@@ -1,8 +1,7 @@
-#nvda_slave.pyw
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2009-2017 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2009-2023 NV Access Limited, Cyrille Bougot
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """NVDA slave process
 Performs miscellaneous tasks which need to be performed in a separate process.
@@ -11,37 +10,26 @@ Performs miscellaneous tasks which need to be performed in a separate process.
 import sys
 import os
 import globalVars
+import logHandler
 import monkeyPatches.comtypesMonkeyPatches
+import NVDAState
+
 
 # Ensure that slave uses generated comInterfaces by adding our comInterfaces to `comtypes.gen` search path.
 monkeyPatches.comtypesMonkeyPatches.appendComInterfacesToGenSearchPath()
 
 
-if hasattr(sys, "frozen"):
+if NVDAState.isRunningAsSource():
+	globalVars.appDir = os.path.abspath(os.path.dirname(__file__))
+else:
 	# Error messages (which are only for debugging) should not cause the py2exe log message box to appear.
 	sys.stderr = sys.stdout
 	globalVars.appDir = sys.prefix
-else:
-	globalVars.appDir = os.path.abspath(os.path.dirname(__file__))
+
 
 # #2391: some functions may still require the current directory to be set to NVDA's app dir
 os.chdir(globalVars.appDir)
-
-
-import gettext
-import locale
-#Localization settings
-try:
-	gettext.translation(
-		'nvda',
-		localedir=os.path.join(globalVars.appDir, 'locale'),
-		languages=[locale.getdefaultlocale()[0]]
-	).install()
-except:
-	gettext.install('nvda')
-
-
-import logHandler
+globalVars.appPid = os.getpid()
 
 
 def getNvdaHelperRemote():

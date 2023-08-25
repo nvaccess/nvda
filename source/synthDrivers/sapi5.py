@@ -8,8 +8,6 @@ from typing import Optional
 from enum import IntEnum
 import locale
 from collections import OrderedDict
-import os
-from ctypes import c_long, WINFUNCTYPE, windll
 import comtypes.client
 from comtypes import COMError
 import winreg
@@ -165,7 +163,7 @@ class SynthDriver(SynthDriver):
 	def _get_pitch(self):
 		return self._pitch
 
-	def _get_volume(self):
+	def _get_volume(self) -> int:
 		return self.tts.volume
 
 	def _get_voice(self):

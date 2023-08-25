@@ -3,17 +3,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-19 00:02+0000\n"
-"PO-Revision-Date: 2021-11-22 21:48+0100\n"
+"POT-Creation-Date: 2023-08-14 03:03+0000\n"
+"PO-Revision-Date: 2023-08-13 23:06+0200\n"
 "Last-Translator: Juan C. Buño <oprisniki@gmail.com>\n"
 "Language-Team: Equipo de tradución ao Galego <oprisniki@gmail.com>\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
-"X-Poedit-SourceCharset: iso-8859-1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.3.2\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -78,49 +78,6 @@ msgstr "lingua descoñecida"
 #. Translators: The label for an unknown input method when switching input methods.
 msgid "unknown input method"
 msgstr "método de entrada descoñecido"
-
-#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "spelling and grammar: {text}"
-msgstr "ortografía e gramática: {text}"
-
-#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "spelling: {text}"
-msgstr "ortografía: {text}"
-
-#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "grammar: {text}"
-msgstr "gramática: {text}"
-
-#. Translators: a style of fill type (to color the inside of a control or text)
-msgctxt "UIAHandler.FillType"
-msgid "none"
-msgstr "non"
-
-#. Translators: a style of fill type (to color the inside of a control or text)
-msgctxt "UIAHandler.FillType"
-msgid "color"
-msgstr "cor"
-
-#. Translators: a style of fill type (to color the inside of a control or text)
-msgctxt "UIAHandler.FillType"
-msgid "gradient"
-msgstr "gradiente"
-
-#. Translators: a style of fill type (to color the inside of a control or text)
-msgctxt "UIAHandler.FillType"
-msgid "picture"
-msgstr "imaxe"
-
-#. Translators: a style of fill type (to color the inside of a control or text)
-msgctxt "UIAHandler.FillType"
-msgid "pattern"
-msgstr "patrón"
 
 #. Translators: shown when an addon API version string is unknown
 #. Translators: The word for an unknown control type.
@@ -279,6 +236,11 @@ msgstr "pesctl"
 msgid "prgbar"
 msgstr "barpgr"
 
+#. Translators: Displayed in braille for an object which is an
+#. indeterminate progress bar, aka busy indicator.
+msgid "bsyind"
+msgstr "bsyind"
+
 #. Translators: Displayed in braille for an object which is a
 #. scroll bar.
 msgid "scrlbar"
@@ -417,6 +379,25 @@ msgstr "fig"
 msgid "hlght"
 msgstr "rstd"
 
+#. Translators: Displayed in braille when an object is a comment.
+#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
+#. Translators: Brailled when text contains a generic comment.
+msgid "cmnt"
+msgstr "cmnt"
+
+#. Translators: Displayed in braille when an object is a suggestion.
+msgid "sggstn"
+msgstr "sxr"
+
+#. Translators: Displayed in braille when an object is a definition.
+#. Translators: Identifies a definition.
+msgid "definition"
+msgstr "definición"
+
+#. Translators: Displayed in braille when an object is a switch control
+msgid "swtch"
+msgstr "cnmt"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "sel"
@@ -469,10 +450,6 @@ msgstr "ordeado asc"
 msgid "sorted desc"
 msgstr "ordeado desc"
 
-#. Translators: Displayed in braille when an object has additional details (such as a comment section).
-msgid "details"
-msgstr "detalles"
-
 #. Translators: Displayed in braille when an object (usually a graphic) has a long description.
 msgid "ldesc"
 msgstr "ldesc"
@@ -480,10 +457,6 @@ msgstr "ldesc"
 #. Translators: Displayed in braille when there is a formula on a spreadsheet cell.
 msgid "frml"
 msgstr "frml"
-
-#. Translators: Displayed in braille when there is a comment for a spreadsheet cell or piece of text in a document.
-msgid "cmnt"
-msgstr "cmnt"
 
 #. Translators: Displayed in braille when an object is not selected.
 msgid "nsel"
@@ -565,6 +538,18 @@ msgstr "USB"
 msgid "Bluetooth"
 msgstr "Bluetooth"
 
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+msgid "details"
+msgstr "detalles"
+
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. "has comment suggestion")
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. "comment, suggestion, details")
+#, python-format
+msgid "has %s"
+msgstr "ten %s"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -621,18 +606,17 @@ msgstr "c{columnNumber}"
 msgid "%s end"
 msgstr "%s fin"
 
-#. Translators: The label for a braille setting indicating that braille should be
-#. tethered to focus or review cursor automatically.
-msgid "automatically"
-msgstr "automáticamente"
+#. Translators: Brailled when text contains a draft comment.
+msgid "drft cmnt"
+msgstr "brd"
 
-#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
-msgid "to focus"
-msgstr "ao foco"
+#. Translators: Brailled when text contains a resolved comment.
+msgid "rslvd cmnt"
+msgstr "cmnt rslt"
 
-#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
-msgid "to review"
-msgstr "á revisión"
+#. Translators: brailled when text contains a bookmark
+msgid "bkmk"
+msgstr "mrc"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Dot firm&ness"
@@ -669,11 +653,6 @@ msgstr "Entrada non soportada"
 #, python-brace-format
 msgid "{modifier} released"
 msgstr "{modifier} soltado"
-
-#. Translators: Reported when a braille input modifier is pressed.
-#, python-brace-format
-msgid "{modifier} pressed"
-msgstr "{modifier} premido"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -765,6 +744,11 @@ msgstr "Búlgaro grao 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Catalan grade 1"
+msgstr "Catalán grao 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Central Kurdish grade 1"
 msgstr "Curdo central grao 1"
 
@@ -800,8 +784,18 @@ msgstr "Braille danés computerizado de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 8 dot computer braille (1993)"
+msgstr "Braille danés computerizado de 8 puntos (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 6 dot grade 1"
 msgstr "Danés de 6 puntos grao 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 6 dot grade 1 (1993)"
+msgstr "Braille danés grao 1 de 6 puntos (1993)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -810,13 +804,33 @@ msgstr "Danés de 8 puntos grao 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 8 dot grade 1 (1993)"
+msgstr "Danés de 8 puntos grao 1 (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 6 dot grade 2"
 msgstr "Danés de 6 puntos grao 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 6 dot grade 2 (1993)"
+msgstr "Danés de 6 puntos grado 2 (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 8 dot grade 2"
 msgstr "Danés de 8 puntos grao 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot grade 2 (1993)"
+msgstr "Danés de 8 puntos grao 2 (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "German 6 dot computer braille"
+msgstr "Braille computerizado alemán de 6 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -847,6 +861,11 @@ msgstr "Alemán grado 1 (detallado)"
 #. braille settings dialog.
 msgid "German grade 2"
 msgstr "Alemán grao 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "German grade 2 (detailed)"
+msgstr "Alemán grao 2 (detallado)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1045,8 +1064,18 @@ msgstr "Braille computerizado italiano de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Japanese (Kantenji) literary braille"
+msgstr "Braille literario xaponés (Kantenji)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Kannada grade 1"
 msgstr "Kannada grao 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Georgian literary braille"
+msgstr "Braille literario georgiano"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1087,6 +1116,11 @@ msgstr "Coreán grao 2"
 #. braille settings dialog.
 msgid "Kashmiri grade 1"
 msgstr "Cachemir grao 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Luganda literary braille"
+msgstr "Braille literario Luganda"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1145,13 +1179,8 @@ msgstr "Birmán grao 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (Belgium) 6 dot"
-msgstr "Holandés (Bélxica) de 6 puntos"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Dutch (Netherlands) 6 dot"
-msgstr "Holandés (Holanda) de 6 puntos"
+msgid "Dutch 6 dot"
+msgstr "Holandés de 6 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1200,6 +1229,11 @@ msgstr "Sepedi grao 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Chichewa (Malawi) literary braille"
+msgstr "Braille literario Chichewa (Malawi)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "Oriya grao 1"
 
@@ -1210,8 +1244,8 @@ msgstr "Braille polaco computerizado de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Polish grade 1"
-msgstr "Polaco grao 1"
+msgid "Polish literary braille"
+msgstr "Braille literario polaco"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1260,6 +1294,11 @@ msgstr "Braille Ruso contraído"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Kinyarwanda literary braille"
+msgstr "Braille literario Kinyarwanda"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "Sánscrito grao 1"
 
@@ -1272,11 +1311,6 @@ msgstr "Yakut grao 1"
 #. braille settings dialog.
 msgid "Swedish 8 dot computer braille"
 msgstr "Sueco computerizado de 8 puntos"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "Swedish grade 1"
-msgstr "Sueco grao 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1307,6 +1341,51 @@ msgstr "Sesotho grao 2"
 #. braille settings dialog.
 msgid "Serbian grade 1"
 msgstr "Serbio grado 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish uncontracted braille"
+msgstr "Braille sueco sen contracción"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish partially contracted braille"
+msgstr "Braille sueco parcialmente contraído"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish contracted braille"
+msgstr "Braille sueco contraído"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1"
+msgstr "Swahili (Kenya) grao 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.2"
+msgstr "Swahili (Kenya) grao 1.2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.3"
+msgstr "Swahili (Kenya) grao 1.3"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.4"
+msgstr "Swahili (Kenya) grao 1.4"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.5"
+msgstr "Swahili (Kenya) grao 1.5"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) Grade 2"
+msgstr "Swahili (Kenya) Grao 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1410,13 +1489,27 @@ msgstr "Xhosa grao 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Chinese (China, Mandarin) grade 1"
-msgstr "Chinés (China, Mandarín) grao 1"
+#. This should be translated to '中文中国汉语通用盲文' in Mandarin.
+msgid "Chinese common braille (simplified Chinese characters)"
+msgstr "Braille chinés común (caracteres chineses simplificados)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Chinese (China, Mandarin) grade 2"
-msgstr "Chinés (China, Mandarín) grao 2"
+#. This should be translated to '中文中国汉语现行盲文（无声调）' in Mandarin.
+msgid "Chinese (China, Mandarin) Current Braille System (no tones)"
+msgstr "Chinés (China, mandarín) Sistema Braille actual (sen tons)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#. This should be translated to '中文中国汉语现行盲文' in Mandarin.
+msgid "Chinese (China, Mandarin) Current Braille System"
+msgstr "Chinés (China, Mandarín) Sistema braille Double-phonic"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#. This should be translated to '中文中国汉语双拼盲文' in Mandarin.
+msgid "Chinese (China, Mandarin) Double-phonic Braille System"
+msgstr "Chinés (China, Mandarín) Sistema braille Double-phonic"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2031,15 +2124,6 @@ msgstr "Sen descripción longa"
 msgid "Shows the long description at this position if one is found."
 msgstr "Amosa a descripción longa nesta posición se se atopa unha."
 
-#. Translators: the description for the activateAriaDetailsSummary script on browseMode documents.
-msgid "Shows a summary of the details at this position if found."
-msgstr "Amosa un resumo dos detalles nesta posición se o atopa."
-
-#. Translators: the message presented when the activateAriaDetailsSummary script cannot locate a
-#. set of details to read.
-msgid "No additional details"
-msgstr "Non hai detalles adicionais"
-
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
 msgid "Not in a container"
@@ -2328,6 +2412,17 @@ msgctxt "color hue"
 msgid "brown-yellow"
 msgstr "marrón amarelo"
 
+#. Translators: Shown when NVDA has been started with unknown command line parameters.
+#, python-brace-format
+msgid "The following command line parameters are unknown to NVDA: {params}"
+msgstr ""
+"Os seguintes parámetros de liña de ordes son descoñecidos para NVDA: {params}"
+
+#. Translators: Title of the dialog letting user know
+#. that command line parameters they provided are unknown.
+msgid "Unknown command line parameters"
+msgstr "Parámetros de liña de ordes descoñecidos"
+
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
@@ -2356,24 +2451,6 @@ msgstr "erro no ficheiro de mapa de xestos"
 msgid "Loading NVDA. Please wait..."
 msgstr "Cargando NVDA. Agarda por favor..."
 
-#. Translators: The screen is oriented so that it is wider than it is tall.
-msgid "Landscape"
-msgstr "Horizontal"
-
-#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
-msgid "Portrait"
-msgstr "Vertical"
-
-#. Translators: Reported when the battery is plugged in, and now is charging.
-#, python-format
-msgid "Charging battery. %d percent"
-msgstr "Cargando batería. %d porcento"
-
-#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-#, python-format
-msgid "Not charging battery. %d percent"
-msgstr "Sen cargar batería. %d porcento"
-
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
 msgstr "NVDA activado"
@@ -2391,12 +2468,16 @@ msgstr "Teclea o texto que desexas atopar"
 msgid "Case &sensitive"
 msgstr "&Sensible ás maiúsculas"
 
+#. Translators: message displayed to the user when
+#. searching text and no text is found.
 #, python-format
 msgid "text \"%s\" not found"
 msgstr "texto \"%s\" non atopado"
 
-msgid "Find Error"
-msgstr "Erro na procura"
+#. Translators: message dialog title displayed to the user when
+#. searching text and no text is found.
+msgid "0 matches"
+msgstr "0 coincidenzas"
 
 #. Translators: Input help message for NVDA's find command.
 msgid "find a text string from the current cursor position"
@@ -2421,6 +2502,12 @@ msgstr ""
 #. Translators: Reported when there is no text selected (for copying).
 msgid "No selection"
 msgstr "Sen seleción"
+
+#. Translators: Abbreviation for points, a measurement of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s pt"
+msgstr "%s pt"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -2448,6 +2535,54 @@ msgstr "móvese á seguinte columna da táboa"
 #. Translators: the description for the previous table column script on browseMode documents.
 msgid "moves to the previous table column"
 msgstr "móvese á anterior columna da táboa"
+
+#. Translators: the description for the first table row script on browseMode documents.
+msgid "moves to the first table row"
+msgstr "móvese á primeira fila da táboa"
+
+#. Translators: the description for the last table row script on browseMode documents.
+msgid "moves to the last table row"
+msgstr "móvese á última fila da táboa"
+
+#. Translators: the description for the first table column script on browseMode documents.
+msgid "moves to the first table column"
+msgstr "móvese á primeira columna da táboa"
+
+#. Translators: the description for the last table column script on browseMode documents.
+msgid "moves to the last table column"
+msgstr "móvese á última columna da táboa"
+
+#. Translators: the description for the sayAll row command
+msgid ""
+"Reads the row horizontally from the current cell rightwards to the last cell "
+"in the row."
+msgstr ""
+"Le a fila horizontalmente dende a celda actual cara a dereita ate a última "
+"celda da fila."
+
+#. Translators: the description for the sayAll row command
+msgid ""
+"Reads the column vertically from the current cell downwards to the last cell "
+"in the column."
+msgstr ""
+"Le a columna verticalmente dende a celda actual cara abaixo ate a última "
+"celda da columna."
+
+#. Translators: the description for the speak row command
+msgid ""
+"Reads the current row horizontally from left to right without moving the "
+"system caret."
+msgstr ""
+"Le a fila actual horizontalmente de esquerda a dereita sen mover o cursor do "
+"sistema."
+
+#. Translators: the description for the speak column command
+msgid ""
+"Reads the current column vertically from top to bottom without moving the "
+"system caret."
+msgstr ""
+"Le a columna actual verticalmente de arriba a abaixo sen mover o cursor do "
+"sistema."
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables off"
@@ -2494,6 +2629,8 @@ msgid "Configuration profiles"
 msgstr "Configuración de perfís"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 #. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "Braille"
@@ -2600,25 +2737,9 @@ msgstr "Clic dereito"
 msgid "Locks or unlocks the left mouse button"
 msgstr "Bloquea ou desbloquea o botón esquerdo do rato"
 
-#. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-msgid "Left mouse button unlock"
-msgstr "Botón esquerdo do rato desbloqueado"
-
-#. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-msgid "Left mouse button lock"
-msgstr "Botón esquerdo do rato bloqueado"
-
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "Bloquea ou desbloquea o botón dereito do rato"
-
-#. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-msgid "Right mouse button unlock"
-msgstr "Botón dereito do rato desbloqueado"
-
-#. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-msgid "Right mouse button lock"
-msgstr "Botón dereito do rato bloqueado"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -2861,20 +2982,10 @@ msgid "Cycles through line indentation settings"
 msgstr "Móvese a través das opcións de sangría de liña"
 
 #. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with speech"
-msgstr "Anunciar sangría de liñas con voz"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with tones"
-msgstr "Anunciar sangría de liñas con tons"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with speech and tones"
-msgstr "Anunciar sangría de liñas con voz e tons"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation off"
-msgstr "Anunciar sangría de liña desactivado"
+#. {mode} will be replaced with the mode; i.e. Off, Speech, Tones or Both Speech and Tones.
+#, python-brace-format
+msgid "Report line indentation {mode}"
+msgstr "Anunciar sangrado de liña {mode}"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
@@ -2913,17 +3024,16 @@ msgid "report tables on"
 msgstr "anunciar táboas activado"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
-msgid "Toggles on and off the reporting of table row and column headers"
+msgid "Cycle through the possible modes to report table row and column headers"
 msgstr ""
-"Activa e desactiva o anunciado das cabeceiras de fila e columna da táboa"
+"Percorre os modos posibles para anunciar as cabeceiras das filas e columnas "
+"da táboa"
 
-#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
-msgid "report table row and column headers off"
-msgstr "anunciar cabeceiras de fila e columna da táboa desactivado"
-
-#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
-msgid "report table row and column headers on"
-msgstr "anunciar cabeceiras de fila e columna da táboa activado"
+#. Translators: Reported when the user cycles through report table header modes.
+#. {mode} will be replaced with the mode; e.g. None, Rows and columns, Rows or Columns.
+#, python-brace-format
+msgid "Report table headers {mode}"
+msgstr "Anunciar cabeceiras de táboa {mode}"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
@@ -2941,17 +3051,11 @@ msgstr "anunciar cordenadas de celdas da tábuoa activado"
 msgid "Cycles through the cell border reporting settings"
 msgstr "Móvese polas opcións de borde da celda"
 
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report styles of cell borders"
-msgstr "Anunciar estilos dos bordes da celda"
-
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report colors and styles of cell borders"
-msgstr "Anunciar cores e estilos de bordes de celda"
-
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report cell borders off."
-msgstr "Anunciar bordes da celda activado."
+#. Translators: Reported when the user cycles through report cell border modes.
+#. {mode} will be replaced with the mode; e.g. Off, Styles and Colors and styles.
+#, python-brace-format
+msgid "Report cell borders {mode}"
+msgstr "Anunciar os bordes da celda {mode}"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -3085,6 +3189,26 @@ msgstr "anunciar cliqueable desactivado"
 msgid "report if clickable on"
 msgstr "anunciar cliqueable activado"
 
+#. Translators: Input help mode message for cycle through automatic language switching mode command.
+msgid ""
+"Cycles through speech modes for automatic language switching: off, language "
+"only and language and dialect."
+msgstr ""
+"Móvese circularmente polos modos de voz para o cambio automático de linguas: "
+"desactivado, só lingua e lingua e dialecto."
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language switching off"
+msgstr "Cambio automático de lingua desactivado"
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language and dialect switching on"
+msgstr "Cambio automático de lingua e de dialecto activado"
+
+#. Translators: A message reported when executing the cycle automatic language switching mode command.
+msgid "Automatic language switching on"
+msgstr "Cambio automático de lingua activado"
+
 #. Translators: Input help mode message for cycle speech symbol level command.
 msgid ""
 "Cycles through speech symbol levels which determine what symbols are spoken"
@@ -3098,6 +3222,21 @@ msgstr ""
 #, python-format
 msgid "Symbol level %s"
 msgstr "Nivel de símbolos %s"
+
+#. Translators: Input help mode message for toggle delayed character description command.
+msgid ""
+"Toggles on and off delayed descriptions for characters on cursor movement"
+msgstr ""
+"Activa e desactiva as descripcións retrasadas de caracteres co movemento do "
+"cursor"
+
+#. Translators: The message announced when toggling the delayed character description setting.
+msgid "delayed character descriptions on"
+msgstr "descripcións retrasadas de carácter activadas"
+
+#. Translators: The message announced when toggling the delayed character description setting.
+msgid "delayed character descriptions off"
+msgstr "descripcións retrasadas de carácter desactivadas"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
@@ -3169,6 +3308,39 @@ msgstr ""
 msgid "No navigator object"
 msgstr "Sen navegador de obxectos"
 
+#. Translators: message when there is no location information
+msgid "No location information"
+msgstr "Sen información de localización"
+
+#. Translators: Description for a keyboard command which reports location of the
+#. review cursor, falling back to the location of navigator object if needed.
+msgid ""
+"Reports information about the location of the text at the review cursor, or "
+"location of the navigator object if there is no text under review cursor."
+msgstr ""
+"Anuncia información da colocación do texto no cursor de revisión, ou da "
+"colocación do navegador de obxectos se non hai texto baixo o cursor de "
+"revisión."
+
+#. Translators: Description for a keyboard command which reports location of the navigator object.
+msgid "Reports information about the location of the current navigator object."
+msgstr ""
+"Anuncia información sobre a colocación do navegador de obxectos actual."
+
+#. Translators: Description for a keyboard command which reports location of the
+#. current caret position falling back to the location of focused object if needed.
+msgid ""
+"Reports information about the location of the text at the caret, or location "
+"of the currently focused object if there is no caret."
+msgstr ""
+"Anuncia a colocación do texto no cursor, ou a colocación do obxecto enfocado "
+"actualmente se non hai cursor."
+
+#. Translators: Description for a keyboard command which reports location of the
+#. currently focused object.
+msgid "Reports information about the location of the currently focused object."
+msgstr "Anuncia a colocación do obxecto enfocado actualmente."
+
 #. Translators: Description for report review cursor location command.
 msgid ""
 "Reports information about the location of the text or object at the review "
@@ -3177,9 +3349,15 @@ msgstr ""
 "Anuncia información sobre a localización do texto ou obxecto no cursor de "
 "revisión. ao premer dúas veces poderá proporcionar máis detalles."
 
-#. Translators: message when there is no location information for the review cursor
-msgid "No location information"
-msgstr "Sen información de localización"
+#. Translators: Description for a keyboard command
+#. which reports location of the text at the caret position
+#. or object with focus if there is no caret.
+msgid ""
+"Reports information about the location of the text or object at the position "
+"of system caret. Pressing twice may provide further detail."
+msgstr ""
+"Anuncia a localización do texto ou do obxecto na posición do cursor do "
+"sistema. Se se preme dúas veces pódense obter máis detalles."
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
@@ -3301,6 +3479,26 @@ msgid ""
 msgstr ""
 "Move o cursor de revisión á seguinte liña do navegador de obxectos actual e "
 "fálaa"
+
+#. Translators: Input help mode message for move review cursor to previous page command.
+msgid ""
+"Moves the review cursor to the previous page of the current navigator object "
+"and speaks it"
+msgstr ""
+"Move o cursor de revisión á páxina anterior do navegador de obxectos actual "
+"e fálaa"
+
+#. Translators: a message reported when movement by page is unsupported
+msgid "Movement by page not supported"
+msgstr "Non se admite o movemento por páxinas"
+
+#. Translators: Input help mode message for move review cursor to next page command.
+msgid ""
+"Moves the review cursor to the next page of the current navigator object and "
+"speaks it"
+msgstr ""
+"Move o cursor de revisión á páxina seguinte do navegador de obxectos actual "
+"e fálaa"
 
 #. Translators: Input help mode message for move review cursor to bottom line command.
 msgid ""
@@ -3437,8 +3635,12 @@ msgstr "Modo de voz falar"
 
 #. Translators: Input help mode message for move to next document with focus command,
 #. mostly used in web browsing to move from embedded object to the webpage document.
-msgid "Moves the focus to the next closest document that contains the focus"
-msgstr "Move o foco ao seguinte documento máis cercano que conteña o foco"
+msgid ""
+"Moves the focus out of the current embedded object and into the document "
+"that contains it"
+msgstr ""
+"Move o foco fora do obxecto integrado actual e dentro do documento que o "
+"conteña"
 
 #. Translators: Input help mode message for toggle focus and browse mode command
 #. in web browsing and other situations.
@@ -3528,6 +3730,15 @@ msgstr ""
 "Anuncia información de formato para o texto baixo o cursor. Se se preme dúas "
 "veces, presenta información no modo exploración"
 
+#. Translators: the description for the reportDetailsSummary script.
+msgid "Report summary of any annotation details at the system caret."
+msgstr ""
+"Anunciar o resumo de calquera detalle da anotación no cursor do sistema."
+
+#. Translators: message given when there is no annotation details for the reportDetailsSummary script.
+msgid "No additional details"
+msgstr "Non hai detalles adicionais"
+
 #. Translators: Input help mode message for report current focus command.
 msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr ""
@@ -3572,6 +3783,16 @@ msgid ""
 msgstr ""
 "Le a barra de estado da aplicación actual. Se se preme dúas veces, deletrea "
 "a información. Se se preme tres veces, copia a barra de estado no portapapeis"
+
+#. Translators: Description for a keyboard command which reports the
+#. accelerator key of the currently focused object.
+msgid "Reports the shortcut key of the currently focused object"
+msgstr "Anuncia o atallo de teclado do obxecto actualmente enfocado"
+
+#. Translators: reported when a user requests the accelerator key
+#. of the currently focused object, but there is none set.
+msgid "No shortcut key"
+msgstr "Non hai atallo de teclado"
 
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
@@ -3767,24 +3988,6 @@ msgstr ""
 "Anuncia o estado das baterías e o tempo restante se a fonte externa de "
 "alimentación non está enchufada"
 
-#. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-msgid "No system battery"
-msgstr "Non hai batería do sistema"
-
-#. Translators: This is presented to inform the user of the current battery percentage.
-#, python-format
-msgid "%d percent"
-msgstr "%d porcento"
-
-#. Translators: This is presented when AC power is connected such as when recharging a laptop battery.
-msgid "AC power on"
-msgstr "Fonte externa de alimentación activada"
-
-#. Translators: This is the estimated remaining runtime of the laptop battery.
-#, python-brace-format
-msgid "{hours:d} hours and {minutes:d} minutes remaining"
-msgstr "{hours:d} horas e {minutes:d} minutos restantes"
-
 #. Translators: Input help mode message for pass next key through command.
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
@@ -3919,13 +4122,12 @@ msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr ""
 "Activa a Consola de Python do NVDA, útil principalmente para desenvolvemento"
 
-#. Translators: Input help mode message for activate manage add-ons command.
+#. Translators: Input help mode message to activate Add-on Store command.
 msgid ""
-"Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
-"for NVDA"
+"Activates the Add-on Store to browse and manage add-on packages for NVDA"
 msgstr ""
-"Activa o Administrador de Complementos do NVDA para instalar e desinstalar "
-"paquetes de complementos para o NVDA"
+"Activa a Tenda de Complementos do NVDA para instalar e xestionar paquetes de "
+"complementos para o NVDA"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
@@ -3943,6 +4145,23 @@ msgstr "visualizador da Fala deshabilitado"
 msgid "speech viewer enabled"
 msgstr "visualizador da Fala habilitado"
 
+#. Translators: Input help mode message for toggle Braille viewer command.
+msgid ""
+"Toggles the NVDA Braille viewer, a floating window that allows you to view "
+"braille output, and the text equivalent for each braille character"
+msgstr ""
+"Activa e desactiva o visualizador de braille do NVDA, unha ventá flotante "
+"que permite ver a saída en braille e o equivalente en texto de cada carácter "
+"braille"
+
+#. Translators: The message announced when disabling braille viewer.
+msgid "Braille viewer disabled"
+msgstr "Visualizador de Braille deshabilitado"
+
+#. Translators: The message announced when enabling Braille viewer.
+msgid "Braille viewer enabled"
+msgstr "Visualizador de Braille habilitado"
+
 #. Translators: Input help mode message for toggle braille tether to command
 #. (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
@@ -3955,6 +4174,31 @@ msgstr ""
 #, python-format
 msgid "Braille tethered %s"
 msgstr "O Braille segue %s"
+
+#. Translators: Input help mode message for cycle through
+#. braille move system caret when routing review cursor command.
+msgid ""
+"Cycle through the braille move system caret when routing review cursor states"
+msgstr ""
+"Percorre os estados do braille move o cursor do sistema ao enrutar o cursor "
+"de revisión"
+
+#. Translators: Reported when action is unavailable because braille tether is to focus.
+msgid "Action unavailable. Braille is tethered to focus"
+msgstr "Acción non dispoñible. O Braille está a seguir ao foco"
+
+#. Translators: Used when reporting braille move system caret when routing review cursor
+#. state (default behavior).
+#, python-format
+msgid "Braille move system caret when routing review cursor default (%s)"
+msgstr ""
+"O Braille move o cursor do sistema cando se enruta o cursor de revisión "
+"predeterminado (%s)"
+
+#. Translators: Used when reporting braille move system caret when routing review cursor state.
+#, python-format
+msgid "Braille move system caret when routing review cursor %s"
+msgstr "O Braille move o cursor do sistema ao enrutar o cursor de revisión %s"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
@@ -3992,6 +4236,32 @@ msgstr "O cursor braille está desactivado"
 #, python-format
 msgid "Braille cursor %s"
 msgstr "Cursor braille %s"
+
+#. Translators: Input help mode message for cycle through braille show messages command.
+msgid "Cycle through the braille show messages modes"
+msgstr "Percorre os modos de amosar mensaxes en braille"
+
+#. Translators: Reports which show braille message mode is used
+#. (disabled, timeout or indefinitely).
+#, python-format
+msgid "Braille show messages %s"
+msgstr "Amosar mensaxes braille %s"
+
+#. Translators: Input help mode message for cycle through braille show selection command.
+msgid "Cycle through the braille show selection states"
+msgstr "Percorre os estados de amosar a seleción braille"
+
+#. Translators: Used when reporting braille show selection state
+#. (default behavior).
+#, python-format
+msgid "Braille show selection default (%s)"
+msgstr "O braille amosa a seleción predeteminada (%s)"
+
+#. Translators: Reports which show braille selection state is used
+#. (disabled or enabled).
+#, python-format
+msgid "Braille show selection %s"
+msgstr "Amosar selección braille %s"
 
 #. Translators: Input help mode message for report clipboard text command.
 msgid "Reports the text on the Windows clipboard"
@@ -4144,6 +4414,54 @@ msgstr ""
 "Conmuta virtualmente a tecla NVDA para emular un atallo de teclado coa "
 "entrada braille"
 
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control and shift keys to emulate a keyboard shortcut "
+"with braille input"
+msgstr ""
+"Conmuta virtualmente as teclas de control e maiúsculas para emular un atallo "
+"de teclado ca entrada braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the alt and shift keys to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Conmuta virtualmente as teclas alt e shift para emular un atallo de teclado "
+"coa entrada braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows and shift keys to emulate a keyboard "
+"shortcut with braille input"
+msgstr ""
+"Conmuta virtualmente as teclas Windows esquerda e shift para emular un "
+"atallo de teclado coa entrada braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the NVDA and shift keys to emulate a keyboard shortcut "
+"with braille input"
+msgstr ""
+"Conmuta virtualmente as teclas NVDA e shift para emular un atallo de teclado "
+"coa entrada braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control and alt keys to emulate a keyboard shortcut "
+"with braille input"
+msgstr ""
+"Conmuta virtualmente as teclas control e alt para emular un atallo de "
+"teclado coa entrada braille"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control, alt, and shift keys to emulate a keyboard "
+"shortcut with braille input"
+msgstr ""
+"Conmuta virtualmente as teclas control, alt e shift para emular un atallo de "
+"teclado coa entrada braille"
+
 #. Translators: Input help mode message for reload plugins command.
 msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
@@ -4155,6 +4473,37 @@ msgstr ""
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Plugins recargados"
+
+#. Translators: input help mode message for Report destination URL of a link command
+msgid ""
+"Report the destination URL of the link at the position of caret or focus. If "
+"pressed twice, shows the URL in a window for easier review."
+msgstr ""
+"Anuncia o destiño da URL da ligazón na posición do cursor ou do foco. Se se "
+"preme dúas veces, amosa a URL nunha ventá para facer máis doada a súa "
+"revisión."
+
+#. Translators: Informs the user that the link has no destination
+msgid "Link has no apparent destination"
+msgstr "A ligazón non ten un destiño aparente"
+
+#. Translators: Informs the user that the window contains the destination of the
+#. link with given title
+#, python-brace-format
+msgid "Destination of: {name}"
+msgstr "Destiño de: {name}"
+
+#. Translators: Tell user that the command has been run on something that is not a link
+msgid "Not a link."
+msgstr "Non é una ligazón."
+
+#. Translators: input help mode message for Report URL of a link in a window command
+msgid ""
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
+msgstr ""
+"Amosa o destiño da URL da ligazón na posición do cursor ou do foco nunha "
+"ventá, a cambio de pronunciala. Pódese preferir polos usuarios de braille."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4263,6 +4612,10 @@ msgid "Please disable screen curtain before using Windows OCR."
 msgstr ""
 "Por favor desactiva a cortina de pantalla antes de usar o OCR de Windows."
 
+#. Translators: Describes a command.
+msgid "Cycles through the available languages for Windows OCR"
+msgstr "Percorre as linguas dispoñibles para o OCR de Windows"
+
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
 msgstr "Activa e desactiva o anunciado dos caracteres CLDR coma os emojis"
@@ -4310,6 +4663,10 @@ msgstr "Cortina de pantalla temporal, habilitada ate o seguinte reinicio"
 #. Translators: Reported when the screen curtain could not be enabled.
 msgid "Could not enable screen curtain"
 msgstr "Non se puido habilitar a Cortina de pantalla"
+
+#. Translators: Describes a command.
+msgid "Cycles through paragraph navigation styles"
+msgstr "Percorre os estilos de navegación por parágrafos"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -4707,9 +5064,12 @@ msgstr "portátil"
 msgid "unknown %s"
 msgstr "descoñecida %s"
 
+#. Translators: a state that denotes a control is currently on
+#. E.g. a switch control.
 msgid "on"
 msgstr "activado"
 
+#. Translators: This is presented when a switch control is off.
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
@@ -4727,16 +5087,16 @@ msgstr "teclado %s"
 msgid "keyboard, all layouts"
 msgstr "teclado, todas as distribucións"
 
+#. Translators: the label for the Windows default NVDA interface language.
+msgid "User default"
+msgstr "Predeterminado do usuario"
+
 #. Translators: The pattern defining how languages are displayed and sorted in in the general
 #. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
 #. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
 #, python-brace-format
 msgid "{desc}, {lc}"
 msgstr "{desc}, {lc}"
-
-#. Translators: the label for the Windows default NVDA interface language.
-msgid "User default"
-msgstr "Predeterminado do usuario"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
@@ -4767,6 +5127,22 @@ msgstr "Somalí"
 #, python-format
 msgid "%s cursor"
 msgstr "%s cursor"
+
+#. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
+msgid "Left mouse button lock"
+msgstr "Botón esquerdo do rato bloqueado"
+
+#. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
+msgid "Left mouse button unlock"
+msgstr "Botón esquerdo do rato desbloqueado"
+
+#. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
+msgid "Right mouse button lock"
+msgstr "Botón dereito do rato bloqueado"
+
+#. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
+msgid "Right mouse button unlock"
+msgstr "Botón dereito do rato desbloqueado"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6019,6 +6395,34 @@ msgctxt "touch action"
 msgid "hover up"
 msgstr "deixando de desprazarse"
 
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt).
+msgid ""
+"This feature is unavailable while on secure screens such as the sign-on "
+"screen or UAC prompt."
+msgstr ""
+"Esta característica non está dispoñible mentres se estea en pantallas "
+"seguras como a pantalla de inicio de sesión ou no indicativo do UAC."
+
+#. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+#. when Windows is on a secure screen (sign-on screen / UAC prompt). This prompt includes the title
+#. of the Window that could not be opened for context.
+#. The {title} will be replaced with the title.
+#. The title may be something like "Formatting".
+#, python-brace-format
+msgid ""
+"This feature ({title}) is unavailable while on secure screens such as the "
+"sign-on screen or UAC prompt."
+msgstr ""
+"Esta característica ({title}) non está dispoñible mentres se estea en "
+"pantallas seguras como a pantalla de inicio de sesión ou no indicativo do "
+"UAC."
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message
+#. dialog.
+msgid "Feature unavailable."
+msgstr "Característica non dispoñible."
+
 #. Translators: The title for the dialog used to present general NVDA messages in browse mode.
 msgid "NVDA Message"
 msgstr "Mensaxe do NVDA"
@@ -6060,13 +6464,16 @@ msgstr "Erro procurando actualización."
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
-#. Translators: The message title displayed
-#. when the user has not specified an absolute destination directory
-#. in the Create Portable NVDA dialog.
+#. Translators: the title of an error dialog.
+#. Translators: The message title displayed when the user has not specified an absolute
+#. destination directory in the Create Portable NVDA dialog.
+#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
 #. Translators: The title of an error message dialog.
+#. Translators: A message indicating that an error occurred.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
 #. for a vision enhancement provider
+#. Translators: The title of an error message box displayed when validating the startup dialog
 msgid "Error"
 msgstr "Erro"
 
@@ -6085,32 +6492,6 @@ msgstr "Non hai actualizacións dispoñíbels."
 msgid "NVDA version {version} has been downloaded and is pending installation."
 msgstr ""
 "A versión do NVDA {version} descargouse e está pendente de se instalar."
-
-#. Translators: A message indicating that some add-ons will be disabled
-#. unless reviewed before installation.
-#. Translators: A message in the installer to let the user know that
-#. some addons are not compatible.
-msgid ""
-"\n"
-"\n"
-"However, your NVDA configuration contains add-ons that are incompatible with "
-"this version of NVDA. These add-ons will be disabled after installation. If "
-"you rely on these add-ons, please review the list to decide whether to "
-"continue with the installation"
-msgstr ""
-"\n"
-"\n"
-"Polo tanto, a túa configuración de NVDA contén complementos que son "
-"incompatibles con esta versión do NVDA. Estos complementos deshabilitaranse "
-"despois da instalación. Se confías neles, por favor revisa a listaxe para "
-"decidir se desexas continuar coa instalación"
-
-#. Translators: A message to confirm that the user understands that addons that have not been
-#. reviewed and made available, will be disabled after installation.
-#. Translators: A message to confirm that the user understands that addons that have not been reviewed and made
-#. available, will be disabled after installation.
-msgid "I understand that these incompatible add-ons will be disabled"
-msgstr "Comprendo que estes complementos incompatibles se deshabilitarán"
 
 #. Translators: The label of a button to review add-ons prior to NVDA update.
 #. Translators: The label of a button to launch the add-on compatibility review dialog.
@@ -6151,21 +6532,6 @@ msgstr "&Pechar"
 #, python-brace-format
 msgid "NVDA version {version} is ready to be installed.\n"
 msgstr "A versión do NVDA {version} está lista para se instalar.\n"
-
-#. Translators: A message indicating that some add-ons will be disabled
-#. unless reviewed before installation.
-msgid ""
-"\n"
-"However, your NVDA configuration contains add-ons that are incompatible with "
-"this version of NVDA. These add-ons will be disabled after installation. If "
-"you rely on these add-ons, please review the list to decide whether to "
-"continue with the installation"
-msgstr ""
-"\n"
-"Sen embargo, a túa configuración de NVDA contén complementos que son "
-"incompatibles con esta versión do NVDA. Estos complementos deshabilitaranse "
-"despois da instalación. Se confías neles, por favor revisa a listaxe para "
-"decidir se continuar coa instalación"
 
 #. Translators: The label of a button to install an NVDA update.
 msgid "&Install update"
@@ -6249,7 +6615,7 @@ msgstr "Copyright (C) {years} colaboradores do NVDA"
 #, python-brace-format
 msgid ""
 "{longName} ({name})\n"
-"Version: {version}\n"
+"Version: {version} ({version_detailed})\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
@@ -6270,25 +6636,24 @@ msgid ""
 "menu."
 msgstr ""
 "{longName} ({name})\n"
-"Versión: {version}\n"
+"Versión: {version} ({version_detailed})\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} está cuberto pola GNU General Public License (Versión 2). Eres libre "
-"de compartir ou cambiar este software de calquera xeito sempre e cando vaia "
-"acompañado da licencia e que poñas todo o código fonte á disposición de "
-"calquera quen o desexe. Esto aplícase tanto ao orixinal como ás copias "
-"modificadas deste software, ademáis de calquera traballo derivado.\n"
-"Para máis detalles, podes ver a licencia dende o menú Axuda.\n"
-"Tamén se pode ver en liña en: https://www.gnu.org/licenses/old-licenses/"
+"{name} está cuberto pola GNU General Public License (Versión 2). Es libre de "
+"compartir ou modificar este software do xeito que desexes sempre que vaia "
+"acompañado da licencia e que poñas todo o código fonte a disposición de quen "
+"o desexe. Esto aplícase tanto ás copias orixinais como ás modificadas deste "
+"software, así como a calquera traballo derivado.\n"
+"Para máis detalles, podes ver a licencia en inglés no menú Axuda.\n"
+"Tamén pode verse en liña en: https://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
-"{name} é desenvolvido por NV Access, unha organización sen ánimo de lucro "
-"comprometida coa axuda e ca promoción de solucións gratuitas para cegos e "
-"persoas con problemas de visión.\n"
-"Se crees que o NVDA é útil e desexas que sega mellorando, por favor "
-"considera a posibilidade de realizar unha doazón a NV Access. Podes facelo "
-"selecionando Doar dende o menú NVDA."
+"{name} foi desenvuelto por NV Access, unha organización sen ánimo de lucro "
+"comprometida coa axuda e a promoción de solucións libres e de código aberto "
+"para persoas cegas e con problemas de visión.\n"
+"Se atopas útil NVDA e queres que sega mellorándose, por favor considera "
+"donar a NV Access. Podes facelo selecionando Donar no menú NVDA."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
 #, python-brace-format
@@ -6314,6 +6679,17 @@ msgstr ""
 "da pantalla, {top:.1f} por cento da marxen superior da pantalla, o ancho é "
 "{width:.1f} por cento da pantalla, o alto é {height:.1f} por cento da "
 "pantalla"
+
+#. Translators: This is presented to inform the user of a progress bar percentage.
+#. Translators: This is presented to inform the user of the current battery percentage.
+#, python-format
+msgid "%d percent"
+msgstr "%d porcento"
+
+#. Translators: Announced in braille when suggestions appear when search term is entered
+#. in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr "Suxerencias"
 
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
@@ -6341,9 +6717,21 @@ msgstr "Move o navegador de obxectos e o foco á seguinte fila"
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "Move o navegador de obxectos e o foco á fila anterior"
 
-#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
-msgid "Suggestions"
-msgstr "Suxerencias"
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object to the first column"
+msgstr "Move o navegador de obxectos á primeira columna"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object to the last column"
+msgstr "Move o navegador de obxectos á última columna"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object and focus to the first row"
+msgstr "Move o navegador de obxectos e o foco á primeira fila"
+
+#. Translators: The description of an NVDA command.
+msgid "Moves the navigator object and focus to the last row"
+msgstr "Move o navegador de obxectos e o foco á última fila"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
@@ -6356,6 +6744,116 @@ msgstr "Composición"
 msgid "Candidate"
 msgstr "Candidata"
 
+#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling and grammar: {text}"
+msgstr "ortografía e gramática: {text}"
+
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "ortografía: {text}"
+
+#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "grammar: {text}"
+msgstr "gramática: {text}"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "none"
+msgstr "non"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "color"
+msgstr "cor"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "gradient"
+msgstr "gradiente"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "picture"
+msgstr "imaxe"
+
+#. Translators: a style of fill type (to color the inside of a control or text)
+msgctxt "UIAHandler.FillType"
+msgid "pattern"
+msgstr "patrón"
+
+#. Translators: A title of the dialog shown when fetching add-on data from the store fails
+msgctxt "addonStore"
+msgid "Add-on data update failure"
+msgstr "Fallo na actualización de datos do complemento"
+
+#. Translators: A message shown when fetching add-on data from the store fails
+msgctxt "addonStore"
+msgid "Unable to fetch latest add-on data for compatible add-ons."
+msgstr ""
+"Non se poden obter os datos máis recentes dos complementos compatibles."
+
+#. Translators: A message shown when fetching add-on data from the store fails
+msgctxt "addonStore"
+msgid "Unable to fetch latest add-on data for incompatible add-ons."
+msgstr ""
+"Non se poden obter os datos máis recentes para os complementos incompatibles."
+
+#. Translators: The message displayed when an error occurs when opening an add-on package for adding.
+#. The %s will be replaced with the path to the add-on that could not be opened.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Failed to open add-on package file at {filePath} - missing file or invalid "
+"file format"
+msgstr ""
+"Fallos ao abrir o ficheiro de paquete do complemento en {filePath} - "
+"ficheiro non dispoñible ou formato non válido"
+
+#. Translators: The message displayed when an add-on is not supported by this version of NVDA.
+#. The %s will be replaced with the path to the add-on that is not supported.
+#, python-format
+msgctxt "addonStore"
+msgid "Add-on not supported %s"
+msgstr "Complemento non soportado %s"
+
+#. Translators: The message displayed when an error occurs when installing an add-on package.
+#. The %s will be replaced with the path to the add-on that could not be installed.
+#, python-format
+msgctxt "addonStore"
+msgid "Failed to install add-on from %s"
+msgstr "Fallo ao instalar o complemento dende %s"
+
+#. Translators: A title for a dialog notifying a user of an add-on download failure.
+msgctxt "addonStore"
+msgid "Add-on download failure"
+msgstr "Fallo na descarga do complemento"
+
+#. Translators: A message to the user if an add-on download fails
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Unable to download add-on: {name}"
+msgstr "Non se pode descargar o complemento: {name}"
+
+#. Translators: A message to the user if an add-on download fails
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Unable to save add-on as a file: {name}"
+msgstr "Non se pode gardar o complemento coma un ficheiro: {name}"
+
+#. Translators: A message to the user if an add-on download is not safe
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Add-on download not safe: checksum failed for {name}"
+msgstr ""
+"A descarga do complemento non é segura: fallou a suma de comprobación de "
+"{name}"
+
 msgid "Display"
 msgstr "Display"
 
@@ -6364,26 +6862,45 @@ msgid "Tries to read documentation for the selected autocompletion item."
 msgstr "Tenta ler a documentación do elemento de autocompletado selecionado."
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
-msgid "Cann't find the documentation window."
+msgid "Can't find the documentation window."
 msgstr "Non se atopou a ventá comentarios."
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
 msgstr "Non hai pista en reprodución"
 
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{remainingTimeFormatted} remaining"
+msgstr "{remainingTimeFormatted} restante"
+
 #. Translators: Reported if the remaining time can not be calculated in Foobar2000
-msgid "Unable to determine remaining time"
-msgstr "Imposible determinar o tempo restante"
+msgid "Remaining time not available"
+msgstr "Tempo restante non dispoñible"
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr ""
 "Anuncia o tempo restante da pista actualmente en reprodución, se hai algunha"
 
+#. Translators: Reported elapsed time in Foobar2000
+#, python-brace-format
+msgid "{elapsedTime} elapsed"
+msgstr "{elapsedTime} transcorrido"
+
+#. Translators: Reported if the elapsed time is not available in Foobar2000
+msgid "Elapsed time not available"
+msgstr "Tempo transcorrido non dispoñible"
+
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr ""
 "Anuncia o tempo restante da pista actualmente en reprodución, se hai algunha"
+
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{totalTime} total"
+msgstr "{totalTime} total"
 
 #. Translators: Reported if the total time is not available in Foobar2000
 msgid "Total time not available"
@@ -6589,8 +7106,10 @@ msgstr "{startTime} a {endTime}"
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
 #, python-brace-format
-msgid "categories {categories}"
-msgstr "categorías {categories}"
+msgid "category {categories}"
+msgid_plural "categories {categories}"
+msgstr[0] "categoría {categories}"
+msgstr[1] "categories {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
@@ -6889,6 +7408,35 @@ msgstr "Diapositiva valdeira"
 msgid "Waiting for Powerpoint..."
 msgstr "Agardando polo Powerpoint..."
 
+#. Translators: LibreOffice, report selected range of cell coordinates with their values
+#, python-brace-format
+msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
+msgstr "{firstAddress} {firstValue} ata {lastAddress} {lastValue}"
+
+#. Translators: LibreOffice, report range of cell coordinates
+#, python-brace-format
+msgid "{firstAddress} through {lastAddress}"
+msgstr "{firstAddress} ata {lastAddress}"
+
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} inches"
+msgstr "{val:.2f} pulgadas"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} centimetres"
+msgstr "{val:.2f} centímetros"
+
+#. Translators: LibreOffice, report cursor position in the current page
+#, python-brace-format
+msgid ""
+"cursor positioned {horizontalDistance} from left edge of page, "
+"{verticalDistance} from top edge of page"
+msgstr ""
+"cursor colocado en {horizontalDistance} dende a marxe esquerda da páxina, en "
+"{verticalDistance} dende a marxe superior da páxina"
+
 msgid "left"
 msgstr "esquerda"
 
@@ -6915,7 +7463,8 @@ msgctxt "repeat"
 msgid "off"
 msgstr "desactivada"
 
-#. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
+#. Translators: presented when there is no emoji when searching for one
+#. in Windows 10 Fall Creators Update and later.
 msgid "No emoji"
 msgstr "Non hai emoji"
 
@@ -6962,18 +7511,6 @@ msgstr "Series das HumanWare Brailliant BI/B / BrailleNote Touch"
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
 msgstr "Pantallas EcoBraille"
-
-#. Translators: Names of braille displays.
-msgid "Eurobraille Esys/Esytime/Iris displays"
-msgstr "Pantallas Eurobraille Esys/Esytime/Iris"
-
-#. Translators: Message when HID keyboard simulation is unavailable.
-msgid "HID keyboard input simulation is unavailable."
-msgstr "A simulación de entrada de teclado HID non está dispoñible."
-
-#. Translators: Description of the script that toggles HID keyboard simulation.
-msgid "Toggle HID keyboard simulation"
-msgstr "Conmuta a simulación de teclado HID"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7058,6 +7595,127 @@ msgstr "&Amosar Visualizador de Braille ao Comezar"
 msgid "&Hover for cell routing"
 msgstr "&Desprazar para enrutar a celda"
 
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+msgid "Disabled"
+msgstr "Deshabilitado"
+
+#. Translators: One of the show states of braille messages
+#. (the timeout mode shows messages for the specific time).
+msgid "Use timeout"
+msgstr "Usar tempo de espera"
+
+#. Translators: One of the show states of braille messages
+#. (the indefinitely mode prevents braille messages from disappearing automatically).
+msgid "Show indefinitely"
+msgstr "Amosar indefinidamente"
+
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+msgid "automatically"
+msgstr "automáticamente"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+msgid "to focus"
+msgstr "ao foco"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered
+#. to the review cursor.
+msgid "to review"
+msgstr "á revisión"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report No line Indentation.
+msgctxt "line indentation setting"
+msgid "Off"
+msgstr "Desactivado"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation
+#. with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "Voz"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation
+#. with tones.
+msgctxt "line indentation setting"
+msgid "Tones"
+msgstr "Tons"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation with both
+#. Speech and tones.
+msgctxt "line indentation setting"
+msgid "Both Speech and Tones"
+msgstr "Voz e Tons"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Off"
+msgstr "Desactivado"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Rows and columns"
+msgstr "Filas e columnas"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Rows"
+msgstr "Filas"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Columns"
+msgstr "Columnas"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Styles"
+msgstr "Estilos"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Both Colors and Styles"
+msgstr "Ambas Cores e Estilos"
+
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently running in NVDA.
+msgid "Enabled"
+msgstr "Habilitado"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Handled by application"
+msgstr "Manexado por aplicación"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Single line break"
+msgstr "Salto de liña simple"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Multi line break"
+msgstr "Salto multiliña"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Never"
+msgstr "Nunca"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Only when tethered automatically"
+msgstr "Só ao seguir automáticamente"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Always"
+msgstr "Sempre"
+
+#. Translators: Label for an option in NVDA settings.
+msgid "Diffing"
+msgstr "Difusión"
+
+#. Translators: Label for an option in NVDA settings.
+msgid "UIA notifications"
+msgstr "Notificacións UIA"
+
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
 msgstr "Resultado"
@@ -7086,6 +7744,101 @@ msgstr "Recoñecendo"
 
 msgid "Recognition failed"
 msgstr "Fallou o recoñecemento"
+
+#. Translators: Reported for text which is at the baseline position;
+#. i.e. not superscript or subscript.
+msgid "baseline"
+msgstr "base"
+
+#. Translators: Reported for subscript text.
+#. Translators: Describes text formatting.
+msgid "subscript"
+msgstr "subíndice"
+
+#. Translators: Reported for superscript text.
+#. Translators: Describes text formatting.
+msgid "superscript"
+msgstr "superíndice"
+
+#. Translators: Abbreviation for pixels, a measurement of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s px"
+msgstr "%s px"
+
+#. Translators: A measurement unit of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s em"
+msgstr "%s em"
+
+#. Translators: A measurement unit of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s ex"
+msgstr "%s ex"
+
+#. Translators: Abbreviation for relative em, a measurement of font size.
+#, python-format
+msgctxt "font size"
+msgid "%s rem"
+msgstr "%s rem"
+
+#. Translators: Font size measured as a percentage
+#, python-format
+msgctxt "font size"
+msgid "%s%%"
+msgstr "%s%%"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "xx-small"
+msgstr "xx-pequeno"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "x-small"
+msgstr "x-pequeno"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "small"
+msgstr "pequeno"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "medium"
+msgstr "medio"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "large"
+msgstr "grande"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "x-large"
+msgstr "x-grande"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "xx-large"
+msgstr "xx-grande"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "xxx-large"
+msgstr "xxx-grande"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "larger"
+msgstr "moi grande"
+
+#. Translators: A measurement unit of font size.
+msgctxt "font size"
+msgid "smaller"
+msgstr "moi pequeno"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -7388,7 +8141,7 @@ msgstr "nota final"
 msgid "footer"
 msgstr "pe"
 
-#. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
+#. Translators: Identifies a foot note (text at the end of a passage or used for annotations).
 msgid "foot note"
 msgstr "nota ao pe"
 
@@ -7642,16 +8395,6 @@ msgstr "cor de primeiro plano"
 msgid "background color"
 msgstr "cor de fondo"
 
-#. Translators: Describes text formatting.
-#. Translators: Reported for superscript text.
-msgid "superscript"
-msgstr "superíndice"
-
-#. Translators: Describes text formatting.
-#. Translators: Reported for subscript text.
-msgid "subscript"
-msgstr "subíndice"
-
 #. Translators: Describes style of text.
 #. Translators: a Microsoft Word revision type (style change)
 msgid "style"
@@ -7727,6 +8470,23 @@ msgstr "figura"
 msgid "highlighted"
 msgstr "resaltado"
 
+#. Translators: Identifies a progress bar with indeterminate state, I.E. progress can not be determined.
+msgid "busy indicator"
+msgstr "indicador ocupado"
+
+#. Translators: Identifies a comment.
+msgid "comment"
+msgstr "comentario"
+
+#. Translators: Identifies a suggestion.
+msgid "suggestion"
+msgstr "suxerencia"
+
+#. Translators: The word role for a switch control
+#. I.e. a control that can be switched on or off.
+msgid "switch"
+msgstr "conmutador"
+
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
 #. checked), but this still might be used in some other cases.
@@ -7762,6 +8522,10 @@ msgstr "marcado"
 #. Translators: This is presented when a three state check box is half checked.
 msgid "half checked"
 msgstr "semimarcado"
+
+#. Translators: This is presented when a three state toggle button is half pressed.
+msgid "half pressed"
+msgstr "semi premido"
 
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
@@ -7870,10 +8634,6 @@ msgstr "ordeado descendentemente"
 msgid "has long description"
 msgstr "ten descripción longa"
 
-#. Translators: a state that denotes that an object has additional details (such as a comment section).
-msgid "has details"
-msgstr "ten detalles"
-
 #. Translators: a state that denotes that an object is pinned in its current location
 msgid "pinned"
 msgstr "fixado"
@@ -7883,7 +8643,7 @@ msgid "has formula"
 msgstr "ten fórmula"
 
 #. Translators: a state that denotes the existance of a comment.
-#. Translators: Reported when text contains a comment.
+#. Translators: Reported when text contains a generic comment.
 msgid "has comment"
 msgstr "ten comentario"
 
@@ -7905,6 +8665,26 @@ msgstr "desbordando"
 msgid "unlocked"
 msgstr "desbloqueado"
 
+#. Translators: a state that denotes the existence of a note.
+msgid "has note"
+msgstr "ten nota"
+
+#. Translators: Presented when a control has a pop-up dialog.
+msgid "opens dialog"
+msgstr "abre diálogo"
+
+#. Translators: Presented when a control has a pop-up grid.
+msgid "opens grid"
+msgstr "abre grella"
+
+#. Translators: Presented when a control has a pop-up list box.
+msgid "opens list"
+msgstr "abre lista"
+
+#. Translators: Presented when a control has a pop-up tree.
+msgid "opens tree"
+msgstr "abre árbore"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "non seleccioado"
@@ -7922,6 +8702,21 @@ msgstr "sen marcar"
 msgid "done dragging"
 msgstr "arrastrado feito"
 
+#. Translators: This is spoken when a paragraph is considered blank.
+#. Translators: This is spoken when the line is considered blank.
+#. Translators: This is spoken when NVDA moves to an empty line.
+#. Translators: This is spoken when the line is considered blank.
+msgid "blank"
+msgstr "en branco"
+
+#. Translators: this message is given when there is no next paragraph when navigating by paragraph
+msgid "No next paragraph"
+msgstr "Sen seguinte parágrafo"
+
+#. Translators: this message is given when there is no previous paragraph when navigating by paragraph
+msgid "No previous paragraph"
+msgstr "Sen anterior parágrafo"
+
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
 msgstr "Configuración aplicada"
@@ -7929,10 +8724,6 @@ msgstr "Configuración aplicada"
 #. Translators: Reported when configuration has been restored to defaults by using restore configuration to factory defaults item in NVDA menu.
 msgid "Configuration restored to factory defaults"
 msgstr "Configuración restaurada ós valores predeterminados de fábrica"
-
-#. Translators: Reported when current configuration cannot be saved while NVDA is running in secure mode such as in Windows login screen.
-msgid "Cannot save configuration - NVDA in secure mode"
-msgstr "Non podo gardar a configuración - NVDA está en modo seguro"
 
 #. Translators: Reported when current configuration has been saved.
 msgid "Configuration saved"
@@ -8002,43 +8793,6 @@ msgstr "&Opcións..."
 msgid "NVDA settings"
 msgstr "Opcións do NVDA"
 
-#. Translators: The label for the menu item to open Default speech dictionary dialog.
-msgid "&Default dictionary..."
-msgstr "Diccionario por &Omisión..."
-
-#. Translators: The help text for the menu item to open Default speech dictionary dialog.
-msgid ""
-"A dialog where you can set default dictionary by adding dictionary entries "
-"to the list"
-msgstr ""
-"Un diálogo onde podes axuxtar o diccionario por omisión engadindo entradas "
-"do diccionario á lista"
-
-#. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
-msgid "&Voice dictionary..."
-msgstr "Diccionario por &Voces..."
-
-#. Translators: The help text for the menu item
-#. to open Voice specific speech dictionary dialog.
-msgid ""
-"A dialog where you can set voice-specific dictionary by adding dictionary "
-"entries to the list"
-msgstr ""
-"Un diálogo onde podes axustar o diccionario por voces específico engadindo "
-"entradas do diccionario á lista"
-
-#. Translators: The label for the menu item to open Temporary speech dictionary dialog.
-msgid "&Temporary dictionary..."
-msgstr "Diccionario &Temporal..."
-
-#. Translators: The help text for the menu item to open Temporary speech dictionary dialog.
-msgid ""
-"A dialog where you can set temporary dictionary by adding dictionary entries "
-"to the edit box"
-msgstr ""
-"Un diálogo onde podes configurar o diccionario temporalmente engadindo as "
-"entradas do diccionario á caixa de edición"
-
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
 msgstr "&Diccionarios por voces"
@@ -8067,13 +8821,13 @@ msgstr "Visualizador da Fala"
 msgid "Braille viewer"
 msgstr "Visualizador Braille"
 
+#. Translators: The label of a menu item to open the Add-on store
+msgid "Add-on &store..."
+msgstr "&Tenda de complementos..."
+
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
 msgstr "Consola de Python"
-
-#. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons..."
-msgstr "Administrador de &complementos..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 msgid "Create portable copy..."
@@ -8134,32 +8888,6 @@ msgstr "Acerca de..."
 msgid "&Help"
 msgstr "A&xuda"
 
-#. Translators: The label for the menu item to open the Configuration Profiles dialog.
-msgid "&Configuration profiles..."
-msgstr "&Configuración de perfís..."
-
-#. Translators: The label for the menu item to revert to saved configuration.
-msgid "&Revert to saved configuration"
-msgstr "&Voltar á Configuración Gardada"
-
-msgid "Reset all settings to saved state"
-msgstr "Reiniciar toda-las configuracións ao estado gardado"
-
-#. Translators: The label for the menu item to reset settings to default settings.
-#. Here, default settings means settings that were there when the user first used NVDA.
-msgid "&Reset configuration to factory defaults"
-msgstr "&Reiniciar configuración ós valores predeterminados de fábrica"
-
-msgid "Reset all settings to default state"
-msgstr "Reinicia todas as opcións ao estado predeterminado"
-
-#. Translators: The label for the menu item to save current settings.
-msgid "&Save configuration"
-msgstr "&Gardar Configuración"
-
-msgid "Write the current configuration to nvda.ini"
-msgstr "Escribi-la configuración actual no nvda.ini"
-
 #. Translators: The label for the menu item to open donate page.
 msgid "Donate"
 msgstr "Doar"
@@ -8179,37 +8907,72 @@ msgstr "&Saír"
 msgid "Exit NVDA"
 msgstr "Saír do NVDA"
 
-#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+#. Translators: The label for the menu item to open Default speech dictionary dialog.
+msgid "&Default dictionary..."
+msgstr "Diccionario por &Omisión..."
+
+#. Translators: The help text for the menu item to open Default speech dictionary dialog.
 msgid ""
-"All add-ons are now disabled. They will be re-enabled on the next restart "
-"unless you choose to disable them again."
+"A dialog where you can set default dictionary by adding dictionary entries "
+"to the list"
 msgstr ""
-"Agora deshabilitáronse todos os complementos. Voltaranse a habilitar no "
-"seguinte reinicio a menos que escollas deshabilitalos de novo."
+"Un diálogo onde podes axuxtar o diccionario por omisión engadindo entradas "
+"do diccionario á lista"
 
-#. Translators: The label for actions list in the Exit dialog.
-msgid "What would you like to &do?"
-msgstr "¿qué che gostaría &facer?"
+#. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
+msgid "&Voice dictionary..."
+msgstr "Diccionario por &Voces..."
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Exit"
-msgstr "Saír"
+#. Translators: The help text for the menu item
+#. to open Voice specific speech dictionary dialog.
+msgid ""
+"A dialog where you can set voice-specific dictionary by adding dictionary "
+"entries to the list"
+msgstr ""
+"Un diálogo onde podes axustar o diccionario por voces específico engadindo "
+"entradas do diccionario á lista"
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart"
-msgstr "Reiniciar"
+#. Translators: The label for the menu item to open Temporary speech dictionary dialog.
+msgid "&Temporary dictionary..."
+msgstr "Diccionario &Temporal..."
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with add-ons disabled"
-msgstr "Reiniciar cos complementos deshabilitados"
+#. Translators: The help text for the menu item to open Temporary speech dictionary dialog.
+msgid ""
+"A dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
+msgstr ""
+"Un diálogo onde podes configurar o diccionario temporalmente engadindo as "
+"entradas do diccionario á caixa de edición"
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Restart with debug logging enabled"
-msgstr "Reiniciar co rexistro de depuración habilitado"
+#. Translators: The label for the menu item to open the Configuration Profiles dialog.
+msgid "&Configuration profiles..."
+msgstr "&Configuración de perfís..."
 
-#. Translators: An option in the combo box to choose exit action.
-msgid "Install pending update"
-msgstr "Instalar actualización pendiente"
+#. Translators: The label for the menu item to revert to saved configuration.
+msgid "&Revert to saved configuration"
+msgstr "&Voltar á Configuración Gardada"
+
+#. Translators: The help text for the menu item to revert to saved configuration.
+msgid "Reset all settings to saved state"
+msgstr "Reiniciar toda-las configuracións ao estado gardado"
+
+#. Translators: The label for the menu item to reset settings to default settings.
+#. Here, default settings means settings that were there when the user first used NVDA.
+msgid "&Reset configuration to factory defaults"
+msgstr "&Reiniciar configuración ós valores predeterminados de fábrica"
+
+#. Translators: The help text for the menu item to reset settings to default settings.
+#. Here, default settings means settings that were there when the user first used NVDA.
+msgid "Reset all settings to default state"
+msgstr "Reinicia todas as opcións ao estado predeterminado"
+
+#. Translators: The label for the menu item to save current settings.
+msgid "&Save configuration"
+msgstr "&Gardar Configuración"
+
+#. Translators: The help text for the menu item to save current settings.
+msgid "Write the current configuration to nvda.ini"
+msgstr "Escribi-la configuración actual no nvda.ini"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -8254,36 +9017,6 @@ msgstr "&Non"
 #. Translators: An ok button on a message dialog.
 msgid "OK"
 msgstr "Aceptar"
-
-#. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
-msgid ""
-"{summary} ({name})\n"
-"Version: {version}\n"
-"Author: {author}\n"
-"Description: {description}\n"
-msgstr ""
-"{summary} ({name})\n"
-"Versión: {version}\n"
-"Autor: {author}\n"
-"Descripción: {description}\n"
-
-#. Translators: the url part of the About Add-on information
-#, python-brace-format
-msgid "URL: {url}"
-msgstr "URL: {url}"
-
-#. Translators: the minimum NVDA version part of the About Add-on information
-msgid "Minimum required NVDA version: {}"
-msgstr "Versión mínima do NVDA requerida: {}"
-
-#. Translators: the last NVDA version tested part of the About Add-on information
-msgid "Last NVDA version tested: {}"
-msgstr "Última versión do NVDA probada: {}"
-
-#. Translators: title for the Addon Information dialog
-msgid "Add-on Information"
-msgstr "Información de Complemento"
 
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
@@ -8362,37 +9095,13 @@ msgstr "Escoller Ficheiro de Paquete de Complemento"
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "Paquete de complemento de NVDA (*.{ext})"
 
-#. Translators: Presented when attempting to remove the selected add-on.
-#. {addon} is replaced with the add-on name.
-#, python-brace-format
-msgid ""
-"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
-"undone."
-msgstr ""
-"¿estás seguro de querer borrar o complemento {addon} do NVDA? Esto non se "
-"pode desfacer."
-
-#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
-msgid "Remove Add-on"
-msgstr "Eliminar Complemento"
-
 #. Translators: The status shown for an addon when it's not considered compatible with this version of NVDA.
 msgid "Incompatible"
 msgstr "Incompatible"
 
-#. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "Enabled"
-msgstr "Habilitado"
-
 #. Translators: The status shown for a newly installed addon before NVDA is restarted.
 msgid "Install"
 msgstr "Instalar"
-
-#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-#. Translators: One of the show states of braille messages
-#. (the disabled mode turns off showing of braille messages completely).
-msgid "Disabled"
-msgstr "Deshabilitado"
 
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "Removed after restart"
@@ -8409,16 +9118,6 @@ msgstr "Habilitado despois do reinicio"
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
 msgstr "&Habilitar complemento"
-
-#. Translators: The message displayed when the add-on cannot be disabled.
-#, python-brace-format
-msgid "Could not disable the {description} add-on."
-msgstr "Non se puido deshabilitar o complemento {description}."
-
-#. Translators: The message displayed when the add-on cannot be enabled.
-#, python-brace-format
-msgid "Could not enable the {description} add-on."
-msgstr "Non se puido habilitar o complemento {description}."
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #, python-format
@@ -8489,18 +9188,6 @@ msgstr ""
 msgid "Add-on not compatible"
 msgstr "Complemento non compatible"
 
-#. Translators: A message informing the user that this addon can not be installed
-#. because it is not compatible.
-#, python-brace-format
-msgid ""
-"Installation of {summary} {version} has been blocked. An updated version of "
-"this add-on is required, the minimum add-on API supported by this version of "
-"NVDA is {backCompatToAPIVersion}"
-msgstr ""
-"A instalación de {summary} {version} foi bloqueada. Requírese dunha versión "
-"actualizada deste complemento, a API mínima soportada por esta versión do "
-"NVDA é {backCompatToAPIVersion}"
-
 #. Translators: A message asking the user if they really wish to install an addon.
 #, python-brace-format
 msgid ""
@@ -8533,20 +9220,28 @@ msgstr "Complementos incompatibles"
 msgid "Incompatible reason"
 msgstr "Razón incompatible"
 
-#. Translators: The reason an add-on is not compatible. A more recent version of NVDA is
-#. required for the add-on to work. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
-msgid "An updated version of NVDA is required. NVDA version {} or later."
-msgstr ""
-"Requírese dunha versión actualizada do NVDA. versión {} do NVDA ou posterior."
+#. Translators: Reported when an action cannot be performed because NVDA is in a secure screen
+msgid "Action unavailable in secure context"
+msgstr "Acción non dispoñible en contexto seguro"
 
-#. Translators: The reason an add-on is not compatible. The addon relies on older, removed features of NVDA,
-#. an updated add-on is required. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
-msgid ""
-"An updated version of this add-on is required. The minimum supported API "
-"version is now {}"
-msgstr ""
-"Requírese dunha versión actualizada deste complemento. A versión mínima da "
-"API soportada agora é {}"
+#. Translators: Reported when an action cannot be performed because NVDA has been installed
+#. from the Windows Store.
+msgid "Action unavailable in NVDA Windows Store version"
+msgstr "Acción non dispoñible na versión do NVDA da Tenda de Windows"
+
+#. Translators: Reported when an action cannot be performed because NVDA is waiting
+#. for a response from a modal dialog
+msgid "Action unavailable while a dialog requires a response"
+msgstr "Acción non dispoñible mentres un diálogo requira unha resposta"
+
+#. Translators: Reported when an action cannot be performed because Windows is locked.
+msgid "Action unavailable while Windows is locked"
+msgstr "Acción non dispoñible mentres o Windows estea bloqueado"
+
+#. Translators: Reported when an action cannot be performed because NVDA is running the launcher temporary
+#. version
+msgid "Action unavailable in a temporary version of NVDA"
+msgstr "Acción non dispoñible nunha versión temporal do NVDA"
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -8599,9 +9294,11 @@ msgid "Error activating profile."
 msgstr "Erro ao activar o perfil."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "This profile will be permanently deleted. This action cannot be undone."
+#. The placeholder {} is replaced with the name of the configuration profile that will be deleted.
+msgid ""
+"The profile {} will be permanently deleted. This action cannot be undone."
 msgstr ""
-"Este perfil borrarase permanentemente. Esta acción non pode desfacerse."
+"O  perfil {} borrarase permanentemente. Esta ación non se pode desfacer."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -8740,6 +9437,47 @@ msgstr "Non hai axuda dispoñible aquí."
 msgid "No user guide found."
 msgstr "Non se atopou a guía do usuario."
 
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "Saír"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "Reiniciar"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "Reiniciar cos complementos deshabilitados"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with debug logging enabled"
+msgstr "Reiniciar co rexistro de depuración habilitado"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "Instalar actualización pendiente"
+
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"Agora deshabilitáronse todos os complementos. Voltaranse a habilitar no "
+"seguinte reinicio a menos que escollas deshabilitalos de novo."
+
+#. Translators: A message in the exit Dialog shown when NVDA language has been
+#. overwritten from the command line.
+msgid ""
+"NVDA's interface language is now forced from the command line. On the next "
+"restart, the language  saved in NVDA's configuration will be used instead."
+msgstr ""
+"Agora a lingua da interfaz do NVDA fórzase dende a liña de ordes. No "
+"seguinte reinicio, usarase a lingua gardada na configuración do NVDA."
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "¿qué che gostaría &facer?"
+
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
@@ -8782,8 +9520,8 @@ msgid "&Filter by:"
 msgstr "&Filtrar por:"
 
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
-#. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
+#. Translators: The label for a button in speech dictionaries dialog to add new entries.
 msgid "&Add"
 msgstr "&Engadir"
 
@@ -8872,6 +9610,7 @@ msgid "Please press OK to start the installed copy."
 msgstr "Por favor preme Aceptar para comezar a copia instalada."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
+#. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 msgid "Success"
 msgstr "Éxito"
 
@@ -8986,23 +9725,17 @@ msgstr "Por favor especifica un directorio no que criar a copia portable."
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
 msgid ""
-"Please specify an absolute path (including drive letter)  in which to create "
-"the portable copy."
+"Please specify the absolute path where the portable copy should be created. "
+"It may include system variables (%temp%, %homepath%, etc.)."
 msgstr ""
-"Por favor, especifica unha ruta absoluta (incluíndo a letra da unidade) na "
-"que crear a copia portable."
+"Por favor especifica a ruta absoluta onde debería crearse a copia portable. "
+"Pode incluir variables do sistema (%temp%, %homepath%, etc.)."
 
-#. Translators: The message displayed when the user specifies an invalid destination drive
-#. in the Create Portable NVDA dialog.
-#, python-format
-msgid "Invalid drive %s"
-msgstr "Unidade %s inválida"
-
-#. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+#. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
 msgstr "Criando Portable Copy"
 
-#. Translators: The message displayed while a portable copy of NVDA is bieng created.
+#. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "Por favor agarda mentres se cría unha copia portable do NVDA."
 
@@ -9011,16 +9744,16 @@ msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA é incapaz de eliminar ou reescreber un ficheiro."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
-#. %s will be replaced with the specific error message.
-#, python-format
-msgid "Failed to create portable copy: %s"
-msgstr "Fallou ao criar a copia portable: %s"
+#. {error} will be replaced with the specific error message.
+#, python-brace-format
+msgid "Failed to create portable copy: {error}."
+msgstr "Fallou ao crear a copia portable: {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
-#. %s will be replaced with the destination directory.
-#, python-format
-msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "Criouse satisfactoriamente unha copia portable do NVDA en %s"
+#. {dir} will be replaced with the destination directory.
+#, python-brace-format
+msgid "Successfully created a portable copy of NVDA at {dir}"
+msgstr "Creada con éxito unha copia portable de NVDA en {dir}"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -9055,6 +9788,13 @@ msgstr "Rexistro non dispoñíble"
 msgid "Cancel"
 msgstr "Cancelar"
 
+#. Translators: Label for the default option for some feature-flag combo boxes
+#. Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'
+#. The placeholder {} is replaced with the label of the option which describes current default behavior
+#. in NVDA. EG "Default (Yes)".
+msgid "Default ({})"
+msgstr "Por defecto ({})"
+
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"
 msgstr "&Categorías:"
@@ -9082,6 +9822,12 @@ msgstr "entrada/saída"
 #. Translators: One of the log levels of NVDA (the debug mode shows debug messages as NVDA runs).
 msgid "debug"
 msgstr "depuración"
+
+#. Translators: Shown for a language which has been provided from the command line
+#. 'langDesc' would be replaced with description of the given locale.
+#, python-brace-format
+msgid "Command line option: {langDesc}"
+msgstr "Opción de liña de ordes: {langDesc}"
 
 #. Translators: The label for a setting in general settings to select NVDA's interface language
 #. (once selected, NVDA must be restarted; the option user default means the user's Windows language
@@ -9310,6 +10056,10 @@ msgstr "&Pitar para as maiúsculas"
 #. voice settings panel.
 msgid "Use &spelling functionality if supported"
 msgstr "Utilizar a funcionalidade &deletrear se está soportada"
+
+#. Translators: This is the label for a checkbox in the voice settings panel.
+msgid "&Delayed descriptions for characters on cursor movement"
+msgstr "&Retraso nas descripcións para caracteres co movemento do cursor"
 
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
@@ -9680,6 +10430,11 @@ msgstr "No&tas e comentarios"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
+msgid "&Bookmarks"
+msgstr "&Marcas"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings panel.
 msgid "&Editor revisions"
 msgstr "Revisións do &editor"
 
@@ -9708,25 +10463,6 @@ msgstr "&Números de liña"
 msgid "Line &indentation reporting:"
 msgstr "Anunciado de &sangría de liñas:"
 
-#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Off"
-msgstr "Desactivado"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
-msgctxt "line indentation setting"
-msgid "Speech"
-msgstr "Voz"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
-msgid "Tones"
-msgstr "Tons"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both Speech and Tones"
-msgstr "Voz e Tons"
-
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
@@ -9752,25 +10488,15 @@ msgstr "Información de táboa"
 msgid "&Tables"
 msgstr "&Táboas"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-msgid "Row/column h&eaders"
-msgstr "&Cabeceiras de fila/columna"
+msgid "H&eaders"
+msgstr "&cabeceiras"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Cell c&oordinates"
 msgstr "C&ordenadas de celdas"
-
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Styles"
-msgstr "Estilos"
-
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Both Colors and Styles"
-msgstr "Ambas Cores e Estilos"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
@@ -9828,6 +10554,18 @@ msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr ""
 "Anunciar cambios no f&ormato despois do cursor (pode causar un retraso)"
 
+#. Translators: This is the label for the document navigation settings panel.
+msgid "Document Navigation"
+msgstr "Navegación de Documento"
+
+#. Translators: This is a label for the paragraph navigation style in the document navigation dialog
+msgid "&Paragraph style:"
+msgstr "Estilo do &parágrafo:"
+
+#. Translators: This is the label for the addon navigation settings panel.
+msgid "Add-on Store"
+msgstr "Tenda de Complementos"
+
 #. Translators: This is the label for the touch interaction settings panel.
 msgid "Touch Interaction"
 msgstr "Interacción Tactil"
@@ -9871,21 +10609,56 @@ msgstr "Abrir o directorio developer scratchpad"
 msgid "Microsoft UI Automation"
 msgstr "Microsoft UI Automation"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Enable &selective registration for UI Automation events and property changes"
-msgstr ""
-"Habilitar rexistrado &selectivo para eventos e cambios de propiedades de UI "
-"Automation"
+#. Translators: This is the label for a combo box for selecting the
+#. means of registering for UI Automation events in the advanced settings panel.
+#. Choices are automatic, selective, and global.
+msgid "Regi&stration for UI Automation events and property changes:"
+msgstr "Rexi&stro de eventos de UI Automation e de cambios de propiedade:"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid ""
-"Use UI Automation to access Microsoft &Word document controls when available"
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA decide whether to register
+#. selectively or globally for UI Automation events.
+msgid "Automatic (prefer selective)"
+msgstr "Automático (preferible selectivo)"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA register selectively for UI Automation events
+#. (i.e. not to request events for objects outside immediate focus).
+msgid "Selective"
+msgstr "Selectivo"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA register for all UI Automation events
+#. in all cases.
+msgid "Global"
+msgstr "Global"
+
+#. Translators: Label for the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Use UI Automation to access Microsoft &Word document controls"
 msgstr ""
-"Usar UI Automation para acesar a controis de documento de Microsoft &Word  "
-"cando estea dispoñible"
+"Usar UI Automation para aceder a controis de documento de Microsoft &Word"
+
+#. Translators: Label for the default value of the Use UIA with MS Word combobox,
+#. in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Default (Where suitable)"
+msgstr "Por defecto (Cando sexa convinte)"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Only when necessary"
+msgstr "Só cando sexa necesario"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Where suitable"
+msgstr "Cando sexa convinte"
+
+#. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
+msgctxt "advanced.uiaWithMSWord"
+msgid "Always"
+msgstr "Sempre"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9896,16 +10669,28 @@ msgstr ""
 "Usar UI Automation para acesar a controis en follas de cálculo de Microsoft "
 "&Excel cando estea dispoñible"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid "Use UI Automation to access the Windows C&onsole when available"
-msgstr ""
-"Usar UI Automation para acesar á C&onsola de Windows cando estea dispoñible"
+#. Translators: This is the label for a combo box for selecting the
+#. active console implementation in the advanced settings panel.
+#. Choices are automatic, UIA when available, and legacy.
+msgid "Windows C&onsole support:"
+msgstr "Soporte par a C&onsola de Windows:"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-msgid "Speak &passwords in UIA consoles (may improve performance)"
-msgstr "Falar &contrasinais en consolas UIA (pode mellorar o rendemento)"
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA determine its Windows Console implementation
+#. automatically.
+msgid "Automatic (prefer UIA)"
+msgstr "Automático (preferible UIA)"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA use UIA in the Windows Console when available.
+msgid "UIA when available"
+msgstr "UIA cando estea dispoñible"
+
+#. Translators: A choice in a combo box in the advanced settings
+#. panel to have NVDA use its legacy Windows Console support
+#. in all cases.
+msgid "Legacy"
+msgstr "Herdada"
 
 #. Translators: Label for the Use UIA with Chromium combobox, in the Advanced settings panel.
 #. Note the '\n' is used to split this long label approximately in half.
@@ -9945,13 +10730,43 @@ msgstr "Anotacións"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Report details in browse mode"
-msgstr "Anunciar detalles en modo exploración"
+msgid "Report 'has details' for structured annotations"
+msgstr "Anunciar 'ten detalles' para anotacións estructuradas"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Report aria-description always"
 msgstr "Anunciar sempre aria-description"
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Default (Yes)"
+msgstr "Por defecto (si)"
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Yes"
+msgstr "Si"
+
+#. Translators: Label for option in the 'Enable support for HID braille' combobox
+#. in the Advanced settings panel.
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "No"
+msgstr "Non"
+
+#. Translators: This is the label for a combo box in the
+#. Advanced settings panel.
+msgid "Enable support for HID braille"
+msgstr "Habilita o soporte para o HID braille"
+
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Report live regions:"
+msgstr "Anunciar rexións activas:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9960,54 +10775,61 @@ msgstr "Programas da Terminal"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-msgid "Use the new t&yped character support in Windows Console when available"
+msgid "Speak &passwords in all enhanced terminals (may improve performance)"
 msgstr ""
-"Usar o novo soporte para caracteres ao se &escreber na Consola de Windows "
-"cando estea dispoñible"
+"Falar &contrasinais en todas as terminais melloradas (pode mellorar o "
+"rendemento)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid ""
+"Use enhanced t&yped character support in legacy Windows Console when "
+"available"
+msgstr ""
+"Usar o soporte mellorado de caracteres ao se &escrebir na Consola de Windows "
+"herdada cando estea dispoñible"
 
 #. Translators: This is the label for a combo box for selecting a
 #. method of detecting changed content in terminals in the advanced
 #. settings panel.
-#. Choices are automatic, allow Diff Match Patch, and force Difflib.
+#. Choices are automatic, Diff Match Patch, and Difflib.
 msgid "&Diff algorithm:"
 msgstr "Algoritmo &diff:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-msgid "Automatic (Diff Match Patch)"
-msgstr "Automático (Diff Match Patch)"
+msgid "Automatic (prefer Diff Match Patch)"
+msgstr "Automático (preferible Diff Match Patch)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
-#. by character when supported, using the diff match patch algorithm.
-msgid "allow Diff Match Patch"
-msgstr "permitir Diff Match Patch"
+#. by character, using the diff match patch algorithm.
+msgid "Diff Match Patch"
+msgstr "Diff Match Patch"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
-msgid "force Difflib"
-msgstr "forzar Difflib"
+msgid "Difflib"
+msgstr "Difflib"
 
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "Default (Yes)"
-msgstr "Por defecto (si)"
-
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "Yes"
-msgstr "Si"
-
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "No"
-msgstr "Non"
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Speak new text in Windows Terminal via:"
+msgstr "Falar texto novo na Terminal de Windows a través de:"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "Tentar cancelar a voz para eventos do foco caducados:"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Virtual Buffers"
+msgstr "Búferes Virtuais"
+
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Load Chromium virtual buffer when document busy."
+msgstr "Cargar o búfer virtual de Chromium cando o documento estea en proceso."
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10023,6 +10845,25 @@ msgstr "Tempo de espera de movemento do cursor do sistema (en ms)"
 #. Advanced settings panel.
 msgid "Report transparent color values"
 msgstr "Anunciar valores de transparencia de cor"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Audio"
+msgstr "Audio"
+
+#. Translators: This is the label for a checkbox control in the Advanced settings panel.
+msgid "Use WASAPI for audio output (requires restart)"
+msgstr "Usar WASAPI para a saída de audio (require reiniciar)"
+
+#. Translators: This is the label for a checkbox control in the
+#. Advanced settings panel.
+msgid "Volume of NVDA sounds follows voice volume (requires WASAPI)"
+msgstr "O volume dos sons do NVDA segue ao volume da voz (require WASAPI)"
+
+#. Translators: This is the label for a slider control in the
+#. Advanced settings panel.
+msgid "Volume of NVDA sounds (requires WASAPI)"
+msgstr "Volume dos sons do NVDA (require WASAPI)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10078,98 +10919,6 @@ msgstr ""
 #. Translators: This is the label for a button in the Advanced settings panel
 msgid "Restore defaults"
 msgstr "Restaurar opcións predeterminadas"
-
-#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Anywhere"
-msgstr "&En calquera sitio"
-
-#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "Whole &word"
-msgstr "&palabra completa"
-
-#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "Regular &expression"
-msgstr "&Expresión regular"
-
-#. Translators: This is the label for the edit dictionary entry dialog.
-msgid "Edit Dictionary Entry"
-msgstr "Edición de Entradas de Eiccionario"
-
-#. Translators: This is a label for an edit field in add dictionary entry dialog.
-msgid "&Pattern"
-msgstr "&Patrón"
-
-#. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
-#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
-msgid "&Replacement"
-msgstr "&Reemplazar"
-
-#. Translators: This is a label for an edit field in add dictionary entry dialog.
-msgid "&Comment"
-msgstr "&Comentario"
-
-#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
-msgid "&Type"
-msgstr "&Tipo"
-
-#. Translators: This is an error message to let the user know that the pattern field in the dictionary entry is not valid.
-msgid "A pattern is required."
-msgstr "Requírese dun patrón."
-
-msgid "Dictionary Entry Error"
-msgstr "Erro de Entrada de Diccionario"
-
-#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "Erro de Expresión Regular: \"%s\"."
-
-#. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
-msgid "&Dictionary entries"
-msgstr "Entradas do &Diccionario"
-
-#. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
-msgid "Comment"
-msgstr "Comentario"
-
-#. Translators: The label for a column in dictionary entries list used to identify pattern (original word or a pattern).
-msgid "Pattern"
-msgstr "Termo orixe"
-
-#. Translators: The label for a column in dictionary entries list and in a list of symbols from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#. Translators: The label for a column in symbols list used to identify a replacement.
-msgid "Replacement"
-msgstr "Reemplazar por"
-
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is case sensitive or not.
-msgid "case"
-msgstr "caso"
-
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
-msgid "Type"
-msgstr "Tipo"
-
-#. Translators: The label for a button in speech dictionaries dialog to edit existing entries.
-msgid "&Edit"
-msgstr "&Editar"
-
-#. Translators: This is the label for the add dictionary entry dialog.
-msgid "Add Dictionary Entry"
-msgstr "Engadir entrada de diccionario"
-
-#. Translators: Title for default speech dictionary dialog.
-msgid "Default dictionary"
-msgstr "Diccionario por omisión"
-
-#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-#, python-format
-msgid "Voice dictionary (%s)"
-msgstr "Diccionario por voces (%s)"
-
-#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
-#. as NvDA is running).
-msgid "Temporary dictionary"
-msgstr "Diccionario temporal"
 
 #. Translators: A label for the braille display on the braille panel.
 msgid "Braille &display"
@@ -10230,16 +10979,6 @@ msgstr "Forma do cursor para o &foco:"
 msgid "Cursor shape for &review:"
 msgstr "Forma do cursor para a &revisión:"
 
-#. Translators: One of the show states of braille messages
-#. (the timeout mode shows messages for the specific time).
-msgid "Use timeout"
-msgstr "Usar tempo de espera"
-
-#. Translators: One of the show states of braille messages
-#. (the indefinitely mode prevents braille messages from disappearing automatically).
-msgid "Show indefinitely"
-msgstr "Amosar indefinidamente"
-
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
 msgid "Show messages"
@@ -10253,6 +10992,10 @@ msgstr "&Duración da mensaxe (seg)"
 msgid "Tether B&raille:"
 msgstr "B&raille segue:"
 
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "Move system caret when ro&uting review cursor"
+msgstr "Mover cursor do sistema ao &enrutar o cursor de revisión"
+
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
 msgstr "Ler por &parágrafo"
@@ -10264,6 +11007,14 @@ msgstr "Evitar separamento de &palabras cando sexa posible"
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
 msgstr "Presentación de contexto para o foco:"
+
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "I&nterrupt speech while scrolling"
+msgstr "I&nterrumpir a fala mentres se despraza"
+
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "Show se&lection"
+msgstr "Amosar se&lección"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -10359,6 +11110,12 @@ msgstr "&Símbolos"
 msgid "Symbol"
 msgstr "Símbolo"
 
+#. Translators: The label for a column in symbols list used to identify a replacement.
+#. Translators: The label for a column in dictionary entries list and in a list of symbols
+#. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
+msgid "Replacement"
+msgstr "Reemplazar por"
+
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
 msgid "Level"
 msgstr "Nivel"
@@ -10371,6 +11128,12 @@ msgstr "Preservar"
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change selected symbol"
 msgstr "Cambiar símbolo selecionado"
+
+#. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
+#. Translators: This is a label for an edit field in add dictionary entry dialog
+#. and in punctuation/symbol pronunciation dialog.
+msgid "&Replacement"
+msgstr "&Reemplazar"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
@@ -10388,6 +11151,108 @@ msgstr "&Borrar"
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "O símbolo \"%s\" xa está presente."
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Anywhere"
+msgstr "&En calquera sitio"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Whole &word"
+msgstr "&palabra completa"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Regular &expression"
+msgstr "&Expresión regular"
+
+#. Translators: This is the label for the edit dictionary entry dialog.
+msgid "Edit Dictionary Entry"
+msgstr "Edición de Entradas de Eiccionario"
+
+#. Translators: This is a label for an edit field in add dictionary entry dialog.
+msgid "&Pattern"
+msgstr "&Patrón"
+
+#. Translators: This is a label for an edit field in add dictionary entry dialog.
+msgid "&Comment"
+msgstr "&Comentario"
+
+#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+msgid "&Type"
+msgstr "&Tipo"
+
+#. Translators: This is an error message to let the user know that the pattern field
+#. in the dictionary entry is not valid.
+msgid "A pattern is required."
+msgstr "Requírese dun patrón."
+
+#. Translators: The title of an error message raised by the Dictionary Entry dialog
+msgid "Dictionary Entry Error"
+msgstr "Erro de Entrada de Diccionario"
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-brace-format
+msgid "Regular Expression error in the pattern field: \"{error}\"."
+msgstr "Erro de expresión regular no campo patrón: \"{error}\"."
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-brace-format
+msgid "Regular Expression error in the replacement field: \"{error}\"."
+msgstr "Erro de expresión regular no campo remprazo: \"{error}\"."
+
+#. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
+msgid "&Dictionary entries"
+msgstr "Entradas do &Diccionario"
+
+#. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
+msgid "Comment"
+msgstr "Comentario"
+
+#. Translators: The label for a column in dictionary entries list used to identify pattern
+#. (original word or a pattern).
+msgid "Pattern"
+msgstr "Termo orixe"
+
+#. Translators: The label for a column in dictionary entries list used to identify
+#. whether the entry is case sensitive or not.
+msgid "case"
+msgstr "caso"
+
+#. Translators: The label for a column in dictionary entries list used to identify
+#. whether the entry is a regular expression, matches whole words, or matches anywhere.
+msgid "Type"
+msgstr "Tipo"
+
+#. Translators: The label for a button in speech dictionaries dialog to edit existing entries.
+msgid "&Edit"
+msgstr "&Editar"
+
+#. Translators: The label for a button on the Speech Dictionary dialog.
+#. Translators: The title on a prompt for confirmation on the Speech Dictionary dialog.
+msgid "Remove all"
+msgstr "Borrar todo"
+
+#. Translators: This is the label for the add dictionary entry dialog.
+msgid "Add Dictionary Entry"
+msgstr "Engadir entrada de diccionario"
+
+#. Translators: A prompt for confirmation on the Speech Dictionary dialog.
+msgid "Are you sure you want to remove all the entries in this dictionary?"
+msgstr ""
+"¿Estás seguro de que queres borrar todas as entradas deste diccionario?"
+
+#. Translators: Title for default speech dictionary dialog.
+msgid "Default dictionary"
+msgstr "Diccionario por omisión"
+
+#. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
+#, python-format
+msgid "Voice dictionary (%s)"
+msgstr "Diccionario por voces (%s)"
+
+#. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
+#. as NvDA is running).
+msgid "Temporary dictionary"
+msgstr "Diccionario temporal"
 
 #. Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
 msgid ""
@@ -10426,9 +11291,13 @@ msgstr "&Utilizar Bloqueo Maiúsculas como tecla modificadora do NVDA"
 msgid "&Show this dialog when NVDA starts"
 msgstr "&Amosar este diálogo cando NVDA comece"
 
-#. Translators: The label of the license text which will be shown when NVDA installation program starts.
-msgid "License Agreement"
-msgstr "Aceptando a Licenza"
+#. Translators: The title of an error message box displayed when validating the startup dialog
+msgid ""
+"At least one NVDA modifier key must be set. Caps lock will remain as an NVDA "
+"modifier key. "
+msgstr ""
+"Polo menos debe establecerse unha tecla modificadora NVDA. BloqMáius seguirá "
+"a ser unha tecla modificadora NVDA. "
 
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
@@ -10446,6 +11315,10 @@ msgstr "Criar copia &portable"
 #. to continue using the installation program as a temporary copy of NVDA.
 msgid "&Continue running"
 msgstr "&Continuar execución"
+
+#. Translators: The label of the license text which will be shown when NVDA installation program starts.
+msgid "License Agreement"
+msgstr "Aceptando a Licenza"
 
 #. Translators: The title of the dialog asking if usage data can be collected
 msgid "NVDA  Usage Data Collection"
@@ -10485,12 +11358,6 @@ msgstr "Sae da interactuación cas matemáticas"
 #. but math interaction is not supported.
 msgid "Math interaction not supported."
 msgstr "Non se soporta interactuación cas matemáticas."
-
-#. Translators: This is spoken when the line is considered blank.
-#. Translators: This is spoken when NVDA moves to an empty line.
-#. Translators: This is spoken when the line is considered blank.
-msgid "blank"
-msgstr "en branco"
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #, python-format
@@ -10535,15 +11402,19 @@ msgid "row %s"
 msgstr "fila %s"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
-#. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, python-format
-msgid "through %s"
-msgstr "ata %s"
+#, python-brace-format
+msgid "through {endRow}"
+msgstr "ate {endRow}"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "columna %s"
+
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-brace-format
+msgid "through {endCol}"
+msgstr "ate {endCol}"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
@@ -10566,6 +11437,10 @@ msgstr "con %s columnas"
 msgid "with %s rows"
 msgstr "con %s filas"
 
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
+msgid "has details"
+msgstr "ten detalles"
+
 #. Translators: Speaks the item level in treeviews (example output: level 2).
 #, python-format
 msgid "level %s"
@@ -10573,8 +11448,10 @@ msgstr "nivel %s"
 
 #. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
-msgid "with %s items"
-msgstr "con %s elementos"
+msgid "with %s item"
+msgid_plural "with %s items"
+msgstr[0] "con %s elemento"
+msgstr[1] "con %s elementos"
 
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #, python-format
@@ -10605,6 +11482,11 @@ msgstr "columna {0} de {1}"
 #, python-format
 msgid "%s columns"
 msgstr "%s columnas"
+
+#. Translators: Indicates the text column number in a document.
+#, python-brace-format
+msgid "column {columnNumber}"
+msgstr "columna {columnNumber}"
 
 msgid "continuous section break"
 msgstr "salto de sección continua"
@@ -10708,6 +11590,15 @@ msgstr "marcado"
 msgid "not marked"
 msgstr "sen marcar"
 
+#. Translators: Reported when text is color-highlighted
+#, python-brace-format
+msgid "highlighted in {color}"
+msgstr "resaltado en {color}"
+
+#. Translators: Reported when text is no longer marked
+msgid "not highlighted"
+msgstr "no resaltado"
+
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
 msgstr "remarcado"
@@ -10762,11 +11653,6 @@ msgstr "agochado"
 #. Translators: Reported when text is not hidden.
 msgid "not hidden"
 msgstr "non agochado"
-
-#. Translators: Reported for text which is at the baseline position;
-#. i.e. not superscript or subscript.
-msgid "baseline"
-msgstr "base"
 
 #. Translators: Reported when text is left-aligned.
 msgid "align left"
@@ -10859,9 +11745,25 @@ msgstr "sen sangría da primeira liña"
 msgid "line spacing %s"
 msgstr "espaciado de liña %s"
 
+#. Translators: Reported when text contains a draft comment.
+msgid "has draft comment"
+msgstr "ten comentario borrador"
+
+#. Translators: Reported when text contains a resolved comment.
+msgid "has resolved comment"
+msgstr "ten comentario resolto"
+
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
 msgstr "fóra dos comentarios"
+
+#. Translators: Reported when text contains a bookmark
+msgid "bookmark"
+msgstr "marcador"
+
+#. Translators: Reported when text no longer contains a bookmark
+msgid "out of bookmark"
+msgstr "fóra da marca"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -10918,6 +11820,59 @@ msgstr "{curPercent:.0f}%"
 #, python-brace-format
 msgid "at {x}, {y}"
 msgstr "en {x}, {y}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds
+#, python-brace-format
+msgctxt "time format"
+msgid "{S}"
+msgstr "{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes
+#, python-brace-format
+msgctxt "time format"
+msgid "{M}:{S}"
+msgstr "{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours
+#, python-brace-format
+msgctxt "time format"
+msgid "{H}:{M}:{S}"
+msgstr "{H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} day
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} day {H}:{M}:{S}"
+msgstr "{D} día {H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} days
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} days {H}:{M}:{S}"
+msgstr "{D} días {H}:{M}:{S}"
+
+#. Translators: This is the message for a warning shown if NVDA cannot determine if
+#. Windows is locked.
+msgid ""
+"NVDA is unable to determine if Windows is locked. While this instance of "
+"NVDA is running, your desktop will not be secure when Windows is locked. "
+"Restarting Windows may address this. If this error is ongoing then disabling "
+"the Windows lock screen is recommended."
+msgstr ""
+"O NVDA non pode determinar se Windows está bloqueado. Mentres esta instancia "
+"do NVDA estea en execución, o teu escritorio non será seguro cando Windows "
+"estea bloqueado. Reiniciar Windows pode solucionar esto. Se este erro é "
+"continuo entón recoméndase desactivar a pantalla de bloqueo de Windows."
+
+#. Translators: This is the title for a warning dialog, shown if NVDA cannot determine if
+#. Windows is locked.
+msgid "Lock screen not secure while using NVDA"
+msgstr "A pantalla de bloqueo non é segura mentres se use o NVDA"
 
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
@@ -10996,6 +11951,36 @@ msgstr ""
 msgid "Make screen black (immediate effect)"
 msgstr "Por a pantalla negra (efecto inmediato)"
 
+#. Translators: The screen is oriented so that it is wider than it is tall.
+msgid "Landscape"
+msgstr "Horizontal"
+
+#. Translators: The screen is oriented in such a way that the height is taller than it is wide.
+msgid "Portrait"
+msgstr "Vertical"
+
+#. Translators: This is presented when there is an error retrieving the battery status.
+msgid "Unknown power status"
+msgstr "Estado da enerxía descoñecido"
+
+#. Translators: This is presented when there is no battery such as desktop computers
+#. and laptops with battery pack removed.
+msgid "No system battery"
+msgstr "Non hai batería do sistema"
+
+#. Translators: Reported when the battery is plugged in, and now is charging.
+msgid "Plugged in"
+msgstr "Enchufado"
+
+#. Translators: Reported when the battery is no longer plugged in, and now is not charging.
+msgid "Unplugged"
+msgstr "Desenchufado"
+
+#. Translators: This is the estimated remaining runtime of the laptop battery.
+#, python-brace-format
+msgid "{hours:d} hours and {minutes:d} minutes remaining"
+msgstr "{hours:d} horas e {minutes:d} minutos restantes"
+
 msgid "Taskbar"
 msgstr "Barra de tarefas"
 
@@ -11007,17 +11992,6 @@ msgstr "RVA bermello {rgb.red}, verde {rgb.green}, azul {rgb.blue}"
 #, python-format
 msgid "%s items"
 msgstr "%s elementos"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document "
-"Formatting Settings"
-msgstr ""
-"Non se poden configurar cabeceiras. Por favor habilita o anunciado de "
-"cabeceiras de táboa en Opcións de Formato de Documento"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
@@ -11219,29 +12193,48 @@ msgstr "Erro: {errorText}"
 msgid "{author} is editing"
 msgstr "{author} está a editar"
 
-#. Translators: Excel, report range of cell coordinates
+#. Translators: Excel, report selected range of cell coordinates
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
 msgstr "{firstAddress} {firstValue} ate {lastAddress} {lastValue}"
 
+#. Translators: Excel, report merged range of cell coordinates
+#, python-brace-format
+msgctxt "excel-UIA"
+msgid "{firstAddress} through {lastAddress}"
+msgstr "{firstAddress} a {lastAddress}"
+
 #. Translators: the description  for a script for Excel
 msgid "Reports the note or comment thread on the current cell"
 msgstr "Anuncia a nota ou fío de comentarios na celda actual"
 
-#. Translators: a comment on a cell in Microsoft excel.
+#. Translators: a note on a cell in Microsoft excel.
 #, python-brace-format
-msgid "{comment}  by {author}"
-msgstr "{comment} por {author}"
+msgid "{name}: {desc}"
+msgstr "{name}: {desc}"
+
+#. Translators: message when a cell in Excel contains no note
+msgid "No note on this cell"
+msgstr "Non hai nota nesta celda"
 
 #. Translators: a comment on a cell in Microsoft excel.
 #, python-brace-format
-msgid "{comment}  by {author} with {numReplies} replies"
-msgstr "{comment} por {author} con {numReplies} respostas"
+msgid "Comment thread: {comment}  by {author}"
+msgstr "Fío de comentarios: {comment}  por {author}"
 
-#. Translators: A message in Excel when there is no note
-msgid "No note or comment thread on this cell"
-msgstr "Non hai nota ou fío de comentarios nesta celda"
+#. Translators: a comment on a cell in Microsoft excel.
+#, python-brace-format
+msgid "Comment thread: {comment}  by {author} with {numReplies} replies"
+msgstr "Fío de comentarios: {comment}  por {author} con {numReplies} respostas"
+
+#. Translators: A message in Excel when there is no comment thread
+msgid "No comment thread on this cell"
+msgstr "Non hai fío de comentarios nesta celda"
+
+#. Translators: announced when moving outside of a table in an Excel spreadsheet.
+msgid "Out of table"
+msgstr "Fora da táboa"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -11788,8 +12781,8 @@ msgstr "non cambia dende o punto {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 #, python-brace-format
-msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr "Increméntase por {incrementValue} dende o punto {previousIndex}, "
+msgid "increased by {incrementValue} from point {previousIndex}, "
+msgstr "increméntase por {incrementValue} dende o punto {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
@@ -11968,11 +12961,13 @@ msgstr "Entrada de lenda {legendEntryIndex} de {legendEntryCount}"
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "Tecla de lenda para Series {seriesName} {seriesIndex} de {seriesCount}"
 
-#. Translators: The default color of text when a color has not been set by the author.
-#. Translators: The default background color  when a color has not been set by the author.
-#. Translators: the default (automatic) color in Microsoft Word
-msgid "default color"
-msgstr "color predeterminado"
+#. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+#, python-brace-format
+msgid "{color} (default color)"
+msgstr "{color} (cor predeterminada)"
 
 #. Translators: The color of text cannot be detected.
 #. Translators: The background color cannot be detected.
@@ -12120,6 +13115,44 @@ msgstr "&Follas"
 #, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} ate {end}"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold off"
+msgstr "Negriña desactivada"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold on"
+msgstr "Negriña activada"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic off"
+msgstr "Cursiva desactivada"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic on"
+msgstr "Cursiva activada"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline off"
+msgstr "Subliñado desactivado"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline on"
+msgstr "Subliñado activado"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+msgid "Strikethrough off"
+msgstr "Tachado desactivado"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+msgid "Strikethrough on"
+msgstr "Tachado activado"
 
 #. Translators: the description  for a script for Excel
 msgid "opens a dropdown item at the current cell"
@@ -12507,36 +13540,18 @@ msgstr "polo menos %.1f pt"
 #. Translators: line spacing of x lines
 #, python-format
 msgctxt "line spacing value"
-msgid "%.1f lines"
-msgstr "%.1f liñas"
+msgid "%.1f line"
+msgid_plural "%.1f lines"
+msgstr[0] "%.1f liña"
+msgstr[1] "%.1f liñas"
 
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "Descripción de táboa"
 
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Bold on"
-msgstr "Negriña activada"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Bold off"
-msgstr "Negriña desactivada"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Italic on"
-msgstr "Cursiva activada"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Italic off"
-msgstr "Cursiva desactivada"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Underline on"
-msgstr "Subliñado activado"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Underline off"
-msgstr "Subliñado desactivado"
+#. Translators: the default (automatic) color in Microsoft Word
+msgid "automatic color"
+msgstr "cor automática"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Left aligned"
@@ -12622,10 +13637,10 @@ msgstr "{offset:.3g} centímetros"
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} milímetros"
 
-#. Translators: a measurement in Microsoft Word
+#. Translators: a measurement in Microsoft Word (points)
 #, python-brace-format
-msgid "{offset:.3g} points"
-msgstr "{offset:.3g} puntos"
+msgid "{offset:.3g} pt"
+msgstr "{offset:.3g} pt"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
@@ -12645,86 +13660,838 @@ msgstr "Espaciado de liña dobre"
 msgid "1.5 line spacing"
 msgstr "espaciado de liña 1.5"
 
-#~ msgid "mrkd"
-#~ msgstr "mrcd"
+#. Translators: Label for add-on channel in the add-on sotre
+#. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "All"
+msgstr "Todas"
 
-#~ msgid "report marked on"
-#~ msgstr "anunciar marcado activado"
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "Stable"
+msgstr "Estable"
 
-#~ msgid "report marked off"
-#~ msgstr "anunciar marcado desactivado"
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "Beta"
+msgstr "Beta"
 
-#~ msgid "marked content"
-#~ msgstr "contido marcado"
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "Dev"
+msgstr "Dev"
 
-#~ msgid "An NVDA settings dialog is already open. Please close it first."
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "External"
+msgstr "Externo"
+
+#. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled"
+msgstr "Habilitado"
+
+#. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled"
+msgstr "Deshabilitado"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Pending removal"
+msgstr "Pendiente de borrar"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Available"
+msgstr "Dispoñible"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Update Available"
+msgstr "Actualización dispoñible"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Migrate to add-on store"
+msgstr "Migrar á tenda de complementos"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Incompatible"
+msgstr "Incompatible"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Downloading"
+msgstr "Descargando"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Download failed"
+msgstr "Fallou a descarga"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Downloaded, pending install"
+msgstr "Descargado, instalación pendente"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Installing"
+msgstr "Instalar"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Install failed"
+msgstr "Fallou a instalación"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Installed, pending restart"
+msgstr "Instalado, reinicio pendente"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled, pending restart"
+msgstr "Deshabilitado, reinicio pendente"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled (incompatible), pending restart"
+msgstr "Deshabilitado (incompatible), reinicio pendente"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled (incompatible)"
+msgstr "Deshabilitado (incompatible)"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled (incompatible), pending restart"
+msgstr "Abilitado (incompatible), reinicio pendente"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled (incompatible)"
+msgstr "Habilitado (incompatible)"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled, pending restart"
+msgstr "Habilitado, reinicio pendente"
+
+#. Translators: The label of a tab to display installed add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Installed add-ons"
+msgstr "Complementos instalados"
+
+#. Translators: The label of a tab to display updatable add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Updatable add-ons"
+msgstr "Complementos actualizables"
+
+#. Translators: The label of a tab to display available add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Available add-ons"
+msgstr "Complementos dispoñibles"
+
+#. Translators: The label of a tab to display incompatible add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Installed incompatible add-ons"
+msgstr "Complementos incompatibles instalados"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Installed &add-ons"
+msgstr "&Complementos instalados"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Updatable &add-ons"
+msgstr "Complementos ac&tualizables"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Available &add-ons"
+msgstr "Complementos &dispoñibles"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Installed incompatible &add-ons"
+msgstr "Complementos &incompatibles instalados"
+
+#. Translators: The reason an add-on is not compatible.
+#. A more recent version of NVDA is required for the add-on to work.
+#. The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"An updated version of NVDA is required. NVDA version {nvdaVersion} or later."
+msgstr ""
+"Requírese dunha versión actualizada do NVDA. A versión do NVDA {nvdaVersion} "
+"ou posterior."
+
+#. Translators: The reason an add-on is not compatible.
+#. The addon relies on older, removed features of NVDA, an updated add-on is required.
+#. The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"An updated version of this add-on is required. The minimum supported API "
+"version is now {nvdaVersion}. This add-on was last tested with "
+"{lastTestedNVDAVersion}. You can enable this add-on at your own risk. "
+msgstr ""
+"Requírese dunha versión actualizada deste complemento. A versión mínima da "
+"API admitida é agora {nvdaVersion}. Este complemento foi comprobado por "
+"última vez con {lastTestedNVDAVersion}. podes habilítalo baixo o teu proprio "
+"risco. "
+
+#. Translators: A message indicating that some add-ons will be disabled
+#. unless reviewed before installation.
+msgctxt "addonStore"
+msgid ""
+"Your NVDA configuration contains add-ons that are incompatible with this "
+"version of NVDA. These add-ons will be disabled after installation. After "
+"installation, you will be able to manually re-enable these add-ons at your "
+"own risk. If you rely on these add-ons, please review the list to decide "
+"whether to continue with the installation. "
+msgstr ""
+"A túa configuración de NVDA contén complementos que son incompatibles con "
+"esta versión do NVDA. Estos complementos desabilitaranse despois da "
+"instalación. Tras a instalación, poderás voltar a habilitalos manualmente "
+"baixo o teu proprio risco. Se confías nestos complementos, revisa por favor "
+"a listaxe para decidir se continúas coa instalación. "
+
+#. Translators: A message to confirm that the user understands that incompatible add-ons
+#. will be disabled after installation, and can be manually re-enabled.
+msgctxt "addonStore"
+msgid ""
+"I understand that incompatible add-ons will be disabled and can be manually "
+"re-enabled at my own risk after installation."
+msgstr ""
+"Entendo que estes complementos incompatibles se deshabilitarán e que poden "
+"voltar a activarse manualmente pola miña conta e risco tras a instalación."
+
+#. Translators: Names of braille displays.
+msgid "Caiku Albatross 46/80"
+msgstr "Caiku Albatross 46/80"
+
+#. Translators: A message when number of status cells must be changed
+#. for a braille display driver
+msgid ""
+"To use Albatross with NVDA: change number of status cells in Albatross "
+"internal menu at most "
+msgstr ""
+"Para usar Albatross co NVDA: cambia o número de celdas de estado no menú "
+"interno de Albatross como máximo "
+
+#. Translators: Names of braille displays.
+msgid "Eurobraille displays"
+msgstr "Pantallas Eurobraille"
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+msgid "HID keyboard input simulation is unavailable."
+msgstr "A simulación de entrada de teclado HID non está dispoñible."
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggle HID keyboard simulation"
+msgstr "Conmuta a simulación de teclado HID"
+
+#. Translators: Header (usually the add-on name) when add-ons are loading. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Loading add-ons..."
+msgstr "Cargando complementos..."
+
+#. Translators: Header (usually the add-on name) when no add-on is selected. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "No add-on selected."
+msgstr "Non hai un complemento selecionado."
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Description:"
+msgstr "Descripción:"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "S&tatus:"
+msgstr "Es&tado:"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "A&ctions"
+msgstr "&Accións"
+
+#. Translators: Label for the text control containing extra details about the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "&Other Details:"
+msgstr "&Outros Detalles:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Publisher:"
+msgstr "Editor:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Author:"
+msgstr "Autor:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "ID:"
+msgstr "ID:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Installed version:"
+msgstr "Versión instalada:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Available version:"
+msgstr "Versión dispoñible:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Channel:"
+msgstr "Canle:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Incompatible Reason:"
+msgstr "Razón Incompatible:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Homepage:"
+msgstr "Páxina de inicio:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "License:"
+msgstr "Licenza:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "License URL:"
+msgstr "URL da licenza:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Download URL:"
+msgstr "URL da descarga:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Source URL:"
+msgstr "URL fonte:"
+
+#. Translators: A button in the addon installation warning / blocked dialog which shows
+#. more information about the addon
+msgctxt "addonStore"
+msgid "&About add-on..."
+msgstr "&Acerca do complemento..."
+
+#. Translators: A button in the addon installation blocked dialog which will confirm the available action.
+msgctxt "addonStore"
+msgid "&Yes"
+msgstr "&Si"
+
+#. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
+msgctxt "addonStore"
+msgid "&No"
+msgstr "&Non"
+
+#. Translators: The message displayed when updating an add-on, but the installed version
+#. identifier can not be compared with the version to be installed.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on installation may result in downgrade: {name}. The installed "
+"add-on version cannot be compared with the add-on store version. Installed "
+"version: {oldVersion}. Available version: {version}.\n"
+"Proceed with installation anyway? "
+msgstr ""
+"Advertencia: a instalación do complemento podería provocar unha degradación: "
+"{name}. a versión instalada do complemento non pode compararse coa da tenda "
+"de complementos. Versión instalada: {oldVersion}. Versión dispoñible: "
+"{version}.\n"
+"¿Proceder coa instalación de todos os xeitos? "
+
+#. Translators: The title of a dialog presented when an error occurs.
+msgctxt "addonStore"
+msgid "Add-on not compatible"
+msgstr "Complemento non compatible"
+
+#. Translators: Presented when attempting to remove the selected add-on.
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
+"undone."
+msgstr ""
+"¿estás seguro de querer borrar o complemento {addon} do NVDA? Esto non se "
+"pode desfacer."
+
+#. Translators: Title for message asking if the user really wishes to remove the selected Add-on.
+msgctxt "addonStore"
+msgid "Remove Add-on"
+msgstr "Eliminar Complemento"
+
+#. Translators: The message displayed when installing an add-on package that is incompatible
+#. because the add-on is too old for the running version of NVDA.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated "
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Installation may cause unstable behavior in NVDA.\n"
+"Proceed with installation anyway? "
+msgstr ""
+"Advertencia: o complemento é incompatible: {name} {version}. Procura unha "
+"versión actualizada deste complemento se é posible. A última versión "
+"comprobada polo NVDA para este complemento é {lastTestedNVDAVersion}, a túa "
+"versión actual do NVDA é {NVDAVersion}. A instalación podería provocar un "
+"comportamento inestable do NVDA.\n"
+"¿Proceder coa instalación de todos os xeitos? "
+
+#. Translators: The message displayed when enabling an add-on package that is incompatible
+#. because the add-on is too old for the running version of NVDA.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated "
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Enabling may cause unstable behavior in NVDA.\n"
+"Proceed with enabling anyway? "
+msgstr ""
+"Advertencia: o complemento é incompatible: {name} {version}. Procura unha "
+"versión actualizada deste complemento se é posible. A última versión "
+"comprobada polo NVDA para el é {lastTestedNVDAVersion}, a versión actual do "
+"teu NVDA é {NVDAVersion}. Habilitalo podería provocar un comportamento "
+"inestable do NVDA.\n"
+"¿Proceder coa habilitación de todos os xeitos? "
+
+#. Translators: message shown in the Addon Information dialog.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"{summary} ({name})\n"
+"Version: {version}\n"
+"Description: {description}\n"
+msgstr ""
+"{summary} ({name})\n"
+"Versión: {version}\n"
+"Descripción: {description}\n"
+
+#. Translators: the publisher part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Publisher: {publisher}\n"
+msgstr "Editor: {publisher}\n"
+
+#. Translators: the author part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Author: {author}\n"
+msgstr "Autor: {author}\n"
+
+#. Translators: the url part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Homepage: {url}\n"
+msgstr "Páxina de inicio: {url}\n"
+
+#. Translators: the minimum NVDA version part of the About Add-on information
+msgctxt "addonStore"
+msgid "Minimum required NVDA version: {}\n"
+msgstr "Versión mínima requerida de NVDA: {}\n"
+
+#. Translators: the last NVDA version tested part of the About Add-on information
+msgctxt "addonStore"
+msgid "Last NVDA version tested: {}\n"
+msgstr "Última versión de NVDA comprobada: {}\n"
+
+#. Translators: title for the Addon Information dialog
+msgctxt "addonStore"
+msgid "Add-on Information"
+msgstr "Información do Complemento"
+
+#. Translators: The warning of a dialog
+msgid "Add-on Store Warning"
+msgstr "Aviso da Tenda de Complementos"
+
+#. Translators: Warning that is displayed before using the Add-on Store.
+msgctxt "addonStore"
+msgid ""
+"Add-ons are created by the NVDA community and are not vetted by NV Access. "
+"NV Access cannot be held responsible for add-on behavior. The functionality "
+"of add-ons is unrestricted and can include accessing your personal data or "
+"even the entire system. "
+msgstr ""
+"Os complementos están creados pola comunidade de NVDA e non se revisan por "
+"parte de NV Access. NV Access non se fai responsable do comportamento dos "
+"mesmos. A funcionalidade dos complementos non ten restricións e pode incluir "
+"o aceso aos teus datos persoais ou incluso a todo o sistema. "
+
+#. Translators: The label of a checkbox in the add-on store warning dialog
+msgctxt "addonStore"
+msgid "&Don't show this message again"
+msgstr "&Non amosar esta mensaxe de novo"
+
+#. Translators: The label of a button in a dialog
+msgid "&OK"
+msgstr "&Aceptar"
+
+#. Translators: The title of the addonStore dialog where the user can find and download add-ons
+msgctxt "addonStore"
+msgid "Add-on Store"
+msgstr "Tenda de Complementos"
+
+#. Translators: The label for a button in add-ons Store dialog to install an external add-on.
+msgctxt "addonStore"
+msgid "Install from e&xternal source"
+msgstr "Instalar dende unha fonte e&xterna"
+
+#. Translators: Banner notice that is displayed in the Add-on Store.
+msgctxt "addonStore"
+msgid "Note: NVDA was started with add-ons disabled"
+msgstr "Nota: o NVDA reiniciarase con complementos deshabilitados"
+
+#. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "Cha&nnel:"
+msgstr "Ca&nle:"
+
+#. Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
+msgid "Include &incompatible add-ons"
+msgstr "Incluir complementos incompatibles"
+
+#. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "Ena&bled/disabled:"
+msgstr "&habilitar/deshabilitar:"
+
+#. Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "&Search:"
+msgstr "&Procurar:"
+
+#. Translators: Title for message shown prior to installing add-ons when closing the add-on store dialog.
+msgctxt "addonStore"
+msgid "Add-on installation"
+msgstr "Instalación de Complemento"
+
+#. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
+#. The placeholder {} will be replaced with the number of add-ons to be installed
+msgctxt "addonStore"
+msgid "Download of {} add-ons in progress, cancel downloading?"
+msgstr "Descarga do complemento {} en progreso, ¿cancelar a descarga?"
+
+#. Translators: Message shown while installing add-ons after closing the add-on store dialog
+#. The placeholder {} will be replaced with the number of add-ons to be installed
+msgctxt "addonStore"
+msgid "Installing {} add-ons, please wait."
+msgstr "Instalando {} complementos, agarda por favor."
+
+#. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
+#. tab's name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "{category}:"
+msgstr "{category}:"
+
+#. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "NVDA Add-on Package (*.{ext})"
+msgstr "Paquete de complemento de NVDA (*.{ext})"
+
+#. Translators: The message displayed in the dialog that
+#. allows you to choose an add-on package for installation.
+msgctxt "addonStore"
+msgid "Choose Add-on Package File"
+msgstr "Escoller Ficheiro de Paquete de Complementos"
+
+#. Translators: The name of the column that contains names of addons.
+msgctxt "addonStore"
+msgid "Name"
+msgstr "Nome"
+
+#. Translators: The name of the column that contains the installed addon's version string.
+msgctxt "addonStore"
+msgid "Installed version"
+msgstr "Versión instalada"
+
+#. Translators: The name of the column that contains the available addon's version string.
+msgctxt "addonStore"
+msgid "Available version"
+msgstr "Versión dispoñible"
+
+#. Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
+msgctxt "addonStore"
+msgid "Channel"
+msgstr "Canle"
+
+#. Translators: The name of the column that contains the addon's publisher.
+msgctxt "addonStore"
+msgid "Publisher"
+msgstr "Editor"
+
+#. Translators: The name of the column that contains the addon's author.
+msgctxt "addonStore"
+msgid "Author"
+msgstr "Autor"
+
+#. Translators: The name of the column that contains the status of the addon.
+#. e.g. available, downloading installing
+msgctxt "addonStore"
+msgid "Status"
+msgstr "Estado"
+
+#. Translators: Label for an action that installs the selected addon
+msgctxt "addonStore"
+msgid "&Install"
+msgstr "Instalar"
+
+#. Translators: Label for an action that installs the selected addon
+msgctxt "addonStore"
+msgid "&Install (override incompatibility)"
+msgstr "&Instalar (anular incompatibilidade)"
+
+#. Translators: Label for an action that updates the selected addon
+msgctxt "addonStore"
+msgid "&Update"
+msgstr "&Actualizar"
+
+#. Translators: Label for an action that replaces the selected addon with
+#. an add-on store version.
+msgctxt "addonStore"
+msgid "Re&place"
+msgstr "Rem&prazar"
+
+#. Translators: Label for an action that disables the selected addon
+msgctxt "addonStore"
+msgid "&Disable"
+msgstr "&Deshabilitar"
+
+#. Translators: Label for an action that enables the selected addon
+msgctxt "addonStore"
+msgid "&Enable"
+msgstr "&Habilitar"
+
+#. Translators: Label for an action that enables the selected addon
+msgctxt "addonStore"
+msgid "&Enable (override incompatibility)"
+msgstr "Ha&bilitar (anular incompatibilidade)"
+
+#. Translators: Label for an action that removes the selected addon
+msgctxt "addonStore"
+msgid "&Remove"
+msgstr "&Eliminar"
+
+#. Translators: Label for an action that opens help for the selected addon
+msgctxt "addonStore"
+msgid "&Help"
+msgstr "A&xuda"
+
+#. Translators: Label for an action that opens the homepage for the selected addon
+msgctxt "addonStore"
+msgid "Ho&mepage"
+msgstr "Páxina de &inicio"
+
+#. Translators: Label for an action that opens the license for the selected addon
+msgctxt "addonStore"
+msgid "&License"
+msgstr "&Licenza"
+
+#. Translators: Label for an action that opens the source code for the selected addon
+msgctxt "addonStore"
+msgid "Source &Code"
+msgstr "&Código Fonte"
+
+#. Translators: The message displayed when the add-on cannot be enabled.
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Could not enable the add-on: {addon}."
+msgstr "Non se puido habilitar o complemento: {addon}."
+
+#. Translators: The message displayed when the add-on cannot be disabled.
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Could not disable the add-on: {addon}."
+msgstr "Non se puido deshabilitar o complemento: {addon}."
+
+#~ msgid "NVDA sounds"
+#~ msgstr "Sons do NVDA"
+
+#~ msgid "HID Braille Standard"
+#~ msgstr "HID Braille Estándar"
+
+#~ msgid "Find Error"
+#~ msgstr "Erro na procura"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "However, your NVDA configuration contains add-ons that are incompatible "
+#~ "with this version of NVDA. These add-ons will be disabled after "
+#~ "installation. If you rely on these add-ons, please review the list to "
+#~ "decide whether to continue with the installation"
 #~ msgstr ""
-#~ "Xa está aberto un diálogo de opcións do NVDA. Por favor péchao primeiro."
+#~ "\n"
+#~ "\n"
+#~ "Polo tanto, a túa configuración de NVDA contén complementos que son "
+#~ "incompatibles con esta versión do NVDA. Estos complementos "
+#~ "deshabilitaranse despois da instalación. Se confías neles, por favor "
+#~ "revisa a listaxe para decidir se desexas continuar coa instalación"
 
-#~ msgid "Mar&ked (highlighted text)"
-#~ msgstr "Mar&cado (texto resaltado)"
+#~ msgid "Eurobraille Esys/Esytime/Iris displays"
+#~ msgstr "Pantallas Eurobraille Esys/Esytime/Iris"
 
-#, fuzzy
-#~ msgctxt "command toggle"
-#~ msgid "off"
-#~ msgstr "desactivado"
+#~ msgid "URL: {url}"
+#~ msgstr "URL: {url}"
 
-#, fuzzy
-#~ msgctxt "command toggle"
-#~ msgid "on"
-#~ msgstr "activado"
-
-#~ msgid "Israeli 8 dot computer braille"
-#~ msgstr "Braille computerizado israelí de 8 puntos"
-
-#~ msgid "COM Registration Fixing tool complete"
-#~ msgstr "Compretouse a ferramenta COM Registration Fixing"
-
-#~ msgid "Automatic (Difflib)"
-#~ msgstr "Automático (Difflib)"
-
-#~ msgid "category"
-#~ msgid_plural "categories"
-#~ msgstr[0] "categoría"
-#~ msgstr[1] "categories"
-
-#~ msgid "&Activate"
-#~ msgstr "&Ativar"
-
-#~ msgctxt "line spacing value"
-#~ msgid "exact"
-#~ msgstr "exacto"
-
-#~ msgid "Russian grade 1"
-#~ msgstr "Ruso grao 1"
-
-#~ msgid "%s copied to clipboard"
-#~ msgstr "%s copiado ao portapapeis"
-
-#~ msgid "Review selection copied to clipboard"
-#~ msgstr "Selección de revisión copiada para o portapapeis"
-
-#~ msgid "Apply"
-#~ msgstr "Aplicar"
-
-#~ msgid "Co&mments"
-#~ msgstr "Co&mentarios"
-
-#~ msgid "C&omments"
-#~ msgstr "&Comentarios"
-
-#~ msgid "Ukrainian"
-#~ msgstr "Ucraniano"
-
-#~ msgid "Russian braille for computer code"
-#~ msgstr "Braille ruso para código computerizado"
-
-#~ msgid "Speaks the current foreground object"
-#~ msgstr "Fala o obxecto actual en primeiro plano"
-
-#~ msgid "&Automatically start NVDA after I log on to Windows"
+#~ msgid ""
+#~ "Installation of {summary} {version} has been blocked. An updated version "
+#~ "of this add-on is required, the minimum add-on API supported by this "
+#~ "version of NVDA is {backCompatToAPIVersion}"
 #~ msgstr ""
-#~ "Iniciar ao NVDA &automáticamente despois de autentificarse no Windows"
+#~ "A instalación de {summary} {version} foi bloqueada. Requírese dunha "
+#~ "versión actualizada deste complemento, a API mínima soportada por esta "
+#~ "versión do NVDA é {backCompatToAPIVersion}"
 
-#~ msgid "Use NVDA on the Windows &logon screen"
-#~ msgstr "Utilizar o NVDA na pantalla &logon de Windows"
+#~ msgid ""
+#~ "Please specify an absolute path (including drive letter)  in which to "
+#~ "create the portable copy."
+#~ msgstr ""
+#~ "Por favor, especifica unha ruta absoluta (incluíndo a letra da unidade) "
+#~ "na que crear a copia portable."
+
+#~ msgid "Invalid drive %s"
+#~ msgstr "Unidade %s inválida"
+
+#~ msgid "Charging battery"
+#~ msgstr "Cargando batería"
+
+#~ msgid "AC disconnected"
+#~ msgstr "Alimentación externa desconectada"
+
+#~ msgid "Unable to determine remaining time"
+#~ msgstr "Imposible determinar o tempo restante"
+
+#~ msgid "through %s"
+#~ msgstr "ata %s"
+
+#~ msgid "Report line indentation with speech"
+#~ msgstr "Anunciar sangría de liñas con voz"
+
+#~ msgid "Report line indentation with tones"
+#~ msgstr "Anunciar sangría de liñas con tons"
+
+#~ msgid "Report line indentation with speech and tones"
+#~ msgstr "Anunciar sangría de liñas con voz e tons"
+
+#~ msgid "Report styles of cell borders"
+#~ msgstr "Anunciar estilos dos bordes da celda"
+
+#~ msgid "Report colors and styles of cell borders"
+#~ msgstr "Anunciar cores e estilos de bordes de celda"
+
+#~ msgid ""
+#~ "NVDA is failing to fetch the foreground window. If this continues, NVDA "
+#~ "will quit starting in %d seconds."
+#~ msgstr ""
+#~ "O NVDA está a fallar ao obter a ventá en primeiro plano. Se esto "
+#~ "continúa, o NVDA deixará de funcionar en %d segundos."
+
+#~ msgid "NVDA could not start securely."
+#~ msgstr "O NVDA non puido se iniciar de xeito seguro."
+
+#~ msgid "Swedish grade 1"
+#~ msgstr "Sueco grao 1"
+
+#~ msgid "Not charging battery. %d percent"
+#~ msgstr "Sen cargar batería. %d porcento"
+
+#~ msgid "report table row and column headers off"
+#~ msgstr "anunciar cabeceiras de fila e columna da táboa desactivado"
+
+#~ msgid "report table row and column headers on"
+#~ msgstr "anunciar cabeceiras de fila e columna da táboa activado"
+
+#~ msgid "AC power on"
+#~ msgstr "Fonte externa de alimentación activada"
+
+#~ msgid "Row/column h&eaders"
+#~ msgstr "&Cabeceiras de fila/columna"
+
+#~ msgid ""
+#~ "Cannot set headers. Please enable reporting of table headers in Document "
+#~ "Formatting Settings"
+#~ msgstr ""
+#~ "Non se poden configurar cabeceiras. Por favor habilita o anunciado de "
+#~ "cabeceiras de táboa en Opcións de Formato de Documento"
+
+#~ msgid "Use UI Automation to access the Windows C&onsole when available"
+#~ msgstr ""
+#~ "Usar UI Automation para acesar á C&onsola de Windows cando estea "
+#~ "dispoñible"
+
+#~ msgid "Moves the navigator object to the first row"
+#~ msgstr "Move o navegador de obxectos cara a primeira fila"
+
+#~ msgid "Moves the navigator object to the last row"
+#~ msgstr "Move o navegador de obxectos cara a última fila"
+
+#~ msgid "Chinese (China, Mandarin) grade 2"
+#~ msgstr "Chinés (China, Mandarín) grao 2"
+
+#~ msgid "Cannot save configuration - NVDA in secure mode"
+#~ msgstr "Non podo gardar a configuración - NVDA está en modo seguro"
+
+#~ msgid "{modifier} pressed"
+#~ msgstr "{modifier} premido"
+
+#~ msgid "Dutch (Belgium) 6 dot"
+#~ msgstr "Holandés (Bélxica) de 6 puntos"
+
+#~ msgid "Dutch (Netherlands) 6 dot"
+#~ msgstr "Holandés (Holanda) de 6 puntos"
+
+#~ msgid "Polish grade 1"
+#~ msgstr "Polaco grao 1"
+
+#~ msgid "Shows a summary of the details at this position if found."
+#~ msgstr "Amosa un resumo dos detalles nesta posición se o atopa."
+
+#~ msgid "Report details in browse mode"
+#~ msgstr "Anunciar detalles en modo exploración"
+
+#~ msgid "{comment}  by {author}"
+#~ msgstr "{comment} por {author}"

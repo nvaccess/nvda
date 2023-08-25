@@ -2,17 +2,853 @@ What's New in NVDA
 
 
 %!includeconf: ../changes.t2tconf
+%!includeconf: ./locale.t2tconf
+
+= 2023.3 =
+
+== New Features ==
+- Enhanced sound management:
+  - NVDA will now output audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds. (#14697)
+  - WASAPI usage can be disabled in Advanced settings.
+  If WASAPI is enabled, the following Advanced settings can also be configured.
+    - An option to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using. (#1409)
+    - An option to separately configure the volume of NVDA sounds. (#1409, #15038)
+    -
+  -
+- A new option in Document Formatting settings, "Ignore blank lines for line indentation reporting". (#13394)
+-
+
+== Changes ==
+- Rich edit controls in applications such as Wordpad now use UI Automation (UIA) when the application advertises native support for this. (#15314)
+-
+
+
+== Bug Fixes ==
+- Fix crash in Microsoft Word when Document formatting options "report headings" and "report comments and notes" were not enabled. (#15019)
+- NVDA will no longer jump back to the last browse mode position when opening the context menu in Microsoft Edge. (#15309)
+- Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283)
+- NVDA will no longer be sluggish in rich edit controls when braille is enabled, such as in MemPad. (#14285)
+- Fixed bug where Albatross braille displays try to initialize although another braille device has been connected. (#15226)
+- NVDA is once again able to read context menus of downloads in Microsoft Edge. (#14916)
+-
+
+== Changes for Developers ==
+Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+
+=== Deprecations ===
+
+
+= 2023.2 =
+This release introduces the Add-on Store to replace the Add-ons Manager.
+In the Add-on Store you can browse, search, install and update community add-ons.
+You can now manually override incompatibility issues with outdated add-ons at your own risk.
+
+There are new braille features, commands, and display support.
+There are also new input gestures for OCR and flattened object navigation.
+Navigating and reporting formatting in Microsoft Office is improved.
+
+There are many bug fixes, particularly for braille, Microsoft Office, web browsers and Windows 11.
+
+eSpeak-NG, LibLouis braille translator, and Unicode CLDR have been updated.
+
+== New Features ==
+- Add-on Store has been added to NVDA. (#13985)
+  - Browse, search, install and update community add-ons.
+  - Manually override incompatibility issues with outdated add-ons.
+  - The Add-ons Manager has been removed and replaced by the Add-on Store.
+  - For more information please read the updated user guide.
+  -
+- New input gestures:
+  - An unbound gesture to cycle through the available languages for Windows OCR. (#13036)
+  - An unbound gesture to cycle through the braille show messages modes. (#14864)
+  - An unbound gesture to toggle showing the selection indicator for braille. (#14948)
+  - Added default keyboard gesture assignments to move to the next or previous object in a flattened view of the object hierarchy. (#15053)
+    - Desktop: ``NVDA+numpad9`` and ``NVDA+numpad3`` to move to the previous and next objects respectively.
+    - Laptop: ``shift+NVDA+[`` and ``shift+NVDA+]`` to move to the previous and next objects respectively.
+    -
+  -
+- New braille features:
+  - Added support for the Help Tech Activator braille display. (#14917)
+  - A new option to toggle showing the selection indicator (dots 7 and 8). (#14948)
+  - A new option to optionally move the system caret or focus when changing the review cursor position with braille routing keys. (#14885, #3166)
+  - When pressing ``numpad2`` three times to report the numerical value of the character at the position of the review cursor, the information is now also provided in braille. (#14826)
+  - Added support for the ``aria-brailleroledescription`` ARIA 1.3 attribute, allowing web authors to override the type of an element shown on the braille display. (#14748)
+  - Baum braille driver: added several braille chord gestures for performing common keyboard commands such as ``windows+d`` and ``alt+tab``.
+  Please refer to the NVDA User Guide for a full list. (#14714)
+  -
+- Added pronunciation of Unicode symbols:
+  - braille symbols such as ``⠐⠣⠃⠗⠇⠐⠜``. (#13778)
+  - Mac Option key symbol ``⌥``. (#14682)
+  -
+- Added gestures for Tivomatic Caiku Albatross braille displays. (#14844, #15002)
+  - showing the braille settings dialog
+  - accessing the status bar
+  - cycling the braille cursor shape
+  - cycling the braille show messages mode
+  - toggling the braille cursor on/off
+  - toggling the "braille show selection indicator" state
+  - cycling the "braille move system caret when routing review cursor" mode. (#15122)
+  -
+- Microsoft Office features:
+  - When highlighted text is enabled Document Formatting, highlight colours are now reported in Microsoft Word. (#7396, #12101, #5866)
+  - When colors are enabled Document Formatting, background colours are now reported in Microsoft Word. (#5866)
+  - When using Excel shortcuts to toggle format such as bold, italic, underline and strike through of a cell in Excel, the result is now reported. (#14923)
+  -
+- Experimental enhanced sound management:
+  - NVDA can now output audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds. (#14697)
+  - WASAPI usage can be enabled in Advanced settings.
+  Additionally, if WASAPI is enabled, the following Advanced settings can also be configured.
+    - An option to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using. (#1409)
+    - An option to separately configure the volume of NVDA sounds. (#1409, #15038)
+    -
+  - There is a known issue with intermittent crashing when WASAPI is enabled. (#15150)
+  -
+- In Mozilla Firefox and Google Chrome, NVDA now reports when a control opens a dialog, grid, list or tree if the author has specified this using ``aria-haspopup``. (#8235)
+- It is now possible to use system variables (such as ``%temp%`` or ``%homepath%``) in the path specification while creating portable copies of NVDA. (#14680)
+- In Windows 10 May 2019 Update and later, NVDA can announce virtual desktop names when opening, changing, and closing them. (#5641)
+- A system wide parameter has been added to allow users and system administrators to force NVDA to start in secure mode. (#10018)
+- 
+
+
+== Changes ==
+- Component updates:
+  - eSpeak NG has been updated to 1.52-dev commit ``ed9a7bcf``. (#15036)
+  - Updated LibLouis braille translator to [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0]. (#14970)
+  - CLDR has been updated to version 43.0. (#14918)
+  -
+- LibreOffice changes:
+  - When reporting the review cursor location, the current cursor/caret location is now reported relative to the current page in LibreOffice Writer 7.6 and newer, similar to what is done for Microsoft Word. (#11696)
+  - Announcement of the status bar (e.g. triggered by ``NVDA+end``) works for LibreOffice. (#11698)
+  - When moving to a different cell in LibreOffice Calc, NVDA no longer incorrectly announces the coordinates of the previously focused cell when cell coordinate announcement is disabled in NVDA's settings. (#15098)
+  -
+- Braille changes:
+  - When using a braille display via the Standard HID braille driver, the dpad can be used to emulate the arrow keys and enter.
+  Also ``space+dot1`` and ``space+dot4`` now map to up and down arrow respectively. (#14713)
+  - Updates to dynamic web content (ARIA live regions) are now displayed in braille.
+  This can be disabled in the Advanced Settings panel. (#7756)
+  -
+- Dash and em-dash symbols will always be sent to the synthesizer. (#13830)
+- Distance reported in Microsoft Word will now honour the unit defined in Word's advanced options even when using UIA to access Word documents. (#14542)
+- NVDA responds faster when moving the cursor in edit controls. (#14708)
+- Script for reporting the destination of a link now reports from the caret / focus position rather than the navigator object. (#14659)
+- Portable copy creation no longer requires that a drive letter be entered as part of the absolute path. (#14680)
+- If Windows is configured to display seconds in the system tray clock, using ``NVDA+f12`` to report the time now honors that setting. (#14742)
+- NVDA will now report unlabeled groupings that have useful position information, such as in recent versions of Microsoft Office 365 menus. (#14878)
+-
+
+
+== Bug Fixes ==
+- Braille:
+  - Several stability fixes to input/output for braille displays, resulting in less frequent errors and crashes of NVDA. (#14627)
+  - NVDA will no longer unnecessarily switch to no braille multiple times during auto detection, resulting in a cleaner log and less overhead. (#14524)
+  - NVDA will now switch back to USB if a HID Bluetooth device (such as the HumanWare Brailliant or APH Mantis) is automatically detected and an USB connection becomes available.
+  This only worked for Bluetooth Serial ports before. (#14524)
+  - When no braille display is connected and the braille viewer is closed by pressing ``alt+f4`` or clicking the close button, the display size of the braille subsystem will again be reset to no cells. (#15214)
+  -
+- Web browsers:
+  - NVDA no longer occasionally causes Mozilla Firefox to crash or stop responding. (#14647)
+  - In Mozilla Firefox and Google Chrome, typed characters are no longer reported in some text boxes even when speak typed characters is disabled. (#8442)
+  - You can now use browse mode in Chromium Embedded Controls where it was not possible previously. (#13493, #8553)
+  - In Mozilla Firefox, moving the mouse over text after a link now reliably reports the text. (#9235)
+  - The destination of graphic links is now reported accurately in more cases in Chrome and Edge. (#14783)
+  - When trying to report the URL for a link without a href attribute NVDA is no longer silent.
+  Instead NVDA reports that the link has no destination. (#14723)
+  - In Browse mode, NVDA will no longer incorrectly ignore focus moving to a parent or child control e.g. moving from a control to its parent list item or gridcell. (#14611)
+    - Note however that this fix only applies when the Automatically set focus to focusable elements" option in Browse Mode settings is turned off (which is the default).
+    -
+  -
+- Fixes for Windows 11:
+  - NVDA can once again announce Notepad status bar contents. (#14573)
+  - Switching between tabs will announce the new tab name and position for Notepad and File Explorer. (#14587, #14388)
+  - NVDA will once again announce candidate items when entering text in languages such as Chinese and Japanese. (#14509)
+  - It is once again possible to open the Contributors and License items on the NVDA Help menu. (#14725)
+  -
+- Microsoft Office fixes:
+  - When rapidly moving through cells in Excel, NVDA is now less likely to report the wrong cell or selection. (#14983, #12200, #12108)
+  - When landing on an Excel cell from outside a work sheet, braille and focus highlighter are no longer needlessly updated to the object that had focus previously. (#15136)
+  - NVDA no longer fails to announce focusing password fields in Microsoft Excel and Outlook. (#14839)
+  -
+- For symbols which do not have a symbol description in the current locale, the default English symbol level will be used. (#14558, #14417)
+- It is now possible to use the backslash character in the replacement field of a dictionaries entry, when the type is not set to regular expression. (#14556)
+- In Windows 10 and 11 Calculator, a portable copy of NVDA will no longer do nothing or play error tones when entering expressions in standard calculator in compact overlay mode. (#14679)
+- NVDA again recovers from many more situations such as applications that stop responding which previously caused it to freeze completely. (#14759) 
+- When forcing UIA support with certain terminal and consoles, a bug is fixed which caused a freeze and the log file to be spammed. (#14689)
+- NVDA will no longer refuse to save the configuration after a configuration reset. (#13187)
+- When running a temporary version from the launcher, NVDA will not mislead users into thinking they can save the configuration. (#14914)
+- NVDA now generally responds slightly faster to commands and focus changes. (#14928)
+- Displaying the OCR settings will not fail on some systems anymore. (#15017)
+- Fix bug related to saving and loading the NVDA configuration, including switching synthesizers. (#14760)
+- Fix bug causing text review "flick up" touch gesture to move pages rather than move to previous line. (#15127)
+- 
+
+
+== Changes for Developers ==
+Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+
+- Suggested conventions have been added to the add-on manifest specification.
+These are optional for NVDA compatibility, but are encouraged or required for submitting to the Add-on Store. (#14754)
+  - Use ``lowerCamelCase`` for the name field.
+  - Use ``<major>.<minor>.<patch>`` format for the version field (required for add-on datastore).
+  - Use ``https://`` as the schema for the url field (required for add-on datastore).
+  -
+- Added a new extension point type called ``Chain``, which can be used to iterate over iterables returned by registered handlers. (#14531)
+- Added the ``bdDetect.scanForDevices`` extension point.
+Handlers can be registered that yield ``BrailleDisplayDriver/DeviceMatch`` pairs that don't fit in existing categories, like USB or Bluetooth. (#14531)
+- Added extension point: ``synthDriverHandler.synthChanged``. (#14618)
+- The NVDA Synth Settings Ring now caches available setting values the first time they're needed, rather than when loading the synthesizer. (#14704)
+- You can now call the export method on a gesture map to export it to a dictionary.
+This dictionary can be imported in another gesture by passing it either to the constructor of ``GlobalGestureMap`` or to the update method on an existing map. (#14582)
+- ``hwIo.base.IoBase`` and its derivatives now have a new constructor parameter to take a ``hwIo.ioThread.IoThread``.
+If not provided, the default thread is used. (#14627)
+- ``hwIo.ioThread.IoThread`` now has a ``setWaitableTimer`` method to set a waitable timer using a python function.
+Similarly, the new ``getCompletionRoutine`` method allows you to convert a python method into a completion routine safely. (#14627)
+- ``offsets.OffsetsTextInfo._get_boundingRects`` should now always return ``List[locationHelper.rectLTWH]`` as expected for a subclass of ``textInfos.TextInfo``. (#12424)
+- ``highlight-color`` is now a format field attribute. (#14610)
+- NVDA should more accurately determine if a logged message is coming from NVDA core. (#14812)
+- NVDA will no longer log inaccurate warnings or errors about deprecated appModules. (#14806)
+- All NVDA extension points are now briefly described in a new, dedicated chapter in the Developer Guide. (#14648)
+- ``scons checkpot`` will no longer check the ``userConfig`` subfolder anymore. (#14820)
+- Translatable strings can now be defined with a singular and a plural form using ``ngettext`` and ``npgettext``. (#12445)
+-
+
+=== Deprecations ===
+- Passing lambda functions to ``hwIo.ioThread.IoThread.queueAsApc`` is deprecated.
+Instead, functions should be weakly referenceable. (#14627)
+- Importing ``LPOVERLAPPED_COMPLETION_ROUTINE`` from ``hwIo.base`` is deprecated.
+Instead import from ``hwIo.ioThread``. (#14627)
+- ``IoThread.autoDeleteApcReference`` is deprecated.
+It was introduced in NVDA 2023.1 and was never meant to be part of the public API.
+Until removal, it behaves as a no-op, i.e. a context manager yielding nothing. (#14924)
+- ``gui.MainFrame.onAddonsManagerCommand`` is deprecated, use ``gui.MainFrame.onAddonStoreCommand`` instead. (#13985)
+- ``speechDictHandler.speechDictVars.speechDictsPath`` is deprecated, use ``NVDAState.WritePaths.speechDictsDir`` instead. (#15021)
+- Importing ``voiceDictsPath`` and ``voiceDictsBackupPath`` from ``speechDictHandler.dictFormatUpgrade`` is deprecated.
+Instead use ``WritePaths.voiceDictsDir`` and ``WritePaths.voiceDictsBackupDir`` from ``NVDAState``. (#15048)
+- ``config.CONFIG_IN_LOCAL_APPDATA_SUBKEY`` is deprecated.
+Instead use ``config.RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY``. (#15049)
+-
+
+= 2023.1 =
+A new option has been added, "Paragraph Style" in "Document Navigation".
+This can be used with text editors that do not support paragraph navigation natively, such as Notepad and Notepad++.
+
+There is a new global command to report the destination of a link, mapped to ``NVDA+k``.
+
+Support for annotated web content (such as comments and footnotes) has improved.
+Press ``NVDA+d`` to cycle through summaries when annotations are reported (e.g. "has comment, has footnote").
+
+Tivomatic Caiku Albatross 46/80 braille displays are now supported.
+
+Support for ARM64 and AMD64 versions of Windows has improved.
+
+There are many bug fixes, notably Windows 11 fixes.
+
+eSpeak, LibLouis, Sonic rate boost and Unicode CLDR have been updated.
+There are new Georgian, Swahili (Kenya) and Chichewa (Malawi) braille tables.
+
+Note:
+- This release breaks compatibility with existing add-ons.
+-
+
+== New Features ==
+- Microsoft Excel via UI Automation: Automatic reporting of column and row headers in tables. (#14228)
+  - Note: This is referring to tables formatted via the "Table" button on the Insert pane of the Ribbon.
+  "First Column" and "Header Row" in "Table Style Options" correspond to column and row headers respectively.
+  - This is not referring to screen reader specific headers via named ranges, which is currently not supported via UI Automation.
+  -
+- An unassigned script has been added to toggle delayed character descriptions. (#14267)
+- Added an experimental option to leverage the UIA notification support in Windows Terminal to report new or changed text in the terminal, resulting in improved stability and responsivity. (#13781)
+  - Consult the user guide for limitations of this experimental option.
+  - 
+- On Windows 11 ARM64, browse mode is now available in AMD64 apps such as Firefox, Google Chrome and 1Password. (#14397)
+- A new option has been added, "Paragraph Style" in "Document Navigation".
+This adds support for single line break (normal) and multi line break (block) paragraph navigation.
+This can be used with text editors that do not support paragraph navigation natively, such as Notepad and Notepad++. (#13797)
+- The presence of multiple annotations are now reported.
+``NVDA+d`` now cycles through reporting the summary of each annotation target for origins with multiple annotation targets.
+For example, when text has a comment and a footnote associated with it. (#14507, #14480)
+- Added support for Tivomatic Caiku Albatross 46/80 braille displays. (#13045)
+- New global command: Report link destination (``NVDA+k``).
+Pressed once will speak/braille the destination of the link that is in the navigator object.
+Pressing twice will show it in a window, for more detailed review. (#14583)
+- New unmapped global command (Tools category): Report link destination in a window.
+Same as pressing ``NVDA+k`` twice, but may be more useful for braille users. (#14583)
+-
+
+
+== Changes ==
+- Updated LibLouis braille translator to [3.24.0 https://github.com/liblouis/liblouis/releases/tag/v3.24.0]. (#14436)
+  - Major updates to Hungarian, UEB, and Chinese bopomofo braille.
+  - Support for the Danish braille standard 2022.
+  - New braille tables for Georgian literary braille, Swahili (Kenya) and Chichewa (Malawi).
+  -
+- Updated Sonic rate boost library to commit ``1d70513``. (#14180)
+- CLDR has been updated to version 42.0. (#14273)
+- eSpeak NG has been updated to 1.52-dev commit ``f520fecb``. (#14281, #14675)
+  - Fixed reporting of large numbers. (#14241)
+  -
+- Java applications with controls using the selectable state will now announce when an item is not selected rather than when the item is selected. (#14336)
+-
+
+
+== Bug Fixes ==
+- Windows 11 fixes:
+  - NVDA will announce search highlights when opening Start menu. (#13841)
+  - On ARM, x64 apps are no longer identified as ARM64 applications. (#14403)
+  - Clipboard history menu items such as "pin item" can be accessed. (#14508)
+  - In Windows 11 22H2 and newer, it is again possible to use mouse and touch interaction to interact with areas such as the system tray overflow window and "Open With" dialog. (#14538, #14539)
+  -
+- Suggestions are reported when typing an @mention in in Microsoft Excel comments. (#13764)
+- In the Google Chrome location bar, suggestion controls (switch to tab, remove suggestion etc) are now reported when selected. (#13522)
+- When requesting formatting information, colors are now explicitly reported in Wordpad or log viewer, rather than only "Default color". (#13959)
+- In Firefox, activating the "Show options" button on GitHub issue pages now works reliably. (#14269)
+- The date picker controls in Outlook 2016 / 365 Advanced search dialog now report their label and value. (#12726)
+- ARIA switch controls are now actually reported as switches in Firefox, Chrome and Edge, rather than checkboxes. (#11310)
+- NVDA will automatically announce the sort state on an HTML table column header when changed by pressing an inner button. (#10890)
+- A landmark or region's name is always automatically spoken when jumping inside from outside using quick navigation or focus in browse mode. (#13307)
+- When beep or announce 'cap' for capitals is enabled with delayed character descriptions, NVDA no longer beeps or announces 'cap' twice. (#14239)
+- Controls in tables in Java applications will now be announced more accurately by NVDA. (#14347)
+- Some settings will no longer be unexpectedly different when used with multiple profiles. (#14170)
+  - The following settings have been addressed:
+    - Line indentation in Document formatting settings.
+    - Cell borders in doc formatting settings
+    - Show messages in braille settings
+    - Tether Braille in braille settings
+    -
+  - In some rare cases, these settings used in profiles may be unexpectedly modified when installing this version of NVDA.
+  - Please check these options in your profiles after upgrading NVDA to this version.
+  -
+- Emojis should now be reported in more languages. (#14433)
+- The presence of an annotation is no longer missing in braille for some elements. (#13815)
+- Fixed an issue where config changes not save correctly when changing between a "Default" option and the value of the "Default" option. (#14133)
+- When configuring NVDA there will always be at least one key defined as an NVDA key. (#14527)
+- When accessing the NVDA menu via the notification area, NVDA will not suggest a pending update anymore when no update is available. (#14523)
+- Remaining, elapsed and total time is now reported correctly for audio files over a day long in foobar2000. (#14127)
+- In web browsers such as Chrome and Firefox, alerts such as file downloads are shown in braille in addition to being spoken. (#14562)
+- Bug fixed when navigating to the first and last column in a table in Firefox (#14554)
+- When NVDA is launched with ``--lang=Windows`` parameter, it is again possible to open NVDA's General settings dialog. (#14407)
+- NVDA no longer fails to continue reading in Kindle for PC after turning the page. (#14390)
+-
+
+
+== Changes for Developers ==
+Note: this is an Add-on API compatibility breaking release.
+Add-ons will need to be re-tested and have their manifest updated.
+Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+
+- System tests should now pass when run locally on non-English systems. (#13362)
+- In Windows 11 on ARM, x64 apps are no longer identified as ARM64 applications. (#14403)
+- It is no longer necessary to use ``SearchField`` and ``SuggestionListItem`` ``UIA`` ``NVDAObjects`` in new UI Automation scenarios, where automatic reporting of search suggestions, and where typing has been exposed via UI Automation with the ``controllerFor`` pattern.
+This functionality is now available generically via ``behaviours.EditableText`` and the base ``NVDAObject`` respectively. (#14222)
+- The UIA debug logging category when enabled now produces significantly more logging for UIA event handlers and utilities. (#14256)
+- NVDAHelper build standards updated. (#13072)
+  - Now uses the C++20 standard, was C++17.
+  - Now uses the ``/permissive-`` compiler flag which disables permissive behaviors, and sets the ``/Zc`` compiler options for strict conformance.
+  -
+- Some plugin objects (e.g. drivers and add-ons) now have a more informative description in the NVDA python console. (#14463)
+- NVDA can now be fully compiled with Visual Studio 2022, no longer requiring the Visual Studio 2019 build tools. (#14326)
+- More detailed logging for NVDA freezes to aid debugging. (#14309)
+- The singleton ``braille._BgThread`` class has been replaced with ``hwIo.ioThread.IoThread``. (#14130)
+  - A single instance ``hwIo.bgThread`` (in NVDA core) of this class provides background i/o for thread safe braille display drivers.
+  - This new class is not a singleton by design, add-on authors are encouraged to use their own instance when doing hardware i/o.
+  -
+- The processor architecture for the computer can be queried from ``winVersion.WinVersion.processorArchitecture attribute.`` (#14439)
+- New extension points have been added. (#14503)
+  - ``inputCore.decide_executeGesture``
+  - ``tones.decide_beep``
+  - ``nvwave.decide_playWaveFile``
+  - ``braille.pre_writeCells``
+  - ``braille.filter_displaySize``
+  - ``braille.decide_enabled``
+  - ``braille.displayChanged``
+  - ``braille.displaySizeChanged``
+  - 
+- It is possible to set useConfig to False on supported settings for a synthesizer driver. (#14601)
+-
+
+=== API Breaking Changes ===
+These are breaking API changes.
+Please open a GitHub issue if your Add-on has an issue with updating to the new API.
+- The configuration specification has been altered, keys have been removed or modified:
+  - In ``[documentFormatting]`` section (#14233):
+    - ``reportLineIndentation`` stores an int value (0 to 3) instead of a boolean
+    - ``reportLineIndentationWithTones`` has been removed.
+    - ``reportBorderStyle`` and ``reportBorderColor`` have been removed and are replaced by ``reportCellBorders``.
+    -
+  - In ``[braille]`` section (#14233):
+    - ``noMessageTimeout`` has been removed, replaced by a value for ``showMessages``.
+    - ``messageTimeout`` cannot take the value 0 anymore, replaced by a value for ``showMessages``.
+    - ``autoTether`` has been removed; ``tetherTo`` can now take the value "auto" instead.
+    -
+  - In ``[keyboard]`` section  (#14528):
+    - ``useCapsLockAsNVDAModifierKey``, ``useNumpadInsertAsNVDAModifierKey``, ``useExtendedInsertAsNVDAModifierKey`` have been removed.
+    They are replaced by ``NVDAModifierKeys``.
+    -
+  -
+- The ``NVDAHelper.RemoteLoader64`` class has been removed with no replacement. (#14449)
+- The following functions in ``winAPI.sessionTracking`` are removed with no replacement. (#14416, #14490)
+  - ``isWindowsLocked``
+  - ``handleSessionChange``
+  - ``unregister``
+  - ``register``
+  - ``isLockStateSuccessfullyTracked``
+  - 
+- It is no longer possible to enable/disable the braille handler by setting ``braille.handler.enabled``.
+To disable the braille handler programatically, register a handler to ``braille.handler.decide_enabled``. (#14503)
+- It is no longer possible to update the display size of the handler by setting ``braille.handler.displaySize``.
+To update the displaySize programatically, register a handler to ``braille.handler.filter_displaySize``.
+Refer to ``brailleViewer`` for an example on how to do this. (#14503)
+- There have been changes to the usage of ``addonHandler.Addon.loadModule``. (#14481)
+  - ``loadModule`` now expects dot as a separator, rather than backslash.
+  For example "lib.example" instead of "lib\example".
+  - ``loadModule`` now raises an exception when a module can't be loaded or has errors, instead of silently returning ``None`` without giving information about the cause.
+  -
+- The following symbols have been removed from ``appModules.foobar2000`` with no direct replacement. (#14570)
+  - ``statusBarTimes``
+  - ``parseIntervalToTimestamp``
+  - ``getOutputFormat``
+  - ``getParsingFormat``
+  -
+- The following are no longer singletons - their get method has been removed.
+Usage of ``Example.get()`` is now ``Example()``. (#14248)
+  - ``UIAHandler.customAnnotations.CustomAnnotationTypesCommon``
+  - ``UIAHandler.customProps.CustomPropertiesCommon``
+  - ``NVDAObjects.UIA.excel.ExcelCustomProperties``
+  - ``NVDAObjects.UIA.excel.ExcelCustomAnnotationTypes``
+  - 
+-
+
+
+=== Deprecations ===
+- ``NVDAObjects.UIA.winConsoleUIA.WinTerminalUIA`` is deprecated and usage is discouraged. (#14047)
+- ``config.addConfigDirsToPythonPackagePath`` has been moved.
+Use ``addonHandler.packaging.addDirsToPythonPackagePath`` instead. (#14350)
+- ``braille.BrailleHandler.TETHER_*`` are deprecated.
+Use ``configFlags.TetherTo.*.value`` instead. (#14233)
+- ``utils.security.postSessionLockStateChanged`` is deprecated.
+Use ``utils.security.post_sessionLockStateChanged`` instead. (#14486)
+- ``NVDAObject.hasDetails``, ``NVDAObject.detailsSummary``, ``NVDAObject.detailsRole`` has been deprecated.
+Use ``NVDAObject.annotations`` instead. (#14507)
+- ``keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS`` is deprecated with no direct replacement.
+Consider using the class ``config.configFlags.NVDAKey`` instead. (#14528)
+- ``gui.MainFrame.evaluateUpdatePendingUpdateMenuItemCommand`` has been deprecated.
+Use ``gui.MainFrame.SysTrayIcon.evaluateUpdatePendingUpdateMenuItemCommand`` instead. (#14523)
+-
+
+
+= 2022.4 =
+This release includes several new key commands, including table say all commands.
+A "Quick Start Guide" section has been added to the User Guide.
+There are also several bug fixes.
+
+eSpeak has been updated and LibLouis has been updated.
+There are new Chinese, Swedish, Luganda and Kinyarwanda braille tables.
+
+== New Features ==
+- Added a "Quick Start Guide" section to the User Guide. (#13934)
+- Introduced a new command to check the keyboard shortcut of the current focus. (#13960)
+  - Desktop: ``shift+numpad2``.
+  - Laptop: ``NVDA+ctrl+shift+.``.
+  -
+- Introduced new commands to move the review cursor by page where supported by the application. (#14021)
+  - Move to previous page:
+    - Desktop: ``NVDA+pageUp``.
+    - Laptop: ``NVDA+shift+pageUp``.
+    -
+  - Move to next page:
+    - Desktop: ``NVDA+pageDown``.
+    - Laptop: ``NVDA+shift+pageDown``.
+    -
+  -
+- Added the following table commands. (#14070)
+  - Say all in column: ``NVDA+control+alt+downArrow``
+  - Say all in row: ``NVDA+control+alt+rightArrow``
+  - Read entire column: ``NVDA+control+alt+upArrow``
+  - Read entire row: ``NVDA+control+alt+leftArrow``
+  -
+- Microsoft Excel via UI Automation: NVDA now announces when moving out of a table within a spreadsheet. (#14165)
+- Reporting table headers can now be configured separately for rows and columns. (#14075)
+-
+
+
+== Changes ==
+- eSpeak NG has been updated to 1.52-dev commit ``735ecdb8``. (#14060, #14079, #14118, #14203)
+  - Fixed reporting of Latin characters when using Mandarin. (#12952, #13572, #14197)
+  -
+- Updated LibLouis braille translator to [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
+  - Added braille tables:
+    - Chinese common braille (simplified Chinese characters)
+    - Kinyarwanda literary braille
+    - Luganda literary braille
+    - Swedish uncontracted braille
+    - Swedish partially contracted braille
+    - Swedish contracted braille
+    - Chinese (China, Mandarin) Current Braille System (no tones) (#14138)
+    -
+- NVDA now includes the architecture of the operating system as part of user statistics tracking. (#14019)
+-
+
+
+== Bug Fixes ==
+- When updating NVDA using the Windows Package Manager CLI (aka winget), a released version of NVDA is no longer always treated as newer than whatever alpha version is installed. (#12469)
+- NVDA will now correctly announce Group boxes in Java applications. (#13962)
+- Caret properly follows spoken text during "say all" in applications such as Bookworm, WordPad, or the NVDA log viewer. (#13420, #9179)
+- In programs using UI Automation, partially checked checkboxes will be reported correctly. (#13975)
+- Improved performance and stability in Microsoft Visual Studio, Windows Terminal, and other UI Automation based applications. (#11077, #11209)
+  - These fixes apply to Windows 11 Sun Valley 2 (version 22H2) and later.
+  - Selective registration for UI Automation events and property changes now enabled by default.
+  -
+- Text reporting, Braille output, and password suppression now work as expected in the embedded Windows Terminal control in Visual Studio 2022. (#14194)
+- NVDA is now DPI aware when using multiple monitors.
+There are several fixes for using a DPI setting higher than 100% or multiple monitors.
+Issues may still exist with versions of Windows older than Windows 10 1809.
+For these fixes to work, applications which NVDA interacts with also need to be DPI aware.
+Note there are still known issues with Chrome and Edge. (#13254)
+  - Visual highlighting frames should now be correctly placed in most applications. (#13370, #3875, #12070)
+  - Touch screen interaction should now be accurate for most applications. (#7083)
+  - Mouse tracking should now work for most applications. (#6722)
+  -
+- Orientation state (landscape/portrait) changes are now correctly ignored when there is no change (e.g. monitor changes). (#14035)
+- NVDA will announce dragging items on screen in places such as rearranging Windows 10 Start menu tiles and virtual desktops in Windows 11. (#12271, #14081)
+- In advanced settings, "Play a sound for logged errors" option is now correctly restored to its default value when pressing the "Restore defaults" button. (#14149)
+- NVDA can now select text using the ``NVDA+f10`` keyboard shortcut on Java applications. (#14163)
+- NVDA will no longer get stuck in a menu when arrowing up and down threaded conversations in Microsoft Teams. (#14355)
+-
+
+
+== Changes for Developers ==
+Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+
+- The [NVDA API Announcement mailing list https://groups.google.com/a/nvaccess.org/g/nvda-api/about] was created. (#13999)
+- NVDA no longer processes ``textChange`` events for most UI Automation applications due to their extreme negative performance impact. (#11002, #14067)
+-
+
+
+=== Deprecations ===
+- ``core.post_windowMessageReceipt`` is deprecated, use ``winAPI.messageWindow.pre_handleWindowMessage`` instead.
+- ``winKernel.SYSTEM_POWER_STATUS`` is deprecated and usage is discouraged, this has been moved to ``winAPI._powerTracking.SystemPowerStatus``.
+- ``winUser.SM_*`` constants are deprecated, use ``winAPI.winUser.constants.SystemMetrics`` instead.
+- 
+
+= 2022.3.3 =
+This is a minor release to fix issues with 2022.3.2, 2022.3.1 and 2022.3.
+This also addresses a security issue.
+
+== Security Fixes ==
+- Prevents possible system access (e.g. NVDA Python console) for unauthenticated users.
+([GHSA-fpwc-2gxx-j9v7 https://github.com/nvaccess/nvda/security/advisories/GHSA-fpwc-2gxx-j9v7])
+-
+
+== Bug Fixes ==
+- Fixed bug where if NVDA freezes when locking, NVDA will allow access to the users desktop while on the Windows lock screen. (#14416)
+- Fixed bug where if NVDA freezes when locking, NVDA will not behave correctly, as if the device was still locked. (#14416)
+- Fixed accessibility issues with the Windows "forgot my PIN" process and Windows update/install experience. (#14368)
+- Fixed bug when trying to install NVDA in some Windows environments, e.g. Windows Server. (#14379)
+-
+
+== Changes for Developers ==
+
+=== Deprecations ===
+- ``utils.security.isObjectAboveLockScreen(obj)`` is deprecated, instead use ``obj.isBelowLockScreen``. (#14416)
+- The following functions in ``winAPI.sessionTracking`` are deprecated for removal in 2023.1. (#14416)
+  - ``isWindowsLocked``
+  - ``handleSessionChange``
+  - ``unregister``
+  - ``register``
+  - ``isLockStateSuccessfullyTracked``
+  - 
+- 
+
+
+= 2022.3.2 =
+This is a minor release to fix regressions with 2022.3.1 and address a security issue.
+
+== Security Fixes ==
+- Prevents possible system level access for unauthenticated users.
+([GHSA-3jj9-295f-h69w https://github.com/nvaccess/nvda/security/advisories/GHSA-3jj9-295f-h69w])
+-
+
+== Bug Fixes ==
+- Fixes a regression from 2022.3.1 where certain functionality was disabled on secure screens. (#14286)
+- Fixes a regression from 2022.3.1 where certain functionality was disabled after sign-in, if NVDA started on the lock screen. (#14301)
+-
+
+
+= 2022.3.1 =
+This is a minor release to fix several security issues.
+Please responsibly disclose security issues to info@nvaccess.org.
+
+== Security Fixes ==
+- Fixed exploit where it was possible to elevate from user to system privileges.
+([GHSA-q7c2-pgqm-vvw5 https://github.com/nvaccess/nvda/security/advisories/GHSA-q7c2-pgqm-vvw5])
+- Fixed a security issue allowing access to the python console on the lock screen via a race condition for NVDA startup.
+([GHSA-72mj-mqhj-qh4w https://github.com/nvaccess/nvda/security/advisories/GHSA-72mj-mqhj-qh4w])
+- Fixed issue where speech viewer text is cached when locking Windows.
+([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+== Bug Fixes ==
+- Prevent an unauthenticated user from updating settings for speech and Braille viewer on the lock screen. ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+= 2022.3 =
+A significant amount of this release was contributed by the NVDA development community.
+This includes delayed character descriptions and improved Windows Console support.
+
+This release also includes several bug fixes.
+Notably, up-to-date versions of Adobe Acrobat/Reader will no longer crash when reading a PDF document.
+
+eSpeak has been updated, which introduces 3 new languages: Belarusian, Luxembourgish and Totontepec Mixe.
+
+== New Features ==
+- In the Windows Console Host used by Command Prompt, PowerShell, and the Windows Subsystem for Linux on Windows 11 version 22H2 (Sun Valley 2) and later:
+  - Vastly improved performance and stability. (#10964)
+  - When pressing ``control+f`` to find text, the review cursor position is updated to follow the found term. (#11172)
+  - Reporting of typed text that does not appear on-screen (such as passwords) is disabled by default.
+It can be re-enabled in NVDA's advanced settings panel. (#11554)
+  - Text that has scrolled offscreen can be reviewed without scrolling the console window. (#12669)
+  - More detailed text formatting information is available. ([microsoft/terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+  -
+- A new Speech option has been added to read character descriptions after a delay. (#13509)
+- A new Braille option has been added to determine if scrolling the display forward/back should interrupt speech. (#2124)
+-
+
+
+== Changes ==
+- eSpeak NG has been updated to 1.52-dev commit ``9de65fcb``. (#13295)
+  - Added languages:
+    - Belarusian
+    - Luxembourgish
+    - Totontepec Mixe
+    -
+  -
+- When using UI Automation to access Microsoft Excel spreadsheet controls, NVDA is now able to report when a cell is merged. (#12843)
+- Instead of reporting "has details" the purpose of details is included where possible, for example "has comment". (#13649)
+- The installation size of NVDA is now shown in Windows Programs and Feature section. (#13909)
+-
+
+
+== Bug Fixes ==
+- Adobe Acrobat / Reader 64 bit will no longer crash when reading a PDF document. (#12920)
+  - Note that the most up to date version of Adobe Acrobat / Reader is also required to avoid the crash.
+  -
+- Font size measurements are now translatable in NVDA. (#13573)
+- Ignore Java Access Bridge events where no window handle can be found for Java applications.
+This will improve performance for some Java applications including IntelliJ IDEA. (#13039)
+- Announcement of selected cells for LibreOffice Calc is more efficient and no longer results in a Calc freeze when many cells are selected. (#13232)
+- When running under a different user, Microsoft Edge is no longer inaccessible. (#13032)
+- When rate boost is off, eSpeak's rate does not drop anymore between rates 99% and 100%. (#13876)
+- Fix bug which allowed 2 Input Gestures dialogs to open. (#13854)
+-
+
+
+== Changes for Developers ==
+- Updated Comtypes to version 1.1.11. (#12953)
+- In builds of Windows Console (``conhost.exe``) with an NVDA API level of 2 (``FORMATTED``) or greater, such as those included with Windows 11 version 22H2 (Sun Valley 2), UI Automation is now used by default. (#10964)
+  - This can be overridden by changing the "Windows Console support" setting in NVDA's advanced settings panel.
+  - To find your Windows Console's NVDA API level, set "Windows Console support" to "UIA when available", then check the NVDA+F1 log opened from a running Windows Console instance.
+  -
+- The Chromium virtual buffer is now loaded even when the document object has the MSAA ``STATE_SYSTEM_BUSY`` exposed via IA2. (#13306)
+- A config spec type ``featureFlag`` has been created for use with experimental features in NVDA. See ``devDocs/featureFlag.md`` for more information. (#13859)
+-
+
+
+=== Deprecations ===
+There are no deprecations proposed in 2022.3.
+
+
+= 2022.2.4 =
+This is a patch release to fix a security issue.
+
+== Bug Fixes ==
+- Fixed an exploit where it was possible to open the NVDA python console via the log viewer on the lock screen.
+([GHSA-585m-rpvv-93qg https://github.com/nvaccess/nvda/security/advisories/GHSA-585m-rpvv-93qg])
+-
+
+= 2022.2.3 =
+This is a patch release to fix an accidental API breakage introduced in 2022.2.1.
+
+== Bug Fixes ==
+- Fixed a bug where NVDA did not announce "Secure Desktop" when entering a secure desktop.
+This caused NVDA remote to not recognize secure desktops. (#14094)
+-
+
+= 2022.2.2 =
+This is a patch release to fix a bug introduced in 2022.2.1 with input gestures.
+
+== Bug Fixes ==
+- Fixed a bug where input gestures didn't always work. (#14065)
+-
+
+= 2022.2.1 =
+This is a minor release to fix a security issue.
+Please responsibly disclose security issues to info@nvaccess.org.
+
+== Security Fixes ==
+- Fixed exploit where it was possible to run a python console from the lockscreen. (GHSA-rmq3-vvhq-gp32)
+- Fixed exploit where it was possible to escape the lockscreen using object navigation. (GHSA-rmq3-vvhq-gp32)
+-
+
+== Changes for Developers ==
+
+=== Deprecations ===
+These deprecations are currently not scheduled for removal.
+The deprecated aliases will remain until further notice.
+Please test the new API and provide feedback.
+For add-on authors, please open a GitHub issue if these changes stop the API from meeting your needs.
+
+- ``appModules.lockapp.LockAppObject`` should be replaced with ``NVDAObjects.lockscreen.LockScreenObject``. (GHSA-rmq3-vvhq-gp32)
+- ``appModules.lockapp.AppModule.SAFE_SCRIPTS`` should be replaced with ``utils.security.getSafeScripts()``. (GHSA-rmq3-vvhq-gp32)
+-
+
+= 2022.2 =
+This release includes many bug fixes.
+Notably, there are significant improvements for Java based applications, braille displays and Windows features.
+
+New table navigation commands have been introduced.
+Unicode CLDR has been updated.
+LibLouis has been updated, which includes a new German braille table.
+
+== New Features ==
+- Support for interacting with Microsoft Loop Components in Microsoft Office products. (#13617)
+- New table navigation commands have been added. (#957)
+ - ``control+alt+home/end`` to jump to first/last column.
+ - ``control+alt+pageUp/pageDown`` to jump to first/last row.
+ -
+- An unassigned script to cycle through language and dialect switching modes has been added. (#10253)
+-
+
+== Changes ==
+- NSIS has been updated to version 3.08. (#9134)
+- CLDR has been updated to version 41.0. (#13582)
+- Updated LibLouis braille translator to [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]. (#13775)
+  - New braille table: German grade 2 (detailed)
+  -
+- Added new role for "busy indicator" controls. (#10644)
+- NVDA now announces when an NVDA action cannot be performed. (#13500)
+  - This includes when:
+    - Using the NVDA Windows Store version.
+    - In a secure context.
+    - Waiting for a response to a modal dialog.
+    -
+  -
+-
+
+
+== Bug Fixes ==
+- Fixes for Java based applications:
+  - NVDA will now announce read-only state. (#13692)
+  - NVDA will now announce disabled/enabled state correctly. (#10993)
+  - NVDA will now announce function key shortcuts. (#13643)
+  - NVDA can now beep or speak on progress bars. (#13594)
+  - NVDA will no longer incorrectly remove text from widgets when presenting to the user. (#13102)
+  - NVDA will now announce the state of toggle buttons. (#9728)
+  - NVDA will now identify the window in a Java application with multiple windows. (#9184)
+  - NVDA will now announce position information for tab controls. (#13744)
+  -
+- Braille fixes:
+  - Fix braille output when navigating certain text in Mozilla rich edit controls, such as drafting a message in Thunderbird. (#12542)
+  - When braille is tethered automatically and the mouse is moved with mouse tracking enabled,
+   text review commands now update the braille display with the spoken content. (#11519)
+  - It is now possible to pan the braille display through content after use of text review commands. (#8682)
+  -
+- The NVDA installer can now run from directories with special characters. (#13270)
+- In Firefox, NVDA no longer fails to report items in web pages when aria-rowindex, aria-colindex, aria-rowcount or aria-colcount attributes are invalid. (#13405)
+- The cursor does not switch row or column anymore when using table navigation to navigate through merged cells. (#7278)
+- When reading non-interactive PDFs in Adobe Reader, the type and state of form fields (such as checkboxes and radio buttons) are now reported. (#13285)
+- "Reset configuration to factory defaults" is now accessible in the NVDA menu during secure mode. (#13547)
+- Any locked mouse keys will be unlocked when NVDA exits, previously the mouse button would remain locked. (#13410)
+- Visual Studio now reports line numbers. (#13604)
+  - Note that for line number reporting to work, showing line numbers must be enabled in Visual Studio and NVDA.
+  -
+- Visual Studio now correctly reports line indentation. (#13574)
+- NVDA will once again announce Start menu search result details in recent Windows 10 and 11 releases. (#13544)
+- In Windows 10 and 11 Calculator version 10.1908 and later,
+NVDA will announce results when more commands are pressed, such as commands from scientific mode. (#13383)
+- In Windows 11, it is again possible to navigate and interact with user interface elements,
+such as Taskbar and Task View using mouse and touch interaction. (#13506)
+- NVDA will announce status bar content in Windows 11 Notepad. (#13688)
+- Navigator object highlighting now shows up immediately upon activation of the feature. (#13641)
+- Fix reading single column list view items. (#13659, #13735)
+- Fix eSpeak automatic language switching for English and French falling back to British English and French (France). (#13727)
+- Fix OneCore automatic language switching when trying to switch to a formerly installed language. (#13732)
+-
+
+
+== Changes for Developers ==
+- Compiling NVDA dependencies with Visual Studio 2022 (17.0) is now supported.
+For development and release builds, Visual Studio 2019 is still used. (#13033)
+- When retrieving the count of selected children via accSelection,
+the case where a negative child ID or an IDispatch is returned by ``IAccessible::get_accSelection`` is now handled properly. (#13277)
+- New convenience functions ``registerExecutableWithAppModule`` and ``unregisterExecutable`` were added to the ``appModuleHandler`` module.
+They can be used to use a single App Module with multiple executables. (#13366)
+-
+
+=== Deprecations ===
+These are proposed API breaking changes.
+The deprecated part of the API will continue to be available until the specified release.
+If no release is specified, the plan for removal has not been determined.
+Note, the roadmap for removals is 'best effort' and may be subject to change.
+Please test the new API and provide feedback.
+For add-on authors, please open a GitHub issue if these changes stop the API from meeting your needs.
+
+
+- ``appModuleHandler.NVDAProcessID`` is deprecated, use ``globalVars.appPid`` instead. (#13646)
+- ``gui.quit`` is deprecated, use ``wx.CallAfter(mainFrame.onExitCommand, None)`` instead. (#13498)
+  -
+% Insert new list items here as the alias appModule table should be kept at the bottom of this list
+- Some alias appModules are marked as deprecated.
+Code which imports from one of them, should instead import from the replacement module.  (#13366)
+-
+
+|| Removed module name | Replacement module |
+| azuredatastudio | code |
+| azuredatastudio-insiders | code |
+| calculatorapp | calculator |
+| code - insiders | code |
+| commsapps | hxmail |
+| dbeaver | eclipse |
+| digitaleditionspreview | digitaleditions |
+| esybraille | esysuite |
+| hxoutlook | hxmail |
+| miranda64 | miranda32 |
+| mpc-hc | mplayerc |
+| mpc-hc64 | mplayerc |
+| notepad++ | notepadPlusPlus |
+| searchapp | searchui |
+| searchhost | searchui |
+| springtoolsuite4 | eclipse |
+| sts | eclipse |
+| teamtalk3 | teamtalk4classic |
+| textinputhost | windowsinternal_composableshell_experiences_textinput_inputapp |
+| totalcmd64 | totalcmd |
+| win32calc | calc |
+| winmail | msimn |
+| zend-eclipse-php | eclipse |
+| zendstudio | eclipse |
 
 = 2022.1 =
+This release includes major improvements to UIA support with MS Office.
+For Microsoft Office 16.0.15000 and higher on Windows 11, NVDA will use UI Automation to access Microsoft Word documents by default.
+This provides a significant performance improvement over the old Object model access.
+
+There are improvements to braille display drivers including Seika Notetaker, Papenmeier and HID Braille. 
+There are also various Windows 11 bug fixes, for apps such as Calculator, Console, Terminal, Mail and Emoji Panel.
+
+eSpeak-NG and LibLouis have been updated, adding new Japanese, German and Catalan tables.
+
+Note:
+ - This release breaks compatibility with existing add-ons.
+ -
+
 
 == New Features ==
 - Support for reporting notes in MS Excel with UI Automation enabled on Windows 11. (#12861)
 - In recent builds of Microsoft Word via UI Automation on Windows 11, the existence of bookmarks, draft comments and resolved comments are now reported in both speech and braille. (#12861)
-- The new --lang command line parameter allows overriding the configured NVDA language. (#10044)
+- The new ``--lang`` command line parameter allows overriding the configured NVDA language. (#10044)
 - NVDA now warns about command line parameters which are unknown and not used by any add-ons. (#12795)
 - In Microsoft Word accessed via UI Automation, NVDA will now make use of mathPlayer to read and navigate Office math equations. (#12946)
   - For this to work, you must be running Microsoft Word 365/2016 build 14326 or later. 
-  - MathType equations must also be manually converted to Office Math by selecting each and choosing Equation options -> Convert to Office Math in the context menu.
+  - MathType equations must also be manually converted to Office Math by selecting each, opening the context menu, choosing Equation options, Convert to Office Math.
   -
 - Reporting of "has details" and the associated command to summarize the details relation have been updated to work in focus mode. (#13106)
 - Seika Notetaker can now be auto-detected when connected via USB and Bluetooth. (#13191, #13142)
@@ -23,24 +859,32 @@ What's New in NVDA
 - Added commands for toggling multiple modifiers simultaneously with a Braille display (#13152)
 - The Speech Dictionary dialog now features a "Remove all" button to help clear a whole dictionary. (#11802)
 - Added support for Windows 11 Calculator. (#13212)
+- In Microsoft Word with UI Automation enabled on Windows 11, line numbers and section numbers can now be reported. (#13283, #13515)
+- For Microsoft Office 16.0.15000 and higher on Windows 11, NVDA will use UI Automation to access Microsoft Word documents by default, providing a significant performance improvement over the old Object model access. (#13437)
+ - This includes documents in Microsoft Word itself, and also the message reader and composer in Microsoft Outlook. 
+ -
 -
 
 
 == Changes ==
 - Espeak-ng has been updated to 1.51-dev commit ``7e5457f91e10``. (#12950)
-- Updated liblouis braille translator to [3.20.0 https://github.com/liblouis/liblouis/releases/tag/v3.20.0]. (#13141)
-  - New braille table: Japanese (Kantenji) literary braille
-  -
+- Updated liblouis braille translator to [3.21.0 https://github.com/liblouis/liblouis/releases/tag/v3.21.0]. (#13141, #13438)
+  - Added new braille table: Japanese (Kantenji) literary braille.
+  - Added new German 6 dot computer braille table.
+  - Added Catalan grade 1 braille table. (#13408)
+  - 
 - NVDA will report selection and merged cells in LibreOffice Calc 7.3 and above. (#9310, #6897)
 - Updated Unicode Common Locale Data Repository (CLDR) to 40.0. (#12999)
 - ``NVDA+Numpad Delete`` reports the location of the caret or focused object by default. (#13060)
 - ``NVDA+Shift+Numpad Delete`` reports the location of the review cursor. (#13060)
 - Added default bindings for toggling modifier keys to Freedom Scientific displays (#13152)
-- 'Baseline' is no longer reported via the report text formatting command (NVDA+F). (#11815)
+- "Baseline" is no longer reported via the report text formatting command (``NVDA+f``). (#11815)
+- Activate long description no longer has a default gesture assigned. (#13380)
+- Report details summary now has a default gesture (``NVDA+d``). (#13380)
+- NVDA needs to be restarted after installing MathPlayer. (#13486)
 -
 
 == Bug Fixes ==
-- Security fix: Prevent object navigation outside of the lockscreen on Windows 10 and Windows 11. (#13328)
 - Clipboard manager pane should no longer incorrectly steal focus when opening some Office programs. (#12736)
 - On a system where the user has chosen to swap the primary mouse button from the left to the right, NVDA will no longer accidentally bring up a context menu instead of activating an item, in applications such as web browsers. (#12642)
 - When moving the review cursor past the end of text controls, such as in Microsoft Word with UI Automation, "bottom" is correctly reported in more situations. (#12808)
@@ -54,21 +898,28 @@ What's New in NVDA
 - NVDA can again duck audio when using the SAPI5 synthesizer on Windows 11. (#12913)
 - In Windows 10 Calculator, NVDA will announce labels for history and memory list items. (#11858)
 - Gestures such as scrolling and routing again work with HID Braille devices. (#13228)
-- Windows 11 Mail: After switching focus between apps, while reading a long email, NVDA would get stuck on a line of the email. (#13050)
-- HID braille: chorded gestures (E.g. space+dot4) can be successfully performed from the Braille display. (#13326)
+- Windows 11 Mail: After switching focus between apps, while reading a long email, NVDA no longer gets stuck on a line of the email. (#13050)
+- HID braille: chorded gestures (e.g. ``space+dot4``) can be successfully performed from the Braille display. (#13326)
 - Fixed an issue where multiple settings dialogs could be opened at the same time. (#12818)
 - Fixed a problem where some Focus Blue Braille displays would stop working after waking the computer from sleep. (#9830)
-- 'Baseline' is no longer spuriously reported when the 'report superscript and subscript' option is active. (#11078)
+- "Baseline" is no longer spuriously reported when the "report superscript and subscript" option is active. (#11078)
 - In Windows 11, NVDA will no longer prevent navigation in emoji panel when selecting emojis. (#13104)
 - Prevents a bug causing double-reporting when using Windows Console and Terminal. (#13261)
 - Fixed several cases where list items could not be reported in 64 bit applications, such as REAPER. (#8175)
+- In the Microsoft Edge downloads manager, NVDA will now automatically switch to focus mode once the list item with the most recent download gains focus. (#13221)
+- NVDA no longer causes 64-bit versions of Notepad++ 8.3 and above to crash. (#13311)
+- Adobe Reader no longer crashes on startup if Adobe Reader's protected mode is enabled. (#11568)
+- Fixed a bug where selecting the Papenmeier Braille Display Driver caused NVDA to crash. (#13348)
+- In Microsoft word with UIA: page number and other formatting is no longer inappropriately announced when moving from a blank table cell to a cell with content, or from the end of the document into existing content. (#13458, #13459)
+- NVDA will no longer fail to report the page title and start automatically reading, when a page loads in Google chrome 100. (#13571)
+- NVDA no longer crashes when resetting the NVDA configuration to factory defaults while speak command keys is on. (#13634)
 -
 
 == Changes for Developers ==
 - Note: this is a Add-on API compatibility breaking release. Add-ons will need to be re-tested and have their manifest updated.
-- Compiling NVDA dependencies with Visual Studio 2022 (17.0) is now supported. For development and release builds, Visual Studio 2019 is still used. (#13033)
+- Although NVDA still requires Visual Studio 2019, Builds should no longer fail if a newer version of Visual Studio (E.g. 2022) is installed along side 2019. (#13033, #13387)
 - Updated SCons to version 4.3.0. (#13033)
-- Updated py2exe to version 0.11.0.1. (#12357, #13066)
+- Updated py2exe to version 0.11.1.0. (#13510)
 - ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable`` has been removed. Use ``apiLevel`` instead. (#12955, #12660)
 - ``TVItemStruct`` has been removed from ``sysTreeView32``. (#12935)
 - ``MessageItem`` has been removed from the Outlook appModule. (#12935)
@@ -113,8 +964,8 @@ This ensures code will honor the Windows user setting for swapping the primary m
 - ``LOCALE_SLANGUAGE``, ``LOCALE_SLIST`` and ``LOCALE_SLANGDISPLAYNAME`` are removed from ``languageHandler`` - use members of ``languageHandler.LOCALE`` instead. (#12753)
 - Switched from Minhook to Microsoft Detours as a hooking library for NVDA. Hooking with this library is mainly used to aid the display model. (#12964)
 - ``winVersion.WIN10_RELEASE_NAME_TO_BUILDS`` is removed. (#13211)
-- SCons now builds with multiple concurrent jobs, equal to the number of logical processors in the system.
-This can dramatically decrease build times on multi core systems. (#13226)
+- SCons now warns to build with a number of jobs that is equal to the number of logical processors in the system.
+This can dramatically decrease build times on multi core systems. (#13226, #13371)
 - ``characterProcessing.SYMLVL_*`` constants are removed - please use ``characterProcessing.SymbolLevel.*`` instead. (#13248)
 - Functions ``loadState`` and ``saveState`` are removed from addonHandler - please use ``addonHandler.state.load`` and ``addonHandler.state.save`` instead. (#13245)
 - Moved the UWP/OneCore interaction layer of NVDAHelper [from C++/CX to C++/Winrt https://docs.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/move-to-winrt-from-cx]. (#10662)
@@ -124,9 +975,71 @@ This can dramatically decrease build times on multi core systems. (#13226)
 - ``easeOfAccess.APP_KEY_NAME`` has been deprecated, to be removed in 2023. (#13242)
 - ``DictionaryDialog`` and ``DictionaryEntryDialog`` are moved from ``gui.settingsDialogs`` to ``gui.speechDict``. (#13294)
 - IAccessible2 relations are now shown in developer info for IAccessible2 objects. (#13315)
+- ``languageHandler.windowsPrimaryLCIDsToLocaleNames`` has been removed, instead use ``languageHandler.windowsLCIDToLocaleName`` or ``winKernel.LCIDToLocaleName``. (#13342)
 - ``UIAAutomationId`` property for UIA objects should be preferred over ``cachedAutomationId``. (#13125, #11447)
   - ``cachedAutomationId`` can be used if obtained directly from the element.
   -
+- ``NVDAObjects.window.scintilla.CharacterRangeStruct`` has moved to ``NVDAObjects.window.scintilla.Scintilla.CharacterRangeStruct``. (#13364)
+- Boolean ``gui.isInMessageBox`` is removed, please use the function ``gui.message.isModalMessageBoxActive`` instead. (#12984, #13376)
+- ``controlTypes`` has been split up into various submodules. (#12510, #13588)
+  - ``ROLE_*`` and ``STATE_*`` have been replaced with ``Role.*`` and ``State.*``.
+  - Although still available, the following should be considered deprecated:
+    - ``ROLE_*`` and ``STATE_*``, use ``Role.*`` and ``State.*`` instead.
+    - ``roleLabels``, ``stateLabels`` and ``negativeStateLabels``, usages like ``roleLabels[ROLE_*]`` should be replaced with their equivalent ``Role.*.displayString`` or ``State.*.negativeDisplayString``.
+    - ``processPositiveStates`` and ``processNegativeStates`` should use ``processAndLabelStates`` instead.
+    -
+  -
+- Excel cell state constants (``NVSTATE_*``) are now values in the ``NvCellState`` enum, mirrored in the ``NvCellState`` enum in ``NVDAObjects/window/excel.py`` and mapped to ``controlTypes.State`` via _nvCellStatesToStates. (#13465)
+- ``EXCEL_CELLINFO`` struct member ``state`` is now ``nvCellStates``.
+- ``mathPres.ensureInit`` has been removed, MathPlayer is now initialized when NVDA starts. (#13486)
+-
+
+
+= 2021.3.5 =
+This is a minor release to fix a security issue.
+Please responsibly disclose security issues to info@nvaccess.org.
+
+== Security Fixes ==
+- Addressed security advisory ``GHSA-xc5m-v23f-pgr7``.
+  - The symbol pronunciation dialog is now disabled in secure mode.
+  -
+-
+
+
+= 2021.3.4 =
+This is a minor release to fix several security issues raised.
+Please responsibly disclose security issues to info@nvaccess.org.
+
+== Security Fixes ==
+- Addressed security advisory ``GHSA-354r-wr4v-cx28``. (#13488)
+  - Remove the ability to start NVDA with debug logging enabled when NVDA runs in secure mode.
+  - Remove the ability to update NVDA when NVDA runs in secure mode.
+  -
+- Addressed security advisory ``GHSA-wg65-7r23-h6p9``. (#13489)
+  - Remove the ability to open the input gestures dialog in secure mode.
+  - Remove the ability to open the default, temporary and voice dictionary dialogs in secure mode.
+  -
+- Addressed security advisory ``GHSA-mvc8-5rv9-w3hx``. (#13487)
+  - The wx GUI inspection tool is now disabled in secure mode.
+  -
+-
+
+
+= 2021.3.3 =
+This release is identical to 2021.3.2.
+A bug existed in NVDA 2021.3.2 where it incorrectly identified itself as 2021.3.1.
+This release correctly identifies itself as 2021.3.3.
+
+
+= 2021.3.2 =
+This is a minor release to fix several security issues raised.
+Please responsibly disclose security issues to info@nvaccess.org.
+
+
+== Bug Fixes ==
+- Security fix: Prevent object navigation outside of the lockscreen on Windows 10 and Windows 11. (#13328)
+- Security fix: The addons manager dialog is now disabled on secure screens. (#13059)
+- Security fix: NVDA context help is no longer available on secure screens. (#13353)
 -
 
 

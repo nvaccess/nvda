@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (c) 2011-2017 NVDA Contributors
 #This file is covered by the GNU General Public License.
-#Edited by NVDA-Taiwan Volunteers Team and reviewed by Dr. Jan Li Wang, 2021/11/15
+#Edited by NVDA-Taiwan Volunteers Team
 # 在本檔案內，當一個符號的解釋出現多音字（或破音字）時，為使其報讀正確，得用另一同音字代替，以避免混淆。
 
 complexSymbols:
@@ -61,12 +61,15 @@ $	錢號	all	norep
 )	半形右括號	most	always
 *	star	some
 ,	comma	all	always
+،	阿拉伯逗號	all	always
 -	dash	most
 .	dot	some
 /	slash	some
 :	colon	most	norep
 ;	semi	most
+؛	阿拉伯冒號	most
 ?	question	all
+؟	阿拉伯問號	all
 @	小老鼠	some
 [	半形左中括號	most	always
 ]	半形右中括號	most	always
@@ -368,9 +371,9 @@ _	半形底線	most
 ？	問號	all	always
 ！	驚嘆號	all	always
 ：	冒號	all	always
-‥	刪節號	most
+‥	左右兩點項目符號	most
 ︱	直破折號	most
-─	夾注號	most
+─	破折號	most
 ︳	直底線	most
 ╴	左邊直線框	most
 ＿	底線	most
@@ -413,7 +416,7 @@ _	半形底線	most
 〗	空心右粗中括號	most	always
 ＃	井字號	most
 —	連接號	most
-＆	連接號	most
+＆	全形 and 符號	most
 ＊	星號	most
 ※	重點符號	most
 〃	同上符號	most
@@ -447,7 +450,7 @@ _	半形底線	most
 ＼	反斜線	some
 ￥	人民幣	none
 ￡	英鎊	none
-％	趴	some
+％	百分比	some
 ＠	全形小老鼠	some
 ℃	度C	none
 ℉	度F	none
@@ -1160,5 +1163,4 @@ _	半形底線	most
 ⿓	龍	none
 ⿔	龜	none
 ⿕	龠	none
-
 #End of file

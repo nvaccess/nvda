@@ -1,2 +1,8 @@
 @echo off
-call "%~dp0\venvUtils\venvCmd.bat" start pyw "%~dp0\source\nvda.pyw" %*
+set hereOrig=%~dp0
+set here=%hereOrig%
+if #%hereOrig:~-1%# == #\# set here=%hereOrig:~0,-1%
+set scriptsDir=%here%\venvUtils
+set sourceDirPath=%here%\source
+
+call "%scriptsDir%\venvCmd.bat" start pyw "%sourceDirPath%\nvda.pyw" %*

@@ -3,6 +3,7 @@
 #Copyright (C) 2008-2014 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+import typing
 
 import api
 import controlTypes
@@ -35,10 +36,16 @@ stdNamesToRoles = {
 	# H1 to H6 handled separately
 	# Span, Quote, Note, Reference, BibEntry, Code, Figure
 	"Formula": controlTypes.Role.MATH,
-	"Form": controlTypes.Role.FORM,
+	# form: a form field - MSAA roles are already much more specific here.
 }
 
-def normalizeStdName(stdName):
+
+def normalizeStdName(stdName: str) -> typing.Tuple[controlTypes.Role, typing.Optional[str]]:
+	"""
+	@param stdName:
+	@return: Tuple with the NVDA role and optionally the level number of the heading as a string, E.G.:
+	"H5" produces "5"
+	"""
 	if stdName and "H1" <= stdName <= "H6":
 		return controlTypes.Role.HEADING, stdName[1]
 

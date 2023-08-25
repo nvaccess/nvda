@@ -1,10 +1,13 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Leonard de Ruijter, Joseph Lee, Renaud Paquay, pvagner
+# Copyright (C) 2006-2022 NV Access Limited, Leonard de Ruijter, Joseph Lee, Renaud Paquay, pvagner
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import ctypes
 import re
+from typing import (
+	Dict,
+)
 import eventHandler
 import keyLabels
 import JABHandler
@@ -12,72 +15,74 @@ import controlTypes
 import textUtils
 from controlTypes import TextPosition
 from ..window import Window
-from ..behaviors import EditableTextWithoutAutoSelectDetection, Dialog
+from ..behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog
 import textInfos.offsets
 from logHandler import log
 from .. import InvalidNVDAObject
 from locationHelper import RectLTWH
 
-JABRolesToNVDARoles={
-	"alert":controlTypes.Role.DIALOG,
-	"column header":controlTypes.Role.TABLECOLUMNHEADER,
-	"canvas":controlTypes.Role.CANVAS,
-	"combo box":controlTypes.Role.COMBOBOX,
-	"desktop icon":controlTypes.Role.DESKTOPICON,
-	"internal frame":controlTypes.Role.INTERNALFRAME,
-	"desktop pane":controlTypes.Role.DESKTOPPANE,
-	"option pane":controlTypes.Role.OPTIONPANE,
-	"window":controlTypes.Role.WINDOW,
-	"frame":controlTypes.Role.FRAME,
-	"dialog":controlTypes.Role.DIALOG,
-	"color chooser":controlTypes.Role.COLORCHOOSER,
-	"directory pane":controlTypes.Role.DIRECTORYPANE,
-	"file chooser":controlTypes.Role.FILECHOOSER,
-	"filler":controlTypes.Role.FILLER,
-	"hyperlink":controlTypes.Role.LINK,
-	"icon":controlTypes.Role.ICON,
-	"label":controlTypes.Role.LABEL,
-	"root pane":controlTypes.Role.PANEL,
-	"glass pane":controlTypes.Role.PANEL,
-	"layered pane":controlTypes.Role.PANEL,
-	"list":controlTypes.Role.LIST,
-	"list item":controlTypes.Role.LISTITEM,
-	"menu bar":controlTypes.Role.MENUBAR,
-	"popup menu":controlTypes.Role.POPUPMENU,
-	"menu":controlTypes.Role.MENU,
-	"menu item":controlTypes.Role.MENUITEM,
-	"separator":controlTypes.Role.SEPARATOR,
-	"page tab list":controlTypes.Role.TABCONTROL,
-	"page tab":controlTypes.Role.TAB,
-	"panel":controlTypes.Role.PANEL,
-	"progress bar":controlTypes.Role.PROGRESSBAR,
-	"password text":controlTypes.Role.PASSWORDEDIT,
-	"push button":controlTypes.Role.BUTTON,
-	"toggle button":controlTypes.Role.TOGGLEBUTTON,
-	"check box":controlTypes.Role.CHECKBOX,
-	"radio button":controlTypes.Role.RADIOBUTTON,
-	"row header":controlTypes.Role.TABLEROWHEADER,
-	"scroll pane":controlTypes.Role.SCROLLPANE,
-	"scroll bar":controlTypes.Role.SCROLLBAR,
-	"view port":controlTypes.Role.VIEWPORT,
-	"slider":controlTypes.Role.SLIDER,
-	"split pane":controlTypes.Role.SPLITPANE,
-	"table":controlTypes.Role.TABLE,
-	"text":controlTypes.Role.EDITABLETEXT,
-	"tree":controlTypes.Role.TREEVIEW,
-	"tool bar":controlTypes.Role.TOOLBAR,
-	"tool tip":controlTypes.Role.TOOLTIP,
-	"status bar":controlTypes.Role.STATUSBAR,
-	"statusbar":controlTypes.Role.STATUSBAR,
-	"date editor":controlTypes.Role.DATEEDITOR,
-	"spin box":controlTypes.Role.SPINBUTTON,
-	"font chooser":controlTypes.Role.FONTCHOOSER,
-	"group box":controlTypes.Role.GROUPING,
-	"header":controlTypes.Role.HEADER,
-	"footer":controlTypes.Role.FOOTER,
-	"paragraph":controlTypes.Role.PARAGRAPH,
-	"ruler":controlTypes.Role.RULER,
-	"edit bar":controlTypes.Role.EDITBAR,
+
+JABRolesToNVDARoles: Dict[str, controlTypes.Role] = {
+	"alert": controlTypes.Role.DIALOG,
+	"column header": controlTypes.Role.TABLECOLUMNHEADER,
+	"canvas": controlTypes.Role.CANVAS,
+	"combo box": controlTypes.Role.COMBOBOX,
+	"desktop icon": controlTypes.Role.DESKTOPICON,
+	"internal frame": controlTypes.Role.INTERNALFRAME,
+	"desktop pane": controlTypes.Role.DESKTOPPANE,
+	"option pane": controlTypes.Role.OPTIONPANE,
+	"window": controlTypes.Role.WINDOW,
+	"frame": controlTypes.Role.FRAME,
+	"dialog": controlTypes.Role.DIALOG,
+	"color chooser": controlTypes.Role.COLORCHOOSER,
+	"directory pane": controlTypes.Role.DIRECTORYPANE,
+	"file chooser": controlTypes.Role.FILECHOOSER,
+	"filler": controlTypes.Role.FILLER,
+	"hyperlink": controlTypes.Role.LINK,
+	"icon": controlTypes.Role.ICON,
+	"label": controlTypes.Role.LABEL,
+	"root pane": controlTypes.Role.PANEL,
+	"glass pane": controlTypes.Role.PANEL,
+	"layered pane": controlTypes.Role.PANEL,
+	"list": controlTypes.Role.LIST,
+	"list item": controlTypes.Role.LISTITEM,
+	"menu bar": controlTypes.Role.MENUBAR,
+	"popup menu": controlTypes.Role.POPUPMENU,
+	"menu": controlTypes.Role.MENU,
+	"menu item": controlTypes.Role.MENUITEM,
+	"separator": controlTypes.Role.SEPARATOR,
+	"page tab list": controlTypes.Role.TABCONTROL,
+	"page tab": controlTypes.Role.TAB,
+	"panel": controlTypes.Role.PANEL,
+	"progress bar": controlTypes.Role.PROGRESSBAR,
+	"password text": controlTypes.Role.PASSWORDEDIT,
+	"push button": controlTypes.Role.BUTTON,
+	"toggle button": controlTypes.Role.TOGGLEBUTTON,
+	"check box": controlTypes.Role.CHECKBOX,
+	"radio button": controlTypes.Role.RADIOBUTTON,
+	"row header": controlTypes.Role.TABLEROWHEADER,
+	"scroll pane": controlTypes.Role.SCROLLPANE,
+	"scroll bar": controlTypes.Role.SCROLLBAR,
+	"view port": controlTypes.Role.VIEWPORT,
+	"slider": controlTypes.Role.SLIDER,
+	"split pane": controlTypes.Role.SPLITPANE,
+	"table": controlTypes.Role.TABLE,
+	"text": controlTypes.Role.EDITABLETEXT,
+	"tree": controlTypes.Role.TREEVIEW,
+	"tool bar": controlTypes.Role.TOOLBAR,
+	"tool tip": controlTypes.Role.TOOLTIP,
+	"status bar": controlTypes.Role.STATUSBAR,
+	"statusbar": controlTypes.Role.STATUSBAR,
+	"date editor": controlTypes.Role.DATEEDITOR,
+	"spin box": controlTypes.Role.SPINBUTTON,
+	"font chooser": controlTypes.Role.FONTCHOOSER,
+	"group box": controlTypes.Role.GROUPING,
+	"groupbox": controlTypes.Role.GROUPING,
+	"header": controlTypes.Role.HEADER,
+	"footer": controlTypes.Role.FOOTER,
+	"paragraph": controlTypes.Role.PARAGRAPH,
+	"ruler": controlTypes.Role.RULER,
+	"edit bar": controlTypes.Role.EDITBAR,
 }
 
 JABStatesToNVDAStates={
@@ -93,9 +98,26 @@ JABStatesToNVDAStates={
 	"multi_line":controlTypes.State.MULTILINE,
 	"focusable":controlTypes.State.FOCUSABLE,
 	"editable":controlTypes.State.EDITABLE,
+	"selectable": controlTypes.State.SELECTABLE,
 }
 
-re_simpleXmlTag=re.compile(r"\<[^>]+\>")
+
+re_simpleXmlTag = re.compile(r"(\<[^>]+\>)+")
+
+
+def _subHtmlTag(match: re.match) -> str:
+	""" Determines whether to replace the tag with a space or to just remove it. """
+	startIndex, endIndex = match.span()
+	return "" if (
+		startIndex == 0 or match.string[startIndex - 1].isspace()
+		or endIndex == len(match.string) or match.string[endIndex].isspace()
+	) else " "
+
+
+def _processHtml(text: str) -> str:
+	""" Strips HTML tags from text if it is HTML """
+	return re_simpleXmlTag.sub(_subHtmlTag, text) if text.startswith("<html>") else text
+
 
 class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 
@@ -160,10 +182,12 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return self._getLineOffsets(offset)
 
 	def _getFormatFieldAndOffsets(self, offset, formatConfig, calculateOffsets=True):
+		attribs: JABHandler.AccessibleTextAttributesInfo
 		attribs, length = self.obj.jabContext.getTextAttributesInRange(offset, self._endOffset - 1)
 		field = textInfos.FormatField()
 		field["font-family"] = attribs.fontFamily
-		field["font-size"] = "%dpt" % attribs.fontSize
+		# Translators: Abbreviation for points, a measurement of font size.
+		field["font-size"] = pgettext("font size", "%s pt") % str(attribs.fontSize)
 		field["bold"] = bool(attribs.bold)
 		field["italic"] = bool(attribs.italic)
 		field["strikethrough"] = bool(attribs.strikethrough)
@@ -204,6 +228,9 @@ class JAB(Window):
 			clsList.append(Table)
 		elif self.parent and isinstance(self.parent,Table) and self.parent._jabTableInfo:
 			clsList.append(TableCell)
+		elif role == "progress bar":
+			clsList.append(ProgressBar)
+
 		clsList.append(JAB)
 
 	@classmethod
@@ -259,34 +286,42 @@ class JAB(Window):
 		for index in range(bindings.keyBindingsCount):
 			binding=bindings.keyBindingInfo[index]
 			# We don't support these modifiers
-			if binding.modifiers&(JABHandler.ACCESSIBLE_META_KEYSTROKE|JABHandler.ACCESSIBLE_ALT_GRAPH_KEYSTROKE|JABHandler.ACCESSIBLE_BUTTON1_KEYSTROKE|JABHandler.ACCESSIBLE_BUTTON2_KEYSTROKE|JABHandler.ACCESSIBLE_BUTTON3_KEYSTROKE):
+			if binding.modifiers & (
+				JABHandler.AccessibleKeystroke.META
+				| JABHandler.AccessibleKeystroke.ALT_GRAPH
+				| JABHandler.AccessibleKeystroke.BUTTON1
+				| JABHandler.AccessibleKeystroke.BUTTON2
+				| JABHandler.AccessibleKeystroke.BUTTON3
+			):
 				continue
-			keyList=[]
+			modifiers = binding.modifiers
 			# We assume alt  if there are no modifiers at all and its not a menu item as this is clearly a nmonic
-			if (binding.modifiers&JABHandler.ACCESSIBLE_ALT_KEYSTROKE) or (not binding.modifiers and self.role!=controlTypes.Role.MENUITEM):
-				keyList.append(keyLabels.localizedKeyLabels['alt'])
-			if binding.modifiers&JABHandler.ACCESSIBLE_CONTROL_KEYSTROKE:
-				keyList.append(keyLabels.localizedKeyLabels['control'])
-			if binding.modifiers&JABHandler.ACCESSIBLE_SHIFT_KEYSTROKE:
-				keyList.append(keyLabels.localizedKeyLabels['shift'])
-			keyList.append(binding.character)
-		shortcutsList.append("+".join(keyList))
+			if not modifiers and self.role != controlTypes.Role.MENUITEM:
+				modifiers |= JABHandler.AccessibleKeystroke.ALT
+			keyList = [
+				keyLabels.localizedKeyLabels.get(l, l)
+				for l in JABHandler._getKeyLabels(modifiers, binding.character)
+			]
+			shortcutsList.append("+".join(keyList))
 		return ", ".join(shortcutsList)
 
 	def _get_name(self):
-		return re_simpleXmlTag.sub(" ", self._JABAccContextInfo.name)
+		name = self._JABAccContextInfo.name
+		return _processHtml(name)
 
 	def _get_JABRole(self):
 		return self._JABAccContextInfo.role_en_US
 
 	def _get_role(self):
 		role = JABRolesToNVDARoles.get(self.JABRole,controlTypes.Role.UNKNOWN)
-		if role in ( controlTypes.Role.LABEL, controlTypes.Role.PANEL) and self.parent:
+		if role in (controlTypes.Role.LABEL, controlTypes.Role.PANEL, controlTypes.Role.UNKNOWN) and self.parent:
 			parentRole = self.parent.role
 			if parentRole == controlTypes.Role.LIST:
 				return controlTypes.Role.LISTITEM
 			elif parentRole in (controlTypes.Role.TREEVIEW, controlTypes.Role.TREEVIEWITEM):
 				return controlTypes.Role.TREEVIEWITEM
+			elif parentRole == controlTypes.Role.TABLE:
+				return controlTypes.Role.TABLECELL
 		if role==controlTypes.Role.LABEL:
 			return controlTypes.Role.STATICTEXT
 		return role
@@ -302,20 +337,36 @@ class JAB(Window):
 		for state in stateStrings:
 			if state in JABStatesToNVDAStates:
 				stateSet.add(JABStatesToNVDAStates[state])
+		if self.role is controlTypes.Role.TOGGLEBUTTON and controlTypes.State.CHECKED in stateSet:
+			stateSet.discard(controlTypes.State.CHECKED)
+			stateSet.add(controlTypes.State.PRESSED)
+		if "editable" not in stateStrings and self._JABAccContextInfo.accessibleText:
+			stateSet.add(controlTypes.State.READONLY)
 		if "visible" not in stateStrings:
 			stateSet.add(controlTypes.State.INVISIBLE)
 		if "showing" not in stateStrings:
 			stateSet.add(controlTypes.State.OFFSCREEN)
 		if "expandable" not in stateStrings:
 			stateSet.discard(controlTypes.State.COLLAPSED)
+		if "enabled" not in stateStrings:
+			stateSet.add(controlTypes.State.UNAVAILABLE)
 		return stateSet
 
 	def _get_value(self):
-		if self.role not in [controlTypes.Role.CHECKBOX,controlTypes.Role.MENU,controlTypes.Role.MENUITEM,controlTypes.Role.RADIOBUTTON,controlTypes.Role.BUTTON] and self._JABAccContextInfo.accessibleValue and not self._JABAccContextInfo.accessibleText:
+		if (
+			self.role not in [
+				controlTypes.Role.TOGGLEBUTTON, controlTypes.Role.CHECKBOX,
+				controlTypes.Role.MENU, controlTypes.Role.MENUITEM,
+				controlTypes.Role.RADIOBUTTON, controlTypes.Role.BUTTON
+			]
+			and self._JABAccContextInfo.accessibleValue
+			and not self._JABAccContextInfo.accessibleText
+		):
 			return self.jabContext.getCurrentAccessibleValueFromContext()
 
 	def _get_description(self):
-		return re_simpleXmlTag.sub(" ", self._JABAccContextInfo.description)
+		description = self._JABAccContextInfo.description
+		return _processHtml(description)
 
 	def _get_location(self):
 		return RectLTWH(self._JABAccContextInfo.x,self._JABAccContextInfo.y,self._JABAccContextInfo.width,self._JABAccContextInfo.height)
@@ -349,7 +400,14 @@ class JAB(Window):
 				return info
 
 		parent=self.parent
-		if isinstance(parent,JAB) and self.role in (controlTypes.Role.TREEVIEWITEM,controlTypes.Role.LISTITEM):
+		if (
+			isinstance(parent, JAB)
+			and self.role in (
+				controlTypes.Role.TREEVIEWITEM,
+				controlTypes.Role.LISTITEM,
+				controlTypes.Role.TAB
+			)
+		):
 			index=self._JABAccContextInfo.indexInParent+1
 			childCount=parent._JABAccContextInfo.childrenCount
 			info['indexInGroup']=index
@@ -366,7 +424,7 @@ class JAB(Window):
 	def _get_parent(self):
 		if not hasattr(self,'_parent'):
 			jabContext=self.jabContext.getAccessibleParentFromContext()
-			if jabContext:
+			if jabContext and self.indexInParent is not None:
 				self._parent=JAB(jabContext=jabContext)
 			else:
 				self._parent=super(JAB,self).parent
@@ -548,6 +606,7 @@ class JAB(Window):
 		if activeDescendant:
 			eventHandler.queueEvent("gainFocus",activeDescendant)
 
+
 class ComboBox(JAB):
 
 	def _get_states(self):
@@ -593,8 +652,6 @@ class Table(JAB):
 		return self._jabTableInfo.jabTable.accContext.value
 
 class TableCell(JAB):
-
-	role=controlTypes.Role.TABLECELL
 
 	def _get_table(self):
 		if self.parent and isinstance(self.parent,Table):

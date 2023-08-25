@@ -1,14 +1,14 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2017-2021 NV Access Limited, Łukasz Golonka
+# Copyright (C) 2017-2022 NV Access Limited, Łukasz Golonka
 
 """Unit tests for the languageHandler module.
 """
 
 import unittest
 import languageHandler
-from languageHandler import LCID_NONE, windowsPrimaryLCIDsToLocaleNames
+from languageHandler import LCID_NONE, LCIDS_TO_TRANSLATED_LOCALES
 from localesData import LANG_NAMES_TO_LOCALIZED_DESCS
 import locale
 import ctypes
@@ -29,7 +29,7 @@ def generateUnsupportedWindowsLocales():
 LCID_ENGLISH_US = 0x0409
 UNSUPPORTED_WIN_LANGUAGES = generateUnsupportedWindowsLocales()
 TRANSLATABLE_LANGS = set(l[0] for l in languageHandler.getAvailableLanguages()) - {"Windows"}
-WINDOWS_LANGS = set(locale.windows_locale.values()).union(windowsPrimaryLCIDsToLocaleNames.values())
+WINDOWS_LANGS = set(locale.windows_locale.values()).union(LCIDS_TO_TRANSLATED_LOCALES.values())
 
 
 class TestLocaleNameToWindowsLCID(unittest.TestCase):

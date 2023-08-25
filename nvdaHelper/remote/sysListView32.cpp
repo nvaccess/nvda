@@ -162,14 +162,19 @@ error_status_t nvdaInProcUtils_sysListView32_getColumnOrderArray(handle_t bindin
 	// ListView_GetColumnOrderArray macro has no return value, using SendMessage directly so errors are caught.
 	// The meaning of the return value depends on the message sent, for LVM_GETCOLUMNORDERARRAY,
 	// it returns nonzero if successful, or 0 otherwise.
+	// https://docs.microsoft.com/en-us/windows/win32/controls/lvm-getcolumnorderarray#return-value
 	const auto sendMsgRes = SendMessage(
 		static_cast<HWND>(UlongToHandle(windowHandle)),
 		LVM_GETCOLUMNORDERARRAY,
 		static_cast<WPARAM>(columnCount),
 		reinterpret_cast<LPARAM>(columnOrderArray)
 	);
-	if (TRUE != sendMsgRes) {
-		LOG_DEBUGWARNING(L"LVM_GETCOLUMNORDERARRAY failed");
+	if (FALSE == sendMsgRes) {
+		LOG_DEBUGWARNING(
+			L"LVM_GETCOLUMNORDERARRAY failed. " <<
+			L"Windows Error: " << GetLastError() <<
+			L", Window Handle: " << windowHandle
+		);
 		return ERROR_INVALID_FUNCTION;
 	}
 	return ERROR_SUCCESS;

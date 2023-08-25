@@ -1,6 +1,9 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020 NV Access Limited
+# Copyright (C) 2013-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
+# Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers
+# Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -633,6 +636,7 @@ class InputGesturesDialog(SettingsDialog):
 		super()._onWindowDestroy(evt)
 
 	def onFilterChange(self, evt):
+		self.tree.Unselect()
 		filterText = evt.GetEventObject().GetValue()
 		self.filter(filterText)
 

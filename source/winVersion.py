@@ -6,6 +6,8 @@
 """A module used to record Windows versions.
 It is also used to define feature checks such as
 making sure NVDA can run on a minimum supported version of Windows.
+
+When working on this file, consider moving to winAPI.
 """
 
 from typing import Optional
@@ -13,6 +15,7 @@ import sys
 import os
 import functools
 import winreg
+import platform
 
 
 # Records a mapping between Windows builds and release names.
@@ -32,8 +35,10 @@ _BUILDS_TO_RELEASE_NAMES = {
 	19042: "Windows 10 20H2",
 	19043: "Windows 10 21H1",
 	19044: "Windows 10 21H2",
+	19045: "Windows 10 22H2",
 	20348: "Windows Server 2022",
 	22000: "Windows 11 21H2",
+	22621: "Windows 11 22H2",
 }
 
 
@@ -64,7 +69,7 @@ def _getRunningVersionNameFromWinReg() -> str:
 class WinVersion(object):
 	"""
 	Represents a Windows release.
-	Includes version major, minor, build, service pack information,
+	Includes version major, minor, build, service pack information, machine architecture,
 	as well as tools such as checking for specific Windows 10 releases.
 	"""
 
@@ -75,7 +80,8 @@ class WinVersion(object):
 			build: int = 0,
 			releaseName: Optional[str] = None,
 			servicePack: str = "",
-			productType: str = ""
+			productType: str = "",
+			processorArchitecture: str = ""
 	):
 		self.major = major
 		self.minor = minor
@@ -86,6 +92,7 @@ class WinVersion(object):
 			self.releaseName = self._getWindowsReleaseName()
 		self.servicePack = servicePack
 		self.productType = productType
+		self.processorArchitecture = processorArchitecture
 
 	def _getWindowsReleaseName(self) -> str:
 		"""Returns the public release name for a given Windows release based on major, minor, and build.
@@ -119,6 +126,8 @@ class WinVersion(object):
 			winVersionText.append(f"service pack {self.servicePack}")
 		if self.productType != "":
 			winVersionText.append(self.productType)
+		if self.processorArchitecture != "":
+			winVersionText.append(self.processorArchitecture)
 		return " ".join(winVersionText)
 
 	def __eq__(self, other):
@@ -152,8 +161,10 @@ WIN10_2004 = WinVersion(major=10, minor=0, build=19041)
 WIN10_20H2 = WinVersion(major=10, minor=0, build=19042)
 WIN10_21H1 = WinVersion(major=10, minor=0, build=19043)
 WIN10_21H2 = WinVersion(major=10, minor=0, build=19044)
+WIN10_22H2 = WinVersion(major=10, minor=0, build=19045)
 WINSERVER_2022 = WinVersion(major=10, minor=0, build=20348)
 WIN11 = WIN11_21H2 = WinVersion(major=10, minor=0, build=22000)
+WIN11_22H2 = WinVersion(major=10, minor=0, build=22621)
 
 
 @functools.lru_cache(maxsize=1)
@@ -181,7 +192,8 @@ def getWinVer():
 		build=winVer.build,
 		releaseName=releaseName,
 		servicePack=winVer.service_pack,
-		productType=("workstation", "domain controller", "server")[winVer.product_type - 1]
+		productType=("workstation", "domain controller", "server")[winVer.product_type - 1],
+		processorArchitecture=platform.machine()
 	)
 
 

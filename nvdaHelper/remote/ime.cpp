@@ -32,11 +32,11 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define IMEID_VER(dwId)		( ( dwId ) & 0xffff0000 )
 #define IMEID_LANG(dwId)	( ( dwId ) & 0x0000ffff )
 
-#define _CHT_HKL_DAYI				( (HKL)(ULONG_PTR)0xE0060404 )	// DaYi
-#define _CHT_HKL_NEW_PHONETIC		( (HKL)(ULONG_PTR)0xE0080404 )	// New Phonetic
-#define _CHT_HKL_NEW_CHANG_JIE		( (HKL)(ULONG_PTR)0xE0090404 )	// New Chang Jie
-#define _CHT_HKL_NEW_QUICK			( (HKL)(ULONG_PTR)0xE00A0404 )	// New Quick
-#define _CHT_HKL_HK_CANTONESE		( (HKL)(ULONG_PTR)0xE00B0404 )	// Hong Kong Cantonese
+#define _CHT_HKL_DAYI				( (DWORD_PTR)0xE0060404 )	// DaYi
+#define _CHT_HKL_NEW_PHONETIC		( (DWORD_PTR)0xE0080404 )	// New Phonetic
+#define _CHT_HKL_NEW_CHANG_JIE		( (DWORD_PTR)0xE0090404 )	// New Chang Jie
+#define _CHT_HKL_NEW_QUICK			( (DWORD_PTR)0xE00A0404 )	// New Quick
+#define _CHT_HKL_HK_CANTONESE		( (DWORD_PTR)0xE00B0404 )	// Hong Kong Cantonese
 #define _CHT_IMEFILENAME	"TINTLGNT.IME"	// New Phonetic
 #define _CHT_IMEFILENAME2	"CINTLGNT.IME"	// New Chang Jie
 #define _CHT_IMEFILENAME3	"MSTCIPHA.IME"	// Phonetic 5.1
@@ -49,7 +49,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define IMEID_CHT_VER60 ( LANG_CHT | MAKEIMEVERSION( 6, 0 ) )	// New(Phonetic/ChanJie)IME6.0 : 6.0.x.x // New IME 6.0(web download)
 #define IMEID_CHT_VER_VISTA ( LANG_CHT | MAKEIMEVERSION( 7, 0 ) )	// All TSF TIP under Cicero UI-less mode: a hack to make GetImeId() return non-zero value
 
-#define _CHS_HKL		( (HKL)(ULONG_PTR)0xE00E0804 )	// MSPY
+#define _CHS_HKL		( (DWORD_PTR)0xE00E0804 )	// MSPY
 #define _CHS_IMEFILENAME	"PINTLGNT.IME"	// MSPY1.5/2/3
 #define _CHS_IMEFILENAME2	"MSSCIPYA.IME"	// MSPY3 for OfficeXP
 #define IMEID_CHS_VER41	( LANG_CHS | MAKEIMEVERSION( 4, 1 ) )	// MSPY1.5	// SCIME97 or MSPY1.5 (w/Win98, Office97)

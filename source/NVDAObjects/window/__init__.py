@@ -178,6 +178,9 @@ An NVDAObject for a window
 	def _get_role(self):
 		return controlTypes.Role.WINDOW
 
+	# type information for auto property _get_windowClassName
+	windowClassName: str
+
 	def _get_windowClassName(self):
 		if hasattr(self,"_windowClassName"):
 			return self._windowClassName

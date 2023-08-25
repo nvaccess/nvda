@@ -1,7 +1,8 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
-# Joseph Lee, Dawid Pieper, mltony
+# Copyright (C) 2006-2023 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
+# Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot, Rob Meredith,
+# Burman's Computer and Education Ltd.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -12,7 +13,7 @@ from configobj import ConfigObj
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config 
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 4
+latestSchemaVersion = 10
 
 #: The configuration specification string
 #: @type: String
@@ -45,6 +46,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	outputDevice = string(default=default)
 	autoLanguageSwitching = boolean(default=true)
 	autoDialectSwitching = boolean(default=false)
+	delayedCharacterDescriptions = boolean(default=false)
 
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)
@@ -55,6 +57,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 # Audio settings
 [audio]
 	audioDuckingMode = integer(default=0)
+	WASAPI = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
+	soundVolumeFollowsVoice = boolean(default=false)
+	soundVolume = integer(default=100, min=0, max=100)
 
 # Braille settings
 [braille]
@@ -67,16 +72,21 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	cursorBlinkRate = integer(default=500,min=200,max=2000)
 	cursorShapeFocus = integer(default=192,min=1,max=255)
 	cursorShapeReview = integer(default=128,min=1,max=255)
-	noMessageTimeout = boolean(default=false)
+	# How braille display will show messages
+	# 0: Disabled, 1: Use timeout, 2: Show indefinitely
+	showMessages = integer(0, 2, default=1)
 	# Timeout after the message will disappear from braille display
-	# 0 means that no message will be shown
-	messageTimeout = integer(default=4,min=0,max=20)
-	tetherTo = string(default="focus")
-	autoTether = boolean(default=true)
+	messageTimeout = integer(default=4, min=1, max=20)
+	tetherTo = option("auto", "focus", "review", default="auto")
+	reviewRoutingMovesSystemCaret = featureFlag(\
+		optionsEnum="ReviewRoutingMovesSystemCaretFlag", behaviorOfDefault="NEVER")
 	readByParagraph = boolean(default=false)
 	wordWrap = boolean(default=true)
 	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
+	interruptSpeechWhileScrolling = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
+	showSelection = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	enableHidBrailleSupport = integer(0, 2, default=0)  # 0:Use default/recommended value (yes), 1:yes, 2:no
+	reportLiveRegions = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 
 	# Braille display driver settings
 	[[__many__]]
@@ -149,9 +159,12 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 #Keyboard settings
 [keyboard]
-	useCapsLockAsNVDAModifierKey = boolean(default=false)
-	useNumpadInsertAsNVDAModifierKey = boolean(default=true)
-	useExtendedInsertAsNVDAModifierKey = boolean(default=true)
+	# NVDAModifierKeys: Integer value combining single-bit value:
+	# 1: CapsLock
+	# 2: NumpadInsert
+	# 4: ExtendedInsert
+	# Default = 6: NumpadInsert + ExtendedInsert
+	NVDAModifierKeys = integer(1, 7, default=6)
 	keyboardLayout = string(default="desktop")
 	speakTypedCharacters = boolean(default=true)
 	speakTypedWords = boolean(default=false)
@@ -174,6 +187,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	trapNonCommandGestures = boolean(default=true)
 	enableOnPageLoad = boolean(default=true)
 	autoFocusFocusableElements = boolean(default=False)
+	loadChromiumVBufOnBusyState = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 
 [touch]
 	enabled = boolean(default=true)
@@ -199,15 +213,17 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportSpellingErrors = boolean(default=true)
 	reportPage = boolean(default=true)
 	reportLineNumber = boolean(default=False)
-	reportLineIndentation = boolean(default=False)
-	reportLineIndentationWithTones = boolean(default=False)
+	# 0: Off, 1: Speech, 2: Tones, 3: Both Speech and Tones
+	reportLineIndentation = integer(0, 3, default=0)
+	ignoreBlankLinesForRLI = boolean(default=False)
 	reportParagraphIndentation = boolean(default=False)
 	reportTables = boolean(default=true)
 	includeLayoutTables = boolean(default=False)
-	reportTableHeaders = boolean(default=True)
+	# 0: Off, 1: Rows and columns, 2: Rows, 3: Columns
+	reportTableHeaders = integer(0, 3, default=1)
 	reportTableCellCoords = boolean(default=True)
-	reportBorderStyle = boolean(default=False)
-	reportBorderColor = boolean(default=False)
+	# 0: Off, 1: style, 2: color and style
+	reportCellBorders = integer(0, 2, default=0)
 	reportLinks = boolean(default=true)
 	reportGraphics = boolean(default=True)
 	reportComments = boolean(default=true)
@@ -221,6 +237,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportFrames = boolean(default=true)
 	reportClickable = boolean(default=true)
 
+[documentNavigation]
+	paragraphStyle = featureFlag(optionsEnum="ParagraphNavigationFlag", behaviorOfDefault="application")
+
 [reviewCursor]
 	simpleReviewMode = boolean(default=True)
 	followFocus = boolean(default=True)
@@ -229,21 +248,23 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [UIA]
 	enabled = boolean(default=true)
-	useInMSWordWhenAvailable = boolean(default=false)
 	useInMSExcelWhenAvailable = boolean(default=false)
 	winConsoleImplementation= option("auto", "legacy", "UIA", default="auto")
-	selectiveEventRegistration = boolean(default=false)
+	eventRegistration = option("auto", "selective", "global", default="auto")
 	# 0:default, 1:Only when necessary, 2:yes, 3:no
 	allowInChromium = integer(0, 3, default=0)
+	# 0:default (where suitable), 1:Only when necessary, 2: where suitable, 3: always
+	allowInMSWord = integer(0, 3, default=0)
 
 [annotations]
-	reportDetails = boolean(default=false)
+	reportDetails = boolean(default=true)
 	reportAriaDescription = boolean(default=true)
 
 [terminals]
 	speakPasswords = boolean(default=false)
 	keyboardSupportInLegacy = boolean(default=True)
 	diffAlgo = option("auto", "dmp", "difflib", default="auto")
+	wtStrategy = featureFlag(optionsEnum="WindowsTerminalStrategyFlag", behaviorOfDefault="diffing")
 
 [update]
 	autoCheck = boolean(default=true)
@@ -271,6 +292,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	speechManager = boolean(default=false)
 	synthDriver = boolean(default=false)
 	nvwave = boolean(default=false)
+	annotations = boolean(default=false)
+	events = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")
@@ -289,6 +312,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	cancelExpiredFocusSpeech = integer(0, 2, default=0)
 	# 0:Only in test versions, 1:yes
 	playErrorSound = integer(0, 1, default=0)
+
+[addonStore]
+	showWarning = boolean(default=true)
 """
 
 #: The configuration specification

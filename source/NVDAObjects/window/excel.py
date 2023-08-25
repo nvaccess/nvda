@@ -1,10 +1,16 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt
+# Copyright (C) 2006-2023 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt,
+# Cyrille Bougot, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import abc
 import ctypes
+import enum
+from typing import (
+	Optional, Dict,
+)
+
 from comtypes import COMError, BSTR
 import comtypes.automation
 import wx
@@ -19,6 +25,7 @@ import ui
 import speech
 from tableUtils import HeaderCellInfo, HeaderCellTracker
 import config
+from config.configFlags import ReportCellBorders
 import textInfos
 import colors
 import eventHandler
@@ -27,6 +34,8 @@ from logHandler import log
 import gui
 import gui.contextHelp
 import winUser
+from winAPI.winUser.functions import GetSysColor
+from winAPI.winUser.constants import SysColorIndex
 import mouseHandler
 from displayModel import DisplayModelTextInfo
 import controlTypes
@@ -451,7 +460,9 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 
 	def __init__(self,rootNVDAObject):
 		super(ExcelBrowseModeTreeInterceptor,self).__init__(rootNVDAObject)
-		self.passThrough=True
+		# Note, as _set_passThrough has logic to handle braille and vision updates which are unnecessary when
+		# initializing this tree interceptor, we set the private _passThrough variable here, which is enough.
+		self._passThrough = True
 		browseMode.reportPassThrough.last=True
 
 	def _get_currentNVDAObject(self):
@@ -703,7 +714,6 @@ class ExcelWorksheet(ExcelBase):
 
 
 	treeInterceptorClass=ExcelBrowseModeTreeInterceptor
-
 	role=controlTypes.Role.TABLE
 
 	def _get_excelApplicationObject(self):
@@ -944,28 +954,135 @@ class ExcelWorksheet(ExcelBase):
 	), canPropagate=True)
 
 	def script_changeSelection(self,gesture):
-		oldSelection=api.getFocusObject()
+		oldSelection = self._getSelection()
 		gesture.send()
-		import eventHandler
-		import time
-		newSelection=None
-		curTime=startTime=time.time()
-		while (curTime-startTime)<=0.15:
+		newSelection = None
+		start = time.time()
+		retryInterval = 0.01
+		maxTimeout = 0.15
+		elapsed = 0
+		retries = 0
+		while True:
 			if scriptHandler.isScriptWaiting():
 				# Prevent lag if keys are pressed rapidly
 				return
-			if eventHandler.isPendingEvents('gainFocus'):
-				return
-			newSelection=self._getSelection()
-			if newSelection and newSelection!=oldSelection:
-				break
 			api.processPendingEvents(processEventQueue=False)
-			time.sleep(0.015)
-			curTime=time.time()
+			if eventHandler.isPendingEvents('gainFocus'):
+				# This object is no longer focused.
+				return
+			newSelection = self._getSelection()
+			if newSelection and newSelection != oldSelection:
+				log.debug(f"Detected new selection after {elapsed} sec")
+				break
+			elapsed = time.time() - start
+			if elapsed >= maxTimeout:
+				log.debug(f"Canceled detecting new selection after {elapsed} sec")
+				break
+			# We spin the first few tries, as sleep is not accurate for tiny periods
+			# and we might end up sleeping longer than we need to. Spinning improves
+			# responsiveness in the case that the app responds fairly quickly.
+			if retries > 2:
+				# Don't spin too long, though. If we get to this point, the app is
+				# probably taking a while to respond, so super fast response is
+				# already lost.
+				time.sleep(retryInterval)
+			retries += 1
 		if newSelection:
-			if oldSelection.parent==newSelection.parent:
-				newSelection.parent=oldSelection.parent
-			eventHandler.executeEvent('gainFocus',newSelection)
+			if newSelection.parent == self:
+				# The new selection has this work sheet as its parent.
+				# While newSelection.parent and self compare equal,
+				# they are in fact not the same python object, i.e.
+				# `newSelection.parent is self` would return False.
+				# Therefore we set newSelection.parent to self in order for the format field speech cache
+				# to persist across selection changes. (#15091)
+				newSelection.parent = self
+			eventHandler.executeEvent('gainFocus', newSelection)
+
+	def _WaitForValueChangeForAction(self, action, fetcher, timeout=0.15):
+		oldVal = fetcher()
+		action()
+		startTime = curTime = time.time()
+		curVal = fetcher()
+		while curVal == oldVal and (curTime - startTime) < timeout:
+			time.sleep(0.01)
+			curVal = fetcher()
+			curTime = time.time()
+		return curVal
+	
+	def _toggleBooleanAttribute(self, gesture, getStateFun, msgOff, msgOn):
+		sel = self._getSelection()
+		if isinstance(sel, ExcelCell):
+			selObj = sel.excelCellObject
+		elif isinstance(sel, ExcelSelection):
+			selObj = sel.excelRangeObject
+		else:
+			gesture.send()
+			return
+		enabled = self._WaitForValueChangeForAction(
+			action=lambda: gesture.send(),
+			fetcher=lambda: getStateFun(selObj)
+		)
+		if enabled:
+			ui.message(msgOn)
+		else:
+			ui.message(msgOff)
+
+	@script(
+		gestures=["kb:control+b", "kb:control+shift+2"],
+		canPropagate=True,
+	)
+	def script_toggleBold(self, gesture):
+		self._toggleBooleanAttribute(
+			gesture,
+			lambda cellOrRange: cellOrRange.font.bold,
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOff=_('Bold off'),
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOn=_('Bold on'),
+		)
+
+	@script(
+		gestures=["kb:control+i", "kb:control+shift+3"],
+		canPropagate=True,
+	)
+	def script_toggleItalic(self, gesture):
+		self._toggleBooleanAttribute(
+			gesture,
+			lambda cellOrRange: cellOrRange.font.italic,
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOff=_('Italic off'),
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOn=_('Italic on'),
+		)
+
+	@script(
+		gestures=["kb:control+u", "kb:control+shift+4"],
+		canPropagate=True,
+	)
+	def script_toggleUnderline(self, gesture):
+		self._toggleBooleanAttribute(
+			gesture,
+			lambda cellOrRange: cellOrRange.font.underline != xlUnderlineStyleNone,
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOff=_('Underline off'),
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOn=_('Underline on'),
+		)
+
+	@script(
+		gesture="kb:control+shift+5",
+		canPropagate=True,
+	)
+	def script_toggleStrikethrough(self, gesture):
+		self._toggleBooleanAttribute(
+			gesture,
+			lambda cellOrRange: cellOrRange.font.strikethrough,
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOff=_('Strikethrough off'),
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOn=_('Strikethrough on'),
+		)
+
 
 class ExcelCellTextInfo(NVDAObjectTextInfo):
 
@@ -989,7 +1106,8 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 		if formatConfig['reportFontName']:
 			formatField['font-name']=fontObj.name
 		if formatConfig['reportFontSize']:
-			formatField['font-size']=str(fontObj.size)
+			# Translators: Abbreviation for points, a measurement of font size.
+			formatField['font-size'] = pgettext("font size", "%s pt") % fontObj.size
 		if formatConfig['reportFontAttributes']:
 			formatField['bold']=fontObj.bold
 			formatField['italic']=fontObj.italic
@@ -1029,7 +1147,7 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 					formatField['background-color']=colors.RGB.fromCOLORREF(int(cellObj.interior.color))
 			except COMError:
 				pass
-		if formatConfig["reportBorderStyle"]:
+		if formatConfig["reportCellBorders"] != ReportCellBorders.OFF:
 			borders = None
 			hasMergedCells = self.obj.excelCellObject.mergeCells
 			if hasMergedCells:
@@ -1041,7 +1159,10 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			else:
 				borders = cellObj.borders
 			try:
-				formatField['border-style']=getCellBorderStyleDescription(borders,reportBorderColor=formatConfig['reportBorderColor'])
+				formatField['border-style'] = getCellBorderStyleDescription(
+					borders,
+					reportBorderColor=formatConfig['reportCellBorders'] == ReportCellBorders.COLOR_AND_STYLE,
+				)
 			except COMError:
 				pass
 		return formatField,(self._startOffset,self._endOffset)
@@ -1059,13 +1180,42 @@ NVCELLINFOFLAG_COMMENTS=0x40
 NVCELLINFOFLAG_FORMULA=0x80
 NVCELLINFOFLAG_ALL=0xffff
 
+
+class NvCellState(enum.IntEnum):
+	# These values must match NvCellState in `nvdaHelper/remote/excel/constants.h`
+	EXPANDED = 1 << 1,
+	COLLAPSED = 1 << 2,
+	LINKED = 1 << 3,
+	HASPOPUP = 1 << 4,
+	PROTECTED = 1 << 5,
+	HASFORMULA = 1 << 6,
+	HASCOMMENT = 1 << 7,
+	CROPPED = 1 << 8,
+	OVERFLOWING = 1 << 9,
+	UNLOCKED = 1 << 10,
+
+
+_nvCellStatesToStates: Dict[NvCellState, controlTypes.State] = {
+	NvCellState.EXPANDED: controlTypes.State.EXPANDED,
+	NvCellState.COLLAPSED: controlTypes.State.COLLAPSED,
+	NvCellState.LINKED: controlTypes.State.LINKED,
+	NvCellState.HASPOPUP: controlTypes.State.HASPOPUP,
+	NvCellState.PROTECTED: controlTypes.State.PROTECTED,
+	NvCellState.HASFORMULA: controlTypes.State.HASFORMULA,
+	NvCellState.HASCOMMENT: controlTypes.State.HASCOMMENT,
+	NvCellState.CROPPED: controlTypes.State.CROPPED,
+	NvCellState.OVERFLOWING: controlTypes.State.OVERFLOWING,
+	NvCellState.UNLOCKED: controlTypes.State.UNLOCKED,
+}
+
+
 class ExcelCellInfo(ctypes.Structure):
 		_fields_=[
 			('text',comtypes.BSTR),
 			('address',comtypes.BSTR),
 			('inputTitle',comtypes.BSTR),
 			('inputMessage',comtypes.BSTR),
-			('states',ctypes.c_longlong),
+			('nvCellStates', ctypes.c_longlong),  # bitwise OR of the NvCellState enum values.
 			('rowNumber',ctypes.c_long),
 			('rowSpan',ctypes.c_long),
 			('columnNumber',ctypes.c_long),
@@ -1074,6 +1224,7 @@ class ExcelCellInfo(ctypes.Structure):
 			('comments',comtypes.BSTR),
 			('formula',comtypes.BSTR),
 		]
+
 
 class ExcelCellInfoQuickNavItem(browseMode.QuickNavItem):
 
@@ -1181,7 +1332,10 @@ class FormulaExcelCellInfoQuicknavIterator(ExcelCellInfoQuicknavIterator):
 
 class ExcelCell(ExcelBase):
 
-	def _get_excelCellInfo(self):
+	excelCellInfo: Optional[ExcelCellInfo]
+	"""Type info for auto property: _get_excelCellInfo"""
+
+	def _get_excelCellInfo(self) -> Optional[ExcelCellInfo]:
 		if not self.appModule.helperLocalBindingHandle:
 			return None
 		ci=ExcelCellInfo()
@@ -1233,10 +1387,6 @@ class ExcelCell(ExcelBase):
 		gesture="kb:NVDA+shift+c")
 	def script_setColumnHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
-		if not config.conf['documentFormatting']['reportTableHeaders']:
-			# Translators: a message reported in the SetColumnHeader script for Excel.
-			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
-			return
 		if scriptCount==0:
 			if self.parent.setAsHeaderCell(self,isColumnHeader=True,isRowHeader=False):
 				# Translators: a message reported in the SetColumnHeader script for Excel.
@@ -1259,10 +1409,6 @@ class ExcelCell(ExcelBase):
 		gesture="kb:NVDA+shift+r")
 	def script_setRowHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
-		if not config.conf['documentFormatting']['reportTableHeaders']:
-			# Translators: a message reported in the SetRowHeader script for Excel.
-			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
-			return
 		if scriptCount==0:
 			if self.parent.setAsHeaderCell(self,isColumnHeader=False,isRowHeader=True):
 				# Translators: a message reported in the SetRowHeader script for Excel.
@@ -1382,10 +1528,14 @@ class ExcelCell(ExcelBase):
 		cellInfo=self.excelCellInfo
 		if not cellInfo:
 			return states
-		stateBits=cellInfo.states
-		for state in controlTypes.State:
-			if stateBits & state.value:
-				states.add(state)
+		nvCellStates = cellInfo.nvCellStates
+
+		for possibleCellState in NvCellState:
+			if nvCellStates & possibleCellState.value:
+				states.add(
+					# intentionally use indexing operator so an error is raised for a missing key
+					_nvCellStatesToStates[possibleCellState]
+				)
 		return states
 
 	def event_typedCharacter(self,ch):
@@ -1582,8 +1732,8 @@ class ExcelDropdown(Window):
 	excelCell=None
 
 	def _get__highlightColors(self):
-		background=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(13))
-		foreground=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(14))
+		background = colors.RGB.fromCOLORREF(GetSysColor(SysColorIndex.HIGHLIGHT))
+		foreground = colors.RGB.fromCOLORREF(GetSysColor(SysColorIndex.HIGHLIGHT_TEXT))
 		self._highlightColors=(background,foreground)
 		return self._highlightColors
 

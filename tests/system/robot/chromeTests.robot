@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2019 NV Access Limited
+# Copyright (C) 2019-2022 NV Access Limited, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 *** Settings ***
@@ -17,15 +17,20 @@ Test Teardown	default teardown
 
 *** Keywords ***
 default teardown
+	logForegroundWindowTitle
 	${screenshotName}=	create_preserved_test_output_filename	failedTest.png
 	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
 	dump_speech_to_log
 	dump_braille_to_log
-	exit chrome
+	# leaving the chrome tabs open may slow down / cause chrome to crash on appveyor
+	close_chrome_tab
 	quit NVDA
 
 default setup
-	start NVDA	standard-dontShowWelcomeDialog.ini	chrome-gestures.ini
+	logForegroundWindowTitle
+	start NVDA	standard-dontShowWelcomeDialog.ini
+	logForegroundWindowTitle
+	enable_verbose_debug_logging_if_requested
 
 *** Test Cases ***
 
@@ -120,3 +125,34 @@ Quick Nav reports target first
 Focus reports target first
 	[Documentation]	Focus target should always be reported before ancestors. Ancestors should be reported from inner to outer.
 	test_focusTargetReporting
+Table navigation with merged columns
+	[Documentation]	When navigating through a merged cell, preserve the column/row position from the previous cell.
+	test_tableNavigationWithMergedColumns
+Table sayAll commands
+	[Documentation]	Table sayAll commands
+	test_tableSayAllCommands
+Table Speak All commands
+	[Documentation]	Table speak entire row/column commands
+	test_tableSpeakAllCommands
+Table sayAll axis caching for merged cells
+	[Documentation]	Tests that axis caching for merged cells in table sayAll commands works.
+	test_tableSayAllAxisCachingForMergedCells
+focus mode is turned on on focused read-only list item
+	[Documentation]	Focused list items with a focusable list container should cause focus mode to be turned on automatically.
+	test_focus_mode_on_focusable_read_only_lists
+ARIA details role
+	[Documentation]	Test aria details roles being announced on discovery
+	test_mark_aria_details_role
+multiple ARIA details targets
+	[Documentation]	Test multiple aria details targets being announced
+	test_annotations_multi_target
+i10890
+	[Documentation]	Test sort state is announced on column header when changed with inner button
+	[Tags]	excluded_from_build
+	test_i10890
+ARIA switch role
+	[Documentation]	Test aria switch control has appropriate role and states in browse mode and when focused
+	test_ARIASwitchRole
+i13307
+	[Documentation]	ensure aria-labelledby on a landmark or region is automatically spoken when jumping inside from outside using focus in browse mode
+	test_i13307

@@ -2,6 +2,884 @@ NVDA 更新日志
 
 
 %!includeconf: ../changes.t2tconf
+%!includeconf: ./locale.t2tconf
+
+= 2023.1 =
+在“文档导航”中添加了一个新选项“段落导航模式”。
+可用于不支持原生段落导航的文本编辑器，例如记事本和 Notepad++。
+
+添加了一个新的快捷键，用于读出当前导航对象所在链接指向的网址，设为“NVDA + k”。
+
+针对带注释的网页内容（例如批注和脚注）进行了改进。 
+当按“NVDA + d”朗读注释时，可循环浏览摘要（例如“有批注，有脚注”）。
+
+支持了 Tivomatic Caiku Albatross 46/80 盲文点显器。
+
+改进了对 ARM64 和 AMD64 版 Windows 的支持。
+还有很多错误修复，尤其是针对 Windows 11。
+
+更新了 eSpeak、LibLouis、Sonic rate boost 和 Unicode CLDR 等依赖库。
+新增了格鲁吉亚语、斯瓦希里语（肯尼亚）和奇切瓦语（马拉维）盲文表。
+
+注意：
+-此版本不兼容现有的插件。
+-
+
+== 新特性 ==
+- Microsoft Excel 通过 UIA 支持自动读出行 / 列标题。（#14228）
+  - 注意：这是指通过“Ribbon”的“插入”选项卡上的“表格”按钮格式化的表格。
+  “表格样式选项”中的“第一列”和“标题行”分别对应列和行标题。
+  - 这不是指通过命名范围实现的屏幕阅读器行列标题朗读，目前 UIA 不支持该特性。
+  -
+- 添加了一个未分配的命令，用于切换光标移动时延迟字符描述。（#14267）
+- 添加了一个实验性选项，利用 Windows Terminal 中的 UIA 通知读出终端中的新文本或文本改变，从而提高稳定性和响应速度。（#13781）
+  - 请查阅用户指南，了解有关此实验性选项的限制。
+  - 
+- Windows 11 ARM64 中的 AMD64 应用程序（如 Firefox、Google Chrome 和 1Password等）现在支持使用浏览模式。（#14397）
+- 在“文档导航”中添加了一个新选项“段落导航模式”。
+这个选项添加了对单行分段（正常）和多行分段（块）导航的支持。
+可用于不支持原生段落导航的文本编辑器，例如记事本和 Notepad++。（#13797）
+- 支持读出存在多个注释。
+当按``NVDA+d``朗读注释时，可循环浏览摘要。
+例如文档中包含批注、脚注。（#14507、#14480）
+- 添加了对 Tivomatic Caiku Albatross 46/80 盲文点显器的支持。（#13045）
+- 添加了一个新的快捷键，用于读出当前导航对象所在链接指向的网址（``NVDA+k``）。
+按一次会用语音/盲文提示当前导航对象所在链接指向的网址。
+连按两次则会在独立窗口中显示，以便进行更详细的查看。（#14583）
+- 在“按键与手势”下的“工具”类别中包含一个“在对话框中显示当前导航对象所在链接指向的 URL”（默认未分配快捷键）。
+与连按两次``NVDA+k``的功能相同，但可能对使用盲文点显器的用户更有用。（#14583）
+-
+
+
+== 改进 ==
+- 将 LibLouis 盲文翻译器更新到 [3.24.0 https://github.com/liblouis/liblouis/releases/tag/v3.24.0]。（#14436）
+  - 匈牙利语、UEB 和中文盲文表（台湾）的重大更新。
+  - 支持丹麦盲文 2022 标准。
+  - 新盲文表：格鲁吉亚文学盲文、斯瓦希里语（肯尼亚）和奇切瓦语（马拉维）。
+  -
+- 更新了 Sonic 速率增强库到 commit ``1d70513``。（#14180）
+- 更新了 CLDR 到 42.0 版。（#14273）
+- 更新了 eSpeak NG 到 1.52-dev commit ``f520fecb``。（#14281、#14675）
+  - 修复了大数的朗读问题。（#14241）
+  -
+- 针对于使用了可选择状态控件的 Java 应用程序现在会读出未选中项目而不是已选中项目。（#14336）
+-
+
+
+== 错误修复 ==
+- Windows 11 修复：
+  - 支持在打开“开始”菜单时读出搜索高亮。（#13841）
+  - 修复了在 ARM 平台上， x64 应用程序会被识别为 ARM64 应用程序的错误。（#14403）
+  - 支持浏览剪贴板历史的菜单项，例如“固定”。（#14508）
+  - 在 Windows 11 22H2 及更高版本中，可以在使用鼠标和/或触摸交互时正确识别新版的系统托盘溢出区域。（#14538、#14539）
+  -
+- 支持在 Microsoft Excel 批注中使用 @ 提及时读出建议。（#13764）
+- 支持读出 Google Chrome 地址栏中选中的建议控件（切换到标签、删除建议等）。（#13522）
+- 获取格式信息时，能够明确读出在写字板或日志查看器等控件中的颜色信息，而不仅仅是朗读为“默认颜色”。（#13959）
+- 修复了在 Firefox 中，点击 GitHub Issue 页面上的“显示选项”按钮不稳定的问题。（#14269）
+- 支持读出 Outlook 2016 / 365 高级搜索对话框中的日期选择控件的标签和值。（#12726）
+- 在 Firefox、Chrome 和 Edge 中， ARIA Switch 控件会被朗读为“开关”，而不是“复选框”。（#11310）
+- 按下排序切换按钮时，NVDA 会自动读出 HTML 表格列标题上的排序状态。（#10890）
+- 使用单键导航或在浏览模式下，当焦点从外部跳入内部时，始终会自动读出路标或区域的名称。（#13307）
+- 启用了“光标移动时延迟字符描述”，且同时启用了“遇到大写字母时发出提示音”或“遇到大写字母时先提示大写”选项，NVDA 不会重复发出提示音或提示大写。（#14239）
+- 提高了 Java 应用程序中表格控件的朗读准确性。（#14347）
+- 修复了使用多个独立配置时，某些设置会意外改变的错误。（#14170）
+  - 处理了以下设置：
+    - 文档格式设置中的行缩进提示
+    - 文档格式设置中的单元格边框
+    - 盲文设置中的显示消息
+    - 盲文设置中的盲文显示跟随
+    -
+  - 在极少数情况下，安装此版本的 NVDA 时，配置文件中的这些设置可能会被意外修改。
+  - 升级到此版本后请检查您配置文件中的这些选项。
+  - 译者注： 如果您经常在不同版本的 NVDA 之间切换（尤其是降级后升级），需注意，升级此版本可能会导致配置文件被重置，建议升级前备份配置。
+- 支持在更多的语言下读出表情符号。（#14433）
+- 修复了某些元素在盲文下缺失注释的问题。（#13815）
+- 修复了在“默认”选项和“默认”选项的值之间更改时配置更改无法正确保存的问题。（#14133）
+- 在配置 NVDA 时，确保至少有一个键被定义为 NVDA 键。（#14527）
+- 当从通知区域打开 NVDA 菜单时，若没有等待被安装的更新，不会再显示“安装之前推迟的更新”选项。（#14523）
+- 修复了在 foobar2000 中无法正确读出时长超过一天的音频文件的剩余时间、已播放时间和总时间的问题。（#14127）
+- 在 Chrome 和 Firefox 等浏览器中，文件下载等通知除了以语音朗读外，还支持以盲文显示。（#14562）
+- 修复了在 Firefox 中导航到表格的第一列和最后一列时的错误。（*#14554）
+- 修复了使用 ``--lang=Windows`` 参数启动 NVDA 时，无法打开常规设置对话框的错误。（#14407）
+- 修复了在 Kindle for PC 中翻页后无法继续朗读的错误。（#14390）
+-
+
+
+== 插件以及 NVDA 核心开发者需要了解的变动 ==
+注意：这是一个打破插件 API 兼容性的版本。
+插件需要重新测试并更新其清单。
+请参阅 [开发人员指南 https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] 了解有关 NVDA API 的弃用和移除信息。
+
+- 在非英语系统环境下，运行本地系统测试，现在可顺利通过。（#13362）
+- 在 ARM 架构的 Windows 11 系统中， x64 的应用将不再被识别为 ARM64应用程序。（#14403）
+- 在新的 UIA scenarios 中，不必使用  ``SearchField`` 和 ``SuggestionListItem`` ``UIA`` ``NVDAObjects``， 因为将通过 UIA 的 ``controllerFor`` 样式公开键入的内容和搜索建议。
+此特性现可通过  ``behaviours.EditableText`` 和  ``NVDAObject`` 分别调用。（#14222）
+- UIA 调试日志类启用后，将为 UIA event handlers 和 utilies 生成更多重要日志。 （#14256）
+- 更新了 NVDAHelper 构建标准。（#13072）
+  - 现在使用 C++20标准（过去是C++17）。
+    - 现在使用 ``/permissive-`` 编译器标志禁用宽容行为，并设置 ``/Zc`` 编译器选项以实现严格一致性。
+  -
+- 某些 plugin 对象（如驱动或者插件）可在 NVDA Python 控制台获取到更多详细信息。（#14463）
+- 现在，NVDA 可完全使用 Visual Studio 2022进行编译，不再需要 Visual Studio 2019 构建工具。（#14326）
+- 若 NVDA 卡死，会生成更详尽的调试日志以方便调试。（#14309）
+- 单例的  ``braille._BgThread`` 类 已被 ``hwIo.ioThread.IoThread`` 代替。（#14130）
+  - 此类 ``hwIo.bgThread`` 的一个单独的实例(在 NVDA 核心)为点显器驱动提供线程安全的后台 I/O。 
+  - - 这个类在设计上不是单例的，鼓励插件作者在进行硬件 i/o 时创建自己的实例。
+  -
+- 可以从 ``winVersion.WinVersion.processorArchitecture`` 属性查询计算机的处理器架构。（#14439）
+- 添加了新的扩展点。（#14503）
+  - ``inputCore.decide_executeGesture``
+  - ``tones.decide_beep``
+  - ``nvwave.decide_playWaveFile``
+  - ``braille.pre_writeCells``
+  - ``braille.filter_displaySize``
+  - ``braille.decide_enabled``
+  - ``braille.displayChanged``
+  - ``braille.displaySizeChanged``
+  - 
+- 可以在合成器驱动支持的设置上将 useConfig 设置为 False。（#14601）
+-
+
+=== API 的破坏性修改 ===
+这里是所有的 API 破坏性修改。
+如您的插件在使用新 API 后遇到问题，请在 github 打开一个 issue。
+- 更改了配置规范，相关的配置键已被删除或修改：
+  -  ``[documentFormatting]`` 部分（#14233）:
+    - ``reportLineIndentation`` 是一个整数（0 到 3）而不是一个布尔值。
+    - ``reportLineIndentationWithTones`` 已经被移除。
+    - ``reportBorderStyle`` 和 ``reportBorderColor`` 已经被移除 并被替换为 ``reportCellBorders``。
+    -
+  -  ``[braille]`` 部分（#14233）:
+    - ``noMessageTimeout`` 已经被移除， 代替他的是一个 ``showMessages`` 的值。
+    - ``messageTimeout`` 不能取值为 0，而是用 ``showMessages`` 的值来代替。
+    - ``autoTether`` 已被删除； ``tetherTo`` 现可以取值为“auto”。
+    -
+  -  ``[keyboard]`` 部分（#14528）：
+    - ``useCapsLockAsNVDAModifierKey``、 ``useNumpadInsertAsNVDAModifierKey``、 ``useExtendedInsertAsNVDAModifierKey`` 已经被移除。
+    而是被 ``NVDAModifierKeys`` 代替。
+    -
+  -
+-  ``NVDAHelper.RemoteLoader64`` 已经被移除且没有可替代的方案。（#14449）
+-  ``winAPI.sessionTracking`` 的下列函数被移除且无对应的替代方案。（#14416、#14490）
+  - ``isWindowsLocked``
+  - ``handleSessionChange``
+  - ``unregister``
+  - ``register``
+  - ``isLockStateSuccessfullyTracked``
+  - 
+- 现无法通过设置 ``braille.handler.enabled``  来启用/禁用盲文处理程序。
+要以编程方式禁用盲文处理程序，请将处理程序注册到 ``braille.handler.decide_enabled``。（#14503）
+- 不再允许设置 ``braille.handler.displaySize`` 来改变盲文处理程序的显示大小。
+要以编程方式更新 displaySize，请将处理程序注册到 ``braille.handler.filter_displaySize``。
+有关如何执行此操作的示例，请参阅“brailleViewer”。（#14503）
+- ``addonHandler.Addon.loadModule`` 的用法发生了变化。（#14481）
+  - ``loadModule`` 现在用点分割，而不是反斜杠。
+  如用 "lib.example" 代替 "lib\example"。
+  - ``loadModule`` 在无法加载模块或出现错误时引发异常，而不是在不提供有关原因的信息的情况下静默返回 ``None``。
+  -
+- 以下标志已从 ``appModules.foobar2000`` 中删除，没有同等功能的替换。（#14570）
+  - ``statusBarTimes``
+  - ``parseIntervalToTimestamp``
+  - ``getOutputFormat``
+  - ``getParsingFormat``
+  -
+- 以下不再是单例——其对应的 get 方法已被删除。
+``Example.get()`` 已经变为  ``Example()``。（#14248）
+  - ``UIAHandler.customAnnotations.CustomAnnotationTypesCommon``
+  - ``UIAHandler.customProps.CustomPropertiesCommon``
+  - ``NVDAObjects.UIA.excel.ExcelCustomProperties``
+  - ``NVDAObjects.UIA.excel.ExcelCustomAnnotationTypes``
+  - 
+-
+
+
+=== 弃用 ===
+- ``NVDAObjects.UIA.winConsoleUIA.WinTerminalUIA`` 不推荐使用，将被弃用。（#14047）
+- ``config.addConfigDirsToPythonPackagePath`` 已经被移动。
+请用 ``addonHandler.packaging.addDirsToPythonPackagePath`` 代替。（#14350）
+- ``braille.BrailleHandler.TETHER_*`` 均不推荐使用。
+请用 ``configFlags.TetherTo.*.value`` 代替。（#14233）
+- ``utils.security.postSessionLockStateChanged`` 不推荐使用。
+请用 ``utils.security.post_sessionLockStateChanged`` 代替。（#14486）
+- ``NVDAObject.hasDetails``, ``NVDAObject.detailsSummary``, ``NVDAObject.detailsRole`` 不推荐使用。
+请用 ``NVDAObject.annotations`` 代替。（#14507）
+- ``keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS`` 不推荐使用，且无直接替代方案。
+可以考虑用类 ``config.configFlags.NVDAKey``。（#14528）
+- ``gui.MainFrame.evaluateUpdatePendingUpdateMenuItemCommand`` 不推荐使用。
+请用 ``gui.MainFrame.SysTrayIcon.evaluateUpdatePendingUpdateMenuItemCommand`` 代替。（#14523）
+-
+
+
+= 2022.4 =
+本版新增了一些重要的功能命令，涵盖表格的逐行/逐列导航、朗读等快捷键。
+还在用户指南中新增了“快速入门指南”部分。
+其次是一些外部依赖库更新和 Bug 修复。
+
+一如既往的对 eSpeak 和 LibLouis 进行了更新。
+值得一提的是 LibLouis 又更新/新增了中文、瑞典文、卢干达文和基尼亚卢旺达文盲文表，让 NVDA 对盲文点显器的支持再上一层楼。
+译者注：中文增加了“国家通用盲文”和“现行盲文（不标调）”两份盲文表。
+
+== 新特性 ==
+- 在用户指南中新增了“快速入门指南”部分。（#13934）
+- 新增了一个命令来读出当前所聚焦对象的快捷键。（#13960）
+  - 台式机：``shift+数字键盘2``。
+  - 笔记本：``NVDA+ctrl+shift+.``。
+  -
+- 新增了一个命令，在应用程序支持的情况下逐页移动浏览光标。（#14021）
+  - 移动到上一页：
+    - 台式机：``NVDA+上翻页``。
+    - 笔记本：``NVDA+shift+上翻页``。
+    -
+  - 移动到下一页：
+    - 台式机：``NVDA+下翻页``。
+    - 笔记本：``NVDA+shift+下翻页``。
+    -
+  -
+- 针对表格新增了以下命令。（#14070）
+  - 从当前单元格开始垂直向下朗读至当前列的最后一个单元格：``NVDA+control+alt+下光标``。
+  - 从当前单元格开始水平向右朗读至当前行的最后一个单元格：``NVDA+control+alt+右光标``。
+  - 在不移动输入焦点的情况下，从上到下垂直朗读当前列：``NVDA+control+alt+上光标``。
+  - 在不移动输入焦点的情况下，从左到右水平朗读当前行：``NVDA+control+alt+左光标``。
+  -
+- NVDA 支持 Excel 在启用了 UIA 的情况下读出“离开表格”。（#14165）
+- 支持单独开关读出行标题或列标题。（#14075）
+-
+
+
+== 改进 ==
+- 将 eSpeak NG 更新至 1.52-dev commit ``735ecdb8``。（#14060、#14079、#14118、#14203）
+  - 修正了中文普通话的发音问题。（#12952、#13572、#14197）
+  -
+- 将 LibLouis 更新至 [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]。（#14112）
+  - 新增了以下盲文表：
+    - 中文中国汉语通用盲文
+    - 卢旺达语文学盲文
+    - 卢干达语文学盲文
+    - 瑞典语非简写盲文
+    - 瑞典语部分简写盲文
+    - 瑞典语简写盲文
+    - 中文中国汉语现行盲文（不标调）（#14138）
+    -
+- NVDA 将操作系统架构信息纳入用户使用情况统计跟踪的一部分。（#14019）
+  - 译者注：系统架构信息即 32 位还是 64 位。
+-
+
+
+== 错误修复 ==
+- 使用 Windows 包管理器 CLI（又名 winget）更新 NVDA 时，Alpha 版本不会被误识别低于已发布的正式版。（#12469）
+- 支持在 Java 应用程序中正确读出分组框。（#13962）
+- 在 Bookworm、写字板或 NVDA 日志查看器等应用程序中，系统光标在“全文朗读”期间可以正确跟随。（#13420、#9179）
+- 可以正确读出 UIA 程序中，支持部分选中的复选框选中状态。（#13975）
+- 改进了 Microsoft Visual Studio、Windows Terminal 和其他基于 UIA 的应用程序的性能和稳定性。（#11077、#11209）
+  - 这些改进适用于 Windows 11 Sun Valley 2（版本 22H2）及更高版本。
+  - 现在会默认选择性注册 UIA 事件和属性改变。
+  -
+- 文本朗读、盲文输出和密码保护现在可以在 Visual Studio 2022 的嵌入式 Windows 终端控件中正常工作。（#14194）
+- NVDA 支持在使用多显示器时自动检测 DPI。
+使用高于 100% 的 DPI 设置或使用多显示器时有以下修复。
+系统版本低于 Windows 10 1809 可能仍然存在问题。
+这些修复要求与 NVDA 交互的应用程序也需要具有 DPI 感知能力。
+另请注意，Chrome 和 Edge 仍然存在已知的问题。（#13254）
+  - 可以在大多数应用程序中正确绘制视觉高亮边框。（#13370、#3875、#12070）
+  - 对于大多数应用程序，触摸屏交互现在会更加准确。（#7083）
+  - 对于大多数应用程序，鼠标导航现在会更加准确。（#6722）
+  -
+- 可以正确忽略没有状态改变（如显示器改变）时读出的方向状态（横向/纵向）。（#14035）
+- 支持读出在拖动项目过程中的状态变化，例如重新排列 Windows 10 开始菜单磁贴和 Windows 11 中的虚拟桌面。（#12271、#14081）
+- 修复了在高级设置面板中，“日志记录后播放错误提示音”选项按下“恢复默认值”按钮时未正确恢复为其默认值的错误。（#14149）
+- 修复了 在 Java 应用程序中无法使用“NVDA+f10”选择文本的错误。（#14163）
+- 修复了在 Microsoft Teams 中使用上/下箭头切换对话时会卡在菜单内的 Bug。（#14355）
+-
+
+
+== 简体中文本地化更改 ==
+- “帮助”菜单内的“最近更新”菜单项改为“升级日志”与本文档标题保持一致。
+- 盲文表：由 Cary-Rowen 和 Frank 制作并贡献的“中文中国汉语通用盲文”。
+- 盲文表：由 Cary-Rowen 添加的“中文中国汉语现行盲文（不标调）”。
+- eSpeak NG 语音：由黄冠能改进的中文普通话发音。
+- 符号：由 Cary-Rowen 添加的一系列打印相关数字符号朗读支持。
+- 由其他社区贡献者提出的若干翻译错误改进。
+
+
+== 插件以及 NVDA 核心开发者需要了解的变动 ==
+请参阅[开发人员指南 https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API]以了解有关 NVDA 的 API 弃用和删除信息。
+
+- 创建了 [NVDA API 公告邮件列表 https://groups.google.com/a/nvaccess.org/g/nvda-api/about]。（#13999）
+- NVDA 不再处理大多数 UIA 应用程序的 ``textChange`` 事件，因为这些事件会对性能产生极大的负面影响。（#11002、#14067）
+-
+
+
+=== 弃用 ===
+- ``core.post_windowMessageReceipt`` 已弃用，请用 ``winAPI.messageWindow.pre_handleWindowMessage`` 来代替。
+- ``winKernel.SYSTEM_POWER_STATUS`` 已弃用并且不鼓励使用，已移动到 ``winAPI._powerTracking.SystemPowerStatus``。
+- ``winUser.SM_*`` 常量已弃用，请用 ``winAPI.winUser.constants.SystemMetrics`` 来代替.
+-
+
+
+= 2022.3.3 =
+这是一个小版本，用于修复 2022.3.2、2022.3.1 和 2022.3 中存在的问题。
+同时还修复了一个存在的安全隐患。
+
+== 安全修复 ==
+- - 防止未经身份验证的用户可能存在的系统级访问（如 NVDA Python 控制台）。
+([GHSA-fpwc-2gxx-j9v7 https://github.com/nvaccess/nvda/security/advisories/GHSA-fpwc-2gxx-j9v7])
+-
+
+== 错误修复 ==
+- 修复了如果 NVDA 在 Windows 锁屏界面无响应后可通过锁屏界面访问用户桌面的错误。（#14416）
+- 修复了如果 NVDA 在锁屏上无响应，NVDA 会无法正常运行的错误，就好像设备仍处于锁定状态一样。（#14416）
+- 修复了 Windows“忘记了我的 PIN”过程和 Windows 更新/安装体验的辅助功能问题。（#14368）
+- 修复了在某些环境中尝试安装 NVDA 时出现的错误，例如 Windows 服务器。（#14379）
+-
+
+== 插件以及 NVDA 核心开发者需要了解的变动 ==
+
+=== 弃用 ===
+- ``utils.security.isObjectAboveLockScreen(obj)`` 已被弃用，请使用 ``obj.isBelowLockScreen``代替。（#14416）
+- ``winAPI.sessionTracking`` 在2023.1中已被弃用并删除。（#14416）
+  - ``isWindowsLocked``
+  - ``handleSessionChange``
+  - ``unregister``
+  - ``register``
+  - ``isLockStateSuccessfullyTracked``
+  - 
+- 
+
+
+= 2022.3.2 =
+这是一个修复了 2022.3.1 中引入的回归并解决安全问题的小版本。
+
+== 安全修复 ==
+- 防止未经身份验证的用户可能存在的系统级访问。
+([GHSA-3jj9-295f-h69w https://github.com/nvaccess/nvda/security/advisories/GHSA-3jj9-295f-h69w])
+-
+
+== 错误修复 ==
+- 修复了从 2022.3.1 中引入的回归，某些功能在安全屏幕上被意外禁用。（#14286）
+- 修复了从 2022.3.1 的回归，如果 NVDA 在锁屏界面启动，则登录后某些功能会被意外禁用。（#14301）
+-
+
+
+= 2022.3.1 =
+这是一个小版本，修复了发现的几个安全问题。
+请遵循负责任的披露原则像 NV Access （info@nvaccess.org） 提交您发现的安全问题。
+
+== 安全修复 ==
+- 修复了可以从用户提权到系统级权限的漏洞。
+([GHSA-q7c2-pgqm-vvw5 https://github.com/nvaccess/nvda/security/advisories/GHSA-q7c2-pgqm-vvw5])
+- 修复了一个安全问题，可以利用 NVDA 启动的竞争危害（Race Condition）访问锁屏界面上的 python 控制台。
+([GHSA-72mj-mqhj-qh4w https://github.com/nvaccess/nvda/security/advisories/GHSA-72mj-mqhj-qh4w])
+- 修复了锁定 Windows 时会缓存语音查看器文本的问题。
+([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+== 错误修复 ==
+- 防止未经身份验证的用户在锁屏界面改变语音和盲文查看器的设置。 ([GHSA-grvr-j2h8-3qm4 https://github.com/nvaccess/nvda/security/advisories/GHSA-grvr-j2h8-3qm4])
+-
+
+
+= 2022.3 =
+此版本的大部分内容是由 NVDA 社区开发者贡献的。
+这包括光标移动时的延迟字符描述以及对 windows 控制台的增强支持。
+
+本版还包含一些错误修复。
+值得注意的是，解决了最新版本的 Adobe Acrobat/Reader 在阅读 PDF 文档时会崩溃的错误。
+
+eSpeak 又一次得到了更新， 新版的 eSpeak 引入了三种新的语言： 白俄罗斯与、卢森堡语和混合海地克里奥尔语。
+
+== 新特性 ==
+- - 在 Windows 11 22H2 (Sun Valley 2) 及更高版本的命令提示符，PowerShell 以及 Linux 子系统的 Windows 控制台中：
+  - 极大的提升了性能和稳定性。（#10964）
+  - 使用 CTRL+f查找字符时，浏览光标位置会更新以跟随找到的关键词。（#11172）
+  - 默认禁用“朗读屏幕上不显示的字符（如密码等）”。
+可在“高级”面板重新启用此选项。（#11554）
+  - 支持在不滚动窗口的情况下查看超出屏幕范围的文本。（#12669）
+  - 提供了更详细的文本格式信息。 ([microsoft/Terminal PR 10336 https://github.com/microsoft/terminal/pull/10336])
+  -
+- 增加了一个“延迟字符描述”的语音选项。（#13509）
+- 增加了一个盲文选项，用以决定向前或向后滚动时是否打断语音朗读。（#2124）
+-
+
+
+== 改进 ==
+- 将 eSpeak NG 更新到 1.52-dev commit ``9de65fcb``。（#13295）
+  - 增加的语言：
+    - 白俄罗斯与
+    - 卢森堡语
+    - 混合海地克里奥尔语
+    -
+  -
+- 在启用了 UIA 接口时，支持读出 Microsoft Excel 表格的单元格合并状态。（#12843）
+- 现在，可为当前所在的单元提供更详细的描述信息（如包含批注），而不仅仅提示“包含详细信息”。（#13649）
+- NVDA 的安装大小现在可在 Windows 的“应用和功能”里看到。（#13909）
+-
+
+
+== 错误修复 ==
+- 使用 Adobe Acrobat / Reader 64 阅读 PDF 文档时不在崩溃。（#12920）
+  - 同时还需将 Adobe 软件更新到最新版本。
+  -
+- NVDA 读出的字体大小尺寸现在可翻译。（#13573）
+- 对于 Java 应用程序，找不到窗口句柄的  Java Access Bridge 事件会被忽略。    
+这会提高包括 IntelliJ IDEA 在内的某些 Java 应用程序的性能。（#13039）
+- 提高了读出 LibreOffice Calc 多选单元格的性能，且 Calc 不会再出现崩溃的情况。（#13232）
+- 使用不同用户登录 Windows 时， Microsoft Edge 的无障碍支持依然可用。（#13032）
+- ESpeapk 的语速加倍关闭后，语速的下降不会在 %99 和 %100 之间横跳。（#13876）
+- 修复可同时打开两个“按键与手势”对话框的 bug。（#13854）
+-
+
+== 简体中文翻译条目更改 ==
+为持续优化 NVDA 的简体中文用户体验，我们在本版对相关翻译条目进行了以下更改，现将重要更改条目列举如下：
+
+- 将 磅（字体大小） 恢复为“pt”以保持统一；
+- 将输入帮助，用户指南等场景所涉及的“小键盘”统一为“数字键盘”（如“数字键盘删除”即为“数字小键盘点”）。
+
+- 对以下由简体中文本地化团队增加的快捷键进行微调以保证 NVDA 原生功能优先（只涉及笔记本的键盘分配）：
+| 名称 | 台式机键盘 | 笔记本键盘 | 描述 |
+| 移动导航对象到上一个对象 | NVDA + 小键盘数字9 | NVDA + Control+ 上翻页 | 移动导航对象到上一个对象（跨越对象层级） |
+| 移动导航对象到下一个对象 | NVDA + 小键盘数字3 | NVDA + Control + 下翻页 | 移动导航对象到下一个对象（跨越对象层级） |
+
+== 插件以及 NVDA 核心开发者需要了解的变动 ==
+- 升级 Comtypes 版本到 1.1.11。（#12953）
+- 在内置的 Windows 控制台 (``conhost.exe``) 包含 级别  2 或以上版本的 NVDA API (``FORMATTED``) ，或使用 Windows 11 version 22H2 (Sun Valley 2)时， UIA 默认启用。（#10964）
+  - 可在  NVDA “高级”面板中修改“Windows 控制台支持”选项来改变此设置。。
+  - 要想确认当前 Windows 控制台的 NVDA API 级别，可以在选中“启用 UIA支持（如果可用）”选项的前提下打开 Windows 控制台后按下 “NVDA+f1”显示的“NVDA 日志查看器”输出的日志里查看。
+  -
+- 在 Chromium 中，即使 IA2 在 MSAA 为文档对象公开 ``STATE_SYSTEM_BUSY`` ，缓冲区依然照常加载。（#13306）
+- 创建了一个 ``featureFlag`` 的配置类，用来标志实验性特性。 如需了解详情请看 ``devDocs/featureFlag.md``。（#13859）
+-
+
+
+=== 弃用 ===
+在 2022.3 这个版本里没有弃用计划。
+
+= 2022.2.4 =
+这是一个修复安全问题的小版本。
+
+== 错误修复 ==
+- 修复了可以在锁屏界面的日志查看器中打开 NVDA python 控制台的漏洞。
+([GHSA-585m-rpvv-93qg https://github.com/nvaccess/nvda/security/advisories/GHSA-585m-rpvv-93qg])
+-
+
+= 2022.2.3 =
+这是一个补丁版本，仅用于修复 2022.2.2 中引入的有关 API 的意外破坏。
+
+== 错误修复 ==
+- 修复了 NVDA 在进入安全桌面时没有读出“安全桌面”的错误。
+这导致 NVDA 远程插件无法识别安全桌面。（#14094）
+-
+
+= 2022.2.2 =
+这是一个补丁版本，仅用于修复 2022.2.1 中引入的有关按键与手势的错误。
+
+== 错误修复 ==
+- 修复了偶尔执行按键与手势失败的错误。（#14065）
+-
+
+= 2022.2.1 =
+这是一个小版本，修复了发现的几个安全问题。
+请遵循负责任的披露原则像 NV Access （info@nvaccess.org） 提交您发现的安全问题。
+
+== 安全修复 ==
+- 修复可能在锁屏中运行 Python 控制台执行代码的漏洞。 (GHSA-rmq3-vvhq-gp32)
+- 修复可用对象导航跳过锁屏界面的漏洞。 (GHSA-rmq3-vvhq-gp32)
+-
+
+== 插件以及 NVDA 核心开发者需要了解的变动 ==
+
+=== 弃用 ===
+这些特性暂时没有移除的计划。
+弃用的别名在没有相关的通知之前会保留。
+请测试新的 API 并提供反馈。
+对于插件作者，如果这些更改使 API 无法满足您的需求，请打开一个 GitHub Issue。
+
+- ``appModules.lockapp.LockAppObject`` 需用  ``NVDAObjects.lockscreen.LockScreenObject`` 代替 (GHSA-rmq3-vvhq-gp32) 
+- ``appModules.lockapp.AppModule.SAFE_SCRIPTS`` 须用 ``utils.security.getSafeScripts()`` 代替。 (GHSA-rmq3-vvhq-gp32) 
+-
+
+= 2022.2 =
+该版本包含许多错误修复。
+尤其在基于 Java 的应用程序、盲文点显器和 Windows 功能方面有一些显著的改进。
+
+增加了新的表格导航快捷键。
+更新了 Unicode CLDR。
+更新了 LibLouis ，增加了一套新的德语盲文表。
+
+
+== 新特性 ==
+- 支持与 Microsoft Office 产品中的 Microsoft Loop Components 进行交互。（#13617）
+- 添加了新的表格导航快捷键。（#957）
+ - ``control+alt+home/end`` 移动到第一列/最后一列。
+ - ``control+alt+pageUp/pageDown`` 移动到第一行/最后一行。
+ -
+- 添加了一个未分配的手势来循环切换语言和方言切换模式开关。（#10253）
+-
+
+== 改进 ==
+- 将 NSIS  更新到了 3.08。（#9134）
+- 将 CLDR 更新到了 41.0。（#13582）
+- 将 LibLouis 盲文翻译器更新到了 [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]。（#13775）
+  - 新盲文表：德语2级（详细）
+  -
+- 为“忙碌指示器”控件添加了新角色。（#10644）
+- NVDA 现在会在无法执行 NVDA 操作时发出通知。（#13500）
+  - 具体如下：
+    - 使用了 Windows 应用商店版本的 NVDA。
+    - 在安全环境下。
+    - 等待模态对话框的响应。
+    -
+  -
+-
+
+
+== 错误修复 ==
+- 基于 Java 的应用程序中存在的以下问题得到了修复：
+  - 支持读出只读状态。（#13692）
+  - 支持正确读出启用/禁用状态。（#10993）
+  - 支持读出对象的快捷键。（#13643）
+  - 支持用语音朗读或提示音指示进度条进度。（#13594）
+  - 修复了 NVDA 在向用户呈现信息时可能会错误地从 Java 小部件中删除文本的问题。（#13102）
+  - 支持读出切换按钮的状态。（#9728）
+  - 支持正确读出包含多窗口的 Java 应用程序的窗口标题。（#9184）
+  - 支持读出选项卡控件的位置信息。（#13744）
+  -
+- 盲文相关修复：
+  - 修复了在 Mozilla 富文本编辑控件中导航某些文本时的盲文输出问题，例如在 Thunderbird 中撰写消息。（#12542）
+  - 当盲文自动连接并在启用鼠标导航的情况下移动鼠标时，文本导航命令会使用语音朗读的内容更新盲文显示。（#11519）
+  - 支持在使用文本查看命令后正常滚动盲文显示。（#8682）
+  -
+- NVDA 安装程序支持在包含特殊字符的目录中运行。（#13270）
+- 在 Firefox 中，当 aria-rowindex、aria-colindex、aria-rowcount 或 aria-colcount 属性无效时，NVDA 支持读出网页中的项目。（#13405）
+- 使用表格导航在合并的单元格中导航时，光标不会再切换行或列。（#7278）
+- 在 Adobe Reader 中阅读非交互式 PDF 时，现在会读出表单（例如复选框和单选按钮）的类型和状态。（#13285）
+- 支持在安全模式下使用 NVDA 菜单中的“重置设置为默认值”。（#13547）
+- 当 NVDA 退出时，会释放所有已锁定的鼠标键，在以前鼠标键将保持锁定状态。（#13410）
+- 支持在 Visual Studio 中读出行号。（#13604）
+  - 请注意，如果要读出行号，必须在 Visual Studio 和 NVDA 中启用行号。
+  -
+- 支持在 Visual Studio 中正确读出行缩进。（#13574）
+- 支持在最新的 Windows 10 和 11 中读出开始菜单搜索结果的详细信息。（#13544）
+- 在 Windows 10 和 11 计算器版本 10.1908 及更高版本中，NVDA 会在按下更多命令时读出结果，例如科学计算器模式下的相关命令。（#13383）
+- 在 Windows 11 中，支持导航某些用户界面元素并与之交互，例如使用鼠标和触摸交互的任务栏和任务视图。（#13506）
+- 在 Windows 11 的记事本中支持读出状态栏的内容。（#13688）
+- “高亮显示导航对象”在启用后可以立即生效。（#13641）
+- 修复了无法朗读某些单列列表视图中的列表项的问题。（#13659, #13735）
+- 修复了英语和法语的 eSpeak 自动语言切换回退到英国英语和法语（法国）。（#13727）
+- 在尝试切换到之前安装的语言时修复 OneCore 自动语言切换。（#13732）
+-
+
+
+== 插件以及 NVDA 核心开发者需要了解的变动 ==
+- 支持使用 Visual Studio 2022 (17.0) 编译 NVDA 依赖项。对于开发和发布版本，仍使用 Visual Studio 2019 进行编译。 (#13033)
+- 通过 accSelection 检索选定子项的数量时，可以正确处理由“IAccessible::get accSelection”返回负子 ID 或 IDispatch 的情况。 (#13277)
+- 新的便利函数 “registerExecutableWithAppModule” 和 “unregisterExecutable” 已添加到 “appModuleHandler” 模块中。该特性可用于使用多个可执行文件的单个 App Module。 (#13366)
+-
+
+=== 弃用 ===
+这些是提议的重大 API 更改。
+弃用的 API 在指定版本发布前仍然可用。
+如果未明确指定版本，则表明尚未确定移除计划。
+注意，会尽可能遵循删除路线图，但也可能会发生变化。
+请测试新的 API 并提供反馈。
+对于插件作者，如果这些更改使 API 无法满足您的需求，请打开一个 GitHub Issue。
+
+
+- ``appModuleHandler.NVDAProcessID`` 已弃用，请改用 ``globalVars.appPid``。 (#13646)
+- ``gui.quit`` 已弃用，请改用 ``wx.CallAfter(mainFrame.onExitCommand, None)``。 (#13498)
+  -
+% Insert new list items here as the alias appModule table should be kept at the bottom of this list
+- 以下 appModules 已被标记为已弃用。要导入其中任意一项请从替代模块中导入。 (#13366)
+-
+
+|| 弃用模块 | 替代模块 |
+| azuredatastudio | code |
+| azuredatastudio-insiders | code |
+| calculatorapp | calculator |
+| code - insiders | code |
+| commsapps | hxmail |
+| dbeaver | eclipse |
+| digitaleditionspreview | digitaleditions |
+| esybraille | esysuite |
+| hxoutlook | hxmail |
+| miranda64 | miranda32 |
+| mpc-hc | mplayerc |
+| mpc-hc64 | mplayerc |
+| notepad++ | notepadPlusPlus |
+| searchapp | searchui |
+| searchhost | searchui |
+| springtoolsuite4 | eclipse |
+| sts | eclipse |
+| teamtalk3 | teamtalk4classic |
+| textinputhost | windowsinternal_composableshell_experiences_textinput_inputapp |
+| totalcmd64 | totalcmd |
+| win32calc | calc |
+| winmail | msimn |
+| zend-eclipse-php | eclipse |
+| zendstudio | eclipse |
+
+
+= 2022.1 =
+此版本针对 Microsoft Office 提供了 UIA 支持的重大改进。
+在 Windows 11 下，对于 Microsoft Office 16.0.15000 及后续版本，NVDA 浏览 Word 文档时，将默认启用 UIA。
+与原有的对象模型访问相比，开启 UIA 后的性能提升显著。
+
+针对Seika Notetaker（清华 Mini 系列）、Papenmeier 以及使用 HID 协议的点显器，本版在驱动支持方面提供了改进。
+对于 Windows 11 中的计算器、控制台、Terminal、邮件以及表情符号面板等系统应用，也修复了其原本存在的部分 Bug，
+
+eSpeak-NG 语音合成器以及 LibLouis 盲文翻译模块都得到了升级，并添加了新的日语、、德语以及加泰罗尼亚语的盲文表。
+
+注：
+ - 此版本将破坏现有插件的兼容性。
+ -
+
+
+== 新特性 ==
+- Windows 11下开启UIA后，支持在MS Excel中读出注释。 (#12861)
+- Windows 11下基于UIA接口，在最新的MS Word开发版中，能够通过语音和盲文呈现书签、草稿、批注及已解决批注等信息。 (#12861)
+- 新的--lang命令行参数允许覆盖已设定的NVDA语言。 (#10044)
+- NVDA能够针对未知和未被任何插件使用的命令行参数发出警告。 (#12795)
+- 基于UIA 支持， NVDA 能够在Microsoft Word中，利用MathPlayer朗读和浏览Office的数学公式。 (#12946)
+  - 若需使用该功能，你必须运行Microsoft Word 365 或2016 build 14326 及后续版本。 
+  - 必须手动将MathType 公式转换为 Office Math，方法是：选中公式并在上下文菜单中选择“Equation”对象 -> 转换为 Office Math。
+  -
+- 读出“有详细信息”以及综述详细信息关系的相关命令拓展至焦点浏览模式下可用。 (#13106)
+- 通过USB或蓝牙连接 Seika Notetaker 设备后，支持自动检测连接。 (#13191, #13142)
+  - 该功能所涉及的机型包括：Seika Notetaker Mini16、Mini24以及包含40个显示单元的V6和V6Pro。
+  - 目前也同样支持手动选择蓝牙Com接口。
+  -
+- 增加切换盲文查看器的命令；无默认的关联手势。 (#13258)
+- 增加了一组在盲文键盘上模拟按下货放开多个修饰键的命令。 (#13152)
+- 语音字典对话框内的“移除所有”按钮可用于清除所有的字典条目。 (#11802)
+- 增加对于Windows 11系统计算器的支持。 (#13212)
+- Windows 11下开启UIA，能够在Microsoft Word中读出行数、区域数与列数。 (#13283)
+- 在Windows 11 下的 Microsoft Office 16.0.15000 及其后版本中，NVDA 将默认通过 UIA 访问 Microsoft Word 文档，相较于传统的对象模型方式性能提升显著。 (#13437)
+ - 除了 Word 文档本身， Microsoft outlook中的消息阅读器与编辑器也将受益于该特性。 
+ -
+-
+
+
+== 改进 ==
+- Espeak-ng 升级至 1.51-dev commit ``7e5457f91e10``。 (#12950)
+- 将 liblouis 盲文翻译模块升级至 [3.21.0 https://github.com/liblouis/liblouis/releases/tag/v3.21.0]。 (#13141, #13438)
+  - 添加新盲文表：日语（kantenji）文学盲文。
+  - 添加德语6点计算机盲文。
+  - 添加加泰罗尼亚语1级盲文。
+  - 
+- 在（免费办公套件） LibreOffice Calc 7.3及以上版本中， NVDA可读出选中以及合并的单元格。 (#9310, #6897)
+- 升级 Unicode Common Locale Data Repository (CLDR) 至 40.0。 (#12999)
+- ``NVDA键+数字键盘删除键`` 默认读出当前插入符或当前焦点对象的位置信息。 (#13060)
+- ``NVDA键+Shift+数字键盘删除键`读出浏览光标的位置信息。 (#13060)
+- 为 Freedom Scientific 点显器添加切换修饰键的默认关联。 (#13152)
+- 不在通过读出文本格式的命令 (NVDA+F) 读出“基准线”。 (#11815)
+- 不在默认分配读出长描述的手势。 (#13380)
+- 默认快捷键 ``NVDA+d`` 用于读出详细信息摘要。 (#13380)
+- 安装 MathPlayer 后，需重新启动 NVDA。 (#13486)
+-
+
+== 错误修复 ==
+- 打开某些 Office 程序时，剪贴板管理器将不在错误地获取焦点。 (#12736)
+- 若用户将鼠标的主按件从左键改换至右键， 在诸如网页浏览器等应用中， NVDA 将不会偶尔出现按下右键弹出上下文菜单而非激活项目的情况。 (#12642)
+- 针对诸如开启了 UIA 的Microsoft Word 等文本控件，若将浏览光标移至最后一行，能够正确读出“底部”。 (#12808)
+- 在 64 位版本的 Windows 下，NVDA 可以获取到 system32 文件夹内的二进制文件的应用程序名称和版本。 (#12943)
+- 增强对终端程序输出朗读的一致性。 (#12974)
+  - 请注意，在某些情况下，在一行的中间插入或删除字符时，插入点后面的字符可能会再次被读出。
+  -
+- 开启 UIA 后，在 MS Word中：浏览模式下的标题快速导航将不会卡在文档的最后一个标题上，该标题也不会在 NVDA 的元素列表中显示两次。 (#9540)
+- 在 Windows 8 及后续版本中，只需按下快捷键 NVDA+end （台式机按键方案） / NVDA+shift+end （笔记本键盘方案），即可读出资源管理器状态栏信息。 (#12845)
+- 修复在Skype企业版聊天界面不会自动朗读收到的信息。 (#9295)
+- 修复Windows 11 系统下，使用 Sapi 5 语音引擎时的音频闪避功能。 (#12913)
+- 在Windows 10 的计算器中，NVDA可读出历史及记忆列表的标签。 (#11858)
+- 修复HID 盲文设备诸如页面滚动、光标定位等快捷键。 (#13228)
+- Windows 11 邮件客户端：在阅读长邮件的过程中，在APP间切换过焦点之后，NVDA 的焦点仍可以停留在邮件的正文内容部分。 (#13050)
+- HID 盲文设备：能够通过盲文点显器键入（诸如 空格键+第4点）这类组合件，并成功实现相应功能。 (#13326)
+- 修复了同时打开多个设置对话框的问题。 (#12818)
+- 修复了系统从休眠状态恢复后部分Focus Blue 点显器停止响应的问题。 (#9830)
+- 在开启读出上标和下标的选项后，不再错乱的朗读“基准线”。 (#11078)
+- 在Windows 11 下，即使选中了表情符号，NVDA在表情面板中的浏览体验也不会受到影响。 (#13104)
+- 在使用 Windows 控制台或终端应用时，防止一个 Bug 触发两次报错的情况出现。 (#13261)
+- 修复在诸如 Reaper 等64位应用中，部分列表项目无法朗读的情况。 (#8175)
+- 在 Edge 浏览器的下载管理器中，一旦最近下载列表项获得焦点，NVDA将自动切换为焦点模式。 (#13221)
+- NVDA将不再导致64位版本的 Notepad++ 8.3及以上版本的程序崩溃。 (#13311)
+- 即使启用了文档保护模式，Adobe Reader 也不会在启动时出现程序崩溃。 (#11568)
+- 修复了选中 Papenmeier 点显器驱动导致 NVDA崩溃的错误。 (#13348)
+- 开启 UIA 后，在 MS Word 中：当从空白表格单元格移动到有内容的单元格，或从文档末尾移动到正文区域时，不会错误的读出页码和其他格式信息。 (#13458, #13459)
+- 修复了在 Google chrome 100 中页面加载后，无法读出标题且无法自动朗读的错误。 (#13571)
+- 修复了启用“读出 NVDA 快捷键”的情况下，重置设置为默认值会导致 NVDA 崩溃的错误。 (#13634)
+-
+
+== 简体中文翻译条目更改 ==
+- 对“点显器选择”对话框内的 Seika 和 Seika Notetaker 进行改进：体现相应选项具体支持的型号；
+- 对行/列读法进行改进，诸如：“列 a， 行 b”现在朗读为“a 列，b 行”；
+- 将 pt 翻译为“磅”；
+- 将 exactly 翻译为“固定值”；
+- 改进“单倍行距”、“1.5倍行距”、“2倍行距”的翻译与 Microsoft Word 保持一致；
+- 修复将“粗体”误读作“黑体”；
+- 对部分功能的键盘帮助进行了改进 / 修正；
+- 补充 Unicode 盲文，7-8点的组合；
+- 对颜色提示进行了改进 / 修正，具体如下：
+  - red-orange=橘红色
+  - orange-yellow=橙黄色
+  - yellow-green=黄绿色
+  - green-aqua=水绿色
+  - aqua=青色
+  - aqua-blue=海蓝色
+  - blue-purple=蓝紫色
+  - purple-pink=粉紫色
+  - pink-red=粉红色
+  - very light grey=淡灰色
+  - very dark grey=暗灰色
+  - bright {color}=亮 {color}
+  - dark {color}=深 {color}
+  - very dark {color}=暗 {color}
+  - light pale {color}=浅灰{color}
+  - pale {color}=灰{color}
+  - very dark pale {color}=深灰 {color}
+  - very dark pale {color}=暗灰 {color}
+  - dark {color} grey=深 {color} 灰色
+  - very dark {color} grey=暗 {color} 灰色
+-
+
+
+== 插件以及 NVDA 核心开发者需要了解的变动 ==
+- 注：本版将破坏原有插件的兼容性，因此开发者必须重新测试并更新插件清单。
+- 尽管 NVDA 的构建仍需要 Visual Studio 2019 支持，不过（诸如 2022）等新版 Visual Studio 与2019版同时安装，也不会导致 NVDA 构建失败。 (#13033, #13387)
+- 升级 SCons 至 4.3.0 版。 (#13033)
+- 升级 py2exe 至 0.11.0.1 版。 (#12357, #13066)
+- 以 ``apiLevel`` 替代被移除的 ``NVDAObjects.UIA.winConsoleUIA.WinConsoleUIA.isImprovedTextRangeAvailable``。 (#12955, #12660)
+- 从 ``sysTreeView32`` 移除 ``TVItemStruct``。 (#12935)
+-  从 Outlook 应用模块中移除 ``MessageItem``。 (#12935)
+- ``audioDucking.AUDIODUCKINGMODE_*`` 常量现为一个 ``DisplayStringIntEnum``. (#12926)
+  - 其使用需被替换为 ``AudioDuckingMode.*``
+  - ``audioDucking.audioDuckingModes`` 被 ``AudioDuckingMode.*.displayString`` 所替代
+  -
+- ``audioDucking.ANRUS_ducking_*`` 常量的使用需被 ``ANRUSDucking.*`` 所替代。 (#12926)
+- ``synthDrivers.sapi5`` 的改变 (#12927):
+  - ``SPAS_*`` 的使用需被 ``SPAudioState.*`` 所替代
+  - ``constants.SVSF*`` 的使用需被 ``SpeechVoiceSpeakFlags.*`` 所替代
+    - 注： 替代 ``SVSFlagsAsync`` 的是 ``SpeechVoiceSpeakFlags.Async`` 而不是 ``SpeechVoiceSpeakFlags.lagsAsync``
+    -
+  - ``constants.SVE*`` 的使用需被 ``SpeechVoiceEvents.*`` 所替代
+  -
+- ``soffice`` 应用模块移除了以下函数和类 ``JAB_OOTableCell``, ``JAB_OOTable``, ``gridCoordStringToNumbers``. (#12849)
+- ``core.CallCancelled`` 现为 ``exceptions.CallCancelled``. (#12940)
+- ``core`` 和 ``logHandler`` 中所有以 RPC 开头的常量被移至 ``RPCConstants.RPC`` 枚举。 (#12940)
+- 建议 将``mouseHandler.doPrimaryClick`` 和 ``mouseHandler.doSecondaryClick`` 函数用于点击鼠标以执行诸如激活（主要按键）或次要按键（弹出上下文菜单）这类逻辑动作，
+而不是使用 ``executeMouseEvent`` 并专门指定鼠标左键或右键
+这确保代码能够将更换鼠标主要案件的权限下放给 Windows 用户。 (#12642)
+- 移除 ``config.getSystemConfigPath`` ，未提供相应的替代项。 (#12943)
+- 移除 ``shlobj.SHGetFolderPath`` ，请使用 ``shlobj.SHGetKnownFolderPath`` 代替。 (#12943)
+- 移除常量 ``shlobj`` ，为 ``SHGetKnownFolderPath`` 的使用创建新枚举 ``shlobj.FolderId``。 (#12943)
+- ``diffHandler.get_dmp_algo`` 和 ``diffHandler.get_difflib_algo`` 分别为 ``diffHandler.prefer_dmp`` 和 ``diffHandler.prefer_difflib`` 所替代。 (#12974)
+- 移除 ``languageHandler.curLang`` ，欲获取当前 NVDA 的语言可用 ``languageHandler.getLanguage()``。 (#13082)
+- 可以在 appModule 上实现 ``getStatusBarText``，来自定义NVDA从状态栏获取文本的方式。  (#12845)
+- 移除 ``globalVars.appArgsExtra`` has been removed.。 (#13087)
+  如果您的插件需要处理额外的命令行参数，可参看 ``addonHandler.isCLIParamKnown`` 的说明文档以及开发者指南获取详细信息。
+  -
+- UIA 控制模块以及其他 UIA 支持模块如今都包含于 UIAHandler 包中。 (#10916)
+  - ``UIAUtils`` 现为 ``UIAHandler.utils``
+  - ``UIABrowseMode`` 现为 ``UIAHandler.browseMode``
+  - ``_UIAConstants`` 现为 ``UIAHandler.constants``
+  - ``_UIACustomProps`` 现为 ``UIAHandler.customProps``
+  - ``_UIACustomAnnotations`` 现为 ``UIAHandler.customAnnotations``
+- ``IAccessibleHandler`` ``IA2_RELATION_*`` 常量被 ``IAccessibleHandler.RelationType`` 枚举所取代。 (#13096)
+  - 移除 ``IA2_RELATION_FLOWS_FROM``
+  - 移除 ``IA2_RELATION_FLOWS_TO``
+  - 移除 ``IA2_RELATION_CONTAINING_DOCUMENT``
+  -
+- 从 ``languageHandler`` 中移除 ``LOCALE_SLANGUAGE``、 ``LOCALE_SLIST`` 以及 ``LOCALE_SLANGDISPLAYNAME``，使用 ``languageHandler.LOCALE`` 的成员替代。 (#12753)
+- 从 Minhook 转至 Microsoft Detours，将之作为 NVDA 的挂钩库。 通过此库所截获的信息主要用于支持显示模型。 (#12964)
+- 移除 ``winVersion.WIN10_RELEASE_NAME_TO_BUILDS``。 (#13211)
+- 现在， SCons 会提示支持使用系统内的所有逻辑处理器进行构建。
+这可以显著减少在多核系统内的构建时间。 (#13226, #13371)
+- 移除 ``characterProcessing.SYMLVL_*`` 常量，请使用 ``characterProcessing.SymbolLevel.*`` 替代。 (#13248)
+- 从插件管理器中移除函数 ``loadState`` 和 ``saveState``，请使用 ``addonHandler.state.load`` 和 ``addonHandler.state.save`` 替代。. (#13245)
+- 移动 NVDA帮助 的 UWP/OneCore 交互层 [从 C++/CX 移至 C++/Winrt https://docs.microsoft.com/en-us/windows/uwp/cpp-and-winrt-apis/move-to-winrt-from-cx]. (#10662)
+- 现在必须继承 ``DictionaryDialog`` 才能使用。 (#13268)
+- 不推荐使用``config.RUN_REGKEY``、 ``config.NVDA_REGKEY``，请使用 ``config.RegistryKey.RUN``、 ``config.RegistryKey.NVDA`` 替代，在2023版软件中，其将被移除。 (#13242)
+- 不推荐使用 ``easeOfAccess.ROOT_KEY``、 ``easeOfAccess.APP_KEY_PATH``，请使用 ``easeOfAccess.RegistryKey.ROOT``、 ``easeOfAccess.RegistryKey.APP`` 替代，在2023版软件中，其将被移除。 (#13242)
+- ``easeOfAccess.APP_KEY_NAME`` 将在2023版软件中被移除，不推荐使用。 (#13242)
+- ``DictionaryDialog`` 和 ``DictionaryEntryDialog`` 从 ``gui.settingsDialogs`` 移至 ``gui.speechDict``。 (#13294)
+- IAccessible2 关系 被至于 IAccessible2 对象的开发者信息中。 (#13315)
+- 移除 ``languageHandler.windowsPrimaryLCIDsToLocaleNames``，使用 ``languageHandler.windowsLCIDToLocaleName`` 或 ``winKernel.LCIDToLocaleName`` 替代。 (#13342)
+- 推荐优先使用UIA 对象的“UIAAutomationId”属性，而不是“cachedAutomationId”。 (#13125, #11447)
+  - 如果直接从元素中获取，可以使用``cachedAutomationId``。
+  -
+- 移动 ``NVDAObjects.window.scintilla.CharacterRangeStruct`` 至 ``NVDAObjects.window.scintilla.Scintilla.CharacterRangeStruct``。 (#13364)
+- 移除 bool 型的 ``gui.isInMessageBox``，请使用 ``gui.message.isModalMessageBoxActive`` 函数替代。 (#12984, #13376)
+- ``controlTypes`` 被拆分为不同的子模块。 (#12510, #13588)
+  - 虽仍然有效，但应该弃用以下内容：
+  - ``ROLE_*`` 和 ``STATE_*`` 应使用 ``Role.*`` 和 ``State.*`` 代替。
+  - ``roleLabels``、``stateLabels`` 和 ``negativeStateLabels``，如 ``roleLabels[ROLE_*]`` 应替换为其等价的用法 ``Role.*.displayString`` 或 ``State.*.negativeDisplayString``。
+  - ``processPositiveStates`` 和 ``processNegativeStates`` 应使用 ``processAndLabelStates`` 代替。
+    -
+  -
+- Excel 单元格状态常量 (``NVSTATE_*``) 现为 ``NvCellState`` 枚举中的值，在 ``NVDAObjects/window/excel.py`` 中的 ``NvCellState`` 枚举内作为镜像，并通过 _nvCellStatesToStates 映射于 ``controlTypes.State``。 (#13465)
+- ``EXCEL_CELLINFO`` 的结构成员 ``state`` 现为 ``nvCellStates``。
+- 移除 ``mathPres.ensureInit``， MathPlayer 将随 NVDA的启动而初始化。 (#13486)
+-
+
+
+= 2021.3.5 =
+这是一个小版本，修复了发现的几个安全问题。
+请遵循负责任的披露原则像 NV Access （info@nvaccess.org） 提交您发现的安全问题。
+
+== 安全修复 ==
+- 修复了安全通报 ``GHSA-xc5m-v23f-pgr7`` 中的漏洞。
+  - 标点符号读音对话框在安全模式下被禁用。
+  -
+-
+
+
+= 2021.3.4 =
+这是一个小版本，修复了发现的几个安全问题。
+请遵循负责任的披露原则像 NV Access （info@nvaccess.org） 提交您发现的安全问题。
+
+== 安全修复 ==
+- 修复了安全通报 ``GHSA-354r-wr4v-cx28`` 中的漏洞。 (#13488)
+  - 当 NVDA 在安全模式下运行时，删除“重启并启用调试日志记录”的功能。
+  - 当 NVDA 在安全模式下运行时，删除“安装之前推迟的更新”功能
+  -
+- 修复了安全通报 ``GHSA-wg65-7r23-h6p9`` 中的漏洞。 (#13489)
+  - 删除在安全模式下打开“按键与手势”对话框的功能。
+  - 删除在安全模式下打开"默认"、“临时”和“语音”字典对话框的功能。
+  -
+- 修复了安全通报 ``GHSA-mvc8-5rv9-w3hx`` 中的漏洞。 (#13487)
+  - wx GUI 检查工具在安全模式下被禁用。
+  -
+-
+
+
+= 2021.3.3 =
+此版本与 2021.3.2 相同。
+NVDA 2021.3.2 中存在一个错误——将版本标记成了 2021.3.1。
+该版本将版本纠正为 2021.3.3。
+
+
+= 2021.3.2 =
+这是一个小版本，修复了发现的几个安全问题。
+请遵循负责任的披露原则像 NV Access （info@nvaccess.org） 提交您发现的安全问题。
+
+== 错误修复 ==
+- 安全修复：在 Windows 10 和 Windows 11 上禁止对象导航到锁屏之外。 (#13328)
+- 安全修复：在安全屏幕上禁用插件对话框。 (#13059)
+- 安全修复：在安全屏幕上禁用了 NVDA 的上下文帮助。 (#13353)
+-
+
+
+= 2021.3.1 =
+这是一个小版本，修复了 2021.3 中的几个问题。
+
+
+== 改进 ==
+- 当另一个盲文驱动程序可用时，不再首选新的 HID 盲文协议。 (#13153)
+- 可以从高级设置面板中提供的选项禁用新的 HID 盲文协议。 (#13180)
+-
+
+== 错误修复 ==
+- 恢复了路标的盲文缩写。 (#13158)
+- 修复了 Humanware Brailliant 和 APH Mantis Q40 盲文点显器在使用蓝牙时自动检测不稳定的情况。 (#13153)
+-
 
 
 = 2021.3 =
@@ -453,7 +1331,7 @@ NVDA 中的COM 注册修复工具现在能够解决更多的系统问题。
 - 您可以切换 NVDA 的触摸屏支持。在 NVDA 的“输入首饰”的“触摸屏”分类下添加了一个选项。默认热键为 NVDA + control + alt + t。 (#9682)
 - 添加了新版德语盲文表。 (#11268)
 - NVDA 能够检测到 UIA 文本控件中的止读状态。 (#10494)
-- 在所有浏览器中，语音或盲文都可以报告存在的标记（高亮文本）等内容。 (#11436)
+- 在所有浏览器中，语音或盲文都可以读出存在的标记（高亮文本）等内容。 (#11436)
 - 可在 NVDA 的“文档格式”设置中打开或关闭该选项。
  - 可以从 NVDA 的“输入首饰”对话框中添加新的模拟系统按键。 (#6060)
 - 使用方法是定位到“模拟系统按键”类别，然后按下“添加”按钮。
@@ -589,7 +1467,7 @@ NVDA 中的COM 注册修复工具现在能够解决更多的系统问题。
 - 在Firefox中，当在启用了高级Web界面的情况下加载Mastodon时，所有时间轴现在都可以在浏览模式下正确呈现。 (#10776)
 - 在浏览模式下，NVDA现在朗读“未选中”的未选中复选框，而以前有时没有选中。 (#10781)
 - 当前ARIA开关不再读出令人困惑的信息，例如“未按下选中”或“按下选中”。 (#9187)
-- SAPI4语音合成器不应再拒绝报读某些文本。 (#10792)
+- SAPI4语音合成器可以朗读某些特殊文本。 (#10792)
 - NVDA现在可以再次读取Microsoft Word中的数学方程式并与之交互。 (#10803)
 - 如果在选择文本时按下光标键，NVDA将再次读出在浏览模式下未选择的文本。 (#10731).
 - 当前如果初始化eSpeak时出错，则NVDA不再退出。 (#10607)
@@ -1265,7 +2143,7 @@ NVDA 中的COM 注册修复工具现在能够解决更多的系统问题。
 == 新特性 ==
 - 添加了盲文设置“无限期显示消息”。 (#6669)
 - 在Microsoft Outlook消息列表中，NVDA现在会读出消息是否已经标记。 (#)6374)
-- 在Microsoft PowerPoint中，当编辑幻灯片时，现在会报告形状的确切类型（例如三角形，圆形，视频或光标），而不仅提示“形状”。 (#7111)
+- 在Microsoft PowerPoint中，当编辑幻灯片时，现在会读出形状的确切类型（例如三角形，圆形，视频或光标），而不仅提示“形状”。 (#7111)
 - Google Chrome 现已支持以MathML格式提供的数学内容。 (#7184)
 - NVDA现在可以使用Windows 10中包含的新的Windows OneCore语音（也称为Microsoft Mobile语音）。您可以通过在NVDA的“合成器”对话框中选择Windows OneCore语音来使用这些声音。 (#6159)
 - NVDA用户配置文件现在可以存储在用户的本地应用程序数据文件夹中。这是通过注册表中的设置启用的。有关详细信息，请参阅“用户指南”中的“系统参数”。 (#6812)
@@ -1405,7 +2283,7 @@ NVDA 中的COM 注册修复工具现在能够解决更多的系统问题。
 此版本的新特性包括支持朗读Microsoft Word中的章节和文本列;支持在Kindle上阅读，导航和注释电子书;并改进了Microsoft Edge浏览器。
 
 == 新特性 ==
-- 在Microsoft Word中，现在可以朗读页码。可以从文档格式对话框中的“报告页码”复选框启用或关闭。 (#5946)
+- 在Microsoft Word中，现在可以读出页码。可以从文档格式对话框中的“读出页码”复选框启用或关闭。 (#5946)
 - 在Microsoft Word中，现在可以朗读文本列。这是通过文档格式对话框中的“朗读页码”选项启用的。 (#5946)
 - 写字板现在支持自动语言切换。 (#6555)
 - Microsoft Edge中的浏览模式现在支持NVDA find命令（NVDA + control + f）。 (#6580)

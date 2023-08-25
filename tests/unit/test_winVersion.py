@@ -1,12 +1,13 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2021 NV Access Limited, Joseph Lee
+# Copyright (C) 2021-2022 NV Access Limited, Joseph Lee
 
 """Unit tests for the Windows version module."""
 
 import unittest
 import sys
+import os
 import winVersion
 
 
@@ -78,3 +79,9 @@ class TestWinVersion(unittest.TestCase):
 			major=unknownMajor, minor=unknownMinor, build=unknownBuild
 		)
 		self.assertEqual(badWin81Info.releaseName, "Windows release unknown")
+
+	def test_winVerProcessorArchitecture(self):
+		# See if processor architecture matches what Windows says.
+		# Use os.environ to guard against platform.machine() giving odd results.
+		actualArchitecture = os.environ.get("PROCESSOR_ARCHITEW6432", os.environ["PROCESSOR_ARCHITECTURE"])
+		self.assertEqual(winVersion.getWinVer().processorArchitecture, actualArchitecture)

@@ -34,7 +34,7 @@ typedef struct {
 	BSTR address;
 	BSTR inputTitle;
 	BSTR inputMessage;
-	hyper states;
+	hyper nvCellStates;  // bitwise OR of the NvCellState enum values that apply to this cell.
 	long rowNumber;
 	long rowSpan;
 	long columnNumber;

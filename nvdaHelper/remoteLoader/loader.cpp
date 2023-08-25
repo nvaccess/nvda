@@ -23,7 +23,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdline, 
 	#ifndef NDEBUG
 	Beep(440,100);
 	#endif
-	res=injection_initialize(0);
+	res=injection_initialize();
 	assert(res!=0); //nvdaHelper_initialize
 	// Wait for input or EOF.
 	getc(stdin);

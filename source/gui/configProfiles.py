@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2013-2018 NV Access Limited, Joseph Lee, Julien Cochuyt, Thomas Stivers
+# Copyright (C) 2013-2022 NV Access Limited, Joseph Lee, Julien Cochuyt, Thomas Stivers, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -171,6 +171,7 @@ class ProfilesDialog(
 		try:
 			config.conf.manualActivateProfile(profile)
 		except:
+			log.debugWarning("", exc_info=True)
 			# Translators: An error displayed when activating a configuration profile fails.
 			gui.messageBox(_("Error activating profile."),
 				_("Error"), wx.OK | wx.ICON_ERROR, self)
@@ -183,15 +184,16 @@ class ProfilesDialog(
 
 	def onDelete(self, evt):
 		index = self.profileList.Selection
+		name = self.profileNames[index]
 		if gui.messageBox(
 			# Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-			_("This profile will be permanently deleted. This action cannot be undone."),
+			# The placeholder {} is replaced with the name of the configuration profile that will be deleted.
+			_("The profile {} will be permanently deleted. This action cannot be undone.").format(name),
 			# Translators: The title of the confirmation dialog for deletion of a configuration profile.
 			_("Confirm Deletion"),
-			wx.OK | wx.CANCEL | wx.ICON_QUESTION, self
+			wx.OK | wx.CANCEL | wx.CANCEL_DEFAULT | wx.ICON_QUESTION, self
 		) != wx.OK:
 			return
-		name = self.profileNames[index]
 		try:
 			config.conf.deleteProfile(name)
 		except:

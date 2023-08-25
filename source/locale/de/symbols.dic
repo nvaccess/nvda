@@ -1,25 +1,22 @@
-#locale/de/symbols.dic
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2021 NVDA Contributors
-#This file is covered by the GNU General Public License.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (c) 2011-2023 NVDA Contributors
+# This file is covered by the GNU General Public License.
 
 complexSymbols:
 # identifier	regexp
-
-# Sentence endings.
+# Satzenden
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
 ! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
 ? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
-
-# Phrase endings.
-; Satzzeichen	(?<=[^\s;]);(?=\s|$)
-: Satzzeichen	(?<=[^\s:]):(?=\s|$)
-
-# Others
-Dezimalpunkt	(?<![^\d -])\.(?=\d)
-in-word '	(?<=[^\W_])['’]
-negative Zahl	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
-Tausender Punkt	(?<=\d)\.(?=\d{3})
+# Phrasenenden
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Andere
+Dezimaltrennzeichen	(?<![^\d -])\,(?=\d)
+' im Wort	(?<=[^\W_])['’]
+- im Wort	(?<=[^\W_])[-]
+Negative Ziffer	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
+Tausendertrennzeichen	(?<![^\d -])\.(?=\d{3}(\D|$))
 Datumstrennzeichen	(?<=\d\d)\.(?=\d\d)
 
 symbols:
@@ -31,20 +28,25 @@ symbols:
 ? sentence ending	Fragezeichen	all	always
 ; phrase ending	Semikolon	most	always
 : phrase ending	Doppelpunkt	most	always
-decimal point		none	always
-in-word '	Apostroph	all	norep
-negative number	Minus	none	norep
+Dezimaltrennzeichen		none	always
+' im Wort	Apostroph	all	norep
+Negative Ziffer	Minus	none	norep
+- im Wort	Bindestrich	all	norep
+... sentence ending	Auslassungspunkte	all	always
+… sentence ending	Auslassungspunkte	all	always
+Tausendertrennzeichen	
+Datumstrennzeichen	Punkt	none	norep
 
-# Whitespace
+# Leerzeichen
 \0	Leer	char	# null
 \t	Tab
 \n	Zeilenumbruch	char
 \f	Seitenwechsel	none
 \r	Neue Zeile	char
  	Leerzeichen	char
- 	Geschütztes Leerzeichen	char	# no-break space
+ 	Geschütztes Leerzeichen	char
 
-# Standard Punctuation/Symbols
+# Standardzeichensetzung/-symbole
 !	Ausrufezeichen	all
 "	Anführungszeichen	most
 \#	Nummernzeichen	some
@@ -54,7 +56,7 @@ $	Dollar	all	norep
 ¢	Cents	all	norep
 ¥	Yen	all	norep
 ₹	Rupie	some	norep
-ƒ	Lateinischer Kleinbuchstabe F mit Häkchen	all	norep
+ƒ	Gulden	all	norep
 ¤	Währungszeichen	all	norep
 %	Prozent	some
 ‰	Promille	some
@@ -64,13 +66,17 @@ $	Dollar	all	norep
 )	Runde Klammer zu	most	always
 *	Stern	some
 ,	Komma	all	always
--	Strich	most
+、	ideografisches Komma	all	always
+،	arabisches Komma	all	always
+-	Strich	most	always
 .	Punkt	some
 /	Schrägstrich	some
 :	Doppelpunkt	most	norep
 ;	Semikolon	most
+؛	arabisches Semikolon	most
 ?	Fragezeichen	all
-@	ätt	some
+؟	arabisches Fragezeichen	all
+@	ät	some
 [	Eckige Klammer auf	most
 ]	Eckige Klammer zu	most
 \\	Bäcksläsch	most
@@ -85,24 +91,24 @@ _	Unterstrich	most
 ¡	Umgekehrtes Ausrufezeichen	some
 ¿	Umgekehrtes Fragezeichen	some
 ·	Mittelpunkt	most
-‚	Einfaches Aführungszeichen unten	most
+‚	Einfaches Anführungszeichen unten	most
 „	Typografisches Anführungszeichen links	most
-′	Minuten	some
-″	Sekunden	some
-‴	Dreistrich	some
+′	prim	some
+″	doppelte Primzahl	some
+‴	dreifache Primzahl	some
 ⁗	Vierstrich	some
 
-# Other Characters
+# Andere Zeichen
 •	Aufzählungszeichen	some
 …	Punkt Punkt Punkt	all	always
 ...	Punkt Punkt Punkt	all	always
-“	Typografishes Anführungszeichen rechts	most
+“	Anführungszeichen links	most
 ”	Anführungszeichen rechts	most
 ‘	Apostroph links	most
 ’	Apostroph rechts	most
 –	Bindestrich	most	always
-—	Gedankenstrich	most
-­	Silbentrennzeichen	most
+—	Gedankenstrich	most	always
+­	Silbentrennzeichen	most	always
 ⁃	Bindestrich-Aufzählungszeichen	none
 ●	Kreis	most
 ○	Weißer Kreis	most
@@ -110,8 +116,8 @@ _	Unterstrich	most
 ¯	Makron	most
 ´	Akut	most
 ¸	Cedille	most
-‎	Pfeil von links nach rechts	char
-‏	Pfeil von rechts nach links	char
+‎	von links nach rechts Markierung	char
+‏	von rechts nach links Markierung	char
 ¶	Absatzmarke	most
 ■	Großes, gefülltes, schwarzes Quadrat	some
 ▪	Kleines, gefülltes, schwarzes Quadrat	some
@@ -127,8 +133,8 @@ _	Unterstrich	most
 ◆	Schwarzes Karo	some
 §	Paragraf	all
 °	Grad	some
-«	Doppelt gewinkelte Klammer auf	none
-»	Doppelt gewinkelte Klammer zu	none
+«	Doppelt gewinkelte Klammer auf	most	always
+»	Doppelt gewinkelte Klammer zu	most	always
 µ	Mikro	some
 ⁰	hochgestellte 0	some
 ¹	hochgestellte 1	some
@@ -162,8 +168,8 @@ _	Unterstrich	most
 ₎	tiefgestellte runde Klammer zu	some
 ®	Registriertes Warenzeichen	some
 ™	Eingetragenes Warenzeichen	some
-©	Copyright	some
-℠	Service-Mark-Zeichen	some
+©	Urheberrecht	some
+℠	Dienstleistungsmarke	some
 ←	Pfeil nach links	some
 ↑	Pfeil nach oben	some
 →	Pfeil nach rechts	some
@@ -185,7 +191,6 @@ _	Unterstrich	most
 ؛	Arabisches Semikolon
 ؟	Arabisches Fragezeichen
 。	Ideografischer Punkt
-“	Typografisches Anführungszeichen rechts
 〈	Spitze Klammer auf
 〉	Spitze Klammer zu
 《	Doppelte, spitze Klammer auf
@@ -200,7 +205,6 @@ _	Unterstrich	most
 〕	Stumpfe Klammer zu
 〖	Hohle, konkave Klammer auf
 〗	Hohle, konkave Klammer zu
-&	Und
 ‧	Silbentrennzeichen
 ‸	Dach
 ⁂	Asterismus
@@ -253,7 +257,7 @@ _	Unterstrich	most
 ⊉	Weder Obermenge von noch Gleichheit	none
 ⊌	Multimenge	none
 
-# Equality Signs
+# Gleichheitszeichen
 =	gleich	some
 ≃	Asymptotisch Gleichheit	none
 ≄	Keine asymptotische Gleichheit	none
@@ -275,7 +279,7 @@ _	Unterstrich	most
 ≙	entspricht	none
 ≟	fraglich gleich mit	none
 
-# Comparison Signs
+# Vergleichszeichen
 <	kleiner als	some
 >	größer als	some
 ≤	gleich oder kleiner als	none
@@ -289,13 +293,13 @@ _	Unterstrich	most
 ≮	nicht weniger als	none
 ≯	nicht größer als	none
 
-# Functions
+# Functionen
 ⁻	Hochgestelltes Minuszeichen	some
 ∘	Ring-Operator	none
 ∂	Partielles Differential	none
 ∇	Nabla	none
 
-# Geometry and Linear Algebra
+# Geometrie und Lineare Algebra
 ⃗	Vektor zwischen	none
 △	Dreieck	none
 ▭	Rechteck	none
@@ -311,14 +315,14 @@ _	Unterstrich	most
 ∡	gemessener Winkel	none
 ∢	Kugelwinkel	none
 
-# Logical Operators
+# Logische Operatoren
 ∀	für alle	none
 ∃	es gibt	none
 ∄	es gibt kein	none
-⇏	does not imply	none
+⇏	impliziert nicht	none
 ⇐	wird impliziert durch	none
 
-# Other Mathematical Operators
+# Andere mathematische Operatoren
 ∈	Element von	none
 ∉	kein Element von	none
 ∊	kleines Element von	none
@@ -326,8 +330,8 @@ _	Unterstrich	most
 ∌	enthält nicht als Mitglied	none
 ∍	klein enthält als Mitglied	none
 ∎	Ende des Beweises	none
-∏n-äres Produkt	none
-∐n-äres Kuppelprodukt	none
+∏	n-äres Produkt	none
+∐	n-äres Kuppelprodukt	none
 ∑	n-äre Summation	none
 √	Quadratwurzel	none
 ∛	Kubikwurzel	none
@@ -360,14 +364,14 @@ _	Unterstrich	most
 ∙	Kreis-Operator	none
 ∣	teilt	none
 ∤	teilt nicht	none
-≔	Doppelpunkt und Gleichheitszeichen	none
-≕	Gleichheitszeichen und Doppelpunkt	none
+≔	Doppelpunkt ist gleich	none
+≕	ist gleich Doppelpunkt	none
 ≺	geht voran	none
 ≻	gelingt	none
 ⊀	geht nicht voran	none
 ⊁	gelingt nicht	none
 
-# Vulgur Fractions U+2150 to U+215E
+# Brüche (U+2150 bis U+215E)
 ¼	ein Viertel	none
 ½	einhalb	none
 ¾	dreiviertel	none
@@ -401,5 +405,266 @@ _	Unterstrich	most
 ℵ	Alef-Symbol	none
 ℶ	Bet-Symbol	none
 
-# Miscellaneous Technical
+# Sonstiges Technisch
 ⌘	Mac-Befehlstaste	none
+⌥	Mac-Optionstaste	none
+
+## 6-Punkt-Braille-Modul
+### Hinweis: Das Zeichen in der folgenden Zeile ist U+2800 (Braille-Leerzeichen), nicht U+0020 (ASCII-Leerzeichen)
+⠀	Braille-Leerzeichen
+⠁	Braille-Punkt 1
+⠂	Braille-Punkt 2
+⠃	Braille-Punkte 1 2
+⠄	Braille-Punkt 3
+⠅	Braille-Punkte 1 3
+⠆	Braille-Punkte 2 3
+⠇	Braille-Punkte 1 2 3
+⠈	Braille-Punkt 4
+⠉	Braille-Punkte 1 4
+⠊	Braille-Punkte 2 4
+⠋	Braille-Punkte 1 2 4
+⠌	Braille-Punkte 3 4
+⠍	Braille-Punkte 1 3 4
+⠎	Braille-Punkte 2 3 4
+⠏	Braille-Punkte 1 2 3 4
+⠐	Braille-Punkt 5
+⠑	Braille-Punkte 1 5
+⠒	Braille-Punkte 2 5
+⠓	Braille-Punkte 1 2 5
+⠔	Braille-Punkte 3 5
+⠕	Braille-Punkte 1 3 5
+⠖	Braille-Punkte 2 3 5
+⠗	Braille-Punkte 1 2 3 5
+⠘	Braille-Punkte 4 5
+⠙	Braille-Punkte 1 4 5
+⠚	Braille-Punkte 2 4 5
+⠛	Braille-Punkte 1 2 4 5
+⠜	Braille-Punkte 3 4 5
+⠝	Braille-Punkte 1 3 4 5
+⠞	Braille-Punkte 2 3 4 5
+⠟	Braille-Punkte 1 2 3 4 5
+⠠	Braille-Punkt 6
+⠡	Braille-Punkte 1 6
+⠢	Braille-Punkte 2 6
+⠣	Braille-Punkte 1 2 6
+⠤	Braille-Punkte 3 6
+⠥	Braille-Punkte 1 3 6
+⠦	Braille-Punkte 2 3 6
+⠧	Braille-Punkte 1 2 3 6
+⠨	Braille-Punkte 4 6
+⠩	Braille-Punkte 1 4 6
+⠪	Braille-Punkte 2 4 6
+⠫	Braille-Punkte 1 2 4 6
+⠬	Braille-Punkte 3 4 6
+⠭	Braille-Punkte 1 3 4 6
+⠮	Braille-Punkte 2 3 4 6
+⠯	Braille-Punkte 1 2 3 4 6
+⠰	Braille-Punkte 5 6
+⠱	Braille-Punkte 1 5 6
+⠲	Braille-Punkte 2 5 6
+⠳	Braille-Punkte 1 2 5 6
+⠴	Braille-Punkte 3 5 6
+⠵	Braille-Punkte 1 3 5 6
+⠶	Braille-Punkte 2 3 5 6
+⠷	Braille-Punkte 1 2 3 5 6
+⠸	Braille-Punkte 1 2 3
+⠹	Braille-Punkte 1 4 5 6
+⠺	Braille-Punkte 2 4 5 6
+⠻	Braille-Punkte 1 2 4 5 6
+⠼	Braille-Punkte 3 4 5 6
+⠽	Braille-Punkte 1 3 4 5 6
+⠾	Braille-Punkte 2 3 4 5 6
+⠿	Alle 6 Braille-Punkte 1 2 3 4 5 6
+## 8-Punkt-Braille-Modul
+⡀	Braille-Punkt 7
+⡁	Braille-Punkte 1 7
+⡂	Braille-Punkte 2 7
+⡃	Braille-Punkte 1 2 7
+⡄	Braille-Punkte 3 7
+⡅	Braille-Punkte 1 3 7
+⡆	Braille-Punkte 2 3 7
+⡇	Braille-Punkte 1 2 3 7
+⡈	Braille-Punkte 4 7
+⡉	Braille-Punkte 1 4 7
+⡊	Braille-Punkte 2 4 7
+⡋	Braille-Punkte 1 2 4 7
+⡌	Braille-Punkte 3 4 7
+⡍	Braille-Punkte 1 3 4 7
+⡎	Braille-Punkte 2 3 4 7
+⡏	Braille-Punkte 1 2 3 4 7
+⡐	Braille-Punkte 5 7
+⡑	Braille-Punkte 1 5 7
+⡒	Braille-Punkte 2 5 7
+⡓	Braille-Punkte 1 2 5 7
+⡔	Braille-Punkte 3 5 7
+⡕	Braille-Punkte 1 3 5 7
+⡖	Braille-Punkte 2 3 5 7
+⡗	Braille-Punkte 1 2 3 5 7
+⡘	Braille-Punkte 4 5 7
+⡙	Braille-Punkte 1 4 5 7
+⡚	Braille-Punkte 2 4 5 7
+⡛	Braille-Punkte 1 2 4 5 7
+⡜	Braille-Punkte 3 4 5 7
+⡝	Braille-Punkte 1 3 4 5 7
+⡞	Braille-Punkte 2 3 4 5 7
+⡟	Braille-Punkte 1 2 3 4 5 7
+⡠	Braille-Punkte 6 7
+⡡	Braille-Punkte 1 6 7
+⡢	Braille-Punkte 2 6 7
+⡣	Braille-Punkte 1 2 6 7
+⡤	Braille-Punkte 3 6 7
+⡥	Braille-Punkte 1 3 6 7
+⡦	Braille-Punkte 2 3 6 7
+⡧	Braille-Punkte 1 2 3 6 7
+⡨	Braille-Punkte 4 6 7
+⡩	Braille-Punkte 1 4 6 7
+⡪	Braille-Punkte 2 4 6 7
+⡫	Braille-Punkte 1 2 4 6 7
+⡬	Braille-Punkte 3 4 6 7
+⡭	Braille-Punkte 1 3 4 6 7
+⡮	Braille-Punkte 2 3 4 6 7
+⡯	Braille-Punkte 1 2 3 4 6 7
+⡰	Braille-Punkte 5 6 7
+⡱	Braille-Punkte 1 5 6 7
+⡲	Braille-Punkte 2 5 6 7
+⡳	Braille-Punkte 1 2 5 6 7
+⡴	Braille-Punkte 3 5 6 7
+⡵	Braille-Punkte 1 3 5 6 7
+⡶	Braille-Punkte 2 3 5 6 7
+⡷	Braille-Punkte 1 2 3 5 6 7
+⡸	Braille-Punkte 1 2 3 7
+⡹	Braille-Punkte 1 4 5 6 7
+⡺	Braille-Punkte 2 4 5 6 7
+⡻	Braille-Punkte 1 2 4 5 6 7
+⡼	Braille-Punkte 3 4 5 6 7
+⡽	Braille-Punkte 1 3 4 5 6 7
+⡾	Braille-Punkte 2 3 4 5 6 7
+⡿	Braille-Punkte 1 2 3 4 5 6 7
+⢀	Braille-Punkt 8
+⢁	Braille-Punkte 1 8
+⢂	Braille-Punkte 2 8
+⢃	Braille-Punkte 1 2 8
+⢄	Braille-Punkte 3 8
+⢅	Braille-Punkte 1 3 8
+⢆	Braille-Punkte 2 3 8
+⢇	Braille-Punkte 1 2 3 8
+⢈	Braille-Punkte 4 8
+⢉	Braille-Punkte 1 4 8
+⢊	Braille-Punkte 2 4 8
+⢋	Braille-Punkte 1 2 4 8
+⢌	Braille-Punkte 3 4 8
+⢍	Braille-Punkte 1 3 4 8
+⢎	Braille-Punkte 2 3 4 8
+⢏	Braille-Punkte 1 2 3 4 8
+⢐	Braille-Punkte 5 8
+⢑	Braille-Punkte 1 5 8
+⢒	Braille-Punkte 2 5 8
+⢓	Braille-Punkte 1 2 5 8
+⢔	Braille-Punkte 3 5 8
+⢕	Braille-Punkte 1 3 5 8
+⢖	Braille-Punkte 2 3 5 8
+⢗	Braille-Punkte 1 2 3 5 8
+⢘	Braille-Punkte 4 5 8
+⢙	Braille-Punkte 1 4 5 8
+⢚	Braille-Punkte 2 4 5 8
+⢛	Braille-Punkte 1 2 4 5 8
+⢜	Braille-Punkte 3 4 5 8
+⢝	Braille-Punkte 1 3 4 5 8
+⢞	Braille-Punkte 2 3 4 5 8
+⢟	Braille-Punkte 1 2 3 4 5 8
+⢠	Braille-Punkte 6 8
+⢡	Braille-Punkte 1 6 8
+⢢	Braille-Punkte 2 6 8
+⢣	Braille-Punkte 1 2 6 8
+⢤	Braille-Punkte 3 6 8
+⢥	Braille-Punkte 1 3 6 8
+⢦	Braille-Punkte 2 3 6 8
+⢧	Braille-Punkte 1 2 3 6 8
+⢨	Braille-Punkte 4 6 8
+⢩	Braille-Punkte 1 4 6 8
+⢪	Braille-Punkte 2 4 6 8
+⢫	Braille-Punkte 1 2 4 6 8
+⢬	Braille-Punkte 3 4 6 8
+⢭	Braille-Punkte 1 3 4 6 8
+⢮	Braille-Punkte 2 3 4 6 8
+⢯	Braille-Punkte 1 2 3 4 6 8
+⢰	Braille-Punkte 5 6 8
+⢱	Braille-Punkte 1 5 6 8
+⢲	Braille-Punkte 2 5 6 8
+⢳	Braille-Punkte 1 2 5 6 8
+⢴	Braille-Punkte 3 5 6 8
+⢵	Braille-Punkte 1 3 5 6 8
+⢶	Braille-Punkte 2 3 5 6 8
+⢷	Braille-Punkte 1 2 3 5 6 8
+⢸	Braille-Punkte 1 2 3 8
+⢹	Braille-Punkte 1 4 5 6 8
+⢺	Braille-Punkte 2 4 5 6 8
+⢻	Braille-Punkte 1 2 4 5 6 8
+⢼	Braille-Punkte 3 4 5 6 8
+⢽	Braille-Punkte 1 3 4 5 6 8
+⢾	Braille-Punkte 2 3 4 5 6 8
+⢿	Braille-Punkte 1 2 3 4 5 6 8
+⣀	Braille-Punkte 7 8
+⣁	Braille-Punkte 1 7 8
+⣂	Braille-Punkte 2 7 8
+⣃	Braille-Punkte 1 2 7 8
+⣄	Braille-Punkte 3 7 8
+⣅	Braille-Punkte 1 3 7 8
+⣆	Braille-Punkte 2 3 7 8
+⣇	Braille-Punkte 1 2 3 7 8
+⣈	Braille-Punkte 4 7 8
+⣉	Braille-Punkte 1 4 7 8
+⣊	Braille-Punkte 2 4 7 8
+⣋	Braille-Punkte 1 2 4 7 8
+⣌	Braille-Punkte 3 4 7 8
+⣍	Braille-Punkte 1 3 4 7 8
+⣎	Braille-Punkte 2 3 4 7 8
+⣏	Braille-Punkte 1 2 3 4 7 8
+⣐	Braille-Punkte 5 7 8
+⣑	Braille-Punkte 1 5 7 8
+⣒	Braille-Punkte 2 5 7 8
+⣓	Braille-Punkte 1 2 5 7 8
+⣔	Braille-Punkte 3 5 7 8
+⣕	Braille-Punkte 1 3 5 7 8
+⣖	Braille-Punkte 2 3 5 7 8
+⣗	Braille-Punkte 1 2 3 5 7 8
+⣘	Braille-Punkte 4 5 7 8
+⣙	Braille-Punkte 1 4 5 7 8
+⣚	Braille-Punkte 2 4 5 7 8
+⣛	Braille-Punkte 1 2 4 5 7 8
+⣜	Braille-Punkte 3 4 5 7 8
+⣝	Braille-Punkte 1 3 4 5 7 8
+⣞	Braille-Punkte 2 3 4 5 7 8
+⣟	Braille-Punkte 1 2 3 4 5 7 8
+⣠	Braille-Punkte 6 7 8
+⣡	Braille-Punkte 1 6 7 8
+⣢	Braille-Punkte 2 6 7 8
+⣣	Braille-Punkte 1 2 6 7 8
+⣤	Braille-Punkte 3 6 7 8
+⣥	Braille-Punkte 1 3 6 7 8
+⣦	Braille-Punkte 2 3 6 7 8
+⣧	Braille-Punkte 1 2 3 6 7 8
+⣨	Braille-Punkte 4 6 7 8
+⣩	Braille-Punkte 1 4 6 7 8
+⣪	Braille-Punkte 2 4 6 7 8
+⣫	Braille-Punkte 1 2 4 6 7 8
+⣬	Braille-Punkte 3 4 6 7 8
+⣭	Braille-Punkte 1 3 4 6 7 8
+⣮	Braille-Punkte 2 3 4 6 7 8
+⣯	Braille-Punkte 1 2 3 4 6 7 8
+⣰	Braille-Punkte 5 6 7 8
+⣱	Braille-Punkte 1 5 6 7 8
+⣲	Braille-Punkte 2 5 6 7 8
+⣳	Braille-Punkte 1 2 5 6 7 8
+⣴	Braille-Punkte 3 5 6 7 8
+⣵	Braille-Punkte 1 3 5 6 7 8
+⣶	Braille-Punkte 2 3 5 6 7 8
+⣷	Braille-Punkte 1 2 3 5 6 7 8
+⣸	Braille-Punkte 1 2 3 7 8
+⣹	Braille-Punkte 1 4 5 6 7 8
+⣺	Braille-Punkte 2 4 5 6 7 8
+⣻	Braille-Punkte 1 2 4 5 6 7 8
+⣼	Braille-Punkte 3 4 5 6 7 8
+⣽	Braille-Punkte 1 3 4 5 6 7 8
+⣾	Braille-Punkte 2 3 4 5 6 7 8
+⣿	Alle 8 Braille-Punkte 1 2 3 4 5 6 7 8

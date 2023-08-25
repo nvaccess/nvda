@@ -59,9 +59,6 @@ env['CC'] = 'clang-cl'
 if 'analyze' in env['nvdaHelperDebugFlags']:
 	env.Append(CCFLAGS='/analyze-')
 
-# Ignore some warnings as the code is not ours
-env.Replace(CCFLAGS='/W2')
-
 env.Append(CPPDEFINES=[
 	# The Visual C++ C Runtime deprecates standard POSIX APIs that conflict with
 	# reserved ISO C names (like strdup) in favour of non-portable conforming

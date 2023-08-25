@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018-2021 NV Access Limited, Luke Davis (Open Source Systems, Ltd.)
+# Copyright (C) 2018-2023 NV Access Limited, Luke Davis (Open Source Systems, Ltd.)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -110,13 +110,13 @@ def apply64bitRegistryPatch(fileName: str) -> None:
 		log.debug(f"Applied 64-bit registry patch from {fileName}")
 
 
-def fixCOMRegistrations():
+def fixCOMRegistrations() -> None:
 	"""Registers most common COM proxies, in case they have accidentally been unregistered or overwritten by
 	3rd party software installs or uninstalls.
 	"""
-	is64bit = os.environ.get("PROCESSOR_ARCHITEW6432", "").endswith("64")
 	winVer = winVersion.getWinVer()
 	OSMajorMinor = (winVer.major, winVer.minor)
+	is64bit = winVer.processorArchitecture.endswith("64")
 	log.debug(
 		f"Fixing COM registrations for Windows {OSMajorMinor[0]}.{OSMajorMinor[1]}, "
 		"{} bit.".format("64" if is64bit else "32")

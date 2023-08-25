@@ -1,27 +1,27 @@
 # This file is covered by the GNU General Public License.
 # A part of NonVisual Desktop Access (NVDA)
 # See the file COPYING for more details.
-# Copyright (C) 2016-2022 NV Access Limited, Joseph Lee, Jakub Lukowicz
+# Copyright (C) 2016-2023 NV Access Limited, Joseph Lee, Jakub Lukowicz, Cyrille Bougot
 
 from typing import (
 	Optional,
 	Dict,
 )
 
+import enum
 from comtypes import COMError
-from collections import defaultdict
+import winVersion
 import mathPres
 from scriptHandler import isScriptWaiting
 import textInfos
-import eventHandler
 import UIAHandler
+import UIAHandler.remote as UIARemote
 from logHandler import log
 import controlTypes
 import ui
 import speech
 import review
 import braille
-import api
 import browseMode
 from UIAHandler.browseMode import (
 	UIABrowseModeDocument,
@@ -39,6 +39,15 @@ from scriptHandler import script
 
 
 """Support for Microsoft Word via UI Automation."""
+
+
+class UIACustomAttributeID(enum.IntEnum):
+	LINE_NUMBER = 0
+	PAGE_NUMBER = 1
+	COLUMN_NUMBER = 2
+	SECTION_NUMBER = 3
+	BOOKMARK_NAME = 4
+
 
 #: the non-printable unicode character that represents the end of cell or end of row mark in Microsoft Word
 END_OF_ROW_MARK = '\x07'
@@ -313,7 +322,6 @@ class WordDocumentTextInfo(UIATextInfo):
 		# But, we therefore need to remove the inner math content if reading by line
 		if not formatConfig or not formatConfig.get('extraDetail'):
 			# We really only want to remove content if we can guarantee that mathPlayer is available.
-			mathPres.ensureInit()
 			if mathPres.speechProvider or mathPres.brailleProvider:
 				curLevel = 0
 				mathLevel = None
@@ -411,6 +419,54 @@ class WordDocumentTextInfo(UIATextInfo):
 			else:
 				index+=1
 		return fields
+
+	def _getFormatFieldAtRange(self, textRange, formatConfig, ignoreMixedValues=False):
+		formatField = super()._getFormatFieldAtRange(textRange, formatConfig, ignoreMixedValues=ignoreMixedValues)
+		if not formatField:
+			return formatField
+		if winVersion.getWinVer() >= winVersion.WIN11:
+			docElement = self.obj.UIAElement
+			if formatConfig['reportLineNumber']:
+				lineNumber = UIARemote.msWord_getCustomAttributeValue(
+					docElement, textRange, UIACustomAttributeID.LINE_NUMBER
+				)
+				if isinstance(lineNumber, int):
+					formatField.field['line-number'] = lineNumber
+			if formatConfig['reportPage']:
+				sectionNumber = UIARemote.msWord_getCustomAttributeValue(
+					docElement, textRange, UIACustomAttributeID.SECTION_NUMBER
+				)
+				if isinstance(sectionNumber, int):
+					formatField.field['section-number'] = sectionNumber
+				if False:
+					# #13511: Fetching of text-column-number is disabled
+					# as it causes Microsoft Word 16.0.1493 and newer to crash!!
+					# This should only be reenabled for versions identified not to crash.
+					textColumnNumber = UIARemote.msWord_getCustomAttributeValue(
+						docElement, textRange, UIACustomAttributeID.COLUMN_NUMBER
+					)
+					if isinstance(textColumnNumber, int):
+						formatField.field['text-column-number'] = textColumnNumber
+		return formatField
+	
+	def _getIndentValueDisplayString(self, val: float) -> str:
+		"""A function returning the string to display in formatting info in Word documents.
+		@param val: an indent value measured in points, fetched via
+			an UIAHandler.UIA_Indentation*AttributeId attribute.
+		@return: The string used in formatting information to report the length of an indentation.
+		"""
+		
+		if self.obj.WinwordApplicationObject:
+			# When Word object model is available we honour Word's options to report distances so that what is
+			# reported by NVDA matches Word's UI (rulers, paragraph formatting dialog, etc.)
+			# Default seem to be inch or centimeters for Western countries localization of Word and characters for
+			# east Asian localisations.
+			return self.obj.getLocalizedMeasurementTextForPointSize(val)
+		
+		# If Word object model is not available, we just fallback to general UIA case, i.e. use Windows regional
+		# settings.
+		return super()._getIndentValueDisplayString(val)
+
 
 class WordBrowseModeDocument(UIABrowseModeDocument):
 

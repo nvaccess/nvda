@@ -1,20 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2021 NV Access Limited
+# Copyright (C) 2021-2022 NV Access Limited, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-
-from dataclasses import (
-	dataclass,
-	field,
-)
-from typing import Optional
-
-from comtypes import (
-	GUID,
-	byref,
-)
-import winVersion
-
 
 """
 This module provides helpers and a common format to define UIA custom annotation types.
@@ -32,17 +19,31 @@ This relies on both the UIA server application and the UIA client application sh
 GUID for the annotation type.
 """
 
+import dataclasses
+from typing import (
+	ClassVar,
+	Dict,
+)
 
-@dataclass
+from comtypes import (
+	GUID,
+	byref,
+)
+
+import winVersion
+
+
+@dataclasses.dataclass
 class CustomAnnotationTypeInfo:
 	"""Holds information about a CustomAnnotationType
 	This makes it easy to define custom annotation types to be loaded.
 	"""
 	guid: GUID
-	id: int = field(init=False)
+	_registeredAnnotations: ClassVar[Dict[GUID, int]] = dict()
 
-	def __post_init__(self) -> None:
-		""" The id field must be initialised at runtime.
+	def _registerCustomAnnotation(self) -> int:
+		""" Registers the annotation with a given GUID.
+
 		A GUID uniquely identifies a custom annotation, but the UIA system relies on integer IDs.
 		Any application (clients or providers) can register a custom annotation type, subsequent applications
 		will get the same id for a given GUID.
@@ -52,29 +53,30 @@ class CustomAnnotationTypeInfo:
 		"""
 		if winVersion.getWinVer() >= winVersion.WIN11:
 			import NVDAHelper
-			self.id = NVDAHelper.localLib.registerUIAAnnotationType(
+			return NVDAHelper.localLib.registerUIAAnnotationType(
 				byref(self.guid),
 			)
-		else:
-			self.id = 0
+		return 0
+
+	@property
+	def id(self) -> int:
+		"""Return an ID for a given annotation registering it first if necessary.
+
+		Id's of all registered annotations are cached when requested for the first time
+		to prevent unnecessary work by repeatedly interacting with UIA .
+		"""
+		try:
+			annotationId = self._registeredAnnotations[self.guid]
+		except KeyError:
+			annotationId = self._registerCustomAnnotation()
+			self._registeredAnnotations[self.guid] = annotationId
+		return annotationId
 
 
 class CustomAnnotationTypesCommon:
 	"""UIA 'custom annotation types' common to all applications.
 	Once registered, all subsequent registrations will return the same ID value.
-	This class should be used as a singleton via CustomAnnotationTypesCommon.get()
-	to prevent unnecessary work by repeatedly interacting with UIA.
 	"""
-	#: Singleton instance
-	_instance: "Optional[CustomAnnotationTypesCommon]" = None
-
-	@classmethod
-	def get(cls) -> "CustomAnnotationTypesCommon":
-		"""Get the singleton instance or initialise it.
-		"""
-		if cls._instance is None:
-			cls._instance = cls()
-		return cls._instance
 
 	def __init__(self):
 		# Registration of Custom annotation types used across multiple applications or frameworks should go here.

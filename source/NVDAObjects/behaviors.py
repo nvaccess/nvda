@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler
 
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 Behaviors described in this mix-in include providing table navigation commands for certain table rows, terminal input and output support, announcing notifications and suggestion items and so on.
@@ -63,7 +63,12 @@ class ProgressBar(NVDAObject):
 			self.progressValueCache["beep,%d,%d"%(x,y)]=percentage
 		lastSpeechProgressValue=self.progressValueCache.get("speech,%d,%d"%(x,y),None)
 		if pbConf["progressBarOutputMode"] in ("speak","both") and (lastSpeechProgressValue is None or abs(percentage-lastSpeechProgressValue)>=pbConf["speechPercentageInterval"]):
-			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("%d percent")%percentage)
+			queueHandler.queueFunction(
+				queueHandler.eventQueue,
+				speech.speakMessage,
+				# Translators: This is presented to inform the user of a progress bar percentage.
+				_("%d percent") % percentage,
+			)
 			self.progressValueCache["speech,%d,%d"%(x,y)]=percentage
 
 class Dialog(NVDAObject):
@@ -158,7 +163,42 @@ class Dialog(NVDAObject):
 		self.isPresentableFocusAncestor = res = super(Dialog, self).isPresentableFocusAncestor
 		return res
 
-class EditableText(editableText.EditableText, NVDAObject):
+
+class InputFieldWithSuggestions(NVDAObject):
+	"""Allows NVDA to announce appearance/disappearance of suggestions as content is entered.
+	This is used in various places, including Windows 10 search edit fields and others.
+	Subclasses should provide L{event_suggestionsOpened} and can optionally override L{event_suggestionsClosed}.
+	These events are fired when suggestions appear and disappear, respectively.
+	"""
+
+	def event_suggestionsOpened(self):
+		"""Called when suggestions appear when text is entered e.g. search suggestions.
+		Subclasses should provide custom implementations if possible.
+		By default NVDA will announce appearance of suggestions using speech, braille or a sound will be played.
+		"""
+		# Translators: Announced in braille when suggestions appear when search term is entered
+		# in various search fields such as Start search box in Windows 10.
+		braille.handler.message(_("Suggestions"))
+		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "suggestionsOpened.wav"))
+
+	def event_suggestionsClosed(self):
+		"""Called when suggestions list or container is closed.
+		Subclasses should provide custom implementations if possible.
+		By default NVDA will announce this via speech, braille or via a sound.
+		"""
+		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "suggestionsClosed.wav"))
+
+	def event_controllerForChange(self):
+		# Report when suggestions appear and disappear.
+		if self is api.getFocusObject() and len(self.controllerFor) > 0:
+			self.event_suggestionsOpened()
+		else:
+			self.event_suggestionsClosed()
+
+
+class EditableTextBase(editableText.EditableText, NVDAObject):
 	"""Provides scripts to report appropriately when moving the caret in editable text fields.
 	This does not handle selection changes.
 	To handle selection changes, use either L{EditableTextWithAutoSelectDetection} or L{EditableTextWithoutAutoSelectDetection}.
@@ -168,8 +208,9 @@ class EditableText(editableText.EditableText, NVDAObject):
 
 	def initOverlayClass(self):
 		# #4264: the caret_newLine script can only be bound for processes other than NVDA's process
-		# As Pressing enter on an edit field can cause modal dialogs to appear, yet gesture.send and api.processPendingEvents may call.wx.yield which ends in a freeze. 
-		if self.announceNewLineText and self.processID!=os.getpid():
+		# As Pressing enter on an edit field can cause modal dialogs to appear,
+		# yet gesture.send and api.processPendingEvents may call.wx.yield which ends in a freeze.
+		if self.announceNewLineText and self.processID != globalVars.appPid:
 			self.bindGesture("kb:enter","caret_newLine")
 			self.bindGesture("kb:numpadEnter","caret_newLine")
 
@@ -228,6 +269,20 @@ class EditableText(editableText.EditableText, NVDAObject):
 			# Reporting of spelling errors is enabled and this character ends a word.
 			self._reportErrorInPreviousWord()
 		super().event_typedCharacter(ch)
+
+
+class EditableTextWithSuggestions(InputFieldWithSuggestions, EditableTextBase):
+	""" Represents an editable text field that shows suggestions as you type.
+	This is an empty class as functionality has been moved to the base InputFieldWithSuggestions class.
+	"""
+
+
+class EditableText(EditableTextWithSuggestions, EditableTextBase):
+	""" Represents an editable text field.
+	This is an empty class as functionality has been moved to the base EditableTextBase class.
+	This class also supports reporting of the appearance and disappearance of suggestions
+	by inheriting from the EditableTextWithSuggestions class.
+	"""
 
 
 class EditableTextWithAutoSelectDetection(EditableText):
@@ -391,7 +446,7 @@ class LiveText(NVDAObject):
 						# so ignore it.
 						del outLines[0]
 					if outLines:
-						queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewLines, outLines)
+						queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewLines, outLines, _immediate=True)
 				oldText = newText
 			except:
 				log.exception("Error getting or calculating new text")
@@ -590,8 +645,8 @@ class RowWithFakeNavigation(NVDAObject):
 		if obj is not self:
 			# Use the focused copy of the row as the parent for all cells to make comparison faster.
 			obj.parent = self
-		api.setNavigatorObject(obj)
-		speech.speakObject(obj, reason=controlTypes.OutputReason.FOCUS)
+		if api.setNavigatorObject(obj):
+			speech.speakObject(obj, reason=controlTypes.OutputReason.FOCUS)
 
 	def _moveToColumnNumber(self, column):
 		child = column - 1
@@ -600,6 +655,12 @@ class RowWithFakeNavigation(NVDAObject):
 		cell = self.getChild(child)
 		self._moveToColumn(cell)
 
+	@script(
+		# Translators: The description of an NVDA command.
+		description=_("Moves the navigator object to the next column"),
+		gesture="kb:control+alt+rightArrow",
+		canPropagate=True,
+	)
 	def script_moveToNextColumn(self, gesture):
 		cur = api.getNavigatorObject()
 		if cur == self:
@@ -612,10 +673,13 @@ class RowWithFakeNavigation(NVDAObject):
 		while new and new.location and new.location.width == 0:
 			new = new.next
 		self._moveToColumn(new)
-	script_moveToNextColumn.canPropagate = True
-	# Translators: The description of an NVDA command.
-	script_moveToNextColumn.__doc__ = _("Moves the navigator object to the next column")
 
+	@script(
+		# Translators: The description of an NVDA command.
+		description=_("Moves the navigator object to the previous column"),
+		gesture="kb:control+alt+leftArrow",
+		canPropagate=True,
+	)
 	def script_moveToPreviousColumn(self, gesture):
 		cur = api.getNavigatorObject()
 		if cur == self:
@@ -627,9 +691,6 @@ class RowWithFakeNavigation(NVDAObject):
 			while new and new.location and new.location.width == 0:
 				new = new.previous
 		self._moveToColumn(new)
-	script_moveToPreviousColumn.canPropagate = True
-	# Translators: The description of an NVDA command.
-	script_moveToPreviousColumn.__doc__ = _("Moves the navigator object to the previous column")
 
 	def reportFocus(self):
 		col = self._savedColumnNumber
@@ -646,24 +707,77 @@ class RowWithFakeNavigation(NVDAObject):
 			self.__class__._savedColumnNumber = nav.columnNumber
 		row.setFocus()
 
+	@script(
+		# Translators: The description of an NVDA command.
+		description=_("Moves the navigator object and focus to the next row"),
+		gesture="kb:control+alt+downArrow",
+		canPropagate=True,
+	)
 	def script_moveToNextRow(self, gesture):
 		self._moveToRow(self.next)
-	script_moveToNextRow.canPropagate = True
-	# Translators: The description of an NVDA command.
-	script_moveToNextRow.__doc__ = _("Moves the navigator object and focus to the next row")
 
+	@script(
+		# Translators: The description of an NVDA command.
+		description=_("Moves the navigator object and focus to the previous row"),
+		gesture="kb:control+alt+upArrow",
+		canPropagate=True,
+	)
 	def script_moveToPreviousRow(self, gesture):
 		self._moveToRow(self.previous)
-	script_moveToPreviousRow.canPropagate = True
-	# Translators: The description of an NVDA command.
-	script_moveToPreviousRow.__doc__ = _("Moves the navigator object and focus to the previous row")
 
-	__gestures = {
-		"kb:control+alt+rightArrow": "moveToNextColumn",
-		"kb:control+alt+leftArrow": "moveToPreviousColumn",
-		"kb:control+alt+downArrow": "moveToNextRow",
-		"kb:control+alt+upArrow": "moveToPreviousRow",
-	}
+	@script(
+		description=_(
+			# Translators: The description of an NVDA command.
+			"Moves the navigator object to the first column"
+		),
+		gesture="kb:Control+Alt+Home",
+		canPropagate=True,
+	)
+	def script_moveToFirstColumn(self, gesture):
+		new = self.firstChild
+		while new and new.location and new.location.width == 0:
+			new = new.next
+		self._moveToColumn(new)
+
+	@script(
+		description=_(
+			# Translators: The description of an NVDA command.
+			"Moves the navigator object to the last column"
+		),
+		gesture="kb:Control+Alt+End",
+		canPropagate=True,
+	)
+	def script_moveToLastColumn(self, gesture):
+		new = self.lastChild
+		# In some cases, e.g. in NVDA symbol pronounciation llist view lastChild returns none.
+		if not new and len(self.children) > 0:
+			new = self.children[-1]
+		while new and new.location and new.location.width == 0:
+			new = new.previous
+		self._moveToColumn(new)
+
+	@script(
+		description=_(
+			# Translators: The description of an NVDA command.
+			"Moves the navigator object and focus to the first row"
+		),
+		gesture="kb:Control+Alt+PageUp",
+		canPropagate=True,
+	)
+	def script_moveToFirstRow(self, gesture):
+		self._moveToRow(self.parent.firstChild)
+
+	@script(
+		description=_(
+			# Translators: The description of an NVDA command.
+			"Moves the navigator object and focus to the last row"
+		),
+		gesture="kb:Control+Alt+PageDown",
+		canPropagate=True,
+	)
+	def script_moveToLastRow(self, gesture):
+		self._moveToRow(self.parent.lastChild)
+
 
 class RowWithoutCellObjects(NVDAObject):
 	"""An abstract class which creates cell objects for table rows which don't natively expose them.
@@ -808,30 +922,6 @@ class Notification(NVDAObject):
 
 	event_show = event_alert
 
-class EditableTextWithSuggestions(NVDAObject):
-	"""Allows NvDA to announce appearance/disappearance of suggestions as text is entered.
-	This is used in various places, including Windows 10 search edit fields and others.
-	Subclasses should provide L{event_suggestionsOpened} and can optionally override L{event_suggestionsClosed}.
-	These events are fired when suggestions appear and disappear, respectively.
-	"""
-
-	def event_suggestionsOpened(self):
-		"""Called when suggestions appear when text is entered e.g. search suggestions.
-		Subclasses should provide custom implementations if possible.
-		By default NVDA will announce appearance of suggestions using speech, braille or a sound will be played.
-		"""
-		# Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
-		braille.handler.message(_("Suggestions"))
-		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
-			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "suggestionsOpened.wav"))
-
-	def event_suggestionsClosed(self):
-		"""Called when suggestions list or container is closed.
-		Subclasses should provide custom implementations if possible.
-		By default NVDA will announce this via speech, braille or via a sound.
-		"""
-		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
-			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "suggestionsClosed.wav"))
 
 class WebDialog(NVDAObject):
 	"""

@@ -1,8 +1,7 @@
-#versionInfo.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2022 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """
 This module contains localizable version information such as description, copyright and About messages etc.
@@ -16,13 +15,13 @@ from buildVersion import *
 longName = _("NonVisual Desktop Access")
 description = _("A free and open source screen reader for Microsoft Windows")
 url = "https://www.nvaccess.org/"
-copyrightYears = "2006-2021"
+copyrightYears = "2006-2023"
 copyright = _("Copyright (C) {years} NVDA Contributors").format(
 	years=copyrightYears)
 aboutMessage = _(
 	# Translators: "About NVDA" dialog box message
 	u"""{longName} ({name})
-Version: {version}
+Version: {version} ({version_detailed})
 URL: {url}
 {copyright}
 

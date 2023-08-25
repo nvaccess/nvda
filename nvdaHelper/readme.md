@@ -6,40 +6,82 @@ While virtual buffers apply to several different application types, it may first
 work with browsers, the rest of this document will take a web browser centric view unless specified otherwise.
 
 ### Output
-Internal code is built into three DLLs:
+Internal code is built into several DLLs:
 - `nvdaHelperLocal.dll`
 - `nvdaHelperLocalWin10.dll`
 - `nvdaHelperRemote.dll`
- 
+- Several COM proxy dlls
+- `UIARemote.dll`
+
+The `*local*.dll`'s are built for x86 (ie to match NVDA's arch), others are built for x86, x64, and arm64.
+
+#### COM proxy dlls
 Several COM Proxy DLLs are built from IDL files. A COM Proxy tells windows how to marshal data over COM when calling
  the target API interface.
 For instance:
 - IAccessible2 IDL files are built into `IAccessible2Proxy.dll`
 - ISimpleDOM IDL files are built into `ISimpleDOM.dll`
- 
-The `*local*.dll`'s are built for x86 (ie to match NVDA's arch), others are built for x86, x64, and arm64.
+
+#### nvdaHelperLocalWin10.dll
+Contains code specific to Windows 10 and above, that aides in accessing newer technologies such as Windows OneCore speech synthesis, the Windows in-built OCR service.
+This code is mostly C++/WinRT. 
+
+#### nvdaHelperLocal.dll
+This dll is loaded directly in to NVDA. It provides the following features:
+*  client stub methods for several RPC interfaces allowing NVDA to execute code in-process. These interfaces include nvdaInprocUtils, vbufBackends, and displayModel, which are implemented in nvdaHelperRemote.dll.
+* Server stub methods for several RPC interfaces allowing in-process code to execute code in NVDA. These interfaces include nvdaController and nvdaControllerInternal. 
+* Functions to aide NVDA in hooking platform dlls to make their calls easier to cancel 
+* Several small utility functions that assist in processing text (which are faster in c++).
+
+#### NVDAHelperRemote.dll
+This dll injects itself into other processes on the system, allowing for in-process code execution by NVDA.
+It provides the following features:
+* Server stub methods for several RPC interfaces, including NVDAInprocUtils, VBufBackends and displayModel.
+* Client stub methods for several RPC interfaces, allowing in-process code to execute code back in NVDA. These interfaces include NVDAController and NVDAControllerInternal
+
+#### UIARemote.dll
+This dll is loaded by NVDA, providing utility functions that perform certain tasks or batch procedures on Microsoft UI Automation elements.
+It makes use of the UI Automation Remote Operations capabilities in Windows 11, allowing to declaratively define code  to  access and manipulate UI Automation elements, that will be Just-In-Time compiled by Windows and executed in the process providing the UI Automation elements.
+
+##### microsoft-ui-uiAutomation remote ops library
+As a dependency of UIARemote.dll, the open source [Microsoft-UI-UIAutomation Remote Operations library](https://github.com/microsoft/microsoft-ui-uiautomation)  is also built.
+This library contains both a low-level winrt API, and a higher-level pure C++ API which depends on the lower-level winrt API. UIARemote.dll tends to use the higher-level Operations abstraction API for its work.
+In order for the winrt API to be available, UIARemote must register it with the Windows winrt platform. this involves loading a manifest file (See `microsoft-ui-uiautomation/Microsoft.UI.UIAutomation.dll.manifest`) and activating an activation context.
 
 ### Configuring Visual Studio
 The following steps won't prepare a buildable solution, but it will enable intellisense.
 You should still build on the command line to verify errors.
 
 - Ensure you have built NVDA on the command line first.
-- Create a new project from existing code
-- Type: Visual C++, press next.
-- Set the `<repo root>/nvdaHelper/` directory as the project file location.
-- Project name: "nvdaHelper"
-- Add files to the project from these folders: checked.
-  - This should have a single 'checked' item, the path to nvdaHelper
-- Other defaults are fine, press next
-- Select "use external build system" for "How do you want to build the project?", press next
-- Build command line: `scons source`
-- Include search paths: `../include;../miscDeps/include;./;../build\x86_64;../include/minhook/include`
-- Preprocessor definitions: `WIN32;_WINDOWS;_USRDLL;NVDAHELPER_EXPORTS;UNICODE;_CRT_SECURE_NO_DEPRECATE;LOGLEVEL=15;_WIN32_WINNT=_WIN32_WINNT_WIN7;`
-- Forced Included files: `winuser.h`
-- Press next
-- Ensure "same as Debug configuration" is checked and press finish
-- Open the project settings and change the following:
-  - NMake -> Additional Options -> `/std:c++17`
+- From the files menu select: `Create a new project from existing code`
+- "Welcome to the Create Project from Existing Code Files Wizard"
+  - "What type of project would you like to create?": `Visual C++`
+  - Press next.
+- "Specify Project Location and Source Files"
+  - "Project file location": `<repo root>/nvdaHelper/`
+  - Project name: `nvdaHelper`
+  - Add files to the project from these folders: `checked`
+  - One **checked** item: `<path to nvdaHelper>`
+  - Files types to add to the project: **use default**
+  - Show all files in Solution Explorer: *use default (checked)**
+  - Press next
+- "Specify Project Settings"
+  - "How do you want to build the project?": Select `use external build system`
+  - Press next
+-  Specify Debug Configuration Settings
+  - Build command line: `scons source`
+  - Preprocessor definitions (/D): `WIN32;_WINDOWS;_USRDLL;NVDAHELPER_EXPORTS;UNICODE;_CRT_SECURE_NO_DEPRECATE;LOGLEVEL=15;_WIN32_WINNT=_WIN32_WINNT_WIN7;NOMINMAX`
+  - Include search paths (/I): `../include;../miscDeps/include;./;../build\x86_64;../include/minhook/include`
+  - Forced Included files (/FI): `winuser.h`
+  - Press next
+-  Specify Debug Configuration Settings
+  - "Same as Debug configuration": **Checked**
+- Press Finish
+- Set the C++ standard:
+  - In the project menu, select Properties
+  - Select "Configuration:" `All Configurations`
+  - Under "Configuration Properties" select NMake
+  - Set additional Options -> `/std:c++20`
 
 #### To confirm these settings
 - Build NVDA normally
@@ -47,15 +89,15 @@ You should still build on the command line to verify errors.
   - EG
   ```
   cl /Fobuild\x86\vbufBackends\gecko_ia2\gecko_ia2.obj /c build\x86\vbufBackends\gecko_ia2\gecko_ia2.cpp
-  /TP /EHsc /nologo /std:c++17 /Od /MT /W3 /WX
-  /DUNICODE /D_CRT_SECURE_NO_DEPRECATE /DLOGLEVEL=15 /D_WIN32_WINNT=_WIN32_WINNT_WIN7 /DNDEBUG
+  /TP /EHsc /nologo /std:c++20 /permissive- /Od /MT /W3 /WX
+  /DUNICODE /D_CRT_SECURE_NO_DEPRECATE /DLOGLEVEL=15 /D_WIN32_WINNT=_WIN32_WINNT_WIN7 /DNOMINMAX /DNDEBUG
   /Iinclude /Imiscdeps\include /Ibuild\x86
   /Z7
   ```
 - This shows the:
   - defines beginning with `/D`
   - includes directories beginning with `/I`
-  - Additional options like `/std:c++17`
+  - Additional options like `/std:c++20`
 
 ### Virtual Buffer Backends
 

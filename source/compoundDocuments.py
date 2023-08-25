@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2010-2021 NV Access Limited, Bram Duvigneau
+# Copyright (C) 2010-2022 NV Access Limited, Bram Duvigneau
 from typing import (
 	Optional,
 	Dict,
@@ -155,7 +155,8 @@ class CompoundTextInfo(textInfos.TextInfo):
 		field['roleText'] = obj.roleText
 		field['description'] = obj.description
 		field['_description-from'] = obj.descriptionFrom
-		field['hasDetails'] = obj.hasDetails
+		field['hasDetails'] = bool(obj.annotations)
+		field["detailsRoles"] = obj.annotations.roles if obj.annotations else tuple()
 		# The user doesn't care about certain states, as they are obvious.
 		states.discard(controlTypes.State.EDITABLE)
 		states.discard(controlTypes.State.MULTILINE)

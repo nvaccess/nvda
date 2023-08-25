@@ -1,9 +1,14 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2012-2022 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
 import api
-import tones
 import controlTypes
 import textInfos
 import locationHelper
 import speech
+from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 class ScreenExplorer(object):
 
@@ -13,7 +18,16 @@ class ScreenExplorer(object):
 		self._obj=None
 		self._pos=None
 
-	def moveTo(self,x,y,new=False,unit=textInfos.UNIT_LINE):
+	# C901 'moveTo' is too complex
+	# Note: when working on moveTo, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def moveTo(  # noqa: C901
+			self,
+			x: int,
+			y: int,
+			new: bool = False,
+			unit: str = textInfos.UNIT_LINE,
+	) -> None:
 		obj=api.getDesktopObject().objectFromPoint(x,y)
 		prevObj=None
 		while obj  and obj.beTransparentToMouse:
@@ -28,7 +42,8 @@ class ScreenExplorer(object):
 			self._obj=obj
 			hasNewObj=True
 			if self.updateReview:
-				api.setNavigatorObject(obj)
+				if not api.setNavigatorObject(obj):
+					return
 		else:
 			obj=self._obj
 		pos=None
@@ -50,11 +65,24 @@ class ScreenExplorer(object):
 		if pos and self.updateReview:
 			api.setReviewPosition(pos)
 		speechCanceled=False
-		if hasNewObj:
+		if (
+			hasNewObj
+			and not objectBelowLockScreenAndWindowsIsLocked(obj)
+		):
 			speech.cancelSpeech()
 			speechCanceled=True
 			speech.speakObject(obj)
-		if pos  and (new or not self._pos or pos.__class__!=self._pos.__class__ or pos.compareEndPoints(self._pos,"startToStart")!=0 or pos.compareEndPoints(self._pos,"endToEnd")!=0):
+		if (
+			pos
+			and (
+				new
+				or not self._pos
+				or pos.__class__ != self._pos.__class__
+				or pos.compareEndPoints(self._pos, "startToStart") != 0
+				or pos.compareEndPoints(self._pos, "endToEnd") != 0
+			)
+			and not objectBelowLockScreenAndWindowsIsLocked(pos.obj)
+		):
 				self._pos=pos
 				if not speechCanceled:
 					speech.cancelSpeech()

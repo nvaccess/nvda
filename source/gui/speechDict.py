@@ -1,9 +1,11 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2022 NV Access Limited, Peter Vágner, Mesar Hameed, Joseph Lee,
+# Copyright (C) 2007-2023 NV Access Limited, Peter Vágner, Mesar Hameed, Joseph Lee,
 # Aaron Cannon, Ethan Holliger, Julien Cochuyt, Thomas Stivers, Cyrille Bougot, Aleksey Sadovoy
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
+from re import error as RegexpError
 
 from abc import abstractmethod
 import wx
@@ -94,25 +96,44 @@ class DictionaryEntryDialog(
 			)
 			self.patternTextCtrl.SetFocus()
 			return
+		entryType = self.getType()
 		try:
 			dictEntry = self.dictEntry = speechDictHandler.SpeechDictEntry(
 				self.patternTextCtrl.GetValue(),
 				self.replacementTextCtrl.GetValue(),
 				self.commentTextCtrl.GetValue(),
 				bool(self.caseSensitiveCheckBox.GetValue()),
-				self.getType()
+				entryType,
 			)
-			dictEntry.sub("test")  # Ensure there are no grouping error (#11407)
-		except Exception as e:
-			log.debugWarning("Could not add dictionary entry due to (regex error) : %s" % e)
+		except RegexpError as e:
+			log.debugWarning(f"Could not add dictionary entry due to regex error in the pattern field : {e}")
+			if entryType != speechDictHandler.ENTRY_TYPE_REGEXP:
+				raise e
 			gui.messageBox(
 				# Translators: This is an error message to let the user know that the dictionary entry is not valid.
-				_("Regular Expression error: \"%s\".") % e,
+				_("Regular Expression error in the pattern field: \"{error}\".").format(error=e),
 				# Translators: The title of an error message raised by the Dictionary Entry dialog
 				_("Dictionary Entry Error"),
 				wx.OK | wx.ICON_WARNING,
 				self
 			)
+			self.patternTextCtrl.SetFocus()
+			return
+		try:
+			dictEntry.sub("test")  # Ensure there are no grouping error (#11407)
+		except RegexpError as e:
+			log.debugWarning(f"Could not add dictionary entry due to regex error in the replacement field : {e}")
+			if entryType != speechDictHandler.ENTRY_TYPE_REGEXP:
+				raise e
+			gui.messageBox(
+				# Translators: This is an error message to let the user know that the dictionary entry is not valid.
+				_("Regular Expression error in the replacement field: \"{error}\".").format(error=e),
+				# Translators: The title of an error message raised by the Dictionary Entry dialog
+				_("Dictionary Entry Error"),
+				wx.OK | wx.ICON_WARNING,
+				self
+			)
+			self.replacementTextCtrl.SetFocus()
 			return
 		evt.Skip()
 

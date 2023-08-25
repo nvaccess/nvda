@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2022 NV Access Limited, Joseph Lee
+# Copyright (C) 2017-2023 NV Access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -88,11 +88,16 @@ class ImeCandidateItem(CandidateItemBehavior, UIA):
 		return super(ImeCandidateItem, self).name
 
 	def event_UIA_elementSelected(self):
+		# In Windows 11, focus event is fired when a candidate item receives focus,
+		# therefore ignore this event for now.
+		if winVersion.getWinVer() >= winVersion.WIN11:
+			return
 		oldNav = api.getNavigatorObject()
 		if isinstance(oldNav, ImeCandidateItem) and self.name == oldNav.name:
 			# Duplicate selection event fired on the candidate item. Ignore it.
 			return
-		api.setNavigatorObject(self)
+		if not api.setNavigatorObject(self):
+			return
 		speech.cancelSpeech()
 		# Report the entire current page of candidate items if it is newly shown  or it has changed.
 		if config.conf["inputComposition"]["autoReportAllCandidates"]:
@@ -111,7 +116,14 @@ class AppModule(appModuleHandler.AppModule):
 	# Cache the most recently selected item.
 	_recentlySelected = None
 
+	# In Windows 11, clipboard history is seen as a web document.
+	# Turn off browse mode by default so clipboard history entry menu items can be announced when tabbed to.
+	disableBrowseModeByDefault: bool = True
+
 	def event_UIA_elementSelected(self, obj, nextHandler):
+		# In Windows 11, candidate panel houses candidate items, not the prediction window.
+		if obj.UIAAutomationId == "TEMPLATE_PART_CandidatePanel":
+			obj = obj.firstChild
 		# Logic for IME candidate items is handled all within its own object
 		# Therefore pass these events straight on.
 		if isinstance(obj, ImeCandidateItem):
@@ -149,8 +161,7 @@ class AppModule(appModuleHandler.AppModule):
 				# Emoji categories list.
 				ui.message(candidate.name)
 				obj = candidate.firstChild
-		if obj is not None:
-			api.setNavigatorObject(obj)
+		if obj is not None and api.setNavigatorObject(obj):
 			obj.reportFocus()
 			braille.handler.message(braille.getPropertiesBraille(
 				name=obj.name,
@@ -304,12 +315,20 @@ class AppModule(appModuleHandler.AppModule):
 					)
 					and obj.parent.parent.UIAAutomationId == "IME_Candidate_Window"
 				)
-				or obj.parent.UIAAutomationId in ("IME_Candidate_Window", "IME_Prediction_Window")
+				or obj.parent.UIAAutomationId in (
+					"IME_Candidate_Window",
+					"IME_Prediction_Window",
+					"TEMPLATE_PART_CandidatePanel",
+				)
 			):
 				clsList.insert(0, ImeCandidateItem)
-			elif obj.role == controlTypes.Role.PANE and obj.UIAAutomationId in (
-				"IME_Candidate_Window",
-				"IME_Prediction_Window"
+			elif (
+				obj.role in (controlTypes.Role.PANE, controlTypes.Role.LIST, controlTypes.Role.POPUPMENU)
+				and obj.UIAAutomationId in (
+					"IME_Candidate_Window",
+					"IME_Prediction_Window",
+					"TEMPLATE_PART_CandidatePanel",
+				)
 			):
 				clsList.insert(0, ImeCandidateUI)
 			# #13104: newer revisions of Windows 11 build 22000 moves focus to emoji search field.

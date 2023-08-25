@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
-# Julien Cochuyt
+# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Julien Cochuyt, Derek Riemer, Cyrille Bougot
 
 """High-level functions to speak information.
 """ 
@@ -14,6 +14,7 @@ import unicodedata
 import time
 import colors
 import api
+from annotation import _AnnotationRolesT
 import controlTypes
 from controlTypes import OutputReason, TextPosition
 import tones
@@ -26,6 +27,7 @@ import languageHandler
 from . import manager
 from .commands import (
 	# Commands that are used in this file.
+	BreakCommand,
 	SpeechCommand,
 	PitchCommand,
 	LangChangeCommand,
@@ -54,11 +56,17 @@ from typing import (
 )
 from logHandler import log
 import config
+from config.configFlags import (
+	ReportLineIndentation,
+	ReportTableHeaders,
+	ReportCellBorders,
+)
 import aria
 from .priorities import Spri
 from enum import IntEnum
 from dataclasses import dataclass
 from copy import copy
+from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 if typing.TYPE_CHECKING:
 	import NVDAObjects
@@ -294,7 +302,13 @@ def _getSpellingSpeechWithoutCharMode(
 		sayCapForCapitals: bool,
 		capPitchChange: int,
 		beepForCapitals: bool,
+		fallbackToCharIfNoDescription: bool = True,
 ) -> Generator[SequenceItemT, None, None]:
+	"""
+	@param fallbackToCharIfNoDescription: Only applies if useCharacterDescriptions is True.
+	If fallbackToCharIfNoDescription is True, and no character description is found,
+	the character itself will be announced. Otherwise, nothing will be spoken.
+	"""
 	
 	defaultLanguage=getCurrentLanguage()
 	if not locale or (not config.conf['speech']['autoDialectSwitching'] and locale.split('_')[0]==defaultLanguage.split('_')[0]):
@@ -308,7 +322,6 @@ def _getSpellingSpeechWithoutCharMode(
 		text=text.rstrip()
 
 	textLength=len(text)
-	count = 0
 	localeHasConjuncts = True if locale.split('_',1)[0] in LANGS_WITH_CONJUNCT_CHARS else False
 	charDescList = getCharDescListFromText(text,locale) if localeHasConjuncts else text
 	for item in charDescList:
@@ -325,6 +338,8 @@ def _getSpellingSpeechWithoutCharMode(
 		if useCharacterDescriptions and charDesc:
 			IDEOGRAPHIC_COMMA = u"\u3001"
 			speakCharAs=charDesc[0] if textLength>1 else IDEOGRAPHIC_COMMA.join(charDesc)
+		elif useCharacterDescriptions and not charDesc and not fallbackToCharIfNoDescription:
+			return None
 		else:
 			speakCharAs=characterProcessing.processSpeechSymbol(locale,speakCharAs)
 		if config.conf['speech']['autoLanguageSwitching']:
@@ -336,6 +351,54 @@ def _getSpellingSpeechWithoutCharMode(
 			uppercase and beepForCapitals,
 		)
 		yield EndUtteranceCommand()
+
+
+def getSingleCharDescriptionDelayMS() -> int:
+	"""
+	@returns: 1 second, a default delay for delayed character descriptions.
+	In the future, this should fetch its value from a user defined NVDA idle time.
+	Blocked by: https://github.com/nvaccess/nvda/issues/13915
+	"""
+	return 1000
+
+
+def getSingleCharDescription(
+		text: str,
+		locale: Optional[str] = None,
+) -> Generator[SequenceItemT, None, None]:
+	"""
+	Returns a speech sequence:
+	a pause, the length determined by getSingleCharDescriptionDelayMS,
+	followed by the character description.
+	"""
+	# This should only be used for single chars.
+	if not len(text) == 1:
+		return
+	synth = getSynth()
+	synthConfig = config.conf["speech"][synth.name]
+	if synth.isSupported("pitch") and text.isupper():
+		capPitchChange = synthConfig["capPitchChange"]
+	else:
+		capPitchChange = 0
+	yield BreakCommand(getSingleCharDescriptionDelayMS())
+	yield from _getSpellingSpeechWithoutCharMode(
+		text,
+		locale,
+		useCharacterDescriptions=True,
+		# The pitch change may be useful,
+		# as a pitch change may be harder to notice,
+		# and continuing the shifted pitch
+		# is more intuitive.
+		capPitchChange=capPitchChange,
+		# #14239: When navigating by character,
+		# there is already a beep or "cap" announcement.
+		# There is no need for a secondary beep
+		# or "cap" announcement when announcing the
+		# the delayed character description.
+		beepForCapitals=False,
+		sayCapForCapitals=False,
+		fallbackToCharIfNoDescription=False,
+	)
 
 
 def getSpellingSpeech(
@@ -389,7 +452,7 @@ def getCharDescListFromText(text,locale):
 
 
 def speakObjectProperties(
-		obj,
+		obj: "NVDAObjects.NVDAObject",
 		reason: OutputReason = OutputReason.QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 		priority: Optional[Spri] = None,
@@ -414,6 +477,8 @@ def getObjectPropertiesSpeech(  # noqa: C901
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
 		**allowedProperties
 ) -> SpeechSequence:
+	if objectBelowLockScreenAndWindowsIsLocked(obj):
+		return []
 	#Fetch the values for all wanted properties
 	newPropertyValues={}
 	positionInfo=None
@@ -430,7 +495,9 @@ def getObjectPropertiesSpeech(  # noqa: C901
 			newPropertyValues['current'] = obj.isCurrent
 
 		elif value and name == "hasDetails":
-			newPropertyValues['hasDetails'] = obj.hasDetails
+			newPropertyValues['hasDetails'] = bool(obj.annotations)
+		elif value and name == "detailsRoles":
+			newPropertyValues["detailsRoles"] = obj.annotations.roles if obj.annotations else tuple()
 		elif value and name == "descriptionFrom" and (
 			obj.descriptionFrom == controlTypes.DescriptionFrom.ARIA_DESCRIPTION
 		):
@@ -487,8 +554,11 @@ def getObjectPropertiesSpeech(  # noqa: C901
 				newStates=newPropertyValues[name]
 				newPropertyValues['states']=newStates-oldStates
 				newPropertyValues['negativeStates']=oldStates-newStates
-	#properties such as states need to know the role to speak properly, give it as a _ name
-	newPropertyValues['_role']=newPropertyValues.get('role',obj.role)
+
+	# properties such as states or value need to know the role to speak properly,
+	# give it as a _ name
+	newPropertyValues['_role'] = newPropertyValues.get('role', obj.role)
+
 	# The real states are needed also, as the states entry might be filtered.
 	newPropertyValues['_states']=obj.states
 	if "rowNumber" in newPropertyValues or "columnNumber" in newPropertyValues:
@@ -561,16 +631,13 @@ def speakObject(
 		speak(sequence, priority=priority)
 
 
-
-
-# C901 'getObjectSpeech' is too complex
-# Note: when working on getObjectSpeech, look for opportunities to simplify
-# and move logic out into smaller helper functions.
-def getObjectSpeech(  # noqa: C901
-		obj,
+def getObjectSpeech(
+		obj: "NVDAObjects.NVDAObject",
 		reason: OutputReason = OutputReason.QUERY,
 		_prefixSpeechCommand: Optional[SpeechCommand] = None,
-):
+) -> SpeechSequence:
+	if objectBelowLockScreenAndWindowsIsLocked(obj):
+		return []
 	role=obj.role
 	# Choose when we should report the content of this object's textInfo, rather than just the object's value
 	import browseMode
@@ -624,7 +691,6 @@ def getObjectSpeech(  # noqa: C901
 			sequence.extend(_flattenNestedSequences(speechGen))
 	elif role == controlTypes.Role.MATH:
 		import mathPres
-		mathPres.ensureInit()
 		if mathPres.speechProvider:
 			try:
 				sequence.extend(
@@ -644,6 +710,7 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 		'value': True,
 		'description': True,
 		'hasDetails': config.conf["annotations"]["reportDetails"],
+		"detailsRoles": config.conf["annotations"]["reportDetails"],
 		'descriptionFrom': config.conf["annotations"]["reportAriaDescription"],
 		'keyboardShortcut': True,
 		'positionInfo_level': True,
@@ -681,20 +748,29 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 		allowProperties["cellCoordsText"] = False
 		# rowNumber and columnNumber might be needed even if we're not reporting coordinates.
 		allowProperties["includeTableCellCoords"] = False
-	if not formatConf["reportTableHeaders"]:
+	if formatConf["reportTableHeaders"] not in (ReportTableHeaders.ROWS_AND_COLUMNS, ReportTableHeaders.ROWS):
 		allowProperties["rowHeaderText"] = False
+	if formatConf["reportTableHeaders"] not in (ReportTableHeaders.ROWS_AND_COLUMNS, ReportTableHeaders.COLUMNS):
 		allowProperties["columnHeaderText"] = False
 	if (
 		not formatConf["reportTables"]
 		or (
 			not formatConf["reportTableCellCoords"]
-			and not formatConf["reportTableHeaders"]
+			and formatConf["reportTableHeaders"] in (ReportTableHeaders.OFF, ReportTableHeaders.COLUMNS)
 		)
 	):
-		# We definitely aren't reporting any table info at all.
+		# We definitely aren't reporting any table row info at all.
 		allowProperties["rowNumber"] = False
-		allowProperties["columnNumber"] = False
 		allowProperties["rowSpan"] = False
+	if (
+		not formatConf["reportTables"]
+		or (
+			not formatConf["reportTableCellCoords"]
+			and formatConf["reportTableHeaders"] in (ReportTableHeaders.OFF, ReportTableHeaders.ROWS)
+		)
+	):
+		# We definitely aren't reporting any table column info at all.
+		allowProperties["columnNumber"] = False
 		allowProperties["columnSpan"] = False
 	if shouldReportTextContent:
 		allowProperties['value'] = False
@@ -742,9 +818,15 @@ def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> Spe
 	@param indentation: The string of indentation.
 	@param formatConfig: The configuration to use.
 	"""
-	speechIndentConfig = formatConfig["reportLineIndentation"]
+	speechIndentConfig = formatConfig["reportLineIndentation"] in (
+		ReportLineIndentation.SPEECH,
+		ReportLineIndentation.SPEECH_AND_TONES
+	)
 	toneIndentConfig = (
-		formatConfig["reportLineIndentationWithTones"]
+		formatConfig["reportLineIndentation"] in (
+			ReportLineIndentation.TONES,
+			ReportLineIndentation.SPEECH_AND_TONES
+		)
 		and _speechState.speechMode == SpeechMode.talk
 	)
 	indentSequence: SpeechSequence = []
@@ -1115,7 +1197,6 @@ def _extendSpeechSequence_addMathForTextInfo(
 		speechSequence: SpeechSequence, info: textInfos.TextInfo, field: textInfos.Field
 ) -> None:
 	import mathPres
-	mathPres.ensureInit()
 	if not mathPres.speechProvider:
 		return
 	try:
@@ -1165,7 +1246,6 @@ def getTextInfoSpeech(  # noqa: C901
 		onlyInitialFields: bool = False,
 		suppressBlanks: bool = False
 ) -> Generator[SpeechSequence, None, bool]:
-	onlyCache = reason == OutputReason.ONLYCACHE
 	if isinstance(useCache,SpeakTextInfoState):
 		speakTextInfoState=useCache
 	elif useCache:
@@ -1179,7 +1259,10 @@ def getTextInfoSpeech(  # noqa: C901
 	formatConfig=formatConfig.copy()
 	if extraDetail:
 		formatConfig['extraDetail']=True
-	reportIndentation=unit==textInfos.UNIT_LINE and ( formatConfig["reportLineIndentation"] or formatConfig["reportLineIndentationWithTones"])
+	reportIndentation = (
+		unit == textInfos.UNIT_LINE
+		and formatConfig["reportLineIndentation"] != ReportLineIndentation.OFF
+	)
 	# For performance reasons, when navigating by paragraph or table cell, spelling errors will not be announced.
 	if unit in (textInfos.UNIT_PARAGRAPH, textInfos.UNIT_CELL) and reason == OutputReason.CARET:
 		formatConfig['reportSpellingErrors']=False
@@ -1205,8 +1288,8 @@ def getTextInfoSpeech(  # noqa: C901
 		except KeyError:
 			pass
 
-	#Make a new controlFieldStack and formatField from the textInfo's initialFields
-	newControlFieldStack=[]
+	# Make a new controlFieldStack and formatField from the textInfo's initialFields
+	newControlFieldStack: List[textInfos.ControlField] = []
 	newFormatField=textInfos.FormatField()
 	initialFields=[]
 	for field in textWithFields:
@@ -1336,32 +1419,29 @@ def getTextInfoSpeech(  # noqa: C901
 		language=newFormatField.get('language')
 		speechSequence.append(LangChangeCommand(language))
 		lastLanguage=language
-
-	def isControlEndFieldCommand(x):
-		return isinstance(x, textInfos.FieldCommand) and x.command == "controlEnd"
-
 	isWordOrCharUnit = unit in (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD)
 	if onlyInitialFields or (
 		isWordOrCharUnit
 		and len(textWithFields) > 0
 		and len(textWithFields[0].strip() if not textWithFields[0].isspace() else textWithFields[0]) == 1
-		and all(isControlEndFieldCommand(x) for x in itertools.islice(textWithFields, 1, None))
+		and all(_isControlEndFieldCommand(x) for x in itertools.islice(textWithFields, 1, None))
 	):
-		if not onlyCache:
-			if onlyInitialFields or any(isinstance(x, str) for x in speechSequence):
-				yield speechSequence
-			if not onlyInitialFields:
-				spellingSequence = list(getSpellingSpeech(
-					textWithFields[0],
-					locale=language
-				))
-				logBadSequenceTypes(spellingSequence)
-				yield spellingSequence
+		if reason != OutputReason.ONLYCACHE:
+			yield from list(_getTextInfoSpeech_considerSpelling(
+				unit,
+				onlyInitialFields,
+				textWithFields,
+				reason,
+				speechSequence,
+				language,
+			))
 		if useCache:
-			speakTextInfoState.controlFieldStackCache=newControlFieldStack
-			speakTextInfoState.formatFieldAttributesCache=formatFieldAttributesCache
-			if not isinstance(useCache,SpeakTextInfoState):
-				speakTextInfoState.updateObj()
+			_getTextInfoSpeech_updateCache(
+				useCache,
+				speakTextInfoState,
+				newControlFieldStack,
+				formatFieldAttributesCache,
+			)
 		return False
 
 	# Similar to before, but If the most inner clickable is exited, then we allow announcing clickable for the next lot of clickable fields entered.
@@ -1459,7 +1539,21 @@ def getTextInfoSpeech(  # noqa: C901
 				if autoLanguageSwitching and newLanguage!=lastLanguage:
 					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
 					lastLanguage=newLanguage
-	if reportIndentation and speakTextInfoState and allIndentation!=speakTextInfoState.indentationCache:
+	if (
+		reportIndentation
+		and speakTextInfoState
+		and(
+			# either not ignoring blank lines
+			not formatConfig['ignoreBlankLinesForRLI']
+			# or line isn't completely blank
+			or any(
+				not (set(t) <= LINE_END_CHARS)
+				for t in textWithFields
+				if isinstance(t, str)
+			)
+		)
+		and allIndentation != speakTextInfoState.indentationCache
+	):
 		indentationSpeech=getIndentationSpeech(allIndentation, formatConfig)
 		if autoLanguageSwitching and speechSequence[-1].lang is not None:
 			# Indentation must be spoken in the default language,
@@ -1507,18 +1601,69 @@ def getTextInfoSpeech(  # noqa: C901
 		# Translators: This is spoken when the line is considered blank.
 		speechSequence.append(_("blank"))
 
-	#Cache a copy of the new controlFieldStack for future use
+	# Cache a copy of the new controlFieldStack for future use
 	if useCache:
-		speakTextInfoState.controlFieldStackCache=list(newControlFieldStack)
-		speakTextInfoState.formatFieldAttributesCache=formatFieldAttributesCache
-		if not isinstance(useCache,SpeakTextInfoState):
-			speakTextInfoState.updateObj()
+		_getTextInfoSpeech_updateCache(
+			useCache,
+			speakTextInfoState,
+			newControlFieldStack,
+			formatFieldAttributesCache,
+		)
 
 	if reason == OutputReason.ONLYCACHE or not speechSequence:
 		return False
 
 	yield speechSequence
 	return True
+
+
+# for checking a line is completely blank, i.e. doesn't even contain spaces
+LINE_END_CHARS = frozenset(('\r', '\n'))
+
+
+def _isControlEndFieldCommand(command: Union[str, textInfos.FieldCommand]):
+	return isinstance(command, textInfos.FieldCommand) and command.command == "controlEnd"
+
+
+def _getTextInfoSpeech_considerSpelling(
+		unit: Optional[textInfos.TextInfo],
+		onlyInitialFields: bool,
+		textWithFields: textInfos.TextInfo.TextWithFieldsT,
+		reason: OutputReason,
+		speechSequence: SpeechSequence,
+		language: str,
+) -> Generator[SpeechSequence, None, None]:
+	if onlyInitialFields or any(isinstance(x, str) for x in speechSequence):
+		yield speechSequence
+	if not onlyInitialFields:
+		spellingSequence = list(getSpellingSpeech(
+			textWithFields[0],
+			locale=language
+		))
+		logBadSequenceTypes(spellingSequence)
+		yield spellingSequence
+		if (
+			reason == OutputReason.CARET
+			and unit == textInfos.UNIT_CHARACTER
+			and config.conf["speech"]["delayedCharacterDescriptions"]
+		):
+			descriptionSequence = list(getSingleCharDescription(
+				textWithFields[0],
+				locale=language,
+			))
+			yield descriptionSequence
+
+
+def _getTextInfoSpeech_updateCache(
+		useCache: Union[bool, SpeakTextInfoState],
+		speakTextInfoState: SpeakTextInfoState,
+		newControlFieldStack: List[textInfos.ControlField],
+		formatFieldAttributesCache: textInfos.Field,
+):
+	speakTextInfoState.controlFieldStackCache = newControlFieldStack
+	speakTextInfoState.formatFieldAttributesCache = formatFieldAttributesCache
+	if not isinstance(useCache, SpeakTextInfoState):
+		speakTextInfoState.updateObj()
 
 
 # C901 'getPropertiesSpeech' is too complex
@@ -1533,11 +1678,11 @@ def getPropertiesSpeech(  # noqa: C901
 	if name:
 		textList.append(name)
 	if 'role' in propertyValues:
-		role=propertyValues['role']
+		role: controlTypes.Role = propertyValues['role']
 		speakRole=True
 	elif '_role' in propertyValues:
 		speakRole=False
-		role: int = propertyValues['_role']
+		role: controlTypes.Role = propertyValues['_role']
 	else:
 		speakRole=False
 		role=controlTypes.Role.UNKNOWN
@@ -1628,7 +1773,7 @@ def getPropertiesSpeech(  # noqa: C901
 				textList.append(rowNumberTranslation)
 				if rowSpan>1 and columnSpan<=1:
 					# Translators: Speaks the row span added to the current row number (example output: through 5).
-					rowSpanAddedTranslation: str = _("through %s") % (rowNumber + rowSpan - 1)
+					rowSpanAddedTranslation: str = _("through {endRow}").format(endRow=rowNumber + rowSpan - 1)
 					textList.append(rowSpanAddedTranslation)
 			_speechState.oldRowNumber = rowNumber
 			_speechState.oldRowSpan = rowSpan
@@ -1646,7 +1791,7 @@ def getPropertiesSpeech(  # noqa: C901
 				textList.append(colNumberTranslation)
 				if columnSpan>1 and rowSpan<=1:
 					# Translators: Speaks the column span added to the current column number (example output: through 5).
-					colSpanAddedTranslation: str = _("through %s") % (columnNumber + columnSpan - 1)
+					colSpanAddedTranslation: str = _("through {endCol}").format(endCol=columnNumber + columnSpan - 1)
 					textList.append(colSpanAddedTranslation)
 			_speechState.oldColumnNumber = columnNumber
 			_speechState.oldColumnSpan = columnSpan
@@ -1687,10 +1832,20 @@ def getPropertiesSpeech(  # noqa: C901
 	# are there further details
 	hasDetails = propertyValues.get('hasDetails', False)
 	if hasDetails:
-		textList.append(
-			# Translators: Speaks when there a further details/annotations that can be fetched manually.
-			_("has details")
-		)
+		detailsRoles: _AnnotationRolesT = propertyValues.get("detailsRoles", tuple())
+		if detailsRoles:
+			roleStrings = (role.displayString if role else _("details") for role in detailsRoles)
+			for roleString in roleStrings:
+				textList.append(
+					# Translators: Speaks when there are further details/annotations that can be fetched manually.
+					# %s specifies the type of details (e.g. "comment, suggestion, details")
+					_("has %s") % roleString
+				)
+		else:
+			textList.append(
+				# Translators: Speaks when there are further details/annotations that can be fetched manually.
+				_("has details")
+			)
 
 	placeholder: Optional[str] = propertyValues.get('placeholder', None)
 	if placeholder:
@@ -1792,6 +1947,7 @@ def getControlFieldSpeech(  # noqa: C901
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
 	isCurrent = attrs.get('current', controlTypes.IsCurrent.NO)
 	hasDetails = attrs.get('hasDetails', False)
+	detailsRoles: _AnnotationRolesT = attrs.get("detailsRoles", tuple())
 	placeholderValue=attrs.get('placeholder', None)
 	value=attrs.get('value',"")
 
@@ -1851,10 +2007,10 @@ def getControlFieldSpeech(  # noqa: C901
 			reason=reason, keyboardShortcut=keyboardShortcut
 		)
 	isCurrentSequence = getPropertiesSpeech(reason=reason, current=isCurrent)
-	hasDetailsSequence = getPropertiesSpeech(reason=reason, hasDetails=hasDetails)
+	hasDetailsSequence = getPropertiesSpeech(reason=reason, hasDetails=hasDetails, detailsRoles=detailsRoles)
 	placeholderSequence = getPropertiesSpeech(reason=reason, placeholder=placeholderValue)
 	nameSequence = getPropertiesSpeech(reason=reason, name=name)
-	valueSequence = getPropertiesSpeech(reason=reason, value=value)
+	valueSequence = getPropertiesSpeech(reason=reason, value=value, _role=role)
 	descriptionSequence = []
 	if description is not None:
 		descriptionSequence = getPropertiesSpeech(
@@ -1903,7 +2059,7 @@ def getControlFieldSpeech(  # noqa: C901
 		# handled further down in the general cases section.
 		# This ensures that properties such as name, states and level etc still get reported appropriately.
 		# Translators: Number of items in a list (example output: list with 5 items).
-		containerContainsText=_("with %s items")%childControlCount
+		containerContainsText = ngettext("with %s item", "with %s items", childControlCount) % childControlCount
 	elif fieldType=="start_addedToControlFieldStack" and role==controlTypes.Role.TABLE and tableID:
 		# Table.
 		rowCount=(attrs.get("table-rowcount-presentational") or attrs.get("table-rowcount"))
@@ -1924,11 +2080,24 @@ def getControlFieldSpeech(  # noqa: C901
 		nameSequence
 		and reason in [OutputReason.FOCUS, OutputReason.QUICKNAV]
 		and fieldType == "start_addedToControlFieldStack"
-		and role in (controlTypes.Role.GROUPING, controlTypes.Role.PROPERTYPAGE)
+		and role in (
+			controlTypes.Role.GROUPING,
+			controlTypes.Role.PROPERTYPAGE,
+			controlTypes.Role.LANDMARK,
+			controlTypes.Role.REGION,
+		)
 	):
 		# #10095, #3321, #709: Report the name and description of groupings (such as fieldsets) and tab pages
+		# #13307: report the label for landmarks and regions
 		nameAndRole = nameSequence[:]
-		nameAndRole.extend(roleTextSequence)
+		if (
+			role not in (
+				controlTypes.Role.LANDMARK,
+				controlTypes.Role.REGION,
+			)
+			or config.conf["documentFormatting"]["reportLandmarks"]
+		):
+			nameAndRole.extend(roleTextSequence)
 		types.logBadSequenceTypes(nameAndRole)
 		return nameAndRole
 	elif (
@@ -1950,8 +2119,9 @@ def getControlFieldSpeech(  # noqa: C901
 			'columnSpan': attrs.get("table-columnsspanned"),
 			'includeTableCellCoords': reportTableCellCoords
 		}
-		if reportTableHeaders:
+		if reportTableHeaders in (ReportTableHeaders.ROWS_AND_COLUMNS, ReportTableHeaders.ROWS):
 			getProps['rowHeaderText'] = attrs.get("table-rowheadertext")
+		if reportTableHeaders in (ReportTableHeaders.ROWS_AND_COLUMNS, ReportTableHeaders.COLUMNS):
 			getProps['columnHeaderText'] = attrs.get("table-columnheadertext")
 		tableCellSequence = getPropertiesSpeech(_tableID=tableID, **getProps)
 		tableCellSequence.extend(stateTextSequence)
@@ -2129,6 +2299,10 @@ def getFormatFieldSpeech(  # noqa: C901
 				# %s will be replaced with the number of text columns.
 				text=_("%s columns")%(textColumnCount)
 				textList.append(text)
+			elif textColumnNumber:
+				# Translators: Indicates the text column number in a document.
+				text = _("column {columnNumber}").format(columnNumber=textColumnNumber)
+				textList.append(text)
 
 	sectionBreakType=attrs.get("section-break")
 	if sectionBreakType:
@@ -2181,7 +2355,7 @@ def getFormatFieldSpeech(  # noqa: C901
 				# A style is a collection of formatting settings and depends on the application.
 				text=_("default style")
 			textList.append(text)
-	if  formatConfig["reportBorderStyle"]:
+	if formatConfig["reportCellBorders"] != ReportCellBorders.OFF:
 		borderStyle=attrs.get("border-style")
 		oldBorderStyle=attrsCache.get("border-style") if attrsCache is not None else None
 		if borderStyle!=oldBorderStyle:
@@ -2201,9 +2375,9 @@ def getFormatFieldSpeech(  # noqa: C901
 		if fontName and fontName!=oldFontName:
 			textList.append(fontName)
 	if  formatConfig["reportFontSize"]:
-		fontSize=attrs.get("font-size")
-		oldFontSize=attrsCache.get("font-size") if attrsCache is not None else None
-		if fontSize and fontSize!=oldFontSize:
+		fontSize = attrs.get("font-size")
+		oldFontSize = attrsCache.get("font-size") if attrsCache is not None else None
+		if fontSize and fontSize != oldFontSize:
 			textList.append(fontSize)
 	if  formatConfig["reportColor"]:
 		color=attrs.get("color")
@@ -2285,6 +2459,17 @@ def getFormatFieldSpeech(  # noqa: C901
 			text=(_("marked") if marked
 				# Translators: Reported when text is no longer marked
 				else _("not marked"))
+			textList.append(text)
+		# color-highlighted text in Word
+		hlColor = attrs.get("highlight-color")
+		oldHlColor = attrsCache.get("highlight-color") if attrsCache is not None else None
+		if (hlColor or oldHlColor is not None) and hlColor != oldHlColor:
+			colorName = hlColor.name if isinstance(hlColor, colors.RGB) else hlColor
+			text = (
+				# Translators: Reported when text is color-highlighted
+				_("highlighted in {color}").format(color=colorName) if hlColor
+				# Translators: Reported when text is no longer marked
+				else _("not highlighted"))
 			textList.append(text)
 	if formatConfig["reportEmphasis"]:
 		# strong text

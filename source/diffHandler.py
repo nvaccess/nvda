@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2020-2022 NV Access Limited, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2020 Bill Dengler
 
 import config
 import globalVars
@@ -16,6 +16,7 @@ from logHandler import log
 from textInfos import TextInfo, UNIT_LINE
 from threading import Lock
 from typing import List
+import NVDAState
 
 
 class DiffAlgo(AutoPropertyObject):
@@ -44,12 +45,12 @@ class DiffMatchPatch(DiffAlgo):
 		@note: This should be run from within the context of an acquired lock."""
 		if not DiffMatchPatch._proc:
 			log.debug("Starting diff-match-patch proxy")
-			if hasattr(sys, "frozen"):
-				dmp_path = (os.path.join(globalVars.appDir, "nvda_dmp.exe"),)
-			else:
+			if NVDAState.isRunningAsSource():
 				dmp_path = (sys.executable, os.path.join(
 					globalVars.appDir, "..", "include", "nvda_dmp", "nvda_dmp.py"
 				))
+			else:
+				dmp_path = (os.path.join(globalVars.appDir, "nvda_dmp.exe"),)
 			DiffMatchPatch._proc = subprocess.Popen(
 				dmp_path,
 				creationflags=subprocess.CREATE_NO_WINDOW,

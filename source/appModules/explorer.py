@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Joseph Lee, Łukasz Golonka, Julien Cochuyt
+# Copyright (C) 2006-2023 NV Access Limited, Joseph Lee, Łukasz Golonka, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -10,20 +10,23 @@ Provides workarounds for controls such as identifying Start button, notification
 
 from comtypes import COMError
 import time
+from typing import Callable
 import appModuleHandler
 import controlTypes
 import winUser
 import winVersion
 import api
 import speech
+import braille
 import eventHandler
 import mouseHandler
-from NVDAObjects.window import Window
+from NVDAObjects import NVDAObject
 from NVDAObjects.IAccessible import IAccessible, List
 from NVDAObjects.UIA import UIA
 from NVDAObjects.behaviors import ToolTip
 from NVDAObjects.window.edit import RichEdit50, EditTextInfo
 import config
+from winAPI.types import HWNDValT
 
 
 # Suppress incorrect Win 10 Task switching window focus
@@ -46,9 +49,9 @@ class SuggestionListItem(UIA):
 
 	def event_UIA_elementSelected(self):
 		speech.cancelSpeech()
-		api.setNavigatorObject(self, isFocus=True)
-		self.reportFocus()
-		super(SuggestionListItem,self).event_UIA_elementSelected()
+		if api.setNavigatorObject(self, isFocus=True):
+			self.reportFocus()
+			super().event_UIA_elementSelected()
 
 
 # Windows 8 hack: Class to disable incorrect focus on windows 8 search box (containing the already correctly focused edit field)
@@ -505,11 +508,35 @@ class AppModule(appModuleHandler.AppModule):
 
 		nextHandler()
 
-	def isGoodUIAWindow(self, hwnd):
+	def isGoodUIAWindow(self, hwnd: HWNDValT) -> bool:
+		currentWinVer = winVersion.getWinVer()
 		# #9204: shell raises window open event for emoji panel in build 18305 and later.
 		if (
-			winVersion.getWinVer() >= winVersion.WIN10_1903
+			currentWinVer >= winVersion.WIN10_1903
 			and winUser.getClassName(hwnd) == "ApplicationFrameWindow"
+		):
+			return True
+		# #13506: Windows 11 UI elements such as Taskbar should be reclassified as UIA windows,
+		# letting NVDA announce shell elements when navigating with mouse and/or touch,
+		# notably when interacting with windows labeled "DesktopWindowXamlSource".
+		# WORKAROUND UNTIL A PERMANENT FIX IS FOUND ACROSS APPS
+		if (
+			currentWinVer >= winVersion.WIN11
+			# Traverse parents until arriving at the top-level window with the below class names.
+			# This is more so for the shell root (first class name), and for others, class name check would work
+			# since they are top-level windows for windows shown on screen such as Task View.
+			# However, look for the ancestor for consistency.
+			and winUser.getClassName(winUser.getAncestor(hwnd, winUser.GA_ROOT)) in (
+				# Windows 11 shell UI root, housing various shell elements shown on screen if enabled.
+				"Shell_TrayWnd",  # Start, Search, Widgets, other shell elements
+				# Top-level window class names from Windows 11 shell features
+				"Shell_InputSwitchTopLevelWindow",  # Language switcher
+				"XamlExplorerHostIslandWindow",  # Task View and Snap Layouts
+				"TopLevelWindowForOverflowXamlIsland",  # #14539: redesigned systray overflow in 22H2
+			)
+			# #13717: on some systems, Windows 11 shell elements are reported as IAccessible,
+			# notably Start button, causing IAccessible handler to report attribute error when handling events.
+			and winUser.getClassName(hwnd) != "Start"
 		):
 			return True
 		return False
@@ -527,4 +554,24 @@ class AppModule(appModuleHandler.AppModule):
 			if inputPanelWindow and inputPanelWindow.appModule.appName in inputPanelAppName:
 				eventHandler.executeEvent("UIA_window_windowOpen", inputPanelWindow)
 				return
+		nextHandler()
+
+	def event_UIA_elementSelected(self, obj: NVDAObject, nextHandler: Callable[[], None]):
+		# #14388: announce File Explorer tab switches (Windows 11 22H2 and later).
+		if (
+			obj.role == controlTypes.Role.TAB
+			and controlTypes.State.SELECTED in obj.states
+			and obj.parent.UIAAutomationId == "TabListView"
+			# this is done because 2 selection events are sent for the same object, so to prevent double speaking.
+			and not eventHandler.isPendingEvents(eventName="UIA_elementSelected")
+		):
+			speech.speakObject(obj, reason=controlTypes.OutputReason.FOCUS)
+			braille.handler.message(
+				braille.getPropertiesBraille(
+					name=obj.name,
+					role=obj.role,
+					states=obj.states,
+					positionInfo=obj.positionInfo
+				)
+			)
 		nextHandler()

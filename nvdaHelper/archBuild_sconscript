@@ -77,7 +77,6 @@ env.AddMethod(COMProxyDllBuilder,'COMProxyDll')
 if not env.get('MSVC_VERSION') or tuple(map(int, env.get('MSVC_VERSION').split("."))) < (14, 2):
 	raise RuntimeError("Visual C++ 14.2 (Visual Studio 2019) or newer not found")
 
-
 TARGET_ARCH=env['TARGET_ARCH']
 debug=env['nvdaHelperDebugFlags']
 release=env['release']
@@ -88,21 +87,22 @@ env.Append(
 	CPPDEFINES=[
 		'UNICODE',
 		'_CRT_SECURE_NO_DEPRECATE',
-		('LOGLEVEL','${nvdaHelperLogLevel}'),
-		('_WIN32_WINNT','_WIN32_WINNT_WIN7')
+		('LOGLEVEL', '${nvdaHelperLogLevel}'),
+		('_WIN32_WINNT', '_WIN32_WINNT_WIN7'),
+		# NOMINMAX: prevent minwindef.h min/max macro definition, which unexpectedly override developer
+		# expectations
+		'NOMINMAX',
 	]
 )
-env.Append(CCFLAGS=[
-	'/std:c++17',
-	# '/showIncludes': Useful to understand which file causes some other file to be included.
-	# It will output a list of the include files.
-	# The option also displays nested include files, that is, the files
-	# included by the files that you include.
-])
 
 env.Append(CXXFLAGS=['/EHsc'])
 
-env.Append(CPPPATH=['#/include','#/miscDeps/include',Dir('.').abspath])
+env.Append(CPPPATH=[
+	'#/include',
+	'#/include/wil/include',
+	'#/miscDeps/include',
+	Dir('.').abspath
+])
 if TARGET_ARCH == "arm64":
 	subsystem = "/subsystem:windows,6.02"
 else:
@@ -140,13 +140,14 @@ if 'RTC' in debug:
 env.Append(PDB='${TARGET}.pdb')
 env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we have no need for unused symbols
 
-# Ignoring Flake8 F821: 'undefined name' due to nonstandard SCons import
-win10env = env.Clone()  # noqa: F821
-# Swap C++17 for C++20 for co-routine support, used by C++/WinRT.
-win10env.Replace(CCFLAGS=[
+env.Append(CCFLAGS=[
 	'/std:c++20',
+	'/permissive-',
+	# '/showIncludes': Useful to understand which file causes some other file to be included.
+	# It will output a list of the include files.
+	# The option also displays nested include files, that is, the files
+	# included by the files that you include.
 ])
-Export('win10env')
 
 if 'debugCRT' in debug:
 	env.Append(CCFLAGS=['/MTd'])
@@ -199,6 +200,12 @@ mathPlayerRPCStubs=env.SConscript('mathPlayer_sconscript')
 if TARGET_ARCH=='x86':
 	env.Install(sourceTypelibDir,mathPlayerRPCStubs[0]) #typelib
 
+detoursLib = env.SConscript('detours/sconscript')
+Export('detoursLib')
+
+apiHookObj = env.Object("apiHook","common/apiHook.cpp")
+Export('apiHookObj')
+
 if TARGET_ARCH=='x86':
 	localLib=env.SConscript('local/sconscript')
 	Export('localLib')
@@ -209,15 +216,19 @@ if TARGET_ARCH=='x86':
 	if signExec:
 		env.AddPostAction(win10localLib[0],[signExec])
 	env.Install(libInstallDir,win10localLib)
+	MSUIA_lib_outDir,MSUIA_include_outDir = thirdPartyEnv.SConscript('microsoft-ui-uiautomation/sconscript')
+	Export('MSUIA_lib_outDir')
+	Export('MSUIA_include_outDir')
+	UIARemoteLib=env.SConscript('UIARemote/sconscript')
+	if signExec:
+		env.AddPostAction(UIARemoteLib[0],[signExec])
+	env.Install(libInstallDir,UIARemoteLib)
 
 clientLib=env.SConscript('client/sconscript')
 Export('clientLib')
 if signExec:
 	env.AddPostAction(clientLib[0],[signExec])
 env.Install(clientInstallDir,clientLib)
-
-detoursLib = env.SConscript('detours/sconscript')
-Export('detoursLib')
 
 remoteLib=env.SConscript('remote/sconscript')
 Export('remoteLib')

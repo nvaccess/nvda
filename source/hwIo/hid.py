@@ -12,7 +12,8 @@ See L{braille.BrailleDisplayDriver.isThreadSafe}.
 import ctypes
 from ctypes import byref
 from ctypes.wintypes import USHORT
-from typing import Tuple, Callable
+from typing import Tuple, Callable, Optional
+from .ioThread import IoThread
 
 from serial.win32 import FILE_FLAG_OVERLAPPED, INVALID_HANDLE_VALUE, CreateFile
 import winKernel
@@ -126,12 +127,24 @@ class Hid(IoBase):
 	"""
 	_featureSize: int
 
-	def __init__(self, path: str, onReceive: Callable[[bytes], None], exclusive: bool = True):
+	def __init__(
+			self,
+			path: str,
+			onReceive: Callable[[bytes], None],
+			exclusive: bool = True,
+			onReadError: Optional[Callable[[int], bool]] = None,
+			ioThread: Optional[IoThread] = None,
+	):
 		"""Constructor.
 		@param path: The device path.
 			This can be retrieved using L{hwPortUtils.listHidDevices}.
 		@param onReceive: A callable taking a received input report as its only argument.
 		@param exclusive: Whether to block other application's access to this device.
+		@param onReadError: An optional callable that handles read errors.
+			It takes an error code and returns True if the error has been handled,
+			allowing the read loop to exit cleanly, or False if an exception should be thrown.
+		@param ioThread: If provided, the I/O thread used for background reads.
+			if C{None}, defaults to L{hwIo.bgThread}
 		"""
 		if _isDebug():
 			log.debug("Opening device %s" % path)
@@ -168,7 +181,11 @@ class Hid(IoBase):
 		self._readSize = caps.InputReportByteLength
 		# Reading any less than caps.InputReportByteLength is an error.
 		super().__init__(
-			handle, onReceive, onReceiveSize=caps.InputReportByteLength
+			handle,
+			onReceive,
+			onReceiveSize=caps.InputReportByteLength,
+			onReadError=onReadError,
+			ioThread=ioThread
 		)
 
 	@property
