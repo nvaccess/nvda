@@ -37,7 +37,7 @@ You can also get direct support from NV Access. See the [NV Access](http://www.n
 * [NVDA Add-ons coordination and support center](https://github.com/nvdaaddons): all about NVDA's addons environment
 * [NVDA Add-ons Template](https://github.com/nvdaaddons/AddonTemplate): A repository for generating the Add-ons template
 * [Translating NVDA](https://github.com/nvaccess/nvda/wiki/Translating): Information about how to translate NVDA into another language
-* [Contributing to NVDA](https://github.com/nvaccess/nvda/wiki/Contributing): Guidelines for contributing to the NVDA source code
+* [Contributing to NVDA](./.github/CONTRIBUTING.md): Suggestions on how to contribute to the NVDA project, including issue triage, development and documentation.
 * [NVDA commits email list](https://lists.sourceforge.net/lists/listinfo/nvda-commits): Notifications for all commits to the Git repository
 * [Old email archives](http://nabble.nvda-project.org/Development-f1.html): contain discussions about NVDA development
 
@@ -319,4 +319,4 @@ For more details (including filtering and exclusion of tests) see `tests/system/
 
 ## Contributing to NVDA
 
-If you would like to contribute code or documentation to NVDA, you can read more information in our [contributing guide](https://github.com/nvaccess/nvda/wiki/Contributing).
+If you would like to contribute code or documentation to NVDA, you can read more information in our [contributing guide](./.github/CONTRIBUTING.md).
