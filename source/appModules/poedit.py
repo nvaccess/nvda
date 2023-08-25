@@ -24,7 +24,7 @@ LEFT_TO_RIGHT_EMBEDDING = '\u202a'
 """Character often found in translator comments."""
 
 
-class WindowControlIdOffset(IntEnum):
+class _WindowControlIdOffset(IntEnum):
 	"""Window control ID's in poedit tend to be stable within one release, then change in a new release.
 	However, the order of ids stays the same.
 	Therefore, using the first sub window of the main foreground as a reference,
@@ -37,7 +37,7 @@ class WindowControlIdOffset(IntEnum):
 	TRANSLATION_WARNING = 28
 
 
-def getObjectWithControlId(parentWindowHandle: int, controlId: int) -> Optional[NVDAObject]:
+def _getObjectWithControlId(parentWindowHandle: int, controlId: int) -> Optional[NVDAObject]:
 	"""
 	Finds a window with the given controlId, starting from the window belonging to the given parentWindowHandle.
 	"""
@@ -54,14 +54,14 @@ def getObjectWithControlId(parentWindowHandle: int, controlId: int) -> Optional[
 
 class AppModule(appModuleHandler.AppModule):
 
-	def _getNVDAObjectForWindowControlIdOffset(self, windowControlIdOffset: WindowControlIdOffset):
+	def _getNVDAObjectForWindowControlIdOffset(self, windowControlIdOffset: _WindowControlIdOffset):
 		fg = api.getForegroundObject()
-		return getObjectWithControlId(
+		return _getObjectWithControlId(
 			fg.windowHandle,
 			fg.firstChild.windowControlID + windowControlIdOffset
 		)
 
-	def _reportControlScriptHelper(self, windowControlIdOffset: WindowControlIdOffset, description: str):
+	def _reportControlScriptHelper(self, windowControlIdOffset: _WindowControlIdOffset, description: str):
 		obj = self._getNVDAObjectForWindowControlIdOffset(windowControlIdOffset)
 		if obj:
 			if not obj.hasIrrelevantLocation and not obj.parent.parent.hasIrrelevantLocation:
@@ -92,9 +92,9 @@ class AppModule(appModuleHandler.AppModule):
 		),
 		gesture="kb:control+shift+a",
 	)
-	def script_reportTranslatorNotes(self, gesture):
+	def script_reportAutoCommentsWindow(self, gesture):
 		self._reportControlScriptHelper(
-			WindowControlIdOffset.TRANSLATOR_NOTES,
+			_WindowControlIdOffset.TRANSLATOR_NOTES,
 			# Translators: The description of the "Translator notes" window in poedit.
 			# This text is reported when the given window contains no item to report or could not be found.
 			pgettext("poedit", "notes for translators")
@@ -108,9 +108,9 @@ class AppModule(appModuleHandler.AppModule):
 		),
 		gesture="kb:control+shift+c",
 	)
-	def script_reportComment(self, gesture):
+	def script_reportCommentsWindow(self, gesture):
 		self._reportControlScriptHelper(
-			WindowControlIdOffset.COMMENT,
+			_WindowControlIdOffset.COMMENT,
 			# Translators: The description of the "comment" window in poedit.
 			# This text is reported when the given window contains no item to report or could not be found.
 			pgettext("poedit", "comment")
@@ -126,7 +126,7 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_reportOldSourceText(self, gesture):
 		self._reportControlScriptHelper(
-			WindowControlIdOffset.OLD_SOURCE_TEXT,
+			_WindowControlIdOffset.OLD_SOURCE_TEXT,
 			# Translators: The description of the "old source text" window in poedit.
 			# This text is reported when the given window contains no item to report or could not be found.
 			pgettext("poedit", "old source text")
@@ -142,7 +142,7 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_reportTranslationWarning(self, gesture):
 		self._reportControlScriptHelper(
-			WindowControlIdOffset.TRANSLATION_WARNING,
+			_WindowControlIdOffset.TRANSLATION_WARNING,
 			# Translators: The description of the "translation warning" window in poedit.
 			# This text is reported when the given window contains no item to report or could not be found.
 			pgettext("poedit", "translation warning")
@@ -174,19 +174,19 @@ class PoeditRichEdit(NVDAObject):
 
 class PoeditListItem(NVDAObject):
 
-	_warningControlToReport: Optional[WindowControlIdOffset]
+	_warningControlToReport: Optional[_WindowControlIdOffset]
 
-	def _get__warningControlToReport(self) -> Optional[WindowControlIdOffset]:
-		obj = self.appModule._getNVDAObjectForWindowControlIdOffset(WindowControlIdOffset.OLD_SOURCE_TEXT)
+	def _get__warningControlToReport(self) -> Optional[_WindowControlIdOffset]:
+		obj = self.appModule._getNVDAObjectForWindowControlIdOffset(_WindowControlIdOffset.OLD_SOURCE_TEXT)
 		if obj and not obj.hasIrrelevantLocation:
-			return WindowControlIdOffset.OLD_SOURCE_TEXT
-		obj = self.appModule._getNVDAObjectForWindowControlIdOffset(WindowControlIdOffset.TRANSLATION_WARNING)
+			return _WindowControlIdOffset.OLD_SOURCE_TEXT
+		obj = self.appModule._getNVDAObjectForWindowControlIdOffset(_WindowControlIdOffset.TRANSLATION_WARNING)
 		if (
 			obj
 			and obj.parent and obj.parent.parent
 			and not obj.parent.parent.hasIrrelevantLocation
 		):
-			return WindowControlIdOffset.TRANSLATION_WARNING
+			return _WindowControlIdOffset.TRANSLATION_WARNING
 		return None
 
 	def _get_name(self):
@@ -205,7 +205,7 @@ class PoeditListItem(NVDAObject):
 			tones.beep(440, 50)
 			return
 		warning = self._warningControlToReport
-		if warning is WindowControlIdOffset.OLD_SOURCE_TEXT:
+		if warning is _WindowControlIdOffset.OLD_SOURCE_TEXT:
 			tones.beep(550, 50)
-		elif warning is WindowControlIdOffset.TRANSLATION_WARNING:
+		elif warning is _WindowControlIdOffset.TRANSLATION_WARNING:
 			tones.beep(660, 50)
