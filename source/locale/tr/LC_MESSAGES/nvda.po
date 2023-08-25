@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-14 03:03+0000\n"
+"POT-Creation-Date: 2023-08-18 00:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Burak Yüksek <burakyuksek94@gmail.com>\n"
 "Language-Team: \n"
@@ -3525,7 +3525,7 @@ msgid ""
 msgstr ""
 "İnceleme imlecinin üzerinde bulunduğu karakteri okur. İki kez basılırsa "
 "karakterin tanımı (adana, bolu, ceyhan gibi) okunur. Üç kez basıldığında "
-"ise, karakterin ascii ve hexadecimal değerleri söylenir"
+"ise, karakterin decimal ve hexadecimal değerleri söylenir"
 
 #. Translators: Input help mode message for move review cursor to next character command.
 msgid ""
@@ -6869,22 +6869,22 @@ msgstr "Sayfa {pageNumber}"
 
 #. Translators: Reported when text is highlighted.
 msgid "highlight"
-msgstr "işaretli"
+msgstr "vurgulu"
 
 #. Translators: Reported when text is not highlighted.
 msgid "no highlight"
-msgstr "işaretli yok"
+msgstr "vurgulu değil"
 
 #. Translators: Reported in Kindle when text has been identified as a popular highlight;
 #. i.e. it has been highlighted by several people.
 #. %s is replaced with the number of people who have highlighted this text.
 #, python-format
 msgid "%s highlighted"
-msgstr "%s işaretli"
+msgstr "%s vurgulanma"
 
 #. Translators: Reported when moving out of a popular highlight.
 msgid "out of popular highlight"
-msgstr "popüler işaretlenenin dışında"
+msgstr "popüler vurgu dışı"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -8228,7 +8228,7 @@ msgstr "menü düğmesi"
 
 #. Translators: Reported for a button which expands a grid when it is pressed.
 msgid "drop down button grid"
-msgstr "alta açılır klavuz düğmesi"
+msgstr "alta açılır kılavuz düğmesi"
 
 #. Translators: Identifies mathematical content.
 msgid "math"
@@ -8357,7 +8357,7 @@ msgstr "uyarı"
 
 #. Translators: Identifies a data grid control (a grid which displays data).
 msgid "data grid"
-msgstr "veri klavuzu"
+msgstr "veri kılavuzu"
 
 msgid "data item"
 msgstr "veri ögesi"
@@ -8617,7 +8617,7 @@ msgstr "iletişim kutusu açar"
 
 #. Translators: Presented when a control has a pop-up grid.
 msgid "opens grid"
-msgstr "ızgarayı açar"
+msgstr "ızgara açar"
 
 #. Translators: Presented when a control has a pop-up list box.
 msgid "opens list"
@@ -10796,7 +10796,7 @@ msgstr ""
 #. Translators: This is the label for a slider control in the
 #. Advanced settings panel.
 msgid "Volume of NVDA sounds (requires WASAPI)"
-msgstr "NVDA seslerinin ses seviyesi (WASAPI)"
+msgstr "NVDA seslerinin ses seviyesi (WASAPI gerekir)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -11527,11 +11527,11 @@ msgstr "işaretlenmemişBaşlangıç işareti"
 #. Translators: Reported when text is color-highlighted
 #, python-brace-format
 msgid "highlighted in {color}"
-msgstr "{color} işaretli"
+msgstr "{color} vurgulu"
 
 #. Translators: Reported when text is no longer marked
 msgid "not highlighted"
-msgstr "işaretli yok"
+msgstr "vurgulu değil"
 
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
