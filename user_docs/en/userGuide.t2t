@@ -4011,52 +4011,54 @@ NVDA can accept one or more additional options when it starts which alter its be
 You can pass as many options as you need.
 These options can be passed when starting from a shortcut (in the shortcut properties), from the Run dialog (Start Menu -> Run or Windows+r) or from a Windows command console.
 Options should be separated from the name of NVDA's executable file and from other options by spaces.
-For example, a useful option is --disable-addons, which tells NVDA to suspend all running add-ons.
+For example, a useful option is ``--disable-addons``, which tells NVDA to suspend all running add-ons.
 This allows you to determine whether a problem is caused by an add-on and to recover from serious problems caused by add-ons.
 
 As an example, you can exit the currently running copy of NVDA by entering the following in the Run dialog:
 
+```
 nvda -q
+```
 
 Some of the command line options have a short and a long version, while some of them have only a long version.
 For those which have a short version, you can combine them like this:
-| nvda -mc CONFIGPATH | This will start NVDA with startup sounds and message disabled, and the specified configuration |
-| nvda -mc CONFIGPATH --disable-addons | Same as above, but with add-ons disabled |
+|`` nvda -mc CONFIGPATH`` | This will start NVDA with startup sounds and message disabled, and the specified configuration |
+| ``nvda -mc CONFIGPATH --disable-addons`` | Same as above, but with add-ons disabled |
 
 Some of the command line options accept additional parameters; e.g. how detailed the logging should be or the path to the user configuration directory.
-Those parameters should be placed after the option, separated from the option by a space when using the short version or an equals sign (=) when using the long version; e.g.:
-| nvda -l 10 | Tells NVDA to start with log level set to debug |
-| nvda --log-file=c:\nvda.log | Tells NVDA to write its log to c:\nvda.log |
-| nvda --log-level=20 -f c:\nvda.log | Tells NVDA to start with log level set to info and to write its log to c:\nvda.log |
+Those parameters should be placed after the option, separated from the option by a space when using the short version or an equals sign (``=``) when using the long version; e.g.:
+| ``nvda -l 10`` | Tells NVDA to start with log level set to debug |
+| ``nvda --log-file=c:\nvda.log`` | Tells NVDA to write its log to ``c:\nvda.log`` |
+| ``nvda --log-level=20 -f c:\nvda.log`` | Tells NVDA to start with log level set to info and to write its log to ``c:\nvda.log`` |
 
 Following are the command line options for NVDA:
 || Short | Long | Description |
-| -h | --help | show command line help and exit |
-| -q | --quit | Quit already running copy of NVDA |
-| -k | --check-running | Report whether NVDA is running via the exit code; 0 if running, 1 if not running |
-| -f LOGFILENAME | --log-file=LOGFILENAME | The file where log messages should be written to |
-| -l LOGLEVEL | --log-level=LOGLEVEL | The lowest level of message logged (debug 10, input/output 12, debug warning 15, info 20, disabled 100) |
-| -c CONFIGPATH | --config-path=CONFIGPATH | The path where all settings for NVDA are stored |
-| None | --lang=LANGUAGE | Override the configured NVDA language. Set to "Windows" for current user default, "en" for English, etc. |
-| -m | --minimal | No sounds, no interface, no start message, etc. |
-| -s | --secure | Starts NVDA in [Secure Mode #SecureMode] |
-| None | --disable-addons | Add-ons will have no effect |
-| None | --debug-logging | Enable debug level logging just for this run. This setting will override any other log level ( ""--loglevel"", -l) argument given, including no logging option. |
-| None | --no-logging | Disable logging altogether while using NVDA. This setting can be overridden if a log level ( ""--loglevel"", -l) is specified from command line or if debug logging is turned on. |
-| None | --no-sr-flag  | Don't change the global system screen reader flag |
-| None | --install | Installs NVDA (starting the newly installed copy) |
-| None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |
-| None | --enable-start-on-logon=True|False | When installing, enable NVDA's [Use NVDA during Windows sign-in #StartAtWindowsLogon] |
-| None | --copy-portable-config | When installing, copy the portable configuration from the provided path (--config-path, -c) to the current user account |
-| None | --create-portable | Creates a portable copy of NVDA (starting the newly created copy). Requires --portable-path to be specified |
-| None | --create-portable-silent | Creates a portable copy of NVDA (does not start the newly installed copy). Requires --portable-path to be specified |
-| None | --portable-path=PORTABLEPATH | The path where a portable copy will be created |
+| ``-h`` | ``--help`` | show command line help and exit |
+| ``-q`` | ``--quit`` | Quit already running copy of NVDA |
+| ``-k`` | ``--check-running`` | Report whether NVDA is running via the exit code; 0 if running, 1 if not running |
+| ``-f LOGFILENAME`` | ``--log-file=LOGFILENAME`` | The file where log messages should be written to |
+| ``-l LOGLEVEL`` | ``--log-level=LOGLEVEL`` | The lowest level of message logged (debug 10, input/output 12, debug warning 15, info 20, disabled 100) |
+| ``-c CONFIGPATH`` | ``--config-path=CONFIGPATH`` | The path where all settings for NVDA are stored |
+| None | ``--lang=LANGUAGE`` | Override the configured NVDA language. Set to "Windows" for current user default, "en" for English, etc. |
+| ``-m`` | ``--minimal`` | No sounds, no interface, no start message, etc. |
+| ``-s`` | ``--secure`` | Starts NVDA in [Secure Mode #SecureMode] |
+| None | ``--disable-addons`` | Add-ons will have no effect |
+| None | ``--debug-logging`` | Enable debug level logging just for this run. This setting will override any other log level ( ``--loglevel``, ``-l``) argument given, including no logging option. |
+| None | ``--no-logging`` | Disable logging altogether while using NVDA. This setting can be overridden if a log level (``--loglevel``, ``-l``) is specified from command line or if debug logging is turned on. |
+| None | ``--no-sr-flag`` | Don't change the global system screen reader flag |
+| None | ``--install`` | Installs NVDA (starting the newly installed copy) |
+| None | ``--install-silent`` | Silently installs NVDA (does not start the newly installed copy) |
+| None | ``--enable-start-on-logon=True|False`` | When installing, enable NVDA's [Use NVDA during Windows sign-in #StartAtWindowsLogon] |
+| None | ``--copy-portable-config`` | When installing, copy the portable configuration from the provided path (``--config-path``, ``-c``) to the current user account |
+| None | ``--create-portable`` | Creates a portable copy of NVDA (starting the newly created copy). Requires ``--portable-path`` to be specified |
+| None | ``--create-portable-silent`` | Creates a portable copy of NVDA (does not start the newly installed copy). Requires ``--portable-path`` to be specified |
+| None | ``--portable-path=PORTABLEPATH`` | The path where a portable copy will be created |
 
 ++ System Wide Parameters ++[SystemWideParameters]
 NVDA allows some values to be set in the system registry which alter the system wide behaviour of NVDA.
 These values are stored in the registry under one of the following keys:
-- 32-bit system: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
-- 64-bit system: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+- 32-bit system: ``HKEY_LOCAL_MACHINE\SOFTWARE\nvda``
+- 64-bit system: ``HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda``
 -
 
 The following values can be set under this registry key:
