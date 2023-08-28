@@ -2,7 +2,9 @@ Manual do Utilizador do NVDA NVDA_VERSION
 
 Traduzido pela equipa portuguesa do NVDA.
 %!includeconf: ../userGuide.t2tconf
+%!includeconf: ./locale.t2tconf
 %kc:title: Referência Rápida de Comandos do NVDA NVDA_VERSION
+%kc:includeconf: ./locale.t2tconf
 
 = Índice =[toc]
 %%toc
@@ -135,7 +137,7 @@ Quando seleccionada, o instalador percorre os passos para criar uma cópia port�
 O essencial a indicar ao NVDA é a pasta onde colocar a cópia portátil. 
 - "Continuar em execução": Isto mantém a cópia temporária do NVDA em execução.
 Isto é útil para testar as funcionalidades duma nova versão antes de a instalar.
-Quando seleccionada, a janela do instalador fecha-se e a cópia temporária da NVDA continua a correr até sair ou até o PC ser desligado.
+Quando seleccionada, a janela do instalador fecha-se e a cópia temporária do NVDA continua a correr até sair ou até o PC ser desligado.
 Note que as alterações às configurações não são guardadas. 
 - "Cancelar": Isto fecha o NVDA sem executar qualquer acção.
 -
@@ -202,7 +204,7 @@ Os comandos reais não serão executados enquanto estiver no modo de ajuda de co
 +++ Iniciar e terminar o NVDA +++[StartingAndStoppingNVDA]
 || Nome | Comando de Teclado Desktop | Comando de Teclado Laptop | Descrição |
 | Iniciar NVDA | "control+alt+n" | "control+alt+n" | Inicia ou reinicia o NVDA |
-| Sair do NVDA | "NVDA+q", depois "Enter" | "NVDA+q", depois "Enter" | Sair da NVDA |
+| Sair do NVDA | "NVDA+q", depois "Enter" | "NVDA+q", depois "Enter" | Sair do NVDA |
 | Pausa ou retoma da voz | "shift" | "shift" | Pausa instantaneamente a voz. Se pressionar novamente, recomeçará a falar, desde onde parou |
 | Parar a voz | "Control" | "Control" Pára instantaneamente a voz |
 
@@ -219,14 +221,14 @@ Os comandos reais não serão executados enquanto estiver no modo de ajuda de co
 | Anunciar o foco actual | "NVDA+tab" | "NVDA+tab" | Anuncia o objecto actual ou o controlo que tem o cursor do sistema. Ao pressionar duas vezes, soletrará a informação |
 | Ler a janela activa | "NVDA+b" | "NVDA+b" | Lê todos os controlos da janela actualmente em execução (útil para diálogos) |
 | Anunciar a Barra de Estado | "NVDA+end" | "NVDA+shift+end" | Lê a Barra de Estado, se for encontrada. Se pressionar duas vezes soletra a informação. Se pressionar três vezes, copiará a informação para a área de transferência |
-| Anunciar a hora/data | "NVDA+f12" | "NVDA+f12" | Ao pressionar uma vez, informa a hora actual; se pressionar duas vezes, anuncia a data |
-| Anuncia as informações de formatação do texto | "NVDA+f" | "NVDA+f" | Anuncia as informações de formatação do texto. Se pressionar duas vezes mostra a informação numa janela em modo de navegação |
-| Anuncia o URL de destino do link | "NVDA+k" | "NVDA+k" | Pressionando uma vez anuncia o URL de destino do link no [objecto de navegação #ObjectNavigation]. Pressionando duas vezes mostra-o numa janela para poder ser revisto com mais atenção |
+| Anunciar a hora/data | "NVDA+f12" | "NVDA+f12" | Ao pressionar uma vez, informa a hora actual; se pressionar duas vezes, anuncia a data.  Estes anúncios seguirão o formato definido nas configurações do Windows, na secção Comportamento da barra de tarefas. |
+| Anunciar as informações de formatação do texto | "NVDA+f" | "NVDA+f" | Anuncia as informações de formatação do texto. Se pressionar duas vezes mostra a informação numa janela em modo de navegação |
+| Anunciar o URL de destino do link | "NVDA+k" | "NVDA+k" | Pressionando uma vez anuncia o URL de destino do link na posição do cursor ou foco. Pressionando duas vezes mostra-o numa janela para poder ser revisto com mais atenção |
 
 +++ Alternar que informação o NVDA fala +++[ToggleWhichInformationNVDAReads]
 || Nome | Comando de Teclado Desktop | Comando de Teclado Laptop | Descrição |
 | Anunciar Caracteres Escritos | "NVDA+2" | "NVDA+2" | Quando activado, o NVDA anunciará todos os caracteres que escrever. |
-| Anunciar palavras Escritas | "NVDA+3" | "NVDA+3" | Quando activado, a NVDA anunciará a palavra que escrever. |
+| Anunciar palavras Escritas | "NVDA+3" | "NVDA+3" | Quando activado, o NVDA anunciará a palavra que escrever. |
 | Anunciar Teclas de Comando | "NVDA+4" | "NVDA+4" | Quando activado, o NVDA anunciará todas as teclas que não sejam caracter ou sinais de pontuação que pressionar. Isto inclui combinações de teclas, tais como controlo mais outra letra. |
 | Activar seguimento do rato | "NVDA+m" | "NVDA+m" | Quando activado, o NVDA anunciará o texto actualmente sob o ponteiro do rato, à medida que o move no ecrã. Isto permite-lhe encontrar coisas no ecrã, ao mover fisicamente o rato, em vez de tentar encontrá-las através da navegação por objectos. |
 
@@ -305,9 +307,10 @@ Pressionando OK, neste ponto, irá reiniciar a cópia instalada do NVDA.
 
 +++ Aviso sobre extras Incompatíveis +++[InstallWithIncompatibleAddons]
 Se tiver extras instalados, poderá haver um aviso de que os extras incompatíveis serão desativados.
-Antes de poder pressionar o botão "Continuar", terá de marcar a caixa de verificação para confirmar que sabe que esses extras serão desativados.
+Nesse aviso, antes de poder pressionar o botão "Continuar", terá de marcar a caixa de verificação para confirmar que sabe que esses extras serão desativados.
 Também haverá um botão para poder analisar os extras que serão desativados.
 Consulte a [secção Extras incompatíveis #incompatibleAddonsManager] para obter mais informações sobre este botão.
+Após a instalação, poderá reactivar os extras incompatíveis por sua conta e risco na  [Loja de extras #AddonsManager].
 
 +++ Usar o NVDA no início de sessão do Windows +++[StartAtWindowsLogon]
 Esta opção permite-lhe que escolha se o NVDA deverá ou não iniciar, automaticamente, na janela de início de sessão do Windows, antes de escrever a palavra passe.
@@ -479,10 +482,15 @@ Os comandos reais não serão executados, enquanto estiver no modo de ajuda de e
 ++ O Menu do NVDA ++[TheNVDAMenu]
 O Menu do NVDA permite-lhe definir as configurações do leitor de ecrã, aceder à ajuda, guardar/restaurar a sua configuração, alterar os dicionários de voz, aceder a ferramentas adicionais e sair do NVDA.
 
-Para aceder ao menu do NVDA, de qualquer lugar no Windows, enquanto executa o NVDA, pressione NVDA+n, ou realize um duplo toque com dois dedos, num ecrã táctil.
-Também pode aceder ao mesmo através da área de notificação do Windows.
-Basta clicar com o botão direito no ícone do NVDA que lá se encontra, ou mova-se para a área de notificação, com a tecla Windows+B, desloque-se com a Seta Abaixo, até ao ícone deste leitor de ecrã, e pressione a Tecla Aplicações que se encontra, na maioria dos teclados, antes do Control direito.
-Quando o menu surgir, pode usar as setas direccionais para navegar pelo mesmo e activar um item com a tecla Enter.
+Para aceder ao menu do NVDA, de qualquer lugar no Windows, enquanto executa o NVDA, pode executar uma das seguintes acções:
+- Pressionar ``NVDA+n`` no teclado;
+- Dar um duplo toque com dois dedos, num ecrã táctil;
+- Aceda à barra do sistema pressionando ``Windows+b``, ``seta para baixo`` para o ícone do NVDA e pressione ``enter``;
+- Em alternativa, aceda à barra do sistema pressionando ``Windows+b``, ``seta para baixo`` para o ícone do NVDA e abra o menu de contexto pressionando a tecla ``aplicaçõs``, localizada à esquerda da tecla Control direita na maioria dos teclados;
+Num teclado sem a tecla ``aplicações``, pressione ``shift+F10``.
+- Clique com o botão direito do rato no ícone do NVDA localizado na barra do sistema.
+-
+Quando o menu for apresentado, pode utilizar as teclas de setas para navegar no menu e a tecla ``enter`` para ativar um item.
 
 ++ Comandos Básicos do NVDA ++[BasicNVDACommands]
 %kc:beginInclude
@@ -1293,15 +1301,18 @@ Algumas configurações podem ser feitas por atalhos, que serão indicados quand
 
 ++ Configurações ++[NVDASettings]
 %kc:settingsSection: || Nome | Tecla de Atalho de Desktop | Tecla de Atalho de Laptop | Descrição |
-O diálogo de Configurações do NVDA contém muitos parâmetros que podem ser alterados.
-Este diálogo contém uma lista com as várias secções de configuração, para seleccionar o que se quer alterar.
-Quando selecciona uma secção, são apresentadas, no diálogo, as respectivas opções.
-Estas configurações podem ser aplicadas sem fechar o diálogo, pressionando o botão "Aplicar".
-Se quiser guardar as suas alterações e fechar o diálogo de configurações do NVDA, deve pressionar o botão "OK".
+O NVDA fornece muitos parâmetros de configuração que podem ser alterados através da janela de configurações.
+Para facilitar a procura do tipo de configurações que pretende alterar, a janela apresenta uma lista de secções de configurações à escolha.
+Quando selecciona uma secção, todas as definições relacionadas com a mesma serão apresentadas na janela.
+Para se deslocar entre secções, utilize "tab" ou "shift+tab" para aceder à lista de secções e, em seguida, utilize as teclas de seta para cima e para baixo para navegar na lista.
+A partir de qualquer ponto da janela , pode também avançar uma secção pressionando ``ctrl+tab``, ou recuar uma seccção pressionando "shift+ctrl+tab".
+
+Depois de alterar uma ou mais configurações, as configurações podem ser aplicadas utilizando o botão aplicar, caso em que a janela permanecerá aberta, permitindo-lhe alterar mais configurações ou escolher outra secção.
+Se quiser guardar as suas alterações e fechar a janela de configurações do NVDA, deve pressionar o botão "OK".
 
 Algumas das secções possuem teclas de atalho dedicadas.
 Se pressionar estas teclas de atalho abrirá o diálogo de configurações do NVDA, com a página dessa secção já seleccionada.
-Note que, por padrão, nem todas as secções das configurações podem ser acedidas por comandos (como por exemplo comandos de teclado, comandos de toque, etc.).
+Note que, por padrão, nem todas as secções das configurações podem ser acedidas por comandos.
 Se quiser aceder a secções que não possuem atalhos dedicados, use a opção [Definir comandos #InputGestures] para adicionar um comando personalizado para essa secção.
 
 As secções presentes no diálogo de configurações do NVDA são detalhadas seguidamente.
@@ -1582,6 +1593,8 @@ A indicação de selecção não é afectada por esta opção, é sempre feita c
 ==== Mostrar mensagens ====[BrailleSettingsShowMessages]
 Uma caixa de combinação que permite definir se o NVDA deve mostrar as mensagens em Braille e quando elas devem desaparecer automaticamente.
 
+Para alternar entre os vários modos, em qualquer local, pode atribuir um comando utilizando a janela "Definir comandos" #InputGestures].
+
 ==== Tempo de Permanência de Mensagens (seg) ====[BrailleSettingsMessageTimeout]
 Esta definição é um campo numérico que controla durante quantos segundos são apresentadas as mensagens do sistema, na linha Braille.
 A mensagem do NVDA é imediatamente descartada ao pressionar um cursor de toque da linha Braille, mas reaparece ao pressionar um comando que accione a mensagem.
@@ -1660,7 +1673,21 @@ Por este motivo, a opção está  activada por padrão, interrompendo a fala ao 
 
 Desactivar esta opção permite que a voz seja ouvida enquanto, simultaneamente, se lê em Braille.
 
-++++ Seleccionar Linha Braille (NVDA+control+a) +++[SelectBrailleDisplay]
+==== Indicador de selecção ====[BrailleSettingsShowSelection]
+: Predefinição
+ Activado
+: Opções
+ Padrão (Activado), Activado, Desactivado
+:
+
+Esta configuração determina se o indicador de selecção (pontos 7 e 8) é mostrado na linha Braille.
+A opção está activada por padrão, pelo que o indicador de selecção é mostrado.
+O indicador de selecção pode ser uma distração durante a leitura.
+A desactivação desta opção pode melhorar a legibilidade.
+
+Para alternar entre mostrar ou não o indicador de selecção, a partir de qualquer lugar, atribua um comando personalizado utilizando a opção [Definir comandos #InputGestures].
+
++++ Seleccionar Linha Braille (NVDA+control+a) +++[SelectBrailleDisplay]
 O diálogo "Seleccionar linha Braille", que pode ser aberto activando o botão "Alterar..." na secção Braille das configurações do NVDA, permite escolher a linha Braille a ser usada.
 Após escolher a sua linha Braille, pode pressionar "OK" e o NVDA carregará os respectivos drivers.
 Se houver um erro, ao carregar o driver, o NVDA notificará com uma mensagem e continuará a usar o dispositivo anterior, ou continuará sem Braille.
@@ -2120,6 +2147,7 @@ Actualmente, só contém uma opção:
 
 ==== Idioma de reconhecimento ====[Win10OcrSettingsRecognitionLanguage]
 Esta caixa de combinação permite seleccionar qual o idioma a ser usado no reconhecimento de texto.
+Para alternar entre os idiomas disponíveis para OCR do Windows, em qualquer local, pode atribuir um comando utilizando a janela "Definir comandos" #InputGestures].
 
 +++ Configurações Avançadas +++[AdvancedSettings]
 Aviso! As configurações desta secção são para utilizadores avançados e podem fazer com que o NVDA não funcione correctamente se configurado de maneira errada.
@@ -2135,8 +2163,8 @@ Também pode ser o caso de não ter a certeza que as configurações foram alter
 
 ==== Activar o carregamento de código personalizado a partir do diretório Scratchpad ====[AdvancedSettingsEnableScratchpad]
 Ao desenvolver add-ons para o NVDA, é útil poder testar o código à medida que você o escreve.
-Esta opção, quando activada, permite que o NVDA carregue appModules, globalPlugins, brailleDisplayDrivers e synthDrivers personalizados, a partir de um diretório especial, scratchpad, no diretório de configurações do utilizador do NVDA.
-Anteriormente, o NVDA carregava código personalizado diretamente do diretório de configurações do utilizador, sem a possibilidade de desactivá-lo.
+Esta opção, quando activada, permite que o NVDA carregue appModules, globalPlugins, brailleDisplayDrivers, synthDrivers e vision enhancement providers personalizados, a partir de um diretório especial, scratchpad, no diretório de configurações do utilizador do NVDA.
+Tal como os seus equivalentes nos extras, esses módulos são carregados na inicialização do NVDA ou, no caso dos appModules e globalPlugins, quando [recarregar os extras #ReloadPlugins].
 Esta opção está desactivada por padrão, para garantir que nenhum código não testado seja executado no NVDA sem o conhecimento explícito do utilizador.
 Se deseja distribuir código personalizado para outras pessoas, você deve empacotá-lo como um extra do NVDA.
  
@@ -2289,6 +2317,19 @@ Algumas aplicações GDI realçam o texto com uma cor de fundo, e o  NVDA (via "
 Em algumas situações, o fundo do texto pode ser totalmente transparente, com o texto em sobreposto a algum outro elemento GUI.
 Com várias API's de GUI, historicamente populares, o texto pode ser apresentado com um fundo transparente, mas visualmente a cor de fundo é exacta.
 
+==== Usar WASAPI para saída de áudio ====[WASAPI]
+Esta opção activa a saída de áudio através da API de sessão de áudio do Windows (WASAPI).
+WASAPI é uma estrutura de áudio mais moderna que pode melhorar a capacidade de resposta, o desempenho e a estabilidade da saída de áudio do NVDA, incluindo a voz e os sons.
+Esta opção está activada por predefinição.
+Depois de alterar esta opção, terá de reiniciar o NVDA para que a alteração tenha efeito.
+
+==== O volume dos sons do NVDA segue o volume da voz ====[SoundVolumeFollowsVoice]
+Quando esta opção está activada, o volume dos sons e dos bipes do NVDA segue a definição de volume da voz que está a utilizar.
+Se diminuir o volume da voz, o volume dos sons diminui.
+Da mesma forma, se aumentar o volume da voz, o volume dos sons aumenta.
+Esta opção só tem efeito quando "Usar WASAPI para saída de áudio" está activado.
+Esta opção está desactivada por predefinição.
+
 ==== Categorias do registo em modo de depuração ====[AdvancedSettingsDebugLoggingCategories]
 As caixas de verificação desta lista permitem activar categorias específicas de mensagens de depuração no registo do NVDA.
 O registo dessas mensagens pode provocar um desempenho reduzido e grandes ficheiros de registo.
@@ -2348,7 +2389,10 @@ Para mudar um símbolo, seleccione-o, primeiro, na lista de símbolos.
 Pode filtrar os símbolos inserindo o símbolo ou uma parte da expressão de substituição do símbolo no campo de edição "Filtrar por".
 
 - O campo "Substituir por" permite-lhe alterar o texto que deve ser falado em vez do símbolo.
-- Usando o campo "Nível" pode definir o nível a partir do qual o símbolo deve ser falado.
+- Usando o campo "Nível" pode definir o nível a partir do qual o símbolo deve ser falado (nenhum, alguns, a maioria ou todos).
+Também pode definir o nível para caracter; neste caso, o símbolo não será falado independentemente do nível de símbolo em uso, com as duas excepções seguintes:
+ - Ao navegar caracter a caracter;
+ - Quando o NVDA soletra qualquer texto que contenha esse símbolo. -
 - O campo "Enviar o próprio símbolo ao sintetizador" determina quando o próprio símbolo, em vez do texto substituto, deve ser enviado ao sintetizador.
 Isto é útil, se o símbolo forçar o sintetizador a uma pausa ou a uma mudança de entoação na voz.
 Por exemplo, uma vírgula força o sintetizador a fazer uma pausa.
@@ -2514,6 +2558,125 @@ As configurações para o NVDA, quando está a ser executado na janela de autent
 Por norma, não deverá alterar estas configurações.
 Para alterar a configuração do NVDA, nas janelas de autenticação/UAC, com sessão iniciada no Windows, configure o NVDA como deseja, guarde as configurações e pressione o botão "Utilizar as configurações actualmente guardadas durante o início de sessão e janelas em ambiente seguro (requer privilégios de administrador)" da secção Gerais do diálogo de Configurações.
 
++ Extras e a Loja de extras +[AddonsManager]
+Os extras são pacotes de software que fornecem funcionalidades novas ou alteradas para o NVDA.
+Estes são desenvolvidos pela comunidade do NVDA e por organizações externas, como empresas comerciais.
+Os extras podem realizar qualquer uma das seguintes acções:
+- Adicionar ou melhorar o suporte para determinadas aplicações;
+- Fornecer suporte para dispositivos Braille ou sintetizadores de voz adicionais;
+- Adicionar ou alterar funcionalidades no NVDA.
+-
+
+A Loja de Extras do NVDA permite gerir e navegar por pacotes de extras.
+Todos os extras disponíveis na Loja de Extras podem ser descarregados gratuitamente.
+No entanto, alguns deles podem requerer que os utilizadores paguem uma licença ou software adicional antes de poderem ser utilizados.
+Os sintetizadores de voz comerciais são um exemplo deste tipo de extra.
+Se instalar um extra com componentes pagos e mudar de ideias sobre a sua utilização, pode removê-lo facilmente.
+
+A Loja de Extras é acedida a partir do submenu Ferramentas do menu do NVDA.
+Para aceder à Loja de Extras a partir de qualquer local, atribua um comando personalizado utilizando a opçção [Definir comandos #InputGestures].
+
+++ Navegar pelos extras ++[AddonStoreBrowsing]
+Ao abrir a Loja de Extras, é apresentada uma lista de extras.
+Pode regressar à lista pressionando "Alt+L" a partir de qualquer outra secção da loja.
+Se nunca tiver instalado um extra antes, a loja de extras irá abrir para uma lista de extras disponíveis para instalar.
+Se já tiver instalado extras, a lista irá mostrar os extras instalados actualmente.
+
+Ao seleccionar um extra, ao mover-se com as teclas de seta para cima e para baixo, serão apresentados os detalhes do extra.
+Os extras têm ações associadas que podem ser acedidas através de um [menu de ações #AddonStoreActions], tais como instalar, ajuda, desactivar e remover.
+As ações disponíveis irão variar consoante o extra esteja instalado ou não, e se estiver activado ou desactivado.
+
++++ Listas de extras +++[AddonStoreFilterStatus]
+Existem listas diferentes para extras instalados, atualizáveis, disponíveis e incompatíveis.
+Para alterar a lista dos extras, altere a guia ativa da lista de extras pressionando "Ctrl+Tab".
+Também pode navegar para uma lista com a tecla "Tab" e movimentar-se entre elas com as teclas "Seta Esquerda" e "Seta Direita".
+
++++ Filtrar por extras activados ou desactivados +++[AddonStoreFilterEnabled]
+Normalmente, um extra instalado está "activado", o que significa que está em execução e disponível no NVDA.
+No entanto, alguns dos extras instalados podem estar definidos como "desactivado".
+Isso significa que eles não serão utilizados e as suas funcionalidades não estarão disponíveis durante a sessão atual do NVDA.
+Pode ter desactivado um extra porque este entra em conflito com outro extra ou com uma determinada aplicação.
+O NVDA também pode desactivar certos extras se forem considerados incompatíveis durante uma actualização do NVDA; no entanto, será avisado se isso estiver prestes a acontecer.
+Os extras também podem ser desactivados se não forem necessários por um período prolongado, mas não desejar desinstalá-los porque espera utilizá-los novamente no futuro.
+
+As listas de extras instalados e incompatíveis podem ser filtradas pelo seu estado de activação ou desactivação.
+Por padrão, são listados tanto os extras activados quanto os desactivados.
+
++++ Incluir extras incompatíveis +++[AddonStoreFilterIncompatible]
+Os extras disponíveis e actualizáveis podem ser filtrados para incluir [extras incompatíveis #incompatibleAddonsManager] que estão disponíveis para instalar.
+
++++ Filtrar extras por canal +++[AddonStoreFilterChannel]
+Os extras podem ser distribuídos através de até quatro canais:
+- Estável: O desenvolvedor lançou-o como um extra testado com uma versão lançada do NVDA.
+- Beta: Este extra pode precisar de mais testes, mas está disponível para obter feedback dos utilizadores.
+Sugerido para os utilizadores que gostam de testar novidades.
+- Dev: Este canal é sugerido para uso por desenvolvedores de extras para testar mudanças não lançadas da API.
+Testadores alfa do NVDA podem precisar usar uma versão "Dev" dos seus extras.
+- Externo: Extras instalados a partir de fontes externas, fora da loja de extras.
+-
+
+Para listar apenas extras de canais específicos, altere a seleção do filtro "Canal".
+
++++ Pesquisar extras +++[AddonStoreFilterSearch]
+Para pesquisar extras, utilize a caixa de texto "Pesquisar".
+Pode acedê-la pressionando "Shift+Tab" a partir da lista de extras ou pressionando "Alt+P" a partir de qualquer parte da interface da Loja de Extras.
+Digite uma palavra-chave ou duas para o tipo de extra que procura e, em seguida, "Tab" para voltar à lista de extras.
+Os extras serão listados se o texto de pesquisa puder ser encontrado no nome de exibição, no editor ou na descrição.
+
+++ Acções do extra ++[AddonStoreActions]
+Os extras têm acções associadas, como instalar, ajuda, desactivar e remover.
+O menu de ações pode ser acedido para um extra na lista de extras pressionando a tecla "Aplicações", "Enter", clicando com o botão direito do rato ou fazendo duplo clique no extra.
+Há também um botão de Acções nos detalhes do extra selecionado, que pode ser ativado normalmente ou pressionando "Alt+A".
+
++++ Instalar extras +++[AddonStoreInstalling]
+Só porque um extra está disponível na Loja de Extras do NVDA, não significa que tenha sido aprovado ou analisado pela NV Access ou qualquer outra pessoa.
+É muito importante instalar apenas extras de fontes confiáveis.
+A funcionalidade dos extras é ilimitada dentro do NVDA.
+Isso pode incluir o acesso aos seus dados pessoais ou até mesmo ao sistema inteiro.
+
+Pode instalar e actualizar extras ao [navegar pelos extras disponíveis #AddonStoreBrowsing].
+Seleccione um extra no separador "Extras disponíveis" ou "Extras actualizáveis".
+Em seguida, utilize a acção de actualizar, instalar ou substituir para iniciar a instalação.
+
+Para instalar um extra que tenha obtido fora da Loja de Extras, pressione o botão "Instalar a partir de uma fonte externa".
+Isso permitirá procurar um pacote de extras (ficheiro ".nvda-addon") em algum lugar do seu computador ou em uma rede.
+Depois de abrir o pacote do extra, o processo de instalação será iniciado.
+
+Quando um extra está a ser instalado a partir de uma fonte externa, o NVDA irá solicitar a confirmação da instalação.
+Depois de instalado o extra, será necessário reiniciar o NVDA para que o extra comece a funcionar, embora possa adiar a reinicialização do NVDA se tiver outros extras para instalar ou actualizar.
+
++++ Remover Extras +++[AddonStoreRemoving]
+Para remover um extra, selecione o extra na lista e utilize a ação de Remover.
+O NVDA irá solicitar a confirmação da remoção.
+Assim como na instalação, será necessário reiniciar o NVDA para que o extra seja completamente removido.
+Até isso acontecer, o estado será exibido como "Remoção pendente" para esse extra na lista.
+
++++ Desactivar e activar Extras +++[AddonStoreDisablingEnabling]
+Para desactivar um extra, utilize a ação "desactivar".
+Para activar um extra previamente desactivado, utilize a ação "activar".
+Pode desactivar um extra se o estado do extra indicar que está "activado" ou activá-lo se o extra estiver "desactivado".
+Ao usar a ação de activar/desactivar, o estado do extra muda para indicar o que acontecerá quando o NVDA for reiniciado.
+Se o extra estiver "desactivado", o estado será mostrado como "Activado após reinício".
+Se o extra estiver "activado", o estado será mostrado como "Desativado após reinício".
+Assim como na instalação ou remoção de extras, é necessário reiniciar o NVDA para que as alterações tenham efeito.
+
+++ Extras Incompatíveis ++[incompatibleAddonsManager]
+Alguns extras mais antigos podem não ser compatíveis com a versão do NVDA que está a usar.
+Se estiver a utilizar uma versão mais antiga do NVDA, alguns extras mais recentes também podem não ser compatíveis.
+Tentar instalar um extra incompatível resultará num erro explicando por que o extra é considerado incompatível.
+
+Para extras mais antigos, pode ignorar a incompatibilidade por sua conta e risco.
+Extras incompatíveis podem não funcionar com a sua versão do NVDA e podem causar comportamentos instáveis ou inesperados, incluindo falhas.
+Pode ignorar a compatibilidade ao ativar ou instalar um extra.
+Se o extra incompatível causar problemas mais tarde, pode desativá-lo ou removê-lo.
+
+Se estiver com problemas ao executar o NVDA e tiver atualizado ou instalado recentemente um extra, especialmente se for um extra incompatível, pode tentar executar temporariamente o NVDA com todos os extras desativados.
+Para reiniciar o NVDA com todos os extras desativados, escolha a opção adequada ao sair do NVDA.
+Alternativamente, utilize a opção de linha de comando [--disable-addons #CommandLineOptions].
+
+Pode navegar pelos extras incompatíveis disponíveis utilizando os [separadores de extras disponíveis e atualizáveis #AddonStoreFilterStatus].
+Pode navegar pelos extras incompatíveis instalados utilizando o [separador de extras incompatíveis #AddonStoreFilterStatus].
+
 + Ferramentas +[ExtraTools]
 
 ++ Visualizador de Registo ++[LogViewer]
@@ -2566,65 +2729,11 @@ Para alternar o Visualizador Braille a partir de qualquer lugar, por favor assoc
 A Consola de Python do NVDA, encontrada em Ferramentas no menu do NVDA, é uma ferramenta de desenvolvimento útil para depuração, inspecção geral de componentes internos do NVDA ou inspecção da hierarquia de acessibilidade de uma aplicação.
 Para mais informações, leia o [Guia de desenvolvimento do NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
 
-++ Gestor de extras ++[AddonsManager]
-O gestor de extras, acessível seleccionando "Gestor de Extras", no menu de "ferramentas" do NVDA, permite-lhe que instale, desinstale, active ou desactive pacotes de extras para o NVDA.
-Estes pacotes, fornecidos pela comunidade, contêm código personalizado, que poderá adicionar ou modificar funcionalidades no NVDA, ou mesmo fornecer suporte para linhas braile ou sintetizadores adicionais.
+++ Loja de extras ++
+Esta opção abre a [Loja de extras do NVDA #AddonsManager].
+Para mais informações, leia o capítulo: [Extras e a Loja de extras #AddonsManager].
 
-O gestor de extras contém uma lista que mostra todos os extras actualmente instalados na sua pasta de configurações do NVDA.
-O nome do pacote, estado, versão e autor são mostrados para cada extra, Mais informações, como uma descrição e o URL do Extra podem ser visualizadas, seleccionando o extra e pressionando o botão "acerca do extra".
-Caso exista ajuda disponível para o extra seleccionado, poderá consultá-la pressionando o botão de Ajuda do extra.
-
-Para procurar extras disponíveis online, pressione o botão "Obter Extras".
-Este botão abre a [[Página de extras do NVDA https://addons.nvda-project.org/].
-Se o NVDA estiver instalado, e a ser executado, no seu sistema, poderá abrir o extra directamente pelo navegador, de modo a iniciar o processo de instalação, seguidamente descrito.
-Caso contrário, guarde o pacote do extra e siga as instruções abaixo.
-
-Para instalar um extra que obteve previamente, pressione o botão "instalar".
-Isto permite-lhe procurar por um pacote de extras para o NVDA (ficheiro .nvda-addon) algures, no seu computador ou numa rede.
-Ao pressionar "abrir", inicia-se o processo de instalação.
-
-Quando um extra está a ser instalado, o NVDA pergunta-lhe se deseja realmente instalá-lo.
-Tendo em conta que a funcionalidade dos extras não é restrita ao NVDA, o que em teoria pode incluir aceder a dados pessoais ou mesmo a todo o sistema, se o NVDA for uma cópia instalada, é muito importante instalar apenas extras de fontes de confiança.
-Uma vez o extra instalado, o NVDA terá que ser reiniciado, para que o extra possa ser executado.
-Até que o faça, o estado "instalar" será mostrado para esse extra, na lista.
-
-Para remover um extra, seleccione-o na lista e pressione o botão "Remover".
-O NVDA perguntar-lhe-á se deseja realmente fazê-lo.
-Tal como na instalação, o NVDA terá que ser reiniciado, para que o extra seja totalmente removido.
-Até que o faça, o estado "remover" será mostrado para esse extra.
-
-Para desactivar um Extra, pressione o botão "Desactivar".
-Para activar um Extra previamente desactivado, pressione o botão "Activar".
-Pode desactivar um Extra se o seu estado indicar "Activado", ou activar um Extra se o seu estado for "Desactivado".
-Cada vez que pressionar o botão "Activar"/"Desactivar", o estado do Extra é alterado para reflectir o que acontecerá quando o NVDA reiniciar.
-Se o extra estiver activado, o seu estado passará a "Desactivado após reinício".
-Se o extra estiver desactivado, o seu estado passará a "Activado após reinício".
-Tal como quando instala ou desinstala um Extra, tem de reiniciar o NVDA para que as alterações surtam efeito.
-
-O gestor tem também um botão "fechar" para que o diálogo seja fechado.
-Se instalou, removeu ou alterou o estado de algum extra, o NVDA pedirá para reiniciar, para que as suas modificações possam ter efeito.
-
-Alguns extras mais antigos podem já não ser compatíveis com a versão do NVDA que possui.
-Ao usar uma versão mais antiga do NVDA, alguns novos extras podem não ser compatíveis.
-A tentativa de instalar um extra incompatível resultará em um erro explicando porque o extra é considerado incompatível.
-Para inspecionar esses extras incompatíveis, você pode usar o botão "ver extras incompatíveis" para abrir o gestor de extras incompatíveis.
-
-Para aceder ao Gestor de Extras, a partir de qualquer local, por favor associe-lhe um comando através da opção [Definir comandos #InputGestures].
-
-+++ Gestor de extras Incompatíveis +++[incompatibleAddonsManager]
-O Gestor de extras Incompatíveis, que pode aceder através do botão "ver extras incompatíveis" no gestor de extras, permite inspecionar quaisquer extras incompatíveis e o motivo pelo qual eles são considerados incompatíveis.
-Os extras são considerados incompatíveis quando não foram actualizados para funcionar com alterações significativas no NVDA ou quando dependem de um recurso não disponível na versão do NVDA que está a usar.
-O gestor de extras incompatíveis tem uma mensagem curta para explicar sua finalidade, bem como a versão do NVDA.
-Os extras incompatíveis são apresentados numa lista com as seguintes colunas:
-- Pacote, o nome do extra;
-- Versão, a versão do extra
-- Razão, uma explicação de porque o extra é considerado incompatível
--
-
-O Gestor de extras Incompatíveis também possui um botão "Sobre o extra...".
-Este botão abre um diálogo contendo informações do extra, para conhecer os detalhes completos do extra, o que é útil ao entrar em contato com o autor do extra.
-
-++ Criar uma cópia portátil ++[CreatePortableCopy]
+ ++ Criar uma cópia portátil ++[CreatePortableCopy]
 Esta opção abre uma caixa de diálogo que permite criar uma cópia portátil do NVDA a partir da versão instalada.
 Quando estiver a executar uma cópia portátil do NVDA, terá uma opção adicional do menu Ferramentas, chamada "instalar o NVDA".
  
@@ -2938,6 +3047,15 @@ Por favor, consulte a documentação da sua linha Braille para obter a descriç�
 | Mover a linha braille para a linha anterior | d1 |
 | Mover a linha braille para a linha seguinte | d3 |
 | Encaminhar | routing |
+| tecla shift+tab | espaço+ponto 1+ponto 3 |
+| tecla tab | espaço+ponto 4+ponto 6 |
+| tecla alt | espaço+ponto 1+ponto 3+ponto 4 (espaço+m) |
+| tecla escape | espaço+ponto 1+ponto 5 (espaço+e) |
+| tecla windows | espaço+ponto 3+ponto 4 |
+| tecla alt+tab | espaço+ponto 2+ponto 3+ponto 4+ponto 5 (espaço+t) |
+| Menu NVDA | espaço+ponto 1+ponto 3+ponto 4+ponto 5 (espaço+n) |
+| Tecla Windows+d (minimizar todos os aplicativos) Espaço+ponto 1+ponto 4+ponto 5 (espaço+d)
+| Leitura contínua | espaço+ponto 1+ponto 2+ponto 3+ponto 4+ponto 5+ponto 6 |
 
 Para linhas braille que tenham um joistick:
 || Nome | Tecla de atalho |
@@ -3176,11 +3294,11 @@ Por favor, consulte a documentação destes dispositivos Braille para obter a de
 | shift+tecla abaixo | Space+RJ down, Backspace+RJ down |
 | shift+tecla seta à esquerda | Space+RJ left, Backspace+RJ left |
 | shift+tecla seta à direita | Space+RJ right, Backspace+RJ right |
-| Tecla enter | RJ center, dot8
+| Tecla enter | RJ center, ponto 8
 | Tecla escape | Space+RJ center |
 | Tecla windows | Backspace+RJ center |
 | Tecla espaço | Space, Backspace |
-| Tecla backspace | dot7 |
+| Tecla backspace | ponto 7 |
 | Tecla pageUp | space+LJ right |
 | Tecla pageDown | space+LJ left |
 | Tecla home | space+LJ up |
@@ -3490,89 +3608,163 @@ Por isso, e para manter a compatibilidade com outros leitores de ecrã em Taiwan
 | Mover a linha Braille para a frente | Mais do bloco numérico | 
 %kc:endInclude
 
-++ Eurobraille Esys/Esytime/Iris displays ++[Eurobraille]
-As linhas Braille Esys, Esytime e Iris da [Eurobraille https://www.eurobraille.fr/] são suportadas pelo NVDA.
-Esys e Esytime-Evo são suportadas, quando ligadas quer por USB ou bluetooth.
-As Esytime antigas apenas são suportadas via USB.
-As Iris apenas podem ser ligadas por portas série.
-Não é possível a detecção automática da porta, portanto, após escolher a linha Braille, é necessário escolher a porta correcta à qual a linha está ligada.
+++ Dispositivos Eurobraille ++[Eurobraille]
+Os dispositivos Braille b.book, b.note, Esys, Esytime e Iris da [Eurobraille https://www.eurobraille.fr/] são suportados pelo NVDA.
+Estes dispositivos possuem um teclado Braille com 10 teclas. 
+ das duas teclas colocadas como uma barra de Espaço, a tecla esquerda corresponde ao backspace e a tecla direita ao Espaço.
+Ligados via USB, estes dispositivos têm um teclado USB autónomo.
+É possível activar/desactivar este teclado usando a caixa de verificação "Simulação de introdução pelo teclado HID" das configurações Braille.
+O teclado Braille, descrito abaixo, refere-se a quando esta caixa de verificação está desmarcada.
+Seguem-se as associações de comandos dos dispositivos EuroBraille com o NVDA.
+Por favor, consulte a documentação destes dispositivos Braille para obter a descrição de onde estas teclas podem ser encontradas.
 
-As linhas Iris e Esys têm um teclado Braille com 10 teclas.
-As duas teclas colocadas como se fossem a tecla Espaço, são a Retrocesso, à esquerda, e o Espaço à direita.
++++  Funções do teclado Braille +++[EurobrailleBraille]
+%kc:beginInclude
+|| Nome | Comando |
+| ***Erase the last entered braille cell or character | ``backspace`` |
+| Translate any braille input and press the enter key |``backspace+space`` |
+| Toggle ``NVDA`` key | ``dot3+dot5+space`` |
+| Tecla insert | ``dot1+dot3+dot5+space``, ``dot3+dot4+dot5+space`` |
+| Tecla delete | ``dot3+dot6+space`` |
+| Tecla home | ``dot1+dot2+dot3+space`` |
+| Tecla end | ``dot4+dot5+dot6+space`` |
+| Seta à esquerda  | ``dot2+space`` |
+| Seta à direita | ``dot5+space`` |
+| Seta acima | ``dot1+space`` |
+| Seta abaixo | ``dot6+space`` |
+| Página acima | ``dot1+dot3+space`` |
+| Página abaixo | ``dot4+dot6+space`` |
+| ``numpad1`` | ``dot1+dot6+backspace`` |
+| ``numpad2`` | ``dot1+dot2+dot6+backspace`` |
+| ``numpad3`` | ``dot1+dot4+dot6+backspace`` |
+| ``numpad4`` | ``dot1+dot4+dot5+dot6+backspace`` |
+| ``numpad5`` | ``dot1+dot5+dot6+backspace`` |
+| ``numpad6`` | ``dot1+dot2+dot4+dot6+backspace`` |
+| ``numpad7`` | ``dot1+dot2+dot4+dot5+dot6+backspace`` |
+| ``numpad8`` | ``dot1+dot2+dot5+dot6+backspace`` |
+| ``numpad9`` | ``dot2+dot4+dot6+backspace`` |
+| ``numpadInsert`` | ``dot3+dot4+dot5+dot6+backspace`` |
+| ``numpadPonto`` | ``dot2+backspace`` |
+| ``numpadDivide`` key | ``dot3+dot4+backspace`` |
+| ``numpadMultiply`` key | ``dot3+dot5+backspace`` |
+| ``numpadMinus`` key | ``dot3+dot6+backspace`` |
+| ``numpadPlus`` key | ``dot2+dot3+dot5+backspace`` |
+| ``numpadEnter`` key | ``dot3+dot4+dot5+backspace`` |
+| ``escape`` key | ``dot1+dot2+dot4+dot5+space``, ``l2`` |
+| ``tab`` key | ``dot2+dot5+dot6+space``, ``l3`` |
+| ``shift+tab`` keys | ``dot2+dot3+dot5+space`` |
+| ``printScreen`` key | ``dot1+dot3+dot4+dot6+space`` |
+| ``pause`` key | ``dot1+dot4+space`` |
+| ``applications`` key | ``dot5+dot6+backspace`` |
+| ``f1`` key | ``dot1+backspace`` |
+| ``f2`` key | ``dot1+dot2+backspace`` |
+| ``f3`` key | ``dot1+dot4+backspace`` |
+| ``f4`` key | ``dot1+dot4+dot5+backspace`` |
+| ``f5`` key | ``dot1+dot5+backspace`` |
+| ``f6`` key | ``dot1+dot2+dot4+backspace`` |
+| ``f7`` key | ``dot1+dot2+dot4+dot5+backspace`` |
+| ``f8`` key | ``dot1+dot2+dot5+backspace`` |
+| ``f9`` key | ``dot2+dot4+backspace`` |
+| ``f10`` key | ``dot2+dot4+dot5+backspace`` |
+| ``f11`` key | ``dot1+dot3+backspace`` |
+| ``f12`` key | ``dot1+dot2+dot3+backspace`` |
+| ``windows`` key | ``dot1+dot2+dot4+dot5+dot6+space`` |
+| Toggle ``windows`` key | ``dot1+dot2+dot3+dot4+backspace``, ``dot2+dot4+dot5+dot6+space`` |
+| ``capsLock`` key | ``dot7+backspace``, ``dot8+backspace`` |
+| ``numLock`` key | ``dot3+backspace``, ``dot6+backspace`` |
+| ``shift`` key | ``dot7+space`` |
+| Toggle ``shift`` key | ``dot1+dot7+space``, ``dot4+dot7+space`` |
+| ``control`` key | ``dot7+dot8+space`` |
+| Toggle ``control`` key | ``dot1+dot7+dot8+space``, ``dot4+dot7+dot8+space`` |
+| ``alt`` key | ``dot8+space`` |
+| Toggle ``alt`` key | ``dot1+dot8+space``, ``dot4+dot8+space`` |
+%kc:endInclude
 
-Seguem-se as associações de comandos das linhas EuroBraille com o NVDA.
-Por favor, consulte a documentação destas linhas Braille para obter a descrição de onde estas teclas podem ser encontradas.
++++ b.book keyboard commands +++[Eurobraillebbook]
 %kc:beginInclude
 || Name | Key |
-| Mover a linha Braille para trás | switch1-6left, l1 |
-| Mover a linha Braille para a frente | switch1-6Right, l8 |
-| Mover para o foco actual | switch1-6Left+switch1-6Right, l1+l8 |
-| Encaminhar para a célula Braille | routing |
-| Anunciar a formatação do caracter da célula Braille | Linha de encaminhamento superior |
-| Mover a linha braille para a linha anterior em revisão | joystick1Up |
-| Mover a linha braille para a linha seguinte em revisão | joystick1Down |
-| Mover a linha braille para o caracter anterior em revisão | joystick1Left |
-| Mover a linha braille para o caracter seguinte em revisão | joystick1Right |
-| Mudar para o modo de revisão anterior | joystick1Left+joystick1Up |
-| Mudar para o modo de revisão seguinte | joystick1Right+joystick1Down |
-| Apagar a última célula Braille ou caracter introduzido | backSpace |
-| Converter a introdução Braille e pressionar a tecla enter | backSpace+space |
-| Tecla Insert | dot3+dot5+space, l7 |
-| Tecla Delete | dot3+dot6+space |
-| Tecla Home | dot1+dot2+dot3+space, joystick2Left+joystick2Up |
-| Tecla End | dot4+dot5+dot6+space, joystick2Right+joystick2Down |
-| Tecla Seta à esquerda | dot2+space, joystick2Left, leftArrow |
-| Tecla Seta à direita | dot5+space, joystick2Right, rightArrow |
-| Tecla Seta para cima | dot1+space, joystick2Up, seta acima |
-| Tecla Seta para baixo | dot6+space, joystick2Down, seta abaixo |
-| Tecla enter | joystick2Center |
-| Tecla PageUp | dot1+dot3+space |
-| Tecla PageDown| dot4+dot6+space |
-| numpad1 | dot1+dot6+backspace |
-| numpad2 | dot1+dot2+dot6+backspace |
-| numpad3 | dot1+dot4+dot6+backspace |
-| numpad4 | dot1+dot4+dot5+dot6+backspace |
-| numpad5 | dot1+dot5+dot6+backspace |
-| numpad6 | dot1+dot2+dot4+dot6+backspace |
-| numpad7 | dot1+dot2+dot4+dot5+dot6+backspace |
-| numpad8 | dot1+dot2+dot5+dot6+backspace |
-| numpad9 key | dot2+dot4+dot6+backspace |
-| numpadInsert | dot3+dot4+dot5+dot6+backspace |
-| numpadDelete| dot2+backspace |
-| numpadBarra | dot3+dot4+backspace |
-| numpadAsterisco | dot3+dot5+backspace |
-| numpadMenos | dot3+dot6+backspace |
-| numpadMais | dot2+dot3+dot5+backspace |
-| numpadEnter | dot3+dot4+dot5+backspace |
-| Tecla Escape | dot1+dot2+dot4+dot5+space, l2 |
-| Tecla Tab | dot2+dot5+dot6+space, l3 |
-| Teclas Shift+Tab | dot2+dot3+dot5+space |
-| Tecla PrintScreen | dot1+dot3+dot4+dot6+space |
-| Tecla Pause | dot1+dot4+space |
-| Tecla Aplicações | dot5+dot6+backspace |
-| Tecla F1 | dot1+backspace |
-| Tecla F2 | dot1+dot2+backspace |
-| Tecla F3 | dot1+dot4+backspace |
-| Tecla F4 | dot1+dot4+dot5+backspace |
-| Tecla F5 | dot1+dot5+backspace |
-| Tecla F6 | dot1+dot2+dot4+backspace |
-| Tecla F7 | dot1+dot2+dot4+dot5+backspace |
-| Tecla F8 | dot1+dot2+dot5+backspace |
-| Tecla F9 | dot2+dot4+backspace |
-| Tecla F10 | dot2+dot4+dot5+backspace |
-| Tecla F11 | dot1+dot3+backspace |
-| Tecla F12 | dot1+dot2+dot3+backspace |
-| Tecla Windows | dot1+dot2+dot3+dot4+backspace |
-| Tecla CapsLock | dot7+backspace, dot8+backspace |
-| Tecla NumLock | dot3+backspace, dot6+backspace |
-| Tecla Shift | dot7+space, l4 |
-| Prender tecla Shift | dot1+dot7+space, dot4+dot7+space |
-| Tecla Control | dot7+dot8+space, l5 |
-| Prender tecla Control | dot1+dot7+dot8+space, dot4+dot7+dot8+space |
-| Tecla Alt | dot8+space, l6 |
-| Prender tecla Alt | dot1+dot8+space, dot4+dot8+space |
-| Alternar simulação de teclado HID | Esytime):l1+joystick1Down, esytime):l8+joystick1Down |
+| Scroll braille display back | ``backward`` |
+| Scroll braille display forward | ``forward`` |
+| Move to current focus | ``backward+forward`` | 
+| Route to braille cell | ``routing`` |
+| ``leftArrow`` key | ``joystick2Left`` |
+| ``rightArrow`` key | ``joystick2Right`` |
+| ``upArrow`` key | ``joystick2Up`` |
+| ``downArrow`` key | ``joystick2Down`` |
+| ``enter`` key | ``joystick2Center`` |
+| ``escape`` key | ``c1`` |
+| ``tab`` key | ``c2`` |
+| Toggle ``shift`` key | ``c3`` |
+| Toggle ``control`` key | ``c4`` |
+| Toggle ``alt`` key | ``c5`` |
+| Toggle ``NVDA`` key | ``c6`` |
+| ``control+Home`` key | ``c1+c2+c3`` |
+| ``control+End`` key | ``c4+c5+c6`` |
 %kc:endInclude
+
++++ b.note keyboard commands +++[Eurobraillebnote]
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | ``leftKeypadLeft`` |
+| Scroll braille display forward | ``leftKeypadRight`` |
+| Route to braille cell | ``routing`` |
+| Report text formatting under braille cell | ``doubleRouting`` |
+| Move to next line in review | ``leftKeypadDown`` |
+| Switch to previous review mode | ``leftKeypadLeft+leftKeypadUp`` |
+| Switch to next review mode | ``leftKeypadRight+leftKeypadDown`` |
+| ``leftArrow`` key | ``rightKeypadLeft`` |
+| ``rightArrow`` key | ``rightKeypadRight`` |
+| ``upArrow`` key | ``rightKeypadUp`` |
+| ``downArrow`` key | ``rightKeypadDown`` |
+| ``control+home`` key | ``rightKeypadLeft+rightKeypadUp`` |
+| ``control+end`` key | ``rightKeypadLeft+rightKeypadUp`` |
+%kc:endInclude
+
++++ Esys keyboard commands +++[Eurobrailleesys]
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | ``switch1Left`` |
+| Scroll braille display forward | ``switch1Right`` |
+| Move to current focus | ``switch1Center`` |
+| Route to braille cell | ``routing`` |
+| Report text formatting under braille cell | ``doubleRouting`` |
+| Move to previous line in review | ``joystick1Up`` |
+| Move to next line in review | ``joystick1Down`` |
+| Move to previous character in review | ``joystick1Left`` |
+| Move to next character in review | ``joystick1Right`` |
+| ``leftArrow`` key | ``joystick2Left`` |
+| ``rightArrow`` key | ``joystick2Right`` |
+| ``upArrow`` key | ``joystick2Up`` |
+| ``downArrow`` key | ``joystick2Down`` |
+| ``enter`` key | ``joystick2Center`` |
+%kc:endInclude
+
++++ Esytime keyboard commands +++[EurobrailleEsytime]
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | ``l1`` |
+| Scroll braille display forward | ``l8`` |
+| Move to current focus | ``l1+l8`` |
+| Route to braille cell | ``routing`` |
+| Report text formatting under braille cell | ``doubleRouting`` |
+| Move to previous line in review | ``joystick1Up`` |
+| Move to next line in review | ``joystick1Down`` |
+| Move to previous character in review | ``joystick1Left`` |
+| Move to next character in review | ``joystick1Right`` |
+| ``leftArrow`` key | ``joystick2Left`` |
+| ``rightArrow`` key | ``joystick2Right`` |
+| ``upArrow`` key | ``joystick2Up`` |
+| ``downArrow`` key | ``joystick2Down`` |
+| ``enter`` key | ``joystick2Center`` |
+| ``escape`` key | ``l2`` |
+| ``tab`` key | ``l3`` |
+| Toggle ``shift`` key | ``l4`` |
+| Toggle ``control`` key | ``l5`` |
+| Toggle ``alt`` key | ``l6`` |
+| Toggle ``NVDA`` key | ``l7`` |
+| ``control+home`` key | ``l1+l2+l3``, ``l2+l3+l4`` |
+| ``control+end`` key | ``l6+l7+l8``, ``l5+l6+l7`` |
+ %kc:endInclude
 
 ++ Linhas Nattiq nBraille ++[NattiqTechnologies]
 O NVDA suporta as linhas Braille da [Nattiq Technologies https://www.nattiq.com/] quando ligadas por USB.
@@ -3651,6 +3843,12 @@ Por favor, consulte a documentação destas linhas Braille para obter a descriç
 | Mover para o objecto seguinte | ``f6`` |
 | Anunciar o objecto de navegação actual | ``f7`` |
 | Anunciar localização do cursor de revisão | ``f8`` |
+| Mostra as configurações em braile | ``f1+home1``, ``f9+home2`` |
+| Lê a barra de estado e move o objeto de navegação para ela | ``f1+end1``, ``f9+end2`` |
+| Alternar entre as formas do cursor Braile | ``f1+eCursor1``, ``f9+eCursor2`` | +| Alterna a forma do cursor braile
+| Alternar o cursor Braille | ``f1+cursor1``, ``f9+cursor2``
+***| Cycle the braille show messages mode | ``f1+f2``, ``f9+f10`` |
+| Cycle the braille show selection state | ``f1+f5``, ``f9+f14`` |
 | Activar o objecto de navegação actual | ``f7+f8`` |
 | Anunciar hora/data | ``f9`` |
 | Anunciar o estado da bateria e tempo restante se não ligada à corrente | ``f10`` |
@@ -3678,26 +3876,25 @@ A detecção automática de dispositivos Braille do NVDA reconhecerá qualquer d
 Seguem-se as associações de teclas para este protocolo.
 %kc:beginInclude
 || Name | Key |
-\| Deslocar a linha Braille para trás | pan left or rocker up |
+| Deslocar a linha Braille para trás | pan left or rocker up |
 | Deslocar a linha Braille para a frente | pan right or rocker down |
-| Move a linha braille para a linha anterior | space + dot1 |
-| Move a linha braille para a linha seguinte | space + dot4 |
+| Move a linha braille para a linha seguinte | space + ponto 4 |
 | Encaminhar para a célula | routing set 1|
 | Alternar "Braille segue:" | up+down |
-| seta acima key | joystick up |
-| seta abaixo key | joystick down |
-| Seta à esquerda | space+dot3 or joystick left |
-| Seta à direita| space+dot6 or joystick right |
-| Tecla Shift+Tab | space+dot1+dot3 |
-| Tecla Tab | space+dot4+dot6 |
-| Tecla Alt | space+dot1+dot3+dot4 (space+m) |
-| Tecla Escape | space+dot1+dot5 (space+e) |
-| Tecla Enter | dot8 or joystick center |
-| Tecla Windows | space+dot3+dot4 |
-| Tecla alt+tab | space+dot2+dot3+dot4+dot5 (space+t) |
-| Menu NVDA | space+dot1+dot3+dot4+dot5 (space+n) |
-| Teclas windows+d (minimizar todas as aplicações) | | space+dot1+dot4+dot5 (space+d) |
-| Ler tudo | space+dot1+dot2+dot3+dot4+dot5+dot6 |
+| seta acima | joystick up, dpad up  ou Espaço + ponto 1 |
+| seta abaixo | joystick down, dpad down  espaço + ponto 4 |
+| Seta à esquerda | joystick left, dpad left ou espaço +ponto 3 |
+| Seta à direita| joystick right, dpad right ou espaço +ponto 6 |
+| Tecla Shift+Tab | space+ponto 1+ponto 3 |
+| Tecla Tab | space+ponto 4+ponto 6 |
+| Tecla Alt | space+ponto 1+ponto 3+ponto 4 (space+m) |
+| Tecla Escape | space+ponto 1+ponto 5 (space+e) |
+| Tecla Enter | joystick center, dpad center  ou ponto 8 |
+| Tecla Windows | espaço +ponto 3+ponto 4 |
+| Tecla alt+tab | espaço +ponto 2+ponto 3+ponto 4+ponto 5 (space+t) |
+| Menu NVDA | espaço +ponto 1+ponto 3+ponto 4+ponto 5 (espaço+n) |
+| Teclas windows+d (minimizar todas as aplicações) | espaço +ponto 1+ponto 4+ponto 5 (espaço+d) |
+| Leitura contínua | espaço +ponto 1+ponto 2+ponto 3+ponto 4+ponto 5+ponto 6 |
 %kc:endInclude
  
 + tópicos Avançados +[AdvancedTopics]

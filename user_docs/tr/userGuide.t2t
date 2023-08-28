@@ -2,6 +2,7 @@ NVDA NVDA_VERSION Kullanıcı Rehberi
 
 
 %!includeconf: ../userGuide.t2tconf
+%!includeconf: ./locale.t2tconf
 %kc:title: NVDA NVDA_VERSION Komutlar Hızlı Rehber
 
 = İçindekiler =[toc]
@@ -221,7 +222,7 @@ Girdi yardımı açıkken komutlar farklı uygulamalara gönderilmez.
 | Durum çubuğunu oku | ``NVDA+end`` | ``NVDA+şift+end`` | Eğer saptanırsa, NVDA durum çubuğu bilgisini bildirir. İki kez basıldığında, bilgi hecelenerek okunur. Üç kere basıldığında metin panoya kopyalanır |
 | Saati oku | ``NVDA+f12`` | ``NVDA+f12`` | Bir kez basmak geçerli saati, iki kez basmak tarihi bildirir |
 | Metin biçimini oku | ``NVDA+f`` | ``NVDA+f`` | Metin biçimlendirmesini bildirir. İki kez basıldığında bilgileri bir pencerede gösterir |
-| Link hedefini bildir | ``NVDA+k`` | ``NVDA+k`` | Nesne sunucusunun üzerinde bulunduğu linkin yönlendirdiği web adresini okur. İki kez basıldığında daha kolay incelenebilmesi için web adresini bir pencerede gösterir |
+| Link hedefini bildir | ``NVDA+k`` | ``NVDA+k`` | NESNE Sunucusu üzerinde bulunduğu linkin yönlendirdiği web adresini okur. İki kez basıldığında daha kolay incelenebilmesi için web adresini bir pencerede gösterir |
 
 +++ NVDA'nın hangi bilgileri okumasını değiştirme+++[ToggleWhichInformationNVDAReads]
 || işlev | Masa üstü kısayolu | Dizüstü Kısayolu | Açıklama |
@@ -2348,7 +2349,11 @@ Bu iletişim kutusunun , NVDA ayarları iletişim kutusu altındaki [konuşma ka
 Sembolü veya sembolün  bir bölümünü, Filtreye göre düzenle kutusuna girerek sembolleri filtreleyebilirsiniz.
 
 - Olarak değiştir alanı, NVDA'nın sözkonusu işaretle karşılaştığında ne demesi gerektiğini belirlemenizi sağlar.
-- Düzey alanı ise, işaretin seslendirilmesini istediğiniz en düşük imla seslendirme düzeyini belirlemenize imkan verir.
+- Düzey alanı ise, işaretin seslendirilmesini istediğiniz en düşük imla seslendirme düzeyini belirlemenize imkan verir (hiç biri, bağzıları, çoğu veya tümü).
+Ayrıca düzeyi karakter olarak ayarlayabilirsiniz. Bu durumda, aşağıdaki iki durum harici semboller seslendirilmez:
+- Karakter karakter gezinirken.
+- NVDA bu sembolü içeren herhangi bir metni HARF HARF OKURKEN.
+ -
 - Sentezleyiciye asıl sembolü gönder alanı sembol için belirlenen seslendirme değeri yerine sentezleyiciye sembolün kendisinin gönderilmesini sağlar.
 Bu, sembolün sentezleyicinin duraksamasına ya da tonlamayı değiştirmesine neden olan bir sembol olması halinde faydalı olabilir.
 Örneğin, virgül işareti sentezleyicinin duraksamasına yol açar.
@@ -2937,6 +2942,15 @@ Please see your display's documentation for descriptions of where these keys can
 | Braille ekranı önceki satıra götürme | d1 |
 | Braille ekranı sonraki satıra götürme | d3 |
 | imleci parmağın üzerinde bulunduğu Braille hücresine taşıma | hücre üzerindeki braille iğnesi |
+| şift+tab tuşu | space+dot1+dot3 |
+| tab tuşu | space+dot4+dot6 |
+| alt tuşu | space+dot1+dot3+dot4 (space+m) |
+| escape tuşu | space+dot1+dot5 (space+e) |
+| windows tuşu | space+dot3+dot4 |
+| alt+tab tuşu | space+dot2+dot3+dot4+dot5 (space+t) |
+| NVDA Menü | space+dot1+dot3+dot4+dot5 (space+n) |
+| windows+d key (tüm uygulamaları simge durumuna küçült) | space+dot1+dot4+dot5 (space+d) |
+| Tümünü oku | space+dot1+dot2+dot3+dot4+dot5+dot6 |
 
 Kumanda kolu olan ekranlar için:
 || Ad | Kısayol tuşu |
@@ -3678,19 +3692,17 @@ Following are the current key assignments for these displays.
 || Name | Key |
 | Scroll braille display back | pan left or rocker up |
 | Scroll braille display forward | pan right or rocker down |
-| Move braille display to previous line | space + dot1 |
-| Move braille display to next line | space + dot4 |
 | Route to braille cell | routing set 1|
 | Toggle braille tethered to | up+down |
-| upArrow key | joystick up |
-| downArrow key | joystick down |
-| leftArrow key | space+dot3 or joystick left |
-| rightArrow key | space+dot6 or joystick right |
+| upArrow key | joystick up, dpad up or space+dot1 |
+| downArrow key | joystick down, dpad down or space+dot4 |
+| leftArrow key | space+dot3, joystick left  or dpad left |
+| rightArrow key | space+dot6, joystick right or dpad right |
 | shift+tab key | space+dot1+dot3 |
 | tab key | space+dot4+dot6 |
 | alt key | space+dot1+dot3+dot4 (space+m) |
+| enter key | dot8, joystick center or dpad center |
 | escape key | space+dot1+dot5 (space+e) |
-| enter key | dot8 or joystick center |
 | windows key | space+dot3+dot4 |
 | alt+tab key | space+dot2+dot3+dot4+dot5 (space+t) |
 | NVDA Menu | space+dot1+dot3+dot4+dot5 (space+n) |

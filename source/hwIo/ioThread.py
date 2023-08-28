@@ -186,7 +186,7 @@ class IoThread(threading.Thread):
 			reference = BoundMethodWeakref(func) if ismethod(func) else AnnotatableWeakref(func)
 			reference.funcName = repr(func)
 
-		self._apcStore[internalParam] = (func or reference, param)
+		self._apcStore[internalParam] = (reference or func, param)
 		return internalParam
 
 	def queueAsApc(

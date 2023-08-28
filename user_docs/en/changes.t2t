@@ -19,10 +19,18 @@ What's New in NVDA
 -
 
 == Changes ==
+- Rich edit controls in applications such as Wordpad now use UI Automation (UIA) when the application advertises native support for this. (#15314)
+-
 
 
 == Bug Fixes ==
-
+- Fix crash in Microsoft Word when Document formatting options "report headings" and "report comments and notes" were not enabled. (#15019)
+- NVDA will no longer jump back to the last browse mode position when opening the context menu in Microsoft Edge. (#15309)
+- Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283)
+- NVDA will no longer be sluggish in rich edit controls when braille is enabled, such as in MemPad. (#14285)
+- Fixed bug where Albatross braille displays try to initialize although another braille device has been connected. (#15226)
+- NVDA is once again able to read context menus of downloads in Microsoft Edge. (#14916)
+-
 
 == Changes for Developers ==
 Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
@@ -31,6 +39,17 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 
 
 = 2023.2 =
+This release introduces the Add-on Store to replace the Add-ons Manager.
+In the Add-on Store you can browse, search, install and update community add-ons.
+You can now manually override incompatibility issues with outdated add-ons at your own risk.
+
+There are new braille features, commands, and display support.
+There are also new input gestures for OCR and flattened object navigation.
+Navigating and reporting formatting in Microsoft Office is improved.
+
+There are many bug fixes, particularly for braille, Microsoft Office, web browsers and Windows 11.
+
+eSpeak-NG, LibLouis braille translator, and Unicode CLDR have been updated.
 
 == New Features ==
 - Add-on Store has been added to NVDA. (#13985)
@@ -41,27 +60,27 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
   -
 - New input gestures:
   - An unbound gesture to cycle through the available languages for Windows OCR. (#13036)
-  - An unbound gesture to cycle through the Braille show messages modes. (#14864)
-  - An unbound gesture to toggle showing the selection indicator for Braille. (#14948)
+  - An unbound gesture to cycle through the braille show messages modes. (#14864)
+  - An unbound gesture to toggle showing the selection indicator for braille. (#14948)
   - Added default keyboard gesture assignments to move to the next or previous object in a flattened view of the object hierarchy. (#15053)
     - Desktop: ``NVDA+numpad9`` and ``NVDA+numpad3`` to move to the previous and next objects respectively.
     - Laptop: ``shift+NVDA+[`` and ``shift+NVDA+]`` to move to the previous and next objects respectively.
     -
   -
-- New Braille features:
-  - Added support for the Help Tech Activator Braille display. (#14917)
+- New braille features:
+  - Added support for the Help Tech Activator braille display. (#14917)
   - A new option to toggle showing the selection indicator (dots 7 and 8). (#14948)
-  - A new option to optionally move the system caret or focus when changing the review cursor position with Braille routing keys. (#14885, #3166)
-  - When pressing ``numpad2`` three times to report the numerical value of the character at the position of the review cursor, the information is now also provided in Braille. (#14826)
-  - Added support for the ``aria-brailleroledescription`` ARIA 1.3 attribute, allowing web authors to override the type of an element shown on the Braille display. (#14748)
-  - Baum Braille driver: added several Braille chord gestures for performing common keyboard commands such as ``windows+d`` and ``alt+tab``.
+  - A new option to optionally move the system caret or focus when changing the review cursor position with braille routing keys. (#14885, #3166)
+  - When pressing ``numpad2`` three times to report the numerical value of the character at the position of the review cursor, the information is now also provided in braille. (#14826)
+  - Added support for the ``aria-brailleroledescription`` ARIA 1.3 attribute, allowing web authors to override the type of an element shown on the braille display. (#14748)
+  - Baum braille driver: added several braille chord gestures for performing common keyboard commands such as ``windows+d`` and ``alt+tab``.
   Please refer to the NVDA User Guide for a full list. (#14714)
   -
 - Added pronunciation of Unicode symbols:
-  - braille symbols such as "⠐⠣⠃⠗⠇⠐⠜". (#14548)
-  - Mac Option key symbol "⌥". (#14682)
+  - braille symbols such as ``⠐⠣⠃⠗⠇⠐⠜``. (#13778)
+  - Mac Option key symbol ``⌥``. (#14682)
   -
-- Added gestures for Tivomatic Caiku Albatross Braille displays. (#14844, #15002)
+- Added gestures for Tivomatic Caiku Albatross braille displays. (#14844, #15002)
   - showing the braille settings dialog
   - accessing the status bar
   - cycling the braille cursor shape
@@ -84,7 +103,7 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
     -
   - There is a known issue with intermittent crashing when WASAPI is enabled. (#15150)
   -
-- In Mozilla Firefox and Google Chrome, NVDA now reports when a control opens a dialog, grid, list or tree if the author has specified this using aria-haspopup. (#14709)
+- In Mozilla Firefox and Google Chrome, NVDA now reports when a control opens a dialog, grid, list or tree if the author has specified this using ``aria-haspopup``. (#8235)
 - It is now possible to use system variables (such as ``%temp%`` or ``%homepath%``) in the path specification while creating portable copies of NVDA. (#14680)
 - In Windows 10 May 2019 Update and later, NVDA can announce virtual desktop names when opening, changing, and closing them. (#5641)
 - A system wide parameter has been added to allow users and system administrators to force NVDA to start in secure mode. (#10018)
@@ -92,25 +111,29 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 
 
 == Changes ==
-- eSpeak NG has been updated to 1.52-dev commit ``ed9a7bcf``. (#15036)
-- Updated LibLouis braille translator to [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0]. (#14970)
-- CLDR has been updated to version 43.0. (#14918)
-- Dash and em-dash symbols will always be sent to the synthesizer. (#13830)
-- LibreOffice changes:
-  - When reporting the review cursor location, the current cursor/caret location is now reported relative to the current page in LibreOffice Writer for LibreOffice versions >= 7.6, similar to what is done for Microsoft Word. (#11696)
-  - Announcement of the status bar (e.g. triggered by ``NVDA+end``) works for LibreOffice. (#11698)
+- Component updates:
+  - eSpeak NG has been updated to 1.52-dev commit ``ed9a7bcf``. (#15036)
+  - Updated LibLouis braille translator to [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0]. (#14970)
+  - CLDR has been updated to version 43.0. (#14918)
   -
+- LibreOffice changes:
+  - When reporting the review cursor location, the current cursor/caret location is now reported relative to the current page in LibreOffice Writer 7.6 and newer, similar to what is done for Microsoft Word. (#11696)
+  - Announcement of the status bar (e.g. triggered by ``NVDA+end``) works for LibreOffice. (#11698)
+  - When moving to a different cell in LibreOffice Calc, NVDA no longer incorrectly announces the coordinates of the previously focused cell when cell coordinate announcement is disabled in NVDA's settings. (#15098)
+  -
+- Braille changes:
+  - When using a braille display via the Standard HID braille driver, the dpad can be used to emulate the arrow keys and enter.
+  Also ``space+dot1`` and ``space+dot4`` now map to up and down arrow respectively. (#14713)
+  - Updates to dynamic web content (ARIA live regions) are now displayed in braille.
+  This can be disabled in the Advanced Settings panel. (#7756)
+  -
+- Dash and em-dash symbols will always be sent to the synthesizer. (#13830)
 - Distance reported in Microsoft Word will now honour the unit defined in Word's advanced options even when using UIA to access Word documents. (#14542)
 - NVDA responds faster when moving the cursor in edit controls. (#14708)
-- When using a Braille Display via the Standard HID braille driver, the dpad can be used to emulate the arrow keys and enter.
-Also ``space+dot1`` and ``space+dot4`` now map to up and down arrow respectively. (#14713)
 - Script for reporting the destination of a link now reports from the caret / focus position rather than the navigator object. (#14659)
-- Portable copy creation no longer requires that a drive letter be entered as part of the absolute path. (#14681)
+- Portable copy creation no longer requires that a drive letter be entered as part of the absolute path. (#14680)
 - If Windows is configured to display seconds in the system tray clock, using ``NVDA+f12`` to report the time now honors that setting. (#14742)
 - NVDA will now report unlabeled groupings that have useful position information, such as in recent versions of Microsoft Office 365 menus. (#14878)
-- Updates to dynamic web content (ARIA live regions) are now displayed in Braille.
-This can be disabled in the Advanced Settings panel. (#7756)
-- When moving to a different cell in LibreOffice Calc, NVDA no longer incorrectly announces the coordinates of the previously focused cell when cell coordinate announcement is disabled in NVDA's settings. (#15098)
 -
 
 
@@ -120,13 +143,14 @@ This can be disabled in the Advanced Settings panel. (#7756)
   - NVDA will no longer unnecessarily switch to no braille multiple times during auto detection, resulting in a cleaner log and less overhead. (#14524)
   - NVDA will now switch back to USB if a HID Bluetooth device (such as the HumanWare Brailliant or APH Mantis) is automatically detected and an USB connection becomes available.
   This only worked for Bluetooth Serial ports before. (#14524)
+  - When no braille display is connected and the braille viewer is closed by pressing ``alt+f4`` or clicking the close button, the display size of the braille subsystem will again be reset to no cells. (#15214)
   -
 - Web browsers:
   - NVDA no longer occasionally causes Mozilla Firefox to crash or stop responding. (#14647)
-  - In Mozilla Firefox and Google Chrome, typed characters are no longer reported in some text boxes even when speak typed characters is disabled. (#14666)
+  - In Mozilla Firefox and Google Chrome, typed characters are no longer reported in some text boxes even when speak typed characters is disabled. (#8442)
   - You can now use browse mode in Chromium Embedded Controls where it was not possible previously. (#13493, #8553)
   - In Mozilla Firefox, moving the mouse over text after a link now reliably reports the text. (#9235)
-  - The destination of graphic links is now correctly reported in Chrome and Edge. (#14779)
+  - The destination of graphic links is now reported accurately in more cases in Chrome and Edge. (#14783)
   - When trying to report the URL for a link without a href attribute NVDA is no longer silent.
   Instead NVDA reports that the link has no destination. (#14723)
   - In Browse mode, NVDA will no longer incorrectly ignore focus moving to a parent or child control e.g. moving from a control to its parent list item or gridcell. (#14611)
@@ -151,23 +175,21 @@ This can be disabled in the Advanced Settings panel. (#7756)
 - When forcing UIA support with certain terminal and consoles, a bug is fixed which caused a freeze and the log file to be spammed. (#14689)
 - NVDA will no longer refuse to save the configuration after a configuration reset. (#13187)
 - When running a temporary version from the launcher, NVDA will not mislead users into thinking they can save the configuration. (#14914)
-- Reporting of object shortcut keys has been improved. (#10807)
 - NVDA now generally responds slightly faster to commands and focus changes. (#14928)
 - Displaying the OCR settings will not fail on some systems anymore. (#15017)
 - Fix bug related to saving and loading the NVDA configuration, including switching synthesizers. (#14760)
 - Fix bug causing text review "flick up" touch gesture to move pages rather than move to previous line. (#15127)
--
+- 
 
 
 == Changes for Developers ==
 Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
 
 - Suggested conventions have been added to the add-on manifest specification.
-These are optional for NVDA compatibility, but are encouraged or required for submitting to the add-on store.
-The new suggested conventions are:
-  - Using ``lowerCamelCase`` for the name field.
-  - Using ``<major>.<minor>.<patch>`` format for the version field (required for add-on datastore).
-  - Using ``https://`` as the schema for the url field (required for add-on datastore).
+These are optional for NVDA compatibility, but are encouraged or required for submitting to the Add-on Store. (#14754)
+  - Use ``lowerCamelCase`` for the name field.
+  - Use ``<major>.<minor>.<patch>`` format for the version field (required for add-on datastore).
+  - Use ``https://`` as the schema for the url field (required for add-on datastore).
   -
 - Added a new extension point type called ``Chain``, which can be used to iterate over iterables returned by registered handlers. (#14531)
 - Added the ``bdDetect.scanForDevices`` extension point.

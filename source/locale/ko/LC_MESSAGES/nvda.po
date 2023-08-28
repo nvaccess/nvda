@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-14 00:01+0000\n"
-"PO-Revision-Date: 2023-04-17 15:06+0900\n"
+"POT-Creation-Date: 2023-07-28 03:20+0000\n"
+"PO-Revision-Date: 2023-08-02 10:40+0900\n"
 "Last-Translator: Ungjin Park <ungjin312@kakao.com>\n"
 "Language-Team: NVDA Korean users and translations forum <advck1123@gmail."
 "com>\n"
@@ -2468,12 +2468,16 @@ msgstr "찾고자 하는 내용을 입력하세요"
 msgid "Case &sensitive"
 msgstr "대소문자 구별 (&S)"
 
+#. Translators: message displayed to the user when
+#. searching text and no text is found.
 #, python-format
 msgid "text \"%s\" not found"
 msgstr "검색어 “%s”을(를) 찾지 못했습니다"
 
-msgid "Find Error"
-msgstr "찾기 오류"
+#. Translators: message dialog title displayed to the user when
+#. searching text and no text is found.
+msgid "0 matches"
+msgstr "일치 항목 없음"
 
 #. Translators: Input help message for NVDA's find command.
 msgid "find a text string from the current cursor position"
@@ -2614,6 +2618,8 @@ msgid "Configuration profiles"
 msgstr "환경 설정 프로필"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 #. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "점자"
@@ -4047,12 +4053,11 @@ msgstr ""
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "개발에 유용한 NVDA 파이썬 콘솔을 활성화합니다"
 
-#. Translators: Input help mode message for activate manage add-ons command.
+#. Translators: Input help mode message to activate Add-on Store command.
 msgid ""
-"Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
-"for NVDA"
+"Activates the Add-on Store to browse and manage add-on packages for NVDA"
 msgstr ""
-"NVDA 추가 기능 패키지 설치 및 제거를 위한 추가 기능 관리자를 활성화합니다"
+"NVDA 추가 기능 패키지 설치 및 제거를 위한 추가 기능 스토어를 활성화합니다"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
@@ -4095,6 +4100,27 @@ msgstr "점자 디스플레이가 포커스 또는 리뷰 위치를 따라갈 �
 msgid "Braille tethered %s"
 msgstr "점자 연계 커서: %s"
 
+#. Translators: Input help mode message for cycle through
+#. braille move system caret when routing review cursor command.
+msgid ""
+"Cycle through the braille move system caret when routing review cursor states"
+msgstr "리뷰 커서를 라우팅중일 시 점자 이동 시스템 케럿을 순환 설정합니다"
+
+#. Translators: Reported when action is unavailable because braille tether is to focus.
+msgid "Action unavailable. Braille is tethered to focus"
+msgstr "동작을 사용할 수 없습니다. 초점을 맞추기 위해 점자가 묶여 있습니다"
+
+#. Translators: Used when reporting braille move system caret when routing review cursor
+#. state (default behavior).
+#, python-format
+msgid "Braille move system caret when routing review cursor default (%s)"
+msgstr "기본으로 라우팅 중일 때 점자 시스템 캐럿 이동 (%s)"
+
+#. Translators: Used when reporting braille move system caret when routing review cursor state.
+#, python-format
+msgid "Braille move system caret when routing review cursor %s"
+msgstr "검토 커서 라우팅 시 점자 이동 시스템 캐럿 %s"
+
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
 msgstr "포커스된 객체의 세부 내용이 점자로 전달되는 방법을 변경합니다"
@@ -4130,6 +4156,32 @@ msgstr "점자 커서 꺼져있음"
 #, python-format
 msgid "Braille cursor %s"
 msgstr "점자 커서 %s"
+
+#. Translators: Input help mode message for cycle through braille show messages command.
+msgid "Cycle through the braille show messages modes"
+msgstr "점자 메시지 표시 모드를 순환 설정합니다"
+
+#. Translators: Reports which show braille message mode is used
+#. (disabled, timeout or indefinitely).
+#, python-format
+msgid "Braille show messages %s"
+msgstr "점자 메시지 표시: %s"
+
+#. Translators: Input help mode message for cycle through braille show selection command.
+msgid "Cycle through the braille show selection states"
+msgstr "선택 상태 표시를 순환 설정합니다"
+
+#. Translators: Used when reporting braille show selection state
+#. (default behavior).
+#, python-format
+msgid "Braille show selection default (%s)"
+msgstr "점자 선택 표시 기본 동작 (%s)"
+
+#. Translators: Reports which show braille selection state is used
+#. (disabled or enabled).
+#, python-format
+msgid "Braille show selection %s"
+msgstr "점자 선택 표시: %s"
 
 #. Translators: Input help mode message for report clipboard text command.
 msgid "Reports the text on the Windows clipboard"
@@ -4464,6 +4516,10 @@ msgstr "Windows OCR 사용할 수 없음"
 #. Translators: Reported when screen curtain is enabled.
 msgid "Please disable screen curtain before using Windows OCR."
 msgstr "스크린 커튼 사용중, 윈도우 OCR을 사용하려면 스크린 커튼을 끄십시오."
+
+#. Translators: Describes a command.
+msgid "Cycles through the available languages for Windows OCR"
+msgstr "Windows OCR 언어를 사용가능한 언어로 순환설정합니다"
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -5260,7 +5316,7 @@ msgstr "아래쪽 화살표"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Callout with Down Arrow"
-msgstr "설명선: 위쪽/아래쪽 화살표(&U)"
+msgstr "설명선: 위쪽/아래쪽 화살표 (&U)"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6099,21 +6155,21 @@ msgstr "언어"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Voice"
-msgstr "보이스 (&V)"
+msgstr "음성 (&V)"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
 msgid "Voice"
-msgstr "보이스"
+msgstr "음성"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&ariant"
-msgstr "보이스 버전 (&A)"
+msgstr "음성 버전 (&A)"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
 msgid "Variant"
-msgstr "보이스 버전"
+msgstr "음성 버전"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Rate"
@@ -6310,10 +6366,12 @@ msgstr "업데이트를 확인하는 중 오류가 발생했습니다."
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
-#. Translators: The message title displayed
-#. when the user has not specified an absolute destination directory
-#. in the Create Portable NVDA dialog.
+#. Translators: the title of an error dialog.
+#. Translators: The message title displayed when the user has not specified an absolute
+#. destination directory in the Create Portable NVDA dialog.
+#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
 #. Translators: The title of an error message dialog.
+#. Translators: A message indicating that an error occurred.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
 #. for a vision enhancement provider
@@ -6336,32 +6394,6 @@ msgstr "새 업데이트가 없습니다."
 #, python-brace-format
 msgid "NVDA version {version} has been downloaded and is pending installation."
 msgstr "NVDA 버전 {version}을 다운로드하였습니다."
-
-#. Translators: A message indicating that some add-ons will be disabled
-#. unless reviewed before installation.
-#. Translators: A message in the installer to let the user know that
-#. some addons are not compatible.
-msgid ""
-"\n"
-"\n"
-"However, your NVDA configuration contains add-ons that are incompatible with "
-"this version of NVDA. These add-ons will be disabled after installation. If "
-"you rely on these add-ons, please review the list to decide whether to "
-"continue with the installation"
-msgstr ""
-"\n"
-"\n"
-"하지만 현재 설치되어 있는 NVDA에는 새 버전의 NVDA에 호환되지 않는 추가 기능"
-"이 포함되어 있습니다. 이 추가 기능은 새 버전이 설치된 후에 비활성화됩니다. 중"
-"요한 추가 기능을 사용하고 있다면 설치를 계속 진행하기 전에 추가 기능의 호환"
-"성 여부를 검토하세요"
-
-#. Translators: A message to confirm that the user understands that addons that have not been
-#. reviewed and made available, will be disabled after installation.
-#. Translators: A message to confirm that the user understands that addons that have not been reviewed and made
-#. available, will be disabled after installation.
-msgid "I understand that these incompatible add-ons will be disabled"
-msgstr "호환되지 않는 추가 기능은 비활성화된다는 것을 이해했습니다"
 
 #. Translators: The label of a button to review add-ons prior to NVDA update.
 #. Translators: The label of a button to launch the add-on compatibility review dialog.
@@ -6402,20 +6434,6 @@ msgstr "닫기 (&C)"
 #, python-brace-format
 msgid "NVDA version {version} is ready to be installed.\n"
 msgstr "NVDA {version} 버전을 설치합니다.\n"
-
-#. Translators: A message indicating that some add-ons will be disabled
-#. unless reviewed before installation.
-msgid ""
-"\n"
-"However, your NVDA configuration contains add-ons that are incompatible with "
-"this version of NVDA. These add-ons will be disabled after installation. If "
-"you rely on these add-ons, please review the list to decide whether to "
-"continue with the installation"
-msgstr ""
-"\n"
-"하지만, 현재 NVDA에는 이 버전의 NVDA와 호환되지 않는 애드온이 포함되어 있습니"
-"다. 호환되지 않는 애드온은 설치 후에 비활성화됩니다. 이 애드온을 중요하게 사"
-"용하는 경우에는 설치를 계속하기에 앞서 반드시 목록을 검토해 주세요"
 
 #. Translators: The label of a button to install an NVDA update.
 msgid "&Install update"
@@ -6471,7 +6489,7 @@ msgstr "후원해 주세요"
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
 msgid "&Donate"
-msgstr "후원(&D)"
+msgstr "후원 (&D)"
 
 #. Translators: The label of the button to decline donation
 #. in the "Please Donate" dialog.
@@ -6665,6 +6683,69 @@ msgstr "그림"
 msgctxt "UIAHandler.FillType"
 msgid "pattern"
 msgstr "패턴"
+
+#. Translators: A title of the dialog shown when fetching add-on data from the store fails
+msgctxt "addonStore"
+msgid "Add-on data update failure"
+msgstr "추가 기능 데이터 업데이트 실패"
+
+#. Translators: A message shown when fetching add-on data from the store fails
+msgctxt "addonStore"
+msgid "Unable to fetch latest add-on data for compatible add-ons."
+msgstr "호환가능한 최신 추가 기능 데이터를 가져올 수 없습니다."
+
+#. Translators: A message shown when fetching add-on data from the store fails
+msgctxt "addonStore"
+msgid "Unable to fetch latest add-on data for incompatible add-ons."
+msgstr "호환되지 않는 추가기능의 최신 데이터를 가져올 수 없습니다."
+
+#. Translators: The message displayed when an error occurs when opening an add-on package for adding.
+#. The %s will be replaced with the path to the add-on that could not be opened.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Failed to open add-on package file at {filePath} - missing file or invalid "
+"file format"
+msgstr ""
+"추가 기능 설치 파일 열기 실패 {filePath} - 파일이 존재하지 않거나 파일 형식"
+"이 잘못되었습니다"
+
+#. Translators: The message displayed when an add-on is not supported by this version of NVDA.
+#. The %s will be replaced with the path to the add-on that is not supported.
+#, python-format
+msgctxt "addonStore"
+msgid "Add-on not supported %s"
+msgstr "추가기능 지원 안됨 %s"
+
+#. Translators: The message displayed when an error occurs when installing an add-on package.
+#. The %s will be replaced with the path to the add-on that could not be installed.
+#, python-format
+msgctxt "addonStore"
+msgid "Failed to install add-on from %s"
+msgstr "%s 에서 추가 기능 설치 실패"
+
+#. Translators: A title for a dialog notifying a user of an add-on download failure.
+msgctxt "addonStore"
+msgid "Add-on download failure"
+msgstr "추가 기능 다운로드 실패"
+
+#. Translators: A message to the user if an add-on download fails
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Unable to download add-on: {name}"
+msgstr "{name} 추가기능을 설치할 수 없음"
+
+#. Translators: A message to the user if an add-on download fails
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Unable to save add-on as a file: {name}"
+msgstr "{name} 추가 기능을 파일로 저장할 수 없음"
+
+#. Translators: A message to the user if an add-on download is not safe
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Add-on download not safe: checksum failed for {name}"
+msgstr "안전하지 않은 추가기능 다운로드입니다. {name}에 대한 검사 실패"
 
 msgid "Display"
 msgstr "화면"
@@ -6916,8 +6997,9 @@ msgstr "{startTime} - {endTime}"
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
 #, python-brace-format
-msgid "categories {categories}"
-msgstr "{categories} 분류"
+msgid "category {categories}"
+msgid_plural "categories {categories}"
+msgstr[0] "{categories} 분류"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
@@ -7321,18 +7403,6 @@ msgid "EcoBraille displays"
 msgstr "EcoBraille 디스플레이"
 
 #. Translators: Names of braille displays.
-msgid "Eurobraille Esys/Esytime/Iris displays"
-msgstr "Eurobraille Esys/Esytime/Iris"
-
-#. Translators: Message when HID keyboard simulation is unavailable.
-msgid "HID keyboard input simulation is unavailable."
-msgstr "HID 키보드 입력 시뮬레이션 사용할 수 없음."
-
-#. Translators: Description of the script that toggles HID keyboard simulation.
-msgid "Toggle HID keyboard simulation"
-msgstr "HID 키보드 시뮬레이션을 토글합니다"
-
-#. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
 msgstr "Freedom Scientific Focus/PAC Mate"
 
@@ -7517,6 +7587,18 @@ msgstr "한줄 개행"
 #. Translators: Label for a paragraph style in NVDA settings.
 msgid "Multi line break"
 msgstr "여러줄 개행"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Never"
+msgstr "처리 안 함"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Only when tethered automatically"
+msgstr "자동으로 연결되었을 때만"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Always"
+msgstr "항상"
 
 #. Translators: Label for an option in NVDA settings.
 msgid "Diffing"
@@ -8625,13 +8707,13 @@ msgstr "음성 출력 뷰어 (&S)"
 msgid "Braille viewer"
 msgstr "점자 뷰어"
 
+#. Translators: The label of a menu item to open the Add-on store
+msgid "Add-on &store..."
+msgstr "추가 기능 스토어 (&S)"
+
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
 msgstr "파이썬 콘솔"
-
-#. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons..."
-msgstr "추가 기능 관리 (&A)"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 msgid "Create portable copy..."
@@ -8816,43 +8898,13 @@ msgstr "아니요 (&N)"
 msgid "OK"
 msgstr "확인"
 
-#. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
-msgid ""
-"{summary} ({name})\n"
-"Version: {version}\n"
-"Author: {author}\n"
-"Description: {description}\n"
-msgstr ""
-"{summary} ({name})\n"
-"버전: {version}\n"
-"저자: {author}\n"
-"설명: {description}\n"
-
-#. Translators: the url part of the About Add-on information
-#, python-brace-format
-msgid "URL: {url}"
-msgstr "URL: {url}"
-
-#. Translators: the minimum NVDA version part of the About Add-on information
-msgid "Minimum required NVDA version: {}"
-msgstr "지원하는 최소 NVDA 버전: {}"
-
-#. Translators: the last NVDA version tested part of the About Add-on information
-msgid "Last NVDA version tested: {}"
-msgstr "검증된 최근의 NVDA 버전: {}"
-
-#. Translators: title for the Addon Information dialog
-msgid "Add-on Information"
-msgstr "추가 기능 정보"
-
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "추가 기능 관리자"
 
 #. Translators: The title of the Addons Dialog when add-ons are disabled
 msgid "Add-ons Manager (add-ons disabled)"
-msgstr "애드온 관리자 (비활성화됨)"
+msgstr "추가 기능 관리자 (비활성화됨)"
 
 #. Translators: A message in the add-ons manager shown when add-ons are globally disabled.
 msgid ""
@@ -8860,9 +8912,9 @@ msgid ""
 "disabled state, and install or uninstall add-ons. Changes will not take "
 "effect until after NVDA is restarted."
 msgstr ""
-"NVDA가 애드온이 모두 비활성화된 상태로 시작했습니다. 애드온을 설치 및 삭제하"
-"거나, 활성화 상태를 조정할 수 있습니다. 변경된 설정은 NVDA를 다시 시작해야 적"
-"용됩니다."
+"NVDA가 추가 기능이 모두 비활성화된 상태로 시작했습니다. 추가 기능을 설치 및 "
+"삭제하거나, 활성화 상태를 조정할 수 있습니다. 변경된 설정은 NVDA를 다시 시작"
+"해야 적용됩니다."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -8922,20 +8974,6 @@ msgstr "추가 기능 설치 파일 선택"
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "NVDA 추가 기능 패키지 (*.{ext})"
 
-#. Translators: Presented when attempting to remove the selected add-on.
-#. {addon} is replaced with the add-on name.
-#, python-brace-format
-msgid ""
-"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
-"undone."
-msgstr ""
-"NVDA에서 {addon} 추가기능을 삭제하시겠습니까? 일단 삭제하면 취소할 수 없습니"
-"다."
-
-#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
-msgid "Remove Add-on"
-msgstr "추가 기능 제거"
-
 #. Translators: The status shown for an addon when it's not considered compatible with this version of NVDA.
 msgid "Incompatible"
 msgstr "호환되지 않음"
@@ -8959,16 +8997,6 @@ msgstr "재시작 후에 활성화됩니다"
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
 msgstr "사용 (&E)"
-
-#. Translators: The message displayed when the add-on cannot be disabled.
-#, python-brace-format
-msgid "Could not disable the {description} add-on."
-msgstr "{description} 애드온을 비활성화하지 못했습니다."
-
-#. Translators: The message displayed when the add-on cannot be enabled.
-#, python-brace-format
-msgid "Could not enable the {description} add-on."
-msgstr "{description} 애드온을 활성화하지 못했습니다."
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #, python-format
@@ -9042,18 +9070,6 @@ msgstr ""
 msgid "Add-on not compatible"
 msgstr "사용할 수 없는 추가 기능입니다"
 
-#. Translators: A message informing the user that this addon can not be installed
-#. because it is not compatible.
-#, python-brace-format
-msgid ""
-"Installation of {summary} {version} has been blocked. An updated version of "
-"this add-on is required, the minimum add-on API supported by this version of "
-"NVDA is {backCompatToAPIVersion}"
-msgstr ""
-"{summary} {version} 버전의 설치가 중지되었습니다. 이 추가 기능의 상위 버전이 "
-"필요합니다. 현재 NVDA 버전에서 지원하는 최소 API 버전은 "
-"{backCompatToAPIVersion} 입니다."
-
 #. Translators: A message asking the user if they really wish to install an addon.
 #, python-brace-format
 msgid ""
@@ -9085,21 +9101,6 @@ msgstr "호환되지 않는 추가 기능"
 msgid "Incompatible reason"
 msgstr "호환되지 않는 이유"
 
-#. Translators: The reason an add-on is not compatible. A more recent version of NVDA is
-#. required for the add-on to work. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
-msgid "An updated version of NVDA is required. NVDA version {} or later."
-msgstr ""
-"상위 버전의 NVDA로 업데이트해야 합니다. NVDA {} 버전 이상이 필요합니다."
-
-#. Translators: The reason an add-on is not compatible. The addon relies on older, removed features of NVDA,
-#. an updated add-on is required. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
-msgid ""
-"An updated version of this add-on is required. The minimum supported API "
-"version is now {}"
-msgstr ""
-"상위 버전의 추가 기능으로 업데이트해야 합니다. 현재 지원되는 최소 API 버전은 "
-"{} 입니다."
-
 #. Translators: Reported when an action cannot be performed because NVDA is in a secure screen
 msgid "Action unavailable in secure context"
 msgstr "보안 컨텍스트에서 사용할 수 없음"
@@ -9117,6 +9118,11 @@ msgstr "대화상자가 응답하는 동안 사용할 수 없음"
 #. Translators: Reported when an action cannot be performed because Windows is locked.
 msgid "Action unavailable while Windows is locked"
 msgstr "Windows가 잠긴 동안 사용할 수 없음"
+
+#. Translators: Reported when an action cannot be performed because NVDA is running the launcher temporary
+#. version
+msgid "Action unavailable in a temporary version of NVDA"
+msgstr "임시 버전 NVDA에서 사용할 수 없는 기능"
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -9474,6 +9480,7 @@ msgid "Please press OK to start the installed copy."
 msgstr "확인 버튼을 눌러 설치본을 시작하십시오."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
+#. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 msgid "Success"
 msgstr "성공"
 
@@ -9585,22 +9592,17 @@ msgstr "휴대용 버전을 저장할 폴더를 선택하십시오."
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
 msgid ""
-"Please specify an absolute path (including drive letter)  in which to create "
-"the portable copy."
+"Please specify the absolute path where the portable copy should be created. "
+"It may include system variables (%temp%, %homepath%, etc.)."
 msgstr ""
-"휴대용 버전을 저장할 절대경로를 입력하세요. 드라이브 이름도 포함해야 합니다."
+"휴대용 복사본이 생성될 위치를 지정해주세요. 경로에는 %temp% %homepath%와 같"
+"은 시스템 환경 변수를 포함할 수 있습니다."
 
-#. Translators: The message displayed when the user specifies an invalid destination drive
-#. in the Create Portable NVDA dialog.
-#, python-format
-msgid "Invalid drive %s"
-msgstr "%s 잘못된 드라이브"
-
-#. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+#. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
 msgstr "휴대용 버전 만드는 중"
 
-#. Translators: The message displayed while a portable copy of NVDA is bieng created.
+#. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "NVDA 휴대용 버전을 생성하고 있습니다. 잠시만 기다려 주십시오."
 
@@ -9609,16 +9611,16 @@ msgid "NVDA is unable to remove or overwrite a file."
 msgstr "파일을 제거하거나 덮어쓸 수 없습니다."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
-#. %s will be replaced with the specific error message.
-#, python-format
-msgid "Failed to create portable copy: %s"
-msgstr "휴대용 버전 생성 실패: %s"
+#. {error} will be replaced with the specific error message.
+#, python-brace-format
+msgid "Failed to create portable copy: {error}."
+msgstr "휴대용 버전 생성 실패: {error}"
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
-#. %s will be replaced with the destination directory.
-#, python-format
-msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "%s에 휴대용 NVDA 버전을 복사하였습니다"
+#. {dir} will be replaced with the destination directory.
+#, python-brace-format
+msgid "Successfully created a portable copy of NVDA at {dir}"
+msgstr "다음 경로에 휴대용 NVDA 버전을 복사하였습니다: {dir}"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -10417,6 +10419,10 @@ msgstr "문서 탐색"
 msgid "&Paragraph style:"
 msgstr "문단 스타일:"
 
+#. Translators: This is the label for the addon navigation settings panel.
+msgid "Add-on Store"
+msgstr "추가 기능 스토어"
+
 #. Translators: This is the label for the touch interaction settings panel.
 msgid "Touch Interaction"
 msgstr "터치 기능 설정"
@@ -10587,11 +10593,6 @@ msgstr "구조화된 주석이 있을 경우 \"세부정보 있음\"을 알립�
 msgid "Report aria-description always"
 msgstr "언제나 aria-description 내용 알림"
 
-#. Translators: This is the label for a group of advanced options in the
-#. Advanced settings panel
-msgid "HID Braille Standard"
-msgstr "표준 점자 HID"
-
 #. Translators: Label for option in the 'Enable support for HID braille' combobox
 #. in the Advanced settings panel.
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
@@ -10613,10 +10614,14 @@ msgstr "예 (&Y)"
 msgid "No"
 msgstr "아니요 (&N)"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combo box in the
 #. Advanced settings panel.
 msgid "Enable support for HID braille"
 msgstr "점자 HID 지원 활성화"
+
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Report live regions:"
+msgstr "실시간 영역 알림:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10691,6 +10696,25 @@ msgstr "커서 이동 시간제한 (천분의 일초 단위)"
 #. Advanced settings panel.
 msgid "Report transparent color values"
 msgstr "투명 색상 알림"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Audio"
+msgstr "음향"
+
+#. Translators: This is the label for a checkbox control in the Advanced settings panel.
+msgid "Use WASAPI for audio output (requires restart)"
+msgstr "오디오 출력을 위해 WASAPI 사용(재시작 필요)"
+
+#. Translators: This is the label for a checkbox control in the
+#. Advanced settings panel.
+msgid "Volume of NVDA sounds follows voice volume (requires WASAPI)"
+msgstr "NVDA 소리를 음성 볼륨과 동기화 (WASAPI 사용 필요)"
+
+#. Translators: This is the label for a slider control in the
+#. Advanced settings panel.
+msgid "Volume of NVDA sounds (requires WASAPI)"
+msgstr "NVDA 음량에 동기화 (WASAPI 사용 필요)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10820,6 +10844,10 @@ msgstr "알림 메시지 출력 시간(초) (&T)"
 msgid "Tether B&raille:"
 msgstr "점자 연계 커서 (&R):"
 
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "Move system caret when ro&uting review cursor"
+msgstr "리뷰커서 라우팅 시 시스템 캐럿 이동(&U)"
+
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
 msgstr "문단 단위로 읽기 (&P)"
@@ -10835,6 +10863,11 @@ msgstr "포커스 세부 내용 출력:"
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 msgid "I&nterrupt speech while scrolling"
 msgstr "스크롤 하는 동안 음성 중단(&N)"
+
+# Literally means, "no contents selcted".
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "Show se&lection"
+msgstr "선택 표시(&L)"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -11263,8 +11296,9 @@ msgstr "레벨 %s"
 
 #. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
-msgid "with %s items"
-msgstr "항목 수 %s개"
+msgid "with %s item"
+msgid_plural "with %s items"
+msgstr[0] "항목 수 %s개"
 
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #, python-format
@@ -11402,6 +11436,15 @@ msgstr "표시됨"
 #. Translators: Reported when text is no longer marked
 msgid "not marked"
 msgstr "표시되지 않음"
+
+#. Translators: Reported when text is color-highlighted
+#, python-brace-format
+msgid "highlighted in {color}"
+msgstr "{color} 색상으로 강조됨"
+
+#. Translators: Reported when text is no longer marked
+msgid "not highlighted"
+msgstr "강조되지 않음"
 
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
@@ -11772,12 +11815,12 @@ msgid "No system battery"
 msgstr "배터리 없음"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
-msgid "Charging battery"
-msgstr "배터리 충전 중"
+msgid "Plugged in"
+msgstr "전원 연결됨"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-msgid "AC disconnected"
-msgstr "AC 전원 연결 해제됨"
+msgid "Unplugged"
+msgstr "전원 제거됨"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 #, python-brace-format
@@ -12897,6 +12940,44 @@ msgstr "시트 (&S)"
 msgid "{start} through {end}"
 msgstr "{start} - {end}"
 
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold off"
+msgstr "진하게 해제"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold on"
+msgstr "진하게"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic off"
+msgstr "기울임꼴 해제"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic on"
+msgstr "기울임꼴"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline off"
+msgstr "밑줄 해제"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline on"
+msgstr "밑줄"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+msgid "Strikethrough off"
+msgstr "취소선 끔"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+msgid "Strikethrough on"
+msgstr "취소선 켬"
+
 #. Translators: the description  for a script for Excel
 msgid "opens a dropdown item at the current cell"
 msgstr "현재 셀에서 드롭다운 항목을 엽니다"
@@ -13282,8 +13363,9 @@ msgstr "최소 %.1f 포인트"
 #. Translators: line spacing of x lines
 #, python-format
 msgctxt "line spacing value"
-msgid "%.1f lines"
-msgstr "%.1f 줄"
+msgid "%.1f line"
+msgid_plural "%.1f lines"
+msgstr[0] "%.1f 줄"
 
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
@@ -13292,30 +13374,6 @@ msgstr "표 설명"
 #. Translators: the default (automatic) color in Microsoft Word
 msgid "automatic color"
 msgstr "자동"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Bold on"
-msgstr "진하게"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Bold off"
-msgstr "진하게 해제"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Italic on"
-msgstr "기울임꼴"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Italic off"
-msgstr "기울임꼴 해제"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Underline on"
-msgstr "밑줄"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Underline off"
-msgstr "밑줄 해제"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Left aligned"
@@ -13424,6 +13482,205 @@ msgstr "두 줄 간격"
 msgid "1.5 line spacing"
 msgstr "1.5 줄 간격"
 
+#. Translators: Label for add-on channel in the add-on sotre
+#. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "All"
+msgstr "모두"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "Stable"
+msgstr "안정화"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "Beta"
+msgstr "베타"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "Dev"
+msgstr "개발자"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "External"
+msgstr "외부"
+
+#. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled"
+msgstr "활성화됨"
+
+#. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled"
+msgstr "비활성화됨"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Pending removal"
+msgstr "삭제 대기중"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Available"
+msgstr "사용가능"
+
+# Literally means, "no new update is availible."
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Update Available"
+msgstr "업데이트 사용 가능"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Migrate to add-on store"
+msgstr "추가 기능 스토어로 이동"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Incompatible"
+msgstr "호환 안 됨"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Downloading"
+msgstr "다운로드 중"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Download failed"
+msgstr "업데이트 실패"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Downloaded, pending install"
+msgstr "다운로드됨, 설치 대기중"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Installing"
+msgstr "설치중"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Install failed"
+msgstr "설치 실패"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Installed, pending restart"
+msgstr "설치됨, 재시작 대기중"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled, pending restart"
+msgstr "비활성화됨, 재시작 대기중"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled (incompatible), pending restart"
+msgstr "비활성화됨(호환 안 됨), 재시작 대기중"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled (incompatible)"
+msgstr "비활성화됨 (호환되지 않음)"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled (incompatible), pending restart"
+msgstr "활성화됨 (호환 안 됨), 재시작 대기중"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled (incompatible)"
+msgstr "활성화됨(호환되지 않음)"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled, pending restart"
+msgstr "활성화됨, 재시작 대기중"
+
+#. Translators: The label of a tab to display installed add-ons in the add-on store and the label of the
+#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+msgctxt "addonStore"
+msgid "Installed &add-ons"
+msgstr "설치된 추가 기능 (&A)"
+
+#. Translators: The label of a tab to display updatable add-ons in the add-on store and the label of the
+#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+msgctxt "addonStore"
+msgid "Updatable &add-ons"
+msgstr "업데이트 가능한 추가 기능 (&A)"
+
+#. Translators: The label of a tab to display available add-ons in the add-on store and the label of the
+#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+msgctxt "addonStore"
+msgid "Available &add-ons"
+msgstr "사용 가능한 추가 기능 (&A)"
+
+#. Translators: The label of a tab to display incompatible add-ons in the add-on store and the label of the
+#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+msgctxt "addonStore"
+msgid "Installed incompatible &add-ons"
+msgstr "설치된 비호환 추가 기능"
+
+#. Translators: The reason an add-on is not compatible.
+#. A more recent version of NVDA is required for the add-on to work.
+#. The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"An updated version of NVDA is required. NVDA version {nvdaVersion} or later."
+msgstr ""
+"상위 버전의 NVDA로 업데이트해야 합니다. NVDA {nvdaVersion} 버전 이상이 필요합"
+"니다."
+
+#. Translators: The reason an add-on is not compatible.
+#. The addon relies on older, removed features of NVDA, an updated add-on is required.
+#. The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"An updated version of this add-on is required. The minimum supported API "
+"version is now {nvdaVersion}. This add-on was last tested with "
+"{lastTestedNVDAVersion}. You can enable this add-on at your own risk. "
+msgstr ""
+"상위 버전의 추가 기능으로 업데이트해야 합니다. 현재 지원되는 최소 API 버전은 "
+"{nvdaVersion} 입니다. 이 추가 기능은 {lastTestedNVDAVersion} 버전에 마지막으"
+"로 테스트되었습니다. "
+
+#. Translators: A message indicating that some add-ons will be disabled
+#. unless reviewed before installation.
+msgctxt "addonStore"
+msgid ""
+"Your NVDA configuration contains add-ons that are incompatible with this "
+"version of NVDA. These add-ons will be disabled after installation. After "
+"installation, you will be able to manually re-enable these add-ons at your "
+"own risk. If you rely on these add-ons, please review the list to decide "
+"whether to continue with the installation. "
+msgstr ""
+"NVDA 구성에 이 버전의 NVDA와 호환되지 않는 추가 기능이 포함되어 있습니다. 이"
+"러한 추가 기능은 설치 후 사용할 수 없도록 설정됩니다. 설치 후에는 위험을 무릅"
+"쓰고 수동으로 이러한 추가 기능을 다시 사용하도록 설정할 수 있습니다. 이러한 "
+"추가 기능을 사용하는 경우 목록을 검토하여 설치를 계속 진행할지 여부를 결정하"
+"십시오. "
+
+#. Translators: A message to confirm that the user understands that incompatible add-ons
+#. will be disabled after installation, and can be manually re-enabled.
+msgctxt "addonStore"
+msgid ""
+"I understand that incompatible add-ons will be disabled and can be manually "
+"re-enabled at my own risk after installation."
+msgstr ""
+"호환되지 않는 추가 기능은 비활성화되며 설치 후에 수동으로 위험을 감수하고 활"
+"성화할 수 있음을 이해했습니다."
+
 #. Translators: Names of braille displays.
 msgid "Caiku Albatross 46/80"
 msgstr "Caiku Albatross 46/80"
@@ -13436,3 +13693,477 @@ msgid ""
 msgstr ""
 "Albatross를 NVDA와 함께 사용하려면 Albatross 내부 메뉴에서 최대 상태 셀 수 변"
 "경 "
+
+#. Translators: Names of braille displays.
+msgid "Eurobraille displays"
+msgstr "EuroBraille 점자디스플레이"
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+msgid "HID keyboard input simulation is unavailable."
+msgstr "HID 키보드 입력 시뮬레이션 사용할 수 없음."
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggle HID keyboard simulation"
+msgstr "HID 키보드 시뮬레이션을 토글합니다"
+
+#. Translators: Header (usually the add-on name) when add-ons are loading. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Loading add-ons..."
+msgstr "추가 기능 불러오는 중..."
+
+#. Translators: Header (usually the add-on name) when no add-on is selected. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "No add-on selected."
+msgstr "선택된 추가 기능 없음."
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Description:"
+msgstr "설명:"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "S&tatus:"
+msgstr "상태 (&T):"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "A&ctions"
+msgstr "동작 (&C)"
+
+#. Translators: Label for the text control containing extra details about the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "&Other Details:"
+msgstr "기타 세부정보 (&O):"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Publisher:"
+msgstr "계시자:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Author:"
+msgstr "저자:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "ID:"
+msgstr "추가기능 식별자:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Installed version:"
+msgstr "설치된 버전:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Available version:"
+msgstr "사용 가능한 버전:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Channel:"
+msgstr "채널:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Incompatible Reason:"
+msgstr "호환되지 않는 이유:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Homepage:"
+msgstr "홈페이지:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "License:"
+msgstr "사용 약관:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "License URL:"
+msgstr "사용 약관 URL:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Download URL:"
+msgstr "다운로드 URL:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Source URL:"
+msgstr "소스코드 URL:"
+
+#. Translators: A button in the addon installation warning / blocked dialog which shows
+#. more information about the addon
+msgctxt "addonStore"
+msgid "&About add-on..."
+msgstr "이 추가 기능에 관하여 (&A)..."
+
+#. Translators: A button in the addon installation blocked dialog which will confirm the available action.
+msgctxt "addonStore"
+msgid "&Yes"
+msgstr "예 (&Y)"
+
+#. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
+msgctxt "addonStore"
+msgid "&No"
+msgstr "아니요 (&N)"
+
+#. Translators: The message displayed when updating an add-on, but the installed version
+#. identifier can not be compared with the version to be installed.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on installation may result in downgrade: {name}. The installed "
+"add-on version cannot be compared with the add-on store version. Installed "
+"version: {oldVersion}. Available version: {version}.\n"
+"Proceed with installation anyway? "
+msgstr ""
+"경고: : {name} 추가 기능을 설치하면 다운그레이드될 수 있습니다. 설치된 추가 "
+"기능 버전({oldVersion})을 추가 기능 저장소 버전과 비교할 수 없습니다. 사용 가"
+"능한 버전: 사{version}.\n"
+"계속 진행하시겠습니까? "
+
+#. Translators: The title of a dialog presented when an error occurs.
+msgctxt "addonStore"
+msgid "Add-on not compatible"
+msgstr "호환되지 않는 추가 기능입니다"
+
+#. Translators: Presented when attempting to remove the selected add-on.
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
+"undone."
+msgstr ""
+"NVDA에서 {addon} 추가기능을 삭제하시겠습니까? 일단 삭제하면 취소할 수 없습니"
+"다."
+
+#. Translators: Title for message asking if the user really wishes to remove the selected Add-on.
+msgctxt "addonStore"
+msgid "Remove Add-on"
+msgstr "추가 기능 제거"
+
+#. Translators: The message displayed when installing an add-on package that is incompatible
+#. because the add-on is too old for the running version of NVDA.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated "
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Installation may cause unstable behavior in NVDA.\n"
+"Proceed with installation anyway? "
+msgstr ""
+"경고: {name} {version} 추가기능은 호환되지 않습니다. 새 버전이 있는지 확인해"
+"주세요. 이 추가 기능이 마지막으로 테스트된 NVDA 버전은 "
+"{lastTestedNVDAVersion} 이며 현재 실행중인 NVDA 버전은 {NVDAVersion}입니다. "
+"설치 시 NVDA에서 불안정한 동작이 발생할 수 있습니다.\n"
+"그래도 설치하시겠습니까? "
+
+#. Translators: The message displayed when enabling an add-on package that is incompatible
+#. because the add-on is too old for the running version of NVDA.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated "
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Enabling may cause unstable behavior in NVDA.\n"
+"Proceed with enabling anyway? "
+msgstr ""
+"경고: {name} 추가기능 {version} 버전이 호환되지 않습니다. 새 버전을 확인해주"
+"세요.이 추가 기능의 마지막으로 테스트된 NVDA 버전은 {lastTestedNVDAVersion}이"
+"며, 실행중인 NVDA 버전은 {NVDAVersion}입니다. 활성화하면 NVDA에서 불안정한 동"
+"작이 발생할 수 있습니다.\n"
+"그래도 활성화하시겠습니까? "
+
+#. Translators: message shown in the Addon Information dialog.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"{summary} ({name})\n"
+"Version: {version}\n"
+"Description: {description}\n"
+msgstr ""
+"{summary} ({name})\n"
+"버전: {version}\n"
+"설명: {description}\n"
+
+#. Translators: the publisher part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Publisher: {publisher}\n"
+msgstr "계시자: {publisher}\n"
+
+#. Translators: the author part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Author: {author}\n"
+msgstr "제작자: {author}\n"
+
+#. Translators: the url part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Homepage: {url}\n"
+msgstr "홈페이지: {url}\n"
+
+#. Translators: the minimum NVDA version part of the About Add-on information
+msgctxt "addonStore"
+msgid "Minimum required NVDA version: {}\n"
+msgstr "NVDA 최소 요구 버전: {}\n"
+
+#. Translators: the last NVDA version tested part of the About Add-on information
+msgctxt "addonStore"
+msgid "Last NVDA version tested: {}\n"
+msgstr "마지막으로 검증된 NVDA 버전: {}\n"
+
+#. Translators: title for the Addon Information dialog
+msgctxt "addonStore"
+msgid "Add-on Information"
+msgstr "추가 기능 정보"
+
+#. Translators: The title of the addonStore dialog where the user can find and download add-ons
+msgctxt "addonStore"
+msgid "Add-on Store"
+msgstr "추가 기능 스토어"
+
+#. Translators: Banner notice that is displayed in the Add-on Store.
+msgctxt "addonStore"
+msgid "Note: NVDA was started with add-ons disabled"
+msgstr "추가 기능 비활성화와 함께 NVDA가 다시 시작되었습니다"
+
+#. Translators: The label for a button in add-ons Store dialog to install an external add-on.
+msgctxt "addonStore"
+msgid "Install from e&xternal source"
+msgstr "외부 소스로부터 설치 (&X)"
+
+#. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "Cha&nnel:"
+msgstr "채널 (&N)"
+
+#. Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
+msgid "Include &incompatible add-ons"
+msgstr "호환되지 않는 추가 기능 포함"
+
+#. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "Ena&bled/disabled:"
+msgstr "활성화/비활성화:"
+
+#. Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "&Search:"
+msgstr "검색 (&S)"
+
+#. Translators: Title for message shown prior to installing add-ons when closing the add-on store dialog.
+msgctxt "addonStore"
+msgid "Add-on installation"
+msgstr "추가 기능 설치"
+
+#. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
+#. The placeholder {} will be replaced with the number of add-ons to be installed
+msgctxt "addonStore"
+msgid "Download of {} add-ons in progress, cancel downloading?"
+msgstr "{} 추가 기능이 다운로드 진행중입니다, 다운로드를 취소하시겠습니까?"
+
+#. Translators: Message shown while installing add-ons after closing the add-on store dialog
+#. The placeholder {} will be replaced with the number of add-ons to be installed
+msgctxt "addonStore"
+msgid "Installing {} add-ons, please wait."
+msgstr "{} 추가기능을 설치하는 중입니다. 잠시만 기다려주십시오."
+
+#. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
+#. tab's name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "{category}:"
+msgstr "{category}:"
+
+#. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "NVDA Add-on Package (*.{ext})"
+msgstr "NVDA 추가 기능 패키지 (*.{ext})"
+
+#. Translators: The message displayed in the dialog that
+#. allows you to choose an add-on package for installation.
+msgctxt "addonStore"
+msgid "Choose Add-on Package File"
+msgstr "추가 기능 페키지 파일 선택"
+
+#. Translators: The name of the column that contains names of addons.
+msgctxt "addonStore"
+msgid "Name"
+msgstr "이름"
+
+#. Translators: The name of the column that contains the installed addon's version string.
+msgctxt "addonStore"
+msgid "Installed version"
+msgstr "설치된 버전"
+
+#. Translators: The name of the column that contains the available addon's version string.
+msgctxt "addonStore"
+msgid "Available version"
+msgstr "사용 가능한 버전"
+
+#. Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
+msgctxt "addonStore"
+msgid "Channel"
+msgstr "채널"
+
+#. Translators: The name of the column that contains the addon's publisher.
+msgctxt "addonStore"
+msgid "Publisher"
+msgstr "계시자"
+
+#. Translators: The name of the column that contains the addon's author.
+msgctxt "addonStore"
+msgid "Author"
+msgstr "제작자"
+
+#. Translators: The name of the column that contains the status of the addon.
+#. e.g. available, downloading installing
+msgctxt "addonStore"
+msgid "Status"
+msgstr "상태"
+
+#. Translators: Label for an action that installs the selected addon
+msgctxt "addonStore"
+msgid "&Install"
+msgstr "설치 (&I)"
+
+#. Translators: Label for an action that installs the selected addon
+msgctxt "addonStore"
+msgid "&Install (override incompatibility)"
+msgstr "호환성을 무시하고 설치 (&I)"
+
+#. Translators: Label for an action that updates the selected addon
+msgctxt "addonStore"
+msgid "&Update"
+msgstr "업데이트 (&U)"
+
+#. Translators: Label for an action that replaces the selected addon with
+#. an add-on store version.
+msgctxt "addonStore"
+msgid "Re&place"
+msgstr "대체 (&P)"
+
+#. Translators: Label for an action that disables the selected addon
+msgctxt "addonStore"
+msgid "&Disable"
+msgstr "비활성화 (&D)"
+
+#. Translators: Label for an action that enables the selected addon
+msgctxt "addonStore"
+msgid "&Enable"
+msgstr "활성화 (&E)"
+
+#. Translators: Label for an action that enables the selected addon
+msgctxt "addonStore"
+msgid "&Enable (override incompatibility)"
+msgstr "호환성을 무시하고 활성화 (&E)"
+
+#. Translators: Label for an action that removes the selected addon
+msgctxt "addonStore"
+msgid "&Remove"
+msgstr "제거 (&R)"
+
+#. Translators: Label for an action that opens help for the selected addon
+msgctxt "addonStore"
+msgid "&Help"
+msgstr "도움말 (&H)"
+
+#. Translators: Label for an action that opens the homepage for the selected addon
+msgctxt "addonStore"
+msgid "Ho&mepage"
+msgstr "홈페이지 (&M)"
+
+#. Translators: Label for an action that opens the license for the selected addon
+msgctxt "addonStore"
+msgid "&License"
+msgstr "사용 약관 (&L)"
+
+#. Translators: Label for an action that opens the source code for the selected addon
+msgctxt "addonStore"
+msgid "Source &Code"
+msgstr "소스코드 (&C)"
+
+#. Translators: The message displayed when the add-on cannot be enabled.
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Could not enable the add-on: {addon}."
+msgstr "{addon} 추가 기능을 활성화하지 못했습니다."
+
+#. Translators: The message displayed when the add-on cannot be disabled.
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Could not disable the add-on: {addon}."
+msgstr "{addon} 추가 기능을 비활성화하지 못했습니다."
+
+#, fuzzy
+#~ msgid "NVDA sounds"
+#~ msgstr "NVDA 설정"
+
+#~ msgid "HID Braille Standard"
+#~ msgstr "표준 점자 HID"
+
+#~ msgid "Find Error"
+#~ msgstr "찾기 오류"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "However, your NVDA configuration contains add-ons that are incompatible "
+#~ "with this version of NVDA. These add-ons will be disabled after "
+#~ "installation. If you rely on these add-ons, please review the list to "
+#~ "decide whether to continue with the installation"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "하지만 현재 설치되어 있는 NVDA에는 새 버전의 NVDA에 호환되지 않는 추가 기"
+#~ "능이 포함되어 있습니다. 이 추가 기능은 새 버전이 설치된 후에 비활성화됩니"
+#~ "다. 중요한 추가 기능을 사용하고 있다면 설치를 계속 진행하기 전에 추가 기능"
+#~ "의 호환성 여부를 검토하세요"
+
+#~ msgid "Eurobraille Esys/Esytime/Iris displays"
+#~ msgstr "Eurobraille Esys/Esytime/Iris"
+
+#~ msgid "URL: {url}"
+#~ msgstr "URL: {url}"
+
+#~ msgid ""
+#~ "Installation of {summary} {version} has been blocked. An updated version "
+#~ "of this add-on is required, the minimum add-on API supported by this "
+#~ "version of NVDA is {backCompatToAPIVersion}"
+#~ msgstr ""
+#~ "{summary} {version} 버전의 설치가 중지되었습니다. 이 추가 기능의 상위 버전"
+#~ "이 필요합니다. 현재 NVDA 버전에서 지원하는 최소 API 버전은 "
+#~ "{backCompatToAPIVersion} 입니다."
+
+#~ msgid ""
+#~ "Please specify an absolute path (including drive letter)  in which to "
+#~ "create the portable copy."
+#~ msgstr ""
+#~ "휴대용 버전을 저장할 절대경로를 입력하세요. 드라이브 이름도 포함해야 합니"
+#~ "다."
+
+#~ msgid "Invalid drive %s"
+#~ msgstr "%s 잘못된 드라이브"
+
+#~ msgid "Charging battery"
+#~ msgstr "배터리 충전 중"
+
+#~ msgid "AC disconnected"
+#~ msgstr "AC 전원 연결 해제됨"

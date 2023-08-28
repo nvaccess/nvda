@@ -48,7 +48,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		return braille.getSerialPorts()
 
 	def __init__(self, port="Auto"):
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		self.numCells = 0
 		self.deviceType = None
 		self._deviceData = {}
@@ -101,7 +101,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				# A display responded.
 				log.info("Found {device} connected via {type} ({port})".format(
 					device=self.deviceType, type=portType, port=port))
-				if self.deviceType.startswith(("b.note", "b.book")):
+				if self.deviceType.startswith(("bnote", "bbook")):
 					# send identifier to bnote / bbook with current COM port
 					comportNumber = f'{int(re.match(".*?([0-9]+)$", port).group(1)):02d}'
 					identifier = f"NVDA/{comportNumber}".encode()
@@ -118,10 +118,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def terminate(self):
 		try:
-			if self.deviceType.startswith(("b.note", "b.book")):
+			if self.deviceType.startswith(("bnote", "bbook")):
 				# reset identifier to bnote / bbook with current COM port
 				self._sendPacket(constants.EB_SYSTEM, constants.EB_CONNECTION_NAME, b'')
-			super(BrailleDisplayDriver, self).terminate()
+			super().terminate()
 		finally:
 			# We must sleep before closing the port as not doing this can leave
 			# the display in a bad state where it can not be re-initialized.
@@ -190,7 +190,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def _handleAck(self, frame: int):
 		try:
-			super(BrailleDisplayDriver, self)._handleAck()
+			super()._handleAck()
 		except NotImplementedError:
 			log.debugWarning(f"Received ACK for frame {frame} while ACK handling is disabled")
 		else:
@@ -214,7 +214,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			elif 0x14 <= deviceType <= 0x15:
 				self.keys = constants.KEYS_BBOOK
 			else:
-				log.debugWarning("fUnknown device identifier {data}")
+				log.debugWarning(f"Unknown device identifier {data}")
 		elif packetType == constants.EB_SYSTEM_DISPLAY_LENGTH:
 			self.numCells = ord(data)
 		elif packetType == constants.EB_SYSTEM_FRAME_LENGTH:
@@ -325,7 +325,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	scriptCategory = SCRCAT_BRAILLE
 
-	def script_toggleHidKeyboardInput(self, gesture):
+	def script_toggleHidKeyboardInput(self, gesture: inputCore.InputGesture):
 		def announceUnavailableMessage():
 			# Translators: Message when HID keyboard simulation is unavailable.
 			ui.message(_("HID keyboard input simulation is unavailable."))

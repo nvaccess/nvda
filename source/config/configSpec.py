@@ -312,6 +312,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	cancelExpiredFocusSpeech = integer(0, 2, default=0)
 	# 0:Only in test versions, 1:yes
 	playErrorSound = integer(0, 1, default=0)
+
+[addonStore]
+	showWarning = boolean(default=true)
 """
 
 #: The configuration specification
