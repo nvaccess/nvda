@@ -33,6 +33,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	description = "brltty"
 	isThreadSafe = True
 
+	# Type info for auto property: _get_brlapi_pipes
+	brlapi_pipes: List[str]
+
 	@classmethod
 	def _get_brlapi_pipes(cls) -> List[str]:
 		"""Get the BrlAPI named pipes
