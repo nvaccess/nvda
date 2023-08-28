@@ -384,6 +384,12 @@ class MSHTML(VirtualBuffer):
 					"name": [VBufStorage_findMatch_notEmpty]
 				},
 			]
+		elif nodeType == "tab":
+			attrs = [
+				{
+					"IAccessible::role": [oleacc.ROLE_SYSTEM_PAGETAB],
+				},
+			]
 		elif nodeType == "embeddedObject":
 			attrs = [
 				{"IHTMLDOMNode::nodeName": ["OBJECT", "EMBED", "APPLET", "AUDIO", "VIDEO", "FIGURE"]},
