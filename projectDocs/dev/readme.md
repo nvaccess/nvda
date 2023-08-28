@@ -6,7 +6,6 @@
 This includes information on reporting issues, triaging issues, testing, translating, contributing code/documentation and creating add-ons.
 * [NVDA development snapshots](https://www.nvaccess.org/files/nvda/snapshots/): Automatically generated builds of the project in its current state of development
 Add-on development
-* [NVDA commits email list](https://lists.sourceforge.net/lists/listinfo/nvda-commits): Notifications for all commits to the Git repository
 
 ### Documentation
 * [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
