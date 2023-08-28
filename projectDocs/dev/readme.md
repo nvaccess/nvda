@@ -1,4 +1,4 @@
-## Important links
+### Important links
 * [Refer to contributing.md](./contributing.md) for contributing code/documentation to NVDA.
 * [Refer to addons.md](./addons.md) for key links for add-on development.
 * [Reporting issues on GitHub](../issues/readme.md)
