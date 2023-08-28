@@ -1,8 +1,8 @@
 
 ## Manual testing
 
-Testing alpha / beta / and release candidates help to ensure the quality of the NVDA.
-You can the latest alpha snapshots [here](https://www.nvaccess.org/files/nvda/snapshots/).
+Testing alpha / beta / and release candidates help to ensure the quality of the NVDA project.
+You can find the latest alpha snapshots [here](https://www.nvaccess.org/files/nvda/snapshots/).
 
 User / community testing is particularly important for languages other than English.
 
