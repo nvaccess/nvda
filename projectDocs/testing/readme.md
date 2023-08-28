@@ -1,0 +1,16 @@
+### Important links
+* [How to contribute to NVDA by testing](./contributing.md)
+* [Reporting issues on GitHub](../issues/readme.md)
+* [Triaging issues on GitHub](../issues/triage.md)
+* [NVDA development snapshots](https://www.nvaccess.org/files/nvda/snapshots/): Automatically generated builds of the project in its current state of development
+
+### Documentation
+* [NVDA User Guide](https://www.nvaccess.org/files/nvda/documentation/userGuide.html)
+* [Changes in the latest release](https://www.nvaccess.org/files/nvda/documentation/changes.html)
+* [Manual test plans](../../tests/manual/README.md)
+* [Automated tests for developers](./automated.md)
+
+### Communication channels
+* [NVDA Users Mailing List](https://nvda.groups.io/g/nvda)
+* [NVDA Developers Mailing List](https://groups.io/g/nvda-devel)
+* [Other sources including groups and profiles on social media channels, language-specific websites and mailing lists etc.](https://github.com/nvaccess/nvda-community/wiki/Connect)
