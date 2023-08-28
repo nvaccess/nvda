@@ -21,7 +21,7 @@ You can also get direct support from NV Access. See the [NV Access](http://www.n
 ## Other Key Project Links
 * You can find information on user support on the [NV Access website](https://www.nvaccess.org/get-help/).
 * [NVDA on GitHub](https://github.com/nvaccess/nvda)
-* [Reporting issues on GitHub](../issues/reporting.md)
+* [Reporting issues on GitHub](../issues/readme.md)
 * [Contributing to NVDA](../../.github/CONTRIBUTING.md).
 This includes information on reporting issues, triaging issues, testing, translating, contributing code/documentation and creating add-ons.
 * [Community add-ons website](https://addons.nvda-project.org/)

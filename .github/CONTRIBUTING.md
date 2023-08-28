@@ -7,7 +7,7 @@ The NVDA project is guided by a [product vision statement and set of principles]
 The vision and principles should be always considered when planning features and prioritizing work.
 
 There are several ways in which you can contribute to the NVDA project:
-- [Reporting issues](../projectDocs/issues/reporting.md)
+- [Reporting issues](../projectDocs/issues/readme.md)
 - [Issue triage and investigation](../projectDocs/issues/triage.md)
 - [Testing](../projectDocs/testing/contributing.md)
 - [Translating NVDA](https://github.com/nvaccess/nvda/wiki/Translating)

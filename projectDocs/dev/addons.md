@@ -24,6 +24,6 @@
 
 ## NVDA project links
 * [NVDA on GitHub](https://github.com/nvaccess/nvda)
-* [Reporting issues on GitHub](../issues/reporting.md)
+* [Reporting issues on GitHub](../issues/readme.md)
 * [NVDA development snapshots](https://www.nvaccess.org/files/nvda/snapshots/): Automatically generated builds of the project in its current state of development
 * [NVDA commits email list](https://lists.sourceforge.net/lists/listinfo/nvda-commits): Notifications for all commits to the master branch of the git repository

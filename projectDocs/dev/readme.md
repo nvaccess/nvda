@@ -1,7 +1,7 @@
 ## Important links
 * [Refer to contributing.md](./contributing.md) for contributing code/documentation to NVDA.
 * [Refer to addons.md](./addons.md) for key links for add-on development.
-* [Reporting issues on GitHub](../issues/reporting.md)
+* [Reporting issues on GitHub](../issues/readme.md)
 * [Contributing to NVDA](../../.github/CONTRIBUTING.md).
 This includes information on reporting issues, triaging issues, testing, translating, contributing code/documentation and creating add-ons.
 * [NVDA development snapshots](https://www.nvaccess.org/files/nvda/snapshots/): Automatically generated builds of the project in its current state of development
