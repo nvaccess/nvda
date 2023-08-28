@@ -15,7 +15,7 @@ There are several approaches you may take for testing:
 - Pull request testing.
 Testing pull requests can be done
 	1. Go to the pull request page.
-	1. Navigate to the linked "Details of continuos integration", this is towards the end of the PR, as part of the checks and approval status.
+	1. Navigate to the linked "Details of continuous integration", this is towards the end of the PR, as part of the checks and approval status.
 	1. Go to the "Artifacts" tab
 	1. Download the NVDA installer, named something like `output\nvda_snapshot_pr15335-28962,a2970e3f.exe`
 	1. The pull request should contain some information on how to test this change.

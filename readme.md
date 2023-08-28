@@ -13,10 +13,10 @@ NVDA is available under the GNU General Public License version 2, with two speci
 Please refer to [our license](./copying.txt) for more information.
  
 ## NVDA Community
-* [Support and information for NVDA users](./projectDocs/users/support.md)
+* [Support and information for NVDA users](https://www.nvaccess.org/get-help/)
 * [Report an issue or feature request](./projectDocs/issues/reporting.md)
 * [Getting add-ons](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#AddonsManager)
-* [Find out more on the NVDA community](./projectDocs/users/readme.md)
+* [Find out more on the NVDA community](./projectDocs/community/readme.md)
 
 ## Contributing to NVDA
 If you would like to contribute to NVDA, you can read more information in our [contributing guide](./.github/CONTRIBUTING.md).

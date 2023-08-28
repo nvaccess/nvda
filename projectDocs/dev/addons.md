@@ -1,0 +1,29 @@
+### Important links
+* [Changes in the latest release](https://www.nvaccess.org/files/nvda/documentation/changes.html)
+* [NVDA Add-on API Mailing List](https://groups.google.com/a/nvaccess.org/g/nvda-api)
+* [The NVDA Add-on Store](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#AddonsManager)
+* [Community add-ons website](https://addons.nvda-project.org/)
+* [Submitting to the NVDA Add-on Store](https://github.com/nvaccess/addon-datastore/blob/master/docs/submitters/submissionGuide.md)
+* [NVDA add-ons community coordination and support center](https://github.com/nvdaaddons): all about NVDA's add-ons environment
+* [NVDA add-ons community template](https://github.com/nvdaaddons/AddonTemplate): A repository for generating add-ons using a template
+* [NVDA commits email list](https://lists.sourceforge.net/lists/listinfo/nvda-commits): Notifications for all commits to the master branch of the git repository
+
+### Documentation
+* [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
+* [Technical design overview](../design/technicalDesignOverview.md)
+* [NVDA Add-on Development Community Guide](https://github.com/nvdaaddons/DevGuide/wiki/NVDA-Add-on-Development-Guide)
+* [NVDA ControllerClient manual (NVDA API for external applications to directly speak or braille messages, etc.)](../../extras/controllerClient)
+* Further documentation is available in the NVDA repository's [Wiki](https://github.com/nvaccess/nvda/wiki), and in the [Community Wiki](https://github.com/nvaccess/nvda-community/wiki)
+
+### Communication channels
+* [GitHub discussions](https://github.com/nvaccess/nvda/discussions)
+* [NVDA Developers Mailing List](https://groups.io/g/nvda-devel)
+* [NVDA Add-ons Mailing List](https://groups.io/g/nvda-addons)
+* [Instant Messaging channel for NVDA Support](https://gitter.im/nvaccess/NVDA)
+* [Other sources including groups and profiles on social media channels, language-specific websites and mailing lists etc.](https://github.com/nvaccess/nvda-community/wiki/Connect)
+
+## NVDA project links
+* [NVDA on GitHub](https://github.com/nvaccess/nvda)
+* [Reporting issues on GitHub](../issues/reporting.md)
+* [NVDA development snapshots](https://www.nvaccess.org/files/nvda/snapshots/): Automatically generated builds of the project in its current state of development
+* [NVDA commits email list](https://lists.sourceforge.net/lists/listinfo/nvda-commits): Notifications for all commits to the master branch of the git repository

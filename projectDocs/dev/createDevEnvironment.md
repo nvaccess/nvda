@@ -23,7 +23,7 @@ git checkout master
 git branch -u nvaccess/master
 # Update the local master.
 git pull
-   ```
+```
 
 ## Supported Operating Systems
 Although NVDA can run on any Windows version starting from Windows 7 Service pack 1, building NVDA from source is currently limited to only Windows 10 and above.
