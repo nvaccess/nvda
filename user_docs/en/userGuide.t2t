@@ -3847,8 +3847,8 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
-[BRLTTY https://www.brltty.com/] is a separate program which can be used to support many more braille displays.
-In order to use this, you need to install [BRLTTY for Windows https://www.brltty.com/download.html].
+[BRLTTY https://www.brltty.app/] is a separate program which can be used to support many more braille displays.
+In order to use this, you need to install [BRLTTY for Windows https://www.brltty.app/download.html].
 You should download and install the latest installer package, which will be named, for example, brltty-win-4.2-2.exe.
 When configuring the display and port to use, be sure to pay close attention to the instructions, especially if you are using a USB display and already have the manufacturer's drivers installed.
 
@@ -3858,7 +3858,7 @@ Therefore, NVDA's braille input table setting is not relevant.
 BRLTTY is not involved in NVDA's automatic background braille display detection functionality.
 
 Following are the BRLTTY command assignments for NVDA.
-Please see the [BRLTTY key binding lists http://mielke.cc/brltty/doc/KeyBindings/] for information about how BRLTTY commands are mapped to controls on braille displays.
+Please see the [BRLTTY key binding lists https://brltty.app/doc/KeyBindings/] for information about how BRLTTY commands are mapped to controls on braille displays.
 %kc:beginInclude
 || Name | BRLTTY command |
 | Scroll braille display back | fwinlt (go left one window) |
@@ -3866,6 +3866,13 @@ Please see the [BRLTTY key binding lists http://mielke.cc/brltty/doc/KeyBindings
 | Move braille display to previous line | lnup (go up one line) |
 | Move braille display to next line | lndn (go down one line) |
 | Route to braille cell | route (bring cursor to character) |
+| Toggle input help | learn (enter/leave command learn mode) |
+| Open the NVDA menu | prefmenu (enter/leave preferences menu) |
+| Revert configuration | prefload (restore preferences from disk) |
+| Save configuration | prefsave (save preferences to disk) |
+| Report time | time (show current date and time) |
+| Speak the line where the review cursor is located | say_line (speak current line) |
+| Say all using review cursor | say_below (speak from current line through bottom of screen) |
 %kc:endInclude
 
 ++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
