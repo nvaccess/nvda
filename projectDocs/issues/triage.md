@@ -27,7 +27,9 @@ Pick a few keywords and search the NVDA repository on Github. We can also check 
 Can we label this as a regression, a requested change of behaviour, or a requested new feature?
 
 ### Regression
-The behaviour of the software has changed, unintentionally. This may mean that a feature has stopped working altogether or there may be an error sound, or perhaps a crash.
+The behaviour of NVDA, or NVDA interacting with an application/software has changed to something worse.
+This may mean that a feature has stopped working altogether, something isn't being announced accurately or perhaps a crash.
+A regression can be caused by NVDA changing something, or an application/website changing.
 
 ### New features
 This is something new, that NVDA does not do yet.
@@ -55,6 +57,8 @@ This is the kind of information that might help when investigating the issue fur
 	- Its worth clarifying this with the user, it helps to make sure everyone is on the same page, and that we truly understand what the issue is about.
 - What version of NVDA was being used. Its good to get something like: stable, beta, rc, alpha. But much better to get the exact version of NVDA, retrieved from the NVDA menu by going to "Help" then "About". "alpha-28931,186a8d70"
 - In which version of NVDA did this work as expected?
+Knowing the last version where this worked in NVDA is very helpful for triage.
+If an issue is a recent regression in alpha, i.e. an unreleased issue, it is fixed with a higher priority.
 - If some other software is needed to reproduce the issue, it helps to know what that software is and what version is being used with NVDA. It's also useful if a test case / document is provided.
 - Some behaviour is specific to operating systems or versions of operating systems. Sometimes a bug can only be reproduced on that particular version of the operating system. So its important to get this information as well. Similar to the NVDA version information, more specific is better. For instance its good if we know the issue occurred on: 'Windows 7', 'Windows 10 Insider'. But even better is to know the version and build too: 'Windows 10, fast insider, version 1703, build 16170.1000'.
 - A copy of the (debug) log
@@ -150,10 +154,15 @@ For controversial changes, a product decision from NV Access may be required bef
 Bugs/regressions are given priorities based on an estimate of their severity and impact.
 
 - `P1`:
+  - `P1s` should always be fixed ASAP, in the current milestone, or the next.
   - Crash, freeze, instability or performance issue that affects most users.
+  - A medium or higher ([CVSS 4+](https://www.first.org/cvss/v4.0/specification-document)) security issue.
+  Note that security issues should not be reported publicly, and so labelling should not apply here.
   - A `P1` causes the inability to perform a popular task or majority of tasks in NVDA or a popular app.
 - `P2`:
   - Crash, freeze, instability or performance issue that affects a small subset of users. It may be uncommon or difficult to reproduce.
+  - A low ([CVSS <4](https://www.first.org/cvss/v4.0/specification-document)) security issue.
+  Note that security issues should not be reported publicly, and so labelling should not apply here.
   - Popular documented feature does not work as expected
   - Popular task not supported and no work around
   - Misleading information or misleading handling from a popular task or feature
@@ -173,7 +182,7 @@ Many older issues do not follow our issue template and have missing information.
 Often they have conversation spanning years.
 Summarising this information and opening a new issue filling out the issue template would be extremely useful in triaging these issues.
 
-NV Access migrated tickets from our old issue tracker ('Trac') into Github issues. These issues can be identified by having an author of `nvaccessauto`. 
+NV Access migrated tickets from our old issue tracker (Trac) into Github issues. These issues can be identified by having an author of `nvaccessauto`. 
 
 ### Missing attachments
 Some of the migrated issues have comments that indicate an attachment should be available, but it is not. All of these Trac attachments are accessible on the [NV Access website](https://www.nvaccess.org/files/nvdaTracAttachments/), you can search for issue numbers in the folder, or append the GitHub issue number to the URL. As an example, for issue [#2396](https://github.com/nvaccess/nvda/issues/2396), get the attachments from <https://www.nvaccess.org/files/nvdaTracAttachments/2396>
