@@ -12,6 +12,7 @@ Add-on development
 * [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
 * [Technical design overview](../design/technicalDesignOverview.md)
 * [NVDA ControllerClient manual (NVDA API for external applications to directly speak or braille messages, etc.)](https://github.com/nvaccess/nvda/tree/master/extras/controllerClient)
+* Further documentation is available in the NVDA repository's [Wiki](https://github.com/nvaccess/nvda/wiki), and in the [Community Wiki](https://github.com/nvaccess/nvda-community/wiki)
 
 ### Communication channels
 * [NVDA on GitHub](https://github.com/nvaccess/nvda)
