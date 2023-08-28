@@ -22,6 +22,10 @@ import api
 import aria
 import config
 import exceptions
+from typing import (
+	Dict,
+	Optional,
+)
 
 FORMATSTATE_INSERTED=1
 FORMATSTATE_DELETED=2
@@ -39,7 +43,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			log.debug(f'textPositionValue={textPositionValue}')
 			return TextPosition.BASELINE
 
-	def _getTextAlignAttribute(self, attrs: dict) -> TextAlign:
+	def _getTextAlignAttribute(self, attrs: Dict[str, str]) -> Optional[TextAlign]:
 		textAlignValue = attrs.get('text-align')
 		try:
 			return TextAlign(textAlignValue)
@@ -47,7 +51,6 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			log.debug(f'textAlignValue={textAlignValue}')
 			return None
 
-	
 	def _normalizeFormatField(self, attrs):
 		formatState=attrs.get('formatState',"0")
 		formatState=int(formatState)

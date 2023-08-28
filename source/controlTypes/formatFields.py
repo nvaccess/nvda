@@ -137,7 +137,7 @@ _textAlignLabels: Dict[TextAlign, str] = {
 	# See http://kohei.us/2010/01/21/distributed-text-justification/
 	TextAlign.DISTRIBUTE: _("align distributed"),
 	# Translators: Reported when text is centered across multiple cells.
-	TextAlign.CENTER_ACROSS_SELECTION: _("align center across multiple cells"),
+	TextAlign.CENTER_ACROSS_SELECTION: _("align centered across selection"),
 	# Translators: Reported in Excel when text is formatted with "General" alignment, i.e. the name of the
 	# alignment in Excel aligning the cell's content depending on its type: text left and numbers right.
 	TextAlign.GENERAL: _("align general"),
