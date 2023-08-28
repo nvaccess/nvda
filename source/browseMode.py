@@ -921,7 +921,7 @@ qn(
 	prevError=_("no previous grouping")
 )
 qn(
-	"tab", key="y",
+	"tab", key=None,
 	# Translators: Input help message for a quick navigation command in browse mode.
 	nextDoc=_("moves to the next tab"),
 	# Translators: Message presented when the browse mode element is not found.
