@@ -2232,13 +2232,13 @@ Ce paramètre contient les valeurs suivantes :
 - Toujours : partout où UI automation est disponible dans Microsoft Word (quel que soit l'avancement de son développement)
 -
 
-==== Utilisez UI Automation pour accéder aux contrôles de feuille de calcul Microsoft Excel lorsqu'ils sont disponibles ====[UseUiaForExcel]
-Lorsque cette option est activée, NVDA essaiera d'utiliser l'API d'accessibilité de Microsoft UI Automation afin de récupérer des informations à partir des contrôles de la feuille de calcul Microsoft Excel.
+==== Utilisez UI Automation pour accéder aux contrôles de feuille de calcul Microsoft Excel quand disponible ====[UseUiaForExcel]
+Lorsque cette option est activée, NVDA essaiera d'utiliser l'API d'accessibilité de Microsoft UI Automation pour récupérer les informations depuis les contrôles de la feuille de calcul Microsoft Excel.
 Il s'agit d'une fonctionnalité expérimentale et certaines fonctionnalités de Microsoft Excel peuvent ne pas être disponibles dans ce mode.
-Par exemple, la liste des éléments de NVDA pour lister les formules et les commentaires, et la navigation rapide en mode navigation pour accéder aux champs de formulaire sur une feuille de calcul ne sont pas disponibles.
+Par exemple, la liste des éléments de NVDA pour lister les formules et les commentaires, et la navigation rapide en mode navigation pour sauter aux champs de formulaire sur une feuille de calcul ne sont pas disponibles.
 Cependant, pour la navigation/l'édition de base d'une feuille de calcul, cette option peut améliorer considérablement les performances.
-Nous ne recommandons toujours pas que la majorité des utilisateurs l'activent par défaut, bien que nous invitons les utilisateurs de Microsoft Excel version 16.0.13522.10000 ou supérieure à tester cette fonctionnalité et à fournir des commentaires.
-La mise en œuvre de l'automatisation de l'interface utilisateur de Microsoft Excel est en constante évolution et les versions de Microsoft Office antérieures à 16.0.13522.10000 peuvent ne pas exposer suffisamment d'informations pour que cette option soit utile.
+Nous ne recommandons toujours pas que la majorité des utilisateurs l'activent par défaut, mais nous invitons les utilisateurs de Microsoft Excel version 16.0.13522.10000 ou supérieure à tester cette fonctionnalité et à nous faire part de leurs commentaires.
+L'implémentation de UI Automation dans Microsoft Excel est en constante évolution et les versions de Microsoft Office antérieures à 16.0.13522.10000 peuvent ne pas exposer suffisamment d'informations pour que cette option soit d'une quelconque utilité.
 
 ==== Prise en charge de la Console Windows ====[AdvancedSettingsConsoleUIA]
 : Défaut
@@ -2679,7 +2679,7 @@ Pour lister les extensions uniquement pour des canaux spécifiques, modifiez la 
 +++ Recherche d'extensions +++[AddonStoreFilterSearch]
 Pour rechercher des extensions, utilisez la zone de texte "Rechercher".
 Vous pouvez y accéder en appuyant sur ``maj+tab`` dans la liste des extensions.
-Tapez un ou deux mots-clés pour le type d'extension que vous recherchez, puis ``tabulez`` pour aller à la liste des extensions.
+Tapez un ou deux mots-clés pour le type d'extension que vous recherchez, puis ``tabulation`` pour aller à la liste des extensions.
 Les extensions seront répertoriées si le texte de recherche peut être trouvé dans l'ID, le nom, l'éditeur l'auteur ou la description de l'extension.
 
 ++ Actions sur les extensions ++[AddonStoreActions]
