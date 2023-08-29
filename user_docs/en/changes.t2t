@@ -20,6 +20,8 @@ What's New in NVDA
 
 == Changes ==
 - Rich edit controls in applications such as Wordpad now use UI Automation (UIA) when the application advertises native support for this. (#15314)
+- When the text in a terminal changes without updating the caret, the text on a braille display will now properly update when positioned on a changed line.
+This includes situations where braille is tethered to review. (#15115)
 -
 
 
@@ -31,16 +33,25 @@ What's New in NVDA
 - Microsoft Edge:
   - NVDA will no longer jump back to the last browse mode position when opening the context menu in Microsoft Edge. (#15309)
   - NVDA is once again able to read context menus of downloads in Microsoft Edge. (#14916)
--
+  -
+- Braille:
+  - The braille cursor and selection indicators will now always be updated correctly after showing or hiding respective indicators with a gesture. (#15115)
+  - NVDA will no longer be sluggish in rich edit controls when braille is enabled, such as in MemPad. (#14285)
+  - Fixed bug where Albatross braille displays try to initialize although another braille device has been connected. (#15226)
+  -
 - Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283)
-- NVDA will no longer be sluggish in rich edit controls when braille is enabled, such as in MemPad. (#14285)
-- Fixed bug where Albatross braille displays try to initialize although another braille device has been connected. (#15226)
 -
 
 == Changes for Developers ==
 Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+- ``braille.handler.handleUpdate`` and ``braille.handler.handleReviewMove`` have been changed in order not to update instantly.
+Before this change, when either of these methods was called very often, this would drain many resources.
+These methods now queue an update at the end of every core cycle instead.
+They should also be thread safe, making it possible to call them from background threads. (#15163)
 
 === Deprecations ===
+- braille.BrailleHandler.handlePendingCaretUpdate is now deprecated with no public replacement. (#15163)
+-
 
 
 = 2023.2 =
