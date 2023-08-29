@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-14 03:03+0000\n"
+"POT-Creation-Date: 2023-08-25 00:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: hwf1324 <1398969445@qq.com>\n"
 "Language-Team: \n"
@@ -3381,7 +3381,7 @@ msgstr "往前没有对象"
 
 #. Translators: Input help mode message for move to first child object command.
 msgid "Moves the navigator object to the first object inside it"
-msgstr "移动到此父对象的首个子对象"
+msgstr "移动到此对象的首个子对象"
 
 #. Translators: Reported when there is no contained (first child) object such as inside a document.
 msgid "No objects inside"
@@ -4045,26 +4045,24 @@ msgstr "盲文显示跟随到 %s"
 
 #. Translators: Input help mode message for cycle through
 #. braille move system caret when routing review cursor command.
-#, fuzzy
 msgid ""
 "Cycle through the braille move system caret when routing review cursor states"
-msgstr "在盲文选中指示光标之间循环切换"
+msgstr "在移动浏览光标时移动系统输入光标选项之间循环切换"
 
 #. Translators: Reported when action is unavailable because braille tether is to focus.
-#, fuzzy
 msgid "Action unavailable. Braille is tethered to focus"
-msgstr "Windows 锁定时该操作不可用"
+msgstr "盲文显示跟随到焦点时该操作不可用"
 
 #. Translators: Used when reporting braille move system caret when routing review cursor
 #. state (default behavior).
 #, python-format
 msgid "Braille move system caret when routing review cursor default (%s)"
-msgstr ""
+msgstr "盲文移动浏览光标时移动系统输入光标默认（%s）"
 
 #. Translators: Used when reporting braille move system caret when routing review cursor state.
 #, python-format
 msgid "Braille move system caret when routing review cursor %s"
-msgstr ""
+msgstr "盲文移动浏览光标时移动系统输入光标（%s）"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
@@ -4777,7 +4775,7 @@ msgstr "数字键盘 加号"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad decimal"
-msgstr "数字键盘删除"
+msgstr "数字键盘点"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad insert"
@@ -7490,7 +7488,7 @@ msgstr "从不"
 
 #. Translators: Label for setting to move the system caret when routing review cursor with braille.
 msgid "Only when tethered automatically"
-msgstr ""
+msgstr "仅当盲文光标设为自动跟随时"
 
 #. Translators: Label for setting to move the system caret when routing review cursor with braille.
 msgid "Always"
@@ -9423,7 +9421,7 @@ msgstr "继续安装（不建议）(&P)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
-msgstr "创建 NVDA 的便携副本"
+msgstr "创建 NVDA 的便携版"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
 msgid ""
@@ -9451,7 +9449,7 @@ msgstr "拷贝当前用户配置(&U)"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "&Start the new portable copy after creation"
-msgstr "创建并自动启动便携副本(&S)"
+msgstr "创建并自动启动便携版(&S)"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -9468,11 +9466,11 @@ msgstr ""
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
-msgstr "正在创建便携副本"
+msgstr "正在创建便携版"
 
 #. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
-msgstr "请稍后，正在创建便携版的 NVDA。"
+msgstr "请稍后，正在创建 NVDA 便携版"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
 msgid "NVDA is unable to remove or overwrite a file."
@@ -9834,7 +9832,7 @@ msgstr "若“大写锁定”键打开，输入小写字母时发出提示音(&O
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
 msgid "Speak c&ommand keys"
-msgstr "读出 NVDA 快捷键(&K)"
+msgstr "朗读命令键(&K)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -10036,7 +10034,7 @@ msgstr "每页最大行数(&N)"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Use &screen layout (when supported)"
-msgstr "使用屏幕真实布局（若支持）(&S)"
+msgstr "使用屏幕布局（若支持）(&S)"
 
 #. Translators: The label for a checkbox in browse mode settings to
 #. enable browse mode on page load.
@@ -10477,7 +10475,7 @@ msgstr "启用对 HID 盲文的支持"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 msgid "Report live regions:"
-msgstr ""
+msgstr "盲文显示动态内容更新"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10698,7 +10696,7 @@ msgstr "盲文显示跟随到(&R)："
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 msgid "Move system caret when ro&uting review cursor"
-msgstr ""
+msgstr "移动浏览光标时移动系统输入光标(&U)"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -13799,6 +13797,8 @@ msgid ""
 "of add-ons is unrestricted and can include accessing your personal data or "
 "even the entire system. "
 msgstr ""
+"插件由 NVDA 社区创建，未经过 NV Acess 审查。 NV Access 不对插件行为负责。插件"
+"行为不受限制，包括访问您的个人信息乃至整个系统。"
 
 #. Translators: The label of a checkbox in the add-on store warning dialog
 msgctxt "addonStore"
@@ -13964,7 +13964,7 @@ msgstr "帮助(&H)"
 #. Translators: Label for an action that opens the homepage for the selected addon
 msgctxt "addonStore"
 msgid "Ho&mepage"
-msgstr "主页(&H)"
+msgstr "主页(&M)"
 
 #. Translators: Label for an action that opens the license for the selected addon
 msgctxt "addonStore"

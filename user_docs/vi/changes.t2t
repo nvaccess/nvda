@@ -13,16 +13,16 @@ Tính năng mới cho chữ nổi, thêm lệnh và thêm màn hình được h�
 Thêm thao tác mới cho việc nhận dạng văn bản (OCR) và điều hướng đối tượng phẳng.
 Cải thiện cho việc điều hướng và đọc định dạng trong Microsoft Office
 
-Sửa nhiều lỗi, đặc biệt là cho chữ nổi, Microsoft Office, trình duyệt web và Windows 11.
+Sửa nhiều lỗi, đặc biệt là lỗi liên quan đến chữ nổi, Microsoft Office, trình duyệt web và Windows 11.
 
 Đã cập nhật eSpeak-NG, thư viện phiên dịch chữ nổi LibLouis, và Unicode CLDR.
 
 == Tính năng mới ==
 - Add-on Store (Cửa Hàng Add-On) đã được tích hợp vào NVDA. (#13985)
-  - Duyệt, tìm kiếm, cài đặt và cập nhật cộng đồng add-on.
+  - Duyệt, tìm kiếm, cài đặt và cập nhật add-on từ cộng đồng.
   - Xử lý thủ công các vấn đề về tương thích với những add-on lỗi thời.
   - Công cụ Quản Lý Các Add-On đã bị gỡ bỏ và được thay thế bởi Add-on Store.
-  - Xem tài liệu hướng dẫn để biết thêm thông tin.
+  - Xem tài liệu hướng dẫn sử dụng để biết thêm thông tin.
   -
 - Các thao tác mới:
   - Thao tác chưa gán lệnh để chuyển qua những ngôn ngữ có sẵn cho Windows OCR. (#13036)
@@ -120,7 +120,7 @@ Việc thông báo thanh trạng thái (kích hoạt bằng lệnh ``NVDA+end``)
   - Khi nỗ lực thông báo đường dẫn cho một liên kết không có thuộc tính href, NVDA sẽ không còn rơi vào trạng thái im lặng.
   Thay vào đó, NVDA sẽ thông báo liên kết không có đường dẫn. (#14723)
   - Trong chế độ duyệt, NVDA không còn bỏ qua một cách không chính xác focus di chuyển đến một điều khiển cha hay điều khiển con. Ví dụ: di chuyển từ một điều khiển đến thành phần cha của nó thành phần trong danh sách hoặc ô lưới. (#14611)
-    - Lưu ý là sửa lỗi này chỉ áp dụng khi  tắt tùy chọn Tự đưa con trỏ &hệ thống đến các thành phần có thể có focus trong cài đặt chế độ duyệt (là tùy chọn mặc định).
+    - Lưu ý là sửa lỗi này chỉ áp dụng khi  tắt tùy chọn Tự đưa con trỏ hệ thống đến các thành phần có thể có focus trong cài đặt chế độ duyệt (là tùy chọn mặc định).
     -  -
   -
 - Sửa các lỗi trên Windows 11:
