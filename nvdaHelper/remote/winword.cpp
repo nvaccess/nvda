@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2023 NVDA contributors.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -561,7 +561,10 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 						formatAttribsStream<<L"text-align=\"right\" ";
 						break;
 						case wdAlignParagraphJustify:
-						formatAttribsStream<<L"text-align=\"justified\" ";
+						formatAttribsStream<<L"text-align=\"justify\" ";
+						break;
+						case wdAlignParagraphDistribute:
+						formatAttribsStream<<L"text-align=\"distribute\" ";
 						break;
 					}
 				}

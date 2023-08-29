@@ -1,13 +1,13 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2009-2022 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
+# Copyright (C) 2009-2023 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot
 
 from comtypes import COMError
 import eventHandler
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import controlTypes
-from controlTypes import TextPosition
+from controlTypes import TextPosition, TextAlign
 from controlTypes.formatFields import FontSize
 import NVDAObjects.IAccessible.MSHTML
 import winUser
@@ -22,6 +22,10 @@ import api
 import aria
 import config
 import exceptions
+from typing import (
+	Dict,
+	Optional,
+)
 
 FORMATSTATE_INSERTED=1
 FORMATSTATE_DELETED=2
@@ -39,6 +43,14 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			log.debug(f'textPositionValue={textPositionValue}')
 			return TextPosition.BASELINE
 
+	def _getTextAlignAttribute(self, attrs: Dict[str, str]) -> Optional[TextAlign]:
+		textAlignValue = attrs.get('text-align')
+		try:
+			return TextAlign(textAlignValue)
+		except ValueError:
+			log.debug(f'textAlignValue={textAlignValue}')
+			return None
+
 	def _normalizeFormatField(self, attrs):
 		formatState=attrs.get('formatState',"0")
 		formatState=int(formatState)
@@ -53,12 +65,17 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		language=attrs.get('language')
 		if language:
 			attrs['language']=languageHandler.normalizeLanguage(language)
+		
 		textPosition = attrs.get('textPosition')
 		textPosition = self._getTextPositionAttribute(attrs)
 		attrs['text-position'] = textPosition
 		fontSize = attrs.get("font-size")
 		if fontSize is not None:
 			attrs["font-size"] = FontSize.translateFromAttribute(fontSize)
+		textAlign = attrs.get('textAlign')
+		textAlign = self._getTextAlignAttribute(attrs)
+		if textAlign:
+			attrs['text-align'] = textAlign
 		return attrs
 
 	def _getIsCurrentAttribute(self, attrs: dict) -> controlTypes.IsCurrent:
