@@ -8,7 +8,9 @@ import abc
 import ctypes
 import enum
 from typing import (
-	Optional, Dict, Any
+	Any,
+	Dict,
+	Optional,
 )
 
 from comtypes import COMError, BSTR
