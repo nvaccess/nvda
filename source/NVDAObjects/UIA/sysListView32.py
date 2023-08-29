@@ -18,17 +18,19 @@ from . import ListItem, UIA
 
 def findExtraOverlayClasses(obj: NVDAObject, clsList: List[Type[NVDAObject]]) -> None:
 	UIAControlType = obj.UIAElement.cachedControlType
-	if UIAControlType == UIAHandler.UIA.UIA_ListItemControlTypeId:
-		clsList.insert(0, SysListViewItem)
-	elif UIAControlType == UIAHandler.UIA.UIA_ListControlTypeId:
+	if UIAControlType == UIAHandler.UIA.UIA_ListControlTypeId:
 		clsList.insert(0, SysListViewList)
+	elif UIAControlType == UIAHandler.UIA.UIA_ListItemControlTypeId and isinstance(obj.parent, SysListViewList):
+		clsList.insert(0, SysListViewItem)
+		if obj.parent._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_IsTablePatternAvailablePropertyId):
+			clsList.insert(0, RowWithFakeNavigation)
 
 
 class SysListViewList(UIA):
 	...
 
 
-class SysListViewItem(RowWithFakeNavigation, ListItem):
+class SysListViewItem(ListItem):
 
 	def _get_name(self) -> str:
 		parent = self.parent
@@ -55,10 +57,14 @@ class SysListViewItem(RowWithFakeNavigation, ListItem):
 				)
 				and index > 0
 			):
-				columnHeaderItems = e.getCachedPropertyValueEx(
-					UIAHandler.UIA.UIA_TableItemColumnHeaderItemsPropertyId,
-					True
-				)
+				try:
+					columnHeaderItems = e.getCachedPropertyValueEx(
+						UIAHandler.UIA.UIA_TableItemColumnHeaderItemsPropertyId,
+						False
+					)
+				except COMError:
+					log.debugWarning("Couldn't fetch column header items", exc_info=True)
+					columnHeaderItems = None
 			else:
 				columnHeaderItems = None
 			if columnHeaderItems:
