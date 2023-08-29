@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-14 03:03+0000\n"
+"POT-Creation-Date: 2023-08-25 00:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nicolai Svendsen <dansk@nvda.dk>\n"
 "Language-Team: Dansk NVDA <dansk@nvda.dk>\n"
@@ -4196,7 +4196,9 @@ msgstr ""
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
-msgstr "Skift mellem de forskellige tilstande kontekstinformationer kan vises"
+msgstr ""
+"Skift mellem de forskellige tilstande kontekstinformationer kan vises på "
+"punkt"
 
 #. Translators: Reports the new state of braille focus context presentation.
 #. %s will be replaced with the context presentation setting.
@@ -4245,20 +4247,20 @@ msgstr "Vis beskeder på punkt %s"
 #. Translators: Input help mode message for cycle through braille show selection command.
 msgid "Cycle through the braille show selection states"
 msgstr ""
-"Skift mellem de forskellige indstillinger for visning af valg på "
+"Skift mellem de forskellige indstillinger for visning af valgmarkøren på "
 "punktdisplayet"
 
 #. Translators: Used when reporting braille show selection state
 #. (default behavior).
 #, python-format
 msgid "Braille show selection default (%s)"
-msgstr "Punkt vis valg standard (%s)"
+msgstr "Punkt vis valgmarkør standard (%s)"
 
 #. Translators: Reports which show braille selection state is used
 #. (disabled or enabled).
 #, python-format
 msgid "Braille show selection %s"
-msgstr "Vis valg på punkt %s"
+msgstr "Vis valgmarkør på punkt %s"
 
 #. Translators: Input help mode message for report clipboard text command.
 msgid "Reports the text on the Windows clipboard"
@@ -10746,7 +10748,7 @@ msgstr "Aktivér understøttelse for HID Braille"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 msgid "Report live regions:"
-msgstr "Oplys live områder"
+msgstr "Oplys live-områder"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10993,7 +10995,7 @@ msgstr "Afbryd talen, mens du &panorerer"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 msgid "Show se&lection"
-msgstr "Vis &udvalg"
+msgstr "Vis &valgmarkør"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -13763,21 +13765,18 @@ msgstr "Installerede tilføjelsesprogrammer"
 
 #. Translators: The label of a tab to display updatable add-ons in the add-on store.
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
-#, fuzzy
 msgctxt "addonStore"
 msgid "Updatable add-ons"
 msgstr "Opdaterbare tilføjelser"
 
 #. Translators: The label of a tab to display available add-ons in the add-on store.
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
-#, fuzzy
 msgctxt "addonStore"
 msgid "Available add-ons"
 msgstr "Tilgængelige tilføjelser"
 
 #. Translators: The label of a tab to display incompatible add-ons in the add-on store.
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
-#, fuzzy
 msgctxt "addonStore"
 msgid "Installed incompatible add-ons"
 msgstr "Installerede inkompatible tilføjelser"
@@ -13785,7 +13784,6 @@ msgstr "Installerede inkompatible tilføjelser"
 #. Translators: The label of the add-ons list in the corresponding panel.
 #. Preferably use the same accelerator key for the four labels.
 #. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
-#, fuzzy
 msgctxt "addonStore"
 msgid "Installed &add-ons"
 msgstr "Installerede &tilføjelser"
@@ -14118,9 +14116,8 @@ msgid "Add-on Information"
 msgstr "Information om tilføjelsesprogram"
 
 #. Translators: The warning of a dialog
-#, fuzzy
 msgid "Add-on Store Warning"
-msgstr "Tilføjelsescenter"
+msgstr "Advarsel om Tilføjelscenteret"
 
 #. Translators: Warning that is displayed before using the Add-on Store.
 msgctxt "addonStore"
@@ -14130,16 +14127,19 @@ msgid ""
 "of add-ons is unrestricted and can include accessing your personal data or "
 "even the entire system. "
 msgstr ""
+"Tilføjelser er oprettet af NVDA-fællesskabet og kontrolleres ikke af NV "
+"Access. NV Access kan ikke holdes ansvarlig for adfærden af disse "
+"tilføjelser. Funktionaliteten af tilføjelser er ubegrænset og kan omfatte "
+"adgang til dine personlige data eller endda hele systemet."
 
 #. Translators: The label of a checkbox in the add-on store warning dialog
 msgctxt "addonStore"
 msgid "&Don't show this message again"
-msgstr ""
+msgstr "&Vis ikke denne besked igen"
 
 #. Translators: The label of a button in a dialog
-#, fuzzy
 msgid "&OK"
-msgstr "OK"
+msgstr "&OK"
 
 #. Translators: The title of the addonStore dialog where the user can find and download add-ons
 msgctxt "addonStore"
