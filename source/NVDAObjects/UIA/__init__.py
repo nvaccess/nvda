@@ -24,7 +24,7 @@ import UIAHandler
 import UIAHandler.customProps
 import UIAHandler.customAnnotations
 import controlTypes
-from controlTypes import TextPosition
+from controlTypes import TextPosition, TextAlign
 import config
 import speech
 import api
@@ -69,6 +69,13 @@ paragraphIndentIDs = {
 	UIAHandler.UIA_IndentationFirstLineAttributeId,
 	UIAHandler.UIA_IndentationLeadingAttributeId,
 	UIAHandler.UIA_IndentationTrailingAttributeId,
+}
+
+textAlignLabels = {
+	UIAHandler.HorizontalTextAlignment_Left: TextAlign.LEFT,
+	UIAHandler.HorizontalTextAlignment_Centered: TextAlign.CENTER,
+	UIAHandler.HorizontalTextAlignment_Right: TextAlign.RIGHT,
+	UIAHandler.HorizontalTextAlignment_Justified: TextAlign.JUSTIFY,
 }
 
 
@@ -270,19 +277,13 @@ class UIATextInfo(textInfos.TextInfo):
 		if formatConfig["reportParagraphIndentation"]:
 			formatField.update(self._getFormatFieldIndent(fetcher, ignoreMixedValues=ignoreMixedValues))
 		if formatConfig["reportAlignment"]:
-			val=fetcher.getValue(UIAHandler.UIA_HorizontalTextAlignmentAttributeId,ignoreMixedValues=ignoreMixedValues)
-			if val==UIAHandler.HorizontalTextAlignment_Left:
-				val="left"
-			elif val==UIAHandler.HorizontalTextAlignment_Centered:
-				val="center"
-			elif val==UIAHandler.HorizontalTextAlignment_Right:
-				val="right"
-			elif val==UIAHandler.HorizontalTextAlignment_Justified:
-				val="justify"
-			else:
-				val=None
-			if val:
-				formatField['text-align']=val
+			val = fetcher.getValue(
+				UIAHandler.UIA_HorizontalTextAlignmentAttributeId,
+				ignoreMixedValues=ignoreMixedValues,
+			)
+			textAlign = textAlignLabels.get(val)
+			if textAlign:
+				formatField['text-align'] = textAlign
 		if formatConfig["reportColor"]:
 			val=fetcher.getValue(UIAHandler.UIA_BackgroundColorAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if isinstance(val,int):

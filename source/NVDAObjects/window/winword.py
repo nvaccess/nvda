@@ -32,6 +32,7 @@ import textInfos.offsets
 import colors
 import controlTypes
 from controlTypes import TextPosition
+from controlTypes.formatFields import TextAlign
 import treeInterceptorHandler
 import browseMode
 import review
@@ -972,6 +973,9 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if fontSize is not None:
 			# Translators: Abbreviation for points, a measurement of font size.
 			field["font-size"] = pgettext("font size", "%s pt") % fontSize
+		textAlign = field.pop('text-align', None)
+		if textAlign:
+			field['text-align'] = TextAlign(textAlign)
 		return field
 
 	def expand(self,unit):

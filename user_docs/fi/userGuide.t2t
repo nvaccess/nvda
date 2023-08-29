@@ -241,7 +241,7 @@ Varsinaisia komentoja ei suoriteta.
 | Pienennä nykyistä syntetisaattorin asetusta | ``NVDA+Ctrl+Nuoli alas`` | ``NVDA+Vaihto+Ctrl+Nuoli alas`` | Pienentää valittua puheasetusta, esim. vähentää nopeutta, valitsee edellisen puheäänen tai vähentää äänenvoimakkuutta. |
 
 +++ Verkon selaaminen +++[WebNavigation]
-Täydellinen luettelo pikaselausnäppäimistä on käyttöoppaan [Selaustila #BrowseMode] -osiossa.
+Täydellinen luettelo pikanavigointinäppäimistä on käyttöoppaan [Selaustila #BrowseMode] -osiossa.
 || Komento | Näppäin | Kuvaus |
 | Otsikko | ``h`` | Siirrä seuraavaan otsikkoon. |
 | Otsikkotaso 1, 2 tai 3 | ``1``, ``2``, ``3`` | Siirrä seuraavaan otsikkoon määritetyllä tasolla. |
@@ -772,8 +772,8 @@ Vuorovaikutustila voidaan lisäksi ottaa käyttöön manuaalisesti, jolloin se p
 | Etsi edellinen | NVDA+Vaihto+F3 tai Vaihto+F3 | Etsii asiakirjasta aiemmin haetun tekstin edellisen esiintymän. |
 %kc:endInclude
 
-++ Pikaselausnäppäimet ++[SingleLetterNavigation]
-NVDA:ssa on selaustilaa käytettäessä liikkumisen nopeuttamiseksi myös pikaselauskomentoja, joilla voidaan siirtyä asiakirjan eri elementteihin.
+++ Pikanavigointinäppäimet ++[SingleLetterNavigation]
+NVDA:ssa on selaustilaa käytettäessä liikkumisen nopeuttamiseksi myös pikanavigointikomentoja, joilla voidaan siirtyä asiakirjan eri elementteihin.
 HUOM: Kaikkia komentoja ei tueta joissakin asiakirjatyypeissä.
 
 %kc:beginInclude
@@ -809,9 +809,9 @@ Säilöelementtien, kuten luetteloiden ja taulukoiden alkuun tai loppuun siirtym
 %kc:endInclude
 
 Joissakin uusissa verkkopohjaisissa sovelluksissa, kuten Gmail, Twitter ja Facebook, käytetään yksikirjaimisia pikanäppäimiä.
-Mikäli halutaan samaan aikaan käyttää sekä niitä että nuolinäppäimiä selaustilassa lukemiseen, NVDA:n pikaselausnäppäimet voidaan poistaa tilapäisesti käytöstä.
+Mikäli halutaan samaan aikaan käyttää sekä niitä että nuolinäppäimiä selaustilassa lukemiseen, NVDA:n pikanavigointinäppäimet voidaan poistaa tilapäisesti käytöstä.
 %kc:beginInclude
-Ota pikaselausnäppäimet käyttöön tai poista ne käytöstä nykyisessä asiakirjassa painamalla NVDA+Vaihto+Väli.
+Ota pikanavigointinäppäimet käyttöön tai poista ne käytöstä nykyisessä asiakirjassa painamalla NVDA+Vaihto+Väli.
 %kc:endInclude
 
 ++ Elementtilista ++[ElementsList]
@@ -841,7 +841,7 @@ hakujen suorittamiseen käytetään seuraavia näppäimiä:
 ++ Upotetut objektit ++[ImbeddedObjects]
 Sivut voivat sisältää monipuolista sisältöä, jossa käytetään sellaisia tekniikoita kuin Java, HTML5, kuten myös sovelluksia ja valintaikkunoita.
 Kun selaustilassa tullaan niiden kohdalle, NVDA ilmoittaa "upotettu objekti", "sovellus" tai "valintaikkuna".
-Niihin voidaan siirtyä nopeasti käyttäen upotettuihin objekteihin siirtäviä pikaselausnäppäimiä O ja Vaihto+O.
+Niihin voidaan siirtyä nopeasti käyttäen upotettuihin objekteihin siirtäviä pikanavigointinäppäimiä O ja Vaihto+O.
 Näiden objektien kanssa voidaan olla vuorovaikutuksessa painamalla Enteriä niiden kohdalla.
 Jos objekti on saavutettava, siinä voidaan liikkua sarkaimella ja olla sen kanssa vuorovaikutuksessa kuten missä tahansa muussakin sovelluksessa.
 Seuraavalla näppäinkomennolla voidaan palata alkuperäiselle upotetun objektin sisältävälle sivulle:
@@ -1121,11 +1121,11 @@ Asetukset tallennetaan asiakirjan kirjanmerkkeinä, jotka ovat yhteensopivia my�
 Tämä tarkoittaa, että rivi- ja sarakeotsikot on jo valmiiksi määritelty muiden ruudunlukuohjelmien käyttäjille, jotka avaavat kyseisen asiakirjan.
 
 +++ Selaustila +++[BrowseModeInMicrosoftWord]
-Samoin kuin verkkosivuilla, myös Microsoft Wordissa selaustilaa voidaan käyttää pikaselaukseen ja elementtilistan hyödyntämiseen.
+Samoin kuin verkkosivuilla, myös Microsoft Wordissa selaustilaa voidaan käyttää pikanavigointiin ja elementtilistan hyödyntämiseen.
 %kc:beginInclude
 Selaustila otetaan käyttöön tai poistetaan käytöstä painamalla NVDA+Väli.
 %kc:endInclude
-Lisätietoja selaustilasta ja pikaselauksesta on [Selaustila #BrowseMode]-osiossa.
+Lisätietoja selaustilasta ja pikanavigoinnista on [Selaustila #BrowseMode]-osiossa.
 
 ++++ Elementtilista ++++[WordElementsList]
 %kc:beginInclude
@@ -1207,9 +1207,9 @@ Lukittuihin soluihin siirtyminen on mahdollista selaustilassa, joka otetaan käy
 
 +++ Lomakekentät +++[ExcelFormFields]
 Excelin laskentataulukot voivat sisältää lomakekenttiä.
-Niihin päästään elementtilistaa tai pikaselausnäppäimiä F ja Vaihto+F käyttäen.
+Niihin päästään elementtilistaa tai pikanavigointinäppäimiä F ja Vaihto+F käyttäen.
 Kun selaustilassa siirrytään lomakekentän kohdalle, säätimestä riippuen voidaan joko aktivoida se tai vaihtaa vuorovaikutustilaan painamalla Enteriä tai välilyöntiä, jotta sen kanssa on mahdollista olla vuorovaikutuksessa.
-Lisätietoja selaustilasta ja pikaselausnäppäimistä on [Selaustila #BrowseMode]-osiossa.
+Lisätietoja selaustilasta ja pikanavigointinäppäimistä on [Selaustila #BrowseMode]-osiossa.
 
 ++ Microsoft PowerPoint ++[MicrosoftPowerPoint]
 %kc:beginInclude
@@ -1251,7 +1251,7 @@ Sivua käännetään automaattisesti aina tarvittaessa kohdistinta siirrettäess
 Seuraavalle sivulle voidaan kääntää manuaalisesti painamalla Page down- ja edelliselle painamalla Page up -näppäintä.
 %kc:endInclude
 
-Pikaselausta tuetaan linkeille ja grafiikoille, mutta vain nykyisellä sivulla.
+Pikanavigointia tuetaan linkeille ja grafiikoille, mutta vain nykyisellä sivulla.
 Linkkeihin siirtyminen sisältää myös alaviitteet.
 
 NVDA tarjoaa alkeellisen tuen kirjojen saavutettavan matemaattisen sisällön lukemiselle ja vuorovaikutteiselle selaukselle.
@@ -1827,7 +1827,7 @@ Jos tämä valintaruutu on valittuna, puhe keskeytetään aina, kun näppäimist
 Jos tämä valintaruutu on valittuna, puhe keskeytetään aina Enter-näppäintä painettaessa. Asetus on oletusarvoisesti käytössä.
 
 ==== Salli pikaluku jatkuvassa luvussa ====[KeyboardSettingsSkimReading]
-Jos tämä asetus on käytössä, tietyt navigointikomennot (kuten selaustilan pikaselaus tai riveittäin/kappaleittain liikkuminen) eivät keskeytä jatkuvaa lukua, vaan siirtävät uuteen sijaintiin, jonka jälkeen lukemista jatketaan.
+Jos tämä asetus on käytössä, tietyt navigointikomennot (kuten selaustilan pikanavigointi tai riveittäin/kappaleittain liikkuminen) eivät keskeytä jatkuvaa lukua, vaan siirtävät uuteen sijaintiin, jonka jälkeen lukemista jatketaan.
 
 ==== Anna äänimerkki kirjoitettaessa pieniä kirjaimia Caps Lockin ollessa käytössä ====[KeyboardSettingsBeepLowercase]
 Kun tämä asetus on käytössä, kirjoitettaessa kirjaimia Vaihto-näppäin pohjassa kuuluu varoitusäänimerkki, Jos Caps Lock on päällä.
@@ -2048,8 +2048,8 @@ Asetus on oletusarvoisesti käytössä.
 
 ==== Sisällytä asettelutaulukot ====[BrowseModeSettingsIncludeLayoutTables]
 Tämä asetus vaikuttaa siihen, miten NVDA käsittelee puhtaasti visuaaliseen esittämiseen käytettäviä taulukoita.
-Kun asetus on käytössä, NVDA käsittelee niitä normaaleina taulukoina (ts. lukee [asiakirjojen muotoiluasetusten #DocumentFormattingSettings] mukaisesti sekä löytää ne pikaselauskomennoilla).
-Kun asetus on poistettu käytöstä, asettelutaulukoita ei lueta eikä löydetä pikaselauskomennoilla.
+Kun asetus on käytössä, NVDA käsittelee niitä normaaleina taulukoina (ts. lukee [asiakirjojen muotoiluasetusten #DocumentFormattingSettings] mukaisesti sekä löytää ne pikanavigointikomennoilla).
+Kun asetus on poistettu käytöstä, asettelutaulukoita ei lueta eikä löydetä pikanavigointikomennoilla.
 Taulukoiden sisältö näytetään kuitenkin tavallisena tekstinä.
 Asetus on oletusarvoisesti poissa käytöstä.
 
@@ -2072,7 +2072,7 @@ Jos tämä asetus on käytössä, NVDA toistaa äänimerkin vaihtaessaan selaus-
 
 ==== Estä muiden kuin näppäinkomentojen pääsy asiakirjaan ====[BrowseModeSettingsTrapNonCommandGestures]
 Tällä oletusarvoisesti käytössä olevalla asetuksella voidaan valita, estetäänkö näppäinkomentojen (kuten näppäinpainallusten), jotka eivät suorita NVDA-komentoa tai joita ei pidetä yleisinä komentonäppäiminä, pääsy aktiivisena olevaan asiakirjaan.
-Esim. jos asetuksen ollessa käytössä painetaan J-kirjainta, sen tulostuminen asiakirjaan estetään, sillä se ei ole pikaselausnäppäin, tai koska on epätodennäköistä, että se olisi sovelluksen käytössä oleva näppäinkomento.
+Esim. jos asetuksen ollessa käytössä painetaan J-kirjainta, sen tulostuminen asiakirjaan estetään, sillä se ei ole pikanavigointinäppäin, tai koska on epätodennäköistä, että se olisi sovelluksen käytössä oleva näppäinkomento.
 NVDA käskee Windowsia toistamaan oletusäänen, kun estettyä näppäintä painetaan.
 
 %kc:setting

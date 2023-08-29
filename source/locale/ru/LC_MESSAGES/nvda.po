@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-28 03:20+0000\n"
-"PO-Revision-Date: 2023-07-29 16:45+0800\n"
+"POT-Creation-Date: 2023-08-14 03:03+0000\n"
+"PO-Revision-Date: 2023-08-14 22:23+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -13808,26 +13808,54 @@ msgctxt "addonStore"
 msgid "Enabled, pending restart"
 msgstr "Включено, ожидает перезагрузки"
 
-#. Translators: The label of a tab to display installed add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of a tab to display installed add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Installed add-ons"
+msgstr "Установленные дополнения"
+
+#. Translators: The label of a tab to display updatable add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Updatable add-ons"
+msgstr "Обновлённые дополнения"
+
+#. Translators: The label of a tab to display available add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Available add-ons"
+msgstr "Доступные дополнения"
+
+#. Translators: The label of a tab to display incompatible add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Installed incompatible add-ons"
+msgstr "Установленные несовместимые дополнения"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Installed &add-ons"
 msgstr "Установленные &дополнения"
 
-#. Translators: The label of a tab to display updatable add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Updatable &add-ons"
 msgstr "Обновлённые &дополнения"
 
-#. Translators: The label of a tab to display available add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Available &add-ons"
 msgstr "Доступные &дополнения"
 
-#. Translators: The label of a tab to display incompatible add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Installed incompatible &add-ons"
 msgstr "Установленные несовместимые &дополнения"
@@ -14115,20 +14143,47 @@ msgctxt "addonStore"
 msgid "Add-on Information"
 msgstr "Информация о дополнении"
 
+#. Translators: The warning of a dialog
+msgid "Add-on Store Warning"
+msgstr "Предупреждение магазина дополнений"
+
+#. Translators: Warning that is displayed before using the Add-on Store.
+msgctxt "addonStore"
+msgid ""
+"Add-ons are created by the NVDA community and are not vetted by NV Access. "
+"NV Access cannot be held responsible for add-on behavior. The functionality "
+"of add-ons is unrestricted and can include accessing your personal data or "
+"even the entire system. "
+msgstr ""
+"Обратите внимание, что дополнения создаются сообществом NVDA и не "
+"проверяются со стороны NV Access. NV Access не может нести ответственность "
+"за поведение тех или иных дополнений. Функциональность дополнений никак не "
+"ограничена и может включать доступ к вашим личным данным или даже ко всей "
+"системе."
+
+#. Translators: The label of a checkbox in the add-on store warning dialog
+msgctxt "addonStore"
+msgid "&Don't show this message again"
+msgstr "Больше &не показывать это сообщение"
+
+#. Translators: The label of a button in a dialog
+msgid "&OK"
+msgstr "&OK"
+
 #. Translators: The title of the addonStore dialog where the user can find and download add-ons
 msgctxt "addonStore"
 msgid "Add-on Store"
 msgstr "Магазин дополнений"
 
-#. Translators: Banner notice that is displayed in the Add-on Store.
-msgctxt "addonStore"
-msgid "Note: NVDA was started with add-ons disabled"
-msgstr "Примечание: NVDA была запущена с отключёнными дополнениями"
-
 #. Translators: The label for a button in add-ons Store dialog to install an external add-on.
 msgctxt "addonStore"
 msgid "Install from e&xternal source"
 msgstr "&Установить из стороннего источника"
+
+#. Translators: Banner notice that is displayed in the Add-on Store.
+msgctxt "addonStore"
+msgid "Note: NVDA was started with add-ons disabled"
+msgstr "Примечание: NVDA была запущена с отключёнными дополнениями"
 
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"
@@ -14234,7 +14289,7 @@ msgstr "&Установить (игнорировать несовместимо
 #. Translators: Label for an action that updates the selected addon
 msgctxt "addonStore"
 msgid "&Update"
-msgstr "&Обновить"
+msgstr "О&бновить"
 
 #. Translators: Label for an action that replaces the selected addon with
 #. an add-on store version.
@@ -14280,7 +14335,7 @@ msgstr "&Лицензия"
 #. Translators: Label for an action that opens the source code for the selected addon
 msgctxt "addonStore"
 msgid "Source &Code"
-msgstr "&Исходный код"
+msgstr "Исходный &код"
 
 #. Translators: The message displayed when the add-on cannot be enabled.
 #. {addon} is replaced with the add-on name.
