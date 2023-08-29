@@ -59,7 +59,7 @@ xlExtended=3
 
 
 class XlHAlign(DisplayStringIntEnum):
-	# XlHAlign enumeration  from https://docs.microsoft.com/en-us/office/vba/api/excel.xlhalign
+	# XlHAlign enumeration from https://docs.microsoft.com/en-us/office/vba/api/excel.xlhalign
 	CENTER = -4108
 	CENTER_ACROSS_SELECTION = 7
 	DISTRIBUTED = -4117
