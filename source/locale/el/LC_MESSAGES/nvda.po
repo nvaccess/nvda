@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-18 00:02+0000\n"
-"PO-Revision-Date: 2023-08-21 12:30+0200\n"
+"POT-Creation-Date: 2023-08-25 00:02+0000\n"
+"PO-Revision-Date: 2023-08-26 21:11+0200\n"
 "Last-Translator: Irene Nakas <irnakas@gmail.com>\n"
 "Language-Team: Gerasimos Xydas, Irene Nakas, Nikos Demetriou <access@e-"
 "rhetor.com, irnakas@gmail.com, nikosdemetriou@googlemail.com>\n"
@@ -2905,7 +2905,7 @@ msgstr "αναφορά εκθετών και δεικτών ενεργοποιη
 #. Translators: The message announced when toggling the report superscripts and subscripts
 #. document formatting setting.
 msgid "report superscripts and subscripts off"
-msgstr "Αναφορά εκθετών και δεικτών απενεργοποιημένη"
+msgstr "αναφορά εκθετών και δεικτών απενεργοποιημένη"
 
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
@@ -4298,26 +4298,30 @@ msgstr "Η οθόνη braille προσδέθηκε σε %s"
 
 #. Translators: Input help mode message for cycle through
 #. braille move system caret when routing review cursor command.
-#, fuzzy
 msgid ""
 "Cycle through the braille move system caret when routing review cursor states"
-msgstr "Κυκλική κίνηση μεταξύ των σχημάτων του δρομέα braille"
+msgstr ""
+"Πραγματοποιεί κυκλική κίνηση μεταξύ των καταστάσεων μετακίνησης του κέρσορα "
+"Braille κατά τη δρομολόγηση του δρομέα επισκόπησης"
 
 #. Translators: Reported when action is unavailable because braille tether is to focus.
-#, fuzzy
 msgid "Action unavailable. Braille is tethered to focus"
-msgstr "Μη διαθέσιμη ενέργεια όσο τα Widnows είναι κλειδωμένα"
+msgstr "Ενέργεια μη διαθέσιμη. Το Braille έχει προσδεθεί στην εστίαση"
 
 #. Translators: Used when reporting braille move system caret when routing review cursor
 #. state (default behavior).
 #, python-format
 msgid "Braille move system caret when routing review cursor default (%s)"
 msgstr ""
+"Μετακίνηση του κέρσορα Braille του συστήματος κατά τη δρομολόγηση του δρομέα "
+"επισκόπησης προεπιλεγμένο (%s)"
 
 #. Translators: Used when reporting braille move system caret when routing review cursor state.
 #, python-format
 msgid "Braille move system caret when routing review cursor %s"
 msgstr ""
+"Μετακίνηση του κέρσορα Braille του συστήματος κατά τη δρομολόγηση του δρομέα "
+"επισκόπησης %s"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
@@ -4358,32 +4362,34 @@ msgid "Braille cursor %s"
 msgstr "Δρομέας braille %s"
 
 #. Translators: Input help mode message for cycle through braille show messages command.
-#, fuzzy
 msgid "Cycle through the braille show messages modes"
-msgstr "Κυκλική κίνηση μεταξύ των σχημάτων του δρομέα braille"
+msgstr ""
+"Πραγματοποιεί κυκλική κίνηση μεταξύ των λειτουργιών εμφάνισης μηνυμάτων "
+"Braille"
 
 #. Translators: Reports which show braille message mode is used
 #. (disabled, timeout or indefinitely).
-#, fuzzy, python-format
+#, python-format
 msgid "Braille show messages %s"
-msgstr "Η οθόνη braille προσδέθηκε σε %s"
+msgstr "Εμφάνιση μηνυμάτων Braille %s"
 
 #. Translators: Input help mode message for cycle through braille show selection command.
-#, fuzzy
 msgid "Cycle through the braille show selection states"
-msgstr "Κυκλική κίνηση μεταξύ των σχημάτων του δρομέα braille"
+msgstr ""
+"Πραγματοποιεί κυκλική κίνηση μεταξύ των καταστάσεων εμφάνισης επιλογής "
+"Braille"
 
 #. Translators: Used when reporting braille show selection state
 #. (default behavior).
 #, python-format
 msgid "Braille show selection default (%s)"
-msgstr ""
+msgstr "Εμφάνιση επιλογής Braille προεπιλεγμένο (%s)"
 
 #. Translators: Reports which show braille selection state is used
 #. (disabled or enabled).
-#, fuzzy, python-format
+#, python-format
 msgid "Braille show selection %s"
-msgstr "Η οθόνη braille προσδέθηκε σε %s"
+msgstr "Εμφάνιση επιλογής Braille %s"
 
 #. Translators: Input help mode message for report clipboard text command.
 msgid "Reports the text on the Windows clipboard"
@@ -4599,13 +4605,13 @@ msgid "Plugins reloaded"
 msgstr "Επαναφόρτωση των plugins"
 
 #. Translators: input help mode message for Report destination URL of a link command
-#, fuzzy
 msgid ""
 "Report the destination URL of the link at the position of caret or focus. If "
 "pressed twice, shows the URL in a window for easier review."
 msgstr ""
-"Αναφορά URL προορισμού για το σύνδεσμο στο αντικείμενο πλοήγησης. Αν πατηθεί "
-"δυο φορές, εμφανίζει το URL σε παράθυρο για ευκολότερη επισκόπηση. "
+"Αναφέρει το URL του προορισμού για το σύνδεσμο στη θέση του κέρσορα ή της "
+"εστίασης. Αν πατηθεί δυο φορές, εμφανίζει το URL σε παράθυρο για ευκολότερη "
+"επισκόπηση."
 
 #. Translators: Informs the user that the link has no destination
 msgid "Link has no apparent destination"
@@ -4622,14 +4628,13 @@ msgid "Not a link."
 msgstr "Δεν είναι σύνδεσμος."
 
 #. Translators: input help mode message for Report URL of a link in a window command
-#, fuzzy
 msgid ""
 "Displays the destination URL of the link at the position of caret or focus "
 "in a window, instead of just speaking it. May be preferred by braille users."
 msgstr ""
-"Αναφορά URL προορισμού για το σύνδεσμο στο αντικείμενο πλοήγησης σε ένα "
-"παράθυρο, αντί απλά να το εκφωνεί. Ίσως να είναι προτιμότερο για τους "
-"χρήστες braille."
+"Εμφανίζει το URL του προορισμού για το σύνδεσμο στη θέση του κέρσορα ή της "
+"εστίασης στο παράθυρο, αντί απλά να το εκφωνεί. Ίσως προτιμάται από τους "
+"χρήστες Braille."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -6961,14 +6966,14 @@ msgstr ""
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #. The %s will be replaced with the path to the add-on that could not be opened.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgctxt "addonStore"
 msgid ""
 "Failed to open add-on package file at {filePath} - missing file or invalid "
 "file format"
 msgstr ""
-"Αποτυχία ανοίγματος του πακέτου αρχείου του πρόσθετου %s - απουσία αρχείου ή "
-"μη έγκυρη μορφή αρχείου"
+"Αποτυχία ανοίγματος πακέτου πρόσθετου στο {filePath} - απουσία αρχείου ή "
+"λανθασμένη μορφή αρχείου"
 
 #. Translators: The message displayed when an add-on is not supported by this version of NVDA.
 #. The %s will be replaced with the path to the add-on that is not supported.
@@ -7591,6 +7596,8 @@ msgid ""
 "cursor positioned {horizontalDistance} from left edge of page, "
 "{verticalDistance} from top edge of page"
 msgstr ""
+"θέση δρομέα {horizontalDistance} από την αριστερή πλευρά της σελίδας, "
+"{verticalDistance} από την  πάνω πλευρά της σελίδας"
 
 msgid "left"
 msgstr "αριστερά"
@@ -7857,7 +7864,7 @@ msgstr "Ποτέ"
 
 #. Translators: Label for setting to move the system caret when routing review cursor with braille.
 msgid "Only when tethered automatically"
-msgstr ""
+msgstr "Μόνο κατά την αυτόματη πρόσδεση"
 
 #. Translators: Label for setting to move the system caret when routing review cursor with braille.
 msgid "Always"
@@ -9898,6 +9905,9 @@ msgid ""
 "Please specify the absolute path where the portable copy should be created. "
 "It may include system variables (%temp%, %homepath%, etc.)."
 msgstr ""
+"Παρακαλώ προσδιορίστε το ακριβές μονοπάτι όπου θα πρέπει να δημιουργηθεί το "
+"φορητό αντίγραφο. Μπορεί να περιέχει μεταβλητές συστήματος (%temp%, %homepath"
+"%, etc.)."
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
@@ -11035,17 +11045,19 @@ msgstr "Ήχος"
 
 #. Translators: This is the label for a checkbox control in the Advanced settings panel.
 msgid "Use WASAPI for audio output (requires restart)"
-msgstr ""
+msgstr "Χρήση WASAPI για έξοδο ήχου (απαιτείται επανεκκίνηση)"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
 msgid "Volume of NVDA sounds follows voice volume (requires WASAPI)"
 msgstr ""
+"Η ένταση ηχητικών εφέ του NVDA ακολουθεί την ένταση ήχου της φωνής "
+"(απαιτείται WASAPI)"
 
 #. Translators: This is the label for a slider control in the
 #. Advanced settings panel.
 msgid "Volume of NVDA sounds (requires WASAPI)"
-msgstr ""
+msgstr "Ένταση ηχητικών εφέ του NVDA (απαιτείται WASAPI)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -11179,6 +11191,7 @@ msgstr "Πρόσδεση οθόνης &Braile"
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 msgid "Move system caret when ro&uting review cursor"
 msgstr ""
+"Μετακίνηση κέρσορα συστήματος κατά τη &δρομολόγηση του δρομέα επισκόπησης"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -11376,14 +11389,14 @@ msgid "Dictionary Entry Error"
 msgstr "Σφάλμα Καταχώρησης Στο Λεξικό"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Regular Expression error in the pattern field: \"{error}\"."
-msgstr "Σύνηθες Σφάλμα Έκφρασης: \"%s\"."
+msgstr "Σφάλμα συνήθους έκφρασης στο πεδίο μοτίβου: \"{error}\"."
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Regular Expression error in the replacement field: \"{error}\"."
-msgstr "Σύνηθες Σφάλμα Έκφρασης: \"%s\"."
+msgstr "Σφάλμα συνήθους έκφρασης στο πεδίο αντικατάστασης: \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -13879,12 +13892,12 @@ msgstr "Σταθερό"
 #. Translators: Label for add-on channel in the add-on sotre
 msgctxt "addonStore"
 msgid "Beta"
-msgstr "Beta"
+msgstr "Υπό δοκιμή"
 
 #. Translators: Label for add-on channel in the add-on sotre
 msgctxt "addonStore"
 msgid "Dev"
-msgstr "Για προγραμματιστές"
+msgstr "Υπό ανάπτυξη"
 
 #. Translators: Label for add-on channel in the add-on sotre
 msgctxt "addonStore"
@@ -13901,7 +13914,7 @@ msgstr "Ενεργοποιημένο"
 #. Translators: Status for addons shown in the add-on store dialog
 msgctxt "addonStore"
 msgid "Disabled"
-msgstr "Απενεργοποιημένα"
+msgstr "Απενεργοποιημένο"
 
 #. Translators: Status for addons shown in the add-on store dialog
 msgctxt "addonStore"
@@ -13936,7 +13949,7 @@ msgstr "Λήψη σε εξέλιξη"
 #. Translators: Status for addons shown in the add-on store dialog
 msgctxt "addonStore"
 msgid "Download failed"
-msgstr "Η λήψη απέτυχε"
+msgstr "Αποτυχία λήψης"
 
 #. Translators: Status for addons shown in the add-on store dialog
 msgctxt "addonStore"
@@ -13951,7 +13964,7 @@ msgstr "Εγκατάσταση σε εξέλιξη"
 #. Translators: Status for addons shown in the add-on store dialog
 msgctxt "addonStore"
 msgid "Install failed"
-msgstr "Η εγκατάσταση απέτυχε"
+msgstr "Αποτυχία εγκατάστασης"
 
 #. Translators: Status for addons shown in the add-on store dialog
 msgctxt "addonStore"
@@ -13998,7 +14011,7 @@ msgstr "Εγκατεστημένα πρόσθετα"
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
 msgid "Updatable add-ons"
-msgstr "Με ενημερώσεις"
+msgstr "Πρόσθετα με ενημερώσεις"
 
 #. Translators: The label of a tab to display available add-ons in the add-on store.
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
@@ -14017,28 +14030,28 @@ msgstr "Εγκατεστημένα μη συμβατά πρόσθετα"
 #. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Installed &add-ons"
-msgstr "&Εγκατεστημένα πρόσθετα"
+msgstr "Εγκατεστημένα &πρόσθετα"
 
 #. Translators: The label of the add-ons list in the corresponding panel.
 #. Preferably use the same accelerator key for the four labels.
 #. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Updatable &add-ons"
-msgstr "&Με ενημερώσεις"
+msgstr "&Πρόσθετα με ενημερώσεις"
 
 #. Translators: The label of the add-ons list in the corresponding panel.
 #. Preferably use the same accelerator key for the four labels.
 #. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Available &add-ons"
-msgstr "&Διαθέσιμα πρόσθετα"
+msgstr "Διαθέσιμα &πρόσθετα"
 
 #. Translators: The label of the add-ons list in the corresponding panel.
 #. Preferably use the same accelerator key for the four labels.
 #. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Installed incompatible &add-ons"
-msgstr "&Εγκατεστημένα μη συμβατά πρόσθετα"
+msgstr "Εγκατεστημένα μη συμβατά &πρόσθετα"
 
 #. Translators: The reason an add-on is not compatible.
 #. A more recent version of NVDA is required for the add-on to work.
@@ -14112,7 +14125,7 @@ msgstr "Οθόνες braille Eurobraille"
 
 #. Translators: Message when HID keyboard simulation is unavailable.
 msgid "HID keyboard input simulation is unavailable."
-msgstr "Προσομείωση εισόδου πληκτρολογίου HID δε διατίθεται."
+msgstr "Δε διατίθεται προσομείωση εισόδου πληκτρολογίου HID."
 
 #. Translators: Description of the script that toggles HID keyboard simulation.
 msgid "Toggle HID keyboard simulation"
@@ -14210,7 +14223,7 @@ msgstr "URL λήψης:"
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 msgctxt "addonStore"
 msgid "Source URL:"
-msgstr "Πηγή URL:"
+msgstr "URL πηγής:"
 
 #. Translators: A button in the addon installation warning / blocked dialog which shows
 #. more information about the addon
@@ -14276,11 +14289,12 @@ msgid ""
 "{NVDAVersion}. Installation may cause unstable behavior in NVDA.\n"
 "Proceed with installation anyway? "
 msgstr ""
-"Warning: add-on is incompatible: {name} {version}. Check for an updated "
-"version of this add-on if possible. The last tested NVDA version for this "
-"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
-"{NVDAVersion}. Installation may cause unstable behavior in NVDA.\n"
-"Proceed with installation anyway? "
+"Προσοχή: πρόσθετο μη συμβατό: {name} {version}. Ελέγξτε για ενημερωμένη "
+"έκδοση αυτού του πρόσθετου αν είναι δυνατό. Η τελευταία δοκιμασμένη έκδοση "
+"του NVDA για αυτό το πρόσθετο είναι {lastTestedNVDAVersion}, η τρέχουσα "
+"έκδοση του NVDA είναι {NVDAVersion}. Η εγκατάσταση ίσως προκαλέσει "
+"προβλήματα σταθερότητας στο NVDA.\n"
+"Να πραγματοποιηθεί η εγκατάσταση παρόλα αυτά; "
 
 #. Translators: The message displayed when enabling an add-on package that is incompatible
 #. because the add-on is too old for the running version of NVDA.
@@ -14293,8 +14307,8 @@ msgid ""
 "{NVDAVersion}. Enabling may cause unstable behavior in NVDA.\n"
 "Proceed with enabling anyway? "
 msgstr ""
-"Προειδοποίηση: το πρόσθετο είναι μη συμβατό: {name} {version}. Αν είναι "
-"δυνατό, ελέγξτε για ενημερωμερωμένη έκδοση αυτού του πρόσθετου. Η τελευταία "
+"Προσοχή: το πρόσθετο είναι μη συμβατό: {name} {version}. Ελέγξτε για "
+"ενημερωμένη έκδοση αυτού του πρόσθετου αν είναι δυνατό. Η τελευταία "
 "δοκιμασμένη έκδοση του NVDA για αυτό το πρόσθετο είναι "
 "{lastTestedNVDAVersion}, η τρέχουσα έκδοση του NVDA είναι {NVDAVersion}. Η "
 "ενεργοποίηση ίσως προκαλέσει προβλήματα σταθερόττητας στο NVDA.\n"
@@ -14322,7 +14336,7 @@ msgstr "Εκδότης: {publisher}\n"
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Author: {author}\n"
-msgstr "Συγγραφέας: {author}\n"
+msgstr "Συντάκτης: {author}\n"
 
 #. Translators: the url part of the About Add-on information
 #, python-brace-format
@@ -14385,7 +14399,7 @@ msgstr "Εγκατάσταση από &εξωτερική πηγή"
 #. Translators: Banner notice that is displayed in the Add-on Store.
 msgctxt "addonStore"
 msgid "Note: NVDA was started with add-ons disabled"
-msgstr "Προσοχή: Το NVDA εκκίνησε με τα πρόσθετα απενεργοποιημένα"
+msgstr "Σημείωση: Το NVDA εκκίνησε με τα πρόσθετα απενεργοποιημένα"
 
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"
@@ -14399,7 +14413,7 @@ msgstr "&Να συμπεριληφθούν και μη συμβατά πρόσθ
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"
 msgid "Ena&bled/disabled:"
-msgstr "&Ενεργοποιημένα/απενεργοποιημένα:"
+msgstr "&Ενεργοποιημένο/απενεργοποιημένο:"
 
 #. Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"
@@ -14484,10 +14498,9 @@ msgid "&Install"
 msgstr "&Εγκατάσταση"
 
 #. Translators: Label for an action that installs the selected addon
-#, fuzzy
 msgctxt "addonStore"
 msgid "&Install (override incompatibility)"
-msgstr "Μη συμβατά πρόσθετα"
+msgstr "&Εγκατάσταση (παράκαμψη της ασυμβατότητας)"
 
 #. Translators: Label for an action that updates the selected addon
 msgctxt "addonStore"
@@ -14511,10 +14524,9 @@ msgid "&Enable"
 msgstr "&Ενεργοποίηση"
 
 #. Translators: Label for an action that enables the selected addon
-#, fuzzy
 msgctxt "addonStore"
 msgid "&Enable (override incompatibility)"
-msgstr "Μη συμβατό"
+msgstr "&Ενεργοποίηση (παράκαμψη της ασυμβατότητας)"
 
 #. Translators: Label for an action that removes the selected addon
 msgctxt "addonStore"
