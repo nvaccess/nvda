@@ -226,7 +226,7 @@ class ScreenCurtainGuiPanel(
 
 	_enabledCheckbox: wx.CheckBox
 	_enableCheckSizer: wx.BoxSizer
-
+	
 	helpId = "VisionSettingsScreenCurtain"
 
 	def __init__(
