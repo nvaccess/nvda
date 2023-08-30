@@ -22,7 +22,7 @@ This includes information on reporting issues, triaging issues, testing, transla
 * [Community add-ons website](https://addons.nvda-project.org/)
 
 ### Communication channels
-* NV Access has several ways you can contact us and keep up to date on the latest of NVDA.
+* NV Access has several ways you can contact us and keep up to date on the latest on NVDA.
 See the [NV Access](https://www.nvaccess.org/contact-us/) website for our social media accounts and other contact information.
 * [NVDA Users Mailing List](https://nvda.groups.io/g/nvda)
 * [NVDA Developers Mailing List](https://groups.io/g/nvda-devel)
