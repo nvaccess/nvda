@@ -298,7 +298,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [uwpOcr]
 	language = string(default="")
 	autoRefresh = boolean(default=false)
-	autoRefreshIntervalMs = integer(default=1500,min=500)
+	autoRefreshInterval = integer(default=1500, min=100)
 
 [upgrade]
 	newLaptopKeyboardLayout = boolean(default=false)
