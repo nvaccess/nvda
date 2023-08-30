@@ -7,7 +7,7 @@ Whether you are a beginner, an advanced user, a new or a long time developer; or
 * [NVDA on GitHub](https://github.com/nvaccess/nvda)
 * [Contributing to NVDA](../../.github/CONTRIBUTING.md).
 This includes information on reporting issues, triaging issues, testing, translating, contributing code/documentation and creating add-ons.
-* The NVDA repository [Wiki](https://github.com/nvaccess/nvda/wiki), and the [Community Wiki](https://github.com/nvaccess/nvda-community/wiki).
+* The NVDA repository [Wiki](https://github.com/nvaccess/nvda/wiki) contains more guides and documentation.
 * [NVDA development snapshots](https://www.nvaccess.org/files/nvda/snapshots/): Automatically generated builds of the project in its current state of development
 * [Translating NVDA](https://github.com/nvaccess/nvda/wiki/Translating): Information about how to translate NVDA into another language
 
@@ -22,12 +22,12 @@ This includes information on reporting issues, triaging issues, testing, transla
 * [Community add-ons website](https://addons.nvda-project.org/)
 
 ### Communication channels
+* NV Access has several ways you can contact us and keep up to date on the latest of NVDA.
+See the [NV Access](https://www.nvaccess.org/contact-us/) website for our social media accounts and other contact information.
 * [NVDA Users Mailing List](https://nvda.groups.io/g/nvda)
 * [NVDA Developers Mailing List](https://groups.io/g/nvda-devel)
 * [NVDA Translators list](https://groups.io/g/nvda-translations)
 * [NVDA Add-ons Mailing List](https://groups.io/g/nvda-addons)
 * [NVDA Add-on API Mailing List](https://groups.google.com/a/nvaccess.org/g/nvda-api)
-* [Instant Messaging channel for NVDA Support](https://gitter.im/nvaccess/NVDA)
-* [Other sources including groups and profiles on social media channels, language-specific websites and mailing lists etc.](https://github.com/nvaccess/nvda-community/wiki/Connect)
-
-You can also get direct support from NV Access. See the [NV Access](https://www.nvaccess.org/contact-us/) website for more details.
+* [NVDA Community Gitter channel](https://gitter.im/nvaccess/NVDA) (Instant Messaging)
+* [Other sources including groups and profiles on social media channels, language-specific websites and mailing lists etc.](https://github.com/nvaccess/nvda/wiki/Connect)

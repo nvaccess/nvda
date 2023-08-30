@@ -6,7 +6,7 @@
 * [Submitting to the NVDA Add-on Store](https://github.com/nvaccess/addon-datastore/blob/master/docs/submitters/submissionGuide.md)
 * [NVDA add-ons community coordination and support center](https://github.com/nvdaaddons): all about NVDA's add-ons environment
 * [NVDA add-ons community template](https://github.com/nvdaaddons/AddonTemplate): A repository for generating add-ons using a template
-* The NVDA repository [Wiki](https://github.com/nvaccess/nvda/wiki), and the [Community Wiki](https://github.com/nvaccess/nvda-community/wiki).
+* The NVDA repository [Wiki](https://github.com/nvaccess/nvda/wiki) contains more guides and documentation.
 
 ### Documentation
 * [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
@@ -18,8 +18,8 @@
 * [GitHub discussions](https://github.com/nvaccess/nvda/discussions)
 * [NVDA Developers Mailing List](https://groups.io/g/nvda-devel)
 * [NVDA Add-ons Mailing List](https://groups.io/g/nvda-addons)
-* [Instant Messaging channel for NVDA Support](https://gitter.im/nvaccess/NVDA)
-* [Other sources including groups and profiles on social media channels, language-specific websites and mailing lists etc.](https://github.com/nvaccess/nvda-community/wiki/Connect)
+* [NVDA Community Gitter channel](https://gitter.im/nvaccess/NVDA) (Instant Messaging)
+* [Other sources including groups and profiles on social media channels, language-specific websites and mailing lists etc.](https://github.com/nvaccess/nvda/wiki/Connect)
 
 ## NVDA project links
 * [NVDA on GitHub](https://github.com/nvaccess/nvda)

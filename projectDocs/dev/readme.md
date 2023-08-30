@@ -4,7 +4,7 @@
 * [Reporting issues on GitHub](../issues/readme.md)
 * [Contributing to NVDA](../../.github/CONTRIBUTING.md).
 This includes information on reporting issues, triaging issues, testing, translating, contributing code/documentation and creating add-ons.
-* The NVDA repository [Wiki](https://github.com/nvaccess/nvda/wiki), and the [Community Wiki](https://github.com/nvaccess/nvda-community/wiki).
+* The NVDA repository [Wiki](https://github.com/nvaccess/nvda/wiki) contains more guides and documentation.
 * [NVDA development snapshots](https://www.nvaccess.org/files/nvda/snapshots/): Automatically generated builds of the project in its current state of development
 
 ### Documentation
@@ -17,5 +17,5 @@ This includes information on reporting issues, triaging issues, testing, transla
 	* Report [NVDA issues and feature requests on GitHub](https://github.com/nvaccess/nvda/issues).
 	* Start a [GitHub discussion with the development community](https://github.com/nvaccess/nvda/discussions).
 * [NVDA Developers Mailing List](https://groups.io/g/nvda-devel)
-* [Instant Messaging channel for NVDA Support](https://gitter.im/nvaccess/NVDA)
-* [Other sources including groups and profiles on social media channels, language-specific websites and mailing lists etc.](https://github.com/nvaccess/nvda-community/wiki/Connect)
+* [NVDA Community Gitter channel](https://gitter.im/nvaccess/NVDA) (Instant Messaging)
+* [Other sources including groups and profiles on social media channels, language-specific websites and mailing lists etc.](https://github.com/nvaccess/nvda/wiki/Connect)
