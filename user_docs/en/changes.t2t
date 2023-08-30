@@ -19,9 +19,19 @@ What's New in NVDA
 -
 
 == Changes ==
+- Braille:
+  - When the text in a terminal changes without updating the caret, the text on a braille display will now properly update when positioned on a changed line.
+  This includes situations where braille is tethered to review. (#15115)
+  - More BRLTTY key bindings are now mapped to NVDA commands (#6483):
+    - learn: toggle NVDA input help
+    - prefmenu: open the NVDA menu
+    - prefload/prefsave: Load/save NVDA configuration
+    - time: Show time
+    - say_line: Speak the current line where the review cursor is located
+    - say_below: Say all using review cursor
+  - The BRLTTY driver is only available when a BRLTTY instance with BrlAPI enabled is running. (#15335)
+  -
 - Rich edit controls in applications such as Wordpad now use UI Automation (UIA) when the application advertises native support for this. (#15314)
-- When the text in a terminal changes without updating the caret, the text on a braille display will now properly update when positioned on a changed line.
-This includes situations where braille is tethered to review. (#15115)
 -
 
 
