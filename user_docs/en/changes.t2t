@@ -51,7 +51,8 @@ They should also be thread safe, making it possible to call them from background
 -
 
 === Deprecations ===
-- ``braille.BrailleHandler.handlePendingCaretUpdate`` is now deprecated with no public replacement. (#15163)
+- ``braille.BrailleHandler.handlePendingCaretUpdate`` is now deprecated with no public replacement.
+It will be removed in 2024.1. (#15163)
 - Importing the constants ``xlCenter``, ``xlJustify``, ``xlLeft``, ``xlRight``, ``xlDistributed``, ``xlBottom``, ``xlTop`` from ``NVDAObjects.window.excel`` is deprecated.
 Use ``XlHAlign`` or ``XlVAlign`` enumerations instead. (#15205)
 - The mapping ``NVDAObjects.window.excel.alignmentLabels`` is deprecated.
