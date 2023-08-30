@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2021-2022 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2021-2023 NV Access Limited, Cyrille Bougot
 
 import re
 from typing import Dict
@@ -99,3 +99,83 @@ class FontSize:
 				return FontSize._unitToTranslatableString[measurementUnit] % measurement
 		log.debugWarning(f"Unknown font-size value, can't translate '{fontSize}'")
 		return fontSize
+
+
+class TextAlign(DisplayStringStrEnum):
+	"""Values to use for 'text-align' NVDA format field.
+	These describe the horizontal paragraph position.
+	"""
+	UNDEFINED = 'undefined'
+	LEFT = 'left'
+	CENTER = 'center'
+	RIGHT = 'right'
+	JUSTIFY = 'justify'
+	DISTRIBUTE = 'distribute'
+	CENTER_ACROSS_SELECTION = 'center-across-selection'
+	GENERAL = 'general'
+	FILL = 'fill'
+
+	@property
+	def _displayStringLabels(self):
+		return _textAlignLabels
+
+
+#: Text to use for 'text-align format field values. These describe the horizontal position of a paragraph
+#: or a cell's content.
+_textAlignLabels: Dict[TextAlign, str] = {
+	TextAlign.UNDEFINED: "",  # There is nothing to report if no alignment is defined.
+	# Translators: Reported when text is left-aligned.
+	TextAlign.LEFT: _("align left"),
+	# Translators: Reported when text is centered.
+	TextAlign.CENTER: _("align center"),
+	# Translators: Reported when text is right-aligned.
+	TextAlign.RIGHT: _("align right"),
+	# Translators: Reported when text is justified.
+	# See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
+	TextAlign.JUSTIFY: _("align justify"),
+	# Translators: Reported when text is justified with character spacing (Japanese etc)
+	# See http://kohei.us/2010/01/21/distributed-text-justification/
+	TextAlign.DISTRIBUTE: _("align distributed"),
+	# Translators: Reported when text is centered across multiple cells.
+	TextAlign.CENTER_ACROSS_SELECTION: _("align centered across selection"),
+	# Translators: Reported in Excel when text is formatted with "General" alignment, i.e. the name of the
+	# alignment in Excel aligning the cell's content depending on its type: text left and numbers right.
+	TextAlign.GENERAL: _("align general"),
+	# Translators: Reported in Excel when text is formatted with "Fill" alignment, i.e. the name of the
+	# alignment in Excel repeating the cell's content for the width of the cell.
+	TextAlign.FILL: _("align fill"),
+}
+
+
+class VerticalTextAlign(DisplayStringStrEnum):
+	"""Values to use for 'vertical-align' NVDA format field.
+	These describe the vertical text position, e.g. in a table cell.
+	"""
+	UNDEFINED = 'undefined'
+	TOP = 'top'
+	CENTER = 'center'
+	BOTTOM = 'bottom'
+	JUSTIFY = 'justify'
+	DISTRIBUTE = 'distributed'
+
+	@property
+	def _displayStringLabels(self):
+		return _verticalTextAlignLabels
+
+
+#: Text to use for 'vertical-align' format field values. These describe the vertical position
+#: of a cell's content.
+_verticalTextAlignLabels: Dict[VerticalTextAlign, str] = {
+	VerticalTextAlign.UNDEFINED: "",  # There is nothing to report if no vertical alignment is defined.
+	# Translators: Reported when text is vertically top-aligned.
+	VerticalTextAlign.TOP: _("vertical align top"),
+	# Translators: Reported when text is vertically middle aligned.
+	VerticalTextAlign.CENTER: _("vertical align middle"),
+	# Translators: Reported when text is vertically bottom-aligned.
+	VerticalTextAlign.BOTTOM: _("vertical align bottom"),
+	# Translators: Reported when text is vertically justified.
+	VerticalTextAlign.JUSTIFY: _("vertical align justified"),
+	# Translators: Reported when text is vertically justified but with character spacing
+	# (For some Asian content).
+	VerticalTextAlign.DISTRIBUTE: _("vertical align distributed"),
+}
