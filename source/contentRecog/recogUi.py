@@ -122,8 +122,6 @@ class RefreshableRecogResultNVDAObject(RecogResultNVDAObject, LiveText):
 		LiveText.initOverlayClass(self)
 
 	def _recognize(self, onResult: onRecognizeResultCallbackT):
-		import tones
-		tones.beep(440, 30)
 		if self.result and not self.hasFocus:
 			# We've already recognized once, so we did have focus, but we don't any
 			# more. This means the user dismissed the recognition result, so we

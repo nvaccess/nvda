@@ -9,9 +9,9 @@
 from io import StringIO
 from configobj import ConfigObj
 
-#: The version of the schema outlined in this file. Increment this when modifying the schema and
+#: The version of the schema outlined in this file. Increment this when modifying the schema and 
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
-#: just adding a new element to (or removing from) the schema, only when old versions of the config
+#: just adding a new element to (or removing from) the schema, only when old versions of the config 
 #: (conforming to old schema versions) will not work correctly with the new schema.
 latestSchemaVersion = 10
 
