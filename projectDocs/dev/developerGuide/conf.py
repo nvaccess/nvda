@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2019-2020 NV Access Limited, Leonard de Ruijter, Joseph Lee
+# Copyright (C) 2019-2023 NV Access Limited, Leonard de Ruijter, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -9,7 +9,9 @@
 
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../source'))
+_appDir = os.path.abspath(os.path.join("..", "..", "..", "source"))
+
+sys.path.insert(0, _appDir)
 import sourceEnv  # noqa: F401, E402
 
 
@@ -40,8 +42,7 @@ globalVars.appArgs.disableAddons = True
 
 # #11971: NVDA is not running, therefore app dir is undefined.
 # Therefore tell NVDA that apt source directory is app dir.
-appDir = os.path.join("..", "source")
-globalVars.appDir = os.path.abspath(appDir)
+globalVars.appDir = _appDir
 
 
 # Import NVDA's versionInfo module.

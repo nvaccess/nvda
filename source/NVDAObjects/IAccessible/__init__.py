@@ -50,7 +50,7 @@ import api
 import config
 import controlTypes
 from controlTypes import TextPosition
-from controlTypes.formatFields import FontSize
+from controlTypes.formatFields import FontSize, TextAlign
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
@@ -86,11 +86,23 @@ def getNVDAObjectFromPoint(x,y):
 FORMAT_OBJECT_ATTRIBS = frozenset({"text-align"})
 def normalizeIA2TextFormatField(formatField):
 	try:
-		textAlign=formatField.pop("text-align")
+		val = formatField.pop("text-align")
 	except KeyError:
 		textAlign=None
+	else:
+		mozillaTextAlign = {
+			'-moz-left': 'left',
+			'-moz-center': 'center',
+			'-moz-right': 'right',
+		}
+		val = mozillaTextAlign.get(val, val)
+		try:
+			textAlign = TextAlign(val)
+		except ValueError:
+			log.debugWarning(f'Unsupported value for text-align attribute: "{val}"')
+			textAlign = None
 	if textAlign:
-		formatField["text-align"]=textAlign
+		formatField["text-align"] = textAlign
 	try:
 		fontWeight=formatField.pop("font-weight")
 	except KeyError:

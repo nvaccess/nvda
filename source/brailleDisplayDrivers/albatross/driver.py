@@ -25,8 +25,10 @@ from threading import (
 	Lock,
 )
 from typing import (
+	Iterator,
 	List,
 	Optional,
+	Tuple,
 )
 
 import braille
@@ -90,9 +92,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._keyLayout: int
 		# Keep old display data, only changed content is sent.
 		self._oldCells: List[int] = []
-		# After reconnection and when user exits from device menu, display may not
-		# update automatically. Keep current cell content for this.
-		self._currentCells: List[int] = []
 		# Set to True when filtering redundant init packets when init byte
 		# received but not yet settings byte.
 		self._initByteReceived = False
@@ -114,14 +113,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._exitEvent = Event()
 		# Thread for read
 		self._handleRead = None
-		# Display function is called manually when display is switched back on
-		# or exited from internal menu. Ensuring data integrity.
+		# Display function is called indirectly manually when display is switched
+		# back on or exited from internal menu. Ensuring data integrity.
 		self._displayLock = Lock()
 		# For proper write operations because calls may be from different threads
 		self._writeLock = Lock()
-		# Timer to keep connection (see KC_INTERVAL).
+		# Timer to keep connection (see L{KC_INTERVAL}).
 		self._kc = None
-		# When previous write was done (see KC_INTERVAL).
+		# When previous write was done (see L{KC_INTERVAL}).
 		self._writeTime = 0.0
 		self._searchPorts(port)
 
@@ -204,11 +203,20 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		If no connection, Albatross sends continuously INIT_START_BYTE
 		followed by byte containing various settings like number of cells.
 
-		@return: C{True} on success, C{False} on failure
+		@raises: RuntimeError if port initialization fails
+		@return: C{True} on success, C{False} on connection failure
 		"""
 		for i in range(MAX_INIT_RETRIES):
 			if not self._dev:
-				if not self._initPort(i):
+				try:
+					initState: bool = self._initPort(i)
+				except IOError:
+					# Port initialization failed. No need to try with 9600 bps,
+					# and there is no other port to try.
+					log.debug(f"Port {self._currentPort} not initialized", exc_info=True)
+					raise RuntimeError(f"Port {self._currentPort} cannot be initialized for Albatross")
+				# I/O buffers reset failed, retried again in L{_openPort}
+				if not initState:
 					continue
 			elif not self._dev.is_open:
 				if not self._openPort(i):
@@ -229,38 +237,27 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _initPort(self, i: int = MAX_INIT_RETRIES - 1) -> bool:
 		"""Initializes port.
 		@param i: Just for logging retries.
-		@return: C{True} on success, C{False} on failure
+		@raises: IOError if port initialization fails
+		@return: C{True} on success, C{False} on I/O buffers reset failure
 		"""
-		try:
-			self._dev = serial.Serial(
-				self._currentPort,
-				baudrate=self._baudRate,
-				stopbits=serial.STOPBITS_ONE,
-				parity=serial.PARITY_NONE,
-				timeout=READ_TIMEOUT,
-				writeTimeout=WRITE_TIMEOUT
-			)
-			log.debug(f"Port {self._currentPort} initialized")
-			if not self._resetBuffers():
-				if i == MAX_INIT_RETRIES - 1:
-					return False
-				log(
-					f"sleeping {SLEEP_TIMEOUT} seconds before try {i + 2} / {MAX_INIT_RETRIES}"
-				)
-				time.sleep(SLEEP_TIMEOUT)
-				return False
-			return True
-		except IOError:
+		self._dev = serial.Serial(
+			self._currentPort,
+			baudrate=self._baudRate,
+			stopbits=serial.STOPBITS_ONE,
+			parity=serial.PARITY_NONE,
+			timeout=READ_TIMEOUT,
+			writeTimeout=WRITE_TIMEOUT
+		)
+		log.debug(f"Port {self._currentPort} initialized")
+		if not self._resetBuffers():
 			if i == MAX_INIT_RETRIES - 1:
-				log.debug(f"Port {self._currentPort} not initialized", exc_info=True)
 				return False
-			log.debug(
-				f"Port {self._currentPort} not initialized, sleeping {SLEEP_TIMEOUT} seconds "
-				f"before try {i + 2} / {MAX_INIT_RETRIES}",
-				exc_info=True
+			log(
+				f"sleeping {SLEEP_TIMEOUT} seconds before try {i + 2} / {MAX_INIT_RETRIES}"
 			)
 			time.sleep(SLEEP_TIMEOUT)
 			return False
+		return True
 
 	def _openPort(self, i: int = MAX_INIT_RETRIES - 1) -> bool:
 		"""Opens port.
@@ -565,18 +562,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				return
 		self._handleSettingsByte(data)
 		# Reconnected or exited device menu if length of _oldCells is numCells.
-		# Also checking that _currentCells has sometimes updated.
-		# Show last known content.
-		if (
-			len(self._oldCells) == self.numCells
-			and len(self._oldCells) == len(self._currentCells)
-		):
+		if len(self._oldCells) == self.numCells:
+			# Ensure display is updated after reconnection and exit from internal menu.
 			self._clearOldCells()
-			self.display(self._currentCells)
-			if not self._tryToConnect:
-				log.debug(
-					"Updated display content after reconnection or display menu exit"
-				)
+			braille.handler._displayWithCursor()
+			log.debug(
+				"Updated display content after reconnection or display menu exit"
+			)
 		if self._waitingSettingsByte:
 			self._waitingSettingsByte = False
 
@@ -736,16 +728,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"""Prepare cell content for display.
 		@param cells: List of cells content
 		"""
-		# Using lock because called also manually when display is switched back on
-		# or exited from internal menu.
+		# No connection
+		if self._tryToConnect or self._disabledConnection:
+			log.debug("returning, no connection")
+			return
+		# Using lock because called also indirectly manually when display is
+		# switched back on or exited from internal menu.
 		with self._displayLock:
-			# Keep _currentCells up to date for reconnection regardless
-			# of connection state of driver.
-			self._currentCells = cells.copy()
-			# No connection
-			if self._tryToConnect or self._disabledConnection:
-				log.debug("returning, no connection")
-				return
 			writeBytes: List[bytes] = [START_BYTE, ]
 			# Only changed content is sent (cell index and data).
 			for i, cell in enumerate(cells):
