@@ -226,7 +226,7 @@ class ScreenCurtainGuiPanel(
 
 	_enabledCheckbox: wx.CheckBox
 	_enableCheckSizer: wx.BoxSizer
-	
+
 	helpId = "VisionSettingsScreenCurtain"
 
 	def __init__(
@@ -279,11 +279,27 @@ class ScreenCurtainGuiPanel(
 		if evt.GetEventObject() is self._enabledCheckbox:
 			self._ensureEnableState(evt.IsChecked())
 
+	def _ocrActive(self) -> bool:
+		"""Outputs a message when trying to activate screen curtain when OCR is active.
+		@returns: C{True} when OCR is active, C{False} otherwise.
+		"""
+		import api
+		from contentRecog.recogUi import RefreshableRecogResultNVDAObject
+		import speech
+		import ui
+		focusObj = api.getFocusObject()
+		if isinstance(focusObj, RefreshableRecogResultNVDAObject) and focusObj.recognizer.allowAutoRefresh:
+			# Translators: Warning message when trying to enable the screen curtain when OCR is active.
+			warningMessage = _("Could not enable screen curtain when performing content recognition")
+			ui.message(warningMessage, speechPriority=speech.priorities.Spri.NOW)
+			return True
+		return False
+
 	def _ensureEnableState(self, shouldBeEnabled: bool):
 		currentlyEnabled = bool(self._providerControl.getProviderInstance())
 		if shouldBeEnabled and not currentlyEnabled:
 			confirmed = self.confirmInitWithUser()
-			if not confirmed or not self._providerControl.startProvider():
+			if not confirmed or self._ocrActive() or not self._providerControl.startProvider():
 				self._enabledCheckbox.SetValue(False)
 		elif not shouldBeEnabled and currentlyEnabled:
 			self._providerControl.terminateProvider()
