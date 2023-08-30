@@ -16,6 +16,7 @@ from collections import namedtuple
 import ctypes
 from typing import Callable, Dict, List, Union
 import garbageHandler
+from baseObject import AutoPropertyObject
 import cursorManager
 import textInfos.offsets
 from abc import ABCMeta, abstractmethod
@@ -31,7 +32,7 @@ class BaseContentRecogTextInfo(cursorManager._ReviewCursorManagerTextInfo):
 	"""
 
 
-class ContentRecognizer(garbageHandler.TrackedObject, metaclass=ABCMeta):
+class ContentRecognizer(AutoPropertyObject):
 	"""Implementation of a content recognizer.
 	"""
 
@@ -42,6 +43,8 @@ class ContentRecognizer(garbageHandler.TrackedObject, metaclass=ABCMeta):
 	recognizer uses an internet service or is very resource intensive, this
 	may be undesirable.
 	"""
+	autoRefreshInterval: int = 1500
+	"""How often (in ms) to perform recognition."""
 
 	def getResizeFactor(self, width: int, height: int) -> Union[int, float]:
 		"""Return the factor by which an image must be resized

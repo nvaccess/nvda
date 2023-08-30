@@ -10,8 +10,8 @@ and present the result to the user so they can read it with cursor keys, etc.
 NVDA scripts or GUI call the L{recognizeNavigatorObject} function with the recognizer they wish to use.
 """
 
+from typing import Optional, Union
 import api
-import config
 import ui
 import screenBitmap
 import NVDAObjects.window
@@ -24,10 +24,10 @@ import textInfos
 from logHandler import log
 import queueHandler
 import core
-from . import RecogImageInfo, ContentRecognizer
+from . import RecogImageInfo, ContentRecognizer, RecognitionResult, onRecognizeResultCallbackT
 
 
-class RecogResultNVDAObject(cursorManager.CursorManager, LiveText, NVDAObjects.window.Window):
+class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Window):
 	"""Fake NVDAObject used to present a recognition result in a cursor manager.
 	This allows the user to read the result with cursor keys, etc.
 	Pressing enter will activate (e.g. click) the text at the cursor.
@@ -39,65 +39,12 @@ class RecogResultNVDAObject(cursorManager.CursorManager, LiveText, NVDAObjects.w
 	name = _("Result")
 	treeInterceptor = None
 
-	def __init__(
-			self,
-			recognizer: ContentRecognizer,
-			imageInfo: RecogImageInfo,
-			obj: NVDAObjects.NVDAObject
-	):
+	def __init__(self, result=None, obj=None):
 		self.parent = parent = api.getFocusObject()
-		self.recognizer = recognizer
-		self.imageInfo = imageInfo
-		self.result = None
+		self.result = result
+		if result:
+			self._selection = self.makeTextInfo(textInfos.POSITION_FIRST)
 		super().__init__(windowHandle=parent.windowHandle)
-		LiveText.initOverlayClass(self)
-
-	def _recognize(self, onResult):
-		if self.result and not self.hasFocus:
-			# We've already recognized once, so we did have focus, but we don't any
-			# more. This means the user dismissed the recognition result, so we
-			# shouldn't recognize again.
-			return
-		imgInfo = self.imageInfo
-		sb = screenBitmap.ScreenBitmap(imgInfo.recogWidth, imgInfo.recogHeight)
-		pixels = sb.captureImage(
-			imgInfo.screenLeft, imgInfo.screenTop,
-			imgInfo.screenWidth, imgInfo.screenHeight
-		)
-		self.recognizer.recognize(pixels, self.imageInfo, onResult)
-
-	def _onFirstResult(self, result):
-		global _activeRecog
-		_activeRecog = None
-		# This might get called from a background thread, so any UI calls must be queued to the main thread.
-		if isinstance(result, Exception):
-			log.error(f"Recognition failed: {result}")
-			# Translators: Reported when recognition (e.g. OCR) fails.
-			queueHandler.queueFunction(
-				queueHandler.eventQueue, ui.message, _("Recognition failed")
-			)
-			return
-		self.result = result
-		self._selection = self.makeTextInfo(textInfos.POSITION_FIRST)
-		# This method queues an event to the main thread.
-		self.setFocus()
-		if self.recognizer.allowAutoRefresh:
-			self._scheduleRecognize()
-
-	def _scheduleRecognize(self):
-		core.callLater(config.conf['uwpOcr']['autoRefreshIntervalMs'], self._recognize, self._onResult)
-
-	def _onResult(self, result):
-		if not self.hasFocus:
-			# The user has dismissed the recognition result.
-			return
-		self.result = result
-		# The current selection refers to the old result. We need to refresh that,
-		# but try to keep the same cursor position.
-		self.selection = self.makeTextInfo(self._selection.bookmark)
-		# Tell LiveText that our text has changed.
-		self.event_textChange()
-		self._scheduleRecognize()
 
 	def makeTextInfo(self, position):
 		# Maintain our own fake selection/caret.
@@ -120,20 +67,6 @@ class RecogResultNVDAObject(cursorManager.CursorManager, LiveText, NVDAObjects.w
 		# This might get called from a background thread and all NVDA events must run in the main thread.
 		eventHandler.queueEvent("gainFocus", self)
 
-	def event_gainFocus(self):
-		super().event_gainFocus()
-		if config.conf['uwpOcr']['autoRefresh'] and self.recognizer.allowAutoRefresh:
-			# Make LiveText watch for and report new text.
-			self.startMonitoring()
-
-	def event_loseFocus(self):
-		# note: If monitoring has not been started, this will have no effect.
-		self.stopMonitoring()
-		super().event_loseFocus()
-
-	def start(self):
-		self._recognize(self._onFirstResult)
-
 	def _get_hasFocus(self) -> bool:
 		return self is api.getFocusObject()
 
@@ -146,7 +79,6 @@ class RecogResultNVDAObject(cursorManager.CursorManager, LiveText, NVDAObjects.w
 	script_activatePosition.__doc__ = _("Activates the text at the cursor if possible")
 
 	def script_exit(self, gesture):
-		self.recognizer.cancel()
 		eventHandler.executeEvent("gainFocus", self.parent)
 	# Translators: Describes a command.
 	script_exit.__doc__ = _("Dismiss the recognition result")
@@ -171,6 +103,94 @@ class RecogResultNVDAObject(cursorManager.CursorManager, LiveText, NVDAObjects.w
 		"kb:space": "activatePosition",
 		"kb:escape": "exit",
 	}
+
+
+class RefreshableRecogResultNVDAObject(RecogResultNVDAObject, LiveText):
+	"""NVDA Object that itself is responsible for fetching the recognizition result.
+	It is also able to refresh the result at intervals whenthe recognizer supports it.
+	"""
+
+	def __init__(
+			self,
+			recognizer: ContentRecognizer,
+			imageInfo: RecogImageInfo,
+			obj: Optional[NVDAObjects.NVDAObject] = None
+	):
+		self.recognizer = recognizer
+		self.imageInfo = imageInfo
+		super().__init__(result=None, obj=obj)
+		LiveText.initOverlayClass(self)
+
+	def _recognize(self, onResult: onRecognizeResultCallbackT):
+		import tones
+		tones.beep(440, 30)
+		if self.result and not self.hasFocus:
+			# We've already recognized once, so we did have focus, but we don't any
+			# more. This means the user dismissed the recognition result, so we
+			# shouldn't recognize again.
+			return
+		imgInfo = self.imageInfo
+		sb = screenBitmap.ScreenBitmap(imgInfo.recogWidth, imgInfo.recogHeight)
+		pixels = sb.captureImage(
+			imgInfo.screenLeft, imgInfo.screenTop,
+			imgInfo.screenWidth, imgInfo.screenHeight
+		)
+		self.recognizer.recognize(pixels, self.imageInfo, onResult)
+
+	def _onFirstResult(self, result: Union[RecognitionResult, Exception]):
+		global _activeRecog
+		_activeRecog = None
+		# This might get called from a background thread, so any UI calls must be queued to the main thread.
+		if isinstance(result, Exception):
+			log.error(f"Recognition failed: {result}")
+			# Translators: Reported when recognition (e.g. OCR) fails.
+			queueHandler.queueFunction(
+				queueHandler.eventQueue, ui.message, _("Recognition failed")
+			)
+			return
+		self.result = result
+		self._selection = self.makeTextInfo(textInfos.POSITION_FIRST)
+		# This method queues an event to the main thread.
+		self.setFocus()
+		if self.recognizer.allowAutoRefresh:
+			self._scheduleRecognize()
+
+	def _scheduleRecognize(self):
+		core.callLater(self.recognizer.autoRefreshInterval, self._recognize, self._onResult)
+
+	def _onResult(self, result: Union[RecognitionResult, Exception]):
+		if not self.hasFocus:
+			# The user has dismissed the recognition result.
+			return
+		if isinstance(result, Exception):
+			log.error(f"Subsequent recognition failed: {result}")
+			# Translators: Reported when recognition (e.g. OCR) fails during automatic refresh.
+			queueHandler.queueFunction(
+				queueHandler.eventQueue, ui.message, _("Subsequent recognition failed, automatic refresh canceled")
+			)
+			self.stopMonitoring()
+			return
+		self.result = result
+		# The current selection refers to the old result. We need to refresh that,
+		# but try to keep the same cursor position.
+		self.selection = self.makeTextInfo(self._selection.bookmark)
+		# Tell LiveText that our text has changed.
+		self.event_textChange()
+		self._scheduleRecognize()
+
+	def event_gainFocus(self):
+		super().event_gainFocus()
+		if self.recognizer.allowAutoRefresh:
+			# Make LiveText watch for and report new text.
+			self.startMonitoring()
+
+	def event_loseFocus(self):
+		# note: If monitoring has not been started, this will have no effect.
+		self.stopMonitoring()
+		super().event_loseFocus()
+
+	def start(self):
+		self._recognize(self._onFirstResult)
 
 
 #: Keeps track of the recognition in progress, if any.
@@ -211,5 +231,5 @@ def recognizeNavigatorObject(recognizer: ContentRecognizer):
 		_activeRecog.recognizer.cancel()
 	# Translators: Reporting when content recognition (e.g. OCR) begins.
 	ui.message(_("Recognizing"))
-	_activeRecog = RecogResultNVDAObject(recognizer=recognizer, imageInfo=imgInfo, obj=nav)
+	_activeRecog = RefreshableRecogResultNVDAObject(recognizer=recognizer, imageInfo=imgInfo)
 	_activeRecog.start()
