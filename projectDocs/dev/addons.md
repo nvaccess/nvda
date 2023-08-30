@@ -6,13 +6,13 @@
 * [Submitting to the NVDA Add-on Store](https://github.com/nvaccess/addon-datastore/blob/master/docs/submitters/submissionGuide.md)
 * [NVDA add-ons community coordination and support center](https://github.com/nvdaaddons): all about NVDA's add-ons environment
 * [NVDA add-ons community template](https://github.com/nvdaaddons/AddonTemplate): A repository for generating add-ons using a template
+* The NVDA repository [Wiki](https://github.com/nvaccess/nvda/wiki), and the [Community Wiki](https://github.com/nvaccess/nvda-community/wiki).
 
 ### Documentation
 * [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
 * [Technical design overview](../design/technicalDesignOverview.md)
 * [NVDA Add-on Development Community Guide](https://github.com/nvdaaddons/DevGuide/wiki/NVDA-Add-on-Development-Guide)
 * [NVDA ControllerClient manual (NVDA API for external applications to directly speak or braille messages, etc.)](../../extras/controllerClient)
-* Further documentation is available in the NVDA repository's [Wiki](https://github.com/nvaccess/nvda/wiki), and in the [Community Wiki](https://github.com/nvaccess/nvda-community/wiki)
 
 ### Communication channels
 * [GitHub discussions](https://github.com/nvaccess/nvda/discussions)

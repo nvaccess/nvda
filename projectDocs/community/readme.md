@@ -7,6 +7,7 @@ Whether you are a beginner, an advanced user, a new or a long time developer; or
 * [NVDA on GitHub](https://github.com/nvaccess/nvda)
 * [Contributing to NVDA](../../.github/CONTRIBUTING.md).
 This includes information on reporting issues, triaging issues, testing, translating, contributing code/documentation and creating add-ons.
+* The NVDA repository [Wiki](https://github.com/nvaccess/nvda/wiki), and the [Community Wiki](https://github.com/nvaccess/nvda-community/wiki).
 * [NVDA development snapshots](https://www.nvaccess.org/files/nvda/snapshots/): Automatically generated builds of the project in its current state of development
 * [Translating NVDA](https://github.com/nvaccess/nvda/wiki/Translating): Information about how to translate NVDA into another language
 
@@ -15,7 +16,6 @@ This includes information on reporting issues, triaging issues, testing, transla
 * [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
 * [Key Commands](https://www.nvaccess.org/files/nvda/documentation/keyCommands.html)
 * [Changes in the latest release](https://www.nvaccess.org/files/nvda/documentation/changes.html)
-* Further documentation is available in the NVDA repository's [Wiki](https://github.com/nvaccess/nvda/wiki), and in the [Community Wiki](https://github.com/nvaccess/nvda-community/wiki)
 
 ### Add-ons
 * [The NVDA Add-on store](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#AddonsManager)
