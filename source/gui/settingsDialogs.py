@@ -2400,7 +2400,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		ignoreBlankLinesCheckBox = wx.CheckBox(pageAndSpaceBox, label=ignoreBlankLinesText)
 		self.ignoreBlankLinesRLICheckbox = pageAndSpaceGroup.addItem(ignoreBlankLinesCheckBox)
 		self.ignoreBlankLinesRLICheckbox.SetValue(config.conf["documentFormatting"]["ignoreBlankLinesForRLI"])
-
+		
 		# Translators: This message is presented in the document formatting settings panel
 		# If this option is selected, NVDA will report paragraph indentation if available. 
 		paragraphIndentationText = _("&Paragraph indentation")
@@ -2682,7 +2682,7 @@ class AdvancedPanelControls(
 	"""
 	
 	helpId = "AdvancedSettings"
-
+	
 	def __init__(self, parent):
 		super().__init__(parent)
 		self._defaultsRestored = False
