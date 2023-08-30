@@ -141,9 +141,11 @@ class RefreshableRecogResultNVDAObject(RecogResultNVDAObject, LiveText):
 		# This might get called from a background thread, so any UI calls must be queued to the main thread.
 		if isinstance(result, Exception):
 			log.error(f"Recognition failed: {result}")
-			# Translators: Reported when recognition (e.g. OCR) fails.
 			queueHandler.queueFunction(
-				queueHandler.eventQueue, ui.message, _("Recognition failed")
+				queueHandler.eventQueue,
+				ui.message,
+				# Translators: Reported when recognition (e.g. OCR) fails.
+				_("Recognition failed")
 			)
 			return
 		self.result = result
@@ -162,9 +164,11 @@ class RefreshableRecogResultNVDAObject(RecogResultNVDAObject, LiveText):
 			return
 		if isinstance(result, Exception):
 			log.error(f"Subsequent recognition failed: {result}")
-			# Translators: Reported when recognition (e.g. OCR) fails during automatic refresh.
 			queueHandler.queueFunction(
-				queueHandler.eventQueue, ui.message, _("Subsequent recognition failed, automatic refresh canceled")
+				queueHandler.eventQueue,
+				ui.message,
+				# Translators: Reported when recognition (e.g. OCR) fails during automatic refresh.
+				_("Automatic refresh of recognition result failed")
 			)
 			self.stopMonitoring()
 			return

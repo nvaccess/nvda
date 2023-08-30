@@ -56,7 +56,6 @@ EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
 	'Display',
 	'left',
 	'right',
-	'Recognition failed',
 	'NVDA &web site',
 	'E&xit',
 	'Error renaming profile.',
