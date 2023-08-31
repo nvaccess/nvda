@@ -9,6 +9,7 @@
 from typing import Dict, List, Optional, Type
 from comtypes import COMError
 import config
+from logHandler import log
 from config.configFlags import ReportTableHeaders
 import UIAHandler
 from .. import NVDAObject
