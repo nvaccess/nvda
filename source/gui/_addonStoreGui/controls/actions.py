@@ -3,6 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from abc import ABC, abstractmethod
 import functools
 from typing import (
 	Dict,
@@ -11,7 +12,6 @@ from typing import (
 	List,
 	TypeVar,
 )
-from typing_extensions import Protocol
 
 import wx
 
@@ -27,11 +27,12 @@ from ..viewModels.store import AddonStoreVM
 AddonActionT = TypeVar("AddonActionT", AddonActionVM, BatchAddonActionVM)
 
 
-class _ActionsContextMenuP(Generic[AddonActionT], Protocol):
+class _ActionsContextMenuP(Generic[AddonActionT], ABC):
 	_actions: List[AddonActionT]
 	_actionMenuItemMap: Dict[AddonActionT, wx.MenuItem]
 	_contextMenu: wx.Menu
 
+	@abstractmethod
 	def _menuItemClicked(self, evt: wx.ContextMenuEvent, actionVM: AddonActionT):
 		...
 
