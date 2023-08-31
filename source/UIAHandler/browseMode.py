@@ -487,11 +487,7 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 			])
 			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
 		elif nodeType == "tab":
-			condition = createUIAMultiPropertyCondition(
-				{
-					UIAHandler.UIA_ControlTypePropertyId: UIAHandler.UIA_TabItemControlTypeId,
-				},
-			)
+			condition = UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId, UIAHandler.UIA_TabItemControlTypeId)
 			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
 		elif nodeType=="nonTextContainer":
 			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:True},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ComboBoxControlTypeId})
