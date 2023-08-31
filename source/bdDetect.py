@@ -521,6 +521,18 @@ def driverHasPossibleDevices(driver: str) -> bool:
 	), None))
 
 
+def driverSupportsAutoDetection(driver: str) -> bool:
+	"""Returns whether the provided driver supports automatic detection of displays.
+	@param driver: The name of the driver.
+	@return: C{True} if de driver supports auto detection, C{False} otherwise.
+	"""
+	try:
+		driverCls = braille._getDisplayDriver(driver)
+	except ImportError:
+		return False
+	return driverCls.isThreadSafe and driverCls.supportsAutomaticDetection
+
+
 def driverIsEnabledForAutoDetection(driver: str) -> bool:
 	"""Returns whether the provided driver is enabled for automatic detection of displays.
 	@param driver: The name of the driver.
