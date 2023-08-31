@@ -19,7 +19,7 @@ from logHandler import log
 
 from .actions import (
 	_ActionsContextMenuP,
-	_BulkActionsContextMenu,
+	_BatchActionsContextMenu,
 	_MonoActionsContextMenu,
 )
 from ..viewModels.addonList import AddonListItemVM, AddonListVM
@@ -47,7 +47,7 @@ class AddonVirtualList(
 		)
 		self._addonsListVM = addonsListVM
 		self._actionsContextMenu = actionsContextMenu
-		self._bulkActionsContextMenu = _BulkActionsContextMenu(self._addonsListVM._storeVM)
+		self._batchActionsContextMenu = _BatchActionsContextMenu(self._addonsListVM._storeVM)
 
 		self.SetMinSize(self.scaleSize((500, 500)))
 
@@ -80,7 +80,7 @@ class AddonVirtualList(
 		itemRect: wx.Rect = self.GetItemRect(firstSelectedIndex)
 		return itemRect.GetBottomLeft()
 
-	def _updateBulkContextMenuSelection(self):
+	def _updateBatchContextMenuSelection(self):
 		numSelected = self.GetSelectedItemCount()
 		prevSelectedIndex = self.GetFirstSelected()
 		selectedAddons: List[AddonListItemVM] = []
@@ -89,14 +89,14 @@ class AddonVirtualList(
 			selectedAddons.append(addon)
 			prevSelectedIndex = self.GetNextSelected(prevSelectedIndex)
 
-		self._bulkActionsContextMenu._updateSelectedAddons(selectedAddons)
+		self._batchActionsContextMenu._updateSelectedAddons(selectedAddons)
 
 	@property
 	def _contextMenu(self) -> _ActionsContextMenuP:
 		numSelected = self.GetSelectedItemCount()
 		if numSelected > 1:
-			self._updateBulkContextMenuSelection()
-			return self._bulkActionsContextMenu
+			self._updateBatchContextMenuSelection()
+			return self._batchActionsContextMenu
 		return self._actionsContextMenu
 
 	def _popupContextMenuFromList(self, evt: wx.ContextMenuEvent):

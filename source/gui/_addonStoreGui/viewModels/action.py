@@ -116,11 +116,11 @@ class AddonActionVM(_AddonAction[Optional["AddonListItemVM"]]):
 		self._notify()
 
 
-class BulkAddonActionVM(_AddonAction[Iterable["AddonListItemVM"]]):
+class BatchAddonActionVM(_AddonAction[Iterable["AddonListItemVM"]]):
 	"""
 	Actions/behaviour that can be embedded within other views/viewModels
 	that can apply to a group of L{AddonListItemVM}.
-	Use the L{BulkAddonActionVM.updated} extensionPoint.Action to be notified about changes.
+	Use the L{BatchAddonActionVM.updated} extensionPoint.Action to be notified about changes.
 	E.G.:
 	- Updates within the AddonListItemVM (perhaps changing the action validity)
 	- Entirely changing the AddonListItemVM action will be applied to, the validity can be checked for the new

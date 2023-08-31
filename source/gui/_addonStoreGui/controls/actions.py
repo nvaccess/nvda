@@ -19,12 +19,12 @@ from _addonStore.models.status import _StatusFilterKey
 from logHandler import log
 import ui
 
-from ..viewModels.action import AddonActionVM, BulkAddonActionVM
+from ..viewModels.action import AddonActionVM, BatchAddonActionVM
 from ..viewModels.addonList import AddonListItemVM
 from ..viewModels.store import AddonStoreVM
 
 
-AddonActionT = TypeVar("AddonActionT", AddonActionVM, BulkAddonActionVM)
+AddonActionT = TypeVar("AddonActionT", AddonActionVM, BatchAddonActionVM)
 
 
 class _ActionsContextMenuP(Generic[AddonActionT], Protocol):
@@ -104,7 +104,7 @@ class _MonoActionsContextMenu(_ActionsContextMenuP[AddonActionVM]):
 		return self._storeVM.actionVMList
 
 
-class _BulkActionsContextMenu(_ActionsContextMenuP[BulkAddonActionVM]):
+class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 	"""Context menu for actions for a group of add-ons"""
 	def __init__(self, storeVM: AddonStoreVM):
 		self._storeVM = storeVM
@@ -128,14 +128,14 @@ class _BulkActionsContextMenu(_ActionsContextMenuP[BulkAddonActionVM]):
 			# but no actions are available for the add-ons.
 			ui.message(pgettext("addonStore", "No actions available for the selected add-ons"))
 
-	def _menuItemClicked(self, evt: wx.ContextMenuEvent, actionVM: BulkAddonActionVM):
-		log.debug(f"Performing bulk action for actionVM: {actionVM.displayName}")
+	def _menuItemClicked(self, evt: wx.ContextMenuEvent, actionVM: BatchAddonActionVM):
+		log.debug(f"Performing batch action for actionVM: {actionVM.displayName}")
 		actionVM.actionHandler(self._selectedAddons)
 
 	@property
-	def _actions(self) -> List[BulkAddonActionVM]:
+	def _actions(self) -> List[BatchAddonActionVM]:
 		return [
-			BulkAddonActionVM(
+			BatchAddonActionVM(
 				# Translators: Label for an action that installs the selected add-ons
 				displayName=pgettext("addonStore", "&Install selected add-ons"),
 				actionHandler=self._storeVM.getAddons,
