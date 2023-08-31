@@ -17,6 +17,7 @@ import wx
 
 from _addonStore.models.status import _StatusFilterKey
 from logHandler import log
+import ui
 
 from ..viewModels.action import AddonActionVM, BulkAddonActionVM
 from ..viewModels.addonList import AddonListItemVM
@@ -115,6 +116,17 @@ class _BulkActionsContextMenu(_ActionsContextMenuP[BulkAddonActionVM]):
 		# Reset the action menu as self._actions depends on the selected add-ons
 		self._actionMenuItemMap = {}
 		self._selectedAddons = selectedAddons
+
+	def popupContextMenuFromPosition(
+			self,
+			targetWindow: wx.Window,
+			position: wx.Position = wx.DefaultPosition
+	):
+		super().popupContextMenuFromPosition(targetWindow, position)
+		if self._contextMenu.GetMenuItemCount() == 0:
+			# Translators: a message displayed when activating the context menu on multiple selected add-ons,
+			# but no actions are available for the add-ons.
+			ui.message(pgettext("addonStore", "No actions available for the selected add-ons"))
 
 	def _menuItemClicked(self, evt: wx.ContextMenuEvent, actionVM: BulkAddonActionVM):
 		log.debug(f"Performing bulk action for actionVM: {actionVM.displayName}")
