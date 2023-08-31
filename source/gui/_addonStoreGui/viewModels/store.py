@@ -323,7 +323,7 @@ class AddonStoreVM:
 				self.getAddon(aVM)
 
 	def _downloadComplete(self, addonDetails: AddonStoreModel, fileDownloaded: Optional[PathLike]):
-		listItemVM: Optional[AddonListItemVM] = self.listVM._addons[addonDetails.listItemVMId]
+		listItemVM: Optional[AddonListItemVM] = self.listVM._addons.get(addonDetails.listItemVMId)
 		if listItemVM is None:
 			log.error(f"No list item VM for addon with id: {addonDetails.addonId}")
 			return
