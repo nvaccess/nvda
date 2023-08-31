@@ -14,6 +14,7 @@ from typing import (
 )
 
 import extensionPoints
+from logHandler import log
 
 if TYPE_CHECKING:
 	from .addonList import AddonListItemVM
@@ -73,7 +74,7 @@ class AddonActionVM(_AddonAction[Optional["AddonListItemVM"]]):
 	def __init__(
 			self,
 			displayName: str,
-			actionHandler: Callable[[Optional["AddonListItemVM"], ], None],
+			actionHandler: Callable[["AddonListItemVM", ], None],
 			validCheck: Callable[["AddonListItemVM", ], bool],
 			actionTarget: Optional["AddonListItemVM"],
 	):
@@ -87,7 +88,13 @@ class AddonActionVM(_AddonAction[Optional["AddonListItemVM"]]):
 			# Handle the None case so that each validCheck doesn't have to.
 			return listItemVM is not None and validCheck(listItemVM)
 
-		super().__init__(displayName, actionHandler, _validCheck, actionTarget)
+		def _actionHandler(listItemVM: Optional["AddonListItemVM"]):
+			# Handle the None case so that each validCheck doesn't have to.
+			if listItemVM is not None:
+				log.warning(f"Action triggered for invalid None listItemVM: {self.displayName}")
+				actionHandler(listItemVM)
+
+		super().__init__(displayName, _actionHandler, _validCheck, actionTarget)
 		if actionTarget:
 			actionTarget.updated.register(self._listItemChanged)
 
