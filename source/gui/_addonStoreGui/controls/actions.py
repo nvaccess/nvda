@@ -95,7 +95,7 @@ class _MonoActionsContextMenu(_ActionsContextMenuP[AddonActionVM]):
 		self._contextMenu = wx.Menu()
 
 	def _menuItemClicked(self, evt: wx.ContextMenuEvent, actionVM: AddonActionVM):
-		selectedAddon = actionVM.listItemVM
+		selectedAddon = actionVM.actionTarget
 		log.debug(f"action selected: actionVM: {actionVM.displayName}, selectedAddon: {selectedAddon}")
 		actionVM.actionHandler(selectedAddon)
 
@@ -140,6 +140,6 @@ class _BulkActionsContextMenu(_ActionsContextMenuP[BulkAddonActionVM]):
 				displayName=pgettext("addonStore", "&Install selected add-ons"),
 				actionHandler=self._storeVM.getAddons,
 				validCheck=lambda aVMs: self._storeVM._filteredStatusKey == _StatusFilterKey.AVAILABLE,
-				listItemVMs=self._selectedAddons
+				actionTarget=self._selectedAddons
 			),
 		]
