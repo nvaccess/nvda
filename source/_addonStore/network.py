@@ -75,7 +75,7 @@ class AddonFileDownloader:
 		] = {}
 		self.complete: Dict[AddonStoreModel, os.PathLike] = {}  # Path to downloaded file
 		self._executor = ThreadPoolExecutor(
-			max_workers=1,
+			max_workers=10,
 			thread_name_prefix="AddonDownloader",
 		)
 
@@ -122,8 +122,10 @@ class AddonFileDownloader:
 		else:
 			cacheFilePath: Optional[os.PathLike] = downloadAddonFuture.result()
 
-		del self._pending[downloadAddonFuture]
-		del self.progress[addonData]
+		# If canceled after our previous isCancelled check,
+		# then _pending and progress will be empty.
+		self._pending.pop(downloadAddonFuture, None)
+		self.progress.pop(addonData, None)
 		self.complete[addonData] = cacheFilePath
 		onComplete(addonData, cacheFilePath)
 

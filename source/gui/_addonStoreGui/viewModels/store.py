@@ -13,6 +13,7 @@ from os import (
 )
 import os
 from typing import (
+	Iterable,
 	List,
 	Optional,
 	cast,
@@ -313,6 +314,13 @@ class AddonStoreVM:
 		listItemVM.status = AvailableAddonStatus.DOWNLOADING
 		log.debug(f"{listItemVM.Id} status: {listItemVM.status}")
 		self._downloader.download(listItemVM.model, self._downloadComplete, self.onDisplayableError)
+
+	def getAddons(self, listItemVMs: Iterable[AddonListItemVM]) -> None:
+		for aVM in listItemVMs:
+			if not aVM.model.isCompatible and aVM.model.canOverrideCompatibility:
+				self.installOverrideIncompatibilityForAddon(aVM)
+			else:
+				self.getAddon(aVM)
 
 	def _downloadComplete(self, addonDetails: AddonStoreModel, fileDownloaded: Optional[PathLike]):
 		listItemVM: Optional[AddonListItemVM] = self.listVM._addons[addonDetails.listItemVMId]
