@@ -18,6 +18,10 @@ from hwIo import intToByte
 from bdDetect import HID_USAGE_PAGE_BRAILLE, DriverRegistrar
 
 
+def isSupportEnabled() -> bool:
+	return bdDetect.driverIsEnabledForAutoDetection(HidBrailleDriver.name)
+
+
 class BraillePageUsageID(enum.IntEnum):
 	UNDEFINED = 0
 	BRAILLE_DISPLAY = 0x1

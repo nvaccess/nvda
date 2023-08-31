@@ -115,7 +115,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	)
 
 	@classmethod
-	def registerAutomaticDetection(cls, driverRegistrar):
+	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
 		driverRegistrar.addUsbDevices(bdDetect.KEY_HID, {
 			"VID_0798&PID_0640",  # BC640
 			"VID_0798&PID_0680",  # BC680
