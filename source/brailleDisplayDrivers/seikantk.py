@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2012-2021 NV Access Limited, Ulf Beckmann <beckmann@flusoft.de>
+# Copyright (C) 2012-2023 NV Access Limited, Ulf Beckmann <beckmann@flusoft.de>
 
 """
 Braille display driver for Seika Notetaker, a product from Nippon Telesoft

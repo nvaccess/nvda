@@ -103,27 +103,29 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"VID_1C71&PID_C005",  # Brailliant BI 32, 40 and 80
 			"VID_1C71&PID_C021",  # Brailliant BI 14
 		})
-		driverRegistrar.addBluetoothDevices(lambda m: (
-			m.type == bdDetect.KEY_SERIAL
-			and (
-				m.id.startswith("Brailliant B")
-				or m.id == "Brailliant 80"
-				or "BrailleNote Touch" in m.id
+		driverRegistrar.addBluetoothDevices(
+			lambda m: (
+				m.type == bdDetect.KEY_SERIAL
+				and (
+					m.id.startswith("Brailliant B")
+					or m.id == "Brailliant 80"
+					or "BrailleNote Touch" in m.id
+				)
 			)
-			) or (
-		m.type == bdDetect.KEY_HID
-		and m.deviceInfo.get("manufacturer") == "Humanware"
-		and m.deviceInfo.get("product") in (
-			"Brailliant HID",
-			"APH Chameleon 20",
-			"APH Mantis Q40",
-			"Humanware BrailleOne",
-			"NLS eReader",
-			"NLS eReader Humanware",
-			"Brailliant BI 40X",
-			"Brailliant BI 20X",
-		)
-		)
+			or (
+				m.type == bdDetect.KEY_HID
+				and m.deviceInfo.get("manufacturer") == "Humanware"
+				and m.deviceInfo.get("product") in (
+					"Brailliant HID",
+					"APH Chameleon 20",
+					"APH Mantis Q40",
+					"Humanware BrailleOne",
+					"NLS eReader",
+					"NLS eReader Humanware",
+					"Brailliant BI 40X",
+					"Brailliant BI 20X",
+				)
+			)
 		)
 
 	@classmethod
