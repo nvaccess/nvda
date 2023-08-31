@@ -91,8 +91,9 @@ class AddonActionVM(_AddonAction[Optional["AddonListItemVM"]]):
 		def _actionHandler(listItemVM: Optional["AddonListItemVM"]):
 			# Handle the None case so that each actionHandler doesn't have to.
 			if listItemVM is not None:
-				log.warning(f"Action triggered for invalid None listItemVM: {self.displayName}")
 				actionHandler(listItemVM)
+			else:
+				log.warning(f"Action triggered for invalid None listItemVM: {self.displayName}")
 
 		super().__init__(displayName, _actionHandler, _validCheck, actionTarget)
 		if actionTarget:
