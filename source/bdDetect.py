@@ -130,7 +130,7 @@ if version_year < 2024 and NVDAState._allowDeprecatedAPI():
 			and returns a C{bool} indicating whether it matched.
 		"""
 		log.warning(
-			"bdDetect.addBluetoothDevices is deprecated and wil lbe removed in NVDA 2024.1. "
+			"bdDetect.addBluetoothDevices is deprecated and will be removed in NVDA 2024.1. "
 			"Braille display drivers should implement the registerAutomaticDetection classmethod instead. "
 			"That method receives a DriverRegistrar object on which the addBluetoothDevices method can be used."
 		)
