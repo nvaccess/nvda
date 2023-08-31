@@ -281,7 +281,7 @@ class _DataManager:
 			with open(addonCachePath, 'r', encoding='utf-8') as cacheFile:
 				cacheData = json.load(cacheFile)
 		except Exception:
-			log.exception("Invalid cached installed add-on data")
+			log.exception(f"Invalid cached installed add-on data: {addonCachePath}")
 			return None
 		if not cacheData:
 			return None

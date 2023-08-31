@@ -2232,6 +2232,14 @@ Je možné nastaviť tieto možnosti:
 - Vždy: Použije sa vždy, keď je dostupná podpora pre UI Automation, pričom táto podpora nemusí byť kompletná.
 -
 
+ ==== Na sprístupnenie prvkov v zošitoch Microsoft Excel používať UI Automation ====[UseUiaForExcel]
+Keď je táto voľba aktívna, NVDA sa pokúsi na získavanie informácií o ovládacích prvkoch v programe Microsoft Excel používať rozhranie prístupnosti Microsoft UI Automation.
+Toto je experimentálna funkcia a niektoré vlastnosti programu Microsoft Excel nemusia byť v tomto režime dostupné.
+Takímito sú hlavne zoznam prvkov NVDA, kde je možné si zobraziť zoznamy vzorcov a komentárov a podpora pre rýchlu navigáciu v režime prehliadania na pohyb po prvkoch formulára v zošite.
+Pre základnú navigáciu v zošite a jednoduché úpravy, tento režim poskytne výrazné zrýchlenie odozvy.
+Zatiaľ neodporúčame toto nastavenie aktivovať pre väčšinu bežných používateľov, ale budeme radi, ak si tento režim vyskúšate s programom Microsoft Excel od verzie  16.0.13522.10000 a poskytnete nám spätnú väzbu.
+Implementácia rozhrania UI automation v programe Microsoft Excel sa stále zlepšuje a staršie verzie než Microsoft Office 16.0.13522.10000 nemusia poskytovať dostatok informácií, aby ste z tohto nastavenia mohli mať skutočný úžitok.
+
 ==== Podpora pre konzolu Windows ====[AdvancedSettingsConsoleUIA]
 : Predvolene
   Automaticky
@@ -2284,15 +2292,7 @@ V minulosti asistenčné technológie neoznamovali tieto zdroje, nakoľko nebolo
   -
  -
 
- ==== Na sprístupnenie prvkov v zošitoch Microsoft Excel používať UI Automation ====[UseUiaForExcel]
-Keď je táto voľba aktívna, NVDA sa pokúsi na získavanie informácií o ovládacích prvkoch v programe Microsoft Excel používať rozhranie prístupnosti Microsoft UI Automation.
-Toto je experimentálna funkcia a niektoré vlastnosti programu Microsoft Excel nemusia byť v tomto režime dostupné.
-Takímito sú hlavne zoznam prvkov NVDA, kde je možné si zobraziť zoznamy vzorcov a komentárov a podpora pre rýchlu navigáciu v režime prehliadania na pohyb po prvkoch formulára v zošite.
-Pre základnú navigáciu v zošite a jednoduché úpravy, tento režim poskytne výrazné zrýchlenie odozvy.
-Zatiaľ neodporúčame toto nastavenie aktivovať pre väčšinu bežných používateľov, ale budeme radi, ak si tento režim vyskúšate s programom Microsoft Excel od verzie  16.0.13522.10000 a poskytnete nám spätnú väzbu.
-Implementácia rozhrania UI automation v programe Microsoft Excel sa stále zlepšuje a staršie verzie než Microsoft Office 16.0.13522.10000 nemusia poskytovať dostatok informácií, aby ste z tohto nastavenia mohli mať skutočný úžitok.
-
-==== Oznamovať dymnamicky menený obsah označený pomocou Live Region ====[BrailleLiveRegions]
+==== Oznamovať dynamicky menený obsah označený pomocou Live Region ====[BrailleLiveRegions]
 : Predvolené
   Zapnuté
 : Možnosti
@@ -2678,7 +2678,7 @@ Ak chcete zobraziť doplnky len z konkrétneho zdroja, nastavte ho v zozname zdr
 +++ Vyhľadávanie doplnkov +++[AddonStoreFilterSearch]
 Na vyhľadávanie doplnkov použite editačné pole vyhľadávanie.
 Môžete ho rýchlo nájsť, ak v zozname s doplnkami stlačíte ``shift+tab``.
-Zadajte kľúčové slová, alebo názov doplnku. Potom klávesom ``tab`` prejdite späť do zoznamu s doplnkami.
+Zadajte kľúčové slová, alebo názov doplnku. Potom klávesom ``tab`` prejdite do zoznamu s doplnkami.
 Doplnky sa zobrazia v zozname, ak sa podarilo nájsť reťazec v názve doplnku, v názve vydavateľa, V identifikátore alebo v popise doplnku.
 
 ++ Akcie ++[AddonStoreActions]
@@ -2687,7 +2687,7 @@ Zoznam akcií je možné vyvolať priamo na konkrétnom doplnku po stlačení ``
 Tiež môžete aktivovať tlačidlo akcie v podrobnostiach doplnku.
 
 +++ Inštalovanie doplnkov +++[AddonStoreInstalling]
-To, že je doplnok dostupný v katalógu neznamená, že ho NV Access alebo ktokoľvek iný odporúča používať.
+To, že je doplnok dostupný v katalógu neznamená, že ho NV Access alebo ktokoľvek iný preveril a odporúča používať.
 Je veľmi dôležité, aby ste inštalovali doplnky z overených zdrojov.
 Funkcie doplnkov nie sú nijako obmedzené.
 Doplnky môžu mať prístup k vašim osobným údajom aj celému systému.
@@ -3108,12 +3108,12 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | Prejsť na znak v brailly | ``smerové tlačidlá`` |
 | ``shift+tab``  | ``medzera + bod1+bod3`` |
 | ``tab`` | ``medzera + bod4+bod6`` |
-| ``alt`` | ``medzera +bod1+bod3+bod4 (medzera+m)`` |
-| ``escape`` | ``medzera+bod1+bod5 (medzera+e)`` |
+| ``alt`` | ``medzera +bod1+bod3+bod4`` (``medzera+m)`` |
+| ``escape`` | ``medzera+bod1+bod5`` (``medzera+e)`` |
 | ``windows`` | ``medzera+bod3+bod4`` |
-| ``alt+tab`` | ``medzera+bod2+bod3+bod4+bod5 (medzera+t)`` |
-| NVDA Menu | ``medzera+bod1+bod3+bod4+bod5 (medzera+n)`` |
-| ``windows+d`` (minimalizovať všetky aplikácie) | ``medzera+bod1+bod4+bod5 (medzera+d)`` |
+| ``alt+tab`` | ``medzera+bod2+bod3+bod4+bod5`` (``medzera+t)`` |
+| NVDA Menu | ``medzera+bod1+bod3+bod4+bod5`` (``medzera+n)`` |
+| ``windows+d`` (minimalizovať všetky aplikácie) | ``medzera+bod1+bod4+bod5`` (``medzera+d)`` |
 | Plynulé čítanie | ``medzera+bod1+bod2+bod3+bod4+bod5+bod6`` |
 
 Pre zobrazovače, ktoré majú džojstik:

@@ -1,9 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2019-2022 Bill Dengler, Leonard de Ruijter
+# Copyright (C) 2019-2023 Bill Dengler, Leonard de Ruijter
 
 import api
+import braille
 import config
 import controlTypes
 import ctypes
@@ -471,6 +472,7 @@ class _NotificationsBasedWinTerminalUIA(UIA):
 		# Do not announce output from background terminals.
 		if self.appModule != api.getFocusObject().appModule:
 			return
+		braille.handler.handleUpdate(self)
 		# microsoft/terminal#12358: Automatic reading of terminal output
 		# is provided by UIA notifications. If the user does not want
 		# automatic reporting of dynamic output, suppress this notification.

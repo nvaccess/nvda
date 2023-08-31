@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-28 03:20+0000\n"
+"POT-Creation-Date: 2023-08-25 00:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Rui Fontes <rui.fontes@tiflotecnia.com>\n"
 "Language-Team: NVDA portuguese team <rui.fontes@tiflotecnia.com>; "
@@ -4182,13 +4182,13 @@ msgstr "Visualizador Braille activado"
 #. (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
-"Alterna entre o Braille acompanhar o foco e a posição do cursor de revisão"
+"Alterna entre ligar o Braille ao foco ou à posição do cursor de revisão"
 
 #. Translators: Reports which position braille is tethered to
 #. (braille can be tethered automatically or to either focus or review position).
 #, python-format
 msgid "Braille tethered %s"
-msgstr "Braille segue o %s"
+msgstr "Braille ligado %s"
 
 #. Translators: Input help mode message for cycle through
 #. braille move system caret when routing review cursor command.
@@ -4200,7 +4200,7 @@ msgstr ""
 
 #. Translators: Reported when action is unavailable because braille tether is to focus.
 msgid "Action unavailable. Braille is tethered to focus"
-msgstr "Acção indisponível. Braille segue o foco"
+msgstr "Acção indisponível. Braille ligado ao foco"
 
 #. Translators: Used when reporting braille move system caret when routing review cursor
 #. state (default behavior).
@@ -7722,7 +7722,7 @@ msgstr "Nunca"
 
 #. Translators: Label for setting to move the system caret when routing review cursor with braille.
 msgid "Only when tethered automatically"
-msgstr "Apenas quando segue automaticamente"
+msgstr "Apenas quando ligado automaticamente"
 
 #. Translators: Label for setting to move the system caret when routing review cursor with braille.
 msgid "Always"
@@ -10637,7 +10637,7 @@ msgstr "Microsoft UI Automation"
 #. means of registering for UI Automation events in the advanced settings panel.
 #. Choices are automatic, selective, and global.
 msgid "Regi&stration for UI Automation events and property changes:"
-msgstr "&Rregisto de eventos UI Automation e alterações de propriedades:"
+msgstr "&Registo de eventos UI Automation e alterações de propriedades:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA decide whether to register
@@ -10789,7 +10789,7 @@ msgstr "Activar suporte a HID Braile"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 msgid "Report live regions:"
-msgstr "Anunciar live regins:"
+msgstr "Anunciar live regions:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -11013,7 +11013,7 @@ msgstr "&Tempo de permanência de mensagens (seg)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Tether B&raille:"
-msgstr "Braille &segue:"
+msgstr "&Ligação Braille:"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 msgid "Move system caret when ro&uting review cursor"
@@ -13816,26 +13816,54 @@ msgctxt "addonStore"
 msgid "Enabled, pending restart"
 msgstr "Activado após reinício"
 
-#. Translators: The label of a tab to display installed add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of a tab to display installed add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Installed add-ons"
+msgstr "Extras Instalados"
+
+#. Translators: The label of a tab to display updatable add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Updatable add-ons"
+msgstr "Extras com actualizações"
+
+#. Translators: The label of a tab to display available add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Available add-ons"
+msgstr "Extras disponíveis"
+
+#. Translators: The label of a tab to display incompatible add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Installed incompatible add-ons"
+msgstr "Extras incompatíveis instalados"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Installed &add-ons"
 msgstr "Extras &Instalados"
 
-#. Translators: The label of a tab to display updatable add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Updatable &add-ons"
 msgstr "Extras com &actualizações"
 
-#. Translators: The label of a tab to display available add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Available &add-ons"
 msgstr "Extras &disponíveis"
 
-#. Translators: The label of a tab to display incompatible add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Installed incompatible &add-ons"
 msgstr "Extras incom&patíveis instalados"
@@ -14141,20 +14169,46 @@ msgctxt "addonStore"
 msgid "Add-on Information"
 msgstr "Informação do Extra"
 
+#. Translators: The warning of a dialog
+msgid "Add-on Store Warning"
+msgstr "Aviso da loja de Extras"
+
+#. Translators: Warning that is displayed before using the Add-on Store.
+msgctxt "addonStore"
+msgid ""
+"Add-ons are created by the NVDA community and are not vetted by NV Access. "
+"NV Access cannot be held responsible for add-on behavior. The functionality "
+"of add-ons is unrestricted and can include accessing your personal data or "
+"even the entire system. "
+msgstr ""
+"Os extras são criados pela comunidade do NVDA e não são aprovados pela NV "
+"Access. A NV Access não pode ser responsabilizada pelo comportamento dos "
+"extras. A funcionalidade dos extras é irrestrita e pode incluir o acesso aos "
+"seus dados pessoais ou mesmo a todo o sistema. "
+
+#. Translators: The label of a checkbox in the add-on store warning dialog
+msgctxt "addonStore"
+msgid "&Don't show this message again"
+msgstr "&Não voltar a mostrar esta mensagem"
+
+#. Translators: The label of a button in a dialog
+msgid "&OK"
+msgstr "&OK"
+
 #. Translators: The title of the addonStore dialog where the user can find and download add-ons
 msgctxt "addonStore"
 msgid "Add-on Store"
 msgstr "Loja de extras"
 
-#. Translators: Banner notice that is displayed in the Add-on Store.
-msgctxt "addonStore"
-msgid "Note: NVDA was started with add-ons disabled"
-msgstr "Nota: O NVDA foi reiniciado com os extras desactivados"
-
 #. Translators: The label for a button in add-ons Store dialog to install an external add-on.
 msgctxt "addonStore"
 msgid "Install from e&xternal source"
 msgstr "&Instalar a partir de uma fonte externa"
+
+#. Translators: Banner notice that is displayed in the Add-on Store.
+msgctxt "addonStore"
+msgid "Note: NVDA was started with add-ons disabled"
+msgstr "Nota: O NVDA foi reiniciado com os extras desactivados"
 
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"
