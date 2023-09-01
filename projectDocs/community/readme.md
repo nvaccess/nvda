@@ -19,7 +19,8 @@ This includes information on reporting issues, triaging issues, testing, transla
 
 ### Add-ons
 * [The NVDA Add-on store](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#AddonsManager)
-* [Community add-ons website](https://addons.nvda-project.org/)
+* [Community add-ons website](https://addons.nvda-project.org/).
+This website is considered legacy software, using the NVDA Add-on Store instead is encouraged.
 
 ### Communication channels
 * NV Access has several ways you can contact us and keep up to date on the latest on NVDA.
