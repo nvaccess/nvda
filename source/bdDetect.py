@@ -115,7 +115,7 @@ if version_year < 2024 and NVDAState._allowDeprecatedAPI():
 		@raise ValueError: When one of the provided IDs is malformed.
 		"""
 		log.warning(
-			"bdDetect.addUsbDevices is deprecated and wil lbe removed in NVDA 2024.1. "
+			"bdDetect.addUsbDevices is deprecated and will be removed in NVDA 2024.1. "
 			"Braille display drivers should implement the registerAutomaticDetection classmethod instead. "
 			"That method receives a DriverRegistrar object on which the addUsbDevices method can be used."
 		)
