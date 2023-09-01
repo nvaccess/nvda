@@ -3295,6 +3295,8 @@ class GlobalCommands(ScriptableObject):
 			# Translators: The message announced when toggling the braille cursor.
 			state = _("Braille cursor on")
 			config.conf["braille"]["showCursor"]=True
+		# To hide or show cursor immediately on braille line
+		braille.handler._updateDisplay()
 		ui.message(state)
 
 	@script(
@@ -3363,6 +3365,8 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Reports which show braille selection state is used
 			# (disabled or enabled).
 			msg = _("Braille show selection %s") % BoolFlag[nextName].displayString
+		# To hide or show selection immediately on braille line
+		braille.handler.initialDisplay()
 		ui.message(msg)
 
 	@script(
@@ -4259,6 +4263,13 @@ class GlobalCommands(ScriptableObject):
 					)
 				)
 			else:
+				from contentRecog.recogUi import RefreshableRecogResultNVDAObject
+				focusObj = api.getFocusObject()
+				if isinstance(focusObj, RefreshableRecogResultNVDAObject) and focusObj.recognizer.allowAutoRefresh:
+					# Translators: Warning message when trying to enable the screen curtain when OCR is active.
+					warningMessage = _("Could not enable screen curtain when performing content recognition")
+					ui.message(warningMessage, speechPriority=speech.priorities.Spri.NOW)
+					return
 				_enableScreenCurtain()
 
 	@script(

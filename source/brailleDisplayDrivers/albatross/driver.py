@@ -12,6 +12,7 @@ import serial
 import time
 
 from collections import deque
+from bdDetect import KEY_SERIAL, DriverRegistrar
 from logHandler import log
 from serial.win32 import (
 	PURGE_RXABORT,
@@ -79,6 +80,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	# Translators: Names of braille displays.
 	description = _("Caiku Albatross 46/80")
 	isThreadSafe = True
+	supportsAutomaticDetection = True
+
+	@classmethod
+	def registerAutomaticDetection(cls, driverRegistrar: DriverRegistrar):
+		driverRegistrar.addUsbDevices(KEY_SERIAL, {
+			"VID_0403&PID_6001",  # Caiku Albatross 46/80
+		})
 
 	@classmethod
 	def getManualPorts(cls):

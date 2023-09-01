@@ -413,7 +413,10 @@ UINT64 WasapiPlayer::getPlayPos() {
 	UINT64 pos;
 	HRESULT hr = clock->GetPosition(&pos, nullptr);
 	if (FAILED(hr)) {
-		return 0;
+		// If we get an error, playback has probably been interrupted; e.g. because
+		// the device disconnected. Treat this as if playback has finished so we
+		// don't wait forever and so that we fire any pending callbacks.
+		return sentMs;
 	}
 	return pos * 1000 / clockFreq;
 }
