@@ -15,6 +15,7 @@ What's New in NVDA
     - An option to separately configure the volume of NVDA sounds. (#1409, #15038)
     -
   -
+- When using automatic detection of braille displays, it is now possible to opt-out drivers from detection from the braille display selection dialog. (#15196)
 - A new option in Document Formatting settings, "Ignore blank lines for line indentation reporting". (#13394)
 -
 
@@ -30,6 +31,8 @@ What's New in NVDA
     - say_line: Speak the current line where the review cursor is located
     - say_below: Say all using review cursor
   - The BRLTTY driver is only available when a BRLTTY instance with BrlAPI enabled is running. (#15335)
+  - The advanced setting to enable support for HID braille has been removed in favor of a new option.
+  You can now disable specific drivers for braille display auto detection in the braille display selection dialog. (#15196)
   -
 - Rich edit controls in applications such as Wordpad now use UI Automation (UIA) when the application advertises native support for this. (#15314)
 -
@@ -58,6 +61,9 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 Before this change, when either of these methods was called very often, this would drain many resources.
 These methods now queue an update at the end of every core cycle instead.
 They should also be thread safe, making it possible to call them from background threads. (#15163)
+- Added official support to register custom braille display drivers in the automatic braille display detection process.
+Consult the ``braille.BrailleDisplayDriver`` class documentation for more details.
+Most notably, the ``supportsAutomaticDetection`` attribute must be set to ``True`` and the ``registerAutomaticDetection`` ``classmethod`` must be implemented.  (#15196)
 -
 
 === Deprecations ===
@@ -67,6 +73,11 @@ It will be removed in 2024.1. (#15163)
 Use ``XlHAlign`` or ``XlVAlign`` enumerations instead. (#15205)
 - The mapping ``NVDAObjects.window.excel.alignmentLabels`` is deprecated.
 Use the ``displayString`` methods of ``XlHAlign`` or ``XlVAlign`` enumerations instead. (#15205)
+- ``bdDetect.addUsbDevices`` and ``bdDetect.addBluetoothDevices`` have been deprecated.
+Braille display drivers should implement the ``registerAutomaticDetection`` classmethod instead.
+That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices`` and ``addBluetoothDevices`` methods can be used. (#15200)
+- The default implementation of the check method on ``BrailleDisplayDriver`` uses ``bdDetect.driverHasPossibleDevices`` for devices that are marked as thread safe.
+Starting from NVDA 2024.1, in order for the base method to use ``bdDetect.driverHasPossibleDevices``, the ``supportsAutomaticDetection`` attribute must be set to ``True`` as well. (#15200)
 -
 
 
