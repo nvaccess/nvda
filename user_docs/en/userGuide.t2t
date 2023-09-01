@@ -814,6 +814,26 @@ If you want to use these while still being able to use your cursor keys to read 
 To toggle single letter navigation on and off for the current document, press NVDA+shift+space.
 %kc:endInclude
 
++++ Other navigation commands +++[OtherNavigationCommands]
+
+In addition to the quick navigation commands listed above, NVDA has commands that have no default keys assigned.
+To use these commands, you first need to assign gestures to them using the [Input Gestures dialog #InputGestures].
+Here is a list of available commands
+- Article
+- Grouping
+- Tab
+-
+Keep in mind that there are two commands for each type of element, for moving forward in the document and backward in the document, and you must assign gestures to both commands in order to be able to quickly navigate in both directions.
+
+For example, if you want to use the ``y`` / ``shift+y`` keys to quickly navigate through tabs, you would do the following
+
++ Open input gestures dialog from browse mode.
++ Find "moves to the next tab" item in the Browse mode section.
++ Assign ``y`` key for found gesture.
++ Find "moves to the previous tab" item.
++ Assign ``shift+y`` for found gesture.
++
+
 ++ The Elements List ++[ElementsList]
 The elements list provides access to a list of various types of elements in the document as appropriate for the application.
 For example, in web browsers, the elements list can list links, headings, form fields, buttons or landmarks.
