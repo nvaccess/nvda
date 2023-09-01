@@ -3233,6 +3233,7 @@ class AdvancedPanelControls(
 		self.wasapiComboBox.resetToConfigSpecDefault()
 		self.soundVolFollowCheckBox.SetValue(self.soundVolFollowCheckBox.defaultValue)
 		self.soundVolSlider.SetValue(self.soundVolSlider.defaultValue)
+		self._onWASAPIChange()
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self.playErrorSoundCombo.SetSelection(self.playErrorSoundCombo.defaultValue)
 		self._defaultsRestored = True
