@@ -2660,9 +2660,18 @@ class UwpOcrPanel(SettingsPanel):
 		except ValueError:
 			self.languageChoice.Selection = 0
 
+		# Translators: Label for an option in the Windows OCR settings panel.
+		autoRefreshText = _("Periodically &refresh recognized content")
+		self.autoRefreshCheckbox = sHelper.addItem(
+			wx.CheckBox(self, label=autoRefreshText)
+		)
+		self.bindHelpEvent("Win10OcrSettingsAutoRefresh", self.autoRefreshCheckbox)
+		self.autoRefreshCheckbox.SetValue(config.conf["uwpOcr"]["autoRefresh"])
+
 	def onSave(self):
 		lang = self.languageCodes[self.languageChoice.Selection]
 		config.conf["uwpOcr"]["language"] = lang
+		config.conf["uwpOcr"]["autoRefresh"] = self.autoRefreshCheckbox.IsChecked()
 
 
 class AdvancedPanelControls(

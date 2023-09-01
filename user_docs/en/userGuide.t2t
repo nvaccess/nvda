@@ -1096,6 +1096,9 @@ NVDA can use this to recognize text from images or inaccessible applications.
 You can set the language to use for text recognition in the [Windows OCR category #Win10OcrSettings] of the [NVDA Settings #NVDASettings] dialog.
 Additional languages can be installed by opening the Start menu, choosing Settings, selecting Time & Language -> Region & Language and then choosing Add a language.
 
+When you want to monitor constantly changing content, such as when watching a video with subtitles, you can optionally enable automatic refresh of the recognized content.
+This can also be done in the [Windows OCR category #Win10OcrSettings] of the [NVDA Settings #NVDASettings] dialog.
+
 Windows OCR may be partially or fully incompatible with [NVDA vision enhancements #Vision] or other external visual aids. You will need to disable these aids before proceeding to a recognition.
 
 %kc:beginInclude
@@ -2195,6 +2198,12 @@ This category contains the following options:
 ==== Recognition language ====[Win10OcrSettingsRecognitionLanguage]
 This combo box allows you to choose the language to be used for text recognition.
 To cycle through available languages from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
+==== Periodically refresh recognized content ====[Win10OcrSettingsAutoRefresh]
+When this checkbox is enabled, NVDA will automatically refresh the recognized content when a recognition result has focus.
+This can be very useful when you want to monitor constantly changing content, such as when watching a video with subtitles.
+The refresh takes place every one and a half seconds.
+This option is disabled by default.
 
 +++ Advanced Settings +++[AdvancedSettings]
 Warning! The settings in this category are for advanced users and may cause NVDA to not function correctly if configured in the wrong way.
