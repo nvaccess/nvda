@@ -459,7 +459,7 @@ class FeatureFlagCombo(wx.Choice):
 			name=name,
 		)
 
-		self.SetSelection(self._getChoiceIndex(self._getConfigValue().value))
+		self.SetSelection(self._getChoiceIndex(configValue.value))
 		self.defaultValue = self._getConfSpecDefaultValue()
 		"""The default value of the config spec. Not the "behavior of default".
 		This is provided to maintain compatibility with other controls in the
@@ -499,10 +499,18 @@ class FeatureFlagCombo(wx.Choice):
 		"""
 		self.SetSelection(self._getChoiceIndex(self.defaultValue))
 
+	def _getControlCurrentValue(self) -> enum.Enum:
+		return list(self._translatedOptions.keys())[self.GetSelection()]
+
+	def _getControlCurrentFlag(self) -> FeatureFlag:
+		flagValue = self._getControlCurrentValue()
+		currentFlag = self._getConfigValue()
+		return FeatureFlag(flagValue, currentFlag.behaviorOfDefault)
+
 	def saveCurrentValueToConf(self) -> None:
 		""" Set the config value to the current value of the control.
 		"""
-		flagValue: enum.Enum = list(self._translatedOptions.keys())[self.GetSelection()]
+		flagValue = self._getControlCurrentValue()
 		keyPath = self._confPath
 		if not keyPath or len(keyPath) < 1:
 			raise ValueError("Key path not provided")

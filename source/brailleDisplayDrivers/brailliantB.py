@@ -1,8 +1,7 @@
-#brailleDisplayDrivers/brailliantB.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2012-2017 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2012-2023 NV Access Limited, Babbage B.V.
 
 import time
 from typing import List, Union
@@ -84,6 +83,50 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	# Translators: The name of a series of braille displays.
 	description = _("HumanWare Brailliant BI/B series / BrailleNote Touch")
 	isThreadSafe = True
+	supportsAutomaticDetection = True
+
+	@classmethod
+	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
+		driverRegistrar.addUsbDevices(bdDetect.KEY_HID, {
+			"VID_1C71&PID_C111",  # Mantis Q 40
+			"VID_1C71&PID_C101",  # Chameleon 20
+			"VID_1C71&PID_C121",  # Humanware BrailleOne 20 HID
+			"VID_1C71&PID_CE01",  # NLS eReader 20 HID
+			"VID_1C71&PID_C006",  # Brailliant BI 32, 40 and 80
+			"VID_1C71&PID_C022",  # Brailliant BI 14
+			"VID_1C71&PID_C131",  # Brailliant BI 40X
+			"VID_1C71&PID_C141",  # Brailliant BI 20X
+			"VID_1C71&PID_C00A",  # BrailleNote Touch
+			"VID_1C71&PID_C00E",  # BrailleNote Touch v2
+		})
+		driverRegistrar.addUsbDevices(bdDetect.KEY_SERIAL, {
+			"VID_1C71&PID_C005",  # Brailliant BI 32, 40 and 80
+			"VID_1C71&PID_C021",  # Brailliant BI 14
+		})
+		driverRegistrar.addBluetoothDevices(
+			lambda m: (
+				m.type == bdDetect.KEY_SERIAL
+				and (
+					m.id.startswith("Brailliant B")
+					or m.id == "Brailliant 80"
+					or "BrailleNote Touch" in m.id
+				)
+			)
+			or (
+				m.type == bdDetect.KEY_HID
+				and m.deviceInfo.get("manufacturer") == "Humanware"
+				and m.deviceInfo.get("product") in (
+					"Brailliant HID",
+					"APH Chameleon 20",
+					"APH Mantis Q40",
+					"Humanware BrailleOne",
+					"NLS eReader",
+					"NLS eReader Humanware",
+					"Brailliant BI 40X",
+					"Brailliant BI 20X",
+				)
+			)
+		)
 
 	@classmethod
 	def getManualPorts(cls):

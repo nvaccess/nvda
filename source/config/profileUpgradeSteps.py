@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2023 NV Access Limited, Bill Dengler, Cyrille Bougot, Łukasz Golonka
+# Copyright (C) 2016-2023 NV Access Limited, Bill Dengler, Cyrille Bougot, Łukasz Golonka, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -22,9 +22,6 @@ from config.configFlags import (
 	ReportLineIndentation,
 	ReportTableHeaders,
 	ReportCellBorders,
-)
-from typing import (
-	Dict,
 )
 import configobj.validate
 from configobj import ConfigObj
@@ -354,3 +351,22 @@ def upgradeConfigFrom_9_to_10(profile: ConfigObj) -> None:
 		profile['keyboard']['NVDAModifierKeys'] = val
 	else:
 		log.debug("use*AsNVDAModifierKey values not present, no action taken.")
+
+
+def upgradeConfigFrom_10_to_11(profile: ConfigObj) -> None:
+	"""Remove the enableHidBrailleSupport braille config flag in favor of an auto detect exclusion.
+	"""
+	# Config spec entry was:
+	# enableHidBrailleSupport = integer(0, 2, default=0)  # 0:Use default/recommended value (yes), 1:yes, 2:no
+	try:
+		hidSetting: str = profile['braille']['enableHidBrailleSupport']
+		del profile['braille']['enableHidBrailleSupport']
+	except KeyError:
+		log.debug("enableHidBrailleSupport not present in config, no action taken.")
+		return
+	if configobj.validate.is_integer(hidSetting) == 2:  # HID standard support disabled
+		profile['braille']['auto']['excludedDisplays'] += ["hidBrailleStandard"]
+		log.debug(
+			"hidBrailleStandard added to braille display auto detection excluded displays. "
+			f"List is now: {profile['braille']['auto']['excludedDisplays']}"
+		)

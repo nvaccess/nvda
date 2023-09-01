@@ -7,7 +7,7 @@ import wx
 
 from _addonStore.models.addon import (
 	_AddonStoreModel,
-	_InstalledAddonModel,
+	_AddonManifestModel,
 )
 from gui import guiHelper
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
@@ -201,7 +201,7 @@ class AddonDetails(
 			self.otherDetailsTextCtrl.SetValue("")
 			if not details:
 				self.contentsPanel.Hide()
-				if self._detailsVM._isLoading:
+				if self._detailsVM._listVM._isLoading:
 					self.updateAddonName(AddonDetails._loadingAddonsLabelText)
 				else:
 					self.updateAddonName(AddonDetails._noAddonSelectedLabelText)
@@ -225,7 +225,7 @@ class AddonDetails(
 						pgettext("addonStore", "Publisher:"),
 						details.publisher
 					)
-				if isinstance(details, _InstalledAddonModel):
+				if isinstance(details, _AddonManifestModel):
 					# Author comes from the manifest, and is only available for installed add-ons.
 					self._appendDetailsLabelValue(
 						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.

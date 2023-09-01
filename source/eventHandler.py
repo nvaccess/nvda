@@ -499,11 +499,18 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 
 	fg = winUser.getForegroundWindow()
 	fgClassName=winUser.getClassName(fg)
-	if wClass == "NetUIHWND" and fgClassName in ("Net UI Tool Window Layered","Net UI Tool Window"):
+	if (
 		# #5504: In Office >= 2013 with the ribbon showing only tabs,
 		# when a tab is expanded, the window we get from the focus object is incorrect.
-		# This window isn't beneath the foreground window,
-		# so our foreground application checks fail.
+		# This window isn't beneath the foreground window.
+		wClass == "NetUIHWND" and fgClassName in ("Net UI Tool Window Layered", "Net UI Tool Window")
+		or (
+			# #14916: The context menu in the Edge download window isn't beneath the foreground window.
+			wClass == fgClassName
+			and wClass.startswith("Chrome_WidgetWin_") and fgClassName.startswith("Chrome_WidgetWin_")
+		)
+	):
+		# Our foreground application checks fail.
 		# Just compare the root owners.
 		if winUser.getAncestor(windowHandle, winUser.GA_ROOTOWNER) == winUser.getAncestor(fg, winUser.GA_ROOTOWNER):
 			return True

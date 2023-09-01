@@ -29,10 +29,7 @@ import controlTypes
 import api
 import textInfos
 import speech
-from speech import (
-	sayAll,
-	shortcutKeys,
-)
+from speech import sayAll
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
 from logHandler import log
@@ -621,6 +618,23 @@ class GlobalCommands(ScriptableObject):
 		# Translators: A message reported when cycling through line indentation settings.
 		# {mode} will be replaced with the mode; i.e. Off, Speech, Tones or Both Speech and Tones.
 		ui.message(_("Report line indentation {mode}").format(mode=state.displayString))
+
+	@script(
+		# Translators: Input help mode message for toggle ignore blank lines for line indentation reporting command.
+		description=_("Toggles on and off the ignoring of blank lines for line indentation reporting"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
+	def script_toggleignoreBlankLinesForReportLineIndentation(self, gesture: inputCore.InputGesture) -> None:
+		ignore = config.conf['documentFormatting']['ignoreBlankLinesForRLI']
+		config.conf['documentFormatting']['ignoreBlankLinesForRLI'] = not ignore
+		if ignore:
+			# Translators: The message announced when toggling off the ignore blank lines for line indentation
+			# reporting document formatting setting.
+			ui.message(_("Ignore blank lines for line indentation reporting off"))
+		else:
+			# Translators: The message announced when toggling on the ignore blank lines for line indentation
+			# reporting document formatting setting.
+			ui.message(_("Ignore blank lines for line indentation reporting on"))
 
 	@script(
 		# Translators: Input help mode message for toggle report paragraph indentation command.
@@ -2591,13 +2605,12 @@ class GlobalCommands(ScriptableObject):
 	def script_reportFocusObjectAccelerator(self, gesture: inputCore.InputGesture) -> None:
 		obj = api.getFocusObject()
 		if obj.keyboardShortcut:
-			shortcut = obj.keyboardShortcut
-			shortcutKeys.speakKeyboardShortcuts(shortcut)
-			braille.handler.message(shortcut)
+			res = obj.keyboardShortcut
 		else:
 			# Translators: reported when a user requests the accelerator key
 			# of the currently focused object, but there is none set.
-			ui.message(_("No shortcut key"))
+			res = _("No shortcut key")
+		ui.message(res)
 
 	@script(
 		# Translators: Input help mode message for toggle mouse tracking command.
@@ -3282,6 +3295,8 @@ class GlobalCommands(ScriptableObject):
 			# Translators: The message announced when toggling the braille cursor.
 			state = _("Braille cursor on")
 			config.conf["braille"]["showCursor"]=True
+		# To hide or show cursor immediately on braille line
+		braille.handler._updateDisplay()
 		ui.message(state)
 
 	@script(
@@ -3350,6 +3365,8 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Reports which show braille selection state is used
 			# (disabled or enabled).
 			msg = _("Braille show selection %s") % BoolFlag[nextName].displayString
+		# To hide or show selection immediately on braille line
+		braille.handler.initialDisplay()
 		ui.message(msg)
 
 	@script(
@@ -3820,7 +3837,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_OBJECTNAVIGATION,
 		gestures=(
 			"ts(object):flickright",
-			"kb(desktop):NVDA+numpad3",
+			"kb:NVDA+numpad3",
 			"kb(laptop):shift+NVDA+]",
 		),
 	)
@@ -3858,7 +3875,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_OBJECTNAVIGATION,
 		gestures=(
 			"ts(object):flickleft",
-			"kb(desktop):NVDA+numpad9",
+			"kb:NVDA+numpad9",
 			"kb(laptop):shift+NVDA+[",
 		),
 	)
@@ -4246,6 +4263,13 @@ class GlobalCommands(ScriptableObject):
 					)
 				)
 			else:
+				from contentRecog.recogUi import RefreshableRecogResultNVDAObject
+				focusObj = api.getFocusObject()
+				if isinstance(focusObj, RefreshableRecogResultNVDAObject) and focusObj.recognizer.allowAutoRefresh:
+					# Translators: Warning message when trying to enable the screen curtain when OCR is active.
+					warningMessage = _("Could not enable screen curtain when performing content recognition")
+					ui.message(warningMessage, speechPriority=speech.priorities.Spri.NOW)
+					return
 				_enableScreenCurtain()
 
 	@script(

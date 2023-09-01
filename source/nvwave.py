@@ -36,7 +36,7 @@ from ctypes.wintypes import (
 	UINT,
 	LPUINT
 )
-from comtypes import HRESULT, BSTR, GUID
+from comtypes import HRESULT, BSTR
 from comtypes.hresult import S_OK
 import atexit
 import weakref
@@ -883,6 +883,8 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		if self._audioDucker:
 			self._audioDucker.enable()
 		feedId = c_uint() if onDone else None
+		# Never treat this instance as idle while we're feeding.
+		self._lastActiveTime = None
 		NVDAHelper.localLib.wasPlay_feed(
 			self._player,
 			data,
@@ -913,6 +915,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		if self._audioDucker:
 			self._audioDucker.disable()
 		NVDAHelper.localLib.wasPlay_stop(self._player)
+		self._lastActiveTime = None
 		self._isPaused = False
 		self._doneCallbacks = {}
 		self._setVolumeFromConfig()
@@ -930,8 +933,11 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			NVDAHelper.localLib.wasPlay_pause(self._player)
 		else:
 			NVDAHelper.localLib.wasPlay_resume(self._player)
-			self._lastActiveTime = time.time()
-			self._scheduleIdleCheck()
+			# If self._lastActiveTime is None, either no audio has been fed yet or audio
+			# is currently being fed. Either way, we shouldn't touch it.
+			if self._lastActiveTime:
+				self._lastActiveTime = time.time()
+				self._scheduleIdleCheck()
 		self._isPaused = switch
 
 	def setVolume(
@@ -1002,6 +1008,8 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		stillActiveStream = False
 		for player in cls._instances.values():
 			if not player._lastActiveTime or player._isPaused:
+				# Either no audio has been fed yet, audio is currently being fed or the
+				# player is paused. Don't treat this player as idle.
 				continue
 			if player._lastActiveTime <= threshold:
 				NVDAHelper.localLib.wasPlay_idle(player._player)
@@ -1044,7 +1052,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 
 def initialize():
 	global WavePlayer
-	if not config.conf["audio"]["wasapi"]:
+	if not config.conf["audio"]["WASAPI"]:
 		return
 	WavePlayer = WasapiWavePlayer
 	NVDAHelper.localLib.wasPlay_create.restype = c_void_p

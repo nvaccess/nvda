@@ -20,6 +20,7 @@ from _addonStore.models.status import (
 	_statusFilters,
 	_StatusFilterKey,
 )
+import config
 from core import callLater
 import globalVars
 import gui
@@ -27,7 +28,7 @@ from gui import (
 	guiHelper,
 	addonGui,
 )
-from gui.message import DisplayableError
+from gui.message import DisplayableError, displayDialogAsModal
 from gui.settingsDialogs import SettingsDialog
 from logHandler import log
 
@@ -35,6 +36,7 @@ from ..viewModels.store import AddonStoreVM
 from .actions import _ActionsContextMenu
 from .addonList import AddonVirtualList
 from .details import AddonDetails
+from .messageDialogs import _SafetyWarningDialog
 
 
 class AddonStoreDialog(SettingsDialog):
@@ -50,6 +52,8 @@ class AddonStoreDialog(SettingsDialog):
 		self._storeVM.onDisplayableError.register(self.handleDisplayableError)
 		self._actionsContextMenu = _ActionsContextMenu(self._storeVM)
 		super().__init__(parent, resizeable=True, buttons={wx.CLOSE})
+		if config.conf["addonStore"]["showWarning"]:
+			displayDialogAsModal(_SafetyWarningDialog(parent))
 		self.Maximize()
 
 	def _enterActivatesOk_ctrlSActivatesApply(self, evt: wx.KeyEvent):
@@ -61,15 +65,7 @@ class AddonStoreDialog(SettingsDialog):
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
 		if globalVars.appArgs.disableAddons:
-			self.banner = BannerWindow(self, dir=wx.TOP)
-			self.banner.SetText(
-				# Translators: Banner notice that is displayed in the Add-on Store.
-				pgettext("addonStore", "Note: NVDA was started with add-ons disabled"),
-				"",
-			)
-			normalBgColour = self.GetBackgroundColour()
-			self.banner.SetGradient(normalBgColour, normalBgColour)
-			settingsSizer.Add(self.banner, flag=wx.CENTER)
+			self._makeBanner()
 
 		splitViewSizer = wx.BoxSizer(wx.HORIZONTAL)
 
@@ -133,6 +129,18 @@ class AddonStoreDialog(SettingsDialog):
 		settingsSizer.Add(generalActions.sizer)
 		self.onListTabPageChange(None)
 
+	def _makeBanner(self):
+		self.banner = BannerWindow(self, dir=wx.TOP)
+		# Translators: Banner notice that is displayed in the Add-on Store.
+		bannerText = pgettext("addonStore", "Note: NVDA was started with add-ons disabled")
+		self.banner.SetText(
+			bannerText,
+			"",
+		)
+		normalBgColour = self.GetBackgroundColour()
+		self.banner.SetGradient(normalBgColour, normalBgColour)
+		self.settingsSizer.Add(self.banner, flag=wx.CENTER)
+
 	def _createFilterControls(self):
 		filterCtrlsLine0 = guiHelper.BoxSizerHelper(self, wx.HORIZONTAL)
 		filterCtrlsLine1 = guiHelper.BoxSizerHelper(self, wx.HORIZONTAL)
@@ -154,7 +162,7 @@ class AddonStoreDialog(SettingsDialog):
 		self.bindHelpEvent("AddonStoreFilterChannel", self.channelFilterCtrl)
 
 		# Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
-		incompatibleAddonsLabel = _("Include &incompatible add-ons")
+		incompatibleAddonsLabel = pgettext("addonStore", "Include &incompatible add-ons")
 		self.includeIncompatibleCtrl = cast(wx.CheckBox, filterCtrlsLine0.addItem(
 			wx.CheckBox(self, label=incompatibleAddonsLabel)
 		))
@@ -309,6 +317,8 @@ class AddonStoreDialog(SettingsDialog):
 			self.includeIncompatibleCtrl.Disable()
 
 	def onListTabPageChange(self, evt: wx.EVT_CHOICE):
+		self.searchFilterCtrl.SetValue("")
+
 		self._storeVM._filterEnabledDisabled = EnabledStatus.ALL
 		self.enabledFilterCtrl.SetSelection(0)
 
@@ -357,7 +367,7 @@ class AddonStoreDialog(SettingsDialog):
 			defaultDir="c:",
 			style=wx.FD_OPEN,
 		)
-		if fd.ShowModal() != wx.ID_OK:
+		if displayDialogAsModal(fd) != wx.ID_OK:
 			return
 		addonPath = fd.GetPath()
 		try:

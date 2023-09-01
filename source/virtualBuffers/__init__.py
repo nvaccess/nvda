@@ -409,6 +409,10 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	TextInfo=VirtualBufferTextInfo
 
+	# As NVDA manages the caret virtually,
+	# It is necessary for 'gainFocus' events to update the caret.
+	_focusEventMustUpdateCaretPosition = True
+
 	#: Maps root identifiers (docHandle and ID) to buffers.
 	rootIdentifiers = weakref.WeakValueDictionary()
 

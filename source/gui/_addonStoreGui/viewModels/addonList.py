@@ -22,7 +22,7 @@ from requests.structures import CaseInsensitiveDict
 from _addonStore.models.addon import (
 	_AddonGUIModel,
 	_AddonStoreModel,
-	_InstalledAddonModel,
+	_AddonManifestModel,
 )
 from _addonStore.models.status import (
 	_StatusFilterKey,
@@ -127,9 +127,9 @@ class AddonListItemVM:
 
 
 class AddonDetailsVM:
-	def __init__(self, listItem: Optional[AddonListItemVM] = None):
-		self._listItem: Optional[AddonListItemVM] = listItem
-		self._isLoading: bool = False
+	def __init__(self, listVM: AddonListVM):
+		self._listVM = listVM
+		self._listItem: Optional[AddonListItemVM] = listVM.getSelection()
 		self.updated = extensionPoints.Action()  # triggered by setting L{self._listItem}
 
 	@property
@@ -158,6 +158,7 @@ class AddonListVM:
 			addons: List[AddonListItemVM],
 			storeVM: "AddonStoreVM",
 	):
+		self._isLoading: bool = False
 		self._addons: CaseInsensitiveDict[AddonListItemVM] = CaseInsensitiveDict()
 		self._storeVM = storeVM
 		self.itemUpdated = extensionPoints.Action()
@@ -302,7 +303,7 @@ class AddonListVM:
 			term = term.casefold()
 			model = detailsVM.model
 			inPublisher = isinstance(model, _AddonStoreModel) and term in model.publisher.casefold()
-			inAuthor = isinstance(model, _InstalledAddonModel) and term in model.author.casefold()
+			inAuthor = isinstance(model, _AddonManifestModel) and term in model.author.casefold()
 			return (
 				term in model.displayName.casefold()
 				or term in model.description.casefold()

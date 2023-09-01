@@ -13,7 +13,7 @@ The principles outlined in ["The Documentation System" guide for reference mater
 
 ## Feature settings
 
-Feature flags should be included using the following format.
+Feature flags, comboboxes and checkboxes should be included using the following format.
 
 `FeatureDescriptionAnchor` should not include the settings category.
 Once the anchor is set it cannot be updated, while settings may move categories.

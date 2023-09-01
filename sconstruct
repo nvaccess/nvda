@@ -487,7 +487,7 @@ def makePot(target, source, env):
 	os.rename(tmpFn, potFn)
 
 
-env.SConscript("devDocs/sconscript", exports=["env", "outputDir", "sourceDir", "t2tBuildConf"])
+env.SConscript("projectDocs/dev/developerGuide/sconscript", exports=["env", "outputDir", "sourceDir", "t2tBuildConf"])
 
 
 def getSubDirs(path):

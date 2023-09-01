@@ -13,6 +13,7 @@ from abc import ABCMeta, abstractmethod
 import copy
 import os
 from enum import IntEnum
+from locale import strxfrm
 
 import typing
 import wx
@@ -55,6 +56,7 @@ from typing import (
 	List,
 	Optional,
 	Set,
+	cast,
 )
 import core
 import keyboardHandler
@@ -450,7 +452,7 @@ class SettingsPanelAccessible(wx.Accessible):
 
 class MultiCategorySettingsDialog(SettingsDialog):
 	"""A settings dialog with multiple settings categories.
-	A multi category settings dialog consists of a list view with settings categories on the left side, 
+	A multi category settings dialog consists of a list view with settings categories on the left side,
 	and a settings panel on the right side of the dialog.
 	Furthermore, in addition to Ok and Cancel buttons, it has an Apply button by default,
 	which is different  from the default behavior of L{SettingsDialog}.
@@ -881,7 +883,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
-			# Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering  
+			# Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
 			item=self.allowUsageStatsCheckBox=wx.CheckBox(self,label=_("Allow the NVDA project to gather NVDA usage statistics"))
 			self.bindHelpEvent("GeneralSettingsGatherUsageStats", self.allowUsageStatsCheckBox)
 			item.Value=config.conf["update"]["allowUsageStats"]
@@ -2159,7 +2161,7 @@ class BrowseModePanel(SettingsPanel):
 		self.bindHelpEvent("BrowseModeSettingsScreenLayout", self.useScreenLayoutCheckBox)
 		self.useScreenLayoutCheckBox.SetValue(config.conf["virtualBuffers"]["useScreenLayout"])
 
-		# Translators: The label for a checkbox in browse mode settings to 
+		# Translators: The label for a checkbox in browse mode settings to
 		# enable browse mode on page load.
 		enableOnPageLoadText = _("&Enable browse mode on page load")
 		self.enableOnPageLoadCheckBox = sHelper.addItem(wx.CheckBox(self, label=enableOnPageLoadText))
@@ -2263,7 +2265,7 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		sHelper.addItem(wx.StaticText(self, label=self.panelDescription))
 
-		# Translators: This is the label for a group of document formatting options in the 
+		# Translators: This is the label for a group of document formatting options in the
 		# document formatting settings panel
 		fontGroupText = _("Font")
 		fontGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=fontGroupText)
@@ -2327,7 +2329,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.colorCheckBox = fontGroup.addItem(wx.CheckBox(fontGroupBox, label=colorsText))
 		self.colorCheckBox.SetValue(config.conf["documentFormatting"]["reportColor"])
 
-		# Translators: This is the label for a group of document formatting options in the 
+		# Translators: This is the label for a group of document formatting options in the
 		# document formatting settings panel
 		documentInfoGroupText = _("Document information")
 		docInfoSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=documentInfoGroupText)
@@ -2359,7 +2361,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.spellingErrorsCheckBox = docInfoGroup.addItem(wx.CheckBox(docInfoBox, label=spellingErrorText))
 		self.spellingErrorsCheckBox.SetValue(config.conf["documentFormatting"]["reportSpellingErrors"])
 
-		# Translators: This is the label for a group of document formatting options in the 
+		# Translators: This is the label for a group of document formatting options in the
 		# document formatting settings panel
 		pageAndSpaceGroupText = _("Pages and spacing")
 		pageAndSpaceSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=pageAndSpaceGroupText)
@@ -2392,16 +2394,23 @@ class DocumentFormattingPanel(SettingsPanel):
 			self.lineIndentationCombo
 		)
 		self.lineIndentationCombo.SetSelection(config.conf['documentFormatting']['reportLineIndentation'])
-		
-		# Translators: This message is presented in the document formatting settings panelue
-		# If this option is selected, NVDA will report paragraph indentation if available. 
+
+		# Translators: This is the label of a checkbox in the document formatting settings panel
+		# If this option is selected, NVDA will ignore blank lines for line indentation reporting
+		ignoreBlankLinesText = _("Ignore &blank lines for line indentation reporting")
+		ignoreBlankLinesCheckBox = wx.CheckBox(pageAndSpaceBox, label=ignoreBlankLinesText)
+		self.ignoreBlankLinesRLICheckbox = pageAndSpaceGroup.addItem(ignoreBlankLinesCheckBox)
+		self.ignoreBlankLinesRLICheckbox.SetValue(config.conf["documentFormatting"]["ignoreBlankLinesForRLI"])
+
+		# Translators: This message is presented in the document formatting settings panel
+		# If this option is selected, NVDA will report paragraph indentation if available.
 		paragraphIndentationText = _("&Paragraph indentation")
 		_paragraphIndentationCheckBox = wx.CheckBox(pageAndSpaceBox, label=paragraphIndentationText)
 		self.paragraphIndentationCheckBox = pageAndSpaceGroup.addItem(_paragraphIndentationCheckBox)
 		self.paragraphIndentationCheckBox.SetValue(config.conf["documentFormatting"]["reportParagraphIndentation"])
 
-		# Translators: This message is presented in the document formatting settings panelue
-		# If this option is selected, NVDA will report line spacing if available. 
+		# Translators: This message is presented in the document formatting settings panel
+		# If this option is selected, NVDA will report line spacing if available.
 		lineSpacingText=_("&Line spacing")
 		_lineSpacingCheckBox = wx.CheckBox(pageAndSpaceBox, label=lineSpacingText)
 		self.lineSpacingCheckBox = pageAndSpaceGroup.addItem(_lineSpacingCheckBox)
@@ -2413,7 +2422,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.alignmentCheckBox = pageAndSpaceGroup.addItem(wx.CheckBox(pageAndSpaceBox, label=alignmentText))
 		self.alignmentCheckBox.SetValue(config.conf["documentFormatting"]["reportAlignment"])
 
-		# Translators: This is the label for a group of document formatting options in the 
+		# Translators: This is the label for a group of document formatting options in the
 		# document formatting settings panel
 		tablesGroupText = _("Table information")
 		tablesGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=tablesGroupText)
@@ -2452,7 +2461,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		)
 		self.borderComboBox.SetSelection(config.conf["documentFormatting"]["reportCellBorders"])
 
-		# Translators: This is the label for a group of document formatting options in the 
+		# Translators: This is the label for a group of document formatting options in the
 		# document formatting settings panel
 		elementsGroupText = _("Elements")
 		elementsGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=elementsGroupText)
@@ -2544,6 +2553,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportPage"]=self.pageCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineNumber"]=self.lineNumberCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineIndentation"] = self.lineIndentationCombo.GetSelection()
+		config.conf["documentFormatting"]["ignoreBlankLinesForRLI"] = self.ignoreBlankLinesRLICheckbox.IsChecked()
 		config.conf["documentFormatting"]["reportParagraphIndentation"]=self.paragraphIndentationCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineSpacing"]=self.lineSpacingCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
@@ -2650,9 +2660,18 @@ class UwpOcrPanel(SettingsPanel):
 		except ValueError:
 			self.languageChoice.Selection = 0
 
+		# Translators: Label for an option in the Windows OCR settings panel.
+		autoRefreshText = _("Periodically &refresh recognized content")
+		self.autoRefreshCheckbox = sHelper.addItem(
+			wx.CheckBox(self, label=autoRefreshText)
+		)
+		self.bindHelpEvent("Win10OcrSettingsAutoRefresh", self.autoRefreshCheckbox)
+		self.autoRefreshCheckbox.SetValue(config.conf["uwpOcr"]["autoRefresh"])
+
 	def onSave(self):
 		lang = self.languageCodes[self.languageChoice.Selection]
 		config.conf["uwpOcr"]["language"] = lang
+		config.conf["uwpOcr"]["autoRefresh"] = self.autoRefreshCheckbox.IsChecked()
 
 
 class AdvancedPanelControls(
@@ -2662,9 +2681,9 @@ class AdvancedPanelControls(
 	"""Holds the actual controls for the Advanced Settings panel, this allows the state of the controls to
 	be more easily managed.
 	"""
-	
+
 	helpId = "AdvancedSettings"
-	
+
 	def __init__(self, parent):
 		super().__init__(parent)
 		self._defaultsRestored = False
@@ -2868,33 +2887,6 @@ class AdvancedPanelControls(
 		brailleGroup = guiHelper.BoxSizerHelper(self, sizer=brailleSizer)
 		sHelper.addItem(brailleGroup)
 
-		supportHidBrailleChoices = [
-			# Translators: Label for option in the 'Enable support for HID braille' combobox
-			# in the Advanced settings panel.
-			_("Default (Yes)"),
-			# Translators: Label for option in the 'Enable support for HID braille' combobox
-			# in the Advanced settings panel.
-			_("Yes"),
-			# Translators: Label for option in the 'Enable support for HID braille' combobox
-			# in the Advanced settings panel.
-			_("No"),
-		]
-
-		# Translators: This is the label for a combo box in the
-		#  Advanced settings panel.
-		label = _("Enable support for HID braille")
-		self.supportHidBrailleCombo: wx.Choice = brailleGroup.addLabeledControl(
-			labelText=label,
-			wxCtrlClass=wx.Choice,
-			choices=supportHidBrailleChoices,
-		)
-		self.supportHidBrailleCombo.SetSelection(
-			config.conf["braille"]["enableHidBrailleSupport"]
-		)
-		self.supportHidBrailleCombo.defaultValue = self._getDefaultValue(
-			["braille", "enableHidBrailleSupport"]
-		)
-		self.bindHelpEvent("HIDBraille", self.supportHidBrailleCombo)
 		self.brailleLiveRegionsCombo: nvdaControls.FeatureFlagCombo = brailleGroup.addLabeledControl(
 			# Translators: This is the label for a combo-box in the Advanced settings panel.
 			labelText=_("Report live regions:"),
@@ -3074,19 +3066,17 @@ class AdvancedPanelControls(
 		audioGroup = guiHelper.BoxSizerHelper(self, sizer=audio)
 		sHelper.addItem(audioGroup)
 
-		# Translators: This is the label for a checkbox control in the
-		#  Advanced settings panel.
+		# Translators: This is the label for a checkbox control in the Advanced settings panel.
 		label = _("Use WASAPI for audio output (requires restart)")
-		self.wasapiCheckBox: wx.CheckBox = audioGroup.addItem(
-			wx.CheckBox(audioBox, label=label)
-		)
-		self.bindHelpEvent("WASAPI", self.wasapiCheckBox)
-		self.wasapiCheckBox.Bind(wx.EVT_CHECKBOX, self.onAudioCheckBoxChange)
-		self.wasapiCheckBox.SetValue(
-			config.conf["audio"]["wasapi"]
-		)
-		self.wasapiCheckBox.defaultValue = self._getDefaultValue(
-			["audio", "wasapi"])
+		self.wasapiComboBox = cast(nvdaControls.FeatureFlagCombo, audioGroup.addLabeledControl(
+			labelText=label,
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["audio", "WASAPI"],
+			conf=config.conf,
+		))
+		self.bindHelpEvent("WASAPI", self.wasapiComboBox)
+		self.wasapiComboBox.Bind(wx.EVT_CHOICE, self._onWASAPIChange)
+
 		# Translators: This is the label for a checkbox control in the
 		#  Advanced settings panel.
 		label = _("Volume of NVDA sounds follows voice volume (requires WASAPI)")
@@ -3094,7 +3084,7 @@ class AdvancedPanelControls(
 			wx.CheckBox(audioBox, label=label)
 		)
 		self.bindHelpEvent("SoundVolumeFollowsVoice", self.soundVolFollowCheckBox)
-		self.soundVolFollowCheckBox.Bind(wx.EVT_CHECKBOX, self.onAudioCheckBoxChange)
+		self.soundVolFollowCheckBox.Bind(wx.EVT_CHECKBOX, self._onWASAPIChange)
 		self.soundVolFollowCheckBox.SetValue(
 			config.conf["audio"]["soundVolumeFollowsVoice"]
 		)
@@ -3115,7 +3105,7 @@ class AdvancedPanelControls(
 		)
 		self.soundVolSlider.defaultValue = self._getDefaultValue(
 			["audio", "soundVolume"])
-		self.onAudioCheckBoxChange()
+		self._onWASAPIChange()
 
 		# Translators: This is the label for a group of advanced options in the
 		# Advanced settings panel
@@ -3158,7 +3148,7 @@ class AdvancedPanelControls(
 					self._getDefaultValue(['debugLog', x])
 			)
 		]
-		
+
 		# Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
 		label = _("Play a sound for logged e&rrors:")
 		playErrorSoundChoices = (
@@ -3171,15 +3161,15 @@ class AdvancedPanelControls(
 		self.bindHelpEvent("PlayErrorSound", self.playErrorSoundCombo)
 		self.playErrorSoundCombo.SetSelection(config.conf["featureFlag"]["playErrorSound"])
 		self.playErrorSoundCombo.defaultValue = self._getDefaultValue(["featureFlag", "playErrorSound"])
-		
+
 		self.Layout()
 
 	def onOpenScratchpadDir(self,evt):
 		path=config.getScratchpadDir(ensureExists=True)
 		os.startfile(path)
 
-	def onAudioCheckBoxChange(self, evt: Optional[wx.CommandEvent] = None):
-		wasapi = self.wasapiCheckBox.IsChecked()
+	def _onWASAPIChange(self, evt: Optional[wx.CommandEvent] = None):
+		wasapi = bool(self.wasapiComboBox._getControlCurrentFlag())
 		self.soundVolFollowCheckBox.Enable(wasapi)
 		self.soundVolSlider.Enable(
 			wasapi
@@ -3203,7 +3193,6 @@ class AdvancedPanelControls(
 			and self.UIAInChromiumCombo.GetSelection() == self.UIAInChromiumCombo.defaultValue
 			and self.annotationsDetailsCheckBox.IsChecked() == self.annotationsDetailsCheckBox.defaultValue
 			and self.ariaDescCheckBox.IsChecked() == self.ariaDescCheckBox.defaultValue
-			and self.supportHidBrailleCombo.GetSelection() == self.supportHidBrailleCombo.defaultValue
 			and self.brailleLiveRegionsCombo.isValueConfigSpecDefault()
 			and self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
@@ -3213,7 +3202,7 @@ class AdvancedPanelControls(
 			and self.loadChromeVBufWhenBusyCombo.isValueConfigSpecDefault()
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
 			and self.reportTransparentColorCheckBox.GetValue() == self.reportTransparentColorCheckBox.defaultValue
-			and self.wasapiCheckBox.GetValue() == self.wasapiCheckBox.defaultValue
+			and self.wasapiComboBox.isValueConfigSpecDefault()
 			and self.soundVolFollowCheckBox.GetValue() == self.soundVolFollowCheckBox.defaultValue
 			and self.soundVolSlider.GetValue() == self.soundVolSlider.defaultValue
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
@@ -3232,7 +3221,6 @@ class AdvancedPanelControls(
 		self.UIAInChromiumCombo.SetSelection(self.UIAInChromiumCombo.defaultValue)
 		self.annotationsDetailsCheckBox.SetValue(self.annotationsDetailsCheckBox.defaultValue)
 		self.ariaDescCheckBox.SetValue(self.ariaDescCheckBox.defaultValue)
-		self.supportHidBrailleCombo.SetSelection(self.supportHidBrailleCombo.defaultValue)
 		self.brailleLiveRegionsCombo.resetToConfigSpecDefault()
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
@@ -3242,7 +3230,7 @@ class AdvancedPanelControls(
 		self.loadChromeVBufWhenBusyCombo.resetToConfigSpecDefault()
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
-		self.wasapiCheckBox.SetValue(self.wasapiCheckBox.defaultValue)
+		self.wasapiComboBox.resetToConfigSpecDefault()
 		self.soundVolFollowCheckBox.SetValue(self.soundVolFollowCheckBox.defaultValue)
 		self.soundVolSlider.SetValue(self.soundVolSlider.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
@@ -3275,18 +3263,18 @@ class AdvancedPanelControls(
 		config.conf["documentFormatting"]["reportTransparentColor"] = (
 			self.reportTransparentColorCheckBox.IsChecked()
 		)
-		config.conf["audio"]["wasapi"] = self.wasapiCheckBox.IsChecked()
+		self.wasapiComboBox.saveCurrentValueToConf()
 		config.conf["audio"]["soundVolumeFollowsVoice"] = self.soundVolFollowCheckBox.IsChecked()
 		config.conf["audio"]["soundVolume"] = self.soundVolSlider.GetValue()
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
 		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
-		config.conf["braille"]["enableHidBrailleSupport"] = self.supportHidBrailleCombo.GetSelection()
 		self.brailleLiveRegionsCombo.saveCurrentValueToConf()
 		self.loadChromeVBufWhenBusyCombo.saveCurrentValueToConf()
 
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
 		config.conf["featureFlag"]["playErrorSound"] = self.playErrorSoundCombo.GetSelection()
+
 
 class AdvancedPanel(SettingsPanel):
 	enableControlsCheckBox = None  # type: wx.CheckBox
@@ -3357,7 +3345,7 @@ class AdvancedPanel(SettingsPanel):
 			self.enableControlsCheckBox.IsChecked() or
 			self.advancedControls.haveConfigDefaultsBeenRestored()
 		):
-			self.advancedControls.onSave()	
+			self.advancedControls.onSave()
 
 
 	def onEnableControlsCheckBox(self, evt):
@@ -3463,12 +3451,22 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 		self.bindHelpEvent("SelectBrailleDisplayDisplay", self.displayList)
 		self.Bind(wx.EVT_CHOICE, self.onDisplayNameChanged, self.displayList)
 
+		# Translators: The label for a setting in braille settings to enable displays for automatic detection.
+		autoDetectLabelText = _("&Displays to detect automatically:")
+		self.autoDetectList = sHelper.addLabeledControl(
+			autoDetectLabelText,
+			nvdaControls.CustomCheckListBox,
+			choices=[]
+		)
+		self.bindHelpEvent("SelectBrailleDisplayAutoDetect", self.autoDetectList)
+
 		# Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 		portsLabelText = _("&Port:")
 		self.portsList = sHelper.addLabeledControl(portsLabelText, wx.Choice, choices=[])
 		self.bindHelpEvent("SelectBrailleDisplayPort", self.portsList)
 
 		self.updateBrailleDisplayLists()
+		self.updateStateDependentControls()
 
 	def postInit(self):
 		# Finally, ensure that focus is on the list of displays.
@@ -3499,12 +3497,25 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			self.displayList.SetSelection(selection)
 		except:
 			pass
-		self.updatePossiblePorts()
 
-	def updatePossiblePorts(self):
+		import bdDetect
+		autoDetectDrivers = list(bdDetect.getSupportedBrailleDisplayDrivers())
+		autoDetectDrivers.sort(key=lambda d: strxfrm(d.description))
+		autoDetectChoices = [d.description for d in autoDetectDrivers]
+		self.autoDetectValues = [d.name for d in autoDetectDrivers]
+		self.autoDetectList.Items = autoDetectChoices
+		self.autoDetectList.CheckedItems = [
+			i for i, n
+			in enumerate(self.autoDetectValues)
+			if n in bdDetect.getBrailleDisplayDriversEnabledForDetection()
+		]
+		self.autoDetectList.Selection = 0
+
+	def updateStateDependentControls(self):
 		displayName = self.displayNames[self.displayList.GetSelection()]
 		self.possiblePorts = []
-		if displayName != "auto":
+		isAutoDisplaySelected = displayName == braille.AUTOMATIC_PORT[0]
+		if not isAutoDisplaySelected:
 			displayCls = braille._getDisplayDriver(displayName)
 			try:
 				self.possiblePorts.extend(displayCls.getPossiblePorts().items())
@@ -3524,8 +3535,10 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 		enable = len(self.possiblePorts) > 0 and not (len(self.possiblePorts) == 1 and self.possiblePorts[0][0] == "auto")
 		self.portsList.Enable(enable)
 
+		self.autoDetectList.Enable(isAutoDisplaySelected)
+
 	def onDisplayNameChanged(self, evt):
-		self.updatePossiblePorts()
+		self.updateStateDependentControls()
 
 	def onOk(self, evt):
 		if not self.displayNames:
@@ -3537,8 +3550,19 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 		if self.possiblePorts:
 			port = self.possiblePorts[self.portsList.GetSelection()][0]
 			config.conf["braille"][display]["port"] = port
-		if not braille.handler.setDisplayByName(display):
+		if self.autoDetectList.IsEnabled():
+			# Excluded drivers that are not loaded (e.g. because add-ons are disabled) should be persisted.
+			unknownDriversExcluded = [
+				n for n in config.conf["braille"]["auto"]["excludedDisplays"]
+				if n not in self.autoDetectValues
+			]
+			config.conf["braille"]["auto"]["excludedDisplays"] = [
+				n for i, n
+				in enumerate(self.autoDetectValues)
+				if i not in self.autoDetectList.CheckedItems
+			] + unknownDriversExcluded
 
+		if not braille.handler.setDisplayByName(display):
 			gui.messageBox(
 				# Translators: The message in a dialog presented when NVDA is unable to load the selected
 				# braille display.
@@ -3549,7 +3573,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 				style=wx.OK | wx.ICON_WARNING,
 				parent=self
 			)
-			return 
+			return
 
 		if self.IsModal():
 			# Hack: we need to update the display in our parent window before closing.
@@ -3697,7 +3721,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.bindHelpEvent("BrailleSettingsShowMessages", self.showMessagesList)
 		self.showMessagesList.Bind(wx.EVT_CHOICE, self.onShowMessagesChange)
 		self.showMessagesList.SetSelection(config.conf['braille']['showMessages'])
-		
+
 		minTimeout = int(config.conf.getConfigValidation(
 			("braille", "messageTimeout")
 		).kwargs["min"])
@@ -4327,7 +4351,7 @@ class AddSymbolDialog(
 ):
 
 	helpId = "SymbolPronunciation"
-	
+
 	def __init__(self, parent):
 		# Translators: This is the label for the add symbol dialog.
 		super().__init__(parent, title=_("Add Symbol"))
@@ -4416,7 +4440,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		# generally the advice on the wx documentation is: "In general, it is recommended to skip all non-command events
 		# to allow the default handling to take place. The command events are, however, normally not skipped as usually
 		# a single command such as a button click or menu item selection must only be processed by one handler."
-		def skipEventAndCall(handler):	
+		def skipEventAndCall(handler):
 			def wrapWithEventSkip(event):
 				if event:
 					event.Skip()

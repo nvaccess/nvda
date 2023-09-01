@@ -35,7 +35,6 @@ from .commands import (
 	EndUtteranceCommand,
 	CharacterModeCommand,
 )
-from .shortcutKeys import getKeyboardShortcutsSpeech
 
 from . import types
 from .types import (
@@ -1540,7 +1539,21 @@ def getTextInfoSpeech(  # noqa: C901
 				if autoLanguageSwitching and newLanguage!=lastLanguage:
 					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
 					lastLanguage=newLanguage
-	if reportIndentation and speakTextInfoState and allIndentation!=speakTextInfoState.indentationCache:
+	if (
+		reportIndentation
+		and speakTextInfoState
+		and(
+			# either not ignoring blank lines
+			not formatConfig['ignoreBlankLinesForRLI']
+			# or line isn't completely blank
+			or any(
+				not (set(t) <= LINE_END_CHARS)
+				for t in textWithFields
+				if isinstance(t, str)
+			)
+		)
+		and allIndentation != speakTextInfoState.indentationCache
+	):
 		indentationSpeech=getIndentationSpeech(allIndentation, formatConfig)
 		if autoLanguageSwitching and speechSequence[-1].lang is not None:
 			# Indentation must be spoken in the default language,
@@ -1602,6 +1615,10 @@ def getTextInfoSpeech(  # noqa: C901
 
 	yield speechSequence
 	return True
+
+
+# for checking a line is completely blank, i.e. doesn't even contain spaces
+LINE_END_CHARS = frozenset(('\r', '\n'))
 
 
 def _isControlEndFieldCommand(command: Union[str, textInfos.FieldCommand]):
@@ -1726,7 +1743,8 @@ def getPropertiesSpeech(  # noqa: C901
 		textList.append(description)
 	# sometimes keyboardShortcut key is present but value is None
 	keyboardShortcut: Optional[str] = propertyValues.get('keyboardShortcut')
-	textList.extend(getKeyboardShortcutsSpeech(keyboardShortcut))
+	if keyboardShortcut:
+		textList.append(keyboardShortcut)
 	if includeTableCellCoords and cellCoordsText:
 		textList.append(cellCoordsText)
 	if cellCoordsText or rowNumber or columnNumber:
@@ -2540,55 +2558,12 @@ def getFormatFieldSpeech(  # noqa: C901
 	if formatConfig["reportAlignment"]:
 		textAlign=attrs.get("text-align")
 		oldTextAlign=attrsCache.get("text-align") if attrsCache is not None else None
-		if (textAlign or oldTextAlign is not None) and textAlign!=oldTextAlign:
-			textAlign=textAlign.lower() if textAlign else textAlign
-			if textAlign=="left":
-				# Translators: Reported when text is left-aligned.
-				text=_("align left")
-			elif textAlign=="center":
-				# Translators: Reported when text is centered.
-				text=_("align center")
-			elif textAlign=="right":
-				# Translators: Reported when text is right-aligned.
-				text=_("align right")
-			elif textAlign=="justify":
-				# Translators: Reported when text is justified.
-				# See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
-				text=_("align justify")
-			elif textAlign=="distribute":
-				# Translators: Reported when text is justified with character spacing (Japanese etc) 
-				# See http://kohei.us/2010/01/21/distributed-text-justification/
-				text=_("align distributed")
-			else:
-				# Translators: Reported when text has reverted to default alignment.
-				text=_("align default")
-			textList.append(text)
+		if textAlign and textAlign != oldTextAlign:
+			textList.append(textAlign.displayString)
 		verticalAlign=attrs.get("vertical-align")
-		oldverticalAlign=attrsCache.get("vertical-align") if attrsCache is not None else None
-		if (verticalAlign or oldverticalAlign is not None) and verticalAlign!=oldverticalAlign:
-			verticalAlign=verticalAlign.lower() if verticalAlign else verticalAlign
-			if verticalAlign=="top":
-				# Translators: Reported when text is vertically top-aligned.
-				text=_("vertical align top")
-			elif verticalAlign in("center","middle"):
-				# Translators: Reported when text is vertically middle aligned.
-				text=_("vertical align middle")
-			elif verticalAlign=="bottom":
-				# Translators: Reported when text is vertically bottom-aligned.
-				text=_("vertical align bottom")
-			elif verticalAlign=="baseline":
-				# Translators: Reported when text is vertically aligned on the baseline. 
-				text=_("vertical align baseline")
-			elif verticalAlign=="justify":
-				# Translators: Reported when text is vertically justified.
-				text=_("vertical align justified")
-			elif verticalAlign=="distributed":
-				# Translators: Reported when text is vertically justified but with character spacing (For some Asian content). 
-				text=_("vertical align distributed") 
-			else:
-				# Translators: Reported when text has reverted to default vertical alignment.
-				text=_("vertical align default")
-			textList.append(text)
+		oldVerticalAlign = attrsCache.get("vertical-align") if attrsCache is not None else None
+		if verticalAlign and verticalAlign != oldVerticalAlign:
+			textList.append(verticalAlign.displayString)
 	if formatConfig["reportParagraphIndentation"]:
 		indentLabels={
 			'left-indent':(

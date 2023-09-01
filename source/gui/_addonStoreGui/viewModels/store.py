@@ -98,7 +98,7 @@ class AddonStoreVM:
 			storeVM=self,
 		)
 		self.detailsVM: AddonDetailsVM = AddonDetailsVM(
-			listItem=self.listVM.getSelection()
+			listVM=self.listVM
 		)
 		self.actionVMList = self._makeActionsList()
 		self.listVM.selectionChanged.register(self._onSelectedItemChanged)
@@ -201,11 +201,16 @@ class AddonStoreVM:
 				# Translators: Label for an action that opens help for the selected addon
 				displayName=pgettext("addonStore", "&Help"),
 				actionHandler=self.helpAddon,
-				validCheck=lambda aVM: aVM.model.isInstalled and self._filteredStatusKey in (
-					# Showing help in the updatable add-ons view is misleading
-					# as we can only fetch the add-on help from the installed version.
-					_StatusFilterKey.INSTALLED,
-					_StatusFilterKey.INCOMPATIBLE,
+				validCheck=lambda aVM: (
+					aVM.model.isInstalled
+					and self._filteredStatusKey in (
+						# Showing help in the updatable add-ons view is misleading
+						# as we can only fetch the add-on help from the installed version.
+						_StatusFilterKey.INSTALLED,
+						_StatusFilterKey.INCOMPATIBLE,
+					)
+					and aVM.model._addonHandlerModel is not None
+					and aVM.model._addonHandlerModel.getDocFilePath() is not None
 				),
 				listItemVM=selectedListItem
 			),
@@ -236,7 +241,9 @@ class AddonStoreVM:
 		]
 
 	def helpAddon(self, listItemVM: AddonListItemVM) -> None:
+		assert listItemVM.model._addonHandlerModel is not None
 		path = listItemVM.model._addonHandlerModel.getDocFilePath()
+		assert path is not None
 		startfile(path)
 
 	def removeAddon(self, listItemVM: AddonListItemVM) -> None:
@@ -370,7 +377,7 @@ class AddonStoreVM:
 			raise NotImplementedError(f"Unhandled status filter key {self._filteredStatusKey}")
 
 	def _getAvailableAddonsInBG(self):
-		self.detailsVM._isLoading = True
+		self.listVM._isLoading = True
 		self.listVM.resetListItems([])
 		log.debug("getting available addons in the background")
 		assert addonDataManager
@@ -393,7 +400,9 @@ class AddonStoreVM:
 		self._availableAddons = availableAddons
 		self.listVM.resetListItems(self._createListItemVMs())
 		self.detailsVM.listItem = self.listVM.getSelection()
-		self.detailsVM._isLoading = False
+		self.listVM._isLoading = False
+		# ensure calling on the main thread.
+		core.callLater(delay=0, callable=self.detailsVM.updated.notify, addonDetailsVM=self.detailsVM)
 		log.debug("completed refresh")
 
 	def cancelDownloads(self):

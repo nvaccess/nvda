@@ -53,9 +53,9 @@ Because 19200 is the display default, it is tried at first.
 """
 
 READ_TIMEOUT = 0.2
-WRITE_TIMEOUT = 0
+WRITE_TIMEOUT = 0.2
 SLEEP_TIMEOUT = 0.2
-"""How long to sleep between port init or open retries."""
+"""How long to sleep when port cannot be opened or I/O buffers reset fails."""
 
 MAX_INIT_RETRIES = 20
 """

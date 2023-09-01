@@ -9,13 +9,14 @@
 # 星空 <dingpengyu06@gmail.com>, 2018-2020
 # Mike Zhao <singer.mike.zhao@gmail.com>, 2019
 # 完美很难 <1872265132@qq.com>, 2020
+# hwf1324 <1398969445@qq.com>，2023
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-07 02:43+0000\n"
+"POT-Creation-Date: 2023-08-25 00:02+0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: 完美很难 <1872265132@qq.com>\n"
+"Last-Translator: hwf1324 <1398969445@qq.com>\n"
 "Language-Team: \n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
@@ -2619,6 +2620,8 @@ msgid "Configuration profiles"
 msgstr "配置管理"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 #. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "盲文"
@@ -3378,7 +3381,7 @@ msgstr "往前没有对象"
 
 #. Translators: Input help mode message for move to first child object command.
 msgid "Moves the navigator object to the first object inside it"
-msgstr "移动到此父对象的首个子对象"
+msgstr "移动到此对象的首个子对象"
 
 #. Translators: Reported when there is no contained (first child) object such as inside a document.
 msgid "No objects inside"
@@ -4039,6 +4042,27 @@ msgstr "将盲文光标移到系统焦点或浏览光标"
 #, python-format
 msgid "Braille tethered %s"
 msgstr "盲文显示跟随到 %s"
+
+#. Translators: Input help mode message for cycle through
+#. braille move system caret when routing review cursor command.
+msgid ""
+"Cycle through the braille move system caret when routing review cursor states"
+msgstr "在移动浏览光标时移动系统输入光标选项之间循环切换"
+
+#. Translators: Reported when action is unavailable because braille tether is to focus.
+msgid "Action unavailable. Braille is tethered to focus"
+msgstr "盲文显示跟随到焦点时该操作不可用"
+
+#. Translators: Used when reporting braille move system caret when routing review cursor
+#. state (default behavior).
+#, python-format
+msgid "Braille move system caret when routing review cursor default (%s)"
+msgstr "盲文移动浏览光标时移动系统输入光标默认（%s）"
+
+#. Translators: Used when reporting braille move system caret when routing review cursor state.
+#, python-format
+msgid "Braille move system caret when routing review cursor %s"
+msgstr "盲文移动浏览光标时移动系统输入光标（%s）"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
@@ -4751,7 +4775,7 @@ msgstr "数字键盘 加号"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad decimal"
-msgstr "数字键盘删除"
+msgstr "数字键盘点"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad insert"
@@ -5998,10 +6022,6 @@ msgstr "动作按钮: 返回"
 msgctxt "action"
 msgid "Sound"
 msgstr "动作按钮: 声音"
-
-#. Translators: Shown in the system Volume Mixer for controlling NVDA sounds.
-msgid "NVDA sounds"
-msgstr "NVDA声音"
 
 msgid "Type help(object) to get help about object."
 msgstr "输入“help（对象名称）”，以获得该对象的帮助。"
@@ -7462,6 +7482,18 @@ msgstr "单行分段"
 msgid "Multi line break"
 msgstr "多行分段"
 
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Never"
+msgstr "从不"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Only when tethered automatically"
+msgstr "仅当盲文光标设为自动跟随时"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Always"
+msgstr "总是"
+
 #. Translators: Label for an option in NVDA settings.
 msgid "Diffing"
 msgstr "Diffing"
@@ -8441,7 +8473,7 @@ msgstr "打开树式图"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
-msgstr "，未选择"
+msgstr "未选择"
 
 #. Translators: This is presented when a button is not pressed.
 msgid "not pressed"
@@ -9389,7 +9421,7 @@ msgstr "继续安装（不建议）(&P)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
-msgstr "创建 NVDA 的便携副本"
+msgstr "创建 NVDA 的便携版"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
 msgid ""
@@ -9417,7 +9449,7 @@ msgstr "拷贝当前用户配置(&U)"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "&Start the new portable copy after creation"
-msgstr "创建并自动启动便携副本(&S)"
+msgstr "创建并自动启动便携版(&S)"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -9434,11 +9466,11 @@ msgstr ""
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
-msgstr "正在创建便携副本"
+msgstr "正在创建便携版"
 
 #. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
-msgstr "请稍后，正在创建便携版的 NVDA。"
+msgstr "请稍后，正在创建 NVDA 便携版"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
 msgid "NVDA is unable to remove or overwrite a file."
@@ -9800,7 +9832,7 @@ msgstr "若“大写锁定”键打开，输入小写字母时发出提示音(&O
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
 msgid "Speak c&ommand keys"
-msgstr "读出 NVDA 快捷键(&K)"
+msgstr "朗读命令键(&K)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -10002,7 +10034,7 @@ msgstr "每页最大行数(&N)"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Use &screen layout (when supported)"
-msgstr "使用屏幕真实布局（若支持）(&S)"
+msgstr "使用屏幕布局（若支持）(&S)"
 
 #. Translators: The label for a checkbox in browse mode settings to
 #. enable browse mode on page load.
@@ -10415,11 +10447,6 @@ msgstr "读出“有详细信息”以获取结构化注释"
 msgid "Report aria-description always"
 msgstr "始终读出 aria-description"
 
-#. Translators: This is the label for a group of advanced options in the
-#. Advanced settings panel
-msgid "HID Braille Standard"
-msgstr "HID 盲文标准"
-
 #. Translators: Label for option in the 'Enable support for HID braille' combobox
 #. in the Advanced settings panel.
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
@@ -10441,10 +10468,14 @@ msgstr "是"
 msgid "No"
 msgstr "否"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combo box in the
 #. Advanced settings panel.
 msgid "Enable support for HID braille"
 msgstr "启用对 HID 盲文的支持"
+
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Report live regions:"
+msgstr "盲文显示动态内容更新"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10525,8 +10556,7 @@ msgstr "读出透明色值"
 msgid "Audio"
 msgstr "音频"
 
-#. Translators: This is the label for a checkbox control in the
-#. Advanced settings panel.
+#. Translators: This is the label for a checkbox control in the Advanced settings panel.
 msgid "Use WASAPI for audio output (requires restart)"
 msgstr "音频输出使用 WASAPI（重启生效）"
 
@@ -10534,6 +10564,11 @@ msgstr "音频输出使用 WASAPI（重启生效）"
 #. Advanced settings panel.
 msgid "Volume of NVDA sounds follows voice volume (requires WASAPI)"
 msgstr "NVDA 音效音量跟随语音音量（需要 WASAPI 支持）"
+
+#. Translators: This is the label for a slider control in the
+#. Advanced settings panel.
+msgid "Volume of NVDA sounds (requires WASAPI)"
+msgstr "NVDA 音效音量（需要 WASAPI 支持）"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10658,6 +10693,10 @@ msgstr "消息显示时间(以秒为单位)(&T)"
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Tether B&raille:"
 msgstr "盲文显示跟随到(&R)："
+
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "Move system caret when ro&uting review cursor"
+msgstr "移动浏览光标时移动系统输入光标(&U)"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -13401,25 +13440,57 @@ msgctxt "addonStore"
 msgid "Enabled, pending restart"
 msgstr "已启用，重启后生效"
 
-#. Translators: A selection option to display installed add-ons in the add-on store
+#. Translators: The label of a tab to display installed add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
 msgid "Installed add-ons"
 msgstr "已安装的插件"
 
-#. Translators: A selection option to display updatable add-ons in the add-on store
+#. Translators: The label of a tab to display updatable add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
 msgid "Updatable add-ons"
 msgstr "可更新的插件"
 
-#. Translators: A selection option to display available add-ons in the add-on store
+#. Translators: The label of a tab to display available add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
 msgid "Available add-ons"
 msgstr "可安装的插件"
 
-#. Translators: A selection option to display incompatible add-ons in the add-on store
+#. Translators: The label of a tab to display incompatible add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
 msgid "Installed incompatible add-ons"
 msgstr "已安装的不兼容插件"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Installed &add-ons"
+msgstr "已安装的插件(&A)"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Updatable &add-ons"
+msgstr "可更新的插件(&A)"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Available &add-ons"
+msgstr "可安装的插件(&A)"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Installed incompatible &add-ons"
+msgstr "已安装的不兼容插件(&A)"
 
 #. Translators: The reason an add-on is not compatible.
 #. A more recent version of NVDA is required for the add-on to work.
@@ -13502,7 +13573,7 @@ msgstr "正在加载插件..."
 #. Translators: Header (usually the add-on name) when no add-on is selected. In the add-on store dialog.
 msgctxt "addonStore"
 msgid "No add-on selected."
-msgstr "，未选择插件。"
+msgstr "未选择插件。"
 
 #. Translators: Label for the text control containing a description of the selected add-on.
 #. In the add-on store dialog.
@@ -13519,8 +13590,8 @@ msgstr "状态(&T):"
 #. Translators: Label for the text control containing a description of the selected add-on.
 #. In the add-on store dialog.
 msgctxt "addonStore"
-msgid "&Actions"
-msgstr "操作(&A)"
+msgid "A&ctions"
+msgstr "操作(&C)"
 
 #. Translators: Label for the text control containing extra details about the selected add-on.
 #. In the add-on store dialog.
@@ -13532,6 +13603,16 @@ msgstr "其他详情(&O):"
 msgctxt "addonStore"
 msgid "Publisher:"
 msgstr "发布者："
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Author:"
+msgstr "作者："
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "ID:"
+msgstr "ID:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 msgctxt "addonStore"
@@ -13665,49 +13746,83 @@ msgctxt "addonStore"
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
-"Publisher: {publisher}\n"
 "Description: {description}\n"
 msgstr ""
 "{summary} ({name})\n"
 "版本： {version}\n"
-"发布者： {publisher}\n"
 "描述： {description}\n"
+
+#. Translators: the publisher part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Publisher: {publisher}\n"
+msgstr "发布者： {publisher}\n"
+
+#. Translators: the author part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Author: {author}\n"
+msgstr "作者： {author}\n"
 
 #. Translators: the url part of the About Add-on information
 #, python-brace-format
 msgctxt "addonStore"
-msgid "Homepage: {url}"
-msgstr "主页：{url}"
+msgid "Homepage: {url}\n"
+msgstr "主页： {url}\n"
 
 #. Translators: the minimum NVDA version part of the About Add-on information
 msgctxt "addonStore"
-msgid "Minimum required NVDA version: {}"
-msgstr "NVDA版本最低要求： "
+msgid "Minimum required NVDA version: {}\n"
+msgstr "NVDA版本最低要求： {}\n"
 
 #. Translators: the last NVDA version tested part of the About Add-on information
 msgctxt "addonStore"
-msgid "Last NVDA version tested: {}"
-msgstr "最后测试的 NVDA 版本： {}"
+msgid "Last NVDA version tested: {}\n"
+msgstr "最后测试的 NVDA 版本： {}\n"
 
 #. Translators: title for the Addon Information dialog
 msgctxt "addonStore"
 msgid "Add-on Information"
 msgstr "插件信息"
 
+#. Translators: The warning of a dialog
+msgid "Add-on Store Warning"
+msgstr "插件商店警告"
+
+#. Translators: Warning that is displayed before using the Add-on Store.
+msgctxt "addonStore"
+msgid ""
+"Add-ons are created by the NVDA community and are not vetted by NV Access. "
+"NV Access cannot be held responsible for add-on behavior. The functionality "
+"of add-ons is unrestricted and can include accessing your personal data or "
+"even the entire system. "
+msgstr ""
+"插件由 NVDA 社区创建，未经过 NV Acess 审查。 NV Access 不对插件行为负责。插件"
+"行为不受限制，包括访问您的个人信息乃至整个系统。"
+
+#. Translators: The label of a checkbox in the add-on store warning dialog
+msgctxt "addonStore"
+msgid "&Don't show this message again"
+msgstr "不再显示此消息(&D)"
+
+#. Translators: The label of a button in a dialog
+msgid "&OK"
+msgstr "确定(&O)"
+
 #. Translators: The title of the addonStore dialog where the user can find and download add-ons
 msgctxt "addonStore"
 msgid "Add-on Store"
 msgstr "插件商店"
 
-#. Translators: Banner notice that is displayed in the Add-on Store.
-msgctxt "addonStore"
-msgid "Note: NVDA was started with add-ons disabled"
-msgstr "注意：NVDA 是在禁用插件的情况下启动的"
-
 #. Translators: The label for a button in add-ons Store dialog to install an external add-on.
 msgctxt "addonStore"
 msgid "Install from e&xternal source"
 msgstr "从外部源安装(&X)"
+
+#. Translators: Banner notice that is displayed in the Add-on Store.
+msgctxt "addonStore"
+msgid "Note: NVDA was started with add-ons disabled"
+msgstr "注意：NVDA 是在禁用插件的情况下启动的"
 
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"
@@ -13745,6 +13860,13 @@ msgctxt "addonStore"
 msgid "Installing {} add-ons, please wait."
 msgstr "正在安装插件 {}，请稍候。"
 
+#. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
+#. tab's name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "{category}:"
+msgstr "{category}："
+
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
 #, python-brace-format
 msgctxt "addonStore"
@@ -13762,12 +13884,12 @@ msgctxt "addonStore"
 msgid "Name"
 msgstr "名称"
 
-#. Translators: The name of the column that contains the installed addons version string.
+#. Translators: The name of the column that contains the installed addon's version string.
 msgctxt "addonStore"
 msgid "Installed version"
 msgstr "已安装版本"
 
-#. Translators: The name of the column that contains the available addons version string.
+#. Translators: The name of the column that contains the available addon's version string.
 msgctxt "addonStore"
 msgid "Available version"
 msgstr "可用版本"
@@ -13777,10 +13899,15 @@ msgctxt "addonStore"
 msgid "Channel"
 msgstr "通道"
 
-#. Translators: The name of the column that contains the addons publisher.
+#. Translators: The name of the column that contains the addon's publisher.
 msgctxt "addonStore"
 msgid "Publisher"
 msgstr "发布者"
+
+#. Translators: The name of the column that contains the addon's author.
+msgctxt "addonStore"
+msgid "Author"
+msgstr "作者"
 
 #. Translators: The name of the column that contains the status of the addon.
 #. e.g. available, downloading installing
@@ -13837,7 +13964,7 @@ msgstr "帮助(&H)"
 #. Translators: Label for an action that opens the homepage for the selected addon
 msgctxt "addonStore"
 msgid "Ho&mepage"
-msgstr "主页(&H)"
+msgstr "主页(&M)"
 
 #. Translators: Label for an action that opens the license for the selected addon
 msgctxt "addonStore"
@@ -13862,6 +13989,12 @@ msgstr "无法启用插件： {addon}"
 msgctxt "addonStore"
 msgid "Could not disable the add-on: {addon}."
 msgstr "无法禁用插件 {addon}"
+
+#~ msgid "NVDA sounds"
+#~ msgstr "NVDA声音"
+
+#~ msgid "HID Braille Standard"
+#~ msgstr "HID 盲文标准"
 
 #~ msgid "Find Error"
 #~ msgstr "查找失败"

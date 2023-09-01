@@ -5,16 +5,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-27 01:58+0000\n"
-"PO-Revision-Date: 2023-06-28 18:40+0200\n"
-"Last-Translator: Michel Such <michelsuch93@gmail.com>\n"
+"POT-Creation-Date: 2023-08-25 00:02+0000\n"
+"PO-Revision-Date: 2023-08-27 17:52+0200\n"
+"Last-Translator: Cyrille Bougot <cyrille.bougot2@laposte.net>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.0\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
@@ -2633,6 +2633,8 @@ msgid "Configuration profiles"
 msgstr "Profils de configuration"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 #. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "Braille"
@@ -4134,7 +4136,7 @@ msgstr ""
 msgid ""
 "Activates the Add-on Store to browse and manage add-on packages for NVDA"
 msgstr ""
-"Active l'Addon Store pour parcourir et gérer les packages d'extensions pour "
+"Active l'Add-on Store pour parcourir et gérer les paquets d'extensions pour "
 "NVDA"
 
 #. Translators: Input help mode message for toggle speech viewer command.
@@ -4180,6 +4182,32 @@ msgstr "Basculer le suivi braille entre focus et curseur de revue"
 #, python-format
 msgid "Braille tethered %s"
 msgstr "Le Braille suit %s"
+
+#. Translators: Input help mode message for cycle through
+#. braille move system caret when routing review cursor command.
+msgid ""
+"Cycle through the braille move system caret when routing review cursor states"
+msgstr ""
+"Faire défiler les choix pour Déplacer le curseur système lors du routage du "
+"curseur de revue"
+
+#. Translators: Reported when action is unavailable because braille tether is to focus.
+msgid "Action unavailable. Braille is tethered to focus"
+msgstr "Action indisponible. Le braille suit le focus"
+
+#. Translators: Used when reporting braille move system caret when routing review cursor
+#. state (default behavior).
+#, python-format
+msgid "Braille move system caret when routing review cursor default (%s)"
+msgstr ""
+"Braille déplacer le curseur système lors du routage du curseur de revue "
+"Valeur par défaut (%s)"
+
+#. Translators: Used when reporting braille move system caret when routing review cursor state.
+#, python-format
+msgid "Braille move system caret when routing review cursor %s"
+msgstr ""
+"Braille déplacer le curseur système lors du routage du curseur de revue %s"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
@@ -4231,7 +4259,7 @@ msgstr "Affichage des messages braille %s"
 
 #. Translators: Input help mode message for cycle through braille show selection command.
 msgid "Cycle through the braille show selection states"
-msgstr "Faire défiler les états de l'affichage de la sélection en braille"
+msgstr "Faire défiler les modes d'affichage de la sélection en braille"
 
 #. Translators: Used when reporting braille show selection state
 #. (default behavior).
@@ -4456,7 +4484,7 @@ msgstr ""
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
-msgstr "Modules rechargées"
+msgstr "Modules rechargés"
 
 #. Translators: input help mode message for Report destination URL of a link command
 msgid ""
@@ -6198,10 +6226,6 @@ msgctxt "action"
 msgid "Sound"
 msgstr "Son"
 
-#. Translators: Shown in the system Volume Mixer for controlling NVDA sounds.
-msgid "NVDA sounds"
-msgstr "Sons NVDA"
-
 msgid "Type help(object) to get help about object."
 msgstr "Tapez help(object) pour obtenir de l'aide sur l'objet"
 
@@ -7690,6 +7714,18 @@ msgstr "Un saut de ligne"
 #. Translators: Label for a paragraph style in NVDA settings.
 msgid "Multi line break"
 msgstr "Saut de plusieurs lignes"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Never"
+msgstr "Jamais"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Only when tethered automatically"
+msgstr "Seulement quand le braille suit automatiquement"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Always"
+msgstr "Toujours"
 
 #. Translators: Label for an option in NVDA settings.
 msgid "Diffing"
@@ -10742,11 +10778,6 @@ msgstr "Annoncer \"contient des détails\" pour les annotations structurées"
 msgid "Report aria-description always"
 msgstr "Toujours annoncer la description aria"
 
-#. Translators: This is the label for a group of advanced options in the
-#. Advanced settings panel
-msgid "HID Braille Standard"
-msgstr "Standard Braille HID"
-
 #. Translators: Label for option in the 'Enable support for HID braille' combobox
 #. in the Advanced settings panel.
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
@@ -10768,10 +10799,14 @@ msgstr "Oui"
 msgid "No"
 msgstr "Non"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combo box in the
 #. Advanced settings panel.
 msgid "Enable support for HID braille"
 msgstr "Activer le support du Braille HID"
+
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Report live regions:"
+msgstr "Signaler les régions actives"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10856,8 +10891,7 @@ msgstr "Annoncer la valeur des couleurs transparentes"
 msgid "Audio"
 msgstr "Audio"
 
-#. Translators: This is the label for a checkbox control in the
-#. Advanced settings panel.
+#. Translators: This is the label for a checkbox control in the Advanced settings panel.
 msgid "Use WASAPI for audio output (requires restart)"
 msgstr "Utiliser WASAPI pour la sortie audio (nécessite un redémarrage)"
 
@@ -10865,6 +10899,11 @@ msgstr "Utiliser WASAPI pour la sortie audio (nécessite un redémarrage)"
 #. Advanced settings panel.
 msgid "Volume of NVDA sounds follows voice volume (requires WASAPI)"
 msgstr "Le volume des sons NVDA suit le volume de la voix (nécessite WASAPI)"
+
+#. Translators: This is the label for a slider control in the
+#. Advanced settings panel.
+msgid "Volume of NVDA sounds (requires WASAPI)"
+msgstr "Volume des sons NVDA (nécessite WASAPI)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10993,6 +11032,10 @@ msgstr "&Durée d'affichage des messages (sec)"
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Tether B&raille:"
 msgstr "Le &Braille suit :"
+
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "Move system caret when ro&uting review cursor"
+msgstr "Déplacer le curseur système lors du r&outage du curseur de revue"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -11629,17 +11672,17 @@ msgstr "non italique"
 #. Translators: Reported when text is formatted with double strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "double strikethrough"
-msgstr "double biffure"
+msgstr "double barré"
 
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
-msgstr "biffure"
+msgstr "barré"
 
 #. Translators: Reported when text is formatted without strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "no strikethrough"
-msgstr "pas de biffure"
+msgstr "non barré"
 
 #. Translators: Reported when text is underlined.
 msgid "underlined"
@@ -13155,11 +13198,11 @@ msgstr "Souligné activé"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 msgid "Strikethrough off"
-msgstr "biffure désactivée"
+msgstr "barré désactivée"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 msgid "Strikethrough on"
-msgstr "biffure activée"
+msgstr "barré activée"
 
 #. Translators: the description  for a script for Excel
 msgid "opens a dropdown item at the current cell"
@@ -13790,25 +13833,57 @@ msgctxt "addonStore"
 msgid "Enabled, pending restart"
 msgstr "Activée, en attente de redémarrage"
 
-#. Translators: A selection option to display installed add-ons in the add-on store
+#. Translators: The label of a tab to display installed add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
 msgid "Installed add-ons"
 msgstr "Extensions installées"
 
-#. Translators: A selection option to display updatable add-ons in the add-on store
+#. Translators: The label of a tab to display updatable add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
 msgid "Updatable add-ons"
 msgstr "Mises à jour"
 
-#. Translators: A selection option to display available add-ons in the add-on store
+#. Translators: The label of a tab to display available add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
 msgid "Available add-ons"
 msgstr "Extensions disponibles"
 
-#. Translators: A selection option to display incompatible add-ons in the add-on store
+#. Translators: The label of a tab to display incompatible add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
 msgid "Installed incompatible add-ons"
 msgstr "Extensions incompatibles installées"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Installed &add-ons"
+msgstr "&Extensions installées"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Updatable &add-ons"
+msgstr "Mis&es à jour"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Available &add-ons"
+msgstr "&Extensions disponibles"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Installed incompatible &add-ons"
+msgstr "&Extensions incompatibles installées"
 
 #. Translators: The reason an add-on is not compatible.
 #. A more recent version of NVDA is required for the add-on to work.
@@ -13912,7 +13987,7 @@ msgstr "É&tat :"
 #. Translators: Label for the text control containing a description of the selected add-on.
 #. In the add-on store dialog.
 msgctxt "addonStore"
-msgid "&Actions"
+msgid "A&ctions"
 msgstr "&Actions"
 
 #. Translators: Label for the text control containing extra details about the selected add-on.
@@ -13925,6 +14000,16 @@ msgstr "Autres &détails"
 msgctxt "addonStore"
 msgid "Publisher:"
 msgstr "Éditeur :"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Author:"
+msgstr "Auteur :"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "ID:"
+msgstr "ID :"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 msgctxt "addonStore"
@@ -13949,7 +14034,7 @@ msgstr "Raison d'incompatibilité :"
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 msgctxt "addonStore"
 msgid "Homepage:"
-msgstr "page web :"
+msgstr "Page web :"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 msgctxt "addonStore"
@@ -14066,49 +14151,85 @@ msgctxt "addonStore"
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
-"Publisher: {publisher}\n"
 "Description: {description}\n"
 msgstr ""
 "{summary} ({name})\n"
 "Version : {version}\n"
-"Éditeur : {publisher}\n"
 "Description : {description}\n"
+
+#. Translators: the publisher part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Publisher: {publisher}\n"
+msgstr "Éditeur : {publisher}\n"
+
+#. Translators: the author part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Author: {author}\n"
+msgstr "Auteur : {author}\n"
 
 #. Translators: the url part of the About Add-on information
 #, python-brace-format
 msgctxt "addonStore"
-msgid "Homepage: {url}"
-msgstr "Page web : {url}"
+msgid "Homepage: {url}\n"
+msgstr "Page web : {url}\n"
 
 #. Translators: the minimum NVDA version part of the About Add-on information
 msgctxt "addonStore"
-msgid "Minimum required NVDA version: {}"
-msgstr "Version minimum de NVDA requise : {}"
+msgid "Minimum required NVDA version: {}\n"
+msgstr "Version minimum de NVDA requise : {}\n"
 
 #. Translators: the last NVDA version tested part of the About Add-on information
 msgctxt "addonStore"
-msgid "Last NVDA version tested: {}"
-msgstr "Dernière version de NVDA testée : {}"
+msgid "Last NVDA version tested: {}\n"
+msgstr "Dernière version de NVDA testée : {}\n"
 
 #. Translators: title for the Addon Information dialog
 msgctxt "addonStore"
 msgid "Add-on Information"
 msgstr "Information sur l'extension"
 
+#. Translators: The warning of a dialog
+msgid "Add-on Store Warning"
+msgstr "Avertissement de l'Add-on Store"
+
+#. Translators: Warning that is displayed before using the Add-on Store.
+msgctxt "addonStore"
+msgid ""
+"Add-ons are created by the NVDA community and are not vetted by NV Access. "
+"NV Access cannot be held responsible for add-on behavior. The functionality "
+"of add-ons is unrestricted and can include accessing your personal data or "
+"even the entire system. "
+msgstr ""
+"Les extensions sont créées par la communauté NVDA et ne sont pas contrôlées "
+"par NV Access. NV Access ne peut être tenu responsable du comportement des "
+"extensions. La fonctionnalité des extensions est illimitée et peut inclure "
+"l'accès à vos données personnelles ou même à l'ensemble du système."
+
+#. Translators: The label of a checkbox in the add-on store warning dialog
+msgctxt "addonStore"
+msgid "&Don't show this message again"
+msgstr "&Ne plus afficher ce message"
+
+#. Translators: The label of a button in a dialog
+msgid "&OK"
+msgstr "&OK"
+
 #. Translators: The title of the addonStore dialog where the user can find and download add-ons
 msgctxt "addonStore"
 msgid "Add-on Store"
 msgstr "Add-on Store"
 
-#. Translators: Banner notice that is displayed in the Add-on Store.
-msgctxt "addonStore"
-msgid "Note: NVDA was started with add-ons disabled"
-msgstr "Note : NVDA a été démarré avec les extensions désactivées"
-
 #. Translators: The label for a button in add-ons Store dialog to install an external add-on.
 msgctxt "addonStore"
 msgid "Install from e&xternal source"
 msgstr "Installer depuis une source e&xterne"
+
+#. Translators: Banner notice that is displayed in the Add-on Store.
+msgctxt "addonStore"
+msgid "Note: NVDA was started with add-ons disabled"
+msgstr "Note : NVDA a été démarré avec les extensions désactivées"
 
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"
@@ -14147,6 +14268,13 @@ msgctxt "addonStore"
 msgid "Installing {} add-ons, please wait."
 msgstr "Installation de {} extensions, veuillez patienter."
 
+#. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
+#. tab's name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "{category}:"
+msgstr "{category} :"
+
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
 #, python-brace-format
 msgctxt "addonStore"
@@ -14164,12 +14292,12 @@ msgctxt "addonStore"
 msgid "Name"
 msgstr "Nom"
 
-#. Translators: The name of the column that contains the installed addons version string.
+#. Translators: The name of the column that contains the installed addon's version string.
 msgctxt "addonStore"
 msgid "Installed version"
 msgstr "Version installée"
 
-#. Translators: The name of the column that contains the available addons version string.
+#. Translators: The name of the column that contains the available addon's version string.
 msgctxt "addonStore"
 msgid "Available version"
 msgstr "Version disponible"
@@ -14179,10 +14307,15 @@ msgctxt "addonStore"
 msgid "Channel"
 msgstr "Canal"
 
-#. Translators: The name of the column that contains the addons publisher.
+#. Translators: The name of the column that contains the addon's publisher.
 msgctxt "addonStore"
 msgid "Publisher"
 msgstr "Éditeur"
+
+#. Translators: The name of the column that contains the addon's author.
+msgctxt "addonStore"
+msgid "Author"
+msgstr "Auteur"
 
 #. Translators: The name of the column that contains the status of the addon.
 #. e.g. available, downloading installing
@@ -14264,6 +14397,12 @@ msgstr "Impossible d'activer l'extension : {addon}."
 msgctxt "addonStore"
 msgid "Could not disable the add-on: {addon}."
 msgstr "Impossible de désactiver l'extension : {addon}."
+
+#~ msgid "NVDA sounds"
+#~ msgstr "Sons NVDA"
+
+#~ msgid "HID Braille Standard"
+#~ msgstr "Standard Braille HID"
 
 #~ msgid "Find Error"
 #~ msgstr "Chaîne non trouvée"
