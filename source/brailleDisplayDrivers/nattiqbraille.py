@@ -1,11 +1,11 @@
-# brailleDisplayDrivers/nattiqbraille.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2020 NV Access Limited, Mohammed Noman - Nattiq Technologies
+# Copyright (C) 2020-2023 NV Access Limited, Mohammed Noman - Nattiq Technologies
 
 
 import serial
+import bdDetect
 import braille
 import inputCore
 from logHandler import log
@@ -34,6 +34,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	# Translators: Names of braille displays
 	description = _("Nattiq nBraille")
 	isThreadSafe = True
+	supportsAutomaticDetection = True
+
+	@classmethod
+	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
+		driverRegistrar.addUsbDevices(bdDetect.KEY_SERIAL, {
+			"VID_2341&PID_8036",  # Atmel-based USB Serial for Nattiq nBraille
+		})
 
 	@classmethod
 	def getManualPorts(cls):

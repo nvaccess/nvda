@@ -15,27 +15,75 @@ What's New in NVDA
     - An option to separately configure the volume of NVDA sounds. (#1409, #15038)
     -
   -
+- NVDA is now able to continually update the result when performing optical character recognition (OCR), speaking new text as it appears. (#2797)
+  - To enable this functionality, enable the option "Periodically refresh recognized content" in the Windows OCR category of NVDA's settings dialog.
+  - Once enabled, you can toggle speaking new text by toggling report dynamic content changes (pressing ``NVDA+5``).
+  -
+- When using automatic detection of braille displays, it is now possible to opt-out drivers from detection from the braille display selection dialog. (#15196)
 - A new option in Document Formatting settings, "Ignore blank lines for line indentation reporting". (#13394)
+- Added an unassigned gesture to navigate by tab groupings in browse mode. (#15046)
 -
 
 == Changes ==
+- Braille:
+  - When the text in a terminal changes without updating the caret, the text on a braille display will now properly update when positioned on a changed line.
+  This includes situations where braille is tethered to review. (#15115)
+  - More BRLTTY key bindings are now mapped to NVDA commands (#6483):
+    - learn: toggle NVDA input help
+    - prefmenu: open the NVDA menu
+    - prefload/prefsave: Load/save NVDA configuration
+    - time: Show time
+    - say_line: Speak the current line where the review cursor is located
+    - say_below: Say all using review cursor
+  - The BRLTTY driver is only available when a BRLTTY instance with BrlAPI enabled is running. (#15335)
+  - The advanced setting to enable support for HID braille has been removed in favor of a new option.
+  You can now disable specific drivers for braille display auto detection in the braille display selection dialog. (#15196)
+  -
 - Rich edit controls in applications such as Wordpad now use UI Automation (UIA) when the application advertises native support for this. (#15314)
 -
 
 
 == Bug Fixes ==
-- Fix crash in Microsoft Word when Document formatting options "report headings" and "report comments and notes" were not enabled. (#15019)
-- NVDA will no longer jump back to the last browse mode position when opening the context menu in Microsoft Edge. (#15309)
+- Microsoft Office:
+  - Fix crash in Microsoft Word when Document formatting options "report headings" and "report comments and notes" were not enabled. (#15019)
+  - In Word and Excel, text alignment will be correctly reported in more situations. (#15206, #15220)
+  -
+- Microsoft Edge:
+  - NVDA will no longer jump back to the last browse mode position when opening the context menu in Microsoft Edge. (#15309)
+  - NVDA is once again able to read context menus of downloads in Microsoft Edge. (#14916)
+  -
+- Braille:
+  - The braille cursor and selection indicators will now always be updated correctly after showing or hiding respective indicators with a gesture. (#15115)
+  - NVDA will no longer be sluggish in rich edit controls when braille is enabled, such as in MemPad. (#14285)
+  - Fixed bug where Albatross braille displays try to initialize although another braille device has been connected. (#15226)
+  -
 - Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283)
-- NVDA will no longer be sluggish in rich edit controls when braille is enabled, such as in MemPad. (#14285)
-- Fixed bug where Albatross braille displays try to initialize although another braille device has been connected. (#15226)
-- NVDA is once again able to read context menus of downloads in Microsoft Edge. (#14916)
 -
 
 == Changes for Developers ==
 Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+- ``braille.handler.handleUpdate`` and ``braille.handler.handleReviewMove`` have been changed in order not to update instantly.
+Before this change, when either of these methods was called very often, this would drain many resources.
+These methods now queue an update at the end of every core cycle instead.
+They should also be thread safe, making it possible to call them from background threads. (#15163)
+- Added official support to register custom braille display drivers in the automatic braille display detection process.
+Consult the ``braille.BrailleDisplayDriver`` class documentation for more details.
+Most notably, the ``supportsAutomaticDetection`` attribute must be set to ``True`` and the ``registerAutomaticDetection`` ``classmethod`` must be implemented.  (#15196)
+-
 
 === Deprecations ===
+- ``braille.BrailleHandler.handlePendingCaretUpdate`` is now deprecated with no public replacement.
+It will be removed in 2024.1. (#15163)
+- Importing the constants ``xlCenter``, ``xlJustify``, ``xlLeft``, ``xlRight``, ``xlDistributed``, ``xlBottom``, ``xlTop`` from ``NVDAObjects.window.excel`` is deprecated.
+Use ``XlHAlign`` or ``XlVAlign`` enumerations instead. (#15205)
+- The mapping ``NVDAObjects.window.excel.alignmentLabels`` is deprecated.
+Use the ``displayString`` methods of ``XlHAlign`` or ``XlVAlign`` enumerations instead. (#15205)
+- ``bdDetect.addUsbDevices`` and ``bdDetect.addBluetoothDevices`` have been deprecated.
+Braille display drivers should implement the ``registerAutomaticDetection`` classmethod instead.
+That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices`` and ``addBluetoothDevices`` methods can be used. (#15200)
+- The default implementation of the check method on ``BrailleDisplayDriver`` uses ``bdDetect.driverHasPossibleDevices`` for devices that are marked as thread safe.
+Starting from NVDA 2024.1, in order for the base method to use ``bdDetect.driverHasPossibleDevices``, the ``supportsAutomaticDetection`` attribute must be set to ``True`` as well. (#15200)
+-
 
 
 = 2023.2 =

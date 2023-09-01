@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-14 03:03+0000\n"
-"PO-Revision-Date: 2023-08-11 09:43+0300\n"
+"POT-Creation-Date: 2023-08-25 00:02+0000\n"
+"PO-Revision-Date: 2023-08-21 23:00+0300\n"
 "Last-Translator: Ukrainian NVDA Community <vp88.mobile@gmail.com>\n"
 "Language-Team: Volodymyr Pyrih <vp88.mobile@gmail.com>\n"
 "Language: uk\n"
@@ -301,12 +301,12 @@ msgstr "вбуд"
 #. Translators: Displayed in braille for an object which is a
 #. end note.
 msgid "enote"
-msgstr "кінвин"
+msgstr "квин"
 
 #. Translators: Displayed in braille for an object which is a
 #. foot note.
 msgid "fnote"
-msgstr "нижвин"
+msgstr "нвин"
 
 #. Translators: Displayed in braille for an object which is a
 #. terminal.
@@ -3551,7 +3551,7 @@ msgid ""
 "character. Pressing three times reports the numeric value of the character "
 "in decimal and hexadecimal"
 msgstr ""
-"Промовляє символ, на якому знаходиться переглядовий курсор. Натисніть двічі "
+"Промовляє символ, на якому розташований переглядовий курсор. Натисніть двічі "
 "для отримання опису символу або зразків його використання. Натисніть тричі "
 "для отримання його десяткового та шістнадцяткового значень"
 
@@ -3960,12 +3960,14 @@ msgstr ""
 #. Translators: presented when toggled.
 msgid "Automatically set system focus to focusable elements off"
 msgstr ""
-"Автоматичне встановлення системного фокуса на фокусовані елементи вимкнено"
+"Автоматичне встановлення системного фокуса на елементи, доступні для "
+"фокусування, вимкнено"
 
 #. Translators: presented when toggled.
 msgid "Automatically set system focus to focusable elements on"
 msgstr ""
-"Автоматичне встановлення системного фокуса на фокусовані елементи увімкнено"
+"Автоматичне встановлення системного фокуса на елементи, доступні для "
+"фокусування, увімкнено"
 
 #. Translators: Input help mode message for report battery status command.
 msgid "Reports battery status and time remaining if AC is not plugged in"
@@ -4320,7 +4322,7 @@ msgstr "Прокручує вперед на брайлівському дисп
 
 #. Translators: Input help mode message for a braille command.
 msgid "Routes the cursor to or activates the object under this braille cell"
-msgstr "Приводить курсор або активовує елемент під брайлівською коміркою"
+msgstr "Приводить курсор або активує елемент під брайлівською коміркою"
 
 #. Translators: Input help mode message for Braille report formatting command.
 msgid "Reports formatting info for the text under this braille cell"
@@ -4489,16 +4491,16 @@ msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
 msgstr ""
-"Переходить до наступного об’єкта в ієрархії об’єктної навігації у режимі "
-"огляду екрана"
+"Переходить до наступного об’єкта у плоскому поданні ієрархії об’єктної "
+"навігації"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
 "hierarchy"
 msgstr ""
-"Переходить до попереднього об’єкта в ієрархії об’єктної навігації в режимі "
-"огляду екрана"
+"Переходить до попереднього об’єкта у плоскому поданні ієрархії об’єктної "
+"навігації"
 
 #. Translators: Describes a command.
 msgid "Toggles the support of touch interaction"
@@ -4669,7 +4671,7 @@ msgstr "{profile} профіль активовано"
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
 msgid "Activates or deactivates the {profile} configuration profile"
-msgstr "Активовує чи деактивовує конфігураційний профіль {profile}"
+msgstr "Активує чи  деактивує конфігураційний профіль {profile}"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -4685,7 +4687,7 @@ msgstr "Різне"
 #. The key must be formatted as described in this article:
 #. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
 msgid "CTRL+ALT+N"
-msgstr "Контрол+альт+N"
+msgstr "CTRL+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
@@ -4801,7 +4803,7 @@ msgstr "caps lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "ctrl"
-msgstr "контрол"
+msgstr "ctrl"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "alt"
@@ -4809,7 +4811,7 @@ msgstr "алт"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "shift"
-msgstr "шіфт"
+msgstr "shift"
 
 # An open-source (and free) Screen Reader for the Windows Operating System
 # Created by Michael Curran, with help from James Teh and others
@@ -4992,11 +4994,11 @@ msgstr "інсерт"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left control"
-msgstr "лівий контрол"
+msgstr "лівий control"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right control"
-msgstr "правий контрол"
+msgstr "правий control"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left windows"
@@ -5004,19 +5006,19 @@ msgstr "ліва windows"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left shift"
-msgstr "лівий шіфт"
+msgstr "лівий shift"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right shift"
-msgstr "правий шіфт"
+msgstr "правий shift"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left alt"
-msgstr "лівий альт"
+msgstr "лівий alt"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right alt"
-msgstr "правий альт"
+msgstr "правий alt"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right windows"
@@ -6649,7 +6651,7 @@ msgstr ""
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
-msgstr "Захищений робочій стіл"
+msgstr "Захищений робочий стіл"
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
 #, python-brace-format
@@ -10324,7 +10326,9 @@ msgstr "&Блокувати всі некомандні жести в межах
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Automatically set system &focus to focusable elements"
-msgstr "Автоматично встановлювати &системний фокус на фокусовані елементи"
+msgstr ""
+"Автоматично встановлювати &системний фокус на елементи, доступні для "
+"фокусування"
 
 #. Translators: This is the label for the document formatting panel.
 #. Translators: This is the label for a group of advanced options in the
@@ -10841,7 +10845,7 @@ msgstr "Налагоджувальне ведення журналу"
 #. Translators: This is the label for a list in the
 #. Advanced settings panel
 msgid "Enabled logging categories"
-msgstr "Увімкнути категорії ведення журналу"
+msgstr "Увімкнути категорії журналювання"
 
 #. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
 msgid "Play a sound for logged e&rrors:"

@@ -10,6 +10,7 @@ import typing
 from typing import (
 	TYPE_CHECKING,
 	Any,
+	Callable,
 	Dict,
 	Generator,
 	Iterable,
@@ -61,6 +62,8 @@ import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import hwIo
+from buildVersion import version_year
+import NVDAState
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
@@ -396,6 +399,7 @@ def _getDisplayDriver(moduleName: str, caseSensitive: bool = True) -> Type["Brai
 		else:
 			raise initialException
 
+
 def getDisplayList(excludeNegativeChecks=True) -> List[Tuple[str, str]]:
 	"""Gets a list of available display driver names with their descriptions.
 	@param excludeNegativeChecks: excludes all drivers for which the check method returns C{False}.
@@ -405,15 +409,7 @@ def getDisplayList(excludeNegativeChecks=True) -> List[Tuple[str, str]]:
 	displayList = []
 	# The display that should be placed at the end of the list.
 	lastDisplay = None
-	for loader, name, isPkg in pkgutil.iter_modules(brailleDisplayDrivers.__path__):
-		if name.startswith('_'):
-			continue
-		try:
-			display = _getDisplayDriver(name)
-		except:
-			log.error("Error while importing braille display driver %s" % name,
-				exc_info=True)
-			continue
+	for display in getDisplayDrivers():
 		try:
 			if not excludeNegativeChecks or display.check():
 				if display.name == "noBraille":
@@ -421,13 +417,14 @@ def getDisplayList(excludeNegativeChecks=True) -> List[Tuple[str, str]]:
 				else:
 					displayList.append((display.name, display.description))
 			else:
-				log.debugWarning("Braille display driver %s reports as unavailable, excluding" % name)
+				log.debugWarning(f"Braille display driver {display.name} reports as unavailable, excluding")
 		except:
 			log.error("", exc_info=True)
 	displayList.sort(key=lambda d: strxfrm(d[1]))
 	if lastDisplay:
 		displayList.append(lastDisplay)
 	return displayList
+
 
 class Region(object):
 	"""A region of braille to be displayed.
@@ -1569,6 +1566,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		raise LookupError("No such position")
 
 	def regionPosToBufferPos(self, region, pos, allowNearest=False):
+		start: int = 0
 		for testRegion, start, end in self.regionsWithPositions:
 			if region == testRegion:
 				if pos < end - start:
@@ -2014,6 +2012,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	queuedWrite: Optional[List[int]] = None
 	queuedWriteLock: threading.Lock
 	ackTimerHandle: int
+	_regionsPendingUpdate: Set[Region]
+	"""
+	Regions pending an update.
+	Regions are added by L{handleUpdate} and L{handleCaretMove} and cleared in L{_handlePendingUpdate}.
+	"""
 
 	def __init__(self):
 		louisHelper.initialize()
@@ -2032,6 +2035,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		with its previous output.
 		If L{decide_enabled} decides to disable the handler, pending output should be cleared.
 		"""
+		self._regionsPendingUpdate = set()
 
 
 		self.mainBuffer = BrailleBuffer(self)
@@ -2472,29 +2476,46 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		region = self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
 		if region and region.obj==obj:
 			region.pendingCaretUpdate=True
+			self._regionsPendingUpdate.add(region)
 		elif prevTether == TetherTo.REVIEW.value:
 			# The caret moved in a different object than the review position.
 			self._doNewObject(getFocusRegions(obj, review=False))
 
-	def handlePendingCaretUpdate(self):
-		"""Checks to see if the final text region needs its caret updated and if so calls _doCursorMove for the region."""
-		region=self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
-		if isinstance(region,TextInfoRegion) and region.pendingCaretUpdate:
-			try:
-				self._doCursorMove(region)
-			finally:
-				region.pendingCaretUpdate=False
+	if version_year < 2024 and NVDAState._allowDeprecatedAPI():
+		def handlePendingCaretUpdate(self):
+			log.warning(
+				"braille.BrailleHandler.handlePendingCaretUpdate is now deprecated "
+				"with no public replacement. "
+				"It will be removed in NVDA 2024.1."
+			)
+			self._handlePendingUpdate()
 
-	def _doCursorMove(self, region):
-		self.mainBuffer.saveWindow()
-		region.update()
-		self.mainBuffer.update()
-		self.mainBuffer.restoreWindow()
-		self.scrollToCursorOrSelection(region)
-		if self.buffer is self.mainBuffer:
-			self.update()
-		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
-			self._dismissMessage()
+	def _handlePendingUpdate(self):
+		"""When any region is pending an update, updates the region and the braille display.
+		"""
+		if not self._regionsPendingUpdate:
+			return
+		try:
+			scrollTo: Optional[TextInfoRegion] = None
+			self.mainBuffer.saveWindow()
+			for region in self._regionsPendingUpdate:
+				region.update()
+				if isinstance(region, TextInfoRegion) and region.pendingCaretUpdate:
+					scrollTo = region
+					region.pendingCaretUpdate = False
+			self.mainBuffer.update()
+			self.mainBuffer.restoreWindow()
+			if scrollTo is not None:
+				self.scrollToCursorOrSelection(scrollTo)
+			if self.buffer is self.mainBuffer:
+				self.update()
+			elif (
+				self.buffer is self.messageBuffer
+				and keyboardHandler.keyCounter > self._keyCountForLastMessage
+			):
+				self._dismissMessage()
+		finally:
+			self._regionsPendingUpdate.clear()
 
 	def scrollToCursorOrSelection(self, region):
 		if region.brailleCursorPos is not None:
@@ -2548,14 +2569,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			if isinstance(obj, NVDAObject) and obj.role == controlTypes.Role.PROGRESSBAR and obj.isInForeground:
 				self._handleProgressBarUpdate(obj)
 			return
-		self.mainBuffer.saveWindow()
-		region.update()
-		self.mainBuffer.update()
-		self.mainBuffer.restoreWindow()
-		if self.buffer is self.mainBuffer:
-			self.update()
-		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
-			self._dismissMessage()
+		self._regionsPendingUpdate.add(region)
 
 	def handleReviewMove(self, shouldAutoTether=True):
 		if not self.enabled:
@@ -2567,7 +2581,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		region = self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
 		if region and region.obj == reviewPos.obj:
-			self._doCursorMove(region)
+			region.pendingCaretUpdate = True
+			self._regionsPendingUpdate.add(region)
 		else:
 			# We're reviewing a different object.
 			self._doNewObject(getFocusRegions(reviewPos.obj, review=True))
@@ -2593,9 +2608,19 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# The display in the new profile is equal to the last requested display name
 			display == self._lastRequestedDisplayName
 			# or the new profile uses auto detection, which supports detection of the currently active display.
-			or (display == AUTO_DISPLAY_NAME and bdDetect.driverSupportsAutoDetection(self.display.name))
+			or (display == AUTO_DISPLAY_NAME and bdDetect.driverIsEnabledForAutoDetection(self.display.name))
 		):
 			self.setDisplayByName(display)
+		elif (
+			# Auto detection should be active
+			display == AUTO_DISPLAY_NAME and self._detector is not None
+			# And the current display should be no braille.
+			# If not, there is an active detector for the current driver
+			# to switch from bluetooth to USB.
+			and self.display.name == NO_BRAILLE_DISPLAY_NAME
+		):
+			self._detector._limitToDevices = bdDetect.getBrailleDisplayDriversEnabledForDetection()
+
 		self._tether = config.conf["braille"]["tetherTo"]
 
 	def handleDisplayUnavailable(self):
@@ -2720,13 +2745,14 @@ def initialize():
 	handler.setDisplayByName(config.conf["braille"]["display"])
 
 def pumpAll():
-	"""Runs tasks at the end of each core cycle. For now just caret updates."""
-	handler.handlePendingCaretUpdate()
+	"""Runs tasks at the end of each core cycle. For now just region updates, e.g. for caret movement."""
+	handler._handlePendingUpdate()
 
 def terminate():
 	global handler
 	handler.terminate()
 	handler = None
+
 
 class BrailleDisplayDriver(driverHandler.Driver):
 	"""Abstract base braille display driver.
@@ -2735,6 +2761,11 @@ class BrailleDisplayDriver(driverHandler.Driver):
 
 	At a minimum, drivers must set L{name} and L{description} and override the L{check} method.
 	To display braille, L{numCells} and L{display} must be implemented.
+
+	To support automatic detection of braille displays belonging to this driver:
+		* The driver must be thread safe and L{isThreadSafe} should be set to C{True}
+		* L{supportsAutomaticDetection} must be set to C{True}.
+		* L{registerAutomaticDetection} must be implemented.
 
 	Drivers should dispatch input such as presses of buttons, wheels or other controls
 	using the L{inputCore} framework.
@@ -2758,19 +2789,19 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	#: which means the rest of NVDA is not blocked while this occurs,
 	#: thus resulting in better performance.
 	#: This is also required to use the L{hwIo} module.
-	#: @type: bool
-	isThreadSafe = False
+	isThreadSafe: bool = False
+	#: Whether this driver is supported for automatic detection of braille displays.
+	supportsAutomaticDetection: bool = False
 	#: Whether displays for this driver return acknowledgements for sent packets.
 	#: L{_handleAck} should be called when an ACK is received.
 	#: Note that thread safety is required for the generic implementation to function properly.
 	#: If a display is not thread safe, a driver should manually implement ACK processing.
-	#: @type: bool
-	receivesAckPackets = False
+	receivesAckPackets: bool = False
 	#: Whether this driver is awaiting an Ack for a connected display.
 	#: This is set to C{True} after displaying cells when L{receivesAckPackets} is True,
 	#: and set to C{False} by L{_handleAck} or when C{timeout} has elapsed.
 	#: This is for internal use by NVDA core code only and shouldn't be touched by a driver itself.
-	_awaitingAck = False
+	_awaitingAck: bool = False
 	#: Maximum timeout to use for communication with a device (in seconds).
 	#: This can be used for serial connections.
 	#: Furthermore, it is used to stop waiting for missed acknowledgement packets.
@@ -2788,23 +2819,42 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		super().__init__()
 
 	@classmethod
-	def check(cls):
+	def check(cls) -> bool:
 		"""Determine whether this braille display is available.
 		The display will be excluded from the list of available displays if this method returns C{False}.
 		For example, if this display is not present, C{False} should be returned.
 		@return: C{True} if this display is available, C{False} if not.
-		@rtype: bool
 		"""
 		if cls.isThreadSafe:
-			if bdDetect.driverHasPossibleDevices(cls.name):
+			supportsAutomaticDetection = cls.supportsAutomaticDetection
+			if not supportsAutomaticDetection and NVDAState._allowDeprecatedAPI() and version_year < 2024:
+				log.warning(
+					"Starting from NVDA 2024.1, drivers that rely on bdDetect for the default check method "
+					"should have supportsAutomaticDetection set to True"
+				)
+				supportsAutomaticDetection = True
+			if supportsAutomaticDetection and bdDetect.driverHasPossibleDevices(cls.name):
 				return True
-			try:
-				next(cls.getManualPorts())
-			except (StopIteration, NotImplementedError):
-				pass
-			else:
-				return True
+		try:
+			next(cls.getManualPorts())
+		except (StopIteration, NotImplementedError):
+			pass
+		else:
+			return True
 		return False
+
+	@classmethod
+	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
+		"""
+		This method may register the braille display driver in the braille display automatic detection framework.
+		The framework provides a L{bdDetect.DriverRegistrar} object as its only parameter.
+		The methods on the driver registrar can be used to register devices or device scanners.
+		This method should only register itself with the bdDetect framework,
+		and should refrain from doing anything else.
+		Drivers with L{supportsAutomaticDetection} set to C{True} must implement this method.
+		@param driverRegistrar: An object containing several methods to register device identifiers for this driver.
+		"""
+		raise NotImplementedError
 
 	def terminate(self):
 		"""Terminate this display driver.
@@ -3206,3 +3256,26 @@ def getSerialPorts(filterFunc=None) -> typing.Iterator[typing.Tuple[str, str]]:
 			yield (info["port"],
 				# Translators: Name of a serial communications port.
 				_("Serial: {portName}").format(portName=info["friendlyName"]))
+
+
+def getDisplayDrivers(
+		filterFunc: Optional[Callable[[Type[BrailleDisplayDriver]], bool]] = None
+) -> Generator[Type[BrailleDisplayDriver], Any, Any]:
+	"""Gets an iterator of braille display drivers meeting the given filter callable.
+	@param filterFunc: an optional callable that receives a driver as its only argument and returns
+		either True or False.
+	@return: Iterator of braille display drivers.
+	"""
+	for loader, name, isPkg in pkgutil.iter_modules(brailleDisplayDrivers.__path__):
+		if name.startswith('_'):
+			continue
+		try:
+			display = _getDisplayDriver(name)
+		except Exception:
+			log.error(
+				f"Error while importing braille display driver {name}",
+				exc_info=True
+			)
+			continue
+		if not filterFunc or filterFunc(display):
+			yield display

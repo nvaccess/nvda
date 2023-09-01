@@ -1,12 +1,12 @@
 # Japanese Translation of NVDA messages.
-# Copyright (C) 2006-2012 NVDA Contributors
+# Copyright (C) 2006-2023 NVDA Contributors
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-04 00:02+0000\n"
-"PO-Revision-Date: 2023-07-28 14:57+0900\n"
+"POT-Creation-Date: 2023-08-14 03:03+0000\n"
+"PO-Revision-Date: 2023-08-14 12:33+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -13581,26 +13581,54 @@ msgctxt "addonStore"
 msgid "Enabled, pending restart"
 msgstr "再起動後に有効"
 
-#. Translators: The label of a tab to display installed add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of a tab to display installed add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Installed add-ons"
+msgstr "インストール済みのアドオン"
+
+#. Translators: The label of a tab to display updatable add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Updatable add-ons"
+msgstr "更新可能なアドオン"
+
+#. Translators: The label of a tab to display available add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Available add-ons"
+msgstr "利用可能なアドオン"
+
+#. Translators: The label of a tab to display incompatible add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Installed incompatible add-ons"
+msgstr "インストール済みのアドオン(互換性なし)"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Installed &add-ons"
 msgstr "インストール済みのアドオン(&A)"
 
-#. Translators: The label of a tab to display updatable add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Updatable &add-ons"
 msgstr "更新可能なアドオン(&A)"
 
-#. Translators: The label of a tab to display available add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Available &add-ons"
 msgstr "利用可能なアドオン(&A)"
 
-#. Translators: The label of a tab to display incompatible add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Installed incompatible &add-ons"
 msgstr "インストール済みのアドオン(互換性なし)(&A)"
@@ -13902,20 +13930,45 @@ msgctxt "addonStore"
 msgid "Add-on Information"
 msgstr "アドオンの情報"
 
+#. Translators: The warning of a dialog
+msgid "Add-on Store Warning"
+msgstr "アドオンストアの警告"
+
+#. Translators: Warning that is displayed before using the Add-on Store.
+msgctxt "addonStore"
+msgid ""
+"Add-ons are created by the NVDA community and are not vetted by NV Access. "
+"NV Access cannot be held responsible for add-on behavior. The functionality "
+"of add-ons is unrestricted and can include accessing your personal data or "
+"even the entire system. "
+msgstr ""
+"アドオンはNVDAコミュニティが作成しています。NV Accessはアドオンの審査を行って"
+"いません。またアドオンの動作について責任を負いません。アドオンの機能には制限"
+"がなく、個人データまたはシステム全体へのアクセスを含む場合があります。"
+
+#. Translators: The label of a checkbox in the add-on store warning dialog
+msgctxt "addonStore"
+msgid "&Don't show this message again"
+msgstr "今後このメッセージを表示しない(&D)"
+
+#. Translators: The label of a button in a dialog
+msgid "&OK"
+msgstr "OK(&O)"
+
 #. Translators: The title of the addonStore dialog where the user can find and download add-ons
 msgctxt "addonStore"
 msgid "Add-on Store"
 msgstr "アドオン ストア"
 
-#. Translators: Banner notice that is displayed in the Add-on Store.
-msgctxt "addonStore"
-msgid "Note: NVDA was started with add-ons disabled"
-msgstr "注意: NVDAはアドオンを無効にして起動しました"
-
 #. Translators: The label for a button in add-ons Store dialog to install an external add-on.
 msgctxt "addonStore"
 msgid "Install from e&xternal source"
 msgstr "外部ソースからインストールする(&X)"
+
+#. Translators: Banner notice that is displayed in the Add-on Store.
+msgctxt "addonStore"
+msgid "Note: NVDA was started with add-ons disabled"
+msgstr "注意: NVDAはアドオンを無効にして起動しました"
 
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"
@@ -14022,7 +14075,7 @@ msgstr "インストール済みのアドオン(互換性なし)(&I)"
 #. Translators: Label for an action that updates the selected addon
 msgctxt "addonStore"
 msgid "&Update"
-msgstr "NVDAを更新(&U)"
+msgstr "更新(&U)"
 
 #. Translators: Label for an action that replaces the selected addon with
 #. an add-on store version.
@@ -14033,17 +14086,17 @@ msgstr "置換(&P)"
 #. Translators: Label for an action that disables the selected addon
 msgctxt "addonStore"
 msgid "&Disable"
-msgstr "無効(&D)"
+msgstr "無効化(&D)"
 
 #. Translators: Label for an action that enables the selected addon
 msgctxt "addonStore"
 msgid "&Enable"
-msgstr "有効(&E)"
+msgstr "有効化(&E)"
 
 #. Translators: Label for an action that enables the selected addon
 msgctxt "addonStore"
 msgid "&Enable (override incompatibility)"
-msgstr "有効 (互換性なし)(&E)"
+msgstr "有効化 (互換性なし)(&E)"
 
 #. Translators: Label for an action that removes the selected addon
 msgctxt "addonStore"
