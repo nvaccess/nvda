@@ -13,9 +13,12 @@ This includes information on reporting issues, triaging issues, testing, transla
 * [NVDA ControllerClient manual (NVDA API for external applications to directly speak or braille messages, etc.)](https://github.com/nvaccess/nvda/tree/master/extras/controllerClient)
 
 ### Communication channels
+#### NV Access
 * [NVDA on GitHub](https://github.com/nvaccess/nvda)
 	* Report [NVDA issues and feature requests on GitHub](https://github.com/nvaccess/nvda/issues).
 	* Start a [GitHub discussion with the development community](https://github.com/nvaccess/nvda/discussions).
 * [NVDA Developers Mailing List](https://groups.io/g/nvda-devel)
+
+#### NVDA Community
 * [NVDA Community Gitter channel](https://gitter.im/nvaccess/NVDA) (Instant Messaging)
 * [Other sources including groups and profiles on social media channels, language-specific websites and mailing lists etc.](https://github.com/nvaccess/nvda/wiki/Connect)

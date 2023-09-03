@@ -11,7 +11,7 @@
 * [Manual test plans](../../tests/manual/README.md)
 * [Automated tests for developers](./automated.md)
 
-### Communication channels
+### Community communication channels
 * [NVDA Users Mailing List](https://nvda.groups.io/g/nvda)
 * [NVDA Developers Mailing List](https://groups.io/g/nvda-devel)
 * [Other sources including groups and profiles on social media channels, language-specific websites and mailing lists etc.](https://github.com/nvaccess/nvda/wiki/Connect)

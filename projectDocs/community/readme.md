@@ -23,12 +23,14 @@ This includes information on reporting issues, triaging issues, testing, transla
 This website is considered legacy software, using the NVDA Add-on Store instead is encouraged.
 
 ### Communication channels
-* NV Access has several ways you can contact us and keep up to date on the latest on NVDA.
-See the [NV Access](https://www.nvaccess.org/contact-us/) website for our social media accounts and other contact information.
+#### NV Access
+* See the [NV Access](https://www.nvaccess.org/contact-us/) website for our social media accounts and other contact information.
+* [NVDA Add-on API Mailing List](https://groups.google.com/a/nvaccess.org/g/nvda-api)
+
+#### NVDA Community
 * [NVDA Users Mailing List](https://nvda.groups.io/g/nvda)
 * [NVDA Developers Mailing List](https://groups.io/g/nvda-devel)
 * [NVDA Translators list](https://groups.io/g/nvda-translations)
 * [NVDA Add-ons Mailing List](https://groups.io/g/nvda-addons)
-* [NVDA Add-on API Mailing List](https://groups.google.com/a/nvaccess.org/g/nvda-api)
 * [NVDA Community Gitter channel](https://gitter.im/nvaccess/NVDA) (Instant Messaging)
 * [Other sources including groups and profiles on social media channels, language-specific websites and mailing lists etc.](https://github.com/nvaccess/nvda/wiki/Connect)

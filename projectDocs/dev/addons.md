@@ -16,7 +16,11 @@ This website is considered legacy software, using the NVDA Add-on Store instead 
 * [NVDA ControllerClient manual (NVDA API for external applications to directly speak or braille messages, etc.)](../../extras/controllerClient)
 
 ### Communication channels
+#### NV Access
 * [GitHub discussions](https://github.com/nvaccess/nvda/discussions)
+* [NVDA Add-on API Mailing List](https://groups.google.com/a/nvaccess.org/g/nvda-api)
+
+#### NVDA Community
 * [NVDA Developers Mailing List](https://groups.io/g/nvda-devel)
 * [NVDA Add-ons Mailing List](https://groups.io/g/nvda-addons)
 * [NVDA Community Gitter channel](https://gitter.im/nvaccess/NVDA) (Instant Messaging)
