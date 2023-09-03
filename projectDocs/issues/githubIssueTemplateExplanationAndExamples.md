@@ -31,7 +31,5 @@ If you are getting a crash dump file (nvda_crash.dmp) please also include it.
 While we welcome **images/screenshots** to help explain a problem, be aware that many of the developers of NVDA are blind and will greatly appreciate this image being described in text.
 Most tools allow you to copy text out of them.
 
-### Tips
-* Consider swapping to the preview tab in order to read through your issue at any stage to confirm
-  the issue reads as expected.
-* If you have trouble following this template, or with the initial investigation that is required, please politely ask for assistance from the fantastic community of people on the [NVDA users mailing list](https://github.com/nvaccess/nvda-community/wiki/Connect#international-users-mailing-list-english)
+### Help
+If you have trouble following this template, or with the initial investigation that is required, please politely ask for assistance from the fantastic community of people on the [NVDA users mailing list](https://github.com/nvaccess/nvda/wiki/Connect#international-users-mailing-list-english)
