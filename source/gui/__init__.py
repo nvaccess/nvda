@@ -538,7 +538,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			item = menu_tools.Append(wx.ID_ANY, _("&Reload plugins"))
 			self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
 		# Translators: The label for the Tools submenu in NVDA menu.
-		self.menu.AppendSubMenu(menu_tools,_("&Tools"))
+		self.menu.AppendSubMenu(menu_tools, _("&Tools"))
 
 		menu_help = self.helpMenu = wx.Menu()
 		if not globalVars.appArgs.secure:
