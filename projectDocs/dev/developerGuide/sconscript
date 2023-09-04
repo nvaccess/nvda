@@ -31,12 +31,6 @@ devDocs_nvdaHelper = env.Command(
 env.Alias('devDocs_nvdaHelper', devDocs_nvdaHelper)
 env.Clean('devDocs_nvdaHelper', devDocs_nvdaHelper)
 
-devDocs_nvdaHelper_readme = env.Command(
-	target=devDocsOutputDir.File('nvdaHelper_readme.md'),
-	source=env.File('../../../nvdaHelper/readme.md'),
-	action=Copy('$TARGET', '$SOURCE')
-)
-
 ignorePaths = [
 	'_buildVersion.py',
 	'comInterfaces',
@@ -81,5 +75,5 @@ sphinxHtml = env.Command(
 	]]
 )
 devDocs_nvda = env.Command(devDocsOutputDir.Dir('NVDA'), sphinxHtml, Move('$TARGET', '$SOURCE'))
-env.Alias('devDocs', [devGuide, devDocs_nvda, devDocs_nvdaHelper_readme])
-env.Clean('devDocs', [devGuide, devDocs_nvda, devDocs_nvdaHelper_readme])
+env.Alias('devDocs', [devGuide, devDocs_nvda])
+env.Clean('devDocs', [devGuide, devDocs_nvda])
