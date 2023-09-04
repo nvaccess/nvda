@@ -205,14 +205,14 @@ NVDA 键也可以设定为``大小写锁定``键。
 +++ 启动和退出 NVDA +++[StartingAndStoppingNVDA]
 || 名称 | 台式机键盘 | 笔记本键盘 | 描述 |
 | 启动 NVDA | ``control+alt+n`` | ``control+alt+n`` | 启动或重启 NVDA。 |
-| 退出 NVDA | ``NVDA+q``, 然后按 ``enter`` | ``NVDA+q``, 然后按 ``enter`` | 退出 NVDA。 |
+| 退出 NVDA | ``NVDA+q`` 然后按 ``enter`` | ``NVDA+q`` 然后按 ``enter`` | 退出 NVDA。 |
 | 暂停或恢复语音 | ``shift`` | ``shift`` | 立即暂停朗读。再次按下会从刚刚停止的地方继续朗读。 |
 | 停止朗读 | ``control`` | ``control`` | 立即停止朗读。 |
 
 +++ 朗读文本 +++[ReadingText]
 || 名称 | 台式机键盘 | 笔记本键盘 | 描述 |
 | 全文朗读 | ``NVDA+下光标`` | ``NVDA+a`` | 从当前位置开始朗读，并随朗读向下移动焦点。 |
-| 朗读当前行 | ``NVDA+上光标`` | ``NVDA+l`` | 朗读当前行。连按两次拼读该行。连按三次用字符解释的方式拼读该行（如  |Alpha，Bravo，Charlie 等。一个的一——译者注） |
+| 朗读当前行 | ``NVDA+上光标`` | ``NVDA+l`` | 朗读当前行。连按两次拼读该行。连按三次用字符解释的方式拼读该行（如 Alpha，Bravo，Charlie 等。） |
 | 朗读选择的文本 | ``NVDA+shift+上光标`` | ``NVDA+shift+s`` | 朗读选择的所有文本。 |
 | 朗读剪贴板文本 | ``NVDA+c`` | ``NVDA+c`` | 朗读剪贴板中的任何文本。 |
 
@@ -223,9 +223,9 @@ NVDA 键也可以设定为``大小写锁定``键。
 | 朗读窗口 | ``NVDA+b`` | ``NVDA+b`` | 朗读整个当前窗口（用于对话框）。 |
 | 朗读状态栏 | ``NVDA+end`` | ``NVDA+shift+end`` | 如果 NVDA 能找到状态栏则朗读它。连按两次会拼读此信息。连按三次会复制此信息到剪贴板。 |
 | 读出当前所聚焦对象的快捷键 | ``shift+数字键盘2`` | ``NVDA+control+shift+.`` | 读出当前所聚焦对象的快捷键（或加速键） |
-| 朗读时间 | ``NVDA+f12`` | ``NVDA+f12`` | 按一次读出当前时间。连按两次读出日期。 |
+| 朗读时间 | ``NVDA+f12`` | ``NVDA+f12`` | 按一次读出当前时间。连按两次读出日期。时间与日期将以 Windows 设置中为系统托盘时钟设置的格式读出。 |
 | 朗读文本格式 | ``NVDA+f`` | ``NVDA+f`` | 朗读文本的格式信息。连按两次在一个窗口中显示此信息。 |
-| 读出链接对象网址 | ``NVDA+k`` | ``NVDA+k`` | 读出当前[导航对象 #ObjectNavigation]所在链接指向的网址。连按两次在一个窗口中显示此信息，以便进行更详细的查看。 |
+| 读出链接网址 | ``NVDA+k`` | ``NVDA+k`` | 读出当前光标或焦点所在链接指向的网址。连按两次在浏览模式下显示该信息，便于仔细查看。 |
 
 +++ 切换需要 NVDA 读出哪些信息 +++[ToggleWhichInformationNVDAReads]
 || 名称 | 台式机键盘 | 笔记本键盘 | 描述 |
@@ -245,7 +245,7 @@ NVDA 键也可以设定为``大小写锁定``键。
 完整的单字母导航键的列表位于用户指南的[浏览模式 #BrowseMode]部分。
 || 命令 | 按键 | 描述 |
 | 标题 | ``h`` | 移动到下一个标题。 |
-| 1、2或3级标题 | ``1``, ``2``, ``3`` | 移动到下一个指定级别的标题。 |
+| 1、2或3级标题 | ``1``、``2``、``3`` | 移动到下一个指定级别的标题。 |
 | 表单区域 | ``f`` | 移动到下一个表单区域（如编辑框，按钮等）。 |
 | 链接 | ``k`` | 移动到下一个链接。 |
 | 路标 | ``d`` | 移动到下一个路标。 |
@@ -310,6 +310,7 @@ NV Access 还出售[电话支持 https://www.nvaccess.org/product/nvda-telephone
 您必须使用复选框确认您了解这些插件将被禁用之后才可以点击继续按钮。
 还会显示一个按钮来查看将被禁用的插件。
 请参阅[不兼容的插件对话框 #incompatibleAddonsManager]以了解关于这个按钮的详细帮助。
+安装后，您可以在[插件商店 #AddonsManager]重新启用不兼容的插件。但这需要由您自行承担潜在的风险。
 
 +++ 进入 Windows 欢迎界面时启用 NVDA +++[StartAtWindowsLogon]
 此选项允许您选择是否在 Windows 欢迎界面，即在输入密码之前自动启动 NVDA。
@@ -339,14 +340,17 @@ NV Access 还出售[电话支持 https://www.nvaccess.org/product/nvda-telephone
 
 
 ++ 便携版和临时副本的限制 ++[PortableAndTemporaryCopyRestrictions]
-如果您想将 NVDA 放在U盘或其它便携媒体中随身携带，您可以选择创建一个便携版本。
-安装版本还可以随时创建它自己的便携副本。
-创建以后，便携版本还能复制自己并安装到任何计算机上。
-然而，如果您希望把 NVDA 复制到像CD那样的只读媒体上，您只能复制下载的安装程序包。
+如果您想将 NVDA 放在 U 盘或其它便携媒体中随身携带，您可以选择创建一个便携版本。
+已安装版可以随时创建为便携版。
+创建的便携版也能安装到另一台计算机上。
+然而，如果您希望把 NVDA 复制到像 CD 那样的只读媒体上，您只能复制已下载的安装包。
 目前还不支持从只读媒体上直接运行便携版本。
-选择使用 NVDA 临时副本（如为了演示的目的）也是可以的，然而总是用这种方式启动 NVDA 会造成非常大的时间消耗。
 
-除了不能在登录期间和/或其后自动启动，NVDA 的便携版和临时副本还有以下限制：
+[NVDA 安装程序 #StepsForRunningTheDownloadLauncher]可以作为 NVDA 的临时副本运行。
+临时副本无法保存 NVDA 配置，例如设置或手势。
+也无法使用[插件商店 #AddonsManager]。
+
+NVDA 的便携版和临时副本还有以下限制：
 - 无法与使用管理员权限运行的应用程序进行交互，当然，除非 NVDA 本身也已经运行在管理员权限之下(不推荐)。
 - 尝试启动具有管理权限的应用程序时无法读取用户帐户控制(UAC)界面。
 - Windows8 及以上：无法支持使用触摸屏进行输入。
@@ -479,10 +483,15 @@ NVDA 目前共有两套被称为键盘布局的快捷键配置：一套是台式
 ++ NVDA 菜单 ++[TheNVDAMenu]
 NVDA 菜单允许您控制 NVDA 设置、访问帮助、保存或者恢复您的配置、定义语音字典、访问额外的工具和退出 NVDA。
 
-当 NVDA 正在运行的时候，如果您想访问 NVDA 菜单，在 Windows 的任何地方都可以通过在键盘上按下“NVDA+N”或者在触摸屏上执行双指双击的动作。
-您也可以通过 Windows 的托盘图标访问 NVDA 菜单。
-您可以在右键单击系统托盘上的 NVDA 图标和按下“Windows 键 + B”访问系统托盘，然后按下光标找到 NVDA 图标后按下右 control 键附近的“应用建（Applications）”（大多数键盘可用）两种方式之间进行选择。
-当菜单显示后，您可以使用方向键进行菜单导航，然后按“Enter”执行当前项目。
+当 NVDA 正在运行的时候，要想在 Windows 的任何地方弹出 NVDA 菜单，您可执行下面任一操作：
+- 按下键盘上的 ``NVDA+N``。
+- 用双指双击触摸屏。
+- 按下 ``Windows+b`` 访问系统托盘，按 ``下光标键`` 导航到 NVDA 图标， 接着按下 ``enter`` 键。
+- 又或者，按下 ``Windows+b`` 访问系统托盘，按 ``下光标键`` 导航到 NVDA 图标，接着按下 ``应用（applications）`` 键打开上下文菜单， 该键通常位于键盘上右侧 control 键旁边。
+在没有``应用（applications）``键的键盘上，可按下 ```shift+F10` 替代。
+- 用右键单机位于系统托盘上的 NVDA 图标。
+-
+当弹出了 NVDA 菜单， 您可以使用光标键浏览菜单项，使用回车键激活。
 
 ++ 基本的 NVDA 命令 ++[BasicNVDACommands]
 %kc:beginInclude
@@ -571,21 +580,27 @@ NVDA 提供下列与系统输入焦点相关的快捷命令：
 在这些情况下，您可以使用对象导航。
 
 对象导航允许您在[对象 #Objects]之间进行浏览并获取每个对象的信息。
-当您移动到一个对象时，NVDA 将用语系统焦点相类似的方式进行朗读。
+当您移动到一个对象时，NVDA 将用语系统焦点相似的方式进行朗读。
 浏览出现在屏幕上的所有文本的方法就是使用[屏幕浏览 #ScreenReview]。
 
-为了避免在系统创建的海量对象之间移动，对象被分成不同层级。
-这样就意味着，有些对象内包含着其他对象，您必须先进入它们才能访问这些包含在此父对象的子对象。
+为了避免在系统创建的众多对象之间移动，对象被分成不同层级。
+这就意味着，有些对象内可以包含其他对象，您必须先进入它们才能访问这些包含在其父对象内的子对象。
 例如，一个列表包含列表项目，您必须先移动到列表的内部才能访问列表项目。
-如果您已经移动到了列表项目，上一个和下一个的命令将带领您在相同列表的其他项目之间移动。
-移动到包含这个列表项目的父对象将带领您返回列表。
-您可以越过这个列表来访问其他您所希望访问的对象。
-同样的，工具栏包含控件，所以您必须进入工具栏才能访问包含在这个工具栏的控件。
+如果您已经移动到了列表内的列表项，使用移动到此层级的上一个对象/下一个对象可以让您在此列表内的其他列表项之间移动。
+使用移动到父对象可以让您退出这个列表。
+您也可以越过这个列表来访问其他您所希望访问的对象。
+同样的，又比如工具栏包含控件，所以您必须进入工具栏才能访问包含在这个工具栏的控件。
 
-当前查看的对象被称为浏览对象。
-一旦您浏览到了一个对象，您可以使用[对象浏览模式 #ObjectReview]的[文本查看命令 #ReviewingText]进行查看。
+如果您希望在系统上的每一个对象之间来回移动，则可以使用基于线性浏览的移动到上一个/下一个对象命令。
+例如，如果您使用移动到下一个对象命令移动到了某个对象，并且该对象包含子对象，则 NVDA 将自动移动到该对象的第一个子对象。
+或者，如果该对象不包含任何子对象，NVDA 会移动到此层级的下一个对象。
+如果此层级没有更多对象，NVDA 将尝试基于其父对象查找下一个对象，直到没有更多的对象可以移动为止。
+相同的规则同样也适用于移动到上一个对象的操作。
+
+当前移动到的对象被称为浏览对象。
+一旦您浏览到了一个对象，您可以使用[对象浏览模式 #ObjectReview]的[文本查看命令 #ReviewingText]查看该对象的文本。
 当[高亮显示导航对象 #VisionFocusHighlight]开启时，当前浏览对象的位置也将以视觉方式显示。
-默认情况下，浏览对象会随着系统焦点而移动，此行为可以在设置里开关。
+默认情况下，浏览对象会随着系统焦点移动，此行为可以在设置里开关。
 
 请注意，想要盲文光标跟随浏览对象可以在[盲文光标跟随 #BrailleTether]设置里修改。
 
@@ -593,16 +608,18 @@ NVDA 提供下列与系统输入焦点相关的快捷命令：
 
 %kc:beginInclude
 || 名称 | 台式机键盘 | 笔记本键盘 | 触摸 | 描述 |
-| 朗读当前对象 | NVDA+数字键盘5 | NVDA+shift+o | 无 | 朗读当前对象。连按两次拼读信息，连按三次复制此对象的名称和值到剪贴板。 |
-| 移动到父对象 | NVDA+数字键盘8 | NVDA+shift+上光标 | 向上滑动(对象模式) | 移动到包含当前对象的父对象。 |
-| 移动到上一个对象 | NVDA+数字键盘4 | NVDA+shift+左光标 | 向左滑动(对象模式) | 移动到当前对象的前一个对象。 |
-| 移动到下一个对象 | NVDA+数字键盘6 | NVDA+shift+右光标 | 向右滑动(对象模式) | 移动到当前对象的后一个对象。 |
-| 移动到第一个被包含的对象 | NVDA+数字键盘2 | NVDA+shift+下光标 | 向下滑动(对象模式) | 移动到当前对象所包含的第一个子对象。 |
+| 读出当前对象 | NVDA+数字键盘5 | NVDA+shift+o | 无 | 读出当前导航对象。连按两次拼读信息，连按三次复制此对象的名称和值到剪贴板。 |
+| 移动到父对象 | NVDA+数字键盘8 | NVDA+shift+上光标 | 向上滑动(对象模式) | 移动导航对象到此对象的父对象 |
+| 移动到此层级的上一个对象 | NVDA+数字键盘4 | NVDA+shift+左光标 | 向左滑动(对象模式) | 移动导航对象到此层级的前一个对象 |
+| 移动到上一个对象 | NVDA+numpad9 | NVDA+shift+[ | 向右滑动（对象模式） | 移动导航对象到前一个对象，忽略层级关系。 |
+| 移动到此层级的下一个对象 | NVDA+数字键盘6 | NVDA+shift+右光标 | 向右滑动(对象模式) | 移动导航对象到此层级的后一个对象 |
+| 移动到下一个对象 | NVDA+小键盘3 | NVDA+shift+] | 向右滑动（对象模式） | 移动导航对象到后一个对象，忽略层级关系。 |
+| 移动到此对象的首个子对象 | NVDA+数字键盘2 | NVDA+shift+下光标 | 向下滑动(对象模式) | 移动导航对象到此对象的第一个子对象。 |
 | 移动到焦点对象 | NVDA+数字键盘减号 | NVDA+退格 | 无 | 移动到当前包含焦点的对象，也会放置在系统输入焦点的位置(如果有显示)。 |
 | 激活当前的浏览对象 | NVDA+数字键盘回车 | NVDA+回车 | 点击两次 | 激活当前的导航对象(类似点击鼠标或者在有焦点的对象上按空格键)。 |
 | 移动焦点或系统输入焦点到当前浏览位置 | NVDA+shift+数字键盘减号 | NVDA+shift+退格 | 无 | 按一次把系统焦点移动到当前浏览的对象，按两次把系统输入焦点移动到浏览光标所在的位置。 |
 | 读出浏览光标的位置信息 | NVDA+Shift+数字键盘删除 | NVDA+Shift+删除 | 无 | 读出浏览光标处文本或对象的位置信息。例如，可能包括浏览光标位置在文档内的百分比、与页面边缘的距离或确切的屏幕位置。连按两次获取详细信息。 |
-| 将导航对象移动到状态栏 | 无 | 无 | 无 | 读出当前应用程序的状态栏，并将导航对象移动到该状态栏（如果可能）。 |
+| 移动到状态栏 | 无 | 无 | 无 | 读出当前应用程序的状态栏，并将导航对象移动到该状态栏（如果可能）。 |
 %kc:endInclude
 
 请注意，数字键盘必须处于关闭状态下数字键盘的按键才能正常工作。
@@ -654,7 +671,6 @@ NVDA 允许您按照字、词、行的方式朗读[屏幕 #ScreenReview]、当�
 
 ++浏览模式 ++[ReviewModes]
 NVDA 的[文本查看命令 #ReviewingText] 可以查看当前导航对象的内容，即当前的文档或者屏幕，依照您当前选择的模式而定。
-浏览模式取代了 NVDA 以前的平面浏览。
 
 下面的命令，可以在浏览模式之间切换：
 %kc:beginInclude
@@ -836,7 +852,7 @@ NVDA支持以下应用中的文档
 安装 MathPlayer 后，需重启 NVDA。
 
 NVDA 支持以下数学内容：
-- Mozilla Firefox, Microsoft Internet Explorer 和 Google Chrome内的MathML 内容。
+- Mozilla Firefox、Microsoft Internet Explorer 和 Google Chrome内的 MathML 内容。
 - UIA 模式下 Microsoft Word 中的新版数学公式：
 NVDA 能够阅读 Microsoft Word 365/2016 build 14326 及更高版本软件中的数学公式并与之交互。
 但请注意，必须将先前创建的 MathType 公式转换为 Office Math。
@@ -1295,16 +1311,19 @@ NVDA支持命令提示符，PowerShell 以及 Linux 子系统的 Windows 控制�
 
 ++ NVDA设置对话框 ++[NVDASettings]
 %kc:settingsSection: || 名称 | 台式机键盘 | 笔记本键盘 | 描述 |
-[NVDA设置对话框 #NVDASettings]里面有很多设置选项。
-这个对话框有一个列表，里面有设置选项的分类。
-选中一个分类，这一类的设置就在对话框里显示出来。
-按”应用“按钮，立即应用设置而不用关闭对话框。
+NVDA 的许多配置参数位于设置对话框，在该对话框中可以方便地调整它们。
+为了易于使用，对话框中有一个包含配置分类的列表，使得所有设置项分门别类、仅仅有条。
+选中一个分类，该类对应的设置项就在对话框里显示出来。
+要想在分类之间切换，请按 ``tab`` 或者 ``shift+tab`` 移动到分类列表，然后使用上下光标键浏览。
+在对话框中的任何位置，还可以使用 ``ctrl+tab`` 切换到下一个分类，又或者使用 ``ctrl+shift+tab`` 切换到上一个分类。
+
+当修改一个或者多个设置后，使用“应用”按钮，立即应用设置，而对话框不会关闭，您可继续调整其他设置。
 点击“确认”按钮，保存所有您作过的更改，并且关闭对话框。
 
-有的分类有快捷键。
-按下对应快捷键可以打开NVDA设置对话框，并显示对应分类的设置。
+有的分类具有特定的快捷键。
+按下对应快捷键可以打开 NVDA 设置对话框，并显示对应分类的设置。
 请注意：默认情况下不是所有的选项都可以使用按键或手势进行访问
-如果您想访问的选项没有专用的快捷键，使用[按键与手势对话框 #InputGestures] 可给该选项添加自定义手势或快捷键。
+如果您经常访问的选项没有专门的快捷键，使用[按键与手势对话框 #InputGestures]可给该选项添加自定义手势或快捷键。
 
 下面列出NVDA设置对话框里面的各个分类
 
@@ -1568,7 +1587,7 @@ NVDA 正在运行的时候，如果您想在不进入“语音设置”对话框
 ==== 光标闪烁 ====[BrailleSettingsBlinkCursor]
 选中这个选项开启盲文光标闪烁。
 如果关闭闪烁，盲文光标将始终处于“固定”位置。
-选择指示器不受影响,它一直位于 7 8 两点 而且不会闪烁.
+选择指示光标不受影响，它一直位于 7 点和 8 点，而且不会闪烁。
 
 ==== 光标闪烁频率(以毫秒为单位) ====[BrailleSettingsBlinkRate]
 此选项是一个数字区域，允许您以毫秒为单位更改光标的闪烁速度。
@@ -1579,10 +1598,13 @@ NVDA 正在运行的时候，如果您想在不进入“语音设置”对话框
 
 ==== 跟随浏览光标时盲文光标的形状 ====[BrailleSettingsCursorShapeForReview]
 此选项允许您在盲文光标跟随浏览光标时，选择盲文光标的形状（哪些点位）。
-选择指示器不受影响,它一直位于 7 8 两点 而且不会闪烁.
+选择指示光标不受影响，它一直位于 7 点和 8 点，而且不会闪烁。
 
 ==== 显示消息 ====[BrailleSettingsShowMessages]
 这是一个组合框，可让您选择 NVDA 是否应显示盲文消息，如果显示，那么在多长时间后消失。
+
+要在任何地方切换显示消息，请在[按键与手势对话框 #InputGestures]中分配一个自定义按键或手势.
+
 
 ==== 消息显示时间(以秒为单位) ====[BrailleSettingsMessageTimeout]
 这是一个数字区域，允许您控制 NVDA 的消息将在点显器上显示多长时间。
@@ -1594,12 +1616,34 @@ NVDA 正在运行的时候，如果您想在不进入“语音设置”对话框
 按键: NVDA+control+t
 
 此选项允许您选择是否希望点显器跟随系统焦点或浏览对象(即浏览光标)。
-如果选中了“自动”盲文光标会跟随系统焦点或浏览对象(即浏览光标)
-此时，如果用户操作改变了浏览对象， NVDA 会让盲文光标暂时跟随浏览对象，直到系统焦点或者输入焦点改变为止。
+如果选中了“自动”，盲文光标会跟随系统焦点或浏览对象（即浏览光标）
+此时，如果用户操作改变了浏览对象，NVDA 会让盲文光标暂时跟随浏览对象，直到系统焦点或者输入焦点改变为止。
 如果您想让盲文光标只跟随系统焦点或系统输入焦点，需要把这个设置改成焦点
 此时，盲文光标不会跟随文本浏览或导航对象。
 如果您想让盲文光标只跟随文本浏览或对象浏览，需要把这个设置改成浏览光标。
 此时盲文光标不再跟随系统焦点或导航对象。
+
+==== 移动浏览光标时移动系统输入光标 ====[BrailleSettingsReviewRoutingMovesSystemCaret]
+: 默认
+  从不
+: 选项
+  默认 （从不）, 从不, 仅当盲文光标设为自动跟随时, 总是
+:
+
+此设置决定是否应该在按下盲文点显器上的定位按键后移动系统光标。
+在默认情况下，此选项设置为“从不”，这意味着在点显器上按下定位按键移动浏览光标时从不移动系统光标。
+
+当此选项设置为“总是”，且[盲文光标跟随 #BrailleTether]设置为“自动”或“浏览光标”时，按盲文点显器上的定位按键也将在支持时移动系统光标或系统焦点。
+若当前浏览模式为[屏幕浏览 #ScreenReview]时，没有物理光标。
+在这种情况下，NVDA 尝试将对象聚焦在您要定位到的文本上。
+这同样适用于[对象浏览 #ObjectReview]。
+
+您还可以将该选项设置为“仅当盲文光标设为自动跟随时”移动系统光标。
+在这种情况下，当 NVDA 自动跟随浏览光标时，按光标定位键只会移动系统光标或系统焦点，而手动跟随到浏览光标时不会发生任何移动。
+
+仅当“[盲文光标跟随 #BrailleTether]”设置为“自动”或“浏览光标”时，才会显示此选项。
+
+如需在任意位置随意切换“移动浏览光标时移动系统输入光标”模式，请在[按键与首饰#InputGestures]中分配一个快捷键。
 
 ==== 按段落阅读 ====[BrailleSettingsReadByParagraph]
 如果启用，盲文将用段落显示方式来代替逐行显示方式。
@@ -1607,7 +1651,7 @@ NVDA 正在运行的时候，如果您想在不进入“语音设置”对话框
 这样的意思就是您不必在每一行的末尾进行点显器滚动
 实际上，更多的文本将会显示在点显器上面。
 这样做将提高在阅读更大数量的文本时的效率。
-默认情况下，它是禁用的。
+默认情况下，该选项是禁用的。
 
 ==== 避免拆分单词(如果可能) ====[BrailleSettingsWordWrap]
 如果启用了该选项，对于点显器的一行而言太长的单词不会被拆分，剩余的位置会显示为空白。
@@ -1660,6 +1704,20 @@ NVDA 正在运行的时候，如果您想在不进入“语音设置”对话框
 出于此目的，该选项默认设置为启用，即在盲文滚动时会打断语音朗读。
 
 反之，禁用该选项则可以在阅读盲文的同时听到语音朗读。
+
+==== 盲文选中指示光标 ====[BrailleSettingsShowSelection]
+: 默认
+  启用
+: 可选
+  默认 (启用), 启用, 禁用
+:
+
+该选项决定是否显示盲文选择指示光标（第7点和第8点）。
+默认情况下，该选项处于启用状态，因此会显示选择指示光标。
+阅读时显示选择只是光标可能会分散注意力。
+禁用该选项可以增加阅读时的专注力。
+
+要想在任何地方切换盲文选中指示光标，请在[按键与手势对话框 #InputGestures]中分配一个自定义按键或手势。
 
 +++ 选择点显器(NVDA+control+a) +++[SelectBrailleDisplay]
 在盲文分类里面点击“更改...”按钮，会打开一个对话框。您可以在这里更改 NVDA 使用的点显器。
@@ -1828,7 +1886,7 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 
 +++ 使用触摸屏与系统交互 +++[TouchInteraction]
 这个部分只有在设备有触摸屏并且系统是Windows 8或者更高的版本才可用。
-这个分类包含以下选项这个分类包含以下选项
+这个分类包含以下选项
 
 ==== 启用触摸支持 ====[TouchSupportEnable]
 此复选框启用了NVDA的触摸支持。
@@ -1875,10 +1933,10 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 一个复选框，如果选中则告诉 NVDA 朗读出现在屏幕的工具提示。
 当您的鼠标指针经过某些窗口和对象，或在有的时候把焦点放在他们上面时，这些窗口或控件都会显示短消息(或称工具提示)。
 
-==== 读出通知或气球提示 ====[ObjectPresentationReportBalloons]
+==== 读出通知提示 ====[ObjectPresentationReportBalloons]
 当此复选框被选中时，告诉 NVDA 在通知或气球提示出现时朗读内容。
 - 气球提示就像工具提示，但尺寸通常比较大，提示的一般是系统事件。比如网络电缆没有插好、或Windows 系统可能存在安全问题等。
-- 通知是Windows 10的新功能，在系统托盘的通知中心里可以找到，通知用户发生了某种事件比如更新下载完成、收到了新邮件。
+- 通知是Windows 10的新功能，在系统托盘的通知中心里可以找到，通知用户发生了某种事件比如更新下载完成、收到了新邮件等。
 -
 
 ==== 读出对象的快捷键 ====[ObjectPresentationShortcutKeys]
@@ -1957,7 +2015,7 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 此选项默认情况下启用。
 
 +++ 浏览模式设置 (NVDA+control+b) +++[BrowseModeSettings]
-“浏览模式设置”分类包含用NVDA浏览文档比如网页时的选项
+“浏览模式设置”分类包含用NVDA浏览文档比如网页时的选项。
 这个分类包含以下选项
 
 ==== 每行最大字符数 ====[BrowseModeSettingsMaxLength]
@@ -1975,7 +2033,7 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 如果关闭屏幕布局，那么页面元素会呈现为独立的一行。
 这种布局在逐行浏览页面时可能更容易理解，并可能使某些用户更容易与元素交互。
 
-==== 页面加载完成后启用浏览模式 ====[BrowseModeSettingsEnableOnPageLoad]
+==== 页面加载时启用浏览模式 ====[BrowseModeSettingsEnableOnPageLoad]
 此复选框用于切换加载页面时是否应自动启用浏览模式。
 禁用此选项后，仍可在页面或支持浏览模式的文档中手动激活浏览模式。
 有关浏览模式支持的应用程序列表，请参阅[浏览模式 #BrowseMode]部分。
@@ -1984,14 +2042,15 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 
 ==== 页面加载完成后朗读所有内容 ====[BrowseModeSettingsAutoSayAll]
 此复选框用来切换在浏览模式下，页面加载完成之后自动朗读所有内容的开关。
-此选项默认情况下启用。
+这个选项默认情况下是开启的。
+
 
 ==== 包含布局表格 ====[BrowseModeSettingsIncludeLayoutTables]
 此选项用于控制仅用作布局的列表的获取。
 如果启用，NVDA 会把他们当作普通的列表对待，依照[文档格式设置 #DocumentFormattingSettings]来朗读，并可使用快捷命令进行快速定位。
 如果停用，它将不会被朗读，且用快捷键也无法跳转。
 不管怎样，列表的内容都会作为文本被包含在阅读的进程中。
-此选项默认情况下是关闭的。
+这个选项默认情况下是关闭的。
 
 要想在任何地方切换包含布局表格设置，可在[按键与手势对话框 #InputGestures]设置一个自定义手势或快捷键
 
@@ -2016,21 +2075,21 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 此时 NVDA 会通知 Windows 发出默认提示音。
 
 %kc:setting
-==== 浏览模式中自动把焦点放到可聚焦的元素上 ====[BrowseModeSettingsAutoFocusFocusableElements]
+==== 将焦点自动跳转到可聚焦元素 ====[BrowseModeSettingsAutoFocusFocusableElements]
 快捷键: NVDA+8
 
-默认情况下处于禁用状态，此选项使您可以选择在使用浏览模式时，是否应将系统焦点自动设置为可以获取系统焦点的元素（链接，表单域等）。
-禁用此选项将不会自动聚焦这些元素。
-这可能会提高浏览模式响应速度，改善体验。
-与特定元素互动时，焦点仍会更新（例如，按下按钮，选中复选框）。
-启用此选项可能会以性能和稳定性为代价改善对某些网站的支持。
+默认情况下处于禁用状态，此选项使您可以选择在使用浏览模式时，是否应将系统焦点自动设置为可以获取系统焦点的元素（链接，表单等）。
+禁用此选项则不会自动聚焦这些元素。
+禁用此选项可能会提高浏览模式的响应速度，改善体验。
+与特定元素交互时，焦点仍会更新（例如，按下按钮，选中复选框）。
+启用此选项可能会改善对某些网站的支持，但会牺牲一定的性能和稳定性。
 
 +++ 文档格式设置 (NVDA+control+d) +++[DocumentFormattingSettings]
-“文档格式...”这个分类下面的大多数选项都是用来配置，在您用光标浏览整个文档时朗读什么类型的格式信息。
-例如，如果您选择了“朗读字体名称”复选框，每次您用光标进入拥有不同字体的文本时，字体名称就会被读出。
+这个分类下的大多数选项都是用来配置，在您用光标浏览整个文档时朗读什么类型的格式信息。
+例如，如果您选择了“朗读字体名称”复选框，每次您用光标进入使用了不同字体的文本时，相应的字体名称就会被读出。
 
-文档格式信息已经被编成组了。
-您可以配置的选项有：
+文档格式信息被分成了若干组。
+您可以配置的选项包括：
 - 字体
  - 字体名称
  - 字体大小
@@ -2062,7 +2121,7 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
  - 链接
  - 图像
  - 列表
- - 引用区域
+ - 引用区
  - 组
  - 路标
  - 文章
@@ -2074,7 +2133,7 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 要想在任何地方切换这些设置，可在[按键与手势对话框 #InputGestures]设置一个自定义手势或快捷键
 
 ==== 朗读光标经过时的文本格式变化 ====[DocumentFormattingDetectFormatAfterCursor]
-如果启用，此设置告诉 NVDA 尝试去检测正在朗读的行的所有格式信息的变动，即使这样做会导致 NVDA 执行效率降低。
+如果启用，此设置告诉 NVDA 尝试去检测正在朗读的行的所有格式信息变化，选中该选项会牺牲一定的性能。
 
  默认情况下，NVDA 会检测系统输入焦点或者浏览光标所在位置的格式信息，某些情况也会检测这一行的剩余部分，前提是这样做不会降低执行效率。
 
@@ -2118,27 +2177,28 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 这个部分允许你设置 [Windows 光学字符识别 #Win10Ocr]。
 这个分类包含以下选项
 
-==== 识别用语言 ====[Win10OcrSettingsRecognitionLanguage]
+==== 识别语言 ====[Win10OcrSettingsRecognitionLanguage]
 此组合框允许您选择用于光学字符识别的语言。
+要在任何地方循环切换可用的语言，请在[按键与手势对话框 #InputGestures]分配一个自定义手势或快捷键。
 
 +++ 高级设置 +++
-请注意！ 此类别中的设置适用于高级用户，如果随意修改，可能会导致NVDA无法正常运行。
-只有在您确定知道自己在做什么，或者NVDA开发人员明确指示您修改时，才应该对这些设置进行更改。
+请注意！ 此类别中的设置适用于高级用户，如果不慎修改，可能会导致NVDA无法正常运行。
+只有在您确定知道自己在做什么，或者NVDA开发人员明确指示您修改时，才应该改变其中的设置。
 
 ==== 更改高级设置 ====[AdvancedSettingsMakingChanges]
-更改下面的设置之前必须选中这个复选框，表示用户了解随意更改这些设置的风险。
+更改下面的设置之前必须选中这个复选框，表示用户了解随意更改这些设置可能的风险。
 
 ==== 恢复高级设置为默认值 ====[AdvancedSettingsRestoringDefaults]
 即使未勾选确认复选框，该按钮也会恢复高级设置为默认值。
-更改高级设置后，您可能希望恢复高级设置为默认值。
+更改高级设置中的选项后，您可能希望恢复高级设置为默认值。
 如果您不确定设置是否已更改，您可能也会需要恢复高级设置为默认值。
 
 ==== 允许从开发者实验目录加载代码 ====[AdvancedSettingsEnableScratchpad]
-在为NVDA开发插件时，能够边写边测试会给开发者带来很大便利。
-启用此选项后，NVDA允许从NVDA用户配置目录中特殊的开发者实验目录目录加载自定义appModules，globalPlugins，brailleDisplayDrivers和synthDrivers。
-以前NVDA会直接从用户配置目录加载自定义代码而且不提供关闭加载的选项，这种做法不太安全。
-默认情况下，此选项处于关闭状态，可以确保用户仅仅在明确了解的情况下，用NVDA运行未经测试的代码。
-如果您希望将代码分发给其他人，则应将其打包为NVDA插件。
+在为 NVDA 开发插件时，能够边写边测试会给开发者带来很大便利。
+启用此选项后，NVDA 允许从 NVDA 用户配置目录中特殊的开发者实验目录加载自定义 appModules、globalPlugins、brailleDisplayDrivers、synthDrivers 和 vision enhancement。
+作为插件的等效模块，这些插件在 NVDA 启动时加载。对于 appModules 和 globalPlugins，[重新加载插件 #ReloadPlugins]时也会被加载。。
+默认情况下，此选项处于关闭状态，可以确保用户仅仅在明确了解的情况下，NVDA 才会运行未经测试的代码。
+如果您希望将代码分发给其他人，则应将其打包为 NVDA 插件。
 
 ==== 打开开发者实验目录 ====[AdvancedSettingsOpenScratchpadDir]
 此按钮可打开开发者实验目录。
@@ -2170,6 +2230,14 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 - 符合要求时：Microsoft Word 版本在 16.0.15000 以上，或者传统的 Word 对象模型不可用。
 - 总是：始终在 Microsoft Word 中使用 UIA 接口（无论其是否完整）。
 -
+
+==== 在 Excel 中启用 UIA 接口（如果可用） ====[UseUiaForExcel]
+启用该选项后，NVDA 将尝试使用 Microsoft UI Automation 接口从 Excel 表格中获取信息。
+这是一项实验性功能，在此模式下可能无法使用 Excel 的某些功能。
+例如，用于列出公式和批注的元素列表，以及用于在浏览模式下跳转到表单的快速导航功能。
+但对于基础的导航和编辑功能，启用该选项可能会带来明显的性能改进。
+尽管如此，我们仍然不推荐大多数用户启用该功能，但我们也欢迎使用 Microsoft Excel 内部版本 16.0.13522.10000 或更高版本的用户测试此功能并提供反馈。
+Microsoft Excel 的 UI Automation 接口实现不断变化，早于 16.0.13522.10000 版本的 Office 可能无法提供足够多的信息来支持此功能。
 
 ==== Windows 控制台支持 ====[AdvancedSettingsConsoleUIA]
 : 默认
@@ -2223,15 +2291,15 @@ UIA 对基于 Chromium 的浏览器的支持目前处于早期开发阶段，可
   -
 -
 
-==== 在 Excel 中启用 UIA 接口（如果可用） ====[UseUiaForExcel]
-启用该选项后，NVDA 将尝试使用 Microsoft UI Automation 接口从 Excel 表格中获取信息。
-这是一项实验性功能，在此模式下可能无法使用 Excel 的某些功能。
-例如，用于列出公式和注释的元素列表，以及用于在浏览模式下快速跳转到相应表单字段的快速导航功能。
-但对于基础的导航和编辑功能，启用该选项可能会带来明显的性能改进。
-尽管如此，我们仍然不推荐大多数用户启用该功能，但我们也欢迎使用 Microsoft Excel 内部版本 16.0.13522.10000 或更高版本的用户测试此功能并提供反馈。
-Microsoft Excel 的 UI Automation 接口实现不断变化，早于 16.0.13522.10000 的 Microsoft Office 版本可能无法提供足够多的信息来支持此功能。
-  -
--
+==== 盲文显示动态内容更新 ====[BrailleLiveRegions]
+: 默认
+  启用
+: 选项
+  默认 （启用）, 禁用, 启用
+:
+
+此选项选择 NVDA 是否用盲文显示某些 Web 动态内容更新。
+禁用此选项则意味着与 NVDA2023.1 及更早版本中的行为一致，仅用语音提示这些动态内容更新。
 
 ==== 在所有的增强终端读出密码 ====[AdvancedSettingsWinConsoleSpeakPasswords]
 此设置控制在某些终端程序（例如启用了 UIA 和 Mintty 的 Windows 控制台）屏幕不更新的情况下（例如密码输入）的场景，是否[读出输入字符 #KeyboardSettingsSpeakTypedCharacters] 或[读出输入单词 #KeyboardSettingsSpeakTypedWords]。
@@ -2255,16 +2323,16 @@ Diff 算法组合框内有三个选项：
 当控制台中包含大量文本时，该选项可以提高性能，并能够更加准确的报告行中间的字符变化。
 但是，在某些终端程序中，可能会导致文本的读取断断续续或不一致。
 - Difflib：此选项让 NVDA 强制逐行计算终端文本的变化。
-这与 NVDA 2020.4 及更早版本中的行为相同。
+这与 NVDA 2020.4 及更早版本中的行为一致。
 此设置可能会使某些应用程序中对传入文本的读取更加稳定。
-但是，当在一行中间插入或删除一个字符时，会读出插入符后的文本。
+但是，当在一行中间插入或删除一个字符时，会读出光标后的文本。
 -
 
 ==== 在 Windows 终端内使用以下方式朗读新文本 ====[WtStrategy]
 : 默认
   Diffing
 : 选项
-  Diffing、UIA通知
+  默认（Diffing）, Diffing, UIA 通知
 :
 
 该选项决定 NVDA 如何确定 Windows 终端和 Visual Studio 2022 中使用的 WPF Windows Terminal 控件中的“新”文本（以及启用“读出动态内容更新”时要朗读的内容）。
@@ -2293,6 +2361,33 @@ Diff 算法组合框内有三个选项：
 一些 GDI 应用程序会用背景颜色突出显示文本，NVDA（通过显示模型）尝试读出这些颜色。
 在某些情况下，文本背景可能是完全透明的，文本分层在其他一些 GUI 元素上。
 使用几个历史上流行的 GUI API，文本可能会以透明背景渲染，但在视觉上背景颜色是准确的。
+
+==== 音频输出使用 WASAPI ====[WASAPI]
+: 默认
+  禁用
+: 选项
+  默认（禁用）, 启用, 禁用
+:
+
+此选项通过 Windows 音频会话 API（WASAPI）进行音频输出。
+WASAPI 是一个更现代的音频框架，可以提高 NVDA 音频输出的响应性、性能和稳定性，包括语音和声音。
+更改此选项后，您需要重新启动 NVDA 才能使更改生效。
+
+==== NVDA 音效音量跟随语音音量 ====[SoundVolumeFollowsVoice]
+: 默认
+  禁用
+: 选项
+  禁用， 启用
+:
+
+启用此选项后，NVDA 音效和 Beep 蜂鸣声的音量会跟随您正在使用的语音音量设置。
+如果降低语音音量，音效的音量也会降低。
+同样，若增大语音的音量，音效的音量也会增大。
+此选项仅在启用了“音频输出使用 WASAPI”的情况下生效。
+
+==== NVDA 音效音量 ====[SoundVolume]
+此滑块可以让您设置 NVDA 音效和 Beep 蜂鸣声的音量
+仅当启用“音频输出使用 WASAPI”且禁用“NVDA 音效音量跟随语音音量”时，此设置才会生效。
 
 ==== 调试日志 ====[AdvancedSettingsDebugLoggingCategories]
 此列表中的复选框允许您在NVDA日志中启用特定类别的调试信息。
@@ -2353,7 +2448,11 @@ NVDA 的语音字典比之单词替换更为强大。
 您可以通过在“查找”编辑框中输入符号或符号替换的一部分来寻找符号。
 
 - “替换文本”编辑区域允许您定义用来替换此标点的文本。
-- 使用“标点符号级别”区域，您可以为希望读出的标点指定更低的级别。
+- 使用“标点符号级别”区域，您可以为希望读出的标点指定更低的级别（无、少数、多数或全部）。
+您也可以将级别设置为逐字移动；在这种情况下，无论使用的符号级别如何，都不会读出该符号，以下两种情况除外：
+ - 逐字浏览时。
+ - 当 NVDA 拼读包含该符号的文本时。
+ -
 - “发送实际标点到合成器”区域定义核实把标点自身而不是替换文本传送到合成器。
 这对于让合成器读取该标点时的语调或停顿发生改变非常有用。
 例如，一个逗号可以让合成器暂停。
@@ -2373,7 +2472,7 @@ NVDA 的语音字典比之单词替换更为强大。
 
 当您完成之后，您可以点击“确认”按钮保存设置或者点击“取消”按钮放弃对他们的修改。
 
-对于复杂符号规则，“替换”字段可能必须包含匹配文本的某些组引用。例如，对于匹配完整日期的表达式， \1、\2和\3必须出现，以用来替换日期的相应部分。
+对于复杂符号规则，“替换”字段可能必须包含匹配文本的某些组引用。例如，对于匹配完整日期的表达式，\1、\2 和 \3 必须出现，以用来替换日期的相应部分。
 因此，“替换”字段中的正常反斜杠应输入两个，例如应该键入“a\\b”以达到“a\b”的替换效果。
 
 +++ 按键与手势（原输入手势） +++[InputGestures]
@@ -2394,7 +2493,7 @@ NVDA 的语音字典比之单词替换更为强大。
 
 要想从一个命令删除按键或手势，选择要删除的项目并点击“移除”按钮。
 
-“模拟系统按键”类别包含NVDA命令，用于模拟系统键盘上的按键。
+“模拟系统按键”类别包含 NVDA 命令，用于模拟系统键盘上的按键。
 这些模拟的系统键盘的按键可用于直接从点显器控制系统键盘。
 要添加需要模拟的按键或手势，请选择“模拟系统按键”类别，然后按“添加”按钮。
 然后，按要模拟的按键。
@@ -2403,8 +2502,8 @@ NVDA 的语音字典比之单词替换更为强大。
 注意:
  - 要模拟的键需要有快捷键或手势，要不然无法保存。
  - 有辅助键的按键模拟没有辅助键的按键会出问题，
- 比如用ctrl+m模拟a键，最后效果是和ctrl+a一样
- 因为模拟a键的时候，ctrl键仍然被按下，故程序收到的是Ctrl+a
+ 比如用 ctrl+m 模拟 a 键，最后效果是和 ctrl+a 一样
+ 因为模拟 a 键的时候，ctrl 键仍然被按下，故程序收到的是 Ctrl+a。
  -
 
 当您完成修改之后，点击“确认”保存设置或点击“取消”按钮放弃。
@@ -2519,23 +2618,142 @@ NVDA 的语音字典比之单词替换更为强大。
 通常情况下，不要接触这些配置文件。
 要想更改 NVDA 在欢迎屏幕和 UAC 屏幕时的配置，在登录 Windows 之后修改您的 NVDA 配置，保存您的配置，然后按下“常规设置”对话框的“应用以保存的配置到欢迎界面和其他安全界面”按钮。
 
++ 插件和插件商店 +[AddonsManager]
+插件是为 NVDA 提供新功能或更改现有功能的软件包。
+这些插件往往由 NVDA 社区以及外部商业供应商等组织开发。
+插件可以执行以下任一操作：
+- 增加或增强对某些应用程序的支持能力。
+- 提供对第三方盲文点显器或语音合成器的支持。
+- 添加或更改 NVDA 的功能。
+-
+
+NVDA 的插件商店可以让您浏览和管理插件。
+插件商店中提供的所有插件都可免费下载。
+然而，其中个别插件可能要求用户在使用前购买许可证或额外付费。
+一个典型的例子是个别商业版语音合成器。
+如果您在安装了需要付费的插件后不想使用了，您可以轻松移除该插件。
+
+您可以从 NVDA 菜单的“工具”子菜单打开插件商店。
+若需要从任意位置打开插件商店，请在[按键与手势对话框 #InputGestures]内分配一个自定义手势。
+
+++ 浏览插件 ++[AddonStoreBrowsing]
+打开插件商店后，会显示一个插件列表。
+如果您尚未安装插件，插件商店会停留在可安装的插件列表。
+如果您已经安装了插件，列表内将显示当前安装的插件。
+
+按向上和向下箭头键移动到对应插件来选中某个插件，选中后将显示该插件的详细信息。
+对于已选中的插件有与之关联的操作，您可以通过[操作菜单 #AddonStoreActions]访问这些操作，例如安装、帮助、禁用和移除。
+可用的操作会根据是否安装插件以及是否启用或禁用而有所差异。
+
++++ 插件选项卡组 +++[AddonStoreFilterStatus]
+对于已安装的、可更新的、可用的和不兼容的插件有不同的选项卡。
+可以使用 ``ctrl+tab`` 切换不同的选项卡。
+您还可以按 ``tab`` 到选项卡组，用左右箭头进行切换。
+
++++ 过滤已启用或已禁用的插件 +++[AddonStoreFilterEnabled]
+通常，已安装的插件处于“启用”状态，这意味着该插件正在 NVDA 中运行且可用。
+但是，您安装的某些插件可能会被设置为“禁用”状态。
+这意味着，这些插件不可用，其功能在您当前 NVDA 会话中无效。
+您也可能会因为插件与插件或与应用程序之间存在冲突而选择禁用某个插件。
+如果在 NVDA 升级过程中发现某些插件不兼容，NVDA 也可能会禁用这些插件；但在这种情况下，您会收到警告。
+如果您长时间用不到某些插件，又想保留他们以备不时之需，您也可以选择禁用插件。
+
+已安装和不兼容的插件列表可以按其启用​​或禁用状态进行过滤。
+默认会显示已启用和已禁用的插件。
+
++++ 包含不兼容插件 +++[AddonStoreFilterIncompatible]
+在“可更新的插件”和“可安装的插件”中可以选择包含[不兼容的插件 #incompatibleAddonsManager]进行安装。
+
++++ 按通道过滤插件 +++[AddonStoreFilterChannel]
+插件最多可以通过四个通道发布：
+- 稳定版：开发者使用 NVDA 的稳定版对其进行了测试后发布。
+- 测试版：插件可能需要进一步测试，公开发布以便收集用户反馈。
+建议尝鲜用户选用。
+- 开发板：建议插件开发者使用此通道来测试未发布的 API 变更。
+使用 NVDA alpha 版的测试用户可能需要使用此开发板插件。
+- 外部：从插件商店的外部源安装的插件。
+-
+
+如需仅列出来自特定通道的插件，请在“通道”组合框内选择相应的通道。
+
++++ 搜索插件 +++[AddonStoreFilterSearch]
+要搜索插件，请使用“搜索”编辑框。
+您可以从插件列表按 ``shift+tab`` 找到该编辑框。
+输入一两个有关您要搜索的插件类型的关键词，然后按 ``tab`` 键进入插件列表。
+如果可以在插件 ID、显示名称、发布者、作者或描述等字段中找到所键入的关键词，则会列出插件。
+
+++ 插件操作 ++[AddonStoreActions]
+插件具有与之关联的操作，例如安装、帮助、禁用和移除。
+对于插件列表中的插件，可以通过按``applications``、``回车``、右键单击或双击该插件打开的菜单来访问这些操作。
+还可以通过选中插件详细信息中的“操作”按钮访问该菜单。
+
++++ 安装插件 +++[AddonStoreInstalling]
+尽管 NVDA 插件商店中提供了某款插件，并不意味着该插件已获得 NV Access 或其他任何人的批准或审查。
+仅安装您信任的来源的插件非常重要。
+插件的功能在 NVDA 中不受限。
+插件可以访问您的个人数据甚至整个系统。
+
+您可以[浏览可用的插件 #AddonStoreBrowsing]来安装和更新插件。
+从“可安装的插件”或“可更新的插件”选项卡中选择一个插件。
+然后使用更新、安装或替换操作开始安装。
+
+要安装从插件商店外部获取的插件，请按“从外部源安装”按钮。
+这可以让您在计算机或网络上的某个位置浏览插件包（``.nvda-addon`` 文件）。
+打开插件包后，安装过程将开始。
+
+如果您在系统上已安装并运行了 NVDA，您还可以直接从浏览器或文件资源管理器打开插件文件以开始安装过程。
+从外部源安装插件时，NVDA 会要求您确认安装。
+安装插件后，必须重新启动 NVDA 才能使插件生效，但如果您还有其他插件需要安装或更新，则可以推迟重新启动 NVDA。
+
++++ 移除插件 +++[AddonStoreRemoving]
+要移除特定插件，请从列表中选择该插件并使用“移除”操作。
+NVDA 将询问您是否确认移除。
+与安装一样，必须重新启动 NVDA 才能完全删除该插件。
+在重启之前，列表中该插件的状态会显示为“待删除”。
+
++++ 禁用和启用插件 +++[AddonStoreDisablingEnabling]
+要禁用特定插件，请使用“禁用”操作。
+要启用先前禁用的插件，请使用“启用”操作。
+如果插件状态显示“已启用”，您可以禁用该插件；反之，如果插件“已禁用”，则可以启用。
+每次使用启用/禁用操作时，插件状态都会发生变化，以指示 NVDA 重新启动时会发生什么情况。
+如果该插件之前被“禁用”，则状态将显示“已启用，重启后生效”。
+如果该插件之前已“启用”，则状态将显示“已禁用，重启后生效”。
+就像安装或删除插件时一样，您需要重新启动 NVDA 才能使更改生效。
+
+++ 不兼容的插件 ++[incompatibleAddonsManager]
+某些较旧的插件可能已经不兼容您当前版本的 NVDA 了。
+反之，若您使用的是旧版本的 NVDA，某些较新的插件可能也无法向下兼容。
+若您尝试安装不兼容的插件会显示错误，提示为什么该插件被视为不兼容。
+
+对于较旧的插件，您可以自行承担可能的风险，忽略兼容性以强行安装不兼容的插件。
+不兼容的插件可能无法在您当前版本的 NVDA 中使用，尤其可能导致 NVDA 不稳定或意外行为，包括崩溃。
+您可以在启用或安装插件时忽略兼容性。
+如果不兼容的插件导致问题，您可以选择禁用或移除相应插件。
+
+如果您在使用 NVDA 过程中遇到问题，并且最近更新或安装了某个插件，尤其安装或更新了不兼容的插件，您可能需要在禁用所有插件的情况下暂时运行 NVDA 以移除可能导致问题的插件。
+要在禁用所有插件的情况下重新启动 NVDA，请在退出 NVDA 时选择相应选项。
+或者，使用[命令行选项 #CommandLineOptions] ``--disable-addons``。
+
+您可以在[可用和可更新的插件选项卡 #AddonStoreFilterStatus]浏览可用的不兼容插件。
+您可以在[不兼容的插件选项卡 #AddonStoreFilterStatus]浏览已安装的不兼容插件。
+
 + 附加工具 +[ExtraTools]
 
 ++ 日志查看器 ++[LogViewer]
 在 NVDA 的“工具”菜单下能找到“日志查看器”，允许您查看所有自上次启动 NVDA 开始到现在的所有日志输出。
-按 NVDA+F1可以打开日志查看器，并且在日志查看器里面显示当前导航对象的详细信息。
+按 NVDA+F1 可以打开日志查看器，并且在日志查看器里面显示当前导航对象的详细信息。
 
 除了阅读内容，您还可以保存日志文件的副本，或刷新查看器，因为日志查看器只会显示在该对话框被打开之前的最近输出。
 此动作可在日志查看器的“日志”菜单下找到。
 
 ++ 朗读查看器 ++[SpeechViewer]
- 对于明眼的软件开发者或希望向明眼观众演示 NVDA 的人们，有一个浮动的窗口可以查看 NVDA 所有的语音输出文本。
+对于明眼的软件开发者或希望向明眼观众演示 NVDA 的人们，有一个浮动的窗口可以查看 NVDA 所有的语音输出文本。
 
 要想起用朗读查看器，可以再 NVDA 的“工具”菜单选中。
 取消选中菜单即可停用。
 
 朗读查看器窗口包含选项“启动时显示朗读查看器”
-如果选中， NVDA 会在启动时打开朗读查看器。
+如果选中，NVDA 会在启动时打开朗读查看器。
 此窗口若被关闭，重新打开时也将以相同的尺寸出现在相同的位置。
 
 当朗读查看器启用时，它会不断地更新，从而向您显示最近朗读的文本。
@@ -2568,76 +2786,22 @@ NVDA 的语音字典比之单词替换更为强大。
 要想在任何地方切换盲文查看器的开关，请在[按键与手势对话框 #InputGestures]定义一个自定义手势或快捷键。
 
 ++ Python 控制台 ++[PythonConsole]
-NVDA工具菜单下面的 NVDA Python 控制台是调试NVDA、了解NVDA内部原理、以及查看其他软件无障碍支持情况的工具
-想详细了解请查看下面链接里的英文文档 [NVDA开发文档 https://www.nvaccess.org/files/nvda/documentation/developerGuide.html]。
+NVDA工具菜单下面的 NVDA Python 控制台是调试 NVDA、了解 NVDA内部原理、以及查看其他软件无障碍支持情况的工具
+想了解更多信息请查看 [NVDA 开发文档 https://www.nvaccess.org/files/nvda/documentation/developerGuide.html]。
 
-++ 插件管理器 ++[AddonsManager]
-您可以通过 NVDA 的“工具”菜单的“插件管理器”访问插件管理器，插件管理器允许您安装、移除、启用或停用 NVDA 的插件。
-您可以在社区找到这些插件包，它们包含定制的代码，为您添加或更改 NVDA 甚至是额外的点显器和语音合成器的特性。
-
-插件管理器包含 NVDA 当前用户配置中安装的所有插件的列表。
-每个插件都显示了她的包名称、版本和作者，可以通过选中插件后点击“关于”插件的按钮来查看更详细的描述或 URL(地址)。
-如果选择的插件拥有可用的帮助，您可以通过点击“插件帮助”按钮访问。
-
-要想浏览并下载在线的可用插件包，点击“获取插件”按钮。
-此按钮会打开[NVDA 插件页面 https://addons.nvda-project.org/]。
-如果 NVDA 已经安装并运行在了您的系统上，您可以使用浏览器直接打开插件，开始下面将要叙述的安装进程。
-否则，保存插件并按照下面的教程进行。
-
-要想安装您以前获取的插件，请点击“安装”按钮。
-插件管理器允许您浏览插件文件。(.nvda-addon 文件)会在您的电脑或互联网的某处。
-当您点击打开时，安装进程将随之开始。
-
-当一个插件正在被安装的时候，NVDA 首先会向您确认是否真的要安装。
-这些附加的插件可以执行的操作理论上是没有限制的，如果您正在使用安装版本，从来源可靠的地方获取插件是非常重要的，它们可以访问您的用户数据甚至整个系统。
-插件安装完成之后， NVDA 必须重新启动已使得插件可以开始运行。
-待这些都完成之后，插件的“安装”状态就会显示在列表内。
-
-要想删除插件，可以在列表中选中插件之后点击“移除”按钮。
-NVDA 会询问您是否真的要这样做。
-当卸载完成之后，NVDA 必须重新启动以使插件能够完全地被移除。
-待这些都完成之后，那个插件的“移除”状态就会显示在列表内。
-
-要想停用插件，点击“停用”按钮
-要想启用先前停用的插件，点击“启用”按钮。
-当插件状态显示为“正在运行”或“已启用”时，您可以停用该插件；当状态显示为“挂起”或“已停用”时，您可以启用该插件。
-每次点击“启用”和“停用”按钮后，插件状态栏都能实时地显示在下次 NVDA 重新启动时会发生什么变化。
-如果之前停用了插件，状态一栏会显示“重启后启用”。
-如果之前插件是启用的，状态一栏会显示“重启后禁用”。
-就像是添加或删除插件一样，您必须重新启动 NVDA 才能使之生效。
-
-管理器也包含“关闭”按钮，使用它可以关闭对话框。
-如果您已经安装卸载插件或修改了插件的状态，NVDA 会首先询问您是否要重新启动以使修改生效。
-
-旧插件可能不兼容新版NVDA。
-为新版NVDA编写的插件也可能不兼容旧版NVDA。
-安装这些插件时，NVDA会报错并提示原因。
-您可以在插件管理器内找到“查看不兼容的插件”这个按钮，点击这个按钮就可以查看这些插件。
-
-要想在任何地方访问插件管理器，请在[按键与手势对话框 #InputGestures]定义一个自定义手势或快捷键。
-
-+++ 管理不兼容的插件 +++[incompatibleAddonsManager]
-可以通过插件管理器中的“查看不兼容的插件”按钮访问不兼容的加插件管理器，允许您检查任何不兼容的插件以及不兼容的原因。
-如果NVDA进行重大更改之后插件尚未更新，或者它们依赖于您正在使用的NVDA版本中未提供的功能，NVDA则会认为插件不兼容。
-不兼容的插件管理器有一条简短的消息来解释它的用途以及兼容的 NVDA 版本。
-不兼容的插件显示在列表中，其中包含以下条目：
-+ 名称， 插件名称
-+ 版本， 插件版本
-+ 不兼容的原因， 解释为什么插件不兼容
-+
-
-不兼容插件管理器里面也有关于插件按钮
-点击这个按钮会打开一个对话框，里面有这个插件的详细信息，可以帮你找到开发者的联系方式。
+++ 插件商店 ++
+访问该菜单会打开 [NVDA 插件商店 #AddonsManager]。
+想了解更多信息请查看：[插件和插件商店 #AddonsManager]。
 
 ++ 创建便携版 ++[CreatePortableCopy]
-打开一个对话框，在里面可以从安装的NVDA创建便携版。
-如果运行的是是便携版，这个选项会变成安装NVDA。
+打开一个对话框，在此对话框中可以使用已安装的 NVDA 创建便携版。
+如果当前运行的是便携版，这个选项会变成安装 NVDA。
 
-在该PC上创建NVDA便携版或安装NVDA的对话框将提示您选择一个文件夹路径，NVDA应在其中创建便携版或在其中安装NVDA。
+在该 PC 上创建 NVDA 便携版或安装 NVDA 的对话框将提示您选择一个目录，NVDA 应在其中创建便携版或安装 NVDA 到该目录下。
 
-In this dialog you can enable or disable the following:
-- Copy current user configuration (this includes the files in %appdata%\roaming\NVDA or in the user configuration of your portable copy and includes also addons and other modules)
-- Start the new portable copy after creation or start NVDA after installation (starts NVDA automatically after the portable copy creation or the installation)
+在此对话框中，您可以启用或禁用以下功能：
+- 拷贝当前用户配置（包括 %appdata%\NVDA 中的文件或便携版用户配置，目录中的文件，还包括插件和其他模块）
+- 创建并自动启动便携版或安装后启动 NVDA（在便携版创建完成或安装完成后自动启动 NVDA）
 -
 
 ++ 运行 COM 注册修复工具 ++[RunCOMRegistrationFixingTool]
@@ -2655,7 +2819,7 @@ In this dialog you can enable or disable the following:
 - 还可能出现其他的一些问题
 -
 
-++ 重新加载插件 ++[ReloadPlugins]
+++ 重载插件 ++[ReloadPlugins]
 一旦此项目被激活，即可在不重新启动 NVDA 的情况下重新加载程序模块和全局插件，此功能对于开发者非常有用。
 
 + 支持的语音合成器 +[SupportedSpeechSynths]
@@ -2931,18 +3095,27 @@ If connecting via USB to displays which do not use HID, you must first install t
 The VarioUltra and Pronto! use HID.
 The Refreshabraille and Orbit Reader 20 can use HID if configured appropriately.
 
-The USB serial mode of the Orbit Reader 20 is currently only supported in Windows 10.
+The USB serial mode of the Orbit Reader 20 is currently only supported in Windows 10 and later.
 USB HID should generally be used instead.
 
 Following are the key assignments for these displays with NVDA.
 Please see your display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
 || Name | Key |
-| Scroll braille display back | d2 |
-| Scroll braille display forward | d5 |
-| Move braille display to previous line | d1 |
-| Move braille display to next line | d3 |
-| Route to braille cell | routing |
+| Scroll braille display back | ``d2`` |
+| Scroll braille display forward | ``d5`` |
+| Move braille display to previous line | ``d1`` |
+| Move braille display to next line | ``d3`` |
+| Route to braille cell | ``routing`` |
+| ``shift+tab`` key | ``space+dot1+dot3`` |
+| ``tab`` key | ``space+dot4+dot6`` |
+| ``alt`` key | ``space+dot1+dot3+dot4`` (``space+m``) |
+| ``escape`` key | ``space+dot1+dot5`` (``space+e``) |
+| ``windows`` key | ``space+dot3+dot4`` |
+| ``alt+tab`` key | ``space+dot2+dot3+dot4+dot5`` (``space+t``) |
+| NVDA Menu | ``space+dot1+dot3+dot4+dot5`` (``space+n``) |
+| ``windows+d`` key (minimize all applications) | ``space+dot1+dot4+dot5`` (``space+d``) |
+| Say all | ``space+dot1+dot2+dot3+dot4+dot5+dot6`` |
 
 For displays which have a joystick:
 || Name | Key |
@@ -3195,17 +3368,15 @@ Seika Notetaker 盲文点显器按键分配如下。
 | control+end key | backspace+LJ down |
 
 
-++ Papenmeier BRAILLEX 新型号 ++[Papenmeier]
-支持以下盲文点显器：
+++ Papenmeier BRAILLEX Newer Models ++[Papenmeier]
+The following Braille displays are supported: 
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
-- BRAILLEX Trio (USB 和蓝牙)
-- BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus (USB 和蓝牙)
+- BRAILLEX Trio (USB and bluetooth)
+- BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus (USB and bluetooth)
 -
 
 These displays do not support NVDA's automatic background braille display detection functionality.
-
-
 
 Most devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
 The EAB can be moved in four directions where generally each direction has two switches.
@@ -3384,7 +3555,7 @@ If connecting using a legacy serial port (or a USB to serial converter) or if no
 Before connecting your BrailleNote Apex using its USB client interface, you must install the drivers provided by HumanWare.
 
 On the BrailleNote Apex BT, you can use the scroll wheel located between dots 1 and 4 for various NVDA commands.
-The wheel consists of four directional dots, a center click button, and a wheel that spins clockwise or counterclockwise.
+The wheel consists of four directional dots, a centre click button, and a wheel that spins clockwise or counterclockwise.
 
 Following are the BrailleNote command assignments for NVDA.
 Please check your BrailleNote's documentation to find where these keys are located.
@@ -3446,7 +3617,7 @@ Following are commands assigned to the scroll wheel:
 | Down arrow key | downArrow |
 | Left Arrow key | leftArrow |
 | Right arrow key | rightArrow |
-| Enter key | center button |
+| Enter key | centre button |
 | Tab key | scroll wheel clockwise |
 | Shift+tab keys | scroll wheel counterclockwise |
 %kc:endInclude
@@ -3494,96 +3665,172 @@ Due to this, and to maintain compatibility with other screen readers in Taiwan, 
 %kc:beginInclude
 || Name | Key |
 | Scroll braille display back | numpadMinus |
-| Scroll braille display forward | numpadPlus |
+| Scroll braille display forward | numpadPlus | 
 %kc:endInclude
 
-++ Eurobraille Esys/Esytime/Iris displays ++[Eurobraille]
-The Esys, Esytime and Iris displays from [Eurobraille https://www.eurobraille.fr/] are supported by NVDA.
-Esys and Esytime-Evo devices are supported when connected via USB or bluetooth.
-Older Esytime devices only support USB.
-Iris displays can only be connected via a serial port.
-Therefore, for these displays, you should select the port to which the display is connected after you have chosen this driver in the Braille Settings dialog.
-
-Iris and Esys displays have a braille keyboard with 10 keys.
+++ Eurobraille displays ++[Eurobraille]
+The b.book, b.note, Esys, Esytime and Iris displays from Eurobraille are supported by NVDA.  
+These devices have a braille keyboard with 10 keys. 
+Please refer to the display's documentation for descriptions of these keys.
 Of the two keys placed like a space bar, the left key is corresponding to the backspace key and the right key to the space key.
 
-Following are the key assignments for these displays with NVDA.
-Please see the display's documentation for descriptions of where these keys can be found.
+These devices are connected via USB and have one stand-alone USB keyboard. 
+It is possible to enable/disable this keyboard by toggling "HID Keyboard simulation" using an input gesture.
+The braille keyboard functions described directly below is when "HID Keyboard simulation" is disabled.
+
++++  Braille keyboard functions +++[EurobrailleBraille]
 %kc:beginInclude
 || Name | Key |
-| Scroll braille display back | switch1-6left, l1 |
-| Scroll braille display forward | switch1-6Right, l8 |
-| Move to current focus | switch1-6Left+switch1-6Right, l1+l8 |
-| Route to braille cell | routing |
-| Report text formatting under braille cell | doubleRouting |
-| Move to previous line in review | joystick1Up |
-| Move to next line in review | joystick1Down |
-| Move to previous character in review | joystick1Left |
-| Move to next character in review | joystick1Right |
-| Switch to previous review mode | joystick1Left+joystick1Up |
-| Switch to next review mode | joystick1Right+joystick1Down |
-| Erase the last entered braille cell or character | backSpace |
-| Translate any braille input and press the enter key | backSpace+space |
-| insert key | dot3+dot5+space, l7 |
-| delete key | dot3+dot6+space |
-| home key | dot1+dot2+dot3+space, joystick2Left+joystick2Up |
-| end key | dot4+dot5+dot6+space, joystick2Right+joystick2Down |
-| leftArrow key | dot2+space, joystick2Left, leftArrow |
-| rightArrow key | dot5+space, joystick2Right, rightArrow |
-| upArrow key | dot1+space, joystick2Up, upArrow |
-| downArrow key | dot6+space, joystick2Down, downArrow |
-| enter key | joystick2centre |
-| pageUp key | dot1+dot3+space |
-| pageDown key | dot4+dot6+space |
-| numpad1 key | dot1+dot6+backspace |
-| numpad2 key | dot1+dot2+dot6+backspace |
-| numpad3 key | dot1+dot4+dot6+backspace |
-| numpad4 key | dot1+dot4+dot5+dot6+backspace |
-| numpad5 key | dot1+dot5+dot6+backspace |
-| numpad6 key | dot1+dot2+dot4+dot6+backspace |
-| numpad7 key | dot1+dot2+dot4+dot5+dot6+backspace |
-| numpad8 key | dot1+dot2+dot5+dot6+backspace |
-| numpad9 key | dot2+dot4+dot6+backspace |
-| numpadInsert key | dot3+dot4+dot5+dot6+backspace |
-| numpadDecimal key | dot2+backspace |
-| numpadDivide key | dot3+dot4+backspace |
-| numpadMultiply key | dot3+dot5+backspace |
-| numpadMinus key | dot3+dot6+backspace |
-| numpadPlus key | dot2+dot3+dot5+backspace |
-| numpadEnter key | dot3+dot4+dot5+backspace |
-| escape key | dot1+dot2+dot4+dot5+space, l2 |
-| tab key | dot2+dot5+dot6+space, l3 |
-| shift+tab key | dot2+dot3+dot5+space |
-| printScreen key | dot1+dot3+dot4+dot6+space |
-| pause key | dot1+dot4+space |
-| applications key | dot5+dot6+backspace |
-| f1 key | dot1+backspace |
-| f2 key | dot1+dot2+backspace |
-| f3 key | dot1+dot4+backspace |
-| f4 key | dot1+dot4+dot5+backspace |
-| f5 key | dot1+dot5+backspace |
-| f6 key | dot1+dot2+dot4+backspace |
-| f7 key | dot1+dot2+dot4+dot5+backspace |
-| f8 key | dot1+dot2+dot5+backspace |
-| f9 key | dot2+dot4+backspace |
-| f10 key | dot2+dot4+dot5+backspace |
-| f11 key | dot1+dot3+backspace |
-| f12 key | dot1+dot2+dot3+backspace |
-| windows key | dot1+dot2+dot3+dot4+backspace |
-| Caps Lock key | dot7+backspace, dot8+backspace |
-| num lock key | dot3+backspace, dot6+backspace |
-| shift key | dot7+space, l4 |
-| Toggle shift key | dot1+dot7+space, dot4+dot7+space |
-| control key | dot7+dot8+space, l5 |
-| Toggle control key | dot1+dot7+dot8+space, dot4+dot7+dot8+space |
-| alt key | dot8+space, l6 |
-| Toggle alt key | dot1+dot8+space, dot4+dot8+space |
-| ToggleHID keyboard input simulation | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
+| Erase the last entered braille cell or character | ``backspace`` |
+| Translate any braille input and press the enter key | ``backspace+space`` |
+| Toggle ``NVDA`` key | ``dot3+dot5+space`` |
+| ``insert`` key | ``dot1+dot3+dot5+space``, ``dot3+dot4+dot5+space`` |
+| ``delete`` key | ``dot3+dot6+space`` |
+| ``home`` key | ``dot1+dot2+dot3+space`` |
+| ``end`` key | ``dot4+dot5+dot6+space`` |
+| ``leftArrow`` key | ``dot2+space`` |
+| ``rightArrow`` key | ``dot5+space`` |
+| ``upArrow`` key | ``dot1+space`` |
+| ``downArrow`` key | ``dot6+space`` |
+| ``pageUp`` key | ``dot1+dot3+space`` |
+| ``pageDown`` key | ``dot4+dot6+space`` |
+| ``numpad1`` key | ``dot1+dot6+backspace`` |
+| ``numpad2`` key | ``dot1+dot2+dot6+backspace`` |
+| ``numpad3`` key | ``dot1+dot4+dot6+backspace`` |
+| ``numpad4`` key | ``dot1+dot4+dot5+dot6+backspace`` |
+| ``numpad5`` key | ``dot1+dot5+dot6+backspace`` |
+| ``numpad6`` key | ``dot1+dot2+dot4+dot6+backspace`` |
+| ``numpad7`` key | ``dot1+dot2+dot4+dot5+dot6+backspace`` |
+| ``numpad8`` key | ``dot1+dot2+dot5+dot6+backspace`` |
+| ``numpad9`` key | ``dot2+dot4+dot6+backspace`` |
+| ``numpadInsert`` key | ``dot3+dot4+dot5+dot6+backspace`` |
+| ``numpadDecimal`` key | ``dot2+backspace`` |
+| ``numpadDivide`` key | ``dot3+dot4+backspace`` |
+| ``numpadMultiply`` key | ``dot3+dot5+backspace`` |
+| ``numpadMinus`` key | ``dot3+dot6+backspace`` |
+| ``numpadPlus`` key | ``dot2+dot3+dot5+backspace`` |
+| ``numpadEnter`` key | ``dot3+dot4+dot5+backspace`` |
+| ``escape`` key | ``dot1+dot2+dot4+dot5+space``, ``l2`` |
+| ``tab`` key | ``dot2+dot5+dot6+space``, ``l3`` |
+| ``shift+tab`` keys | ``dot2+dot3+dot5+space`` |
+| ``printScreen`` key | ``dot1+dot3+dot4+dot6+space`` |
+| ``pause`` key | ``dot1+dot4+space`` |
+| ``applications`` key | ``dot5+dot6+backspace`` |
+| ``f1`` key | ``dot1+backspace`` |
+| ``f2`` key | ``dot1+dot2+backspace`` |
+| ``f3`` key | ``dot1+dot4+backspace`` |
+| ``f4`` key | ``dot1+dot4+dot5+backspace`` |
+| ``f5`` key | ``dot1+dot5+backspace`` |
+| ``f6`` key | ``dot1+dot2+dot4+backspace`` |
+| ``f7`` key | ``dot1+dot2+dot4+dot5+backspace`` |
+| ``f8`` key | ``dot1+dot2+dot5+backspace`` |
+| ``f9`` key | ``dot2+dot4+backspace`` |
+| ``f10`` key | ``dot2+dot4+dot5+backspace`` |
+| ``f11`` key | ``dot1+dot3+backspace`` |
+| ``f12`` key | ``dot1+dot2+dot3+backspace`` |
+| ``windows`` key | ``dot1+dot2+dot4+dot5+dot6+space`` |
+| Toggle ``windows`` key | ``dot1+dot2+dot3+dot4+backspace``, ``dot2+dot4+dot5+dot6+space`` |
+| ``capsLock`` key | ``dot7+backspace``, ``dot8+backspace`` |
+| ``numLock`` key | ``dot3+backspace``, ``dot6+backspace`` |
+| ``shift`` key | ``dot7+space`` |
+| Toggle ``shift`` key | ``dot1+dot7+space``, ``dot4+dot7+space`` |
+| ``control`` key | ``dot7+dot8+space`` |
+| Toggle ``control`` key | ``dot1+dot7+dot8+space``, ``dot4+dot7+dot8+space`` |
+| ``alt`` key | ``dot8+space`` |
+| Toggle ``alt`` key | ``dot1+dot8+space``, ``dot4+dot8+space`` |
+| Toggle HID Keyboard simulation | ``switch1Left+joystick1Down``, ``switch1Right+joystick1Down`` |
+%kc:endInclude
+
++++ b.book keyboard commands +++[Eurobraillebbook]
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | ``backward`` |
+| Scroll braille display forward | ``forward`` |
+| Move to current focus | ``backward+forward`` | 
+| Route to braille cell | ``routing`` |
+| ``leftArrow`` key | ``joystick2Left`` |
+| ``rightArrow`` key | ``joystick2Right`` |
+| ``upArrow`` key | ``joystick2Up`` |
+| ``downArrow`` key | ``joystick2Down`` |
+| ``enter`` key | ``joystick2Center`` |
+| ``escape`` key | ``c1`` |
+| ``tab`` key | ``c2`` |
+| Toggle ``shift`` key | ``c3`` |
+| Toggle ``control`` key | ``c4`` |
+| Toggle ``alt`` key | ``c5`` |
+| Toggle ``NVDA`` key | ``c6`` |
+| ``control+Home`` key | ``c1+c2+c3`` |
+| ``control+End`` key | ``c4+c5+c6`` |
+%kc:endInclude
+
++++ b.note keyboard commands +++[Eurobraillebnote]
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | ``leftKeypadLeft`` |
+| Scroll braille display forward | ``leftKeypadRight`` |
+| Route to braille cell | ``routing`` |
+| Report text formatting under braille cell | ``doubleRouting`` |
+| Move to next line in review | ``leftKeypadDown`` |
+| Switch to previous review mode | ``leftKeypadLeft+leftKeypadUp`` |
+| Switch to next review mode | ``leftKeypadRight+leftKeypadDown`` |
+| ``leftArrow`` key | ``rightKeypadLeft`` |
+| ``rightArrow`` key | ``rightKeypadRight`` |
+| ``upArrow`` key | ``rightKeypadUp`` |
+| ``downArrow`` key | ``rightKeypadDown`` |
+| ``control+home`` key | ``rightKeypadLeft+rightKeypadUp`` |
+| ``control+end`` key | ``rightKeypadLeft+rightKeypadUp`` |
+%kc:endInclude
+
++++ Esys keyboard commands +++[Eurobrailleesys]
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | ``switch1Left`` |
+| Scroll braille display forward | ``switch1Right`` |
+| Move to current focus | ``switch1Center`` |
+| Route to braille cell | ``routing`` |
+| Report text formatting under braille cell | ``doubleRouting`` |
+| Move to previous line in review | ``joystick1Up`` |
+| Move to next line in review | ``joystick1Down`` |
+| Move to previous character in review | ``joystick1Left`` |
+| Move to next character in review | ``joystick1Right`` |
+| ``leftArrow`` key | ``joystick2Left`` |
+| ``rightArrow`` key | ``joystick2Right`` |
+| ``upArrow`` key | ``joystick2Up`` |
+| ``downArrow`` key | ``joystick2Down`` |
+| ``enter`` key | ``joystick2Center`` |
+%kc:endInclude
+
++++ Esytime keyboard commands +++[EurobrailleEsytime]
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | ``l1`` |
+| Scroll braille display forward | ``l8`` |
+| Move to current focus | ``l1+l8`` |
+| Route to braille cell | ``routing`` |
+| Report text formatting under braille cell | ``doubleRouting`` |
+| Move to previous line in review | ``joystick1Up`` |
+| Move to next line in review | ``joystick1Down`` |
+| Move to previous character in review | ``joystick1Left`` |
+| Move to next character in review | ``joystick1Right`` |
+| ``leftArrow`` key | ``joystick2Left`` |
+| ``rightArrow`` key | ``joystick2Right`` |
+| ``upArrow`` key | ``joystick2Up`` |
+| ``downArrow`` key | ``joystick2Down`` |
+| ``enter`` key | ``joystick2Center`` |
+| ``escape`` key | ``l2`` |
+| ``tab`` key | ``l3`` |
+| Toggle ``shift`` key | ``l4`` |
+| Toggle ``control`` key | ``l5`` |
+| Toggle ``alt`` key | ``l6`` |
+| Toggle ``NVDA`` key | ``l7`` |
+| ``control+home`` key | ``l1+l2+l3``, ``l2+l3+l4`` |
+| ``control+end`` key | ``l6+l7+l8``, ``l5+l6+l7`` |
+| Toggle HID Keyboard simulation | ``l1+joystick1Down``, ``l8+joystick1Down`` |
 %kc:endInclude
 
 ++ Nattiq nBraille Displays ++[NattiqTechnologies]
 NVDA supports displays from [Nattiq Technologies https://www.nattiq.com/] when connected via USB.
-Windows 10 detects the Braille Displays once connected, you may need to install USB drivers if using older versions of Windows (below Win10).
+Windows 10 and later detects the Braille Displays once connected, you may need to install USB drivers if using older versions of Windows (below Win10).
 You can get them from the manufacturer's website.
 
 Following are the key assignments for Nattiq Technologies displays with NVDA.
@@ -3609,7 +3856,7 @@ Therefore, NVDA's braille input table setting is not relevant.
 BRLTTY is not involved in NVDA's automatic background braille display detection functionality.
 
 Following are the BRLTTY command assignments for NVDA.
-Please see the [BRLTTY key binding lists https://mielke.cc/brltty/doc/KeyBindings/] for information about how BRLTTY commands are mapped to controls on braille displays.
+Please see the [BRLTTY key binding lists http://mielke.cc/brltty/doc/KeyBindings/] for information about how BRLTTY commands are mapped to controls on braille displays.
 %kc:beginInclude
 || Name | BRLTTY command |
 | Scroll braille display back | fwinlt (go left one window) |
@@ -3658,6 +3905,13 @@ Please see the display's documentation for descriptions of where these keys can 
 | Moves the navigator object to the next object | ``f6`` |
 | Reports the current navigator object | ``f7`` |
 | Reports information about the location of the text or object at the review cursor | ``f8`` |
+| Shows braille settings | ``f1+home1``, ``f9+home2`` |
+| Reads status bar and moves navigator object into it | ``f1+end1``, ``f9+end2`` |
+| Cycle the braille cursor shape | ``f1+eCursor1``, ``f9+eCursor2`` |
+| Toggle the braille cursor | ``f1+cursor1``, ``f9+cursor2`` |
+| Cycle the braille show messages mode | ``f1+f2``, ``f9+f10`` |
+| Cycle the braille show selection state | ``f1+f5``, ``f9+f14`` |
+| Cycle the "braille move system caret when routing review cursor" states | ``f1+f3``, ``f9+f11`` |
 | Performs the default action on the current navigator object | ``f7+f8`` |
 | Reports date/time | ``f9`` |
 | Reports battery status and time remaining if AC is not plugged in | ``f10`` |
@@ -3687,19 +3941,17 @@ NVDA 的点显器自动检测功能也可以识别任何使用该协议的点显
 || Name | Key |
 | Scroll braille display back | pan left or rocker up |
 | Scroll braille display forward | pan right or rocker down |
-| Move braille display to previous line | space + dot1 |
-| Move braille display to next line | space + dot4 |
 | Route to braille cell | routing set 1 |
 | Toggle braille tethered to | up+down |
-| upArrow key | joystick up |
-| downArrow key | joystick down |
-| leftArrow key | space+dot3 or joystick left |
-| rightArrow key | space+dot6 or joystick right |
+| upArrow key | joystick up, dpad up or space+dot1 |
+| downArrow key | joystick down, dpad down or space+dot4 |
+| leftArrow key | space+dot3, joystick left  or dpad left |
+| rightArrow key | space+dot6, joystick right or dpad right |
 | shift+tab key | space+dot1+dot3 |
 | tab key | space+dot4+dot6 |
 | alt key | space+dot1+dot3+dot4 (space+m) |
 | escape key | space+dot1+dot5 (space+e) |
-| enter key | dot8 or joystick center |
+| enter key | dot8, joystick center or dpad center |
 | windows key | space+dot3+dot4 |
 | alt+tab key | space+dot2+dot3+dot4+dot5 (space+t) |
 | NVDA Menu | space+dot1+dot3+dot4+dot5 (space+n) |
@@ -3710,21 +3962,36 @@ NVDA 的点显器自动检测功能也可以识别任何使用该协议的点显
 + 进阶内容 +[AdvancedTopics]
 
 ++ 安全模式 ++[SecureMode]
-NVDA 可以使用[命令行选项 #CommandLineOptions] ``-s`` 以安全模式运行。
-在[安全界面 #SecureScreens] 时，除非启用了``serviceDebug`` [系统范围参数 #SystemWideParameters]，否则 NVDA 默认将以安全模式运行，。
+系统管理员可能需要配置 NVDA 以限制其对系统的访问权限。
+NVDA 可以安装自定义插件，这些插件可以执行任意代码，包括在 NVDA 获得管理员权限时。
+NVDA 还可以让用户在 NVDA Python 控制台中执行任意代码。
+NVDA 安全模式可防止用户修改 NVDA 设置，并用其他方式限制其对系统的访问权限。
+
+在[安全界面 #SecureScreens]时，除非启用了 ``serviceDebug`` [系统范围参数 #SystemWideParameters]，否则 NVDA 默认将以安全模式运行，
+要强制 NVDA 始终以安全模式运行，请设置 ``forceSecureMode`` [系统范围参数 #SystemWideParameters]。
+NVDA 还可以使用 ``-s`` [命令行选项 #CommandLineOptions]在安全模式下启动。
 
 在安全模式下禁用以下功能：
 
 - 将配置和其他设置信息保存到磁盘。
 - 将按键与手势设置保存到磁盘。
--[配置文件 #ConfigurationProfiles]功能，例如创建、删除、重命名配置文件等。
+- [配置文件 #ConfigurationProfiles]创建、删除、重命名配置文件等功能。
 - 更新 NVDA 以及创建便携版。
--  [NVDA Python 控制台 #PythonConsole]。
-- [日志查看器 #LogViewer] 和日志记录。
+- [插件商店 #AddonsManager]
+- [NVDA Python 控制台 #PythonConsole]
+- [日志查看器 #LogViewer]和日志记录。
+- 从 NVDA 菜单中打开外部文档，例如用户指南或贡献者名单。
 -
 
+NVDA 安装版将其配置（包括插件）存储在 ``%APPDATA%\nvda`` 中。
+为了防止 NVDA 用户直接修改其配置或插件，还必须限制用户对此文件夹的访问。
+
+NVDA 用户通常依赖设置 NVDA 配置文件来满足个性化需求。
+这可能包括安装和设置自定义插件，这些插件应独立于 NVDA 进行单独审查。
+安全模式会禁止对 NVDA 配置的更改，因此请确保在强制使用安全模式之前正确配置好 NVDA。
+
 ++ 安全界面 ++[SecureScreens]
-在安全界面，除非启用了``serviceDebug`` [系统范围参数 #SystemWideParameters]，否则 NVDA 默认将以[安全模式 #SecureMode]运行。
+在安全界面，除非启用了 ``serviceDebug`` [系统范围参数 #SystemWideParameters]，否则 NVDA 默认将以[安全模式 #SecureMode]运行。
 
 NVDA 在安全界面使用系统配置文件作为首选项。
 可以将用户配置[应用到安全界面 #GeneralSettingsCopySettings]。
@@ -3738,65 +4005,67 @@ NVDA 在安全界面使用系统配置文件作为首选项。
 -
 
 ++ 命令行选项 ++[CommandLineOptions]
-在 NVDA启动时，它可以接收一个或多个附加选项以改变它启动时的行为。
+在 NVDA 启动时，它可以接收一个或多个附加选项以改变它启动时的行为。
 选项数量不限。
-这些选项可以通过快捷方式(快捷方式属性)、运行对话框(开始菜单 -> 运行 或 Windows+r)或一个 Windows 命令控制台启动时传给NVDA主程序。
+这些选项可以通过快捷方式(快捷方式属性)、运行对话框（开始菜单 -> 运行 或 Windows+r）或一个 Windows 命令控制台启动时传给 NVDA 主程序。
 在 NVDA 主程序文件名和命令行选项之间以及每个命令行选项之间需要用空格分开。
-一个实用的选项是 --disable-addons，它指示 NVDA 启动时不加载插件。
+一个实用的选项是 ``--disable-addons``，它指示 NVDA 启动时不加载插件。
 用这个选项可以判断遇到的问题是否由插件造成，也可用于恢复因为插件而导致的严重错误。
 
 这里有一个例子，您可以在“运行”对话框键入下面的代码退出当前运行的 NVDA 副本：
 
+```
 nvda -q
+```
 
 有一些命令行选项有长和短两个版本，而另外一些则只有长的版本。
 对于那些有短版本的命令行选项，您可以像这样的组合他们：
-| nvda -mc CONFIGPATH | 按照指定的配置目录启动NVDA并在停用启动声音和启动消息。 |
-| nvda -mc CONFIGPATH --disable-addons | 在上一行的效果的基础上另外停用了插件。 |
+| ``nvda -mc CONFIGPATH`` | 按照指定的配置目录启动 NVDA 并在停用启动声音和启动消息。 |
+| ``nvda -mc CONFIGPATH --disable-addons`` | 在上一行的效果的基础上另外停用了插件。 |
 
-一些命令行选项接受附加参数，如日志记录有多详细或用户配置目录的路径。
-那些参数应该被放在选项之后，短版本使用空格分隔，长版本使用等于号(=)分隔。如：
-| nvda -l 10 | 告诉 NVDA 在日志记录级别为调试的状态下启动。 |
-| nvda --log-file=c:\nvda.log | 告诉 NVDA 记录自身的日志到c:\nvda.log |
-| nvda --log-level=20 -f c:\nvda.log | 告诉 NVDA 设置日志记录级别为信息且将其自身的日志写在 c:\nvda.log |
+一些命令行选项接受附加参数，如日志记录级别或用户配置目录的路径。
+那些参数应该被放在选项之后，短版本使用空格分隔，长版本使用等于号(``=``)分隔。如：
+| ``nvda -l 10`` | 告诉 NVDA 在日志记录级别为调试的状态下启动。 |
+| ``nvda --log-file=c:\nvda.log`` | 告诉 NVDA 记录自身的日志到 ``c:\nvda.log`` |
+| ``nvda --log-level=20 -f c:\nvda.log`` | 告诉 NVDA 设置日志记录级别为信息且将其自身的日志写在 ``c:\nvda.log`` |
 
 以下为 NVDA 的命令行选项：
 || 短版本 | 长版本 | 描述 |
-| -h | --help | 显示命令行帮助并退出。 |
-| -q | --quit | 退出已运行的 NVDA 副本。 |
-| -k | --check-running | 通过退出代码报告 NVDA 是否在运行，0 表示运行， 1 表示没有运行。 |
-| -f LOGFILENAME | --log-file=LOGFILENAME | 日志消息需要写入的文件。 |
-| -l LOGLEVEL | --log-level=LOGLEVEL | 日志消息记录的最低级别（调试 10， 输入/输出 12， 调试警告 15， 信息 20， 停用 100 |
-| -c CONFIGPATH | --config-path=CONFIGPATH | 所有 NVDA 设置存储的路径。 |
-| 无 | --lang=LANGUAGE | 覆盖设置中的 NVDA 语言。比如用户默认传入 “Windows”，英语传入“en”等。 |
-| -m | --minimal | 无声、无界面、无启动通知等。 |
-| -s | --secure | 以[安全模式 #SecureMode] 启动 NVDA |
-| 无 | --disable-addons | 禁用插件。 |
-| 无 | --debug-logging | 开启调试日志 覆盖之前的日志记录级别设置(""--loglevel"", -l) 包括已禁用日志。 |
-| 无 | --no-logging | 禁用 NVDA 日志功能 注意 --debug-logging 和 --loglevel 会覆盖这个参数 |
-| 无 | --no-sr-flag  | 不修改 Windows 系统全局屏幕阅读器标志。 |
-| 无 | --install | 安装 NVDA（并启动安装的副本）。 |
-| 无 | --install-silent | 静默安装 NVDA（但不启动安装后的副本）。 |
-| 无 | --enable-start-on-logon=True|False | 安装时开启或关闭[进入 Windows 欢迎界面时启用 NVDA #StartAtWindowsLogon]选项 |
-| 无 | --copy-portable-config | 安装时，将便携版配置从所提供的路径（--config-path， -c）复制到当前用户帐户目录下。 |
-| 无 | --create-portable | 创建一个便携版（并启动该便携版）。 必须和 --portable-path 一起使用。 |
-| 无 | --create-portable-silent | 创建一个便携版（但不启动该便携版）。 必须和 --portable-path 一起使用。 |
-| 无 | --portable-path=PORTABLEPATH | 创建便携版的目录 |
+| ``-h`` | ``--help`` | 显示命令行帮助并退出。 |
+| ``-q`` | ``--quit`` | 退出已运行的 NVDA 副本。 |
+| ``-k`` | ``--check-running`` | 通过退出代码报告 NVDA 是否在运行，0 表示运行，1 表示没有运行。 |
+| ``-f LOGFILENAME`` | ``--log-file=LOGFILENAME`` | 日志消息需要写入的文件。 |
+| ``-l LOGLEVEL`` | ``--log-level=LOGLEVEL`` | 日志消息记录的最低级别（调试 10， 输入/输出 12， 调试警告 15， 信息 20， 停用 100 |
+| ``-c CONFIGPATH`` | ``--config-path=CONFIGPATH`` | 所有 NVDA 设置存储的路径。 |
+| 无 | ``--lang=LANGUAGE`` | 覆盖设置中的 NVDA 语言。比如用户默认传入“Windows”，英语传入“en”等。 |
+| ``-m`` | ``--minimal`` | 无声、无界面、无启动通知等。 |
+| ``-s`` | ``--secure`` | 以[安全模式 #SecureMode]启动 NVDA |
+| 无 | ``--disable-addons`` | 禁用插件。 |
+| 无 | ``--debug-logging`` | 开启调试日志 覆盖之前的日志记录级别设置(``--loglevel``, ``-l``) 包括已禁用日志。 |
+| 无 | ``--no-logging`` | 禁用 NVDA 日志功能 注意 ``--debug-logging`` 和 ``--loglevel`` 会覆盖这个参数 |
+| 无 | ``--no-sr-flag`` | 不修改 Windows 系统全局屏幕阅读器标志。 |
+| 无 | ``--install`` | 安装 NVDA（并启动安装的副本）。 |
+| 无 | ``--install-silent`` | 静默安装 NVDA（但不启动安装后的副本）。 |
+| 无 | ``--enable-start-on-logon=True|False`` | 安装时开启或关闭[进入 Windows 欢迎界面时启用 NVDA #StartAtWindowsLogon] 选项 |
+| 无 | ``--copy-portable-config`` | 安装时，将便携版配置从所提供的路径（``--config-path``， ``-c``）复制到当前用户帐户目录下。 |
+| 无 | ``--create-portable`` | 创建一个便携版（并启动该便携版）。 必须和 ``--portable-path`` 一起使用。 |
+| 无 | ``--create-portable-silent`` | 创建一个便携版（但不启动该便携版）。 必须和 ``--portable-path`` 一起使用。 |
+| 无 | ``--portable-path=PORTABLEPATH`` | 创建便携版的目录 |
 
 ++ 系统范围参数 ++[SystemWideParameters]
-某些NVDA配置对整个系统的所有用户生效。
+某些 NVDA 配置对整个系统的所有用户生效。
 配置信息保存在注册表的这些键值内:
-- 32位系统: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
-- 64位系统: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+- 32 位系统：``HKEY_LOCAL_MACHINE\SOFTWARE\nvda``
+- 64 位系统：``HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda``
 -
 
 注册表接受下面这些配置:
 || 名称 | 类型 | 数值 | 描述 |
-| configInLocalAppData | DWORD | 0（默认）禁用，1 启用 | 启用这个选项会让NVDA把配置保存到“本地”应用程序配置文件夹(比如 "C:\Users\<用户名>\AppData\Local") |
-| serviceDebug | DWORD | 0（默认）禁用，1 启用 | 启用这个选项，会让 NVDA 在[安全界面 #SecureScreens]禁用[安全模式 #SecureMode]。由于存在一些严重的安全隐患，强烈建议不要使用该选项。 |
-
+| ``configInLocalAppData`` | DWORD | 0（默认）禁用，1 启用 | 如果启用，则将 NVDA 用户配置存储在本地应用程序数据目录，而不是漫游应用程序数据目录。 |
+| ``serviceDebug`` | DWORD | 0（默认）禁用，1 启用 | 如果启用，会让 NVDA 在[安全界面 #SecureScreens]禁用[安全模式 #SecureMode]。由于存在一些严重的安全隐患，强烈建议不要使用该选项。 |
+| ``forceSecureMode`` | DWORD | 0（默认）禁用，1 启用 | 如果启用，则在运行 NVDA 时强制启用[安全模式 #SecureMode]。 |
 
 + 更多信息 +[FurtherInformation]
- 如果您希望获得更多信息或关于 NVDA 的帮助，可通过 NVDA_URL 访问 NVDA 官方网站。
+如果您希望获得更多信息或关于 NVDA 的帮助，可通过 NVDA_URL 访问 NVDA 官方网站。
 在这里，您可以找到更多的文档、技术支持及社区资源。
 这个网站还提供了 NVDA 开发的相关信息。

@@ -48,6 +48,7 @@ import synthDriverHandler  # noqa: E402
 import braille
 import gui
 from gui import guiHelper
+from gui.message import displayDialogAsModal  # noqa: E402
 from addonHandler import getCodeAddon, AddonError, getIncompatibleAddons
 from _addonStore.models.version import (  # noqa: E402
 	getAddonCompatibilityMessage,
@@ -379,7 +380,7 @@ class UpdateResultDialog(
 				backCompatToAPIVersion=self.backCompatTo
 			))
 			if showAddonCompat:
-				message += + "\n\n" + getAddonCompatibilityMessage()
+				message += "\n\n" + getAddonCompatibilityMessage()
 				confirmationCheckbox = sHelper.addItem(wx.CheckBox(
 					self,
 					label=getAddonCompatibilityConfirmationMessage()
@@ -464,7 +465,7 @@ class UpdateResultDialog(
 			APIVersion=self.apiVersion,
 			APIBackwardsCompatToVersion=self.backCompatTo
 		)
-		incompatibleAddons.ShowModal()
+		displayDialogAsModal(incompatibleAddons)
 
 
 class UpdateAskInstallDialog(
@@ -540,7 +541,7 @@ class UpdateAskInstallDialog(
 			APIVersion=self.apiVersion,
 			APIBackwardsCompatToVersion=self.backCompatTo
 		)
-		incompatibleAddons.ShowModal()
+		displayDialogAsModal(incompatibleAddons)
 
 	def onInstallButton(self, evt):
 		_executeUpdate(self.destPath)

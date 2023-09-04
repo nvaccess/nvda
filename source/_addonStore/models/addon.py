@@ -184,7 +184,10 @@ class _AddonManifestModel(_AddonGUIModel):
 
 	@property
 	def description(self) -> str:
-		return self.manifest["description"]
+		description: Optional[str] = self.manifest.get("description")
+		if description is None:
+			return ""
+		return description
 
 	@property
 	def author(self) -> str:

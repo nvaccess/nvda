@@ -621,7 +621,7 @@ class Addon(AddonBase):
 			if func:
 				func(*args,**kwargs)
 
-	def getDocFilePath(self, fileName=None):
+	def getDocFilePath(self, fileName: Optional[str] = None) -> Optional[str]:
 		r"""Get the path to a documentation file for this add-on.
 		The file should be located in C{doc\lang\file} inside the add-on,
 		where C{lang} is the language code and C{file} is the requested file name.
@@ -630,9 +630,7 @@ class Addon(AddonBase):
 		An add-on can specify a default documentation file name
 		via the docFileName parameter in its manifest.
 		@param fileName: The requested file name or C{None} for the add-on's default.
-		@type fileName: str
 		@return: The path to the requested file or C{None} if it wasn't found.
-		@rtype: str
 		"""
 		if not fileName:
 			fileName = self.manifest["docFileName"]

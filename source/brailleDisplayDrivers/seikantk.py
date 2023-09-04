@@ -1,11 +1,13 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2021 NV Access Limited, Ulf Beckmann <beckmann@flusoft.de>
-# This file may be used under the terms of the GNU General Public License, version 2 or later.
-# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
-#
-# This file represents the braille display driver for
-# Seika Notetaker, a product from Nippon Telesoft
-# see www.seika-braille.com for more details
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2012-2023 NV Access Limited, Ulf Beckmann <beckmann@flusoft.de>
+
+"""
+Braille display driver for Seika Notetaker, a product from Nippon Telesoft
+see www.seika-braille.com for more details
+"""
+
 import re
 from io import BytesIO
 import typing
@@ -14,7 +16,7 @@ from typing import Dict, List, Optional, Set
 import serial
 
 import braille
-from bdDetect import DeviceMatch
+from bdDetect import KEY_HID, DeviceMatch, DriverRegistrar
 import brailleInput
 import inputCore
 import bdDetect
@@ -101,6 +103,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	# Translators: Name of a braille display.
 	description = _("Seika Notetaker")
 	isThreadSafe = True
+	supportsAutomaticDetection = True
+
+	@classmethod
+	def registerAutomaticDetection(cls, driverRegistrar: DriverRegistrar):
+		driverRegistrar.addUsbDevices(KEY_HID, {
+			vidpid,  # Seika Notetaker
+		})
+
+		driverRegistrar.addBluetoothDevices(isSeikaBluetoothDeviceMatch)
 
 	@classmethod
 	def getManualPorts(cls) -> typing.Iterator[typing.Tuple[str, str]]:

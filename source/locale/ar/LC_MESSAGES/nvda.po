@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-10703,53a09c4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-27 01:58+0000\n"
-"PO-Revision-Date: 2023-07-03 18:58+0300\n"
+"POT-Creation-Date: 2023-08-18 00:02+0000\n"
+"PO-Revision-Date: 2023-08-22 20:06+0300\n"
 "Last-Translator: Hatoon <h.felemban@hotmail.com>\n"
 "Language-Team: AR <nvda-ar@groups.io>\n"
 "Language: ar\n"
@@ -2615,6 +2615,8 @@ msgid "Configuration profiles"
 msgstr "الأوضاع"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 #. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "الخط البارز Braille"
@@ -2673,11 +2675,11 @@ msgstr ""
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
-msgstr "المساعدة التفاعلية تشغيل"
+msgstr "تفعيل المساعدة التفاعلية"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help off"
-msgstr "المساعدة التفاعلية تعطيل"
+msgstr "تعطيل المساعدة التفاعلية"
 
 #. Translators: Input help mode message for toggle sleep mode command.
 msgid "Toggles sleep mode on and off for the active application."
@@ -4070,14 +4072,39 @@ msgstr "عارض الخط البارز Braille مفعَّل"
 #. Translators: Input help mode message for toggle braille tether to command
 #. (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
-msgstr ""
-"التبديل بين إرفاق مؤشر البرايل لموضع التحديد الحالي أو موضع مؤشر الاستعراض"
+msgstr "التبديل بين إرفاق برايل لموضع التحديد الحالي أو موضع مؤشر الاستعراض"
 
 #. Translators: Reports which position braille is tethered to
 #. (braille can be tethered automatically or to either focus or review position).
 #, python-format
 msgid "Braille tethered %s"
-msgstr "إرفاق مؤشر البرايل %s"
+msgstr "إرفاق برايل %s"
+
+#. Translators: Input help mode message for cycle through
+#. braille move system caret when routing review cursor command.
+msgid ""
+"Cycle through the braille move system caret when routing review cursor states"
+msgstr ""
+"التبديل بين حالات نقل مؤشّر التحرير عند نقل مؤشّر الاستعراض عبر مفاتيح توجيه "
+"مؤشّر برايل"
+
+#. Translators: Reported when action is unavailable because braille tether is to focus.
+msgid "Action unavailable. Braille is tethered to focus"
+msgstr "الإجراء غير متاح. مؤشّر برايل مصاحب لمؤشّر النظام"
+
+#. Translators: Used when reporting braille move system caret when routing review cursor
+#. state (default behavior).
+#, python-format
+msgid "Braille move system caret when routing review cursor default (%s)"
+msgstr ""
+"نقل مؤشّر التحرير عند نقل مؤشّر الاستعراض عبر مفاتيح توجيه مؤشّر برايل افتراضيا "
+"(%s)"
+
+#. Translators: Used when reporting braille move system caret when routing review cursor state.
+#, python-format
+msgid "Braille move system caret when routing review cursor %s"
+msgstr ""
+"نقل مؤشّر التحرير عند نقل مؤشّر الاستعراض عبر مفاتيح توجيه مؤشّر برايل (%s)"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
@@ -4092,15 +4119,15 @@ msgstr "إرفاق مؤشر الخط البارز %s"
 
 #. Translators: Input help mode message for toggle braille cursor command.
 msgid "Toggle the braille cursor on and off"
-msgstr "التبديل بين تشغيل وتعطيل مؤشر البرايل"
+msgstr "التبديل بين تفعيل وتعطيل مؤشر البرايل"
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
-msgstr "تعطيل مؤشر البرايل"
+msgstr "تعطيل مؤشر برايل"
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor on"
-msgstr "تشغيل مؤشر البرايل"
+msgstr "تفعيل مؤشر برايل"
 
 #. Translators: Input help mode message for cycle braille cursor shape command.
 msgid "Cycle through the braille cursor shapes"
@@ -4143,25 +4170,25 @@ msgstr "مؤشّر برايل لإظهار التحديد %s"
 
 #. Translators: Input help mode message for report clipboard text command.
 msgid "Reports the text on the Windows clipboard"
-msgstr "الإعلان عن النص الموجود بالحافظة"
+msgstr "الإعلان عن النص الموجود في حافظة Windows"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
-msgstr "لا يوجد نص بالحافظة"
+msgstr "لا يوجد نص td الحافظة"
 
 #. Translators: If the number of characters on the clipboard is greater than about 1000, it reports this message and gives number of characters on the clipboard.
 #. Example output: The clipboard contains a large portion of text. It is 2300 characters long.
 #, python-format
 msgid ""
 "The clipboard contains a large portion of text. It is %s characters long"
-msgstr "الحافظة تحتوي على جزء كبير من نص. يبلغ طوله %s حرف"
+msgstr "تحتوي الحافظة على نص كبير. يبلغ طوله %s حرف"
 
 #. Translators: Input help mode message for mark review cursor position for a select or copy command
 #. (that is, marks the current review cursor position as the starting point for text to be selected).
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "selected or copied"
-msgstr "بدأ التحديد من نقطة وجود مؤشر الاستعراض للنسخ"
+msgstr "بدء التحديد من نقطة وجود مؤشر الاستعراض للنسخ"
 
 #. Translators: Indicates start of review cursor text to be copied to clipboard.
 msgid "Start marked"
@@ -6075,10 +6102,6 @@ msgctxt "action"
 msgid "Sound"
 msgstr "صوت"
 
-#. Translators: Shown in the system Volume Mixer for controlling NVDA sounds.
-msgid "NVDA sounds"
-msgstr "أصوات NVDA"
-
 msgid "Type help(object) to get help about object."
 msgstr "اكتب help(واسم الكائن) للحصول على معلومات عنه."
 
@@ -7486,7 +7509,7 @@ msgstr "تلقائي"
 
 #. Translators: The label for a braille setting indicating that braille should be tethered to focus.
 msgid "to focus"
-msgstr "للتحديد الحالي"
+msgstr "لمؤشّر النظام"
 
 #. Translators: The label for a braille setting indicating that braille should be tethered
 #. to the review cursor.
@@ -7549,7 +7572,7 @@ msgstr "الألوان والأنماط"
 #. Translators: Label for an option in NVDA settings.
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "Enabled"
-msgstr "مُفعَّلة"
+msgstr "تفعيل"
 
 #. Translators: Label for a paragraph style in NVDA settings.
 msgid "Handled by application"
@@ -7562,6 +7585,18 @@ msgstr "فاصل سطر واحد"
 #. Translators: Label for a paragraph style in NVDA settings.
 msgid "Multi line break"
 msgstr "فاصل أسطر متعددة"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Never"
+msgstr "مطلقًا"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Only when tethered automatically"
+msgstr "فقط حال الإرفاق التلقائي"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Always"
+msgstr "دائمًا"
 
 #. Translators: Label for an option in NVDA settings.
 msgid "Diffing"
@@ -8466,15 +8501,15 @@ msgid "checkable"
 msgstr "يمكن تحديده"
 
 msgid "draggable"
-msgstr "يمكن سحْبه"
+msgstr "قابلٌ للسَحْب"
 
 msgid "dragging"
-msgstr "سحْب"
+msgstr "سَحْب"
 
 #. Translators: Reported where an object which is being dragged can be dropped.
 #. This is only reported for objects that support accessible drag and drop.
 msgid "drop target"
-msgstr "إسقاط الهدف"
+msgstr "إسقاط"
 
 msgid "sorted"
 msgstr "مُرَتّبَة"
@@ -10419,11 +10454,11 @@ msgstr "تطوير NVDA"
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Enable loading custom code from Developer Scratchpad directory"
-msgstr "إتاحة تحميل التعليمات البرمجية المخصصة من دليل مسودة المطور"
+msgstr "إتاحة تحميل التعليمات البرمجية المخصصة من دليل مسودة التطوير"
 
 #. Translators: the label for a button in the Advanced settings category
 msgid "Open developer scratchpad directory"
-msgstr "فتح الدليل المتضمن لمسودة المطوِّر"
+msgstr "فتح المجلّد المتضمّن لمسودة التطوير"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10559,11 +10594,6 @@ msgstr "الإعلام بوجود تفاصيل للعناصر ذات التعل�
 msgid "Report aria-description always"
 msgstr "الإعلان دائمًا عن أوصاف aria (aria-description )"
 
-#. Translators: This is the label for a group of advanced options in the
-#. Advanced settings panel
-msgid "HID Braille Standard"
-msgstr "HID Braille القياسي"
-
 #. Translators: Label for option in the 'Enable support for HID braille' combobox
 #. in the Advanced settings panel.
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
@@ -10585,10 +10615,14 @@ msgstr "نعم"
 msgid "No"
 msgstr "لا"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combo box in the
 #. Advanced settings panel.
 msgid "Enable support for HID braille"
 msgstr "تمكين دعم HID braille"
+
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Report live regions:"
+msgstr "الإعلان عن المحتوى النَشِط:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10673,15 +10707,19 @@ msgstr "الإعلان عن قيم الألوان الشفافة"
 msgid "Audio"
 msgstr "الصوت"
 
-#. Translators: This is the label for a checkbox control in the
-#. Advanced settings panel.
+#. Translators: This is the label for a checkbox control in the Advanced settings panel.
 msgid "Use WASAPI for audio output (requires restart)"
 msgstr "استخدام WASAPI  لإخراج الصوت (يتطلّب إعادة التشغيل)"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
 msgid "Volume of NVDA sounds follows voice volume (requires WASAPI)"
-msgstr "مستوى أصوات NVDA يتبع مستوى الصوت (يتطلَّب WASAPI)"
+msgstr "مستوى أصوات NVDA يتبع مستوى الصوت في إعدادات النُطق (يتطلَّب WASAPI)"
+
+#. Translators: This is the label for a slider control in the
+#. Advanced settings panel.
+msgid "Volume of NVDA sounds (requires WASAPI)"
+msgstr "مستوى أصوات NVDA (يتطلَّب WASAPI)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10807,7 +10845,11 @@ msgstr "مدة ظهور ال&رسالة (بالثواني)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Tether B&raille:"
-msgstr "إرفاق مؤشّر برايل:"
+msgstr "&إرفاق برايل:"
+
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "Move system caret when ro&uting review cursor"
+msgstr "&نقل مؤشّر التحرير عند نقل مؤشّر الاستعراض عبر مفاتيح توجيه المؤشّر"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -13579,25 +13621,57 @@ msgctxt "addonStore"
 msgid "Enabled, pending restart"
 msgstr "مفعَّلة (في انتظار إعادة التشغيل)"
 
-#. Translators: A selection option to display installed add-ons in the add-on store
+#. Translators: The label of a tab to display installed add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
 msgid "Installed add-ons"
 msgstr "الإضافات المثبَّتة"
 
-#. Translators: A selection option to display updatable add-ons in the add-on store
+#. Translators: The label of a tab to display updatable add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
 msgid "Updatable add-ons"
 msgstr "الإضافات القابلة للتحديث"
 
-#. Translators: A selection option to display available add-ons in the add-on store
+#. Translators: The label of a tab to display available add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
 msgid "Available add-ons"
-msgstr "الإضافات المتاحة"
+msgstr "الإضافات المتوفرة"
 
-#. Translators: A selection option to display incompatible add-ons in the add-on store
+#. Translators: The label of a tab to display incompatible add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
 msgid "Installed incompatible add-ons"
 msgstr "إضافات مثَبَّتة غير متوافقة"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Installed &add-ons"
+msgstr "الإضافات الم&ثبَّتة"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Updatable &add-ons"
+msgstr "الإضافات القابلة للت&حديث"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Available &add-ons"
+msgstr "الإضافات ال&متوفرة"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Installed incompatible &add-ons"
+msgstr "إضافات مثَبَّتة &غير متوافقة"
 
 #. Translators: The reason an add-on is not compatible.
 #. A more recent version of NVDA is required for the add-on to work.
@@ -13624,7 +13698,6 @@ msgstr ""
 
 #. Translators: A message indicating that some add-ons will be disabled
 #. unless reviewed before installation.
-#, fuzzy
 msgctxt "addonStore"
 msgid ""
 "Your NVDA configuration contains add-ons that are incompatible with this "
@@ -13633,10 +13706,13 @@ msgid ""
 "own risk. If you rely on these add-ons, please review the list to decide "
 "whether to continue with the installation. "
 msgstr ""
-"\n"
-"تتضمّن إعدادات NVDA لديك إضافات غير متوافقة مع هذا الإصدار من NVDA. ستُعطَّل هذه "
-"الإضافات بعد التثبيت. إذا كانت هناك إضافات تعتمد عليها، فضلًا راجِعْ قائمة "
-"الإضافات لديك لتقرّر إن كنت تودُّ إكمال التثبيت"
+"تحتوي إعدادات NVDA لديك على إضافات غير متوافقة مع هذا الإصدار من NVDA. ستُعطَّل "
+"هذه الإضافات بعد التثبيت. ويمكنك تفعيلها بعد اكتمال التثبيت على مسؤوليتك "
+"الخاصة. يُرجى مراجعة القائمة لمعرفة إن كانت هناك إضافات تعتمد عليه لتقرر بناءً "
+"على هذا إن كنت ترغب في المتابعة للتثبيت.تتضمّن إعدادات NVDA لديك إضافات غير "
+"متوافقة مع هذا الإصدار من NVDA. ستُعطَّل هذه الإضافات بعد التثبيت. إذا كانت "
+"هناك إضافات تعتمد عليها، فضلًا راجِعْ قائمة الإضافات لديك لتقرّر إن كنت تودُّ "
+"إكمال التثبيت"
 
 #. Translators: A message to confirm that the user understands that incompatible add-ons
 #. will be disabled after installation, and can be manually re-enabled.
@@ -13698,7 +13774,7 @@ msgstr "ال&حالة:"
 #. Translators: Label for the text control containing a description of the selected add-on.
 #. In the add-on store dialog.
 msgctxt "addonStore"
-msgid "&Actions"
+msgid "A&ctions"
 msgstr "&إجراءات"
 
 #. Translators: Label for the text control containing extra details about the selected add-on.
@@ -13711,6 +13787,16 @@ msgstr "&تفاصيل أخرى:"
 msgctxt "addonStore"
 msgid "Publisher:"
 msgstr "الناشر:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Author:"
+msgstr "المبرمج"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "ID:"
+msgstr "اسم التعريف:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 msgctxt "addonStore"
@@ -13783,6 +13869,10 @@ msgid ""
 "version: {oldVersion}. Available version: {version}.\n"
 "Proceed with installation anyway? "
 msgstr ""
+"تنبيه: تثبيت الإضافة {name} قد يؤدي للرجوع لإصدار أقدم منها. لا يمكن مقارنة "
+"الإصدار المثبَّت حاليا من الإضافة مع الإصدار المتوفر في مستودع الإضافات. "
+"الإصدار المثبَّت: {oldVersion}. الإصدار المتوفر {version}.\n"
+"هل ترغب في المتابعة للتثبيت على أية حال؟"
 
 #. Translators: The title of a dialog presented when an error occurs.
 msgctxt "addonStore"
@@ -13814,6 +13904,11 @@ msgid ""
 "{NVDAVersion}. Installation may cause unstable behavior in NVDA.\n"
 "Proceed with installation anyway? "
 msgstr ""
+"تنبيه: الإضافة البرمجية: {name} {version} غير متوافقة. تحقَّق إن كان هناك "
+"تحديث لها إن أمكن. أحدث إصدار اختُبِر مع الإضافة من NVDA "
+"{lastTestedNVDAVersion}، إصدار Nvda المثبَّت عندك حاليا {NVDAVersion}. قد "
+"يتسسب التثبيت في عدم استقرار NVDA وعمله على نحو غير متوقع.\n"
+"المتابعة للتثبيت على أية حال؟"
 
 #. Translators: The message displayed when enabling an add-on package that is incompatible
 #. because the add-on is too old for the running version of NVDA.
@@ -13826,6 +13921,11 @@ msgid ""
 "{NVDAVersion}. Enabling may cause unstable behavior in NVDA.\n"
 "Proceed with enabling anyway? "
 msgstr ""
+"تنبيه: الإضافة {name} {version} غير متوافقة. يتحقَّقْ من وجود إصدار أحدث منها "
+"إن أمكن. أحدث إصدار من NVDA اختُبِر معها {lastTestedNVDAVersion}، إصدار NVDA "
+"المثبَّت لديك حاليا {NVDAVersion}. تفعيل هذه قد يتسبب في عدم استقرار عمل "
+"NVDA.\n"
+"المتابعة لتفعيلها على أية حال؟"
 
 #. Translators: message shown in the Addon Information dialog.
 #, python-brace-format
@@ -13833,49 +13933,85 @@ msgctxt "addonStore"
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
-"Publisher: {publisher}\n"
 "Description: {description}\n"
 msgstr ""
 "{summary} ({name})\n"
-"الإصدار: {version}\n"
-"الناشر: {publisher}\n"
-"الوصف: {description}\n"
+"Version: {version}\n"
+"Description: {description}\n"
+
+#. Translators: the publisher part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Publisher: {publisher}\n"
+msgstr "الناشر: {publisher}\n"
+
+#. Translators: the author part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Author: {author}\n"
+msgstr "مطوِّر الإضافة: {author}\n"
 
 #. Translators: the url part of the About Add-on information
 #, python-brace-format
 msgctxt "addonStore"
-msgid "Homepage: {url}"
-msgstr "الصفحة الرئيسية: {url}"
+msgid "Homepage: {url}\n"
+msgstr "الصفحة الرئيسية:{url}\n"
 
 #. Translators: the minimum NVDA version part of the About Add-on information
 msgctxt "addonStore"
-msgid "Minimum required NVDA version: {}"
-msgstr "الإصدار المطلوب كحد أدنى من NVDA: {}"
+msgid "Minimum required NVDA version: {}\n"
+msgstr "الإصدار المطلوب كحد أدنى من NVDA: {}\n"
 
 #. Translators: the last NVDA version tested part of the About Add-on information
 msgctxt "addonStore"
-msgid "Last NVDA version tested: {}"
-msgstr "&آخر إصدار اختُبِر من NVDA: {}"
+msgid "Last NVDA version tested: {}\n"
+msgstr "&أحدث إصدار اختُبِر من NVDA مع الإضافة: {}\n"
 
 #. Translators: title for the Addon Information dialog
 msgctxt "addonStore"
 msgid "Add-on Information"
 msgstr "معلومات عن الإضافة"
 
+#. Translators: The warning of a dialog
+msgid "Add-on Store Warning"
+msgstr "تنبيه من مستودع الإضافات"
+
+#. Translators: Warning that is displayed before using the Add-on Store.
+msgctxt "addonStore"
+msgid ""
+"Add-ons are created by the NVDA community and are not vetted by NV Access. "
+"NV Access cannot be held responsible for add-on behavior. The functionality "
+"of add-ons is unrestricted and can include accessing your personal data or "
+"even the entire system. "
+msgstr ""
+"هذه الإضافات مبرمجة بواسطة مجتمع تطوير NVDA ولا تُفحَص من قِبَل مؤسسة NV Access "
+"وبناءً على هذا فهي غير مسؤولة عن طريقة عمل هذه الإضافات. المهام التي يمكن "
+"لهذه الإضافات غير مقيَّدة، ويمكن أن تشمل الوصول للبيانات الشخصية أو حتى نظام "
+"التشغيل نفسه."
+
+#. Translators: The label of a checkbox in the add-on store warning dialog
+msgctxt "addonStore"
+msgid "&Don't show this message again"
+msgstr "&لا تعرِضْ هذه الرسالة مرة أخرى"
+
+#. Translators: The label of a button in a dialog
+msgid "&OK"
+msgstr "&موافق"
+
 #. Translators: The title of the addonStore dialog where the user can find and download add-ons
 msgctxt "addonStore"
 msgid "Add-on Store"
 msgstr "مستودع الإضافات البرمجية"
 
-#. Translators: Banner notice that is displayed in the Add-on Store.
-msgctxt "addonStore"
-msgid "Note: NVDA was started with add-ons disabled"
-msgstr "ملاحظة: لقد بدأ عمل NVDA مع تعطيل الإضافات"
-
 #. Translators: The label for a button in add-ons Store dialog to install an external add-on.
 msgctxt "addonStore"
 msgid "Install from e&xternal source"
 msgstr "تثبيت من مصدر &خارجي"
+
+#. Translators: Banner notice that is displayed in the Add-on Store.
+msgctxt "addonStore"
+msgid "Note: NVDA was started with add-ons disabled"
+msgstr "ملاحظة: لقد بدأ عمل NVDA مع تعطيل الإضافات"
 
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"
@@ -13913,6 +14049,13 @@ msgctxt "addonStore"
 msgid "Installing {} add-ons, please wait."
 msgstr "تثبيت {} إضافات، يُرجى الانتظار."
 
+#. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
+#. tab's name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "{category}:"
+msgstr "{category}:"
+
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
 #, python-brace-format
 msgctxt "addonStore"
@@ -13930,12 +14073,12 @@ msgctxt "addonStore"
 msgid "Name"
 msgstr "الاسم"
 
-#. Translators: The name of the column that contains the installed addons version string.
+#. Translators: The name of the column that contains the installed addon's version string.
 msgctxt "addonStore"
 msgid "Installed version"
 msgstr "الإصدار المُثبَّت"
 
-#. Translators: The name of the column that contains the available addons version string.
+#. Translators: The name of the column that contains the available addon's version string.
 msgctxt "addonStore"
 msgid "Available version"
 msgstr "الإصدار المتوفر"
@@ -13945,10 +14088,15 @@ msgctxt "addonStore"
 msgid "Channel"
 msgstr "قناة النشر"
 
-#. Translators: The name of the column that contains the addons publisher.
+#. Translators: The name of the column that contains the addon's publisher.
 msgctxt "addonStore"
 msgid "Publisher"
 msgstr "الناشر"
+
+#. Translators: The name of the column that contains the addon's author.
+msgctxt "addonStore"
+msgid "Author"
+msgstr "المبرمج"
 
 #. Translators: The name of the column that contains the status of the addon.
 #. e.g. available, downloading installing
@@ -14030,6 +14178,12 @@ msgstr "لا يمكن تفعيل إضافة: {addon}."
 msgctxt "addonStore"
 msgid "Could not disable the add-on: {addon}."
 msgstr "لا يمكن تعطيل إضافة: {addon}."
+
+#~ msgid "NVDA sounds"
+#~ msgstr "أصوات NVDA"
+
+#~ msgid "HID Braille Standard"
+#~ msgstr "HID Braille القياسي"
 
 #~ msgid "Find Error"
 #~ msgstr "خلل في البحث"

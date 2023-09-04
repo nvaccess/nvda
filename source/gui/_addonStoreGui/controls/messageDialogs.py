@@ -15,16 +15,24 @@ from _addonStore.models.addon import (
 	_AddonStoreModel,
 	_AddonManifestModel,
 )
+import config
 from gui.addonGui import ErrorAddonInstallDialog
-from gui.message import messageBox
+from gui.contextHelp import ContextHelpMixin
+from gui.guiHelper import (
+	BoxSizerHelper,
+	BORDER_FOR_DIALOGS,
+	ButtonHelper,
+	SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS,
+)
+from gui.message import displayDialogAsModal, messageBox
+import windowUtils
 
 if TYPE_CHECKING:
 	from _addonStore.models.version import SupportsVersionCheck
-	from guiHelper import ButtonHelper
 
 
 class ErrorAddonInstallDialogWithYesNoButtons(ErrorAddonInstallDialog):
-	def _addButtons(self, buttonHelper: "ButtonHelper") -> None:
+	def _addButtons(self, buttonHelper: ButtonHelper) -> None:
 		addonInfoButton = buttonHelper.addButton(
 			self,
 			# Translators: A button in the addon installation warning / blocked dialog which shows
@@ -73,13 +81,14 @@ def _shouldProceedWhenInstalledAddonVersionUnknown(
 	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
 	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
 	)
-	return ErrorAddonInstallDialogWithYesNoButtons(
+	res = displayDialogAsModal(ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
 		title=pgettext("addonStore", "Add-on not compatible"),
 		message=incompatibleMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon)
-	).ShowModal() == wx.YES
+	))
+	return res == wx.YES
 
 
 def _shouldProceedToRemoveAddonDialog(
@@ -119,13 +128,14 @@ def _shouldInstallWhenAddonTooOldDialog(
 	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
 	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
 	)
-	return ErrorAddonInstallDialogWithYesNoButtons(
+	res = displayDialogAsModal(ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
 		title=pgettext("addonStore", "Add-on not compatible"),
 		message=incompatibleMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon)
-	).ShowModal() == wx.YES
+	))
+	return res == wx.YES
 
 
 def _shouldEnableWhenAddonTooOldDialog(
@@ -148,13 +158,14 @@ def _shouldEnableWhenAddonTooOldDialog(
 	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
 	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
 	)
-	return ErrorAddonInstallDialogWithYesNoButtons(
+	res = displayDialogAsModal(ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
 		title=pgettext("addonStore", "Add-on not compatible"),
 		message=incompatibleMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon)
-	).ShowModal() == wx.YES
+	))
+	return res == wx.YES
 
 
 def _showAddonInfo(addon: _AddonGUIModel) -> None:
@@ -194,3 +205,61 @@ def _showAddonInfo(addon: _AddonGUIModel) -> None:
 	# Translators: title for the Addon Information dialog
 	title = pgettext("addonStore", "Add-on Information")
 	messageBox("\n".join(message), title, wx.OK)
+
+
+class _SafetyWarningDialog(
+		ContextHelpMixin,
+		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+):
+	"""A dialog warning the user about the risks of installing add-ons."""
+
+	helpId = "AddonStoreInstalling"
+
+	def __init__(self, parent: wx.Window):
+		# Translators: The warning of a dialog
+		super().__init__(parent, title=pgettext("addonStore", "Add-on Store Warning"))
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		sHelper = BoxSizerHelper(self, orientation=wx.VERTICAL)
+
+		_warningText = pgettext(
+			"addonStore",
+			# Translators: Warning that is displayed before using the Add-on Store.
+			"Add-ons are created by the NVDA community and are not vetted by NV Access. "
+			"NV Access cannot be held responsible for add-on behavior. "
+			"The functionality of add-ons is unrestricted and can include "
+			"accessing your personal data or even the entire system. "
+		)
+
+		sText = sHelper.addItem(wx.StaticText(self, label=_warningText))
+		# the wx.Window must be constructed before we can get the handle.
+		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
+		sText.Wrap(
+			# 600 was fairly arbitrarily chosen by a visual user to look acceptable on their machine.
+			self.scaleFactor * 600
+		)
+
+		sHelper.sizer.AddSpacer(SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
+
+		self.dontShowAgainCheckbox = sHelper.addLabeledControl(
+			pgettext(
+				"addonStore",
+				# Translators: The label of a checkbox in the add-on store warning dialog
+				"&Don't show this message again"
+			),
+			wx.CheckBox,
+		)
+
+		bHelper = sHelper.addDialogDismissButtons(ButtonHelper(wx.HORIZONTAL))
+
+		# Translators: The label of a button in a dialog
+		okButton = bHelper.addButton(self, wx.ID_OK, label=pgettext("addonStore", "&OK"))
+		okButton.Bind(wx.EVT_BUTTON, self.onOkButton)
+
+		mainSizer.Add(sHelper.sizer, border=BORDER_FOR_DIALOGS, flag=wx.ALL)
+		self.Sizer = mainSizer
+		mainSizer.Fit(self)
+		self.CentreOnScreen()
+
+	def onOkButton(self, evt: wx.CommandEvent):
+		config.conf["addonStore"]["showWarning"] = not self.dontShowAgainCheckbox.GetValue()
+		self.EndModal(wx.ID_OK)

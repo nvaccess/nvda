@@ -131,10 +131,10 @@ Pritisnite ``strelicuDole`` da pročitate licencni ugovor ako želite.
 
 Opcije su: 
 - "Instaliraj NVDA na ovaj računar": ovo je glavna opcija koju će većina korisnika želeti za lakše korišćenje programa NVDA. 
-- "Kreiraj prenosivu kopiju": ovo dozvoljava programu NVDA da bude podešen u bilo kom folderu bez instalacije.
+- "Kreiraj prenosnu kopiju": ovo dozvoljava programu NVDA da bude podešen u bilo kom folderu bez instalacije.
 Ovo je korisno na računarima bez administratorskih prava, ili na memorijskim uređajima kako biste NVDA nosili sa sobom.
-Kada je ova opcija izabrana, NVDA vas vodi kroz korake za pravljenje prenosive kopije.
-Glavna stvar koju NVDA mora da zna je folder u kojem treba napraviti prenosivu kopiju. 
+Kada je ova opcija izabrana, NVDA vas vodi kroz korake za pravljenje prenosne kopije.
+Glavna stvar koju NVDA mora da zna je folder u kojem treba napraviti prenosnu kopiju. 
 - "Nastavi sa korišćenjem": ovo ostavlja privremenu NVDA kopiju pokrenutu.
 Ovo je korisno kako biste testirali karakteristike nove verzije pre nego što je instalirate.
 Kada je ova opcija izabrana, prozor pokretača se zatvara i privremena NVDA kopija ostaje pokrenuta dok se ne zatvori ili se računar isključi.
@@ -145,8 +145,8 @@ Napomena da se promene podešavanja ne čuvaju.
 
 Ako planirate da uvek koristite NVDA na ovom računaru, izabraćete opciju da instalirate NVDA.
 Instaliranje NVDA-a će vam omogućiti dodatne funkcije kao što su automatsko pokretanje nakon prijave i mogućnost čitanja ekrana za prijavu i drugih [bezbednih ekrana #SecureScreens].
-Ovo nije moguće sa prenosivim i privremenim kopijama.
-Za potpune detalje o ograničenjima korišćenja prenosivih i privremenih kopija programa NVDA, molimo pročitajte [ograničenja prenosivih i privremenih kopija #PortableAndTemporaryCopyRestrictions].
+Ovo nije moguće sa prenosnim i privremenim kopijama.
+Za potpune detalje o ograničenjima korišćenja prenosnih i privremenih kopija programa NVDA, molimo pročitajte [ograničenja prenosnih i privremenih kopija #PortableAndTemporaryCopyRestrictions].
 
 Instaliranje vam takođe dozvoljava pravljenje prečica na radnoj površini i u start meniju, i dozvoljava programu NVDA da se pokrene prečicom ``control+alt+n``.
 
@@ -296,7 +296,7 @@ Telefonska podrška uključuje lokalne brojeve u Australiji i SAD-u.
 ++ Opcije instalacije ++[InstallingNVDA]
 
 Ako instalirate NVDA direktno iz preuzetog pokretača, pritisnite dugme instaliraj NVDA.
-Ako ste zatvorili ovaj dijalog ili želite da instalirate NVDA iz prenosive kopije, izaberite instaliraj NVDA u NVDA meniju iz podmenija alati.
+Ako ste zatvorili ovaj dijalog ili želite da instalirate NVDA iz prenosne kopije, izaberite instaliraj NVDA u NVDA meniju iz podmenija alati.
 
 Dijalog za instalaciju će zatražiti potvrdu i takođe reći da li ova instalacija ažurira neku postojeću instalaciju.
 Aktiviranjem dugmeta nastavi počinje instalacija NVDA.
@@ -323,31 +323,35 @@ Ako je napravljena, ona takođe dobija prečicu sa tastature ``control+alt+n``, 
 +++ Kopiraj podešavanja prenosne kopije u trenutni nalog+++[CopyPortableConfigurationToCurrentUserAccount]
 Ova opcija bira da li konfiguracija trenutno pokrenute kopije NVDA treba da se kopira za korisnika koji je trenutno prijavljen, za instaliranu kopiju NVDA. 
 Ovo neće kopirati podešavanja za druge korisnike ni za korišćenje na Windows ekranu za prijavljivanje i [drugim bezbednim ekranima #SecureScreens].
-Ova opcija je dostupna samo kada se instalira iz prenosive kopije, ne i kada se instalira iz preuzete datoteke.
+Ova opcija je dostupna samo kada se instalira iz prenosne kopije, ne i kada se instalira iz preuzete datoteke.
 
-++ Pravljenje prenosive kopije ++[CreatingAPortableCopy]
-Ako pravite prenosivu kopiju iz preuzete datoteke, jednostavno aktivirajte dugme napravi prenosivu kopiju.
-Ako ste zatvorili ovaj dijalog ili ste instalirali NVDA, Izaberite opciju napravi prenosivu kopiju u NVDA meniju a zatim u podmeniju alati.
+++ Pravljenje prenosne kopije ++[CreatingAPortableCopy]
+Ako pravite prenosnu kopiju iz preuzete datoteke, jednostavno aktivirajte dugme napravi prenosnu kopiju.
+Ako ste zatvorili ovaj dijalog ili ste instalirali NVDA, Izaberite opciju napravi prenosnu kopiju u NVDA meniju a zatim u podmeniju alati.
 
-Dijalog koji se otvori nakon toga vam omogućava izbor gde prenosiva kopija treba da bude napravljena.
-Ovo može biti lokacija na hard disku ili nekim drugim prenosivim medijima.
-Tu takođe imate opciju koja bira da li treba kopirati trenutna podešavanja u prenosivu kopiju.
- Ova opcija je dostupna samo kada se pravi prenosiva kopija iz instalirane kopije, ne i kada se pravi iz preuzete datoteke.
-Aktiviranje dugmeta nastavi pravi prenosivu kopiju.
+Dijalog koji se otvori nakon toga vam omogućava izbor gde prenosna kopija treba da bude napravljena.
+Ovo može biti lokacija na hard disku ili nekim drugim prenosnim medijima.
+Tu takođe imate opciju koja bira da li treba kopirati trenutna podešavanja u prenosnu kopiju.
+ Ova opcija je dostupna samo kada se pravi prenosna kopija iz instalirane kopije, ne i kada se pravi iz preuzete datoteke.
+Aktiviranje dugmeta nastavi pravi prenosnu kopiju.
 Nakon što se pravljenje završi, poruka će se pojaviti koja će vas obavestiti da je bilo uspešno.
 Pritisnite u redu da zatvorite ovaj dijalog.
 
 
-++ Ograničenja prenosivih i privremenih kopija ++[PortableAndTemporaryCopyRestrictions]
+++ Ograničenja prenosnih i privremenih kopija ++[PortableAndTemporaryCopyRestrictions]
 
-Ako želite da nosite NVDA sa sobom na USB disku ili drugom mediju koji podržava pisanje, onda izaberite da napravite prenosivu kopiju.
-Instalirana kopija takođe može da napravi prenosivu kopiju u bilo kom trenutku. 
-Prenosiva kopija takođe ima mogućnost da se instalira na računaru u bilo kom trenutku.
+Ako želite da nosite NVDA sa sobom na USB disku ili drugom mediju koji podržava pisanje, onda izaberite da napravite prenosnu kopiju.
+Instalirana kopija takođe može da napravi prenosnu kopiju u bilo kom trenutku. 
+Prenosna kopija takođe ima mogućnost da se instalira na računaru u bilo kom trenutku.
 Ali, ako želite da kopirate NVDA na medijima koji podržavaju samo čitanje kao što je CD, onda samo kopirajte preuzetu datoteku.
-Pokretanje prenosive kopije direktno sa medija koji podržavaju samo čitanje trenutno nije podržano.
-Korišćenje privremene kopije programa NVDA je takođe mogućnost (na primer u svrhu demonstracije), ali pokretanje NVDA na ovaj način svaki put može oduzeti dosta vremena.
+Pokretanje prenosne kopije direktno sa medija koji podržavaju samo čitanje trenutno nije podržano.
 
-Pored toga što ne mogu da se pokrenu nakon i u toku prijave, privremena i prenosiva kopija takođe imaju sledeća ograničenja:
+[NVDA instalacija #StepsForRunningTheDownloadLauncher] se može koristiti kao privremena kopija programa NVDA.
+Privremene kopije sprečavaju čuvanje NVDA podešavanja.
+Ovo uključuje nemogućnost korišćenja [prodavnice dodataka #AddonsManager].
+
+Prenosne i privremene kopije programa NVDA imaju sledeća ograničenja:
+- Nemogućnost automatskog pokretanja u toku ili nakon prijave.
 - Nemogućnost interakcije sa aplikacijama koje su pokrenute sa administratorskim privilegijama, osim ako se NVDA ne pokrene sa administratorskim privilegijama(nije preporučeno).
 - Nemogućnost čitanja ekrana kontrole korisničkog naloga(KKN) kada pokušate da pokrenete neku aplikaciju sa administratorskim privilegijama.
 - Windows 8 i noviji: Nemogućnost podrške unosa uz pomoć ekrana osetljivog na dodir.
@@ -368,8 +372,8 @@ Za instalirane kopije, NVDA čuva podešavanja u roaming app data folderu trenut
 Moguće je promeniti ovo tako da NVDA učitava svoja podešavanja iz foldera local u folderu app data.
 Pogledajte deo o [sistemskim parametrima #SystemWideParameters] za više detalja.
 
-Da pokrenete prenosivu kopiju, potrebno je ući u folder u kojem ste napravili prenosivu kopiju, i pritisnuti enter ili kliknuti dva puta na datoteku nvda.exe.
-Ako je NVDA već pokrenut, automatski će biti zaustavljen pre pokretanja prenosive verzije.
+Da pokrenete prenosnu kopiju, potrebno je ući u folder u kojem ste napravili prenosnu kopiju, i pritisnuti enter ili kliknuti dva puta na datoteku nvda.exe.
+Ako je NVDA već pokrenut, automatski će biti zaustavljen pre pokretanja prenosne verzije.
 
 Dok se NVDA pokreće, čućete niz tonova(koji vam govore da se NVDA učitava).
 U zavisnosti od brzine vašeg računara, ili ako pokrećete NVDA sa sporijeg medija, možda će ovo malo duže trajati.
@@ -486,7 +490,7 @@ Da biste ušli u NVDA meni bilo gde u Windowsu dok je NVDA pokrenut, možete izv
 - Dvostruki dodir sa dva prsta na ekranu osetljivom na dodir.
 - Pristup sistemskoj traci pritiskanjem prečice ``Windows+b``, kretanje ``strelicomDole`` do NVDA ikonice, a zatim pritiskanje tastera ``enter``.
 - Kao alternativa, pristupite sistemskoj traci prečicom ``Windows+b``, krećite se ``strelicomDole`` do NVDA ikonice, i otvorite kontekstni meni pritiskanjem ``aplikacionog`` tastera koji se nalazi pored desnog kontrol tastera na većem broju tastatura.
-Na tastaturi bez ``aplikacionog`` tastera, umesto toga pritisnite ``šift+F10``.
+Na tastaturi bez ``aplikacionog`` tastera, umesto toga pritisnite ``šift+f10``.
 - Desni klik na NVDA ikonici na Windows sistemskoj traci
 -
 Kada se meni otvori, možete koristiti strelice da se krećete po meniju, i taster ``enter`` da aktivirate stavku.
@@ -590,6 +594,12 @@ Ako se pomerite na objekat u kojem je stavka liste sadržana vratićete se na li
 Nakon toga se možete kretati dalje od liste da biste pristupili drugim objektima.
 Slično tome, alatna traka sadrži kontrole, pa morate ući u alatnu traku da pristupite kontrolama.
 
+Ako ipak želite da se krećete između svakog pojedinačnog objekta na sistemu, možete koristiti komande da se pomerite na prethodni ili sledeći objekat u  ravnom prikazu.
+Na primer, ako se krećete do sledećeg objekta u ovom ravnom prikazu a trenutni objekat u sebi sadrži druge objekte, NVDA će se automatski prebaciti na prvij unutrašnji objekat.
+U suprotnom, ako trenutni objekat ne sadrži objekte, NVDA će se prebaciti na sledeći objekat u trenutnom nivou hierarhije.
+Ako nema takvog sledećeg objekta, NVDA će pokušati da pronađe sledeći objekat u hierarhiji u zavisnosti od unutrašnjih objekata dok više nema objekata na koje se možete prebaciti.
+Ista pravila se primenjuju i kada se krećete nazad u hierarhiji.
+
 Objekat koji se trenutno pregleda se zove navigacioni objekat.
 Kada stignete do nekog objekta, možete pregledati njegov sadržaj koristeći [komande za pregled teksta #ReviewingText] dok ste u [režimu pregleda objekata #ObjectReview].
 Kada je [Vizuelno označavanje #VisionFocusHighlight] omogućeno, lokacija trenutnog navigacionog objekta je takođe vizuelno označena.
@@ -603,9 +613,11 @@ Za navigaciju između objekata, koristite sledeće komande:
  || Ime | Desktop komanda | Laptop komanda | Pokret | Opis |
  | Prijavi trenutni objekat | NVDA+numeričko5 | NVDA+šift+o | Nema komande | Prijavljuje trenutni navigacioni objekat. Ako se pritisne dva puta informacija se sriče, a pritiskanjem 3 puta informacija i vrednost se kopiraju u privremenu memoriju. |
  | Premesti se na sadržani objekat | NVDA+numeričko8 | NVDA+šift+strelica gore | prevuci nagore(režim objekata) | premešta se na objekat koji sadrži trenutni navigacioni objekat |
- | Premesti se na prethodni objekat | NVDA+numeričko4 | NVDA+šift+strelica levo | prevlačenje levo(režim objekata) | pomera se na objekat pre trenutnog navigacionog objekta |
- | Premesti na sledeći objekat | NVDA+numeričko6 | NVDA+šift+strelica desno | prevlačenje desno(režim objekata) | premešta se na objekat posle trenutnog navigacionog objekta |
- | Premesti se na prvi sadržan objekat | NVDA+numeričko2 | NVDA+šift+strelica dole | prevlačenje dole (režim objekata) | Premešta se na prvi objekat sadržan od strane navigacionog objekta |
+ | Premesti se na prethodni objekat | NVDA+numeričko4 | NVDA+šift+strelica levo | nema | pomera se na objekat pre trenutnog navigacionog objekta |
+ | Premesti se na prethodni objekat u ravnom prikazu | NVDA+numeričko9 | NVDA+šift+[ | prevlačenje levo (režim objekata) | Premešta se na prethodni objekat u ravnom prikazu hierarhije navigacije objekata |
+| Premesti se na sledeći objekat | NVDA+numeričko6 | NVDA+šift+strelica desno | nema | premešta se na objekat posle trenutnog navigacionog objekta |
+ | Premesti se na sledeći objekat u ravnom prikazu | NVDA+numeričko3 | NVDA+šift+] | prevlačenje desno (režim objekata) | Premešta se na sledeći objekat u ravnom prikazu hierarhije navigacije objekata |
+| Premesti se na prvi sadržan objekat | NVDA+numeričko2 | NVDA+šift+strelica dole | prevlačenje dole (režim objekata) | Premešta se na prvi objekat sadržan od strane navigacionog objekta |
  | Premesti se na fokusiran objekat | NVDA+numerički minus | NVDA+taster za brisanje unazad | Nema komande | Premešta se na objekat koji trenutno ima sistemski fokus, i takođe postavlja pregledni kursor na poziciju sistemskog kursora, ako je prikazan |
  | Aktiviraj trenutni navigacioni objekat | NVDA+numerički enter | NVDA+enter | dupli dodir | aktivira trenutni navigacioni objekat(slično kliku mišem ili pritiskanju tastera razmak kada ima sistemski fokus) |
  | Premesti sistemski fokus ili kursor na poziciju pregleda | NVDA+šift+numerički minus | NVDA+šift+taster za brisanje unazad | Nema komande | Ako se pritisne jednom pomera sistemski fokus na mesto navigacionog objekta, ako se pritisne dva puta pomera sistemski kursor na poziciju preglednog kursora |
@@ -662,7 +674,6 @@ Izgled je ovako ilustrovan:
 
 ++ Režimi pregleda ++[ReviewModes]
 Komande programa NVDA [za pregled teksta #ReviewingText] mogu pregledati sadržaj trenutnog navigacionog objekta, trenutnog dokumenta ili ekrana, u zavisnosti od toga koji je režim pregleda odabran.
-Režimi pregleda su zamena za stari način pregleda programa NVDA.
 
 Sledeće komande menjaju režime pregleda:
 %kc:beginInclude
@@ -1383,7 +1394,7 @@ Ako je ova opcija omogućena, NV Access će koristiti informacije iz provera až
 Napomena da iako će vaša IP adresa biti poslata za određivanje države u toku provere ažuriranja, IP adresa se nikada ne čuva.
 Pored osnovnih informacija neophodnih za proveru ažuriranja, sledeće dodatne informacije se takođe trenutno šalju:
 - Jezik NVDA interfejsa
-- Da li je ova kopija programa NVDA prenosiva ili instalirana
+- Da li je ova kopija programa NVDA prenosna ili instalirana
 - Ime sintetizatora koji se trenutno koristi (uključujući ime dodatka od kog dolazi drajver)
 - Ime brajevog reda koji se trenutno koristi (uključujući ime dodatka od kog dolazi drajver)
 - Trenutna izlazna brajeva tabela (ako se koristi brajev red)
@@ -1531,7 +1542,7 @@ Na Windowsu 8 i novijim verzijama, ova opcija vam dozvoljava da izaberete da li 
 -
 
 Ova opcija je dostupna samo ako je NVDA instaliran.
-Nije moguće podržati stišavanje pozadinskih zvukova za prenosive i privremene kopije programa NVDA.
+Nije moguće podržati stišavanje pozadinskih zvukova za prenosne i privremene kopije programa NVDA.
 
 +++ Krug sintetizatora+++[SynthSettingsRing]
 Ako želite brzo da menjate podešavanja govora bez ulaza u kategoriju govor podešavanja programa NVDA, NVDA ima nekoliko komandi za pomeranje kroz neka od često korišćenih podešavanja govora:
@@ -1593,7 +1604,7 @@ Ova opcija ne utiče na pokazivač izbora, uvek izbor pokazuju tačke 7 i 8 bez 
 Ovo je izborni okvir koji vam omogućava da odredite da li će NVDA prikazivati brajeve poruke i kada će one nestati.
 
 Da biste uključili ili isključili prikazivanje poruka bilo gde da se nalazite, molimo podesite prilagođenu prečicu korišćenjem [dijaloga ulaznih komandi #InputGestures].
-+
+
 ==== Vreme isteka poruke (u sekundama) ====[BrailleSettingsMessageTimeout]
 Ova opcija je brojčano polje koje bira koliko dugo se poruke zadržavaju na brajevom redu.
 NVDA poruka se odbacuje kada se pritisne dugme na brajevom redu koje prebacuje kursor, ali se ponovo pojavljuje kada se pritisne odgovarajući taster koji prikazuje poruku ponovo.
@@ -1610,6 +1621,28 @@ Ako želite da samo prati fokus i sistemski kursor, morate da podesite brajev re
 U tom slučaju, brajev red neće pratiti NVDA pregledni kursor u toku objektne navigacije ili pregleda teksta.
 Ako želite da umesto toga brajev red prati objektnu navigaciju i pregled teksta, morate da podesite brajev red da bude vezan za pregled.
 U ovom slučaju, brajev red neće pratiti sistemski fokus i kursor.
+
+==== Pomeranje sistemskog kursora kada se prebacuje pregledni kursor ====[BrailleSettingsReviewRoutingMovesSystemCaret]
+: Podrazumevano
+  Nikada
+: Opcije
+  Podrazumevano (nikada), nikada, samo pri automatskom vezivanju, uvek
+:
+
+Ovo podešavanje određuje da li sistemski kursor takođe treba da se pomera pritiskanjem tastera za prebacivanje.
+Ova opcija je podrazumevano podešena na nikada, što znači da prebacivanje nikada neće pomerati kursor kada se prebacuje pregledni kursor.
+
+Kada je ova opcija podešena na uvek, i [vezivanje brajevog reda #BrailleTether] je podešeno na "automatski" ili "za pregled", pritiskanje tastera za prebacivanje kursora će takođe pomeriti sistemski kursor ili fokus kada je podržano.
+Kada je trenutni režim pregleda [pregled ekrana #ScreenReview], nema fizičkog kursora.
+U tom slučaju, NVDA pokušava da se fokusira na objekat ispod teksta na koji se prebacujete.
+Isto se primenjuje i na [pregled objekata #ObjectReview].
+
+Takođe možete da podesite ovu opciju da pomera kursor pri automatskom vezivanju.
+U tom slučaju, pritiskanje tastera za prebacivanje kursora će pomeriti sistemski kursor ili fokus kada je NVDA vezan za pregledni kursor automatski, a do pomeranja neće doći kada je ručno vezan za pregledni kursor.
+
+Ova opcija se prikazuje samo ako je "[Brajev red vezan #BrailleTether]" "Automatski" ili "za pregled".
+
+Da biste uključili pomeranje sistemskog kursora kada se prebacuje pregledni kursor bilo gde da se nalazite, molimo podesite prilagođenu komandu korišćenjem [dijaloga ulaznih komandi #InputGestures].
 
 ==== Čitaj po pasusima====[BrailleSettingsReadByParagraph]
 Ako je omogućeno, brajevo pismo će se prikazivati po pasusima umesto po redovima.
@@ -1678,7 +1711,7 @@ Kada se ova opcija onemogući moguće je čuti govor i u isto vreme čitati braj
   Podrazumevano (omogućeno), omogućeno, onemogućeno
 :
 
-Ovo podešavanje određuje da li će se pokazivač izbora (tačkice 7 i 8) prikazivati na brajevom redu.
+Ovo podešavanje određuje da li će se pokazivač izbora (tačke 7 i 8) prikazivati na brajevom redu.
 Opcija je podrazumevano omogućena, pa će se pokazivač izbora prikazivati.
 Pokazivač izbora može ometati u toku čitanja.
 Isključivanje ove opcije može poboljšati iskustvo pri čitanju.
@@ -2197,6 +2230,14 @@ Ovo podešavanje sadrži sledeće vrednosti:
 - Uvek: Kad god je UI automation dostupan u Microsoft word-u (bez obzira koliko je ova podrška kompletna).
 -
 
+==== koristi UI automation za pristup Microsoft Excel kontrolama ćelija kada je dostupan ====[UseUiaForExcel]
+Kada je ova opcija omogućena, NVDA će pokušati da koristi informacije iz Microsoft UI Automation accessibility API-a kako bi preuzeo informacije iz kontrola za Microsoft Excel ćelije.
+Ovo je eksperimentalna opcija, i neke opcije programa Excel možda neće biti dostupne u ovom modu.
+Na primer, lista elemenata programa NVDA za listanje formula u ćeliji, kao i brza navigacija u režimu pretraživanja za skakanje sa jednog polja za unos na drugo nisu dostupne.
+Ali, za osnovnu navigaciju i uređivanje ćelija, ova opcija će možda doneti značajna poboljšanja u brzini.
+Mi još uvek ne preporučujemo da većina korisnika ovaj način koristi kao podrazumevani, ali korisnici programa Microsoft Excel verzije 16.0.13522.10000 ili novijih su dobrodošli da testiraju ovu opciju i pruže svoje povratne informacije.
+Microsoft Excel UI automation podrška se uvek menja, i starije Microsoft Office verzije od 16.0.13522.10000 možda ne pružaju dovoljno informacija da ova opcija bude uopšte korisna.
+
 ==== Podrška za Windows konzolu ====[AdvancedSettingsConsoleUIA]
 : Podrazumevano
   Automatski
@@ -2249,13 +2290,15 @@ Sledeće opcije su dostupne:
   -
 -
 
-==== koristi UI automation za pristup Microsoft Excel kontrolama ćelija kada je dostupan ====[UseUiaForExcel]
-Kada je ova opcija omogućena, NVDA će pokušati da koristi informacije iz Microsoft UI Automation accessibility API-a kako bi preuzeo informacije iz kontrola za Microsoft Excel ćelije.
-Ovo je eksperimentalna opcija, i neke opcije programa Excel možda neće biti dostupne u ovom modu.
-Na primer, lista elemenata programa NVDA za listanje formula u ćeliji, kao i brza navigacija u režimu pretraživanja za skakanje sa jednog polja za unos na drugo nisu dostupne.
-Ali, za osnovnu navigaciju i uređivanje ćelija, ova opcija će možda doneti značajna poboljšanja u brzini.
-Mi još uvek ne preporučujemo da većina korisnika ovaj način koristi kao podrazumevani, ali korisnici programa Microsoft Excel verzije 16.0.13522.10000 ili novijih su dobrodošli da testiraju ovu opciju i pruže svoje povratne informacije.
-Microsoft Excel UI automation podrška se uvek menja, i starije Microsoft Office verzije od 16.0.13522.10000 možda ne pružaju dovoljno informacija da ova opcija bude uopšte korisna.
+==== Prijavi žive regione ====[BrailleLiveRegions]
+ : Podrazumevano
+   Omogućeno
+ : Opcije
+  Podrazumevano (omogućeno), onemogućeno, omogućeno
+ :
+
+Ova opcija bira da li će NVDA prijaviti promene u određenom dinamičkom Web sadržaju na brajevom redu.
+Onemogućavanje ove opcije je jednako ponašanju programa NVDA u verziji 2023.1 i starijim, koja je ove promene prijavljivala samo govorom.
 
 ==== Izgovaraj lozinke u svim poboljšanim terminalima ====[AdvancedSettingsWinConsoleSpeakPasswords]
 Ovo podešavanje kontroliše da li će se znakovi izgovarati uz podešene opcije [izgovor ukucanih znakova #KeyboardSettingsSpeakTypedCharacters] ili [izgovor ukucanih reči #KeyboardSettingsSpeakTypedWords] u situacijama u kojima se ekran ne ažurira (kao što su unosi lozinki) u nekim terminal programima, kao što su Windows konzola uz omogućenu UI automation podršku i Mintty.
@@ -2286,7 +2329,7 @@ Ali, u terminalima, kada se znakovi ubacuju ili brišu u sredini reda, tekst nak
 : Podrazumevano
   Prepoznavanje razlika
 : Opcije
-  Prepoznavanje razlika, UIA obaveštenja
+  Podrazumevano (prepoznavanje razlika), prepoznavanje razlika, UIA obaveštenja
 :
 
 Ova opcija kontroliše kako NVDA određuje koji tekst je "nov" (i samim tim šta da izgovara kada je "Prijavljivanje dinamičkih promena sadržaja" omogućeno) u Windows terminalu i WPF Windows terminal kontroli koja se koristi u Visual Studiju 2022.
@@ -2318,17 +2361,31 @@ U nekim situacijama, pozadina teksta može da bude potpuno transparentna, a teks
 Uz nekoliko istorijski popularnih API-a za interfejse, tekst može biti sa transparentnom pozadinom, ali je vizuelno pozadinska boja precizna.
 
 ==== Koristi WASAPI za zvučni izlaz ====[WASAPI]
+: Podrazumevano
+  Onemogućeno
+: Opcije
+  Podrazumevano (onemogućeno), omogućeno, onemogućeno
+:
+
 Ova opcija će omogućiti reprodukciju zvukova korišćenjem standarda Windows Audio Session API (WASAPI).
 WASAPI je moderniji standard zvuka koji može poboljšati brzinu, performanse i stabilnost NVDA zvukova, što uključuje govor i NVDA zvukove.
-Ova opcija je podrazumevano omogućena.
 Nakon što promenite ovu opciju, moraćete ponovo da pokrenete NVDA kako bi se promene primenile.
 
 ==== Jačina NVDA zvukova prati jačinu glasa ====[SoundVolumeFollowsVoice]
+: Podrazumevano
+  Onemogućeno
+: Opcije
+  Onemogućeno, omogućeno
+:
+
 Kada se ova opcija omogući, jačina NVDA zvukova i pištanja će pratiti podešavanje jačine glasa kojeg koristite.
 Ako utišate jačinu glasa kojeg koristite, jačina NVDA zvukova će se takođe utišati.
 Slično tome, ako pojačate glas, jačina zvukova će se pojačati.
 Ova opcija se primenjuje samo kada je opcija "Koristi WASAPI za zvučni izlaz" omogućena.
-Ova opcija je podrazumevano onemogućena.
+
+==== Jačina NVDA zvukova ====[SoundVolume]
+Ovaj klizač vam dozvoljava da podesite jačinu NVDA zvukova i  pištanja.
+Ovo podešavanje se primenjuje samo kada je opcija "Koristi WASAPI za zvučni izlaz" omogućena i opcija "Jačina NVDA zvukova prati jačinu glasa" onemogućena.
 
 ==== Kategorije za evidentiranje otklanjanja grešaka ====[AdvancedSettingsDebugLoggingCategories]
 Izborna polja u ovoj listi dozvoljavaju vam da omogućite određene vrste poruka u NVDA dnevniku za otklanjanje grešaka.
@@ -2391,9 +2448,9 @@ Da promenite znak, prvo ga izaberite u listi simbola.
 - Polje zamene vam dozvoljava da promenite tekst koji se izgovara za ovaj znak.
 - Koristeći polje nivoa, možete promeniti najniži nivo na kojem se ovaj simbol izgovara (Nijedan, neki, većina ili svi).
 Možete takođe da podesite nivo na znak; u tom slučaju simbol se neće izgovarati bez obzira na nivo simbola koji se koristi, uz sledeća dva izuzetka:
- - Kada se krećete znak po znak.
- - Kada NVDA sriče bilo koji tekst koji sadrži taj simbol.
- -
+  - Kada se krećete znak po znak.
+  - Kada NVDA sriče bilo koji tekst koji sadrži taj simbol.
+  -
 - Polje za slanje simbola sintetizatoru podešava kada treba poslati simbol(umesto zamenskog teksta) sintetizatoru.
 Ovo je korisno ako simbol izaziva pauzu u čitanju ili menjanje intonacije.
 Na primer, zarez izaziva pauzu u čitanju.
@@ -2548,7 +2605,7 @@ Kada promenite ime profila, sve prečice koje ste prethodno dodali će ostati do
 Uklanjanje profila će automatski obrisati prečice za taj profil.
 
 ++ Lokacija datoteka podešavanja ++[LocationOfConfigurationFiles]
-Prenosive kopije čuvaju sva podešavanja, sve prilagođene dodatke za aplikacije i drajvere u folderu userConfig, koji se nalazi u NVDA folderu.
+Prenosne kopije čuvaju sva podešavanja, sve prilagođene dodatke za aplikacije i drajvere u folderu userConfig, koji se nalazi u NVDA folderu.
 
 Instalirane verzije čuvaju sva podešavanja, prilagođene drajvere i dodatke za aplikacije u folderu vašeg Windows korisničkog profila.
 Ovo znači da svaki korisnik sistema može imati svoja podešavanja.
@@ -2579,7 +2636,6 @@ Da pristupite prodavnici bilo gde da se nalazite, podesite prilagođenu prečicu
 
 ++ Istraživanje dodataka ++[AddonStoreBrowsing]
 Kada se otvori, prodavnica dodataka prikazuje listu dodataka.
-Možete se vratiti na listu prečicom  ``alt+l`` bilo gde da se nalazite u prodavnici.
 Ako prethodno niste instalirai nijedan dodatak, prodavnica dodataka će se otvoriti sa listom dodataka koji su dostupni za instalaciju.
 Ako imate instalirane dodatke, lista će prikazati trenutno instalirane dodatke.
 
@@ -2620,17 +2676,17 @@ Da pogledate dodatke određenog kanala, promenite izdvajanje "kanal".
 
 +++ Pretraga dodataka +++[AddonStoreFilterSearch]
 Da pretražite dodatke, koristite tekstualno polje pretrage.
-Možete doći do njega pritiskanjem prečice ``šift+tab`` iz liste dodataka, ili prečicom ``alt+s`` bilo gde iz interfejsa prodavnice dodataka.
-Upišite ključnu reč ili nekoliko reči vrste dodatka koju tražite, a zatim se tasterom ``tab`` vratite na listu dodataka.
-Dodaci će biti prikazani ako tekst pretrage bude pronađen u imenu, autoru ili opisu.
+Možete doći do njega pritiskanjem prečice ``šift+tab`` iz liste dodataka.
+Upišite ključnu reč ili nekoliko reči vrste dodatka koju tražite, a zatim  tasterom ``tab`` dođite do liste dodataka.
+Dodaci će biti prikazani ako tekst pretrage bude pronađen u ID-u dodatka, prikazanom imenu, izdavaču, autoru ili opisu.
 
 ++ Radnje dodatka ++[AddonStoreActions]
 Dodaci imaju određene radnje, kao što su instaliraj, pomoć, onemogući i ukloni.
-Meniju radnji za dodatak u listi dodataka se može pristupiti  pritiskanjem ``aplikacionog`` tastera, ``enterom``, desnim klikom ili dvostrukim klikom na ime dodatka.
-Dugme za radnje je takođe dostupno u detaljima izabranog dodatka, koje se može aktivirati na standardan način ili prečicom ``alt+a``.
+Za dodatak u  listi dodataka, ovim radnjama se može pristupiti kroz meni koji  se otvara pritiskanjem ``aplikacionog`` tastera, tastera ``enter``, desnim klikom ili duplim klikom na dodatak.
+Ovom meniju se takođe može pristupiti pritiskanjem dugmeta radnje u detaljima izabranog dodatka.
 
 +++ Instaliranje dodataka +++[AddonStoreInstalling]
-Ako je dodatak dostupan u NVDA prodavnici, to ne znači da ga podržava ili odobrava NV Access ili bilo ko drugi.
+Ako je dodatak dostupan u NVDA prodavnici, to ne znači da ga je proverio ili odobrio NV Access ili bilo ko drugi.
 Veoma je važno da instalirate dodatke samo iz izvora kojima verujete.
 Dodaci imaju neograničenu funkcionalnost u okviru programa NVDA. 
 Ovo može uključiti pristup vašim ličnim podacima pa čak i celom sistemu.
@@ -2734,17 +2790,17 @@ Za više informacija, pročitajte uputstvo za programere dostupno u[delu za prog
 
 ++ Prodavnica dodataka ++
 Ovo će otvoriti [prodavnicu NVDA dodataka #AddonsManager].
-Za više informacija, pročitajte obimno poglavlje: [Dodaci i prodavnica dodataka #AddonsManager].
+Za više informacija, pročitajte obimnu sekciju: [Dodaci i prodavnica dodataka #AddonsManager].
 
-++ Napravi prenosivu kopiju ++[CreatePortableCopy]
-Ova opcija otvara dijalog koji će vam dozvoliti da napravite prenosivu kopiju programa NVDA iz instalirane verzije.
-U suprotnom slučaju, kada koristite prenosivu kopiju programa NVDA, u meniju sa alatima ime opcije će biti "Instaliraj NVDA na ovaj računar" umesto "Napravi prenosivu kopiju").
+++ Napravi prenosnu kopiju ++[CreatePortableCopy]
+Ova opcija otvara dijalog koji će vam dozvoliti da napravite prenosnu kopiju programa NVDA iz instalirane verzije.
+U suprotnom slučaju, kada koristite prenosnu kopiju programa NVDA, u meniju sa alatima ime opcije će biti "Instaliraj NVDA na ovaj računar" umesto "Napravi prenosnu kopiju").
 
-Oba dijaloga će vas pitati da izaberete folder u kome će se napraviti prenosiva kopija ili instalirati program NVDA.
+Oba dijaloga će vas pitati da izaberete folder u kome će se napraviti prenosna kopija ili instalirati program NVDA.
 
 U ovom dijalogu možete da omogućite ili onemogućite sledeće opcije:
-- Kopiraj trenutna korisnička podešavanja (ovo uključuje datoteke u %appdata%\roaming\NVDA ili u podešavanjima vaše prenosive kopije i uključuje dodatke i druge module)
-- Pokretanje nakon kreiranja prenosive kopije ili instalacije (automatski pokreće NVDA nakon završenog kreiranja prenosive kopije ili instalacije)
+- Kopiraj trenutna korisnička podešavanja (ovo uključuje datoteke u %appdata%\roaming\NVDA ili u podešavanjima vaše prenosne kopije i uključuje dodatke i druge module)
+- Pokretanje nakon kreiranja prenosne kopije ili instalacije (automatski pokreće NVDA nakon završenog kreiranja prenosne kopije ili instalacije)
 -
 
 ++ Pokreni COM Registration Fixing alatku... ++[RunCOMRegistrationFixingTool]
@@ -3044,21 +3100,20 @@ Slede prečice za ovaj brajev red za korišćenje uz pomoć NVDA.
 Molimo pogledajte uputstvo za upotrebu brajevog reda kako biste saznali listu i raspored tastera na brajevom redu.
 %kc:beginInclude
  || Ime | Komanda |
- | Pomeri brajev red unazad | d2 |
- | Pomeri brajev red napred | d5 |
- | Pomeri brajev red na prethodni red | d1 |
- | Pomeri brajev red na sledeći red | d3 |
- | Pomeri se na brajevu ćeliju | routing |
-| šift+tab | Razmak+tačkica1+tačkica3 |
-| tab | Razmak+tačkica4+tačkica6 |
-| alt | Razmak+tačkica1+tačkica3+tačkica4 (razmak+M) |
-| escape | Razmak+tačkica1+tačkica5 (razmak+e) |
-| windows | Razmak+tačkica3+tačkica4 |
-| alt+tab | Razmak+tačkica2+tačkica3+tačkica4+
-tačkica5 (razmak+t) |
-| NVDA meni | razmak+tačkica1+tačkica3+tačkica4+tačkica5 (razmak+n) |
-| windows+d (umanji sve aplikacije) | Razmak+tačkica1+tačkica4+tačkica5 (razmak+d) |
-| Izgovori sve | Razmak+tačkica1+tačkica2+tačkica3+tačkica4+tačkica5+tačkica6 |
+ | Pomeri brajev red unazad | ``d2`` |
+ | Pomeri brajev red napred | ``d5`` |
+ | Pomeri brajev red na prethodni red | ``d1`` |
+ | Pomeri brajev red na sledeći red | ``d3`` |
+ | Pomeri se na brajevu ćeliju | ``routing`` |
+| ``šift+tab`` | ``Razmak+tačka1+tačka3`` |
+| ``tab`` | ``Razmak+tačka4+tačka6`` |
+| ``alt`` | ``Razmak+tačka1+tačka3+tačka4`` (``razmak+M``) |
+| ``escape`` | ``Razmak+tačka1+tačka5`` (``razmak+e``) |
+| ``windows`` | ``Razmak+tačka3+tačka4`` |
+| ``alt+tab`` | ``Razmak+tačka2+tačka3+tačka4+tačka5`` (``razmak+t``) |
+| NVDA meni | ``razmak+tačka1+tačka3+tačka4+tačka5`` (``razmak+n``) |
+| ``windows+d`` (umanji sve aplikacije) | ``Razmak+tačka1+tačka4+tačka5`` (``razmak+d``) |
+| Izgovori sve | ``Razmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6`` |
 
 Za brajeve redove koji imaju džojstik:
  || Ime | Komanda |
@@ -3612,72 +3667,73 @@ Zbog ovoga, i zbog zadržavanja kompatibilnosti sa drugim čitačima ekrana u Ta
 ++ Eurobraille redovi ++[Eurobraille]
 b.book, b.note, Esys, Esytime i Iris brajevi redovi kompanije Eurobraille su podržani od strane NVDA.  
 Ovi uređaji imaju brajevu tastaturu sa 10 tastera. 
+Molimo pogledajte dokumentaciju brajevog reda za opis ovih tastera.
 Od dva tastera koji izgledaju slično razmaku, levi taster je backspace i desni je razmak.
-Ako se povežu putem USB veze, imaju jednu samostalnu USB tastaturu. 
-Moguće je omogućiti ili onemogućiti ovu tastaturu izbornim poljem "HID simulacija tastature" u panelu brajevih podešavanja. 
-Brajeva tastatura opisana ispod je tastatura kada ovo izborno polje nije označeno.
-Slede komande za ove brajeve redove uz NVDA. 
-Molimo pogledajte dokumentaciju brajevog reda za opis i raspored ovih tastera.
+
+Ovi uređaji se povezuju putem USB veze i imaju jednu samostalnu USB tastaturu. 
+Moguće je omogućiti ili onemogućiti ovu tastaturu menjanjem opcije "HID simulacija tastature" korišćenjem ulazne komande.
+Funkcije brajeve tastature koje su opisane ispod važe kada je "HID simulacija tastature" onemogućena.
 
 +++  Funkcije brajeve tastature +++[EurobrailleBraille]
 %kc:beginInclude
 | Obriši poslednju upisanu brajevu ćeliju ili znak | ``taster za brisanje nazad`` |
 | Prevedi bilo koji brajev unos i pritisni taster enter |``taster za brisanje nazad+razmak`` |
-| Uključi ili isključi ``NVDA`` taster | ``tačkica3+tačkica5+razmak`` |
-| ``insert`` taster | ``tačkica1+tačkica3+tačkica5+razmak``, ``tačkica3+tačkica4+tačkica5+razmak`` |
-| ``delete`` taster | ``tačkica3+tačkica6+razmak`` |
-| ``home`` taster | ``tačkica1+tačkica2+tačkica3+razmak`` |
-| ``end`` taster | ``tačkica4+tačkica5+tačkica6+razmak`` |
-| ``StrelicaLevo`` | ``tačkica2+razmak`` |
-| ``strelicaDesno`` | ``tačkica5+razmak`` |
-| ``strelicaGore`` | ``tačkica1+razmak`` |
-| ``strelicaDole`` | ``tačkica6+razmak`` |
-| ``pageUp`` taster | ``tačkica1+tačkica3+razmak`` |
-| ``pageDown`` taster | ``tačkica4+tačkica6+razmak`` |
-| ``NumeričkiTaster1`` | ``tačkica1+tačkica6+taster za brisanje nazad`` |
-| ``NumeričkiTaster2`` | ``tačkica1+tačkica2+tačkica6+taster za brisanje nazad`` |
-| ``NumeričkiTaster3`` | ``tačkica1+tačkica4+tačkica6+taster za brisanje nazad`` |
-| ``numeričkiTaster4`` | ``tačkica1+tačkica4+tačkica5+tačkica6+taster za brisanje nazad`` |
-| ``numeričkiTaster5`` | ``tačkica1+tačkica5+tačkica6+taster za brisanje nazad`` |
-| ``numeričkiTaster6`` | ``tačkica1+tačkica2+tačkica4+tačkica6+taster za brisanje nazad`` |
-| ``numeričkiTaster7`` | ``tačkica1+tačkica2+tačkica4+tačkica5+tačkica6+taster za brisanje nazad`` |
-| ``numeričkiTaster8`` | ``tačkica1+tačkica2+tačkica5+tačkica6+taster za brisanje nazad`` |
-| ``numeričkiTaster9`` | ``tačkica2+tačkica4+tačkica6+taster za brisanje nazad`` |
-| ``NumeričkiInsert`` taster | ``tačkica3+tačkica4+tačkica5+tačkica6+taster za brisanje nazad`` |
-| ``NumeričkiDecimalniZarez`` | ``tačkica2+taster za brisanje nazad`` |
-| ``NumeričkiTasterPodeljeno`` | ``tačkica3+tačkica4+taster za brisanje nazad`` |
-| ``NumeričkiTasterPuta`` | ``tačkica3+tačkica5+taster za brisanje nazad`` |
-| ``NumeričkiTasterMinus`` | ``tačkica3+tačkica6+taster za brisanje nazad`` |
-| ``NumeričkiTasterplus`` | ``tačkica2+tačkica3+tačkica5+taster za brisanje nazad`` |
-| ``NumeričkiTasterEnter`` | ``tačkica3+tačkica4+tačkica5+taster za brisanje nazad`` |
-| ``escape`` taster | ``tačkica1+tačkica2+tačkica4+tačkica5+razmak``, ``l2`` |
-| ``tab`` taster | ``tačkica2+tačkica5+tačkica6+razmak``, ``l3`` |
-| ``šift+tab`` tasteri | ``tačkica2+tačkica3+tačkica5+razmak`` |
-| ``printScreen`` taster | ``tačkica1+tačkica3+tačkica4+tačkica6+razmak`` |
-| ``Pauza`` taster | ``tačkica1+tačkica4+razmak`` |
-| ``aplikacioni`` taster | ``tačkica5+tačkica6+taster za brisanje nazad`` |
-| ``f1`` taster | ``tačkica1+taster za brisanje nazad`` |
-| ``f2`` taster | ``tačkica1+tačkica2+taster za brisanje nazad`` |
-| ``f3`` taster | ``tačkica1+tačkica4+taster za brisanje nazad`` |
-| ``f4`` taster | ``tačkica1+tačkica4+tačkica5+taster za brisanje nazad`` |
-| ``f5`` taster | ``tačkica1+tačkica5+taster za brisanje nazad`` |
-| ``f6`` taster | ``tačkica1+tačkica2+tačkica4+taster za brisanje nazad`` |
-| ``f7`` taster | ``tačkica1+tačkica2+tačkica4+tačkica5+taster za brisanje nazad`` |
-| ``f8`` taster | ``tačkica1+tačkica2+tačkica5+taster za brisanje nazad`` |
-| ``f9`` taster | ``tačkica2+tačkica4+taster za brisanje nazad`` |
-| ``f10`` taster | ``tačkica2+tačkica4+tačkica5+taster za brisanje nazad`` |
-| ``f11`` taster | ``tačkica1+tačkica3+taster za brisanje nazad`` |
-| ``f12`` taster | ``tačkica1+tačkica2+tačkica3+taster za brisanje nazad`` |
-| ``windows`` taster | ``tačkica1+tačkica2+tačkica4+tačkica5+tačkica6+razmak`` |
-| Uključi ili isključi taster ``windows`` | ``tačkica1+tačkica2+tačkica3+tačkica4+taster za brisanje nazad``, ``tačkica2+tačkica4+tačkica5+tačkica6+razmak`` |
-| ``capsLock`` taster | ``tačkica7+taster za brisanje nazad``, ``tačkica8+taster za brisanje nazad`` |
-| ``numLock`` taster | ``tačkica3+taster za brisanje nazad``, ``tačkica6+taster za brisanje nazad`` |
-| ``Šhift`` taster | ``tačkica7+razmak`` |
-| Uključi ili isključi taster ``šift`` | ``tačkica1+tačkica7+razmak``, ``tačkica4+tačkica7+razmak`` |
-| ``kontrol`` taster | ``tačkica7+tačkica8+razmak`` |
-| Uključi ili isključi taster ``kontrol`` | ``tačkica1+tačkica7+tačkica8+razmak``, ``tačkica4+tačkica7+tačkica8+razmak`` |
-| ``alt`` taster | ``tačkica8+razmak`` |
-| Uključi ili isključi taster ``alt`` | ``tačkica1+tačkica8+razmak``, ``tačkica4+tačkica8+razmak`` |
+| Uključi ili isključi ``NVDA`` taster | ``tačka3+tačka5+razmak`` |
+| ``insert`` taster | ``tačka1+tačka3+tačka5+razmak``, ``tačka3+tačka4+tačka5+razmak`` |
+| ``delete`` taster | ``tačka3+tačka6+razmak`` |
+| ``home`` taster | ``tačka1+tačka2+tačka3+razmak`` |
+| ``end`` taster | ``tačka4+tačka5+tačka6+razmak`` |
+| ``StrelicaLevo`` | ``tačka2+razmak`` |
+| ``strelicaDesno`` | ``tačka5+razmak`` |
+| ``strelicaGore`` | ``tačka1+razmak`` |
+| ``strelicaDole`` | ``tačka6+razmak`` |
+| ``pageUp`` taster | ``tačka1+tačka3+razmak`` |
+| ``pageDown`` taster | ``tačka4+tačka6+razmak`` |
+| ``NumeričkiTaster1`` | ``tačka1+tačka6+taster za brisanje nazad`` |
+| ``NumeričkiTaster2`` | ``tačka1+tačka2+tačka6+taster za brisanje nazad`` |
+| ``NumeričkiTaster3`` | ``tačka1+tačka4+tačka6+taster za brisanje nazad`` |
+| ``numeričkiTaster4`` | ``tačka1+tačka4+tačka5+tačka6+taster za brisanje nazad`` |
+| ``numeričkiTaster5`` | ``tačka1+tačka5+tačka6+taster za brisanje nazad`` |
+| ``numeričkiTaster6`` | ``tačka1+tačka2+tačka4+tačka6+taster za brisanje nazad`` |
+| ``numeričkiTaster7`` | ``tačka1+tačka2+tačka4+tačka5+tačka6+taster za brisanje nazad`` |
+| ``numeričkiTaster8`` | ``tačka1+tačka2+tačka5+tačka6+taster za brisanje nazad`` |
+| ``numeričkiTaster9`` | ``tačka2+tačka4+tačka6+taster za brisanje nazad`` |
+| ``NumeričkiInsert`` taster | ``tačka3+tačka4+tačka5+tačka6+taster za brisanje nazad`` |
+| ``NumeričkiDecimalniZarez`` | ``tačka2+taster za brisanje nazad`` |
+| ``NumeričkiTasterPodeljeno`` | ``tačka3+tačka4+taster za brisanje nazad`` |
+| ``NumeričkiTasterPuta`` | ``tačka3+tačka5+taster za brisanje nazad`` |
+| ``NumeričkiTasterMinus`` | ``tačka3+tačka6+taster za brisanje nazad`` |
+| ``NumeričkiTasterplus`` | ``tačka2+tačka3+tačka5+taster za brisanje nazad`` |
+| ``NumeričkiTasterEnter`` | ``tačka3+tačka4+tačka5+taster za brisanje nazad`` |
+| ``escape`` taster | ``tačka1+tačka2+tačka4+tačka5+razmak``, ``l2`` |
+| ``tab`` taster | ``tačka2+tačka5+tačka6+razmak``, ``l3`` |
+| ``šift+tab`` tasteri | ``tačka2+tačka3+tačka5+razmak`` |
+| ``printScreen`` taster | ``tačka1+tačka3+tačka4+tačka6+razmak`` |
+| ``Pauza`` taster | ``tačka1+tačka4+razmak`` |
+| ``aplikacioni`` taster | ``tačka5+tačka6+taster za brisanje nazad`` |
+| ``f1`` taster | ``tačka1+taster za brisanje nazad`` |
+| ``f2`` taster | ``tačka1+tačka2+taster za brisanje nazad`` |
+| ``f3`` taster | ``tačka1+tačka4+taster za brisanje nazad`` |
+| ``f4`` taster | ``tačka1+tačka4+tačka5+taster za brisanje nazad`` |
+| ``f5`` taster | ``tačka1+tačka5+taster za brisanje nazad`` |
+| ``f6`` taster | ``tačka1+tačka2+tačka4+taster za brisanje nazad`` |
+| ``f7`` taster | ``tačka1+tačka2+tačka4+tačka5+taster za brisanje nazad`` |
+| ``f8`` taster | ``tačka1+tačka2+tačka5+taster za brisanje nazad`` |
+| ``f9`` taster | ``tačka2+tačka4+taster za brisanje nazad`` |
+| ``f10`` taster | ``tačka2+tačka4+tačka5+taster za brisanje nazad`` |
+| ``f11`` taster | ``tačka1+tačka3+taster za brisanje nazad`` |
+| ``f12`` taster | ``tačka1+tačka2+tačka3+taster za brisanje nazad`` |
+| ``windows`` taster | ``tačka1+tačka2+tačka4+tačka5+tačka6+razmak`` |
+| Uključi ili isključi taster ``windows`` | ``tačka1+tačka2+tačka3+tačka4+taster za brisanje nazad``, ``tačka2+tačka4+tačka5+tačka6+razmak`` |
+| ``capsLock`` taster | ``tačka7+taster za brisanje nazad``, ``tačka8+taster za brisanje nazad`` |
+| ``numLock`` taster | ``tačka3+taster za brisanje nazad``, ``tačka6+taster za brisanje nazad`` |
+| ``Šhift`` taster | ``tačka7+razmak`` |
+| Uključi ili isključi taster ``šift`` | ``tačka1+tačka7+razmak``, ``tačka4+tačka7+razmak`` |
+| ``kontrol`` taster | ``tačka7+tačka8+razmak`` |
+| Uključi ili isključi taster ``kontrol`` | ``tačka1+tačka7+tačka8+razmak``, ``tačka4+tačka7+tačka8+razmak`` |
+| ``alt`` taster | ``tačka8+razmak`` |
+| Uključi ili isključi taster ``alt`` | ``tačka1+tačka8+razmak``, ``tačka4+tačka8+razmak`` |
+| Uključi ili isključi HID simulaciju tastature | ``Prekidač1Levo+Džojstik1Dole``, ``Prekidač1Desno+džojstik1Dole`` |
 %kc:endInclude
 
 +++ b.book komande tastature +++[Eurobraillebbook]
@@ -3764,6 +3820,7 @@ Molimo pogledajte dokumentaciju brajevog reda za opis i raspored ovih tastera.
 | Uključi ili isključi taster ``NVDA`` | ``l7`` |
 | ``kontrol+home``  | ``l1+l2+l3``, ``l2+l3+l4`` |
 | ``kontrol+end`` | ``l6+l7+l8``, ``l5+l6+l7`` |
+| Uključi ili isključi HID simulaciju tastature | ``l1+džojstik1Dole``, ``l8+džojstik1Dole`` |
 %kc:endInclude
 
 ++ Nattiq nBraille redovi ++[NattiqTechnologies]
@@ -3849,6 +3906,7 @@ Molimo pogledajte dokumentaciju brajevog reda za opis gde se ovi tasteri nalaze.
 | Uključuje ili isključuje brajev kursor | ``f1+kursor1``, ``f9+kursor2`` |
 | Kruži kroz režime prikazivanja brajevih poruka | ``f1+f2``, ``f9+f10`` |
 | Menja stanje prikazivanja izbora na brajevom redu | ``f1+f5``, ``f9+f14`` |
+| Kruži kroz stanja opcije "Brajevo pomeranje sistemskog kursora kada se prebacuje pregledni kursor" | ``f1+f3``, ``f9+f11`` |
 | Izvršava podrazumevanu radnju na trenutnom navigacionom objektu | ``f7+f8`` |
 | Prijavljuje datum/vreme | ``f9`` |
 | obaveštava o statusu baterije i preostalom vremenu ako punjač nije uključen | ``f10`` |
@@ -3880,8 +3938,8 @@ Slede trenutne tasterske prečice za ove redove.
 | Pomeri brajev red napred | pan desno ili rocker dole |
 | Prebaci na brajevu ćeliju | routing set 1|
 | Promeni vezivanje brajevog reda | Gore+Dole |
-| Strelica gore | Džojstik gore, strelica gore ili razmak+tačkica1 |
-| Strelica dole | Džojstik dole, strelica dole ili razmak+tačkica4 |
+| Strelica gore | Džojstik gore, strelica gore ili razmak+tačka1 |
+| Strelica dole | Džojstik dole, strelica dole ili razmak+tačka4 |
 | Strelica levo | Razmak+tačka3, džojstik levo ili strelica levo |
 | Strelica desno | Razmak+tačka6, džojstik desno ili strelica desno |
 | Šift plus tab | razmak+tačka1+tačka3 |
@@ -3899,18 +3957,33 @@ Slede trenutne tasterske prečice za ove redove.
 + Napredne teme +[AdvancedTopics]
 
 ++ Bezbedan način rada ++[SecureMode]
-NVDA se može pokrenuti u bezbednom načinu rada korišćenjem ``-s`` [opcije komandne linije #CommandLineOptions].
+Administratori sistema će možda želeti da podese NVDA tako da mu se ograniči neovlašćen pristup sistemu.
+NVDA dozvoljava instalaciju prilagođenih dodataka, koji mogu da izvrše i pokrenu kod, što uključuje kada NVDA ima administratorske privilegije.
+NVDA takođe dozvoljava korisnicima da pokrenu kod kroz NVDA Python konzolu.
+NVDA bezbedan režim sprečava da korisnici menjaju njihova NVDA podešavanja, i na druge načine ograničava pristup sistemu.
+
 NVDA se pokreće u bezbednom načinu rada na [bezbednim ekranima #SecureScreens], osim ako se ne omogući ``serviceDebug`` [sistemski parametar #SystemWideParameters].
+Da naterate NVDA da se uvek pokrene u bezbednom režimu, podesite ``forceSecureMode`` [sistemski parameta #SystemWideParameters].
+NVDA se takođe može pokrenuti u bezbednom režimu uz ``-s`` [opciju komandne linije #CommandLineOptions].
 
 Bezbedan način rada će onemogućiti:
 
 - Čuvanje konfiguracije i drugih podešavanja na disku
 - Čuvanje mape komandi na disku
 - Opcije [profila podešavanja #ConfigurationProfiles] kao što su pravljenje, brisanje, preimenovanje profila i slično.
-- Ažuriranje programa NVDA i pravljenje prenosivih kopija
-- [Python konzolu #PythonConsole]
+- Ažuriranje programa NVDA i pravljenje prenosnih kopija
+- [Prodavnicu dodataka #AddonsManager]
+- [NVDA Python konzolu #PythonConsole]
 - [Preglednik dnevnika #LogViewer] i evidentiranje u dnevniku
+- Otvaranje eksternih dokumenata iz NVDA menija, kao što su korisničko uputstvo ili datoteku saradnika.
 -
+
+Instalirane kopije programa NVDA čuvaju podešavanja uključujući dodatke u ``%APPDATA%\nvda``.
+Da biste sprečili NVDA korisnike da direktno izmene podešavanja ili dodatke, korisnički pristup ovom folderu se takođe mora ograničiti.
+
+NVDA korisnici često zavise od podešavanja njihovog NVDA profila kako bi zadovoljio njihove potrebe.
+Ovo može uključiti instalaciju i podešavanje prilagođenih dodataka, koje treba pregledati nezavisno od programa NVDA.
+Bezbedni režim će onemogućiti promene podešavanja, tako da prvo treba osigurati da je NVDA podešen pre nego što prisilite bezbedan režim.
 
 ++ Bezbedni ekrani ++[SecureScreens]
 NVDA se pokreće u [bezbednom načinu rada #SecureMode] kada je pokrenut na bezbednim ekranima osim ako je omogućen ``serviceDebug`` [sistemski parametar #SystemWideParameters].
@@ -3968,9 +4041,9 @@ Slede opcije komandne linije za NVDA:
 | Nema | --install-silent | Tiha instalacija programa NVDA(ne pokreće novo instaliranu kopiju) |
 | Nema | --enable-start-on-logon=True |False | U toku instalacije, omogući podešavanje [pokreni NVDA na Windows ekranu za prijavljivanje #StartAtWindowsLogon] |
 | Nema | --copy-portable-config | Kada instalirate, kopira podešavanja iz označene adrese (--config-path, -c) u trenutni korisnički nalog |
-| Nema | --create-portable | Pravi prenosivu kopiju programa NVDA (pokreće se automatski nakon pravljenja). Zahteva opciju --portable-path koja određuje adresu kopije |
-| Nema | --create-portable-silent | Pravi prenosivu kopiju programa NVDA (bez pokretanja nakon završetka). Zahteva opciju --portable-path koja određuje adresu kopije |
-| Nema | --portable-path=AdresaKopije | Adresa na kojoj će prenosiva kopija biti napravljena |
+| Nema | --create-portable | Pravi prenosnu kopiju programa NVDA (pokreće se automatski nakon pravljenja). Zahteva opciju --portable-path koja određuje adresu kopije |
+| Nema | --create-portable-silent | Pravi prenosnu kopiju programa NVDA (bez pokretanja nakon završetka). Zahteva opciju --portable-path koja određuje adresu kopije |
+| Nema | --portable-path=AdresaKopije | Adresa na kojoj će prenosna kopija biti napravljena |
 
 ++ Sistemski parametri++[SystemWideParameters]
 NVDA dozvoljava promenu određenih vrednosti u sistemskoj registry bazi koje menjaju ponašanje programa NVDA.
@@ -3981,8 +4054,9 @@ Ove vrednosti se čuvaju u registry bazi u jednom od sledećih ključeva:
 
 Sledeće vrednosti se mogu podesiti u ovom registry ključu:
  || Ime | Vrsta | Moguće vrednosti | Opis |
-| configInLocalAppData | DWORD | 0 (Podrazumevano) da onemogućite, 1 da omogućite | Ako je omogućeno, Čuva NVDA podešavanja u local folderu foldera app data umesto roaming foldera |
-| serviceDebug | DWORD | 0 (podrazumevano) da onemogućite, 1 da omogućite | Ako je omogućen, biće onemogućen [bezbedan način rada #SecureMode] na [bezbednim ekranima #SecureScreens]. Zbog nekoliko ogromnih bezbednosnih rizika, korišćenje ove opcije se ne preporučuje |
+| ``configInLocalAppData`` | DWORD | 0 (Podrazumevano) da onemogućite, 1 da omogućite | Ako je omogućeno, Čuva NVDA podešavanja u lokalnim podacima aplikacija umesto roming podataka |
+| ``serviceDebug`` | DWORD | 0 (podrazumevano) da onemogućite, 1 da omogućite | Ako je omogućen, biće onemogućen [bezbedan način rada #SecureMode] na [bezbednim ekranima #SecureScreens]. Zbog nekoliko ogromnih bezbednosnih rizika, korišćenje ove opcije se ne preporučuje |
+| ``forceSecureMode`` | DWORD | 0 (podrazumevano) da onemogućite, 1 da omogućite | Ako je omogućeno, nateraće NVDA da koristi [bezbedan režim #SecureMode] pri pokretanju. |
 
 + Dodatne informacije +[FurtherInformation]
 Ako vam trebaju dodatne informacije ili pomoć za program NVDA, molimo posetite NVDA sajt na lokaciji NVDA_URL.

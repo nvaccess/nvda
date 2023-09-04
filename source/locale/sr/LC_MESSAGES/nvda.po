@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3935\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-27 01:58+0000\n"
+"POT-Creation-Date: 2023-08-14 03:03+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nikola Jović <wwenikola123@gmail.com>\n"
 "Language-Team: NVDA Serbian translation\n"
@@ -2630,6 +2630,8 @@ msgid "Configuration profiles"
 msgstr "Profili podešavanja"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 #. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "Brajev"
@@ -4115,8 +4117,8 @@ msgstr "Aktivira NVDA Python konzolu, prvenstveno korisnu za razvoj"
 msgid ""
 "Activates the Add-on Store to browse and manage add-on packages for NVDA"
 msgstr ""
-"Aktivirar prodavnicu dodataka kako biste istraživali i upravljali dodacima "
-"za NVDA"
+"Aktivira prodavnicu dodataka kako biste istraživali i upravljali dodacima za "
+"NVDA"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
@@ -4161,6 +4163,32 @@ msgstr "Menja vezivanje brajevog reda između fokusa i pozicije pregleda"
 #, python-format
 msgid "Braille tethered %s"
 msgstr "Brajev red vezan za %s"
+
+#. Translators: Input help mode message for cycle through
+#. braille move system caret when routing review cursor command.
+msgid ""
+"Cycle through the braille move system caret when routing review cursor states"
+msgstr ""
+"Kruži kroz stanja brajevog pomeranja sistemskog kursora kada se prebacuje "
+"pregledni kursor"
+
+#. Translators: Reported when action is unavailable because braille tether is to focus.
+msgid "Action unavailable. Braille is tethered to focus"
+msgstr "Radnja nedostupna. Brajev red je vezan za fokus."
+
+#. Translators: Used when reporting braille move system caret when routing review cursor
+#. state (default behavior).
+#, python-format
+msgid "Braille move system caret when routing review cursor default (%s)"
+msgstr ""
+"Brajevo pomeranje sistemskog kursora kada se prebacuje pregledni kursor "
+"podrazumevano (%s)"
+
+#. Translators: Used when reporting braille move system caret when routing review cursor state.
+#, python-format
+msgid "Braille move system caret when routing review cursor %s"
+msgstr ""
+"Brajevo pomeranje sistemskog kursora kada se prebacuje pregledni kursor %s"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
@@ -6169,10 +6197,6 @@ msgctxt "action"
 msgid "Sound"
 msgstr "zvuk"
 
-#. Translators: Shown in the system Volume Mixer for controlling NVDA sounds.
-msgid "NVDA sounds"
-msgstr "NVDA zvukovi"
-
 msgid "Type help(object) to get help about object."
 msgstr "Upišite help(object) da dobijete pomoć o objektu"
 
@@ -6328,12 +6352,12 @@ msgstr "zadržati"
 #. Translators: a quick swipe of a finger in an up direction, on a touch screen.
 msgctxt "touch action"
 msgid "flick up"
-msgstr "povlačenje nagore"
+msgstr "povlačenje gore"
 
 #. Translators: a quick swipe of a finger in an down direction, on a touch screen.
 msgctxt "touch action"
 msgid "flick down"
-msgstr "povlačenje nadole"
+msgstr "povlačenje dole"
 
 #. Translators: a quick swipe of a finger in a left direction, on a touch screen.
 msgctxt "touch action"
@@ -6348,17 +6372,17 @@ msgstr "povlačenje udesno"
 #. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
 msgctxt "touch action"
 msgid "hover down"
-msgstr "Povuči dole"
+msgstr "Povuci dole"
 
 #. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
 msgctxt "touch action"
 msgid "hover"
-msgstr "Povuči"
+msgstr "Povuci"
 
 #. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
 msgctxt "touch action"
 msgid "hover up"
-msgstr "Povuči gore"
+msgstr "Povuci gore"
 
 #. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
 #. when Windows is on a secure screen (sign-on screen / UAC prompt).
@@ -7658,6 +7682,18 @@ msgstr "Jedan novi red"
 #. Translators: Label for a paragraph style in NVDA settings.
 msgid "Multi line break"
 msgstr "Više novih redova"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Never"
+msgstr "nikada"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Only when tethered automatically"
+msgstr "Samo pri automatskom vezivanju"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Always"
+msgstr "Uvek"
 
 #. Translators: Label for an option in NVDA settings.
 msgid "Diffing"
@@ -10681,11 +10717,6 @@ msgstr "Prijavi 'ima detalje ' za strukture napomena"
 msgid "Report aria-description always"
 msgstr "Uvek prijavi aria-description opis"
 
-#. Translators: This is the label for a group of advanced options in the
-#. Advanced settings panel
-msgid "HID Braille Standard"
-msgstr "HID standard za brajeve redove"
-
 #. Translators: Label for option in the 'Enable support for HID braille' combobox
 #. in the Advanced settings panel.
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
@@ -10707,10 +10738,14 @@ msgstr "Da"
 msgid "No"
 msgstr "Ne"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combo box in the
 #. Advanced settings panel.
 msgid "Enable support for HID braille"
 msgstr "Omogući podršku za HID brajev standard"
+
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Report live regions:"
+msgstr "Prijavi žive regione:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10794,8 +10829,7 @@ msgstr "Prijavi vrednosti transparentnih boja"
 msgid "Audio"
 msgstr "Zvuk"
 
-#. Translators: This is the label for a checkbox control in the
-#. Advanced settings panel.
+#. Translators: This is the label for a checkbox control in the Advanced settings panel.
 msgid "Use WASAPI for audio output (requires restart)"
 msgstr "Koristi WASAPI za zvučni izlaz (zahteva ponovno pokretanje)"
 
@@ -10803,6 +10837,11 @@ msgstr "Koristi WASAPI za zvučni izlaz (zahteva ponovno pokretanje)"
 #. Advanced settings panel.
 msgid "Volume of NVDA sounds follows voice volume (requires WASAPI)"
 msgstr "Jačina NVDA zvukova prati jačinu glasa (zahteva WASAPI)"
+
+#. Translators: This is the label for a slider control in the
+#. Advanced settings panel.
+msgid "Volume of NVDA sounds (requires WASAPI)"
+msgstr "Jačina NVDA zvukova (zahteva WASAPI)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10931,6 +10970,10 @@ msgstr "Vreme isteka &poruke (u sekundama)"
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Tether B&raille:"
 msgstr "Vezivanje b&rajevog reda za:"
+
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "Move system caret when ro&uting review cursor"
+msgstr "Pomeranje sistemskog kursora kada se &prebacuje pregledni kursor"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -13715,25 +13758,57 @@ msgctxt "addonStore"
 msgid "Enabled, pending restart"
 msgstr "Omogućen, čeka na ponovno pokretanje"
 
-#. Translators: A selection option to display installed add-ons in the add-on store
+#. Translators: The label of a tab to display installed add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
 msgid "Installed add-ons"
 msgstr "Instalirani dodaci"
 
-#. Translators: A selection option to display updatable add-ons in the add-on store
+#. Translators: The label of a tab to display updatable add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
 msgid "Updatable add-ons"
 msgstr "Dodaci koji imaju ažuriranja"
 
-#. Translators: A selection option to display available add-ons in the add-on store
+#. Translators: The label of a tab to display available add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
 msgid "Available add-ons"
 msgstr "Dostupni dodaci"
 
-#. Translators: A selection option to display incompatible add-ons in the add-on store
+#. Translators: The label of a tab to display incompatible add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
 msgid "Installed incompatible add-ons"
 msgstr "Instalirani nekompatibilni dodaci"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Installed &add-ons"
+msgstr "Instalirani &dodaci"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Updatable &add-ons"
+msgstr "&Dodaci koji imaju ažuriranja"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Available &add-ons"
+msgstr "&Dostupni dodaci"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Installed incompatible &add-ons"
+msgstr "Instalirani nekompatibilni &dodaci"
 
 #. Translators: The reason an add-on is not compatible.
 #. A more recent version of NVDA is required for the add-on to work.
@@ -13837,7 +13912,7 @@ msgstr "S&tatus:"
 #. Translators: Label for the text control containing a description of the selected add-on.
 #. In the add-on store dialog.
 msgctxt "addonStore"
-msgid "&Actions"
+msgid "A&ctions"
 msgstr "R&adnje"
 
 #. Translators: Label for the text control containing extra details about the selected add-on.
@@ -13849,7 +13924,17 @@ msgstr "&Drugi detalji:"
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 msgctxt "addonStore"
 msgid "Publisher:"
+msgstr "Izdavač:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Author:"
 msgstr "Autor:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "ID:"
+msgstr "ID:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 msgctxt "addonStore"
@@ -13991,49 +14076,85 @@ msgctxt "addonStore"
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
-"Publisher: {publisher}\n"
 "Description: {description}\n"
 msgstr ""
 "{summary} ({name})\n"
 "Verzija: {version}\n"
-"Autor: {publisher}\n"
 "Opis: {description}\n"
+
+#. Translators: the publisher part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Publisher: {publisher}\n"
+msgstr "Izdavač: {publisher}\n"
+
+#. Translators: the author part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Author: {author}\n"
+msgstr "Autor: {author}\n"
 
 #. Translators: the url part of the About Add-on information
 #, python-brace-format
 msgctxt "addonStore"
-msgid "Homepage: {url}"
-msgstr "Početna stranica: {url}"
+msgid "Homepage: {url}\n"
+msgstr "Početna stranica: {url}\n"
 
 #. Translators: the minimum NVDA version part of the About Add-on information
 msgctxt "addonStore"
-msgid "Minimum required NVDA version: {}"
-msgstr "Minimalna neophodna NVDA verzija: {}"
+msgid "Minimum required NVDA version: {}\n"
+msgstr "Minimalna neophodna NVDA verzija: {}\n"
 
 #. Translators: the last NVDA version tested part of the About Add-on information
 msgctxt "addonStore"
-msgid "Last NVDA version tested: {}"
-msgstr "Poslednja testirana NVDA verzija: {}"
+msgid "Last NVDA version tested: {}\n"
+msgstr "Poslednja testirana NVDA verzija: {}\n"
 
 #. Translators: title for the Addon Information dialog
 msgctxt "addonStore"
 msgid "Add-on Information"
 msgstr "Informacije o dodatku"
 
+#. Translators: The warning of a dialog
+msgid "Add-on Store Warning"
+msgstr "Upozorenje prodavnice dodataka"
+
+#. Translators: Warning that is displayed before using the Add-on Store.
+msgctxt "addonStore"
+msgid ""
+"Add-ons are created by the NVDA community and are not vetted by NV Access. "
+"NV Access cannot be held responsible for add-on behavior. The functionality "
+"of add-ons is unrestricted and can include accessing your personal data or "
+"even the entire system. "
+msgstr ""
+"Dodatke pravi NVDA zajednica i NV Access ih ne proverava. NV Access ne može "
+"snositi odgovornost za ponašanje dodataka. Funkcionalnost dodataka je "
+"neograničena i ovo može uključiti pristup ličnim podacima ili čak celom "
+"sistemu. "
+
+#. Translators: The label of a checkbox in the add-on store warning dialog
+msgctxt "addonStore"
+msgid "&Don't show this message again"
+msgstr "&Ne prikazuj ovu poruku ponovo"
+
+#. Translators: The label of a button in a dialog
+msgid "&OK"
+msgstr "&U redu"
+
 #. Translators: The title of the addonStore dialog where the user can find and download add-ons
 msgctxt "addonStore"
 msgid "Add-on Store"
 msgstr "Prodavnica dodataka"
 
-#. Translators: Banner notice that is displayed in the Add-on Store.
-msgctxt "addonStore"
-msgid "Note: NVDA was started with add-ons disabled"
-msgstr "Napomena: NVDA je pokrenut sa onemogućenim dodacima"
-
 #. Translators: The label for a button in add-ons Store dialog to install an external add-on.
 msgctxt "addonStore"
 msgid "Install from e&xternal source"
 msgstr "Instaliraj iz e&ksternog izvora"
+
+#. Translators: Banner notice that is displayed in the Add-on Store.
+msgctxt "addonStore"
+msgid "Note: NVDA was started with add-ons disabled"
+msgstr "Napomena: NVDA je pokrenut sa onemogućenim dodacima"
 
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"
@@ -14047,7 +14168,7 @@ msgstr "Uključi nekompat&ibilne dodatke"
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"
 msgid "Ena&bled/disabled:"
-msgstr "&Omogućen/onemogućen:"
+msgstr "&Omogućeni/onemogućeni:"
 
 #. Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"
@@ -14071,6 +14192,13 @@ msgctxt "addonStore"
 msgid "Installing {} add-ons, please wait."
 msgstr "Instalacija {} dodataka, molimo sačekajte."
 
+#. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
+#. tab's name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "{category}:"
+msgstr "{category}:"
+
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
 #, python-brace-format
 msgctxt "addonStore"
@@ -14088,12 +14216,12 @@ msgctxt "addonStore"
 msgid "Name"
 msgstr "Ime"
 
-#. Translators: The name of the column that contains the installed addons version string.
+#. Translators: The name of the column that contains the installed addon's version string.
 msgctxt "addonStore"
 msgid "Installed version"
 msgstr "Instalirana verzija"
 
-#. Translators: The name of the column that contains the available addons version string.
+#. Translators: The name of the column that contains the available addon's version string.
 msgctxt "addonStore"
 msgid "Available version"
 msgstr "Dostupna verzija"
@@ -14103,9 +14231,14 @@ msgctxt "addonStore"
 msgid "Channel"
 msgstr "Kanal"
 
-#. Translators: The name of the column that contains the addons publisher.
+#. Translators: The name of the column that contains the addon's publisher.
 msgctxt "addonStore"
 msgid "Publisher"
+msgstr "Izdavač"
+
+#. Translators: The name of the column that contains the addon's author.
+msgctxt "addonStore"
+msgid "Author"
 msgstr "Autor"
 
 #. Translators: The name of the column that contains the status of the addon.
@@ -14188,6 +14321,12 @@ msgstr "Nije moguće omogućiti dodatak: {addon}."
 msgctxt "addonStore"
 msgid "Could not disable the add-on: {addon}."
 msgstr "Nije moguće onemogućiti dodatak: {addon}."
+
+#~ msgid "NVDA sounds"
+#~ msgstr "NVDA zvukovi"
+
+#~ msgid "HID Braille Standard"
+#~ msgstr "HID standard za brajeve redove"
 
 #~ msgid "Find Error"
 #~ msgstr "Greška pri pretrazi"
