@@ -45,17 +45,6 @@ https://chromium.googlesource.com/chromium/src/+/main/ui/accessibility/platform/
 """
 
 
-def fetchIA2OffsetInfoFromVBufFormatField(field: textInfos.FormatField) -> Tuple[int, int, int]:
-	startOffset = field.get('ia2TextStartOffset', None)
-	if startOffset is None:
-		raise ValueError("no ia2StartOffset found")
-	startOffset += field.get('strippedCharsFromStart', 0)
-	startOffset += field['_offsetFromStartOfNode']
-	hwnd = field['ia2WindowHandle']
-	ID = field['ia2UniqueID']
-	return hwnd, ID, startOffset
-
-
 class ChromeVBufTextInfo(GeckoVBufTextInfo):
 
 	def _calculateDescriptionFrom(self, attrs) -> controlTypes.DescriptionFrom:
@@ -100,66 +89,6 @@ class ChromeVBuf(GeckoVBuf):
 		except COMError:
 			return False
 		return not self._isNVDAObjectInApplication(obj)
-
-	def updateAppSelection(self):
-		try:
-			paccTextSelectionContainer = self.rootNVDAObject.IAccessibleObject.QueryInterface(IAccessibleTextSelectionContainer)
-		except COMError as e:
-			raise NotImplementedError from e
-		selInfo = self.makeTextInfo(textInfos.POSITION_SELECTION)
-		selFields = selInfo.getTextWithFields()
-		ia2StartWindow = None
-		ia2StartID = None
-		ia2StartOffset = None
-		ia2EndWindow = None
-		ia2EndID = None
-		ia2EndOffset = None
-		for field in selFields:
-			if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
-				try:
-					ia2StartWindow, ia2StartID, ia2StartOffset = fetchIA2OffsetInfoFromVBufFormatField(field.field)
-				except ValueError:
-					continue
-				break
-		if ia2StartOffset is None:
-			raise NotImplementedError("No ia2StartOffset")
-		log.debug(f"ia2StartWindow: {ia2StartWindow}")
-		log.debug(f"ia2StartID: {ia2StartID}")
-		log.debug(f"ia2StartOffset: {ia2StartOffset}")
-		ia2StartObj, childID = IAccessibleHandler.accessibleObjectFromEvent(ia2StartWindow, winUser.OBJID_CLIENT, ia2StartID)
-		assert (childID == 0), f"childID should be 0"
-		ia2StartObj = ia2StartObj.QueryInterface(IAccessibleText)
-		log.debug(f"ia2StartObj {ia2StartObj}")
-		lastTextLen = 0
-		for field in reversed(selFields):
-			if isinstance(field, str):
-				lastTextLen = len(field)
-				continue
-			elif isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
-				try:
-					ia2EndWindow, ia2EndID, ia2EndOffset = fetchIA2OffsetInfoFromVBufFormatField(field.field)
-				except ValueError:
-					lastTextLen = 0
-					continue
-				ia2EndOffset += lastTextLen
-				break
-			else:
-				lastTextLen = 0
-		if ia2EndOffset is None:
-			raise NotImplementedError("No ia2EndOffset")
-		log.debug(f"ia2EndWindow: {ia2EndWindow}")
-		log.debug(f"ia2EndID: {ia2EndID}")
-		log.debug(f"ia2EndOffset: {ia2EndOffset}")
-		if ia2EndID == ia2StartID:
-			ia2EndObj = ia2StartObj
-			log.debug("Reusing ia2StartObj for ia2EndObj")
-		else:
-			ia2EndObj, childID = IAccessibleHandler.accessibleObjectFromEvent(ia2EndWindow, winUser.OBJID_CLIENT, ia2EndID)
-			assert (childID == 0), f"childID should be 0"
-			ia2EndObj = ia2EndObj.QueryInterface(IAccessibleText)
-			log.debug(f"ia2EndObj {ia2EndObj}")
-		r = IA2TextSelection(ia2StartObj, ia2StartOffset, ia2EndObj, ia2EndOffset, False)
-		paccTextSelectionContainer.SetSelections(1, byref(r))
 
 
 class Document(ia2Web.Document):
