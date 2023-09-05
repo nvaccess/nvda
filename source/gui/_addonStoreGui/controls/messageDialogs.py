@@ -217,7 +217,7 @@ class _SafetyWarningDialog(
 
 	def __init__(self, parent: wx.Window):
 		# Translators: The warning of a dialog
-		super().__init__(parent, title=_("Add-on Store Warning"))
+		super().__init__(parent, title=pgettext("addonStore", "Add-on Store Warning"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = BoxSizerHelper(self, orientation=wx.VERTICAL)
 
@@ -252,7 +252,7 @@ class _SafetyWarningDialog(
 		bHelper = sHelper.addDialogDismissButtons(ButtonHelper(wx.HORIZONTAL))
 
 		# Translators: The label of a button in a dialog
-		okButton = bHelper.addButton(self, wx.ID_OK, label=_("&OK"))
+		okButton = bHelper.addButton(self, wx.ID_OK, label=pgettext("addonStore", "&OK"))
 		okButton.Bind(wx.EVT_BUTTON, self.onOkButton)
 
 		mainSizer.Add(sHelper.sizer, border=BORDER_FOR_DIALOGS, flag=wx.ALL)

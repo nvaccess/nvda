@@ -543,6 +543,10 @@ class Gecko_ia2(VirtualBuffer):
 				},
 				{"IAccessible::role":[oleacc.ROLE_SYSTEM_APPLICATION,oleacc.ROLE_SYSTEM_DIALOG]},
 			]
+		elif nodeType == "tab":
+			attrs = [
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_PAGETAB]}
+			]
 		else:
 			return None
 		return attrs

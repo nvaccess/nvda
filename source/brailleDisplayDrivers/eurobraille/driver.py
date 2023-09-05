@@ -38,10 +38,41 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	# Translators: Names of braille displays.
 	description = constants.description
 	isThreadSafe = True
+	supportsAutomaticDetection = True
 	timeout = 0.2
 	supportedSettings = (
 		braille.BrailleDisplayDriver.HIDInputSetting(useConfig=True),
 	)
+
+	@classmethod
+	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
+		driverRegistrar.addUsbDevices(bdDetect.KEY_HID, {
+			"VID_C251&PID_1122",  # Esys (version < 3.0, no SD card
+			"VID_C251&PID_1123",  # Esys (version >= 3.0, with HID keyboard, no SD card
+			"VID_C251&PID_1124",  # Esys (version < 3.0, with SD card
+			"VID_C251&PID_1125",  # Esys (version >= 3.0, with HID keyboard, with SD card
+			"VID_C251&PID_1126",  # Esys (version >= 3.0, no SD card
+			"VID_C251&PID_1127",  # Reserved
+			"VID_C251&PID_1128",  # Esys (version >= 3.0, with SD card
+			"VID_C251&PID_1129",  # Reserved
+			"VID_C251&PID_112A",  # Reserved
+			"VID_C251&PID_112B",  # Reserved
+			"VID_C251&PID_112C",  # Reserved
+			"VID_C251&PID_112D",  # Reserved
+			"VID_C251&PID_112E",  # Reserved
+			"VID_C251&PID_112F",  # Reserved
+			"VID_C251&PID_1130",  # Esytime
+			"VID_C251&PID_1131",  # Reserved
+			"VID_C251&PID_1132",  # Reserved
+		})
+		driverRegistrar.addUsbDevices(bdDetect.KEY_SERIAL, {
+			"VID_28AC&PID_0012",  # b.note
+			"VID_28AC&PID_0013",  # b.note 2
+			"VID_28AC&PID_0020",  # b.book internal
+			"VID_28AC&PID_0021",  # b.book external
+		})
+
+		driverRegistrar.addBluetoothDevices(lambda m: m.id.startswith("Esys"))
 
 	@classmethod
 	def getManualPorts(cls):

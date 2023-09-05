@@ -25,17 +25,18 @@ The following behaviours are expected and requested of all community members:
 
 ## 4. Unacceptable Behaviour
 The following behaviours are considered harassment and are unacceptable within our community:
-* Violence, threats of violence or violent language directed against another person.
+* Violence, threats of violence, inciting violence, glorifying violence, or violent language directed against another person.
 * Sexist, racist, homophobic, transphobic, ableist or otherwise discriminatory jokes and language.
 * Posting or displaying sexually explicit or violent material.
 * Posting or threatening to post other people's personally identifying information ("doxing").
 * Trolling, insulting/derogatory comments, and personal or political attacks
 * Personal insults, particularly those related to gender, sexual orientation, race, religion, or disability.
 * Inappropriate photography or recording.
-* Unwelcome sexual attention. This includes sexualized comments or jokes, inappropriate touching, groping, and unwelcomed sexual advances.
+* Unwelcome sexual attention. This includes sexualized comments or jokes, inappropriate touching, groping, and unwelcome sexual advances.
 * Deliberate intimidation, stalking or following (online or in person).
 * Advocating for, or encouraging, any of the above behaviour.
 * Sustained disruption of community events, including talks and presentations.
+* Religious or political proselytising.
 
 ## 5. Consequences of Unacceptable Behaviour
 Unacceptable behaviour from any community member, including sponsors and those with decision-making authority, will not be tolerated.
@@ -61,4 +62,6 @@ info@nvaccess.org
 The Citizen and Contributor Code of Conduct is distributed by NV Access Limited. 
 Portions of text were derived from the GitHub sample Citizen and Contributor Code of Conduct, which is distributed under a Creative Commons Attribution-ShareAlike license.
 
-Revision1.0 adopted by NV Access Limited on 2020-09-23
+Revision history:
+- Revision 1.0 adopted by NV Access Limited on 2020-09-23
+- Revision 1.1 adopted by NV Access Limited on 2023-08-09
