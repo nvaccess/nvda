@@ -44,6 +44,7 @@ from UIAHandler.utils import (
 	_shouldUseWindowsTerminalNotifications,
 )
 from NVDAObjects.window import Window
+from NVDAObjects.window.edit import EditBase
 from NVDAObjects import (
 	NVDAObject,
 	NVDAObjectTextInfo,
@@ -1234,13 +1235,11 @@ class UIA(Window):
 			super(UIA,self).findOverlayClasses(clsList)
 			if self.UIATextPattern:
 				# Since there is a UIA text pattern, there is no need to use the win32 edit support at all.
-				# However, UIA classifies (rich) edit controls with a role of document and doesn't add a multiline state.
-				# Remove any win32 Edit class and insert EditBase to keep backwards compatibility with win32.
-				import NVDAObjects.window.edit
+				# Remove any win32 Edit class and insert EditUIA instead.
 				for x in list(clsList):
 					if issubclass(x, NVDAObjects.window.edit.Edit):
 						clsList.remove(x)
-						clsList.insert(0, NVDAObjects.window.edit.EditBase)
+						clsList.insert(0, EditUIA)
 
 	@classmethod
 	def kwargsFromSuper(cls, kwargs, relation=None, ignoreNonNativeElementsWithFocus=True):
@@ -2438,3 +2437,20 @@ class ProgressBar(UIA, ProgressBar):
 		else:
 			val = ((val - minVal) / (maxVal - minVal)) * 100.0
 		return f"{round(val)}%"
+
+
+class EditUIA(EditBase, UIA):
+	"""Overlay class for Edit and RichEdit controls."""
+
+	def _get_name(self):
+		name = super().name
+		if name == "RichEdit Control":
+			# #15330: UIA redundantly sets "RichEdit Control as name for rich edit objects.
+			self.name = None
+			return self.name
+		elif name == self.UIAValue:
+			# #15375: Some edit controls, such as for file rename in Windows 11, have the name
+			# redundantly mimic the window text/value of the control.
+			self.name = None
+			return self.name
+		return name

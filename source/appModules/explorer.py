@@ -1,6 +1,5 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Joseph Lee, Łukasz Golonka, Julien Cochuyt
+# Copyright (C) 2006-2023 NV Access Limited, Joseph Lee, Łukasz Golonka, Julien Cochuyt, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -224,16 +223,6 @@ class UIProperty(UIA):
 			return value
 		return value.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 
-class ReadOnlyEditBox(IAccessible):
-#Used for read-only edit boxes in a properties window.
-#These can contain dates that include unwanted left-to-right and right-to-left indicator characters.
-
-	def _get_windowText(self):
-		windowText = super(ReadOnlyEditBox, self).windowText
-		if windowText is not None:
-			return windowText.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
-		return windowText
-
 
 class MetadataEditField(RichEdit50):
 	""" Used for metadata edit fields in Windows Explorer in Windows 7.
@@ -296,11 +285,7 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, ExplorerToolTip)
 			return
 
-		if windowClass == "Edit" and controlTypes.State.READONLY in obj.states:
-			clsList.insert(0, ReadOnlyEditBox)
-			return # Optimization: return early to avoid comparing class names and roles that will never match.
-
-		if windowClass == "SysListView32":
+		if isinstance(obj, IAccessible) and windowClass == "SysListView32":
 			if(
 				role == controlTypes.Role.MENUITEM
 				or(
@@ -320,7 +305,7 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, StartButton)
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
-		if windowClass == 'RICHEDIT50W' and obj.windowControlID == 256:
+		if windowClass == 'RICHEDIT50W' and RichEdit50 in clsList and obj.windowControlID == 256:
 			clsList.insert(0, MetadataEditField)
 			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 
