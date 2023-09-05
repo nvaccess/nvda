@@ -29,7 +29,10 @@ import controlTypes
 import api
 import textInfos
 import speech
-from speech import sayAll
+from speech import (
+	sayAll,
+	shortcutKeys,
+)
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import globalVars
 from logHandler import log
@@ -2605,12 +2608,13 @@ class GlobalCommands(ScriptableObject):
 	def script_reportFocusObjectAccelerator(self, gesture: inputCore.InputGesture) -> None:
 		obj = api.getFocusObject()
 		if obj.keyboardShortcut:
-			res = obj.keyboardShortcut
+			shortcut = obj.keyboardShortcut
+			shortcutKeys.speakKeyboardShortcuts(shortcut)
+			braille.handler.message(shortcut)
 		else:
 			# Translators: reported when a user requests the accelerator key
 			# of the currently focused object, but there is none set.
-			res = _("No shortcut key")
-		ui.message(res)
+			ui.message(_("No shortcut key"))
 
 	@script(
 		# Translators: Input help mode message for toggle mouse tracking command.
