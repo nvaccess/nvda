@@ -45,11 +45,21 @@ Add-ons can be filtered by display name, publisher and description.
 
 ### Install add-on from add-on store
 1. Open the add-on store.
+1. Navigate to the available add-ons tab.
 1. Select an add-on.
-1. Navigate to and press the install button for the add-on.
+1. Using the context menu, install the add-on.
 1. Exit the dialog
 1. Restart NVDA as prompted.
-1. Confirm the add-on is listed in the add-ons store.
+1. Confirm the add-ons are listed in the installed add-ons tab of the add-ons store.
+
+### Batch install add-ons from add-on store
+1. Open the add-on store.
+1. Navigate to the available add-ons tab.
+1. Select multiple add-ons using `shift` and `ctrl`.
+1. Using the context menu, install the add-ons.
+1. Exit the dialog
+1. Restart NVDA as prompted.
+1. Confirm the add-ons are listed in the installed add-ons tab of the add-ons store.
 
 ### Install add-on from external source in add-on store
 1. Open the add-on store.

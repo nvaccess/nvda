@@ -110,7 +110,7 @@ class AddonStoreVM:
 		log.debug(f"Setting selection: {selectedVM}")
 		self.detailsVM.listItem = selectedVM
 		for action in self.actionVMList:
-			action.listItemVM = selectedVM
+			action.actionTarget = selectedVM
 
 	def _makeActionsList(self):
 		selectedListItem: Optional[AddonListItemVM] = self.listVM.getSelection()
@@ -120,7 +120,7 @@ class AddonStoreVM:
 				displayName=pgettext("addonStore", "&Install"),
 				actionHandler=self.getAddon,
 				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.AVAILABLE,
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that installs the selected addon
@@ -130,14 +130,14 @@ class AddonStoreVM:
 					aVM.status == AvailableAddonStatus.INCOMPATIBLE
 					and aVM.model.canOverrideCompatibility
 				),
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that updates the selected addon
 				displayName=pgettext("addonStore", "&Update"),
 				actionHandler=self.getAddon,
 				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.UPDATE,
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that replaces the selected addon with
@@ -145,7 +145,7 @@ class AddonStoreVM:
 				displayName=pgettext("addonStore", "Re&place"),
 				actionHandler=self.replaceAddon,
 				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.REPLACE_SIDE_LOAD,
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that disables the selected addon
@@ -158,7 +158,7 @@ class AddonStoreVM:
 					AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
 					AvailableAddonStatus.PENDING_REMOVE,
 				),
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that enables the selected addon
@@ -168,7 +168,7 @@ class AddonStoreVM:
 					aVM.status == AvailableAddonStatus.DISABLED
 					or aVM.status == AvailableAddonStatus.PENDING_DISABLE
 				),
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that enables the selected addon
@@ -181,7 +181,7 @@ class AddonStoreVM:
 					)
 					and aVM.model.canOverrideCompatibility
 				),
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that removes the selected addon
@@ -197,7 +197,7 @@ class AddonStoreVM:
 						_StatusFilterKey.INCOMPATIBLE,
 					)
 				),
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that opens help for the selected addon
@@ -214,14 +214,14 @@ class AddonStoreVM:
 					and aVM.model._addonHandlerModel is not None
 					and aVM.model._addonHandlerModel.getDocFilePath() is not None
 				),
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that opens the homepage for the selected addon
 				displayName=pgettext("addonStore", "Ho&mepage"),
 				actionHandler=lambda aVM: startfile(aVM.model.homepage),
 				validCheck=lambda aVM: aVM.model.homepage is not None,
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that opens the license for the selected addon
@@ -236,14 +236,14 @@ class AddonStoreVM:
 					isinstance(aVM.model, _AddonStoreModel)
 					and aVM.model.licenseURL is not None
 				),
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that opens the source code for the selected addon
 				displayName=pgettext("addonStore", "Source &Code"),
 				actionHandler=lambda aVM: startfile(cast(_AddonStoreModel, aVM.model).sourceURL),
 				validCheck=lambda aVM: isinstance(aVM.model, _AddonStoreModel),
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 		]
 

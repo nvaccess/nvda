@@ -258,6 +258,11 @@ class AddonListVM:
 			return self._addonsFilteredOrdered.index(self.selectedAddonId)
 		return None
 
+	def getAddonAtIndex(self, index: int) -> AddonListItemVM:
+		self._validate(selectionIndex=index)
+		selectedAddonId = self._addonsFilteredOrdered[index]
+		return self._addons[selectedAddonId]
+
 	def setSelection(self, index: Optional[int]) -> Optional[AddonListItemVM]:
 		self._validate(selectionIndex=index)
 		self.selectedAddonId = None

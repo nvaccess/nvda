@@ -15,7 +15,7 @@ from logHandler import log
 
 from ..viewModels.addonList import AddonDetailsVM, AddonListField
 
-from .actions import _ActionsContextMenu
+from .actions import _MonoActionsContextMenu
 
 _fontFaceName = "Segoe UI"
 _fontFaceName_semiBold = "Segoe UI Semibold"
@@ -49,7 +49,7 @@ class AddonDetails(
 			self,
 			parent: wx.Window,
 			detailsVM: AddonDetailsVM,
-			actionsContextMenu: _ActionsContextMenu,
+			actionsContextMenu: _MonoActionsContextMenu,
 	):
 		self._detailsVM: AddonDetailsVM = detailsVM
 		self._actionsContextMenu = actionsContextMenu
