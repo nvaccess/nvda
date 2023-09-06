@@ -49,7 +49,7 @@ from .network import (
 if TYPE_CHECKING:
 	from addonHandler import Addon as AddonHandlerModel  # noqa: F401
 	# AddonGUICollectionT must only be imported when TYPE_CHECKING
-	from .models.addon import AddonGUICollectionT  # noqa: F401
+	from .models.addon import AddonGUICollectionT, _AddonStoreModel  # noqa: F401
 	from gui._addonStoreGui.viewModels.addonList import AddonListItemVM  # noqa: F401
 	from gui.message import DisplayableError  # noqa: F401
 
@@ -69,7 +69,8 @@ def initialize():
 class _DataManager:
 	_cacheLatestFilename: str = "_cachedLatestAddons.json"
 	_cacheCompatibleFilename: str = "_cachedCompatibleAddons.json"
-	_downloadsPendingInstall: Set[Tuple["AddonListItemVM", os.PathLike]] = set()
+	_downloadsPendingInstall: Set[Tuple["AddonListItemVM[_AddonStoreModel]", os.PathLike]] = set()
+	_downloadsPendingCompletion: Set["AddonListItemVM[_AddonStoreModel]"] = set()
 
 	def __init__(self):
 		self._lang = languageHandler.getLanguage()
@@ -123,7 +124,7 @@ class _DataManager:
 		cacheHash = response.json()
 		return cacheHash
 
-	def _cacheCompatibleAddons(self, addonData: str, cacheHash: str):
+	def _cacheCompatibleAddons(self, addonData: str, cacheHash: Optional[str]):
 		if not NVDAState.shouldWriteToDisk():
 			return
 		if not addonData or not cacheHash:
@@ -137,7 +138,7 @@ class _DataManager:
 		with open(self._cacheCompatibleFile, 'w', encoding='utf-8') as cacheFile:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
 
-	def _cacheLatestAddons(self, addonData: str, cacheHash: str):
+	def _cacheLatestAddons(self, addonData: str, cacheHash: Optional[str]):
 		if not NVDAState.shouldWriteToDisk():
 			return
 		if not addonData or not cacheHash:
