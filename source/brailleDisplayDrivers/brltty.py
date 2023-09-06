@@ -126,13 +126,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"braille_previousLine": ("br(brltty):lnup",),
 			"braille_nextLine": ("br(brltty):lndn",),
 			"braille_routeTo": ("br(brltty):route",),
-			"toggleInputHelp": ("brl(brltty):learn"),
-			"showGui": ("brl(brltty):prefmenu",),
-			"revertConfiguration": ("brl(brltty):prefload",),
-			"saveConfiguration": ("brl(brltty):prefsave",),
-			"dateTime": ("brl(brltty):time",),
-			"review_currentLine": ("brl(brltty):say_line",),
-			"review_sayAll": ("brl(brltty):say_below",),
+			"toggleInputHelp": ("br(brltty):learn"),
+			"showGui": ("br(brltty):prefmenu",),
+			"revertConfiguration": ("br(brltty):prefload",),
+			"saveConfiguration": ("br(brltty):prefsave",),
+			"dateTime": ("br(brltty):time",),
+			"review_currentLine": ("br(brltty):say_line",),
+			"review_sayAll": ("br(brltty):say_below",),
 		}
 	})
 
