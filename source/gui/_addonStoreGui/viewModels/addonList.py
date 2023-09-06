@@ -12,11 +12,9 @@ from enum import Enum
 from locale import strxfrm
 from typing import (
 	FrozenSet,
-	Generic,
 	List,
 	Optional,
 	TYPE_CHECKING,
-	TypeVar,
 )
 
 from requests.structures import CaseInsensitiveDict
@@ -94,21 +92,18 @@ class AddonListField(_AddonListFieldData, Enum):
 	)
 
 
-_AddonModelT = TypeVar("_AddonModelT", bound=_AddonGUIModel)
-
-
-class AddonListItemVM(Generic[_AddonModelT]):
+class AddonListItemVM:
 	def __init__(
 			self,
-			model: _AddonModelT,
+			model: _AddonGUIModel,
 			status: AvailableAddonStatus = AvailableAddonStatus.AVAILABLE
 	):
-		self._model: _AddonModelT = model  # read-only
+		self._model: _AddonGUIModel = model  # read-only
 		self._status: AvailableAddonStatus = status  # modifications triggers L{updated.notify}
 		self.updated = extensionPoints.Action()  # Notify of changes to VM, argument: addonListItemVM
 
 	@property
-	def model(self) -> _AddonModelT:
+	def model(self) -> _AddonGUIModel:
 		return self._model
 
 	@property
@@ -257,6 +252,11 @@ class AddonListVM:
 		if self._addonsFilteredOrdered and self.selectedAddonId in self._addonsFilteredOrdered:
 			return self._addonsFilteredOrdered.index(self.selectedAddonId)
 		return None
+
+	def getAddonAtIndex(self, index: int) -> AddonListItemVM:
+		self._validate(selectionIndex=index)
+		selectedAddonId = self._addonsFilteredOrdered[index]
+		return self._addons[selectedAddonId]
 
 	def setSelection(self, index: Optional[int]) -> Optional[AddonListItemVM]:
 		self._validate(selectionIndex=index)
