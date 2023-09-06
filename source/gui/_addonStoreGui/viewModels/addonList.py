@@ -12,9 +12,11 @@ from enum import Enum
 from locale import strxfrm
 from typing import (
 	FrozenSet,
+	Generic,
 	List,
 	Optional,
 	TYPE_CHECKING,
+	TypeVar,
 )
 
 from requests.structures import CaseInsensitiveDict
@@ -92,18 +94,21 @@ class AddonListField(_AddonListFieldData, Enum):
 	)
 
 
-class AddonListItemVM:
+_AddonModelT = TypeVar("_AddonModelT", bound=_AddonGUIModel)
+
+
+class AddonListItemVM(Generic[_AddonModelT]):
 	def __init__(
 			self,
-			model: _AddonGUIModel,
+			model: _AddonModelT,
 			status: AvailableAddonStatus = AvailableAddonStatus.AVAILABLE
 	):
-		self._model: _AddonGUIModel = model  # read-only
+		self._model: _AddonModelT = model  # read-only
 		self._status: AvailableAddonStatus = status  # modifications triggers L{updated.notify}
 		self.updated = extensionPoints.Action()  # Notify of changes to VM, argument: addonListItemVM
 
 	@property
-	def model(self) -> _AddonGUIModel:
+	def model(self) -> _AddonModelT:
 		return self._model
 
 	@property
