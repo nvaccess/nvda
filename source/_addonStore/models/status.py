@@ -303,28 +303,30 @@ class _StatusFilterKey(DisplayStringEnum):
 			raise e
 
 
+_installedAddonStatuses: Set[AvailableAddonStatus] = {
+	AvailableAddonStatus.UPDATE,
+	AvailableAddonStatus.REPLACE_SIDE_LOAD,
+	AvailableAddonStatus.INSTALLED,
+	AvailableAddonStatus.PENDING_DISABLE,
+	AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
+	AvailableAddonStatus.PENDING_INCOMPATIBLE_ENABLED,
+	AvailableAddonStatus.INCOMPATIBLE_ENABLED,
+	AvailableAddonStatus.INCOMPATIBLE_DISABLED,
+	AvailableAddonStatus.DISABLED,
+	AvailableAddonStatus.PENDING_ENABLE,
+	AvailableAddonStatus.PENDING_REMOVE,
+	AvailableAddonStatus.RUNNING,
+	AvailableAddonStatus.ENABLED,
+	AvailableAddonStatus.DOWNLOAD_SUCCESS,
+}
+
 _statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = OrderedDict({
-	_StatusFilterKey.INSTALLED: {
-		AvailableAddonStatus.UPDATE,
-		AvailableAddonStatus.REPLACE_SIDE_LOAD,
-		AvailableAddonStatus.INSTALLED,
-		AvailableAddonStatus.PENDING_DISABLE,
-		AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
-		AvailableAddonStatus.PENDING_INCOMPATIBLE_ENABLED,
-		AvailableAddonStatus.INCOMPATIBLE_ENABLED,
-		AvailableAddonStatus.INCOMPATIBLE_DISABLED,
-		AvailableAddonStatus.DISABLED,
-		AvailableAddonStatus.PENDING_ENABLE,
-		AvailableAddonStatus.PENDING_REMOVE,
-		AvailableAddonStatus.RUNNING,
-		AvailableAddonStatus.ENABLED,
-		AvailableAddonStatus.DOWNLOAD_SUCCESS,
-	},
+	_StatusFilterKey.INSTALLED: _installedAddonStatuses,
 	_StatusFilterKey.UPDATE: {
 		AvailableAddonStatus.UPDATE,
 		AvailableAddonStatus.REPLACE_SIDE_LOAD,
 	},
-	_StatusFilterKey.AVAILABLE: {
+	_StatusFilterKey.AVAILABLE: _installedAddonStatuses.union({
 		AvailableAddonStatus.INCOMPATIBLE,
 		AvailableAddonStatus.AVAILABLE,
 		AvailableAddonStatus.UPDATE,
@@ -335,7 +337,7 @@ _statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = Order
 		AvailableAddonStatus.INSTALLING,
 		AvailableAddonStatus.INSTALL_FAILED,
 		AvailableAddonStatus.INSTALLED,
-	},
+	}),
 	_StatusFilterKey.INCOMPATIBLE: {
 		AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
 		AvailableAddonStatus.PENDING_INCOMPATIBLE_ENABLED,
