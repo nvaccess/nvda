@@ -98,6 +98,7 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 		return f"{self.addonId}-{self.channel}"
 
 	def asdict(self) -> Dict[str, Any]:
+		assert dataclasses.is_dataclass(self)
 		jsonData = dataclasses.asdict(self)
 		for field in jsonData:
 			# dataclasses.asdict parses NamedTuples to JSON arrays,
@@ -110,6 +111,15 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 
 
 class _AddonStoreModel(_AddonGUIModel):
+	addonId: str
+	displayName: str
+	description: str
+	addonVersionName: str
+	channel: Channel
+	homepage: Optional[str]
+	minNVDAVersion: MajorMinorPatch
+	lastTestedVersion: MajorMinorPatch
+	legacy: bool
 	publisher: str
 	license: str
 	licenseURL: Optional[str]
@@ -145,6 +155,7 @@ class _AddonStoreModel(_AddonGUIModel):
 	def isPendingInstall(self) -> bool:
 		"""True if this addon has not yet been fully installed."""
 		from ..dataManager import addonDataManager
+		assert addonDataManager
 		nameInDownloadsPendingInstall = filter(
 			lambda m: m[0].model.name == self.name,
 			# add-ons which have been downloaded but
@@ -240,6 +251,7 @@ class InstalledAddonStoreModel(_AddonManifestModel, _AddonStoreModel):
 	@property
 	def manifest(self) -> "AddonManifest":
 		from ..dataManager import addonDataManager
+		assert addonDataManager
 		return addonDataManager._installedAddonsCache.installedAddons[self.name].manifest
 
 
@@ -273,7 +285,7 @@ class AddonStoreModel(_AddonStoreModel):
 @dataclasses.dataclass
 class CachedAddonsModel:
 	cachedAddonData: "AddonGUICollectionT"
-	cacheHash: str
+	cacheHash: Optional[str]
 	cachedLanguage: str
 	# AddonApiVersionT or the string .network._LATEST_API_VER
 	nvdaAPIVersion: Union[addonAPIVersion.AddonApiVersionT, str]
