@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING
 
 import wx
 
@@ -38,7 +38,8 @@ class AddonDetails(
 	# Translators: Header (usually the add-on name) when no add-on is selected. In the add-on store dialog.
 	_noAddonSelectedLabelText: str = pgettext("addonStore", "No add-on selected.")
 
-	# Translators: Header (usually the add-on name) when multiple add-ons are selected. In the add-on store dialog.
+	# Translators: Header (usually the add-on name) when multiple add-ons are selected.
+	# In the add-on store dialog.
 	_multiAddonSelectedLabelText: str = pgettext("addonStore", "{num} add-ons selected.")
 
 	# Translators: Label for the text control containing a description of the selected add-on.
