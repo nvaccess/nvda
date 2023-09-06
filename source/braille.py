@@ -2875,11 +2875,24 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	numCells: int
 
 	def _get_numCells(self) -> int:
-		"""Obtain the number of braille cells on this  display.
+		"""Obtain the number of braille cells on this display.
 		@note: 0 indicates that braille should be disabled.
+		@note: For multi line displays, this is the total number of cells (e.g. numRows * numCols)
 		@return: The number of cells.
 		"""
-		return 0
+		return self.numRows * self.numCols
+
+	def _set_numCells(self, numCells):
+		if self.numRows > 1:
+			raise ValueError("Please set numCols explicitly and don't set numCells for multi line braille displays")
+		self.numCols = numCells
+
+	#: typing information for autoproperty _get_numRows
+	numRows: int = 1
+
+	#: typing information for autoproperty _get_numCols
+	numCols: int = 0
+
 
 	def __repr__(self):
 		return f"{self.__class__.__name__}({self.name!r}, numCells={self.numCells!r})"
