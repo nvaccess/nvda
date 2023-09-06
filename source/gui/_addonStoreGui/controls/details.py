@@ -3,6 +3,8 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from typing import TYPE_CHECKING, cast
+
 import wx
 
 from _addonStore.models.addon import (
@@ -20,6 +22,9 @@ from .actions import _MonoActionsContextMenu
 _fontFaceName = "Segoe UI"
 _fontFaceName_semiBold = "Segoe UI Semibold"
 
+if TYPE_CHECKING:
+	from .storeDialog import AddonStoreDialog
+
 
 class AddonDetails(
 		wx.Panel,
@@ -33,6 +38,9 @@ class AddonDetails(
 	# Translators: Header (usually the add-on name) when no add-on is selected. In the add-on store dialog.
 	_noAddonSelectedLabelText: str = pgettext("addonStore", "No add-on selected.")
 
+	# Translators: Header (usually the add-on name) when multiple add-ons are selected. In the add-on store dialog.
+	_multiAddonSelectedLabelText: str = pgettext("addonStore", "{num} add-ons selected.")
+
 	# Translators: Label for the text control containing a description of the selected add-on.
 	# In the add-on store dialog.
 	_descriptionLabelText: str = pgettext("addonStore", "Description:")
@@ -45,9 +53,11 @@ class AddonDetails(
 	# In the add-on store dialog.
 	_actionsLabelText: str = pgettext("addonStore", "A&ctions")
 
+	Parent: "AddonStoreDialog"
+
 	def __init__(
 			self,
-			parent: wx.Window,
+			parent: "AddonStoreDialog",
 			detailsVM: AddonDetailsVM,
 			actionsContextMenu: _MonoActionsContextMenu,
 	):
@@ -194,12 +204,16 @@ class AddonDetails(
 
 	def _refresh(self):
 		details = None if self._detailsVM.listItem is None else self._detailsVM.listItem.model
+		numSelectedAddons = self.Parent.addonListView.GetSelectedItemCount()
 
 		with guiHelper.autoThaw(self):
 			# AppendText is used to build up the details so that formatting can be set as text is added, via
 			# SetDefaultStyle, however, this means the text control must start empty.
 			self.otherDetailsTextCtrl.SetValue("")
-			if not details:
+			if numSelectedAddons > 1:
+				self.contentsPanel.Hide()
+				self.updateAddonName(AddonDetails._multiAddonSelectedLabelText.format(num=numSelectedAddons))
+			elif not details:
 				self.contentsPanel.Hide()
 				if self._detailsVM._listVM._isLoading:
 					self.updateAddonName(AddonDetails._loadingAddonsLabelText)

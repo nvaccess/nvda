@@ -328,7 +328,12 @@ class AddonStoreVM:
 
 	def getAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]) -> None:
 		for aVM in listItemVMs:
-			if not aVM.model.isCompatible and aVM.model.canOverrideCompatibility:
+			if aVM.status not in (
+				AvailableAddonStatus.AVAILABLE,
+				AvailableAddonStatus.UPDATE,
+			):
+				log.debug(f"Skipping {aVM.Id} as it is not available or updatable")
+			elif not aVM.model.isCompatible and aVM.model.canOverrideCompatibility:
 				self.installOverrideIncompatibilityForAddon(aVM)
 			else:
 				self.getAddon(aVM)

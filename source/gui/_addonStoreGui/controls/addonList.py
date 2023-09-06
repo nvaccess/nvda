@@ -118,7 +118,7 @@ class AddonVirtualList(
 		self.RefreshItem(index)
 
 	def OnItemSelected(self, evt: wx.ListEvent):
-		newIndex = self.GetFirstSelected()
+		newIndex = evt.GetIndex()
 		log.debug(f"item selected: {newIndex}")
 		self._addonsListVM.setSelection(index=newIndex)
 
@@ -128,17 +128,8 @@ class AddonVirtualList(
 		log.debug(f"item activated: {evt.GetIndex()}")
 
 	def OnItemDeselected(self, evt: wx.ListEvent):
-		# Call this later, as the list control doesn't update its selection until after this event,
-		# and we need an accurate selection count.
-		wx.CallAfter(self._OnItemDeselected, evt)
-
-	def _OnItemDeselected(self, evt: wx.ListEvent):
-		if self.GetSelectedItemCount() == 0:
-			log.debug("item deselected")
-			self._addonsListVM.setSelection(None)
-		else:
-			log.debug("updating selection due to item deselected")
-			self.OnItemSelected(evt)
+		log.debug("item deselected")
+		self._addonsListVM.setSelection(None)
 
 	def OnGetItemText(self, itemIndex: int, colIndex: int) -> str:
 		dataItem = self._addonsListVM.getAddonFieldText(

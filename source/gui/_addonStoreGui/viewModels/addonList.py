@@ -143,15 +143,6 @@ class AddonDetailsVM:
 
 	@listItem.setter
 	def listItem(self, newListItem: Optional[AddonListItemVM]):
-		if (
-			self._listItem == newListItem  # both may be same ref or None
-			or (
-				None not in (newListItem, self._listItem)
-				and self._listItem.Id == newListItem.Id  # confirm with addonId
-			)
-		):
-			# already set, exit early
-			return
 		self._listItem = newListItem
 		# ensure calling on the main thread.
 		core.callLater(delay=0, callable=self.updated.notify, addonDetailsVM=self)
