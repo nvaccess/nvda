@@ -123,6 +123,10 @@ class AddonVirtualList(
 		self._addonsListVM.setSelection(index=newIndex)
 
 	def OnItemActivated(self, evt: wx.ListEvent):
+		if evt.GetKeyCode() == wx.WXK_SPACE:
+			# Space key is used to toggle add-on selection.
+			# Don't trigger the context menu.
+			return
 		position = self._getListSelectionPosition()
 		self._contextMenu.popupContextMenuFromPosition(self, position)
 		log.debug(f"item activated: {evt.GetIndex()}")
