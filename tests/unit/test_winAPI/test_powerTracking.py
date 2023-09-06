@@ -69,7 +69,7 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 			oldPowerState=PowerState.AC_OFFLINE,
 		)
 		self.assertEqual(
-			['1 percent', '1 hours and 1 minutes remaining', "AC disconnected"],
+			['1 percent', '1 hours and 1 minutes remaining', "Unplugged"],
 			actualSpeech,
 		)
 
@@ -96,7 +96,7 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 			oldPowerState=PowerState.AC_OFFLINE,
 		)
 		self.assertEqual(
-			["Charging battery", '1 percent', '1 hours and 1 minutes remaining'],
+			["Plugged in", '1 percent', '1 hours and 1 minutes remaining'],
 			actualSpeech,
 		)
 
@@ -110,7 +110,7 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 			oldPowerState=PowerState.AC_ONLINE,
 		)
 		self.assertEqual(
-			["AC disconnected", '1 percent', '1 hours and 1 minutes remaining'],
+			["Unplugged", '1 percent', '1 hours and 1 minutes remaining'],
 			actualSpeech,
 		)
 
@@ -124,7 +124,7 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 			oldPowerState=PowerState.AC_ONLINE,
 		)
 		self.assertEqual(
-			["AC disconnected", '1 percent'],
+			["Unplugged", '1 percent'],
 			actualSpeech,
 		)
 
@@ -139,6 +139,6 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 			oldPowerState=PowerState.AC_ONLINE,
 		)
 		self.assertEqual(
-			["AC disconnected", '7 percent'],
+			["Unplugged", '7 percent'],
 			actualSpeech,
 		)

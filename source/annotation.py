@@ -13,14 +13,17 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Annotations
 from dataclasses import dataclass
 from typing import (
 	TYPE_CHECKING,
-	Iterable,
 	List,
 	Optional,
+	Tuple,
 )
 
 if TYPE_CHECKING:
 	import controlTypes
 	from NVDAObjects import NVDAObject
+
+
+_AnnotationRolesT = Tuple[Optional["controlTypes.Role"]]
 
 
 class AnnotationTarget:
@@ -30,7 +33,7 @@ class AnnotationTarget:
 	"""
 
 	@property
-	def role(self) -> "controlTypes.Role":
+	def role(self) -> Optional["controlTypes.Role"]:
 		raise NotImplementedError
 
 	@property
@@ -45,7 +48,10 @@ class AnnotationTarget:
 class AnnotationOrigin:
 	"""
 	Structured information of an annotation origin.
+	Each origin may have many annotation targets.
+	Targets can have different roles.
 	For example, a phrase with a footnote and comments associated with it.
+	This class encapsulates the relation.
 	"""
 
 	def __init__(self, originObj: "NVDAObject"):
@@ -57,15 +63,11 @@ class AnnotationOrigin:
 		raise NotImplementedError
 
 	@property
-	def targets(self) -> Iterable[AnnotationTarget]:
+	def targets(self) -> Tuple[AnnotationTarget]:
 		raise NotImplementedError
 
 	@property
-	def roles(self) -> Iterable["controlTypes.Role"]:
-		raise NotImplementedError
-
-	@property
-	def summaries(self) -> Iterable[str]:
+	def roles(self) -> _AnnotationRolesT:
 		raise NotImplementedError
 
 

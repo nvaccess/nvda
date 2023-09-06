@@ -1,18 +1,18 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
-# Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot, Rob Meredith
+# Copyright (C) 2006-2023 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
+# Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot, Rob Meredith,
+# Burman's Computer and Education Ltd., Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 from io import StringIO
 from configobj import ConfigObj
 
-#: The version of the schema outlined in this file. Increment this when modifying the schema and 
+#: The version of the schema outlined in this file. Increment this when modifying the schema and
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
-#: just adding a new element to (or removing from) the schema, only when old versions of the config 
+#: just adding a new element to (or removing from) the schema, only when old versions of the config
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 9
+latestSchemaVersion = 11
 
 #: The configuration specification string
 #: @type: String
@@ -56,6 +56,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 # Audio settings
 [audio]
 	audioDuckingMode = integer(default=0)
+	WASAPI = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
+	soundVolumeFollowsVoice = boolean(default=false)
+	soundVolume = integer(default=100, min=0, max=100)
 
 # Braille settings
 [braille]
@@ -74,11 +77,16 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# Timeout after the message will disappear from braille display
 	messageTimeout = integer(default=4, min=1, max=20)
 	tetherTo = option("auto", "focus", "review", default="auto")
+	reviewRoutingMovesSystemCaret = featureFlag(\
+		optionsEnum="ReviewRoutingMovesSystemCaretFlag", behaviorOfDefault="NEVER")
 	readByParagraph = boolean(default=false)
 	wordWrap = boolean(default=true)
 	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
 	interruptSpeechWhileScrolling = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
-	enableHidBrailleSupport = integer(0, 2, default=0)  # 0:Use default/recommended value (yes), 1:yes, 2:no
+	showSelection = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
+	reportLiveRegions = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
+	[[auto]]
+    	excludedDisplays = string_list(default=list())
 
 	# Braille display driver settings
 	[[__many__]]
@@ -151,9 +159,12 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 #Keyboard settings
 [keyboard]
-	useCapsLockAsNVDAModifierKey = boolean(default=false)
-	useNumpadInsertAsNVDAModifierKey = boolean(default=true)
-	useExtendedInsertAsNVDAModifierKey = boolean(default=true)
+	# NVDAModifierKeys: Integer value combining single-bit value:
+	# 1: CapsLock
+	# 2: NumpadInsert
+	# 4: ExtendedInsert
+	# Default = 6: NumpadInsert + ExtendedInsert
+	NVDAModifierKeys = integer(1, 7, default=6)
 	keyboardLayout = string(default="desktop")
 	speakTypedCharacters = boolean(default=true)
 	speakTypedWords = boolean(default=false)
@@ -204,6 +215,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportLineNumber = boolean(default=False)
 	# 0: Off, 1: Speech, 2: Tones, 3: Both Speech and Tones
 	reportLineIndentation = integer(0, 3, default=0)
+	ignoreBlankLinesForRLI = boolean(default=False)
 	reportParagraphIndentation = boolean(default=False)
 	reportTables = boolean(default=true)
 	includeLayoutTables = boolean(default=False)
@@ -285,6 +297,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [uwpOcr]
 	language = string(default="")
+	autoRefresh = boolean(default=false)
+	autoRefreshInterval = integer(default=1500, min=100)
 
 [upgrade]
 	newLaptopKeyboardLayout = boolean(default=false)
@@ -300,6 +314,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	cancelExpiredFocusSpeech = integer(0, 2, default=0)
 	# 0:Only in test versions, 1:yes
 	playErrorSound = integer(0, 1, default=0)
+
+[addonStore]
+	showWarning = boolean(default=true)
 """
 
 #: The configuration specification

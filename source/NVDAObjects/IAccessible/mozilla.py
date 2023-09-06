@@ -5,11 +5,13 @@
 # Copyright (C) 2006-2022 NV Access Limited, Peter Vágner
 
 from typing import (
-	Iterable,
+	Generator,
 	Optional,
+	Tuple,
 )
 
 from annotation import (
+	_AnnotationRolesT,
 	AnnotationTarget,
 	AnnotationOrigin,
 )
@@ -34,7 +36,7 @@ class MozAnnotationTarget(AnnotationTarget):
 		return self._target.summarizeInProcess()
 
 	@property
-	def role(self) -> controlTypes.Role:
+	def role(self) -> Optional[controlTypes.Role]:
 		# details-roles is currently only defined in Chromium
 		# this may diverge in Firefox in the future.
 		from .chromium import supportedAriaDetailsRoles
@@ -46,7 +48,10 @@ class MozAnnotationTarget(AnnotationTarget):
 			log.debug(f"detailsRole: {repr(detailsRole)}")
 		if detailsRole in supportedAriaDetailsRoles.values():
 			return detailsRole
-		raise ValueError(f"Unsupported aria details role: {detailsRole}")
+
+		if config.conf["debugLog"]["annotations"]:
+			log.warning(f"Unsupported aria details role: {detailsRole}")
+		return None
 
 	@property
 	def targetObject(self) -> IAccessible:
@@ -68,27 +73,23 @@ class MozAnnotation(AnnotationOrigin):
 		)
 
 	@property
-	def targets(self) -> Iterable[MozAnnotationTarget]:
-		detailsRelations = self._originObj.detailsRelations
-		for rel in detailsRelations:
-			yield MozAnnotationTarget(rel)
+	def targets(self) -> Tuple[MozAnnotationTarget]:
+		return tuple(MozAnnotationTarget(rel) for rel in self._originObj.detailsRelations)
 
 	@property
-	def roles(self) -> Iterable[controlTypes.Role]:
+	def roles(self) -> _AnnotationRolesT:
+		return tuple(self._rolesGenerator)
+
+	@property
+	def _rolesGenerator(self) -> Generator[Optional[controlTypes.Role], None, None]:
 		# Unlike base Ia2Web implementation, the details-roles
 		# IA2 attribute is not exposed in Firefox.
 		# Although slower, we have to fetch the details relations instead.
 		for target in self.targets:
-			# just take the first target for now.
 			try:
 				yield target.role
 			except ValueError:
 				log.error("Error getting role.", exc_info=True)
-
-	@property
-	def summaries(self) -> Iterable[str]:
-		for target in self.targets:
-			yield target.summary
 
 
 class Mozilla(ia2Web.Ia2Web):
@@ -144,17 +145,27 @@ class Mozilla(ia2Web.Ia2Web):
 		return annotationOrigin
 
 	def _get_detailsSummary(self) -> Optional[str]:
-		for summary in self.annotations.summaries:
-			# just take the first for now.
-			return summary
+		log.warning(
+			"NVDAObject.detailsSummary is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True,
+		)
+		# just take the first for now.
+		return self.annotations.targets[0].summary
 
 	def _get_detailsRole(self) -> Optional[controlTypes.Role]:
-		for role in self.annotations.roles:
-			# just take the first target for now.
-			return role
+		log.warning(
+			"NVDAObject.detailsRole is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True,
+		)
+		# just take the first target for now.
+		return self.annotations.roles[0]
 
 	@property
 	def hasDetails(self) -> bool:
+		log.warning(
+			"NVDAObject.hasDetails is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True,
+		)
 		return bool(self.annotations)
 
 

@@ -17,10 +17,10 @@ import comtypes
 import sys
 import winVersion
 import threading
-import nvwave
 import os
 import time
 import ctypes
+from enum import Enum
 import logHandler
 import languageHandler
 import globalVars
@@ -29,6 +29,7 @@ import addonHandler
 import extensionPoints
 import garbageHandler
 import NVDAState
+from NVDAState import WritePaths
 
 
 def __getattr__(attrName: str) -> Any:
@@ -44,8 +45,7 @@ def __getattr__(attrName: str) -> Any:
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
-
-# inform those who want to know that NVDA has finished starting up.
+# Inform those who want to know that NVDA has finished starting up.
 postNvdaStartup = extensionPoints.Action()
 
 PUMP_MAX_DELAY = 10
@@ -54,7 +54,16 @@ PUMP_MAX_DELAY = 10
 mainThreadId = threading.get_ident()
 
 _pump = None
-_isPumpPending = False
+
+
+class _PumpPending(Enum):
+	NONE = 0
+	DELAYED = 1
+	IMMEDIATE = 2
+
+	def __bool__(self):
+		return self is not self.NONE
+
 
 _hasShutdownBeenTriggered = False
 _shuttingDownFlagLock = threading.Lock()
@@ -212,6 +221,7 @@ def resetConfiguration(factoryDefaults=False):
 	import speech
 	import vision
 	import inputCore
+	import bdDetect
 	import hwIo
 	import tones
 	log.debug("Terminating vision")
@@ -224,6 +234,8 @@ def resetConfiguration(factoryDefaults=False):
 	speech.terminate()
 	log.debug("terminating tones")
 	tones.terminate()
+	log.debug("Terminating background braille display detection")
+	bdDetect.terminate()
 	log.debug("Terminating background i/o")
 	hwIo.terminate()
 	log.debug("terminating addonHandler")
@@ -239,10 +251,14 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("setting language to %s"%lang)
 	languageHandler.setLanguage(lang)
 	# Addons
+	from _addonStore import dataManager
+	dataManager.initialize()
 	addonHandler.initialize()
 	# Hardware background i/o
 	log.debug("initializing background i/o")
 	hwIo.initialize()
+	log.debug("Initializing background braille display detection")
+	bdDetect.initialize()
 	# Tones
 	tones.initialize()
 	#Speech
@@ -371,7 +387,7 @@ def _closeAllWindows():
 
 	for instance, state in nonWeak.items():
 		if state is _SettingsDialog.DialogState.DESTROYED:
-			log.error(
+			log.debugWarning(
 				"Destroyed but not deleted instance of gui.SettingsDialog exists"
 				f": {instance.title} - {instance.__class__.__qualname__} - {instance}"
 			)
@@ -477,28 +493,36 @@ def main():
 		setDPIAwareness()
 
 	import config
-	if not globalVars.appArgs.configPath:
-		globalVars.appArgs.configPath=config.getUserDefaultConfigPath(useInstalledPathIfExists=globalVars.appArgs.launcher)
+	if not WritePaths.configDir:
+		WritePaths.configDir = config.getUserDefaultConfigPath(
+			useInstalledPathIfExists=globalVars.appArgs.launcher
+		)
 	#Initialize the config path (make sure it exists)
 	config.initConfigPath()
-	log.info(f"Config dir: {globalVars.appArgs.configPath}")
+	log.info(f"Config dir: {WritePaths.configDir}")
 	log.debug("loading config")
 	import config
 	config.initialize()
 	if config.conf['development']['enableScratchpadDir']:
 		log.info("Developer Scratchpad mode enabled")
-	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
-		try:
-			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "start.wav"))
-		except:
-			pass
-	logHandler.setLogLevelFromConfig()
 	if languageHandler.isLanguageForced():
 		lang = globalVars.appArgs.language
 	else:
 		lang = config.conf["general"]["language"]
 	log.debug(f"setting language to {lang}")
 	languageHandler.setLanguage(lang)
+	import NVDAHelper
+	log.debug("Initializing NVDAHelper")
+	NVDAHelper.initialize()
+	import nvwave
+	log.debug("initializing nvwave")
+	nvwave.initialize()
+	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
+		try:
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "start.wav"))
+		except Exception:
+			pass
+	logHandler.setLogLevelFromConfig()
 	log.info(f"Windows version: {winVersion.getWinVer()}")
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
@@ -508,18 +532,20 @@ def main():
 	import socket
 	socket.setdefaulttimeout(10)
 	log.debug("Initializing add-ons system")
+	from _addonStore import dataManager
+	dataManager.initialize()
 	addonHandler.initialize()
 	if globalVars.appArgs.disableAddons:
 		log.info("Add-ons are disabled. Restart NVDA to enable them.")
 	import appModuleHandler
 	log.debug("Initializing appModule Handler")
 	appModuleHandler.initialize()
-	import NVDAHelper
-	log.debug("Initializing NVDAHelper")
-	NVDAHelper.initialize()
 	log.debug("initializing background i/o")
 	import hwIo
 	hwIo.initialize()
+	log.debug("Initializing background braille display detection")
+	import bdDetect
+	bdDetect.initialize()
 	log.debug("Initializing tones")
 	import tones
 	tones.initialize()
@@ -696,11 +722,37 @@ def main():
 	# Doing this here is a bit ugly, but we don't want these modules imported
 	# at module level, including wx.
 	log.debug("Initializing core pump")
-	class CorePump(gui.NonReEntrantTimer):
+
+	class CorePump(wx.Timer):
 		"Checks the queues and executes functions."
-		def run(self):
-			global _isPumpPending
-			_isPumpPending = False
+		pending = _PumpPending.NONE
+		isPumping = False
+
+		def queueRequest(self):
+			isMainThread = threading.get_ident() == mainThreadId
+			if self.pending == _PumpPending.DELAYED and isMainThread:
+				# We just want to start a timer and we're already on the main thread, so we
+				# don't need to queue that.
+				self.processRequest()
+				return
+			wx.CallAfter(self.processRequest)
+
+		def processRequest(self):
+			if self.isPumping:
+				return  # Prevent re-entry.
+			if self.pending == _PumpPending.IMMEDIATE:
+				# A delayed pump might have been scheduled. If so, cancel it.
+				self.Stop()
+				self.Notify()
+			elif self.pending == _PumpPending.DELAYED:
+				self.Start(PUMP_MAX_DELAY, True)
+
+		def Notify(self):
+			assert not self.isPumping, "Must not pump while already pumping"
+			if not self.pending:
+				log.error("Pumping but pump wasn't pending", stack_info=True)
+			self.isPumping = True
+			self.pending = _PumpPending.NONE
 			watchdog.alive()
 			try:
 				if touchHandler.handler:
@@ -716,10 +768,16 @@ def main():
 				log.exception("errors in this core pump cycle")
 			baseObject.AutoPropertyObject.invalidateCaches()
 			watchdog.asleep()
-			if _isPumpPending and not _pump.IsRunning():
-				# #3803: Another pump was requested during this pump execution.
-				# As our pump is not re-entrant, schedule another pump.
-				_pump.Start(PUMP_MAX_DELAY, True)
+			self.isPumping = False
+			# #3803: If another pump was requested during this pump execution, we need
+			# to trigger another pump, as our pump is not re-entrant.
+			if self.pending == _PumpPending.IMMEDIATE:
+				# We don't call processRequest directly because we don't want this to
+				# recurse. Recursing can overflow the stack if there are a flood of
+				# immediate pumps; e.g. touch exploration.
+				self.queueRequest()
+			elif self.pending == _PumpPending.DELAYED:
+				self.processRequest()
 	global _pump
 	_pump = CorePump()
 	requestPump()
@@ -781,7 +839,6 @@ def main():
 	_terminate(JABHandler, name="Java Access Bridge support")
 	_terminate(appModuleHandler, name="app module handler")
 	_terminate(tones)
-	_terminate(NVDAHelper)
 	_terminate(touchHandler)
 	_terminate(keyboardHandler, name="keyboard handler")
 	_terminate(mouseHandler)
@@ -790,6 +847,7 @@ def main():
 	_terminate(brailleInput)
 	_terminate(braille)
 	_terminate(speech)
+	_terminate(bdDetect)
 	_terminate(hwIo)
 	_terminate(addonHandler)
 	_terminate(garbageHandler)
@@ -813,6 +871,7 @@ def main():
 	# #5189: Destroy the message window as late as possible
 	# so new instances of NVDA can find this one even if it freezes during exit.
 	messageWindow.destroy()
+	_terminate(NVDAHelper)
 	log.debug("core done")
 
 def _terminate(module, name=None):
@@ -824,23 +883,31 @@ def _terminate(module, name=None):
 	except:
 		log.exception("Error terminating %s" % name)
 
-def requestPump():
+
+def isMainThread() -> bool:
+	return threading.get_ident() == mainThreadId
+
+
+def requestPump(immediate: bool = False):
 	"""Request a core pump.
 	This will perform any queued activity.
-	It is delayed slightly so that queues can implement rate limiting,
-	filter extraneous events, etc.
+	@param immediate: If True, the pump will happen as soon as possible. This
+		should be used where response time is most important; e.g. user input or
+		focus events.
+		If False, it is delayed slightly so that queues can implement rate limiting,
+		filter extraneous events, etc.
 	"""
-	global _isPumpPending
-	if not _pump or _isPumpPending:
+	if not _pump:
 		return
-	_isPumpPending = True
-	if threading.get_ident() == mainThreadId:
-		_pump.Start(PUMP_MAX_DELAY, True)
-		return
-	# This isn't the main thread. wx timers cannot be run outside the main thread.
-	# Therefore, Have wx start it in the main thread with a CallAfter.
-	import wx
-	wx.CallAfter(_pump.Start,PUMP_MAX_DELAY, True)
+	# We only need to do something if:
+	if (
+		# There is no pending pump.
+		_pump.pending == _PumpPending.NONE
+		# There is a pending delayed pump but an immediate pump was just requested.
+		or (immediate and _pump.pending == _PumpPending.DELAYED)
+	):
+		_pump.pending = _PumpPending.IMMEDIATE if immediate else _PumpPending.DELAYED
+		_pump.queueRequest()
 
 
 class NVDANotInitializedError(Exception):
@@ -858,7 +925,7 @@ def callLater(delay, callable, *args, **kwargs):
 		# If NVDA has not fully initialized yet, the wxApp may not be initialized.
 		# wx.CallLater and wx.CallAfter requires the wxApp to be initialized.
 		raise NVDANotInitializedError("Cannot schedule callable, wx.App is not initialized")
-	if threading.get_ident() == mainThreadId:
+	if isMainThread():
 		return wx.CallLater(delay, _callLaterExec, callable, args, kwargs)
 	else:
 		return wx.CallAfter(wx.CallLater,delay, _callLaterExec, callable, args, kwargs)

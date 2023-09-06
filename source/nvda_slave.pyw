@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2009-2022 NV Access Limited
+# Copyright (C) 2009-2023 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -10,6 +10,7 @@ Performs miscellaneous tasks which need to be performed in a separate process.
 import sys
 import os
 import globalVars
+import logHandler
 import monkeyPatches.comtypesMonkeyPatches
 import NVDAState
 
@@ -29,22 +30,6 @@ else:
 # #2391: some functions may still require the current directory to be set to NVDA's app dir
 os.chdir(globalVars.appDir)
 globalVars.appPid = os.getpid()
-
-
-import gettext
-import locale
-#Localization settings
-try:
-	gettext.translation(
-		'nvda',
-		localedir=os.path.join(globalVars.appDir, 'locale'),
-		languages=[locale.getdefaultlocale()[0]]
-	).install()
-except:
-	gettext.install('nvda')
-
-
-import logHandler
 
 
 def getNvdaHelperRemote():

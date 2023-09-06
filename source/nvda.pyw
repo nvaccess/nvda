@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka,
+# Copyright (C) 2006-2023 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka,
 # Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -59,21 +59,7 @@ globalVars.appDir = appDir
 globalVars.appPid = os.getpid()
 
 
-import locale
-import gettext
-
-try:
-	gettext.translation(
-		'nvda',
-		localedir=os.path.join(globalVars.appDir, 'locale'),
-		languages=[locale.getdefaultlocale()[0]]
-	).install(True)
-except:
-	gettext.install('nvda')
-
-import time
 import argparse
-import globalVars
 import config
 import logHandler
 from logHandler import log
@@ -290,8 +276,8 @@ elif globalVars.appArgs.check_running:
 
 
 # Suppress E402 (module level import not at top of file)
+from utils.security import isRunningOnSecureDesktop  # noqa: E402
 from systemUtils import _getDesktopName  # noqa: E402
-from winAPI.secureDesktop import _isSecureDesktop  # noqa: E402
 # Ensure multiple instances are not fully started by using a mutex
 desktopName = _getDesktopName()
 _log.info(f"DesktopName: {desktopName}")
@@ -370,20 +356,12 @@ if mutex is None:
 	sys.exit(1)
 
 
-def _serviceDebugEnabled() -> bool:
-	import winreg
-	try:
-		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\NVDA")
-		if winreg.QueryValueEx(k, "serviceDebug")[0]:
-			return True
-	except WindowsError:
-		# Expected state by default, serviceDebug parameter not set
-		pass
-	return False
+if NVDAState._forceSecureModeEnabled():
+	globalVars.appArgs.secure = True
 
 
-if _isSecureDesktop():
-	if not _serviceDebugEnabled():
+if isRunningOnSecureDesktop():
+	if not NVDAState._serviceDebugEnabled():
 		globalVars.appArgs.secure = True
 	globalVars.appArgs.changeScreenReaderFlag = False
 	globalVars.appArgs.minimal = True
@@ -413,7 +391,7 @@ if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT, winUser.M
 	raise winUser.WinError()
 # Make this the last application to be shut down and don't display a retry dialog box.
 winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)
-if not _isSecureDesktop() and not config.isAppX:
+if not isRunningOnSecureDesktop() and not config.isAppX:
 	import easeOfAccess
 	easeOfAccess.notify(3)
 try:
@@ -423,7 +401,7 @@ except:
 	log.critical("core failure",exc_info=True)
 	sys.exit(1)
 finally:
-	if not _isSecureDesktop() and not config.isAppX:
+	if not isRunningOnSecureDesktop() and not config.isAppX:
 		easeOfAccess.notify(2)
 	if globalVars.appArgs.changeScreenReaderFlag:
 		winUser.setSystemScreenReaderFlag(False)

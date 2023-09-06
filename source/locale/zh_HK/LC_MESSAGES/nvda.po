@@ -2,11 +2,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 2022.4beta3\n"
+"Project-Id-Version: 2023.1beta1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-18 00:02+0000\n"
-"PO-Revision-Date: 2022-11-24 15:16+0800\n"
-"Last-Translator: EricYip@HKBU <cyeric20@yahoo.com.hk>\n"
+"POT-Creation-Date: 2023-08-25 00:02+0000\n"
+"PO-Revision-Date: 2023-08-28 17:48+0800\n"
+"Last-Translator: EricYip@HKBU <ericyip@hkbu.org.hk>\n"
 "Language-Team: Eric Yip@ HKBU <ericyip@hkbu.org.hk>\n"
 "Language: zh_HK\n"
 "MIME-Version: 1.0\n"
@@ -396,6 +396,10 @@ msgstr "sggstn"
 msgid "definition"
 msgstr "definition"
 
+#. Translators: Displayed in braille when an object is a switch control
+msgid "swtch"
+msgstr "swtch"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "sel"
@@ -536,6 +540,18 @@ msgstr "USB"
 msgid "Bluetooth"
 msgstr "藍牙"
 
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+msgid "details"
+msgstr "更多資料"
+
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. "has comment suggestion")
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. "comment, suggestion, details")
+#, python-format
+msgid "has %s"
+msgstr "有 %s"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -545,18 +561,6 @@ msgstr "h%s"
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
 msgstr "vlnk"
-
-#. Translators: Braille when there are further details/annotations that can be fetched manually.
-#. %s specifies the type of details (e.g. comment, suggestion)
-#. Translators: Speaks when there are further details/annotations that can be fetched manually.
-#. %s specifies the type of details (e.g. comment, suggestion)
-#, python-format
-msgid "has %s"
-msgstr "有 %s"
-
-#. Translators: Braille when there are further details/annotations that can be fetched manually.
-msgid "details"
-msgstr "更多資料"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -615,19 +619,6 @@ msgstr "rslvd cmnt"
 #. Translators: brailled when text contains a bookmark
 msgid "bkmk"
 msgstr "bkmk"
-
-#. Translators: The label for a braille setting indicating that braille should be
-#. tethered to focus or review cursor automatically.
-msgid "automatically"
-msgstr "自動"
-
-#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
-msgid "to focus"
-msgstr "跟隨焦點"
-
-#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
-msgid "to review"
-msgstr "跟隨易讀游標"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Dot firm&ness"
@@ -795,8 +786,18 @@ msgstr "丹麥語電腦8 點"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 8 dot computer braille (1993)"
+msgstr "丹麥語電腦8 點 (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 6 dot grade 1"
 msgstr "丹麥語電腦6 點1 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 6 dot grade 1 (1993)"
+msgstr "丹麥語電腦6 點1 級 (1993)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -805,13 +806,28 @@ msgstr "丹麥語8 點1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 8 dot grade 1 (1993)"
+msgstr "丹麥語8 點1 級 (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 6 dot grade 2"
 msgstr "丹麥語6 點2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 6 dot grade 2 (1993)"
+msgstr "丹麥語6 點2 級 (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 8 dot grade 2"
 msgstr "丹麥語8 點2 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot grade 2 (1993)"
+msgstr "丹麥語8 點2 級 (1993)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1060,6 +1076,11 @@ msgstr "卡納達語1 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Georgian literary braille"
+msgstr "格魯吉亞書面語"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Kazakh grade 1"
 msgstr "哈薩克語1 級"
 
@@ -1210,6 +1231,11 @@ msgstr "北梭托語2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Chichewa (Malawi) literary braille"
+msgstr "齊切瓦 (馬拉維)書面語"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "奧里亞語1 級"
 
@@ -1332,6 +1358,36 @@ msgstr "瑞典文部份簡寫"
 #. braille settings dialog.
 msgid "Swedish contracted braille"
 msgstr "瑞典文簡寫"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1"
+msgstr "斯瓦希里語 (肯尼亞)1 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.2"
+msgstr "斯瓦希里語 (肯尼亞)1.2 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.3"
+msgstr "斯瓦希里語 (肯尼亞)1.3 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.4"
+msgstr "斯瓦希里語 (肯尼亞)1.4 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.5"
+msgstr "斯瓦希里語 (肯尼亞)1.5 級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) Grade 2"
+msgstr "斯瓦希里語 (肯尼亞)2 級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2407,12 +2463,16 @@ msgstr "請輸入要搜尋的字串"
 msgid "Case &sensitive"
 msgstr "大小寫需相符(&S)"
 
+#. Translators: message displayed to the user when
+#. searching text and no text is found.
 #, python-format
 msgid "text \"%s\" not found"
 msgstr "找不到 \"%s\""
 
-msgid "Find Error"
-msgstr "尋找失敗"
+#. Translators: message dialog title displayed to the user when
+#. searching text and no text is found.
+msgid "0 matches"
+msgstr "沒有相符項目"
 
 #. Translators: Input help message for NVDA's find command.
 msgid "find a text string from the current cursor position"
@@ -2552,6 +2612,8 @@ msgid "Configuration profiles"
 msgstr "組態設定"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 #. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "B 點字"
@@ -2889,20 +2951,10 @@ msgid "Cycles through line indentation settings"
 msgstr "循環切換行縮排的設定"
 
 #. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with speech"
-msgstr "讀出行縮排"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with tones"
-msgstr "行縮排播出提示音"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with speech and tones"
-msgstr "讀出行縮排及播放提示音"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation off"
-msgstr "不讀出行縮排"
+#. {mode} will be replaced with the mode; i.e. Off, Speech, Tones or Both Speech and Tones.
+#, python-brace-format
+msgid "Report line indentation {mode}"
+msgstr "行縮排 {mode}"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
@@ -2966,17 +3018,11 @@ msgstr "讀出表格座標"
 msgid "Cycles through the cell border reporting settings"
 msgstr "循環切換讀出儲存格框線的設定"
 
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report styles of cell borders"
-msgstr "讀出儲存格框線的樣式"
-
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report colors and styles of cell borders"
-msgstr "讀出儲存格框線的色彩及樣式"
-
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report cell borders off."
-msgstr "不讀出儲存格框線。"
+#. Translators: Reported when the user cycles through report cell border modes.
+#. {mode} will be replaced with the mode; e.g. Off, Styles and Colors and styles.
+#, python-brace-format
+msgid "Report cell borders {mode}"
+msgstr "讀出儲存格框線 {mode} 變化"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -3139,6 +3185,19 @@ msgstr "設定報讀多少標點符號"
 #, python-format
 msgid "Symbol level %s"
 msgstr "符號等級%s"
+
+#. Translators: Input help mode message for toggle delayed character description command.
+msgid ""
+"Toggles on and off delayed descriptions for characters on cursor movement"
+msgstr "切換是否游標移動稍停後自動讀出字元的配詞解釋"
+
+#. Translators: The message announced when toggling the delayed character description setting.
+msgid "delayed character descriptions on"
+msgstr "讀出字元的配詞解釋"
+
+#. Translators: The message announced when toggling the delayed character description setting.
+msgid "delayed character descriptions off"
+msgstr "不讀出字元的配詞解釋"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
@@ -3920,11 +3979,10 @@ msgstr ""
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "開啟 NVDA Python 主控台，主要供程式開發者使用。"
 
-#. Translators: Input help mode message for activate manage add-ons command.
+#. Translators: Input help mode message to activate Add-on Store command.
 msgid ""
-"Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
-"for NVDA"
-msgstr "打開附加組件管理器來安裝或移除 NVDA 附加組件"
+"Activates the Add-on Store to browse and manage add-on packages for NVDA"
+msgstr "啟動組件商店以瀏覽和管理 NVDA 附加組件"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
@@ -3965,6 +4023,27 @@ msgstr "切換點字顯示跟隨系統焦點或物件游標移動"
 msgid "Braille tethered %s"
 msgstr "點字顯示%s"
 
+#. Translators: Input help mode message for cycle through
+#. braille move system caret when routing review cursor command.
+msgid ""
+"Cycle through the braille move system caret when routing review cursor states"
+msgstr "循環切換點字游標移動易讀游標時也移動系統游標的方式"
+
+#. Translators: Reported when action is unavailable because braille tether is to focus.
+msgid "Action unavailable. Braille is tethered to focus"
+msgstr "無法執行動作。點字游標是跟隨系統焦點"
+
+#. Translators: Used when reporting braille move system caret when routing review cursor
+#. state (default behavior).
+#, python-format
+msgid "Braille move system caret when routing review cursor default (%s)"
+msgstr "點字移到摸讀游標時也同時移動系統游標預設 (%s)"
+
+#. Translators: Used when reporting braille move system caret when routing review cursor state.
+#, python-format
+msgid "Braille move system caret when routing review cursor %s"
+msgstr "點字移到摸讀游標時也同時移動系統游標 %s"
+
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
 msgstr "切換上下文點字顯示方式"
@@ -4000,6 +4079,32 @@ msgstr "點字游標已隱藏"
 #, python-format
 msgid "Braille cursor %s"
 msgstr "點字游標為%s"
+
+#. Translators: Input help mode message for cycle through braille show messages command.
+msgid "Cycle through the braille show messages modes"
+msgstr "循環切換點字顯示訊息的模式"
+
+#. Translators: Reports which show braille message mode is used
+#. (disabled, timeout or indefinitely).
+#, python-format
+msgid "Braille show messages %s"
+msgstr "點字顯示訊息 %s"
+
+#. Translators: Input help mode message for cycle through braille show selection command.
+msgid "Cycle through the braille show selection states"
+msgstr "循環切換點字顯示選取範圍的狀態"
+
+#. Translators: Used when reporting braille show selection state
+#. (default behavior).
+#, python-format
+msgid "Braille show selection default (%s)"
+msgstr "點字顯示選取範圍預設 (%s)"
+
+#. Translators: Reports which show braille selection state is used
+#. (disabled or enabled).
+#, python-format
+msgid "Braille show selection %s"
+msgstr "點字顯示選取範圍 %s"
 
 #. Translators: Input help mode message for report clipboard text command.
 msgid "Reports the text on the Windows clipboard"
@@ -4182,6 +4287,33 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "外掛程式已重新載入"
 
+#. Translators: input help mode message for Report destination URL of a link command
+msgid ""
+"Report the destination URL of the link at the position of caret or focus. If "
+"pressed twice, shows the URL in a window for easier review."
+msgstr "讀出游標或焦點連結的目標網址，連按兩下用新視窗顯示網址以便瀏覽。"
+
+#. Translators: Informs the user that the link has no destination
+msgid "Link has no apparent destination"
+msgstr "連結沒有明確目標"
+
+#. Translators: Informs the user that the window contains the destination of the
+#. link with given title
+#, python-brace-format
+msgid "Destination of: {name}"
+msgstr "目標：{name}"
+
+#. Translators: Tell user that the command has been run on something that is not a link
+msgid "Not a link."
+msgstr "這不是連結"
+
+#. Translators: input help mode message for Report URL of a link in a window command
+msgid ""
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
+msgstr ""
+"在新視窗顯示目前游標或焦點連結的網址，而不單是讀出來，有利於點字的摸讀。"
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
@@ -4278,6 +4410,10 @@ msgstr "Windows 光學字元辨識不可用"
 msgid "Please disable screen curtain before using Windows OCR."
 msgstr "請先停用螢幕變黑，才啟用 Windows 光學字元辨識功能"
 
+#. Translators: Describes a command.
+msgid "Cycles through the available languages for Windows OCR"
+msgstr "循環切換 Windows OCR 可用的語言"
+
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
 msgstr "切換是否讀出 CLDR 字符(如表情符號)"
@@ -4323,6 +4459,10 @@ msgstr "暫時啟用螢幕變黑直到重開　NVDA 為止"
 #. Translators: Reported when the screen curtain could not be enabled.
 msgid "Could not enable screen curtain"
 msgstr "無法啟用螢幕變黑"
+
+#. Translators: Describes a command.
+msgid "Cycles through paragraph navigation styles"
+msgstr "循環切換段落導覽的設定"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -4719,9 +4859,12 @@ msgstr "筆記型電腦"
 msgid "unknown %s"
 msgstr "不明的按鍵 %s"
 
+#. Translators: a state that denotes a control is currently on
+#. E.g. a switch control.
 msgid "on"
 msgstr "開"
 
+#. Translators: This is presented when a switch control is off.
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
@@ -6110,13 +6253,16 @@ msgstr "檢查更新時發生錯誤"
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
-#. Translators: The message title displayed
-#. when the user has not specified an absolute destination directory
-#. in the Create Portable NVDA dialog.
+#. Translators: the title of an error dialog.
+#. Translators: The message title displayed when the user has not specified an absolute
+#. destination directory in the Create Portable NVDA dialog.
+#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
 #. Translators: The title of an error message dialog.
+#. Translators: A message indicating that an error occurred.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
 #. for a vision enhancement provider
+#. Translators: The title of an error message box displayed when validating the startup dialog
 msgid "Error"
 msgstr "錯誤"
 
@@ -6134,30 +6280,6 @@ msgstr "現時未有更新"
 #, python-brace-format
 msgid "NVDA version {version} has been downloaded and is pending installation."
 msgstr "NVDA 版本 {version} 已經下載有待安裝。"
-
-#. Translators: A message indicating that some add-ons will be disabled
-#. unless reviewed before installation.
-#. Translators: A message in the installer to let the user know that
-#. some addons are not compatible.
-msgid ""
-"\n"
-"\n"
-"However, your NVDA configuration contains add-ons that are incompatible with "
-"this version of NVDA. These add-ons will be disabled after installation. If "
-"you rely on these add-ons, please review the list to decide whether to "
-"continue with the installation"
-msgstr ""
-"\n"
-"\n"
-"但是一些附加組件不相容於這個版本的 NVDA，這些附加組件將在安裝完後被禁止執行。"
-"如果你需要使用這些附加組件，請檢視以下清單並決定是否繼續安裝。"
-
-#. Translators: A message to confirm that the user understands that addons that have not been
-#. reviewed and made available, will be disabled after installation.
-#. Translators: A message to confirm that the user understands that addons that have not been reviewed and made
-#. available, will be disabled after installation.
-msgid "I understand that these incompatible add-ons will be disabled"
-msgstr "我明白這些不相容的附加組件將被禁用"
 
 #. Translators: The label of a button to review add-ons prior to NVDA update.
 #. Translators: The label of a button to launch the add-on compatibility review dialog.
@@ -6198,19 +6320,6 @@ msgstr "關閉(&C)"
 #, python-brace-format
 msgid "NVDA version {version} is ready to be installed.\n"
 msgstr "NVDA 版本 {version} 可以安裝.\n"
-
-#. Translators: A message indicating that some add-ons will be disabled
-#. unless reviewed before installation.
-msgid ""
-"\n"
-"However, your NVDA configuration contains add-ons that are incompatible with "
-"this version of NVDA. These add-ons will be disabled after installation. If "
-"you rely on these add-ons, please review the list to decide whether to "
-"continue with the installation"
-msgstr ""
-"\n"
-"但是一些附加組件不相容於這個版本的 NVDA，這些附加組件將在安裝完後被禁止執行。"
-"如果你需要使用這些附加組件，請檢視以下清單並決定是否繼續安裝。"
 
 #. Translators: The label of a button to install an NVDA update.
 msgid "&Install update"
@@ -6357,6 +6466,11 @@ msgstr ""
 msgid "%d percent"
 msgstr "百分之 %d"
 
+#. Translators: Announced in braille when suggestions appear when search term is entered
+#. in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr "建議"
+
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
 msgid "{symbol} as in {description}"
@@ -6398,10 +6512,6 @@ msgstr "將物件游標及焦點移到第一列"
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the last row"
 msgstr "將物件游標及焦點移到最後一列"
-
-#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
-msgid "Suggestions"
-msgstr "建議"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
@@ -6457,6 +6567,67 @@ msgctxt "UIAHandler.FillType"
 msgid "pattern"
 msgstr "模式"
 
+#. Translators: A title of the dialog shown when fetching add-on data from the store fails
+msgctxt "addonStore"
+msgid "Add-on data update failure"
+msgstr "更新附加組件資料失敗"
+
+#. Translators: A message shown when fetching add-on data from the store fails
+msgctxt "addonStore"
+msgid "Unable to fetch latest add-on data for compatible add-ons."
+msgstr "在相容組件商店無法找到附加組件的最新資料"
+
+#. Translators: A message shown when fetching add-on data from the store fails
+msgctxt "addonStore"
+msgid "Unable to fetch latest add-on data for incompatible add-ons."
+msgstr "在不相容組件資料庫無法找到附加組件的最新資料"
+
+#. Translators: The message displayed when an error occurs when opening an add-on package for adding.
+#. The %s will be replaced with the path to the add-on that could not be opened.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Failed to open add-on package file at {filePath} - missing file or invalid "
+"file format"
+msgstr "在 {filePath} 開啟附加組件檔案失敗，沒有找到檔案，又或檔案格式錯誤"
+
+#. Translators: The message displayed when an add-on is not supported by this version of NVDA.
+#. The %s will be replaced with the path to the add-on that is not supported.
+#, python-format
+msgctxt "addonStore"
+msgid "Add-on not supported %s"
+msgstr "不支援的附加組件 %s"
+
+#. Translators: The message displayed when an error occurs when installing an add-on package.
+#. The %s will be replaced with the path to the add-on that could not be installed.
+#, python-format
+msgctxt "addonStore"
+msgid "Failed to install add-on from %s"
+msgstr "從 %s 安裝附加組件失敗"
+
+#. Translators: A title for a dialog notifying a user of an add-on download failure.
+msgctxt "addonStore"
+msgid "Add-on download failure"
+msgstr "下載附加組件失敗"
+
+#. Translators: A message to the user if an add-on download fails
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Unable to download add-on: {name}"
+msgstr "無法下載附加組件: {name}"
+
+#. Translators: A message to the user if an add-on download fails
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Unable to save add-on as a file: {name}"
+msgstr "無法儲存附加組件檔案: {name}"
+
+#. Translators: A message to the user if an add-on download is not safe
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Add-on download not safe: checksum failed for {name}"
+msgstr "附加組件下載不安全: {name} 校驗碼錯誤"
+
 msgid "Display"
 msgstr "顯示"
 
@@ -6472,17 +6643,36 @@ msgstr "找不到文件視窗"
 msgid "No track playing"
 msgstr "目前沒有播放曲目"
 
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{remainingTimeFormatted} remaining"
+msgstr "剩餘時間 {remainingTimeFormatted}"
+
 #. Translators: Reported if the remaining time can not be calculated in Foobar2000
-msgid "Unable to determine remaining time"
-msgstr "無法讀取剩餘時間"
+msgid "Remaining time not available"
+msgstr "沒有剩餘時間"
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "讀出目前播放曲目的剩餘時間"
 
+#. Translators: Reported elapsed time in Foobar2000
+#, python-brace-format
+msgid "{elapsedTime} elapsed"
+msgstr "經過時間 {elapsedTime}"
+
+#. Translators: Reported if the elapsed time is not available in Foobar2000
+msgid "Elapsed time not available"
+msgstr "沒有經過時間"
+
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr "如有的話讀出目前播放曲目的經過時間"
+
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{totalTime} total"
+msgstr "總時間 {totalTime}"
 
 #. Translators: Reported if the total time is not available in Foobar2000
 msgid "Total time not available"
@@ -6687,8 +6877,9 @@ msgstr "從 {startTime} 到 {endTime}"
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
 #, python-brace-format
-msgid "categories {categories}"
-msgstr "類別 {categories}"
+msgid "category {categories}"
+msgid_plural "categories {categories}"
+msgstr[0] "類別 {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
@@ -6994,6 +7185,25 @@ msgstr "{firstAddress} {firstValue} 到 {lastAddress} {lastValue}"
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} 到 {lastAddress}"
 
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} inches"
+msgstr "{val:.2f} 英吋"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} centimetres"
+msgstr "{val:.2f} 釐米"
+
+#. Translators: LibreOffice, report cursor position in the current page
+#, python-brace-format
+msgid ""
+"cursor positioned {horizontalDistance} from left edge of page, "
+"{verticalDistance} from top edge of page"
+msgstr ""
+"游標位置距離頁面左邊緣 {horizontalDistance}，距離頁面上邊緣 "
+"{verticalDistance}"
+
 msgid "left"
 msgstr "左"
 
@@ -7068,18 +7278,6 @@ msgstr "HumanWare Brailliant BI/B 系列 / BrailleNote Touch"
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
 msgstr "EcoBraille 點字顯示器"
-
-#. Translators: Names of braille displays.
-msgid "Eurobraille Esys/Esytime/Iris displays"
-msgstr "Eurobraille Esys 或 Esytime 或 Iris 顯示器"
-
-#. Translators: Message when HID keyboard simulation is unavailable.
-msgid "HID keyboard input simulation is unavailable."
-msgstr "HID 模擬鍵盤輸入不可用"
-
-#. Translators: Description of the script that toggles HID keyboard simulation.
-msgid "Toggle HID keyboard simulation"
-msgstr "開關 HID 模擬鍵盤"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7165,9 +7363,60 @@ msgstr "啟動時顯示點字輸出檢視器(&S)"
 msgid "&Hover for cell routing"
 msgstr "鼠標停留時移到點字顯示位置(&H)"
 
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+msgid "Disabled"
+msgstr "禁用"
+
+#. Translators: One of the show states of braille messages
+#. (the timeout mode shows messages for the specific time).
+msgid "Use timeout"
+msgstr "限時"
+
+#. Translators: One of the show states of braille messages
+#. (the indefinitely mode prevents braille messages from disappearing automatically).
+msgid "Show indefinitely"
+msgstr "持續"
+
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+msgid "automatically"
+msgstr "自動"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+msgid "to focus"
+msgstr "跟隨焦點"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered
+#. to the review cursor.
+msgid "to review"
+msgstr "跟隨易讀游標"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report No line Indentation.
+msgctxt "line indentation setting"
+msgid "Off"
+msgstr "不表示"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation
+#. with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "報讀"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation
+#. with tones.
+msgctxt "line indentation setting"
+msgid "Tones"
+msgstr "播放提示音"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation with both
+#. Speech and tones.
+msgctxt "line indentation setting"
+msgid "Both Speech and Tones"
+msgstr "播放語音及提示音"
+
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
 msgid "Off"
@@ -7188,17 +7437,52 @@ msgstr "列"
 msgid "Columns"
 msgstr "欄"
 
-#. Translators: Label for an option in NVDA settings.
-#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-#. Translators: One of the show states of braille messages
-#. (the disabled mode turns off showing of braille messages completely).
-msgid "Disabled"
-msgstr "禁用"
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Styles"
+msgstr "樣式"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Both Colors and Styles"
+msgstr "色彩與樣式"
 
 #. Translators: Label for an option in NVDA settings.
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "Enabled"
 msgstr "啟用"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Handled by application"
+msgstr "由應用程式處理"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Single line break"
+msgstr "單一換行"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Multi line break"
+msgstr "多個換行"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Never"
+msgstr "永不"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Only when tethered automatically"
+msgstr "僅在自動跟隨時"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Always"
+msgstr "總是"
+
+#. Translators: Label for an option in NVDA settings.
+msgid "Diffing"
+msgstr "單行分析"
+
+#. Translators: Label for an option in NVDA settings.
+msgid "UIA notifications"
+msgstr "UIA 通知"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -7966,6 +8250,11 @@ msgstr "註解"
 msgid "suggestion"
 msgstr "建議"
 
+#. Translators: The word role for a switch control
+#. I.e. a control that can be switched on or off.
+msgid "switch"
+msgstr "切換按鈕"
+
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
 #. checked), but this still might be used in some other cases.
@@ -8148,6 +8437,22 @@ msgstr "沒鎖"
 msgid "has note"
 msgstr "有註解"
 
+#. Translators: Presented when a control has a pop-up dialog.
+msgid "opens dialog"
+msgstr "快顯對話方塊"
+
+#. Translators: Presented when a control has a pop-up grid.
+msgid "opens grid"
+msgstr "快顯網格"
+
+#. Translators: Presented when a control has a pop-up list box.
+msgid "opens list"
+msgstr "快顯清單"
+
+#. Translators: Presented when a control has a pop-up tree.
+msgid "opens tree"
+msgstr "快顯樹狀檢視"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "沒選取"
@@ -8164,6 +8469,21 @@ msgstr "沒勾選"
 #. This is only reported for objects which support accessible drag and drop.
 msgid "done dragging"
 msgstr "拖曳完成"
+
+#. Translators: This is spoken when a paragraph is considered blank.
+#. Translators: This is spoken when the line is considered blank.
+#. Translators: This is spoken when NVDA moves to an empty line.
+#. Translators: This is spoken when the line is considered blank.
+msgid "blank"
+msgstr "空航"
+
+#. Translators: this message is given when there is no next paragraph when navigating by paragraph
+msgid "No next paragraph"
+msgstr "沒有下一段落了"
+
+#. Translators: this message is given when there is no previous paragraph when navigating by paragraph
+msgid "No previous paragraph"
+msgstr "沒有上一段落了"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -8260,13 +8580,13 @@ msgstr "報讀檢視器(&S)"
 msgid "Braille viewer"
 msgstr "點字輸出檢視器(&B)"
 
+#. Translators: The label of a menu item to open the Add-on store
+msgid "Add-on &store..."
+msgstr "組件商店(&S)..."
+
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
 msgstr "Python 主控台"
-
-#. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons..."
-msgstr "管理附加組件...(&A)"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 msgid "Create portable copy..."
@@ -8449,36 +8769,6 @@ msgstr "否(&N)"
 msgid "OK"
 msgstr "確定"
 
-#. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
-msgid ""
-"{summary} ({name})\n"
-"Version: {version}\n"
-"Author: {author}\n"
-"Description: {description}\n"
-msgstr ""
-"{summary} ({name})\n"
-"版本: {version}\n"
-"開發者: {author}\n"
-"描述: {description}\n"
-
-#. Translators: the url part of the About Add-on information
-#, python-brace-format
-msgid "URL: {url}"
-msgstr "網址: {url}"
-
-#. Translators: the minimum NVDA version part of the About Add-on information
-msgid "Minimum required NVDA version: {}"
-msgstr "最低 NVDA 版本應為： {}"
-
-#. Translators: the last NVDA version tested part of the About Add-on information
-msgid "Last NVDA version tested: {}"
-msgstr "最後測試過的 NVDA 版本： {}"
-
-#. Translators: title for the Addon Information dialog
-msgid "Add-on Information"
-msgstr "附加組件資訊"
-
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "附加組件管理器"
@@ -8554,18 +8844,6 @@ msgstr "選擇附加組件檔"
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "NVDA 附加組件檔 (*.{ext})"
 
-#. Translators: Presented when attempting to remove the selected add-on.
-#. {addon} is replaced with the add-on name.
-#, python-brace-format
-msgid ""
-"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
-"undone."
-msgstr "確定從 NVDA 移除 {addon} 附加組件嗎？移除後不能復原。"
-
-#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
-msgid "Remove Add-on"
-msgstr "移除附加組件"
-
 #. Translators: The status shown for an addon when it's not considered compatible with this version of NVDA.
 msgid "Incompatible"
 msgstr "不相容"
@@ -8589,16 +8867,6 @@ msgstr "重開後啟用"
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
 msgstr "啟用附加組件(&E)"
-
-#. Translators: The message displayed when the add-on cannot be disabled.
-#, python-brace-format
-msgid "Could not disable the {description} add-on."
-msgstr "無法禁用 {description} 附加組件。"
-
-#. Translators: The message displayed when the add-on cannot be enabled.
-#, python-brace-format
-msgid "Could not enable the {description} add-on."
-msgstr "無法啟用 {description} 附加組件。"
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #, python-format
@@ -8664,17 +8932,6 @@ msgstr ""
 msgid "Add-on not compatible"
 msgstr "不相容的附加組件"
 
-#. Translators: A message informing the user that this addon can not be installed
-#. because it is not compatible.
-#, python-brace-format
-msgid ""
-"Installation of {summary} {version} has been blocked. An updated version of "
-"this add-on is required, the minimum add-on API supported by this version of "
-"NVDA is {backCompatToAPIVersion}"
-msgstr ""
-"安裝 {summary} {version} 已被禁止，必須更新此附加組件版本，NVDA 附加組件可支"
-"援的版本至少應為 {backCompatToAPIVersion}。"
-
 #. Translators: A message asking the user if they really wish to install an addon.
 #, python-brace-format
 msgid ""
@@ -8706,18 +8963,6 @@ msgstr "不相容的附加組件"
 msgid "Incompatible reason"
 msgstr "不相容原因"
 
-#. Translators: The reason an add-on is not compatible. A more recent version of NVDA is
-#. required for the add-on to work. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
-msgid "An updated version of NVDA is required. NVDA version {} or later."
-msgstr "需要新版 NVDA，NVDA 版本 {} 或更新版本。"
-
-#. Translators: The reason an add-on is not compatible. The addon relies on older, removed features of NVDA,
-#. an updated add-on is required. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
-msgid ""
-"An updated version of this add-on is required. The minimum supported API "
-"version is now {}"
-msgstr "需要更新此附加組件，可支援的版本至少應為 {}"
-
 #. Translators: Reported when an action cannot be performed because NVDA is in a secure screen
 msgid "Action unavailable in secure context"
 msgstr "目前在安全畫面不能執行此動作"
@@ -8731,6 +8976,15 @@ msgstr "Windows 市集版的 NVDA 不能執行此動作"
 #. for a response from a modal dialog
 msgid "Action unavailable while a dialog requires a response"
 msgstr "目前有一個對話方塊正等待回應不能執行此動作"
+
+#. Translators: Reported when an action cannot be performed because Windows is locked.
+msgid "Action unavailable while Windows is locked"
+msgstr "Windows 鎖定時不能執行此動作"
+
+#. Translators: Reported when an action cannot be performed because NVDA is running the launcher temporary
+#. version
+msgid "Action unavailable in a temporary version of NVDA"
+msgstr "NVDA 暫存版不能執行動作"
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -8783,7 +9037,9 @@ msgid "Error activating profile."
 msgstr "啟用組態發生錯誤"
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "This profile will be permanently deleted. This action cannot be undone."
+#. The placeholder {} is replaced with the name of the configuration profile that will be deleted.
+msgid ""
+"The profile {} will be permanently deleted. This action cannot be undone."
 msgstr "這個組態設定將被永久刪除，此項操作將無法還原。"
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
@@ -9080,6 +9336,7 @@ msgid "Please press OK to start the installed copy."
 msgstr "請按 \"確定\" 啟動安裝好的程式。"
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
+#. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 msgid "Success"
 msgstr "完成"
 
@@ -9189,21 +9446,16 @@ msgstr "請指定建立可攜版的資料夾。"
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
 msgid ""
-"Please specify an absolute path (including drive letter)  in which to create "
-"the portable copy."
-msgstr "請指定建立可攜版的完整路徑，(包括磁碟機代號)"
+"Please specify the absolute path where the portable copy should be created. "
+"It may include system variables (%temp%, %homepath%, etc.)."
+msgstr ""
+"請指定建立可攜版的絕對路徑，它可能包括系統變數 (%temp%、%homepath% 等)。"
 
-#. Translators: The message displayed when the user specifies an invalid destination drive
-#. in the Create Portable NVDA dialog.
-#, python-format
-msgid "Invalid drive %s"
-msgstr "不可用的磁碟區 %s"
-
-#. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+#. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
 msgstr "正在建立可攜版"
 
-#. Translators: The message displayed while a portable copy of NVDA is bieng created.
+#. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "請稍候，正在建立 NVDA 可攜版。"
 
@@ -9212,16 +9464,16 @@ msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA 沒能移除或複寫檔案"
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
-#. %s will be replaced with the specific error message.
-#, python-format
-msgid "Failed to create portable copy: %s"
-msgstr "在 %s 建立 NVDA 可攜版失敗"
+#. {error} will be replaced with the specific error message.
+#, python-brace-format
+msgid "Failed to create portable copy: {error}."
+msgstr "無法建立可攜版: {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
-#. %s will be replaced with the destination directory.
-#, python-format
-msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "在 %s 建立 NVDA 可攜版完成"
+#. {dir} will be replaced with the destination directory.
+#, python-brace-format
+msgid "Successfully created a portable copy of NVDA at {dir}"
+msgstr "在 {dir} 建立 NVDA 可攜版完成"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -9913,19 +10165,6 @@ msgstr "行號(&N)"
 msgid "Line &indentation reporting:"
 msgstr "報出行縮排(&I)"
 
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
-msgctxt "line indentation setting"
-msgid "Speech"
-msgstr "報讀"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
-msgid "Tones"
-msgstr "提示音"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both Speech and Tones"
-msgstr "語音及提示音"
-
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
@@ -9960,16 +10199,6 @@ msgstr "欄列標題(&E)"
 #. document formatting settings panel.
 msgid "Cell c&oordinates"
 msgstr "儲存格座標(&O)"
-
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Styles"
-msgstr "樣式"
-
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Both Colors and Styles"
-msgstr "色彩與樣式"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
@@ -10025,6 +10254,18 @@ msgstr "可點擊(&C)"
 #. document formatting settings panel.
 msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr "報出游標經過後的格式改變(程式反應可能稍慢)(&G)"
+
+#. Translators: This is the label for the document navigation settings panel.
+msgid "Document Navigation"
+msgstr "文件導覽"
+
+#. Translators: This is a label for the paragraph navigation style in the document navigation dialog
+msgid "&Paragraph style:"
+msgstr "段落樣式(&P):"
+
+#. Translators: This is the label for the addon navigation settings panel.
+msgid "Add-on Store"
+msgstr "組件商店"
 
 #. Translators: This is the label for the touch interaction settings panel.
 msgid "Touch Interaction"
@@ -10193,11 +10434,6 @@ msgstr "針對結構注釋讀出「有詳細資料」"
 msgid "Report aria-description always"
 msgstr "總是讀出 aria 描述"
 
-#. Translators: This is the label for a group of advanced options in the
-#. Advanced settings panel
-msgid "HID Braille Standard"
-msgstr "HID 點字器標準"
-
 #. Translators: Label for option in the 'Enable support for HID braille' combobox
 #. in the Advanced settings panel.
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
@@ -10219,10 +10455,14 @@ msgstr "是("
 msgid "No"
 msgstr "否"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combo box in the
 #. Advanced settings panel.
 msgid "Enable support for HID braille"
 msgstr "啟用 HID 點字器支援"
+
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Report live regions:"
+msgstr "讀出即時區域:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10266,6 +10506,10 @@ msgstr "字元分析"
 msgid "Difflib"
 msgstr "單行分析"
 
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Speak new text in Windows Terminal via:"
+msgstr "獲取終端機視窗的文字的方式"
+
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "嘗試將已過期焦點事件的語音取消:"
@@ -10293,6 +10537,25 @@ msgstr "游標移動時限(以毫秒計)"
 #. Advanced settings panel.
 msgid "Report transparent color values"
 msgstr "讀出透明色彩值"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Audio"
+msgstr "音訊"
+
+#. Translators: This is the label for a checkbox control in the Advanced settings panel.
+msgid "Use WASAPI for audio output (requires restart)"
+msgstr "使用 WASAPI 作為音訊輸出 (需重新啟動)"
+
+#. Translators: This is the label for a checkbox control in the
+#. Advanced settings panel.
+msgid "Volume of NVDA sounds follows voice volume (requires WASAPI)"
+msgstr "NVDA 音效音量跟隨語音音量 (需要 WASAPI)"
+
+#. Translators: This is the label for a slider control in the
+#. Advanced settings panel.
+msgid "Volume of NVDA sounds (requires WASAPI)"
+msgstr "NVDA 音效音量 (需要 WASAPI)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10405,16 +10668,6 @@ msgstr "跟隨焦點游標的形態(&F)"
 msgid "Cursor shape for &review:"
 msgstr "跟隨易讀游標的形態(&R)"
 
-#. Translators: One of the show states of braille messages
-#. (the timeout mode shows messages for the specific time).
-msgid "Use timeout"
-msgstr "限時"
-
-#. Translators: One of the show states of braille messages
-#. (the indefinitely mode prevents braille messages from disappearing automatically).
-msgid "Show indefinitely"
-msgstr "持續"
-
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
 msgid "Show messages"
@@ -10427,6 +10680,10 @@ msgstr "訊息顯示的時間 (以秒計)(&T)"
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Tether B&raille:"
 msgstr "點字顯示跟隨：(&R)"
+
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "Move system caret when ro&uting review cursor"
+msgstr "移動易讀游標時也移動系統游標(&U)"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -10443,6 +10700,10 @@ msgstr "上下文顯示方式(&F)"
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 msgid "I&nterrupt speech while scrolling"
 msgstr "點字捲動時中斷語音(&N)"
+
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "Show se&lection"
+msgstr "顯示選取範圍(&L)"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -10615,9 +10876,14 @@ msgid "Dictionary Entry Error"
 msgstr "字庫項目錯誤"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "正規表達式錯誤 \"%s\""
+#, python-brace-format
+msgid "Regular Expression error in the pattern field: \"{error}\"."
+msgstr "原來文字欄位的正規表達式錯誤: \"{error}\"."
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-brace-format
+msgid "Regular Expression error in the replacement field: \"{error}\"."
+msgstr "替代文字欄位的正規表達式錯誤: \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -10708,6 +10974,12 @@ msgstr "將 Caps Lock 鍵設為 NVDA 鍵(&U)"
 msgid "&Show this dialog when NVDA starts"
 msgstr "每當 NVDA 啟動時顯示此對話方塊(&S)"
 
+#. Translators: The title of an error message box displayed when validating the startup dialog
+msgid ""
+"At least one NVDA modifier key must be set. Caps lock will remain as an NVDA "
+"modifier key. "
+msgstr "必須設定最少一個 NVDA 鍵，Caps lock 將繼續為 NVDA 鍵"
+
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
 msgstr "我同意(&A)"
@@ -10764,12 +11036,6 @@ msgstr "結束署理算式"
 msgid "Math interaction not supported."
 msgstr "不支援署理算式"
 
-#. Translators: This is spoken when the line is considered blank.
-#. Translators: This is spoken when NVDA moves to an empty line.
-#. Translators: This is spoken when the line is considered blank.
-msgid "blank"
-msgstr "空航"
-
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #, python-format
 msgid "cap %s"
@@ -10813,15 +11079,19 @@ msgid "row %s"
 msgstr "第 %s 列"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
-#. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, python-format
-msgid "through %s"
-msgstr "合併 %s 個儲存格"
+#, python-brace-format
+msgid "through {endRow}"
+msgstr "到第 {endRow} 列"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "第 %s 欄"
+
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-brace-format
+msgid "through {endCol}"
+msgstr "到第 {endCol} 欄"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
@@ -10854,9 +11124,10 @@ msgid "level %s"
 msgstr "第 %s 級"
 
 #. Translators: Number of items in a list (example output: list with 5 items).
-#, python-format
-msgid "with %s items"
-msgstr "有 %s 個項目"
+#, fuzzy, python-format
+msgid "with %s item"
+msgid_plural "with %s items"
+msgstr[0] "有 %s 個項目"
 
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #, python-format
@@ -10994,6 +11265,16 @@ msgstr "標記"
 #. Translators: Reported when text is no longer marked
 msgid "not marked"
 msgstr "沒標記"
+
+#. Translators: Reported when text is color-highlighted
+#, fuzzy, python-brace-format
+msgid "highlighted in {color}"
+msgstr "亮灰{color}"
+
+#. Translators: Reported when text is no longer marked
+#, fuzzy
+msgid "not highlighted"
+msgstr "沒有加亮"
 
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
@@ -11217,6 +11498,41 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "在 {x}、{y}"
 
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds
+#, python-brace-format
+msgctxt "time format"
+msgid "{S}"
+msgstr "{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes
+#, python-brace-format
+msgctxt "time format"
+msgid "{M}:{S}"
+msgstr "{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours
+#, python-brace-format
+msgctxt "time format"
+msgid "{H}:{M}:{S}"
+msgstr "{H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} day
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} day {H}:{M}:{S}"
+msgstr "{D} 日 {H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} days
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} days {H}:{M}:{S}"
+msgstr "{D} 日 {H}:{M}:{S}"
+
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
 msgid ""
@@ -11327,12 +11643,14 @@ msgid "No system battery"
 msgstr "系統沒有安裝電池"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
-msgid "Charging battery"
-msgstr "電池充電中"
+#, fuzzy
+msgid "Plugged in"
+msgstr "建議"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-msgid "AC disconnected"
-msgstr "交流電源斷開了"
+#, fuzzy
+msgid "Unplugged"
+msgstr "標幟"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 #, python-brace-format
@@ -12292,11 +12610,13 @@ msgstr "第 {legendEntryIndex} 個圖例項目共 {legendEntryCount} 個"
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "數列圖例符號 {seriesName} 第 {seriesIndex} 個共 {seriesCount} 個"
 
-#. Translators: The default color of text when a color has not been set by the author.
-#. Translators: The default background color  when a color has not been set by the author.
-#. Translators: the default (automatic) color in Microsoft Word
-msgid "default color"
-msgstr "預設顏色"
+#. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+#, python-brace-format
+msgid "{color} (default color)"
+msgstr "{color} (預設顏色)"
 
 #. Translators: The color of text cannot be detected.
 #. Translators: The background color cannot be detected.
@@ -12444,6 +12764,46 @@ msgstr "工作表(&S)"
 #, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} 到 {end}"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold off"
+msgstr "粗體關"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold on"
+msgstr "粗體開"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic off"
+msgstr "斜體關"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic on"
+msgstr "斜體開"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline off"
+msgstr "底線關"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline on"
+msgstr "底線開"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#, fuzzy
+msgid "Strikethrough off"
+msgstr "刪除線"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#, fuzzy
+msgid "Strikethrough on"
+msgstr "刪除線"
 
 #. Translators: the description  for a script for Excel
 msgid "opens a dropdown item at the current cell"
@@ -12823,38 +13183,19 @@ msgid "at least %.1f pt"
 msgstr "至少%.1f點"
 
 #. Translators: line spacing of x lines
-#, python-format
+#, fuzzy, python-format
 msgctxt "line spacing value"
-msgid "%.1f lines"
-msgstr "%.1f行"
+msgid "%.1f line"
+msgid_plural "%.1f lines"
+msgstr[0] "%.1f行"
 
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "表格說明"
 
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Bold on"
-msgstr "粗體開"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Bold off"
-msgstr "粗體關"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Italic on"
-msgstr "斜體開"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Italic off"
-msgstr "斜體關"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Underline on"
-msgstr "底線開"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Underline off"
-msgstr "底線關"
+#. Translators: the default (automatic) color in Microsoft Word
+msgid "automatic color"
+msgstr "自動顏色"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Left aligned"
@@ -12962,6 +13303,824 @@ msgstr "2倍行高"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5倍行高"
+
+#. Translators: Label for add-on channel in the add-on sotre
+#. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "All"
+msgstr "報讀全部標點"
+
+#. Translators: Label for add-on channel in the add-on sotre
+#, fuzzy
+msgctxt "addonStore"
+msgid "Stable"
+msgstr "表格"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "Beta"
+msgstr "Beta"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "Dev"
+msgstr "Dev"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "External"
+msgstr "外部"
+
+#. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+#. Translators: Status for addons shown in the add-on store dialog
+#, fuzzy
+msgctxt "addonStore"
+msgid "Enabled"
+msgstr "啟用"
+
+#. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+#. Translators: Status for addons shown in the add-on store dialog
+#, fuzzy
+msgctxt "addonStore"
+msgid "Disabled"
+msgstr "禁用"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Pending removal"
+msgstr "等待移除"
+
+#. Translators: Status for addons shown in the add-on store dialog
+#, fuzzy
+msgctxt "addonStore"
+msgid "Available"
+msgstr "無法使用"
+
+#. Translators: Status for addons shown in the add-on store dialog
+#, fuzzy
+msgctxt "addonStore"
+msgid "Update Available"
+msgstr "現時未有更新"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Migrate to add-on store"
+msgstr "移到組件商店"
+
+#. Translators: Status for addons shown in the add-on store dialog
+#, fuzzy
+msgctxt "addonStore"
+msgid "Incompatible"
+msgstr "不相容"
+
+#. Translators: Status for addons shown in the add-on store dialog
+#, fuzzy
+msgctxt "addonStore"
+msgid "Downloading"
+msgstr "下載中"
+
+#. Translators: Status for addons shown in the add-on store dialog
+#, fuzzy
+msgctxt "addonStore"
+msgid "Download failed"
+msgstr "下載更新(&D)"
+
+#. Translators: Status for addons shown in the add-on store dialog
+#, fuzzy
+msgctxt "addonStore"
+msgid "Downloaded, pending install"
+msgstr "重開後啟用"
+
+#. Translators: Status for addons shown in the add-on store dialog
+#, fuzzy
+msgctxt "addonStore"
+msgid "Installing"
+msgstr "已安裝"
+
+#. Translators: Status for addons shown in the add-on store dialog
+#, fuzzy
+msgctxt "addonStore"
+msgid "Install failed"
+msgstr "安裝更新(&I)"
+
+#. Translators: Status for addons shown in the add-on store dialog
+#, fuzzy
+msgctxt "addonStore"
+msgid "Installed, pending restart"
+msgstr "安裝已經下載的更新"
+
+#. Translators: Status for addons shown in the add-on store dialog
+#, fuzzy
+msgctxt "addonStore"
+msgid "Disabled, pending restart"
+msgstr "重開後禁用"
+
+#. Translators: Status for addons shown in the add-on store dialog
+#, fuzzy
+msgctxt "addonStore"
+msgid "Disabled (incompatible), pending restart"
+msgstr "重開後禁用"
+
+#. Translators: Status for addons shown in the add-on store dialog
+#, fuzzy
+msgctxt "addonStore"
+msgid "Disabled (incompatible)"
+msgstr "不相容"
+
+#. Translators: Status for addons shown in the add-on store dialog
+#, fuzzy
+msgctxt "addonStore"
+msgid "Enabled (incompatible), pending restart"
+msgstr "重開後啟用"
+
+#. Translators: Status for addons shown in the add-on store dialog
+#, fuzzy
+msgctxt "addonStore"
+msgid "Enabled (incompatible)"
+msgstr "不相容"
+
+#. Translators: Status for addons shown in the add-on store dialog
+#, fuzzy
+msgctxt "addonStore"
+msgid "Enabled, pending restart"
+msgstr "重開後啟用"
+
+#. Translators: The label of a tab to display installed add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Installed add-ons"
+msgstr "附加組件"
+
+#. Translators: The label of a tab to display updatable add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Updatable add-ons"
+msgstr "不相容的附加組件"
+
+#. Translators: The label of a tab to display available add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Available add-ons"
+msgstr "停用附加組件(&D)"
+
+#. Translators: The label of a tab to display incompatible add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Installed incompatible add-ons"
+msgstr "不相容的附加組件"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Installed &add-ons"
+msgstr "附加組件"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Updatable &add-ons"
+msgstr "不相容的附加組件"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Available &add-ons"
+msgstr "停用附加組件(&D)"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Installed incompatible &add-ons"
+msgstr "不相容的附加組件"
+
+#. Translators: The reason an add-on is not compatible.
+#. A more recent version of NVDA is required for the add-on to work.
+#. The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
+#, fuzzy, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"An updated version of NVDA is required. NVDA version {nvdaVersion} or later."
+msgstr "需要新版 NVDA，NVDA 版本 {} 或更新版本。"
+
+#. Translators: The reason an add-on is not compatible.
+#. The addon relies on older, removed features of NVDA, an updated add-on is required.
+#. The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
+#, fuzzy, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"An updated version of this add-on is required. The minimum supported API "
+"version is now {nvdaVersion}. This add-on was last tested with "
+"{lastTestedNVDAVersion}. You can enable this add-on at your own risk. "
+msgstr "需要更新此附加組件，可支援的版本至少應為 {}"
+
+#. Translators: A message indicating that some add-ons will be disabled
+#. unless reviewed before installation.
+#, fuzzy
+msgctxt "addonStore"
+msgid ""
+"Your NVDA configuration contains add-ons that are incompatible with this "
+"version of NVDA. These add-ons will be disabled after installation. After "
+"installation, you will be able to manually re-enable these add-ons at your "
+"own risk. If you rely on these add-ons, please review the list to decide "
+"whether to continue with the installation. "
+msgstr ""
+"\n"
+"但是一些附加組件不相容於這個版本的 NVDA，這些附加組件將在安裝完後被禁止執行。"
+"如果你需要使用這些附加組件，請檢視以下清單並決定是否繼續安裝。"
+
+#. Translators: A message to confirm that the user understands that incompatible add-ons
+#. will be disabled after installation, and can be manually re-enabled.
+#, fuzzy
+msgctxt "addonStore"
+msgid ""
+"I understand that incompatible add-ons will be disabled and can be manually "
+"re-enabled at my own risk after installation."
+msgstr "我明白這些不相容的附加組件將被禁用"
+
+#. Translators: Names of braille displays.
+msgid "Caiku Albatross 46/80"
+msgstr "Caiku Albatross 46/80"
+
+#. Translators: A message when number of status cells must be changed
+#. for a braille display driver
+msgid ""
+"To use Albatross with NVDA: change number of status cells in Albatross "
+"internal menu at most "
+msgstr ""
+"若使用 NVDA 搭配 Albatross，請到 Albatross 內建的選單，將 number of status "
+"cells 改為 at most"
+
+#. Translators: Names of braille displays.
+#, fuzzy
+msgid "Eurobraille displays"
+msgstr "EcoBraille 點字顯示器"
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+msgid "HID keyboard input simulation is unavailable."
+msgstr "HID 模擬鍵盤輸入不可用"
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggle HID keyboard simulation"
+msgstr "開關 HID 模擬鍵盤"
+
+#. Translators: Header (usually the add-on name) when add-ons are loading. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Loading add-ons..."
+msgstr "管理附加組件...(&A)"
+
+#. Translators: Header (usually the add-on name) when no add-on is selected. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "No add-on selected."
+msgstr "沒選取"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Description:"
+msgstr "分佈："
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "S&tatus:"
+msgstr "狀態"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "A&ctions"
+msgstr "註解(&A)"
+
+#. Translators: Label for the text control containing extra details about the selected add-on.
+#. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Other Details:"
+msgstr "有更多資料"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Publisher:"
+msgstr "發行者:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Author:"
+msgstr "開發者"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "ID:"
+msgstr "ID:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Installed version:"
+msgstr "安裝 NVDA {version}(&I)"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Available version:"
+msgstr "停用附加組件(&D)"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Channel:"
+msgstr "通道:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Incompatible Reason:"
+msgstr "不相容原因"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Homepage:"
+msgstr "首頁"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "License:"
+msgstr "版權資訊(&I)"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "License URL:"
+msgstr "版權資訊(&I)"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Download URL:"
+msgstr "下載中"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Source URL:"
+msgstr "來源網址:"
+
+#. Translators: A button in the addon installation warning / blocked dialog which shows
+#. more information about the addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&About add-on..."
+msgstr "關於(&A)"
+
+#. Translators: A button in the addon installation blocked dialog which will confirm the available action.
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Yes"
+msgstr "是(&Y)"
+
+#. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "&No"
+msgstr "否(&N)"
+
+#. Translators: The message displayed when updating an add-on, but the installed version
+#. identifier can not be compared with the version to be installed.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on installation may result in downgrade: {name}. The installed "
+"add-on version cannot be compared with the add-on store version. Installed "
+"version: {oldVersion}. Available version: {version}.\n"
+"Proceed with installation anyway? "
+msgstr ""
+"警告: 安裝此附加組件可能導致降級: {name}。安裝的版本無法與組件商店版本比較。"
+"安裝版本: {oldVersion}。可用版本: {version}。\n"
+"仍然要繼續安裝嗎? "
+
+#. Translators: The title of a dialog presented when an error occurs.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Add-on not compatible"
+msgstr "不相容的附加組件"
+
+#. Translators: Presented when attempting to remove the selected add-on.
+#. {addon} is replaced with the add-on name.
+#, fuzzy, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
+"undone."
+msgstr "確定從 NVDA 移除 {addon} 附加組件嗎？移除後不能復原。"
+
+#. Translators: Title for message asking if the user really wishes to remove the selected Add-on.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Remove Add-on"
+msgstr "移除附加組件"
+
+#. Translators: The message displayed when installing an add-on package that is incompatible
+#. because the add-on is too old for the running version of NVDA.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated "
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Installation may cause unstable behavior in NVDA.\n"
+"Proceed with installation anyway? "
+msgstr ""
+"警告: 此附加組件不相容: {name} {version}。若可能的話檢查組件的更新版本。組件"
+"通過測試的最新 NVDA 版本為 {lastTestedNVDAVersion}，目前的 NVDA 版本為 "
+"{NVDAVersion}。繼續安裝可能會導致 NVDA 執行時不夠穩定。\n"
+"仍然要繼續安裝嗎? "
+
+#. Translators: The message displayed when enabling an add-on package that is incompatible
+#. because the add-on is too old for the running version of NVDA.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated "
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Enabling may cause unstable behavior in NVDA.\n"
+"Proceed with enabling anyway? "
+msgstr ""
+"警告: 此附加組件不相容: {name} {version}。若可能的話檢查組件的更新版本。組件"
+"通過測試的最新 NVDA 版本為 {lastTestedNVDAVersion}，目前的 NVDA 版本為 "
+"{NVDAVersion}。啟用組件可能會導致 NVDA 執行時不夠穩定。\n"
+"仍然要啟用嗎? "
+
+#. Translators: message shown in the Addon Information dialog.
+#, fuzzy, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"{summary} ({name})\n"
+"Version: {version}\n"
+"Description: {description}\n"
+msgstr ""
+"{summary} ({name})\n"
+"版本: {version}\n"
+"開發者: {author}\n"
+"描述: {description}\n"
+
+#. Translators: the publisher part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Publisher: {publisher}\n"
+msgstr "發行者: {publisher}\n"
+
+#. Translators: the author part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Author: {author}\n"
+msgstr "作者: {author}\n"
+
+#. Translators: the url part of the About Add-on information
+#, fuzzy, python-brace-format
+msgctxt "addonStore"
+msgid "Homepage: {url}\n"
+msgstr "首頁"
+
+#. Translators: the minimum NVDA version part of the About Add-on information
+#, fuzzy
+msgctxt "addonStore"
+msgid "Minimum required NVDA version: {}\n"
+msgstr "最低 NVDA 版本應為： {}"
+
+#. Translators: the last NVDA version tested part of the About Add-on information
+#, fuzzy
+msgctxt "addonStore"
+msgid "Last NVDA version tested: {}\n"
+msgstr "最後測試過的 NVDA 版本： {}"
+
+#. Translators: title for the Addon Information dialog
+#, fuzzy
+msgctxt "addonStore"
+msgid "Add-on Information"
+msgstr "附加組件資訊"
+
+#. Translators: The warning of a dialog
+#, fuzzy
+msgid "Add-on Store Warning"
+msgstr "附加組件說明(&H)"
+
+#. Translators: Warning that is displayed before using the Add-on Store.
+msgctxt "addonStore"
+msgid ""
+"Add-ons are created by the NVDA community and are not vetted by NV Access. "
+"NV Access cannot be held responsible for add-on behavior. The functionality "
+"of add-ons is unrestricted and can include accessing your personal data or "
+"even the entire system. "
+msgstr ""
+"附加組件由 NVDA 社群建立且未經 NV Access 審查，NV Access 不會對附加組件的行為"
+"負責，組件的功能是不受限制的，可能包括存取您的個人資料甚至整個系統。 "
+
+#. Translators: The label of a checkbox in the add-on store warning dialog
+msgctxt "addonStore"
+msgid "&Don't show this message again"
+msgstr "不再顯示此訊息(&D)"
+
+#. Translators: The label of a button in a dialog
+#, fuzzy
+msgid "&OK"
+msgstr "確定"
+
+#. Translators: The title of the addonStore dialog where the user can find and download add-ons
+#, fuzzy
+msgctxt "addonStore"
+msgid "Add-on Store"
+msgstr "附加組件說明(&H)"
+
+#. Translators: The label for a button in add-ons Store dialog to install an external add-on.
+msgctxt "addonStore"
+msgid "Install from e&xternal source"
+msgstr "從外部來源安裝(&X)"
+
+#. Translators: Banner notice that is displayed in the Add-on Store.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Note: NVDA was started with add-ons disabled"
+msgstr "重開後停用附加組件"
+
+#. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "Cha&nnel:"
+msgstr "通道(&N):"
+
+#. Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
+#, fuzzy
+msgid "Include &incompatible add-ons"
+msgstr "不相容的附加組件"
+
+#. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Ena&bled/disabled:"
+msgstr "停用"
+
+#. Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Search:"
+msgstr "搜尋區"
+
+#. Translators: Title for message shown prior to installing add-ons when closing the add-on store dialog.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Add-on installation"
+msgstr "安裝附加組件"
+
+#. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
+#. The placeholder {} will be replaced with the number of add-ons to be installed
+msgctxt "addonStore"
+msgid "Download of {} add-ons in progress, cancel downloading?"
+msgstr "正在下載 {} 附加組件，要取消下載嗎?"
+
+#. Translators: Message shown while installing add-ons after closing the add-on store dialog
+#. The placeholder {} will be replaced with the number of add-ons to be installed
+#, fuzzy
+msgctxt "addonStore"
+msgid "Installing {} add-ons, please wait."
+msgstr "正在安裝附加組件"
+
+#. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
+#. tab's name.
+#, fuzzy, python-brace-format
+msgctxt "addonStore"
+msgid "{category}:"
+msgstr "{category} (1 項結果)"
+
+#. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#, fuzzy, python-brace-format
+msgctxt "addonStore"
+msgid "NVDA Add-on Package (*.{ext})"
+msgstr "NVDA 附加組件檔 (*.{ext})"
+
+#. Translators: The message displayed in the dialog that
+#. allows you to choose an add-on package for installation.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Choose Add-on Package File"
+msgstr "選擇附加組件檔"
+
+#. Translators: The name of the column that contains names of addons.
+msgctxt "addonStore"
+msgid "Name"
+msgstr "名稱"
+
+#. Translators: The name of the column that contains the installed addon's version string.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Installed version"
+msgstr "安裝 NVDA {version}(&I)"
+
+#. Translators: The name of the column that contains the available addon's version string.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Available version"
+msgstr "停用附加組件(&D)"
+
+#. Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
+#, fuzzy
+msgctxt "addonStore"
+msgid "Channel"
+msgstr "橫幅區"
+
+#. Translators: The name of the column that contains the addon's publisher.
+msgctxt "addonStore"
+msgid "Publisher"
+msgstr "發行者:"
+
+#. Translators: The name of the column that contains the addon's author.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Author"
+msgstr "開發者"
+
+#. Translators: The name of the column that contains the status of the addon.
+#. e.g. available, downloading installing
+#, fuzzy
+msgctxt "addonStore"
+msgid "Status"
+msgstr "狀態"
+
+#. Translators: Label for an action that installs the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Install"
+msgstr "已安裝"
+
+#. Translators: Label for an action that installs the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Install (override incompatibility)"
+msgstr "不相容的附加組件"
+
+#. Translators: Label for an action that updates the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Update"
+msgstr "檢查 NVDA 更新"
+
+#. Translators: Label for an action that replaces the selected addon with
+#. an add-on store version.
+#, fuzzy
+msgctxt "addonStore"
+msgid "Re&place"
+msgstr "取代"
+
+#. Translators: Label for an action that disables the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Disable"
+msgstr "禁用"
+
+#. Translators: Label for an action that enables the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Enable"
+msgstr "啟用"
+
+#. Translators: Label for an action that enables the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Enable (override incompatibility)"
+msgstr "不相容"
+
+#. Translators: Label for an action that removes the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Remove"
+msgstr "移除(&R)"
+
+#. Translators: Label for an action that opens help for the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&Help"
+msgstr "說明(&H)"
+
+#. Translators: Label for an action that opens the homepage for the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "Ho&mepage"
+msgstr "首頁"
+
+#. Translators: Label for an action that opens the license for the selected addon
+#, fuzzy
+msgctxt "addonStore"
+msgid "&License"
+msgstr "版權資訊(&I)"
+
+#. Translators: Label for an action that opens the source code for the selected addon
+msgctxt "addonStore"
+msgid "Source &Code"
+msgstr "原始碼(&C)"
+
+#. Translators: The message displayed when the add-on cannot be enabled.
+#. {addon} is replaced with the add-on name.
+#, fuzzy, python-brace-format
+msgctxt "addonStore"
+msgid "Could not enable the add-on: {addon}."
+msgstr "無法啟用 {description} 附加組件。"
+
+#. Translators: The message displayed when the add-on cannot be disabled.
+#. {addon} is replaced with the add-on name.
+#, fuzzy, python-brace-format
+msgctxt "addonStore"
+msgid "Could not disable the add-on: {addon}."
+msgstr "無法禁用 {description} 附加組件。"
+
+#, fuzzy
+#~ msgid "NVDA sounds"
+#~ msgstr "NVDA 設定"
+
+#~ msgid "HID Braille Standard"
+#~ msgstr "HID 點字器標準"
+
+#~ msgid "Find Error"
+#~ msgstr "尋找失敗"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "However, your NVDA configuration contains add-ons that are incompatible "
+#~ "with this version of NVDA. These add-ons will be disabled after "
+#~ "installation. If you rely on these add-ons, please review the list to "
+#~ "decide whether to continue with the installation"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "但是一些附加組件不相容於這個版本的 NVDA，這些附加組件將在安裝完後被禁止執"
+#~ "行。如果你需要使用這些附加組件，請檢視以下清單並決定是否繼續安裝。"
+
+#~ msgid "Eurobraille Esys/Esytime/Iris displays"
+#~ msgstr "Eurobraille Esys 或 Esytime 或 Iris 顯示器"
+
+#~ msgid "URL: {url}"
+#~ msgstr "網址: {url}"
+
+#~ msgid ""
+#~ "Installation of {summary} {version} has been blocked. An updated version "
+#~ "of this add-on is required, the minimum add-on API supported by this "
+#~ "version of NVDA is {backCompatToAPIVersion}"
+#~ msgstr ""
+#~ "安裝 {summary} {version} 已被禁止，必須更新此附加組件版本，NVDA 附加組件可"
+#~ "支援的版本至少應為 {backCompatToAPIVersion}。"
+
+#~ msgid ""
+#~ "Please specify an absolute path (including drive letter)  in which to "
+#~ "create the portable copy."
+#~ msgstr "請指定建立可攜版的完整路徑，(包括磁碟機代號)"
+
+#~ msgid "Invalid drive %s"
+#~ msgstr "不可用的磁碟區 %s"
+
+#~ msgid "Charging battery"
+#~ msgstr "電池充電中"
+
+#~ msgid "AC disconnected"
+#~ msgstr "交流電源斷開了"
+
+#~ msgid "Unable to determine remaining time"
+#~ msgstr "無法讀取剩餘時間"
+
+#~ msgid "through %s"
+#~ msgstr "合併 %s 個儲存格"
+
+#~ msgid "Report line indentation with speech"
+#~ msgstr "讀出行縮排"
+
+#~ msgid "Report line indentation with tones"
+#~ msgstr "行縮排播出提示音"
+
+#~ msgid "Report line indentation with speech and tones"
+#~ msgstr "讀出行縮排及播放提示音"
+
+#~ msgid "Report styles of cell borders"
+#~ msgstr "讀出儲存格框線的樣式"
+
+#~ msgid "Report colors and styles of cell borders"
+#~ msgstr "讀出儲存格框線的色彩及樣式"
 
 #~ msgid "NVDA could not start securely."
 #~ msgstr "NVDA 不能安全啟動。"

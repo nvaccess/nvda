@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2010-2022 NV Access Limited, World Light Information Limited,
+# Copyright (C) 2010-2023 NV Access Limited, World Light Information Limited,
 # Hong Kong Blind Union, Babbage B.V., Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -22,6 +22,7 @@ from typing import (
 from logHandler import log
 import globalVars
 import config
+from NVDAState import WritePaths
 
 
 _LocaleDataT = TypeVar("_LocaleDataT")
@@ -406,11 +407,11 @@ def _getSpeechSymbolsForLocale(locale: str) -> Tuple[SpeechSymbols, SpeechSymbol
 	if not builtinDataImported:
 		raise LookupError("No symbol information for locale %s" % locale)
 	user = SpeechSymbols()
+	pathToSymbolsDic = WritePaths.getSymbolsConfigFile(locale)
 	try:
 		# Don't allow users to specify complex symbols
 		# because an error will cause the whole processor to fail.
-		user.load(os.path.join(globalVars.appArgs.configPath, "symbols-%s.dic" % locale),
-			allowComplexSymbols=False)
+		user.load(pathToSymbolsDic, allowComplexSymbols=False)
 	except IOError:
 		# An empty user SpeechSymbols is okay.
 		pass

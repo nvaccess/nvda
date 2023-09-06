@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V.
+# Copyright (C) 2006-2023 NV Access Limited, Babbage B.V.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -50,7 +50,7 @@ import api
 import config
 import controlTypes
 from controlTypes import TextPosition
-from controlTypes.formatFields import FontSize
+from controlTypes.formatFields import FontSize, TextAlign
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
@@ -86,11 +86,23 @@ def getNVDAObjectFromPoint(x,y):
 FORMAT_OBJECT_ATTRIBS = frozenset({"text-align"})
 def normalizeIA2TextFormatField(formatField):
 	try:
-		textAlign=formatField.pop("text-align")
+		val = formatField.pop("text-align")
 	except KeyError:
 		textAlign=None
+	else:
+		mozillaTextAlign = {
+			'-moz-left': 'left',
+			'-moz-center': 'center',
+			'-moz-right': 'right',
+		}
+		val = mozillaTextAlign.get(val, val)
+		try:
+			textAlign = TextAlign(val)
+		except ValueError:
+			log.debugWarning(f'Unsupported value for text-align attribute: "{val}"')
+			textAlign = None
 	if textAlign:
-		formatField["text-align"]=textAlign
+		formatField["text-align"] = textAlign
 	try:
 		fontWeight=formatField.pop("font-weight")
 	except KeyError:
@@ -198,22 +210,32 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def expand(self,unit):
 		if unit==self.unit_mouseChunk:
 			isMouseChunkUnit=True
-			oldStart=self._startOffset
-			oldEnd=self._endOffset
+			origin = self._startOffset
 			unit=super(IA2TextTextInfo,self).unit_mouseChunk
 		else:
 			isMouseChunkUnit=False
 		super(IA2TextTextInfo,self).expand(unit)
 		if isMouseChunkUnit:
+			# If there are embedded object characters near our origin, shrink the range
+			# so that it only covers the text between them. Note that the user can
+			# mouse over the embedded objects separately. For example, if we have:
+			# before link after
+			# where "before" and "after" are plain text and "link" is a link, mousing
+			# over "before" would just read "before", mousing over "link" would read
+			# "link" and mousing over "after" would just read "after".
 			text=self._getTextRange(self._startOffset,self._endOffset)
 			if not text:
 				return
+			# Make our origin relative to the start of the text we just retrieved.
+			relativeOrigin = origin - self._startOffset
 			try:
-				self._startOffset = text.rindex(textUtils.OBJ_REPLACEMENT_CHAR, 0, oldStart - self._startOffset)
+				# Shrink the start to the nearest embedded object before our origin.
+				self._startOffset = text.rindex(textUtils.OBJ_REPLACEMENT_CHAR, 0, relativeOrigin)
 			except ValueError:
 				pass
 			try:
-				self._endOffset = text.index(textUtils.OBJ_REPLACEMENT_CHAR, oldEnd - self._startOffset)
+				# Shrink the end to the nearest embedded object after our origin.
+				self._endOffset = text.index(textUtils.OBJ_REPLACEMENT_CHAR, relativeOrigin)
 			except ValueError:
 				pass
 
@@ -1548,7 +1570,8 @@ the NVDAObject for IAccessible
 			# https://crbug.com/1399184
 			maxRelations
 		)
-		log.debug(f"Got {count} relations, given maxRelations: {maxRelations}")
+		if config.conf["debugLog"]["annotations"]:
+			log.debug(f"Got {count} relations, given maxRelations: {maxRelations}")
 		if count == 0:
 			return
 		yield from (
@@ -1619,7 +1642,8 @@ the NVDAObject for IAccessible
 		try:
 			# rather than fetch all the relations and querying the type, do that in process for performance reasons
 			# Bug in Chrome, Chrome does not respect maxRelations param.
-			# https://crbug.com/1399184. In future, uncomment the next line.
+			# https://crbug.com/1399184.
+			# In future, uncomment the next line.
 			# maxRelsToFetch = self.IAccessibleObject.nRelations  # they may or may not all match 'relationType'
 			maxRelsToFetch = 10
 			targetsGen = self._getIA2TargetsForRelationsOfType(relationType, maxRelations=maxRelsToFetch)
@@ -1686,7 +1710,7 @@ the NVDAObject for IAccessible
 			return
 		return super(IAccessible, self).event_valueChange()
 
-	def event_alert(self):
+	def event_alert(self) -> None:
 		if self.role != controlTypes.Role.ALERT:
 			# Ignore alert events on objects that aren't alerts.
 			return
@@ -1700,9 +1724,11 @@ the NVDAObject for IAccessible
 		if self in api.getFocusAncestors():
 			return
 		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS, priority=speech.Spri.NOW)
+		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 		for child in self.recursiveDescendants:
 			if controlTypes.State.FOCUSABLE in child.states:
 				speech.speakObject(child, reason=controlTypes.OutputReason.FOCUS, priority=speech.Spri.NOW)
+				braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
 	def event_caret(self):
 		focus = api.getFocusObject()

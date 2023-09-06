@@ -33,19 +33,7 @@ import re
 class ExcelCustomProperties:
 	""" UIA 'custom properties' specific to Excel.
 	Once registered, all subsequent registrations will return the same ID value.
-	This class should be used as a singleton via ExcelCustomProperties.get()
-	to prevent unnecessary work by repeatedly interacting with UIA.
 	"""
-	#: Singleton instance
-	_instance: "Optional[ExcelCustomProperties]" = None
-
-	@classmethod
-	def get(cls) -> "ExcelCustomProperties":
-		"""Get the singleton instance or initialise it.
-		"""
-		if cls._instance is None:
-			cls._instance = cls()
-		return cls._instance
 
 	def __init__(self):
 		self.cellFormula = CustomPropertyInfo(
@@ -100,20 +88,8 @@ class ExcelCustomProperties:
 class ExcelCustomAnnotationTypes:
 	""" UIA 'custom annotation types' specific to Excel.
 	Once registered, all subsequent registrations will return the same ID value.
-	This class should be used as a singleton via ExcelCustomAnnotationTypes.get()
-	to prevent unnecessary work by repeatedly interacting with UIA.
 	"""
-	#: Singleton instance
-	_instance: "Optional[ExcelCustomAnnotationTypes]" = None
-
-	@classmethod
-	def get(cls) -> "ExcelCustomAnnotationTypes":
-		"""Get the singleton instance or initialise it.
-		"""
-		if cls._instance is None:
-			cls._instance = cls()
-		return cls._instance
-
+	
 	def __init__(self):
 		#  Available custom Annotations list at https://docs.microsoft.com/en-us/office/uia/excel/excelannotations
 		# Note annotation:
@@ -127,9 +103,8 @@ class ExcelCustomAnnotationTypes:
 class ExcelObject(UIA):
 	"""Common base class for all Excel UIA objects
 	"""
-	_UIAExcelCustomProps = ExcelCustomProperties.get()
-	_UIAExcelCustomAnnotationTypes = ExcelCustomAnnotationTypes.get()
-
+	_UIAExcelCustomProps = ExcelCustomProperties()
+	_UIAExcelCustomAnnotationTypes = ExcelCustomAnnotationTypes()
 
 
 class ExcelCell(ExcelObject):

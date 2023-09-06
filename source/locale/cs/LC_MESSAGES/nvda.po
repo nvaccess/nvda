@@ -3,17 +3,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-25 00:02+0000\n"
-"PO-Revision-Date: 2022-11-30 17:01+0100\n"
+"POT-Creation-Date: 2023-08-25 00:02+0000\n"
+"PO-Revision-Date: 2023-08-21 16:15+0100\n"
 "Last-Translator: Martina <letochova@seznam.cz>\n"
 "Language-Team: CS\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
 "Generated-By: pygettext.py 1.5\n"
 "X-Generator: Poedit 1.5.7\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -349,7 +349,7 @@ msgstr "pnl"
 #. Translators: Displayed in braille for an object which is a
 #. password edit.
 msgid "pwdedt"
-msgstr "Heslo"
+msgstr "heslo"
 
 #. Translators: Displayed in braille for an object which is deleted.
 msgid "del"
@@ -393,6 +393,10 @@ msgstr "návrh"
 #. Translators: Identifies a definition.
 msgid "definition"
 msgstr "definice"
+
+#. Translators: Displayed in braille when an object is a switch control
+msgid "swtch"
+msgstr "přep"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -508,13 +512,13 @@ msgstr "Všechny body"
 #. Translators: The label for a braille focus context presentation setting that
 #. only shows as much as possible focus context information when the context has changed.
 msgid "Fill display for context changes"
-msgstr "vyplnit řádek při změnách kontextu"
+msgstr "Vyplnit řádek při změnách kontextu"
 
 #. Translators: The label for a braille focus context presentation setting that
 #. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
 #. This was the pre NVDA 2017.3 default.
 msgid "Always fill display"
-msgstr "vždy vyplnit řádek"
+msgstr "Vždy vyplnit řádek"
 
 #. Translators: The label for a braille focus context presentation setting that
 #. always shows the object with focus at the very left of the braille display
@@ -534,6 +538,18 @@ msgstr "USB"
 msgid "Bluetooth"
 msgstr "Bluetooth"
 
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+msgid "details"
+msgstr "podrobnosti"
+
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. "has comment suggestion")
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. "comment, suggestion, details")
+#, python-format
+msgid "has %s"
+msgstr "má %s"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -544,24 +560,13 @@ msgstr "nadp%s"
 msgid "vlnk"
 msgstr "navšt"
 
-#. Translators: Braille when there are further details/annotations that can be fetched manually.
-#. %s specifies the type of details (e.g. comment, suggestion)
-#. Translators: Speaks when there are further details/annotations that can be fetched manually.
-#. %s specifies the type of details (e.g. comment, suggestion)
-#, python-format
-msgid "has %s"
-msgstr "má %s"
-
-#. Translators: Braille when there are further details/annotations that can be fetched manually.
-msgid "details"
-msgstr "podrobnosti"
-
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
+#, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} z {total}"
 
@@ -573,21 +578,25 @@ msgstr "úr %s"
 
 #. Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
 #. Occurences of %s are replaced with the corresponding row numbers.
+#, python-brace-format
 msgid "r{rowNumber}-{rowSpan}"
 msgstr "ř{rowNumber}-{rowSpan}"
 
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
+#, python-brace-format
 msgid "r{rowNumber}"
 msgstr "ř{rowNumber}"
 
 #. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
 #. Occurences of %s are replaced with the corresponding column numbers.
+#, python-brace-format
 msgid "c{columnNumber}-{columnSpan}"
 msgstr "s{columnNumber}-{columnSpan}"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
+#, python-brace-format
 msgid "c{columnNumber}"
 msgstr "s{columnNumber}"
 
@@ -609,19 +618,6 @@ msgstr "zpr kmnt"
 msgid "bkmk"
 msgstr "zál"
 
-#. Translators: The label for a braille setting indicating that braille should be
-#. tethered to focus or review cursor automatically.
-msgid "automatically"
-msgstr "automaticky"
-
-#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
-msgid "to focus"
-msgstr "na fokus"
-
-#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
-msgid "to review"
-msgstr "na čtecí kurzor"
-
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Dot firm&ness"
 msgstr "&Pevnost bodů"
@@ -639,11 +635,13 @@ msgid "Unknown braille display"
 msgstr "Neznámý braillský řádek"
 
 #. Translators: Name of a Bluetooth serial communications port.
+#, python-brace-format
 msgid "Bluetooth Serial: {port} ({deviceName})"
 msgstr "Bluetooth sériový: {port} ({deviceName})"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#, python-brace-format
 msgid "Serial: {portName}"
 msgstr "Sériový: {portName}"
 
@@ -652,6 +650,7 @@ msgid "Unsupported input"
 msgstr "Nepodporovaný vstup"
 
 #. Translators: Reported when a braille input modifier is released.
+#, python-brace-format
 msgid "{modifier} released"
 msgstr "{modifier} uvolněno"
 
@@ -785,8 +784,18 @@ msgstr "Dánské 8-bodové počítačové písmo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 8 dot computer braille (1993)"
+msgstr "Dánské 8-bodové počítačové písmo (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 6 dot grade 1"
 msgstr "Dánský 6-bodový plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 6 dot grade 1 (1993)"
+msgstr "Dánský 6-bodový plnopis (1993)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -795,13 +804,28 @@ msgstr "Dánský 8-bodový plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 8 dot grade 1 (1993)"
+msgstr "Dánský 8-bodový plnopis (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 6 dot grade 2"
 msgstr "Dánský 6-bodový zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 6 dot grade 2 (1993)"
+msgstr "Dánský 6-bodový zkratkopis (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 8 dot grade 2"
 msgstr "Dánský 8-bodový zkratkopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot grade 2 (1993)"
+msgstr "Dánský 8-bodový zkratkopis (1993)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1050,6 +1074,11 @@ msgstr "Kannadský plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Georgian literary braille"
+msgstr "Gruzínský plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Kazakh grade 1"
 msgstr "Kazašský plnopis"
 
@@ -1200,6 +1229,11 @@ msgstr "Sepedský zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Chichewa (Malawi) literary braille"
+msgstr "Čičevština (Malawi) plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "Urijský plnopis"
 
@@ -1322,6 +1356,36 @@ msgstr "Švédský částečný zkratkopis"
 #. braille settings dialog.
 msgid "Swedish contracted braille"
 msgstr "Švédský zkratkopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1"
+msgstr "Svahilština (Keňa) plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.2"
+msgstr "Svahilština (Keňa´stupeň 1.2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.3"
+msgstr "Svahilština (Keňa) stupeň 1.3"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.4"
+msgstr "Svahilština (Keňa´stupeň 1.4"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.5"
+msgstr "Svahilština (Keňa) stupeň 1.5"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) Grade 2"
+msgstr "Svahilština (Keňa) zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1479,7 +1543,7 @@ msgstr "Režim prohlížení"
 
 #. Translators: Reported label in the elements list for an element which which has no name and value
 msgid "Unlabeled"
-msgstr "neoznačeno"
+msgstr "Neoznačeno"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -2090,7 +2154,7 @@ msgstr "Zapíná a vypíná zachování vzhledu jako na obrazovce"
 
 #. Translators: The message reported for not supported toggling of screen layout
 msgid "Not supported in this document."
-msgstr "Nepodporováno v tomto dokumentu"
+msgstr "Nepodporováno v tomto dokumentu."
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2137,6 +2201,7 @@ msgstr "jen pod úroveň znaku"
 
 #. Translators: a transparent color, {colorDescription} replaced with the full description of the color e.g.
 #. "transparent bright orange-yellow"
+#, python-brace-format
 msgctxt "color variation"
 msgid "transparent {colorDescription}"
 msgstr "transparentní {colorDescription}"
@@ -2257,61 +2322,73 @@ msgid "pink-red"
 msgstr "růžově červená"
 
 #. Translators: a bright color (HSV saturation 100% and value 100%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "bright {color}"
 msgstr "jasně {color}"
 
 #. Translators: color (HSV saturation 100% and value 72%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color}"
 msgstr "tmavě {color}"
 
 #. Translators: a very dark color (HSV saturation 100% and value 16%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color}"
 msgstr "velmi tmavě {color}"
 
 #. Translators: a light pale color (HSV saturation 50% and value 100%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
 msgstr "světle bledě {color}"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "pale {color}"
 msgstr "bledě {color}"
 
 #. Translators: a dark pale color (HSV saturation 50% and value 44%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
 msgstr "tmavě bledě {color}"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
 msgstr "velmi tmavě bledě {color}"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "{color} white"
 msgstr "{color} bílá"
 
 #. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "{color} grey"
 msgstr "{color} šedá"
 
 #. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "dark {color} grey"
 msgstr "tmavě {color} šedá"
 
 #. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
+#, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color} grey"
 msgstr "velmi tmavě {color} šedá"
@@ -2332,6 +2409,7 @@ msgid "brown-yellow"
 msgstr "hnědožlutá"
 
 #. Translators: Shown when NVDA has been started with unknown command line parameters.
+#, python-brace-format
 msgid "The following command line parameters are unknown to NVDA: {params}"
 msgstr "Následující parametry jsou pro NVDA neznámé: {params}"
 
@@ -2385,12 +2463,16 @@ msgstr "Zadejte text pro vyhledávání"
 msgid "Case &sensitive"
 msgstr "Rozlišovat velká a malá &písmena"
 
+#. Translators: message displayed to the user when
+#. searching text and no text is found.
 #, python-format
 msgid "text \"%s\" not found"
 msgstr "text \"%s\" nenalezen"
 
-msgid "Find Error"
-msgstr "Chyba hledání"
+#. Translators: message dialog title displayed to the user when
+#. searching text and no text is found.
+msgid "0 matches"
+msgstr "žádné výsledky"
 
 #. Translators: Input help message for NVDA's find command.
 msgid "find a text string from the current cursor position"
@@ -2490,11 +2572,11 @@ msgstr "Přečte sloupec svisle zhora dolů bez pohybu systémového kurzoru."
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables off"
-msgstr "Neohlašovat vzhledové tabulky"
+msgstr "neohlašovat vzhledové tabulky"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables on"
-msgstr "Ohlašovat vzhledové tabulky"
+msgstr "ohlašovat vzhledové tabulky"
 
 #. Translators: Input help mode message for include layout tables command.
 msgid "Toggles on and off the inclusion of layout tables in browse mode"
@@ -2533,6 +2615,8 @@ msgid "Configuration profiles"
 msgstr "Konfigurační profily"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 #. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "Braill"
@@ -2654,7 +2738,7 @@ msgstr ""
 msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
-msgstr "Oznámí aktuální čas a dvojitý stisk oznámí aktuální datum."
+msgstr "Oznámí aktuální čas a dvojitý stisk oznámí aktuální datum"
 
 #. Translators: Input help mode message for increase synth setting value command.
 msgid "Increases the currently active setting in the synth settings ring"
@@ -2881,20 +2965,10 @@ msgid "Cycles through line indentation settings"
 msgstr "Přepíná nastavení pro odsazení řádku"
 
 #. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with speech"
-msgstr "Hlásit odsazení řečí"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with tones"
-msgstr "indikovat odsazení zvukem"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with speech and tones"
-msgstr "Hlásit odsazení řečí i zvukem"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation off"
-msgstr "Neohlašovat odsazení"
+#. {mode} will be replaced with the mode; i.e. Off, Speech, Tones or Both Speech and Tones.
+#, python-brace-format
+msgid "Report line indentation {mode}"
+msgstr "Ohlašovat odsazení řádků {mode}"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
@@ -2938,6 +3012,7 @@ msgstr "Přepíná mezi režimy ohlašování záhlaví sloupců a řádků v ta
 
 #. Translators: Reported when the user cycles through report table header modes.
 #. {mode} will be replaced with the mode; e.g. None, Rows and columns, Rows or Columns.
+#, python-brace-format
 msgid "Report table headers {mode}"
 msgstr "Hlášení záhlaví v tabulkách {mode}"
 
@@ -2957,17 +3032,11 @@ msgstr "hlásit souřadnice buněk v tabulkách"
 msgid "Cycles through the cell border reporting settings"
 msgstr "Přepíná nastavení hlášení okrajů buněk"
 
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report styles of cell borders"
-msgstr "Hlásit styly okrajů buněk"
-
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report colors and styles of cell borders"
-msgstr "Hlásit barvy a styly okrajů buněk"
-
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report cell borders off."
-msgstr "Neohlašovat okraje buněk"
+#. Translators: Reported when the user cycles through report cell border modes.
+#. {mode} will be replaced with the mode; e.g. Off, Styles and Colors and styles.
+#, python-brace-format
+msgid "Report cell borders {mode}"
+msgstr "Ohlašovat okraje buněk {mode}"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -3133,6 +3202,19 @@ msgstr "Přepíná mezi několika úrovněmi vyslovování interpunkce"
 msgid "Symbol level %s"
 msgstr "Interpunkce %s"
 
+#. Translators: Input help mode message for toggle delayed character description command.
+msgid ""
+"Toggles on and off delayed descriptions for characters on cursor movement"
+msgstr "Zapíná a vypíná prodlevu při popisu znaků při pohybu kurzorem"
+
+#. Translators: The message announced when toggling the delayed character description setting.
+msgid "delayed character descriptions on"
+msgstr "prodleva při popisu znaků zapnutá"
+
+#. Translators: The message announced when toggling the delayed character description setting.
+msgid "delayed character descriptions off"
+msgstr "prodleva při popisu znaků vypnutá"
+
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "Přesune kurzor myši na aktuálně prohlížený objekt"
@@ -3269,7 +3351,7 @@ msgid ""
 "Pressed once sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
-"nastaví fokus na prohlížený objekt. Dvojitý stisk přesune systémový kurzor "
+"Nastaví fokus na prohlížený objekt. Dvojitý stisk přesune systémový kurzor "
 "na pozici čtecího kurzoru"
 
 #. Translators: Reported when:
@@ -3416,7 +3498,7 @@ msgid ""
 msgstr ""
 "Přečte slovo aktuálně prohlíženého objektu, na kterém se nachází čtecí "
 "kurzor. Dvojitý stisk slovo vyhláskuje a trojitý stisk ho vyhláskuje pomocí "
-"hláskovací tabulky."
+"hláskovací tabulky"
 
 #. Translators: Input help mode message for move review cursor to next word command.
 msgid ""
@@ -3455,7 +3537,7 @@ msgid ""
 msgstr ""
 "Přečte znak aktuálně prohlíženého objektu, na kterém se nachází čtecí "
 "kurzor. Dvojitý stisk znak ohlásí pomocí hláskovací tabulky a trojitý stisk "
-"ohlásí jeho ascii a hexadecimální hodnotu."
+"ohlásí jeho ascii a hexadecimální hodnotu"
 
 #. Translators: Input help mode message for move review cursor to next character command.
 msgid ""
@@ -3551,7 +3633,7 @@ msgstr "Ukončí NVDA!"
 
 #. Translators: Input help mode message for restart NVDA command.
 msgid "Restarts NVDA!"
-msgstr "Restartuje NVDA"
+msgstr "Restartuje NVDA!"
 
 #. Translators: Input help mode message for show NVDA menu command.
 msgid "Shows the NVDA menu"
@@ -3653,11 +3735,11 @@ msgstr "Hláskuje stavový řádek aktuální aplikace."
 #. Translators: Input help mode message for command which copies status bar content to the clipboard.
 msgid ""
 "Copies content of the status bar  of current application to the clipboard."
-msgstr "Zkopíruje obsah stavového řádku aktuální aplikace"
+msgstr "Zkopíruje obsah stavového řádku aktuální aplikace."
 
 #. Translators: Reported when user attempts to copy content of the empty status line.
 msgid "Unable to copy status bar content to clipboard"
-msgstr "nelze zkopírovat stavový řádek"
+msgstr "Nelze zkopírovat stavový řádek"
 
 #. Translators: Input help mode message for Command which moves review cursor to the status bar.
 msgid ""
@@ -3689,7 +3771,7 @@ msgstr "Přepíná ohlašování objektů při pohybu myší"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
-msgstr "nesledovat myš"
+msgstr "Nesledovat myš"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking on"
@@ -3713,7 +3795,7 @@ msgid ""
 "the clipboard"
 msgstr ""
 "Přečte titulek aktuálního aplikačního okna nebo okna v popředí. Dvojitý "
-"stisk titulek vyhláskuje a trojitý stisk ho zkopíruje do schránky."
+"stisk titulek vyhláskuje a trojitý stisk ho zkopíruje do schránky"
 
 #. Translators: Reported when there is no title text for current program or window.
 msgid "No title"
@@ -3979,6 +4061,7 @@ msgstr "výchozí profil aktivní"
 
 #. Translators: Message announced when the command to report the current configuration profile
 #. is active. The placeholder '{profilename}' is replaced with the name of the current active profile.
+#, python-brace-format
 msgid "{profileName} configuration profile active"
 msgstr "Profil {profileName} aktivní"
 
@@ -3991,20 +4074,18 @@ msgid ""
 "Pressing once reverts the current configuration to the most recently saved "
 "state. Pressing three times resets to factory defaults."
 msgstr ""
-"načte naposledy uložené nastavení. Trojitý stisk obnoví výchozí nastavení "
+"Načte naposledy uložené nastavení. Trojitý stisk obnoví výchozí nastavení "
 "NVDA."
 
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
-msgstr "Aktivuje NVDA Python konzoli. Ta je užitečná především pro vývoj NVDA."
+msgstr "Aktivuje NVDA Python konzoli. Ta je užitečná především pro vývoj NVDA"
 
-#. Translators: Input help mode message for activate manage add-ons command.
+#. Translators: Input help mode message to activate Add-on Store command.
 msgid ""
-"Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
-"for NVDA"
+"Activates the Add-on Store to browse and manage add-on packages for NVDA"
 msgstr ""
-"Aktivuje správce doplňků pro nainstalování a odinstalování balíčků s doplňky "
-"pro NVDA"
+"Aktivuje katalog doplňků pro procházení a správu balíčků s doplňky pro NVDA\""
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
@@ -4051,6 +4132,30 @@ msgstr ""
 msgid "Braille tethered %s"
 msgstr "Braillský kurzor je propojen %s"
 
+#. Translators: Input help mode message for cycle through
+#. braille move system caret when routing review cursor command.
+msgid ""
+"Cycle through the braille move system caret when routing review cursor states"
+msgstr ""
+"Přepíná mezi režimy přesunutí systémového a čtecího kurzoru na braillském "
+"řádku"
+
+#. Translators: Reported when action is unavailable because braille tether is to focus.
+msgid "Action unavailable. Braille is tethered to focus"
+msgstr "Nedostupné. Braillský řádek je propojen na fokus"
+
+#. Translators: Used when reporting braille move system caret when routing review cursor
+#. state (default behavior).
+#, python-format
+msgid "Braille move system caret when routing review cursor default (%s)"
+msgstr ""
+"Systémový kurzor následuje čtecí kurzor na braillském řádku výchozí (%s)"
+
+#. Translators: Used when reporting braille move system caret when routing review cursor state.
+#, python-format
+msgid "Braille move system caret when routing review cursor %s"
+msgstr "Systémový kurzor následuje čtecí kurzor na braillském řádku %s"
+
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
 msgstr "Přepíná způsob zobrazení kontextových informací na braillském řádku"
@@ -4086,6 +4191,32 @@ msgstr "Braillský kurzor je vypnut"
 #, python-format
 msgid "Braille cursor %s"
 msgstr "Braillský kurzor %s"
+
+#. Translators: Input help mode message for cycle through braille show messages command.
+msgid "Cycle through the braille show messages modes"
+msgstr "Přepíná mezi režimy zobrazení zpráv na braillském řádku"
+
+#. Translators: Reports which show braille message mode is used
+#. (disabled, timeout or indefinitely).
+#, python-format
+msgid "Braille show messages %s"
+msgstr "Zobrazení zpráv %s"
+
+#. Translators: Input help mode message for cycle through braille show selection command.
+msgid "Cycle through the braille show selection states"
+msgstr "Přepíná mezi stavy zobrazení výběru braillského řádku"
+
+#. Translators: Used when reporting braille show selection state
+#. (default behavior).
+#, python-format
+msgid "Braille show selection default (%s)"
+msgstr "Zobrazení výběru výchozí (%s)"
+
+#. Translators: Reports which show braille selection state is used
+#. (disabled or enabled).
+#, python-format
+msgid "Braille show selection %s"
+msgstr "Zobrazení výběru %s"
 
 #. Translators: Input help mode message for report clipboard text command.
 msgid "Reports the text on the Windows clipboard"
@@ -4269,11 +4400,41 @@ msgid ""
 "Useful for developers"
 msgstr ""
 "Znovu načte aplikační a zásuvné moduly bez nutnosti restartovat NVDA. To "
-"Může být užitečné pro vývojáře."
+"Může být užitečné pro vývojáře"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
 msgstr "Zásuvné moduly načteny"
+
+#. Translators: input help mode message for Report destination URL of a link command
+msgid ""
+"Report the destination URL of the link at the position of caret or focus. If "
+"pressed twice, shows the URL in a window for easier review."
+msgstr ""
+"Zobrazí cílovou URL adresu odkazu na pozici kurzoru nebo fokusu. Dvojitým "
+"stiskem se zobrazí v samostatném okně pro lepší přehlednost."
+
+#. Translators: Informs the user that the link has no destination
+msgid "Link has no apparent destination"
+msgstr "Odkaz nemá jasný cíl"
+
+#. Translators: Informs the user that the window contains the destination of the
+#. link with given title
+#, python-brace-format
+msgid "Destination of: {name}"
+msgstr "Cíl: {name}"
+
+#. Translators: Tell user that the command has been run on something that is not a link
+msgid "Not a link."
+msgstr "Není odkaz."
+
+#. Translators: input help mode message for Report URL of a link in a window command
+msgid ""
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
+msgstr ""
+"Zobrazí cílovou URL adresu odkazu na pozici kurzoru nebo fokusu v "
+"samostatném okně. To může víc vyhovovat uživatelům braillských řádků."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4379,7 +4540,11 @@ msgstr "Rozpoznávání textu Windows není dostupné"
 #. Translators: Reported when screen curtain is enabled.
 msgid "Please disable screen curtain before using Windows OCR."
 msgstr ""
-"Prosím vypněte clonu obrazovky před použitím rozpoznávání textu Windows"
+"Prosím vypněte clonu obrazovky před použitím rozpoznávání textu Windows."
+
+#. Translators: Describes a command.
+msgid "Cycles through the available languages for Windows OCR"
+msgstr "Přepíná mezi dostupnými jazyky pro rozpoznávání textu Windows"
 
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
@@ -4403,7 +4568,7 @@ msgstr ""
 "Přepíná clonu obrazovky. Pokud je clona zapnutá, obrazovka je černá a není "
 "na ní nic vidět. je-li vypnutá, obsah obrazovky se zobrazí. Jedním stiskem "
 "zkratky je clona obrazovky zapnutá do restartu NVDA. Dvojitý stisk clonu "
-"aktivuje, dokud ji ručně nevypnete."
+"aktivuje, dokud ji ručně nevypnete"
 
 #. Translators: Reported when the screen curtain is disabled.
 msgid "Screen curtain disabled"
@@ -4429,6 +4594,10 @@ msgstr "Clona obrazovky, zapnutá do nejbližšího restartu NVDA"
 msgid "Could not enable screen curtain"
 msgstr "Nelze zapnout clonu obrazovky"
 
+#. Translators: Describes a command.
+msgid "Cycles through paragraph navigation styles"
+msgstr "Přepíná styly pro navigaci odstavci"
+
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
 msgid "Can't change the active profile while an NVDA dialog is open"
@@ -4436,17 +4605,20 @@ msgstr "Nelze změnit aktivní profil, je nutné zavřít všechny dialogy NVDA"
 
 #. Translators: a message when a configuration profile is manually deactivated.
 #. {profile} is replaced with the profile's name.
+#, python-brace-format
 msgid "{profile} profile deactivated"
 msgstr "Profil {profile} deaktivován"
 
 #. Translators: a message when a configuration profile is manually activated.
 #. {profile} is replaced with the profile's name.
+#, python-brace-format
 msgid "{profile} profile activated"
 msgstr "Profil {profile} aktivován"
 
 #. Translators: The description shown in input help for a script that
 #. activates or deactivates a config profile.
 #. {profile} is replaced with the profile's name.
+#, python-brace-format
 msgid "Activates or deactivates the {profile} configuration profile"
 msgstr "Aktivuje nebo deaktivuje konfigurační profil {profile}"
 
@@ -4528,7 +4700,7 @@ msgstr "domovská stránka"
 
 #. Translators: This is the name of the mute key found on multimedia keyboards to control playback volume.
 msgid "mute"
-msgstr "Ztlumit\""
+msgstr "ztlumit"
 
 #. Translators: This is the name of the volume down key found on multimedia keyboards to reduce playback volume.
 msgid "volume down"
@@ -4821,9 +4993,12 @@ msgstr "laptop"
 msgid "unknown %s"
 msgstr "neznámá klávesa %s"
 
+#. Translators: a state that denotes a control is currently on
+#. E.g. a switch control.
 msgid "on"
 msgstr "zapnuto"
 
+#. Translators: This is presented when a switch control is off.
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
@@ -4848,6 +5023,7 @@ msgstr "Výchozí jazyk systému"
 #. Translators: The pattern defining how languages are displayed and sorted in in the general
 #. setting panel language list. Use "{desc}, {lc}" (most languages) to display first full language
 #. name and then ISO; use "{lc}, {desc}" to display first ISO language code and then full language name.
+#, python-brace-format
 msgid "{desc}, {lc}"
 msgstr "{desc}, {lc}"
 
@@ -5057,7 +5233,7 @@ msgstr "Roh"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "four snipped corners"
-msgstr "Čtyři odříznuté rohy"
+msgstr "čtyři odříznuté rohy"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5147,7 +5323,7 @@ msgstr "Dvojitá složená závorka"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Double bracket"
-msgstr "dvojitá hranatá závorka"
+msgstr "Dvojitá hranatá závorka"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5297,7 +5473,7 @@ msgstr "Nebo ve vývojovém diagramu"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Predefined process flowchart symbol"
-msgstr "předdefinovaný postup ve vývojovém diagramu"
+msgstr "Předdefinovaný postup ve vývojovém diagramu"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5315,13 +5491,13 @@ msgstr "Postup ve vývojovém diagramu"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Punched tape flowchart symbol"
-msgstr "děrná páska ve vývojovém diagramu"
+msgstr "Děrná páska ve vývojovém diagramu"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Sequential access storage flowchart symbol"
-msgstr "paměť se sekvenčním přístupem ve vývojovém diagramu"
+msgstr "Paměť se sekvenčním přístupem ve vývojovém diagramu"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5718,7 +5894,7 @@ msgstr "Popisek s šipkami ukazujícími doleva, doprava, nahoru a dolů"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Rectangle"
-msgstr "obdélník"
+msgstr "Obdélník"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6073,22 +6249,27 @@ msgid "object mode"
 msgstr "objektový režim"
 
 #. Translators: a touch screen action performed once
+#, python-brace-format
 msgid "single {action}"
 msgstr "jednoduché {action}"
 
 #. Translators: a touch screen action performed twice
+#, python-brace-format
 msgid "double {action}"
 msgstr "dvojité {action}"
 
 #. Translators: a touch screen action performed 3 times
+#, python-brace-format
 msgid "tripple {action}"
 msgstr "trojité {action}"
 
 #. Translators: a touch screen action performed 4 times
+#, python-brace-format
 msgid "quadruple {action}"
 msgstr "čtyřnásobné {action}"
 
 #. Translators: a touch screen action using multiple fingers
+#, python-brace-format
 msgid "{numFingers} finger {action}"
 msgstr "{numFingers} prsty {action}"
 
@@ -6156,6 +6337,7 @@ msgstr ""
 #. of the Window that could not be opened for context.
 #. The {title} will be replaced with the title.
 #. The title may be something like "Formatting".
+#, python-brace-format
 msgid ""
 "This feature ({title}) is unavailable while on secure screens such as the "
 "sign-on screen or UAC prompt."
@@ -6166,7 +6348,7 @@ msgstr ""
 #. Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message
 #. dialog.
 msgid "Feature unavailable."
-msgstr "Nedostupné"
+msgstr "Nedostupná funkce."
 
 #. Translators: The title for the dialog used to present general NVDA messages in browse mode.
 msgid "NVDA Message"
@@ -6181,11 +6363,13 @@ msgstr "%d znaků"
 
 #. Translators: Announced when a text has been copied to clipboard.
 #. {text} is replaced by the copied text.
+#, python-brace-format
 msgid "Copied to clipboard: {text}"
 msgstr "Zkopírováno: {text}"
 
 #. Translators: Displayed in braille when a text has been copied to clipboard.
 #. {text} is replaced by the copied text.
+#, python-brace-format
 msgid "Copied: {text}"
 msgstr "Zkop: {text}"
 
@@ -6207,13 +6391,16 @@ msgstr "Při kontrole aktualizací došlo k chybě."
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
-#. Translators: The message title displayed
-#. when the user has not specified an absolute destination directory
-#. in the Create Portable NVDA dialog.
+#. Translators: the title of an error dialog.
+#. Translators: The message title displayed when the user has not specified an absolute
+#. destination directory in the Create Portable NVDA dialog.
+#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
 #. Translators: The title of an error message dialog.
+#. Translators: A message indicating that an error occurred.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
 #. for a vision enhancement provider
+#. Translators: The title of an error message box displayed when validating the startup dialog
 msgid "Error"
 msgstr "Chyba"
 
@@ -6228,33 +6415,9 @@ msgstr "Žádná aktualizace není k dispozici."
 
 #. Translators: A message indicating that an updated version of NVDA has been downloaded
 #. and is pending to be installed.
+#, python-brace-format
 msgid "NVDA version {version} has been downloaded and is pending installation."
 msgstr "Verze NVDA {version} je stažená a připravená k instalaci."
-
-#. Translators: A message indicating that some add-ons will be disabled
-#. unless reviewed before installation.
-#. Translators: A message in the installer to let the user know that
-#. some addons are not compatible.
-msgid ""
-"\n"
-"\n"
-"However, your NVDA configuration contains add-ons that are incompatible with "
-"this version of NVDA. These add-ons will be disabled after installation. If "
-"you rely on these add-ons, please review the list to decide whether to "
-"continue with the installation"
-msgstr ""
-"\n"
-"\n"
-"Vaše instalace NVDA obsahuje doplňky, které nejsou kompatibilní s touto "
-"verzí NVDA. Tyto doplňky budou po instalaci zakázány. Pokud chcete tyto "
-"doplňky i nadále používat, zvažte aktualizaci na tuto verzi NVDA"
-
-#. Translators: A message to confirm that the user understands that addons that have not been
-#. reviewed and made available, will be disabled after installation.
-#. Translators: A message to confirm that the user understands that addons that have not been reviewed and made
-#. available, will be disabled after installation.
-msgid "I understand that these incompatible add-ons will be disabled"
-msgstr "Chápu, že tyto nekompatibilní doplňky budou zakázány"
 
 #. Translators: The label of a button to review add-ons prior to NVDA update.
 #. Translators: The label of a button to launch the add-on compatibility review dialog.
@@ -6263,6 +6426,7 @@ msgstr "&Zkontrolovat doplňky..."
 
 #. Translators: The label of a button to install a pending NVDA update.
 #. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
 msgid "&Install NVDA {version}"
 msgstr "na&instalovat NVDA {version}"
 
@@ -6272,6 +6436,7 @@ msgstr "&Znovu stáhnout aktualizaci"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
 msgid "NVDA version {version} is available."
 msgstr "je dostupná nová verze {version}."
 
@@ -6290,22 +6455,9 @@ msgid "&Close"
 msgstr "&Zavřít"
 
 #. Translators: A message indicating that an updated version of NVDA is ready to be installed.
+#, python-brace-format
 msgid "NVDA version {version} is ready to be installed.\n"
 msgstr "NVDA verze {version} je připravená k instalaci.\n"
-
-#. Translators: A message indicating that some add-ons will be disabled
-#. unless reviewed before installation.
-msgid ""
-"\n"
-"However, your NVDA configuration contains add-ons that are incompatible with "
-"this version of NVDA. These add-ons will be disabled after installation. If "
-"you rely on these add-ons, please review the list to decide whether to "
-"continue with the installation"
-msgstr ""
-"\n"
-"Vaše instalace NVDA obsahuje doplňky, které nejsou kompatibilní s touto "
-"verzí NVDA. Tyto doplňky budou po instalaci zakázány. Pokud chcete tyto "
-"doplňky i nadále používat, zvažte aktualizaci na tuto verzi NVDA"
 
 #. Translators: The label of a button to install an NVDA update.
 msgid "&Install update"
@@ -6382,10 +6534,12 @@ msgstr "NonVisual Desktop Access"
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "Otevřený a volně šiřitelný odečítač obrazovky pro Microsoft Windows"
 
+#, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Copyright (C) {years} NVDA Tým"
 
 #. Translators: "About NVDA" dialog box message
+#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version} ({version_detailed})\n"
@@ -6430,6 +6584,7 @@ msgstr ""
 "můžete z hlavní nabídky NVDA."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+#, python-brace-format
 msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
@@ -6442,6 +6597,7 @@ msgid "Secure Desktop"
 msgstr "Zabezpečená plocha"
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#, python-brace-format
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -6457,11 +6613,18 @@ msgstr ""
 msgid "%d percent"
 msgstr "%d procent"
 
+#. Translators: Announced in braille when suggestions appear when search term is entered
+#. in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr "Návrhy"
+
 #. Translators: a message announcing a candidate's character and description.
+#, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{symbol} jako v {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
+#, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
@@ -6497,10 +6660,6 @@ msgstr "Přesune prohlížený objekt a fokus na první řádek"
 msgid "Moves the navigator object and focus to the last row"
 msgstr "Přesune prohlížený objekt a fokus na poslední řádek"
 
-#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
-msgid "Suggestions"
-msgstr "Návrhy"
-
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
 msgstr "Vstup složených znaků"
@@ -6514,16 +6673,19 @@ msgstr "Návrh"
 
 #. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
 msgid "spelling and grammar: {text}"
 msgstr "pravopisná a gramatická chyba: {text}"
 
 #. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
 msgid "spelling: {text}"
 msgstr "pravopisná chyba: {text}"
 
 #. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
 msgid "grammar: {text}"
 msgstr "gramatická chyba: {text}"
 
@@ -6550,7 +6712,70 @@ msgstr "obrázek"
 #. Translators: a style of fill type (to color the inside of a control or text)
 msgctxt "UIAHandler.FillType"
 msgid "pattern"
-msgstr "Vzor"
+msgstr "vzor"
+
+#. Translators: A title of the dialog shown when fetching add-on data from the store fails
+msgctxt "addonStore"
+msgid "Add-on data update failure"
+msgstr "Aktualizace doplňku se nezdařila"
+
+#. Translators: A message shown when fetching add-on data from the store fails
+msgctxt "addonStore"
+msgid "Unable to fetch latest add-on data for compatible add-ons."
+msgstr "Nelze načíst nejnovější data pro kompatibilní doplňky."
+
+#. Translators: A message shown when fetching add-on data from the store fails
+msgctxt "addonStore"
+msgid "Unable to fetch latest add-on data for incompatible add-ons."
+msgstr "Nelze načíst nejnovější data pro nekompatibilní doplňky."
+
+#. Translators: The message displayed when an error occurs when opening an add-on package for adding.
+#. The %s will be replaced with the path to the add-on that could not be opened.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Failed to open add-on package file at {filePath} - missing file or invalid "
+"file format"
+msgstr ""
+"Z umístění {filePath} nelze balíček doplňku otevřít. Chybějící soubor nebo "
+"neplatný formát balíčku"
+
+#. Translators: The message displayed when an add-on is not supported by this version of NVDA.
+#. The %s will be replaced with the path to the add-on that is not supported.
+#, python-format
+msgctxt "addonStore"
+msgid "Add-on not supported %s"
+msgstr "Nepodporovaný doplněk %s"
+
+#. Translators: The message displayed when an error occurs when installing an add-on package.
+#. The %s will be replaced with the path to the add-on that could not be installed.
+#, python-format
+msgctxt "addonStore"
+msgid "Failed to install add-on from %s"
+msgstr "Instalace doplňku z umístění %s se nezdařila"
+
+#. Translators: A title for a dialog notifying a user of an add-on download failure.
+msgctxt "addonStore"
+msgid "Add-on download failure"
+msgstr "Stažení doplňku se nezdařilo"
+
+#. Translators: A message to the user if an add-on download fails
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Unable to download add-on: {name}"
+msgstr "Stažení doplňku {name} se nezdařilo"
+
+#. Translators: A message to the user if an add-on download fails
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Unable to save add-on as a file: {name}"
+msgstr "Stažení doplňku {name} se nezdařilo"
+
+#. Translators: A message to the user if an add-on download is not safe
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Add-on download not safe: checksum failed for {name}"
+msgstr "Stažení doplňku není bezpečné: kontrolní součet pro {name} se nezdařil"
 
 msgid "Display"
 msgstr "Displej"
@@ -6568,21 +6793,40 @@ msgstr "Nelze najít okno s dokumentací."
 msgid "No track playing"
 msgstr "Žádná stopa se nepřehrává"
 
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{remainingTimeFormatted} remaining"
+msgstr "zbývá {remainingTimeFormatted}"
+
 #. Translators: Reported if the remaining time can not be calculated in Foobar2000
-msgid "Unable to determine remaining time"
+msgid "Remaining time not available"
 msgstr "Nelze zjistit zbývající čas"
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Oznámí zbývající čas u aktuálně přehrávané stopy"
 
+#. Translators: Reported elapsed time in Foobar2000
+#, python-brace-format
+msgid "{elapsedTime} elapsed"
+msgstr "uplynulo {elapsedTime}"
+
+#. Translators: Reported if the elapsed time is not available in Foobar2000
+msgid "Elapsed time not available"
+msgstr "Nelze zjistit uplynulý čas"
+
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr "Oznámí uplynulý čas u aktuálně přehrávané stopy"
 
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{totalTime} total"
+msgstr "celkem {totalTime}"
+
 #. Translators: Reported if the total time is not available in Foobar2000
 msgid "Total time not available"
-msgstr "Celkový čas není k dispozici"
+msgstr "Nelze zjistit celkový čas"
 
 #. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
 msgid "Reports the length of the currently playing track, if any"
@@ -6593,11 +6837,12 @@ msgid "Shows options related to selected text or text at the cursor"
 msgstr "Zobrazí možnosti týkající se vybraného textu nebo textu pod kurzorem"
 
 #. Translators: A position in a Kindle book
-#, no-python-format
+#, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
 msgstr "{bookPercentage}%, přečteno {curLocation} z {maxLocation}"
 
 #. Translators: a page in a Kindle book
+#, python-brace-format
 msgid "Page {pageNumber}"
 msgstr "Strana {pageNumber}"
 
@@ -6722,6 +6967,7 @@ msgid "Select until the start of the current result"
 msgstr "Vybrat do začátku aktuálního výsledku"
 
 #. Translators: A message announcing what configuration profile is currently being edited.
+#, python-brace-format
 msgid "Editing profile {profile}"
 msgstr "Úprava profilu {profile}"
 
@@ -6769,19 +7015,26 @@ msgid "Waiting for Outlook..."
 msgstr "Čekám na spuštění Outlooku..."
 
 #. Translators: a message reporting the date of a all day Outlook calendar entry
+#, python-brace-format
 msgid "{date} (all day)"
 msgstr "{date} (celý den)"
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+#, python-brace-format
 msgid "{startTime} to {endTime}"
 msgstr "{startTime} do {endTime}"
 
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
-msgid "categories {categories}"
-msgstr "kategorie {categories}"
+#, python-brace-format
+msgid "category {categories}"
+msgid_plural "categories {categories}"
+msgstr[0] "kategorie {categories}"
+msgstr[1] "kategorie {categories}"
+msgstr[2] "kategorií {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
+#, python-brace-format
 msgid "Appointment {subject}, {time}"
 msgstr "Připomínka {subject}, {time}"
 
@@ -6943,6 +7196,7 @@ msgid "Master Thumbnails"
 msgstr "Předloha s náhledy"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide {slideNumber}"
 msgstr "Snímek {slideNumber}"
 
@@ -6951,74 +7205,92 @@ msgid "other item"
 msgstr "jiná položka"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
-msgstr "Překrývá zleva  {otherShape} o {distance:.3g} bodů"
+msgstr "překrývá zleva  {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} points"
 msgstr "následuje zleva za {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "překrývá zhora {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} points"
 msgstr "následuje zhora za {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr "překrývá zprava {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "následuje zprava za {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "překrývá zdola {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "následuje zdola za {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, python-brace-format
 msgid "covers  {otherShape}"
 msgstr "překrývá  {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, python-brace-format
 msgid "behind {otherShape}"
 msgstr "za {otherShape}"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+#, python-brace-format
 msgid "{distance:.3g} points from left slide edge"
 msgstr "{distance:.3g} bodů od levého okraje snímku"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+#, python-brace-format
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "Mimo levý okraj snímku o {distance:.3g} bodů"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+#, python-brace-format
 msgid "{distance:.3g} points from top slide edge"
 msgstr "{distance:.3g} bodů od horního okraje snímku"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+#, python-brace-format
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "Mimo horní okraj snímku o {distance:.3g} bodů"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+#, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
 msgstr "{distance:.3g} bodů od pravého okraje snímku"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+#, python-brace-format
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "Mimo pravý okraj snímku o {distance:.3g} bodů"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+#, python-brace-format
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "{distance:.3g} bodů od spodního okraje snímku"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+#, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "Mimo spodní okraj snímku o {distance:.3g} bodů"
 
@@ -7029,13 +7301,15 @@ msgid ""
 "read with NVDA"
 msgstr ""
 "Přepíná mezi hlášením poznámek a obsahem snímku. Nemění se zobrazení na "
-"obrazovce, ale jen to, co lze číst pomocí NVDA."
+"obrazovce, ale jen to, co lze číst pomocí NVDA"
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show notes - {slideName}"
 msgstr "Poznámky pro prezentaci - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
+#, python-brace-format
 msgid "Slide show - {slideName}"
 msgstr "Prezentace - {slideName}"
 
@@ -7056,12 +7330,33 @@ msgid "Waiting for Powerpoint..."
 msgstr "Čekám na spuštění Powerpointu..."
 
 #. Translators: LibreOffice, report selected range of cell coordinates with their values
+#, python-brace-format
 msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
 msgstr "{firstAddress} {firstValue} do {lastAddress} {lastValue}"
 
 #. Translators: LibreOffice, report range of cell coordinates
+#, python-brace-format
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} do {lastAddress}"
+
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} inches"
+msgstr "{val:.2f} palců"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} centimetres"
+msgstr "{val:.2f} centimetrů"
+
+#. Translators: LibreOffice, report cursor position in the current page
+#, python-brace-format
+msgid ""
+"cursor positioned {horizontalDistance} from left edge of page, "
+"{verticalDistance} from top edge of page"
+msgstr ""
+"kurzor umístěn {horizontalDistance} od levého okraje stránky, "
+"{verticalDistance} od horního okraje stránky"
 
 msgid "left"
 msgstr "vlevo"
@@ -7137,18 +7432,6 @@ msgstr "HumanWare Brailliant BI/B series / BrailleNote Touch"
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
 msgstr "Braillské řádky EcoBraille"
-
-#. Translators: Names of braille displays.
-msgid "Eurobraille Esys/Esytime/Iris displays"
-msgstr "Řádky Eurobraille Esys/Esytime/Iris"
-
-#. Translators: Message when HID keyboard simulation is unavailable.
-msgid "HID keyboard input simulation is unavailable."
-msgstr "Simulace HID klávesnice není dostupná."
-
-#. Translators: Description of the script that toggles HID keyboard simulation.
-msgid "Toggle HID keyboard simulation"
-msgstr "Přepnout simulaci HID klávesnice"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7233,9 +7516,60 @@ msgstr "Zobrazit &Braillský prohlížeč při spuštění NVDA"
 msgid "&Hover for cell routing"
 msgstr "&Přidržení myši simuluje Přemístění na znak"
 
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+msgid "Disabled"
+msgstr "Zakázán"
+
+#. Translators: One of the show states of braille messages
+#. (the timeout mode shows messages for the specific time).
+msgid "Use timeout"
+msgstr "Na určitou dobu"
+
+#. Translators: One of the show states of braille messages
+#. (the indefinitely mode prevents braille messages from disappearing automatically).
+msgid "Show indefinitely"
+msgstr "Na neurčito"
+
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+msgid "automatically"
+msgstr "automaticky"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+msgid "to focus"
+msgstr "na fokus"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered
+#. to the review cursor.
+msgid "to review"
+msgstr "na čtecí kurzor"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report No line Indentation.
+msgctxt "line indentation setting"
+msgid "Off"
+msgstr "Vypnuto"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation
+#. with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "Řeč"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation
+#. with tones.
+msgctxt "line indentation setting"
+msgid "Tones"
+msgstr "Zvuky"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation with both
+#. Speech and tones.
+msgctxt "line indentation setting"
+msgid "Both Speech and Tones"
+msgstr "Řeč i zvuky"
+
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
 msgid "Off"
@@ -7256,17 +7590,52 @@ msgstr "Řádky"
 msgid "Columns"
 msgstr "Sloupce"
 
-#. Translators: Label for an option in NVDA settings.
-#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-#. Translators: One of the show states of braille messages
-#. (the disabled mode turns off showing of braille messages completely).
-msgid "Disabled"
-msgstr "Zakázán"
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Styles"
+msgstr "Styly"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Both Colors and Styles"
+msgstr "Barvy i styly"
 
 #. Translators: Label for an option in NVDA settings.
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "Enabled"
 msgstr "Povolen"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Handled by application"
+msgstr "Zpracováno v aplikaci"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Single line break"
+msgstr "Zalomení jednoho řádku"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Multi line break"
+msgstr "Zalomení více řádků"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Never"
+msgstr "Nikdy"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Only when tethered automatically"
+msgstr "Jen při automatickém propojení"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Always"
+msgstr "Vždy"
+
+#. Translators: Label for an option in NVDA settings.
+msgid "Diffing"
+msgstr "Diffing"
+
+#. Translators: Label for an option in NVDA settings.
+msgid "UIA notifications"
+msgstr "Oznámení UIA"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -7283,7 +7652,7 @@ msgstr "Zavřít okno s výsledkem rozpoznaného textu"
 #. Translators: Reported when content recognition (e.g. OCR) is attempted,
 #. but the user is already reading a content recognition result.
 msgid "Already in a content recognition result"
-msgstr "nacházíte se v okně s rozpoznaným textem"
+msgstr "Bacházíte se v okně s rozpoznaným textem"
 
 #. Translators: Reported when content recognition (e.g. OCR) is attempted,
 #. but the content is not visible.
@@ -7295,7 +7664,7 @@ msgid "Recognizing"
 msgstr "Rozpoznávám"
 
 msgid "Recognition failed"
-msgstr "rozpoznávání se nezdařilo"
+msgstr "Rozpoznávání se nezdařilo"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
@@ -7859,7 +8228,7 @@ msgstr "indikátor"
 
 #. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
 msgid "spin button"
-msgstr "Výběrové tlačítko"
+msgstr "výběrové tlačítko"
 
 #. Translators: Identifies a sound clip on websites.
 msgid "sound"
@@ -8020,7 +8389,7 @@ msgstr "ilustrace"
 
 #. Translators: Identifies marked (highlighted) content
 msgid "highlighted"
-msgstr "zvýrazněné"
+msgstr "zvýrazněno"
 
 #. Translators: Identifies a progress bar with indeterminate state, I.E. progress can not be determined.
 msgid "busy indicator"
@@ -8033,6 +8402,11 @@ msgstr "komentář"
 #. Translators: Identifies a suggestion.
 msgid "suggestion"
 msgstr "návrh"
+
+#. Translators: The word role for a switch control
+#. I.e. a control that can be switched on or off.
+msgid "switch"
+msgstr "přepínač"
 
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
@@ -8216,6 +8590,22 @@ msgstr "odemčeno"
 msgid "has note"
 msgstr "obsahuje poznámku"
 
+#. Translators: Presented when a control has a pop-up dialog.
+msgid "opens dialog"
+msgstr "otevře dialogové okno"
+
+#. Translators: Presented when a control has a pop-up grid.
+msgid "opens grid"
+msgstr "otevře mřížku"
+
+#. Translators: Presented when a control has a pop-up list box.
+msgid "opens list"
+msgstr "otevře seznam"
+
+#. Translators: Presented when a control has a pop-up tree.
+msgid "opens tree"
+msgstr "otevře strom"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "nevybráno"
@@ -8232,6 +8622,21 @@ msgstr "nezaškrtnuto"
 #. This is only reported for objects which support accessible drag and drop.
 msgid "done dragging"
 msgstr "tažení ukončeno"
+
+#. Translators: This is spoken when a paragraph is considered blank.
+#. Translators: This is spoken when the line is considered blank.
+#. Translators: This is spoken when NVDA moves to an empty line.
+#. Translators: This is spoken when the line is considered blank.
+msgid "blank"
+msgstr "prázdný"
+
+#. Translators: this message is given when there is no next paragraph when navigating by paragraph
+msgid "No next paragraph"
+msgstr "Žádný další odstavec"
+
+#. Translators: this message is given when there is no previous paragraph when navigating by paragraph
+msgid "No previous paragraph"
+msgstr "Žádný předchozí odstavec"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -8334,13 +8739,13 @@ msgstr "Zobrazení &řeči"
 msgid "Braille viewer"
 msgstr "&Braillský prohlížeč"
 
+#. Translators: The label of a menu item to open the Add-on store
+msgid "Add-on &store..."
+msgstr "Katalog &doplňků..."
+
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
 msgstr "Python &konzole"
-
-#. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons..."
-msgstr "Správce &doplňků..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 msgid "Create portable copy..."
@@ -8352,7 +8757,7 @@ msgstr "Na&instalovat NVDA..."
 
 #. Translators: The label for the menu item to run the COM registration fix tool
 msgid "Run COM Registration Fixing tool..."
-msgstr "Spustit nástroj pro &opravu systému"
+msgstr "Spustit nástroj pro &opravu systému..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -8531,34 +8936,6 @@ msgstr "&Ne"
 msgid "OK"
 msgstr "OK"
 
-#. Translators: message shown in the Addon Information dialog.
-msgid ""
-"{summary} ({name})\n"
-"Version: {version}\n"
-"Author: {author}\n"
-"Description: {description}\n"
-msgstr ""
-"{summary} ({name})\n"
-"Verze: {version}\n"
-"Autor: {author}\n"
-"Popis: {description}\n"
-
-#. Translators: the url part of the About Add-on information
-msgid "URL: {url}"
-msgstr "URL: {url}"
-
-#. Translators: the minimum NVDA version part of the About Add-on information
-msgid "Minimum required NVDA version: {}"
-msgstr "Minimální vyžadovaná verze NVDA: {}"
-
-#. Translators: the last NVDA version tested part of the About Add-on information
-msgid "Last NVDA version tested: {}"
-msgstr "Poslední testovaná verze NVDA: {}"
-
-#. Translators: title for the Addon Information dialog
-msgid "Add-on Information"
-msgstr "Informace o doplňku"
-
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Správce doplňků"
@@ -8623,26 +9000,16 @@ msgstr "Na&instalovat..."
 
 #. Translators: The label of a button in the Add-ons Manager to open the list of incompatible add-ons.
 msgid "&View incompatible add-ons..."
-msgstr "Zobrazit ne&kompatibilní doplňky"
+msgstr "Zobrazit ne&kompatibilní doplňky."
 
 #. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
 msgid "Choose Add-on Package File"
 msgstr "Vyberte instalační balíček doplňku pro NVDA"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "Instalační Balíček  doplňku pro NVDA (*.{ext})"
-
-#. Translators: Presented when attempting to remove the selected add-on.
-#. {addon} is replaced with the add-on name.
-msgid ""
-"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
-"undone."
-msgstr "Opravdu chcete odstranit doplněk {addon}? Tuto akci nelze vrátit zpět."
-
-#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
-msgid "Remove Add-on"
-msgstr "Odstranit doplněk"
 
 #. Translators: The status shown for an addon when it's not considered compatible with this version of NVDA.
 msgid "Incompatible"
@@ -8668,14 +9035,6 @@ msgstr "Bude povolen po restartu"
 msgid "&Enable add-on"
 msgstr "&Povolit doplněk"
 
-#. Translators: The message displayed when the add-on cannot be disabled.
-msgid "Could not disable the {description} add-on."
-msgstr "Nelze zakázat doplněk {description}"
-
-#. Translators: The message displayed when the add-on cannot be enabled.
-msgid "Could not enable the {description} add-on."
-msgstr "Nelze povolit doplněk {description}"
-
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #, python-format
 msgid ""
@@ -8693,6 +9052,7 @@ msgstr "Instalace doplňku"
 
 #. Translators: A message asking if the user wishes to update an add-on with the same version
 #. currently installed according to the version number.
+#, python-brace-format
 msgid ""
 "You are about to install version {newVersion} of {summary}, which appears to "
 "be already installed. Would you still like to update?"
@@ -8702,6 +9062,7 @@ msgstr ""
 
 #. Translators: A message asking if the user wishes to update a previously installed
 #. add-on with this one.
+#, python-brace-format
 msgid ""
 "A version of this add-on is already installed. Would you like to update "
 "{summary} version {curVersion} to version {newVersion}?"
@@ -8724,10 +9085,11 @@ msgstr "Instalace doplňku z umístění %s se nezdařila"
 
 #. Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
 msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
-msgstr "Ve verzi NVDA z obchodu Windows store Nelze instalovat doplňky."
+msgstr "Ve verzi NVDA z obchodu Windows store Nelze instalovat doplňky"
 
 #. Translators: The message displayed when installing an add-on package is prohibited,
 #. because it requires a later version of NVDA than is currently installed.
+#, python-brace-format
 msgid ""
 "Installation of {summary} {version} has been blocked. The minimum NVDA "
 "version required for this add-on is {minimumNVDAVersion}, your current NVDA "
@@ -8741,18 +9103,8 @@ msgstr ""
 msgid "Add-on not compatible"
 msgstr "Nekompatibilní Doplněk"
 
-#. Translators: A message informing the user that this addon can not be installed
-#. because it is not compatible.
-msgid ""
-"Installation of {summary} {version} has been blocked. An updated version of "
-"this add-on is required, the minimum add-on API supported by this version of "
-"NVDA is {backCompatToAPIVersion}"
-msgstr ""
-"Instalace {summary} {version} byla zablokována. Prosím vyhledejte novější "
-"verzi doplňku, protože tato je určena pro starší verzi rozhraní "
-"{backCompatToAPIVersion}"
-
 #. Translators: A message asking the user if they really wish to install an addon.
+#, python-brace-format
 msgid ""
 "Are you sure you want to install this add-on?\n"
 "Only install add-ons from trusted sources.\n"
@@ -8782,20 +9134,6 @@ msgstr "Nekompatibilní doplňky"
 msgid "Incompatible reason"
 msgstr "Důvod nekompatibility"
 
-#. Translators: The reason an add-on is not compatible. A more recent version of NVDA is
-#. required for the add-on to work. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
-msgid "An updated version of NVDA is required. NVDA version {} or later."
-msgstr "Je vyžadována aktualizace minimálně na verzi NVDA {} nebo novější."
-
-#. Translators: The reason an add-on is not compatible. The addon relies on older, removed features of NVDA,
-#. an updated add-on is required. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
-msgid ""
-"An updated version of this add-on is required. The minimum supported API "
-"version is now {}"
-msgstr ""
-"Je vyžadována aktualizovaná verze tohoto doplňku. Minimální podporovaná "
-"verze rozhraní je nyní {}"
-
 #. Translators: Reported when an action cannot be performed because NVDA is in a secure screen
 msgid "Action unavailable in secure context"
 msgstr "Nedostupné v zabezpečeném režimu"
@@ -8809,6 +9147,15 @@ msgstr "Nedostupné ve verzi NVDA z obchodu Windows store"
 #. for a response from a modal dialog
 msgid "Action unavailable while a dialog requires a response"
 msgstr "Nedostupné, čeká se na odpověď"
+
+#. Translators: Reported when an action cannot be performed because Windows is locked.
+msgid "Action unavailable while Windows is locked"
+msgstr "Nedostupné při uzamčení systému Windows"
+
+#. Translators: Reported when an action cannot be performed because NVDA is running the launcher temporary
+#. version
+msgid "Action unavailable in a temporary version of NVDA"
+msgstr "Nedostupné v dočasné verzi NVDA"
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -8861,7 +9208,9 @@ msgid "Error activating profile."
 msgstr "Chyba při aktivaci profilu."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "This profile will be permanently deleted. This action cannot be undone."
+#. The placeholder {} is replaced with the name of the configuration profile that will be deleted.
+msgid ""
+"The profile {} will be permanently deleted. This action cannot be undone."
 msgstr "Profil bude trvale odstraněn. Tuto akci nelze vrátit zpět."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
@@ -9046,6 +9395,7 @@ msgstr "Co chcete u&dělat?"
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
+#, python-brace-format
 msgid "{main} ({source})"
 msgstr "{main} ({source})"
 
@@ -9056,6 +9406,7 @@ msgstr "Zadejte klávesový příkaz:"
 #. Translators: An gesture that will be emulated by some other new gesture. The token {emulateGesture}
 #. will be replaced by the gesture that can be triggered by a mapped gesture.
 #. E.G. Emulate key press: NVDA+b
+#, python-brace-format
 msgid "Emulate key press: {emulateGesture}"
 msgstr "Emulovat stisk kláves: {emulateGesture}"
 
@@ -9064,10 +9415,12 @@ msgid "Enter gesture to emulate:"
 msgstr "Zadejte příkaz pro emulaci:"
 
 #. Translators: The label for a filtered category in the Input Gestures dialog.
+#, python-brace-format
 msgid "{category} (1 result)"
 msgstr "{category} (1 výsledek)"
 
 #. Translators: The label for a filtered category in the Input Gestures dialog.
+#, python-brace-format
 msgid "{category} ({nbResults} results)"
 msgstr "{category} ({nbResults} výsledků)"
 
@@ -9155,11 +9508,11 @@ msgstr ""
 
 #. Translators: The message displayed when NVDA has been successfully installed.
 msgid "Successfully installed NVDA. "
-msgstr "Instalace NVDA byla úspěšně dokončena."
+msgstr "Instalace NVDA byla úspěšná. "
 
 #. Translators: The message displayed when NVDA has been successfully updated.
 msgid "Successfully updated your installation of NVDA. "
-msgstr "Vaše instalace NVDA byla úspěšně aktualizována."
+msgstr "Vaše instalace NVDA byla úspěšně aktualizována. "
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
@@ -9167,6 +9520,7 @@ msgid "Please press OK to start the installed copy."
 msgstr "Stiskněte tlačítko OK pro spuštění nainstalované kopie."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
+#. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 msgid "Success"
 msgstr "Hotovo"
 
@@ -9188,6 +9542,7 @@ msgstr ""
 "aktualizována."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
+#, python-brace-format
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
@@ -9283,23 +9638,17 @@ msgstr "Prosím vyberte složku pro vytvoření přenosné verze."
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
 msgid ""
-"Please specify an absolute path (including drive letter)  in which to create "
-"the portable copy."
+"Please specify the absolute path where the portable copy should be created. "
+"It may include system variables (%temp%, %homepath%, etc.)."
 msgstr ""
-"Prosím zadejte přesnou cestu složky (včetně písmene jednotky) pro vytvoření "
-"přenosné verze."
+"Prosím určete úplnou cestu pro vytvoření přenosné verze. Může obsahovat "
+"systémové proměnné (%temp%, %homepath%, atd)."
 
-#. Translators: The message displayed when the user specifies an invalid destination drive
-#. in the Create Portable NVDA dialog.
-#, python-format
-msgid "Invalid drive %s"
-msgstr "Neplatná jednotka %s"
-
-#. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+#. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
 msgstr "Vytváření Přenosné Verze"
 
-#. Translators: The message displayed while a portable copy of NVDA is bieng created.
+#. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "Prosím vyčkejte na vytvoření přenosné verze NVDA."
 
@@ -9308,16 +9657,16 @@ msgid "NVDA is unable to remove or overwrite a file."
 msgstr "Odstranění nebo přepsání souboru se nezdařilo."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
-#. %s will be replaced with the specific error message.
-#, python-format
-msgid "Failed to create portable copy: %s"
-msgstr "Při vytváření přenosné verze došlo k chybě: %s"
+#. {error} will be replaced with the specific error message.
+#, python-brace-format
+msgid "Failed to create portable copy: {error}."
+msgstr "Při vytváření přenosné verze došlo k chybě: {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
-#. %s will be replaced with the destination directory.
-#, python-format
-msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "Přenosná verze NVDA byla úspěšně vytvořena ve složce %s"
+#. {dir} will be replaced with the destination directory.
+#, python-brace-format
+msgid "Successfully created a portable copy of NVDA at {dir}"
+msgstr "Přenosná verze NVDA byla úspěšně vytvořena ve složce {dir}"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -9389,6 +9738,7 @@ msgstr "debug"
 
 #. Translators: Shown for a language which has been provided from the command line
 #. 'langDesc' would be replaced with description of the given locale.
+#, python-brace-format
 msgid "Command line option: {langDesc}"
 msgstr "Možnost příkazového řádku: {langDesc}"
 
@@ -9559,7 +9909,7 @@ msgstr "Režim &tlumení zvuku:"
 #. synthesizer.
 #, python-format
 msgid "Could not load the %s synthesizer."
-msgstr "hlasový výstup %s nelze načíst"
+msgstr "Hlasový výstup %s nelze načíst."
 
 msgid "Synthesizer Error"
 msgstr "Chyba hlasového výstupu"
@@ -9854,7 +10204,7 @@ msgstr "Hlásit &dynamicky měněný obsah"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
 msgid "Play a sound when &auto-suggestions appear"
-msgstr "oznamovat &zvukem automatické návrhy"
+msgstr "Oznamovat &zvukem automatické návrhy"
 
 #. Translators: This is the label for the browse mode settings panel.
 msgid "Browse Mode"
@@ -10019,19 +10369,6 @@ msgstr "&Čísla řádků"
 msgid "Line &indentation reporting:"
 msgstr "Hlá&šení odsazení:"
 
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
-msgctxt "line indentation setting"
-msgid "Speech"
-msgstr "Řeč"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
-msgid "Tones"
-msgstr "Zvuky"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both Speech and Tones"
-msgstr "Řeč i zvuky"
-
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
@@ -10069,18 +10406,8 @@ msgstr "So&uřadnice buněk"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
-msgid "Styles"
-msgstr "Styly"
-
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Both Colors and Styles"
-msgstr "Barvy i styly"
-
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
 msgid "Cell &borders:"
-msgstr "Okraje bun&ěk"
+msgstr "Okraje bun&ěk:"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
@@ -10132,6 +10459,18 @@ msgstr "&Kliknutelné"
 msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr "Při pohybu kurzoru oznamovat změny &formátování"
 
+#. Translators: This is the label for the document navigation settings panel.
+msgid "Document Navigation"
+msgstr "Dokumentová navigace"
+
+#. Translators: This is a label for the paragraph navigation style in the document navigation dialog
+msgid "&Paragraph style:"
+msgstr "Styl &odstavců:"
+
+#. Translators: This is the label for the addon navigation settings panel.
+msgid "Add-on Store"
+msgstr "Katalog doplňků"
+
 #. Translators: This is the label for the touch interaction settings panel.
 msgid "Touch Interaction"
 msgstr "Dotyková gesta"
@@ -10152,7 +10491,7 @@ msgstr "Rozpoznávání textu Windows"
 
 #. Translators: Label for an option in the Windows OCR dialog.
 msgid "Recognition &language:"
-msgstr "&Jazyk pro rozpoznávání"
+msgstr "&Jazyk pro rozpoznávání:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10218,7 +10557,7 @@ msgstr "Pouze v případě potřeby"
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithMSWord"
 msgid "Where suitable"
-msgstr "kde je vhodné"
+msgstr "Kde je vhodné"
 
 #. Translators: Label for a value in the Use UIA with MS Word combobox, in the Advanced settings panel.
 msgctxt "advanced.uiaWithMSWord"
@@ -10238,7 +10577,7 @@ msgstr ""
 #. active console implementation in the advanced settings panel.
 #. Choices are automatic, UIA when available, and legacy.
 msgid "Windows C&onsole support:"
-msgstr "Podpora Windows K&onzole"
+msgstr "Podpora Windows K&onzole:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine its Windows Console implementation
@@ -10303,11 +10642,6 @@ msgstr "Hlásit podrobnosti pro strukturované anotace"
 msgid "Report aria-description always"
 msgstr "Hlásit aria-popis vždy"
 
-#. Translators: This is the label for a group of advanced options in the
-#. Advanced settings panel
-msgid "HID Braille Standard"
-msgstr "HID Braille Standard"
-
 #. Translators: Label for option in the 'Enable support for HID braille' combobox
 #. in the Advanced settings panel.
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
@@ -10329,10 +10663,14 @@ msgstr "Ano"
 msgid "No"
 msgstr "Ne"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combo box in the
 #. Advanced settings panel.
 msgid "Enable support for HID braille"
 msgstr "Povolit podporu pro HID braille"
+
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Report live regions:"
+msgstr "Hlásit aktivní oblasti:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10378,6 +10716,10 @@ msgstr "Diff Match Patch"
 msgid "Difflib"
 msgstr "Difflib"
 
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Speak new text in Windows Terminal via:"
+msgstr "Hlásit nový text v terminálu Windows pomocí:"
+
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "Přerušit řeč po ukončení zaměřené události:"
@@ -10405,6 +10747,27 @@ msgstr "Vyčkat před pohybem systémového kurzoru (časový limit v milisekund
 #. Advanced settings panel.
 msgid "Report transparent color values"
 msgstr "Hlásit hodnoty transparentních barev"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Audio"
+msgstr "Audio"
+
+#. Translators: This is the label for a checkbox control in the Advanced settings panel.
+msgid "Use WASAPI for audio output (requires restart)"
+msgstr "Použít rozhraní WASAPI pro zvukový výstup (vyžaduje restart)"
+
+#. Translators: This is the label for a checkbox control in the
+#. Advanced settings panel.
+msgid "Volume of NVDA sounds follows voice volume (requires WASAPI)"
+msgstr ""
+"Hlasitost zvuků NVDA se řídí podle hlasitosti hlasu (vyžaduje rozhraní "
+"WASAPI)"
+
+#. Translators: This is the label for a slider control in the
+#. Advanced settings panel.
+msgid "Volume of NVDA sounds (requires WASAPI)"
+msgstr "Hlasitost zvuků NVDA (vyžaduje rozhraní WASAPI)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10477,8 +10840,9 @@ msgstr "&Port:"
 
 #. Translators: The message in a dialog presented when NVDA is unable to load the selected
 #. braille display.
+#, python-brace-format
 msgid "Could not load the {display} display."
-msgstr "řádek {display} nelze načíst."
+msgstr "Řádek {display} nelze načíst."
 
 #. Translators: The title in a dialog presented when NVDA is unable to load the selected
 #. braille display.
@@ -10511,21 +10875,11 @@ msgstr "&Rychlost blikání kurzoru v milisekundách"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
 msgid "Cursor shape for &focus:"
-msgstr "Tvar kurzoru pro &fokus"
+msgstr "Tvar kurzoru pro &fokus:"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
 msgid "Cursor shape for &review:"
-msgstr "Tvar čtecího kurzoru"
-
-#. Translators: One of the show states of braille messages
-#. (the timeout mode shows messages for the specific time).
-msgid "Use timeout"
-msgstr "na určitou dobu"
-
-#. Translators: One of the show states of braille messages
-#. (the indefinitely mode prevents braille messages from disappearing automatically).
-msgid "Show indefinitely"
-msgstr "Na neurčito"
+msgstr "Tvar čtecího kurzoru:"
 
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
@@ -10538,7 +10892,11 @@ msgstr "&Čas pro zobrazení systémových zpráv (v sekundách)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Tether B&raille:"
-msgstr "Propojit b&raillský řádek"
+msgstr "Propojit b&raillský řádek:"
+
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "Move system caret when ro&uting review cursor"
+msgstr "Přesunout systémový i čtecí k&urzor na braillském řádku"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -10550,19 +10908,25 @@ msgstr "&Nedělit slova, pokud je to možné"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
-msgstr "Zobrazení kontextových informací"
+msgstr "Zobrazení kontextových informací:"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 msgid "I&nterrupt speech while scrolling"
 msgstr "Přerušit řeč při přesouvá&ní"
 
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "Show se&lection"
+msgstr "Zobrazit &výběr"
+
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
+#, python-brace-format
 msgid "Could not load the {providerName} vision enhancement provider"
 msgstr "Nelze načíst vizuální rozšíření {providerName}"
 
 #. Translators: This message is presented when NVDA is unable to
 #. load multiple vision enhancement providers.
+#, python-brace-format
 msgid ""
 "Could not load the following vision enhancement providers:\n"
 "{providerNames}"
@@ -10576,12 +10940,14 @@ msgstr "Chyba vizuálního rozšíření"
 
 #. Translators: This message is presented when
 #. NVDA is unable to gracefully terminate a single vision enhancement provider.
+#, python-brace-format
 msgid ""
 "Could not gracefully terminate the {providerName} vision enhancement provider"
 msgstr "Nelze korektně ukončit {providerName}"
 
 #. Translators: This message is presented when
 #. NVDA is unable to terminate multiple vision enhancement providers.
+#, python-brace-format
 msgid ""
 "Could not gracefully terminate the following vision enhancement providers:\n"
 "{providerNames}"
@@ -10591,7 +10957,7 @@ msgstr ""
 
 #. Translators: This is a label appearing on the vision settings panel.
 msgid "Configure visual aids."
-msgstr "Nastavení vizuálních pomůcek"
+msgstr "Nastavení vizuálních pomůcek."
 
 #. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
 msgid "Enable"
@@ -10722,12 +11088,17 @@ msgstr "Je nutné zadat vzor."
 
 #. Translators: The title of an error message raised by the Dictionary Entry dialog
 msgid "Dictionary Entry Error"
-msgstr "chyba položky slovníku"
+msgstr "Chyba položky slovníku"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "Neplatný regulární výraz: \"%s\"."
+#, python-brace-format
+msgid "Regular Expression error in the pattern field: \"{error}\"."
+msgstr "Chyba regulárního výrazu v poli vzor: \"{error}\"."
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-brace-format
+msgid "Regular Expression error in the replacement field: \"{error}\"."
+msgstr "Chyba regulárního výrazu v poli nahradit: \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -10820,6 +11191,14 @@ msgstr "Po&užít CapsLock jako NVDA klávesu"
 msgid "&Show this dialog when NVDA starts"
 msgstr "&Zobrazit tento dialog při spuštění NVDA"
 
+#. Translators: The title of an error message box displayed when validating the startup dialog
+msgid ""
+"At least one NVDA modifier key must be set. Caps lock will remain as an NVDA "
+"modifier key. "
+msgstr ""
+"Je nutné nastavit alespoň jednu modifikační klávesu. Capslock zůstane jako "
+"modifikační klávesa NVDA. "
+
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
 msgstr "&Souhlasím"
@@ -10877,13 +11256,7 @@ msgstr "Ukončí propouštění klávesových příkazů do aplikace MathPlayer"
 #. Translators: Reported when the user attempts math interaction
 #. but math interaction is not supported.
 msgid "Math interaction not supported."
-msgstr "práce s matematickým obsahem není podporována."
-
-#. Translators: This is spoken when the line is considered blank.
-#. Translators: This is spoken when NVDA moves to an empty line.
-#. Translators: This is spoken when the line is considered blank.
-msgid "blank"
-msgstr "prázdný"
+msgstr "Práce s matematickým obsahem není podporována."
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #, python-format
@@ -10928,34 +11301,40 @@ msgid "row %s"
 msgstr "řádek %s"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
-#. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, python-format
-msgid "through %s"
-msgstr "přes %s"
+#, python-brace-format
+msgid "through {endRow}"
+msgstr "do {endRow}"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "sloupec %s"
 
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-brace-format
+msgid "through {endCol}"
+msgstr "do {endCol}"
+
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
+#, python-brace-format
 msgid "through row {row} column {column}"
 msgstr "přes řádek {row} sloupec {column}"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
+#, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
-msgstr "s {rowCount} řádky a {columnCount} sloupci"
+msgstr "má {rowCount} řádků a {columnCount} sloupců"
 
 #. Translators: Speaks number of columns (example output: with 4 columns).
 #, python-format
 msgid "with %s columns"
-msgstr "s %s sloupci"
+msgstr "má %s sloupců"
 
 #. Translators: Speaks number of rows (example output: with 2 rows).
 #, python-format
 msgid "with %s rows"
-msgstr "s %s řádky"
+msgstr "má %s řádků"
 
 #. Translators: Speaks when there are further details/annotations that can be fetched manually.
 msgid "has details"
@@ -10968,8 +11347,11 @@ msgstr "úroveň %s"
 
 #. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
-msgid "with %s items"
-msgstr "s %s položkami"
+msgid "with %s item"
+msgid_plural "with %s items"
+msgstr[0] "má %s položku"
+msgstr[1] "má %s položky"
+msgstr[2] "má %s položek"
 
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #, python-format
@@ -10991,6 +11373,7 @@ msgstr "úsek %s"
 #. Translators: Indicates the text column number in a document.
 #. {0} will be replaced with the text column number.
 #. {1} will be replaced with the number of text columns.
+#, python-brace-format
 msgid "column {0} of {1}"
 msgstr "sloupec {0} z {1}"
 
@@ -11001,6 +11384,7 @@ msgid "%s columns"
 msgstr "%s sloupců"
 
 #. Translators: Indicates the text column number in a document.
+#, python-brace-format
 msgid "column {columnNumber}"
 msgstr "sloupec {columnNumber}"
 
@@ -11047,27 +11431,32 @@ msgstr "bez okrajů"
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
+#, python-brace-format
 msgid "{color1} to {color2}"
 msgstr "{color1} na {color2}"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{color} na {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
+#, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
+#, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "na {backgroundColor}"
 
+#, python-brace-format
 msgid "background pattern {pattern}"
-msgstr "Vzor pozadí {pattern}"
+msgstr "vzor pozadí {pattern}"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -11100,6 +11489,15 @@ msgstr "označeno"
 #. Translators: Reported when text is no longer marked
 msgid "not marked"
 msgstr "neoznačeno"
+
+#. Translators: Reported when text is color-highlighted
+#, python-brace-format
+msgid "highlighted in {color}"
+msgstr "barva zvýraznění {color}"
+
+#. Translators: Reported when text is no longer marked
+msgid "not highlighted"
+msgstr "není zvýrazněno"
 
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
@@ -11288,6 +11686,7 @@ msgid "out of table"
 msgstr "mimo tabulku"
 
 #. Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
+#, python-brace-format
 msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "tabulka s {columnCount} sloupci a {rowCount} řádky"
 
@@ -11308,16 +11707,54 @@ msgid "word"
 msgstr "slovo"
 
 #. Translators: the current position's screen coordinates in pixels
+#, python-brace-format
 msgid "Positioned at {x}, {y}"
 msgstr "Umístěno na {x}, {y}"
 
 #. Translators: current position in a document as a percentage of the document length
+#, python-brace-format
 msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
+#, python-brace-format
 msgid "at {x}, {y}"
 msgstr "na {x}, {y}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds
+#, python-brace-format
+msgctxt "time format"
+msgid "{S}"
+msgstr "{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes
+#, python-brace-format
+msgctxt "time format"
+msgid "{M}:{S}"
+msgstr "{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours
+#, python-brace-format
+msgctxt "time format"
+msgid "{H}:{M}:{S}"
+msgstr "{H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} day
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} day {H}:{M}:{S}"
+msgstr "{D} den {H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} days
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} days {H}:{M}:{S}"
+msgstr "{D} dní {H}:{M}:{S}"
 
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
@@ -11389,7 +11826,7 @@ msgstr "Clona obrazovky"
 #. Translators: Description for a Screen Curtain setting that shows a warning when loading
 #. the screen curtain.
 msgid "Always &show a warning when loading Screen Curtain"
-msgstr "Před aktivací clony obrazovky vždy Zobrazit &upozornění "
+msgstr "Před aktivací clony obrazovky vždy Zobrazit &upozornění"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
 msgid "&Play sound when toggling Screen Curtain"
@@ -11432,14 +11869,15 @@ msgid "No system battery"
 msgstr "Žádná baterie není k dispozici"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
-msgid "Charging battery"
-msgstr "Nabíjí se baterie"
+msgid "Plugged in"
+msgstr "Napájení zapnuto"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-msgid "AC disconnected"
+msgid "Unplugged"
 msgstr "Nenabíjí se"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
+#, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "zbývá {hours:d} hodin a {minutes:d} minut"
 
@@ -11447,6 +11885,7 @@ msgid "Taskbar"
 msgstr "Úlohová lišta"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
+#, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 msgstr "RGB červená {rgb.red}, zelená {rgb.green}, modrá {rgb.blue}"
 
@@ -11455,12 +11894,14 @@ msgid "%s items"
 msgstr "%s položek"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "Řádek {rowNumber} sloupec {columnNumber} nastaven jako začátek záhlaví "
 "sloupců"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
@@ -11468,10 +11909,12 @@ msgstr ""
 "sloupců"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr "Řádek {rowNumber} sloupec {columnNumber}  odstraněn ze záhlaví sloupců"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
 "Nelze najít řádek {rowNumber} sloupec {columnNumber}  v záhlaví sloupců"
@@ -11481,15 +11924,17 @@ msgid ""
 "lower and to the right of it within this table. Pressing twice will forget "
 "the current column header for this cell."
 msgstr ""
-"nastaví tuto buňku jako první záhlaví sloupců pro buňky níže a vpravo v této "
+"Nastaví tuto buňku jako první záhlaví sloupců pro buňky níže a vpravo v této "
 "tabulce. Dvojitý stisk toto nastavení zruší."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
 "Řádek {rowNumber} sloupec {columnNumber} nastaven jako začátek záhlaví řádků"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
@@ -11497,10 +11942,12 @@ msgstr ""
 "řádků"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr "Řádek {rowNumber} sloupec {columnNumber}  odstraněn ze záhlaví řádků"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr "Nelze najít řádek {rowNumber} sloupec {columnNumber}  v záhlaví řádků"
 
@@ -11509,7 +11956,7 @@ msgid ""
 "and to the right of it within this table. Pressing twice will forget the "
 "current row header for this cell."
 msgstr ""
-"nastaví tuto buňku jako první záhlaví řádků pro buňky níže a vpravo v této "
+"Nastaví tuto buňku jako první záhlaví řádků pro buňky níže a vpravo v této "
 "tabulce. Dvojitý stisk toto nastavení zruší."
 
 #. Translators: a message when there is no comment to report in Microsoft Word
@@ -11527,10 +11974,12 @@ msgid "Not in table"
 msgstr "Mimo tabulku"
 
 #. Translators: a measurement in inches
+#, python-brace-format
 msgid "{val:.2f} in"
 msgstr "{val:.2f} in"
 
 #. Translators: a measurement in centimetres
+#, python-brace-format
 msgid "{val:.2f} cm"
 msgstr "{val:.2f} cm"
 
@@ -11555,21 +12004,25 @@ msgstr ""
 "velikost"
 
 #. Translators: The width of the cell in points
+#, python-brace-format
 msgctxt "excel-UIA"
 msgid "Cell width: {0.x:.1f} pt"
 msgstr "Šířka buňky: {0.x:.1f} bodů"
 
 #. Translators: The height of the cell in points
+#, python-brace-format
 msgctxt "excel-UIA"
 msgid "Cell height: {0.y:.1f} pt"
 msgstr "Výška buňky: {0.y:.1f} bodů"
 
 #. Translators: The rotation in degrees of an Excel cell
+#, python-brace-format
 msgctxt "excel-UIA"
 msgid "Rotation: {0} degrees"
 msgstr "Otočení: {0} stupňů"
 
 #. Translators: The outline (border) colors of an Excel cell.
+#, python-brace-format
 msgctxt "excel-UIA"
 msgid ""
 "Outline color: top={0.name}, bottom={1.name}, left={2.name}, right={3.name}"
@@ -11578,22 +12031,26 @@ msgstr ""
 "strana={3.name}"
 
 #. Translators: The outline (border) thickness values of an Excel cell.
+#, python-brace-format
 msgctxt "excel-UIA"
 msgid "Outline thickness: top={0}, bottom={1}, left={2}, right={3}"
 msgstr ""
 "Tloušťka obrysu: vršek={0}, spodek={1}, levá strana={2}, pravá strana={3}"
 
 #. Translators: The fill color of an Excel cell
+#, python-brace-format
 msgctxt "excel-UIA"
 msgid "Fill color: {0.name}"
 msgstr "Barva výseče: {0.name}"
 
 #. Translators: The fill type (pattern, gradient etc) of an Excel Cell
+#, python-brace-format
 msgctxt "excel-UIA"
 msgid "Fill type: {0}"
 msgstr "Typ výseče: {0}"
 
 #. Translators: the number format of an Excel cell
+#, python-brace-format
 msgid "Number format: {0}"
 msgstr "Formát čísel: {0}"
 
@@ -11602,6 +12059,7 @@ msgid "Has data validation"
 msgstr "Ověření dat"
 
 #. Translators: the data validation prompt (input message) for an Excel cell
+#, python-brace-format
 msgid "Data validation prompt: {0}"
 msgstr "Žádost o ověření dat: {0}"
 
@@ -11619,19 +12077,23 @@ msgid "Cell Appearance"
 msgstr "Vzhled buňky"
 
 #. Translators:  an error message on a cell in Microsoft Excel.
+#, python-brace-format
 msgid "Error: {errorText}"
 msgstr "Chyba: {errorText}"
 
 #. Translators: a mesage when another author is editing a cell in a shared Excel spreadsheet.
+#, python-brace-format
 msgid "{author} is editing"
 msgstr "{author} právě upravuje"
 
 #. Translators: Excel, report selected range of cell coordinates
+#, python-brace-format
 msgctxt "excel-UIA"
 msgid "{firstAddress} {firstValue} through {lastAddress} {lastValue}"
 msgstr "{firstAddress} {firstValue} do {lastAddress} {lastValue}"
 
 #. Translators: Excel, report merged range of cell coordinates
+#, python-brace-format
 msgctxt "excel-UIA"
 msgid "{firstAddress} through {lastAddress}"
 msgstr "{firstAddress} do {lastAddress}"
@@ -11641,6 +12103,7 @@ msgid "Reports the note or comment thread on the current cell"
 msgstr "Přečte vlákno poznámek nebo komentářů v aktuální buňce"
 
 #. Translators: a note on a cell in Microsoft excel.
+#, python-brace-format
 msgid "{name}: {desc}"
 msgstr "{name}: {desc}"
 
@@ -11649,10 +12112,12 @@ msgid "No note on this cell"
 msgstr "Žádné poznámky v této buňce"
 
 #. Translators: a comment on a cell in Microsoft excel.
+#, python-brace-format
 msgid "Comment thread: {comment}  by {author}"
 msgstr "Vlákno komentáře: {comment}  od {author}"
 
 #. Translators: a comment on a cell in Microsoft excel.
+#, python-brace-format
 msgid "Comment thread: {comment}  by {author} with {numReplies} replies"
 msgstr "Vlákno komentáře: {comment}  od {author} má {numReplies} odpovědí"
 
@@ -11675,22 +12140,27 @@ msgid "&Errors"
 msgstr "&Chyby"
 
 #. Translators: The label shown for an insertion change
+#, python-brace-format
 msgid "insertion: {text}"
 msgstr "vloženo: {text}"
 
 #. Translators: The label shown for a deletion change
+#, python-brace-format
 msgid "deletion: {text}"
 msgstr "odstraněno: {text}"
 
 #. Translators: The general label shown for track changes
+#, python-brace-format
 msgid "track change: {text}"
 msgstr "změna stopy: {text}"
 
 #. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
 msgid "Comment: {comment} by {author}"
 msgstr "Komentář: {comment} od {author}"
 
 #. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
 msgid "Comment: {comment} by {author} on {date}"
 msgstr "Komentář: {comment} od {author} dne {date}"
 
@@ -12069,6 +12539,7 @@ msgid "item"
 msgstr "položka"
 
 #. Translators: Message to be spoken to report Series Color
+#, python-brace-format
 msgid "Series color: {colorName} "
 msgstr "Barva řady: {colorName} "
 
@@ -12158,6 +12629,7 @@ msgid "Shape"
 msgstr "Obdélník"
 
 #. Translators: Message reporting the title and type of a chart.
+#, python-brace-format
 msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "Název grafu: {chartTitle}, typ: {chartType}"
 
@@ -12171,6 +12643,7 @@ msgid "There are total %d series in this chart"
 msgstr "Celkem %d řad v tomto grafu"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
+#, python-brace-format
 msgid "series {number} {name}"
 msgstr "řada {number} {name}"
 
@@ -12185,55 +12658,66 @@ msgstr "Prvky grafu"
 #. Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
+#, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} řada {seriesIndex} z {seriesCount}"
 
 #. Translators: Message to be spoken to report Slice Color in Pie Chart
+#, python-brace-format
 msgid "Slice color: {colorName} "
 msgstr "Barva výseče: {colorName} "
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
+#, python-brace-format
 msgid "no change from point {previousIndex}, "
 msgstr "žádná změna od bodu {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
+#, python-brace-format
 msgid "increased by {incrementValue} from point {previousIndex}, "
 msgstr "zvýšeno o {incrementValue} od bodu {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
+#, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
 msgstr "sníženo o {decrementValue} od bodu {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
 msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
 msgid "Category {categoryAxisData}: "
 msgstr "Kategorie {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
 msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
 msgid "value {valueAxisData}"
 msgstr "hodnota {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
+#, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr " zlomek {fractionValue:.2f} výseč procent {pointIndex} z {pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
+#, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} {pointIndex} z {pointCount}"
 
@@ -12262,6 +12746,7 @@ msgid "Secondary Series Axis"
 msgstr "Osa sekundární řady"
 
 #. Translators: the title of a chart axis
+#, python-brace-format
 msgid " title: {axisTitle}"
 msgstr " název: {axisTitle}"
 
@@ -12298,6 +12783,7 @@ msgid " minus "
 msgstr " mínus "
 
 #. Translators: This message gives trendline type and name for selected series
+#, python-brace-format
 msgid ""
 "{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: "
 "{trendlineLabel} "
@@ -12306,11 +12792,13 @@ msgstr ""
 "značka: {trendlineLabel} "
 
 #. Translators: This message gives trendline type and name for selected series
+#, python-brace-format
 msgid "{seriesName} trendline type: {trendlineType}, name: {trendlineName} "
 msgstr ""
 "{seriesName} typ spojnice trendu: {trendlineType}, název: {trendlineName} "
 
 #. Translators: Details about a chart title in Microsoft Office.
+#, python-brace-format
 msgid "Chart title: {chartTitle}"
 msgstr "Název grafu: {chartTitle}"
 
@@ -12319,6 +12807,7 @@ msgid "Untitled chart"
 msgstr "Bez názvu"
 
 #. Translators: Details about the chart area in a Microsoft Office chart.
+#, python-brace-format
 msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
@@ -12331,6 +12820,7 @@ msgid "Chart area "
 msgstr "Oblast grafu "
 
 #. Translators: Details about the plot area of a Microsoft Office chart.
+#, python-brace-format
 msgid ""
 "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
@@ -12345,24 +12835,29 @@ msgid "Plot area "
 msgstr "Oblast grafu "
 
 #. Translators: a message for the legend entry of a chart in MS Office
+#, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "Položka legendy pro řadu {seriesName} {seriesIndex} z {seriesCount}"
 
 #. Translators: the legend entry for a chart in Microsoft Office
+#, python-brace-format
 msgid "Legend entry {legendEntryIndex} of {legendEntryCount}"
 msgstr "Položka legendy {legendEntryIndex} z {legendEntryCount}"
 
 #. Translators: Details about a legend key for a series in a Microsoft office chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+#, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "Klíč legendy pro řadu {seriesName} {seriesIndex} z {seriesCount}"
 
-#. Translators: The default color of text when a color has not been set by the author.
-#. Translators: The default background color  when a color has not been set by the author.
-#. Translators: the default (automatic) color in Microsoft Word
-msgid "default color"
-msgstr "výchozí barva"
+#. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+#, python-brace-format
+msgid "{color} (default color)"
+msgstr "{color} (výchozí barva)"
 
 #. Translators: The color of text cannot be detected.
 #. Translators: The background color cannot be detected.
@@ -12507,8 +13002,47 @@ msgid "&Sheets"
 msgstr "&Listy"
 
 #. Translators: Used to express an address range in excel.
+#, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} do {end}"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold off"
+msgstr "Tučné vypnuto"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold on"
+msgstr "Tučné zapnuto"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic off"
+msgstr "Kurzíva vypnutá"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic on"
+msgstr "Kurzíva zapnutá"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline off"
+msgstr "Podtržení vypnuté"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline on"
+msgstr "Podtržení zapnuté"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+msgid "Strikethrough off"
+msgstr "Přeškrtnuté vypnuto"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+msgid "Strikethrough on"
+msgstr "Přeškrtnuté zapnuto"
 
 #. Translators: the description  for a script for Excel
 msgid "opens a dropdown item at the current cell"
@@ -12519,18 +13053,22 @@ msgid "Sets the current cell as start of column header"
 msgstr "Nastaví aktuální buňku jako začátek záhlaví sloupců"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of column headers"
 msgstr "{address} nastaveno jako začátek záhlaví sloupců"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of column headers"
 msgstr "{address} již nastaveno jako začátek záhlaví sloupců"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Removed {address}    from column headers"
 msgstr "{address}    odstraněno ze záhlaví sloupců"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr "Nelze najít {address}    v záhlaví sloupců"
 
@@ -12547,18 +13085,22 @@ msgid "sets the current cell as start of row header"
 msgstr "nastaví aktuální buňku jako začátek záhlaví řádků"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Set {address} as start of row headers"
 msgstr "{address} nastaveno jako začátek záhlaví řádků"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Already set {address} as start of row headers"
 msgstr "{address} již nastaveno jako začátek záhlaví řádků"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Removed {address}    from row headers"
 msgstr "{address}    odstraněno ze záhlaví řádků"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
+#, python-brace-format
 msgid "Cannot find {address}    in row headers"
 msgstr "Nelze najít {address}    v záhlaví řádků"
 
@@ -12571,12 +13113,15 @@ msgstr ""
 "oblasti. Dvojitý stisk toto nastavení zruší."
 
 #. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
+#, python-brace-format
 msgid "Sheet {0}, {1}"
 msgstr "List {0}, {1}"
 
+#, python-brace-format
 msgid "Input Message is {title}: {message}"
 msgstr "Vstupní zpráva je {title}: {message}"
 
+#, python-brace-format
 msgid "Input Message is {message}"
 msgstr "Vstupní zpráva je {message}"
 
@@ -12593,6 +13138,7 @@ msgid "Opens the note editing dialog"
 msgstr "Otevře okno pro úpravu poznámek"
 
 #. Translators: Dialog text for the note editing dialog
+#, python-brace-format
 msgid "Editing note for cell {address}"
 msgstr "Upravit poznámku pro buňku {address}"
 
@@ -12603,6 +13149,7 @@ msgstr "Poznámka"
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 #. Beware to keep two spaces between the address and the content. Otherwise some synthesizer
 #. may mix the address and the content when the cell contains a 3-digit number.
+#, python-brace-format
 msgid "{firstAddress}  {firstContent} through {lastAddress}  {lastContent}"
 msgstr "{firstAddress}  {firstContent} do {lastAddress}  {lastContent}"
 
@@ -12695,30 +13242,37 @@ msgid "medium dashed"
 msgstr "střední čárkovaný"
 
 #. Translators: border styles in Microsoft Excel.
+#, python-brace-format
 msgid "{weight} {style}"
 msgstr "{weight} {style}"
 
 #. Translators: border styles in Microsoft Excel.
+#, python-brace-format
 msgid "{color} {desc}"
 msgstr "{color} {desc}"
 
 #. Translators: border styles in Microsoft Excel.
+#, python-brace-format
 msgid "{desc} surrounding border"
 msgstr "{desc} okolní okraj"
 
 #. Translators: border styles in Microsoft Excel.
+#, python-brace-format
 msgid "{desc} top and bottom edges"
 msgstr "{desc} vrchní a spodní okraje"
 
 #. Translators: border styles in Microsoft Excel.
+#, python-brace-format
 msgid "{desc} left and right edges"
 msgstr "{desc} levé a pravé okraje"
 
 #. Translators: border styles in Microsoft Excel.
+#, python-brace-format
 msgid "{desc} up-right and down-right diagonal lines"
 msgstr "{desc} šikmé čáry vpravo nahoře a vpravo dole"
 
 #. Translators: border styles in Microsoft Excel.
+#, python-brace-format
 msgid "{desc} {position}"
 msgstr "{desc} {position}"
 
@@ -12822,6 +13376,7 @@ msgstr "Textový rámeček"
 
 #. Translators: The label shown for a comment in the NVDA Elements List dialog in Microsoft Word.
 #. {text}, {author} and {date} will be replaced by the corresponding details about the comment.
+#, python-brace-format
 msgid "comment: {text} by {author} on {date}"
 msgstr "komentář: {text} od {author} dne {date}"
 
@@ -12829,14 +13384,17 @@ msgstr "komentář: {text} od {author} dne {date}"
 #. {revisionType} will be replaced with the type of revision; e.g. insertion, deletion or property.
 #. {description} will be replaced with a description of the formatting changes, if any.
 #. {text}, {author} and {date} will be replaced by the corresponding details about the revision.
+#, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} od {author} dne {date}"
 
 #. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
 msgid "{distance} from left edge of page"
 msgstr "{distance} od levého okraje strany"
 
 #. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
 msgid "{distance} from top edge of page"
 msgstr "{distance} od vrchního okraje strany"
 
@@ -12856,6 +13414,7 @@ msgid "1.5 lines"
 msgstr "1.5 řádků"
 
 #. Translators: line spacing of exactly x point
+#, python-brace-format
 msgctxt "line spacing value"
 msgid "exactly {space:.1f} pt"
 msgstr "přesně {space:.1f} bodů"
@@ -12869,36 +13428,19 @@ msgstr "alespoň %.1f bodů"
 #. Translators: line spacing of x lines
 #, python-format
 msgctxt "line spacing value"
-msgid "%.1f lines"
-msgstr "%.1f řádků"
+msgid "%.1f line"
+msgid_plural "%.1f lines"
+msgstr[0] "%.1f řádek"
+msgstr[1] "%.1f řádky"
+msgstr[2] "%.1f řádků"
 
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "Popis tabulky"
 
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Bold on"
-msgstr "Tučné zapnuto"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Bold off"
-msgstr "Tučné vypnuto"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Italic on"
-msgstr "Kurzíva zapnutá"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Italic off"
-msgstr "Kurzíva vypnutá"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Underline on"
-msgstr "Podtržení zapnuté"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Underline off"
-msgstr "Podtržení vypnuté"
+#. Translators: the default (automatic) color in Microsoft Word
+msgid "automatic color"
+msgstr "automatická barva"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Left aligned"
@@ -12947,10 +13489,12 @@ msgid "Moved above blank paragraph"
 msgstr "Přesunuto nad prázdný odstavec"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
+#, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "styl {styleName}, úroveň zobrazení {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
+#, python-brace-format
 msgid "{size:g} point font"
 msgstr "písmo {size:g} bodů"
 
@@ -12963,27 +13507,33 @@ msgid "Hide nonprinting characters"
 msgstr "Skrýt netisknutelné znaky"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} characters"
 msgstr "{offset:.3g} znaků"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} inches"
 msgstr "{offset:.3g} palců"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} centimeters"
 msgstr "{offset:.3g} centimetrů"
 
 #. Translators: a measurement in Microsoft Word
+#, python-brace-format
 msgid "{offset:.3g} millimeters"
 msgstr "{offset:.3g} milimetrů"
 
 #. Translators: a measurement in Microsoft Word (points)
+#, python-brace-format
 msgid "{offset:.3g} pt"
 msgstr "{offset:.3g} bodů"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
+#, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} pící"
 
@@ -12998,6 +13548,760 @@ msgstr "Dvojí řádkování"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "řádkování 1.5"
+
+#. Translators: Label for add-on channel in the add-on sotre
+#. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "All"
+msgstr "Vše"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "Stable"
+msgstr "Stabilní"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "Beta"
+msgstr "Beta"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "Dev"
+msgstr "Vývojové verze"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "External"
+msgstr "Externí"
+
+#. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled"
+msgstr "Povolené doplňky"
+
+#. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled"
+msgstr "Zakázané doplňky"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Pending removal"
+msgstr "Čeká na odstranění"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Available"
+msgstr "Dostupný"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Update Available"
+msgstr "Aktualizace k dispozici"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Migrate to add-on store"
+msgstr "Přemístit do katalogu doplňků"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Incompatible"
+msgstr "Nekompatibilní"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Downloading"
+msgstr "Stahování"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Download failed"
+msgstr "Stažení se nezdařilo"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Downloaded, pending install"
+msgstr "Staženo, čeká se na instalaci"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Installing"
+msgstr "Instalace"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Install failed"
+msgstr "Instalace se nezdařila"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Installed, pending restart"
+msgstr "Nainstalováno, čeká se na restart NVDA"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled, pending restart"
+msgstr "Zakázán, čeká se na restart NVDA"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled (incompatible), pending restart"
+msgstr "Zakázán (nekompatibilní), čeká se na restart NVDA"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled (incompatible)"
+msgstr "Zakázán (nekompatibilní)"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled (incompatible), pending restart"
+msgstr "Povolen (nekompatibilní), čeká se na restart NVDA"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled (incompatible)"
+msgstr "Povolen (nekompatibilní)"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled, pending restart"
+msgstr "Povolen, čeká se na restart NVDA"
+
+#. Translators: The label of a tab to display installed add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Installed add-ons"
+msgstr "Nainstalované doplňky"
+
+#. Translators: The label of a tab to display updatable add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Updatable add-ons"
+msgstr "Aktualizace doplňků"
+
+#. Translators: The label of a tab to display available add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Available add-ons"
+msgstr "Dostupné doplňky"
+
+#. Translators: The label of a tab to display incompatible add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Installed incompatible add-ons"
+msgstr "Nainstalované nekompatibilní doplňky"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Installed &add-ons"
+msgstr "Na&instalované doplňky"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Updatable &add-ons"
+msgstr "&Aktualizace doplňků"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Available &add-ons"
+msgstr "&Dostupné doplňky"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Installed incompatible &add-ons"
+msgstr "Nainstalované &nekompatibilní doplňky"
+
+#. Translators: The reason an add-on is not compatible.
+#. A more recent version of NVDA is required for the add-on to work.
+#. The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"An updated version of NVDA is required. NVDA version {nvdaVersion} or later."
+msgstr "Je vyžadována aktualizace NVDA na verzi {nvdaVersion} nebo novější."
+
+#. Translators: The reason an add-on is not compatible.
+#. The addon relies on older, removed features of NVDA, an updated add-on is required.
+#. The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"An updated version of this add-on is required. The minimum supported API "
+"version is now {nvdaVersion}. This add-on was last tested with "
+"{lastTestedNVDAVersion}. You can enable this add-on at your own risk. "
+msgstr ""
+"Je vyžadována aktualizovaná verze tohoto doplňku. Minimální podporovaná "
+"verze rozhraní je nyní {nvdaVersion}. Tento doplněk byl naposledy otestován "
+"s verzí {lastTestedNVDAVersion}. Můžete ho povolit na vlastní nebezpečí. "
+
+#. Translators: A message indicating that some add-ons will be disabled
+#. unless reviewed before installation.
+msgctxt "addonStore"
+msgid ""
+"Your NVDA configuration contains add-ons that are incompatible with this "
+"version of NVDA. These add-ons will be disabled after installation. After "
+"installation, you will be able to manually re-enable these add-ons at your "
+"own risk. If you rely on these add-ons, please review the list to decide "
+"whether to continue with the installation. "
+msgstr ""
+"Konfigurace NVDA obsahuje doplňky, které nejsou kompatibilní s touto verzí "
+"NVDA. Tyto doplňky budou po instalaci zakázány. Po instalaci budete moci "
+"tyto doplňky znovu povolit ručně na vlastní nebezpečí. Pokud tyto doplňky "
+"používáte, projděte si seznam a rozhodněte se, zda chcete v instalaci "
+"pokračovat. "
+
+#. Translators: A message to confirm that the user understands that incompatible add-ons
+#. will be disabled after installation, and can be manually re-enabled.
+msgctxt "addonStore"
+msgid ""
+"I understand that incompatible add-ons will be disabled and can be manually "
+"re-enabled at my own risk after installation."
+msgstr ""
+"Chápu, že nekompatibilní doplňky budou zakázány a po instalaci je mohu "
+"povolit ručně na vlastní nebezpečí."
+
+#. Translators: Names of braille displays.
+msgid "Caiku Albatross 46/80"
+msgstr "Caiku Albatross 46/80"
+
+#. Translators: A message when number of status cells must be changed
+#. for a braille display driver
+msgid ""
+"To use Albatross with NVDA: change number of status cells in Albatross "
+"internal menu at most "
+msgstr ""
+"Pro použití řádků Albatross s NVDA: změňte maximální počet stavových buněk "
+"ve vnitřním menu Albatrossu na "
+
+#. Translators: Names of braille displays.
+msgid "Eurobraille displays"
+msgstr "Braillské řádky EuroBraille"
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+msgid "HID keyboard input simulation is unavailable."
+msgstr "Simulace HID klávesnice není dostupná."
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggle HID keyboard simulation"
+msgstr "Přepnout simulaci HID klávesnice"
+
+#. Translators: Header (usually the add-on name) when add-ons are loading. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Loading add-ons..."
+msgstr "Načítám doplňky..."
+
+#. Translators: Header (usually the add-on name) when no add-on is selected. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "No add-on selected."
+msgstr "Není vybrán žádný doplněk."
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Description:"
+msgstr "Popis:"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "S&tatus:"
+msgstr "&Stav:"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "A&ctions"
+msgstr "&Akce"
+
+#. Translators: Label for the text control containing extra details about the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "&Other Details:"
+msgstr "Další &podrobnosti:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Publisher:"
+msgstr "Autor:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Author:"
+msgstr "Autor:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "ID:"
+msgstr "ID:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Installed version:"
+msgstr "Nainstalovaná verze:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Available version:"
+msgstr "Dostupná verze:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Channel:"
+msgstr "Kanál:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Incompatible Reason:"
+msgstr "Důvod Nekompatibility:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Homepage:"
+msgstr "Domovská stránka:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "License:"
+msgstr "Licence:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "License URL:"
+msgstr "Odkaz na Licenci:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Download URL:"
+msgstr "Odkaz pro stažení:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Source URL:"
+msgstr "Zdrojový odkaz:"
+
+#. Translators: A button in the addon installation warning / blocked dialog which shows
+#. more information about the addon
+msgctxt "addonStore"
+msgid "&About add-on..."
+msgstr "&O doplňku..."
+
+#. Translators: A button in the addon installation blocked dialog which will confirm the available action.
+msgctxt "addonStore"
+msgid "&Yes"
+msgstr "&Ano"
+
+#. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
+msgctxt "addonStore"
+msgid "&No"
+msgstr "&Ne"
+
+#. Translators: The message displayed when updating an add-on, but the installed version
+#. identifier can not be compared with the version to be installed.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on installation may result in downgrade: {name}. The installed "
+"add-on version cannot be compared with the add-on store version. Installed "
+"version: {oldVersion}. Available version: {version}.\n"
+"Proceed with installation anyway? "
+msgstr ""
+"Upozornění: může dojít k instalaci starší verze doplňku: {name}. "
+"Nainstalovanou verzi doplňku nelze srovnat s verzí v katalogu doplňků. "
+"Nainstalovaná verze: {oldVersion}. Dostupná verze: {version}.\n"
+"I přesto nainstalovat? "
+
+#. Translators: The title of a dialog presented when an error occurs.
+msgctxt "addonStore"
+msgid "Add-on not compatible"
+msgstr "Nekompatibilní Doplněk"
+
+#. Translators: Presented when attempting to remove the selected add-on.
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
+"undone."
+msgstr "Opravdu chcete odstranit doplněk {addon}? Tuto akci nelze vrátit zpět."
+
+#. Translators: Title for message asking if the user really wishes to remove the selected Add-on.
+msgctxt "addonStore"
+msgid "Remove Add-on"
+msgstr "Odstranit Doplněk"
+
+#. Translators: The message displayed when installing an add-on package that is incompatible
+#. because the add-on is too old for the running version of NVDA.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated "
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Installation may cause unstable behavior in NVDA.\n"
+"Proceed with installation anyway? "
+msgstr ""
+"Upozornění: doplněk není kompatibilní: {name} {version}. Pokud možno "
+"zkontrolujte aktualizaci tohoto doplňku. Poslední testovaná verze NVDA s "
+"tímto doplňkem je {lastTestedNVDAVersion}, vaše nynější verze NVDA je "
+"{NVDAVersion}. Instalací může dojít k nestabilnímu chování NVDA.\n"
+"I přesto nainstalovat? "
+
+#. Translators: The message displayed when enabling an add-on package that is incompatible
+#. because the add-on is too old for the running version of NVDA.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated "
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Enabling may cause unstable behavior in NVDA.\n"
+"Proceed with enabling anyway? "
+msgstr ""
+"Upozornění: doplněk není kompatibilní: {name} {version}. Pokud možno "
+"zkontrolujte aktualizaci tohoto doplňku. Poslední testovaná verze NVDA s "
+"tímto doplňkem je {lastTestedNVDAVersion}, vaše nynější verze NVDA je "
+"{NVDAVersion}. Povolením může dojít k nestabilnímu chování NVDA.\n"
+"I přesto povolit? "
+
+#. Translators: message shown in the Addon Information dialog.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"{summary} ({name})\n"
+"Version: {version}\n"
+"Description: {description}\n"
+msgstr ""
+"{summary} ({name})\n"
+"Verze: {version}\n"
+"Popis: {description}\n"
+
+#. Translators: the publisher part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Publisher: {publisher}\n"
+msgstr "Autor: {publisher}\n"
+
+#. Translators: the author part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Author: {author}\n"
+msgstr "Autor: {author}\n"
+
+#. Translators: the url part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Homepage: {url}\n"
+msgstr "Domovská stránka: {url}\n"
+
+#. Translators: the minimum NVDA version part of the About Add-on information
+msgctxt "addonStore"
+msgid "Minimum required NVDA version: {}\n"
+msgstr "Minimální vyžadovaná verze NVDA: {}\n"
+
+#. Translators: the last NVDA version tested part of the About Add-on information
+msgctxt "addonStore"
+msgid "Last NVDA version tested: {}\n"
+msgstr "Poslední testovaná verze NVDA: {}\n"
+
+#. Translators: title for the Addon Information dialog
+msgctxt "addonStore"
+msgid "Add-on Information"
+msgstr "Informace o doplňku"
+
+#. Translators: The warning of a dialog
+msgid "Add-on Store Warning"
+msgstr "Katalog Doplňků Upozornění"
+
+#. Translators: Warning that is displayed before using the Add-on Store.
+msgctxt "addonStore"
+msgid ""
+"Add-ons are created by the NVDA community and are not vetted by NV Access. "
+"NV Access cannot be held responsible for add-on behavior. The functionality "
+"of add-ons is unrestricted and can include accessing your personal data or "
+"even the entire system. "
+msgstr ""
+"Doplňky jsou vytvářeny komunitou NVDA a nejsou prověřeny společností NV "
+"Access. Společnost NV Access nemůže nést zodpovědnost za chování doplňků. "
+"Funkčnost doplňků je neomezená a může mít přístup k vašim osobním údajům "
+"nebo dokonce k celému systému. "
+
+#. Translators: The label of a checkbox in the add-on store warning dialog
+msgctxt "addonStore"
+msgid "&Don't show this message again"
+msgstr "Tuto zprávu již příště &nezobrazovat"
+
+#. Translators: The label of a button in a dialog
+msgid "&OK"
+msgstr "&OK"
+
+#. Translators: The title of the addonStore dialog where the user can find and download add-ons
+msgctxt "addonStore"
+msgid "Add-on Store"
+msgstr "Katalog Doplňků"
+
+#. Translators: The label for a button in add-ons Store dialog to install an external add-on.
+msgctxt "addonStore"
+msgid "Install from e&xternal source"
+msgstr "Instalovat z e&externího zdroje"
+
+#. Translators: Banner notice that is displayed in the Add-on Store.
+msgctxt "addonStore"
+msgid "Note: NVDA was started with add-ons disabled"
+msgstr "Poznámka: NVDA byl spuštěn se zakázanými doplňky"
+
+#. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "Cha&nnel:"
+msgstr "Kanál:"
+
+#. Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
+msgid "Include &incompatible add-ons"
+msgstr "Zahrnout &nekompatibilní doplňky"
+
+#. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "Ena&bled/disabled:"
+msgstr "Povolené zakázané:"
+
+#. Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "&Search:"
+msgstr "&Vyhledat:"
+
+#. Translators: Title for message shown prior to installing add-ons when closing the add-on store dialog.
+msgctxt "addonStore"
+msgid "Add-on installation"
+msgstr "Instalace doplňku"
+
+#. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
+#. The placeholder {} will be replaced with the number of add-ons to be installed
+msgctxt "addonStore"
+msgid "Download of {} add-ons in progress, cancel downloading?"
+msgstr "Probíhá stahování {} doplňků, zrušit stahování?"
+
+#. Translators: Message shown while installing add-ons after closing the add-on store dialog
+#. The placeholder {} will be replaced with the number of add-ons to be installed
+msgctxt "addonStore"
+msgid "Installing {} add-ons, please wait."
+msgstr "Instalace {} doplňků, prosím čekejte."
+
+#. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
+#. tab's name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "{category}:"
+msgstr "{category}:"
+
+#. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "NVDA Add-on Package (*.{ext})"
+msgstr "Balíček doplňku pro NVDA (*.{ext})"
+
+#. Translators: The message displayed in the dialog that
+#. allows you to choose an add-on package for installation.
+msgctxt "addonStore"
+msgid "Choose Add-on Package File"
+msgstr "Vyberte balíček doplňku pro NVDA"
+
+#. Translators: The name of the column that contains names of addons.
+msgctxt "addonStore"
+msgid "Name"
+msgstr "Název"
+
+#. Translators: The name of the column that contains the installed addon's version string.
+msgctxt "addonStore"
+msgid "Installed version"
+msgstr "Nainstalovaná verze"
+
+#. Translators: The name of the column that contains the available addon's version string.
+msgctxt "addonStore"
+msgid "Available version"
+msgstr "Dostupná verze"
+
+#. Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
+msgctxt "addonStore"
+msgid "Channel"
+msgstr "Kanál"
+
+#. Translators: The name of the column that contains the addon's publisher.
+msgctxt "addonStore"
+msgid "Publisher"
+msgstr "Autor"
+
+#. Translators: The name of the column that contains the addon's author.
+msgctxt "addonStore"
+msgid "Author"
+msgstr "Autor"
+
+#. Translators: The name of the column that contains the status of the addon.
+#. e.g. available, downloading installing
+msgctxt "addonStore"
+msgid "Status"
+msgstr "Stav"
+
+#. Translators: Label for an action that installs the selected addon
+msgctxt "addonStore"
+msgid "&Install"
+msgstr "Na&instalovat"
+
+#. Translators: Label for an action that installs the selected addon
+msgctxt "addonStore"
+msgid "&Install (override incompatibility)"
+msgstr "Na&instalovat (přepsat nekompatibilní doplňek)"
+
+#. Translators: Label for an action that updates the selected addon
+msgctxt "addonStore"
+msgid "&Update"
+msgstr "&Aktualizovat"
+
+#. Translators: Label for an action that replaces the selected addon with
+#. an add-on store version.
+msgctxt "addonStore"
+msgid "Re&place"
+msgstr "&nahradit"
+
+#. Translators: Label for an action that disables the selected addon
+msgctxt "addonStore"
+msgid "&Disable"
+msgstr "&Zakázat"
+
+#. Translators: Label for an action that enables the selected addon
+msgctxt "addonStore"
+msgid "&Enable"
+msgstr "&Povolit"
+
+#. Translators: Label for an action that enables the selected addon
+msgctxt "addonStore"
+msgid "&Enable (override incompatibility)"
+msgstr "&Povolit (i přes inkompatibilní)"
+
+#. Translators: Label for an action that removes the selected addon
+msgctxt "addonStore"
+msgid "&Remove"
+msgstr "&Odstranit"
+
+#. Translators: Label for an action that opens help for the selected addon
+msgctxt "addonStore"
+msgid "&Help"
+msgstr "&Nápověda"
+
+#. Translators: Label for an action that opens the homepage for the selected addon
+msgctxt "addonStore"
+msgid "Ho&mepage"
+msgstr "&Domovská stránka"
+
+#. Translators: Label for an action that opens the license for the selected addon
+msgctxt "addonStore"
+msgid "&License"
+msgstr "&Licence"
+
+#. Translators: Label for an action that opens the source code for the selected addon
+msgctxt "addonStore"
+msgid "Source &Code"
+msgstr "&Zdrojový kód"
+
+#. Translators: The message displayed when the add-on cannot be enabled.
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Could not enable the add-on: {addon}."
+msgstr "Nelze povolit doplněk: {addon}."
+
+#. Translators: The message displayed when the add-on cannot be disabled.
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Could not disable the add-on: {addon}."
+msgstr "Nelze zakázat doplněk: {addon}."
+
+#~ msgid "NVDA sounds"
+#~ msgstr "Zvuky NVDA"
+
+#~ msgid "HID Braille Standard"
+#~ msgstr "HID Braille Standard"
+
+#~ msgid "Find Error"
+#~ msgstr "Chyba hledání"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "However, your NVDA configuration contains add-ons that are incompatible "
+#~ "with this version of NVDA. These add-ons will be disabled after "
+#~ "installation. If you rely on these add-ons, please review the list to "
+#~ "decide whether to continue with the installation"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "Vaše instalace NVDA obsahuje doplňky, které nejsou kompatibilní s touto "
+#~ "verzí NVDA. Tyto doplňky budou po instalaci zakázány. Pokud chcete tyto "
+#~ "doplňky i nadále používat, zvažte aktualizaci na tuto verzi NVDA"
+
+#~ msgid "Eurobraille Esys/Esytime/Iris displays"
+#~ msgstr "Řádky Eurobraille Esys/Esytime/Iris"
+
+#~ msgid "URL: {url}"
+#~ msgstr "URL: {url}"
+
+#~ msgid ""
+#~ "Installation of {summary} {version} has been blocked. An updated version "
+#~ "of this add-on is required, the minimum add-on API supported by this "
+#~ "version of NVDA is {backCompatToAPIVersion}"
+#~ msgstr ""
+#~ "Instalace {summary} {version} byla zablokována. Prosím vyhledejte novější "
+#~ "verzi doplňku, protože tato je určena pro starší verzi rozhraní "
+#~ "{backCompatToAPIVersion}"
+
+#~ msgid ""
+#~ "Please specify an absolute path (including drive letter)  in which to "
+#~ "create the portable copy."
+#~ msgstr ""
+#~ "Prosím zadejte přesnou cestu složky (včetně písmene jednotky) pro "
+#~ "vytvoření přenosné verze."
+
+#~ msgid "Invalid drive %s"
+#~ msgstr "Neplatná jednotka %s"
+
+#~ msgid "Charging battery"
+#~ msgstr "Nabíjí se baterie"
+
+#~ msgid "AC disconnected"
+#~ msgstr "Nenabíjí se"
+
+#~ msgid "Unable to determine remaining time"
+#~ msgstr "Nelze zjistit zbývající čas"
+
+#~ msgid "through %s"
+#~ msgstr "přes %s"
+
+#~ msgid "Report line indentation with speech"
+#~ msgstr "Hlásit odsazení řečí"
+
+#~ msgid "Report line indentation with tones"
+#~ msgstr "indikovat odsazení zvukem"
+
+#~ msgid "Report line indentation with speech and tones"
+#~ msgstr "Hlásit odsazení řečí i zvukem"
+
+#~ msgid "Report styles of cell borders"
+#~ msgstr "Hlásit styly okrajů buněk"
+
+#~ msgid "Report colors and styles of cell borders"
+#~ msgstr "Hlásit barvy a styly okrajů buněk"
 
 #~ msgid "Swedish grade 1"
 #~ msgstr "Švédský plnopis"
@@ -13027,13 +14331,11 @@ msgstr "řádkování 1.5"
 #~ msgid "Use UI Automation to access the Windows C&onsole when available"
 #~ msgstr "Použít UI Automation pro přístup k Windows &konzoli, je-li dostupná"
 
-#, fuzzy
 #~ msgid "Moves the navigator object to the first row"
-#~ msgstr "Přejde na následující objekt"
+#~ msgstr "Přesune prohlížený objekt na první řádek"
 
-#, fuzzy
 #~ msgid "Moves the navigator object to the last row"
-#~ msgstr "Přejde na následující objekt"
+#~ msgstr "Přesune prohlížený objekt na poslední řádek"
 
 #~ msgid "Chinese (China, Mandarin) grade 2"
 #~ msgstr "Čínština (čínská, mandarínská) - zkratkopis"

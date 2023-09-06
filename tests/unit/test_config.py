@@ -1,16 +1,21 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2022 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
 import enum
 import typing
 import unittest
+from unittest.mock import MagicMock
 import io
 
 import configobj
 import configobj.validate
 
-from config import featureFlag
+from config import (
+	AggregatedSection,
+	ConfigManager,
+	featureFlag,
+)
 from config.featureFlag import (
 	FeatureFlag,
 )
@@ -23,8 +28,10 @@ from config.profileUpgradeSteps import (
 	_upgradeConfigFrom_8_to_9_cellBorders,
 	_upgradeConfigFrom_8_to_9_showMessages,
 	_upgradeConfigFrom_8_to_9_tetherTo,
+	upgradeConfigFrom_9_to_10,
 )
 from config.configFlags import (
+	NVDAKey,
 	ShowMessages,
 	ReportLineIndentation,
 	ReportCellBorders,
@@ -690,3 +697,138 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_8_to_9_tetherTo(unittest.Test
 		_upgradeConfigFrom_8_to_9_tetherTo(profile)
 		self._checkOldKeyRemoved(profile)
 		self.assertEqual(profile['braille']['tetherTo'], TetherTo.REVIEW.value)
+
+
+class Config_profileUpgradeSteps_upgradeConfigFrom_9_to_10(unittest.TestCase):
+
+	def _checkOldKeyRemoved(self, profile: configobj.ConfigObj) -> None:
+		with self.assertRaises(KeyError):
+			profile['keyboard']['useCapsLockAsNVDAModifierKey']
+		with self.assertRaises(KeyError):
+			profile['keyboard']['useNumpadInsertAsNVDAModifierKey']
+		with self.assertRaises(KeyError):
+			profile['keyboard']['useExtendedInsertAsNVDAModifierKey']
+
+	def test_DefaultProfile_Unmodified(self):
+		"""Keyboard settings, NVDA Modifiers Keys option not modified in default profile."""
+		
+		configString = "[keyboard]"
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_9_to_10(profile)
+		self._checkOldKeyRemoved(profile)
+		with self.assertRaises(KeyError):
+			profile['keyboard']['NVDAModifierKeys']
+
+	def test_DefaultProfile_setCapsLockTrue(self):
+		"""Keyboard settings, Caps Lock enabled as NVDA Modifier key in default profile; other keys remain enabled
+		(default).
+		"""
+		
+		configString = """
+[keyboard]
+	useCapsLockAsNVDAModifierKey = True
+"""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_9_to_10(profile)
+		self._checkOldKeyRemoved(profile)
+		self.assertEqual(
+			profile['keyboard']['NVDAModifierKeys'],
+			NVDAKey.CAPS_LOCK.value | NVDAKey.NUMPAD_INSERT.value | NVDAKey.EXTENDED_INSERT.value,
+		)
+
+	def test_DefaultProfile_setCapsLockTrueOtherFalse(self):
+		"""Keyboard settings, Caps Lock enabled as NVDA Modifier key in default profile; other keys disabled.
+		"""
+		
+		configString = """
+[keyboard]
+	useCapsLockAsNVDAModifierKey = True
+	useNumpadInsertAsNVDAModifierKey = False
+	useExtendedInsertAsNVDAModifierKey = False
+"""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_9_to_10(profile)
+		self._checkOldKeyRemoved(profile)
+		self.assertEqual(
+			profile['keyboard']['NVDAModifierKeys'],
+			NVDAKey.CAPS_LOCK.value,
+		)
+	
+	def test_ManualProfile_setNumpadInsertFalseExtendedInsertFalse(self):
+		"""Keyboard settings, NVDA Modifier keys option set on:
+		- numpad insert and extended insert explicitely disabled in the manual profile, while caps lock was still
+		enabled in default profile
+		- caps lock explicitely disabled in the default profile afterwards
+		
+		Thus the configuration for manually activated profile only explicitely disables numpad insert and
+		extended insert since caps lock enabled was inherited from default profile.
+		
+		See issue #14527 for full description.
+		"""
+		
+		# Note that this config is not possible in default profile using only NVDA GUI options, i.e. not using
+		# Python console or manually editing nvda.ini.
+		configString = """
+[keyboard]
+	useNumpadInsertAsNVDAModifierKey = False
+	useExtendedInsertAsNVDAModifierKey = False
+"""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_9_to_10(profile)
+		self._checkOldKeyRemoved(profile)
+		# Check that Caps Lock is restored to avoid having no NVDA modifier key at all.
+		self.assertEqual(
+			profile['keyboard']['NVDAModifierKeys'],
+			NVDAKey.CAPS_LOCK.value,
+		)
+
+
+class Config_AggregatedSection_getitem(unittest.TestCase):
+	def setUp(self):
+		manager = MagicMock(ConfigManager())
+		spec = MagicMock(configobj.ConfigObj())
+		self.testSection = AggregatedSection(
+			manager=manager,
+			path=(),
+			spec=spec,
+			profiles=[],
+		)
+
+	def test_cached(self):
+		self.testSection._cache["foo"] = "bar"
+		self.assertEqual(self.testSection["foo"], "bar")
+
+	def test_KeyError(self):
+		self.testSection._cache["foo"] = KeyError
+		with self.assertRaises(KeyError):
+			self.testSection["foo"]
+
+
+class Config_AggregatedSection_setitem(unittest.TestCase):
+	def setUp(self):
+		manager = MagicMock(ConfigManager())
+		spec = MagicMock(configobj.ConfigObj())
+		profile = MagicMock(configobj.ConfigObj())
+		self.testSection = AggregatedSection(
+			manager=manager,
+			path=(),
+			spec=spec,
+			profiles=[profile],
+		)
+
+	def test_update_str(self):
+		self.testSection._cache["foo"] = "bar"
+		self.testSection["foo"] = "zoo"
+		self.assertEqual(self.testSection["foo"], "zoo")
+
+	def test_update_FeatureFlag_defaultValue_fromValueOfDefault(self):
+		"""
+		Documents bug raised in #14133,
+		where the config did not update when changing from the value of the default to the default value
+		"""
+		valueOfDefaultFlag = FeatureFlag(value=CustomEnum.NEVER, behaviorOfDefault=CustomEnum.NEVER)
+		defaultFlag = FeatureFlag(value=CustomEnum.DEFAULT, behaviorOfDefault=CustomEnum.NEVER)
+		self.testSection["foo"] = defaultFlag
+		self.assertIs(self.testSection["foo"], defaultFlag)
+		self.testSection["foo"] = valueOfDefaultFlag
+		self.assertIs(self.testSection["foo"], valueOfDefaultFlag)

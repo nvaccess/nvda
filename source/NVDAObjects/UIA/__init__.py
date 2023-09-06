@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2009-2022 NV Access Limited, Joseph Lee, Mohammad Suliman,
-# Babbage B.V., Leonard de Ruijter, Bill Dengler
+# Copyright (C) 2009-2023 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V., Leonard de Ruijter,
+# Bill Dengler, Cyrille Bougot
 
 """Support for UI Automation (UIA) controls."""
 import typing
@@ -24,7 +24,7 @@ import UIAHandler
 import UIAHandler.customProps
 import UIAHandler.customAnnotations
 import controlTypes
-from controlTypes import TextPosition
+from controlTypes import TextPosition, TextAlign
 import config
 import speech
 import api
@@ -69,6 +69,13 @@ paragraphIndentIDs = {
 	UIAHandler.UIA_IndentationFirstLineAttributeId,
 	UIAHandler.UIA_IndentationLeadingAttributeId,
 	UIAHandler.UIA_IndentationTrailingAttributeId,
+}
+
+textAlignLabels = {
+	UIAHandler.HorizontalTextAlignment_Left: TextAlign.LEFT,
+	UIAHandler.HorizontalTextAlignment_Centered: TextAlign.CENTER,
+	UIAHandler.HorizontalTextAlignment_Right: TextAlign.RIGHT,
+	UIAHandler.HorizontalTextAlignment_Justified: TextAlign.JUSTIFY,
 }
 
 
@@ -270,19 +277,13 @@ class UIATextInfo(textInfos.TextInfo):
 		if formatConfig["reportParagraphIndentation"]:
 			formatField.update(self._getFormatFieldIndent(fetcher, ignoreMixedValues=ignoreMixedValues))
 		if formatConfig["reportAlignment"]:
-			val=fetcher.getValue(UIAHandler.UIA_HorizontalTextAlignmentAttributeId,ignoreMixedValues=ignoreMixedValues)
-			if val==UIAHandler.HorizontalTextAlignment_Left:
-				val="left"
-			elif val==UIAHandler.HorizontalTextAlignment_Centered:
-				val="center"
-			elif val==UIAHandler.HorizontalTextAlignment_Right:
-				val="right"
-			elif val==UIAHandler.HorizontalTextAlignment_Justified:
-				val="justify"
-			else:
-				val=None
-			if val:
-				formatField['text-align']=val
+			val = fetcher.getValue(
+				UIAHandler.UIA_HorizontalTextAlignmentAttributeId,
+				ignoreMixedValues=ignoreMixedValues,
+			)
+			textAlign = textAlignLabels.get(val)
+			if textAlign:
+				formatField['text-align'] = textAlign
 		if formatConfig["reportColor"]:
 			val=fetcher.getValue(UIAHandler.UIA_BackgroundColorAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if isinstance(val,int):
@@ -388,8 +389,7 @@ class UIATextInfo(textInfos.TextInfo):
 			formatField['right-indent'] = self._getIndentValueDisplayString(uiaIndentTrailing)
 		return formatField
 	
-	@staticmethod
-	def _getIndentValueDisplayString(val: float) -> str:
+	def _getIndentValueDisplayString(self, val: float) -> str:
 		"""A function returning the string to display in formatting info.
 		@param val: an indent value measured in points, fetched via
 			an UIAHandler.UIA_Indentation*AttributeId attribute.
@@ -962,8 +962,8 @@ class UIATextInfo(textInfos.TextInfo):
 
 
 class UIA(Window):
-	_UIACustomProps = UIAHandler.customProps.CustomPropertiesCommon.get()
-	_UIACustomAnnotationTypes = UIAHandler.customAnnotations.CustomAnnotationTypesCommon.get()
+	_UIACustomProps = UIAHandler.customProps.CustomPropertiesCommon()
+	_UIACustomAnnotationTypes = UIAHandler.customAnnotations.CustomAnnotationTypesCommon()
 
 	shouldAllowDuplicateUIAFocusEvent = False
 
@@ -1217,6 +1217,10 @@ class UIA(Window):
 			else:
 				clsList.append(winConsoleUIA._DiffBasedWinTerminalUIA)
 
+		elif self.normalizeWindowClassName(self.windowClassName) == "SysListView32":
+			from . import sysListView32
+			sysListView32.findExtraOverlayClasses(self, clsList)
+
 		# Add editableText support if UIA supports a text pattern
 		if self.TextInfo==UIATextInfo:
 			if UIAHandler.autoSelectDetectionAvailable:
@@ -1229,11 +1233,14 @@ class UIA(Window):
 		if self.UIAIsWindowElement:
 			super(UIA,self).findOverlayClasses(clsList)
 			if self.UIATextPattern:
-				#Since there is a UIA text pattern, there is no need to use the win32 edit support at all
+				# Since there is a UIA text pattern, there is no need to use the win32 edit support at all.
+				# However, UIA classifies (rich) edit controls with a role of document and doesn't add a multiline state.
+				# Remove any win32 Edit class and insert EditBase to keep backwards compatibility with win32.
 				import NVDAObjects.window.edit
 				for x in list(clsList):
-					if issubclass(x,NVDAObjects.window.edit.Edit):
+					if issubclass(x, NVDAObjects.window.edit.Edit):
 						clsList.remove(x)
+						clsList.insert(0, NVDAObjects.window.edit.EditBase)
 
 	@classmethod
 	def kwargsFromSuper(cls, kwargs, relation=None, ignoreNonNativeElementsWithFocus=True):

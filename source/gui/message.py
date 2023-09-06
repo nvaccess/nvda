@@ -7,7 +7,10 @@
 
 import threading
 from typing import Optional
+
 import wx
+
+import extensionPoints
 
 _messageBoxCounterLock = threading.Lock()
 _messageBoxCounter = 0
@@ -31,6 +34,39 @@ def isModalMessageBoxActive() -> bool:
 	"""
 	with _messageBoxCounterLock:
 		return _messageBoxCounter != 0
+
+
+def displayDialogAsModal(dialog: wx.Dialog) -> int:
+	"""Display a dialog as modal.
+	@return: Same as for wx.MessageBox.
+
+	`displayDialogAsModal` is a function which blocks the calling thread,
+	until a user responds to the modal dialog.
+	This function should be used when an answer is required before proceeding.
+
+	It's possible for multiple message boxes to be open at a time.
+	Before opening a new messageBox, use `isModalMessageBoxActive`
+	to check if another messageBox modal response is still pending.
+
+	Because an answer is required to continue after a modal messageBox is opened,
+	some actions such as shutting down are prevented while NVDA is in a possibly uncertain state.
+	"""
+	from gui import mainFrame
+	global _messageBoxCounter
+	with _messageBoxCounterLock:
+		_messageBoxCounter += 1
+
+	try:
+		if not dialog.GetParent():
+			mainFrame.prePopup()
+		res = dialog.ShowModal()
+	finally:
+		if not dialog.GetParent():
+			mainFrame.postPopup()
+		with _messageBoxCounterLock:
+			_messageBoxCounter -= 1
+
+	return res
 
 
 def messageBox(
@@ -76,3 +112,36 @@ def messageBox(
 			_messageBoxCounter -= 1
 
 	return res
+
+
+class DisplayableError(Exception):
+	OnDisplayableErrorT = extensionPoints.Action
+	"""
+	A type of extension point used to notify a handler when an error occurs.
+	This allows a handler to handle displaying an error.
+
+	@param displayableError: Error that can be displayed to the user.
+	@type displayableError: DisplayableError
+	"""
+
+	def __init__(self, displayMessage: str, titleMessage: Optional[str] = None):
+		"""
+		@param displayMessage: A translated message, to be displayed to the user.
+		@param titleMessage: A translated message, to be used as a title for the display message.
+		If left None, "Error" is presented as the title by default.
+		"""
+		self.displayMessage = displayMessage
+		if titleMessage is None:
+			# Translators: A message indicating that an error occurred.
+			self.titleMessage = _("Error")
+		else:
+			self.titleMessage = titleMessage
+
+	def displayError(self, parentWindow: wx.Window):
+		wx.CallAfter(
+			messageBox,
+			message=self.displayMessage,
+			caption=self.titleMessage,
+			style=wx.OK | wx.ICON_ERROR,
+			parent=parentWindow,
+		)

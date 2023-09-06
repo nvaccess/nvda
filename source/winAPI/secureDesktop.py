@@ -4,8 +4,6 @@
 # See the file COPYING for more details.
 
 import extensionPoints
-from systemUtils import _getDesktopName
-
 
 post_secureDesktopStateChange = extensionPoints.Action()
 """
@@ -32,22 +30,6 @@ post_secureDesktopStateChange.notify(isSecureDesktop=True)
 post_secureDesktopStateChange.unregister(onSecureDesktopChange)
 ```
 """
-
-
-def _isSecureDesktop() -> bool:
-	"""
-	When NVDA is running on a secure screen,
-	it is running on the secure desktop.
-	When the serviceDebug parameter is not set,
-	NVDA should run in secure mode when on the secure desktop.
-	globalVars.appArgs.secure being set to True means NVDA is running in secure mode.
-
-	For more information, refer to devDocs/technicalDesignOverview.md 'Logging in secure mode'
-	and the following userGuide sections:
-	 - SystemWideParameters (information on the serviceDebug parameter)
-	 - SecureMode and SecureScreens
-	"""
-	return _getDesktopName() == "Winlogon"
 
 
 def _handleSecureDesktopChange():

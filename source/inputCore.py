@@ -1,7 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2010-2022 NV Access Limited, Babbage B.V., Mozilla Corporation
+# Copyright (C) 2010-2023 NV Access Limited, Babbage B.V., Mozilla Corporation, Cyrille Bougot,
+# Leonard de Ruijter
 
 """Core framework for handling input from the user.
 Every piece of input from the user (e.g. a key press) is represented by an L{InputGesture}.
@@ -40,6 +41,8 @@ import globalVars
 import languageHandler
 import controlTypes
 import winKernel
+import extensionPoints
+from NVDAState import WritePaths
 
 
 InputGestureBindingClassT = TypeVar("InputGestureBindingClassT")
@@ -218,32 +221,43 @@ class InputGesture(baseObject.AutoPropertyObject):
 		"""
 		return scriptHandler.executeScript(script, self)
 
-class GlobalGestureMap(object):
+
+FlattenedGestureMapT = Dict[
+	str,  # moduleName.className
+	Dict[
+		Optional[ScriptNameT],  # Script name
+		Optional[Union[str, List[str]]],  # Normalized gestures
+	],
+]
+_InternalGestureMapT = Dict[
+	str,  # Normalized gesture
+	List[
+		Tuple[
+			str,  # module
+			str,  # class name
+			Optional[ScriptNameT],  # script
+		],
+	],
+]
+
+
+class GlobalGestureMap:
 	"""Maps gestures to scripts anywhere in NVDA.
-	This is used to allow users and locales to bind gestures in addition to those bound by individual scriptable objects.
+	This is used to allow users and locales to bind gestures in addition to those bound by
+	individual scriptable objects.
 	Map entries will most often be loaded from a file using the L{load} method.
 	See that method for details of the file format.
 	"""
 
-	def __init__(self, entries=None):
+	def __init__(self, entries: Optional[FlattenedGestureMapT] = None):
 		"""Constructor.
 		@param entries: Initial entries to add; see L{update} for the format.
-		@type entries: mapping of str to mapping
 		"""
-		self._map: Dict[
-			str,  # Normalized gesture
-			List[
-				Tuple[
-					str,  # module
-					str,  # class name
-					str,  # script
-		]]] = {}
+		self._map: _InternalGestureMapT = {}
 		#: Indicates that the last load or update contained an error.
-		#: @type: bool
-		self.lastUpdateContainedError = False
+		self.lastUpdateContainedError: bool = False
 		#: The file name for this gesture map, if any.
-		#: @type: str
-		self.fileName = None
+		self.fileName: Optional[str] = None
 		if entries:
 			self.update(entries)
 
@@ -253,19 +267,22 @@ class GlobalGestureMap(object):
 		self._map.clear()
 		self.lastUpdateContainedError = False
 
-	def add(self, gesture, module, className, script,replace=False):
+	def add(
+			self,
+			gesture: str,
+			module: str,
+			className: str,
+			script: Optional[ScriptNameT],
+			replace: bool = False
+	):
 		"""Add a gesture mapping.
 		@param gesture: The gesture identifier.
-		@type gesture: str
 		@param module: The name of the Python module containing the target script.
-		@type module: str
 		@param className: The name of the class in L{module} containing the target script.
-		@type className: str
 		@param script: The name of the target script
 			or C{None} to unbind the gesture for this class.
-		@type script: str
-		@param replace: if true replaces all existing bindings for this gesture with the given script, otherwise only appends this binding.
-		@type replace: boolean
+		@param replace: if true replaces all existing bindings for this gesture with the given script,
+			otherwise only appends this binding.
 		"""
 		gesture = normalizeGestureIdentifier(gesture)
 		try:
@@ -276,7 +293,7 @@ class GlobalGestureMap(object):
 			del scripts[:]
 		scripts.append((module, className, script))
 
-	def load(self, filename):
+	def load(self, filename: str):
 		"""Load map entries from a file.
 		The file is an ini file.
 		Each section contains entries for a particular scriptable object class.
@@ -289,26 +306,26 @@ class GlobalGestureMap(object):
 			nextHeading = kb:a
 			None = kb:h
 		@param filename: The name of the file to load.
-		@type: str
 		"""
 		self.fileName = filename
 		try:
 			conf = configobj.ConfigObj(filename, file_error=True, encoding="UTF-8")
-		except (configobj.ConfigObjError,UnicodeDecodeError) as e:
+		except (configobj.ConfigObjError, UnicodeDecodeError) as e:
 			log.warning("Error in gesture map '%s': %s"%(filename, e))
 			self.lastUpdateContainedError = True
 			return
 		self.update(conf)
 
-	def update(self, entries):
+	def update(self, entries: FlattenedGestureMapT):
 		"""Add multiple map entries.
 		C{entries} must be a mapping of mappings.
 		Each inner mapping contains entries for a particular scriptable object class.
 		The key in the outer mapping must be the full Python module and class name.
-		The key of each entry in the inner mappings is the script name and the value is a list of one or more gestures.
+		The key of each entry in the inner mappings is the script name
+		and the value is one gesture string or a list of one or more gesture strings.
 		If the script name is C{None}, the gesture will be unbound for this class.
 		For example, the following binds the "a" key to move to the next heading in virtual buffers
-		and removes the default "h" binding::
+		and removes the default "h" binding:
 			{
 				"virtualBuffers.VirtualBuffer": {
 					"nextHeading": "kb:a",
@@ -316,7 +333,6 @@ class GlobalGestureMap(object):
 				}
 			}
 		@param entries: The items to add.
-		@type entries: mapping of str to mapping
 		"""
 		self.lastUpdateContainedError = False
 		for locationName, location in entries.items():
@@ -329,7 +345,7 @@ class GlobalGestureMap(object):
 			for script, gestures in location.items():
 				if script == "None":
 					script = None
-				if gestures == "":
+				if gestures in ("", None):
 					gestures = ()
 				elif isinstance(gestures, str):
 					gestures = [gestures]
@@ -372,16 +388,12 @@ class GlobalGestureMap(object):
 			for cls, scriptName in self.getScriptsForGesture(gesture):
 				yield cls, gesture, scriptName
 
-	def remove(self, gesture, module, className, script):
+	def remove(self, gesture: str, module: str, className: str, script: ScriptNameT):
 		"""Remove a gesture mapping.
 		@param gesture: The gesture identifier.
-		@type gesture: str
 		@param module: The name of the Python module containing the target script.
-		@type module: str
 		@param className: The name of the class in L{module} containing the target script.
-		@type className: str
 		@param script: The name of the target script.
-		@type script: str
 		@raise ValueError: If the requested mapping does not exist.
 		"""
 		gesture = normalizeGestureIdentifier(gesture)
@@ -391,19 +403,13 @@ class GlobalGestureMap(object):
 			raise ValueError("Mapping not found")
 		scripts.remove((module, className, script))
 
-	@blockAction.when(blockAction.Context.SECURE_MODE)
-	def save(self):
-		"""Save this gesture map to disk.
-		@precondition: L{load} must have been called.
+	def export(self) -> FlattenedGestureMapT:
+		"""Exports this gesture map to a dictionary that can be saved to disk or imported into another gesture map.
 		"""
-		if not self.fileName:
-			raise ValueError("No file name")
-		out = configobj.ConfigObj(encoding="UTF-8")
-		out.filename = self.fileName
-
+		out: FlattenedGestureMapT = {}
 		for gesture, scripts in self._map.items():
 			for module, className, script in scripts:
-				key = "%s.%s" % (module, className)
+				key = f"{module}.{className}"
 				try:
 					outSect = out[key]
 				except KeyError:
@@ -421,9 +427,38 @@ class GlobalGestureMap(object):
 						outVal.append(gesture)
 					else:
 						outSect[script] = [outVal, gesture]
+		return out
+
+	@blockAction.when(blockAction.Context.SECURE_MODE)
+	def save(self):
+		"""Save this gesture map to disk.
+		@precondition: L{load} must have been called.
+		"""
+		if not self.fileName:
+			raise ValueError("No file name")
+		out = configobj.ConfigObj(self.export(), encoding="UTF-8")
+		out.filename = self.fileName
 
 		with FaultTolerantFile(out.filename) as f:
 			out.write(f)
+
+	def __eq__(self, other: Any) -> bool:
+		if isinstance(other, GlobalGestureMap):
+			return self._map == other._map
+		return NotImplemented
+
+
+decide_executeGesture = extensionPoints.Decider()
+"""
+Notifies when a gesture is about to be executed,
+and allows components or add-ons to decide whether or not to execute a gesture.
+For example, when controlling a remote system with a connected local braille display,
+braille display gestures should not be executed locally.
+Handlers are called with one argument:
+@param gesture: The gesture that is about to be executed.
+@type gesture: L{InputGesture}
+"""
+
 
 class InputManager(baseObject.AutoPropertyObject):
 	"""Manages functionality related to input from the user.
@@ -461,6 +496,16 @@ class InputManager(baseObject.AutoPropertyObject):
 			# as well as stopping a flood of actions when the core revives.
 			raise NoInputGestureAction
 
+		if not decide_executeGesture.decide(gesture=gesture):
+			# A registered handler decided that this gesture shouldn't be executed.
+			# Purposely do not raise a NoInputGestureAction here, as that could
+			# lead to unexpected behavior for gesture emulation, i.e. the gesture will be send to the system
+			# when the decider decided not to execute it.
+			log.debug(
+				"Gesture execution canceled by handler registered to decide_executeGesture extension point"
+			)
+			return
+
 		script = gesture.script
 		focus = api.getFocusObject()
 		if focus.sleepMode is focus.SLEEP_FULL or (focus.sleepMode and not getattr(script, 'allowInSleepMode', False)):
@@ -478,9 +523,10 @@ class InputManager(baseObject.AutoPropertyObject):
 		if wasInSayAll:
 			gesture.wasInSayAll=True
 
+		immediate = getattr(gesture, "_immediate", True)
 		speechEffect = gesture.speechEffectWhenExecuted
 		if speechEffect == gesture.SPEECHEFFECT_CANCEL:
-			queueHandler.queueFunction(queueHandler.eventQueue, speech.cancelSpeech)
+			queueHandler.queueFunction(queueHandler.eventQueue, speech.cancelSpeech, _immediate=immediate)
 		elif speechEffect in (gesture.SPEECHEFFECT_PAUSE, gesture.SPEECHEFFECT_RESUME):
 			queueHandler.queueFunction(queueHandler.eventQueue, speech.pauseSpeech, speechEffect == gesture.SPEECHEFFECT_PAUSE)
 
@@ -503,10 +549,15 @@ class InputManager(baseObject.AutoPropertyObject):
 			raise NoInputGestureAction
 
 		if config.conf["keyboard"]["speakCommandKeys"] and gesture.shouldReportAsCommand:
-			queueHandler.queueFunction(queueHandler.eventQueue, speech.speakMessage, gesture.displayName)
+			queueHandler.queueFunction(
+				queueHandler.eventQueue,
+				speech.speakMessage,
+				gesture.displayName,
+				_immediate=True
+			)
 
 		gesture.reportExtra()
-		
+
 		# #2953: if an intercepted command Script (script that sends a gesture) is queued
 		# then queue all following gestures (that don't have a script) with a fake script so that they remain in order.
 		if not script and scriptHandler._numIncompleteInterceptedCommandScripts:
@@ -536,7 +587,14 @@ class InputManager(baseObject.AutoPropertyObject):
 
 	def _inputHelpCaptor(self, gesture):
 		bypass = gesture.bypassInputHelp or getattr(gesture.script, "bypassInputHelp", False)
-		queueHandler.queueFunction(queueHandler.eventQueue, self._handleInputHelp, gesture, onlyLog=bypass or not gesture.reportInInputHelp)
+		immediate = getattr(gesture, "_immediate", True)
+		queueHandler.queueFunction(
+			queueHandler.eventQueue,
+			self._handleInputHelp,
+			gesture,
+			onlyLog=bypass or not gesture.reportInInputHelp,
+			_immediate=immediate
+		)
 		return bypass
 
 	def _handleInputHelp(self, gesture, onlyLog=False):
@@ -578,7 +636,7 @@ class InputManager(baseObject.AutoPropertyObject):
 	def loadUserGestureMap(self):
 		self.userGestureMap.clear()
 		try:
-			self.userGestureMap.load(os.path.join(globalVars.appArgs.configPath, "gestures.ini"))
+			self.userGestureMap.load(WritePaths.gesturesConfigFile)
 		except IOError:
 			log.debugWarning("No user gesture map")
 
@@ -633,7 +691,7 @@ class _AllGestureMappingsRetriever(object):
 		self.addGlobalMap(manager.userGestureMap)
 		self.addGlobalMap(manager.localeGestureMap)
 		import braille
-		gmap = braille.handler.display.gestureMap
+		gmap = braille.handler.display.gestureMap if braille.handler and braille.handler.display else None
 		if gmap:
 			self.addGlobalMap(gmap)
 
@@ -703,9 +761,12 @@ class _AllGestureMappingsRetriever(object):
 					try:
 						script = getattr(cls, "script_%s" % scriptName)
 					except AttributeError:
+						log.debugWarning(f"Unable to bind gesture: script '{scriptName}' not found in class {cls}.")
+						self.handledGestures.remove(key)
 						continue
 					scriptInfo = self.makeNormalScriptInfo(cls, scriptName, script)
 					if not scriptInfo:
+						# Scripts with no description are not displayed in the Input gesture dialog.
 						continue
 				self.addResult(scriptInfo)
 			scriptInfo.gestures.append(gesture)
@@ -773,7 +834,7 @@ class _AllGestureMappingsRetriever(object):
 
 class AllGesturesScriptInfo(object):
 	__slots__ = ("cls", "scriptName", "category", "displayName", "gestures")
-	
+
 	def __init__(self, cls, scriptName):
 		self.cls = cls
 		self.scriptName = scriptName

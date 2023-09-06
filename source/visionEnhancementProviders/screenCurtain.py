@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2019 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2018-2023 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 """Screen curtain implementation based on the windows magnification API.
 The Magnification API has been marked by MS as unsupported for WOW64 applications such as NVDA. (#12491)
@@ -17,7 +17,12 @@ from ctypes.wintypes import BOOL
 from autoSettingsUtils.driverSetting import BooleanDriverSetting
 from autoSettingsUtils.autoSettings import SupportedSettingType
 import wx
-import gui
+from gui.nvdaControls import MessageDialog
+from gui.settingsDialogs import (
+	AutoSettingsMixin,
+	SettingsPanel,
+	VisionProviderStateControl,
+)
 from logHandler import log
 from typing import Optional, Type
 import nvwave
@@ -141,7 +146,7 @@ warnOnLoadText = _(
 )
 
 
-class WarnOnLoadDialog(gui.nvdaControls.MessageDialog):
+class WarnOnLoadDialog(MessageDialog):
 
 	showWarningOnLoadCheckBox: wx.CheckBox
 	noButton: wx.Button
@@ -152,7 +157,7 @@ class WarnOnLoadDialog(gui.nvdaControls.MessageDialog):
 			parent,
 			title=_("Warning"),
 			message=warnOnLoadText,
-			dialogType=gui.nvdaControls.MessageDialog.DIALOG_TYPE_WARNING
+			dialogType=MessageDialog.DIALOG_TYPE_WARNING
 	):
 		self._settingsStorage = screenCurtainSettingsStorage
 		super().__init__(parent, title, message, dialogType)
@@ -215,16 +220,14 @@ class WarnOnLoadDialog(gui.nvdaControls.MessageDialog):
 
 
 class ScreenCurtainGuiPanel(
-		gui.AutoSettingsMixin,
-		gui.SettingsPanel,
+		AutoSettingsMixin,
+		SettingsPanel,
 ):
 
 	_enabledCheckbox: wx.CheckBox
 	_enableCheckSizer: wx.BoxSizer
 	
 	helpId = "VisionSettingsScreenCurtain"
-
-	from gui.settingsDialogs import VisionProviderStateControl
 
 	def __init__(
 			self,
@@ -276,11 +279,27 @@ class ScreenCurtainGuiPanel(
 		if evt.GetEventObject() is self._enabledCheckbox:
 			self._ensureEnableState(evt.IsChecked())
 
+	def _ocrActive(self) -> bool:
+		"""Outputs a message when trying to activate screen curtain when OCR is active.
+		@returns: C{True} when OCR is active, C{False} otherwise.
+		"""
+		import api
+		from contentRecog.recogUi import RefreshableRecogResultNVDAObject
+		import speech
+		import ui
+		focusObj = api.getFocusObject()
+		if isinstance(focusObj, RefreshableRecogResultNVDAObject) and focusObj.recognizer.allowAutoRefresh:
+			# Translators: Warning message when trying to enable the screen curtain when OCR is active.
+			warningMessage = _("Could not enable screen curtain when performing content recognition")
+			ui.message(warningMessage, speechPriority=speech.priorities.Spri.NOW)
+			return True
+		return False
+
 	def _ensureEnableState(self, shouldBeEnabled: bool):
 		currentlyEnabled = bool(self._providerControl.getProviderInstance())
 		if shouldBeEnabled and not currentlyEnabled:
 			confirmed = self.confirmInitWithUser()
-			if not confirmed or not self._providerControl.startProvider():
+			if not confirmed or self._ocrActive() or not self._providerControl.startProvider():
 				self._enabledCheckbox.SetValue(False)
 		elif not shouldBeEnabled and currentlyEnabled:
 			self._providerControl.terminateProvider()

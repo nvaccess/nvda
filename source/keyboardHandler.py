@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-#keyboardHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V.
+# keyboardHandler.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Cyrille Bougot
 
 """Keyboard support"""
 
@@ -12,6 +12,12 @@ import sys
 import time
 import re
 import typing
+from typing import (
+	Tuple,
+	List,
+	Optional,
+	Any,
+)
 
 import wx
 import winVersion
@@ -24,11 +30,13 @@ from keyLabels import localizedKeyLabels
 from logHandler import log
 import queueHandler
 import config
+from config.configFlags import NVDAKey
 import api
 import winInputHook
 import inputCore
 import tones
 import core
+import NVDAState
 from contextlib import contextmanager
 import threading
 
@@ -83,25 +91,47 @@ def passNextKeyThrough():
 	if passKeyThroughCount==-1:
 		passKeyThroughCount=0
 
-def isNVDAModifierKey(vkCode,extended):
-	if config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"] and vkCode==winUser.VK_INSERT and not extended:
+
+def isNVDAModifierKey(vkCode: int, extended: bool) -> bool:
+	if (
+		(config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.NUMPAD_INSERT)
+		and vkCode == winUser.VK_INSERT
+		and not extended
+	):
 		return True
-	elif config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"] and vkCode==winUser.VK_INSERT and extended:
+	elif (
+		(config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.EXTENDED_INSERT)
+		and vkCode == winUser.VK_INSERT
+		and extended
+	):
 		return True
-	elif config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"] and vkCode==winUser.VK_CAPITAL:
+	elif (
+		(config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.CAPS_LOCK)
+		and vkCode == winUser.VK_CAPITAL
+	):
 		return True
 	else:
 		return False
 
-SUPPORTED_NVDA_MODIFIER_KEYS = ("capslock", "numpadinsert", "insert")
 
-def getNVDAModifierKeys():
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "SUPPORTED_NVDA_MODIFIER_KEYS" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS is deprecated with no direct replacement. "
+			"Consider using the class config.configFlags.NVDAKey instead."
+		)
+		return ("capslock", "numpadinsert", "insert")
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
+
+def getNVDAModifierKeys() -> List[Tuple[int, Optional[bool]]]:
 	keys=[]
-	if config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"]:
+	if config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.EXTENDED_INSERT:
 		keys.append(vkCodes.byName["insert"])
-	if config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"]:
+	if config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.NUMPAD_INSERT:
 		keys.append(vkCodes.byName["numpadinsert"])
-	if config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"]:
+	if config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.CAPS_LOCK:
 		keys.append(vkCodes.byName["capslock"])
 	return keys
 
@@ -555,13 +585,6 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			# Send key up events for the keys in reverse order.
 			for vk, scan, ext in reversed(keys):
 				winUser.keybd_event(vk, scan, ext + 2, 0)
-
-			if not queueHandler.isPendingItems(queueHandler.eventQueue):
-				# We want to guarantee that by the time that 
-				# this function returns,the keyboard input generated
-				# has been injected and NVDA has received and processed it.
-				time.sleep(0.01)
-				wx.Yield()
 
 	@classmethod
 	def fromName(cls, name):

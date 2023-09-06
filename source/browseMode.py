@@ -1,10 +1,15 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2021 NV Access Limited, Babbage B.V., James Teh, Leonard de Ruijter,
+# Copyright (C) 2007-2023 NV Access Limited, Babbage B.V., James Teh, Leonard de Ruijter,
 # Thomas Stivers, Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import Any, Callable, Union
+from typing import (
+	Any,
+	Callable,
+	Union,
+	cast,
+)
 import os
 import itertools
 import collections
@@ -578,6 +583,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def script_passThrough(self,gesture):
 		if not config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
 			self._focusLastFocusableObject()
+			api.processPendingEvents(processEventQueue=True)
 		gesture.send()
 	# Translators: the description for the passThrough script on browseMode documents.
 	script_passThrough.__doc__ = _("Passes gesture through to the application")
@@ -914,6 +920,17 @@ qn(
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous grouping")
 )
+qn(
+	"tab", key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next tab"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next tab"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous tab"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous tab")
+)
 del qn
 
 
@@ -980,7 +997,8 @@ class ElementsListDialog(
 		# in the browse mode Elements List dialog.
 		filterText = _("Filter b&y:")
 		labeledCtrl = gui.guiHelper.LabeledControlHelper(self, filterText, wx.TextCtrl)
-		self.filterEdit = labeledCtrl.control
+		self.filterEdit = cast(wx.TextCtrl, labeledCtrl.control)
+		self.filterTimer: Optional[wx.CallLater] = None
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
 		contentsSizer.Add(labeledCtrl.sizer)
 		contentsSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
@@ -1206,8 +1224,14 @@ class ElementsListDialog(
 
 			item = self.tree.GetNextSibling(item)
 
-	def onFilterEditTextChange(self, evt):
-		self.filter(self.filterEdit.GetValue())
+	FILTER_TIMER_DELAY_MS = 300
+
+	def onFilterEditTextChange(self, evt: wx.CommandEvent) -> None:
+		filter = self.filterEdit.GetValue()
+		if self.filterTimer is None:
+			self.filterTimer = wx.CallLater(self.FILTER_TIMER_DELAY_MS, self.filter, filter)
+		else:
+			self.filterTimer.Start(self.FILTER_TIMER_DELAY_MS, filter)
 		evt.Skip()
 
 	def onAction(self, activate):
@@ -1406,6 +1430,11 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				followBrowseModeFocus = config.conf["virtualBuffers"]["autoFocusFocusableElements"]
 				if followBrowseModeFocus or self.passThrough:
 					focusObj.setFocus()
+					# Track this object as NVDA having just requested setting focus to it
+					# So that when NVDA does receive the focus event for it
+					# It can handle it quietly rather than speaking the new focus.
+					if followBrowseModeFocus:
+						self._objPendingFocusBeforeActivate = obj
 			# Queue the reporting of pass through mode so that it will be spoken after the actual content.
 			queueHandler.queueFunction(queueHandler.eventQueue, reportPassThrough, self)
 
@@ -1623,12 +1652,30 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				self._replayFocusEnteredEvents()
 			return nextHandler()
 
-		#We only want to update the caret and speak the field if we're not in the same one as before
-		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
-		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
-		caretInfo.expand(textInfos.UNIT_CHARACTER)
-		isOverlapping = focusInfo.isOverlapping(caretInfo)
-		if not self._hadFirstGainFocus or not isOverlapping or (isOverlapping and previousFocusObjIsDefunct):
+		# Save off and clear any previous object that was focused by NVDA
+		# and waiting on a focus event.
+		objPendingFocusBeforeActivate = self._objPendingFocusBeforeActivate
+		self._objPendingFocusBeforeActivate = None
+
+		# We do not want to speak the new focus and update the caret if...
+		if not self._hadFirstGainFocus or previousFocusObjIsDefunct:
+			# still initializing  or the old focus is dead.
+			isOverlapping = False
+		elif config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
+			# if this focus event was caused by NVDA setting the focus itself
+			# Due to auto focus focusable elements option being enabled,
+			# And we detect that the caret was already positioned within the focus.
+			# Note that this is not the default and may be removed in future.
+			caretInfo = self.makeTextInfo(textInfos.POSITION_CARET)
+			# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
+			caretInfo.expand(textInfos.UNIT_CHARACTER)
+			isOverlapping = focusInfo.isOverlapping(caretInfo)
+		else:
+			# if this focus event was caused by NVDA setting the focus itself
+			# due to activation or applications key etc.
+			isOverlapping = (obj == objPendingFocusBeforeActivate)
+
+		if not isOverlapping:
 			# The virtual caret is not within the focus node.
 			oldPassThrough=self.passThrough
 			passThrough = self.shouldPassThrough(obj, reason=OutputReason.FOCUS)
@@ -1653,7 +1700,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				self._replayFocusEnteredEvents()
 				nextHandler()
 			focusInfo.collapse()
-			self._set_selection(focusInfo, reason=OutputReason.FOCUS)
+			if self._focusEventMustUpdateCaretPosition:
+				self._set_selection(focusInfo, reason=OutputReason.FOCUS)
 		else:
 			# The virtual caret was already at the focused node.
 			if not self.passThrough:
@@ -1666,9 +1714,9 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 					# Note: this is usually called after the caret movement.
 					vision.handler.handleGainFocus(obj)
 				elif (
-					self._objPendingFocusBeforeActivate
-					and obj == self._objPendingFocusBeforeActivate
-					and obj is not self._objPendingFocusBeforeActivate
+					objPendingFocusBeforeActivate
+					and obj == objPendingFocusBeforeActivate
+					and obj is not objPendingFocusBeforeActivate
 				):
 					# With auto focus focusable elements disabled, when the user activates
 					# an element (e.g. by pressing enter) or presses a key which we pass
@@ -1680,10 +1728,9 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 					# the properties before the activation/key, so use that to speak any
 					# changes.
 					speech.speakObject(
-						self._objPendingFocusBeforeActivate,
+						objPendingFocusBeforeActivate,
 						OutputReason.CHANGE
 					)
-					self._objPendingFocusBeforeActivate = None
 			else:
 				self._replayFocusEnteredEvents()
 				return nextHandler()

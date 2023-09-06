@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-15 00:02+0000\n"
-"PO-Revision-Date: 2022-11-12 16:02+0200\n"
+"POT-Creation-Date: 2023-08-14 03:03+0000\n"
+"PO-Revision-Date: 2023-08-16 22:27+0200\n"
 "Last-Translator: Jani Kinnunen <janikinnunen340@gmail.com>\n"
 "Language-Team: janikinnunen340@gmail.com\n"
 "Language: fi_FI\n"
@@ -395,6 +395,10 @@ msgstr "ehdts"
 msgid "definition"
 msgstr "määritelmä"
 
+#. Translators: Displayed in braille when an object is a switch control
+msgid "swtch"
+msgstr "vltsn"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "val"
@@ -535,6 +539,18 @@ msgstr "USB"
 msgid "Bluetooth"
 msgstr "Bluetooth"
 
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+msgid "details"
+msgstr "Lisätiedot"
+
+#. Translators: Braille when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. "has comment suggestion")
+#. Translators: Speaks when there are further details/annotations that can be fetched manually.
+#. %s specifies the type of details (e.g. "comment, suggestion, details")
+#, python-format
+msgid "has %s"
+msgstr "sisältää tiedon %s"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -544,18 +560,6 @@ msgstr "o%s"
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
 msgstr "vlnk"
-
-#. Translators: Braille when there are further details/annotations that can be fetched manually.
-#. %s specifies the type of details (e.g. comment, suggestion)
-#. Translators: Speaks when there are further details/annotations that can be fetched manually.
-#. %s specifies the type of details (e.g. comment, suggestion)
-#, python-format
-msgid "has %s"
-msgstr "sisältää lisätiedon %s"
-
-#. Translators: Braille when there are further details/annotations that can be fetched manually.
-msgid "details"
-msgstr "Lisätiedot"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -614,19 +618,6 @@ msgstr "rtkst kmnt"
 #. Translators: brailled when text contains a bookmark
 msgid "bkmk"
 msgstr "knmi"
-
-#. Translators: The label for a braille setting indicating that braille should be
-#. tethered to focus or review cursor automatically.
-msgid "automatically"
-msgstr "automaattinen"
-
-#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
-msgid "to focus"
-msgstr "kohdistusta"
-
-#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
-msgid "to review"
-msgstr "tarkastelukohdistinta"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Dot firm&ness"
@@ -794,8 +785,18 @@ msgstr "tanska, 8 pisteen tietokonemerkistö"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 8 dot computer braille (1993)"
+msgstr "tanska, 8 pisteen tietokonemerkistö (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 6 dot grade 1"
 msgstr "tanska, 6 pisteen taso 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 6 dot grade 1 (1993)"
+msgstr "tanska, 6 pisteen taso 1 (1993)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -804,13 +805,28 @@ msgstr "tanska, 8 pisteen taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 8 dot grade 1 (1993)"
+msgstr "tanska, 8 pisteen taso 1 (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 6 dot grade 2"
 msgstr "tanska, 6 pisteen taso 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Danish 6 dot grade 2 (1993)"
+msgstr "tanska, 6 pisteen taso 2 (1993)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Danish 8 dot grade 2"
 msgstr "tanska, 8 pisteen taso 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot grade 2 (1993)"
+msgstr "tanska, 8 pisteen taso 2 (1993)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1059,6 +1075,11 @@ msgstr "kannada, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Georgian literary braille"
+msgstr "georgialainen kaunokirjallinen pistekirjoitus"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Kazakh grade 1"
 msgstr "kazakki, taso 1"
 
@@ -1209,6 +1230,11 @@ msgstr "sepedi, taso 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Chichewa (Malawi) literary braille"
+msgstr "njandža (Malawi), kaunokirjallinen pistekirjoitus"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "orija, taso 1"
 
@@ -1331,6 +1357,36 @@ msgstr "ruotsalainen osittainen lyhennekirjoitus"
 #. braille settings dialog.
 msgid "Swedish contracted braille"
 msgstr "ruotsalainen lyhennekirjoitus"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1"
+msgstr "swahili (Kenia), taso 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.2"
+msgstr "swahili (Kenia), taso 1.2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.3"
+msgstr "swahili (Kenia), taso 1.3"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.4"
+msgstr "swahili (Kenia), taso 1.4"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) grade 1.5"
+msgstr "swahili (Kenia), taso 1.5"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swahili (Kenya) Grade 2"
+msgstr "swahili (Kenia), taso 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1494,11 +1550,11 @@ msgstr "Ei nimeä"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
-msgstr "Pikaselaus pois"
+msgstr "Pikanavigointi pois"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
 msgid "Single letter navigation on"
-msgstr "Pikaselaus käytössä"
+msgstr "Pikanavigointi käytössä"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 msgid ""
@@ -1506,10 +1562,10 @@ msgid ""
 "browse mode jump to various kinds of elements on the page. When off, these "
 "keys are passed to the application"
 msgstr ""
-"Ottaa käyttöön pikaselausnäppäimet tai poistaa ne käytöstä. Kun näppäimet "
-"ovat käytössä, määrättyjen kirjainten painaminen selaustilassa siirtää "
-"sivulla oleviin eri tyyppisiin elementteihin. Kun ne eivät ole käytössä, "
-"niiden painallukset välitetään suoraan sovellukselle."
+"Ottaa käyttöön pikanavigointinäppäimet tai poistaa ne käytöstä. Kun ne ovat "
+"käytössä, tiettyjen kirjainten painaminen selaustilassa siirtää sivulla "
+"oleviin eri tyyppisiin elementteihin. Kun ne eivät ole käytössä, niiden "
+"painallukset välitetään suoraan sovellukselle."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 #. Translators: Reported when a user tries to use a find command when it isn't supported.
@@ -2413,12 +2469,16 @@ msgstr "Kirjoita etsittävä teksti"
 msgid "Case &sensitive"
 msgstr "Sa&ma kirjainkoko"
 
+#. Translators: message displayed to the user when
+#. searching text and no text is found.
 #, python-format
 msgid "text \"%s\" not found"
 msgstr "tekstiä \"%s\" ei löydy"
 
-msgid "Find Error"
-msgstr "Virhe"
+#. Translators: message dialog title displayed to the user when
+#. searching text and no text is found.
+msgid "0 matches"
+msgstr "0 tulosta"
 
 #. Translators: Input help message for NVDA's find command.
 msgid "find a text string from the current cursor position"
@@ -2568,6 +2628,8 @@ msgid "Configuration profiles"
 msgstr "Asetusprofiilit"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 #. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "Pistekirjoitus"
@@ -2927,20 +2989,10 @@ msgid "Cycles through line indentation settings"
 msgstr "Vaihtaa rivien sisennysten ilmaisemisen asetusta."
 
 #. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with speech"
-msgstr "Ilmaise rivien sisennykset puheella"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with tones"
-msgstr "Ilmaise rivien sisennykset äänimerkeillä"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation with speech and tones"
-msgstr "Ilmaise rivien sisennykset puheella ja äänimerkeillä"
-
-#. Translators: A message reported when cycling through line indentation settings.
-msgid "Report line indentation off"
-msgstr "Rivien sisennysten ilmaiseminen pois"
+#. {mode} will be replaced with the mode; i.e. Off, Speech, Tones or Both Speech and Tones.
+#, python-brace-format
+msgid "Report line indentation {mode}"
+msgstr "Rivien sisennysten ilmaiseminen {mode}"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
@@ -3007,17 +3059,11 @@ msgstr "Taulukon solujen koordinaattien ilmaiseminen käytössä"
 msgid "Cycles through the cell border reporting settings"
 msgstr "Vaihtaa solun reunojen ilmaisemisen asetusta."
 
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report styles of cell borders"
-msgstr "Ilmaise solun reunojen tyylit"
-
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report colors and styles of cell borders"
-msgstr "Ilmaise solun reunojen värit ja tyylit"
-
-#. Translators: A message reported when cycling through cell borders settings.
-msgid "Report cell borders off."
-msgstr "Solun reunojen ilmaiseminen pois"
+#. Translators: Reported when the user cycles through report cell border modes.
+#. {mode} will be replaced with the mode; e.g. Off, Styles and Colors and styles.
+#, python-brace-format
+msgid "Report cell borders {mode}"
+msgstr "Solun reunojen ilmaiseminen {mode}"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -3187,6 +3233,21 @@ msgstr "Vaihtaa symbolitasoa, joka määrittää, mitkä symbolit puhutaan."
 msgid "Symbol level %s"
 msgstr "Symbolitaso %s"
 
+#. Translators: Input help mode message for toggle delayed character description command.
+msgid ""
+"Toggles on and off delayed descriptions for characters on cursor movement"
+msgstr ""
+"Ottaa käyttöön tai poistaa käytöstä viivästetyt merkkien kuvaukset "
+"kohdistinta siirrettäessä."
+
+#. Translators: The message announced when toggling the delayed character description setting.
+msgid "delayed character descriptions on"
+msgstr "Viivästetyt merkkikuvaukset käytössä"
+
+#. Translators: The message announced when toggling the delayed character description setting.
+msgid "delayed character descriptions off"
+msgstr "Viivästetyt merkkikuvaukset pois"
+
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "Siirtää hiiren nykyiseen navigointiobjektiin."
@@ -3342,7 +3403,7 @@ msgstr "Ei kohdistinta"
 
 #. Translators: Input help mode message for move to parent object command.
 msgid "Moves the navigator object to the object containing it"
-msgstr "Siirtää navigointiobjektin sen itsensä sisältävään objektiin."
+msgstr "Siirtää navigointiobjektin ylemmän tason objektiin."
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
@@ -3600,8 +3661,8 @@ msgstr ""
 "Vaihtaa selaus- ja vuorovaikutustilojen välillä. Vuorovaikutustilassa "
 "näppäinten painallukset välitetään suoraan nykyiselle sovellukselle, mikä "
 "mahdollistaa suoran vuorovaikutuksen säädinten kanssa. Selaustilassa "
-"oltaessa asiakirjassa voidaan liikkua kohdistimella, pikaselausnäppäimillä "
-"jne."
+"oltaessa asiakirjassa voidaan liikkua kohdistimella, "
+"pikanavigointinäppäimillä jne."
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
@@ -4062,13 +4123,11 @@ msgstr ""
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Avaa NVDA:n Python-konsolin, josta on hyötyä pääasiassa kehittäjille."
 
-#. Translators: Input help mode message for activate manage add-ons command.
+#. Translators: Input help mode message to activate Add-on Store command.
 msgid ""
-"Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
-"for NVDA"
+"Activates the Add-on Store to browse and manage add-on packages for NVDA"
 msgstr ""
-"Avaa Lisäosien hallinnan, jolla voi asentaa ja poistaa NVDA:n "
-"lisäosapaketteja."
+"Avaa lisäosakaupan, jossa voi selata ja hallita NVDA:n lisäosapaketteja."
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
@@ -4116,6 +4175,29 @@ msgstr ""
 msgid "Braille tethered %s"
 msgstr "Pistenäyttö seuraa %s"
 
+#. Translators: Input help mode message for cycle through
+#. braille move system caret when routing review cursor command.
+msgid ""
+"Cycle through the braille move system caret when routing review cursor states"
+msgstr ""
+"Vaihtaa Siirrä järjestelmäkohdistin tarkastelukohdistimen kohdalle -"
+"asetuksen tilaa."
+
+#. Translators: Reported when action is unavailable because braille tether is to focus.
+msgid "Action unavailable. Braille is tethered to focus"
+msgstr "Toiminto ei käytettävissä, koska pistenäyttö seuraa kohdistusta."
+
+#. Translators: Used when reporting braille move system caret when routing review cursor
+#. state (default behavior).
+#, python-format
+msgid "Braille move system caret when routing review cursor default (%s)"
+msgstr "Siirrä järjestelmäkohdistin tarkastelukohdistimen kohdalle oletus (%s)"
+
+#. Translators: Used when reporting braille move system caret when routing review cursor state.
+#, python-format
+msgid "Braille move system caret when routing review cursor %s"
+msgstr "Siirrä järjestelmäkohdistin tarkastelukohdistimen kohdalle %s"
+
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
 msgstr "Vaihda tapaa, jolla kontekstitiedot näytetään pistenäytöllä."
@@ -4151,6 +4233,32 @@ msgstr "Pistekohdistin on poistettu käytöstä"
 #, python-format
 msgid "Braille cursor %s"
 msgstr "Pistekohdistin %s"
+
+#. Translators: Input help mode message for cycle through braille show messages command.
+msgid "Cycle through the braille show messages modes"
+msgstr "Vaihtaa pistenäytön Näytä ilmoitukset -asetuksen tilaa."
+
+#. Translators: Reports which show braille message mode is used
+#. (disabled, timeout or indefinitely).
+#, python-format
+msgid "Braille show messages %s"
+msgstr "Ilmoitusten näyttäminen pistenäytöllä %s"
+
+#. Translators: Input help mode message for cycle through braille show selection command.
+msgid "Cycle through the braille show selection states"
+msgstr "Vaihtaa valinnan näyttämisen tilaa pistenäytöllä."
+
+#. Translators: Used when reporting braille show selection state
+#. (default behavior).
+#, python-format
+msgid "Braille show selection default (%s)"
+msgstr "Valinnan näyttämisen oletus pistenäytöllä (%s)"
+
+#. Translators: Reports which show braille selection state is used
+#. (disabled or enabled).
+#, python-format
+msgid "Braille show selection %s"
+msgstr "Valinnan näyttäminen pistenäytöllä %s"
 
 #. Translators: Input help mode message for report clipboard text command.
 msgid "Reports the text on the Windows clipboard"
@@ -4364,6 +4472,38 @@ msgstr ""
 msgid "Plugins reloaded"
 msgstr "Liitännäiset ladattu uudelleen"
 
+#. Translators: input help mode message for Report destination URL of a link command
+msgid ""
+"Report the destination URL of the link at the position of caret or focus. If "
+"pressed twice, shows the URL in a window for easier review."
+msgstr ""
+"Ilmoittaa kohdistimen tai kohdistuksen kohdalla olevan linkin kohteen URL-"
+"osoitteen. Kahdesti painettaessa se näytetään erillisessä ikkunassa, jotta "
+"sitä on helpompi tarkastella."
+
+#. Translators: Informs the user that the link has no destination
+msgid "Link has no apparent destination"
+msgstr "Linkillä ei ole kohdetta"
+
+#. Translators: Informs the user that the window contains the destination of the
+#. link with given title
+#, python-brace-format
+msgid "Destination of: {name}"
+msgstr "Kohde: {name}"
+
+#. Translators: Tell user that the command has been run on something that is not a link
+msgid "Not a link."
+msgstr "Ei ole linkki."
+
+#. Translators: input help mode message for Report URL of a link in a window command
+msgid ""
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
+msgstr ""
+"Näyttää kohdistimen tai kohdistuksen kohdalla olevan linkin kohteen URL-"
+"osoitteen erillisessä ikkunassa pelkän puhumisen sijaan. Pistenäyttöjen "
+"käyttäjät saattavat pitää tästä enemmän."
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
@@ -4471,6 +4611,11 @@ msgid "Please disable screen curtain before using Windows OCR."
 msgstr ""
 "Poista näyttöverho käytöstä ennen Windowsin tekstintunnistuksen käyttöä."
 
+#. Translators: Describes a command.
+msgid "Cycles through the available languages for Windows OCR"
+msgstr ""
+"Vaihtaa Windowsin tekstintunnistuksen käytettävissä olevien kielten välillä."
+
 #. Translators: Input help mode message for toggle report CLDR command.
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
 msgstr "Ottaa käyttöön emojien ilmaisemisen tai poistaa sen käytöstä."
@@ -4519,6 +4664,10 @@ msgstr ""
 #. Translators: Reported when the screen curtain could not be enabled.
 msgid "Could not enable screen curtain"
 msgstr "Näyttöverhoa ei voitu ottaa käyttöön"
+
+#. Translators: Describes a command.
+msgid "Cycles through paragraph navigation styles"
+msgstr "Vaihtaa kappalenavigointityylin asetusta."
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -4916,9 +5065,12 @@ msgstr "kannettava"
 msgid "unknown %s"
 msgstr "tuntematon %s"
 
+#. Translators: a state that denotes a control is currently on
+#. E.g. a switch control.
 msgid "on"
 msgstr "käytössä"
 
+#. Translators: This is presented when a switch control is off.
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
@@ -6311,13 +6463,16 @@ msgstr "Virhe tarkistettaessa päivitystä."
 #. Translators: The title of an error message dialog.
 #. Translators: An title for an error displayed when saving user defined input gestures fails.
 #. Translators: The title of a dialog presented when an error occurs.
-#. Translators: The message title displayed
-#. when the user has not specified an absolute destination directory
-#. in the Create Portable NVDA dialog.
+#. Translators: the title of an error dialog.
+#. Translators: The message title displayed when the user has not specified an absolute
+#. destination directory in the Create Portable NVDA dialog.
+#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
 #. Translators: The title of an error message dialog.
+#. Translators: A message indicating that an error occurred.
 #. Translators: The title of the message box
 #. Translators: The title of the error dialog displayed when there is an error showing the GUI
 #. for a vision enhancement provider
+#. Translators: The title of an error message box displayed when validating the startup dialog
 msgid "Error"
 msgstr "Virhe"
 
@@ -6335,32 +6490,6 @@ msgstr "Ei päivitystä saatavilla."
 #, python-brace-format
 msgid "NVDA version {version} has been downloaded and is pending installation."
 msgstr "NVDA {version} on ladattu ja odottaa asentamista."
-
-#. Translators: A message indicating that some add-ons will be disabled
-#. unless reviewed before installation.
-#. Translators: A message in the installer to let the user know that
-#. some addons are not compatible.
-msgid ""
-"\n"
-"\n"
-"However, your NVDA configuration contains add-ons that are incompatible with "
-"this version of NVDA. These add-ons will be disabled after installation. If "
-"you rely on these add-ons, please review the list to decide whether to "
-"continue with the installation"
-msgstr ""
-"\n"
-"\n"
-"Asetuksesi sisältävät kuitenkin lisäosia, jotka eivät ole yhteensopivia "
-"tämän NVDA-version kanssa. Ne poistetaan käytöstä asennuksen jälkeen. Jos "
-"luotat näihin lisäosiin, tarkastele luetteloa päättääksesi, haluatko jatkaa "
-"asennusta."
-
-#. Translators: A message to confirm that the user understands that addons that have not been
-#. reviewed and made available, will be disabled after installation.
-#. Translators: A message to confirm that the user understands that addons that have not been reviewed and made
-#. available, will be disabled after installation.
-msgid "I understand that these incompatible add-ons will be disabled"
-msgstr "Ymmärrän, että yhteensopimattomat lisäosat poistetaan käytöstä"
 
 #. Translators: The label of a button to review add-ons prior to NVDA update.
 #. Translators: The label of a button to launch the add-on compatibility review dialog.
@@ -6401,21 +6530,6 @@ msgstr "&Sulje"
 #, python-brace-format
 msgid "NVDA version {version} is ready to be installed.\n"
 msgstr "NVDA {version} on valmiina asennettavaksi.\n"
-
-#. Translators: A message indicating that some add-ons will be disabled
-#. unless reviewed before installation.
-msgid ""
-"\n"
-"However, your NVDA configuration contains add-ons that are incompatible with "
-"this version of NVDA. These add-ons will be disabled after installation. If "
-"you rely on these add-ons, please review the list to decide whether to "
-"continue with the installation"
-msgstr ""
-"\n"
-"Asetuksesi sisältävät kuitenkin lisäosia, jotka eivät ole yhteensopivia "
-"tämän NVDA-version kanssa. Ne poistetaan käytöstä asennuksen jälkeen. Jos "
-"luotat näihin lisäosiin, tarkastele luetteloa päättääksesi, haluatko jatkaa "
-"asennusta."
 
 #. Translators: The label of a button to install an NVDA update.
 msgid "&Install update"
@@ -6570,6 +6684,11 @@ msgstr ""
 msgid "%d percent"
 msgstr "%d prosenttia"
 
+#. Translators: Announced in braille when suggestions appear when search term is entered
+#. in various search fields such as Start search box in Windows 10.
+msgid "Suggestions"
+msgstr "Ehdotukset"
+
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
 msgid "{symbol} as in {description}"
@@ -6611,10 +6730,6 @@ msgstr "Siirtää navigointiobjektin ja kohdistuksen seuraavalle riville."
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the last row"
 msgstr "Siirtää navigointiobjektin ja kohdistuksen viimeiselle riville."
-
-#. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
-msgid "Suggestions"
-msgstr "Ehdotukset"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
@@ -6670,6 +6785,69 @@ msgctxt "UIAHandler.FillType"
 msgid "pattern"
 msgstr "kuvio"
 
+#. Translators: A title of the dialog shown when fetching add-on data from the store fails
+msgctxt "addonStore"
+msgid "Add-on data update failure"
+msgstr "Lisäosatietojen päivitys epäonnistui"
+
+#. Translators: A message shown when fetching add-on data from the store fails
+msgctxt "addonStore"
+msgid "Unable to fetch latest add-on data for compatible add-ons."
+msgstr "Yhteensopivien lisäosien viimeisimpiä tietoja ei voitu hakea."
+
+#. Translators: A message shown when fetching add-on data from the store fails
+msgctxt "addonStore"
+msgid "Unable to fetch latest add-on data for incompatible add-ons."
+msgstr "Yhteensopimattomien lisäosien viimeisimpiä tietoja ei voitu hakea."
+
+#. Translators: The message displayed when an error occurs when opening an add-on package for adding.
+#. The %s will be replaced with the path to the add-on that could not be opened.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Failed to open add-on package file at {filePath} - missing file or invalid "
+"file format"
+msgstr ""
+"Lisäosapaketin avaaminen epäonnistui kohteesta {filePath} - tiedostoa ei "
+"löydy tai virheellinen tiedostomuoto"
+
+#. Translators: The message displayed when an add-on is not supported by this version of NVDA.
+#. The %s will be replaced with the path to the add-on that is not supported.
+#, python-format
+msgctxt "addonStore"
+msgid "Add-on not supported %s"
+msgstr "Lisäosaa %s ei tueta"
+
+#. Translators: The message displayed when an error occurs when installing an add-on package.
+#. The %s will be replaced with the path to the add-on that could not be installed.
+#, python-format
+msgctxt "addonStore"
+msgid "Failed to install add-on from %s"
+msgstr "Lisäosan asennus epäonnistui tiedostosta %s"
+
+#. Translators: A title for a dialog notifying a user of an add-on download failure.
+msgctxt "addonStore"
+msgid "Add-on download failure"
+msgstr "Lisäosan lataus epäonnistui"
+
+#. Translators: A message to the user if an add-on download fails
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Unable to download add-on: {name}"
+msgstr "Lisäosaa {name} ei voitu ladata"
+
+#. Translators: A message to the user if an add-on download fails
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Unable to save add-on as a file: {name}"
+msgstr "Lisäosaa {name} ei voitu tallentaa tiedostoksi"
+
+#. Translators: A message to the user if an add-on download is not safe
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Add-on download not safe: checksum failed for {name}"
+msgstr "Lataus ei ole turvallinen: lisäosan {name} tarkistussumma epäonnistui"
+
 msgid "Display"
 msgstr "Näyttö"
 
@@ -6685,21 +6863,40 @@ msgstr "Ohjeikkunaa ei löydy."
 msgid "No track playing"
 msgstr "Kappaleen toisto ei ole käynnissä"
 
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{remainingTimeFormatted} remaining"
+msgstr "{remainingTimeFormatted} jäljellä"
+
 #. Translators: Reported if the remaining time can not be calculated in Foobar2000
-msgid "Unable to determine remaining time"
-msgstr "Jäljellä olevaa aikaa ei voida selvittää"
+msgid "Remaining time not available"
+msgstr "Jäljellä olevaa aikaa ei saatavilla"
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Ilmoittaa toistettavan kappaleen jäljellä olevan ajan."
 
+#. Translators: Reported elapsed time in Foobar2000
+#, python-brace-format
+msgid "{elapsedTime} elapsed"
+msgstr "{elapsedTime} kulunut"
+
+#. Translators: Reported if the elapsed time is not available in Foobar2000
+msgid "Elapsed time not available"
+msgstr "Kulunutta aikaa ei saatavilla"
+
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr "Ilmoittaa toistettavan kappaleen kuluneen ajan."
 
+#. Translators: Reported remaining time in Foobar2000
+#, python-brace-format
+msgid "{totalTime} total"
+msgstr "Kokonaisaika {totalTime}"
+
 #. Translators: Reported if the total time is not available in Foobar2000
 msgid "Total time not available"
-msgstr "Kokonaisaika ei ole käytettävissä"
+msgstr "Kokonaisaikaa ei saatavilla"
 
 #. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
 msgid "Reports the length of the currently playing track, if any"
@@ -6902,8 +7099,10 @@ msgstr "alkaa {startTime}, päättyy {endTime}"
 #. Translators: Part of a message reported when on a calendar appointment with one or more categories
 #. in Microsoft Outlook.
 #, python-brace-format
-msgid "categories {categories}"
-msgstr "{categories} kategoriaa"
+msgid "category {categories}"
+msgid_plural "categories {categories}"
+msgstr[0] "luokka {categories}"
+msgstr[1] "luokkia {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #, python-brace-format
@@ -7214,6 +7413,25 @@ msgstr "väliltä {firstAddress} {firstValue} ja {lastAddress} {lastValue}"
 msgid "{firstAddress} through {lastAddress}"
 msgstr "väliltä {firstAddress} ja {lastAddress}"
 
+#. Translators: a measurement in inches
+#, python-brace-format
+msgid "{val:.2f} inches"
+msgstr "{val:.2f} tuumaa"
+
+#. Translators: a measurement in centimetres
+#, python-brace-format
+msgid "{val:.2f} centimetres"
+msgstr "{val:.2f} senttimetriä"
+
+#. Translators: LibreOffice, report cursor position in the current page
+#, python-brace-format
+msgid ""
+"cursor positioned {horizontalDistance} from left edge of page, "
+"{verticalDistance} from top edge of page"
+msgstr ""
+"Kohdistimen sijainti {horizontalDistance} sivun vasemmasta reunasta ja "
+"{verticalDistance} sivun yläreunasta"
+
 msgid "left"
 msgstr "vasen"
 
@@ -7288,18 +7506,6 @@ msgstr "HumanWare Brailliant BI/B / BrailleNote Touch"
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
 msgstr "EcoBraille"
-
-#. Translators: Names of braille displays.
-msgid "Eurobraille Esys/Esytime/Iris displays"
-msgstr "Eurobraille Esys/Esytime/Iris"
-
-#. Translators: Message when HID keyboard simulation is unavailable.
-msgid "HID keyboard input simulation is unavailable."
-msgstr "HID-näppäimistöemulointi ei ole käytettävissä."
-
-#. Translators: Description of the script that toggles HID keyboard simulation.
-msgid "Toggle HID keyboard simulation"
-msgstr "Ottaa HID-näppäimistöemuloinnin käyttöön tai poistaa sen käytöstä."
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7384,9 +7590,60 @@ msgstr "&Näytä pistekirjoituksen tarkastelu käynnistettäessä"
 msgid "&Hover for cell routing"
 msgstr "&Hiiren vieminen merkin päälle siirtää kyseiseen soluun"
 
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-#. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
+#. Translators: One of the show states of braille messages
+#. (the disabled mode turns off showing of braille messages completely).
+#. Translators: Label for an option in NVDA settings.
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+msgid "Disabled"
+msgstr "Ei käytössä"
+
+#. Translators: One of the show states of braille messages
+#. (the timeout mode shows messages for the specific time).
+msgid "Use timeout"
+msgstr "Käytä aikakatkaisua"
+
+#. Translators: One of the show states of braille messages
+#. (the indefinitely mode prevents braille messages from disappearing automatically).
+msgid "Show indefinitely"
+msgstr "Pysyvästi"
+
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+msgid "automatically"
+msgstr "automaattisesti"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+msgid "to focus"
+msgstr "kohdistusta"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered
+#. to the review cursor.
+msgid "to review"
+msgstr "tarkastelukohdistinta"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report No line Indentation.
+msgctxt "line indentation setting"
+msgid "Off"
+msgstr "Ei käytössä"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation
+#. with Speech.
+msgctxt "line indentation setting"
+msgid "Speech"
+msgstr "Puheella"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation
+#. with tones.
+msgctxt "line indentation setting"
+msgid "Tones"
+msgstr "Äänimerkeillä"
+
+#. Translators: A choice in a combo box in the document formatting dialog to report indentation with both
+#. Speech and tones.
+msgctxt "line indentation setting"
+msgid "Both Speech and Tones"
+msgstr "Puheella ja äänimerkeillä"
+
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
 msgid "Off"
@@ -7407,17 +7664,52 @@ msgstr "Rivit"
 msgid "Columns"
 msgstr "Sarakkeet"
 
-#. Translators: Label for an option in NVDA settings.
-#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-#. Translators: One of the show states of braille messages
-#. (the disabled mode turns off showing of braille messages completely).
-msgid "Disabled"
-msgstr "Ei käytössä"
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Styles"
+msgstr "Tyylit"
+
+#. Translators: This is the label for a combobox in the
+#. document formatting settings panel.
+msgid "Both Colors and Styles"
+msgstr "Värit ja tyylit"
 
 #. Translators: Label for an option in NVDA settings.
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "Enabled"
 msgstr "Käytössä"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Handled by application"
+msgstr "Sovelluksen määrittämä"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Single line break"
+msgstr "Yksi rivinvaihto"
+
+#. Translators: Label for a paragraph style in NVDA settings.
+msgid "Multi line break"
+msgstr "Useita rivinvaihtoja"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Never"
+msgstr "Ei koskaan"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Only when tethered automatically"
+msgstr "Vain, kun pistenäyttö seuraa automaattisesti"
+
+#. Translators: Label for setting to move the system caret when routing review cursor with braille.
+msgid "Always"
+msgstr "Aina"
+
+#. Translators: Label for an option in NVDA settings.
+msgid "Diffing"
+msgstr "Muutosten havaitseminen"
+
+#. Translators: Label for an option in NVDA settings.
+msgid "UIA notifications"
+msgstr "UIA-ilmoitukset"
 
 #. Translators: The title of the document used to present the result of content recognition.
 msgid "Result"
@@ -7597,7 +7889,7 @@ msgstr "teksti"
 
 #. Translators: The word used to identify edit fields such as subject edit field.
 msgid "edit"
-msgstr "muokattava"
+msgstr "muokkaa"
 
 #. Translators: The word used to identify a button such as OK button.
 msgid "button"
@@ -8185,6 +8477,11 @@ msgstr "kommentti"
 msgid "suggestion"
 msgstr "ehdotus"
 
+#. Translators: The word role for a switch control
+#. I.e. a control that can be switched on or off.
+msgid "switch"
+msgstr "valitsin"
+
 #. Translators: Indicates that a particular state of an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not
 #. checked), but this still might be used in some other cases.
@@ -8303,7 +8600,7 @@ msgid "clickable"
 msgstr "napsautettava"
 
 msgid "editable"
-msgstr "muokattavissa"
+msgstr "muokattava"
 
 msgid "checkable"
 msgstr "valittavissa"
@@ -8367,6 +8664,22 @@ msgstr "lukitsematon"
 msgid "has note"
 msgstr "sisältää muistiinpanon"
 
+#. Translators: Presented when a control has a pop-up dialog.
+msgid "opens dialog"
+msgstr "avaa valintaikkunan"
+
+#. Translators: Presented when a control has a pop-up grid.
+msgid "opens grid"
+msgstr "avaa ruudukon"
+
+#. Translators: Presented when a control has a pop-up list box.
+msgid "opens list"
+msgstr "avaa luettelon"
+
+#. Translators: Presented when a control has a pop-up tree.
+msgid "opens tree"
+msgstr "avaa puun"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "ei valittu"
@@ -8383,6 +8696,21 @@ msgstr "ei valittu"
 #. This is only reported for objects which support accessible drag and drop.
 msgid "done dragging"
 msgstr "Vedetty"
+
+#. Translators: This is spoken when a paragraph is considered blank.
+#. Translators: This is spoken when the line is considered blank.
+#. Translators: This is spoken when NVDA moves to an empty line.
+#. Translators: This is spoken when the line is considered blank.
+msgid "blank"
+msgstr "tyhjä"
+
+#. Translators: this message is given when there is no next paragraph when navigating by paragraph
+msgid "No next paragraph"
+msgstr "Ei enempää kappaleita"
+
+#. Translators: this message is given when there is no previous paragraph when navigating by paragraph
+msgid "No previous paragraph"
+msgstr "Ei edellisiä kappaleita"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -8487,13 +8815,13 @@ msgstr "Pu&heen tarkastelu"
 msgid "Braille viewer"
 msgstr "Pistekirjoituksen tarkastelu"
 
+#. Translators: The label of a menu item to open the Add-on store
+msgid "Add-on &store..."
+msgstr "L&isäosakauppa..."
+
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
 msgstr "&Python-konsoli"
-
-#. Translators: The label of a menu item to open the Add-ons Manager.
-msgid "Manage &add-ons..."
-msgstr "&Lisäosien hallinta..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 msgid "Create portable copy..."
@@ -8532,7 +8860,7 @@ msgstr "NVDA:n &verkkosivusto"
 
 #. Translators: The label for the menu item to view NVDA License document.
 msgid "L&icense"
-msgstr "L&isenssi"
+msgstr "Kä&yttöoikeussopimus"
 
 #. Translators: The label for the menu item to view NVDA Contributors list document.
 msgid "C&ontributors"
@@ -8681,36 +9009,6 @@ msgstr "&Ei"
 msgid "OK"
 msgstr "OK"
 
-#. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
-msgid ""
-"{summary} ({name})\n"
-"Version: {version}\n"
-"Author: {author}\n"
-"Description: {description}\n"
-msgstr ""
-"{summary} ({name})\n"
-"Versio: {version}\n"
-"Tekijä: {author}\n"
-"Kuvaus: {description}\n"
-
-#. Translators: the url part of the About Add-on information
-#, python-brace-format
-msgid "URL: {url}"
-msgstr "URL: {url}"
-
-#. Translators: the minimum NVDA version part of the About Add-on information
-msgid "Minimum required NVDA version: {}"
-msgstr "Edellyttää vähintään NVDA-versiota: {}"
-
-#. Translators: the last NVDA version tested part of the About Add-on information
-msgid "Last NVDA version tested: {}"
-msgstr "Viimeisin testattu NVDA-versio: {}"
-
-#. Translators: title for the Addon Information dialog
-msgid "Add-on Information"
-msgstr "Lisäosan tiedot"
-
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Lisäosien hallinta"
@@ -8752,7 +9050,7 @@ msgstr "Tekijä"
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
-msgstr "Lisäosan &Ohje"
+msgstr "Lisäosan &ohje"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Disable add-on"
@@ -8787,20 +9085,6 @@ msgstr "Valitse lisäosapaketti"
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "NVDA:n lisäosapaketti (*.{ext})"
 
-#. Translators: Presented when attempting to remove the selected add-on.
-#. {addon} is replaced with the add-on name.
-#, python-brace-format
-msgid ""
-"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
-"undone."
-msgstr ""
-"Haluatko varmasti poistaa lisäosan {addon} NVDA:sta? Poistoa ei voi "
-"peruuttaa."
-
-#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
-msgid "Remove Add-on"
-msgstr "Poista lisäosa"
-
 #. Translators: The status shown for an addon when it's not considered compatible with this version of NVDA.
 msgid "Incompatible"
 msgstr "Yhteensopimaton"
@@ -8824,16 +9108,6 @@ msgstr "Otetaan käyttöön uudelleenkäynnistyksen jälkeen"
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
 msgstr "&Ota käyttöön"
-
-#. Translators: The message displayed when the add-on cannot be disabled.
-#, python-brace-format
-msgid "Could not disable the {description} add-on."
-msgstr "Lisäosaa {description} ei voitu poistaa käytöstä."
-
-#. Translators: The message displayed when the add-on cannot be enabled.
-#, python-brace-format
-msgid "Could not enable the {description} add-on."
-msgstr "Lisäosaa {description} ei voitu ottaa käyttöön."
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #, python-format
@@ -8896,24 +9170,12 @@ msgid ""
 "version is {NVDAVersion}"
 msgstr ""
 "Lisäosan {summary} {version} asennus on estetty. Tämä lisäosa edellyttää "
-"vähintään NVDA-versiota {minimumNVDAVersion}, käytössä oleva NVDA:n versio "
-"on {NVDAVersion}."
+"vähintään NVDA-versiota {minimumNVDAVersion}, käytössä oleva versio on "
+"{NVDAVersion}."
 
 #. Translators: The title of a dialog presented when an error occurs.
 msgid "Add-on not compatible"
 msgstr "Lisäosa ei ole yhteensopiva"
-
-#. Translators: A message informing the user that this addon can not be installed
-#. because it is not compatible.
-#, python-brace-format
-msgid ""
-"Installation of {summary} {version} has been blocked. An updated version of "
-"this add-on is required, the minimum add-on API supported by this version of "
-"NVDA is {backCompatToAPIVersion}"
-msgstr ""
-"Lisäosan {summary} {version} asennus on estetty. Tästä lisäosasta "
-"edellytetään päivitettyä versiota. Tämän NVDA-version tukema "
-"lisäosarajapinnan vähimmäisversio on {backCompatToAPIVersion}."
 
 #. Translators: A message asking the user if they really wish to install an addon.
 #, python-brace-format
@@ -8946,20 +9208,6 @@ msgstr "Yhteensopimattomat lisäosat"
 msgid "Incompatible reason"
 msgstr "Yhteensopimattomuuden syy"
 
-#. Translators: The reason an add-on is not compatible. A more recent version of NVDA is
-#. required for the add-on to work. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
-msgid "An updated version of NVDA is required. NVDA version {} or later."
-msgstr "Edellyttää päivitettyä NVDA:n versiota. NVDA {} tai uudempi."
-
-#. Translators: The reason an add-on is not compatible. The addon relies on older, removed features of NVDA,
-#. an updated add-on is required. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
-msgid ""
-"An updated version of this add-on is required. The minimum supported API "
-"version is now {}"
-msgstr ""
-"Edellyttää tämän lisäosan päivitettyä versiota. Tuettu rajapinnan "
-"vähimmäisversio on nyt {}."
-
 #. Translators: Reported when an action cannot be performed because NVDA is in a secure screen
 msgid "Action unavailable in secure context"
 msgstr "Toiminto ei käytettävissä suojatussa kontekstissa"
@@ -8974,6 +9222,15 @@ msgstr ""
 #. for a response from a modal dialog
 msgid "Action unavailable while a dialog requires a response"
 msgstr "Toiminto ei käytettävissä valintaikkunan odottaessa vastausta"
+
+#. Translators: Reported when an action cannot be performed because Windows is locked.
+msgid "Action unavailable while Windows is locked"
+msgstr "Toiminto ei käytettävissä Windowsin ollessa lukittuna"
+
+#. Translators: Reported when an action cannot be performed because NVDA is running the launcher temporary
+#. version
+msgid "Action unavailable in a temporary version of NVDA"
+msgstr "Toiminto ei käytettävissä NVDA:n tilapäisversiossa"
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -9026,8 +9283,10 @@ msgid "Error activating profile."
 msgstr "Virhe otettaessa käyttöön profiilia."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
-msgid "This profile will be permanently deleted. This action cannot be undone."
-msgstr "Tämä profiili poistetaan pysyvästi. Poistoa ei voi perua."
+#. The placeholder {} is replaced with the name of the configuration profile that will be deleted.
+msgid ""
+"The profile {} will be permanently deleted. This action cannot be undone."
+msgstr "Profiili poistetaan pysyvästi. Poistoa ei voi peruuttaa."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -9160,7 +9419,7 @@ msgstr "Manuaalinen käyttöönotto"
 
 #. Translators: Message indicating no context sensitive help is available for the control or dialog.
 msgid "No help available here."
-msgstr "Ohjetta ei saatavilla."
+msgstr "Ohjetta ei saatavilla tästä kohteesta."
 
 #. Translators: Message shown when trying to display context sensitive help,
 #. indicating that	the user guide could not be found.
@@ -9335,6 +9594,7 @@ msgid "Please press OK to start the installed copy."
 msgstr "Käynnistä asennettu versio painamalla OK."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
+#. Translators: Title of a dialog shown when a portable copy of NVDA is created.
 msgid "Success"
 msgstr "Onnistui"
 
@@ -9446,23 +9706,17 @@ msgstr "Määritä hakemisto, johon massamuistiversio luodaan."
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
 msgid ""
-"Please specify an absolute path (including drive letter)  in which to create "
-"the portable copy."
+"Please specify the absolute path where the portable copy should be created. "
+"It may include system variables (%temp%, %homepath%, etc.)."
 msgstr ""
-"Anna täysi hakemistopolku (asemakirjain mukaan lukien), johon "
-"massamuistiversio luodaan."
+"Määritä absoluuttinen hakemistopolku, jonne massamuistiversio luodaan. Polku "
+"voi sisältää järjestelmän ympäristömuuttujia (%temp%, %homepath% jne.)."
 
-#. Translators: The message displayed when the user specifies an invalid destination drive
-#. in the Create Portable NVDA dialog.
-#, python-format
-msgid "Invalid drive %s"
-msgstr "Virheellinen asemakirjain %s"
-
-#. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+#. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
 msgstr "Luodaan massamuistiversiota"
 
-#. Translators: The message displayed while a portable copy of NVDA is bieng created.
+#. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "Odota, kun NVDA:n massamuistiversiota luodaan."
 
@@ -9471,16 +9725,16 @@ msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA ei voi poistaa tai korvata tiedostoa."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
-#. %s will be replaced with the specific error message.
-#, python-format
-msgid "Failed to create portable copy: %s"
-msgstr "Massamuistiversion luonti epäonnistui: %s"
+#. {error} will be replaced with the specific error message.
+#, python-brace-format
+msgid "Failed to create portable copy: {error}."
+msgstr "Massamuistiversion luonti epäonnistui: {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
-#. %s will be replaced with the destination directory.
-#, python-format
-msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "NVDA:n massamuistiversio luotu onnistuneesti hakemistoon %s."
+#. {dir} will be replaced with the destination directory.
+#, python-brace-format
+msgid "Successfully created a portable copy of NVDA at {dir}"
+msgstr "NVDA:n massamuistiversio luotu onnistuneesti hakemistoon {dir}"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -9692,7 +9946,7 @@ msgstr "&Syntetisaattori"
 #. Translators: This is the label for the button used to change braille display,
 #. it appears in the context of a braille display group on the braille settings panel.
 msgid "C&hange..."
-msgstr "&Muuta..."
+msgstr "Va&ihda..."
 
 #. Translators: This is the label for the synthesizer selection dialog
 msgid "Select Synthesizer"
@@ -10187,19 +10441,6 @@ msgstr "Rivi&numerot"
 msgid "Line &indentation reporting:"
 msgstr "Rivien &sisennysten ilmaiseminen:"
 
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with Speech.
-msgctxt "line indentation setting"
-msgid "Speech"
-msgstr "Puheella"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with tones.
-msgid "Tones"
-msgstr "Äänimerkeillä"
-
-#. Translators: A choice in a combo box in the document formatting dialog  to report indentation with both  Speech and tones.
-msgid "Both Speech and Tones"
-msgstr "Puheella ja äänimerkeillä"
-
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
@@ -10234,16 +10475,6 @@ msgstr "O&tsikot"
 #. document formatting settings panel.
 msgid "Cell c&oordinates"
 msgstr "Solujen koor&dinaatit"
-
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Styles"
-msgstr "Tyylit"
-
-#. Translators: This is the label for a combobox in the
-#. document formatting settings panel.
-msgid "Both Colors and Styles"
-msgstr "Värit ja tyylit"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
@@ -10300,6 +10531,18 @@ msgstr "&Napsautettavat kohteet"
 msgid "Report formatting chan&ges after the cursor (can cause a lag)"
 msgstr ""
 "Ilmoita koh&distimen jälkeiset muotoilumuutokset (voi aiheuttaa hidastumista)"
+
+#. Translators: This is the label for the document navigation settings panel.
+msgid "Document Navigation"
+msgstr "Asiakirjan selaus"
+
+#. Translators: This is a label for the paragraph navigation style in the document navigation dialog
+msgid "&Paragraph style:"
+msgstr "Ka&ppaletyyli:"
+
+#. Translators: This is the label for the addon navigation settings panel.
+msgid "Add-on Store"
+msgstr "Lisäosakauppa"
 
 #. Translators: This is the label for the touch interaction settings panel.
 msgid "Touch Interaction"
@@ -10470,11 +10713,6 @@ msgstr "Ilmoita rakenteellisten merkintöjen lisätiedoista"
 msgid "Report aria-description always"
 msgstr "Puhu aina ARIA-kuvaukset"
 
-#. Translators: This is the label for a group of advanced options in the
-#. Advanced settings panel
-msgid "HID Braille Standard"
-msgstr "HID Braille -protokolla"
-
 #. Translators: Label for option in the 'Enable support for HID braille' combobox
 #. in the Advanced settings panel.
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
@@ -10496,10 +10734,14 @@ msgstr "Kyllä"
 msgid "No"
 msgstr "Ei"
 
-#. Translators: This is the label for a checkbox in the
+#. Translators: This is the label for a combo box in the
 #. Advanced settings panel.
 msgid "Enable support for HID braille"
 msgstr "Ota käyttöön HID Braille -protokollan tuki"
+
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Report live regions:"
+msgstr "Ilmaise aktiiviset alueet:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10547,6 +10789,10 @@ msgstr "Diff Match Patch"
 msgid "Difflib"
 msgstr "Difflib"
 
+#. Translators: This is the label for a combo-box in the Advanced settings panel.
+msgid "Speak new text in Windows Terminal via:"
+msgstr "Uuden tekstin puhumismenetelmä Windows Terminalissa:"
+
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "Yritä perua vanhentuneiden kohdistustapahtumien puhe:"
@@ -10574,6 +10820,26 @@ msgstr "Kohdistimen siirtämisen aikakatkaisu (ms)"
 #. Advanced settings panel.
 msgid "Report transparent color values"
 msgstr "Ilmoita läpinäkyvien värien arvot"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Audio"
+msgstr "Ääni"
+
+#. Translators: This is the label for a checkbox control in the Advanced settings panel.
+msgid "Use WASAPI for audio output (requires restart)"
+msgstr "Käytä WASAPIa äänen toistamiseen (edellyttää uudelleenkäynnistystä)"
+
+#. Translators: This is the label for a checkbox control in the
+#. Advanced settings panel.
+msgid "Volume of NVDA sounds follows voice volume (requires WASAPI)"
+msgstr ""
+"NVDA-äänien voimakkuus mukautuu puheäänen voimakkuuteen (edellyttää WASAPIa)"
+
+#. Translators: This is the label for a slider control in the
+#. Advanced settings panel.
+msgid "Volume of NVDA sounds (requires WASAPI)"
+msgstr "NVDA-äänien voimakkuus (edellyttää WASAPIa)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10659,7 +10925,7 @@ msgstr "Pistenäyttövirhe"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 msgid "&Output table:"
-msgstr "&Tulostustaulukko:"
+msgstr "Tul&ostustaulukko:"
 
 #. Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 msgid "&Input table:"
@@ -10667,7 +10933,7 @@ msgstr "S&yöttötaulukko:"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 msgid "E&xpand to computer braille for the word at the cursor"
-msgstr "&Laajenna kohdistimen kohdalla oleva sana"
+msgstr "Laa&jenna kohdistimen kohdalla oleva sana"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
 msgid "&Show cursor"
@@ -10679,7 +10945,7 @@ msgstr "Vilkkuva kohdistin"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
-msgstr "&Kohdistimen vilkkumisnopeus (ms)"
+msgstr "Ko&hdistimen vilkkumisnopeus (ms)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
 msgid "Cursor shape for &focus:"
@@ -10687,17 +10953,7 @@ msgstr "Kohdistimen muoto &kohdistukselle:"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
 msgid "Cursor shape for &review:"
-msgstr "Kohdistimen muoto tarkaste&lukohdistimelle:"
-
-#. Translators: One of the show states of braille messages
-#. (the timeout mode shows messages for the specific time).
-msgid "Use timeout"
-msgstr "Käytä aikakatkaisua"
-
-#. Translators: One of the show states of braille messages
-#. (the indefinitely mode prevents braille messages from disappearing automatically).
-msgid "Show indefinitely"
-msgstr "Pysyvästi"
+msgstr "Kohdistimen muoto t&arkastelukohdistimelle:"
 
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
@@ -10712,9 +10968,14 @@ msgstr "Ilmoitusten aikakatkaisu (sek)"
 msgid "Tether B&raille:"
 msgstr "Pistenäyttö s&euraa:"
 
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "Move system caret when ro&uting review cursor"
+msgstr ""
+"Siirrä &järjestelmäkohdistinta siirryttäessä tarkastelukohdistimen kohdalle"
+
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
-msgstr "Lue &kappaleittain"
+msgstr "Lue ka&ppaleittain"
 
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
@@ -10726,7 +10987,11 @@ msgstr "Kohdistuskontekstin näyttäminen:"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 msgid "I&nterrupt speech while scrolling"
-msgstr "Ke&skeytä puhe vieritettäessä"
+msgstr "Keskeyt&ä puhe vieritettäessä"
+
+#. Translators: This is a label for a combo-box in the Braille settings panel.
+msgid "Show se&lection"
+msgstr "Näytä va&linta"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -10901,9 +11166,14 @@ msgid "Dictionary Entry Error"
 msgstr "Virhe sanastomäärityksessä"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
-#, python-format
-msgid "Regular Expression error: \"%s\"."
-msgstr "Virhe sääntölausekkeessa: \"%s\"."
+#, python-brace-format
+msgid "Regular Expression error in the pattern field: \"{error}\"."
+msgstr "Virhe Korvattava-kentän sääntölausekkeessa: \"{error}\"."
+
+#. Translators: This is an error message to let the user know that the dictionary entry is not valid.
+#, python-brace-format
+msgid "Regular Expression error in the replacement field: \"{error}\"."
+msgstr "Virhe Korvaava-kentän sääntölausekkeessa: \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -10996,6 +11266,14 @@ msgstr "Käytä &Caps Lockia  NVDA-näppäimenä"
 msgid "&Show this dialog when NVDA starts"
 msgstr "&Näytä tämä valintaikkuna NVDA:n käynnistyessä"
 
+#. Translators: The title of an error message box displayed when validating the startup dialog
+msgid ""
+"At least one NVDA modifier key must be set. Caps lock will remain as an NVDA "
+"modifier key. "
+msgstr ""
+"Vähintään yksi näppäin on määritettävä NVDA-näppäimeksi. Caps Lockia "
+"käytetään, mikäli mitään muuta ei ole valittu."
+
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
 msgstr "&Hyväksyn"
@@ -11055,12 +11333,6 @@ msgstr "Poistu matemaattisen sisällön vuorovaikutuksesta"
 msgid "Math interaction not supported."
 msgstr "Matemaattisen sisällön vuorovaikutusta ei tueta."
 
-#. Translators: This is spoken when the line is considered blank.
-#. Translators: This is spoken when NVDA moves to an empty line.
-#. Translators: This is spoken when the line is considered blank.
-msgid "blank"
-msgstr "tyhjä"
-
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #, python-format
 msgid "cap %s"
@@ -11104,36 +11376,40 @@ msgid "row %s"
 msgstr "rivi %s"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
-#. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, python-format
-msgid "through %s"
-msgstr "jakaantunut %s"
+#, python-brace-format
+msgid "through {endRow}"
+msgstr "/ {endRow}"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "sarake %s"
 
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-brace-format
+msgid "through {endCol}"
+msgstr "/ {endCol}"
+
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
 #, python-brace-format
 msgid "through row {row} column {column}"
-msgstr "jakaantunut rivi {row} sarake {column}"
+msgstr "/ rivi {row} sarake {column}"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
-msgstr "jossa {rowCount} riviä ja {columnCount} saraketta"
+msgstr ", jossa {rowCount} riviä ja {columnCount} saraketta"
 
 #. Translators: Speaks number of columns (example output: with 4 columns).
 #, python-format
 msgid "with %s columns"
-msgstr "jossa %s saraketta"
+msgstr ", jossa %s saraketta"
 
 #. Translators: Speaks number of rows (example output: with 2 rows).
 #, python-format
 msgid "with %s rows"
-msgstr "jossa %s riviä"
+msgstr ", jossa %s riviä"
 
 #. Translators: Speaks when there are further details/annotations that can be fetched manually.
 msgid "has details"
@@ -11146,8 +11422,10 @@ msgstr "taso %s"
 
 #. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
-msgid "with %s items"
-msgstr "jossa %s kohdetta"
+msgid "with %s item"
+msgid_plural "with %s items"
+msgstr[0] ", jossa %s kohde"
+msgstr[1] ", jossa %s kohdetta"
 
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #, python-format
@@ -11285,6 +11563,15 @@ msgstr "merkitty"
 #. Translators: Reported when text is no longer marked
 msgid "not marked"
 msgstr "ei merkitty"
+
+#. Translators: Reported when text is color-highlighted
+#, python-brace-format
+msgid "highlighted in {color}"
+msgstr "korostettu värillä {color}"
+
+#. Translators: Reported when text is no longer marked
+msgid "not highlighted"
+msgstr "ei korostusta"
 
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
@@ -11508,6 +11795,41 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "kohdassa {x}, {y}"
 
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds
+#, python-brace-format
+msgctxt "time format"
+msgid "{S}"
+msgstr "{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes
+#, python-brace-format
+msgctxt "time format"
+msgid "{M}:{S}"
+msgstr "{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours
+#, python-brace-format
+msgctxt "time format"
+msgid "{H}:{M}:{S}"
+msgstr "{H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} day
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} day {H}:{M}:{S}"
+msgstr "{D} päivä {H}:{M}:{S}"
+
+#. Translators: used to format time locally.
+#. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} days
+#, python-brace-format
+msgctxt "time format"
+msgid "{D} days {H}:{M}:{S}"
+msgstr "{D} päivää {H}:{M}:{S}"
+
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
 msgid ""
@@ -11620,11 +11942,11 @@ msgid "No system battery"
 msgstr "Järjestelmässä ei akkua"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
-msgid "Charging battery"
-msgstr "Akkua ladataan"
+msgid "Plugged in"
+msgstr "Kytketty verkkovirtaan"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
-msgid "AC disconnected"
+msgid "Unplugged"
 msgstr "Irrotettu verkkovirrasta"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
@@ -12604,11 +12926,13 @@ msgstr "Seliteosa {legendEntryIndex} / {legendEntryCount}"
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "Seliteavain sarjalle {seriesName} {seriesIndex} / {seriesCount}"
 
-#. Translators: The default color of text when a color has not been set by the author.
-#. Translators: The default background color  when a color has not been set by the author.
-#. Translators: the default (automatic) color in Microsoft Word
-msgid "default color"
-msgstr "oletusväri"
+#. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
+#. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
+#, python-brace-format
+msgid "{color} (default color)"
+msgstr "{color} (oletusväri)"
 
 #. Translators: The color of text cannot be detected.
 #. Translators: The background color cannot be detected.
@@ -12756,6 +13080,44 @@ msgstr "&Laskentataulukot"
 #, python-brace-format
 msgid "{start} through {end}"
 msgstr "väliltä {start} ja {end}"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold off"
+msgstr "Lihavointi pois"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold on"
+msgstr "Lihavointi käytössä"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic off"
+msgstr "Kursivointi pois"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic on"
+msgstr "Kursivointi käytössä"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline off"
+msgstr "Alleviivaus pois"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline on"
+msgstr "Alleviivaus käytössä"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+msgid "Strikethrough off"
+msgstr "Yliviivaus pois"
+
+#. Translators: a message when toggling formatting in Microsoft Excel
+msgid "Strikethrough on"
+msgstr "Yliviivaus käytössä"
 
 #. Translators: the description  for a script for Excel
 msgid "opens a dropdown item at the current cell"
@@ -13144,36 +13506,18 @@ msgstr "vähintään %.1f pistettä"
 #. Translators: line spacing of x lines
 #, python-format
 msgctxt "line spacing value"
-msgid "%.1f lines"
-msgstr "%.1f riviä"
+msgid "%.1f line"
+msgid_plural "%.1f lines"
+msgstr[0] "%.1f rivi"
+msgstr[1] "%.1f riviä"
 
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "Taulukon kuvaus"
 
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Bold on"
-msgstr "Lihavointi käytössä"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Bold off"
-msgstr "Lihavointi pois"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Italic on"
-msgstr "Kursivointi käytössä"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Italic off"
-msgstr "Kursivointi pois"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Underline on"
-msgstr "Alleviivaus käytössä"
-
-#. Translators: a message when toggling formatting in Microsoft word
-msgid "Underline off"
-msgstr "Alleviivaus pois"
+#. Translators: the default (automatic) color in Microsoft Word
+msgid "automatic color"
+msgstr "automaattinen väri"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Left aligned"
@@ -13281,6 +13625,765 @@ msgstr "Kaksinkertainen riviväli"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Riviväli 1,5"
+
+#. Translators: Label for add-on channel in the add-on sotre
+#. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "All"
+msgstr "Kaikki"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "Stable"
+msgstr "Vakaa"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "Beta"
+msgstr "Beeta"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "Dev"
+msgstr "Kehitys"
+
+#. Translators: Label for add-on channel in the add-on sotre
+msgctxt "addonStore"
+msgid "External"
+msgstr "Ulkoinen"
+
+#. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled"
+msgstr "Käytössä"
+
+#. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled"
+msgstr "Ei käytössä"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Pending removal"
+msgstr "Odottaa poistoa"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Available"
+msgstr "Saatavilla"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Update Available"
+msgstr "Päivitys saatavilla"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Migrate to add-on store"
+msgstr "Siirrä lisäosakauppaan"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Incompatible"
+msgstr "Yhteensopimaton"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Downloading"
+msgstr "Ladataan"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Download failed"
+msgstr "Lataus epäonnistui"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Downloaded, pending install"
+msgstr "Ladattu, odottaa asennusta"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Installing"
+msgstr "Asennetaan"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Install failed"
+msgstr "Asennus epäonnistui"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Installed, pending restart"
+msgstr "Asennettu, odottaa uudelleenkäynnistystä"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled, pending restart"
+msgstr "Ei käytössä, odottaa uudelleenkäynnistystä"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled (incompatible), pending restart"
+msgstr "Ei käytössä (yhteensopimaton), odottaa uudelleenkäynnistystä"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Disabled (incompatible)"
+msgstr "Ei käytössä (yhteensopimaton)"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled (incompatible), pending restart"
+msgstr "Käytössä (yhteensopimaton), odottaa uudelleenkäynnistystä"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled (incompatible)"
+msgstr "Käytössä (yhteensopimaton)"
+
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Enabled, pending restart"
+msgstr "Käytössä, odottaa uudelleenkäynnistystä"
+
+#. Translators: The label of a tab to display installed add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Installed add-ons"
+msgstr "Asennetut"
+
+#. Translators: The label of a tab to display updatable add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Updatable add-ons"
+msgstr "Päivitettävissä"
+
+#. Translators: The label of a tab to display available add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Available add-ons"
+msgstr "Saatavilla"
+
+#. Translators: The label of a tab to display incompatible add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Installed incompatible add-ons"
+msgstr "Yhteensopimattomat"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Installed &add-ons"
+msgstr "Ase&nnetut"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Updatable &add-ons"
+msgstr "&Päivitettävissä"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Available &add-ons"
+msgstr "Saatav&illa"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+msgctxt "addonStore"
+msgid "Installed incompatible &add-ons"
+msgstr "&Yhteensopimattomat"
+
+#. Translators: The reason an add-on is not compatible.
+#. A more recent version of NVDA is required for the add-on to work.
+#. The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"An updated version of NVDA is required. NVDA version {nvdaVersion} or later."
+msgstr "Edellyttää NVDA:n versiota {nvdaVersion} tai uudempaa."
+
+#. Translators: The reason an add-on is not compatible.
+#. The addon relies on older, removed features of NVDA, an updated add-on is required.
+#. The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"An updated version of this add-on is required. The minimum supported API "
+"version is now {nvdaVersion}. This add-on was last tested with "
+"{lastTestedNVDAVersion}. You can enable this add-on at your own risk. "
+msgstr ""
+"Edellyttää lisäosan päivitettyä versiota. Tuettu rajapinnan vähimmäisversio "
+"on nyt {nvdaVersion}. Lisäosa on testattu viimeksi NVDA:n versiolla "
+"{lastTestedNVDAVersion}. Voit ottaa tämän lisäosan käyttöön omalla "
+"vastuullasi."
+
+#. Translators: A message indicating that some add-ons will be disabled
+#. unless reviewed before installation.
+msgctxt "addonStore"
+msgid ""
+"Your NVDA configuration contains add-ons that are incompatible with this "
+"version of NVDA. These add-ons will be disabled after installation. After "
+"installation, you will be able to manually re-enable these add-ons at your "
+"own risk. If you rely on these add-ons, please review the list to decide "
+"whether to continue with the installation. "
+msgstr ""
+"Asennettuina on lisäosia, jotka eivät ole yhteensopivia tämän NVDA-version "
+"kanssa. Ne poistetaan käytöstä asennuksen jälkeen. Voit halutessasi ottaa ne "
+"käyttöön manuaalisesti omalla vastuullasi. Mikäli olet riippuvainen näistä "
+"lisäosista, käy luettelo läpi ja päätä, haluatko jatkaa asennusta."
+
+#. Translators: A message to confirm that the user understands that incompatible add-ons
+#. will be disabled after installation, and can be manually re-enabled.
+msgctxt "addonStore"
+msgid ""
+"I understand that incompatible add-ons will be disabled and can be manually "
+"re-enabled at my own risk after installation."
+msgstr ""
+"Ymmärrän, että yhteensopimattomat lisäosat poistetaan käytöstä ja että ne "
+"voidaan ottaa uudelleen käyttöön manuaalisesti asennuksen jälkeen omalla "
+"vastuullani"
+
+#. Translators: Names of braille displays.
+msgid "Caiku Albatross 46/80"
+msgstr "Caiku Albatross 46/80"
+
+#. Translators: A message when number of status cells must be changed
+#. for a braille display driver
+msgid ""
+"To use Albatross with NVDA: change number of status cells in Albatross "
+"internal menu at most "
+msgstr ""
+"Käytä Albatrossia NVDA:n kanssa muuttamalla laitteen sisäisestä valikosta "
+"tilasolujen määräksi korkeintaan "
+
+#. Translators: Names of braille displays.
+msgid "Eurobraille displays"
+msgstr "Eurobraille"
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+msgid "HID keyboard input simulation is unavailable."
+msgstr "HID-näppäimistösyötteen emulointi ei ole käytettävissä."
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggle HID keyboard simulation"
+msgstr "Ottaa HID-näppäimistöemuloinnin käyttöön tai poistaa sen käytöstä."
+
+#. Translators: Header (usually the add-on name) when add-ons are loading. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Loading add-ons..."
+msgstr "Ladataan lisäosia..."
+
+#. Translators: Header (usually the add-on name) when no add-on is selected. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "No add-on selected."
+msgstr "Lisäosaa ei valittuna."
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Description:"
+msgstr "Kuvaus:"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "S&tatus:"
+msgstr "T&ila:"
+
+#. Translators: Label for the text control containing a description of the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "A&ctions"
+msgstr "T&oiminnot"
+
+#. Translators: Label for the text control containing extra details about the selected add-on.
+#. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "&Other Details:"
+msgstr "&Muita tietoja:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Publisher:"
+msgstr "Julkaisija:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Author:"
+msgstr "Tekijä:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "ID:"
+msgstr "Tunnus:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Installed version:"
+msgstr "Asennettu versio:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Available version:"
+msgstr "Saatavilla oleva versio:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Channel:"
+msgstr "Kanava:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Incompatible Reason:"
+msgstr "Yhteensopimattomuuden syy:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Homepage:"
+msgstr "Kotisivu:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "License:"
+msgstr "Käyttöoikeussopimus:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "License URL:"
+msgstr "Käyttöoikeussopimuksen URL:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Download URL:"
+msgstr "Lataus-URL:"
+
+#. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+msgctxt "addonStore"
+msgid "Source URL:"
+msgstr "Lähdekoodin URL:"
+
+#. Translators: A button in the addon installation warning / blocked dialog which shows
+#. more information about the addon
+msgctxt "addonStore"
+msgid "&About add-on..."
+msgstr "Tietoa l&isäosasta..."
+
+#. Translators: A button in the addon installation blocked dialog which will confirm the available action.
+msgctxt "addonStore"
+msgid "&Yes"
+msgstr "&Kyllä"
+
+#. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
+msgctxt "addonStore"
+msgid "&No"
+msgstr "&Ei"
+
+#. Translators: The message displayed when updating an add-on, but the installed version
+#. identifier can not be compared with the version to be installed.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on installation may result in downgrade: {name}. The installed "
+"add-on version cannot be compared with the add-on store version. Installed "
+"version: {oldVersion}. Available version: {version}.\n"
+"Proceed with installation anyway? "
+msgstr ""
+"Varoitus: Lisäosan asentamisesta saattaa olla seurauksena alaspäin "
+"päivittäminen: {name}. Asennettuna olevaa versiota ei voi verrata "
+"lisäosakaupan versioon. Asennettuna oleva versio: {oldVersion}. Saatavilla "
+"oleva versio: {version}.\n"
+"Haluatko silti jatkaa asennusta?"
+
+#. Translators: The title of a dialog presented when an error occurs.
+msgctxt "addonStore"
+msgid "Add-on not compatible"
+msgstr "Lisäosa ei ole yhteensopiva"
+
+#. Translators: Presented when attempting to remove the selected add-on.
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be "
+"undone."
+msgstr ""
+"Haluatko varmasti poistaa lisäosan {addon} NVDA:sta? Poistoa ei voi "
+"peruuttaa."
+
+#. Translators: Title for message asking if the user really wishes to remove the selected Add-on.
+msgctxt "addonStore"
+msgid "Remove Add-on"
+msgstr "Poista lisäosa"
+
+#. Translators: The message displayed when installing an add-on package that is incompatible
+#. because the add-on is too old for the running version of NVDA.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated "
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Installation may cause unstable behavior in NVDA.\n"
+"Proceed with installation anyway? "
+msgstr ""
+"Varoitus: Lisäosa ei ole yhteensopiva: {name} {version}. Mikäli mahdollista, "
+"etsi tästä lisäosasta päivitettyä versiota. Viimeisin testattu NVDA-versio "
+"on {lastTestedNVDAVersion} ja tämänhetkinen NVDA-versiosi on {NVDAVersion}. "
+"Asentaminen saattaa aiheuttaa epävakautta NVDA:ssa.\n"
+"Haluatko silti jatkaa asennusta?"
+
+#. Translators: The message displayed when enabling an add-on package that is incompatible
+#. because the add-on is too old for the running version of NVDA.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"Warning: add-on is incompatible: {name} {version}. Check for an updated "
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Enabling may cause unstable behavior in NVDA.\n"
+"Proceed with enabling anyway? "
+msgstr ""
+"Varoitus: Lisäosa ei ole yhteensopiva: {name} {version}. Mikäli mahdollista, "
+"etsi tämän lisäosan päivitettyä versiota. Viimeisin testattu NVDA-versio on "
+"{lastTestedNVDAVersion} ja tämänhetkinen NVDA-versiosi on {NVDAVersion}. "
+"Käyttöönotto saattaa aiheuttaa epävakautta NVDA:ssa.\n"
+"Haluatko silti jatkaa käyttöönottoa?"
+
+#. Translators: message shown in the Addon Information dialog.
+#, python-brace-format
+msgctxt "addonStore"
+msgid ""
+"{summary} ({name})\n"
+"Version: {version}\n"
+"Description: {description}\n"
+msgstr ""
+"{summary} ({name})\n"
+"Versio: {version}\n"
+"Kuvaus: {description}\n"
+
+#. Translators: the publisher part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Publisher: {publisher}\n"
+msgstr "Julkaisija: {publisher}\n"
+
+#. Translators: the author part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Author: {author}\n"
+msgstr "Tekijä: {author}\n"
+
+#. Translators: the url part of the About Add-on information
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Homepage: {url}\n"
+msgstr "Kotisivu: {url}\n"
+
+#. Translators: the minimum NVDA version part of the About Add-on information
+msgctxt "addonStore"
+msgid "Minimum required NVDA version: {}\n"
+msgstr "Edellytettävä NVDA:n vähimmäisversio: {}\n"
+
+#. Translators: the last NVDA version tested part of the About Add-on information
+msgctxt "addonStore"
+msgid "Last NVDA version tested: {}\n"
+msgstr "Viimeisin testattu NVDA-versio: {}\n"
+
+#. Translators: title for the Addon Information dialog
+msgctxt "addonStore"
+msgid "Add-on Information"
+msgstr "Lisäosan tiedot"
+
+#. Translators: The warning of a dialog
+msgid "Add-on Store Warning"
+msgstr "Lisäosakaupan varoitus"
+
+#. Translators: Warning that is displayed before using the Add-on Store.
+msgctxt "addonStore"
+msgid ""
+"Add-ons are created by the NVDA community and are not vetted by NV Access. "
+"NV Access cannot be held responsible for add-on behavior. The functionality "
+"of add-ons is unrestricted and can include accessing your personal data or "
+"even the entire system. "
+msgstr ""
+"Lisäosat ovat NVDA-yhteisön tekemiä, eikä NV Access ole tarkastanut niitä. "
+"NV Access ei ole vastuussa lisäosien toiminnasta. Lisäosien toiminnallisuus "
+"on rajoittamatonta ja saattaa mahdollistaa pääsyn henkilökohtaisiin "
+"tietoihisi tai jopa koko järjestelmään."
+
+#. Translators: The label of a checkbox in the add-on store warning dialog
+msgctxt "addonStore"
+msgid "&Don't show this message again"
+msgstr "&Älä näytä tätä varoitusta uudelleen"
+
+#. Translators: The label of a button in a dialog
+msgid "&OK"
+msgstr "&OK"
+
+#. Translators: The title of the addonStore dialog where the user can find and download add-ons
+msgctxt "addonStore"
+msgid "Add-on Store"
+msgstr "Lisäosakauppa"
+
+#. Translators: The label for a button in add-ons Store dialog to install an external add-on.
+msgctxt "addonStore"
+msgid "Install from e&xternal source"
+msgstr "Asenna &ulkoisesta lähteestä"
+
+#. Translators: Banner notice that is displayed in the Add-on Store.
+msgctxt "addonStore"
+msgid "Note: NVDA was started with add-ons disabled"
+msgstr "Huom: NVDA käynnistettiin lisäosat käytöstä poistettuina"
+
+#. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "Cha&nnel:"
+msgstr "&Kanava:"
+
+#. Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
+msgid "Include &incompatible add-ons"
+msgstr "Näytä y&hteensopimattomat lisäosat"
+
+#. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "Ena&bled/disabled:"
+msgstr "Käyt&össä/ei käytössä:"
+
+#. Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
+msgid "&Search:"
+msgstr "Et&si:"
+
+#. Translators: Title for message shown prior to installing add-ons when closing the add-on store dialog.
+msgctxt "addonStore"
+msgid "Add-on installation"
+msgstr "Lisäosan asennus"
+
+#. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
+#. The placeholder {} will be replaced with the number of add-ons to be installed
+msgctxt "addonStore"
+msgid "Download of {} add-ons in progress, cancel downloading?"
+msgstr "Lisäosien lataus käynnissä. Haluatko peruuttaa?"
+
+#. Translators: Message shown while installing add-ons after closing the add-on store dialog
+#. The placeholder {} will be replaced with the number of add-ons to be installed
+msgctxt "addonStore"
+msgid "Installing {} add-ons, please wait."
+msgstr "Asennetaan {} lisäosaa, odota..."
+
+#. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
+#. tab's name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "{category}:"
+msgstr "{category}:"
+
+#. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "NVDA Add-on Package (*.{ext})"
+msgstr "NVDA:n lisäosapaketti (*.{ext})"
+
+#. Translators: The message displayed in the dialog that
+#. allows you to choose an add-on package for installation.
+msgctxt "addonStore"
+msgid "Choose Add-on Package File"
+msgstr "Valitse lisäosapakettitiedosto"
+
+#. Translators: The name of the column that contains names of addons.
+msgctxt "addonStore"
+msgid "Name"
+msgstr "Nimi"
+
+#. Translators: The name of the column that contains the installed addon's version string.
+msgctxt "addonStore"
+msgid "Installed version"
+msgstr "Asennettu versio"
+
+#. Translators: The name of the column that contains the available addon's version string.
+msgctxt "addonStore"
+msgid "Available version"
+msgstr "Saatavilla oleva versio"
+
+#. Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
+msgctxt "addonStore"
+msgid "Channel"
+msgstr "Kanava"
+
+#. Translators: The name of the column that contains the addon's publisher.
+msgctxt "addonStore"
+msgid "Publisher"
+msgstr "Julkaisija"
+
+#. Translators: The name of the column that contains the addon's author.
+msgctxt "addonStore"
+msgid "Author"
+msgstr "Tekijä"
+
+#. Translators: The name of the column that contains the status of the addon.
+#. e.g. available, downloading installing
+msgctxt "addonStore"
+msgid "Status"
+msgstr "Tila"
+
+#. Translators: Label for an action that installs the selected addon
+msgctxt "addonStore"
+msgid "&Install"
+msgstr "&Asenna"
+
+#. Translators: Label for an action that installs the selected addon
+msgctxt "addonStore"
+msgid "&Install (override incompatibility)"
+msgstr "&Asenna (ohita yhteensopimattomuus)"
+
+#. Translators: Label for an action that updates the selected addon
+msgctxt "addonStore"
+msgid "&Update"
+msgstr "&Päivitä"
+
+#. Translators: Label for an action that replaces the selected addon with
+#. an add-on store version.
+msgctxt "addonStore"
+msgid "Re&place"
+msgstr "Ko&rvaa"
+
+#. Translators: Label for an action that disables the selected addon
+msgctxt "addonStore"
+msgid "&Disable"
+msgstr "Po&ista käytöstä"
+
+#. Translators: Label for an action that enables the selected addon
+msgctxt "addonStore"
+msgid "&Enable"
+msgstr "&Ota käyttöön"
+
+#. Translators: Label for an action that enables the selected addon
+msgctxt "addonStore"
+msgid "&Enable (override incompatibility)"
+msgstr "&Ota käyttöön (ohita yhteensopimattomuus)"
+
+#. Translators: Label for an action that removes the selected addon
+msgctxt "addonStore"
+msgid "&Remove"
+msgstr "Poi&sta"
+
+#. Translators: Label for an action that opens help for the selected addon
+msgctxt "addonStore"
+msgid "&Help"
+msgstr "O&hje"
+
+#. Translators: Label for an action that opens the homepage for the selected addon
+msgctxt "addonStore"
+msgid "Ho&mepage"
+msgstr "&Kotisivu"
+
+#. Translators: Label for an action that opens the license for the selected addon
+msgctxt "addonStore"
+msgid "&License"
+msgstr "K&äyttöoikeussopimus"
+
+#. Translators: Label for an action that opens the source code for the selected addon
+msgctxt "addonStore"
+msgid "Source &Code"
+msgstr "L&ähdekoodi"
+
+#. Translators: The message displayed when the add-on cannot be enabled.
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Could not enable the add-on: {addon}."
+msgstr "Lisäosaa ei voitu ottaa käyttöön: {addon}."
+
+#. Translators: The message displayed when the add-on cannot be disabled.
+#. {addon} is replaced with the add-on name.
+#, python-brace-format
+msgctxt "addonStore"
+msgid "Could not disable the add-on: {addon}."
+msgstr "Lisäosaa ei voitu poistaa käytöstä: {addon}."
+
+#~ msgid "NVDA sounds"
+#~ msgstr "NVDA:n äänet"
+
+#~ msgid "HID Braille Standard"
+#~ msgstr "HID Braille -protokolla"
+
+#~ msgid "Find Error"
+#~ msgstr "Virhe"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "However, your NVDA configuration contains add-ons that are incompatible "
+#~ "with this version of NVDA. These add-ons will be disabled after "
+#~ "installation. If you rely on these add-ons, please review the list to "
+#~ "decide whether to continue with the installation"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "Asetuksesi sisältävät kuitenkin lisäosia, jotka eivät ole yhteensopivia "
+#~ "tämän NVDA-version kanssa. Ne poistetaan käytöstä asennuksen jälkeen. Jos "
+#~ "luotat näihin lisäosiin, tarkastele luetteloa päättääksesi, haluatko "
+#~ "jatkaa asennusta."
+
+#~ msgid "Eurobraille Esys/Esytime/Iris displays"
+#~ msgstr "Eurobraille Esys/Esytime/Iris"
+
+#~ msgid "URL: {url}"
+#~ msgstr "URL: {url}"
+
+#~ msgid ""
+#~ "Installation of {summary} {version} has been blocked. An updated version "
+#~ "of this add-on is required, the minimum add-on API supported by this "
+#~ "version of NVDA is {backCompatToAPIVersion}"
+#~ msgstr ""
+#~ "Lisäosan {summary} {version} asennus on estetty. Tästä lisäosasta "
+#~ "edellytetään päivitettyä versiota. Tämän NVDA-version tukema "
+#~ "lisäosarajapinnan vähimmäisversio on {backCompatToAPIVersion}."
+
+#~ msgid ""
+#~ "Please specify an absolute path (including drive letter)  in which to "
+#~ "create the portable copy."
+#~ msgstr ""
+#~ "Anna täysi hakemistopolku (asemakirjain mukaan lukien), johon "
+#~ "massamuistiversio luodaan."
+
+#~ msgid "Invalid drive %s"
+#~ msgstr "Virheellinen asemakirjain %s"
+
+#~ msgid "Charging battery"
+#~ msgstr "Akkua ladataan"
+
+#~ msgid "AC disconnected"
+#~ msgstr "Irrotettu verkkovirrasta"
+
+#~ msgid "Unable to determine remaining time"
+#~ msgstr "Jäljellä olevaa aikaa ei voida selvittää"
+
+#~ msgid "through %s"
+#~ msgstr "jakaantunut %s"
+
+#~ msgid "Report line indentation with speech"
+#~ msgstr "Ilmaise rivien sisennykset puheella"
+
+#~ msgid "Report line indentation with tones"
+#~ msgstr "Ilmaise rivien sisennykset äänimerkeillä"
+
+#~ msgid "Report line indentation with speech and tones"
+#~ msgstr "Ilmaise rivien sisennykset puheella ja äänimerkeillä"
+
+#~ msgid "Report styles of cell borders"
+#~ msgstr "Ilmaise solun reunojen tyylit"
+
+#~ msgid "Report colors and styles of cell borders"
+#~ msgstr "Ilmaise solun reunojen värit ja tyylit"
 
 #~ msgid ""
 #~ "NVDA is failing to fetch the foreground window. If this continues, NVDA "

@@ -1,4 +1,3 @@
-
 <!doctype html>
 <HTML style="width : 350; height: 300">
 <HEAD>
@@ -15,7 +14,7 @@ function escapeKeyPress(e) {
 function windowOnLoad() {
 	// #5875: string.prototype.split strips the tail when a limit is supplied,
 	// so use a regexp instead.
-	var args = window.dialogArguments.match(/^(.*?);([\s\S]*)$/);
+	var args = window.dialogArguments.match(/^(.*?)__NVDA:split-here__([\s\S]*)$/);
 	// args[0] is the whole string.
 	if (args && args.length == 3){
 		document.title= args[1];

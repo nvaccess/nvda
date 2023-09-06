@@ -1,23 +1,29 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2022 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
-# Leonard de Ruijter
+# Copyright (C) 2008-2023 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
+# Leonard de Ruijter, Burman's Computer and Education Ltd.
 
 import itertools
 import os
 import typing
 from typing import (
 	TYPE_CHECKING,
+	Any,
+	Callable,
+	Dict,
 	Generator,
 	Iterable,
 	List,
 	Optional,
+	Set,
 	Tuple,
 	Union,
+	Type,
 )
 from locale import strxfrm
 
+from annotation import _AnnotationRolesT
 import driverHandler
 import pkgutil
 import importlib
@@ -37,6 +43,7 @@ from config.configFlags import (
 	TetherTo,
 	ReportTableHeaders,
 )
+from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag
 from logHandler import log
 import controlTypes
 import api
@@ -55,6 +62,8 @@ import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import hwIo
+from buildVersion import version_year
+import NVDAState
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
@@ -300,6 +309,13 @@ CURSOR_SHAPES = (
 )
 SELECTION_SHAPE = 0xC0 #: Dots 7 and 8
 
+END_OF_BRAILLE_OUTPUT_SHAPE = 0xFF  # All dots
+"""
+The braille shape shown on a braille display when
+the number of cells used by the braille handler is lower than the actual number of cells.
+The 0 based position of the shape is equal to the number of cells used by the braille handler.
+"""
+
 #: Unicode braille indicator at the start of untranslated braille input.
 INPUT_START_IND = u"⣏"
 #: Unicode braille indicator at the end of untranslated braille input.
@@ -344,6 +360,10 @@ AUTOMATIC_PORT = ("auto", _("Automatic"))
 #: braille displays should be automatically detected and used.
 #: @type: str
 AUTO_DISPLAY_NAME = AUTOMATIC_PORT[0]
+
+NO_BRAILLE_DISPLAY_NAME: str = "noBraille"
+"""The name of the noBraille display driver."""
+
 #: A port name which indicates that USB should be used.
 #: @type: tuple
 # Translators: String representing the USB port selection for braille displays.
@@ -366,7 +386,7 @@ def NVDAObjectHasUsefulText(obj: "NVDAObject") -> bool:
 		return obj._hasNavigableText
 
 
-def _getDisplayDriver(moduleName, caseSensitive=True):
+def _getDisplayDriver(moduleName: str, caseSensitive: bool = True) -> Type["BrailleDisplayDriver"]:
 	try:
 		return importlib.import_module("brailleDisplayDrivers.%s" % moduleName, package="brailleDisplayDrivers").BrailleDisplayDriver
 	except ImportError as initialException:
@@ -379,6 +399,7 @@ def _getDisplayDriver(moduleName, caseSensitive=True):
 		else:
 			raise initialException
 
+
 def getDisplayList(excludeNegativeChecks=True) -> List[Tuple[str, str]]:
 	"""Gets a list of available display driver names with their descriptions.
 	@param excludeNegativeChecks: excludes all drivers for which the check method returns C{False}.
@@ -388,15 +409,7 @@ def getDisplayList(excludeNegativeChecks=True) -> List[Tuple[str, str]]:
 	displayList = []
 	# The display that should be placed at the end of the list.
 	lastDisplay = None
-	for loader, name, isPkg in pkgutil.iter_modules(brailleDisplayDrivers.__path__):
-		if name.startswith('_'):
-			continue
-		try:
-			display = _getDisplayDriver(name)
-		except:
-			log.error("Error while importing braille display driver %s" % name,
-				exc_info=True)
-			continue
+	for display in getDisplayDrivers():
 		try:
 			if not excludeNegativeChecks or display.check():
 				if display.name == "noBraille":
@@ -404,13 +417,14 @@ def getDisplayList(excludeNegativeChecks=True) -> List[Tuple[str, str]]:
 				else:
 					displayList.append((display.name, display.description))
 			else:
-				log.debugWarning("Braille display driver %s reports as unavailable, excluding" % name)
+				log.debugWarning(f"Braille display driver {display.name} reports as unavailable, excluding")
 		except:
 			log.error("", exc_info=True)
 	displayList.sort(key=lambda d: strxfrm(d[1]))
 	if lastDisplay:
 		displayList.append(lastDisplay)
 	return displayList
+
 
 class Region(object):
 	"""A region of braille to be displayed.
@@ -480,7 +494,11 @@ class Region(object):
 			mode=mode,
 			cursorPos=self.cursorPos
 		)
-		if self.selectionStart is not None and self.selectionEnd is not None:
+		if (
+			self.selectionStart is not None
+			and self.selectionEnd is not None
+			and config.conf["braille"]["showSelection"]
+		):
 			try:
 				# Mark the selection.
 				self.brailleSelectionStart = self.rawToBraillePos[self.selectionStart]
@@ -518,6 +536,31 @@ class TextRegion(Region):
 	def __init__(self, text):
 		super(TextRegion, self).__init__()
 		self.rawText = text
+
+
+def _getAnnotationProperty(
+		propertyValues: Dict[str, Any]
+) -> str:
+	# Translators: Braille when there are further details/annotations that can be fetched manually.
+	genericDetailsRole = _("details")
+	detailsRoles: _AnnotationRolesT = propertyValues.get("detailsRoles", tuple())
+	if not detailsRoles:
+		log.debugWarning(
+			"There should always be detailsRoles (at least a single None value) when hasDetails is true."
+		)
+		return genericDetailsRole
+	else:
+		# Translators: Braille when there are further details/annotations that can be fetched manually.
+		# %s specifies the type of details (e.g. "has comment suggestion")
+		hasDetailsRoleTemplate = _("has %s")
+		rolesLabels = list((
+			hasDetailsRoleTemplate % roleLabels.get(role, role.displayString)
+			for role in detailsRoles
+			if role  # handle None case without the "has X" grammar.
+		))
+		if None in detailsRoles:
+			rolesLabels.insert(0, genericDetailsRole)
+		return " ".join(rolesLabels)  # no comma to save cells on braille display
 
 
 # C901 'getPropertiesBraille' is too complex
@@ -582,17 +625,7 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 		textList.append(description)
 	hasDetails = propertyValues.get("hasDetails")
 	if hasDetails:
-		detailsRole: Optional[controlTypes.Role] = propertyValues.get("detailsRole")
-		if detailsRole is not None:
-			detailsRoleLabel = roleLabels.get(detailsRole, detailsRole.displayString)
-			# Translators: Braille when there are further details/annotations that can be fetched manually.
-			# %s specifies the type of details (e.g. comment, suggestion)
-			textList.append(_("has %s") % detailsRoleLabel)
-		else:
-			textList.append(
-				# Translators: Braille when there are further details/annotations that can be fetched manually.
-				_("details")
-			)
+		textList.append(_getAnnotationProperty(propertyValues))
 	keyboardShortcut = propertyValues.get("keyboardShortcut")
 	if keyboardShortcut:
 		textList.append(keyboardShortcut)
@@ -686,15 +719,15 @@ class NVDAObjectRegion(Region):
 			)
 		)
 		description = obj.description if _shouldUseDescription else None
-
+		detailsRoles = obj.annotations.roles if obj.annotations else None
 		text = getPropertiesBraille(
 			name=name,
 			role=role,
 			roleText=obj.roleTextBraille,
 			current=obj.isCurrent,
 			placeholder=placeholderValue,
-			hasDetails=obj.hasDetails,
-			detailsRole=obj.detailsRole,
+			hasDetails=bool(obj.annotations),
+			detailsRoles=detailsRoles,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=description,
@@ -720,16 +753,26 @@ class NVDAObjectRegion(Region):
 			pass
 
 
-#  C901 'getControlFieldBraille' is too complex
-# Note: when working on getControlFieldBraille, look for opportunities to simplify
-# and move logic out into smaller helper functions.
-def getControlFieldBraille(  # noqa: C901
+class ReviewNVDAObjectRegion(NVDAObjectRegion):
+	"""A region to provide a braille representation of an NVDAObject when braille is tethered to review.
+	This region behaves very similar to its base class.
+	However, when the move system caret when routing review cursor braille setting is active,
+	pressing a routing key will first focus the object before executing the default action.
+	"""
+
+	def routeTo(self, braillePos: int):
+		if _routingShouldMoveSystemCaret() and self.obj.isFocusable and not self.obj.hasFocus:
+			self.obj.setFocus()
+		super().routeTo(braillePos)
+
+
+def getControlFieldBraille(
 		info: textInfos.TextInfo,
 		field: textInfos.Field,
 		ancestors: typing.List[textInfos.Field],
 		reportStart: bool,
 		formatConfig: config.AggregatedSection
-):
+) -> Optional[str]:
 	presCat = field.getPresentationCategory(ancestors, formatConfig)
 	# Cache this for later use.
 	field._presCat = presCat
@@ -769,9 +812,9 @@ def getControlFieldBraille(  # noqa: C901
 	placeholder=field.get('placeholder', None)
 	hasDetails = field.get('hasDetails', False) and config.conf["annotations"]["reportDetails"]
 	if config.conf["annotations"]["reportDetails"]:
-		detailsRole: Optional[controlTypes.Role] = field.get('detailsRole')
+		detailsRoles: Set[Union[None, controlTypes.Role]] = field.get('detailsRoles')
 	else:
-		detailsRole = None
+		detailsRoles = set()
 
 	roleText = field.get('roleTextBraille', field.get('roleText'))
 	landmark = field.get("landmark")
@@ -781,79 +824,42 @@ def getControlFieldBraille(  # noqa: C901
 	content = field.get("content")
 
 	if presCat == field.PRESCAT_LAYOUT:
-		text = []
-		if description:
-			text.append(getPropertiesBraille(description=description))
-		if current:
-			text.append(getPropertiesBraille(current=current))
-		if hasDetails:
-			text.append(getPropertiesBraille(hasDetails=hasDetails, detailsRole=detailsRole))
-		if role == controlTypes.Role.GRAPHIC and content:
-			text.append(content)
-		return TEXT_SEPARATOR.join(text) if len(text) != 0 else None
+		return _getControlFieldForLayoutPresentation(
+			description=description,
+			current=current,
+			hasDetails=hasDetails,
+			detailsRoles=detailsRoles,
+			role=role,
+			content=content,
+		)
 
 	elif role in (controlTypes.Role.TABLECELL, controlTypes.Role.TABLECOLUMNHEADER, controlTypes.Role.TABLEROWHEADER) and field.get("table-id"):
-		# Table cell.
-		reportTableHeaders = formatConfig["reportTableHeaders"]
-		reportTableCellCoords = formatConfig["reportTableCellCoords"]
-		props = {
-			"states": states,
-			"rowNumber": (field.get("table-rownumber-presentational") or field.get("table-rownumber")),
-			"columnNumber": (field.get("table-columnnumber-presentational") or field.get("table-columnnumber")),
-			"rowSpan": field.get("table-rowsspanned"),
-			"columnSpan": field.get("table-columnsspanned"),
-			"includeTableCellCoords": reportTableCellCoords,
-			"current": current,
-			"description": description,
-			"hasDetails": hasDetails,
-			"detailsRole": detailsRole,
-		}
-		if reportTableHeaders in (ReportTableHeaders.ROWS_AND_COLUMNS, ReportTableHeaders.COLUMNS):
-			props["columnHeaderText"] = field.get("table-columnheadertext")
-		return getPropertiesBraille(**props)
+		return _getControlFieldForTableCell(
+			description=description,
+			current=current,
+			hasDetails=hasDetails,
+			detailsRoles=detailsRoles,
+			field=field,
+			formatConfig=formatConfig,
+			states=states,
+		)
 
 	elif reportStart:
-		props = {
-			# Don't report the role for math here.
-			# However, we still need to pass it (hence "_role").
-			"_role" if role == controlTypes.Role.MATH else "role": role,
-			"states": states,
-			"value": value,
-			"current": current,
-			"placeholder": placeholder,
-			"roleText": roleText,
-			"description": description,
-			"hasDetails": hasDetails,
-			"detailsRole": detailsRole,
-		}
-		if field.get('alwaysReportName', False):
-			# Ensure that the name of the field gets presented even if normally it wouldn't.
-			name = field.get("name")
-			if name:
-				props["name"] = name
-		if config.conf["presentation"]["reportKeyboardShortcuts"]:
-			kbShortcut = field.get("keyboardShortcut")
-			if kbShortcut:
-				props["keyboardShortcut"] = kbShortcut
-		level = field.get("level")
-		if level:
-			props["positionInfo"] = {"level": level}
-		text = getPropertiesBraille(**props)
-		if content:
-			if text:
-				text += TEXT_SEPARATOR
-			text += content
-		elif role == controlTypes.Role.MATH:
-			import mathPres
-			if mathPres.brailleProvider:
-				try:
-					if text:
-						text += TEXT_SEPARATOR
-					text += mathPres.brailleProvider.getBrailleForMathMl(
-						info.getMathMl(field))
-				except (NotImplementedError, LookupError):
-					pass
-		return text
+		return _getControlFieldForReportStart(
+			description=description,
+			current=current,
+			hasDetails=hasDetails,
+			detailsRoles=detailsRoles,
+			field=field,
+			role=role,
+			states=states,
+			content=content,
+			info=info,
+			value=value,
+			roleText=roleText,
+			placeholder=placeholder,
+		)
+
 	else:
 		# Translators: Displayed in braille at the end of a control field such as a list or table.
 		# %s is replaced with the control's role.
@@ -861,6 +867,122 @@ def getControlFieldBraille(  # noqa: C901
 			role=role,
 			roleText=roleText
 		))
+
+
+def _getControlFieldForLayoutPresentation(
+		description: Optional[str],
+		current: controlTypes.IsCurrent,
+		hasDetails: bool,
+		detailsRoles: _AnnotationRolesT,
+		role: controlTypes.Role,
+		content: Optional[str],
+) -> Optional[str]:
+	text = []
+	if description:
+		text.append(getPropertiesBraille(description=description))
+	if current:
+		text.append(getPropertiesBraille(current=current))
+	if hasDetails:
+		text.append(getPropertiesBraille(hasDetails=hasDetails, detailsRoles=detailsRoles))
+	if role == controlTypes.Role.GRAPHIC and content:
+		text.append(content)
+
+	if text:
+		return TEXT_SEPARATOR.join(text)
+	return None
+
+
+def _getControlFieldForTableCell(
+		description: Optional[str],
+		current: controlTypes.IsCurrent,
+		hasDetails: bool,
+		detailsRoles: _AnnotationRolesT,
+		field: textInfos.Field,
+		formatConfig: config.AggregatedSection,
+		states: Set[controlTypes.State],
+) -> str:
+	reportTableHeaders = formatConfig["reportTableHeaders"]
+	reportTableCellCoords = formatConfig["reportTableCellCoords"]
+	props = {
+		"states": states,
+		"rowNumber": (field.get("table-rownumber-presentational") or field.get("table-rownumber")),
+		"columnNumber": (field.get("table-columnnumber-presentational") or field.get("table-columnnumber")),
+		"rowSpan": field.get("table-rowsspanned"),
+		"columnSpan": field.get("table-columnsspanned"),
+		"includeTableCellCoords": reportTableCellCoords,
+		"current": current,
+		"description": description,
+		"hasDetails": hasDetails,
+		"detailsRoles": detailsRoles,
+	}
+	if reportTableHeaders in (ReportTableHeaders.ROWS_AND_COLUMNS, ReportTableHeaders.COLUMNS):
+		props["columnHeaderText"] = field.get("table-columnheadertext")
+	return getPropertiesBraille(**props)
+
+
+def _getControlFieldForReportStart(
+		description: Optional[str],
+		current: controlTypes.IsCurrent,
+		hasDetails: bool,
+		detailsRoles: _AnnotationRolesT,
+		field: textInfos.Field,
+		role: controlTypes.Role,
+		states: Set[controlTypes.State],
+		content: Optional[str],
+		info: textInfos.TextInfo,
+		value: Optional[str],
+		roleText: str,
+		placeholder: Optional[str],
+) -> str:
+	props = {
+		"states": states,
+		"value": value,
+		"current": current,
+		"placeholder": placeholder,
+		"roleText": roleText,
+		"description": description,
+		"hasDetails": hasDetails,
+		"detailsRoles": detailsRoles,
+	}
+
+	if role == controlTypes.Role.MATH:
+		# Don't report the role for math here.
+		# However, we still need to pass it (hence "_role").
+		props["_role"] = role
+	else:
+		props["role"] = role
+
+	if field.get('alwaysReportName', False):
+		# Ensure that the name of the field gets presented even if normally it wouldn't.
+		name = field.get("name")
+		if name:
+			props["name"] = name
+
+	if config.conf["presentation"]["reportKeyboardShortcuts"]:
+		kbShortcut = field.get("keyboardShortcut")
+		if kbShortcut:
+			props["keyboardShortcut"] = kbShortcut
+
+	level = field.get("level")
+	if level:
+		props["positionInfo"] = {"level": level}
+
+	text = getPropertiesBraille(**props)
+	if content:
+		if text:
+			text += TEXT_SEPARATOR
+		text += content
+	elif role == controlTypes.Role.MATH:
+		import mathPres
+		if mathPres.brailleProvider:
+			try:
+				if text:
+					text += TEXT_SEPARATOR
+				text += mathPres.brailleProvider.getBrailleForMathMl(
+					info.getMathMl(field))
+			except (NotImplementedError, LookupError):
+				pass
+	return text
 
 
 def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
@@ -957,10 +1079,9 @@ class TextInfoRegion(Region):
 		except:
 			return self.obj.makeTextInfo(textInfos.POSITION_FIRST)
 
-	def _setCursor(self, info):
+	def _setCursor(self, info: textInfos.TextInfo):
 		"""Set the cursor.
 		@param info: The range to which the cursor should be moved.
-		@type info: L{textInfos.TextInfo}
 		"""
 		try:
 			info.updateCaret()
@@ -1050,7 +1171,7 @@ class TextInfoRegion(Region):
 						if not inClickable and formatConfig['reportClickable']:
 							states=field.get('states')
 							if states and controlTypes.State.CLICKABLE in states:
-								# We have entered an outer most clickable or entered a new clickable after exiting a previous one 
+								# We have entered an outer most clickable or entered a new clickable after exiting a previous one
 								# Report it if there is nothing else interesting about the field
 								field._presCat=presCat=field.getPresentationCategory(ctrlFields,formatConfig)
 								if not presCat or presCat is field.PRESCAT_LAYOUT:
@@ -1221,7 +1342,7 @@ class TextInfoRegion(Region):
 		dest.move(textInfos.UNIT_CHARACTER, pos)
 		return dest
 
-	def routeTo(self, braillePos):
+	def routeTo(self, braillePos: int):
 		if self._brailleInputIndStart is not None and self._brailleInputIndStart <= braillePos < self._brailleInputIndEnd:
 			# The user is moving within untranslated braille input.
 			if braillePos < self._brailleInputStart:
@@ -1238,13 +1359,16 @@ class TextInfoRegion(Region):
 			return
 
 		dest = self.getTextInfoForBraillePos(braillePos)
+		self._routeToTextInfo(dest)
+
+	def _routeToTextInfo(self, info: textInfos.TextInfo):
 		# When there is a selection, brailleCursorPos will be None
 		# Don't activate, but move the cursor to the new cell (dropping the
 		# selection). An alternative behavior may be to activate on the selection.
 		# Moving the cursor was considered more intuitive.
 		if self.brailleCursorPos is not None:
 			cursor = self.getTextInfoForBraillePos(self.brailleCursorPos)
-			if dest.compareEndPoints(cursor, "startToStart") == 0:
+			if info.compareEndPoints(cursor, "startToStart") == 0:
 				# The cursor is already at this position,
 				# so activate the position.
 				try:
@@ -1252,7 +1376,7 @@ class TextInfoRegion(Region):
 				except NotImplementedError:
 					pass
 				return
-		self._setCursor(dest)
+		self._setCursor(info)
 
 	def nextLine(self):
 		dest = self._readingInfo.copy()
@@ -1293,6 +1417,7 @@ class TextInfoRegion(Region):
 		dest.collapse()
 		self._setCursor(dest)
 
+
 class CursorManagerRegion(TextInfoRegion):
 
 	def _isMultiline(self):
@@ -1301,8 +1426,9 @@ class CursorManagerRegion(TextInfoRegion):
 	def _getSelection(self):
 		return self.obj.selection
 
-	def _setCursor(self, info):
+	def _setCursor(self, info: textInfos.TextInfo):
 		self.obj.selection = info
+
 
 class ReviewTextInfoRegion(TextInfoRegion):
 
@@ -1311,8 +1437,53 @@ class ReviewTextInfoRegion(TextInfoRegion):
 	def _getSelection(self):
 		return api.getReviewPosition().copy()
 
-	def _setCursor(self, info):
+	def _routeToTextInfo(self, info: textInfos.TextInfo):
+		super()._routeToTextInfo(info)
+		if not _routingShouldMoveSystemCaret():
+			return
+		from displayModel import DisplayModelTextInfo, EditableTextDisplayModelTextInfo
+		if (
+			isinstance(info, DisplayModelTextInfo)
+			and not isinstance(info, EditableTextDisplayModelTextInfo)
+		):
+			# This region either reviews the screen or an object that has
+			# DisplayModelTextInfo without a caret, e.g. IAccessible.ContentGenericClient.
+			# In this case, we can at least emulate a kind of caret
+			# by trying to focus the object at start of the range.
+			obj = info.NVDAObjectAtStart
+			if (
+				not objectBelowLockScreenAndWindowsIsLocked(obj)
+				and obj.isFocusable
+				and not obj.hasFocus
+			):
+				obj.setFocus()
+		else:
+			# Update the physical caret using the super class.
+			super()._setCursor(info)
+
+	def _setCursor(self, info: textInfos.TextInfo):
 		api.setReviewPosition(info)
+
+
+class ReviewCursorManagerRegion(ReviewTextInfoRegion, CursorManagerRegion):
+	...
+
+
+def _routingShouldMoveSystemCaret() -> bool:
+	"""Returns whether pressing a braille routing key should move the system caret.
+	"""
+	reviewRoutingMovesSystemCaret = config.conf["braille"]["reviewRoutingMovesSystemCaret"].calculated()
+	configuredTether = config.conf["braille"]["tetherTo"]
+	shouldMoveCaretTetheredReview = (
+		configuredTether == TetherTo.REVIEW.value
+		and reviewRoutingMovesSystemCaret == ReviewRoutingMovesSystemCaretFlag.ALWAYS
+	)
+	shouldMoveCaretTetheredAuto = (
+		configuredTether == TetherTo.AUTO.value
+		and reviewRoutingMovesSystemCaret != ReviewRoutingMovesSystemCaretFlag.NEVER
+	)
+	return shouldMoveCaretTetheredAuto or shouldMoveCaretTetheredReview
+
 
 def rindex(seq, item, start, end):
 	for index in range(end - 1, start - 1, -1):
@@ -1395,6 +1566,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		raise LookupError("No such position")
 
 	def regionPosToBufferPos(self, region, pos, allowNearest=False):
+		start: int = 0
 		for testRegion, start, end in self.regionsWithPositions:
 			if region == testRegion:
 				if pos < end - start:
@@ -1456,7 +1628,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		"""Sets the end position for the braille window and recalculates the window start position based on several variables.
 		1. Braille display size.
 		2. Whether one of the regions should be shown hard left on the braille display;
-			i.e. because of The configuration setting for focus context representation 
+			i.e. because of The configuration setting for focus context representation
 			or whether the braille region that corresponds with the focus represents a multi line edit box.
 		3. Whether word wrap is enabled."""
 		startPos = endPos - self.handler.displaySize
@@ -1734,14 +1906,23 @@ def getFocusRegions(
 	from cursorManager import CursorManager
 	from NVDAObjects import NVDAObject
 	if isinstance(obj, CursorManager):
-		region2 = (ReviewTextInfoRegion if review else CursorManagerRegion)(obj)
-	elif isinstance(obj, DocumentTreeInterceptor) or (isinstance(obj,NVDAObject) and NVDAObjectHasUsefulText(obj)): 
+		region2 = (ReviewCursorManagerRegion if review else CursorManagerRegion)(obj)
+	elif (
+		isinstance(obj, DocumentTreeInterceptor)
+		or (
+			isinstance(obj, NVDAObject)
+			and NVDAObjectHasUsefulText(obj)
+		)
+	):
 		region2 = (ReviewTextInfoRegion if review else TextInfoRegion)(obj)
 	else:
 		region2 = None
 	if isinstance(obj, TreeInterceptor):
 		obj = obj.rootNVDAObject
-	region = NVDAObjectRegion(obj, appendText=TEXT_SEPARATOR if region2 else "")
+	region = (ReviewNVDAObjectRegion if review else NVDAObjectRegion)(
+		obj,
+		appendText=TEXT_SEPARATOR if region2 else ""
+	)
 	region.update()
 	yield region
 	if region2:
@@ -1764,6 +1945,62 @@ def formatCellsForLog(cells: List[int]) -> str:
 		if cell else "-"
 		for cell in cells])
 
+
+pre_writeCells = extensionPoints.Action()
+"""
+Notifies when cells are about to be written to a braille display.
+This allows components and add-ons to perform an action.
+For example, when a system is controlled by a braille enabled remote system,
+the remote system should know what cells to show on its display.
+@param cells: The list of braille cells.
+@type cells: List[int]
+@param rawText: The raw text that corresponds with the cells.
+@type rawText: str
+@param currentCellCount: The current number of cells
+@type currentCellCount: bool
+"""
+
+filter_displaySize = extensionPoints.Filter()
+"""
+Filter that allows components or add-ons to change the display size used for braille output.
+For example, when a system has an 80 cell display, but is being controlled by a remote system with a 40 cell
+display, the display size should be lowered to 40 .
+@param value: the number of cells of the current display.
+@type value: int
+"""
+
+displaySizeChanged = extensionPoints.Action()
+"""
+Action that allows components or add-ons to be notified of display size changes.
+For example, when a system is controlled by a remote system and the remote system swaps displays,
+The local system should be notified about display size changes at the remote system.
+@param displaySize: The current display size used by the braille handler.
+@type displaySize: int
+"""
+
+displayChanged = extensionPoints.Action()
+"""
+Action that allows components or add-ons to be notified of braille display changes.
+For example, when a system is controlled by a remote system and the remote system swaps displays,
+The local system should be notified about display parameters at the remote system,
+e.g. name and cellcount.
+@param display: The new braille display driver
+@type display: L{BrailleDisplayDriver}
+@param isFallback: Whether the display is set as fallback display due to another display's failure
+@type isFallback: bool
+@param detected: If the display was set by auto detection, the device match that matched the driver
+@type detected: bdDetect.DeviceMatch or C{None}
+"""
+
+decide_enabled = extensionPoints.Decider()
+"""
+Allows components or add-ons to decide whether the braille handler should be forcefully disabled.
+For example, when a system is controlling a remote system with braille,
+the local braille handler should be disabled as long as the system is in control of the remote system.
+Handlers are called without arguments.
+"""
+
+
 class BrailleHandler(baseObject.AutoPropertyObject):
 	# TETHER_AUTO, TETHER_FOCUS, TETHER_REVIEW and tetherValues
 	# are deprecated, but remain to retain API backwards compatibility
@@ -1775,13 +2012,32 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	queuedWrite: Optional[List[int]] = None
 	queuedWriteLock: threading.Lock
 	ackTimerHandle: int
+	_regionsPendingUpdate: Set[Region]
+	"""
+	Regions pending an update.
+	Regions are added by L{handleUpdate} and L{handleCaretMove} and cleared in L{_handlePendingUpdate}.
+	"""
 
 	def __init__(self):
 		louisHelper.initialize()
 		self.display: Optional[BrailleDisplayDriver] = None
-		#: Number of cells the connected device (or if no device connected, what braille viewer has)
-		#: Zero cells disables braille. See L{_get_enabled}
 		self._displaySize: int = 0
+		"""
+		Internal cache for the displaySize property.
+		This attribute is used to compare the displaySize output by l{filter_displaySize}
+		with its previous output.
+		If the value differs, L{displaySizeChanged} is notified.
+		"""
+		self._enabled: bool = False
+		"""
+		Internal cache for the enabled property.
+		This attribute is used to compare the enabled output by l{decide_enabled}
+		with its previous output.
+		If L{decide_enabled} decides to disable the handler, pending output should be cleared.
+		"""
+		self._regionsPendingUpdate = set()
+
+
 		self.mainBuffer = BrailleBuffer(self)
 		self.messageBuffer = BrailleBuffer(self)
 		self._messageCallLater = None
@@ -1796,13 +2052,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._tether = TetherTo.FOCUS.value
 		else:
 			self._tether = config.conf["braille"]["tetherTo"]
-		self._detectionEnabled = False
 		self._detector = None
 		self._rawText = u""
 
 		self.queuedWriteLock = threading.Lock()
 		self.ackTimerHandle = winKernel.createWaitableTimer()
-		self._ackTimeoutResetterApc = winKernel.PAPCFUNC(self._ackTimeoutResetter)
 
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
 
@@ -1842,114 +2096,164 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		return self.enabled and config.conf["braille"]["tetherTo"] == TetherTo.AUTO.value
 
 	displaySize: int
+	_cache_displaySize = True
 
 	def _get_displaySize(self):
-		if self._displaySize == 0 and brailleViewer.isBrailleViewerActive():
-			return brailleViewer.DEFAULT_NUM_CELLS
-		return self._displaySize
-
-	def _set_displaySize(self, numCells):
-		"""The display size can be changed while a display is connected, for instance
-			see L{brailleDisplayDrivers.alva.BrailleDisplayDriver} split point feature.
+		"""Returns the display size to use for braille output.
+		Handlers can register themselves to L{filter_displaySize} to change this value on the fly.
+		Therefore, this is a read only property and can't be set.
 		"""
-		self._displaySize = numCells
+		numCells = self.display.numCells if self.display else 0
+		currentDisplaySize = filter_displaySize.apply(numCells)
+		if self._displaySize != currentDisplaySize:
+			displaySizeChanged.notify(displaySize=currentDisplaySize)
+			self._displaySize = currentDisplaySize
+		return currentDisplaySize
+
+	def _set_displaySize(self, value):
+		"""While the display size can be changed while a display is connected
+		(for instance see L{brailleDisplayDrivers.alva.BrailleDisplayDriver} split point feature),
+		it is not possible to override the display size using this property.
+		Consider registering a handler to L{filter_displaySize} instead.
+		"""
+		raise AttributeError(
+			f"Can't set displaySize to {value}, consider registering a handler to filter_displaySize"
+		)
 
 	enabled: bool
+	_cache_enabled = True
 
 	def _get_enabled(self):
-		return bool(self.displaySize)
+		"""Returns whether braille is enabled.
+		Handlers can register themselves to L{decide_enabled} and return C{False}
+		to forcefully disable the braille handler.
+		If components need to change the state from disabled to enabled instead,
+		they should register to L{filter_displaySize}.
+		By default, the enabled/disabled state is based on the boolean value of L{displaySize},
+		and thus is C{True} when the display size is greater than 0.
+		This is a read only property and can't be set.
+		"""
+		currentEnabled = bool(self.displaySize) and decide_enabled.decide()
+		if self._enabled != currentEnabled:
+			self._enabled = currentEnabled
+			if currentEnabled is False:
+				wx.CallAfter(self._handleEnabledDecisionFalse)
+		return currentEnabled
+
+	def _set_enabled(self, value):
+		raise AttributeError(
+			f"Can't set enabled to {value}, consider registering a handler to decide_enabled or filter_displaySize"
+		)
+
+	def _handleEnabledDecisionFalse(self):
+		"""When a decider handler decides to disable the braille handler, ensure braille doesn't continue.
+		This should be called from the main thread to avoid wx assertions.
+		"""
+		if self._cursorBlinkTimer:
+			# A blinking cursor should be stopped
+			self._cursorBlinkTimer.Stop()
+			self._cursorBlinkTimer = None
+		if self.buffer is self.messageBuffer:
+			self._dismissMessage(shouldUpdate=False)
 
 	_lastRequestedDisplayName = None
 	"""The name of the last requested braille display driver with setDisplayByName,
 	even if it failed and has fallen back to no braille.
 	"""
 
-	# C901 'setDisplayByName' is too complex
-	# Note: when working on setDisplayByName, look for opportunities to simplify
-	# and move logic out into smaller helper functions.
-	def setDisplayByName(  # noqa: C901
+	def setDisplayByName(
 			self,
 			name: str,
-			isFallback=False,
+			isFallback: bool = False,
+			detected: typing.Optional[bdDetect.DeviceMatch] = None,
+	) -> bool:
+		if name == AUTO_DISPLAY_NAME:
+			# Calling _enableDetection will set the display to noBraille until a display is detected.
+			# Note that L{isFallback} is ignored in these cases.
+			self._enableDetection()
+			return True
+		elif not isFallback:
+			# #8032: Take note of the display requested, even if it is going to fail.
+			self._lastRequestedDisplayName = name
+			if not detected:
+				self._disableDetection()
+
+		try:
+			newDisplayClass = _getDisplayDriver(name)
+			self._setDisplay(newDisplayClass, isFallback=isFallback, detected=detected)
+			if not isFallback:
+				if not detected:
+					config.conf["braille"]["display"] = newDisplayClass.name
+				elif 'bluetoothName' in detected.deviceInfo or detected.deviceInfo.get("provider") == "bluetooth":
+					# As USB devices have priority over Bluetooth, keep a detector running to switch to USB when connected.
+					# Note that the detector should always be running in this situation, so we can trigger a rescan.
+					self._detector.rescan(bluetooth=False, limitToDevices=[newDisplayClass.name])
+				else:
+					self._disableDetection()
+			return True
+		except Exception:
+			# For auto display detection, logging an error for every failure is too obnoxious.
+			if not detected:
+				log.error(f"Error initializing display driver {name!r}", exc_info=True)
+			elif bdDetect._isDebug():
+				log.debugWarning(f"Couldn't initialize display driver {name!r}", exc_info=True)
+			fallbackDisplayClass = _getDisplayDriver(NO_BRAILLE_DISPLAY_NAME)
+			# Only initialize the fallback if it is not already set
+			if self.display.__class__ != fallbackDisplayClass:
+				self._setDisplay(fallbackDisplayClass, isFallback=False)
+			return False
+
+	def _switchDisplay(
+			self,
+			oldDisplay: Optional["BrailleDisplayDriver"],
+			newDisplayClass: Type["BrailleDisplayDriver"],
+			**kwargs
+	) -> "BrailleDisplayDriver":
+		sameDisplayReInit = newDisplayClass == oldDisplay.__class__
+		if sameDisplayReInit:
+			# This is the same driver as was already set, so just re-initialize it.
+			log.debug(f"Reinitializing {newDisplayClass.name!r} braille display")
+			oldDisplay.terminate()
+			newDisplay = oldDisplay
+		else:
+			newDisplay = newDisplayClass.__new__(newDisplayClass)
+		extensionPoints.callWithSupportedKwargs(newDisplay.__init__, **kwargs)
+		if not sameDisplayReInit:
+			if oldDisplay:
+				log.debug(f"Switching braille display from {oldDisplay.name!r} to {newDisplay.name!r}")
+				try:
+					oldDisplay.terminate()
+				except Exception:
+					log.error("Error terminating previous display driver", exc_info=True)
+		newDisplay.initSettings()
+		return newDisplay
+
+	def _setDisplay(
+			self,
+			newDisplayClass: Type["BrailleDisplayDriver"],
+			isFallback: bool = False,
 			detected: typing.Optional[bdDetect.DeviceMatch] = None,
 	):
-		if not isFallback:
-			# #8032: Take note of the display requested, even if it is going to fail.
-			self._lastRequestedDisplayName=name
-		if name == AUTO_DISPLAY_NAME:
-			self._enableDetection(keepCurrentDisplay=False)
-			return True
-		elif not isFallback and not detected:
-			self._disableDetection()
-
 		kwargs = {}
 		if detected:
 			kwargs["port"] = detected
 		else:
 			# See if the user has defined a specific port to connect to
 			try:
-				port = config.conf["braille"][name]["port"]
+				kwargs["port"] = config.conf["braille"][newDisplayClass.name]["port"]
 			except KeyError:
-				port = None
-			# Here we try to keep compatible with old drivers that don't support port setting
-			# or situations where the user hasn't set any port.
-			if port:
-				kwargs["port"] = port
+				pass
 
-		try:
-			newDisplay = _getDisplayDriver(name)
-			oldDisplay = self.display
-			if detected and bdDetect._isDebug():
-				log.debug("Possibly detected display '%s'" % newDisplay.description)
-			if newDisplay == oldDisplay.__class__:
-				# This is the same driver as was already set, so just re-initialise it.
-				log.debug("Reinitializing %s braille display"%name)
-				oldDisplay.terminate()
-				newDisplay = oldDisplay
-				try:
-					newDisplay.__init__(**kwargs)
-				except TypeError:
-					# Re-initialize with supported kwargs.
-					extensionPoints.callWithSupportedKwargs(newDisplay.__init__, **kwargs)
-			else:
-				try:
-					newDisplay = newDisplay(**kwargs)
-				except TypeError:
-					newDisplay = newDisplay.__new__(newDisplay)
-					# initialize with supported kwargs.
-					extensionPoints.callWithSupportedKwargs(newDisplay.__init__, **kwargs)
-				if self.display:
-					log.debug("Switching braille display from %s to %s"%(self.display.name,name))
-					try:
-						self.display.terminate()
-					except:
-						log.error("Error terminating previous display driver", exc_info=True)
-				self.display = newDisplay
-			newDisplay.initSettings()
-			self._displaySize = newDisplay.numCells
-			if isFallback:
-				if self._detectionEnabled and not self._detector:
-					# As this is the fallback display, which is usually noBraille,
-					# we can keep the current display when enabling detection.
-					# Note that in this case, L{_detectionEnabled} is set by L{handleDisplayUnavailable}
-					self._enableDetection(keepCurrentDisplay=True)
-			elif not detected:
-				config.conf["braille"]["display"] = name
-			else: # detected:
-				self._disableDetection()
-			log.info("Loaded braille display driver %s, current display has %d cells." %(name, self.displaySize))
-			queueHandler.queueFunction(queueHandler.eventQueue, self.initialDisplay)
-			if detected and 'bluetoothName' in detected.deviceInfo:
-				self._enableDetection(bluetooth=False, keepCurrentDisplay=True, limitToDevices=[name])
-			return True
-		except:
-			# For auto display detection, logging an error for every failure is too obnoxious.
-			if not detected:
-				log.error("Error initializing display driver %s for kwargs %r"%(name,kwargs), exc_info=True)
-			elif bdDetect._isDebug():
-				log.debugWarning("Couldn't initialize display driver for kwargs %r"%(kwargs,), exc_info=True)
-			self.setDisplayByName("noBraille", isFallback=True)
-			return False
+		if bdDetect._isDebug() and detected:
+			log.debug(f"Possibly detected display {newDisplayClass.description!r}")
+		oldDisplay = self.display
+		newDisplay = self._switchDisplay(oldDisplay, newDisplayClass, **kwargs)
+		self.display = newDisplay
+		log.info(
+			f"Loaded braille display driver {newDisplay.name!r}, current display has {newDisplay.numCells} cells."
+		)
+		displayChanged.notify(display=newDisplay, isFallback=isFallback, detected=detected)
+		queueHandler.queueFunction(queueHandler.eventQueue, self.initialDisplay)
 
 	def _onBrailleViewerChangedState(self, created):
 		if created:
@@ -1973,7 +2277,26 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			wx.CallAfter(self._cursorBlinkTimer.Start,blinkRate)
 
 	def _writeCells(self, cells: List[int]):
-		brailleViewer.update(cells, self._rawText)
+		handlerCellCount = self.displaySize
+		pre_writeCells.notify(cells=cells, rawText=self._rawText, currentCellCount=handlerCellCount)
+		displayCellCount = self.display.numCells
+		if not displayCellCount:
+			# No physical display to write to
+			return
+		# Braille displays expect cells to be padded up to displayCellCount.
+		# However, the braille handler uses handlerCellCount to calculate the number of cells.
+		cellCountDif = displayCellCount - len(cells)
+		if cellCountDif < 0:
+			# There are more cells than the connected display could take.
+			log.warning(
+				f"Connected display {self.display.name!r} has {displayCellCount} cells, "
+				f"while braille handler is using {handlerCellCount} cells"
+			)
+			cells = cells[:displayCellCount]
+		elif cellCountDif > 0:
+			# The connected display could take more cells than the braille handler produces.
+			# Displays expect cells to be padded up to the number of cells.
+			cells += [END_OF_BRAILLE_OUTPUT_SHAPE] + [0] * (cellCountDif - 1)
 		if not self.display.isThreadSafe:
 			try:
 				self.display.display(cells)
@@ -2081,8 +2404,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		else:
 			self._messageCallLater = wx.CallLater(timeout, self._dismissMessage)
 
-	def _dismissMessage(self):
+	def _dismissMessage(self, shouldUpdate: bool = True):
 		"""Dismiss the current message.
+		@param shouldUpdate: Whether to call update after dismissing.
 		@precondition: A message is currently being displayed.
 		@postcondition: The display returns to the main buffer.
 		"""
@@ -2091,7 +2415,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self._messageCallLater:
 			self._messageCallLater.Stop()
 			self._messageCallLater = None
-		self.update()
+		if shouldUpdate:
+			self.update()
 
 	def handleGainFocus(self, obj: "NVDAObject", shouldAutoTether: bool = True) -> None:
 		if not self.enabled:
@@ -2151,29 +2476,46 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		region = self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
 		if region and region.obj==obj:
 			region.pendingCaretUpdate=True
+			self._regionsPendingUpdate.add(region)
 		elif prevTether == TetherTo.REVIEW.value:
 			# The caret moved in a different object than the review position.
 			self._doNewObject(getFocusRegions(obj, review=False))
 
-	def handlePendingCaretUpdate(self):
-		"""Checks to see if the final text region needs its caret updated and if so calls _doCursorMove for the region."""
-		region=self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
-		if isinstance(region,TextInfoRegion) and region.pendingCaretUpdate:
-			try:
-				self._doCursorMove(region)
-			finally:
-				region.pendingCaretUpdate=False
+	if version_year < 2024 and NVDAState._allowDeprecatedAPI():
+		def handlePendingCaretUpdate(self):
+			log.warning(
+				"braille.BrailleHandler.handlePendingCaretUpdate is now deprecated "
+				"with no public replacement. "
+				"It will be removed in NVDA 2024.1."
+			)
+			self._handlePendingUpdate()
 
-	def _doCursorMove(self, region):
-		self.mainBuffer.saveWindow()
-		region.update()
-		self.mainBuffer.update()
-		self.mainBuffer.restoreWindow()
-		self.scrollToCursorOrSelection(region)
-		if self.buffer is self.mainBuffer:
-			self.update()
-		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
-			self._dismissMessage()
+	def _handlePendingUpdate(self):
+		"""When any region is pending an update, updates the region and the braille display.
+		"""
+		if not self._regionsPendingUpdate:
+			return
+		try:
+			scrollTo: Optional[TextInfoRegion] = None
+			self.mainBuffer.saveWindow()
+			for region in self._regionsPendingUpdate:
+				region.update()
+				if isinstance(region, TextInfoRegion) and region.pendingCaretUpdate:
+					scrollTo = region
+					region.pendingCaretUpdate = False
+			self.mainBuffer.update()
+			self.mainBuffer.restoreWindow()
+			if scrollTo is not None:
+				self.scrollToCursorOrSelection(scrollTo)
+			if self.buffer is self.mainBuffer:
+				self.update()
+			elif (
+				self.buffer is self.messageBuffer
+				and keyboardHandler.keyCounter > self._keyCountForLastMessage
+			):
+				self._dismissMessage()
+		finally:
+			self._regionsPendingUpdate.clear()
 
 	def scrollToCursorOrSelection(self, region):
 		if region.brailleCursorPos is not None:
@@ -2227,14 +2569,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			if isinstance(obj, NVDAObject) and obj.role == controlTypes.Role.PROGRESSBAR and obj.isInForeground:
 				self._handleProgressBarUpdate(obj)
 			return
-		self.mainBuffer.saveWindow()
-		region.update()
-		self.mainBuffer.update()
-		self.mainBuffer.restoreWindow()
-		if self.buffer is self.mainBuffer:
-			self.update()
-		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
-			self._dismissMessage()
+		self._regionsPendingUpdate.add(region)
 
 	def handleReviewMove(self, shouldAutoTether=True):
 		if not self.enabled:
@@ -2246,7 +2581,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		region = self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
 		if region and region.obj == reviewPos.obj:
-			self._doCursorMove(region)
+			region.pendingCaretUpdate = True
+			self._regionsPendingUpdate.add(region)
 		else:
 			# We're reviewing a different object.
 			self._doNewObject(getFocusRegions(reviewPos.obj, review=True))
@@ -2272,9 +2608,19 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# The display in the new profile is equal to the last requested display name
 			display == self._lastRequestedDisplayName
 			# or the new profile uses auto detection, which supports detection of the currently active display.
-			or (display == AUTO_DISPLAY_NAME and bdDetect.driverSupportsAutoDetection(self.display.name))
+			or (display == AUTO_DISPLAY_NAME and bdDetect.driverIsEnabledForAutoDetection(self.display.name))
 		):
 			self.setDisplayByName(display)
+		elif (
+			# Auto detection should be active
+			display == AUTO_DISPLAY_NAME and self._detector is not None
+			# And the current display should be no braille.
+			# If not, there is an active detector for the current driver
+			# to switch from bluetooth to USB.
+			and self.display.name == NO_BRAILLE_DISPLAY_NAME
+		):
+			self._detector._limitToDevices = bdDetect.getBrailleDisplayDriversEnabledForDetection()
+
 		self._tether = config.conf["braille"]["tetherTo"]
 
 	def handleDisplayUnavailable(self):
@@ -2284,31 +2630,43 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		but drivers can also call it themselves if appropriate.
 		"""
 		log.error("Braille display unavailable. Disabling", exc_info=True)
-		self._detectionEnabled = config.conf["braille"]["display"] == AUTO_DISPLAY_NAME
-		self.setDisplayByName("noBraille", isFallback=True)
+		newDisplay = (
+			AUTO_DISPLAY_NAME
+			if config.conf["braille"]["display"] == AUTO_DISPLAY_NAME
+			else NO_BRAILLE_DISPLAY_NAME
+		)
+		self.setDisplayByName(newDisplay, isFallback=True)
 
-	def _enableDetection(self, usb=True, bluetooth=True, keepCurrentDisplay=False, limitToDevices=None):
+	def _enableDetection(
+			self,
+			usb: bool = True,
+			bluetooth: bool = True,
+			limitToDevices: Optional[List[str]] = None
+	):
 		"""Enables automatic detection of braille displays.
 		When auto detection is already active, this will force a rescan for devices.
 		This should also be executed when auto detection should be resumed due to loss of display connectivity.
+		In that case, it is triggered by L{setDisplayByname}.
+		@param usb: Whether to scan for USB devices
+		@param bluetooth: Whether to scan for Bluetooth devices.
+		@param limitToDevices: An optional list of driver names a scan should be limited to.
+			This is used when a Bluetooth device is detected, in order to switch to USB
+			when an USB device for the same driver is found.
+			C{None} if no driver filtering should occur.
 		"""
-		if self._detectionEnabled and self._detector:
+		self.setDisplayByName(NO_BRAILLE_DISPLAY_NAME, isFallback=True)
+		if self._detector:
 			self._detector.rescan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 			return
 		config.conf["braille"]["display"] = AUTO_DISPLAY_NAME
-		if not keepCurrentDisplay:
-			self.setDisplayByName("noBraille", isFallback=True)
-		self._detector = bdDetect.Detector(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
-		self._detectionEnabled = True
+		self._detector = bdDetect._Detector()
+		self._detector._queueBgScan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 
 	def _disableDetection(self):
 		"""Disables automatic detection of braille displays."""
-		if not self._detectionEnabled:
-			return
 		if self._detector:
 			self._detector.terminate()
 			self._detector = None
-		self._detectionEnabled = False
 
 	def _bgThreadExecutor(self, param: int):
 		"""Executed as APC when cells have to be written to a display asynchronously.
@@ -2335,13 +2693,12 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			if self.display.receivesAckPackets:
 				self.display._awaitingAck = True
 				SECOND_TO_MS = 1000
-				winKernel.setWaitableTimer(
+				hwIo.bgThread.setWaitableTimer(
 					self.ackTimerHandle,
 					# Wait twice the display driver timeout for acknowledgement packets
 					# Note: timeout is in seconds whereas setWaitableTimer expects milliseconds
 					int(self.display.timeout * 2 * SECOND_TO_MS),
-					0,
-					self._ackTimeoutResetterApc
+					self._ackTimeoutResetter
 				)
 
 	def _ackTimeoutResetter(self, param: int):
@@ -2365,7 +2722,8 @@ RENAMED_DRIVERS = {
 	"hid": "hidBrailleStandard",
 }
 
-handler: BrailleHandler
+handler: Optional[BrailleHandler] = None
+
 
 def initialize():
 	global handler
@@ -2377,7 +2735,6 @@ def initialize():
 	newTableName = brailleTables.RENAMED_TABLES.get(oldTableName)
 	if newTableName:
 		config.conf["braille"]["translationTable"] = newTableName
-	bdDetect.initializeDetectionData()
 	handler = BrailleHandler()
 	# #7459: the syncBraille has been dropped in favor of the native hims driver.
 	# Migrate to renamed drivers as smoothly as possible.
@@ -2388,13 +2745,14 @@ def initialize():
 	handler.setDisplayByName(config.conf["braille"]["display"])
 
 def pumpAll():
-	"""Runs tasks at the end of each core cycle. For now just caret updates."""
-	handler.handlePendingCaretUpdate()
+	"""Runs tasks at the end of each core cycle. For now just region updates, e.g. for caret movement."""
+	handler._handlePendingUpdate()
 
 def terminate():
 	global handler
 	handler.terminate()
 	handler = None
+
 
 class BrailleDisplayDriver(driverHandler.Driver):
 	"""Abstract base braille display driver.
@@ -2403,6 +2761,11 @@ class BrailleDisplayDriver(driverHandler.Driver):
 
 	At a minimum, drivers must set L{name} and L{description} and override the L{check} method.
 	To display braille, L{numCells} and L{display} must be implemented.
+
+	To support automatic detection of braille displays belonging to this driver:
+		* The driver must be thread safe and L{isThreadSafe} should be set to C{True}
+		* L{supportsAutomaticDetection} must be set to C{True}.
+		* L{registerAutomaticDetection} must be implemented.
 
 	Drivers should dispatch input such as presses of buttons, wheels or other controls
 	using the L{inputCore} framework.
@@ -2426,19 +2789,19 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	#: which means the rest of NVDA is not blocked while this occurs,
 	#: thus resulting in better performance.
 	#: This is also required to use the L{hwIo} module.
-	#: @type: bool
-	isThreadSafe = False
+	isThreadSafe: bool = False
+	#: Whether this driver is supported for automatic detection of braille displays.
+	supportsAutomaticDetection: bool = False
 	#: Whether displays for this driver return acknowledgements for sent packets.
 	#: L{_handleAck} should be called when an ACK is received.
 	#: Note that thread safety is required for the generic implementation to function properly.
 	#: If a display is not thread safe, a driver should manually implement ACK processing.
-	#: @type: bool
-	receivesAckPackets = False
+	receivesAckPackets: bool = False
 	#: Whether this driver is awaiting an Ack for a connected display.
 	#: This is set to C{True} after displaying cells when L{receivesAckPackets} is True,
 	#: and set to C{False} by L{_handleAck} or when C{timeout} has elapsed.
 	#: This is for internal use by NVDA core code only and shouldn't be touched by a driver itself.
-	_awaitingAck = False
+	_awaitingAck: bool = False
 	#: Maximum timeout to use for communication with a device (in seconds).
 	#: This can be used for serial connections.
 	#: Furthermore, it is used to stop waiting for missed acknowledgement packets.
@@ -2456,23 +2819,42 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		super().__init__()
 
 	@classmethod
-	def check(cls):
+	def check(cls) -> bool:
 		"""Determine whether this braille display is available.
 		The display will be excluded from the list of available displays if this method returns C{False}.
 		For example, if this display is not present, C{False} should be returned.
 		@return: C{True} if this display is available, C{False} if not.
-		@rtype: bool
 		"""
 		if cls.isThreadSafe:
-			if bdDetect.driverHasPossibleDevices(cls.name):
+			supportsAutomaticDetection = cls.supportsAutomaticDetection
+			if not supportsAutomaticDetection and NVDAState._allowDeprecatedAPI() and version_year < 2024:
+				log.warning(
+					"Starting from NVDA 2024.1, drivers that rely on bdDetect for the default check method "
+					"should have supportsAutomaticDetection set to True"
+				)
+				supportsAutomaticDetection = True
+			if supportsAutomaticDetection and bdDetect.driverHasPossibleDevices(cls.name):
 				return True
-			try:
-				next(cls.getManualPorts())
-			except (StopIteration, NotImplementedError):
-				pass
-			else:
-				return True
+		try:
+			next(cls.getManualPorts())
+		except (StopIteration, NotImplementedError):
+			pass
+		else:
+			return True
 		return False
+
+	@classmethod
+	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
+		"""
+		This method may register the braille display driver in the braille display automatic detection framework.
+		The framework provides a L{bdDetect.DriverRegistrar} object as its only parameter.
+		The methods on the driver registrar can be used to register devices or device scanners.
+		This method should only register itself with the bdDetect framework,
+		and should refrain from doing anything else.
+		Drivers with L{supportsAutomaticDetection} set to C{True} must implement this method.
+		@param driverRegistrar: An object containing several methods to register device identifiers for this driver.
+		"""
+		raise NotImplementedError
 
 	def terminate(self):
 		"""Terminate this display driver.
@@ -2874,3 +3256,26 @@ def getSerialPorts(filterFunc=None) -> typing.Iterator[typing.Tuple[str, str]]:
 			yield (info["port"],
 				# Translators: Name of a serial communications port.
 				_("Serial: {portName}").format(portName=info["friendlyName"]))
+
+
+def getDisplayDrivers(
+		filterFunc: Optional[Callable[[Type[BrailleDisplayDriver]], bool]] = None
+) -> Generator[Type[BrailleDisplayDriver], Any, Any]:
+	"""Gets an iterator of braille display drivers meeting the given filter callable.
+	@param filterFunc: an optional callable that receives a driver as its only argument and returns
+		either True or False.
+	@return: Iterator of braille display drivers.
+	"""
+	for loader, name, isPkg in pkgutil.iter_modules(brailleDisplayDrivers.__path__):
+		if name.startswith('_'):
+			continue
+		try:
+			display = _getDisplayDriver(name)
+		except Exception:
+			log.error(
+				f"Error while importing braille display driver {name}",
+				exc_info=True
+			)
+			continue
+		if not filterFunc or filterFunc(display):
+			yield display

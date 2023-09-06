@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2022 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
+# Copyright (C) 2007-2023 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
 # Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -22,6 +22,7 @@ from typing import Optional
 import exceptions
 import RPCConstants
 import NVDAState
+from NVDAState import WritePaths
 
 
 ERROR_INVALID_WINDOW_HANDLE = 1400
@@ -31,6 +32,11 @@ E_ACCESSDENIED = -2147024891
 CO_E_OBJNOTCONNECTED = -2147220995
 EVENT_E_ALL_SUBSCRIBERS_FAILED = -2147220991
 LOAD_WITH_ALTERED_SEARCH_PATH=0x8
+_NVDA_CODE_PATH = os.path.dirname(__file__)
+"""Store path in which NVDA code is placed.
+We cannot use `globalVars.appDir`, since for binary builds it points to the directory with NVDA binaries,
+whereas for compiled versions NVDA's code files are in `library.zip`.
+"""
 
 
 def isPathExternalToNVDA(path: str) -> bool:
@@ -38,14 +44,22 @@ def isPathExternalToNVDA(path: str) -> bool:
 	if(
 		path[0] != "<"
 		and os.path.isabs(path)
-		and not os.path.normpath(path).startswith(sys.path[0] + "\\")
+		and not os.path.normpath(path).startswith(_NVDA_CODE_PATH + "\\")
+		or (
+			# Handle messages logged before config is initialized
+			WritePaths.configDir is not None
+			and path.startswith(WritePaths.configDir)
+		)
 	):
 		# This module is external because:
 		# the code comes from a file (fn doesn't begin with "<");
 		# it has an absolute file path (code bundled in binary builds reports relative paths); and
-		# it is not part of NVDA's Python code (not beneath sys.path[0]).
+		# it is not part of NVDA's Python code
+		# (i.e. outside of NVDA directory or in NVDA's config,
+		# so it belongs to an add-on or a plugin in the scratchpad).
 		return True
 	return False
+
 
 def getCodePath(f):
 	"""Using a frame object, gets its module path (relative to the current directory).[className.[funcName]]

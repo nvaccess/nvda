@@ -21,13 +21,13 @@ from NVDAObjects.lockscreen import LockScreenObject
 from NVDAObjects.UIA import UIA
 import NVDAState
 from utils.security import getSafeScripts
-from winAPI.sessionTracking import _isLockScreenModeActive
+from winAPI.sessionTracking import isLockScreenModeActive
 
 """App module for the Windows 10 and 11 lock screen.
 
 The lock screen allows other windows to be opened, so security related functions
 are done at a higher level than the lockapp app module.
-Refer to usages of `winAPI.sessionTracking._isLockScreenModeActive`.
+Refer to usages of `winAPI.sessionTracking.isLockScreenModeActive`.
 """
 
 
@@ -60,7 +60,7 @@ class AppModule(appModuleHandler.AppModule):
 		if isinstance(obj,UIA) and obj.role==controlTypes.Role.PANE and obj.UIAElement.cachedClassName=="LockAppContainer":
 			clsList.insert(0,LockAppContainer)
 
-		if not _isLockScreenModeActive():
+		if not isLockScreenModeActive():
 			log.debugWarning(
 				"LockApp is being initialized but NVDA does not expect Windows to be locked. "
 				"DynamicNVDAObjectType may have failed to apply LockScreenObject. "

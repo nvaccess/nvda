@@ -324,7 +324,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			return self._getNearestTableCell(
 				startPos,
 				_TableCell(
-					cell.TableID,
+					cell.tableID,
 					destRow,
 					destCol,
 					rowSpan=1,

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2015-2020 NV Access Limited, David Parduhn, Bill Dengler, Leonard de Ruijter, Łukasz Golonka
+# Copyright (C) 2015-2023 NV Access Limited, David Parduhn, Bill Dengler, Leonard de Ruijter, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -9,6 +9,9 @@ import controlTypes
 import eventHandler
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.behaviors import ToolTip
+import NVDAObjects.window
+import winUser
+
 
 class MMCTable(IAccessible):
 	def _get_focusRedirect(self):
@@ -56,8 +59,21 @@ class AppModule(appModuleHandler.AppModule):
 		if obj.windowClassName == "AfxWnd42u":
 			if obj.role == controlTypes.Role.TABLE:
 				clsList.insert(0, MMCTable)
-			elif obj.role in (controlTypes.Role.TABLECELL,
-			controlTypes.Role.TABLEROWHEADER):
+			elif obj.role in (
+				controlTypes.Role.TABLECELL,
+				controlTypes.Role.TABLEROWHEADER
+			):
 				clsList.insert(0, MMCTableCell)
 		if obj.windowClassName == "tooltips_class32" and obj.name is None:
 			clsList.insert(0, toolTipWithEmptyName)
+
+	def isBadUIAWindow(self, hwnd):
+		windowClassName = winUser.getClassName(hwnd)
+		normalizedClassName = NVDAObjects.window.Window.normalizeWindowClassName(windowClassName)
+		if normalizedClassName in (
+			# #15333: SysListView32 controls in mmc are known to have an incomplete UIA implementation.
+			# Revert back to the MSAA implementation instead.
+			'SysListView32'
+		):
+			return True
+		return False

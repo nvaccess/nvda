@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt,
-# Cyrille Bougot
+# Copyright (C) 2006-2023 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt,
+# Cyrille Bougot, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -8,7 +8,9 @@ import abc
 import ctypes
 import enum
 from typing import (
-	Optional, Dict,
+	Any,
+	Dict,
+	Optional,
 )
 
 from comtypes import COMError, BSTR
@@ -39,7 +41,7 @@ from winAPI.winUser.constants import SysColorIndex
 import mouseHandler
 from displayModel import DisplayModelTextInfo
 import controlTypes
-from controlTypes import TextPosition
+from controlTypes import TextPosition, TextAlign, VerticalTextAlign
 from . import Window
 from .. import NVDAObjectTextInfo
 import scriptHandler
@@ -48,35 +50,103 @@ import browseMode
 import inputCore
 import ctypes
 import vision
+from utils.displayString import DisplayStringIntEnum
+import NVDAState
 
 excel2010VersionMajor=14
 
 xlNone=-4142
 xlSimple=-4154
 xlExtended=3
-xlCenter=-4108
-xlJustify=-4130
-xlLeft=-4131
-xlRight=-4152
-xlDistributed=-4117
-xlBottom=-4107
-xlTop=-4160
+
+
+class XlHAlign(DisplayStringIntEnum):
+	# XlHAlign enumeration from https://docs.microsoft.com/en-us/office/vba/api/excel.xlhalign
+	CENTER = -4108
+	CENTER_ACROSS_SELECTION = 7
+	DISTRIBUTED = -4117
+	FILL = 5
+	GENERAL = 1
+	JUSTIFY = -4130
+	LEFT = -4131
+	RIGHT = -4152
+
+	@property
+	def _displayStringLabels(self):
+		return _horizontalAlignmentLabels
+
+
+class XlVAlign(DisplayStringIntEnum):
+	# XlVAlign enumeration from https://docs.microsoft.com/en-us/office/vba/api/excel.xlvalign
+	BOTTOM = -4107
+	CENTER = -4108
+	DISTRIBUTED = -4117
+	JUSTIFY = -4130
+	TOP = -4160
+
+	@property
+	def _displayStringLabels(self):
+		return _verticalAlignmentLabels
+
+
+_horizontalAlignmentLabels = {
+	XlHAlign.CENTER: TextAlign.CENTER,
+	XlHAlign.CENTER_ACROSS_SELECTION: TextAlign.CENTER_ACROSS_SELECTION,
+	XlHAlign.DISTRIBUTED: TextAlign.DISTRIBUTE,
+	XlHAlign.FILL: TextAlign.FILL,
+	XlHAlign.GENERAL: TextAlign.GENERAL,
+	XlHAlign.JUSTIFY: TextAlign.JUSTIFY,
+	XlHAlign.LEFT: TextAlign.LEFT,
+	XlHAlign.RIGHT: TextAlign.RIGHT,
+}
+
+_verticalAlignmentLabels = {
+	XlVAlign.BOTTOM: VerticalTextAlign.BOTTOM,
+	XlVAlign.CENTER: VerticalTextAlign.CENTER,
+	XlVAlign.DISTRIBUTED: VerticalTextAlign.DISTRIBUTE,
+	XlVAlign.JUSTIFY: VerticalTextAlign.JUSTIFY,
+	XlVAlign.TOP: VerticalTextAlign.TOP,
+}
+
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	_deprecatedConstantsMap = {
+		"xlCenter": -4108,  # XlHAlign.CENTER or XlVAlign.CENTER
+		"xlJustify": -4130,  # XlHAlign.JUSTIFY or XlVAlign.JUSTIFY
+		"xlLeft": XlHAlign.LEFT.value,
+		"xlRight": XlHAlign.RIGHT.value,
+		"xlDistributed": -4117,  # XlHAlign.DDISTRIBUTED or XlVAlign.DDISTRIBUTED
+		"xlBottom": XlVAlign.BOTTOM.value,
+		"xlTop": XlVAlign.TOP.value,
+		"alignmentLabels": {
+			XlHAlign.CENTER.value: "center",
+			XlHAlign.JUSTIFY.value: "justify",
+			XlHAlign.LEFT.value: "left",
+			XlHAlign.RIGHT.value: "right",
+			XlHAlign.DISTRIBUTED.value: "distributed",
+			XlVAlign.BOTTOM.value: "botom",
+			XlVAlign.TOP.value: "top",
+			1: "default",
+		}
+	}
+	if attrName in _deprecatedConstantsMap and NVDAState._allowDeprecatedAPI():
+		replacementSymbol = _deprecatedConstantsMap[attrName]
+		log.warning(
+			f"Importing {attrName} from here is deprecated. "
+			f"Import XlVAlign or XlHAlign enumerations instead.",
+			stack_info=True,
+		)
+		return replacementSymbol
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
+
 xlDown=-4121
 xlToLeft=-4159
 xlToRight=-4161
 xlUp=-4162
 xlCellWidthUnitToPixels = 7.5919335705812574139976275207592
 xlSheetVisible=-1
-alignmentLabels={
-	xlCenter:"center",
-	xlJustify:"justify",
-	xlLeft:"left",
-	xlRight:"right",
-	xlDistributed:"distributed",
-	xlBottom:"botom",
-	xlTop:"top",
-	1:"default",
-}
 
 xlA1 = 1
 xlRC = 2
@@ -460,7 +530,9 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 
 	def __init__(self,rootNVDAObject):
 		super(ExcelBrowseModeTreeInterceptor,self).__init__(rootNVDAObject)
-		self.passThrough=True
+		# Note, as _set_passThrough has logic to handle braille and vision updates which are unnecessary when
+		# initializing this tree interceptor, we set the private _passThrough variable here, which is enough.
+		self._passThrough = True
 		browseMode.reportPassThrough.last=True
 
 	def _get_currentNVDAObject(self):
@@ -712,7 +784,6 @@ class ExcelWorksheet(ExcelBase):
 
 
 	treeInterceptorClass=ExcelBrowseModeTreeInterceptor
-
 	role=controlTypes.Role.TABLE
 
 	def _get_excelApplicationObject(self):
@@ -953,28 +1024,135 @@ class ExcelWorksheet(ExcelBase):
 	), canPropagate=True)
 
 	def script_changeSelection(self,gesture):
-		oldSelection=api.getFocusObject()
+		oldSelection = self._getSelection()
 		gesture.send()
-		import eventHandler
-		import time
-		newSelection=None
-		curTime=startTime=time.time()
-		while (curTime-startTime)<=0.15:
+		newSelection = None
+		start = time.time()
+		retryInterval = 0.01
+		maxTimeout = 0.15
+		elapsed = 0
+		retries = 0
+		while True:
 			if scriptHandler.isScriptWaiting():
 				# Prevent lag if keys are pressed rapidly
 				return
-			if eventHandler.isPendingEvents('gainFocus'):
-				return
-			newSelection=self._getSelection()
-			if newSelection and newSelection!=oldSelection:
-				break
 			api.processPendingEvents(processEventQueue=False)
-			time.sleep(0.015)
-			curTime=time.time()
+			if eventHandler.isPendingEvents('gainFocus'):
+				# This object is no longer focused.
+				return
+			newSelection = self._getSelection()
+			if newSelection and newSelection != oldSelection:
+				log.debug(f"Detected new selection after {elapsed} sec")
+				break
+			elapsed = time.time() - start
+			if elapsed >= maxTimeout:
+				log.debug(f"Canceled detecting new selection after {elapsed} sec")
+				break
+			# We spin the first few tries, as sleep is not accurate for tiny periods
+			# and we might end up sleeping longer than we need to. Spinning improves
+			# responsiveness in the case that the app responds fairly quickly.
+			if retries > 2:
+				# Don't spin too long, though. If we get to this point, the app is
+				# probably taking a while to respond, so super fast response is
+				# already lost.
+				time.sleep(retryInterval)
+			retries += 1
 		if newSelection:
-			if oldSelection.parent==newSelection.parent:
-				newSelection.parent=oldSelection.parent
-			eventHandler.executeEvent('gainFocus',newSelection)
+			if newSelection.parent == self:
+				# The new selection has this work sheet as its parent.
+				# While newSelection.parent and self compare equal,
+				# they are in fact not the same python object, i.e.
+				# `newSelection.parent is self` would return False.
+				# Therefore we set newSelection.parent to self in order for the format field speech cache
+				# to persist across selection changes. (#15091)
+				newSelection.parent = self
+			eventHandler.executeEvent('gainFocus', newSelection)
+
+	def _WaitForValueChangeForAction(self, action, fetcher, timeout=0.15):
+		oldVal = fetcher()
+		action()
+		startTime = curTime = time.time()
+		curVal = fetcher()
+		while curVal == oldVal and (curTime - startTime) < timeout:
+			time.sleep(0.01)
+			curVal = fetcher()
+			curTime = time.time()
+		return curVal
+	
+	def _toggleBooleanAttribute(self, gesture, getStateFun, msgOff, msgOn):
+		sel = self._getSelection()
+		if isinstance(sel, ExcelCell):
+			selObj = sel.excelCellObject
+		elif isinstance(sel, ExcelSelection):
+			selObj = sel.excelRangeObject
+		else:
+			gesture.send()
+			return
+		enabled = self._WaitForValueChangeForAction(
+			action=lambda: gesture.send(),
+			fetcher=lambda: getStateFun(selObj)
+		)
+		if enabled:
+			ui.message(msgOn)
+		else:
+			ui.message(msgOff)
+
+	@script(
+		gestures=["kb:control+b", "kb:control+shift+2"],
+		canPropagate=True,
+	)
+	def script_toggleBold(self, gesture):
+		self._toggleBooleanAttribute(
+			gesture,
+			lambda cellOrRange: cellOrRange.font.bold,
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOff=_('Bold off'),
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOn=_('Bold on'),
+		)
+
+	@script(
+		gestures=["kb:control+i", "kb:control+shift+3"],
+		canPropagate=True,
+	)
+	def script_toggleItalic(self, gesture):
+		self._toggleBooleanAttribute(
+			gesture,
+			lambda cellOrRange: cellOrRange.font.italic,
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOff=_('Italic off'),
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOn=_('Italic on'),
+		)
+
+	@script(
+		gestures=["kb:control+u", "kb:control+shift+4"],
+		canPropagate=True,
+	)
+	def script_toggleUnderline(self, gesture):
+		self._toggleBooleanAttribute(
+			gesture,
+			lambda cellOrRange: cellOrRange.font.underline != xlUnderlineStyleNone,
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOff=_('Underline off'),
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOn=_('Underline on'),
+		)
+
+	@script(
+		gesture="kb:control+shift+5",
+		canPropagate=True,
+	)
+	def script_toggleStrikethrough(self, gesture):
+		self._toggleBooleanAttribute(
+			gesture,
+			lambda cellOrRange: cellOrRange.font.strikethrough,
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOff=_('Strikethrough off'),
+			# Translators: a message when toggling formatting in Microsoft Excel
+			msgOn=_('Strikethrough on'),
+		)
+
 
 class ExcelCellTextInfo(NVDAObjectTextInfo):
 
@@ -989,11 +1167,17 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			cellObj=self.obj.excelCellObject
 		fontObj=cellObj.font
 		if formatConfig['reportAlignment']:
-			value=alignmentLabels.get(self.obj.excelCellObject.horizontalAlignment)
-			if value:
+			try:
+				value = XlHAlign(self.obj.excelCellObject.horizontalAlignment).displayString
+			except ValueError:
+				pass
+			else:
 				formatField['text-align']=value
-			value=alignmentLabels.get(self.obj.excelCellObject.verticalAlignment)
-			if value:
+			try:
+				value = XlVAlign(self.obj.excelCellObject.verticalAlignment).displayString
+			except ValueError:
+				pass
+			else:
 				formatField['vertical-align']=value
 		if formatConfig['reportFontName']:
 			formatField['font-name']=fontObj.name

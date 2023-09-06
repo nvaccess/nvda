@@ -48,12 +48,13 @@ class DefaultAppArgs(argparse.Namespace):
 	When this is True, NVDA is running in secure mode.
 	This is set to True when NVDA starts with the --secure parameter.
 	This is also set to True when NVDA is running on a secure screen
-	(winAPI.secureDesktop._isSecureDesktop() returns True)
+	(utils.security.isRunningOnSecureDesktop() returns True)
 	and the serviceDebug parameter is not set.
+	This is forced to true if the forceSecureMode parameter is set.
 
-	For more information, refer to devDocs/technicalDesignOverview.md 'Logging in secure mode'
+	For more information, refer to projectDocs/design/technicalDesignOverview.md 'Logging in secure mode'
 	and the following userGuide sections:
-	 - SystemWideParameters (information on the serviceDebug parameter)
+	 - SystemWideParameters (information on the serviceDebug and forceSecureMode parameters)
 	 - SecureMode and SecureScreens
 	"""
 	disableAddons: bool = False

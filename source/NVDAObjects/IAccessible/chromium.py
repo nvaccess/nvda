@@ -22,6 +22,7 @@ if typing.TYPE_CHECKING:
 	from treeInterceptorHandler import TreeInterceptor  # noqa: F401
 
 supportedAriaDetailsRoles: Dict[str, Optional[controlTypes.Role]] = {
+	"unknown": None,  # no explicit role, should be reported as "details"
 	"comment": controlTypes.Role.COMMENT,
 	"doc-footnote": controlTypes.Role.FOOTNOTE,
 	# These roles are current unsupported by IAccessible2,

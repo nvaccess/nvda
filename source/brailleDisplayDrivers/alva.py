@@ -108,10 +108,21 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	# Translators: The name of a braille display.
 	description = _("Optelec ALVA 6 series/protocol converter")
 	isThreadSafe = True
+	supportsAutomaticDetection = True
 	timeout = 0.2
 	supportedSettings = (
 		braille.BrailleDisplayDriver.HIDInputSetting(useConfig=False),
 	)
+
+	@classmethod
+	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
+		driverRegistrar.addUsbDevices(bdDetect.KEY_HID, {
+			"VID_0798&PID_0640",  # BC640
+			"VID_0798&PID_0680",  # BC680
+			"VID_0798&PID_0699",  # USB protocol converter
+		})
+
+		driverRegistrar.addBluetoothDevices(lambda m: m.id.startswith("ALVA "))
 
 	@classmethod
 	def getManualPorts(cls):
@@ -124,7 +135,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		return self.model
 
 	def _updateSettings(self):
-		oldNumCells = self.numCells
 		if self.isHid:
 			displaySettings = self._dev.getFeature(ALVA_DISPLAY_SETTINGS_REPORT)
 			if displaySettings[ALVA_DISPLAY_SETTINGS_STATUS_CELL_SIDE_POS] > 1:
@@ -152,9 +162,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._ser6SendMessage(b"H", b"?")
 			# Get HID keyboard input state
 			self._ser6SendMessage(b"r", b"?")
-		if oldNumCells not in (0, self.numCells):
-			# In case of splitpoint changes, we need to update the braille handler as well
-			braille.handler.displaySize = self.numCells
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver,self).__init__()

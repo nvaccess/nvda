@@ -267,7 +267,6 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 
 		if not self.initialIteration or not self.shouldReadInitialPosition():
 			if not self.nextLineImpl():
-				self.finish()
 				return
 		self.initialIteration = False
 		bookmark = self.reader.bookmark
@@ -408,6 +407,7 @@ class _TableTextReader(_CaretTextReader):
 			self.reader = self.nextLineFunc(self.reader)
 			return True
 		except StopIteration:
+			self.finish()
 			return False
 
 	def collapseLineImpl(self) -> bool:

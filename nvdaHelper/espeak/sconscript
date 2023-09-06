@@ -103,7 +103,7 @@ env.Append(
 		# Preprocessor definitions. Espeak Features
 		'/DUSE_SPEECHPLAYER=1',
 		'/DUSE_KLATT=1',
-		'/DHAVE_SONIC_H=1',
+		'/DUSE_LIBSONIC=1',
 	])
 
 env.Append(
