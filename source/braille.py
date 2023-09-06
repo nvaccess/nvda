@@ -2887,10 +2887,10 @@ class BrailleDisplayDriver(driverHandler.Driver):
 			raise ValueError("Please set numCols explicitly and don't set numCells for multi line braille displays")
 		self.numCols = numCells
 
-	#: typing information for autoproperty _get_numRows
+	#: Number of rows of the braille display, this will be 1 for most displays
 	numRows: int = 1
 
-	#: typing information for autoproperty _get_numCols
+	#: Number of columns (cells per row) of the braille display
 	numCols: int = 0
 
 

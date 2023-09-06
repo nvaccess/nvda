@@ -79,8 +79,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		except:
 			pass
 
-	def _get_numCells(self):
+	def _get_numCols(self):
 		return self._con.displaySize[0]
+	
+	def _get_numRows(self):
+		return self._con.displaySize[1]
 
 	def display(self, cells: List[int]):
 		cells = bytes(cells)
