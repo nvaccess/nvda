@@ -7,9 +7,13 @@
 from typing import TYPE_CHECKING
 
 import addonAPIVersion
+from buildVersion import version_year
 
 if TYPE_CHECKING:
 	from _addonStore.models.addon import SupportsVersionCheck  # noqa: F401
+
+if version_year < 2024:
+	_forceDisabled2023_3Addons = {"tonysEnhancements", }
 
 
 def hasAddonGotRequiredSupport(
@@ -29,6 +33,9 @@ def isAddonTested(
 	"""True if this add-on is tested for the given API version.
 	By default, the current version of NVDA is evaluated.
 	"""
+	if version_year < 2024:
+		if addon.name in _forceDisabled2023_3Addons:
+			return False
 	return addon.lastTestedNVDAVersion >= backwardsCompatToVersion
 
 

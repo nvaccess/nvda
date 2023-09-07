@@ -13,7 +13,6 @@ from os import (
 )
 import os
 from typing import (
-	Iterable,
 	List,
 	Optional,
 	cast,
@@ -24,10 +23,10 @@ import addonHandler
 from _addonStore.dataManager import addonDataManager
 from _addonStore.install import installAddon
 from _addonStore.models.addon import (
-	AddonStoreModel,
 	_createAddonGUICollection,
 	_AddonGUIModel,
 	_AddonStoreModel,
+	_AddonManifestModel,
 )
 from _addonStore.models.channel import (
 	Channel,
@@ -284,7 +283,7 @@ class AddonStoreVM:
 		"Could not disable the add-on: {addon}."
 	)
 
-	def _handleEnableDisable(self, listItemVM: AddonListItemVM, shouldEnable: bool) -> None:
+	def _handleEnableDisable(self, listItemVM: AddonListItemVM[_AddonManifestModel], shouldEnable: bool) -> None:
 		try:
 			listItemVM.model._addonHandlerModel.enable(shouldEnable)
 		except addonHandler.AddonError:
@@ -302,7 +301,7 @@ class AddonStoreVM:
 		listItemVM.status = getStatus(listItemVM.model)
 		self.refresh()
 
-	def enableOverrideIncompatibilityForAddon(self, listItemVM: AddonListItemVM) -> None:
+	def enableOverrideIncompatibilityForAddon(self, listItemVM: AddonListItemVM[_AddonManifestModel]) -> None:
 		from ... import mainFrame
 		if _shouldEnableWhenAddonTooOldDialog(mainFrame, listItemVM.model):
 			listItemVM.model.enableCompatibilityOverride()

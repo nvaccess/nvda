@@ -62,7 +62,8 @@ class SupportsVersionCheck(Protocol):
 		"""
 		from addonHandler import AddonStateCategory, state
 		overiddenAddons = state[AddonStateCategory.OVERRIDE_COMPATIBILITY]
-		assert self.name not in overiddenAddons and self.canOverrideCompatibility
+		assert self.name not in overiddenAddons, f"{self.name}, {overiddenAddons}"
+		assert self.canOverrideCompatibility
 		overiddenAddons.add(self.name)
 		state[AddonStateCategory.BLOCKED].discard(self.name)
 		state[AddonStateCategory.DISABLED].discard(self.name)
