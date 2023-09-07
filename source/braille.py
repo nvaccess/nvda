@@ -2016,7 +2016,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	queuedWrite: Optional[List[int]] = None
 	queuedWriteLock: threading.Lock
 	ackTimerHandle: int
-	_regionsPendingUpdate: Set[Region]
+	_regionsPendingUpdate: Set[Union[NVDAObjectRegion, TextInfoRegion]]
 	"""
 	Regions pending an update.
 	Regions are added by L{handleUpdate} and L{handleCaretMove} and cleared in L{_handlePendingUpdate}.
