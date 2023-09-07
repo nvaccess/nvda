@@ -1030,6 +1030,10 @@ For examples of how to define and use new extension points, please see the code 
 || Type | Extension Point | Description |
 | ``Action`` | ``pre_handleWindowMessage`` | Notifies when NVDA receives a window message, allowing components to perform an action when certain system events occur. |
 
+++ winAPI.secureDesktop ++[winAPI_secureDesktopExtPts]
+|| Type | Extension Point | Description |
+| ``Action`` | ``winAPI.secureDesktop.post_secureDesktopStateChange`` | Notifies when the user has switched to/from the secure desktop |
+
 ++ bdDetect ++[bdDetectExtPts]
 || Type | Extension Point | Description |
 | ``Chain`` | ``scanForDevices`` | Can be iterated to scan for braille devices. |
