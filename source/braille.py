@@ -530,7 +530,7 @@ class Region(object):
 		"""
 
 	def __repr__(self):
-		return f"{self.__class__.__name__} ({self.obj!r})"
+		return f"{self.__class__.__name__} ({self.rawText!r})"
 
 
 class TextRegion(Region):
