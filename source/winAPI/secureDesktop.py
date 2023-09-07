@@ -26,7 +26,7 @@ def onSecureDesktopChange(isSecureDesktop: bool):
 	pass
 
 post_secureDesktopStateChange.register(onSecureDesktopChange)
-post_secureDesktopStateChange.notify(isSecureDesktop=True)
+# Later, when no longer needed:
 post_secureDesktopStateChange.unregister(onSecureDesktopChange)
 ```
 """
