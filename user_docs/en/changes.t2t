@@ -39,8 +39,8 @@ What's New in NVDA
   - The advanced setting to enable support for HID braille has been removed in favor of a new option.
   You can now disable specific drivers for braille display auto detection in the braille display selection dialog. (#15196)
   -
-- Rich edit controls in applications such as Wordpad now use UI Automation (UIA) when the application advertises native support for this. (#15314)
 - Add-on Store: Installed add-ons will now be listed in the Available Add-ons tab, if they are still available in the store. (#15374)
+- Some shortcut keys have been updated in the NVDA menu. (#15364)
 -
 
 
@@ -55,10 +55,10 @@ What's New in NVDA
   -
 - Braille:
   - The braille cursor and selection indicators will now always be updated correctly after showing or hiding respective indicators with a gesture. (#15115)
-  - NVDA will no longer be sluggish in rich edit controls when braille is enabled, such as in MemPad. (#14285)
   - Fixed bug where Albatross braille displays try to initialize although another braille device has been connected. (#15226)
   -
 - Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283)
+- NVDA once again announces calculation results in the Windows 32bit calculator on Server, LTSC and LTSB versions of Windows. (#15284)
 -
 
 == Changes for Developers ==

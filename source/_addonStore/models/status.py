@@ -8,7 +8,6 @@ import os
 from pathlib import Path
 from typing import (
 	Dict,
-	Optional,
 	OrderedDict,
 	Set,
 	TYPE_CHECKING,
@@ -51,6 +50,7 @@ class AvailableAddonStatus(DisplayStringEnum):
 	""" Values to represent the status of add-ons within the NVDA add-on store.
 	Although related, these are independent of the states in L{addonHandler}
 	"""
+	UNKNOWN = enum.auto()
 	PENDING_REMOVE = enum.auto()
 	AVAILABLE = enum.auto()
 	UPDATE = enum.auto()
@@ -120,6 +120,8 @@ class AvailableAddonStatus(DisplayStringEnum):
 			self.ENABLED: pgettext("addonStore", "Enabled"),
 			# Translators: Status for addons shown in the add-on store dialog
 			self.RUNNING: pgettext("addonStore", "Enabled"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.UNKNOWN: pgettext("addonStore", "Unknown status"),
 		}
 
 
@@ -144,7 +146,7 @@ class AddonStateCategory(str, enum.Enum):
 	"""Add-ons that are blocked from running because they are incompatible"""
 
 
-def getStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
+def getStatus(model: "_AddonGUIModel") -> AvailableAddonStatus:
 	from addonHandler import (
 		state as addonHandlerState,
 	)
@@ -213,8 +215,8 @@ def getStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
 	if addonHandlerModel.isEnabled:
 		return AvailableAddonStatus.ENABLED
 
-	log.debugWarning(f"Add-on in unknown state: {model.addonId}")
-	return None
+	log.error(f"Add-on in unknown state: {model.addonId}")
+	return AvailableAddonStatus.UNKNOWN
 
 
 _addonStoreStateToAddonHandlerState: OrderedDict[
@@ -343,6 +345,7 @@ _statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = Order
 		AvailableAddonStatus.PENDING_INCOMPATIBLE_ENABLED,
 		AvailableAddonStatus.INCOMPATIBLE_DISABLED,
 		AvailableAddonStatus.INCOMPATIBLE_ENABLED,
+		AvailableAddonStatus.UNKNOWN,
 	},
 })
 """A dictionary where the keys are a status to filter by,
