@@ -529,6 +529,10 @@ class Region(object):
 		@type start: bool
 		"""
 
+	def __repr__(self):
+		return f"{self.__class__.__name__} ({self.obj!r})"
+
+
 class TextRegion(Region):
 	"""A simple region containing a string of text.
 	"""
@@ -2499,7 +2503,18 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			scrollTo: Optional[TextInfoRegion] = None
 			self.mainBuffer.saveWindow()
 			for region in self._regionsPendingUpdate:
-				region.update()
+				from treeInterceptorHandler import TreeInterceptor
+				if isinstance(region.obj, TreeInterceptor) and not region.obj.isAlive:
+					log.debugWarning("Skipping region update for died tree interceptor")
+					continue
+				try:
+					region.update()
+				except Exception:
+					log.debugWarning(
+						f"Region update failed for {region}, object probably died",
+						exc_info=True
+					)
+					continue
 				if isinstance(region, TextInfoRegion) and region.pendingCaretUpdate:
 					scrollTo = region
 					region.pendingCaretUpdate = False
