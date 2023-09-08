@@ -9,7 +9,6 @@ Functions should mostly refer to getting an object (NVDAObject) or a position (T
 """
 
 import typing
-from NVDAObjects.window import Window
 
 import config
 import textInfos
@@ -19,6 +18,7 @@ from logHandler import log
 import ui
 import treeInterceptorHandler
 import NVDAObjects
+from NVDAObjects.window import Window
 import winUser
 import controlTypes
 import eventHandler
