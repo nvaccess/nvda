@@ -309,8 +309,10 @@ def executeEvent(
 		sleepMode = obj.sleepMode
 		# Handle possible virtual desktop name change event.
 		# More effective in Windows 10 Version 1903 and later.
+		from NVDAObjects.window import Window
 		if (
 			eventName == "nameChange"
+			and isinstance(obj, Window)
 			and obj.windowClassName == "#32769"
 			and _canAnnounceVirtualDesktopNames
 		):

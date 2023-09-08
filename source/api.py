@@ -9,6 +9,7 @@ Functions should mostly refer to getting an object (NVDAObject) or a position (T
 """
 
 import typing
+from NVDAObjects.window import Window
 
 import config
 import textInfos
@@ -111,7 +112,8 @@ def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:  # noqa: C901
 				log.error(
 					"Never ending focus ancestry:"
 					f" last object: {tempObj.name}, {controlTypes.Role(tempObj.role).displayString},"
-					f" window class {tempObj.windowClassName}, application name {tempObj.appModule.appName}"
+					f" window class {tempObj.windowClassName if isinstance(tempObj, Window) else type(tempObj)}, "
+					f"application name {tempObj.appModule.appName}"
 				)
 			except:
 				pass
