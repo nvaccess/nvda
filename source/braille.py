@@ -2505,7 +2505,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			for region in self._regionsPendingUpdate:
 				from treeInterceptorHandler import TreeInterceptor
 				if isinstance(region.obj, TreeInterceptor) and not region.obj.isAlive:
-					log.debugWarning("Skipping region update for died tree interceptor")
+					log.debug("Skipping region update for died tree interceptor")
 					continue
 				try:
 					region.update()
