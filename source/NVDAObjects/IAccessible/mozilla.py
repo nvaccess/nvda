@@ -2,10 +2,22 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner
 
+from typing import (
+	Generator,
+	Optional,
+	Tuple,
+)
+
+from annotation import (
+	_AnnotationRolesT,
+	AnnotationTarget,
+	AnnotationOrigin,
+)
 import IAccessibleHandler
 from comInterfaces import IAccessible2Lib as IA2
+import config
 import oleacc
 import winUser
 import controlTypes
@@ -13,6 +25,72 @@ from . import IAccessible, WindowRoot
 from logHandler import log
 from NVDAObjects.behaviors import RowWithFakeNavigation
 from . import ia2Web
+
+
+class MozAnnotationTarget(AnnotationTarget):
+	def __init__(self, target: IAccessible):
+		self._target: IAccessible = target
+
+	@property
+	def summary(self) -> str:
+		return self._target.summarizeInProcess()
+
+	@property
+	def role(self) -> Optional[controlTypes.Role]:
+		# details-roles is currently only defined in Chromium
+		# this may diverge in Firefox in the future.
+		from .chromium import supportedAriaDetailsRoles
+		detailsRole = IAccessibleHandler.IAccessibleRolesToNVDARoles.get(
+			self._target.IAccessibleRole
+		)
+		# return a supported details role
+		if config.conf["debugLog"]["annotations"]:
+			log.debug(f"detailsRole: {repr(detailsRole)}")
+		if detailsRole in supportedAriaDetailsRoles.values():
+			return detailsRole
+
+		if config.conf["debugLog"]["annotations"]:
+			log.warning(f"Unsupported aria details role: {detailsRole}")
+		return None
+
+	@property
+	def targetObject(self) -> IAccessible:
+		return self._target
+
+
+class MozAnnotation(AnnotationOrigin):
+	"""
+	Unlike base Ia2Web implementation, the details-roles IA2 attribute is not exposed in Firefox.
+	"""
+	_originObj: "Mozilla"
+
+	def __bool__(self) -> bool:
+		# Unlike base Ia2Web implementation, the details-roles
+		# IA2 attribute is not exposed in Firefox.
+		# Although slower, we have to fetch the details relations instead.
+		return bool(
+			self._originObj.detailsRelations
+		)
+
+	@property
+	def targets(self) -> Tuple[MozAnnotationTarget]:
+		return tuple(MozAnnotationTarget(rel) for rel in self._originObj.detailsRelations)
+
+	@property
+	def roles(self) -> _AnnotationRolesT:
+		return tuple(self._rolesGenerator)
+
+	@property
+	def _rolesGenerator(self) -> Generator[Optional[controlTypes.Role], None, None]:
+		# Unlike base Ia2Web implementation, the details-roles
+		# IA2 attribute is not exposed in Firefox.
+		# Although slower, we have to fetch the details relations instead.
+		for target in self.targets:
+			try:
+				yield target.role
+			except ValueError:
+				log.error("Error getting role.", exc_info=True)
+
 
 class Mozilla(ia2Web.Ia2Web):
 
@@ -57,6 +135,39 @@ class Mozilla(ia2Web.Ia2Web):
 			elif self.table and self.table.presentationType==self.presType_layout:
 				presType=self.presType_layout
 		return presType
+
+	annotations: MozAnnotation
+	"""Typing information for auto property _get_annotations
+	"""
+
+	def _get_annotations(self) -> MozAnnotation:
+		annotationOrigin = MozAnnotation(self)
+		return annotationOrigin
+
+	def _get_detailsSummary(self) -> Optional[str]:
+		log.warning(
+			"NVDAObject.detailsSummary is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True,
+		)
+		# just take the first for now.
+		return self.annotations.targets[0].summary
+
+	def _get_detailsRole(self) -> Optional[controlTypes.Role]:
+		log.warning(
+			"NVDAObject.detailsRole is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True,
+		)
+		# just take the first target for now.
+		return self.annotations.roles[0]
+
+	@property
+	def hasDetails(self) -> bool:
+		log.warning(
+			"NVDAObject.hasDetails is deprecated. Use NVDAObject.annotations instead.",
+			stack_info=True,
+		)
+		return bool(self.annotations)
+
 
 class Document(ia2Web.Document):
 

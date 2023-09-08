@@ -112,8 +112,11 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 
 	@classmethod
 	def setUpClass(cls):
-		from . import translations as originalTranslationClass
-		cls.translationsFake = Translation_Fake(originalTranslationClass)
+		# Initialize fake translation,
+		# providing translation installed by `languageHandler` as an original one.
+		# To retrieve it we just get an gettext instance bound to the `_` function.
+		orig_translation = _.__self__
+		cls.translationsFake = Translation_Fake(orig_translation)
 		cls.translationsFake.install()
 
 	@classmethod

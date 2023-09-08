@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka
+# Copyright (C) 2011-2023 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka
 
 import ctypes
 import winreg
@@ -21,6 +21,13 @@ import addonHandler
 import easeOfAccess
 import COMRegistrationFixes
 import winKernel
+from typing import (
+	Any,
+	Dict,
+	Union,
+)
+import NVDAState
+from NVDAState import WritePaths
 
 _wsh=None
 def _getWSH():
@@ -31,7 +38,7 @@ def _getWSH():
 	return _wsh
 
 defaultStartMenuFolder=versionInfo.name
-with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, "SOFTWARE\Microsoft\Windows\CurrentVersion") as k: 
+with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Windows\CurrentVersion") as k:
 	programFilesPath=winreg.QueryValueEx(k, "ProgramFilesDir")[0] 
 defaultInstallPath=os.path.join(programFilesPath, versionInfo.name)
 
@@ -66,7 +73,7 @@ def createShortcut(path,targetPath=None,arguments=None,iconLocation=None,working
 
 def getStartMenuFolder(noDefault=False):
 	try:
-		with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,config.NVDA_REGKEY) as k:
+		with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, config.RegistryKey.NVDA.value) as k:
 			return winreg.QueryValueEx(k,u"Start Menu Folder")[0]
 	except WindowsError:
 		return defaultStartMenuFolder if not noDefault else None
@@ -138,7 +145,7 @@ def copyProgramFiles(destPath):
 			tryCopyFile(sourceFilePath,destFilePath)
 
 def copyUserConfig(destPath):
-	sourcePath = globalVars.appArgs.configPath
+	sourcePath = WritePaths.configDir
 	for curSourceDir,subDirs,files in os.walk(sourcePath):
 		curDestDir=os.path.join(destPath,os.path.relpath(curSourceDir,sourcePath))
 		if not os.path.isdir(curDestDir):
@@ -226,27 +233,88 @@ def removeOldProgramFiles(destPath):
 				except RetriableFailure:
 					log.warning(f"Couldn't remove file: {path!r}")
 
-uninstallerRegInfo={
-	"DisplayName":versionInfo.name,
-	"DisplayVersion":versionInfo.version,
-	"DisplayIcon":u"{installDir}\\images\\nvda.ico",
-	"InstallDir":u"{installDir}",
-	"Publisher":versionInfo.publisher,
-	"UninstallDirectory":u"{installDir}",
-	"UninstallString":u"{installDir}\\uninstall.exe",
-	"URLInfoAbout":versionInfo.url,
-}
 
-def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,startOnLogonScreen,configInLocalAppData=False):
-	with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\NVDA",0,winreg.KEY_WRITE) as k:
-		for name,value in uninstallerRegInfo.items(): 
-			winreg.SetValueEx(k,name,None,winreg.REG_SZ,value.format(installDir=installDir))
+def getUninstallerRegInfo(installDir: str) -> Dict[str, Union[str, int]]:
+	"""
+	Constructs a dictionary that is written to the registry for NVDA to show up
+	in the Windows "Apps and Features" overview.
+	"""
+	return dict(
+		DisplayName=f"{versionInfo.name} {versionInfo.version}",
+		DisplayVersion=versionInfo.version_detailed,
+		DisplayIcon=os.path.join(installDir, "images", "nvda.ico"),
+		# EstimatedSize is in KiB
+		EstimatedSize=getDirectorySize(installDir) // 1024,
+		InstallDir=installDir,
+		Publisher=versionInfo.publisher,
+		UninstallDirectory=installDir,
+		UninstallString=os.path.join(installDir, "uninstall.exe"),
+		URLInfoAbout=versionInfo.url,
+	)
+
+
+def getDirectorySize(path: str) -> int:
+	"""Calculates the size of a directory in bytes.
+	"""
+	total = 0
+	with os.scandir(path) as iterator:
+		for entry in iterator:
+			if entry.is_file():
+				total += entry.stat().st_size
+			elif entry.is_dir():
+				total += getDirectorySize(entry.path)
+	return total
+
+
+def registerInstallation(
+		installDir: str,
+		startMenuFolder: str,
+		shouldCreateDesktopShortcut: bool,
+		startOnLogonScreen: bool,
+		configInLocalAppData: bool = False
+) -> None:
+	calculatedUninstallerRegInfo = getUninstallerRegInfo(installDir)
+	log.debug(f"Estimated install size: {calculatedUninstallerRegInfo.get('EstimatedSize')} KiB")
+	with winreg.CreateKeyEx(
+		winreg.HKEY_LOCAL_MACHINE,
+		r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA",
+		0,
+		winreg.KEY_WRITE
+	) as k:
+		for name, value in calculatedUninstallerRegInfo.items():
+			if isinstance(value, int):
+				regType = winreg.REG_DWORD
+			elif isinstance(value, str):
+				regType = winreg.REG_SZ
+			else:
+				raise NotImplementedError("Unexpected value from dictionary in getUninstallerRegInfo")
+			winreg.SetValueEx(
+				k,
+				name,
+				None,
+				regType,
+				value
+			)
 	with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\nvda.exe",0,winreg.KEY_WRITE) as k:
 		winreg.SetValueEx(k,"",None,winreg.REG_SZ,os.path.join(installDir,"nvda.exe"))
-	with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE,config.NVDA_REGKEY,0,winreg.KEY_WRITE) as k:
+	with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE, config.RegistryKey.NVDA.value, 0, winreg.KEY_WRITE) as k:
 		winreg.SetValueEx(k,"startMenuFolder",None,winreg.REG_SZ,startMenuFolder)
 		if configInLocalAppData:
-			winreg.SetValueEx(k,config.CONFIG_IN_LOCAL_APPDATA_SUBKEY,None,winreg.REG_DWORD,int(configInLocalAppData))
+			winreg.SetValueEx(
+				k,
+				config.RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY.value,
+				None,
+				winreg.REG_DWORD,
+				int(configInLocalAppData)
+			)
+		if NVDAState._forceSecureModeEnabled():
+			winreg.SetValueEx(
+				k,
+				config.RegistryKey.FORCE_SECURE_MODE_SUBKEY.value,
+				None,
+				winreg.REG_DWORD,
+				1
+			)
 	registerEaseOfAccess(installDir)
 	if startOnLogonScreen is not None:
 		config._setStartOnLogonScreen(startOnLogonScreen)
@@ -412,9 +480,12 @@ def isDesktopShortcutInstalled():
 
 def unregisterInstallation(keepDesktopShortcut=False):
 	try:
-		winreg.DeleteKeyEx(winreg.HKEY_LOCAL_MACHINE, easeOfAccess.APP_KEY_PATH,
-			winreg.KEY_WOW64_64KEY)
-		easeOfAccess.setAutoStart(winreg.HKEY_LOCAL_MACHINE, False)
+		winreg.DeleteKeyEx(
+			winreg.HKEY_LOCAL_MACHINE,
+			easeOfAccess.RegistryKey.APP.value,
+			winreg.KEY_WOW64_64KEY
+		)
+		easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.ON_LOGON_SCREEN, False)
 	except WindowsError:
 		pass
 	wsh=_getWSH()
@@ -439,7 +510,7 @@ def unregisterInstallation(keepDesktopShortcut=False):
 	except WindowsError:
 		pass
 	try:
-		winreg.DeleteKey(winreg.HKEY_LOCAL_MACHINE,config.NVDA_REGKEY)
+		winreg.DeleteKey(winreg.HKEY_LOCAL_MACHINE, config.RegistryKey.NVDA.value)
 	except WindowsError:
 		pass
 	unregisterAddonFileAssociation()
@@ -550,13 +621,9 @@ def tryCopyFile(sourceFilePath,destFilePath):
 			errorCode = ctypes.GetLastError()
 			raise OSError("Unable to copy file %s to %s, error %d"%(sourceFilePath,destFilePath,errorCode))
 
-def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
+
+def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = True):
 	prevInstallPath=getInstallPath(noDefault=True)
-	try:
-		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, config.NVDA_REGKEY)
-		configInLocalAppData = bool(winreg.QueryValueEx(k, config.CONFIG_IN_LOCAL_APPDATA_SUBKEY)[0])
-	except WindowsError:
-		configInLocalAppData = False
 	unregisterInstallation(keepDesktopShortcut=shouldCreateDesktopShortcut)
 	installDir=defaultInstallPath
 	startMenuFolder=defaultStartMenuFolder
@@ -581,8 +648,14 @@ def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 			break
 	else:
 		raise RuntimeError("No available executable to use as nvda.exe")
-	registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,shouldRunAtLogon,configInLocalAppData)
-	removeOldLibFiles(installDir,rebootOK=True)
+	removeOldLibFiles(installDir, rebootOK=True)
+	registerInstallation(
+		installDir,
+		startMenuFolder,
+		shouldCreateDesktopShortcut,
+		shouldRunAtLogon,
+		NVDAState._configInLocalAppDataEnabled()
+	)
 	COMRegistrationFixes.fixCOMRegistrations()
 
 def removeOldLoggedFiles(installPath):
@@ -615,8 +688,12 @@ def createPortableCopy(destPath,shouldCopyUserConfig=True):
 	removeOldLibFiles(destPath,rebootOK=True)
 
 def registerEaseOfAccess(installDir):
-	with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE, easeOfAccess.APP_KEY_PATH, 0,
-			winreg.KEY_ALL_ACCESS | winreg.KEY_WOW64_64KEY) as appKey:
+	with winreg.CreateKeyEx(
+		winreg.HKEY_LOCAL_MACHINE,
+		easeOfAccess.RegistryKey.APP.value,
+		0,
+		winreg.KEY_ALL_ACCESS | winreg.KEY_WOW64_64KEY
+	) as appKey:
 		winreg.SetValueEx(appKey, "ApplicationName", None, winreg.REG_SZ,
 			versionInfo.name)
 		winreg.SetValueEx(appKey, "Description", None, winreg.REG_SZ,

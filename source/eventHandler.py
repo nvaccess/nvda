@@ -1,20 +1,19 @@
-#eventHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2007-2017 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2007-2023 NV Access Limited, Babbage B.V., Joseph Lee
 
 import threading
+import typing
 from typing import Optional
+from comtypes import COMError
 
 import garbageHandler
 import queueHandler
 import api
 import speech
 from speech.commands import _CancellableSpeechCommand
-import appModuleHandler
 import treeInterceptorHandler
-import globalVars
 import controlTypes
 from logHandler import log
 import globalPluginHandler
@@ -22,6 +21,11 @@ import config
 import winUser
 import extensionPoints
 import oleacc
+from utils.security import objectBelowLockScreenAndWindowsIsLocked
+import winVersion
+
+if typing.TYPE_CHECKING:
+	import NVDAObjects
 
 
 #Some dicts to store event counts by name and or obj
@@ -34,6 +38,12 @@ _pendingEventCountsLock=threading.RLock()
 #: the last object queued for a gainFocus event. Useful for code running outside NVDA's core queue 
 lastQueuedFocusObject=None
 
+
+# Handle virtual desktop switch announcements in Windows 10 and later
+_virtualDesktopName: Optional[str] = None
+_canAnnounceVirtualDesktopNames: bool = winVersion.getWinVer() >= winVersion.WIN10_1903
+
+
 def queueEvent(eventName,obj,**kwargs):
 	"""Queues an NVDA event to be executed.
 	@param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
@@ -44,7 +54,14 @@ def queueEvent(eventName,obj,**kwargs):
 		_pendingEventCountsByName[eventName]=_pendingEventCountsByName.get(eventName,0)+1
 		_pendingEventCountsByObj[obj]=_pendingEventCountsByObj.get(obj,0)+1
 		_pendingEventCountsByNameAndObj[(eventName,obj)]=_pendingEventCountsByNameAndObj.get((eventName,obj),0)+1
-	queueHandler.queueFunction(queueHandler.eventQueue,_queueEventCallback,eventName,obj,kwargs)
+	queueHandler.queueFunction(
+		queueHandler.eventQueue,
+		_queueEventCallback,
+		eventName,
+		obj,
+		kwargs,
+		_immediate=eventName == "gainFocus"
+	)
 
 
 def _queueEventCallback(eventName,obj,kwargs):
@@ -145,14 +162,20 @@ class _EventExecuter(garbageHandler.TrackedObject):
 WAS_GAIN_FOCUS_OBJ_ATTR_NAME = "wasGainFocusObj"
 
 
-def _trackFocusObject(eventName, obj) -> None:
+def _trackFocusObject(eventName: str, obj: "NVDAObjects.NVDAObject") -> None:
 	""" Keeps track of lastQueuedFocusObject and sets wasGainFocusObj attr on objects.
 	:param eventName: the event type, eg "gainFocus"
 	:param obj: the object to track if focused
 	"""
 	global lastQueuedFocusObject
 
-	if eventName == "gainFocus":
+	if (
+		eventName == "gainFocus"
+		and not objectBelowLockScreenAndWindowsIsLocked(
+			obj,
+			shouldLog=config.conf["debugLog"]["events"],
+		)
+	):
 		lastQueuedFocusObject = obj
 
 
@@ -172,7 +195,7 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 
 			# Assumption: we only process one focus event at a time, so even if several focus events are queued,
 			# all focused objects will still gain this tracking attribute. Otherwise, this may need to be set via
-			# api.setFocusObject when globalVars.focusObject is set.
+			# api.setFocusObject when api.getFocusObject is set.
 			setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, True)
 		elif not hasattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME):
 			setattr(obj, WAS_GAIN_FOCUS_OBJ_ATTR_NAME, False)
@@ -262,35 +285,73 @@ def _getFocusLossCancellableSpeechCommand(
 	return FocusLossCancellableSpeechCommand(obj, reportDevInfo=shouldReportDevInfo)
 
 
-def executeEvent(eventName, obj, **kwargs):
+def executeEvent(
+		eventName: str,
+		obj: "NVDAObjects.NVDAObject",
+		**kwargs,
+) -> None:
 	"""Executes an NVDA event.
 	@param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
-	@type eventName: string
 	@param obj: the object the event is for
-	@type obj: L{NVDAObjects.NVDAObject}
 	@param kwargs: Additional event parameters as keyword arguments.
 	"""
+	if objectBelowLockScreenAndWindowsIsLocked(
+		obj,
+		shouldLog=config.conf["debugLog"]["events"],
+	):
+		return
 	try:
+		global _virtualDesktopName
 		isGainFocus = eventName == "gainFocus"
 		# Allow NVDAObjects to redirect focus events to another object of their choosing.
 		if isGainFocus and obj.focusRedirect:
-			obj=obj.focusRedirect
-		sleepMode=obj.sleepMode
+			obj = obj.focusRedirect
+		sleepMode = obj.sleepMode
+		# Handle possible virtual desktop name change event.
+		# More effective in Windows 10 Version 1903 and later.
+		if (
+			eventName == "nameChange"
+			and obj.windowClassName == "#32769"
+			and _canAnnounceVirtualDesktopNames
+		):
+			import core
+			_virtualDesktopName = obj.name
+			core.callLater(250, handlePossibleDesktopNameChange)
 		if isGainFocus and not doPreGainFocus(obj, sleepMode=sleepMode):
 			return
-		elif not sleepMode and eventName=="documentLoadComplete" and not doPreDocumentLoadComplete(obj):
+		elif not sleepMode and eventName == "documentLoadComplete" and not doPreDocumentLoadComplete(obj):
 			return
 		elif not sleepMode:
-			_EventExecuter(eventName,obj,kwargs)
-	except:
-		log.exception("error executing event: %s on %s with extra args of %s"%(eventName,obj,kwargs))
+			_EventExecuter(eventName, obj, kwargs)
+	except Exception:
+		log.exception(f"error executing event: {eventName} on {obj} with extra args of {kwargs}")
 
-def doPreGainFocus(obj,sleepMode=False):
-	oldForeground=api.getForegroundObject()
-	oldFocus=api.getFocusObject()
-	oldTreeInterceptor=oldFocus.treeInterceptor if oldFocus else None
-	api.setFocusObject(obj)
 
+def handlePossibleDesktopNameChange() -> None:
+	"""
+	Reports the new virtual desktop name if changed.
+	On Windows versions lower than Windows 10, this function does nothing.
+	"""
+	global _virtualDesktopName
+	# Virtual desktop switch announcement works more effectively in Version 1903 and later.
+	if not _canAnnounceVirtualDesktopNames:
+		return
+	if _virtualDesktopName:
+		import ui
+		ui.message(_virtualDesktopName)
+		_virtualDesktopName = None
+
+
+def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bool:
+	if objectBelowLockScreenAndWindowsIsLocked(
+		obj,
+		shouldLog=config.conf["debugLog"]["events"],
+	):
+		return False
+	oldFocus = api.getFocusObject()
+	oldTreeInterceptor = oldFocus.treeInterceptor if oldFocus else None
+	if not api.setFocusObject(obj):
+		return False
 	if speech.manager._shouldCancelExpiredFocusEvents():
 		log._speechManagerDebug("executeEvent: Removing cancelled speech commands.")
 		# ask speechManager to check if any of it's queued utterances should be cancelled
@@ -305,25 +366,32 @@ def doPreGainFocus(obj,sleepMode=False):
 		# - api.getFocusAncestors() via api.setFocusObject() called in doPreGainFocus
 		speech._manager.removeCancelledSpeechCommands()
 
-	if globalVars.focusDifferenceLevel<=1:
-		newForeground=api.getDesktopObject().objectInForeground()
+	if api.getFocusDifferenceLevel() <= 1:
+		newForeground = api.getDesktopObject().objectInForeground()
 		if not newForeground:
 			log.debugWarning("Can not get real foreground, resorting to focus ancestors")
-			ancestors=api.getFocusAncestors()
-			if len(ancestors)>1:
-				newForeground=ancestors[1]
+			ancestors = api.getFocusAncestors()
+			if len(ancestors) > 1:
+				newForeground = ancestors[1]
 			else:
-				newForeground=obj
-		api.setForegroundObject(newForeground)
-		executeEvent('foreground',newForeground)
-	if sleepMode: return True
-	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
-	for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:
-		executeEvent("focusEntered",parent)
+				newForeground = obj
+		if not api.setForegroundObject(newForeground):
+			return False
+		executeEvent('foreground', newForeground)
+	handlePossibleDesktopNameChange()
+	if sleepMode:
+		return True
+	# Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
+	for parent in api.getFocusAncestors()[api.getFocusDifferenceLevel():]:
+		executeEvent("focusEntered", parent)
 	if obj.treeInterceptor is not oldTreeInterceptor:
-		if hasattr(oldTreeInterceptor,"event_treeInterceptor_loseFocus"):
+		if hasattr(oldTreeInterceptor, "event_treeInterceptor_loseFocus"):
 			oldTreeInterceptor.event_treeInterceptor_loseFocus()
-		if obj.treeInterceptor and obj.treeInterceptor.isReady and hasattr(obj.treeInterceptor,"event_treeInterceptor_gainFocus"):
+		if (
+			obj.treeInterceptor
+			and obj.treeInterceptor.isReady
+			and hasattr(obj.treeInterceptor, "event_treeInterceptor_gainFocus")
+		):
 			obj.treeInterceptor.event_treeInterceptor_gainFocus()
 	return True
 
@@ -413,18 +481,25 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 
 	# #6713: Edge (and soon all UWP apps) will no longer have windows as descendants of the foreground window.
 	# However, it does look like they are always  equal to or descendants of the "active" window of the input thread. 
+	gi = winUser.getGUIThreadInfo(0)
 	if wClass.startswith('Windows.UI.Core'):
-		gi=winUser.getGUIThreadInfo(0)
 		if winUser.isDescendantWindow(gi.hwndActive,windowHandle):
 			return True
 
 	fg = winUser.getForegroundWindow()
 	fgClassName=winUser.getClassName(fg)
-	if wClass == "NetUIHWND" and fgClassName in ("Net UI Tool Window Layered","Net UI Tool Window"):
+	if (
 		# #5504: In Office >= 2013 with the ribbon showing only tabs,
 		# when a tab is expanded, the window we get from the focus object is incorrect.
-		# This window isn't beneath the foreground window,
-		# so our foreground application checks fail.
+		# This window isn't beneath the foreground window.
+		wClass == "NetUIHWND" and fgClassName in ("Net UI Tool Window Layered", "Net UI Tool Window")
+		or (
+			# #14916: The context menu in the Edge download window isn't beneath the foreground window.
+			wClass == fgClassName
+			and wClass.startswith("Chrome_WidgetWin_") and fgClassName.startswith("Chrome_WidgetWin_")
+		)
+	):
+		# Our foreground application checks fail.
 		# Just compare the root owners.
 		if winUser.getAncestor(windowHandle, winUser.GA_ROOTOWNER) == winUser.getAncestor(fg, winUser.GA_ROOTOWNER):
 			return True
@@ -438,4 +513,31 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		# This window or its root is a topmost window.
 		# This includes menus, combo box pop-ups and the task switching list.
 		return True
+	# This may be an event for a windowless embedded Chrome document
+	# (E.g. Microsoft Loop component).
+	if wClass == "Chrome_RenderWidgetHostHWND":
+		# The event is for a Chromium document
+		if winUser.getClassName(gi.hwndFocus) == "Chrome_WidgetWin_0":
+			# The real win32 focus is on a Chrome embedding window.
+			# See if we can get from the event's Chromium document to the Chrome embedding window
+			# via ancestors in the UIA tree.
+			rootWindowHandle = winUser.getAncestor(windowHandle, winUser.GA_ROOT)
+			import UIAHandler
+			try:
+				rootElement = UIAHandler.handler.clientObject.elementFromHandle(rootWindowHandle)
+			except COMError:
+				log.debugWarning("Could not create UIA element for root of Chromium document", exc_info=True)
+			else:
+				condition = UIAHandler.handler.clientObject.CreatePropertyCondition(
+					UIAHandler.UIA_NativeWindowHandlePropertyId, gi.hwndFocus
+				)
+				try:
+					walker = UIAHandler.handler.clientObject.CreateTreeWalker(condition)
+					ancestorElement = walker.NormalizeElement(rootElement)
+				except COMError:
+					log.debugWarning("Unable to normalize root Chromium element to focused ancestor", exc_info=True)
+					ancestorElement = None
+				if ancestorElement:
+					# The real focused window is an ancestor of the Chromium document in the UIA tree.
+					return True
 	return False

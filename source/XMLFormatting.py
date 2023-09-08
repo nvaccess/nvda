@@ -10,7 +10,9 @@ import textUtils
 from logHandler import log
 from textUtils import WCHAR_ENCODING, isLowSurrogate
 
-CommandListT = typing.List[typing.Union[textInfos.FieldCommand, typing.Optional[str]]]
+CommandsT = typing.Union[textInfos.FieldCommand, typing.Optional[str]]
+CommandListT = typing.List[CommandsT]
+
 
 class XMLTextParser(object): 
 

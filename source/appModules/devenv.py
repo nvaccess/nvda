@@ -1,7 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2010-2019 NV Access Limited, Soronel Haetir, Babbage B.V., Francisco Del Roio
+# Copyright (C) 2010-2022 NV Access Limited, Soronel Haetir, Babbage B.V., Francisco Del Roio,
+# Leonard de Ruijter
 
 import objbase
 import comtypes
@@ -14,11 +15,12 @@ from NVDAObjects.window import Window
 from comtypes.automation import IDispatch
 from NVDAObjects.window import DisplayModelEditableText
 from NVDAObjects.IAccessible import IAccessible
-from NVDAObjects.UIA import UIA
+from NVDAObjects.UIA import UIA, WpfTextView, UIATextInfo
 from enum import IntEnum
 import appModuleHandler
 import controlTypes
 import threading
+import UIAHandler
 
 
 # A few helpful constants
@@ -43,9 +45,12 @@ class AppModule(appModuleHandler.AppModule):
 		self.vsMajor, self.vsMinor = int(vsMajor), int(vsMinor)
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		if WpfTextView in clsList:
+			clsList.remove(WpfTextView)
+			clsList.insert(0, VsWpfTextView)
 		# Only use this overlay class if the top level automation object for the IDE can be retrieved,
 		# as it will not work otherwise.
-		if obj.windowClassName == "VsTextEditPane" and self.DTE:
+		elif obj.windowClassName == "VsTextEditPane" and self.DTE:
 			try:
 				clsList.remove(DisplayModelEditableText)
 			except ValueError:
@@ -80,6 +85,44 @@ class AppModule(appModuleHandler.AppModule):
 
 		DTE = self._DTECache[thread] = self._getDTE()
 		return DTE
+
+
+class VsWpfTextViewTextInfo(UIATextInfo):
+
+	def _getLineNumberString(self, textRange):
+		# Visual Studio exposes line numbers as part of the actual text.
+		# We want to store the line number in a format field instead.
+		lineNumberRange = textRange.Clone()
+		lineNumberRange.MoveEndpointByRange(
+			UIAHandler.TextPatternRangeEndpoint_End,
+			lineNumberRange,
+			UIAHandler.TextPatternRangeEndpoint_Start
+		)
+		return lineNumberRange.GetText(-1)
+
+	def _getFormatFieldAtRange(self, textRange, formatConfig, ignoreMixedValues=False):
+		formatField = super()._getFormatFieldAtRange(textRange, formatConfig, ignoreMixedValues=ignoreMixedValues)
+		if not formatField or not formatConfig['reportLineNumber']:
+			return formatField
+		lineNumberStr = self._getLineNumberString(textRange)
+		if lineNumberStr:
+			try:
+				formatField.field['line-number'] = int(lineNumberStr)
+			except ValueError:
+				log.debugWarning(
+					f"Couldn't parse {lineNumberStr} as integer to report a line number",
+					exc_info=True
+				)
+		return formatField
+
+	def _getTextFromUIARange(self, textRange):
+		text = super()._getTextFromUIARange(textRange)
+		lineNumberStr = self._getLineNumberString(textRange)
+		return text[(0 if not lineNumberStr else len(lineNumberStr)):]
+
+
+class VsWpfTextView(WpfTextView):
+	TextInfo = VsWpfTextViewTextInfo
 
 
 class VsTextEditPaneTextInfo(textInfos.offsets.OffsetsTextInfo):

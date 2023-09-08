@@ -72,10 +72,10 @@ public:
 
 struct displayModelFormatInfo_t {
 	std::wstring fontName;
-	int fontSize;
-	bool bold;
-	bool italic;
-	bool underline;
+	int fontSize = 0;
+	bool bold = false;
+	bool italic = false;
+	bool underline = false;
 
 	displayModelFormatColor_t color;
 	displayModelFormatColor_t backgroundColor;

@@ -3,12 +3,30 @@
 # See the file COPYING for more details.
 # Copyright (C) 2007-2021 NV Access Limited, Babbage B.V.
 
+from enum import (
+	unique,
+)
 from typing import Dict
 
 from utils.displayString import DisplayStringIntEnum
 
 
+def setBit(bitPos: int) -> int:
+	return 0x1 << bitPos
+
+
+@unique
 class State(DisplayStringIntEnum):
+	"""
+	Add-on authors are recommended not to depend on values and use a `State` directly.
+	From a string, this can be done as `controlTypes.State[nameOfState]` e.g. `State["CHECKED"]`.
+	Although unlikely to change, if names/values changing represents a significant risk for your add-on,
+	then consider decoupling, and maintain an internal mapping of `State` to add-on internal states.
+
+	As add-on authors may still rely on the values, new members of State should continue
+	the pattern of incrementing.
+	"""
+
 	@property
 	def _displayStringLabels(self):
 		return _stateLabels
@@ -28,50 +46,62 @@ class State(DisplayStringIntEnum):
 			# %s will be replaced with the full identifier of the negated state (e.g. selected).
 			return _("not %s") % self.displayString
 
-	UNAVAILABLE = 0x1
-	FOCUSED = 0x2
-	SELECTED = 0x4
-	BUSY = 0x8
-	PRESSED = 0x10
-	CHECKED = 0x20
-	HALFCHECKED = 0x40
-	READONLY = 0x80
-	EXPANDED = 0x100
-	COLLAPSED = 0x200
-	INVISIBLE = 0x400
-	VISITED = 0x800
-	LINKED = 0x1000
-	HASPOPUP = 0x2000
-	PROTECTED = 0x4000
-	REQUIRED = 0x8000
-	DEFUNCT = 0x10000
-	INVALID_ENTRY = 0x20000
-	MODAL = 0x40000
-	AUTOCOMPLETE = 0x80000
-	MULTILINE = 0x100000
-	ICONIFIED = 0x200000
-	OFFSCREEN = 0x400000
-	SELECTABLE = 0x800000
-	FOCUSABLE = 0x1000000
-	CLICKABLE = 0x2000000
-	EDITABLE = 0x4000000
-	CHECKABLE = 0x8000000
-	DRAGGABLE = 0x10000000
-	DRAGGING = 0x20000000
-	DROPTARGET = 0x40000000
-	SORTED = 0x80000000
-	SORTED_ASCENDING = 0x100000000
-	SORTED_DESCENDING = 0x200000000
-	HASLONGDESC = 0x400000000
-	PINNED = 0x800000000
-	HASFORMULA = 0x1000000000  # Mostly for spreadsheets
-	HASCOMMENT = 0x2000000000
-	OBSCURED = 0x4000000000
-	CROPPED = 0x8000000000
-	OVERFLOWING = 0x10000000000
-	UNLOCKED = 0x20000000000
-	HAS_ARIA_DETAILS = 0x40000000000
-	HASNOTE = 0x80000000000
+	UNAVAILABLE = setBit(0)
+	FOCUSED = setBit(1)
+	SELECTED = setBit(2)
+	BUSY = setBit(3)
+	PRESSED = setBit(4)
+	CHECKED = setBit(5)
+	HALFCHECKED = setBit(6)
+	READONLY = setBit(7)
+	EXPANDED = setBit(8)
+	COLLAPSED = setBit(9)
+	INVISIBLE = setBit(10)
+	VISITED = setBit(11)
+	LINKED = setBit(12)
+	HASPOPUP = setBit(13)
+	PROTECTED = setBit(14)
+	REQUIRED = setBit(15)
+	DEFUNCT = setBit(16)
+	INVALID_ENTRY = setBit(17)
+	MODAL = setBit(18)
+	AUTOCOMPLETE = setBit(19)
+	MULTILINE = setBit(20)
+	ICONIFIED = setBit(21)
+	OFFSCREEN = setBit(22)
+	SELECTABLE = setBit(23)
+	FOCUSABLE = setBit(24)
+	CLICKABLE = setBit(25)
+	EDITABLE = setBit(26)
+	CHECKABLE = setBit(27)
+	DRAGGABLE = setBit(28)
+	DRAGGING = setBit(29)
+	DROPTARGET = setBit(30)
+	SORTED = setBit(31)
+	SORTED_ASCENDING = setBit(32)
+	SORTED_DESCENDING = setBit(33)
+	HASLONGDESC = setBit(34)
+	PINNED = setBit(35)
+	HASFORMULA = setBit(36)  # Mostly for spreadsheets
+	HASCOMMENT = setBit(37)
+	OBSCURED = setBit(38)
+	CROPPED = setBit(39)
+	OVERFLOWING = setBit(40)
+	UNLOCKED = setBit(41)
+	# HAS_ARIA_DETAILS is not used internally.
+	# See instead refer to NVDAObject.annotations
+	# This enum value was initially added to controlTypes.py in commit d6787b8f47861f5e76aba68da7a13a217404196f
+	HAS_ARIA_DETAILS = setBit(42)  # Restored for backwards compat only.
+	HASNOTE = setBit(43)
+	# indeterminate progress bar, aka busy indicator. No specific state label.
+	# when combined with role of 'progress bar', role is mutated to 'busy indicator'
+	INDETERMINATE = setBit(44)
+	HALF_PRESSED = setBit(45)
+	ON = setBit(46)
+	HASPOPUP_DIALOG = setBit(47)
+	HASPOPUP_GRID = setBit(48)
+	HASPOPUP_LIST = setBit(49)
+	HASPOPUP_TREE = setBit(50)
 
 
 STATES_SORTED = frozenset([State.SORTED, State.SORTED_ASCENDING, State.SORTED_DESCENDING])
@@ -92,6 +122,8 @@ _stateLabels: Dict[State, str] = {
 	State.CHECKED: _("checked"),
 	# Translators: This is presented when a three state check box is half checked.
 	State.HALFCHECKED: _("half checked"),
+	# Translators: This is presented when a three state toggle button is half pressed.
+	State.HALF_PRESSED: _("half pressed"),
 	# Translators: This is presented when the control is a read-only control such as read-only edit box.
 	State.READONLY: _("read only"),
 	# Translators: This is presented when a tree view or submenu item is expanded.
@@ -143,8 +175,6 @@ _stateLabels: Dict[State, str] = {
 	State.SORTED_DESCENDING: _("sorted descending"),
 	# Translators: a state that denotes that an object (usually a graphic) has a long description.
 	State.HASLONGDESC: _("has long description"),
-	# Translators: a state that denotes that an object has additional details (such as a comment section).
-	State.HAS_ARIA_DETAILS: _("has details"),
 	# Translators: a state that denotes that an object is pinned in its current location
 	State.PINNED: _("pinned"),
 	# Translators: a state that denotes the existance of a formula on a spreadsheet cell
@@ -161,8 +191,19 @@ _stateLabels: Dict[State, str] = {
 	# Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected
 	# Excel spreadsheet).
 	State.UNLOCKED: _("unlocked"),
-	# Translators: a state that denotes the existance of a note.
+	# Translators: a state that denotes the existence of a note.
 	State.HASNOTE: _("has note"),
+	# Translators: a state that denotes a control is currently on
+	# E.g. a switch control.
+	State.ON: _("on"),
+	# Translators: Presented when a control has a pop-up dialog.
+	State.HASPOPUP_DIALOG: _("opens dialog"),
+	# Translators: Presented when a control has a pop-up grid.
+	State.HASPOPUP_GRID: _("opens grid"),
+	# Translators: Presented when a control has a pop-up list box.
+	State.HASPOPUP_LIST: _("opens list"),
+	# Translators: Presented when a control has a pop-up tree.
+	State.HASPOPUP_TREE: _("opens tree"),
 }
 
 
@@ -176,4 +217,6 @@ _negativeStateLabels: Dict[State, str] = {
 	# Translators: This is presented when drag and drop is finished.
 	# This is only reported for objects which support accessible drag and drop.
 	State.DROPTARGET: _("done dragging"),
+	# Translators: This is presented when a switch control is off.
+	State.ON: _("off"),
 }

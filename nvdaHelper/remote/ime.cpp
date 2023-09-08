@@ -15,7 +15,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <wchar.h>
 #include "nvdaHelperRemote.h"
-#include "nvdaControllerInternal.h"
+#include <remote/nvdaControllerInternal.h>
 #include "typedCharacter.h"
 #include "tsf.h"
 #include <common/log.h>
@@ -32,11 +32,11 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define IMEID_VER(dwId)		( ( dwId ) & 0xffff0000 )
 #define IMEID_LANG(dwId)	( ( dwId ) & 0x0000ffff )
 
-#define _CHT_HKL_DAYI				( (HKL)(ULONG_PTR)0xE0060404 )	// DaYi
-#define _CHT_HKL_NEW_PHONETIC		( (HKL)(ULONG_PTR)0xE0080404 )	// New Phonetic
-#define _CHT_HKL_NEW_CHANG_JIE		( (HKL)(ULONG_PTR)0xE0090404 )	// New Chang Jie
-#define _CHT_HKL_NEW_QUICK			( (HKL)(ULONG_PTR)0xE00A0404 )	// New Quick
-#define _CHT_HKL_HK_CANTONESE		( (HKL)(ULONG_PTR)0xE00B0404 )	// Hong Kong Cantonese
+#define _CHT_HKL_DAYI				( (DWORD_PTR)0xE0060404 )	// DaYi
+#define _CHT_HKL_NEW_PHONETIC		( (DWORD_PTR)0xE0080404 )	// New Phonetic
+#define _CHT_HKL_NEW_CHANG_JIE		( (DWORD_PTR)0xE0090404 )	// New Chang Jie
+#define _CHT_HKL_NEW_QUICK			( (DWORD_PTR)0xE00A0404 )	// New Quick
+#define _CHT_HKL_HK_CANTONESE		( (DWORD_PTR)0xE00B0404 )	// Hong Kong Cantonese
 #define _CHT_IMEFILENAME	"TINTLGNT.IME"	// New Phonetic
 #define _CHT_IMEFILENAME2	"CINTLGNT.IME"	// New Chang Jie
 #define _CHT_IMEFILENAME3	"MSTCIPHA.IME"	// Phonetic 5.1
@@ -49,7 +49,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define IMEID_CHT_VER60 ( LANG_CHT | MAKEIMEVERSION( 6, 0 ) )	// New(Phonetic/ChanJie)IME6.0 : 6.0.x.x // New IME 6.0(web download)
 #define IMEID_CHT_VER_VISTA ( LANG_CHT | MAKEIMEVERSION( 7, 0 ) )	// All TSF TIP under Cicero UI-less mode: a hack to make GetImeId() return non-zero value
 
-#define _CHS_HKL		( (HKL)(ULONG_PTR)0xE00E0804 )	// MSPY
+#define _CHS_HKL		( (DWORD_PTR)0xE00E0804 )	// MSPY
 #define _CHS_IMEFILENAME	"PINTLGNT.IME"	// MSPY1.5/2/3
 #define _CHS_IMEFILENAME2	"MSSCIPYA.IME"	// MSPY3 for OfficeXP
 #define IMEID_CHS_VER41	( LANG_CHS | MAKEIMEVERSION( 4, 1 ) )	// MSPY1.5	// SCIME97 or MSPY1.5 (w/Win98, Office97)
@@ -108,12 +108,22 @@ DWORD getIMEVersion(HKL kbd_layout, wchar_t* filename) {
 			// Do not know how to extract version number
 			return 0;
 	}
-	DWORD ver_handle;
-	DWORD buf_size = GetFileVersionInfoSizeW(filename, &ver_handle);
+	DWORD buf_size = GetFileVersionInfoSizeW(
+		filename,
+		nullptr  // lpdwHandle
+	);
 	if (!buf_size)  return 0;
 	void* buf = malloc(buf_size);
-    if (!buf)  return 0;
-	if (GetFileVersionInfoW(filename, ver_handle, buf_size, buf)) {
+	if (!buf) {
+		return 0;
+	}
+	const auto gotFileVerInfo = GetFileVersionInfoW(
+		filename,
+		0,  // dwHandle
+		buf_size,
+		buf
+	);
+	if (gotFileVerInfo) {
 		void* data = NULL;
 		UINT  data_len;
 		if (VerQueryValueW(buf, L"\\", &data, &data_len)) {
@@ -129,13 +139,16 @@ DWORD getIMEVersion(HKL kbd_layout, wchar_t* filename) {
 
 bool getTIPFilename(REFCLSID clsid, WCHAR* filename, DWORD len) {
 	// Format registry path for CLSID
-	WCHAR reg_path[100];
+	WCHAR reg_path[100]{};
 	_snwprintf(reg_path, ARRAYSIZE(reg_path),
 		L"CLSID\\{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}\\InProcServer32",
 		clsid.Data1, clsid.Data2, clsid.Data3,
 		clsid.Data4[0], clsid.Data4[1], clsid.Data4[2], clsid.Data4[3],
 		clsid.Data4[4], clsid.Data4[5], clsid.Data4[6], clsid.Data4[7]);
 	HKEY reg_key = NULL;
+	// ensure null terminated for the case where the formatted string is longer than the reg_path buffer
+	// see _snwprintf docs
+	reg_path[99] = '\0';
 	RegOpenKeyW(HKEY_CLASSES_ROOT, reg_path, &reg_key);
 	if (!reg_key)  return false;
 	DWORD type = REG_NONE;
@@ -206,6 +219,9 @@ void handleReadingStringUpdate(HWND hwnd) {
 		len = GetReadingString(imc, 0, NULL, &err, &vert, &max_len);
 		if (len) {
 			read_str = (WCHAR*)malloc(sizeof(WCHAR) * (len + 1));
+			if (!read_str) {
+				return;
+			}
 			read_str[len] = '\0';
 			GetReadingString(imc, len, read_str, &err, &vert, &max_len);
 		}
@@ -249,6 +265,9 @@ void handleReadingStringUpdate(HWND hwnd) {
 				break;
 		}
 		read_str = (WCHAR*)malloc(sizeof(WCHAR) * (len + 1));
+		if (!read_str) {
+			return;
+		}
 		read_str[len] = '\0';
 		memcpy(read_str, str, sizeof(WCHAR) * len);
 		immUnlockIMCC(ctx->hPrivate);
@@ -318,6 +337,9 @@ static bool handleCandidates(HWND hwnd) {
 		return false;
 	}
 	CANDIDATELIST* list = (CANDIDATELIST*)malloc(len);
+	if (!list) {
+		return false;
+	}
 	ImmGetCandidateList(imc, 0, list, len);
 	ImmReleaseContext(hwnd, imc);
 
@@ -340,8 +362,12 @@ static bool handleCandidates(HWND hwnd) {
 		}
 	}
 	WCHAR* cand_str = NULL;
+	bool cand_updated = false;
 	if(buflen>0) {
 		cand_str=(WCHAR*)malloc(buflen);
+		if (!cand_str) {
+			return false;
+		}
 		WCHAR* ptr = cand_str;
 		for (DWORD n = list->dwPageStart; n < pageEnd;  ++n) {
 			DWORD offset = list->dwOffset[n];
@@ -356,17 +382,21 @@ static bool handleCandidates(HWND hwnd) {
 		WCHAR filename[MAX_PATH + 1]={0};
 		ImmGetIMEFileNameW(kbd_layout, filename, MAX_PATH);
 		nvdaControllerInternal_inputCandidateListUpdate(cand_str,selection,filename);
+		cand_updated = true;
 		free(cand_str);
 	}
 	/* Clean up */
 	free(list);
-	return cand_str!=NULL;
+	return cand_updated;
 }
 
 static WCHAR* getCompositionString(HIMC imc, DWORD index) {
 	int len = ImmGetCompositionStringW(imc, index, 0, 0);
 	if (len < sizeof(WCHAR))  return NULL;
 	WCHAR* wstr = (WCHAR*)malloc(len + sizeof(WCHAR));
+	if (!wstr) {
+		return nullptr;
+	}
 	len = ImmGetCompositionStringW(imc, index, wstr, len) / sizeof(WCHAR);
 	wstr[len] = L'\0';
 	 return wstr;

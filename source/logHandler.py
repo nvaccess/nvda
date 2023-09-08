@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2020 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
+# Copyright (C) 2007-2023 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
 # Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -21,6 +21,9 @@ import buildVersion
 from typing import Optional
 import exceptions
 import RPCConstants
+import NVDAState
+from NVDAState import WritePaths
+
 
 ERROR_INVALID_WINDOW_HANDLE = 1400
 ERROR_TIMEOUT = 1460
@@ -29,16 +32,34 @@ E_ACCESSDENIED = -2147024891
 CO_E_OBJNOTCONNECTED = -2147220995
 EVENT_E_ALL_SUBSCRIBERS_FAILED = -2147220991
 LOAD_WITH_ALTERED_SEARCH_PATH=0x8
+_NVDA_CODE_PATH = os.path.dirname(__file__)
+"""Store path in which NVDA code is placed.
+We cannot use `globalVars.appDir`, since for binary builds it points to the directory with NVDA binaries,
+whereas for compiled versions NVDA's code files are in `library.zip`.
+"""
 
-def isPathExternalToNVDA(path):
+
+def isPathExternalToNVDA(path: str) -> bool:
 	""" Checks if the given path is external to NVDA (I.e. not pointing to built-in code). """
-	if path[0] != "<" and os.path.isabs(path) and not path.startswith(sys.path[0] + "\\"):
+	if(
+		path[0] != "<"
+		and os.path.isabs(path)
+		and not os.path.normpath(path).startswith(_NVDA_CODE_PATH + "\\")
+		or (
+			# Handle messages logged before config is initialized
+			WritePaths.configDir is not None
+			and path.startswith(WritePaths.configDir)
+		)
+	):
 		# This module is external because:
 		# the code comes from a file (fn doesn't begin with "<");
 		# it has an absolute file path (code bundled in binary builds reports relative paths); and
-		# it is not part of NVDA's Python code (not beneath sys.path[0]).
+		# it is not part of NVDA's Python code
+		# (i.e. outside of NVDA directory or in NVDA's config,
+		# so it belongs to an add-on or a plugin in the scratchpad).
 		return True
 	return False
+
 
 def getCodePath(f):
 	"""Using a frame object, gets its module path (relative to the current directory).[className.[funcName]]
@@ -120,15 +141,16 @@ def shouldPlayErrorSound() -> bool:
 
 
 # Function to strip the base path of our code from traceback text to improve readability.
-if getattr(sys, "frozen", None):
-	# We're running a py2exe build.
-	stripBasePathFromTracebackText = lambda text: text
-else:
+if NVDAState.isRunningAsSource():
 	BASE_PATH = os.path.split(__file__)[0] + os.sep
 	TB_BASE_PATH_PREFIX = '  File "'
 	TB_BASE_PATH_MATCH = TB_BASE_PATH_PREFIX + BASE_PATH
 	def stripBasePathFromTracebackText(text):
 		return text.replace(TB_BASE_PATH_MATCH, TB_BASE_PATH_PREFIX)
+else:
+	def stripBasePathFromTracebackText(text: str) -> str:
+		return text
+
 
 class Logger(logging.Logger):
 	# Import standard levels for convenience.
@@ -155,7 +177,7 @@ class Logger(logging.Logger):
 			codepath=getCodePath(f)
 		extra["codepath"] = codepath
 
-		if not globalVars.appArgs or globalVars.appArgs.secure:
+		if globalVars.appArgs.secure:
 			# The log might expose sensitive information and the Save As dialog in the Log Viewer is a security risk.
 			activateLogViewer = False
 
@@ -246,8 +268,7 @@ class Logger(logging.Logger):
 		@rtype: bool
 		"""
 		if (
-			not globalVars.appArgs
-			or globalVars.appArgs.secure
+			globalVars.appArgs.secure
 			or not globalVars.appArgs.logFileName
 			or not isinstance(logHandler, FileHandler)
 		):
@@ -268,7 +289,6 @@ class Logger(logging.Logger):
 		"""
 		if (
 			self.fragmentStart is None
-			or not globalVars.appArgs
 			or globalVars.appArgs.secure
 			or not globalVars.appArgs.logFileName
 			or not isinstance(logHandler, FileHandler)
@@ -295,7 +315,7 @@ class RemoteHandler(logging.Handler):
 	def emit(self, record):
 		msg = self.format(record)
 		try:
-			self._remoteLib.nvdaControllerInternal_logMessage(record.levelno, ctypes.windll.kernel32.GetCurrentProcessId(), msg)
+			self._remoteLib.nvdaControllerInternal_logMessage(record.levelno, globalVars.appPid, msg)
 		except WindowsError:
 			pass
 
@@ -321,6 +341,17 @@ class Formatter(logging.Formatter):
 
 	def formatException(self, ex):
 		return stripBasePathFromTracebackText(super(Formatter, self).formatException(ex))
+
+	def format(self, record: logging.LogRecord) -> str:
+		# NVDA's log calls provide / generate a special 'codepath' record attribute.
+		# Which is a clean and friendly module.class.function string.
+		# However, as NVDA's logger is also installed as the root logger to catch logging from other libraries,
+		# log calls outside of NVDA will not provide codepath.
+		if not hasattr(record, 'codepath'):
+			# #14315: codepath was not provided,
+			# So make up a simple one from standard record attributes we know will exist.
+			record.codepath = "{name}.{funcName}".format(**record.__dict__)
+		return super().format(record)
 
 	def formatTime(self, record: logging.LogRecord, datefmt: Optional[str] = None) -> str:
 		"""Custom implementation of `formatTime` which avoids `time.localtime`
@@ -376,18 +407,37 @@ log: Logger = logging.getLogger("nvda")
 #: The singleton log handler instance.
 logHandler: Optional[logging.Handler] = None
 
+
 def _getDefaultLogFilePath():
-	if getattr(sys, "frozen", None):
+	if NVDAState.isRunningAsSource():
+		return os.path.join(globalVars.appDir, "nvda.log")
+	else:
 		import tempfile
 		return os.path.join(tempfile.gettempdir(), "nvda.log")
-	else:
-		return os.path.join(globalVars.appDir, "nvda.log")
+
 
 def _excepthook(*exc_info):
 	log.exception(exc_info=exc_info, codepath="unhandled exception")
 
 def _showwarning(message, category, filename, lineno, file=None, line=None):
 	log.debugWarning(warnings.formatwarning(message, category, filename, lineno, line).rstrip(), codepath="Python warning")
+
+
+def _shouldDisableLogging() -> bool:
+	"""Disables logging based on command line options and if secure mode is active.
+	See NoConsoleOptionParser in nvda.pyw, #TODO and #8516.
+
+	Secure mode disables logging.
+	Logging on secure screens could allow keylogging of passwords and retrieval from the SYSTEM user.
+
+	* `--secure` overrides any logging preferences by disabling logging.
+	* `--debug-logging` or `--log-level=X` overrides the user config log level setting.
+	* `--debug-logging` and `--log-level=X` override `--no-logging`.
+	"""
+	logLevelOverridden = globalVars.appArgs.debugLogging or not globalVars.appArgs.logLevel == 0
+	noLoggingRequested = globalVars.appArgs.noLogging and not logLevelOverridden
+	return globalVars.appArgs.secure or noLoggingRequested
+
 
 def initialize(shouldDoRemoteLogging=False):
 	"""Initialize logging.
@@ -408,9 +458,7 @@ def initialize(shouldDoRemoteLogging=False):
 			fmt="{levelname!s} - {codepath!s} ({asctime}) - {threadName} ({thread}):\n{message}",
 			style="{"
 		)
-		if (globalVars.appArgs.secure or globalVars.appArgs.noLogging) and (not globalVars.appArgs.debugLogging and globalVars.appArgs.logLevel == 0):
-			# Don't log in secure mode.
-			# #8516: also if logging is completely turned off.
+		if _shouldDisableLogging():
 			logHandler = logging.NullHandler()
 			# There's no point in logging anything at all, since it'll go nowhere.
 			log.root.setLevel(Logger.OFF)

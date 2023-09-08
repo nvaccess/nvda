@@ -18,8 +18,18 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #ifndef IA2SUPPORT_H
 #define IA2SUPPORT_H
 
-bool installIA2Support();
-bool uninstallIA2Support();
+#include <map>
+#include "COMProxyRegistration.h"
+
+struct IA2InstallData {
+	COMProxyRegistration_t* IA2ProxyRegistration;
+	COMProxyRegistration_t* ISimpleDOMProxyRegistration;
+	HANDLE uiThreadHandle;
+	HANDLE uiThreadUninstalledEvent;
+};
+
+std::pair<std::map<DWORD, IA2InstallData>::iterator, bool> installIA2Support(DWORD threadID);
+bool uninstallIA2Support(DWORD threadID);
 
 //Private functions
 void IA2Support_inProcess_initialize();

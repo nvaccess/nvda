@@ -8,6 +8,7 @@
 
 import itertools
 import ctypes
+import typing
 from ctypes.wintypes import BOOL, WCHAR, HWND, DWORD, ULONG, WORD, USHORT
 import winreg
 import winKernel
@@ -124,12 +125,13 @@ DIREG_DEV = 0x00000001
 def _isDebug():
 	return config.conf["debugLog"]["hwIo"]
 
-def listComPorts(onlyAvailable=True):
+
+# C901 'listComPorts' is too complex. Look for opportunities to break this method down.
+def listComPorts(onlyAvailable=True) -> typing.Iterator[typing.Dict]:  # noqa: C901
 	"""List com ports on the system.
 	@param onlyAvailable: Only return ports that are currently available.
 	@type onlyAvailable: bool
 	@return: Dicts including keys of port, friendlyName and hardwareID.
-	@rtype: generator of dict
 	"""
 	flags = DIGCF_DEVICEINTERFACE
 	if onlyAvailable:
@@ -334,12 +336,12 @@ def getWidcommBluetoothPortInfo(port):
 				return addr, name
 	raise LookupError
 
-def listUsbDevices(onlyAvailable=True):
+
+def listUsbDevices(onlyAvailable=True) -> typing.Iterator[typing.Dict]:
 	"""List USB devices on the system.
 	@param onlyAvailable: Only return devices that are currently available.
 	@type onlyAvailable: bool
 	@return: Generates dicts including keys of usbID (VID and PID), devicePath and hardwareID.
-	@rtype: generator of dict
 	"""
 	flags = DIGCF_DEVICEINTERFACE
 	if onlyAvailable:
@@ -483,14 +485,15 @@ def _getHidInfo(hwId, path):
 	return info
 
 _hidGuid = None
-def listHidDevices(onlyAvailable=True):
+
+
+def listHidDevices(onlyAvailable=True) -> typing.Iterator[typing.Dict]:
 	"""List HID devices on the system.
 	@param onlyAvailable: Only return devices that are currently available.
 	@type onlyAvailable: bool
 	@return: Generates dicts including keys such as hardwareID,
 		usbID (in the form "VID_xxxx&PID_xxxx")
 		and devicePath.
-	@rtype: generator of dict
 	"""
 	global _hidGuid
 	if not _hidGuid:

@@ -19,6 +19,7 @@ from NVDAObjects import NVDAObject
 from NVDAObjects.behaviors import EditableText, EditableTextWithoutAutoSelectDetection, LiveText
 import watchdog
 from locationHelper import RectLTWH
+from diffHandler import prefer_difflib
 
 re_WindowsForms=re.compile(r'^WindowsForms[0-9]*\.(.*)\.app\..*$')
 re_ATL=re.compile(r'^ATL:(.*)$')
@@ -176,6 +177,9 @@ An NVDAObject for a window
 
 	def _get_role(self):
 		return controlTypes.Role.WINDOW
+
+	# type information for auto property _get_windowClassName
+	windowClassName: str
 
 	def _get_windowClassName(self):
 		if hasattr(self,"_windowClassName"):
@@ -417,6 +421,12 @@ class DisplayModelLiveText(LiveText, Window):
 	def stopMonitoring(self):
 		super(DisplayModelLiveText, self).stopMonitoring()
 		displayModel.requestTextChangeNotifications(self, False)
+
+	def _get_diffAlgo(self):
+		# #12974: The display model gives us only one screen of text at a time.
+		# Use Difflib to reduce choppiness in reading.
+		return prefer_difflib()
+
 
 windowClassMap={
 	"EDIT":"Edit",

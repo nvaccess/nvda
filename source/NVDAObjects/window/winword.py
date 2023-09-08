@@ -1,18 +1,19 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
+# Copyright (C) 2006-2023 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V., Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 
 import ctypes
 import time
+from typing import (
+	Optional,
+	Dict,
+)
+
 from comtypes import COMError, GUID, BSTR
 import comtypes.client
 import comtypes.automation
-import uuid
-import operator
-import locale
-import collections
 import colorsys
 import eventHandler
 import braille
@@ -24,13 +25,14 @@ import XMLFormatting
 from logHandler import log
 import winUser
 import oleacc
-import globalVars
 import speech
 import config
 import textInfos
 import textInfos.offsets
 import colors
 import controlTypes
+from controlTypes import TextPosition
+from controlTypes.formatFields import TextAlign
 import treeInterceptorHandler
 import browseMode
 import review
@@ -40,6 +42,7 @@ from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
 from . import _msOfficeChart
 import locationHelper
+from enum import IntEnum
 
 #Word constants
 
@@ -218,6 +221,56 @@ WdThemeColorIndexToMsoThemeColorSchemeIndex={
 	wdThemeColorText2:msoThemeDark2,
 }
 
+
+# document useful values from:
+# https://learn.microsoft.com/en-us/office/vba/api/word.wdcolorindex
+class WinWordColorIndex(IntEnum):
+
+	wdBlack = 1
+	wdBlue = 2
+	wdBrightGreen = 4
+	wdDarkBlue = 9
+	wdDarkRed = 13
+	wdDarkYellow = 14
+	wdGray25 = 16
+	wdGray50 = 15
+	wdGreen = 11
+	wdPink = 5
+	wdRed = 6
+	wdTeal = 10
+	wdTurquoise = 3
+	wdViolet = 12
+	wdWhite = 8
+	wdYellow = 7
+
+
+# document useful values from:
+# https://learn.microsoft.com/en-us/office/vba/api/word.wdcolor
+class WinWordColor(IntEnum):
+
+	wdBlack = 0
+	wdBlue = 16711680
+	wdBrightGreen = 65280
+	wdDarkBlue = 8388608
+	wdDarkRed = 128
+	wdDarkYellow = 32896
+	wdGray25 = 12632256
+	wdGray50 = 8421504
+	wdGreen = 32768
+	wdPink = 16711935
+	wdRed = 255
+	wdTeal = 8421376
+	wdTurquoise = 16776960
+	wdViolet = 8388736
+	wdWhite = 16777215
+	wdYellow = 65535
+
+
+# map (highlighting) color index to color decimal value
+_colorIndexToColor: Dict[WinWordColorIndex, WinWordColor] = {
+	colorIndex.value: WinWordColor[colorIndex.name].value for colorIndex in WinWordColorIndex
+}
+
 wdRevisionTypeLabels={
 	# Translators: a Microsoft Word revision type (inserted content) 
 	wdRevisionInsert:_("insertion"),
@@ -326,6 +379,7 @@ formatConfigFlagsMap = {
 	"reportLineSpacing": 0x40000,
 	"reportSuperscriptsAndSubscripts": 0x80000,
 	"reportGraphics": 0x100000,
+	"reportHighlight": 0x200000,
 }
 formatConfigFlag_includeLayoutTables = 0x20000
 
@@ -721,7 +775,13 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError("position: %s"%position)
 
-	def getTextWithFields(self,formatConfig=None):
+	# C901 'getTextWithFields' is too complex
+	# Note: when working on getTextWithFields, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def getTextWithFields(  # noqa: C901
+		self,
+		formatConfig: Optional[Dict] = None
+	) -> textInfos.TextInfo.TextWithFieldsT:
 		if self.isCollapsed: return []
 		if self.obj.ignoreFormatting:
 			return [self.text]
@@ -853,8 +913,15 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				# Translators: line spacing of at least x point
 				field['line-spacing']=pgettext('line spacing value',"at least %.1f pt")%float(lineSpacingVal)
 			elif lineSpacingRule==wdLineSpaceMultiple:
-				# Translators: line spacing of x lines
-				field['line-spacing']=pgettext('line spacing value',"%.1f lines")%(float(lineSpacingVal)/12.0)
+				multiLineSpacingVal = float(lineSpacingVal) / 12.0
+				
+				field['line-spacing'] = npgettext(
+					'line spacing value',
+					# Translators: line spacing of x lines
+					"%.1f line",
+					"%.1f lines",
+					multiLineSpacingVal,
+				) % multiLineSpacingVal
 		revisionType=int(field.pop('wdRevisionType',0))
 		if revisionType==wdRevisionInsert:
 			field['revision-insertion']=True
@@ -864,9 +931,25 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			revisionLabel=wdRevisionTypeLabels.get(revisionType,None)
 			if revisionLabel:
 				field['revision']=revisionLabel
+		textPosition = field.pop('text-position', TextPosition.BASELINE)
+		field['text-position'] = TextPosition(textPosition)
 		color=field.pop('color',None)
 		if color is not None:
 			field['color']=self.obj.winwordColorToNVDAColor(int(color))
+		bgColor = field.pop('background-color', None)
+		if bgColor is not None:
+			field['background-color'] = self.obj.winwordColorToNVDAColor(int(bgColor))
+		hlColorIndex = field.pop('highlight-color-index', None)
+		if hlColorIndex is not None:
+			hlColor = None
+			try:
+				val = _colorIndexToColor[int(hlColorIndex)]
+				hlColor = self.obj.winwordColorToNVDAColor(val)
+			except (KeyError, ValueError):
+				log.debugWarning("highlight color error", exc_info=True)
+				pass
+			if hlColor is not None:
+				field['highlight-color'] = hlColor
 		try:
 			languageId = int(field.pop('wdLanguageId',0))
 			if languageId:
@@ -886,6 +969,13 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		bullet=field.get('line-prefix')
 		if bullet and len(bullet)==1:
 			field['line-prefix']=mapPUAToUnicode.get(bullet,bullet)
+		fontSize = field.get("font-size")
+		if fontSize is not None:
+			# Translators: Abbreviation for points, a measurement of font size.
+			field["font-size"] = pgettext("font size", "%s pt") % fontSize
+		textAlign = field.pop('text-align', None)
+		if textAlign:
+			field['text-align'] = TextAlign(textAlign)
 		return field
 
 	def expand(self,unit):
@@ -1174,7 +1264,7 @@ class WordDocument(Window):
 			return colors.RGB.fromCOLORREF(val).name
 		elif (val&0xffffffff)==0xff000000:
 			# Translators: the default (automatic) color in Microsoft Word
-			return _("default color")
+			return _("automatic color")
 		elif ((val>>28)&0xf)==0xd and ((val>>16)&0xff)==0x00:
 			# An MS word color index Plus intencity
 			# Made up of MS Word Theme Color index, hsv value ratio (MS Word darker percentage) and hsv saturation ratio (MS Word lighter percentage)
@@ -1462,8 +1552,8 @@ class WordDocument(Window):
 				# Translators: a measurement in Microsoft Word
 				return _("{offset:.3g} millimeters").format(offset=offset)
 			elif unit==wdPoints:
-				# Translators: a measurement in Microsoft Word
-				return _("{offset:.3g} points").format(offset=offset)
+				# Translators: a measurement in Microsoft Word (points)
+				return _("{offset:.3g} pt").format(offset=offset)
 			elif unit==wdPicas:
 				offset=offset/12.0
 				# Translators: a measurement in Microsoft Word

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Joseph Lee, Łukasz Golonka, Julien Cochuyt
+# Copyright (C) 2006-2023 NV Access Limited, Joseph Lee, Łukasz Golonka, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -10,20 +10,23 @@ Provides workarounds for controls such as identifying Start button, notification
 
 from comtypes import COMError
 import time
+from typing import Callable
 import appModuleHandler
 import controlTypes
 import winUser
 import winVersion
 import api
 import speech
+import braille
 import eventHandler
 import mouseHandler
-from NVDAObjects.window import Window
+from NVDAObjects import NVDAObject
 from NVDAObjects.IAccessible import IAccessible, List
 from NVDAObjects.UIA import UIA
 from NVDAObjects.behaviors import ToolTip
-from NVDAObjects.window.edit import RichEdit50, EditTextInfo
+from NVDAObjects.window.edit import RichEdit50, Edit, EditTextInfo
 import config
+from winAPI.types import HWNDValT
 
 
 # Suppress incorrect Win 10 Task switching window focus
@@ -46,9 +49,9 @@ class SuggestionListItem(UIA):
 
 	def event_UIA_elementSelected(self):
 		speech.cancelSpeech()
-		api.setNavigatorObject(self, isFocus=True)
-		self.reportFocus()
-		super(SuggestionListItem,self).event_UIA_elementSelected()
+		if api.setNavigatorObject(self, isFocus=True):
+			self.reportFocus()
+			super().event_UIA_elementSelected()
 
 
 # Windows 8 hack: Class to disable incorrect focus on windows 8 search box (containing the already correctly focused edit field)
@@ -185,13 +188,9 @@ class GridGroup(UIA):
 	# Normally the name is the first tile which is rather redundant
 	# However some groups have custom header text which should be read instead
 	def _get_name(self):
-		child=self.firstChild
-		if isinstance(child,UIA):
-			try:
-				automationID=child.UIAElement.currentAutomationID
-			except COMError:
-				automationID=None
-			if automationID=="GridListGroupHeader":
+		child = self.firstChild
+		if isinstance(child, UIA):
+			if child.UIAAutomationId == "GridListGroupHeader":
 				return child.name
 
 
@@ -225,7 +224,8 @@ class UIProperty(UIA):
 			return value
 		return value.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 
-class ReadOnlyEditBox(IAccessible):
+
+class ReadOnlyEditBox(Edit):
 #Used for read-only edit boxes in a properties window.
 #These can contain dates that include unwanted left-to-right and right-to-left indicator characters.
 
@@ -297,11 +297,11 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, ExplorerToolTip)
 			return
 
-		if windowClass == "Edit" and controlTypes.State.READONLY in obj.states:
+		if windowClass == "Edit" and Edit in clsList and controlTypes.State.READONLY in obj.states:
 			clsList.insert(0, ReadOnlyEditBox)
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
-		if windowClass == "SysListView32":
+		if windowClass == "SysListView32" and isinstance(obj, IAccessible):
 			if(
 				role == controlTypes.Role.MENUITEM
 				or(
@@ -321,7 +321,7 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, StartButton)
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
-		if windowClass == 'RICHEDIT50W' and obj.windowControlID == 256:
+		if windowClass == 'RICHEDIT50W' and RichEdit50 in clsList and obj.windowControlID == 256:
 			clsList.insert(0, MetadataEditField)
 			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 
@@ -339,7 +339,7 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, GridGroup)
 			elif uiaClassName == "ImmersiveLauncher" and role == controlTypes.Role.PANE:
 				clsList.insert(0, ImmersiveLauncher)
-			elif uiaClassName == "ListViewItem" and obj.UIAElement.cachedAutomationId.startswith('Suggestion_'):
+			elif uiaClassName == "ListViewItem" and obj.UIAAutomationId.startswith('Suggestion_'):
 				clsList.insert(0, SuggestionListItem)
 			# Multitasking view frame window
 			elif (
@@ -354,11 +354,95 @@ class AppModule(appModuleHandler.AppModule):
 				# RS4 and below we can match on a window class
 				windowClass == "MultitaskingViewFrame" or
 				# RS5 and above we must look for a particular UIA automationID on the list
-				isinstance(obj.parent,UIA) and obj.parent.UIAElement.cachedAutomationID=="SwitchItemListControl"
+				isinstance(obj.parent, UIA) and obj.parent.UIAAutomationId == "SwitchItemListControl"
 			):
 				clsList.insert(0, MultitaskingViewFrameListItem)
 			elif uiaClassName == "UIProperty" and role == controlTypes.Role.EDITABLETEXT:
 				clsList.insert(0, UIProperty)
+
+	def _get_statusBar(self):
+		foreground = api.getForegroundObject()
+		if not isinstance(foreground, UIA) or not foreground.windowClassName == "CabinetWClass":
+			# This is not the file explorer window. Resort to standard behavior.
+			raise NotImplementedError
+		import UIAHandler
+		clientObject = UIAHandler.handler.clientObject
+		condition = clientObject.createPropertyCondition(
+			UIAHandler.UIA_ControlTypePropertyId,
+			UIAHandler.UIA_StatusBarControlTypeId
+		)
+		walker = clientObject.createTreeWalker(condition)
+		try:
+			element = walker.getFirstChildElement(foreground.UIAElement)
+		except COMError:
+			# We could not find the expected object. Resort to standard behavior.
+			raise NotImplementedError()
+		element = element.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		statusBar = UIA(UIAElement=element)
+		return statusBar
+
+	@staticmethod
+	def _getStatusBarTextWin7(obj) -> str:
+		"""For status bar in Windows 7 Windows Explorer we're interested only in the name of the first child
+		the rest are either empty or contain garbage."""
+		if obj.firstChild and obj.firstChild.name:
+			return obj.firstChild.name
+		raise NotImplementedError
+
+	@staticmethod
+	def _getStatusBarTextPostWin7(obj) -> str:
+		# The expected status bar, as of Windows 10 20H2 at least, contains:
+		#  - A grouping with a single static text child presenting the total number of elements
+		#  - Optionally, a grouping with a single static text child presenting the number of
+		#    selected elements and their total size, missing if no element is selected.
+		#  - A grouping with two radio buttons to control the display mode.
+		parts = []
+		for index, child in enumerate(obj.children):
+			if (
+				child.role == controlTypes.Role.GROUPING
+				and child.childCount == 1
+				and child.firstChild.role == controlTypes.Role.STATICTEXT
+			):
+				parts.append(child.firstChild.name)
+			elif (
+				child.role == controlTypes.Role.GROUPING
+				and child.childCount > 1
+				and not any(
+					grandChild for grandChild in child.children
+					if grandChild.role != controlTypes.Role.RADIOBUTTON
+				)
+			):
+				selected = next(iter(
+					grandChild for grandChild in child.children
+					if controlTypes.State.CHECKED in grandChild.states
+				), None)
+				if selected is not None:
+					parts.append(" ".join(
+						[child.name]
+						+ ([selected.name] if selected is not None else [])
+					))
+			else:
+				# Unexpected child, try to retrieve something useful.
+				parts.append(" ".join(
+					chunk
+					for chunk in (child.name, child.value)
+					if chunk and isinstance(chunk, str) and not chunk.isspace()
+				))
+		if not parts:
+			# We couldn't retrieve anything. Resort to standard behavior.
+			raise NotImplementedError
+		return ", ".join(parts)
+
+	def getStatusBarText(self, obj) -> str:
+		if obj.windowClassName == "msctls_statusbar32":  # Windows 7
+			return self._getStatusBarTextWin7(obj)
+		if (
+			isinstance(obj, UIA) or obj.UIAElement.cachedClassname == "StatusBarModuleInner"
+		):  # Windows 8 or later
+			return self._getStatusBarTextPostWin7(obj)
+		else:
+			# This is not the file explorer status bar. Resort to standard behavior.
+			raise NotImplementedError
 
 	def event_NVDAObject_init(self, obj):
 		windowClass = obj.windowClassName
@@ -425,11 +509,35 @@ class AppModule(appModuleHandler.AppModule):
 
 		nextHandler()
 
-	def isGoodUIAWindow(self, hwnd):
+	def isGoodUIAWindow(self, hwnd: HWNDValT) -> bool:
+		currentWinVer = winVersion.getWinVer()
 		# #9204: shell raises window open event for emoji panel in build 18305 and later.
 		if (
-			winVersion.getWinVer() >= winVersion.WIN10_1903
+			currentWinVer >= winVersion.WIN10_1903
 			and winUser.getClassName(hwnd) == "ApplicationFrameWindow"
+		):
+			return True
+		# #13506: Windows 11 UI elements such as Taskbar should be reclassified as UIA windows,
+		# letting NVDA announce shell elements when navigating with mouse and/or touch,
+		# notably when interacting with windows labeled "DesktopWindowXamlSource".
+		# WORKAROUND UNTIL A PERMANENT FIX IS FOUND ACROSS APPS
+		if (
+			currentWinVer >= winVersion.WIN11
+			# Traverse parents until arriving at the top-level window with the below class names.
+			# This is more so for the shell root (first class name), and for others, class name check would work
+			# since they are top-level windows for windows shown on screen such as Task View.
+			# However, look for the ancestor for consistency.
+			and winUser.getClassName(winUser.getAncestor(hwnd, winUser.GA_ROOT)) in (
+				# Windows 11 shell UI root, housing various shell elements shown on screen if enabled.
+				"Shell_TrayWnd",  # Start, Search, Widgets, other shell elements
+				# Top-level window class names from Windows 11 shell features
+				"Shell_InputSwitchTopLevelWindow",  # Language switcher
+				"XamlExplorerHostIslandWindow",  # Task View and Snap Layouts
+				"TopLevelWindowForOverflowXamlIsland",  # #14539: redesigned systray overflow in 22H2
+			)
+			# #13717: on some systems, Windows 11 shell elements are reported as IAccessible,
+			# notably Start button, causing IAccessible handler to report attribute error when handling events.
+			and winUser.getClassName(hwnd) != "Start"
 		):
 			return True
 		return False
@@ -447,4 +555,24 @@ class AppModule(appModuleHandler.AppModule):
 			if inputPanelWindow and inputPanelWindow.appModule.appName in inputPanelAppName:
 				eventHandler.executeEvent("UIA_window_windowOpen", inputPanelWindow)
 				return
+		nextHandler()
+
+	def event_UIA_elementSelected(self, obj: NVDAObject, nextHandler: Callable[[], None]):
+		# #14388: announce File Explorer tab switches (Windows 11 22H2 and later).
+		if (
+			obj.role == controlTypes.Role.TAB
+			and controlTypes.State.SELECTED in obj.states
+			and obj.parent.UIAAutomationId == "TabListView"
+			# this is done because 2 selection events are sent for the same object, so to prevent double speaking.
+			and not eventHandler.isPendingEvents(eventName="UIA_elementSelected")
+		):
+			speech.speakObject(obj, reason=controlTypes.OutputReason.FOCUS)
+			braille.handler.message(
+				braille.getPropertiesBraille(
+					name=obj.name,
+					role=obj.role,
+					states=obj.states,
+					positionInfo=obj.positionInfo
+				)
+			)
 		nextHandler()

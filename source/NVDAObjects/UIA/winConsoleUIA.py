@@ -1,19 +1,30 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2019-2021 Bill Dengler
+# Copyright (C) 2019-2023 Bill Dengler, Leonard de Ruijter
 
+import api
+import braille
+import config
+import controlTypes
 import ctypes
 import NVDAHelper
+import NVDAState
+import speech
 import textInfos
 import textUtils
 import UIAHandler
 
 from comtypes import COMError
+from diffHandler import prefer_difflib
 from logHandler import log
-from UIAUtils import _getConhostAPILevel
-from _UIAConstants import WinConsoleAPILevel
-from . import UIATextInfo
+from typing import (
+	Any,
+	Optional,
+)
+from UIAHandler.utils import _getConhostAPILevel, _shouldUseWindowsTerminalNotifications
+from UIAHandler.constants import WinConsoleAPILevel
+from . import UIA, UIATextInfo
 from ..behaviors import EnhancedTermTypedCharSupport, KeyboardHandlerBasedTypedCharSupport
 from ..window import Window
 
@@ -94,6 +105,17 @@ class ConsoleUIATextInfo(UIATextInfo):
 	def _move(self, unit, direction, endPoint=None):
 		"Perform a move without respect to bounding."
 		return super(ConsoleUIATextInfo, self).move(unit, direction, endPoint)
+
+	def _get_text(self) -> str:
+		# #14689: IMPROVED and END_INCLUSIVE UIA consoles have many blank lines,
+		# which slows speech dictionary processing to a halt
+		res = super()._get_text()
+		stripRes = res.rstrip("\r\n")
+		IGNORE_TRAILING_WHITESPACE_LENGTH = 100
+		if len(res) - len(stripRes) > IGNORE_TRAILING_WHITESPACE_LENGTH:
+			return stripRes
+		else:
+			return res
 
 	def __ne__(self, other):
 		"""Support more accurate caret move detection."""
@@ -379,6 +401,14 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		info.append(f"API level: {self.apiLevel} ({self.apiLevel.name})")
 		return info
 
+	def _get_diffAlgo(self):
+		if self.apiLevel < WinConsoleAPILevel.FORMATTED:
+			# #12974: These consoles are constrained to onscreen text.
+			# Use Difflib to reduce choppiness in reading.
+			return prefer_difflib()
+		else:
+			return super().diffAlgo
+
 	def detectPossibleSelectionChange(self):
 		try:
 			return super().detectPossibleSelectionChange()
@@ -391,13 +421,78 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 				"probably due to a switch to/from the alt buffer."
 			), exc_info=True)
 
+	def event_UIA_notification(self, **kwargs):
+		"""
+		In Windows Sun Valley 2 (SV2 M2), UIA notification events will be sent
+		to announce new text. Block these for now to avoid double-reporting of
+		text changes.
+		@note: In the longer term, NVDA should leverage these events in place
+		of the current LiveText strategy, as performance will likely be
+		significantly improved and #11002 can be completely mitigated.
+		"""
+		log.debugWarning(f"Notification event blocked to avoid double-report: {kwargs}")
+
 
 def findExtraOverlayClasses(obj, clsList):
-	if obj.UIAElement.cachedAutomationId == "Text Area":
+	if obj.UIAAutomationId == "Text Area":
 		clsList.append(WinConsoleUIA)
-	elif obj.UIAElement.cachedAutomationId == "Console Window":
+	elif obj.UIAAutomationId == "Console Window":
 		clsList.append(consoleUIAWindow)
 
 
-class WinTerminalUIA(EnhancedTermTypedCharSupport):
-	pass
+class _DiffBasedWinTerminalUIA(EnhancedTermTypedCharSupport):
+	"""
+	An overlay class for Windows Terminal (wt.exe) that uses diffing to speak
+	new text.
+	"""
+
+	def event_UIA_notification(self, **kwargs):
+		"Block notification events when diffing to prevent double reporting."
+		log.debugWarning(f"Notification event blocked to avoid double-report: {kwargs}")
+
+
+class _NotificationsBasedWinTerminalUIA(UIA):
+	"""
+	An overlay class for Windows Terminal (wt.exe) that uses UIA notification
+	events provided by the application to speak new text.
+	"""
+
+	#: Override the role, which is controlTypes.Role.STATICTEXT by default.
+	role = controlTypes.Role.TERMINAL
+	#: New line text is announced using UIA notification events
+	announceNewLineText = False
+
+	def event_UIA_notification(
+			self,
+			notificationKind: Optional[int] = None,
+			notificationProcessing: Optional[int] = UIAHandler.NotificationProcessing_CurrentThenMostRecent,
+			displayString: Optional[str] = None,
+			activityId: Optional[str] = None
+	):
+		# Do not announce output from background terminals.
+		if self.appModule != api.getFocusObject().appModule:
+			return
+		braille.handler.handleUpdate(self)
+		# microsoft/terminal#12358: Automatic reading of terminal output
+		# is provided by UIA notifications. If the user does not want
+		# automatic reporting of dynamic output, suppress this notification.
+		if not config.conf["presentation"]["reportDynamicContentChanges"]:
+			return
+		for line in displayString.splitlines():
+			if line and not line.isspace():  # Don't say "blank" during autoread
+				speech.speakText(line)
+
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "WinTerminalUIA" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"WinTerminalUIA is deprecated. "
+			"Instead use _DiffBasedWinTerminalUIA or _NotificationsBasedWinTerminalUIA"
+		)
+		return (
+			_NotificationsBasedWinTerminalUIA
+			if _shouldUseWindowsTerminalNotifications()
+			else _DiffBasedWinTerminalUIA
+		)
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")

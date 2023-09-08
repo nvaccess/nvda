@@ -19,7 +19,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <set>
 #include <algorithm>
 #include <common/xml.h>
-#include "nvdaControllerInternal.h"
+#include <remote/nvdaControllerInternal.h>
 #include <common/log.h>
 #include "displayModel.h"
 
@@ -47,7 +47,7 @@ void displayModelChunk_t::generateXML(wstring& text) {
 	s<<L"baseline=\""<<baseline<<L"\" ";
 	s<<L"direction=\""<<direction<<L"\" ";
 	s<<L" font-name=\""<<formatInfo.fontName<<L"\" ";
-	s<<L" font-size=\""<<formatInfo.fontSize<<L"pt\" ";
+	s<<L" font-size=\""<<formatInfo.fontSize<<L"\" ";
 	if(this->formatInfo.bold) s<<L" bold=\"true\"";
 	if(this->formatInfo.italic) s<<L" italic=\"true\"";
 	if(this->formatInfo.underline) s<<L" underline=\"true\"";

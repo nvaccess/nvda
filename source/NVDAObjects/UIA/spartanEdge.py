@@ -9,7 +9,7 @@ import eventHandler
 import controlTypes
 import textInfos
 import UIAHandler
-from UIAUtils import (
+from UIAHandler.utils import (
 	getChildrenWithCacheFromUIATextRange,
 	getEnclosingElementWithCacheFromUIATextRange,
 )

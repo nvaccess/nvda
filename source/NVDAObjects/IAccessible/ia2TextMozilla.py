@@ -7,6 +7,10 @@
 This is now used by other applications as well.
 """
 import typing
+from typing import (
+	Optional,
+	Dict,
+)
 
 from comtypes import COMError
 import winUser
@@ -266,6 +270,8 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				yield item
 			elif isinstance(item, int): # Embedded object.
 				embedded: typing.Optional[IAccessible] = _getEmbedded(ti.obj, item)
+				if embedded is None:
+					continue
 				notText = _getRawTextInfo(embedded) is NVDAObjectTextInfo
 				if controlStack is not None:
 					controlField = self._getControlFieldForObject(embedded)
@@ -395,7 +401,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 	def _get_text(self):
 		return "".join(self._getText(False))
 
-	def getTextWithFields(self, formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		return self._getText(True, formatConfig)
 
 	def _findUnitEndpoints(self, baseTi, unit, findStart=True, findEnd=True):

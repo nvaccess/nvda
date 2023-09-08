@@ -20,3 +20,18 @@ from .base import (  # noqa: F401
 	getByte
 )
 from .hid import Hid  # noqa: F401
+from .ioThread import IoThread
+
+bgThread: IoThread
+
+
+def initialize():
+	global bgThread
+	bgThread = IoThread()
+	bgThread.start()
+
+
+def terminate():
+	global bgThread
+	bgThread.stop()
+	bgThread = None

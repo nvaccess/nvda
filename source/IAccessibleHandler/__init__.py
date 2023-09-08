@@ -1,11 +1,22 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Łukasz Golonka, Leonard de Ruijter
+# Copyright (C) 2006-2022 NV Access Limited, Łukasz Golonka, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+import typing
+# F401 imported but unused. RelationType should be exposed from IAccessibleHandler, in future __all__
+# should be used to export it.
+from .types import RelationType  # noqa: F401
+
 import re
 import struct
-from typing import Optional, Tuple
+from typing import (
+	Optional,
+	Tuple,
+	Dict,
+	Union,
+	Set,
+)
 import weakref
 from ctypes import (
 	wintypes,
@@ -34,7 +45,6 @@ import appModuleHandler
 import controlTypes
 import core
 import eventHandler
-import keyboardHandler
 from logHandler import log
 import mouseHandler
 import NVDAObjects.IAccessible
@@ -45,6 +55,8 @@ from . import internalWinEventHandler
 from .orderedWinEventLimiter import MENU_EVENTIDS
 from .utils import getWinEventLogInfo, getWinEventName, isMSAADebugLoggingEnabled
 
+if typing.TYPE_CHECKING:
+	import textInfos
 
 # Special Mozilla gecko MSAA constant additions
 NAVRELATION_LABEL_FOR = 0x1002
@@ -52,15 +64,11 @@ NAVRELATION_LABELLED_BY = 0x1003
 NAVRELATION_NODE_CHILD_OF = 0x1005
 NAVRELATION_EMBEDS = 0x1009
 
-# IAccessible2 relations (not included in the typelib)
-IA2_RELATION_FLOWS_FROM = "flowsFrom"
-IA2_RELATION_FLOWS_TO = "flowsTo"
-
 # A place to store live IAccessible NVDAObjects, that can be looked up by their window,objectID,
 # childID event params.
 liveNVDAObjectTable = weakref.WeakValueDictionary()
 
-IAccessibleRolesToNVDARoles = {
+IAccessibleRolesToNVDARoles: Dict[Union[int, str], controlTypes.Role] = {
 	oleacc.ROLE_SYSTEM_WINDOW: controlTypes.Role.WINDOW,
 	oleacc.ROLE_SYSTEM_CLIENT: controlTypes.Role.PANE,
 	oleacc.ROLE_SYSTEM_TITLEBAR: controlTypes.Role.TITLEBAR,
@@ -83,7 +91,6 @@ IAccessibleRolesToNVDARoles = {
 	oleacc.ROLE_SYSTEM_LINK: controlTypes.Role.LINK,
 	oleacc.ROLE_SYSTEM_OUTLINE: controlTypes.Role.TREEVIEW,
 	oleacc.ROLE_SYSTEM_OUTLINEITEM: controlTypes.Role.TREEVIEWITEM,
-	oleacc.ROLE_SYSTEM_OUTLINEBUTTON: controlTypes.Role.TREEVIEWITEM,
 	oleacc.ROLE_SYSTEM_PAGETAB: controlTypes.Role.TAB,
 	oleacc.ROLE_SYSTEM_PAGETABLIST: controlTypes.Role.TABCONTROL,
 	oleacc.ROLE_SYSTEM_SLIDER: controlTypes.Role.SLIDER,
@@ -176,6 +183,8 @@ IAccessibleRolesToNVDARoles = {
 	IA2.IA2_ROLE_BLOCK_QUOTE: controlTypes.Role.BLOCKQUOTE,
 	IA2.IA2_ROLE_LANDMARK: controlTypes.Role.LANDMARK,
 	IA2.IA2_ROLE_MARK: controlTypes.Role.MARKED_CONTENT,
+	IA2.IA2_ROLE_COMMENT: controlTypes.Role.COMMENT,
+	IA2.IA2_ROLE_SUGGESTION: controlTypes.Role.SUGGESTION,
 	# some common string roles
 	"frame": controlTypes.Role.FRAME,
 	"iframe": controlTypes.Role.INTERNALFRAME,
@@ -213,7 +222,6 @@ IAccessibleStatesToNVDAStates = {
 	oleacc.STATE_SYSTEM_COLLAPSED: controlTypes.State.COLLAPSED,
 	oleacc.STATE_SYSTEM_OFFSCREEN: controlTypes.State.OFFSCREEN,
 	oleacc.STATE_SYSTEM_INVISIBLE: controlTypes.State.INVISIBLE,
-	oleacc.STATE_SYSTEM_TRAVERSED: controlTypes.State.VISITED,
 	oleacc.STATE_SYSTEM_LINKED: controlTypes.State.LINKED,
 	oleacc.STATE_SYSTEM_HASPOPUP: controlTypes.State.HASPOPUP,
 	oleacc.STATE_SYSTEM_PROTECTED: controlTypes.State.PROTECTED,
@@ -235,8 +243,87 @@ IAccessible2StatesToNVDAStates = {
 	IA2.IA2_STATE_CHECKABLE: controlTypes.State.CHECKABLE,
 }
 
+Role = controlTypes.Role
+State = controlTypes.State
 
-def normalizeIAccessible(pacc, childID=0):
+
+def _getStatesSetFromIAccessibleStates(
+		IAccessibleStates: int
+) -> Set[controlTypes.State]:
+	return set(
+		IAccessibleStatesToNVDAStates[IAState]
+		for IAState in IAccessibleStatesToNVDAStates.keys()
+		if IAState & IAccessibleStates
+	)
+
+
+def getStatesSetFromIAccessible2States(IAccessible2States: int) -> Set[State]:
+	return set(
+		IAccessible2StatesToNVDAStates[IA2State]
+		for IA2State in IAccessible2StatesToNVDAStates.keys()
+		if IA2State & IAccessible2States
+	)
+
+
+def getStatesSetFromIAccessibleAttrs(attrs: "textInfos.ControlField") -> Set[State]:
+	# States are serialized (in XML) with an attribute per state.
+	# The value for the state is used in the attribute name.
+	# The attribute value is always 1.
+	# EG IAccessible::state_40="1"
+	IAccessibleStateAttrName = 'IAccessible::state_{}'
+	return set(
+		IAccessibleStatesToNVDAStates[IAState]
+		for IAState in IAccessibleStatesToNVDAStates.keys()
+		if int(attrs.get(IAccessibleStateAttrName.format(IAState), 0))
+	)
+
+
+def getStatesSetFromIAccessible2Attrs(attrs: "textInfos.ControlField") -> Set[State]:
+	# States are serialized (in XML) with an attribute per state.
+	# The value for the state is used in the attribute name.
+	# The attribute value is always 1.
+	# EG IAccessible2::state_40="1"
+	IAccessible2StateAttrName = 'IAccessible2::state_{}'
+	return set(
+		IAccessible2StatesToNVDAStates[IA2State]
+		for IA2State in IAccessible2StatesToNVDAStates.keys()
+		if int(attrs.get(IAccessible2StateAttrName.format(IA2State), 0))
+	)
+
+
+def calculateNvdaRole(IARole: int, IAStates: int) -> Role:
+	"""Convert IARole value into an NVDA role, and apply any required transformations.
+	"""
+	role = IAccessibleRolesToNVDARoles.get(IARole, Role.UNKNOWN)
+	states = _getStatesSetFromIAccessibleStates(IAStates)
+	role, states = controlTypes.transformRoleStates(role, states)
+	return role
+
+
+def calculateNvdaStates(IARole: int, IAStates: int) -> Set[State]:
+	"""Convert IAStates bit set into a Set of NVDA States and apply any required transformations.
+	"""
+	role = IAccessibleRolesToNVDARoles.get(IARole, Role.UNKNOWN)
+	states = _getStatesSetFromIAccessibleStates(IAStates)
+	role, states = controlTypes.transformRoleStates(role, states)
+	return states
+
+
+def NVDARoleFromAttr(accRole: Optional[str]) -> Role:
+	if not accRole:  # empty string or None
+		return controlTypes.Role.UNKNOWN
+	assert isinstance(accRole, str)
+	if accRole.isdigit():
+		accRole = int(accRole)
+	else:
+		accRole = accRole.lower()
+	return IAccessibleRolesToNVDARoles.get(accRole, controlTypes.Role.UNKNOWN)
+
+
+def normalizeIAccessible(
+		pacc: Union[IUnknown, IA.IAccessible, IA2.IAccessible2],
+		childID: int = 0
+) -> Union[IA.IAccessible, IA2.IAccessible2]:
 	if not isinstance(pacc, IA.IAccessible):
 		try:
 			pacc = pacc.QueryInterface(IA.IAccessible)
@@ -470,7 +557,7 @@ def winEventToNVDAEvent(  # noqa: C901
 			)
 		return None
 	# We do not support MSAA object proxied from native UIA
-	if UIAHandler.handler and UIAHandler.handler.isUIAWindow(window):
+	if UIAHandler.handler and UIAHandler.handler.isUIAWindow(window, isDebug=isMSAADebugLoggingEnabled()):
 		if isMSAADebugLoggingEnabled():
 			log.debug(
 				f"Native UIA window. Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}"
@@ -539,12 +626,20 @@ def processGenericWinEvent(eventID, window, objectID, childID):
 		winUser.EVENT_OBJECT_SHOW
 	):
 		if not isinstance(focus, NVDAObjects.IAccessible.IAccessible):
-			if isMSAADebugLoggingEnabled():
-				log.debug(
-					f"Ignoring MSAA caret event on non-MSAA focus {focus}, "
-					f"winEvent {getWinEventLogInfo(window, objectID, childID)}"
-				)
-			return False
+			# #12855: Ignore MSAA caret event on non-MSAA focus.
+			# as Chinese input method fires MSAA caret events over and over on UIA Word documents.
+			# #13098: However, limit this specifically to UIA Word documents,
+			# As other UIA documents (E.g. Visual Studio)
+			# Seem to rely on MSAA caret events,
+			# as they do not fire their own UIA caret events.
+			from NVDAObjects.UIA.wordDocument import WordDocument
+			if isinstance(focus, WordDocument):
+				if isMSAADebugLoggingEnabled():
+					log.debug(
+						f"Ignoring MSAA caret event on focused UIA Word document"
+						f"winEvent {getWinEventLogInfo(window, objectID, childID)}"
+					)
+				return False
 		if isMSAADebugLoggingEnabled():
 			log.debug(
 				"handling winEvent as caret event on focus. "
@@ -677,26 +772,8 @@ def processFocusNVDAEvent(obj, force=False):
 	return True
 
 
-class SecureDesktopNVDAObject(NVDAObjects.window.Desktop):
-
-	def findOverlayClasses(self, clsList):
-		clsList.append(SecureDesktopNVDAObject)
-		return clsList
-
-	def _get_name(self):
-		# Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
-		return _("Secure Desktop")
-
-	def _get_role(self):
-		return controlTypes.Role.PANE
-
-	def event_gainFocus(self):
-		super(SecureDesktopNVDAObject, self).event_gainFocus()
-		# After handling the focus, NVDA should sleep while the secure desktop is active.
-		self.sleepMode = self.SLEEP_FULL
-
-
 def processDesktopSwitchWinEvent(window, objectID, childID):
+	from winAPI.secureDesktop import _handleSecureDesktopChange
 	if isMSAADebugLoggingEnabled():
 		log.debug(
 			f"Processing desktopSwitch winEvent: {getWinEventLogInfo(window, objectID, childID)}"
@@ -704,18 +781,23 @@ def processDesktopSwitchWinEvent(window, objectID, childID):
 	hDesk = windll.user32.OpenInputDesktop(0, False, 0)
 	if hDesk != 0:
 		windll.user32.CloseDesktop(hDesk)
-		core.callLater(200, _correctFocus)
+		core.callLater(200, _handleUserDesktop)
 	else:
-		# Switching to a secure desktop.
-		# We don't receive key up events for any keys down before switching to a secure desktop,
-		# so clear our recorded modifiers.
-		keyboardHandler.currentModifiers.clear()
-		obj = SecureDesktopNVDAObject(windowHandle=window)
-		eventHandler.executeEvent("gainFocus", obj)
+		# When hDesk == 0, the active desktop has changed.
+		# This is usually means the secure desktop has been launched,
+		# but the new desktop can also be a secondary desktop created through the Windows API.
+		# https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-createdesktopa
+		# This secondary desktop has some bugs, and as such is not properly supported (#14395).
+		# It is not immediately clear how to differentiate changing to a secondary desktop and the secure desktop.
+		# When looking to support the secondary desktop,
+		# the UX should be updated to announce "desktop change" rather than "Secure Desktop".
+		_handleSecureDesktopChange()
 
 
-def _correctFocus():
+def _handleUserDesktop():
+	from winAPI.secureDesktop import post_secureDesktopStateChange
 	eventHandler.queueEvent("gainFocus", api.getDesktopObject().objectWithFocus())
+	post_secureDesktopStateChange.notify(isSecureDesktop=False)
 
 
 def processForegroundWinEvent(window, objectID, childID):
@@ -1114,15 +1196,15 @@ ATTRIBS_STRING_BASE64_THRESHOLD = 4096
 
 
 # C901: splitIA2Attribs is too complex
-def splitIA2Attribs(attribsString):  # noqa: C901
+def splitIA2Attribs(  # noqa: C901
+		attribsString: str
+) -> Dict[str, Union[str, Dict]]:
 	"""Split an IAccessible2 attributes string into a dict of attribute keys and values.
 	An invalid attributes string does not cause an error, but strange results may be returned.
 	Subattributes are handled. Subattribute keys and values are placed into a dict which becomes the value
 	of the attribute.
 	@param attribsString: The IAccessible2 attributes string to convert.
-	@type attribsString: str
 	@return: A dict of the attribute keys and values, where values are strings or dicts.
-	@rtype: {str: str or {str: str}}
 	"""
 	# Do not treat huge base64 data as it might freeze NVDA in Google Chrome (#10227)
 	if len(attribsString) >= ATTRIBS_STRING_BASE64_THRESHOLD:

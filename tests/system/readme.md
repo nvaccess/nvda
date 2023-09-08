@@ -7,23 +7,43 @@ Dependencies such as Robot are automatically installed for you when NVDA's build
  
 ### Running the tests
 
-You can run the tests with `runsystemtests.bat`.
-Running this script with no arguments will run all system tests found in tests\system\robot, against the current source copy of NVDA.
+You can run the tests with `runsystemtests.bat --include <TAG>`.
+This will run against the source copy of NVDA.
 Any extra arguments provided to this script are forwarded on to Robot.
+**Note:** For tests to run the [tags to include **must** be specified](#tags-are-required).
+Include can be specified multiple times, acting as a logical OR.
 
 To run a single test, add the `--test` argument (wildcards accepted).
 
 ```
-runsystemtests --test "starts" ...
+runsystemtests --include chrome --test "starts" ...
 ```
 
-To run all tests with a particular tag use `-i`:
+A shorter alternative for `--include` is `-i`.
+E.G. to run all tests with the chrome tag use:
 ```
 runsystemtests -i "chrome" ...
 ```
 
-Other options exit for specifying tests to run (e.g. by suite, tag, etc).
+Note: For tests based on Chrome, be sure that no previous instance of Chrome is open when you launch the test, specifically on non-English systems.
+
+Other options exist for specifying tests to run (e.g. by suite, tag, etc).
 Consult `runsystemtests --help`
+
+### Tags are required
+
+Running this script with no arguments won't run any tests, instead an error will be given:
+```
+[ ERROR ] Suite 'Robot' contains no tests matching tag 'fakeTagToEnforceUsageOfInclude' and not matching tag 'excluded from build'.
+```
+This is to prevent accidental running of the installer tests.
+Instead, the tags should be explicitly included, to run all (except installer) tests.
+Examples:
+- All tests tagged with NVDA: `runsystemtests.bat --include NVDA`
+- All Chrome tests: `runsystemtests.bat --include chrome`
+
+This is implemented by supplying an unused tag `fakeTagToEnforceUsageOfInclude` to RobotFramework via the
+`tests\system\robotArgs.robot` file.
 
 ### Getting the results
 
@@ -33,7 +53,9 @@ The logs from NVDA are saved to the `nvdaTestRunLogs` folder
 
 ### Excluding tests
 
-Tests can be excluded by adding the tag `excluded_from_build` EG:
+It is possible to exclude/disable a flaky test, i.e. intermittent test failures, or a test that needs
+to be disabled until there is time to investigate.
+Add the tag `excluded_from_build` EG:
 
 ```robot
 checkbox labelled by inner element

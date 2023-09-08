@@ -3,12 +3,10 @@
 #Copyright (c) 2011-2021 NVDA Contributors, Cleverson Casarin Uliana, Rui Batista, Marlin Rodrigues da Silva, Tiago Melo Casal
 #This file is covered by the GNU General Public License.
 
-# pt_BR: na medida do possível, foi usado os nomes oficiais dos caracteres constantes na tabela Unicode como fonte para tradução, fontes como dicionários/enciclopédias/wikipedia/páginas especializadas também foram utilizadas, nos casos em que há nomes locais oficiais foi preferido utilizar a forma local ou uma forma híbrida, foi utilizado para cada caractere um nome distinto dos demais evitando ambiguidades ocasionadas por nomes idênticos para caracteres diferentes, em pouquíssimos casos especiais adaptações foram usadas para uma melhor pronúncia dos sintetizadores. Link da tabela internacional de caracteres Unicode: www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt
-
 complexSymbols:
 # identifier	regexp
 # Others
-# pt_BR: em português o separador decimal é , (vírgula) e o separador de classes (milhares) tradicional é . (ponto)
+# em português o separador decimal é , (vírgula) e o separador de classes (milhares) tradicional é . (ponto)
 decimal point	(?<![^\d -])\,(?=\d)
 thousands separator	(?<=\d)\.(?=\d)
 
@@ -38,7 +36,6 @@ thousands separator	ponto	all	norep	# separador de classes numéricas (milhares,
 # Standard punctuation/symbols
 !	exclamação
 "	aspas
-# pt_BR: "#" na tabela Unicode (caractere U+0023) é nomeado oficialmente como "number sign" (sinal de número), no symbols.dic está como "number", traduzido então como "número"
 \#	cardinal
 $	cifrão
 £	libra
@@ -49,7 +46,6 @@ $	cifrão
 ƒ	florim
 ¤	símbolo monetário
 %	porcento
-# pt_BR: nos itens em que aparece letra "e" individual, usado "eh" no lugar para pronúncia correta com alguns sintetizadores
 &	And
 ‰	por mil
 '	apóstrofo
@@ -57,12 +53,16 @@ $	cifrão
 )	fechar parêntesis
 *	asterisco
 ,	vírgula
+、	vírgula ideográfica	all	always
+،	vírgula árabe	all	always
 -	hífen
 .	ponto
 /	barra
 :	dois pontos
 ;	ponto e vírgula	-	always
+؛	ponto e vírgula árabe	most
 ?	interrogação	-	always
+؟	ponto de interrogação árabe	all
 @	arroba
 [	abrir parênteses rectos
 ]	fechar parênteses rectos

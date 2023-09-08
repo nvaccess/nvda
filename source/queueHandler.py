@@ -38,9 +38,18 @@ def cancelGeneratorObject(generatorObjID):
 	except KeyError:
 		pass
 
-def queueFunction(queue,func,*args,**kwargs):
+
+def queueFunction(queue, func, *args, _immediate: bool = False, **kwargs):
+	"""Queue a function to be executed in a specific queue.
+	@param queue: The queue to use. Currently, this can only be
+		L{queueHandler.eventQueue}.
+	@param func: The function to run.
+	@param _immediate: Whether to run this as soon as possible (e.g. input) or
+		to delay it slightly (e.g. events). See the immediate argument to
+		L{core.requestPump}.
+	"""
 	queue.put_nowait((func,args,kwargs))
-	core.requestPump()
+	core.requestPump(immediate=_immediate)
 
 def isRunningGenerators():
 	res=len(generators)>0

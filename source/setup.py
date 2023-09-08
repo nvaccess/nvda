@@ -1,9 +1,8 @@
 # -*- coding: UTF-8 -*-
-#setup.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Joseph Lee
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Joseph Lee
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import os
 import sys
@@ -11,18 +10,22 @@ import copy
 import gettext
 gettext.install("nvda")
 from setuptools import setup
-import py2exe as py2exeModule
+# While the import of py2exe appears unused it is required.
+# py2exe monkey patches distutils when importing py2exe for the first time.
+import py2exe as py2exeModule  # noqa: F401, E402
 from glob import glob
 import fnmatch
 # versionInfo names must be imported after Gettext
 # Suppress E402 (module level import not at top of file)
 from versionInfo import (
+	copyright as NVDAcopyright,  # copyright is a reserved python keyword
+	description,
 	formatBuildVersionString,
 	name,
+	publisher,
+	url,
 	version,
-	publisher
 )  # noqa: E402
-from versionInfo import *
 from py2exe import distutils_buildexe
 from py2exe.dllfinder import DllFinder
 import wx
@@ -30,41 +33,7 @@ import importlib.machinery
 # Explicitly put the nvda_dmp dir on the build path so the DMP library is included
 sys.path.append(os.path.join("..", "include", "nvda_dmp"))
 RT_MANIFEST = 24
-manifest_template = """\
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
-	<trustInfo xmlns="urn:schemas-microsoft-com:asm.v3">
-		<security>
-			<requestedPrivileges>
-				<requestedExecutionLevel
-					level="asInvoker"
-					uiAccess="%(uiAccess)s"
-				/>
-			</requestedPrivileges>
-		</security>
-	</trustInfo>
-	<compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
-		<application>
-			<!-- Windows 7 -->
-			<supportedOS
-				Id="{35138b9a-5d96-4fbd-8e2d-a2440225f93a}"
-			/>
-			<!-- Windows 8 -->
-			<supportedOS
-				Id="{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}"
-			/>
-			<!-- Windows 8.1 -->
-			<supportedOS
-				Id="{1f676c76-80e1-4239-95bb-83d0f6d0da78}"
-			/>
-			<!-- Windows 10 -->
-			<supportedOS
-				Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}"
-			/>
-		</application> 
-	</compatibility>
-</assembly>
-"""
+manifestTemplateFilePath = "manifest.template.xml"
 
 # py2exe's idea of whether a dll is a system dll appears to be wrong sometimes, so monkey patch it.
 orig_determine_dll_type = DllFinder.determine_dll_type
@@ -92,6 +61,8 @@ class py2exe(distutils_buildexe.py2exe):
 		self.enable_uiAccess = False
 
 	def run(self):
+		with open(manifestTemplateFilePath, "r", encoding="utf-8") as manifestTemplateFile:
+			manifestTemplate = manifestTemplateFile.read()
 		dist = self.distribution
 		if self.enable_uiAccess:
 			# Add a target for nvda_uiAccess, using nvda_noUIAccess as a base.
@@ -108,7 +79,7 @@ class py2exe(distutils_buildexe.py2exe):
 				(
 					RT_MANIFEST,
 					1,
-					(manifest_template % dict(uiAccess=target['uiAccess'])).encode("utf-8")
+					(manifestTemplate % dict(uiAccess=target['uiAccess'])).encode("utf-8")
 				),
 			]
 		super(py2exe, self).run()
@@ -167,7 +138,7 @@ setup(
 			"description":"NVDA application",
 			"product_name":name,
 			"product_version":version,
-			"copyright":copyright,
+			"copyright": NVDAcopyright,
 			"company_name":publisher,
 		},
 		# The nvda_uiAccess target will be added at runtime if required.
@@ -180,7 +151,7 @@ setup(
 			"description": name,
 			"product_name":name,
 			"product_version": version,
-			"copyright": copyright,
+			"copyright": NVDAcopyright,
 			"company_name": publisher,
 		},
 		{
@@ -193,7 +164,7 @@ setup(
 			"description": "NVDA Ease of Access proxy",
 			"product_name":name,
 			"product_version": version,
-			"copyright": copyright,
+			"copyright": NVDAcopyright,
 			"company_name": publisher,
 		},
 	],
@@ -207,7 +178,7 @@ setup(
 			"description": "NVDA Diff-match-patch proxy",
 			"product_name": name,
 			"product_version": version,
-			"copyright": f"{copyright}, Bill Dengler",
+			"copyright": f"{NVDAcopyright}, Bill Dengler",
 			"company_name": f"Bill Dengler, {publisher}",
 		},
 	],
@@ -231,13 +202,24 @@ setup(
 			"winxptheme",
 			# numpy is an optional dependency of comtypes but we don't require it.
 			"numpy",
+			# multiprocessing isn't going to work in a frozen environment
+			"multiprocessing",
+			"concurrent.futures.process",
 		],
 		"packages": [
 			"NVDAObjects",
+			# As of py2exe 0.11.0.0 if the forcibly included package contains subpackages
+			# they need to be listed explicitly (py2exe issue 113).
+			"NVDAObjects.IAccessible",
+			"NVDAObjects.JAB",
+			"NVDAObjects.UIA",
+			"NVDAObjects.window",
 			"virtualBuffers",
 			"appModules",
 			"comInterfaces",
 			"brailleDisplayDrivers",
+			"brailleDisplayDrivers.albatross",
+			"brailleDisplayDrivers.eurobraille",
 			"synthDrivers",
 			"visionEnhancementProviders",
 		],
@@ -252,7 +234,7 @@ setup(
 	data_files=[
 		(".",glob("*.dll")+glob("*.manifest")+["builtin.dic"]),
 		("documentation", ['../copying.txt', '../contributors.txt']),
-		("lib/%s"%version, glob("lib/*.dll")),
+		("lib/%s" % version, glob("lib/*.dll") + glob("lib/*.manifest")),
 		("lib64/%s"%version, glob("lib64/*.dll") + glob("lib64/*.exe")),
 		("libArm64/%s"%version, glob("libArm64/*.dll") + glob("libArm64/*.exe")),
 		("waves", glob("waves/*.wav")),

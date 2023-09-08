@@ -16,7 +16,12 @@ from treeInterceptorHandler import TreeInterceptor
 import api
 import textUtils
 from dataclasses import dataclass
-from typing import Optional, Tuple
+from typing import (
+	Optional,
+	Tuple,
+	Dict,
+	List,
+)
 from logHandler import log
 
 @dataclass
@@ -175,7 +180,10 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			textList.append(_("at {x}, {y}").format(x=curPoint.x,y=curPoint.y))
 		return ", ".join(textList)
 
-	def _get_boundingRects(self):
+	# C901 '_get_boundingRects' is too complex
+	# Note: when working on _get_boundingRects, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def _get_boundingRects(self) -> List[locationHelper.RectLTWH]:  # noqa: C901
 		if self.isCollapsed:
 			return []
 		startOffset = self._startOffset
@@ -231,12 +239,11 @@ class OffsetsTextInfo(textInfos.TextInfo):
 				)
 				offset = inclusiveLineEnd + 1
 		else:
-			if isinstance(startLocation, locationHelper.Point):
-				rects.append(
-					locationHelper.RectLTWH.fromPoint(startLocation)
+			rects.append(
+				locationHelper.RectLTWH.fromCollection(
+					startLocation
 				)
-			else:
-				rects.append(startLocation)
+			)
 		intersectedRects = []
 		for rect in rects:
 			intersection = rect.intersection(objLocation)
@@ -560,7 +567,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			else:
 				self._startOffset=self._endOffset
 
-	def getTextWithFields(self,formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
 		if self.detectFormattingAfterCursorMaybeSlow and not formatConfig['detectFormatAfterCursor']:

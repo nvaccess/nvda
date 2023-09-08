@@ -1,8 +1,7 @@
-#virtualBuffers/adobeAcrobat.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2009-2012 NV Access Limited, Aleksey Sadovoy
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2009-2022 NV Access Limited, Aleksey Sadovoy
 
 from . import VirtualBuffer, VirtualBufferTextInfo
 import browseMode
@@ -49,16 +48,18 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 			role, level = None, None
 
 		if not role:
-			accRole=attrs['IAccessible::role']
-			if accRole.isdigit():
-				accRole=int(accRole)
-			else:
-				accRole = accRole.lower()
-			role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.Role.UNKNOWN)
+			role = IAccessibleHandler.NVDARoleFromAttr(attrs['IAccessible::role'])
+		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs)
+		role, states = controlTypes.transformRoleStates(role, states)
 
-		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
-
-		if role == controlTypes.Role.EDITABLETEXT and {controlTypes.State.READONLY, controlTypes.State.FOCUSABLE, controlTypes.State.LINKED} <= states:
+		if (
+			role == controlTypes.Role.EDITABLETEXT
+			and states.issuperset({
+				controlTypes.State.READONLY,
+				controlTypes.State.FOCUSABLE,
+				controlTypes.State.LINKED
+			})
+		):
 			# HACK: Acrobat sets focus states on text nodes beneath links,
 			# making them appear as read only editable text fields.
 			states.difference_update({controlTypes.State.FOCUSABLE, controlTypes.State.FOCUSED})
@@ -78,6 +79,10 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 			attrs["_indexInParent"] = int(attrs["_indexInParent"])
 		except KeyError:
 			pass
+		fontSize = attrs.get("font-size")
+		if fontSize is not None:
+			# Translators: Abbreviation for points, a measurement of font size.
+			attrs["font-size"] = pgettext("font size", "%s pt") % fontSize
 		return attrs
 
 class AdobeAcrobat(VirtualBuffer):

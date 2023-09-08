@@ -1,10 +1,14 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, James Teh, Michael Curran, Peter Vagner, Derek Riemer,
+# Copyright (C) 2006-2022 NV Access Limited, James Teh, Michael Curran, Peter Vagner, Derek Riemer,
 # Davy Kager, Babbage B.V., Leonard de Ruijter, Joseph Lee, Accessolutions, Julien Cochuyt
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-"""General functions for NVDA"""
+"""General functions for NVDA
+Functions should mostly refer to getting an object (NVDAObject) or a position (TextInfo).
+"""
+
+import typing
 
 import config
 import textInfos
@@ -24,9 +28,11 @@ import exceptions
 import appModuleHandler
 import cursorManager
 from typing import Any, Optional
+from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
+if typing.TYPE_CHECKING:
+	import documentBase
 
-#User functions
 
 def getFocusObject() -> NVDAObjects.NVDAObject:
 	"""
@@ -35,40 +41,52 @@ def getFocusObject() -> NVDAObjects.NVDAObject:
 	"""
 	return globalVars.focusObject
 
-def getForegroundObject():
+
+def getForegroundObject() -> NVDAObjects.NVDAObject:
 	"""Gets the current foreground object.
 	This (cached) object is the (effective) top-level "window" (hwnd).
 	EG a Dialog rather than the focused control within the dialog.
 	The cache is updated as queued events are processed, as such there will be a delay between the winEvent
 	and this function matching. However, within NVDA this should be used in order to be in sync with other
 	functions such as "getFocusAncestors".
-@returns: the current foreground object
-@rtype: L{NVDAObjects.NVDAObject}
-"""
+	@returns: the current foreground object
+	"""
 	return globalVars.foregroundObject
 
-def setForegroundObject(obj):
+
+def setForegroundObject(obj: NVDAObjects.NVDAObject) -> bool:
 	"""Stores the given object as the current foreground object.
 	Note: does not cause the operating system to change the foreground window,
 		but simply allows NVDA to keep track of what the foreground window is.
 		Alternative names for this function may have been:
 		- setLastForegroundWindow
 		- setLastForegroundEventObject
-@param obj: the object that will be stored as the current foreground object
-@type obj: NVDAObjects.NVDAObject
-"""
-	if not isinstance(obj,NVDAObjects.NVDAObject):
+	@param obj: the object that will be stored as the current foreground object
+	"""
+	if not isinstance(obj, NVDAObjects.NVDAObject):
+		log.error("Object is not a valid NVDAObject")
+		return False
+	if objectBelowLockScreenAndWindowsIsLocked(obj):
 		return False
 	globalVars.foregroundObject=obj
 	return True
 
-def setFocusObject(obj):
-	"""Stores an object as the current focus object. (Note: this does not physically change the window with focus in the operating system, but allows NVDA to keep track of the correct object).
-Before overriding the last object, this function calls event_loseFocus on the object to notify it that it is loosing focus. 
-@param obj: the object that will be stored as the focus object
-@type obj: NVDAObjects.NVDAObject
-"""
-	if not isinstance(obj,NVDAObjects.NVDAObject):
+
+# C901 'setFocusObject' is too complex
+# Note: when working on setFocusObject, look for opportunities to simplify
+# and move logic out into smaller helper functions.
+def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:  # noqa: C901
+	"""Stores an object as the current focus object.
+	Note: this does not physically change the window with focus in the operating system,
+	but allows NVDA to keep track of the correct object.
+	Before overriding the last object,
+	this function calls event_loseFocus on the object to notify it that it is losing focus.
+	@param obj: the object that will be stored as the focus object
+	"""
+	if not isinstance(obj, NVDAObjects.NVDAObject):
+		log.error("Object is not a valid NVDAObject")
+		return False
+	if objectBelowLockScreenAndWindowsIsLocked(obj):
 		return False
 	if globalVars.focusObject:
 		eventHandler.executeEvent("loseFocus",globalVars.focusObject)
@@ -157,6 +175,9 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 	braille.invalidateCachedFocusAncestors(focusDifferenceLevel)
 	if config.conf["reviewCursor"]["followFocus"]:
 		setNavigatorObject(obj,isFocus=True)
+	# Fire focusExited event for all old focus ancestors not common with the new focus
+	for oldFocusAncestor in reversed(oldFocusLine[focusDifferenceLevel:-1]):
+		eventHandler.executeEvent("focusExited", oldFocusAncestor)
 	return True
 
 def getFocusDifferenceLevel():
@@ -170,20 +191,34 @@ def getMouseObject():
 	"""Returns the object that is directly under the mouse"""
 	return globalVars.mouseObject
 
-def setMouseObject(obj):
-	"""Tells NVDA to remember the given object as the object that is directly under the mouse"""
-	globalVars.mouseObject=obj
 
-def getDesktopObject():
+def setMouseObject(obj: NVDAObjects.NVDAObject) -> bool:
+	"""Tells NVDA to remember the given object as the object that is directly under the mouse"""
+	if not isinstance(obj, NVDAObjects.NVDAObject):
+		log.error("Object is not a valid NVDAObject")
+		return False
+	if objectBelowLockScreenAndWindowsIsLocked(obj):
+		return False
+	globalVars.mouseObject=obj
+	return True
+
+
+def getDesktopObject() -> NVDAObjects.NVDAObject:
 	"""Get the desktop object"""
 	return globalVars.desktopObject
 
-def setDesktopObject(obj):
-	"""Tells NVDA to remember the given object as the desktop object"""
+
+def setDesktopObject(obj: NVDAObjects.NVDAObject) -> None:
+	"""Tells NVDA to remember the given object as the desktop object.
+	We cannot prevent setting this when objectBelowLockScreenAndWindowsIsLocked is True,
+	as NVDA needs to set the desktopObject on start, and NVDA may start from the lockscreen.
+	"""
 	globalVars.desktopObject=obj
 
-def getReviewPosition():
-	"""Retreaves the current TextInfo instance representing the user's review position. If it is not set, it uses the user's set navigator object and creates a TextInfo from that.
+
+def getReviewPosition() -> textInfos.TextInfo:
+	"""Retrieves the current TextInfo instance representing the user's review position.
+	If it is not set, it uses navigator object to create a TextInfo.
 	"""
 	if globalVars.reviewPosition: 
 		return globalVars.reviewPosition
@@ -194,20 +229,34 @@ def getReviewPosition():
 
 
 def setReviewPosition(
-		reviewPosition,
-		clearNavigatorObject=True,
-		isCaret=False,
-		isMouse=False
-):
+		reviewPosition: textInfos.TextInfo,
+		clearNavigatorObject: bool = True,
+		isCaret: bool = False,
+		isMouse: bool = False,
+) -> bool:
 	"""Sets a TextInfo instance as the review position.
-	@param clearNavigatorObject: if  true, It sets the current navigator object to C{None}.
+	@param clearNavigatorObject: if True, It sets the current navigator object to C{None}.
 		In that case, the next time the navigator object is asked for it fetches it from the review position.
-	@type clearNavigatorObject: bool
 	@param isCaret: Whether the review position is changed due to caret following.
-	@type isCaret: bool
 	@param isMouse: Whether the review position is changed due to mouse following.
-	@type isMouse: bool
 	"""
+	reviewObj = reviewPosition.obj
+
+	if isinstance(reviewObj, treeInterceptorHandler.DocumentTreeInterceptor):
+		# reviewPosition.obj can be a number of classes, e.g.
+		# CursorManager, DocumentWithTableNavigation, EditableText.
+		# We can only handle the NVDAObject case.
+		reviewObj = reviewObj.rootNVDAObject
+
+	if isinstance(reviewObj, NVDAObjects.NVDAObject):
+		# reviewPosition.obj can be a number of classes, e.g.
+		# CursorManager, DocumentWithTableNavigation, EditableText.
+		# We can only handle the NVDAObject case.
+		if objectBelowLockScreenAndWindowsIsLocked(reviewObj):
+			return False
+	else:
+		log.debug(f"Unhandled reviewObj type {type(reviewObj)} when checking security of reviewObj")
+
 	globalVars.reviewPosition=reviewPosition.copy()
 	globalVars.reviewPositionObj=reviewPosition.obj
 	if clearNavigatorObject: globalVars.navigatorObject=None
@@ -222,37 +271,48 @@ def setReviewPosition(
 	else:
 		visionContext = vision.constants.Context.REVIEW
 	vision.handler.handleReviewMove(context=visionContext)
+	return True
 
-def getNavigatorObject():
-	"""Gets the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus. If the navigator object is not set, it fetches it from the review position. 
-@returns: the current navigator object
-@rtype: L{NVDAObjects.NVDAObject}
-"""
+
+def getNavigatorObject() -> NVDAObjects.NVDAObject:
+	"""Gets the current navigator object.
+	Navigator objects can be used to navigate around the operating system (with the numpad),
+	without moving the focus.
+	If the navigator object is not set, it fetches and sets it from the review position.
+	@returns: the current navigator object
+	"""
 	if globalVars.navigatorObject:
 		return globalVars.navigatorObject
+	elif review.getCurrentMode() == 'object':
+		obj = globalVars.reviewPosition.obj
 	else:
-		if review.getCurrentMode()=='object':
-			obj=globalVars.reviewPosition.obj
-		else:
-			try:
-				obj=globalVars.reviewPosition.NVDAObjectAtStart
-			except (NotImplementedError,LookupError):
-				obj=globalVars.reviewPosition.obj
-		globalVars.navigatorObject=getattr(obj,'rootNVDAObject',None) or obj
+		try:
+			obj = globalVars.reviewPosition.NVDAObjectAtStart
+		except (NotImplementedError, LookupError):
+			obj = globalVars.reviewPosition.obj
+	nextObj = getattr(obj, 'rootNVDAObject', None) or obj
+	if objectBelowLockScreenAndWindowsIsLocked(nextObj):
 		return globalVars.navigatorObject
+	globalVars.navigatorObject = nextObj
+	return globalVars.navigatorObject
 
-def setNavigatorObject(obj,isFocus=False):
-	"""Sets an object to be the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus. It also sets the current review position to None so that next time the review position is asked for, it is created from the navigator object.  
-@param obj: the object that will be set as the current navigator object
-@type obj: NVDAObjects.NVDAObject  
-@param isFocus: true if the navigator object was set due to a focus change.
-@type isFocus: bool
-"""
-	if not isinstance(obj,NVDAObjects.NVDAObject):
+
+def setNavigatorObject(obj: NVDAObjects.NVDAObject, isFocus: bool = False) -> bool:
+	"""Sets an object to be the current navigator object.
+	Navigator objects can be used to navigate around the operating system (with the numpad),
+	without moving the focus.
+	It also sets the current review position to None so that next time the review position is asked for,
+	it is created from the navigator object.
+	@param obj: the object that will be set as the current navigator object
+	@param isFocus: true if the navigator object was set due to a focus change.
+	"""
+
+	if not isinstance(obj, NVDAObjects.NVDAObject):
+		log.error("Object is not a valid NVDAObject")
+		return False
+	if objectBelowLockScreenAndWindowsIsLocked(obj):
 		return False
 	globalVars.navigatorObject=obj
-	oldPos=globalVars.reviewPosition
-	oldPosObj=globalVars.reviewPositionObj
 	globalVars.reviewPosition=None
 	globalVars.reviewPositionObj=None
 	reviewMode=review.getCurrentMode()
@@ -266,6 +326,7 @@ def setNavigatorObject(obj,isFocus=False):
 			globalVars.reviewPosition=obj.treeInterceptor.makeTextInfo(textInfos.POSITION_CARET)
 			globalVars.reviewPositionObj=globalVars.reviewPosition
 	eventHandler.executeEvent("becomeNavigatorObject",obj,isFocus=isFocus)
+	return True
 
 def isTypingProtected():
 	"""Checks to see if key echo should be suppressed because the focus is currently on an object that has its protected state set.
@@ -341,10 +402,10 @@ def getClipData():
 	with winUser.openClipboard(gui.mainFrame.Handle):
 		return winUser.getClipboardData(winUser.CF_UNICODETEXT) or u""
 
-def getStatusBar():
+
+def getStatusBar() -> Optional[NVDAObjects.NVDAObject]:
 	"""Obtain the status bar for the current foreground object.
 	@return: The status bar object or C{None} if no status bar was found.
-	@rtype: L{NVDAObjects.NVDAObject}
 	"""
 	foreground = getForegroundObject()
 	try:
@@ -374,6 +435,10 @@ def getStatusBarText(obj):
 	@return: The status bar text.
 	@rtype: str
 	"""
+	try:
+		return obj.appModule.getStatusBarText(obj)
+	except NotImplementedError:
+		pass
 	text = obj.name or ""
 	if text:
 		text += " "
@@ -386,7 +451,7 @@ def filterFileName(name):
 	@returns: The filtered file name.
 	@rtype: str
 	"""
-	invalidChars=':?*\|<>/"'
+	invalidChars = r':?*\|<>/"'
 	for c in invalidChars:
 		name=name.replace(c,'_')
 	return name
@@ -419,13 +484,24 @@ def isObjectInActiveTreeInterceptor(obj: NVDAObjects.NVDAObject) -> bool:
 	)
 
 
-def getCaretObject():
+def getCaretPosition() -> "textInfos.TextInfo":
+	"""Gets a text info at the position of the caret.
+	"""
+	textContainerObj = getCaretObject()
+	if not textContainerObj:
+		raise RuntimeError("No Caret Object available, this is expected while NVDA is still starting up.")
+	return textContainerObj.makeTextInfo("caret")
+
+
+def getCaretObject() -> "documentBase.TextContainerObject":
 	"""Gets the object which contains the caret.
-	This is normally the focus object.
-	However, if the focus object has a tree interceptor which is not in focus mode,
-	the tree interceptor will be returned.
+	This is normally the NVDAObject with focus, unless it has a browse mode tree interceptor to return instead.
 	@return: The object containing the caret.
-	@rtype: L{baseObject.ScriptableObject}
+	@note: Note: this may not be the NVDA Object closest to the caret, EG an edit text box may have focus,
+	and contain multiple NVDAObjects closer to the caret position, consider instead:
+		ti = getCaretPosition()
+		ti.expand(textInfos.UNIT_CHARACTER)
+		closestObj = ti.NVDAObjectAtStart
 	"""
 	obj = getFocusObject()
 	ti = obj.treeInterceptor

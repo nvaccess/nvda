@@ -1,10 +1,15 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2021 NV Access Limited, Babbage B.V., James Teh, Leonard de Ruijter,
+# Copyright (C) 2007-2023 NV Access Limited, Babbage B.V., James Teh, Leonard de Ruijter,
 # Thomas Stivers, Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import Any, Callable, Union
+from typing import (
+	Any,
+	Callable,
+	Union,
+	cast,
+)
 import os
 import itertools
 import collections
@@ -353,10 +358,22 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		if not obj.isFocusable and controlTypes.State.FOCUSED not in states and role != controlTypes.Role.POPUPMENU:
 			return False
 		# many controls that are read-only should not switch to passThrough. 
-		# However, certain controls such as combo boxes and readonly edits are read-only but still interactive.
-		# #5118: read-only ARIA grids should also be allowed (focusable table cells, rows and headers).
-		if controlTypes.State.READONLY in states and role not in (controlTypes.Role.EDITABLETEXT, controlTypes.Role.COMBOBOX, controlTypes.Role.TABLEROW, controlTypes.Role.TABLECELL, controlTypes.Role.TABLEROWHEADER, controlTypes.Role.TABLECOLUMNHEADER):
-			return False
+		# However, there are exceptions.
+		if controlTypes.State.READONLY in states:
+			# #13221: For Slack message lists, and the MS Edge downloads window, switch to passthrough
+			# even though the list item and list are read-only, but focusable.
+			if (
+				role == controlTypes.Role.LISTITEM and controlTypes.State.FOCUSED in states
+				and obj.parent.role == controlTypes.Role.LIST and controlTypes.State.FOCUSABLE in obj.parent.states
+			):
+				return True
+			# Certain controls such as combo boxes and readonly edits are read-only but still interactive.
+			# #5118: read-only ARIA grids should also be allowed (focusable table cells, rows and headers).
+			if role not in (
+				controlTypes.Role.EDITABLETEXT, controlTypes.Role.COMBOBOX, controlTypes.Role.TABLEROW,
+				controlTypes.Role.TABLECELL, controlTypes.Role.TABLEROWHEADER, controlTypes.Role.TABLECOLUMNHEADER
+			):
+				return False
 		# Any roles or states for which we always switch to passThrough
 		if role in self.ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES or controlTypes.State.EDITABLE in states:
 			return True
@@ -566,6 +583,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def script_passThrough(self,gesture):
 		if not config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
 			self._focusLastFocusableObject()
+			api.processPendingEvents(processEventQueue=True)
 		gesture.send()
 	# Translators: the description for the passThrough script on browseMode documents.
 	script_passThrough.__doc__ = _("Passes gesture through to the application")
@@ -902,6 +920,17 @@ qn(
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous grouping")
 )
+qn(
+	"tab", key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next tab"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next tab"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous tab"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous tab")
+)
 del qn
 
 
@@ -968,7 +997,8 @@ class ElementsListDialog(
 		# in the browse mode Elements List dialog.
 		filterText = _("Filter b&y:")
 		labeledCtrl = gui.guiHelper.LabeledControlHelper(self, filterText, wx.TextCtrl)
-		self.filterEdit = labeledCtrl.control
+		self.filterEdit = cast(wx.TextCtrl, labeledCtrl.control)
+		self.filterTimer: Optional[wx.CallLater] = None
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
 		contentsSizer.Add(labeledCtrl.sizer)
 		contentsSizer.AddSpacer(gui.guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
@@ -1194,8 +1224,14 @@ class ElementsListDialog(
 
 			item = self.tree.GetNextSibling(item)
 
-	def onFilterEditTextChange(self, evt):
-		self.filter(self.filterEdit.GetValue())
+	FILTER_TIMER_DELAY_MS = 300
+
+	def onFilterEditTextChange(self, evt: wx.CommandEvent) -> None:
+		filter = self.filterEdit.GetValue()
+		if self.filterTimer is None:
+			self.filterTimer = wx.CallLater(self.FILTER_TIMER_DELAY_MS, self.filter, filter)
+		else:
+			self.filterTimer.Start(self.FILTER_TIMER_DELAY_MS, filter)
 		evt.Skip()
 
 	def onAction(self, activate):
@@ -1245,7 +1281,9 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	def __init__(self,obj):
 		super(BrowseModeDocumentTreeInterceptor,self).__init__(obj)
 		self._lastProgrammaticScrollTime = None
-		self.documentConstantIdentifier = self.documentConstantIdentifier
+		# Cache the document constant identifier so it can be saved with the last caret position on termination.
+		# As the original property may not be available as the document will be already dead.
+		self._lastCachedDocumentConstantIdentifier: Optional[str] = self.documentConstantIdentifier
 		self._lastFocusObj = None
 		self._objPendingFocusBeforeActivate = None
 		self._hadFirstGainFocus = False
@@ -1259,8 +1297,11 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 
 	def terminate(self):
 		if self.shouldRememberCaretPositionAcrossLoads and self._lastCaretPosition:
+			docID = self._lastCachedDocumentConstantIdentifier
+			lastCaretPos = self._lastCaretPosition
+			log.debug(f"Saving caret position {lastCaretPos} for document at {docID}")
 			try:
-				self.rootNVDAObject.appModule._browseModeRememberedCaretPositions[self.documentConstantIdentifier] = self._lastCaretPosition
+				self.rootNVDAObject.appModule._browseModeRememberedCaretPositions[docID] = lastCaretPos
 			except AttributeError:
 				# The app module died.
 				pass
@@ -1280,6 +1321,12 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				# We only set the caret position if in browse mode.
 				# If in focus mode, the document must have forced the focus somewhere,
 				# so we don't want to override it.
+				# Update the cached document constant identifier
+				# so it can be saved with the last caret position on termination.
+				# As the original property may not be available as the document will be already dead.
+				# Updating here is necessary as the identifier could have dynamically changed since initial load,
+				# such as with  a SPA (single page app)
+				self._lastCachedDocumentConstantIdentifier = self.documentConstantIdentifier
 				initialPos = self._getInitialCaretPos()
 				if initialPos:
 					self.selection = self.makeTextInfo(initialPos)
@@ -1346,6 +1393,14 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		caret = info.copy()
 		caret.collapse()
 		self._lastCaretPosition = caret.bookmark
+		docID = self.documentConstantIdentifier
+		if docID:
+			# Update the cached document constant identifier
+			# so it can be saved with the last caret position on termination.
+			# As the original property may not be available as the document will be already dead.
+			# Updating here is necessary as the identifier could have dynamically changed since initial load,
+			# such as with  a SPA (single page app)
+			self._lastCachedDocumentConstantIdentifier = self.documentConstantIdentifier
 		review.handleCaretMove(caret)
 		if reason == OutputReason.FOCUS:
 			self._lastCaretMoveWasFocus = True
@@ -1375,6 +1430,11 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				followBrowseModeFocus = config.conf["virtualBuffers"]["autoFocusFocusableElements"]
 				if followBrowseModeFocus or self.passThrough:
 					focusObj.setFocus()
+					# Track this object as NVDA having just requested setting focus to it
+					# So that when NVDA does receive the focus event for it
+					# It can handle it quietly rather than speaking the new focus.
+					if followBrowseModeFocus:
+						self._objPendingFocusBeforeActivate = obj
 			# Queue the reporting of pass through mode so that it will be spoken after the actual content.
 			queueHandler.queueFunction(queueHandler.eventQueue, reportPassThrough, self)
 
@@ -1400,26 +1460,6 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			ui.message(_("No long description"))
 	# Translators: the description for the activateLongDescription script on browseMode documents.
 	script_activateLongDesc.__doc__=_("Shows the long description at this position if one is found.")
-
-	@script(
-		description=_(
-			# Translators: the description for the activateAriaDetailsSummary script on browseMode documents.
-			"Shows a summary of the details at this position if found."
-		)
-	)
-	def script_activateAriaDetailsSummary(self, gesture):
-		info = self.makeTextInfo(textInfos.POSITION_CARET)
-		info.expand("character")
-		for field in reversed(info.getTextWithFields()):
-			if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart":
-				states = field.field.get('states')
-				if states and controlTypes.State.HAS_ARIA_DETAILS in states:
-					ui.message(field.field['detailsSummary'])
-					return
-
-		# Translators: the message presented when the activateAriaDetailsSummary script cannot locate a
-		# set of details to read.
-		ui.message(_("No additional details"))
 
 	def event_caretMovementFailed(self, obj, nextHandler, gesture=None):
 		if not self.passThrough or not gesture or not config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]:
@@ -1612,12 +1652,30 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				self._replayFocusEnteredEvents()
 			return nextHandler()
 
-		#We only want to update the caret and speak the field if we're not in the same one as before
-		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
-		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
-		caretInfo.expand(textInfos.UNIT_CHARACTER)
-		isOverlapping = focusInfo.isOverlapping(caretInfo)
-		if not self._hadFirstGainFocus or not isOverlapping or (isOverlapping and previousFocusObjIsDefunct):
+		# Save off and clear any previous object that was focused by NVDA
+		# and waiting on a focus event.
+		objPendingFocusBeforeActivate = self._objPendingFocusBeforeActivate
+		self._objPendingFocusBeforeActivate = None
+
+		# We do not want to speak the new focus and update the caret if...
+		if not self._hadFirstGainFocus or previousFocusObjIsDefunct:
+			# still initializing  or the old focus is dead.
+			isOverlapping = False
+		elif config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
+			# if this focus event was caused by NVDA setting the focus itself
+			# Due to auto focus focusable elements option being enabled,
+			# And we detect that the caret was already positioned within the focus.
+			# Note that this is not the default and may be removed in future.
+			caretInfo = self.makeTextInfo(textInfos.POSITION_CARET)
+			# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
+			caretInfo.expand(textInfos.UNIT_CHARACTER)
+			isOverlapping = focusInfo.isOverlapping(caretInfo)
+		else:
+			# if this focus event was caused by NVDA setting the focus itself
+			# due to activation or applications key etc.
+			isOverlapping = (obj == objPendingFocusBeforeActivate)
+
+		if not isOverlapping:
 			# The virtual caret is not within the focus node.
 			oldPassThrough=self.passThrough
 			passThrough = self.shouldPassThrough(obj, reason=OutputReason.FOCUS)
@@ -1642,7 +1700,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				self._replayFocusEnteredEvents()
 				nextHandler()
 			focusInfo.collapse()
-			self._set_selection(focusInfo, reason=OutputReason.FOCUS)
+			if self._focusEventMustUpdateCaretPosition:
+				self._set_selection(focusInfo, reason=OutputReason.FOCUS)
 		else:
 			# The virtual caret was already at the focused node.
 			if not self.passThrough:
@@ -1655,9 +1714,9 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 					# Note: this is usually called after the caret movement.
 					vision.handler.handleGainFocus(obj)
 				elif (
-					self._objPendingFocusBeforeActivate
-					and obj == self._objPendingFocusBeforeActivate
-					and obj is not self._objPendingFocusBeforeActivate
+					objPendingFocusBeforeActivate
+					and obj == objPendingFocusBeforeActivate
+					and obj is not objPendingFocusBeforeActivate
 				):
 					# With auto focus focusable elements disabled, when the user activates
 					# an element (e.g. by pressing enter) or presses a key which we pass
@@ -1669,10 +1728,9 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 					# the properties before the activation/key, so use that to speak any
 					# changes.
 					speech.speakObject(
-						self._objPendingFocusBeforeActivate,
+						objPendingFocusBeforeActivate,
 						OutputReason.CHANGE
 					)
-					self._objPendingFocusBeforeActivate = None
 			else:
 				self._replayFocusEnteredEvents()
 				return nextHandler()
@@ -1786,10 +1844,19 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			obj = container
 		return doResult(False)
 
-	def _get_documentConstantIdentifier(self):
+	documentConstantIdentifier: Optional[str]
+	""" Typing information for auto-property: _get_documentConstantIdentifier"""
+
+	# Mark documentConstantIdentifier property for caching during the current core cycle
+	_cache_documentConstantIdentifier = True
+
+	def _get_documentConstantIdentifier(self) -> Optional[str]:
 		"""Get the constant identifier for this document.
 		This identifier should uniquely identify all instances (not just one instance) of a document for at least the current session of the hosting application.
 		Generally, the document URL should be used.
+		Although the name of this property suggests that the identifier will be constant,
+		With the introduction of SPAs (single page apps) the URL of a page may dynamically change over time.
+		this property should reflect the most up to date URL.
 		@return: The constant identifier for this document, C{None} if there is none.
 		"""
 		return None
@@ -1802,7 +1869,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		@return: C{True} if the caret position should be remembered, C{False} if not.
 		@rtype: bool
 		"""
-		docConstId = self.documentConstantIdentifier
+		docConstId = self._lastCachedDocumentConstantIdentifier
 		# Return True if the URL indicates that this is probably a web browser document.
 		# We do this check because we don't want to remember caret positions for email messages, etc.
 		if isinstance(docConstId, str):
@@ -1820,10 +1887,14 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		@rtype: TextInfo position
 		"""
 		if self.shouldRememberCaretPositionAcrossLoads:
+			docID = self._lastCachedDocumentConstantIdentifier
 			try:
-				return self.rootNVDAObject.appModule._browseModeRememberedCaretPositions[self.documentConstantIdentifier]
+				caretPos = self.rootNVDAObject.appModule._browseModeRememberedCaretPositions[docID]
 			except KeyError:
-				pass
+				log.debug(f"No saved caret position for {docID}")
+				return None
+			log.debug(f"Found saved caret pos {caretPos} for document {docID}")
+			return caretPos
 		return None
 
 	def getEnclosingContainerRange(self, textRange):
@@ -1906,7 +1977,6 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			item1=item2
 
 	__gestures={
-		"kb:NVDA+d": "activateLongDesc",
 		"kb:alt+upArrow": "collapseOrExpandControl",
 		"kb:alt+downArrow": "collapseOrExpandControl",
 		"kb:tab": "tab",

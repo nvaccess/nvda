@@ -1,12 +1,14 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2010-2021 NV Access Limited, James Teh, Michael Curran, Peter Vágner, Joseph Lee,
-# Reef Turner, Babbage B.V., Leonard de Ruijter, Łukasz Golonka, Accessolutions, Julien Cochuyt
+# Copyright (C) 2010-2023 NV Access Limited, James Teh, Michael Curran, Peter Vágner, Joseph Lee,
+# Reef Turner, Babbage B.V., Leonard de Ruijter, Łukasz Golonka, Accessolutions, Julien Cochuyt,
+# Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 import sys
 import os
 import platform
+import multiprocessing
 
 # Ensure we are inside the Python virtual environment.
 nvdaVenv = os.getenv("NVDA_VENV")
@@ -77,7 +79,7 @@ sys.path.append("source")
 import versionInfo
 del sys.path[-1]
 
-makensis = "miscDeps\\tools\\NSIS\\makensis"
+makensis = os.path.abspath(os.path.join("include", "nsis", "NSIS", "makensis.exe"))
 
 # Get the path to xgettext.
 XGETTEXT = os.path.abspath(os.path.join("miscDeps", "tools", "xgettext.exe"))
@@ -121,8 +123,20 @@ env = Environment(variables=vars,HOST_ARCH='x86',tools=[
 	"recursiveInstall"
 ])
 
-# speed up subsiquent runs by checking timestamps of targets and dependencies, and only using md5 if timestamps differ.
+# speed up subsequent runs by checking timestamps of targets and dependencies, and only using md5 if timestamps differ.
 env.Decider('MD5-timestamp')
+
+# Warn to run the build on multiple threads so it runs faster
+numJobs = env.GetOption('num_jobs')
+numCores = multiprocessing.cpu_count()
+if numJobs < numCores:
+	print(
+		f"Warning: Building with {numJobs} concurrent job{'s' if numJobs != 1 else ''} "
+		f"while {numCores} CPU threads are available. "
+		f"Running SCONS with the parameter '-j{numCores}' may lead to a faster build."
+	)
+else:
+	print(f"Building with {numJobs} concurrent jobs")
 
 #Make our recursiveCopy function available to any script using this environment
 env.AddMethod(recursiveCopy)
@@ -271,6 +285,7 @@ for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
 			styles,
 			installedStyle
 		])
+
 # Build unicode CLDR dictionaries
 env.SConscript('cldrDict_sconscript',exports=['env', 'sourceDir'])
 
@@ -445,6 +460,7 @@ def makePot(target, source, env):
 			"--foreign-user",
 			"--add-comments=Translators:",
 			"--keyword=pgettext:1c,2",
+			"--keyword=npgettext:1c,2,3",
 			"--from-code", "utf-8",
 			# Needed because xgettext doesn't recognise the .pyw extension.
 			"--language=python",
@@ -457,7 +473,7 @@ def makePot(target, source, env):
 	# Tweak the headers.
 	potFn = str(target[0])
 	tmpFn = "%s.tmp" % potFn
-	with open(potFn, "rt") as inp, open(tmpFn, "wt") as out:
+	with open(potFn, "rt", encoding="utf-8") as inp, open(tmpFn, "wt", encoding="utf-8") as out:
 		for lineNum, line in enumerate(inp):
 			if lineNum == 1:
 				line = "# %s\n" % versionInfo.copyright
@@ -471,7 +487,7 @@ def makePot(target, source, env):
 	os.rename(tmpFn, potFn)
 
 
-env.SConscript("devDocs/sconscript", exports=["env", "outputDir", "sourceDir", "t2tBuildConf"])
+env.SConscript("projectDocs/dev/developerGuide/sconscript", exports=["env", "outputDir", "sourceDir", "t2tBuildConf"])
 
 
 def getSubDirs(path):
@@ -485,12 +501,17 @@ potSourceFiles = [
 	# Don't use sourceDir as the source, as this depends on comInterfaces and nvdaHelper.
 	# We only depend on the Python files.
 	f for recurseDirs in getSubDirs(sourceDir.path)
+	if not (
+		# Exclude comInterfaces, since these don't contain translatable strings
+		# and they cause unknown encoding warnings.
+		recurseDirs.startswith(r"source\comInterfaces")
+		# Exclude userConfig folder which does not contain NVDA code but may contain gettext call without
+		# translator comments in add-ons or scratchpad, triggering false positive for checkpot script.
+		or recurseDirs.startswith(r"source\userConfig")
+	)	
 	for pattern in ("*.py", "*.pyw")
 	for f in env.Glob(
 		os.path.join(recurseDirs, pattern),
-		# Exclude comInterfaces, since these don't contain translatable strings
-		# and they cause unknown encoding warnings.
-		exclude="source/comInterfaces/*"
 	)
 ]
 

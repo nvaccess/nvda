@@ -331,15 +331,6 @@ class SpeechManager(object):
 
 		outSeq = []
 		for command in inSeq:
-			if isinstance(command, LangChangeCommand) and currentSynth.name == 'oneCore':
-				langCode = command.lang.split('_')[0]
-				langSupported = False
-				currentSynthLanguages = currentSynth.availableLanguages
-				for lang in currentSynthLanguages:
-					if lang and normalizeLanguage(lang).split('_')[0] == langCode:
-						langSupported = True
-				if not langSupported:
-					log.warning(f"Language {command.lang} not supported by {currentSynth.name} ({currentSynthLanguages})")
 			if isinstance(command, BaseCallbackCommand):
 				# When the synth reaches this point, we want to call the callback.
 				speechIndex = next(self._indexCounter)

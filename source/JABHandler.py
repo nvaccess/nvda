@@ -1,9 +1,10 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2019 NV Access Limited, Peter Vágner, Renaud Paquay, Babbage B.V.
+# Copyright (C) 2007-2023 NV Access Limited, Peter Vágner, Renaud Paquay, Babbage B.V.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from enum import IntEnum, IntFlag
 import os
 import queue
 from ctypes import (
@@ -40,7 +41,7 @@ import core
 import textUtils
 import NVDAHelper
 import config
-import globalVars
+from utils.security import isRunningOnSecureDesktop
 
 #: The path to the user's .accessibility.properties file, used
 #: to enable JAB.
@@ -226,14 +227,61 @@ class AccessibleTableCellInfo(Structure):
 	]
 
 MAX_KEY_BINDINGS=50
-ACCESSIBLE_SHIFT_KEYSTROKE=1
-ACCESSIBLE_CONTROL_KEYSTROKE=2
-ACCESSIBLE_META_KEYSTROKE=4
-ACCESSIBLE_ALT_KEYSTROKE=8
-ACCESSIBLE_ALT_GRAPH_KEYSTROKE=16
-ACCESSIBLE_BUTTON1_KEYSTROKE=32
-ACCESSIBLE_BUTTON2_KEYSTROKE=64
-ACCESSIBLE_BUTTON3_KEYSTROKE=128
+
+
+class AccessibleKeystroke(IntFlag):
+	"""
+	Defined in the JDK in header include/win32/bridge/AccessBridgePackages.h
+	"""
+	SHIFT = 1
+	CONTROL = 2
+	META = 4
+	ALT = 8
+	ALT_GRAPH = 16
+	BUTTON1 = 32
+	BUTTON2 = 64
+	BUTTON3 = 128
+	FKEY = 256  # F key pressed, character contains 1-24
+	CONTROLCODE = 512
+	"""
+	Control code key pressed, character contains control code.
+	Refer to AccessibleVK.
+	"""
+
+
+# Keep for backwards compatibility
+ACCESSIBLE_SHIFT_KEYSTROKE = AccessibleKeystroke.SHIFT
+ACCESSIBLE_CONTROL_KEYSTROKE = AccessibleKeystroke.CONTROL
+ACCESSIBLE_META_KEYSTROKE = AccessibleKeystroke.META
+ACCESSIBLE_ALT_KEYSTROKE = AccessibleKeystroke.ALT
+ACCESSIBLE_ALT_GRAPH_KEYSTROKE = AccessibleKeystroke.ALT_GRAPH
+ACCESSIBLE_BUTTON1_KEYSTROKE = AccessibleKeystroke.BUTTON1
+ACCESSIBLE_BUTTON2_KEYSTROKE = AccessibleKeystroke.BUTTON2
+ACCESSIBLE_BUTTON3_KEYSTROKE = AccessibleKeystroke.BUTTON3
+# Do not extend this list
+
+
+class AccessibleVK(IntEnum):
+	"""
+	The supported control code keys related to AccessibleKeystroke.CONTROLCODE.
+	Defined in the JDK in header include/win32/bridge/AccessBridgePackages.h
+	"""
+	BACK_SPACE = 8
+	DELETE = 127
+	DOWN = 40
+	END = 35
+	HOME = 36
+	INSERT = 155
+	KP_DOWN = 225
+	KP_LEFT = 226
+	KP_RIGHT = 227
+	KP_UP = 224
+	LEFT = 37
+	PAGE_DOWN = 34
+	PAGE_UP = 33
+	RIGHT = 39
+	UP = 38
+
 
 class AccessibleKeyBindingInfo(Structure):
 	_fields_=[
@@ -517,8 +565,8 @@ class JABContext(object):
 		bridgeDll.getCurrentAccessibleValueFromContext(self.vmID,self.accContext,buf,SHORT_STRING_SIZE)
 		return buf.value
 
-	def selectTextRange(self,start,end):
-		bridgeDll.selectTextRange(start,end)
+	def selectTextRange(self, start: int, end: int) -> None:
+		bridgeDll.selectTextRange(self.vmID, self.accContext, start, end)
 
 	def setCaretPosition(self,offset):
 		bridgeDll.setCaretPosition(self.vmID,self.accContext,offset)
@@ -643,47 +691,50 @@ def internal_hasFocus(sourceContext):
 	focus = api.getFocusObject()
 	if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == sourceContext:
 		return True
-	ancestors = api.getFocusAncestors()
-	for ancestor in reversed(ancestors):
-		if isinstance(ancestor, NVDAObjects.JAB.JAB) and ancestor.jabContext == sourceContext:
-			return True
-	return False
+	ancestors = reversed(api.getFocusAncestors())
+	return any((isinstance(x, NVDAObjects.JAB.JAB) and x.jabContext == sourceContext for x in ancestors))
 
 
 @AccessBridge_PropertyNameChangeFP
 def event_nameChange(vmID,event,source,oldVal,newVal):
-	jabContext=JABContext(vmID=vmID,accContext=source)
-	focus=api.getFocusObject()
-	if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext:
-		obj = focus
+	jabContext = JABContext(vmID=vmID, accContext=source)
+	if jabContext.hwnd:
+		focus = api.getFocusObject()
+		obj = focus if (
+			isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext
+		) else NVDAObjects.JAB.JAB(jabContext=jabContext)
+		if obj:
+			eventHandler.queueEvent("nameChange", obj)
 	else:
-		obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
-	if obj:
-		eventHandler.queueEvent("nameChange", obj)
+		log.debugWarning("Unable to obtain window handle for accessible context")
 	bridgeDll.releaseJavaObject(vmID,event)
 
 @AccessBridge_PropertyDescriptionChangeFP
 def event_descriptionChange(vmID,event,source,oldVal,newVal):
-	jabContext=JABContext(vmID=vmID,accContext=source)
-	focus=api.getFocusObject()
-	if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext:
-		obj = focus
+	jabContext = JABContext(vmID=vmID, accContext=source)
+	if jabContext.hwnd:
+		focus = api.getFocusObject()
+		obj = focus if (
+			isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext
+		) else NVDAObjects.JAB.JAB(jabContext=jabContext)
+		if obj:
+			eventHandler.queueEvent("descriptionChange", obj)
 	else:
-		obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
-	if obj:
-		eventHandler.queueEvent("descriptionChange", obj)
+		log.debugWarning("Unable to obtain window handle for accessible context")
 	bridgeDll.releaseJavaObject(vmID,event)
 
 @AccessBridge_PropertyValueChangeFP
 def event_valueChange(vmID,event,source,oldVal,newVal):
-	jabContext=JABContext(vmID=vmID,accContext=source)
-	focus=api.getFocusObject()
-	if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext:
-		obj = focus
+	jabContext = JABContext(vmID=vmID, accContext=source)
+	if jabContext.hwnd:
+		focus = api.getFocusObject()
+		obj = focus if (
+			isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext
+		) else NVDAObjects.JAB.JAB(jabContext=jabContext)
+		if obj:
+			eventHandler.queueEvent("valueChange", obj)
 	else:
-		obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
-	if obj:
-		eventHandler.queueEvent("valueChange", obj)
+		log.debugWarning("Unable to obtain window handle for accessible context")
 	bridgeDll.releaseJavaObject(vmID,event)
 
 @AccessBridge_PropertyStateChangeFP
@@ -692,24 +743,25 @@ def internal_event_stateChange(vmID,event,source,oldState,newState):
 	bridgeDll.releaseJavaObject(vmID,event)
 
 def event_stateChange(vmID,accContext,oldState,newState):
-	jabContext=JABContext(vmID=vmID,accContext=accContext)
-	focus=api.getFocusObject()
+	jabContext = JABContext(vmID=vmID, accContext=accContext)
+	if not jabContext.hwnd:
+		log.debugWarning("Unable to obtain window handle for accessible context")
+		return
+	focus = api.getFocusObject()
 	#For broken tabs and menus, we need to watch for things being selected and pretend its a focus change
-	stateList=newState.split(',')
+	stateList = newState.split(',')
 	if "focused" in stateList or "selected" in stateList:
-		obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
+		obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
 		if not obj:
 			return
 		if focus!=obj and eventHandler.lastQueuedFocusObject!=obj and obj.role in (controlTypes.Role.MENUITEM,controlTypes.Role.TAB,controlTypes.Role.MENU):
 			eventHandler.queueEvent("gainFocus",obj)
 			return
-	if isinstance(focus,NVDAObjects.JAB.JAB) and focus.jabContext==jabContext:
-		obj=focus
-	else:
-		obj=NVDAObjects.JAB.JAB(jabContext=jabContext)
-		if not obj:
-			return
-	eventHandler.queueEvent("stateChange",obj)
+	obj = focus if (
+		isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext
+	) else NVDAObjects.JAB.JAB(jabContext=jabContext)
+	if obj:
+		eventHandler.queueEvent("stateChange", obj)
 
 @AccessBridge_PropertyCaretChangeFP
 def internal_event_caretChange(vmID, event,source,oldPos,newPos):
@@ -722,14 +774,16 @@ def internal_event_caretChange(vmID, event,source,oldPos,newPos):
 
 def event_caret(vmID, accContext, hwnd):
 	jabContext = JABContext(hwnd=hwnd, vmID=vmID, accContext=accContext)
-	focus = api.getFocusObject()
-	if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext:
-		obj = focus
+	if jabContext.hwnd:
+		focus = api.getFocusObject()
+		obj = focus if (
+			isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext
+		) else NVDAObjects.JAB.JAB(jabContext=jabContext)
+		if obj:
+			eventHandler.queueEvent("caret", obj)
 	else:
-		obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
-		if not obj:
-			return
-	eventHandler.queueEvent("caret", obj)
+		log.debugWarning("Unable to obtain window handle for accessible context")
+
 
 def event_enterJavaWindow(hwnd):
 	internalQueueFunction(enterJavaWindow_helper,hwnd)
@@ -790,7 +844,9 @@ def initialize():
 		raise NotImplementedError("dll not available")
 	_fixBridgeFuncs()
 	if (
-		not globalVars.appArgs.secure and config.isInstalledCopy()
+		# We should not attempt to write to disk from the secure desktop.
+		not isRunningOnSecureDesktop()
+		and config.isInstalledCopy()
 		and not isBridgeEnabled()
 	):
 		enableBridge()
@@ -827,3 +883,46 @@ def terminate():
 	bridgeDll=None
 	windll.kernel32.FreeLibrary(h)
 	isRunning=False
+
+
+JABKeyControlCodesToLabels = {
+	AccessibleVK.UP: "uparrow",
+	AccessibleVK.DOWN: "downarrow",
+	AccessibleVK.LEFT: "leftarrow",
+	AccessibleVK.RIGHT: "rightarrow",
+	AccessibleVK.KP_UP: "numpad8",
+	AccessibleVK.KP_DOWN: "numpad2",
+	AccessibleVK.KP_LEFT: "numpad4",
+	AccessibleVK.KP_RIGHT: "numpad6",
+	AccessibleVK.BACK_SPACE: "backspace",
+	AccessibleVK.INSERT: "insert",
+	AccessibleVK.DELETE: "delete",
+	AccessibleVK.HOME: "home",
+	AccessibleVK.END: "end",
+	AccessibleVK.PAGE_UP: "pageup",
+	AccessibleVK.PAGE_DOWN: "pagedown"
+}
+
+# Do not include AccessibleKeystroke.FKEY_KEYSTROKE and AccessibleKeystroke.CONTROLCODE
+# as these are not really modifiers
+JABKeyModifiersToLabels = {
+	AccessibleKeystroke.BUTTON3: "button3",
+	AccessibleKeystroke.BUTTON2: "button2",
+	AccessibleKeystroke.BUTTON1: "button1",
+	AccessibleKeystroke.ALT_GRAPH: "altgraph",
+	AccessibleKeystroke.ALT: "alt",
+	AccessibleKeystroke.META: "meta",
+	AccessibleKeystroke.CONTROL: "control",
+	AccessibleKeystroke.SHIFT: "shift"
+}
+
+
+def _getKeyLabels(modifiers, character):
+	keys = [v for m, v in JABKeyModifiersToLabels.items() if modifiers & m]
+	if modifiers & AccessibleKeystroke.FKEY:
+		keys.append("F{}".format(ord(character)))
+	elif modifiers & AccessibleKeystroke.CONTROLCODE:
+		keys.append(JABKeyControlCodesToLabels.get(ord(character), character))
+	else:
+		keys.append(character)
+	return keys

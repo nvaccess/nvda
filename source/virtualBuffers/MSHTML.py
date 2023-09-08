@@ -1,13 +1,14 @@
-# virtualBuffers/MSHTML.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2009-2020 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
+# Copyright (C) 2009-2023 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot
 
 from comtypes import COMError
 import eventHandler
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import controlTypes
+from controlTypes import TextPosition, TextAlign
+from controlTypes.formatFields import FontSize
 import NVDAObjects.IAccessible.MSHTML
 import winUser
 import NVDAHelper
@@ -21,6 +22,10 @@ import api
 import aria
 import config
 import exceptions
+from typing import (
+	Dict,
+	Optional,
+)
 
 FORMATSTATE_INSERTED=1
 FORMATSTATE_DELETED=2
@@ -29,6 +34,22 @@ FORMATSTATE_STRONG=8
 FORMATSTATE_EMPH=16
 
 class MSHTMLTextInfo(VirtualBufferTextInfo):
+
+	def _getTextPositionAttribute(self, attrs: dict) -> TextPosition:
+		textPositionValue = attrs.get('text-position')
+		try:
+			return TextPosition(textPositionValue)
+		except ValueError:
+			log.debug(f'textPositionValue={textPositionValue}')
+			return TextPosition.BASELINE
+
+	def _getTextAlignAttribute(self, attrs: Dict[str, str]) -> Optional[TextAlign]:
+		textAlignValue = attrs.get('text-align')
+		try:
+			return TextAlign(textAlignValue)
+		except ValueError:
+			log.debug(f'textAlignValue={textAlignValue}')
+			return None
 
 	def _normalizeFormatField(self, attrs):
 		formatState=attrs.get('formatState',"0")
@@ -44,6 +65,17 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		language=attrs.get('language')
 		if language:
 			attrs['language']=languageHandler.normalizeLanguage(language)
+		
+		textPosition = attrs.get('textPosition')
+		textPosition = self._getTextPositionAttribute(attrs)
+		attrs['text-position'] = textPosition
+		fontSize = attrs.get("font-size")
+		if fontSize is not None:
+			attrs["font-size"] = FontSize.translateFromAttribute(fontSize)
+		textAlign = attrs.get('textAlign')
+		textAlign = self._getTextAlignAttribute(attrs)
+		if textAlign:
+			attrs['text-align'] = textAlign
 		return attrs
 
 	def _getIsCurrentAttribute(self, attrs: dict) -> controlTypes.IsCurrent:
@@ -60,7 +92,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 
 	# C901 'MSHTMLTextInfo._normalizeControlField' is too complex (42)
 	# Look for opportunities to simplify this function.
-	def _normalizeControlField(self, attrs: dict):  # noqa: C901
+	def _normalizeControlField(self, attrs: textInfos.ControlField):  # noqa: C901
 		level = None
 
 		isCurrent = self._getIsCurrentAttribute(attrs)
@@ -70,8 +102,6 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		placeholder = self._getPlaceholderAttribute(attrs, 'HTMLAttrib::aria-placeholder')
 		if placeholder:
 			attrs['placeholder']=placeholder
-		accRole=attrs.get('IAccessible::role',0)
-		accRole=int(accRole) if isinstance(accRole,str) and accRole.isdigit() else accRole
 		nodeName=attrs.get('IHTMLDOMNode::nodeName',"")
 		roleAttrib = attrs.get("HTMLAttrib::role", "")
 		ariaRoles = [ar for ar in roleAttrib.split(" ") if ar]
@@ -83,12 +113,17 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		)
 		if role == controlTypes.Role.UNKNOWN and nodeName:
 			role=NVDAObjects.IAccessible.MSHTML.nodeNamesToNVDARoles.get(nodeName,controlTypes.Role.UNKNOWN)
+
 		if role == controlTypes.Role.UNKNOWN:
-			role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.Role.UNKNOWN)
+			role = IAccessibleHandler.NVDARoleFromAttr(attrs.get('IAccessible::role'))
+
 		roleText=attrs.get('HTMLAttrib::aria-roledescription')
 		if roleText:
 			attrs['roleText']=roleText
-		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+
+		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs)
+		role, states = controlTypes.transformRoleStates(role, states)
+
 		if attrs.get('HTMLAttrib::longdesc'):
 			states.add(controlTypes.State.HASLONGDESC)
 		#IE exposes destination anchors as links, this is wrong
@@ -188,7 +223,11 @@ class MSHTML(VirtualBuffer):
 		# Force focus mode for applications, and dialogs with no parent treeInterceptor (E.g. a dialog embedded in an application)  
 		if rootNVDAObject.role==controlTypes.Role.APPLICATION or (rootNVDAObject.role==controlTypes.Role.DIALOG and (not rootNVDAObject.parent or not rootNVDAObject.parent.treeInterceptor or rootNVDAObject.parent.treeInterceptor.passThrough)):
 			self.disableAutoPassThrough=True
-			self.passThrough=True
+			# Note, as _set_passThrough has logic to handle braille and vision updates which are unnecessary when
+			# initializing this tree interceptor, we set the private _passThrough variable here, which is enough.
+			self._passThrough = True
+			import browseMode
+			browseMode.reportPassThrough.last = True
 
 	def _getInitialCaretPos(self):
 		initialPos = super(MSHTML,self)._getInitialCaretPos()
@@ -360,6 +399,12 @@ class MSHTML(VirtualBuffer):
 				{
 					"IHTMLDOMNode::nodeName": [VBufStorage_findMatch_word("FIELDSET")],
 					"name": [VBufStorage_findMatch_notEmpty]
+				},
+			]
+		elif nodeType == "tab":
+			attrs = [
+				{
+					"IAccessible::role": [oleacc.ROLE_SYSTEM_PAGETAB],
 				},
 			]
 		elif nodeType == "embeddedObject":

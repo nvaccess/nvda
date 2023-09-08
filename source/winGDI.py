@@ -1,3 +1,12 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2011-2022 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
+"""
+When working on this file, consider moving to winAPI.
+"""
+
 from ctypes import windll, Structure, c_ubyte, c_uint32, c_void_p, c_int, c_float, POINTER, byref, c_ulong
 from ctypes.wintypes import LONG, DWORD, WORD, BOOL
 from contextlib import contextmanager

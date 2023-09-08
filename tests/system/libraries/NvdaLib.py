@@ -28,16 +28,21 @@ from typing import (
 )
 from urllib.parse import quote as _quoteStr
 
+import typing
 from robotremoteserver import (
 	test_remote_server as _testRemoteServer,
 	stop_remote_server as _stopRemoteServer,
 )
 from SystemTestSpy import (
 	_blockUntilConditionMet,
+	DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
 	_getLib,
 	_nvdaSpyAlias,
 	configManager
 )
+
+if typing.TYPE_CHECKING:
+	from SystemTestSpy.speechSpyGlobalPlugin import NVDASpyLib
 
 # Imported for type information
 from robot.libraries.BuiltIn import BuiltIn
@@ -122,7 +127,7 @@ class NvdaLib:
 	- NvdaLib.nvdaSpy is a library instance for getting speech and other information out of NVDA
 	"""
 	def __init__(self):
-		self.nvdaSpy = None  #: _Optional[SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib]
+		self.nvdaSpy: _Optional["NVDASpyLib"] = None
 		self.nvdaHandle: _Optional[int] = None
 		self.lastNVDAStart: _Optional[_datetime] = None
 
@@ -196,7 +201,7 @@ class NvdaLib:
 		)
 		return handle
 
-	def _connectToRemoteServer(self, connectionTimeoutSecs=10):
+	def _connectToRemoteServer(self, connectionTimeoutSecs: int = 15) -> None:
 		"""Connects to the nvdaSpyServer
 		Because we do not know how far through the startup NVDA is, we have to poll
 		to check that the server is available. Importing the library immediately seems
@@ -213,6 +218,7 @@ class NvdaLib:
 		_blockUntilConditionMet(
 			getValue=lambda: _testRemoteServer(self._spyServerURI, log=False),
 			giveUpAfterSeconds=connectionTimeoutSecs,
+			intervalBetweenSeconds=DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
 			errorMessage=f"Unable to connect to {self._spyAlias}",
 		)
 		builtIn.log(f"Connecting to {self._spyAlias}", level='DEBUG')
@@ -270,14 +276,31 @@ class NvdaLib:
 		self.nvdaSpy.wait_for_NVDA_startup_to_complete()
 		return nvdaProcessHandle
 
+	def enable_verbose_debug_logging_if_requested(self):
+		builtIn.should_be_true(self.nvdaSpy is not None)
+		shouldEnableVerboseDebugLogging = bool(
+			builtIn.get_variable_value("${verboseDebugLogging}", "")
+		)
+		if shouldEnableVerboseDebugLogging:
+			self.nvdaSpy.modifyNVDAConfig(
+				[
+					(["debugLog", "MSAA"], True),
+					(["debugLog", "UIA"], True),
+					(["debugLog", "timeSinceInput"], True),
+			])
+
 	def start_NVDA(self, settingsFileName: str, gesturesFileName: _Optional[str] = None):
 		self.lastNVDAStart = _datetime.utcnow()
 		builtIn.log(f"Starting NVDA with config: {settingsFileName}")
 		self.setup_nvda_profile(settingsFileName, gesturesFileName)
+		builtIn.log("Config copied", level="DEBUG")  # observe timing of the startup
 		nvdaProcessHandle = self._startNVDAProcess()
+		builtIn.log("Started NVDA process", level="DEBUG")   # observe timing of the startup
 		process.process_should_be_running(nvdaProcessHandle)
 		self._connectToRemoteServer()
+		builtIn.log("Connected to RF remote server", level="DEBUG")  # observe timing of the startup
 		self.nvdaSpy.wait_for_NVDA_startup_to_complete()
+		builtIn.log("Startup complete", level="DEBUG")  # observe timing of the startup
 		return nvdaProcessHandle
 
 	def save_NVDA_log(self):
@@ -383,11 +406,10 @@ class NvdaLib:
 		return saveToPath
 
 
-def getSpyLib():
+def getSpyLib() -> "NVDASpyLib":
 	""" Gets the spy library instance. This has been augmented with methods for all supported keywords.
 	Requires NvdaLib and nvdaSpy (remote library - see speechSpyGlobalPlugin) to be initialised.
 	On failure check order of keywords in Robot log and NVDA log for failures.
-	@rtype: SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib
 	@return: Remote NVDA spy Robot Framework library.
 	"""
 	nvdaLib = _getLib("NvdaLib")
