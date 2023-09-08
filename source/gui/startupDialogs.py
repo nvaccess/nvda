@@ -15,6 +15,7 @@ from documentationUtils import getDocFilePath
 import globalVars
 import gui
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
+from gui import guiHelper
 import keyboardHandler
 from logHandler import log
 import versionInfo
@@ -348,7 +349,7 @@ class _AddonIncompatibilityWarningDialog(
 		# Translators: The title of the dialog asking if usage data can be collected
 		super().__init__(parent, title=_("Warning: Certain add-ons have been disabled due to incompatibility"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
-		sHelper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
 		message = _(
 			# Translators: A message warning the user about incompatible add-ons
@@ -369,7 +370,16 @@ class _AddonIncompatibilityWarningDialog(
 			self.scaleFactor * 600
 		)
 
-		bHelper = sHelper.addDialogDismissButtons(gui.guiHelper.ButtonHelper(wx.HORIZONTAL))
+		self.dontShowAgainCheckbox = sHelper.addLabeledControl(
+			pgettext(
+				"addonStore",
+				# Translators: The label of a checkbox in an add-on warning dialog
+				"&Don't show this message again"
+			),
+			wx.CheckBox,
+		)
+
+		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
 
 		# Translators: The label of a button in a warning dialog
 		continueButton = bHelper.addButton(self, wx.ID_CANCEL, label=_("&Continue with these add-ons disabled"))
@@ -379,20 +389,27 @@ class _AddonIncompatibilityWarningDialog(
 		disableWASAPIButton = bHelper.addButton(self, wx.ID_NO, label=_("&Disable WASAPI and re-enable add-ons"))
 		disableWASAPIButton.Bind(wx.EVT_BUTTON, self.onDisableWASAPIButton)
 
-		mainSizer.Add(sHelper.sizer, border=gui.guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
+		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
 		self.CentreOnScreen()
 
 	def onDisableWASAPIButton(self, evt):
-		config.conf['audio']['WASAPI'] = "disabled"
+		config.conf["audio"]["WASAPI"] = "disabled"
 		for addon in self.disabledAddons:
 			addon._addonStoreData.enableCompatibilityOverride()
 			addon.enable(True)
-		gui.messageBox(_("Please restart your device to apply these changes"), _("Restart Required"))
+		config.conf["addonStore"]["_2023.3AddonWarning"] = not self.dontShowAgainCheckbox.GetValue()
+		gui.messageBox(
+			# Translators: Message in a dialog when a restart is required
+			_("Please restart your device to apply these changes"),
+			# Translators: Title in a dialog when a restart is required
+			_("Restart Required")
+		)
 		self.EndModal(wx.ID_NO)
 
-	def onContinueButton(self, evt):
+	def onContinueButton(self, evt: wx.CloseEvent):
 		# evt.Skip() is called since wx.ID_CANCEL is used as the ID for the continue button,
 		# wx automatically ends the modal itself.
+		config.conf["addonStore"]["_2023.3AddonWarning"] = not self.dontShowAgainCheckbox.GetValue()
 		evt.Skip()

@@ -10,10 +10,29 @@ import addonAPIVersion
 from buildVersion import version_year
 
 if TYPE_CHECKING:
-	from _addonStore.models.addon import SupportsVersionCheck  # noqa: F401
+	from _addonStore.models.version import SupportsVersionCheck  # noqa: F401
+
 
 if version_year < 2024:
-	_forceDisabled2023_3Addons = {"tonysEnhancements", }
+	def _isAddonForceDisabled(addon: "SupportsVersionCheck") -> bool:
+		from addonHandler import AddonBase as AddonHandlerModel
+		from _addonStore.models.addon import _AddonManifestModel, _AddonStoreModel
+		from _addonStore.models.version import MajorMinorPatch
+		forceDisabledAddons = {
+			"tonysEnhancements": MajorMinorPatch(1, 15),
+		}
+		if isinstance(addon, _AddonStoreModel):
+			addonVersion = addon.addonVersionNumber
+		elif isinstance(addon, AddonHandlerModel):
+			addonVersion = MajorMinorPatch._parseVersionFromVersionStr(addon.version)
+		elif isinstance(addon, _AddonManifestModel):
+			addonVersion = MajorMinorPatch._parseVersionFromVersionStr(addon.addonVersionName)
+		else:
+			raise NotImplementedError(f"Unexpected type for addon: {addon.name}, type: {type(addon)}")
+		return (
+			addon.name in forceDisabledAddons
+			and addonVersion <= forceDisabledAddons[addon.name]
+		)
 
 
 def hasAddonGotRequiredSupport(
@@ -34,7 +53,7 @@ def isAddonTested(
 	By default, the current version of NVDA is evaluated.
 	"""
 	if version_year < 2024:
-		if addon.name in _forceDisabled2023_3Addons:
+		if _isAddonForceDisabled(addon):
 			return False
 	return addon.lastTestedNVDAVersion >= backwardsCompatToVersion
 

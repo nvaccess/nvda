@@ -317,6 +317,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [addonStore]
 	showWarning = boolean(default=true)
+	_2023.3AddonWarning = boolean(default=true)
 """
 
 #: The configuration specification

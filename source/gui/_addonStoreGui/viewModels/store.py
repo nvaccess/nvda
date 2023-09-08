@@ -25,8 +25,8 @@ from _addonStore.install import installAddon
 from _addonStore.models.addon import (
 	_createAddonGUICollection,
 	_AddonGUIModel,
-	_AddonStoreModel,
 	_AddonManifestModel,
+	_AddonStoreModel,
 )
 from _addonStore.models.channel import (
 	Channel,

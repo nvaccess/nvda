@@ -112,15 +112,15 @@ def doStartupDialogs():
 
 	from buildVersion import version_year
 	if version_year < 2024:
-		from addonHandler.addonVersionCheck import _forceDisabled2023_3Addons
+		from addonHandler.addonVersionCheck import _isAddonForceDisabled
 		from gui.startupDialogs import _AddonIncompatibilityWarningDialog
 		import wx
 		forceDisabledAddons = {
 			addon for addon in addonHandler.getIncompatibleAddons()
-			if addon.name in _forceDisabled2023_3Addons
+			if _isAddonForceDisabled(addon)
 			and not addon.overrideIncompatibility
 		}
-		if forceDisabledAddons:
+		if config.conf["addonStore"]["_2023.3AddonWarning"] and forceDisabledAddons:
 			warningDialog = _AddonIncompatibilityWarningDialog(gui.mainFrame, forceDisabledAddons)
 			wx.CallAfter(warningDialog.ShowModal)
 
