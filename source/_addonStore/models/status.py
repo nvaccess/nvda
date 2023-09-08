@@ -156,6 +156,9 @@ def getStatus(model: "_AddonGUIModel") -> AvailableAddonStatus:
 	from .version import MajorMinorPatch
 	addonHandlerModel = model._addonHandlerModel
 
+	if model.name in (d.model.name for d in addonDataManager._downloadsPendingCompletion):
+		return AvailableAddonStatus.DOWNLOADING
+
 	if model.name in (d.model.name for d, _ in addonDataManager._downloadsPendingInstall):
 		return AvailableAddonStatus.DOWNLOAD_SUCCESS
 
