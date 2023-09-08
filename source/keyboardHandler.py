@@ -154,8 +154,8 @@ def shouldUseToUnicodeEx(focus: Optional["NVDAObject"] = None):
 			)
 			# or the focus is within a UWP app, where WM_CHAR never gets sent
 			or (
-				not isinstance(focus, Window)
-				or focus.windowClassName.startswith('Windows.UI.Core')
+				isinstance(focus, Window)
+				and focus.windowClassName.startswith('Windows.UI.Core')
 			)
 			# Or this is a console with keyboard support, where WM_CHAR messages are doubled
 			or isinstance(focus, KeyboardHandlerBasedTypedCharSupport)
