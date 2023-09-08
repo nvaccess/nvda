@@ -344,9 +344,13 @@ Instalirana kopija može stvoriti prijenosnu kopiju u bilo kojem trenutku.
 Prijenosna kopija također posjeduje mogućnost instalacije na bilo koje računalo u neko dogledno vrijeme.
 Međutim, ako želite kopirati NVDA na medij koji je samo za čitanje kao što je to CD, trebate samo kopirati preuzeti paket.
 Izravno pokretanje prijenosne verzije sa nosača koji je samo za čitanje nije podržano u ovom trenutku.
-Korištenje privremene kopije NVDA je također opcija (na primjer. u demonstracijske svrhe), iako pokretanje NVDA na takav način može biti jako sporo.
 
-Osim nemogućnosti automatskog pokretanja prije i poslije prijave, privremene i prijenosne kopije imaju sljedeća ograničenja:
+[NVDA instalacija #StepsForRunningTheDownloadLauncher] se može koristiti kao privremena kopija programa NVDA.
+Privremene kopije sprečavaju čuvanje NVDA podešavanja.
+Ovo uključuje nemogućnost korišćenja [prodavnice dodataka #AddonsManager].
+
+Prenosne i privremene kopije programa NVDA imaju sledeća ograničenja:
+- Nemogućnost automatskog pokretanja u toku ili nakon prijave.
 - Nemogućnost interakcije aplikacija sa administrativnim privilegijama, osim ako NVDA nije pokrenut s istima (nije preporučeno).
 - Nemogućnost čitanja zaslone kontrole korisničkih računa (UAC) prilikom pokušaja pokretanja aplikacije s administratorskim pravima.
 - Windows 8 i noviji: nemogućnost korištenja dodirnika.
@@ -2289,7 +2293,7 @@ Onemogućavanje ove opcije je jednako ponašanju programa NVDA u verziji 2023.1 
 ==== Koristi UI automation za pristup Excel proračunskim tablicama kada je to moguće ====[UseUiaForExcel]
 Kada je ova opcija omogućena, NVDA će probati koristiti Microsoft UI Automation API za pristupačnost kako bi izvlačio informacije iz kontrola proračunskih tablica Microsoft Excela.
 To je eksperimentalna funkcija, i neke značajke Microsoft Excela mogu biti nedostupne koristeći taj modus.
-Na primjer, NVDA popis elemenata za popisivanej formula i komentara, i i brzo kretanje u modusu čitanje za preskakanje na polja obrazaca u proračunskoj tablici.
+Na primjer, NVDA popis elemenata za popisivanje formula i komentara, i i brzo kretanje u modusu čitanje za preskakanje na polja obrazaca u proračunskoj tablici.
 Međutim, prilikom osnovnog kretanja po proračunskoj tablici ili uređivanja , ova opcija može donijeti značajno unapređenje u performansama.
 Još uvijek ne preporučujemo da većina korisnika uključuje ovo kao podrazumjevani način rada, ali pozivamo korisnike Microsoft Excela  koji koriste verziju 16.0.13522.10000 ili noviju da testiraju ovu funkciju i poišalju povratnu informaciju.
 Implementacija UIA u Microsoft excelu se mijenja od verzije do verzije, te  verzije Microsoft office paketa starije od 16.0.13522.10000 mogu pružati nedovoljno informacija na način da ova opcija bude od koristi.
@@ -2332,7 +2336,7 @@ Ako mislite da NVDA uvijek kasni jedan znak iza ili ponavlja retke, tada biste t
 : podrazumjevano
   difovanje
 : opcije
-  Difovanje, obavijesti UIA
+ Podrazumijevano (difovanje), difovanje, Obavijesti UIA
 :
 
 Ova opcija regulira način na koji NVDA otkriva "novi" tekst, i stoga što treba izgovoriti kada je opcija  "izgovori promjene dinamičkog sadržaja" uključena u Windows Terminalu i WPF Windows Terminalu kontroli koja se koristi u  Visual studio 2022.
@@ -3092,20 +3096,20 @@ Slijede prečaci za ove brajične retke s NVDA čitačem.
 Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
 %kc:beginInclude
 || Ime | Tipka  |
-| Kliži po brajičnom retku natrag | d2 |
-| Kliži po brajičnom retku naprijed | d5 |
-| Premjesti brajični redak na prethodni redak | d1 |
-| Premjesti brajični redak na sljedeći redak | d3 |
-| Premjesti se na brajičnu ćeliju | routing |
-| shift+tab | space+točkica1+točkica3 |
-| tab | razmaknica+točkica4+točkica6 |
-| alt | razmaknica+točkica1+točkica3+točkica4 (razmaknica+m) |
-| escape | razmaknica+točkica1+točkica5 (razmaknica+e) |
-| windows tipka | razmaknica+točkica3+točkica4 |
-| alt+tab | razmaknica+točkica2+točkica3+točkica4+točkica5 (razmaknica+t) |
-| NVDA izbornik | razmaknica+točkica1+točkica3+točkica4+točkica5 (razmaknica+n) |
-| windows+d tipka (minimiziraj sve aplikacije) | razmaknica+točkica1+točkica4+točkica5 (razmaknica+d) |
-| Čitaj sve | razmaknica+točkica1+točkica2+točkica3+točkica4+točkica5+točkica6 |
+| Pomeri brajev red unazad | ``d2`` |
+| Pomeri brajev red napred | ``d5`` |
+| Pomeri brajev red na prethodni red | ``d1`` |
+| Pomeri brajev red na sledeći red | ``d3`` |
+| Pomeri se na brajevu ćeliju | ``routing`` |
+| ``šift+tab`` | ``Razmak+tačka1+tačka3`` |
+| ``tab`` | ``Razmak+tačka4+tačka6`` |
+| ``alt`` | ``Razmak+tačka1+tačka3+tačka4`` (``razmak+M``) |
+| ``escape`` | ``Razmak+tačka1+tačka5`` (``razmak+e``) |
+| ``windows`` | ``Razmak+tačka3+tačka4`` |
+| ``alt+tab`` | ``Razmak+tačka2+tačka3+tačka4+tačka5`` (``razmak+t``) |
+| NVDA meni | ``razmak+tačka1+tačka3+tačka4+tačka5`` (``razmak+n``) |
+| ``windows+d`` (umanji sve aplikacije) | ``Razmak+tačka1+tačka4+tačka5`` (``razmak+d``) |
+| Izgovori sve | ``Razmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6`` |
 
 Za brajične retke koji imaju joystick:
 || Naziv | Tipka  |
