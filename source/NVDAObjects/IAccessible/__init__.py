@@ -989,34 +989,45 @@ the NVDAObject for IAccessible
 
 	re_positionInfoEncodedAccDescription=re.compile(r"L(?P<level>\d+)(?:, (?P<indexInGroup>\d+) of (?P<similarItemsInGroup>\d+))?")
 
-	def _get_decodedAccDescription(self):
+	decodedAccDescription: Optional[str]
+	"""Typing information for auto property _get_decodedAccDescription"""
+
+	def _get_decodedAccDescription(self) -> Optional[str]:
 		try:
-			description=self.IAccessibleObject.accDescription(self.IAccessibleChildID)
+			description = self.IAccessibleObject.accDescription(self.IAccessibleChildID)
 		except COMError:
 			return None
 		if not description:
 			return None
 		if description.lower().startswith('description:'):
 			return description[12:].strip()
-		m=self.re_positionInfoEncodedAccDescription.match(description)
+		m = self.re_positionInfoEncodedAccDescription.match(description)
 		if m:
 			return m
 		return description
 
-	hasEncodedAccDescription=False #:If true, accDescription contains info such as level, and number of items etc.
+	hasEncodedAccDescription = False
+	"""If true, accDescription contains info such as level, and number of items etc."""
 
-	def _get_description(self):
+	def _get_description(self) -> Optional[str]:
 		if self.hasEncodedAccDescription:
-			d=self.decodedAccDescription
-			if isinstance(d,str):
+			d = self.decodedAccDescription
+			if isinstance(d, str):
 				return d
 			else:
-				return ""
+				return None
 		try:
-			res=self.IAccessibleObject.accDescription(self.IAccessibleChildID)
+			res = self.IAccessibleObject.accDescription(self.IAccessibleChildID)
 		except COMError:
-			res=None
-		return res if isinstance(res,str) and not res.isspace() else None
+			res = None
+		return res if isinstance(res, str) and not res.isspace() else None
+
+	def _get_helpText(self) -> Optional[str]:
+		try:
+			res = self.IAccessibleObject.accHelp(self.IAccessibleChildID)
+		except COMError:
+			res = None
+		return res if isinstance(res, str) and not res.isspace() else None
 
 	def _get_keyboardShortcut(self):
 		try:
@@ -2206,7 +2217,8 @@ class Titlebar(IAccessible):
 	presentationType=IAccessible.presType_layout
 
 	def _get_description(self):
-		return ""
+		return None
+
 
 class ReBarWindow32Client(IAccessible):
 	"""

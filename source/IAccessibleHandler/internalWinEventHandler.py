@@ -46,6 +46,7 @@ winEventIDsToNVDAEventNames = {
 	winUser.EVENT_OBJECT_HIDE: "hide",
 	winUser.EVENT_OBJECT_DESTROY: "destroy",
 	winUser.EVENT_OBJECT_DESCRIPTIONCHANGE: "descriptionChange",
+	winUser.EVENT_OBJECT_HELPCHANGE: "helpTextChange",
 	winUser.EVENT_OBJECT_LOCATIONCHANGE: "locationChange",
 	winUser.EVENT_OBJECT_NAMECHANGE: "nameChange",
 	winUser.EVENT_OBJECT_SELECTION: "selection",

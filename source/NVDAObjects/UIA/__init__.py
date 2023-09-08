@@ -1588,20 +1588,29 @@ class UIA(Window):
 				role=superRole
 		return role
 
-	def _get_UIAFullDescription(self):
-		try:
-			return self._getUIACacheablePropertyValue(UIAHandler.UIA_FullDescriptionPropertyId) or ""
-		except COMError:
-			return ""
+	UIAFullDescription: Optional[str]
+	"""Typing information for auto property _get_UIAFullDescription"""
 
-	def _get_UIAHelpText(self):
+	def _get_UIAFullDescription(self) -> Optional[str]:
 		try:
-			return self._getUIACacheablePropertyValue(UIAHandler.UIA_HelpTextPropertyId) or ""
+			return self._getUIACacheablePropertyValue(UIAHandler.UIA_FullDescriptionPropertyId) or None
 		except COMError:
-			return ""
+			return None
 
-	def _get_description(self):
-		return self.UIAFullDescription or self.UIAHelpText
+	UIAHelpText: Optional[str]
+	"""Typing information for auto property _get_UIAHelpText"""
+
+	def _get_UIAHelpText(self) -> Optional[str]:
+		try:
+			return self._getUIACacheablePropertyValue(UIAHandler.UIA_HelpTextPropertyId) or None
+		except COMError:
+			return None
+
+	def _get_description(self) -> Optional[str]:
+		return self.UIAFullDescription
+
+	def _get_helpText(self) -> Optional[str]:
+		return self.UIAHelpText
 
 	def _get_keyboardShortcut(self):
 		# Build the keyboard shortcuts list early for readability.
@@ -2249,17 +2258,17 @@ class SensitiveSlider(UIA):
 		else:
 			super(SensitiveSlider,self).event_valueChange()
 
+
 class ControlPanelLink(UIA):
 
-	def _get_description(self):
-		desc = self.UIAHelpText
-		try:
-			i=desc.find('\n')
-		except:
-			i=None
-		if i:
-			desc=desc[i+1:]
-		return desc
+	def _get_helpText(self) -> Optional[str]:
+		help = super().helpText
+		if help:
+			i = help.find('\n')
+			if i > 0:
+				help = help[i + 1:]
+		return help
+
 
 class ComboBoxWithoutValuePattern(UIA):
 	"""A combo box without the Value pattern.

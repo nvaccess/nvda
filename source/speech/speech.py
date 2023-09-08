@@ -713,6 +713,7 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 		'hasDetails': config.conf["annotations"]["reportDetails"],
 		"detailsRoles": config.conf["annotations"]["reportDetails"],
 		'descriptionFrom': config.conf["annotations"]["reportAriaDescription"],
+		'helpText': True,
 		'keyboardShortcut': True,
 		'positionInfo_level': True,
 		'positionInfo_indexInGroup': True,
@@ -735,6 +736,8 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 		allowProperties["positionInfo_level"] = False
 	if not config.conf["presentation"]["reportObjectDescriptions"]:
 		allowProperties["description"] = False
+	if not config.conf["presentation"]["reportObjectHelpTexts"]:
+		allowProperties["helpText"] = False
 	if not config.conf["presentation"]["reportKeyboardShortcuts"]:
 		allowProperties["keyboardShortcut"] = False
 	if not config.conf["presentation"]["reportObjectPositionInformation"]:
@@ -1742,6 +1745,10 @@ def getPropertiesSpeech(  # noqa: C901
 	description: Optional[str] = propertyValues.get('description')
 	if description:
 		textList.append(description)
+	# sometimes helpText key is present but value is None
+	helpText: Optional[str] = propertyValues.get('helpText')
+	if helpText:
+		textList.append(helpText)
 	# sometimes keyboardShortcut key is present but value is None
 	keyboardShortcut: Optional[str] = propertyValues.get('keyboardShortcut')
 	textList.extend(getKeyboardShortcutsSpeech(keyboardShortcut))

@@ -2074,6 +2074,13 @@ class ObjectPresentationPanel(SettingsPanel):
 		self.bindHelpEvent("ObjectPresentationReportDescriptions", self.descriptionCheckBox)
 		self.descriptionCheckBox.SetValue(config.conf["presentation"]["reportObjectDescriptions"])
 
+		# Translators: This is the label for a checkbox in the
+		# object presentation settings panel.
+		helpTextsLabel = _("Report object &help texts")
+		self.helptextsCheckBox = sHelper.addItem(wx.CheckBox(self, label=helpTextsLabel))
+		self.bindHelpEvent("ObjectPresentationReportHelpTexts", self.helptextsCheckBox)
+		self.helptextsCheckBox.SetValue(config.conf["presentation"]["reportObjectHelpTexts"])
+
 		# Translators: This is the label for a combobox in the
 		# object presentation settings panel.
 		progressLabelText = _("Progress &bar output:")
@@ -2124,10 +2131,12 @@ class ObjectPresentationPanel(SettingsPanel):
 		config.conf["presentation"]["reportObjectPositionInformation"]=self.positionInfoCheckBox.IsChecked()
 		config.conf["presentation"]["guessObjectPositionInformationWhenUnavailable"]=self.guessPositionInfoCheckBox.IsChecked()
 		config.conf["presentation"]["reportObjectDescriptions"]=self.descriptionCheckBox.IsChecked()
+		config.conf["presentation"]["reportObjectHelpTexts"] = self.helptextsCheckBox.IsChecked()
 		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]=self.progressLabels[self.progressList.GetSelection()][0]
 		config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]=self.reportBackgroundProgressBarsCheckBox.IsChecked()
 		config.conf["presentation"]["reportDynamicContentChanges"]=self.dynamicContentCheckBox.IsChecked()
 		config.conf["presentation"]["reportAutoSuggestionsWithSound"]=self.autoSuggestionSoundsCheckBox.IsChecked()
+
 
 class BrowseModePanel(SettingsPanel):
 	# Translators: This is the label for the browse mode settings panel.

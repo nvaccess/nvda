@@ -627,6 +627,9 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 	description = propertyValues.get("description")
 	if description:
 		textList.append(description)
+	helpText = propertyValues.get("helpText")
+	if helpText:
+		textList.append(helpText)
 	hasDetails = propertyValues.get("hasDetails")
 	if hasDetails:
 		textList.append(_getAnnotationProperty(propertyValues))
@@ -723,6 +726,14 @@ class NVDAObjectRegion(Region):
 			)
 		)
 		description = obj.description if _shouldUseDescription else None
+		# determine if description should be read
+		_shouldUseHelpText = (
+			obj.helpText
+			# the help text must not be a duplicate of name, prevent double braille
+			and presConfig["reportObjectHelpTexts"]
+			and obj.helpText != name
+		)
+		helpText = obj.helpText if _shouldUseHelpText else None
 		detailsRoles = obj.annotations.roles if obj.annotations else None
 		text = getPropertiesBraille(
 			name=name,
@@ -735,6 +746,7 @@ class NVDAObjectRegion(Region):
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=description,
+			helpText=helpText,
 			keyboardShortcut=obj.keyboardShortcut if presConfig["reportKeyboardShortcuts"] else None,
 			positionInfo=obj.positionInfo if presConfig["reportObjectPositionInformation"] else None,
 			cellCoordsText=obj.cellCoordsText if config.conf["documentFormatting"]["reportTableCellCoords"] else None,

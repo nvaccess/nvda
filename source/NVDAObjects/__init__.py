@@ -504,19 +504,27 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		return ""
 
-	#: Typing information for auto property _get_description
-	description: str
+	description: typing.Optional[str]
+	"""Typing information for auto property _get_description"""
 
-	def _get_description(self) -> str:
-		"""The description or help text of this object.
+	def _get_description(self) -> typing.Optional[str]:
+		"""The description of this object.
 		"""
-		return ""
+		return None
 
 	#: Typing information for auto property _get_descriptionFrom
 	descriptionFrom: controlTypes.DescriptionFrom
 
 	def _get_descriptionFrom(self) -> controlTypes.DescriptionFrom:
 		return controlTypes.DescriptionFrom.UNKNOWN
+
+	helpText: typing.Optional[str]
+	"""Typing information for auto property _get_helpText"""
+
+	def _get_helpText(self) -> typing.Optional[str]:
+		"""The help text of this object.
+		"""
+		return None
 
 	annotations: AnnotationOrigin
 	"""Typing information for auto property _get_annotations
@@ -1339,6 +1347,12 @@ This code is executed if a gain focus event is received by this object.
 	def event_descriptionChange(self):
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, description=True, reason=controlTypes.OutputReason.CHANGE)
+		braille.handler.handleUpdate(self)
+		vision.handler.handleUpdate(self, property="description")
+
+	def event_helpTextChange(self):
+		if self is api.getFocusObject():
+			speech.speakObjectProperties(self, helpText=True, reason=controlTypes.OutputReason.CHANGE)
 		braille.handler.handleUpdate(self)
 		vision.handler.handleUpdate(self, property="description")
 

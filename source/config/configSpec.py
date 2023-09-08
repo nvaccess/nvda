@@ -107,6 +107,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		reportTooltips = boolean(default=false)
 		reportHelpBalloons = boolean(default=true)
 		reportObjectDescriptions = boolean(default=True)
+		reportObjectHelpTexts = boolean(default=True)
 		reportDynamicContentChanges = boolean(default=True)
 		reportAutoSuggestionsWithSound = boolean(default=True)
 	[[progressBarUpdates]]
