@@ -1021,9 +1021,10 @@ def _getSelectionMessageSpeech(
 ) -> SpeechSequence:
 	if len(text) < 512:
 		return _getSpeakMessageSpeech(message % text)
+	textLength = len(text)
 	# Translators: This is spoken when the user has selected a large portion of text.
 	# Example output "1000 characters"
-	numCharactersText = _("%d characters") % len(text)
+	numCharactersText = ngettext("%d character", "%d characters", textLength) % textLength
 	return _getSpeakMessageSpeech(message % numCharactersText)
 
 # C901 'speakSelectionChange' is too complex
@@ -1814,11 +1815,11 @@ def getPropertiesSpeech(  # noqa: C901
 		textList.append(rowAndColCountTranslation)
 	elif columnCount and not rowCount:
 		# Translators: Speaks number of columns (example output: with 4 columns).
-		columnCountTransation: str = _("with %s columns") % columnCount
+		columnCountTransation: str = ngettext("with %s column", "with %s columns", columnCount) % columnCount
 		textList.append(columnCountTransation)
 	elif rowCount and not columnCount:
 		# Translators: Speaks number of rows (example output: with 2 rows).
-		rowCountTranslation: str = _("with %s rows") % rowCount
+		rowCountTranslation: str = ngettext("with %s row", "with %s rows", rowCount) % rowCount
 		textList.append(rowCountTranslation)
 	if rowCount or columnCount:
 		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
@@ -2297,7 +2298,7 @@ def getFormatFieldSpeech(  # noqa: C901
 			elif textColumnCount:
 				# Translators: Indicates the text column number in a document.
 				# %s will be replaced with the number of text columns.
-				text=_("%s columns")%(textColumnCount)
+				text = ngettext("%s column", "%s columns", textColumnCount) % textColumnCount
 				textList.append(text)
 			elif textColumnNumber:
 				# Translators: Indicates the text column number in a document.

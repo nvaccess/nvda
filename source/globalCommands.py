@@ -3384,12 +3384,17 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Presented when there is no text on the clipboard.
 			ui.message(_("There is no text on the clipboard"))
 			return
-		if len(text) < 1024: 
+		textLength = len(text)
+		if textLength < 1024:
 			ui.message(text)
 		else:
 			# Translators: If the number of characters on the clipboard is greater than about 1000, it reports this message and gives number of characters on the clipboard.
 			# Example output: The clipboard contains a large portion of text. It is 2300 characters long.
-			ui.message(_("The clipboard contains a large portion of text. It is %s characters long") % len(text))
+			ui.message(ngettext(
+				"The clipboard contains a large portion of text. It is %s character long",
+				"The clipboard contains a large portion of text. It is %s characters long",
+				textLength,
+			) % textLength
 
 	@script(
 		description=_(
