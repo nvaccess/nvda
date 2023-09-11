@@ -405,7 +405,6 @@ class AddonStoreVM:
 					# (it's too old and not too new)
 					if (
 						addonId not in availableAddons[channel]
-						and addonId not in self._installedAddons[channel]
 						and incompatibleAddons[channel][addonId].canOverrideCompatibility
 					):
 						availableAddons[channel][addonId] = incompatibleAddons[channel][addonId]
@@ -432,10 +431,15 @@ class AddonStoreVM:
 			return model.isPendingEnable or (
 				not model.isDisabled
 				and not model.isPendingDisable
+				and not model.isBlocked
 			)
 
 		elif EnabledStatus.DISABLED == self._filterEnabledDisabled:
-			return model.isDisabled or model.isPendingDisable
+			return (
+				model.isDisabled
+				or model.isPendingDisable
+				or model.isBlocked
+			)
 
 		raise NotImplementedError(f"Invalid EnabledStatus: {self._filterEnabledDisabled}")
 
