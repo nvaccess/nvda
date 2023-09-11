@@ -432,10 +432,15 @@ class AddonStoreVM:
 			return model.isPendingEnable or (
 				not model.isDisabled
 				and not model.isPendingDisable
+				and not model.isBlocked
 			)
 
 		elif EnabledStatus.DISABLED == self._filterEnabledDisabled:
-			return model.isDisabled or model.isPendingDisable
+			return (
+				model.isDisabled
+				or model.isPendingDisable
+				or model.isBlocked
+			)
 
 		raise NotImplementedError(f"Invalid EnabledStatus: {self._filterEnabledDisabled}")
 
