@@ -7,6 +7,7 @@
 # Can be removed in a future version of python (3.8+)
 from __future__ import annotations
 
+from copy import deepcopy
 import json
 import os
 import pathlib
@@ -220,7 +221,7 @@ class _DataManager:
 
 		if self._compatibleAddonCache is None:
 			return _createAddonGUICollection()
-		return self._compatibleAddonCache.cachedAddonData
+		return deepcopy(self._compatibleAddonCache.cachedAddonData)
 
 	def getLatestAddons(
 			self,
@@ -258,7 +259,7 @@ class _DataManager:
 
 		if self._latestAddonCache is None:
 			return _createAddonGUICollection()
-		return self._latestAddonCache.cachedAddonData
+		return deepcopy(self._latestAddonCache.cachedAddonData)
 
 	def _deleteCacheInstalledAddon(self, addonId: str):
 		addonCachePath = os.path.join(self._installedAddonDataCacheDir, f"{addonId}.json")
