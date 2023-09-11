@@ -406,7 +406,6 @@ class AddonStoreVM:
 					# (it's too old and not too new)
 					if (
 						addonId not in availableAddons[channel]
-						and addonId not in self._installedAddons[channel]
 						and incompatibleAddons[channel][addonId].canOverrideCompatibility
 					):
 						availableAddons[channel][addonId] = incompatibleAddons[channel][addonId]
