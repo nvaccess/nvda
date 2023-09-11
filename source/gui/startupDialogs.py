@@ -4,7 +4,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-from typing import Iterable, Set, TYPE_CHECKING
+from typing import Set
 import weakref
 import wx
 
@@ -15,13 +15,9 @@ from documentationUtils import getDocFilePath
 import globalVars
 import gui
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
-from gui import guiHelper
 import keyboardHandler
 from logHandler import log
 import versionInfo
-
-if TYPE_CHECKING:
-	from _addonStore.models.addon import AddonHandlerModel  # noqa: F401
 
 
 class WelcomeDialog(
@@ -337,79 +333,4 @@ class AskAllowUsageStatsDialog(
 		log.debug("Usage stats gathering question has been deferred")
 		# evt.Skip() is called since wx.ID_CANCEL is used as the ID for the Ask Later button,
 		# wx automatically ends the modal itself.
-		evt.Skip()
-
-
-class _AddonIncompatibilityWarningDialog(
-		gui.contextHelp.ContextHelpMixin,
-		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
-):
-	def __init__(self, parent: wx.Window, disabledAddons: Iterable["AddonHandlerModel"]):
-		self.disabledAddons = disabledAddons
-		# Translators: The title of the dialog asking if usage data can be collected
-		super().__init__(parent, title=_("Warning: Certain add-ons have been disabled due to incompatibility"))
-		mainSizer = wx.BoxSizer(wx.VERTICAL)
-		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
-
-		message = _(
-			# Translators: A message warning the user about incompatible add-ons
-			"NVDA has detected that certain add-ons are incompatible with this version of NVDA. "
-			"2023.3 includes a non-API breaking change to improve audio output using WASAPI. "
-			"Due to design issues with the following add-ons, they cause serious issues with WASAPI enabled. "
-			"Consequently, they have been disabled. "
-			"You can disable WASAPI, and manually re-enable these add-ons. "
-			"This will require a device restart. "
-			"Disabled add-ons: %s"
-		) % ", ".join(f'{addon.manifest["summary"]} ({addon.name})' for addon in disabledAddons)
-		sText = sHelper.addItem(wx.StaticText(self, label=message))
-		# the wx.Window must be constructed before we can get the handle.
-		import windowUtils
-		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
-		sText.Wrap(
-			# 600 was fairly arbitrarily chosen by a visual user to look acceptable on their machine.
-			self.scaleFactor * 600
-		)
-
-		self.dontShowAgainCheckbox = sHelper.addLabeledControl(
-			pgettext(
-				"addonStore",
-				# Translators: The label of a checkbox in an add-on warning dialog
-				"&Don't show this message again"
-			),
-			wx.CheckBox,
-		)
-
-		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
-
-		# Translators: The label of a button in a warning dialog
-		continueButton = bHelper.addButton(self, wx.ID_CANCEL, label=_("&Continue with these add-ons disabled"))
-		continueButton.Bind(wx.EVT_BUTTON, self.onContinueButton)
-
-		# Translators: The label of a button in a warning dialog
-		disableWASAPIButton = bHelper.addButton(self, wx.ID_NO, label=_("&Disable WASAPI and re-enable add-ons"))
-		disableWASAPIButton.Bind(wx.EVT_BUTTON, self.onDisableWASAPIButton)
-
-		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
-		self.Sizer = mainSizer
-		mainSizer.Fit(self)
-		self.CentreOnScreen()
-
-	def onDisableWASAPIButton(self, evt):
-		config.conf["audio"]["WASAPI"] = "disabled"
-		for addon in self.disabledAddons:
-			addon._addonStoreData.enableCompatibilityOverride()
-			addon.enable(True)
-		config.conf["addonStore"]["_2023.3AddonWarning"] = not self.dontShowAgainCheckbox.GetValue()
-		gui.messageBox(
-			# Translators: Message in a dialog when a restart is required
-			_("Please restart your device to apply these changes"),
-			# Translators: Title in a dialog when a restart is required
-			_("Restart Required")
-		)
-		self.EndModal(wx.ID_NO)
-
-	def onContinueButton(self, evt: wx.CloseEvent):
-		# evt.Skip() is called since wx.ID_CANCEL is used as the ID for the continue button,
-		# wx automatically ends the modal itself.
-		config.conf["addonStore"]["_2023.3AddonWarning"] = not self.dontShowAgainCheckbox.GetValue()
 		evt.Skip()

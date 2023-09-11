@@ -109,21 +109,6 @@ def doStartupDialogs():
 			# Translators: The title of the dialog to tell users that there are errors in the configuration file.
 			_("Configuration File Error"),
 			wx.OK | wx.ICON_EXCLAMATION)
-
-	from buildVersion import version_year
-	if version_year < 2024:
-		from addonHandler.addonVersionCheck import _isAddonForceDisabled
-		from gui.startupDialogs import _AddonIncompatibilityWarningDialog
-		import wx
-		forceDisabledAddons = {
-			addon for addon in addonHandler.getIncompatibleAddons()
-			if _isAddonForceDisabled(addon)
-			and not addon.overrideIncompatibility
-		}
-		if config.conf["addonStore"]["_2023.3AddonWarning"] and forceDisabledAddons:
-			warningDialog = _AddonIncompatibilityWarningDialog(gui.mainFrame, forceDisabledAddons)
-			wx.CallAfter(warningDialog.ShowModal)
-
 	if config.conf["general"]["showWelcomeDialogAtStartup"]:
 		from gui.startupDialogs import WelcomeDialog
 		WelcomeDialog.run()
