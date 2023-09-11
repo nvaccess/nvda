@@ -56,7 +56,7 @@ If you are new to the project, or looking for some way to help take a look at:
 	You may have to follow up to address bugs or missed use-cases.
 
 ## Code Style
-Please ensure you follow [our coding standards document](../projectDocs/dev/codingStandards.md).
+Please ensure you follow [our coding standards document](./codingStandards.md).
 
 ## Technical design
 Please checkout our [technical design overview](../design/technicalDesignOverview.md).
