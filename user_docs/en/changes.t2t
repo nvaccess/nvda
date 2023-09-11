@@ -60,6 +60,7 @@ What's New in NVDA
   -
 - Add-on Store:
   - Fix bug where unchecking "include incompatible add-ons" would result in incompatible add-ons still being listed in the store. (#15411)
+  - Add-ons blocked due to compatibility reasons should now be filtered correctly when toggling the filter for enabled/disabled status. (#15416)
   -
 - Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283)
 - NVDA once again announces calculation results in the Windows 32bit calculator on Server, LTSC and LTSB versions of Windows. (#15284)
