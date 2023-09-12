@@ -4,6 +4,35 @@ What's New in NVDA
 %!includeconf: ../changes.t2tconf
 %!includeconf: ./locale.t2tconf
 
+= 2024.1 =
+
+== New Features ==
+
+
+== Changes ==
+
+
+== Bug Fixes ==
+- Reporting of object shortcut keys has been improved. (#10807)
+-
+
+== Changes for Developers ==
+Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+
+- Note: this is an Add-on API compatibility breaking release.
+Add-ons will need to be re-tested and have their manifest updated.
+-
+
+=== API Breaking Changes ===
+These are breaking API changes.
+Please open a GitHub issue if your Add-on has an issue with updating to the new API.
+
+- ``IAccessibleHandler.SecureDesktopNVDAObject`` has been removed.
+Instead, when NVDA is running on the user profile, track the existence of the secure desktop with the extension point: ``winAPI.secureDesktop.post_secureDesktopStateChange``. (#14488)
+
+=== Deprecations ===
+
+
 = 2023.3 =
 
 == New Features ==
@@ -14,6 +43,7 @@ What's New in NVDA
     - An option to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using. (#1409)
     - An option to separately configure the volume of NVDA sounds. (#1409, #15038)
     -
+  - Note: WASAPI is incompatible with version 1.51 and older of Tony's enhancement add-on. (#15402)
   -
 - NVDA is now able to continually update the result when performing optical character recognition (OCR), speaking new text as it appears. (#2797)
   - To enable this functionality, enable the option "Periodically refresh recognized content" in the Windows OCR category of NVDA's settings dialog.
@@ -56,6 +86,11 @@ What's New in NVDA
 - Braille:
   - The braille cursor and selection indicators will now always be updated correctly after showing or hiding respective indicators with a gesture. (#15115)
   - Fixed bug where Albatross braille displays try to initialize although another braille device has been connected. (#15226)
+  -
+- Add-on Store:
+  - Fix bug where unchecking "include incompatible add-ons" would result in incompatible add-ons still being listed in the store. (#15411)
+  - Add-ons blocked due to compatibility reasons should now be filtered correctly when toggling the filter for enabled/disabled status. (#15416)
+  - Fix bug preventing incompatible add-ons which are installed and enabled being upgraded or replaced using the external install tool. (#15417)
   -
 - Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283)
 - NVDA once again announces calculation results in the Windows 32bit calculator on Server, LTSC and LTSB versions of Windows. (#15284)

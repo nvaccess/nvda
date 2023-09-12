@@ -13,7 +13,6 @@ from os import (
 )
 import os
 from typing import (
-	Iterable,
 	List,
 	Optional,
 	cast,
@@ -26,6 +25,7 @@ from _addonStore.install import installAddon
 from _addonStore.models.addon import (
 	_createAddonGUICollection,
 	_AddonGUIModel,
+	_AddonManifestModel,
 	_AddonStoreModel,
 )
 from _addonStore.models.channel import (
@@ -283,7 +283,7 @@ class AddonStoreVM:
 		"Could not disable the add-on: {addon}."
 	)
 
-	def _handleEnableDisable(self, listItemVM: AddonListItemVM, shouldEnable: bool) -> None:
+	def _handleEnableDisable(self, listItemVM: AddonListItemVM[_AddonManifestModel], shouldEnable: bool) -> None:
 		try:
 			listItemVM.model._addonHandlerModel.enable(shouldEnable)
 		except addonHandler.AddonError:
@@ -301,7 +301,7 @@ class AddonStoreVM:
 		listItemVM.status = getStatus(listItemVM.model)
 		self.refresh()
 
-	def enableOverrideIncompatibilityForAddon(self, listItemVM: AddonListItemVM) -> None:
+	def enableOverrideIncompatibilityForAddon(self, listItemVM: AddonListItemVM[_AddonManifestModel]) -> None:
 		from ... import mainFrame
 		if _shouldEnableWhenAddonTooOldDialog(mainFrame, listItemVM.model):
 			listItemVM.model.enableCompatibilityOverride()
@@ -423,7 +423,6 @@ class AddonStoreVM:
 					# (it's too old and not too new)
 					if (
 						addonId not in availableAddons[channel]
-						and addonId not in self._installedAddons[channel]
 						and incompatibleAddons[channel][addonId].canOverrideCompatibility
 					):
 						availableAddons[channel][addonId] = incompatibleAddons[channel][addonId]
@@ -450,10 +449,15 @@ class AddonStoreVM:
 			return model.isPendingEnable or (
 				not model.isDisabled
 				and not model.isPendingDisable
+				and not model.isBlocked
 			)
 
 		elif EnabledStatus.DISABLED == self._filterEnabledDisabled:
-			return model.isDisabled or model.isPendingDisable
+			return (
+				model.isDisabled
+				or model.isPendingDisable
+				or model.isBlocked
+			)
 
 		raise NotImplementedError(f"Invalid EnabledStatus: {self._filterEnabledDisabled}")
 

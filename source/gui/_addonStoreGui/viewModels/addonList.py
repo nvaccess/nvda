@@ -155,7 +155,7 @@ class AddonListVM:
 			storeVM: "AddonStoreVM",
 	):
 		self._isLoading: bool = False
-		self._addons: CaseInsensitiveDict[AddonListItemVM] = CaseInsensitiveDict()
+		self._addons: CaseInsensitiveDict[AddonListItemVM[_AddonGUIModel]] = CaseInsensitiveDict()
 		self._storeVM = storeVM
 		self.itemUpdated = extensionPoints.Action()
 		self.updated = extensionPoints.Action()
