@@ -330,7 +330,10 @@ class AddonStoreVM:
 			listItemVM: AddonListItemVM[_AddonStoreModel],
 			fileDownloaded: Optional[PathLike]
 	):
-		addonDataManager._downloadsPendingCompletion.remove(listItemVM)
+		try:
+			addonDataManager._downloadsPendingCompletion.remove(listItemVM)
+		except KeyError:
+			log.debug("Download already completed")
 
 		if fileDownloaded is None:
 			# Download may have been cancelled or otherwise failed
@@ -369,7 +372,10 @@ class AddonStoreVM:
 		listItemVM.status = AvailableAddonStatus.INSTALLED
 		addonDataManager._cacheInstalledAddon(listItemVM.model)
 		# Clean up download file
-		os.remove(fileDownloaded)
+		try:
+			os.remove(fileDownloaded)
+		except FileNotFoundError:
+			pass
 		log.debug(f"{listItemVM.Id} status: {listItemVM.status}")
 
 	def refresh(self):
