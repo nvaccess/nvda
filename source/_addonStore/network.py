@@ -109,7 +109,7 @@ class AddonFileDownloader:
 		f.add_done_callback(self._done)
 
 	def _done(self, downloadAddonFuture: Future[Optional[os.PathLike]]):
-		isCancelled = downloadAddonFuture not in self._pending
+		isCancelled = downloadAddonFuture.cancelled() or downloadAddonFuture not in self._pending
 		addonId = "CANCELLED" if isCancelled else self._pending[downloadAddonFuture][0].model.addonId
 		log.debug(f"Done called for {addonId}")
 		if isCancelled:
@@ -144,7 +144,8 @@ class AddonFileDownloader:
 
 	def cancelAll(self):
 		log.debug("Cancelling all")
-		for f in self._pending.keys():
+		futuresCopy = self._pending.copy()
+		for f in futuresCopy.keys():
 			f.cancel()
 		assert self._executor
 		self._executor.shutdown(wait=False)
