@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-14 03:03+0000\n"
+"POT-Creation-Date: 2023-09-01 00:01+0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Umut KORKMAZ <umutkork@gmail.com>\n"
+"Last-Translator: Burak Yüksek <burakyuksek94@gmail.com>\n"
 "Language-Team: \n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -3525,7 +3525,7 @@ msgid ""
 msgstr ""
 "İnceleme imlecinin üzerinde bulunduğu karakteri okur. İki kez basılırsa "
 "karakterin tanımı (adana, bolu, ceyhan gibi) okunur. Üç kez basıldığında "
-"ise, karakterin ascii ve hexadecimal değerleri söylenir"
+"ise, karakterin decimal ve hexadecimal değerleri söylenir"
 
 #. Translators: Input help mode message for move review cursor to next character command.
 msgid ""
@@ -3686,7 +3686,7 @@ msgstr ""
 #. Translators: the description for the reportDetailsSummary script.
 msgid "Report summary of any annotation details at the system caret."
 msgstr ""
-"Sistem imleci konumundaki herhangi bir ek açıklamayla ilgili detayların "
+"Sistem imleci konumundaki herhangi bir bilgi notuyla ilgili detayların "
 "özetini bildirir."
 
 #. Translators: message given when there is no annotation details for the reportDetailsSummary script.
@@ -4455,13 +4455,14 @@ msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
 msgstr ""
-"Nesne dolaşım hierarşisinin düzleşmiş görünümünde sonraki nesneye gider"
+"Nesne dolaşım hierarşisinin düzleştirilmiş görünümünde sonraki nesneye gider"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
 "hierarchy"
-msgstr "Nesne dolaşım hierarşisinin düzleşmiş görünümünde önceki nesneye gider"
+msgstr ""
+"Nesne dolaşım hierarşisinin düzleştirilmiş görünümünde önceki nesneye gider"
 
 #. Translators: Describes a command.
 msgid "Toggles the support of touch interaction"
@@ -6868,22 +6869,22 @@ msgstr "Sayfa {pageNumber}"
 
 #. Translators: Reported when text is highlighted.
 msgid "highlight"
-msgstr "işaretli"
+msgstr "vurgulu"
 
 #. Translators: Reported when text is not highlighted.
 msgid "no highlight"
-msgstr "işaretli yok"
+msgstr "vurgulu değil"
 
 #. Translators: Reported in Kindle when text has been identified as a popular highlight;
 #. i.e. it has been highlighted by several people.
 #. %s is replaced with the number of people who have highlighted this text.
 #, python-format
 msgid "%s highlighted"
-msgstr "%s işaretli"
+msgstr "%s vurgulanma"
 
 #. Translators: Reported when moving out of a popular highlight.
 msgid "out of popular highlight"
-msgstr "popüler işaretlenenin dışında"
+msgstr "popüler vurgu dışı"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -7534,7 +7535,7 @@ msgstr "&Başlangıçta Braille Görüntüleyici'yı Göster"
 #. Translators: The label for a setting in the braille viewer that controls
 #. whether hovering mouse routes to the cell.
 msgid "&Hover for cell routing"
-msgstr "&Hücre yönlendirme için üzerine gelin"
+msgstr "&Hücreyi hareket ettirmek için üzerine gelin"
 
 #. Translators: One of the show states of braille messages
 #. (the disabled mode turns off showing of braille messages completely).
@@ -8227,7 +8228,7 @@ msgstr "menü düğmesi"
 
 #. Translators: Reported for a button which expands a grid when it is pressed.
 msgid "drop down button grid"
-msgstr "alta açılır klavuz düğmesi"
+msgstr "alta açılır kılavuz düğmesi"
 
 #. Translators: Identifies mathematical content.
 msgid "math"
@@ -8356,7 +8357,7 @@ msgstr "uyarı"
 
 #. Translators: Identifies a data grid control (a grid which displays data).
 msgid "data grid"
-msgstr "veri klavuzu"
+msgstr "veri kılavuzu"
 
 msgid "data item"
 msgstr "veri ögesi"
@@ -8616,7 +8617,7 @@ msgstr "iletişim kutusu açar"
 
 #. Translators: Presented when a control has a pop-up grid.
 msgid "opens grid"
-msgstr "ızgarayı açar"
+msgstr "ızgara açar"
 
 #. Translators: Presented when a control has a pop-up list box.
 msgid "opens list"
@@ -9725,7 +9726,7 @@ msgstr "İptal"
 #. The placeholder {} is replaced with the label of the option which describes current default behavior
 #. in NVDA. EG "Default (Yes)".
 msgid "Default ({})"
-msgstr "Varsayılan (Evet)"
+msgstr "Varsayılan ({})"
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"
@@ -10662,7 +10663,7 @@ msgstr "Bilgi notları"
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Report 'has details' for structured annotations"
-msgstr "Rapor, yapılandırılmış ek açıklamalar için 'ayrıntılara sahiptir'"
+msgstr "Yapılı bilgi notları için \"ayrıntı var\" seslendirmesini yap"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10708,7 +10709,7 @@ msgstr "Terminal programları"
 #. Advanced settings panel.
 msgid "Speak &passwords in all enhanced terminals (may improve performance)"
 msgstr ""
-"Tüm gelişmiş terminallerde &parolaları söyler (performansı artırabilir)"
+"Tüm gelişmiş uçbirimlerde &parolaları seslendir (performansı artırabilir)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -10746,7 +10747,7 @@ msgstr "Difflib"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 msgid "Speak new text in Windows Terminal via:"
-msgstr "Windows Terminal'de yeni metin şunun aracılığıyla oku:"
+msgstr "Windows Terminal'de yeni metni şunun aracılığıyla oku:"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
@@ -10795,7 +10796,7 @@ msgstr ""
 #. Translators: This is the label for a slider control in the
 #. Advanced settings panel.
 msgid "Volume of NVDA sounds (requires WASAPI)"
-msgstr "NVDA seslerinin ses seviyesi (WASAPI)"
+msgstr "NVDA seslerinin ses seviyesi (WASAPI gerekir)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -11526,11 +11527,11 @@ msgstr "işaretlenmemişBaşlangıç işareti"
 #. Translators: Reported when text is color-highlighted
 #, python-brace-format
 msgid "highlighted in {color}"
-msgstr "{color} işaretli"
+msgstr "{color} vurgulu"
 
 #. Translators: Reported when text is no longer marked
 msgid "not highlighted"
-msgstr "işaretli yok"
+msgstr "vurgulu değil"
 
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
@@ -11798,9 +11799,9 @@ msgid ""
 "the Windows lock screen is recommended."
 msgstr ""
 "NVDA Windows'un kilitli olup olmadığını algılayamadı. NVDA'nın bu kopyası "
-"çalışırken, Windows kilitlendiğinde masaüstünüz olmayacak. Windows'u yeniden "
-"başlatmak sorunu çözebilir. Hata devam ederse kilit ekranını devredışı "
-"bırakmanız önerilir."
+"çalışırken, Windows kilitlendiğinde masaüstünüz güvenli olmayacak. Windows'u "
+"yeniden başlatmak sorunu çözebilir. Hata devam ederse kilit ekranını devre "
+"dışı bırakmanız önerilir."
 
 #. Translators: This is the title for a warning dialog, shown if NVDA cannot determine if
 #. Windows is locked.
@@ -11996,7 +11997,7 @@ msgstr "Açıklama yok"
 #. Translators: a description for a script
 #. Translators: a description for a script that reports the comment at the caret.
 msgid "Reports the text of the comment where the System caret is located."
-msgstr "Sistem imlecinin bulunduğu noktadaki açıklama metnini aktarır."
+msgstr "Sistem imlecinin bulunduğu noktadaki yorumun metnini okur."
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
@@ -12160,7 +12161,7 @@ msgstr "Tablo dışı"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
-msgstr "Ek &Açıklamalar"
+msgstr "&Bilgi notları"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -13688,7 +13689,7 @@ msgstr "Yeniden başlatıldıktan sonra devre dışı (uyumsuz)"
 #. Translators: Status for addons shown in the add-on store dialog
 msgctxt "addonStore"
 msgid "Disabled (incompatible)"
-msgstr "Devredışı (uyumsuz)"
+msgstr "Devre dışı (uyumsuz)"
 
 #. Translators: Status for addons shown in the add-on store dialog
 msgctxt "addonStore"
@@ -13709,25 +13710,25 @@ msgstr "Yeniden başlatıldıktan sonra Etkin"
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
 msgid "Installed add-ons"
-msgstr "Yüklü eklentiler"
+msgstr "Kurulu eklentiler"
 
 #. Translators: The label of a tab to display updatable add-ons in the add-on store.
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
 msgid "Updatable add-ons"
-msgstr "Güncellenebilir eklentiler"
+msgstr "Güncellenebilen eklentiler"
 
 #. Translators: The label of a tab to display available add-ons in the add-on store.
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
 msgid "Available add-ons"
-msgstr "Mevcut eklentiler"
+msgstr "Mağazadaki eklentiler"
 
 #. Translators: The label of a tab to display incompatible add-ons in the add-on store.
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
 msgid "Installed incompatible add-ons"
-msgstr "Yüklü uyumsuz eklentiler"
+msgstr "Kurulu uyumsuz eklentiler"
 
 #. Translators: The label of the add-ons list in the corresponding panel.
 #. Preferably use the same accelerator key for the four labels.
@@ -13779,8 +13780,9 @@ msgid ""
 "{lastTestedNVDAVersion}. You can enable this add-on at your own risk. "
 msgstr ""
 "Bu eklentinin güncellenmiş bir sürümü gerekli. Desteklenen minimum API "
-"sürümü şimdi {nvdaVersion}. Bu eklenti en son {lastTestedNVDAVersion} "
-"sürümünde test edildi. Eklentiyi etkinleştirmek sizin sorumluluğunuzdadır. "
+"sürümü şu anda {nvdaVersion}. Bu eklenti en son {lastTestedNVDAVersion} "
+"sürümünde test edildi. Sorumluluğu üstlenerek eklentiyi "
+"etkinleştirebilirsiniz. "
 
 #. Translators: A message indicating that some add-ons will be disabled
 #. unless reviewed before installation.
@@ -13794,9 +13796,9 @@ msgid ""
 msgstr ""
 "NVDA konfigürasyonunuz, NVDA'nın bu sürümüyle uyumlu olmayan eklentiler "
 "içeriyor. Bu eklentiler kurulumdan sonra devre dışı bırakılacak. Kurulumdan "
-"sonra, sorumluluğu üzerinize alarak bu eklentileri yeniden "
-"etkinleştirebilirsiniz. Bu eklentileri kullanıyorsanız, lütfen kuruluma "
-"devam edilip edilmeyeceğine karar vermek için listeyi gözden geçirin. "
+"sonra, sorumluluğu üstlenerek bu eklentileri yeniden etkinleştirebilirsiniz. "
+"Bu eklentileri kullanıyorsanız, lütfen kuruluma devam edilip edilmeyeceğine "
+"karar vermek için listeyi gözden geçirin. "
 
 #. Translators: A message to confirm that the user understands that incompatible add-ons
 #. will be disabled after installation, and can be manually re-enabled.
@@ -13805,8 +13807,8 @@ msgid ""
 "I understand that incompatible add-ons will be disabled and can be manually "
 "re-enabled at my own risk after installation."
 msgstr ""
-"Uyumsuz eklentilerin devre dışı bırakılacağını ve sorumluluğu üzerime alarak "
-"onları yeniden etkinleştirebileceğimi anladım."
+"Uyumsuz eklentilerin devre dışı bırakılacağını ve sorumluluğu üstlenerek "
+"eklentileri yeniden etkinleştirebileceğimi anladım."
 
 #. Translators: Names of braille displays.
 msgid "Caiku Albatross 46/80"
@@ -14096,7 +14098,7 @@ msgstr "&Dış kaynaktan kur"
 #. Translators: Banner notice that is displayed in the Add-on Store.
 msgctxt "addonStore"
 msgid "Note: NVDA was started with add-ons disabled"
-msgstr "Uyarı: NVDA eklentiler devredışı bırakılarak başlatıldı"
+msgstr "Uyarı: NVDA eklentiler devre dışı bırakılarak başlatıldı"
 
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"
@@ -14110,7 +14112,7 @@ msgstr "&Uyumsuz eklentileri göster"
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"
 msgid "Ena&bled/disabled:"
-msgstr "&Etkin/devredışı:"
+msgstr "&Etkin/devre dışı:"
 
 #. Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"

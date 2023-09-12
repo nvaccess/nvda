@@ -349,6 +349,9 @@ class BoxSizerHelper:
 				keywordArgs["flag"] = keywordArgs.get("flag", 0) | wx.EXPAND
 			else:
 				raise NotImplementedError("Adding PathSelectionHelper to a horizontal BoxSizerHelper is not implemented")
+		elif isinstance(item, wx.CheckBox):
+			if self.sizer.GetOrientation() == wx.HORIZONTAL:
+				keywordArgs["flag"] = keywordArgs.get("flag", 0) | wx.EXPAND
 		elif isinstance(item, LabeledControlHelper):
 			raise NotImplementedError("Use addLabeledControl instead")
 

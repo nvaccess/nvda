@@ -2232,6 +2232,14 @@ Esta opción contiene los siguientes valores:
 - Siempre: cuando la UI automation esté disponible en Microsoft word (sin importar cuán completa sea).
 -
 
+==== Utilizar UI automation para acceder a controles en hojas de cálculo de Microsoft  Excel cuando esté disponible ====[UseUiaForExcel]
+Cuando esta opción está activada, NVDA intentará utilizar la API de accesibilidad Microsoft UI Automation  para obtener información de los controles de las hojas de cálculo de Microsoft Excel.
+Esta es una funcionalidad experimental y algunas características de Microsoft Excel pueden no estar disponibles en este modo.
+Por ejemplo, las características de la Lista de Elementos de NVDA para enumerar fórmulas y comentarios y la tecla rápida de navegación del modo Exploración saltar campos de formulario en una hoja de cálculo no están disponibles.
+Sin embargo, para la navegación y edición básica de las hojas de cálculo, esta opción puede proporcionar una gran mejora de rendimiento.
+Todavía no recomendamos que la mayoría de los usuarios activen esta opción por defecto, aunque invitamos a los usuarios de Microsoft Excel  compilación 16.0.13522.10000 o superior a que prueben esta función y nos den su opinión.
+La implementación de UI automation de Microsoft Excel cambia constantemente y es posible que las versiones de Microsoft Office anteriores a la 16.0.13522.10000 puedan no exponer suficiente información para que esta opción sea útil.
+
 ==== Soporte para Consola de Windows ====[AdvancedSettingsConsoleUIA]
 : Predeterminado
   Automático
@@ -2284,14 +2292,6 @@ Existen las siguientes opciones:
  - Se espera que funcione con Chromium 92.0.4479.0+
  -
 -
-
-==== Utilizar UI automation para acceder a controles en hojas de cálculo de Microsoft  Excel cuando esté disponible ====[UseUiaForExcel]
-Cuando esta opción está activada, NVDA intentará utilizar la API de accesibilidad Microsoft UI Automation  para obtener información de los controles de las hojas de cálculo de Microsoft Excel.
-Esta es una funcionalidad experimental y algunas características de Microsoft Excel pueden no estar disponibles en este modo.
-Por ejemplo, las características de la Lista de Elementos de NVDA para enumerar fórmulas y comentarios y la tecla rápida de navegación del modo Exploración saltar campos de formulario en una hoja de cálculo no están disponibles.
-Sin embargo, para la navegación y edición básica de las hojas de cálculo, esta opción puede proporcionar una gran mejora de rendimiento.
-Todavía no recomendamos que la mayoría de los usuarios activen esta opción por defecto, aunque invitamos a los usuarios de Microsoft Excel  compilación 16.0.13522.10000 o superior a que prueben esta función y nos den su opinión.
-La implementación de UI automation de Microsoft Excel cambia constantemente y es posible que las versiones de Microsoft Office anteriores a la 16.0.13522.10000 puedan no exponer suficiente información para que esta opción sea útil.
 
 ==== Anunciar regiones activas ====[BrailleLiveRegions]
 : Predeterminado

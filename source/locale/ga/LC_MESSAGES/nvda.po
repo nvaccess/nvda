@@ -6,10 +6,10 @@
 # Ronan McGuirk <ronan.p.mcguirk@gmail.com>
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA 2023.1\n"
+"Project-Id-Version: NVDA 2023.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-28 03:20+0000\n"
-"PO-Revision-Date: 2023-07-29 15:45+0100\n"
+"POT-Creation-Date: 2023-09-01 00:01+0000\n"
+"PO-Revision-Date: 2023-08-21 11:38+0100\n"
 "Last-Translator: Ronan McGuirk <ronan.mcguirk@gmail.com>\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
@@ -1567,7 +1567,7 @@ msgid ""
 "Toggles single letter navigation on and off. When on, single letter keys in "
 "browse mode jump to various kinds of elements on the page. When off, these "
 "keys are passed to the application"
-msgstr "Cuir nó ná cuir nascleanúint le litir singil ar siúl.  "
+msgstr "Cuir nó ná cuir nascleanúint le litir shingil ar siúl.  "
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 #. Translators: Reported when a user tries to use a find command when it isn't supported.
@@ -2428,13 +2428,13 @@ msgstr "Paraiméadair líne na n-orduithe anaithnide"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
-"Your configuration file contains errors. Your configuration has been reset to "
-"factory defaults.\n"
+"Your configuration file contains errors. Your configuration has been reset "
+"to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr ""
 "Earráid i do mhapa gothaí.\n"
-"Tá do chumraíocht socraithe go dtí an chumraíocht réamhshocraithe. Gheobhaidh "
-"tú tuilleadh eolais sa logchomhad."
+"Tá do chumraíocht socraithe go dtí an chumraíocht réamhshocraithe. "
+"Gheobhaidh tú tuilleadh eolais sa logchomhad."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
 msgid "Configuration File Error"
@@ -2754,8 +2754,8 @@ msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
 msgstr ""
-"Má brúitear uair amháin é, tuairiscítear an t-am láithreach. Má brúitear faoi "
-"dhó é, tuairiscítear an dáta láithreach."
+"Má brúitear uair amháin é, tuairiscítear an t-am láithreach. Má brúitear "
+"faoi dhó é, tuairiscítear an dáta láithreach."
 
 #. Translators: Input help mode message for increase synth setting value command.
 msgid "Increases the currently active setting in the synth settings ring"
@@ -3022,7 +3022,8 @@ msgstr "Tabhair tuairisc ar táblaí"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
 msgid "Cycle through the possible modes to report table row and column headers"
-msgstr "Scrolláil trí na móid chun tuairisc a thabhairt ar  cheanntásca táblaí."
+msgstr ""
+"Scrolláil trí na móid chun tuairisc a thabhairt ar  cheanntásca táblaí."
 
 #. Translators: Reported when the user cycles through report table header modes.
 #. {mode} will be replaced with the mode; e.g. None, Rows and columns, Rows or Columns.
@@ -3292,8 +3293,9 @@ msgstr "mód simplí athbhreithnithe ar siúl"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
-"Reports the current navigator object. Pressing twice spells this information, "
-"and pressing three times Copies name and value of this object to the clipboard"
+"Reports the current navigator object. Pressing twice spells this "
+"information, and pressing three times Copies name and value of this object "
+"to the clipboard"
 msgstr ""
 "Tuairiscítear an oibiacht nascleantóra reatha.   Má bhrúitear faoi dhó í "
 "litreofar an t-eolas seo, agus má bhrúitear trí huaire í, cóipeálfar ainm "
@@ -3424,8 +3426,8 @@ msgstr "Níl aon réad taobh istigh de"
 
 #. Translators: Input help mode message for activate current object command.
 msgid ""
-"Performs the default action on the current navigator object (example: presses "
-"it if it is a button)."
+"Performs the default action on the current navigator object (example: "
+"presses it if it is a button)."
 msgstr ""
 "Déan an gníomh réamhshocraithe sa réad nascleantóra (mar shampla: brúigh é "
 "más cnaipe é)"
@@ -3439,16 +3441,16 @@ msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
 msgstr ""
-"Bog an cursóir athbhreithnithe go dtí an chéad líne sa réad nascleantóra agus "
-"léigh é"
+"Bog an cursóir athbhreithnithe go dtí an chéad líne sa réad nascleantóra "
+"agus léigh é"
 
 #. Translators: Input help mode message for move review cursor to previous line command.
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
 msgstr ""
-"Bog an cursóir athbhreithnithe go dtí an líne roimhe seo sa réad nascleantóra "
-"agus léigh é"
+"Bog an cursóir athbhreithnithe go dtí an líne roimhe seo sa réad "
+"nascleantóra agus léigh é"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 #. Translators: Reported when attempting to move to the previous result in the Python Console
@@ -3463,17 +3465,17 @@ msgid ""
 "Pressing three times will spell the line using character descriptions."
 msgstr ""
 "Tuairiscítear líne na hoibiachta reatha nascleantóra san áit ina bhfuil an "
-"cúrsóir athbhreithnithe suite: Ma brúitear an eochair seo faoi dhó, litrífear "
-"an líne reatha.  Brúitear trí huaire í agus litrífear an líne ag déanamh cur "
-"síos ar na carachtair."
+"cúrsóir athbhreithnithe suite: Ma brúitear an eochair seo faoi dhó, "
+"litrífear an líne reatha.  Brúitear trí huaire í agus litrífear an líne ag "
+"déanamh cur síos ar na carachtair."
 
 #. Translators: Input help mode message for move review cursor to next line command.
 msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
 "speaks it"
 msgstr ""
-"Bog an cursóir athbhreithnithe go dtí an chéad líne eile sa réad nascleantóra "
-"agus léigh é"
+"Bog an cursóir athbhreithnithe go dtí an chéad líne eile sa réad "
+"nascleantóra agus léigh é"
 
 #. Translators: Input help mode message for move review cursor to previous page command.
 msgid ""
@@ -3552,20 +3554,21 @@ msgstr "clé"
 
 #. Translators: Input help mode message for report current character under review cursor command.
 msgid ""
-"Reports the character of the current navigator object where the review cursor "
-"is situated. Pressing twice reports a description or example of that "
-"character. Pressing three times reports the numeric value of the character in "
-"decimal and hexadecimal"
+"Reports the character of the current navigator object where the review "
+"cursor is situated. Pressing twice reports a description or example of that "
+"character. Pressing three times reports the numeric value of the character "
+"in decimal and hexadecimal"
 msgstr ""
 "Tuairiscítear carachtar na hoibiachta reatha nascleantóra in san áit ina "
 "bhfuil cúrsóir an athbhreithnithe suite.  Brúitear faoi dhó chun cur síos nó "
-"sampla an charactair sin a dhéanamh.  Má brúitear trí huaire í, tuairiscítear "
-"luach uimhruichiúil an charactair sa chóras deachúil agus heicseadheachúil."
+"sampla an charactair sin a dhéanamh.  Má brúitear trí huaire í, "
+"tuairiscítear luach uimhruichiúil an charactair sa chóras deachúil agus "
+"heicseadheachúil."
 
 #. Translators: Input help mode message for move review cursor to next character command.
 msgid ""
-"Moves the review cursor to the next character of the current navigator object "
-"and speaks it"
+"Moves the review cursor to the next character of the current navigator "
+"object and speaks it"
 msgstr ""
 "Bog an cursóir athbhreithnithe go dtí an chéad charachtar eile sa réad "
 "nascleantóra, agus léigh é"
@@ -3579,17 +3582,17 @@ msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
 msgstr ""
-"Bog an cursóir athbhreithnithe go dtí an carachtar deiridh sa líne ina bhfuil "
-"sé sa réad nascleantóra, agus léigh é"
+"Bog an cursóir athbhreithnithe go dtí an carachtar deiridh sa líne ina "
+"bhfuil sé sa réad nascleantóra, agus léigh é"
 
 #. Translators: Input help mode message for Review Current Symbol command.
 msgid ""
 "Reports the symbol where the review cursor is positioned. Pressed twice, "
 "shows the symbol and the text used to speak it in browse mode"
 msgstr ""
-"Tuairiscítear an siombail ag suíomh an chúrsóra athbhreithnithe. Má bhrúitear "
-"faoi dhó, taispeánfar an siombail agus an téacs a úsáidfear chun í a labhairt "
-"i mód brabhsála."
+"Tuairiscítear an siombail ag suíomh an chúrsóra athbhreithnithe. Má "
+"bhrúitear faoi dhó, taispeánfar an siombail agus an téacs a úsáidfear chun í "
+"a labhairt i mód brabhsála."
 
 #. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
 msgid "No symbol replacement"
@@ -3610,8 +3613,8 @@ msgstr "siombail leathnaithe ({})"
 #. Translators: Input help mode message for toggle speech mode command.
 msgid ""
 "Toggles between the speech modes of off, beep and talk. When set to off NVDA "
-"will not speak anything. If beeps then NVDA will simply beep each time it its "
-"supposed to speak something. If talk then NVDA will just speak normally."
+"will not speak anything. If beeps then NVDA will simply beep each time it "
+"its supposed to speak something. If talk then NVDA will just speak normally."
 msgstr ""
 "Scoránaigh idir na móid  labhartha (bíp,  labhairt) agus as feidhm.  Nuair a "
 "múchtar é,  ní dhéarfaidh NVDA dada; má táthar i mód na mbípeanna, déanfaidh "
@@ -3632,11 +3635,11 @@ msgstr "mód cainte: gnáth"
 #. Translators: Input help mode message for move to next document with focus command,
 #. mostly used in web browsing to move from embedded object to the webpage document.
 msgid ""
-"Moves the focus out of the current embedded object and into the document that "
-"contains it"
+"Moves the focus out of the current embedded object and into the document "
+"that contains it"
 msgstr ""
-"Bogtar an fócas as an oibiacht leabaithe reatha agus isteach sa doiciméid ina "
-"bhfuil sí."
+"Bogtar an fócas as an oibiacht leabaithe reatha agus isteach sa doiciméid "
+"ina bhfuil sí."
 
 #. Translators: Input help mode message for toggle focus and browse mode command
 #. in web browsing and other situations.
@@ -3647,9 +3650,9 @@ msgid ""
 "cursor, quick navigation keys, etc."
 msgstr ""
 "Scoránaítear idir mód brabhsála agus mód fócais.  Sa mhód  fócais, rachaidh "
-"na heochracha go díreach ar aghaidh chuig an clár feidhmeach ionas go ligtear "
-"duit idirghníomhú le rialú.  Istigh i mód brabhsála is féidir leat an "
-"cháipéis a thaisteal le eochair an chúrsóra nascleantóra."
+"na heochracha go díreach ar aghaidh chuig an clár feidhmeach ionas go "
+"ligtear duit idirghníomhú le rialú.  Istigh i mód brabhsála is féidir leat "
+"an cháipéis a thaisteal le eochair an chúrsóra nascleantóra."
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
@@ -3673,8 +3676,8 @@ msgstr ""
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
-"Reads from the system caret up to the end of the text, moving the caret as it "
-"goes"
+"Reads from the system caret up to the end of the text, moving the caret as "
+"it goes"
 msgstr ""
 "léigh ó charait an chórais go dtí deireadh an téacs, agus an charait ag "
 "leanúint an téacs"
@@ -3776,9 +3779,9 @@ msgid ""
 "Reads the current application status bar. If pressed twice, spells the "
 "information. If pressed three times, copies the status bar to the clipboard"
 msgstr ""
-"léitear barra stádais an fheidhmchláir reatha Má bhrútar  faoi dhó, litrítear "
-"an fhaisnéis. Má bhrúitear trí huaire, cóipeálfar an barra stádais go dtí an "
-"gearrthaisce."
+"léitear barra stádais an fheidhmchláir reatha Má bhrútar  faoi dhó, "
+"litrítear an fhaisnéis. Má bhrúitear trí huaire, cóipeálfar an barra stádais "
+"go dtí an gearrthaisce."
 
 #. Translators: Description for a keyboard command which reports the
 #. accelerator key of the currently focused object.
@@ -3815,9 +3818,9 @@ msgstr "Gléine téacs na luiche %s"
 
 #. Translators: Input help mode message for report title bar command.
 msgid ""
-"Reports the title of the current application or foreground window. If pressed "
-"twice, spells the title. If pressed three times, copies the title to the "
-"clipboard"
+"Reports the title of the current application or foreground window. If "
+"pressed twice, spells the title. If pressed three times, copies the title to "
+"the clipboard"
 msgstr ""
 "Léigh teideal an fheidhmchláir reatha nó an fhuinneog sa tulra. Má bhrúnn tú "
 "faoi dhó é, litreofar an teideal. Trí huaire agus cóipeálfar an teideal go "
@@ -3918,8 +3921,8 @@ msgstr "tabhair tuairisc labhartha agus bíp ar dhul chun cinn"
 
 #. Translators: Input help mode message for toggle dynamic content changes command.
 msgid ""
-"Toggles on and off the reporting of dynamic content changes, such as new text "
-"in dos console windows"
+"Toggles on and off the reporting of dynamic content changes, such as new "
+"text in dos console windows"
 msgstr ""
 "Tosaítear nó múchtar tuairisciú ar athraithe an inneachair dinimiciúila, mar "
 "shampla téacs nua in san fhuinneog dos consól."
@@ -4113,8 +4116,8 @@ msgid ""
 "Pressing once reverts the current configuration to the most recently saved "
 "state. Pressing three times resets to factory defaults."
 msgstr ""
-"Brúitear uair amháin chun an chumraíocht seo a fhilleadh ar an gcumraíocht is "
-"déanaí sábháilte.  Brúitear faoi dhó chun filleadh ar an gcumraíocht "
+"Brúitear uair amháin chun an chumraíocht seo a fhilleadh ar an gcumraíocht "
+"is déanaí sábháilte.  Brúitear faoi dhó chun filleadh ar an gcumraíocht "
 "réamhshocraithe. "
 
 #. Translators: Input help mode message for activate python console command.
@@ -4122,15 +4125,16 @@ msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Cuir an consól Python NVDA ar siúl. Úsáideach don fhorbairt"
 
 #. Translators: Input help mode message to activate Add-on Store command.
-msgid "Activates the Add-on Store to browse and manage add-on packages for NVDA"
+msgid ""
+"Activates the Add-on Store to browse and manage add-on packages for NVDA"
 msgstr ""
 "Gníomhaítear Stór na mBreiseán, chun brabhsáil agus bainistiú a dhéanamh ar "
 "bhreiseáin le haghaidh NVDA."
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
-"Toggles the NVDA Speech viewer, a floating window that allows you to view all "
-"the text that NVDA is currently speaking"
+"Toggles the NVDA Speech viewer, a floating window that allows you to view "
+"all the text that NVDA is currently speaking"
 msgstr "Cuir nó ná cuir an amharcóir ar siúl"
 
 #. Translators: The message announced when disabling speech viewer.
@@ -4146,9 +4150,9 @@ msgid ""
 "Toggles the NVDA Braille viewer, a floating window that allows you to view "
 "braille output, and the text equivalent for each braille character"
 msgstr ""
-"Scorántar amharcóir Braille NVDA. Is fuinneog ar snámh í seo inar féidir leat "
-"breathnú ar aschur Braille agus ar na carachtair téacs a bhaineann le gach "
-"carachtar Braille.\n"
+"Scorántar amharcóir Braille NVDA. Is fuinneog ar snámh í seo inar féidir "
+"leat breathnú ar aschur Braille agus ar na carachtair téacs a bhaineann le "
+"gach carachtar Braille.\n"
 "  "
 
 #. Translators: The message announced when disabling braille viewer.
@@ -4269,7 +4273,8 @@ msgstr "Níl aon téacs sa ghearrthaisce"
 #. Translators: If the number of characters on the clipboard is greater than about 1000, it reports this message and gives number of characters on the clipboard.
 #. Example output: The clipboard contains a large portion of text. It is 2300 characters long.
 #, python-format
-msgid "The clipboard contains a large portion of text. It is %s characters long"
+msgid ""
+"The clipboard contains a large portion of text. It is %s characters long"
 msgstr "Tá go leor téacs sa ghearrthaisce, %s carachtar ar fad"
 
 #. Translators: Input help mode message for mark review cursor position for a select or copy command
@@ -4378,8 +4383,8 @@ msgstr ""
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
-"Virtually toggles the control key to emulate a keyboard shortcut with braille "
-"input"
+"Virtually toggles the control key to emulate a keyboard shortcut with "
+"braille input"
 msgstr ""
 "Scorántar an eochair rialúcháin go fíorúil, chun aithris a dhéanamh ar "
 "aicearra méarchláir le hionchur Braille   "
@@ -4434,8 +4439,8 @@ msgstr ""
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
-"Virtually toggles the NVDA and shift keys to emulate a keyboard shortcut with "
-"braille input"
+"Virtually toggles the NVDA and shift keys to emulate a keyboard shortcut "
+"with braille input"
 msgstr ""
 "Scorántar na heochracha NVDA agus na heochracha iomlaoide go fíorúil chun "
 "aithris a dhéanamh ar eochair eacearra le hionchur Braille."
@@ -4494,8 +4499,8 @@ msgstr "Ní nasc é seo"
 
 #. Translators: input help mode message for Report URL of a link in a window command
 msgid ""
-"Displays the destination URL of the link at the position of caret or focus in "
-"a window, instead of just speaking it. May be preferred by braille users."
+"Displays the destination URL of the link at the position of caret or focus "
+"in a window, instead of just speaking it. May be preferred by braille users."
 msgstr ""
 "Taispeántar spriocaimsitheoir aonfhoirmeach acmhainne an naisc ag suíomh an "
 "fhócais nó na caraite, i bhfuinneog  in ionad í a labhairt. D’fhéadfadh le "
@@ -4572,8 +4577,8 @@ msgstr "Próifílí cumraíochta"
 
 #. Translators: Input help mode message for toggle configuration profile triggers command.
 msgid ""
-"Toggles disabling of all configuration profile triggers. Disabling remains in "
-"effect until NVDA is restarted"
+"Toggles disabling of all configuration profile triggers. Disabling remains "
+"in effect until NVDA is restarted"
 msgstr ""
 "Scorántar díchumasú na truicir próifílí cumriachta go léir. Fanfaidh an "
 "díchumasú seo i bhfeidhm go dtí go gcuirfear tús arís le NVDA.  "
@@ -4597,7 +4602,8 @@ msgstr "ní matamaitic é seo."
 
 #. Translators: Describes a command.
 msgid "Recognizes the content of the current navigator object with Windows OCR"
-msgstr "Aithnítear inneachar na hoibiachta nascleanúna reatha le OCR Windows 10"
+msgstr ""
+"Aithnítear inneachar na hoibiachta nascleanúna reatha le OCR Windows 10"
 
 #. Translators: Reported when Windows OCR is not available.
 msgid "Windows OCR not available"
@@ -5881,7 +5887,8 @@ msgstr "gealach"
 msgctxt "shape"
 msgid "Trapezoid with asymmetrical non-parallel sides"
 msgstr ""
-"Traipéasóideach agus taobhanna neamhshiméadracha ann nach bhfuil comhthreomhar"
+"Traipéasóideach agus taobhanna neamhshiméadracha ann nach bhfuil "
+"comhthreomhar"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6615,8 +6622,8 @@ msgid ""
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} is covered by the GNU General Public License (Version 2). You are free "
-"to share or change this software in any way you like as long as it is "
+"{name} is covered by the GNU General Public License (Version 2). You are "
+"free to share or change this software in any way you like as long as it is "
 "accompanied by the license and you make all source code available to anyone "
 "who wants it. This applies to both original and modified copies of this "
 "software, plus any derivative works.\n"
@@ -6628,15 +6635,16 @@ msgid ""
 "helping and promoting free and open source solutions for blind and vision "
 "impaired people.\n"
 "If you find NVDA useful and want it to continue to improve, please consider "
-"donating to NV Access. You can do this by selecting Donate from the NVDA menu."
+"donating to NV Access. You can do this by selecting Donate from the NVDA "
+"menu."
 msgstr ""
 "{longName} ({name})\n"
 "Leagan: {version} ({version_detailed})\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"Tá {name}  clúdaithe faoi Cheadúnas poiblí ginearálta GNU, (leagan 2).  Tá tú "
-"saor na bogearraí seo a roinnt nó a athrú pé bealach ar mhian leat, ar "
+"Tá {name}  clúdaithe faoi Cheadúnas poiblí ginearálta GNU, (leagan 2).  Tá "
+"tú saor na bogearraí seo a roinnt nó a athrú pé bealach ar mhian leat, ar "
 "choinníoll go bhfuil an ceadúnas in éineacht leo agus go bhfuil an cód "
 "foinseach go léir curtha ar fáil agat do gach duine ar mhaith leis é. "
 "Baineann sé seo leis an bhunchóip agus cóipeanna athraithe de na bogearraí "
@@ -6645,10 +6653,10 @@ msgstr ""
 "chomh maith ag: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "\n"
 "Tá {name} forbartha ag NV Access. Is eagraíocht neamhbhrabúis í seo atá "
-"tiomanta réitigh saor le cód foinseach oscailte a chabhrú agus a chur ar fáil "
-"do dhaoine dalla agus do dhaoine faoi mhíchumas radhairc.\n"
-"Má tá NVDA úsáideach duit, agus más mian leat go mbeadh feabhas curtha air as "
-"seo amach, le do thoil, smaoinigh ar dheontas a bhronnadh ar \n"
+"tiomanta réitigh saor le cód foinseach oscailte a chabhrú agus a chur ar "
+"fáil do dhaoine dalla agus do dhaoine faoi mhíchumas radhairc.\n"
+"Má tá NVDA úsáideach duit, agus más mian leat go mbeadh feabhas curtha air "
+"as seo amach, le do thoil, smaoinigh ar dheontas a bhronnadh ar \n"
 "NV Access."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
@@ -6657,8 +6665,8 @@ msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
 msgstr ""
-"Ní féidir breiseán NVDA a shuiteáil ó {path}. Ní foláir NVDA a bheith ar siúl "
-"chun bhreiseáin a shuiteáil"
+"Ní féidir breiseán NVDA a shuiteáil ó {path}. Ní foláir NVDA a bheith ar "
+"siúl chun bhreiseáin a shuiteáil"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -7284,7 +7292,8 @@ msgstr "mír eile"
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 #, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} points"
-msgstr "clúdaítear taobh na láimhe clé den {otherShape} i {distance:.3g} pointí"
+msgstr ""
+"clúdaítear taobh na láimhe clé den {otherShape} i {distance:.3g} pointí"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
 #, python-brace-format
@@ -7374,13 +7383,13 @@ msgstr "As imeall an bhunshleamhnáin i {distance:.3g} pointí"
 
 #. Translators: The description for a script
 msgid ""
-"Toggles between reporting the speaker notes or the actual slide content. This "
-"does not change what is visible on-screen, but only what the user can read "
-"with NVDA"
+"Toggles between reporting the speaker notes or the actual slide content. "
+"This does not change what is visible on-screen, but only what the user can "
+"read with NVDA"
 msgstr ""
 "Scoránaítear idir thuairisciú nótaí callaire nó inneachar an fhíor-"
-"shleamhnáin.  Ní athraíotar an méid atá infheicthe ar an scáileán, ach amháin "
-"an méid atá inléite ag NVDA."
+"shleamhnáin.  Ní athraíotar an méid atá infheicthe ar an scáileán, ach "
+"amháin an méid atá inléite ag NVDA."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
 #, python-brace-format
@@ -7434,8 +7443,8 @@ msgid ""
 "cursor positioned {horizontalDistance} from left edge of page, "
 "{verticalDistance} from top edge of page"
 msgstr ""
-"Tá an cúrsóir suite  {horizontalDistance} ó imeall clé an leathanaigh, agus,  "
-"{verticalDistance} ó bharr an leathanaigh"
+"Tá an cúrsóir suite  {horizontalDistance} ó imeall clé an leathanaigh, "
+"agus,  {verticalDistance} ó bharr an leathanaigh"
 
 msgid "left"
 msgstr "clé"
@@ -8748,16 +8757,17 @@ msgstr "Maidir le NVDA"
 msgid ""
 "You are about to run the COM Registration Fixing tool. This tool will try to "
 "fix common system problems that stop NVDA from being able to access content "
-"in many programs including Firefox and Internet Explorer. This tool must make "
-"changes to the System registry and therefore requires administrative access. "
-"Are you sure you wish to proceed?"
+"in many programs including Firefox and Internet Explorer. This tool must "
+"make changes to the System registry and therefore requires administrative "
+"access. Are you sure you wish to proceed?"
 msgstr ""
 "Tá tú ar tí an uirlis um chlárúchán COM a réiteach a chur ar siúl. Déanfar "
 "iarracht leis an uirlis seo fadhbanna coitianta córais a réiteach, "
 "fadhbanna   a chuireann cosc ar NVDA rochtain a fháil ar inneachar in roinnt "
 "mhaith feidhmchlár, Firefox agus Internet Explorer ina measc. Is gá don "
 "uirlis seo athruithe a dhéanamh ar chlárlann an chórais agus mar sin beidh "
-"rochtain riarthóra de dhíth. An bhfuil tú cinnte gur mian leat dul ar aghaidh?"
+"rochtain riarthóra de dhíth. An bhfuil tú cinnte gur mian leat dul ar "
+"aghaidh?"
 
 #. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
 #. Translators: The title of a warning dialog.
@@ -8913,8 +8923,8 @@ msgstr "Foclóir &réamhshocraithe..."
 
 #. Translators: The help text for the menu item to open Default speech dictionary dialog.
 msgid ""
-"A dialog where you can set default dictionary by adding dictionary entries to "
-"the list"
+"A dialog where you can set default dictionary by adding dictionary entries "
+"to the list"
 msgstr ""
 "dialóg inar féidir Foclóir réamhshocraithe a shocrú trí chur  iontrála-cha "
 "fHoclóra leis an liosta."
@@ -8981,8 +8991,8 @@ msgstr "Fan nóiméad"
 #. Translators: A message asking the user if they wish to restart NVDA
 #. as addons have been added, enabled/disabled or removed.
 msgid ""
-"Changes were made to add-ons. You must restart NVDA for these changes to take "
-"effect. Would you like to restart now?"
+"Changes were made to add-ons. You must restart NVDA for these changes to "
+"take effect. Would you like to restart now?"
 msgstr ""
 "Athraíodh breiseáin. Is gá NVDA a atosú chun na hathruithe seo a chur I "
 "bhfeidhm. An mian leat NVDA a atosú anois?"
@@ -9032,8 +9042,8 @@ msgid ""
 "disabled state, and install or uninstall add-ons. Changes will not take "
 "effect until after NVDA is restarted."
 msgstr ""
-"Nuair a cuireadh tús le NVDA bhí gach breiseáin díchumasaithe. Is féidir leat "
-"an staid sin, cumasaithe nó díchumasaithe, a athrú nó is féidir leat "
+"Nuair a cuireadh tús le NVDA bhí gach breiseáin díchumasaithe. Is féidir "
+"leat an staid sin, cumasaithe nó díchumasaithe, a athrú nó is féidir leat "
 "breiseáin a shuiteáil. Ní tiocfaidh na hathruithe i bhfeidhm go dtí go "
 "gcuirfear tús le NVDA arís. "
 
@@ -9122,7 +9132,8 @@ msgstr "Cumasaigh an Breiseán "
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #, python-format
 msgid ""
-"Failed to open add-on package file at %s - missing file or invalid file format"
+"Failed to open add-on package file at %s - missing file or invalid file "
+"format"
 msgstr ""
 "Níorbh fhéidir pacáiste breiseáin ag %s a oscailt - comhad ar iarraidh nó "
 "comhad neamhbhailí"
@@ -9179,8 +9190,8 @@ msgid ""
 "version is {NVDAVersion}"
 msgstr ""
 "Cuireadh cosc ar suiteáil an leagan  {summary}{version}. Is é "
-"{minimumNVDAVersion},  an leagan NVDA  is ísle ar ar féidir an breiseán seo a "
-"shuiteáil. Is é {NVDAVersion} an leagan NVDA Reatha."
+"{minimumNVDAVersion},  an leagan NVDA  is ísle ar ar féidir an breiseán seo "
+"a shuiteáil. Is é {NVDAVersion} an leagan NVDA Reatha."
 
 #. Translators: The title of a dialog presented when an error occurs.
 msgid "Add-on not compatible"
@@ -9399,8 +9410,8 @@ msgid ""
 "Are you sure you want to continue?"
 msgstr ""
 "Baineann an truicear seo le próifíl eile cheana.  Má leanann tú ar aghaidh, "
-"bainfear as an bpróifíl sin agus bainfear leis an gceann seo é.  An bhfuil tú "
-"cinnte gur mian leat leanúint ar aghaidh?"
+"bainfear as an bpróifíl sin agus bainfear leis an gceann seo é.  An bhfuil "
+"tú cinnte gur mian leat leanúint ar aghaidh?"
 
 #. Translators: An error displayed when the user attempts to create a configuration profile
 #. with an empty name.
@@ -9420,8 +9431,8 @@ msgid ""
 "usage.\n"
 "Do you wish to manually activate it now?"
 msgstr ""
-"Chun an phróifíl seo a eagrú, ní foláir duit í a ghníomhachtú deláimh.  Nuair "
-"atá do chuid eagarthóireachta críochnaithe agat, Is gáduit í a "
+"Chun an phróifíl seo a eagrú, ní foláir duit í a ghníomhachtú deláimh.  "
+"Nuair atá do chuid eagarthóireachta críochnaithe agat, Is gáduit í a "
 "dhíghníomhachtú de láimh chun gnáth-úsáid a athosnú.\n"
 "An mian leat í a ghníomhachtú de láimh anois?"
 
@@ -9473,7 +9484,8 @@ msgid ""
 "restart, the language  saved in NVDA's configuration will be used instead."
 msgstr ""
 "Tá teanga chomhéadan NVDA fórsáilte anois ó líne na n-orduithe. Ag an gcéad "
-"atosú NVDA eile, úsáidfear an teanga atá sabháilte i gcumriacht NVDA ina háit."
+"atosú NVDA eile, úsáidfear an teanga atá sabháilte i gcumriacht NVDA ina "
+"háit."
 
 #. Translators: The label for actions list in the Exit dialog.
 msgid "What would you like to &do?"
@@ -9591,7 +9603,8 @@ msgid ""
 "The installation of NVDA failed. Please check the Log Viewer for more "
 "information."
 msgstr ""
-"Theip ar shuiteáil NVDA. Féach ar an logchomhad chun tuilleadh eolais a fháil."
+"Theip ar shuiteáil NVDA. Féach ar an logchomhad chun tuilleadh eolais a "
+"fháil."
 
 #. Translators: The message displayed when NVDA has been successfully installed.
 msgid "Successfully installed NVDA. "
@@ -9874,7 +9887,8 @@ msgid ""
 "Use currently saved settings during sign-in and on secure screens (requires "
 "administrator privileges)"
 msgstr ""
-"Bain úsáid as socruithe sábháilte reatha agus tú ar an scáileán logála isteach"
+"Bain úsáid as socruithe sábháilte reatha agus tú ar an scáileán logála "
+"isteach"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
@@ -9915,8 +9929,8 @@ msgid ""
 "or you have run out of disc space on the drive you are copying to."
 msgstr ""
 "Ní féidir comhad a chóipeáil.  B’fhéidir go bhfuil sé in úsáid faoi láthair "
-"ag próiseas eile nó nach bhfuil spás diosca fágtha ar dtiomántán chinn scríbe "
-"na cóipeála."
+"ag próiseas eile nó nach bhfuil spás diosca fágtha ar dtiomántán chinn "
+"scríbe na cóipeála."
 
 #. Translators: the title of a retry cancel dialog when copying settings  fails
 msgid "Error Copying"
@@ -10222,8 +10236,8 @@ msgid ""
 "reading text content e.g. web content with browse mode."
 msgstr ""
 "Cumraigh an méid eolais faoi rialtáin  a chuirfidh NVDA ar fáil. Baineann na "
-"roghanna seo le tuairisciú fócais agus le nascleanúint oibiachta NVDA, ach ní "
-"bhaineann siad le brabhsáil téacs."
+"roghanna seo le tuairisciú fócais agus le nascleanúint oibiachta NVDA, ach "
+"ní bhaineann siad le brabhsáil téacs."
 
 #. Translators: This is the label for the object presentation panel.
 msgid "Object Presentation"
@@ -10596,7 +10610,8 @@ msgstr "Forbairt NVDA"
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Enable loading custom code from Developer Scratchpad directory"
-msgstr "Cumasaigh lódáil an chóid saincheaptha ón bhfillteán um chuimhne oibre "
+msgstr ""
+"Cumasaigh lódáil an chóid saincheaptha ón bhfillteán um chuimhne oibre "
 
 #. Translators: the label for a button in the Advanced settings category
 msgid "Open developer scratchpad directory"
@@ -10790,7 +10805,8 @@ msgstr ""
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid ""
-"Use enhanced t&yped character support in legacy Windows Console when available"
+"Use enhanced t&yped character support in legacy Windows Console when "
+"available"
 msgstr ""
 "Bain úsáid as tacaíocht feabhsaithe do charachtair chlóscríofa i gconsól "
 "oidhreachta  Windows, nuair atá sí ar fáil."
@@ -10916,8 +10932,8 @@ msgid ""
 msgstr ""
 "Baineann na socruithe seo a leanas le sainúsáideoirí. Má athraítear iad, "
 "d’fhéadfadh NVDA a fheidhmiú go mícheart. Ná athraigh na socruithe seo ach "
-"amháin má tá a fhios agat cad atá á dhéanamh agat nó má ordaigh na forbreoirí "
-"NVDA duit é a dhéanamh."
+"amháin má tá a fhios agat cad atá á dhéanamh agat nó má ordaigh na "
+"forbreoirí NVDA duit é a dhéanamh."
 
 #. Translators: This is the label for a checkbox in the Advanced settings panel.
 msgid ""
@@ -11283,8 +11299,8 @@ msgstr ""
 "choinneáil síos agus tú ag brú eochracha eile\n"
 "Mar réamhshocrú, is féidir na heochracha “ionsáigh” an uimhirchip agus an "
 "príomheochair “ionsáigh” araon a úsáid mar eochair an NVDA. \n"
-" Is féidir leat, freisin, NVDA a chumrú chun glais ceannlitreacha a úsáid mar "
-"an eochair NVDA. \n"
+" Is féidir leat, freisin, NVDA a chumrú chun glais ceannlitreacha a úsáid "
+"mar an eochair NVDA. \n"
 "Brúigh NVDA+N am ar bith chun an roghchlár NVDA a ghníomhachtú.\n"
 "  Ón roghnúchán seo, féadann tú NVDA a chumrú,cabhair a fháil, agus "
 "feidhmeanna NVDA eile a rochtainiú."
@@ -11876,8 +11892,8 @@ msgstr "{D} lá {H}:{M}:{S}"
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
 msgid ""
-"NVDA is unable to determine if Windows is locked. While this instance of NVDA "
-"is running, your desktop will not be secure when Windows is locked. "
+"NVDA is unable to determine if Windows is locked. While this instance of "
+"NVDA is running, your desktop will not be secure when Windows is locked. "
 "Restarting Windows may address this. If this error is ongoing then disabling "
 "the Windows lock screen is recommended."
 msgstr ""
@@ -12019,8 +12035,8 @@ msgstr ""
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
-"Tá  ró {rowNumber} colún {columnNumber} socraithe cheana mar thús cheanntásca "
-"colúin."
+"Tá  ró {rowNumber} colún {columnNumber} socraithe cheana mar thús "
+"cheanntásca colúin."
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
@@ -12115,8 +12131,8 @@ msgstr "{} moladh"
 #. Translators: the description of a script
 msgctxt "excel-UIA"
 msgid ""
-"Shows a browseable message Listing information about a cell's appearance such "
-"as outline and fill colors, rotation and size"
+"Shows a browseable message Listing information about a cell's appearance "
+"such as outline and fill colors, rotation and size"
 msgstr ""
 "Taispeántar fógra inbhrabhsáilte ina bhfuil eolas faoi chuma na cille ar nós "
 "imlíne, dathanna agus méid."
@@ -12828,7 +12844,8 @@ msgstr "Luach {valueAxisData}"
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
 #, python-brace-format
-msgid " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
+msgid ""
+" fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr " Codán {fractionValue:.2f}  {pointIndex} faoin gcéad de   {pointCount}"
 
 #. Translators: Details about a segment of a chart.
@@ -12910,7 +12927,8 @@ msgstr ""
 #. Translators: This message gives trendline type and name for selected series
 #, python-brace-format
 msgid "{seriesName} trendline type: {trendlineType}, name: {trendlineName} "
-msgstr "Cineál tríochtlíne {seriesName} {trendlineType},  ainm: {trendlineName}"
+msgstr ""
+"Cineál tríochtlíne {seriesName} {trendlineType},  ainm: {trendlineName}"
 
 #. Translators: Details about a chart title in Microsoft Office.
 #, python-brace-format
@@ -13224,9 +13242,10 @@ msgid ""
 "and to the right of it within this region. Pressing twice will forget the "
 "current row header for this cell."
 msgstr ""
-"Brúitear uair amháin í chun an chill seo a shocrú mar an chéadcheanntásc ró i "
-"gcomhair na gceall thíos agus ar dheis di sa réigiúinseo. Brúitear faoi dhó í "
-"chun dearmad a dhéanamh ar an gceanntásc róreatha i gcomhair na cille seo."
+"Brúitear uair amháin í chun an chill seo a shocrú mar an chéadcheanntásc ró "
+"i gcomhair na gceall thíos agus ar dheis di sa réigiúinseo. Brúitear faoi "
+"dhó í chun dearmad a dhéanamh ar an gceanntásc róreatha i gcomhair na cille "
+"seo."
 
 #. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
 #, python-brace-format
@@ -13790,26 +13809,54 @@ msgctxt "addonStore"
 msgid "Enabled, pending restart"
 msgstr "cumasaithe ag feitheamh ar atosú"
 
-#. Translators: The label of a tab to display installed add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of a tab to display installed add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Installed add-ons"
+msgstr "Breiseáin Shuiteáilte"
+
+#. Translators: The label of a tab to display updatable add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Updatable add-ons"
+msgstr "Breiseáin in-nuashonraithe "
+
+#. Translators: The label of a tab to display available add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Available add-ons"
+msgstr "Na Breiseáin atá ar fáil"
+
+#. Translators: The label of a tab to display incompatible add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Installed incompatible add-ons"
+msgstr "Breiseáin neamh-chomhoiriúnacha suiteáilte"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Installed &add-ons"
 msgstr "Breiseáin Shuiteáilte"
 
-#. Translators: The label of a tab to display updatable add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Updatable &add-ons"
 msgstr "Breiseáin in-nuashonraithe "
 
-#. Translators: The label of a tab to display available add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Available &add-ons"
 msgstr "Na Breiseáin &ar fáil"
 
-#. Translators: The label of a tab to display incompatible add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Installed incompatible &add-ons"
 msgstr "Breiseáin neamh-chomhoiriúnacha suiteáilte"
@@ -13822,8 +13869,8 @@ msgctxt "addonStore"
 msgid ""
 "An updated version of NVDA is required. NVDA version {nvdaVersion} or later."
 msgstr ""
-"Tá leagan nuashonraithe de NVDA de dhíth. Leagan {nvdaVersion} nó leagan níos "
-"déanaí."
+"Tá leagan nuashonraithe de NVDA de dhíth. Leagan {nvdaVersion} nó leagan "
+"níos déanaí."
 
 #. Translators: The reason an add-on is not compatible.
 #. The addon relies on older, removed features of NVDA, an updated add-on is required.
@@ -13854,8 +13901,8 @@ msgstr ""
 "seo de NVDA. Díchumasófar na breiseáin seo tar éis na suiteála. Tar éis duit "
 "an suiteáil a dhéanamh, beidh tú in ann na breiseáin seo a chumasaigh de "
 "láimhe  arís ar do phriacal féin. Má bhíonn tú ag brath ar na breiseáin seo, "
-"déan athbhreithniú ar an liosta le do thoil chun cinneadh a dhéanamh cé acu a "
-"dhéanamh iad a shuiteáil nó gan iad a shuiteáil.\n"
+"déan athbhreithniú ar an liosta le do thoil chun cinneadh a dhéanamh cé acu "
+"a dhéanamh iad a shuiteáil nó gan iad a shuiteáil.\n"
 "            "
 
 #. Translators: A message to confirm that the user understands that incompatible add-ons
@@ -13866,7 +13913,8 @@ msgid ""
 "re-enabled at my own risk after installation."
 msgstr ""
 "Tuigim go ndíchumasófar breiseáin neamh-chomhoiriúnacha agus go mbeidh mé in "
-"ann iad a chumasaigh de láimhe arís ar mo phriacal féin tar éis na suiteála.  "
+"ann iad a chumasaigh de láimhe arís ar mo phriacal féin tar éis na "
+"suiteála.  "
 
 #. Translators: Names of braille displays.
 msgid "Caiku Albatross 46/80"
@@ -14045,9 +14093,9 @@ msgstr "Bain an breiseán de NVDA"
 msgctxt "addonStore"
 msgid ""
 "Warning: add-on is incompatible: {name} {version}. Check for an updated "
-"version of this add-on if possible. The last tested NVDA version for this add-"
-"on is {lastTestedNVDAVersion}, your current NVDA version is {NVDAVersion}. "
-"Installation may cause unstable behavior in NVDA.\n"
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Installation may cause unstable behavior in NVDA.\n"
 "Proceed with installation anyway? "
 msgstr ""
 "Tá an breiseán {name}{version}.   neamh-chomhoiriúnach. Séiceáil an bhfuil "
@@ -14062,17 +14110,17 @@ msgstr ""
 msgctxt "addonStore"
 msgid ""
 "Warning: add-on is incompatible: {name} {version}. Check for an updated "
-"version of this add-on if possible. The last tested NVDA version for this add-"
-"on is {lastTestedNVDAVersion}, your current NVDA version is {NVDAVersion}. "
-"Enabling may cause unstable behavior in NVDA.\n"
+"version of this add-on if possible. The last tested NVDA version for this "
+"add-on is {lastTestedNVDAVersion}, your current NVDA version is "
+"{NVDAVersion}. Enabling may cause unstable behavior in NVDA.\n"
 "Proceed with enabling anyway? "
 msgstr ""
 "Rabhadh: Tá an breiseán {name} {version}   neamh-chomhoiriúnach. Déan "
 "seiceáil an bhfuil leagan nua ar fáil más féidir. Is é leagan NVDA  "
-"{lastTestedNVDAVersion} an leagan is déanaí a bhí tástáilte leis an mbreiseán "
-"seo. Is é {NVDAVersion}.  Do leagan NVDA reatha. D’fhéadfadh iompair "
-"éagobhsaí a bheith ann in NVDA má bheidh an breiseán cumasaithe. Ar mhian "
-"leat leanúint ar aghaidh pé scéal é?"
+"{lastTestedNVDAVersion} an leagan is déanaí a bhí tástáilte leis an "
+"mbreiseán seo. Is é {NVDAVersion}.  Do leagan NVDA reatha. D’fhéadfadh "
+"iompair éagobhsaí a bheith ann in NVDA má bheidh an breiseán cumasaithe. Ar "
+"mhian leat leanúint ar aghaidh pé scéal é?"
 
 #. Translators: message shown in the Addon Information dialog.
 #, python-brace-format
@@ -14119,21 +14167,47 @@ msgctxt "addonStore"
 msgid "Add-on Information"
 msgstr "Eolas faoin mBreiseán"
 
+#. Translators: The warning of a dialog
+msgid "Add-on Store Warning"
+msgstr "Rabhadh Stór na mBreiseán"
+
+#. Translators: Warning that is displayed before using the Add-on Store.
+msgctxt "addonStore"
+msgid ""
+"Add-ons are created by the NVDA community and are not vetted by NV Access. "
+"NV Access cannot be held responsible for add-on behavior. The functionality "
+"of add-ons is unrestricted and can include accessing your personal data or "
+"even the entire system. "
+msgstr ""
+"Cruthaíonn pobal NVDA na breiseáin agus ní sheiceálann NVAcess iad. Ní "
+"féidir an fhreagracht a chur ar NVAcess as iompraíocht na mbreiseán. Níl "
+"srianta ar fheidhmiúlacht na mbreiseán agus d’fhéadfadh rochtain ar do "
+"shonraí pearsanta nó ar do chóras iomláine."
+
+#. Translators: The label of a checkbox in the add-on store warning dialog
+msgctxt "addonStore"
+msgid "&Don't show this message again"
+msgstr "Ná thaispeáin an teachtaireacht seo arís."
+
+#. Translators: The label of a button in a dialog
+msgid "&OK"
+msgstr "&OK"
+
 #. Translators: The title of the addonStore dialog where the user can find and download add-ons
 msgctxt "addonStore"
 msgid "Add-on Store"
 msgstr "Stór na mBreiseán"
+
+#. Translators: The label for a button in add-ons Store dialog to install an external add-on.
+msgctxt "addonStore"
+msgid "Install from e&xternal source"
+msgstr "Déan suiteáil ó fhoinse seachtrach."
 
 #. Translators: Banner notice that is displayed in the Add-on Store.
 msgctxt "addonStore"
 msgid "Note: NVDA was started with add-ons disabled"
 msgstr ""
 "Tabhair faoi deara go raibh na breiseáin dhíchumasaithe nuar a thosaigh NVDA."
-
-#. Translators: The label for a button in add-ons Store dialog to install an external add-on.
-msgctxt "addonStore"
-msgid "Install from e&xternal source"
-msgstr "Déan suiteáil ó fhoinse seachtrach."
 
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"
@@ -14320,10 +14394,10 @@ msgstr "Níorbh fhéidir an breiseán {addon}. A dhíchumasú."
 #~ msgstr ""
 #~ "\n"
 #~ "\n"
-#~ "Tá breiseáin sa chumriacht NVDA seo, áfach, nach bhfuil comhoiriúnach leis "
-#~ "an leagan NVDA seo. Díchumasófar na breiseáin seo tar éis na suiteála. Má "
-#~ "tá tú ag brath ar na breiseáin seo, déan athbhreithniú ar an liosta sula "
-#~ "leannán tú ar aghaidh leis an suiteáil. "
+#~ "Tá breiseáin sa chumriacht NVDA seo, áfach, nach bhfuil comhoiriúnach "
+#~ "leis an leagan NVDA seo. Díchumasófar na breiseáin seo tar éis na "
+#~ "suiteála. Má tá tú ag brath ar na breiseáin seo, déan athbhreithniú ar an "
+#~ "liosta sula leannán tú ar aghaidh leis an suiteáil. "
 
 #~ msgid "Eurobraille Esys/Esytime/Iris displays"
 #~ msgstr "Taispeáintí Eurobraille Esys/Esytime/Iris  "
@@ -14399,13 +14473,13 @@ msgstr "Níorbh fhéidir an breiseán {addon}. A dhíchumasú."
 #~ "Cannot set headers. Please enable reporting of table headers in Document "
 #~ "Formatting Settings"
 #~ msgstr ""
-#~ "Ní féidir ceanntásca a shocrú.  Cumasaigh tuairisciú cheanntásc na dtáblaí "
-#~ "sa socruithe fhormáidithe na cáipéisí."
+#~ "Ní féidir ceanntásca a shocrú.  Cumasaigh tuairisciú cheanntásc na "
+#~ "dtáblaí sa socruithe fhormáidithe na cáipéisí."
 
 #~ msgid "Use UI Automation to access the Windows C&onsole when available"
 #~ msgstr ""
-#~ "Bain úsáid as uathoibriú UI Microsoft más féidir, chun rochtain a fháil ar "
-#~ "c&onsól Windows."
+#~ "Bain úsáid as uathoibriú UI Microsoft más féidir, chun rochtain a fháil "
+#~ "ar c&onsól Windows."
 
 #, fuzzy
 #~ msgid "Moves the navigator object to the first row"

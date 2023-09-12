@@ -1,9 +1,9 @@
-# -*- coding: UTF-8 -*-
-#brailleDisplayDrivers/hims.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2010-2018 Gianluca Casalino, NV Access Limited, Babbage B.V., Leonard de Ruijter, Bram Duvigneau
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2010-2023 Gianluca Casalino, NV Access Limited, Babbage B.V., Leonard de Ruijter,
+# Bram Duvigneau
+
 from typing import List
 
 import serial
@@ -43,7 +43,7 @@ class Model(AutoPropertyObject):
 		"""Basic keymap
 
 		This returns a basic keymap with sensible defaults for all devices.
-		Subclasses should override or extend this method to add model specific keys, 
+		Subclasses should override or extend this method to add model specific keys,
 		or relabel keys. Even if a key isn't available on all devices, add it here
 		if it would make sense for most devices.
 
@@ -182,7 +182,27 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	# Translators: The name of a series of braille displays.
 	description = _("HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series")
 	isThreadSafe = True
+	supportsAutomaticDetection = True
 	timeout = 0.2
+
+	@classmethod
+	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
+		# Bulk devices
+		driverRegistrar.addUsbDevices(bdDetect.KEY_CUSTOM, {
+			"VID_045E&PID_930A",  # Braille Sense & Smart Beetle
+			"VID_045E&PID_930B",  # Braille EDGE 40
+		})
+
+		# Sync Braille, serial device
+		driverRegistrar.addUsbDevices(bdDetect.KEY_SERIAL, {
+			"VID_0403&PID_6001",
+		})
+
+		driverRegistrar.addBluetoothDevices(lambda m: any(m.id.startswith(prefix) for prefix in (
+			"BrailleSense",
+			"BrailleEDGE",
+			"SmartBeetle",
+		)))
 
 	@classmethod
 	def getManualPorts(cls):

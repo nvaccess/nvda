@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-28 03:20+0000\n"
-"PO-Revision-Date: 2023-07-28 12:32+0200\n"
-"Last-Translator: Radek Žalud <radek.zalud@seznam.cz>\n"
+"POT-Creation-Date: 2023-08-25 00:02+0000\n"
+"PO-Revision-Date: 2023-08-21 16:15+0100\n"
+"Last-Translator: Martina <letochova@seznam.cz>\n"
 "Language-Team: CS\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -4134,26 +4134,27 @@ msgstr "Braillský kurzor je propojen %s"
 
 #. Translators: Input help mode message for cycle through
 #. braille move system caret when routing review cursor command.
-#, fuzzy
 msgid ""
 "Cycle through the braille move system caret when routing review cursor states"
-msgstr "Přepíná mezi stavy zobrazení výběru braillského řádku"
+msgstr ""
+"Přepíná mezi režimy přesunutí systémového a čtecího kurzoru na braillském "
+"řádku"
 
 #. Translators: Reported when action is unavailable because braille tether is to focus.
-#, fuzzy
 msgid "Action unavailable. Braille is tethered to focus"
-msgstr "Nedostupné při uzamčení systému Windows"
+msgstr "Nedostupné. Braillský řádek je propojen na fokus"
 
 #. Translators: Used when reporting braille move system caret when routing review cursor
 #. state (default behavior).
 #, python-format
 msgid "Braille move system caret when routing review cursor default (%s)"
 msgstr ""
+"Systémový kurzor následuje čtecí kurzor na braillském řádku výchozí (%s)"
 
 #. Translators: Used when reporting braille move system caret when routing review cursor state.
 #, python-format
 msgid "Braille move system caret when routing review cursor %s"
-msgstr ""
+msgstr "Systémový kurzor následuje čtecí kurzor na braillském řádku %s"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
@@ -7622,7 +7623,7 @@ msgstr "Nikdy"
 
 #. Translators: Label for setting to move the system caret when routing review cursor with braille.
 msgid "Only when tethered automatically"
-msgstr ""
+msgstr "Jen při automatickém propojení"
 
 #. Translators: Label for setting to move the system caret when routing review cursor with braille.
 msgid "Always"
@@ -10668,9 +10669,8 @@ msgid "Enable support for HID braille"
 msgstr "Povolit podporu pro HID braille"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#, fuzzy
 msgid "Report live regions:"
-msgstr "hlásit odkazy"
+msgstr "Hlásit aktivní oblasti:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10766,11 +10766,8 @@ msgstr ""
 
 #. Translators: This is the label for a slider control in the
 #. Advanced settings panel.
-#, fuzzy
 msgid "Volume of NVDA sounds (requires WASAPI)"
-msgstr ""
-"Hlasitost zvuků NVDA se řídí podle hlasitosti hlasu (vyžaduje rozhraní "
-"WASAPI)"
+msgstr "Hlasitost zvuků NVDA (vyžaduje rozhraní WASAPI)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10899,7 +10896,7 @@ msgstr "Propojit b&raillský řádek:"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 msgid "Move system caret when ro&uting review cursor"
-msgstr ""
+msgstr "Přesunout systémový i čtecí k&urzor na braillském řádku"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -13675,26 +13672,54 @@ msgctxt "addonStore"
 msgid "Enabled, pending restart"
 msgstr "Povolen, čeká se na restart NVDA"
 
-#. Translators: The label of a tab to display installed add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of a tab to display installed add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Installed add-ons"
+msgstr "Nainstalované doplňky"
+
+#. Translators: The label of a tab to display updatable add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Updatable add-ons"
+msgstr "Aktualizace doplňků"
+
+#. Translators: The label of a tab to display available add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Available add-ons"
+msgstr "Dostupné doplňky"
+
+#. Translators: The label of a tab to display incompatible add-ons in the add-on store.
+#. Ensure the translation matches the label for the add-on list which includes an accelerator key.
+msgctxt "addonStore"
+msgid "Installed incompatible add-ons"
+msgstr "Nainstalované nekompatibilní doplňky"
+
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Installed &add-ons"
 msgstr "Na&instalované doplňky"
 
-#. Translators: The label of a tab to display updatable add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Updatable &add-ons"
 msgstr "&Aktualizace doplňků"
 
-#. Translators: The label of a tab to display available add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Available &add-ons"
 msgstr "&Dostupné doplňky"
 
-#. Translators: The label of a tab to display incompatible add-ons in the add-on store and the label of the
-#. add-ons list in the corresponding panel (preferably use the same accelerator key for the four labels)
+#. Translators: The label of the add-ons list in the corresponding panel.
+#. Preferably use the same accelerator key for the four labels.
+#. Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 msgctxt "addonStore"
 msgid "Installed incompatible &add-ons"
 msgstr "Nainstalované &nekompatibilní doplňky"
@@ -13820,7 +13845,7 @@ msgstr "Autor:"
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 msgctxt "addonStore"
 msgid "ID:"
-msgstr ""
+msgstr "ID:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 msgctxt "addonStore"
@@ -13996,20 +14021,46 @@ msgctxt "addonStore"
 msgid "Add-on Information"
 msgstr "Informace o doplňku"
 
+#. Translators: The warning of a dialog
+msgid "Add-on Store Warning"
+msgstr "Katalog Doplňků Upozornění"
+
+#. Translators: Warning that is displayed before using the Add-on Store.
+msgctxt "addonStore"
+msgid ""
+"Add-ons are created by the NVDA community and are not vetted by NV Access. "
+"NV Access cannot be held responsible for add-on behavior. The functionality "
+"of add-ons is unrestricted and can include accessing your personal data or "
+"even the entire system. "
+msgstr ""
+"Doplňky jsou vytvářeny komunitou NVDA a nejsou prověřeny společností NV "
+"Access. Společnost NV Access nemůže nést zodpovědnost za chování doplňků. "
+"Funkčnost doplňků je neomezená a může mít přístup k vašim osobním údajům "
+"nebo dokonce k celému systému. "
+
+#. Translators: The label of a checkbox in the add-on store warning dialog
+msgctxt "addonStore"
+msgid "&Don't show this message again"
+msgstr "Tuto zprávu již příště &nezobrazovat"
+
+#. Translators: The label of a button in a dialog
+msgid "&OK"
+msgstr "&OK"
+
 #. Translators: The title of the addonStore dialog where the user can find and download add-ons
 msgctxt "addonStore"
 msgid "Add-on Store"
 msgstr "Katalog Doplňků"
 
-#. Translators: Banner notice that is displayed in the Add-on Store.
-msgctxt "addonStore"
-msgid "Note: NVDA was started with add-ons disabled"
-msgstr "Poznámka: NVDA byl spuštěn se zakázanými doplňky"
-
 #. Translators: The label for a button in add-ons Store dialog to install an external add-on.
 msgctxt "addonStore"
 msgid "Install from e&xternal source"
 msgstr "Instalovat z e&externího zdroje"
+
+#. Translators: Banner notice that is displayed in the Add-on Store.
+msgctxt "addonStore"
+msgid "Note: NVDA was started with add-ons disabled"
+msgstr "Poznámka: NVDA byl spuštěn se zakázanými doplňky"
 
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"

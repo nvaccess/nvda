@@ -4,7 +4,7 @@ Please also note that the NVDA project has a Citizen and Contributor Code of Con
 
 Please initially open PRs as a draft.
 When you would like a review, mark the PR as "ready for review". 
-See https://github.com/nvaccess/nvda/wiki/Contributing.
+See https://github.com/nvaccess/nvda/blob/master/.github/CONTRIBUTING.md.
 -->
 
 ### Link to issue number:
