@@ -233,8 +233,13 @@ def getIncompatibleAddons(
 				currentAPIVersion=currentAPIVersion,
 				backwardsCompatToVersion=backCompatToAPIVersion
 			)
-			# Add-ons that override incompatibility are not considered incompatible.
-			and not addon.overrideIncompatibility
+			and (
+				# Add-ons that override incompatibility are not considered incompatible.
+				not addon.overrideIncompatibility
+				# If we are upgrading NVDA API versions,
+				# then the add-on compatibility override will be reset
+				or backCompatToAPIVersion > addonAPIVersion.BACK_COMPAT_TO
+			)
 		)
 	)
 

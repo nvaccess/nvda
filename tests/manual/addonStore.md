@@ -216,7 +216,7 @@ Typically, this requires a contributor creating 3 different versions of the same
 - (X+1).1 e.g `CURRENT=2024.1`, `BACK_COMPAT_TO=2024.1`
 
 
-| Test Name | Upgrade from | Upgrade to  | Test notes |
+| Test Name | Upgrade from | Upgrade to | Test notes |
 |---|---|---|---|
 | Upgrade to different NVDA version in the same API breaking release cycle | X.1 | X.1 | Add-ons which remain incompatible are listed as incompatible on upgrading. Preserves state of enabled incompatible add-ons |
 | Upgrade to a different but compatible API version | X.1 | X.2 | Add-ons which remain incompatible are listed as incompatible on upgrading. Preserves state of enabled incompatible add-ons |
