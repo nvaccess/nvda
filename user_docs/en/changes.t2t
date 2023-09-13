@@ -5,10 +5,20 @@ What's New in NVDA
 %!includeconf: ./locale.t2tconf
 
 = 2023.3 =
+This release includes improvements to performance, responsiveness and stability of audio output.
+
+NVDA can now periodically refresh OCR results, speaking new text as it appears.
+This can be configured in the Windows OCR category of NVDA's settings dialog.
+
+There's been several braille fixes, improving device detection and caret movement.
+It is now possible to opt-out unwanted drivers from automatic detection, to improve autodetection performance.
+There are also new BRLTTY commands.
+
+There's also been bug fixes for the Add-on Store, Microsoft Office, Microsoft Edge context menus, and Windows Calculator.
 
 == New Features ==
 - Enhanced sound management:
-  - NVDA will now output audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds. (#14697)
+  - NVDA will now output audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds. (#14697, #11169, #11615, #5096, #10185, #11061)
   - WASAPI usage can be disabled in Advanced settings.
   If WASAPI is enabled, the following Advanced settings can also be configured.
     - An option to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using. (#1409)
@@ -30,12 +40,13 @@ What's New in NVDA
   - When the text in a terminal changes without updating the caret, the text on a braille display will now properly update when positioned on a changed line.
   This includes situations where braille is tethered to review. (#15115)
   - More BRLTTY key bindings are now mapped to NVDA commands (#6483):
-    - learn: toggle NVDA input help
-    - prefmenu: open the NVDA menu
-    - prefload/prefsave: Load/save NVDA configuration
-    - time: Show time
-    - say_line: Speak the current line where the review cursor is located
-    - say_below: Say all using review cursor
+    - ``learn``: toggle NVDA input help
+    - ``prefmenu``: open the NVDA menu
+    - ``prefload``/``prefsave``: Load/save NVDA configuration
+    - ``time``: Show time
+    - ``say_line``: Speak the current line where the review cursor is located
+    - ``say_below``: Say all using review cursor
+    -
   - The BRLTTY driver is only available when a BRLTTY instance with BrlAPI enabled is running. (#15335)
   - The advanced setting to enable support for HID braille has been removed in favor of a new option.
   You can now disable specific drivers for braille display auto detection in the braille display selection dialog. (#15196)
@@ -64,7 +75,7 @@ What's New in NVDA
   - Fix bug preventing incompatible add-ons which are installed and enabled being upgraded or replaced using the external install tool. (#15417)
   -
 - Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283)
-- NVDA once again announces calculation results in the Windows 32bit calculator on Server, LTSC and LTSB versions of Windows. (#15284)
+- NVDA once again announces calculation results in the Windows 32bit calculator on Server, LTSC and LTSB versions of Windows. (#15230)
 -
 
 == Changes for Developers ==
