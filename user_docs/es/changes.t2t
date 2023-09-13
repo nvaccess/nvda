@@ -4,6 +4,89 @@ Qué hay de Nuevo en NVDA
 %!includeconf: ../changes.t2tconf
 %!includeconf: ./locale.t2tconf
 
+= 2023.3 =
+
+== Nuevas Características ==
+- Mejorada la gestión del sonido:
+  - NVDA ahora sacará el audio a través de la Windows Audio Session API (WASAPI), lo que puede mejorar la respuesta, el rendimiento y la estabilidad de la voz y de los sonidos de NVDA. (#14697)
+  - El uso de WASAPI puede deshabilitarse en las opciones Avanzadas.
+  Si WASAPI está habilitado, también pueden configurarse las siguientes opciones avanzadas.
+    - Una opción para hacer que el volumen de los sonidos y pitidos de NVDA siga a la configuración de volúmen de la voz que estés utilizando. (#1409)
+    - Una opción para configurar por separado el volumen de los sonidos de NVDA. (#1409, #15038)
+    -
+  -
+- NVDA ahora puede actualizar continuamente el resultado al realizar el reconocimiento óptico de caracteres (OCR), verbalizando el texto nuevo según aparezca. (#2797)
+  - Para habilitar esta funcionalidad, activa la opción "Refrescar periódicamente el contenido reconocido" en la categoría OCR de Windows del diálogo de opciones de NVDA.
+  - Una vez habilitado, puedes conmutar la verbalización de texto nuevo activando anunciar cambios de contenido dinámico (pulsando ``NVDA+5``).
+  -
+- Al utilizar la detección automática de pantallas braille, ahora es posible excluir los controladores de la detección del diálogo de selección de pantalla braille. (#15196)
+- Una nueva opción en las opciones de Formateado de Documentos, "Ignorar líneas en blanco para el anunciado de sangría de línea". (#13394)
+- Se añadió un gesto sin asignar para navegar por grupos de pestañas en modo exploración. (#15046)
+-
+
+== Cambios ==
+- Braille:
+  - Cuando el texto en una terminal cambia sin actualizar el cursor del sistema, el texto en una pantalla braille ahora se actualizará correctamente al situarse sobre una línea que haya cambiado.
+  Esto incluye situaciones donde el braille esté siguiendo a la revisión. (#15115)
+  - Más combinaciones de teclas para BRLTTY están asignadas ahora a órdenes de NVDA (#6483):
+    - learn: conmuta la ayuda de entrada de NVDA
+    - prefmenu: abre el menú de NVDA
+    - prefload y prefsave: carga y guarda la configuración de NVDA
+    - time: muestra la hora
+    - say_line: verbaliza la línea actual donde esté colocado el cursor de revisión
+    - say_below: lee todo utilizando el cursor de revisión
+  - El controlador BRLTTY sólo está disponible cuando esté en ejecución una instancia BRLTTY con BrlAPI habilitado. (#15335)
+  - Se ha eliminado la configuración avanzada para habilitar la compatibilidad con HID braille en favor de una nueva opción.
+  Ahora puedes desactivar la auto detección de controladores específicos para pantallas braille en el diálogo de selección de pantalla braille. (#15196)
+  -
+- Tienda de complementos: los complementos instalados ahora se enumerarán en la pestaña Complementos Disponibles, si todavía están disponibles en la tienda. (#15374)
+- Algunos atajos de teclado se han actualizado en el menú NVDA. (#15364)
+-
+
+
+== Corrección de Fallos ==
+- Microsoft Office:
+  - Corrección de un fallo en Microsoft Word cuando las opciones de formateado de documentos "anunciar encabezados" y "anunciar comentarios y notas" no estaban activadas. (#15019)
+  - En Word y Excel, la alineación de texto se anunciará correctamente en más situaciones. (#15206, #15220)
+  -
+- Microsoft Edge:
+  - NVDA ya no retrocederá a la última posición del modo exploración al abrir el menú de contexto en Microsoft Edge. (#15309)
+  - NVDA vuelve a ser capaz de leer menús de contexto de descargas en Microsoft Edge. (#14916)
+  -
+- Braille:
+  - El cursor braille y los indicadores de selección ahora siempre se actualizan correctamente después de mostrar u ocultar los indicadores respectivos con un gesto. (#15115)
+  - Corregido un fallo donde las pantallas braille Albatross intentan inicializarse aunque otro dispositivo braille haya sido conectado. (#15226)
+  -
+- Corregido el soporte para controles System List view (``SysListView32``) en aplicaciones Windows Forms. (#15283)
+- NVDA vuelvbe a anunciar los resultados de cálculo en la calculadora de Windows 32bit en las versiones Server, LTSC y LTSB de Windows. (#15284)
+-
+
+== Cambios para Desarrolladores ==
+Por favor consulta [la guía del desarrollador https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] para información sobre el proceso de obsolescencia y eliminación de la API de NVDA.
+- ``braille.handler.handleUpdate`` y ``braille.handler.handleReviewMove`` han sido cambiadas para no actualizar instantáneamente.
+Antes de este cambio, cuando se llamaba a cualquiera de estos métodos con mucha frecuencia, esto consumiría muchos recursos.
+Estos métodos ahora ponen en cola una actualización al final de cada ciclo del núcleo en su lugar.
+También deberían ser seguros para los hilos, haciendo posible llamarlos desde hilos en segundo plano. (#15163)
+- Se añadió el soporte oficial para registrar controladores personalizados de pantallas braille en el proceso de detección automática de pantallas braille.
+Consulta la documentación de la clase ``braille.BrailleDisplayDriver`` para más detalles.
+En particular, el atributo ``supportsAutomaticDetection`` debe tener el valor ``True`` y debe implementarse el método ``registerAutomaticDetection`` ``classmethod``.  (#15196)
+-
+
+=== Obsolescencias ===
+- ``braille.BrailleHandler.handlePendingCaretUpdate`` está obsoleto y no tiene substituto público.
+Se eliminará en 2024.1. (#15163)
+- Importar las constantes ``xlCenter``, ``xlJustify``, ``xlLeft``, ``xlRight``, ``xlDistributed``, ``xlBottom``, ``xlTop`` desde ``NVDAObjects.window.excel`` está obsoleto.
+Utiliza las enumeraciones ``XlHAlign`` o ``XlVAlign`` en su lugar. (#15205)
+- La asignación ``NVDAObjects.window.excel.alignmentLabels`` está obsoleta.
+Utiliza los métodos ``displayString`` de las enumeraciones ``XlHAlign`` o ``XlVAlign`` en su lugar. (#15205)
+- ``bdDetect.addUsbDevices`` y ``bdDetect.addBluetoothDevices`` están obsoletas.
+Los controladores de pantallas Braille deberían implementar el método de clase ``registerAutomaticDetection`` en su lugar.
+Ese método recibe un objeto ``DriverRegistrar`` en cuyos métodos ``addUsbDevices`` y``addBluetoothDevices`` pueden utilizarse. (#15200)
+- La implementación predeterminada del método de comprobación en ``BrailleDisplayDriver`` utiliza ``bdDetect.driverHasPossibleDevices`` para los dispositivos que están marcados como hilo seguro.
+A partir de NVDA 2024.1, para que el método base utilice ``bdDetect.driverHasPossibleDevices``, el atributo ``supportsAutomaticDetection`` también debe tener el valor ``True``. (#15200)
+-
+
+
 = 2023.2 =
 Esta versión introduce la Tienda de Complementos para remplazar el Administrador de Complementos.
 En la Tienda de Complementos puedes explorar, buscar, instalar y actualizar complementos de la comunidad.
