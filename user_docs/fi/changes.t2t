@@ -4,6 +4,69 @@
 %!includeconf: ../changes.t2tconf
 %!includeconf: ./locale.t2tconf
 
+= 2023.3 =
+
+== Uudet ominaisuudet ==
+- Paranneltu äänenhallinta:
+  - NVDA toistaa nyt ääntä Windows Audio Session APIn (WASAPI) kautta, mikä saattaa parantaa puheen ja äänien reagointi- ja suorituskykyä sekä vakautta. (#14697)
+  - WASAPI voidaan poistaa käytöstä lisäasetuksista.
+  Jos WASAPI on otettu käyttöön, myös seuraavat lisäasetukset on mahdollista määrittää.
+    - Asetus, joka saa NVDA:n äänet ja piippaukset mukautumaan käyttämäsi puheäänen voimakkuuteen. (#1409)
+    - Asetus, jonka avulla NVDA-äänien voimakkuutta on mahdollista säätää erikseen. (#1409, #15038)
+    -
+  -
+- NVDA pystyy nyt päivittämään jatkuvasti tunnistuksen tulosta suorittaessaan tekstintunnistusta ja puhumaan uuden tekstin sitä mukaa, kun se ilmestyy. (#2797)
+  - Ota tämä toiminto käyttöön "Päivitä tunnistuksen tulos automaattisesti" -asetuksella, joka löytyy NVDA:n asetusvalintaikkunan Windowsin tekstintunnistus -kategoriasta.
+  - Kun toiminto on käytössä, voit ottaa käyttöön tai poistaa käytöstä uuden tekstin puhumisen muuttamalla Puhu dynaamisen sisällön muutokset -asetusta (painamalla ``NVDA+5``).
+  -
+- Pistenäyttöjen automaattista tunnistusta käytettäessä on nyt mahdollista jättää ajureita tunnistuksen ulkopuolelle Valitse pistenäyttö -valintaikkunasta. (#15196)
+- Lisätty asetusvalintaikkunan Asiakirjojen muotoilu -kategoriaan "Ohita tyhjät rivit rivien sisennystä ilmoitettaessa" -asetus. (#13394)
+- Lisätty komento välilehtien välillä liikkumiseen selaustilassa. Pikanavigointinäppäintä ei ole määritetty. (#15046)
+-
+
+
+== Muutokset ==
+- Pistekirjoitus:
+  - Pistenäytöllä näkyvä teksti päivittyy nyt oikein oltaessa muuttuneella rivillä, kun Teksti muuttuu päätteessä ilman, että kohdistinta päivitetään.
+  Näihin sisältyvät tilanteet, joissa pistenäyttö seuraa tarkastelukohdistinta. (#15115)
+  - Määritetty NVDA-komennot useampiin BRLTTYn näppäinsidoksiin (#6483):
+    - learn: NVDA:n näppäinohje
+    - prefmenu: Avaa NVDA-valikko
+    - prefload/prefsave: Lataa/tallenna NVDA:n asetukset
+    - time: Näytä kellonaika
+    - say_line: Puhu tarkastelukohdistimen kohdalla oleva rivi
+    - say_below: Jatkuva luku
+  - BRLTTY-ajuri on käytettävissä vain, kun käynnissä on BRLTTY-kopio, jossa BrlAPI on käytössä. (#15335)
+  - HID Braille -protokollan käyttöönottava lisäasetus on korvattu uudella asetuksella.
+  Automaattinen tunnistus on nyt mahdollista poistaa käytöstä määrätyiltä pistenäyttöajureilta Valitse pistenäyttö -valintaikkunassa. (#15196)
+  -
+- Asennetut lisäosat näytetään nyt lisäosakaupan Saatavilla-välilehdellä, mikäli ne ovat edelleen saatavilla. (#15374)
+- Jotkut NVDA-valikossa olevien kohteiden pikanäppäimistä on päivitetty. Tämä koskee vain käyttäjiä, joilla NVDA:n kielenä on englanti. (#15364)
+-
+
+
+== Bugikorjaukset ==
+- Microsoft Office:
+  - Korjattu kaatuminen Microsoft Wordissa, kun otsikoiden sekä kommenttien ja muistiinpanojen ilmoittaminen eivät olleet käytössä. (#15019)
+  - Tekstin tasaus ilmoitetaan oikein useammissa tilanteissa Wordissa ja Excelissä. (#15206, #15220)
+  -
+- Microsoft Edge:
+  - NVDA ei enää siirry takaisin edelliseen selaustilasijaintiin Microsoft Edgessä pikavalikkoa avattaessa. (#15309)
+  - NVDA pystyy taas lukemaan latausten pikavalikon Microsoft Edgessä. (#14916)
+  -
+- Pistekirjoitus:
+  - Pistekohdistin ja valinnanilmaisin päivittyvät nyt oikein aina, kun ne näytetään tai piilotetaan näppäinkomentoa käyttäen. (#15115)
+  - Korjattu bugi, jossa Albatross-pistenäytöt yrittävät alustaa itsensä, vaikka toinen pistenäyttö on kytkettynä. (#15226)
+  -
+- Korjattu järjestelmän luettelonäkymä (``SysListView32``) -säädinten tuki Windows Forms -sovelluksissa. (#15283)
+- NVDA ilmoittaa jälleen laskutoimitusten tulokset 32-bittisessä laskimessa Windowsin Server-, LTSC- ja LTSB-versioissa. (#15284)
+-
+
+
+== Muutokset kehittäjille ==
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta ../en/changes.html].
+
+
 = 2023.2 =
 Tässä versiossa esitellään lisäosakauppa, joka korvaa lisäosien hallinnan.
 Lisäosakaupassa on mahdollista selata, etsiä, asentaa ja päivittää yhteisön lisäosia.
