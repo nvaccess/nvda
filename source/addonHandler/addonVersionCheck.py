@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018-2023 NV Access Limited
+# Copyright (C) 2018-2023 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -19,6 +19,7 @@ if version_year < 2024:
 		from _addonStore.models.addon import _AddonManifestModel, _AddonStoreModel
 		from _addonStore.models.version import MajorMinorPatch
 		forceDisabledAddons = {
+			"NVDAExtensionGlobalPlugin": MajorMinorPatch(12, 0, 8),
 			"tonysEnhancements": MajorMinorPatch(1, 15),
 		}
 		if isinstance(addon, _AddonStoreModel):
