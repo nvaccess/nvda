@@ -246,8 +246,8 @@ class SynthDriver(SynthDriver):
 		else:
 			if self.isSupported("rate"):
 				self.removeSetting("rate")
-		if RateCommand in self.supportedCommands:
-			self.supportedCommands.remove(RateCommand)
+			if RateCommand in self.supportedCommands:
+				self.supportedCommands.remove(RateCommand)
 		#Find out pitch limits
 		hasPitch=bool(mode.dwFeatures&TTSFEATURE_PITCH)
 		if hasPitch:
@@ -319,29 +319,36 @@ class SynthDriver(SynthDriver):
 		return voices
 
 	def _get_rate(self):
-		val=DWORD()
+		val = DWORD()
 		self._ttsAttrs.SpeedGet(byref(val))
-		return self._paramToPercent(val.value,self._minRate,self._maxRate)
+		return self._paramToPercent(val.value, self._minRate, self._maxRate)
 
-	def _set_rate(self,val):
-		val=self._percentToParam(val,self._minRate,self._maxRate)
+	def _set_rate(self, val):
+		val = self._percentToParam(val, self._minRate, self._maxRate)
 		self._ttsAttrs.SpeedSet(val)
 
 	def _get_pitch(self):
-		val=WORD()
+		val = WORD()
 		self._ttsAttrs.PitchGet(byref(val))
-		return self._paramToPercent(val.value,self._minPitch,self._maxPitch)
+		return self._paramToPercent(val.value, self._minPitch, self._maxPitch)
 
-	def _set_pitch(self,val):
-		val=self._percentToParam(val,self._minPitch,self._maxPitch)
+	def _set_pitch(self, val):
+		val = self._percentToParam(val, self._minPitch, self._maxPitch)
 		self._ttsAttrs.PitchSet(val)
 
 	def _get_volume(self):
-		val=DWORD()
+		val = DWORD()
 		self._ttsAttrs.VolumeGet(byref(val))
-		return self._paramToPercent(val.value&0xffff,self._minVolume&0xffff,self._maxVolume&0xffff)
+		return self._paramToPercent(val.value & 0xffff, self._minVolume & 0xffff, self._maxVolume & 0xffff)
 
-	def _set_volume(self,val):
-		val=self._percentToParam(val,self._minVolume&0xffff,self._maxVolume&0xffff)
-		val+=val<<16
+	def _set_volume(self, val):
+		val = self._percentToParam(
+			val,
+			self._minVolume & 0xffff,
+			self._maxVolume & 0xffff
+		)
+		# If you specify a value greater than 65535, the engine assumes that you want to set the
+		# left and right channels separately and converts the value to a double word,
+		# using the low word for the left channel and the high word for the right channel.
+		val |= val << 16
 		self._ttsAttrs.VolumeSet(val)
