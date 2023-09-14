@@ -152,11 +152,10 @@ class SynthDriver(SynthDriver):
 				textList.append(f"\\Spd={val}\\")
 			elif isinstance(item, VolumeCommand):
 				val = oldVolume + item.offset
-				val = self._percentToParam(
-					val,
-					self._minVolume & 0xffff,
-					self._maxVolume & 0xffff
-				)
+				val = self._percentToParam(val, self._minVolume, self._maxVolume)
+				# If you specify a value greater than 65535, the engine assumes that you want to set the
+				# left and right channels separately and converts the value to a double word,
+				# using the low word for the left channel and the high word for the right channel.
 				val |= val << 16
 				textList.append(f"\\Vol={val}\\")
 			elif isinstance(item, SpeechCommand):
@@ -284,10 +283,10 @@ class SynthDriver(SynthDriver):
 				self._ttsAttrs.VolumeSet(TTSATTR_MINVOLUME)
 				newVal=DWORD()
 				self._ttsAttrs.VolumeGet(byref(newVal))
-				self._minVolume=newVal.value
+				self._minVolume = newVal.value & 0Xffff
 				self._ttsAttrs.VolumeSet(TTSATTR_MAXVOLUME)
 				self._ttsAttrs.VolumeGet(byref(newVal))
-				self._maxVolume=newVal.value
+				self._maxVolume = newVal.value & 0Xffff
 				self._ttsAttrs.VolumeSet(oldVal.value)
 				if self._maxVolume<=self._minVolume:
 					hasVolume=False
@@ -339,14 +338,10 @@ class SynthDriver(SynthDriver):
 	def _get_volume(self):
 		val = DWORD()
 		self._ttsAttrs.VolumeGet(byref(val))
-		return self._paramToPercent(val.value & 0xffff, self._minVolume & 0xffff, self._maxVolume & 0xffff)
+		return self._paramToPercent(val.value & 0xffff, self._minVolume, self._maxVolume)
 
 	def _set_volume(self, val):
-		val = self._percentToParam(
-			val,
-			self._minVolume & 0xffff,
-			self._maxVolume & 0xffff
-		)
+		val = self._percentToParam(val, self._minVolume, self._maxVolume)
 		# If you specify a value greater than 65535, the engine assumes that you want to set the
 		# left and right channels separately and converts the value to a double word,
 		# using the low word for the left channel and the high word for the right channel.
