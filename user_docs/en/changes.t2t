@@ -24,7 +24,12 @@ There's also been bug fixes for the Add-on Store, Microsoft Office, Microsoft Ed
     - An option to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using. (#1409)
     - An option to separately configure the volume of NVDA sounds. (#1409, #15038)
     -
-  - Note: WASAPI is incompatible with version 1.51 and older of Tony's enhancement add-on. (#15402)
+  - Note: WASAPI is incompatible with some add-ons.
+  Compatible updates are available for these add-ons, please update them before updating NVDA.
+  Incompatible versions of these add-ons will be disabled when updating NVDA:
+    - Tony's Enhancements version 1.15 or older. (#15402)
+    - NVDA global commands extension 12.0.8 or older. (#15443)
+    -
   -
 - NVDA is now able to continually update the result when performing optical character recognition (OCR), speaking new text as it appears. (#2797)
   - To enable this functionality, enable the option "Periodically refresh recognized content" in the Windows OCR category of NVDA's settings dialog.
