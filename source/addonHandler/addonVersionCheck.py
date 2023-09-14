@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 
 import addonAPIVersion
 from buildVersion import version_year
+from logHandler import log
 
 if TYPE_CHECKING:
 	from _addonStore.models.version import SupportsVersionCheck  # noqa: F401
@@ -24,11 +25,18 @@ if version_year < 2024:
 		if isinstance(addon, _AddonStoreModel):
 			addonVersion = addon.addonVersionNumber
 		elif isinstance(addon, AddonHandlerModel):
-			addonVersion = MajorMinorPatch._parseVersionFromVersionStr(addon.version)
+			try:
+				addonVersion = MajorMinorPatch._parseVersionFromVersionStr(addon.version)
+			except ValueError:
+				return False
 		elif isinstance(addon, _AddonManifestModel):
-			addonVersion = MajorMinorPatch._parseVersionFromVersionStr(addon.addonVersionName)
+			try:
+				addonVersion = MajorMinorPatch._parseVersionFromVersionStr(addon.addonVersionName)
+			except ValueError:
+				return False
 		else:
-			raise NotImplementedError(f"Unexpected type for addon: {addon.name}, type: {type(addon)}")
+			log.error(f"Unexpected type for addon: {addon.name}, type: {type(addon)}")
+			return False
 		return (
 			addon.name in forceDisabledAddons
 			and addonVersion <= forceDisabledAddons[addon.name]
