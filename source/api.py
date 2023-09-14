@@ -164,6 +164,11 @@ def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:  # noqa: C901
 		obj.treeInterceptor=treeInterceptorObject
 	else:
 		obj.treeInterceptor=None
+	if obj.treeInterceptor:
+		browseMode = not treeInterceptorObject._passThrough
+		treeInterceptorHandler.post_browseModeStateChange.notify(browseMode=browseMode)
+	else:
+		treeInterceptorHandler.post_browseModeStateChange.notify(browseMode=False)
 	# #3804: handleAppSwitch should be called as late as possible,
 	# as triggers must not be out of sync with global focus variables.
 	# setFocusObject shouldn't fail earlier anyway, but it's best to be safe.
