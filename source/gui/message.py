@@ -98,6 +98,7 @@ def messageBox(
 	"""
 	from gui import mainFrame
 	import core
+	from logHandler import log
 	global _messageBoxCounter
 	with _messageBoxCounterLock:
 		_messageBoxCounter += 1
@@ -108,6 +109,7 @@ def messageBox(
 		if not core._hasShutdownBeenTriggered:
 			res = wx.MessageBox(message, caption, style, parent or mainFrame)
 		else:
+			log.debugWarning("Not displaying message box as shutdown has been triggered.", stack_info=True)
 			res = wx.ID_CANCEL
 	finally:
 		if not parent:
