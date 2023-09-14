@@ -8,6 +8,64 @@
 Informacije za programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 
+= 2023.3 =
+
+== Nove značajke ==
+- Napredno upravljanje zvukom:
+  - NVDA će sada reproducirati zvuk uz pomoć Windows Audio Session API (WASAPI), Što može unaprijediti brzinu odziva, performanse i stabilnost NVDA zvukova i govora. (#14697)
+  - Korištenje Wasapi može se isključiti u naprednim postavkama.
+  Ako je Wasapi uključen, sljedeće napredne postavke mogu biti uključene.
+    - Opcija koja omogućuje izjednačavanje glasnoće zvukova i govora NVDA. (#1409)
+    - Opcija za odvojenu konfiguraciju glasnoće NVDA zvukova. (#1409, #15038)
+    -
+  -
+- NVDA je sada u mogućnosti kontinuirano ažurirati tekst čim se pojavi novi prilikom prepoznavanja teksta čim se pojavi. (#2797)
+  - Kako biste uključili ovu mogućnost, uključite opciju "s vremena na vrijeme ažuriraj tekst kada se pojavi" u kategoriji Windows 10 OCR u NVDA postavkama.
+  - Kada je opcija uključena, možete uključiti ili isključiti izgovor novog teksta koristeći opciju uključi izgovor dinamičkog sadržaja (tako da pritisnete ``NVDA+5``).
+  -
+- Prilikom korištenja automatskog otkrivanja brajičnih redaka, sada je moguće odrediti koji se brajični redci neće automatski otkrivati. (#15196)
+- Nova opcija u opcijama oblikovanja dokumenta, "ignoriraj prazne redke prilikom čitanja poravnanja". (#13394)
+- Dodana je nedodijeljena gesta za kretanje po grupama kartica u modusu pregleda. (#15046)
+-
+
+== Izmjene ==
+- Brajica:
+  - Kada se promijeni tekst u naredbenom redku bez promjene kursora sustava, tekst na brajičnom redku će se pravilno osvježiti kada i pozicija u promijenjenom redku.
+  Ovo uključuje situacije kada je brajični redak povezan na pregled. (#15115)
+  - Više BRLTTY tipkovničkih prečaca su povezani na NVDA prečace (#6483):
+    - learn: uključivanje i isključivanje pomoći pri unosu
+    - prefmenu: otvaranje NVDA izbornika
+    - prefload/prefsave: učitavanje ili spremanje NVDA konfiguracije
+    - time: pokazuj vrijeme
+    - say_line: izgovori trenutni redak u kojem se nalazi pregledni kursor
+    - say_below: čitaj sve uz pomoć preglednog kursora
+  - Upravljački program BRLTTY je dostupan samo kada kada je pokrenut primjerak BRLTTY sa pokrenutim BrlAPI. (#15335)
+  - Napredna postavka za uključivanje HID brajice je uklonjena i zamijenjena novom opcijom.
+  Sada možete isključiti određene upravljačke programe iz automatskog ptkrivanja brajičnih redaka u dijaloškom okviru oddabira brajičnog redka. (#15196)
+  -
+- Add-on Store: Instalirani dodaci će se prikazati na kartici dostupni dodaci, ako su još uvijek dostupni u Add-on storeu. (#15374)
+- Neki su prečaci NVDA ažurirani. (#15364)
+-
+
+
+== Ispravke grešaka ==
+- Microsoft Office:
+  - Ispravljeno rušenje u Microsoft Wordu kada su opcije oblikovanja dokumenta "izvjesti o naslovima" i "izvjesti o komentarima i bilješkama" isključene. (#15019)
+  - U Wordu i Excelu, poravnanje teksta biti će ispravno čitano u više situacija. (#15206, #15220)
+  -
+- Microsoft Edge:
+  - NVDA više neće preskakati nazad na zadnju poziciju u načinu čitanja pri otvaranju kontekstnog izbornika u Microsoft Edgeu. (#15309)
+  - NVDA sada ponovno može čitati kontekstne izbornike preuzimanja u Microsoft Edgeu. (#14916)
+  -
+- Brajica:
+  - Brajični kursor i indikatori označavanja biti će uvijek ažurirane ispravno poslije njihovog uključivanja ili isključivanja prečacem. (#15115)
+  - Ispravljena pogreška prilikom koje Albatross brajični redci se pokušavaju inicijalizirati čak iako je drugi brajični redak spojen. (#15226)
+  -
+- Ispravljena podrška popisa sustava (``SysListView32``) u Windows Forms aplikacijama. (#15283)
+- NVDA ponovno može čitati rezultate u Windows 32bitnom kalkulatoru u Server, LTSC and LTSB inačicama operacijskog sustava Windows. (#15284)
+-
+
+
 = 2023.2 =
 Ova verzija dodaje add-on store koja Zamjenjuje upravljanje dodacima.
 U  dAdd-on storeu možete pregledavati, pretraživati, instalirati i ažurirati dodatke zajednice.
