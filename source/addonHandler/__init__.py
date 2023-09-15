@@ -198,7 +198,8 @@ class AddonsState(collections.UserDict):
 				self[AddonStateCategory.DISABLED].discard(disabledAddonName)
 
 	def _cleanupCompatibleAddonsFromDowngrade(self) -> None:
-		installedAddons = {a.name: a for a in getAvailableAddons()}
+		from _addonStore.dataManager import addonDataManager
+		installedAddons = addonDataManager._installedAddonsCache.installedAddons
 		for blockedAddon in CaseInsensitiveSet(
 			self[AddonStateCategory.BLOCKED].union(
 				self[AddonStateCategory.OVERRIDE_COMPATIBILITY]
