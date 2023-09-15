@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-14 03:03+0000\n"
-"PO-Revision-Date: 2023-08-14 12:33+0900\n"
+"POT-Creation-Date: 2023-09-08 00:01+0000\n"
+"PO-Revision-Date: 2023-09-14 12:10+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -2062,6 +2062,22 @@ msgstr "前のグループに移動"
 msgid "no previous grouping"
 msgstr "前のグループがありません"
 
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next tab"
+msgstr "次のタブに移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next tab"
+msgstr "次のタブなし"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous tab"
+msgstr "前のタブに移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous tab"
+msgstr "前のタブなし"
+
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
@@ -2963,6 +2979,21 @@ msgstr "行インデントの報告の切り替え"
 #, python-brace-format
 msgid "Report line indentation {mode}"
 msgstr "行インデントの報告 {mode}"
+
+#. Translators: Input help mode message for toggle ignore blank lines for line indentation reporting command.
+msgid ""
+"Toggles on and off the ignoring of blank lines for line indentation reporting"
+msgstr "行インデントの報告で空白行の無視の切り替え"
+
+#. Translators: The message announced when toggling off the ignore blank lines for line indentation
+#. reporting document formatting setting.
+msgid "Ignore blank lines for line indentation reporting off"
+msgstr "行インデントの報告で空白行を無視"
+
+#. Translators: The message announced when toggling on the ignore blank lines for line indentation
+#. reporting document formatting setting.
+msgid "Ignore blank lines for line indentation reporting on"
+msgstr "行インデントの報告で空白行を無視"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
@@ -4545,6 +4576,10 @@ msgstr "次の再起動まで一時的にスクリーンカーテンが有効"
 #. Translators: Reported when the screen curtain could not be enabled.
 msgid "Could not enable screen curtain"
 msgstr "スクリーンカーテンを有効にできません"
+
+#. Translators: Warning message when trying to enable the screen curtain when OCR is active.
+msgid "Could not enable screen curtain when performing content recognition"
+msgstr "コンテンツ認識の実行中はスクリーンカーテンを有効にできません"
 
 #. Translators: Describes a command.
 msgid "Cycles through paragraph navigation styles"
@@ -6469,6 +6504,7 @@ msgstr "寄付のお願い"
 
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
+#. Translators: The label for the menu item to open donate page.
 msgid "&Donate"
 msgstr "寄付(&D)"
 
@@ -7602,6 +7638,14 @@ msgstr "カーソル位置のテキストのアクションを実行"
 msgid "Dismiss the recognition result"
 msgstr "画像認識結果を消す"
 
+#. Translators: Reported when recognition (e.g. OCR) fails.
+msgid "Recognition failed"
+msgstr "認識失敗"
+
+#. Translators: Reported when recognition (e.g. OCR) fails during automatic refresh.
+msgid "Automatic refresh of recognition result failed"
+msgstr "認識結果の自動更新に失敗しました"
+
 #. Translators: Reported when content recognition (e.g. OCR) is attempted,
 #. but the user is already reading a content recognition result.
 msgid "Already in a content recognition result"
@@ -7615,9 +7659,6 @@ msgstr "内容にアクセスできません"
 #. Translators: Reporting when content recognition (e.g. OCR) begins.
 msgid "Recognizing"
 msgstr "認識中"
-
-msgid "Recognition failed"
-msgstr "認識失敗"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
@@ -7713,6 +7754,63 @@ msgstr "ラージャー"
 msgctxt "font size"
 msgid "smaller"
 msgstr "スモーラー"
+
+#. Translators: Reported when text is left-aligned.
+msgid "align left"
+msgstr "左揃え"
+
+#. Translators: Reported when text is centered.
+msgid "align center"
+msgstr "中央揃え"
+
+#. Translators: Reported when text is right-aligned.
+msgid "align right"
+msgstr "右揃え"
+
+#. Translators: Reported when text is justified.
+#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
+msgid "align justify"
+msgstr "両端揃え"
+
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "両端揃え"
+
+#. Translators: Reported when text is centered across multiple cells.
+msgid "align centered across selection"
+msgstr "選択範囲の中央揃え"
+
+#. Translators: Reported in Excel when text is formatted with "General" alignment, i.e. the name of the
+#. alignment in Excel aligning the cell's content depending on its type: text left and numbers right.
+msgid "align general"
+msgstr "一般揃え"
+
+#. Translators: Reported in Excel when text is formatted with "Fill" alignment, i.e. the name of the
+#. alignment in Excel repeating the cell's content for the width of the cell.
+msgid "align fill"
+msgstr "両端揃え"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "縦方向 上揃え"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "縦方向 中央揃え"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "縦方向 下揃え"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "縦方向 両端揃え"
+
+#. Translators: Reported when text is vertically justified but with character spacing
+#. (For some Asian content).
+msgid "vertical align distributed"
+msgstr "縦方向 両端揃え"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -8679,27 +8777,27 @@ msgid "&Preferences"
 msgstr "設定(&P)"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
-msgid "View log"
-msgstr "ログビューアー(&V)"
+msgid "View &log"
+msgstr "ログビューアー(&L)"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
-msgid "Speech viewer"
+msgid "&Speech viewer"
 msgstr "スピーチビューアー(&S)"
 
 #. Translators: The label for the menu item to toggle Braille Viewer.
-msgid "Braille viewer"
-msgstr "点字ビューアー"
+msgid "&Braille viewer"
+msgstr "点字ビューアー(&B)"
 
 #. Translators: The label of a menu item to open the Add-on store
-msgid "Add-on &store..."
-msgstr "アドオン ストア(&S)..."
+msgid "&Add-on store..."
+msgstr "アドオン ストア(&A)..."
 
 #. Translators: The label for the menu item to open NVDA Python Console.
-msgid "Python console"
-msgstr "Pythonコンソール"
+msgid "&Python console"
+msgstr "Pythonコンソール(&P)"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create portable copy..."
+msgid "&Create portable copy..."
 msgstr "ポータブル版の作成(&C)..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -8707,15 +8805,15 @@ msgid "&Install NVDA..."
 msgstr "NVDAのインストール(&I)..."
 
 #. Translators: The label for the menu item to run the COM registration fix tool
-msgid "Run COM Registration Fixing tool..."
-msgstr "COM 登録修復ツール..."
+msgid "&Run COM Registration Fixing tool..."
+msgstr "COM 登録修復ツール(&R)..."
 
 #. Translators: The label for the menu item to reload plugins.
-msgid "Reload plugins"
-msgstr "プラグインの再読み込み(&R)"
+msgid "R&eload plugins"
+msgstr "プラグインの再読み込み(&E)"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
-msgid "Tools"
+msgid "&Tools"
 msgstr "ツール(&T)"
 
 #. Translators: The label of a menu item to open NVDA user guide.
@@ -8750,16 +8848,12 @@ msgid "&Check for update..."
 msgstr "更新を確認(&C)..."
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
-msgid "About..."
+msgid "&About..."
 msgstr "NVDAについて(&A)..."
 
 #. Translators: The label for the Help submenu in NVDA menu.
 msgid "&Help"
 msgstr "ヘルプ(&H)"
-
-#. Translators: The label for the menu item to open donate page.
-msgid "Donate"
-msgstr "寄付(&D)"
 
 #. Translators: The label for the menu item to run a pending update.
 msgid "Install pending &update"
@@ -8821,8 +8915,8 @@ msgstr "前回保存された設定に戻す"
 
 #. Translators: The label for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
-msgid "&Reset configuration to factory defaults"
-msgstr "設定のリセット"
+msgid "Reset configuration to &factory defaults"
+msgstr "設定のリセット(&F)"
 
 #. Translators: The help text for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
@@ -10306,12 +10400,17 @@ msgstr "行番号(&N)"
 msgid "Line &indentation reporting:"
 msgstr "行インデント(&I)"
 
-#. Translators: This message is presented in the document formatting settings panelue
+#. Translators: This is the label of a checkbox in the document formatting settings panel
+#. If this option is selected, NVDA will ignore blank lines for line indentation reporting
+msgid "Ignore &blank lines for line indentation reporting"
+msgstr "行インデントの報告で空白行を無視(&B)"
+
+#. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
 msgstr "段落インデント(&P)"
 
-#. Translators: This message is presented in the document formatting settings panelue
+#. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report line spacing if available.
 msgid "&Line spacing"
 msgstr "行間(&L)"
@@ -10429,6 +10528,10 @@ msgstr "Windows 文字認識"
 #. Translators: Label for an option in the Windows OCR dialog.
 msgid "Recognition &language:"
 msgstr "文字認識の言語(&L)"
+
+#. Translators: Label for an option in the Windows OCR settings panel.
+msgid "Periodically &refresh recognized content"
+msgstr "認識されたコンテンツを定期的に更新(&R)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10575,32 +10678,6 @@ msgstr "構造化された注釈で「詳細あり」を報告"
 msgid "Report aria-description always"
 msgstr "オブジェクトの説明を常に報告"
 
-#. Translators: Label for option in the 'Enable support for HID braille' combobox
-#. in the Advanced settings panel.
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "Default (Yes)"
-msgstr "する(既定の設定)"
-
-#. Translators: Label for option in the 'Enable support for HID braille' combobox
-#. in the Advanced settings panel.
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "Yes"
-msgstr "する"
-
-#. Translators: Label for option in the 'Enable support for HID braille' combobox
-#. in the Advanced settings panel.
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "No"
-msgstr "しない"
-
-#. Translators: This is the label for a combo box in the
-#. Advanced settings panel.
-msgid "Enable support for HID braille"
-msgstr "標準 HID 点字ディスプレイのサポートを有効にする"
-
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 msgid "Report live regions:"
 msgstr "ライブリージョンの報告"
@@ -10652,6 +10729,21 @@ msgstr "ディフリブ"
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 msgid "Speak new text in Windows Terminal via:"
 msgstr "Windows ターミナルで新しいテキストを読み上げる方法:"
+
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Default (Yes)"
+msgstr "する(既定の設定)"
+
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Yes"
+msgstr "する"
+
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "No"
+msgstr "しない"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
@@ -10767,6 +10859,10 @@ msgstr "点字ディスプレイの選択"
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
 msgstr "点字ディスプレイ(&D)"
+
+#. Translators: The label for a setting in braille settings to enable displays for automatic detection.
+msgid "&Displays to detect automatically:"
+msgstr "自動検出する(&D)"
 
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
@@ -11480,60 +11576,6 @@ msgstr "非表示"
 #. Translators: Reported when text is not hidden.
 msgid "not hidden"
 msgstr "非表示にしない"
-
-#. Translators: Reported when text is left-aligned.
-msgid "align left"
-msgstr "左揃え"
-
-#. Translators: Reported when text is centered.
-msgid "align center"
-msgstr "中央揃え"
-
-#. Translators: Reported when text is right-aligned.
-msgid "align right"
-msgstr "右揃え"
-
-#. Translators: Reported when text is justified.
-#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
-msgid "align justify"
-msgstr "両端揃え"
-
-#. Translators: Reported when text is justified with character spacing (Japanese etc)
-#. See http://kohei.us/2010/01/21/distributed-text-justification/
-msgid "align distributed"
-msgstr "両端揃え"
-
-#. Translators: Reported when text has reverted to default alignment.
-msgid "align default"
-msgstr "既定の揃え"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "縦方向 上揃え"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "縦方向 中央揃え"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "縦方向 下揃え"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "縦方向 ベースライン揃え"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "縦方向 両端揃え"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "縦方向 両端揃え"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "縦方向 既定の揃え"
 
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
@@ -13581,6 +13623,11 @@ msgctxt "addonStore"
 msgid "Enabled, pending restart"
 msgstr "再起動後に有効"
 
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Unknown status"
+msgstr "不明な状態"
+
 #. Translators: The label of a tab to display installed add-ons in the add-on store.
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
@@ -13931,6 +13978,7 @@ msgid "Add-on Information"
 msgstr "アドオンの情報"
 
 #. Translators: The warning of a dialog
+msgctxt "addonStore"
 msgid "Add-on Store Warning"
 msgstr "アドオンストアの警告"
 
@@ -13952,6 +14000,7 @@ msgid "&Don't show this message again"
 msgstr "今後このメッセージを表示しない(&D)"
 
 #. Translators: The label of a button in a dialog
+msgctxt "addonStore"
 msgid "&OK"
 msgstr "OK(&O)"
 
@@ -13976,8 +14025,9 @@ msgid "Cha&nnel:"
 msgstr "チャンネル(&N)"
 
 #. Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
 msgid "Include &incompatible add-ons"
-msgstr "インストール済みのアドオン(互換性なし)(&I)"
+msgstr "インストール済みのアドオン(互換性なし)を含む(&I)"
 
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 msgctxt "addonStore"
