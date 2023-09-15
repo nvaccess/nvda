@@ -108,6 +108,12 @@ class AddonsState(collections.UserDict):
 		"""Populates state with the default content and then loads values from the config."""
 		state = self._generateDefaultStateContent()
 		self.update(state)
+
+		# Set default value for manualOverridesAPIVersion.
+		# The ability to override add-ons only appeared in 2023.2,
+		# where the BACK_COMPAT_TO API version was 2023.1.0.
+		self.manualOverridesAPIVersion = MajorMinorPatch(2023, 1, 0)
+
 		try:
 			# #9038: Python 3 requires binary format when working with pickles.
 			with open(self.statePath, "rb") as f:
@@ -121,30 +127,28 @@ class AddonsState(collections.UserDict):
 		except Exception:
 			log.exception()
 		else:
-			if "backCompatToAPIVersion" not in pickledState:
-				# The ability to override add-ons only appeared in 2023.2,
-				# where the BACK_COMPAT_TO API version was 2023.1.0.
-				self.manualOverridesAPIVersion = MajorMinorPatch(2023, 1, 0)
-			else:
+			# Load from pickledState
+			if "backCompatToAPIVersion" in pickledState:
 				self.manualOverridesAPIVersion = MajorMinorPatch(*pickledState["backCompatToAPIVersion"])
 			for category in AddonStateCategory:
 				# Make pickles case insensitive
 				state[AddonStateCategory(category)] = CaseInsensitiveSet(pickledState.get(category, set()))
-			if self.manualOverridesAPIVersion != addonAPIVersion.BACK_COMPAT_TO:
-				log.debug(
-					"BACK_COMPAT_TO API version for manual compatibility overrides has changed. "
-					f"NVDA API has been upgraded: from {self.manualOverridesAPIVersion} to {addonAPIVersion.BACK_COMPAT_TO}"
-				)
-			if self.manualOverridesAPIVersion < addonAPIVersion.BACK_COMPAT_TO:
-				# Reset compatibility overrides as the API version has upgraded.
-				# For the installer, this is not written to disk.
-				# Portable/temporary copies will write this on the first run.
-				# Mark overridden compatible add-ons as blocked.
-				state[AddonStateCategory.BLOCKED].update(state[AddonStateCategory.OVERRIDE_COMPATIBILITY])
-				# Reset overridden compatibility for add-ons that were overridden by older versions of NVDA.
-				state[AddonStateCategory.OVERRIDE_COMPATIBILITY].clear()
-			self.manualOverridesAPIVersion = MajorMinorPatch(*addonAPIVersion.BACK_COMPAT_TO)
-			self.update(state)
+
+		if self.manualOverridesAPIVersion != addonAPIVersion.BACK_COMPAT_TO:
+			log.debug(
+				"BACK_COMPAT_TO API version for manual compatibility overrides has changed. "
+				f"NVDA API has been upgraded: from {self.manualOverridesAPIVersion} to {addonAPIVersion.BACK_COMPAT_TO}"
+			)
+		if self.manualOverridesAPIVersion < addonAPIVersion.BACK_COMPAT_TO:
+			# Reset compatibility overrides as the API version has upgraded.
+			# For the installer, this is not written to disk.
+			# Portable/temporary copies will write this on the first run.
+			# Mark overridden compatible add-ons as blocked.
+			state[AddonStateCategory.BLOCKED].update(state[AddonStateCategory.OVERRIDE_COMPATIBILITY])
+			# Reset overridden compatibility for add-ons that were overridden by older versions of NVDA.
+			state[AddonStateCategory.OVERRIDE_COMPATIBILITY].clear()
+		self.manualOverridesAPIVersion = MajorMinorPatch(*addonAPIVersion.BACK_COMPAT_TO)
+		self.update(state)
 
 	def removeStateFile(self) -> None:
 		if not NVDAState.shouldWriteToDisk():
