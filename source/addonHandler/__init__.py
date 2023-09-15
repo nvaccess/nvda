@@ -197,7 +197,7 @@ class AddonsState(collections.UserDict):
 				log.debug(f"Discarding {disabledAddonName} from disabled add-ons as it has been uninstalled.")
 				self[AddonStateCategory.DISABLED].discard(disabledAddonName)
 
-	def cleanupCompatibleAddonsFromDowngrade(self) -> None:
+	def _cleanupCompatibleAddonsFromDowngrade(self) -> None:
 		installedAddons = {a.name: a for a in getAvailableAddons()}
 		for blockedAddon in CaseInsensitiveSet(
 			self[AddonStateCategory.BLOCKED].union(
@@ -278,9 +278,9 @@ def initialize():
 	# #3090: Are there add-ons that are supposed to not run for this session?
 	disableAddonsIfAny()
 	getAvailableAddons(refresh=True, isFirstLoad=True)
+	state.cleanupRemovedDisabledAddons()
+	state._cleanupCompatibleAddonsFromDowngrade()
 	if NVDAState.shouldWriteToDisk():
-		state.cleanupRemovedDisabledAddons()
-		state.cleanupCompatibleAddonsFromDowngrade()
 		state.save()
 	initializeModulePackagePaths()
 
