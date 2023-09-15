@@ -205,7 +205,7 @@ class AddonsState(collections.UserDict):
 			)
 		):
 			# Iterate over copy of set to prevent updating the set while iterating over it.
-			if blockedAddon not in installedAddons:
+			if blockedAddon not in installedAddons and blockedAddon not in self[AddonStateCategory.PENDING_INSTALL]:
 				log.debug(f"Discarding {blockedAddon} from blocked add-ons as it has been uninstalled.")
 				self[AddonStateCategory.BLOCKED].discard(blockedAddon)
 				self[AddonStateCategory.OVERRIDE_COMPATIBILITY].discard(blockedAddon)
