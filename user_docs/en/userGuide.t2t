@@ -2785,10 +2785,20 @@ You can browse installed incompatible add-ons using the [incompatible add-ons ta
 
 ++ Log Viewer ++[LogViewer]
 The log viewer, found under Tools in the NVDA menu, allows you to view all the logging output that has occurred up until now from when you last started NVDA.
+%kc:beginInclude
 Using NVDA+F1 will open the log viewer and display developer information about the current navigator object.
+%kc:endInclude
 
 Apart from reading the content, you can also Save a copy of the log file, or refresh the viewer so that it shows the most recent output since the Log viewer was opened.
 These actions are available under the viewer's Log menu.
+The file which is opened when you press NVDA+f1 is saved on your computer in the temporary folder "%temp%" of your Windows and is called NVDA.log.
+A log file is also saved in case NVDA crashes. The file is called NVDA_old.log and is saved in the same location.
+
+You can also copy some content of the log without opening the log viewer.
+%kc:beginInclude
+Press CTRL+NVDA+Shift+F1 to set the starting point for the content that should be copied, do the action that you want to review the log for and press CTRL+NVDA+Shift+F1 again to set the end point and to place  the content between starting point and end point in your clipboard.
+%kc:endInclude
+Now you can paste the content anywhere you want.
 
 ++ Speech Viewer ++[SpeechViewer]
 For sighted software developers or people demoing NVDA to sighted audiences, a floating window is available that allows you to view all the text that NVDA is currently speaking.
@@ -2865,6 +2875,12 @@ Specifically, following issues can be solved by running this tool:
 
 ++ Reload plugins ++[ReloadPlugins]
 This item, once activated, reloads app modules and global plugins without restarting NVDA, which can be useful for developers.
+
+You can also find out whether the  application that you focus has an app module integrated in NVDA or not.
+%kc:beginInclude
+Press ctrl+NVDA+f1 while you focus an  application To hear the name of the app module integrated in NVDA - if any - and the name of the executable of the currently running application.
+In case there is no app module integrated in NVDA for the focused application, you will only hear the name of the executable.
+%kc:endInclude
 
 + Supported Speech Synthesizers +[SupportedSpeechSynths]
 This section contains information about the speech synthesizers supported by NVDA.
