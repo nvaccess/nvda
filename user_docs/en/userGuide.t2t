@@ -2874,7 +2874,8 @@ Specifically, following issues can be solved by running this tool:
 ++ Reload plugins ++[ReloadPlugins]
 This item, once activated, reloads app modules and global plugins without restarting NVDA, which can be useful for developers.
 
-You can also find out whether the  application that you focus has an app module integrated in NVDA or not.
+You can also find out whether the  application that you focus has an associated app module.
+
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Touch | Description |
 | Report loaded plugin and executable | ctrl+nvda+f1 | ctrl+nvda+f1 | none | Use this command while you focus an  application To hear the name of the app module integrated in NVDA - if any - and the name of the executable of the currently running application. In case there is no app module integrated in NVDA for the focused application, you will only hear the name of the executable. |
