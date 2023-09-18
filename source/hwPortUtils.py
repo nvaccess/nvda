@@ -443,6 +443,8 @@ def _getHidInfo(hwId, path):
 		info["usbID"] = hwId[:17] # VID_xxxx&PID_xxxx
 	elif hwId.startswith("{00001124-0000-1000-8000-00805f9b34fb}"):
 		info["provider"] = "bluetooth"
+	elif hwId.startswith("{00001812-0000-1000-8000-00805f9b34fb}"):
+		info["provider"] = "bluetooth"
 	else:
 		# Unknown provider.
 		info["provider"] = None
