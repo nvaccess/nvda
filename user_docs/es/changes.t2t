@@ -5,6 +5,16 @@ Qué hay de Nuevo en NVDA
 %!includeconf: ./locale.t2tconf
 
 = 2023.3 =
+Esta versión incluye mejoras en el rendimiento, la respuesta y la estabilidad de la salida de audio.
+
+NVDA ahora puede refrescar periódicamente los resultados del OCR, verbalizando el texto nuevo según aparezca.
+Esto puede configurarse en la categoría de OCR de Windows del diálogo opciones de NVDA.
+
+Se han realizado varias correcciones en el braille, mejorando la detección de dispositivos, y en el movimiento del cursor.
+Ahora es posible excluir controladores no deseados de la detección automática para mejorar el rendimiento de la autodetección.
+También hay nuevas órdenes para BRLTTY.
+
+También se han corregido errores en la tienda de complementos, en Microsoft Office, en los menús de contexto de Microsoft Edge, y en la calculadora de Windows.
 
 == Nuevas Características ==
 - Mejorada la gestión del sonido:
@@ -14,7 +24,13 @@ Qué hay de Nuevo en NVDA
     - Una opción para hacer que el volumen de los sonidos y pitidos de NVDA siga a la configuración de volúmen de la voz que estés utilizando. (#1409)
     - Una opción para configurar por separado el volumen de los sonidos de NVDA. (#1409, #15038)
     -
-  -
+  - Nota: WASAPI es incompatible con algunos complementos.
+  Hay actualizaciones compatibles disponibles para estos complementos, por favor actualízalos antes de actualizar NVDA.
+  Las versiones incompatibles de estos complementos se deshabilitarán al actualizar NVDA:
+    - Tony's Enhancements versión 1.15 o anteriores. (#15402)
+    - NVDA global commands extension 12.0.8 o anteriores. (#15443)
+    -
+ - 
 - NVDA ahora puede actualizar continuamente el resultado al realizar el reconocimiento óptico de caracteres (OCR), verbalizando el texto nuevo según aparezca. (#2797)
   - Para habilitar esta funcionalidad, activa la opción "Refrescar periódicamente el contenido reconocido" en la categoría OCR de Windows del diálogo de opciones de NVDA.
   - Una vez habilitado, puedes conmutar la verbalización de texto nuevo activando anunciar cambios de contenido dinámico (pulsando ``NVDA+5``).
@@ -56,6 +72,11 @@ Qué hay de Nuevo en NVDA
 - Braille:
   - El cursor braille y los indicadores de selección ahora siempre se actualizan correctamente después de mostrar u ocultar los indicadores respectivos con un gesto. (#15115)
   - Corregido un fallo donde las pantallas braille Albatross intentan inicializarse aunque otro dispositivo braille haya sido conectado. (#15226)
+  -
+- Tienda de Complementos:
+  - Corregido un fallo donde al desmarcar "incluir complementos incompatibles" provocaría que los complementos incompatibles siguieran apareciendo en la tienda. (#15411)
+  - Los complementos bloqueados debido a razones de compatibilidad ahora deberían filtrarse correctamente al conmutar el filtro por estado habilitado y deshabilitado. (#15416)
+  - Corregido un fallo que evita que se actualicen o substituyan complementos incompatibles instalados y habilitados mediante la herramienta de instalación externa. (#15417)
   -
 - Corregido el soporte para controles System List view (``SysListView32``) en aplicaciones Windows Forms. (#15283)
 - NVDA vuelvbe a anunciar los resultados de cálculo en la calculadora de Windows 32bit en las versiones Server, LTSC y LTSB de Windows. (#15284)

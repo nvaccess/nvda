@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-08 00:01+0000\n"
+"POT-Creation-Date: 2023-09-15 00:01+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Burak Yüksek <burakyuksek94@gmail.com>\n"
 "Language-Team: \n"
@@ -2059,24 +2059,20 @@ msgid "no previous grouping"
 msgstr "geride gruplandırma yok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#, fuzzy
 msgid "moves to the next tab"
-msgstr "sonraki tabloya gider"
+msgstr "sonraki sekmeye gider"
 
 #. Translators: Message presented when the browse mode element is not found.
-#, fuzzy
 msgid "no next tab"
-msgstr "ileride Tablo yok"
+msgstr "ileride sekme yok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#, fuzzy
 msgid "moves to the previous tab"
-msgstr "önceki tabloya gider"
+msgstr "önceki sekmeye gider"
 
 #. Translators: Message presented when the browse mode element is not found.
-#, fuzzy
 msgid "no previous tab"
-msgstr "geride Tablo yok"
+msgstr "geride sekme yok"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -2995,22 +2991,21 @@ msgid "Report line indentation {mode}"
 msgstr "Satır girintisi bildirimi {mode}"
 
 #. Translators: Input help mode message for toggle ignore blank lines for line indentation reporting command.
-#, fuzzy
 msgid ""
 "Toggles on and off the ignoring of blank lines for line indentation reporting"
-msgstr "Paragraf girintisinin bildirimini açıp kapatır"
+msgstr ""
+"Satır girintilerinin bildiriminde boş satırların yok sayılması ayarını açar/"
+"kapatır"
 
 #. Translators: The message announced when toggling off the ignore blank lines for line indentation
 #. reporting document formatting setting.
-#, fuzzy
 msgid "Ignore blank lines for line indentation reporting off"
-msgstr "Satır gi&rintilerinin bildirimi:"
+msgstr "Satır girintilerini bildirirken boş satırları yok say kapalı"
 
 #. Translators: The message announced when toggling on the ignore blank lines for line indentation
 #. reporting document formatting setting.
-#, fuzzy
 msgid "Ignore blank lines for line indentation reporting on"
-msgstr "Satır gi&rintilerinin bildirimi:"
+msgstr "Satır girintilerini bildirirken boş satırları yok say açık"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
@@ -4650,9 +4645,8 @@ msgid "Could not enable screen curtain"
 msgstr "Ekran perdesi etkinleştirilemiyor"
 
 #. Translators: Warning message when trying to enable the screen curtain when OCR is active.
-#, fuzzy
 msgid "Could not enable screen curtain when performing content recognition"
-msgstr "Ekran perdesi etkinleştirilemiyor"
+msgstr "İçerik tanınırken ekran perdesi etkinleştirilemedi"
 
 #. Translators: Describes a command.
 msgid "Cycles through paragraph navigation styles"
@@ -7719,9 +7713,8 @@ msgid "Recognition failed"
 msgstr "Tanıma başarısız"
 
 #. Translators: Reported when recognition (e.g. OCR) fails during automatic refresh.
-#, fuzzy
 msgid "Automatic refresh of recognition result failed"
-msgstr "Tanıma sonucunu dikkate alma"
+msgstr "Tanıma sonucunun otomatik yenilenmesi başarısız oldu"
 
 #. Translators: Reported when content recognition (e.g. OCR) is attempted,
 #. but the user is already reading a content recognition result.
@@ -7856,19 +7849,17 @@ msgstr "dağıtık hizalı"
 
 #. Translators: Reported when text is centered across multiple cells.
 msgid "align centered across selection"
-msgstr ""
+msgstr "seçim boyu ortaya hizalı"
 
 #. Translators: Reported in Excel when text is formatted with "General" alignment, i.e. the name of the
 #. alignment in Excel aligning the cell's content depending on its type: text left and numbers right.
-#, fuzzy
 msgid "align general"
-msgstr "ortalı"
+msgstr "hizalama genel"
 
 #. Translators: Reported in Excel when text is formatted with "Fill" alignment, i.e. the name of the
 #. alignment in Excel repeating the cell's content for the width of the cell.
-#, fuzzy
 msgid "align fill"
-msgstr "sola hizalı"
+msgstr "hizalama doldur"
 
 #. Translators: Reported when text is vertically top-aligned.
 msgid "vertical align top"
@@ -8858,51 +8849,42 @@ msgid "&Preferences"
 msgstr "&Tercihler"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
-#, fuzzy
 msgid "View &log"
-msgstr "Log dosyasını göster"
+msgstr "&Log dosyasını göster"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
-#, fuzzy
 msgid "&Speech viewer"
-msgstr "Konuşma görüntüleyici"
+msgstr "&Konuşma görüntüleyici"
 
 #. Translators: The label for the menu item to toggle Braille Viewer.
-#, fuzzy
 msgid "&Braille viewer"
-msgstr "Braille görüntüleyici"
+msgstr "&Braille görüntüleyici"
 
 #. Translators: The label of a menu item to open the Add-on store
-#, fuzzy
 msgid "&Add-on store..."
 msgstr "Eklenti &mağazası..."
 
 #. Translators: The label for the menu item to open NVDA Python Console.
-#, fuzzy
 msgid "&Python console"
-msgstr "Python konsolu"
+msgstr "&Python konsolu"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-#, fuzzy
 msgid "&Create portable copy..."
-msgstr "Taşınabilir kopya oluştur..."
+msgstr "&Taşınabilir kopya oluştur..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
 msgstr "NVDA'y&ı Kur..."
 
 #. Translators: The label for the menu item to run the COM registration fix tool
-#, fuzzy
 msgid "&Run COM Registration Fixing tool..."
-msgstr "COM Kayıt Tamir aracını  çalıştır..."
+msgstr "&COM Kayıt Tamir aracını  çalıştır..."
 
 #. Translators: The label for the menu item to reload plugins.
-#, fuzzy
 msgid "R&eload plugins"
-msgstr "Pluginleri yeniden yükle"
+msgstr "&Pluginleri yeniden yükle"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
-#, fuzzy
 msgid "&Tools"
 msgstr "A&raçlar"
 
@@ -8938,9 +8920,8 @@ msgid "&Check for update..."
 msgstr "&Güncelleme kontrolü..."
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
-#, fuzzy
 msgid "&About..."
-msgstr "Hakkında..."
+msgstr "&Hakkında..."
 
 #. Translators: The label for the Help submenu in NVDA menu.
 msgid "&Help"
@@ -9010,7 +8991,6 @@ msgstr "Kaydedilmiş konfigürasyona geri dön"
 
 #. Translators: The label for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
-#, fuzzy
 msgid "Reset configuration to &factory defaults"
 msgstr "&Fabrika ayarlarına dön"
 
@@ -10512,9 +10492,8 @@ msgstr "Satır gi&rintilerinin bildirimi:"
 
 #. Translators: This is the label of a checkbox in the document formatting settings panel
 #. If this option is selected, NVDA will ignore blank lines for line indentation reporting
-#, fuzzy
 msgid "Ignore &blank lines for line indentation reporting"
-msgstr "Satır gi&rintilerinin bildirimi:"
+msgstr "Satır gi&rintilerini bildirirken boş satırları yok say"
 
 #. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -10644,7 +10623,7 @@ msgstr "Tanıma &dili:"
 
 #. Translators: Label for an option in the Windows OCR settings panel.
 msgid "Periodically &refresh recognized content"
-msgstr ""
+msgstr "Tanınan içeriği düzenli olarak &yenile"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10982,9 +10961,8 @@ msgid "Braille &display:"
 msgstr "Braille &ekran:"
 
 #. Translators: The label for a setting in braille settings to enable displays for automatic detection.
-#, fuzzy
 msgid "&Displays to detect automatically:"
-msgstr "Sadece otomatik olarak hareket ettirilirken"
+msgstr "Otomatik olarak algılanacak &ekranlar:"
 
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
@@ -11052,7 +11030,7 @@ msgstr "&İnceleme imlecini taşırken sistem düzenleme imlecini hareket ettir"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
-msgstr "&paragraph bazında oku"
+msgstr "&paragraf bazında oku"
 
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
@@ -13773,10 +13751,9 @@ msgid "Enabled, pending restart"
 msgstr "Yeniden başlatıldıktan sonra Etkin"
 
 #. Translators: Status for addons shown in the add-on store dialog
-#, fuzzy
 msgctxt "addonStore"
 msgid "Unknown status"
-msgstr "Güç durumu bilinmiyor"
+msgstr "Durumu bilinmiyor"
 
 #. Translators: The label of a tab to display installed add-ons in the add-on store.
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
@@ -14132,10 +14109,9 @@ msgid "Add-on Information"
 msgstr "Eklenti Bilgisi"
 
 #. Translators: The warning of a dialog
-#, fuzzy
 msgctxt "addonStore"
 msgid "Add-on Store Warning"
-msgstr "Eklenti Mağazası'ndan Uyarı"
+msgstr "Eklenti Mağazası Uyarısı"
 
 #. Translators: Warning that is displayed before using the Add-on Store.
 msgctxt "addonStore"
@@ -14156,7 +14132,6 @@ msgid "&Don't show this message again"
 msgstr "Bu mesajı bir &daha gösterme"
 
 #. Translators: The label of a button in a dialog
-#, fuzzy
 msgctxt "addonStore"
 msgid "&OK"
 msgstr "&Tamam"
@@ -14182,7 +14157,6 @@ msgid "Cha&nnel:"
 msgstr "&Kanal:"
 
 #. Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
-#, fuzzy
 msgctxt "addonStore"
 msgid "Include &incompatible add-ons"
 msgstr "&Uyumsuz eklentileri göster"
