@@ -2652,7 +2652,7 @@ class AudioPanel(SettingsPanel):
 
 	def _onSoundVolChange(self, event: wx.Event) -> None:
 		"""Called when the sound volume follow checkbox is checked or unchecked."""
-		wasapi = bool(config.conf["audio"]["WASAPI"])
+		wasapi = nvwave.usingWasapiWavePlayer()
 		self.soundVolFollowCheckBox.Enable(wasapi)
 		self.soundVolSlider.Enable(
 			wasapi
