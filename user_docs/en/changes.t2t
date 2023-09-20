@@ -29,12 +29,21 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
 
 - ``IAccessibleHandler.SecureDesktopNVDAObject`` has been removed.
 Instead, when NVDA is running on the user profile, track the existence of the secure desktop with the extension point: ``winAPI.secureDesktop.post_secureDesktopStateChange``. (#14488)
+- ``braille.BrailleHandler.handlePendingCaretUpdate`` has been removed with no public replacement. (#15163) 
+- ``bdDetect.addUsbDevices and bdDetect.addBluetoothDevices`` have been removed.
+Braille display drivers should implement the ``registerAutomaticDetection`` ``classmethod`` instead.
+That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices`` and ``addBluetoothDevices`` methods can be used. (#15200)
+- The default implementation of the check method on ``BrailleDisplayDriver`` now requires both the ``threadSafe`` and ``supportsAutomaticDetection`` attributes to be set to ``True``. (#15200)
+- Passing lambda functions to ``hwIo.ioThread.IoThread.queueAsApc`` is no longer possible, as functions should be weakly referenceable. (#14627)
+- ``IoThread.autoDeleteApcReference`` has been removed. (#14924) 
+-
 
 === Deprecations ===
 
 
 = 2023.3 =
 This release includes improvements to performance, responsiveness and stability of audio output.
+Options have been added to control the volume of NVDA sounds and beeps, or to have them follow the volume of the voice you are using.
 
 NVDA can now periodically refresh OCR results, speaking new text as it appears.
 This can be configured in the Windows OCR category of NVDA's settings dialog.
@@ -47,12 +56,9 @@ There's also been bug fixes for the Add-on Store, Microsoft Office, Microsoft Ed
 
 == New Features ==
 - Enhanced sound management:
+  - An option in Audio settings to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using. (#1409)
+  - An option in Audio settings to separately configure the volume of NVDA sounds. (#1409, #15038)
   - NVDA will now output audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds. (#14697, #11169, #11615, #5096, #10185, #11061)
-  - WASAPI usage can be disabled in Advanced settings.
-  If WASAPI is enabled, the following Advanced settings can also be configured.
-    - An option to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using. (#1409)
-    - An option to separately configure the volume of NVDA sounds. (#1409, #15038)
-    -
   - Note: WASAPI is incompatible with some add-ons.
   Compatible updates are available for these add-ons, please update them before updating NVDA.
   Incompatible versions of these add-ons will be disabled when updating NVDA:
@@ -89,10 +95,9 @@ There's also been bug fixes for the Add-on Store, Microsoft Office, Microsoft Ed
 - Some shortcut keys have been updated in the NVDA menu. (#15364)
 -
 
-
 == Bug Fixes ==
 - Microsoft Office:
-  - Fix crash in Microsoft Word when Document formatting options "report headings" and "report comments and notes" were not enabled. (#15019)
+  - Fixed crash in Microsoft Word when Document formatting options "report headings" and "report comments and notes" were not enabled. (#15019)
   - In Word and Excel, text alignment will be correctly reported in more situations. (#15206, #15220)
   -
 - Microsoft Edge:
@@ -104,12 +109,16 @@ There's also been bug fixes for the Add-on Store, Microsoft Office, Microsoft Ed
   - Fixed bug where Albatross braille displays try to initialize although another braille device has been connected. (#15226)
   -
 - Add-on Store:
-  - Fix bug where unchecking "include incompatible add-ons" would result in incompatible add-ons still being listed in the store. (#15411)
+  - Fixed bug where unchecking "include incompatible add-ons" would result in incompatible add-ons still being listed in the store. (#15411)
   - Add-ons blocked due to compatibility reasons should now be filtered correctly when toggling the filter for enabled/disabled status. (#15416)
-  - Fix bug preventing incompatible add-ons which are installed and enabled being upgraded or replaced using the external install tool. (#15417)
+  - Fixed bug preventing overridden enabled incompatible add-ons being upgraded or replaced using the external install tool. (#15417)
+  - Fixed bug where NVDA would not speak until restarted after add-on installation. (#14525)
+  - Fixed bug where add-ons cannot be installed if a previous download failed or was cancelled. (#15469)
+  - Fixed issues with handling incompatible add-ons when upgrading NVDA. (#15414, #15412, #15437)
   -
 - Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283)
 - NVDA once again announces calculation results in the Windows 32bit calculator on Server, LTSC and LTSB versions of Windows. (#15230)
+- NVDA no longer ignores focus changes when a nested window (grand child window) gets focus. (#15432)
 -
 
 == Changes for Developers ==

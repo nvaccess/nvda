@@ -72,8 +72,8 @@ class AvailableAddonStatus(DisplayStringEnum):
 	INCOMPATIBLE_DISABLED = enum.auto()  # disabled due to being incompatible
 	PENDING_DISABLE = enum.auto()  # disabled after restart
 	DISABLED = enum.auto()
-	PENDING_INCOMPATIBLE_ENABLED = enum.auto()  # overriden incompatible, enabled after restart
-	INCOMPATIBLE_ENABLED = enum.auto()  # enabled, overriden incompatible
+	PENDING_INCOMPATIBLE_ENABLED = enum.auto()  # overridden incompatible, enabled after restart
+	INCOMPATIBLE_ENABLED = enum.auto()  # enabled, overridden incompatible
 	PENDING_ENABLE = enum.auto()  # enabled after restart
 	ENABLED = enum.auto()  # enabled but not running (e.g. all add-ons are disabled).
 	RUNNING = enum.auto()  # enabled and active.

@@ -62,7 +62,6 @@ EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
 	'Use this profile for:',
 	'This change requires administrator privileges.',
 	'Insufficient Privileges',
-	'Synthesizer Error',
 	'word',
 	'Taskbar',
 	'%s items',
