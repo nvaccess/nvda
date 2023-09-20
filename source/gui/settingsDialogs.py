@@ -1132,7 +1132,7 @@ class SynthesizerSelectionDialog(SettingsDialog):
 
 		newSynth=self.synthNames[self.synthList.GetSelection()]
 		if not setSynth(newSynth):
-			_synthWarningDialog()
+			_synthWarningDialog(newSynth.name)
 			return
 
 		# Reinitialize the tones module to update the audio device
@@ -2554,7 +2554,7 @@ class DocumentNavigationPanel(SettingsPanel):
 		self.paragraphStyleCombo.saveCurrentValueToConf()
 
 
-def _synthWarningDialog():
+def _synthWarningDialog(newSynth: str):
 	gui.messageBox(
 		# Translators: This message is presented when
 		# NVDA is unable to load the selected synthesizer.
@@ -2563,7 +2563,6 @@ def _synthWarningDialog():
 		# NVDA is unable to load the selected synthesizer.
 		_("Synthesizer Error"),
 		wx.OK | wx.ICON_WARNING,
-		self
 	)
 
 
@@ -2632,7 +2631,7 @@ class AudioPanel(SettingsPanel):
 			config.conf["speech"]["outputDevice"] = self.deviceList.GetStringSelection()
 			currentSynth = getSynth()
 			if not setSynth(currentSynth.name):
-				_synthWarningDialog()
+				_synthWarningDialog(currentSynth.name)
 
 			# Reinitialize the tones module to update the audio device
 			import tones
