@@ -5,6 +5,16 @@ Que hai de Novo no NVDA
 %!includeconf: ./locale.t2tconf
 
 = 2023.3 =
+Esta versión inclúe melloras no rendemento, a resposta e a estabilidade da saída de audio.
+
+O NVDA agora pode refrescar periódicamente os resultados do OCR, falando o texto novo según apareza.
+Esto pode configurarse na categoría de OCR de Windows do diálogo opcións de NVDA.
+
+Realizáronse varios arranxos no braille, mellorando a detección de dispositivos, e no movemento do cursor.
+Agora é posible excluir controladores non desexados da detección automática para mellorar o rendemento da autodetección.
+Tamén hai novas ordes para BRLTTY.
+
+Tamén se arranxaron erros na tenda de complementos, en Microsoft Office, nos menús de contexto de Microsoft Edge, e na calculadora de Windows.
 
 == Novas Características ==
 - Mellorada a xestión do son:
@@ -14,7 +24,13 @@ Que hai de Novo no NVDA
     - Unha opción para facer que o volume dos sons e pitidos do NVDA siga á configuración do volúme da voz que esteas a usar. (#1409)
     - Unha opción para configurar por separado o volume dos sons do NVDA. (#1409, #15038)
     -
-  -
+ - Nota: WASAPI é incompatible con algúns complementos.
+  Hai actualizacións compatibles dispoñibles para estos complementos, por favor actualízaos antes de actualizar o NVDA.
+  As versións incompatibles destos complementos desactivaranse ao se actualizar o NVDA:
+    - Tony's Enhancements versión 1.15 ou anteriores. (#15402)
+    - NVDA global commands extension 12.0.8 ou anteriores. (#15443)
+    -
+   -   -
 - O NVDA agora pode actualizar continuamente o resultado ao realizar o recoñecemento óptico de caracteres (OCR), falando o texto novo según apareza. (#2797)
   - Para habilitar esta funcionalidade, activa a opción "Refrescar periódicamente ol contido recoñecido" na categoría OCR de Windows do diálogo de opcións do NVDA.
   - Unha vez habilitado, podes conmutar a fala de texto novo activando anunciar cambios de contido dinámico (premendo ``NVDA+5``).
@@ -56,6 +72,11 @@ Que hai de Novo no NVDA
 - Braille:
   - O cursor braille e os indicadores de seleción agora sempre se actualizan correctamente despois de amosar ou agochar os indicadores respectivos cun xesto. (#15115)
   - Arranxado un fallo onde as pantallas braille Albatross tentan inicializarse aíndaque outro dispositivo braille fora conectado. (#15226)
+  -
+- Tenda de Complementos:
+  - Arranxado un erro onde ao desmarcar "incluir complementos incompatibles" provocaría que os complementos incompatibles seguiran aparecendo na tenda. (#15411)
+  - Os complementos bloqueados debido a razóns de compatibilidade agora deberían filtrarse correctamente ao conmutar o filtro por estado habilitado e deshabilitado. (#15416)
+  - Arranxado un erro que evita que se actualicen ou substitúan complementos incompatibles instalados e habilitados mediante a ferramenta de instalación externa. (#15417)
   -
 - Arranxado o soporte para controis System List view (``SysListView32``) en aplicacións Windows Forms. (#15283)
 - O NVDA volta a anunciar os resultados de cálculo na calculadora de Windows 32bit nas versións Server, LTSC e LTSB de Windows. (#15284)

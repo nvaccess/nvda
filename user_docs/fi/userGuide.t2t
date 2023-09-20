@@ -825,10 +825,9 @@ Tässä on luettelo käytettävissä olevista komennoista:
 - Välilehti
 -
 Muista, että kullekin elementtityypille on komennot eteen- ja taaksepäin siirtymistä varten, ja sinun on määritettävä näppäimet molemmille, jotta voit siirtyä nopeasti molempiin suuntiin.
-
 Jos esimerkiksi haluat käyttää ``Y``- ja ``Vaihto+Y`` -näppäimiä välilehtien välillä siirtymiseen, sinun tulee tehdä seuraavasti:
 
-+ Avaa Näppäinkomennot-valintaikkuna selaustilasta.
++ Avaa Näppäinkomennot-valintaikkuna selaustilan ollessa aktiivisena.
 + Etsi Selaustila-osiosta "Siirtää seuraavan välilehden kohdalle" -komento.
 + Määritä löytyneelle komennolle ``y``-näppäin.
 + Etsi "Siirtää edellisen välilehden kohdalle" -komento.
@@ -3901,18 +3900,18 @@ Seuraavassa on BRLTTY:n näppäinkomennot NVDA:ta käytettäessä.
 Katso [BRLTTY:n näppäinsidosluetteloista https://brltty.app/doc/KeyBindings/] tietoja BRLTTY:n komentojen määrittämisestä pistenäyttöjen näppäimiin.
 %kc:beginInclude
 || Nimi | BRLTTY-komento |
-| Vieritä taaksepäin | fwinlt (siirry yksi ikkuna vasemmalle) |
-| Vieritä eteenpäin | fwinrt (siirry yksi ikkuna oikealle) |
-| Siirrä edelliselle riville | lnup (siirry yksi rivi ylöspäin) |
-| Siirrä seuraavalle riville | lndn (siirry yksi rivi alaspäin) |
-| siirrä pistesoluun | kosketuskohdistinnäppäin (siirrä kohdistin merkin kohdalle) |
-| Ota näppäinohje käyttöön tai poista se käytöstä | learn (siirry näppäinohjetilaan tai poistu siitä) |
-| Avaa NVDA-valikko | prefmenu (avaa NVDA-valikko tai poistu siitä) |
-| Palauta asetukset | prefload (palauta asetukset levyltä) |
-| Tallenna asetukset | prefsave (tallenna asetukset levylle) |
-| Ilmoita kellonaika | time (näytä nykyinen päivämäärä ja kellonaika) |
-| Lue rivi, jolla tarkastelukohdistin on | say_line (puhu nykyinen rivi) |
-| Jatkuva luku | say_below (puhu nykyiseltä riviltä lähtien näytön alareunaan saakka) |
+| Vieritä taaksepäin | ``fwinlt`` (siirry yksi ikkuna vasemmalle) |
+| Vieritä eteenpäin | ``fwinrt`` (siirry yksi ikkuna oikealle) |
+| Siirrä edelliselle riville | ``lnup`` (siirry yksi rivi ylöspäin) |
+| Siirrä seuraavalle riville | ``lndn`` (siirry yksi rivi alaspäin) |
+| siirrä pistesoluun | ``route`` (siirrä kohdistin merkin kohdalle) |
+| Ota näppäinohje käyttöön tai poista se käytöstä | ``learn`` (siirry näppäinohjetilaan tai poistu siitä) |
+| Avaa NVDA-valikko | ``prefmenu`` (avaa NVDA-valikko tai poistu siitä) |
+| Palauta asetukset | ``prefload`` (palauta asetukset levyltä) |
+| Tallenna asetukset | ``prefsave`` (tallenna asetukset levylle) |
+| Ilmoita kellonaika | ``time`` (näytä nykyinen päivämäärä ja kellonaika) |
+| Lue rivi, jolla tarkastelukohdistin on | ``say_line`` (puhu nykyinen rivi) |
+| Jatkuva luku | ``say_below`` (puhu nykyiseltä riviltä lähtien näytön alareunaan saakka) |
 %kc:endInclude
 
 ++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
