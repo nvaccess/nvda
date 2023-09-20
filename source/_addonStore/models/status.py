@@ -8,6 +8,7 @@ import os
 from pathlib import Path
 from typing import (
 	Dict,
+	Optional,
 	OrderedDict,
 	Set,
 	TYPE_CHECKING,
@@ -21,7 +22,7 @@ from logHandler import log
 from NVDAState import WritePaths
 from utils.displayString import DisplayStringEnum
 
-from .version import SupportsVersionCheck
+from .version import MajorMinorPatch, SupportsVersionCheck
 
 if TYPE_CHECKING:
 	from .addon import _AddonGUIModel  # noqa: F401
@@ -71,8 +72,8 @@ class AvailableAddonStatus(DisplayStringEnum):
 	INCOMPATIBLE_DISABLED = enum.auto()  # disabled due to being incompatible
 	PENDING_DISABLE = enum.auto()  # disabled after restart
 	DISABLED = enum.auto()
-	PENDING_INCOMPATIBLE_ENABLED = enum.auto()  # overriden incompatible, enabled after restart
-	INCOMPATIBLE_ENABLED = enum.auto()  # enabled, overriden incompatible
+	PENDING_INCOMPATIBLE_ENABLED = enum.auto()  # overridden incompatible, enabled after restart
+	INCOMPATIBLE_ENABLED = enum.auto()  # enabled, overridden incompatible
 	PENDING_ENABLE = enum.auto()  # enabled after restart
 	ENABLED = enum.auto()  # enabled but not running (e.g. all add-ons are disabled).
 	RUNNING = enum.auto()  # enabled and active.
@@ -146,20 +147,18 @@ class AddonStateCategory(str, enum.Enum):
 	"""Add-ons that are blocked from running because they are incompatible"""
 
 
-def getStatus(model: "_AddonGUIModel") -> AvailableAddonStatus:
-	from addonHandler import (
-		state as addonHandlerState,
-	)
+def _getDownloadableStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
 	from ..dataManager import addonDataManager
 	assert addonDataManager is not None
-	from .addon import AddonStoreModel
-	from .version import MajorMinorPatch
-	addonHandlerModel = model._addonHandlerModel
+
+	if model.name in (d.model.name for d in addonDataManager._downloadsPendingCompletion):
+		return AvailableAddonStatus.DOWNLOADING
 
 	if model.name in (d.model.name for d, _ in addonDataManager._downloadsPendingInstall):
 		return AvailableAddonStatus.DOWNLOAD_SUCCESS
 
-	if addonHandlerModel is None:
+	if model._addonHandlerModel is None:
+		# add-on is not installed
 		if model.isPendingInstall:
 			return AvailableAddonStatus.DOWNLOAD_SUCCESS
 
@@ -170,8 +169,56 @@ def getStatus(model: "_AddonGUIModel") -> AvailableAddonStatus:
 		# Any compatible add-on which is not installed should be listed as available
 		return AvailableAddonStatus.AVAILABLE
 
+	return None
+
+
+def _getUpdateStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
+	from .addon import AddonStoreModel
+	from ..dataManager import addonDataManager
+	assert addonDataManager is not None
+
+	if not isinstance(model, AddonStoreModel):
+		# If the listed add-on is installed from a side-load
+		# and not available on the add-on store
+		# the type will not be AddonStoreModel
+		return None
+
+	addonStoreInstalledData = addonDataManager._getCachedInstalledAddonData(model.addonId)
+	if addonStoreInstalledData is not None:
+		if model.addonVersionNumber > addonStoreInstalledData.addonVersionNumber:
+			return AvailableAddonStatus.UPDATE
+	else:
+		# Parsing from a side-loaded add-on
+		try:
+			manifestAddonVersion = MajorMinorPatch._parseVersionFromVersionStr(model._addonHandlerModel.version)
+		except ValueError:
+			# Parsing failed to get a numeric version.
+			# Ideally a numeric version would be compared,
+			# however the manifest only has a version string.
+			# Ensure the user is aware that it may be a downgrade or reinstall.
+			# Encourage users to re-install or upgrade the add-on from the add-on store.
+			return AvailableAddonStatus.REPLACE_SIDE_LOAD
+
+		if model.addonVersionNumber > manifestAddonVersion:
+			return AvailableAddonStatus.UPDATE
+
+	return None
+
+
+def getStatus(model: "_AddonGUIModel") -> AvailableAddonStatus:
+	from addonHandler import state as addonHandlerState
+
+	downloadableStatus = _getDownloadableStatus(model)
+	if downloadableStatus:
+		# Is this available in the add-on store and not installed?
+		return downloadableStatus
+	else:
+		# Add-on is currently installed or pending restart
+		addonHandlerModel = model._addonHandlerModel
+		assert addonHandlerModel
+
 	for storeState, handlerStateCategories in _addonStoreStateToAddonHandlerState.items():
-		# Match addonHandler states early for installed add-ons.
+		# Match special addonHandler states early for installed add-ons.
 		# Includes enabled, pending enabled, disabled, e.t.c.
 		if all(
 			model.addonId in addonHandlerState[stateCategory]
@@ -186,28 +233,10 @@ def getStatus(model: "_AddonGUIModel") -> AvailableAddonStatus:
 			# and another for enabled/disabled.
 			return storeState
 
-	addonStoreInstalledData = addonDataManager._getCachedInstalledAddonData(model.addonId)
-	if isinstance(model, AddonStoreModel):
-		# If the listed add-on is installed from a side-load
-		# and not available on the add-on store
-		# the type will not be AddonStoreModel
-		if addonStoreInstalledData is not None:
-			if model.addonVersionNumber > addonStoreInstalledData.addonVersionNumber:
-				return AvailableAddonStatus.UPDATE
-		else:
-			# Parsing from a side-loaded add-on
-			try:
-				manifestAddonVersion = MajorMinorPatch._parseVersionFromVersionStr(addonHandlerModel.version)
-			except ValueError:
-				# Parsing failed to get a numeric version.
-				# Ideally a numeric version would be compared,
-				# however the manifest only has a version string.
-				# Ensure the user is aware that it may be a downgrade or reinstall.
-				# Encourage users to re-install or upgrade the add-on from the add-on store.
-				return AvailableAddonStatus.REPLACE_SIDE_LOAD
-
-			if model.addonVersionNumber > manifestAddonVersion:
-				return AvailableAddonStatus.UPDATE
+	updateStatus = _getUpdateStatus(model)
+	if updateStatus:
+		# Can add-on be updated?
+		return updateStatus
 
 	if addonHandlerModel.isRunning:
 		return AvailableAddonStatus.RUNNING
