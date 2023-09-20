@@ -13,6 +13,7 @@ from concurrent.futures import (
 )
 import os
 import pathlib
+import shutil
 from typing import (
 	TYPE_CHECKING,
 	cast,
@@ -91,6 +92,9 @@ class AddonFileDownloader:
 		)
 
 		if NVDAState.shouldWriteToDisk():
+			# empty temporary downloads
+			if os.path.exists(WritePaths.addonStoreDownloadDir):
+				shutil.rmtree(WritePaths.addonStoreDownloadDir)
 			# ensure downloads dir exist
 			pathlib.Path(WritePaths.addonStoreDownloadDir).mkdir(parents=True, exist_ok=True)
 
@@ -112,12 +116,20 @@ class AddonFileDownloader:
 		isCancelled = downloadAddonFuture.cancelled() or downloadAddonFuture not in self._pending
 		addonId = "CANCELLED" if isCancelled else self._pending[downloadAddonFuture][0].model.addonId
 		log.debug(f"Done called for {addonId}")
-		if isCancelled:
-			log.debug("Download was cancelled, not calling onComplete")
-			return
+
 		if not downloadAddonFuture.done() or downloadAddonFuture.cancelled():
 			log.error("Logic error with download in BG thread.")
+			isCancelled = True
+
+		if isCancelled:
+			log.debug("Download was cancelled, not calling onComplete")
+			try:
+				# If the download was cancelled, the file may have been partially downloaded.
+				os.remove(self._pending[downloadAddonFuture][0].model.tempDownloadPath)
+			except FileNotFoundError:
+				pass
 			return
+
 		addonData, onComplete, onDisplayableError = self._pending[downloadAddonFuture]
 		downloadAddonFutureException = downloadAddonFuture.exception()
 		cacheFilePath: Optional[os.PathLike]
@@ -152,6 +164,7 @@ class AddonFileDownloader:
 		self._executor = None
 		self.progress.clear()
 		self._pending.clear()
+		shutil.rmtree(WritePaths.addonStoreDownloadDir)
 
 	def _downloadAddonToPath(
 			self,
