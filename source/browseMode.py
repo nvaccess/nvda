@@ -51,14 +51,16 @@ import globalVars
 from typing import Optional
 
 
-def reportPassThrough(treeInterceptor,onlyIfChanged=True):
+def reportPassThrough(treeInterceptor,onlyIfChanged=True, prevBrowseMode=False):
 	"""Reports the pass through mode if it has changed.
 	@param treeInterceptor: The current Browse Mode treeInterceptor.
 	@type treeInterceptor: L{BrowseModeTreeInterceptor}
 	@param onlyIfChanged: if true reporting will not happen if the last reportPassThrough reported the same thing.
 	@type onlyIfChanged: bool
+	@param prevBrowseMode: True if browse mode was active, False otherwise.
+	@type browseMode: bool
 	"""
-	if not onlyIfChanged or treeInterceptor.passThrough != reportPassThrough.last:
+	if not onlyIfChanged or treeInterceptor.passThrough != prevBrowseMode:
 		if config.conf["virtualBuffers"]["passThroughAudioIndication"]:
 			sound = "focusMode.wav" if treeInterceptor.passThrough else "browseMode.wav"
 			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", sound))
@@ -70,8 +72,7 @@ def reportPassThrough(treeInterceptor,onlyIfChanged=True):
 				# Translators: The mode that presents text in a flat representation
 				# that can be navigated with the cursor keys like in a text document
 				ui.message(_("Browse mode"))
-		reportPassThrough.last = treeInterceptor.passThrough
-reportPassThrough.last = False
+
 
 def mergeQuickNavItemIterators(iterators,direction="next"):
 	"""
@@ -1995,3 +1996,5 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	def script_toggleScreenLayout(self, gesture):
 		# Translators: The message reported for not supported toggling of screen layout
 		ui.message(_("Not supported in this document."))
+
+treeInterceptorHandler.post_browseModeStateChange.register(reportPassThrough)
