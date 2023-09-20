@@ -1109,24 +1109,6 @@ class SynthesizerSelectionDialog(SettingsDialog):
 		self.bindHelpEvent("SelectSynthesizerSynthesizer", self.synthList)
 		self.updateSynthesizerList()
 
-		# Translators: This is the label for the select output
-		# device combo in the synthesizer dialog. Examples of
-		# of an output device are default soundcard, usb
-		# headphones, etc.
-		deviceListLabelText = _("Audio output  &device:")
-		deviceNames=nvwave.getOutputDeviceNames()
-		# #11349: On Windows 10 20H1 and 20H2, Microsoft Sound Mapper returns an empty string.
-		if deviceNames[0] in ("", "Microsoft Sound Mapper"):
-			# Translators: name for default (Microsoft Sound Mapper) audio output device.
-			deviceNames[0] = _("Microsoft Sound Mapper")
-		self.deviceList = settingsSizerHelper.addLabeledControl(deviceListLabelText, wx.Choice, choices=deviceNames)
-		self.bindHelpEvent("SelectSynthesizerOutputDevice", self.deviceList)
-		try:
-			selection = deviceNames.index(config.conf["speech"]["outputDevice"])
-		except ValueError:
-			selection = 0
-		self.deviceList.SetSelection(selection)
-
 	def postInit(self):
 		# Finally, ensure that focus is on the synthlist
 		self.synthList.SetFocus()
@@ -1148,13 +1130,9 @@ class SynthesizerSelectionDialog(SettingsDialog):
 			# The list of synths has not been populated yet, so we didn't change anything in this panel
 			return
 
-		config.conf["speech"]["outputDevice"]=self.deviceList.GetStringSelection()
 		newSynth=self.synthNames[self.synthList.GetSelection()]
 		if not setSynth(newSynth):
-			# Translators: This message is presented when
-			# NVDA is unable to load the selected
-			# synthesizer.
-			gui.messageBox(_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING,self)
+			_synthWarningDialog()
 			return
 
 		# Reinitialize the tones module to update the audio device
@@ -2576,6 +2554,19 @@ class DocumentNavigationPanel(SettingsPanel):
 		self.paragraphStyleCombo.saveCurrentValueToConf()
 
 
+def _synthWarningDialog():
+	gui.messageBox(
+		# Translators: This message is presented when
+		# NVDA is unable to load the selected synthesizer.
+		_("Could not load the %s synthesizer.") % newSynth,
+		# Translators: Dialog title presented when
+		# NVDA is unable to load the selected synthesizer.
+		_("Synthesizer Error"),
+		wx.OK | wx.ICON_WARNING,
+		self
+	)
+
+
 class AudioPanel(SettingsPanel):
 	# Translators: This is the label for the audio settings panel.
 	title = _("Audio")
@@ -2583,6 +2574,22 @@ class AudioPanel(SettingsPanel):
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
+		# Translators: This is the label for the select output device combo in the synthesizer dialog.
+		# Examples of an output device are default soundcard, usb headphones, etc.
+		deviceListLabelText = _("Audio output &device:")
+		deviceNames = nvwave.getOutputDeviceNames()
+		# #11349: On Windows 10 20H1 and 20H2, Microsoft Sound Mapper returns an empty string.
+		if deviceNames[0] in ("", "Microsoft Sound Mapper"):
+			# Translators: name for default (Microsoft Sound Mapper) audio output device.
+			deviceNames[0] = _("Microsoft Sound Mapper")
+		self.deviceList = sHelper.addLabeledControl(deviceListLabelText, wx.Choice, choices=deviceNames)
+		self.bindHelpEvent("SelectSynthesizerOutputDevice", self.deviceList)
+		try:
+			selection = deviceNames.index(config.conf["speech"]["outputDevice"])
+		except ValueError:
+			selection = 0
+		self.deviceList.SetSelection(selection)
 
 		# Translators: This is a label for the audio ducking combo box in the Audio Settings dialog.
 		duckingListLabelText = _("Audio d&ucking mode:")
@@ -2620,6 +2627,18 @@ class AudioPanel(SettingsPanel):
 		self._onSoundVolChange(None)
 
 	def onSave(self):
+		if config.conf["speech"]["outputDevice"] != self.deviceList.GetStringSelection():
+			# Synthesizer must be reload if output device changes
+			config.conf["speech"]["outputDevice"] = self.deviceList.GetStringSelection()
+			currentSynth = getSynth()
+			if not setSynth(currentSynth.name):
+				_synthWarningDialog()
+
+			# Reinitialize the tones module to update the audio device
+			import tones
+			tones.terminate()
+			tones.initialize()
+
 		config.conf["audio"]["soundVolumeFollowsVoice"] = self.soundVolFollowCheckBox.IsChecked()
 		config.conf["audio"]["soundVolume"] = self.soundVolSlider.GetValue()
 

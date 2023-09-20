@@ -1554,9 +1554,6 @@ For a list of the Synthesizers that NVDA supports, please see the [Supported Spe
 One special item that will always appear in this list is "No speech", which allows you to use NVDA with no speech output whatsoever.
 This may be useful for someone who wishes to only use NVDA with braille, or perhaps to sighted developers who only wish to use the Speech Viewer.
 
-==== Output device ====[SelectSynthesizerOutputDevice]
-This option allows you to choose the audio device that NVDA should instruct the selected synthesizer to speak through.
-
 +++ Synth settings ring +++[SynthSettingsRing]
 If you wish to quickly change speech settings without going to the Speech category of the NVDA settings dialog, there are some NVDA key commands that allow you to move through the most common speech settings from anywhere while running NVDA:
 %kc:beginInclude
@@ -1774,6 +1771,10 @@ it is currently impossible to tell NVDA which display to use.
 Therefore it is recommended to only connect one Braille Display of a given type / manufacturer to your machine at a time.
 
 +++ Audio +++[AudioSettings]
+The Audio category in the NVDA Settings dialog contains options that let you change several aspects of audio output.
+
+==== Output device ====[SelectSynthesizerOutputDevice]
+This option allows you to choose the audio device that NVDA should instruct the selected synthesizer to speak through.
 
 %kc:setting
 ==== Audio Ducking Mode ====[SelectSynthesizerDuckingMode]
