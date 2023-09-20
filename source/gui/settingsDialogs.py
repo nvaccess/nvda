@@ -1109,37 +1109,6 @@ class SynthesizerSelectionDialog(SettingsDialog):
 		self.bindHelpEvent("SelectSynthesizerSynthesizer", self.synthList)
 		self.updateSynthesizerList()
 
-		# Translators: This is the label for the select output
-		# device combo in the synthesizer dialog. Examples of
-		# of an output device are default soundcard, usb
-		# headphones, etc.
-		deviceListLabelText = _("Audio output  &device:")
-		deviceNames=nvwave.getOutputDeviceNames()
-		# #11349: On Windows 10 20H1 and 20H2, Microsoft Sound Mapper returns an empty string.
-		if deviceNames[0] in ("", "Microsoft Sound Mapper"):
-			# Translators: name for default (Microsoft Sound Mapper) audio output device.
-			deviceNames[0] = _("Microsoft Sound Mapper")
-		self.deviceList = settingsSizerHelper.addLabeledControl(deviceListLabelText, wx.Choice, choices=deviceNames)
-		self.bindHelpEvent("SelectSynthesizerOutputDevice", self.deviceList)
-		try:
-			selection = deviceNames.index(config.conf["speech"]["outputDevice"])
-		except ValueError:
-			selection = 0
-		self.deviceList.SetSelection(selection)
-
-		# Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
-		duckingListLabelText = _("Audio d&ucking mode:")
-		self.duckingList = settingsSizerHelper.addLabeledControl(
-			duckingListLabelText,
-			wx.Choice,
-			choices=[mode.displayString for mode in audioDucking.AudioDuckingMode]
-		)
-		self.bindHelpEvent("SelectSynthesizerDuckingMode", self.duckingList)
-		index=config.conf['audio']['audioDuckingMode']
-		self.duckingList.SetSelection(index)
-		if not audioDucking.isAudioDuckingSupported():
-			self.duckingList.Disable()
-
 	def postInit(self):
 		# Finally, ensure that focus is on the synthlist
 		self.synthList.SetFocus()
@@ -1161,18 +1130,10 @@ class SynthesizerSelectionDialog(SettingsDialog):
 			# The list of synths has not been populated yet, so we didn't change anything in this panel
 			return
 
-		config.conf["speech"]["outputDevice"]=self.deviceList.GetStringSelection()
 		newSynth=self.synthNames[self.synthList.GetSelection()]
 		if not setSynth(newSynth):
-			# Translators: This message is presented when
-			# NVDA is unable to load the selected
-			# synthesizer.
-			gui.messageBox(_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING,self)
+			_synthWarningDialog(newSynth.name)
 			return
-		if audioDucking.isAudioDuckingSupported():
-			index=self.duckingList.GetSelection()
-			config.conf['audio']['audioDuckingMode']=index
-			audioDucking.setAudioDuckingMode(index)
 
 		# Reinitialize the tones module to update the audio device
 		import tones
@@ -2593,6 +2554,112 @@ class DocumentNavigationPanel(SettingsPanel):
 		self.paragraphStyleCombo.saveCurrentValueToConf()
 
 
+def _synthWarningDialog(newSynth: str):
+	gui.messageBox(
+		# Translators: This message is presented when
+		# NVDA is unable to load the selected synthesizer.
+		_("Could not load the %s synthesizer.") % newSynth,
+		# Translators: Dialog title presented when
+		# NVDA is unable to load the selected synthesizer.
+		_("Synthesizer Error"),
+		wx.OK | wx.ICON_WARNING,
+	)
+
+
+class AudioPanel(SettingsPanel):
+	# Translators: This is the label for the audio settings panel.
+	title = _("Audio")
+	helpId = "AudioSettings"
+
+	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
+		# Translators: This is the label for the select output device combo in the synthesizer dialog.
+		# Examples of an output device are default soundcard, usb headphones, etc.
+		deviceListLabelText = _("Audio output &device:")
+		deviceNames = nvwave.getOutputDeviceNames()
+		# #11349: On Windows 10 20H1 and 20H2, Microsoft Sound Mapper returns an empty string.
+		if deviceNames[0] in ("", "Microsoft Sound Mapper"):
+			# Translators: name for default (Microsoft Sound Mapper) audio output device.
+			deviceNames[0] = _("Microsoft Sound Mapper")
+		self.deviceList = sHelper.addLabeledControl(deviceListLabelText, wx.Choice, choices=deviceNames)
+		self.bindHelpEvent("SelectSynthesizerOutputDevice", self.deviceList)
+		try:
+			selection = deviceNames.index(config.conf["speech"]["outputDevice"])
+		except ValueError:
+			selection = 0
+		self.deviceList.SetSelection(selection)
+
+		# Translators: This is a label for the audio ducking combo box in the Audio Settings dialog.
+		duckingListLabelText = _("Audio d&ucking mode:")
+		self.duckingList = sHelper.addLabeledControl(
+			duckingListLabelText,
+			wx.Choice,
+			choices=[mode.displayString for mode in audioDucking.AudioDuckingMode]
+		)
+		self.bindHelpEvent("SelectSynthesizerDuckingMode", self.duckingList)
+		index = config.conf["audio"]["audioDuckingMode"]
+		self.duckingList.SetSelection(index)
+		if not audioDucking.isAudioDuckingSupported():
+			self.duckingList.Disable()
+
+		# Translators: This is the label for a checkbox control in the
+		# Audio settings panel.
+		label = _("Volume of NVDA sounds follows voice volume")
+		self.soundVolFollowCheckBox: wx.CheckBox = sHelper.addItem(wx.CheckBox(self, label=label))
+		self.bindHelpEvent("SoundVolumeFollowsVoice", self.soundVolFollowCheckBox)
+		self.soundVolFollowCheckBox.SetValue(config.conf["audio"]["soundVolumeFollowsVoice"])
+		self.soundVolFollowCheckBox.Bind(wx.EVT_CHECKBOX, self._onSoundVolChange)
+
+		# Translators: This is the label for a slider control in the
+		# Audio settings panel.
+		label = _("Volume of NVDA sounds")
+		self.soundVolSlider: nvdaControls.EnhancedInputSlider = sHelper.addLabeledControl(
+			label,
+			nvdaControls.EnhancedInputSlider,
+			minValue=0,
+			maxValue=100
+		)
+		self.bindHelpEvent("SoundVolume", self.soundVolSlider)
+		self.soundVolSlider.SetValue(config.conf["audio"]["soundVolume"])
+
+		self._onSoundVolChange(None)
+
+	def onSave(self):
+		if config.conf["speech"]["outputDevice"] != self.deviceList.GetStringSelection():
+			# Synthesizer must be reload if output device changes
+			config.conf["speech"]["outputDevice"] = self.deviceList.GetStringSelection()
+			currentSynth = getSynth()
+			if not setSynth(currentSynth.name):
+				_synthWarningDialog(currentSynth.name)
+
+			# Reinitialize the tones module to update the audio device
+			import tones
+			tones.terminate()
+			tones.initialize()
+
+		config.conf["audio"]["soundVolumeFollowsVoice"] = self.soundVolFollowCheckBox.IsChecked()
+		config.conf["audio"]["soundVolume"] = self.soundVolSlider.GetValue()
+
+		if audioDucking.isAudioDuckingSupported():
+			index = self.duckingList.GetSelection()
+			config.conf["audio"]["audioDuckingMode"] = index
+			audioDucking.setAudioDuckingMode(index)
+
+	def onPanelActivated(self):
+		self._onSoundVolChange(None)
+		super().onPanelActivated()
+
+	def _onSoundVolChange(self, event: wx.Event) -> None:
+		"""Called when the sound volume follow checkbox is checked or unchecked."""
+		wasapi = bool(config.conf["audio"]["WASAPI"])
+		self.soundVolFollowCheckBox.Enable(wasapi)
+		self.soundVolSlider.Enable(
+			wasapi
+			and not self.soundVolFollowCheckBox.IsChecked()
+		)
+
+
 class AddonStorePanel(SettingsPanel):
 	# Translators: This is the label for the addon navigation settings panel.
 	title = _("Add-on Store")
@@ -3075,37 +3142,6 @@ class AdvancedPanelControls(
 			conf=config.conf,
 		))
 		self.bindHelpEvent("WASAPI", self.wasapiComboBox)
-		self.wasapiComboBox.Bind(wx.EVT_CHOICE, self._onWASAPIChange)
-
-		# Translators: This is the label for a checkbox control in the
-		#  Advanced settings panel.
-		label = _("Volume of NVDA sounds follows voice volume (requires WASAPI)")
-		self.soundVolFollowCheckBox: wx.CheckBox = audioGroup.addItem(
-			wx.CheckBox(audioBox, label=label)
-		)
-		self.bindHelpEvent("SoundVolumeFollowsVoice", self.soundVolFollowCheckBox)
-		self.soundVolFollowCheckBox.Bind(wx.EVT_CHECKBOX, self._onWASAPIChange)
-		self.soundVolFollowCheckBox.SetValue(
-			config.conf["audio"]["soundVolumeFollowsVoice"]
-		)
-		self.soundVolFollowCheckBox.defaultValue = self._getDefaultValue(
-			["audio", "soundVolumeFollowsVoice"])
-		# Translators: This is the label for a slider control in the
-		#  Advanced settings panel.
-		label = _("Volume of NVDA sounds (requires WASAPI)")
-		self.soundVolSlider: nvdaControls.EnhancedInputSlider = audioGroup.addLabeledControl(
-			label,
-			nvdaControls.EnhancedInputSlider,
-			minValue=0,
-			maxValue=100
-		)
-		self.bindHelpEvent("SoundVolume", self.soundVolSlider)
-		self.soundVolSlider.SetValue(
-			config.conf["audio"]["soundVolume"]
-		)
-		self.soundVolSlider.defaultValue = self._getDefaultValue(
-			["audio", "soundVolume"])
-		self._onWASAPIChange()
 
 		# Translators: This is the label for a group of advanced options in the
 		# Advanced settings panel
@@ -3168,14 +3204,6 @@ class AdvancedPanelControls(
 		path=config.getScratchpadDir(ensureExists=True)
 		os.startfile(path)
 
-	def _onWASAPIChange(self, evt: Optional[wx.CommandEvent] = None):
-		wasapi = bool(self.wasapiComboBox._getControlCurrentFlag())
-		self.soundVolFollowCheckBox.Enable(wasapi)
-		self.soundVolSlider.Enable(
-			wasapi
-			and not self.soundVolFollowCheckBox.IsChecked()
-		)
-
 	def _getDefaultValue(self, configPath):
 		return config.conf.getConfigValidation(configPath).default
 
@@ -3203,8 +3231,6 @@ class AdvancedPanelControls(
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
 			and self.reportTransparentColorCheckBox.GetValue() == self.reportTransparentColorCheckBox.defaultValue
 			and self.wasapiComboBox.isValueConfigSpecDefault()
-			and self.soundVolFollowCheckBox.GetValue() == self.soundVolFollowCheckBox.defaultValue
-			and self.soundVolSlider.GetValue() == self.soundVolSlider.defaultValue
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and self.playErrorSoundCombo.GetSelection() == self.playErrorSoundCombo.defaultValue
 			and True  # reduce noise in diff when the list is extended.
@@ -3231,9 +3257,6 @@ class AdvancedPanelControls(
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
 		self.wasapiComboBox.resetToConfigSpecDefault()
-		self.soundVolFollowCheckBox.SetValue(self.soundVolFollowCheckBox.defaultValue)
-		self.soundVolSlider.SetValue(self.soundVolSlider.defaultValue)
-		self._onWASAPIChange()
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self.playErrorSoundCombo.SetSelection(self.playErrorSoundCombo.defaultValue)
 		self._defaultsRestored = True
@@ -3265,8 +3288,6 @@ class AdvancedPanelControls(
 			self.reportTransparentColorCheckBox.IsChecked()
 		)
 		self.wasapiComboBox.saveCurrentValueToConf()
-		config.conf["audio"]["soundVolumeFollowsVoice"] = self.soundVolFollowCheckBox.IsChecked()
-		config.conf["audio"]["soundVolume"] = self.soundVolSlider.GetValue()
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
 		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
 		self.brailleLiveRegionsCombo.saveCurrentValueToConf()
@@ -4288,6 +4309,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		GeneralSettingsPanel,
 		SpeechSettingsPanel,
 		BrailleSettingsPanel,
+		AudioPanel,
 		VisionSettingsPanel,
 		KeyboardSettingsPanel,
 		MouseSettingsPanel,
