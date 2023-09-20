@@ -46,7 +46,8 @@ def promptUserForRestart():
 	)
 	if wx.YES == result:
 		if gui.message.isModalMessageBoxActive():
-			ui.message(gui.blockAction.Context.MODAL_DIALOG_OPEN.translatedMessage)
+			# For unknown reasons speech doesn't occur unless this is called with a delay
+			wx.CallLater(500, ui.message, gui.blockAction.Context.MODAL_DIALOG_OPEN.translatedMessage)
 		else:
 			core.restart()
 
