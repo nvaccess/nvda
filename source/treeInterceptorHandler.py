@@ -144,7 +144,7 @@ class TreeInterceptor(baseObject.ScriptableObject):
 		if self._passThrough == state:
 			return
 		self._passThrough = state
-		browseMode = not self._passThrough
+		browseMode = not self.passThrough
 		post_browseModeStateChange.notify(browseMode=browseMode)
 		if state:
 			if config.conf['reviewCursor']['followFocus']:
