@@ -25,12 +25,15 @@ import extensionPoints
 if TYPE_CHECKING:
 	import NVDAObjects
 
-# Extension points action:
-# Triggered when browseMode state is changed.
-# Callback definition: Callable(browseMode: bool) -> None
-# browseMode - True when current treeInterceptor.passThrough is False.
-# False otherwise, or if focus is not in a treeInterceptor.
 post_browseModeStateChange = extensionPoints.Action()
+"""
+Notifies when browse mode state has changed.
+This allows components and add-ons to perform an action.
+For example, an add-on may activate a profile when browse mode has been activated,
+and deactivate that profile when browse mode becomes inactive.
+@param browseMode: The state of browse mode.
+@type browseMode: bool
+"""
 
 runningTable=set()
 
