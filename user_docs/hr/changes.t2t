@@ -9,60 +9,82 @@ Informacije za programere nisu prevedene, molimo ’pogledajte [englesku inačic
 
 
 = 2023.3 =
+Ova inačica uključuje poboljšanja stabilnosti i performansi pri izlazu zvuka.
+
+NVDA može s vremena na vrijeme osvježavati rezultate prepoznavanja tekstakada se pojave.
+Ovo se može konfigurirati u Windows OCR kategoriji u dijaloškom okviru postavki NVDA.
+
+Dodane su ispravke za brajične redke, uključujući automatsko otkrivanje.
+Sada je moguće isključiti upravljačke programe iz procesa automatskog otkrivanjau cilju pobočjšanja performansi.
+Dodane su također nove komande za Brltty.
+
+Ispravljene su greške u Add-on Storeu, Microsoft Officeu, Microsoft Edge kontekstnim izbornicima i u Windows kalkulatoru.
 
 == Nove značajke ==
-- Napredno upravljanje zvukom:
-  - NVDA će sada reproducirati zvuk uz pomoć Windows Audio Session API (WASAPI), Što može unaprijediti brzinu odziva, performanse i stabilnost NVDA zvukova i govora. (#14697)
+- Unapređeno upravljanej zvuka:
+  - NVDA će od sada proizvoditi zvuk uz pomoć Windows Audio Session API (WASAPI), što će poboljšati odziv, performanse, i stabilnost NVDA zvukova. (#14697, #11169, #11615, #5096, #10185, #11061)
   - Korištenje Wasapi može se isključiti u naprednim postavkama.
-  Ako je Wasapi uključen, sljedeće napredne postavke mogu biti uključene.
-    - Opcija koja omogućuje izjednačavanje glasnoće zvukova i govora NVDA. (#1409)
-    - Opcija za odvojenu konfiguraciju glasnoće NVDA zvukova. (#1409, #15038)
+  Ako je wasapi uključen, sljedeće postavke mogu se također konfigurirati.
+    - Opcija koja omogućuje izjednačenu glasnoću zvukova i govora NVDA. (#1409)
+    - Opcija za odvojeno koonfiguriranje glasnoće NVDA zvukova. (#1409, #15038)
+    -
+  - Upozorenje: WASAPI je nekompatibilan sa nekim dodacima.
+  Dostupne su kompatibilne nadogradnje tih dodataka, Nadogradite ih prije nadogradnje NVDA.
+  Nekompatibilne verzije tih dodataka bit će isključene prilikom nadogradnje NVDA:
+    - Tony's Enhancements inačica 1.15 ili starija. (#15402)
+    - NVDA global commands extension 12.0.8 ili starija. (#15443)
     -
   -
-- NVDA je sada u mogućnosti kontinuirano ažurirati tekst čim se pojavi novi prilikom prepoznavanja teksta čim se pojavi. (#2797)
-  - Kako biste uključili ovu mogućnost, uključite opciju "s vremena na vrijeme ažuriraj tekst kada se pojavi" u kategoriji Windows 10 OCR u NVDA postavkama.
-  - Kada je opcija uključena, možete uključiti ili isključiti izgovor novog teksta koristeći opciju uključi izgovor dinamičkog sadržaja (tako da pritisnete ``NVDA+5``).
+- NVDA sada može kontinuirano osvježavati rezultat prepoznavanja teksta kada se pojavi novi tekst. (#2797)
+  - Kako biste uključili ovu opciju, molimo uključite opciju "S vremena na vrijeme osvježavaj sadržaj prepoznavanja" u kategoriji Windows Ocr u NVDA postavkama.
+  - Kada je ova opcija uključena, možete uključiti ili isključiti izgovor novog teksta tako da uključite ili isključite čitanje dinamičkog sadržaja (pritiskom ``NVDA+5``).
   -
-- Prilikom korištenja automatskog otkrivanja brajičnih redaka, sada je moguće odrediti koji se brajični redci neće automatski otkrivati. (#15196)
-- Nova opcija u opcijama oblikovanja dokumenta, "ignoriraj prazne redke prilikom čitanja poravnanja". (#13394)
-- Dodana je nedodijeljena gesta za kretanje po grupama kartica u modusu pregleda. (#15046)
+- Prilikom korištenja automatskog otkrivanja brajičnih redaka, sada je moguće onemogućiti upravljačke programe sa popisa automatski otkrivanih u dijaloškom okviru izbora brajičnog redka. (#15196)
+- Nova opcija u opcijama oblikovanja dokumenta, "Ignoriraj prazne redke prilikom čitanja uvlačenja". (#13394)
+- Dodana nedodijeljena gesta za kretanje po grupiranjima kartica svojstva u načinu pregleda. (#15046)
 -
 
-== Izmjene ==
+== izmjene ==
 - Brajica:
-  - Kada se promijeni tekst u naredbenom redku bez promjene kursora sustava, tekst na brajičnom redku će se pravilno osvježiti kada i pozicija u promijenjenom redku.
-  Ovo uključuje situacije kada je brajični redak povezan na pregled. (#15115)
-  - Više BRLTTY tipkovničkih prečaca su povezani na NVDA prečace (#6483):
-    - learn: uključivanje i isključivanje pomoći pri unosu
-    - prefmenu: otvaranje NVDA izbornika
-    - prefload/prefsave: učitavanje ili spremanje NVDA konfiguracije
-    - time: pokazuj vrijeme
-    - say_line: izgovori trenutni redak u kojem se nalazi pregledni kursor
-    - say_below: čitaj sve uz pomoć preglednog kursora
-  - Upravljački program BRLTTY je dostupan samo kada kada je pokrenut primjerak BRLTTY sa pokrenutim BrlAPI. (#15335)
-  - Napredna postavka za uključivanje HID brajice je uklonjena i zamijenjena novom opcijom.
-  Sada možete isključiti određene upravljačke programe iz automatskog ptkrivanja brajičnih redaka u dijaloškom okviru oddabira brajičnog redka. (#15196)
+  - Kada se tekst u naredbenom redku promijeni bez promjene fokusa, tekst na brajičnom redku će se također obnoviti kada se nalazite na tom redku.
+  Ovo uključuje situacije kada je brajica povezana na pregled. (#15115)
+  - Više Brltty prečaca je povezana sa NVDA prečacima (#6483):
+    - ``learn``: uklčuči isključi pomoć pri unosu
+    - ``prefmenu``: otvori nVDA izbornik
+    - ``prefload``/``prefsave``: učitaj spremi NVDA konfiguraciju
+    - ``time``: pokaži vrijeme
+    - ``say_line``: Izgovori redak na kojem se nalazi pregledni kursor
+    - ``say_below``: Čitaj sve koristećk pregledni kursor
+    -
+  - BRLTTY upravljački program je dostupan samo kada je Brltty pokrenut sa BRL api. (#15335)
+  - Napredna postavka za isključivanje HID brajičnog redka  sada je uklonjena i zamijenjena novom opcijom.
+  Sada možete isključiti određene upravljačke programe za automatsko prepoznavanje u dojaloškom okviru brajičnih postavki. (#15196)
   -
-- Add-on Store: Instalirani dodaci će se prikazati na kartici dostupni dodaci, ako su još uvijek dostupni u Add-on storeu. (#15374)
-- Neki su prečaci NVDA ažurirani. (#15364)
+- Add-on Store: dodaci će sada biti dostupni na kartici svostva dostupnih dodataka, ako su dostupni u Add-on storeu. (#15374)
+- Osvježeni su neki prečaci u NVDA izborniku. (#15364)
 -
 
 
 == Ispravke grešaka ==
 - Microsoft Office:
-  - Ispravljeno rušenje u Microsoft Wordu kada su opcije oblikovanja dokumenta "izvjesti o naslovima" i "izvjesti o komentarima i bilješkama" isključene. (#15019)
-  - U Wordu i Excelu, poravnanje teksta biti će ispravno čitano u više situacija. (#15206, #15220)
+  - Ispravljeno rušenje u Microsoft Word Kada su opcije u postavkama oblikovanja "čitaj naslove" i "čitaj komentare i bilješke" isključene. (#15019)
+  - U Wordu i Excelu, poravnanje će biti ispravno pročitano u više situacija. (#15206, #15220)
   -
 - Microsoft Edge:
-  - NVDA više neće preskakati nazad na zadnju poziciju u načinu čitanja pri otvaranju kontekstnog izbornika u Microsoft Edgeu. (#15309)
-  - NVDA sada ponovno može čitati kontekstne izbornike preuzimanja u Microsoft Edgeu. (#14916)
+  - NVDA više se neće vraćati na prethodnu poziciju u modusu čitanja pri otvaranju kontekstnog izbornika u Microsoft Edgeu. (#15309)
+  - NVDA opet može čitati kontekstni izbornik preuzimanja u Microsoft Edgeu. (#14916)
   -
 - Brajica:
-  - Brajični kursor i indikatori označavanja biti će uvijek ažurirane ispravno poslije njihovog uključivanja ili isključivanja prečacem. (#15115)
-  - Ispravljena pogreška prilikom koje Albatross brajični redci se pokušavaju inicijalizirati čak iako je drugi brajični redak spojen. (#15226)
+  - Brajični kursor i pokazivač označenosti bit će ispravno osvježeni poslije uključenja ili isključenja gestom. (#15115)
+  - Ispravljena pogreška prilikom koje Albatros brajični redci su se pokušali inicijalizirati čak iako je drugi brajični redak bio spojen. (#15226)
   -
-- Ispravljena podrška popisa sustava (``SysListView32``) u Windows Forms aplikacijama. (#15283)
-- NVDA ponovno može čitati rezultate u Windows 32bitnom kalkulatoru u Server, LTSC and LTSB inačicama operacijskog sustava Windows. (#15284)
+- Add-on Store:
+  - Ispravljena greška poslije odznačavanja "uključi nekompatibilne dodatke" koja je prouzrokovala vidljivost nekompatibilnih dodataka. (#15411)
+  - Dodaci blokirani zbog nekompatibilnosti bi se sada trebali pravilno osvježavati prilikom sortiranja po statusi uključenosti ili isključenosti. (#15416)
+  - Ispravljena pogreška prilikom koje nije bilo moguće nadograditi nekompatibilne dodatke iz vanjskih izvora. (#15417)
+  -
+- Ispravljena podrška za prikaze popisa sustava (``SysListView32``) u WIndows forms aplikacijama. (#15283)
+- NVDA opet izgovara rezultate računskih operacija u 32-bitnom kalkulatoru za Windows u operacijskim sustavima Server, LTSC and LTSB. (#15230)
 -
 
 
