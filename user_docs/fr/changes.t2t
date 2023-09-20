@@ -5,14 +5,30 @@ Quoi de Neuf dans NVDA
 %!includeconf: ./locale.t2tconf
 
 = 2023.3 =
+Cette version inclue des améliorations pour les performances, la réactivité et la fiabilité de la sortie audio.
+
+NVDA peut maintenant raffraîchir périodiquement le résultat de l'OCR, en annonçant le texte lorsqu'il apparaît.
+Cela peut être configuré dans la catégorie Reconnaissance Optique de Caractères de Windows du dialogue de paramètres de NVDA.
+
+Plusieurs corrections pour le Braille ont été apportées, améliorant la détection des appareils et le mouvement du curseur.
+Il est maintenant possible d'exclure les pilotes non désirés de la détection automatique, pour en améliorer les performances.
+De nouvelles commandes BRLTTY sont également présentes.
+
+Sont également présents des correctifs pour l'Add-on Store, Microsoft Office, les menus contextuels de Microsoft Edge, et la calculatrice de Windows.
 
 == Nouvelles Fonctionnalités ==
 - Amélioration de la gestion du son :
-  - NVDA sort désormais l'audio via l'API Windows Audio Session (WASAPI), ce qui peut améliorer la réactivité, les performances et la stabilité de la parole et des sons de NVDA. (#14697)
+  - NVDA sort désormais l'audio via l'API Windows Audio Session (WASAPI), ce qui peut améliorer la réactivité, les performances et la stabilité de la parole et des sons de NVDA. (#14697, #11169, #11615, #5096, #10185, #11061)
   - L'utilisation de WASAPI peut être désactivée dans les paramètres avancés.
   Si WASAPI est activé, les paramètres avancés suivants peuvent également être configurés.
     - Une option pour que le volume des sons de NVDA suive le volume de la voix que vous utilisez. (#1409)
     - Une option pour séparément configurer le volume des sons de NVDA. (#1409, #15038)
+    -
+  - Note : WASAPI est incompatible avec quelques extensions.
+  Des mises à jour compatibles sont disponibles pour ces extensions, veuillez les mettre à jour avant NVDA.
+  Les versions incompatibles de ces extensions seront désactivées lors de la mise à jour de NVDA.
+    - Tony's Enhancements version 1.15 ou plus ancien. (#15402)
+    - NVDA global commands extension 12.0.8 ou plus ancien. (#15443)
     -
   -
 - NVDA est maintenant capable d'actualiser continuellement le résultat lors de l'exécution de la reconnaissance optique des caractères (OCR), en annonçant le texte lorsqu'il apparaît. (#2797)
@@ -29,17 +45,17 @@ Quoi de Neuf dans NVDA
   - Lorsque le texte dans un terminal change sans raffraîchir le curseur, le texte sur l'afficheur Braille sera maintenant correctement mis à jour lorsque positionné sur une ligne modifiée.
   Cela inclu les situations où le Braille suit la revue. (#15115)
   - Plus de gestes de commandes BRLTTY sont désormais assignées à des commandes NVDA (#6483) :
-    - learn : Bascule l'aide d'entrée NVDA
-    - prefmenu : Ouvrir le menu NVDA
-    - prefload/prefsave : Charger/sauvegarder la configuration NVDA
-    - time : Afficher l'heure
-    - say_line : Annoncer la ligne actuelle où est positionné le curseur de revue
-    - say_below : Dire tout en utilisant le curseur de revue
+    - ``learn`` : Bascule l'aide d'entrée NVDA
+    - ``prefmenu`` : Ouvrir le menu NVDA
+    - ``prefload``/``prefsave`` : Charger/sauvegarder la configuration NVDA
+    - ``time`` : Afficher l'heure
+    - ``say_line`` : Annoncer la ligne actuelle où est positionné le curseur de revue
+    - ``say_below`` : Dire tout en utilisant le curseur de revue
   - Le pilote BRLTTY est uniquement disponible lorsqu'une instance de BRLTTY avec BrlAPI activé est en cours d'exécution. (#15335)
   - Le paramètre avancé pour activer le support du Braille HID a été remplacé en faveur d'une nouvelle option.
   Vous pouvez maintenant exclure certains pilotes de la détection automatique dans le dialogue de sélection de l'afficheur Braille. (#15196)
   -
-- Add-on Store : Les extensions installées apparaitront désormais dans l'onglet extensions disponibles si elles sont toujours disponibles dans le store. (#15374)
+- Add-on Store : Les extensions installées apparaitront désormais dans l'onglet extensions disponibles si elles sont disponibles dans le store. (#15374)
 - Certaines touches d'accès ont été modifiées dans le menu NVDA. (#15364)
 -
 
@@ -57,8 +73,13 @@ Quoi de Neuf dans NVDA
   - Le curseur et l'indicateur de sélection Braille seront désormais toujours correctement actualisés après avoir affiché ou masqué leurs indicateurs respectifs via un geste de commande. (#15115)
   - Correction d'un problème où les afficheurs Braille Albatross essayaient de s'initialiser alors qu'un autre afficheur Braille était connecté. (#15226)
   -
+- Add-on Store :
+  - Correction d'un problème où décocher "inclure les extensions incompatibles" continuait malgré tout de lister les extensions incompatibles dans le store. (#15411)
+  - Les extensions bloquées pour des raisons d'incompatibilité devraient maintenant être correctement filtrées lors de la bascule du filtre sur le statut activée/désactivée. (#15416)
+  - Correction d'un problème empêchant la mise à jour ou le remplacement des extensions incompatibles installées et activées via l'outil d'installation externe. (#15417)
+  -
 - Correction du support pour les contrôles des listes système (``SysListView32``) dans les applications Windows Forms. (#15283)
-- NVDA annonce à nouveau les résultats des calculs dans la calculatrice 32 bits de Windows Server, versions de Windows LTSC et LTSB. (#15284)
+- NVDA annonce à nouveau les résultats des calculs dans la calculatrice 32 bits de Windows Server, versions de Windows LTSC et LTSB. (#15230)
 -
 
 == Changements pour les Développeurs ==

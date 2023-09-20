@@ -63,7 +63,7 @@ There's also been bug fixes for the Add-on Store, Microsoft Office, Microsoft Ed
 
 == Bug Fixes ==
 - Microsoft Office:
-  - Fix crash in Microsoft Word when Document formatting options "report headings" and "report comments and notes" were not enabled. (#15019)
+  - Fixed crash in Microsoft Word when Document formatting options "report headings" and "report comments and notes" were not enabled. (#15019)
   - In Word and Excel, text alignment will be correctly reported in more situations. (#15206, #15220)
   -
 - Microsoft Edge:
@@ -75,9 +75,11 @@ There's also been bug fixes for the Add-on Store, Microsoft Office, Microsoft Ed
   - Fixed bug where Albatross braille displays try to initialize although another braille device has been connected. (#15226)
   -
 - Add-on Store:
-  - Fix bug where unchecking "include incompatible add-ons" would result in incompatible add-ons still being listed in the store. (#15411)
+  - Fixed bug where unchecking "include incompatible add-ons" would result in incompatible add-ons still being listed in the store. (#15411)
   - Add-ons blocked due to compatibility reasons should now be filtered correctly when toggling the filter for enabled/disabled status. (#15416)
-  - Fix bug preventing incompatible add-ons which are installed and enabled being upgraded or replaced using the external install tool. (#15417)
+  - Fixed bug preventing overridden enabled incompatible add-ons being upgraded or replaced using the external install tool. (#15417)
+  - Fixed bug where NVDA would not speak until restarted after add-on installation. (#14525)
+  - Fixed bug where add-ons cannot be installed if a previous download failed or was cancelled. (#15469)
   -
 - Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283)
 - NVDA once again announces calculation results in the Windows 32bit calculator on Server, LTSC and LTSB versions of Windows. (#15230)
