@@ -18,12 +18,9 @@ There's also been bug fixes for the Add-on Store, Microsoft Office, Microsoft Ed
 
 == New Features ==
 - Enhanced sound management:
+  - An option in Audio settings to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using. (#1409)
+  - An option in Audio settings to separately configure the volume of NVDA sounds. (#1409, #15038)
   - NVDA will now output audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds. (#14697, #11169, #11615, #5096, #10185, #11061)
-  - WASAPI usage can be disabled in Advanced settings.
-  If WASAPI is enabled, the following Advanced settings can also be configured.
-    - An option to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using. (#1409)
-    - An option to separately configure the volume of NVDA sounds. (#1409, #15038)
-    -
   - Note: WASAPI is incompatible with some add-ons.
   Compatible updates are available for these add-ons, please update them before updating NVDA.
   Incompatible versions of these add-ons will be disabled when updating NVDA:
