@@ -170,7 +170,7 @@ def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:  # noqa: C901
 	if oldTreeInterceptor is not obj.treeInterceptor:
 		if obj.treeInterceptor:
 			# obj.treeInterceptor has been assigned to treeInterceptorObject.
-			browseMode = not treeInterceptorObject._passThrough
+			browseMode = not treeInterceptorObject.passThrough
 		else:
 			browseMode = False
 		treeInterceptorHandler.post_browseModeStateChange.notify(browseMode=browseMode)
