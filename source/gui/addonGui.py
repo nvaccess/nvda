@@ -26,6 +26,7 @@ from . import nvdaControls
 from .message import displayDialogAsModal
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 import gui.contextHelp
+import ui
 
 
 def promptUserForRestart():
@@ -44,7 +45,10 @@ def promptUserForRestart():
 		style=wx.YES | wx.NO | wx.ICON_WARNING
 	)
 	if wx.YES == result:
-		core.restart()
+		if gui.message.isModalMessageBoxActive():
+			ui.message(gui.blockAction.Context.MODAL_DIALOG_OPEN.translatedMessage)
+		else:
+			core.restart()
 
 
 class ConfirmAddonInstallDialog(nvdaControls.MessageDialog):
