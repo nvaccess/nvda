@@ -5,7 +5,7 @@
 # Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
 # Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot, Rob Meredith, Luke Davis,
-# Burman's Computer and Education Ltd.
+# Burman's Computer and Education Ltd, Beka Gozalishvili.
 
 import itertools
 from typing import (
@@ -58,6 +58,7 @@ import ui
 import braille
 import brailleInput
 import inputCore
+import nvwave
 import characterProcessing
 from baseObject import ScriptableObject
 import core
@@ -4442,6 +4443,45 @@ class GlobalCommands(ScriptableObject):
 		newFlag: config.featureFlag.FeatureFlag = nextParagraphStyle()
 		config.conf["documentNavigation"]["paragraphStyle"] = newFlag.name
 		ui.message(newFlag.displayString)
+
+	@staticmethod
+	def _cycleOutputAudioDevices(forward: bool = True):
+		"""Cycle through available output devices.
+		@param forward: boolean flag if false cycles in backward direction.
+		"""
+		deviceNames = nvwave.getFriendlyOutputDeviceNames()
+		currentIndex = 0
+		currentOutputDevice = config.conf["speech"]["outputDevice"]
+		if currentOutputDevice in deviceNames:
+			currentIndex = deviceNames.index(currentOutputDevice)
+		direction = 1 if forward else -1
+		newIndex = (currentIndex + direction) % len(deviceNames)
+		device = deviceNames[newIndex]
+		if not nvwave.setOutputDevice(device):
+			# Translators: Error while switching to an output audio device.
+			ui.message(_("Failed to set {device} as an output audio device").format(device=device))
+			return
+		ui.message(device)
+
+	@script(
+		description=_(
+			# Translators: Describes the switch to next output device command.
+			"switches to the next output device"
+		),
+		category=SCRCAT_SPEECH,
+	)
+	def script_switchToNextOutputDevice(self, gesture: inputCore.InputGesture) -> None:
+		self._cycleOutputAudioDevices()
+
+	@script(
+		description=_(
+			# Translators: Describes the switch to previous output device command.
+			"switches to the previous output device"
+		),
+		category=SCRCAT_SPEECH,
+	)
+	def script_switchToPreviousOutputDevice(self, gesture: inputCore.InputGesture) -> None:
+		self._cycleOutputAudioDevices(-False)
 
 
 #: The single global commands instance.

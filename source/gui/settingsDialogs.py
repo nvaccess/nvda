@@ -2661,11 +2661,7 @@ class AudioPanel(SettingsPanel):
 		# Translators: This is the label for the select output device combo in NVDA audio settings.
 		# Examples of an output device are default soundcard, usb headphones, etc.
 		deviceListLabelText = _("Audio output &device:")
-		deviceNames = nvwave.getOutputDeviceNames()
-		# #11349: On Windows 10 20H1 and 20H2, Microsoft Sound Mapper returns an empty string.
-		if deviceNames[0] in ("", "Microsoft Sound Mapper"):
-			# Translators: name for default (Microsoft Sound Mapper) audio output device.
-			deviceNames[0] = _("Microsoft Sound Mapper")
+		deviceNames = nvwave.getFriendlyOutputDeviceNames()
 		self.deviceList = sHelper.addLabeledControl(deviceListLabelText, wx.Choice, choices=deviceNames)
 		self.bindHelpEvent("SelectSynthesizerOutputDevice", self.deviceList)
 		try:
@@ -2712,15 +2708,8 @@ class AudioPanel(SettingsPanel):
 	def onSave(self):
 		if config.conf["speech"]["outputDevice"] != self.deviceList.GetStringSelection():
 			# Synthesizer must be reload if output device changes
-			config.conf["speech"]["outputDevice"] = self.deviceList.GetStringSelection()
-			currentSynth = getSynth()
-			if not setSynth(currentSynth.name):
+			if not nvwave.setOutputDevice(self.deviceList.GetStringSelection()):
 				_synthWarningDialog(currentSynth.name)
-
-			# Reinitialize the tones module to update the audio device
-			import tones
-			tones.terminate()
-			tones.initialize()
 
 		config.conf["audio"]["soundVolumeFollowsVoice"] = self.soundVolFollowCheckBox.IsChecked()
 		config.conf["audio"]["soundVolume"] = self.soundVolSlider.GetValue()
