@@ -261,11 +261,19 @@ class SynthDriver(driverHandler.Driver):
 	def _set_rate(self, value):
 		pass
 
+	#: Typing information for auto-property: _get_pitch
+	pitch: int
+	"""Between 0-100"""
+
 	def _get_pitch(self):
 		return 0
 
 	def _set_pitch(self, value):
 		pass
+
+	#: Typing information for auto-property: _get_volume
+	volume: int
+	"""Between 0-100"""
 
 	def _get_volume(self):
 		return 0
