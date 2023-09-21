@@ -18,7 +18,6 @@ from locale import strxfrm
 import typing
 import wx
 from NVDAState import WritePaths
-import NVDAState
 from buildVersion import version_year
 
 from vision.providerBase import VisionEnhancementProviderSettings
@@ -1110,7 +1109,7 @@ class SynthesizerSelectionDialog(SettingsDialog):
 		self.synthList = settingsSizerHelper.addLabeledControl(synthListLabelText, wx.Choice, choices=[])
 		self.bindHelpEvent("SelectSynthesizerSynthesizer", self.synthList)
 		self.updateSynthesizerList()
-		if version_year < 2024 and NVDAState._allowDeprecatedAPI():
+		if version_year < 2024:
 			_addAudioCombos(self, settingsSizerHelper)
 
 	def postInit(self):
@@ -2572,9 +2571,9 @@ def _synthWarningDialog(newSynth: str):
 	)
 
 
-def _addAudioCombos(panel, sHelper):
+def _addAudioCombos(panel: SettingsPanel, sHelper: guiHelper.BoxSizerHelper):
 	"#15486: temporarily re-add audio options to synth dialog for 2023.3."
-	# Translators: This is the label for the select output device combo in the synthesizer dialog.
+	# Translators: This is the label for the select output device combo in NVDA audio settings.
 	# Examples of an output device are default soundcard, usb headphones, etc.
 	deviceListLabelText = _("Audio output &device:")
 	deviceNames = nvwave.getOutputDeviceNames()
