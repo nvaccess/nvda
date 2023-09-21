@@ -317,30 +317,30 @@ class SynthDriver(SynthDriver):
 			voices[ID]=VoiceInfo(ID,name,language)
 		return voices
 
-	def _get_rate(self):
+	def _get_rate(self) -> int:
 		val = DWORD()
 		self._ttsAttrs.SpeedGet(byref(val))
 		return self._paramToPercent(val.value, self._minRate, self._maxRate)
 
-	def _set_rate(self, val):
+	def _set_rate(self, val: int):
 		val = self._percentToParam(val, self._minRate, self._maxRate)
 		self._ttsAttrs.SpeedSet(val)
 
-	def _get_pitch(self):
+	def _get_pitch(self) -> int:
 		val = WORD()
 		self._ttsAttrs.PitchGet(byref(val))
 		return self._paramToPercent(val.value, self._minPitch, self._maxPitch)
 
-	def _set_pitch(self, val):
+	def _set_pitch(self, val: int):
 		val = self._percentToParam(val, self._minPitch, self._maxPitch)
 		self._ttsAttrs.PitchSet(val)
 
-	def _get_volume(self):
+	def _get_volume(self) -> int:
 		val = DWORD()
 		self._ttsAttrs.VolumeGet(byref(val))
 		return self._paramToPercent(val.value & 0xffff, self._minVolume, self._maxVolume)
 
-	def _set_volume(self, val):
+	def _set_volume(self, val: int):
 		val = self._percentToParam(val, self._minVolume, self._maxVolume)
 		# If you specify a value greater than 65535, the engine assumes that you want to set the
 		# left and right channels separately and converts the value to a double word,
