@@ -36,6 +36,9 @@ from NVDAObjects.window.winword import (
 )
 from NVDAObjects import NVDAObject
 from scriptHandler import script
+import api
+import config
+from config.configFlags import TetherTo
 
 
 """Support for Microsoft Word via UI Automation."""
@@ -544,7 +547,10 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 	def event_textChange(self):
 		# Ensure Braille is updated when text changes,
 		# As Microsoft Word does not fire caret events when typing text, even though the caret does move.
+		# Update braille also when tethered to review, and review position
+		# if review follows caret.
 		braille.handler.handleCaretMove(self)
+		review.handleCaretMove(self)
 
 	def event_UIA_notification(self, activityId=None, **kwargs):
 		# #10851: in recent Word 365 releases, UIA notification will cause NVDA to announce edit functions
@@ -552,6 +558,13 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 		if activityId == "AccSN2":  # Delete activity ID
 			return
 		super(WordDocument, self).event_UIA_notification(**kwargs)
+		# Try to ensure that braille is updated when UIA is not used and
+		# ctrl-x or ctrl-z is pressed.
+		if config.conf["braille"]["tetherTo"] != TetherTo.REVIEW.value:
+			# Using getFocusObject because self does not work always.
+			braille.handler.handleCaretMove(api.getFocusObject())
+		else:
+			braille.handler.handleReviewMove()
 
 	# The following overide of the EditableText._caretMoveBySentenceHelper private method
 	# Falls back to the MS Word object model if available.

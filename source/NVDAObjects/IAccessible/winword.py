@@ -47,12 +47,6 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 	ignoreFormatting=False
 
 	def event_caret(self):
-		curSelectionPos=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		lastSelectionPos=getattr(self,'_lastSelectionPos',None)
-		self._lastSelectionPos=curSelectionPos
-		if lastSelectionPos:
-			if curSelectionPos._rangeObj.isEqual(lastSelectionPos._rangeObj):
-				return
 		super(WordDocument,self).event_caret()
 
 	def _get_role(self):
