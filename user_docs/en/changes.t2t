@@ -19,6 +19,9 @@ There's also been bug fixes for the Add-on Store, Microsoft Office, Microsoft Ed
 
 == New Features ==
 - Enhanced sound management:
+  - New "audio" panel in settings. (#15472)
+    - Options to control audio output and ducking mode have been relocated to audio settings. They will be removed from the "select synthesizer" dialog in 2024.1. (#15486)
+    -
   - An option in Audio settings to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using. (#1409)
   - An option in Audio settings to separately configure the volume of NVDA sounds. (#1409, #15038)
   - NVDA will now output audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds. (#14697, #11169, #11615, #5096, #10185, #11061)
