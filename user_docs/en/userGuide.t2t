@@ -2795,9 +2795,9 @@ When this happens, the previous NVDA session's log file is moved to ``%temp%\nvd
 
 You can also copy a fragment of the current log file to the clipboard without opening the log viewer.
 %kc:beginInclude
-|| Name | Desktop key | Laptop key | Touch | Description |
-| Open log viewer | ``NVDA+f1`` | ``NVDA+f1`` | None | Opens the log viewer and displays developer information about the current navigator object. |
-| Copy a fragment of the log to the clipboard | ``NVDA+control+shift+f1``  | ``NVDA+control+shift+f1`` | None | When this command is pressed once, it sets a starting point for the log content that should be captured. When pressed a second time, it copies the log content since the start point to your clipboard. |
+|| Name | key | Description |
+| Open log viewer | ``NVDA+f1`` | Opens the log viewer and displays developer information about the current navigator object. |
+| Copy a fragment of the log to the clipboard | ``NVDA+control+shift+f1`` | When this command is pressed once, it sets a starting point for the log content that should be captured. When pressed a second time, it copies the log content since the start point to your clipboard. |
 %kc:endInclude
 
 ++ Speech Viewer ++[SpeechViewer]
@@ -2877,11 +2877,10 @@ Specifically, following issues can be solved by running this tool:
 This item, once activated, reloads app modules and global plugins without restarting NVDA, which can be useful for developers.
 
 The following NVDA key commands may also be useful:
-
 %kc:beginInclude
-|| Name | Desktop key | Laptop key | Touch | Description |
-| Reload plugins | ``control+f3`` | ``NVDA+control+f3`` | None | Reloads NVDA's global plugins and app modules. |
-| Report loaded app module and executable | ``NVDA+control+f1`` | ``NVDA+control+f1`` | None | Report the name of the app module, if any, and the name of the executable associated to the active application which has the keyboard focus. |
+|| Name | key | Description |
+| Reload plugins | ``NVDA+control+f3`` | Reloads NVDA's global plugins and app modules. |
+| Report loaded app module and executable | ``NVDA+control+f1`` | Report the name of the app module, if any, and the name of the executable associated to the active application which has the keyboard focus. |
 %kc:endInclude
 
 + Supported Speech Synthesizers +[SupportedSpeechSynths]
