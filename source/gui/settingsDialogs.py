@@ -2501,7 +2501,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.detectFormatAfterCursorCheckBox.SetValue(config.conf["documentFormatting"]["detectFormatAfterCursor"])
 		sHelper.addItem(self.detectFormatAfterCursorCheckBox)
 
-	def onLineIndentationChange(self, evt):
+	def onLineIndentationChange(self, evt: wx.CommandEvent) -> None:
 		self.ignoreBlankLinesRLICheckbox.Enable(evt.GetSelection() != 0)
 
 	def onSave(self):
