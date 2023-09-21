@@ -133,6 +133,7 @@ They should also be thread safe, making it possible to call them from background
 - Added official support to register custom braille display drivers in the automatic braille display detection process.
 Consult the ``braille.BrailleDisplayDriver`` class documentation for more details.
 Most notably, the ``supportsAutomaticDetection`` attribute must be set to ``True`` and the ``registerAutomaticDetection`` ``classmethod`` must be implemented.  (#15196)
+- Added extension point: ``treeInterceptorHandler.post_browseModeStateChange``. (#14969)
 -
 
 === Deprecations ===

@@ -1022,6 +1022,10 @@ For examples of how to define and use new extension points, please see the code 
 || Type | Extension Point | Description |
 | ``Decider`` | ``decide_beep`` | Notifies when a beep is about to be generated and played, allowing a component to decide whether it should be. |
 
+++ treeInterceptorHandler ++[treeInterceptorHandlerExtPts]
+|| Type | Extension Point | Description |
+| ``Action`` | ``post_browseModeStateChange`` | Notifies when browse mode state changes. |
+
 ++ utils.security ++[utils_securityExtPts]
 || Type | Extension Point | Description |
 | ``Action`` | ``post_sessionLockStateChanged`` | Notifies when a session lock or unlock event occurs. |

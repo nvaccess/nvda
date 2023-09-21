@@ -91,6 +91,9 @@ def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:  # noqa: C901
 		return False
 	if globalVars.focusObject:
 		eventHandler.executeEvent("loseFocus",globalVars.focusObject)
+		oldTreeInterceptor = globalVars.focusObject.treeInterceptor
+	else:
+		oldTreeInterceptor = None
 	oldFocusLine=globalVars.focusAncestors
 	#add the old focus to the old focus ancestors, but only if its not None (is none at NVDA initialization)
 	if globalVars.focusObject: 
@@ -166,6 +169,13 @@ def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:  # noqa: C901
 		obj.treeInterceptor=treeInterceptorObject
 	else:
 		obj.treeInterceptor=None
+	if oldTreeInterceptor is not obj.treeInterceptor:
+		if obj.treeInterceptor:
+			# obj.treeInterceptor has been assigned to treeInterceptorObject.
+			browseMode = not treeInterceptorObject.passThrough
+		else:
+			browseMode = False
+		treeInterceptorHandler.post_browseModeStateChange.notify(browseMode=browseMode)
 	# #3804: handleAppSwitch should be called as late as possible,
 	# as triggers must not be out of sync with global focus variables.
 	# setFocusObject shouldn't fail earlier anyway, but it's best to be safe.
