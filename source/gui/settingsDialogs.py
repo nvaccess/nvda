@@ -1110,7 +1110,7 @@ class SynthesizerSelectionDialog(SettingsDialog):
 		self.bindHelpEvent("SelectSynthesizerSynthesizer", self.synthList)
 		self.updateSynthesizerList()
 		if version_year < 2024:
-			_addAudioCombos(self, settingsSizerHelper)
+			AudioPanel._addAudioCombos(self, settingsSizerHelper)
 
 	def postInit(self):
 		# Finally, ensure that focus is on the synthlist
@@ -2571,47 +2571,46 @@ def _synthWarningDialog(newSynth: str):
 	)
 
 
-def _addAudioCombos(panel: SettingsPanel, sHelper: guiHelper.BoxSizerHelper):
-	"#15486: temporarily re-add audio options to synth dialog for 2023.3."
-	# Translators: This is the label for the select output device combo in NVDA audio settings.
-	# Examples of an output device are default soundcard, usb headphones, etc.
-	deviceListLabelText = _("Audio output &device:")
-	deviceNames = nvwave.getOutputDeviceNames()
-	# #11349: On Windows 10 20H1 and 20H2, Microsoft Sound Mapper returns an empty string.
-	if deviceNames[0] in ("", "Microsoft Sound Mapper"):
-		# Translators: name for default (Microsoft Sound Mapper) audio output device.
-		deviceNames[0] = _("Microsoft Sound Mapper")
-	panel.deviceList = sHelper.addLabeledControl(deviceListLabelText, wx.Choice, choices=deviceNames)
-	panel.bindHelpEvent("SelectSynthesizerOutputDevice", panel.deviceList)
-	try:
-		selection = deviceNames.index(config.conf["speech"]["outputDevice"])
-	except ValueError:
-		selection = 0
-	panel.deviceList.SetSelection(selection)
-
-	# Translators: This is a label for the audio ducking combo box in the Audio Settings dialog.
-	duckingListLabelText = _("Audio d&ucking mode:")
-	panel.duckingList = sHelper.addLabeledControl(
-		duckingListLabelText,
-		wx.Choice,
-		choices=[mode.displayString for mode in audioDucking.AudioDuckingMode]
-	)
-	panel.bindHelpEvent("SelectSynthesizerDuckingMode", panel.duckingList)
-	index = config.conf["audio"]["audioDuckingMode"]
-	panel.duckingList.SetSelection(index)
-	if not audioDucking.isAudioDuckingSupported():
-		panel.duckingList.Disable()
-
-
 class AudioPanel(SettingsPanel):
 	# Translators: This is the label for the audio settings panel.
 	title = _("Audio")
 	helpId = "AudioSettings"
 
+	def _addAudioCombos(panel: SettingsPanel, sHelper: guiHelper.BoxSizerHelper):
+		"#15486: temporarily re-add audio options to synth dialog for 2023.3."
+		# Translators: This is the label for the select output device combo in NVDA audio settings.
+		# Examples of an output device are default soundcard, usb headphones, etc.
+		deviceListLabelText = _("Audio output &device:")
+		deviceNames = nvwave.getOutputDeviceNames()
+		# #11349: On Windows 10 20H1 and 20H2, Microsoft Sound Mapper returns an empty string.
+		if deviceNames[0] in ("", "Microsoft Sound Mapper"):
+			# Translators: name for default (Microsoft Sound Mapper) audio output device.
+			deviceNames[0] = _("Microsoft Sound Mapper")
+		panel.deviceList = sHelper.addLabeledControl(deviceListLabelText, wx.Choice, choices=deviceNames)
+		panel.bindHelpEvent("SelectSynthesizerOutputDevice", panel.deviceList)
+		try:
+			selection = deviceNames.index(config.conf["speech"]["outputDevice"])
+		except ValueError:
+			selection = 0
+		panel.deviceList.SetSelection(selection)
+
+		# Translators: This is a label for the audio ducking combo box in the Audio Settings dialog.
+		duckingListLabelText = _("Audio d&ucking mode:")
+		panel.duckingList = sHelper.addLabeledControl(
+			duckingListLabelText,
+			wx.Choice,
+			choices=[mode.displayString for mode in audioDucking.AudioDuckingMode]
+		)
+		panel.bindHelpEvent("SelectSynthesizerDuckingMode", panel.duckingList)
+		index = config.conf["audio"]["audioDuckingMode"]
+		panel.duckingList.SetSelection(index)
+		if not audioDucking.isAudioDuckingSupported():
+			panel.duckingList.Disable()
+
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
-		_addAudioCombos(self, sHelper)
+		AudioPanel._addAudioCombos(self, sHelper)
 
 		# Translators: This is the label for a checkbox control in the
 		# Audio settings panel.
