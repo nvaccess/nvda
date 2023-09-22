@@ -37,7 +37,8 @@ Braille display drivers should implement the ``registerAutomaticDetection`` ``cl
 That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices`` and ``addBluetoothDevices`` methods can be used. (#15200)
 - The default implementation of the check method on ``BrailleDisplayDriver`` now requires both the ``threadSafe`` and ``supportsAutomaticDetection`` attributes to be set to ``True``. (#15200)
 - Passing lambda functions to ``hwIo.ioThread.IoThread.queueAsApc`` is no longer possible, as functions should be weakly referenceable. (#14627)
-- ``IoThread.autoDeleteApcReference`` has been removed. (#14924) 
+- ``IoThread.autoDeleteApcReference`` has been removed. (#14924)
+- To support capital pitch changes, synthesizers must now explicitly declare their support for the ``PitchCommand`` in the ``supportedCommands`` attribute on the driver. (#15433)
 -
 
 === Deprecations ===
