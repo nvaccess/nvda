@@ -2587,7 +2587,6 @@ class AudioPanel(SettingsPanel):
 	helpId = "AudioSettings"
 
 	def _addAudioCombos(panel: SettingsPanel, sHelper: guiHelper.BoxSizerHelper):
-		"#15486: temporarily re-add audio options to synth dialog for 2023.3."
 		# Translators: This is the label for the select output device combo in NVDA audio settings.
 		# Examples of an output device are default soundcard, usb headphones, etc.
 		deviceListLabelText = _("Audio output &device:")
