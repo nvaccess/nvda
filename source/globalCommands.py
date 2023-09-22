@@ -255,7 +255,7 @@ class GlobalCommands(ScriptableObject):
 		description=_(
 			# Translators: Input help mode message for report current selection command.
 			"Announces the current selection in edit controls and documents. "
-			"If there is no selection it says so."
+			"Pressing twice spells this information."
 		),
 		category=SCRCAT_SYSTEMCARET,
 		gestures=("kb(desktop):NVDA+shift+upArrow", "kb(laptop):NVDA+shift+s")
@@ -272,7 +272,13 @@ class GlobalCommands(ScriptableObject):
 		if not info or info.isCollapsed:
 			speech.speakMessage(_("No selection"))
 		else:
-			speech.speakTextSelected(info.text)
+			scriptCount = scriptHandler.getLastScriptRepeatCount()
+			if scriptCount == 0:
+				speech.speakTextSelected(info.text)
+			elif len(info.text) < speech.speech.MAX_LENGTH_FOR_SELECTION_REPORTING:
+				speech.speakSpelling(info.text)
+			else:
+				speech.speakTextSelected(info.text)
 
 	@script(
 		# Translators: Input help mode message for report date and time command.
@@ -3374,8 +3380,11 @@ class GlobalCommands(ScriptableObject):
 		ui.message(msg)
 
 	@script(
-		# Translators: Input help mode message for report clipboard text command.
-		description=_("Reports the text on the Windows clipboard"),
+		description=_(
+			# Translators: Input help mode message for report clipboard text command.
+			"Reports the text on the Windows clipboard. "
+			"Pressing twice spells this information."
+		),
 		category=SCRCAT_SYSTEM,
 		gesture="kb:NVDA+c"
 	)
@@ -3389,7 +3398,11 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("There is no text on the clipboard"))
 			return
 		if len(text) < 1024: 
-			ui.message(text)
+			repeatCount = scriptHandler.getLastScriptRepeatCount()
+			if repeatCount == 0:
+				ui.message(text)
+			elif repeatCount == 1:
+				speech.speakSpelling(text)
 		else:
 			# Translators: If the number of characters on the clipboard is greater than about 1000, it reports this message and gives number of characters on the clipboard.
 			# Example output: The clipboard contains a large portion of text. It is 2300 characters long.
