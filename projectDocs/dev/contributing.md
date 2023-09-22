@@ -35,6 +35,7 @@ If you are new to the project, or looking for some way to help take a look at:
 	- If possible for your PR, please consider creating a set of unit or system tests to test your changes.
 	- The lint check ensures your changes comply with our code style expectations. Use `runlint nvaccess/master` (`runlint.bat`)
 	- Run `scons checkPot` to ensure translatable strings have comments for the translators
+1. [Create a change log entry](#change-log-entry)
 1. [Create a Pull Request (PR)](./githubPullRequestTemplateExplanationAndExamples.md)
 	- When you think a contribution is ready, or you would like feedback, open a draft pull request.
 	When you would like a review, mark the PR as "ready for review".
@@ -54,6 +55,34 @@ If you are new to the project, or looking for some way to help take a look at:
 1. Feedback from alpha users
 	- After a PR is merged, watch for feedback from alpha users / testers.
 	You may have to follow up to address bugs or missed use-cases.
+
+#### Change log entry
+An entry intended to explain changes in NVDA to end users.
+Your proposed entry should be added to the [`changes.t2t` file](../../user_docs/en/changes.t2t) which is converted to HTML.
+Change log entries are not required for changes with no/minor user impact or no developer impact.
+
+Because the `changes.t2t` file is prone to conflicts, NV Access will resolve any merge conflicts with the change log entry before merging.
+
+These descriptions should be in the format: `"{Description of change}. (#{issue number})"`.
+Multiple issue numbers can be included, separated by comma.
+If there is no issue number, you can use the PR number.
+
+For instance:
+```t2t
+New features
+- Added a command to announce useful thing. (#WXYZ, #ABCD)
+
+Changes
+- Old command, now also uses new useful command. (#WXYZ)
+```
+
+You may add descriptions for multiple sections.
+The sections are:
+ 
+* New features
+* Changes
+* Bug fixes
+* Changes for developers
 
 ## Code Style
 Please ensure you follow [our coding standards document](./codingStandards.md).

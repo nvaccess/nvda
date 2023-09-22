@@ -4,6 +4,110 @@ Was ist neu in NVDA
 %!includeconf: ../changes.t2tconf
 %!includeconf: ./locale.t2tconf
 
+= 2023.3 =
+Diese Version enthält Verbesserungen bei der Leistung, Reaktionsfähigkeit und Stabilität der Audio-Ausgabe.
+
+NVDA aktualisiert die Ergebnisse der Texterkennung jetzt regelmäßig und teilt neuen Text mit, sobald er erscheint.
+Dies kann in der Kategorie "Windows-Texterkennung" in den NVDA-Einstellungen konfiguriert werden.
+
+Mehrere Korrekturen wurden für Braille vorgenommen, die die Geräteerkennung und die Navigation der Schreibmarke verbessern.
+Unerwünschte Treiber können jetzt von der automatischen Erkennung ausgeschlossen werden, um die Leistung der automatischen Erkennung zu verbessern.
+Außerdem gibt es neue BRLTTY-Befehle.
+
+Weitere Fehler wurden außerdem im Store für NVDA-Erweiterungen, in Microsoft Office, in den Kontextmenüs von Microsoft Edge und im Windows-Rechner behoben.
+
+== Neue Features ==
+- Verbessertes Sound-Management:
+  - NVDA gibt nun Audio über die API der Windows-Audio-Session (WASAPI) aus, was die Reaktionsfähigkeit, Leistung und Stabilität der Sprachausgaben und NVDA-Sounds verbessern kann. (#14697, #11169, #11615, #5096, #10185,e #11061)
+  - Die Verwendung von WASAPI kann in den Einstellungen in der Kategorie "Erweitert" deaktiviert werden.
+  Wenn WASAPI aktiviert ist, können auch die folgenden erweiterten Einstellungen konfiguriert werden.
+    - Eine Option, mit der die Lautstärke der NVDA-Sounds und -Signaltöne an die Lautstärke-Einstellung der verwendeten Stimme angepasst werden kann. (#1409)
+    - Eine Option, um die Lautstärke von NVDA-Sounds separat zu konfigurieren. (#1409, #15038)
+    -
+  - Hinweis: WASAPI ist mit einigen NVDA-Erweiterungen nicht kompatibel.
+  Für diese NVDA-Erweiterungen sind kompatible Updates verfügbar. Bitte aktualisieren Sie diese, bevor Sie NVDA aktualisieren.
+  Inkompatible Versionen dieser NVDA-Erweiterungen werden beim NVDA-Update deaktiviert:
+    - Tony's Enhancements Version 1.15 oder älter. (#15402)
+    - NVDA Global Commands Extension 12.0.8 oder älter. (#15443)
+    -
+  -
+- NVDA ist nun in der Lage, bei der Texterkennung (OCR) das Ergebnis kontinuierlich zu aktualisieren und neuen Text mitzuteilen, sobald er erscheint. (#2797)
+  - Um diese Funktion zu aktivieren, aktivieren Sie in den NVDA-Einstellungen in der Kategorie "Windows-Texterkennung" die Option "Erkannte Inhalte regelmäßig aktualisieren".
+  - Sobald diese Funktion aktiviert ist, können Sie neuen Text mit ``NVDA+5`` sich mitteilen lassen, indem Sie die Änderungen dynamischer Inhalte umschalten.
+  -
+- Bei der automatischen Erkennung von Braillezeilen ist es nun möglich, Treiber von der Erkennung auszuschließen, und zwar im Dialogfeld zur Auswahl der Braillezeile. (#15196)
+- Eine neue Option in den Einstellungen für die Dokument-Formatierung "Ignorieren von Leerzeilen bei Mitteilung von Zeileneinrückungen". (#13394)
+- Es wurde ein nicht zugewiesener Tastenbefehlhinzugefügt, um im Lesemodus durch die Registerkarten-Gruppierungen zu navigieren. (#15046)
+-
+
+== Änderungen ==
+- Braille:
+  - Wenn sich der Text in einem Terminal ändert, ohne dass der Cursor aktualisiert wird, wird der Text auf einer Braillezeile jetzt korrekt aktualisiert, wenn er auf einer geänderten Zeile steht.
+  Dies gilt auch für Situationen, in denen die Braille-Ausgabe dem NVDA-Cursor folgt. (#15115)
+  - Weitere BRLTTY-Tastenbelegungen sind nun NVDA-Befehlen zugeordnet (#6483):
+    - ``learn``: Eingabehilfe von NVDA umschalten
+    - ``prefmenu``: Das NVDA-Menü öffnen
+    - ``prefload``/``prefsave``: NVDA-Konfiguration laden/speichern
+    - ``time``: Datum und Uhrzeit anzeigen
+    - ``say_line``: Teilt die aktuelle Zeile mit, in der sich der NVDA-Cursor befindet
+    - ``say_below``: Alles sich mit dem NVDA-cursor vorlesen lassen
+  - Der BRLTTY-Treiber ist nur verfügbar, wenn eine BRLTTY-Instanz mit aktivierter BrlAPI läuft. (#15335)
+  - Die erweiterte Einstellung zur Aktivierung der HID-Unterstützung für die Braille-Ausgabe wurde zugunsten einer neuen Option entfernt.
+  Sie können nun bestimmte Treiber für die automatische Erkennung von Braillezeilen im Dialogfeld zur Auswahl für Braillezeilen deaktivieren. (#15196)
+  -
+- Store für NVDA-Erweiterungen: Installierte Pakete werden nun auf der Registerkarte Verfügbare Pakete aufgelistet, sofern sie im Store verfügbar sind. (#15374)
+- Einige Tastenkombinationen wurden im NVDA-Menü aktualisiert. (#15364)
+-
+
+
+== Fehlerbehebungen ==
+- Microsoft Office:
+  - Behebung eines Absturzes in Microsoft Word, wenn die Option in den Dokument-Formatierungen "Überschriften mitteilen" und "Kommentare und Anmerkungen mitteilen" nicht aktiviert waren. (#15019)
+  - In Microsoft Word und Microsoft Excel wird die Textausrichtung in weiteren Situationen korrekt mitgeteilt. (#15206, #15220)
+  -
+- Microsoft Edge:
+  - NVDA springt beim Öffnen des Kontextmenüs in Microsoft Edge nicht mehr zur letzten Position im Lesemodus zurück. (#15309)
+  - NVDA ist wieder in der Lage, Kontextmenüs von Downloads in Microsoft Edge auszulesen. (#14916)
+  -
+- Braille:
+  - Der Braille-Cursor und die Auswahl-Indikatoren werden nun immer korrekt aktualisiert, wenn die entsprechenden Indikatoren durch einen Tastenbefehl ein- oder ausgeblendet werden. (#15115)
+  - Fehler behoben, bei dem Braillezeilen von Albatross versuchten, sich zu initialisieren, obwohl eine andere Braillezeile angeschlossen ist. (#15226)
+  -
+- Store für NVDA-Erweiterungen:
+  - Es wurde ein Fehler behoben, bei dem das Deaktivieren der Option "Inkompatible Pakete einschließen" dazu führte, dass inkompatible NVDA-Erweiterungen weiterhin im Store aufgeführt wurden. (#15411)
+  - NVDA-Erweiterungen, die aus Kompatibilitätsgründen blockiert sind, sollten nun korrekt gefiltert werden, wenn der Filter für den Status aktiviert/deaktiviert umgeschaltet wird. (#15416)
+  - Behebung eines Fehlers, der verhindert, dass inkompatible NVDA-Erweiterungen, die installiert und aktiviert sind, mit dem externen Installations-Tool aktualisiert oder ersetzt werden. (#15417)
+  -
+- Die Unterstützung für die System-Listenansicht (``SysListView32``) in Windows Forms-Anwendungen wurde verbessert. (#15283)
+- NVDA teilt erneut Berechnungsergebnisse im Windows-Rechner (32-Bit) auf Server-, LTSC- und LTSB-Versionen von Windows mit. (#15230)
+-
+
+== Änderungen für Entwickler ==
+Bitte lesen Sie [das Entwicklerhandbuch https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] für Informationen über den Prozess bei API-Änderungen in NVDA.
+- ``braille.handler.handleUpdate`` und ``braille.handler.handleReviewMove`` wurden geändert, um eine sofortige Erneuerung zu vermeiden.
+Vor dieser Änderung wurden bei sehr häufigen Aufrufen einer dieser Methoden viele Ressourcen verbraucht.
+Diese Methoden stellen nun eine Erneuerung am Ende jedes Kernzyklus in die Warteschlange.
+Sie sollten auch Thread-sicher sein, so dass sie von Hintergrund-Threads aus aufgerufen werden können. (#15163)
+- Offizielle Unterstützung für die Registrierung von benutzerdefinierten Braillezeilen-Treibern bei der automatischen Erkennung von Braillezeilen wurde hinzugefügt.
+Lesen Sie die Dokumentation der Klasse ``braille.BrailleDisplayDriver`` für weitere Details.
+Vor allem muss das Attribut ``supportsAutomaticDetection`` auf ``True`` gesetzt und die Klassenmethode ``registerAutomaticDetection`` implementiert sein. (#15196)
+-
+
+=== Veraltete Funktionen ===
+- Die Funktion ``braille.BrailleHandler.handlePendingCaretUpdate`` ist jetzt veraltet, ohne Ersatz.
+Sie wird in 2024.1 entfernt. (#15163)
+- Das Importieren der Konstanten ``xlCenter``, ``xlJustify``, ``xlLeft``, ``xlRight``, ``xlDistributed``, ``xlBottom``, ``xlTop`` aus ``NVDAObjects.window.excel`` sind veraltet.
+Verwenden Sie stattdessen die Enumerationen ``XlHAlign`` oder ``XlVAlign``. (#15205)
+- Das Mapping ``NVDAObjects.window.excel.alignmentLabels`` ist veraltet.
+Verwenden Sie stattdessen die Methoden ``displayString`` der ``XlHAlign``- oder die Enumerationen ``XlVAlign``. (#15205)
+- ``bdDetect.addUsbDevices`` und ``bdDetect.addBluetoothDevices`` sind veraltet
+In Braillezeilen-Treiber sollte stattdessen die Methode ``registerAutomaticDetection`` implementiert werden.
+Diese Methode erhält ein Objekt ``DriverRegistrar``, auf das die Methoden ``addUsbDevices`` und ``addBluetoothDevices`` angewendet werden können. (#15200)
+- Die Standard-Implementierung der Methode zur Überprüfung von ``BrailleDisplayDriver`` verwendet ``bdDetect.driverHasPossibleDevices`` für Geräte, die als Thread-sicher markiert sind.
+Damit die Basis-Methode ``bdDetect.driverHasPossibleDevices`` verwendet werden kann, muss ab NVDA 2024.1 das Attribut ``supportsAutomaticDetection`` ebenfalls auf ``True`` gesetzt werden. (#15200)
+-
+
+
 = 2023.2 =
 Mit dieser Version wird der Store für NVDA-Erweiterungen eingeführt, der den vorherigen Eintrag "Erweiterungen verwalten" ersetzt.
 Im diesem Store können Sie nach NVDA-Erweiterungen aus der Community direkt suchen, installieren und aktualisieren.

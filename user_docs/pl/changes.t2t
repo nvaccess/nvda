@@ -8,6 +8,86 @@
 Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
 
 
+= 2023.3 =
+This release includes improvements to performance, responsiveness and stability of audio output.
+
+NVDA can now periodically refresh OCR results, speaking new text as it appears.
+This can be configured in the Windows OCR category of NVDA's settings dialog.
+
+There's been several braille fixes, improving device detection and caret movement.
+It is now possible to opt-out unwanted drivers from automatic detection, to improve autodetection performance.
+There are also new BRLTTY commands.
+
+There's also been bug fixes for the Add-on Store, Microsoft Office, Microsoft Edge context menus, and Windows Calculator.
+
+== New Features ==
+- Enhanced sound management:
+  - NVDA will now output audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds. (#14697, #11169, #11615, #5096, #10185, #11061)
+  - WASAPI usage can be disabled in Advanced settings.
+  If WASAPI is enabled, the following Advanced settings can also be configured.
+    - An option to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using. (#1409)
+    - An option to separately configure the volume of NVDA sounds. (#1409, #15038)
+    -
+  - Note: WASAPI is incompatible with some add-ons.
+  Compatible updates are available for these add-ons, please update them before updating NVDA.
+  Incompatible versions of these add-ons will be disabled when updating NVDA:
+    - Tony's Enhancements version 1.15 or older. (#15402)
+    - NVDA global commands extension 12.0.8 or older. (#15443)
+    -
+  -
+- NVDA is now able to continually update the result when performing optical character recognition (OCR), speaking new text as it appears. (#2797)
+  - To enable this functionality, enable the option "Periodically refresh recognized content" in the Windows OCR category of NVDA's settings dialog.
+  - Once enabled, you can toggle speaking new text by toggling report dynamic content changes (pressing ``NVDA+5``).
+  -
+- When using automatic detection of braille displays, it is now possible to opt-out drivers from detection from the braille display selection dialog. (#15196)
+- A new option in Document Formatting settings, "Ignore blank lines for line indentation reporting". (#13394)
+- Added an unassigned gesture to navigate by tab groupings in browse mode. (#15046)
+-
+
+== Changes ==
+- Braille:
+  - When the text in a terminal changes without updating the caret, the text on a braille display will now properly update when positioned on a changed line.
+  This includes situations where braille is tethered to review. (#15115)
+  - More BRLTTY key bindings are now mapped to NVDA commands (#6483):
+    - ``learn``: toggle NVDA input help
+    - ``prefmenu``: open the NVDA menu
+    - ``prefload``/``prefsave``: Load/save NVDA configuration
+    - ``time``: Show time
+    - ``say_line``: Speak the current line where the review cursor is located
+    - ``say_below``: Say all using review cursor
+    -
+  - The BRLTTY driver is only available when a BRLTTY instance with BrlAPI enabled is running. (#15335)
+  - The advanced setting to enable support for HID braille has been removed in favor of a new option.
+  You can now disable specific drivers for braille display auto detection in the braille display selection dialog. (#15196)
+  -
+- Add-on Store: Installed add-ons will now be listed in the Available Add-ons tab, if they are available in the store. (#15374)
+- Some shortcut keys have been updated in the NVDA menu. (#15364)
+-
+
+
+== Bug Fixes ==
+- Microsoft Office:
+  - Fix crash in Microsoft Word when Document formatting options "report headings" and "report comments and notes" were not enabled. (#15019)
+  - In Word and Excel, text alignment will be correctly reported in more situations. (#15206, #15220)
+  -
+- Microsoft Edge:
+  - NVDA will no longer jump back to the last browse mode position when opening the context menu in Microsoft Edge. (#15309)
+  - NVDA is once again able to read context menus of downloads in Microsoft Edge. (#14916)
+  -
+- Braille:
+  - The braille cursor and selection indicators will now always be updated correctly after showing or hiding respective indicators with a gesture. (#15115)
+  - Fixed bug where Albatross braille displays try to initialize although another braille device has been connected. (#15226)
+  -
+- Add-on Store:
+  - Fix bug where unchecking "include incompatible add-ons" would result in incompatible add-ons still being listed in the store. (#15411)
+  - Add-ons blocked due to compatibility reasons should now be filtered correctly when toggling the filter for enabled/disabled status. (#15416)
+  - Fix bug preventing incompatible add-ons which are installed and enabled being upgraded or replaced using the external install tool. (#15417)
+  -
+- Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283)
+- NVDA once again announces calculation results in the Windows 32bit calculator on Server, LTSC and LTSB versions of Windows. (#15230)
+-
+
+
 = 2023.2 =
 W tej wersji została wprowadzona funkcja Add-on store, która zamienia menedżer dodatków.
 W Add-on Store można przeglądać, wyszukiwać, instalować dodatki stworzone przez społeczność.

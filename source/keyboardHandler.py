@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-# keyboardHandler.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -8,7 +7,6 @@
 """Keyboard support"""
 
 import ctypes
-import sys
 import time
 import re
 import typing
@@ -19,7 +17,6 @@ from typing import (
 	Any,
 )
 
-import wx
 import winVersion
 import winUser
 import vkCodes
@@ -28,7 +25,6 @@ import speech
 import ui
 from keyLabels import localizedKeyLabels
 from logHandler import log
-import queueHandler
 import config
 from config.configFlags import NVDAKey
 import api
@@ -41,6 +37,7 @@ from contextlib import contextmanager
 import threading
 
 if typing.TYPE_CHECKING:
+	from NVDAObjects import NVDAObject  # noqa: F401
 	from watchdog import WatchdogObserver
 
 _watchdogObserver: typing.Optional["WatchdogObserver"] = None
@@ -136,10 +133,11 @@ def getNVDAModifierKeys() -> List[Tuple[int, Optional[bool]]]:
 	return keys
 
 
-def shouldUseToUnicodeEx(focus=None):
+def shouldUseToUnicodeEx(focus: Optional["NVDAObject"] = None):
 	"Returns whether to use ToUnicodeEx to determine typed characters."
 	if not focus:
 		focus = api.getFocusObject()
+	from NVDAObjects.window import Window
 	from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport
 	return (
 		# This is only possible in Windows 10 1607 and above
@@ -147,9 +145,18 @@ def shouldUseToUnicodeEx(focus=None):
 		and (  # Either of
 			# We couldn't inject in-process, and its not a legacy console window without keyboard support.
 			# console windows have their own specific typed character support.
-			(not focus.appModule.helperLocalBindingHandle and focus.windowClassName != 'ConsoleWindowClass')
+			(
+				not focus.appModule.helperLocalBindingHandle
+				and (
+					not isinstance(focus, Window)
+					or focus.windowClassName != 'ConsoleWindowClass'
+				)
+			)
 			# or the focus is within a UWP app, where WM_CHAR never gets sent
-			or focus.windowClassName.startswith('Windows.UI.Core')
+			or (
+				isinstance(focus, Window)
+				and focus.windowClassName.startswith('Windows.UI.Core')
+			)
 			# Or this is a console with keyboard support, where WM_CHAR messages are doubled
 			or isinstance(focus, KeyboardHandlerBasedTypedCharSupport)
 		)

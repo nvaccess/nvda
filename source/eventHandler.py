@@ -309,8 +309,10 @@ def executeEvent(
 		sleepMode = obj.sleepMode
 		# Handle possible virtual desktop name change event.
 		# More effective in Windows 10 Version 1903 and later.
+		from NVDAObjects.window import Window
 		if (
 			eventName == "nameChange"
+			and isinstance(obj, Window)
 			and obj.windowClassName == "#32769"
 			and _canAnnounceVirtualDesktopNames
 		):
@@ -487,22 +489,14 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 			return True
 
 	fg = winUser.getForegroundWindow()
-	fgClassName=winUser.getClassName(fg)
+	# #5504, #14916, #15432 : Some windows, such as in the Office ribbon or Edge downloads window
+	# aren't directly beneath the foreground window, so our foreground application checks fail.
+	# However, they share the same root owner and events for them should be allowed.
 	if (
-		# #5504: In Office >= 2013 with the ribbon showing only tabs,
-		# when a tab is expanded, the window we get from the focus object is incorrect.
-		# This window isn't beneath the foreground window.
-		wClass == "NetUIHWND" and fgClassName in ("Net UI Tool Window Layered", "Net UI Tool Window")
-		or (
-			# #14916: The context menu in the Edge download window isn't beneath the foreground window.
-			wClass == fgClassName
-			and wClass.startswith("Chrome_WidgetWin_") and fgClassName.startswith("Chrome_WidgetWin_")
-		)
+		winUser.getAncestor(windowHandle, winUser.GA_ROOTOWNER)
+		== winUser.getAncestor(fg, winUser.GA_ROOTOWNER)
 	):
-		# Our foreground application checks fail.
-		# Just compare the root owners.
-		if winUser.getAncestor(windowHandle, winUser.GA_ROOTOWNER) == winUser.getAncestor(fg, winUser.GA_ROOTOWNER):
-			return True
+		return True
 	if (winUser.isDescendantWindow(fg, windowHandle)
 			# #3899, #3905: Covers cases such as the Firefox Page Bookmarked window and OpenOffice/LibreOffice context menus.
 			or winUser.isDescendantWindow(fg, winUser.getAncestor(windowHandle, winUser.GA_ROOTOWNER))):
