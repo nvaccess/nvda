@@ -2354,7 +2354,7 @@ class DocumentFormattingPanel(SettingsPanel):
 			"DocumentFormattingSettingsLineIndentation",
 			self.lineIndentationCombo
 		)
-		self.lineIndentationCombo.Bind(wx.EVT_CHOICE, self.onLineIndentationChange)
+		self.lineIndentationCombo.Bind(wx.EVT_CHOICE, self._onLineIndentationChange)
 		reportLineIndentation = config.conf['documentFormatting']['reportLineIndentation']
 		self.lineIndentationCombo.SetSelection(reportLineIndentation)
 
@@ -2501,7 +2501,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.detectFormatAfterCursorCheckBox.SetValue(config.conf["documentFormatting"]["detectFormatAfterCursor"])
 		sHelper.addItem(self.detectFormatAfterCursorCheckBox)
 
-	def onLineIndentationChange(self, evt: wx.CommandEvent) -> None:
+	def _onLineIndentationChange(self, evt: wx.CommandEvent) -> None:
 		self.ignoreBlankLinesRLICheckbox.Enable(evt.GetSelection() != 0)
 
 	def onSave(self):
