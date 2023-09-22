@@ -1,7 +1,7 @@
 # User Guide Standards
 This document aims to create a standard style guide for writing documentation in the User Guide.
 
-The principles outlined in ["The Documentation System" guide for reference materials](https://documentation.divio.com/reference/) are encouraged when working on the User Guide and this document.
+The principles outlined in ["The Documentation System" guide for reference materials](https://documentation.divio.com/reference.html) are encouraged when working on the User Guide and this document.
 
 ## General standards
 - Key commands (e.g. ` ``NVDA+control+upArrow`` `):

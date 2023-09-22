@@ -263,7 +263,8 @@ Muchas pantallas de opciones tienen pulsaciones de teclas para abrirlas directam
 
 ++ Comunidad ++[Community]
 
-NVDA tiene una vibrante comunidad de usuarios.  Hay una [lista principal de correo electrónico en inglés https://nvda.groups.io/g/nvda] y una página completa de [grupos locales de idiomas https://github.com/nvaccess/nvda-community/wiki/Connect].
+NVDA tiene una vibrante comunidad de usuarios.
+Hay una [lista principal de correo electrónico en inglés https://nvda.groups.io/g/nvda] y una página completa de [grupos locales de idiomas https://github.com/nvaccess/nvda-community/wiki/Connect].
 NV Access, los constructores de NVDA, están activos en [Twitter https://twitter.com/nvaccess] y en [Facebook https://www.facebook.com/NVAccess].
 NV Access también tiene un [blog In-Process https://www.nvaccess.org/category/in-process/].
 
@@ -814,6 +815,25 @@ Si quieres utilizar éstas aún podrás usar las teclas de cursor para leer en m
 Para activar o desactivar la navegación con una sola letra para el documento actual, pulsa NVDA+shift+espacio.
 %kc:endInclude
 
++++ Otras órdenes de navegación +++[OtherNavigationCommands]
+
+Además de las órdenes enumeradas arriba, NVDA tiene órdenes que no tienen teclas predeterminadas asignadas.
+Para utilizar estas órdenes, primero necesitas asignarles gestos usando el [diálogo Gestos de Entrada #InputGestures].
+Aquí tienes una lista de las órdenes disponibles
+- Artículo
+- Grupo
+- Pestaña
+-
+Ten en cuenta que hay dos órdenes para cada tipo de elemento, para avanzar y para retroceder en el documento, y debes asignar gestos para ambas órdenes para poder navegar rápidamente en ambas direcciones.
+Por ejemplo, si quieres utilizar las teclas ``y`` / ``shift+y`` para navegar rápidamente por las pestañas, harías lo siguiente
+
++ Abre el diálogo Gestos de entrada desde el modo exploración.
++ Busca el elemento "mueve a la siguiente pestaña" en la sección modo Exploración.
++ Asigna la tecla ``y`` para el gesto encontrado.
++ Busca el elemento "mueve a la pestaña anterior".
++ Asigna ``shift+y`` para el gesto encontrado.
++
+
 ++ La Lista de Elementos ++[ElementsList]
 La lista de elementos proporciona acceso a una lista de varios tipos de elementos en el documento según sea apropiado para la aplicación.
 Por ejemplo, en navegadores web, la lista de elementos puede enumerar enlaces, encabezados, campos de formulario, botones o regiones.
@@ -1095,6 +1115,9 @@ NVDA puede utilizar esto para reconocer texto desde imágenes o aplicaciones ina
 
 Puedes configurar el idioma a utilizar para el reconocimiento de texto en la [categoría OCR de Windows #Win10OcrSettings]del diálogo [Opciones de NVDA #NVDASettings].
 Pueden instalarse idiomas adicionales abriendo el menú Inicio, eligiendo Configuración, seleccionando Hora e Idioma -> Región e Idioma y luego eligiendo Añadir un Idioma.
+
+Cuando quieras monitorizar contenido que cambie constantemente, como cuando ves un vídeo con subtítulos, opcionalmente puedes habilitar el refrescado automático del contenido reconocido.
+Esto puede hacerse también en la [categoría OCR de Windows #Win10OcrSettings] del diálogo [Opciones de NVDA #NVDASettings].
 
 El OCR de Windows puede ser total o parcialmente incompatible con las [Mejoras visuales de NVDA #Vision] u otras ayudas visuales externas. Tendrás que deshabilitar estas ayudas antes de proceder con un reconocimiento.
 
@@ -1736,6 +1759,16 @@ Sin braille significa que no estás utilizando braille.
 
 Por favor consulta la sección [Pantallas Braille Admitidas #SupportedBrailleDisplays] para más información acerca de dichas pantallas braille y de cuáles de ellas admiten la detección automática.
 
+==== Pantallas a detectar automáticamente ====[SelectBrailleDisplayAutoDetect]
+Cuando la pantalla braille está configurada en "Automático", las casillas de verificación en este control de lista te permiten habilitar y deshabilitar los controladores de pantalla que participarán en el proceso de detección automática.
+Esto te permite excluir los controladores de las pantallas braille que no utilices habitualmente.
+Por ejemplo, si sólo tienes una pantalla que necesite el controlador Baum para funcionar, puedes dejar activado dicho controlador y desactivar los demás.
+
+Por omisión, todos los controladores compatibles con la detección automática están habilitados.
+Cualquier controlador añadido, por ejemplo en una versión futura de NVDA o en un complemento, también se ahbilitará por defecto.
+
+Puedes consultar la documentación para tu pantalla braille en la sección [Pantallas Braille Admitidas #SupportedBrailleDisplays] para comprobar si el controlador soporta la detección automática de pantallas.
+
 ==== Puerto ====[SelectBrailleDisplayPort]
 Esta opción, si está disponible, te permite elegir qué puerto o tipo de conexión se utilizará para comunicar con la pantalla braille que has seleccionado.
 Es un cuadro combinado que contiene las elecciones posibles para tu pantalla braille.
@@ -2110,6 +2143,7 @@ Puedes configurar el anunciado de:
  - Números de línea
  - Anunciado de sangría de línea [(Desactivado, voz, Tonos, voz y tonos) #DocumentFormattingSettingsLineIndentation]
  - Sangría de párrafo (por ejemplo: sangría, sangría de primera línea)
+ - Ignorar líneas en blanco para anunciado de sangría de línea
  - Espaciado de línea (simple, doble etc)
  - Alineación
 - Información de tabla
@@ -2151,6 +2185,9 @@ El tono se incrementará en intensidad para cada espacio, y para el tabulador,se
 - Voz y Tonos: esta opción lee la sangría utilizando ambos métodos de arriba.
 -
 
+Si marcas la casilla de verificación "Ignorar líneas en blanco para anunciado de sangría de línea", entonces no se anunciarán los cambios de sangría en las líneas en blanco.
+Esto puede ser útil al leer un documento en el que las líneas en blanco se utilicen para separar bloques de texto con sangría, como en el código fuente de programación.
+
 +++ Navegación de Documento +++[DocumentNavigation]
 Esta categoría te permite ajustar varios aspectos de la navegación de documento.
 
@@ -2181,6 +2218,12 @@ Esta categoría contiene las siguientes opciones:
 ==== Idioma de Reconocimiento ====[Win10OcrSettingsRecognitionLanguage]
 Este cuadro combinado te permite elegir el idioma para utilizar con el reconocimiento de texto.
 Para recorrer los idiomas disponibles desde cualquier lugar, por favor asigna un gesto personalizado utilizando el [diálogo Gestos de Entrada #InputGestures].
+
+==== Refrescado periódico de contenido reconocido ====[Win10OcrSettingsAutoRefresh]
+Cuando esta casilla esté habilitada, NVDA refrescará automáticamente el contenido reconocido cuando un resultado de un reconocimiento tenga el foco.
+Esto puede ser muy útil cuando quieras monitorizar contenido que cambia constantemente, como cuando ves un vídeo con subtítulos.
+El refrescado tiene lugar cada segundo y medio.
+Esta opción está deshabilitada por defecto.
 
 +++ Opciones Avanzadas +++[AdvancedSettings]
 ¡Advertencia! Las opciones en esta categoría son para usuarios avanzados y pueden causar que NVDA no funcione correctamente si se configura de forma incorrecta.
@@ -2364,9 +2407,9 @@ Con varias APIs de GUI históricamente populares, el texto puede ser renderizado
 
 ==== Utilizar WASAPI para la salida de audio ====[WASAPI]
 : predeterminada
-  Deshabilitada
+  Habilitada
 : Opciones
-  Deshabilitada, Habilitada
+  Predeterminada (habilitada),Deshabilitada, Habilitada
 :
 
 Esta opción habilita la salida de audio a través de la API Windows Audio Session (WASAPI).
@@ -3863,6 +3906,13 @@ Por favor consulta las [listas de claves de vínculos de BRLTTY http://mielke.cc
 | Mover la pantalla braille a la línea anterior | lnup (va una línea hacia arriba) |
 | Mover pantalla braille a la siguiente línea | lndn (va una línea hacia abajo) |
 | Guiar a la celda braille | route (lleva el cursor al carácter) |
+| Conmutar entrada de ayuda | learn (entra y sale del modo aprendizaje de órdenes) |
+| Abrir el menú NVDA | prefmenu (entra y sale del menú preferencias) |
+| Revertir configuración | prefload (restaura las preferencias desde el disco) |
+| Guardar configuración | prefsave (guarda las preferencias en el disco) |
+| Anunciar hora | time (muestra la fecha y la hora actuales) |
+| Verbalizar la línea donde esté el cursor de revisión | say_line (verbaliza la línea actual) |
+| Verbalizar todo utilizando el cursor de revisión | say_below (verbaliza desde la línea actual hasta el fondo de la pantalla) |
 %kc:endInclude
 
 ++ Tivomatic Caiku Albatross 46/80 ++[Albatross]

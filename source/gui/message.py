@@ -97,6 +97,8 @@ def messageBox(
 	some actions such as shutting down are prevented while NVDA is in a possibly uncertain state.
 	"""
 	from gui import mainFrame
+	import core
+	from logHandler import log
 	global _messageBoxCounter
 	with _messageBoxCounterLock:
 		_messageBoxCounter += 1
@@ -104,7 +106,11 @@ def messageBox(
 	try:
 		if not parent:
 			mainFrame.prePopup()
-		res = wx.MessageBox(message, caption, style, parent or mainFrame)
+		if not core._hasShutdownBeenTriggered:
+			res = wx.MessageBox(message, caption, style, parent or mainFrame)
+		else:
+			log.debugWarning("Not displaying message box as shutdown has been triggered.", stack_info=True)
+			res = wx.ID_CANCEL
 	finally:
 		if not parent:
 			mainFrame.postPopup()

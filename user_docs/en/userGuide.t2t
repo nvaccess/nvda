@@ -819,14 +819,14 @@ To toggle single letter navigation on and off for the current document, press NV
 
 In addition to the quick navigation commands listed above, NVDA has commands that have no default keys assigned.
 To use these commands, you first need to assign gestures to them using the [Input Gestures dialog #InputGestures].
-Here is a list of available commands
+Here is a list of available commands:
 - Article
 - Grouping
 - Tab
 -
-Keep in mind that there are two commands for each type of element, for moving forward in the document and backward in the document, and you must assign gestures to both commands in order to be able to quickly navigate in both directions.
 
-For example, if you want to use the ``y`` / ``shift+y`` keys to quickly navigate through tabs, you would do the following
+Keep in mind that there are two commands for each type of element, for moving forward in the document and backward in the document, and you must assign gestures to both commands in order to be able to quickly navigate in both directions.
+For example, if you want to use the ``y`` / ``shift+y`` keys to quickly navigate through tabs, you would do the following:
 
 + Open input gestures dialog from browse mode.
 + Find "moves to the next tab" item in the Browse mode section.
@@ -1554,22 +1554,6 @@ For a list of the Synthesizers that NVDA supports, please see the [Supported Spe
 One special item that will always appear in this list is "No speech", which allows you to use NVDA with no speech output whatsoever.
 This may be useful for someone who wishes to only use NVDA with braille, or perhaps to sighted developers who only wish to use the Speech Viewer.
 
-==== Output device ====[SelectSynthesizerOutputDevice]
-This option allows you to choose the audio device that NVDA should instruct the selected synthesizer to speak through.
-
-%kc:setting
-==== Audio Ducking Mode ====[SelectSynthesizerDuckingMode]
-Key: NVDA+shift+d
-
-On Windows 8 and above, this option allows you to choose if NVDA should lower the volume of other applications while NVDA is speaking, or all the time while NVDA is running.
-- No Ducking: NVDA will never lower the volume of other audio.
-- Duck when outputting speech and sounds: NVDA will only lower the volume of other audio when NVDA is speaking or playing sounds. This may not work for all synthesizers.
-- Always duck: NVDA will keep the volume of other audio lower the whole time NVDA is running.
--
-
-This option is only available if NVDA has been installed.
-It is not possible to support audio ducking for portable and temporary copies of NVDA.
-
 +++ Synth settings ring +++[SynthSettingsRing]
 If you wish to quickly change speech settings without going to the Speech category of the NVDA settings dialog, there are some NVDA key commands that allow you to move through the most common speech settings from anywhere while running NVDA:
 %kc:beginInclude
@@ -1785,6 +1769,42 @@ You may consult the documentation for your braille display in the section [Suppo
 Please note: If you connect multiple Braille Displays to your machine at the same time which use the same driver (E.g. connecting two Seika displays),
 it is currently impossible to tell NVDA which display to use.
 Therefore it is recommended to only connect one Braille Display of a given type / manufacturer to your machine at a time.
+
++++ Audio +++[AudioSettings]
+The Audio category in the NVDA Settings dialog contains options that let you change several aspects of audio output.
+
+==== Output device ====[SelectSynthesizerOutputDevice]
+This option allows you to choose the audio device that NVDA should instruct the selected synthesizer to speak through.
+
+%kc:setting
+==== Audio Ducking Mode ====[SelectSynthesizerDuckingMode]
+Key: ``NVDA+shift+d``
+
+On Windows 8 and above, this option allows you to choose if NVDA should lower the volume of other applications while NVDA is speaking, or all the time while NVDA is running.
+- No Ducking: NVDA will never lower the volume of other audio.
+- Duck when outputting speech and sounds: NVDA will only lower the volume of other audio when NVDA is speaking or playing sounds. This may not work for all synthesizers.
+- Always duck: NVDA will keep the volume of other audio lower the whole time NVDA is running.
+-
+
+This option is only available if NVDA has been installed.
+It is not possible to support audio ducking for portable and temporary copies of NVDA.
+
+==== Volume of NVDA sounds follows voice volume ====[SoundVolumeFollowsVoice]
+: Default
+  Disabled
+: Options
+  Disabled, Enabled
+:
+
+When this option is enabled, the volume of NVDA sounds and beeps will follow the volume setting of the voice you are using.
+If you decrease the volume of the voice, the volume of sounds will decrease.
+Similarly, if you increase the volume of the voice, the volume of sounds will increase.
+This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
+
+==== Volume of NVDA sounds ====[SoundVolume]
+This slider allows you to set the volume of NVDA sounds and beeps.
+This setting only takes effect when "Volume of NVDA sounds follows voice volume" is disabled.
+This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
 
 +++ Vision +++[VisionSettings]
 The Vision category in the NVDA Settings dialog allows you to enable, disable and configure [visual aids #Vision].
@@ -2415,22 +2435,10 @@ With several historically popular GUI APIs, the text may be rendered with a tran
 This option enables audio output via the Windows Audio Session API (WASAPI).
 WASAPI is a more modern audio framework which may improve the responsiveness, performance and stability of NVDA audio output, including both speech and sounds.
 After changing this option, you will need to restart NVDA for the change to take effect.
-
-==== Volume of NVDA sounds follows voice volume ====[SoundVolumeFollowsVoice]
-: Default
-  Disabled
-: Options
-  Disabled, Enabled
-:
-
-When this option is enabled, the volume of NVDA sounds and beeps will follow the volume setting of the voice you are using.
-If you decrease the volume of the voice, the volume of sounds will decrease.
-Similarly, if you increase the volume of the voice, the volume of sounds will increase.
-This option only takes effect when "Use WASAPI for audio output" is enabled.
-
-==== Volume of NVDA sounds ====[SoundVolume]
-This slider allows you to set the volume of NVDA sounds and beeps.
-This setting only takes effect when "Use WASAPI for audio output" is enabled and "Volume of NVDA sounds follows voice volume" is disabled.
+Disabling WASAPI will disable the following options:
+- [Volume of NVDA sounds follows voice volume #SoundVolumeFollowsVoice]
+- [Volume of NVDA sounds #SoundVolume]
+-
 
 ==== Debug logging categories ====[AdvancedSettingsDebugLoggingCategories]
 The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.
@@ -3901,18 +3909,18 @@ Following are the BRLTTY command assignments for NVDA.
 Please see the [BRLTTY key binding lists https://brltty.app/doc/KeyBindings/] for information about how BRLTTY commands are mapped to controls on braille displays.
 %kc:beginInclude
 || Name | BRLTTY command |
-| Scroll braille display back | fwinlt (go left one window) |
-| Scroll braille display forward | fwinrt (go right one window) |
-| Move braille display to previous line | lnup (go up one line) |
-| Move braille display to next line | lndn (go down one line) |
-| Route to braille cell | route (bring cursor to character) |
-| Toggle input help | learn (enter/leave command learn mode) |
-| Open the NVDA menu | prefmenu (enter/leave preferences menu) |
-| Revert configuration | prefload (restore preferences from disk) |
-| Save configuration | prefsave (save preferences to disk) |
-| Report time | time (show current date and time) |
-| Speak the line where the review cursor is located | say_line (speak current line) |
-| Say all using review cursor | say_below (speak from current line through bottom of screen) |
+| Scroll braille display back | ``fwinlt`` (go left one window) |
+| Scroll braille display forward | ``fwinrt`` (go right one window) |
+| Move braille display to previous line | ``lnup`` (go up one line) |
+| Move braille display to next line | ``lndn`` (go down one line) |
+| Route to braille cell | ``route`` (bring cursor to character) |
+| Toggle input help | ``learn`` (enter/leave command learn mode) |
+| Open the NVDA menu | ``prefmenu`` (enter/leave preferences menu) |
+| Revert configuration | ``prefload`` (restore preferences from disk) |
+| Save configuration | ``prefsave`` (save preferences to disk) |
+| Report time | ``time`` (show current date and time) |
+| Speak the line where the review cursor is located | ``say_line`` (speak current line) |
+| Say all using review cursor | ``say_below`` (speak from current line through bottom of screen) |
 %kc:endInclude
 
 ++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
