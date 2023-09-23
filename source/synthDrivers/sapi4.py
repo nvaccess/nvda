@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited
+# Copyright (C) 2006-2023 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -43,7 +43,10 @@ from speech.commands import (
 	CharacterModeCommand,
 	BreakCommand,
 	PitchCommand,
+	RateCommand,
+	VolumeCommand,
 )
+
 
 class SynthDriverBufSink(COMObject):
 	_com_interfaces_ = [ITTSBufNotifySink]
@@ -74,6 +77,11 @@ class SynthDriver(SynthDriver):
 	name="sapi4"
 	description="Microsoft Speech API version 4"
 	supportedSettings=[SynthDriver.VoiceSetting()]
+	supportedCommands = {
+		IndexCommand,
+		CharacterModeCommand,
+		BreakCommand,
+	}
 	supportedNotifications={synthIndexReached,synthDoneSpeaking}
 
 	@classmethod
@@ -120,10 +128,9 @@ class SynthDriver(SynthDriver):
 		textList=[]
 		charMode=False
 		item=None
-		isPitchCommand = False
-		pitch = WORD()
-		self._ttsAttrs.PitchGet(byref(pitch))
-		oldPitch = pitch.value
+		oldPitch = self.pitch
+		oldVolume = self.volume
+		oldRate = self.rate
 
 		for item in speechSequence:
 			if isinstance(item,str):
@@ -136,15 +143,21 @@ class SynthDriver(SynthDriver):
 			elif isinstance(item, BreakCommand):
 				textList.append(f"\\Pau={item.time}\\")
 			elif isinstance(item, PitchCommand):
-				offset = int(config.conf["speech"]['sapi4']["capPitchChange"])
-				offset = int((self._maxPitch - self._minPitch) * offset / 100)
-				val = oldPitch + offset
-				if val > self._maxPitch:
-					val = self._maxPitch
-				if val < self._minPitch:
-					val = self._minPitch
-				self._ttsAttrs.PitchSet(val)
-				isPitchCommand = True
+				val = oldPitch + item.offset
+				val = self._percentToParam(val, self._minPitch, self._maxPitch)
+				textList.append(f"\\Pit={val}\\")
+			elif isinstance(item, RateCommand):
+				val = oldRate + item.offset
+				val = self._percentToParam(val, self._minRate, self._maxRate)
+				textList.append(f"\\Spd={val}\\")
+			elif isinstance(item, VolumeCommand):
+				val = oldVolume + item.offset
+				val = self._percentToParam(val, self._minVolume, self._maxVolume)
+				# If you specify a value greater than 65535, the engine assumes that you want to set the
+				# left and right channels separately and converts the value to a double word,
+				# using the low word for the left channel and the high word for the right channel.
+				val |= val << 16
+				textList.append(f"\\Vol={val}\\")
 			elif isinstance(item, SpeechCommand):
 				log.debugWarning("Unsupported speech command: %s"%item)
 			else:
@@ -161,24 +174,13 @@ class SynthDriver(SynthDriver):
 		textList.append("\\PAU=1\\")
 		text="".join(textList)
 		flags=TTSDATAFLAG_TAGGED
-		if isPitchCommand:
-			self._ttsCentral.TextData(
-				VOICECHARSET.CHARSET_TEXT,
-				flags,
-				TextSDATA(text),
-				self._bufSinkPtr,
-				ITTSBufNotifySink._iid_
-			)
-			self._ttsAttrs.PitchSet(oldPitch)
-			isPitchCommand = False
-		else:
-			self._ttsCentral.TextData(
-				VOICECHARSET.CHARSET_TEXT,
-				flags,
-				TextSDATA(text),
-				self._bufSinkPtr,
-				ITTSBufNotifySink._iid_
-			)
+		self._ttsCentral.TextData(
+			VOICECHARSET.CHARSET_TEXT,
+			flags,
+			TextSDATA(text),
+			self._bufSinkPtr,
+			ITTSBufNotifySink._iid_
+		)
 
 	def cancel(self):
 		self._ttsCentral.AudioReset()
@@ -239,8 +241,12 @@ class SynthDriver(SynthDriver):
 		if hasRate:
 			if not self.isSupported('rate'):
 				self.supportedSettings.insert(1,SynthDriver.RateSetting())
+			self.supportedCommands.add(RateCommand)
 		else:
-			if self.isSupported("rate"): self.removeSetting("rate")
+			if self.isSupported("rate"):
+				self.removeSetting("rate")
+			if RateCommand in self.supportedCommands:
+				self.supportedCommands.remove(RateCommand)
 		#Find out pitch limits
 		hasPitch=bool(mode.dwFeatures&TTSFEATURE_PITCH)
 		if hasPitch:
@@ -262,8 +268,12 @@ class SynthDriver(SynthDriver):
 		if hasPitch:
 			if not self.isSupported('pitch'):
 				self.supportedSettings.insert(2,SynthDriver.PitchSetting())
+			self.supportedCommands.add(PitchCommand)
 		else:
-			if self.isSupported('pitch'): self.removeSetting('pitch')
+			if self.isSupported('pitch'):
+				self.removeSetting('pitch')
+			if PitchCommand in self.supportedCommands:
+				self.supportedCommands.remove(PitchCommand)
 		#Find volume limits
 		hasVolume=bool(mode.dwFeatures&TTSFEATURE_VOLUME)
 		if hasVolume:
@@ -273,10 +283,10 @@ class SynthDriver(SynthDriver):
 				self._ttsAttrs.VolumeSet(TTSATTR_MINVOLUME)
 				newVal=DWORD()
 				self._ttsAttrs.VolumeGet(byref(newVal))
-				self._minVolume=newVal.value
+				self._minVolume = newVal.value & 0Xffff
 				self._ttsAttrs.VolumeSet(TTSATTR_MAXVOLUME)
 				self._ttsAttrs.VolumeGet(byref(newVal))
-				self._maxVolume=newVal.value
+				self._maxVolume = newVal.value & 0Xffff
 				self._ttsAttrs.VolumeSet(oldVal.value)
 				if self._maxVolume<=self._minVolume:
 					hasVolume=False
@@ -285,8 +295,12 @@ class SynthDriver(SynthDriver):
 		if hasVolume:
 			if not self.isSupported('volume'):
 				self.supportedSettings.insert(3,SynthDriver.VolumeSetting())
+			self.supportedCommands.add(VolumeCommand)
 		else:
-			if self.isSupported('volume'): self.removeSetting('volume')
+			if self.isSupported('volume'):
+				self.removeSetting('volume')
+			if VolumeCommand in self.supportedCommands:
+				self.supportedCommands.remove(VolumeCommand)
 
 	def _get_voice(self):
 		return str(self._currentMode.gModeID)
@@ -303,30 +317,33 @@ class SynthDriver(SynthDriver):
 			voices[ID]=VoiceInfo(ID,name,language)
 		return voices
 
-	def _get_rate(self):
-		val=DWORD()
+	def _get_rate(self) -> int:
+		val = DWORD()
 		self._ttsAttrs.SpeedGet(byref(val))
-		return self._paramToPercent(val.value,self._minRate,self._maxRate)
+		return self._paramToPercent(val.value, self._minRate, self._maxRate)
 
-	def _set_rate(self,val):
-		val=self._percentToParam(val,self._minRate,self._maxRate)
+	def _set_rate(self, val: int):
+		val = self._percentToParam(val, self._minRate, self._maxRate)
 		self._ttsAttrs.SpeedSet(val)
 
-	def _get_pitch(self):
-		val=WORD()
+	def _get_pitch(self) -> int:
+		val = WORD()
 		self._ttsAttrs.PitchGet(byref(val))
-		return self._paramToPercent(val.value,self._minPitch,self._maxPitch)
+		return self._paramToPercent(val.value, self._minPitch, self._maxPitch)
 
-	def _set_pitch(self,val):
-		val=self._percentToParam(val,self._minPitch,self._maxPitch)
+	def _set_pitch(self, val: int):
+		val = self._percentToParam(val, self._minPitch, self._maxPitch)
 		self._ttsAttrs.PitchSet(val)
 
-	def _get_volume(self):
-		val=DWORD()
+	def _get_volume(self) -> int:
+		val = DWORD()
 		self._ttsAttrs.VolumeGet(byref(val))
-		return self._paramToPercent(val.value&0xffff,self._minVolume&0xffff,self._maxVolume&0xffff)
+		return self._paramToPercent(val.value & 0xffff, self._minVolume, self._maxVolume)
 
-	def _set_volume(self,val):
-		val=self._percentToParam(val,self._minVolume&0xffff,self._maxVolume&0xffff)
-		val+=val<<16
+	def _set_volume(self, val: int):
+		val = self._percentToParam(val, self._minVolume, self._maxVolume)
+		# If you specify a value greater than 65535, the engine assumes that you want to set the
+		# left and right channels separately and converts the value to a double word,
+		# using the low word for the left channel and the high word for the right channel.
+		val |= val << 16
 		self._ttsAttrs.VolumeSet(val)

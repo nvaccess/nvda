@@ -2,7 +2,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
-# Julien Cochuyt, Derek Riemer, Cyrille Bougot
+# Julien Cochuyt, Derek Riemer, Cyrille Bougot, Leonard de Ruijter
 
 """High-level functions to speak information.
 """ 
@@ -377,7 +377,7 @@ def getSingleCharDescription(
 		return
 	synth = getSynth()
 	synthConfig = config.conf["speech"][synth.name]
-	if synth.isSupported("pitch") and text.isupper():
+	if PitchCommand in synth.supportedCommands and text.isupper():
 		capPitchChange = synthConfig["capPitchChange"]
 	else:
 		capPitchChange = 0
@@ -410,8 +410,8 @@ def getSpellingSpeech(
 	
 	synth = getSynth()
 	synthConfig = config.conf["speech"][synth.name]
-	
-	if synth.isSupported("pitch"):
+
+	if PitchCommand in synth.supportedCommands:
 		capPitchChange = synthConfig["capPitchChange"]
 	else:
 		capPitchChange = 0

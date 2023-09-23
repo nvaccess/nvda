@@ -260,7 +260,8 @@ Većina NVDA ekrana postavki ima pripadajuće prečace za izravno otvaranje, kao
 
 ++ Zajednica ++[Community]
 
-NVDA ima živu zajednicu korisnika.  Postoji glavna [Mailing lista na engleskom jeziku https://nvda.groups.io/g/nvda] te stranica koja sadrži puno [grupa na lokalnim jezicima https://github.com/nvaccess/nvda-community/wiki/Connect].
+NVDA ima živu zajednicu korisnika. 
+Postoji glavna [Mailing lista na engleskom jeziku https://nvda.groups.io/g/nvda] te stranica koja sadrži puno [grupa na lokalnim jezicima https://github.com/nvaccess/nvda-community/wiki/Connect].
 NV Access, tvorci NVDA, aktivni su na [Twitteru https://twitter.com/nvaccess] i [Facebooku https://www.facebook.com/NVAccess].
 Članovi organizacije NV Access također vode [Blog s novostima https://www.nvaccess.org/category/in-process/].
 
@@ -811,6 +812,26 @@ Ako ih želite koristiti istovremeno s kursorskim tipkama kako biste mogli nesme
 Da biste isključili ili uključili brzo kretanje za trenutačni dokument, pritisnite tipke NVDA+šift+razmaknica.
 %kc:endInclude
 
++++ Drugi prečaci za kretanje +++[OtherNavigationCommands]
+
+Osim prečaca za kretanej koji su popisani više, NVDA NVDA posjeduje prečace koji nisu definirani.
+Kako biste ih koristili, morate ih definirati koristeći [dijaloški okvir ulaznih gesti #InputGestures].
+Ovdje su popisani dostupni prečaci
+- Članak
+- Grupiranje
+- Kartica svojstava
+-
+Imajte na umu a postoje dva tipa prečaca za kretanje po elementima za kretanje u naprijed i u nazad po dokumentu te morate pridjeliti oba prečaca kako biste se mogli kretati u oba smjera.
+
+Na primjer, ako biste htjeli koristiti ``y`` / ``šift+y`` tipke za brzo kretanje po karticama svojstva, učinit ćete slijedeće
+
++ Otvorit ćete dijaloški okvir ulaznih gesti iz modusa čitanja.
++ Pronači ćete "premješta se na sljedeću karticu svojstva" u odjeljku modus čitanja.
++ Pridjelit ćete slovo ``y`` za pronađeni prečac.
++ Pronaći ćete "premjesti se na prethodnu karticu svojstva".
++ Pridjelit ćete ``šift+y`` za pronađeni prečac.
+++
+
 ++ Popis elemenata ++[ElementsList]
 Popis elemenata prikazuje razne vrste elemenata, što ovisi od aplikacije do aplikacije.
 Na primjer, u web preglednicima, popis elemenata može izraditi popis poveznica, naslova, gumba, polja obrazaca ili orijentira.
@@ -1093,7 +1114,10 @@ NVDA može to koristiti kako bi se prepoznavao tekst sa slike ili nedostupne apl
 Jezik prepoznavanja možete postaviti u [kategoriji Windows OCR #Win10OcrSettings] [u dijaloškom okviru postavki #NVDASettings].
 Dodatni jezici se mogu instalirati putem izbornika Start>Postavke>Vrijeme i Jezik>Regija i jezik, a zatim Dodaj jezik.
 
-Funkcija Windows OCR može biti djelomično ili u cijelosti nekompatibilna sa [NVDA poboljšanjima vida #Vision] ili drugim vanjskim vizualnim pomagalima. Prije poletk prepoznavanja, ta ćete pomagala trebait isključiti.
+Kada želite čitati sadržaj koji se stalno mijenja, poput videa sa titlovima koji se stalno mijenjaju, možete uključiti automatsko osvježavanja prepoznatog sadržaja.
+Ovo se također može učiniti u [Windows OCR kategoriji #Win10OcrSettings] u dijaloškom okviru [NVDA postavki #NVDASettings].
+
+Funkcija Windows OCR može biti djelomično ili u cijelosti nekompatibilna sa [NVDA poboljšanjima vida #Vision] ili drugim vanjskim vizualnim pomagalima. Prije početka prepoznavanja, ta ćete pomagala trebati isključiti.
 
 %kc:beginInclude
 Za prepoznavanje teksta u navigacijskom objektu koristeći windows ocr, pritisnite NVDA+r.
@@ -1733,6 +1757,16 @@ Opcija "Bez brajice" znači da ne koristite brajični redak.
 
 Za više informacija o podržanim brajičnim redcima, te o tome koji od njih podržavaju automatsko otkrivanje brajičnih redaka u pozadini, pogledajte poglavlje [Podržani brajični redci #SupportedBrailleDisplays].
 
+==== Brajični redci koji će se automatski otkrivati ====[SelectBrailleDisplayAutoDetect]
+Kada je brajični redak postavljen na "automatski", potvrdni okviri na ovom popisu omogućuju vam uključivanje i iskljuučivanje upravljačkih programa koji će biti uključeni u procesu automatskog otkrivanja.
+Ovo vam omogućuje isključivanje brajičnih redaka koje ne koristite uvijek.
+Na primjer, ako posjedujete samo brajični redak koji koristi Baumov upravljački program za svoje funkcioniranje, ostavit ćete baum upravlojački program uključen a ostale ćete isključiti.
+
+Podrazumjevano, svi podržani brajični redci su uključeni.
+Svaki dodani upravljački programm, na primjer u budućoj verziji NVDA ili u NVDA dodatku biti će podrazumjevano omogućen.
+
+Trebat ćete provjeriti dokumentaciju vašeg brajičnog redka u poglavlju [podržani brajični redci #SupportedBrailleDisplays] kako biste provjerili podržava li vaš brajični redak automatsko otkrivanje.
+
 ==== Priključak ====[SelectBrailleDisplayPort]
 Ova opcija, ako je dostupna, omogućuje izbor komunikacijskog priključka na kojem je spojen brajični redak kojeg ste izabrali.
 To je odabirni okvir, koji sadrži mogućnosti za vaš brajični redak.
@@ -2107,6 +2141,7 @@ Možete podesiti izvještavanje o sljedećim elementima:
  - brojevi redaka
  - izvještavanje o uvlačenju retka [(Isključeno, Govor, Zvučni signali, Oboje Govor i zvučni signali) #DocumentFormattingSettingsLineIndentation]
  - uvlačenje odlomka (npr. viseća uvlaka, samo prvi redak)
+ - Ignoriranje praznih redaka pri čitanju uvlačenja
  - prored (jednostruki, dvostruki itd.)
  - poravnanje retka
 - informacije o tablici
@@ -2148,6 +2183,9 @@ Zvuk se povećava u visini za svaki razmak, a za tabulator, povećavat će se ek
 - Govor i zvučni signali: Ova opcija čita uvlake koristeći obje metode.
 -
 
+Ako označite potvrdni okvir "ignoriraj prazne redke pri čitanju uvlačenja" tada se promjene uvlačenja neće čitati za prazne redke.
+Ovo može biti korisno pri čitanju izvornog koda nekog programa gdje se prazni redci koriste za odvajanje blokova uvučenog teksta.
+
 +++ Kretanje po dokumentu +++[DocumentNavigation]
 Ova vam kategorija omogućuje podešavanje raznih opcija vezanih uz kretanje po dokumentu.
 
@@ -2178,6 +2216,12 @@ Ova kategorija sadrži sljedeće opcije:
 ==== Jezik prepoznavanja ====[Win10OcrSettingsRecognitionLanguage]
 Ovaj odabirni okvir omogućuje izbor jezika koji će se koristiti za prepoznavanje sadržaja.
 Kako biste kružili kroz dostupne jezike s bilo kojeg mjesta, molimo podesite prilagođenu prečicu u [dijaloškom okviru ulaznih gesti #InputGestures].
+
+==== S vremena na vrijeme osvježavaj prepoznati sadržaj ====[Win10OcrSettingsAutoRefresh]
+Kada je ovaj potvrdni okvir uključen, NVDA će automatski osvježavati tekst kada je prepoznati rezultat u fokusu.
+Ovo može biti vrlo korisno kada želite čitati sadržaj koji se često mijenja kao što je to na primjer video sa titlovima.
+Sadržaj se osvježava svakih pol sekunde.
+Ova je opcija podrazumjevano isključena.
 
 +++ Napredne postavke +++[AdvancedSettings]
 Upozorenje! Ove postavke mogu prouzročiti nepravilno funkcioniranje NVDA, ako su konfigurirane nepravilno.
@@ -2361,7 +2405,7 @@ Sa nekim povijesno popularnim GUI api-jima, tekst može biti prikazan sa transpa
 : podrazumjevano
   Onemogućeno
 : Opcije
-  Podrazumjevano (onemogućeno), omogućeno, onemogućeno
+  Podrazumjevano (omogućeno), omogućeno, onemogućeno
 :
 
 Ova opcija će omogućiti reprodukciju zvukova korištenjem standarda Windows Audio Session API (WASAPI).
@@ -3837,8 +3881,8 @@ Molimo pogledajte dokumentaciju brajevog reda da biste pročitali opise tastera 
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
-[BRLTTY https://www.brltty.com/] je program koji se može koristiti za podršku puno više brajičnih redaka.
-Da biste ga mogli koristiti, morate instalirati [BRLTTY za Windows https://www.brltty.com/download.html].
+[BRLTTY https://www.brltty.app/] je program koji se može koristiti za podršku puno više brajičnih redaka.
+Da biste ga mogli koristiti, morate instalirati [BRLTTY za Windows https://www.brltty.app/download.html].
 Trebali biste preuzeti i instalirati aktualnu verziju instalacijskog paketa, koji se na primjer zove, brltty-win-4.2-2.exe.
 Kad podešavate brajični redak i priključak za korištenje, budite sigurni da strogo pratite upute, pogotovo ako koristite USB brajični redak i ako već imate instalirane upravljačke programe proizvođača.
 
@@ -3848,7 +3892,7 @@ Stoga, postavka za ulaznu brajičnu tablicu nije bitna.
 BRLTTY ne sudjeluje u automatskom otkrivanju brajičnih redaka.
 
 Slijede BRLTTY prečaci za NVDA.
-Pogledajte [BRLTTY tablice tipkovničkih prečaca http://mielke.cc/brltty/doc/KeyBindings/] za više informacija o tome kako su BRLTTY prečaci dodijeljeni kontrolama na brajičnim redcima.
+Pogledajte [BRLTTY tablice tipkovničkih prečaca https://brltty.app/doc/KeyBindings/] za više informacija o tome kako su BRLTTY prečaci dodijeljeni kontrolama na brajičnim redcima.
 %kc:beginInclude
 || Naziv | BRLTTY naredba |
 | Kliži po brajičnom retku natrag | fwinlt (idi jedan prozor u lijevo) |
@@ -3856,6 +3900,13 @@ Pogledajte [BRLTTY tablice tipkovničkih prečaca http://mielke.cc/brltty/doc/Ke
 | Premjesti brajični redak na prethodni redak | lnup (idi jedan redak gore) |
 | Premjesti brajični redak na sljedeći redak | lndn (idi jedan redak dolje) |
 | Premjesti se na brajičnu ćeliju | route (dovedi kursor na znak) |
+| Uključi pomoć tipkovnice | learn (uključuje način učenja tipkovnice) |
+| Otvori NVDA izbornik | prefmenu (otvara izlazi iz izbornika postavki) |
+| Vrati konfiguraciju | prefload (vraća postavke s diska) |
+| Spremi konfiguraciju | prefsave (sprema postavke na disk) |
+| Čitaj vrijeme | time (pokazuje trenutni datum i vrijeme) |
+| Čitaj redaj gdje se nalazi pregledni kursor | say_line (izgovara trenutni redak) |
+| Čitaj sve koristeći pregledni kursor | say_below (izgovara od trenutnog redka do kraja) |
 %kc:endInclude
 
 ++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
@@ -4006,7 +4057,9 @@ Ovo vam pomaže otkriti je li problem nastao zbog dodatka i omogućuje oporavlja
 
 Na primjer, iz trenutačno pokrenute kopije NVDA čitača možete izaći upisom sljedeće opcije u dijaloški okvir "Pokreni":
 
+```
 nvda -q
+```
 
 Neke opcije naredbenog retka imaju dugu i kratku verziju, dok neke od njih imaju samo dugu verziju.
 Za opcije koje imaju kratku verziju, možete ih kombinirati na sljedeće načine:

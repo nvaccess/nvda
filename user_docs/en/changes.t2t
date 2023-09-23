@@ -40,7 +40,8 @@ Braille display drivers should implement the ``registerAutomaticDetection`` ``cl
 That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices`` and ``addBluetoothDevices`` methods can be used. (#15200)
 - The default implementation of the check method on ``BrailleDisplayDriver`` now requires both the ``threadSafe`` and ``supportsAutomaticDetection`` attributes to be set to ``True``. (#15200)
 - Passing lambda functions to ``hwIo.ioThread.IoThread.queueAsApc`` is no longer possible, as functions should be weakly referenceable. (#14627)
-- ``IoThread.autoDeleteApcReference`` has been removed. (#14924) 
+- ``IoThread.autoDeleteApcReference`` has been removed. (#14924)
+- To support capital pitch changes, synthesizers must now explicitly declare their support for the ``PitchCommand`` in the ``supportedCommands`` attribute on the driver. (#15433)
 -
 
 === Deprecations ===
@@ -125,6 +126,7 @@ There's also been bug fixes for the Add-on Store, Microsoft Office, Microsoft Ed
 - Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283)
 - NVDA once again announces calculation results in the Windows 32bit calculator on Server, LTSC and LTSB versions of Windows. (#15230)
 - NVDA no longer ignores focus changes when a nested window (grand child window) gets focus. (#15432)
+- The SAPI4 synthesizer now properly supports volume, rate and pitch changes embedded in speech. (#15271)
 -
 
 == Changes for Developers ==
