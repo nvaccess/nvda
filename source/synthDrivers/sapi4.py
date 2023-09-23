@@ -9,6 +9,7 @@ import winreg
 from comtypes import CoCreateInstance, COMObject, COMError, GUID
 from ctypes import byref, c_ulong, POINTER
 from ctypes.wintypes import DWORD, WORD
+from typing import Optional
 from synthDriverHandler import SynthDriver,VoiceInfo, synthIndexReached, synthDoneSpeaking
 from logHandler import log
 from ._sapi4 import (
@@ -111,7 +112,7 @@ class SynthDriver(SynthDriver):
 		return enginesList
 
 	def __init__(self):
-		self._finalIndex=None
+		self._finalIndex: Optional[int] = None
 		self._bufSink = SynthDriverBufSink(weakref.ref(self))
 		self._bufSinkPtr=self._bufSink.QueryInterface(ITTSBufNotifySink)
 		# HACK: Some buggy engines call Release() too many times on our buf sink.
@@ -193,15 +194,19 @@ class SynthDriver(SynthDriver):
 		)
 
 	def cancel(self):
-		self._ttsCentral.AudioReset()
-		self.lastIndex=None
+		try:
+			self._ttsCentral.AudioReset()
+		except COMError:
+			log.error("Error cancelling speech", exc_info=True)
+		finally:
+			self._finalIndex = None
 
-	def pause(self,switch):
+	def pause(self, switch: bool):
 		if switch:
 			try:
 				self._ttsCentral.AudioPause()
 			except COMError:
-				pass
+				log.debugWarning("Error pausing speech", exc_info=True)
 		else:
 			self._ttsCentral.AudioResume()
 
