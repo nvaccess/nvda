@@ -2977,6 +2977,16 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onBrailleSettingsCommand, None)
 
 	@script(
+		# Translators: Input help mode message for go to audio settings command.
+		description=_("Shows NVDA's audio settings"),
+		category=SCRCAT_CONFIG,
+		gesture="kb:NVDA+control+u"
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateAudioSettingsDialog(self, gesture):
+		wx.CallAfter(gui.mainFrame.onAudioSettingsCommand, None)
+
+	@script(
 		# Translators: Input help mode message for go to keyboard settings command.
 		description=_("Shows NVDA's keyboard settings"),
 		category=SCRCAT_CONFIG,
