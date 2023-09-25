@@ -197,11 +197,10 @@ class ChromeLib:
 			)
 			return False
 
-		afterDownArrowSpeech = _NvdaLib.getSpeechAfterKey('downArrow')  # focus web content, chrome shortcut.
-		documentDescriptor = f"document\n{ChromeLib._beforeMarker}"
-		if documentDescriptor not in afterDownArrowSpeech:
+		afterUpArrowSpeech = _NvdaLib.getSpeechAfterKey('upArrow')  # focus web content, chrome shortcut.
+		if ChromeLib._beforeMarker not in afterUpArrowSpeech:
 			builtIn.log(
-				f"Didn't get '{documentDescriptor}' after moving to document, instead got: {afterDownArrowSpeech}"
+				f"Didn't get '{ChromeLib._beforeMarker}' after moving to document, instead got: {afterUpArrowSpeech}"
 			)
 			return False
 
