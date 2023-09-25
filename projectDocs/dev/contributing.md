@@ -24,10 +24,11 @@ If you are new to the project, or looking for some way to help take a look at:
 ### Overview of contribution process:
 1. [Setup your development environment](./createDevEnvironment.md).
 1. Ensure the issue you plan to fix is [triaged](../issues/triage.md)
-1. Create a branch for the contribution.
+1. Create a branch for the contribution, to be used for a pull request.
 	- Pull requests should be based on the latest commit in the official master branch.
 	This helps reduce the chance of merge conflicts.
-	- If you are adding a feature or changing something that will be noticeable to the user, you should update the User Guide accordingly.
+	- If you are adding a feature or changing something that will be noticeable to the user, you should update the [User Guide accordingly](./userGuideStandards.md).
+	New commands, drivers, settings, dialogs, etc. must be documented.
 1. [Build NVDA](./buildingNVDA.md) and run from source
 1. [Manually test the change](../testing/readme.md)
 1. [Run automated tests](../testing/automated.md)
@@ -45,6 +46,9 @@ If you are new to the project, or looking for some way to help take a look at:
 	If these fail, please review them.
 	Sometimes system tests fail unexpectedly.
 	If you believe the failure is unrelated, feel free to ignore it unless it is raised by a reviewer.
+	- All pull requests submitted must have their "Allow edits from maintainers" checkbox ticked.
+	This is the GitHub default for new pull requests.
+	- A lead developer may specifically requested the pull request be made against `beta` or `rc` in the case of addressing bugs introduced in the current release cycle.
 1. Participate in the code review process
 	- This process requires core NVDA developers to understand the intent of the change, read the code changes, asking questions or suggesting changes.
 	Please participate in this process, answering questions, and discussing the changes.
