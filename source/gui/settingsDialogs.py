@@ -1098,7 +1098,7 @@ class SynthesizerSelectionDialog(SettingsDialog):
 	# Translators: This is the label for the synthesizer selection dialog
 	title = _("Select Synthesizer")
 	helpId = "SynthesizerSelection"
-	synthNames = []
+	synthNames: List[str] = []
 
 	def makeSettings(self, settingsSizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -1130,9 +1130,9 @@ class SynthesizerSelectionDialog(SettingsDialog):
 			# The list of synths has not been populated yet, so we didn't change anything in this panel
 			return
 
-		newSynth=self.synthNames[self.synthList.GetSelection()]
+		newSynth = self.synthNames[self.synthList.GetSelection()]
 		if not setSynth(newSynth):
-			_synthWarningDialog(newSynth.name)
+			_synthWarningDialog(newSynth)
 			return
 
 		# Reinitialize the tones module to update the audio device

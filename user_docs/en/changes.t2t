@@ -19,8 +19,12 @@ There's also been bug fixes for the Add-on Store, Microsoft Office, Microsoft Ed
 
 == New Features ==
 - Enhanced sound management:
-  - An option in Audio settings to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using. (#1409)
-  - An option in Audio settings to separately configure the volume of NVDA sounds. (#1409, #15038)
+  - A new Audio Settings panel:
+    - This can be opened with ``NVDA+control+u``. (#15497)
+    - An option in Audio settings to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using. (#1409)
+    - An option in Audio settings to separately configure the volume of NVDA sounds. (#1409, #15038)
+    - The settings to change audio output device and toggle audio ducking have been moved to the new Audio settings panel from the Select Synthesizer dialog. (#8711)
+    -
   - NVDA will now output audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds. (#14697, #11169, #11615, #5096, #10185, #11061)
   - Note: WASAPI is incompatible with some add-ons.
   Compatible updates are available for these add-ons, please update them before updating NVDA.
@@ -54,7 +58,6 @@ There's also been bug fixes for the Add-on Store, Microsoft Office, Microsoft Ed
   - The advanced setting to enable support for HID braille has been removed in favor of a new option.
   You can now disable specific drivers for braille display auto detection in the braille display selection dialog. (#15196)
   -
-- The settings to change audio output device and toggle audio ducking have been moved to the new Audio settings panel from the Select Synthesizer dialog. (#8711)
 - Add-on Store: Installed add-ons will now be listed in the Available Add-ons tab, if they are available in the store. (#15374)
 - Some shortcut keys have been updated in the NVDA menu. (#15364)
 -
