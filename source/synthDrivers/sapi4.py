@@ -9,6 +9,7 @@ import winreg
 from comtypes import CoCreateInstance, COMObject, COMError, GUID
 from ctypes import byref, c_ulong, POINTER
 from ctypes.wintypes import DWORD, WORD
+from typing import Optional
 from synthDriverHandler import SynthDriver,VoiceInfo, synthIndexReached, synthDoneSpeaking
 from logHandler import log
 from ._sapi4 import (
@@ -45,7 +46,9 @@ from speech.commands import (
 	PitchCommand,
 	RateCommand,
 	VolumeCommand,
+	BaseProsodyCommand
 )
+from speech.types import SpeechSequence
 
 
 class SynthDriverBufSink(COMObject):
@@ -109,7 +112,7 @@ class SynthDriver(SynthDriver):
 		return enginesList
 
 	def __init__(self):
-		self._finalIndex=None
+		self._finalIndex: Optional[int] = None
 		self._bufSink = SynthDriverBufSink(weakref.ref(self))
 		self._bufSinkPtr=self._bufSink.QueryInterface(ITTSBufNotifySink)
 		# HACK: Some buggy engines call Release() too many times on our buf sink.
@@ -124,35 +127,43 @@ class SynthDriver(SynthDriver):
 	def terminate(self):
 		self._bufSink._allowDelete = True
 
-	def speak(self,speechSequence):
+	def speak(self, speechSequence: SpeechSequence):
 		textList=[]
 		charMode=False
-		item=None
-		oldPitch = self.pitch
-		oldVolume = self.volume
-		oldRate = self.rate
-
+		unprocessedSequence = speechSequence
+		# #15500: Some SAPI4 voices reset all prosody when they receive any prosody command,
+		# whereas other voices never undo prosody changes when a sequence is interrupted.
+		# Add all default values to the start and end of the sequence,
+		# but avoid duplicating the first command, if any.
+		prosodyToAdd = [
+			c() for c in self.supportedCommands
+			if issubclass(c, BaseProsodyCommand)
+		]
+		speechSequence = [c for c in prosodyToAdd if not isinstance(unprocessedSequence[0], type(c))]
+		speechSequence.extend(unprocessedSequence)
+		# To be sure, add all default values to the end of the sequence.
+		# This might cause multiple cases of prosody resets, but better safe than sorry.
+		speechSequence.extend(prosodyToAdd)
+		lastHandledIndexInSequence = 0
 		for item in speechSequence:
 			if isinstance(item,str):
 				textList.append(item.replace('\\','\\\\'))
 			elif isinstance(item, IndexCommand):
 				textList.append("\\mrk=%d\\"%item.index)
+				lastHandledIndexInSequence = item.index
 			elif isinstance(item, CharacterModeCommand):
 				textList.append("\\RmS=1\\" if item.state else "\\RmS=0\\")
 				charMode=item.state
 			elif isinstance(item, BreakCommand):
 				textList.append(f"\\Pau={item.time}\\")
 			elif isinstance(item, PitchCommand):
-				val = oldPitch + item.offset
-				val = self._percentToParam(val, self._minPitch, self._maxPitch)
+				val = self._percentToParam(item.newValue, self._minPitch, self._maxPitch)
 				textList.append(f"\\Pit={val}\\")
 			elif isinstance(item, RateCommand):
-				val = oldRate + item.offset
-				val = self._percentToParam(val, self._minRate, self._maxRate)
+				val = self._percentToParam(item.newValue, self._minRate, self._maxRate)
 				textList.append(f"\\Spd={val}\\")
 			elif isinstance(item, VolumeCommand):
-				val = oldVolume + item.offset
-				val = self._percentToParam(val, self._minVolume, self._maxVolume)
+				val = self._percentToParam(item.newValue, self._minVolume, self._maxVolume)
 				# If you specify a value greater than 65535, the engine assumes that you want to set the
 				# left and right channels separately and converts the value to a double word,
 				# using the low word for the left channel and the high word for the right channel.
@@ -162,9 +173,9 @@ class SynthDriver(SynthDriver):
 				log.debugWarning("Unsupported speech command: %s"%item)
 			else:
 				log.error("Unknown speech: %s"%item)
-		if isinstance(item, IndexCommand):
-			# This is the index denoting the end of the speech sequence.
-			self._finalIndex=item.index
+		# lastHandledIndexInSequence is the index denoting the end of the speech sequence.
+		# store it on the driver to support the synthDoneSpeaking notification.
+		self._finalIndex = lastHandledIndexInSequence
 		if charMode:
 			# Some synths stay in character mode if we don't explicitly disable it.
 			textList.append("\\RmS=0\\")
@@ -183,15 +194,19 @@ class SynthDriver(SynthDriver):
 		)
 
 	def cancel(self):
-		self._ttsCentral.AudioReset()
-		self.lastIndex=None
+		try:
+			self._ttsCentral.AudioReset()
+		except COMError:
+			log.error("Error cancelling speech", exc_info=True)
+		finally:
+			self._finalIndex = None
 
-	def pause(self,switch):
+	def pause(self, switch: bool):
 		if switch:
 			try:
 				self._ttsCentral.AudioPause()
 			except COMError:
-				pass
+				log.debugWarning("Error pausing speech", exc_info=True)
 		else:
 			self._ttsCentral.AudioResume()
 
