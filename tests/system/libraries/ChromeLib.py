@@ -190,10 +190,18 @@ class ChromeLib:
 				return False
 
 		afterControlF6Speech = _NvdaLib.getSpeechAfterKey('control+F6')  # focus web content, chrome shortcut.
-		documentDescriptor = f"document\n{ChromeLib._beforeMarker}"
-		if documentDescriptor not in afterControlF6Speech:
+		if self._testCaseTitle not in afterControlF6Speech:
 			builtIn.log(
-				f"Didn't get '{documentDescriptor}' after moving to document, instead got: {afterControlF6Speech}"
+				f"Didn't get tab title '{self._testCaseTitle}' after moving to document, "
+				f"instead got: {afterControlF6Speech}"
+			)
+			return False
+
+		afterDownArrowSpeech = _NvdaLib.getSpeechAfterKey('downArrow')  # focus web content, chrome shortcut.
+		documentDescriptor = f"document\n{ChromeLib._beforeMarker}"
+		if documentDescriptor not in afterDownArrowSpeech:
+			builtIn.log(
+				f"Didn't get '{documentDescriptor}' after moving to document, instead got: {afterDownArrowSpeech}"
 			)
 			return False
 
