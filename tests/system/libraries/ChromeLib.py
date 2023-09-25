@@ -190,9 +190,9 @@ class ChromeLib:
 				return False
 
 		afterControlF6Speech = _NvdaLib.getSpeechAfterKey('control+F6')  # focus web content, chrome shortcut.
-		if self._testCaseTitle not in afterControlF6Speech:
+		if ChromeLib._testCaseTitle not in afterControlF6Speech:
 			builtIn.log(
-				f"Didn't get tab title '{self._testCaseTitle}' after moving to document, "
+				f"Didn't get tab title '{ChromeLib._testCaseTitle}' after moving to document, "
 				f"instead got: {afterControlF6Speech}"
 			)
 			return False
