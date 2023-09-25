@@ -1957,8 +1957,10 @@ The options are character, word, line and paragraph.
 
 To toggle text unit resolution from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
-==== Report role when mouse enters object ====[MouseSettingsRole]
-If this checkbox is checked, NVDA will announce the role (type) of object as the mouse moves inside it.
+==== Report object when mouse enters it ====[MouseSettingsReportObjectPropertiesCheckBox]
+If this checkbox is checked, NVDA will announce information about objects as the mouse moves inside them.
+This includes the role (type) of the object as well as states (checked/pressed), cell coordinates in tables, etc.
+Note that the announcement of some object dedtails might be dependent on how other settings, such as in the [object presentation #ObjectPresentationSettings] or [Document Formatting #DocumentFormattingSettings] categories are set.
 
 ==== Play audio coordinates when mouse moves ====[MouseSettingsAudio]
 Checking this checkbox makes NVDA play beeps as the mouse moves, so that the user can work out where the mouse is in regards to the dimensions of the screen.

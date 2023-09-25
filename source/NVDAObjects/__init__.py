@@ -1204,7 +1204,7 @@ Tries to force this object to take the focus.
 
 		if not self._mouseEntered and config.conf['mouse']['reportObjectRoleOnMouseEnter']:
 			speech.cancelSpeech()
-			speech.speakObjectProperties(self,role=True)
+			speech.speakObject(self, reason=controlTypes.OutputReason.MOUSE)
 			speechWasCanceled=True
 		else:
 			speechWasCanceled=False
