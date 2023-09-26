@@ -548,7 +548,7 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 		# As Microsoft Word does not fire caret events when typing text, even though the caret does move.
 		# Update braille also when tethered to review, and review position
 		# if review follows caret.
-		if not eventHandler.isPendingEvents("caret, self"):
+		if not eventHandler.isPendingEvents("caret", self):
 			eventHandler.queueEvent("caret", self)
 
 	def event_UIA_notification(self, activityId=None, **kwargs):
