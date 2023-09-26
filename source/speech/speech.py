@@ -1016,16 +1016,20 @@ def speakSelectionMessage(
 		speak(seq, symbolLevel=None, priority=priority)
 
 
+MAX_LENGTH_FOR_SELECTION_REPORTING = 512
+
+
 def _getSelectionMessageSpeech(
 		message: str,
 		text: str,
 ) -> SpeechSequence:
-	if len(text) < 512:
+	if len(text) < MAX_LENGTH_FOR_SELECTION_REPORTING:
 		return _getSpeakMessageSpeech(message % text)
 	# Translators: This is spoken when the user has selected a large portion of text.
 	# Example output "1000 characters"
 	numCharactersText = _("%d characters") % len(text)
 	return _getSpeakMessageSpeech(message % numCharactersText)
+
 
 # C901 'speakSelectionChange' is too complex
 # Note: when working on speakSelectionChange, look for opportunities to simplify
