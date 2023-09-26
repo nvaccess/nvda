@@ -87,7 +87,8 @@ There's also been bug fixes for the Add-on Store, Microsoft Office, Microsoft Ed
 - Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283)
 - NVDA once again announces calculation results in the Windows 32bit calculator on Server, LTSC and LTSB versions of Windows. (#15230)
 - NVDA no longer ignores focus changes when a nested window (grand child window) gets focus. (#15432)
-- Fixed performance issues with Task Manager. (#6245)
+- Fixed performance issues with Task Manager and some Windows versions. (#6245)
+- Fixed a potential cause of crashing during NVDA startup. (#15517)
 -
 
 == Changes for Developers ==
