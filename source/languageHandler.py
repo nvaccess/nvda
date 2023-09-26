@@ -8,7 +8,6 @@ This module assists in NVDA going global through language services
 such as converting Windows locale ID's to friendly names and presenting available languages.
 """
 
-import builtins
 import os
 import sys
 import ctypes
@@ -362,7 +361,8 @@ def setLanguage(lang: str) -> None:
 	if trans is None:
 		trans = _createGettextTranslation("en")
 
-	trans.install(names=["pgettext", "npgettext"])
+	# #9207: Python 3.8 adds gettext.pgettext, so add it to the built-in namespace.
+	trans.install(names=["pgettext", "ngettext"])
 	setLocale(getLanguage())
 
 	global installedTranslation
