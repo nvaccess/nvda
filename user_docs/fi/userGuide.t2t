@@ -1553,22 +1553,6 @@ Luettelo NVDA:n tukemista syntetisaattoreista on [Tuetut puhesyntetisaattorit #S
 Eräs tässä luettelossa aina näkyvä vaihtoehto on "Ei puhetta", joka mahdollistaa NVDA:n käytön täysin ilman puhetta.
 Tästä voi olla hyötyä NVDA:ta pelkän pistenäytön varassa käyttävälle tai näkeville kehittäjille, jotka käyttävät pelkkää puheen tarkastelu -toimintoa.
 
-==== Äänilaite ====[SelectSynthesizerOutputDevice]
-Tästä valitaan, mitä äänilaitetta NVDA:ssa valittuna oleva puhesyntetisaattori käyttää.
-
-%kc:setting
-==== Äänen vaimennus ====[SelectSynthesizerDuckingMode]
-Näppäinkomento: NVDA+Vaihto+D
-
-Tällä asetuksella voidaan Windows 8:ssa ja sitä uudemmissa käyttöjärjestelmissä valita, pienentääkö NVDA muiden sovellusten äänenvoimakkuutta puhuessaan vai koko ajan käynnissä ollessaan.
-- Ei käytössä: NVDA ei koskaan pienennä muiden sovellusten äänenvoimakkuutta.
-- Puhuttaessa ja ääntä toistettaessa: NVDA pienentää muiden sovellusten äänenvoimakkuutta vain puhuessaan tai ääniä toistaessaan. Tämä ei ehkä toimi kaikilla puhesyntetisaattoreilla.
-- Aina: NVDA pienentää muiden sovellusten äänenvoimakkuutta koko ajan käynnissä ollessaan.
--
-
-Tämä asetus on käytettävissä vain NVDA:n asennetussa versiossa.
-Massamuisti- ja tilapäisversiot eivät tue äänen vaimennusta.
-
 +++ Syntetisaattorin asetusrengas +++[SynthSettingsRing]
 NVDA:ssa on joitakin näppäinkomentoja, joiden avulla voidaan siirtyä missä tahansa yleisimpien puheasetusten välillä, mikäli niitä halutaan muuttaa nopeasti menemättä Asetukset-valintaikkunan Puhe-kategoriaan:
 %kc:beginInclude
@@ -1784,6 +1768,42 @@ Lisätietoja pistenäyttöjen tukemista kommunikointityypeistä ja käytettävis
 Huom: Jos kytket koneeseesi samanaikaisesti useita samaa ajuria käyttäviä pistenäyttöjä (esim. kaksi Seikaa),
 NVDA:ssa ei ole tällä hetkellä mahdollista määrittää, mitä näyttöä sen tulisi käyttää.
 Siksi on suositeltavaa kytkeä koneeseen vain yksi tietyn tyyppinen/valmistajan pistenäyttö kerrallaan.
+
++++ Ääni +++[AudioSettings]
+NVDA:n asetusvalintaikkunan Ääni-kategorian valinnoilla voidaan muuttaa useita äänen ulostuloon liittyviä asetuksia.
+
+==== Äänen ulostulolaite ====[SelectSynthesizerOutputDevice]
+Tästä valitaan, mitä äänilaitetta NVDA:ssa valittuna oleva puhesyntetisaattori käyttää.
+
+%kc:setting
+==== Äänen vaimennus ====[SelectSynthesizerDuckingMode]
+Näppäinkomento: NVDA+Vaihto+D
+
+Tällä asetuksella voidaan Windows 8:ssa ja sitä uudemmissa käyttöjärjestelmissä valita, pienentääkö NVDA muiden sovellusten äänenvoimakkuutta puhuessaan vai koko ajan käynnissä ollessaan.
+- Ei käytössä: NVDA ei koskaan pienennä muiden sovellusten äänenvoimakkuutta.
+- Puhuttaessa ja ääntä toistettaessa: NVDA pienentää muiden sovellusten äänenvoimakkuutta vain puhuessaan tai ääniä toistaessaan. Tämä ei välttämättä toimi kaikilla puhesyntetisaattoreilla.
+- Aina: NVDA pienentää muiden sovellusten äänenvoimakkuutta koko ajan käynnissä ollessaan.
+-
+
+Tämä asetus on käytettävissä vain NVDA:n asennetussa versiossa.
+Massamuisti- ja tilapäisversiot eivät tue äänen vaimennusta.
+
+==== NVDA-äänien voimakkuus mukautuu puheäänen voimakkuuteen ====[SoundVolumeFollowsVoice]
+: Oletus
+  Ei käytössä
+: Asetukset
+  Ei käytössä, Käytössä
+:
+
+Kun tämä asetus on käytössä, NVDA:n äänien ja piippausten voimakkuus mukautuu käytettävän puheäänen voimakkuusasetukseen.
+Jos puheäänen voimakkuutta vähennetään, äänien voimakkuus vähenee.
+Jos puheäänen voimakkuutta lisätään, äänien voimakkuus vastaavasti kasvaa.
+Tämä asetus ei ole käytettävissä, jos [Käytä WASAPIa äänen toistamiseen #WASAPI] on poistettu käytöstä lisäasetuksista.
+
+==== NVDA-äänien voimakkuus ====[SoundVolume]
+Tällä liukusäätimellä voidaan määrittää NVDA:n äänien ja piippausten äänenvoimakkuus.
+Tämä asetus on käytettävissä vain, kun "NVDA-äänien voimakkuus mukautuu puheäänen voimakkuuteen" ei ole käytössä.
+Tämä asetus ei ole käytettävissä, jos [Käytä WASAPIa äänen toistamiseen #WASAPI] on poistettu käytöstä lisäasetuksista.
 
 +++ Näkö +++[VisionSettings]
 NVDA:n asetusvalintaikkunan Näkö-kategoriassa voit ottaa käyttöön ja poistaa käytöstä [näköapuja. #Vision] sekä muuttaa niiden asetuksia.
@@ -2414,22 +2434,10 @@ Useiden historiallisesti suosittujen käyttöliittymärajapintojen avulla teksti
 Tämä asetus mahdollistaa äänen toistamisen Windowsin äänentoistorajapinnan (WASAPI) kautta.
 WASAPI on nykyaikaisempi äänikehys, joka saattaa parantaa NVDA:n ääniulostulon reagointia, suorituskykyä ja vakautta sekä puheen että äänien toiston osalta.
 Kun asetusta on muutettu, NVDA on käynnistettävä uudelleen, jotta muutos tulee voimaan.
-
-==== NVDA-äänien voimakkuus mukautuu puheäänen voimakkuuteen ====[SoundVolumeFollowsVoice]
-: Oletus
-  Ei käytössä
-: Asetukset
-  Ei käytössä, Käytössä
-:
-
-Kun tämä asetus on käytössä, NVDA:n äänien ja piippausten voimakkuus mukautuu käyttämäsi puheäänen voimakkuusasetukseen.
-Jos vähennät puheäänen voimakkuutta, äänien voimakkuus vähenee.
-Jos vastaavasti lisäät puheäänen voimakkuutta, äänien voimakkuus kasvaa.
-Tällä on vaikutusta vain, kun "Käytä WASAPIa äänen toistamiseen" on otettu käyttöön.
-
-==== NVDA-äänien voimakkuus ====[SoundVolume]
-Tällä liukusäätimellä voit määrittää NVDA:n äänien ja piippausten äänenvoimakkuuden.
-Tämä asetus on käytettävissä vain, kun "Käytä WASAPIa äänen toistamiseen" on käytössä ja "NVDA-äänien voimakkuus mukautuu puheäänen voimakkuuteen" ei ole käytössä.
+WASAPIn käytöstä poistaminen poistaa käytöstä seuraavat asetukset:
+- [NVDA-äänien voimakkuus mukautuu puheäänen voimakkuuteen #SoundVolumeFollowsVoice]
+- [NVDA-äänien voimakkuus #SoundVolume]
+-
 
 ==== Virheenkorjauslokin kategoriat ====[AdvancedSettingsDebugLoggingCategories]
 Tämän luettelon valintaruuduilla voidaan ottaa käyttöön tiettyjen kategorioiden virheenkorjausilmoituksia NVDA:n lokissa.

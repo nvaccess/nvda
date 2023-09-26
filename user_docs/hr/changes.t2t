@@ -10,6 +10,7 @@ Informacije za programere nisu prevedene, molimo ’pogledajte [englesku inačic
 
 = 2023.3 =
 Ova inačica uključuje poboljšanja stabilnosti i performansi pri izlazu zvuka.
+Dodane su opcije za kontrolu glasnoće NVDA zvukova i zvučnih signala, ili ujednačavanja sa glasnoćom glasa koji koristite.
 
 NVDA može s vremena na vrijeme osvježavati rezultate prepoznavanja tekstakada se pojave.
 Ovo se može konfigurirati u Windows OCR kategoriji u dijaloškom okviru postavki NVDA.
@@ -21,12 +22,9 @@ Dodane su također nove komande za Brltty.
 Ispravljene su greške u Add-on Storeu, Microsoft Officeu, Microsoft Edge kontekstnim izbornicima i u Windows kalkulatoru.
 
 == Nove značajke ==
-- Unapređeno upravljanej zvuka:
-  - NVDA će od sada proizvoditi zvuk uz pomoć Windows Audio Session API (WASAPI), što će poboljšati odziv, performanse, i stabilnost NVDA zvukova. (#14697, #11169, #11615, #5096, #10185, #11061)
-  - Korištenje Wasapi može se isključiti u naprednim postavkama.
-  Ako je wasapi uključen, sljedeće postavke mogu se također konfigurirati.
-    - Opcija koja omogućuje izjednačenu glasnoću zvukova i govora NVDA. (#1409)
-    - Opcija za odvojeno koonfiguriranje glasnoće NVDA zvukova. (#1409, #15038)
+- Unapređeno upravljanje zvukom:
+ - Opcija koja omogućuje izjednačavanje glasnoće zvukova NVDA sa glasnoćom govora. (#1409)
+ - Opcija u postavkama zvuka za konfiguriranje glasnoće NVDA zvukova. (#1409, #15038)
     -
   - Upozorenje: WASAPI je nekompatibilan sa nekim dodacima.
   Dostupne su kompatibilne nadogradnje tih dodataka, Nadogradite ih prije nadogradnje NVDA.
@@ -39,6 +37,7 @@ Ispravljene su greške u Add-on Storeu, Microsoft Officeu, Microsoft Edge kontek
   - Kako biste uključili ovu opciju, molimo uključite opciju "S vremena na vrijeme osvježavaj sadržaj prepoznavanja" u kategoriji Windows Ocr u NVDA postavkama.
   - Kada je ova opcija uključena, možete uključiti ili isključiti izgovor novog teksta tako da uključite ili isključite čitanje dinamičkog sadržaja (pritiskom ``NVDA+5``).
   -
+- Postavka za promjenu zvučne kartice i uključivanje utišavanaj zvuka premještene su u nove postavke zvuka iz dijaloškog okvira odabir govorne jedinice. (#8711)
 - Prilikom korištenja automatskog otkrivanja brajičnih redaka, sada je moguće onemogućiti upravljačke programe sa popisa automatski otkrivanih u dijaloškom okviru izbora brajičnog redka. (#15196)
 - Nova opcija u opcijama oblikovanja dokumenta, "Ignoriraj prazne redke prilikom čitanja uvlačenja". (#13394)
 - Dodana nedodijeljena gesta za kretanje po grupiranjima kartica svojstva u načinu pregleda. (#15046)
@@ -80,12 +79,16 @@ Ispravljene su greške u Add-on Storeu, Microsoft Officeu, Microsoft Edge kontek
   -
 - Add-on Store:
   - Ispravljena greška poslije odznačavanja "uključi nekompatibilne dodatke" koja je prouzrokovala vidljivost nekompatibilnih dodataka. (#15411)
-  - Dodaci blokirani zbog nekompatibilnosti bi se sada trebali pravilno osvježavati prilikom sortiranja po statusi uključenosti ili isključenosti. (#15416)
-  - Ispravljena pogreška prilikom koje nije bilo moguće nadograditi nekompatibilne dodatke iz vanjskih izvora. (#15417)
+  - Dodaci blokirani zbog nekompatibilnosti bi se sada trebali pravilno osvježavati prilikom sortiranja po statusu uključenosti ili isključenosti. (#15416)
+  - Ispravljena pogreška nadpisivanja ili nadogradnje dodataka koristeći ručnu instalaciju. (#15417)
+ - Ispravljena pogreška prilikom koje NVDA neće govoriti poslije ponovnog pokretanja i završetka NVDA instalacije. (#14525)
+  - Ispravljena pogreška  pri instalaciji dodataka ako je prethodna instalacija ili preuzimanje prekinuto. (#15469)
+ - Ispravljene pogreške s rukovanjem nekompatibilnim dodacima pri nadogradnji NVDA. (#15414, #15412, #15437)
   -
-- Ispravljena podrška za prikaze popisa sustava (``SysListView32``) u WIndows forms aplikacijama. (#15283)
+- Ispravljena podrška za prikaze popisa sustava (``SysListView32``) u Windows forms aplikacijama. (#15283)
 - NVDA opet izgovara rezultate računskih operacija u 32-bitnom kalkulatoru za Windows u operacijskim sustavima Server, LTSC and LTSB. (#15230)
 -
+- NVDA više ne ignorira izmjene fokusa kada se višeslojni prozor (prozok koji se nalazi iznad drugog prozora) postane fokusiran. (#15432)
 
 
 = 2023.2 =

@@ -6,6 +6,7 @@ Was ist neu in NVDA
 
 = 2023.3 =
 Diese Version enthält Verbesserungen bei der Leistung, Reaktionsfähigkeit und Stabilität der Audio-Ausgabe.
+Es wurden Optionen für die Lautstärke der NVDA-Sounds und -Signaltöne zum Steuern oder Anpassen der Lautstärke der verwendeten Stimme hinzugefügt.
 
 NVDA aktualisiert die Ergebnisse der Texterkennung jetzt regelmäßig und teilt neuen Text mit, sobald er erscheint.
 Dies kann in der Kategorie "Windows-Texterkennung" in den NVDA-Einstellungen konfiguriert werden.
@@ -18,12 +19,9 @@ Weitere Fehler wurden außerdem im Store für NVDA-Erweiterungen, in Microsoft O
 
 == Neue Features ==
 - Verbessertes Sound-Management:
-  - NVDA gibt nun Audio über die API der Windows-Audio-Session (WASAPI) aus, was die Reaktionsfähigkeit, Leistung und Stabilität der Sprachausgaben und NVDA-Sounds verbessern kann. (#14697, #11169, #11615, #5096, #10185,e #11061)
-  - Die Verwendung von WASAPI kann in den Einstellungen in der Kategorie "Erweitert" deaktiviert werden.
-  Wenn WASAPI aktiviert ist, können auch die folgenden erweiterten Einstellungen konfiguriert werden.
-    - Eine Option, mit der die Lautstärke der NVDA-Sounds und -Signaltöne an die Lautstärke-Einstellung der verwendeten Stimme angepasst werden kann. (#1409)
-    - Eine Option, um die Lautstärke von NVDA-Sounds separat zu konfigurieren. (#1409, #15038)
-    -
+  - Eine Option in den Audio-Einstellungen, um die Lautstärke der NVDA-Sounds und -Signaltöne an die Lautstärke-Einstellung der verwendeten Stimme anzupassen. (#1409)
+  - Eine Option in den Audio-Einstellungen, um die Lautstärke der NVDA-Sounds separat zu konfigurieren. (#1409, #15038)
+  - NVDA verwendet nun Audio über die API der Windows-Audio-Session (WASAPI), was die Reaktionsfähigkeit, Leistung und Stabilität der Sprachausgaben und NVDA-Sounds verbessern kann. (#14697, #11169, #11615, #5096, #10185,e #11061)
   - Hinweis: WASAPI ist mit einigen NVDA-Erweiterungen nicht kompatibel.
   Für diese NVDA-Erweiterungen sind kompatible Updates verfügbar. Bitte aktualisieren Sie diese, bevor Sie NVDA aktualisieren.
   Inkompatible Versionen dieser NVDA-Erweiterungen werden beim NVDA-Update deaktiviert:
@@ -55,14 +53,14 @@ Weitere Fehler wurden außerdem im Store für NVDA-Erweiterungen, in Microsoft O
   - Die erweiterte Einstellung zur Aktivierung der HID-Unterstützung für die Braille-Ausgabe wurde zugunsten einer neuen Option entfernt.
   Sie können nun bestimmte Treiber für die automatische Erkennung von Braillezeilen im Dialogfeld zur Auswahl für Braillezeilen deaktivieren. (#15196)
   -
-- Store für NVDA-Erweiterungen: Installierte Pakete werden nun auf der Registerkarte Verfügbare Pakete aufgelistet, sofern sie im Store verfügbar sind. (#15374)
+- Die Einstellungen zum Ändern des Audio-Ausgabegeräts und zum Umschalten der Audio-Quellen wurden in die neuen Audio-Einstellungen im Dialogfeld "Sprachausgabe auswählen" verschoben. (#8711)
+- Store für NVDA-Erweiterungen: Installierte Pakete werden nun in der Registerkarte Verfügbare Pakete aufgelistet, sofern sie im Store verfügbar sind. (#15374)
 - Einige Tastenkombinationen wurden im NVDA-Menü aktualisiert. (#15364)
 -
 
-
 == Fehlerbehebungen ==
 - Microsoft Office:
-  - Behebung eines Absturzes in Microsoft Word, wenn die Option in den Dokument-Formatierungen "Überschriften mitteilen" und "Kommentare und Anmerkungen mitteilen" nicht aktiviert waren. (#15019)
+  - Absturz behoben in Microsoft Word, wenn die Option in den Dokument-Formatierungen "Überschriften mitteilen" und "Kommentare und Anmerkungen mitteilen" nicht aktiviert waren. (#15019)
   - In Microsoft Word und Microsoft Excel wird die Textausrichtung in weiteren Situationen korrekt mitgeteilt. (#15206, #15220)
   -
 - Microsoft Edge:
@@ -74,12 +72,16 @@ Weitere Fehler wurden außerdem im Store für NVDA-Erweiterungen, in Microsoft O
   - Fehler behoben, bei dem Braillezeilen von Albatross versuchten, sich zu initialisieren, obwohl eine andere Braillezeile angeschlossen ist. (#15226)
   -
 - Store für NVDA-Erweiterungen:
-  - Es wurde ein Fehler behoben, bei dem das Deaktivieren der Option "Inkompatible Pakete einschließen" dazu führte, dass inkompatible NVDA-Erweiterungen weiterhin im Store aufgeführt wurden. (#15411)
+  - Fehler behoben, bei dem das Deaktivieren der Option "Inkompatible Pakete einschließen" dazu führte, dass inkompatible NVDA-Erweiterungen weiterhin im Store aufgeführt wurden. (#15411)
   - NVDA-Erweiterungen, die aus Kompatibilitätsgründen blockiert sind, sollten nun korrekt gefiltert werden, wenn der Filter für den Status aktiviert/deaktiviert umgeschaltet wird. (#15416)
-  - Behebung eines Fehlers, der verhindert, dass inkompatible NVDA-Erweiterungen, die installiert und aktiviert sind, mit dem externen Installations-Tool aktualisiert oder ersetzt werden. (#15417)
+  - Fehler behoben, der verhindert, dass inkompatible NVDA-Erweiterungen, die installiert und aktiviert sind, mit dem externen Installations-Tool aktualisiert oder ersetzt werden. (#15417)
+  - Fehler behoben, bei dem NVDA nach der Installation der NVDA-Erweiterung erst nach einem Neustart die Sprachausgabe  wieder funktionierte. (#14525)
+  - Fehler behoben, bei dem NVDA-Erweiterungen nicht installiert werden konnten, wenn ein vorheriger Download fehlschlug oder abbrach. (#15469)
+  - Probleme beim Umgang mit inkompatiblen NVDA-Erweiterungen beim NVDA-Update wurden behoben. (#15414, #15412, #15437)
   -
 - Die Unterstützung für die System-Listenansicht (``SysListView32``) in Windows Forms-Anwendungen wurde verbessert. (#15283)
 - NVDA teilt erneut Berechnungsergebnisse im Windows-Rechner (32-Bit) auf Server-, LTSC- und LTSB-Versionen von Windows mit. (#15230)
+- NVDA ignoriert beim Wechseln nicht mehr den Fokus, sobald ein verschachteltes Fenster (großes Unterfenster) fokussiert wurde. (#15432)
 -
 
 == Änderungen für Entwickler ==
