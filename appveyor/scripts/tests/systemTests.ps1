@@ -9,7 +9,8 @@ if ($env:VERBOSE_SYSTEM_TEST_LOGGING) {
 
 # This tag is used to exclude system tests.
 # If provided to runsystemtests, RF would give an error.
-$SKIP_SYS_TESTS = "excluded_from_build"
+# Chrome system tests are currently broken due to experiemental changes happening to control+F6 behaviour
+$SKIP_SYS_TESTS = "excluded_from_build chrome"
 $tagsForTest = "installer NVDA"  # include the tests tagged with installer, or NVDA
 if ($env:INCLUDE_SYSTEM_TEST_TAGS) {
 	if ($env:INCLUDE_SYSTEM_TEST_TAGS -eq $SKIP_SYS_TESTS) {
