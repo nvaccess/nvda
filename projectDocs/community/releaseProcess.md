@@ -13,10 +13,10 @@ This is the general release workflow. Information for specific community groups 
 1. [Release Phase](#release-phase) (~7 weeks)
    - [Beta1](#beta-builds) 1 week after the most recent final release
    - A new beta is released weekly as required
-   - Once a week passes with a stable beta, the 2 week [translation freeze begins](#translatable-string-freeze)
+   - Once a beta has been stable for one week (no issues reported), the 2 week [translation freeze begins](#translatable-string-freeze)
    - Once the translation freeze ends, [a release candidate (RC)](#release-candidate) is created
    - A new RC is released weekly as required
-   - Once a week passes with a stable RC, the final release is created
+   - when an RC has been stable for one week (no issues reported), the final release is created
 
 ### Alpha phase
 * Contributions are made following the [dev contributing guide](../dev/contributing.md).
@@ -45,7 +45,7 @@ When no blocking issues are encountered it is expected to take ~6 weeks:
   - If addressing regression introduced in this release.
   - If addressing a bug in a "must have" feature for this release.
   - If addressing a critical Operating System change out of our control.
-* As appropriate new tagged beta releases will be published. 
+* As appropriate new tagged beta releases will be published once a week.
 * As necessary `beta` will be merged back into master.
   - For critical pull requests or translation merges.
 * If a merged pull request that reached beta has been identified as causing a regression, new bug, or does not work as originally reported:

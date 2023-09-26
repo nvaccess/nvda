@@ -48,7 +48,7 @@ If you are new to the project, or looking for some way to help take a look at:
 	If you believe the failure is unrelated, feel free to ignore it unless it is raised by a reviewer.
 	- All pull requests submitted must have their "Allow edits from maintainers" checkbox ticked.
 	This is the GitHub default for new pull requests.
-	- A lead developer may specifically requested the pull request be made against `beta` or `rc` in the case of addressing bugs introduced in the current release cycle.
+	- A lead developer may specifically request the pull request be made against `beta` or `rc` in the case of addressing bugs introduced in the current release cycle.
 1. Participate in the code review process
 	- This process requires core NVDA developers to understand the intent of the change, read the code changes, asking questions or suggesting changes.
 	Please participate in this process, answering questions, and discussing the changes.
