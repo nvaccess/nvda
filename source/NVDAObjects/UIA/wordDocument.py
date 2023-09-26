@@ -36,7 +36,6 @@ from NVDAObjects.window.winword import (
 )
 from NVDAObjects import NVDAObject
 from scriptHandler import script
-import api
 import eventHandler
 
 
@@ -557,15 +556,6 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 		if activityId == "AccSN2":  # Delete activity ID
 			return
 		super(WordDocument, self).event_UIA_notification(**kwargs)
-		# Try to ensure that braille is updated when UIA is not used and
-		# ctrl-v, ctrl-x or ctrl-z is pressed.
-		# Using getFocusObject because self does not work always.
-		if (
-			not UIAHandler.shouldUseUIAInMSWord(self.appModule)
-			and not eventHandler.isPendingEvents("caret", api.getFocusObject())
-		):
-			eventHandler.queueEvent("caret", api.getFocusObject())
-			log.debug(f"{self.appModule.appName}: enqueued caret event")
 
 	# The following overide of the EditableText._caretMoveBySentenceHelper private method
 	# Falls back to the MS Word object model if available.
