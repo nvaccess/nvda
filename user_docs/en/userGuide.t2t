@@ -39,9 +39,7 @@ Major highlights include:
 -
 
 ++ System Requirements ++[SystemRequirements]
-- Operating Systems: all 32-bit and 64-bit editions of Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11, and all Server Operating Systems starting from Windows Server 2008 R2.
-  - For Windows 7, NVDA requires Service Pack 1 or higher.
-  - For Windows Server 2008 R2, NVDA requires Service Pack 1 or higher.
+- Operating Systems: all 32-bit and 64-bit editions of Windows 8.1, Windows 10, Windows 11, and all Server Operating Systems starting from Windows Server 2012.
   - both AMD64 and ARM64 variants of Windows are supported.
   -
 - at least 150 MB of storage space.
@@ -2930,7 +2928,7 @@ For an even more extensive list of  free and commercial synthesizers that you ca
 
 ++ eSpeak NG ++[eSpeakNG]
 The [eSpeak NG https://github.com/espeak-ng/espeak-ng] synthesizer is built directly into NVDA and does not require any other special drivers or components to be installed.
-On Windows 7, 8 and 8.1, NVDA uses eSpeak NG by default ([Windows OneCore #OneCore] is used in Windows 10 and later by default).
+On Windows 8.1 NVDA uses eSpeak NG by default ([Windows OneCore #OneCore] is used in Windows 10 and later by default).
 As this synthesizer is built into NVDA, this is a great choice for when running NVDA off a USB thumb drive on other systems.
 
 Each voice that comes with eSpeak NG speaks a different language.
