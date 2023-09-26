@@ -12,10 +12,12 @@ What's New in NVDA
 
 
 == Changes ==
-
+- The following commands now support two and three presses to spell the reported information and spell with character descriptions: report selection, report clipboard text and report focused object. (#15449)
+-
 
 == Bug Fixes ==
 - Reporting of object shortcut keys has been improved. (#10807)
+- The SAPI4 synthesizer now properly supports volume, rate and pitch changes embedded in speech. (#15271)
 - Braille is updated when control+x, control+z or backspace is pressed.
 It is also updated when typing text, and braille is tethered to review and
 review follows caret. (#3276)
@@ -26,6 +28,9 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 
 - Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
+- Updated Comtypes to version 1.2.0. (#15513)
+- Updated fast_diff_match_patch to version 2.0.1. (#15514)
+- Added extension point: ``treeInterceptorHandler.post_browseModeStateChange``. (#14969)
 -
 
 === API Breaking Changes ===
@@ -62,8 +67,13 @@ There's also been bug fixes for the Add-on Store, Microsoft Office, Microsoft Ed
 
 == New Features ==
 - Enhanced sound management:
-  - An option in Audio settings to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using. (#1409)
-  - An option in Audio settings to separately configure the volume of NVDA sounds. (#1409, #15038)
+  - A new Audio Settings panel:
+    - This can be opened with ``NVDA+control+u``. (#15497)
+    - An option in Audio settings to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using. (#1409)
+    - An option in Audio settings to separately configure the volume of NVDA sounds. (#1409, #15038)
+    - The settings to change audio output device and toggle audio ducking have been moved to the new Audio settings panel from the Select Synthesizer dialog.
+    These options will be removed from the "select synthesizer" dialog in 2024.1. (#15486, #8711)
+    -
   - NVDA will now output audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds. (#14697, #11169, #11615, #5096, #10185, #11061)
   - Note: WASAPI is incompatible with some add-ons.
   Compatible updates are available for these add-ons, please update them before updating NVDA.
@@ -97,7 +107,6 @@ There's also been bug fixes for the Add-on Store, Microsoft Office, Microsoft Ed
   - The advanced setting to enable support for HID braille has been removed in favor of a new option.
   You can now disable specific drivers for braille display auto detection in the braille display selection dialog. (#15196)
   -
-- The settings to change audio output device and toggle audio ducking have been moved to the new Audio settings panel from the Select Synthesizer dialog. (#8711)
 - Add-on Store: Installed add-ons will now be listed in the Available Add-ons tab, if they are available in the store. (#15374)
 - Some shortcut keys have been updated in the NVDA menu. (#15364)
 -
@@ -126,7 +135,8 @@ There's also been bug fixes for the Add-on Store, Microsoft Office, Microsoft Ed
 - Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283)
 - NVDA once again announces calculation results in the Windows 32bit calculator on Server, LTSC and LTSB versions of Windows. (#15230)
 - NVDA no longer ignores focus changes when a nested window (grand child window) gets focus. (#15432)
-- The SAPI4 synthesizer now properly supports volume, rate and pitch changes embedded in speech. (#15271)
+- Fixed performance issues with Task Manager and some Windows versions. (#6245)
+- Fixed a potential cause of crashing during NVDA startup. (#15517)
 -
 
 == Changes for Developers ==
@@ -138,7 +148,6 @@ They should also be thread safe, making it possible to call them from background
 - Added official support to register custom braille display drivers in the automatic braille display detection process.
 Consult the ``braille.BrailleDisplayDriver`` class documentation for more details.
 Most notably, the ``supportsAutomaticDetection`` attribute must be set to ``True`` and the ``registerAutomaticDetection`` ``classmethod`` must be implemented.  (#15196)
-- Added extension point: ``treeInterceptorHandler.post_browseModeStateChange``. (#14969)
 -
 
 === Deprecations ===

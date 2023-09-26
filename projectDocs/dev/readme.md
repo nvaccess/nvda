@@ -11,6 +11,7 @@ This includes information on reporting issues, triaging issues, testing, transla
 * [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
 * [Technical design overview](../design/technicalDesignOverview.md)
 * [NVDA ControllerClient manual (NVDA API for external applications to directly speak or braille messages, etc.)](https://github.com/nvaccess/nvda/tree/master/extras/controllerClient)
+* [Release process](../community/releaseProcess.md)
 
 ### Communication channels
 #### NV Access

@@ -1,5 +1,5 @@
 $ErrorActionPreference = "Stop";
-$sconsOutTargets = "launcher developerGuide  changes userGuide client"
+$sconsOutTargets = "launcher developerGuide changes userGuide keyCommands client"
 if(!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
 	$sconsOutTargets += " appx"
 }

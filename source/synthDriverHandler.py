@@ -6,7 +6,13 @@
 
 import pkgutil
 import importlib
-from typing import Optional, OrderedDict, Set
+from typing import (
+	List,
+	Optional,
+	OrderedDict,
+	Set,
+	Tuple,
+)
 from locale import strxfrm
 
 import config
@@ -403,10 +409,10 @@ def _getSynthDriver(name) -> SynthDriver:
 	return importlib.import_module("synthDrivers.%s" % name, package="synthDrivers").SynthDriver
 
 
-def getSynthList():
+def getSynthList() -> List[Tuple[str, str]]:
 	from synthDrivers.silence import SynthDriver as SilenceSynthDriver
 
-	synthList = []
+	synthList: List[Tuple[str, str]] = []
 	# The synth that should be placed at the end of the list.
 	lastSynth = None
 	for loader, name, isPkg in pkgutil.iter_modules(synthDrivers.__path__):

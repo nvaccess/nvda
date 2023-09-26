@@ -6,6 +6,7 @@
 
 = 2023.3 =
 Tämä versio sisältää suoritus- ja reagointikyvyn sekä äänentoiston vakauden parannuksia.
+Lisätty asetukset NVDA-äänien ja piippausten voimakkuuden säätämiseen tai käytettävän puheäänen voimakkuuteen mukautumiseen.
 
 NVDA voi nyt päivittää tekstintunnistuksen tulokset automaattisesti ja puhua uuden tekstin sen ilmestyessä.
 Tämä voidaan määrittää NVDA:n asetusvalintaikkunan Windowsin tekstintunnistus -kategoriasta.
@@ -18,12 +19,9 @@ Bugikorjauksia lisäosakauppaan, Microsoft Officeen, Edgen pikavalikoihin sekä 
 
 == Uudet ominaisuudet ==
 - Paranneltu äänenhallinta:
+  - Ääni-kategorian asetuksella NVDA:n äänet ja piippaukset saadaan mukautumaan käytettävän puheäänen voimakkuuteen. (#1409)
+  - Ääni-kategorian asetuksella NVDA-äänien voimakkuus voidaan määrittää erikseen. (#1409, #15038)
   - NVDA toistaa nyt ääntä Windows Audio Session APIn (WASAPI) kautta, mikä saattaa parantaa puheen ja äänien reagointi- ja suorituskykyä sekä vakautta. (#14697, #11169, #11615, #5096, #10185, #11061)
-  - WASAPI voidaan poistaa käytöstä lisäasetuksista.
-  Jos WASAPI on otettu käyttöön, myös seuraavat lisäasetukset on mahdollista määrittää.
-    - Asetus, joka saa NVDA:n äänet ja piippaukset mukautumaan käyttämäsi puheäänen voimakkuuteen. (#1409)
-    - Asetus, jonka avulla NVDA-äänien voimakkuutta on mahdollista säätää erikseen. (#1409, #15038)
-    -
   - Huom: WASAPI ei ole yhteensopiva joidenkin lisäosien kanssa.
   Näille lisäosille on saatavilla yhteensopivat päivitykset. Asenna ne ennen NVDA:n päivittämistä.
   Näiden lisäosien yhteensopimattomat versiot poistetaan käytöstä NVDA:ta päivitettäessä:
@@ -39,7 +37,6 @@ Bugikorjauksia lisäosakauppaan, Microsoft Officeen, Edgen pikavalikoihin sekä 
 - Lisätty asetusvalintaikkunan Asiakirjojen muotoilu -kategoriaan "Ohita tyhjät rivit rivien sisennystä ilmoitettaessa" -asetus. (#13394)
 - Lisätty komento välilehtien välillä liikkumiseen selaustilassa. Pikanavigointinäppäintä ei ole määritetty. (#15046)
 -
-
 
 == Muutokset ==
 - Pistekirjoitus:
@@ -57,10 +54,10 @@ Bugikorjauksia lisäosakauppaan, Microsoft Officeen, Edgen pikavalikoihin sekä 
   - HID Braille -protokollan käyttöönottava lisäasetus on korvattu uudella asetuksella.
   Automaattinen tunnistus on nyt mahdollista poistaa käytöstä määrätyiltä pistenäyttöajureilta Valitse pistenäyttö -valintaikkunassa. (#15196)
   -
+- Äänen ulostulolaitteen ja äänenvaimennuksen muuttamiseen tarkoitetut asetukset on siirretty Valitse syntetisaattori -valintaikkunasta uuteen Ääni-asetuspaneeliin. (#8711)
 - Asennetut lisäosat näytetään nyt lisäosakaupan Saatavilla-välilehdellä, mikäli ne ovat saatavilla. (#15374)
 - Jotkut NVDA-valikossa olevien kohteiden pikanäppäimistä on päivitetty. Tämä koskee vain käyttäjiä, joilla NVDA:n kielenä on englanti. (#15364)
 -
-
 
 == Bugikorjaukset ==
 - Microsoft Office:
@@ -78,12 +75,15 @@ Bugikorjauksia lisäosakauppaan, Microsoft Officeen, Edgen pikavalikoihin sekä 
 - Lisäosakauppa:
   - Korjattu bugi, joka aiheutti sen, että yhteensopimattomat lisäosat näytettiin, vaikka "Näytä yhteensopimattomat lisäosat" -valintaruudun valinta oli poistettu. (#15411)
   - Yhteensopivuussyistä estetyt lisäosat suodatetaan nyt asianmukaisesti, kun Käytössä/ei käytössä -suodattimen tilaa vaihdetaan. (#15416)
-  - Korjattu bugi, joka esti asennetut ja käyttöön otetut yhteensopimattomat lisäosat, jotka päivitettiin tai korvattiin ulkoisesta lähteestä asennetulla versiolla. (#15417)
+  - Korjattu bugi, joka esti käytössä olevien yhteensopivuusohitettujen lisäosien päivittämisen tai korvaamisen ulkoisesta lähteestä asennetulla versiolla. (#15417)
+  - Korjattu bugi, joka aiheutti sen, ettei NVDA puhunut mitään lisäosan asennuksen jälkeen ennen kuin se käynnistettiin uudelleen. (#14525)
+  - Korjattu bugi, joka aiheutti sen, ettei lisäosia voitu asentaa, jos aiempi lataus epäonnistui tai peruutettiin. (#15469)
+  - Korjattu NVDA:ta päivitettäessä ilmenneitä yhteensopimattomien lisäosien käsittelyn ongelmia. (#15414, #15412, #15437)
   -
 - Korjattu järjestelmän luettelonäkymä (``SysListView32``) -säädinten tuki Windows Forms -sovelluksissa. (#15283)
 - NVDA ilmoittaa jälleen laskutoimitusten tulokset 32-bittisessä laskimessa Windowsin Server-, LTSC- ja LTSB-versioissa. (#15230)
+- NVDA ei enää ohita kohdistusmuutoksia, kun sisäkkäinen ikkuna tulee aktiiviseksi. (#15432)
 -
-
 
 == Muutokset kehittäjille ==
 Katso muutokset tämän dokumentin [englanninkielisestä versiosta ../en/changes.html].

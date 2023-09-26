@@ -43,6 +43,7 @@ from .speechDict import (
 # Be careful when removing, and only do in a compatibility breaking release.
 from .exit import ExitDialog
 from .settingsDialogs import (
+	AudioPanel,
 	BrailleDisplaySelectionDialog,
 	BrailleSettingsPanel,
 	BrowseModePanel,
@@ -296,6 +297,9 @@ class MainFrame(wx.Frame):
 
 	def onBrailleSettingsCommand(self,evt):
 		self.popupSettingsDialog(NVDASettingsDialog, BrailleSettingsPanel)
+
+	def onAudioSettingsCommand(self, evt: wx.CommandEvent):
+		self.popupSettingsDialog(NVDASettingsDialog, AudioPanel)
 
 	def onKeyboardSettingsCommand(self,evt):
 		self.popupSettingsDialog(NVDASettingsDialog, KeyboardSettingsPanel)
