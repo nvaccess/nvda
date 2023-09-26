@@ -55,11 +55,11 @@ def COMProxyDllBuilder(env,target,source,proxyClsid):
 		target=target,
 		source=source,
 		LIBS=['rpcrt4','oleaut32','ole32'],
-		CPPDEFINES=[
-			env['CPPDEFINES'],
-			'WIN32',
-			('PROXY_CLSID_IS',clsidStringToCLSIDDefine(proxyClsid)),
-		],
+		CPPDEFINES={
+			**{x: y for (x, y) in env['CPPDEFINES']},
+			'WIN32': None,
+			'PROXY_CLSID_IS': clsidStringToCLSIDDefine(proxyClsid),
+		},
 		LINKFLAGS=[
 			env['LINKFLAGS'],
 			'/export:DllGetClassObject,private',
@@ -84,15 +84,15 @@ signExec=env['signExec'] if env['certFile'] else None
 
 #Some defines and includes for the environment
 env.Append(
-	CPPDEFINES=[
-		'UNICODE',
-		'_CRT_SECURE_NO_DEPRECATE',
-		('LOGLEVEL', '${nvdaHelperLogLevel}'),
-		('_WIN32_WINNT', '_WIN32_WINNT_WIN7'),
+	CPPDEFINES={
+		'UNICODE': None,
+		'_CRT_SECURE_NO_DEPRECATE': None,
+		'LOGLEVEL': '${nvdaHelperLogLevel}',
+		'_WIN32_WINNT': '_WIN32_WINNT_WIN7',
 		# NOMINMAX: prevent minwindef.h min/max macro definition, which unexpectedly override developer
 		# expectations
-		'NOMINMAX',
-	]
+		'NOMINMAX': None,
+	}
 )
 
 env.Append(CXXFLAGS=['/EHsc'])
@@ -130,7 +130,7 @@ else:
 	env.Append(LINKFLAGS=['/LTCG'])
 
 if 'debugCRT' not in debug:
-	env.Append(CPPDEFINES=['NDEBUG'])
+	env.Append(CPPDEFINES={'NDEBUG': None})
 
 if 'RTC' in debug:
 	env.Append(CCFLAGS=['/RTCsu'])

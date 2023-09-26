@@ -3,10 +3,6 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-# Needed for type hinting CaseInsensitiveDict
-# Can be removed in a future version of python (3.8+)
-from __future__ import annotations
-
 import dataclasses
 import json
 import os
@@ -17,10 +13,8 @@ from typing import (
 	Generator,
 	List,
 	Optional,
-	Union,
-)
-from typing_extensions import (
 	Protocol,
+	Union,
 )
 
 from requests.structures import CaseInsensitiveDict
@@ -182,7 +176,7 @@ class _AddonManifestModel(_AddonGUIModel):
 	homepage: Optional[str]
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
-	manifest: AddonManifest
+	manifest: "AddonManifest"
 	legacy: bool = False
 	"""
 	Legacy add-ons contain invalid metadata
@@ -216,7 +210,7 @@ class AddonManifestModel(_AddonManifestModel):
 	homepage: Optional[str]
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
-	manifest: AddonManifest
+	manifest: "AddonManifest"
 	legacy: bool = False
 	"""
 	Legacy add-ons contain invalid metadata

@@ -4453,14 +4453,14 @@ class SpeechSymbolsDialog(SettingsDialog):
 		)
 
 		# Translators: The label for a column in symbols list used to identify a symbol.
-		self.symbolsList.InsertColumn(0, _("Symbol"), width=self.scaleSize(150))
+		self.symbolsList.AppendColumn(_("Symbol"), width=self.scaleSize(150))
 		# Translators: The label for a column in symbols list used to identify a replacement.
-		self.symbolsList.InsertColumn(1, _("Replacement"))
+		self.symbolsList.AppendColumn(_("Replacement"))
 		# Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-		self.symbolsList.InsertColumn(2, _("Level"))
+		self.symbolsList.AppendColumn(_("Level"))
 		# Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 		# See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
-		self.symbolsList.InsertColumn(3, _("Preserve"))
+		self.symbolsList.AppendColumn(_("Preserve"))
 		self.symbolsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemFocused)
 
 		# Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.

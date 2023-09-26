@@ -3,9 +3,6 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-# Needed for type hinting CaseInsensitiveDict
-# Can be removed in a future version of python (3.8+)
-from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
 
@@ -132,7 +129,7 @@ class AddonListItemVM(Generic[_AddonModelT]):
 
 
 class AddonDetailsVM:
-	def __init__(self, listVM: AddonListVM):
+	def __init__(self, listVM: "AddonListVM"):
 		self._listVM = listVM
 		self._listItem: Optional[AddonListItemVM] = listVM.getSelection()
 		self.updated = extensionPoints.Action()  # triggered by setting L{self._listItem}

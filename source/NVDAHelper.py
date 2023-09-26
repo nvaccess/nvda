@@ -493,6 +493,7 @@ def nvdaControllerInternal_openConfigDirectory():
 class _RemoteLoader:
 
 	def __init__(self, loaderDir: str):
+		# os.add_dll_directory(loaderDir)
 		# Create a pipe so we can write to stdin of the loader process.
 		pipeReadOrig, self._pipeWrite = winKernel.CreatePipe(None, 0)
 		# Make the read end of the pipe inheritable.
@@ -599,7 +600,6 @@ def initialize() -> None:
 		raise RuntimeError("Error initializing NVDAHelperRemote")
 	#Manually start the in-process manager thread for this NVDA main thread now, as a slow system can cause this action to confuse WX
 	_remoteLib.initInprocManagerThreadIfNeeded()
-	versionedLibARM64Path
 	arch = winVersion.getWinVer().processorArchitecture
 	if arch == 'AMD64':
 		_remoteLoaderAMD64 = _RemoteLoader(versionedLibAMD64Path)

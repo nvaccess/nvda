@@ -20,7 +20,7 @@ init:
       "INIT, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
 
 environment:
- PY_PYTHON: 3.7-32
+ PY_PYTHON: 3.11-32
  secure_authenticode_pass:
   secure: Way+hJyhbiLG/cmCo4+dHHzS5DiSvk/45o6frnIQ27GBX6nVDsh7jwQ7fSnqxBRP
  secure_ssh_pass:

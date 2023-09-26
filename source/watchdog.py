@@ -396,7 +396,11 @@ def cancellableExecute(func, *args, ccPumpMessages=True, **kwargs):
 	@raise CallCancelled: If the call was cancelled.
 	"""
 	global cancellableCallThread
-	if not isRunning or _suspended or not isinstance(threading.currentThread(), threading._MainThread):
+	if (
+		not isRunning
+		or _suspended
+		or not threading.current_thread() == threading.main_thread()
+	):
 		# Watchdog is not running or this is a background thread,
 		# so just execute the call.
 		return func(*args, **kwargs)
