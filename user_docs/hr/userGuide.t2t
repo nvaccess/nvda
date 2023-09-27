@@ -1551,22 +1551,6 @@ Za prikaz popisa govornih jedinica koje NVDA podržava, pogledajte poglavlje [Po
 Jedna specijalna stavka koja će se pojaviti u ovom popisu je "Bez govora", koja omogućuje korištenje NVDA čitača apsolutno bez govora.
 To može biti korisno za nekoga tko koristi NVDA s brajičnim retkom ili za razvojne programere koji žele koristiti preglednik govora.
 
-==== Izlazni uređaj ====[SelectSynthesizerOutputDevice]
-Ovaj odabirni okvir omogućuje odabir zvučnog uređaja kojeg će govorna jedinica koristiti za govor.
-
-%kc:setting
-==== Modus stišavanja zvuka ====[SelectSynthesizerDuckingMode]
-Tipkovnički prečac: NVDA+šift+d
-
-U sustavu Windows 8 ili novijem, ova opcija omogućuje odabir hoće li NVDA stišati glasnoću drugih aplikacija dok NVDA govori ili će to raditi cijelo vrijeme dok je NVDA pokrenut.
-- Bez stišavanja: NVDA nikad neće smanjiti glasnoću drugih zvukova. 
-- Stišaj tijekom govora ili sviranja zvukova: NVDA će stišavati zvuk samo kad on govori, a u pozadini se javljaju zvukovi. Ovo možda ne radi u svim govornim jedinicama. 
-- Uvijek stišaj: NVDA cijelo vrijeme stišava zvukove drugih aplikacija kad je NVDA pokrenut.
--
-
-Ova je opcija dostupna, samo ako je NVDA instaliran.
-Na prijenosnim i privremenim kopijama NVDA čitača, podrška za stišavanje zvuka nije moguća.
-
 +++ Kružne postavke govorne jedinice +++[SynthSettingsRing]
 Ako želite promijeniti postavke odasvud bez ulaženja u kategoriju govor u NVDA postavkama, postoji nekoliko NVDA tipkovničkih prečaca koji to omogućuju:
 %kc:beginInclude
@@ -1782,6 +1766,44 @@ Pročitajte dokumentaciju za vaš brajični redak u poglavlju [Podržani brajič
 Imajte na umu da ako spojite više brajičnih redaka na jedno računalo u isto vrijeme a ti redci koriste isti upravljački program npr. spajanje dva seika brajična redka,
 Trenutno je nemoguće odrediti koji brajični redak NVDA bi trebao koristiti.
 Stoga preporuča se spajanje samo jednog brajičnog redka određenog tipa ili proizvođača na vaše računalo u isto vrijeme.
+
++++ Zvuk +++[AudioSettings]
+Kategorija zvuk u NVDA postavkama omogućuje vam mijenjanje nekih opcija vezanih uz zvuk.
+
+==== Izlazni uređaj ====[SelectSynthesizerOutputDevice]
+Ovaj odabirni okvir omogućuje odabir zvučnog uređaja kojeg će govorna jedinica koristiti za govor.
+
+%kc:setting
+==== Modus stišavanja zvuka ====[SelectSynthesizerDuckingMode]
+Tipkovnički prečac: NVDA+šift+d
+
+U sustavu Windows 8 ili novijem, ova opcija omogućuje odabir hoće li NVDA stišati glasnoću drugih aplikacija dok NVDA govori ili će to raditi cijelo vrijeme dok je NVDA pokrenut.
+- Bez stišavanja: NVDA nikad neće smanjiti glasnoću drugih zvukova. 
+- Stišaj tijekom govora ili sviranja zvukova: NVDA će stišavati zvuk samo kad on govori, a u pozadini se javljaju zvukovi. Ovo možda ne radi u svim govornim jedinicama. 
+- Uvijek stišaj: NVDA cijelo vrijeme stišava zvukove drugih aplikacija kad je NVDA pokrenut.
+-
+
+Ova je opcija dostupna, samo ako je NVDA instaliran.
+Na prijenosnim i privremenim kopijama NVDA čitača, podrška za stišavanje zvuka nije moguća.
+
+==== Glasnoća zvukova NVDA prati glasnoću govorne jedinice  (zahtijeva WASAPI) ====[SoundVolumeFollowsVoice]
+: Podrazumjevano
+  Onemogućeno
+: Opcije
+  Onemogućeno, omogućeno
+:
+
+Kada se ova opcija omogući, jačina govorne jedinice i NVDA zvukova će pratiti podešavanje jačine glasa kojeg koristite.
+Ako utišate jačinu glasa kojeg koristite, jačina NVDA zvukova će se takođe utišati.
+Slično tome, ako pojačate glas, jačina zvukova će se pojačati.
+Ova opcija se primjenjuje samo kada je opcija "Koristi WASAPI za zvučni izlaz" omogućena.
+Ova postavka nije dostupna ako ste pokrenuli  NVDA sa isključenim [WASAPI za audio izlaz #WASAPI] U naprednim postavkama.
+
+==== Glasnoća NVDA zvukova ====[SoundVolume]
+Ovaj klizač vam dozvoljava regulaciju glasnoće govorne jedinice i  zvukova.
+ Ova postavka se primjenjuje samo kada je opcija "Koristi WASAPI za audio izlaz" omogućena i opcija "Jačina NVDA zvukova prati jačinu glasa" onemogućena.
+Ova postavka nije dostupna ako ste pokrenuli  NVDA sa isključenim [WASAPI za audio izlaz #WASAPI] U naprednim postavkama.
+
 
 +++ Vid +++[VisionSettings]
 Kategorija "Vid" u dijaloškom okviru NVDA Postavke omogućuje aktiviranje, deaktiviranje i konfiguriranje [vizualnih pomagala #Vision].
@@ -2412,21 +2434,10 @@ Ova opcija će omogućiti reprodukciju zvukova korištenjem standarda Windows Au
 WASAPI je moderniji standard zvuka koji može poboljšati brzinu, performanse i stabilnost NVDA zvukova, što uključuje govor i NVDA zvukove.
 Nakon što promjenite ovu opciju, morat ćete ponovo pokrenuti NVDA kako bi se promjene primjenile.
 
-==== Glasnoća zvukova NVDA prati glasnoću govorne jedinice  (zahtijeva WASAPI) ====[SoundVolumeFollowsVoice]
-: Podrazumevano
-  Onemogućeno
-: Opcije
-  Onemogućeno, omogućeno
-:
-
-Kada se ova opcija omogući, jačina govorne jedinice i NVDA zvukova će pratiti podešavanje jačine glasa kojeg koristite.
-Ako utišate jačinu glasa kojeg koristite, jačina NVDA zvukova će se takođe utišati.
-Slično tome, ako pojačate glas, jačina zvukova će se pojačati.
-Ova opcija se primjenjuje samo kada je opcija "Koristi WASAPI za zvučni izlaz" omogućena.
-
-==== Glasnoća NVDA zvukova ====[SoundVolume]
-Ovaj klizač vam dozvoljava regulaciju glasnoće govorne jedinice i  zvukova.
-Ovo podešavanje se primjenjuje samo kada je opcija "Koristi WASAPI za audio izlaz" omogućena i opcija "Jačina NVDA zvukova prati jačinu glasa" onemogućena.
+Kada onemogućite WASAPI biti će onemogućene slijedeće opcije:
+- [Glasnoća NVDA zvukova prati glasnoću drugih zvukova #SoundVolumeFollowsVoice]
+- [Glasnoća NVDA zvukova #SoundVolume]
+-
 
 ==== Kategorije zapisivanja ====[AdvancedSettingsDebugLoggingCategories]
 Potvrdni okviri u ovoj kategoriji omogućuju dodavanje kategorija debugiranja u zapisnik.

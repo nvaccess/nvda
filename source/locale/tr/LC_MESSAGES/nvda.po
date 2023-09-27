@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-15 00:01+0000\n"
+"POT-Creation-Date: 2023-09-22 00:01+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Burak Yüksek <burakyuksek94@gmail.com>\n"
 "Language-Team: \n"
@@ -3000,12 +3000,12 @@ msgstr ""
 #. Translators: The message announced when toggling off the ignore blank lines for line indentation
 #. reporting document formatting setting.
 msgid "Ignore blank lines for line indentation reporting off"
-msgstr "Satır girintilerini bildirirken boş satırları yok say kapalı"
+msgstr "Satır girintilerini bildirirken boş satırları yok say, kapalı"
 
 #. Translators: The message announced when toggling on the ignore blank lines for line indentation
 #. reporting document formatting setting.
 msgid "Ignore blank lines for line indentation reporting on"
-msgstr "Satır girintilerini bildirirken boş satırları yok say açık"
+msgstr "Satır girintilerini bildirirken boş satırları yok say, açık"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
@@ -10004,31 +10004,6 @@ msgstr "Sentezleyici seçin"
 msgid "&Synthesizer:"
 msgstr "&Sentezleyici:"
 
-#. Translators: This is the label for the select output
-#. device combo in the synthesizer dialog. Examples of
-#. of an output device are default soundcard, usb
-#. headphones, etc.
-msgid "Audio output  &device:"
-msgstr "&Çıkış cihazı:"
-
-#. Translators: name for default (Microsoft Sound Mapper) audio output device.
-msgid "Microsoft Sound Mapper"
-msgstr "Microsoft Ses Eşleştiricisi"
-
-#. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
-msgid "Audio d&ucking mode:"
-msgstr "Ses &zayıflaması modu:"
-
-#. Translators: This message is presented when
-#. NVDA is unable to load the selected
-#. synthesizer.
-#, python-format
-msgid "Could not load the %s synthesizer."
-msgstr "%s Sentezleyicisi yüklenemiyor."
-
-msgid "Synthesizer Error"
-msgstr "Sentezleyici hatası"
-
 #. Translators: This is the label for the voice settings panel.
 msgid "Voice"
 msgstr "Ses"
@@ -10595,6 +10570,46 @@ msgstr "Belge dolaşımı"
 msgid "&Paragraph style:"
 msgstr "&Paragraf kipi:"
 
+#. Translators: This message is presented when
+#. NVDA is unable to load the selected synthesizer.
+#, python-format
+msgid "Could not load the %s synthesizer."
+msgstr "%s Sentezleyicisi yüklenemiyor."
+
+#. Translators: Dialog title presented when
+#. NVDA is unable to load the selected synthesizer.
+msgid "Synthesizer Error"
+msgstr "Sentezleyici hatası"
+
+#. Translators: This is the label for the audio settings panel.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Audio"
+msgstr "Ses"
+
+#. Translators: This is the label for the select output device combo in the synthesizer dialog.
+#. Examples of an output device are default soundcard, usb headphones, etc.
+msgid "Audio output &device:"
+msgstr "Ses &Çıkış cihazı:"
+
+#. Translators: name for default (Microsoft Sound Mapper) audio output device.
+msgid "Microsoft Sound Mapper"
+msgstr "Microsoft Ses Eşleştiricisi"
+
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog.
+msgid "Audio d&ucking mode:"
+msgstr "Ses &zayıflaması modu:"
+
+#. Translators: This is the label for a checkbox control in the
+#. Audio settings panel.
+msgid "Volume of NVDA sounds follows voice volume"
+msgstr "NVDA seslerinin ses seviyesi konuşma ses seviyesine eşit olsun"
+
+#. Translators: This is the label for a slider control in the
+#. Audio settings panel.
+msgid "Volume of NVDA sounds"
+msgstr "NVDA seslerinin ses seviyesi"
+
 #. Translators: This is the label for the addon navigation settings panel.
 msgid "Add-on Store"
 msgstr "Eklenti mağazası"
@@ -10871,26 +10886,9 @@ msgstr "Düzenleme imleç hareketi zaman aşımı süresi (ms cinsinden)"
 msgid "Report transparent color values"
 msgstr "Saydam renk değerlerini bildir"
 
-#. Translators: This is the label for a group of advanced options in the
-#. Advanced settings panel
-msgid "Audio"
-msgstr "Ses"
-
 #. Translators: This is the label for a checkbox control in the Advanced settings panel.
 msgid "Use WASAPI for audio output (requires restart)"
 msgstr "Ses çıkışı için WASAPI kullan (NVDA'yı yeniden başlatmak gerekir)"
-
-#. Translators: This is the label for a checkbox control in the
-#. Advanced settings panel.
-msgid "Volume of NVDA sounds follows voice volume (requires WASAPI)"
-msgstr ""
-"NVDA seslerinin ses seviyesi konuşma ses seviyesine eşit olsun (WASAPI "
-"gerekir)"
-
-#. Translators: This is the label for a slider control in the
-#. Advanced settings panel.
-msgid "Volume of NVDA sounds (requires WASAPI)"
-msgstr "NVDA seslerinin ses seviyesi (WASAPI gerekir)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -11483,7 +11481,7 @@ msgstr "seviye %s"
 msgid "with %s item"
 msgid_plural "with %s items"
 msgstr[0] "%s ögeli"
-msgstr[1] "%s \t\tögeli"
+msgstr[1] "%s ögeli"
 
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #, python-format
