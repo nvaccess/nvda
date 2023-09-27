@@ -55,8 +55,7 @@ def COMProxyDllBuilder(env,target,source,proxyClsid):
 		target=target,
 		source=source,
 		LIBS=['rpcrt4','oleaut32','ole32'],
-		CPPDEFINES=[
-			env['CPPDEFINES'],
+		CPPDEFINES=list(env['CPPDEFINES']) + [
 			'WIN32',
 			('PROXY_CLSID_IS',clsidStringToCLSIDDefine(proxyClsid)),
 		],
@@ -130,7 +129,7 @@ else:
 	env.Append(LINKFLAGS=['/LTCG'])
 
 if 'debugCRT' not in debug:
-	env.Append(CPPDEFINES=['NDEBUG'])
+	env.Append(CPPDEFINES='NDEBUG')
 
 if 'RTC' in debug:
 	env.Append(CCFLAGS=['/RTCsu'])
