@@ -23,9 +23,7 @@ from displayModel import EditableTextDisplayModelTextInfo
 from ..behaviors import EditableTextWithoutAutoSelectDetection
 import NVDAObjects.window.winword as winWordWindowModule
 from speech import sayAll
-import api
 import inputCore
-from typing import Callable
 
 
 class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordWindowModule.WordDocument):
@@ -367,20 +365,12 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
 	script_previousParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
 
-	def script_paste(self, gesture: inputCore.InputGesture) -> None:
+	def script_updateBrailleAndReviewPosition(self, gesture: inputCore.InputGesture) -> None:
 		"""Helper script to update braille and review position."""
 		gesture.send()
-		self._updateBraille()
-
-	def _updateBraille(self) -> None:
-		"""Update braille and review position when helper scripts like script_paste are executed."""
-		# Using getFocusObject because self does not work always.
-		if not eventHandler.isPendingEvents("caret", api.getFocusObject()):
-			eventHandler.queueEvent("caret", api.getFocusObject())
+		if not eventHandler.isPendingEvents("caret", self):
+			eventHandler.queueEvent("caret", self)
 			log.debug(f"{self.appModule.appName}: enqueued caret event")
-
-	script_cut: Callable[[inputCore.InputGesture], None] = script_paste
-	script_undo: Callable[[inputCore.InputGesture], None] = script_paste
 
 	def focusOnActiveDocument(self, officeChartObject):
 		rangeStart=officeChartObject.Parent.Range.Start
@@ -403,9 +393,9 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		"kb:alt+pageUp":"caret_moveByCell",
 		"kb:alt+pageDown":"caret_moveByCell",
 		"kb:NVDA+alt+c":"reportCurrentComment",
-		"kb:control+v": "paste",
-		"kb:control+x": "cut",
-		"kb:control+z": "undo",
+		"kb:control+v": "updateBrailleAndReviewPosition",
+		"kb:control+x": "updateBrailleAndReviewPosition",
+		"kb:control+z": "updateBrailleAndReviewPosition",
 	}
 
 
