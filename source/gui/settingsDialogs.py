@@ -1830,7 +1830,7 @@ class MouseSettingsPanel(SettingsPanel):
 		self.reportObjectPropertiesCheckBox = sHelper.addItem(
 			wx.CheckBox(self, label=reportObjectPropertiesText)
 		)
-		self.bindHelpEvent("MouseSettingsReportObjectPropertiesCheckBox", self.reportObjectPropertiesCheckBox)
+		self.bindHelpEvent("MouseSettingsRole", self.reportObjectPropertiesCheckBox)
 		self.reportObjectPropertiesCheckBox.SetValue(config.conf["mouse"]["reportObjectRoleOnMouseEnter"])
 
 		# Translators: This is the label for a checkbox in the
