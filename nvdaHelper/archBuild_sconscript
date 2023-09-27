@@ -83,15 +83,15 @@ signExec=env['signExec'] if env['certFile'] else None
 
 #Some defines and includes for the environment
 env.Append(
-	CPPDEFINES={
-		'UNICODE': None,
-		'_CRT_SECURE_NO_DEPRECATE': None,
-		'LOGLEVEL': '${nvdaHelperLogLevel}',
-		'_WIN32_WINNT': '_WIN32_WINNT_WINBLUE',
+	CPPDEFINES=[
+		'UNICODE',
+		'_CRT_SECURE_NO_DEPRECATE',
+		('LOGLEVEL', '${nvdaHelperLogLevel}'),
+		('_WIN32_WINNT', '_WIN32_WINNT_WIN7'),
 		# NOMINMAX: prevent minwindef.h min/max macro definition, which unexpectedly override developer
 		# expectations
-		'NOMINMAX': None,
-	}
+		'NOMINMAX',
+	]
 )
 
 env.Append(CXXFLAGS=['/EHsc'])

@@ -59,20 +59,20 @@ env['CC'] = 'clang-cl'
 if 'analyze' in env['nvdaHelperDebugFlags']:
 	env.Append(CCFLAGS='/analyze-')
 
-env.Append(CPPDEFINES={
+env.Append(CPPDEFINES=[
 	# The Visual C++ C Runtime deprecates standard POSIX APIs that conflict with
 	# reserved ISO C names (like strdup) in favour of non-portable conforming
 	# variants that start with an '_'. This removes those deprecation warnings. */
-	"_CRT_NONSTDC_NO_DEPRECATE": None,
-	"PACKAGE_VERSION": r'\"%s\"' % getLouisVersion(),
-	"WIDECHARS_ARE_UCS4": None,
+	"_CRT_NONSTDC_NO_DEPRECATE",
+	("PACKAGE_VERSION", r'\"%s\"' % getLouisVersion()),
+	"WIDECHARS_ARE_UCS4",
 	# Tell liblouis.h that we're exporting liblouis dll functions, not importing them.
-	"_EXPORTING": None,
-})
+	"_EXPORTING",
+])
 env.Prepend(CPPPATH=[".", louisSourceDir])
 
 # Upstream liblouis compiles without UNICODE defined.
-env['CPPDEFINES'].remove(("UNICODE", None))
+env['CPPDEFINES'].remove("UNICODE")
 
 liblouisH = env.Substfile("liblouis.h", louisSourceDir.File("liblouis.h.in"),
 	SUBST_DICT={"@WIDECHAR_TYPE@": "unsigned int"})
