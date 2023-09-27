@@ -23,6 +23,7 @@ from displayModel import EditableTextDisplayModelTextInfo
 from ..behaviors import EditableTextWithoutAutoSelectDetection
 import NVDAObjects.window.winword as winWordWindowModule
 from speech import sayAll
+import api
 import inputCore
 
 
@@ -368,8 +369,9 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 	def script_updateBrailleAndReviewPosition(self, gesture: inputCore.InputGesture) -> None:
 		"""Helper script to update braille and review position."""
 		gesture.send()
-		if not eventHandler.isPendingEvents("caret", self):
-			eventHandler.queueEvent("caret", self)
+		# Using getFocusObject because self does not work always.
+		if not eventHandler.isPendingEvents("caret", api.getFocusObject()):
+			eventHandler.queueEvent("caret", api.getFocusObject())
 			log.debug(f"{self.appModule.appName}: enqueued caret event")
 
 	def focusOnActiveDocument(self, officeChartObject):
