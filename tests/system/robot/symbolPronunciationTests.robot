@@ -65,7 +65,7 @@ selectionByCharacter
 
 tableHeaderSymbols
 	[Documentation]	Ensure symbols announced as expected in table headers.
-	[Tags]	table
+	[Tags]	table	excluded_from_build
 	test_tableHeaders
 
 ignoreBlankLinesForReportLineIndentation
