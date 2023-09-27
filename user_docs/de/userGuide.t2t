@@ -1552,22 +1552,6 @@ Eine Liste aller von NVDA unterstützten Sprachausgaben finden Sie im Abschnitt 
 In der Liste der verfügbaren Sprachausgaben gibt es auch den Eintrag "Keine Sprachausgabe". Damit wird NVDA stumm geschaltet.
 Dies ist für Anwender nützlich, die nur mit einer Braillezeile arbeiten möchten. Aber auch Entwickler können davon profitieren, wenn Sie nur den Sprachausgaben-Betrachter für Ihre Tests nutzen möchten.
 
-==== Ausgabegerät ====[SelectSynthesizerOutputDevice]
-Mit dieser Option können Sie das Audiogerät zur Ausgabe der Sprachausgabe festlegen.
-
-%kc:setting
-==== Lautstärke anderer Audio-Quellen reduzieren ====[SelectSynthesizerDuckingMode]
-Tastenkombination: NVDA+Umschalt+D
-
-In Windows 8 und neuer kann diese Option die Systemlautstärke automatisch immer dann reduzieren, wenn NVDA spricht oder die ganze Zeit, wenn NVDA ausgeführt wird.
-- Niemals: Die Lautstärke anderer Audioquellen wird nicht reduziert.
-- Während des Sprechens und bei Wiedergabe der Signaltöne: NVDA wird die Lautstärke anderer Audioquellen nur dann reduzieren, wenn es spricht oder Töne ausgibt. Diese Option funktioniert nicht bei allen Sprachausgaben.
-- Immer: Die Lautstärke anderer Audioquellen wird immer reduziert, solange NVDA ausgeführt wird.
--
-
-Diese Funktion läuft nur bei installierten NVDA-Versionen.
-Bei portable oder temporäre NVDA-Versionen wird diese Funktion nicht unterstützt.
-
 +++ Einstellungsring der Sprachausgabe +++[SynthSettingsRing]
 Wenn Sie rasch durch die verschiedenen Sprachausgabeneinstellungen schalten möchten, ohne zuvor extra in die Kategorie der NVDA-Einstellungen gehen zu müssen, so gibt es die folgenden Tastenkombinationen in NVDA, die Sie von überall aus benutzen können:
 %kc:beginInclude
@@ -1782,6 +1766,42 @@ Für weitere Informationen sehen Sie im Abschnitt [Unterstützte Braillezeilen #
 
 Bitte beachten Sie: Wenn Sie mehrere Braille-Displays gleichzeitig an Ihr Gerät anschließen, die denselben Treiber verwenden (z. B. zwei Seika-Braillezeilen anschließen), ist es derzeit nicht möglich, NVDA mitzuteilen, welche Braillezeile verwendet werden soll.
 Es wird daher empfohlen, immer nur eine Braillezeile eines bestimmten Typs / Herstellers an Ihr Gerät anzuschließen.
+
++++ Audio-Einstellungen +++[AudioSettings]
+Die Kategorie "Audio-Einstellungen" in den NVDA-Einstellungen enthält Optionen, mit denen Sie verschiedene Aspekte der Audio-Ausgabe anpassen können.
+
+==== Audio-Ausgabegerät ====[SelectSynthesizerOutputDevice]
+Mit dieser Option können Sie das Audio-Ausgabegerät auswählen, über welches NVDA die ausgewählte Sprachausgabe verwenden soll.
+
+%kc:setting
+==== Verringern anderer Audio-Quellen ====[SelectSynthesizerDuckingMode]
+Tastenkombination: ``NVDA+Umschalt+D``
+
+Unter Windows 8 und neuer können Sie mit dieser Option festlegen, wie NVDA bei Verwendung der Sprachausgabe die Lautstärke anderer Anwendungen verringern soll oder die ganze Zeit, während NVDA läuft.
+- Niemals: NVDA verringert die Lautstärke anderer Audio-Quellen nicht.
+- Nur beim Vorlesen und bei Sounds: NVDA verringert die Lautstärke anderer Audio-Quellen nur bei Verwendung der Sprachausgabe oder sofern NVDA-Sounds wiedergegeben werden. Dies funktioniert möglicherweise nicht mit allen Sprachausgaben.
+- Immer: NVDA hält die Lautstärke anderer Audio-Quellen während der gesamten Laufzeit von NVDA niedrig.
+-
+
+Diese Option ist nur verfügbar, sofern NVDA installiert wurde.
+Die Unterstützung zum Umschalten der Audio-Quellen für portable und temporäre NVDA-Versionen ist nicht möglich.
+
+==== Lautstärke der NVDA-Sounds folgt der Lautstärke der verwendeten Stimme ====[SoundVolumeFollowsVoice]
+: Standard
+  Ausgeschaltet
+: Optionen
+  Ausgeschaltet, Eingeschaltet
+:
+
+Wenn diese Option aktiviert ist, folgt die Lautstärke der NVDA-Sounds und -Signaltöne der Lautstärke-Einstellung der verwendeten Stimme.
+Wenn Sie die Lautstärke der Stimme verringern, nimmt auch die Lautstärke der Sounds ab.
+Ähnlich verhält es sich, wenn Sie die Lautstärke der Stimme erhöhen, wird auch die Lautstärke der Sounds zunehmen.
+Diese Option ist nicht verfügbar, wenn Sie NVDA mit [WASAPI deaktiviert für Audio-Ausgabe #WASAPI] in den Erweiterten Einstellungen gestartet haben.
+
+==== Lautstärke der NVDA-Sounds ====[SoundVolume]
+Mit diesem Schieberegler können Sie die Lautstärke der NVDA-Sounds und -Signaltöne einstellen.
+Diese Einstellung ist nur wirksam, sofern die "Lautstärke der NVDA-Sounds folgt der Lautstärke der verwendeten Stimme" deaktiviert ist.
+Diese Option ist nicht verfügbar, wenn Sie NVDA mit [WASAPI deaktiviert für Audioausgabe #WASAPI] in den Erweiterten Einstellungen gestartet haben.
 
 +++ Visuelle Darstellungen +++[VisionSettings]
 Mit der Kategorie "Visuelle Darstellungen" in den NVDA-Einstellungen können Sie[visuelle Verbesserungen #Vision] aktivieren, deaktivieren und konfigurieren.
@@ -2413,31 +2433,19 @@ Bei mehreren historisch beliebten APIs von grafischen Oberflächen kann der Text
 Diese Option aktiviert die Audio-Ausgabe über die API der Windows-Audio-Session (WASAPI).
 Das WASAPI ist ein moderneres Audio-Framework, das die Reaktionsfähigkeit, Leistung und Stabilität der Audio-Ausgabe in NVDA, einschließlich Sprachausgabe und Sounds, verbessern kann.
 Nachdem Sie diese Option geändert haben, müssen Sie NVDA neu starten, damit die Änderung wirksam wird.
-
-==== Lautstärke der NVDA-Sounds folgt der Lautstärke der Sprachausgabe ====[SoundVolumeFollowsVoice]
-: Standard
-  ausgeschaltet
-: Optionen
-  Ausgeschaltet, Eingeschaltet
-:
-
-Wenn diese Option aktiviert ist, folgt die Lautstärke der NVDA-Sounds und Signaltöne der Lautstärke-Einstellung der eingestellten Stimme.
-Wenn Sie die Lautstärke der Stimme verringern, nimmt auch die Lautstärke der Sounds ab.
-Ähnlich verhält es sich, wenn Sie die Lautstärke der Stimme erhöhen, wird auch die Lautstärke der Sounds zunehmen.
-Diese Option ist nur wirksam, wenn die Option "WASAPI für Audio-Ausgabe verwenden" aktiviert ist.
-
-==== Lautstärke der NVDA-Sounds ====[SoundVolume]
-Mit diesem Schieberegler können Sie die Lautstärke der NVDA-Sounds und Signaltöne einstellen.
-Diese Einstellung ist nur wirksam, wenn "WASAPI für Audio-Ausgabe verwenden" aktiviert und "Lautstärke der NVDA-Sounds folgt der Lautstärke der Sprachausgabe" deaktiviert ist.
+Wenn Sie WASAPI deaktivieren, werden die folgenden Optionen deaktiviert:
+- [Lautstärke der NVDA-Sounds folgt der Lautstärke der Stimme #SoundVolumeFollowsVoice]
+- [Lautstärke der NVDA-Sounds #SoundVolume]
+-
 
 ==== Kategorien der Protokollierungsstufe ====[AdvancedSettingsDebugLoggingCategories]
-Die Kontrollkästchen in dieser Liste ermöglichen es Ihnen, bestimmte Kategorien von Debug-Meldungen im Protokoll von NVDA zu aktivieren.
+Mit diesen Kontrollkästchen in dieser Liste können Sie bestimmte Kategorien von Debug-Meldungen im Protokoll von NVDA aktivieren.
 Das Protokollieren dieser Nachrichten kann zu Leistungseinbußen und großen Protokolldateien führen.
 Schalten Sie nur eines davon ein, wenn dies von einem NVDA-Entwickler ausdrücklich angeordnet wurde, z. B. beim Debuggen, warum ein Braille-Treiber nicht ordnungsgemäß funktioniert.
 
 ==== Fehlern im Protokoll mit einem Sound kennzeichnen ====[PlayErrorSound]
 Mit dieser Option können Sie festlegen, ob NVDA einen Fehlerton abspielen soll, falls ein Fehler protokolliert wird.
-Bei Auswahl von Nur in Testversionen (Standard) ertönt nur dann ein NVDA-Wiedergabefehler, wenn die aktuelle NVDA-Version eine Testversion ist (Alpha-, Beta- oder Source-Code).
+Bei Auswahl von "Nur in Testversionen" (Standard) ertönt nur dann ein NVDA-Wiedergabefehler, wenn die aktuelle NVDA-Version eine Testversion ist (Alpha-, Beta- oder Quellcode).
 Wenn Sie "Ja" auswählen, können Sie unabhängig von Ihrer aktuellen NVDA-Version die Fehlertöne aktivieren.
 
 ++ Verschiedene Optionen ++[MiscSettings]

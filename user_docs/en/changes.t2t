@@ -12,10 +12,10 @@ What's New in NVDA
 
 
 == Changes ==
+- The following commands now support two and three presses to spell the reported information and spell with character descriptions: report selection, report clipboard text and report focused object. (#15449)
 - The option "Report role when mouse enters object" in NVDA's mouse settings category has been renamed to "Report object when mouse enters it".
 This option now announces additional relevant information about an object when the mouse enters it, such as states (checked/pressed) or cell coordinates in a table. (#15420)
 -
-
 
 == Bug Fixes ==
 - Reporting of object shortcut keys has been improved. (#10807)
@@ -27,6 +27,9 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 
 - Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
+- Updated Comtypes to version 1.2.0. (#15513)
+- Updated fast_diff_match_patch to version 2.0.1. (#15514)
+- Updated SCons to version 4.5.2. (#15529)
 - Added extension point: ``treeInterceptorHandler.post_browseModeStateChange``. (#14969)
 -
 
@@ -112,6 +115,7 @@ There's also been bug fixes for the Add-on Store, Microsoft Office, Microsoft Ed
 - Microsoft Office:
   - Fixed crash in Microsoft Word when Document formatting options "report headings" and "report comments and notes" were not enabled. (#15019)
   - In Word and Excel, text alignment will be correctly reported in more situations. (#15206, #15220)
+  - Fixes the announcement of some cell formatting shortcuts in Excel. (#15527)
   -
 - Microsoft Edge:
   - NVDA will no longer jump back to the last browse mode position when opening the context menu in Microsoft Edge. (#15309)
@@ -132,6 +136,8 @@ There's also been bug fixes for the Add-on Store, Microsoft Office, Microsoft Ed
 - Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283)
 - NVDA once again announces calculation results in the Windows 32bit calculator on Server, LTSC and LTSB versions of Windows. (#15230)
 - NVDA no longer ignores focus changes when a nested window (grand child window) gets focus. (#15432)
+- Fixed performance issues with Task Manager and some Windows versions. (#6245)
+- Fixed a potential cause of crashing during NVDA startup. (#15517)
 -
 
 == Changes for Developers ==

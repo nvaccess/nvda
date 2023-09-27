@@ -255,7 +255,8 @@ class GlobalCommands(ScriptableObject):
 		description=_(
 			# Translators: Input help mode message for report current selection command.
 			"Announces the current selection in edit controls and documents. "
-			"If there is no selection it says so."
+			"Pressing twice spells this information. "
+			"Pressing three times spells it using character descriptions."
 		),
 		category=SCRCAT_SYSTEMCARET,
 		gestures=("kb(desktop):NVDA+shift+upArrow", "kb(laptop):NVDA+shift+s")
@@ -272,7 +273,13 @@ class GlobalCommands(ScriptableObject):
 		if not info or info.isCollapsed:
 			speech.speakMessage(_("No selection"))
 		else:
-			speech.speakTextSelected(info.text)
+			scriptCount = scriptHandler.getLastScriptRepeatCount()
+			if scriptCount == 0:
+				speech.speakTextSelected(info.text)
+			elif len(info.text) < speech.speech.MAX_LENGTH_FOR_SELECTION_REPORTING:
+				speech.speakSpelling(info.text, useCharacterDescriptions=scriptCount > 1)
+			else:
+				speech.speakTextSelected(info.text)
 
 	@script(
 		# Translators: Input help mode message for report date and time command.
@@ -2431,8 +2438,12 @@ class GlobalCommands(ScriptableObject):
 		return
 
 	@script(
-		# Translators: Input help mode message for report current focus command.
-		description=_("Reports the object with focus. If pressed twice, spells the information"),
+		description=_(
+			# Translators: Input help mode message for report current focus command.
+			"Reports the object with focus. "
+			"If pressed twice, spells the information. "
+			"Pressing three times spells it using character descriptions."
+		),
 		category=SCRCAT_FOCUS,
 		gesture="kb:NVDA+tab"
 	)
@@ -2452,10 +2463,11 @@ class GlobalCommands(ScriptableObject):
 			ui.message(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
 			return
 
-		if scriptHandler.getLastScriptRepeatCount() == 0:
+		repeatCount = scriptHandler.getLastScriptRepeatCount()
+		if repeatCount == 0:
 			speech.speakObject(focusObject, reason=controlTypes.OutputReason.QUERY)
 		else:
-			speech.speakSpelling(focusObject.name)
+			speech.speakSpelling(focusObject.name, useCharacterDescriptions=repeatCount > 1)
 
 	@staticmethod
 	def _getStatusBarText(setReviewCursor: bool = False) -> Optional[str]:
@@ -3384,8 +3396,12 @@ class GlobalCommands(ScriptableObject):
 		ui.message(msg)
 
 	@script(
-		# Translators: Input help mode message for report clipboard text command.
-		description=_("Reports the text on the Windows clipboard"),
+		description=_(
+			# Translators: Input help mode message for report clipboard text command.
+			"Reports the text on the Windows clipboard. "
+			"Pressing twice spells this information. "
+			"Pressing three times spells it using character descriptions."
+		),
 		category=SCRCAT_SYSTEM,
 		gesture="kb:NVDA+c"
 	)
@@ -3399,7 +3415,11 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("There is no text on the clipboard"))
 			return
 		if len(text) < 1024: 
-			ui.message(text)
+			repeatCount = scriptHandler.getLastScriptRepeatCount()
+			if repeatCount == 0:
+				ui.message(text)
+			else:
+				speech.speakSpelling(text, useCharacterDescriptions=repeatCount > 1)
 		else:
 			# Translators: If the number of characters on the clipboard is greater than about 1000, it reports this message and gives number of characters on the clipboard.
 			# Example output: The clipboard contains a large portion of text. It is 2300 characters long.
