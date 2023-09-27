@@ -70,7 +70,7 @@ You should still build on the command line to verify errors.
   - Press next
 -  Specify Debug Configuration Settings
   - Build command line: `scons source`
-  - Preprocessor definitions (/D): `WIN32;_WINDOWS;_USRDLL;NVDAHELPER_EXPORTS;UNICODE;_CRT_SECURE_NO_DEPRECATE;LOGLEVEL=15;_WIN32_WINNT=_WIN32_WINNT_WIN7;NOMINMAX`
+  - Preprocessor definitions (/D): `WIN32;_WINDOWS;_USRDLL;NVDAHELPER_EXPORTS;UNICODE;_CRT_SECURE_NO_DEPRECATE;LOGLEVEL=15;_WIN32_WINNT=_WIN32_WINNT_WINBLUE;NOMINMAX`
   - Include search paths (/I): `../include;../miscDeps/include;./;../build\x86_64;../include/minhook/include`
   - Forced Included files (/FI): `winuser.h`
   - Press next
@@ -90,7 +90,7 @@ You should still build on the command line to verify errors.
   ```
   cl /Fobuild\x86\vbufBackends\gecko_ia2\gecko_ia2.obj /c build\x86\vbufBackends\gecko_ia2\gecko_ia2.cpp
   /TP /EHsc /nologo /std:c++20 /permissive- /Od /MT /W3 /WX
-  /DUNICODE /D_CRT_SECURE_NO_DEPRECATE /DLOGLEVEL=15 /D_WIN32_WINNT=_WIN32_WINNT_WIN7 /DNOMINMAX /DNDEBUG
+  /DUNICODE /D_CRT_SECURE_NO_DEPRECATE /DLOGLEVEL=15 /D_WIN32_WINNT=_WIN32_WINNT_WINBLUE /DNOMINMAX /DNDEBUG
   /Iinclude /Imiscdeps\include /Ibuild\x86
   /Z7
   ```
