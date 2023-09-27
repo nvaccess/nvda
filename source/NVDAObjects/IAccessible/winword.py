@@ -17,6 +17,7 @@ import tableUtils
 import textInfos
 import eventHandler
 import scriptHandler
+from scriptHandler import script
 import ui
 from . import IAccessible
 from displayModel import EditableTextDisplayModelTextInfo
@@ -366,13 +367,13 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
 	script_previousParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
 
+	@script(gestures=("kb:control+v", "kb:control+x", "kb:control+z"))
 	def script_updateBrailleAndReviewPosition(self, gesture: inputCore.InputGesture) -> None:
 		"""Helper script to update braille and review position."""
 		gesture.send()
 		# Using getFocusObject because self does not work always.
 		if not eventHandler.isPendingEvents("caret", api.getFocusObject()):
 			eventHandler.queueEvent("caret", api.getFocusObject())
-			log.debug(f"{self.appModule.appName}: enqueued caret event")
 
 	def focusOnActiveDocument(self, officeChartObject):
 		rangeStart=officeChartObject.Parent.Range.Start
@@ -395,9 +396,6 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		"kb:alt+pageUp":"caret_moveByCell",
 		"kb:alt+pageDown":"caret_moveByCell",
 		"kb:NVDA+alt+c":"reportCurrentComment",
-		"kb:control+v": "updateBrailleAndReviewPosition",
-		"kb:control+x": "updateBrailleAndReviewPosition",
-		"kb:control+z": "updateBrailleAndReviewPosition",
 	}
 
 
