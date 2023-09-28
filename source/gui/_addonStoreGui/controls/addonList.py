@@ -64,8 +64,8 @@ class AddonVirtualList(
 
 	def _refreshColumns(self):
 		self.ClearAll()
-		for colIndex, col in enumerate(self._addonsListVM.presentedFields):
-			self.InsertColumn(colIndex, col.displayString, width=self.scaleSize(col.width))
+		for col in self._addonsListVM.presentedFields:
+			self.AppendColumn(col.displayString, width=self.scaleSize(col.width))
 		self.Layout()
 
 	def _getListSelectionPosition(self) -> Optional[wx.Position]:

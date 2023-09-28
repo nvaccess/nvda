@@ -185,13 +185,13 @@ class AddonsDialog(
 			proportion=1,
 		)
 		# Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
-		self.addonsList.InsertColumn(0, _("Package"), width=self.scaleSize(150))
+		self.addonsList.AppendColumn(_("Package"), width=self.scaleSize(150))
 		# Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
-		self.addonsList.InsertColumn(1, _("Status"), width=self.scaleSize(50))
+		self.addonsList.AppendColumn(_("Status"), width=self.scaleSize(50))
 		# Translators: The label for a column in add-ons list used to identify add-on's version (example: version is 0.3).
-		self.addonsList.InsertColumn(2, _("Version"), width=self.scaleSize(50))
+		self.addonsList.AppendColumn(_("Version"), width=self.scaleSize(50))
 		# Translators: The label for a column in add-ons list used to identify add-on's author (example: author is NV Access).
-		self.addonsList.InsertColumn(3, _("Author"), width=self.scaleSize(300))
+		self.addonsList.AppendColumn(_("Author"), width=self.scaleSize(300))
 		self.addonsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemSelected)
 
 		# this is the group of buttons that affects the currently selected addon
@@ -710,11 +710,11 @@ class IncompatibleAddonsDialog(
 		)
 
 		# Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
-		self.addonsList.InsertColumn(1, _("Package"), width=self.scaleSize(150))
+		self.addonsList.AppendColumn(_("Package"), width=self.scaleSize(150))
 		# Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
-		self.addonsList.InsertColumn(2, _("Version"), width=self.scaleSize(150))
+		self.addonsList.AppendColumn(_("Version"), width=self.scaleSize(150))
 		# Translators: The label for a column in add-ons list used to provide some explanation about incompatibility
-		self.addonsList.InsertColumn(3, _("Incompatible reason"), width=self.scaleSize(180))
+		self.addonsList.AppendColumn(_("Incompatible reason"), width=self.scaleSize(180))
 
 		buttonSizer = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		# Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
