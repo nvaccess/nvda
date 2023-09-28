@@ -72,6 +72,8 @@ That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices``
 - ``IoThread.autoDeleteApcReference`` has been removed. (#14924, @LeonarddeR)
 - To support capital pitch changes, synthesizers must now explicitly declare their support for the ``PitchCommand`` in the ``supportedCommands`` attribute on the driver. (#15433, @LeonarddeR)
 - ``speechDictHandler.speechDictVars`` has been removed. Use ``NVDAState.WritePaths.speechDictsDir`` instead of ``speechDictHandler.speechDictVars.speechDictsPath``. (#15614, @lukaszgo1)
+- ``languageHandler.makeNpgettext`` and ``languageHandler.makePgettext`` have been removed.
+``npgettext`` and ``pgettext`` are supported natively now. (#15546)
 -
 
 === Deprecations ===
