@@ -643,8 +643,8 @@ def getObjectSpeech(
 	# Choose when we should report the content of this object's textInfo, rather than just the object's value
 	import browseMode
 	shouldReportTextContent=not (
-		# focusEntered should never present text content
-		(reason == OutputReason.FOCUSENTERED)
+		# focusEntered or mouse should never present text content
+		reason in (OutputReason.FOCUSENTERED, OutputReason.MOUSE)
 		# The rootNVDAObject of a browseMode document in browse mode (not passThrough)
 		# should never present text content
 		or (
@@ -729,10 +729,16 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 		"columnSpan": True,
 		"current": True
 	}
-	if reason == OutputReason.FOCUSENTERED:
+	if reason in (OutputReason.FOCUSENTERED, OutputReason.MOUSE):
 		allowProperties["value"] = False
 		allowProperties["keyboardShortcut"] = False
 		allowProperties["positionInfo_level"] = False
+	if reason == OutputReason.MOUSE:
+		# Name is often part of the text content when mouse tracking.
+		allowProperties["name"] = False
+		allowProperties["description"] = False
+		allowProperties["positionInfo_indexInGroup"] = False
+		allowProperties["positionInfo_similarItemsInGroup"] = False
 	if not config.conf["presentation"]["reportObjectDescriptions"]:
 		allowProperties["description"] = False
 	if not config.conf["presentation"]["reportKeyboardShortcuts"]:
