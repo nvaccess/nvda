@@ -93,10 +93,10 @@ env.Append(CPPPATH=[
 	'#/miscDeps/include',
 	Dir('.').abspath
 ])
-if TARGET_ARCH == "arm64":
-	subsystem = "/subsystem:windows,6.02"
-else:
-	subsystem = "/subsystem:windows,6.01"
+
+# Windows 8.1 (blue)
+subsystem = "/subsystem:windows,6.03"
+
 env.Append(
 	LINKFLAGS=[
 		'/incremental:no',
