@@ -28,9 +28,17 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 
 - Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
-- Updated Comtypes to version 1.2.0. (#15513)
-- Updated fast_diff_match_patch to version 2.0.1. (#15514)
-- Updated SCons to version 4.5.2. (#15529)
+- NVDA is now built with Python 3.11 (#12064)
+- Updated pip dependencies:
+  - configobj to 5.0.8. (#15544)
+  - Comtypes to 1.2.0. (#15513)
+  - fast_diff_match_patch to 2.0.1. (#15514)
+  - py2exe to 0.13.0.0. (#15544) 
+  - robotframework to 6.1.1. (#15544)
+  - SCons to 4.5.2. (#15529)
+  - sphinx to 7.2.6. (#15544)
+  - wxPython to 4.2.1 (#12551)
+  -
 - Added extension point: ``treeInterceptorHandler.post_browseModeStateChange``. (#14969)
 -
 
