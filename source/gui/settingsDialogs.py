@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
@@ -1827,10 +1826,12 @@ class MouseSettingsPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# mouse settings panel.
-		reportObjectRoleText = _("Report &role when mouse enters object")
-		self.reportObjectRoleCheckBox=sHelper.addItem(wx.CheckBox(self,label=reportObjectRoleText))
-		self.bindHelpEvent("MouseSettingsRole", self.reportObjectRoleCheckBox)
-		self.reportObjectRoleCheckBox.SetValue(config.conf["mouse"]["reportObjectRoleOnMouseEnter"])
+		reportObjectPropertiesText = _("Report &object when mouse enters it")
+		self.reportObjectPropertiesCheckBox = sHelper.addItem(
+			wx.CheckBox(self, label=reportObjectPropertiesText)
+		)
+		self.bindHelpEvent("MouseSettingsRole", self.reportObjectPropertiesCheckBox)
+		self.reportObjectPropertiesCheckBox.SetValue(config.conf["mouse"]["reportObjectRoleOnMouseEnter"])
 
 		# Translators: This is the label for a checkbox in the
 		# mouse settings panel.
@@ -1857,10 +1858,13 @@ class MouseSettingsPanel(SettingsPanel):
 		config.conf["mouse"]["reportMouseShapeChanges"]=self.shapeCheckBox.IsChecked()
 		config.conf["mouse"]["enableMouseTracking"]=self.mouseTrackingCheckBox.IsChecked()
 		config.conf["mouse"]["mouseTextUnit"]=self.textUnits[self.textUnitComboBox.GetSelection()]
-		config.conf["mouse"]["reportObjectRoleOnMouseEnter"]=self.reportObjectRoleCheckBox.IsChecked()
+		config.conf["mouse"]["reportObjectRoleOnMouseEnter"] = (
+			self.reportObjectPropertiesCheckBox.IsChecked()
+		)
 		config.conf["mouse"]["audioCoordinatesOnMouseMove"]=self.audioCheckBox.IsChecked()
 		config.conf["mouse"]["audioCoordinates_detectBrightness"]=self.audioDetectBrightnessCheckBox.IsChecked()
 		config.conf["mouse"]["ignoreInjectedMouseInput"]=self.ignoreInjectedMouseInputCheckBox.IsChecked()
+
 
 class ReviewCursorPanel(SettingsPanel):
 	# Translators: This is the label for the review cursor settings panel.
