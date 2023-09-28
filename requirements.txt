@@ -5,7 +5,7 @@ SCons==4.5.2
 comtypes==1.2.0
 pyserial==3.5
 wxPython==4.2.1
-configobj==5.0.8
+git+https://github.com/DiffSK/configobj@e2ba445#egg=configobj
 requests==2.31.0
 # Pillow is an implicit dependency and requires zlib and jpeg by default, but we don't need it
 Pillow==10.0.1 -C "zlib=disable" -C "jpeg=disable"
@@ -15,6 +15,11 @@ fast_diff_match_patch==2.0.1
 
 # Packaging NVDA
 py2exe==0.13.0.0
+# py2exe fails to compile properly without this.
+# This can be removed when upgrading py2exe to the next release.
+# https://github.com/Ousret/charset_normalizer/issues/253
+# https://github.com/py2exe/py2exe/commit/7b34f06486fbc07500e323796d3f3d5fb862aee3
+charset-normalizer==2.1.1
 
 # For building developer documentation
 sphinx==7.2.6
