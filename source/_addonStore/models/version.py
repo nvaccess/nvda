@@ -7,8 +7,8 @@
 from typing import (
 	NamedTuple,
 	Optional,
+	Protocol,
 )
-from typing_extensions import Protocol  # Python 3.8 adds native support
 import addonAPIVersion
 
 

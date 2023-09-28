@@ -173,15 +173,4 @@ if __name__ == '__main__':
 			"Please deactivate the current Python virtual environment and try again."
 		)
 		sys.exit(1)
-	if (
-		sys.version_info.minor == 7
-		and sys.version_info.micro == 6
-	):
-		# #10696: Building with Python 3.7.6 fails. Inform user and exit.
-		Py376FailMsg = (
-			"Error: Building with Python 3.7.6 is not possible.\n"
-			"Please use a more  recent version of Python 3."
-		)
-		print(Py376FailMsg)
-		sys.exit(1)
 	ensureVenvAndRequirements()
