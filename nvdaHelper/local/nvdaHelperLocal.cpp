@@ -1,15 +1,8 @@
 /*
-This file is a part of the NVDA project.
-URL: http://www.nvda-project.org/
-Copyright 2008-2014 NV Access Limited.
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License version 2.0, as published by
-    the Free Software Foundation.
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-This license can be found at:
-http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+A part of NonVisual Desktop Access (NVDA)
+Copyright (C) 2008-2023 NV Access Limited
+This file may be used under the terms of the GNU General Public License, version 2 or later.
+For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
 #include <cstdio>
@@ -28,20 +21,6 @@ decltype(&SendMessageW) real_SendMessageW = nullptr;
 decltype(&SendMessageTimeoutW) real_SendMessageTimeoutW = nullptr;
 decltype(&OpenClipboard) real_OpenClipboard = nullptr;
 
-typedef struct _RPC_SECURITY_QOS_V5_W {
-  unsigned long Version;
-  unsigned long Capabilities;
-  unsigned long IdentityTracking;
-  unsigned long ImpersonationType;
-  unsigned long AdditionalSecurityInfoType;
-  union
-      {
-      RPC_HTTP_TRANSPORT_CREDENTIALS_W *HttpCredentials;
-      } u;
-  void *Sid;
-  unsigned int EffectiveOnly;
-  void *ServerSecurityDescriptor;
-} RPC_SECURITY_QOS_V5_W, *PRPC_SECURITY_QOS_V5_W;
 
 handle_t createRemoteBindingHandle(wchar_t* uuidString) {
 	RPC_STATUS rpcStatus;
