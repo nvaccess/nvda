@@ -3,25 +3,38 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from abc import ABC, abstractmethod
 import functools
 from typing import (
 	Dict,
+	Generic,
+	Iterable,
 	List,
+	TypeVar,
 )
 
 import wx
 
+from _addonStore.models.status import _StatusFilterKey
 from logHandler import log
+import ui
 
-from ..viewModels.action import AddonActionVM
+from ..viewModels.action import AddonActionVM, BatchAddonActionVM
+from ..viewModels.addonList import AddonListItemVM
 from ..viewModels.store import AddonStoreVM
 
 
-class _ActionsContextMenu:
-	def __init__(self, storeVM: AddonStoreVM):
-		self._storeVM = storeVM
-		self._actionMenuItemMap: Dict[AddonActionVM, wx.MenuItem] = {}
-		self._contextMenu = wx.Menu()
+AddonActionT = TypeVar("AddonActionT", AddonActionVM, BatchAddonActionVM)
+
+
+class _ActionsContextMenuP(Generic[AddonActionT], ABC):
+	_actions: List[AddonActionT]
+	_actionMenuItemMap: Dict[AddonActionT, wx.MenuItem]
+	_contextMenu: wx.Menu
+
+	@abstractmethod
+	def _menuItemClicked(self, evt: wx.ContextMenuEvent, actionVM: AddonActionT):
+		...
 
 	def popupContextMenuFromPosition(
 			self,
@@ -31,14 +44,9 @@ class _ActionsContextMenu:
 		self._populateContextMenu()
 		targetWindow.PopupMenu(self._contextMenu, pos=position)
 
-	def _menuItemClicked(self, evt: wx.ContextMenuEvent, actionVM: AddonActionVM):
-		selectedAddon = actionVM.listItemVM
-		log.debug(f"action selected: actionVM: {actionVM}, selectedAddon: {selectedAddon}")
-		actionVM.actionHandler(selectedAddon)
-
 	def _populateContextMenu(self):
 		prevActionIndex = -1
-		for action in self._storeVM.actionVMList:
+		for action in self._actions:
 			menuItem = self._actionMenuItemMap.get(action)
 			menuItems: List[wx.MenuItem] = list(self._contextMenu.GetMenuItems())
 			isMenuItemInContextMenu = menuItem is not None and menuItem in menuItems
@@ -71,3 +79,68 @@ class _ActionsContextMenu:
 				# Remove the menu item from the context menu.
 				self._contextMenu.RemoveItem(menuItem)
 				del self._actionMenuItemMap[action]
+
+		menuItems: List[wx.MenuItem] = list(self._contextMenu.GetMenuItems())
+		for menuItem in menuItems:
+			if menuItem not in self._actionMenuItemMap.values():
+				# The menu item is not in the action menu item map.
+				# It should be removed from the context menu.
+				self._contextMenu.RemoveItem(menuItem)
+
+
+class _MonoActionsContextMenu(_ActionsContextMenuP[AddonActionVM]):
+	"""Context menu for actions for a single add-on"""
+	def __init__(self, storeVM: AddonStoreVM):
+		self._storeVM = storeVM
+		self._actionMenuItemMap = {}
+		self._contextMenu = wx.Menu()
+
+	def _menuItemClicked(self, evt: wx.ContextMenuEvent, actionVM: AddonActionVM):
+		selectedAddon = actionVM.actionTarget
+		log.debug(f"action selected: actionVM: {actionVM.displayName}, selectedAddon: {selectedAddon}")
+		actionVM.actionHandler(selectedAddon)
+
+	@property
+	def _actions(self) -> List[AddonActionVM]:
+		return self._storeVM.actionVMList
+
+
+class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
+	"""Context menu for actions for a group of add-ons"""
+	def __init__(self, storeVM: AddonStoreVM):
+		self._storeVM = storeVM
+		self._actionMenuItemMap = {}
+		self._contextMenu = wx.Menu()
+		self._selectedAddons: Iterable[AddonListItemVM] = tuple()
+
+	def _updateSelectedAddons(self, selectedAddons: Iterable[AddonListItemVM]):
+		# Reset the action menu as self._actions depends on the selected add-ons
+		self._actionMenuItemMap = {}
+		self._selectedAddons = selectedAddons
+
+	def popupContextMenuFromPosition(
+			self,
+			targetWindow: wx.Window,
+			position: wx.Position = wx.DefaultPosition
+	):
+		super().popupContextMenuFromPosition(targetWindow, position)
+		if self._contextMenu.GetMenuItemCount() == 0:
+			# Translators: a message displayed when activating the context menu on multiple selected add-ons,
+			# but no actions are available for the add-ons.
+			ui.message(pgettext("addonStore", "No actions available for the selected add-ons"))
+
+	def _menuItemClicked(self, evt: wx.ContextMenuEvent, actionVM: BatchAddonActionVM):
+		log.debug(f"Performing batch action for actionVM: {actionVM.displayName}")
+		actionVM.actionHandler(self._selectedAddons)
+
+	@property
+	def _actions(self) -> List[BatchAddonActionVM]:
+		return [
+			BatchAddonActionVM(
+				# Translators: Label for an action that installs the selected add-ons
+				displayName=pgettext("addonStore", "&Install selected add-ons"),
+				actionHandler=self._storeVM.getAddons,
+				validCheck=lambda aVMs: self._storeVM._filteredStatusKey == _StatusFilterKey.AVAILABLE,
+				actionTarget=self._selectedAddons
+			),
+		]
