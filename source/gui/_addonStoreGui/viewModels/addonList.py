@@ -132,7 +132,7 @@ class AddonListItemVM(Generic[_AddonModelT]):
 
 
 class AddonDetailsVM:
-	def __init__(self, listVM: AddonListVM):
+	def __init__(self, listVM: "AddonListVM"):
 		self._listVM = listVM
 		self._listItem: Optional[AddonListItemVM] = listVM.getSelection()
 		self.updated = extensionPoints.Action()  # triggered by setting L{self._listItem}

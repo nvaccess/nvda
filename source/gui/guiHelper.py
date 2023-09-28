@@ -136,7 +136,6 @@ def associateElements(firstElement: wx.Control, secondElement: wx.Control) -> wx
 	# likely a labelled control from LabeledControlHelper
 	if isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (
 		wx.Button,
-		wx.CheckBox,
 		wx.Choice,
 		wx.Slider,
 		wx.SpinCtrl,
@@ -146,6 +145,12 @@ def associateElements(firstElement: wx.Control, secondElement: wx.Control) -> wx
 		sizer.Add(firstElement, flag=wx.ALIGN_CENTER_VERTICAL)
 		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
 		sizer.Add(secondElement)
+	elif isinstance(firstElement, wx.StaticText) and isinstance(secondElement, wx.CheckBox):
+		# checkbox should go first, and label should go after
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sizer.Add(secondElement)
+		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
+		sizer.Add(firstElement, flag=wx.ALIGN_CENTER_VERTICAL)
 	# staticText and (ListCtrl, ListBox or TreeCtrl)
 	elif isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (wx.ListCtrl,wx.ListBox,wx.TreeCtrl)):
 		sizer = wx.BoxSizer(wx.VERTICAL)

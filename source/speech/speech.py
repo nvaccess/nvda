@@ -2,7 +2,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
-# Julien Cochuyt, Derek Riemer, Cyrille Bougot
+# Julien Cochuyt, Derek Riemer, Cyrille Bougot, Leonard de Ruijter
 
 """High-level functions to speak information.
 """ 
@@ -377,7 +377,7 @@ def getSingleCharDescription(
 		return
 	synth = getSynth()
 	synthConfig = config.conf["speech"][synth.name]
-	if synth.isSupported("pitch") and text.isupper():
+	if PitchCommand in synth.supportedCommands and text.isupper():
 		capPitchChange = synthConfig["capPitchChange"]
 	else:
 		capPitchChange = 0
@@ -410,8 +410,8 @@ def getSpellingSpeech(
 	
 	synth = getSynth()
 	synthConfig = config.conf["speech"][synth.name]
-	
-	if synth.isSupported("pitch"):
+
+	if PitchCommand in synth.supportedCommands:
 		capPitchChange = synthConfig["capPitchChange"]
 	else:
 		capPitchChange = 0
@@ -643,8 +643,8 @@ def getObjectSpeech(
 	# Choose when we should report the content of this object's textInfo, rather than just the object's value
 	import browseMode
 	shouldReportTextContent=not (
-		# focusEntered should never present text content
-		(reason == OutputReason.FOCUSENTERED)
+		# focusEntered or mouse should never present text content
+		reason in (OutputReason.FOCUSENTERED, OutputReason.MOUSE)
 		# The rootNVDAObject of a browseMode document in browse mode (not passThrough)
 		# should never present text content
 		or (
@@ -729,10 +729,16 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 		"columnSpan": True,
 		"current": True
 	}
-	if reason == OutputReason.FOCUSENTERED:
+	if reason in (OutputReason.FOCUSENTERED, OutputReason.MOUSE):
 		allowProperties["value"] = False
 		allowProperties["keyboardShortcut"] = False
 		allowProperties["positionInfo_level"] = False
+	if reason == OutputReason.MOUSE:
+		# Name is often part of the text content when mouse tracking.
+		allowProperties["name"] = False
+		allowProperties["description"] = False
+		allowProperties["positionInfo_indexInGroup"] = False
+		allowProperties["positionInfo_similarItemsInGroup"] = False
 	if not config.conf["presentation"]["reportObjectDescriptions"]:
 		allowProperties["description"] = False
 	if not config.conf["presentation"]["reportKeyboardShortcuts"]:
@@ -1016,16 +1022,20 @@ def speakSelectionMessage(
 		speak(seq, symbolLevel=None, priority=priority)
 
 
+MAX_LENGTH_FOR_SELECTION_REPORTING = 512
+
+
 def _getSelectionMessageSpeech(
 		message: str,
 		text: str,
 ) -> SpeechSequence:
-	if len(text) < 512:
+	if len(text) < MAX_LENGTH_FOR_SELECTION_REPORTING:
 		return _getSpeakMessageSpeech(message % text)
 	# Translators: This is spoken when the user has selected a large portion of text.
 	# Example output "1000 characters"
 	numCharactersText = _("%d characters") % len(text)
 	return _getSpeakMessageSpeech(message % numCharactersText)
+
 
 # C901 'speakSelectionChange' is too complex
 # Note: when working on speakSelectionChange, look for opportunities to simplify

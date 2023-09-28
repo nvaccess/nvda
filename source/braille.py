@@ -62,8 +62,6 @@ import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import hwIo
-from buildVersion import version_year
-import NVDAState
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
@@ -2485,15 +2483,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# The caret moved in a different object than the review position.
 			self._doNewObject(getFocusRegions(obj, review=False))
 
-	if version_year < 2024 and NVDAState._allowDeprecatedAPI():
-		def handlePendingCaretUpdate(self):
-			log.warning(
-				"braille.BrailleHandler.handlePendingCaretUpdate is now deprecated "
-				"with no public replacement. "
-				"It will be removed in NVDA 2024.1."
-			)
-			self._handlePendingUpdate()
-
 	def _handlePendingUpdate(self):
 		"""When any region is pending an update, updates the region and the braille display.
 		"""
@@ -2842,12 +2831,6 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		"""
 		if cls.isThreadSafe:
 			supportsAutomaticDetection = cls.supportsAutomaticDetection
-			if not supportsAutomaticDetection and NVDAState._allowDeprecatedAPI() and version_year < 2024:
-				log.warning(
-					"Starting from NVDA 2024.1, drivers that rely on bdDetect for the default check method "
-					"should have supportsAutomaticDetection set to True"
-				)
-				supportsAutomaticDetection = True
 			if supportsAutomaticDetection and bdDetect.driverHasPossibleDevices(cls.name):
 				return True
 		try:
