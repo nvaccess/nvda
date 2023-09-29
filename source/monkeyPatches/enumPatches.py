@@ -46,15 +46,15 @@ def _replacement__new__(cls, value):
 	if isinstance(result, cls):
 		return result
 
-	with ValueError(
+	ve_exc = ValueError(
 		"%r is not a valid %s" % (value, cls.__name__)
-	) as ve_exc:
-		if result is None:
-			raise ve_exc
+	)
+	if result is None:
+		raise ve_exc
 
-		te_exc = TypeError(
-			'error in %s._missing_: returned %r instead of None or a valid member'
-			% (cls.__name__, result)
-		)
-		te_exc.__context__ = ve_exc
-		raise te_exc
+	te_exc = TypeError(
+		'error in %s._missing_: returned %r instead of None or a valid member'
+		% (cls.__name__, result)
+	)
+	te_exc.__context__ = ve_exc
+	raise te_exc

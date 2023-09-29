@@ -33,7 +33,7 @@ from gui.settingsDialogs import SettingsDialog
 from logHandler import log
 
 from ..viewModels.store import AddonStoreVM
-from .actions import _ActionsContextMenu
+from .actions import _MonoActionsContextMenu
 from .addonList import AddonVirtualList
 from .details import AddonDetails
 from .messageDialogs import _SafetyWarningDialog
@@ -50,7 +50,7 @@ class AddonStoreDialog(SettingsDialog):
 	def __init__(self, parent: wx.Window, storeVM: AddonStoreVM):
 		self._storeVM = storeVM
 		self._storeVM.onDisplayableError.register(self.handleDisplayableError)
-		self._actionsContextMenu = _ActionsContextMenu(self._storeVM)
+		self._actionsContextMenu = _MonoActionsContextMenu(self._storeVM)
 		super().__init__(parent, resizeable=True, buttons={wx.CLOSE})
 		if config.conf["addonStore"]["showWarning"]:
 			displayDialogAsModal(_SafetyWarningDialog(parent))
