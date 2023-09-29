@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-08 00:01+0000\n"
-"PO-Revision-Date: 2023-09-14 12:10+0900\n"
+"POT-Creation-Date: 2023-09-22 00:01+0000\n"
+"PO-Revision-Date: 2023-09-27 13:18+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -137,7 +137,7 @@ msgstr "ダッキングなし"
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Duck when outputting speech and sounds"
-msgstr "音声とサウンドの出力時にダッキング"
+msgstr "音声と音の出力時にダッキング"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
@@ -2673,11 +2673,12 @@ msgid ""
 "Cycles through audio ducking modes which determine when NVDA lowers the "
 "volume of other sounds"
 msgstr ""
-"音のダッキングの切り替え。NVDA以外のサウンドの音量を下げるかどうかを選択"
+"オーディオのダッキングの切り替え。NVDA以外のサウンドの音量を下げるかどうかを"
+"選択"
 
 #. Translators: a message when audio ducking is not supported on this machine
 msgid "Audio ducking not supported"
-msgstr "音のダッキングはサポートされていません"
+msgstr "オーディオのダッキングはサポートされていません"
 
 #. Translators: Input help mode message for toggle input help command.
 msgid ""
@@ -9794,7 +9795,7 @@ msgstr "NVDA終了時に終了オプションを表示(&W)"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
-msgstr "NVDAの起動と終了のサウンド(&P)"
+msgstr "NVDAの起動と終了の音(&P)"
 
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs
 #. (available options and what they are logging are found under comments for the logging level messages
@@ -9922,31 +9923,6 @@ msgstr "音声エンジンの選択"
 #. synthesizer combobox in the synthesizer dialog.
 msgid "&Synthesizer:"
 msgstr "音声エンジン(&S)"
-
-#. Translators: This is the label for the select output
-#. device combo in the synthesizer dialog. Examples of
-#. of an output device are default soundcard, usb
-#. headphones, etc.
-msgid "Audio output  &device:"
-msgstr "サウンド出力先デバイス(&D)"
-
-#. Translators: name for default (Microsoft Sound Mapper) audio output device.
-msgid "Microsoft Sound Mapper"
-msgstr "Microsoft サウンドマッパー"
-
-#. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
-msgid "Audio d&ucking mode:"
-msgstr "音のダッキング(&D)"
-
-#. Translators: This message is presented when
-#. NVDA is unable to load the selected
-#. synthesizer.
-#, python-format
-msgid "Could not load the %s synthesizer."
-msgstr "音声エンジン %s を読み込めません。"
-
-msgid "Synthesizer Error"
-msgstr "音声エンジンエラー"
 
 #. Translators: This is the label for the voice settings panel.
 msgid "Voice"
@@ -10503,6 +10479,46 @@ msgstr "ドキュメントナビゲーション"
 msgid "&Paragraph style:"
 msgstr "段落の区切り方法(&P)"
 
+#. Translators: This message is presented when
+#. NVDA is unable to load the selected synthesizer.
+#, python-format
+msgid "Could not load the %s synthesizer."
+msgstr "音声エンジン %s を読み込めません。"
+
+#. Translators: Dialog title presented when
+#. NVDA is unable to load the selected synthesizer.
+msgid "Synthesizer Error"
+msgstr "音声エンジンエラー"
+
+#. Translators: This is the label for the audio settings panel.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Audio"
+msgstr "オーディオ"
+
+#. Translators: This is the label for the select output device combo in the synthesizer dialog.
+#. Examples of an output device are default soundcard, usb headphones, etc.
+msgid "Audio output &device:"
+msgstr "オーディオ出力デバイス(&D)"
+
+#. Translators: name for default (Microsoft Sound Mapper) audio output device.
+msgid "Microsoft Sound Mapper"
+msgstr "Microsoft サウンドマッパー"
+
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog.
+msgid "Audio d&ucking mode:"
+msgstr "オーディオのダッキング(&D)"
+
+#. Translators: This is the label for a checkbox control in the
+#. Audio settings panel.
+msgid "Volume of NVDA sounds follows voice volume"
+msgstr "NVDAの音の音量を音声の音量に追従"
+
+#. Translators: This is the label for a slider control in the
+#. Audio settings panel.
+msgid "Volume of NVDA sounds"
+msgstr "NVDAの音の音量"
+
 #. Translators: This is the label for the addon navigation settings panel.
 msgid "Add-on Store"
 msgstr "アドオン ストア"
@@ -10773,24 +10789,9 @@ msgstr "テキストカーソル移動タイムアウト (ミリ秒)"
 msgid "Report transparent color values"
 msgstr "半透明または透明な色の値を報告"
 
-#. Translators: This is the label for a group of advanced options in the
-#. Advanced settings panel
-msgid "Audio"
-msgstr "オーディオ"
-
 #. Translators: This is the label for a checkbox control in the Advanced settings panel.
 msgid "Use WASAPI for audio output (requires restart)"
 msgstr "オーディオ出力に WASAPI を使用 (再起動が必要)"
-
-#. Translators: This is the label for a checkbox control in the
-#. Advanced settings panel.
-msgid "Volume of NVDA sounds follows voice volume (requires WASAPI)"
-msgstr "NVDAのサウンドの音量を音声の音量に追従(WASAPIが必要)"
-
-#. Translators: This is the label for a slider control in the
-#. Advanced settings panel.
-msgid "Volume of NVDA sounds (requires WASAPI)"
-msgstr "NVDAのサウンドの音量(WASAPIが必要)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -11798,7 +11799,7 @@ msgstr "スクリーンカーテンを開始するときに警告を表示(&S)"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
 msgid "&Play sound when toggling Screen Curtain"
-msgstr "スクリーンカーテンの開始と終了のサウンド(&P)"
+msgstr "スクリーンカーテンの開始と終了の音(&P)"
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"

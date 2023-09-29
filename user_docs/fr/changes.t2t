@@ -6,6 +6,7 @@ Quoi de Neuf dans NVDA
 
 = 2023.3 =
 Cette version inclue des améliorations pour les performances, la réactivité et la fiabilité de la sortie audio.
+Des options ont été ajoutées pour contrôler le volume des sons et des bips de NVDA, ou pour qu'ils suivent le volume de la voix utilisée.
 
 NVDA peut maintenant raffraîchir périodiquement le résultat de l'OCR, en annonçant le texte lorsqu'il apparaît.
 Cela peut être configuré dans la catégorie Reconnaissance Optique de Caractères de Windows du dialogue de paramètres de NVDA.
@@ -18,13 +19,10 @@ Sont également présents des correctifs pour l'Add-on Store, Microsoft Office, 
 
 == Nouvelles Fonctionnalités ==
 - Amélioration de la gestion du son :
+  - Une option dans les paramètres audio pour que le volume des sons et bips de NVDA suive le volume de la voix utilisée. (#1409)
+  - Une option dans les paramètres audio pour séparément configurer le volume des sons de NVDA. (#1409, #15038)
   - NVDA sort désormais l'audio via l'API Windows Audio Session (WASAPI), ce qui peut améliorer la réactivité, les performances et la stabilité de la parole et des sons de NVDA. (#14697, #11169, #11615, #5096, #10185, #11061)
-  - L'utilisation de WASAPI peut être désactivée dans les paramètres avancés.
-  Si WASAPI est activé, les paramètres avancés suivants peuvent également être configurés.
-    - Une option pour que le volume des sons de NVDA suive le volume de la voix que vous utilisez. (#1409)
-    - Une option pour séparément configurer le volume des sons de NVDA. (#1409, #15038)
-    -
-  - Note : WASAPI est incompatible avec quelques extensions.
+  - Note : WASAPI est incompatible avec certaines extensions.
   Des mises à jour compatibles sont disponibles pour ces extensions, veuillez les mettre à jour avant NVDA.
   Les versions incompatibles de ces extensions seront désactivées lors de la mise à jour de NVDA.
     - Tony's Enhancements version 1.15 ou plus ancien. (#15402)
@@ -55,10 +53,10 @@ Sont également présents des correctifs pour l'Add-on Store, Microsoft Office, 
   - Le paramètre avancé pour activer le support du Braille HID a été remplacé en faveur d'une nouvelle option.
   Vous pouvez maintenant exclure certains pilotes de la détection automatique dans le dialogue de sélection de l'afficheur Braille. (#15196)
   -
+- Les paramètres pour changer le périphérique de sortie audio et le mode d'atténuation audio ont été déplacés du dialogue de sélection du synthétiseur vers le nouveau panneau paramètres audio. (#8711)
 - Add-on Store : Les extensions installées apparaitront désormais dans l'onglet extensions disponibles si elles sont disponibles dans le store. (#15374)
 - Certaines touches d'accès ont été modifiées dans le menu NVDA. (#15364)
 -
-
 
 == Corrections de Bogues ==
 - Microsoft Office :
@@ -77,9 +75,13 @@ Sont également présents des correctifs pour l'Add-on Store, Microsoft Office, 
   - Correction d'un problème où décocher "inclure les extensions incompatibles" continuait malgré tout de lister les extensions incompatibles dans le store. (#15411)
   - Les extensions bloquées pour des raisons d'incompatibilité devraient maintenant être correctement filtrées lors de la bascule du filtre sur le statut activée/désactivée. (#15416)
   - Correction d'un problème empêchant la mise à jour ou le remplacement des extensions incompatibles installées et activées via l'outil d'installation externe. (#15417)
+  - Correction d'un problème où NVDA ne parlait plus jusqu'à son redémarrage après l'installation d'une extension. (#14525)
+  - Correction d'un problème où une extension ne pouvait pas être installée si un téléchargement précédent avait échoué ou était annulé. (#15469)
+  - Correction de problèmes avec la gestion des extensions incompatibles lors de la mise à jour de NVDA. (#15414, #15412, #15437)
   -
 - Correction du support pour les contrôles des listes système (``SysListView32``) dans les applications Windows Forms. (#15283)
 - NVDA annonce à nouveau les résultats des calculs dans la calculatrice 32 bits de Windows Server, versions de Windows LTSC et LTSB. (#15230)
+- NVDA n'ignore plus les changements de focus lorsqu'une fenêtre imbriquée (fenêtre petit-enfant) obtient le focus. (#15432)
 -
 
 == Changements pour les Développeurs ==
