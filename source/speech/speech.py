@@ -2368,7 +2368,7 @@ def getFormatFieldSpeech(  # noqa: C901
 	if formatConfig["reportCellBorders"] != ReportCellBorders.OFF:
 		borderStyle=attrs.get("border-style")
 		oldBorderStyle=attrsCache.get("border-style") if attrsCache is not None else None
-		if borderStyle!=oldBorderStyle:
+		if (borderStyle or oldBorderStyle is not None) and borderStyle != oldBorderStyle:
 			if borderStyle:
 				text=borderStyle
 			else:
