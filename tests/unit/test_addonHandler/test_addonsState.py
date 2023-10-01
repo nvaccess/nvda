@@ -52,7 +52,7 @@ class TestStatePopulationFromPickleddata(unittest.TestCase):
 		self.assertEqual(self.state.manualOverridesAPIVersion.patch, 1)
 
 	def test_backCompatToProvidedAsAMajorMinorPatch(self):
-		# While addons state should be pickled using builtin data types oonly for backward compatibility,
+		# While addons state should be pickled using builtin data types only for backward compatibility,
 		# In PR #15439 `backCompatToVersion` was mistakenly pickled as a custom named tuple `MajorMinorPatch`.
 		# This tests verifies that data in this format can be loaded by versions of NVDA where `MajorMinorPatch`
 		# is defined.
