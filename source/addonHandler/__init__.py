@@ -104,16 +104,38 @@ class AddonsState(collections.UserDict):
 		"""Returns path to the state file. """
 		return WritePaths.addonStateFile
 
-	def load(self) -> None:
-		"""Populates state with the default content and then loads values from the config."""
-		state = self._generateDefaultStateContent()
-		self.update(state)
+	def setDefaultStateValues(self) -> None:
+		self.update(self._generateDefaultStateContent())
 
 		# Set default value for manualOverridesAPIVersion.
 		# The ability to override add-ons only appeared in 2023.2,
 		# where the BACK_COMPAT_TO API version was 2023.1.0.
 		self.manualOverridesAPIVersion = MajorMinorPatch(2023, 1, 0)
 
+	def fromPickledDict(
+			self,
+			pickledState: Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT, MajorMinorPatch]]
+	) -> None:
+		# Load from pickledState
+		if "backCompatToAPIVersion" in pickledState:
+			self.manualOverridesAPIVersion = MajorMinorPatch(*pickledState["backCompatToAPIVersion"])
+		for category in AddonStateCategory:
+			# Make pickles case insensitive
+			self[AddonStateCategory(category)] = CaseInsensitiveSet(pickledState.get(category, set()))
+
+	def toDict(self) -> Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT]]:
+		# We cannot pickle instance of `AddonsState` directly
+		# since older versions of NVDA aren't aware about this class and they're expecting
+		# the state to be using inbuilt data types only.
+		picklableState: Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT]] = dict()
+		for category in self.data:
+			picklableState[category.value] = set(self.data[category])
+		picklableState["backCompatToAPIVersion"] = tuple(self.manualOverridesAPIVersion)
+		return picklableState
+
+	def load(self) -> None:
+		"""Populates state with the default content and then loads values from the config."""
+		self.setDefaultStateValues()
 		try:
 			# #9038: Python 3 requires binary format when working with pickles.
 			with open(self.statePath, "rb") as f:
@@ -127,13 +149,7 @@ class AddonsState(collections.UserDict):
 		except Exception:
 			log.exception()
 		else:
-			# Load from pickledState
-			if "backCompatToAPIVersion" in pickledState:
-				self.manualOverridesAPIVersion = MajorMinorPatch(*pickledState["backCompatToAPIVersion"])
-			for category in AddonStateCategory:
-				# Make pickles case insensitive
-				state[AddonStateCategory(category)] = CaseInsensitiveSet(pickledState.get(category, set()))
-
+			self.fromPickledDict(pickledState)
 		if self.manualOverridesAPIVersion != addonAPIVersion.BACK_COMPAT_TO:
 			log.debug(
 				"BACK_COMPAT_TO API version for manual compatibility overrides has changed. "
@@ -144,11 +160,10 @@ class AddonsState(collections.UserDict):
 			# For the installer, this is not written to disk.
 			# Portable/temporary copies will write this on the first run.
 			# Mark overridden compatible add-ons as blocked.
-			state[AddonStateCategory.BLOCKED].update(state[AddonStateCategory.OVERRIDE_COMPATIBILITY])
+			self[AddonStateCategory.BLOCKED].update(self[AddonStateCategory.OVERRIDE_COMPATIBILITY])
 			# Reset overridden compatibility for add-ons that were overridden by older versions of NVDA.
-			state[AddonStateCategory.OVERRIDE_COMPATIBILITY].clear()
+			self[AddonStateCategory.OVERRIDE_COMPATIBILITY].clear()
 		self.manualOverridesAPIVersion = MajorMinorPatch(*addonAPIVersion.BACK_COMPAT_TO)
-		self.update(state)
 
 	def removeStateFile(self) -> None:
 		if not NVDAState.shouldWriteToDisk():
@@ -168,17 +183,10 @@ class AddonsState(collections.UserDict):
 			return
 
 		if any(self.values()):
-			# We cannot pickle instance of `AddonsState` directly
-			# since older versions of NVDA aren't aware about this class and they're expecting
-			# the state to be using inbuilt data types only.
-			picklableState: Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT]] = dict()
-			for category in self.data:
-				picklableState[category.value] = set(self.data[category])
-			picklableState["backCompatToAPIVersion"] = self.manualOverridesAPIVersion
 			try:
 				# #9038: Python 3 requires binary format when working with pickles.
 				with open(self.statePath, "wb") as f:
-					pickle.dump(picklableState, f, protocol=0)
+					pickle.dump(self.toDict(), f, protocol=0)
 			except (IOError, pickle.PicklingError):
 				log.debugWarning("Error saving state", exc_info=True)
 		else:
