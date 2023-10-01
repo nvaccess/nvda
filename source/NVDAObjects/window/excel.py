@@ -1215,7 +1215,8 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 				pass
 			try:
 				pattern = cellObj.Interior.Pattern
-				formatField['background-pattern'] = backgroundPatternLabels.get(pattern)
+				if pattern != xlPatternNone:
+					formatField['background-pattern'] = backgroundPatternLabels.get(pattern)
 				if pattern in (xlPatternLinearGradient, xlPatternRectangularGradient):
 					formatField['background-color']=(colors.RGB.fromCOLORREF(int(cellObj.Interior.Gradient.ColorStops(1).Color)))
 					formatField['background-color2']=(colors.RGB.fromCOLORREF(int(cellObj.Interior.Gradient.ColorStops(2).Color)))
