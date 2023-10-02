@@ -198,8 +198,8 @@ def getWinVer():
 
 
 def isSupportedOS():
-	# NVDA can only run on Windows 7 Service pack 1 and above
-	return getWinVer() >= WIN7_SP1
+	# NVDA can only run on Windows 8.1 (Blue) and above
+	return getWinVer() >= WIN81
 
 
 UWP_OCR_DATA_PATH = os.path.expandvars(r"$windir\OCR")
