@@ -29,7 +29,7 @@ class TestDefaultStateContent(unittest.TestCase):
 		self.assertEqual(state, {})
 
 
-class TestStatePopulationFromPickleddata(unittest.TestCase):
+class TestStatePopulationFromPickledData(unittest.TestCase):
 
 	def setUp(self) -> None:
 		self.state = addonHandler.AddonsState()
