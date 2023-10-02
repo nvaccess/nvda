@@ -1352,7 +1352,12 @@ Jos käytät usein kategorioita, joilla ei ole omia pikanäppäimiä, voit halut
 
 Valintaikkunan asetuskategoriat on kuvailtu alla.
  
-+++ Yleiset (NVDA+Ctrl+G) +++[GeneralSettings]
++++ Yleiset +++[GeneralSettings]
+
+%kc:setting
+==== Avaa yleiset asetukset ====
+Pikanäppäin: ``NVDA+Ctrl+G``
+
 Yleiset-kategoriassa määritetään NVDA:n yleinen toiminta, kuten käyttöliittymän kieli ja automaattinen päivitysten tarkistus.
 Se sisältää seuraavat asetukset:
 
@@ -1431,7 +1436,12 @@ Nämä tiedot auttavat huomattavasti NV Accessia priorisoimaan NVDA:n tulevaa ke
 Jos tämä on valittuna, NVDA ilmoittaa käynnistyessään odottavasta päivityksestä ja tarjoaa mahdollisuutta sen asentamiseen.
 Päivitys voidaan asentaa myös manuaalisesti Sulje NVDA -valintaikkunasta (mikäli se on käytössä), NVDA-valikosta tai suoritettaessa päivitystarkistusta Ohje-valikosta.
 
-+++ Puhe (NVDA+Ctrl+V) +++[SpeechSettings]
++++ Puhe +++[SpeechSettings]
+
+%kc:setting
+==== Avaa puheasetukset ====
+Pikanäppäin: ``NVDA+Ctrl+V``
+
 Puhe-kategoria sisältää asetuksia, joilla muutetaan sekä käytettävää puhesyntetisaattoria että sen puheäänen ominaisuuksia.
 Tietoja nopeammasta vaihtoehtoisesta tavasta puheparametrien säätämiseen mistä tahansa on [Syntetisaattorin asetusrengas #SynthSettingsRing] -osiossa.
 
@@ -1540,8 +1550,13 @@ Tästä voi olla hyötyä, mikäli symbolien ääntämistä on vaikea erottaa to
 
 Viivästetty merkin kuvaus peruuntuu, jos tuona aikana puhutaan muuta tekstiä tai jos painetaan ``Ctrl``-näppäintä.
 
-+++ Valitse syntetisaattori (NVDA+Ctrl+S) +++[SelectSynthesizer]
-Syntetisaattori-valintaikkunassa, joka voidaan avata painamalla Muuta...-painiketta Asetukset-valintaikkunan Puhe-kategoriassa, valitaan, mitä syntetisaattoria NVDA käyttää.
++++ Valitse syntetisaattori +++[SelectSynthesizer]
+
+%kc:setting
+==== Avaa Valitse syntetisaattori -valintaikkuna ====
+Pikanäppäin: ``NVDA+Ctrl+S``
+
+Valitse 	syntetisaattori -valintaikkunassa, joka voidaan avata painamalla Vaihda...-painiketta Asetukset-valintaikkunan Puhe-kategoriassa, valitaan, mitä syntetisaattoria NVDA käyttää.
 Kun haluttu syntetisaattori on valittu, NVDA ottaa sen käyttöön OK-painikkeen painamisen jälkeen.
 Jos syntetisaattorin lataamisessa ilmenee virhe, siitä ilmoittava viesti näytetään, eikä käytettävää syntetisaattoria vaihdeta.
 
@@ -1727,8 +1742,13 @@ Tämän asetuksen käytöstä poistaminen saattaa parantaa luettavuutta.
 
 Voit ottaa valinnan näyttämisen käyttöön tai poistaa sen käytöstä mistä tahansa määrittämällä sille pikanäppäimen [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen.
 
-+++ Valitse pistenäyttö (NVDA+Ctrl+A) +++[SelectBrailleDisplay]
-Valitse pistenäyttö -valintaikkunasta, joka voidaan avata painamalla Muuta...-painiketta Asetukset-valintaikkunan Pistekirjoitus-kategoriassa, valitaan, mitä pistenäyttöä NVDA käyttää pistekirjoituksen tulostamiseen.
++++ Valitse pistenäyttö +++[SelectBrailleDisplay]
+
+%kc:setting
+==== Avaa Valitse pistenäyttö -valintaikkuna ====
+Pikanäppäin: ``NVDA+Ctrl+A``
+
+Valitse pistenäyttö -valintaikkunasta, joka voidaan avata painamalla Vaihda...-painiketta Asetukset-valintaikkunan Pistekirjoitus-kategoriassa, valitaan, mitä pistenäyttöä NVDA käyttää pistekirjoituksen tulostamiseen.
 Kun haluttu pistenäyttö on valittu, NVDA ottaa sen käyttöön OK-painikkeen painamisen jälkeen.
 Mikäli näytön ajurin lataamisessa ilmenee virheitä, NVDA ilmoittaa siitä, eikä mahdollisesti käytössä olevaa pistenäyttöä vaihdeta.
 
@@ -1770,7 +1790,12 @@ NVDA:ssa ei ole tällä hetkellä mahdollista määrittää, mitä näyttöä se
 Siksi on suositeltavaa kytkeä koneeseen vain yksi tietyn tyyppinen/valmistajan pistenäyttö kerrallaan.
 
 +++ Ääni +++[AudioSettings]
-NVDA:n asetusvalintaikkunan Ääni-kategorian valinnoilla voidaan muuttaa useita äänen ulostuloon liittyviä asetuksia.
+
+%kc:setting
+==== Avaa ääniasetukset ====
+Pikanäppäin: ``NVDA+Ctrl+U``
+
+NVDA:n asetusvalintaikkunan Ääni-kategoriasta voidaan muuttaa useita äänen ulostuloon liittyviä asetuksia.
 
 ==== Äänen ulostulolaite ====[SelectSynthesizerOutputDevice]
 Tästä valitaan, mitä äänilaitetta NVDA:ssa valittuna oleva puhesyntetisaattori käyttää.
@@ -1843,7 +1868,12 @@ Muita näönparannuksen tarjoajia voidaan asentaa [lisäosina. #AddonsManager]
 Mikäli näillä tarjoajilla on säädettäviä asetuksia, ne näytetään erillisissä ryhmissä tässä asetuskategoriassa.
 Katso tietoja kunkin tarjoajan tukemista asetuksista kyseisen tarjoajan ohjeesta.
 
-+++ Näppäimistö (NVDA+Ctrl+K) +++[KeyboardSettings]
++++ Näppäimistö +++[KeyboardSettings]
+
+%kc:setting
+==== Avaa näppäimistöasetukset ====
+Pikanäppäin: ``NVDA+Ctrl+K``
+
 Näppäimistö-kategoria sisältää asetuksia, jotka määrittävät, miten NVDA käyttäytyy kirjoitettaessa ja käytettäessä näppäimistöä muilla tavoin.
 Tämä asetuskategoria sisältää seuraavat asetukset:
 
@@ -1901,7 +1931,12 @@ Asetus on käytettävissä vain, jos kirjoitusvirheiden ilmoittaminen on otettu 
 Tällä asetuksella käyttäjä voi määrittää, käsitteleekö NVDA esim. näyttönäppäimistöjen ja puheentunnistusohjelmistojen tuottamat näppäinpainallukset.
 Asetus on oletusarvoisesti käytössä, mutta esim. vietnaminkielistä tekstiä UniKey-kirjoitusohjelmistolla kirjoittavat käyttäjät saattavat haluta poistaa sen käytöstä, sillä se aiheuttaa väärien merkkien syöttämistä.
 
-+++ Hiiri (NVDA+Ctrl+M) +++[MouseSettings]
++++ Hiiri +++[MouseSettings]
+
+%kc:setting
+==== Avaa hiiriasetukset ====
+Pikanäppäin: ``NVDA+Ctrl+M``
+
 Hiiri-kategoriassa NVDA:n voi määrittää seuraamaan hiirtä, ilmaisemaan hiiren koordinaatit äänimerkeillä sekä muuttaa muita hiiren käyttöön liittyviä asetuksia.
 Tämä kategoria sisältää seuraavat asetukset:
 
@@ -1977,7 +2012,12 @@ Kun tämä asetus on käytössä, NVDA suodattaa objektihierarkiasta pois sellai
 
 Yksinkertainen tarkastelutila otetaan käyttöön tai poistetaan käytöstä mistä tahansa määrittämällä sille oma näppäinkomento [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen.
 
-+++ Objektien lukeminen (NVDA+Ctrl+O) +++[ObjectPresentationSettings]
++++ Objektien lukeminen +++[ObjectPresentationSettings]
+
+%kc:setting
+==== Avaa objektien lukemisen asetukset ====
+Pikanäppäin: ``NVDA+Ctrl+O``
+
 Objektien lukeminen -kategoriaa käytetään määrittämään, kuinka paljon säädinten tietoja, kuten kuvaus, sijaintitiedot jne., NVDA lukee.
 Nämä asetukset eivät yleensä koske selaustilaa.
 Ne koskevat tyypillisesti kohdistuksen ilmaisemista ja NVDA:n objektinavigointia, mutta ei tekstin lukemista esim. selaustilassa.
@@ -2025,10 +2065,10 @@ Kun tämä asetus on käytössä, NVDA ilmaisee edistymispalkin päivitykset, va
 Jos edistymispalkin sisältävä ikkuna pienennetään tai siirrytään pois sellaisesta, NVDA seuraa edistymispalkkia, jolloin voidaan tehdä samalla jotain muuta.
 
 %kc:setting
-==== Lue dynaamisen sisällön muutokset ====[ObjectPresentationReportDynamicContent]
+==== Puhu dynaamisen sisällön muutokset ====[ObjectPresentationReportDynamicContent]
 Pikanäppäin: NVDA+5
 
-Ottaa käyttöön tai poistaa käytöstä uuden sisällön lukemisen tietyissä objekteissa, kuten pääteohjelmissa ja chattiohjelmien historiasäätimissä.
+Ottaa käyttöön tai poistaa käytöstä uuden sisällön puhumisen tietyissä objekteissa, kuten pääteohjelmissa ja pikaviestiohjelmien historiasäätimissä.
 
 ==== Toista ääni automaattisten ehdotusten tullessa näkyviin ====[ObjectPresentationSuggestionSounds]
 Ottaa käyttöön tai poistaa käytöstä automaattisten ehdotusten ilmoittamisen niiden tullessa näkyviin, ja mikäli asetus on käytössä, NVDA toistaa äänen, joka ilmaisee tämän.
@@ -2067,8 +2107,13 @@ Kun luku- tai esiyhdistelmätiedot on yhdistetty kelvolliseksi kuvakirjoitussymb
 Tällä asetuksella voidaan valita, lukeeko NVDA uudet symbolit niiden tullessa näkyviin merkkiyhdistelmässä.
 Asetus on oletusarvoisesti käytössä.
 
-+++ Selaustila (NVDA+Ctrl+B) +++[BrowseModeSettings]
-Selaustila-kategoriaa käytetään määrittämään NVDA:n toimintaa lukiessasi ja liikkuessasi monisisältöisissä asiakirjoissa, kuten verkkosivuilla.
++++ Selaustila +++[BrowseModeSettings]
+
+%kc:setting
+==== Avaa selaustilan asetukset ====
+Pikanäppäin: ``NVDA+Ctrl+B``
+
+NVDA:n asetusvalintaikkunan Selaustila-kategoriaa käytetään määrittämään NVDA:n toimintaa luettaessa ja liikuttaessa monisisältöisissä asiakirjoissa, kuten verkkosivuilla.
 Kategoria sisältää seuraavat asetukset:
 
 ==== Merkkien enimmäismäärä rivillä ====[BrowseModeSettingsMaxLength]
@@ -2138,7 +2183,12 @@ Tästä voi olla seurauksena nopeampi selauskokemus sekä parempi reagointi sela
 Kohdistus päivitetään kuitenkin elementin kohdalle, kun sen kanssa ollaan vuorovaikutuksessa (esim. painetaan painiketta tai valitaan valintaruutu).
 Tämän asetuksen käyttöön ottaminen voi parantaa joidenkin verkkosivustojen tukea suorituskyvyn ja vakauden kustannuksella.
 
-+++ Asiakirjojen muotoilu (NVDA+Ctrl+D) +++[DocumentFormattingSettings]
++++ Asiakirjojen muotoilu +++[DocumentFormattingSettings]
+
+%kc:setting
+==== Avaa asiakirjojen muotoiluasetukset ====
+Pikanäppäin: ``NVDA+Ctrl+D``
+
 Useimmilla tämän kategorian valintaruuduilla voidaan määrittää, minkä tyyppisiä muotoilutietoja halutaan automaattisesti kuulla siirrettäessä kohdistinta asiakirjoissa.
 Jos esim. valitaan Lue fontti -valintaruutu, NVDA kertoo fontin nimen aina kun siirrytään nuolinäppäimillä sellaisen tekstin kohdalle, jonka fontti eroaa aikaisemmasta.
 
@@ -2363,7 +2413,7 @@ Seuraavat vaihtoehdot ovat käytettävissä:
 :
 
 Tällä asetuksella voidaan valita, näyttääkö NVDA tietyt verkkosivulla tapahtuvat dynaamiset muutokset pistenäytöllä.
-Asetuksen käytöstä poistaminen vastaa NVDA:n toiminnallisuutta versiossa 2023.1 ja sitä vanhemmissa, joissa nämä sisällön muutokset ilmooitettiin vain puheena.
+Asetuksen käytöstä poistaminen vastaa NVDA:n toiminnallisuutta versiossa 2023.1 ja sitä vanhemmissa, joissa tällaisen sisällön muutokset ilmoitettiin vain puheella.
 
 ==== Puhu salasanat kaikissa laajennetuissa päätteissä ====[AdvancedSettingsWinConsoleSpeakPasswords]
 Tämä asetus säätää, puhutaanko merkit [Puhu kirjoitetut merkit- #KeyboardSettingsSpeakTypedCharacters] tai [Puhu kirjoitetut sanat #KeyboardSettingsSpeakTypedWords] -asetusta käytettäessä tilanteissa, joissa ruutu ei päivity (kuten salasanaa syötettäessä) Windows-konsolissa UI automation -tuen ollessa käytössä ja Mintty:ssä.
@@ -2397,7 +2447,7 @@ Kohdistimen jälkeinen teksti kuitenkin luetaan päätteissä, kun rivin keskell
   Oletus (Muutosten havaitseminen), Muutosten havaitseminen, UIA-ilmoitukset
 :
 
-Tämä asetus valitsee, miten NVDA määrittää "uuden" tekstin (ja näin ollen sen, mitä puhutaan "Lue dynaamisen sisällön muutokset" -asetuksen ollessa käytössä) Windows Terminalissa ja Windows Terminalin WPF-säätimessä, jota käytetään Visual Studio 2022:ssa.
+Tämä asetus valitsee, miten NVDA määrittää "uuden" tekstin (ja näin ollen sen, mitä puhutaan "Puhu dynaamisen sisällön muutokset" -asetuksen ollessa käytössä) Windows Terminalissa sekä sen WPF-säätimessä, jota käytetään Visual Studio 2022:ssa.
 Asetus ei vaikuta Windows-konsoliin (``conhost.exe``).
 Uuden tekstin puhumismenetelmä Windows Terminalissa -yhdistelmäruudussa on kolme vaihtoehtoa:
 - Oletus: Tämä asetus vastaa tällä hetkellä "muutosten havaitsemista", mutta sen odotetaan muuttuvan, kun UIA-ilmoitusten tukea kehitetään edelleen.
@@ -2406,7 +2456,7 @@ Tämä toimii samoin kuin NVDA 2022.4:ssä ja sitä vanhemmissa versioissa.
 - UIA-ilmoitukset: Tämä asetus siirtää vastuun puhuttavan tekstin määrittämisestä Windows Terminalille itselleen, mikä tarkoittaa, että NVDA: n ei enää tarvitse määrittää, mikä ruudulla oleva teksti on "uutta".
 Tämän pitäisi parantaa huomattavasti Windows Terminalin suorituskykyä ja vakautta, mutta ominaisuus ei ole vielä valmis.
 Erityisesti kirjoitetut merkit, joita ei näytetä ruudulla, kuten salasanat, puhutaan tämän ollessa valittuna.
-Lisäksi jatkuvia yli 1000 merkin tulosteita ei välttämättä puhuta tarkasti.
+Lisäksi yhtenäisiä yli 1000 merkin mittaisia tekstijaksoja ei välttämättä puhuta tarkasti.
 -
 
 ==== Yritä perua vanhentuneiden kohdistustapahtumien puhe ====[CancelExpiredFocusSpeech]
