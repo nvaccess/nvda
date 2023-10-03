@@ -10,7 +10,6 @@ import ctypes
 import _ctypes
 from ctypes import cast, c_void_p
 from _ctypes import _Pointer
-import importlib
 import sys
 import exceptions
 import RPCConstants
