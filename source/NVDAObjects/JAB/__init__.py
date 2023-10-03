@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Leonard de Ruijter, Joseph Lee, Renaud Paquay, pvagner
+# Copyright (C) 2006-2023 NV Access Limited, Leonard de Ruijter, Joseph Lee, Renaud Paquay, pvagner
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -96,6 +96,7 @@ JABStatesToNVDAStates={
 	"iconified":controlTypes.State.ICONIFIED,
 	"modal":controlTypes.State.MODAL,
 	"multi_line":controlTypes.State.MULTILINE,
+	"multiple line": controlTypes.State.MULTILINE,
 	"focusable":controlTypes.State.FOCUSABLE,
 	"editable":controlTypes.State.EDITABLE,
 	"selectable": controlTypes.State.SELECTABLE,

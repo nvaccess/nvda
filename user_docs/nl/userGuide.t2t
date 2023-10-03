@@ -837,7 +837,7 @@ Als u bijvoorbeeld de ``y`` / ``shift+y`` toetsen wilt gebruiken om snel door ta
 + Open het dialoogvenster invoerhandelingen  vanuit bladermodus.
 + Zoek  het item "naar volgende tab gaan" in de  sectie Bladermodus.
 + Wijs de toets ``y`` toe voor de gevonden handeling.
-+ Zoek  het item "naar vorige tab gaan" .
++ Zoek  het item "naar vorige tab gaan".
 + Wijs ``shift+y`` toe voor de gevonden handeling.
 +
 
@@ -1564,22 +1564,6 @@ Voor een lijst met de Synthesizers die NVDA ondersteunt gaat u naar het onderdee
 Er is één specifieke optie die altijd in deze lijst voorkomt en wel “geen spraak” waarmee alle spraakuitvoer wordt uitgeschakeld.
 Dit kan nuttig zijn voor iemand die NVDA uitsluitend met braille wil gebruiken of voor goedziende ontwikkelaars die uitsluitend de speech viewer willen gebruiken.
 
-==== Uitvoerapparaat ====[SelectSynthesizerOutputDevice]
-Hiermee kunt u het audioapparaat kiezen dat NVDA moet aansturen voor de spraakuitvoer.
-
-%kc:setting
-==== Audio-onderdrukkingsmodus ====[SelectSynthesizerDuckingMode]
-Toets: NVDA+shift+d
-
-Als u Windows 8 of hoger gebruikt, kunt u met deze optie bepalen of NVDA het volume van andere applicaties moet verlagen zodra en zolang NVDA aan het spreken is of gedurende de hele tijd dat NVDA actief is.
-- Geen onderdrukking: NVDA zal het volume van andere audiobronnen niet verlagen.
-- Onderdrukken bij spraak- en geluidsuitvoer: NVDA zal alleen het volume van andere audiobronnen verlagen wanneer NVDA aan het spreken is of geluiden afspeelt. Mogelijk dat dit niet bij alle synthesizers werkt.
-- Altijd onderdrukken: NVDA zal het volume van andere audiobronnen steeds op een lager niveau houden zolang NVDA actief is.
-
-
-Deze optie is alleen beschikbaar als u de geïnstalleerde versie van NVDA gebruikt.
-audio-onderdrukking kan niet worden ondersteund bij gebruik van de draagbare en de tijdelijke versie van NVDA. 
-
 +++ Synth settings ring +++[SynthSettingsRing]
 Om spraakinstellingen snel aan te passen zonder dat u naar de categorie Spraak gaat van het dialoogvenster Instellingen van NVDA, kunt u te allen tijde beschikken over een aantal toetscombinaties terwijl u met NVDA werkt:
 %kc:beginInclude
@@ -1796,7 +1780,43 @@ U kunt de documentatie voor uw brailleleesregel raadplegen in de rubriek [Onders
 Wilt u er opletten dat bij het tegelijkertijd aansluiten van meerdere brailleleesregels op uw systeem die hetzelfde stuurprogramma (driver) gebruiken (bijvoorbeeld als er twee Seika leesregels worden gekoppeld),
 het momenteel niet mogelijk is om NVDA te laten weten welke leesregel gebruikt moet worden.
 Het verdient dan ook aanbeveling slechts één leesregel van een bepaald type / fabrikant op u systeem aan te sluiten.
- 
+
++++ Audio +++[AudioSettings]
+Via het Instellingenvenster van NVDA zijn  in de rubriek Audio opties beschikbaar waarmee u allerlei aspecten van audiouitvoer kunt aanpassen.
+
+==== Uitvoerapparaat ====[SelectSynthesizerOutputDevice]
+Hiermee kunt u het audioapparaat kiezen dat NVDA moet aansturen voor de spraakuitvoer.
+
+%kc:setting
+==== Audio-onderdrukkingsmodus ====[SelectSynthesizerDuckingMode]
+Toets: NVDA+shift+d
+
+Als u Windows 8 of hoger gebruikt, kunt u met deze optie bepalen of NVDA het volume van andere applicaties moet verlagen zodra en zolang NVDA aan het spreken is of gedurende de hele tijd dat NVDA actief is.
+- Geen onderdrukking: NVDA zal het volume van andere audiobronnen niet verlagen.
+- Onderdrukken bij spraak- en geluidsuitvoer: NVDA zal alleen het volume van andere audiobronnen verlagen wanneer NVDA aan het spreken is of geluiden afspeelt. Mogelijk dat dit niet bij alle synthesizers werkt.
+- Altijd onderdrukken: NVDA zal het volume van andere audiobronnen steeds op een lager niveau houden zolang NVDA actief is.
+
+
+Deze optie is alleen beschikbaar als u de geïnstalleerde versie van NVDA gebruikt.
+audio-onderdrukking kan niet worden ondersteund bij gebruik van de draagbare en de tijdelijke versie van NVDA. 
+
+==== Volume van NVDA-geluiden volgt stemvolume ====[SoundVolumeFollowsVoice]
+: Standaard
+  Uitgeschakeld
+: Opties
+  Uitgeschakeld, Ingeschakeld
+:
+
+Wanneer deze optie ingeschakeld is, zal het volume van   geluiden en piepjes die NVDA voortbrengt de volumeinstelling  van de stem die gebruikt wordt volgen.
+Als u het volume van de stem verlaagt, zal het volume van geluiden mee naar beneden gaan.
+Evenzo zal,  als u het volume van de stem verhoogt, het volume van geluiden mee omhoog gaan.
+Deze optie is niet beschikbaar als u NVDA gestart hebt  terwijll [WASAPI voor audiouitvoer #WASAPI] in Geavanceerde Instellingen UIT stond.
+
+==== Volume van NVDA-geluiden ====[SoundVolume]
+Met deze schuifbalk kunt u het volume van geluiden en pieptonen van NVDA instellen.
+Deze instelling werkt alleen wanneer "Volume van NVDA-geluiden volgt stemvolume" uitgeschakeld is.
+Deze optie is niet beschikbaar als u NVDA gestart hebt  terwijll [WASAPI voor audiouitvoer #WASAPI] in Geavanceerde Instellingen UIT stond.
+
 +++ Zicht +++[VisionSettings]
 In de categorie Zicht in het dialoogvenster Instellingen van NVDA kunt u de [elementen voor visuele ondersteuning #Vision] in- en uitschakelen, alsmede configureren.
 
@@ -2439,22 +2459,11 @@ WASAPI is een moderner audio-framework dat potentieel betere response-eigenschap
 
 Na aanpassing van de optie moet u NVDA opnieuw opstarten om de aanpassing van kracht te laten worden.
 
-==== Volume van NVDAgeluiden volgt stemvolume ====[SoundVolumeFollowsVoice]
-: Standaard
-  Uitgeschakeld
-: Opties
-  Uitgeschakeld, Ingeschakeld
-:
-
-Wanneer deze optie is ingeschakeld  zal het volume van  NVDA-geluiden en -pieptonen de volumeinstelling van de stem die u gebruikt volgen.
-Als u het volume van  de stem verlaagt, gaat het volume van geluiden mee naar beneden.
-Evenzo zal bij verhoging van het stemvolume het volume van geluiden mee omhoog gaan.
-Deze optie heeft alleen dan effect wanneer WASAPI voor audiouitvoer" is ingeschakeld.
-
-==== Volume van NVDA-geluiden ====[SoundVolume]
-Met deze schuifregelaar stelt u het volume in van  geluiden en pieptonen van NVDA.
-Deze instelling werkt alleen als "Gebruik WASAPI voor audiouitvoer" ingeschakeld is en "Volume van NVDA-geluid volgt stemvolume" UIT staat.
-
+Met het uitschakelen van WASAPI worden de volgende opties uitgezet:
+- [Volume van NVDA-geluiden volgt stemvolume #SoundVolumeFollowsVoice]
+- [Volume van NVDA-geluiden #SoundVolume]
+-
+ 
 ==== categorieën Debug logging ====[AdvancedSettingsDebugLoggingCategories]
 Het selectievakje in deze lijst biedt u de mogelijkheid specifieke categorieën debug-meldingen in NVDA's log te activeren.
 Het loggen van deze meldingen kan de prestatie nadelig beïnvloeden en kan grote logbestanden tot gevolg hebben.
