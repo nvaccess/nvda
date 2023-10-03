@@ -21,6 +21,7 @@ This option now announces additional relevant information about an object when t
 == Bug Fixes ==
 - Reporting of object shortcut keys has been improved. (#10807)
 - The SAPI4 synthesizer now properly supports volume, rate and pitch changes embedded in speech. (#15271)
+- Multi line state is now correctly reported in applications using Java Access Bridge. (#14609)
 - Braille is updated when control+v, control+x, control+z or backspace is
 pressed in MS Word when uia is not used. It is also updated when typing text,
 and braille is tethered to review and review follows caret. (#3276)
@@ -139,7 +140,6 @@ There's also been bug fixes for the Add-on Store, Microsoft Office, Microsoft Ed
   -
 - NVDA once again announces calculation results in the Windows 32bit calculator on Server, LTSC and LTSB versions of Windows. (#15230)
 - NVDA no longer ignores focus changes when a nested window (grand child window) gets focus. (#15432)
-- Fixed performance issues with Task Manager and some Windows versions. (#6245)
 - Fixed a potential cause of crashing during NVDA startup. (#15517)
 -
 
