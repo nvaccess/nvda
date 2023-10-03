@@ -28,6 +28,13 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 
 - Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
+- Added extension point: ``treeInterceptorHandler.post_browseModeStateChange``. (#14969)
+-
+
+=== API Breaking Changes ===
+These are breaking API changes.
+Please open a GitHub issue if your Add-on has an issue with updating to the new API.
+
 - NVDA is now built with Python 3.11 (#12064)
 - Updated pip dependencies:
   - configobj to 5.0.8. (#15544)
@@ -39,13 +46,6 @@ Add-ons will need to be re-tested and have their manifest updated.
   - sphinx to 7.2.6. (#15544)
   - wxPython to 4.2.1 (#12551)
   -
-- Added extension point: ``treeInterceptorHandler.post_browseModeStateChange``. (#14969)
--
-
-=== API Breaking Changes ===
-These are breaking API changes.
-Please open a GitHub issue if your Add-on has an issue with updating to the new API.
-
 - Removed pip dependencies:
   - typing_extensions, these should be supported natively in Python 3.11 (#15544)
   - nose, instead unittest-xml-reporting is used to generate XML reports. (#15544)
