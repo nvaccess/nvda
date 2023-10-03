@@ -148,6 +148,7 @@ freeze(
 		},
 	],
 	options={
+		"optimize": 2,
 		"bundle_files": 3,
 		"dist_dir": "../dist",
 		"excludes": [

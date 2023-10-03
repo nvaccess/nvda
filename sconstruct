@@ -315,8 +315,6 @@ def NVDADistGenerator(target, source, env, for_signature):
 	# Issue errors about str(bytes_instance), str(bytearray_instance)
 	buildCmd.append("-bb")
 	buildCmd.extend(("setup.py", "-vv", "build", "--build-base", buildDir.abspath, "--dist-dir", target[0].abspath))
-	if release:
-		buildCmd.append("-O1")
 	if env.get("uiAccess"):
 		buildCmd.append("--enable-uiAccess")
 
