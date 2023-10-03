@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2014-2022 NV Access Limited
+# Copyright (C) 2014-2023 NV Access Limited, Cyrille Bougot
 
 """Support for math presentation using MathPlayer 4.
 """
@@ -20,6 +20,7 @@ from synthDriverHandler import getSynth
 from keyboardHandler import KeyboardInputGesture
 import braille
 import mathPres
+import config
 
 from speech.commands import (
 	PitchCommand,
@@ -68,7 +69,10 @@ def _processMpSpeech(text, language):
 		if m.lastgroup == "break":
 			out.append(BreakCommand(time=int(m.group("break")) * breakMulti))
 		elif m.lastgroup == "char":
-			out.extend((CharacterModeCommand(True), m.group("char"), CharacterModeCommand(False)))
+			if config.conf["speech"][synth.name]["useSpellingFunctionality"]:
+				out.extend((CharacterModeCommand(True), m.group("char"), CharacterModeCommand(False)))
+			else:
+				out.append(m.group("char"))
 		elif m.lastgroup == "comma":
 			out.append(BreakCommand(time=100))
 		elif m.lastgroup in PROSODY_COMMANDS:
