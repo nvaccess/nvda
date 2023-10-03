@@ -62,8 +62,6 @@ import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import hwIo
-from buildVersion import version_year
-import NVDAState
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
@@ -528,6 +526,10 @@ class Region(object):
 		@param start: C{True} to move to the start of the line, C{False} to move to the end.
 		@type start: bool
 		"""
+
+	def __repr__(self):
+		return f"{self.__class__.__name__} ({self.rawText!r})"
+
 
 class TextRegion(Region):
 	"""A simple region containing a string of text.
@@ -2012,7 +2014,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	queuedWrite: Optional[List[int]] = None
 	queuedWriteLock: threading.Lock
 	ackTimerHandle: int
-	_regionsPendingUpdate: Set[Region]
+	_regionsPendingUpdate: Set[Union[NVDAObjectRegion, TextInfoRegion]]
 	"""
 	Regions pending an update.
 	Regions are added by L{handleUpdate} and L{handleCaretMove} and cleared in L{_handlePendingUpdate}.
@@ -2481,15 +2483,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# The caret moved in a different object than the review position.
 			self._doNewObject(getFocusRegions(obj, review=False))
 
-	if version_year < 2024 and NVDAState._allowDeprecatedAPI():
-		def handlePendingCaretUpdate(self):
-			log.warning(
-				"braille.BrailleHandler.handlePendingCaretUpdate is now deprecated "
-				"with no public replacement. "
-				"It will be removed in NVDA 2024.1."
-			)
-			self._handlePendingUpdate()
-
 	def _handlePendingUpdate(self):
 		"""When any region is pending an update, updates the region and the braille display.
 		"""
@@ -2499,7 +2492,18 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			scrollTo: Optional[TextInfoRegion] = None
 			self.mainBuffer.saveWindow()
 			for region in self._regionsPendingUpdate:
-				region.update()
+				from treeInterceptorHandler import TreeInterceptor
+				if isinstance(region.obj, TreeInterceptor) and not region.obj.isAlive:
+					log.debug("Skipping region update for died tree interceptor")
+					continue
+				try:
+					region.update()
+				except Exception:
+					log.debugWarning(
+						f"Region update failed for {region}, object probably died",
+						exc_info=True
+					)
+					continue
 				if isinstance(region, TextInfoRegion) and region.pendingCaretUpdate:
 					scrollTo = region
 					region.pendingCaretUpdate = False
@@ -2827,12 +2831,6 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		"""
 		if cls.isThreadSafe:
 			supportsAutomaticDetection = cls.supportsAutomaticDetection
-			if not supportsAutomaticDetection and NVDAState._allowDeprecatedAPI() and version_year < 2024:
-				log.warning(
-					"Starting from NVDA 2024.1, drivers that rely on bdDetect for the default check method "
-					"should have supportsAutomaticDetection set to True"
-				)
-				supportsAutomaticDetection = True
 			if supportsAutomaticDetection and bdDetect.driverHasPossibleDevices(cls.name):
 				return True
 		try:

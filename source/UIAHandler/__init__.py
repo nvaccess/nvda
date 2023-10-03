@@ -86,13 +86,20 @@ goodUIAWindowClassNames = (
 badUIAWindowClassNames = (
 	# UIA events of candidate window interfere with MSAA events.
 	"Microsoft.IME.CandidateWindow.View",
+	# Known issue with "Reliability Monitor" in explorer.exe #15541.
+	# Task manager and mmc.exe are also affected, but have isBadUIAWindow workarounds.
+	"SysListView32",
 	"SysTreeView32",
 	"WuDuiListView",
 	"ComboBox",
 	"msctls_progress32",
+	"Edit",
 	"CommonPlacesWrapperWndClass",
 	"SysMonthCal32",
 	"SUPERGRID",  # Outlook 2010 message list
+	"RichEdit",
+	"RichEdit20",
+	"RICHEDIT50W",
 	"Button",
 	# #8944: The Foxit UIA implementation is incomplete and should not be used for now.
 	"FoxitDocWnd",

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018-2023 NV Access Limited
+# Copyright (C) 2018-2023 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 import addonAPIVersion
 
 if TYPE_CHECKING:
-	from _addonStore.models.addon import SupportsVersionCheck  # noqa: F401
+	from _addonStore.models.version import SupportsVersionCheck  # noqa: F401
 
 
 def hasAddonGotRequiredSupport(

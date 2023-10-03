@@ -10,6 +10,7 @@
 * [Changes in the latest release](https://www.nvaccess.org/files/nvda/documentation/changes.html)
 * [Manual test plans](../../tests/manual/README.md)
 * [Automated tests for developers](./automated.md)
+* [Release process](../community/releaseProcess.md)
 
 ### Community communication channels
 * [NVDA Users Mailing List](https://nvda.groups.io/g/nvda)

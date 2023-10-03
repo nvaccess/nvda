@@ -43,6 +43,7 @@ from .speechDict import (
 # Be careful when removing, and only do in a compatibility breaking release.
 from .exit import ExitDialog
 from .settingsDialogs import (
+	AudioPanel,
 	BrailleDisplaySelectionDialog,
 	BrailleSettingsPanel,
 	BrowseModePanel,
@@ -297,6 +298,9 @@ class MainFrame(wx.Frame):
 	def onBrailleSettingsCommand(self,evt):
 		self.popupSettingsDialog(NVDASettingsDialog, BrailleSettingsPanel)
 
+	def onAudioSettingsCommand(self, evt: wx.CommandEvent):
+		self.popupSettingsDialog(NVDASettingsDialog, AudioPanel)
+
 	def onKeyboardSettingsCommand(self,evt):
 		self.popupSettingsDialog(NVDASettingsDialog, KeyboardSettingsPanel)
 
@@ -494,17 +498,17 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		menu_tools = self.toolsMenu = wx.Menu()
 		if not globalVars.appArgs.secure:
 			# Translators: The label for the menu item to open NVDA Log Viewer.
-			item = menu_tools.Append(wx.ID_ANY, _("View log"))
+			item = menu_tools.Append(wx.ID_ANY, _("View &log"))
 			self.Bind(wx.EVT_MENU, frame.onViewLogCommand, item)
 		# Translators: The label for the menu item to toggle Speech Viewer.
-		item = self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Speech viewer"))
+		item = self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("&Speech viewer"))
 		item.Check(speechViewer.isActive)
 		self.Bind(wx.EVT_MENU, frame.onToggleSpeechViewerCommand, item)
 
 		self.menu_tools_toggleBrailleViewer: wx.MenuItem = menu_tools.AppendCheckItem(
 			wx.ID_ANY,
 			# Translators: The label for the menu item to toggle Braille Viewer.
-			_("Braille viewer")
+			_("&Braille viewer")
 		)
 		item = self.menu_tools_toggleBrailleViewer
 		self.Bind(wx.EVT_MENU, frame.onToggleBrailleViewerCommand, item)
@@ -514,31 +518,31 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 
 		if not config.isAppX and NVDAState.shouldWriteToDisk():
 			# Translators: The label of a menu item to open the Add-on store
-			item = menu_tools.Append(wx.ID_ANY, _("Add-on &store..."))
+			item = menu_tools.Append(wx.ID_ANY, _("&Add-on store..."))
 			self.Bind(wx.EVT_MENU, frame.onAddonStoreCommand, item)
 
 		if not globalVars.appArgs.secure and not config.isAppX:
 			# Translators: The label for the menu item to open NVDA Python Console.
-			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
+			item = menu_tools.Append(wx.ID_ANY, _("&Python console"))
 			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
 
 		if not globalVars.appArgs.secure and not config.isAppX and not NVDAState.isRunningAsSource():
 			# Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-			item = menu_tools.Append(wx.ID_ANY, _("Create portable copy..."))
+			item = menu_tools.Append(wx.ID_ANY, _("&Create portable copy..."))
 			self.Bind(wx.EVT_MENU, frame.onCreatePortableCopyCommand, item)
 			if not config.isInstalledCopy():
 				# Translators: The label for the menu item to install NVDA on the computer.
 				item = menu_tools.Append(wx.ID_ANY, _("&Install NVDA..."))
 				self.Bind(wx.EVT_MENU, frame.onInstallCommand, item)
 			# Translators: The label for the menu item to run the COM registration fix tool 
-			item = menu_tools.Append(wx.ID_ANY, _("Run COM Registration Fixing tool..."))
+			item = menu_tools.Append(wx.ID_ANY, _("&Run COM Registration Fixing tool..."))
 			self.Bind(wx.EVT_MENU, frame.onRunCOMRegistrationFixesCommand, item)
 		if not config.isAppX:
 			# Translators: The label for the menu item to reload plugins.
-			item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
+			item = menu_tools.Append(wx.ID_ANY, _("R&eload plugins"))
 			self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
 		# Translators: The label for the Tools submenu in NVDA menu.
-		self.menu.AppendSubMenu(menu_tools,_("Tools"))
+		self.menu.AppendSubMenu(menu_tools, _("&Tools"))
 
 		menu_help = self.helpMenu = wx.Menu()
 		if not globalVars.appArgs.secure:
@@ -576,7 +580,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			item = menu_help.Append(wx.ID_ANY, _("&Check for update..."))
 			self.Bind(wx.EVT_MENU, frame.onCheckForUpdateCommand, item)
 		# Translators: The label for the menu item to open About dialog to get information about NVDA.
-		item = menu_help.Append(wx.ID_ABOUT, _("About..."), _("About NVDA"))
+		item = menu_help.Append(wx.ID_ABOUT, _("&About..."), _("About NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onAboutCommand, item)
 		# Translators: The label for the Help submenu in NVDA menu.
 		self.menu.AppendSubMenu(menu_help,_("&Help"))
@@ -586,7 +590,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		if not globalVars.appArgs.secure:
 			self.menu.AppendSeparator()
 			# Translators: The label for the menu item to open donate page.
-			item = self.menu.Append(wx.ID_ANY, _("Donate"))
+			item = self.menu.Append(wx.ID_ANY, _("&Donate"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(DONATE_URL), item)
 			self.installPendingUpdateMenuItemPos = self.menu.GetMenuItemCount()
 			item = self.installPendingUpdateMenuItem = self.menu.Append(wx.ID_ANY,
@@ -673,7 +677,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			wx.ID_ANY,
 			# Translators: The label for the menu item to reset settings to default settings.
 			# Here, default settings means settings that were there when the user first used NVDA.
-			_("&Reset configuration to factory defaults"),
+			_("Reset configuration to &factory defaults"),
 			# Translators: The help text for the menu item to reset settings to default settings.
 			# Here, default settings means settings that were there when the user first used NVDA.
 			_("Reset all settings to default state")

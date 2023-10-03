@@ -365,6 +365,12 @@ def upgradeConfigFrom_10_to_11(profile: ConfigObj) -> None:
 		log.debug("enableHidBrailleSupport not present in config, no action taken.")
 		return
 	if configobj.validate.is_integer(hidSetting) == 2:  # HID standard support disabled
+		if 'braille' not in profile:
+			profile['braille'] = {}
+		if 'auto' not in profile['braille']:
+			profile['braille']['auto'] = {}
+		if 'excludedDisplays' not in profile['braille']['auto']:
+			profile['braille']['auto']['excludedDisplays'] = []
 		profile['braille']['auto']['excludedDisplays'] += ["hidBrailleStandard"]
 		log.debug(
 			"hidBrailleStandard added to braille display auto detection excluded displays. "

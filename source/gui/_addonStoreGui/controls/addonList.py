@@ -4,6 +4,7 @@
 # See the file COPYING for more details.
 
 from typing import (
+	List,
 	Optional,
 )
 
@@ -16,8 +17,12 @@ from gui import (
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from logHandler import log
 
-from .actions import _ActionsContextMenu
-from ..viewModels.addonList import AddonListVM
+from .actions import (
+	_ActionsContextMenuP,
+	_BatchActionsContextMenu,
+	_MonoActionsContextMenu,
+)
+from ..viewModels.addonList import AddonListItemVM, AddonListVM
 
 
 class AddonVirtualList(
@@ -28,14 +33,13 @@ class AddonVirtualList(
 			self,
 			parent: wx.Window,
 			addonsListVM: AddonListVM,
-			actionsContextMenu: _ActionsContextMenu,
+			actionsContextMenu: _MonoActionsContextMenu,
 	):
 		super().__init__(
 			parent,
 			style=(
 				wx.LC_REPORT  # Single or multicolumn report view, with optional header.
 				| wx.LC_VIRTUAL  # The application provides items text on demand. May only be used with LC_REPORT.
-				| wx.LC_SINGLE_SEL  # Single selection (default is multiple).
 				| wx.LC_HRULES  # Draws light horizontal rules between rows in report mode.
 				| wx.LC_VRULES  # Draws light vertical rules between columns in report mode.
 			),
@@ -43,6 +47,7 @@ class AddonVirtualList(
 		)
 		self._addonsListVM = addonsListVM
 		self._actionsContextMenu = actionsContextMenu
+		self._batchActionsContextMenu = _BatchActionsContextMenu(self._addonsListVM._storeVM)
 
 		self.SetMinSize(self.scaleSize((500, 500)))
 
@@ -64,8 +69,8 @@ class AddonVirtualList(
 
 	def _refreshColumns(self):
 		self.ClearAll()
-		for colIndex, col in enumerate(self._addonsListVM.presentedFields):
-			self.InsertColumn(colIndex, col.displayString, width=self.scaleSize(col.width))
+		for col in self._addonsListVM.presentedFields:
+			self.AppendColumn(col.displayString, width=self.scaleSize(col.width))
 		self.Layout()
 
 	def _getListSelectionPosition(self) -> Optional[wx.Position]:
@@ -75,6 +80,25 @@ class AddonVirtualList(
 		itemRect: wx.Rect = self.GetItemRect(firstSelectedIndex)
 		return itemRect.GetBottomLeft()
 
+	def _updateBatchContextMenuSelection(self):
+		numSelected = self.GetSelectedItemCount()
+		prevSelectedIndex = self.GetFirstSelected()
+		selectedAddons: List[AddonListItemVM] = []
+		for _ in range(numSelected):
+			addon = self._addonsListVM.getAddonAtIndex(prevSelectedIndex)
+			selectedAddons.append(addon)
+			prevSelectedIndex = self.GetNextSelected(prevSelectedIndex)
+
+		self._batchActionsContextMenu._updateSelectedAddons(selectedAddons)
+
+	@property
+	def _contextMenu(self) -> _ActionsContextMenuP:
+		numSelected = self.GetSelectedItemCount()
+		if numSelected > 1:
+			self._updateBatchContextMenuSelection()
+			return self._batchActionsContextMenu
+		return self._actionsContextMenu
+
 	def _popupContextMenuFromList(self, evt: wx.ContextMenuEvent):
 		listSelectionPosition = self._getListSelectionPosition()
 		if listSelectionPosition is None:
@@ -83,11 +107,11 @@ class AddonVirtualList(
 		if eventPosition == wx.DefaultPosition:
 			# keyboard triggered context menu (due to "applications" key)
 			# don't have position set. It must be fetched from the selected item.
-			self._actionsContextMenu.popupContextMenuFromPosition(self, listSelectionPosition)
+			self._contextMenu.popupContextMenuFromPosition(self, listSelectionPosition)
 		else:
 			# Mouse (right click) triggered context menu.
 			# In this case the menu is positioned better with GetPopupMenuSelectionFromUser.
-			self._actionsContextMenu.popupContextMenuFromPosition(self)
+			self._contextMenu.popupContextMenuFromPosition(self)
 
 	def _itemDataUpdated(self, index: int):
 		log.debug(f"index: {index}")
@@ -99,12 +123,16 @@ class AddonVirtualList(
 		self._addonsListVM.setSelection(index=newIndex)
 
 	def OnItemActivated(self, evt: wx.ListEvent):
+		if evt.GetKeyCode() == wx.WXK_SPACE:
+			# Space key is used to toggle add-on selection.
+			# Don't trigger the context menu.
+			return
 		position = self._getListSelectionPosition()
-		self._actionsContextMenu.popupContextMenuFromPosition(self, position)
+		self._contextMenu.popupContextMenuFromPosition(self, position)
 		log.debug(f"item activated: {evt.GetIndex()}")
 
 	def OnItemDeselected(self, evt: wx.ListEvent):
-		log.debug(f"item deselected")
+		log.debug("item deselected")
 		self._addonsListVM.setSelection(None)
 
 	def OnGetItemText(self, itemIndex: int, colIndex: int) -> str:

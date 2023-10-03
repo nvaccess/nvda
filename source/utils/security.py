@@ -205,7 +205,6 @@ def _isObjectBelowLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	An object below the lockscreen should only be accessible when Windows is unlocked,
 	as it may contain sensitive information.
 	"""
-	from IAccessibleHandler import SecureDesktopNVDAObject
 	from NVDAObjects.IAccessible import TaskListIcon
 	import systemUtils
 
@@ -224,10 +223,6 @@ def _isObjectBelowLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 		# The task switcher window does not become the foreground process on the lock screen,
 		# so we must whitelist it explicitly.
 		isinstance(obj, TaskListIcon)
-		# Secure Desktop Object.
-		# Used to indicate to the user and to API consumers (including NVDA remote) via gainFocus,
-		# that the user has switched to a secure desktop.
-		or isinstance(obj, SecureDesktopNVDAObject)
 	):
 		return False
 
