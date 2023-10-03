@@ -41,8 +41,6 @@ from baseObject import AutoPropertyObject
 import re
 from winAPI import messageWindow
 import extensionPoints
-import NVDAState
-from buildVersion import version_year
 from logHandler import log
 
 
@@ -103,39 +101,6 @@ DETECT_BLUETOOTH = 2
 
 def _isDebug():
 	return config.conf["debugLog"]["hwIo"]
-
-
-if version_year < 2024 and NVDAState._allowDeprecatedAPI():
-	def addUsbDevices(driver: str, type: str, ids: Set[str]):
-		"""Associate USB devices with a driver.
-		@param driver: The name of the driver.
-		@param type: The type of the driver, either C{KEY_HID}, C{KEY_SERIAL} or C{KEY_CUSTOM}.
-		@param ids: A set of USB IDs in the form C{"VID_xxxx&PID_XXXX"}.
-			Note that alphabetical characters in hexadecimal numbers should be uppercase.
-		@raise ValueError: When one of the provided IDs is malformed.
-		"""
-		log.warning(
-			"bdDetect.addUsbDevices is deprecated and will be removed in NVDA 2024.1. "
-			"Braille display drivers should implement the registerAutomaticDetection classmethod instead. "
-			"That method receives a DriverRegistrar object on which the addUsbDevices method can be used."
-		)
-		registrar = DriverRegistrar(driver)
-		registrar.addUsbDevices(type, ids)
-
-	def addBluetoothDevices(driver: str, matchFunc: MatchFuncT):
-		"""Associate Bluetooth HID or COM ports with a driver.
-		@param driver: The name of the driver.
-		@param matchFunc: A function which determines whether a given Bluetooth device matches.
-			It takes a L{DeviceMatch} as its only argument
-			and returns a C{bool} indicating whether it matched.
-		"""
-		log.warning(
-			"bdDetect.addBluetoothDevices is deprecated and will be removed in NVDA 2024.1. "
-			"Braille display drivers should implement the registerAutomaticDetection classmethod instead. "
-			"That method receives a DriverRegistrar object on which the addBluetoothDevices method can be used."
-		)
-		registrar = DriverRegistrar(driver)
-		registrar.addBluetoothDevices(matchFunc)
 
 
 def getDriversForConnectedUsbDevices(

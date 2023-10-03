@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
-# Davy Kager
+# Davy Kager, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -1204,7 +1204,7 @@ Tries to force this object to take the focus.
 
 		if not self._mouseEntered and config.conf['mouse']['reportObjectRoleOnMouseEnter']:
 			speech.cancelSpeech()
-			speech.speakObjectProperties(self,role=True)
+			speech.speakObject(self, reason=controlTypes.OutputReason.MOUSE)
 			speechWasCanceled=True
 		else:
 			speechWasCanceled=False
@@ -1481,17 +1481,20 @@ This code is executed if a gain focus event is received by this object.
 		info.extend(self.appModule.devInfo)
 		return info
 
-	def _get_sleepMode(self):
+	# Typing information for auto property _get_sleepMode
+	sleepMode: bool
+
+	# Don't cache sleepMode, as it is derived from a property which might change
+	# and we want the changed value immediately.
+	_cache_sleepMode = False
+
+	def _get_sleepMode(self) -> bool:
 		"""Whether NVDA should sleep for this object (e.g. it is self-voicing).
 		If C{True}, all  events and script requests for this object are silently dropped.
-		@rtype: bool
 		"""
 		if self.appModule:
 			return self.appModule.sleepMode
 		return False
-	# Don't cache sleepMode, as it is derived from a property which might change
-	# and we want the changed value immediately.
-	_cache_sleepMode = False
 
 	def _get_mathMl(self):
 		"""Obtain the MathML markup for an object containing math content.

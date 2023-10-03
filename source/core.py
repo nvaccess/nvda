@@ -449,7 +449,6 @@ def _initializeObjectCaches():
 	Caches the desktop object.
 	This may make information from the desktop window available on the lock screen,
 	however no known exploit is known for this.
-	2023.1 plans to ensure the desktopObject is available only when signed-in.
 
 	The desktop object must be used, as setting the object caches has side effects,
 	such as focus events.

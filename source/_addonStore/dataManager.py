@@ -186,7 +186,7 @@ class _DataManager:
 
 	def getLatestCompatibleAddons(
 			self,
-			onDisplayableError: Optional[DisplayableError.OnDisplayableErrorT] = None,
+			onDisplayableError: Optional["DisplayableError.OnDisplayableErrorT"] = None,
 	) -> "AddonGUICollectionT":
 		cacheHash = self._getCacheHash()
 		shouldRefreshData = (
@@ -225,7 +225,7 @@ class _DataManager:
 
 	def getLatestAddons(
 			self,
-			onDisplayableError: Optional[DisplayableError.OnDisplayableErrorT] = None,
+			onDisplayableError: Optional["DisplayableError.OnDisplayableErrorT"] = None,
 	) -> "AddonGUICollectionT":
 		cacheHash = self._getCacheHash()
 		shouldRefreshData = (

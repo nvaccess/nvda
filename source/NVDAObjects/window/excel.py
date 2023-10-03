@@ -1098,7 +1098,7 @@ class ExcelWorksheet(ExcelBase):
 			ui.message(msgOff)
 
 	@script(
-		gestures=["kb:control+b", "kb:control+shift+2"],
+		gestures=["kb:control+b", "kb:control+2"],
 		canPropagate=True,
 	)
 	def script_toggleBold(self, gesture):
@@ -1112,7 +1112,7 @@ class ExcelWorksheet(ExcelBase):
 		)
 
 	@script(
-		gestures=["kb:control+i", "kb:control+shift+3"],
+		gestures=["kb:control+i", "kb:control+3"],
 		canPropagate=True,
 	)
 	def script_toggleItalic(self, gesture):
@@ -1126,7 +1126,7 @@ class ExcelWorksheet(ExcelBase):
 		)
 
 	@script(
-		gestures=["kb:control+u", "kb:control+shift+4"],
+		gestures=["kb:control+u", "kb:control+4"],
 		canPropagate=True,
 	)
 	def script_toggleUnderline(self, gesture):
@@ -1140,7 +1140,7 @@ class ExcelWorksheet(ExcelBase):
 		)
 
 	@script(
-		gesture="kb:control+shift+5",
+		gesture="kb:control+5",
 		canPropagate=True,
 	)
 	def script_toggleStrikethrough(self, gesture):

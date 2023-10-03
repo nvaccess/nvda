@@ -182,7 +182,7 @@ class _AddonManifestModel(_AddonGUIModel):
 	homepage: Optional[str]
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
-	manifest: AddonManifest
+	manifest: "AddonManifest"
 	legacy: bool = False
 	"""
 	Legacy add-ons contain invalid metadata
@@ -216,7 +216,7 @@ class AddonManifestModel(_AddonManifestModel):
 	homepage: Optional[str]
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
-	manifest: AddonManifest
+	manifest: "AddonManifest"
 	legacy: bool = False
 	"""
 	Legacy add-ons contain invalid metadata
