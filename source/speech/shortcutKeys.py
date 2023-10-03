@@ -11,6 +11,8 @@ import re
 
 import characterProcessing
 from logHandler import log
+from synthDriverHandler import getSynth
+import config
 
 from .commands import CharacterModeCommand
 from .types import SpeechSequence
@@ -91,6 +93,9 @@ def _getKeySpeech(key: str) -> SpeechSequence:
 	keySymbol = characterProcessing.processSpeechSymbol(locale, key)
 	if keySymbol != key:
 		return [keySymbol]
+	synth = getSynth()
+	if not config.conf["speech"][synth.name]["useSpellingFunctionality"]:
+		return [key]
 	return [
 		CharacterModeCommand(True),
 		key,
