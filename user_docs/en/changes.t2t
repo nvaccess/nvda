@@ -47,8 +47,8 @@ These are breaking API changes.
 Please open a GitHub issue if your Add-on has an issue with updating to the new API.
 
 - Removed pip dependencies:
-  - typing_extensions (#15544)
-  - nose (#15544)
+  - typing_extensions, these should be supported natively in Python 3.11 (#15544)
+  - nose, instead unittest-xml-reporting is used to generate XML reports. (#15544)
   -
 - ``IAccessibleHandler.SecureDesktopNVDAObject`` has been removed.
 Instead, when NVDA is running on the user profile, track the existence of the secure desktop with the extension point: ``winAPI.secureDesktop.post_secureDesktopStateChange``. (#14488)
