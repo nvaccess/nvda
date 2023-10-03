@@ -55,7 +55,7 @@ def _parsePartialArguments() -> argparse.Namespace:
 		action="store_true",
 		help="enable uiAccess for the main executable"
 	)
-	partialArgs, _argslist = partialParser.parse_known_args("--enable-uiAccess")
+	partialArgs, _argslist = partialParser.parse_known_args(("--enable-uiAccess", ))
 	return partialArgs
 
 
