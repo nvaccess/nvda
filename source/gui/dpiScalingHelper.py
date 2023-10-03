@@ -17,8 +17,8 @@ def scaleSize(scaleFactor: float, size: _Size) -> _ScaledSize:
 	@returns: The scaled size, as a tuple or a single numerical type.
 	"""
 	if isinstance(size, tuple):
-		return (int(scaleFactor * size[0]), int(scaleFactor * size[1]))
-	return int(scaleFactor * size)
+		return (round(scaleFactor * size[0]), round(scaleFactor * size[1]))
+	return round(scaleFactor * size)
 
 
 def getScaleFactor(windowHandle: int) -> int:
