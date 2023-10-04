@@ -434,10 +434,19 @@ outputStylesFile=env.Command(outputDir.File("styles.css"),userDocsDir.File('styl
 changesFile=env.Command(outputDir.File("%s_changes.html" % outFilePrefix),userDocsDir.File('en/changes.html'),Copy('$TARGET','$SOURCE'))
 env.Depends(changesFile, outputStylesFile)
 env.Alias('changes',changesFile)
+
 userGuideFile=env.Command(outputDir.File("userGuide.html"),userDocsDir.File('en/userGuide.html'),Copy('$TARGET','$SOURCE'))
 env.Depends(userGuideFile, outputStylesFile)
 env.Alias('userGuide',userGuideFile)
 
+keyCommandsFile = env.Command(
+	outputDir.File("keyCommands.html"),
+	userDocsDir.File('en/keyCommands.html'),
+	Copy('$TARGET', '$SOURCE')
+)
+env.Depends(keyCommandsFile, outputStylesFile)
+env.Depends(keyCommandsFile, userGuideFile)
+env.Alias('keyCommands', keyCommandsFile)
 
 def makePotSourceFileList(target, sourceFiles, env):
 	potSourceFiles = [
@@ -487,7 +496,7 @@ def makePot(target, source, env):
 	os.rename(tmpFn, potFn)
 
 
-env.SConscript("devDocs/sconscript", exports=["env", "outputDir", "sourceDir", "t2tBuildConf"])
+env.SConscript("projectDocs/dev/developerGuide/sconscript", exports=["env", "outputDir", "sourceDir", "t2tBuildConf"])
 
 
 def getSubDirs(path):

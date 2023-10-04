@@ -213,13 +213,13 @@ The actual commands will not execute while in input help mode.
 || Name | Desktop key | Laptop key | Description |
 | Say all | ``NVDA+downArrow`` | ``NVDA+a`` | Starts reading from the current position, moving it along as it goes |
 | Read current line | ``NVDA+upArrow`` | ``NVDA+l`` | Reads the line. Pressing twice spells the line. Pressing three times spells the line using character descriptions (Alpha, Bravo, Charlie, etc) |
-| Read selection | ``NVDA+shift+upArrow`` | ``NVDA+shift+s`` | Reads any selected text |
-| Read clipboard text | ``NVDA+c`` | ``NVDA+c`` | Reads any text on the clipboard |
+| Read selection | ``NVDA+shift+upArrow`` | ``NVDA+shift+s`` | Reads any selected text. Pressing twice will spell the information. Pressing three times will spell it using character description |
+| Read clipboard text | ``NVDA+c`` | ``NVDA+c`` | Reads any text on the clipboard. Pressing twice will spell the information. Pressing three times will spell it using character description |
 
 +++ Reporting location and other information +++[ReportingLocation]
 || Name | Desktop key | Laptop key | Description |
 | Window title | ``NVDA+t`` | ``NVDA+t`` | Reports the title of the currently active window. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
-| Report focus | ``NVDA+tab`` | ``NVDA+tab`` | Reports the current control which has focus.  Pressing twice will spell the information |
+| Report focus | ``NVDA+tab`` | ``NVDA+tab`` | Reports the current control which has focus.  Pressing twice will spell the information. Pressing three times will spell it using character description |
 | Read window | ``NVDA+b`` | ``NVDA+b`` | Reads the entire current window (useful for dialogs) |
 | Read status bar | ``NVDA+end`` | ``NVDA+shift+end`` | Reports the Status Bar if NVDA finds one. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
 | Read time | ``NVDA+f12`` | ``NVDA+f12`` | Pressing once reports the current time, pressing twice reports the date. The time and date are reported in the format specified in Windows settings for the system tray clock. |
@@ -263,7 +263,8 @@ Many settings screens have keystrokes to open them directly, such as ``NVDA+cont
 
 ++ Community ++[Community]
 
-NVDA has a vibrant user community.  There is a main [English language email list https://nvda.groups.io/g/nvda] and a page full of [local language groups https://github.com/nvaccess/nvda-community/wiki/Connect].
+NVDA has a vibrant user community.
+There is a main [English language email list https://nvda.groups.io/g/nvda] and a page full of [local language groups https://github.com/nvaccess/nvda/wiki/Connect].
 NV Access, makers of NVDA, are active on [Twitter https://twitter.com/nvaccess] and [Facebook https://www.facebook.com/NVAccess].
 NV Access also have a regular [In-Process blog https://www.nvaccess.org/category/in-process/].
 
@@ -289,8 +290,8 @@ Other modules, and the discounted [NVDA Productivity Bundle https://www.nvaccess
 
 NV Access also sells [telephone support https://www.nvaccess.org/product/nvda-telephone-support/], either in blocks, or as part of the [NVDA Productivity Bundle https://www.nvaccess.org/product/nvda-productivity-bundle/].
 Telephone support includes local numbers in Australia and the USA.
-
-The [email user groups https://github.com/nvaccess/nvda-community/wiki/Connect] are a great source of community help, as are [certified NVDA experts https://certification.nvaccess.org/].
+ 
+The [email user groups https://github.com/nvaccess/nvda/wiki/Connect] are a great source of community help, as are [certified NVDA experts https://certification.nvaccess.org/].
 
 
 + More Setup Options +[MoreSetupOptions]
@@ -814,6 +815,26 @@ If you want to use these while still being able to use your cursor keys to read 
 To toggle single letter navigation on and off for the current document, press NVDA+shift+space.
 %kc:endInclude
 
++++ Other navigation commands +++[OtherNavigationCommands]
+
+In addition to the quick navigation commands listed above, NVDA has commands that have no default keys assigned.
+To use these commands, you first need to assign gestures to them using the [Input Gestures dialog #InputGestures].
+Here is a list of available commands:
+- Article
+- Grouping
+- Tab
+-
+
+Keep in mind that there are two commands for each type of element, for moving forward in the document and backward in the document, and you must assign gestures to both commands in order to be able to quickly navigate in both directions.
+For example, if you want to use the ``y`` / ``shift+y`` keys to quickly navigate through tabs, you would do the following:
+
++ Open input gestures dialog from browse mode.
++ Find "moves to the next tab" item in the Browse mode section.
++ Assign ``y`` key for found gesture.
++ Find "moves to the previous tab" item.
++ Assign ``shift+y`` for found gesture.
++
+
 ++ The Elements List ++[ElementsList]
 The elements list provides access to a list of various types of elements in the document as appropriate for the application.
 For example, in web browsers, the elements list can list links, headings, form fields, buttons or landmarks.
@@ -853,7 +874,7 @@ A key command is provided to return to the original page containing the embedded
 + Reading Mathematical Content +[ReadingMath]
 Using MathPlayer 4 from Design Science, NVDA can read and interactively navigate supported mathematical content.
 This requires that MathPlayer 4 is installed on the computer.
-MathPlayer is available as a free download from: https://www.dessci.com/en/products/mathplayer/.
+MathPlayer is available as a free download from the [MathPlayer information page https://info.wiris.com/mathplayer-info].
 After installing MathPlayer, restart NVDA.
 
 NVDA supports the following types of mathematical content:
@@ -869,7 +890,7 @@ For further details, please see [Linear format equations using UnicodeMath and L
 NVDA can read and navigate MathType equations in both Microsoft Powerpoint and Microsoft word.
 MathType needs to be installed in order for this to work.
 The trial version is sufficient.
-It can be downloaded from https://www.dessci.com/en/products/mathtype/
+It can be downloaded from the [MathType presentation page https://www.wiris.com/en/mathtype/].
 - Adobe Reader:
 Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
 - Kindle Reader for PC:
@@ -897,7 +918,7 @@ By default, the review cursor follows the system caret, so you can usually use t
 
 At this point, you can use MathPlayer commands such as the arrow keys to explore the expression.
 For example, you can move through the expression with the left and right arrow keys and zoom into a portion of the expression such as a fraction using the down arrow key.
-Please see the [MathPlayer documentation about navigation commands https://www.dessci.com/en/products/mathplayer/navigation_commands.htm] for further information.
+Please see the [MathPlayer documentation https://docs.wiris.com/mathplayer/en/mathplayer-user-manual.html] for further information.
 
 When you wish to return to the document, simply press the escape key.
 
@@ -1096,6 +1117,9 @@ NVDA can use this to recognize text from images or inaccessible applications.
 You can set the language to use for text recognition in the [Windows OCR category #Win10OcrSettings] of the [NVDA Settings #NVDASettings] dialog.
 Additional languages can be installed by opening the Start menu, choosing Settings, selecting Time & Language -> Region & Language and then choosing Add a language.
 
+When you want to monitor constantly changing content, such as when watching a video with subtitles, you can optionally enable automatic refresh of the recognized content.
+This can also be done in the [Windows OCR category #Win10OcrSettings] of the [NVDA Settings #NVDASettings] dialog.
+
 Windows OCR may be partially or fully incompatible with [NVDA vision enhancements #Vision] or other external visual aids. You will need to disable these aids before proceeding to a recognition.
 
 %kc:beginInclude
@@ -1234,7 +1258,7 @@ Note: The above shortcuts work only with the default formatting string for fooba
 %kc:endInclude
 
 ++ Poedit ++[Poedit]
-NVDA offers enhanced support for Poedit 3 or newer.
+NVDA offers enhanced support for Poedit 3.4 or newer.
 
 %kc:beginInclude
 || Name | Key | Description |
@@ -1333,7 +1357,12 @@ If you frequently access categories that do not have dedicated shortcut keys, yo
 
 The settings categories found in the NVDA Settings dialog will be outlined below.
 
-+++ General (NVDA+control+g) +++[GeneralSettings]
++++ General +++[GeneralSettings]
+
+%kc:setting
+==== Open General settings ====
+Key: ``NVDA+control+g``
+
 The General category of the NVDA Settings dialog sets NVDA's overall behaviour such as interface language and whether or not it should check for updates.
 This category contains the following options:
 
@@ -1412,7 +1441,12 @@ This information greatly aides NV Access to prioritize future development of NVD
 If this is enabled, NVDA will inform you when there is a pending update on startup, offering you the possibility to install it.
 You can also manually install the pending update from the Exit NVDA dialog (if enabled),  from the NVDA menu, or when you perform a new check from the Help menu.
 
-+++ Speech Settings (NVDA+control+v) +++[SpeechSettings]
++++ Speech Settings +++[SpeechSettings]
+
+%kc:setting
+==== Open Speech settings ====
+Key: ``NVDA+control+v``
+
 The Speech category in the NVDA Settings dialog contains options that lets you change the speech synthesizer as well as voice characteristics for the chosen synthesizer.
 For a quicker alternative way of controlling speech parameters from anywhere, please see the [Synth Settings Ring #SynthSettingsRing] section.
 
@@ -1521,7 +1555,12 @@ This can be useful if it is hard to distinguish between pronunciation of symbols
 
 The delayed character description will be cancelled if other text is spoken during that time, or if you press the ``control`` key.
 
-+++ Select Synthesizer (NVDA+control+s) +++[SelectSynthesizer]
++++ Select Synthesizer +++[SelectSynthesizer]
+
+%kc:setting
+==== Open Select Synthesizer dialog ====
+Key: ``NVDA+control+s``
+
 The Synthesizer dialog, which can be opened by activating the Change... button in the speech category of the NVDA settings dialog, allows you to select which Synthesizer NVDA should use to speak with.
 Once you have selected your synthesizer of choice, you can press Ok and NVDA will load the selected Synthesizer.
 If there is an error loading the synthesizer, NVDA will notify you with a message, and continue using the previous synthesizer.
@@ -1533,22 +1572,6 @@ For a list of the Synthesizers that NVDA supports, please see the [Supported Spe
 
 One special item that will always appear in this list is "No speech", which allows you to use NVDA with no speech output whatsoever.
 This may be useful for someone who wishes to only use NVDA with braille, or perhaps to sighted developers who only wish to use the Speech Viewer.
-
-==== Output device ====[SelectSynthesizerOutputDevice]
-This option allows you to choose the audio device that NVDA should instruct the selected synthesizer to speak through.
-
-%kc:setting
-==== Audio Ducking Mode ====[SelectSynthesizerDuckingMode]
-Key: NVDA+shift+d
-
-On Windows 8 and above, this option allows you to choose if NVDA should lower the volume of other applications while NVDA is speaking, or all the time while NVDA is running.
-- No Ducking: NVDA will never lower the volume of other audio.
-- Duck when outputting speech and sounds: NVDA will only lower the volume of other audio when NVDA is speaking or playing sounds. This may not work for all synthesizers.
-- Always duck: NVDA will keep the volume of other audio lower the whole time NVDA is running.
--
-
-This option is only available if NVDA has been installed.
-It is not possible to support audio ducking for portable and temporary copies of NVDA.
 
 +++ Synth settings ring +++[SynthSettingsRing]
 If you wish to quickly change speech settings without going to the Speech category of the NVDA settings dialog, there are some NVDA key commands that allow you to move through the most common speech settings from anywhere while running NVDA:
@@ -1724,7 +1747,12 @@ Disabling this option may improve readability.
 
 To toggle show selection from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
-+++ Select Braille Display (NVDA+control+a) +++[SelectBrailleDisplay]
++++ Select Braille Display +++[SelectBrailleDisplay]
+
+%kc:setting
+==== Open Select Braille Display dialog ====
+Key: ``NVDA+control+a``
+
 The Select Braille Display dialog, which can be opened by activating the Change... button in the Braille category of the NVDA settings dialog, allows you to select which Braille display NVDA should use for braille output.
 Once you have selected your braille display of choice, you can press Ok and NVDA will load the selected display.
 If there is an error loading the display driver, NVDA will notify you with a message, and continue using the previous display, if any.
@@ -1739,6 +1767,16 @@ When this feature is enabled and you connect a supported display using USB or bl
 No braille means that you are not using braille.
 
 Please see the [Supported Braille Displays #SupportedBrailleDisplays] section for more information about supported braille displays and which of these support automatic detection in the background.
+
+==== Displays to detect automatically ====[SelectBrailleDisplayAutoDetect]
+When braille display is set to "Automatic", the check boxes in this list control allows you to enable and disable display drivers that will be involved in the automatic detection process.
+This allows you to exclude braille display drivers you do not use on a regular basis.
+For example, if you only own a display that requires the Baum driver to function, you may leave the Baum driver enabled whereas the other drivers can be disabled.
+
+By default, all drivers that support automatic detection are enabled.
+Any driver added, for example in a future version of NVDA or in an add-on, will also be enabled by default.
+
+You may consult the documentation for your braille display in the section [Supported Braille Displays #SupportedBrailleDisplays] to check whether the driver supports automatic detection of displays.
 
 ==== Port ====[SelectBrailleDisplayPort]
 This option, if available, allows you to choose what port or type of connection will be used to communicate with the braille display you have selected.
@@ -1755,6 +1793,47 @@ You may consult the documentation for your braille display in the section [Suppo
 Please note: If you connect multiple Braille Displays to your machine at the same time which use the same driver (E.g. connecting two Seika displays),
 it is currently impossible to tell NVDA which display to use.
 Therefore it is recommended to only connect one Braille Display of a given type / manufacturer to your machine at a time.
+
++++ Audio +++[AudioSettings]
+
+%kc:setting
+==== Open Audio settings ====
+Key: ``NVDA+control+u``
+
+The Audio category in the NVDA Settings dialog contains options that let you change several aspects of audio output.
+
+==== Output device ====[SelectSynthesizerOutputDevice]
+This option allows you to choose the audio device that NVDA should instruct the selected synthesizer to speak through.
+
+%kc:setting
+==== Audio Ducking Mode ====[SelectSynthesizerDuckingMode]
+Key: ``NVDA+shift+d``
+
+On Windows 8 and above, this option allows you to choose if NVDA should lower the volume of other applications while NVDA is speaking, or all the time while NVDA is running.
+- No Ducking: NVDA will never lower the volume of other audio.
+- Duck when outputting speech and sounds: NVDA will only lower the volume of other audio when NVDA is speaking or playing sounds. This may not work for all synthesizers.
+- Always duck: NVDA will keep the volume of other audio lower the whole time NVDA is running.
+-
+
+This option is only available if NVDA has been installed.
+It is not possible to support audio ducking for portable and temporary copies of NVDA.
+
+==== Volume of NVDA sounds follows voice volume ====[SoundVolumeFollowsVoice]
+: Default
+  Disabled
+: Options
+  Disabled, Enabled
+:
+
+When this option is enabled, the volume of NVDA sounds and beeps will follow the volume setting of the voice you are using.
+If you decrease the volume of the voice, the volume of sounds will decrease.
+Similarly, if you increase the volume of the voice, the volume of sounds will increase.
+This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
+
+==== Volume of NVDA sounds ====[SoundVolume]
+This slider allows you to set the volume of NVDA sounds and beeps.
+This setting only takes effect when "Volume of NVDA sounds follows voice volume" is disabled.
+This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
 
 +++ Vision +++[VisionSettings]
 The Vision category in the NVDA Settings dialog allows you to enable, disable and configure [visual aids #Vision].
@@ -1794,7 +1873,12 @@ Additional vision enhancement providers can be provided in [NVDA add-ons #Addons
 When these providers have adjustable settings, they will be shown in this settings category in separate groupings.
 For the supported settings per provider, please refer to the documentation for that provider.
 
-+++ Keyboard (NVDA+control+k) +++[KeyboardSettings]
++++ Keyboard +++[KeyboardSettings]
+
+%kc:setting
+==== Open Keyboard settings ====
+Key: ``NVDA+control+k``
+
 The Keyboard category in the NVDA Settings dialog contains options that set how NVDA behaves as you use and type on your keyboard.
 This settings category contains the following options:
 
@@ -1852,7 +1936,12 @@ This option is only available if reporting of spelling errors is enabled in NVDA
 This option allows the user to control if key presses generated by applications such as on-screen keyboards and speech recognition software should be processed by NVDA.
 This option is on by default, though certain users may wish to turn this off, such as those typing Vietnamese with the UniKey typing software as it will  cause incorrect character input.
 
-+++ Mouse (NVDA+control+m) +++[MouseSettings]
++++ Mouse +++[MouseSettings]
+
+%kc:setting
+==== Open Mouse settings ====
+Key: ``NVDA+control+m``
+
 The Mouse category in the NVDA Settings dialog allows NVDA to track the mouse, play mouse coordinate beeps and sets other mouse usage options.
 This category contains the following options:
 
@@ -1872,8 +1961,10 @@ The options are character, word, line and paragraph.
 
 To toggle text unit resolution from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
-==== Report role when mouse enters object ====[MouseSettingsRole]
-If this checkbox is checked, NVDA will announce the role (type) of object as the mouse moves inside it.
+==== Report object when mouse enters it ====[MouseSettingsRole]
+If this checkbox is checked, NVDA will announce information about objects as the mouse moves inside them.
+This includes the role (type) of the object as well as states (checked/pressed), cell coordinates in tables, etc.
+Note that the announcement of some object details might be dependent on how other settings are set, such as in the [object presentation #ObjectPresentationSettings] or [Document Formatting #DocumentFormattingSettings] categories.
 
 ==== Play audio coordinates when mouse moves ====[MouseSettingsAudio]
 Checking this checkbox makes NVDA play beeps as the mouse moves, so that the user can work out where the mouse is in regards to the dimensions of the screen.
@@ -1928,7 +2019,12 @@ When enabled, NVDA will filter the hierarchy of objects that can be navigated to
 
 To toggle simple review mode from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
-+++ Object Presentation (NVDA+control+o) +++[ObjectPresentationSettings]
++++ Object Presentation +++[ObjectPresentationSettings]
+
+%kc:setting
+==== Open Object Presentation settings ====
+Key: ``NVDA+control+o``
+
 The Object Presentation category in the NVDA Settings dialog is used to set how much information NVDA will present about controls such as description, position information and so on.
 These options don't typically apply to browse mode.
 These options typically apply to focus reporting and NVDA object navigation, but not reading text content e.g. browse mode.
@@ -2018,7 +2114,12 @@ After reading or precomposition data has been combined into a valid pictographic
 This option allows you to choose whether or not NVDA should report new symbols as they appear  in the composition string.
 This option is on by default.
 
-+++ Browse Mode (NVDA+control+b) +++[BrowseModeSettings]
++++ Browse Mode +++[BrowseModeSettings]
+
+%kc:setting
+==== Open Browse Mode settings ====
+Key: ``NVDA+control+b``
+
 The Browse Mode category in the NVDA Settings dialog is used to configure NVDA's behaviour when you read and navigate complex documents such as web pages.
 This category contains the following options:
 
@@ -2089,7 +2190,12 @@ This might result in faster browsing experience and better responsiveness in bro
 The focus will yet be updated to the particular element when interacting with it (e.g. pressing a button, checking a check box).
 Enabling this option may improve support for some websites at the cost of performance and stability.
 
-+++ Document Formatting (NVDA+control+d) +++[DocumentFormattingSettings]
++++ Document Formatting +++[DocumentFormattingSettings]
+
+%kc:setting
+==== Open Document Formatting settings ====
+Key: ``NVDA+control+d``
+
 Most of the options in this category are for configuring what type of formatting you wish to have reported as you move the cursor around documents.
 For example, if you check the report font name checkbox, each time you arrow onto text with a different font, the name of the font will be announced.
 
@@ -2189,6 +2295,12 @@ This category contains the following options:
 ==== Recognition language ====[Win10OcrSettingsRecognitionLanguage]
 This combo box allows you to choose the language to be used for text recognition.
 To cycle through available languages from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
+==== Periodically refresh recognized content ====[Win10OcrSettingsAutoRefresh]
+When this checkbox is enabled, NVDA will automatically refresh the recognized content when a recognition result has focus.
+This can be very useful when you want to monitor constantly changing content, such as when watching a video with subtitles.
+The refresh takes place every one and a half seconds.
+This option is disabled by default.
 
 +++ Advanced Settings +++[AdvancedSettings]
 Warning! The settings in this category are for advanced users and may cause NVDA to not function correctly if configured in the wrong way.
@@ -2379,22 +2491,10 @@ With several historically popular GUI APIs, the text may be rendered with a tran
 This option enables audio output via the Windows Audio Session API (WASAPI).
 WASAPI is a more modern audio framework which may improve the responsiveness, performance and stability of NVDA audio output, including both speech and sounds.
 After changing this option, you will need to restart NVDA for the change to take effect.
-
-==== Volume of NVDA sounds follows voice volume ====[SoundVolumeFollowsVoice]
-: Default
-  Disabled
-: Options
-  Disabled, Enabled
-:
-
-When this option is enabled, the volume of NVDA sounds and beeps will follow the volume setting of the voice you are using.
-If you decrease the volume of the voice, the volume of sounds will decrease.
-Similarly, if you increase the volume of the voice, the volume of sounds will increase.
-This option only takes effect when "Use WASAPI for audio output" is enabled.
-
-==== Volume of NVDA sounds ====[SoundVolume]
-This slider allows you to set the volume of NVDA sounds and beeps.
-This setting only takes effect when "Use WASAPI for audio output" is enabled and "Volume of NVDA sounds follows voice volume" is disabled.
+Disabling WASAPI will disable the following options:
+- [Volume of NVDA sounds follows voice volume #SoundVolumeFollowsVoice]
+- [Volume of NVDA sounds #SoundVolume]
+-
 
 ==== Debug logging categories ====[AdvancedSettingsDebugLoggingCategories]
 The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.
@@ -2443,7 +2543,7 @@ Thus, using the earlier example of replacing the word "bird" with "frog", if you
 
 A regular expression is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples.
 Regular expressions are not covered in this user guide.
-For an introductory tutorial, please refer to [https://docs.python.org/3.7/howto/regex.html].
+For an introductory tutorial, please refer to [Python's Regular Expression Guide https://docs.python.org/3.11/howto/regex.html].
 
 +++ Punctuation/symbol pronunciation +++[SymbolPronunciation]
 This dialog allows you to change the way punctuation and other symbols are pronounced, as well as the symbol level at which they are spoken.
@@ -2704,6 +2804,9 @@ You can install and update add-ons by [browsing Available add-ons #AddonStoreBro
 Select an add-on from the "Available add-ons" or "Updatable add-ons" tab.
 Then use the update, install, or replace action to start the installation.
 
+You can also install multiple add-ons at once.
+This can be done by selecting multiple add-ons in the available add-ons tab, then activating the context menu on the selection and choosing the install action.
+
 To install an add-on you have obtained outside of the Add-on Store, press the "Install from external source" button.
 This will allow you to browse for an add-on package (``.nvda-addon`` file) somewhere on your computer or on a network.
 Once you open the add-on package, the installation process will begin.
@@ -2861,8 +2964,8 @@ The Microsoft Speech Platform provides voices for many languages which are norma
 These voices can also be used with NVDA.
 
 To use these voices, you will need to install two components:
-- Microsoft Speech Platform - Runtime (Version 11) , x86: https://www.microsoft.com/download/en/details.aspx?id=27225
-- Microsoft Speech Platform - Runtime Languages (Version 11): https://www.microsoft.com/download/en/details.aspx?id=27224
+- [Microsoft Speech Platform - Runtime (Version 11), x86 https://www.microsoft.com/download/en/details.aspx?id=27225]
+- [Microsoft Speech Platform - Runtime Languages (Version 11) https://www.microsoft.com/download/en/details.aspx?id=27224]
  - This page includes many files for both speech recognition and text-to-speech.
  Choose the files containing the TTS data for the desired languages/voices.
  For example, the file MSSpeech_TTS_en-US_ZiraPro.msi is a U.S. English voice.
@@ -2883,7 +2986,8 @@ Search for the broader language (such as English or French), then locate the var
 Select any languages desired and use the "add" button to add them.
 Once added, restart NVDA.
 
-Please see this Microsoft article for a list of available voices: https://support.microsoft.com/en-us/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
+Please see [Supported languages and voices https://support.microsoft.com/en-us/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01] for a list of available voices.
+
 
 + Supported Braille Displays +[SupportedBrailleDisplays]
 This section contains information about the Braille displays supported by NVDA.
@@ -2911,7 +3015,7 @@ The following displays support this automatic detection functionality.
 ++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
 All Focus and PAC Mate displays from [Freedom Scientific https://www.freedomscientific.com/] are supported when connected via USB or bluetooth.
 You will need the Freedom Scientific braille display drivers installed on your system.
-If you do not have them already, you can obtain them from https://support.freedomscientific.com/Downloads/Focus/FocusBlueBrailleDisplayDriver.
+If you do not have them already, you can obtain them from the [Focus Blue Braille Display Driver page https://support.freedomscientific.com/Downloads/Focus/FocusBlueBrailleDisplayDriver].
 Although this page only mentions the Focus Blue display, the drivers support all Freedom Scientific Focus and Pacmate displays.
 
 By default, NVDA can automatically detect and connect to these displays either via USB or bluetooth.
@@ -3230,8 +3334,7 @@ Please see the display's documentation for descriptions of where these keys can 
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series ++[Hims]
 NVDA supports Braille Sense, Braille EDGE, Smart Beetle and Sync Braille displays from [Hims https://www.hims-inc.com/] when connected via USB or bluetooth.
-If connecting via USB, you will need to install the USB drivers from HIMS on your system.
-You can download these from here: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
+If connecting via USB, you will need to install the [USB drivers from HIMS http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip] on your system.
 
 Following are the key assignments for these displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -3305,7 +3408,7 @@ The following Seika Braille displays from Nippon Telesoft are supported in two g
 - [Seika Version 3, 4, and 5 (40 cells), Seika80 (80 cells) #SeikaBrailleDisplays]
 - [MiniSeika (16, 24 cells), V6, and V6Pro (40 cells) #SeikaNotetaker]
 -
-You can find more information about the displays at https://en.seika-braille.com/down/index.html.
+You can find more information about the displays on their [Demo and Driver Download page https://en.seika-braille.com/down/index.html].
 
 
 +++ Seika Version 3, 4, and 5 (40 cells), Seika80 (80 cells) +++[SeikaBrailleDisplays]
@@ -3600,7 +3703,7 @@ Following are commands assigned to BrailleNote QT when it is not in braille inpu
 | NVDA menu | read+n |
 | Up arrow key | upArrow |
 | Down arrow key | downArrow |
-| Left Arrow key | leftArrow|
+| Left Arrow key | leftArrow |
 | Right arrow key | rightArrow |
 | Page up key | function+upArrow |
 | Page down key | function+downArrow |
@@ -3675,12 +3778,12 @@ Due to this, and to maintain compatibility with other screen readers in Taiwan, 
 %kc:endInclude
 
 ++ Eurobraille displays ++[Eurobraille]
-The b.book, b.note, Esys, Esytime and Iris displays from Eurobraille are supported by NVDA.
-These devices have a braille keyboard with 10 keys.
+The b.book, b.note, Esys, Esytime and Iris displays from Eurobraille are supported by NVDA.  
+These devices have a braille keyboard with 10 keys. 
 Please refer to the display's documentation for descriptions of these keys.
 Of the two keys placed like a space bar, the left key is corresponding to the backspace key and the right key to the space key.
 
-These devices are connected via USB and have one stand-alone USB keyboard.
+These devices are connected via USB and have one stand-alone USB keyboard. 
 It is possible to enable/disable this keyboard by toggling "HID Keyboard simulation" using an input gesture.
 The braille keyboard functions described directly below is when "HID Keyboard simulation" is disabled.
 
@@ -3688,7 +3791,7 @@ The braille keyboard functions described directly below is when "HID Keyboard si
 %kc:beginInclude
 || Name | Key |
 | Erase the last entered braille cell or character | ``backspace`` |
-| Translate any braille input and press the enter key |``backspace+space`` |
+| Translate any braille input and press the enter key | ``backspace+space`` |
 | Toggle ``NVDA`` key | ``dot3+dot5+space`` |
 | ``insert`` key | ``dot1+dot3+dot5+space``, ``dot3+dot4+dot5+space`` |
 | ``delete`` key | ``dot3+dot6+space`` |
@@ -3851,8 +3954,8 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
-[BRLTTY https://www.brltty.com/] is a separate program which can be used to support many more braille displays.
-In order to use this, you need to install [BRLTTY for Windows https://www.brltty.com/download.html].
+[BRLTTY https://www.brltty.app/] is a separate program which can be used to support many more braille displays.
+In order to use this, you need to install [BRLTTY for Windows https://www.brltty.app/download.html].
 You should download and install the latest installer package, which will be named, for example, brltty-win-4.2-2.exe.
 When configuring the display and port to use, be sure to pay close attention to the instructions, especially if you are using a USB display and already have the manufacturer's drivers installed.
 
@@ -3862,14 +3965,21 @@ Therefore, NVDA's braille input table setting is not relevant.
 BRLTTY is not involved in NVDA's automatic background braille display detection functionality.
 
 Following are the BRLTTY command assignments for NVDA.
-Please see the [BRLTTY key binding lists http://mielke.cc/brltty/doc/KeyBindings/] for information about how BRLTTY commands are mapped to controls on braille displays.
+Please see the [BRLTTY key binding lists https://brltty.app/doc/KeyBindings/] for information about how BRLTTY commands are mapped to controls on braille displays.
 %kc:beginInclude
 || Name | BRLTTY command |
-| Scroll braille display back | fwinlt (go left one window) |
-| Scroll braille display forward | fwinrt (go right one window) |
-| Move braille display to previous line | lnup (go up one line) |
-| Move braille display to next line | lndn (go down one line) |
-| Route to braille cell | route (bring cursor to character) |
+| Scroll braille display back | ``fwinlt`` (go left one window) |
+| Scroll braille display forward | ``fwinrt`` (go right one window) |
+| Move braille display to previous line | ``lnup`` (go up one line) |
+| Move braille display to next line | ``lndn`` (go down one line) |
+| Route to braille cell | ``route`` (bring cursor to character) |
+| Toggle input help | ``learn`` (enter/leave command learn mode) |
+| Open the NVDA menu | ``prefmenu`` (enter/leave preferences menu) |
+| Revert configuration | ``prefload`` (restore preferences from disk) |
+| Save configuration | ``prefsave`` (save preferences to disk) |
+| Report time | ``time`` (show current date and time) |
+| Speak the line where the review cursor is located | ``say_line`` (speak current line) |
+| Say all using review cursor | ``say_below`` (speak from current line through bottom of screen) |
 %kc:endInclude
 
 ++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
@@ -3947,7 +4057,7 @@ Following are the current key assignments for these displays.
 || Name | Key |
 | Scroll braille display back | pan left or rocker up |
 | Scroll braille display forward | pan right or rocker down |
-| Route to braille cell | routing set 1|
+| Route to braille cell | routing set 1 |
 | Toggle braille tethered to | up+down |
 | upArrow key | joystick up, dpad up or space+dot1 |
 | downArrow key | joystick down, dpad down or space+dot4 |
@@ -4015,52 +4125,54 @@ NVDA can accept one or more additional options when it starts which alter its be
 You can pass as many options as you need.
 These options can be passed when starting from a shortcut (in the shortcut properties), from the Run dialog (Start Menu -> Run or Windows+r) or from a Windows command console.
 Options should be separated from the name of NVDA's executable file and from other options by spaces.
-For example, a useful option is --disable-addons, which tells NVDA to suspend all running add-ons.
+For example, a useful option is ``--disable-addons``, which tells NVDA to suspend all running add-ons.
 This allows you to determine whether a problem is caused by an add-on and to recover from serious problems caused by add-ons.
 
 As an example, you can exit the currently running copy of NVDA by entering the following in the Run dialog:
 
+```
 nvda -q
+```
 
 Some of the command line options have a short and a long version, while some of them have only a long version.
 For those which have a short version, you can combine them like this:
-| nvda -mc CONFIGPATH | This will start NVDA with startup sounds and message disabled, and the specified configuration |
-| nvda -mc CONFIGPATH --disable-addons | Same as above, but with add-ons disabled |
+|`` nvda -mc CONFIGPATH`` | This will start NVDA with startup sounds and message disabled, and the specified configuration |
+| ``nvda -mc CONFIGPATH --disable-addons`` | Same as above, but with add-ons disabled |
 
 Some of the command line options accept additional parameters; e.g. how detailed the logging should be or the path to the user configuration directory.
-Those parameters should be placed after the option, separated from the option by a space when using the short version or an equals sign (=) when using the long version; e.g.:
-| nvda -l 10 | Tells NVDA to start with log level set to debug |
-| nvda --log-file=c:\nvda.log | Tells NVDA to write its log to c:\nvda.log |
-| nvda --log-level=20 -f c:\nvda.log | Tells NVDA to start with log level set to info and to write its log to c:\nvda.log |
+Those parameters should be placed after the option, separated from the option by a space when using the short version or an equals sign (``=``) when using the long version; e.g.:
+| ``nvda -l 10`` | Tells NVDA to start with log level set to debug |
+| ``nvda --log-file=c:\nvda.log`` | Tells NVDA to write its log to ``c:\nvda.log`` |
+| ``nvda --log-level=20 -f c:\nvda.log`` | Tells NVDA to start with log level set to info and to write its log to ``c:\nvda.log`` |
 
 Following are the command line options for NVDA:
 || Short | Long | Description |
-| -h | --help | show command line help and exit |
-| -q | --quit | Quit already running copy of NVDA |
-| -k | --check-running | Report whether NVDA is running via the exit code; 0 if running, 1 if not running |
-| -f LOGFILENAME | --log-file=LOGFILENAME | The file where log messages should be written to |
-| -l LOGLEVEL | --log-level=LOGLEVEL | The lowest level of message logged (debug 10, input/output 12, debug warning 15, info 20, disabled 100) |
-| -c CONFIGPATH | --config-path=CONFIGPATH | The path where all settings for NVDA are stored |
-| None | --lang=LANGUAGE | Override the configured NVDA language. Set to "Windows" for current user default, "en" for English, etc. |
-| -m | --minimal | No sounds, no interface, no start message, etc. |
-| -s | --secure | Starts NVDA in [Secure Mode #SecureMode] |
-| None | --disable-addons | Add-ons will have no effect |
-| None | --debug-logging | Enable debug level logging just for this run. This setting will override any other log level ( ""--loglevel"", -l) argument given, including no logging option. |
-| None | --no-logging | Disable logging altogether while using NVDA. This setting can be overridden if a log level ( ""--loglevel"", -l) is specified from command line or if debug logging is turned on. |
-| None | --no-sr-flag  | Don't change the global system screen reader flag |
-| None | --install | Installs NVDA (starting the newly installed copy) |
-| None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |
-| None | --enable-start-on-logon=True|False | When installing, enable NVDA's [Use NVDA during Windows sign-in #StartAtWindowsLogon] |
-| None | --copy-portable-config | When installing, copy the portable configuration from the provided path (--config-path, -c) to the current user account |
-| None | --create-portable | Creates a portable copy of NVDA (starting the newly created copy). Requires --portable-path to be specified |
-| None | --create-portable-silent | Creates a portable copy of NVDA (does not start the newly installed copy). Requires --portable-path to be specified |
-| None | --portable-path=PORTABLEPATH | The path where a portable copy will be created |
+| ``-h`` | ``--help`` | show command line help and exit |
+| ``-q`` | ``--quit`` | Quit already running copy of NVDA |
+| ``-k`` | ``--check-running`` | Report whether NVDA is running via the exit code; 0 if running, 1 if not running |
+| ``-f LOGFILENAME`` | ``--log-file=LOGFILENAME`` | The file where log messages should be written to |
+| ``-l LOGLEVEL`` | ``--log-level=LOGLEVEL`` | The lowest level of message logged (debug 10, input/output 12, debug warning 15, info 20, disabled 100) |
+| ``-c CONFIGPATH`` | ``--config-path=CONFIGPATH`` | The path where all settings for NVDA are stored |
+| None | ``--lang=LANGUAGE`` | Override the configured NVDA language. Set to "Windows" for current user default, "en" for English, etc. |
+| ``-m`` | ``--minimal`` | No sounds, no interface, no start message, etc. |
+| ``-s`` | ``--secure`` | Starts NVDA in [Secure Mode #SecureMode] |
+| None | ``--disable-addons`` | Add-ons will have no effect |
+| None | ``--debug-logging`` | Enable debug level logging just for this run. This setting will override any other log level ( ``--loglevel``, ``-l``) argument given, including no logging option. |
+| None | ``--no-logging`` | Disable logging altogether while using NVDA. This setting can be overridden if a log level (``--loglevel``, ``-l``) is specified from command line or if debug logging is turned on. |
+| None | ``--no-sr-flag`` | Don't change the global system screen reader flag |
+| None | ``--install`` | Installs NVDA (starting the newly installed copy) |
+| None | ``--install-silent`` | Silently installs NVDA (does not start the newly installed copy) |
+| None | ``--enable-start-on-logon=True|False`` | When installing, enable NVDA's [Use NVDA during Windows sign-in #StartAtWindowsLogon] |
+| None | ``--copy-portable-config`` | When installing, copy the portable configuration from the provided path (``--config-path``, ``-c``) to the current user account |
+| None | ``--create-portable`` | Creates a portable copy of NVDA (starting the newly created copy). Requires ``--portable-path`` to be specified |
+| None | ``--create-portable-silent`` | Creates a portable copy of NVDA (does not start the newly installed copy). Requires ``--portable-path`` to be specified |
+| None | ``--portable-path=PORTABLEPATH`` | The path where a portable copy will be created |
 
 ++ System Wide Parameters ++[SystemWideParameters]
 NVDA allows some values to be set in the system registry which alter the system wide behaviour of NVDA.
 These values are stored in the registry under one of the following keys:
-- 32-bit system: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
-- 64-bit system: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+- 32-bit system: ``HKEY_LOCAL_MACHINE\SOFTWARE\nvda``
+- 64-bit system: ``HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda``
 -
 
 The following values can be set under this registry key:
@@ -4070,6 +4182,6 @@ The following values can be set under this registry key:
 | ``forceSecureMode`` | DWORD | 0 (default) to disable, 1 to enable | If enabled, forces [Secure Mode #SecureMode] to be enabled when running NVDA. |
 
 + Further Information +[FurtherInformation]
-If you require further information or assistance regarding NVDA, please visit the NVDA web site at NVDA_URL.
+If you require further information or assistance regarding NVDA, please visit the [NVDA web site NVDA_URL].
 Here, you can find additional documentation, as well as technical support and community resources.
 This site also provides information and resources concerning NVDA development.

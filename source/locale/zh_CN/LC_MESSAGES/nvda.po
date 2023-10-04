@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-14 03:03+0000\n"
+"POT-Creation-Date: 2023-09-08 00:01+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: hwf1324 <1398969445@qq.com>\n"
 "Language-Team: \n"
@@ -1569,8 +1569,8 @@ msgid ""
 "browse mode jump to various kinds of elements on the page. When off, these "
 "keys are passed to the application"
 msgstr ""
-"切换单键导航的开关，如果打开，具有单键导航功能的案件可以在页面上的许多种元素"
-"间跳转，如果关闭，这些案件事件则会直接传递到应用程序"
+"切换单键导航的开关，如果打开，具有单键导航功能的按键可以在页面上的各类元素"
+"间跳转，如果关闭，这些按键事件则会直接传递到应用程序"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 #. Translators: Reported when a user tries to use a find command when it isn't supported.
@@ -2068,6 +2068,22 @@ msgstr "移到上一个分组"
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous grouping"
 msgstr "往上没有分组"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next tab"
+msgstr "移到下一个选项卡"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next tab"
+msgstr "往下没有选项卡"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous tab"
+msgstr "移到上一个选项卡"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous tab"
+msgstr "往上没有选项卡"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -2964,6 +2980,21 @@ msgstr "在行缩进朗读模式之间循环切换"
 msgid "Report line indentation {mode}"
 msgstr "行缩进提示 {mode}"
 
+#. Translators: Input help mode message for toggle ignore blank lines for line indentation reporting command.
+msgid ""
+"Toggles on and off the ignoring of blank lines for line indentation reporting"
+msgstr "切换是否提示空白行的行缩进"
+
+#. Translators: The message announced when toggling off the ignore blank lines for line indentation
+#. reporting document formatting setting.
+msgid "Ignore blank lines for line indentation reporting off"
+msgstr "提示空白行的行缩进"
+
+#. Translators: The message announced when toggling on the ignore blank lines for line indentation
+#. reporting document formatting setting.
+msgid "Ignore blank lines for line indentation reporting on"
+msgstr "不提示空白行的行缩进"
+
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
 msgstr "切换读出段落缩进的开关"
@@ -3381,7 +3412,7 @@ msgstr "往前没有对象"
 
 #. Translators: Input help mode message for move to first child object command.
 msgid "Moves the navigator object to the first object inside it"
-msgstr "移动到此父对象的首个子对象"
+msgstr "移动到此对象的首个子对象"
 
 #. Translators: Reported when there is no contained (first child) object such as inside a document.
 msgid "No objects inside"
@@ -3636,7 +3667,7 @@ msgstr "在浏览模式下，显示当前光标处的文本格式信息。"
 msgid ""
 "Reports formatting info for the text under the caret. If pressed twice, "
 "presents the information in browse mode"
-msgstr "读出当前光标处的文本格式信息。连案两次，在浏览模式下显示该信息"
+msgstr "读出当前光标处的文本格式信息。连按两次，在浏览模式下显示该信息"
 
 #. Translators: the description for the reportDetailsSummary script.
 msgid "Report summary of any annotation details at the system caret."
@@ -4045,26 +4076,24 @@ msgstr "盲文显示跟随到 %s"
 
 #. Translators: Input help mode message for cycle through
 #. braille move system caret when routing review cursor command.
-#, fuzzy
 msgid ""
 "Cycle through the braille move system caret when routing review cursor states"
-msgstr "在盲文选中指示光标之间循环切换"
+msgstr "在移动浏览光标时移动系统输入光标选项之间循环切换"
 
 #. Translators: Reported when action is unavailable because braille tether is to focus.
-#, fuzzy
 msgid "Action unavailable. Braille is tethered to focus"
-msgstr "Windows 锁定时该操作不可用"
+msgstr "盲文显示跟随到焦点时该操作不可用"
 
 #. Translators: Used when reporting braille move system caret when routing review cursor
 #. state (default behavior).
 #, python-format
 msgid "Braille move system caret when routing review cursor default (%s)"
-msgstr ""
+msgstr "盲文移动浏览光标时移动系统输入光标默认（%s）"
 
 #. Translators: Used when reporting braille move system caret when routing review cursor state.
 #, python-format
 msgid "Braille move system caret when routing review cursor %s"
-msgstr ""
+msgstr "盲文移动浏览光标时移动系统输入光标（%s）"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
@@ -4483,6 +4512,10 @@ msgstr "开启临时黑屏，重启NVDA后恢复"
 msgid "Could not enable screen curtain"
 msgstr "无法开启黑屏"
 
+#. Translators: Warning message when trying to enable the screen curtain when OCR is active.
+msgid "Could not enable screen curtain when performing content recognition"
+msgstr "识别期间无法开启黑屏"
+
 #. Translators: Describes a command.
 msgid "Cycles through paragraph navigation styles"
 msgstr "在段落导航模式之间循环切换"
@@ -4777,7 +4810,7 @@ msgstr "数字键盘 加号"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad decimal"
-msgstr "数字键盘删除"
+msgstr "数字键盘点"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad insert"
@@ -6395,6 +6428,7 @@ msgstr "请捐赠"
 
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
+#. Translators: The label for the menu item to open donate page.
 msgid "&Donate"
 msgstr "立即捐赠(&D)"
 
@@ -7490,7 +7524,7 @@ msgstr "从不"
 
 #. Translators: Label for setting to move the system caret when routing review cursor with braille.
 msgid "Only when tethered automatically"
-msgstr ""
+msgstr "仅当盲文光标设为自动跟随时"
 
 #. Translators: Label for setting to move the system caret when routing review cursor with braille.
 msgid "Always"
@@ -7516,6 +7550,14 @@ msgstr "点击光标所在文本的位置（如果可能）"
 msgid "Dismiss the recognition result"
 msgstr "关闭识别结果显示"
 
+#. Translators: Reported when recognition (e.g. OCR) fails.
+msgid "Recognition failed"
+msgstr "识别失败"
+
+#. Translators: Reported when recognition (e.g. OCR) fails during automatic refresh.
+msgid "Automatic refresh of recognition result failed"
+msgstr "自动刷新识别结果失败"
+
 #. Translators: Reported when content recognition (e.g. OCR) is attempted,
 #. but the user is already reading a content recognition result.
 msgid "Already in a content recognition result"
@@ -7529,9 +7571,6 @@ msgstr "内容不可见"
 #. Translators: Reporting when content recognition (e.g. OCR) begins.
 msgid "Recognizing"
 msgstr "正在识别"
-
-msgid "Recognition failed"
-msgstr "识别失败"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
@@ -7627,6 +7666,63 @@ msgstr "超大号"
 msgctxt "font size"
 msgid "smaller"
 msgstr "小小号"
+
+#. Translators: Reported when text is left-aligned.
+msgid "align left"
+msgstr "左对齐"
+
+#. Translators: Reported when text is centered.
+msgid "align center"
+msgstr "居中"
+
+#. Translators: Reported when text is right-aligned.
+msgid "align right"
+msgstr "右对齐"
+
+#. Translators: Reported when text is justified.
+#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
+msgid "align justify"
+msgstr "两端对齐"
+
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "对齐校正"
+
+#. Translators: Reported when text is centered across multiple cells.
+msgid "align centered across selection"
+msgstr "跨列居中"
+
+#. Translators: Reported in Excel when text is formatted with "General" alignment, i.e. the name of the
+#. alignment in Excel aligning the cell's content depending on its type: text left and numbers right.
+msgid "align general"
+msgstr "常规"
+
+#. Translators: Reported in Excel when text is formatted with "Fill" alignment, i.e. the name of the
+#. alignment in Excel repeating the cell's content for the width of the cell.
+msgid "align fill"
+msgstr "填充"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "垂直上对齐"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "垂直中对其"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "垂直下对齐"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "垂直上下对齐"
+
+#. Translators: Reported when text is vertically justified but with character spacing
+#. (For some Asian content).
+msgid "vertical align distributed"
+msgstr "垂直分布对齐"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -8590,43 +8686,43 @@ msgid "&Preferences"
 msgstr "选项(&P)"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
-msgid "View log"
-msgstr "查看日志(&V)"
+msgid "View &log"
+msgstr "查看日志(&L)"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
-msgid "Speech viewer"
-msgstr "朗读查看器(&W)"
+msgid "&Speech viewer"
+msgstr "朗读查看器(&S)"
 
 #. Translators: The label for the menu item to toggle Braille Viewer.
-msgid "Braille viewer"
+msgid "&Braille viewer"
 msgstr "盲文查看器(&B)"
 
 #. Translators: The label of a menu item to open the Add-on store
-msgid "Add-on &store..."
-msgstr "插件商店(&S)..."
+msgid "&Add-on store..."
+msgstr "插件商店(&A)..."
 
 #. Translators: The label for the menu item to open NVDA Python Console.
-msgid "Python console"
+msgid "&Python console"
 msgstr "Python 控制台(&P)"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create portable copy..."
-msgstr "创建便携版本(&C)..."
+msgid "&Create portable copy..."
+msgstr "创建便携版(&C)..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
 msgstr "安装 NVDA(&I)"
 
 #. Translators: The label for the menu item to run the COM registration fix tool
-msgid "Run COM Registration Fixing tool..."
-msgstr "运行COM注册修复工具(&C)..."
+msgid "&Run COM Registration Fixing tool..."
+msgstr "运行COM注册修复工具(&R)..."
 
 #. Translators: The label for the menu item to reload plugins.
-msgid "Reload plugins"
-msgstr "重载插件(&R)"
+msgid "R&eload plugins"
+msgstr "重载插件(&O)"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
-msgid "Tools"
+msgid "&Tools"
 msgstr "工具(&T)"
 
 #. Translators: The label of a menu item to open NVDA user guide.
@@ -8661,16 +8757,12 @@ msgid "&Check for update..."
 msgstr "检查更新(&C)..."
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
-msgid "About..."
+msgid "&About..."
 msgstr "关于(&A)..."
 
 #. Translators: The label for the Help submenu in NVDA menu.
 msgid "&Help"
 msgstr "帮助(&H)"
-
-#. Translators: The label for the menu item to open donate page.
-msgid "Donate"
-msgstr "捐赠(&D)"
 
 #. Translators: The label for the menu item to run a pending update.
 msgid "Install pending &update"
@@ -8732,8 +8824,8 @@ msgstr "重置所有设置到已保存的状态"
 
 #. Translators: The label for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
-msgid "&Reset configuration to factory defaults"
-msgstr "重置设置为默认值(&R)"
+msgid "Reset configuration to &factory defaults"
+msgstr "重置设置为默认值(&F)"
 
 #. Translators: The help text for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
@@ -9241,7 +9333,7 @@ msgstr "{main} ({source})"
 
 #. Translators: The prompt to enter a gesture in the Input Gestures dialog.
 msgid "Enter input gesture:"
-msgstr "添加案件或手势："
+msgstr "添加按键或手势："
 
 #. Translators: An gesture that will be emulated by some other new gesture. The token {emulateGesture}
 #. will be replaced by the gesture that can be triggered by a mapped gesture.
@@ -9423,7 +9515,7 @@ msgstr "继续安装（不建议）(&P)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
-msgstr "创建 NVDA 的便携副本"
+msgstr "创建 NVDA 的便携版"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
 msgid ""
@@ -9451,7 +9543,7 @@ msgstr "拷贝当前用户配置(&U)"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "&Start the new portable copy after creation"
-msgstr "创建并自动启动便携副本(&S)"
+msgstr "创建并自动启动便携版(&S)"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -9468,11 +9560,11 @@ msgstr ""
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 msgid "Creating Portable Copy"
-msgstr "正在创建便携副本"
+msgstr "正在创建便携版"
 
 #. Translators: The message displayed while a portable copy of NVDA is being created.
 msgid "Please wait while a portable copy of NVDA is created."
-msgstr "请稍后，正在创建便携版的 NVDA。"
+msgstr "请稍后，正在创建 NVDA 便携版"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
 msgid "NVDA is unable to remove or overwrite a file."
@@ -9834,7 +9926,7 @@ msgstr "若“大写锁定”键打开，输入小写字母时发出提示音(&O
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
 msgid "Speak c&ommand keys"
-msgstr "读出 NVDA 快捷键(&K)"
+msgstr "朗读命令键(&K)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -9848,7 +9940,7 @@ msgstr "从其他应用程序获取键盘控制权(&A)"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
-msgstr "至少指定一个案件为 NVDA 键。"
+msgstr "至少指定一个按键为 NVDA 键。"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
@@ -10036,7 +10128,7 @@ msgstr "每页最大行数(&N)"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Use &screen layout (when supported)"
-msgstr "使用屏幕真实布局（若支持）(&S)"
+msgstr "使用屏幕布局（若支持）(&S)"
 
 #. Translators: The label for a checkbox in browse mode settings to
 #. enable browse mode on page load.
@@ -10180,12 +10272,17 @@ msgstr "行号(&N)"
 msgid "Line &indentation reporting:"
 msgstr "行缩进提示(&I)"
 
-#. Translators: This message is presented in the document formatting settings panelue
+#. Translators: This is the label of a checkbox in the document formatting settings panel
+#. If this option is selected, NVDA will ignore blank lines for line indentation reporting
+msgid "Ignore &blank lines for line indentation reporting"
+msgstr "忽略空白行的行缩进(&B)"
+
+#. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
 msgstr "段落缩进(&P)"
 
-#. Translators: This message is presented in the document formatting settings panelue
+#. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report line spacing if available.
 msgid "&Line spacing"
 msgstr "行间距(&L)"
@@ -10303,6 +10400,10 @@ msgstr "Windows OCR"
 #. Translators: Label for an option in the Windows OCR dialog.
 msgid "Recognition &language:"
 msgstr "识别语言(&L)："
+
+#. Translators: Label for an option in the Windows OCR settings panel.
+msgid "Periodically &refresh recognized content"
+msgstr "定期刷新识别结果(&R)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10449,35 +10550,9 @@ msgstr "读出“有详细信息”以获取结构化注释"
 msgid "Report aria-description always"
 msgstr "始终读出 aria-description"
 
-#. Translators: Label for option in the 'Enable support for HID braille' combobox
-#. in the Advanced settings panel.
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "Default (Yes)"
-msgstr "默认 (是)"
-
-#. Translators: Label for option in the 'Enable support for HID braille' combobox
-#. in the Advanced settings panel.
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "Yes"
-msgstr "是"
-
-#. Translators: Label for option in the 'Enable support for HID braille' combobox
-#. in the Advanced settings panel.
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "No"
-msgstr "否"
-
-#. Translators: This is the label for a combo box in the
-#. Advanced settings panel.
-msgid "Enable support for HID braille"
-msgstr "启用对 HID 盲文的支持"
-
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 msgid "Report live regions:"
-msgstr ""
+msgstr "盲文显示动态内容更新"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10524,6 +10599,21 @@ msgstr "Difflib"
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 msgid "Speak new text in Windows Terminal via:"
 msgstr "在 Windows 终端内使用以下方式朗读新文本："
+
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Default (Yes)"
+msgstr "默认 (是)"
+
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Yes"
+msgstr "是"
+
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "No"
+msgstr "否"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
@@ -10636,6 +10726,10 @@ msgstr "选择盲文点显器"
 msgid "Braille &display:"
 msgstr "点显器(&D):"
 
+#. Translators: The label for a setting in braille settings to enable displays for automatic detection.
+msgid "&Displays to detect automatically:"
+msgstr "自动检测的点显器(&D):"
+
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
 msgstr "端口(&P):"
@@ -10698,7 +10792,7 @@ msgstr "盲文显示跟随到(&R)："
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 msgid "Move system caret when ro&uting review cursor"
-msgstr ""
+msgstr "移动浏览光标时移动系统输入光标(&U)"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -10992,7 +11086,7 @@ msgstr "每当 NVDA 启动时显示此对话框(&S)"
 msgid ""
 "At least one NVDA modifier key must be set. Caps lock will remain as an NVDA "
 "modifier key. "
-msgstr "至少指定一个案件为 NVDA 键，Caps Lock 将被保留为 NVDA 键。 "
+msgstr "至少指定一个按键为 NVDA 键，Caps Lock 将被保留为 NVDA 键。 "
 
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
@@ -11342,60 +11436,6 @@ msgstr "隐藏"
 #. Translators: Reported when text is not hidden.
 msgid "not hidden"
 msgstr "未隐藏"
-
-#. Translators: Reported when text is left-aligned.
-msgid "align left"
-msgstr "左对齐"
-
-#. Translators: Reported when text is centered.
-msgid "align center"
-msgstr "居中"
-
-#. Translators: Reported when text is right-aligned.
-msgid "align right"
-msgstr "右对齐"
-
-#. Translators: Reported when text is justified.
-#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
-msgid "align justify"
-msgstr "两端对齐"
-
-#. Translators: Reported when text is justified with character spacing (Japanese etc)
-#. See http://kohei.us/2010/01/21/distributed-text-justification/
-msgid "align distributed"
-msgstr "对齐校正"
-
-#. Translators: Reported when text has reverted to default alignment.
-msgid "align default"
-msgstr "默认对齐"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "垂直上对齐"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "垂直中对其"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "垂直下对齐"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "垂直基准线对齐"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "垂直上下对齐"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "垂直分布对齐"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "垂直对齐默认"
 
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
@@ -13442,6 +13482,11 @@ msgctxt "addonStore"
 msgid "Enabled, pending restart"
 msgstr "已启用，重启后生效"
 
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Unknown status"
+msgstr "状态未知"
+
 #. Translators: The label of a tab to display installed add-ons in the add-on store.
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
@@ -13721,8 +13766,8 @@ msgid ""
 "{NVDAVersion}. Installation may cause unstable behavior in NVDA.\n"
 "Proceed with installation anyway? "
 msgstr ""
-"警告：插件不兼容：{name}-{version}。如果可能，请检查该插件有无新版本。此插件"
-"最后测试的 NVDA 版本是 {lastTestedNVDAVersion}，您当前的 NVDA 版本是 "
+"警告：插件不兼容：{name}-{version}。如果可能，请检查该插件有无新版本。\n"
+"此插件最后测试的 NVDA 版本是 {lastTestedNVDAVersion}，您当前的 NVDA 版本是 "
 "{NVDAVersion}。安装可能会导致 NVDA 不稳定或无法正常运行。\n"
 "您仍要安装该插件吗？"
 
@@ -13737,9 +13782,9 @@ msgid ""
 "{NVDAVersion}. Enabling may cause unstable behavior in NVDA.\n"
 "Proceed with enabling anyway? "
 msgstr ""
-"警告：插件不兼容：{name}-{version}。如果可能，请检查该插件有无新版本。此插件"
-"最后测试的 NVDA 版本是 {lastTestedNVDAVersion}，您当前的 NVDA 版本是 "
-"{NVDAVersion}。启用可能会导致 NVDA 不稳定或无法正常运行。\\n\n"
+"警告：插件不兼容：{name}-{version}。如果可能，请检查该插件有无新版本。\n"
+"此插件最后测试的 NVDA 版本是 {lastTestedNVDAVersion}，您当前的 NVDA 版本是 "
+"{NVDAVersion}。启用可能会导致 NVDA 不稳定或无法正常运行。\n"
 "您仍要启用该插件吗？"
 
 #. Translators: message shown in the Addon Information dialog.
@@ -13788,6 +13833,7 @@ msgid "Add-on Information"
 msgstr "插件信息"
 
 #. Translators: The warning of a dialog
+msgctxt "addonStore"
 msgid "Add-on Store Warning"
 msgstr "插件商店警告"
 
@@ -13799,6 +13845,8 @@ msgid ""
 "of add-ons is unrestricted and can include accessing your personal data or "
 "even the entire system. "
 msgstr ""
+"插件由 NVDA 社区创建，未经 NV Access 审查，NV Access 不对插件行为负责。插件功"
+"能不受限制，可以访问您的个人信息乃至整个系统。"
 
 #. Translators: The label of a checkbox in the add-on store warning dialog
 msgctxt "addonStore"
@@ -13806,6 +13854,7 @@ msgid "&Don't show this message again"
 msgstr "不再显示此消息(&D)"
 
 #. Translators: The label of a button in a dialog
+msgctxt "addonStore"
 msgid "&OK"
 msgstr "确定(&O)"
 
@@ -13830,6 +13879,7 @@ msgid "Cha&nnel:"
 msgstr "通道(&N):"
 
 #. Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
 msgid "Include &incompatible add-ons"
 msgstr "包含不兼容插件(&I)"
 
@@ -13964,7 +14014,7 @@ msgstr "帮助(&H)"
 #. Translators: Label for an action that opens the homepage for the selected addon
 msgctxt "addonStore"
 msgid "Ho&mepage"
-msgstr "主页(&H)"
+msgstr "主页(&M)"
 
 #. Translators: Label for an action that opens the license for the selected addon
 msgctxt "addonStore"
@@ -13989,6 +14039,21 @@ msgstr "无法启用插件： {addon}"
 msgctxt "addonStore"
 msgid "Could not disable the add-on: {addon}."
 msgstr "无法禁用插件 {addon}"
+
+#~ msgid "Donate"
+#~ msgstr "捐赠(&D)"
+
+#~ msgid "Enable support for HID braille"
+#~ msgstr "启用对 HID 盲文的支持"
+
+#~ msgid "align default"
+#~ msgstr "默认对齐"
+
+#~ msgid "vertical align baseline"
+#~ msgstr "垂直基准线对齐"
+
+#~ msgid "vertical align default"
+#~ msgstr "垂直对齐默认"
 
 #~ msgid "NVDA sounds"
 #~ msgstr "NVDA声音"

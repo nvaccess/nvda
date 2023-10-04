@@ -26,7 +26,7 @@ As características principais são:
 - Sintetizador de voz embutido, que suporta mais de oitenta idiomas;
 - Anúncio da formatação do texto, quando disponível, tal como nome e tamanho do tipo de letra, estilos e erros ortográficos;
 - Anúncio automático do texto sob o rato e dá indicação em áudio (opcional) da posição do periférico;
-- Suporte para diversas linhas Braille, incluindo a detecção automática da maioria das linhas e a introdução de texto através do teclado Braille, nas linhas que o possuem;
+- Suporte para diversos dispositivos Braille, incluindo a detecção automática da maioria deles e a introdução de texto através do teclado Braille, nos dispositivos que o possuem;
 - Possibilidade de ser executado a partir de dispositivos USB ou através de outros dispositivos portáteis, sem necessitar de instalação;
 - Instalador com voz e fácil de usar;
 - Tradução para 54 idiomas;
@@ -62,8 +62,8 @@ Na secção [Sintetizadores de Voz Suportados #SupportedSpeechSynths] pode ser e
 ++ Suporte de Braille ++[BrailleSupport]
 Para os utilizadores que tenham uma linha Braille, o NVDA pode transmitir a informação em braille.
 Também é suportada a  introdução de texto, através de um teclado Braille, usando a codificação normal ou abreviada.
-Para além disso, o NVDA, por padrão, detecta automaticamente várias linhas Braille.
-Veja, por favor, a secção [Linhas Braille Suportadas #SupportedBrailleDisplays] para obter mais informações sobre terminais Braille compatíveis.
+Para além disso, o NVDA, por padrão, detecta automaticamente vários dispositivos Braille.
+Veja, por favor, a secção [Dispositivos Braille Suportados #SupportedBrailleDisplays] para obter mais informações sobre terminais Braille compatíveis.
 
 O NVDA suporta codificação Braille para diversos idiomas, incluindo codificação para Braille literário, abreviado e de computador.
 
@@ -263,7 +263,8 @@ Muitas configurações têm teclas para as abrir directamente, tais como "NVDA+c
 
 ++ Comunidade ++[Community]
 
-O NVDA tem uma vibrant comunidade de utilizadores. Existe uma [lista de e-mails em português https://groups.google.com/g/nvdaemportugues?hl=pt-PT] e uma página com bastantes [grupos de vários locais https://github.com/nvaccess/nvda-community/wiki/Connect].
+O NVDA tem uma vibrant comunidade de utilizadores.
+Existe uma [lista de e-mails em português https://groups.google.com/g/nvdaemportugues?hl=pt-PT] e uma página com bastantes [grupos em vários idiomas https://github.com/nvaccess/nvda-community/wiki/Connect].
 A NV Access, desenvolvedora do NVDA, está activamente no [Twitter https://twitter.com/nvaccess] e no [Facebook https://www.facebook.com/NVAccess].
 A NV Access também tem um blog regular, em inglês, chamado [In-Process https://www.nvaccess.org/category/in-process/].
 
@@ -299,6 +300,7 @@ As [listas de e-mail https://github.com/nvaccess/nvda-community/wiki/Connect] s�
 
 Se estiver a instalar o NVDA pelo instalador descarregado, pressione o botão "Instalar o NVDA neste computador".
 Se já fechou esse diálogo ou quer instalar a partir duma cópia portátil, por favor, seleccione "instalar o NVDA", que se encontra no submenu "ferramentas", do menu do NVDA.
+
 O diálogo de instalação que aparece confirmará se deseja instalar o NVDA e dir-lhe-á igualmente se esta instalação actualizará uma instalação anterior.
 Pressionando o botão "Continuar" iniciará a instalação do NVDA.
 Existem também algumas opções, neste diálogo, que serão seguidamente explicadas.
@@ -346,14 +348,18 @@ A cópia instalada terá a possibilidade de criar uma cópia portátil, em qualq
 A cópia portátil é igualmente capaz de se instalar a si mesma, em qualquer computador, mais tarde.
 Porém, se deseja copiar o NVDA para um suporte apenas de leitura, como um CD, deverá copiar somente o pacote descarregado.
 A execução automática da versão portátil, a partir de dispositivos apenas de leitura, actualmente não é suportada.
-Usar a cópia temporária do NVDA é também uma opção (por exemplo, com a finalidade de demonstração); contudo, iniciar sempre o NVDA deste modo poderá consumir bastante tempo.
 
-Para além da impossibilidade de arrancar automaticamente com o Windows, as cópias portáteis e temporárias do NVDA têm também as seguintes restrições:
-- Impossibilidade de interagir com aplicações executadas com privilégios de administrador, a menos que o NVDA esteja também a ser executado com os mesmos privilégios, (o que não é recomendado);
-- Impossibilidade de ler as janelas do Controlo de Conta de Utilizador (UAC), ao tentar iniciar uma aplicação com privilégios de administrador;
-- Windows 8 e seguintes: Impossibilidade de suportar introdução de texto pelo ecrã táctil;
-- Windows 8 e seguintes: Impossibilidade de usar as funcionalidades de modo de navegação e de anunciar os caracteres escritos nas aplicações Windows Store.
-- Windows 8 e seguintes: O Modo de diminuição do volume não é suportado.
+O [instalador do NVDA #StepsForRunningTheDownloadLauncher] pode ser utilizado como uma cópia temporária do NVDA.
+As cópias temporárias impedem a gravação das configurações do NVDA.
+Isto inclui a desactivação da utilização do [Add-on Store #AddonsManager].
+
+As cópias portáteis e temporárias do NVDA têm as seguintes restrições:
+- A incapacidade de iniciar automaticamente durante e/ou após o início de sessão;
+- A incapacidade de interagir com aplicações executadas com privilégios administrativos, a menos que o próprio NVDA tenha sido executado também com esses privilégios (não recomendado);
+- A incapacidade de ler os ecrãs do Controlo de Conta de Utilizador (UAC) ao tentar iniciar uma aplicação com privilégios administrativos;
+- Windows 8 e posterior: incapacidade de suportar a introdução de dados a partir de um ecrã tátil;
+- Windows 8 e posteriores: incapacidade de fornecer funcionalidades como o modo de navegação e a reprodução de caracteres digitados em aplicações da Microsoft Store;
+- Windows 8 e posterior: não é suportada a redução de áudio;
 -
 
 
@@ -483,14 +489,14 @@ Os comandos reais não serão executados, enquanto estiver no modo de ajuda de e
 O Menu do NVDA permite-lhe definir as configurações do leitor de ecrã, aceder à ajuda, guardar/restaurar a sua configuração, alterar os dicionários de voz, aceder a ferramentas adicionais e sair do NVDA.
 
 Para aceder ao menu do NVDA, de qualquer lugar no Windows, enquanto executa o NVDA, pode executar uma das seguintes acções:
-- Pressionar ``NVDA+n`` no teclado;
+- Pressionar "NVDA+n" no teclado;
 - Dar um duplo toque com dois dedos, num ecrã táctil;
-- Aceda à barra do sistema pressionando ``Windows+b``, ``seta para baixo`` para o ícone do NVDA e pressione ``enter``;
-- Em alternativa, aceda à barra do sistema pressionando ``Windows+b``, ``seta para baixo`` para o ícone do NVDA e abra o menu de contexto pressionando a tecla ``aplicaçõs``, localizada à esquerda da tecla Control direita na maioria dos teclados;
-Num teclado sem a tecla ``aplicações``, pressione ``shift+F10``.
+- Aceda à barra do sistema pressionando "Windows+b", "seta para baixo" para o ícone do NVDA e pressione "enter";
+- Em alternativa, aceda à barra do sistema pressionando "Windows+b", "seta para baixo" para o ícone do NVDA e abra o menu de contexto pressionando a tecla "aplicaçõs", localizada à esquerda da tecla Control direita na maioria dos teclados;
+Num teclado sem a tecla "aplicações", pressione "shift+F10".
 - Clique com o botão direito do rato no ícone do NVDA localizado na barra do sistema.
 -
-Quando o menu for apresentado, pode utilizar as teclas de setas para navegar no menu e a tecla ``enter`` para ativar um item.
+Quando o menu for apresentado, pode utilizar as teclas de setas para navegar no menu e a tecla "enter" para ativar um item.
 
 ++ Comandos Básicos do NVDA ++[BasicNVDACommands]
 %kc:beginInclude
@@ -570,7 +576,7 @@ Quando estiver numa tabela, os seguintes comandos de teclado também estarão di
 | Leitura contínua em colunas | NVDA+control+alt+seta abaixo | Lê a coluna verticalmente da célula actual até ao fim. |
 | Leitura contínua em linhas | NVDA+control+alt+seta à direita | Lê a linha horizontalmente da célula actual até ao fim. |
 | Lê a coluna toda | NVDA+control+alt+seta acima | Lê a coluna actual de cima a baixo sem deslocar o cursor. |
-| Lê a linha toda | ``NVDA+control+alt+leftArrow`` | Lê a linha actual da esquerda para a direita sem deslocar o cursor. |
+| Lê a linha toda | "NVDA+control+alt+leftArrow" | Lê a linha actual da esquerda para a direita sem deslocar o cursor. |
 %kc:endInclude
 
 ++ Navegação Por Objectos ++[ObjectNavigation]
@@ -591,12 +597,18 @@ Ao deslocar-se para o objecto que contém um item de lista, fará com que regres
 Pode então mover-se para fora da lista, se pretender aceder a outros objectos.
 De forma similar, uma barra de ferramentas contém controlos; portanto deve mover-se para dentro da mesma, para aceder aos controlos da barra de ferramentas.
 
+Se preferir mover-se para a frente e para trás entre cada objecto no sistema, pode utilizar comandos para mover para o objecto anterior/seguinte numa vista plana.
+Por exemplo, se se deslocar para o objecto seguinte nesta vista plana e o objeto actual contiver outros objectos, o NVDA deslocar-se-á automaticamente para o primeiro objecto que contém.
+Como alternativa, se o objecto actual não contiver nenhum objecto, o NVDA passará para o próximo objecto no nível actual da hierarquia.
+Se não existir um objecto seguinte, o NVDA tentará encontrar o objecto seguinte na hierarquia com base nos objectos que contém, até não existirem mais objectos para onde se deslocar.
+As mesmas regras se aplicam à movimentação para trás na hierarquia.
+
 O objecto que está a ser revisto actualmente denomina-se "objecto de navegação".
-Após navegar para um objecto, pode rever o seu conteúdo com os comandos de [revisão de texto #ReviewingText].
+Após navegar para um objecto, pode rever o seu conteúdo com os comandos de [revisão de texto #ReviewingText] enquanto estiver no [modo de revisão de objectos #ObjectReview].
 Quando a funcionalidade ["Realce visual" #VisionFocusHighlight] estiver ativada, a localização actual do foco do sistema também será anunciada visualmente.
 Por padrão, a navegação de objectos acompanha o foco do sistema, embora este comportamento possa ser activado e desactivado.
 
-Nota:  O Braille seguir o objecto de navegação pode ser configurado na opção Braille segue #BrailleTether].
+Nota:  A ligação do Braille ao objecto de navegação pode ser configurada na opção Braille ligado #BrailleTether].
 
 Para navegar pelos objectos, utilize os seguintes comandos:
 
@@ -604,8 +616,10 @@ Para navegar pelos objectos, utilize os seguintes comandos:
 || Nome | Comando de Teclado de Desktop | Comando de Teclado de Laptop | Toque | Descrição |
 | Anunciar o objecto actual | NVDA+5 do bloco numérico | NVDA+shift+o | nenhum | Anuncia o objecto de navegação actual. Se pressionar duas vezes, soletra o objecto e, se pressionar três vezes, copia nome e valor para a área de transferência |
 | Mover para o objecto ascendente | NVDA+8 do teclado numérico | NVDA+shift+Seta Acima | Varrer para cima (modo de objectos) | Move para o objecto que contém o objecto de navegação actual |
-| Mover para o objecto anterior | NVDA4 do bloco numérico | NVDA+shift+Seta Esquerda | Varrer para a esquerda (modo de objectos) | Move para o objecto anterior ao objecto de navegação actual |
-| Mover para o objecto seguinte | NVDA+6 do bloco numérico | NVDA+shift+Seta Direita | Varrer para a direita (modo de objectos) | Move para o objecto seguinte ao objecto de navegação actual |
+| Mover para o objecto anterior | NVDA4 do bloco numérico | NVDA+shift+Seta Esquerda | nenhum | Move para o objecto anterior ao objecto de navegação actual |
+| Mover para o objecto anterior em revisão plana | NVDA+9 do teclado numérico | NVDA+shift+Sinal de mais | Varrer para a esquerda (em modo de objecto) | Move para o objecto anterior em revisão plana |
+| Mover para o objecto seguinte | NVDA+6 do bloco numérico | NVDA+shift+Seta Direita | Nenhum | Move para o objecto seguinte ao objecto de navegação actual |
+| Mover para o objecto seguinte em revisão plana | NVDA+3 do teclado numérico | NVDA+shift+agudo | Varrer para a esquerda (em modo de objecto) | Move para o objecto seguinte em revisão plana |
 | Mover para o primeiro objecto descendente | NVDA+2 do bloco numérico | NVDA+shift+Seta Abaixo | Varrer para baixo (modo de objectos) | Move para o primeiro objecto contido pelo objecto de navegação actual |
 | Mover para o objecto em foco | NVDA+Menos do bloco numérico | NVDA+Backspace | Nenhum | Move para o objecto que tem o foco do sistema actual e também posiciona o cursor de revisão na posição do cursor do sistema, se o mesmo estiver visível |
 | Activar o objecto de navegação actual | NVDA+Enter do bloco numérico | NVDA+Enter | Toque duplo | Activa o objecto de navegação actual (semelhante ao clicar com o rato ou pressionar espaço quando o mesmo tem o foco do sistema) |
@@ -625,7 +639,7 @@ Quando move o cursor de revisão, o cursor do sistema não o acompanha. Assim, p
 No entanto, por padrão, quando se move o cursor do Sistema, o cursor de revisão acompanha-o.
 Isto pode ser activado e desactivado.
 
-Nota:  O Braille seguir o cursor de revisão pode ser configurado na opção Braille segue #BrailleTether].
+Nota:  A ligação do Braille ao cursor de revisão pode ser configurada na opção Braille ligado #BrailleTether].
 
 Os comandos seguintes estão disponíveis para a revisão de texto:
 %kc:beginInclude
@@ -643,8 +657,8 @@ Os comandos seguintes estão disponíveis para a revisão de texto:
 | Anunciar o caracter actual em revisão | 2 do bloco numérico | NVDA+ponto | nenhum | Anuncia o caracter actual na linha do texto, onde está posicionado o cursor de revisão. Se pressionar duas vezes, informa-o através da descrição de caracteres ou o respectivo exemplo. Ao pressionar três vezes, informa o valor numérico do caracter em decimal e hexadecimal |
 | Mover para o próximo caracter em revisão | 3 do bloco numérico | NVDA+Seta Direita | Varrer para a direita (modo de texto) | Move o cursor de revisão para o caracter seguinte na linha actual do texto |
 | Mover para o fim da linha em revisão | Shift+3 do bloco numérico | NVDA+end | nenhum | Move o cursor de revisão para o fim da linha actual do texto |
-| Mover para a página anterior em revisão | ``NVDA+pageUp`` | ``NVDA+shift+pageUp`` | none | Move o cursor de revisão para a página de texto anterior se suportado pela aplicação |
-| Mover para a página seguinte em revisão | ``NVDA+pageDown`` | ``NVDA+shift+pageDown`` | none | Move o cursor de revisão para a página de texto seguinte se suportado pela aplicação |
+| Mover para a página anterior em revisão | "NVDA+pageUp" | "NVDA+shift+pageUp" | none | Move o cursor de revisão para a página de texto anterior se suportado pela aplicação |
+| Mover para a página seguinte em revisão | "NVDA+pageDown" | "NVDA+shift+pageDown" | none | Move o cursor de revisão para a página de texto seguinte se suportado pela aplicação |
 | Ler continuamente com a revisão | Mais do bloco numérico | NVDA+shift+a | Varrer para baixo com três dedos (modo de texto) | Lê a partir da posição actual do cursor de revisão e move-o até ao final do texto |
 | Seleccionar e copiar a partir do cursor de revisão | NVDA+F9 | NVDA+F9 | Nenhum | Inicia o Seleccionar e copiar o texto a partir da posição actual do cursor de revisão. A função não será efectuada até que informe o NVDA até onde é que pretende copiar |
 | Seleccionar e copiar até ao cursor de revisão | NVDA+F10 | NVDA+F10 | Nenhum | Ao pressionar a primeira vez o texto, se possível, é seleccionado até à posição do cursor. Se o cursor de inserção puder, será movido para esse local. Ao pressionar segunda vez copia o texto para a área de transferência do Windows |
@@ -663,7 +677,6 @@ A disposição é ilustrada como se segue:
 
 ++ Modos de Revisão ++[ReviewModes]
 Os [comandos de revisão de texto #ReviewingText] do NVDA possibilitam-lhe rever o conteúdo presente no objecto de navegação actual, documento actual, ou do ecrã, dependendo do modo de revisão seleccionado.
-Os modos de revisão são um substituto do conceito de revisão plana, existente anteriormente no NVDA.
 
 Os comandos seguintes alternam entre os modos de revisão:
 %kc:beginInclude
@@ -802,6 +815,25 @@ Se quiser usar esses atalhos, mantendo a possibilidade de usar as teclas de curs
 Para activar e desactivar a navegação por caracter para o documento actual, pressione NVDA+shift+espaço.
 %kc:endInclude
 
++++ Other navigation commands +++[OtherNavigationCommands]
+
+Para além dos comandos de navegação por caracter listados acima, o NVDA tem comandos que não têm nenhuma tecla associada.
+Para usar esses comandos, primeiro tem que associar uma tecla usando o [diálogo Definir comandos #InputGestures].
+Eis a lista dos comandos disponíveis:
+- Artigo
+- Agrupamento
+- Separador
+-
+Não se esqueça que há dois comandos para cada tipo de elemento, para mover para a frente no documento e para mover para trás no documento, e deve associar um comando a cada para poder navegar rapidamente nas duas direcções.
+Por exemplo, se quiser usar "y" / "shift+y" para navegar rapidamente entre tabs, deve fazer o seguinte:
+
++ Abrir o diálogo "Definir Comandos" a partir do modo de navegação;
++ Encontrar "mover para o próximo tab" item na secção "Modo de navegação";
++ Associar "y" como comando;
++ Encontrar "mover para o tab anterior" item na secção "Modo de navegação";
++ + Associar "shift+y" como comando.
++
+
 ++ A Lista de Elementos ++[ElementsList]
 A Lista de Elementos fornece acesso a uma lista de vários tipos de elementos no documento de acordo com a aplicação.
 Por exemplo, em navegadores da Internet pode listar links, títulos, campos de formulário, botões ou marcas.
@@ -897,8 +929,8 @@ Se dispõe de uma linha Braille, o NVDA pode usá-la para mostrar as informaçõ
 Se a linha Braille possuir um teclado estilo Perkins, pode escrever no PC usando o código Braille normal ou abreviado.
 A saída Braille também pode ser mostrada no ecrã usando o [Visualizador Braille #BrailleViewer], em vez de, ou ao mesmo tempo que se usa uma linha Braille.
 
-para informações sobre os dispositivos suportados, por favor leia a secção [Linhas Braille Suportadas#SupportedBrailleDisplays].
-Esta secção também contém informação sobre que linhas Braille suportam a detecção automática do NVDA.
+para informações sobre os dispositivos suportados, por favor leia a secção [Dispositivos Braille Suportados #SupportedBrailleDisplays].
+Esta secção também contém informação sobre que dispositivos Braille suportam a detecção automática do NVDA.
 Pode configurar o Braille na secção [Braille #BrailleSettings], que encontra no diálogo [Configurações #NVDASettings] aberto através do Menu NVDA, "Preferências", "Configurações".
 
 ++ Abreviaturas Braille para tipos e estados de controlos e marcas ++[BrailleAbbreviations]
@@ -1014,7 +1046,7 @@ O NVDA suporta a introdução de atalhos e a simulação do pressionar de teclas
 Esta simulação pode ser de duas maneiras: associando o pressionar de uma tecla da linha Braille directamente ao pressionar de alguma tecla ou usando as teclas modificadoras virtuais.
 
 Teclas habitualmente utilizadas, como as setas ou pressionar Alt para abrir os menus, podem ser associadas directamente a teclas da linha Braille.
-Os driver das linhas Braille vem já com algumas dessas associações.
+Os driver dos dispositivos Braille vem já com algumas dessas associações.
 Pode alterar essas associações ou criar novas simulações de teclas no diálogo [Definir comandos #InputGestures].
 
 Embora esta técnica seja útil para teclas únicas ou muitas vezes pressionadas (como o Tab), pode não querer associar uma única combinação de teclas para cada atalho.
@@ -1083,6 +1115,9 @@ O NVDA pode usá-lo para reconhecer texto de imagens ou de aplicações inacess�
 
 Pode configurar o idioma a utilizar na secção [OCR do Windows #Win10OcrSettings] do diálogo [Configurações do NVDA #NVDASettings].
 Idiomas adicionais podem ser instalados, abrindo o menu "Iniciar", escolhendo "configurações", seleccionando o separador "Hora e Idioma", depois "Região e Idioma", e, por fim, "Adicionar um idioma".
+
+Quando necessitar de monitorizar constantemente conteúdo sempre a mudar, como quando está a ver um vídeo com legendas, pode activar a opção "Actualizar periodicamente os conteúdos reconhecidos". 
+Isto pode ser feito na secção [OCR do Windows #Win10OcrSettings] nas [configurações do NVDA #NVDASettings].
 
 O OCR do Windows pode ser, total ou parcialmente, incompatível com as [Ajudas visuais do NVDA #Vision] ou outras ajudas visuais externas. É necessário desactivá-las antes de executar um reconhecimento por OCR.
 
@@ -1305,7 +1340,7 @@ O NVDA fornece muitos parâmetros de configuração que podem ser alterados atra
 Para facilitar a procura do tipo de configurações que pretende alterar, a janela apresenta uma lista de secções de configurações à escolha.
 Quando selecciona uma secção, todas as definições relacionadas com a mesma serão apresentadas na janela.
 Para se deslocar entre secções, utilize "tab" ou "shift+tab" para aceder à lista de secções e, em seguida, utilize as teclas de seta para cima e para baixo para navegar na lista.
-A partir de qualquer ponto da janela , pode também avançar uma secção pressionando ``ctrl+tab``, ou recuar uma seccção pressionando "shift+ctrl+tab".
+A partir de qualquer ponto da janela , pode também avançar uma secção pressionando "ctrl+tab", ou recuar uma seccção pressionando "shift+ctrl+tab".
 
 Depois de alterar uma ou mais configurações, as configurações podem ser aplicadas utilizando o botão aplicar, caso em que a janela permanecerá aberta, permitindo-lhe alterar mais configurações ou escolher outra secção.
 Se quiser guardar as suas alterações e fechar a janela de configurações do NVDA, deve pressionar o botão "OK".
@@ -1545,11 +1580,11 @@ Se pretender alterar, rapidamente, as configurações de voz, sem ir à secção
 %kc:endInclude
 
 +++ Braille +++[BrailleSettings]
-A secção Braille, do diálogo de configurações do NVDA, contém os parâmetros referentes às linhas Braille.
+A secção Braille, do diálogo de configurações do NVDA, contém os parâmetros referentes aos dispositivos Braille.
 Esta secção contém as seguintes opções:
 
-==== Alterar Linha Braille ====[BrailleSettingsChange]
-O botão "Alterar..." na secção Braille das configurações do NVDA activa o diálogo [Seleccionar Linha Braille #SelectBrailleDisplay], que permite seleccionar a linha Braille a usar.
+==== Alterar dispositivos Braille ====[BrailleSettingsChange]
+O botão "Alterar..." na secção Braille das configurações do NVDA activa o diálogo [Seleccionar dispositivo Braille #SelectBrailleDisplay], que permite seleccionar o dispositivo Braille a usar.
 Quando aberto a partir do diálogo "Configurações", será sobreposto a este.
 Nesta situação, quer guarde ou cancele as alterações, voltará ao diálogo de configurações.
 
@@ -1565,7 +1600,7 @@ A tabela escolhida será usada para converter o Braille introduzido, através do
 Pode mover-se de tabela Braille em tabela Braille, na lista, utilizando as Setas.
 
 Note que esta opção só é útil se a sua linha Braille tiver um teclado Braille e esta funcionalidade for suportada pelo respectivo driver.
-Se, apesar de ter teclado Braille, a escrita Braille não for suportada pela linha, isto será declarado na secção [Linhas Braille Suportadas #SupportedBrailleDisplays].
+Se, apesar de ter teclado Braille, a escrita Braille não for suportada pela linha, isto será declarado na secção [Dispositivos Braille Suportados #SupportedBrailleDisplays].
  
 ==== Expandir Para Braille De Computador Palavras Sobre O Cursor ====[BrailleSettingsExpandToComputerBraille]
 Esta opção permite que a palavra que está sob o cursor apareça em Braille de computador não contraído.
@@ -1601,16 +1636,38 @@ A mensagem do NVDA é imediatamente descartada ao pressionar um cursor de toque 
 Esta opção só é mostrada se a opção "Mostrar Mensagens" estiver definida para "Usar tempo de permanência".
 
 %kc:setting
-==== Braille Segue ====[BrailleTether]
+==== Ligação Braill ====[BrailleTether]
 Comando: NVDA+Ctrl+T
 
-Esta opção permite-lhe escolher se a linha Braille seguirá o foco do sistema,/cursor de inserção, o objecto de navegação / cursor de revisão ou ambos.
-Se seleccionar Automaticamente, o NVDA, por padrão, seguirá o foco do sistema.
-Mas, quando a posição da navegação por objectos ou da revisão é alterada, por acção directa do utilizador, o NVDA seguirá temporariamente o cursor de revisão, até que o foco do sistema seja alterado.
-Se pretender que o Braille siga sempre o cursor e o foco do sistema, deve definir o [Braille segue: #BrailleTether] para "Cursor do sistema".
+Esta opção permite-lhe escolher se o Braille seguirá o foco do sistema,/cursor de inserção, o objecto de navegação / cursor de revisão ou ambos.
+Se seleccionar Automaticamente, por padrão, o Braille seguirá o foco do sistema.
+Mas, quando a posição da navegação por objectos ou da revisão é alterada, por acção directa do utilizador, o Braille seguirá temporariamente o cursor de revisão, até que o foco do sistema seja alterado.
+Se pretender que o Braille siga sempre o cursor e o foco do sistema, deve definir a [Ligação Braille: #BrailleTether] para "Cursor do sistema".
 Assim, o Braille não seguirá a navegação por objectos e a revisão de texto.
-Se pretender que o Braille siga apenas a navegação por objectos e a revisão de texto, deve definir o [Braille segue: #BrailleTether] para "Cursor de revisão".
+Se pretender que o Braille siga apenas a navegação por objectos e a revisão de texto, deve definir a [ligação Braille: #BrailleTether] para "Cursor de revisão".
 Assim, o Braille não seguirá o foco e o cursor do sistema,.
+
+==== Mover o cursor de revisão do sistema ao encaminhar o cursor de revisão ====[BrailleSettingsReviewRoutingMovesSystemCaret]
+: Predefinição
+  Nunca
+: Opções
+  Predefinição (Nunca), Nunca, Apenas quando ligado automaticamente, Sempre
+:
+
+Esta opção determina se o cursor do sistema também deve ser movido com o premir de um botão de encaminhamento.
+Esta opção está definida para Nunca por predefinição, o que significa que o encaminhamento nunca moverá o cursor de revisão.
+
+Quando esta opção está definida para Sempre e [ligação Braille #BrailleTether] está definido para "automaticamente" ou "para revisão", pressionar uma tecla de encaminhamento também moverá o cursor do sistema ou o foco quando suportado.
+Quando o modo de revisão actual é [Revisão de ecrã #ScreenReview], não existe um cursor físico.
+Neste caso, o NVDA tenta focar o objeto sob o texto para o qual está a encaminhar.
+O mesmo se aplica a [revisão de objectos #ObjectReview].
+
+Também pode definir esta opção para mover o cursor apenas quando ligado automaticamente.
+Nesse caso, pressionar uma tecla de encaminhamento apenas moverá o cursor do sistema ou o foco quando a ligação Braille estiver configurada para automaticamente, ao passo que não ocorrerá qualquer movimento quando ligado manualmente ao cursor de revisão.
+
+Esta opção só é mostrada se "[Ligação Braille #BrailleTether]" estiver configurada para "automaticamente" ou "para revisão".
+
+Para alternar entre as várias opções de mover o cursor do sistema ao encaminhar o cursor de revisão a partir de qualquer lugar, atribua um comando personalizado utilizando o [diálogo Definir comandos #InputGestures].
 
 ==== Ler por Parágrafo ====[BrailleSettingsReadByParagraph]
 Se activada, o Braille será mostrado por parágrafos em vez de linhas.
@@ -1665,7 +1722,6 @@ Se quiser alterara Apresentação do contexto do Foco, rapidamente e em qualquer
 :
 
 Esta configuração determina se a voz deve ser interrompida quando o texto do dispositivo Braille é movido para trás ou para a frente.
-
 Os comandos de mover para a linha anterior ou seguinte interrompem sempre a voz.
 
 A leitura em voz pode ser uma distracção enquanto lê em Braille.
@@ -1693,30 +1749,39 @@ Após escolher a sua linha Braille, pode pressionar "OK" e o NVDA carregará os 
 Se houver um erro, ao carregar o driver, o NVDA notificará com uma mensagem e continuará a usar o dispositivo anterior, ou continuará sem Braille.
 
 ==== Linha Braille ====[SelectBrailleDisplayDisplay]
-Esta caixa de combinação contém diversas opções, que dependem dos drivers de linhas Braille disponíveis no seu sistema.
+Esta caixa de combinação contém diversas opções, que dependem dos drivers de dispositivos Braille disponíveis no seu sistema.
 Utilize as setas para se mover pelas mesmas.
 
-A primeira opção, "Automático", indica ao NVDA para pesquisar, em segundo plano, pelos vários modelos de linha Braille suportados pela detecção automática.
-Com esta funcionalidade activa, se ligar ao computador uma linha Braille suportada, via USB ou Bluetooth, o NVDA irá, automaticamente, activá-la.
+A primeira opção, "Automático", indica ao NVDA para pesquisar, em segundo plano, pelos vários modelos de dispositivos Braille suportados pela detecção automática.
+Com esta funcionalidade activa, se ligar ao computador um dispositivo Braille suportada, via USB ou Bluetooth, o NVDA irá, automaticamente, activá-la.
 
 O item "Sem Braille" significa que não será utilizado Braille.
 
-Por favor, consulte a secção [Linhas Braille Suportadas#SupportedBrailleDisplays] para obter mais informações sobre as linhas Braille suportadas, e quais delas suportam a detecção automática em segundo plano.
+Por favor, consulte a secção [Dispositivos Braille Suportados #SupportedBrailleDisplays] para obter mais informações sobre os dispositivos Braille suportados, e quais suportam a detecção automática em segundo plano.
+
+==== Dispositivos com detecção automática ====[SelectBrailleDisplayAutoDetect]
+Quando o dispositivo Braille estiver configurado para "Automático", podemos dar "Tab" para uma lista onde podemos activar ou desactivar os drivers que serão detectados automaticamente.
+Isto permite excluir os drivers de dispositivos Braille que nunca, ou raramente, usa.
+Por exemplo, se apenas tem um dispositivo Handytech, pode deixar apenas o driver da Handytech activado.
+
+Por padrão, todos os drivers que suportam a detecção automática estão activados.
+Qualquer driver adicionado, por exemplo numa futura versão do NVDA ou num extra, também ficará activado por padrão.
+
+Pode consultar a informação sobre o seu dispositivo Braille na secção [Dispositivos Braille suportados #SupportedBrailleDisplays] para verificar se o driver suporta a detecção automática do dispositivo.
 
 ==== Porta ====[SelectBrailleDisplayPort]
-Esta opção, se disponível, permite escolher que porta, ou tipo de ligação, será usada para comunicar com a linha Braille que seleccionou.
-É uma caixa de combinação, contendo as opções possíveis para a sua linha Braille.
+Esta opção, se disponível, permite escolher que porta, ou tipo de ligação, será usada para comunicar com o dispositivo Braille que seleccionou.
+É uma caixa de combinação, contendo as opções possíveis para o seu dispositivo Braille.
 
-Por padrão, o NVDA utiliza a detecção automática da porta, o que significa que a ligação com a linha Braille será automaticamente estabelecida, após pesquisa das ligações disponíveis no sistema, quer sejam USB ou Bluetooth.
-Contudo, para algumas linhas Braille, pode explicitamente escolher qual a porta a ser usada.
+Por padrão, o NVDA utiliza a detecção automática da porta, o que significa que a ligação com o dispositivo Braille será automaticamente estabelecida, após pesquisa das ligações disponíveis no sistema, quer sejam USB ou Bluetooth.
+Contudo, para alguns dispositivos Braille, pode explicitamente escolher qual a porta a ser usada.
 As opções são: "Automática", que indica ao NVDA para usar a detecção automática da porta; "USB", "Bluetooth" e "portas série", dependendo do tipo de comunicações suportadas pelo dispositivo Braille.
 
-Esta opção não aparecerá, se a sua linha Braille apenas suportar a detecção automática.
+Esta opção não aparecerá, se o seu dispositivo Braille apenas suportar a detecção automática.
 
-Pode consultar a informação sobre a sua linha Braille na secção [Linhas Braille Suportadas #SupportedBrailleDisplays] para mais detalhes dos tipos de comunicação suportados e portas disponíveis.
+Pode consultar a informação sobre o seu dispositivo Braille na secção [Dispositivos Braille Suportados #SupportedBrailleDisplays] para mais detalhes dos tipos de comunicação suportados e portas disponíveis.
 
-Por favor, note que se ligar vários dispositivos Braille à sua máquina ao mesmo tempo, usando o mesmo driver, (por exemplo, ligando dois dispositivos Handytech, 
-actualmente é impossível dizer ao NVDA qual dispositivo usar.
+Por favor, note que se ligar vários dispositivos Braille à sua máquina ao mesmo tempo, usando o mesmo driver, (por exemplo, ligando dois dispositivos Handytech, actualmente é impossível dizer ao NVDA qual dispositivo usar.
 Portanto, é recomendável ligar apenas um dispositivo Braille de um determinado tipo / fabricante à sua máquina de cada vez.
 
 +++ Visão +++[VisionSettings]
@@ -2076,6 +2141,7 @@ Pode configurar o anúncio de:
  - Números de página
  - Números de linha
  - Indentação da linha [(Desligado, Voz, Sons ou ambos) #DocumentFormattingSettingsLineIndentation]
+ - Ignorar linhas em branco no anúncio de indentação das linhas
  - Indentação do parágrafo (i.e. indentação suspensa, indentação da primeira linha)
  - Espaçamento das linhas (simples, duplo, etc.)
  - Alinhamento
@@ -2118,6 +2184,9 @@ O som aumentará a tonalidade cada espaço e para cada Tab aumentará o equivale
 - Voz e sons: O NVDA usará, em simultâneo, os dois métodos acima descritos.
 -
 
++If you tick the "Ignore blank lines for line indentation reporting" checkbox, then indentation changes won't be reported for blank lines.
+Isto pode ser útil ao ler um documento onde linhas em branco são usadas para separar blocos de texto indentados, como em linguagem de programação.
+
 +++ Navegação em documentos +++[DocumentNavigation]
 Esta secção permite ajustar vários aspectos da navegação em documentos.
 
@@ -2148,6 +2217,12 @@ Actualmente, só contém uma opção:
 ==== Idioma de reconhecimento ====[Win10OcrSettingsRecognitionLanguage]
 Esta caixa de combinação permite seleccionar qual o idioma a ser usado no reconhecimento de texto.
 Para alternar entre os idiomas disponíveis para OCR do Windows, em qualquer local, pode atribuir um comando utilizando a janela "Definir comandos" #InputGestures].
+
+==== Actualizar periodicamente os conteúdos reconhecidos ====[Win10OcrSettingsAutoRefresh]
+Quando esta caixa de verificação está marcada, o NVDA irá actualizar automaticamente o conteúdo reconhecido se o conteúdo do reconhecimento estiver em foco.
+Isto pode ser muito útil quando quer monitorizar constantemente conteúdo sempre diferente, como quando está a ver um vídeo com legendas.
+A actualização é feita a cada segundo e meio.
+Esta opção está desactivada por padrão.
 
 +++ Configurações Avançadas +++[AdvancedSettings]
 Aviso! As configurações desta secção são para utilizadores avançados e podem fazer com que o NVDA não funcione correctamente se configurado de maneira errada.
@@ -2199,6 +2274,14 @@ Esta configuração contém as seguintes opções:
 - Sempre: sempre que a  UI Automation esteja disponível no Word (não importa quão completa).
 -
 
+==== Usar UI Automation para aceder às folhas do Microsoft Excel se disponível ====[UseUiaForExcel]
+Quando esta opção está activada, o NVDA tentará utilizar a API de acessibilidade de automatização da interface do utilizador da Microsoft para obter informações dos controlos da folha de cálculo do Microsoft Excel.
+Esta é uma funcionalidade experimental e algumas funcionalidades do Microsoft Excel poderão não estar disponíveis neste modo.
+Por exemplo, a Lista de Elementos do NVDA para listar fórmulas e comentários e a navegação rápida no modo Procurar para saltar para campos de formulário numa folha de cálculo não estão disponíveis.
+No entanto, para a navegação/edição básica de folhas de cálculo, esta opção pode proporcionar uma grande melhoria de desempenho.
+Continuamos a não recomendar que a maioria dos utilizadores ative esta opção por predefinição, embora seja desejável que os utilizadores do Microsoft Excel build 16.0.13522.10000 ou superior testem esta funcionalidade e forneçam comentários.
+A implementação da automação da interface do usuário do Microsoft Excel está sempre mudando, e as versões do Microsoft Office anteriores à 16.0.13522.10000 podem não expor informações suficientes para que essa opção seja útil.
+
 ==== Suporte à Consola Windows ====[AdvancedSettingsConsoleUIA]
 : Padrão
   Automático
@@ -2249,14 +2332,17 @@ Existem as seguintes opções:
   - Esta opção está em desenvolvimento muito precoce, e depende de características dos navegadores  ainda não amplamente disponíveis;
   - Espera-se que funcione com o Chromium 92.0.4479.0+.
   -
+-
 
-==== Usar UI Automation para aceder às folhas do Microsoft Excel se disponível ====[UseUiaForExcel]
-Quando esta opção está activada o NVDA tentará usar a Microsoft UI Automation accessibility API para recolher informação dos controlos das folhas do Microsoft Excel.
-Esta é uma funcionalidade experimental e algumas funcionalidades do Microsoft Excel podem não estar acessíveis neste modo.
-Por exemplo, a lista de elementos, para listar fórmulas e comentários,, e o modo de navegação, para activar as teclas rápidas para saltar para um elemento de formulário, não estão disponíveis.
-No entanto, para um uso básico do Excel, este método permite uma melhoria na performance.
-Ainda não recomendamos que a maioria dos utilizadores active esta opção, mas agradecemos que utilizadores do Microsoft Excel  build 16.0.13522.10000 ou superior testem esta funcionalidade e nos dêem retorno.
-A implementação do UI automation no Microsoft Excel's está em constante alteração e as versões do Microsoft Office anteriores à 16.0.13522.10000 podem não expor informações suficientes para que esta funcionalidade tenha algum uso.
+==== Anunciar live regions ====[BrailleLiveRegions]
+: Predefinição
+  Activado
+: Opções
+  Predefinição (Activado), Desactivado, Activado
+:
+
+Esta opção selecciona se o NVDA comunica alterações em alguns conteúdos dinâmicos da Web em Braille.
+A desactivação desta opção é equivalente ao comportamento do NVDA nas versões 2023.1 e anteriores, que apenas comunicava estas alterações de conteúdo em voz.
 
 ==== Falar palavras-passe em todos os terminais melhorados ====[AdvancedSettingsWinConsoleSpeakPasswords]
 Este parâmetro controla se os caracteres são falados seguindo as opções [Anúncio de caracteres escritos #KeyboardSettingsSpeakTypedCharacters] ou [Anúncio de palavras escritas #KeyboardSettingsSpeakTypedWords] em situações em que o ecrã não é actualizado, como acontece em introdução de palavras-passe em alguns programas de terminal, como nas Consolas Windows com o suporte UI automation activado e Mintty.
@@ -2291,7 +2377,7 @@ No entanto, em terminais, ao inserir ou apagar um caractere no meio de uma linha
 :
 
 Esta opção define como o NVDA determina que texto é "novo" (e portanto o que falar quando a opção "Anunciar alterações de conteúdo dinâmico" está activada) no Terminal Windows e no controlo WPF do Terminal Windows utilizado no Visual Studio 2022.
-Não afecta a Consola do Windows (``conhost.exe```).
+Não afecta a Consola do Windows ("conhost.exe").
 A caixa de combinação "Falar novo texto no Terminal Windows via:" tem três opções:
 - Predefinição: Esta opção é actualmente equivalente a "diffing", mas prevê-se que mude assim que o suporte para notificações UIA estiver mais desenvolvido.
 - Diffing: Esta opção utiliza o algoritmo Diff seleccionado para calcular as alterações cada vez que o terminal apresenta um novo texto.
@@ -2318,17 +2404,31 @@ Em algumas situações, o fundo do texto pode ser totalmente transparente, com o
 Com várias API's de GUI, historicamente populares, o texto pode ser apresentado com um fundo transparente, mas visualmente a cor de fundo é exacta.
 
 ==== Usar WASAPI para saída de áudio ====[WASAPI]
+: Predefinição
+  Activada
+: Opções
+  Predefinição (activada), Activada, Desactivada
+:
+
 Esta opção activa a saída de áudio através da API de sessão de áudio do Windows (WASAPI).
 WASAPI é uma estrutura de áudio mais moderna que pode melhorar a capacidade de resposta, o desempenho e a estabilidade da saída de áudio do NVDA, incluindo a voz e os sons.
-Esta opção está activada por predefinição.
 Depois de alterar esta opção, terá de reiniciar o NVDA para que a alteração tenha efeito.
 
 ==== O volume dos sons do NVDA segue o volume da voz ====[SoundVolumeFollowsVoice]
+: Predefinição
+  Desactivado
+: Opções
+  Desactivado, Activado
+:
+
 Quando esta opção está activada, o volume dos sons e dos bipes do NVDA segue a definição de volume da voz que está a utilizar.
 Se diminuir o volume da voz, o volume dos sons diminui.
 Da mesma forma, se aumentar o volume da voz, o volume dos sons aumenta.
 Esta opção só tem efeito quando "Usar WASAPI para saída de áudio" está activado.
-Esta opção está desactivada por predefinição.
+
+==== Volume dos sons do NVDA ====[SoundVolume]
+Esta barra deslizante permite-lhe definir o volume dos sons e dos bips do NVDA.
+Esta definição só tem efeito quando "Usar WASAPI para saída de áudio" está activado e "O volume dos sons do NVDA segue o volume da voz" está desactivado.
 
 ==== Categorias do registo em modo de depuração ====[AdvancedSettingsDebugLoggingCategories]
 As caixas de verificação desta lista permitem activar categorias específicas de mensagens de depuração no registo do NVDA.
@@ -2393,6 +2493,7 @@ Pode filtrar os símbolos inserindo o símbolo ou uma parte da expressão de sub
 Também pode definir o nível para caracter; neste caso, o símbolo não será falado independentemente do nível de símbolo em uso, com as duas excepções seguintes:
  - Ao navegar caracter a caracter;
  - Quando o NVDA soletra qualquer texto que contenha esse símbolo. -
+ -
 - O campo "Enviar o próprio símbolo ao sintetizador" determina quando o próprio símbolo, em vez do texto substituto, deve ser enviado ao sintetizador.
 Isto é útil, se o símbolo forçar o sintetizador a uma pausa ou a uma mudança de entoação na voz.
 Por exemplo, uma vírgula força o sintetizador a fazer uma pausa.
@@ -2578,7 +2679,6 @@ Para aceder à Loja de Extras a partir de qualquer local, atribua um comando per
 
 ++ Navegar pelos extras ++[AddonStoreBrowsing]
 Ao abrir a Loja de Extras, é apresentada uma lista de extras.
-Pode regressar à lista pressionando "Alt+L" a partir de qualquer outra secção da loja.
 Se nunca tiver instalado um extra antes, a loja de extras irá abrir para uma lista de extras disponíveis para instalar.
 Se já tiver instalado extras, a lista irá mostrar os extras instalados actualmente.
 
@@ -2641,6 +2741,8 @@ Em seguida, utilize a acção de actualizar, instalar ou substituir para iniciar
 Para instalar um extra que tenha obtido fora da Loja de Extras, pressione o botão "Instalar a partir de uma fonte externa".
 Isso permitirá procurar um pacote de extras (ficheiro ".nvda-addon") em algum lugar do seu computador ou em uma rede.
 Depois de abrir o pacote do extra, o processo de instalação será iniciado.
+
+Se o NVDA estiver instalado e a funcionar no seu sistema, também pode abrir um ficheiro de extra directamente a partir do navegador web ou do explorador de ficheiros para iniciar o processo de instalação.
 
 Quando um extra está a ser instalado a partir de uma fonte externa, o NVDA irá solicitar a confirmação da instalação.
 Depois de instalado o extra, será necessário reiniciar o NVDA para que o extra comece a funcionar, embora possa adiar a reinicialização do NVDA se tiver outros extras para instalar ou actualizar.
@@ -2709,7 +2811,7 @@ Enquanto o Visualizador Braille estiver activo será constantemente actualizado 
 Para activar o Visualizador Braille, marque este item no menu do NVDA, Ferramentas.
 Desmarque para desactivá-lo.
 
-As linhas Braille, normalmente, possuem teclas para deslocar o conteúdo da linha para trás ou para a frente, para poder fazer o mesmo no Visualizador Braille, use a janela ["Definir comandos" #InputGestures] para associar atalhos às funções "Movimenta a linha braille para trás" e "Movimenta a linha braille para a frente".
+Os dispositivos Braille, normalmente, possuem teclas para deslocar o conteúdo da linha para trás ou para a frente, para poder fazer o mesmo no Visualizador Braille, use a janela ["Definir comandos" #InputGestures] para associar atalhos às funções "Movimenta a linha braille para trás" e "Movimenta a linha braille para a frente".
 
 A janela do Visualizador Braille tem uma caixa de verificação chamada "Mostrar o Visualizador Braille no arranque".
 Se esta caixa estiver marcada, o Visualizador Braille será aberto quando o NVDA é iniciado.
@@ -2817,28 +2919,27 @@ Uma vez adicionadas, reinicie o NVDA.
 
 Por favor, leia este artigo da Microsoft para saber as vozes disponíveis: https://support.microsoft.com/pt-pt/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
 
-
-+ Linhas Braille Suportadas +[SupportedBrailleDisplays]
-Esta secção contém informação sobre as linhas Braille suportadas pelo NVDA.
++ Dispositivos Braille Suportados +[SupportedBrailleDisplays]
+Esta secção contém informação sobre os dispositivos Braille suportados pelo NVDA.
 
 ++ Dispositivos que suportam a detecção automática em segundo plano ++[AutomaticDetection]
-O NVDA possui a funcionalidade de detectar várias linhas Braille em segundo plano, quer via USB quer via bluetooth.
-Esta funcionalidade é activada seleccionando "Automática" como a linha Braille a ser usada no diálogo [Seleccionar linha Braille do NVDA. #BrailleSettings].
+O NVDA possui a funcionalidade de detectar vários dispositivos Braille em segundo plano, quer via USB quer via bluetooth.
+Esta funcionalidade é activada seleccionando "Automático" como o dispositivo Braille a ser usado no diálogo [Seleccionar dispositivo Braille do NVDA. #BrailleSettings].
 Esta é a opção padrão.
 
-Estas são as linhas que suportam a funcionalidade de detecção automática:
-- Linhas da HandyTech;
-- Linhas da Baum/Humanware/APH/Orbit;
+Estes são os dispositivos que suportam a funcionalidade de detecção automática:
+- Dispositivos HandyTech;
+- Dispositivos Baum/Humanware/APH/Orbit;
 - Linhas HumanWare das séries Brailliant BI/B;
 - HumanWare BrailleNote;
 - SuperBraille;
-- Linhas Optelec ALVA série 6;
-- Linhas HIMS das séries Braille Sense/Braille EDGE/Smart Beetle/Sync Braille;
-- Linhas Eurobraille das séries Esys/Esytime/Iris;
+- Dispositivos Optelec ALVA série 6;
+- Dispositivos HIMS das séries Braille Sense/Braille EDGE/Smart Beetle/Sync Braille;
+- Dispositivos Eurobraille das séries Esys/Esytime/Iris;
 - Linhas NBraille da Nattiq;
 - Blocos de notas Seika: MiniSeika (16 e 24 células), V6 e V6Pro (40 células)
 - Linhas Braille Tivomatic Caiku Albatross 46/80
-- Qualquer linha Braille que suporte o protocolo HID padrão.
+- Qualquer dispositivo Braille que suporte o protocolo HID padrão.
 -
 
 ++ Freedom Scientific: Séries Focus e PM ++[FreedomScientificFocus]
@@ -2860,7 +2961,7 @@ Por favor, consulte a documentação desta linha braille para obter a descriçã
 | Deslocar a linha braille para a frente | topRouting20/40/80 (última célula da linha) |
 | Deslocar a linha braille para trás | leftAdvanceBar |
 | Deslocar a linha braille para a frente | rightAdvanceBar |
-| Alternar "Braille segue:" | leftGDFButton+rightGDFButton |
+| Alternar "Ligação Braille:" | leftGDFButton+rightGDFButton |
 | Alternar a acção da roda de deslocamento esquerda | leftWizWheelPress |
 | Mover para trás usando  a acção da roda de deslocamento esquerda | leftWizWheelUp |
 | Mover para a frente usando  a acção da roda de deslocamento esquerda | leftWizWheelDown |
@@ -2940,7 +3041,7 @@ Por favor, consulte a documentação da sua linha braille para obter a descriç�
 | Alternar simulação de teclado HID | t1+spEnter |
 | mover para a primeira linha em revisão | t1+t2 |
 | mover para a última linha em revisão | t4+t5 |
-| Alternar "Braille segue:" | t1+t3 |
+| Alternar "Ligação Braille:" | t1+t3 |
 | Anunciar o título | etouch2 |
 | Anunciar a Barra de Estado | etouch4 |
 | Teclas shift+tab | sp1 |
@@ -2974,8 +3075,8 @@ Os seguintes modelos não são automaticamente suportados, mas podem ser usados 
 - Bookworm
 -
 
-Seguem-se as associações de teclas para estas linhas braille com o NVDA.
-Por favor, consulte a documentação da sua linha braille para obter a descrição de onde estas teclas podem ser encontradas.
+Seguem-se as associações de teclas para estes dispositivos braille com o NVDA.
+Por favor, consulte a documentação do seu dispositivo braille para obter a descrição de onde estas teclas podem ser encontradas.
 %kc:beginInclude
 || Nome | Tecla de Atalho |
 | Deslocar a linha braille para trás | left, up, B3 |
@@ -3022,7 +3123,7 @@ Por favor, consulte a documentação desta linha braille para obter a descriçã
 %kc:endInclude
 
 ++ Baum, HumanWare, APH e Orbit ++[Baum]
-São suportadas várias linhas braille da [Baum https://www.visiobraille.de/index.php?article_id=1&clang=2], [HumanWare https://www.humanware.com/], [APH https://www.aph.org/] e [Orbit https://www.orbitresearch.com/] quando ligadas via USB, porta série ou bluetooth.
+São suportados vários dispositivos braille da [Baum https://www.visiobraille.de/index.php?article_id=1&clang=2], [HumanWare https://www.humanware.com/], [APH https://www.aph.org/] e [Orbit https://www.orbitresearch.com/] quando ligadas via USB, porta série ou bluetooth.
 Incluem-se:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2 e Vario 340;
 - HumanWare: Brailliant, BrailleConnect e Brailliant2;
@@ -3031,15 +3132,15 @@ Incluem-se:
 -
 Outras linhas braille fabricadas pela Baum poderão igualmente funcionar, porém tal não foi testado.
 
-Se for ligar uma linha, que não use o modo HID, via USB, deverá, primeiro, instalar os drivers USB fornecidos pelo fabricante.
+Se for ligar um dispositivo , que não use o modo HID, via USB, deverá, primeiro, instalar os drivers USB fornecidos pelo fabricante.
 As VarioUltra e Pronto! usam HID.
 As Refreshabraille e Orbit Reader 20 podem usar HID, se devidamente configuradas.
 
 O modo USB serial da Orbit Reader 20 só é actualmente suportado no Windows 10 e seguintes.
 Regra geral, deve ser usado o modo USB HID.
 
-Seguem-se as associações de teclas para estas linhas Braille com o NVDA.
-Por favor, consulte a documentação da sua linha Braille para obter a descrição de onde estas teclas podem ser encontradas.
+Seguem-se as associações de teclas para estes dispositivos Braille com o NVDA.
+Por favor, consulte a documentação do seu dispositivo Braille para obter a descrição de onde estas teclas podem ser encontradas.
 %kc:beginInclude
 || Nome | Tecla de Atalho |
 | Deslocar a linha braille para trás | d2 |
@@ -3057,7 +3158,7 @@ Por favor, consulte a documentação da sua linha Braille para obter a descriç�
 | Tecla Windows+d (minimizar todos os aplicativos) Espaço+ponto 1+ponto 4+ponto 5 (espaço+d)
 | Leitura contínua | espaço+ponto 1+ponto 2+ponto 3+ponto 4+ponto 5+ponto 6 |
 
-Para linhas braille que tenham um joistick:
+Para dispositivos braille que tenham um joistick:
 || Nome | Tecla de atalho |
 | Tecla seta acima  | up |
 | Tecla seta abaixo | down |
@@ -3116,8 +3217,8 @@ Os seguintes dispositivos são também suportados, não necessitando de drivers 
 - NLS eReader
 -
 
-Seguem-se as associações de teclas para estas linhas braille com o NVDA.
-Por favor, consulte a documentação da sua linha braille para obter a descrição de onde estas teclas podem ser encontradas.
+Seguem-se as associações de teclas para estes dispositivos braille com o NVDA.
+Por favor, consulte a documentação do seu dispositivo braille para obter a descrição de onde estas teclas podem ser encontradas.
 +++ Comandos para todos os modelos +++
 %kc:beginInclude
 || Nome | Tecla de atalho |
@@ -3162,12 +3263,12 @@ Por favor, consulte a documentação da sua linha braille para obter a descriç�
 %kc:endInclude
 
 ++ HIMS: Séries Braille Sense, Braille EDGE, Smart Beetle e Sync Braille ++[Hims]
-O NVDA suporta as linhas Braille Sense, Braille EDGE, Smart Beetle e Sync Braille da [Hims https://www.hims-inc.com/] quando conectadas via USB ou bluetooth.
-Se ligar a linha via USB, necessitará de instalar os drivers USB, da HIMS, no seu sistema.
+O NVDA suporta os dispositivos Braille Sense, Braille EDGE, Smart Beetle e Sync Braille da [Hims https://www.hims-inc.com/] quando conectados via USB ou bluetooth.
+Se ligar o dispositivo via USB, necessitará de instalar os drivers USB, da HIMS, no seu sistema.
 Pode fazer o download dos drivers de http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
-Seguem-se as associações de teclas para estas linhas braille com o NVDA.
-Por favor, consulte a documentação da sua linha braille para obter a descrição de onde estas teclas podem ser encontradas.
+Seguem-se as associações de teclas para estes dispositivos braille com o NVDA.
+Por favor, consulte a documentação do seu dispositivo braille para obter a descrição de onde estas teclas podem ser encontradas.
 %kc:beginInclude
 || Nome | Tecla de atalho |
 | Encaminhar para a célula braille | routing |
@@ -3267,8 +3368,8 @@ Por favor, consulte a documentação destas linhas Braille para obter a descriç
 
 
 +++ MiniSeika (16 ou 24 células), V6 e V6Pro (40 células) +++[SeikaNotetaker]
-- A detecção automática em segundo plano de linhas Braille do NVDA é suportada via USB e Bluetooth.
-- Seleccione "Seika (Blocos de Notas)" ou "automática" para as configurar.
+- A detecção automática em segundo plano de dispositivos Braille do NVDA suporta-os via USB e Bluetooth.
+- Seleccione "Seika (Blocos de Notas)" ou "automático" para os configurar.
 - Não são necessários drivers adicionais para usar um Bloco de notas Seika.
 -
 
@@ -3305,7 +3406,6 @@ Por favor, consulte a documentação destes dispositivos Braille para obter a de
 | Tecla end | space+LJ down |
 | Teclas control+home | backspace+LJ up |
 | Teclas control+end | backspace+LJ down |
-%kc:endInclude
 
 
 ++ Papenmeier BRAILLEX (Modelos recentes) ++[Papenmeier]
@@ -3621,149 +3721,151 @@ Por favor, consulte a documentação destes dispositivos Braille para obter a de
 +++  Funções do teclado Braille +++[EurobrailleBraille]
 %kc:beginInclude
 || Nome | Comando |
-| ***Erase the last entered braille cell or character | ``backspace`` |
-| Translate any braille input and press the enter key |``backspace+space`` |
-| Toggle ``NVDA`` key | ``dot3+dot5+space`` |
-| Tecla insert | ``dot1+dot3+dot5+space``, ``dot3+dot4+dot5+space`` |
-| Tecla delete | ``dot3+dot6+space`` |
-| Tecla home | ``dot1+dot2+dot3+space`` |
-| Tecla end | ``dot4+dot5+dot6+space`` |
-| Seta à esquerda  | ``dot2+space`` |
-| Seta à direita | ``dot5+space`` |
-| Seta acima | ``dot1+space`` |
-| Seta abaixo | ``dot6+space`` |
-| Página acima | ``dot1+dot3+space`` |
-| Página abaixo | ``dot4+dot6+space`` |
-| ``numpad1`` | ``dot1+dot6+backspace`` |
-| ``numpad2`` | ``dot1+dot2+dot6+backspace`` |
-| ``numpad3`` | ``dot1+dot4+dot6+backspace`` |
-| ``numpad4`` | ``dot1+dot4+dot5+dot6+backspace`` |
-| ``numpad5`` | ``dot1+dot5+dot6+backspace`` |
-| ``numpad6`` | ``dot1+dot2+dot4+dot6+backspace`` |
-| ``numpad7`` | ``dot1+dot2+dot4+dot5+dot6+backspace`` |
-| ``numpad8`` | ``dot1+dot2+dot5+dot6+backspace`` |
-| ``numpad9`` | ``dot2+dot4+dot6+backspace`` |
-| ``numpadInsert`` | ``dot3+dot4+dot5+dot6+backspace`` |
-| ``numpadPonto`` | ``dot2+backspace`` |
-| ``numpadDivide`` key | ``dot3+dot4+backspace`` |
-| ``numpadMultiply`` key | ``dot3+dot5+backspace`` |
-| ``numpadMinus`` key | ``dot3+dot6+backspace`` |
-| ``numpadPlus`` key | ``dot2+dot3+dot5+backspace`` |
-| ``numpadEnter`` key | ``dot3+dot4+dot5+backspace`` |
-| ``escape`` key | ``dot1+dot2+dot4+dot5+space``, ``l2`` |
-| ``tab`` key | ``dot2+dot5+dot6+space``, ``l3`` |
-| ``shift+tab`` keys | ``dot2+dot3+dot5+space`` |
-| ``printScreen`` key | ``dot1+dot3+dot4+dot6+space`` |
-| ``pause`` key | ``dot1+dot4+space`` |
-| ``applications`` key | ``dot5+dot6+backspace`` |
-| ``f1`` key | ``dot1+backspace`` |
-| ``f2`` key | ``dot1+dot2+backspace`` |
-| ``f3`` key | ``dot1+dot4+backspace`` |
-| ``f4`` key | ``dot1+dot4+dot5+backspace`` |
-| ``f5`` key | ``dot1+dot5+backspace`` |
-| ``f6`` key | ``dot1+dot2+dot4+backspace`` |
-| ``f7`` key | ``dot1+dot2+dot4+dot5+backspace`` |
-| ``f8`` key | ``dot1+dot2+dot5+backspace`` |
-| ``f9`` key | ``dot2+dot4+backspace`` |
-| ``f10`` key | ``dot2+dot4+dot5+backspace`` |
-| ``f11`` key | ``dot1+dot3+backspace`` |
-| ``f12`` key | ``dot1+dot2+dot3+backspace`` |
-| ``windows`` key | ``dot1+dot2+dot4+dot5+dot6+space`` |
-| Toggle ``windows`` key | ``dot1+dot2+dot3+dot4+backspace``, ``dot2+dot4+dot5+dot6+space`` |
-| ``capsLock`` key | ``dot7+backspace``, ``dot8+backspace`` |
-| ``numLock`` key | ``dot3+backspace``, ``dot6+backspace`` |
-| ``shift`` key | ``dot7+space`` |
-| Toggle ``shift`` key | ``dot1+dot7+space``, ``dot4+dot7+space`` |
-| ``control`` key | ``dot7+dot8+space`` |
-| Toggle ``control`` key | ``dot1+dot7+dot8+space``, ``dot4+dot7+dot8+space`` |
-| ``alt`` key | ``dot8+space`` |
-| Toggle ``alt`` key | ``dot1+dot8+space``, ``dot4+dot8+space`` |
+| Erase the last entered braille cell or character | "backspace" |
+| Translate any braille input and press the enter key |"backspace+space" |
+| Toggle "NVDA" key | "dot3+dot5+space" |
+| Tecla insert | "dot1+dot3+dot5+space", "dot3+dot4+dot5+space" |
+| Tecla delete | "dot3+dot6+space" |
+| Tecla home | "dot1+dot2+dot3+space" |
+| Tecla end | "dot4+dot5+dot6+space" |
+| Seta à esquerda  | "dot2+space" |
+| Seta à direita | "dot5+space" |
+| Seta acima | "dot1+space" |
+| Seta abaixo | "dot6+space" |
+| Página acima | "dot1+dot3+space" |
+| Página abaixo | "dot4+dot6+space" |
+| "numpad1" | "dot1+dot6+backspace" |
+| "numpad2" | "dot1+dot2+dot6+backspace" |
+| "numpad3" | "dot1+dot4+dot6+backspace" |
+| "numpad4" | "dot1+dot4+dot5+dot6+backspace" |
+| "numpad5" | "dot1+dot5+dot6+backspace" |
+| "numpad6" | "dot1+dot2+dot4+dot6+backspace" |
+| "numpad7" | "dot1+dot2+dot4+dot5+dot6+backspace" |
+| "numpad8" | "dot1+dot2+dot5+dot6+backspace" |
+| "numpad9" | "dot2+dot4+dot6+backspace" |
+| "numpadInsert" | "dot3+dot4+dot5+dot6+backspace" |
+| "numpadPonto" | "dot2+backspace" |
+| "numpadDivide" key | "dot3+dot4+backspace" |
+| "numpadMultiply" key | "dot3+dot5+backspace" |
+| "numpadMinus" key | "dot3+dot6+backspace" |
+| "numpadPlus" key | "dot2+dot3+dot5+backspace" |
+| "numpadEnter" key | "dot3+dot4+dot5+backspace" |
+| "escape" key | "dot1+dot2+dot4+dot5+space", "l2" |
+| "tab" key | "dot2+dot5+dot6+space", "l3" |
+| "shift+tab" keys | "dot2+dot3+dot5+space" |
+| "printScreen" key | "dot1+dot3+dot4+dot6+space" |
+| "pause" key | "dot1+dot4+space" |
+| "applications" key | "dot5+dot6+backspace" |
+| "f1" key | "dot1+backspace" |
+| "f2" key | "dot1+dot2+backspace" |
+| "f3" key | "dot1+dot4+backspace" |
+| "f4" key | "dot1+dot4+dot5+backspace" |
+| "f5" key | "dot1+dot5+backspace" |
+| "f6" key | "dot1+dot2+dot4+backspace" |
+| "f7" key | "dot1+dot2+dot4+dot5+backspace" |
+| "f8" key | "dot1+dot2+dot5+backspace" |
+| "f9" key | "dot2+dot4+backspace" |
+| "f10" key | "dot2+dot4+dot5+backspace" |
+| "f11" key | "dot1+dot3+backspace" |
+| "f12" key | "dot1+dot2+dot3+backspace" |
+| "windows" key | "dot1+dot2+dot4+dot5+dot6+space" |
+| Toggle "windows" key | "dot1+dot2+dot3+dot4+backspace", "dot2+dot4+dot5+dot6+space" |
+| "capsLock" key | "dot7+backspace", "dot8+backspace" |
+| "numLock" key | "dot3+backspace", "dot6+backspace" |
+| "shift" key | "dot7+space" |
+| Toggle "shift" key | "dot1+dot7+space", "dot4+dot7+space" |
+| "control" key | "dot7+dot8+space" |
+| Toggle "control" key | "dot1+dot7+dot8+space", "dot4+dot7+dot8+space" |
+| "alt" key | "dot8+space" |
+| Toggle "alt" key | "dot1+dot8+space", "dot4+dot8+space" |
+| Toggle HID Keyboard simulation | "switch1Left+joystick1Down", "switch1Right+joystick1Down" |
 %kc:endInclude
 
 +++ b.book keyboard commands +++[Eurobraillebbook]
 %kc:beginInclude
 || Name | Key |
-| Scroll braille display back | ``backward`` |
-| Scroll braille display forward | ``forward`` |
-| Move to current focus | ``backward+forward`` | 
-| Route to braille cell | ``routing`` |
-| ``leftArrow`` key | ``joystick2Left`` |
-| ``rightArrow`` key | ``joystick2Right`` |
-| ``upArrow`` key | ``joystick2Up`` |
-| ``downArrow`` key | ``joystick2Down`` |
-| ``enter`` key | ``joystick2Center`` |
-| ``escape`` key | ``c1`` |
-| ``tab`` key | ``c2`` |
-| Toggle ``shift`` key | ``c3`` |
-| Toggle ``control`` key | ``c4`` |
-| Toggle ``alt`` key | ``c5`` |
-| Toggle ``NVDA`` key | ``c6`` |
-| ``control+Home`` key | ``c1+c2+c3`` |
-| ``control+End`` key | ``c4+c5+c6`` |
+| Scroll braille display back | "backward" |
+| Scroll braille display forward | "forward" |
+| Move to current focus | "backward+forward" | 
+| Route to braille cell | "routing" |
+| "leftArrow" key | "joystick2Left" |
+| "rightArrow" key | "joystick2Right" |
+| "upArrow" key | "joystick2Up" |
+| "downArrow" key | "joystick2Down" |
+| "enter" key | "joystick2Center" |
+| "escape" key | "c1" |
+| "tab" key | "c2" |
+| Toggle "shift" key | "c3" |
+| Toggle "control" key | "c4" |
+| Toggle "alt" key | "c5" |
+| Toggle "NVDA" key | "c6" |
+| "control+Home" key | "c1+c2+c3" |
+| "control+End" key | "c4+c5+c6" |
 %kc:endInclude
 
 +++ b.note keyboard commands +++[Eurobraillebnote]
 %kc:beginInclude
 || Name | Key |
-| Scroll braille display back | ``leftKeypadLeft`` |
-| Scroll braille display forward | ``leftKeypadRight`` |
-| Route to braille cell | ``routing`` |
-| Report text formatting under braille cell | ``doubleRouting`` |
-| Move to next line in review | ``leftKeypadDown`` |
-| Switch to previous review mode | ``leftKeypadLeft+leftKeypadUp`` |
-| Switch to next review mode | ``leftKeypadRight+leftKeypadDown`` |
-| ``leftArrow`` key | ``rightKeypadLeft`` |
-| ``rightArrow`` key | ``rightKeypadRight`` |
-| ``upArrow`` key | ``rightKeypadUp`` |
-| ``downArrow`` key | ``rightKeypadDown`` |
-| ``control+home`` key | ``rightKeypadLeft+rightKeypadUp`` |
-| ``control+end`` key | ``rightKeypadLeft+rightKeypadUp`` |
+| Scroll braille display back | "leftKeypadLeft" |
+| Scroll braille display forward | "leftKeypadRight" |
+| Route to braille cell | "routing" |
+| Report text formatting under braille cell | "doubleRouting" |
+| Move to next line in review | "leftKeypadDown" |
+| Switch to previous review mode | "leftKeypadLeft+leftKeypadUp" |
+| Switch to next review mode | "leftKeypadRight+leftKeypadDown" |
+| "leftArrow" key | "rightKeypadLeft" |
+| "rightArrow" key | "rightKeypadRight" |
+| "upArrow" key | "rightKeypadUp" |
+| "downArrow" key | "rightKeypadDown" |
+| "control+home" key | "rightKeypadLeft+rightKeypadUp" |
+| "control+end" key | "rightKeypadLeft+rightKeypadUp" |
 %kc:endInclude
 
 +++ Esys keyboard commands +++[Eurobrailleesys]
 %kc:beginInclude
 || Name | Key |
-| Scroll braille display back | ``switch1Left`` |
-| Scroll braille display forward | ``switch1Right`` |
-| Move to current focus | ``switch1Center`` |
-| Route to braille cell | ``routing`` |
-| Report text formatting under braille cell | ``doubleRouting`` |
-| Move to previous line in review | ``joystick1Up`` |
-| Move to next line in review | ``joystick1Down`` |
-| Move to previous character in review | ``joystick1Left`` |
-| Move to next character in review | ``joystick1Right`` |
-| ``leftArrow`` key | ``joystick2Left`` |
-| ``rightArrow`` key | ``joystick2Right`` |
-| ``upArrow`` key | ``joystick2Up`` |
-| ``downArrow`` key | ``joystick2Down`` |
-| ``enter`` key | ``joystick2Center`` |
+| Scroll braille display back | "switch1Left" |
+| Scroll braille display forward | "switch1Right" |
+| Move to current focus | "switch1Center" |
+| Route to braille cell | "routing" |
+| Report text formatting under braille cell | "doubleRouting" |
+| Move to previous line in review | "joystick1Up" |
+| Move to next line in review | "joystick1Down" |
+| Move to previous character in review | "joystick1Left" |
+| Move to next character in review | "joystick1Right" |
+| "leftArrow" key | "joystick2Left" |
+| "rightArrow" key | "joystick2Right" |
+| "upArrow" key | "joystick2Up" |
+| "downArrow" key | "joystick2Down" |
+| "enter" key | "joystick2Center" |
 %kc:endInclude
 
 +++ Esytime keyboard commands +++[EurobrailleEsytime]
 %kc:beginInclude
 || Name | Key |
-| Scroll braille display back | ``l1`` |
-| Scroll braille display forward | ``l8`` |
-| Move to current focus | ``l1+l8`` |
-| Route to braille cell | ``routing`` |
-| Report text formatting under braille cell | ``doubleRouting`` |
-| Move to previous line in review | ``joystick1Up`` |
-| Move to next line in review | ``joystick1Down`` |
-| Move to previous character in review | ``joystick1Left`` |
-| Move to next character in review | ``joystick1Right`` |
-| ``leftArrow`` key | ``joystick2Left`` |
-| ``rightArrow`` key | ``joystick2Right`` |
-| ``upArrow`` key | ``joystick2Up`` |
-| ``downArrow`` key | ``joystick2Down`` |
-| ``enter`` key | ``joystick2Center`` |
-| ``escape`` key | ``l2`` |
-| ``tab`` key | ``l3`` |
-| Toggle ``shift`` key | ``l4`` |
-| Toggle ``control`` key | ``l5`` |
-| Toggle ``alt`` key | ``l6`` |
-| Toggle ``NVDA`` key | ``l7`` |
-| ``control+home`` key | ``l1+l2+l3``, ``l2+l3+l4`` |
-| ``control+end`` key | ``l6+l7+l8``, ``l5+l6+l7`` |
+| Scroll braille display back | "l1" |
+| Scroll braille display forward | "l8" |
+| Move to current focus | "l1+l8" |
+| Route to braille cell | "routing" |
+| Report text formatting under braille cell | "doubleRouting" |
+| Move to previous line in review | "joystick1Up" |
+| Move to next line in review | "joystick1Down" |
+| Move to previous character in review | "joystick1Left" |
+| Move to next character in review | "joystick1Right" |
+| "leftArrow" key | "joystick2Left" |
+| "rightArrow" key | "joystick2Right" |
+| "upArrow" key | "joystick2Up" |
+| "downArrow" key | "joystick2Down" |
+| "enter" key | "joystick2Center" |
+| "escape" key | "l2" |
+| "tab" key | "l3" |
+| Toggle "shift" key | "l4" |
+| Toggle "control" key | "l5" |
+| Toggle "alt" key | "l6" |
+| Toggle "NVDA" key | "l7" |
+| "control+home" key | "l1+l2+l3", "l2+l3+l4" |
+| "control+end" key | "l6+l7+l8", "l5+l6+l7" |
+| Toggle HID Keyboard simulation | "l1+joystick1Down", "l8+joystick1Down" |
  %kc:endInclude
 
 ++ Linhas Nattiq nBraille ++[NattiqTechnologies]
@@ -3783,25 +3885,32 @@ Por favor, consulte a documentação destas linhas Braille para obter a descriç
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
-O [BRLTTY https://www.brltty.com/] é um programa adicional que pode ser usado para suportar muito mais linhas Braille.
+O [BRLTTY https://www.brltty.com/] é um programa adicional que pode ser usado para suportar muito mais dispositivos Braille.
 Para utilizá-lo, terá que instalar o [BRLTTY para o Windows https://www.brltty.com/download.html].
 Para isso, deverá efectuar o download e instalar o último pacote de instalação, que se denominará, por exemplo, brltty-win-4.2-2.exe.
-Quando configurar a linha e porta a utilizar, certifique-se de prestar muita atenção às instruções, especialmente se está a utilizar uma linha USB e já tem as drivers do fabricante instaladas.
+Quando configurar o dispositivo e porta a utilizar, certifique-se de prestar muita atenção às instruções, especialmente se está a utilizar um dispositivo USB e já tem os drivers do fabricante instaladas.
 
-Para as linhas com teclado Braille, actualmente, o BRLTTY trata da escrita em Braille.
+Para os dispositivos com teclado Braille, actualmente, o BRLTTY trata da escrita em Braille.
 Por isso, a tabela de conversão da escrita do NVDA é irrelevante
 
 O BRLTTY não está envolvido na detecção automática em segundo plano do NVDA.
 
 Seguem-se as associações de teclas do BRLTTY com o NVDA.
-Por favor, consulte na documentação do BRLTTY as [tabelas de associação de teclas do BRLTTY http://mielke.cc/brltty/doc/KeyBindings/] para informação sobre como os comandos do BRLTTY são mapiados nas linhas braille.
+Por favor, consulte na documentação do BRLTTY as [tabelas de associação de teclas do BRLTTY http://mielke.cc/brltty/doc/KeyBindings/] para informação sobre como os comandos do BRLTTY são mapiados nos dispositivos braille.
 %kc:beginInclude
 || Nome | Comando BRLTTY |
-| Mover a linha braille para trás | fwinlt (go left one window) |
-| Mover a linha braille para a frennte | fwinrt (go right one window) |
-| Mover a linha braille para a linha anterior | lnup (go up one line) |
-| Mover a linha braille para a linha seguinte | lndn (go down one line) |
-| Encaminhar para a célula braille | route (bring cursor to character) |
+| Mover a linha braille para trás | "fwinlt" (go left one window) |
+| Mover a linha braille para a frennte | "fwinrt" (go right one window) |
+| Mover a linha braille para a linha anterior | "lnup" (go up one line) |
+| Mover a linha braille para a linha seguinte | "lndn" (go down one line) |
+| Encaminhar para a célula braille | "route" (bring cursor to character) |
+| Alternar ajuda de comandos | "learn" (Activar/desactivar a ajuda de comandos) |
+| Abrir menu NVDA | "prefmenu" (Abrir o menu do NVDA) |
+| Reverter para as últimas configurações | "prefload" (restaura as configurações guardadas) |
+| Guardar configurações | "prefsave" (Guarda as configurações) |
+| Anunciar hora e data | "time" (Mostrar data e hora actual) |
+| ler a linha do cursor de revisão | "say_line" (Ler linha actual do cursor de revisão) |
+| Ler tudo com cursor de revisão | "say_below" (Ler da posição actual até ao fim com cursor de revisão) |
 %kc:endInclude
 
 ++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
@@ -3819,55 +3928,56 @@ Seguem-se as associações de comandos destas linhas com o NVDA.
 Por favor, consulte a documentação destas linhas Braille para obter a descrição de onde estas teclas podem ser encontradas.
 %kc:beginInclude
 || Nome | Tecla |
-| mover para a primeira linha em revisão | ``home1``, ``home2`` |
-| mover para a última linha em revisão | ``end1``, ``end2`` |
-| Mover para o objecto em foco | ``eCursor1``, ``eCursor2`` |
-| Mover a linha Braille para o foco actual | ``cursor1``, ``cursor2`` |
-| Mover o rato para o objecto de navegação actual | ``home1+home2`` |
-| Navegar para o objecto sob o rato | ``end1+end2`` |
-| Mover o foco do sistema ou o cursor para o objecto actual da revisão | ``eCursor1+eCursor2`` |
-| Alternar "Braille segue:" | ``cursor1+cursor2`` |
-| Move a linha braille para a linha anterior | ``up1``, ``up2``, ``up3`` |
-| Move a linha braille para a linha seguinte | ``down1``, ``down2``, ``down3`` |
-| Deslocar a linha braille para trás | ``left``, ``lWheelLeft``, ``rWheelLeft`` |
-| Deslocar a linha braille para a frente | ``right``, ``lWheelRight``, ``rWheelRight`` |
-| Encaminhar para a célula braille | ``routing`` |
+| mover para a primeira linha em revisão | "home1", "home2" |
+| mover para a última linha em revisão | "end1", "end2" |
+| Mover para o objecto em foco | "eCursor1", "eCursor2" |
+| Mover a linha Braille para o foco actual | "cursor1", "cursor2" |
+| Mover o rato para o objecto de navegação actual | "home1+home2" |
+| Navegar para o objecto sob o rato | "end1+end2" |
+| Mover o foco do sistema ou o cursor para o objecto actual da revisão | "eCursor1+eCursor2" |
+| Alternar "Braille segue:" | "cursor1+cursor2" |
+| Move a linha braille para a linha anterior | "up1", "up2", "up3" |
+| Move a linha braille para a linha seguinte | "down1", "down2", "down3" |
+| Deslocar a linha braille para trás | "left", "lWheelLeft", "rWheelLeft" |
+| Deslocar a linha braille para a frente | "right", "lWheelRight", "rWheelRight" |
+| Encaminhar para a célula braille | "routing" |
 | Anunciar formatação do caracter da célula Braille | secondary routing |
-| Alternar Apresentação do contexto do foco: ``attribute1+attribute3`` |
-| Alternar entre os Modos de Voz | ``attribute2+attribute4`` |
-| Muda para o modo de revisão anterior | ``f1`` |
-| Muda para o modo de revisão seguinte | ``f2`` |
-| Mover para o objecto ascendente | ``f3`` |
-| Mover para o primeiro objecto descendente | ``f4`` |
-| Mover para o objecto anterior | ``f5`` |
-| Mover para o objecto seguinte | ``f6`` |
-| Anunciar o objecto de navegação actual | ``f7`` |
-| Anunciar localização do cursor de revisão | ``f8`` |
-| Mostra as configurações em braile | ``f1+home1``, ``f9+home2`` |
-| Lê a barra de estado e move o objeto de navegação para ela | ``f1+end1``, ``f9+end2`` |
-| Alternar entre as formas do cursor Braile | ``f1+eCursor1``, ``f9+eCursor2`` | +| Alterna a forma do cursor braile
-| Alternar o cursor Braille | ``f1+cursor1``, ``f9+cursor2``
-***| Cycle the braille show messages mode | ``f1+f2``, ``f9+f10`` |
-| Cycle the braille show selection state | ``f1+f5``, ``f9+f14`` |
-| Activar o objecto de navegação actual | ``f7+f8`` |
-| Anunciar hora/data | ``f9`` |
-| Anunciar o estado da bateria e tempo restante se não ligada à corrente | ``f10`` |
-| Anunciar o título | ``f11`` |
-| Anunciar a Barra de Estado | ``f12`` |
-| Anunciar a linha actual | ``f13`` |
-| Leitura contínua | ``f14`` |
-| Anunciar o caracter actual em revisão | ``f15`` |
-| Anunciar a linha actual em revisão | ``f16`` |
-| Anunciar a palavra actual em revisão | ``f15+f16`` |
-| Mover para a linha anterior em revisão | ``lWheelUp``, ``rWheelUp`` |
-| Mover para a próxima linha em revisão | ``lWheelDown``, ``rWheelDown`` |
-| Teclas windows+d (minimizar todas as aplicações) | ``attribute1`` |
-| Teclas Windows+e (Este PC) | ``attribute2`` |
-| Teclas windows+b (Mover para a Área de notificações) | ``attribute3`` |
-| Teclas Windows+i (Definições do Windows) | ``attribute4`` |
+| Alternar Apresentação do contexto do foco: "attribute1+attribute3" |
+| Alternar entre os Modos de Voz | "attribute2+attribute4" |
+| Muda para o modo de revisão anterior | "f1" |
+| Muda para o modo de revisão seguinte | "f2" |
+| Mover para o objecto ascendente | "f3" |
+| Mover para o primeiro objecto descendente | "f4" |
+| Mover para o objecto anterior | "f5" |
+| Mover para o objecto seguinte | "f6" |
+| Anunciar o objecto de navegação actual | "f7" |
+| Anunciar localização do cursor de revisão | "f8" |
+| Mostra as configurações em braile | "f1+home1", "f9+home2" |
+| Lê a barra de estado e move o objeto de navegação para ela | "f1+end1", "f9+end2" |
+| Alternar entre as formas do cursor Braile | "f1+eCursor1", "f9+eCursor2" | +| Alterna a forma do cursor braile
+| Alternar o cursor Braille | "f1+cursor1", "f9+cursor2"
+***| Cycle the braille show messages mode | "f1+f2", "f9+f10" |
+| Cycle the braille show selection state | "f1+f5", "f9+f14" |
+| Cycle the "braille move system caret when routing review cursor" states | "f1+f3", "f9+f11" |
+| Activar o objecto de navegação actual | "f7+f8" |
+| Anunciar hora/data | "f9" |
+| Anunciar o estado da bateria e tempo restante se não ligada à corrente | "f10" |
+| Anunciar o título | "f11" |
+| Anunciar a Barra de Estado | "f12" |
+| Anunciar a linha actual | "f13" |
+| Leitura contínua | "f14" |
+| Anunciar o caracter actual em revisão | "f15" |
+| Anunciar a linha actual em revisão | "f16" |
+| Anunciar a palavra actual em revisão | "f15+f16" |
+| Mover para a linha anterior em revisão | "lWheelUp", "rWheelUp" |
+| Mover para a próxima linha em revisão | "lWheelDown", "rWheelDown" |
+| Tecla windows+d (minimizar todas as aplicações) | "attribute1" |
+| Tecla Windows+e (Este PC) | "attribute2" |
+| Tecla windows+b (Mover para a Área de notificações) | "attribute3" |
+| Tecla Windows+i (Definições do Windows) | "attribute4" |
 %kc:endInclude
 
-++ Linhas Braille com protocolo HID ++[HIDBraille]
+++ Dispositivos Braille com protocolo HID ++[HIDBraille]
 Este é um driver experimental para o novo protocolo Braille HID, aprovado em 2018 por Microsoft, Google, Apple e várias entidades de tecnologia assistiva, incluindo a NV Access. 
 Espera-se que todos os dispositivos Braille futuros, desenvolvidos por qualquer fabricante utilize este protocolo, o que dispensará drivers específicos de cada fabricante.
 
@@ -3878,7 +3988,6 @@ Seguem-se as associações de teclas para este protocolo.
 || Name | Key |
 | Deslocar a linha Braille para trás | pan left or rocker up |
 | Deslocar a linha Braille para a frente | pan right or rocker down |
-| Move a linha braille para a linha seguinte | space + ponto 4 |
 | Encaminhar para a célula | routing set 1|
 | Alternar "Braille segue:" | up+down |
 | seta acima | joystick up, dpad up  ou Espaço + ponto 1 |
@@ -3896,22 +4005,37 @@ Seguem-se as associações de teclas para este protocolo.
 | Teclas windows+d (minimizar todas as aplicações) | espaço +ponto 1+ponto 4+ponto 5 (espaço+d) |
 | Leitura contínua | espaço +ponto 1+ponto 2+ponto 3+ponto 4+ponto 5+ponto 6 |
 %kc:endInclude
- 
+
 + tópicos Avançados +[AdvancedTopics]
 
 ++ Modo Seguro ++[SecureMode]
-O NVDA pode ser iniciado em modo seguro com a opção "-s" [opção de linha de comando #CommandLineOptions].
-O NVDA corre em modo seguro quando executado em [ecrãs seguros #SecureScreens], a menos que o "serviceDebug" [parâmetro largo do sistema #SystemWideParameters] esteja activado.
+Os administradores de sistema podem querer configurar o NVDA para restringir o acesso não autorizado ao sistema.
+O NVDA permite a instalação de extras personalizados, que podem executar código arbitrário, incluindo quando o NVDA é elevado a privilégios de administrador.
+O NVDA também permite que os utilizadores executem código arbitrário através da Consola Python do NVDA.
+O modo seguro do NVDA impede que os utilizadores modifiquem a sua configuração do NVDA e limita o acesso não autorizado ao sistema.
 
-Modo de segurança desactiva:
+O NVDA corre em modo seguro quando executado em [ecrãs seguros #SecureScreens], a menos que o "serviceDebug" [parâmetros do sistema #SystemWideParameters] esteja activado.
+Para forçar o NVDA a iniciar sempre em modo seguro, defina o "forceSecureMode" [parâmetros do sistema #SystemWideParameters].
+O NVDA também pode ser iniciado em modo seguro com o "-s" [opção de linha de comando #CommandLineOptions].
+
+O modo de segurança desactiva:
 
 - Guardar configuração e outras definições no disco
-- Guardar o mapa de gestos no disco
+- Guardar o mapa de comandos no disco
 - [Perfil de Configuração #ConfigurationProfiles] características tais como criação, eliminação, renomear perfis e.t.c.
 - Actualização de NVDA e criação de cópias portáteis
+- A [loja de extras #AddonsManager]
 - A [consola Python #PythonConsole]
 - O [Visualizador de Registo #LogViewer] e o registo
+- A abertura pelo menu do NVDA de documentos externos como o Manual do utilizador e Contribuidores
 -
+
+As cópias instaladas do NVDA armazenam as suas configurações, incluindo extras, em "%APPDATA%\nvda".
+Para evitar que os utilizadores do NVDA modifiquem as suas configurações ou extras diretamente, o acesso do utilizador a essa pasta também deve ser restrito.
+
+Os utilizadores do NVDA geralmente dependem da configuração de seu perfil do NVDA para atender às suas necessidades.
+Isso pode incluir a instalação e configuração de extras personalizados, que devem ser verificados independentemente do NVDA.
+O modo seguro congela as alterações na configuração do NVDA, portanto, certifique-se de que o NVDA esteja configurado adequadamente antes de forçar o modo seguro.
 
 ++ ecrãs seguros ++[SecureScreens]
 NVDA corre em [modo seguro #SecureMode] quando executado em ecrãs seguros, a menos que o parâmetro "serviceDebug" [dos Parâmetros do sistema #SystemWideParameters] esteja activado.
@@ -3932,46 +4056,48 @@ O NVDA pode aceitar uma ou mais opções adicionais, quando inicia, que alteram 
 Pode passar todas as opções que necessitar.
 Estas opções podem ser passadas ao iniciar a partir de um atalho (nas propriedades do atalho), a partir do diálogo Executar (Menu Iniciar -> Executar ou Windows+r) ou a partir da linha de comandos.
 As opções devem ser separadas do nome do ficheiro executável do NVDA e de outras opções por um espaço.
-Por exemplo, uma opção útil é --disable-addons, que indica ao NVDA para suspender todos os extras.
+Por exemplo, uma opção útil é "--disable-addons", que indica ao NVDA para suspender todos os extras.
 Isto permite determinar se um problema é provocado por algum extra e para recuperar de um problema grave provocado por um extra.
 
 Como exemplo, pode sair da cópia em execução do NVDA escrevendo o seguinte na janela Executar::
 
+"""
 nvda -q
+"""
 
 Algumas das opções têm uma versão curta e uma longa, enquanto algumas só têm a longa.
 Para as que têm uma versão curta, pode combiná-las como se segue:
-| nvda -mc CONFIGPATH | Isto iniciará o NVDA com os sons e mensagens de início desactivadas e a configuração especificada |
-| nvda -mc CONFIGPATH --disable-addons| Igual à anterior mas também com os extras desactivados |
+| "nvda -mc CONFIGPATH" | Isto iniciará o NVDA com os sons e mensagens de início desactivadas e a configuração especificada |
+| "nvda -mc CONFIGPATH --disable-addons" | Igual à anterior mas também com os extras desactivados |
 
 Algumas das opções da linha de comando aceitam parâmetros adicionais, por exemplo quão detalhado o ficheiro de log deve ser ou o caminho para as configurações do utilizador.
 Esses parâmetros devem ser colocados depois da opção, separados da opção por um espaço, se estivermos a usar a versão curta ou um sinal de igual (=), se usarmos a versão longa. Por exemplo:
-| nvda -l 10 | Informa o NVDA para iniciar com o nível de registo definido para depuração |
-| nvda --log-file=c:\nvda.log | Informa o NVDA para escrever o ficheiro de log em c:\nvda.log |
-| nvda --log-level=20 -f c:\nvda.log | Informa o NVDA para iniciar com o nível de registo definido para info e para guardar o ficheiro em c:\nvda.log |
+| "nvda -l 10" | Informa o NVDA para iniciar com o nível de registo definido para depuração |
+| "nvda --log-file=c:\nvda.log" | Informa o NVDA para escrever o ficheiro de log em c:\nvda.log |
+| "nvda --log-level=20 -f c:\nvda.log" | Informa o NVDA para iniciar com o nível de registo definido para info e para guardar o ficheiro em c:\nvda.log |
 
 Seguidamente, apresentam-se as opções para a linha de comando para o NVDA
 || Curta | Longa | Descrição |
-| -h | --help | Mostra a ajuda da linha de comandos e sai |
-| -q | --quit | Sai da cópia em execução do NVDA |
-| -k | --check-running | Anuncia se o NVDA está em execução via código de saída; 0 se em execução, 1 se não em execução |
-| -f NomeDoFicheiroDeRegisto | --log-file=NomeDoFicheiroDeRegisto | Especifica em que ficheiro devem ser escritas as informações de registo |
-| -l LOGLEVEL | --log-level=LOGLEVEL | O nível mais baixo de mensagens registadas (depuração 10, input/output 12, aviso de depuração 15, info 20, desactivado 100) |
-| -c CAMINHO | --config-path=CAMINHO | O caminho para onde estão as configurações do NVDA |
-| None | --lang=LANGUAGE | Sobreõe-se ao idioma  configurado no NVDA. "Windows" para o padrão do utilizador actual, "pt_PT" para português, etc. |
-| -m | --minimal | Sem sons, sem interface, sem mensagem de início, etc |
-| -s | --secure | Inicia o NVDA em [modo seguro #SecureMode] |
-| None | --disable-addons | Os extras serão desacttivados |
-| None | --debug-logging | Activa o nível de registo para Depuração apenas para a próxima execução. Esta definição substitui qualquer outra definição para o nível de registo ( ""--loglevel"", -l) argumento dado, incluindo sem registo. |
-| None | --no-logging | Desactiva totalmente o registo ao usar o NVDA. Esta configuração pode ser sobreescrita se um nível de registo ( ""--loglevel"", -l) for especificado from pela linha de comando ou se o registo em depuração estiver activado. |
-| None | --no-sr-flag  | Não alterar a flag que sinaliza a presença de um leitor de ecrã no sistema |
-| None | --install | Installa o NVDA e inicia a cópia instalada |
-| None | --install-silent | Instala o NVDA silenciosamente e não inicia a cópia instalada |
-| None | --enable-start-on-logon=True|False | Ao instalar, activa o [Usar o NVDA no início de sessão do Windows #StartAtWindowsLogon] |
-| None | --copy-portable-config | Ao instalar copiar a configuração portátil (--config-path, -c) para a conta do utilizador |
-| None | --create-portable | Cria uma cópia portátil do NVDA iniciando a cópia criada. Requer que --portable-path seja especificado |
-| None | --create-portable-silent | Cria uma cópia portátil do NVDA sem iniciar a cópia criada. Requer que --portable-path seja especificado |
-| None | --portable-path=PORTABLEPATH | O caminho da pasta onde a cópia portátil vai ser criada |
+| "-h" | "--help" | Mostra a ajuda da linha de comandos e sai |
+| "-q" | "--quit" | Sai da cópia em execução do NVDA |
+| "-k" | "--check-running" | Anuncia se o NVDA está em execução via código de saída; 0 se em execução, 1 se não em execução |
+| "-f NomeDoFicheiroDeRegisto" | "--log-file=NomeDoFicheiroDeRegisto" | Especifica em que ficheiro devem ser escritas as informações de registo |
+| "-l LOGLEVEL" | "--log-level=LOGLEVEL" | O nível mais baixo de mensagens registadas (depuração 10, input/output 12, aviso de depuração 15, info 20, desactivado 100) |
+| "-c CAMINHO" | "--config-path=CAMINHO" | O caminho para onde estão as configurações do NVDA |
+| None | "--lang=LANGUAGE" | Sobreõe-se ao idioma  configurado no NVDA. "Windows" para o padrão do utilizador actual, "pt_PT" para português, etc. |
+| "-m" | "--minimal" | Sem sons, sem interface, sem mensagem de início, etc |
+| "-s" | "--secure" | Inicia o NVDA em [modo seguro #SecureMode] |
+| None | "--disable-addons" | Os extras serão desacttivados |
+| None | "--debug-logging" | Activa o nível de registo para Depuração apenas para a próxima execução. Esta definição substitui qualquer outra definição para o nível de registo ( ""--loglevel"", -l) argumento dado, incluindo sem registo. |
+| None | "--no-logging" | Desactiva totalmente o registo ao usar o NVDA. Esta configuração pode ser sobreescrita se um nível de registo ( ""--loglevel"", -l) for especificado pela linha de comando ou se o registo em depuração estiver activado. |
+| None | "--no-sr-flag" | Não alterar a flag que sinaliza a presença de um leitor de ecrã no sistema |
+| None | "--install" | Installa o NVDA e inicia a cópia instalada |
+| None | "--install-silent" | Instala o NVDA silenciosamente e não inicia a cópia instalada |
+| None | "--enable-start-on-logon=True/False" | Ao instalar, activa o [Usar o NVDA no início de sessão do Windows #StartAtWindowsLogon] |
+| None | "--copy-portable-config" | Ao instalar copiar a configuração portátil (--config-path, -c) para a conta do utilizador |
+| None | "--create-portable" | Cria uma cópia portátil do NVDA iniciando a cópia criada. Requer que --portable-path seja especificado |
+| None | "--create-portable-silent" | Cria uma cópia portátil do NVDA sem iniciar a cópia criada. Requer que --portable-path seja especificado |
+| None | "--portable-path=PORTABLEPATH" | O caminho da pasta onde a cópia portátil vai ser criada |
 
 ++ Parâmetros do Sistema ++[SystemWideParameters]
 O NVDA permite que a configuração de alguns valores no registo do sistema , alterem o comportamento do NVDA em relação às variáveis do sistema.
@@ -3983,7 +4109,8 @@ Esses valores são guardados no registo numa das seguintes chaves:
 Os seguintes valores podem ser configurados nestas chaves:
 || Nome | Tipo | Valores possíveis | Descrição |
 | configInLocalAppData | DWORD | 0 (padrão) para desactivar, 1 para activar | Se activo, guarda as configurações do utilizador do NVDA na pasta appdata\local, em vez de appdata\roaming |
-| serviceDebug | DWORD | 0 (padrão) para desactivar, 1 para activar | Se activo, desactiva o [modo seguro #SecureMode] em janelas de [Ambiente seguro #SecureScreens] do windows, permitindo o uso da Consola de Python e Visualizador de registo. Devido às graves implicações de segurança, o uso desta opção é fortemente desaconselhado! |
+| serviceDebug | DWORD | 0 (padrão) para desactivar, 1 para activar | Se activo, desactiva o [modo seguro #SecureMode] em janelas de [Ambiente seguro #SecureScreens] do windows. Devido às graves implicações de segurança, o uso desta opção é fortemente desaconselhado! |
+| "forceSecureMode" | DWORD | 0 (padrão) para desactivar, 1 para activar | Se activado, força o [Secure Mode #SecureMode] a ser ativado ao executar o NVDA. |
 
 + Mais Informações +
 Caso necessite de mais informações ou suporte ao o NVDA, por favor, visite a página Internet do NVDA em NVDA_URL.

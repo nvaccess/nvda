@@ -52,7 +52,7 @@ class DefaultAppArgs(argparse.Namespace):
 	and the serviceDebug parameter is not set.
 	This is forced to true if the forceSecureMode parameter is set.
 
-	For more information, refer to devDocs/technicalDesignOverview.md 'Logging in secure mode'
+	For more information, refer to projectDocs/design/technicalDesignOverview.md 'Logging in secure mode'
 	and the following userGuide sections:
 	 - SystemWideParameters (information on the serviceDebug and forceSecureMode parameters)
 	 - SecureMode and SecureScreens
@@ -131,6 +131,11 @@ appPid: int = 0
 """The process ID of NVDA itself.
 """
 
+appDir: str
+"""
+The directory where NVDA is installed or running from.
+Set by nvda_slave.pyw and nvda.pyw.
+"""
 
 # TODO: encapsulate in synthDriverHandler
 settingsRing = None

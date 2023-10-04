@@ -2,7 +2,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
-# Julien Cochuyt, Derek Riemer, Cyrille Bougot
+# Julien Cochuyt, Derek Riemer, Cyrille Bougot, Leonard de Ruijter
 
 """High-level functions to speak information.
 """ 
@@ -35,6 +35,7 @@ from .commands import (
 	EndUtteranceCommand,
 	CharacterModeCommand,
 )
+from .shortcutKeys import getKeyboardShortcutsSpeech
 
 from . import types
 from .types import (
@@ -376,7 +377,7 @@ def getSingleCharDescription(
 		return
 	synth = getSynth()
 	synthConfig = config.conf["speech"][synth.name]
-	if synth.isSupported("pitch") and text.isupper():
+	if PitchCommand in synth.supportedCommands and text.isupper():
 		capPitchChange = synthConfig["capPitchChange"]
 	else:
 		capPitchChange = 0
@@ -409,8 +410,8 @@ def getSpellingSpeech(
 	
 	synth = getSynth()
 	synthConfig = config.conf["speech"][synth.name]
-	
-	if synth.isSupported("pitch"):
+
+	if PitchCommand in synth.supportedCommands:
 		capPitchChange = synthConfig["capPitchChange"]
 	else:
 		capPitchChange = 0
@@ -642,8 +643,8 @@ def getObjectSpeech(
 	# Choose when we should report the content of this object's textInfo, rather than just the object's value
 	import browseMode
 	shouldReportTextContent=not (
-		# focusEntered should never present text content
-		(reason == OutputReason.FOCUSENTERED)
+		# focusEntered or mouse should never present text content
+		reason in (OutputReason.FOCUSENTERED, OutputReason.MOUSE)
 		# The rootNVDAObject of a browseMode document in browse mode (not passThrough)
 		# should never present text content
 		or (
@@ -728,10 +729,16 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 		"columnSpan": True,
 		"current": True
 	}
-	if reason == OutputReason.FOCUSENTERED:
+	if reason in (OutputReason.FOCUSENTERED, OutputReason.MOUSE):
 		allowProperties["value"] = False
 		allowProperties["keyboardShortcut"] = False
 		allowProperties["positionInfo_level"] = False
+	if reason == OutputReason.MOUSE:
+		# Name is often part of the text content when mouse tracking.
+		allowProperties["name"] = False
+		allowProperties["description"] = False
+		allowProperties["positionInfo_indexInGroup"] = False
+		allowProperties["positionInfo_similarItemsInGroup"] = False
 	if not config.conf["presentation"]["reportObjectDescriptions"]:
 		allowProperties["description"] = False
 	if not config.conf["presentation"]["reportKeyboardShortcuts"]:
@@ -1015,16 +1022,20 @@ def speakSelectionMessage(
 		speak(seq, symbolLevel=None, priority=priority)
 
 
+MAX_LENGTH_FOR_SELECTION_REPORTING = 512
+
+
 def _getSelectionMessageSpeech(
 		message: str,
 		text: str,
 ) -> SpeechSequence:
-	if len(text) < 512:
+	if len(text) < MAX_LENGTH_FOR_SELECTION_REPORTING:
 		return _getSpeakMessageSpeech(message % text)
 	# Translators: This is spoken when the user has selected a large portion of text.
 	# Example output "1000 characters"
 	numCharactersText = _("%d characters") % len(text)
 	return _getSpeakMessageSpeech(message % numCharactersText)
+
 
 # C901 'speakSelectionChange' is too complex
 # Note: when working on speakSelectionChange, look for opportunities to simplify
@@ -1743,8 +1754,7 @@ def getPropertiesSpeech(  # noqa: C901
 		textList.append(description)
 	# sometimes keyboardShortcut key is present but value is None
 	keyboardShortcut: Optional[str] = propertyValues.get('keyboardShortcut')
-	if keyboardShortcut:
-		textList.append(keyboardShortcut)
+	textList.extend(getKeyboardShortcutsSpeech(keyboardShortcut))
 	if includeTableCellCoords and cellCoordsText:
 		textList.append(cellCoordsText)
 	if cellCoordsText or rowNumber or columnNumber:
@@ -2558,55 +2568,12 @@ def getFormatFieldSpeech(  # noqa: C901
 	if formatConfig["reportAlignment"]:
 		textAlign=attrs.get("text-align")
 		oldTextAlign=attrsCache.get("text-align") if attrsCache is not None else None
-		if (textAlign or oldTextAlign is not None) and textAlign!=oldTextAlign:
-			textAlign=textAlign.lower() if textAlign else textAlign
-			if textAlign=="left":
-				# Translators: Reported when text is left-aligned.
-				text=_("align left")
-			elif textAlign=="center":
-				# Translators: Reported when text is centered.
-				text=_("align center")
-			elif textAlign=="right":
-				# Translators: Reported when text is right-aligned.
-				text=_("align right")
-			elif textAlign=="justify":
-				# Translators: Reported when text is justified.
-				# See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
-				text=_("align justify")
-			elif textAlign=="distribute":
-				# Translators: Reported when text is justified with character spacing (Japanese etc) 
-				# See http://kohei.us/2010/01/21/distributed-text-justification/
-				text=_("align distributed")
-			else:
-				# Translators: Reported when text has reverted to default alignment.
-				text=_("align default")
-			textList.append(text)
+		if textAlign and textAlign != oldTextAlign:
+			textList.append(textAlign.displayString)
 		verticalAlign=attrs.get("vertical-align")
-		oldverticalAlign=attrsCache.get("vertical-align") if attrsCache is not None else None
-		if (verticalAlign or oldverticalAlign is not None) and verticalAlign!=oldverticalAlign:
-			verticalAlign=verticalAlign.lower() if verticalAlign else verticalAlign
-			if verticalAlign=="top":
-				# Translators: Reported when text is vertically top-aligned.
-				text=_("vertical align top")
-			elif verticalAlign in("center","middle"):
-				# Translators: Reported when text is vertically middle aligned.
-				text=_("vertical align middle")
-			elif verticalAlign=="bottom":
-				# Translators: Reported when text is vertically bottom-aligned.
-				text=_("vertical align bottom")
-			elif verticalAlign=="baseline":
-				# Translators: Reported when text is vertically aligned on the baseline. 
-				text=_("vertical align baseline")
-			elif verticalAlign=="justify":
-				# Translators: Reported when text is vertically justified.
-				text=_("vertical align justified")
-			elif verticalAlign=="distributed":
-				# Translators: Reported when text is vertically justified but with character spacing (For some Asian content). 
-				text=_("vertical align distributed") 
-			else:
-				# Translators: Reported when text has reverted to default vertical alignment.
-				text=_("vertical align default")
-			textList.append(text)
+		oldVerticalAlign = attrsCache.get("vertical-align") if attrsCache is not None else None
+		if verticalAlign and verticalAlign != oldVerticalAlign:
+			textList.append(verticalAlign.displayString)
 	if formatConfig["reportParagraphIndentation"]:
 		indentLabels={
 			'left-indent':(

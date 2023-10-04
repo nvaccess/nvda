@@ -240,13 +240,15 @@ class _SafetyWarningDialog(
 
 		sHelper.sizer.AddSpacer(SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
-		self.dontShowAgainCheckbox = sHelper.addLabeledControl(
-			pgettext(
-				"addonStore",
-				# Translators: The label of a checkbox in the add-on store warning dialog
-				"&Don't show this message again"
+		self.dontShowAgainCheckbox = sHelper.addItem(
+			wx.CheckBox(
+				self,
+				label=pgettext(
+					"addonStore",
+					# Translators: The label of a checkbox in the add-on store warning dialog
+					"&Don't show this message again"
+				),
 			),
-			wx.CheckBox,
 		)
 
 		bHelper = sHelper.addDialogDismissButtons(ButtonHelper(wx.HORIZONTAL))

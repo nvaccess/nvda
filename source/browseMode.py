@@ -583,6 +583,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def script_passThrough(self,gesture):
 		if not config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
 			self._focusLastFocusableObject()
+			api.processPendingEvents(processEventQueue=True)
 		gesture.send()
 	# Translators: the description for the passThrough script on browseMode documents.
 	script_passThrough.__doc__ = _("Passes gesture through to the application")
@@ -918,6 +919,17 @@ qn(
 	prevDoc=_("moves to the previous grouping"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous grouping")
+)
+qn(
+	"tab", key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next tab"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next tab"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous tab"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous tab")
 )
 del qn
 

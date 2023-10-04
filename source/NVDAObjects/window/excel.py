@@ -8,7 +8,9 @@ import abc
 import ctypes
 import enum
 from typing import (
-	Optional, Dict,
+	Any,
+	Dict,
+	Optional,
 )
 
 from comtypes import COMError, BSTR
@@ -39,7 +41,7 @@ from winAPI.winUser.constants import SysColorIndex
 import mouseHandler
 from displayModel import DisplayModelTextInfo
 import controlTypes
-from controlTypes import TextPosition
+from controlTypes import TextPosition, TextAlign, VerticalTextAlign
 from . import Window
 from .. import NVDAObjectTextInfo
 import scriptHandler
@@ -48,35 +50,103 @@ import browseMode
 import inputCore
 import ctypes
 import vision
+from utils.displayString import DisplayStringIntEnum
+import NVDAState
 
 excel2010VersionMajor=14
 
 xlNone=-4142
 xlSimple=-4154
 xlExtended=3
-xlCenter=-4108
-xlJustify=-4130
-xlLeft=-4131
-xlRight=-4152
-xlDistributed=-4117
-xlBottom=-4107
-xlTop=-4160
+
+
+class XlHAlign(DisplayStringIntEnum):
+	# XlHAlign enumeration from https://docs.microsoft.com/en-us/office/vba/api/excel.xlhalign
+	CENTER = -4108
+	CENTER_ACROSS_SELECTION = 7
+	DISTRIBUTED = -4117
+	FILL = 5
+	GENERAL = 1
+	JUSTIFY = -4130
+	LEFT = -4131
+	RIGHT = -4152
+
+	@property
+	def _displayStringLabels(self):
+		return _horizontalAlignmentLabels
+
+
+class XlVAlign(DisplayStringIntEnum):
+	# XlVAlign enumeration from https://docs.microsoft.com/en-us/office/vba/api/excel.xlvalign
+	BOTTOM = -4107
+	CENTER = -4108
+	DISTRIBUTED = -4117
+	JUSTIFY = -4130
+	TOP = -4160
+
+	@property
+	def _displayStringLabels(self):
+		return _verticalAlignmentLabels
+
+
+_horizontalAlignmentLabels = {
+	XlHAlign.CENTER: TextAlign.CENTER,
+	XlHAlign.CENTER_ACROSS_SELECTION: TextAlign.CENTER_ACROSS_SELECTION,
+	XlHAlign.DISTRIBUTED: TextAlign.DISTRIBUTE,
+	XlHAlign.FILL: TextAlign.FILL,
+	XlHAlign.GENERAL: TextAlign.GENERAL,
+	XlHAlign.JUSTIFY: TextAlign.JUSTIFY,
+	XlHAlign.LEFT: TextAlign.LEFT,
+	XlHAlign.RIGHT: TextAlign.RIGHT,
+}
+
+_verticalAlignmentLabels = {
+	XlVAlign.BOTTOM: VerticalTextAlign.BOTTOM,
+	XlVAlign.CENTER: VerticalTextAlign.CENTER,
+	XlVAlign.DISTRIBUTED: VerticalTextAlign.DISTRIBUTE,
+	XlVAlign.JUSTIFY: VerticalTextAlign.JUSTIFY,
+	XlVAlign.TOP: VerticalTextAlign.TOP,
+}
+
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	_deprecatedConstantsMap = {
+		"xlCenter": -4108,  # XlHAlign.CENTER or XlVAlign.CENTER
+		"xlJustify": -4130,  # XlHAlign.JUSTIFY or XlVAlign.JUSTIFY
+		"xlLeft": XlHAlign.LEFT.value,
+		"xlRight": XlHAlign.RIGHT.value,
+		"xlDistributed": -4117,  # XlHAlign.DDISTRIBUTED or XlVAlign.DDISTRIBUTED
+		"xlBottom": XlVAlign.BOTTOM.value,
+		"xlTop": XlVAlign.TOP.value,
+		"alignmentLabels": {
+			XlHAlign.CENTER.value: "center",
+			XlHAlign.JUSTIFY.value: "justify",
+			XlHAlign.LEFT.value: "left",
+			XlHAlign.RIGHT.value: "right",
+			XlHAlign.DISTRIBUTED.value: "distributed",
+			XlVAlign.BOTTOM.value: "botom",
+			XlVAlign.TOP.value: "top",
+			1: "default",
+		}
+	}
+	if attrName in _deprecatedConstantsMap and NVDAState._allowDeprecatedAPI():
+		replacementSymbol = _deprecatedConstantsMap[attrName]
+		log.warning(
+			f"Importing {attrName} from here is deprecated. "
+			f"Import XlVAlign or XlHAlign enumerations instead.",
+			stack_info=True,
+		)
+		return replacementSymbol
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
+
 xlDown=-4121
 xlToLeft=-4159
 xlToRight=-4161
 xlUp=-4162
 xlCellWidthUnitToPixels = 7.5919335705812574139976275207592
 xlSheetVisible=-1
-alignmentLabels={
-	xlCenter:"center",
-	xlJustify:"justify",
-	xlLeft:"left",
-	xlRight:"right",
-	xlDistributed:"distributed",
-	xlBottom:"botom",
-	xlTop:"top",
-	1:"default",
-}
 
 xlA1 = 1
 xlRC = 2
@@ -1028,7 +1098,7 @@ class ExcelWorksheet(ExcelBase):
 			ui.message(msgOff)
 
 	@script(
-		gestures=["kb:control+b", "kb:control+shift+2"],
+		gestures=["kb:control+b", "kb:control+2"],
 		canPropagate=True,
 	)
 	def script_toggleBold(self, gesture):
@@ -1042,7 +1112,7 @@ class ExcelWorksheet(ExcelBase):
 		)
 
 	@script(
-		gestures=["kb:control+i", "kb:control+shift+3"],
+		gestures=["kb:control+i", "kb:control+3"],
 		canPropagate=True,
 	)
 	def script_toggleItalic(self, gesture):
@@ -1056,7 +1126,7 @@ class ExcelWorksheet(ExcelBase):
 		)
 
 	@script(
-		gestures=["kb:control+u", "kb:control+shift+4"],
+		gestures=["kb:control+u", "kb:control+4"],
 		canPropagate=True,
 	)
 	def script_toggleUnderline(self, gesture):
@@ -1070,7 +1140,7 @@ class ExcelWorksheet(ExcelBase):
 		)
 
 	@script(
-		gesture="kb:control+shift+5",
+		gesture="kb:control+5",
 		canPropagate=True,
 	)
 	def script_toggleStrikethrough(self, gesture):
@@ -1097,11 +1167,17 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			cellObj=self.obj.excelCellObject
 		fontObj=cellObj.font
 		if formatConfig['reportAlignment']:
-			value=alignmentLabels.get(self.obj.excelCellObject.horizontalAlignment)
-			if value:
+			try:
+				value = XlHAlign(self.obj.excelCellObject.horizontalAlignment).displayString
+			except ValueError:
+				pass
+			else:
 				formatField['text-align']=value
-			value=alignmentLabels.get(self.obj.excelCellObject.verticalAlignment)
-			if value:
+			try:
+				value = XlVAlign(self.obj.excelCellObject.verticalAlignment).displayString
+			except ValueError:
+				pass
+			else:
 				formatField['vertical-align']=value
 		if formatConfig['reportFontName']:
 			formatField['font-name']=fontObj.name

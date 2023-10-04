@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
-# Davy Kager
+# Davy Kager, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -11,6 +11,7 @@ as well as the associated TextInfo class."""
 import time
 import typing
 from typing import (
+	Dict,
 	Optional,
 )
 import weakref
@@ -283,7 +284,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		raise NotImplementedError
 
-	def findOverlayClasses(self, clsList: typing.List["NVDAObject"]) -> None:
+	def findOverlayClasses(self, clsList: typing.List[typing.Type["NVDAObject"]]) -> None:
 		"""
 		Chooses overlay classes which should be added to this object's class structure,
 		after the object has been initially instantiated.
@@ -1044,10 +1045,12 @@ Tries to force this object to take the focus.
 		"""
 		return None
 
-	def _get_positionInfo(self):
+	#: Type definition for auto prop '_get_positionInfo'
+	positionInfo: Dict[str, int]
+
+	def _get_positionInfo(self) -> Dict[str, int]:
 		"""Retrieves position information for this object such as its level, its index with in a group, and the number of items in that group.
 		@return: a dictionary containing any of level, groupIndex and similarItemsInGroup.
-		@rtype: dict
 		"""
 		return {}
 
@@ -1074,10 +1077,12 @@ Tries to force this object to take the focus.
 			self.isProtected=isProtected
 		return isProtected
 
-	def _get_indexInParent(self):
+	#: Type definition for auto prop '_get_indexInParent'
+	indexInParent: Optional[int]
+
+	def _get_indexInParent(self) -> Optional[int]:
 		"""The index of this object in its parent object.
 		@return: The 0 based index, C{None} if there is no parent.
-		@rtype: int
 		@raise NotImplementedError: If not supported by the underlying object.
 		"""
 		raise NotImplementedError
@@ -1199,7 +1204,7 @@ Tries to force this object to take the focus.
 
 		if not self._mouseEntered and config.conf['mouse']['reportObjectRoleOnMouseEnter']:
 			speech.cancelSpeech()
-			speech.speakObjectProperties(self,role=True)
+			speech.speakObject(self, reason=controlTypes.OutputReason.MOUSE)
 			speechWasCanceled=True
 		else:
 			speechWasCanceled=False
@@ -1476,17 +1481,20 @@ This code is executed if a gain focus event is received by this object.
 		info.extend(self.appModule.devInfo)
 		return info
 
-	def _get_sleepMode(self):
+	# Typing information for auto property _get_sleepMode
+	sleepMode: bool
+
+	# Don't cache sleepMode, as it is derived from a property which might change
+	# and we want the changed value immediately.
+	_cache_sleepMode = False
+
+	def _get_sleepMode(self) -> bool:
 		"""Whether NVDA should sleep for this object (e.g. it is self-voicing).
 		If C{True}, all  events and script requests for this object are silently dropped.
-		@rtype: bool
 		"""
 		if self.appModule:
 			return self.appModule.sleepMode
 		return False
-	# Don't cache sleepMode, as it is derived from a property which might change
-	# and we want the changed value immediately.
-	_cache_sleepMode = False
 
 	def _get_mathMl(self):
 		"""Obtain the MathML markup for an object containing math content.

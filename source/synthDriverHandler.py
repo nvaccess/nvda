@@ -6,7 +6,13 @@
 
 import pkgutil
 import importlib
-from typing import Optional, OrderedDict, Set
+from typing import (
+	List,
+	Optional,
+	OrderedDict,
+	Set,
+	Tuple,
+)
 from locale import strxfrm
 
 import config
@@ -255,22 +261,30 @@ class SynthDriver(driverHandler.Driver):
 	rate: int
 	"""Between 0-100"""
 
-	def _get_rate(self):
+	def _get_rate(self) -> int:
 		return 0
 
-	def _set_rate(self, value):
+	def _set_rate(self, value: int):
 		pass
 
-	def _get_pitch(self):
+	#: Typing information for auto-property: _get_pitch
+	pitch: int
+	"""Between 0-100"""
+
+	def _get_pitch(self) -> int:
 		return 0
 
-	def _set_pitch(self, value):
+	def _set_pitch(self, value: int):
 		pass
 
-	def _get_volume(self):
+	#: Typing information for auto-property: _get_volume
+	volume: int
+	"""Between 0-100"""
+
+	def _get_volume(self) -> int:
 		return 0
 
-	def _set_volume(self, value):
+	def _set_volume(self, value: int):
 		pass
 
 	def _get_variant(self):
@@ -395,10 +409,10 @@ def _getSynthDriver(name) -> SynthDriver:
 	return importlib.import_module("synthDrivers.%s" % name, package="synthDrivers").SynthDriver
 
 
-def getSynthList():
+def getSynthList() -> List[Tuple[str, str]]:
 	from synthDrivers.silence import SynthDriver as SilenceSynthDriver
 
-	synthList = []
+	synthList: List[Tuple[str, str]] = []
 	# The synth that should be placed at the end of the list.
 	lastSynth = None
 	for loader, name, isPkg in pkgutil.iter_modules(synthDrivers.__path__):

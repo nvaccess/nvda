@@ -33,10 +33,10 @@ eSpeak-NG, LibLouis braille translator, i Unicode CLDR su ažurirani.
   - Komanda bez dodeljene prečice kako biste kružili kroz dostupne jezike za Windows OCR. (#13036)
   - Komanda bez dodeljene prečice kako biste kružili kroz režime prikazivanja poruka na brajevom redu. (#14864)
   - Komanda bez dodeljene prečice kako biste uključili ili isključili pokazivač izbora na brajevom redu. (#14948)
-    - Dodate podrazumevane prečice na tastaturi za pomeranje na sledeći ili prethodni objekat u ravnom prikazu hierarhije objekata. (#15053)
+  - Dodate podrazumevane prečice na tastaturi za pomeranje na sledeći ili prethodni objekat u ravnom prikazu hierarhije objekata. (#15053)
     - Desktop: ``NVDA+numeričko9`` i ``NVDA+numeričko3`` da se pomerite na sledeći ili prethodni objekat.
     - Laptop: ``šift+NVDA+[`` i ``šift+NVDA+]`` da se pomerite na prethodni i sledeći objekat.
-    -
+  -
   -
 - Nove funkcije za brajeve redove:
   - Dodata podrška za Help Tech Activator brajev red. (#14917)
@@ -58,7 +58,7 @@ eSpeak-NG, LibLouis braille translator, i Unicode CLDR su ažurirani.
   - Menjanje režima prikazivanja poruka
   - Uključivanje i isključivanje brajevog kursora
   - Uključivanje i isključivanje pokazivača izbora na brajevom redu
-    - Menjanje opcije "Brajevo pomeranje kursora kada se prebacuje pregledni kursor". (#15122)
+  - Menjanje opcije "Brajevo pomeranje kursora kada se prebacuje pregledni kursor". (#15122)
   -
 - Microsoft Office funkcije:
   - Kada se omogući prijavljivanje obeleženog teksta u opcijama formatiranja dokumenta, obeležene boje se sada prijavljuju u Microsoft Wordu. (#7396, #12101, #5866)
@@ -110,13 +110,13 @@ Ovo se može onemogućiti u panelu naprednih podešavanja. (#7756)
 
 
 == Ispravljene greške ==
-  - Brajevi redovi:
+- Brajevi redovi:
   - Nekoliko poboljšanja u stabilnosti unosa/izlaza na brajevom redu, što će smanjiti učestalost grešaka i rušenja programa NVDA. (#14627)
   - NVDA se više neće bespotrebno prebacivati na opciju bez brajevog reda više puta u toku automatskog prepoznavanja, što donosi čistije dnevnike evidencije i manje opterećenje. (#14524)
   - NVDA će se sada vratiti na USB ako HID Bluetooth uređaj (kao što je HumanWare Brailliant ili APH Mantis) automatski bude prepoznat i USB veza postane dostupna.
   Ovo je ranije radilo samo za Bluetooth serijske portove. (#14524)
   - Kada nijedan brajev red nije povezan i preglednik brajevog reda se zatvori pritiskanjem ``alt+f4`` ili klikom na dugme zatvori, veličina brajevog podsistema će ponovo biti vraćena na bez ćelija. (#15214)
-   -
+  -
 - Web pretraživači:
   - NVDA više neće ponekad izazivati rušenje ili prestanak rada programa Mozilla Firefox. (#14647)
   - U pretraživačima Mozilla Firefox i Google Chrome, ukucani znakovi se više ne prijavljuju u nekim poljima za unos teksta čak i kada je izgovor ukucanih znakova onemogućen. (#8442)
@@ -126,20 +126,20 @@ Ovo se može onemogućiti u panelu naprednih podešavanja. (#7756)
   - Kada pokušavate da čitate adresu linka bez href atributa NVDA više neće biti bez govora.
   Umesto togag NVDA će prijaviti da link  nema odredište. (#14723)
   - U režimu pretraživanja, NVDA neće neispravno ignorisati pomeranje fokusa na glavnu kontrolu ili kontrolu unutar nje na primer pomeranje sa kontrole na njenu unutrašnju stavku liste ili ćeliju mreže. (#14611)
-    - Napomena međutim da se ova ispravka primenjuje samo kada je opcija "Automatsko postavljanje fokusa na elemente koji se mogu fokusirati" u podešavanjima režima pretraživanja isključena (što je podrazumevano podešavanje).
+   - Napomena međutim da se ova ispravka primenjuje samo kada je opcija "Automatsko postavljanje fokusa na elemente koji se mogu fokusirati" u podešavanjima režima pretraživanja isključena (što je podrazumevano podešavanje).
     -
 -
 - Ispravke za Windows 11:
   - NVDA ponovo može da izgovara sadržaj statusne trake u beležnici. (#14573)
   - Prebacivanje između kartica će izgovoriti ime i poziciju nove kartice u beležnici i istraživaču datoteka. (#14587, #14388)
   - NVDA će ponovo izgovarati dostupne unose kada se tekst piše na jezicima kao što su Kineski i Japanski. (#14509)
-    - Ponovo je moguće otvoriti listu saradnika ili licencu iz menija NVDA pomoći. (#14725)
+  - Ponovo je moguće otvoriti listu saradnika ili licencu iz menija NVDA pomoći. (#14725)
   -
 - Microsoft Office ispravke:
   - Kada se brzo krećete kroz ćelije u Excelu, manja je verovatnoća da će NVDA prijaviti pogrešnu ćeliju ili pogrešan izbor. (#14983, #12200, #12108)
   - Kada stanete na Excel ćeliju van radnog lista, brajev red i označavanje fokusa se više neće bespotrebno ažurirati na objekat koji je ranije bio fokusiran. (#15136)
-- NVDA sada uspešno izgovara fokusiranje na polja za lozinke u programima Microsoft Excel i Outlook. (#14839)
-   -
+  - NVDA sada uspešno izgovara fokusiranje na polja za lozinke u programima Microsoft Excel i Outlook. (#14839)
+  -
 - Za simbole koji nemaju opis na trenutnom jeziku, podrazumevani Engleski nivo simbola će se koristiti. (#14558, #14417)
 - Sada je moguće koristiti znak obrnuta kosa crta u polju zamene unosa rečnika, kada vrsta nije podešena kao regularni izraz. (#14556)
 - In Windows 10 and 11 Calculator, a portable copy of NVDA will no longer do nothing or play error tones when entering expressions in standard calculator in compact overlay mode. (#14679)

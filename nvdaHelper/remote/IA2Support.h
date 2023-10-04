@@ -28,10 +28,13 @@ struct IA2InstallData {
 	HANDLE uiThreadUninstalledEvent;
 };
 
-std::pair<std::map<DWORD, IA2InstallData>::iterator, bool> installIA2Support(DWORD threadID);
-bool uninstallIA2Support(DWORD threadID);
+bool installIA2Support();
+bool uninstallIA2Support();
 
 //Private functions
+
+std::pair<std::map<DWORD, IA2InstallData>::iterator, bool> installIA2SupportForThread(DWORD threadID);
+bool uninstallIA2SupportForThread(DWORD threadID);
 void IA2Support_inProcess_initialize();
 void IA2Support_inProcess_terminate();
 

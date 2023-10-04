@@ -1,8 +1,8 @@
 # NVDA's build system is SCons
-SCons==4.3.0
+SCons==4.5.2
 
 # NVDA's runtime dependencies
-comtypes==1.1.11
+comtypes==1.2.0
 pyserial==3.5
 wxPython==4.1.1
 git+https://github.com/DiffSK/configobj@3e2f4cc#egg=configobj
@@ -14,7 +14,7 @@ requests==2.31.0
 charset-normalizer==2.1.1
 
 #NVDA_DMP requires diff-match-patch
-diff_match_patch_python==1.0.2
+fast_diff_match_patch==2.0.1
 
 # Packaging NVDA
 py2exe==0.11.1.0

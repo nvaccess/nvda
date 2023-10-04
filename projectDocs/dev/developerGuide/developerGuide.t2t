@@ -1,7 +1,7 @@
 NVDA NVDA_VERSION Developer Guide
 
 
-%!includeconf: ../user_docs/userGuide.t2tconf
+%!includeconf: ../../../user_docs/userGuide.t2tconf
 
 % Remove double spacing from the beginning of each line as txt2tags seems to indent preformatted text by two spaces
 %!PostProc(html): '^  ' ''
@@ -970,7 +970,7 @@ The sections below provide the list of currently defined extension points in NVD
 Please see code documentation in the associated files, or the code itself, for further explanation.
 The section titles below represent the package or module in which the listed extension points are defined.
 
-For examples of how to define and use new extension points, please see the code documentation of the ``extensionPoints`` module.
+For examples of how to define and use new extension points, please see the code documentation of the ``extensionPoints`` package.
 
 ++ braille ++[brailleExtPts]
 || Type | Extension Point | Description |
@@ -1022,6 +1022,10 @@ For examples of how to define and use new extension points, please see the code 
 || Type | Extension Point | Description |
 | ``Decider`` | ``decide_beep`` | Notifies when a beep is about to be generated and played, allowing a component to decide whether it should be. |
 
+++ treeInterceptorHandler ++[treeInterceptorHandlerExtPts]
+|| Type | Extension Point | Description |
+| ``Action`` | ``post_browseModeStateChange`` | Notifies when browse mode state changes. |
+
 ++ utils.security ++[utils_securityExtPts]
 || Type | Extension Point | Description |
 | ``Action`` | ``post_sessionLockStateChanged`` | Notifies when a session lock or unlock event occurs. |
@@ -1029,6 +1033,10 @@ For examples of how to define and use new extension points, please see the code 
 ++ winAPI.messageWindow ++[winAPI_messageWindowExtPts]
 || Type | Extension Point | Description |
 | ``Action`` | ``pre_handleWindowMessage`` | Notifies when NVDA receives a window message, allowing components to perform an action when certain system events occur. |
+
+++ winAPI.secureDesktop ++[winAPI_secureDesktopExtPts]
+|| Type | Extension Point | Description |
+| ``Action`` | ``winAPI.secureDesktop.post_secureDesktopStateChange`` | Notifies when the user has switched to/from the secure desktop |
 
 ++ bdDetect ++[bdDetectExtPts]
 || Type | Extension Point | Description |

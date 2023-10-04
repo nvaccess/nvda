@@ -86,6 +86,9 @@ goodUIAWindowClassNames = (
 badUIAWindowClassNames = (
 	# UIA events of candidate window interfere with MSAA events.
 	"Microsoft.IME.CandidateWindow.View",
+	# Known issue with "Reliability Monitor" in explorer.exe #15541.
+	# Task manager and mmc.exe are also affected, but have isBadUIAWindow workarounds.
+	"SysListView32",
 	"SysTreeView32",
 	"WuDuiListView",
 	"ComboBox",
@@ -97,7 +100,6 @@ badUIAWindowClassNames = (
 	"RichEdit",
 	"RichEdit20",
 	"RICHEDIT50W",
-	"SysListView32",
 	"Button",
 	# #8944: The Foxit UIA implementation is incomplete and should not be used for now.
 	"FoxitDocWnd",
@@ -1203,7 +1205,7 @@ class UIAHandler(COMObject):
 			return windowHandle
 		if _isDebug():
 			log.debug(
-				" locating nearest ancestor windowHandle "
+				"Locating nearest ancestor windowHandle "
 				f"for element {self.getUIAElementDebugString(UIAElement)}"
 			)
 		try:
@@ -1237,7 +1239,11 @@ class UIAHandler(COMObject):
 		try:
 			window = new.cachedNativeWindowHandle
 		except COMError:
-			window = None
+			if _isDebug():
+				log.debugWarning(
+					"Unable to get cachedNativeWindowHandle from found ancestor element", exc_info=True
+				)
+			return None
 		if _isDebug():
 			log.debug(
 				"Found ancestor element "
