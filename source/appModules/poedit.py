@@ -35,6 +35,7 @@ class _WindowControlIdOffset(IntEnum):
 	TRANSLATOR_NOTES = 80
 	COMMENT = 83
 	TRANSLATION_WARNING = 28
+	NEEDS_WORK_SWITCH = 33
 
 
 def _getObjectWithControlId(parentWindowHandle: int, controlId: int) -> Optional[NVDAObject]:
@@ -173,10 +174,12 @@ class PoeditRichEdit(NVDAObject):
 
 
 class PoeditListItem(NVDAObject):
-
 	_warningControlToReport: Optional[_WindowControlIdOffset]
 
 	def _get__warningControlToReport(self) -> Optional[_WindowControlIdOffset]:
+		obj = self.appModule._getNVDAObjectForWindowControlIdOffset(_WindowControlIdOffset.NEEDS_WORK_SWITCH)
+		if obj and controlTypes.State.CHECKED in obj.states:
+			return _WindowControlIdOffset.NEEDS_WORK_SWITCH
 		obj = self.appModule._getNVDAObjectForWindowControlIdOffset(_WindowControlIdOffset.OLD_SOURCE_TEXT)
 		if obj and not obj.hasIrrelevantLocation:
 			return _WindowControlIdOffset.OLD_SOURCE_TEXT
@@ -206,6 +209,8 @@ class PoeditListItem(NVDAObject):
 			return
 		warning = self._warningControlToReport
 		if warning is _WindowControlIdOffset.OLD_SOURCE_TEXT:
-			tones.beep(550, 50)
+			tones.beep(495, 50)
 		elif warning is _WindowControlIdOffset.TRANSLATION_WARNING:
+			tones.beep(550, 50)
+		elif warning is _WindowControlIdOffset.NEEDS_WORK_SWITCH:
 			tones.beep(660, 50)
