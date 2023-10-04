@@ -99,6 +99,7 @@ def physicalToLogicalPoint(window, x, y):
 	_physicalToLogicalPoint(window, ctypes.byref(point))
 	return point.x, point.y
 
+
 DEFAULT_DPI_LEVEL = 96
 # The constant (defined in winGdi.h) to get the number of logical pixels per inch on the x axis
 # via the GetDeviceCaps function.
