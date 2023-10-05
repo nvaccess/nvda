@@ -52,18 +52,16 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 	#: True if formatting should be ignored (text only) such as for spellCheck error field
 	ignoreFormatting=False
 
-	def event_caret(self):
+	def event_caret(self) -> None:
 		curSelectionPos=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		lastSelectionPos=getattr(self,'_lastSelectionPos',None)
 		self._lastSelectionPos=curSelectionPos
 		if lastSelectionPos:
 			if curSelectionPos._rangeObj.isEqual(lastSelectionPos._rangeObj):
-				log.debug("caret event before return")
 				if self._fromUpdateBrailleAndReviewPosition:
 					super().event_caret()
 					self._fromUpdateBrailleAndReviewPosition = False
 				return
-		log.debug("caret event")
 		super(WordDocument,self).event_caret()
 
 	def _get_role(self):
@@ -380,26 +378,32 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
 	script_previousParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
 
-	@script(gestures=("kb:control+v", "kb:control+x", "kb:control+z", "kb:backspace"))
+	@script(
+		gestures=(
+			"kb:control+v", "kb:control+x", "kb:control+y", "kb:control+z",
+			"kb:alt+backspace", "kb:backspace", "kb:control+backspace"
+		)
+	)
 	def script_updateBrailleAndReviewPosition(self, gesture: inputCore.InputGesture) -> None:
 		"""Helper script to update braille and review position.
-		Caret event is not always fired when control+v, control+x or control+z is
-		pressed so enqueuing caret event for that.
-		When backspace is pressed and hold down, braille may not always be updated.
-		Allowing braille and review position updates in any cases when
-		this script is executed, seems to fix that problem.
+		Caret event is not always fired when control+v, control+x, control+y
+		or control+z (alt+backspace) is pressed so enqueuing caret event for that.
+		When backspace or control+backspace is pressed and hold down, braille
+		may not always be updated. Allowing braille and review position updates
+		in L{event_caret} seems to fix that problem.
 		"""
 		# Ensuring braille and review position updates are allowed in caret event.
 		self._fromUpdateBrailleAndReviewPosition = True
-		# Speech output when backspace is pressed.
+		# Speech output when backspace or control+backspace is pressed.
 		if gesture._get_displayName() == "backspace":
-			scriptHandler.queueScript(self.script_caret_backspaceCharacter, gesture)
-			return
+			self.script_caret_backspaceCharacter(gesture)
+		elif gesture._get_displayName() == "ctrl+backspace":
+			self.script_caret_backspaceWord(gesture)
 		else:
 			gesture.send()
-		# Using getFocusObject because self may not always work.
-		if not eventHandler.isPendingEvents("caret", api.getFocusObject()):
-			eventHandler.queueEvent("caret", api.getFocusObject())
+			# Using getFocusObject because self may not always work.
+			if not eventHandler.isPendingEvents("caret", api.getFocusObject()):
+				eventHandler.queueEvent("caret", api.getFocusObject())
 
 	def focusOnActiveDocument(self, officeChartObject):
 		rangeStart=officeChartObject.Parent.Range.Start
