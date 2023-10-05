@@ -719,7 +719,8 @@ def registerEaseOfAccess(installDir):
 			winreg.REG_SZ,
 			"nvda.exe"
 		)
-		winreg.SetValueEx(appKey,
+		winreg.SetValueEx(
+			appKey,
 			"StartExe",
 			None,
 			winreg.REG_SZ,
