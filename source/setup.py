@@ -114,11 +114,6 @@ _py2ExeWindows = [
 		"icon_resources": [(1, "images/nvda.ico")],
 		"other_resources": [_genManifestTemplate(shouldHaveUIAccess=False)],
 	},
-	{
-		"script": "nvda_eoaProxy.pyw",
-		"icon_resources": [(1, "images/nvda.ico")],
-		"other_resources": [_genManifestTemplate(shouldHaveUIAccess=_partialArgs.uiAccess)],
-	},
 ]
 if _partialArgs.uiAccess:
 	_py2ExeWindows.insert(1, {
