@@ -104,6 +104,15 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 	# Note: when working on _normalizeControlField, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
 	def _normalizeControlField(self, attrs):  # noqa: C901
+		# convert some IAccessible2 text values to integers
+		for name in (
+			"ia2TextWindowHandle",
+			"ia2TextUniqueID",
+			"ia2TextStartOffset",
+		):
+			val = attrs.get(name, None)
+			if val is not None:
+				attrs[name] = int(val)
 		for attr in (
 			"table-rownumber-presentational",
 			"table-columnnumber-presentational",
@@ -240,8 +249,8 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		normalizeIA2TextFormatField(attrs)
 		# convert some IAccessible2 values to integers
 		for name in (
-			"ia2WindowHandle",
-			"ia2UniqueID",
+			"ia2TextWindowHandle",
+			"ia2TextUniqueID",
 			"ia2TextStartOffset",
 		):
 			val = attrs.get(name, None)
@@ -635,15 +644,23 @@ class Gecko_ia2(VirtualBuffer):
 		ia2EndWindow = None
 		ia2EndID = None
 		ia2EndOffset = None
+		log.debug("checking fields...")
 		for field in selFields:
-			if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
-				try:
-					ia2StartWindow, ia2StartID, ia2StartOffset = fetchIA2OffsetInfoFromVBufFormatField(field.field)
-				except ValueError:
-					continue
-				break
+			if isinstance(field, textInfos.FieldCommand):
+				if field.command in ("controlStart", "formatChange"):
+					hwnd = field.field.get('ia2TextWindowHandle')
+					if hwnd is not None:
+						ia2StartWindow = hwnd
+						ia2StartID = field.field['ia2TextUniqueID']
+						ia2StartOffset = field.field['ia2TextStartOffset']
+						if field.command == "formatChange":
+							ia2StartOffset += field.field.get('strippedCharsFromStart', 0)
+							ia2StartOffset += field.field['_offsetFromStartOfNode']
+					if field.command == "controlStart":
+						continue
+			break
 		if ia2StartOffset is None:
-			raise NotImplementedError("No ia2StartOffset")
+			raise NotImplementedError
 		log.debug(f"ia2StartWindow: {ia2StartWindow}")
 		log.debug(f"ia2StartID: {ia2StartID}")
 		log.debug(f"ia2StartOffset: {ia2StartOffset}")
@@ -651,25 +668,31 @@ class Gecko_ia2(VirtualBuffer):
 		assert (childID == 0), f"childID should be 0"
 		ia2StartObj = ia2StartObj.QueryInterface(IAccessibleText)
 		log.debug(f"ia2StartObj {ia2StartObj}")
-		lastTextLen = 0
+		textLen = 0
 		for field in reversed(selFields):
 			if isinstance(field, str):
-				lastTextLen = len(field)
+				textLen = len(field)
 				continue
-			elif isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
-				try:
-					ia2EndWindow, ia2EndID, ia2EndOffset = fetchIA2OffsetInfoFromVBufFormatField(field.field)
-				except ValueError:
-					lastTextLen = 0
+			elif isinstance(field, textInfos.FieldCommand):
+				if field.command in ("controlEnd", "formatChange"):
+					hwnd = field.field.get('ia2TextWindowHandle')
+					if hwnd is not None:
+						ia2EndWindow = hwnd
+						ia2EndID = field.field['ia2TextUniqueID']
+						ia2EndOffset = field.field['ia2TextStartOffset']
+						if field.command == "controlEnd":
+							ia2EndOffset += 1
+						elif field.command == "formatChange":
+							ia2EndOffset += field.field.get('strippedCharsFromStart', 0)
+							ia2EndOffset += field.field['_offsetFromStartOfNode']
+							ia2EndOffset += textLen
+				if field.command == "controlEnd":
 					continue
-				ia2EndOffset += lastTextLen
-				break
-			else:
-				lastTextLen = 0
+			break
 		if ia2EndOffset is None:
-			raise NotImplementedError("No ia2EndOffset")
-		log.debug(f"ia2EndWindow: {ia2EndWindow}")
-		log.debug(f"ia2EndID: {ia2EndID}")
+			raise NotImplementedError
+		log.debug(f"ia2EndWindow: {repr(ia2EndWindow)}")
+		log.debug(f"ia2EndID: {repr(ia2EndID)}")
 		log.debug(f"ia2EndOffset: {ia2EndOffset}")
 		if ia2EndID == ia2StartID:
 			ia2EndObj = ia2StartObj
