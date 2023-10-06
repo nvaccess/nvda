@@ -134,11 +134,15 @@ class SynthDriver(SynthDriver):
 		# #15500: Some SAPI4 voices reset all prosody when they receive any prosody command,
 		# whereas other voices never undo prosody changes when a sequence is interrupted.
 		# Add all default values to the start and end of the sequence,
-		# but avoid duplicating the first command, if any.
-		prosodyToAdd = [
-			c() for c in self.supportedCommands
+		# but avoid duplicating the first command, if any,
+		# And only add the defaults when there is a prosody command in the sequence.
+		supportedProsody = [
+			c for c in self.supportedCommands
 			if issubclass(c, BaseProsodyCommand)
 		]
+		prosodyToAdd = []
+		if any(type(i) in supportedProsody for i in unprocessedSequence):
+			prosodyToAdd.extend(c() for c in supportedProsody)
 		speechSequence = [c for c in prosodyToAdd if not isinstance(unprocessedSequence[0], type(c))]
 		speechSequence.extend(unprocessedSequence)
 		# To be sure, add all default values to the end of the sequence.
