@@ -12,10 +12,21 @@ from speech.shortcutKeys import (
 	_getKeyboardShortcutSpeech,
 	getKeyboardShortcutsSpeech,
 )
+import speech.shortcutKeys
 from speech.commands import CharacterModeCommand
 
 
+original_shouldUseSpellingFunctionality = speech.shortcutKeys.shouldUseSpellingFunctionality
+
 class Test_getKeyboardShortcutSpeech(unittest.TestCase):
+
+	@classmethod
+	def setUpClass(cls):
+		speech.shortcutKeys.shouldUseSpellingFunctionality = lambda: True
+
+	@classmethod
+	def tearDownClass(cls):
+		speech.shortcutKeys.shouldUseSpellingFunctionality = original_shouldUseSpellingFunctionality
 
 	def test_simpleLetterKey(self):
 		"""A shortcut consisting in only one letter."""
@@ -135,6 +146,14 @@ class Test_getKeyboardShortcutSpeech(unittest.TestCase):
 
 
 class Test_getKeyboardShortcutsSpeech(unittest.TestCase):
+
+	@classmethod
+	def setUpClass(cls):
+		speech.shortcutKeys.shouldUseSpellingFunctionality = lambda: True
+
+	@classmethod
+	def tearDownClass(cls):
+		speech.shortcutKeys.shouldUseSpellingFunctionality = original_shouldUseSpellingFunctionality
 
 	def test_twoShortcutKeys(self):
 		"""A shortcut key indication indicating two shortcut keys (a sequential one and a simultaneous one)

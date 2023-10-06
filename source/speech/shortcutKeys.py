@@ -81,6 +81,10 @@ def _getKeyboardShortcutSpeech(keyboardShortcut: str) -> SpeechSequence:
 	return seq
 
 
+def shouldUseSpellingFunctionality() -> bool:
+	synth = getSynth()
+	return config.conf["speech"][synth.name]["useSpellingFunctionality"]
+
 def _getKeySpeech(key: str) -> SpeechSequence:
 	"""Gets the speech sequence for a string describing a key.
 	@param key: the key string.
@@ -93,8 +97,7 @@ def _getKeySpeech(key: str) -> SpeechSequence:
 	keySymbol = characterProcessing.processSpeechSymbol(locale, key)
 	if keySymbol != key:
 		return [keySymbol]
-	synth = getSynth()
-	if not config.conf["speech"][synth.name]["useSpellingFunctionality"]:
+	if not shouldUseSpellingFunctionality():
 		return [key]
 	return [
 		CharacterModeCommand(True),
