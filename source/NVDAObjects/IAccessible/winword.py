@@ -24,7 +24,6 @@ from displayModel import EditableTextDisplayModelTextInfo
 from ..behaviors import EditableTextWithoutAutoSelectDetection
 import NVDAObjects.window.winword as winWordWindowModule
 from speech import sayAll
-import api
 import inputCore
 
 
@@ -401,9 +400,8 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 			self.script_caret_backspaceWord(gesture)
 		else:
 			gesture.send()
-			# Using getFocusObject because self may not always work.
-			if not eventHandler.isPendingEvents("caret", api.getFocusObject()):
-				eventHandler.queueEvent("caret", api.getFocusObject())
+			if not eventHandler.isPendingEvents("caret", self):
+				eventHandler.queueEvent("caret", self)
 
 	def focusOnActiveDocument(self, officeChartObject):
 		rangeStart=officeChartObject.Parent.Range.Start
