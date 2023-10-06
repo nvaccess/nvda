@@ -95,10 +95,10 @@ class AppModule(appModuleHandler.AppModule):
 					pgettext("poedit", "No {description}").format(description=description)
 				)
 		else:
-			# Translators: this message is reported when NVDA is unable to find
-			# a requested window in Poedit.
-			# {description} is replaced by the description of the window to be reported, e.g. translator notes
 			ui.message(
+				# Translators: this message is reported when NVDA is unable to find
+				# a requested window in Poedit.
+				# {description} is replaced by the description of the window to be reported, e.g. translator notes
 				pgettext("poedit", "Could not find {description} window.").format(description=description)
 			)
 
