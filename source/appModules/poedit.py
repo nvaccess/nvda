@@ -8,43 +8,54 @@
 
 from enum import IntEnum
 from typing import Optional
+
 import api
 import appModuleHandler
 import controlTypes
-from scriptHandler import script, getLastScriptRepeatCount
+import NVDAObjects.IAccessible
 import tones
 import ui
-from NVDAObjects import NVDAObject
 import windowUtils
-import NVDAObjects.IAccessible
 import winUser
+from NVDAObjects import NVDAObject
+from scriptHandler import getLastScriptRepeatCount, script
 
-
-LEFT_TO_RIGHT_EMBEDDING = '\u202a'
+LEFT_TO_RIGHT_EMBEDDING = "\u202a"
 """Character often found in translator comments."""
 
 
 class _WindowControlIdOffset(IntEnum):
 	"""Window control ID's in poedit tend to be stable within one release, then change in a new release.
 	However, the order of ids stays the same.
-	Therefore, using the first sub window of the main foreground as a reference,
+	Therefore, using a wxDataView control in the translations list as a reference,
 	we can safely calculate control ids accross releases.
-	This class contains window control id offsets relative to the first sub window of the main foreground window.
+	This class contains window control id offsets relative to the wxDataView window.
 	"""
-	OLD_SOURCE_TEXT = 77
-	TRANSLATOR_NOTES = 80
-	COMMENT = 83
-	TRANSLATION_WARNING = 28
-	NEEDS_WORK_SWITCH = 33
+
+	OLD_SOURCE_TEXT = 65
+	TRANSLATOR_NOTES = 68
+	COMMENT = 71
+	TRANSLATION_WARNING = 16
+	NEEDS_WORK_SWITCH = 21
 
 
-def _getObjectWithControlId(parentWindowHandle: int, controlId: int) -> Optional[NVDAObject]:
+def _findDescendantObject(
+		parentWindowHandle: int,
+		controlId: Optional[int] = None,
+		className: Optional[str] = None
+) -> Optional[NVDAObject]:
 	"""
-	Finds a window with the given controlId, starting from the window belonging to the given parentWindowHandle.
+	Finds a window with the given controlId or class name,
+	starting from the window belonging to the given parentWindowHandle,
+	and returns the object belonging to it.
 	"""
 	try:
 		obj = NVDAObjects.IAccessible.getNVDAObjectFromEvent(
-			windowUtils.findDescendantWindow(parentWindowHandle, controlID=controlId),
+			windowUtils.findDescendantWindow(
+				parentWindowHandle,
+				controlID=controlId,
+				className=className
+			),
 			winUser.OBJID_CLIENT,
 			0
 		)
@@ -54,19 +65,22 @@ def _getObjectWithControlId(parentWindowHandle: int, controlId: int) -> Optional
 
 
 class AppModule(appModuleHandler.AppModule):
+	def __init__(self, processID, appName=None):
+		super().__init__(processID, appName)
+		self._dataViewControlId: int = 0
 
 	def _getNVDAObjectForWindowControlIdOffset(self, windowControlIdOffset: _WindowControlIdOffset):
 		fg = api.getForegroundObject()
-		return _getObjectWithControlId(
-			fg.windowHandle,
-			fg.firstChild.windowControlID + windowControlIdOffset
-		)
+		if not self._dataViewControlId:
+			obj = _findDescendantObject(fg.windowHandle, className="wxDataView")
+			self._dataViewControlId = obj.windowControlID
+		return _findDescendantObject(fg.windowHandle, self._dataViewControlId + windowControlIdOffset)
 
 	def _reportControlScriptHelper(self, windowControlIdOffset: _WindowControlIdOffset, description: str):
 		obj = self._getNVDAObjectForWindowControlIdOffset(windowControlIdOffset)
 		if obj:
 			if not obj.hasIrrelevantLocation and not obj.parent.parent.hasIrrelevantLocation:
-				message = obj.name.replace(LEFT_TO_RIGHT_EMBEDDING, '')
+				message = obj.name.replace(LEFT_TO_RIGHT_EMBEDDING, "")
 				repeats = getLastScriptRepeatCount()
 				if repeats == 0:
 					ui.message(message)
@@ -76,20 +90,23 @@ class AppModule(appModuleHandler.AppModule):
 				ui.message(
 					# Translators: this message is reported when there is nothing
 					# to be presented to the user in Poedit.
-					# {description} is replaced by the description of the window to be reported, e.g. translator notes
+					# {description} is replaced by the description of the window to be reported,
+					# e.g. translator notes
 					pgettext("poedit", "No {description}").format(description=description)
 				)
 		else:
 			# Translators: this message is reported when NVDA is unable to find
 			# a requested window in Poedit.
 			# {description} is replaced by the description of the window to be reported, e.g. translator notes
-			ui.message(pgettext("poedit", "Could not find {description} window.").format(description=description))
+			ui.message(
+				pgettext("poedit", "Could not find {description} window.").format(description=description)
+			)
 
 	@script(
 		description=pgettext(
 			"poedit",
 			# Translators: The description of an NVDA command for Poedit.
-			"Reports any notes for translators. If pressed twice, presents the notes in browse mode"
+			"Reports any notes for translators. If pressed twice, presents the notes in browse mode",
 		),
 		gesture="kb:control+shift+a",
 	)
@@ -98,14 +115,15 @@ class AppModule(appModuleHandler.AppModule):
 			_WindowControlIdOffset.TRANSLATOR_NOTES,
 			# Translators: The description of the "Translator notes" window in poedit.
 			# This text is reported when the given window contains no item to report or could not be found.
-			pgettext("poedit", "notes for translators")
+			pgettext("poedit", "notes for translators"),
 		)
 
 	@script(
 		description=pgettext(
 			"poedit",
 			# Translators: The description of an NVDA command for Poedit.
-			"Reports any comment in the comments window. If pressed twice, presents the comment in browse mode"
+			"Reports any comment in the comments window. "
+			"If pressed twice, presents the comment in browse mode",
 		),
 		gesture="kb:control+shift+c",
 	)
@@ -114,14 +132,14 @@ class AppModule(appModuleHandler.AppModule):
 			_WindowControlIdOffset.COMMENT,
 			# Translators: The description of the "comment" window in poedit.
 			# This text is reported when the given window contains no item to report or could not be found.
-			pgettext("poedit", "comment")
+			pgettext("poedit", "comment"),
 		)
 
 	@script(
 		description=pgettext(
 			"poedit",
 			# Translators: The description of an NVDA command for Poedit.
-			"Reports the old source text, if any. If pressed twice, presents the text in browse mode"
+			"Reports the old source text, if any. If pressed twice, presents the text in browse mode",
 		),
 		gesture="kb:control+shift+o",
 	)
@@ -130,14 +148,14 @@ class AppModule(appModuleHandler.AppModule):
 			_WindowControlIdOffset.OLD_SOURCE_TEXT,
 			# Translators: The description of the "old source text" window in poedit.
 			# This text is reported when the given window contains no item to report or could not be found.
-			pgettext("poedit", "old source text")
+			pgettext("poedit", "old source text"),
 		)
 
 	@script(
 		description=pgettext(
 			"poedit",
 			# Translators: The description of an NVDA command for Poedit.
-			"Reports a translation warning, if any. If pressed twice, presents the warning in browse mode"
+			"Reports a translation warning, if any. If pressed twice, presents the warning in browse mode",
 		),
 		gesture="kb:control+shift+w",
 	)
@@ -146,7 +164,7 @@ class AppModule(appModuleHandler.AppModule):
 			_WindowControlIdOffset.TRANSLATION_WARNING,
 			# Translators: The description of the "translation warning" window in poedit.
 			# This text is reported when the given window contains no item to report or could not be found.
-			pgettext("poedit", "translation warning")
+			pgettext("poedit", "translation warning"),
 		)
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
@@ -160,8 +178,7 @@ class AppModule(appModuleHandler.AppModule):
 
 
 class PoeditRichEdit(NVDAObject):
-
-	def _get_name(self,) -> str:
+	def _get_name(self) -> str:
 		# These rich edit controls are incorrectly labeled.
 		# Oleacc doesn't return any name, and UIA defaults to RichEdit Control.
 		# The label object is positioned just above the field on the screen.
@@ -183,12 +200,10 @@ class PoeditListItem(NVDAObject):
 		obj = self.appModule._getNVDAObjectForWindowControlIdOffset(_WindowControlIdOffset.OLD_SOURCE_TEXT)
 		if obj and not obj.hasIrrelevantLocation:
 			return _WindowControlIdOffset.OLD_SOURCE_TEXT
-		obj = self.appModule._getNVDAObjectForWindowControlIdOffset(_WindowControlIdOffset.TRANSLATION_WARNING)
-		if (
-			obj
-			and obj.parent and obj.parent.parent
-			and not obj.parent.parent.hasIrrelevantLocation
-		):
+		obj = self.appModule._getNVDAObjectForWindowControlIdOffset(
+			_WindowControlIdOffset.TRANSLATION_WARNING
+		)
+		if obj and obj.parent and obj.parent.parent and not obj.parent.parent.hasIrrelevantLocation:
 			return _WindowControlIdOffset.TRANSLATION_WARNING
 		return None
 
