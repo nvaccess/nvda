@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA 2023.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-08 00:01+0000\n"
-"PO-Revision-Date: 2023-09-12 11:24+0100\n"
+"POT-Creation-Date: 2023-09-29 00:01+0000\n"
+"PO-Revision-Date: 2023-10-05 19:52+0100\n"
 "Last-Translator: Ronan McGuirk <ronan.mcguirk@gmail.com>\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
@@ -4076,6 +4076,10 @@ msgstr "Taispeántar  socruithe Braille NVDA"
 #. Translators: Input help mode message for go to braille settings command.
 msgid "Shows NVDA's braille settings"
 msgstr "Taispeántar  socruithe Braille NVDA"
+
+#. Translators: Input help mode message for go to audio settings command.
+msgid "Shows NVDA's audio settings"
+msgstr "Taispeántar  socruithe fuaime NVDA"
 
 #. Translators: Input help mode message for go to keyboard settings command.
 msgid "Shows NVDA's keyboard settings"
@@ -10083,31 +10087,6 @@ msgstr "Romhnaigh an Sintéiseoir"
 msgid "&Synthesizer:"
 msgstr "&Sintéiseoir:"
 
-#. Translators: This is the label for the select output
-#. device combo in the synthesizer dialog. Examples of
-#. of an output device are default soundcard, usb
-#. headphones, etc.
-msgid "Audio output  &device:"
-msgstr "Gléas aschurtha fuaime:"
-
-#. Translators: name for default (Microsoft Sound Mapper) audio output device.
-msgid "Microsoft Sound Mapper"
-msgstr "Microsoft Sound Mapper"
-
-#. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
-msgid "Audio d&ucking mode:"
-msgstr "Mód ísliú audio  "
-
-#. Translators: This message is presented when
-#. NVDA is unable to load the selected
-#. synthesizer.
-#, python-format
-msgid "Could not load the %s synthesizer."
-msgstr "Níorbh fhéidir an sintéiseoir %s a luchtú."
-
-msgid "Synthesizer Error"
-msgstr "Earráid sa Sintéiseoir"
-
 #. Translators: This is the label for the voice settings panel.
 msgid "Voice"
 msgstr "Guth"
@@ -10678,6 +10657,46 @@ msgstr "nascleanúint doiciméid"
 msgid "&Paragraph style:"
 msgstr "stíl &pharagraif"
 
+#. Translators: This message is presented when
+#. NVDA is unable to load the selected synthesizer.
+#, python-format
+msgid "Could not load the %s synthesizer."
+msgstr "Níorbh fhéidir an sintéiseoir %s a luchtú."
+
+#. Translators: Dialog title presented when
+#. NVDA is unable to load the selected synthesizer.
+msgid "Synthesizer Error"
+msgstr "Earráid sa Sintéiseoir"
+
+#. Translators: This is the label for the audio settings panel.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Audio"
+msgstr "fuaim"
+
+#. Translators: This is the label for the select output device combo in NVDA audio settings.
+#. Examples of an output device are default soundcard, usb headphones, etc.
+msgid "Audio output &device:"
+msgstr "Gléas aschurtha fuaime:"
+
+#. Translators: name for default (Microsoft Sound Mapper) audio output device.
+msgid "Microsoft Sound Mapper"
+msgstr "Microsoft Sound Mapper"
+
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog.
+msgid "Audio d&ucking mode:"
+msgstr "Mód ísliú audio  "
+
+#. Translators: This is the label for a checkbox control in the
+#. Audio settings panel.
+msgid "Volume of NVDA sounds follows voice volume"
+msgstr "Bíonn airde fuaimeanna NVDA ag leanúint airde an ghutha. "
+
+#. Translators: This is the label for a slider control in the
+#. Audio settings panel.
+msgid "Volume of NVDA sounds"
+msgstr "Airde fuaimeanna NVDA "
+
 #. Translators: This is the label for the addon navigation settings panel.
 msgid "Add-on Store"
 msgstr "Stór na mBreiseán"
@@ -10966,25 +10985,9 @@ msgstr "Am istigh do ghluaiseacht na caraite in milleasoicindí"
 msgid "Report transparent color values"
 msgstr "Tabhair tuairisc ar luachanna na ndathanna trédhearcacha "
 
-#. Translators: This is the label for a group of advanced options in the
-#. Advanced settings panel
-msgid "Audio"
-msgstr "fuaim"
-
 #. Translators: This is the label for a checkbox control in the Advanced settings panel.
 msgid "Use WASAPI for audio output (requires restart)"
 msgstr "Bain úsáid as WASAPI le haghaidh aschuir fuaime. Tá atosú de dhíth."
-
-#. Translators: This is the label for a checkbox control in the
-#. Advanced settings panel.
-msgid "Volume of NVDA sounds follows voice volume (requires WASAPI)"
-msgstr ""
-"Bíonn airde fuaimeanna NVDA ag leanúint airde gutha. Tá WASAPI de dhíth."
-
-#. Translators: This is the label for a slider control in the
-#. Advanced settings panel.
-msgid "Volume of NVDA sounds (requires WASAPI)"
-msgstr "Airde fhuaimeanna NVDA (Tá WASAPI de dhíth)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel

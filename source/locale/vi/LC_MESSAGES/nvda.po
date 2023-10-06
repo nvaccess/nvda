@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Vietnamese Language for NVDA\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-09-29 00:01+0000\n"
-"PO-Revision-Date: 2023-10-02 14:31+0700\n"
+"PO-Revision-Date: 2023-10-04 00:17+0700\n"
 "Last-Translator: Dang Manh Cuong <dangmanhcuong@gmail.com>\n"
 "Language-Team: Sao Mai Center for the Blind <danghoaiphuc@gmail.com>\n"
 "Language: vi_VN\n"
@@ -2063,24 +2063,20 @@ msgid "no previous grouping"
 msgstr "không còn nhóm trước"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#, fuzzy
 msgid "moves to the next tab"
-msgstr "chuyển đến bảng kế"
+msgstr "chuyển đến thẻ kế"
 
 #. Translators: Message presented when the browse mode element is not found.
-#, fuzzy
 msgid "no next tab"
-msgstr "không có bảng kế"
+msgstr "không có thẻ kế"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#, fuzzy
 msgid "moves to the previous tab"
-msgstr "chuyển về bảng trước"
+msgstr "chuyển về thẻ trước"
 
 #. Translators: Message presented when the browse mode element is not found.
-#, fuzzy
 msgid "no previous tab"
-msgstr "không có bảng trước"
+msgstr "không có thẻ trước"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -2990,10 +2986,9 @@ msgid "Report line indentation {mode}"
 msgstr "Báo thụt đầu dòng {mode}"
 
 #. Translators: Input help mode message for toggle ignore blank lines for line indentation reporting command.
-#, fuzzy
 msgid ""
 "Toggles on and off the ignoring of blank lines for line indentation reporting"
-msgstr "Bật/tắt thông báo lề đoạn"
+msgstr "Bật/tắt bỏ qua dòng trắng khi thông áo thụt lề dòng"
 
 #. Translators: The message announced when toggling off the ignore blank lines for line indentation
 #. reporting document formatting setting.
@@ -4025,9 +4020,8 @@ msgid "Shows NVDA's braille settings"
 msgstr "Hiển thị cấu hình màn hình nổi NVDA"
 
 #. Translators: Input help mode message for go to audio settings command.
-#, fuzzy
 msgid "Shows NVDA's audio settings"
-msgstr "Hiển thị cấu hình màn hình nổi NVDA"
+msgstr "Hiện cài đặt audio của NVDA"
 
 #. Translators: Input help mode message for go to keyboard settings command.
 msgid "Shows NVDA's keyboard settings"
@@ -4624,9 +4618,8 @@ msgid "Could not enable screen curtain"
 msgstr "Không thể bật che màn hình"
 
 #. Translators: Warning message when trying to enable the screen curtain when OCR is active.
-#, fuzzy
 msgid "Could not enable screen curtain when performing content recognition"
-msgstr "Không thể bật che màn hình"
+msgstr "Không thể bật che màn hình khi đang nhận dạng nội dung"
 
 #. Translators: Describes a command.
 msgid "Cycles through paragraph navigation styles"
@@ -7687,9 +7680,8 @@ msgid "Recognition failed"
 msgstr "Nhận dạng không thành công"
 
 #. Translators: Reported when recognition (e.g. OCR) fails during automatic refresh.
-#, fuzzy
 msgid "Automatic refresh of recognition result failed"
-msgstr "Bỏ qua kết quả nhận dạng"
+msgstr "Quá trình tự cập nhật kết quả nhận dạng bị lỗi"
 
 #. Translators: Reported when content recognition (e.g. OCR) is attempted,
 #. but the user is already reading a content recognition result.
@@ -7824,19 +7816,17 @@ msgstr "căn phân tán"
 
 #. Translators: Reported when text is centered across multiple cells.
 msgid "align centered across selection"
-msgstr ""
+msgstr "căn giữa qua nhiều ô"
 
 #. Translators: Reported in Excel when text is formatted with "General" alignment, i.e. the name of the
 #. alignment in Excel aligning the cell's content depending on its type: text left and numbers right.
-#, fuzzy
 msgid "align general"
-msgstr "căn giữa"
+msgstr "căn cơ bản"
 
 #. Translators: Reported in Excel when text is formatted with "Fill" alignment, i.e. the name of the
 #. alignment in Excel repeating the cell's content for the width of the cell.
-#, fuzzy
 msgid "align fill"
-msgstr "căn trái"
+msgstr "căn đầy"
 
 #. Translators: Reported when text is vertically top-aligned.
 msgid "vertical align top"
@@ -8823,53 +8813,44 @@ msgid "&Preferences"
 msgstr "&Tùy Chọn"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
-#, fuzzy
 msgid "View &log"
-msgstr "Xem log"
+msgstr "Xem &log"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
-#, fuzzy
 msgid "&Speech viewer"
-msgstr "Trình Hiển thị nội dung đọc"
+msgstr "Trình &Hiển thị nội dung đọc"
 
 #. Translators: The label for the menu item to toggle Braille Viewer.
-#, fuzzy
 msgid "&Braille viewer"
-msgstr "Trình xem chữ nổi"
+msgstr "Trình xem &chữ nổi"
 
 #. Translators: The label of a menu item to open the Add-on store
-#, fuzzy
 msgid "&Add-on store..."
-msgstr "&Cửa hàng add-on..."
+msgstr "&Cửa hàng &add-on..."
 
 #. Translators: The label for the menu item to open NVDA Python Console.
-#, fuzzy
 msgid "&Python console"
-msgstr "Python console"
+msgstr "&Python console"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-#, fuzzy
 msgid "&Create portable copy..."
-msgstr "Tạo bản chạy trực tiếp..."
+msgstr "&Tạo bản chạy trực tiếp..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
 msgstr "&Cài đặt NVDA..."
 
 #. Translators: The label for the menu item to run the COM registration fix tool
-#, fuzzy
 msgid "&Run COM Registration Fixing tool..."
-msgstr "Chạy công cụ sửa đăng ký COM..."
+msgstr "&Chạy công cụ sửa đăng ký COM..."
 
 #. Translators: The label for the menu item to reload plugins.
-#, fuzzy
 msgid "R&eload plugins"
-msgstr "Cập nhật lại các Add on"
+msgstr "Cập &nhật lại các Add on"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
-#, fuzzy
 msgid "&Tools"
-msgstr "Công cụ"
+msgstr "&Công cụ"
 
 #. Translators: The label of a menu item to open NVDA user guide.
 msgid "&User Guide"
@@ -8903,9 +8884,8 @@ msgid "&Check for update..."
 msgstr "&Kiểm tra cập nhật..."
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
-#, fuzzy
 msgid "&About..."
-msgstr "Giới thiệu..."
+msgstr "&Giới thiệu..."
 
 #. Translators: The label for the Help submenu in NVDA menu.
 msgid "&Help"
@@ -8973,7 +8953,6 @@ msgstr "Phục hồi lại các thiết lập như trạng thái đã lưu"
 
 #. Translators: The label for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
-#, fuzzy
 msgid "Reset configuration to &factory defaults"
 msgstr "Khôi phục về cấu hình &mặc định"
 
@@ -10433,9 +10412,8 @@ msgstr "Thông báo &thụt lề dòng:"
 
 #. Translators: This is the label of a checkbox in the document formatting settings panel
 #. If this option is selected, NVDA will ignore blank lines for line indentation reporting
-#, fuzzy
 msgid "Ignore &blank lines for line indentation reporting"
-msgstr "Thông báo &thụt lề dòng:"
+msgstr "Bỏ qua dòng &trắng khi thông báo thụt lề dòng"
 
 #. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -10554,9 +10532,8 @@ msgstr "Audio"
 
 #. Translators: This is the label for the select output device combo in NVDA audio settings.
 #. Examples of an output device are default soundcard, usb headphones, etc.
-#, fuzzy
 msgid "Audio output &device:"
-msgstr "Thiết bị đầu &ra:"
+msgstr "Thiết &bị đầu ra:"
 
 #. Translators: name for default (Microsoft Sound Mapper) audio output device.
 msgid "Microsoft Sound Mapper"
@@ -10568,15 +10545,13 @@ msgstr "Chế độ &giảm âm:"
 
 #. Translators: This is the label for a checkbox control in the
 #. Audio settings panel.
-#, fuzzy
 msgid "Volume of NVDA sounds follows voice volume"
-msgstr "Âm lượng âm thanh NVDA đi theo âm lượng giọng đọc (yêu cầu WASAPI)"
+msgstr "Âm lượng âm thanh NVDA đi theo âm lượng giọng đọc"
 
 #. Translators: This is the label for a slider control in the
 #. Audio settings panel.
-#, fuzzy
 msgid "Volume of NVDA sounds"
-msgstr "Âm lượng âm thanh NVDA (yêu cầu WASAPI)"
+msgstr "Âm lượng âm thanh NVDA"
 
 #. Translators: This is the label for the addon navigation settings panel.
 msgid "Add-on Store"
@@ -10923,9 +10898,8 @@ msgid "Braille &display:"
 msgstr "Màn hình &nổi:"
 
 #. Translators: The label for a setting in braille settings to enable displays for automatic detection.
-#, fuzzy
 msgid "&Displays to detect automatically:"
-msgstr "Chỉ khi tự đi theo"
+msgstr "Các &màn hình tự dò tìm"
 
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
@@ -13708,10 +13682,9 @@ msgid "Enabled, pending restart"
 msgstr "Đã bật, đang chờ khởi động lại"
 
 #. Translators: Status for addons shown in the add-on store dialog
-#, fuzzy
 msgctxt "addonStore"
 msgid "Unknown status"
-msgstr "Không xác định được trạng thái nguồn điện"
+msgstr "Trạng thái không xác định"
 
 #. Translators: The label of a tab to display installed add-ons in the add-on store.
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
@@ -14066,7 +14039,6 @@ msgid "Add-on Information"
 msgstr "Thông tin Add-on"
 
 #. Translators: The warning of a dialog
-#, fuzzy
 msgctxt "addonStore"
 msgid "Add-on Store Warning"
 msgstr "Cảnh bao từ Cửa hàng Add-on"
@@ -14090,7 +14062,6 @@ msgid "&Don't show this message again"
 msgstr "&Không hiện lại thông điệp này"
 
 #. Translators: The label of a button in a dialog
-#, fuzzy
 msgctxt "addonStore"
 msgid "&OK"
 msgstr "Đồ&ng ý"
@@ -14116,7 +14087,6 @@ msgid "Cha&nnel:"
 msgstr "Kê&nh:"
 
 #. Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
-#, fuzzy
 msgctxt "addonStore"
 msgid "Include &incompatible add-ons"
 msgstr "Bao gồm các &add-on không tương thích"

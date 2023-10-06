@@ -6,6 +6,7 @@ Qué hay de Nuevo en NVDA
 
 = 2023.3 =
 Esta versión incluye mejoras en el rendimiento, la respuesta y la estabilidad de la salida de audio.
+Se han añadido opciones para controlar el volumen de los sonidos y pitidos de NVDA, o para tenerlos siguiendo el volumen de la voz que estés usando.
 
 NVDA ahora puede refrescar periódicamente los resultados del OCR, verbalizando el texto nuevo según aparezca.
 Esto puede configurarse en la categoría de OCR de Windows del diálogo opciones de NVDA.
@@ -18,11 +19,13 @@ También se han corregido errores en la tienda de complementos, en Microsoft Off
 
 == Nuevas Características ==
 - Mejorada la gestión del sonido:
-  - NVDA ahora sacará el audio a través de la Windows Audio Session API (WASAPI), lo que puede mejorar la respuesta, el rendimiento y la estabilidad de la voz y de los sonidos de NVDA. (#14697)
-  - El uso de WASAPI puede deshabilitarse en las opciones Avanzadas.
-  Si WASAPI está habilitado, también pueden configurarse las siguientes opciones avanzadas.
+  - Un nuevo panel de opciones de Audio:
+    - Esto puede abrirse con ``NVDA+control+u``. (#15497)
     - Una opción para hacer que el volumen de los sonidos y pitidos de NVDA siga a la configuración de volúmen de la voz que estés utilizando. (#1409)
     - Una opción para configurar por separado el volumen de los sonidos de NVDA. (#1409, #15038)
+    - NVDA ahora sacará el audio a través de la Windows Audio Session API (WASAPI), lo que puede mejorar la respuesta, el rendimiento y la estabilidad de la voz y de los sonidos de NVDA. (#14697)
+    - Las opciones para cambiar el dispositivo de salida de audio y conmutar la atenuación de audio se han movido al nuevo diálogo Opciones de audio del diálogo Seleccionar Sintetizador.
+    Estas opciones se eliminarán del diálogo "seleccionar Sintetizador" en 2024.1. (#15486, #8711)
     -
   - Nota: WASAPI es incompatible con algunos complementos.
   Hay actualizaciones compatibles disponibles para estos complementos, por favor actualízalos antes de actualizar NVDA.
@@ -59,11 +62,11 @@ También se han corregido errores en la tienda de complementos, en Microsoft Off
 - Algunos atajos de teclado se han actualizado en el menú NVDA. (#15364)
 -
 
-
 == Corrección de Fallos ==
 - Microsoft Office:
   - Corrección de un fallo en Microsoft Word cuando las opciones de formateado de documentos "anunciar encabezados" y "anunciar comentarios y notas" no estaban activadas. (#15019)
   - En Word y Excel, la alineación de texto se anunciará correctamente en más situaciones. (#15206, #15220)
+  - Corrección del anunciado de algunos atajos de formato de celda en Excel. (#15527)
   -
 - Microsoft Edge:
   - NVDA ya no retrocederá a la última posición del modo exploración al abrir el menú de contexto en Microsoft Edge. (#15309)
@@ -77,9 +80,13 @@ También se han corregido errores en la tienda de complementos, en Microsoft Off
   - Corregido un fallo donde al desmarcar "incluir complementos incompatibles" provocaría que los complementos incompatibles siguieran apareciendo en la tienda. (#15411)
   - Los complementos bloqueados debido a razones de compatibilidad ahora deberían filtrarse correctamente al conmutar el filtro por estado habilitado y deshabilitado. (#15416)
   - Corregido un fallo que evita que se actualicen o substituyan complementos incompatibles instalados y habilitados mediante la herramienta de instalación externa. (#15417)
+  - Corregido un fallo donde los complementos no pueden instalarse si falló o se canceló una descarga anterior. (#15469)
+  - Corregidos problemas con el manejo de complementos imcompatibles al actualizar NVDA. (#15414, #15412, #15437)
   -
-- Corregido el soporte para controles System List view (``SysListView32``) en aplicaciones Windows Forms. (#15283)
 - NVDA vuelvbe a anunciar los resultados de cálculo en la calculadora de Windows 32bit en las versiones Server, LTSC y LTSB de Windows. (#15284)
+- NVDA ya no ignora los cambios del foco cuando una ventana anidada (ventana hija) obtiene el foco. (#15432)
+- Corregidos problemas de rendimiento con el Administrador de Tareas y algunas versiones de Windows. (#6245)
+- Se corrigió una posible causa de bloqueo durante el arranque de NVDA. (#15517)
 -
 
 == Cambios para Desarrolladores ==
