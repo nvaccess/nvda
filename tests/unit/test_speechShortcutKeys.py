@@ -13,11 +13,9 @@ from speech.shortcutKeys import (
 	_getKeyboardShortcutSpeech,
 	getKeyboardShortcutsSpeech,
 )
-import speech.shortcutKeys
+import speech.shortcutKeys  # noqa F401 - Used by unittest.mock.patch
 from speech.commands import CharacterModeCommand
 
-
-original_shouldUseSpellingFunctionality = speech.shortcutKeys.shouldUseSpellingFunctionality
 
 class Test_getKeyboardShortcutSpeech(unittest.TestCase):
 
