@@ -400,8 +400,7 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 			self.script_caret_backspaceWord(gesture)
 		else:
 			gesture.send()
-			if not eventHandler.isPendingEvents("caret", self):
-				eventHandler.queueEvent("caret", self)
+			self.event_caret()
 
 	def focusOnActiveDocument(self, officeChartObject):
 		rangeStart=officeChartObject.Parent.Range.Start
