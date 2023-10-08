@@ -26,6 +26,8 @@ This option now announces additional relevant information about an object when t
 - The SAPI4 synthesizer now properly supports volume, rate and pitch changes embedded in speech. (#15271)
 - Multi line state is now correctly reported in applications using Java Access Bridge. (#14609)
 - In LibreOffice, words deleted using the ``control+backspace`` keyboard shortcut are now also properly announced when the deleted word is followed by whitespace (like spaces and tabs). (#15436)
+- Braille is updated when UIA is not used and ``control+y``, ``control+z``
+or ``alt+backspace`` is pressed in MS Excel. (15547)
 -
 
 == Changes for Developers ==
