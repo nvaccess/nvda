@@ -379,17 +379,22 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 
 	@script(
 		gestures=(
-			"kb:control+v", "kb:control+x", "kb:control+y", "kb:control+z",
-			"kb:alt+backspace", "kb:backspace", "kb:control+backspace"
+			"kb:control+v",
+			"kb:control+x",
+			"kb:control+y",
+			"kb:control+z",
+			"kb:alt+backspace",
+			"kb:backspace",
+			"kb:control+backspace",
 		)
 	)
 	def script_updateBrailleAndReviewPosition(self, gesture: inputCore.InputGesture) -> None:
 		"""Helper script to update braille and review position.
 		Caret event is not always fired when control+v, control+x, control+y
-		or control+z (alt+backspace) is pressed so enqueuing caret event for that.
+		or control+z (alt+backspace) is pressed.
 		When backspace or control+backspace is pressed and hold down, braille
 		may not always be updated. Allowing braille and review position updates
-		in L{event_caret} seems to fix that problem.
+		in L{event_caret} should fix that problem.
 		"""
 		# Ensuring braille and review position updates are allowed in caret event.
 		self._fromUpdateBrailleAndReviewPosition = True
