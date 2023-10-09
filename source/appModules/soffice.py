@@ -388,7 +388,13 @@ class AppModule(appModuleHandler.AppModule):
 		(up to the given depth) has the corresponding role."""
 		if obj.role == controlTypes.Role.STATUSBAR:
 			return obj
-		if max_depth < 1 or obj.role not in {controlTypes.Role.ROOTPANE, controlTypes.Role.WINDOW}:
+		if max_depth < 1 or obj.role not in {
+			controlTypes.Role.DIALOG,
+			controlTypes.Role.FRAME,
+			controlTypes.Role.OPTIONPANE,
+			controlTypes.Role.ROOTPANE,
+			controlTypes.Role.WINDOW
+		}:
 			return None
 		for child in obj.children:
 			status_bar = self.searchStatusBar(child, max_depth - 1)
@@ -402,9 +408,10 @@ class AppModule(appModuleHandler.AppModule):
 	def getStatusBarText(self, obj: NVDAObject) -> str:
 		text = ""
 		for child in obj.children:
-			textObj = child.IAccessibleTextObject
-			if textObj:
-				if text:
-					text += " "
-				text += textObj.textAtOffset(0, IA2.IA2_TEXT_BOUNDARY_ALL)[2]
+			if hasattr(child, 'IAccessibleTextObject'):
+				textObj = child.IAccessibleTextObject
+				if textObj:
+					if text:
+						text += " "
+					text += textObj.textAtOffset(0, IA2.IA2_TEXT_BOUNDARY_ALL)[2]
 		return text
