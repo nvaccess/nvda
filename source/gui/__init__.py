@@ -535,7 +535,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 				item = menu_tools.Append(wx.ID_ANY, _("&Install NVDA..."))
 				self.Bind(wx.EVT_MENU, frame.onInstallCommand, item)
 			# Translators: The label for the menu item to run the COM registration fix tool 
-			item = menu_tools.Append(wx.ID_ANY, _("Run COM Registration Fixing tool..."))
+			item = menu_tools.Append(wx.ID_ANY, _("&Run COM Registration Fixing tool..."))
 			self.Bind(wx.EVT_MENU, frame.onRunCOMRegistrationFixesCommand, item)
 		if not config.isAppX:
 			# Translators: The label for the menu item to reload plugins.
