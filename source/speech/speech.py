@@ -2422,7 +2422,7 @@ def getFormatFieldSpeech(  # noqa: C901
 			textList.append(_("{backgroundColor} background").format(backgroundColor=bgColorText))
 		backgroundPattern=attrs.get("background-pattern")
 		oldBackgroundPattern=attrsCache.get("background-pattern") if attrsCache is not None else None
-		if (backgroundPattern or oldBackgroundPattern is not None)and backgroundPattern != oldBackgroundPattern:
+		if (backgroundPattern or oldBackgroundPattern is not None) and backgroundPattern != oldBackgroundPattern:
 			if not backgroundPattern:
 				# Translators: A type of background pattern in Microsoft Excel.
 				# No pattern
