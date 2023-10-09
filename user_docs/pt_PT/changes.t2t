@@ -5,6 +5,7 @@ Traduzido pela Equipa portuguesa do NVDA
 
 = 2023.3 =
 Esta versão inclui melhorias no desempenho, responsividade e estabilidade da saída de áudio.
+Foram adicionadas opções para controlar o volume dos sons e bips do NVDA, ou para os fazer seguir o volume da voz que está a utilizar.
 
 O NVDA pode agora actualizar periodicamente os resultados de OCR, anunciando o novo texto à medida que aparece.
 Isto pode ser configurado na categoria OCR do Windows nas configurações do NVDA.
@@ -17,13 +18,11 @@ Também foram corrigidos erros na Loja de Extras, Microsoft Office, menus de con
 
 == Novas Funcionalidades ==
 - Gestão de som melhorada:
+  - Uma opção nas configurações de áudio para que o volume dos sons e bips do NVDA siga a definição de volume da voz que está a utilizar. (#1409)
+  - Uma opção nas configurações de áudio para configurar separadamente o volume dos sons do NVDA. (#1409, #15038)
   - O NVDA agora emitirá a voz e os sons  através da API de Sessão de Áudio do Windows (WASAPI), o que pode melhorar a responsividade, desempenho e estabilidade da voz e sons do NVDA. (#14697, #11169, #11615, #5096, #10185, #11061)
-  - O uso de WASAPI pode ser desactivado nas configurações avançadas do NVDA.
-  - Se a WASAPI estiver activada, as seguintes opções avançadas também podem ser configuradas.
-    - Uma opção para que o volume dos sons e bips do NVDA siga a definição de volume da voz que está a utilizar. (#1409)
-    - Uma opção para configurar separadamente o volume dos sons do NVDA. (#1409, #15038)
-    -
-  -  - Nota: WASAPI é incompatível com alguns extras. Actualizações compatíveis estão disponíveis para esses extras, actualize-os antes de actualizar o NVDA.
+  -  Nota: WASAPI é incompatível com alguns extras.
+  Actualizações compatíveis estão disponíveis para esses extras, actualize-os antes de actualizar o NVDA.
   Versões incompatíveis desses extras serão desactivadas: ao actualizar o NVDA:
     - Tony's Enhancements versão 1.15 ou anterior. (#15402)
     - NVDA global commands extension 12.0.8 ou anterior. (#15443)
@@ -54,6 +53,7 @@ Também foram corrigidos erros na Loja de Extras, Microsoft Office, menus de con
   - A opção para activar o suporte para HID braille foi removido das configurações avançadas sendo substituído por uma nova opção.
   Agora pode desactivar a detecção automática de dispositivos Braille na janela "Seleccionar linha Braille". (#15196)
   -
+- As opções para alterar o dispositivo de saída de áudio e alternar a redução de áudio foram movidas da caixa de diálogo Selecionar sintetizador para o novo painel de configurações de áudio. (#8711)
 - Loja de Extras: Os extras instalados passam a ser também listados no separador Extras Disponíveis, se estiverem disponíveis na loja. (#15374)
 - Algumas teclas de atalho do menu do NVDA foram actualizadas. (#15364)
 -
@@ -75,9 +75,12 @@ Também foram corrigidos erros na Loja de Extras, Microsoft Office, menus de con
   - Corrigido um erro que ao desmarcar a opção "Incluir extras incompatíveis" resultava em os extras incompatíveis ainda serem mostrados. (#15411)
   - Os extras bloqueados por razões de compatibilidade já devem ser filtrados correctamente quando se alterna o filtro para o estado activados/desactivados. (#15416)
   - Corrigido o erro que impedia extras incompatíveis instalados e activados de serem actualizados ou substtituídos utilizando a funcionalidade de instalar de fonte externa. (#15417)
+  - Corrigido o erro em que os add-ons não podiam ser instalados se uma transferência anterior falhasse ou fosse cancelada. (#15469)
+  - Corrigidos problemas com o tratamento de complementos incompatíveis ao atualizar o NVDA. (#15414, #15412, #15437)
   -
 - Corrigido o suporte para controlos ``SysListView32`` em aplicações Windows. (#15283)
 - O NVDA volta a anunciar os resultados na Calculadora do Windows 32bit nas versões do Windows Server, LTSC ed LTSB. (#15230)
+- O NVDA já não ignora as alterações de foco quando uma janela aninhada (janela neta) obtém o foco. (#15432)
 -
 
 == Changes for Developers ==
@@ -104,6 +107,7 @@ That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices``
 - The default implementation of the check method on ``BrailleDisplayDriver`` uses ``bdDetect.driverHasPossibleDevices`` for devices that are marked as thread safe.
 Starting from NVDA 2024.1, in order for the base method to use ``bdDetect.driverHasPossibleDevices``, the ``supportsAutomaticDetection`` attribute must be set to ``True`` as well. (#15200)
 -
+
 
 = 2023.2 =
 Esta versão introduz a Loja de Extras para substituir o Gestor de Extras.
