@@ -160,9 +160,8 @@ freeze(
 	console=[
 		{
 			"script": os.path.join("..", "include", "nvda_dmp", "nvda_dmp.py"),
-			"uiAccess": False,
 			"icon_resources": [(1, "images/nvda.ico")],
-			"other_resources": [],
+			"other_resources": [_genManifestTemplate(shouldHaveUIAccess=False)],
 			"version_info": {
 				"version": formatBuildVersionString(),
 				"description": "NVDA Diff-match-patch proxy",
