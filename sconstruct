@@ -308,13 +308,12 @@ def NVDADistGenerator(target, source, env, for_signature):
 	# which scons treats as an error code.	
 	and None]
 
-	buildCmd = ["cd", source[0].path, "&&",
-		sys.executable]
+	buildCmd = ["cd", source[0].path, "&&", sys.executable]
 	if release:
 		buildCmd.append("-O")
 	# Issue errors about str(bytes_instance), str(bytearray_instance)
 	buildCmd.append("-bb")
-	buildCmd.extend(("setup.py", "-vv", "build", "--build-base", buildDir.abspath, "--dist-dir", target[0].abspath))
+	buildCmd.append("setup.py")
 	if env.get("uiAccess"):
 		buildCmd.append("--enable-uiAccess")
 

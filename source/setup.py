@@ -52,9 +52,10 @@ def _parsePartialArguments() -> argparse.Namespace:
 		"--enable-uiAccess",
 		dest="uiAccess",
 		action="store_true",
-		help="enable uiAccess for the main executable"
+		help="enable uiAccess for the main executable",
+		default=False,
 	)
-	partialArgs, _argslist = partialParser.parse_known_args(("--enable-uiAccess", ))
+	partialArgs, _argslist = partialParser.parse_known_args(sys.argv)
 	return partialArgs
 
 
@@ -173,6 +174,7 @@ freeze(
 		},
 	],
 	options={
+		"verbose": 2,
 		"optimize": 0,
 		"bundle_files": 3,
 		"dist_dir": "../dist",
