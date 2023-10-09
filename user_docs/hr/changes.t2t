@@ -23,9 +23,13 @@ Ispravljene su greške u Add-on Storeu, Microsoft Officeu, Microsoft Edge kontek
 
 == Nove značajke ==
 - Unapređeno upravljanje zvukom:
- - Opcija koja omogućuje izjednačavanje glasnoće zvukova NVDA sa glasnoćom govora. (#1409)
- - Opcija u postavkama zvuka za konfiguriranje glasnoće NVDA zvukova. (#1409, #15038)
-    -
+  - Novi panel postavki zvuka:
+    - Može se otvoriti tipkovničkim prečacom ``NVDA+control+u``. (#15497)
+    - Opcija koja omogućuje ujednačavanje glasnoće zvukova sa glasnoćom govorne jedinice koju koristite. (#1409)
+    - Opcija za odvojenu konfiguraciju glasnoće NVDA zvukova. (#1409, #15038)
+    - Opcije za promjenu zvučne kartice i utišavanje zvukova premještene su u novu kategoriju postavki zvuka iz dijaloškog okvira odabira govorne jedinice.
+Ove će opcije biti uklonjene iz dijaloškog okvira  "odaberi govornu jedinicu" u inačici 2024.1. (#15486, #8711)
+   -
   - Upozorenje: WASAPI je nekompatibilan sa nekim dodacima.
   Dostupne su kompatibilne nadogradnje tih dodataka, Nadogradite ih prije nadogradnje NVDA.
   Nekompatibilne verzije tih dodataka bit će isključene prilikom nadogradnje NVDA:
@@ -37,7 +41,6 @@ Ispravljene su greške u Add-on Storeu, Microsoft Officeu, Microsoft Edge kontek
   - Kako biste uključili ovu opciju, molimo uključite opciju "S vremena na vrijeme osvježavaj sadržaj prepoznavanja" u kategoriji Windows Ocr u NVDA postavkama.
   - Kada je ova opcija uključena, možete uključiti ili isključiti izgovor novog teksta tako da uključite ili isključite čitanje dinamičkog sadržaja (pritiskom ``NVDA+5``).
   -
-- Postavka za promjenu zvučne kartice i uključivanje utišavanaj zvuka premještene su u nove postavke zvuka iz dijaloškog okvira odabir govorne jedinice. (#8711)
 - Prilikom korištenja automatskog otkrivanja brajičnih redaka, sada je moguće onemogućiti upravljačke programe sa popisa automatski otkrivanih u dijaloškom okviru izbora brajičnog redka. (#15196)
 - Nova opcija u opcijama oblikovanja dokumenta, "Ignoriraj prazne redke prilikom čitanja uvlačenja". (#13394)
 - Dodana nedodijeljena gesta za kretanje po grupiranjima kartica svojstva u načinu pregleda. (#15046)
@@ -48,12 +51,12 @@ Ispravljene su greške u Add-on Storeu, Microsoft Officeu, Microsoft Edge kontek
   - Kada se tekst u naredbenom redku promijeni bez promjene fokusa, tekst na brajičnom redku će se također obnoviti kada se nalazite na tom redku.
   Ovo uključuje situacije kada je brajica povezana na pregled. (#15115)
   - Više Brltty prečaca je povezana sa NVDA prečacima (#6483):
-    - ``learn``: uklčuči isključi pomoć pri unosu
+    - ``learn``: uključi isključi pomoć pri unosu
     - ``prefmenu``: otvori nVDA izbornik
     - ``prefload``/``prefsave``: učitaj spremi NVDA konfiguraciju
     - ``time``: pokaži vrijeme
     - ``say_line``: Izgovori redak na kojem se nalazi pregledni kursor
-    - ``say_below``: Čitaj sve koristećk pregledni kursor
+    - ``say_below``: Čitaj sve koristeći pregledni kursor
     -
   - BRLTTY upravljački program je dostupan samo kada je Brltty pokrenut sa BRL api. (#15335)
   - Napredna postavka za isključivanje HID brajičnog redka  sada je uklonjena i zamijenjena novom opcijom.
@@ -68,6 +71,7 @@ Ispravljene su greške u Add-on Storeu, Microsoft Officeu, Microsoft Edge kontek
 - Microsoft Office:
   - Ispravljeno rušenje u Microsoft Word Kada su opcije u postavkama oblikovanja "čitaj naslove" i "čitaj komentare i bilješke" isključene. (#15019)
   - U Wordu i Excelu, poravnanje će biti ispravno pročitano u više situacija. (#15206, #15220)
+    - Ispravljeno čitanje nekih prečaca oblikovanja u Excelu. (#15527)
   -
 - Microsoft Edge:
   - NVDA više se neće vraćati na prethodnu poziciju u modusu čitanja pri otvaranju kontekstnog izbornika u Microsoft Edgeu. (#15309)
@@ -85,10 +89,10 @@ Ispravljene su greške u Add-on Storeu, Microsoft Officeu, Microsoft Edge kontek
   - Ispravljena pogreška  pri instalaciji dodataka ako je prethodna instalacija ili preuzimanje prekinuto. (#15469)
  - Ispravljene pogreške s rukovanjem nekompatibilnim dodacima pri nadogradnji NVDA. (#15414, #15412, #15437)
   -
-- Ispravljena podrška za prikaze popisa sustava (``SysListView32``) u Windows forms aplikacijama. (#15283)
 - NVDA opet izgovara rezultate računskih operacija u 32-bitnom kalkulatoru za Windows u operacijskim sustavima Server, LTSC and LTSB. (#15230)
 -
-- NVDA više ne ignorira izmjene fokusa kada se višeslojni prozor (prozok koji se nalazi iznad drugog prozora) postane fokusiran. (#15432)
+- NVDA više ne ignorira izmjene fokusa kada se višeslojni prozor (prozor koji se nalazi iznad drugog prozora) postane fokusiran. (#15432)
+- Ispravljeno moguće rušenje prilikom pokretanja NVDA. (#15517)
 
 
 = 2023.2 =
