@@ -37,11 +37,9 @@ class Test_getKeyboardShortcutSpeech(unittest.TestCase):
 	def test_simpleLetterKeyWithSpellingFunctionalityDisabled(self):
 		"""A shortcut consisting in only one letter in the case where "Use spelling functionality" is disabled
 		(see #15566).
-		."""
+		"""
 
-		expected = repr([
-			'A',
-		])
+		expected = repr(['A',])
 		output = _getKeyboardShortcutSpeech(
 			keyboardShortcut='A',
 		)

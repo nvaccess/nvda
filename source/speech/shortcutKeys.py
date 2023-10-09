@@ -85,6 +85,7 @@ def shouldUseSpellingFunctionality() -> bool:
 	synth = getSynth()
 	return config.conf["speech"][synth.name]["useSpellingFunctionality"]
 
+
 def _getKeySpeech(key: str) -> SpeechSequence:
 	"""Gets the speech sequence for a string describing a key.
 	@param key: the key string.
