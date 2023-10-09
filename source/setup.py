@@ -106,12 +106,28 @@ _py2ExeWindows = [
 		"dest_base": "nvda_noUIAccess",
 		"icon_resources": [(1, "images/nvda.ico")],
 		"other_resources": [_genManifestTemplate(shouldHaveUIAccess=False)],
+		"version_info": {
+			"version": formatBuildVersionString(),
+			"description": "NVDA application (no UIAccess)",
+			"product_name": name,
+			"product_version": version,
+			"copyright": NVDAcopyright,
+			"company_name": publisher,
+		}
 	},
 	# The nvda_uiAccess target will be added at runtime if required.
 	{
 		"script": "nvda_slave.pyw",
 		"icon_resources": [(1, "images/nvda.ico")],
 		"other_resources": [_genManifestTemplate(shouldHaveUIAccess=False)],
+		"version_info": {
+			"version": formatBuildVersionString(),
+			"description": description,
+			"product_name": name,
+			"product_version": version,
+			"copyright": NVDAcopyright,
+			"company_name": publisher,
+		}
 	},
 ]
 if _partialArgs.uiAccess:
@@ -120,6 +136,14 @@ if _partialArgs.uiAccess:
 		"dest_base": "nvda_uiAccess",
 		"icon_resources": [(1, "images/nvda.ico")],
 		"other_resources": [_genManifestTemplate(shouldHaveUIAccess=True)],
+		"version_info": {
+			"version": formatBuildVersionString(),
+			"description": "NVDA application (has UIAccess)",
+			"product_name": name,
+			"product_version": version,
+			"copyright": NVDAcopyright,
+			"company_name": publisher,
+		}
 	})
 
 
@@ -139,6 +163,14 @@ freeze(
 			"uiAccess": False,
 			"icon_resources": [(1, "images/nvda.ico")],
 			"other_resources": [],
+			"version_info": {
+				"version": formatBuildVersionString(),
+				"description": "NVDA Diff-match-patch proxy",
+				"product_name": name,
+				"product_version": version,
+				"copyright": f"{NVDAcopyright}, Bill Dengler",
+				"company_name": f"Bill Dengler, {publisher}",
+			},
 		},
 	],
 	options={

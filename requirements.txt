@@ -14,12 +14,7 @@ Pillow==10.0.1 -C "zlib=disable" -C "jpeg=disable"
 fast_diff_match_patch==2.0.1
 
 # Packaging NVDA
-py2exe==0.13.0.0
-# py2exe fails to compile properly without this.
-# This can be removed when upgrading py2exe to the next release.
-# https://github.com/Ousret/charset_normalizer/issues/253
-# https://github.com/py2exe/py2exe/commit/7b34f06486fbc07500e323796d3f3d5fb862aee3
-charset-normalizer==2.1.1
+git+https://github.com/py2exe/py2exe@4e7b2b2c60face592e67cb1bc935172a20fa371d#egg=py2exe
 
 # Creating XML unit test reports
 unittest-xml-reporting==3.2.0
