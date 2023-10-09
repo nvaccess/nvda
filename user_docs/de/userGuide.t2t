@@ -1351,16 +1351,21 @@ Wenn Sie häufig auf Kategorien zugreifen, für die es keine eigenen Tastenkombi
 
 Weiter unten finden Sie Erläuterungen zu jeder Kategorie aus den NVDA-Einstellungen.
 
-+++ Allgemein (NVDA+Strg+G) +++[GeneralSettings]
++++ Allgemeine Einstellungen +++[GeneralSettings]
+
+%kc:setting
+==== Allgemeine Einstellungen öffnen ====
+Tastenkombination: ``NVDA+Strg+G``
+
 Die Kategorie "Allgemein" in den NVDA-Einstellungen legt das allgemeine Verhalten von NVDA fest, wie z. B. die Sprache der Benutzeroberfläche und ob nach Updates gesucht werden soll oder nicht.
 Diese Kategorie enthält die folgenden Optionen:
 
-==== Sprache ====[GeneralSettingsLanguage]
+==== Sprache der Oberfläche ====[GeneralSettingsLanguage]
 In dieser Liste können Sie die Sprache festlegen, in welcher die Benutzeroberfläche und die Meldungen von NVDA ausgegeben werden sollen.
 Standardmäßig ist die Option "Benutzerstandard, Windows" ausgewählt. NVDA enthält eine Vielzahl integrierter Sprachen.
 Dies besagt, dass NVDA die Sprache verwendet, welche in Windows eingestellt ist.
 
-Bitte beachten Sie: Um die Sprache zu ändern, muss NVDA neu gestartet werden.
+Bitte beachten Sie: Um die Sprache der Oberfläche zu ändern, muss NVDA neu gestartet werden.
 Wenn das Bestätigungsfenster erscheint, wählen Sie "Jetzt neu starten" oder "Später neu starten", wenn Sie die neue Sprache jetzt oder zu einem späteren Zeitpunkt verwenden möchten. Wenn "Später neu starten" ausgewählt ist, muss die Konfiguration gespeichert werden (entweder manuell oder über die Save-On-Exit-Funktion).
 
 ==== Einstellungen beim Beenden speichern ====[GeneralSettingsSaveConfig]
@@ -1430,14 +1435,19 @@ Diese Informationen helfen NV Access bei der zukünftigen Entwicklung von NVDA.
 Wenn diese Option aktiviert ist, informiert NVDA nach dem Start darüber, falls ein Update noch aussteht, um diese zu installieren.
 Sie können ausstehende Updates auch manuell über das NVDA-Menü, das Dialogfeld zum Beenden von NVDA oder durch eine erneute Suche nach Updates aus dem Hilfe-Menü installieren.
 
-+++ Stimme- und Sprachausgabe (NVDA+Strg+V) +++[SpeechSettings]
-Die Kategorie "Sprache" in den NVDA-Einstellungen enthält Optionen, mit denen Sie die Sprachausgabe sowie die Sprachmerkmale der ausgewählten Sprachausgabe ändern können.
++++ Einstellungen für die Sprachausgabe +++[SpeechSettings]
+
+%kc:setting
+==== Einstellungen für die Sprachausgaben öffnen ====
+Tastenkombination: ``NVDA+Strg+V``
+
+Die Kategorie "Sprachausgabe" in den NVDA-Einstellungen enthält Optionen, mit denen Sie die Sprachausgabe sowie die Sprachmerkmale der ausgewählten Sprachausgabe ändern können.
 Für eine schnellere Möglichkeit, Sprachparameter von überall her zu steuern, lesen Sie bitte den Abschnitt [Sprachausgaben-Einstellungsring #SynthSettingsRing].
  
-Die Kategorie der Sprach-Einstellungen enthält die folgenden Optionen:
+Diese Einstellungen enthalten die folgenden Optionen:
 
 ==== Sprachausgabe ändern ====[SpeechSettingsChange]
-Die erste Option in dieser Kategorie ist der Schalter "Ändern". Dieser Schalter öffnet das Dialogfeld zum [Ändern der Sprachausgabe #SelectSynthesizer]. Dort befinden sich alle verfügbaren Sprachausgaben und Ausgabegeräte, über welche die Sprachausgabe gesteuert werden kann.
+Die Option in dieser Kategorie ist der Schalter "Ändern". Dieser Schalter öffnet das Dialogfeld zum [Ändern der Sprachausgabe #SelectSynthesizer]. Dort befinden sich alle verfügbaren Sprachausgaben und Ausgabegeräte, über welche die Sprachausgabe sich steuern lassen.
 Dieses Dialogfeld wird zusätzlich zu den Einstellung geöffnet.
 Wenn das Dialogfeld zum Ändern der Sprachausgabe mit "OK" oder "Abbrechen" geschlossen wird, erscheinen wieder die NVDA-Einstellungen mit den dazugehörigen Kategorien.
 
@@ -1456,8 +1466,8 @@ Wenn Sie eine Sprachausgabe eines Drittanbieters verwenden, können Sie diesen W
 Mit dieser Option können Sie die Sprechgeschwindigkeit der Stimme festlegen.
 Dies ist ein Schieberegler, der von 0 bis 100 reicht (0 ist sehr langsam, 100 ist sehr schnell).
 
-==== Geschwindigkeitserhöhung ====[SpeechSettingsRateBoost]
-Durch Aktivieren dieser Option wird die Sprachgeschwindigkeit deutlich erhöht, sofern dies von der aktuellen Sprachausgabe unterstützt wird.
+==== Sprachgeschwindigkeit anheben ====[SpeechSettingsRateBoost]
+Durch Aktivieren dieser Option wird die Sprachgeschwindigkeit deutlich angehoben, sofern dies von der aktuellen Sprachausgabe unterstützt wird.
 
 ==== Stimmhöhe ====[SpeechSettingsPitch]
 Mit dieser Option können Sie die Stimmhöhe der aktuell ausgewählten Stimme festlegen.
@@ -1539,7 +1549,12 @@ Dies kann nützlich sein, wenn die Aussprache von Symbolen schwer zu unterscheid
 
 Die verzögerte Zeichenbeschreibung wird abgebrochen, wenn während dieser Zeit ein anderer Text vorgelesen wird oder die ``Strg``-Taste gedrückt wird.
 
-+++ Sprachausgabe auswählen (NVDA+Strg+S) +++[SelectSynthesizer]
++++ Sprachausgabe auswählen +++[SelectSynthesizer]
+
+%kc:setting
+==== Dialogfeld zum Auswählen der Sprachausgabe öffnen ====
+Tastenkombination: ``NVDA+Strg+S``
+
 Das Dialogfeld, welches durch das Betätigen des Schalters "Ändern" geöffnet wird, ermöglicht die Sprachausgabe auszuwählen. Diese wird dann von NVDA dazu genutzt Informationen mittels Sprache zugänglich zu machen.
 NVDA wird die Sprachausgabe verwenden, sobald Sie einen Eintrag ausgewählt und den Schalter "OK" betätigt haben.
 Wenn ein Fehler auftritt, wird NVDA einen Fehlerton abspielen und die vorherige Sprachausgabe weiterhin verwenden.
@@ -1726,7 +1741,12 @@ Das Ausschalten  dieser Option kann eventuell die Lesbarkeit verbessern.
 
 Um die Auswahl von einer beliebigen Stelle aus umzuschalten, weisen Sie bitte einen benutzerdefinierten Tastenbefehl zu, indem Sie das dialogfeld für die [Tastenbefehle #InputGestures] verwenden.
 
-+++ Braillezeile auswählen (NVDA+Strg+A) +++[SelectBrailleDisplay]
++++ Braillezeile auswählen +++[SelectBrailleDisplay]
+
+%kc:setting
+==== Dialogfeld zum Auswählen der Braillezeile öffnen ====
+Tastenkombination: ``NVDA+Strg+A``
+
 Dies ist das Dialogfeld zum Ändern der Braillezeile, welches über den Schalter "Ändern" in der Kategorie "Braille" geöffnet wird. Es ermöglicht die Braillezeile auszuwählen, die NVDA dazu verwendet, Informationen in Punktschrift darzustellen.
 NVDA wird die Braillezeile verwenden, sobald Sie einen Eintrag ausgewählt und den Schalter "OK" betätigt haben.
 Falls ein Fehler auftritt, wird NVDA einen Fehlerton wiedergeben und die vorherige Braillezeile weiterhin verwenden, sofern vorhanden.
@@ -1768,6 +1788,11 @@ Bitte beachten Sie: Wenn Sie mehrere Braille-Displays gleichzeitig an Ihr Gerät
 Es wird daher empfohlen, immer nur eine Braillezeile eines bestimmten Typs / Herstellers an Ihr Gerät anzuschließen.
 
 +++ Audio-Einstellungen +++[AudioSettings]
+
+%kc:setting
+==== Audio-Einstellungen öffnen ====
+Tastenkombination: ``NVDA+Strg+U``
+
 Die Kategorie "Audio-Einstellungen" in den NVDA-Einstellungen enthält Optionen, mit denen Sie verschiedene Aspekte der Audio-Ausgabe anpassen können.
 
 ==== Audio-Ausgabegerät ====[SelectSynthesizerOutputDevice]
@@ -1841,7 +1866,12 @@ Zusätzliche Quellen für die Verbesserung der visuellen Darstellungen können m
 Wenn diese Quellen über konfigurierbare Einstellungen verfügen, werden sie in dieser Einstellungskategorie in separaten Gruppierungen angezeigt.
 Die unterstützten Einstellungen pro Quelle finden Sie in der Dokumentation der jeweiligen Erweiterung.
 
-+++ Tastatur (NVDA+Strg+K) +++[KeyboardSettings]
++++ Tastatur-Einstellungen +++[KeyboardSettings]
+
+%kc:setting
+==== Tastatur-Einstellungen öffnen ====
+Tastenkombination: ``NVDA+Strg+K``
+
 Die Kategorie "Tastatur" im Dialogfeld NVDA-Einstellungen enthält Optionen, die das Verhalten von NVDA bei der Verwendung und Eingabe auf Ihrer Tastatur festlegen.
 Sie enthält die folgenden Optionen:
 
@@ -1899,9 +1929,14 @@ Diese Option funktioniert nur, wenn in den NVDA-Einstellungen in der [Kategorie 
 Mit dieser Option legen Sie fest, ob per Software emulierte Tastendrücke von NVDA verarbeitet werden sollen. Hierzu zählen beispielsweise Tastendrücke auf einer Bildschirmtastatur oder per Spracherkennung erkannte Zeichen.
 Diese Option ist standardmäßig aktiviert, obwohl manche Benutzer dies bestimmt deaktivieren, z. B. diejenigen, die Vietnamesisch mit der UniKey-Software schreiben, da dies zu einer falschen Zeicheneingabe führt.
 
-+++ Maus (NVDA+Strg+M) +++[MouseSettings]
++++ Maus-Einstellungen  +++[MouseSettings]
+
+%kc:setting
+==== Maus-einstellungen öffnen ====
+Tastenkombination: ``NVDA+Strg+M``
+
 Die Kategorie "Maus" in den NVDA-Einstellungen bietet Optionen zur Mausverfolgung, zu akustischer Koordinatenanzeige, etc.
-Es sind folgende Optionen enthalten:
+Folgende Optionen sind enthalten:
 
 ==== Änderungen der Mauszeigerform ansagen ====[MouseSettingsShape]
 Dieses Kontrollfeld legt fest, ob NVDA bei Änderung des Mauszeigers die Form mit ansagen soll.
@@ -1975,7 +2010,12 @@ Bei eingeschaltetem Modus filtert NVDA nicht wichtige Objekte aus der Hierarchie
 
 Um den einfachen Darstellungsmodus per Tastenkombination ein- und auszuschalten, können Sie den entsprechenden Befehl an eine Tastenkombination zuweisen. Verwenden Sie hierfür das Dialogfeld [Tastenbefehle #InputGestures].
 
-+++ Objekt-Darstellung (NVDA+Strg+O) +++[ObjectPresentationSettings]
++++ Einstellungen zur Objekt-Darstellung +++[ObjectPresentationSettings]
+
+%kc:setting
+==== Einstellungen zur Objekt-Darstellung öffnen ====
+Tastenkombination: ``NVDA+Strg+O``
+
 Hier kann eingestellt werden, inwieweit NVDA über Position, Beschreibungen von Objekten, etc. informieren soll.
 Diese Optionen gelten normalerweise nicht für den Lesemodus.
 Diese Optionen gelten normalerweise für die Ansage des Fokus und Objekt-Navigation in NVDA, jedoch nicht für das Lesen von Textinhalten, z. B. im Lesemodus.
@@ -2065,7 +2105,12 @@ Nachdem die Präcompositionsdaten zu einem gültigen piktografischen Zeichen zus
 Mit dieser Option legen Sie fest, ob NVDA Änderungen an den Symbolen im composition string wiedergeben soll.
 Diese Option ist standardmäßig aktiviert.
 
-+++ Lesemodus (NVDA+Strg+B) +++[BrowseModeSettings]
++++ Einnstellungen zum Lesemodus +++[BrowseModeSettings]
+
+%kc:setting
+==== Einstellungen zum Lesemodus öffnen ====
+Tastenkombination: ``NVDA+Strg+B``
+
 Hier kann das Verhalten von NVDA in komplexen Dokumenten wie Webseiten beeinflusst werden.
 Diese Kategorie enthält die folgenden Optionen:
 
@@ -2126,7 +2171,7 @@ Wenn diese Option aktiviert ist, werden Tastenkombinationen, die nicht mit Schne
 Wenn beispielsweise der Buchstabe "J" gedrückt wurde und aktiviert ist, würde er vom Erreichen des Dokuments abgefangen, obwohl es sich weder um einen Schnellnavigationsbefehl handelt noch wahrscheinlich um einen Befehl in der Anwendung selbst.
 In diesem Fall weist NVDA Windows an, einen Standard-Sound abzuspielen, wenn eine Taste gedrückt wird, die festgestellt wird.
 
-+%kc:setting
+%kc:setting
 ==== Automatisches Bewegen des System-Fokus auf fokussierbare Elemente im Lesemodus ====[BrowseModeSettingsAutoFocusFocusableElements]
 Tastenkombination: NVDA+8
 
@@ -2136,7 +2181,12 @@ Dies kann zu einem schnelleren Verhalten im Browser und einer verbesserten Reakt
 Der Fokus wird noch auf das jeweilige Element aktualisiert, wenn man mit ihm interagiert (z. B. einen Schalter drückt, ein Kontrollkästchen markiert).
 Die Aktivierung dieser Option kann die Unterstützung für einige Websites auf Kosten der Leistung und Stabilität verbessern.
 
-+++ Dokument-Formatierungen (NVDA+Strg+D) +++[DocumentFormattingSettings]
++++ Einstellungen zur Dokument-Formatierungen +++[DocumentFormattingSettings]
+
+%kc:setting
+==== Einstellungen zur Dokument-formatierung öffnen ====
+Tastenkombination: ``NVDA+Strg+D``
+
 Die meisten Optionen in dieser Kategorie dienen dazu, die Art der Formatierung zu konfigurieren, die Sie beim Bewegen des Cursors in den Dokumenten erhalten möchten.
 Wenn Sie z. B. das Kontrollkästchen "Schriftartennamen mitteilen" aktivieren und anschließend in einem Text navigieren, wird NVDA jedes Mal den Namen der Schriftart ansagen, sobald sich die Schriftart ändert.
 

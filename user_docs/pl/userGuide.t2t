@@ -260,7 +260,8 @@ Wielu ekranów ustawień mają skróty do bezpośredniego otwierania, takie jak 
 
 ++ Społeczność ++[Community]
 
-NVDA posiada bardzo aktywną społeczność.  istnieje główna [anglojęzyczna lista mailingowa https://nvda.groups.io/g/nvda] a także   strona listująca [lokalne grupy językowe https://github.com/nvaccess/nvda-community/wiki/Connect].
+NVDA posiada bardzo aktywną społeczność.  
+Istnieje główna [anglojęzyczna lista mailingowa https://nvda.groups.io/g/nvda] a także   strona listująca [lokalne grupy językowe https://github.com/nvaccess/nvda-community/wiki/Connect].
 NV Access, twórcy programu NVDA, są aktywni na [Twitterze https://twitter.com/nvaccess] i [Facebooku https://www.facebook.com/NVAccess].
 Pracownicy organizacji NV Access także prowadzą regularnego [Bloga z aktualnościami https://www.nvaccess.org/category/in-process/].
 
@@ -418,7 +419,7 @@ Jeśli twój laptop nie może tego zrobić albo nie pozwala wyłączyć klawisza
 
 ++ Gesty dotykowe ++[NVDATouchGestures]
 Jeśli korzystasz z NVDA pod kontrolą systemu Windows 8 lub nowszego i posiadasz komputer z ekranem dotykowym, możesz korzystać z gestów dotykowych NVDA.
-Podczas działania programu NVDA, wszystkie gesty dotykowe są przekazywane do niego, miast do systemu operacyjnego.
+Podczas działania programu NVDA, chyba że interakcja dotykiem jest wyłączona, wszystkie gesty dotykowe są przekazywane do niego, miast do systemu operacyjnego.
 Oznacza to, że gesty wykonywane normalnie nie będą działać, jeśli włączony jest NVDA.
 %kc:beginInclude
 W celu przełączania obsługi gestów naciśnij NVDA+CTRL+ALT+T.
@@ -811,6 +812,26 @@ Jeśli chcesz używać tych skrótów i móc jednocześnie posługiwać się kla
 Aby włączyć i wyłączyć nawigację literami dla aktualnego dokumentu, naciśnij NVDA+Shift+Spacja.
 %kc:endInclude
 
++++ Inne polecenia do nawigacji +++[OtherNavigationCommands]
+
+Oprócz poleceń do szybkiej nawigacji zawartych powyżej, NVDA posiada nieskojarzone polecenia.
+Aby je używać, musisz z nimi skojarzyć skrót klawiszowy lub dotykową gestę w [oknie dialogowym zdarzeń wejścia #InputGestures].
+Oto spis dostępnych poleceń
+- Artykuł
+- grupowanie
+- Karta właściwości
+-
+Zauważ, że istnieją dwie akcje dla każdego polecenia, do przemieszczania w przód albo w tyl w dokumencie, i w celu prawidłowej nawigacji w obu kierunkach, muzisz je ustawić.
+
+Na przykład, jeżeli chcesz używać skrótów ``y`` / ``shift+y`` do szybkiego przemieszczania się między kartami właściwości, powinieneś wykonać następujące kroki
+
++ Otwórz okno dialogowe zdarzenia wejścia z któregokolwiek dokumentu HTML.
++ Znajdź element "Przemieszcza do następnej karty właściwości" w rozdziale tryb czytania.
++ Skojarz skrót ``y`` ze znalezionym poleceniem.
++ Znajdź element "przemieszcza do poprzedniej karty właściwości".
++ Skojarz skrót ``shift+y`` ze znalezionym poleceniem.
++
+
 ++ Lista elementów ++[ElementsList]
 Lista elementów umożliwia dostęp do listy różnych elementów, znajdujących się w dokumencie, właściwych dla konkretnej aplikacji.
 Dla przykładu w przeglądarkach www, lista elementów wymienia linki, nagłówki, pola formularzy, przyciski albo punkty orientacyjne.
@@ -1093,6 +1114,9 @@ NVDA może go używać dla rozpoznawania tekstu z obrazków lub okien niedostęp
 Możesz ustawić język, który ma być użyty dla rozpoznawania tekstu w kategorii [Windows OCR #Win10OcrSettings] w oknie [Preferencji NVDA #NVDASettings], znajdującym się w podmenu Ustawienia w menu NVDA.
 Dodatkowe języki mogą zostać zainstalowane po otwarciu Menu start, wybraniu Ustawienia, wybór daty i języka -> Region i język, a następnie po wybraniu Dodaj język.
 
+Gdy chcesz śledzić zmieniającą się dynamicznie treść, na przykład napisy w filmie, którego oglądasz, Możesz włączyć automatyczne odświeżanie rozpoznanej treści.
+Możesz to zrobić w kategorii [Windows OCR #Win10OcrSettings] [ustawień NVDA #NVDASettings].
+
 Funkcja Windows OCR może być częsciowo oraz całkowicie niezgodna z [Ulepszeniami wizji NVDA #Vision] oraz z innymi zewnętrznymi pomocami do ulepszenia widzenia. Przed rospoczęciem rozpoznawania tekstu, trzeba wyłączyć takie narzędzia.
 
 %kc:beginInclude
@@ -1326,7 +1350,12 @@ Jeżeli często używasz kategorii które nie mają przypisanych klawiszy skrót
 
 Kategorie w oknie ustawień NVDA zostaną opisane poniżej.
 
-+++ Ogólne (NVDA+Ctrl+G) +++[GeneralSettings]
++++ Ogólne +++[GeneralSettings]
+
+%kc:setting
+==== Otwiera ustawienia ogólne ====
+Skrót: ``NVDA+control+g``
+
 Ta kategoria ustawień NVDA  pozwala określić ogólne zachowanie NVDA takie jak język interfejsu i automatyczne sprawdzanie aktualizacji.
 Zawiera następujące opcje:
 
@@ -1405,7 +1434,12 @@ Te informacje znacząco pomagają NV Access w priorytyzowaniu dalszych prac nad 
 Gdy zaznaczone, NVDA poinformuje o oczekującej przy starcie aktualizacji, oferując możliwość jej zainstalowania.
 Można ręcznie zainstalować oczekującą aktualizację w oknie opcji wyjścia z NVDA (jeśli włączone),  z menu NVDA, lub wykonując sprawdzenie aktualizacji z menu pomoc.
 
-+++ Ustawienia mowy (NVDA+control+v) +++[SpeechSettings]
++++ Ustawienia mowy +++[SpeechSettings]
+
+%kc:setting
+==== Otwiera ustawienia mowy ====
+Skrót: ``NVDA+control+v``
+
 ustawienia mowy w oknie głównym programu NVDA zawierają zarówno opcje zmiany syntezatora jak i jego parametrów.
 Szybszy alternatywny sposób regulacji parametrów mowy z dowolnego miejsca, możesz znaleźć w rozdziale [Szybka zmiana ustawień syntezatora #SynthSettingsRing].
 
@@ -1514,7 +1548,12 @@ To może być użyteczne jeżeli nie można odróżnić wymowę niektórych znak
 
 Opóźniony opis znaków nie będzie wypowiedzony jeżeli zostanie wypowiedzony inny tekst w tym czasie, lub jeżeli zostanie naciśnięty klawisz ``control``.
 
-+++ Wybór syntezatora (NVDA+control+s) +++[SelectSynthesizer]
++++ Wybór syntezatora +++[SelectSynthesizer]
+
+%kc:setting
+==== Otwiera okno dialogowe wybór syntezatora ====
+Skrót: ``NVDA+control+s``
+
 Okno dialogowe "Syntezator...", pod przyciskiem "Zmień..." w kategorii mowa w oknie preferencji NVDA, pozwala wybrać używany przez NVDA syntezator mowy.
 Po zaznaczeniu wybranego syntezatora, naciśnij przycisk "Ok" a NVDA załaduje go.
 Jeśli pojawi się błąd przy ładowaniu wybranego syntezatora, program NVDA powiadomi o tym wyświetlając komunikat i będzie używał syntezatora aktywnego poprzednio.
@@ -1526,23 +1565,8 @@ Listę Syntezatorów, które obsługuje NVDA zobaczysz w rozdziale [Obsługiwane
 
 Jeden specjalny element, który zawsze pojawi się na tej liście, to "bez mowy", który pozwala używać NVDA całkowicie bez komunikatów głosowych.
 Może to być przydatne dla kogoś chcącego używać NVDA tylko z monitorem brajlowskim albo dla widzących twórców oprogramowania, którzy chcą używać wyłącznie funkcji "Podgląd mowy".
+
  
-==== Urządzenie wyjściowe ====[SelectSynthesizerOutputDevice]
-Ta opcja pozwala na wybór urządzenia dźwiękowego, przez które będzie słychać wybrany syntezator NVDA.
-
-%kc:setting
-==== Tryb przyciszania audio ====[SelectSynthesizerDuckingMode]
-Skrót klawiszowy: NVDA+Shift+D
-
-W Windows 8 i nowszych, ta opcja pozwala wybrać, czy NVDA powinien obniżać głośność innych aplikacji, gdy NVDA mówi albo przez cały czas, gdy NVDA jest uruchomione.
-- Bez przyciszania: NVDA nie będzie nigdy obniżać głośności innych dźwięków. 
-- Przycisz podczas generowania mowy i dźwięku: NVDA obniży głośność innych dźwięków tylko wtedy, gdy NVDA mówi albo generuje dźwięk. Może to nie działać dla wszystkich syntezatorów. 
-- Zawsze przyciszaj: NVDA będzie obniżał głośność innych dźwięków przez cały czas, gdy NVDA jest uruchomione.
--
-
-Ta opcja jest dostępna tylko, jeśli NVDA został zainstalowany.
-Nie jest możliwe obsługiwanie przyciszania audio w przenośnych i tymczasowych kopiach NVDA.
-
 +++ Szybka zmiana ustawień syntezatora +++[SynthSettingsRing]
 Jeśli chcesz szybko zmienić ustawienia mowy bez wchodzenia do kategorii Mowa okna preferencji NVDA, istnieją klawisze poleceń, które pozwalają w każdej chwili ustawiać najczęściej zmieniane ustawienia mowy:
 %kc:beginInclude
@@ -1717,7 +1741,12 @@ Wyłączenie tej opcji może poprawić czytelność.
 
 To toggle show selection from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
-+++ Wybór monitora brajlowskiego (NVDA+control+a) +++[SelectBrailleDisplay]
++++ Wybór monitora brajlowskiego +++[SelectBrailleDisplay]
+
+%kc:setting
+==== Otwiera okno dialogowe wybor monitora brajlowskiego ====
+Skrót: ``NVDA+control+a``
+
 Okno wyboru monitora brajlowskiego jest otwierane po kliknięciu przycisku "Zmień..."  w kategorii brajl preferencji NVDA, pozwala wybrać, której linijki brajlowskiej NVDA ma używać do generowania komunikatów w brajlu.
 Po wybraniu monitora brajlowskiego, naciśnij Ok i NVDA uruchomi wybraną linijkę.
 Jeśli wystąpi błąd uruchamiania sterownika, NVDA powiadomi o tym odpowiednim komunikatem i powróci do używania poprzedniego monitora brajlowskiego, jeśli jakiś był wcześniej używany .
@@ -1731,7 +1760,17 @@ Gdy ta funkcja jest włączona i podłączysz obsługiwaną linijkę przez USB l
 
 "Bez brajla" oznacza, że nie używasz monitora brajlowskiego.
 
-Więcej na temat obsługiwanych linijek brajlowskich, oraz informacje, które z nich obsługują automatyczne wykrywanie, znajdziesz w rozdziale [Obsługiwane Monitory Brajlowskie #SupportedBrailleDisplays].
+Więcej na temat obsługiwanych monitorów brajlowskich, oraz informacje, które z nich obsługują automatyczne wykrywanie, znajdziesz w rozdziale [Obsługiwane Monitory Brajlowskie #SupportedBrailleDisplays].
+
+==== Monitory brajlowskie do automatycznego wykrywania ====[SelectBrailleDisplayAutoDetect]
+Gdy monitor brajloski jest ustawiony na "automatyczny", pola wyboru na tej liście umożliwią wykluczenie monitorów brajlowskich z procesu automatycznego wykrywania.
+To umożliwia wykluczenie monitorów brajlowskich, których nie używasz często.
+Na przykład, jeżeli używasz tylko monitora brajlowskiego, który wymaga sterownika baum do jego funkcjonowania, możesz zostawić włączony sterownik baum, ap pozostałe wyłączyć.
+
+Domyślnie włączone są wszystkie sterowniki wspierające automatyczne wykrywanie monitorów brajlowskich.
+Każdy nowy sterownik, dodany w nowej wersji NVDA lub dostarczany jako dodatek, będzie domyślnie włączony.
+
+Możesz sprawdzić, czy twój monitor brajlowski wspiera automatyczne wykrywanie monitorów brajlowskich w rozdziale [wspierane monitory brajlowskie #SupportedBrailleDisplays].
 
 ==== port ====[BrailleSettingsPort]
 Ta opcja, jeśli jest dostępna, pozwala określić jaki port lub typ połączenia będzie użyty do komunikacji z monitorem brajlowskim.
@@ -1748,6 +1787,48 @@ Możesz zajrzeć do sekcji omawiającej twój monitor brajlowski w rozdziale [Ob
 Miej na uwadze, że jeżeli podłączasz więcej monitorów brajlowskich w tym samym momencie używających tego samego sterownika Np. podłączenie tych samych monitorów brajlowskich seika,
 że teraz jest niemożliwie dokładnie ustawić w NVDA, który monitor brajlowski ma być używany.
 Czyli zaleca się podłączać monitor brajlowski określonego typu/producenta na raz.
+
++++ Dźwięk +++[AudioSettings]
+
+%kc:setting
+==== Otwiera ustawienia dźwięku ====
+Skrót: ``NVDA+control+u``
+
+Kategoria dźwięk w oknie dialogowym ustawień NVDA pozwala zmieniać niektóre opcje związane z odtwarzaniem dźwięków NVDA.
+
+==== Urządzenie wyjściowe ====[SelectSynthesizerOutputDevice]
+Ta opcja pozwala na wybór urządzenia dźwiękowego, przez które będzie słychać wybrany syntezator NVDA.
+
+%kc:setting
+==== Tryb przyciszania audio ====[SelectSynthesizerDuckingMode]
+Skrót klawiszowy: NVDA+Shift+D
+
+W Windows 8 i nowszych, ta opcja pozwala wybrać, czy NVDA powinien obniżać głośność innych aplikacji, gdy NVDA mówi albo przez cały czas, gdy NVDA jest uruchomione.
+- Bez przyciszania: NVDA nie będzie nigdy obniżać głośności innych dźwięków. 
+- Przycisz podczas generowania mowy i dźwięku: NVDA obniży głośność innych dźwięków tylko wtedy, gdy NVDA mówi albo generuje dźwięk. Może to nie działać dla wszystkich syntezatorów. 
+- Zawsze przyciszaj: NVDA będzie obniżał głośność innych dźwięków przez cały czas, gdy NVDA jest uruchomione.
+-
+
+Ta opcja jest dostępna tylko, jeśli NVDA został zainstalowany.
+Nie jest możliwe obsługiwanie przyciszania audio w przenośnych i tymczasowych kopiach NVDA.+
+
+==== Głośność dźwięków NVDA jest spójna z głośnością  NVDA ====[SoundVolumeFollowsVoice]
+: Domyślnie
+  Wyłączone
+: opcje
+  Wyłączone, Włączone
+:
+
+Gdy ta opcja jest włączona, Głośność dźwięków NVDA będzie śledzić głośność używanego syntezatora mowy.
+Jeżeli zmniejszysz głośność syntezatora mowy, głośność dźwięków także będzie zmniejszona.
+Podobnie, jeżeli powiększysz głośność syntezatora, głośność dźwięku się zwiększy.
+Ta opcja odnosi skutek gdy opcja "Używaj wasapi do wyjścia audio" jest włączona.
+Ta opcja nie jest dostępna jeżeli uruchomiłeś NVDA z wyłączonym [WASAPI do wyjścia audio #WASAPI] z poziomu ustawień zaawansowanych.
+
+==== Głośność dźwięków NVDA ====[SoundVolume]
+Ten suwak umożliwia ustawienie głośności dźwięków NVDA razem z sygnałami dźwiękowymi.
+To ustawienie odnosi skutek gdy opcja "Używaj WASAPI do wyjścia audio" jest włączona, a opcja "Głośność dźwięków NVDA jest spójna z głośnością  NVDA" jest wyłączona.
+Ta opcja nie jest dostępna jeżeli uruchomiłeś NVDA z wyłączonym [WASAPI do wyjścia audio #WASAPI] z poziomu ustawień zaawansowanych.
 
 +++ Ustawienia widoczności +++[VisionSettings]
 ustawienia widoczności programu NVDA pozwalają na włączanie, wyłączanie i konfigurowanie poszczególnych [ustawień pomocy wizualnych #Vision].
@@ -1787,7 +1868,12 @@ Dodatkowe usługi wsparcia widoczności mogą być dostarczane jako [dodatki dla
 Jeżeli mają one swoje własne ustawienia można je edytować w osobnych dla nich grupach.
 Po więcej informacji prosimy zajrzeć do pomocy danego rozszerzenia.
 
-+++ Klawiatura (NVDA+Ctrl+K) +++[KeyboardSettings]
++++ Klawiatura +++[KeyboardSettings]
+
+%kc:setting
+==== Otwiera ustawienia klawiatury ====
+Skrót: ``NVDA+control+k``
+
 Kategoria klawiatura w oknie ustawień NVDA pozwala ustawić zachowanie NVDA w trakcie używania klawiatury.
 Zawiera następujące ustawienia:
 
@@ -1845,7 +1931,12 @@ Ta opcja jest dostępna tylko jeśli włączone jest zgłaszanie błędów pisow
 Ta opcja pozwala kontrolować, czy naciśnięcia klawiszy generowane przez aplikacje takie jak klawiatury ekranowe i aplikacje rozpoznawania mowy, powinny być przetwarzane przez NVDA. 
 Opcja jest domyślnie włączona, aczkolwiek niektórzy użytkownicy mogą chcieć ją wyłączyć, np. aby pisać w języku wietnamskim przy użyciu programu UniKey. Pozostawienie jej wówczas włączonej powodowałoby wprowadzanie nieprawidłowych znaków.
 
-+++ Mysz (NVDA+Ctrl+M) +++[MouseSettings]
++++ Mysz +++[MouseSettings]
+
+%kc:setting
+==== Otwiera ustawienia myszy ====
+skrót: ``NVDA+control+m``
+
 W tej kategorii ustawień można ustawić m.in. sposób śledzenia myszy przez NVDA, informowanie dźwiękiem o położeniu wskaźnika myszy.
 Zawiera następujące ustawienia:
 
@@ -1919,9 +2010,14 @@ Gdy opcja jest włączona, kursor przeglądu będzie przesuwać się do wskaźni
 ==== Tryb prostego przeglądania ====[ReviewCursorSimple]
 Gdy opcja jest włączona, NVDA będzie filtrować hierarchię obiektów, którymi można nawigować, aby wykluczyć bezużyteczne obiekty np. obiekty niewidoczne albo używane tylko do tworzenia układu treści.
 
-Aby przełączać ten tryb z każdego miejsca, proszę przypisać własne zdarzenie wejścia przy użyciu [okna zdarzeń wejścia #InputGestures].
+Aby móc przełączać ten tryb z każdego miejsca, proszę przypisać własne zdarzenie wejścia przy użyciu [okna zdarzeń wejścia #InputGestures].
 
-+++ Prezentacja obiektów (NVDA+Ctrl+O) +++[ObjectPresentationSettings]
++++ Prezentacja obiektów +++[ObjectPresentationSettings]
+
+%kc:setting
+==== Otwiera opcje prezentacji obiektów ====
+Skrót: ``NVDA+control+o``
+
 Ta kategoria ustawień NVDA  pozwala określić ilość informacji prezentowanych przez NVDA na temat kontrolek takich jak opis, informacje o położeniu itd.
 Te opcje typowo nie są stosowane  do trybu czytania.
 Te opcje zazwyczas są zastosowane do czytania fokusu i obiektową nawigację NVDA, ale nie i do czytania tekstowej treści na przykład tryb czytania na stronach webowych.
@@ -2011,7 +2107,12 @@ Po tym jak dane z łańcucha czytania lub ciągu prekompozycyjnego uformowały p
 Ta opcja pozwala określić, czy NVDA powinien ogłaszać nowe znaki dodawane do ciągu składowego.
 Opcja jest domyślnie włączona.
 
-+++ Tryb czytania (NVDA+Ctrl+B) +++[BrowseModeSettings]
++++ Tryb czytania +++[BrowseModeSettings]
+
+%kc:setting
+==== Otwiera ustawienia trybu czytania ====
+Skrót: ``NVDA+control+b``
+
 Ta kategoria preferencji NVDA określa sposób działania programu podczas czytania skomplikowanych dokumentów, np. stron internetowych.
 Zawiera następujące ustawienia:
 
@@ -2082,7 +2183,12 @@ Może spowodować to przyspieszenie działania trybu przeglądania.
 Kursor będzie przenoszony do pozycji kontrolki w przypadku aktywowania jej.
 Włączenie tej opcji może spowodować, że wsparcie pewnych stron internetowych poprawi się, ale kosztem responsywności.
 
-+++ Formatowanie dokumentów (NVDA+Ctrl+D) +++[DocumentFormattingSettings]
++++ Formatowanie dokumentów +++[DocumentFormattingSettings]
+
+%kc:setting
+==== Otwiera ustawienia formatowania dokumentów ====
+Skrót: ``NVDA+control+d``
+
 Większość opcji w tej kategorii służy do konfiguracji, jaki rodzaj formatowania chcesz usłyszeć automatycznie podczas poruszania się kursorem po dokumentach.
 Jeśli np. zaznaczysz pole wyboru "Odczytuj nazwy czcionek", to za każdym razem gdy kursor znajdzie się na tekście z inną czcionką, nazwa tej czcionki zostanie odczytana.
 
@@ -2106,6 +2212,7 @@ Możemy w ten sposób skonfigurować odczytywanie:
  - Numerów stron
  - Numerów linii
  - Wcięć linii [(Wyłączone, Mowa, Dźwięki, Mowa i dźwięki) #DocumentFormattingSettingsLineIndentation]
+ - Ignorowanie pustych linii podczas odczytywania wcięć
  - Wcięć akapitu (np. wysunięcie, wcięcie pierwszej linii)
  - Interlinii (pojedyncza, podwójna etc)
  - Wyrównania tekstu
@@ -2148,6 +2255,9 @@ Wysokość dźwięku będzie wzrastać dla każdej spacji, a dla tabulatora przy
 - Mowa i dźwięki: ta opcja zgłosi wcięcia przy użyciu obu powyższych metod.
 -
 
+Jeżeli zaznaczysz pole wyboru "Ignoruj puste linie podczas odczytu wcięć" zmiany wcięć nie będą odczytywane w pustych liniach.
+To może być użyteczne podczas czytania tekstu z pustymi liniami do rozdzielania bloków tekstu, na przykład w kodzie programu.
+
 +++ Nawigacja po dokumencie +++[DocumentNavigation]
 Ta kategoria umożliwia różne opcje związane z nawigacją po dokumentach.
 
@@ -2178,6 +2288,12 @@ Zawiera następujące ustawienia:
 ==== Język rozpoznawania ====[Win10OcrSettingsRecognitionLanguage]
 Ta lista rozwijana pozwala wybrać język, używany do rozpoznawania tekstu.
 Aby się przemieszczać między dostępnymi językami z każdego miejsca, Przydziel zdarzenie wejścia używając [okno dialogowe zdarzenia wejscia #InputGestures].
+
+==== Od czasu do czasu odświeżaj  treść rozpoznawaną ====[Win10OcrSettingsAutoRefresh]
+Gdy to pole wyboru jest zaznaczone, NVDA będzie automatycznie odświeżała rozpoznaną treść kiedy wynik rozpoznawania jest w fokusie.
+To może być użyteczne gdy chcesz śledzić stale zmieniającą się treść, taką jak napisy w filmach.
+Treść odświeża się co półtora sekundy.
+Ta opcja jest domyślnie wyłączona.
 
 +++ Ustawienia zaawansowane +++[AdvancedSettings]
 Uwaga! Ustawienia w tej kategorii są przeznaczone dla zaawansowanych użytkowników i mogą spowodować nieprawidłowe działanie NVDA jeśli zostaną błędnie zmodyfikowane.
@@ -2360,30 +2476,18 @@ Z niektórymi historycznie popularnymi API do wyświetlania okien, tekst może b
 
 ==== Używaj WASAPI do wyjścia audio ====[WASAPI]
 : Domyślnie
-  Wyłączone
+  Włączone
 : Opcje
-    Domyślnie (wyłączone), włączone, wyłączone
+    Domyślnie (włączone), włączone, wyłączone
 :
 
 Ta opcja włącza wsparcie wyjścia dźwięku za pomocą interfejsu windows audio session (WASAPI).
 WASAPI to bardziej nowoczesny interfejs audio który może przyśpieszyć odzew, wydajność i stabilność wydawanego dźwięku przez NVDA, włączając w to dźwięki i mowe.
 Po zmianie tej opcji, do zastosowania zmian wymagane jest ponowne uruchomienie.
-
-==== Głośność dźwięków NVDA jest spójna z głośnością  NVDA ====[SoundVolumeFollowsVoice]
-: Domyślnie
-  Wyłączone
-: opcje
-  Wyłączone, Włączone
-:
-
-Gdy ta opcja jest włączona, Głośność dźwięków NVDA będzie śledzić głośność używanego syntezatora mowy.
-Jeżeli zmniejszysz głośność syntezatora mowy, głośność dźwięków także będzie zmniejszona.
-Podobnie, jeżeli powiększysz głośność syntezatora, głośność dźwięku się zwiększy.
-Ta opcja odnosi skutek gdy opcja "Używaj wasapi do wyjścia audio" jest włączona.
-
-==== Głośność dźwięków NVDA ====[SoundVolume]
-Ten suwak umożliwia ustawienie głośności dźwięków NVDA razem z sygnałami dźwiękowymi.
-To ustawienie odnosi skutek gdy opcja "Używaj WASAPI do wyjścia audio" jest włączona, a opcja "Głośność dźwięków NVDA jest spójna z głośnością  NVDA" jest wyłączona.
+Gdy Wasapi jest wyłączone, zostaną wyłączone następujące opcje:
+- [Głośność dźwięków NVDA jest spójna z głośnością  NVDA #SoundVolumeFollowsVoice]
+- [Głośność dźwięków NVDA #SoundVolume]
+-
 
 ==== Włączone kategorie debugowania ====[AdvancedSettingsDebugLoggingCategories]
 Pola wyboru na tej liście pozwalają włączyć konkretne kategorie informacji debugowania w dzienniku NVDA.
@@ -3839,8 +3943,8 @@ Informacje na temat rozmieszczenia tych klawiszy, znajdują się w dokumentacji 
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
-[BRLTTY https://www.brltty.com/] jest osobnym programem, który może być wykorzystany do wsparcia wielu monitorów Brajlowskich.
-Aby skorzystać z takiej możliwości, należy zainstalować [BRLTTY for Windows https://www.brltty.com/download.html].
+[BRLTTY https://www.brltty.app/] jest osobnym programem, który może być wykorzystany do wsparcia wielu monitorów Brajlowskich.
+Aby skorzystać z takiej możliwości, należy zainstalować [BRLTTY for Windows https://www.brltty.app/download.html].
 Należy pobrać i zainstalować najnowszy pakiet instalacyjny, który będzie się nazywać na przykład brltty-win-4.2-2.exe.
 Podczas konfiguracji monitora i używanych portów, należy zwrócić szczególną uwagę na wskazówki w przypadku korzystania z monitora USB i zainstalowania dostarczonych przez producenta sterowników.
 
@@ -3850,7 +3954,7 @@ W związku z tym, ustawienie w NVDA tabeli wprowadzania nie ma zastosowania.
 BRLTTY nie jest obsługiwane przez funkcję NVDA automatycznego wykrywania linijki brajlowskiej.
 
 Poniżej wykaz poleceń brltty dla NVDA. 
-Zobacz [tabele klawiszy w dokumentacji brltty http://mielke.cc/brltty/doc/KeyBindings/] by dowiedzieć się, jak poszczególne komendy programu wywołać za pomocą klawiszy poszczególnych monitorów.
+Zobacz [tabele klawiszy w dokumentacji brltty https://brltty.app/doc/KeyBindings/] by dowiedzieć się, jak poszczególne komendy programu wywołać za pomocą klawiszy poszczególnych monitorów.
 %kc:beginInclude
 || Działanie | Komenda brltty |
 | Przewiń brajla do tyłu | fwinlt (go left one window) |
@@ -3858,6 +3962,13 @@ Zobacz [tabele klawiszy w dokumentacji brltty http://mielke.cc/brltty/doc/KeyBin
 | Przenieś monitor do poprzedniej linii | lnup (go up one line) |
 | Przenieś monitor do następnej linii | lndn (go down one line) |
 | Przywołaj do komórki brajla | route (przenieś kursor do znaku) |
+| Włącz lub wyłącz pomoc klawiatury | learn (włącza lub wyłącza tryb samouczka poleceń) |
+| Otwórz NVDA menu | prefmenu (Otwiera lub zamyka menu ustawień) |
+| Przywróć konfiguracje | prefload (przywraca ustawienia z dysku) |
+| Zapisz ustawienia | prefsave (Zapisuje ustawienia na dysk) |
+| Odczytaj czas | time (pokazuje aktualny czas) |
+| Odczytuje bieżącą linię pod kursorem przeglądu | say_line (Wymawia bieżącą linię) |
+| Czytaj wszystko za pomocą kursora przeglądu | say_below (Czyta wszystko od bieżącej linii do końca ekranu) |
 %kc:endInclude
 
 ++ Monitory brajlowskie Tivomatic Caiku Albatross 46/80 ++[Albatross]

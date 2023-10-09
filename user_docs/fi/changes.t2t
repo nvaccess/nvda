@@ -19,8 +19,13 @@ Bugikorjauksia lisäosakauppaan, Microsoft Officeen, Edgen pikavalikoihin sekä 
 
 == Uudet ominaisuudet ==
 - Paranneltu äänenhallinta:
-  - Ääni-kategorian asetuksella NVDA:n äänet ja piippaukset saadaan mukautumaan käytettävän puheäänen voimakkuuteen. (#1409)
-  - Ääni-kategorian asetuksella NVDA-äänien voimakkuus voidaan määrittää erikseen. (#1409, #15038)
+  - Uusi ääniasetuspaneeli:
+    - Se voidaan avata painamalla ``NVDA+Ctrl+U``. (#15497)
+    - Asetus, jolla NVDA:n äänet ja piippaukset saadaan mukautumaan käytettävän puheäänen voimakkuuteen. (#1409)
+    - Asetus, jolla NVDA-äänien voimakkuus voidaan määrittää erikseen. (#1409, #15038)
+    - Äänen ulostulolaitteen ja äänenvaimennuksen muuttamiseen tarkoitetut asetukset on siirretty Valitse syntetisaattori -valintaikkunasta uuteen Ääni-asetuspaneeliin.
+    Nämä asetukset poistetaan Valitse syntetisaattori -valintaikkunasta NVDA:n 2024.1-versiossa. (#15486, #8711)
+    -
   - NVDA toistaa nyt ääntä Windows Audio Session APIn (WASAPI) kautta, mikä saattaa parantaa puheen ja äänien reagointi- ja suorituskykyä sekä vakautta. (#14697, #11169, #11615, #5096, #10185, #11061)
   - Huom: WASAPI ei ole yhteensopiva joidenkin lisäosien kanssa.
   Näille lisäosille on saatavilla yhteensopivat päivitykset. Asenna ne ennen NVDA:n päivittämistä.
@@ -54,7 +59,6 @@ Bugikorjauksia lisäosakauppaan, Microsoft Officeen, Edgen pikavalikoihin sekä 
   - HID Braille -protokollan käyttöönottava lisäasetus on korvattu uudella asetuksella.
   Automaattinen tunnistus on nyt mahdollista poistaa käytöstä määrätyiltä pistenäyttöajureilta Valitse pistenäyttö -valintaikkunassa. (#15196)
   -
-- Äänen ulostulolaitteen ja äänenvaimennuksen muuttamiseen tarkoitetut asetukset on siirretty Valitse syntetisaattori -valintaikkunasta uuteen Ääni-asetuspaneeliin. (#8711)
 - Asennetut lisäosat näytetään nyt lisäosakaupan Saatavilla-välilehdellä, mikäli ne ovat saatavilla. (#15374)
 - Jotkut NVDA-valikossa olevien kohteiden pikanäppäimistä on päivitetty. Tämä koskee vain käyttäjiä, joilla NVDA:n kielenä on englanti. (#15364)
 -
@@ -63,6 +67,7 @@ Bugikorjauksia lisäosakauppaan, Microsoft Officeen, Edgen pikavalikoihin sekä 
 - Microsoft Office:
   - Korjattu kaatuminen Microsoft Wordissa, kun otsikoiden sekä kommenttien ja muistiinpanojen ilmoittaminen eivät olleet käytössä. (#15019)
   - Tekstin tasaus ilmoitetaan oikein useammissa tilanteissa Wordissa ja Excelissä. (#15206, #15220)
+  - Korjattu joidenkin solunmuotoilupikanäppäinten puhuminen Excelissä. (#15527)
   -
 - Microsoft Edge:
   - NVDA ei enää siirry takaisin edelliseen selaustilasijaintiin Microsoft Edgessä pikavalikkoa avattaessa. (#15309)
@@ -78,11 +83,12 @@ Bugikorjauksia lisäosakauppaan, Microsoft Officeen, Edgen pikavalikoihin sekä 
   - Korjattu bugi, joka esti käytössä olevien yhteensopivuusohitettujen lisäosien päivittämisen tai korvaamisen ulkoisesta lähteestä asennetulla versiolla. (#15417)
   - Korjattu bugi, joka aiheutti sen, ettei NVDA puhunut mitään lisäosan asennuksen jälkeen ennen kuin se käynnistettiin uudelleen. (#14525)
   - Korjattu bugi, joka aiheutti sen, ettei lisäosia voitu asentaa, jos aiempi lataus epäonnistui tai peruutettiin. (#15469)
-  - Korjattu NVDA:ta päivitettäessä ilmenneitä yhteensopimattomien lisäosien käsittelyn ongelmia. (#15414, #15412, #15437)
+  - Korjattu NVDA:ta päivitettäessä ilmenneitä yhteensopimattomien lisäosien käsittelyyn liittyviä ongelmia. (#15414, #15412, #15437)
   -
-- Korjattu järjestelmän luettelonäkymä (``SysListView32``) -säädinten tuki Windows Forms -sovelluksissa. (#15283)
 - NVDA ilmoittaa jälleen laskutoimitusten tulokset 32-bittisessä laskimessa Windowsin Server-, LTSC- ja LTSB-versioissa. (#15230)
 - NVDA ei enää ohita kohdistusmuutoksia, kun sisäkkäinen ikkuna tulee aktiiviseksi. (#15432)
+- Korjattu tehtävienhallinnan sekä joidenkin Windows-versioiden suorituskykyongelmia. (#6245)
+- Korjattu NVDA:n käynnistyksen aikanailmenevän kaatumisen mahdollinen aiheuttaja. (#15517)
 -
 
 == Muutokset kehittäjille ==
@@ -1043,7 +1049,7 @@ Lisäksi monia muita tärkeitä bugikorjauksia ja parannuksia.
 - F3 on uudelleenmääritelty HIMS-pistenäytöissä komennoksi Väli+pisteet 1, 4 ja 8. (#11710)
 - Parannuksia pistekirjoituksen "Ilmoitusten aikakatkaisu"- ja "Näytä ilmoitukset pysyvästi" -asetusten käyttöliittymään. (#11602)
 - Elementtilista-valintaikkuna (NVDA+F7) voidaan nyt avata vuorovaikutustilassa verkkoselaimissa ja muissa selaustilaa tukevissa sovelluksissa. (#10453)
-- Aktiivisten ARIA-alueiden päivitykset estetään, kun dynaamisen sisällön muutosten ilmaiseminen on poistettu käytöstä. (#9077)
+- Aktiivisten ARIA-alueiden päivitykset estetään, kun dynaamisen sisällön muutosten puhuminen on poistettu käytöstä. (#9077)
 - NVDA sanoo nyt "Kopioitu leikepöydälle" ennen kopioitua tekstiä. (#6757)
 - Levynhallinnan graafisen näkymän taulukon näyttämistä on paranneltu. (#10048)
 - Säätimien selitteet poistetaan nyt käytöstä (näytetään harmaana), kun säädin ei ole käytössä. (#11809)
@@ -3033,7 +3039,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat automaattinen puhesyntetis
 - Kokonaistarkastelun sisältö näytetään nyt pistenäytöllä, kun se on asetettu seuraamaan tarkastelukohdistinta. (#1711)
 - Tekstisäätimen tekstiä ei enää näytetä pistenäytöllä kahta kertaa joissakin tapauksissa, esim. vieritettäessä taaksepäin WordPad-asiakirjaen alusta.
 - Enterin painaminen tiedostonlähetyspainikkeen kohdalla selaustilassa näyttää nyt asianmukaisesti valintaikkunan tiedoston valitsemiseksi vuorovaikutustilaan siirtymisen sijaan Internet Explorerissa. (#1720)
-- Dynaamisen sisällön muutoksia, kuten esim. DOS-konsoleissa, ei enää lueta, jos lepotila on käytössä kyseisessä sovelluksessa. (#1662)
+- Dynaamisen sisällön muutoksia, kuten esim. DOS-konsoleissa, ei enää puhuta, jos lepotila on käytössä kyseisessä sovelluksessa. (#1662)
 - Alt+Nuoli ylös- ja alt+Nuoli alas -näppäinyhdistelmien käyttäytymistä paranneltu selaustilassa yhdistelmäruutuja suljettaessa ja avattaessa. (#1630)
 - NVDA palautuu nyt useammista tilanteista, kuten esim. vastaamasta lakanneista sovelluksista, jotka aiemmin aiheuttivat täydellisen jumiutumisen. (#1408)
 - NVDA lukee nyt Mozilla Gecko -moottoria käyttävien sovellusten (esim. Firefoxin) selaustila-asiakirjaen tietyt osat sellaisessa tilanteessa, jossa elementin tyyli on display:table. (#1373)
@@ -3359,7 +3365,7 @@ Tämä versio keskittyy pääasiassa virheiden korjaamiseen ja käyttökokemukse
 - Lisätty liitäntäkirjasto, jolla sovellukset voivat ohjata NVDA:ta, esim. puhua tekstiä, mykistää puheen, näyttää ilmoituksia pistenäytöllä jne.
 - Virheilmoitukset ja muut viestit luetaan nyt Windows Vistan ja Windows 7:n kirjautumisikkunassa. (#506)
 - Adobe LiveCyclellä tehtyjä vuorovaikutteisia PDF-lomakkeita tuetaan nyt Adobe Readerissa. (#475)
-- NVDA voi nyt lukea saapuvat viestit automaattisesti Miranda IM:n -chatti-ikkunoissa, jos dynaamisen sisällön muutosten ilmoittaminen on käytössä. Lisätty myös komennot kolmen viimeisimmän viestin lukemiseksi (NVDA+Ctrl+numero). (#546)
+- NVDA voi nyt lukea saapuvat viestit automaattisesti Miranda IM:n chatti-ikkunoissa, jos dynaamisen sisällön muutosten puhuminen on käytössä. Lisätty myös komennot kolmen viimeisimmän viestin lukemiseen (NVDA+Ctrl+numero). (#546)
 - Lisätty tuki Flashin tekstinsyöttökentille. (#461)
 
 
@@ -3777,7 +3783,7 @@ Saadaksesi lisätietoja eSpeakista tai ladataksesi sen muita versioita, käy oso
 - Puheäänen vaihtaminen Ääniasetukset-valintaikkunasta asettaa nyt nopeus-, korkeus- ja voimakkuus-liukusäätimet vanhojen arvojen sijasta puhesyntetisaattorin mukaisiin uusiin arvoihin. Tämä korjaa ongelmia, jotka saivat esimerkiksi IBM ViaVoice -syntetisaattorin puhumaan paljon muita nopeammin.
 - Korjattu bugi, joka aiheutti konsoli-ikkunoissa puheen keskeytymisen tai NVDA:n täydellisen kaatumisen.
 - NVDA:n käyttöliittymä voidaan näyttää ja ilmoitukset puhua automaattisesti Windowsin käyttämällä kielellä, jos NVDA:ssa vain on tuki kyseiselle kielelle. Kieli voidaan myös edelleen valita manuaalisesti Käyttöliittymän asetukset -valintaikkunasta.
-- Lisätty komento 'ilmoita dynaamisen sisällön muutokset' (Insert+5). Tämä asetus määrittää, luetaanko ruudulle tuleva uusi teksti tai muut dynaamiset muutokset automaattisesti. Toimii toistaiseksi vain konsoli-ikkunoissa.
+- Lisätty komento "Puhu dynaamisen sisällön muutokset" (Insert+5). Tämä asetus määrittää, luetaanko ruudulle tuleva uusi teksti tai muut dynaamiset muutokset automaattisesti. Toimii toistaiseksi vain konsoli-ikkunoissa.
 - Lisätty Komento "järjestelmäkohdistin siirtää tarkastelukohdistinta" (Insert+6). Tämä asetus määrittää, siirretäänkö tarkastelukohdistinta automaattisesti järjestelmäkohdistimen mukana. Tästä on hyötyä luettaessa tietoja päivittyvältä ruudulta konsoli-ikkunoissa.
 - Lisätty komento "kohdistus siirtää navigointiobjektia" (Insert+7). Tämä asetus määrittää, siirretäänkö navigointiobjektia kohdistuksen mukana.
 - Lisätty eri kielille käännettyjä ohjeita, tähän mennessä ranskaksi, espanjaksi ja suomeksi.

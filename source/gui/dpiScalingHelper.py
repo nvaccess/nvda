@@ -21,7 +21,7 @@ def scaleSize(scaleFactor: float, size: _Size) -> _ScaledSize:
 	return round(scaleFactor * size)
 
 
-def getScaleFactor(windowHandle: int) -> float:
+def getScaleFactor(windowHandle: int) -> int:
 	"""Helper method to get the window scale factor. The window needs to be constructed first, in
 	order to get the window handle, this likely means calling the wx.window __init__ method prior
 	to calling self.GetHandle()"""
@@ -47,7 +47,7 @@ class DpiScalingHelperMixinWithoutInit:
 		of wx.Window or this mixin
 	"""
 	GetHandle: Callable[[], Any]  # Should be provided by wx.Window
-	_scaleFactor: Optional[float] = None
+	_scaleFactor: Optional[int] = None
 
 	def scaleSize(self, size: _Size) -> _ScaledSize:
 		if self._scaleFactor is None:

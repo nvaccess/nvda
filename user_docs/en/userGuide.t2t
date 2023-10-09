@@ -872,7 +872,7 @@ A key command is provided to return to the original page containing the embedded
 + Reading Mathematical Content +[ReadingMath]
 Using MathPlayer 4 from Design Science, NVDA can read and interactively navigate supported mathematical content.
 This requires that MathPlayer 4 is installed on the computer.
-MathPlayer is available as a free download from: https://www.dessci.com/en/products/mathplayer/.
+MathPlayer is available as a free download from the [MathPlayer information page https://info.wiris.com/mathplayer-info].
 After installing MathPlayer, restart NVDA.
 
 NVDA supports the following types of mathematical content:
@@ -888,7 +888,7 @@ For further details, please see [Linear format equations using UnicodeMath and L
 NVDA can read and navigate MathType equations in both Microsoft Powerpoint and Microsoft word.
 MathType needs to be installed in order for this to work.
 The trial version is sufficient.
-It can be downloaded from https://www.dessci.com/en/products/mathtype/
+It can be downloaded from the [MathType presentation page https://www.wiris.com/en/mathtype/].
 - Adobe Reader:
 Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
 - Kindle Reader for PC:
@@ -916,7 +916,7 @@ By default, the review cursor follows the system caret, so you can usually use t
 
 At this point, you can use MathPlayer commands such as the arrow keys to explore the expression.
 For example, you can move through the expression with the left and right arrow keys and zoom into a portion of the expression such as a fraction using the down arrow key.
-Please see the [MathPlayer documentation about navigation commands https://www.dessci.com/en/products/mathplayer/navigation_commands.htm] for further information.
+Please see the [MathPlayer documentation https://docs.wiris.com/mathplayer/en/mathplayer-user-manual.html] for further information.
 
 When you wish to return to the document, simply press the escape key.
 
@@ -2537,7 +2537,7 @@ Thus, using the earlier example of replacing the word "bird" with "frog", if you
 
 A regular expression is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples.
 Regular expressions are not covered in this user guide.
-For an introductory tutorial, please refer to [https://docs.python.org/3.7/howto/regex.html].
+For an introductory tutorial, please refer to [Python's Regular Expression Guide https://docs.python.org/3.11/howto/regex.html].
 
 +++ Punctuation/symbol pronunciation +++[SymbolPronunciation]
 This dialog allows you to change the way punctuation and other symbols are pronounced, as well as the symbol level at which they are spoken.
@@ -2958,8 +2958,8 @@ The Microsoft Speech Platform provides voices for many languages which are norma
 These voices can also be used with NVDA.
 
 To use these voices, you will need to install two components:
-- Microsoft Speech Platform - Runtime (Version 11) , x86: https://www.microsoft.com/download/en/details.aspx?id=27225
-- Microsoft Speech Platform - Runtime Languages (Version 11): https://www.microsoft.com/download/en/details.aspx?id=27224
+- [Microsoft Speech Platform - Runtime (Version 11), x86 https://www.microsoft.com/download/en/details.aspx?id=27225]
+- [Microsoft Speech Platform - Runtime Languages (Version 11) https://www.microsoft.com/download/en/details.aspx?id=27224]
  - This page includes many files for both speech recognition and text-to-speech.
  Choose the files containing the TTS data for the desired languages/voices.
  For example, the file MSSpeech_TTS_en-US_ZiraPro.msi is a U.S. English voice.
@@ -2980,7 +2980,8 @@ Search for the broader language (such as English or French), then locate the var
 Select any languages desired and use the "add" button to add them.
 Once added, restart NVDA.
 
-Please see this Microsoft article for a list of available voices: https://support.microsoft.com/en-us/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01
+Please see [Supported languages and voices https://support.microsoft.com/en-us/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01] for a list of available voices.
+
 
 + Supported Braille Displays +[SupportedBrailleDisplays]
 This section contains information about the Braille displays supported by NVDA.
@@ -3008,7 +3009,7 @@ The following displays support this automatic detection functionality.
 ++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
 All Focus and PAC Mate displays from [Freedom Scientific https://www.freedomscientific.com/] are supported when connected via USB or bluetooth.
 You will need the Freedom Scientific braille display drivers installed on your system.
-If you do not have them already, you can obtain them from https://support.freedomscientific.com/Downloads/Focus/FocusBlueBrailleDisplayDriver.
+If you do not have them already, you can obtain them from the [Focus Blue Braille Display Driver page https://support.freedomscientific.com/Downloads/Focus/FocusBlueBrailleDisplayDriver].
 Although this page only mentions the Focus Blue display, the drivers support all Freedom Scientific Focus and Pacmate displays.
 
 By default, NVDA can automatically detect and connect to these displays either via USB or bluetooth.
@@ -3327,8 +3328,7 @@ Please see the display's documentation for descriptions of where these keys can 
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series ++[Hims]
 NVDA supports Braille Sense, Braille EDGE, Smart Beetle and Sync Braille displays from [Hims https://www.hims-inc.com/] when connected via USB or bluetooth.
-If connecting via USB, you will need to install the USB drivers from HIMS on your system.
-You can download these from here: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
+If connecting via USB, you will need to install the [USB drivers from HIMS http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip] on your system.
 
 Following are the key assignments for these displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -3402,7 +3402,7 @@ The following Seika Braille displays from Nippon Telesoft are supported in two g
 - [Seika Version 3, 4, and 5 (40 cells), Seika80 (80 cells) #SeikaBrailleDisplays]
 - [MiniSeika (16, 24 cells), V6, and V6Pro (40 cells) #SeikaNotetaker]
 -
-You can find more information about the displays at https://en.seika-braille.com/down/index.html.
+You can find more information about the displays on their [Demo and Driver Download page https://en.seika-braille.com/down/index.html].
 
 
 +++ Seika Version 3, 4, and 5 (40 cells), Seika80 (80 cells) +++[SeikaBrailleDisplays]
@@ -4176,6 +4176,6 @@ The following values can be set under this registry key:
 | ``forceSecureMode`` | DWORD | 0 (default) to disable, 1 to enable | If enabled, forces [Secure Mode #SecureMode] to be enabled when running NVDA. |
 
 + Further Information +[FurtherInformation]
-If you require further information or assistance regarding NVDA, please visit the NVDA web site at NVDA_URL.
+If you require further information or assistance regarding NVDA, please visit the [NVDA web site NVDA_URL].
 Here, you can find additional documentation, as well as technical support and community resources.
 This site also provides information and resources concerning NVDA development.
