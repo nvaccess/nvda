@@ -19,12 +19,6 @@ See https://github.com/nvaccess/nvda/blob/master/.github/CONTRIBUTING.md.
 
 ### Known issues with pull request:
 
-### Change log entries:
-New features
-Changes
-Bug fixes
-For Developers
-
 ### Code Review Checklist:
 
 <!--
@@ -38,22 +32,20 @@ A detailed explanation of this checklist is available here:
 https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/githubPullRequestTemplateExplanationAndExamples.md#code-review-checklist
 -->
 
-- [ ] Pull Request description:
-  - description is up to date
-  - change log entries
+- [ ] Documentation:
+  - Change log entry
+  - User Documentation
+  - Developer / Technical Documentation
+  - Context sensitive help for GUI changes
 - [ ] Testing:
   - Unit tests
   - System (end to end) tests
   - Manual testing
-- [ ] API is compatible with existing add-ons.
-- [ ] Documentation:
-  - User Documentation
-  - Developer / Technical Documentation
-  - Context sensitive help for GUI changes
 - [ ] UX of all users considered:
   - Speech 
   - Braille
   - Low Vision
   - Different web browsers
   - Localization in other languages / culture than English
+- [ ] API is compatible with existing add-ons.
 - [ ] Security precautions taken.

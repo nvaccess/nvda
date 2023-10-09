@@ -76,41 +76,7 @@ Example:
 
 ### Known issues with pull request:
 Are there any known issues or downsides of this approach.
-For instance: _Will not work with python 3_
-
-### Change log entries:
-An entry intended to explain changes in NVDA to end users.
-Your proposed entry will be added to the `changes.t2t` file which is converted to html and used as a
-what's changed / change log document.
-See 
-[`user_docs/en/changes.t2t`](https://github.com/nvaccess/nvda/blob/master/user_docs/en/changes.t2t)
-
-Because the `changes.t2t` file is prone to conflicts, we ask contributors not to edit the file directly, but instead add the entry to the bottom of the PR description.
-A lead developer will update file when merging the pull request.
-
-For instance:
-```
-*New features*
-`Added a command to announce useful thing. (#WXYZ, #ABCD)`
-
-*Changes*
-`Old command, now also uses new useful command. (#WXYZ)`
-```
-
-These descriptions should be in the format: `"{Description of change}. (#{issue number})"`
-
-You may suggest descriptions for multiple sections.
-The usual sections are:
- 
-* New features
-* Changes
-* Bug fixes
-
-Multiple issue numbers can be included, separated by comma.
-If there is no issue number, you can use the PR number.
-
-For examples see the
-[changes.t2t file](https://github.com/nvaccess/nvda/blob/master/user_docs/en/changes.t2t)
+For instance: _Will not work with UIA enabled in advanced settings_
 
 ## Code Review Checklist
 
@@ -131,16 +97,6 @@ If the reviewer reaches the same conclusion as the author, no further work is ne
 Most items in the checklist have a section in the PR template where you can add your thoughts, doing
 so may preempt questions from the reviewer ensuring you are on the same page, and speed up the
 review process.
-
-### Pull Request description:
-- description is up to date.
-  Authors must keep the PR description up to date.
-  - Even if changes to the approach are described in the comments for the PR.
-  - Future developers need a concise explanation of a change.
-  After each modification, check that the PR description is still accurate.
-- change log entries
-  Has an appropriate change log entry been supplied?
-  As a reviewer, please review it.
 
 ### Testing:
 Discuss under "testing strategy" heading:
@@ -165,6 +121,8 @@ Discuss under "testing strategy" heading:
 - See [Deprecations](./deprecations.md) for more information.
 
 ### Documentation
+- Change log entries
+  [Ensure there is a change log entry if required](./contributing.md#change-log-entry).
 - User Documentation
   Does the user documentation need updating?
 - Context sensitive help for GUI changes.

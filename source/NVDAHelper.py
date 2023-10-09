@@ -601,7 +601,6 @@ def initialize() -> None:
 		log.error("Error installing IA2 support")
 	#Manually start the in-process manager thread for this NVDA main thread now, as a slow system can cause this action to confuse WX
 	_remoteLib.initInprocManagerThreadIfNeeded()
-	versionedLibARM64Path
 	arch = winVersion.getWinVer().processorArchitecture
 	if arch == 'AMD64':
 		_remoteLoaderAMD64 = _RemoteLoader(versionedLibAMD64Path)

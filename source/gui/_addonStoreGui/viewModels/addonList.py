@@ -12,9 +12,11 @@ from enum import Enum
 from locale import strxfrm
 from typing import (
 	FrozenSet,
+	Generic,
 	List,
 	Optional,
 	TYPE_CHECKING,
+	TypeVar,
 )
 
 from requests.structures import CaseInsensitiveDict
@@ -92,18 +94,21 @@ class AddonListField(_AddonListFieldData, Enum):
 	)
 
 
-class AddonListItemVM:
+_AddonModelT = TypeVar("_AddonModelT", bound=_AddonGUIModel)
+
+
+class AddonListItemVM(Generic[_AddonModelT]):
 	def __init__(
 			self,
-			model: _AddonGUIModel,
+			model: _AddonModelT,
 			status: AvailableAddonStatus = AvailableAddonStatus.AVAILABLE
 	):
-		self._model: _AddonGUIModel = model  # read-only
+		self._model: _AddonModelT = model  # read-only
 		self._status: AvailableAddonStatus = status  # modifications triggers L{updated.notify}
 		self.updated = extensionPoints.Action()  # Notify of changes to VM, argument: addonListItemVM
 
 	@property
-	def model(self) -> _AddonGUIModel:
+	def model(self) -> _AddonModelT:
 		return self._model
 
 	@property
@@ -127,7 +132,7 @@ class AddonListItemVM:
 
 
 class AddonDetailsVM:
-	def __init__(self, listVM: AddonListVM):
+	def __init__(self, listVM: "AddonListVM"):
 		self._listVM = listVM
 		self._listItem: Optional[AddonListItemVM] = listVM.getSelection()
 		self.updated = extensionPoints.Action()  # triggered by setting L{self._listItem}
@@ -138,15 +143,6 @@ class AddonDetailsVM:
 
 	@listItem.setter
 	def listItem(self, newListItem: Optional[AddonListItemVM]):
-		if (
-			self._listItem == newListItem  # both may be same ref or None
-			or (
-				None not in (newListItem, self._listItem)
-				and self._listItem.Id == newListItem.Id  # confirm with addonId
-			)
-		):
-			# already set, exit early
-			return
 		self._listItem = newListItem
 		# ensure calling on the main thread.
 		core.callLater(delay=0, callable=self.updated.notify, addonDetailsVM=self)
@@ -159,7 +155,7 @@ class AddonListVM:
 			storeVM: "AddonStoreVM",
 	):
 		self._isLoading: bool = False
-		self._addons: CaseInsensitiveDict[AddonListItemVM] = CaseInsensitiveDict()
+		self._addons: CaseInsensitiveDict[AddonListItemVM[_AddonGUIModel]] = CaseInsensitiveDict()
 		self._storeVM = storeVM
 		self.itemUpdated = extensionPoints.Action()
 		self.updated = extensionPoints.Action()
@@ -252,6 +248,11 @@ class AddonListVM:
 		if self._addonsFilteredOrdered and self.selectedAddonId in self._addonsFilteredOrdered:
 			return self._addonsFilteredOrdered.index(self.selectedAddonId)
 		return None
+
+	def getAddonAtIndex(self, index: int) -> AddonListItemVM:
+		self._validate(selectionIndex=index)
+		selectedAddonId = self._addonsFilteredOrdered[index]
+		return self._addons[selectedAddonId]
 
 	def setSelection(self, index: Optional[int]) -> Optional[AddonListItemVM]:
 		self._validate(selectionIndex=index)

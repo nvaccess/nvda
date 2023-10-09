@@ -1070,3 +1070,7 @@ def initialize():
 		func.restype = HRESULT
 		func.errcheck = _wasPlay_errcheck
 	NVDAHelper.localLib.wasPlay_startup()
+
+
+def usingWasapiWavePlayer() -> bool:
+	return issubclass(WavePlayer, WasapiWavePlayer)
