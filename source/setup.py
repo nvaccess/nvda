@@ -8,7 +8,6 @@ import argparse
 import os
 import sys
 import gettext
-from typing import Tuple
 gettext.install("nvda")
 from glob import glob
 import fnmatch
@@ -93,7 +92,7 @@ def getRecursiveDataFiles(dest,source,excludes=()):
 	return rulesList
 
 
-def _genManifestTemplate(shouldHaveUIAccess: bool) -> Tuple[int, int, bytes]:
+def _genManifestTemplate(shouldHaveUIAccess: bool) -> tuple[int, int, bytes]:
 	return (
 		RT_MANIFEST,
 		1,
