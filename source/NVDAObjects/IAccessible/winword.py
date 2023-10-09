@@ -399,9 +399,9 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		# Ensuring braille and review position updates are allowed in caret event.
 		self._fromUpdateBrailleAndReviewPosition = True
 		# Speech output when backspace or control+backspace is pressed.
-		if gesture._get_displayName() == "backspace":
+		if gesture.displayName == "backspace":
 			self.script_caret_backspaceCharacter(gesture)
-		elif gesture._get_displayName() == "ctrl+backspace":
+		elif gesture.displayName == "ctrl+backspace":
 			self.script_caret_backspaceWord(gesture)
 		else:
 			gesture.send()
