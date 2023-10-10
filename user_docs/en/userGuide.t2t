@@ -1090,6 +1090,11 @@ For this situation, NVDA contains a feature called "Screen Curtain" which can be
 
 You can enable the Screen Curtain in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog.
 
+%kc:beginInclude
+|| Name | Key | Description |
+| Toggles the state of the screen curtain | ``NVDA+control+escape`` | Enable to make the screen black or disable to show the contents of the screen. Pressed once, screen curtain is enabled until you restart NVDA. Pressed twice, screen curtain is enabled until you disable it. |
+%kc:endInclude
+
 When the Screen Curtain is active some tasks directly based on what appears on the screen such as performing [OCR #Win10Ocr] or taking a screenshot cannot be achieved.
 
 Due to a change in the Windows Magnification API, Screen Curtain had to be updated to support the newest versions of Windows.
@@ -1858,8 +1863,6 @@ Select "No" if you no longer wish to enable the Screen Curtain.
 If you are sure, you can choose the Yes button to enable the screen curtain.
 If you no longer want to see this warning message every time, you can change this behaviour in the dialog that displays the message.
 You can always restore the warning by checking the "Always show a warning when loading Screen Curtain" check box next to the "Make screen black" check box.
-
-To toggle the Screen Curtain from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
 By default, sounds are played when the Screen Curtain is toggled.
 When you want to change this behaviour, you can uncheck the "Play sound when toggling Screen Curtain" check box.
