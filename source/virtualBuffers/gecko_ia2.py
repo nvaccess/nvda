@@ -269,9 +269,9 @@ class Gecko_ia2(VirtualBuffer):
 	_nativeAppSelectionMode = False
 
 	@script(
-			gesture="kb:NVDA+shift+f10"
+		gesture="kb:NVDA+shift+f10"
 	)
-	def script_toggleNativeAppSelectionMode(self,gesture):
+	def script_toggleNativeAppSelectionMode(self, gesture):
 		self._nativeAppSelectionMode = not self._nativeAppSelectionMode
 		if self._nativeAppSelectionMode:
 			ui.message(_("Native app selection mode enabled."))
@@ -287,9 +287,9 @@ class Gecko_ia2(VirtualBuffer):
 				pass
 
 	@script(
-			gesture="kb:control+c"
+		gesture="kb:control+c"
 	)
-	def script_copyToClipboard(self,gesture):
+	def script_copyToClipboard(self, gesture):
 		if self._nativeAppSelectionMode:
 			ui.message(_("native copy"))
 			gesture.send()
@@ -657,11 +657,15 @@ class Gecko_ia2(VirtualBuffer):
 			return initialPos
 		return self._initialScrollObj
 
-
-	def updateAppSelection(self):
+	# C901 'updateAppSelection' is too complex
+	# Note: when working on updateAppSelection, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def updateAppSelection(self):  # noqa: C901
 		"""Update the native selection in the application to match the browse mode selection in NVDA."""
 		try:
-			paccTextSelectionContainer = self.rootNVDAObject.IAccessibleObject.QueryInterface(IAccessibleTextSelectionContainer)
+			paccTextSelectionContainer = self.rootNVDAObject.IAccessibleObject.QueryInterface(
+				IAccessibleTextSelectionContainer
+			)
 		except COMError as e:
 			raise NotImplementedError from e
 		selInfo = self.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -677,7 +681,8 @@ class Gecko_ia2(VirtualBuffer):
 		# Until we find the deepest field with IAccessibleText information.
 		# It may be on a formatChange which represents a text attribute run,
 		# or on a controlStart which represents an embeded object within text,
-		# Where we have not included its inner text attribute run as the content was overridden by an ARIA label etc. 
+		# Where we have not included its inner text attribute run
+		# as the content was overridden by an ARIA label or similar.
 		for field in selFields:
 			if isinstance(field, textInfos.FieldCommand):
 				if field.command in ("controlStart", "formatChange"):
@@ -697,7 +702,9 @@ class Gecko_ia2(VirtualBuffer):
 		log.debug(f"ia2StartWindow: {ia2StartWindow}")
 		log.debug(f"ia2StartID: {ia2StartID}")
 		log.debug(f"ia2StartOffset: {ia2StartOffset}")
-		ia2StartObj, childID = IAccessibleHandler.accessibleObjectFromEvent(ia2StartWindow, winUser.OBJID_CLIENT, ia2StartID)
+		ia2StartObj, childID = IAccessibleHandler.accessibleObjectFromEvent(
+			ia2StartWindow, winUser.OBJID_CLIENT, ia2StartID
+		)
 		assert (childID == 0), f"childID should be 0"
 		ia2StartObj = ia2StartObj.QueryInterface(IAccessibleText)
 		log.debug(f"ia2StartObj {ia2StartObj}")
@@ -733,7 +740,9 @@ class Gecko_ia2(VirtualBuffer):
 			ia2EndObj = ia2StartObj
 			log.debug("Reusing ia2StartObj for ia2EndObj")
 		else:
-			ia2EndObj, childID = IAccessibleHandler.accessibleObjectFromEvent(ia2EndWindow, winUser.OBJID_CLIENT, ia2EndID)
+			ia2EndObj, childID = IAccessibleHandler.accessibleObjectFromEvent(
+				ia2EndWindow, winUser.OBJID_CLIENT, ia2EndID
+			)
 			assert (childID == 0), f"childID should be 0"
 			ia2EndObj = ia2EndObj.QueryInterface(IAccessibleText)
 			log.debug(f"ia2EndObj {ia2EndObj}")
@@ -744,7 +753,9 @@ class Gecko_ia2(VirtualBuffer):
 	def clearAppSelection(self):
 		"""Clear the native selection in the application."""
 		try:
-			paccTextSelectionContainer = self.rootNVDAObject.IAccessibleObject.QueryInterface(IAccessibleTextSelectionContainer)
+			paccTextSelectionContainer = self.rootNVDAObject.IAccessibleObject.QueryInterface(
+				IAccessibleTextSelectionContainer
+			)
 		except COMError as e:
 			raise NotImplementedError from e
 		r = IA2TextSelection(None, 0, None, 0, False)

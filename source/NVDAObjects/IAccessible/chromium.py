@@ -6,13 +6,8 @@
 """NVDAObjects for the Chromium browser project
 """
 import typing
-from typing import Dict, Optional, Tuple
+from typing import Dict, Optional
 from comtypes import COMError
-from ctypes import byref
-import winUser
-import IAccessibleHandler
-from comInterfaces.IAccessible2Lib import IAccessibleTextSelectionContainer, IA2TextSelection, IAccessibleText
-import textInfos
 import config
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
