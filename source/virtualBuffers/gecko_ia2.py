@@ -19,7 +19,8 @@ import NVDAObjects.behaviors
 import winUser
 import mouseHandler
 import IAccessibleHandler
-
+from scriptHandler import script
+import ui
 import oleacc
 from logHandler import log
 import textInfos
@@ -47,18 +48,15 @@ def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> typing.Dict[str
 	return {}
 
 
-def fetchIA2OffsetInfoFromVBufFormatField(field: textInfos.FormatField) -> Tuple[int, int, int]:
-	startOffset = field.get('ia2TextStartOffset', None)
-	if startOffset is None:
-		raise ValueError("no ia2StartOffset found")
-	startOffset += field.get('strippedCharsFromStart', 0)
-	startOffset += field['_offsetFromStartOfNode']
-	hwnd = field['ia2WindowHandle']
-	ID = field['ia2UniqueID']
-	return hwnd, ID, startOffset
-
-
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
+
+	def _setSelectionOffsets(self, start, end):
+		super()._setSelectionOffsets(start, end)
+		if self.obj._nativeAppSelectionMode:
+			if start != end:
+				self.obj.updateAppSelection()
+			else:
+				self.obj.clearAppSelection()
 
 	def _getBoundingRectFromOffset(self,offset):
 		formatFieldStart, formatFieldEnd = self._getUnitOffsets(textInfos.UNIT_FORMATFIELD, offset)
@@ -268,6 +266,35 @@ class Gecko_ia2(VirtualBuffer):
 	#: frame/iframe in the lists is a tuple of (IAccessible2_2, uniqueId). This
 	#: cache is used across instances.
 	_framesCache = weakref.WeakKeyDictionary()
+	_nativeAppSelectionMode = False
+
+	@script(
+			gesture="kb:NVDA+shift+f10"
+	)
+	def script_toggleNativeAppSelectionMode(self,gesture):
+		self._nativeAppSelectionMode = not self._nativeAppSelectionMode
+		if self._nativeAppSelectionMode:
+			ui.message(_("Native app selection mode enabled."))
+			try:
+				self.updateAppSelection()
+			except NotImplementedError:
+				pass
+		else:
+			ui.message(_("Native app selection mode disabled."))
+			try:
+				self.clearAppSelection()
+			except NotImplementedError:
+				pass
+
+	@script(
+			gesture="kb:control+c"
+	)
+	def script_copyToClipboard(self,gesture):
+		if self._nativeAppSelectionMode:
+			ui.message(_("native copy"))
+			gesture.send()
+		else:
+			super().script_copyToClipboard(gesture)
 
 	def __init__(self,rootNVDAObject):
 		super(Gecko_ia2,self).__init__(rootNVDAObject,backendName="gecko_ia2")
@@ -704,3 +731,12 @@ class Gecko_ia2(VirtualBuffer):
 			log.debug(f"ia2EndObj {ia2EndObj}")
 		r = IA2TextSelection(ia2StartObj, ia2StartOffset, ia2EndObj, ia2EndOffset, False)
 		paccTextSelectionContainer.SetSelections(1, byref(r))
+		ui.message("selected")
+
+	def clearAppSelection(self):
+		try:
+			paccTextSelectionContainer = self.rootNVDAObject.IAccessibleObject.QueryInterface(IAccessibleTextSelectionContainer)
+		except COMError as e:
+			raise NotImplementedError from e
+		r = IA2TextSelection(None, 0, None, 0, False)
+		paccTextSelectionContainer.SetSelections(0, byref(r))
