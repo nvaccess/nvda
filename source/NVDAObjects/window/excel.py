@@ -1021,6 +1021,9 @@ class ExcelWorksheet(ExcelBase):
 		"kb:control+a",
 		"kb:control+v",
 		"kb:shift+f11",
+		"kb:control+y",
+		"kb:control+z",
+		"kb:alt+backspace",
 	), canPropagate=True)
 
 	def script_changeSelection(self,gesture):
