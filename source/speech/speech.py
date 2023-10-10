@@ -2368,7 +2368,7 @@ def getFormatFieldSpeech(  # noqa: C901
 	if formatConfig["reportCellBorders"] != ReportCellBorders.OFF:
 		borderStyle=attrs.get("border-style")
 		oldBorderStyle=attrsCache.get("border-style") if attrsCache is not None else None
-		if borderStyle!=oldBorderStyle:
+		if (borderStyle or oldBorderStyle is not None) and borderStyle != oldBorderStyle:
 			if borderStyle:
 				text=borderStyle
 			else:
@@ -2422,7 +2422,11 @@ def getFormatFieldSpeech(  # noqa: C901
 			textList.append(_("{backgroundColor} background").format(backgroundColor=bgColorText))
 		backgroundPattern=attrs.get("background-pattern")
 		oldBackgroundPattern=attrsCache.get("background-pattern") if attrsCache is not None else None
-		if backgroundPattern and backgroundPattern!=oldBackgroundPattern:
+		if (backgroundPattern or oldBackgroundPattern is not None) and backgroundPattern != oldBackgroundPattern:
+			if not backgroundPattern:
+				# Translators: A type of background pattern in Microsoft Excel.
+				# No pattern
+				backgroundPattern = _("none")
 			textList.append(_("background pattern {pattern}").format(pattern=backgroundPattern))
 	if  formatConfig["reportLineNumber"]:
 		lineNumber=attrs.get("line-number")
