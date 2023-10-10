@@ -659,6 +659,7 @@ class Gecko_ia2(VirtualBuffer):
 
 
 	def updateAppSelection(self):
+		"""Update the native selection in the application to match the browse mode selection in NVDA."""
 		try:
 			paccTextSelectionContainer = self.rootNVDAObject.IAccessibleObject.QueryInterface(IAccessibleTextSelectionContainer)
 		except COMError as e:
@@ -672,6 +673,11 @@ class Gecko_ia2(VirtualBuffer):
 		ia2EndID = None
 		ia2EndOffset = None
 		log.debug("checking fields...")
+		# Locate the start of the selection by walking through the fields.
+		# Until we find the deepest field with IAccessibleText information.
+		# It may be on a formatChange which represents a text attribute run,
+		# or on a controlStart which represents an embeded object within text,
+		# Where we have not included its inner text attribute run as the content was overridden by an ARIA label etc. 
 		for field in selFields:
 			if isinstance(field, textInfos.FieldCommand):
 				if field.command in ("controlStart", "formatChange"):
@@ -696,6 +702,8 @@ class Gecko_ia2(VirtualBuffer):
 		ia2StartObj = ia2StartObj.QueryInterface(IAccessibleText)
 		log.debug(f"ia2StartObj {ia2StartObj}")
 		textLen = 0
+		# Locate the end of the selection by walking through the fields in reverse,
+		# similar to how we located the start of the selection.
 		for field in reversed(selFields):
 			if isinstance(field, str):
 				textLen = len(field)
@@ -734,6 +742,7 @@ class Gecko_ia2(VirtualBuffer):
 		ui.message("selected")
 
 	def clearAppSelection(self):
+		"""Clear the native selection in the application."""
 		try:
 			paccTextSelectionContainer = self.rootNVDAObject.IAccessibleObject.QueryInterface(IAccessibleTextSelectionContainer)
 		except COMError as e:
