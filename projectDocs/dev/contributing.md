@@ -70,14 +70,16 @@ Because the `changes.t2t` file is prone to conflicts, NV Access will resolve any
 These descriptions should be in the format: `"{Description of change}. (#{issue number})"`.
 Multiple issue numbers can be included, separated by comma.
 If there is no issue number, you can use the PR number.
+Optionally, you may also include your GitHub username after the issue numbers: `"{Description of change}. (#{issue number}, @{GitHub username})"`.
+Our processing will automatically link the issue number to the GitHub page, and your GitHub username to your contributions to NVDA.
 
 For instance:
 ```t2t
 New features
-- Added a command to announce useful thing. (#WXYZ, #ABCD)
+- Added a command to announce useful thing. (#1234, #4321, @myGitHub)
 
 Changes
-- Old command, now also uses new useful command. (#WXYZ)
+- Old command, now also uses new useful command. (#1234)
 ```
 
 You may add descriptions for multiple sections.
