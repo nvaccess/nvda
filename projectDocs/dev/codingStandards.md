@@ -106,3 +106,7 @@ In summary:
 Any module level variables should be prefixed with and underscore and be encapsulated, e.g. via getters and setters.
 - Avoid code which executes at import time.
 Instead use initializer functions.
+
+### Docstrings
+
+NVDA uses [epytext](https://epydoc.sourceforge.net/manual-epytext.html) syntax for docstrings.
