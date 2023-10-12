@@ -7,7 +7,7 @@ What's New in NVDA
 = 2024.1 =
 
 == New Features ==
-- Added support for Bluetooth Low Energy HID Braille displays. (#15470, @alexmoon)
+- Added support for Bluetooth Low Energy HID Braille displays. (#15470)
 - The Add-on Store now supports installing add-ons in bulk by selecting multiple add-ons. (#15350)
 -
 
@@ -16,20 +16,20 @@ What's New in NVDA
 - Updated LibLouis braille translator to 3.27.0. (#15435, @codeofdusk)
   - Added new Thai and Romanian Braille tables.
   -
-- The following commands now support two and three presses to spell the reported information and spell with character descriptions: report selection, report clipboard text and report focused object. (#15449, @CyrilleB79)
+- The following commands now support two and three presses to spell the reported information and spell with character descriptions: report selection, report clipboard text and report focused object. (#15449)
 - The option "Report role when mouse enters object" in NVDA's mouse settings category has been renamed to "Report object when mouse enters it".
-This option now announces additional relevant information about an object when the mouse enters it, such as states (checked/pressed) or cell coordinates in a table. (#15420, @leonardder)
-- When requesting formatting information on Excel cells, borders and background will only be reported if there is such formatting. (#15560, @CyrilleB79)
-- The command to toggle the screen curtain now has a default gesture: ``NVDA+control+escape``. (#10560, @CyrilleB79)
+This option now announces additional relevant information about an object when the mouse enters it, such as states (checked/pressed) or cell coordinates in a table. (#15420)
+- When requesting formatting information on Excel cells, borders and background will only be reported if there is such formatting. (#15560)
+- The command to toggle the screen curtain now has a default gesture: ``NVDA+control+escape``. (#10560)
 -
 
 == Bug Fixes ==
-- Reporting of object shortcut keys has been improved. (#10807, @CyrilleB79)
-- The SAPI4 synthesizer now properly supports volume, rate and pitch changes embedded in speech. (#15271, @leonardder)
-- Multi line state is now correctly reported in applications using Java Access Bridge. (#14609, @dmitrii-drobotov)
-- In LibreOffice, words deleted using the ``control+backspace`` keyboard shortcut are now also properly announced when the deleted word is followed by whitespace (like spaces and tabs). (#15436, @michaelweghorn)
-- In LibreOffice, announcement of the status bar using the ``NVDA+end`` keyboard shortcut now also works for dialogs in LibreOffice version 24.2 and newer. (#15591, @michaelweghorn )
-- In Microsoft Excel with UIA disabled, braille is updated, and the active cell content is spoken, when ``control+y``, ``control+z`` or ``alt+backspace`` is pressed. (15547, @burmancomp )
+- Reporting of object shortcut keys has been improved. (#10807)
+- The SAPI4 synthesizer now properly supports volume, rate and pitch changes embedded in speech. (#15271)
+- Multi line state is now correctly reported in applications using Java Access Bridge. (#14609)
+- In LibreOffice, words deleted using the ``control+backspace`` keyboard shortcut are now also properly announced when the deleted word is followed by whitespace (like spaces and tabs). (#15436)
+- In LibreOffice, announcement of the status bar using the ``NVDA+end`` keyboard shortcut now also works for dialogs in LibreOffice version 24.2 and newer. (#15591)
+- In Microsoft Excel with UIA disabled, braille is updated, and the active cell content is spoken, when ``control+y``, ``control+z`` or ``alt+backspace`` is pressed. (15547)
 -
 
 == Changes for Developers ==
