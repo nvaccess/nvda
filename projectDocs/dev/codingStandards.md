@@ -109,4 +109,7 @@ Instead use initializer functions.
 
 ### Docstrings
 
-NVDA uses [epytext](https://epydoc.sourceforge.net/manual-epytext.html) syntax for docstrings.
+Docstrings should use [Sphinx format](https://sphinx-rtd-tutorial.readthedocs.io/en/latest/docstrings.html).
+
+NVDA formerly used [epytext](https://epydoc.sourceforge.net/manual-epytext.html) syntax for docstrings, which means there is inconsistent syntax used in the NVDA code base.
+[#12971](https://github.com/nvaccess/nvda/issues/12971) exists to track converting epytext docstrings to Sphinx.
