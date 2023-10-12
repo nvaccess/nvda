@@ -61,6 +61,9 @@ That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices``
 
 === Deprecations ===
 
+- Using ``watchdog.getFormattedStacksForAllThreads`` is deprecated - please use ``logHandler.getFormattedStacksForAllThreads`` instead. (#15616, @lukaszgo1)
+-
+
 
 = 2023.3 =
 This release includes improvements to performance, responsiveness and stability of audio output.
