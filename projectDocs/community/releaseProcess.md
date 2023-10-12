@@ -1,22 +1,38 @@
 # Release Process
 
 This document provides rough guidelines for the process of developing NVDA releases.
-All current and potential developers and translators should read and follow this document.
+All current and potential developers, add-on developers and translators should read and follow this document.
 These guidelines may be broken under special circumstances.
 Any concerns should be discussed via [GitHub Discussion](https://github.com/nvaccess/nvda/discussions), issue or pull request.
  
 ## Release Workflow
-This is the general release workflow. Information for specific community groups is provided in later sections. The production of a release consists of the following:
+This is the general release workflow.
+Information for specific community groups is provided in later sections.
+The production of a release consists of the following:
 1. [Alpha Phase](#alpha-phase) (~7 weeks)
-   - Development is done in parallel to the release process for the prior version.
-   - e.g. NVDA 2020.2 is in alpha while NVDA 2020.1 is going through the Release Phase
-1. [Release Phase](#release-phase) (~7 weeks)
-   - [Beta1](#beta-builds) 1 week after the most recent final release
-   - A new beta is released weekly as required
-   - Once a beta has been stable for one week (no issues reported), the 2 week [translation freeze begins](#translatable-string-freeze)
-   - Once the translation freeze ends, [a release candidate (RC)](#release-candidate) is created
-   - A new RC is released weekly as required
-   - when an RC has been stable for one week (no issues reported), the final release is created
+    - Development is done in parallel to the release process for the prior version once beta phase begins.
+    - e.g. NVDA 2020.2 is in alpha while NVDA 2020.1 is going from beta to the final release.
+    - The add-on API for the release is unstable.
+   Add-ons targeting this release should use "dev" channel.
+1. [Beta phase](#beta-phase) (~4 weeks)
+    - Beta1 is released 1 week after the most recent final release
+    - A new beta is released weekly as required
+    - Translations should be relatively stable.
+    Translators may wish to start working on the release, however further changes to translation strings will occur.
+    - The add-on API should be relatively stable.
+    Add-on authors may wish to start testing the new API, however further changes to the API may occur.
+  Add-ons targeting this release should use "dev" or "beta" channel.
+1. [Release candidate phase](#Release-Candidate-phase) (~3 weeks)
+    - Once a beta has been stable for one week (no issues reported), the 2 week [translation freeze begins](#translatable-string-freeze).
+    There should be no further translatable string changes, unless, if required, another freeze will be announced.
+    - Once the translation freeze ends, [a release candidate (RC)](#release-candidate) is created.
+    - A new RC is released weekly as required.
+    The final RC should be identical to the final release.
+    - The add-on API for RC should be stable.
+    Add-ons targeting this release can use "stable" channel.
+1. Final release
+    - When an RC has been stable for one week (no issues reported), the final release is created
+    - If required, a [follow up patch release](#patch-release) may occur.
 
 ### Alpha phase
 * Contributions are made following the [dev contributing guide](../dev/contributing.md).
@@ -28,16 +44,7 @@ This is however unlikely to be an issue as build checks on the pull request itse
   * The bug is trivial enough to be fixed by a collaborator.
 * Automatic 'alpha snapshots' are made available to the public for very early testing. See [testing guide](../testing/contributing.md).
 
-### Release phase
-The release phase is intended to refine the release, with testing from wider audiences, and incorporated translations.
-When no blocking issues are encountered it is expected to take ~6 weeks:
-- Beta builds: ~3 weeks to receive any required fixes
-  - Subsequent betas may take another week at discretion of lead developers
-- 2 weeks for translation freeze (starting 3 weeks before release) 
-- RC: 1 week.
-  - When issues are encountered, subsequent RC's may take another week at the discretion of lead developers.
-
-#### Beta builds
+### Beta phase
 * A commit without any known serious issues, will be selected from the 'master' branch and merged into 'beta', this draws the line for features included in the release.
 * Documentation changes will be reviewed. A release summary will be added to the change log for the beta.
 * A tagged 'beta release' will be created for wider testing. 
@@ -53,7 +60,9 @@ When no blocking issues are encountered it is expected to take ~6 weeks:
   - It may be fixed by a collaborator if the bug is trivial enough.
   - Once a PR is reverted from `beta`, a replacement PR is very unlikely to get into the current release.
 
-### Translatable String Freeze
+### Release Candidate phase
+
+#### Translatable String Freeze
 - The beta branch will enter a 2 week translatable string freeze.
 - Translators should ensure their translation is up to date a day before the translatable string freeze ends in order for it to be included in the upcoming final release.
 The lead developers will announce the deadline when the freeze begins, if in doubt check the [NVDA-Translations message board](https://groups.io/g/nvda-translations/) for the "language freeze" announcement.
@@ -62,7 +71,7 @@ Work submitted after this time will not be included in the upcoming release.
 - Only critical bug fixes and translation updates should be committed to the beta branch at this stage.
 In this case the translation period will need to be extended by an appropriate amount of time.
 
-### Release Candidate
+#### Release Candidate
 * After the translatable string freeze, the `rc` branch will be created based on the beta branch.
 * The first release candidate will immediately be released from the `rc` branch.
 * After this, only critical bug fixes should be committed to the `rc` branch.
