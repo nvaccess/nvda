@@ -13,7 +13,7 @@ The production of a release consists of the following:
     - Development is done in parallel to the release process for the prior version once beta phase begins.
     - e.g. NVDA 2020.2 is in alpha while NVDA 2020.1 is going from beta to the final release.
     - The add-on API for the release is unstable.
-   Add-ons targeting this release should use "dev" channel.
+    Add-ons targeting this release should use "dev" channel.
 1. [Beta phase](#beta-phase) (~4 weeks)
     - Beta1 is released 1 week after the most recent final release
     - A new beta is released weekly as required
@@ -21,7 +21,7 @@ The production of a release consists of the following:
     Translators may wish to start working on the release, however further changes to translation strings will occur.
     - The add-on API should be relatively stable.
     Add-on authors may wish to start testing the new API, however further changes to the API may occur.
-  Add-ons targeting this release should use "dev" or "beta" channel.
+    Add-ons targeting this release should use "dev" or "beta" channel.
 1. [Release candidate phase](#Release-Candidate-phase) (~3 weeks)
     - Once a beta has been stable for one week (no issues reported), the 2 week [translation freeze begins](#translatable-string-freeze).
     There should be no further translatable string changes, unless, if required, another freeze will be announced.
