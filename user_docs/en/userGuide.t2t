@@ -1140,7 +1140,7 @@ NVDA provides its own extra features  for some applications to make certain task
 NVDA is able to automatically announce appropriate row and column headers when navigating around tables in Microsoft Word.
 This requires that the Report Table row / column headers option in NVDA's Document Formatting settings, found in the [NVDA Settings #NVDASettings] dialog, be turned on.
 
-If you use [UIA to access Word documents #MSWordUIA], that is, by default, in recent versions of Word and Windows, the cells of the first row will automatically be considered as column headers; similarly, the cells of the first column will automatically be considered as row headers; 
+If you use [UIA to access Word documents #MSWordUIA], which is default in recent versions of Word and Windows, the cells of the first row will automatically be considered as column headers; similarly, the cells of the first column will automatically be considered as row headers.
 
 On the contrary, if you do not use [UIA to access Word documents #MSWordUIA], you will have to indicate to NVDA which row or column contains the headers in any given table.
 After moving to the first cell in the column or row containing the headers, use one of the following commands:
