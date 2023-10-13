@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-10703,53a09c4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-15 00:01+0000\n"
-"PO-Revision-Date: 2023-09-17 15:42+0300\n"
+"POT-Creation-Date: 2023-10-08 23:57+0000\n"
+"PO-Revision-Date: 2023-10-06 11:14+0300\n"
 "Last-Translator: Hatoon <h.felemban@hotmail.com>\n"
 "Language-Team: AR <nvda-ar@groups.io>\n"
 "Language: ar\n"
@@ -3985,6 +3985,10 @@ msgstr "إظهار مربّع حوار اختيار سطر برايل الإلك
 msgid "Shows NVDA's braille settings"
 msgstr "إظهار إعدادات الخط البارز Braille الخاصة ب NVDA"
 
+#. Translators: Input help mode message for go to audio settings command.
+msgid "Shows NVDA's audio settings"
+msgstr "عرض إعدادات صوت NVDA"
+
 #. Translators: Input help mode message for go to keyboard settings command.
 msgid "Shows NVDA's keyboard settings"
 msgstr "إظهار إعدادات لوحة المفاتيح الخاصة بNVDA"
@@ -7660,9 +7664,8 @@ msgid "Recognition failed"
 msgstr "فشل التعرف الضوئي"
 
 #. Translators: Reported when recognition (e.g. OCR) fails during automatic refresh.
-#, fuzzy
 msgid "Automatic refresh of recognition result failed"
-msgstr "تجاهَلْ نتيجة التعرف على النص"
+msgstr "تعذّر التحديث التلقائي لنتيجة التعرُّف"
 
 #. Translators: Reported when content recognition (e.g. OCR) is attempted,
 #. but the user is already reading a content recognition result.
@@ -7806,9 +7809,8 @@ msgstr "محاذاة "
 
 #. Translators: Reported in Excel when text is formatted with "Fill" alignment, i.e. the name of the
 #. alignment in Excel repeating the cell's content for the width of the cell.
-#, fuzzy
 msgid "align fill"
-msgstr "محاذاة لليسار"
+msgstr "تعبئة المحاذاة"
 
 #. Translators: Reported when text is vertically top-aligned.
 msgid "vertical align top"
@@ -8823,11 +8825,13 @@ msgid "&Install NVDA..."
 msgstr "ت&ثبيت NVDA..."
 
 #. Translators: The label for the menu item to run the COM registration fix tool
-msgid "&Run COM Registration Fixing tool..."
+#, fuzzy
+msgid "Run COM Registration Fixing tool..."
 msgstr "ت&شغيل أداة معالجة مشكلات سجل النظام الشائعة..."
 
 #. Translators: The label for the menu item to reload plugins.
-msgid "R&eload plugins"
+#, fuzzy
+msgid "Reload plugins"
 msgstr "&إعادة تحميل الملحقات"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
@@ -9937,31 +9941,6 @@ msgstr "اختر آلة النطق"
 msgid "&Synthesizer:"
 msgstr "&آلة النطق:"
 
-#. Translators: This is the label for the select output
-#. device combo in the synthesizer dialog. Examples of
-#. of an output device are default soundcard, usb
-#. headphones, etc.
-msgid "Audio output  &device:"
-msgstr "&جهاز إخراج الصوت:"
-
-#. Translators: name for default (Microsoft Sound Mapper) audio output device.
-msgid "Microsoft Sound Mapper"
-msgstr "Microsoft Sound Mapper"
-
-#. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
-msgid "Audio d&ucking mode:"
-msgstr "نم&ط خفض الأصوات:"
-
-#. Translators: This message is presented when
-#. NVDA is unable to load the selected
-#. synthesizer.
-#, python-format
-msgid "Could not load the %s synthesizer."
-msgstr "يتعذّر تحميل آلة النطق %s."
-
-msgid "Synthesizer Error"
-msgstr "خلل في آلة النطق"
-
 #. Translators: This is the label for the voice settings panel.
 msgid "Voice"
 msgstr "الصوت"
@@ -10522,6 +10501,46 @@ msgstr "التنقُّل ضمن المستند"
 msgid "&Paragraph style:"
 msgstr "&نمط الفقرة:"
 
+#. Translators: This message is presented when
+#. NVDA is unable to load the selected synthesizer.
+#, python-format
+msgid "Could not load the %s synthesizer."
+msgstr "يتعذّر تحميل آلة النطق %s."
+
+#. Translators: Dialog title presented when
+#. NVDA is unable to load the selected synthesizer.
+msgid "Synthesizer Error"
+msgstr "خلل في آلة النطق"
+
+#. Translators: This is the label for the audio settings panel.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Audio"
+msgstr "الصوت"
+
+#. Translators: This is the label for the select output device combo in NVDA audio settings.
+#. Examples of an output device are default soundcard, usb headphones, etc.
+msgid "Audio output &device:"
+msgstr "&جهاز إخراج الصوت:"
+
+#. Translators: name for default (Microsoft Sound Mapper) audio output device.
+msgid "Microsoft Sound Mapper"
+msgstr "Microsoft Sound Mapper"
+
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog.
+msgid "Audio d&ucking mode:"
+msgstr "نم&ط خفض الأصوات:"
+
+#. Translators: This is the label for a checkbox control in the
+#. Audio settings panel.
+msgid "Volume of NVDA sounds follows voice volume"
+msgstr "مستوى أصوات NVDA يتبع مستوى الصوت في إعدادات النُطق"
+
+#. Translators: This is the label for a slider control in the
+#. Audio settings panel.
+msgid "Volume of NVDA sounds"
+msgstr "مستوى أصوات NVDA"
+
 #. Translators: This is the label for the addon navigation settings panel.
 msgid "Add-on Store"
 msgstr "مستودع الإضافات"
@@ -10797,24 +10816,9 @@ msgstr "المعدل الزمني لحركة مؤشر التحرير (ملي ف�
 msgid "Report transparent color values"
 msgstr "الإعلان عن قيم الألوان الشفافة"
 
-#. Translators: This is the label for a group of advanced options in the
-#. Advanced settings panel
-msgid "Audio"
-msgstr "الصوت"
-
 #. Translators: This is the label for a checkbox control in the Advanced settings panel.
 msgid "Use WASAPI for audio output (requires restart)"
 msgstr "استخدام WASAPI  لإخراج الصوت (يتطلّب إعادة التشغيل)"
-
-#. Translators: This is the label for a checkbox control in the
-#. Advanced settings panel.
-msgid "Volume of NVDA sounds follows voice volume (requires WASAPI)"
-msgstr "مستوى أصوات NVDA يتبع مستوى الصوت في إعدادات النُطق (يتطلَّب WASAPI)"
-
-#. Translators: This is the label for a slider control in the
-#. Advanced settings panel.
-msgid "Volume of NVDA sounds (requires WASAPI)"
-msgstr "مستوى أصوات NVDA (يتطلَّب WASAPI)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10883,9 +10887,8 @@ msgid "Braille &display:"
 msgstr "السطر الإلكت&روني:"
 
 #. Translators: The label for a setting in braille settings to enable displays for automatic detection.
-#, fuzzy
 msgid "&Displays to detect automatically:"
-msgstr "فقط حال الإرفاق التلقائي"
+msgstr "أسطر برايل التي ستُكتشَف آليا:"
 
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
