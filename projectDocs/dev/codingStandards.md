@@ -103,7 +103,7 @@ Refer to the [limitations to retaining backwards compatibility](./deprecations.m
 
 In summary:
 - Avoid module level global variables.
-Any module level variables should be prefixed with and underscore and be encapsulated, e.g. via getters and setters.
+Any module level variables should be prefixed with an underscore and be encapsulated, e.g. via getters and setters.
 - Avoid code which executes at import time.
 Instead use initializer functions.
 
