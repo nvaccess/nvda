@@ -1,10 +1,10 @@
-# Copyright (C) 2006-2022 NVDA Contributors
+# Copyright (C) 2006-2023 NVDA Contributors
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA-TW\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-25 00:02+0000\n"
+"POT-Creation-Date: 2023-09-22 00:01+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1551,11 +1551,11 @@ msgstr "未標記的"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
-msgstr "單鍵導航關"
+msgstr "單鍵導覽 關"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
 msgid "Single letter navigation on"
-msgstr "單鍵導航開"
+msgstr "單鍵導覽 開"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 msgid ""
@@ -1563,7 +1563,7 @@ msgid ""
 "browse mode jump to various kinds of elements on the page. When off, these "
 "keys are passed to the application"
 msgstr ""
-"切換單鍵導航的開或關，當開啟時會依照所按的按鍵跳至瀏覽模式下的頁面元素，當關"
+"切換單鍵導覽的開或關，當開啟時會依照所按的按鍵跳至瀏覽模式下的頁面元素，當關"
 "閉時直接將按鍵訊息傳到應用程式"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
@@ -2062,6 +2062,22 @@ msgstr "移到上一個群組"
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous grouping"
 msgstr "沒有上一個群組了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next tab"
+msgstr "移到下一個索引標籤"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next tab"
+msgstr "沒有下一個索引標籤了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous tab"
+msgstr "移到上一個索引標籤"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous tab"
+msgstr "沒有上一個索引標籤了"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -2697,11 +2713,11 @@ msgid ""
 "twice will spell the current line. Pressing three times will spell the line "
 "using character descriptions."
 msgstr ""
-"讀出游標所在的一行，連按兩下拼讀這一行，連按三下使用字詞解釋拼讀這一行。"
+"讀出游標所在的一行，連按兩下拼讀這一行，連按三下使用字元說明拼讀這一行。"
 
 #. Translators: Input help mode message for left mouse click command.
 msgid "Clicks the left mouse button once at the current mouse position"
-msgstr "在目前鼠標位置點擊滑鼠左鍵一次"
+msgstr "在目前滑鼠位置點擊滑鼠左鍵一次"
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
@@ -2709,7 +2725,7 @@ msgstr "左擊"
 
 #. Translators: Input help mode message for right mouse click command.
 msgid "Clicks the right mouse button once at the current mouse position"
-msgstr "在目前鼠標位置點擊滑鼠右鍵一次"
+msgstr "在目前滑鼠位置點擊滑鼠右鍵一次"
 
 #. Translators: Reported when right mouse button is clicked.
 msgid "Right click"
@@ -2961,6 +2977,21 @@ msgstr "循環切換行縮排設定"
 msgid "Report line indentation {mode}"
 msgstr "讀出行縮排 {mode}"
 
+#. Translators: Input help mode message for toggle ignore blank lines for line indentation reporting command.
+msgid ""
+"Toggles on and off the ignoring of blank lines for line indentation reporting"
+msgstr "切換讀出行縮排時忽略空白行的開或關"
+
+#. Translators: The message announced when toggling off the ignore blank lines for line indentation
+#. reporting document formatting setting.
+msgid "Ignore blank lines for line indentation reporting off"
+msgstr "讀出行縮排時忽略空白行 關"
+
+#. Translators: The message announced when toggling on the ignore blank lines for line indentation
+#. reporting document formatting setting.
+msgid "Ignore blank lines for line indentation reporting on"
+msgstr "讀出行縮排時忽略空白行 開"
+
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
 msgstr "切換讀出段落縮排的開或關"
@@ -3194,19 +3225,19 @@ msgstr "符號等級 %s"
 #. Translators: Input help mode message for toggle delayed character description command.
 msgid ""
 "Toggles on and off delayed descriptions for characters on cursor movement"
-msgstr "切換延遲讀出字元的字詞解釋的開或關"
+msgstr "切換游標移動時延遲讀出字元說明的開或關"
 
 #. Translators: The message announced when toggling the delayed character description setting.
 msgid "delayed character descriptions on"
-msgstr "延遲讀出字元的字詞解釋 開"
+msgstr "延遲讀出字元說明 開"
 
 #. Translators: The message announced when toggling the delayed character description setting.
 msgid "delayed character descriptions off"
-msgstr "延遲讀出字元的字詞解釋 關"
+msgstr "延遲讀出字元說明 關"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
-msgstr "鼠標移到目前導覽物件"
+msgstr "滑鼠移到目前導覽物件"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
 msgid "Object has no location"
@@ -3216,11 +3247,11 @@ msgstr "物件沒有位置資訊"
 msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
-msgstr "導覽物件移到鼠標所指的物件並讀出"
+msgstr "導覽物件移到滑鼠所指的物件並讀出"
 
 #. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
 msgid "Move navigator object to mouse"
-msgstr "導覽物件移到鼠標"
+msgstr "導覽物件移到滑鼠"
 
 #. Translators: Script help message for next review mode command.
 msgid ""
@@ -3409,7 +3440,7 @@ msgid ""
 "situated. If this key is pressed twice, the current line will be spelled. "
 "Pressing three times will spell the line using character descriptions."
 msgstr ""
-"讀出目前導覽物件的檢閱游標所在行，連按兩下拼讀這一行，連按三下使用字詞解釋拼"
+"讀出目前導覽物件的檢閱游標所在行，連按兩下拼讀這一行，連按三下使用字元說明拼"
 "讀這一行。"
 
 #. Translators: Input help mode message for move review cursor to next line command.
@@ -3452,7 +3483,7 @@ msgid ""
 "situated. Pressing twice spells the word. Pressing three times spells the "
 "word using character descriptions"
 msgstr ""
-"讀出目前導覽物件的檢閱游標所在字詞，連按兩下拼讀字詞，連按三下使用字詞解釋拼"
+"讀出目前導覽物件的檢閱游標所在字詞，連按兩下拼讀字詞，連按三下使用字元說明拼"
 "讀字詞"
 
 #. Translators: Input help mode message for move review cursor to next word command.
@@ -3484,7 +3515,7 @@ msgid ""
 "character. Pressing three times reports the numeric value of the character "
 "in decimal and hexadecimal"
 msgstr ""
-"讀出目前導覽物件的檢閱游標所在字元，連按兩下讀出字詞解釋，連按三下讀出十進位"
+"讀出目前導覽物件的檢閱游標所在字元，連按兩下讀出字元說明，連按三下讀出十進位"
 "值和十六進位值"
 
 #. Translators: Input help mode message for move review cursor to next character command.
@@ -3687,26 +3718,26 @@ msgstr "沒有便捷鍵"
 
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
-msgstr "切換跟隨鼠標移動朗讀的開或關"
+msgstr "切換跟隨滑鼠移動朗讀的開或關"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
-msgstr "跟隨鼠標朗讀 關"
+msgstr "跟隨滑鼠朗讀 關"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking on"
-msgstr "跟隨鼠標朗讀 開"
+msgstr "跟隨滑鼠朗讀 開"
 
 #. Translators: Input help mode message for toggle mouse text unit resolution command.
 msgid "Toggles how much text will be spoken when the mouse moves"
-msgstr "切換鼠標移動時讀出的文字量"
+msgstr "切換滑鼠移動時讀出的文字量"
 
 #. Translators: Reports the new state of the mouse text unit resolution:.
 #. %s will be replaced with the new label.
 #. For example, the full message might be "Mouse text unit resolution character"
 #, python-format
 msgid "Mouse text unit resolution %s"
-msgstr "朗讀鼠標所在文字範圍 %s"
+msgstr "朗讀滑鼠所在文字範圍 %s"
 
 #. Translators: Input help mode message for report title bar command.
 msgid ""
@@ -3905,6 +3936,10 @@ msgstr "顯示 NVDA 點顯器選擇對話框"
 msgid "Shows NVDA's braille settings"
 msgstr "顯示 NVDA 點字設定"
 
+#. Translators: Input help mode message for go to audio settings command.
+msgid "Shows NVDA's audio settings"
+msgstr "顯示 NVDA 音訊設定"
+
 #. Translators: Input help mode message for go to keyboard settings command.
 msgid "Shows NVDA's keyboard settings"
 msgstr "顯示 NVDA 鍵盤設定"
@@ -3935,15 +3970,15 @@ msgstr "顯示 NVDA 文件格式設定"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
 msgid "Shows the NVDA default dictionary dialog"
-msgstr "顯示 NVDA 預設字庫對話框"
+msgstr "顯示 NVDA 預設字典對話框"
 
 #. Translators: Input help mode message for opening voice-specific dictionary dialog.
 msgid "Shows the NVDA voice-specific dictionary dialog"
-msgstr "顯示 NVDA 特定語音字庫對話框"
+msgstr "顯示 NVDA 特定語音字典對話框"
 
 #. Translators: Input help mode message for opening temporary dictionary.
 msgid "Shows the NVDA temporary dictionary dialog"
-msgstr "顯示 NVDA 暫存字庫對話框"
+msgstr "顯示 NVDA 暫存字典對話框"
 
 #. Translators: Input help mode message for go to punctuation/symbol pronunciation dialog.
 msgid "Shows the NVDA symbol pronunciation dialog"
@@ -4468,6 +4503,10 @@ msgstr "暫時啟用螢幕薕幕，直到下次重新啟動 NVDA"
 #. Translators: Reported when the screen curtain could not be enabled.
 msgid "Could not enable screen curtain"
 msgstr "無法啟用螢幕簾幕"
+
+#. Translators: Warning message when trying to enable the screen curtain when OCR is active.
+msgid "Could not enable screen curtain when performing content recognition"
+msgstr "執行內容辨識時無法啟用螢幕簾幕"
 
 #. Translators: Describes a command.
 msgid "Cycles through paragraph navigation styles"
@@ -6390,6 +6429,7 @@ msgstr "請贊助"
 
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
+#. Translators: The label for the menu item to open donate page.
 msgid "&Donate"
 msgstr "贊助(&D)"
 
@@ -7379,7 +7419,7 @@ msgstr "啟動時顯示點字檢視器(&S)"
 #. Translators: The label for a setting in the braille viewer that controls
 #. whether hovering mouse routes to the cell.
 msgid "&Hover for cell routing"
-msgstr "停留鼠標以定位點字方(&H)"
+msgstr "停留滑鼠以定位點字方(&H)"
 
 #. Translators: One of the show states of braille messages
 #. (the disabled mode turns off showing of braille messages completely).
@@ -7514,6 +7554,14 @@ msgstr "若可能的話啟動游標所在的文字"
 msgid "Dismiss the recognition result"
 msgstr "關閉辨識結果"
 
+#. Translators: Reported when recognition (e.g. OCR) fails.
+msgid "Recognition failed"
+msgstr "辨識失敗"
+
+#. Translators: Reported when recognition (e.g. OCR) fails during automatic refresh.
+msgid "Automatic refresh of recognition result failed"
+msgstr "自動更新辨識結果失敗"
+
 #. Translators: Reported when content recognition (e.g. OCR) is attempted,
 #. but the user is already reading a content recognition result.
 msgid "Already in a content recognition result"
@@ -7527,9 +7575,6 @@ msgstr "內容不可見"
 #. Translators: Reporting when content recognition (e.g. OCR) begins.
 msgid "Recognizing"
 msgstr "辨識中"
-
-msgid "Recognition failed"
-msgstr "辨識失敗"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
@@ -7625,6 +7670,63 @@ msgstr "larger"
 msgctxt "font size"
 msgid "smaller"
 msgstr "smaller"
+
+#. Translators: Reported when text is left-aligned.
+msgid "align left"
+msgstr "靠左對齊"
+
+#. Translators: Reported when text is centered.
+msgid "align center"
+msgstr "置中對齊"
+
+#. Translators: Reported when text is right-aligned.
+msgid "align right"
+msgstr "靠右對齊"
+
+#. Translators: Reported when text is justified.
+#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
+msgid "align justify"
+msgstr "左右對齊"
+
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "分散對齊"
+
+#. Translators: Reported when text is centered across multiple cells.
+msgid "align centered across selection"
+msgstr "跨欄置中對齊"
+
+#. Translators: Reported in Excel when text is formatted with "General" alignment, i.e. the name of the
+#. alignment in Excel aligning the cell's content depending on its type: text left and numbers right.
+msgid "align general"
+msgstr "通用格式對齊"
+
+#. Translators: Reported in Excel when text is formatted with "Fill" alignment, i.e. the name of the
+#. alignment in Excel repeating the cell's content for the width of the cell.
+msgid "align fill"
+msgstr "填滿對齊"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "垂直靠上對齊"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "垂直置中對齊"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "垂直靠下對齊"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "垂直上下對齊"
+
+#. Translators: Reported when text is vertically justified but with character spacing
+#. (For some Asian content).
+msgid "vertical align distributed"
+msgstr "垂直分散對齊"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -8574,7 +8676,7 @@ msgstr "NVDA 設定"
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
-msgstr "讀音字庫(&D)"
+msgstr "讀音字典(&D)"
 
 #. Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
 msgid "&Punctuation/symbol pronunciation..."
@@ -8589,43 +8691,43 @@ msgid "&Preferences"
 msgstr "偏好(&P)"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
-msgid "View log"
-msgstr "檢視事件記錄(&V)"
+msgid "View &log"
+msgstr "檢視事件記錄(&L)"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
-msgid "Speech viewer"
-msgstr "語音檢視器"
+msgid "&Speech viewer"
+msgstr "語音檢視器(&S)"
 
 #. Translators: The label for the menu item to toggle Braille Viewer.
-msgid "Braille viewer"
-msgstr "點字檢視器"
+msgid "&Braille viewer"
+msgstr "點字檢視器(&B)"
 
 #. Translators: The label of a menu item to open the Add-on store
-msgid "Add-on &store..."
-msgstr "附加元件商店(&S)..."
+msgid "&Add-on store..."
+msgstr "附加元件商店(&A)..."
 
 #. Translators: The label for the menu item to open NVDA Python Console.
-msgid "Python console"
-msgstr "Python 主控台"
+msgid "&Python console"
+msgstr "Python 主控台(&P)"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create portable copy..."
-msgstr "建立可攜式版..."
+msgid "&Create portable copy..."
+msgstr "建立可攜式版(&C)..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
 msgstr "安裝 NVDA(&I)..."
 
 #. Translators: The label for the menu item to run the COM registration fix tool
-msgid "Run COM Registration Fixing tool..."
-msgstr "執行 COM 註冊修復工具..."
+msgid "&Run COM Registration Fixing tool..."
+msgstr "執行 COM 註冊修復工具(&R)..."
 
 #. Translators: The label for the menu item to reload plugins.
-msgid "Reload plugins"
-msgstr "重新載入外掛程式"
+msgid "R&eload plugins"
+msgstr "重新載入外掛程式(&E)"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
-msgid "Tools"
+msgid "&Tools"
 msgstr "工具(&T)"
 
 #. Translators: The label of a menu item to open NVDA user guide.
@@ -8660,16 +8762,12 @@ msgid "&Check for update..."
 msgstr "檢查更新(&C)..."
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
-msgid "About..."
+msgid "&About..."
 msgstr "關於(&A)..."
 
 #. Translators: The label for the Help submenu in NVDA menu.
 msgid "&Help"
 msgstr "說明(&H)"
-
-#. Translators: The label for the menu item to open donate page.
-msgid "Donate"
-msgstr "贊助"
 
 #. Translators: The label for the menu item to run a pending update.
 msgid "Install pending &update"
@@ -8688,34 +8786,34 @@ msgstr "結束 NVDA"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
-msgstr "預設字庫(&D)..."
+msgstr "預設字典(&D)..."
 
 #. Translators: The help text for the menu item to open Default speech dictionary dialog.
 msgid ""
 "A dialog where you can set default dictionary by adding dictionary entries "
 "to the list"
-msgstr "可新增讀音項目至預設字庫的對話框"
+msgstr "可新增讀音項目至預設字典的對話框"
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
 msgid "&Voice dictionary..."
-msgstr "語音字庫(&V)..."
+msgstr "語音字典(&V)..."
 
 #. Translators: The help text for the menu item
 #. to open Voice specific speech dictionary dialog.
 msgid ""
 "A dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
-msgstr "可新增讀音項目至特定語音字庫的對話框"
+msgstr "可新增讀音項目至特定語音字典的對話框"
 
 #. Translators: The label for the menu item to open Temporary speech dictionary dialog.
 msgid "&Temporary dictionary..."
-msgstr "暫存字庫(&T)..."
+msgstr "暫存字典(&T)..."
 
 #. Translators: The help text for the menu item to open Temporary speech dictionary dialog.
 msgid ""
 "A dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
-msgstr "可新增讀音項目至暫存字庫的對話框"
+msgstr "可新增讀音項目至暫存字典的對話框"
 
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
 msgid "&Configuration profiles..."
@@ -8731,8 +8829,8 @@ msgstr "重設所有設定為已儲存的狀態"
 
 #. Translators: The label for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
-msgid "&Reset configuration to factory defaults"
-msgstr "重設組態為預設值(&R)"
+msgid "Reset configuration to &factory defaults"
+msgstr "重設組態為預設值(&F)"
 
 #. Translators: The help text for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
@@ -9709,31 +9807,6 @@ msgstr "選擇合成器"
 msgid "&Synthesizer:"
 msgstr "合成器(&S):"
 
-#. Translators: This is the label for the select output
-#. device combo in the synthesizer dialog. Examples of
-#. of an output device are default soundcard, usb
-#. headphones, etc.
-msgid "Audio output  &device:"
-msgstr "音訊輸出裝置(&D):"
-
-#. Translators: name for default (Microsoft Sound Mapper) audio output device.
-msgid "Microsoft Sound Mapper"
-msgstr "Microsoft 音效對應表"
-
-#. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
-msgid "Audio d&ucking mode:"
-msgstr "自動音量調整模式(&U)"
-
-#. Translators: This message is presented when
-#. NVDA is unable to load the selected
-#. synthesizer.
-#, python-format
-msgid "Could not load the %s synthesizer."
-msgstr "無法載入 %s 合成器。"
-
-msgid "Synthesizer Error"
-msgstr "合成器錯誤"
-
 #. Translators: This is the label for the voice settings panel.
 msgid "Voice"
 msgstr "語音"
@@ -9789,7 +9862,7 @@ msgstr "使用拼字功能 (若有支援)(&S)"
 
 #. Translators: This is the label for a checkbox in the voice settings panel.
 msgid "&Delayed descriptions for characters on cursor movement"
-msgstr "游標移動時延遲讀出字元的字詞解釋(&D)"
+msgstr "游標移動時延遲讀出字元說明(&D)"
 
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
@@ -9858,12 +9931,12 @@ msgstr "至少要有一個鍵必須作為 NVDA 鍵。"
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
 msgid "Report mouse &shape changes"
-msgstr "讀出鼠標圖案變化(&S)"
+msgstr "讀出滑鼠圖案變化(&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
 msgid "Enable mouse &tracking"
-msgstr "啟用跟隨鼠標朗讀(&T)"
+msgstr "啟用跟隨滑鼠朗讀(&T)"
 
 #. Translators: This is the label for a combobox in the
 #. mouse settings panel.
@@ -9873,12 +9946,12 @@ msgstr "讀出文字範圍(&U):"
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
 msgid "Report &role when mouse enters object"
-msgstr "讀出鼠標所指物件類型(&R)"
+msgstr "讀出滑鼠所指物件類型(&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
 msgid "&Play audio coordinates when mouse moves"
-msgstr "鼠標移動時播放聲音座標(&P)"
+msgstr "滑鼠移動時播放聲音座標(&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
@@ -9907,7 +9980,7 @@ msgstr "跟隨系統游標(&C)"
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
 msgid "Follow &mouse cursor"
-msgstr "跟隨鼠標(&M)"
+msgstr "跟隨滑鼠游標(&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
@@ -9926,12 +9999,12 @@ msgstr "讀出所有顯示的候選字(&C)"
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
 msgid "Announce &selected candidate"
-msgstr "讀出候選字及字詞解釋(&S)"
+msgstr "讀出候選字及字元說明(&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
 msgid "Always include short character &description when announcing candidates"
-msgstr "讀出候選字的一個字詞解釋(&D)"
+msgstr "讀出候選字的簡短字元說明(&D)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
@@ -10185,12 +10258,17 @@ msgstr "行號(&N)"
 msgid "Line &indentation reporting:"
 msgstr "讀出行縮排(&I):"
 
-#. Translators: This message is presented in the document formatting settings panelue
+#. Translators: This is the label of a checkbox in the document formatting settings panel
+#. If this option is selected, NVDA will ignore blank lines for line indentation reporting
+msgid "Ignore &blank lines for line indentation reporting"
+msgstr "讀出行縮排時忽略空白行(&B)"
+
+#. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
 msgstr "段落縮排(&P)"
 
-#. Translators: This message is presented in the document formatting settings panelue
+#. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report line spacing if available.
 msgid "&Line spacing"
 msgstr "行距(&L)"
@@ -10283,6 +10361,46 @@ msgstr "文件導覽"
 msgid "&Paragraph style:"
 msgstr "段落樣式(&P):"
 
+#. Translators: This message is presented when
+#. NVDA is unable to load the selected synthesizer.
+#, python-format
+msgid "Could not load the %s synthesizer."
+msgstr "無法載入 %s 合成器。"
+
+#. Translators: Dialog title presented when
+#. NVDA is unable to load the selected synthesizer.
+msgid "Synthesizer Error"
+msgstr "合成器錯誤"
+
+#. Translators: This is the label for the audio settings panel.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Audio"
+msgstr "音訊"
+
+#. Translators: This is the label for the select output device combo in the synthesizer dialog.
+#. Examples of an output device are default soundcard, usb headphones, etc.
+msgid "Audio output &device:"
+msgstr "音訊輸出裝置(&D):"
+
+#. Translators: name for default (Microsoft Sound Mapper) audio output device.
+msgid "Microsoft Sound Mapper"
+msgstr "Microsoft 音效對應表"
+
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog.
+msgid "Audio d&ucking mode:"
+msgstr "自動音量調整模式(&U)"
+
+#. Translators: This is the label for a checkbox control in the
+#. Audio settings panel.
+msgid "Volume of NVDA sounds follows voice volume"
+msgstr "NVDA 音效音量跟隨語音音量"
+
+#. Translators: This is the label for a slider control in the
+#. Audio settings panel.
+msgid "Volume of NVDA sounds"
+msgstr "NVDA 音效音量"
+
 #. Translators: This is the label for the addon navigation settings panel.
 msgid "Add-on Store"
 msgstr "附加元件商店"
@@ -10308,6 +10426,10 @@ msgstr "Windows OCR"
 #. Translators: Label for an option in the Windows OCR dialog.
 msgid "Recognition &language:"
 msgstr "辨識語言(&L)"
+
+#. Translators: Label for an option in the Windows OCR settings panel.
+msgid "Periodically &refresh recognized content"
+msgstr "定時更新辨識內容(&R)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10457,32 +10579,6 @@ msgstr "針對結構注釋讀出「有詳細資料」"
 msgid "Report aria-description always"
 msgstr "總是讀出 aria-description"
 
-#. Translators: Label for option in the 'Enable support for HID braille' combobox
-#. in the Advanced settings panel.
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "Default (Yes)"
-msgstr "預設 (是)"
-
-#. Translators: Label for option in the 'Enable support for HID braille' combobox
-#. in the Advanced settings panel.
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "Yes"
-msgstr "是"
-
-#. Translators: Label for option in the 'Enable support for HID braille' combobox
-#. in the Advanced settings panel.
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "No"
-msgstr "否"
-
-#. Translators: This is the label for a combo box in the
-#. Advanced settings panel.
-msgid "Enable support for HID braille"
-msgstr "啟用 HID 點字支援"
-
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 msgid "Report live regions:"
 msgstr "讀出即時區域:"
@@ -10533,6 +10629,21 @@ msgstr "單行分析"
 msgid "Speak new text in Windows Terminal via:"
 msgstr "在 Windows 終端機讀出新文字方式:"
 
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Default (Yes)"
+msgstr "預設 (是)"
+
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Yes"
+msgstr "是"
+
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "No"
+msgstr "否"
+
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "嘗試將已過期焦點事件的語音取消:"
@@ -10561,24 +10672,9 @@ msgstr "等待游標移動時間 (以毫秒計)"
 msgid "Report transparent color values"
 msgstr "讀出透明色彩值"
 
-#. Translators: This is the label for a group of advanced options in the
-#. Advanced settings panel
-msgid "Audio"
-msgstr "音訊"
-
 #. Translators: This is the label for a checkbox control in the Advanced settings panel.
 msgid "Use WASAPI for audio output (requires restart)"
 msgstr "使用 WASAPI 作為音訊輸出 (需重新啟動)"
-
-#. Translators: This is the label for a checkbox control in the
-#. Advanced settings panel.
-msgid "Volume of NVDA sounds follows voice volume (requires WASAPI)"
-msgstr "NVDA 音效音量跟隨語音音量 (需要 WASAPI)"
-
-#. Translators: This is the label for a slider control in the
-#. Advanced settings panel.
-msgid "Volume of NVDA sounds (requires WASAPI)"
-msgstr "NVDA 音效音量 (需要 WASAPI)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10643,6 +10739,10 @@ msgstr "選擇點顯器"
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
 msgstr "點字顯示器(&D):"
+
+#. Translators: The label for a setting in braille settings to enable displays for automatic detection.
+msgid "&Displays to detect automatically:"
+msgstr "點顯器自動偵測(&D):"
 
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
@@ -10875,7 +10975,7 @@ msgstr "正規表達式(&E)"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
-msgstr "編輯字庫項目"
+msgstr "編輯字典項目"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 msgid "&Pattern"
@@ -10896,7 +10996,7 @@ msgstr "「原來文字」欄位必填。"
 
 #. Translators: The title of an error message raised by the Dictionary Entry dialog
 msgid "Dictionary Entry Error"
-msgstr "字庫項目錯誤"
+msgstr "字典項目錯誤"
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-brace-format
@@ -10910,7 +11010,7 @@ msgstr "替代文字欄位的正規表達式錯誤: \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
-msgstr "字庫項目(&D)"
+msgstr "字典項目(&D)"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
 msgid "Comment"
@@ -10942,25 +11042,25 @@ msgstr "全部移除"
 
 #. Translators: This is the label for the add dictionary entry dialog.
 msgid "Add Dictionary Entry"
-msgstr "新增字庫項目"
+msgstr "新增字典項目"
 
 #. Translators: A prompt for confirmation on the Speech Dictionary dialog.
 msgid "Are you sure you want to remove all the entries in this dictionary?"
-msgstr "您確定要移除此字庫中的所有項目嗎?"
+msgstr "您確定要移除此字典中的所有項目嗎?"
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
-msgstr "預設字庫"
+msgstr "預設字典"
 
 #. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
 #, python-format
 msgid "Voice dictionary (%s)"
-msgstr "語音字庫 (%s)"
+msgstr "語音字典 (%s)"
 
 #. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
 #. as NvDA is running).
 msgid "Temporary dictionary"
-msgstr "暫存字庫"
+msgstr "暫存字典"
 
 #. Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
 msgid ""
@@ -11353,60 +11453,6 @@ msgstr "隱藏"
 #. Translators: Reported when text is not hidden.
 msgid "not hidden"
 msgstr "沒有隱藏"
-
-#. Translators: Reported when text is left-aligned.
-msgid "align left"
-msgstr "靠左對齊"
-
-#. Translators: Reported when text is centered.
-msgid "align center"
-msgstr "置中對齊"
-
-#. Translators: Reported when text is right-aligned.
-msgid "align right"
-msgstr "靠右對齊"
-
-#. Translators: Reported when text is justified.
-#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
-msgid "align justify"
-msgstr "左右對齊"
-
-#. Translators: Reported when text is justified with character spacing (Japanese etc)
-#. See http://kohei.us/2010/01/21/distributed-text-justification/
-msgid "align distributed"
-msgstr "分散對齊"
-
-#. Translators: Reported when text has reverted to default alignment.
-msgid "align default"
-msgstr "預設對齊"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "垂直靠上對齊"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "垂直置中對齊"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "垂直靠下對齊"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "垂直基準線對齊"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "垂直上下對齊"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "垂直分散對齊"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "垂直預設對齊"
 
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
@@ -13458,6 +13504,11 @@ msgctxt "addonStore"
 msgid "Enabled, pending restart"
 msgstr "已啟用，等待重新啟動"
 
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Unknown status"
+msgstr "未知的狀態"
+
 #. Translators: The label of a tab to display installed add-ons in the add-on store.
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
@@ -13802,6 +13853,7 @@ msgid "Add-on Information"
 msgstr "附加元件資訊"
 
 #. Translators: The warning of a dialog
+msgctxt "addonStore"
 msgid "Add-on Store Warning"
 msgstr "附加元件商店警告"
 
@@ -13822,6 +13874,7 @@ msgid "&Don't show this message again"
 msgstr "不再顯示此訊息(&D)"
 
 #. Translators: The label of a button in a dialog
+msgctxt "addonStore"
 msgid "&OK"
 msgstr "確定(&O)"
 
@@ -13846,6 +13899,7 @@ msgid "Cha&nnel:"
 msgstr "通道(&N):"
 
 #. Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
 msgid "Include &incompatible add-ons"
 msgstr "包含不相容附加元件(&I)"
 
