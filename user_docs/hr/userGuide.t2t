@@ -1350,7 +1350,12 @@ Ako često pristupate kategorijama postavki koje nemaju dodjeljen prečac, možd
 
 Kategorije postavki u dijaloškom okviru NVDA Postavke se opisuju niže dolje.
 
-+++ Opće (NVDA+kontrol+g) +++[GeneralSettings]
++++ Opće +++[GeneralSettings]
+
+%kc:setting
+==== Otvara opće postavke ====
+Prečac: ``NVDA+kontrol+g``
+
 Kategorija "Opće", u dijaloškom okviru NVDA Postavke, postavlja opće opcije poput jezika ili provjeravanja nadogradnji.
 Ova kategorija sadrži sljedeće opcije:
 
@@ -1429,8 +1434,13 @@ Ove informacije puno pomažu programu NV Access postaviti prioritete za budući 
 Ako je ova opcija aktivirana, NVDA će vas tijekom pokretanja informirati o nadogradnji na čekanju, te će ponuditi mogućnost da se instalira.
 Nadogradnje na čekanju je moguće i ručno instalirati u dijaloškom okviru Izađi iz programa NVDA (ako je aktivirano) u NVDA izborniku ili ako ponovo provjeravate nadogradnju putem izbornika Pomoć.
 
-+++ Postavke govora (NVDA+kontrol+v) +++[SpeechSettings]
-Kategorija Govor u dijaloškom okviru Postavke, omogućuje mijenjanje govorne jedinice, kao i njenih karakteristike glasa.
++++ Postavke govora +++[SpeechSettings]
+
+%kc:setting
+==== Otvara postavke govora ====
+Prečac: ``NVDA+kontrol+v``
+
+Kategorija Govor u dijaloškom okviru Postavke, omogućuje mijenjanje govorne jedinice, kao i njenih karakteristika glasa.
 Za brže mjenjanje postavki govora s bilo kojeg mjesta pogledajte poglavlje [Kružne postavke govorne jedinice #SynthSettingsRing].
 
 Kategorija Postavke govora sadrži sljedeće opcije:
@@ -1538,7 +1548,12 @@ Ovo može biti korisno ako je teško razaznati razliku između izgovorenih znako
 
 Opis znakova koji kasni biti će obustavljen ako je drugi tekst izgovoren u tom vremenskom intervalu, ili ako pritisnete tipku ``ctrl``.
 
-+++ Odaberi govornu jedinicu (NVDA+kontrol+s) +++[SelectSynthesizer]
++++ Odaberi govornu jedinicu +++[SelectSynthesizer]
+
+%kc:setting
+==== Otvara postavke govorne jedinice ====
+Prečac: ``NVDA+kontrol+s``
+
 Dijaloški okvir Govorna jedinica, koji se otvara na pritiskom gumba "Promijeni …" u kategoriji za govor u dijaloškom okviru NVDA Postavke, omogućuje promjenu govorne jedinice koju će NVDA koristiti.
 Kad odaberete govornu jedinicu, pritisnite gumb U redu i NVDA će učitati odabranu govornu jedinicu.
 Ako postoji greška pri učitavanju govorne jedinice, NVDA će prikazati poruku, a govorna jedinica se neće promijeniti.
@@ -1725,7 +1740,12 @@ Isključivanje ove opcije može poboljšati iskustvo pri čitanju.
 
 Da biste uključili ili isključili prikazivanje označenog bilo gde da se nalazite, molimo podesite prilagođenu prečicu korišćenjem [dijaloga ulaznih komandi #InputGestures].
 
-+++ Odaberi brajični redak (NVDA+kontrol+a) +++[SelectBrailleDisplay]
++++ Odaberi brajični redak +++[SelectBrailleDisplay]
+
+%kc:setting
+==== Otvara dijaloški okvir odabira brajičnog redka ====
+Prečac: ``NVDA+kontrol+a``
+
 Dijaloški okvir Odaberi brajični redak, koji se može otvoriti koristeći gumb "Promijeni …" u kategoriji Brajica u dijaloškom okviru NVDA Postavke, omogućuje odabir brajičnog retka koji će se koristiti.
 Kad odaberete vaš omiljeni brajični redak, možete pritisnuti gumb U redu i NVDA će učitati vaš brajični redak.
 Ako postoji greška pri učitavanju brajičnog retka, NVDA će vas obavijestiti porukom, te će nastaviti koristiti prethodni brajični redak, ako postoji.
@@ -1768,6 +1788,11 @@ Trenutno je nemoguće odrediti koji brajični redak NVDA bi trebao koristiti.
 Stoga preporuča se spajanje samo jednog brajičnog redka određenog tipa ili proizvođača na vaše računalo u isto vrijeme.
 
 +++ Zvuk +++[AudioSettings]
+
++%kc:setting
+==== Otvara postavke zvuka ====
+Prečac: ``NVDA+kontrol+u``
+
 Kategorija zvuk u NVDA postavkama omogućuje vam mijenjanje nekih opcija vezanih uz zvuk.
 
 ==== Izlazni uređaj ====[SelectSynthesizerOutputDevice]
@@ -1843,7 +1868,12 @@ Dodatne pružatelja vizualnih poboljšanja je moguće pružiti putem [NVDA dodat
 Kad ti pružatelji sadrže prilagodljive postavke, one će se prikazati u ovoj kategoriji postavki u odvojenim grupama.
 Podržane postavke za pružatelje potražite u njihovoj dokumentaciji.
 
-+++ Tipkovnica (NVDA+kontrol+k) +++[KeyboardSettings]
++++ Tipkovnica +++[KeyboardSettings]
+
+%kc:setting
+==== Otvara postavke tipkovnice ====
+prečac: ``NVDA+kontrol+k``
+
 Kategorija Tipkovnica u dijaloškom okviru NVDA Postavke sadrži opcije, s kojima se podešava ponašanje NVDA čitača tijekom upotrebe tipkovnice.
 Ova kategorija postavki sadrži sljedeće opcije:
 
@@ -1901,7 +1931,12 @@ Ova je opcija dostupna samo ako je izvještavanje o pravopisnim pogrreškama akt
 Ova opcija omogućuje korisniku kontrolu nad time, hoće li ili neće NVDA obraditi kombinacije tipaka koje su namijenjene nekoj drugoj aplikaciji, poput ekranskih tipkovnica i softvera za prepoznavanje govora. 
 Ova je opcija standardno aktivirana, ali neki korisnici bi to htjeli isključiti, npr. korisnici koji upisuju vijetnamski pomoću UniKey programa za tipkanje, jer će to prouzrokovati pogrešan unos znakova.
 
-+++ Miš (NVDA+kontrol+m) +++[MouseSettings]
++++ Miš +++[MouseSettings]
+
+%kc:setting
+==== Otvara postavke miša ====
+Prečac: ``NVDA+kontrol+m``
+
 Kategorija Miš u dijaloškom okviru NVDA Postavke, omogućuje praćenje miša, reproduciranje zvučnih koordinata te postavljanje drugih opcija.
 Ova kategorija sadrži sljedeće opcije:
 
@@ -1977,7 +2012,12 @@ Kad je ova opcija aktivirana, NVDA će filtrirati hijerarhiju objekata po kojima
 
 Da biste uključili ili isključili jednostavni modus pregleda s bilo kojeg mjesta, dodijelite prilagođeni prečac u dijaloškom okviru [Ulazne geste #InputGestures].
 
-+++ Prezentacija objekata (NVDA+kontrol+o) +++[ObjectPresentationSettings]
++++ Prezentacija objekata +++[ObjectPresentationSettings]
+
+%kc:setting
+==== Otvara dijaloški okvir prezentacija objekata ====
+Prečac: ``NVDA+kontrol+o``
+
 Kategorija Prezentacija objekta u dijaloškom okviru NVDA Postavke se koristi za podešavanje količine informacija kontrola koje će NVDA prikazivati. Te informacije su na primjer opis, informacija o položaju i tako dalje.
 Ove se opcije ne primjenjuju na modus čitanja.
 Ove se opcije uobičajeno primjenjuju na izgovor fokusa i NVDA objektnu navigaciju, ali ne i na čitanje tekstualnog sadržaja, kao što je to modus čitanja.
@@ -2067,7 +2107,12 @@ Nakon čitanja ili u slučaju kad su kompozicijski podaci spremljeni kao valjan 
 Ova opcija omogućuje odabir između toga hoće li ili neće NVDA izgovarati nove simbole kako se isti budu pojavljivali u kompozicijskom nizu.
 Ova je opcija standardno aktivirana.
 
-+++ Modus čitanja (NVDA+kontrol+b) +++[BrowseModeSettings]
++++ Modus čitanja +++[BrowseModeSettings]
+
+%kc:setting
+==== Otvara postavke modusa čitanja ====
++Key: ``NVDA+kontrol+b``
+
 Kategorija Modus čitanja u NVDA postavkama se koristi za podešavanje toga, kako će se NVDA ponašati pri čitanju kompleksnih dokumenata, kao što su na primjer web stranice.
 Ova kategorija sadrži sljedeće opcije:
 
@@ -2138,7 +2183,12 @@ Ovo može prouzročiti bržu reakciju i rad u modusu čitanja.
 Fokus će se aktivirati samo onda kada dođete u interakciju s elementom  (na primjer pritiščući gumb, odabirući potvrdni okvir).
 Ako omogućite ovu opciju, možda će se poboljšati podrška za neke web stranice u zamjenu za perfornse i stabilnost.
 
-+++ Oblikovanje dokumenta (NVDA+kontrol+d) +++[DocumentFormattingSettings]
++++ Oblikovanje dokumenta +++[DocumentFormattingSettings]
+
+%kc:setting
+==== Otvara postavke oblikovanja dokumenta ====
+Prečac: ``NVDA+kontrol+d``
+
 Većina ovih opcija služi za podešavanje opcija koje služe za podešavanje izgovora svojstva oblikovanja pri kretanju.
 Na primjer, ako odaberete potvrdni okvir izvijesti o imenu fonta, svaki put, kad se budete pomicali po tekstu uz pomoć kursorskih tipaka i nailazili na drugačiji font, ime fonta biti će izgovoreno.
 

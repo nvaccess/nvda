@@ -25,6 +25,7 @@ from logHandler import log
 import speech
 import api
 import braille
+import inputCore
 import languageHandler
 import vision
 
@@ -318,6 +319,40 @@ class SymphonyDocumentTextInfo(TreeCompoundTextInfo):
 class SymphonyDocument(CompoundDocument):
 	TextInfo = SymphonyDocumentTextInfo
 
+	# override base class implementation because that one assumes
+	# that the text retrieved from the text info for the text unit
+	# is the same as the text that actually gets removed, which at
+	# least isn't true for Writer paragraphs when removing a word
+	# followed by whitespace using Ctrl+Backspace
+	def _backspaceScriptHelper(self, unit: str, gesture: inputCore.InputGesture):
+		try:
+			oldInfo = self.makeTextInfo(textInfos.POSITION_CARET)
+			ia2TextObj = oldInfo._start.obj.IAccessibleTextObject
+			oldCaretOffset = ia2TextObj.caretOffset
+			oldText = ia2TextObj.text(0, ia2TextObj.nCharacters)
+		except NotImplementedError:
+			gesture.send()
+			return
+
+		gesture.send()
+
+		newInfo = self.makeTextInfo(textInfos.POSITION_CARET)
+		ia2TextObj = newInfo._start.obj.IAccessibleTextObject
+		newCaretOffset = ia2TextObj.caretOffset
+		newText = ia2TextObj.text(0, ia2TextObj.nCharacters)
+
+		# double-check check that text between previous and current
+		# caret position was deleted and announce it
+		deletedText = oldText[newCaretOffset:oldCaretOffset]
+		if newText == oldText[0:newCaretOffset] + oldText[oldCaretOffset:]:
+			if len(deletedText) > 1:
+				speech.speakMessage(deletedText)
+			else:
+				speech.speakSpelling(deletedText)
+				self._caretScriptPostMovedHelper(None, gesture, newInfo)
+		else:
+			log.warning('Backspace did not remove text as expected.')
+
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -353,7 +388,13 @@ class AppModule(appModuleHandler.AppModule):
 		(up to the given depth) has the corresponding role."""
 		if obj.role == controlTypes.Role.STATUSBAR:
 			return obj
-		if max_depth < 1 or obj.role not in {controlTypes.Role.ROOTPANE, controlTypes.Role.WINDOW}:
+		if max_depth < 1 or obj.role not in {
+			controlTypes.Role.DIALOG,
+			controlTypes.Role.FRAME,
+			controlTypes.Role.OPTIONPANE,
+			controlTypes.Role.ROOTPANE,
+			controlTypes.Role.WINDOW
+		}:
 			return None
 		for child in obj.children:
 			status_bar = self.searchStatusBar(child, max_depth - 1)
@@ -367,9 +408,10 @@ class AppModule(appModuleHandler.AppModule):
 	def getStatusBarText(self, obj: NVDAObject) -> str:
 		text = ""
 		for child in obj.children:
-			textObj = child.IAccessibleTextObject
-			if textObj:
-				if text:
-					text += " "
-				text += textObj.textAtOffset(0, IA2.IA2_TEXT_BOUNDARY_ALL)[2]
+			if hasattr(child, 'IAccessibleTextObject'):
+				textObj = child.IAccessibleTextObject
+				if textObj:
+					if text:
+						text += " "
+					text += textObj.textAtOffset(0, IA2.IA2_TEXT_BOUNDARY_ALL)[2]
 		return text
