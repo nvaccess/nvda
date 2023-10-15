@@ -748,7 +748,6 @@ class Gecko_ia2(VirtualBuffer):
 			log.debug(f"ia2EndObj {ia2EndObj}")
 		r = IA2TextSelection(ia2StartObj, ia2StartOffset, ia2EndObj, ia2EndOffset, False)
 		paccTextSelectionContainer.SetSelections(1, byref(r))
-		ui.message("selected")
 
 	def clearAppSelection(self):
 		"""Clear the native selection in the application."""
