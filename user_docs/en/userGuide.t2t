@@ -2857,11 +2857,21 @@ You can browse installed incompatible add-ons using the [incompatible add-ons ta
 + Extra Tools +[ExtraTools]
 
 ++ Log Viewer ++[LogViewer]
-The log viewer, found under Tools in the NVDA menu, allows you to view all the logging output that has occurred up until now from when you last started NVDA.
-Using NVDA+F1 will open the log viewer and display developer information about the current navigator object.
+The log viewer, found under Tools in the NVDA menu, allows you to view the logging output that has occurred since the latest session of NVDA was started.
 
-Apart from reading the content, you can also Save a copy of the log file, or refresh the viewer so that it shows the most recent output since the Log viewer was opened.
-These actions are available under the viewer's Log menu.
+Apart from reading the content, you can also Save a copy of the log file, or refresh the viewer so that it loads new log output generated after the Log viewer was opened.
+These actions are available under the Log menu in the log viewer.
+
+The file which is displayed when you open the log viewer is saved on your computer at the file location ``%temp%\nvda.log``.
+A new log file is created each time NVDA is started.
+When this happens, the previous NVDA session's log file is moved to ``%temp%\nvda-old.log``.
+
+You can also copy a fragment of the current log file to the clipboard without opening the log viewer.
+%kc:beginInclude
+|| Name | Key | Description |
+| Open log viewer | ``NVDA+f1`` | Opens the log viewer and displays developer information about the current navigator object. |
+| Copy a fragment of the log to the clipboard | ``NVDA+control+shift+f1`` | When this command is pressed once, it sets a starting point for the log content that should be captured. When pressed a second time, it copies the log content since the start point to your clipboard. |
+%kc:endInclude
 
 ++ Speech Viewer ++[SpeechViewer]
 For sighted software developers or people demoing NVDA to sighted audiences, a floating window is available that allows you to view all the text that NVDA is currently speaking.
@@ -2938,6 +2948,15 @@ Specifically, following issues can be solved by running this tool:
 
 ++ Reload plugins ++[ReloadPlugins]
 This item, once activated, reloads app modules and global plugins without restarting NVDA, which can be useful for developers.
+App modules manage how NVDA interacts with specific applications.
+Global plugins manage how NVDA interacts with all applications.
+
+The following NVDA key commands may also be useful:
+%kc:beginInclude
+|| Name | Key | Description |
+| Reload plugins | ``NVDA+control+f3`` | Reloads NVDA's global plugins and app modules. |
+| Report loaded app module and executable | ``NVDA+control+f1`` | Report the name of the app module, if any, and the name of the executable associated with the application which has the keyboard focus. |
+%kc:endInclude
 
 + Supported Speech Synthesizers +[SupportedSpeechSynths]
 This section contains information about the speech synthesizers supported by NVDA.
