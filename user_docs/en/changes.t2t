@@ -15,19 +15,23 @@ What's New in NVDA
 == Changes ==
 - NVDA no longer supports Windows 7 and Windows 8.
 Windows 8.1 is the minimum Windows version supported. (#15544)
-- Updated LibLouis braille translator to 3.27.0. (#15435)
+- Updated LibLouis braille translator to 3.27.0. (#15435, @codeofdusk)
   - Added new Thai and Romanian Braille tables.
   -
-- The following commands now support two and three presses to spell the reported information and spell with character descriptions: report selection, report clipboard text and report focused object. (#15449)
+- The following commands now support two and three presses to spell the reported information and spell with character descriptions: report selection, report clipboard text and report focused object. (#15449, @CyrilleB79)
 - The option "Report role when mouse enters object" in NVDA's mouse settings category has been renamed to "Report object when mouse enters it".
-This option now announces additional relevant information about an object when the mouse enters it, such as states (checked/pressed) or cell coordinates in a table. (#15420)
+This option now announces additional relevant information about an object when the mouse enters it, such as states (checked/pressed) or cell coordinates in a table. (#15420, @LeonarddeR)
+- When requesting formatting information on Excel cells, borders and background will only be reported if there is such formatting. (#15560, @CyrilleB79)
+- The command to toggle the screen curtain now has a default gesture: ``NVDA+control+escape``. (#10560, @CyrilleB79)
 -
 
 == Bug Fixes ==
-- Reporting of object shortcut keys has been improved. (#10807)
-- The SAPI4 synthesizer now properly supports volume, rate and pitch changes embedded in speech. (#15271)
+- Reporting of object shortcut keys has been improved. (#10807, @CyrilleB79)
+- The SAPI4 synthesizer now properly supports volume, rate and pitch changes embedded in speech. (#15271, @LeonarddeR)
 - Multi line state is now correctly reported in applications using Java Access Bridge. (#14609)
 - In LibreOffice, words deleted using the ``control+backspace`` keyboard shortcut are now also properly announced when the deleted word is followed by whitespace (like spaces and tabs). (#15436)
+- In LibreOffice, announcement of the status bar using the ``NVDA+end`` keyboard shortcut now also works for dialogs in LibreOffice version 24.2 and newer. (#15591)
+- In Microsoft Excel with UIA disabled, braille is updated, and the active cell content is spoken, when ``control+y``, ``control+z`` or ``alt+backspace`` is pressed. (15547)
 -
 
 == Changes for Developers ==
@@ -35,7 +39,7 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 
 - Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
-- Added extension point: ``treeInterceptorHandler.post_browseModeStateChange``. (#14969)
+- Added extension point: ``treeInterceptorHandler.post_browseModeStateChange``. (#14969, @nvdaes)
 -
 
 === API Breaking Changes ===
@@ -59,17 +63,21 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
   -
 - ``IAccessibleHandler.SecureDesktopNVDAObject`` has been removed.
 Instead, when NVDA is running on the user profile, track the existence of the secure desktop with the extension point: ``winAPI.secureDesktop.post_secureDesktopStateChange``. (#14488)
-- ``braille.BrailleHandler.handlePendingCaretUpdate`` has been removed with no public replacement. (#15163) 
+- ``braille.BrailleHandler.handlePendingCaretUpdate`` has been removed with no public replacement. (#15163, @LeonarddeR)
 - ``bdDetect.addUsbDevices and bdDetect.addBluetoothDevices`` have been removed.
 Braille display drivers should implement the ``registerAutomaticDetection`` ``classmethod`` instead.
-That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices`` and ``addBluetoothDevices`` methods can be used. (#15200)
-- The default implementation of the check method on ``BrailleDisplayDriver`` now requires both the ``threadSafe`` and ``supportsAutomaticDetection`` attributes to be set to ``True``. (#15200)
-- Passing lambda functions to ``hwIo.ioThread.IoThread.queueAsApc`` is no longer possible, as functions should be weakly referenceable. (#14627)
-- ``IoThread.autoDeleteApcReference`` has been removed. (#14924)
-- To support capital pitch changes, synthesizers must now explicitly declare their support for the ``PitchCommand`` in the ``supportedCommands`` attribute on the driver. (#15433)
+That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices`` and ``addBluetoothDevices`` methods can be used. (#15200, @LeonarddeR)
+- The default implementation of the check method on ``BrailleDisplayDriver`` now requires both the ``threadSafe`` and ``supportsAutomaticDetection`` attributes to be set to ``True``. (#15200, @LeonarddeR)
+- Passing lambda functions to ``hwIo.ioThread.IoThread.queueAsApc`` is no longer possible, as functions should be weakly referenceable. (#14627, @LeonarddeR)
+- ``IoThread.autoDeleteApcReference`` has been removed. (#14924, @LeonarddeR)
+- To support capital pitch changes, synthesizers must now explicitly declare their support for the ``PitchCommand`` in the ``supportedCommands`` attribute on the driver. (#15433, @LeonarddeR)
+- ``speechDictHandler.speechDictVars`` has been removed. Use ``NVDAState.WritePaths.speechDictsDir`` instead of ``speechDictHandler.speechDictVars.speechDictsPath``. (#15614, @lukaszgo1)
 -
 
 === Deprecations ===
+
+- Using ``watchdog.getFormattedStacksForAllThreads`` is deprecated - please use ``logHandler.getFormattedStacksForAllThreads`` instead. (#15616, @lukaszgo1)
+-
 
 
 = 2023.3 =

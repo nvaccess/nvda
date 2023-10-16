@@ -9,6 +9,7 @@
 import os
 import ctypes
 import sys
+import threading
 import warnings
 import logging
 import inspect
@@ -37,6 +38,24 @@ _NVDA_CODE_PATH = os.path.dirname(__file__)
 We cannot use `globalVars.appDir`, since for binary builds it points to the directory with NVDA binaries,
 whereas for compiled versions NVDA's code files are in `library.zip`.
 """
+
+
+def getFormattedStacksForAllThreads() -> str:
+	"""Generates a string containing a call stack for every Python thread in this process.
+
+	The generated string is suitable for logging.
+	"""
+	# First collect the names of all threads that have actually been started by Python itself.
+	threadNamesByID = {x.ident: x.name for x in threading.enumerate()}
+	stacks = []
+	# If a Python function is entered by a thread that was not started by Python itself,
+	# It will have a frame, but won't be tracked by Python's threading module and therefore will have no name.
+	for ident, frame in sys._current_frames().items():
+		# The strings in the formatted stack all end with \n, so no join separator is necessary.
+		stack = "".join(traceback.format_stack(frame))
+		name = threadNamesByID.get(ident, "Unknown")
+		stacks.append(f"Python stack for thread {ident} ({name}):\n{stack}")
+	return "\n".join(stacks)
 
 
 def isPathExternalToNVDA(path: str) -> bool:
