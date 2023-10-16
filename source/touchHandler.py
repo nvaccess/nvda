@@ -298,7 +298,7 @@ class TouchHandler(threading.Thread):
 handler=None
 
 
-def touchSupported(debugLog: bool = False):
+def touchSupported(debugLog: bool = False) -> bool:
 	"""Returns if the system and current NVDA session supports touchscreen interaction.
 	@param debugLog: Whether to log additional details about touch support to the NVDA log.
 	"""
@@ -306,8 +306,8 @@ def touchSupported(debugLog: bool = False):
 		if debugLog:
 			log.debugWarning("Touch only supported on installed copies")
 		return False
-	maxTouches=windll.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES)
-	if maxTouches<=0:
+	maxTouches = windll.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES)
+	if maxTouches <= 0:
 		if debugLog:
 			log.debugWarning("No touch devices found")
 		return False
