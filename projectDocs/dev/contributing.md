@@ -19,6 +19,7 @@ If you are new to the project, or looking for some way to help take a look at:
   - e.g. a fix for a typo/obvious coding error or a simple synthesizer/braille display driver
   - This should be fairly rare.
 - If in doubt, use an issue first. Use this issue to discuss the alternatives you have considered in regards to implementation, design, and user experience. Then give people time to offer feedback.
+- Issues with translations should be reported to the [NVDA Translators list](https://groups.io/g/nvda-translations).
 
 
 ### Overview of contribution process:
