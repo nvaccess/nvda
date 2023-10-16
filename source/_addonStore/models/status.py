@@ -10,11 +10,9 @@ from typing import (
 	Dict,
 	Optional,
 	OrderedDict,
+	Protocol,
 	Set,
 	TYPE_CHECKING,
-)
-from typing_extensions import (
-	Protocol,
 )
 
 import globalVars

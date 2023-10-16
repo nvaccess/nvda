@@ -137,16 +137,18 @@ class TestAbstractAutoPropertyObjects(unittest.TestCase):
 	"""
 
 	def test_abstractProperty(self):
-		self.assertRaisesRegex(TypeError,
+		self.assertRaisesRegex(
+			TypeError,
 			"^Can't instantiate abstract class AutoPropertyObjectWithAbstractProperty "
-			"with abstract methods x",
+			"with abstract method x",
 			AutoPropertyObjectWithAbstractProperty
 		)
 
 	def test_subclassedAbstractProperty(self):
-		self.assertRaisesRegex(TypeError,
+		self.assertRaisesRegex(
+			TypeError,
 			"^Can't instantiate abstract class SubclassedAutoPropertyObjectWithAbstractProperty "
-			"with abstract methods x",
+			"with abstract method x",
 			SubclassedAutoPropertyObjectWithAbstractProperty
 		)
 

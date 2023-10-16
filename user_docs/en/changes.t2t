@@ -13,6 +13,8 @@ What's New in NVDA
 
 
 == Changes ==
+- NVDA no longer supports Windows 7 and Windows 8.
+Windows 8.1 is the minimum Windows version supported. (#15544)
 - Updated LibLouis braille translator to 3.27.0. (#15435, @codeofdusk)
   - Added new Thai and Romanian Braille tables.
   -
@@ -37,9 +39,6 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 
 - Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
-- Updated Comtypes to version 1.2.0. (#15513)
-- Updated fast_diff_match_patch to version 2.0.1. (#15514)
-- Updated SCons to version 4.5.2. (#15529)
 - Added extension point: ``treeInterceptorHandler.post_browseModeStateChange``. (#14969, @nvdaes)
 -
 
@@ -47,6 +46,21 @@ Add-ons will need to be re-tested and have their manifest updated.
 These are breaking API changes.
 Please open a GitHub issue if your Add-on has an issue with updating to the new API.
 
+- NVDA is now built with Python 3.11. (#12064)
+- Updated pip dependencies:
+  - configobj to 5.1.0dev commit e2ba4457. (#15544)
+  - Comtypes to 1.2.0. (#15513, @codeofdusk)
+  - fast_diff_match_patch to 2.0.1. (#15514, @codeofdusk)
+  - py2exe to 0.13.0.1dev commit 4e7b2b2c60face592e67cb1bc935172a20fa371d. (#15544) 
+  - robotframework to 6.1.1. (#15544)
+  - SCons to 4.5.2. (#15529)
+  - sphinx to 7.2.6. (#15544)
+  - wxPython to 4.2.1. (#12551)
+  -
+- Removed pip dependencies:
+  - typing_extensions, these should be supported natively in Python 3.11 (#15544)
+  - nose, instead unittest-xml-reporting is used to generate XML reports. (#15544)
+  -
 - ``IAccessibleHandler.SecureDesktopNVDAObject`` has been removed.
 Instead, when NVDA is running on the user profile, track the existence of the secure desktop with the extension point: ``winAPI.secureDesktop.post_secureDesktopStateChange``. (#14488)
 - ``braille.BrailleHandler.handlePendingCaretUpdate`` has been removed with no public replacement. (#15163, @LeonarddeR)
