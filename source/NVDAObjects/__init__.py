@@ -913,6 +913,12 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 			return self.presType_layout
 		name = self.name
 		description = self.description
+		# #15324: Some builds of Microsoft Office expose a space character as the name of unlabeled groupings.
+		# trying to force NVDA to announce them.
+		if name and name.isspace():
+			name = None
+		if description and description.isspace():
+			description = None
 		if not name and not description:
 			if role in (
 				controlTypes.Role.WINDOW,
