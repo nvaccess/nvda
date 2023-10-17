@@ -10,6 +10,7 @@ In order to use touch features, NVDA must be installed on a touchscreen computer
 
 import threading
 from ctypes import *
+from ctypes import windll
 from ctypes.wintypes import *
 import re
 import gui
