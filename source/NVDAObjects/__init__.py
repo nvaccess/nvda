@@ -913,22 +913,25 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 			return self.presType_layout
 		name = self.name
 		description = self.description
+		# #15324: Some builds of Microsoft Office expose a space character as the name of unlabeled groupings.
+		# trying to force NVDA to announce them.
+		if name and name.isspace():
+			name = None
+		if description and description.isspace():
+			description = None
 		if not name and not description:
 			if role in (
 				controlTypes.Role.WINDOW,
 				controlTypes.Role.PANEL,
 				controlTypes.Role.PROPERTYPAGE,
 				controlTypes.Role.TEXTFRAME,
+				controlTypes.Role.GROUPING,
 				controlTypes.Role.OPTIONPANE,
 				controlTypes.Role.INTERNALFRAME,
 				controlTypes.Role.FORM,
 				controlTypes.Role.TABLEBODY,
 				controlTypes.Role.REGION,
 			):
-				return self.presType_layout
-			# Groupings should only be considered layout (I.e. filtered out)
-			# if they also don't have any position information as well as no name or description.
-			if role == controlTypes.Role.GROUPING and not self.name and not self.description and not self.positionInfo:
 				return self.presType_layout
 			if role == controlTypes.Role.TABLE and not config.conf["documentFormatting"]["reportTables"]:
 				return self.presType_layout

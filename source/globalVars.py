@@ -26,9 +26,9 @@ import os
 from typing import (
 	TYPE_CHECKING,
 	List,
+	Literal,
 	Optional,
 )
-from typing_extensions import Literal
 
 if TYPE_CHECKING:
 	import documentBase  # noqa: F401 used for type checking only

@@ -698,7 +698,7 @@ class UIAHandler(COMObject):
 				f"handleAutomationEvent called with event {self.getUIAEventIDDebugString(eventID)} "
 				f"for element {self.getUIAElementDebugString(sender)}"
 			)
-		if not self.MTAThreadInitEvent.isSet():
+		if not self.MTAThreadInitEvent.is_set():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandleAutomationEvent: event received while not fully initialized")
@@ -799,7 +799,7 @@ class UIAHandler(COMObject):
 	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
 		if _isDebug():
 			log.debug(f"handleFocusChangedEvent called with element {self.getUIAElementDebugString(sender)}")
-		if not self.MTAThreadInitEvent.isSet():
+		if not self.MTAThreadInitEvent.is_set():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandleFocusChangedEvent: event received while not fully initialized")
@@ -888,7 +888,7 @@ class UIAHandler(COMObject):
 		# #3867: For now manually force this VARIANT type to empty to get around a nasty double free in comtypes/ctypes.
 		# We also don't use the value in this callback.
 		newValue.vt=VT_EMPTY
-		if not self.MTAThreadInitEvent.isSet():
+		if not self.MTAThreadInitEvent.is_set():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandlePropertyChangedEvent: event received while not fully initialized")
@@ -978,7 +978,7 @@ class UIAHandler(COMObject):
 				f"activityID {activityId}, "
 				f"for element {self.getUIAElementDebugString(sender)}"
 			)
-		if not self.MTAThreadInitEvent.isSet():
+		if not self.MTAThreadInitEvent.is_set():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandleNotificationEvent: event received while not fully initialized")
@@ -1023,7 +1023,7 @@ class UIAHandler(COMObject):
 			log.debug(
 				f"HandleActiveTextPositionChangedEvent called for element {self.getUIAElementDebugString(sender)}"
 			)
-		if not self.MTAThreadInitEvent.isSet():
+		if not self.MTAThreadInitEvent.is_set():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandleActiveTextPositionchangedEvent: event received while not fully initialized")

@@ -17,10 +17,8 @@ from typing import (
 	Generator,
 	List,
 	Optional,
-	Union,
-)
-from typing_extensions import (
 	Protocol,
+	Union,
 )
 
 from requests.structures import CaseInsensitiveDict

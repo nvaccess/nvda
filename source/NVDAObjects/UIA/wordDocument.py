@@ -611,3 +611,21 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 			# Translators: a message when there is no comment to report in Microsoft Word
 			ui.message(_("No comments"))
 		return
+
+	@script(gesture="kb:NVDA+shift+c")
+	def script_setColumnHeader(self, gesture):
+		ui.message(_(
+			# Translators: The message reported in Microsoft Word for document types not supporting setting custom
+			# headers.
+			"Command not supported in this type of document. "
+			"The tables have their first row cells automatically set as column headers."
+		))
+
+	@script(gesture="kb:NVDA+shift+r")
+	def script_setRowHeader(self, gesture):
+		ui.message(_(
+			# Translators: The message reported in Microsoft Word for document types not supporting setting custom
+			# headers.
+			"Command not supported in this type of document. "
+			"The tables have their first column cells automatically set as row headers."
+		))
