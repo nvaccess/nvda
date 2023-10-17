@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited
+# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -48,7 +48,9 @@ from logHandler import log
 
 from ..controls.messageDialogs import (
 	_shouldEnableWhenAddonTooOldDialog,
+	_shouldEnableWhenMultipleAddonsTooOldDialog,
 	_shouldProceedToRemoveAddonDialog,
+	_shouldProceedToRemoveMultipleAddonDialog,
 	_shouldInstallWhenAddonTooOldDialog,
 	_shouldProceedWhenInstalledAddonVersionUnknown,
 )
@@ -253,15 +255,25 @@ class AddonStoreVM:
 		assert path is not None
 		startfile(path)
 
-	def removeAddon(self, listItemVM: AddonListItemVM[_AddonGUIModel]) -> None:
+	def removeAddon(self, listItemVM: AddonListItemVM[_AddonGUIModel], askConfirmation: bool = True) -> None:
 		assert addonDataManager
 		assert listItemVM.model
-		if _shouldProceedToRemoveAddonDialog(listItemVM.model):
+		if not askConfirmation or _shouldProceedToRemoveAddonDialog(listItemVM.model):
 			addonDataManager._deleteCacheInstalledAddon(listItemVM.model.name)
 			assert listItemVM.model._addonHandlerModel is not None
 			listItemVM.model._addonHandlerModel.requestRemove()
 			self.refresh()
 			listItemVM.status = getStatus(listItemVM.model)
+
+	def removeAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]) -> None:
+		if not _shouldProceedToRemoveMultipleAddonDialog(nAddons=len(listItemVMs)):
+			log.debug("Aborting batch remove add-ons.")
+			return
+		for aVM in listItemVMs:
+			if aVM.status == AvailableAddonStatus.PENDING_REMOVE:
+				log.debug(f"Skipping {aVM.Id} as it is already pending remove")
+			else:
+				self.removeAddon(aVM, askConfirmation=False)
 
 	def installOverrideIncompatibilityForAddon(self, listItemVM: AddonListItemVM) -> None:
 		from gui import mainFrame
@@ -302,17 +314,69 @@ class AddonStoreVM:
 		listItemVM.status = getStatus(listItemVM.model)
 		self.refresh()
 
-	def enableOverrideIncompatibilityForAddon(self, listItemVM: AddonListItemVM[_AddonManifestModel]) -> None:
+	def enableOverrideIncompatibilityForAddon(
+			self,
+			listItemVM: AddonListItemVM[_AddonManifestModel],
+			askConfirmation: bool = True,
+	) -> None:
 		from ... import mainFrame
-		if _shouldEnableWhenAddonTooOldDialog(mainFrame, listItemVM.model):
+		if not askConfirmation or _shouldEnableWhenAddonTooOldDialog(mainFrame, listItemVM.model):
 			listItemVM.model.enableCompatibilityOverride()
 			self._handleEnableDisable(listItemVM, True)
 
 	def enableAddon(self, listItemVM: AddonListItemVM) -> None:
 		self._handleEnableDisable(listItemVM, True)
 
+	def enableAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]) -> None:
+		disabledIncompatibleAddons = [
+			aVM for aVM in listItemVMs
+			if aVM.status in (
+				AvailableAddonStatus.INCOMPATIBLE_DISABLED,
+				AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
+			)
+			and not aVM.model.isCompatible
+			and aVM.model.canOverrideCompatibility
+		]
+		if (
+			len(disabledIncompatibleAddons) > 0
+			and not _shouldEnableWhenMultipleAddonsTooOldDialog(len(disabledIncompatibleAddons))
+		):
+			log.debug("Override incompatibility has been declined. Aborting batch enable add-ons.")
+			return
+		for aVM in listItemVMs:
+			if aVM.status in (
+				AvailableAddonStatus.INCOMPATIBLE_DISABLED,
+				AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
+			) and not aVM.model.isCompatible and aVM.model.canOverrideCompatibility:
+				self.enableOverrideIncompatibilityForAddon(aVM, askConfirmation=False)
+			elif aVM.status in (
+				AvailableAddonStatus.DISABLED,
+				AvailableAddonStatus.PENDING_DISABLE,
+			):
+				self.enableAddon(aVM)
+			else:
+				log.debug(
+					f"Skipping {aVM.Id} as it is not disabled, pending disable, incompatible disabled "
+					"or pending incompatible disabled"
+				)
+
+	
+
 	def disableAddon(self, listItemVM: AddonListItemVM) -> None:
 		self._handleEnableDisable(listItemVM, False)
+
+	def disableAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]) -> None:
+		for aVM in listItemVMs:
+			if aVM.status in [
+				AvailableAddonStatus.DISABLED,
+				AvailableAddonStatus.PENDING_DISABLE,
+				AvailableAddonStatus.INCOMPATIBLE_DISABLED,
+				AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
+				AvailableAddonStatus.PENDING_REMOVE,
+			]:
+				log.debug(f"Skipping {aVM.Id} as it is already disabled, pending disabled or pending remove")
+			else:
+				self.disableAddon(aVM)
 
 	def replaceAddon(self, listItemVM: AddonListItemVM) -> None:
 		from ... import mainFrame

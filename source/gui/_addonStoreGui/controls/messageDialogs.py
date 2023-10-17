@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2023 NV Access Limited
+# Copyright (C) 2023 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -108,6 +108,20 @@ def _shouldProceedToRemoveAddonDialog(
 	) == wx.YES
 
 
+def _shouldProceedToRemoveMultipleAddonDialog(nAddons) -> bool:
+	return messageBox(
+		pgettext(
+			"addonStore",
+			# Translators: Presented when attempting to remove multiple selected add-ons.
+			"Are you sure you wish to remove the {nAddons} selected add-ons from NVDA? "
+			"This cannot be undone.",
+		).format(nAddons=nAddons),
+		# Translators: Title for message asking if the user really wishes to remove the selected Add-on.
+		pgettext("addonStore", "Remove Add-ons"),
+		wx.YES_NO | wx.NO_DEFAULT | wx.ICON_WARNING
+	) == wx.YES
+
+
 def _shouldInstallWhenAddonTooOldDialog(
 		parent: wx.Window,
 		addon: _AddonGUIModel
@@ -166,6 +180,28 @@ def _shouldEnableWhenAddonTooOldDialog(
 		showAddonInfoFunction=lambda: _showAddonInfo(addon)
 	))
 	return res == wx.YES
+
+
+def _shouldEnableWhenMultipleAddonsTooOldDialog(
+		nAddons: int,
+) -> bool:
+	incompatibleMessage = pgettext(
+		"addonStore",
+		# Translators: The message displayed when enabling one or more incompatible add-on packages
+		# because the add-ons are too old for the running version of NVDA.
+		"Warning: {nAddons} add-ons are incompatible. "
+		"Check for an updated version of these add-on if possible. "
+		"Enabling may cause unstable behavior in NVDA.\n"
+		"Proceed with enabling anyway? "
+		).format(
+	nAddons=nAddons,
+	)
+	return messageBox(
+		incompatibleMessage,
+		# Translators: Title for message asking if the user really wishes to enable the selected Add-ons.
+		pgettext("addonStore", "Add-ons not compatible"),
+		wx.YES_NO | wx.NO_DEFAULT | wx.ICON_WARNING,
+	) == wx.YES
 
 
 def _showAddonInfo(addon: _AddonGUIModel) -> None:

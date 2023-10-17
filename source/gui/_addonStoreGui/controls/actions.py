@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited
+# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -77,7 +77,7 @@ class _ActionsContextMenuP(Generic[AddonActionT], ABC):
 			elif isMenuItemInContextMenu:
 				# The action is invalid but the menu item exists and is in the context menu.
 				# Remove the menu item from the context menu.
-				self._contextMenu.RemoveItem(menuItem)
+				self._contextMenu.Remove(menuItem)
 				del self._actionMenuItemMap[action]
 
 		menuItems: List[wx.MenuItem] = list(self._contextMenu.GetMenuItems())
@@ -85,7 +85,7 @@ class _ActionsContextMenuP(Generic[AddonActionT], ABC):
 			if menuItem not in self._actionMenuItemMap.values():
 				# The menu item is not in the action menu item map.
 				# It should be removed from the context menu.
-				self._contextMenu.RemoveItem(menuItem)
+				self._contextMenu.Remove(menuItem)
 
 
 class _MonoActionsContextMenu(_ActionsContextMenuP[AddonActionVM]):
@@ -141,6 +141,30 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 				displayName=pgettext("addonStore", "&Install selected add-ons"),
 				actionHandler=self._storeVM.getAddons,
 				validCheck=lambda aVMs: self._storeVM._filteredStatusKey == _StatusFilterKey.AVAILABLE,
+				actionTarget=self._selectedAddons
+			),
+			BatchAddonActionVM(
+				# Translators: Label for an action that removes the selected add-ons
+				displayName=pgettext("addonStore", "&Remove selected add-ons"),
+				actionHandler=self._storeVM.removeAddons,
+				validCheck=lambda aVMs: self._storeVM._filteredStatusKey in [
+					_StatusFilterKey.INSTALLED,
+					_StatusFilterKey.INCOMPATIBLE,
+				],
+				actionTarget=self._selectedAddons
+			),
+			BatchAddonActionVM(
+				# Translators: Label for an action that enables the selected add-ons
+				displayName=pgettext("addonStore", "&Enable selected add-ons"),
+				actionHandler=self._storeVM.enableAddons,
+				validCheck=lambda aVMs: True,
+				actionTarget=self._selectedAddons
+			),
+			BatchAddonActionVM(
+				# Translators: Label for an action that disables the selected add-ons
+				displayName=pgettext("addonStore", "&Disable selected add-ons"),
+				actionHandler=self._storeVM.disableAddons,
+				validCheck=lambda aVMs: True,
 				actionTarget=self._selectedAddons
 			),
 		]
