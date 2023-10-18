@@ -36,6 +36,7 @@ from NVDAObjects.window.winword import (
 )
 from NVDAObjects import NVDAObject
 from scriptHandler import script
+import eventHandler
 
 
 """Support for Microsoft Word via UI Automation."""
@@ -544,7 +545,10 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 	def event_textChange(self):
 		# Ensure Braille is updated when text changes,
 		# As Microsoft Word does not fire caret events when typing text, even though the caret does move.
-		braille.handler.handleCaretMove(self)
+		# Update braille also when tethered to review, and review position
+		# if review follows caret.
+		if not eventHandler.isPendingEvents("caret", self):
+			eventHandler.queueEvent("caret", self)
 
 	def event_UIA_notification(self, activityId=None, **kwargs):
 		# #10851: in recent Word 365 releases, UIA notification will cause NVDA to announce edit functions
