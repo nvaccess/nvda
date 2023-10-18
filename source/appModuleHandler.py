@@ -48,7 +48,6 @@ from systemUtils import getCurrentProcessLogonSessionId, getProcessLogonSessionI
 
 # Dictionary of processID:appModule pairs used to hold the currently running modules
 runningTable: Dict[int, AppModule] = {}
-_CORE_APP_MODULES_PATH: os.PathLike = os.path.dirname(appModules.__spec__.origin)
 _getAppModuleLock=threading.RLock()
 #: Notifies when another application is taking foreground.
 #: This allows components to react upon application switches.
@@ -103,30 +102,6 @@ def __getattr__(attrName: str) -> Any:
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
-def _warnDeprecatedAliasAppModule() -> None:
-	"""This function should be executed at the top level of an alias App Module,
-	to log a deprecation warning when the module is imported.
-	"""
-	import inspect
-	# Determine the name of the module inside which this function is executed by using introspection.
-	# Since the current frame belongs to the calling function inside `appModuleHandler`
-	# we need to retrieve the file name from the preceding frame which belongs to the module in which this
-	# function is executed.
-	currModName = os.path.splitext(os.path.basename(inspect.stack()[1].filename))[0]
-	try:
-		replacementModName = appModules.EXECUTABLE_NAMES_TO_APP_MODS[currModName]
-	except KeyError:
-		raise RuntimeError("This function can be executed only inside an alias App Module.") from None
-	else:
-		deprecatedImportWarning = (
-			f"Importing appModules.{currModName} is deprecated,"
-			f" instead import appModules.{replacementModName}."
-		)
-		log.warning(deprecatedImportWarning)
-		if not NVDAState._allowDeprecatedAPI():
-			raise ModuleNotFoundError(deprecatedImportWarning)
-
-
 def registerExecutableWithAppModule(executableName: str, appModName: str) -> None:
 	"""Registers appModule to be used for a given executable.
 	"""
@@ -163,32 +138,13 @@ def _getPossibleAppModuleNamesForExecutable(executableName: str) -> Tuple[str, .
 	)
 
 
-def doesAppModuleExist(name: str, ignoreDeprecatedAliases: bool = False) -> bool:
-	"""Returns c{True} if App Module with a given name exists, c{False} otherwise.
-	:param ignoreDeprecatedAliases: used for backward compatibility, so that by default alias modules
-	are not excluded.
-	"""
+def doesAppModuleExist(name: str) -> bool:
+	"""Returns c{True} if App Module with a given name exists, c{False} otherwise."""
 	try:
 		modSpec = importlib.util.find_spec(f"appModules.{name}", package=appModules)
 	except ImportError:
 		modSpec = None
 	if modSpec is None:
-		return False
-	# While the module has been found it is possible this is a deprecated alias.
-	# Before PR #13366 the only possibility to map a single app module to multiple executables
-	# was to create an alias app module and import everything from the main module into it.
-	# Now the preferred solution is to add an entry into `appModules.EXECUTABLE_NAMES_TO_APP_MODS`,
-	# but old alias modules have to stay to preserve backwards compatibility.
-	# We cannot import the alias module since they show a deprecation warning on import.
-	# To determine if the module should be imported or not we check if:
-	# - it is placed in the core appModules package, and
-	# - it has an alias defined in `appModules.EXECUTABLE_NAMES_TO_APP_MODS`.
-	# If both of these are true the module should not be imported in core.
-	if (
-		ignoreDeprecatedAliases
-		and name in appModules.EXECUTABLE_NAMES_TO_APP_MODS
-		and os.path.dirname(modSpec.origin) == _CORE_APP_MODULES_PATH
-	):
 		return False
 	return True
 
@@ -198,10 +154,10 @@ def _importAppModuleForExecutable(executableName: str) -> Optional[ModuleType]:
 	"""
 	for possibleModName in _getPossibleAppModuleNamesForExecutable(executableName):
 		# First, check whether the module exists.
-		# We need to do this separately to exclude alias modules,
-		# and because even though an ImportError is raised when a module can't be found,
+		# We need to do this separately
+		# because even though an ImportError is raised when a module can't be found,
 		# it might also be raised for other reasons.
-		if doesAppModuleExist(possibleModName, ignoreDeprecatedAliases=True):
+		if doesAppModuleExist(possibleModName):
 			return importlib.import_module(
 				f"appModules.{possibleModName}",
 				package="appModules"
@@ -247,7 +203,7 @@ def getAppModuleForNVDAObject(obj: NVDAObjects.NVDAObject) -> AppModule:
 	if not isinstance(obj, NVDAObjects.NVDAObject):
 		return
 	mod = getAppModuleFromProcessID(obj.processID)
-	# #14403: some apps report process handle of 0, causing process information and other functions to fial.
+	# #14403: some apps report process handle of 0, causing process information and other functions to fail.
 	if mod.processHandle == 0:
 		# Sometimes process handle for the NVDA object may not be defined, more so when running tests.
 		try:
