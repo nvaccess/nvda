@@ -144,6 +144,16 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 				actionTarget=self._selectedAddons
 			),
 			BatchAddonActionVM(
+				# Translators: Label for an action that updates the selected add-ons
+				displayName=pgettext("addonStore", "&Update selected add-ons"),
+				actionHandler=self._storeVM.getAddons,
+				validCheck=lambda aVMs: self._storeVM._filteredStatusKey in [
+					_StatusFilterKey.INSTALLED,
+					_StatusFilterKey.UPDATE,
+				],
+				actionTarget=self._selectedAddons
+			),
+			BatchAddonActionVM(
 				# Translators: Label for an action that removes the selected add-ons
 				displayName=pgettext("addonStore", "&Remove selected add-ons"),
 				actionHandler=self._storeVM.removeAddons,
