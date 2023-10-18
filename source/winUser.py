@@ -455,8 +455,10 @@ def MAKELONG(lo,hi):
 def waitMessage():
 	return user32.WaitMessage()
 
-def getMessage(*args):
+
+def getMessage(*args) -> int:
 	return user32.GetMessageW(*args)
+
 
 def translateMessage(*args):
 	return user32.TranslateMessage(*args)
