@@ -505,23 +505,19 @@ class AppModule(baseObject.ScriptableObject):
 		# Sometimes (I.E. when NVDA starts) handle is 0, so stop if it is the case
 		if not self.processHandle:
 			raise RuntimeError("processHandle is 0")
-		# No need to worry about immersive (hosted) apps and friends until Windows 8.
-		if winVersion.getWinVer() >= winVersion.WIN8:
-			# Some apps such as File Explorer says it is an immersive process but error 15700 is shown.
-			# Therefore resort to file version info behavior because it is not a hosted app.
-			# Others such as Store version of Office are not truly hosted apps,
-			# yet returns an internal version anyway because they are converted desktop apps.
-			# For immersive apps, default implementation is generic - returns Windows version information.
-			# Thus probe package full name and parse the serialized representation of package info structure.
-			packageInfo = self._getImmersivePackageInfo()
-			if packageInfo is not None:
-				# Product name is of the form publisher.name for a hosted app.
-				productInfo = packageInfo.split("_")
-			else:
-				# File Explorer and friends which are really native aps.
-				productInfo = self._getExecutableFileInfo()
+		# Some apps such as File Explorer says it is an immersive process but error 15700 is shown.
+		# Therefore resort to file version info behavior because it is not a hosted app.
+		# Others such as Store version of Office are not truly hosted apps,
+		# yet returns an internal version anyway because they are converted desktop apps.
+		# For immersive apps, default implementation is generic - returns Windows version information.
+		# Thus probe package full name and parse the serialized representation of package info structure.
+		packageInfo = self._getImmersivePackageInfo()
+		if packageInfo is not None:
+			# Product name is of the form publisher.name for a hosted app.
+			productInfo = packageInfo.split("_")
 		else:
-			# Not only native apps, but also some converted desktop aps such as Office.
+			# File Explorer and friends which are really native aps.
+			# Also includes converted desktop apps such as Office.
 			productInfo = self._getExecutableFileInfo()
 		self.productName = productInfo[0]
 		self.productVersion = productInfo[1]
@@ -614,17 +610,13 @@ class AppModule(baseObject.ScriptableObject):
 	def _get_isWindowsStoreApp(self):
 		"""Whether this process is a Windows Store (immersive) process.
 		An immersive process is a Windows app that runs inside a Windows Runtime (WinRT) container.
-		These include Windows store apps on Windows 8 and 8.1,
-		and Universal Windows Platform (UWP) apps on Windows 10.
+		These include Windows store apps on Windows 8.1,
+		and Universal Windows Platform (UWP) apps on Windows 10 and later.
 		A special case is a converted desktop app distributed on Microsoft Store.
 		Not all immersive apps are packaged as a true Store app with a package info
 		e.g. File Explorer reports itself as immersive when it is not.
 		@rtype: bool
 		"""
-		if winVersion.getWinVer() < winVersion.WIN8:
-			# Windows Store/UWP apps were introduced in Windows 8.
-			self.isWindowsStoreApp = False
-			return False
 		# Package info is much more accurate than IsImmersiveProcess
 		# because IsImmersive Process returns nonzero for File Explorer
 		# and zero for Store version of Office.
