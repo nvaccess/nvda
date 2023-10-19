@@ -20,20 +20,18 @@ _APP_KEY_NAME = "nvda_nvda_v1"
 
 def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility."""
-	if NVDAState._allowDeprecatedAPI():
-		match attrName:
-			case "ROOT_KEY":
-				log.warning("ROOT_KEY is deprecated, use RegistryKey.ROOT instead.")
-				return RegistryKey.ROOT.value
-			case "APP_KEY_PATH":
-				log.warning("APP_KEY_PATH is deprecated, use RegistryKey.APP instead.")
-				return RegistryKey.APP.value
-			case"APP_KEY_NAME":
-				log.warning("APP_KEY_NAME is deprecated.")
-				return _APP_KEY_NAME
-			case "canConfigTerminateOnDesktopSwitch":
-				log.warning("canConfigTerminateOnDesktopSwitch is deprecated.")
-				return True
+	if attrName == "ROOT_KEY" and NVDAState._allowDeprecatedAPI():
+		log.warning("ROOT_KEY is deprecated, use RegistryKey.ROOT instead.")
+		return RegistryKey.ROOT.value
+	if attrName == "APP_KEY_PATH" and NVDAState._allowDeprecatedAPI():
+		log.warning("APP_KEY_PATH is deprecated, use RegistryKey.APP instead.")
+		return RegistryKey.APP.value
+	if attrName == "APP_KEY_NAME" and NVDAState._allowDeprecatedAPI():
+		log.warning("APP_KEY_NAME is deprecated.")
+		return _APP_KEY_NAME
+	if attrName == "canConfigTerminateOnDesktopSwitch" and NVDAState._allowDeprecatedAPI():
+		log.warning("canConfigTerminateOnDesktopSwitch is deprecated.")
+		return True
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
