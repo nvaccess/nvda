@@ -1757,15 +1757,15 @@ Key: ``NVDA+Ctrl+A``
 このコンボボックスにはシステムで利用可能な点字ディスプレイドライバーが表示されます。
 項目を移動するには矢印キーを押します。
 
-「自動」は接続された点字ディスプレイを自動的に探す機能です。
-「自動」が選択されていて、USB または Bluetooth で接続された点字ディスプレイが検出されたときには、NVDA は自動的にその点字ディスプレイに接続します。
+「自動設定」は接続された点字ディスプレイを自動的に探す機能です。
+「自動設定」が選択されていて、USB または Bluetooth で接続された点字ディスプレイが検出されたときには、NVDA は自動的にその点字ディスプレイに接続します。
 
 点字なしは、点字ディスプレイを使用しないことを意味します。
 
 サポートされている点字ディスプレイの一覧と、各機種の自動検出への対応状況については、[サポートされている点字ディスプレイ #SupportedBrailleDisplays]セクションを参照してください。
 
 ==== 点字ディスプレイの自動検出 ====[SelectBrailleDisplayAutoDetect]
-点字ディスプレイが「自動」に設定されている場合、このリスト内のチェックボックスを使用して、点字ディスプレイのドライバーごとに自動検出を有効または無効にできます。
+点字ディスプレイが「自動設定」の場合、このリスト内のチェックボックスを使用して、点字ディスプレイのドライバーごとに自動検出を有効または無効にできます。
 これにより、定期的に使用しない点字ディスプレイドライバーを除外できます。
 例えば、Baumドライバーに対応したディスプレイのみを所有している場合、Baumドライバーの自動検出を有効にして、他のドライバーは無効にできます。
 
@@ -3004,7 +3004,7 @@ NVDAが自動検出できる点字ディスプレイは以下の通りです。
 
 ++ Freedom Scientific Focus/PAC Mateシリーズ ++[FreedomScientificFocus]
 すべてのUSBまたはBluetooth接続された [Freedom Scientific https://www.freedomscientific.com/] Focus および PAC Mate 点字ディスプレイをサポートしています。
-使用するには、Freedom Scientific社製の点字ディスプレイ用ドライバーが必要です。
+使用するには、Freedom Scientificの点字ディスプレイ用ドライバーが必要です。
 お持ちでない場合は、 https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp から入手できます。
 このページではFocus Blueディスプレイにしか言及していませんが、これらのドライバーはすべてのFreedom Scientific Focus/PAC Mate 点字ディスプレイをサポートしています。
 
@@ -3075,7 +3075,7 @@ Focus 80 のみ:
 %kc:endInclude
 
 ++ Optelec ALVA 6 series/protocol converter ++[OptelecALVA]
-USBまたはBluetooth接続された[Optelec https://www.optelec.com/]社製のALVA BC640およびBC680ディスプレイの両方をサポートします。
+USBまたはBluetooth接続された[Optelec https://www.optelec.com/]のALVA BC640およびBC680ディスプレイの両方をサポートします。
 Braille Voyager などの旧式ディスプレイを、 Optelec 社のプロトコルコンバーター経由で接続することもできます。
 これらのディスプレイを使用するために、特別なドライバーは必要ありません。
 ディスプレイを接続して、NVDAでそれが使用できるように設定するだけです。
@@ -3161,7 +3161,7 @@ USB、シリアルポート、Bluetoothで接続できる多くの[Handy Tech ht
 %kc:endInclude
 
 ++ MDV Lilli ++[MDVLilli]
-[MDV https://www.mdvbologna.it/]社製のLilliディスプレイをサポートしています。
+[MDV https://www.mdvbologna.it/]のLilliディスプレイをサポートしています。
 これらのディスプレイを使用するために、特別なドライバーは必要ありません。
 ディスプレイを接続して、NVDAでそれが使用できるように設定するだけです。
 
@@ -3190,7 +3190,7 @@ USB, Bluetooth またはシリアルポートで接続される[Baum https://www
 - APH: Refreshabraille
 - Orbit: Orbit Reader 20
 -
-その他のいくつかのBaum社製ディスプレイでも動作する可能性がありますが、テストは行っていません。
+その他のいくつかのBaumのディスプレイでも動作する可能性がありますが、テストは行っていません。
 
 HID非対応のディスプレイをUSB接続する場合は、ディスプレイの製造元が提供するUSBドライバーを事前にインストールしてください。
 VarioUltra と Pronto! はHIDを使用します。
@@ -3228,7 +3228,7 @@ USB HID モードはその他の環境でも利用できます。
 %kc:endInclude
 
 ++ hedo ProfiLine USB ++[HedoProfiLine]
-[hedo Reha-Technik https://www.hedo.de/]製のhedo ProfiLine USBに対応しました。
+[hedo Reha-Technik https://www.hedo.de/]のhedo ProfiLine USBに対応しました。
 最初に、製造元から提供されているUSBドライバーをインストールする必要があります。
 
 この機種では点字ディスプレイの自動検出は利用できません。
@@ -3247,7 +3247,7 @@ USB HID モードはその他の環境でも利用できます。
 %kc:endInclude
 
 ++ hedo MobilLine USB ++[HedoMobilLine]
-[hedo Reha-Technik https://www.hedo.de/]製のhedo MobilLine USBがサポートされました。
+[hedo Reha-Technik https://www.hedo.de/]のhedo MobilLine USBがサポートされました。
 最初に、製造元から提供されているUSBドライバーをインストールする必要があります。
 
 この機種では点字ディスプレイの自動検出は利用できません。
@@ -3265,8 +3265,8 @@ USB HID モードはその他の環境でも利用できます。
 | すべて読み上げ | B6 |
 %kc:endInclude
 
-++ HumanWare製Brailliant BI/Bシリーズ / BrailleNote Touch ++[HumanWareBrailliant]
-USBまたはBluetooth接続された[HumanWare https://www.humanware.com/]製の BI 14, BI 32, BI 20X, BI 40, BI 40X および B 80 を含むBrailliant BI および B シリーズのディスプレイに対応しています。
+++ HumanWare Brailliant BI/Bシリーズ / BrailleNote Touch ++[HumanWareBrailliant]
+USBまたはBluetooth接続された[HumanWare https://www.humanware.com/]の BI 14, BI 32, BI 20X, BI 40, BI 40X および B 80 を含むBrailliant BI および B シリーズのディスプレイに対応しています。
 USB接続で HumanWare プロトコルを使用する場合は、事前に製造元から提供されたUSBドライバーをインストールする必要があります。
 プロトコルとして OpenBraille を使用する場合は USB ドライバーは不要です。
 
@@ -3322,7 +3322,7 @@ USB接続で HumanWare プロトコルを使用する場合は、事前に製造
 | Enterキー | ジョイスティック アクション |
 %kc:endInclude
 
-++ HIMS製 Braille Sense/Braille EDGE/Smart Beetle/Sync Braille シリーズ ++[Hims]
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille シリーズ ++[Hims]
 [HIMS https://www.hims-inc.com/] 社の Braille Sense, Braille EDGE, Smart Beetle および Sync Braille ディスプレイを USB または Bluetooth で接続すれば NVDA で利用できます。
 USB 接続のときは HIMS 社が提供する USB ドライバーをインストールしておく必要があります。
 USB ドライバーのダウンロード: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
