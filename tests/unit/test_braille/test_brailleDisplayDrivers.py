@@ -171,7 +171,6 @@ class TestGestureMap(unittest.TestCase):
 class TestBRLTTY(unittest.TestCase):
 	"""Tests the integrity of the bundled brlapi module."""
 
-	@unittest.skip("BRLAPI is temporarily unavailable in NVDA alpha during the python upgrade for 2024.1")
 	def test_brlapi(self):
 		try:
 			# SUpress Flake8 F401 imported but unused, as we're testing the import
