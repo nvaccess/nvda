@@ -33,6 +33,8 @@ This option now announces additional relevant information about an object when t
 - In LibreOffice, words deleted using the ``control+backspace`` keyboard shortcut are now also properly announced when the deleted word is followed by whitespace (like spaces and tabs). (#15436)
 - In LibreOffice, announcement of the status bar using the ``NVDA+end`` keyboard shortcut now also works for dialogs in LibreOffice version 24.2 and newer. (#15591)
 - In Microsoft Excel with UIA disabled, braille is updated, and the active cell content is spoken, when ``control+y``, ``control+z`` or ``alt+backspace`` is pressed. (15547)
+- In Microsoft Word with UIA disabled braille is updated when ``control+v``, ``control+x``, ``control+y``, ``control+z``, ``alt+backspace``, ``backspace`` or ``control+backspace`` is pressed.
+It is also updated with UIA enabled, when typing text and braille is tethered to review and review follows caret. (#3276)
 -
 
 == Changes for Developers ==
@@ -52,6 +54,7 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
   - configobj to 5.1.0dev commit e2ba4457. (#15544)
   - Comtypes to 1.2.0. (#15513, @codeofdusk)
   - fast_diff_match_patch to 2.0.1. (#15514, @codeofdusk)
+  - Flake8 to 4.0.1. (#15636, @lukaszgo1)
   - py2exe to 0.13.0.1dev commit 4e7b2b2c60face592e67cb1bc935172a20fa371d. (#15544) 
   - robotframework to 6.1.1. (#15544)
   - SCons to 4.5.2. (#15529)
@@ -73,7 +76,39 @@ That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices``
 - ``IoThread.autoDeleteApcReference`` has been removed. (#14924, @LeonarddeR)
 - To support capital pitch changes, synthesizers must now explicitly declare their support for the ``PitchCommand`` in the ``supportedCommands`` attribute on the driver. (#15433, @LeonarddeR)
 - ``speechDictHandler.speechDictVars`` has been removed. Use ``NVDAState.WritePaths.speechDictsDir`` instead of ``speechDictHandler.speechDictVars.speechDictsPath``. (#15614, @lukaszgo1)
+- ``languageHandler.makeNpgettext`` and ``languageHandler.makePgettext`` have been removed.
+``npgettext`` and ``pgettext`` are supported natively now. (#15546)
+% Insert new list items here as the alias appModule table should be kept at the bottom of this list
+- The following app modules are removed.
+Code which imports from one of them, should instead import from the replacement module.  (#15618, @lukaszgo1)
 -
+
+|| Removed module name | Replacement module |
+| ``azardi-2.0`` | ``azardi20`` |
+| ``azuredatastudio`` | ``code`` |
+| ``azuredatastudio-insiders`` | ``code`` |
+| ``calculatorapp`` | ``calculator`` |
+| ``code - insiders`` | ``code`` |
+| ``commsapps`` | ``hxmail`` |
+| ``dbeaver`` | ``eclipse`` |
+| ``digitaleditionspreview`` | ``digitaleditions`` |
+| ``esybraille`` | ``esysuite`` |
+| ``hxoutlook`` | ``hxmail`` |
+| ``miranda64`` | ``miranda32`` |
+| ``mpc-hc`` | ``mplayerc`` |
+| ``mpc-hc64`` | ``mplayerc`` |
+| ``notepad++`` | ``notepadPlusPlus`` |
+| ``searchapp`` | ``searchui`` |
+| ``searchhost`` | ``searchui`` |
+| ``springtoolsuite4`` | ``eclipse`` |
+| ``sts`` | ``eclipse`` |
+| ``teamtalk3`` | ``teamtalk4classic`` |
+| ``textinputhost`` | ``windowsinternal_composableshell_experiences_textinput_inputapp`` |
+| ``totalcmd64`` | ``totalcmd`` |
+| ``win32calc`` | ``calc`` |
+| ``winmail`` | ``msimn`` |
+| ``zend-eclipse-php`` | ``eclipse`` |
+| ``zendstudio`` | ``eclipse`` |
 
 === Deprecations ===
 
@@ -288,6 +323,7 @@ eSpeak-NG, LibLouis braille translator, and Unicode CLDR have been updated.
 - Script for reporting the destination of a link now reports from the caret / focus position rather than the navigator object. (#14659)
 - Portable copy creation no longer requires that a drive letter be entered as part of the absolute path. (#14680)
 - If Windows is configured to display seconds in the system tray clock, using ``NVDA+f12`` to report the time now honors that setting. (#14742)
+- NVDA will now report unlabeled groupings that have useful position information, such as in recent versions of Microsoft Office 365 menus. (#14878)
 -
 
 

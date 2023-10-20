@@ -355,9 +355,9 @@ Portable and temporary copies of NVDA have the following restrictions:
 - The inability to automatically start during and/or after log-on.
 - The inability to interact with applications running with administrative privileges, unless of course NVDA itself has been run also with these privileges (not recommended).
 - The inability to read User Account Control (UAC) screens when trying to start an application with administrative privileges.
-- Windows 8 and later: the inability to support input from a touchscreen.
-- Windows 8 and later: the inability to provide features such as browse mode and speaking of typed characters in Windows Store apps.
-- Windows 8 and later: audio ducking is not supported.
+- The inability to support input from a touchscreen.
+- The inability to provide features such as browse mode and speaking of typed characters in Windows Store apps.
+- Audio ducking is not supported.
 -
 
 
@@ -419,7 +419,7 @@ Although most laptops do not have a physical numpad, some laptops can emulate on
 If your laptop cannot do this or does not allow you to turn Num Lock off, you may want to switch to the Laptop layout instead.
 
 ++ NVDA Touch Gestures ++[NVDATouchGestures]
-If you are running NVDA on a device with a touchscreen and running Windows 8 or higher, you can also control NVDA directly via touch commands.
+If you are running NVDA on a device with a touchscreen, you can also control NVDA directly via touch commands.
 While NVDA is running, unless touch interaction support is disabled, all touch input will go directly to NVDA.
 Therefore, actions that can be performed normally without NVDA will not work.
 %kc:beginInclude
@@ -1985,7 +1985,7 @@ This option is unchecked by default.
 If you check this option and you have the "Enable mouse tracking" option enabled, NVDA will not announce what is under the mouse if the mouse is moved by another application.
 
 +++ Touch Interaction +++[TouchInteraction]
-This settings category, only available on computers running Windows 8 and later with touch capabilities, allows you to configure how NVDA interacts with touchscreens.
+This settings category, only available on computers with touch capabilities, allows you to configure how NVDA interacts with touchscreens.
 This category contains the following options:
 
 ==== Enable touch interaction support ====[TouchSupportEnable]
