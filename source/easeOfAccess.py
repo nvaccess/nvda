@@ -13,7 +13,6 @@ from logHandler import log
 import NVDAState
 import winreg
 import winUser
-import winVersion
 
 
 # Windows >= 8
@@ -77,8 +76,8 @@ def notify(signal):
 	for vk in winUser.VK_SHIFT, winUser.VK_CONTROL, winUser.VK_MENU:
 		if winUser.getAsyncKeyState(vk) & 32768:
 			keys.append((vk, False))
-	keys.append((0x5B, True)) # leftWindows
-	keys.append((0x55, True)) # u
+	keys.append((0x5B, True))  # leftWindows
+	keys.append((0x55, True))  # u
 	inputs = []
 	# Release unwanted keys and press desired keys.
 	for vk, desired in keys:
@@ -170,5 +169,7 @@ def setAutoStart(autoStartContext: AutoStartContext, enable: bool) -> None:
 			0,
 			winreg.KEY_READ | winreg.KEY_WRITE | winreg.KEY_WOW64_64KEY
 		)
-		winreg.SetValueEx(k, "Configuration", None, winreg.REG_SZ,
-			",".join(conf))
+		winreg.SetValueEx(
+			k, "Configuration", None, winreg.REG_SZ,
+			",".join(conf)
+		)
