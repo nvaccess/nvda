@@ -217,4 +217,4 @@ def isFullScreenMagnificationAvailable() -> bool:
 	WOW64 applications such as NVDA. For our usages, support has been added since Windows 8, relying on our
 	testing our specific usage of the API with each Windows version since Windows 8
 	"""
-	return getWinVer() >= WIN8
+	return getWinVer() >= WIN81
