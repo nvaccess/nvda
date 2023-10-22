@@ -478,20 +478,6 @@ class AppModule(appModuleHandler.AppModule):
 			obj.presentationType=obj.presType_layout
 			return
 
-		if windowClass == "DirectUIHWND" and role == controlTypes.Role.LIST:
-			# Is this a list containing search results in Windows 7 start menu?
-			isWin7SearchResultsList = False
-			try:
-				if obj.parent and obj.parent.parent:
-					parent = obj.parent.parent.parent
-					isWin7SearchResultsList = parent is not None and parent.windowClassName == "Desktop Search Open View"
-			except AttributeError:
-				isWin7SearchResultsList = False
-			if isWin7SearchResultsList:
-				# Namae of this list is not useful and should be  discarded.
-				obj.name = None
-				return
-
 	def event_gainFocus(self, obj, nextHandler):
 		wClass = obj.windowClassName
 		if wClass == "ToolbarWindow32" and obj.role == controlTypes.Role.MENUITEM and obj.parent.role == controlTypes.Role.MENUBAR and eventHandler.isPendingEvents("gainFocus"):
