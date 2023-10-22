@@ -75,11 +75,8 @@ class SysListView32EmittingDuplicateFocusEvents(IAccessible):
 		focus = eventHandler.lastQueuedFocusObject
 		if (
 			type(focus) != type(self)
-			or (
-				self.event_windowHandle, self.event_objectID, self.event_childID
-			) != (
-				focus.event_windowHandle, focus.event_objectID, focus.event_childID
-			)
+			or (self.event_windowHandle, self.event_objectID, self.event_childID)
+			!= (focus.event_windowHandle, focus.event_objectID, focus.event_childID)
 		):
 			return True
 		return False
