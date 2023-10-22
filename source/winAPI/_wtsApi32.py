@@ -13,11 +13,7 @@ This file refers to this header with the convention `WtsApi32.h#L36` meaning lin
 from enum import (
 	IntEnum,
 )
-from typing import (
-	Callable,
-	Union,
-	Type,
-)
+from typing import Callable
 import ctypes  # Use for ctypes.Union to prevent name collision with typing.Union
 from ctypes import (
 	windll,
@@ -35,7 +31,6 @@ from ctypes.wintypes import (
 	LPWSTR,
 	BOOL,
 )
-import winVersion
 
 
 WTS_CURRENT_SERVER_HANDLE = HANDLE(0)
