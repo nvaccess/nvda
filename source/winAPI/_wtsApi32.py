@@ -214,13 +214,13 @@ class _WTS_LockState_Win7(IntEnum):
 	"""The session is unlocked."""
 
 
-def _setWTS_LockState() -> Type[Union[_WTS_LockState, _WTS_LockState_Win7]]:
+def _setWTS_LockState() -> _WTS_LockState:
 	""" Ensure that the correct values for WTS_SESSIONSTATE_LOCK are used based on the platform.
 	"""
-	return _WTS_LockState_Win7 if (winVersion.getWinVer() < winVersion.WIN8) else _WTS_LockState
+	return _WTS_LockState
 
 
-WTS_LockState: Type[Union[_WTS_LockState, _WTS_LockState_Win7]] = _setWTS_LockState()
+WTS_LockState: _WTS_LockState = _setWTS_LockState()
 """
 Set of known session states that NVDA can handle.
 These values are different on different versions of Windows.
