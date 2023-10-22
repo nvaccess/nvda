@@ -20,6 +20,7 @@ from _addonStore.models.status import (
 	_statusFilters,
 	_StatusFilterKey,
 )
+import config
 from core import callLater
 import globalVars
 import gui
@@ -27,26 +28,33 @@ from gui import (
 	guiHelper,
 	addonGui,
 )
-from gui.message import DisplayableError
+from gui.message import DisplayableError, displayDialogAsModal
 from gui.settingsDialogs import SettingsDialog
 from logHandler import log
 
 from ..viewModels.store import AddonStoreVM
-from .actions import _ActionsContextMenu
+from .actions import _MonoActionsContextMenu
 from .addonList import AddonVirtualList
 from .details import AddonDetails
+from .messageDialogs import _SafetyWarningDialog
 
 
 class AddonStoreDialog(SettingsDialog):
 	# Translators: The title of the addonStore dialog where the user can find and download add-ons
 	title = pgettext("addonStore", "Add-on Store")
-	helpId = "addonStore"
+	# For the Add-on Store paragraph in the User Guide, we have kept "AddonsManager" anchor instead of something
+	# more adapted like "AddonStore" so that old external links pointing to the add-ons manager paragraph now
+	# point to the Add-on Store one.
+	helpId = "AddonsManager"
 
 	def __init__(self, parent: wx.Window, storeVM: AddonStoreVM):
 		self._storeVM = storeVM
 		self._storeVM.onDisplayableError.register(self.handleDisplayableError)
-		self._actionsContextMenu = _ActionsContextMenu(self._storeVM)
+		self._actionsContextMenu = _MonoActionsContextMenu(self._storeVM)
 		super().__init__(parent, resizeable=True, buttons={wx.CLOSE})
+		if config.conf["addonStore"]["showWarning"]:
+			displayDialogAsModal(_SafetyWarningDialog(parent))
+		self.Maximize()
 
 	def _enterActivatesOk_ctrlSActivatesApply(self, evt: wx.KeyEvent):
 		"""Disables parent behaviour which overrides behaviour for enter and ctrl+s"""
@@ -57,15 +65,7 @@ class AddonStoreDialog(SettingsDialog):
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
 		if globalVars.appArgs.disableAddons:
-			self.banner = BannerWindow(self, dir=wx.TOP)
-			self.banner.SetText(
-				# Translators: Banner notice that is displayed in the Add-on Store.
-				pgettext("addonStore", "Note: NVDA was started with add-ons disabled"),
-				"",
-			)
-			normalBgColour = self.GetBackgroundColour()
-			self.banner.SetGradient(normalBgColour, normalBgColour)
-			settingsSizer.Add(self.banner, flag=wx.CENTER)
+			self._makeBanner()
 
 		splitViewSizer = wx.BoxSizer(wx.HORIZONTAL)
 
@@ -94,13 +94,11 @@ class AddonStoreDialog(SettingsDialog):
 
 		settingsSizer.Add(splitViewSizer, flag=wx.EXPAND, proportion=1)
 
-		# add a label for the AddonListVM so that it is announced with a name in NVDA
 		self.listLabel = wx.StaticText(self)
 		tabPageHelper.addItem(
 			self.listLabel,
 			flag=wx.EXPAND
 		)
-		self.listLabel.Hide()
 		self._setListLabels()
 
 		self.addonListView = AddonVirtualList(
@@ -109,12 +107,6 @@ class AddonStoreDialog(SettingsDialog):
 			actionsContextMenu=self._actionsContextMenu,
 		)
 		self.bindHelpEvent("AddonStoreBrowsing", self.addonListView)
-		# Add alt+l accelerator key
-		_setFocusToAddonListView_eventId = wx.NewIdRef(count=1)
-		self.Bind(wx.EVT_MENU, lambda e: self.addonListView.SetFocus(), _setFocusToAddonListView_eventId)
-		self.SetAcceleratorTable(wx.AcceleratorTable([
-			wx.AcceleratorEntry(wx.ACCEL_ALT, ord("l"), _setFocusToAddonListView_eventId)
-		]))
 		tabPageHelper.addItem(self.addonListView, flag=wx.EXPAND, proportion=1)
 		splitViewSizer.AddSpacer(5)
 
@@ -137,6 +129,18 @@ class AddonStoreDialog(SettingsDialog):
 		settingsSizer.Add(generalActions.sizer)
 		self.onListTabPageChange(None)
 
+	def _makeBanner(self):
+		self.banner = BannerWindow(self, dir=wx.TOP)
+		# Translators: Banner notice that is displayed in the Add-on Store.
+		bannerText = pgettext("addonStore", "Note: NVDA was started with add-ons disabled")
+		self.banner.SetText(
+			bannerText,
+			"",
+		)
+		normalBgColour = self.GetBackgroundColour()
+		self.banner.SetGradient(normalBgColour, normalBgColour)
+		self.settingsSizer.Add(self.banner, flag=wx.CENTER)
+
 	def _createFilterControls(self):
 		filterCtrlsLine0 = guiHelper.BoxSizerHelper(self, wx.HORIZONTAL)
 		filterCtrlsLine1 = guiHelper.BoxSizerHelper(self, wx.HORIZONTAL)
@@ -158,7 +162,7 @@ class AddonStoreDialog(SettingsDialog):
 		self.bindHelpEvent("AddonStoreFilterChannel", self.channelFilterCtrl)
 
 		# Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
-		incompatibleAddonsLabel = _("Include &incompatible add-ons")
+		incompatibleAddonsLabel = pgettext("addonStore", "Include &incompatible add-ons")
 		self.includeIncompatibleCtrl = cast(wx.CheckBox, filterCtrlsLine0.addItem(
 			wx.CheckBox(self, label=incompatibleAddonsLabel)
 		))
@@ -240,7 +244,13 @@ class AddonStoreDialog(SettingsDialog):
 				).format(len(addonDataManager._downloadsPendingInstall))
 			)
 			self._storeVM.installPending()
-			wx.CallAfter(installingDialog.done)
+
+			def postInstall():
+				installingDialog.done()
+				# let the dialog exit.
+				super(AddonStoreDialog, self).onClose(evt)
+
+			return wx.CallAfter(postInstall)
 
 		# let the dialog exit.
 		super().onClose(evt)
@@ -274,14 +284,19 @@ class AddonStoreDialog(SettingsDialog):
 
 	@property
 	def _titleText(self) -> str:
-		return f"{self.title} - {self._listLabelText}"
+		return f"{self.title} - {self._statusFilterKey.displayString} ({self._channelFilterKey.displayString})"
 
 	@property
 	def _listLabelText(self) -> str:
-		return f"{self._channelFilterKey.displayString} {self._statusFilterKey.displayString}"
+		return pgettext(
+			"addonStore",
+			# Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
+			# tab's name.
+			"{category}:",
+		).format(category=self._statusFilterKey.displayStringWithAccelerator)
 
 	def _setListLabels(self):
-		self.listLabel.SetLabelText(self._listLabelText)
+		self.listLabel.SetLabel(self._listLabelText)
 		self.SetTitle(self._titleText)
 
 	def _toggleFilterControls(self):
@@ -302,6 +317,8 @@ class AddonStoreDialog(SettingsDialog):
 			self.includeIncompatibleCtrl.Disable()
 
 	def onListTabPageChange(self, evt: wx.EVT_CHOICE):
+		self.searchFilterCtrl.SetValue("")
+
 		self._storeVM._filterEnabledDisabled = EnabledStatus.ALL
 		self.enabledFilterCtrl.SetSelection(0)
 
@@ -350,7 +367,7 @@ class AddonStoreDialog(SettingsDialog):
 			defaultDir="c:",
 			style=wx.FD_OPEN,
 		)
-		if fd.ShowModal() != wx.ID_OK:
+		if displayDialogAsModal(fd) != wx.ID_OK:
 			return
 		addonPath = fd.GetPath()
 		try:

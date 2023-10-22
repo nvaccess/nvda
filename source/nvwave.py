@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2021 NV Access Limited, Aleksey Sadovoy, Cyrille Bougot, Peter Vágner, Babbage B.V.,
-# Leonard de Ruijter
+# Copyright (C) 2007-2023 NV Access Limited, Aleksey Sadovoy, Cyrille Bougot, Peter Vágner, Babbage B.V.,
+# Leonard de Ruijter, James Teh
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -12,8 +12,8 @@ import typing
 from typing import (
 	Optional,
 	Callable,
-	NamedTuple,
 )
+from enum import Enum, auto
 from ctypes import (
 	windll,
 	POINTER,
@@ -36,10 +36,11 @@ from ctypes.wintypes import (
 	UINT,
 	LPUINT
 )
-from comtypes import HRESULT, BSTR, GUID
+from comtypes import HRESULT, BSTR
 from comtypes.hresult import S_OK
 import atexit
 import weakref
+import time
 import garbageHandler
 import winKernel
 import wave
@@ -48,6 +49,7 @@ from logHandler import log
 import os.path
 import extensionPoints
 import NVDAHelper
+import core
 
 
 __all__ = (
@@ -149,26 +151,11 @@ def _isDebugForNvWave():
 	return config.conf["debugLog"]["nvwave"]
 
 
-class AudioSession(NamedTuple):
-	"""Identifies an audio session.
-	An audio session may contain multiple streams. The guid identifies the
-	session. The name is shown in the system Volume Mixer.
+class AudioPurpose(Enum):
+	"""The purpose of a particular stream of audio.
 	"""
-	guid: GUID
-	name: str
-
-
-#: The audio session to use by default.
-defaultSession = AudioSession(
-	GUID("{C302B781-00AF-4ECC-ACB7-7DF16AF7D55E}"),
-	"NVDA"
-)
-#: The audio session to use for sounds.
-soundsSession = AudioSession(
-	GUID("{A560CE90-E9D9-44AF-8C3C-0D9734642D48}"),
-	# Translators: Shown in the system Volume Mixer for controlling NVDA sounds.
-	_("NVDA sounds")
-)
+	SPEECH = auto()
+	SOUNDS = auto()
 
 
 class WinmmWavePlayer(garbageHandler.TrackedObject):
@@ -220,7 +207,7 @@ class WinmmWavePlayer(garbageHandler.TrackedObject):
 			closeWhenIdle: bool = False,
 			wantDucking: bool = True,
 			buffered: bool = False,
-			session: AudioSession = defaultSession,
+			purpose: AudioPurpose = AudioPurpose.SPEECH,
 		):
 		"""Constructor.
 		@param channels: The number of channels of audio; e.g. 2 for stereo, 1 for mono.
@@ -715,7 +702,7 @@ def playWaveFile(
 		bitsPerSample=f.getsampwidth() * 8,
 		outputDevice=config.conf["speech"]["outputDevice"],
 		wantDucking=False,
-		session=soundsSession
+		purpose=AudioPurpose.SOUNDS
 	)
 
 	def play():
@@ -774,10 +761,13 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 	#: This allows us to have a single callback in the class rather than on
 	#: each instance, which prevents reference cycles.
 	_instances = weakref.WeakValueDictionary()
-	#: The previous value of the soundVolumeFollowsVoice setting. This is used to
-	#: determine when this setting has been disabled when it was previously
-	#: enabled.
-	_prevSoundVolFollow: bool = False
+	#: How long (in seconds) to wait before indicating that an audio stream that
+	#: hasn't played is idle.
+	_IDLE_TIMEOUT: int = 10
+	#: How often (in ms) to check whether streams are idle.
+	_IDLE_CHECK_INTERVAL: int = 5000
+	#: Whether there is a pending stream idle check.
+	_isIdleCheckPending: bool = False
 
 	def __init__(
 			self,
@@ -788,7 +778,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			closeWhenIdle: bool = False,
 			wantDucking: bool = True,
 			buffered: bool = False,
-			session: AudioSession = defaultSession,
+			purpose: AudioPurpose = AudioPurpose.SPEECH,
 	):
 		"""Constructor.
 		@param channels: The number of channels of audio; e.g. 2 for stereo, 1 for mono.
@@ -799,7 +789,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		@param closeWhenIdle: Deprecated; ignored.
 		@param wantDucking: if true then background audio will be ducked on Windows 8 and higher
 		@param buffered: Whether to buffer small chunks of audio to prevent audio glitches.
-		@param session: The audio session which should be used.
+		@param purpose: The purpose of this audio.
 		@note: If C{outputDevice} is a name and no such device exists, the default device will be used.
 		@raise WindowsError: If there was an error opening the audio output device.
 		"""
@@ -818,14 +808,17 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			import audioDucking
 			if audioDucking.isAudioDuckingSupported():
 				self._audioDucker = audioDucking.AudioDucker()
-		self._session = session
+		self._purpose = purpose
 		self._player = NVDAHelper.localLib.wasPlay_create(
 			self._deviceNameToId(outputDevice),
 			format,
-			WasapiWavePlayer._callback, session.guid, session.name)
+			WasapiWavePlayer._callback
+		)
 		self._doneCallbacks = {}
 		self._instances[self._player] = self
 		self.open()
+		self._lastActiveTime: typing.Optional[float] = None
+		self._isPaused: bool = False
 
 	@wasPlay_callback
 	def _callback(cppPlayer, feedId):
@@ -862,10 +855,10 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			WavePlayer.audioDeviceError_static = True
 			raise
 		WasapiWavePlayer.audioDeviceError_static = False
-		self._sessionVolumeFollow()
+		self._setVolumeFromConfig()
 
 	def close(self):
-		"""For WASAPI, this just stops playback.
+		"""Close the output device.
 		"""
 		self.stop()
 
@@ -886,9 +879,12 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		@param onDone: Function to call when this chunk has finished playing.
 		@raise WindowsError: If there was an error playing the audio.
 		"""
+		self.open()
 		if self._audioDucker:
 			self._audioDucker.enable()
 		feedId = c_uint() if onDone else None
+		# Never treat this instance as idle while we're feeding.
+		self._lastActiveTime = None
 		NVDAHelper.localLib.wasPlay_feed(
 			self._player,
 			data,
@@ -897,6 +893,8 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		)
 		if onDone:
 			self._doneCallbacks[feedId.value] = onDone
+		self._lastActiveTime = time.time()
+		self._scheduleIdleCheck()
 
 	def sync(self):
 		"""Synchronise with playback.
@@ -906,7 +904,6 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 
 	def idle(self):
 		"""Indicate that this player is now idle; i.e. the current continuous segment  of audio is complete.
-		For WASAPI, this just calls L{sync}.
 		"""
 		self.sync()
 		if self._audioDucker:
@@ -918,8 +915,10 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		if self._audioDucker:
 			self._audioDucker.disable()
 		NVDAHelper.localLib.wasPlay_stop(self._player)
+		self._lastActiveTime = None
+		self._isPaused = False
 		self._doneCallbacks = {}
-		self._sessionVolumeFollow()
+		self._setVolumeFromConfig()
 
 	def pause(self, switch: bool):
 		"""Pause or unpause playback.
@@ -934,28 +933,93 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			NVDAHelper.localLib.wasPlay_pause(self._player)
 		else:
 			NVDAHelper.localLib.wasPlay_resume(self._player)
+			# If self._lastActiveTime is None, either no audio has been fed yet or audio
+			# is currently being fed. Either way, we shouldn't touch it.
+			if self._lastActiveTime:
+				self._lastActiveTime = time.time()
+				self._scheduleIdleCheck()
+		self._isPaused = switch
 
-	def setSessionVolume(self, level: float):
-		"""Set the volume for the audio session.
-		This sets the volume for all streams in this session, not just the stream
-		associated with this WavePlayer instance.
+	def setVolume(
+			self,
+			*,
+			all: Optional[float] = None,
+			left: Optional[float] = None,
+			right: Optional[float] = None
+	):
+		"""Set the volume of one or more channels in this stream.
+		Levels must be specified as a number between 0 and 1.
+		@param all: The level to set for all channels.
+		@param left: The level to set for the left channel.
+		@param right: The level to set for the right channel.
 		"""
-		NVDAHelper.localLib.wasPlay_setSessionVolume(self._player, c_float(level))
+		if all is None and left is None and right is None:
+			raise ValueError("At least one of all, left or right must be specified")
+		if all is not None:
+			if left is not None or right is not None:
+				raise ValueError("all specified, so left and right must not be specified")
+			left = right = all
+		NVDAHelper.localLib.wasPlay_setChannelVolume(self._player, 0, c_float(left))
+		NVDAHelper.localLib.wasPlay_setChannelVolume(self._player, 1, c_float(right))
 
-	def _sessionVolumeFollow(self):
-		if self._session is not soundsSession:
+	def _setVolumeFromConfig(self):
+		if self._purpose is not AudioPurpose.SOUNDS:
 			return
-		follow = config.conf["audio"]["soundVolumeFollowsVoice"]
-		if not follow and WavePlayer._prevSoundVolFollow:
-			# Following was disabled. Reset the sound volume to maximum.
-			self.setSessionVolume(1.0)
-		WavePlayer._prevSoundVolFollow = follow
-		if not follow:
-			return
-		import synthDriverHandler
-		synth = synthDriverHandler.getSynth()
-		if synth and synth.isSupported("volume"):
-			self.setSessionVolume(synth.volume / 100)
+		volume = config.conf["audio"]["soundVolume"]
+		if config.conf["audio"]["soundVolumeFollowsVoice"]:
+			import synthDriverHandler
+			synth = synthDriverHandler.getSynth()
+			if synth and synth.isSupported("volume"):
+				volume = synth.volume
+		self.setVolume(all=volume / 100)
+
+	@classmethod
+	def _scheduleIdleCheck(cls):
+		if not cls._isIdleCheckPending:
+			try:
+				core.callLater(
+					cls._IDLE_CHECK_INTERVAL,
+					cls._idleCheck
+				)
+			except core.NVDANotInitializedError:
+				# This can happen when playing the start sound. We close the stream after
+				# playing a sound anyway, so it's okay that this first idle check doesn't
+				# run.
+				pass
+			cls._isIdleCheckPending = True
+
+	@classmethod
+	def _idleCheck(cls):
+		"""Check whether there are open audio streams that should be considered
+		idle. If there are any, stop them. If there are open streams that
+		aren't idle yet, schedule another check.
+		This is necessary because failing to stop streams can prevent sleep on some
+		systems.
+		We do this in a single, class-wide check rather than separately for each
+		instance to avoid continually resetting a timer for each call to feed().
+		Resetting timers from another thread involves queuing to the main thread.
+		Doing that for every chunk of audio would not be very efficient.
+		Doing this with a class-wide check means that some checks might not take any
+		action and some streams might be stopped a little after the timeout elapses,
+		but this isn't problematic for our purposes.
+		"""
+		cls._isIdleCheckPending = False
+		threshold = time.time() - cls._IDLE_TIMEOUT
+		stillActiveStream = False
+		for player in cls._instances.values():
+			if not player._lastActiveTime or player._isPaused:
+				# Either no audio has been fed yet, audio is currently being fed or the
+				# player is paused. Don't treat this player as idle.
+				continue
+			if player._lastActiveTime <= threshold:
+				NVDAHelper.localLib.wasPlay_idle(player._player)
+				player._lastActiveTime = None
+			else:
+				stillActiveStream = True
+		if stillActiveStream:
+			# There's still at least one active stream that wasn't idle.
+			# Schedule another check here in case feed isn't called for a while.
+			cls._scheduleIdleCheck()
 
 	@staticmethod
 	def _getDevices():
@@ -988,39 +1052,25 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 
 def initialize():
 	global WavePlayer
-	if not config.conf["audio"]["wasapi"]:
+	if not config.conf["audio"]["WASAPI"]:
 		return
 	WavePlayer = WasapiWavePlayer
 	NVDAHelper.localLib.wasPlay_create.restype = c_void_p
 	for func in (
 		NVDAHelper.localLib.wasPlay_startup,
-		NVDAHelper.localLib.wasPlay_open,
 		NVDAHelper.localLib.wasPlay_feed,
 		NVDAHelper.localLib.wasPlay_stop,
 		NVDAHelper.localLib.wasPlay_sync,
+		NVDAHelper.localLib.wasPlay_idle,
 		NVDAHelper.localLib.wasPlay_pause,
 		NVDAHelper.localLib.wasPlay_resume,
-		NVDAHelper.localLib.wasPlay_setSessionVolume,
+		NVDAHelper.localLib.wasPlay_setChannelVolume,
 		NVDAHelper.localLib.wasPlay_getDevices,
 	):
 		func.restype = HRESULT
 		func.errcheck = _wasPlay_errcheck
 	NVDAHelper.localLib.wasPlay_startup()
-	try:
-		# Some audio clients won't specify a session; e.g. speech synthesizers which
-		# use their own audio output code rather than nvwave. We don't want these to
-		# end up in the wrong session, so we set a specific default session. To do
-		# that, first create a stream in that session (defaultSession).
-		WasapiWavePlayer(channels=1, samplesPerSec=44100, bitsPerSample=16)
-		# Now create a stream with the null session (GUID_NULL). This will use the
-		# session we created above. All subsequent streams created without a specific
-		# session will use this session.
-		WasapiWavePlayer(
-			channels=1,
-			samplesPerSec=44100,
-			bitsPerSample=16,
-			session=AudioSession(GUID(), "")
-		)
-	except WindowsError:
-		# There are probably no audio devices. Ignore this so NVDA can still start.
-		log.warning("Unable to set default audio session; couldn't open device")
+
+
+def usingWasapiWavePlayer() -> bool:
+	return issubclass(WavePlayer, WasapiWavePlayer)

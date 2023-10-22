@@ -30,7 +30,7 @@ import api
 import globalVars
 from logHandler import log
 import NVDAState
-from utils.security import _isLockScreenModeActive
+from utils.security import isLockScreenModeActive
 
 versionedLibPath = os.path.join(globalVars.appDir, 'lib')
 versionedLibARM64Path = os.path.join(globalVars.appDir, 'libArm64')
@@ -83,9 +83,10 @@ def nvdaController_brailleMessage(text):
 	focus=api.getFocusObject()
 	if focus.sleepMode==focus.SLEEP_FULL:
 		return -1
-	import queueHandler
-	import braille
-	queueHandler.queueFunction(queueHandler.eventQueue,braille.handler.message,text)
+	if config.conf["braille"]["reportLiveRegions"]:
+		import queueHandler
+		import braille
+		queueHandler.queueFunction(queueHandler.eventQueue, braille.handler.message, text)
 	return 0
 
 def _lookupKeyboardLayoutNameWithHexString(layoutString):
@@ -137,6 +138,7 @@ def nvdaControllerInternal_reportLiveRegion(text: str, politeness: str):
 		return -1
 	import queueHandler
 	import speech
+	import braille
 	from aria import AriaLivePoliteness
 	from speech.priorities import Spri
 	try:
@@ -155,6 +157,11 @@ def nvdaControllerInternal_reportLiveRegion(text: str, politeness: str):
 			if politenessValue == AriaLivePoliteness.ASSERTIVE
 			else Spri.NORMAL
 		)
+	)
+	queueHandler.queueFunction(
+		queueHandler.eventQueue,
+		braille.handler.message,
+		text
 	)
 	return 0
 
@@ -460,7 +467,7 @@ def nvdaControllerInternal_installAddonPackageFromPath(addonPath):
 	if globalVars.appArgs.secure:
 		log.debugWarning("Unable to install add-on into secure copy of NVDA.")
 		return
-	if _isLockScreenModeActive():
+	if isLockScreenModeActive():
 		log.debugWarning("Unable to install add-on while Windows is locked.")
 		return
 	import wx
@@ -475,7 +482,7 @@ def nvdaControllerInternal_openConfigDirectory():
 	if globalVars.appArgs.secure:
 		log.debugWarning("Unable to open user config directory for secure copy of NVDA.")
 		return
-	if _isLockScreenModeActive():
+	if isLockScreenModeActive():
 		log.debugWarning("Unable to open user config directory while Windows is locked.")
 		return
 	import systemUtils
@@ -594,7 +601,6 @@ def initialize() -> None:
 		log.error("Error installing IA2 support")
 	#Manually start the in-process manager thread for this NVDA main thread now, as a slow system can cause this action to confuse WX
 	_remoteLib.initInprocManagerThreadIfNeeded()
-	versionedLibARM64Path
 	arch = winVersion.getWinVer().processorArchitecture
 	if arch == 'AMD64':
 		_remoteLoaderAMD64 = _RemoteLoader(versionedLibAMD64Path)

@@ -12,14 +12,11 @@ All feature flags enums should
 """
 import enum
 import typing
+from typing import Protocol
 
 from utils.displayString import (
 	DisplayStringEnum,
 	_DisplayStringEnumMixin,
-)
-
-from typing_extensions import (
-	Protocol,  # Python 3.8 adds native support
 )
 
 
@@ -83,6 +80,24 @@ class ParagraphNavigationFlag(DisplayStringEnum):
 	APPLICATION = enum.auto()
 	SINGLE_LINE_BREAK = enum.auto()
 	MULTI_LINE_BREAK = enum.auto()
+
+
+class ReviewRoutingMovesSystemCaretFlag(DisplayStringEnum):
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: Label for setting to move the system caret when routing review cursor with braille.
+			self.NEVER: _("Never"),
+			# Translators: Label for setting to move the system caret when routing review cursor with braille.
+			self.ONLY_WHEN_AUTO_TETHERED: _("Only when tethered automatically"),
+			# Translators: Label for setting to move the system caret when routing review cursor with braille.
+			self.ALWAYS: _("Always")
+		}
+
+	DEFAULT = enum.auto()
+	NEVER = enum.auto()
+	ONLY_WHEN_AUTO_TETHERED = enum.auto()
+	ALWAYS = enum.auto()
 
 
 class WindowsTerminalStrategyFlag(DisplayStringEnum):

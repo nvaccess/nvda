@@ -691,7 +691,7 @@ class _AllGestureMappingsRetriever(object):
 		self.addGlobalMap(manager.userGestureMap)
 		self.addGlobalMap(manager.localeGestureMap)
 		import braille
-		gmap = braille.handler.display.gestureMap
+		gmap = braille.handler.display.gestureMap if braille.handler and braille.handler.display else None
 		if gmap:
 			self.addGlobalMap(gmap)
 

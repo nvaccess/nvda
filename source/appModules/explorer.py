@@ -24,7 +24,7 @@ from NVDAObjects import NVDAObject
 from NVDAObjects.IAccessible import IAccessible, List
 from NVDAObjects.UIA import UIA
 from NVDAObjects.behaviors import ToolTip
-from NVDAObjects.window.edit import RichEdit50, EditTextInfo
+from NVDAObjects.window.edit import RichEdit50, Edit, EditTextInfo
 import config
 from winAPI.types import HWNDValT
 
@@ -224,7 +224,8 @@ class UIProperty(UIA):
 			return value
 		return value.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 
-class ReadOnlyEditBox(IAccessible):
+
+class ReadOnlyEditBox(Edit):
 #Used for read-only edit boxes in a properties window.
 #These can contain dates that include unwanted left-to-right and right-to-left indicator characters.
 
@@ -296,11 +297,11 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, ExplorerToolTip)
 			return
 
-		if windowClass == "Edit" and controlTypes.State.READONLY in obj.states:
+		if windowClass == "Edit" and Edit in clsList and controlTypes.State.READONLY in obj.states:
 			clsList.insert(0, ReadOnlyEditBox)
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
-		if windowClass == "SysListView32":
+		if windowClass == "SysListView32" and isinstance(obj, IAccessible):
 			if(
 				role == controlTypes.Role.MENUITEM
 				or(
@@ -320,7 +321,7 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, StartButton)
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
-		if windowClass == 'RICHEDIT50W' and obj.windowControlID == 256:
+		if windowClass == 'RICHEDIT50W' and RichEdit50 in clsList and obj.windowControlID == 256:
 			clsList.insert(0, MetadataEditField)
 			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 

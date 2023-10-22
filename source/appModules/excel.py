@@ -39,11 +39,9 @@ class Excel6(Window):
 				e=UIAHandler.handler.lastFocusedUIAElement
 				if e and e.cachedAutomationID=="CellEdit":
 					obj=UIA(UIAElement=e)
-					oldFocus=api.getFocusObject()
-					if isinstance(oldFocus,ExcelCell):
-						# Set the edit control's parent as the cell that previously had focus. I.e. the cell being edited.
-						# otherwise a whole bunch of UIA focus ancestors for the edit control will be reported.
-						obj.parent=oldFocus
+					# Set the UIA edit control's parent to the parent of self.
+					# otherwise a whole bunch of UIA focus ancestors for the edit control will be reported.
+					obj.parent = self.parent
 					# Cache this for as long as this object exists.
 					self.focusRedirect=obj
 					return obj

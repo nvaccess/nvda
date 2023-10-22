@@ -27,7 +27,7 @@ def initialize():
 			bitsPerSample=16,
 			outputDevice=config.conf["speech"]["outputDevice"],
 			wantDucking=False,
-			session=nvwave.soundsSession
+			purpose=nvwave.AudioPurpose.SOUNDS
 		)
 	except Exception:
 		log.warning("Failed to initialize audio for tones", exc_info=True)

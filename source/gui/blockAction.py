@@ -10,6 +10,7 @@ from functools import wraps
 import globalVars
 from typing import Callable
 import ui
+from utils.security import isLockScreenModeActive, isRunningOnSecureDesktop
 from gui.message import isModalMessageBoxActive
 import queueHandler
 
@@ -39,7 +40,7 @@ class Context(_Context, Enum):
 		_("Action unavailable while a dialog requires a response"),
 	)
 	WINDOWS_LOCKED = (
-		lambda: globalVars.appArgs.secure,
+		lambda: isLockScreenModeActive() or isRunningOnSecureDesktop(),
 		# Translators: Reported when an action cannot be performed because Windows is locked.
 		_("Action unavailable while Windows is locked"),
 	)

@@ -2,6 +2,302 @@ NVDA'daki Yenilikler
 
 
 %!includeconf: ../changes.t2tconf
+%!includeconf: ./locale.t2tconf
+
+= 2023.3 =
+Bu sürümde ses çıkışının performansı, tepki hızı ve kararlılığı geliştirildi.
+NVDA seslerinin ve bip seslerinin ses seviyesini ayarlamak veya ses seviyesinin konuşma ses seviyesine eşitlenmesini sağlamak için seçenekler eklendi.
+
+NVDA OCR sonucunu düzenli olarak yenileyerek değişen metni okuyabiliyor.
+Bu özellik NVDA ayarları iletişim kutusunun Windows OCR kategorisinden ayarlanabilir.
+
+Braille ile ilgili ekran algılamasını ve imleç hareketini iyileştiren çeşitli düzeltmeler yapıldı.
+Otomatik algılama performansını iyileştirmek için istenmeyen sürücüler otomatik algılamadan dışlanabiliyor. 
+Ayrıca yeni BRLTTY komutları eklendi.
+
+Eklenti mağazası, Microsoft Office, Microsoft Edge içerik menüleri ve Windows hesap makinesi için de hata düzeltmeleri yapıldı.
+
+== Yeni özellikler ==
+- Ses yönetimi geliştirildi:
+  - Yeni ses ayarları kategorisi:
+    - ``NVDA+kontrol+u`` tuşuyla açılabilir. (#15497)
+    - Ses ayarlarına, NVDA seslerinin ve bip seslerinin ses seviyesini kullandığınız sentezleyici sesinin ses seviyesine eşitlemek için bir seçenek eklendi. (#1409)
+    - Ses ayarlarına NVDA seslerinin ses seviyesini ayrıca ayarlamak için bir seçenek eklendi. (#1409, #15038)
+    - Ses aygıtı ve ses zayıflamasını değiştirme ayarları, sentezleyici seçimi iletişim kutusundan yeni ses ayarları kategorisine taşındı. 
+    2024.1 sürümünde bu seçenekler sentezleyici seçimi iletişim kutusundan kaldırılacak. (#15486, #8711)
+    -
+  - NVDA artık ses çıkışını Windows Audio Session API (WASAPI) aracılığıyla sağlayacak. NVDA konuşmasının ve seslerinin tepki hızı, performansı ve kararlılığı iyileşebilir. (#14697, #11169, #11615, #5096, #10185, #11061)
+  - Not: WASAPI bazı eklentilerle uyumsuzdur. Bu eklentiler için uyumlu güncellemeler mevcuttur, lütfen NVDA'yı güncellemeden önce bu eklentileri güncelleyin.
+NVDA güncellenirken şu eklentilerin uyumsuz sürümleri devre dışı bırakılacaktır:
+    - Tony's Enhancements 1.15 veya daha eski sürümler. (#15402)
+    - NVDA global commands extension 12.0.8 veya daha eski sürümler. (#15443)
+    -
+  -
+- NVDA artık optik karakter tanıma (OCR) yaparken sonucu sürekli olarak güncelleyerek görünen yeni metni okuyabiliyor. (#2797)
+  - Bu işlevi etkinleştirmek için NVDA'nın ayarlar iletişim kutusunun Windows OCR kategorisinden "Tanınan içeriği düzenli olarak yenile" seçeneğini etkinleştirin.
+  - Etkinleştirildiğinde, yeni metnin okunmasını dinamik içerik değişikliklerini bildir seçeneğini açıp kapayarak (``NVDA+5``'e basarak) kontrol edebilirsiniz.
+  -
+ - Braille ekranlar otomatik olarak algılanırken, braille ekran seçimi iletişim kutusundan sürücüler otomatik algılamadan dışlanabiliyor. (#15196)
+ - Belge formatları ayarlarına yeni seçenek: "Satır girintilerini bildirirken boş satırları yok say" (#13394)
+- Tarama kipinde sekme grupları arasında dolaşmak için kısayolu atanmamış olan yeni bir hareket eklendi. (#15046)
+-
+== Değişiklikler ==
+- Braille:
+  - Uçbirimdeki metin imleci güncellemeden değiştiğinde, braille ekran değişen satıra konumlandığında metin doğru şekilde güncellenecek.
+  Bu durum braille hareketinin inceleme imlecine göre olduğu zamanlarda da geçerlidir. (#15115)
+  - Daha fazla BRLTTY komutu NVDA komutlarıyla eşleştirildi:
+    - ``learn``: Girdi yardımını açma/kapatma
+    - ``prefmenu``: NVDA menüsünü açma
+    - ``prefload``/``prefsave``: NVDA konfigürasyonunu yükleme/kaydetme
+    - ``time``: Zamanı gösterme
+    - ``say_line``: İnceleme imlecinin bulunduğu satırı okuma
+    - ``say_below``: İnceleme imlecini kullanarak tümünü okuma
+    -
+  - BRLTTY sürücüsü, sadece BrlAPI enabled çalışan BRLTTY oturumunda kullanılabilir. (#15335)
+  - HID braille desteğini etkinleştirmek için kullanılan gelişmiş ayar kaldırıldı ve yerini yeni bir seçenek aldı.
+  Braille ekran seçimi iletişim kutusundan, istediğiniz sürücüleri otomatik braille ekran algılamasından dışlayabilirsiniz. (#15196)
+  -
+- Eklenti mağazası: Kurulu eklentiler eklenti mağazasında mevcutsa mağazadaki eklentiler sekmesinde de gösterilecek. (#15374)
+- NVDA menüsündeki bazı kısayol tuşları güncellendi (Türkçe sürüm için geçerli değildir). (#15364)
+-
+== Hata düzeltmeleri ==
+- Microsoft Office:
+  - Belge formatları iletişim kutusundaki "başlıklar" ve "notlar ve açıklamalar" ayarları devre dışı bırakıldığında Microsoft Word'de meydana gelen çökme düzeltildi. (#15019)
+  - Word ve Excel'de, metin hizalaması daha fazla durumda doğru bir şekilde okunacak. (#15206, #15220)
+  - Bazı hücre biçimlendirme kısayollarının seslendirmesi düzeltildi. (#15527)
+  -
+- Microsoft Edge:
+  - İçerik menüsü açıldığında NVDA tarama kipinde bulunulan son konuma atlamayacak. (#15309)
+  - NVDA yeniden Microsoft Edge indirmeler penceresinin içerik menülerini okuyabiliyor. (#14916)
+  -
+- Braille:
+  - Braille imleç ve seçim belirteçleri, kısayolla gizlendikten veya gösterildikten sonra her zaman doğru bir şekilde güncellenecek. (#15115)
+  - Başka bir braille ekranın bağlı olmasına rağmen Albatross braille ekranının yüklenmeye çalışmasına neden olan bir hata düzeltildi. (#15226)
+  -
+- Eklenti mağazası:
+  - Uyumsuz eklentileri göster seçeneğinin işaretinin kaldırılmasına rağmen mağazada uyumsuz eklentilerin hâlâ gösterilmesine neden olan bir hata düzeltildi. (#15411)
+  - Etkin/devre dışı filtresi değiştirildiğinde, uyumsuz olduğu için devre dışı bırakılan eklentiler doğru bir şekilde filtrelenecek. (#15416)
+  - Dış kaynaktan kurulum aracı kullanılarak uyumsuzluğa rağmen etkinleştirilen eklentilerin güncellenmesini veya değiştirilmesini önleyen bir hata düzeltildi. (#15417)
+  - Eklenti kurulumundan sonra NVDA'nın yeniden başlatılana kadar konuşmamasına neden olan bir hata düzeltildi. (#14525)
+  - Önceden yapılan bir indirmenin başarısız olması veya iptal edilmesi durumunda eklentilerin kurulamamasına neden olan bir hata düzeltildi. (#15469)
+  - NVDA güncellenirken uyumsuz eklentilerin ele alınma sorunları giderildi. (#15414, #15412, #15437)
+  -
+- Windows'un Server, LTSC ve LTSB sürümlerinin Windows 32bit hesap makinesinde NVDA sonuçları yeniden okuyabiliyor. (#15230)
+ - Pencere içindeki pencereye (alt pencerenin alt penceresine) odaklanıldığında NVDA odak değişimini yok saymıyor. (#15432)
+- Görev yöneticisinin bazı Windows sürümlerindeki sorunu düzeltildi. (#6245)
+ - NVDA başlarken potansiyel bir çökme nedeni giderildi. (#15517)
+-
+
+== Changes for Developers ==
+Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+- ``braille.handler.handleUpdate`` and ``braille.handler.handleReviewMove`` have been changed in order not to update instantly.
+Before this change, when either of these methods was called very often, this would drain many resources.
+These methods now queue an update at the end of every core cycle instead.
+They should also be thread safe, making it possible to call them from background threads. (#15163)
+- Added official support to register custom braille display drivers in the automatic braille display detection process.
+Consult the ``braille.BrailleDisplayDriver`` class documentation for more details.
+Most notably, the ``supportsAutomaticDetection`` attribute must be set to ``True`` and the ``registerAutomaticDetection`` ``classmethod`` must be implemented.  (#15196)
+-
+
+=== Deprecations ===
+- ``braille.BrailleHandler.handlePendingCaretUpdate`` is now deprecated with no public replacement.
+It will be removed in 2024.1. (#15163)
+- Importing the constants ``xlCenter``, ``xlJustify``, ``xlLeft``, ``xlRight``, ``xlDistributed``, ``xlBottom``, ``xlTop`` from ``NVDAObjects.window.excel`` is deprecated.
+Use ``XlHAlign`` or ``XlVAlign`` enumerations instead. (#15205)
+- The mapping ``NVDAObjects.window.excel.alignmentLabels`` is deprecated.
+Use the ``displayString`` methods of ``XlHAlign`` or ``XlVAlign`` enumerations instead. (#15205)
+- ``bdDetect.addUsbDevices`` and ``bdDetect.addBluetoothDevices`` have been deprecated.
+Braille display drivers should implement the ``registerAutomaticDetection`` classmethod instead.
+That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices`` and ``addBluetoothDevices`` methods can be used. (#15200)
+- The default implementation of the check method on ``BrailleDisplayDriver`` uses ``bdDetect.driverHasPossibleDevices`` for devices that are marked as thread safe.
+Starting from NVDA 2024.1, in order for the base method to use ``bdDetect.driverHasPossibleDevices``, the ``supportsAutomaticDetection`` attribute must be set to ``True`` as well. (#15200)
+-
+
+
+= 2023.2 =
+Bu sürümde eklenti yöneticisinin yerini alan eklenti mağazası eklendi.
+Eklenti mağazasında topluluk tarafından yapılan eklentilere gözatabilir, eklentileri arayabilir, kurabilir ve güncelleyebilirsiniz.
+Sorumluluğu üstlenerek güncel olmayan eklentilerdeki uyumluluk sorunlarını göz ardı edebilirsiniz.
+
+Braille için yeni özellikler ve komutlar eklendi. Yeni braille ekranlar için destek eklendi.
+OCR ve düzleştirilmiş nesne dolaşımı için yeni girdi hareketleri de eklendi.
+Microsoft Office'te dolaşım ve biçimlendirme bilgisi bildirimi geliştirildi.
+
+Özellikle braille, Microsoft Office, web tarayıcıları ve Windows 11 için birçok hata düzeltmesi yapıldı.
+
+eSpeak-NG, LibLouis braille translator ve Unicode CLDR güncellendi.
+
+== Yeni özellikler ==
+- NVDA'ya eklenti mağazası eklendi.  (#13985)
+  - Topluluk tarafından yapılan eklentilere gözatabilir, eklentileri arayabilir, kurabilir ve güncelleyebilirsiniz.
+  - Sorumluluğu üstlenerek güncel olmayan eklentilerdeki uyumluluk sorunlarını göz ardı edebilirsiniz.
+  - Eklenti yöneticisi kaldırıldı ve yerini eklenti mağazasına bıraktı.
+  - Daha fazla bilgi için güncellenen kullanıcı rehberini okuyun.
+  -
+- Yeni girdi hareketleri:
+  - Mevcut Windows OCR dilleri arasında geçiş yapmak için kısayolu atanmamış olan bir girdi hareketi (#13036)
+  - Braille mesaj gösterimi modları arasında geçiş yapmak için kısayolu atanmamış bir girdi hareketi (#14864)
+  - Braille seçim belirtecini göstermek/gizlemek için kısayolu atanmamış bir girdi hareketi (#14948)
+  - Nesne dolaşım hierarşisinin düzleştirilmiş görünümünde sonraki veya önceki nesneye gitme girdi hareketine varsayılan klavye kısayolları eklendi. (#15053)
+    - Sırasıyla önceki ve sonraki nesneye gitmek için masa üstü kısayolları: ``NVDA+numaratör9`` ve ``NVDA+numaratör3``.
+    - Sırasıyla önceki ve sonraki nesneye gitmek için dizüstü kısayolları: ``şift+NVDA+ğ`` ve ``şift+NVDA+ü``.
+    -
+  -
+- Yeni braille özellikleri:
+  - Help Tech Activator braille ekranı için destek eklendi. (#14917)
+  - Seçim belirtecinin (7 ve 8. noktalar) gösterimini açmak/kapatmak için yeni bir seçenek eklendi. (#14948)
+  - İsteğe bağlı olarak, braille hareket ettirme tuşlarıyla inceleme imlecini hareket ettirirken sistem imlecini veya sistem odağını taşıma seçeneği eklendi. (#14885, #3166)
+  - İnceleme imlecinin konumunda bulunan karakterin numerik değerinin okunması için ``numaratör2`` tuşuna üç kez basıldığında, bilgi braille olarak da sunuluyor. (#14826)
+  - ARİA 1.3 özelliği ``aria-brailleroledescription`` için destek eklendi. Bu özellik sayesinde web sitesi üreticileri, braille ekranda gösterilen bir elementin türünü değiştirebilecek. (#14748)
+  - Baum braille sürücüsü: ``windows+d`` ve ``alt+tab`` gibi yaygın kullanılan Windows kısayol tuşları için braille komutları eklendi.
+  Tam liste için NVDA kullanıcı rehberine bakın. (#14714)
+  -
+- Unikod sembolleri için seslendirmeler eklendi:
+  - ``⠐⠣⠃⠗⠇⠐⠜`` gibi braille sembolleri (#13778)
+  - Mek Option tuşu sembolü ``⌥`` (#14682)
+  -
+- Tivomatic Caiku Albatross braille ekranları için komutlar eklendi. (#14844, #15002)
+  - Braille ayarları iletişim kutusunu açma
+  - Durum çubuğuna erişme
+  - Braille imleci şeklini değiştirme
+  - Braille mesaj gösterimi kipini değiştirme
+  - Braille imlecini açma/kapatma
+  - Braille seçim gösterimi belirtecinin ayarını değiştirme
+  - İnceleme imlecini taşırken sistem düzenleme imlecini hareket ettirme kipini değiştirme. (#15122)
+  -
+- Microsoft Office özellikleri:
+  - Belge formatlarında vurgulanan metin etkinleştirildiğinde, Microsoft Word'de vurgu renkleri artık seslendiriliyor. (#7396, #12101, #5866)
+  - Belge formatlarında renkler etkinleştirildiğinde, Microsoft Word'de arka plan renkleri artık seslendiriliyor. (#5866)
+  - Excel'de bir hücrenin kalın, italik, altı çizili ve üstü çizili gibi biçimlendirmesini değiştirmek için excel kısayolları kullanıldığında, yapılan değişiklik artık seslendiriliyor. (#14923)
+  -
+- Deneysel geliştirilmiş ses yönetimi:
+  - NVDA artık Windows Audio Session API'ı (WASAPI) ile ses verebiliyor. Dolayısıyla NVDA konuşmasının ve seslerinin tepki hızı, performansı ve kararlılığı iyileşebilir. (#14697)
+  - WASAPI kullanımı gelişmiş ayarlardan etkinleştirilebilir.
+  Buna ek olarak, WASAPI etkinleştirilmişse aşağıdaki gelişmiş ayarlar da değiştirilebilir:
+    - NVDA seslerinin ve bip seslerinin ses seviyesinin kullandığınız sesin ses seviyesine eşit olması için bir ayar (#1409)
+    - NVDA seslerinin ses seviyesini ayrıca değiştirmek için bir ayar  (#1409, #15038)
+    -
+  - WASAPI etkinleştirildiğinde aralıklı olarak çökme sorununun meydana geldiği biliniyor. (#15150)
+  -
+- Mozilla Firefox ve Google Chrome'da, bir öğe iletişim kutusu, ızgara, liste veya ağaç açıyorsa ve üretici bunu ``aria-haspopup`` kullanarak belirttiyse NVDA bu durumu artık seslendiriyor. (#8235)
+ - NVDA'nın taşınabilir kopyasını oluştururken, taşınabilir kopya yolu olarak sistem değişkenleri (``%temp%`` veya ``%homepath%`` gibi) artık kullanılabiliyor. (#14680)
+- Windows 10 May 2019 güncellemesi ve sonraki sürümlerde, sanal masaüstleri açıldığında, geçiş yapıldığında ve kapatıldığında sanal masaüstü adlarını NVDA seslendiriyor. (#5641)
+- Kullanıcıların ve sistem yöneticilerinin NVDA'yı güvenli modda başlamaya zorlayabilmesi için sistem genelinde bir parametre eklendi. (#10018)
+- 
+
+
+== Değişiklikler ==
+- Bileşen güncellemeleri:
+  - eSpeak NG 1.52-dev commit ``ed9a7bcf`` sürümüne güncellendi. (#15036)
+  - LibLouis braille translator [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0] sürümüne güncellendi. (#14970)
+  - CLDR 43.0 sürümüne güncellendi. (#14918)
+  -
+- LibreOffice değişiklikleri:
+  - LibreOffice Writer 7.6 ve üzeri sürümlerinde, Microsoft Word ile benzer şekilde inceleme imlecinin konumu belirtilirken imleç/düzenleme imlecinin konumu üzerinde bulunulan sayfaya göre seslendirilecek. (#11696)
+  - Durum çubuğu (örn. ``NVDA+son`` kısayoluna basıldığında) LibreOffice'te okunuyor. (#11698)
+  - NVDA ayarlarında hücre koordinatları devre dışı bırakıldığında, libreOffice Calc'te farklı hücreye gidildiğinde NVDA artık bir önceki hücrenin koordinatlarını okumuyor. (#15098)
+  -
+Braille değişiklikleri:
+  - Braille ekran standart HID braille sürücüsüyle kullanıldığında, dpad ok tuşları ve giriş tuşu yerine kullanılabiliyor. Ayrıca ``aralık+1. nokta`` ve ``aralık+4. nokta`` sırasıyla yukarı ok ve aşağı ok görevi görüyor. (#14713)
+  - Dinamik web içeriği güncellemeleri (aria live bölgeleri) artık braille olarak gösteriliyor. Bu özellik gelişmiş ayarlar sayfasından devre dışı bırakılabilir. (#7756)
+  -
+- Tire ve uzuntire sembolleri artık her zaman sentezleyiciye gönderilecek. (#13830)
+- Microsoft Word'de okunan mesafe, Word belgelerine erişmek için UIA kullanılsa bile Word'ün gelişmiş ayarlarında ayarlanan birime göre seslendirilecek. (#14542)
+- Düzenleme denetimlerinde imleci hareket ettirirken NVDA daha hızlı tepki veriyor. (#14708)
+- Linkin yönlendirdiği web adresini okuma scripti, nesne sunucusunun konumundaki linki baz almak yerine sistem imlecinin/odağın konumundaki linki baz alıyor. (#14659)
+- Taşınabilir kopya oluştururken artık kopya konumunda sürücü harfi belirtilmesi gerekmiyor. (#14680)
+- Windows, sistem tepsisinde saati gösterirken saniyeyi de göstermek üzere ayarlandıysa ``NVDA+f12`` tuşu artık bu ayarı yansıtacak. (#14742)
+- NVDA, Microsoft Office 365'in son sürümlerindeki menülerde olduğu gibi kullanışlı konum bilgisi içeren etiketsiz grupları artık seslendirecek. (#14878)
+-
+
+
+== Hata düzeltmeleri ==
+- Braille:
+  - Braille ekran girdisi/çıktısı için çeşitli kararlılık düzeltmeleri yapıldı. Sonuç olarak NVDA hataları ve çökmeleri azalacak. (#14627)
+  - NVDA otomatik algılama sırasında gereksiz olarak birden fazla kez braille yok seçeneğine geçmeyecek. Böylece log daha temiz olacak ve ek yük azalacak. (#14524)
+  - HID bluetooth cihazı (HumanWare Brailliant veya APH Mantis gibi) otomatik olarak algılanırsa ve USB bağlantısı kullanılabilir olursa, NVDA artık USB bağlantısına geri dönecek. Önceden bu durum sadece bluetooth seri bağlantılar için geçerliydi. (#14524)
+  - Braille ekran bağlı olmadığında ve braille görüntüleyici ``alt+f4`` tuşlarına basarak veya kapat düğmesine tıklanarak kapatıldığında, braille alt sisteminin ekran boyutu yeniden 0 hücreye ayarlanacak. (#15214)
+  -
+- Web tarayıcılar:
+  - NVDA, artık Mozilla Firefox'un nadiren çökmesine veya yanıt vermeyi durdurmasına neden olmayacak. (#14647)
+  - Mozilla Firefox ve Google Chrome'da, yazılan karakterleri seslendir ayarı devre dışı olmasına rağmen bazı metin kutularında yazılan karakterler artık seslendirilmeyecek. (#8442)
+  - Önceden mümkün olmayan durumlarda Chromium gömülü denetimlerde artık tarama kipini kullanabiliyorsunuz. (#13493, #8553)
+  - Mozilla Firefox'ta, fare bir linkin yanındaki metnin üzerine getirildiğinde metin artık her zaman okunuyor. (#9235)
+ - Chrome ve Edge'de grafik linklerin yönlendirdikleri web adresleri artık daha fazla durumda doğru bir şekilde okunuyor. (#14783)
+ - a href özelliği olmayan bir linkin web adresi okutulmaya çalışıldığında, NVDA bir şey seslendirmemek yerine linkin yönlendirdiği web adresi olmadığını söyleyecek. (#14723)
+- Tarama kipinde, NVDA artık odağın üst öğe veya alt öğe denetimine hareket etmesini yok saymıyor. Buna örnek olarak bir denetimden onun üst ana öğesi olan listeye veya ızgara hücresine gitmek verilebilir. (#14611)
+    - Bu düzeltme sadece tarama kipi ayarlarındaki sistem odağı otomatik olarak odaklanabilir öğelere taşınsın ayarı devre dışı olduğunda (varsayılan olarak devre dışıdır) geçerlidir.
+    -
+  -
+- Windows 11 için düzeltmeler:
+  - NVDA yeniden not defterinin durum çubuğu içeriğini okuyabiliyor. (#14573)
+  - Not defteri ve dosya gezgininde sekmeler arasında geçiş yapıldığında NVDA artık sekme adı ve konumunu bildirecek. (#14587, #14388)
+  - Çince ve Japonca gibi dillerde metin yazarken NVDA yeniden önerilen öğeleri seslendirecek. (#14509)
+  - NVDA yardım menüsündeki katkıda bulunanlar ve lisans öğelerini açmak yeniden mümkün. (#14725)
+  -
+- Microsoft Office düzeltmeleri:
+  - Excel'de hücreler arasında hızla hareket ederken, NVDA'nın yanlış hücreyi veya seçimi okuması ihtimali artık daha düşük. (#14983, #12200, #12108)
+  - Çalışma kitabının dışından Excel hücresine odaklanıldığında, braille ve odak vurgulama artık önceki odaklanılan öğeyle güncellenmiyor. (#15136)
+  - Microsoft Excel ve Outlook'ta NVDA odaklanılan şifre alanlarını yeniden seslendiriyor. (#14839)
+  -
+- Kullanılan dilde sembol tanımı olmayan sembollerde varsayılan İngilizce sembol seviyesi kullanılacak. (#14558, #14417)
+- Sözlük girişi türü kurallı ifade olmadığında, "olarak değiştir" alanında ters bölü karakterini kullanmak artık mümkün. (#14556)
+- Windows 10 ve 11 hesap makinesindeki standart hesap makinesinin  her zaman üstte görünümünde işlem girildiğinde, NVDA'nın taşınabilir kopyası artık eylemsiz kalmayacak veya hata sesi çalmayacak. (#14679)
+- NVDA, uygulamaların yanıt vermeyi durdurması gibi önceden NVDA'nın tamamen donmasına neden olan daha fazla durumdan kurtulabiliyor. (#14759)
+- Bazı uçbirim ve konsollarda UIA desteği kullanırken, donmaya ve log dosyasının gereksiz yere dolmasına neden olan bir hata düzeltildi. (#14689)
+- Konfigürasyon sıfırlandıktan sonra NVDA'nın  konfigürasyonu kaydetmemesi hatası düzeltildi. (#13187)
+- Çalıştırıcıdan geçici sürüm çalıştırıldığında, NVDA artık konfigürasyonun kaydedilebildiğine dair kullanıcıları yanıltmayacak. (#14914)
+- NVDA genellikle komutlara ve odak değişikliklerine biraz daha hızlı tepki veriyor. (#14928)
+- OCR ayarlarının bazı sistemlerde açılmaması sorunu düzeltildi. (#15017)
+- Sentezleyiciler arasında geçiş yapmak dahil olmak üzere NVDA konfigürasyonunu açma ve yüklemeyle ilgili hata düzeltildi. (#14760)
+- Metin inceleme "yukarı kaydırma" dokunma hareketinin önceki satıra gitmek yerine sayfa değiştirmesine neden olan hata düzeltildi. (#15127)
+- 
+
+
+== Changes for Developers ==
+Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+
+- Suggested conventions have been added to the add-on manifest specification.
+These are optional for NVDA compatibility, but are encouraged or required for submitting to the Add-on Store. (#14754)
+  - Use ``lowerCamelCase`` for the name field.
+  - Use ``<major>.<minor>.<patch>`` format for the version field (required for add-on datastore).
+  - Use ``https://`` as the schema for the url field (required for add-on datastore).
+  -
+- Added a new extension point type called ``Chain``, which can be used to iterate over iterables returned by registered handlers. (#14531)
+- Added the ``bdDetect.scanForDevices`` extension point.
+Handlers can be registered that yield ``BrailleDisplayDriver/DeviceMatch`` pairs that don't fit in existing categories, like USB or Bluetooth. (#14531)
+- Added extension point: ``synthDriverHandler.synthChanged``. (#14618)
+- The NVDA Synth Settings Ring now caches available setting values the first time they're needed, rather than when loading the synthesizer. (#14704)
+- You can now call the export method on a gesture map to export it to a dictionary.
+This dictionary can be imported in another gesture by passing it either to the constructor of ``GlobalGestureMap`` or to the update method on an existing map. (#14582)
+- ``hwIo.base.IoBase`` and its derivatives now have a new constructor parameter to take a ``hwIo.ioThread.IoThread``.
+If not provided, the default thread is used. (#14627)
+- ``hwIo.ioThread.IoThread`` now has a ``setWaitableTimer`` method to set a waitable timer using a python function.
+Similarly, the new ``getCompletionRoutine`` method allows you to convert a python method into a completion routine safely. (#14627)
+- ``offsets.OffsetsTextInfo._get_boundingRects`` should now always return ``List[locationHelper.rectLTWH]`` as expected for a subclass of ``textInfos.TextInfo``. (#12424)
+- ``highlight-color`` is now a format field attribute. (#14610)
+- NVDA should more accurately determine if a logged message is coming from NVDA core. (#14812)
+- NVDA will no longer log inaccurate warnings or errors about deprecated appModules. (#14806)
+- All NVDA extension points are now briefly described in a new, dedicated chapter in the Developer Guide. (#14648)
+- ``scons checkpot`` will no longer check the ``userConfig`` subfolder anymore. (#14820)
+- Translatable strings can now be defined with a singular and a plural form using ``ngettext`` and ``npgettext``. (#12445)
+-
+
+=== Deprecations ===
+- Passing lambda functions to ``hwIo.ioThread.IoThread.queueAsApc`` is deprecated.
+Instead, functions should be weakly referenceable. (#14627)
+- Importing ``LPOVERLAPPED_COMPLETION_ROUTINE`` from ``hwIo.base`` is deprecated.
+Instead import from ``hwIo.ioThread``. (#14627)
+- ``IoThread.autoDeleteApcReference`` is deprecated.
+It was introduced in NVDA 2023.1 and was never meant to be part of the public API.
+Until removal, it behaves as a no-op, i.e. a context manager yielding nothing. (#14924)
+- ``gui.MainFrame.onAddonsManagerCommand`` is deprecated, use ``gui.MainFrame.onAddonStoreCommand`` instead. (#13985)
+- ``speechDictHandler.speechDictVars.speechDictsPath`` is deprecated, use ``NVDAState.WritePaths.speechDictsDir`` instead. (#15021)
+- Importing ``voiceDictsPath`` and ``voiceDictsBackupPath`` from ``speechDictHandler.dictFormatUpgrade`` is deprecated.
+Instead use ``WritePaths.voiceDictsDir`` and ``WritePaths.voiceDictsBackupDir`` from ``NVDAState``. (#15048)
+- ``config.CONFIG_IN_LOCAL_APPDATA_SUBKEY`` is deprecated.
+Instead use ``config.RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY``. (#15049)
+-
 
 = 2023.1 =
 Belge dolaşımı kısmına "paragraf kipleri" seçeneği eklendi.

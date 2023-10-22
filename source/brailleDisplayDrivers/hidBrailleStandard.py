@@ -15,15 +15,11 @@ import hidpi
 import hwIo.hid
 from hwIo import intToByte
 
-from bdDetect import HID_USAGE_PAGE_BRAILLE
+from bdDetect import HID_USAGE_PAGE_BRAILLE, DriverRegistrar
 
 
 def isSupportEnabled() -> bool:
-	import config
-	return config.conf["braille"]["enableHidBrailleSupport"] in [
-		1,  # yes
-		0,  # Use default/recommended value, currently "yes"
-	]
+	return bdDetect.driverIsEnabledForAutoDetection(HidBrailleDriver.name)
 
 
 class BraillePageUsageID(enum.IntEnum):
@@ -85,13 +81,12 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 	# Translators: The name of a series of braille displays.
 	description = _("Standard HID Braille Display")
 	isThreadSafe = True
+	supportsAutomaticDetection = True
 
 	@classmethod
-	def check(cls):
-		return (
-			isSupportEnabled()
-			and super().check()
-		)
+	def registerAutomaticDetection(cls, driverRegistrar: DriverRegistrar):
+		# Note, this is a no-op because detection of HID-braille has special logic in bddDetect
+		...
 
 	def __init__(self, port="auto"):
 		super().__init__()

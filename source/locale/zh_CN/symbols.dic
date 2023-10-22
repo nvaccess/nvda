@@ -1,8 +1,17 @@
-﻿symbols:
-# A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2010-2020 NVDA Simplified Chinese team All volunteers
+﻿# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2010-2023 NVDA Simplified Chinese team All volunteers
 # This file may be used under the terms of the GNU Lesser General Public License, version 2.1.
 # For more details see: https://www.gnu.org/licenses/lgpl-2.1.html
+
+symbols:
+# Complex symbols（复杂符号）
+. sentence ending	句点
+! sentence ending	感叹号
+? sentence ending	问号
+; phrase ending	分号
+: phrase ending	冒号
+in-word '	撇
+
 $	美元
 /	斜杠
 ;	分号
@@ -48,12 +57,9 @@ negative number	负
 ✔	粗对钩
 ✓	对钩
 # Other characters
-©	版权所有
-™	商标	some
-®	注册
 µ	百万分之一	some
-»	右双尖括号	none
-«	左双尖括号	none
+»	右双尖括号
+«	左双尖括号
 ➔	右箭头	most
 🡺	向右箭头	some
 ‏	右至左符号	most
@@ -71,7 +77,6 @@ negative number	负
 ¢	分	most	always
 €	欧元	most	always
 £	英镑	most	always
-no-break space	空格	most
 、	全角顿号	all	always
 ،	阿拉伯文逗号	all	always
 ؛	阿拉伯文分号	most
@@ -153,7 +158,6 @@ no-break space	空格	most
 ■	实心方形	most
 ▽	空心下三角形	most
 ▼	实心下三角形	most
-⇏	右双前頭連斜線	most
 ⇍	左双前頭連斜線	most
 ⇎	左右双箭头連斜線	most
 ⋄	菱形	most
@@ -167,9 +171,6 @@ no-break space	空格	most
 ㊣	正字标记	none
 ＋	全角加号	most
 －	全角減号	most
-×	乘号	most
-÷	除号	most
-±	正负号	most
 ＜	全角小于号	most
 ＞	全角大于号	most
 ＝	全角等号	most
@@ -386,27 +387,27 @@ no-break space	空格	most
 ١	1	none
 
 # 罗马字母
-α	Alpha	none
+α	alpha	none
 Α	Alpha	none
-β	Beta	none
+β	beta	none
 Β	Beta	none
-γ	Gamma	none
+γ	gamma	none
 Γ	Gamma	none
-δ	Delta	none
+δ	delta	none
 Δ	Delta	none
-ε	Eepsilon	none
-Ε	Eepsilon	none
-ζ	Zeta	none
+ε	epsilon	none
+Ε	Epsilon	none
+ζ	zeta	none
 Ζ	Zeta	none
 η	eta	none
-Η	eta	none
+Η	Eta	none
 θ	theta	none
-Θ	theta	none
+Θ	Theta	none
 ι	iota	none
-Ι	iota	none
+Ι	Iota	none
 κ	kappa	none
-Κ	kappa	none
-λ	lanmd	none
+Κ	Kappa	none
+λ	lambda	none
 μ	mu	none
 Μ	mu	none
 ν	nu	none
@@ -451,13 +452,12 @@ no-break space	空格	most
 ℥	盎司	most
 
 #补充
-⇒	双线右箭头	some
 ⇨	空心右箭头	some
 ♣	黑桃	some
 ❖	四个菱形	some
 ♦	实心方块	some
 
-# Unicode 盲文点位 (Add 256braille symbols BY 陈福) 
+# Unicode 盲文点位 (Add 256braille symbols BY 陈福)
 ⠀	空方	some
 ⠁	一点	some
 ⠂	二点	some
@@ -749,7 +749,9 @@ no-break space	空格	most
 ₎	下标右圆括号	some
 
 # Miscellaneous Technical
-⌘	mac Command键	none
+⌘	mac Command 键	none
+⌥	mac Option 键	none
+
 ′	撇号	some
 ″	双撇号	some
 ‴	三撇号	some
@@ -853,7 +855,7 @@ no-break space	空格	most
 ℵ	aleph数	none
 ℶ	beth数	none
 
-# Vulgur Fractions U+2150 to U+215E
+# Vulgar Fractions U+2150 to U+215E
 ⅐	七分之一	none
 ⅑	九分之一	none
 ⅒	十分之一	none

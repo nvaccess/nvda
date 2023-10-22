@@ -309,8 +309,10 @@ def executeEvent(
 		sleepMode = obj.sleepMode
 		# Handle possible virtual desktop name change event.
 		# More effective in Windows 10 Version 1903 and later.
+		from NVDAObjects.window import Window
 		if (
 			eventName == "nameChange"
+			and isinstance(obj, Window)
 			and obj.windowClassName == "#32769"
 			and _canAnnounceVirtualDesktopNames
 		):
@@ -343,8 +345,6 @@ def handlePossibleDesktopNameChange() -> None:
 
 
 def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bool:
-	from IAccessibleHandler import SecureDesktopNVDAObject
-
 	if objectBelowLockScreenAndWindowsIsLocked(
 		obj,
 		shouldLog=config.conf["debugLog"]["events"],
@@ -368,16 +368,7 @@ def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bo
 		# - api.getFocusAncestors() via api.setFocusObject() called in doPreGainFocus
 		speech._manager.removeCancelledSpeechCommands()
 
-	if (
-		api.getFocusDifferenceLevel() <= 1
-		# This object should not set off a foreground event.
-		# SecureDesktopNVDAObject uses a gainFocus event to trigger NVDA
-		# to sleep as the secure instance of NVDA starts for the
-		# secure desktop.
-		# The newForeground object fetches from the User Desktop,
-		# not the secure desktop.
-		and not isinstance(obj, SecureDesktopNVDAObject)
-	):
+	if api.getFocusDifferenceLevel() <= 1:
 		newForeground = api.getDesktopObject().objectInForeground()
 		if not newForeground:
 			log.debugWarning("Can not get real foreground, resorting to focus ancestors")
@@ -498,15 +489,14 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 			return True
 
 	fg = winUser.getForegroundWindow()
-	fgClassName=winUser.getClassName(fg)
-	if wClass == "NetUIHWND" and fgClassName in ("Net UI Tool Window Layered","Net UI Tool Window"):
-		# #5504: In Office >= 2013 with the ribbon showing only tabs,
-		# when a tab is expanded, the window we get from the focus object is incorrect.
-		# This window isn't beneath the foreground window,
-		# so our foreground application checks fail.
-		# Just compare the root owners.
-		if winUser.getAncestor(windowHandle, winUser.GA_ROOTOWNER) == winUser.getAncestor(fg, winUser.GA_ROOTOWNER):
-			return True
+	# #5504, #14916, #15432 : Some windows, such as in the Office ribbon or Edge downloads window
+	# aren't directly beneath the foreground window, so our foreground application checks fail.
+	# However, they share the same root owner and events for them should be allowed.
+	if (
+		winUser.getAncestor(windowHandle, winUser.GA_ROOTOWNER)
+		== winUser.getAncestor(fg, winUser.GA_ROOTOWNER)
+	):
+		return True
 	if (winUser.isDescendantWindow(fg, windowHandle)
 			# #3899, #3905: Covers cases such as the Firefox Page Bookmarked window and OpenOffice/LibreOffice context menus.
 			or winUser.isDescendantWindow(fg, winUser.getAncestor(windowHandle, winUser.GA_ROOTOWNER))):

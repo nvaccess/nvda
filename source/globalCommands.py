@@ -255,7 +255,8 @@ class GlobalCommands(ScriptableObject):
 		description=_(
 			# Translators: Input help mode message for report current selection command.
 			"Announces the current selection in edit controls and documents. "
-			"If there is no selection it says so."
+			"Pressing twice spells this information. "
+			"Pressing three times spells it using character descriptions."
 		),
 		category=SCRCAT_SYSTEMCARET,
 		gestures=("kb(desktop):NVDA+shift+upArrow", "kb(laptop):NVDA+shift+s")
@@ -272,7 +273,13 @@ class GlobalCommands(ScriptableObject):
 		if not info or info.isCollapsed:
 			speech.speakMessage(_("No selection"))
 		else:
-			speech.speakTextSelected(info.text)
+			scriptCount = scriptHandler.getLastScriptRepeatCount()
+			if scriptCount == 0:
+				speech.speakTextSelected(info.text)
+			elif len(info.text) < speech.speech.MAX_LENGTH_FOR_SELECTION_REPORTING:
+				speech.speakSpelling(info.text, useCharacterDescriptions=scriptCount > 1)
+			else:
+				speech.speakTextSelected(info.text)
 
 	@script(
 		# Translators: Input help mode message for report date and time command.
@@ -621,6 +628,23 @@ class GlobalCommands(ScriptableObject):
 		# Translators: A message reported when cycling through line indentation settings.
 		# {mode} will be replaced with the mode; i.e. Off, Speech, Tones or Both Speech and Tones.
 		ui.message(_("Report line indentation {mode}").format(mode=state.displayString))
+
+	@script(
+		# Translators: Input help mode message for toggle ignore blank lines for line indentation reporting command.
+		description=_("Toggles on and off the ignoring of blank lines for line indentation reporting"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
+	def script_toggleignoreBlankLinesForReportLineIndentation(self, gesture: inputCore.InputGesture) -> None:
+		ignore = config.conf['documentFormatting']['ignoreBlankLinesForRLI']
+		config.conf['documentFormatting']['ignoreBlankLinesForRLI'] = not ignore
+		if ignore:
+			# Translators: The message announced when toggling off the ignore blank lines for line indentation
+			# reporting document formatting setting.
+			ui.message(_("Ignore blank lines for line indentation reporting off"))
+		else:
+			# Translators: The message announced when toggling on the ignore blank lines for line indentation
+			# reporting document formatting setting.
+			ui.message(_("Ignore blank lines for line indentation reporting on"))
 
 	@script(
 		# Translators: Input help mode message for toggle report paragraph indentation command.
@@ -1591,7 +1615,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Moves the review cursor to the previous page of the current navigator object and speaks it"),
 		resumeSayAllMode=sayAll.CURSOR.REVIEW,
 		category=SCRCAT_TEXTREVIEW,
-		gestures=("kb:NVDA+pageUp", "kb(laptop):NVDA+shift+pageUp", "ts(text):flickUp")
+		gestures=("kb:NVDA+pageUp", "kb(laptop):NVDA+shift+pageUp")
 	)
 	def script_review_previousPage(self, gesture: inputCore.InputGesture) -> None:
 		info = api.getReviewPosition().copy()
@@ -1623,7 +1647,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Moves the review cursor to the next page of the current navigator object and speaks it"),
 		resumeSayAllMode=sayAll.CURSOR.REVIEW,
 		category=SCRCAT_TEXTREVIEW,
-		gestures=("kb:NVDA+pageDown", "kb(laptop):NVDA+shift+pageDown", "ts(text):flickUp")
+		gestures=("kb:NVDA+pageDown", "kb(laptop):NVDA+shift+pageDown")
 	)
 	def script_review_nextPage(self, gesture: inputCore.InputGesture) -> None:
 		origInfo = api.getReviewPosition().copy()
@@ -2145,6 +2169,7 @@ class GlobalCommands(ScriptableObject):
 			"reportFontSize",
 			"reportFontAttributes",
 			"reportSuperscriptsAndSubscripts",
+			"reportHighlight",
 			"reportColor",
 			"reportStyle",
 			"reportAlignment",
@@ -2413,8 +2438,12 @@ class GlobalCommands(ScriptableObject):
 		return
 
 	@script(
-		# Translators: Input help mode message for report current focus command.
-		description=_("Reports the object with focus. If pressed twice, spells the information"),
+		description=_(
+			# Translators: Input help mode message for report current focus command.
+			"Reports the object with focus. "
+			"If pressed twice, spells the information. "
+			"Pressing three times spells it using character descriptions."
+		),
 		category=SCRCAT_FOCUS,
 		gesture="kb:NVDA+tab"
 	)
@@ -2434,10 +2463,11 @@ class GlobalCommands(ScriptableObject):
 			ui.message(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
 			return
 
-		if scriptHandler.getLastScriptRepeatCount() == 0:
+		repeatCount = scriptHandler.getLastScriptRepeatCount()
+		if repeatCount == 0:
 			speech.speakObject(focusObject, reason=controlTypes.OutputReason.QUERY)
 		else:
-			speech.speakSpelling(focusObject.name)
+			speech.speakSpelling(focusObject.name, useCharacterDescriptions=repeatCount > 1)
 
 	@staticmethod
 	def _getStatusBarText(setReviewCursor: bool = False) -> Optional[str]:
@@ -2959,6 +2989,16 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onBrailleSettingsCommand, None)
 
 	@script(
+		# Translators: Input help mode message for go to audio settings command.
+		description=_("Shows NVDA's audio settings"),
+		category=SCRCAT_CONFIG,
+		gesture="kb:NVDA+control+u"
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateAudioSettingsDialog(self, gesture):
+		wx.CallAfter(gui.mainFrame.onAudioSettingsCommand, None)
+
+	@script(
 		# Translators: Input help mode message for go to keyboard settings command.
 		description=_("Shows NVDA's keyboard settings"),
 		category=SCRCAT_CONFIG,
@@ -3211,6 +3251,42 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Braille tethered %s") % TetherTo(newTetherChoice).displayString)
 
 	@script(
+		# Translators: Input help mode message for cycle through
+		# braille move system caret when routing review cursor command.
+		description=_("Cycle through the braille move system caret when routing review cursor states"),
+		category=SCRCAT_BRAILLE
+	)
+	def script_braille_cycleReviewRoutingMovesSystemCaret(self, gesture: inputCore.InputGesture) -> None:
+		# If braille is not tethered to focus, set next state of
+		# braille Move system caret when routing review cursor.
+		if TetherTo.FOCUS.value == config.conf["braille"]["tetherTo"]:
+			ui.message(
+				# Translators: Reported when action is unavailable because braille tether is to focus.
+				_("Action unavailable. Braille is tethered to focus")
+			)
+			return
+		featureFlag: FeatureFlag = config.conf["braille"]["reviewRoutingMovesSystemCaret"]
+		reviewRoutingMovesSystemCaretFlag = featureFlag.enumClassType
+		values = [x.value for x in reviewRoutingMovesSystemCaretFlag]
+		currentValue = featureFlag.value.value
+		nextValueIndex = (currentValue % len(values)) + 1
+		nextName: str = reviewRoutingMovesSystemCaretFlag(nextValueIndex).name
+		config.conf["braille"]["reviewRoutingMovesSystemCaret"] = nextName
+		featureFlag = config.conf["braille"]["reviewRoutingMovesSystemCaret"]
+		if featureFlag.isDefault():
+			msg = _(
+				# Translators: Used when reporting braille move system caret when routing review cursor
+				# state (default behavior).
+				"Braille move system caret when routing review cursor default (%s)"
+			) % featureFlag.behaviorOfDefault.displayString
+		else:
+			msg = _(
+				# Translators: Used when reporting braille move system caret when routing review cursor state.
+				"Braille move system caret when routing review cursor %s"
+			) % reviewRoutingMovesSystemCaretFlag[nextName].displayString
+		ui.message(msg)
+
+	@script(
 		# Translators: Input help mode message for toggle braille focus context presentation command.
 		description=_("Toggle the way context information is presented in braille"),
 		category=SCRCAT_BRAILLE
@@ -3245,6 +3321,8 @@ class GlobalCommands(ScriptableObject):
 			# Translators: The message announced when toggling the braille cursor.
 			state = _("Braille cursor on")
 			config.conf["braille"]["showCursor"]=True
+		# To hide or show cursor immediately on braille line
+		braille.handler._updateDisplay()
 		ui.message(state)
 
 	@script(
@@ -3313,11 +3391,17 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Reports which show braille selection state is used
 			# (disabled or enabled).
 			msg = _("Braille show selection %s") % BoolFlag[nextName].displayString
+		# To hide or show selection immediately on braille line
+		braille.handler.initialDisplay()
 		ui.message(msg)
 
 	@script(
-		# Translators: Input help mode message for report clipboard text command.
-		description=_("Reports the text on the Windows clipboard"),
+		description=_(
+			# Translators: Input help mode message for report clipboard text command.
+			"Reports the text on the Windows clipboard. "
+			"Pressing twice spells this information. "
+			"Pressing three times spells it using character descriptions."
+		),
 		category=SCRCAT_SYSTEM,
 		gesture="kb:NVDA+c"
 	)
@@ -3331,7 +3415,11 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("There is no text on the clipboard"))
 			return
 		if len(text) < 1024: 
-			ui.message(text)
+			repeatCount = scriptHandler.getLastScriptRepeatCount()
+			if repeatCount == 0:
+				ui.message(text)
+			else:
+				speech.speakSpelling(text, useCharacterDescriptions=repeatCount > 1)
 		else:
 			# Translators: If the number of characters on the clipboard is greater than about 1000, it reports this message and gives number of characters on the clipboard.
 			# Example output: The clipboard contains a large portion of text. It is 2300 characters long.
@@ -3781,7 +3869,11 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for a touchscreen gesture.
 		description=_("Moves to the next object in a flattened view of the object navigation hierarchy"),
 		category=SCRCAT_OBJECTNAVIGATION,
-		gesture="ts(object):flickright"
+		gestures=(
+			"ts(object):flickright",
+			"kb:NVDA+numpad3",
+			"kb(laptop):shift+NVDA+]",
+		),
 	)
 	def script_navigatorObject_nextInFlow(self, gesture: inputCore.InputGesture):
 		curObject=api.getNavigatorObject()
@@ -3815,7 +3907,11 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for a touchscreen gesture.
 		description=_("Moves to the previous object in a flattened view of the object navigation hierarchy"),
 		category=SCRCAT_OBJECTNAVIGATION,
-		gesture="ts(object):flickleft"
+		gestures=(
+			"ts(object):flickleft",
+			"kb:NVDA+numpad9",
+			"kb(laptop):shift+NVDA+[",
+		),
 	)
 	def script_navigatorObject_previousInFlow(self, gesture: inputCore.InputGesture):
 		curObject=api.getNavigatorObject()
@@ -4078,7 +4174,8 @@ class GlobalCommands(ScriptableObject):
 			"Pressed once, screen curtain is enabled until you restart NVDA. "
 			"Pressed twice, screen curtain is enabled until you disable it"
 		),
-		category=SCRCAT_VISION
+		category=SCRCAT_VISION,
+		gesture="kb:NVDA+control+escape",
 	)
 	def script_toggleScreenCurtain(self, gesture):
 		scriptCount = scriptHandler.getLastScriptRepeatCount()
@@ -4201,6 +4298,13 @@ class GlobalCommands(ScriptableObject):
 					)
 				)
 			else:
+				from contentRecog.recogUi import RefreshableRecogResultNVDAObject
+				focusObj = api.getFocusObject()
+				if isinstance(focusObj, RefreshableRecogResultNVDAObject) and focusObj.recognizer.allowAutoRefresh:
+					# Translators: Warning message when trying to enable the screen curtain when OCR is active.
+					warningMessage = _("Could not enable screen curtain when performing content recognition")
+					ui.message(warningMessage, speechPriority=speech.priorities.Spri.NOW)
+					return
 				_enableScreenCurtain()
 
 	@script(

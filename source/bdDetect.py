@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2013-2022 NV Access Limited
+# Copyright (C) 2013-2023 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 """Support for braille display detection.
 This allows devices to be automatically detected and used when they become available,
@@ -16,9 +16,11 @@ import itertools
 import threading
 from concurrent.futures import ThreadPoolExecutor, Future
 from typing import (
+	Any,
 	Callable,
 	DefaultDict,
 	Dict,
+	Generator,
 	Iterable,
 	Iterator,
 	List,
@@ -27,6 +29,7 @@ from typing import (
 	OrderedDict,
 	Set,
 	Tuple,
+	Type,
 	Union,
 )
 import hwPortUtils
@@ -38,6 +41,7 @@ from baseObject import AutoPropertyObject
 import re
 from winAPI import messageWindow
 import extensionPoints
+from logHandler import log
 
 
 HID_USAGE_PAGE_BRAILLE = 0x41
@@ -99,48 +103,14 @@ def _isDebug():
 	return config.conf["debugLog"]["hwIo"]
 
 
-def _getDriver(driver: str) -> DriverDictT:
-	try:
-		return _driverDevices[driver]
-	except KeyError:
-		ret = _driverDevices[driver] = DriverDictT(set)
-		return ret
-
-
-def addUsbDevices(driver: str, type: str, ids: Set[str]):
-	"""Associate USB devices with a driver.
-	@param driver: The name of the driver.
-	@param type: The type of the driver, either C{KEY_HID}, C{KEY_SERIAL} or C{KEY_CUSTOM}.
-	@param ids: A set of USB IDs in the form C{"VID_xxxx&PID_XXXX"}.
-		Note that alphabetical characters in hexadecimal numbers should be uppercase.
-	@raise ValueError: When one of the provided IDs is malformed.
-	"""
-	malformedIds = [id for id in ids if not isinstance(id, str) or not USB_ID_REGEX.match(id)]
-	if malformedIds:
-		raise ValueError(
-			f"Invalid IDs provided for driver {driver!r}, type {type!r}: "
-			f"{', '.join(malformedIds)}"
-		)
-	devs = _getDriver(driver)
-	driverUsb = devs[type]
-	driverUsb.update(ids)
-
-
-def addBluetoothDevices(driver: str, matchFunc: MatchFuncT):
-	"""Associate Bluetooth HID or COM ports with a driver.
-	@param driver: The name of the driver.
-	@param matchFunc: A function which determines whether a given Bluetooth device matches.
-		It takes a L{DeviceMatch} as its only argument
-		and returns a C{bool} indicating whether it matched.
-	"""
-	devs = _getDriver(driver)
-	devs[KEY_BLUETOOTH] = matchFunc
-
-
-def getDriversForConnectedUsbDevices() -> Iterator[Tuple[str, DeviceMatch]]:
+def getDriversForConnectedUsbDevices(
+		limitToDevices: Optional[List[str]] = None
+) -> Iterator[Tuple[str, DeviceMatch]]:
 	"""Get any matching drivers for connected USB devices.
 	Looks for (and yields) custom drivers first, then considers if the device is may be compatible with the
 	Standard HID Braille spec.
+	@param limitToDevices: Drivers to which detection should be limited.
+		C{None} if no driver filtering should occur.
 	@return: Generator of pairs of drivers and device information.
 	"""
 	usbCustomDeviceMatches = (
@@ -164,20 +134,21 @@ def getDriversForConnectedUsbDevices() -> Iterator[Tuple[str, DeviceMatch]]:
 	))
 	for match in itertools.chain(usbCustomDeviceMatches, usbHidDeviceMatchesForCustom, usbComDeviceMatches):
 		for driver, devs in _driverDevices.items():
+			if limitToDevices and driver not in limitToDevices:
+				continue
 			for type, ids in devs.items():
 				if match.type == type and match.id in ids:
 					yield driver, match
 
-	if _isHidBrailleStandardSupported():
-		for match in usbHidDeviceMatches:
-			# Check for the Braille HID protocol after any other device matching.
-			# This ensures that a vendor specific driver is preferred over the braille HID protocol.
-			# This preference may change in the future.
-			if _isHIDBrailleMatch(match):
-				yield (
-					_getStandardHidDriverName(),
-					match
-				)
+	hidName = _getStandardHidDriverName()
+	if limitToDevices and hidName not in limitToDevices:
+		return
+	for match in usbHidDeviceMatches:
+		# Check for the Braille HID protocol after any other device matching.
+		# This ensures that a vendor specific driver is preferred over the braille HID protocol.
+		# This preference may change in the future.
+		if _isHIDBrailleMatch(match):
+			yield (hidName, match)
 
 
 def _getStandardHidDriverName() -> str:
@@ -187,20 +158,18 @@ def _getStandardHidDriverName() -> str:
 	return brailleDisplayDrivers.hidBrailleStandard.HidBrailleDriver.name
 
 
-def _isHidBrailleStandardSupported() -> bool:
-	"""Check if standard HID braille is supported"""
-	import brailleDisplayDrivers.hidBrailleStandard
-	return brailleDisplayDrivers.hidBrailleStandard.isSupportEnabled()
-
-
 def _isHIDBrailleMatch(match: DeviceMatch) -> bool:
 	return match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE
 
 
-def getDriversForPossibleBluetoothDevices() -> Iterator[Tuple[str, DeviceMatch]]:
+def getDriversForPossibleBluetoothDevices(
+		limitToDevices: Optional[List[str]] = None
+) -> Iterator[Tuple[str, DeviceMatch]]:
 	"""Get any matching drivers for possible Bluetooth devices.
 	Looks for (and yields) custom drivers first, then considers if the device is may be compatible with the
 	Standard HID Braille spec.
+	@param limitToDevices: Drivers to which detection should be limited.
+		C{None} if no driver filtering should occur.
 	@return: Generator of pairs of drivers and port information.
 	"""
 	btSerialMatchesForCustom = (
@@ -220,22 +189,23 @@ def getDriversForPossibleBluetoothDevices() -> Iterator[Tuple[str, DeviceMatch]]
 	))
 	for match in itertools.chain(btSerialMatchesForCustom, btHidDevMatchesForCustom):
 		for driver, devs in _driverDevices.items():
+			if limitToDevices and driver not in limitToDevices:
+				continue
 			matchFunc = devs[KEY_BLUETOOTH]
 			if not callable(matchFunc):
 				continue
 			if matchFunc(match):
 				yield driver, match
 
-	if _isHidBrailleStandardSupported():
-		for match in btHidDevMatchesForHid:
-			# Check for the Braille HID protocol after any other device matching.
-			# This ensures that a vendor specific driver is preferred over the braille HID protocol.
-			# This preference may change in the future.
-			if _isHIDBrailleMatch(match):
-				yield (
-					_getStandardHidDriverName(),
-					match
-				)
+	hidName = _getStandardHidDriverName()
+	if limitToDevices and hidName not in limitToDevices:
+		return
+	for match in btHidDevMatchesForHid:
+		# Check for the Braille HID protocol after any other device matching.
+		# This ensures that a vendor specific driver is preferred over the braille HID protocol.
+		# This preference may change in the future.
+		if _isHIDBrailleMatch(match):
+			yield (hidName, match)
 
 
 btDevsCacheT = Optional[List[Tuple[str, DeviceMatch]]]
@@ -315,11 +285,14 @@ class _Detector:
 		@param usb: Whether USB devices should be detected for this and subsequent scans.
 		@param bluetooth: Whether Bluetooth devices should be detected for this and subsequent scans.
 		@param limitToDevices: Drivers to which detection should be limited for this and subsequent scans.
-			C{None} if no driver filtering should occur.
+			C{None} if default driver filtering according to config should occur.
 		"""
 		self._detectUsb = usb
 		self._detectBluetooth = bluetooth
+		if limitToDevices is None and config.conf["braille"]["auto"]["excludedDisplays"]:
+			limitToDevices = list(getBrailleDisplayDriversEnabledForDetection())
 		self._limitToDevices = limitToDevices
+
 		if self._queuedFuture:
 			# This will cancel a queued scan (i.e. not the currently running scan, if any)
 			# If this future belongs to a scan that is currently running or finished, this does nothing.
@@ -344,9 +317,7 @@ class _Detector:
 		"""
 		if not usb:
 			return
-		for driver, match in getDriversForConnectedUsbDevices():
-			if limitToDevices and driver not in limitToDevices:
-				continue
+		for driver, match in getDriversForConnectedUsbDevices(limitToDevices):
 			yield (driver, match)
 
 	@staticmethod
@@ -361,14 +332,12 @@ class _Detector:
 			return
 		btDevs: Optional[Iterable[Tuple[str, DeviceMatch]]] = deviceInfoFetcher.btDevsCache
 		if btDevs is None:
-			btDevs = getDriversForPossibleBluetoothDevices()
+			btDevs = getDriversForPossibleBluetoothDevices(limitToDevices)
 			# Cache Bluetooth devices for next time.
 			btDevsCache = []
 		else:
 			btDevsCache = btDevs
 		for driver, match in btDevs:
-			if limitToDevices and driver not in limitToDevices:
-				continue
 			if btDevsCache is not btDevs:
 				btDevsCache.append((driver, match))
 			yield (driver, match)
@@ -416,7 +385,7 @@ class _Detector:
 		@param bluetooth: Whether Bluetooth devices should be detected for this and subsequent scans.
 		@type bluetooth: bool
 		@param limitToDevices: Drivers to which detection should be limited for this and subsequent scans.
-			C{None} if no driver filtering should occur.
+			C{None} if default driver filtering according to config should occur.
 		"""
 		self._stopBgScan()
 		# Clear the cache of bluetooth devices so new devices can be picked up.
@@ -468,10 +437,7 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 	)
 	for match in usbDevs:
 		if driver == _getStandardHidDriverName():
-			if(
-				_isHidBrailleStandardSupported()
-				and _isHIDBrailleMatch(match)
-			):
+			if _isHIDBrailleMatch(match):
 				yield match
 		else:
 			devs = _driverDevices[driver]
@@ -487,11 +453,7 @@ def getPossibleBluetoothDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 	@raise LookupError: If there is no detection data for this driver.
 	"""
 	if driver == _getStandardHidDriverName():
-		def matchFunc(checkMatch: DeviceMatch) -> bool:
-			return (
-				_isHidBrailleStandardSupported()
-				and _isHIDBrailleMatch(checkMatch)
-			)
+		matchFunc = _isHIDBrailleMatch
 	else:
 		matchFunc = _driverDevices[driver][KEY_BLUETOOTH]
 		if not callable(matchFunc):
@@ -529,7 +491,36 @@ def driverSupportsAutoDetection(driver: str) -> bool:
 	@param driver: The name of the driver.
 	@return: C{True} if de driver supports auto detection, C{False} otherwise.
 	"""
-	return driver in _driverDevices
+	try:
+		driverCls = braille._getDisplayDriver(driver)
+	except ImportError:
+		return False
+	return driverCls.isThreadSafe and driverCls.supportsAutomaticDetection
+
+
+def driverIsEnabledForAutoDetection(driver: str) -> bool:
+	"""Returns whether the provided driver is enabled for automatic detection of displays.
+	@param driver: The name of the driver.
+	@return: C{True} if de driver is enabled for auto detection, C{False} otherwise.
+	"""
+	return driver in getBrailleDisplayDriversEnabledForDetection()
+
+
+def getSupportedBrailleDisplayDrivers(
+		onlyEnabled: bool = False
+) -> Generator[Type["braille.BrailleDisplayDriver"], Any, Any]:
+	return braille.getDisplayDrivers(lambda d: (
+		d.isThreadSafe
+		and d.supportsAutomaticDetection
+		and (
+			not onlyEnabled
+			or d.name not in config.conf["braille"]["auto"]["excludedDisplays"]
+		)
+	))
+
+
+def getBrailleDisplayDriversEnabledForDetection() -> Generator[str, Any, Any]:
+	return (d.name for d in getSupportedBrailleDisplayDrivers(onlyEnabled=True))
 
 
 def initialize():
@@ -545,267 +536,11 @@ def initialize():
 	scanForDevices.register(_Detector._bgScanBluetooth)
 
 	# Add devices
-	# alva
-	addUsbDevices("alva", KEY_HID, {
-		"VID_0798&PID_0640",  # BC640
-		"VID_0798&PID_0680",  # BC680
-		"VID_0798&PID_0699",  # USB protocol converter
-	})
-
-	addBluetoothDevices("alva", lambda m: m.id.startswith("ALVA "))
-
-	# baum
-	addUsbDevices("baum", KEY_HID, {
-		"VID_0904&PID_3001",  # RefreshaBraille 18
-		"VID_0904&PID_6101",  # VarioUltra 20
-		"VID_0904&PID_6103",  # VarioUltra 32
-		"VID_0904&PID_6102",  # VarioUltra 40
-		"VID_0904&PID_4004",  # Pronto! 18 V3
-		"VID_0904&PID_4005",  # Pronto! 40 V3
-		"VID_0904&PID_4007",  # Pronto! 18 V4
-		"VID_0904&PID_4008",  # Pronto! 40 V4
-		"VID_0904&PID_6001",  # SuperVario2 40
-		"VID_0904&PID_6002",  # SuperVario2 24
-		"VID_0904&PID_6003",  # SuperVario2 32
-		"VID_0904&PID_6004",  # SuperVario2 64
-		"VID_0904&PID_6005",  # SuperVario2 80
-		"VID_0904&PID_6006",  # Brailliant2 40
-		"VID_0904&PID_6007",  # Brailliant2 24
-		"VID_0904&PID_6008",  # Brailliant2 32
-		"VID_0904&PID_6009",  # Brailliant2 64
-		"VID_0904&PID_600A",  # Brailliant2 80
-		"VID_0904&PID_6201",  # Vario 340
-		"VID_0483&PID_A1D3",  # Orbit Reader 20
-		"VID_0904&PID_6301",  # Vario 4
-	})
-
-	addUsbDevices("baum", KEY_SERIAL, {
-		"VID_0403&PID_FE70",  # Vario 40
-		"VID_0403&PID_FE71",  # PocketVario
-		"VID_0403&PID_FE72",  # SuperVario/Brailliant 40
-		"VID_0403&PID_FE73",  # SuperVario/Brailliant 32
-		"VID_0403&PID_FE74",  # SuperVario/Brailliant 64
-		"VID_0403&PID_FE75",  # SuperVario/Brailliant 80
-		"VID_0904&PID_2001",  # EcoVario 24
-		"VID_0904&PID_2002",  # EcoVario 40
-		"VID_0904&PID_2007",  # VarioConnect/BrailleConnect 40
-		"VID_0904&PID_2008",  # VarioConnect/BrailleConnect 32
-		"VID_0904&PID_2009",  # VarioConnect/BrailleConnect 24
-		"VID_0904&PID_2010",  # VarioConnect/BrailleConnect 64
-		"VID_0904&PID_2011",  # VarioConnect/BrailleConnect 80
-		"VID_0904&PID_2014",  # EcoVario 32
-		"VID_0904&PID_2015",  # EcoVario 64
-		"VID_0904&PID_2016",  # EcoVario 80
-		"VID_0904&PID_3000",  # RefreshaBraille 18
-	})
-
-	addBluetoothDevices("baum", lambda m: any(m.id.startswith(prefix) for prefix in (
-		"Baum SuperVario",
-		"Baum PocketVario",
-		"Baum SVario",
-		"HWG Brailliant",
-		"Refreshabraille",
-		"VarioConnect",
-		"BrailleConnect",
-		"Pronto!",
-		"VarioUltra",
-		"Orbit Reader 20",
-		"Vario 4",
-	)))
-
-	# brailleNote
-	addUsbDevices("brailleNote", KEY_SERIAL, {
-		"VID_1C71&PID_C004",  # Apex
-	})
-	addBluetoothDevices("brailleNote", lambda m: (
-		any(
-			first <= m.deviceInfo.get("bluetoothAddress", 0) <= last
-			for first, last in (
-				(0x0025EC000000, 0x0025EC01869F),  # Apex
-			)
-		)
-		or m.id.startswith("Braillenote")
-	))
-
-	# brailliantB
-	addUsbDevices("brailliantB", KEY_HID, {
-		"VID_1C71&PID_C111",  # Mantis Q 40
-		"VID_1C71&PID_C101",  # Chameleon 20
-		"VID_1C71&PID_C121",  # Humanware BrailleOne 20 HID
-		"VID_1C71&PID_CE01",  # NLS eReader 20 HID
-		"VID_1C71&PID_C006",  # Brailliant BI 32, 40 and 80
-		"VID_1C71&PID_C022",  # Brailliant BI 14
-		"VID_1C71&PID_C131",  # Brailliant BI 40X
-		"VID_1C71&PID_C141",  # Brailliant BI 20X
-		"VID_1C71&PID_C00A",  # BrailleNote Touch
-		"VID_1C71&PID_C00E",  # BrailleNote Touch v2
-	})
-	addUsbDevices("brailliantB", KEY_SERIAL, {
-		"VID_1C71&PID_C005",  # Brailliant BI 32, 40 and 80
-		"VID_1C71&PID_C021",  # Brailliant BI 14
-	})
-	addBluetoothDevices(
-		"brailliantB", lambda m: (
-			m.type == KEY_SERIAL
-			and (
-				m.id.startswith("Brailliant B")
-				or m.id == "Brailliant 80"
-				or "BrailleNote Touch" in m.id
-			)
-		)
-		or (
-			m.type == KEY_HID
-			and m.deviceInfo.get("manufacturer") == "Humanware"
-			and m.deviceInfo.get("product") in (
-				"Brailliant HID",
-				"APH Chameleon 20",
-				"APH Mantis Q40",
-				"Humanware BrailleOne",
-				"NLS eReader",
-				"NLS eReader Humanware",
-				"Brailliant BI 40X",
-				"Brailliant BI 20X",
-			)
-		)
-	)
-
-	# eurobraille
-	addUsbDevices("eurobraille", KEY_HID, {
-		"VID_C251&PID_1122",  # Esys (version < 3.0, no SD card
-		"VID_C251&PID_1123",  # Esys (version >= 3.0, with HID keyboard, no SD card
-		"VID_C251&PID_1124",  # Esys (version < 3.0, with SD card
-		"VID_C251&PID_1125",  # Esys (version >= 3.0, with HID keyboard, with SD card
-		"VID_C251&PID_1126",  # Esys (version >= 3.0, no SD card
-		"VID_C251&PID_1127",  # Reserved
-		"VID_C251&PID_1128",  # Esys (version >= 3.0, with SD card
-		"VID_C251&PID_1129",  # Reserved
-		"VID_C251&PID_112A",  # Reserved
-		"VID_C251&PID_112B",  # Reserved
-		"VID_C251&PID_112C",  # Reserved
-		"VID_C251&PID_112D",  # Reserved
-		"VID_C251&PID_112E",  # Reserved
-		"VID_C251&PID_112F",  # Reserved
-		"VID_C251&PID_1130",  # Esytime
-		"VID_C251&PID_1131",  # Reserved
-		"VID_C251&PID_1132",  # Reserved
-	})
-	addUsbDevices("eurobraille", KEY_SERIAL, {
-		"VID_28AC&PID_0012",  # b.note
-		"VID_28AC&PID_0013",  # b.note 2
-		"VID_28AC&PID_0020",  # b.book internal
-		"VID_28AC&PID_0021",  # b.book external
-	})
-
-	addBluetoothDevices("eurobraille", lambda m: m.id.startswith("Esys"))
-
-	# freedomScientific
-	addUsbDevices("freedomScientific", KEY_CUSTOM, {
-		"VID_0F4E&PID_0100",  # Focus 1
-		"VID_0F4E&PID_0111",  # PAC Mate
-		"VID_0F4E&PID_0112",  # Focus 2
-		"VID_0F4E&PID_0114",  # Focus Blue
-	})
-
-	addBluetoothDevices("freedomScientific", lambda m: (
-		any(
-			m.id.startswith(prefix)
-			for prefix in (
-				"F14", "Focus 14 BT",
-				"Focus 40 BT",
-				"Focus 80 BT",
-			)
-		)
-	))
-
-	# handyTech
-	addUsbDevices("handyTech", KEY_SERIAL, {
-		"VID_0403&PID_6001",  # FTDI chip
-		"VID_0921&PID_1200",  # GoHubs chip
-	})
-
-	# Newer Handy Tech displays have a native HID processor
-	addUsbDevices("handyTech", KEY_HID, {
-		"VID_1FE4&PID_0054",  # Active Braille
-		"VID_1FE4&PID_0055",  # Connect Braille
-		"VID_1FE4&PID_0061",  # Actilino
-		"VID_1FE4&PID_0064",  # Active Star 40
-		"VID_1FE4&PID_0081",  # Basic Braille 16
-		"VID_1FE4&PID_0082",  # Basic Braille 20
-		"VID_1FE4&PID_0083",  # Basic Braille 32
-		"VID_1FE4&PID_0084",  # Basic Braille 40
-		"VID_1FE4&PID_008A",  # Basic Braille 48
-		"VID_1FE4&PID_0086",  # Basic Braille 64
-		"VID_1FE4&PID_0087",  # Basic Braille 80
-		"VID_1FE4&PID_008B",  # Basic Braille 160
-		"VID_1FE4&PID_008C",  # Basic Braille 84
-		"VID_1FE4&PID_0093",  # Basic Braille Plus 32
-		"VID_1FE4&PID_0094",  # Basic Braille Plus 40
-		"VID_1FE4&PID_00A4",  # Activator
-	})
-
-	# Some older HT displays use a HID converter and an internal serial interface
-	addUsbDevices("handyTech", KEY_HID, {
-		"VID_1FE4&PID_0003",  # USB-HID adapter
-		"VID_1FE4&PID_0074",  # Braille Star 40
-		"VID_1FE4&PID_0044",  # Easy Braille
-	})
-
-	addBluetoothDevices("handyTech", lambda m: any(m.id.startswith(prefix) for prefix in (
-		"Actilino AL",
-		"Active Braille AB",
-		"Active Star AS",
-		"Basic Braille BB",
-		"Basic Braille Plus BP",
-		"Braille Star 40 BS",
-		"Braillino BL",
-		"Braille Wave BW",
-		"Easy Braille EBR",
-		"Activator AC",
-	)))
-
-	# hims
-	# Bulk devices
-	addUsbDevices("hims", KEY_CUSTOM, {
-		"VID_045E&PID_930A",  # Braille Sense & Smart Beetle
-		"VID_045E&PID_930B",  # Braille EDGE 40
-	})
-
-	# Sync Braille, serial device
-	addUsbDevices("hims", KEY_SERIAL, {
-		"VID_0403&PID_6001",
-	})
-
-	addBluetoothDevices("hims", lambda m: any(m.id.startswith(prefix) for prefix in (
-		"BrailleSense",
-		"BrailleEDGE",
-		"SmartBeetle",
-	)))
-
-	# NattiqBraille
-	addUsbDevices("nattiqbraille", KEY_SERIAL, {
-		"VID_2341&PID_8036",  # Atmel-based USB Serial for Nattiq nBraille
-	})
-
-	# superBrl
-	addUsbDevices("superBrl", KEY_SERIAL, {
-		"VID_10C4&PID_EA60",  # SuperBraille 3.2
-	})
-
-	# seika
-	addUsbDevices("seikantk", KEY_HID, {
-		"VID_10C4&PID_EA80",  # Seika Notetaker
-	})
-
-	from brailleDisplayDrivers.seikantk import isSeikaBluetoothDeviceMatch
-	addBluetoothDevices(
-		"seikantk",
-		isSeikaBluetoothDeviceMatch
-	)
-
-	# albatross
-	addUsbDevices("albatross", KEY_SERIAL, {
-		"VID_0403&PID_6001",  # Caiku Albatross 46/80
-	})
+	for display in getSupportedBrailleDisplayDrivers():
+		display.registerAutomaticDetection(DriverRegistrar(display.name))
+	# Hack, Caiku Albatross detection conflicts with other drivers
+	# when it isn't the last driver in the detection logic.
+	_driverDevices.move_to_end("albatross")
 
 
 def terminate():
@@ -814,3 +549,73 @@ def terminate():
 	scanForDevices.unregister(_Detector._bgScanBluetooth)
 	scanForDevices.unregister(_Detector._bgScanUsb)
 	deviceInfoFetcher = None
+
+
+class DriverRegistrar:
+	""" An object to facilitate registration of drivers in the bdDetect system.
+	It is instanciated for a specific driver and
+	passed to L{braille.BrailleDisplayDriver.registerAutomaticDetection}.
+	"""
+
+	_driver: str
+
+	def __init__(self, driver: str):
+		self._driver = driver
+
+	def _getDriverDict(self) -> DriverDictT:
+		try:
+			return _driverDevices[self._driver]
+		except KeyError:
+			ret = _driverDevices[self._driver] = DriverDictT(set)
+			return ret
+
+	def addUsbDevices(self, type: str, ids: Set[str]):
+		"""Associate USB devices with the driver on this instance.
+		@param type: The type of the driver, either C{KEY_HID}, C{KEY_SERIAL} or C{KEY_CUSTOM}.
+		@param ids: A set of USB IDs in the form C{"VID_xxxx&PID_XXXX"}.
+			Note that alphabetical characters in hexadecimal numbers should be uppercase.
+		@raise ValueError: When one of the provided IDs is malformed.
+		"""
+		malformedIds = [id for id in ids if not isinstance(id, str) or not USB_ID_REGEX.match(id)]
+		if malformedIds:
+			raise ValueError(
+				f"Invalid IDs provided for driver {self._driver!r}, type {type!r}: "
+				f"{', '.join(malformedIds)}"
+			)
+		devs = self._getDriverDict()
+		driverUsb = devs[type]
+		driverUsb.update(ids)
+
+	def addBluetoothDevices(self, matchFunc: MatchFuncT):
+		"""Associate Bluetooth HID or COM ports with the driver on this instance.
+		@param matchFunc: A function which determines whether a given Bluetooth device matches.
+			It takes a L{DeviceMatch} as its only argument
+			and returns a C{bool} indicating whether it matched.
+		"""
+		devs = self._getDriverDict()
+		devs[KEY_BLUETOOTH] = matchFunc
+
+	def addDeviceScanner(
+			self,
+			scanFunc: Callable[..., Iterable[Tuple[str, DeviceMatch]]],
+			moveToStart: bool = False
+	):
+		"""Register a callable to scan devices.
+		This adds a handler to L{scanForDevices}.
+		@param scanFunc: Callable that should yield a tuple containing a driver name as str and DeviceMatch.
+			The callable is called with these keyword arguments:
+			@param usb: Whether the handler is expected to yield USB devices.
+			@type usb: bool
+			@param bluetooth: Whether the handler is expected to yield USB devices.
+			@type bluetooth: bool
+			@param limitToDevices: Drivers to which detection should be limited.
+				C{None} if no driver filtering should occur.
+			@type limitToDevices: Optional[List[str]]
+		@param moveToStart: If C{True}, the registered callable will be moved to the start
+			of the list of registered handlers.
+			Note that subsequent callback registrations may also request to be moved to the start.
+			You should never rely on the registered callable being the first in order.
+		"""
+		scanForDevices.register(scanFunc)
+		if moveToStart:
+			scanForDevices.moveToEnd(scanFunc, last=False)

@@ -1,14 +1,18 @@
-# louisHelper.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018 NV Access Limited, Babbage B.V.
+# Copyright (C) 2018-2023 NV Access Limited, Babbage B.V.
 
 """Helper module to ease communication to and from liblouis."""
 
-import louis
-from logHandler import log
 import config
+from logHandler import log
+import globalVars
+import os
+
+with os.add_dll_directory(globalVars.appDir):
+	import louis
+
 
 LOUIS_TO_NVDA_LOG_LEVELS = {
 	louis.LOG_ALL: log.DEBUG,

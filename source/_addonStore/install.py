@@ -3,10 +3,6 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-# Needed for type hinting CaseInsensitiveDict
-# Can be removed in a future version of python (3.8+)
-from __future__ import annotations
-
 from os import (
 	PathLike,
 )
@@ -85,9 +81,9 @@ def installAddon(addonPath: PathLike) -> None:
 	prevAddon = _getPreviouslyInstalledAddonById(bundle)
 
 	try:
+		installAddonBundle(bundle)
 		if prevAddon:
 			prevAddon.requestRemove()
-		installAddonBundle(bundle)
 	except AddonError:  # Handle other exceptions as they are known
 		log.error("Error installing addon bundle from %s" % addonPath, exc_info=True)
 		raise DisplayableError(

@@ -1,26 +1,27 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited
+# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-# Needed for type hinting CaseInsensitiveDict
-# Can be removed in a future version of python (3.8+)
-from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
 
 from locale import strxfrm
 from typing import (
 	FrozenSet,
+	Generic,
 	List,
 	Optional,
 	TYPE_CHECKING,
+	TypeVar,
 )
 
 from requests.structures import CaseInsensitiveDict
 
 from _addonStore.models.addon import (
-	AddonGUIModel,
+	_AddonGUIModel,
+	_AddonStoreModel,
+	_AddonManifestModel,
 )
 from _addonStore.models.status import (
 	_StatusFilterKey,
@@ -53,14 +54,20 @@ class AddonListField(_AddonListFieldData, Enum):
 		pgettext("addonStore", "Name"),
 		150,
 	)
+	status = (
+		# Translators: The name of the column that contains the status of the addon.
+		# e.g. available, downloading installing
+		pgettext("addonStore", "Status"),
+		150
+	)
 	currentAddonVersionName = (
-		# Translators: The name of the column that contains the installed addons version string.
+		# Translators: The name of the column that contains the installed addon's version string.
 		pgettext("addonStore", "Installed version"),
 		100,
 		frozenset({_StatusFilterKey.AVAILABLE}),
 	)
 	availableAddonVersionName = (
-		# Translators: The name of the column that contains the available addons version string.
+		# Translators: The name of the column that contains the available addon's version string.
 		pgettext("addonStore", "Available version"),
 		100,
 		frozenset({_StatusFilterKey.INCOMPATIBLE, _StatusFilterKey.INSTALLED}),
@@ -71,30 +78,34 @@ class AddonListField(_AddonListFieldData, Enum):
 		50,
 	)
 	publisher = (
-		# Translators: The name of the column that contains the addons publisher.
+		# Translators: The name of the column that contains the addon's publisher.
 		pgettext("addonStore", "Publisher"),
-		100
+		100,
+		frozenset({_StatusFilterKey.INCOMPATIBLE, _StatusFilterKey.INSTALLED})
 	)
-	status = (
-		# Translators: The name of the column that contains the status of the addon.
-		# e.g. available, downloading installing
-		pgettext("addonStore", "Status"),
-		150
+	author = (
+		# Translators: The name of the column that contains the addon's author.
+		pgettext("addonStore", "Author"),
+		100,
+		frozenset({_StatusFilterKey.AVAILABLE, _StatusFilterKey.UPDATE})
 	)
 
 
-class AddonListItemVM:
+_AddonModelT = TypeVar("_AddonModelT", bound=_AddonGUIModel)
+
+
+class AddonListItemVM(Generic[_AddonModelT]):
 	def __init__(
 			self,
-			model: AddonGUIModel,
+			model: _AddonModelT,
 			status: AvailableAddonStatus = AvailableAddonStatus.AVAILABLE
 	):
-		self._model: AddonGUIModel = model  # read-only
+		self._model: _AddonModelT = model  # read-only
 		self._status: AvailableAddonStatus = status  # modifications triggers L{updated.notify}
 		self.updated = extensionPoints.Action()  # Notify of changes to VM, argument: addonListItemVM
 
 	@property
-	def model(self) -> AddonGUIModel:
+	def model(self) -> _AddonModelT:
 		return self._model
 
 	@property
@@ -118,9 +129,9 @@ class AddonListItemVM:
 
 
 class AddonDetailsVM:
-	def __init__(self, listItem: Optional[AddonListItemVM] = None):
-		self._listItem: Optional[AddonListItemVM] = listItem
-		self._isLoading: bool = False
+	def __init__(self, listVM: "AddonListVM"):
+		self._listVM = listVM
+		self._listItem: Optional[AddonListItemVM] = listVM.getSelection()
 		self.updated = extensionPoints.Action()  # triggered by setting L{self._listItem}
 
 	@property
@@ -129,15 +140,6 @@ class AddonDetailsVM:
 
 	@listItem.setter
 	def listItem(self, newListItem: Optional[AddonListItemVM]):
-		if (
-			self._listItem == newListItem  # both may be same ref or None
-			or (
-				None not in (newListItem, self._listItem)
-				and self._listItem.Id == newListItem.Id  # confirm with addonId
-			)
-		):
-			# already set, exit early
-			return
 		self._listItem = newListItem
 		# ensure calling on the main thread.
 		core.callLater(delay=0, callable=self.updated.notify, addonDetailsVM=self)
@@ -149,7 +151,8 @@ class AddonListVM:
 			addons: List[AddonListItemVM],
 			storeVM: "AddonStoreVM",
 	):
-		self._addons: CaseInsensitiveDict[AddonListItemVM] = CaseInsensitiveDict()
+		self._isLoading: bool = False
+		self._addons: CaseInsensitiveDict[AddonListItemVM[_AddonGUIModel]] = CaseInsensitiveDict()
 		self._storeVM = storeVM
 		self.itemUpdated = extensionPoints.Action()
 		self.updated = extensionPoints.Action()
@@ -243,6 +246,11 @@ class AddonListVM:
 			return self._addonsFilteredOrdered.index(self.selectedAddonId)
 		return None
 
+	def getAddonAtIndex(self, index: int) -> AddonListItemVM:
+		self._validate(selectionIndex=index)
+		selectedAddonId = self._addonsFilteredOrdered[index]
+		return self._addons[selectedAddonId]
+
 	def setSelection(self, index: Optional[int]) -> Optional[AddonListItemVM]:
 		self._validate(selectionIndex=index)
 		self.selectedAddonId = None
@@ -292,10 +300,14 @@ class AddonListVM:
 		def _containsTerm(detailsVM: AddonListItemVM, term: str) -> bool:
 			term = term.casefold()
 			model = detailsVM.model
+			inPublisher = isinstance(model, _AddonStoreModel) and term in model.publisher.casefold()
+			inAuthor = isinstance(model, _AddonManifestModel) and term in model.author.casefold()
 			return (
 				term in model.displayName.casefold()
 				or term in model.description.casefold()
-				or term in model.publisher.casefold()
+				or term in model.addonId.casefold()
+				or inPublisher
+				or inAuthor
 			)
 
 		filtered = (

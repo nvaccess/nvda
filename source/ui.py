@@ -24,7 +24,7 @@ from config.configFlags import TetherTo
 import globalVars
 from typing import Optional
 
-from systemUtils import _isSecureDesktop
+from utils.security import isRunningOnSecureDesktop
 
 # From urlmon.h
 URL_MK_UNIFORM = 1
@@ -89,7 +89,7 @@ def browseableMessage(message: str, title: Optional[str] = None, isHtml: bool = 
 	@param isHtml: Whether the message is html
 	"""
 	splitWith: str = "__NVDA:split-here__"  # Unambiguous regex splitter for javascript in message.html, #14667
-	if _isSecureDesktop():
+	if isRunningOnSecureDesktop():
 		import wx  # Late import to prevent circular dependency.
 		wx.CallAfter(_warnBrowsableMessageNotAvailableOnSecureScreens, title)
 		return

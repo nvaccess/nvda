@@ -6,6 +6,7 @@
 import os
 import sys
 import time
+import winreg
 
 import globalVars
 
@@ -145,11 +146,11 @@ class _TrackNVDAInitialization:
 	regardless of lock state.
 	Security checks may cause the desktop object to not be set if NVDA starts on the lock screen.
 	As such, during initialization, NVDA should behave as if Windows is unlocked,
-	i.e. winAPI.sessionTracking._isLockScreenModeActive should return False.
+	i.e. winAPI.sessionTracking.isLockScreenModeActive should return False.
 	"""
 
 	_isNVDAInitialized = False
-	"""When False, _isLockScreenModeActive is forced to return False.
+	"""When False, isLockScreenModeActive is forced to return False.
 	"""
 
 	@staticmethod
@@ -160,3 +161,38 @@ class _TrackNVDAInitialization:
 	@staticmethod
 	def isInitializationComplete() -> bool:
 		return _TrackNVDAInitialization._isNVDAInitialized
+
+
+def _forceSecureModeEnabled() -> bool:
+	from config import RegistryKey
+	try:
+		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
+		return bool(winreg.QueryValueEx(k, RegistryKey.FORCE_SECURE_MODE_SUBKEY.value)[0])
+	except WindowsError:
+		# Expected state by default, forceSecureMode parameter not set
+		return False
+
+
+def _serviceDebugEnabled() -> bool:
+	from config import RegistryKey
+	try:
+		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
+		return bool(winreg.QueryValueEx(k, RegistryKey.SERVICE_DEBUG_SUBKEY.value)[0])
+	except WindowsError:
+		# Expected state by default, serviceDebug parameter not set
+		return False
+
+
+def _configInLocalAppDataEnabled() -> bool:
+	from config import RegistryKey
+	from logHandler import log
+
+	try:
+		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
+		return bool(winreg.QueryValueEx(k, RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY.value)[0])
+	except FileNotFoundError:
+		log.debug("Installed user config is not in local app data")
+		return False
+	except WindowsError:
+		# Expected state by default, configInLocalAppData parameter not set
+		return False

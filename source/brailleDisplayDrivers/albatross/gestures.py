@@ -59,6 +59,7 @@ _gestureMap = inputCore.GlobalGestureMap({
 		"braille_toggleShowCursor": ("br(albatross):f1+cursor1", "br(albatross):f9+cursor2",),
 		"braille_cycleShowMessages": ("br(albatross):f1+f2", "br(albatross):f9+f10",),
 		"braille_cycleShowSelection": ("br(albatross):f1+f5", "br(albatross):f9+f14",),
+		"braille_cycleReviewRoutingMovesSystemCaret": ("br(albatross):f1+f3", "br(albatross):f9+f11",),
 		"review_activate": ("br(albatross):f7+f8",),
 		"dateTime": ("br(albatross):f9",),
 		"say_battery_status": ("br(albatross):f10",),

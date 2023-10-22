@@ -22,9 +22,11 @@ import easeOfAccess
 import COMRegistrationFixes
 import winKernel
 from typing import (
+	Any,
 	Dict,
 	Union,
 )
+import NVDAState
 from NVDAState import WritePaths
 
 _wsh=None
@@ -298,7 +300,21 @@ def registerInstallation(
 	with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE, config.RegistryKey.NVDA.value, 0, winreg.KEY_WRITE) as k:
 		winreg.SetValueEx(k,"startMenuFolder",None,winreg.REG_SZ,startMenuFolder)
 		if configInLocalAppData:
-			winreg.SetValueEx(k,config.CONFIG_IN_LOCAL_APPDATA_SUBKEY,None,winreg.REG_DWORD,int(configInLocalAppData))
+			winreg.SetValueEx(
+				k,
+				config.RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY.value,
+				None,
+				winreg.REG_DWORD,
+				int(configInLocalAppData)
+			)
+		if NVDAState._forceSecureModeEnabled():
+			winreg.SetValueEx(
+				k,
+				config.RegistryKey.FORCE_SECURE_MODE_SUBKEY.value,
+				None,
+				winreg.REG_DWORD,
+				1
+			)
 	registerEaseOfAccess(installDir)
 	if startOnLogonScreen is not None:
 		config._setStartOnLogonScreen(startOnLogonScreen)
@@ -605,13 +621,9 @@ def tryCopyFile(sourceFilePath,destFilePath):
 			errorCode = ctypes.GetLastError()
 			raise OSError("Unable to copy file %s to %s, error %d"%(sourceFilePath,destFilePath,errorCode))
 
-def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
+
+def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = True):
 	prevInstallPath=getInstallPath(noDefault=True)
-	try:
-		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, config.RegistryKey.NVDA.value)
-		configInLocalAppData = bool(winreg.QueryValueEx(k, config.CONFIG_IN_LOCAL_APPDATA_SUBKEY)[0])
-	except WindowsError:
-		configInLocalAppData = False
 	unregisterInstallation(keepDesktopShortcut=shouldCreateDesktopShortcut)
 	installDir=defaultInstallPath
 	startMenuFolder=defaultStartMenuFolder
@@ -642,7 +654,7 @@ def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 		startMenuFolder,
 		shouldCreateDesktopShortcut,
 		shouldRunAtLogon,
-		configInLocalAppData
+		NVDAState._configInLocalAppDataEnabled()
 	)
 	COMRegistrationFixes.fixCOMRegistrations()
 
@@ -686,25 +698,45 @@ def registerEaseOfAccess(installDir):
 			versionInfo.name)
 		winreg.SetValueEx(appKey, "Description", None, winreg.REG_SZ,
 			versionInfo.longName)
-		if easeOfAccess.canConfigTerminateOnDesktopSwitch:
-			winreg.SetValueEx(appKey, "Profile", None, winreg.REG_SZ,
-				'<HCIModel><Accommodation type="severe vision"/></HCIModel>')
-			winreg.SetValueEx(appKey, "SimpleProfile", None, winreg.REG_SZ,
-				"screenreader")
-			winreg.SetValueEx(appKey, "ATExe", None, winreg.REG_SZ,
-				"nvda.exe")
-			winreg.SetValueEx(appKey, "StartExe", None, winreg.REG_SZ,
-				os.path.join(installDir, u"nvda.exe"))
-			winreg.SetValueEx(appKey, "StartParams", None, winreg.REG_SZ,
-				"--ease-of-access")
-			winreg.SetValueEx(appKey, "TerminateOnDesktopSwitch", None,
-				winreg.REG_DWORD, 0)
-		else:
-			# We don't want NVDA to appear in EoA because
-			# starting NVDA from there won't work in this case.
-			# We can do this by not setting Profile and SimpleProfile.
-			# NVDA can still change the EoA logon settings.
-			winreg.SetValueEx(appKey, "ATExe", None, winreg.REG_SZ,
-				"nvda_eoaProxy.exe")
-			winreg.SetValueEx(appKey, "StartExe", None, winreg.REG_SZ,
-				os.path.join(installDir, u"nvda_eoaProxy.exe"))
+		winreg.SetValueEx(
+			appKey,
+			"Profile",
+			None,
+			winreg.REG_SZ,
+			'<HCIModel><Accommodation type="severe vision"/></HCIModel>'
+		)
+		winreg.SetValueEx(
+			appKey,
+			"SimpleProfile",
+			None,
+			winreg.REG_SZ,
+			"screenreader"
+		)
+		winreg.SetValueEx(
+			appKey,
+			"ATExe",
+			None,
+			winreg.REG_SZ,
+			"nvda.exe"
+		)
+		winreg.SetValueEx(
+			appKey,
+			"StartExe",
+			None,
+			winreg.REG_SZ,
+			os.path.join(installDir, "nvda.exe")
+		)
+		winreg.SetValueEx(
+			appKey,
+			"StartParams",
+			None,
+			winreg.REG_SZ,
+			"--ease-of-access"
+		)
+		winreg.SetValueEx(
+			appKey,
+			"TerminateOnDesktopSwitch",
+			None,
+			winreg.REG_DWORD,
+			0
+		)

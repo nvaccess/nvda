@@ -121,8 +121,8 @@ DEVICE_TYPES: Dict[int, str] = {
 	0x0f: "Esytime 32 standard",
 	0x10: "Esytime evo 32",
 	0x11: "Esytime evo 32 standard",
-	0x12: "b.note",
-	0x13: "b.note 2",
-	0x14: "b.book",
-	0x15: "b.book 2"
+	0x12: "bnote",
+	0x13: "bnote 2",
+	0x14: "bbook",
+	0x15: "bbook 2"
 }

@@ -92,11 +92,31 @@ def getFakeCellCount(numCells: int) -> int:
 
 
 braille.filter_displaySize.register(getFakeCellCount)
+_original_handleReviewMove = braille.handler.handleReviewMove
+
+
+def _patched_handleReviewMove(shouldAutoTether=True):
+	"""
+	For braille unit tests that rely on updating the review cursor, ensure that we simulate a core cycle
+	by executing BrailleHandler._handlePendingUpdate after Braillehandler.handleReviewMove
+	"""
+	_original_handleReviewMove(shouldAutoTether)
+	braille.handler._handlePendingUpdate()
+
+
+braille.handler.handleReviewMove = _patched_handleReviewMove
 
 # Changing braille displays might call braille.handler.disableDetection(),
 # which requires the bdDetect.deviceInfoFetcher to be set.
 import bdDetect  # noqa: E402
 bdDetect.deviceInfoFetcher = bdDetect._DeviceInfoFetcher()
+
+# Braille unit tests also need braille input to be initialized.
+import brailleInput  # noqa: E402
+brailleInput.initialize()
+
+# Make sure there's no blinking cursor as that relies on wx
+config.conf['braille']['cursorBlink'] = False
 
 # The focus and navigator objects need to be initialized to something.
 from .objectProvider import PlaceholderNVDAObject,NVDAObjectWithRole

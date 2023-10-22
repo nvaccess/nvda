@@ -222,9 +222,9 @@ class OneCoreSynthDriver(SynthDriver):
 		# Set initial values for parameters that can't be queried when prosody is not supported.
 		# This initialises our cache for the value.
 		# When prosody is supported, the values are used for cachign reasons.
-		self._rate = 50
-		self._pitch = 50
-		self._volume = 100
+		self._rate: int = 50
+		self._pitch: int = 50
+		self._volume: int = 100
 
 		if self.supportsProsodyOptions:
 			self._dll.ocSpeech_getPitch.restype = ctypes.c_double
@@ -339,13 +339,13 @@ class OneCoreSynthDriver(SynthDriver):
 		rawPitch = self._percentToParam(pitch, self.MIN_PITCH, self.MAX_PITCH)
 		self._queuedSpeech.append((self._dll.ocSpeech_setPitch, rawPitch))
 
-	def _get_volume(self):
+	def _get_volume(self) -> int:
 		if not self.supportsProsodyOptions:
 			return self._volume
 		rawVolume = self._dll.ocSpeech_getVolume(self._ocSpeechToken)
 		return int(rawVolume * 100)
 
-	def _set_volume(self, volume):
+	def _set_volume(self, volume: int):
 		self._volume = volume
 		if not self.supportsProsodyOptions:
 			return

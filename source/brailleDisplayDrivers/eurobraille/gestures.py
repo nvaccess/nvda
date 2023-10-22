@@ -1,24 +1,29 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2017-2023 NV Access Limited, Babbage B.V., Eurobraille
+# Copyright (C) 2017-2023 NV Access Limited, Babbage B.V., Eurobraille, Cyrille Bougot
 
+from typing import TYPE_CHECKING
 import braille
 import brailleInput
 import inputCore
 from . import constants
+
+if TYPE_CHECKING:
+	from .driver import BrailleDisplayDriver
+
 
 GestureMapEntries = {
 	"globalCommands.GlobalCommands": {
 		"braille_routeTo": ("br(eurobraille):routing",),
 		"braille_reportFormatting": ("br(eurobraille):doubleRouting",),
 		"braille_scrollBack": (
-			"br(eurobraille.b.note):joystick1Left",
+			"br(eurobraille.bnote):joystick1Left",
 			"br(eurobraille):switch1Left",
 			"br(eurobraille):l1",
 		),
 		"braille_scrollForward": (
-			"br(eurobraille.b.note):joystick1Right",
+			"br(eurobraille.bnote):joystick1Right",
 			"br(eurobraille):switch1Right",
 			"br(eurobraille):l8",
 		),
@@ -151,8 +156,8 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 	source = constants.name
 
-	def __init__(self, display):
-		super(InputGesture, self).__init__()
+	def __init__(self, display: "BrailleDisplayDriver"):
+		super().__init__()
 		self.model = display.deviceType.lower().split(" ")[0]
 		keysDown = dict(display.keysDown)
 
@@ -164,7 +169,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 					# 0x1000 is backspace, 0x2000 is space
 					self.dots = groupKeysDown & 0xff
 					self.space = groupKeysDown & 0x200
-				names.extend(f"dot{((i + 1) for i in range(8) if (groupKeysDown &0xff) & (1 << i))}")
+				names.extend(f"dot{i + 1}" for i in range(8) if (groupKeysDown & 0xff) & (1 << i))
 				if groupKeysDown & 0x200:
 					names.append("space")
 				if groupKeysDown & 0x100:

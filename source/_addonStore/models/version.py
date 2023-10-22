@@ -7,8 +7,8 @@
 from typing import (
 	NamedTuple,
 	Optional,
+	Protocol,
 )
-from typing_extensions import Protocol  # Python 3.8 adds native support
 import addonAPIVersion
 
 
@@ -37,8 +37,11 @@ class SupportsVersionCheck(Protocol):
 	""" Examples implementing this protocol include:
 	- addonHandler.Addon
 	- addonHandler.AddonBundle
-	- _addonStore.models.AddonGUIModel
+	- _addonStore.models._AddonGUIModel
+	- _addonStore.models._AddonStoreModel
+	- _addonStore.models.AddonManifestModel
 	- _addonStore.models.AddonStoreModel
+	- _addonStore.models.InstalledAddonStoreModel
 	"""
 	minimumNVDAVersion: addonAPIVersion.AddonApiVersionT
 	lastTestedNVDAVersion: addonAPIVersion.AddonApiVersionT
@@ -58,9 +61,10 @@ class SupportsVersionCheck(Protocol):
 		and when this add-on is updated, disabled or removed.
 		"""
 		from addonHandler import AddonStateCategory, state
-		overiddenAddons = state[AddonStateCategory.OVERRIDE_COMPATIBILITY]
-		assert self.name not in overiddenAddons and self.canOverrideCompatibility
-		overiddenAddons.add(self.name)
+		overriddenAddons = state[AddonStateCategory.OVERRIDE_COMPATIBILITY]
+		assert self.name not in overriddenAddons, f"{self.name}, {overriddenAddons}"
+		assert self.canOverrideCompatibility
+		overriddenAddons.add(self.name)
 		state[AddonStateCategory.BLOCKED].discard(self.name)
 		state[AddonStateCategory.DISABLED].discard(self.name)
 
