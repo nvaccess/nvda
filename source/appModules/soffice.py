@@ -31,7 +31,9 @@ import vision
 
 
 class SymphonyTextInfo(IA2TextTextInfo):
-	# C901 'SymphonyTextInfo._getFormatFieldFromLegacyAttributesString' is too complex
+	# C901 '_getFormatFieldFromLegacyAttributesString' is too complex
+	# Note: when working on _getFormatFieldFromLegacyAttributesString, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
 	# This is legacy code, kept for compatibility reasons.
 	def _getFormatFieldFromLegacyAttributesString(  # noqa: C901
 			self,
