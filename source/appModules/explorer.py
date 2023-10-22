@@ -272,7 +272,9 @@ class WorkerW(IAccessible):
 
 class AppModule(appModuleHandler.AppModule):
 
-	# C901: chooseNVDAObjectOverlayClasses is too complex
+	# C901 'chooseNVDAObjectOverlayClasses' is too complex
+	# Note: when working on chooseNVDAObjectOverlayClasses, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):  # NOQA: C901
 		windowClass = obj.windowClassName
 		role = obj.role
