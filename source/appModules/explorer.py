@@ -444,7 +444,7 @@ class AppModule(appModuleHandler.AppModule):
 			# This is not the file explorer status bar. Resort to standard behavior.
 			raise NotImplementedError
 
-	def event_NVDAObject_init(self, obj):
+	def event_NVDAObject_init(self, obj: NVDAObject) -> None:
 		windowClass = obj.windowClassName
 		role = obj.role
 
