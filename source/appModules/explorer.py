@@ -237,15 +237,10 @@ class ReadOnlyEditBox(Edit):
 
 
 class MetadataEditField(RichEdit50):
-	""" Used for metadata edit fields in Windows Explorer in Windows 7.
-	By default these fields would use ITextDocumentTextInfo ,
-	but to avoid Windows Explorer crashes we need to use EditTextInfo here. """
+
 	@classmethod
 	def _get_TextInfo(cls):
-		if winVersion.getWinVer() <= winVersion.WIN7_SP1:
-			cls.TextInfo = EditTextInfo
-		else:
-			cls.TextInfo = super().TextInfo
+		cls.TextInfo = super().TextInfo
 		return cls.TextInfo
 
 
