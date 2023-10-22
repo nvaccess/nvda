@@ -2888,6 +2888,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		self.numCols = numCells
 
 	#: Number of rows of the braille display, this will be 1 for most displays
+	#: Note: Setting this to 0 will cause numCells to be 0 and hence will disable braille.
 	numRows: int = 1
 
 	#: Number of columns (cells per row) of the braille display
