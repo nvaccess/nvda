@@ -250,6 +250,7 @@ class MetadataEditField(RichEdit50):
 
 
 class WorkerW(IAccessible):
+
 	def event_gainFocus(self):
 		# #6671: do not allow WorkerW thread to send gain focus event,
 		# as it causes 'pane" to be announced when minimizing windows or moving to desktop.
