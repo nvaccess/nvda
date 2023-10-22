@@ -2882,7 +2882,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		"""
 		return self.numRows * self.numCols
 
-	def _set_numCells(self, numCells):
+	def _set_numCells(self, numCells: int):
 		if self.numRows > 1:
 			raise ValueError("Please set numCols explicitly and don't set numCells for multi line braille displays")
 		self.numCols = numCells
