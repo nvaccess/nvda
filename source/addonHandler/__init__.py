@@ -752,22 +752,21 @@ def getCodeAddon(obj=None, frameDist=1):
 	raise AddonError("Code does not belong to an addon")
 
 
-_TRANSLATION_FUNCTIONS = ["_", "ngettext", "pgettext", "npgettext"]
-
-
 def initTranslation():
 	addon = getCodeAddon(frameDist=2)
 	translations = addon.getTranslationsInstance()
+	_TRANSLATION_FUNCTIONS = {
+		translations.gettext: "_",
+		translations.ngettext: "ngettext",
+		translations.pgettext: "pgettext",
+		translations.npgettext: "npgettext"
+	}
 	# Point _ to the translation object in the globals namespace of the caller frame
 	try:
 		callerFrame = inspect.currentframe().f_back
 		module = inspect.getmodule(callerFrame)
-		[
-			setattr(
-				module, func, getattr(translations, "gettext" if func == "_" else func)
-			)
-			for func in _TRANSLATION_FUNCTIONS
-		]
+		for funcName, installAs in _TRANSLATION_FUNCTIONS.items():
+			setattr(module, installAs, funcName)
 	finally:
 		del callerFrame # Avoid reference problems with frames (per python docs)
 
