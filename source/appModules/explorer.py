@@ -251,22 +251,9 @@ class MetadataEditField(RichEdit50):
 
 class WorkerW(IAccessible):
 	def event_gainFocus(self):
-		# #6671: Normally we do not allow WorkerW thread to send gain focus event,
+		# #6671: do not allow WorkerW thread to send gain focus event,
 		# as it causes 'pane" to be announced when minimizing windows or moving to desktop.
-		# However when closing Windows 7 Start Menu in some  cases
-		# focus lands  on it instead of the focused desktop item.
-		# Simply ignore the event if running on anything other than Win 7.
-		if winVersion.getWinVer() > winVersion.WIN7_SP1:
-			return
-		if eventHandler.isPendingEvents("gainFocus"):
-			return
-		if self.simpleFirstChild:
-			# If focus is not going to be moved autotically
-			# we need to forcefully move it to the focused desktop item.
-			# As we are interested in the first focusable object below the pane use simpleFirstChild.
-			self.simpleFirstChild.setFocus()
-			return
-		super().event_gainFocus()
+		return
 
 
 class AppModule(appModuleHandler.AppModule):
