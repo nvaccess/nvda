@@ -15,8 +15,6 @@ import winreg
 import winUser
 
 
-# Windows >= 8
-_canConfigTerminateOnDesktopSwitch: bool = True
 _APP_KEY_NAME = "nvda_nvda_v1"
 
 
@@ -31,10 +29,9 @@ def __getattr__(attrName: str) -> Any:
 	if attrName == "APP_KEY_NAME" and NVDAState._allowDeprecatedAPI():
 		log.warning("APP_KEY_NAME is deprecated.")
 		return _APP_KEY_NAME
-	# #15662: config can terminate on desktop switch (Windows 8.1 is minimum OS).
 	if attrName == "canConfigTerminateOnDesktopSwitch" and NVDAState._allowDeprecatedAPI():
-		log.warning("canConfigTerminateOnDesktopSwitch is deprecated, Windos 8.1 is the minimum OS.")
-		return _canConfigTerminateOnDesktopSwitch
+		log.warning("canConfigTerminateOnDesktopSwitch is deprecated.")
+		return True
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
