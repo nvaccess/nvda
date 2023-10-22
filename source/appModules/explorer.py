@@ -466,8 +466,13 @@ class AppModule(appModuleHandler.AppModule):
 
 		# The Address bar is embedded inside a progressbar, how strange.
 		# Lets hide that
-		if windowClass=="msctls_progress32" and winUser.getClassName(winUser.getAncestor(obj.windowHandle,winUser.GA_PARENT))=="Address Band Root":
-			obj.presentationType=obj.presType_layout
+		if (
+			windowClass == "msctls_progress32"
+			and winUser.getClassName(
+				winUser.getAncestor(obj.windowHandle, winUser.GA_PARENT)
+			) == "Address Band Root"
+		):
+			obj.presentationType = obj.presType_layout
 			return
 
 	def event_gainFocus(self, obj, nextHandler):
