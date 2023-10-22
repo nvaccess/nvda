@@ -17,7 +17,7 @@ import winVersion
 
 
 # Windows >= 8
-canConfigTerminateOnDesktopSwitch: bool = winVersion.getWinVer() >= winVersion.WIN8
+_canConfigTerminateOnDesktopSwitch: bool = True
 _APP_KEY_NAME = "nvda_nvda_v1"
 
 
