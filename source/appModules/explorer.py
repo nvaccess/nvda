@@ -464,14 +464,6 @@ class AppModule(appModuleHandler.AppModule):
 				obj.name = None
 			return
 
-		if windowClass == "DV2ControlHost" and role == controlTypes.Role.PANE:
-			# Windows 7 start menu.
-			obj.presentationType=obj.presType_content
-			obj.isPresentableFocusAncestor = True
-			# In Windows 7, the description of this pane is extremely verbose help text, so nuke it.
-			obj.description = None
-			return
-
 		# The Address bar is embedded inside a progressbar, how strange.
 		# Lets hide that
 		if windowClass=="msctls_progress32" and winUser.getClassName(winUser.getAncestor(obj.windowHandle,winUser.GA_PARENT))=="Address Band Root":
