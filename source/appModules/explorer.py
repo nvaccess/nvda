@@ -382,14 +382,6 @@ class AppModule(appModuleHandler.AppModule):
 		return statusBar
 
 	@staticmethod
-	def _getStatusBarTextWin7(obj) -> str:
-		"""For status bar in Windows 7 Windows Explorer we're interested only in the name of the first child
-		the rest are either empty or contain garbage."""
-		if obj.firstChild and obj.firstChild.name:
-			return obj.firstChild.name
-		raise NotImplementedError
-
-	@staticmethod
 	def _getStatusBarTextPostWin7(obj) -> str:
 		# The expected status bar, as of Windows 10 20H2 at least, contains:
 		#  - A grouping with a single static text child presenting the total number of elements
