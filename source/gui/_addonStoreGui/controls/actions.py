@@ -15,7 +15,7 @@ from typing import (
 
 import wx
 
-from _addonStore.models.status import _StatusFilterKey
+from _addonStore.models.status import _StatusFilterKey, AvailableAddonStatus
 from logHandler import log
 import ui
 
@@ -140,7 +140,14 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 				# Translators: Label for an action that installs the selected add-ons
 				displayName=pgettext("addonStore", "&Install selected add-ons"),
 				actionHandler=self._storeVM.getAddons,
-				validCheck=lambda aVMs: self._storeVM._filteredStatusKey == _StatusFilterKey.AVAILABLE,
+				#zzz validCheck=lambda aVMs: self._storeVM._filteredStatusKey == _StatusFilterKey.AVAILABLE,
+				validCheck=lambda aVMs: any([
+					(
+						aVM.status == AvailableAddonStatus.AVAILABLE
+						or (aVM.status == AvailableAddonStatus.INCOMPATIBLE and aVM.model.canOverrideCompatibility)
+					)
+					for aVM in aVMs
+				]),
 				actionTarget=self._selectedAddons
 			),
 			BatchAddonActionVM(
