@@ -382,7 +382,7 @@ class AppModule(appModuleHandler.AppModule):
 		return statusBar
 
 	@staticmethod
-	def _getStatusBarText(obj) -> str:
+	def _getStatusBarText(obj: NVDAObject) -> str:
 		# The expected status bar, as of Windows 10 20H2 at least, contains:
 		#  - A grouping with a single static text child presenting the total number of elements
 		#  - Optionally, a grouping with a single static text child presenting the number of
@@ -404,10 +404,12 @@ class AppModule(appModuleHandler.AppModule):
 					if grandChild.role != controlTypes.Role.RADIOBUTTON
 				)
 			):
-				selected = next(iter(
-					grandChild for grandChild in child.children
-					if controlTypes.State.CHECKED in grandChild.states
-				), None)
+				selected = next(
+					iter(
+						grandChild for grandChild in child.children
+						if controlTypes.State.CHECKED in grandChild.states
+					), None
+				)
 				if selected is not None:
 					parts.append(" ".join(
 						[child.name]
@@ -425,7 +427,7 @@ class AppModule(appModuleHandler.AppModule):
 			raise NotImplementedError
 		return ", ".join(parts)
 
-	def getStatusBarText(self, obj) -> str:
+	def getStatusBarText(self, obj: NVDAObject) -> str:
 		if isinstance(obj, UIA) or obj.UIAElement.cachedClassName == "StatusBarModuleInner":
 			return self._getStatusBarText(obj)
 		else:
