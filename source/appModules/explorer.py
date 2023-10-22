@@ -31,17 +31,17 @@ from winAPI.types import HWNDValT
 
 # Suppress incorrect Win 10 Task switching window focus
 class MultitaskingViewFrameWindow(UIA):
-	shouldAllowUIAFocusEvent=False
+	shouldAllowUIAFocusEvent = False
 
 
 # Suppress focus ancestry for task switching list items if alt is held down (alt+tab)
 class MultitaskingViewFrameListItem(UIA):
 
 	def _get_container(self):
-		if winUser.getAsyncKeyState(winUser.VK_MENU)&32768:
+		if winUser.getAsyncKeyState(winUser.VK_MENU) & 32768:
 			return api.getDesktopObject()
 		else:
-			return super(MultitaskingViewFrameListItem,self).container
+			return super(MultitaskingViewFrameListItem, self).container
 
 
 # Support for Win8 start screen search suggestions.
@@ -54,9 +54,10 @@ class SuggestionListItem(UIA):
 			super().event_UIA_elementSelected()
 
 
-# Windows 8 hack: Class to disable incorrect focus on windows 8 search box (containing the already correctly focused edit field)
+# Windows 8 hack: Class to disable incorrect focus on windows 8 search box
+# (containing the already correctly focused edit field)
 class SearchBoxClient(IAccessible):
-	shouldAllowIAccessibleFocusEvent=False
+	shouldAllowIAccessibleFocusEvent = False
 
 
 # Class for menu items  for Windows Places and Frequently used Programs (in start menu)
@@ -72,9 +73,17 @@ class SysListView32EmittingDuplicateFocusEvents(IAccessible):
 		if not res:
 			return False
 		focus = eventHandler.lastQueuedFocusObject
-		if type(focus)!=type(self) or (self.event_windowHandle,self.event_objectID,self.event_childID)!=(focus.event_windowHandle,focus.event_objectID,focus.event_childID):
+		if (
+			type(focus) != type(self)
+			or (
+				self.event_windowHandle, self.event_objectID, self.event_childID
+			) != (
+				focus.event_windowHandle, focus.event_objectID, focus.event_childID
+			)
+		):
 			return True
 		return False
+
 
 class NotificationArea(IAccessible):
 	"""The Windows notification area, a.k.a. system tray.
@@ -162,28 +171,30 @@ class ExplorerToolTip(ToolTip):
 
 class GridTileElement(UIA):
 
-	role=controlTypes.Role.TABLECELL
+	role = controlTypes.Role.TABLECELL
 
 	def _get_description(self):
-		name=self.name
-		descriptionStrings=[]
+		name = self.name
+		descriptionStrings = []
 		for child in self.children:
-			description=child.basicText
-			if not description or description==name: continue
+			description = child.basicText
+			if not description or description == name:
+				continue
 			descriptionStrings.append(description)
 		return " ".join(descriptionStrings)
 		return description
 
 
 class GridListTileElement(UIA):
-	role=controlTypes.Role.TABLECELL
-	description=None
+
+	role = controlTypes.Role.TABLECELL
+	description = None
 
 
 class GridGroup(UIA):
 	"""A group in the Windows 8 Start Menu.
 	"""
-	presentationType=UIA.presType_content
+	presentationType = UIA.presType_content
 
 	# Normally the name is the first tile which is rather redundant
 	# However some groups have custom header text which should be read instead
@@ -195,13 +206,15 @@ class GridGroup(UIA):
 
 
 class ImmersiveLauncher(UIA):
-	# When the Windows 8 start screen opens, focus correctly goes to the first tile, but then incorrectly back to the root of the window.
+	# When the Windows 8 start screen opens, focus correctly goes to the first tile,
+	# but then incorrectly back to the root of the window.
 	# Ignore focus events on this object.
-	shouldAllowUIAFocusEvent=False
+	shouldAllowUIAFocusEvent = False
 
 
 class StartButton(IAccessible):
-	"""For Windows 8.1 and 10 Start buttons to be recognized as proper buttons and to suppress selection announcement."""
+	"""For Windows 8.1 and 10 Start buttons to be recognized as proper buttons
+	and to suppress selection announcement."""
 
 	role = controlTypes.Role.BUTTON
 
@@ -211,28 +224,33 @@ class StartButton(IAccessible):
 		states = super(StartButton, self).states
 		states.discard(controlTypes.State.SELECTED)
 		return states
-		
+
+
 CHAR_LTR_MARK = u'\u200E'
 CHAR_RTL_MARK = u'\u200F'
+
+
 class UIProperty(UIA):
-	#Used for columns in Windows Explorer Details view.
-	#These can contain dates that include unwanted left-to-right and right-to-left indicator characters.
-	
+	"""Used for columns in Windows Explorer Details view.
+	These can contain dates that include unwanted left-to-right and right-to-left indicator characters.
+	"""
+
 	def _get_value(self):
 		value = super(UIProperty, self).value
 		if value is None:
 			return value
-		return value.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
+		return value.replace(CHAR_LTR_MARK, '').replace(CHAR_RTL_MARK, '')
 
 
 class ReadOnlyEditBox(Edit):
-#Used for read-only edit boxes in a properties window.
-#These can contain dates that include unwanted left-to-right and right-to-left indicator characters.
+	"""Used for read-only edit boxes in a properties window.
+	These can contain dates that include unwanted left-to-right and right-to-left indicator characters.
+	"""
 
 	def _get_windowText(self):
 		windowText = super(ReadOnlyEditBox, self).windowText
 		if windowText is not None:
-			return windowText.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
+			return windowText.replace(CHAR_LTR_MARK, '').replace(CHAR_RTL_MARK, '')
 		return windowText
 
 
@@ -258,9 +276,13 @@ class AppModule(appModuleHandler.AppModule):
 		windowClass = obj.windowClassName
 		role = obj.role
 
-		if windowClass in ("Search Box","UniversalSearchBand") and role==controlTypes.Role.PANE and isinstance(obj,IAccessible):
-			clsList.insert(0,SearchBoxClient)
-			return # Optimization: return early to avoid comparing class names and roles that will never match.
+		if (
+			windowClass in ("Search Box", "UniversalSearchBand")
+			and role == controlTypes.Role.PANE
+			and isinstance(obj, IAccessible)
+		):
+			clsList.insert(0, SearchBoxClient)
+			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if windowClass == "ToolbarWindow32":
 			if role != controlTypes.Role.POPUPMENU:
@@ -282,12 +304,12 @@ class AppModule(appModuleHandler.AppModule):
 
 		if windowClass == "Edit" and Edit in clsList and controlTypes.State.READONLY in obj.states:
 			clsList.insert(0, ReadOnlyEditBox)
-			return # Optimization: return early to avoid comparing class names and roles that will never match.
+			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if windowClass == "SysListView32" and isinstance(obj, IAccessible):
 			if(
 				role == controlTypes.Role.MENUITEM
-				or(
+				or (
 					role == controlTypes.Role.LISTITEM
 					and obj.simpleParent
 					and obj.simpleParent.simpleParent
@@ -295,14 +317,14 @@ class AppModule(appModuleHandler.AppModule):
 				)
 			):
 				clsList.insert(0, SysListView32EmittingDuplicateFocusEvents)
-			return # Optimization: return early to avoid comparing class names and roles that will never match.
+			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		# #5178: Start button in Windows 8.1 and 10 should not have been a list in the first place.
 		if windowClass == "Start" and role in (controlTypes.Role.LIST, controlTypes.Role.BUTTON):
 			if role == controlTypes.Role.LIST:
 				clsList.remove(List)
 			clsList.insert(0, StartButton)
-			return # Optimization: return early to avoid comparing class names and roles that will never match.
+			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if windowClass == 'RICHEDIT50W' and RichEdit50 in clsList and obj.windowControlID == 256:
 			clsList.insert(0, MetadataEditField)
@@ -335,9 +357,9 @@ class AppModule(appModuleHandler.AppModule):
 			# Windows 10 task switch list
 			elif role == controlTypes.Role.LISTITEM and (
 				# RS4 and below we can match on a window class
-				windowClass == "MultitaskingViewFrame" or
+				windowClass == "MultitaskingViewFrame"
 				# RS5 and above we must look for a particular UIA automationID on the list
-				isinstance(obj.parent, UIA) and obj.parent.UIAAutomationId == "SwitchItemListControl"
+				or isinstance(obj.parent, UIA) and obj.parent.UIAAutomationId == "SwitchItemListControl"
 			):
 				clsList.insert(0, MultitaskingViewFrameListItem)
 			elif uiaClassName == "UIProperty" and role == controlTypes.Role.EDITABLETEXT:
@@ -450,14 +472,22 @@ class AppModule(appModuleHandler.AppModule):
 
 	def event_gainFocus(self, obj, nextHandler):
 		wClass = obj.windowClassName
-		if wClass == "ToolbarWindow32" and obj.role == controlTypes.Role.MENUITEM and obj.parent.role == controlTypes.Role.MENUBAR and eventHandler.isPendingEvents("gainFocus"):
-			# When exiting a menu, Explorer fires focus on the top level menu item before it returns to the previous focus.
-			# Unfortunately, this focus event always occurs in a subsequent cycle, so the event limiter doesn't eliminate it.
+		if (
+			wClass == "ToolbarWindow32"
+			and obj.role == controlTypes.Role.MENUITEM
+			and obj.parent.role == controlTypes.Role.MENUBAR
+			and eventHandler.isPendingEvents("gainFocus")
+		):
+			# When exiting a menu, Explorer fires focus on the top level menu item
+			# before it returns to the previous focus.
+			# Unfortunately, this focus event always occurs in a subsequent cycle,
+			# so the event limiter doesn't eliminate it.
 			# Therefore, if there is a pending focus event, don't bother handling this event.
 			return
 
 		if wClass in ("ForegroundStaging", "LauncherTipWnd", "ApplicationManager_DesktopShellWindow"):
-			# #5116: The Windows 10 Task View fires foreground/focus on this weird invisible window and foreground staging screen before and after it appears.
+			# #5116: The Windows 10 Task View fires foreground/focus on this weird invisible window
+			# and foreground staging screen before and after it appears.
 			# This causes NVDA to report "unknown", so ignore it.
 			# We can't do this using shouldAllowIAccessibleFocusEvent because this isn't checked for foreground.
 			# #8137: also seen when opening quick link menu (Windows+X) on Windows 8 and later.
