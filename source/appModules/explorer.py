@@ -24,7 +24,7 @@ from NVDAObjects import NVDAObject
 from NVDAObjects.IAccessible import IAccessible, List
 from NVDAObjects.UIA import UIA
 from NVDAObjects.behaviors import ToolTip
-from NVDAObjects.window.edit import RichEdit50, Edit, EditTextInfo
+from NVDAObjects.window.edit import RichEdit50, Edit
 import config
 from winAPI.types import HWNDValT
 
