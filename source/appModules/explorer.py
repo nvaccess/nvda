@@ -382,7 +382,7 @@ class AppModule(appModuleHandler.AppModule):
 		return statusBar
 
 	@staticmethod
-	def _getStatusBarTextPostWin7(obj) -> str:
+	def _getStatusBarText(obj) -> str:
 		# The expected status bar, as of Windows 10 20H2 at least, contains:
 		#  - A grouping with a single static text child presenting the total number of elements
 		#  - Optionally, a grouping with a single static text child presenting the number of
@@ -426,10 +426,8 @@ class AppModule(appModuleHandler.AppModule):
 		return ", ".join(parts)
 
 	def getStatusBarText(self, obj) -> str:
-		if (
-			isinstance(obj, UIA) or obj.UIAElement.cachedClassname == "StatusBarModuleInner"
-		):  # Windows 8 or later
-			return self._getStatusBarTextPostWin7(obj)
+		if isinstance(obj, UIA) or obj.UIAElement.cachedClassName == "StatusBarModuleInner":
+			return self._getStatusBarText(obj)
 		else:
 			# This is not the file explorer status bar. Resort to standard behavior.
 			raise NotImplementedError
