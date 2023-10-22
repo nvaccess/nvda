@@ -2891,6 +2891,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	numRows: int = 1
 
 	#: Number of columns (cells per row) of the braille display
+	#: 0 indicates that braille should be disabled.
 	numCols: int = 0
 
 
