@@ -13,11 +13,8 @@ from logHandler import log
 import NVDAState
 import winreg
 import winUser
-import winVersion
 
 
-# Windows >= 8
-canConfigTerminateOnDesktopSwitch: bool = winVersion.getWinVer() >= winVersion.WIN8
 _APP_KEY_NAME = "nvda_nvda_v1"
 
 
@@ -32,6 +29,9 @@ def __getattr__(attrName: str) -> Any:
 	if attrName == "APP_KEY_NAME" and NVDAState._allowDeprecatedAPI():
 		log.warning("APP_KEY_NAME is deprecated.")
 		return _APP_KEY_NAME
+	if attrName == "canConfigTerminateOnDesktopSwitch" and NVDAState._allowDeprecatedAPI():
+		log.warning("canConfigTerminateOnDesktopSwitch is deprecated.")
+		return True
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
