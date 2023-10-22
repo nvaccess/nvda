@@ -167,6 +167,9 @@ def setAutoStart(autoStartContext: AutoStartContext, enable: bool) -> None:
 			winreg.KEY_READ | winreg.KEY_WRITE | winreg.KEY_WOW64_64KEY
 		)
 		winreg.SetValueEx(
-			k, "Configuration", None, winreg.REG_SZ,
+			k,
+			"Configuration",
+			None,
+			winreg.REG_SZ,
 			",".join(conf)
 		)
