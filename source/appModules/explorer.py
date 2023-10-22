@@ -434,8 +434,6 @@ class AppModule(appModuleHandler.AppModule):
 		return ", ".join(parts)
 
 	def getStatusBarText(self, obj) -> str:
-		if obj.windowClassName == "msctls_statusbar32":  # Windows 7
-			return self._getStatusBarTextWin7(obj)
 		if (
 			isinstance(obj, UIA) or obj.UIAElement.cachedClassname == "StatusBarModuleInner"
 		):  # Windows 8 or later
