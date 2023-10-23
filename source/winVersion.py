@@ -221,6 +221,8 @@ if NVDAState._allowDeprecatedAPI():
 		testing our specific usage of the API with each Windows version since Windows 8
 		"""
 		log.debugWarning(
-			"Deprecated function called: winVersion.isFullScreenMagnificationAvailable", stack_info=True
+			"Deprecated function called: winVersion.isFullScreenMagnificationAvailable, "
+			"use visionEnhancementProviders.screenCurtain.ScreenCurtainProvider.canStart instead.",
+			stack_info=True
 		)
 		return True
