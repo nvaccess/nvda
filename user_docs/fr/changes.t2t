@@ -8,7 +8,7 @@ Quoi de Neuf dans NVDA
 Cette version inclue des améliorations pour les performances, la réactivité et la fiabilité de la sortie audio.
 Des options ont été ajoutées pour contrôler le volume des sons et des bips de NVDA, ou pour qu'ils suivent le volume de la voix utilisée.
 
-NVDA peut maintenant raffraîchir périodiquement le résultat de l'OCR, en annonçant le texte lorsqu'il apparaît.
+NVDA peut maintenant rafraîchir périodiquement le résultat de l'OCR, en annonçant le texte lorsqu'il apparaît.
 Cela peut être configuré dans la catégorie Reconnaissance Optique de Caractères de Windows du dialogue de paramètres de NVDA.
 
 Plusieurs corrections pour le Braille ont été apportées, améliorant la détection des appareils et le mouvement du curseur.
@@ -19,14 +19,19 @@ Sont également présents des correctifs pour l'Add-on Store, Microsoft Office, 
 
 == Nouvelles Fonctionnalités ==
 - Amélioration de la gestion du son :
-  - Une option dans les paramètres audio pour que le volume des sons et bips de NVDA suive le volume de la voix utilisée. (#1409)
-  - Une option dans les paramètres audio pour séparément configurer le volume des sons de NVDA. (#1409, #15038)
+- Un nouveau dialogue Paramètres Audio :
+     - Il peut être ouvert avec ``NVDA+contrôle+u``. (#15497)
+     - Une option dans les paramètres audio pour que le volume des sons et des bips NVDA suive le réglage du volume de la voix que vous utilisez. (#1409)
+     - Une option dans les paramètres Audio pour configurer séparément le volume des sons NVDA. (#1409, #15038)
+     - Les paramètres permettant de modifier le périphérique de sortie audio et d'activer l'atténuation audio ont été déplacés du dialogue Sélectionner un synthétiseur vers le nouveau dialogue de paramètres audio . (#8711)
+     Ces options seront supprimées du dialogue "Sélectionner un synthétiseur" en 2024.1. (#15486, #8711)
+     -
   - NVDA sort désormais l'audio via l'API Windows Audio Session (WASAPI), ce qui peut améliorer la réactivité, les performances et la stabilité de la parole et des sons de NVDA. (#14697, #11169, #11615, #5096, #10185, #11061)
   - Note : WASAPI est incompatible avec certaines extensions.
   Des mises à jour compatibles sont disponibles pour ces extensions, veuillez les mettre à jour avant NVDA.
   Les versions incompatibles de ces extensions seront désactivées lors de la mise à jour de NVDA.
     - Tony's Enhancements version 1.15 ou plus ancien. (#15402)
-    - NVDA global commands extension 12.0.8 ou plus ancien. (#15443)
+    - Extension des commandes de base de NVDA 12.0.8 ou plus ancien. (#15443)
     -
   -
 - NVDA est maintenant capable d'actualiser continuellement le résultat lors de l'exécution de la reconnaissance optique des caractères (OCR), en annonçant le texte lorsqu'il apparaît. (#2797)
@@ -40,8 +45,8 @@ Sont également présents des correctifs pour l'Add-on Store, Microsoft Office, 
 
 == Changements ==
 - Braille :
-  - Lorsque le texte dans un terminal change sans raffraîchir le curseur, le texte sur l'afficheur Braille sera maintenant correctement mis à jour lorsque positionné sur une ligne modifiée.
-  Cela inclu les situations où le Braille suit la revue. (#15115)
+  - Lorsque le texte dans un terminal change sans rafraîchir le curseur, le texte sur l'afficheur Braille sera maintenant correctement mis à jour lorsque positionné sur une ligne modifiée.
+  Cela inclut les situations où le Braille suit la revue. (#15115)
   - Plus de gestes de commandes BRLTTY sont désormais assignées à des commandes NVDA (#6483) :
     - ``learn`` : Bascule l'aide d'entrée NVDA
     - ``prefmenu`` : Ouvrir le menu NVDA
@@ -53,7 +58,6 @@ Sont également présents des correctifs pour l'Add-on Store, Microsoft Office, 
   - Le paramètre avancé pour activer le support du Braille HID a été remplacé en faveur d'une nouvelle option.
   Vous pouvez maintenant exclure certains pilotes de la détection automatique dans le dialogue de sélection de l'afficheur Braille. (#15196)
   -
-- Les paramètres pour changer le périphérique de sortie audio et le mode d'atténuation audio ont été déplacés du dialogue de sélection du synthétiseur vers le nouveau panneau paramètres audio. (#8711)
 - Add-on Store : Les extensions installées apparaitront désormais dans l'onglet extensions disponibles si elles sont disponibles dans le store. (#15374)
 - Certaines touches d'accès ont été modifiées dans le menu NVDA. (#15364)
 -
@@ -62,6 +66,7 @@ Sont également présents des correctifs pour l'Add-on Store, Microsoft Office, 
 - Microsoft Office :
   - Correction d'un crash dans Microsoft Word quand les options de mise en forme des documents "annoncer les titres" et "annoncer les notes et commentaires" ne sont pas activées. (#15019)
   - Dans Word et Excel, l'alignement du texte sera correctement annoncé dans d'avantage de situations. (#15206, #15220)
+  - Correction de l'annonce de quelques raccourcis de mise en forme dans Excel. (#15527)
   -
 - Microsoft Edge :
   - NVDA ne reviendra plus à la dernière position du mode navigation lors de l'ouverture du menu contextuel dans Microsoft Edge. (#15309)
@@ -79,9 +84,9 @@ Sont également présents des correctifs pour l'Add-on Store, Microsoft Office, 
   - Correction d'un problème où une extension ne pouvait pas être installée si un téléchargement précédent avait échoué ou était annulé. (#15469)
   - Correction de problèmes avec la gestion des extensions incompatibles lors de la mise à jour de NVDA. (#15414, #15412, #15437)
   -
-- Correction du support pour les contrôles des listes système (``SysListView32``) dans les applications Windows Forms. (#15283)
 - NVDA annonce à nouveau les résultats des calculs dans la calculatrice 32 bits de Windows Server, versions de Windows LTSC et LTSB. (#15230)
 - NVDA n'ignore plus les changements de focus lorsqu'une fenêtre imbriquée (fenêtre petit-enfant) obtient le focus. (#15432)
+- Correction d'une cause de plantage potentielle au démarrage de NVDA. (#15517)
 -
 
 == Changements pour les Développeurs ==
