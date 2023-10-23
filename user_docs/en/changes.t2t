@@ -117,7 +117,7 @@ Code which imports from one of them, should instead import from the replacement 
 
 - Using ``watchdog.getFormattedStacksForAllThreads`` is deprecated - please use ``logHandler.getFormattedStacksForAllThreads`` instead. (#15616, @lukaszgo1)
 - ``easeOfAccess.canConfigTerminateOnDesktopSwitch`` has been deprecated, as it became obsolete since Windows 7 is no longer supported. (#15644, @LeonarddeR)
-- ``winVersion.isFullScreenMagnificationAvailable`` has been deprecated, as it became obsolete since Windows 7 is no longer supported. (#15664, @josephsl)
+- ``winVersion.isFullScreenMagnificationAvailable`` has been deprecated - use ``visionEnhancementProviders.screenCurtain.ScreenCurtainProvider.canStart`` instead. (#15664, @josephsl)
 -
 
 
