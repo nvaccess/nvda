@@ -124,6 +124,42 @@ class AddonListItemVM(Generic[_AddonModelT]):
 	def Id(self) -> str:
 		return self._model.listItemVMId
 
+	def canUseInstallAction(self):
+		return self.status == AvailableAddonStatus.AVAILABLE,
+
+	def canUseInstallOverrideIncompatibilityAction(self):
+		return self.status == AvailableAddonStatus.INCOMPATIBLE and self.model.canOverrideCompatibility
+
+	def canUseUpdateAction(self):
+		return self.status == AvailableAddonStatus.UPDATE
+
+	def canUseReplaceAction(self):
+		return self.status == AvailableAddonStatus.REPLACE_SIDE_LOAD
+
+	def canUseRemoveAction(self):
+		return (
+			self.model.isInstalled
+			and self.status != AvailableAddonStatus.PENDING_REMOVE
+		)
+
+	def canUseEnableAction(self):
+		return self.status == AvailableAddonStatus.DISABLED or self.status == AvailableAddonStatus.PENDING_DISABLE
+
+	def canUseEnableOverrideIncompatibilityAction(self):
+		return self.status in (
+			AvailableAddonStatus.INCOMPATIBLE_DISABLED,
+			AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
+		) and self.model.canOverrideCompatibility
+
+	def canUseDisableAction(self):
+		return self.model.isInstalled and self.status not in (
+			AvailableAddonStatus.DISABLED,
+			AvailableAddonStatus.PENDING_DISABLE,
+			AvailableAddonStatus.INCOMPATIBLE_DISABLED,
+			AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
+			AvailableAddonStatus.PENDING_REMOVE,
+		)
+
 	def __repr__(self) -> str:
 		return f"{self.__class__.__name__}: {self.Id}, {self.status}"
 

@@ -117,24 +117,21 @@ class AddonStoreVM:
 				# Translators: Label for an action that installs the selected addon
 				displayName=pgettext("addonStore", "&Install"),
 				actionHandler=self.getAddon,
-				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.AVAILABLE,
+				validCheck=lambda aVM: aVM.canUseInstallAction(),
 				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that installs the selected addon
 				displayName=pgettext("addonStore", "&Install (override incompatibility)"),
 				actionHandler=self.installOverrideIncompatibilityForAddon,
-				validCheck=lambda aVM: (
-					aVM.status == AvailableAddonStatus.INCOMPATIBLE
-					and aVM.model.canOverrideCompatibility
-				),
+				validCheck=lambda aVM: aVM.canUseInstallOverrideIncompatibilityAction(),
 				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that updates the selected addon
 				displayName=pgettext("addonStore", "&Update"),
 				actionHandler=self.getAddon,
-				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.UPDATE,
+				validCheck=lambda aVM: aVM.canUseUpdateAction(),
 				actionTarget=selectedListItem
 			),
 			AddonActionVM(
@@ -142,43 +139,28 @@ class AddonStoreVM:
 				# an add-on store version.
 				displayName=pgettext("addonStore", "Re&place"),
 				actionHandler=self.replaceAddon,
-				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.REPLACE_SIDE_LOAD,
+				validCheck=lambda aVM: aVM.canUseReplaceAction,
 				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that disables the selected addon
 				displayName=pgettext("addonStore", "&Disable"),
 				actionHandler=self.disableAddon,
-				validCheck=lambda aVM: aVM.model.isInstalled and aVM.status not in (
-					AvailableAddonStatus.DISABLED,
-					AvailableAddonStatus.PENDING_DISABLE,
-					AvailableAddonStatus.INCOMPATIBLE_DISABLED,
-					AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
-					AvailableAddonStatus.PENDING_REMOVE,
-				),
+				validCheck=lambda aVM: aVM.canUseDisableAction(),
 				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that enables the selected addon
 				displayName=pgettext("addonStore", "&Enable"),
 				actionHandler=self.enableAddon,
-				validCheck=lambda aVM: (
-					aVM.status == AvailableAddonStatus.DISABLED
-					or aVM.status == AvailableAddonStatus.PENDING_DISABLE
-				),
+				validCheck=lambda aVM: aVM.canUseEnableAction(),
 				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that enables the selected addon
 				displayName=pgettext("addonStore", "&Enable (override incompatibility)"),
 				actionHandler=self.enableOverrideIncompatibilityForAddon,
-				validCheck=lambda aVM: (
-					aVM.status in (
-						AvailableAddonStatus.INCOMPATIBLE_DISABLED,
-						AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
-					)
-					and aVM.model.canOverrideCompatibility
-				),
+				validCheck=lambda aVM: aVM.canUseEnableOverrideIncompatibilityAction(),
 				actionTarget=selectedListItem
 			),
 			AddonActionVM(
@@ -186,8 +168,7 @@ class AddonStoreVM:
 				displayName=pgettext("addonStore", "&Remove"),
 				actionHandler=self.removeAddon,
 				validCheck=lambda aVM: (
-					aVM.model.isInstalled
-					and aVM.status != AvailableAddonStatus.PENDING_REMOVE
+					aVM.canUseRemoveAction()
 					and self._filteredStatusKey in (
 						# Removing add-ons in the updatable view fails,
 						# as the updated version cannot be removed.

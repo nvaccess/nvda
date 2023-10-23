@@ -15,7 +15,7 @@ from typing import (
 
 import wx
 
-from _addonStore.models.status import _StatusFilterKey, AvailableAddonStatus
+from _addonStore.models.status import _StatusFilterKey
 from logHandler import log
 import ui
 
@@ -140,48 +140,85 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 				# Translators: Label for an action that installs the selected add-ons
 				displayName=pgettext("addonStore", "&Install selected add-ons"),
 				actionHandler=self._storeVM.getAddons,
-				#zzz validCheck=lambda aVMs: self._storeVM._filteredStatusKey == _StatusFilterKey.AVAILABLE,
-				validCheck=lambda aVMs: any([
-					(
-						aVM.status == AvailableAddonStatus.AVAILABLE
-						or (aVM.status == AvailableAddonStatus.INCOMPATIBLE and aVM.model.canOverrideCompatibility)
-					)
-					for aVM in aVMs
-				]),
+				validCheck=lambda aVMs: (
+					self._storeVM._filteredStatusKey == _StatusFilterKey.AVAILABLE
+					and AddonListValidator(aVMs).canUseInstallAction()
+				),
 				actionTarget=self._selectedAddons
 			),
 			BatchAddonActionVM(
 				# Translators: Label for an action that updates the selected add-ons
 				displayName=pgettext("addonStore", "&Update selected add-ons"),
 				actionHandler=self._storeVM.getAddons,
-				validCheck=lambda aVMs: self._storeVM._filteredStatusKey in [
-					_StatusFilterKey.INSTALLED,
-					_StatusFilterKey.UPDATE,
-				],
+				validCheck=lambda aVMs: (
+					self._storeVM._filteredStatusKey in [
+						_StatusFilterKey.INSTALLED,
+						_StatusFilterKey.UPDATE,
+					]
+					and AddonListValidator(aVMs).canUseUpdateAction()
+				),
 				actionTarget=self._selectedAddons
 			),
 			BatchAddonActionVM(
 				# Translators: Label for an action that removes the selected add-ons
 				displayName=pgettext("addonStore", "&Remove selected add-ons"),
 				actionHandler=self._storeVM.removeAddons,
-				validCheck=lambda aVMs: self._storeVM._filteredStatusKey in [
-					_StatusFilterKey.INSTALLED,
-					_StatusFilterKey.INCOMPATIBLE,
-				],
+				validCheck=lambda aVMs: (
+					self._storeVM._filteredStatusKey in [
+						_StatusFilterKey.INSTALLED,
+						_StatusFilterKey.INCOMPATIBLE,
+					]
+					and AddonListValidator(aVMs).canUseRemoveAction()
+				),
 				actionTarget=self._selectedAddons
 			),
 			BatchAddonActionVM(
 				# Translators: Label for an action that enables the selected add-ons
 				displayName=pgettext("addonStore", "&Enable selected add-ons"),
 				actionHandler=self._storeVM.enableAddons,
-				validCheck=lambda aVMs: True,
+				validCheck=lambda aVMs: AddonListValidator(aVMs).canUseEnableAction(),
 				actionTarget=self._selectedAddons
 			),
 			BatchAddonActionVM(
 				# Translators: Label for an action that disables the selected add-ons
 				displayName=pgettext("addonStore", "&Disable selected add-ons"),
 				actionHandler=self._storeVM.disableAddons,
-				validCheck=lambda aVMs: True,
+				validCheck=lambda aVMs: AddonListValidator(aVMs).canUseDisableAction(),
 				actionTarget=self._selectedAddons
 			),
 		]
+
+
+class AddonListValidator:
+	def __init__(self, addonsList: List[AddonListItemVM]):
+		self.addonsList = addonsList
+
+	def canUseInstallAction(self):
+		for aVM in self.addonsList:
+			if aVM.canUseInstallAction() or aVM.canUseInstallOverrideIncompatibilityAction():
+				return True
+		return False
+	
+	def canUseUpdateAction(self):
+		for aVM in self.addonsList:
+			if aVM.canUseUpdateAction():
+				return True
+		return False
+
+	def canUseRemoveAction(self):
+		for aVM in self.addonsList:
+			if aVM.canUseRemoveAction():
+				return True
+		return False
+
+	def canUseEnableAction(self):
+		for aVM in self.addonsList:
+			if aVM.canUseEnableOverrideIncompatibilityAction() or aVM.canUseEnableAction():
+				return True
+		return False
+
+	def canUseDisableAction(self) -> bool:
+		for aVM in self.addonsList:
+			if aVM.canUseDisableAction():
+				return True
+		return False
