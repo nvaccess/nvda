@@ -10,7 +10,7 @@ making sure NVDA can run on a minimum supported version of Windows.
 When working on this file, consider moving to winAPI.
 """
 
-from typing import Optional, Dict
+from typing import Optional, Dict, Any
 import sys
 import os
 import functools
@@ -226,3 +226,16 @@ if NVDAState._allowDeprecatedAPI():
 			stack_info=True
 		)
 		return True
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "WIN7" and NVDAState._allowDeprecatedAPI():
+		log.warning("WIN7 is deprecated.")
+		return WinVersion(major=6, minor=1, build=7600)
+	if attrName == "WIN7_SP1" and NVDAState._allowDeprecatedAPI():
+		log.warning("WIN7_SP1 is deprecated.")
+		return WinVersion(major=6, minor=1, build=7601, servicePack="1")
+	if attrName == "WIN8" and NVDAState._allowDeprecatedAPI():
+		log.warning("WIN8 is deprecated.")
+		return WinVersion(major=6, minor=2, build=9200)
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
