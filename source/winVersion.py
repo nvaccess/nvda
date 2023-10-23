@@ -105,11 +105,7 @@ class WinVersion(object):
 		On server systems, unless noted otherwise, client release names will be returned.
 		For example, 'Windows 10 1809' will be returned on Server 2019 systems.
 		"""
-		if (self.major, self.minor) == (6, 1):
-			return "Windows 7"
-		elif (self.major, self.minor) == (6, 2):
-			return "Windows 8"
-		elif (self.major, self.minor) == (6, 3):
+		if (self.major, self.minor) == (6, 3):
 			return "Windows 8.1"
 		elif self.major == 10:
 			# From Version 1511 (build 10586), release Id/display version comes from Windows Registry.
@@ -231,11 +227,11 @@ def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility."""
 	if attrName == "WIN7" and NVDAState._allowDeprecatedAPI():
 		log.warning("WIN7 is deprecated.")
-		return WinVersion(major=6, minor=1, build=7600)
+		return WinVersion(major=6, minor=1, build=7600, releaseName="Windows 7")
 	if attrName == "WIN7_SP1" and NVDAState._allowDeprecatedAPI():
 		log.warning("WIN7_SP1 is deprecated.")
-		return WinVersion(major=6, minor=1, build=7601, servicePack="1")
+		return WinVersion(major=6, minor=1, build=7601, releaseName="Windows 7", servicePack="1")
 	if attrName == "WIN8" and NVDAState._allowDeprecatedAPI():
 		log.warning("WIN8 is deprecated.")
-		return WinVersion(major=6, minor=2, build=9200)
+		return WinVersion(major=6, minor=2, build=9200, releaseName="Windows 8")
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
