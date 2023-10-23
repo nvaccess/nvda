@@ -16,6 +16,8 @@ import os
 import functools
 import winreg
 import platform
+import NVDAState
+from logHandler import log
 
 
 # Records a mapping between Windows builds and release names.
@@ -211,10 +213,14 @@ def isUwpOcrAvailable():
 	return os.path.isdir(UWP_OCR_DATA_PATH)
 
 
-def isFullScreenMagnificationAvailable() -> bool:
-	"""
-	Technically this is always False. The Magnification API has been marked by MS as unsupported for
-	WOW64 applications such as NVDA. For our usages, support has been added since Windows 8, relying on our
-	testing our specific usage of the API with each Windows version since Windows 8
-	"""
-	return True
+if NVDAState._allowDeprecatedAPI():
+	def isFullScreenMagnificationAvailable() -> bool:
+		"""
+		Technically this is always False. The Magnification API has been marked by MS as unsupported for
+		WOW64 applications such as NVDA. For our usages, support has been added since Windows 8, relying on our
+		testing our specific usage of the API with each Windows version since Windows 8
+		"""
+		log.debugWarning(
+			"Deprecated function called: winVersion.isFullScreenMagnificationAvailable", stack_info=True
+		)
+		return True
