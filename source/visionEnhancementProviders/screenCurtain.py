@@ -5,13 +5,11 @@
 
 """Screen curtain implementation based on the windows magnification API.
 The Magnification API has been marked by MS as unsupported for WOW64 applications such as NVDA. (#12491)
-This module has been tested on Windows versions specified by winVersion.isFullScreenMagnificationAvailable.
 """
 
 import os
 import vision
 from vision import providerBase
-import winVersion
 from ctypes import Structure, windll, c_float, POINTER, WINFUNCTYPE, WinError
 from ctypes.wintypes import BOOL
 from autoSettingsUtils.driverSetting import BooleanDriverSetting
@@ -330,7 +328,7 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 		versions of Windows, this may not continue to be true in the future. The Magnification API was
 		introduced by Microsoft with Windows 8.
 		"""
-		return winVersion.isFullScreenMagnificationAvailable()
+		return True
 
 	@classmethod
 	def getSettingsPanelClass(cls) -> Optional[Type]:
