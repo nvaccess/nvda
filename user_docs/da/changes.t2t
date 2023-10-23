@@ -4,148 +4,91 @@ Nyheder i NVDA
 %!includeconf: ../changes.t2tconf
 %!includeconf: ./locale.t2tconf
 
-= 2023.2 =
-Denne version af NVDA introducerer Tilføjelsescenteret, der erstatter den tidligere styring af tilføjelser.
-I Tilføjelsescenteret kan du gennemse, søge, installere og opdatere fællesskabets tilføjelser.
-Du kan nu manuelt tilsidesætte inkompatibilitetsproblemer med forældede tilføjelser på eget ansvar.
+= 2023.3 =
+Denne udgivelse inkluderer forbedringer til ydeevne, responsivitet og stabilitet af lydoutput.
+Der er blevet tilføjet indstillinger til at kontrollere lydstyrken af NVDA-lyde og bip, eller til at have dem følge lydstyrken af den stemme, du bruger.
 
-Der er nye punktskriftsfunktioner, kommandoer og understøttelse for nye punktdisplays.
-Der er også nye tastaturkommandoer til OCR (tekstgenkendelse) og flad objektnavigation.
-Navigation og rapportering af formatering i Microsoft Office er forbedret.
+NVDA kan nu regelmæssigt opdatere vinduet, hvor tekstgenkendelse vises, og sige den nye tekst, når den vises.
+Dette kan konfigureres i kategorien Windows Tekstgenkendelse i NVDA's indstillingsdialog.
 
-Der er mange fejlrettelser, især for punktskrift, Microsoft Office, webbrowsere og Windows 11.
+Der er flere rettelser til punktdisplays, der forbedrer enhedsdetektering og bevægelse af markøren.
+Det er nu muligt at fravælge uønskede drivere fra automatisk detektion for at forbedre ydeevnen for denne funktionalitet.
+Der er også nye BRLTTY-kommandoer.
 
-eSpeak-NG, LibLouis punktskriftsoversætter og Unicode CLDR er blevet opdateret.
+Der er også fejlrettelser for Tilføjelsescenteret, Microsoft Office, kontekstmenuer i Microsoft Edge og lommeregneren i Windows.
 
 == Nye funktioner ==
-- Tilføjelsescenteret er blevet tilføjet til NVDA. (#13985)
-  - Gennemse, søg, installer og opdater tilføjelser fra fællesskabet.
-  - Tilsidesæt (på eget ansvar) kompatibilitetsproblemer med forældede tilføjelser.
-  - Funktionaliteten til at styre tilføjelser er blevet erstattet med "Tilføjelsescenteret".
-  - For mere information, læs venligst den opdaterede brugervejledning.
-  -
-- Nye kommandoer:
-  - En kommando uden tastetryk, der lader dig skifte mellem tilgængelige sprog for Windows-tekstgenkendelse. (#13036)
-  - En kommando uden tastetryk, der lader dig skifte mellem indstillinger for visningen af beskeder på punkt. (#14864)
-  - En kommando uden tastetryk, der lader dig slå punktmarkøren til og fra, som vises når noget er valgt. (#14948)
-  - Tilføjet standard tastaturkommandoer for at flytte til det næste eller foregående objekt i en flad visning af objekthierarkiet. (#15053)
-    - Desktop: ``NVDA+numpad9`` og ``NVDA+numpad3`` for at flytte til forrige og næste objekt.
-    - Laptop: ``shift+NVDA+ø`` og ``shift+NVDA+'`` for at flytte til forrige og næste objekt.
+- Forbedret lydstyring:
+  - Et nyt lydindstillingspanel:
+    - Dette kan åbnes med ``NVDA+control+u``. (#15497)
+    - En mulighed i Lydindstillinger til at have lydstyrken af NVDA-lyde og bip følge lydstyrkeindstillingen for den stemme, du bruger. (#1409)
+    - En mulighed i Lydindstillinger til separat at konfigurere lydstyrken af NVDA-lyde. (#1409, #15038)
+    - Indstillingerne for at skifte lydudgangsenhed og skifte lyddækning er blevet flyttet til det nye lydindstillingspanel fra dialogboksen Vælg Talesyntese.
+    Disse indstillinger vil blive fjernet fra dialogboksen "vælg Talesyntese" i 2024.1. (#15486, #8711)
+    -
+  - NVDA vil nu udsende lyd via Windows Audio Session API (WASAPI), hvilket kan forbedre respons, ydeevne og stabilitet for NVDA-tale og -lyde. (#14697, #11169, #11615, #5096, #10185, #11061)
+  - Bemærk: WASAPI er inkompatibel med nogle tilføjelsesprogrammer.
+    Kompatible opdateringer er tilgængelige for disse tilføjelsesprogrammer. Opdater dem venligst, før du opdaterer NVDA.
+    Inkompatible versioner af disse tilføjelsesprogrammer vil blive deaktiveret, når du opdaterer NVDA:
+      - Tony's Enhancements version 1.15 eller ældre. (#15402)
+      - NVDA global commands extension 12.0.8 eller ældre. (#15443)
     -
   -
-- Nye funktioner for punkt:
-  - Tilføjet support for Help Tech Activator punktdisplay. (#14917)
-  - En ny punktindstilling for at skifte visningen af valgmarkøren (punkt 7 og 8). (#14948)
-  - En ny indstilling, der lader dig vælge om du vil flytte systemmarkøren eller fokus, når du bruger markørknapperne på dit punktdisplay. (#14885, #3166)
-  - Når man trykker på ``numpad2`` tre gange for at rapportere den numeriske værdi af tegnet ved læsemarkørens position, vises oplysningerne nu også på punkt. (#14826)
-  - Tilføjet understøttelse for ``aria-punktroledescription`` ARIA 1.3 attribut, som giver webudviklere mulighed for at overskrive typen af et element vist i punktskriftsviseren. (#14748)
-  - Baum braille driver: Tilføjet nogle tastetryk der udfører ofte-benyttede kommandoer, når de skrives på disse punktdisplays, herunder ``windows+d`` og ``alt+tab``.
-  Læs venligst NVDAs brugervejledning for den fulde liste over kommandoer. (#14714)
+- NVDA kan nu automatisk opdatere resultatet, når der udføres tekstgenkendelse (OCR), og NVDA vil oplæse den nye tekst, når den vises. (#2797)
+  - For at aktivere denne funktionalitet, aktivér indstillingen "Opdater regelmæssigt genkendt indhold" i kategorien Windows Tekstgenkendelse i NVDAs indstillingsdialog.
+  - Når dette er aktiveret, kan du bestemme om ny tekst skal oplæses ved at slå oplæsning af dynamisk indhold til og fra med ``NVDA+5``.
   -
-- Tilføjet udtalelse af Unicode-symboler:
-  - Punktsymboler såsom "???????". (#14548)
-  - Mac alternativ-tast "?". (#14682)
-  -
-- Tilføjet kommandoer for Tivomatic Caiku Albatross punktdisplays. (#14844, #15002)
-  - Vis punktindstillingsdialogen.
-  - Adgang til statuslinjen.
-  - Skift formen for punktmarkøren.
-  - Skift mellem metoderne for visningen af punktbeskeder.
-  - Slå visning af punktmarkøren til og fra.
-  - Slå indstillingen for visningen af punktformen for valgte emner til og fra.
-  - Skift indstillingen for "Punkt flytter systemmarkør, når læsemarkøren flyttes med markørknapperne". (#15122)
-  -
-- Funktioner for Microsoft Office:
-  - Når fremhævet tekst er aktiveret i dokumentformatering, rapporteres farverne på fremhævningen nu i Microsoft Word. (#7396, #12101, #5866)
-  - Når farver er aktiveret i dokumentformatering, rapporteres baggrundsfarverne nu i Microsoft Word. (#5866)
-  - Når man bruger Excel genveje til at skifte format som fed, kursiv, understregning og gennemstregning af en celle i Excel, rapporteres resultatet nu. (#14923)
-  -
-- Forsøgsvise forbedringer til håndtering af lyd med NVDA:
-  - NVDA udsender nu lyd via Windows Audio Session API (WASAPI), hvilket kan forbedre reaktionstiden, ydeevnen og stabiliteten af NVDAs tale og lyde.
-  - Dette kan deaktiveres i avancerede indstillinger, hvis der opstår lydproblemer. (#14697)
-  Hvis WASAPI er aktiveret, kan du også tilpasse følgende avancerede indstillinger:
-    - En indstilling, der gør det muligt for NVDA's lyde og bip at følge stemmens lydstyrkeindstilling. (#1409)
-    - En indstilling for at justere lydstyrken af NVDA's lyde separat. (#1409, #15038)
-    -
-  - Bemærk: Der kan forekomme lejlighedsvise nedbrud, når WASAPI er slået til. (#15150)
-  -
-- I Mozilla Firefox og Google Chrome rapporterer NVDA nu, når en kontrol åbner en dialog, et gitter, en liste eller en trævisning, hvis forfatteren har angivet dette ved hjælp af aria-haspopup. (#14709)
-- Det er nu muligt at bruge systemvariabler (såsom ``%temp%`` eller ``%homepath%``) i stispecifikationen ved oprettelsen af flytbare kopier af NVDA. (#14680)
-- I Windows 10 maj 2019-opdatering og senere, kan NVDA annoncere navne på virtuelle skriveborde, når man åbner, ændrer og lukker dem. (#5641)
-- Et systemparameter er blevet tilføjet for at tillade brugere og systemadministratorer at tvinge NVDA til at starte i sikker tilstand. (#10018)
+- Når du bruger automatisk detektion af punktdisplay, er det nu muligt at fravælge drivere fra detektion fra dialogboksen til valg af display. (#15196)
+- En ny indstilling i Dokumentformateringsindstillinger, "Ignorer blanke linjer ved rapportering af linjeindrykning". (#13394)
+- Tilføjet en uanvendt kommando til at navigere efter faner i gennemsynstilstand. (#15046)
 -
-
 
 == Ændringer ==
-- Komponentopdateringer
-  - eSpeak NG er blevet opdateret til 1.52-dev commit ``ed9a7bcf``. (#15036)
-  - LibLouis punktoversætter er blevet opdateret til [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0]. (#14970)
-  - CLDR er blevet opdateret til version 43.0. (#14918)
+- Punktdisplays:
+  - Når teksten i en terminal ændres uden opdatering af systemmarkøren, vil teksten på et punktdisplay nu korrekt opdatere, når den er placeret på en ændret linje.
+  Dette inkluderer situationer, hvor punktskrift er tøjret til læsemarkøren. (#15115)
+  - Flere BRLTTY-tastetryk er nu tildelt NVDA-kommandoer (#6483):
+    - ``learn``: Slå tastaturhjælp til og fra
+    - ``prefmenu``: åbn NVDA-menuen
+    - ``prefload``/``prefsave``: Genindlæs/gem NVDA-konfiguration
+    - ``time``: Vis tid
+    - ``say_line``: Sig den aktuelle linje, hvor læsemarkøren er placeret
+    - ``say_below``: Sig alt ved hjælp af læsemarkøren
+    -
+  - BRLTTY-driveren er kun tilgængelig, når en BRLTTY-instans med BrlAPI aktiveret kører. (#15335)
+  - Den avancerede indstilling til at aktivere support til HID-punktdisplay er blevet fjernet til fordel for en ny indstilling.
+  Du kan nu deaktivere specifikke drivere for automatisk detektion af punktdisplay i dialogboksen til valg af punktdisplay. (#15196)
   -
-- Ændringer i LibreOffice:
-  - Når læsemarkørens position rapporteres, vil den nuværende markørposition blive rapporteret i forhold til den nuværende side i LibreOffice Writer for LibreOffice versioner >= 7.6, svarende til hvad der gøres for Microsoft Word. (#11696)
-  - Annoncering af statuslinjen (f.eks. ved at bruge ``NVDA+end``) virker i LibreOffice. (#11698)
-  - Når du flytter mellem celler i LibreOffice Calc, vil NVDA ikke fejlagtigt meddele den tidligere celles koordinater, hvis denne funktion er slået fra i NVDA's indstillinger. (#15098)
-  -
-- Ændringer for punkt:
-  - Når du bruger et punktdisplay via Standard HID punktdriveren, kan dpad bruges til at efterligne piletasterne og enter.
-  mellemrum+punkt1 og mellemrum+punkt4 fungerer nu også som forventet som pil op og ned. (#14713)
-  - Opdateringer til dynamisk webindhold (aria live regions) vises nu på punktskrift.
-  Dette kan deaktiveres i NVDAs avancerede indstillinger. (#7756)
-  -
-- Symboler for bindestreg og kort/lang tankestreg vil altid blive sendt til talesyntesen. (#13830)
-- Afstanden rapporteret i Microsoft Word vil nu overholde den afstandsenhed, der er indstillet i Words avancerede indstillinger, selv når der bruges UIA til at få adgang til Word-dokumenter. (#14542)
-- NVDA reagerer hurtigere, når markøren bevæges under redigering. (#14708)
-- Script til rapportering af destinationen for et link rapporterer nu fra systemmarkøren/fokus-positionen i stedet for navigationsobjektet. (#14659)
-- Oprettelse af flytbar kopi af NVDA kræver ikke længere, at et drevbogstav indtastes som en del af den absolutte sti. (#14681)
-- Hvis Windows er konfigureret til at vise sekunder på uret i systembakken, vil brug af ``NVDA+f12`` til at rapportere tiden nu overholde denne indstilling. (#14742)
-- NVDA vil nu rapportere unavngivne grupperinger, der har nyttig positionsinformation, som i nyere versioner af Microsoft Office 365-menuer. (#14878) 
+- Tilføjelsescenter: Installerede tilføjelsesprogrammer vil nu blive vist i fanen Tilgængelige tilføjelser, hvis de er tilgængelige i Tilføjelsescenteret. (#15374)
+- Nogle genvejstaster er blevet opdateret i NVDA-menuen. (#15364)
 -
-
 
 == Fejlrettelser ==
-- Punkt:
-  - Flere stabilitetsrettelser ang. input og output for punktdisplays, hvilket resulterer i mindre hyppige fejl og nedbrud af NVDA: (#14627)
-  - NVDA vil ikke længere unødigt skifte til "ingen punkt" flere gange under automatisk detektering af punktdisplays, hvilket resulterer i en renere log og et mindre unødvendigt ressourceforbrug. (#14524)
-  - NVDA vil nu skifte tilbage til USB, hvis en HID Bluetooth-enhed (såsom HumanWare Brailliant eller APH Mantis) automatisk detekteres, og en USB-forbindelse bliver tilgængelig.
-  Dette fungerede kun for Bluetooth-serielle porte tidligere. (#14524)
-  - Når intet punktdisplay er forbundet og punktskriftsviseren lukkes med ``alt+f4`` eller ved at klikke knappen "Luk", vil displaystørrelsen for punktsystemet korrekt blive nulstillet til "ingen celler". (#15214)
+- Microsoft Office:
+  - Rettet nedbrud i Microsoft Word, når dokumentformateringsindstillingerne "overskrifter" og "kommentarer og noter" ikke var aktiveret. (#15019)
+  - I Word og Excel vil tekstjustering nu blive korrekt rapporteret i flere situationer. (#15206, #15220)
+  - Rettet annonceringen af nogle celleformateringsgenveje i Excel. (#15527)
   -
-- Webbrowsere:
-  - NVDA får ikke længere lejlighedsvis Mozilla Firefox til at gå ned eller stoppe med at svare. (#14647)
-  - I Mozilla Firefox og Google Chrome rapporteres indtastede tegn ikke længere i nogle tekstbokse, selv når "Sig indtastede tegn" er deaktiveret. (#14666)
-  - Du kan nu bruge gennemsynstilstand i Chromium Embedded Controls, hvor det ikke tidligere var muligt. (#13493, #8553)
-  - I Mozilla Firefox rapporteres teksten nu pålideligt, når musen bevæges over tekst efter et link. (#9235)
-  - Destinationen for grafiske links rapporteres nu mere præcist i flere tilfælde i Chrome og Edge. (#14779)
-  - Når du forsøger at rapportere URL'en for et link uden en href-attribut, er NVDA ikke længere stille.
-  I stedet oplyser NVDA, at linket ikke har nogen destination. (#14723)
-  - I gennemsynstilstand vil NVDA ikke længere fejlagtigt ignorere fokus, der flytter til en overordnet eller underordnet kontrol, f.eks. flytning fra en kontrol til dens overordnede listeemne eller gittercelle. (#14611)
-    - Bemærk dog, at denne rettelse kun gælder, når indstillingen "Automatisk fokustilstand ved ændring af fokus" i indstillingerne for gennemsynstilstand er slået fra (som er standard).
-    -
+- Microsoft Edge:
+  - NVDA vil ikke længere hoppe tilbage til den sidste position i gennemsynstilstand, når kontekstmenuen åbnes i Microsoft Edge. (#15309)
+  - NVDA kan igen læse kontekstmenuer for downloads i Microsoft Edge. (#14916)
   -
-- Rettelser for Windows 11:
-  - NVDA kan igen annoncere indholdet i Notesbloks statuslinje. (#14573)
-  - Skift mellem faner vil annoncere positionen og navnet på det nye faneblad i både Notesblok og Stifinder. (#14587, #14388)
-  - NVDA vil igen annoncere kandidatelementer, når du indtaster tekst på sprog som kinesisk og japansk. (#14509)
-  - I Windows 11 er det igen muligt at åbne menupunkterne "bidragydere" og "licens" i NVDA-hjælpemenuen. (#14725)
+- Punktdisplay:
+  - Punktdisplaymarkøren og valgmarkøren vil nu altid blive opdateret korrekt, efter at have vist eller skjult respektive indikatorer med et tastetryk. (#15115)
+  - Rettet fejl, hvor Albatross punktdisplays forsøger at initialisere, selvom et andet punktdisplayenhed er blevet tilsluttet. (#15226)
   -
-- Rettelser for Microsoft Office:
-  - Når du hurtigt bevæger dig gennem celler i Excel, er NVDA nu mindre tilbøjelig til at rapportere den forkerte celle eller markering. (#14983, #12200, #12108)
-  - Når man lander på en Excel-celle udefra et regneark, bliver punktskrift og fokusfremhævning ikke længere unødigt opdateret til det objekt, der tidligere havde fokus. (#15136)
-  - NVDA undlader ikke længere at annoncere, at der fokuseres på adgangskodefelter i Microsoft Excel og Outlook. (#14839)
+- Tilføjelsescenter:
+  - Rettet fejl, hvor fjernelse af markeringen for boksen "inkluder inkompatible tilføjelser" ville resultere i, at inkompatible tilføjelsesprogrammer stadig blev vist i tilføjelsescenteret. (#15411)
+  - Tilføjelser, der er blokeret på grund af kompatibilitetsproblemer, burde nu filtreres korrekt, når filteret for aktiveret/deaktiveret status ændres. (#15416)
+  - Rettet fejl, der forhindrede, at tilsidesatte aktiverede inkompatible tilføjelser kunne blive opdateret eller erstattet ved hjælp af det eksterne installationsværktøj. (#15417)
+  - Rettet fejl, hvor NVDA ikke ville tale, indtil den blev genstartet efter installation af tilføjelser. (#14525)
+  - Rettet fejl, hvor tilføjelser ikke kunne installeres, hvis en tidligere download mislykkedes eller blev annulleret. (#15469)
+  - Rettet problemer med håndtering af inkompatible tilføjelser, når NVDA nlev opdateret. (#15414, #15412, #15437)
   -
-- For symboler, som ikke har en symbolsbeskrivelse i det nuværende sprog, vil det standard engelske symbolniveau blive brugt. (#14558, #14417)
-- Det er nu muligt at bruge backslash-tegnet i erstatningsfeltet i ordbogen, når typen ikke er indstillet til regulært udtryk. (#14556)
-- I Lommeregner i Windows 10 og 11 vil en flytbar kopi af NVDA ikke længere gøre ingenting eller afspille fejlsignaler, når der indtastes udtryk i standardlommeregner i kompaktvisning. (#14679)
-- NVDA genoplever igen fra mange flere situationer, såsom applikationer, der holder op med at reagere, hvilket tidligere fik den til at fryse helt. (#14759)
-- Når du tvinger UIA-understøttelse med visse terminaler og konsoller, er en fejl rettet, som forårsagede en frysning og at logfilen blev spammet. (#14689)
-- NVDA vil ikke længere nægte at gemme konfigurationen efter en konfigurationsnulstilling. (#13187)
-- Når du kører en midlertidig version fra launcher, vil NVDA ikke vildlede brugere til at tro, at de kan gemme konfigurationen. (#14914)
-- NVDA reagerer nu generelt lidt hurtigere på kommandoer og fokusændringer. (#14928)
-- Visning af indstillingerne for tekstgenkendelse i NVDA vil ikke længere fejle på nogle systemer. (#15017)
-- Fejlretning i forbindelse med gemning og indlæsning af NVDA-indstillingerne, herunder skift af talesyntesen. (#14760)
+- NVDA annoncerer igen regneresultater for lommeregneren i Windows 32bitpå Server, LTSC og LTSB-versioner af Windows. (#15230)
+- NVDA ignorerer ikke længere fokusændringer, når et indlejret vindue får fokus. (#15432)
+- Rettet en potentiel årsag til nedbrud under NVDA-opstart. (#15517)
 -
-
 
 == Ændringer for udviklere ==
 For nyheder relateret til udvikling se venligst det engelske "What's New"-dokument.
