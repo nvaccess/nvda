@@ -143,9 +143,6 @@ class WinVersion(object):
 
 
 # Windows releases to WinVersion instances for easing comparisons.
-WIN7 = WinVersion(major=6, minor=1, build=7600)
-WIN7_SP1 = WinVersion(major=6, minor=1, build=7601, servicePack="1")
-WIN8 = WinVersion(major=6, minor=2, build=9200)
 WIN81 = WinVersion(major=6, minor=3, build=9600)
 WIN10 = WIN10_1507 = WinVersion(major=10, minor=0, build=10240)
 WIN10_1511 = WinVersion(major=10, minor=0, build=10586)
@@ -222,6 +219,7 @@ if NVDAState._allowDeprecatedAPI():
 			stack_info=True
 		)
 		return True
+
 
 def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility."""
