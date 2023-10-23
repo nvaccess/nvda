@@ -103,6 +103,14 @@ Refer to the [limitations to retaining backwards compatibility](./deprecations.m
 
 In summary:
 - Avoid module level global variables.
-Any module level variables should be prefixed with and underscore and be encapsulated, e.g. via getters and setters.
+Any module level variables should be prefixed with an underscore and be encapsulated, e.g. via getters and setters.
 - Avoid code which executes at import time.
 Instead use initializer functions.
+
+### Docstrings
+
+Docstrings should use [Sphinx format](https://sphinx-rtd-tutorial.readthedocs.io/en/latest/docstrings.html).
+Providing type information in docstrings is discouraged, instead use python's type annotations.
+
+NVDA formerly used [epytext](https://epydoc.sourceforge.net/manual-epytext.html) syntax for docstrings, which means there is inconsistent syntax used in the NVDA code base.
+[#12971](https://github.com/nvaccess/nvda/issues/12971) exists to track converting epytext docstrings to Sphinx.

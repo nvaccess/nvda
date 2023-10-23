@@ -5,10 +5,12 @@
 
 import sys
 import os
-import traceback
 import time
 from time import perf_counter as _timer
 import threading
+from typing import (
+	Any,
+)
 import inspect
 from ctypes import windll, oledll
 import ctypes.wintypes
@@ -17,10 +19,25 @@ import comtypes
 import winUser
 import winKernel
 from logHandler import log
+import logHandler
 import globalVars
 import core
 import exceptions
 import NVDAHelper
+import NVDAState
+
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "getFormattedStacksForAllThreads" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"Importing getFormattedStacksForAllThreads from here is deprecated. "
+			"getFormattedStacksForAllThreads should be imported from logHandler instead.",
+			stack_info=True,
+		)
+		return logHandler.getFormattedStacksForAllThreads
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
 
 MIN_CORE_ALIVE_TIMEOUT = 0.5
 """The minimum time (seconds) to wait for the core to be alive.
@@ -51,23 +68,6 @@ _watcherThread=None
 _cancelCallEvent = None
 
 
-def getFormattedStacksForAllThreads():
-	"""
-	Generates a string containing a call stack for every Python thread in this process, suitable for logging.
-	"""
-	# First collect the names of all threads that have actually been started by Python itself.
-	threadNamesByID = {x.ident: x.name for x in threading.enumerate()}
-	stacks = []
-	# If a Python function is entered by a thread that was not started by Python itself,
-	# It will have a frame, but won't be tracked by Python's threading module and therefore will have no name.
-	for ident, frame in sys._current_frames().items():
-		# The strings in the formatted stack all end with \n, so no join separator is necessary.
-		stack = "".join(traceback.format_stack(frame))
-		name = threadNamesByID.get(ident, "Unknown")
-		stacks.append(f"Python stack for thread {ident} ({name}):\n{stack}")
-	return "\n".join(stacks)
-
-
 def alive():
 	"""Inform the watchdog that the core is alive.
 	"""
@@ -92,6 +92,7 @@ def alive():
 			-int(SECOND_TO_100_NANOSECOND * MIN_CORE_ALIVE_TIMEOUT)
 		)),
 		0, None, None, False)
+
 
 def asleep():
 	"""Inform the watchdog that the core is going to sleep.
@@ -162,7 +163,7 @@ def _watcher():
 def waitForFreezeRecovery(waitedSince: float):
 	log.info(f"Starting freeze recovery after {_timer() - waitedSince} seconds.")
 	if log.isEnabledFor(log.DEBUGWARNING):
-		stacks = getFormattedStacksForAllThreads()
+		stacks = logHandler.getFormattedStacksForAllThreads()
 		log.debugWarning(
 			f"Listing stacks for Python threads:\n{stacks}"
 		)
@@ -183,7 +184,7 @@ def waitForFreezeRecovery(waitedSince: float):
 			# Core is completely frozen.
 			# Collect formatted stacks for all Python threads.
 			log.error(f"Core frozen in stack! ({curTime - waitedSince} seconds)")
-			stacks = getFormattedStacksForAllThreads()
+			stacks = logHandler.getFormattedStacksForAllThreads()
 			log.info(f"Listing stacks for Python threads:\n{stacks}")
 		_recoverAttempt()
 		time.sleep(RECOVER_ATTEMPT_INTERVAL)
@@ -255,7 +256,7 @@ def _crashHandler(exceptionInfo):
 		log.critical("NVDA crashed! Minidump written to %s" % dumpPath)
 
 	# Log Python stacks for every thread.
-	stacks = getFormattedStacksForAllThreads()
+	stacks = logHandler.getFormattedStacksForAllThreads()
 	log.info(f"Listing stacks for Python threads:\n{stacks}")
 
 	log.info("Restarting due to crash")
@@ -396,7 +397,11 @@ def cancellableExecute(func, *args, ccPumpMessages=True, **kwargs):
 	@raise CallCancelled: If the call was cancelled.
 	"""
 	global cancellableCallThread
-	if not isRunning or _suspended or not isinstance(threading.currentThread(), threading._MainThread):
+	if (
+		not isRunning
+		or _suspended
+		or threading.current_thread() is not threading.main_thread()
+	):
 		# Watchdog is not running or this is a background thread,
 		# so just execute the call.
 		return func(*args, **kwargs)

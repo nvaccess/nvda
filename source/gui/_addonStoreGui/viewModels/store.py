@@ -3,10 +3,6 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-# Needed for type hinting CaseInsensitiveDict
-# Can be removed in a future version of python (3.8+)
-from __future__ import annotations
-
 from os import (
 	PathLike,
 	startfile,
@@ -24,9 +20,9 @@ import addonHandler
 from _addonStore.dataManager import addonDataManager
 from _addonStore.install import installAddon
 from _addonStore.models.addon import (
-	AddonStoreModel,
 	_createAddonGUICollection,
 	_AddonGUIModel,
+	_AddonManifestModel,
 	_AddonStoreModel,
 )
 from _addonStore.models.channel import (
@@ -110,7 +106,7 @@ class AddonStoreVM:
 		log.debug(f"Setting selection: {selectedVM}")
 		self.detailsVM.listItem = selectedVM
 		for action in self.actionVMList:
-			action.listItemVM = selectedVM
+			action.actionTarget = selectedVM
 
 	def _makeActionsList(self):
 		selectedListItem: Optional[AddonListItemVM] = self.listVM.getSelection()
@@ -120,7 +116,7 @@ class AddonStoreVM:
 				displayName=pgettext("addonStore", "&Install"),
 				actionHandler=self.getAddon,
 				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.AVAILABLE,
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that installs the selected addon
@@ -130,14 +126,14 @@ class AddonStoreVM:
 					aVM.status == AvailableAddonStatus.INCOMPATIBLE
 					and aVM.model.canOverrideCompatibility
 				),
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that updates the selected addon
 				displayName=pgettext("addonStore", "&Update"),
 				actionHandler=self.getAddon,
 				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.UPDATE,
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that replaces the selected addon with
@@ -145,7 +141,7 @@ class AddonStoreVM:
 				displayName=pgettext("addonStore", "Re&place"),
 				actionHandler=self.replaceAddon,
 				validCheck=lambda aVM: aVM.status == AvailableAddonStatus.REPLACE_SIDE_LOAD,
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that disables the selected addon
@@ -158,7 +154,7 @@ class AddonStoreVM:
 					AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
 					AvailableAddonStatus.PENDING_REMOVE,
 				),
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that enables the selected addon
@@ -168,7 +164,7 @@ class AddonStoreVM:
 					aVM.status == AvailableAddonStatus.DISABLED
 					or aVM.status == AvailableAddonStatus.PENDING_DISABLE
 				),
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that enables the selected addon
@@ -181,7 +177,7 @@ class AddonStoreVM:
 					)
 					and aVM.model.canOverrideCompatibility
 				),
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that removes the selected addon
@@ -197,7 +193,7 @@ class AddonStoreVM:
 						_StatusFilterKey.INCOMPATIBLE,
 					)
 				),
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that opens help for the selected addon
@@ -214,14 +210,14 @@ class AddonStoreVM:
 					and aVM.model._addonHandlerModel is not None
 					and aVM.model._addonHandlerModel.getDocFilePath() is not None
 				),
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that opens the homepage for the selected addon
 				displayName=pgettext("addonStore", "Ho&mepage"),
 				actionHandler=lambda aVM: startfile(aVM.model.homepage),
 				validCheck=lambda aVM: aVM.model.homepage is not None,
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that opens the license for the selected addon
@@ -236,14 +232,14 @@ class AddonStoreVM:
 					isinstance(aVM.model, _AddonStoreModel)
 					and aVM.model.licenseURL is not None
 				),
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 			AddonActionVM(
 				# Translators: Label for an action that opens the source code for the selected addon
 				displayName=pgettext("addonStore", "Source &Code"),
 				actionHandler=lambda aVM: startfile(cast(_AddonStoreModel, aVM.model).sourceURL),
 				validCheck=lambda aVM: isinstance(aVM.model, _AddonStoreModel),
-				listItemVM=selectedListItem
+				actionTarget=selectedListItem
 			),
 		]
 
@@ -284,7 +280,7 @@ class AddonStoreVM:
 		"Could not disable the add-on: {addon}."
 	)
 
-	def _handleEnableDisable(self, listItemVM: AddonListItemVM, shouldEnable: bool) -> None:
+	def _handleEnableDisable(self, listItemVM: AddonListItemVM[_AddonManifestModel], shouldEnable: bool) -> None:
 		try:
 			listItemVM.model._addonHandlerModel.enable(shouldEnable)
 		except addonHandler.AddonError:
@@ -302,7 +298,7 @@ class AddonStoreVM:
 		listItemVM.status = getStatus(listItemVM.model)
 		self.refresh()
 
-	def enableOverrideIncompatibilityForAddon(self, listItemVM: AddonListItemVM) -> None:
+	def enableOverrideIncompatibilityForAddon(self, listItemVM: AddonListItemVM[_AddonManifestModel]) -> None:
 		from ... import mainFrame
 		if _shouldEnableWhenAddonTooOldDialog(mainFrame, listItemVM.model):
 			listItemVM.model.enableCompatibilityOverride()
@@ -326,12 +322,27 @@ class AddonStoreVM:
 		log.debug(f"{listItemVM.Id} status: {listItemVM.status}")
 		self._downloader.download(listItemVM, self._downloadComplete, self.onDisplayableError)
 
+	def getAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]) -> None:
+		for aVM in listItemVMs:
+			if aVM.status not in (
+				AvailableAddonStatus.AVAILABLE,
+				AvailableAddonStatus.UPDATE,
+			):
+				log.debug(f"Skipping {aVM.Id} as it is not available or updatable")
+			elif not aVM.model.isCompatible and aVM.model.canOverrideCompatibility:
+				self.installOverrideIncompatibilityForAddon(aVM)
+			else:
+				self.getAddon(aVM)
+
 	def _downloadComplete(
 			self,
 			listItemVM: AddonListItemVM[_AddonStoreModel],
 			fileDownloaded: Optional[PathLike]
 	):
-		addonDataManager._downloadsPendingCompletion.remove(listItemVM)
+		try:
+			addonDataManager._downloadsPendingCompletion.remove(listItemVM)
+		except KeyError:
+			log.debug("Download already completed")
 
 		if fileDownloaded is None:
 			# Download may have been cancelled or otherwise failed
@@ -370,7 +381,10 @@ class AddonStoreVM:
 		listItemVM.status = AvailableAddonStatus.INSTALLED
 		addonDataManager._cacheInstalledAddon(listItemVM.model)
 		# Clean up download file
-		os.remove(fileDownloaded)
+		try:
+			os.remove(fileDownloaded)
+		except FileNotFoundError:
+			pass
 		log.debug(f"{listItemVM.Id} status: {listItemVM.status}")
 
 	def refresh(self):
@@ -406,7 +420,6 @@ class AddonStoreVM:
 					# (it's too old and not too new)
 					if (
 						addonId not in availableAddons[channel]
-						and addonId not in self._installedAddons[channel]
 						and incompatibleAddons[channel][addonId].canOverrideCompatibility
 					):
 						availableAddons[channel][addonId] = incompatibleAddons[channel][addonId]
@@ -433,10 +446,15 @@ class AddonStoreVM:
 			return model.isPendingEnable or (
 				not model.isDisabled
 				and not model.isPendingDisable
+				and not model.isBlocked
 			)
 
 		elif EnabledStatus.DISABLED == self._filterEnabledDisabled:
-			return model.isDisabled or model.isPendingDisable
+			return (
+				model.isDisabled
+				or model.isPendingDisable
+				or model.isBlocked
+			)
 
 		raise NotImplementedError(f"Invalid EnabledStatus: {self._filterEnabledDisabled}")
 

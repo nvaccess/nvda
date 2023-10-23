@@ -24,12 +24,13 @@ CURRENT: AddonApiVersionT = (
 	buildVersion.version_minor
 )
 
-BACK_COMPAT_TO: AddonApiVersionT = (2023, 1, 0)
+BACK_COMPAT_TO: AddonApiVersionT = (2024, 1, 0)
 """
 As BACK_COMPAT_TO is incremented, the changed / removed parts / or reasoning should be added below.
 These only serve to act as a reminder, the changelog should be consulted for a comprehensive listing.
 EG: (x, y, z): Large changes to speech.py
 ---
+(2024, 1, 0): upgrade to python 3.11
 (2023, 1, 0): speech as str was dropped in favor of only SpeechCommand, and security changes.
 (2022, 1, 0): various constants moved to enums, notably a controlTypes refactor.
 (2021, 1, 0): wxPython 4.1.1, SayAll / Speech re-arranged, removal of previously deprecated code.

@@ -1,11 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited
+# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-# Needed for type hinting CaseInsensitiveDict
-# Can be removed in a future version of python (3.8+)
-from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
 
@@ -57,6 +54,12 @@ class AddonListField(_AddonListFieldData, Enum):
 		pgettext("addonStore", "Name"),
 		150,
 	)
+	status = (
+		# Translators: The name of the column that contains the status of the addon.
+		# e.g. available, downloading installing
+		pgettext("addonStore", "Status"),
+		150
+	)
 	currentAddonVersionName = (
 		# Translators: The name of the column that contains the installed addon's version string.
 		pgettext("addonStore", "Installed version"),
@@ -85,12 +88,6 @@ class AddonListField(_AddonListFieldData, Enum):
 		pgettext("addonStore", "Author"),
 		100,
 		frozenset({_StatusFilterKey.AVAILABLE, _StatusFilterKey.UPDATE})
-	)
-	status = (
-		# Translators: The name of the column that contains the status of the addon.
-		# e.g. available, downloading installing
-		pgettext("addonStore", "Status"),
-		150
 	)
 
 
@@ -132,7 +129,7 @@ class AddonListItemVM(Generic[_AddonModelT]):
 
 
 class AddonDetailsVM:
-	def __init__(self, listVM: AddonListVM):
+	def __init__(self, listVM: "AddonListVM"):
 		self._listVM = listVM
 		self._listItem: Optional[AddonListItemVM] = listVM.getSelection()
 		self.updated = extensionPoints.Action()  # triggered by setting L{self._listItem}
@@ -143,15 +140,6 @@ class AddonDetailsVM:
 
 	@listItem.setter
 	def listItem(self, newListItem: Optional[AddonListItemVM]):
-		if (
-			self._listItem == newListItem  # both may be same ref or None
-			or (
-				None not in (newListItem, self._listItem)
-				and self._listItem.Id == newListItem.Id  # confirm with addonId
-			)
-		):
-			# already set, exit early
-			return
 		self._listItem = newListItem
 		# ensure calling on the main thread.
 		core.callLater(delay=0, callable=self.updated.notify, addonDetailsVM=self)
@@ -164,7 +152,7 @@ class AddonListVM:
 			storeVM: "AddonStoreVM",
 	):
 		self._isLoading: bool = False
-		self._addons: CaseInsensitiveDict[AddonListItemVM] = CaseInsensitiveDict()
+		self._addons: CaseInsensitiveDict[AddonListItemVM[_AddonGUIModel]] = CaseInsensitiveDict()
 		self._storeVM = storeVM
 		self.itemUpdated = extensionPoints.Action()
 		self.updated = extensionPoints.Action()
@@ -257,6 +245,11 @@ class AddonListVM:
 		if self._addonsFilteredOrdered and self.selectedAddonId in self._addonsFilteredOrdered:
 			return self._addonsFilteredOrdered.index(self.selectedAddonId)
 		return None
+
+	def getAddonAtIndex(self, index: int) -> AddonListItemVM:
+		self._validate(selectionIndex=index)
+		selectedAddonId = self._addonsFilteredOrdered[index]
+		return self._addons[selectedAddonId]
 
 	def setSelection(self, index: Optional[int]) -> Optional[AddonListItemVM]:
 		self._validate(selectionIndex=index)

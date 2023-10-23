@@ -3,16 +3,13 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-# Needed for type hinting Future
-# Can be removed in a future version of python (3.8+)
-from __future__ import annotations
-
 from concurrent.futures import (
 	Future,
 	ThreadPoolExecutor,
 )
 import os
 import pathlib
+import shutil
 from typing import (
 	TYPE_CHECKING,
 	cast,
@@ -91,6 +88,9 @@ class AddonFileDownloader:
 		)
 
 		if NVDAState.shouldWriteToDisk():
+			# empty temporary downloads
+			if os.path.exists(WritePaths.addonStoreDownloadDir):
+				shutil.rmtree(WritePaths.addonStoreDownloadDir)
 			# ensure downloads dir exist
 			pathlib.Path(WritePaths.addonStoreDownloadDir).mkdir(parents=True, exist_ok=True)
 
@@ -109,15 +109,23 @@ class AddonFileDownloader:
 		f.add_done_callback(self._done)
 
 	def _done(self, downloadAddonFuture: Future[Optional[os.PathLike]]):
-		isCancelled = downloadAddonFuture not in self._pending
+		isCancelled = downloadAddonFuture.cancelled() or downloadAddonFuture not in self._pending
 		addonId = "CANCELLED" if isCancelled else self._pending[downloadAddonFuture][0].model.addonId
 		log.debug(f"Done called for {addonId}")
-		if isCancelled:
-			log.debug("Download was cancelled, not calling onComplete")
-			return
+
 		if not downloadAddonFuture.done() or downloadAddonFuture.cancelled():
 			log.error("Logic error with download in BG thread.")
+			isCancelled = True
+
+		if isCancelled:
+			log.debug("Download was cancelled, not calling onComplete")
+			try:
+				# If the download was cancelled, the file may have been partially downloaded.
+				os.remove(self._pending[downloadAddonFuture][0].model.tempDownloadPath)
+			except FileNotFoundError:
+				pass
 			return
+
 		addonData, onComplete, onDisplayableError = self._pending[downloadAddonFuture]
 		downloadAddonFutureException = downloadAddonFuture.exception()
 		cacheFilePath: Optional[os.PathLike]
@@ -144,13 +152,15 @@ class AddonFileDownloader:
 
 	def cancelAll(self):
 		log.debug("Cancelling all")
-		for f in self._pending.keys():
+		futuresCopy = self._pending.copy()
+		for f in futuresCopy.keys():
 			f.cancel()
 		assert self._executor
 		self._executor.shutdown(wait=False)
 		self._executor = None
 		self.progress.clear()
 		self._pending.clear()
+		shutil.rmtree(WritePaths.addonStoreDownloadDir)
 
 	def _downloadAddonToPath(
 			self,

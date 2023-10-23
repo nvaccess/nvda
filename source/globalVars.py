@@ -26,9 +26,9 @@ import os
 from typing import (
 	TYPE_CHECKING,
 	List,
+	Literal,
 	Optional,
 )
-from typing_extensions import Literal
 
 if TYPE_CHECKING:
 	import documentBase  # noqa: F401 used for type checking only
@@ -131,6 +131,11 @@ appPid: int = 0
 """The process ID of NVDA itself.
 """
 
+appDir: str
+"""
+The directory where NVDA is installed or running from.
+Set by nvda_slave.pyw and nvda.pyw.
+"""
 
 # TODO: encapsulate in synthDriverHandler
 settingsRing = None

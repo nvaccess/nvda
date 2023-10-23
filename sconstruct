@@ -23,8 +23,8 @@ if nvdaVenv != virtualEnv:
 	print("Warning: SCons launched within a custom Python virtual environment.")
 
 # Variables for storing required version of Python, and the version which is used to run this script.
-requiredPythonMajor ="3"
-requiredPythonMinor = "7"
+requiredPythonMajor = "3"
+requiredPythonMinor = "11"
 requiredPythonArchitecture = "32bit"
 installedPythonMajor = str(sys.version_info.major)
 installedPythonMinor = str(sys.version_info.minor)
@@ -308,16 +308,12 @@ def NVDADistGenerator(target, source, env, for_signature):
 	# which scons treats as an error code.	
 	and None]
 
-	buildCmd = ["cd", source[0].path, "&&",
-		sys.executable]
+	buildCmd = ["cd", source[0].path, "&&", sys.executable]
 	if release:
 		buildCmd.append("-O")
 	# Issue errors about str(bytes_instance), str(bytearray_instance)
 	buildCmd.append("-bb")
-	buildCmd.extend(("setup.py", "-vv", "build", "--build-base", buildDir.abspath,
-		"py2exe", "--dist-dir", target[0].abspath))
-	if release:
-		buildCmd.append("-O1")
+	buildCmd.append("setup.py")
 	if env.get("uiAccess"):
 		buildCmd.append("--enable-uiAccess")
 
@@ -346,7 +342,7 @@ def NVDADistGenerator(target, source, env, for_signature):
 				action.append(Copy(target[0], file.path))
 
 	if certFile:
-		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe", "nvda_eoaProxy.exe":
+		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe":
 			action.append(lambda target,source,env, progByVal=prog: signExec([target[0].File(progByVal)],source,env))
 
 	action.extend((
@@ -434,10 +430,19 @@ outputStylesFile=env.Command(outputDir.File("styles.css"),userDocsDir.File('styl
 changesFile=env.Command(outputDir.File("%s_changes.html" % outFilePrefix),userDocsDir.File('en/changes.html'),Copy('$TARGET','$SOURCE'))
 env.Depends(changesFile, outputStylesFile)
 env.Alias('changes',changesFile)
+
 userGuideFile=env.Command(outputDir.File("userGuide.html"),userDocsDir.File('en/userGuide.html'),Copy('$TARGET','$SOURCE'))
 env.Depends(userGuideFile, outputStylesFile)
 env.Alias('userGuide',userGuideFile)
 
+keyCommandsFile = env.Command(
+	outputDir.File("keyCommands.html"),
+	userDocsDir.File('en/keyCommands.html'),
+	Copy('$TARGET', '$SOURCE')
+)
+env.Depends(keyCommandsFile, outputStylesFile)
+env.Depends(keyCommandsFile, userGuideFile)
+env.Alias('keyCommands', keyCommandsFile)
 
 def makePotSourceFileList(target, sourceFiles, env):
 	potSourceFiles = [

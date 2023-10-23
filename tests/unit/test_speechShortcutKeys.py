@@ -7,16 +7,19 @@
 """
 
 import unittest
+from unittest.mock import patch
 
 from speech.shortcutKeys import (
 	_getKeyboardShortcutSpeech,
 	getKeyboardShortcutsSpeech,
 )
+import speech.shortcutKeys  # noqa F401 - Used by unittest.mock.patch
 from speech.commands import CharacterModeCommand
 
 
 class Test_getKeyboardShortcutSpeech(unittest.TestCase):
 
+	@patch('speech.shortcutKeys.shouldUseSpellingFunctionality', lambda: True)
 	def test_simpleLetterKey(self):
 		"""A shortcut consisting in only one letter."""
 
@@ -30,6 +33,19 @@ class Test_getKeyboardShortcutSpeech(unittest.TestCase):
 		)
 		self.assertEqual(repr(output), expected)
 
+	@patch('speech.shortcutKeys.shouldUseSpellingFunctionality', lambda: False)
+	def test_simpleLetterKeyWithSpellingFunctionalityDisabled(self):
+		"""A shortcut consisting in only one letter in the case where "Use spelling functionality" is disabled
+		(see #15566).
+		"""
+
+		expected = repr(['A', ])
+		output = _getKeyboardShortcutSpeech(
+			keyboardShortcut='A',
+		)
+		self.assertEqual(repr(output), expected)
+
+	
 	def test_simpleSymbolKey(self):
 		"""A shortcut consisting in only one symbol present in symbols.dic."""
 
@@ -52,6 +68,7 @@ class Test_getKeyboardShortcutSpeech(unittest.TestCase):
 		)
 		self.assertEqual(repr(output), expected)
 
+	@patch('speech.shortcutKeys.shouldUseSpellingFunctionality', lambda: True)
 	def test_modifiersAndLetterKey(self):
 		"""A shortcut consisting in modifiers and a letter key."""
 
@@ -110,6 +127,7 @@ class Test_getKeyboardShortcutSpeech(unittest.TestCase):
 		)
 		self.assertEqual(repr(output), expected)
 
+	@patch('speech.shortcutKeys.shouldUseSpellingFunctionality', lambda: True)
 	def test_sequentialShortcutCombiningSpacesAndCommas(self):
 		"""A sequential shortcut found in ribbons (e.g. Word)."""
 
@@ -136,6 +154,7 @@ class Test_getKeyboardShortcutSpeech(unittest.TestCase):
 
 class Test_getKeyboardShortcutsSpeech(unittest.TestCase):
 
+	@patch('speech.shortcutKeys.shouldUseSpellingFunctionality', lambda: True)
 	def test_twoShortcutKeys(self):
 		"""A shortcut key indication indicating two shortcut keys (a sequential one and a simultaneous one)
 		as found in ribbons (e.g. Word).

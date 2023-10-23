@@ -20,10 +20,20 @@ import braille
 import vision
 from speech.types import SpeechSequence
 from controlTypes import OutputReason
+import extensionPoints
 
 if TYPE_CHECKING:
 	import NVDAObjects
 
+post_browseModeStateChange = extensionPoints.Action()
+"""
+Notifies when browse mode state has changed.
+This allows components and add-ons to perform an action.
+For example, an add-on may activate a profile when browse mode has been activated,
+and deactivate that profile when browse mode becomes inactive.
+@param browseMode: The state of browse mode.
+@type browseMode: bool
+"""
 
 runningTable=set()
 
@@ -134,6 +144,8 @@ class TreeInterceptor(baseObject.ScriptableObject):
 		if self._passThrough == state:
 			return
 		self._passThrough = state
+		browseMode = not self.passThrough
+		post_browseModeStateChange.notify(browseMode=browseMode)
 		if state:
 			if config.conf['reviewCursor']['followFocus']:
 				focusObj=api.getFocusObject()

@@ -45,11 +45,21 @@ Add-ons can be filtered by display name, publisher and description.
 
 ### Install add-on from add-on store
 1. Open the add-on store.
+1. Navigate to the available add-ons tab.
 1. Select an add-on.
-1. Navigate to and press the install button for the add-on.
+1. Using the context menu, install the add-on.
 1. Exit the dialog
 1. Restart NVDA as prompted.
-1. Confirm the add-on is listed in the add-ons store.
+1. Confirm the add-ons are listed in the installed add-ons tab of the add-ons store.
+
+### Batch install add-ons from add-on store
+1. Open the add-on store.
+1. Navigate to the available add-ons tab.
+1. Select multiple add-ons using `shift` and `ctrl`.
+1. Using the context menu, install the add-ons.
+1. Exit the dialog
+1. Restart NVDA as prompted.
+1. Confirm the add-ons are listed in the installed add-ons tab of the add-ons store.
 
 ### Install add-on from external source in add-on store
 1. Open the add-on store.
@@ -203,3 +213,23 @@ For "Action" button and "Other details" text field controls:
 1. Tab to another control and check that `alt+<letter>` allows to move the focus back to the control.
 1. From another control tab to the control and check that `alt+<letter>` is reported.
 1. In the control, check that `shift+numpad2` reports the shortcut key.
+
+## Updating NVDA
+
+### Updating NVDA with incompatible add-ons
+
+There are several scenarios which need to be tested for updating NVDA with incompatible add-ons.
+This is an advanced test scenario which requires 3 versions of NVDA to test with.
+Typically, this requires a contributor creating 3 different versions of the same patch of NVDA, with different versions of `addonAPIVersion.CURRENT` and `addonAPIVersion.BACK_COMPAT_TO`
+- X.1 e.g `CURRENT=2023.1`, `BACK_COMPAT_TO=2023.1`
+- X.2 e.g `CURRENT=2023.2`, `BACK_COMPAT_TO=2023.1`
+- (X+1).1 e.g `CURRENT=2024.1`, `BACK_COMPAT_TO=2024.1`
+
+
+| Test Name | Upgrade from | Upgrade to | Test notes |
+|---|---|---|---|
+| Upgrade to different NVDA version in the same API breaking release cycle | X.1 | X.1 | Add-ons which remain incompatible are listed as incompatible on upgrading. Preserves state of enabled incompatible add-ons |
+| Upgrade to a different but compatible API version | X.1 | X.2 | Add-ons which remain incompatible are listed as incompatible on upgrading. Preserves state of enabled incompatible add-ons |
+| Downgrade to a different but compatible API version | X.2 | X.1 | Add-ons which remain incompatible are listed as incompatible on upgrading. Preserves state of enabled incompatible add-ons |
+| Upgrade to an API breaking version | X.1 | (X+1).1 | All incompatible add-ons are listed as incompatible on upgrading, overridden compatibility is reset. |
+| Downgrade to an API breaking version | (X+1).1 | X.1 | Add-ons which remain incompatible listed as incompatible on upgrading. Preserves state of enabled incompatible add-ons. Add-ons which are now compatible are re-enabled. |

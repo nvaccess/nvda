@@ -86,13 +86,20 @@ goodUIAWindowClassNames = (
 badUIAWindowClassNames = (
 	# UIA events of candidate window interfere with MSAA events.
 	"Microsoft.IME.CandidateWindow.View",
+	# Known issue with "Reliability Monitor" in explorer.exe #15541.
+	# Task manager and mmc.exe are also affected, but have isBadUIAWindow workarounds.
+	"SysListView32",
 	"SysTreeView32",
 	"WuDuiListView",
 	"ComboBox",
 	"msctls_progress32",
+	"Edit",
 	"CommonPlacesWrapperWndClass",
 	"SysMonthCal32",
 	"SUPERGRID",  # Outlook 2010 message list
+	"RichEdit",
+	"RichEdit20",
+	"RICHEDIT50W",
 	"Button",
 	# #8944: The Foxit UIA implementation is incomplete and should not be used for now.
 	"FoxitDocWnd",
@@ -691,7 +698,7 @@ class UIAHandler(COMObject):
 				f"handleAutomationEvent called with event {self.getUIAEventIDDebugString(eventID)} "
 				f"for element {self.getUIAElementDebugString(sender)}"
 			)
-		if not self.MTAThreadInitEvent.isSet():
+		if not self.MTAThreadInitEvent.is_set():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandleAutomationEvent: event received while not fully initialized")
@@ -792,7 +799,7 @@ class UIAHandler(COMObject):
 	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
 		if _isDebug():
 			log.debug(f"handleFocusChangedEvent called with element {self.getUIAElementDebugString(sender)}")
-		if not self.MTAThreadInitEvent.isSet():
+		if not self.MTAThreadInitEvent.is_set():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandleFocusChangedEvent: event received while not fully initialized")
@@ -881,7 +888,7 @@ class UIAHandler(COMObject):
 		# #3867: For now manually force this VARIANT type to empty to get around a nasty double free in comtypes/ctypes.
 		# We also don't use the value in this callback.
 		newValue.vt=VT_EMPTY
-		if not self.MTAThreadInitEvent.isSet():
+		if not self.MTAThreadInitEvent.is_set():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandlePropertyChangedEvent: event received while not fully initialized")
@@ -971,7 +978,7 @@ class UIAHandler(COMObject):
 				f"activityID {activityId}, "
 				f"for element {self.getUIAElementDebugString(sender)}"
 			)
-		if not self.MTAThreadInitEvent.isSet():
+		if not self.MTAThreadInitEvent.is_set():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandleNotificationEvent: event received while not fully initialized")
@@ -1016,7 +1023,7 @@ class UIAHandler(COMObject):
 			log.debug(
 				f"HandleActiveTextPositionChangedEvent called for element {self.getUIAElementDebugString(sender)}"
 			)
-		if not self.MTAThreadInitEvent.isSet():
+		if not self.MTAThreadInitEvent.is_set():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandleActiveTextPositionchangedEvent: event received while not fully initialized")

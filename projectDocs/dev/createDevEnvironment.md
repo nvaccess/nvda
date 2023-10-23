@@ -34,7 +34,7 @@ The NVDA source depends on several other packages to run correctly.
 ### Installed Dependencies
 The following dependencies need to be installed on your system:
 
-* [Python](https://www.python.org/), version 3.7, 32 bit
+* [Python](https://www.python.org/), version 3.11, 32 bit
 	* Use latest minor version if possible.
 * Microsoft Visual Studio 2019 or 2022:
 	* To replicate the production build environment, use the [version of Visual Studio 2019 that AppVeyor is using](https://www.appveyor.com/docs/windows-images-software/#visual-studio-2019). 
@@ -67,7 +67,7 @@ For reference, the following run time dependencies are included in Git submodule
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.52-dev commit `ed9a7bcf`
 * [Sonic](https://github.com/waywardgeek/sonic), commit 1d705135
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit cbc1f29631780
-* [liblouis](http://www.liblouis.io/), version 3.26.0
+* [liblouis](http://www.liblouis.io/), version 3.27.0
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 42.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)

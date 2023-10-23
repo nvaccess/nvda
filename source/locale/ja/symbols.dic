@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (c) 2011-2018 NVDA Contributors
 #Copyright (C) 1999-2002 Bilingual Emacspeak Project
-#Copyright (c) 2012 Takuya Nishimoto(nishimotz), Martin (mahoro-ba.net)
+#Copyright (c) 2012-2023 Takuya Nishimoto(nishimotz), Martin (mahoro-ba.net)
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -75,8 +75,8 @@ $	ドル	none
 +	プラス
 −	マイナス
 ,	コンマ	most	never
-،	アラビック カンマ
--	マイナス	some
+،	アラビック カンマ	-	norep
+-	マイナス	some	norep
 .	ピリオド	some
 /	スラッシュ	some
 :	コロン	some	norep
@@ -110,14 +110,14 @@ _	アンダーライン	some
 
 # Other characters
 •	ビュレット	most
-…	サンテン リーダ	some
-...	ドットドットドット
+…	サンテン リーダ	some	norep
+...	ドットドットドット	-	norep
 “	コーテイション	most
 ”	コーテイショントジ	most
 ‘	シングル	most
 ’	シングルトジ	most
-–	エンダッシュ
-—	エムダッシュ
+–	エンダッシュ	-	norep
+—	エムダッシュ	-	norep
 ­	ソフトハイフン
 ⁃	ハイフン ビュレット
 ●	クロマル	some
@@ -713,7 +713,7 @@ _	アンダーライン	some
 
 # U+3000 to U+3FFF
 　	ゼンカク スペース	char	always
-、	テン	most
+、	テン	most	norep
 。	マル	some
 〃	オナジク	all
 々	オドリジ	char	always
