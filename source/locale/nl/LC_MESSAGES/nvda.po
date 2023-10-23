@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-22 00:01+0000\n"
+"POT-Creation-Date: 2023-10-20 00:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Artin Dekker <vertalen@artindekker.com>\n"
 "Language-Team: \n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.3.2\n"
-"X-Poedit-Bookmarks: -1,-1,-1,-1,1472,-1,-1,-1,-1,-1\n"
+"X-Poedit-Bookmarks: -1,1573,-1,-1,1472,-1,-1,-1,-1,-1\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -4081,6 +4081,11 @@ msgstr "Toont het NVDA dialoogvenster voor selectie van brailleleesregels"
 msgid "Shows NVDA's braille settings"
 msgstr "Toont de braille-instellingen van NVDA"
 
+#. Translators: Input help mode message for go to audio settings command.
+#, fuzzy
+msgid "Shows NVDA's audio settings"
+msgstr "Toont de braille-instellingen van NVDA"
+
 #. Translators: Input help mode message for go to keyboard settings command.
 msgid "Shows NVDA's keyboard settings"
 msgstr "Toont de toetsenbordinstellingen van NVDA"
@@ -7913,7 +7918,7 @@ msgstr "verdeeld uitlijnen"
 
 #. Translators: Reported when text is centered across multiple cells.
 msgid "align centered across selection"
-msgstr ""
+msgstr "gecentreerd uitlijnen voor de selectie"
 
 #. Translators: Reported in Excel when text is formatted with "General" alignment, i.e. the name of the
 #. alignment in Excel aligning the cell's content depending on its type: text left and numbers right.
@@ -8948,11 +8953,13 @@ msgid "&Install NVDA..."
 msgstr "NVDA &installeren..."
 
 #. Translators: The label for the menu item to run the COM registration fix tool
-msgid "&Run COM Registration Fixing tool..."
+#, fuzzy
+msgid "Run COM Registration Fixing tool..."
 msgstr "Probleemoplosser voor COM-registratie &uitvoeren..."
 
 #. Translators: The label for the menu item to reload plugins.
-msgid "R&eload plugins"
+#, fuzzy
+msgid "Reload plugins"
 msgstr "Plugins h&erladen"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
@@ -9303,7 +9310,6 @@ msgid ""
 "Addon: {summary} {version}"
 msgstr ""
 "Weet u zeker dat u deze add-on wilt installeren?\n"
-"\n"
 "Installeer alleen add-ons van bronnen die u vertrouwt.\n"
 "Add-on: {summary} {version}"
 
@@ -10673,7 +10679,7 @@ msgstr "Synthesizer fout"
 msgid "Audio"
 msgstr "Audio"
 
-#. Translators: This is the label for the select output device combo in the synthesizer dialog.
+#. Translators: This is the label for the select output device combo in NVDA audio settings.
 #. Examples of an output device are default soundcard, usb headphones, etc.
 #, fuzzy
 msgid "Audio output &device:"

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-22 00:01+0000\n"
-"PO-Revision-Date: 2023-09-27 13:18+0900\n"
+"POT-Creation-Date: 2023-10-08 23:57+0000\n"
+"PO-Revision-Date: 2023-10-09 12:32+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4\n"
 "X-Poedit-Bookmarks: -1,2672,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
@@ -571,7 +571,7 @@ msgstr "既読"
 #. {total} is replaced with the total number of items in the group.
 #, python-brace-format
 msgid "{number} of {total}"
-msgstr "{number}の{total}"
+msgstr "{total}の{number}"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
 #. %s is replaced with the level.
@@ -3991,6 +3991,10 @@ msgstr "NVDAの点字ディスプレイ選択ダイアログの表示"
 msgid "Shows NVDA's braille settings"
 msgstr "NVDAの点字設定の表示"
 
+#. Translators: Input help mode message for go to audio settings command.
+msgid "Shows NVDA's audio settings"
+msgstr "NVDAのオーディオ設定の表示"
+
 #. Translators: Input help mode message for go to keyboard settings command.
 msgid "Shows NVDA's keyboard settings"
 msgstr "NVDAのキーボード設定の表示"
@@ -6831,7 +6835,7 @@ msgstr "選択されたテキストまたはカーソル位置のテキストの
 #. Translators: A position in a Kindle book
 #, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
-msgstr "{bookPercentage}パーセント 場所 {curLocation}の{maxLocation}"
+msgstr "{bookPercentage}パーセント 場所 {maxLocation}の{curLocation}"
 
 #. Translators: a page in a Kindle book
 #, python-brace-format
@@ -8806,12 +8810,12 @@ msgid "&Install NVDA..."
 msgstr "NVDAのインストール(&I)..."
 
 #. Translators: The label for the menu item to run the COM registration fix tool
-msgid "&Run COM Registration Fixing tool..."
-msgstr "COM 登録修復ツール(&R)..."
+msgid "Run COM Registration Fixing tool..."
+msgstr "COM 登録修復ツール..."
 
 #. Translators: The label for the menu item to reload plugins.
-msgid "R&eload plugins"
-msgstr "プラグインの再読み込み(&E)"
+msgid "Reload plugins"
+msgstr "プラグインの再読み込み"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
 msgid "&Tools"
@@ -10496,7 +10500,7 @@ msgstr "音声エンジンエラー"
 msgid "Audio"
 msgstr "オーディオ"
 
-#. Translators: This is the label for the select output device combo in the synthesizer dialog.
+#. Translators: This is the label for the select output device combo in NVDA audio settings.
 #. Examples of an output device are default soundcard, usb headphones, etc.
 msgid "Audio output &device:"
 msgstr "オーディオ出力デバイス(&D)"
@@ -11399,7 +11403,7 @@ msgstr "セクション %s"
 #. {1} will be replaced with the number of text columns.
 #, python-brace-format
 msgid "column {0} of {1}"
-msgstr "列 {0}の{1}"
+msgstr "列 {1}の{0}"
 
 #. Translators: Indicates the text column number in a document.
 #. %s will be replaced with the number of text columns.
@@ -12617,7 +12621,7 @@ msgstr "グラフ要素"
 #. For example, this might report "foo series 1 of 2"
 #, python-brace-format
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
-msgstr "系列 {seriesName} {seriesIndex}の{seriesCount}"
+msgstr "系列 {seriesName} {seriesCount}の{seriesIndex}"
 
 #. Translators: Message to be spoken to report Slice Color in Pie Chart
 #, python-brace-format
@@ -12670,13 +12674,13 @@ msgstr "値 {valueAxisData}"
 #, python-brace-format
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
-msgstr " {fractionValue:.2f}パーセントのスライス {pointIndex}の{pointCount}"
+msgstr " {fractionValue:.2f}パーセントのスライス {pointCount}の{pointIndex}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
 #, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
-msgstr " {segmentType} {pointIndex}の{pointCount}"
+msgstr " {segmentType} {pointCount}の{pointIndex}"
 
 #. Translators: Indicates Primary Category Axis
 msgid "Primary Category Axis"
@@ -12793,19 +12797,19 @@ msgstr "プロットエリア "
 #. Translators: a message for the legend entry of a chart in MS Office
 #, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr "系列{seriesName}の凡例項目 {seriesIndex}の{seriesCount}"
+msgstr "系列{seriesName}の凡例項目 {seriesCount}の{seriesIndex}"
 
 #. Translators: the legend entry for a chart in Microsoft Office
 #, python-brace-format
 msgid "Legend entry {legendEntryIndex} of {legendEntryCount}"
-msgstr "凡例項目 {legendEntryIndex} の {legendEntryCount}"
+msgstr "凡例項目 {legendEntryCount} の {legendEntryIndex}"
 
 #. Translators: Details about a legend key for a series in a Microsoft office chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 #, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr "系列{seriesName}の凡例キー {seriesIndex}の{seriesCount}"
+msgstr "系列{seriesName}の凡例キー {seriesCount}の{seriesIndex}"
 
 #. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
 #. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-08 00:01+0000\n"
-"PO-Revision-Date: 2023-09-13 13:54+0100\n"
+"POT-Creation-Date: 2023-10-20 00:02+0000\n"
+"PO-Revision-Date: 2023-10-20 09:16+0100\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
@@ -4090,6 +4090,10 @@ msgstr "Mostra la finestra selezione display braille di NVDA"
 #. Translators: Input help mode message for go to braille settings command.
 msgid "Shows NVDA's braille settings"
 msgstr "Mostra le impostazioni braille di NVDA"
+
+#. Translators: Input help mode message for go to audio settings command.
+msgid "Shows NVDA's audio settings"
+msgstr "Mostra le impostazioni audio di NVDA"
 
 #. Translators: Input help mode message for go to keyboard settings command.
 msgid "Shows NVDA's keyboard settings"
@@ -8974,12 +8978,12 @@ msgid "&Install NVDA..."
 msgstr "&Installa NVDA..."
 
 #. Translators: The label for the menu item to run the COM registration fix tool
-msgid "&Run COM Registration Fixing tool..."
-msgstr "Esegui utility &risoluzione registrazioni com di sistema..."
+msgid "Run COM Registration Fixing tool..."
+msgstr "Esegui utility risoluzione registrazioni com di sistema..."
 
 #. Translators: The label for the menu item to reload plugins.
-msgid "R&eload plugins"
-msgstr "Ri&carica i plugin"
+msgid "Reload plugins"
+msgstr "Ricarica componenti aggiuntivi"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
 msgid "&Tools"
@@ -10123,31 +10127,6 @@ msgstr "Seleziona un Sintetizzatore"
 msgid "&Synthesizer:"
 msgstr "&Sintetizzatore"
 
-#. Translators: This is the label for the select output
-#. device combo in the synthesizer dialog. Examples of
-#. of an output device are default soundcard, usb
-#. headphones, etc.
-msgid "Audio output  &device:"
-msgstr "Periferica au&dio da utilizzare:"
-
-#. Translators: name for default (Microsoft Sound Mapper) audio output device.
-msgid "Microsoft Sound Mapper"
-msgstr "Microsoft Sound Mapper"
-
-#. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
-msgid "Audio d&ucking mode:"
-msgstr "Modalità atten&uazione audio"
-
-#. Translators: This message is presented when
-#. NVDA is unable to load the selected
-#. synthesizer.
-#, python-format
-msgid "Could not load the %s synthesizer."
-msgstr "Non posso caricare il sintetizzatore %s"
-
-msgid "Synthesizer Error"
-msgstr "Errore nel sintetizzatore"
-
 #. Translators: This is the label for the voice settings panel.
 msgid "Voice"
 msgstr "Voce"
@@ -10718,6 +10697,46 @@ msgstr "Navigazione documento"
 msgid "&Paragraph style:"
 msgstr "Stile &paragrafo:"
 
+#. Translators: This message is presented when
+#. NVDA is unable to load the selected synthesizer.
+#, python-format
+msgid "Could not load the %s synthesizer."
+msgstr "Non posso caricare il sintetizzatore %s"
+
+#. Translators: Dialog title presented when
+#. NVDA is unable to load the selected synthesizer.
+msgid "Synthesizer Error"
+msgstr "Errore nel sintetizzatore"
+
+#. Translators: This is the label for the audio settings panel.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Audio"
+msgstr "Audio"
+
+#. Translators: This is the label for the select output device combo in NVDA audio settings.
+#. Examples of an output device are default soundcard, usb headphones, etc.
+msgid "Audio output &device:"
+msgstr "Periferica au&dio da utilizzare:"
+
+#. Translators: name for default (Microsoft Sound Mapper) audio output device.
+msgid "Microsoft Sound Mapper"
+msgstr "Microsoft Sound Mapper"
+
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog.
+msgid "Audio d&ucking mode:"
+msgstr "Modalità atten&uazione audio"
+
+#. Translators: This is the label for a checkbox control in the
+#. Audio settings panel.
+msgid "Volume of NVDA sounds follows voice volume"
+msgstr "Il volume dei suoni di NVDA segue il volume della voce"
+
+#. Translators: This is the label for a slider control in the
+#. Audio settings panel.
+msgid "Volume of NVDA sounds"
+msgstr "Volume suoni di NVDA"
+
 #. Translators: This is the label for the addon navigation settings panel.
 msgid "Add-on Store"
 msgstr "Add-on Store"
@@ -10995,25 +11014,9 @@ msgstr "Timeout movimento cursore (in ms)"
 msgid "Report transparent color values"
 msgstr "Annuncia i valori dei colori trasparenti"
 
-#. Translators: This is the label for a group of advanced options in the
-#. Advanced settings panel
-msgid "Audio"
-msgstr "Audio"
-
 #. Translators: This is the label for a checkbox control in the Advanced settings panel.
 msgid "Use WASAPI for audio output (requires restart)"
 msgstr "Usa WASAPI per l'output audio (richiede il riavvio)"
-
-#. Translators: This is the label for a checkbox control in the
-#. Advanced settings panel.
-msgid "Volume of NVDA sounds follows voice volume (requires WASAPI)"
-msgstr ""
-"Il volume dei suoni di NVDA segue il volume della voce (richiede WASAPI)"
-
-#. Translators: This is the label for a slider control in the
-#. Advanced settings panel.
-msgid "Volume of NVDA sounds (requires WASAPI)"
-msgstr "Volume suoni di NVDA (richiede WASAPI)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
