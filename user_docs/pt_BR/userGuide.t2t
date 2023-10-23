@@ -2336,6 +2336,16 @@ Existem as seguintes opções:
   -
 -
 
+==== Relatar regiões dinâmicas [live regions] ====[BrailleLiveRegions]
+: Padrão
+  Habilitado
+: Opções
+  Padrão (Habilitado), Desabilitado, Habilitado
+:
+
+Esta opção seleciona se o NVDA relata alterações em algum conteúdo dinâmico da web em Braille.
+Desabilitar esta opção equivale ao comportamento do NVDA nas versões 2023.1 e anteriores, que apenas relatavam estas alterações de conteúdo por fala.
+
 ==== Falar senhas em todos os terminais aprimorados ====[AdvancedSettingsWinConsoleSpeakPasswords]
 Essa configuração controla se os caracteres são falados por [falar caracteres digitados #KeyboardSettingsSpeakTypedCharacters] ou [falar palavras digitadas #KeyboardSettingsSpeakTypedWords] em situações em que a tela não é atualizada (como a digitação de senha) em alguns programas de terminal, como o Console do Windows com suporte de UI automation ""[automação de interface do usuário]"" habilitado e Mintty.
 Por motivos de segurança, esta configuração deve ser deixada desabilitada.
@@ -2361,6 +2371,25 @@ Essa configuração pode estabilizar a leitura do texto recebido em alguns aplic
 No entanto, nos terminais, ao inserir ou excluir um caractere no meio de uma linha, o texto após o cursor do sistema será lido.
 -
 
+==== Falar texto novo no Terminal Windows via ====[WtStrategy]
+: Padrão
+  Diffing
+: Opções
+  Padrão (Diffing), Diffing, Notificações UIA
+:
+
+Esta opção seleciona como o NVDA determina qual texto é "novo" (e, portanto, o que falar quando "anunciar alterações de conteúdo dinâmico" está habilitado) no Terminal Windows e no controle do Terminal Windows WPF usado no Visual Studio 2022.
+Ela não afeta o Console do Windows (``conhost.exe``).
+A caixa de combinação Falar texto novo no Terminal Windows tem três opções:
+- Padrão: Essa opção é atualmente equivalente a "diffing", mas espera-se que mude assim que o suporte para Notificações UIA for desenvolvido.
+- Diffing: Essa opção usa o algoritmo de comparação ""[diff]"" selecionado para calcular as alterações cada vez que o terminal renderiza um novo texto.
+Isto é idêntico ao comportamento do NVDA nas versões 2022.4 e anteriores.
+- Notificações UIA: Essa opção adia a responsabilidade de determinar qual texto falar para o próprio Terminal Windows, significando que o NVDA não precisa mais determinar qual texto atualmente na tela é "novo".
+Isso deve melhorar significativamente o desempenho e a estabilidade do Terminal Windows, mas esse recurso ainda não está completo.
+Em particular, caracteres digitados que não são exibidos na tela, como senhas, são relatados quando esta opção está selecionada.
+Além disso, intervalos contíguos de saída com mais de 1000 caracteres podem não ser relatados com precisão.
+-
+
 ==== Tentar cancelar a fala para eventos de foco expirados ====[CancelExpiredFocusSpeech]
 Essa opção habilita o comportamento que tenta cancelar a fala para eventos de foco expirados.
 Em particular, a movimentação rápida de mensagens no Gmail com o Chrome pode fazer com que o NVDA fale informações desatualizadas.
@@ -2375,6 +2404,33 @@ esta opção permite informar quando as cores são transparentes, útil para des
 Alguns aplicativos GDI ""[Interface de Dispositivo Gráfico]"" destacam o texto com uma cor de fundo, o NVDA (via modelo de exibição) tenta informar essa cor.
 Em algumas situações, o fundo do texto pode ser totalmente transparente, com o texto em camadas em algum outro elemento da GUI ""[Interface Gráfica do Usuário]"".
 Com várias APIs de GUI historicamente populares, o texto pode ser renderizado com um fundo transparente, mas visualmente a cor do fundo é precisa.
+
+==== Usar WASAPI para saída de áudio ====[WASAPI]
+: Padrão
+  Habilitado
+: Opções
+  Padrão (Habilitado), Desabilitado, Habilitado
+:
+
+Esta opção permite a saída de áudio por meio da Windows Audio Session API (WASAPI) ""[API de Sessão de Áudio do Windows]"".
+WASAPI é uma estrutura de áudio mais moderna que pode melhorar a capacidade de resposta, o desempenho e a estabilidade da saída de áudio do NVDA, incluindo fala e sons.
+Após alterar esta opção, você precisará reiniciar o NVDA para que a alteração entre em vigor.
+
+==== Volume dos sons do NVDA segue o volume da voz ====[SoundVolumeFollowsVoice]
+: Padrão
+  Desabilitado
+: Opções
+  Desabilitado, Habilitado
+:
+
+Quando esta opção estiver habilitada, o volume dos sons e bipes do NVDA seguirá a configuração de volume da voz que você está usando.
+Se você diminuir o volume da voz, o volume dos sons diminuirá.
+Da mesma forma, se você aumentar o volume da voz, o volume dos sons aumentará.
+Esta opção só entra em vigor quando "Usar WASAPI para saída de áudio" está habilitado.
+
+==== Volume dos sons do NVDA ====[SoundVolume]
+Este controle deslizante permite definir o volume dos sons e bipes do NVDA.
+Essa configuração só entra em vigor quando "Usar WASAPI para saída de áudio" está habilitado e "Volume dos sons do NVDA segue o volume da voz" está desabilitado.
 
 ==== Categorias de log de depuração ====[AdvancedSettingsDebugLoggingCategories]
 As caixas de seleção nesta lista permitem habilitar categorias específicas de mensagens de depuração no registro do NVDA.
@@ -2435,14 +2491,18 @@ Para mudar um símbolo, selecione-o na lista de símbolos.
 Você pode filtrar os símbolos inserindo o símbolo ou uma parte da substituição do símbolo na caixa de edição Filtrar por.
 
 - O campo de substituição permite que você altere o texto que será falado no lugar do símbolo.
-- Através do campo grau ""[nível]"" você poderá definir o grau de símbolos mais baixo no qual este será falado.
+- Através do campo grau ""[nível]"" você poderá definir o nível de símbolos mais baixo no qual este deve ser falado (nada, pouco, muito ou tudo).
+Também pode definir o nível como caractere; nesse caso o símbolo não será falado independentemente do nível do símbolo em uso, com as duas exceções a seguir:
+  - Ao navegar caractere por caractere.
+  - Quando o NVDA está soletrando qualquer texto que contenha esse símbolo.
+  -
 - O campo Enviar o real símbolo para o sintetizador especifica quando o próprio símbolo (contrariamente a seu substituto) deve ser enviado para o sintetizador.
 Isso é útil quando o símbolo faz com que o sintetizador emita pausa ou altere a inflexão da voz.
 Por exemplo, uma vírgula provoca pausa no sintetizador.
 Existem 3 opções:
  - nunca: Nunca envia o real símbolo para o sintetizador.
  - sempre: Sempre envia o real símbolo para o sintetizador.
- - somente abaixo do nível de símbolos: envia o real símbolo apenas se o grau configurado estiver abaixo do grau definido para esse símbolo.
+ - somente abaixo do nível de símbolos: envia o real símbolo apenas se o grau configurado estiver abaixo do nível definido para esse símbolo.
  Por exemplo, você pode usá-lo de modo que um símbolo tenha seu substituto falado em graus mais altos sem pausar, enquanto continua sendo indicado com uma pausa em graus mais baixos.
  -
 -
@@ -2601,6 +2661,126 @@ As configurações para o NVDA ao executar durante a entrada ""[credenciais]"" o
 Normalmente, não deve tocar nestas configurações.
 Para alterar a configuração do NVDA nas credenciais ou nas telas do UAC, configure o NVDA como desejar enquanto estiver conectado ao Windows, salve a configuração, e pressione o botão "usar configurações salvas atualmente nas credenciais e em telas seguras" na categoria Geral do diálogo [Configurações do NVDA #NVDASettings].
 
++ Complementos e a Loja de Complementos +[AddonsManager]
+Complementos são pacotes de software que fornecem funcionalidades novas ou alteradas para o NVDA.
+Eles são desenvolvidos pela comunidade do NVDA e por organizações externas, como fornecedores comerciais.
+Os complementos podem fazer o seguinte:
+- Adicionar ou aprimorar o suporte para determinados aplicativos.
+- Fornecer suporte para linhas Braille ou sintetizadores de fala extras.
+- Adicionar ou alterar recursos no NVDA.
+-
+
+A Loja de Complementos do NVDA permite navegar e gerenciar pacotes de complementos.
+Todos os complementos disponíveis na Loja de Complementos podem ser baixados gratuitamente.
+No entanto, alguns deles podem exigir que os usuários paguem por uma licença ou software adicional antes de poderem ser usados.
+Os sintetizadores de fala comerciais são um exemplo desse tipo de complemento.
+Se você instalar um complemento com componentes pagos e mudar de ideia sobre usá-lo, o complemento poderá ser facilmente removido.
+
+A Loja de Complementos é acessada no submenu Ferramentas do menu NVDA.
+Para acessar a Loja de Complementos de qualquer lugar, atribua um comando ""[gesto]"" personalizado usando o [diálogo Definir Comandos #InputGestures].
+
+++ Navegando em complementos ++[AddonStoreBrowsing]
+Quando aberta, a Loja de Complementos exibe uma lista de complementos.
+Se você ainda não instalou um complemento, a Loja de Complementos abrirá uma lista de complementos disponíveis para instalação.
+Se você instalou complementos, a lista exibirá os complementos instalados no momento.
+
+Selecionar um complemento, movendo-se até ele com as teclas de seta para cima e para baixo, exibirá os detalhes do complemento.
+Os complementos têm ações associadas que você pode acessar por meio de um [menu de ações #AddonStoreActions], como instalar, ajuda, desabilitar e remover.
+As ações disponíveis mudarão dependendo se o complemento está instalado ou não e se está habilitado ou desabilitado.
+
++++ Visualizações de lista de complementos +++[AddonStoreFilterStatus]
+Existem diferentes visualizações para complementos instalados, atualizáveis, disponíveis e incompatíveis.
+Para alterar a visualização dos complementos, altere a guia ativa da lista de complementos usando ``ctrl+tab``.
+Também pode ``tab`` até a lista de visualizações, e percorrê-las com as teclas ``seta para esquerda`` e ``seta para direita``.
+
++++ Filtrando complementos habilitados ou desabilitados +++[AddonStoreFilterEnabled]
+Normalmente, um complemento instalado está "habilitado", o que significa que está em execução e disponível no NVDA.
+No entanto, alguns dos complementos instalados podem estar configurados para o estado "desabilitado".
+Isto significa que eles não serão usados e suas funções não estarão disponíveis durante a sua sessão atual do NVDA.
+Você pode ter desabilitado um complemento porque ele entrou em conflito com outro complemento ou com um determinado aplicativo.
+O NVDA também pode desabilitar certos complementos, se eles forem considerados incompatíveis durante uma atualização do NVDA; embora você seja avisado se isso for acontecer.
+Os complementos também podem ser desabilitados se você simplesmente não precisar deles por um período prolongado, mas não quiser desinstalá-los porque espera querê-los novamente no futuro.
+
+As listas de complementos instalados e incompatíveis podem ser filtradas pelo estado habilitado ou desabilitado.
+O padrão mostra ambos complementos, habilitados e desabilitados.
+
++++ Incluir complementos incompatíveis +++[AddonStoreFilterIncompatible]
+Os complementos disponíveis e atualizáveis podem ser filtrados para incluir [complementos incompatíveis #incompatibleAddonsManager] que estão disponíveis para instalação.
+
++++ Filtrar complementos por canal +++[AddonStoreFilterChannel]
+Os complementos podem ser distribuídos através de até quatro canais:
+- Estável: O desenvolvedor lançou deste modo como um complemento testado com uma versão lançada ""[final]"" do NVDA.
+- Beta: Este complemento pode precisar de mais testes, mas foi lançado para receber feedback ""[comentários]"" dos usuários.
+Sugerido para adotantes iniciais ""[usuários entusiastas]"".
+- Dev: Sugere-se que este canal seja usado por desenvolvedores de complementos para testar alterações de API não lançadas.
+Os testadores alfa do NVDA podem precisar usar uma versão "Dev" de seus complementos.
+- Externo: Complementos instalados de fontes externas, fora da Loja de Complementos.
+-
+
+Para listar complementos apenas para canais específicos, altere a seleção do filtro "Canal".
+
++++ Pesquisando complementos +++[AddonStoreFilterSearch]
+Para pesquisar complementos, use a caixa de texto "Pesquisar".
+Você pode acessá-la pressionando ``shift+tab`` a partir da lista de complementos.
+Digite uma ou duas palavras-chave para o tipo de complemento que está procurando e, em seguida, ``tab`` até a lista de complementos.
+Os complementos serão listados se o texto de pesquisa puder ser encontrado no ID do complemento, nome de exibição, editor, autor ou descrição.
+
+++ Ações dos complementos ++[AddonStoreActions]
+Os complementos têm ações associadas, como instalar, ajuda, desabilitar e remover.
+Para um complemento da lista de complementos, essas ações podem ser acessadas através de um menu aberto pressionando a tecla ``aplicações``, ``enter``, clicando com o botão direito ou clicando duas vezes no complemento.
+Este menu também pode ser acessado através de um botão Ações nos detalhes do complemento selecionado.
+
++++ Instalando complementos +++[AddonStoreInstalling]
+Só porque um complemento está disponível na Loja de Complementos do NVDA, não significa que ele tenha sido aprovado ou examinado pela  NV Access ou por qualquer outra pessoa.
+É muito importante instalar apenas complementos de fontes confiáveis.
+A funcionalidade dos complementos é irrestrita dentro do NVDA.
+Isso pode incluir o acesso aos seus dados pessoais ou até mesmo ao sistema inteiro.
+
+Você pode instalar e atualizar complementos [navegando em Complementos disponíveis #AddonStoreBrowsing].
+Selecione um complemento na guia "Complementos disponíveis" ou "Complementos atualizáveis".
+Em seguida, use a ação atualizar, instalar ou substituir para iniciar a instalação.
+
+Para instalar um complemento obtido fora da Loja de Complementos, pressione o botão "Instalar de fonte externa".
+Isso permitirá que você procure um pacote de complemento (arquivo ``.nvda-addon``) em algum lugar do seu computador ou em uma rede.
+Depois de abrir o pacote de complemento, o processo de instalação começará.
+
+Se o NVDA estiver instalado e em execução no seu sistema, você também poderá abrir um arquivo de complemento diretamente do navegador ou sistema de arquivos para iniciar o processo de instalação.
+
+Quando um complemento estiver sendo instalado de uma fonte externa, o NVDA solicitará que você confirme a instalação.
+Depois que o complemento for instalado, o NVDA deverá ser reiniciado para que o complemento comece a ser executado, embora você possa adiar a reinicialização do NVDA se tiver outros complementos para instalar ou atualizar.
+
++++ Removendo Complementos +++[AddonStoreRemoving]
+Para remover um complemento, selecione-o na lista e use a ação Remover.
+O NVDA solicitará que você confirme a remoção.
+Tal como acontece com a instalação, o NVDA deve ser reiniciado para que o complemento seja totalmente removido.
+Até que você faça isso, um status de "Remoção pendente" será mostrado para esse complemento na lista.
+
++++ Desabilitando e Habilitando Complementos +++[AddonStoreDisablingEnabling]
+Para desabilitar um complemento, use a ação "desabilitar".
+Para habilitar um complemento desabilitado anteriormente, use a ação "habilitar".
+Você pode desabilitar um complemento se o status do complemento indicar que ele está "habilitado" ou habilitá-lo se o complemento estiver "desabilitado".
+Para cada uso da ação habilitar/desabilitar, o status do complemento muda para indicar o que acontecerá quando o NVDA for reiniciado.
+Se o complemento estava anteriormente "desabilitado", o status mostrará "habilitado após reinicialização".
+Se o complemento estava anteriormente "habilitado", o status mostrará "desabilitado após reinicialização".
+Assim como quando você instala ou remove complementos, você precisa reiniciar o NVDA para que as alterações entrem em vigor.
+
+++ Complementos Incompatíveis ++[incompatibleAddonsManager]
+Alguns complementos mais antigos podem não ser mais compatíveis com a versão do NVDA que você possui.
+Se você estiver usando uma versão mais antiga do NVDA, alguns complementos mais recentes também poderão não ser compatíveis.
+A tentativa de instalar um complemento incompatível resultará em um erro explicando por que o complemento é considerado incompatível.
+
+Para complementos mais antigos, você pode sobrepujar a incompatibilidade por sua conta e risco.
+Complementos incompatíveis podem não funcionar com a sua versão do NVDA e podem causar comportamento instável ou inesperado, incluindo travamentos.
+Você pode sobrepujar a compatibilidade ao habilitar ou instalar um complemento.
+Se o complemento incompatível causar problemas posteriormente, você poderá desabilitá-lo ou removê-lo.
+
+Se você estiver tendo problemas para executar o NVDA e tiver atualizado ou instalado recentemente um complemento, especialmente se for um complemento incompatível, convém tentar executar o NVDA temporariamente com todos os complementos desabilitados.
+Para reiniciar o NVDA com todos os complementos desabilitados, escolha a opção apropriada ao sair do NVDA.
+Como alternativa, use a [opção de linha de comando #CommandLineOptions] ``--disable-addons``.
+
+Você pode navegar pelos complementos incompatíveis disponíveis usando as [guias de complementos disponíveis e atualizáveis #AddonStoreFilterStatus].
+Você pode navegar pelos complementos incompatíveis instalados usando a [guia de Complementos incompatíveis #AddonStoreFilterStatus].
+
 + Ferramentas Adicionais +[ExtraTools]
 
 ++ Visualizador de Log ++[LogViewer]
@@ -2653,63 +2833,9 @@ Para alternar o visualizador de braille de qualquer lugar, atribua um comando ""
 O Console Python do NVDA, encontrado dentro das Ferramentas no menu do NVDA, é uma ferramenta de desenvolvimento muito útil para depuração, inspeção geral dos componentes internos do NVDA ou inspeção da hierarquia de acessibilidade de um aplicativo.
 Para mais informações, consulte por favor o [Guia do Desenvolvedor do NVDA https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
 
-++ Gerenciador de Complementos ++[AddonsManager]
-O gerenciador de complementos, que pode ser acessado selecionando Gerir Complementos no submenu ferramentas no menu do NVDA, permite-lhe instalar, desinstalar, habilitar e desabilitar pacotes adicionais ""[complementos/add-ons]"" para o NVDA.
-Esses pacotes são fornecidos pela comunidade e contêm códigos com personalizações que podem acrescentar ou modificar recursos do NVDA ou mesmo fornecer suporte para linhas Braille ou sintetizadores de voz extras.
-
-O gerenciador de complementos possui uma lista que mostra todos os complementos atualmente instalados em suas configurações do usuário do NVDA.
-Nome do pacote, status, versão e autor são mostrados para cada complemento, embora informações adicionais tais como uma descrição e URL podem ser visualizadas, selecionando-o e pressionando o botão Sobre o Complemento.
-Se houver ajuda disponível para o complemento selecionado, você poderá acessá-lo pressionando o botão Ajuda do complemento.
-
-Para procurar e baixar complementos disponíveis online, pressione o botão baixar complementos.
-Esse botão abre a [página de complementos do NVDA https://addons.nvda-project.org/index.pt_BR.html].
-Caso o NVDA esteja instalado e em execução em seu sistema, é possível abrir o complemento diretamente do navegador para começar o processo de instalação como será descrito a seguir.
-Caso contrário, salve o pacote de complemento e siga as instruções abaixo.
-
-Para instalar um complemento anteriormente obtido, pressione o botão Instalar.
-Isto lhe permitirá procurar por um pacote de complemento (arquivo .nvda-addon) em algum lugar de seu computador ou em uma rede.
-Depois de pressionar Abrir, o processo de instalação será iniciado.
-
-Quando um complemento está a ser instalado, o NVDA irá primeiro pedir-lhe para confirmar que realmente deseja instalar o complemento.
-Como a funcionalidade dos complementos é irrestrita dentro do NVDA, o que em teoria pode incluir o acesso a seus dados pessoais ou mesmo a todo o sistema caso o NVDA seja uma cópia instalada, é muito importante que você só instale complementos oriundos de fontes confiáveis.
-Após a instalação do complemento, o NVDA necessitará ser reiniciado para que este inicie sua execução.
-Até que você faça isso, o status de "instalar"será mostrado para aquele complemento na lista.
-
-Para remover um complemento, selecione-o na lista e em seguida pressione o botão Remover.
-O NVDA irá perguntar se você realmente deseja removê-lo.
-Assim como ao instalar, o NVDA precisa ser reiniciado para que o complemento seja completamente removido.
-Até que você faça isso, o status de "remover" será mostrado para aquele complemento na lista.
-
-Para desabilitar um complemento, pressione o botão "desabilitar".
-Para habilitar um complemento anteriormente desabilitado, pressione o botão "habilitar".
-Pode desabilitar um complemento caso o status deste indique que ele está "habilitado", ou habilitá-lo se o complemento estiver "desabilitado".
-Para cada pressionamento do botão habilitar/desabilitar, o status do complemento mudará para indicar o que ocorrerá quando o NVDA for reiniciado.
-Se o complemento esteve "desabilitado" anteriormente, um status mostrará "habilitado após a reinicialização".
-Se o complemento esteve anteriormente "Habilitado", um status mostrará "desabilitado após a reinicialização".
-Semelhante a quando você instala ou remove complementos, é necessário reiniciar o NVDA para que as alterações entrem em vigor.
-
-O gerenciador também possui um botão "Fechar" para encerrar o diálogo.
-Caso tenha instalado, removido ou alterado o status de algum complemento, o NVDA primeiro indagará se você deseja reiniciar, de forma que suas alterações possam ter efeito.
-
-Alguns complementos mais antigos podem não ser mais compatíveis com a versão do NVDA que você possui.
-Ao usar uma versão mais antiga do NVDA, alguns novos complementos podem não ser compatíveis.
-A tentativa de instalar um complemento incompatível resultará em um erro explicando porque o complemento é considerado incompatível.
-Para inspecionar esses complementos incompatíveis, você pode usar o botão "exibir complementos incompatíveis" para iniciar o gerenciador de complementos incompatíveis. 
-
-Para acessar o Gerenciador de Complementos de qualquer lugar, por favor atribua-lhe um comando personalizado usando o [Diálogo Definir Comandos #InputGestures].
-
-+++ Gerenciador de Complementos Incompatíveis +++[incompatibleAddonsManager]
-O Gerenciador de Complementos Incompatíveis, que pode ser acessado através do botão "exibir complementos incompatíveis" no gerenciador de Complementos, permite inspecionar quaisquer complementos incompatíveis e o motivo pelo qual eles são considerados incompatíveis.
-Os complementos são considerados incompatíveis quando não foram atualizados para funcionar com alterações significativas no NVDA ou quando dependem de um recurso não disponível na versão do NVDA que você está usando.
-O gerenciador de complementos incompatíveis tem uma mensagem curta para explicar sua finalidade, bem como a versão do NVDA.
-Os complementos incompatíveis são apresentados em uma lista com as seguintes colunas:
-+ Pacote, o nome do complemento
-+ Versão, a versão do complemento
-+ Razão da incompatibilidade, uma explicação de porque o complemento é considerado incompatível
-+
-
-O Gerenciador de Complementos Incompatíveis também possui um botão "Sobre o complemento ...".
-Esse diálogo fornecerá todos os detalhes do complemento, o que é útil ao entrar em contato com o autor do complemento.
+++ Loja de Complementos ++
+Isso abrirá a [Loja de Complementos do NVDA #AddonsManager].
+Para obter mais informações, leia a seção detalhada: [Complementos e a Loja de Complementos #AddonsManager].
 
 ++ Criar cópia portátil ++[CreatePortableCopy]
 Isso abrirá uma caixa de diálogo que permite criar uma cópia portátil do NVDA a partir da versão instalada.
@@ -2814,6 +2940,7 @@ As linhas a seguir suportam essa funcionalidade de detecção automática.
 - Linhas Eurobraille Esys/Esytime/Iris
 - Linhas Nattiq nBraille
 - Seika Notetaker: MiniSeika (16, 24 celas), V6, e V6Pro (40 celas)
+- Linhas Tivomatic Caiku Albatross 46/80
 - Qualquer linha compatível com o protocolo HID Braille Padrão.
 -
 
