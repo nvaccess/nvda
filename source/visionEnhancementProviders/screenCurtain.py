@@ -8,7 +8,6 @@ The Magnification API has been marked by MS as unsupported for WOW64 application
 """
 
 import os
-import vision
 from vision import providerBase
 from ctypes import Structure, windll, c_float, POINTER, WINFUNCTYPE, WinError
 from ctypes.wintypes import BOOL
@@ -133,6 +132,7 @@ class ScreenCurtainSettings(providerBase.VisionEnhancementProviderSettings):
 				defaultVal=True
 			),
 		]
+
 
 warnOnLoadText = _(
 	# Translators: A warning shown when activating the screen curtain.
@@ -344,7 +344,7 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 
 	def __init__(self):
 		super().__init__()
-		log.debug(f"Starting ScreenCurtain")
+		log.debug("Starting ScreenCurtain")
 		Magnification.MagInitialize()
 		try:
 			Magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
@@ -359,7 +359,7 @@ class ScreenCurtainProvider(providerBase.VisionEnhancementProvider):
 				log.exception()
 
 	def terminate(self):
-		log.debug(f"Terminating ScreenCurtain")
+		log.debug("Terminating ScreenCurtain")
 		try:
 			super().terminate()
 		finally:
