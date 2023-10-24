@@ -139,7 +139,7 @@ class AddonStoreVM:
 				# an add-on store version.
 				displayName=pgettext("addonStore", "Re&place"),
 				actionHandler=self.replaceAddon,
-				validCheck=lambda aVM: aVM.canUseReplaceAction,
+				validCheck=lambda aVM: aVM.canUseReplaceAction(),
 				actionTarget=selectedListItem
 			),
 			AddonActionVM(
