@@ -46,6 +46,7 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 Add-ons will need to be re-tested and have their manifest updated.
 - Added extension point: ``treeInterceptorHandler.post_browseModeStateChange``. (#14969, @nvdaes)
 - It is now possible to use plural forms in an add-on's translations. (#15661, @beqabeqa473)
+- Included python3.dll in the binary distribution for use by add-ons with external libraries utilizing the stable ABI. (#15674, @mzanm)
 -
 
 === API Breaking Changes ===
