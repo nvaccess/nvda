@@ -344,14 +344,13 @@ class AddonStoreVM:
 
 	def disableAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]) -> None:
 		for aVM in listItemVMs:
-			if aVM.status in [
-				AvailableAddonStatus.DISABLED,
-				AvailableAddonStatus.PENDING_DISABLE,
-				AvailableAddonStatus.INCOMPATIBLE_DISABLED,
-				AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
-				AvailableAddonStatus.PENDING_REMOVE,
+			if aVM.status not in [
+				AvailableAddonStatus.ENABLED,
+				AvailableAddonStatus.PENDING_ENABLE,
+				AvailableAddonStatus.INCOMPATIBLE_ENABLED,
+				AvailableAddonStatus.PENDING_INCOMPATIBLE_ENABLED,
 			]:
-				log.debug(f"Skipping {aVM.Id} as it is already disabled, pending disabled or pending remove")
+				log.debug(f"Skipping {aVM.Id} as it is not enabled")
 			else:
 				self.disableAddon(aVM)
 
