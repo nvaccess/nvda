@@ -1353,7 +1353,12 @@ Se você acessa frequentemente categorias que não possuem teclas de atalho dedi
 
 As categorias de configurações encontradas na caixa de diálogo de Configurações do NVDA serão descritas abaixo.
 
-+++ Geral (NVDA+control+g) +++[GeneralSettings]
++++ Geral +++[GeneralSettings]
+
+%kc:setting
+==== Abrir configurações Gerais ====
+Tecla: ``NVDA+control+g``
+
 A categoria Geral do diálogo de Configurações do NVDA define o comportamento geral do NVDA, como o idioma da interface e se deve ou não verificar se há atualizações.
 Essa categoria contém as seguintes opções:
 
@@ -1432,7 +1437,12 @@ Essa informação auxilia imensamente a NV Access a priorizar o desenvolvimento 
 Se isso estiver habilitado, o NVDA informará quando houver uma atualização pendente na inicialização, oferecendo a possibilidade de instalá-la.
 Também pode instalar manualmente a atualização pendente na caixa de diálogo Sair do NVDA (se habilitada), no menu do NVDA ou ao executar uma nova verificação no menu Ajuda.
 
-+++ Configurações de Fala (NVDA+control+v) +++[SpeechSettings]
++++ Configurações de Fala +++[SpeechSettings]
+
+%kc:setting
+==== Abrir configurações de Fala ====
+Tecla: ``NVDA+control+v``
+
 A categoria Fala no diálogo de Configurações do NVDA contém opções que permitem alterar o sintetizador de fala e as características de voz do sintetizador escolhido.
 Para uma forma alternativa e mais rápida de controlar os parâmetros de voz a partir de qualquer local, por favor consulte a seção [Anel de Opções de Voz #SynthSettingsRing].
 
@@ -1541,7 +1551,12 @@ Isso pode ser útil se for difícil distinguir entre a pronúncia de símbolos o
 
 A descrição de caractere com atraso será cancelada se outro texto for falado durante esse período ou se você pressionar a tecla ``control``.
 
-+++ Selecionar Sintetizador (NVDA+control+s) +++[SelectSynthesizer]
++++ Selecionar Sintetizador +++[SelectSynthesizer]
+
+%kc:setting
+==== Abrir caixa de diálogo Selecionar Sintetizador ====
+Tecla: ``NVDA+control+s``
+
 O diálogo de Sintetizador, que pode ser aberto ativando o botão Alterar... na categoria fala do diálogo de Configurações do NVDA, permite-lhe selecionar qual sintetizador o NVDA usará para falar.
 Uma vez que tenha selecionado o sintetizador à sua escolha, pode pressionar Ok e o NVDA carregará o Sintetizador selecionado.
 Se houver um erro ao carregar o sintetizador, o NVDA notificará com uma mensagem e continuará a usar o sintetizador anterior.
@@ -1553,22 +1568,6 @@ Para obter uma lista dos sintetizadores que o NVDA suporta, consulte a [Seção 
 
 Um item especial que aparece sempre nesta lista é "Sem fala" e permite o uso do NVDA sem saída de voz.
 Isto pode ser útil para alguém que deseja utilizar o NVDA somente com Braille, ou talvez para os programadores com visão que só pretendem usar o Visualizador de Fala.
-
-==== Dispositivo de Saída ====[SelectSynthesizerOutputDevice]
-Essa opção permite-lhe escolher o dispositivo de áudio que o NVDA indicará ao sintetizador selecionado para falar.
-
-%kc:setting
-==== Modo de Áudio Prioritário [Ducking] ====[SelectSynthesizerDuckingMode]
-Tecla: NVDA+shift+d
-
-No Windows 8 e superiores, essa opção permite-lhe escolher se o NVDA deve reduzir o volume de outros aplicativos enquanto ele estiver falando, ou durante todo o tempo em que o NVDA estiver em execução.
-- Não reduzir: o NVDA não reduzirá o volume de outros áudios.
-- Reduzir ao reproduzir fala e sons: o NVDA irá reduzir o volume de outros áudios apenas quando ele estiver falando ou reproduzindo seus sons. Isso pode não funcionar para todos os sintetizadores.
-- Sempre reduzir: o NVDA irá manter o volume de outros áudios baixo enquanto este leitor de telas estiver em execução.
--
-
-Esta opção só está disponível se o NVDA tiver sido instalado.
-Não é possível suportar o áudio prioritário em cópias portáteis e temporárias do NVDA.
 
 +++ O Anel de Configurações de Voz +++[SynthSettingsRing]
 Se desejar alterar rapidamente as configurações de voz sem ir à categoria Fala do diálogo de configurações do NVDA, alguns comandos do NVDA lhe permitem mover-se através das configurações de voz mais comuns, a partir de qualquer local desde que este esteja sendo executado:
@@ -1744,7 +1743,12 @@ Desabilitar esta opção pode melhorar a legibilidade.
 
 Para alternar mostrar seleção de qualquer lugar, atribua um comando ""[gesto]"" personalizado usando o [diálogo Definir Comandos #InputGestures].
 
-+++ Selecionar Linha Braille (NVDA+control+a) +++[SelectBrailleDisplay]
++++ Selecionar Linha Braille +++[SelectBrailleDisplay]
+
+%kc:setting
+==== Abrir caixa de diálogo Selecionar Linha Braille ====
+Tecla: ``NVDA+control+a``
+
 A caixa de diálogo Selecionar Linha Braille, que pode ser aberta ativando o botão Alterar... na categoria Braille do diálogo de Configurações do NVDA, permite que você selecione qual Linha braille o NVDA deve usar para a saída de braille.
 Uma vez que você selecionou a sua linha braille de preferência, você pode pressionar Ok e o NVDA irá carregar a linha selecionada.
 Se houver um erro ao carregar o driver da linha, o NVDA o notificará com uma mensagem e continuará usando a linha anterior, se houver.
@@ -1786,6 +1790,47 @@ Por favor observe: Se você conectar várias linhas Braille à sua máquina ao m
 atualmente é impossível dizer ao NVDA qual linha usar.
 Portanto, é recomendável conectar apenas uma Linha Braille dum determinado tipo / fabricante à sua máquina por vez.
 
++++ Áudio +++[AudioSettings]
+
+%kc:setting
+==== Abrir configurações de Áudio ====
+Tecla: ``NVDA+control+u``
+
+A categoria Áudio no diálogo Configurações do NVDA contém opções que permitem alterar vários aspectos da saída de áudio.
+
+==== Dispositivo de Saída ====[SelectSynthesizerOutputDevice]
+Essa opção permite-lhe escolher o dispositivo de áudio que o NVDA indicará ao sintetizador selecionado para falar.
+
+%kc:setting
+==== Modo de Áudio Prioritário [Ducking] ====[SelectSynthesizerDuckingMode]
+Tecla: ``NVDA+shift+d``
+
+No Windows 8 e superiores, essa opção permite-lhe escolher se o NVDA deve reduzir o volume de outros aplicativos enquanto ele estiver falando, ou durante todo o tempo em que o NVDA estiver em execução.
+- Não reduzir: o NVDA não reduzirá o volume de outros áudios.
+- Reduzir ao reproduzir fala e sons: o NVDA irá reduzir o volume de outros áudios apenas quando ele estiver falando ou reproduzindo seus sons. Isso pode não funcionar para todos os sintetizadores.
+- Sempre reduzir: o NVDA irá manter o volume de outros áudios baixo enquanto este leitor de telas estiver em execução.
+-
+
+Esta opção só está disponível se o NVDA tiver sido instalado.
+Não é possível suportar o áudio prioritário em cópias portáteis e temporárias do NVDA.
+
+==== Volume dos sons do NVDA acompanha volume da voz ====[SoundVolumeFollowsVoice]
+: Padrão
+  Desabilitado
+: Opções
+  Desabilitado, Habilitado
+:
+
+Quando esta opção estiver ativada, o volume dos sons e bipes do NVDA seguirá a configuração de volume da voz que você está usando.
+Se você diminuir o volume da voz, o volume dos sons diminuirá.
+Da mesma forma, se você aumentar o volume da voz, o volume dos sons aumentará.
+Essa opção não está disponível se você iniciou o NVDA com [WASAPI desabilitado para saída de áudio #WASAPI] nas Configurações Avançadas.
+
+==== Volume dos sons do NVDA ====[SoundVolume]
+Este controle deslizante permite definir o volume dos sons e bipes do NVDA.
+Esta configuração só entra em vigor quando "Volume dos sons do NVDA acompanha volume da voz" está desabilitado.
+Essa opção não está disponível se você iniciou o NVDA com [WASAPI desabilitado para saída de áudio #WASAPI] nas Configurações Avançadas.
+
 +++ Visão +++[VisionSettings]
 A categoria Visão no diálogo Configurações do NVDA permite habilitar, desabilitar e configurar [recursos visuais #Vision].
 
@@ -1824,7 +1869,12 @@ Provedores adicionais de aprimoramento da visão podem ser fornecidos nos [compl
 Quando esses provedores tiverem configurações ajustáveis, eles serão mostrados nessa categoria de configurações em agrupamentos separados.
 Para as configurações suportadas mediante provedor, consulte a documentação desse provedor.
 
-+++ Teclado (NVDA+control+k) +++[KeyboardSettings]
++++ Teclado +++[KeyboardSettings]
+
+%kc:setting
+==== Abrir configurações de Teclado ====
+Tecla: ``NVDA+control+k``
+
 A categoria Teclado no diálogo de Configurações do NVDA contém opções que definem como o NVDA se comporta à medida que você usa e digita no seu teclado.
 Essa categoria de configurações contém as seguintes opções:
 
@@ -1882,7 +1932,12 @@ Esta opção só estará disponível se o anúncio de erros ortográficos estive
 Esta opção permite ao usuário controlar se o pressionamento de teclas gerado por aplicativos tais como teclados na tela e softwares de reconhecimento de fala deverão ser processados pelo NVDA.
 Tal opção está ativada por padrão, embora certos usuários podem querer desativá-la, como por exemplo durante a digitação de texto Vietnamita por meio do software de digitação Unikey, pois isso ocasionará a inserção incorreta de caracteres.
 
-+++ Mouse (NVDA+control+m) +++[MouseSettings]
++++ Mouse +++[MouseSettings]
+
+%kc:setting
+==== Abrir configurações de Mouse ====
+Tecla: ``NVDA+control+m``
+
 A categoria Mouse ""[Rato]"" no diálogo de Configurações do NVDA permite que o NVDA rastreie o mouse, reproduza bipes de coordenadas do mouse e defina outras opções de uso do mouse.
 Essa categoria contém as seguintes opções:
 
@@ -1958,7 +2013,12 @@ Quando habilitado, o NVDA filtrará a hierarquia dos objetos que podem ser naveg
 
 Para alternar o modo de exploração simples de qualquer lugar, atribua um comando usando o [Diálogo Definir Comandos #InputGestures].
 
-+++ Apresentação de Objetos (NVDA+control+o) +++[ObjectPresentationSettings]
++++ Apresentação de Objetos +++[ObjectPresentationSettings]
+
+%kc:setting
+==== Abrir configurações da Apresentação de Objetos ====
+Tecla: ``NVDA+control+o``
+
 A categoria Apresentação de Objetos no diálogo de Configurações do NVDA é usada para definir quanta informação o NVDA apresentará sobre os controles, como descrição, informações de posição e assim por diante.
 Estas opções normalmente não se aplicam ao modo de navegação.
 Estas opções normalmente se aplicam a informações de foco e navegação de objetos do NVDA, mas não à leitura de conteúdo de texto, por exemplo modo de navegação.
@@ -2048,7 +2108,12 @@ Logo que os dados de leitura ou pré-composição tenham sido combinados num sí
 Esta opção lhe permite escolher se o NVDA deve ou não anunciar novos símbolos quando estes aparecem na cadeia de composição.
 Por padrão, a mesma encontra-se ativada.
 
-+++ Modo de Navegação (NVDA+control+b) +++[BrowseModeSettings]
++++ Modo de Navegação +++[BrowseModeSettings]
+
+%kc:setting
+==== Abrir configurações do Modo de Navegação ====
+Tecla: ``NVDA+control+b``
+
 A categoria Modo de Navegação no diálogo de Configurações do NVDA é usada para configurar o comportamento do NVDA quando você lê e navega em documentos complexos, como páginas web.
 Essa categoria contém as seguintes opções:
 
@@ -2119,7 +2184,12 @@ Isso pode resultar em uma experiência de navegação mais rápida e melhor capa
 O foco ainda será atualizado para o elemento específico ao interagir com ele (por exemplo, pressionando um botão, marcando uma caixa de seleção).
 Habilitar essa opção pode melhorar o suporte para alguns sites à custa do desempenho e da estabilidade.
 
-+++ Formatação de Documentos (NVDA+control+d) +++[DocumentFormattingSettings]
++++ Formatação de Documentos +++[DocumentFormattingSettings]
+
+%kc:setting
+==== Abrir configurações de Formatação de Documento ====
+Tecla: ``NVDA+control+d``
+
 Maior parte das opções nesta categoria lhe permitem configurar que tipo de formatação pretende ouvir automaticamente enquanto se move com o cursor pelos documentos.
 Por exemplo, se marcar a caixa de seleção para informar o nome da fonte a medida que avançar pelo texto com tipos de fonte diferentes, este será anunciado.
 
@@ -2415,22 +2485,10 @@ Com várias APIs de GUI historicamente populares, o texto pode ser renderizado c
 Esta opção permite a saída de áudio por meio da Windows Audio Session API (WASAPI) ""[API de Sessão de Áudio do Windows]"".
 WASAPI é uma estrutura de áudio mais moderna que pode melhorar a capacidade de resposta, o desempenho e a estabilidade da saída de áudio do NVDA, incluindo fala e sons.
 Após alterar esta opção, você precisará reiniciar o NVDA para que a alteração entre em vigor.
-
-==== Volume dos sons do NVDA segue o volume da voz ====[SoundVolumeFollowsVoice]
-: Padrão
-  Desabilitado
-: Opções
-  Desabilitado, Habilitado
-:
-
-Quando esta opção estiver habilitada, o volume dos sons e bipes do NVDA seguirá a configuração de volume da voz que você está usando.
-Se você diminuir o volume da voz, o volume dos sons diminuirá.
-Da mesma forma, se você aumentar o volume da voz, o volume dos sons aumentará.
-Esta opção só entra em vigor quando "Usar WASAPI para saída de áudio" está habilitado.
-
-==== Volume dos sons do NVDA ====[SoundVolume]
-Este controle deslizante permite definir o volume dos sons e bipes do NVDA.
-Essa configuração só entra em vigor quando "Usar WASAPI para saída de áudio" está habilitado e "Volume dos sons do NVDA segue o volume da voz" está desabilitado.
+Desabilitar WASAPI desabilitará as seguintes opções:
+- [Volume dos sons do NVDA acompanha volume da voz #SoundVolumeFollowsVoice]
+- [Volume dos sons do NVDA #SoundVolume]
+-
 
 ==== Categorias de log de depuração ====[AdvancedSettingsDebugLoggingCategories]
 As caixas de seleção nesta lista permitem habilitar categorias específicas de mensagens de depuração no registro do NVDA.
@@ -3145,11 +3203,20 @@ A seguir estão as teclas de comando dessas linhas para o NVDA.
 Por favor consulte a documentação da mesma para informações sobre onde essas teclas se encontram.
 %kc:beginInclude
 || Nome | Tecla |
-| Rolar linha braille para trás | d2 |
-| Rolar linha braille para frente | d5 |
-| Mover linha braille para a linha anterior | d1 |
-| Mover linha braille para a linha seguinte | d3 |
-| Guiar para a cela braille | sensor |
+| Rolar linha braille para trás | ``d2`` |
+| Rolar linha braille para frente | ``d5`` |
+| Mover linha braille para a linha anterior | ``d1`` |
+| Mover linha braille para a linha seguinte | ``d3`` |
+| Guiar para a cela braille | ``sensor`` |
+| tecla ``shift+tab`` | ``espaço+ponto1+ponto3`` |
+| tecla ``tab`` | ``espaço+ponto4+ponto6`` |
+| tecla ``alt`` | ``espaço+ponto1+ponto3+ponto4`` (``espaço+m``) |
+| tecla ``escape`` | ``espaço+ponto1+ponto5`` (``espaço+e``) |
+| tecla ``windows`` | ``espaço+ponto3+ponto4`` |
+| tecla ``alt+tab`` | ``espaço+ponto2+ponto3+ponto4+ponto5`` (``espaço+t``) |
+| Menu NVDA | ``espaço+ponto1+ponto3+ponto4+ponto5`` (``espaço+n``) |
+| tecla ``windows+d`` (minimizar todos os aplicativos) | ``espaço+ponto1+ponto4+ponto5`` (``espaço+d``) |
+| Leitura contínua | ``espaço+ponto1+ponto2+ponto3+ponto4+ponto5+ponto6`` |
 
 Para linhas que tenham joystick:
 || Nome | Tecla |
@@ -3701,88 +3768,164 @@ Devido a isso e para manter a compatibilidade com outros leitores de telas usado
 | Rolar a linha braille para frente | mais do bloco numérico |
 %kc:endInclude
 
-++ Linhas Eurobraille Esys/Esytime/Iris ++[Eurobraille]
-As linhas Esys, Esytime e Iris da [Eurobraille https://www.eurobraille.fr/] são suportadas pelo NVDA.
-Os dispositivos Esys e Esytime-Evo são suportados quando conectados via USB ou bluetooth.
-Dispositivos Esytime mais antigos suportados apenas por USB.
-Linhas íris só podem ser conectadas através de uma porta serial.
-Portanto, para essas linhas, você deve selecionar a porta à qual a linha está conectada depois de ter escolhido esse driver na caixa de diálogo Opções de Braille.
-
-As linhas Iris e Esys possuem um teclado braille com 10 teclas.
+++ Linhas Eurobraille ++[Eurobraille]
+As linhas b.book, b.note, Esys, Esytime e Iris da Eurobraille são suportadas pelo NVDA.
+Esses dispositivos possuem teclado braille com 10 teclas.
+Consulte a documentação da linha para obter descrições dessas teclas.
 Das duas teclas colocadas como uma barra de espaço, a tecla esquerda corresponde à tecla de retrocesso ""[backspace]"" e a tecla direita à tecla de espaço.
 
-A seguir estão as atribuições de teclas para essas linhas com o NVDA.
-Por favor, consulte a documentação da linha para descrições de onde essas teclas podem ser encontradas.
+Esses dispositivos são conectados via USB e possuem um teclado USB autônomo.
+É possível habilitar/desabilitar este teclado alternando "Simulação de Teclado HID" usando um comando ""[gesto de entrada]"".
+As funções do teclado braille descritas diretamente abaixo ocorrem quando a "Simulação de Teclado HID" está desabilitada.
+
++++ Funções do teclado braille +++[EurobrailleBraille]
 %kc:beginInclude
 || Nome | Tecla |
-| Rolar linha braille para trás | interruptor1-6esquerdo, l1 |
-| Rolar linha braille para frente | interruptor1-6Direito, l8 |
-| Mover para o foco atual | interruptor1-6Esquerdo+interruptor1-6Direito, l1+l8 |
-| Guiar para a cela braille | sensor |
-| Anunciar formatação de texto em cela braille | sensorDuplo |
-| Mover para a linha anterior em exploração | joystick1Cima |
-| Mover para a próxima linha em exploração | joystick1Baixo |
-| Mover para o caractere anterior em exploração | joystick1Esquerda |
-| Mover para o próximo caractere em exploração | joystick1Direita |
-| Mudar para o modo de exploração anterior | joystick1Esquerda+joystick1Cima |
-| Mudar para o próximo modo de exploração | joystick1Direita+joystick1Baixo |
-| Apaga a última cela ou caractere braille inserido | backSpace |
-| Transcreve qualquer entrada braille e pressiona a tecla enter | backSpace+espaço |
-| tecla insert | ponto3+ponto5+espaço, l7 |
-| tecla delete | ponto3+ponto6+espaço |
-| tecla home | ponto1+ponto2+ponto3+espaço, joystick2Esquerda+joystick2Cima |
-| tecla end | ponto4+ponto5+ponto6+espaço, joystick2Direita+joystick2Baixo |
-| tecla setaParaEsquerda | ponto2+espaço, joystick2Esquerda, setaParaEsquerda |
-| tecla setaParaDireita | ponto5+espaço, joystick2Direita, setaParaDireita |
-| tecla setaParaCima | ponto1+espaço, joystick2Cima, setaParaCima |
-| tecla setaParaDireita | ponto6+espaço, joystick2Baixo, setaParaDireita |
-| tecla enter | joystick2centro |
-| tecla pageUp | ponto1+ponto3+espaço |
-| tecla pageDown | ponto4+ponto6+espaço |
-| tecla numpad1 | ponto1+ponto6+backspace |
-| tecla numpad2 | ponto1+ponto2+ponto6+backspace |
-| tecla numpad3 | ponto1+ponto4+ponto6+backspace |
-| tecla numpad4 | ponto1+ponto4+ponto5+ponto6+backspace |
-| tecla numpad5 | ponto1+ponto5+ponto6+backspace |
-| tecla numpad6 | ponto1+ponto2+ponto4+ponto6+backspace |
-| tecla numpad7 | ponto1+ponto2+ponto4+ponto5+ponto6+backspace |
-| tecla numpad8 | ponto1+ponto2+ponto5+ponto6+backspace |
-| tecla numpad9 | ponto2+ponto4+ponto6+backspace |
-| tecla numpadInsert | ponto3+ponto4+ponto5+ponto6+backspace |
-| tecla numpadDecimal | ponto2+backspace |
-| tecla numpadDivide | ponto3+ponto4+backspace |
-| tecla numpadMultiplica | ponto3+ponto5+backspace |
-| tecla numpadMenos | ponto3+ponto6+backspace |
-| tecla numpadMais | ponto2+ponto3+ponto5+backspace |
-| tecla numpadEnter | ponto3+ponto4+ponto5+backspace |
-| tecla esc | ponto1+ponto2+ponto4+ponto5+espaço, l2 |
-| tecla tab | ponto2+ponto5+ponto6+espaço, l3 |
-| tecla shift+tab | ponto2+ponto3+ponto5+espaço |
-| tecla printScreen | ponto1+ponto3+ponto4+ponto6+espaço |
-| tecla pause | ponto1+ponto4+espaço |
-| tecla aplicações | ponto5+ponto6+backspace |
-| tecla f1 | ponto1+backspace |
-| tecla f2 | ponto1+ponto2+backspace |
-| tecla f3 | ponto1+ponto4+backspace |
-| tecla f4 | ponto1+ponto4+ponto5+backspace |
-| tecla f5 | ponto1+ponto5+backspace |
-| tecla f6 | ponto1+ponto2+ponto4+backspace |
-| tecla f7 | ponto1+ponto2+ponto4+ponto5+backspace |
-| tecla f8 | ponto1+ponto2+ponto5+backspace |
-| tecla f9 | ponto2+ponto4+backspace |
-| tecla f10 | ponto2+ponto4+ponto5+backspace |
-| tecla f11 | ponto1+ponto3+backspace |
-| tecla f12 | ponto1+ponto2+ponto3+backspace |
-| tecla windows | ponto1+ponto2+ponto3+ponto4+backspace |
-| tecla Caps Lock | ponto7+backspace, ponto8+backspace |
-| tecla num lock | ponto3+backspace, ponto6+backspace |
-| tecla shift | ponto7+espaço, l4 |
-| Alternar tecla shift | ponto1+ponto7+espaço, ponto4+ponto7+espaço |
-| tecla control | ponto7+ponto8+espaço, l5 |
-| Alternar tecla control | ponto1+ponto7+ponto8+espaço, ponto4+ponto7+ponto8+espaço |
-| tecla alt | ponto8+espaço, l6 |
-| Alternar tecla alt | ponto1+ponto8+espaço, ponto4+ponto8+espaço |
-| Alternar simulação de entrada de teclado HID | esytime):l1+joystick1Baixo, esytime):l8+joystick1Baixo |
+| Apagar a última cela ou caractere braille inserido | ``backspace`` |
+| Transcreve qualquer entrada em braille e pressiona a tecla enter | ``backspace+espaço`` |
+| Alterna tecla ``NVDA`` | ``ponto3+ponto5+espaço`` |
+| tecla ``insert`` | ``ponto1+ponto3+ponto5+espaço``, ``ponto3+ponto4+ponto5+espaço`` |
+| tecla ``delete`` | ``ponto3+ponto6+espaço`` |
+| tecla ``home`` | ``ponto1+ponto2+ponto3+espaço`` |
+| tecla ``end`` | ``ponto4+ponto5+ponto6+espaço`` |
+| tecla ``setaParaEsquerda`` | ``ponto2+espaço`` |
+| tecla ``setaParaDireita`` | ``ponto5+espaço`` |
+| tecla ``setaParaCima`` | ``ponto1+espaço`` |
+| tecla ``setaParaCima`` | ``ponto6+espaço`` |
+| tecla ``pageUp`` | ``ponto1+ponto3+espaço`` |
+| tecla ``pageDown`` | ``ponto4+ponto6+espaço`` |
+| tecla ``1 do teclado numérico`` | ``ponto1+ponto6+backspace`` |
+| tecla ``2 do teclado numérico`` | ``ponto1+ponto2+ponto6+backspace`` |
+| tecla ``3 do teclado numérico`` | ``ponto1+ponto4+ponto6+backspace`` |
+| tecla ``4 do teclado numérico`` | ``ponto1+ponto4+ponto5+ponto6+backspace`` |
+| tecla ``5 do teclado numérico`` | ``ponto1+ponto5+ponto6+backspace`` |
+| tecla ``6 do teclado numérico`` | ``ponto1+ponto2+ponto4+ponto6+backspace`` |
+| tecla ``7 do teclado numérico`` | ``ponto1+ponto2+ponto4+ponto5+ponto6+backspace`` |
+| tecla ``8 do teclado numérico`` | ``ponto1+ponto2+ponto5+ponto6+backspace`` |
+| tecla ``9 do teclado numérico`` | ``ponto2+ponto4+ponto6+backspace`` |
+| tecla ``insert do teclado numérico`` | ``ponto3+ponto4+ponto5+ponto6+backspace`` |
+| tecla ``vírgula do teclado numérico`` | ``ponto2+backspace`` |
+| tecla ``barra do teclado numérico`` | ``ponto3+ponto4+backspace`` |
+| tecla ``asterisco do teclado numérico`` | ``ponto3+ponto5+backspace`` |
+| tecla ``menos do teclado numérico`` | ``ponto3+ponto6+backspace`` |
+| tecla ``mais do teclado numérico`` | ``ponto2+ponto3+ponto5+backspace`` |
+| tecla ``enter do teclado numérico`` | ``ponto3+ponto4+ponto5+backspace`` |
+| tecla ``escape`` | ``ponto1+ponto2+ponto4+ponto5+espaço``, ``l2`` |
+| tecla ``tab`` | ``ponto2+ponto5+ponto6+espaço``, ``l3`` |
+| tecla ``shift+tab`` | ``ponto2+ponto3+ponto5+espaço`` |
+| tecla ``printScreen`` | ``ponto1+ponto3+ponto4+ponto6+espaço`` |
+| tecla ``pause`` | ``ponto1+ponto4+espaço`` |
+| tecla ``aplicações`` | ``ponto5+ponto6+backspace`` |
+| tecla ``f1`` | ``ponto1+backspace`` |
+| tecla ``f2`` | ``ponto1+ponto2+backspace`` |
+| tecla ``f3`` | ``ponto1+ponto4+backspace`` |
+| tecla ``f4`` | ``ponto1+ponto4+ponto5+backspace`` |
+| tecla ``f5`` | ``ponto1+ponto5+backspace`` |
+| tecla ``f6`` | ``ponto1+ponto2+ponto4+backspace`` |
+| tecla ``f7`` | ``ponto1+ponto2+ponto4+ponto5+backspace`` |
+| tecla ``f8`` | ``ponto1+ponto2+ponto5+backspace`` |
+| tecla ``f9`` | ``ponto2+ponto4+backspace`` |
+| tecla ``f10`` | ``ponto2+ponto4+ponto5+backspace`` |
+| tecla ``f11`` | ``ponto1+ponto3+backspace`` |
+| tecla ``f12`` | ``ponto1+ponto2+ponto3+backspace`` |
+| tecla ``windows`` | ``ponto1+ponto2+ponto4+ponto5+ponto6+espaço`` |
+| Alternar tecla ``windows`` | ``ponto1+ponto2+ponto3+ponto4+backspace``, ``ponto2+ponto4+ponto5+ponto6+espaço`` |
+| tecla ``capsLock`` | ``ponto7+backspace``, ``ponto8+backspace`` |
+| tecla ``numLock`` | ``ponto3+backspace``, ``ponto6+backspace`` |
+| tecla ``shift`` | ``ponto7+espaço`` |
+| Alternar tecla ``shift`` | ``ponto1+ponto7+espaço``, ``ponto4+ponto7+espaço`` |
+| tecla ``control`` | ``ponto7+ponto8+espaço`` |
+| Alternar tecla ``control`` | ``ponto1+ponto7+ponto8+espaço``, ``ponto4+ponto7+ponto8+espaço`` |
+| tecla ``alt`` | ``ponto8+espaço`` |
+| Alternar tecla ``alt`` | ``ponto1+ponto8+espaço``, ``ponto4+ponto8+espaço`` |
+| Alternar simulação de Teclado HID | ``interruptor1Esquerdo+joystick1Baixo``, ``interruptor1Direito+joystick1Baixo`` |
+%kc:endInclude
+
++++ Comandos de teclado b.book +++[Eurobraillebbook]
+%kc:beginInclude
+|| Nome | Tecla |
+| Scroll braille display back | ``backward`` |
+| Scroll braille display forward | ``forward`` |
+| Move to current focus | ``backward+forward`` |
+| Route to braille cell | ``routing`` |
+| ``setaParaEsquerda`` key | ``joystick2Left`` |
+| ``setaParaDireita`` key | ``joystick2Right`` |
+| ``setaParaCima`` key | ``joystick2Up`` |
+| ``setaParaCima`` key | ``joystick2Down`` |
+| ``enter`` key | ``joystick2Center`` |
+| ``escape`` key | ``c1`` |
+| ``tab`` key | ``c2`` |
+| Toggle ``shift`` key | ``c3`` |
+| Toggle ``control`` key | ``c4`` |
+| Toggle ``alt`` key | ``c5`` |
+| Toggle ``NVDA`` key | ``c6`` |
+| ``control+Home`` key | ``c1+c2+c3`` |
+| ``control+End`` key | ``c4+c5+c6`` |
+%kc:endInclude
+
++++ Comandos de teclado b.note +++[Eurobraillebnote]
+%kc:beginInclude
+|| Nome | Tecla |
+| Scroll braille display back | ``leftKeypadLeft`` |
+| Scroll braille display forward | ``leftKeypadRight`` |
+| Route to braille cell | ``routing`` |
+| Report text formatting under braille cell | ``doubleRouting`` |
+| Move to next line in review | ``leftKeypadDown`` |
+| Switch to previous review mode | ``leftKeypadLeft+leftKeypadUp`` |
+| Switch to next review mode | ``leftKeypadRight+leftKeypadDown`` |
+| ``setaParaEsquerda`` key | ``rightKeypadLeft`` |
+| ``setaParaDireita`` key | ``rightKeypadRight`` |
+| ``setaParaCima`` key | ``rightKeypadUp`` |
+| ``setaParaCima`` key | ``rightKeypadDown`` |
+| ``control+home`` key | ``rightKeypadLeft+rightKeypadUp`` |
+| ``control+end`` key | ``rightKeypadLeft+rightKeypadUp`` |
+%kc:endInclude
+
++++ Comandos de teclado Esys +++[Eurobrailleesys]
+%kc:beginInclude
+|| Nome | Tecla |
+| Scroll braille display back | ``switch1Left`` |
+| Scroll braille display forward | ``switch1Right`` |
+| Move to current focus | ``switch1Center`` |
+| Route to braille cell | ``routing`` |
+| Report text formatting under braille cell | ``doubleRouting`` |
+| Move to previous line in review | ``joystick1Up`` |
+| Move to next line in review | ``joystick1Baixo`` |
+| Move to previous character in review | ``joystick1Left`` |
+| Move to next character in review | ``joystick1Right`` |
+| ``setaParaEsquerda`` key | ``joystick2Left`` |
+| ``setaParaDireita`` key | ``joystick2Right`` |
+| ``setaParaCima`` key | ``joystick2Up`` |
+| ``setaParaCima`` key | ``joystick2Down`` |
+| ``enter`` key | ``joystick2Center`` |
+%kc:endInclude
+
++++ Comandos de teclado Esytime +++[EurobrailleEsytime]
+%kc:beginInclude
+|| Nome | Tecla |
+| Scroll braille display back | ``l1`` |
+| Scroll braille display forward | ``l8`` |
+| Move to current focus | ``l1+l8`` |
+| Route to braille cell | ``routing`` |
+| Report text formatting under braille cell | ``doubleRouting`` |
+| Move to previous line in review | ``joystick1Up`` |
+| Move to next line in review | ``joystick1Baixo`` |
+| Move to previous character in review | ``joystick1Left`` |
+| Move to next character in review | ``joystick1Right`` |
+| ``setaParaEsquerda`` key | ``joystick2Left`` |
+| ``setaParaDireita`` key | ``joystick2Right`` |
+| ``setaParaCima`` key | ``joystick2Up`` |
+| ``setaParaCima`` key | ``joystick2Down`` |
+| ``enter`` key | ``joystick2Center`` |
+| ``escape`` key | ``l2`` |
+| ``tab`` key | ``l3`` |
+| Toggle ``shift`` key | ``l4`` |
+| Toggle ``control`` key | ``l5`` |
+| Toggle ``alt`` key | ``l6`` |
+| Toggle ``NVDA`` key | ``l7`` |
+| ``control+home`` key | ``l1+l2+l3``, ``l2+l3+l4`` |
+| ``control+end`` key | ``l6+l7+l8``, ``l5+l6+l7`` |
+| Toggle HID Keyboard simulation | ``l1+joystick1Baixo``, ``l8+joystick1Baixo`` |
 %kc:endInclude
 
 ++ Linhas Nattiq nBraille ++[NattiqTechnologies]
@@ -3811,6 +3954,7 @@ Para as linhas que possuem um teclado braille, o BRLTTY atualmente controla por 
 Portanto, a configuração da tabela braille para entrada no NVDA não é relevante.
 
 O BRLTTY não está envolvido na funcionalidade automática de detecção de linha braille em segundo plano do NVDA.
+| Rolar linha braille para trás | interruptor1-6esquerdo, l1 |
 
 A seguir encontram-se os comandos do BRLTTY para o NVDA.
 Por favor consulte as [listas de associação de teclas BRLTTY http://mielke.cc/brltty/doc/drivers/] para obter informações sobre como estão mapeados os comandos do BRLTTY para controlar cada linha braille.
