@@ -1,8 +1,7 @@
-# -*- coding: UTF-8 -*-
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2016-2023 NV Access Limited, Cyrille Bougot
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 from logHandler import log
 from .configSpec import latestSchemaVersion, confspec
@@ -29,8 +28,7 @@ def upgrade(profile, validator, writeProfileToFileFunc):
 		if writeProfileToFileFunc:
 			writeProfileToFileFunc(profile.filename, profile)
 	except Exception as e:
-		log.warning("Error saving configuration; probably read only file system")
-		log.debugWarning("", exc_info=True)
+		log.warning("Error saving configuration; probably read only file system", exc_info=True)
 		pass
 
 def _doConfigUpgrade(profile, fromVersion):

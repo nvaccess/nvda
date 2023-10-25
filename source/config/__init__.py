@@ -585,7 +585,10 @@ class ConfigManager(object):
 		profile.newlines = "\r\n"
 		profileCopy = deepcopy(profile)
 		try:
-			writeProfileFunc = self._writeProfileToFile if NVDAState.shouldWriteToDisk() else None
+			if NVDAState.shouldWriteToDisk() and profile.filename is not None:
+				writeProfileFunc = self._writeProfileToFile
+			else:
+				writeProfileFunc = None
 			profileUpgrader.upgrade(profile, self.validator, writeProfileFunc)
 		except Exception as e:
 			# Log at level info to ensure that the profile is logged.
@@ -700,8 +703,7 @@ class ConfigManager(object):
 				log.info("Saved configuration profile %s" % name)
 			self._dirtyProfiles.clear()
 		except PermissionError as e:
-			log.warning("Error saving configuration; probably read only file system")
-			log.debugWarning("", exc_info=True)
+			log.warning("Error saving configuration; probably read only file system", exc_info=True)
 			raise e
 		post_configSave.notify()
 
