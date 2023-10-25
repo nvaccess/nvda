@@ -12,38 +12,38 @@ Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angiels
 Ta wersja zawiera ulepszenia wydajności, responsywności i stabilności dźwięku.
 Dodano opcje do kontrolowania głośności dźwięków NVDA, oraz do ich ujednolicania z głośnością mowy.
 
-NVDA potrafi od czasu do czasu odświeżać test rozpoznany za pomocą Ocr, wymawiając go po jego natychmiastowym pojawieniu się.
+NVDA potrafi od czasu do czasu odświeżać tekst rozpoznany za pomocą Ocr, wymawiając go po jego natychmiastowym pojawieniu się.
 Tą opcję można włączyć w kategorii Windows OCR w oknie dialogowym ustawień NVDA.
 
-Naprawiono kilka problemów z brajlem, naprawiając jednocześnie wykrywanie ruchów kursora i automatyczne wykrywanie monitoró brajlowskich.
-W celu ulepszenia wydajności automatycznego wykrywania monitorów brajlowskich, od teraz istnieje możliwość wyłączenia niektórych sterowników z tego procesu.
+Naprawiono kilka problemów z brajlem, naprawiając jednocześnie wykrywanie ruchów kursora i automatyczne wykrywanie monitorów brajlowskich.
+W celu ulepszenia wydajności automatycznego wykrywania monitorów brajlowskich, od teraz istnieje możliwość wyłączania niektórych sterowników z tego procesu.
 Dodano także nowe polecenia BRLTTY.
 
-Naprawiono blędy w Add-on Store, pakiecie Microsoft Office, menu kontekstowych Microsoft Edge, i kalkulatorze Windows.
+Naprawiono błędy w Add-on Store, pakiecie Microsoft Office, menu kontekstowych Microsoft Edge, i kalkulatorze Windows.
 
 == Nowe funkcje ==
 - Ulepszone zarządzanie dźwiękiem:
   - Nowy panel ustawień dźwięku:
     - Można go otworzyć używając skrótu ``NVDA+control+u``. (#15497)
     - Dodano opcje, która umożliwia ustawienie spójności głośności dźwięków NVDA. (#1409)
-    - Dodano opcję do oddzielnej konfiguracji glośności dźwięków NVDA. (#1409, #15038)
+    - Dodano opcję do oddzielnej konfiguracji głośności dźwięków NVDA. (#1409, #15038)
     - Opcje do wyboru karty dźwiękowej i przełączania przyciszania dźwięku zostały przeniesione do nowej kategorii dźwięk w ustawieniach NVDA z okna dialogowego "wybór syntezatora".
     Te opcje będą usunięte z okna dialogowego "wybór syntezatora" w wersji 2024.1. (#15486, #8711)
     -
-  - NVDA od teraz będzie dosyłal dźwięk za pomocą interfejsu Windows Audio Session API (WASAPI), co może wpłynąć na stabilność responsywność i wydajność mowy i dźwięków NVDA. (#14697, #11169, #11615, #5096, #10185, #11061)
-  - Uwaga: WASAPI jest iezgodny z niektórymi dodatkami.
+  - NVDA od teraz będzie dosyłał dźwięk za pomocą interfejsu Windows Audio Session API (WASAPI), co może wpłynąć na stabilność, responsywność i wydajność mowy i dźwięków NVDA. (#14697, #11169, #11615, #5096, #10185, #11061)
+  - Uwaga: WASAPI jest niezgodny z niektórymi dodatkami.
   Zgodne aktualizacje dostępne są dla tych dodatków. Zanim zaktualizujesz NVDA, prosimy zaktualizować te dodatki.
   Niezgodne wersje tych dodatków będą wyłączone podczas aktualizacji NVDA:
     - Tony's Enhancements wersja 1.15 lub starsza. (#15402)
     - NVDA global commands extension 12.0.8 lub starsza. (#15443)
     -
   -
-- od teraz potrafi aktualizować wynik OCR, wymawiając nowy tekst gdy się pojawi. (#2797)
+- NVDA od teraz potrafi aktualizować wynik OCR, wymawiając nowy tekst gdy się pojawi. (#2797)
   - Aby włączyć tę funkcję, włącz opcję "Od czasu do czasu odświeżaj  treść rozpoznawaną" w kategorii windows Ocr w ustawieniach NVDA.
   - Kiedy ta opcja jest włączona, możesz regulować wymawianie nowego tekstu za pomocą opcji informuj o zmianach treści dynamicznych  (naciskając ``NVDA+5``).
   -
 - Podczas używania automatycznego wykrywania monitorów brajlowskich, możliwe jest wykluczenie monitorów brajlowskich z procesu automatycznego wykrywania z poziomu okna dialogowego wybór monitora brajlowskiego. (#15196)
-- Nowa opcja zostałą dodana do ustawień formatowania dokumentów: "Ignoruj puste linie podczas odczytu wcięć". (#13394)
+- Nowa opcja została dodana do ustawień formatowania dokumentów: "Ignoruj puste linie podczas odczytu wcięć". (#13394)
 - Dodano nieprzydzielone zdarzenie wejścia do poruszania się po kartach właściwości w trybie czytania. (#15046)
 -
 
@@ -51,19 +51,19 @@ Naprawiono blędy w Add-on Store, pakiecie Microsoft Office, menu kontekstowych 
 - Brajl:
   - Gdy tekst w terminalu zmieni się bez aktualizacji kursora systemowego, monitor brajlowski zostanie poprawnie odświeżony, gdy znajduje się na tej linii.
   To obejmuje sytuacje, podczas któych brajl jest przywiązany do przeglądu. (#15115)
-  - Więcej poleceń BRLTTY dostało zdarzenia wejścia nVDA (#6483):
-    - ``learn``: włącza i wylącza pomoc klawiatury
+  - Więcej poleceń BRLTTY dostało zdarzenia wejścia NVDA (#6483):
+    - ``learn``: włącza i wyłącza pomoc klawiatury
     - ``prefmenu``: otwiera NVDA menu
     - ``prefload``/``prefsave``: przywracanie i zapisywanie konfiguracji NVDA
     - ``time``: pokaż czas
     - ``say_line``: Wymawia bieżącą linię pod kursorem przeglądu
-    - ``say_below``: Czyta wszystko za pomocąkorsora przeglądu
+    - ``say_below``: Czyta wszystko za pomocą kursora przeglądu
     -
-  - Sterownik BRLTTY jest dostępny tylko gdy kopia BRLTY jest uruchomiona z uruchomionym BRLAPI. (#15335)
+  - Sterownik BRLTTY jest dostępny tylko gdy kopia BRLTTY jest uruchomiona z uruchomionym BRLAPI. (#15335)
   - Usunięto ustawienie do wyłączenia wsparcia monitorów brajlowskich HID, zastępując je nową opcją.
-  Możesz wyłączyć określone sterowniki monitorów brajlowskich z porocesu automatycznego wykrywania z okna dialogowego wybó monitora brajlowskiego. (#15196)
+  Możesz wyłączyć określone sterowniki monitorów brajlowskich z procesu automatycznego wykrywania z okna dialogowego wybór monitora brajlowskiego. (#15196)
   -
-- Add-on Store: zainstalowane dodatki będą pokazane na karcie wlaściwości zainstalowane, jeżeli są dostępne w Add-ion store. (#15374)
+- Add-on Store: zainstalowane dodatki będą pokazane na karcie właściwości zainstalowane, jeżeli są dostępne w Add-on store. (#15374)
 - Niektóre skróty klawiszowe w NVDA menu zostały zaktualizowane. (#15364)
 -
 
@@ -83,10 +83,10 @@ Naprawiono blędy w Add-on Store, pakiecie Microsoft Office, menu kontekstowych 
   -
 - Add-on Store:
   - Naprawiono błąd, który skutkował pokazywaniem niezgodnych dodatków w Add-on store, nawet gdy opcja"Uwzględnij dodatki niezgodne" była wyłączona. (#15411)
-  - Dodatki zablokowane z powodów niezgodności powinni być filtrowane poprawnie podczas przełączania  stanu włączonych lub wyłączonych dodatków. (#15416)
+  - Dodatki zablokowane z powodów niezgodności powinne być filtrowane poprawnie podczas przełączania  stanu włączonych lub wyłączonych dodatków. (#15416)
   - Naprawiono błąd, który zapobiegał aktualizacjom nadpisanych lub zamienionych dodatków używając narzędzia do zewnętrznej instalacji. (#15417)
   - Naprawiono błąd, podczas którego NVDA nie mówiła do póki nie będzie ponownie uruchomiona po instalacji dodatków. (#14525)
-  - Naprawiono błąd, poczas którego dodatki nie mogły być instalowane jeżeli poprzednie pobiranie zostało anulowane, lub instalacja nie powiodła się. (#15469)
+  - Naprawiono błąd, podczas którego dodatki nie mogły być instalowane jeżeli poprzednie pobieranie zostało anulowane, lub instalacja nie powiodła się. (#15469)
   - Naprawiono błędy zarządzania niezgodnymi dodatkami podczas aktualizacji NVDA. (#15414, #15412, #15437)
   -
 - NVDA znowu potrafi czytać wyniki w kalkulatorze w jego 32-bitowej wersji w następujących wydaniach systemu operacyjnego windows:Server, LTSC and LTSB. (#15230)
