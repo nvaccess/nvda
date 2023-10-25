@@ -12,11 +12,11 @@ Informacije za programere nisu prevedene, molimo ’pogledajte [englesku inačic
 Ova inačica uključuje poboljšanja stabilnosti i performansi pri izlazu zvuka.
 Dodane su opcije za kontrolu glasnoće NVDA zvukova i zvučnih signala, ili ujednačavanja sa glasnoćom glasa koji koristite.
 
-NVDA može s vremena na vrijeme osvježavati rezultate prepoznavanja tekstakada se pojave.
+NVDA može s vremena na vrijeme osvježavati rezultate prepoznavanja teksta kada se pojave.
 Ovo se može konfigurirati u Windows OCR kategoriji u dijaloškom okviru postavki NVDA.
 
 Dodane su ispravke za brajične redke, uključujući automatsko otkrivanje.
-Sada je moguće isključiti upravljačke programe iz procesa automatskog otkrivanjau cilju pobočjšanja performansi.
+Sada je moguće isključiti upravljačke programe iz procesa automatskog otkrivanjau cilju poboljšanja performansi.
 Dodane su također nove komande za Brltty.
 
 Ispravljene su greške u Add-on Storeu, Microsoft Officeu, Microsoft Edge kontekstnim izbornicima i u Windows kalkulatoru.
@@ -60,9 +60,9 @@ Ove će opcije biti uklonjene iz dijaloškog okvira  "odaberi govornu jedinicu" 
     -
   - BRLTTY upravljački program je dostupan samo kada je Brltty pokrenut sa BRL api. (#15335)
   - Napredna postavka za isključivanje HID brajičnog redka  sada je uklonjena i zamijenjena novom opcijom.
-  Sada možete isključiti određene upravljačke programe za automatsko prepoznavanje u dojaloškom okviru brajičnih postavki. (#15196)
+  Sada možete isključiti određene upravljačke programe za automatsko prepoznavanje u dijaloškom okviru brajičnih postavki. (#15196)
   -
-- Add-on Store: dodaci će sada biti dostupni na kartici svostva dostupnih dodataka, ako su dostupni u Add-on storeu. (#15374)
+- Add-on Store: dodaci će sada biti dostupni na kartici svojstva dostupnih dodataka, ako su dostupni u Add-on storeu. (#15374)
 - Osvježeni su neki prečaci u NVDA izborniku. (#15364)
 -
 
@@ -74,12 +74,12 @@ Ove će opcije biti uklonjene iz dijaloškog okvira  "odaberi govornu jedinicu" 
     - Ispravljeno čitanje nekih prečaca oblikovanja u Excelu. (#15527)
   -
 - Microsoft Edge:
-  - NVDA više se neće vraćati na prethodnu poziciju u modusu čitanja pri otvaranju kontekstnog izbornika u Microsoft Edgeu. (#15309)
+  - NVDA se više neće vraćati na prethodnu poziciju u modusu čitanja pri otvaranju kontekstnog izbornika u Microsoft Edgeu. (#15309)
   - NVDA opet može čitati kontekstni izbornik preuzimanja u Microsoft Edgeu. (#14916)
   -
 - Brajica:
   - Brajični kursor i pokazivač označenosti bit će ispravno osvježeni poslije uključenja ili isključenja gestom. (#15115)
-  - Ispravljena pogreška prilikom koje Albatros brajični redci su se pokušali inicijalizirati čak iako je drugi brajični redak bio spojen. (#15226)
+  - Ispravljena pogreška prilikom koje su se Albatros brajični redci pokušali inicijalizirati čak iako je drugi brajični redak bio spojen. (#15226)
   -
 - Add-on Store:
   - Ispravljena greška poslije odznačavanja "uključi nekompatibilne dodatke" koja je prouzrokovala vidljivost nekompatibilnih dodataka. (#15411)
@@ -91,7 +91,7 @@ Ove će opcije biti uklonjene iz dijaloškog okvira  "odaberi govornu jedinicu" 
   -
 - NVDA opet izgovara rezultate računskih operacija u 32-bitnom kalkulatoru za Windows u operacijskim sustavima Server, LTSC and LTSB. (#15230)
 -
-- NVDA više ne ignorira izmjene fokusa kada se višeslojni prozor (prozor koji se nalazi iznad drugog prozora) postane fokusiran. (#15432)
+- NVDA više ne ignorira izmjene fokusa kada višeslojni prozor (prozor koji se nalazi iznad drugog prozora) postane fokusiran. (#15432)
 - Ispravljeno moguće rušenje prilikom pokretanja NVDA. (#15517)
 
 
