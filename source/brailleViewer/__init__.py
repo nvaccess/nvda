@@ -2,7 +2,7 @@
 # Copyright (C) 2014-2023 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-from typing import Optional, List
+from typing import Optional
 
 import gui
 import extensionPoints
@@ -91,6 +91,7 @@ def _getDisplaySize(numCells: int):
 	return numCells if numCells > 0 else DEFAULT_NUM_CELLS
 
 
+@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 def createBrailleViewerTool():
 	if not gui.mainFrame:
 		raise RuntimeError("Can not initialise the BrailleViewerGui: gui.mainFrame not yet initialised")
