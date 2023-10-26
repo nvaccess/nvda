@@ -3,6 +3,92 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2023.3 =
+Táto verzia obsahuje vylepšenie stability a rýchlosti hlasového výstupu a zvukov NVDA.
+Pridali sme možnosti samostatne regulovať hlasitosť hlasového výstupu a zvukov NVDA, alebo prispôsobenie hlasitosti zvukov NVDA podľa hlasitosti hlasového výstupu.
+
+NVDA odteraz dokáže automaticky obnovovať okno s rozpoznaným textom OCR a čítať nový text.
+Toto je možné nastaviť v nastaveniach NVDA, v kategórii rozpoznávanie textu Windows.
+
+Došlo k opravám chýb týkajúcich sa spracovania braillovho písma, konkrétne bola vylepšená detekcia brailových riadkov a detekcia pohybu systémového kurzora.
+Odteraz je možné vylúčiť ovládače z automatického detegovania brailových riadkov, čo môže zrýchlyť odozvu.
+Pribudli tiež nové príkazy pre ovládač BRLTTY.
+
+Opravili sme chyby v katalógu s doplnkami, aplikáciách Microsoft Office, kontextových ponukách Microsoft Edge, a v kalkulačke.
+
+== Nové vlastnosti ==
+- Vylepšená správa zvuku:
+  - V nastaveniach pribudla nová kategória s označením zvuk:
+    - Klávesová skratka je ``NVDA+ctrl+u``. (#15497)
+    - Odteraz je možné určiť, že hlasitosť reči a hlasitosť zvukov NVDA bude rovnaká (#1409)
+    - Tiež je možné oddeliť hlasitosť zvukov NVDA a hlasitosť hlasového výstupu. (#1409, #15038)
+    - Nastavenia výstupného zariadenia a automatického stišovania boli presunuté do kategórie zvuk.
+    Možnosti odstránime z dialógu Nastavenia hlasového výstupu vo verzii 2024.1. (#15486, #8711)
+    -
+  - NVDA odteraz predvolene používa zvukové rozhranie Windows Audio Session API (WASAPI), čo zrýchľuje stabilitu a odozvu výstupu reči a zvukov NVDA. (#14697, #11169, #11615, #5096, #10185, #11061)
+  - Upozorňujeme, že WASAPI nie je kompatibilné s niektorými doplnkami.
+  Sú však dostupné aktualizácie, preto prosím najprv aktualizujte doplnky a následne aktualizujte NVDA.
+  Nekompatibilné doplnky budú po aktualizácii zakázané. Ide o doplnky:
+    - Tony's Enhancements do verzie 1.15. (#15402)
+    - NVDA global commands extension do verzie 12.0.8. (#15443)
+    -
+  -
+- NVDA odteraz dokáže pri používaní rozpoznávania textu Windows automaticky aktualizovať rozpoznaný text a prečítať zmeny. (#2797)
+  - Ak chcete túto možnosť využívať, začiarknite v nastaveniach Rozpoznávania textu Windows možnosť Pravidelne obnovovať rozpoznaný text.
+  - Keď je táto možnosť zapnutá, oznamovanie zmien v rozpoznanom texte je možné ovplyvniť nastavením oznamovať dynamicky menený obsah (``nvda+5``).
+  -
+- Ak používate automatickú detekciu brailových riadkov, môžete určiť riadky, ktoré nebudú pri detekcii zohľadnené. (#15196)
+- V nastaveniach čítania textu pribudla nová možnosť "Ignorovať prázdne riadky pre oznamovanie odsadenia". (#13394)
+- Do režimu prehliadania pribudol nový príkaz na prechod medzi záložkami. (#15046)
+-
+
+== Zmeny ==
+- Braille:
+  - Ak sa v terminály zmení text a zároveň sa nezmení pozícia systémového kurzora, zmení sa aj text na brailovom riadku.
+  Toto sa dialo v situáciách, keď bol brailový riadok zviazaný s prezeracím kurzorom. (#15115)
+  - Pridané nové príkazy BRLTTY. (#6483):
+    - ``learn``: Zapína a vypína nápovedu vstupu
+    - ``prefmenu``: Otvorí ponuku NVDA
+    - ``prefload``/``prefsave``: Načítať / uložiť nastavenia NVDA
+    - ``time``: Zobraziť čas
+    - ``say_line``: Prečíta riadok pod kurzorom
+    - ``say_below``: Plynulé čítanie
+    -
+  - Ovládač BRLTTY je dostupný len ak je spustená inštancia BRLTTY s povoleným BrlAPI (#15335)
+  - Odstránená možnosť zapnúť a vypnúť podporu pre štandard HID, zároveň bola pridaná nová možnosť.
+  Odteraz je možné vylúčiť ovládače, ktoré nemajú byť detegované pri automatickej detekcii brailových riadkov. (#15196)
+  -
+- Katalóg s doplnkami: Nainštalované doplnky sú zobrazované aj v časti dostupné doplnky, ak pochádzajú z katalógu. (#15374)
+- Aktualizované niektoré klávesové skratky v ponuke NVDA (týka sa len anglickej lokalizácie). (#15364)
+-
+
+== Opravy ==
+- Microsoft Office:
+  - MS Word viac nespadne, ak sú v nastaveniach čítania textu vypnuté možnosti oznamovať nadpisy a oznamovať anotácie. (#15019)
+  - V aplikáciách Word a Excel je správne oznamované zarovnanie vo viacerých situáciách. (#15206, #15220)
+  - Opravené oznamovanie formátovania pri použití skratiek v Excely. (#15527)
+  -
+- Microsoft Edge:
+  - NVDA viac neskočí na predošlú pozíciu v režime prehliadania po zatvorení kontextovej ponuky. (#15309)
+  - NVDA opäť správne dokáže čítať kontextovú ponuku pri stiahnutých položkách. (#14916)
+  -
+- Braille:
+  - Brailový kurzor a vyznačenie vybratého textu sa správne zobrazuje aj vtedy, ak skratkami prepínate zobrazenie kurzora a vybratého textu. (#15115)
+  - Opravená chyba, ktorá spôsobovala, že riadky Albatross sa pokúšali inicializovať, hoci už bol pripojený iný riadok. (#15226)
+  -
+- Katalóg s doplnkami:
+  - Ak odčiarknete možnosť nekompatibilné doplnky, nezobrazia sa nekompatibilné doplnky ani v katalógu. (#15411)
+  - Filtrovanie zakázaných a povolených doplnkov správne zobrazuje alebo vylučuje nekompatibilné doplnky. (#15416)
+  - Odteraz je možné aktualizovať z externého zdroja doplnok, ktorý je nekompatibilný. (#15417)
+  - NVDA viac neprestane hovoriť po inštalácii doplnkov. (#14525)
+  - Odteraz je možné inštalovať doplnky aj v prípade, že predošlé sťahovanie zlyhalo alebo bolo prerušené. (#15469)
+  - Opravené problémy so spracovaním nekompatibilných doplnkov počas aktualizácie NVDA. (#15414, #15412, #15437)
+  -
+- NVDA opäť oznamuje výsledky výpočtov v kalkulačke v 32-bitových verziách Windows Server, LTSC a LTSB. (#15230)
+- NVDA viac neignoruje zmenu fokusu, ak získa fokus včlenené okno. (#15432)
+- Odstránené potenciálne problémy, ktoré mohli spôsobiť pád NVDA pri štarte. (#15517)
+-
+
 = 2023.2 =
 V tejto verzii je predstavený katalóg s doplnkami, ktorý nahrádza pôvodného správcu doplnkov.
 V katalógu doplnkov je možné prechádzať, vyhľadávať, inštalovať a aktualizovať doplnky.

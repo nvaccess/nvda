@@ -30,11 +30,14 @@ This option now announces additional relevant information about an object when t
 - Reporting of object shortcut keys has been improved. (#10807, @CyrilleB79)
 - The SAPI4 synthesizer now properly supports volume, rate and pitch changes embedded in speech. (#15271, @LeonarddeR)
 - Multi line state is now correctly reported in applications using Java Access Bridge. (#14609)
-- In LibreOffice, words deleted using the ``control+backspace`` keyboard shortcut are now also properly announced when the deleted word is followed by whitespace (like spaces and tabs). (#15436)
-- In LibreOffice, announcement of the status bar using the ``NVDA+end`` keyboard shortcut now also works for dialogs in LibreOffice version 24.2 and newer. (#15591)
+- In LibreOffice, words deleted using the ``control+backspace`` keyboard shortcut are now also properly announced when the deleted word is followed by whitespace (like spaces and tabs). (#15436, @michaelweghorn)
+- In LibreOffice, announcement of the status bar using the ``NVDA+end`` keyboard shortcut now also works for dialogs in LibreOffice version 24.2 and newer. (#15591, @michaelweghorn)
+- In LibreOffice, text attributes according to the [IAccessible2 text attributes specification https://wiki.linuxfoundation.org/accessibility/iaccessible2/textattributes] are supported, which is required to support announcement of text attributes in LibreOffice versions 24.2 and above.
+This makes the announcement of spelling errors work when announcing a line in Writer. (#15648, @michaelweghorn)
 - In Microsoft Excel with UIA disabled, braille is updated, and the active cell content is spoken, when ``control+y``, ``control+z`` or ``alt+backspace`` is pressed. (15547)
 - In Microsoft Word with UIA disabled braille is updated when ``control+v``, ``control+x``, ``control+y``, ``control+z``, ``alt+backspace``, ``backspace`` or ``control+backspace`` is pressed.
 It is also updated with UIA enabled, when typing text and braille is tethered to review and review follows caret. (#3276)
+- Multi line braille displays will no longer crash the BRLTTY driver and are treated as one continuous display. (#15386)
 -
 
 == Changes for Developers ==
@@ -43,6 +46,10 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 - Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
 - Added extension point: ``treeInterceptorHandler.post_browseModeStateChange``. (#14969, @nvdaes)
+- It is now possible to use plural forms in an add-on's translations. (#15661, @beqabeqa473)
+- Included python3.dll in the binary distribution for use by add-ons with external libraries utilizing the [stable ABI https://docs.python.org/3.11/c-api/stable.html]. (#15674, @mzanm)
+- The ``BrailleDisplayDriver`` base class now has ``numRows`` and ``numCols`` properties to provide information about multi line braille displays.
+Setting ``numCells`` is still supported for single line braille displays and ``numCells`` will return the total number of cells for multi line braille displays. (#15386)
 -
 
 === API Breaking Changes ===
@@ -113,6 +120,13 @@ Code which imports from one of them, should instead import from the replacement 
 === Deprecations ===
 
 - Using ``watchdog.getFormattedStacksForAllThreads`` is deprecated - please use ``logHandler.getFormattedStacksForAllThreads`` instead. (#15616, @lukaszgo1)
+- ``easeOfAccess.canConfigTerminateOnDesktopSwitch`` has been deprecated, as it became obsolete since Windows 7 is no longer supported. (#15644, @LeonarddeR)
+- ``winVersion.isFullScreenMagnificationAvailable`` has been deprecated - use ``visionEnhancementProviders.screenCurtain.ScreenCurtainProvider.canStart`` instead. (#15664, @josephsl)
+- The following Windows release constants has been deprecated from winVersion module (#15647, @josephsl):
+  - ``winVersion.WIN7``
+  - ``winVersion.WIN7_SP1``
+  - ``winVersion.WIN8``
+  -
 -
 
 

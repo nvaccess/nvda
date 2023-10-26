@@ -37,8 +37,8 @@ NVDA güncellenirken şu eklentilerin uyumsuz sürümleri devre dışı bırakı
   - Bu işlevi etkinleştirmek için NVDA'nın ayarlar iletişim kutusunun Windows OCR kategorisinden "Tanınan içeriği düzenli olarak yenile" seçeneğini etkinleştirin.
   - Etkinleştirildiğinde, yeni metnin okunmasını dinamik içerik değişikliklerini bildir seçeneğini açıp kapayarak (``NVDA+5``'e basarak) kontrol edebilirsiniz.
   -
- - Braille ekranlar otomatik olarak algılanırken, braille ekran seçimi iletişim kutusundan sürücüler otomatik algılamadan dışlanabiliyor. (#15196)
- - Belge formatları ayarlarına yeni seçenek: "Satır girintilerini bildirirken boş satırları yok say" (#13394)
+- Braille ekranlar otomatik olarak algılanırken, braille ekran seçimi iletişim kutusundan sürücüler otomatik algılamadan dışlanabiliyor. (#15196)
+- Belge formatları ayarlarına yeni seçenek eklendi: "Satır girintilerini bildirirken boş satırları yok say" (#13394)
 - Tarama kipinde sekme grupları arasında dolaşmak için kısayolu atanmamış olan yeni bir hareket eklendi. (#15046)
 -
 == Değişiklikler ==
@@ -53,7 +53,7 @@ NVDA güncellenirken şu eklentilerin uyumsuz sürümleri devre dışı bırakı
     - ``say_line``: İnceleme imlecinin bulunduğu satırı okuma
     - ``say_below``: İnceleme imlecini kullanarak tümünü okuma
     -
-  - BRLTTY sürücüsü, sadece BrlAPI enabled çalışan BRLTTY oturumunda kullanılabilir. (#15335)
+  - BRLTTY sürücüsü, sadece BrlAPI enabled ile çalışan BRLTTY oturumunda kullanılabilir. (#15335)
   - HID braille desteğini etkinleştirmek için kullanılan gelişmiş ayar kaldırıldı ve yerini yeni bir seçenek aldı.
   Braille ekran seçimi iletişim kutusundan, istediğiniz sürücüleri otomatik braille ekran algılamasından dışlayabilirsiniz. (#15196)
   -
@@ -83,9 +83,8 @@ NVDA güncellenirken şu eklentilerin uyumsuz sürümleri devre dışı bırakı
   - NVDA güncellenirken uyumsuz eklentilerin ele alınma sorunları giderildi. (#15414, #15412, #15437)
   -
 - Windows'un Server, LTSC ve LTSB sürümlerinin Windows 32bit hesap makinesinde NVDA sonuçları yeniden okuyabiliyor. (#15230)
- - Pencere içindeki pencereye (alt pencerenin alt penceresine) odaklanıldığında NVDA odak değişimini yok saymıyor. (#15432)
-- Görev yöneticisinin bazı Windows sürümlerindeki sorunu düzeltildi. (#6245)
- - NVDA başlarken potansiyel bir çökme nedeni giderildi. (#15517)
+- Pencere içindeki pencereye (alt pencerenin alt penceresine) odaklanıldığında NVDA odak değişimini yok saymıyor. (#15432)
+- NVDA başlarken potansiyel bir çökme nedeni giderildi. (#15517)
 -
 
 == Changes for Developers ==
