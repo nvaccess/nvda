@@ -194,6 +194,42 @@ def speakMessage(
 		speak(seq, symbolLevel=None, priority=priority)
 
 
+def _getSpeakSsmlSpeech(
+		ssml: str,
+		_prefixSpeechCommand: Optional[SpeechCommand] = None,
+) -> SpeechSequence:
+	"""Gets the speech sequence for given SSML.
+	@param ssml: The SSML data to speak
+	@param _prefixSpeechCommand: A SpeechCommand to append before the sequence.
+	"""
+	if ssml is None:
+		return []
+	from speechXml import SsmlParser
+	parser = SsmlParser()
+	sequence = parser.convertFromXml(ssml)
+	if sequence:
+		if _prefixSpeechCommand is not None:
+			sequence.insert(0, _prefixSpeechCommand)
+	return sequence
+
+
+def speakSsml(
+		ssml: str,
+		symbolLevel: Optional[int] = None,
+		_prefixSpeechCommand: Optional[SpeechCommand] = None,
+		priority: Optional[Spri] = None
+) -> None:
+	"""Speaks a given speech sequence provided as ssml.
+	@param ssml: The SSML data to speak.
+	@param symbolLevel: The symbol verbosity level.
+	@param _prefixSpeechCommand: A SpeechCommand to append before the sequence.
+	@param priority: The speech priority.
+	"""
+	seq = _getSpeakSsmlSpeech(ssml, _prefixSpeechCommand)
+	if seq:
+		speak(seq, symbolLevel=symbolLevel, priority=priority)
+
+
 def getCurrentLanguage() -> str:
 	synth = getSynth()
 	language=None

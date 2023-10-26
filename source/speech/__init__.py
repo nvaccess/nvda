@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
-# Julien Cochuyt
+# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Julien Cochuyt, Leonard de Ruijter
 
 from .speech import (
 	_extendSpeechSequence_addMathForTextInfo,
@@ -47,6 +47,7 @@ from .speech import (
 	setSpeechMode,
 	speak,
 	speakMessage,
+	speakSsml,
 	speakObject,
 	speakObjectProperties,
 	speakPreselectedText,
@@ -62,7 +63,6 @@ from .speech import (
 	spellTextInfo,
 	splitTextIndentation,
 )
-
 from .priorities import Spri
 
 from .types import (
@@ -124,6 +124,7 @@ __all__ = [
 	"RE_INDENTATION_SPLIT",
 	"setSpeechMode",
 	"speak",
+	"speakSsml",
 	"speakMessage",
 	"speakObject",
 	"speakObjectProperties",

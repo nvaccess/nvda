@@ -19,7 +19,7 @@ from logHandler import log
 from .commands import SpeechCommand
 
 SequenceItemT = Union[SpeechCommand, str]
-SpeechSequence = List[SequenceItemT]
+SpeechSequence = list[SequenceItemT]
 SpeechIterable = Iterable[SequenceItemT]
 
 _IndexT = int  # Type for indexes.
