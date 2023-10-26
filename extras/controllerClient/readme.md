@@ -1,12 +1,19 @@
-# NVDA Controller Client API 1.0 Documentation
+# NVDA Controller Client API 1.1 Documentation
 
 ## Introduction
 
-This client API allows an application to communicate with NVDA, in order to do such things as speak text or braille a message.
+This client API allows an application to communicate with NVDA 2024.1 and above, in order to do such things as speak text or braille a message.
 
 The client API is implemented as a dll (dynamic link library). The functions in this dll can be called from any programming language that supports looking up and calling of any symbol in a dll (such as ctypes in Python), or by linking to it for languages like C and C++.
 
+## Compatibility notice
+
+Version 1.1 of the controller client was introduced in NVDA 2024.1, offering support to speak SSML speech sequences.
+While this version of the client adds more functionality, it is *not compatible* with NVDA 2023.3 and below.
+If you do not necessarily rely on the support to speak SSML, you are encouraged to use version 1.0 of the client library that is linked below.
+
 ## Security practices
+
 Developers should be aware that NVDA runs on the lock screen and [secure screens](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#SecureScreens).
 Before providing information to the end user (e.g. via `nvdaController_speakText`), developers should check if Windows is locked or running on a secure screen to prevent secure data being leaked.
 
@@ -18,6 +25,8 @@ You can build locally or download pre-built, details:
 - **Latest, in development version:**
   - The libraries are built by Appveyor (our CI).
   - Downloads are available from the artifacts tab.
+- **Latest build of version 1.0 of the library, supporting NVDA 2023.3 and below:**
+  - Download the `nvda_2023.3_controllerClient.zip` file: [Direct link](https://www.nvaccess.org/files/nvda/releases/2023.3/nvda_2023.3_controllerClient.zip)
 - **Build them yourself:**
   - Follow the project `readme.txt` for general build requirements/dependencies.
   - Run `scons source client`

@@ -70,7 +70,18 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
  - Example: ``speech.speakSsml('<speak><prosody pitch="200%">hello</prosody><break time="500ms" /><prosody rate="50%">John</prosody></speak>')``
  - The SSML parsing capabilities are backed by the ``SsmlParser`` class in the ``speechXml`` module.
  -
-- The file names of the NVDA Controller Library no longer contain a suffix denoting the architecture, i.e. ``nvdaControllerClient32/64.dll`` are now called ``nvdaControllerClient.dll``. (#15718, #15717, @LeonarddeR)
+- Changes to the NVDA Controller Client library:
+ - The file names of the Library no longer contain a suffix denoting the architecture, i.e. ``nvdaControllerClient32/64.dll`` are now called ``nvdaControllerClient.dll``. (#15718, #15717, @LeonarddeR)
+ - Added the following functions to the controller client:
+  - ``nvdaController_getProcessId``: To get the process id (PID) of the current instance of NVDA the controller client is using.
+  - nvdaController_speakSsml: To instruct NVDA to speak according to the given SSML. This function also supports:
+   - Providing the symbol level.
+   - Providing the priority of speech to be spoken.
+   - speaking both synchronously (blockking) and asynchronously (instant return).
+   - The exported ``_nvdaController_onSsmlMarkReached`` pointer can be assigned to a callback function that is called in synchronous mode for every ``<mark />`` tag encountered in the SSML sequence.
+   -
+ - Note: Version 1.1 of the controller client only supports NVDA 2024.1 and above. Version 1.0 supports all past and present versions of NVDA, including 2024.1.
+ -
 - Updated ``include`` dependencies:
   - detours to ``4b8c659f549b0ab21cf649377c7a84eb708f5e68``. (#15695)
   - ia2 to ``3d8c7f0b833453f761ded6b12d8be431507bfe0b``. (#15695)
@@ -114,6 +125,7 @@ That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices``
 - ``languageHandler.makeNpgettext`` and ``languageHandler.makePgettext`` have been removed.
 ``npgettext`` and ``pgettext`` are supported natively now. (#15546)
 - The app module for [Poedit https://poedit.net] has been changed significantly. The ``fetchObject`` function has been removed. (#15313, #7303, @LeonarddeR)
+- Version 1.1 of the NVDA controller client is unable to communicate with older versions of NVDA. If you don't rely on functionality in the new controller client (such as speaking SSML), you are encouraged to stick to version 1.0 of the client, available with NVDA 2023.3 and below.
 % Insert new list items here as the alias appModule table should be kept at the bottom of this list
 - The following app modules are removed.
 Code which imports from one of them, should instead import from the replacement module.  (#15618, @lukaszgo1)

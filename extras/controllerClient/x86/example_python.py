@@ -13,7 +13,7 @@ clientLib = ctypes.windll.LoadLibrary("./nvdaControllerClient.dll")
 res = clientLib.nvdaController_testIfRunning()
 if res != 0:
 	errorMessage = str(ctypes.WinError(res))
-	ctypes.windll.user32.MessageBoxW(0, "Error: %s" % errorMessage, "Error communicating with NVDA", 0)
+	ctypes.windll.user32.MessageBoxW(0, f"Error: {errorMessage}", "Error communicating with NVDA", 0)
 
 # Speak and braille some messages
 for count in range(4):
@@ -21,5 +21,32 @@ for count in range(4):
 	clientLib.nvdaController_brailleMessage("Time: %g seconds" % (0.75 * count))
 	time.sleep(0.625)
 	clientLib.nvdaController_cancelSpeech()
-clientLib.nvdaController_speakText("This is a test client for NVDA!")
+
+
+# Test SSML output
+@ctypes.WINFUNCTYPE(ctypes.c_ulong, ctypes.c_wchar_p)
+def onMarkReached(name):
+	print(f"Reached SSML mark with name: {name}")
+	return 0
+
+
+ctypes.cast(clientLib._nvdaController_onSsmlMarkReached, ctypes.POINTER(ctypes.c_void_p)).contents.value = (
+	ctypes.cast(onMarkReached, ctypes.c_void_p).value
+)
+ssml = (
+	'<speak>'
+	'This is one sentence. '
+	'<mark name="test" />'
+	'<prosody pitch="200%">This sentense is pronounced with higher pitch.</prosody>'
+	'<mark name="test2" />'
+	'This is a third sentence. '
+	'<mark name="test3" />'
+	'This is a fourth sentence. We will stay silent for a second after this one.'
+	'<break time="1000ms" />'
+	'<mark name="test4" />'
+	'This is a fifth sentence. '
+	'<mark name="test5" />'
+	'</speak>'
+)
+clientLib.nvdaController_speakSsml(ssml, 0, 0, False)
 clientLib.nvdaController_brailleMessage("Test completed!")
