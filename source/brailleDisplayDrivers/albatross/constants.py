@@ -308,3 +308,19 @@ approximately 2 seconds from previous appropriate data packet.
 Otherwise it falls back to "wait for connection" state.
 This behavior is built-in feature of the firmware of device.
 """
+
+ALBATROSS_VID = "0x403"
+"""Ftdi vendor id of usb serial port
+"""
+
+ALBATROSS_PID = "0x6001"
+"""Ftdi product id of usb serial port
+"""
+
+ALBATROSS_BUS_DEVICE_DESC = "Albatross Braille Display"
+"""Bus reported device description
+"""
+
+SER_NUM_KEY_LENGTH = 8
+"""Ftdi serial number is truncated when used as registry key
+"""

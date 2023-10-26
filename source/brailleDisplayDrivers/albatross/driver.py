@@ -10,10 +10,12 @@ for description of most important functions.
 
 import serial
 import time
+import winreg
 
 from collections import deque
 from bdDetect import KEY_SERIAL, DriverRegistrar
 from logHandler import log
+from serial.tools import list_ports
 from serial.win32 import (
 	PURGE_RXABORT,
 	PURGE_TXABORT,
@@ -61,6 +63,10 @@ from .constants import (
 	END_BYTE,
 	BOTH_BYTES,
 	KC_INTERVAL,
+	ALBATROSS_VID,
+	ALBATROSS_PID,
+	ALBATROSS_BUS_DEVICE_DESC,
+	SER_NUM_KEY_LENGTH
 )
 from .gestures import _gestureMap
 
@@ -165,6 +171,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"""
 		for self._baudRate in BAUD_RATE:
 			for portType, portId, port, portInfo in self._getTryPorts(port):
+				if not self._albatross_port(port):
+					continue
 				# For reconnection
 				self._currentPort = port
 				self._tryToConnect = True
@@ -204,6 +212,33 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				break
 		else:
 			raise RuntimeError("No Albatross found")
+
+	def _albatross_port(self, port: str) -> bool:
+		"""Check if this is albatross usb serial port
+
+		:param port: port to check
+		:type port: str
+		:return: False, if correct vid and pid but bus device description does not
+		 match, or check fails; otherwise True
+		:rtype: bool
+		"""
+		p = next(list_ports.grep(port))
+		if hex(p.vid) == ALBATROSS_VID and hex(p.pid) == ALBATROSS_PID:
+			try:
+				subKey = (
+					r"SYSTEM\Setup\Upgrade\PnP\CurrentControlSet\Control\DeviceMigration"
+					+ "\\" + r"Devices\USB\VID_0403&PID_6001" + "\\"
+					+ p.serial_number[:SER_NUM_KEY_LENGTH]
+				)
+				regKey = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, subKey)
+				valueData = winreg.QueryValueEx(regKey, "BusDeviceDesc")[0]
+				winreg.CloseKey(regKey)
+				if valueData != ALBATROSS_BUS_DEVICE_DESC:
+					return False
+			except OSError:
+				log.debug("registry key open or getting value data failed", exc_info=True)
+				return False
+		return True
 
 	def _initConnection(self) -> bool:
 		"""_initConnection, _initPort, _openPort, _readInitByte and _readSettingsByte
