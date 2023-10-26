@@ -7,7 +7,6 @@
 """
 
 from enum import IntEnum
-from typing import Optional
 
 import api
 import appModuleHandler
@@ -45,9 +44,9 @@ class _WindowControlIdOffset(IntEnum):
 
 def _findDescendantObject(
 		parentWindowHandle: int,
-		controlId: Optional[int] = None,
-		className: Optional[str] = None,
-) -> Optional[Window]:
+		controlId: int | None = None,
+		className: str | None = None,
+) -> Window | None:
 	"""
 	Finds a window with the given controlId or class name,
 	starting from the window belonging to the given parentWindowHandle,
@@ -88,22 +87,23 @@ class AppModule(appModuleHandler.AppModule):
 	def _correctWindowControllIdOfset(self, windowControlIdOffset: _WindowControlIdOffset):
 		"""Corrects a _WindowControlIdOffset when a pro version of Poedit is active."""
 		if self._isPro:
-			if windowControlIdOffset is _WindowControlIdOffset.OLD_SOURCE_TEXT:
-				return _WindowControlIdOffset.OLD_SOURCE_TEXT_PRO
-			elif windowControlIdOffset is _WindowControlIdOffset.TRANSLATOR_NOTES:
-				return _WindowControlIdOffset.TRANSLATOR_NOTES_PRO
-			elif windowControlIdOffset is _WindowControlIdOffset.COMMENT:
-				return _WindowControlIdOffset.COMMENT_PRO
+			match windowControlIdOffset:
+				case _WindowControlIdOffset.OLD_SOURCE_TEXT:
+					return _WindowControlIdOffset.OLD_SOURCE_TEXT_PRO
+				case _WindowControlIdOffset.TRANSLATOR_NOTES:
+					return _WindowControlIdOffset.TRANSLATOR_NOTES_PRO
+				case _WindowControlIdOffset.COMMENT:
+					return _WindowControlIdOffset.COMMENT_PRO
 		return windowControlIdOffset
 
 	def _getNVDAObjectForWindowControlIdOffset(self, windowControlIdOffset: _WindowControlIdOffset):
 		fg = api.getForegroundObject()
 		return _findDescendantObject(fg.windowHandle, self._dataViewControlId + windowControlIdOffset)
 
-	_translatorNotesObj: Optional[Window]
+	_translatorNotesObj: Window | None
 	"""Type definition for auto prop '_get__translatorNotesObj'"""
 
-	def _get__translatorNotesObj(self) -> Optional[Window]:
+	def _get__translatorNotesObj(self) -> Window | None:
 		return self._getNVDAObjectForWindowControlIdOffset(
 			self._correctWindowControllIdOfset(_WindowControlIdOffset.TRANSLATOR_NOTES)
 		)
@@ -149,10 +149,10 @@ class AppModule(appModuleHandler.AppModule):
 			pgettext("poedit", "notes for translators"),
 		)
 
-	_commentObj: Optional[Window]
+	_commentObj: Window | None
 	"""Type definition for auto prop '_get__commentObj'"""
 
-	def _get__commentObj(self) -> Optional[Window]:
+	def _get__commentObj(self) -> Window | None:
 		return self._getNVDAObjectForWindowControlIdOffset(
 			self._correctWindowControllIdOfset(_WindowControlIdOffset.COMMENT)
 		)
@@ -174,10 +174,10 @@ class AppModule(appModuleHandler.AppModule):
 			pgettext("poedit", "comment"),
 		)
 
-	_oldSourceTextObj: Optional[Window]
+	_oldSourceTextObj: Window | None
 	"""Type definition for auto prop '_get__oldSourceTextObj'"""
 
-	def _get__oldSourceTextObj(self) -> Optional[Window]:
+	def _get__oldSourceTextObj(self) -> Window | None:
 		return self._getNVDAObjectForWindowControlIdOffset(
 			self._correctWindowControllIdOfset(_WindowControlIdOffset.OLD_SOURCE_TEXT)
 		)
@@ -198,10 +198,10 @@ class AppModule(appModuleHandler.AppModule):
 			pgettext("poedit", "old source text"),
 		)
 
-	_translationWarningObj: Optional[Window]
+	_translationWarningObj: Window | None
 	"""Type definition for auto prop '_get__translationWarningObj'"""
 
-	def _get__translationWarningObj(self) -> Optional[Window]:
+	def _get__translationWarningObj(self) -> Window | None:
 		return self._getNVDAObjectForWindowControlIdOffset(_WindowControlIdOffset.TRANSLATION_WARNING)
 
 	@script(
@@ -220,10 +220,10 @@ class AppModule(appModuleHandler.AppModule):
 			pgettext("poedit", "translation warning"),
 		)
 
-	_needsWorkObj: Optional[Window]
+	_needsWorkObj: Window | None
 	"""Type definition for auto prop '_get__needsWorkObj'"""
 
-	def _get__needsWorkObj(self) -> Optional[Window]:
+	def _get__needsWorkObj(self) -> Window | None:
 		obj = self._getNVDAObjectForWindowControlIdOffset(_WindowControlIdOffset.NEEDS_WORK_SWITCH)
 		if obj and obj.role == controlTypes.Role.CHECKBOX:
 			return obj
@@ -253,10 +253,10 @@ class PoeditRichEdit(NVDAObject):
 
 
 class PoeditListItem(NVDAObject):
-	_warningControlToReport: Optional[_WindowControlIdOffset]
+	_warningControlToReport: _WindowControlIdOffset | None
 	appModule: AppModule
 
-	def _get__warningControlToReport(self) -> Optional[_WindowControlIdOffset]:
+	def _get__warningControlToReport(self) -> _WindowControlIdOffset | None:
 		obj = self.appModule._needsWorkObj
 		if obj and controlTypes.State.CHECKED in obj.states:
 			return _WindowControlIdOffset.NEEDS_WORK_SWITCH
@@ -283,10 +283,10 @@ class PoeditListItem(NVDAObject):
 			# This item is untranslated
 			tones.beep(440, 50)
 			return
-		warning = self._warningControlToReport
-		if warning is _WindowControlIdOffset.OLD_SOURCE_TEXT:
-			tones.beep(495, 50)
-		elif warning is _WindowControlIdOffset.TRANSLATION_WARNING:
-			tones.beep(550, 50)
-		elif warning is _WindowControlIdOffset.NEEDS_WORK_SWITCH:
-			tones.beep(660, 50)
+		match self._warningControlToReport:
+			case _WindowControlIdOffset.OLD_SOURCE_TEXT:
+				tones.beep(495, 50)
+			case _WindowControlIdOffset.TRANSLATION_WARNING:
+				tones.beep(550, 50)
+			case _WindowControlIdOffset.NEEDS_WORK_SWITCH:
+				tones.beep(660, 50)
