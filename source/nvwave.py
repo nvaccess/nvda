@@ -696,6 +696,23 @@ def playWaveFile(
 			"Playing wave file canceled by handler registered to decide_playWaveFile extension point"
 		)
 		return
+
+	def play():
+		global fileWavePlayer
+		try:
+			fileWavePlayer.feed(f.readframes(f.getnframes()))
+			fileWavePlayer.idle()
+		except Exception:
+			log.exception("Error playing wave file")
+		# #11169: Files might not be played that often. Leaving the device open
+		# until the next file is played really shouldn't be a problem regardless of
+		# how long we wait, but closing the device seems to hang occasionally.
+		# There's no benefit to keeping it open - we're going to create a new
+		# player for the next file anyway - so just destroy it now.
+		fileWavePlayer = None
+
+	if asynchronous and fileWavePlayerThread is not None:
+		fileWavePlayerThread.join()
 	fileWavePlayer = WavePlayer(
 		channels=f.getnchannels(),
 		samplesPerSec=f.getframerate(),
@@ -704,21 +721,7 @@ def playWaveFile(
 		wantDucking=False,
 		purpose=AudioPurpose.SOUNDS
 	)
-
-	def play():
-		global fileWavePlayer
-		fileWavePlayer.feed(f.readframes(f.getnframes()))
-		fileWavePlayer.idle()
-		# #11169: Files might not be played that often. Leaving the device open
-		# until the next file is played really shouldn't be a problem regardless of
-		# how long we wait, but closing the device seems to hang occasionally.
-		# There's no benefit to keeping it open - we're going to create a new
-		# player for the next file anyway - so just destroy it now.
-		fileWavePlayer = None
-
 	if asynchronous:
-		if fileWavePlayerThread is not None:
-			fileWavePlayerThread.join()
 		fileWavePlayerThread = threading.Thread(
 			name=f"{__name__}.playWaveFile({os.path.basename(fileName)})",
 			target=play
