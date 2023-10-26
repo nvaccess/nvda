@@ -89,7 +89,7 @@ except RuntimeError:
 ### Constants
 NVDA_PATH = globalVars.appDir
 ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
-DONATE_URL = "http://www.nvaccess.org/donate/"
+DONATE_URL = f"{versionInfo.url}/donate/"
 
 ### Globals
 mainFrame: Optional["MainFrame"] = None
@@ -544,46 +544,9 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		# Translators: The label for the Tools submenu in NVDA menu.
 		self.menu.AppendSubMenu(menu_tools, _("&Tools"))
 
-		menu_help = self.helpMenu = wx.Menu()
-		if not globalVars.appArgs.secure:
-			# Translators: The label of a menu item to open NVDA user guide.
-			item = menu_help.Append(wx.ID_ANY, _("&User Guide"))
-			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("userGuide.html")), item)
-			# Translators: The label of a menu item to open the Commands Quick Reference document.
-			item = menu_help.Append(wx.ID_ANY, _("Commands &Quick Reference"))
-			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("keyCommands.html")), item)
-			# Translators: The label for the menu item to open What's New document.
-			item = menu_help.Append(wx.ID_ANY, _("What's &new"))
-			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("changes.html")), item)
-			item = menu_help.Append(wx.ID_ANY, _("NVDA &web site"))
-			self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://www.nvda-project.org/"), item)
-			# Translators: The label for the menu item to view NVDA License document.
-			item = menu_help.Append(wx.ID_ANY, _("L&icense"))
-			self.Bind(
-				wx.EVT_MENU,
-				lambda evt: systemUtils._displayTextFileWorkaround(getDocFilePath("copying.txt", False)),
-				item
-			)
-			# Translators: The label for the menu item to view NVDA Contributors list document.
-			item = menu_help.Append(wx.ID_ANY, _("C&ontributors"))
-			self.Bind(
-				wx.EVT_MENU,
-				lambda evt: systemUtils._displayTextFileWorkaround(getDocFilePath("contributors.txt", False)),
-				item
-			)
-			# Translators: The label for the menu item to open NVDA Welcome Dialog.
-			item = menu_help.Append(wx.ID_ANY, _("We&lcome dialog..."))
-			self.Bind(wx.EVT_MENU, lambda evt: WelcomeDialog.run(), item)
-			menu_help.AppendSeparator()
-		if updateCheck:
-			# Translators: The label of a menu item to manually check for an updated version of NVDA.
-			item = menu_help.Append(wx.ID_ANY, _("&Check for update..."))
-			self.Bind(wx.EVT_MENU, frame.onCheckForUpdateCommand, item)
-		# Translators: The label for the menu item to open About dialog to get information about NVDA.
-		item = menu_help.Append(wx.ID_ABOUT, _("&About..."), _("About NVDA"))
-		self.Bind(wx.EVT_MENU, frame.onAboutCommand, item)
-		# Translators: The label for the Help submenu in NVDA menu.
-		self.menu.AppendSubMenu(menu_help,_("&Help"))
+		self._appendDocsSubMenu()
+
+		self._appendHelpSubMenu(frame)
 
 		self._appendConfigManagementSection(frame)
 
@@ -592,13 +555,9 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# Translators: The label for the menu item to open donate page.
 			item = self.menu.Append(wx.ID_ANY, _("&Donate"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(DONATE_URL), item)
-			self.installPendingUpdateMenuItemPos = self.menu.GetMenuItemCount()
-			item = self.installPendingUpdateMenuItem = self.menu.Append(wx.ID_ANY,
-				# Translators: The label for the menu item to run a pending update.
-				_("Install pending &update"),
-				# Translators: The description for the menu item to run a pending update.
-				_("Execute a previously downloaded NVDA update"))
-			self.Bind(wx.EVT_MENU, frame.onExecuteUpdateCommand, item)
+
+		self._appendPendingUpdateSection(frame)
+
 		self.menu.AppendSeparator()
 		item = self.menu.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onExitCommand, item)
@@ -628,7 +587,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			appModules.nvda.nvdaMenuIaIdentity = None
 		mainFrame.postPopup()
 
-	def _createSpeechDictsSubMenu(self, frame: wx.Frame) -> wx.Menu:
+	def _createSpeechDictsSubMenu(self, frame: MainFrame) -> wx.Menu:
 		subMenu_speechDicts = wx.Menu()
 		item = subMenu_speechDicts.Append(
 			wx.ID_ANY,
@@ -660,7 +619,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
 		return subMenu_speechDicts
 
-	def _appendConfigManagementSection(self, frame: wx.Frame) -> None:
+	def _appendConfigManagementSection(self, frame: MainFrame) -> None:
 		self.menu.AppendSeparator()
 		# Translators: The label for the menu item to open the Configuration Profiles dialog.
 		item = self.menu.Append(wx.ID_ANY, _("&Configuration profiles..."))
@@ -692,6 +651,80 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 				_("Write the current configuration to nvda.ini")
 			)
 			self.Bind(wx.EVT_MENU, frame.onSaveConfigurationCommand, item)
+
+	def _appendDocsSubMenu(self) -> None:
+		if not globalVars.appArgs.secure:
+			self.docsMenu = wx.Menu()
+			# Translators: The label of a menu item to open NVDA user guide.
+			item = self.docsMenu.Append(wx.ID_ANY, _("&User Guide"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("userGuide.html")), item)
+			# Translators: The label of a menu item to open the Commands Quick Reference document.
+			item = self.docsMenu.Append(wx.ID_ANY, _("Commands &Quick Reference"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("keyCommands.html")), item)
+			# Translators: The label for the menu item to open What's New document.
+			item = self.docsMenu.Append(wx.ID_ANY, _("What's &new"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("changes.html")), item)
+			# Translators: The label for the menu item to view NVDA License document.
+			item = self.docsMenu.Append(wx.ID_ANY, _("L&icense"))
+			self.Bind(
+				wx.EVT_MENU,
+				lambda evt: systemUtils._displayTextFileWorkaround(getDocFilePath("copying.txt", False)),
+				item
+			)
+			# Translators: The label for the menu item to view NVDA Contributors list document.
+			item = self.docsMenu.Append(wx.ID_ANY, _("C&ontributors"))
+			self.Bind(
+				wx.EVT_MENU,
+				lambda evt: systemUtils._displayTextFileWorkaround(getDocFilePath("contributors.txt", False)),
+				item
+			)
+
+			# Translators: The label for the documentation submenu in NVDA menu.
+			self.menu.AppendSubMenu(self.docsMenu, _("Docu&mentation"))
+
+	def _appendHelpSubMenu(self, frame: MainFrame) -> None:
+		menu_help = self.helpMenu = wx.Menu()
+		if not globalVars.appArgs.secure:
+			# Translators: The label for the menu item to view the NVDA website
+			item = menu_help.Append(wx.ID_ANY, _("NV Access &web site"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(versionInfo.url), item)
+			# Translators: The label for the menu item to view the NVDA website's get help section
+			item = menu_help.Append(wx.ID_ANY, _("&Help, training and support"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(f"{versionInfo.url}/get-help/"), item)
+			# Translators: The label for the menu item to view the NVDA website's get help section
+			item = menu_help.Append(wx.ID_ANY, _("NV Access &shop"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(f"{versionInfo.url}/shop/"), item)
+
+			menu_help.AppendSeparator()
+
+			# Translators: The label for the menu item to open NVDA Welcome Dialog.
+			item = menu_help.Append(wx.ID_ANY, _("We&lcome dialog..."))
+			self.Bind(wx.EVT_MENU, lambda evt: WelcomeDialog.run(), item)
+
+		# Translators: The label for the menu item to open About dialog to get information about NVDA.
+		item = menu_help.Append(wx.ID_ABOUT, _("&About..."), _("About NVDA"))
+		self.Bind(wx.EVT_MENU, frame.onAboutCommand, item)
+
+		# Translators: The label for the Help submenu in NVDA menu.
+		self.menu.AppendSubMenu(menu_help, _("&Help"))
+
+	def _appendPendingUpdateSection(self, frame: MainFrame) -> None:
+		if not globalVars.appArgs.secure and updateCheck:
+			# Translators: The label of a menu item to manually check for an updated version of NVDA.
+			item = self.menu.Append(wx.ID_ANY, _("Check for &update..."))
+			self.Bind(wx.EVT_MENU, frame.onCheckForUpdateCommand, item)
+
+			# installPendingUpdateMenuItemPos is later toggled based on if an update is available.
+			self.installPendingUpdateMenuItemPos = self.menu.GetMenuItemCount()
+			item = self.installPendingUpdateMenuItem = self.menu.Append(
+				wx.ID_ANY,
+				# Translators: The label for the menu item to run a pending update.
+				_("&Install pending update"),
+				# Translators: The description for the menu item to run a pending update.
+				_("Execute a previously downloaded NVDA update")
+			)
+			self.Bind(wx.EVT_MENU, frame.onExecuteUpdateCommand, item)
+
 
 def initialize():
 	global mainFrame
