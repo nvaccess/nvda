@@ -37,6 +37,7 @@ This makes the announcement of spelling errors work when announcing a line in Wr
 - In Microsoft Excel with UIA disabled, braille is updated, and the active cell content is spoken, when ``control+y``, ``control+z`` or ``alt+backspace`` is pressed. (15547)
 - In Microsoft Word with UIA disabled braille is updated when ``control+v``, ``control+x``, ``control+y``, ``control+z``, ``alt+backspace``, ``backspace`` or ``control+backspace`` is pressed.
 It is also updated with UIA enabled, when typing text and braille is tethered to review and review follows caret. (#3276)
+- NVDA will not fail to start anymore when the configuration file is corrupted, but it will restore the configuration to default as it did in the past. (#15690, @CyrilleB79)
 -
 
 == Changes for Developers ==
