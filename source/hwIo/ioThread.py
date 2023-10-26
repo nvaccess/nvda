@@ -11,11 +11,9 @@ import winKernel
 import typing
 from logHandler import log
 from serial.win32 import OVERLAPPED, LPOVERLAPPED
-from contextlib import contextmanager
 from extensionPoints.util import AnnotatableWeakref, BoundMethodWeakref
 from inspect import ismethod
-from buildVersion import version_year
-from watchdog import getFormattedStacksForAllThreads
+from logHandler import getFormattedStacksForAllThreads
 
 
 LPOVERLAPPED_COMPLETION_ROUTINE = ctypes.WINFUNCTYPE(

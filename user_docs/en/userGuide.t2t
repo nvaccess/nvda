@@ -39,9 +39,7 @@ Major highlights include:
 -
 
 ++ System Requirements ++[SystemRequirements]
-- Operating Systems: all 32-bit and 64-bit editions of Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11, and all Server Operating Systems starting from Windows Server 2008 R2.
-  - For Windows 7, NVDA requires Service Pack 1 or higher.
-  - For Windows Server 2008 R2, NVDA requires Service Pack 1 or higher.
+- Operating Systems: all 32-bit and 64-bit editions of Windows 8.1, Windows 10, Windows 11, and all Server Operating Systems starting from Windows Server 2012 R2.
   - both AMD64 and ARM64 variants of Windows are supported.
   -
 - at least 150 MB of storage space.
@@ -293,6 +291,7 @@ Telephone support includes local numbers in Australia and the USA.
  
 The [email user groups https://github.com/nvaccess/nvda/wiki/Connect] are a great source of community help, as are [certified NVDA experts https://certification.nvaccess.org/].
 
+You can make bug reports or feature requests via [GitHub https://github.com/nvaccess/nvda/blob/master/projectDocs/issues/readme.md].
 
 + More Setup Options +[MoreSetupOptions]
 
@@ -357,9 +356,9 @@ Portable and temporary copies of NVDA have the following restrictions:
 - The inability to automatically start during and/or after log-on.
 - The inability to interact with applications running with administrative privileges, unless of course NVDA itself has been run also with these privileges (not recommended).
 - The inability to read User Account Control (UAC) screens when trying to start an application with administrative privileges.
-- Windows 8 and later: the inability to support input from a touchscreen.
-- Windows 8 and later: the inability to provide features such as browse mode and speaking of typed characters in Windows Store apps.
-- Windows 8 and later: audio ducking is not supported.
+- The inability to support input from a touchscreen.
+- The inability to provide features such as browse mode and speaking of typed characters in Windows Store apps.
+- Audio ducking is not supported.
 -
 
 
@@ -421,7 +420,7 @@ Although most laptops do not have a physical numpad, some laptops can emulate on
 If your laptop cannot do this or does not allow you to turn Num Lock off, you may want to switch to the Laptop layout instead.
 
 ++ NVDA Touch Gestures ++[NVDATouchGestures]
-If you are running NVDA on a device with a touchscreen and running Windows 8 or higher, you can also control NVDA directly via touch commands.
+If you are running NVDA on a device with a touchscreen, you can also control NVDA directly via touch commands.
 While NVDA is running, unless touch interaction support is disabled, all touch input will go directly to NVDA.
 Therefore, actions that can be performed normally without NVDA will not work.
 %kc:beginInclude
@@ -1090,6 +1089,11 @@ For this situation, NVDA contains a feature called "Screen Curtain" which can be
 
 You can enable the Screen Curtain in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog.
 
+%kc:beginInclude
+|| Name | Key | Description |
+| Toggles the state of the screen curtain | ``NVDA+control+escape`` | Enable to make the screen black or disable to show the contents of the screen. Pressed once, screen curtain is enabled until you restart NVDA. Pressed twice, screen curtain is enabled until you disable it. |
+%kc:endInclude
+
 When the Screen Curtain is active some tasks directly based on what appears on the screen such as performing [OCR #Win10Ocr] or taking a screenshot cannot be achieved.
 
 Due to a change in the Windows Magnification API, Screen Curtain had to be updated to support the newest versions of Windows.
@@ -1133,8 +1137,11 @@ NVDA provides its own extra features  for some applications to make certain task
 
 +++ Automatic Column and Row Header Reading +++[WordAutomaticColumnAndRowHeaderReading]
 NVDA is able to automatically announce appropriate row and column headers when navigating around tables in Microsoft Word.
-This firstly requires that the Report Table row / column headers option in NVDA's Document Formatting settings, found in the [NVDA Settings #NVDASettings] dialog, be turned on.
-Secondly, NVDA needs to know which row or column contains the headers in any given table.
+This requires that the Report Table row / column headers option in NVDA's Document Formatting settings, found in the [NVDA Settings #NVDASettings] dialog, be turned on.
+
+If you use [UIA to access Word documents #MSWordUIA], which is default in recent versions of Word and Windows, the cells of the first row will automatically be considered as column headers; similarly, the cells of the first column will automatically be considered as row headers.
+
+On the contrary, if you do not use [UIA to access Word documents #MSWordUIA], you will have to indicate to NVDA which row or column contains the headers in any given table.
 After moving to the first cell in the column or row containing the headers, use one of the following commands:
 %kc:beginInclude
 || Name | Key | Description |
@@ -1337,6 +1344,10 @@ Many of these settings can be found in the multi-page [NVDA Settings dialog #NVD
 In all dialog boxes, press the OK button to accept any changes you have made.
 To cancel any changes, press the Cancel button or the escape key.
 For certain dialogs, you can press the Apply button to let the settings take effect immediately without closing the dialog.
+Most NVDA dialogs support context help.
+%kc:beginInclude
+When in a dialog, pressing ``f1`` opens the User Guide at the paragraph related to the focused setting or the current dialog.
+%kc:endInclude
 Some settings can also be changed using shortcut keys, which are listed where relevant in the sections below.
 
 ++ NVDA Settings ++[NVDASettings]
@@ -1809,7 +1820,7 @@ This option allows you to choose the audio device that NVDA should instruct the 
 ==== Audio Ducking Mode ====[SelectSynthesizerDuckingMode]
 Key: ``NVDA+shift+d``
 
-On Windows 8 and above, this option allows you to choose if NVDA should lower the volume of other applications while NVDA is speaking, or all the time while NVDA is running.
+This option allows you to choose if NVDA should lower the volume of other applications while NVDA is speaking, or all the time while NVDA is running.
 - No Ducking: NVDA will never lower the volume of other audio.
 - Duck when outputting speech and sounds: NVDA will only lower the volume of other audio when NVDA is speaking or playing sounds. This may not work for all synthesizers.
 - Always duck: NVDA will keep the volume of other audio lower the whole time NVDA is running.
@@ -1862,8 +1873,6 @@ Select "No" if you no longer wish to enable the Screen Curtain.
 If you are sure, you can choose the Yes button to enable the screen curtain.
 If you no longer want to see this warning message every time, you can change this behaviour in the dialog that displays the message.
 You can always restore the warning by checking the "Always show a warning when loading Screen Curtain" check box next to the "Make screen black" check box.
-
-To toggle the Screen Curtain from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
 By default, sounds are played when the Screen Curtain is toggled.
 When you want to change this behaviour, you can uncheck the "Play sound when toggling Screen Curtain" check box.
@@ -1981,7 +1990,7 @@ This option is unchecked by default.
 If you check this option and you have the "Enable mouse tracking" option enabled, NVDA will not announce what is under the mouse if the mouse is moved by another application.
 
 +++ Touch Interaction +++[TouchInteraction]
-This settings category, only available on computers running Windows 8 and later with touch capabilities, allows you to configure how NVDA interacts with touchscreens.
+This settings category, only available on computers with touch capabilities, allows you to configure how NVDA interacts with touchscreens.
 This category contains the following options:
 
 ==== Enable touch interaction support ====[TouchSupportEnable]
@@ -2851,11 +2860,21 @@ You can browse installed incompatible add-ons using the [incompatible add-ons ta
 + Extra Tools +[ExtraTools]
 
 ++ Log Viewer ++[LogViewer]
-The log viewer, found under Tools in the NVDA menu, allows you to view all the logging output that has occurred up until now from when you last started NVDA.
-Using NVDA+F1 will open the log viewer and display developer information about the current navigator object.
+The log viewer, found under Tools in the NVDA menu, allows you to view the logging output that has occurred since the latest session of NVDA was started.
 
-Apart from reading the content, you can also Save a copy of the log file, or refresh the viewer so that it shows the most recent output since the Log viewer was opened.
-These actions are available under the viewer's Log menu.
+Apart from reading the content, you can also Save a copy of the log file, or refresh the viewer so that it loads new log output generated after the Log viewer was opened.
+These actions are available under the Log menu in the log viewer.
+
+The file which is displayed when you open the log viewer is saved on your computer at the file location ``%temp%\nvda.log``.
+A new log file is created each time NVDA is started.
+When this happens, the previous NVDA session's log file is moved to ``%temp%\nvda-old.log``.
+
+You can also copy a fragment of the current log file to the clipboard without opening the log viewer.
+%kc:beginInclude
+|| Name | Key | Description |
+| Open log viewer | ``NVDA+f1`` | Opens the log viewer and displays developer information about the current navigator object. |
+| Copy a fragment of the log to the clipboard | ``NVDA+control+shift+f1`` | When this command is pressed once, it sets a starting point for the log content that should be captured. When pressed a second time, it copies the log content since the start point to your clipboard. |
+%kc:endInclude
 
 ++ Speech Viewer ++[SpeechViewer]
 For sighted software developers or people demoing NVDA to sighted audiences, a floating window is available that allows you to view all the text that NVDA is currently speaking.
@@ -2932,6 +2951,15 @@ Specifically, following issues can be solved by running this tool:
 
 ++ Reload plugins ++[ReloadPlugins]
 This item, once activated, reloads app modules and global plugins without restarting NVDA, which can be useful for developers.
+App modules manage how NVDA interacts with specific applications.
+Global plugins manage how NVDA interacts with all applications.
+
+The following NVDA key commands may also be useful:
+%kc:beginInclude
+|| Name | Key | Description |
+| Reload plugins | ``NVDA+control+f3`` | Reloads NVDA's global plugins and app modules. |
+| Report loaded app module and executable | ``NVDA+control+f1`` | Report the name of the app module, if any, and the name of the executable associated with the application which has the keyboard focus. |
+%kc:endInclude
 
 + Supported Speech Synthesizers +[SupportedSpeechSynths]
 This section contains information about the speech synthesizers supported by NVDA.
@@ -2939,7 +2967,7 @@ For an even more extensive list of  free and commercial synthesizers that you ca
 
 ++ eSpeak NG ++[eSpeakNG]
 The [eSpeak NG https://github.com/espeak-ng/espeak-ng] synthesizer is built directly into NVDA and does not require any other special drivers or components to be installed.
-On Windows 7, 8 and 8.1, NVDA uses eSpeak NG by default ([Windows OneCore #OneCore] is used in Windows 10 and later by default).
+On Windows 8.1 NVDA uses eSpeak NG by default ([Windows OneCore #OneCore] is used in Windows 10 and later by default).
 As this synthesizer is built into NVDA, this is a great choice for when running NVDA off a USB thumb drive on other systems.
 
 Each voice that comes with eSpeak NG speaks a different language.

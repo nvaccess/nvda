@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-22 00:01+0000\n"
-"PO-Revision-Date: 2023-09-23 10:56+0200\n"
+"POT-Creation-Date: 2023-10-08 23:57+0000\n"
+"PO-Revision-Date: 2023-10-09 16:15+0400\n"
 "Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: killer@tyflonet.com\n"
 "Language: pl_PL\n"
@@ -17,7 +17,7 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-Bookmarks: -1,216,-1,-1,128,-1,-1,-1,-1,-1\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -4050,6 +4050,10 @@ msgstr "Otwiera okno dialogowe służące do wyboru monitora brajlowskiego"
 #. Translators: Input help mode message for go to braille settings command.
 msgid "Shows NVDA's braille settings"
 msgstr "Otwiera Ustawienia brajla"
+
+#. Translators: Input help mode message for go to audio settings command.
+msgid "Shows NVDA's audio settings"
+msgstr "Otwiera ustawienia dźwięku NVDA"
 
 #. Translators: Input help mode message for go to keyboard settings command.
 msgid "Shows NVDA's keyboard settings"
@@ -8910,12 +8914,12 @@ msgid "&Install NVDA..."
 msgstr "&Zainstaluj NVDA..."
 
 #. Translators: The label for the menu item to run the COM registration fix tool
-msgid "&Run COM Registration Fixing tool..."
-msgstr "Uruchom narzędzie naprawy błędów &rejestracji COM..."
+msgid "Run COM Registration Fixing tool..."
+msgstr "Uruchom narzędzie naprawy błędów rejestracji COM..."
 
 #. Translators: The label for the menu item to reload plugins.
-msgid "R&eload plugins"
-msgstr "Przeładuj &wtyczki"
+msgid "Reload plugins"
+msgstr "Przeładuj wtyczki"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
 msgid "&Tools"
@@ -10608,7 +10612,7 @@ msgstr "Błąd syntezatora"
 msgid "Audio"
 msgstr "Dźwięk"
 
-#. Translators: This is the label for the select output device combo in the synthesizer dialog.
+#. Translators: This is the label for the select output device combo in NVDA audio settings.
 #. Examples of an output device are default soundcard, usb headphones, etc.
 msgid "Audio output &device:"
 msgstr "&Karta dźwiękowa:"

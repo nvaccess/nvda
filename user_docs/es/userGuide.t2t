@@ -1352,7 +1352,12 @@ Si accedes frecuentemente a categorías que no tengan atajos de teclado dedicado
 
 Las diversas categorías  de opciones que se encuentran en el cuadro de diálogo Opciones de NVDA se describirán a continuación.
 
-+++ General (NVDA+control+g) +++[GeneralSettings]
++++ General +++[GeneralSettings]
+
+%kc:setting
+==== Abrir Opciones Generales ====
+Tecla: ``NVDA+control+g``
+
 La categoría General del cuadro de diálogo Opciones de NVDA establece el comportamiento general de NVDA, como el idioma de la interfaz y si debería o no comprobar las actualizaciones.
 Esta categoría contiene las siguientes opciones:
  
@@ -1431,7 +1436,12 @@ Esta información ayuda enormemente a NV Access a priorizar el desarrollo futuro
 Si esto está habilitado, NVDA te informará cuando haya una actualización pendiente al arrancar, ofreciéndote la posibilidad de instalarla.
 También puedes instalar manualmente la actualización pendiente desde el diálogo Salir de NVDA (si está habilitado), desde el menú NVDA, o al realizar una nueva búsqueda desde el menú Ayuda.
 
-+++ Opciones de Voz (NVDA+control+v) +++[SpeechSettings]
++++ Opciones de Voz +++[SpeechSettings]
+
+%kc:setting
+==== Abre opciones de Voz ====
+Tecla: ``NVDA+control+v``
+
 La categoría voz en el cuadro de diálogo Opciones de NVDA contiene ajustes que te permiten cambiar el sintetizador de voz así como características de la voz para el sintetizador elegido.
 Para una forma alternativa rápida de controlar los parámetros de voz desde cualquier lugar, por favor consulta la sección [Grupo de Opciones de Sintetizador #SynthSettingsRing].
 
@@ -1540,34 +1550,15 @@ Esto puede ser útil si te cuesta distinguir entre la pronunciación de los sím
 
 La descripción retrasada de caracteres se cancelará si se habla otro texto durante ese tiempo, o si tú pulsas la tecla ``control``.
 
-+++ Seleccionar Sintetizador (NVDA+control+s) +++[SelectSynthesizer]
++++ Seleccionar Sintetizador +++[SelectSynthesizer]
+
+%kc:setting
+==== Abrir el diálogo Seleccionar Sintetizador ====
+Tecla: ``NVDA+control+s``
+
 El cuadro de diálogo Sintetizador, el cual puede abrirse activando el botón Cambiar... en la categoría voz del diálogo Opciones de NVDA, te permite seleccionar qué Sintetizador debería utilizar NVDA para hablar.
 Una vez hayas seleccionado el sintetizador de tu elección, puedes pulsar Aceptar y NVDA cargará el sintetizador seleccionado.
 Si hay un error cargando el sintetizador, NVDA te lo notificará con un mensaje, y continuará utilizando el anterior.
-
-==== Sintetizador ====[SelectSynthesizerSynthesizer]
-Esta opción te permite elegir el sintetizador que deseas que NVDA utilice para la salida de voz.
-
-Para obtener una lista de los sintetizadores que admite NVDA, por favor consulta la sección [Sintetizadores de Voz admitidos #SupportedSpeechSynths].
-
-Un elemento especial que siempre aparecerá en esta lista es "Sin voz", que te permite utilizar NVDA sin salida de voz.
-Esto puede ser útil para alguien que sólo desee utilizar NVDA con braille, o quizás para desarrolladores videntes que sólo deseen utilizar el Visualizador de voz.
-
-==== Dispositivo de Salida ====[SelectSynthesizerOutputDevice]
-Esta opción te permite elegir la tarjeta de sonido que NVDA debería indicar para que el sintetizador seleccionado hable.
-
-%kc:setting
-==== Modo Atenuación de Audio ====[SelectSynthesizerDuckingMode]
-Tecla: NVDA+shift+d
-
-En Windows 8 y superior, esta opción te permite elegir si NVDA debería reducir el volumen de otras aplicaciones mientras esté hablando, o todo el tiempo mientras NVDA se esté ejecutando.
-- Sin Atenuación: NVDA nunca reducirá el volumen del otro audio. 
-- Atenuar cuando salgan voz y sonidos: NVDA sólo reducirá el volumen del otro audio cuando NVDA esté hablando o reproduciendo sonidos. Esto puede no funcionar para todos los sintetizadores. 
-- Atenuar Siempre: NVDA mantendrá el volumen del otro audio reducido durante todo el tiempo que esté en ejecución.
--
-
-Esta opción sólo estará disponible si se ha instalado NVDA.
-No es posible el soporte de la atenuación de audio para las copias portable y temporal de NVDA.
 
 +++ Anillo de Opciones de Sintetizador +++[SynthSettingsRing]
 Si deseas cambiar rápidamente opciones de voz  sin ir a la categoría de Voz del diálogo Opciones de NVDA, hay algunas teclas de órdenes que te permiten moverte a través de las opciones de voz más comunes, desde cualquier lugar mientras se ejecute NVDA:
@@ -1743,7 +1734,12 @@ Deshabilitar esta opción puede mejorar la legibilidad.
 
 Para conmutar mostrar selección desde cualquier lugar, por favor asigna un gesto personalizado utilizando el [diálogo Gestos de entrada #InputGestures].
 
-+++ Seleccionar Pantalla Braille (NVDA+control+a) +++[SelectBrailleDisplay]
++++ Seleccionar Pantalla Braille +++[SelectBrailleDisplay]
+
+%kc:setting
+==== Abrir el diálogo Seleccionar Pantalla Braille ====
+Tecla: ``NVDA+control+a``
+
 El cuadro de diálogo Seleccionar Pantalla Braille, el cual se puede abrir activando el botón Cambiar... en la categoría Braille del diálogo Opciones de NVDA, te permite seleccionar qué pantalla braille debería utilizar NVDA para la salida braille.
 Una vez hayas seleccionado la pantalla braille de tu elección, puedes pulsar Aceptar y NVDA cargará la pantalla seleccionada.
 Si hay un error carghando el controlador de la pantalla, NVDA te lo notificará con un mensaje, y continuará utilizando la pantalla anterior, si hay alguna.
@@ -1785,6 +1781,55 @@ Nota importante: si conectas varias Pantallas Braille a tu máquina al mismo tie
 actualmente es imposible decirle a NVDA qué pantalla debe utilizar.
 Por lo tanto, se recomienda conectar sólo una Pantalla Braille de un determinado tipo de fabricante a tu máquina al mismo tiempo.
  
+==== Sintetizador ====[SelectSynthesizerSynthesizer]
+Esta opción te permite elegir el sintetizador que deseas que NVDA utilice para la salida de voz.
+
+Para obtener una lista de los sintetizadores que admite NVDA, por favor consulta la sección [Sintetizadores de Voz admitidos #SupportedSpeechSynths].
+
+Un elemento especial que siempre aparecerá en esta lista es "Sin voz", que te permite utilizar NVDA sin salida de voz.
+Esto puede ser útil para alguien que sólo desee utilizar NVDA con braille, o quizás para desarrolladores videntes que sólo deseen utilizar el Visualizador de voz.
+
++++ Audio +++[AudioSettings]
+
+%kc:setting
+==== Abrir Opciones de Audio ====
+Tecla: ``NVDA+control+u``
+
+La categoría Audio en el diálogo de configuración de NVDA contiene opciones que te permiten cambiar varios aspectos de la salida de audio.
+
+==== Dispositivo de Salida ====[SelectSynthesizerOutputDevice]
+Esta opción te permite elegir la tarjeta de sonido que NVDA debería indicar para que el sintetizador seleccionado hable.
+
+%kc:setting
+==== Modo Atenuación de Audio ====[SelectSynthesizerDuckingMode]
+Tecla: NVDA+shift+d
+
+En Windows 8 y superior, esta opción te permite elegir si NVDA debería reducir el volumen de otras aplicaciones mientras esté hablando, o todo el tiempo mientras NVDA se esté ejecutando.
+- Sin Atenuación: NVDA nunca reducirá el volumen del otro audio. 
+- Atenuar cuando salgan voz y sonidos: NVDA sólo reducirá el volumen del otro audio cuando NVDA esté hablando o reproduciendo sonidos. Esto puede no funcionar para todos los sintetizadores. 
+- Atenuar Siempre: NVDA mantendrá el volumen del otro audio reducido durante todo el tiempo que esté en ejecución.
+-
+
+Esta opción sólo estará disponible si se ha instalado NVDA.
+No es posible el soporte de la atenuación de audio para las copias portable y temporal de NVDA.
+
+==== El volumen de los sonidos de NVDA sigue al volumen de la voz  ====[SoundVolumeFollowsVoice]
+: Predeterminada
+  Deshabilitada
+: Opciones
+  Deshabilitada, Habilitada
+:
+
+Cuando esta opción está activada, el volumen de los sonidos y los pitidos de NVDA seguirán la configuración de volumen de la voz que estés utilizando.
+Si disminuyes el volumen de la voz, el volumen de los sonidos disminuirá.
+Del mismo modo, si aumentas el volumen de la voz, el volumen de los sonidos aumentará.
+Esta opción no está disponible si has arrancado NVDA con [WASAPI deshabilitado para la salida de audio #WASAPI] en las Opciones Avanzadas.
+
+==== Volumen de los sonidos de NVDA ====[SoundVolume]
+Este deslizador te permite configurar el volumen de los sonidos y los pitidos de NVDA.
+Esta opción sólo tiene efecto  cuando "Utilizar WASAPI para la salida de audio" esté activado y "el Volumen de los sonidos de NVDA sigue al volumen de la voz" esté desactivado.
+Esta opción no está disponible si has arrancado NVDA con [WASAPI deshabilitado para la salida de audio #WASAPI] en las Opciones Avanzadas.
+
 +++ Visión +++[VisionSettings]
 La categoría Visión en el diálogo opciones de NVDA te permite habilitar, deshabilitar y configurar [ayudas visuales #Vision].
 
@@ -1823,7 +1868,12 @@ Se pueden proporcionar proveedores de mejora de visión adicionales en [compleme
 Cuando estos proveedores tengan opciones ajustables, se mostrarán en esta categoría de opciones en grupos separados.
 Para obtener más información acerca de la configuración de cada proveedor, por favor consulta la documentación de ese proveedor.
 
-+++ Teclado (NVDA+control+k)+++[KeyboardSettings]
++++ Teclado +++[KeyboardSettings]
+
+%kc:setting
+==== Abrir opciones de Teclado ====
+Tecla: ``NVDA+control+k``
+
 La categoría Teclado en el cuadro de diálogo Opciones de NVDA contiene ajustes que establecen el comportamiento de NVDA cuando usas y escribes en tu teclado.
 Esta categoría Opciones contiene los siguientes ajustes:
 
@@ -1881,7 +1931,12 @@ Esta opción sólo está disponible si el anunciado de errores de ortografía es
 Esta opción permite al usuario controlar si la pulsación de las teclas generada por aplicaciones tales como teclados en pantalla y por el software de reconocimiento de voz debería procesarse por NVDA. 
 Esta opción está activada por defecto aunque algunos usuarios pueden necesitar deshabilitarla, como aquellos que escriban en vietnamita con el programa de escritura Unikey ya que hará que la entrada de caracteres sea incorrecta.
 
-+++ Ratón (NVDA+control+m) +++[MouseSettings]
++++ Ratón +++[MouseSettings]
+
+%kc:setting
+==== Abre las opciones de Ratón ====
+Tecla: ``NVDA+control+m``
+
 La categoría Ratón del cuadro de diálogo Opciones de NVDA permite a NVDA realizar un seguimiento del ratón, reproducir pitidos de sus coordenadas  y configurar otras opciones de uso del ratón.
 Esta categoría contiene los siguientes ajustes:
 
@@ -1957,7 +2012,12 @@ Cuando se activa, NVDA filtrará la jerarquía de objetos que puede navegarse, p
 
 Para conmutar el modo de revisión simple desde cualquier sitio, por favor asigna un gesto personalizado utilizando el [diálogo Gestos de Entrada #InputGestures].
 
-+++ Presentación de Objetos (NVDA+control+o) +++[ObjectPresentationSettings]
++++ Presentación de Objetos +++[ObjectPresentationSettings]
+
+%kc:setting
+==== Abrir las opciones de Presentación de Objetos ====
+Tecla: ``NVDA+control+o``
+
 La categoría Presentación de objetos del cuadro de diálogo Opciones de NVDA se utiliza para establecer la cantidad de información que NVDA presentará sobre controles tales como descripción, información de posición, etc.
 Estas opciones no suelen aplicarse al modo exploración.
 Estas opciones suelen aplicarse al anunciado del foco y al navegador de objetos de NVDA, pero no a la lectura de contenido de texto, por ejemplo, en el modo exploración.
@@ -2047,7 +2107,12 @@ Después de que la lectura o los datos de precomposición hayan sido combinados 
 Esta Opción te permite elegir si NVDA debería anunciar o no símbolos nuevos según aparezcan en la cadena de composición.
 Esta opción está activada por omisión.
 
-+++ Modo Exploración (NVDA+control+b) +++[BrowseModeSettings]
++++ Modo Exploración +++[BrowseModeSettings]
+
+%kc:setting
+==== Abrir las opciones de modo Exploración ====
+Tecla: ``NVDA+control+b``
+
 La categoría Modo Exploración del cuadro de diálogo Opciones de NVDA se utiliza para configurar el comportamiento de NVDA al leer y al navegar por documentos complejos como páginas web.
 Esta categoría contiene las siguientes opciones:
 
@@ -2118,7 +2183,12 @@ Esto podría dar como resultado una experiencia de navegación más rápida y un
 El foco todavía se actualizará en el elemento en particular cuando se interactúe con él (ej.: pulsando un botón o marcando una casilla de verificación).
 Habilitar esta opción puede mejorar el soporte para algunos sitios web a costa del rendimiento y de la estabilidad.
 
-+++ Formateado de Documento (NVDA+control+d) +++[DocumentFormattingSettings]
++++ Formateado de Documento +++[DocumentFormattingSettings]
+
+%kc:setting
+==== Abrir las opciones de Formateado de Documento ====
+Tecla: ``NVDA+control+d``
+
 La mayoría de las casillas de verificación en este diálogo son para configurar qué tipo de formato deseas escuchar automáticamente cuando muevas el cursor por los documentos. 
 Por Ejemplo, si marcas la casilla de verificación anunciar el nombre de la fuente, cada vez que navegues por el texto con una fuente diferente, el nombre de la fuente será anunciado.
 
@@ -2416,22 +2486,10 @@ Esta opción habilita la salida de audio a través de la API Windows Audio Sessi
 WASAPI es un framework de audio más moderno que puede mejorar la respuesta, el rendimiento y la estabilidad de la salida de audio de NVDA, incluyendo la voz y los sonidos.
 Después de cambiar esta opción, necesitarás reiniciar NVDA para que el cambio surta efecto.
 
-==== El volumen de los sonidos de NVDA sigue al volumen de la voz  ====[SoundVolumeFollowsVoice]
-: Predeterminada
-  Deshabilitada
-: Opciones
-  Deshabilitada, Habilitada
-:
-
-Cuando esta opción está activada, el volumen de los sonidos y los pitidos de NVDA seguirán la configuración de volumen de la voz que estés utilizando.
-Si disminuyes el volumen de la voz, el volumen de los sonidos disminuirá.
-Del mismo modo, si aumentas el volumen de la voz, el volumen de los sonidos aumentará.
-Esta opción sólo tiene efecto cuando "Utilizar WASAPI para la salida de audio" esté habilitada.
-Esta opción está deshabilitada por defecto.
-
-==== Volumen de los sonidos de NVDA ====[SoundVolume]
-Este deslizador te permite configurar el volumen de los sonidos y los pitidos de NVDA.
-Esta opción sólo tiene efecto  cuando "Utilizar WASAPI para la salida de audio" esté activado y "el Volumen de los sonidos de NVDA sigue al volumen de la voz" esté desactivado.
+Deshabilitar WASAPI desactivará las siguientes opciones:
+- [El volumen de los sonidos de NVDA sigue al volumen de la voz #SoundVolumeFollowsVoice]
+- [Volumen de los sonidos de NVDA #SoundVolume]
+-
 
 ==== Categorías de registro de depuración ====[AdvancedSettingsDebugLoggingCategories]
 Las casillas de verificación de esta lista te permiten habilitar categorías específicas de mensajes de depuración en el registro de NVDA.

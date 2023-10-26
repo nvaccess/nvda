@@ -5,9 +5,9 @@
 
 from typing import (
 	Dict,
+	Protocol,
 	Union,
 )
-from typing_extensions import Protocol
 
 
 class _SupportsStrT(Protocol):

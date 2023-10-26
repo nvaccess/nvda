@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-22 00:01+0000\n"
-"PO-Revision-Date: 2023-09-22 21:17+0200\n"
+"POT-Creation-Date: 2023-10-13 00:02+0000\n"
+"PO-Revision-Date: 2023-10-16 12:15+0400\n"
 "Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Zvonimir Stanecic <9a5dsz@gozaltech.org>\n"
 "Language: hr\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4\n"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -4159,6 +4159,10 @@ msgstr "Prikazuje dijaloški okvir za odabir brajičnog retka"
 #. Translators: Input help mode message for go to braille settings command.
 msgid "Shows NVDA's braille settings"
 msgstr "Prikazuje postavke za brajicu"
+
+#. Translators: Input help mode message for go to audio settings command.
+msgid "Shows NVDA's audio settings"
+msgstr "Prikazuje NVDA postavke zvuka"
 
 #. Translators: Input help mode message for go to keyboard settings command.
 msgid "Shows NVDA's keyboard settings"
@@ -9026,12 +9030,12 @@ msgid "&Install NVDA..."
 msgstr "&Instaliraj NVDA …"
 
 #. Translators: The label for the menu item to run the COM registration fix tool
-msgid "&Run COM Registration Fixing tool..."
-msgstr "Pokreni alat za &ispravljanje grešaka COM registracije …"
+msgid "Run COM Registration Fixing tool..."
+msgstr "Pokreni alat za ispravljanje grešaka COM registracije..."
 
 #. Translators: The label for the menu item to reload plugins.
-msgid "R&eload plugins"
-msgstr "P&onovo učitaj dodatke"
+msgid "Reload plugins"
+msgstr "Ponovo učitaj dodatke"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
 msgid "&Tools"
@@ -10047,7 +10051,7 @@ msgstr "&Pokreni NVVDA poslije prijave u sustav"
 #. needs to enter passwords or if multiple user accounts are present
 #. to allow user to choose the correct account).
 msgid "Use NVDA during sign-in (requires administrator privileges)"
-msgstr "Koristi NVDA prilikom prijave (potrebna su adimnistratorska prava)"
+msgstr "Koristi NVDA prilikom prijave (potrebna su administratorska prava)"
 
 #. Translators: The label for a button in general settings to copy
 #. current user settings to system settings (to allow current
@@ -10057,8 +10061,8 @@ msgid ""
 "Use currently saved settings during sign-in and on secure screens (requires "
 "administrator privileges)"
 msgstr ""
-"Koristi trenutačnog spremljene postavke na zaslonu za prijavu te na sigurnim "
-"zaslonima (zahtijeva adimnistratorska prava)"
+"Koristi trenutačno spremljene postavke na zaslonu za prijavu te na sigurnim "
+"zaslonima (zahtijeva administratorska prava)"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
@@ -10737,7 +10741,7 @@ msgstr "Greška govorne jedinice"
 msgid "Audio"
 msgstr "Audio"
 
-#. Translators: This is the label for the select output device combo in the synthesizer dialog.
+#. Translators: This is the label for the select output device combo in NVDA audio settings.
 #. Examples of an output device are default soundcard, usb headphones, etc.
 msgid "Audio output &device:"
 msgstr "&Zvučna kartica:"

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-22 00:01+0000\n"
-"PO-Revision-Date: 2023-09-28 17:47+0200\n"
+"POT-Creation-Date: 2023-10-08 23:57+0000\n"
+"PO-Revision-Date: 2023-10-09 09:19+0200\n"
 "Last-Translator: Jani Kinnunen <janikinnunen340@gmail.com>\n"
 "Language-Team: janikinnunen340@gmail.com\n"
 "Language: fi_FI\n"
@@ -3956,16 +3956,16 @@ msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
 msgstr ""
-"Ottaa käyttöön ja poistaa käytöstä dynaamisen sisällön muutosten lukemisen, "
+"Ottaa käyttöön ja poistaa käytöstä dynaamisen sisällön muutosten puhumisen, "
 "kuten esim. konsoli-ikkunoiden uuden tekstin."
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
-msgstr "Dynaamisen sisällön muutosten lukeminen pois"
+msgstr "Dynaamisen sisällön muutoksia ei puhuta"
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes on"
-msgstr "Dynaamisen sisällön muutosten lukeminen käytössä"
+msgstr "Dynaamisen sisällön muutokset puhutaan"
 
 #. Translators: Input help mode message for toggle caret moves review cursor command.
 msgid ""
@@ -4070,6 +4070,10 @@ msgstr "Näyttää NVDA:n pistenäytön valitsemisen valintaikkunan."
 #. Translators: Input help mode message for go to braille settings command.
 msgid "Shows NVDA's braille settings"
 msgstr "Näyttää NVDA:n pistenäytön asetukset."
+
+#. Translators: Input help mode message for go to audio settings command.
+msgid "Shows NVDA's audio settings"
+msgstr "Näyttää NVDA:n ääniasetukset."
 
 #. Translators: Input help mode message for go to keyboard settings command.
 msgid "Shows NVDA's keyboard settings"
@@ -8927,12 +8931,12 @@ msgid "&Install NVDA..."
 msgstr "&Asenna NVDA..."
 
 #. Translators: The label for the menu item to run the COM registration fix tool
-msgid "&Run COM Registration Fixing tool..."
-msgstr "S&uorita COM-rekisteröintien korjaustyökalu..."
+msgid "Run COM Registration Fixing tool..."
+msgstr "Suorita COM-rekisteröintien korjaustyökalu..."
 
 #. Translators: The label for the menu item to reload plugins.
-msgid "R&eload plugins"
-msgstr "Lataa lii&tännäiset uudelleen"
+msgid "Reload plugins"
+msgstr "Lataa liitännäiset uudelleen"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
 msgid "&Tools"
@@ -10628,7 +10632,7 @@ msgstr "Syntetisaattorivirhe"
 msgid "Audio"
 msgstr "Ääni"
 
-#. Translators: This is the label for the select output device combo in the synthesizer dialog.
+#. Translators: This is the label for the select output device combo in NVDA audio settings.
 #. Examples of an output device are default soundcard, usb headphones, etc.
 msgid "Audio output &device:"
 msgstr "Äänen ulostulo&laite:"
@@ -13927,7 +13931,7 @@ msgstr "Ladataan lisäosia..."
 #. Translators: Header (usually the add-on name) when no add-on is selected. In the add-on store dialog.
 msgctxt "addonStore"
 msgid "No add-on selected."
-msgstr "Lisäosaa ei valittuna."
+msgstr "Lisäosaa ei valittu."
 
 #. Translators: Label for the text control containing a description of the selected add-on.
 #. In the add-on store dialog.

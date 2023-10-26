@@ -1,11 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited
+# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-# Needed for type hinting CaseInsensitiveDict
-# Can be removed in a future version of python (3.8+)
-from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
 
@@ -57,6 +54,12 @@ class AddonListField(_AddonListFieldData, Enum):
 		pgettext("addonStore", "Name"),
 		150,
 	)
+	status = (
+		# Translators: The name of the column that contains the status of the addon.
+		# e.g. available, downloading installing
+		pgettext("addonStore", "Status"),
+		150
+	)
 	currentAddonVersionName = (
 		# Translators: The name of the column that contains the installed addon's version string.
 		pgettext("addonStore", "Installed version"),
@@ -85,12 +88,6 @@ class AddonListField(_AddonListFieldData, Enum):
 		pgettext("addonStore", "Author"),
 		100,
 		frozenset({_StatusFilterKey.AVAILABLE, _StatusFilterKey.UPDATE})
-	)
-	status = (
-		# Translators: The name of the column that contains the status of the addon.
-		# e.g. available, downloading installing
-		pgettext("addonStore", "Status"),
-		150
 	)
 
 

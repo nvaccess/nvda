@@ -34,7 +34,7 @@ The NVDA source depends on several other packages to run correctly.
 ### Installed Dependencies
 The following dependencies need to be installed on your system:
 
-* [Python](https://www.python.org/), version 3.7, 32 bit
+* [Python](https://www.python.org/), version 3.11, 32 bit
 	* Use latest minor version if possible.
 * Microsoft Visual Studio 2019 or 2022:
 	* To replicate the production build environment, use the [version of Visual Studio 2019 that AppVeyor is using](https://www.appveyor.com/docs/windows-images-software/#visual-studio-2019). 
