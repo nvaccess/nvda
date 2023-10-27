@@ -158,6 +158,7 @@ class AddonStoreDialog(SettingsDialog):
 			wxCtrlClass=wx.Choice,
 			choices=list(c.displayString for c in _channelFilters),
 		))
+		gv.dbg = self.channelFilterCtrl
 		self.channelFilterCtrl.Bind(wx.EVT_CHOICE, self.onChannelFilterChange, self.channelFilterCtrl)
 		self.bindHelpEvent("AddonStoreFilterChannel", self.channelFilterCtrl)
 
@@ -300,16 +301,22 @@ class AddonStoreDialog(SettingsDialog):
 		self.SetTitle(self._titleText)
 
 	def _toggleFilterControls(self):
+		self.channelFilterCtrl.Clear()
+		for c in _channelFilters:
+			if c != Channel.EXTERNAL:
+				self.channelFilterCtrl.Append(c.displayString)
 		if self._storeVM._filteredStatusKey in {
 			_StatusFilterKey.AVAILABLE,
 			_StatusFilterKey.UPDATE,
 		}:
 			self._storeVM._filterChannelKey = Channel.STABLE
+			#zzz self.channelFilterCtrl.zzz
 			self.enabledFilterCtrl.Hide()
 			self.enabledFilterCtrl.Disable()
 			self.includeIncompatibleCtrl.Enable()
 			self.includeIncompatibleCtrl.Show()
 		else:
+			self.channelFilterCtrl.Append(Channel.EXTERNAL.displayString)
 			self._storeVM._filterChannelKey = Channel.ALL
 			self.enabledFilterCtrl.Show()
 			self.enabledFilterCtrl.Enable()
