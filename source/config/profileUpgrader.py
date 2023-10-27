@@ -27,9 +27,8 @@ def upgrade(profile, validator, writeProfileToFileFunc):
 		# other reason the file does not need to be upgraded again.
 		if writeProfileToFileFunc:
 			writeProfileToFileFunc(profile.filename, profile)
-	except Exception as e:
+	except PermissionError:
 		log.warning("Error saving configuration; probably read only file system", exc_info=True)
-		pass
 
 def _doConfigUpgrade(profile, fromVersion):
 	toVersion = fromVersion+1
