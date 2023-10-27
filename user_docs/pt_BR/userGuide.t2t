@@ -3791,7 +3791,7 @@ As funções do teclado braille descritas diretamente abaixo ocorrem quando a "S
 | tecla ``setaParaEsquerda`` | ``ponto2+espaço`` |
 | tecla ``setaParaDireita`` | ``ponto5+espaço`` |
 | tecla ``setaParaCima`` | ``ponto1+espaço`` |
-| tecla ``setaParaCima`` | ``ponto6+espaço`` |
+| tecla ``setaParaBaixo`` | ``ponto6+espaço`` |
 | tecla ``pageUp`` | ``ponto1+ponto3+espaço`` |
 | tecla ``pageDown`` | ``ponto4+ponto6+espaço`` |
 | tecla ``1 do teclado numérico`` | ``ponto1+ponto6+backspace`` |
@@ -3838,94 +3838,94 @@ As funções do teclado braille descritas diretamente abaixo ocorrem quando a "S
 | Alternar tecla ``control`` | ``ponto1+ponto7+ponto8+espaço``, ``ponto4+ponto7+ponto8+espaço`` |
 | tecla ``alt`` | ``ponto8+espaço`` |
 | Alternar tecla ``alt`` | ``ponto1+ponto8+espaço``, ``ponto4+ponto8+espaço`` |
-| Alternar simulação de Teclado HID | ``interruptor1Esquerdo+joystick1Baixo``, ``interruptor1Direito+joystick1Baixo`` |
+| Alternar simulação de Teclado HID | ``interruptor1ParaEsquerda+joystick1ParaBaixo``, ``interruptor1ParaDireita+joystick1ParaBaixo`` |
 %kc:endInclude
 
 +++ Comandos de teclado b.book +++[Eurobraillebbook]
 %kc:beginInclude
 || Nome | Tecla |
-| Scroll braille display back | ``backward`` |
-| Scroll braille display forward | ``forward`` |
-| Move to current focus | ``backward+forward`` |
-| Route to braille cell | ``routing`` |
-| ``setaParaEsquerda`` key | ``joystick2Left`` |
-| ``setaParaDireita`` key | ``joystick2Right`` |
-| ``setaParaCima`` key | ``joystick2Up`` |
-| ``setaParaCima`` key | ``joystick2Down`` |
-| ``enter`` key | ``joystick2Center`` |
-| ``escape`` key | ``c1`` |
-| ``tab`` key | ``c2`` |
-| Toggle ``shift`` key | ``c3`` |
-| Toggle ``control`` key | ``c4`` |
-| Toggle ``alt`` key | ``c5`` |
-| Toggle ``NVDA`` key | ``c6`` |
-| ``control+Home`` key | ``c1+c2+c3`` |
-| ``control+End`` key | ``c4+c5+c6`` |
+| Rolar linha braille para trás | ``paraTrás`` |
+| Rolar linha braille para frente | ``paraFrente`` |
+| Mover para o foco atual | ``paraTrás+paraFrente`` |
+| Direcionar para a cela braille | ``sensor`` |
+| tecla ``setaParaEsquerda`` | ``joystick2Esquerda`` |
+| tecla ``setaParaDireita`` | ``joystick2Direita`` |
+| tecla ``setaParaCima`` | ``joystick2Cima`` |
+| tecla ``setaParaBaixo`` | ``joystick2Baixo`` |
+| tecla ``enter`` | ``joystick2Centro`` |
+| tecla ``escape`` | ``c1`` |
+| tecla ``tab`` | ``c2`` |
+| Alternar tecla ``shift`` | ``c3`` |
+| Alternar tecla ``control`` | ``c4`` |
+| Alternar tecla ``alt`` | ``c5`` |
+| Alternar tecla ``NVDA`` | ``c6`` |
+| tecla ``control+Home`` | ``c1+c2+c3`` |
+| tecla ``control+End`` | ``c4+c5+c6`` |
 %kc:endInclude
 
 +++ Comandos de teclado b.note +++[Eurobraillebnote]
 %kc:beginInclude
 || Nome | Tecla |
-| Scroll braille display back | ``leftKeypadLeft`` |
-| Scroll braille display forward | ``leftKeypadRight`` |
-| Route to braille cell | ``routing`` |
-| Report text formatting under braille cell | ``doubleRouting`` |
-| Move to next line in review | ``leftKeypadDown`` |
-| Switch to previous review mode | ``leftKeypadLeft+leftKeypadUp`` |
-| Switch to next review mode | ``leftKeypadRight+leftKeypadDown`` |
-| ``setaParaEsquerda`` key | ``rightKeypadLeft`` |
-| ``setaParaDireita`` key | ``rightKeypadRight`` |
-| ``setaParaCima`` key | ``rightKeypadUp`` |
-| ``setaParaCima`` key | ``rightKeypadDown`` |
-| ``control+home`` key | ``rightKeypadLeft+rightKeypadUp`` |
-| ``control+end`` key | ``rightKeypadLeft+rightKeypadUp`` |
+| Rolar linha braille para trás | ``esquerdaNoTecladoEsquerdo`` |
+| Rolar linha braille para frente | ``direitaNoTecladoEsquerdo`` |
+| Direcionar para a cela braille | ``sensor`` |
+| Relatar formatação de texto na cela braille | ``sensorDuasVezes`` |
+| Mover para a próxima linha em exploração | ``baixoNoTecladoEsquerdo`` |
+| Mudar para o modo de exploração anterior | ``esquerdaNoTecladoEsquerdo+cimaNoTecladoEsquerdo`` |
+| Mudar para o próximo modo de exploração | ``direitaNoTecladoEsquerdo+baixoNoTecladoEsquerdo`` |
+| tecla ``setaParaEsquerda`` | ``esquerdaNoTecladoDireito`` |
+| tecla ``setaParaDireita`` | ``direitaNoTecladoDireito`` |
+| tecla ``setaParaCima`` | ``cimaNoTecladoDireito`` |
+| tecla ``setaParaBaixo`` | ``baixoNoTecladoDireito`` |
+| tecla ``control+home`` | ``esquerdaNoTecladoDireito+cimaNoTecladoDireito`` |
+| tecla ``control+end`` | ``esquerdaNoTecladoDireito+cimaNoTecladoDireito`` |
 %kc:endInclude
 
 +++ Comandos de teclado Esys +++[Eurobrailleesys]
 %kc:beginInclude
 || Nome | Tecla |
-| Scroll braille display back | ``switch1Left`` |
-| Scroll braille display forward | ``switch1Right`` |
-| Move to current focus | ``switch1Center`` |
-| Route to braille cell | ``routing`` |
-| Report text formatting under braille cell | ``doubleRouting`` |
-| Move to previous line in review | ``joystick1Up`` |
-| Move to next line in review | ``joystick1Baixo`` |
-| Move to previous character in review | ``joystick1Left`` |
-| Move to next character in review | ``joystick1Right`` |
-| ``setaParaEsquerda`` key | ``joystick2Left`` |
-| ``setaParaDireita`` key | ``joystick2Right`` |
-| ``setaParaCima`` key | ``joystick2Up`` |
-| ``setaParaCima`` key | ``joystick2Down`` |
-| ``enter`` key | ``joystick2Center`` |
+| Rolar linha braille para trás | ``interruptor1ParaEsquerda`` |
+| Rolar linha braille para frente | ``interruptor1ParaDireita`` |
+| Mover para o foco atual | ``interruptor1Centro`` |
+| Direcionar para a cela braille | ``sensor`` |
+| Relatar formatação de texto na cela braille | ``sensorDuasVezes`` |
+| Mover para a linha anterior em exploração | ``joystick1ParaCima`` |
+| Mover para a próxima linha em exploração | ``joystick1ParaBaixo`` |
+| Mover para o caractere anterior em exploração | ``joystick1ParaEsquerda`` |
+| Mover para o próximo caractere em exploração | ``joystick1ParaDireita`` |
+| tecla ``setaParaEsquerda`` | ``joystick2ParaEsquerda`` |
+| tecla ``setaParaDireita`` | ``joystick2ParaDireita`` |
+| tecla ``setaParaCima`` | ``joystick2ParaCima`` |
+| tecla ``setaParaBaixo`` | ``joystick2ParaBaixo`` |
+| tecla ``enter`` | ``joystick2Centro`` |
 %kc:endInclude
 
 +++ Comandos de teclado Esytime +++[EurobrailleEsytime]
 %kc:beginInclude
 || Nome | Tecla |
-| Scroll braille display back | ``l1`` |
-| Scroll braille display forward | ``l8`` |
-| Move to current focus | ``l1+l8`` |
-| Route to braille cell | ``routing`` |
-| Report text formatting under braille cell | ``doubleRouting`` |
-| Move to previous line in review | ``joystick1Up`` |
-| Move to next line in review | ``joystick1Baixo`` |
-| Move to previous character in review | ``joystick1Left`` |
-| Move to next character in review | ``joystick1Right`` |
-| ``setaParaEsquerda`` key | ``joystick2Left`` |
-| ``setaParaDireita`` key | ``joystick2Right`` |
-| ``setaParaCima`` key | ``joystick2Up`` |
-| ``setaParaCima`` key | ``joystick2Down`` |
-| ``enter`` key | ``joystick2Center`` |
-| ``escape`` key | ``l2`` |
-| ``tab`` key | ``l3`` |
-| Toggle ``shift`` key | ``l4`` |
-| Toggle ``control`` key | ``l5`` |
-| Toggle ``alt`` key | ``l6`` |
-| Toggle ``NVDA`` key | ``l7`` |
-| ``control+home`` key | ``l1+l2+l3``, ``l2+l3+l4`` |
-| ``control+end`` key | ``l6+l7+l8``, ``l5+l6+l7`` |
-| Toggle HID Keyboard simulation | ``l1+joystick1Baixo``, ``l8+joystick1Baixo`` |
+| Rolar linha braille para trás | ``l1`` |
+| Rolar linha braille para frente | ``l8`` |
+| Mover para o foco atual | ``l1+l8`` |
+| Direcionar para a cela braille | ``sensor`` |
+| Relatar formatação de texto na cela braille | ``sensorDuasVezes`` |
+| Mover para a linha anterior em exploração | ``joystick1ParaCima`` |
+| Mover para a próxima linha em exploração | ``joystick1ParaBaixo`` |
+| Mover para o caractere anterior em exploração | ``joystick1ParaEsquerda`` |
+| Mover para o próximo caractere em exploração | ``joystick1ParaDireita`` |
+| tecla ``setaParaEsquerda`` | ``joystick2ParaEsquerda`` |
+| tecla ``setaParaDireita`` | ``joystick2ParaDireita`` |
+| tecla ``setaParaCima`` | ``joystick2ParaCima`` |
+| tecla ``setaParaBaixo`` | ``joystick2ParaBaixo`` |
+| tecla ``enter`` | ``joystick2Centro`` |
+| tecla ``escape`` | ``l2`` |
+| tecla ``tab`` | ``l3`` |
+| Alternar tecla ``shift`` | ``l4`` |
+| Alternar tecla ``control`` | ``l5`` |
+| Alternar tecla ``alt`` | ``l6`` |
+| Alternar tecla ``NVDA`` | ``l7`` |
+| tecla ``control+home`` | ``l1+l2+l3``, ``l2+l3+l4`` |
+| tecla ``control+end`` | ``l6+l7+l8``, ``l5+l6+l7`` |
+| Alternar simulação de Teclado HID | ``l1+joystick1ParaBaixo``, ``l8+joystick1ParaBaixo`` |
 %kc:endInclude
 
 ++ Linhas Nattiq nBraille ++[NattiqTechnologies]
@@ -3945,8 +3945,8 @@ Consulte a documentação da linha para obter descrições de onde essas teclas 
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
-O [BRLTTY https://www.brltty.com/] é um programa adicional que pode ser usado para suportar muito mais linhas Braille.
-Para usá-lo, será necessário instalar o [BRLTTY para Windows https://www.brltty.com/download.html].
+O [BRLTTY https://www.brltty.app/] é um programa adicional que pode ser usado para suportar muito mais linhas Braille.
+Para usá-lo, será necessário instalar o [BRLTTY para Windows https://www.brltty.app/download.html].
 Você deverá baixar e instalar o último pacote de instalação, cuja denominação é algo como, brltty-win-4.2-2.exe.
 Quando configurar a linha e porta a utilizar, certifique-se de prestar muita atenção às instruções, especialmente se utiliza uma linha USB e já tem os drivers do fabricante instalados.
 
@@ -3954,17 +3954,23 @@ Para as linhas que possuem um teclado braille, o BRLTTY atualmente controla por 
 Portanto, a configuração da tabela braille para entrada no NVDA não é relevante.
 
 O BRLTTY não está envolvido na funcionalidade automática de detecção de linha braille em segundo plano do NVDA.
-| Rolar linha braille para trás | interruptor1-6esquerdo, l1 |
 
 A seguir encontram-se os comandos do BRLTTY para o NVDA.
-Por favor consulte as [listas de associação de teclas BRLTTY http://mielke.cc/brltty/doc/drivers/] para obter informações sobre como estão mapeados os comandos do BRLTTY para controlar cada linha braille.
+Por favor consulte as [listas de associação de teclas BRLTTY https://brltty.app/doc/KeyBindings/] para obter informações sobre como estão mapeados os comandos do BRLTTY para controlar cada linha braille.
 %kc:beginInclude
 | Nome | Comando BRLTTY |
-| Rolar linha braille para trás | fwinlt (caminha uma janela à esquerda) |
-| Rolar linha braille para frente | fwinrt (Caminha uma janela à direita) |
-| Mover linha braille para a linha anterior | lnup (sobe uma linha) |
-| Mover linha braille para a linha seguinte | lndn (desce uma linha) |
-| Encaminhar para a cela braille | route (leva o cursor ao caractere) |
+| Rolar linha braille para trás | ``fwinlt`` (caminha uma janela à esquerda) |
+| Rolar linha braille para frente | ``fwinrt`` (Caminha uma janela à direita) |
+| Mover linha braille para a linha anterior | ``lnup`` (sobe uma linha) |
+| Mover linha braille para a linha seguinte | ``lndn`` (desce uma linha) |
+| Encaminhar para a cela braille | ``route`` (leva o cursor ao caractere) |
+| Alternar ajuda de entrada | ``learn`` (entrar/sair do modo de aprendizagem de comando) |
+| Abrir o menu do NVDA | ``prefmenu`` (entrar/sair do menu de preferências) |
+| Reverter configuração | ``prefload`` (restaurar preferências do disco) |
+| Salvar configuração | ``prefsave`` (salvar preferências no disco) |
+| Relatar hora | ``time`` (mostrar data e hora atuais) |
+| Falar a linha onde o cursor de exploração está localizado | ``say_line`` (falar linha atual) |
+| Leitura contínua usando o cursor de exploração | ``say_below`` (falar da linha atual até a parte inferior da tela) |
 %kc:endInclude
 
 ++ Linhas Braille HID Padrão ++[HIDBraille]
