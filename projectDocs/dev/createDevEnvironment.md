@@ -65,21 +65,22 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 For reference, the following run time dependencies are included in Git submodules:
 
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.52-dev commit `ed9a7bcf`
-* [Sonic](https://github.com/waywardgeek/sonic), commit 1d705135
-* [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit cbc1f29631780
+* [Sonic](https://github.com/waywardgeek/sonic), commit `8694c596378c24e340c09ff2cd47c065494233f1`
+* [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit `3d8c7f0b833453f761ded6b12d8be431507bfe0b`
 * [liblouis](http://www.liblouis.io/), version 3.27.0
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 42.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
-* [Microsoft Detours](https://github.com/microsoft/Detours), commit 45a76a3
-* brlapi Python bindings, version 0.8 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html), version 6.1
+* [Microsoft Detours](https://github.com/microsoft/Detours), commit `4b8c659f549b0ab21cf649377c7a84eb708f5e68`
+* brlapi Python bindings, version 0.8.5 or later, distributed with [BRLTTY for Windows](https://brltty.app/download.html), version 6.1
 * lilli.dll, version 2.1.0.0
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
 * [Nullsoft Install System](https://nsis.sourceforge.io), version 3.08
-* Java Access Bridge 32 bit, from Zulu Community OpenJDK build 13.0.1+10Zulu (13.28.11)
+* [Java Access Bridge 32 bit, from Zulu Community OpenJDK build 13.0.1+10Zulu (13.28.11)](https://github.com/nvaccess/javaAccessBridge32-bin)
+* [wil](https://github.com/microsoft/wil/)
 * [Microsoft UI Automation Remote Operations Library, forked from @microsoft by @michaeldcurran](https://www.github.com/michaeldcurran/microsoft-ui-uiautomation/)
 	* Commit 224b22f3bf9e
-	* The fork specifically adds support for CallExtension / IsExtensionSupported to the high-level API, see pr microsoft/microsoft-ui-uiautomation#84.
+	* The fork specifically adds support for CallExtension / IsExtensionSupported to the high-level API, see pr microsoft/microsoft-ui-uiautomation#84 and #95.
 
 Additionally, the following build time dependencies are included in the miscDeps git submodule: 
 
