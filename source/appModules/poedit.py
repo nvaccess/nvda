@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2012-2023 Mesar Hameed, NV Access Limited, Leonard de Ruijter, Rui Fontes
 
-"""App module for Poedit.
+"""App module for Poedit 3.4+.
 """
 
 from enum import IntEnum
@@ -66,10 +66,10 @@ def _findDescendantObject(
 class AppModule(appModuleHandler.AppModule):
 	cachePropertiesByDefault = True
 
-	_dataViewControlId: int
+	_dataViewControlId: int | None
 	"""Type definition for auto prop '_get__dataViewControlId'"""
 
-	def _get__dataViewControlId(self) -> int:
+	def _get__dataViewControlId(self) -> int | None:
 		fg = api.getForegroundObject()
 		dataView = _findDescendantObject(fg.windowHandle, className="wxDataView")
 		if not dataView:
@@ -80,11 +80,11 @@ class AppModule(appModuleHandler.AppModule):
 	"""Type definition for auto prop '_get__isPro'"""
 
 	def _get__isPro(self) -> bool:
-		"""Returns whether this instance of Poed is a pro version."""
+		"""Returns whether this instance of Poedit is a pro version."""
 		obj = self._getNVDAObjectForWindowControlIdOffset(_WindowControlIdOffset.PRO_IDENTIFIER)
 		return obj is None
 
-	def _correctWindowControllIdOfset(self, windowControlIdOffset: _WindowControlIdOffset):
+	def _correctWindowControllIdOfset(self, windowControlIdOffset: _WindowControlIdOffset) -> _WindowControlIdOffset:
 		"""Corrects a _WindowControlIdOffset when a pro version of Poedit is active."""
 		if self._isPro:
 			match windowControlIdOffset:
@@ -96,7 +96,7 @@ class AppModule(appModuleHandler.AppModule):
 					return _WindowControlIdOffset.COMMENT_PRO
 		return windowControlIdOffset
 
-	def _getNVDAObjectForWindowControlIdOffset(self, windowControlIdOffset: _WindowControlIdOffset):
+	def _getNVDAObjectForWindowControlIdOffset(self, windowControlIdOffset: _WindowControlIdOffset) -> Window | None:
 		fg = api.getForegroundObject()
 		return _findDescendantObject(fg.windowHandle, self._dataViewControlId + windowControlIdOffset)
 
