@@ -315,8 +315,8 @@ class SpeechXmlParser:
 	The method for a tag should be named with the prefix "parse" followed by the tag.
 	For example, the handler for <volume /> should be named C{parseVolume}.
 	These generators receive an optional dictionary containing the attributes and values.
-	When the tags value is None, it is a closing tag.
-	They should yield an appropriate SPeechCommand instance.
+	When the attributes value is None, it is a closing tag.
+	They should yield one or more appropriate SPeechCommand instances.
 	"""
 
 	_speechSequence: SpeechSequence
@@ -337,7 +337,7 @@ class SpeechXmlParser:
 			if prevCommand != command:
 				self._speechSequence.append(command)
 
-	def convertFromXml(self, xml):
+	def convertFromXml(self, xml: str) -> SpeechSequence:
 		"""Convert XML to a speech sequence.
 		"""
 		self._speechSequence = SpeechSequence()
@@ -346,31 +346,31 @@ class SpeechXmlParser:
 		parser.CharacterDataHandler = self._speechSequence.append
 		try:
 			parser.Parse(xml)
-		except Exception e:
+		except Exception as e:
 			raise ValueError(f"XML: {xml}") from e
 		return self._speechSequence
 
 
 ParseGeneratorT = Generator[SpeechCommand, None, None]
-ParseFuncT = Callable[[dict[str, str]], ParseGeneratorT]
+ParseFuncT = Callable[[dict[str, str] | None], ParseGeneratorT]
 
 
 class SsmlParser(SpeechXmlParser):
 	"""Parses SSML into an NVDA speech sequence.
 	"""
 
-	def parseSayAs(self, attrs: dict[str, str]) -> ParseGeneratorT:
+	def parseSayAs(self, attrs: dict[str, str] | None) -> ParseGeneratorT:
 		state = attrs is not None and attrs.get("interpret-as") == "characters"
 		yield CharacterModeCommand(state)
 
-	def parseVoice(self, attrs: dict[str, str]) -> ParseGeneratorT:
+	def parseVoice(self, attrs: dict[str, str] | None) -> ParseGeneratorT:
 		if attrs is None:
 			return None
 		if (xmlLang := attrs.get("xml:lang")) is None:
 			return None
 		yield LangChangeCommand(toNvdaLang(xmlLang))
 
-	def parseBreak(self, attrs: dict[str, str]) -> ParseGeneratorT:
+	def parseBreak(self, attrs: dict[str, str] | None) -> ParseGeneratorT:
 		if attrs is None or "time" not in attrs:
 			return None
 		if (time := RE_TIME_MS.match(attrs["time"])) is None:
@@ -380,7 +380,7 @@ class SsmlParser(SpeechXmlParser):
 
 	_cachedProsodyAttrs: list[dict]
 
-	def parseProsody(self, attrs: dict[str, str]) -> ParseGeneratorT:
+	def parseProsody(self, attrs: dict[str, str] | None) -> ParseGeneratorT:
 		if isOpenTag := attrs is not None:
 			self._cachedProsodyAttrs.append(attrs)
 		else:  # attrs is None
@@ -402,10 +402,10 @@ class SsmlParser(SpeechXmlParser):
 					log.debugWarning(f"Unknown prosody attribute: {attr!r}")
 					continue
 
-	def parseSpeak(self, attrs: dict[str, str]):
+	def parseSpeak(self, attrs: dict[str, str] | None) -> ParseGeneratorT:
 		return
 		yield
 
-	def convertFromXml(self, xml):
+	def convertFromXml(self, xml: str) -> SpeechSequence:
 		self._cachedProsodyAttrs = []
 		return super().convertFromXml(xml)
