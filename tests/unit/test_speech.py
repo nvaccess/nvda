@@ -354,7 +354,7 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 		self.assertEqual(repr(list(output)), expected)
 
 
-class SPeechExtensionPoints(unittest.TestLoader):
+class SpeechExtensionPoints(unittest.TestCase):
 
 	def test_speechCanceledExtensionPoint(self):
 		with actionTester(
