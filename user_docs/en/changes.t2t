@@ -53,14 +53,16 @@ Add-ons will need to be re-tested and have their manifest updated.
 - The ``BrailleDisplayDriver`` base class now has ``numRows`` and ``numCols`` properties to provide information about multi line braille displays.
 Setting ``numCells`` is still supported for single line braille displays and ``numCells`` will return the total number of cells for multi line braille displays. (#15386)
 - Updated BrlAPI for BRLTTY to version 0.8.5, and its corresponding python module to a Python 3.11 compatible build. (#15652, @LeonarddeR)
-- Added the ``speech.speakSsml`` function, which allows you to write NVDA speech sequences using [SSML https://www.w3.org/TR/speech-synthesis11/].
-The following tags are currently supported and translated to appropriate NVDA speech commands:
- - ``Prosody`` (``pitch``, ``rate`` and ``volume``). Only multiplication (e.g. ``200%`` are supported.
- - ``say-as`` with the ``interpret`` attribute set to ``characters``
- - ``voice`` with the ``xml:lang`` set to an XML language
- - ``break`` with the ``time`` attribute set to a value in milliseconds, e.g. ``200ms``
+- Added the ``speech.speakSsml`` function, which allows you to write NVDA speech sequences using [SSML https://www.w3.org/TR/speech-synthesis11/].  (#15699, @LeonarddeR)
+ - The following tags are currently supported and translated to appropriate NVDA speech commands:
+  - ``Prosody`` (``pitch``, ``rate`` and ``volume``). Only multiplication (e.g. ``200%`` are supported.
+  - ``say-as`` with the ``interpret`` attribute set to ``characters``
+  - ``voice`` with the ``xml:lang`` set to an XML language
+  - ``break`` with the ``time`` attribute set to a value in milliseconds, e.g. ``200ms``
+  -
+ - Example: ``speech.speakSsml('<speak><prosody pitch="200%">hello</prosody><break time="500ms" /><prosody rate="50%">John</prosody></speak>')``
+ - The SSML parsing capabilities are backed by the ``SsmlParser`` class in the ``speechXml`` module.
  -
-- Added basic SSML parsing capabilities in the ``speechXml`` module. Consult the ``SsmlParser`` class for more details.
 -
 
 === API Breaking Changes ===
