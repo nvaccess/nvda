@@ -131,12 +131,3 @@ def fixCOMRegistrations() -> None:
 	if is64bit:
 		register64bitServer(os.path.join(SYSTEM32, "oleaut32.dll"))
 		register64bitServer(os.path.join(SYSTEM32, "actxprxy.dll"))
-	# IServiceProvider on windows 7 can become unregistered 
-	if OSMajorMinor == (6, 1):  # Windows 7
-		# There was no "Program Files (x86)" in Windows 7 32-bit, so we cover both cases
-		register32bitServer(os.path.join(
-			PROGRAM_FILES_X86 if is64bit else PROGRAM_FILES,
-			"Internet Explorer", "ieproxy.dll"
-		))
-		if is64bit:
-			register64bitServer(os.path.join(PROGRAM_FILES, "Internet Explorer", "ieproxy.dll"))
