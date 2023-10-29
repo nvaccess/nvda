@@ -158,7 +158,6 @@ class AddonStoreDialog(SettingsDialog):
 			wxCtrlClass=wx.Choice,
 			choices=list(c.displayString for c in _channelFilters),
 		))
-		gv.dbg = self.channelFilterCtrl
 		self.channelFilterCtrl.Bind(wx.EVT_CHOICE, self.onChannelFilterChange, self.channelFilterCtrl)
 		self.bindHelpEvent("AddonStoreFilterChannel", self.channelFilterCtrl)
 
@@ -310,7 +309,6 @@ class AddonStoreDialog(SettingsDialog):
 			_StatusFilterKey.UPDATE,
 		}:
 			self._storeVM._filterChannelKey = Channel.STABLE
-			#zzz self.channelFilterCtrl.zzz
 			self.enabledFilterCtrl.Hide()
 			self.enabledFilterCtrl.Disable()
 			self.includeIncompatibleCtrl.Enable()
