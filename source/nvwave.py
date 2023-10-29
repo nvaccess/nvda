@@ -48,6 +48,7 @@ import config
 from logHandler import log
 import os.path
 import extensionPoints
+import NVDAHelper
 import core
 
 
@@ -795,7 +796,6 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		@note: If C{outputDevice} is a name and no such device exists, the default device will be used.
 		@raise WindowsError: If there was an error opening the audio output device.
 		"""
-		import NVDAHelper
 		self.channels = channels
 		self.samplesPerSec = samplesPerSec
 		self.bitsPerSample = bitsPerSample
@@ -831,7 +831,6 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			onDone()
 
 	def __del__(self):
-		import NVDAHelper
 		if not hasattr(self, "_player"):
 			# This instance failed to construct properly. Let it die gracefully.
 			return
@@ -850,7 +849,6 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		It is not an error if the output device is already open.
 		"""
 		try:
-			import NVDAHelper
 			NVDAHelper.localLib.wasPlay_open(self._player)
 		except WindowsError:
 			log.warning(
@@ -884,7 +882,6 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		@param onDone: Function to call when this chunk has finished playing.
 		@raise WindowsError: If there was an error playing the audio.
 		"""
-		import NVDAHelper
 		self.open()
 		if self._audioDucker:
 			self._audioDucker.enable()
@@ -906,7 +903,6 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		"""Synchronise with playback.
 		This method blocks until the previously fed chunk of audio has finished playing.
 		"""
-		import NVDAHelper
 		NVDAHelper.localLib.wasPlay_sync(self._player)
 
 	def idle(self):
@@ -919,7 +915,6 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 	def stop(self):
 		"""Stop playback.
 		"""
-		import NVDAHelper
 		if self._audioDucker:
 			self._audioDucker.disable()
 		NVDAHelper.localLib.wasPlay_stop(self._player)
@@ -932,7 +927,6 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		"""Pause or unpause playback.
 		@param switch: C{True} to pause playback, C{False} to unpause.
 		"""
-		import NVDAHelper
 		if self._audioDucker:
 			if switch:
 				self._audioDucker.disable()
@@ -962,7 +956,6 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		@param left: The level to set for the left channel.
 		@param right: The level to set for the right channel.
 		"""
-		import NVDAHelper
 		if all is None and left is None and right is None:
 			raise ValueError("At least one of all, left or right must be specified")
 		if all is not None:
@@ -1022,7 +1015,6 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 				# player is paused. Don't treat this player as idle.
 				continue
 			if player._lastActiveTime <= threshold:
-				import NVDAHelper
 				NVDAHelper.localLib.wasPlay_idle(player._player)
 				player._lastActiveTime = None
 			else:
@@ -1034,7 +1026,6 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 
 	@staticmethod
 	def _getDevices():
-		import NVDAHelper
 		rawDevs = BSTR()
 		NVDAHelper.localLib.wasPlay_getDevices(byref(rawDevs))
 		chunkIter = iter(rawDevs.value.split("\0"))
@@ -1063,7 +1054,6 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 
 
 def initialize():
-	import NVDAHelper
 	global WavePlayer
 	if not config.conf["audio"]["WASAPI"]:
 		return
