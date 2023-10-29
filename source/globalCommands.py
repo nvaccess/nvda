@@ -3191,7 +3191,8 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_TOOLS
 	)
-	def script_toggleSpeechViewer(self,gesture):
+	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
+	def script_toggleSpeechViewer(self, gesture: inputCore.InputGesture):
 		if gui.speechViewer.isActive:
 			# Translators: The message announced when disabling speech viewer.
 			state = _("speech viewer disabled")
@@ -3212,7 +3213,8 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_TOOLS
 	)
-	def script_toggleBrailleViewer(self, gesture):
+	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
+	def script_toggleBrailleViewer(self, gesture: inputCore.InputGesture):
 		import brailleViewer
 		if brailleViewer.isBrailleViewerActive():
 			# Translators: The message announced when disabling braille viewer.

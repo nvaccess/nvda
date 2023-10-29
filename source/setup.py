@@ -237,7 +237,8 @@ freeze(
 		("louis/tables",glob("louis/tables/*")),
 		("COMRegistrationFixes", glob("COMRegistrationFixes/*.reg")),
 		(".", glob("../miscDeps/python/*.dll")),
-		(".", ['message.html' ])
+		(".", ['message.html']),
+		(".", [os.path.join(sys.base_prefix, "python3.dll")]),
 	] + (
 		getLocaleDataFiles()
 		+ getRecursiveDataFiles("synthDrivers", "synthDrivers",
