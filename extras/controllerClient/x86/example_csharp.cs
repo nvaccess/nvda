@@ -13,16 +13,16 @@ namespace NVAccess
 	/// </summary>
 	static class NVDA
 	{
-		[DllImport("nvdaControllerClient32.dll", CharSet = CharSet.Unicode)]
+		[DllImport("nvdaControllerClient.dll", CharSet = CharSet.Unicode)]
 		private static extern int nvdaController_brailleMessage(string message);
 
-		[DllImport("nvdaControllerClient32.dll")]
+		[DllImport("nvdaControllerClient.dll")]
 		private static extern int nvdaController_cancelSpeech();
 
-		[DllImport("nvdaControllerClient32.dll", CharSet = CharSet.Unicode)]
+		[DllImport("nvdaControllerClient.dll", CharSet = CharSet.Unicode)]
 		private static extern int nvdaController_speakText(string text);
 
-		[DllImport("nvdaControllerClient32.dll")]
+		[DllImport("nvdaControllerClient.dll")]
 		private static extern int nvdaController_testIfRunning();
 
 		/// <summary>
