@@ -210,7 +210,7 @@ def _getSpeakSsmlSpeech(
 	if ssml is None:
 		return []
 	from speechXml import SsmlParser
-	parser = SsmlParser()
+	parser = SsmlParser(markCallback)
 	sequence = parser.convertFromXml(ssml)
 	if sequence:
 		if _prefixSpeechCommand is not None:
