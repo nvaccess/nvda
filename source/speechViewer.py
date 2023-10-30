@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Thomas Stivers, Accessolutions, Julien Cochuyt
+# Copyright (C) 2006-2023 NV Access Limited, Thomas Stivers, Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -12,6 +12,7 @@ import gui
 import config
 from logHandler import log
 from speech import SpeechSequence
+from gui import blockAction
 import gui.contextHelp
 from utils.security import isLockScreenModeActive, post_sessionLockStateChanged
 
@@ -155,9 +156,10 @@ _guiFrame: Optional[SpeechViewerFrame] = None
 isActive: bool = False
 
 
+@blockAction.when(blockAction.Context.SECURE_MODE)
 def activate():
 	"""
-		Function to call to trigger the speech viewer window to open.
+	Function to call to trigger the speech viewer window to open.
 	"""
 	_setActive(True, SpeechViewerFrame(_cleanup))
 
