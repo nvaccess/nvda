@@ -84,7 +84,10 @@ class AppModule(appModuleHandler.AppModule):
 		obj = self._getNVDAObjectForWindowControlIdOffset(_WindowControlIdOffset.PRO_IDENTIFIER)
 		return obj is None
 
-	def _correctWindowControllIdOfset(self, windowControlIdOffset: _WindowControlIdOffset) -> _WindowControlIdOffset:
+	def _correctWindowControllIdOfset(
+			self,
+			windowControlIdOffset: _WindowControlIdOffset
+	) -> _WindowControlIdOffset:
 		"""Corrects a _WindowControlIdOffset when a pro version of Poedit is active."""
 		if self._isPro:
 			match windowControlIdOffset:
@@ -96,7 +99,10 @@ class AppModule(appModuleHandler.AppModule):
 					return _WindowControlIdOffset.COMMENT_PRO
 		return windowControlIdOffset
 
-	def _getNVDAObjectForWindowControlIdOffset(self, windowControlIdOffset: _WindowControlIdOffset) -> Window | None:
+	def _getNVDAObjectForWindowControlIdOffset(
+			self,
+			windowControlIdOffset: _WindowControlIdOffset
+	) -> Window | None:
 		fg = api.getForegroundObject()
 		return _findDescendantObject(fg.windowHandle, self._dataViewControlId + windowControlIdOffset)
 
