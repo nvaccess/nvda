@@ -697,6 +697,11 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 
 			menu_help.AppendSeparator()
 
+			if updateCheck:
+				# Translators: The label of a menu item to manually check for an updated version of NVDA.
+				item = self.menu.Append(wx.ID_ANY, _("&Check for update..."))
+				self.Bind(wx.EVT_MENU, frame.onCheckForUpdateCommand, item)
+
 			# Translators: The label for the menu item to open NVDA Welcome Dialog.
 			item = menu_help.Append(wx.ID_ANY, _("We&lcome dialog..."))
 			self.Bind(wx.EVT_MENU, lambda evt: WelcomeDialog.run(), item)
@@ -710,16 +715,12 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 
 	def _appendPendingUpdateSection(self, frame: MainFrame) -> None:
 		if not globalVars.appArgs.secure and updateCheck:
-			# Translators: The label of a menu item to manually check for an updated version of NVDA.
-			item = self.menu.Append(wx.ID_ANY, _("Check for &update..."))
-			self.Bind(wx.EVT_MENU, frame.onCheckForUpdateCommand, item)
-
 			# installPendingUpdateMenuItemPos is later toggled based on if an update is available.
 			self.installPendingUpdateMenuItemPos = self.menu.GetMenuItemCount()
 			item = self.installPendingUpdateMenuItem = self.menu.Append(
 				wx.ID_ANY,
 				# Translators: The label for the menu item to run a pending update.
-				_("&Install pending update"),
+				_("Install pending &update"),
 				# Translators: The description for the menu item to run a pending update.
 				_("Execute a previously downloaded NVDA update")
 			)
