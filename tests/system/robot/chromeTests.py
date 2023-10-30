@@ -34,8 +34,12 @@ SPEECH_CALL_SEP = '\n'
 #: single space is used to separate semantics in braille output.
 BRAILLE_SEP = " "
 
-ARIAExamplesDir = os.path.join(
-	_NvdaLib._locations.repoRoot, "include", "w3c-aria-practices", "examples"
+ARIAPatternsDir = os.path.join(
+	_NvdaLib._locations.repoRoot,
+	"include",
+	"w3c-aria-practices",
+	"content",
+	"patterns",
 )
 
 
@@ -894,7 +898,7 @@ def test_ariaTreeGrid_browseMode():
 	"""
 	Ensure that ARIA treegrids are accessible as a standard table in browse mode.
 	"""
-	testFile = os.path.join(ARIAExamplesDir, "treegrid", "treegrid-1.html")
+	testFile = os.path.join(ARIAPatternsDir, "treegrid", "examples", "treegrid-1.html")
 	_chrome.prepareChrome(
 		f"""
 			<iframe src="{testFile}"></iframe>
@@ -991,7 +995,7 @@ def test_ariaCheckbox_browseMode():
 	"""
 	Navigate to an unchecked checkbox in reading mode.
 	"""
-	testFile = os.path.join(ARIAExamplesDir, "checkbox", "checkbox.html")
+	testFile = os.path.join(ARIAPatternsDir, "checkbox", "examples", "checkbox.html")
 	_chrome.prepareChrome(
 		f"""
 			<iframe src="{testFile}"></iframe>
@@ -2234,7 +2238,7 @@ def test_i10890():
 	# Chrome sometimes exposes tables as clickable, sometimes not.
 	# This test does not need to know, so disable reporting of clickables.
 	spy.set_configValue(["documentFormatting", "reportClickable"], False)
-	testFile = os.path.join(ARIAExamplesDir, "grid", "datagrids.html")
+	testFile = os.path.join(ARIAPatternsDir, "grid", "examples", "data-grids.html")
 	_chrome.prepareChrome(
 		f"""
 			<iframe src="{testFile}"></iframe>
@@ -2279,7 +2283,7 @@ def test_ARIASwitchRole():
 	"""
 	Ensure that ARIA switch controls have an appropriate role and states in browse mode.
 	"""
-	testFile = os.path.join(ARIAExamplesDir, "switch", "switch.html")
+	testFile = os.path.join(ARIAPatternsDir, "switch", "examples", "switch.html")
 	_chrome.prepareChrome(
 		f"""
 			<iframe src="{testFile}"></iframe>
