@@ -19,6 +19,7 @@ import textUtils
 from logHandler import log
 from speech.commands import (
 	BreakCommand,
+	CallbackCommand,
 	CharacterModeCommand,
 	LangChangeCommand,
 	PitchCommand,
@@ -353,11 +354,20 @@ class SpeechXmlParser:
 
 ParseGeneratorT = Generator[SpeechCommand, None, None]
 ParseFuncT = Callable[[dict[str, str] | None], ParseGeneratorT]
+MarkCallbackT = Callable[[str], None]
 
 
 class SsmlParser(SpeechXmlParser):
 	"""Parses SSML into an NVDA speech sequence.
 	"""
+
+	def __init__(self, markCallback: MarkCallbackT | None = None):
+		"""Constructor.
+
+		:param markCallback: An optional callback called for every mark command in the SSSML.
+			The mark command in the SSML will be translated to a CallbackCommand instance.
+		"""
+		self._markCallback = markCallback
 
 	def parseSayAs(self, attrs: dict[str, str] | None) -> ParseGeneratorT:
 		state = attrs is not None and attrs.get("interpret-as") == "characters"
@@ -365,17 +375,17 @@ class SsmlParser(SpeechXmlParser):
 
 	def parseVoice(self, attrs: dict[str, str] | None) -> ParseGeneratorT:
 		if attrs is None:
-			return None
+			return
 		if (xmlLang := attrs.get("xml:lang")) is None:
-			return None
+			return
 		yield LangChangeCommand(toNvdaLang(xmlLang))
 
 	def parseBreak(self, attrs: dict[str, str] | None) -> ParseGeneratorT:
 		if attrs is None or "time" not in attrs:
-			return None
+			return
 		if (time := RE_TIME_MS.match(attrs["time"])) is None:
 			log.debugWarning(f"Unknown attributes for break tag: {attrs}")
-			return None
+			return
 		yield BreakCommand(int(time.group("time")))
 
 	_cachedProsodyAttrs: list[dict]
@@ -405,6 +415,13 @@ class SsmlParser(SpeechXmlParser):
 	def parseSpeak(self, attrs: dict[str, str] | None) -> ParseGeneratorT:
 		return
 		yield
+
+	def parseMark(self, attrs: dict[str, str] | None) -> ParseGeneratorT:
+		if attrs is None or "name" not in attrs:
+			return
+		if self._markCallback is not None:
+			name = attrs["name"]
+			yield CallbackCommand(lambda: self._markCallback(name), name=f"SsmlMark_{name}")
 
 	def convertFromXml(self, xml: str) -> SpeechSequence:
 		self._cachedProsodyAttrs = []

@@ -62,6 +62,7 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
   - ``say-as`` with the ``interpret`` attribute set to ``characters``
   - ``voice`` with the ``xml:lang`` set to an XML language
   - ``break`` with the ``time`` attribute set to a value in milliseconds, e.g. ``200ms``
+  - ``mark`` with the ``name`` attribute set to a mark name, e.g. ``mark1``, requires providing a callback
   -
  - Example: ``speech.speakSsml('<speak><prosody pitch="200%">hello</prosody><break time="500ms" /><prosody rate="50%">John</prosody></speak>')``
  - The SSML parsing capabilities are backed by the ``SsmlParser`` class in the ``speechXml`` module.

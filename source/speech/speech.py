@@ -72,6 +72,7 @@ from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 if typing.TYPE_CHECKING:
 	import NVDAObjects
+	from speechXml import MarkCallbackT
 
 _speechState: Optional['SpeechState'] = None
 _curWordChars: List[str] = []
@@ -198,11 +199,13 @@ def speakMessage(
 
 def _getSpeakSsmlSpeech(
 		ssml: str,
-		_prefixSpeechCommand: Optional[SpeechCommand] = None,
+		markCallback: "MarkCallbackT | None" = None,
+		_prefixSpeechCommand: SpeechCommand | None = None,
 ) -> SpeechSequence:
 	"""Gets the speech sequence for given SSML.
-	@param ssml: The SSML data to speak
-	@param _prefixSpeechCommand: A SpeechCommand to append before the sequence.
+	:param ssml: The SSML data to speak
+	:param markCallback: An optional callback called for every mark command in the SSSML.
+	:param _prefixSpeechCommand: A SpeechCommand to append before the sequence.
 	"""
 	if ssml is None:
 		return []
@@ -217,17 +220,19 @@ def _getSpeakSsmlSpeech(
 
 def speakSsml(
 		ssml: str,
+		markCallback: "MarkCallbackT | None" = None,
 		symbolLevel: Optional[int] = None,
-		_prefixSpeechCommand: Optional[SpeechCommand] = None,
-		priority: Optional[Spri] = None
+		_prefixSpeechCommand: SpeechCommand | None = None,
+		priority: Spri | None = None
 ) -> None:
 	"""Speaks a given speech sequence provided as ssml.
-	@param ssml: The SSML data to speak.
-	@param symbolLevel: The symbol verbosity level.
-	@param _prefixSpeechCommand: A SpeechCommand to append before the sequence.
-	@param priority: The speech priority.
+	:param ssml: The SSML data to speak.
+	:param markCallback: An optional callback called for every mark command in the SSSML.
+	:param symbolLevel: The symbol verbosity level.
+	:param _prefixSpeechCommand: A SpeechCommand to append before the sequence.
+	:param priority: The speech priority.
 	"""
-	seq = _getSpeakSsmlSpeech(ssml, _prefixSpeechCommand)
+	seq = _getSpeakSsmlSpeech(ssml, markCallback, _prefixSpeechCommand)
 	if seq:
 		speak(seq, symbolLevel=symbolLevel, priority=priority)
 
