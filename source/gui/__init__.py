@@ -701,14 +701,15 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 
 			menu_help.AppendSeparator()
 
+			# Translators: The label for the menu item to open NVDA Welcome Dialog.
+			item = menu_help.Append(wx.ID_ANY, _("We&lcome dialog..."))
+			self.Bind(wx.EVT_MENU, lambda evt: WelcomeDialog.run(), item)
+
 			if updateCheck:
 				# Translators: The label of a menu item to manually check for an updated version of NVDA.
 				item = self.menu.Append(wx.ID_ANY, _("&Check for update..."))
 				self.Bind(wx.EVT_MENU, frame.onCheckForUpdateCommand, item)
 
-			# Translators: The label for the menu item to open NVDA Welcome Dialog.
-			item = menu_help.Append(wx.ID_ANY, _("We&lcome dialog..."))
-			self.Bind(wx.EVT_MENU, lambda evt: WelcomeDialog.run(), item)
 
 		# Translators: The label for the menu item to open About dialog to get information about NVDA.
 		item = menu_help.Append(wx.ID_ABOUT, _("&About..."), _("About NVDA"))
