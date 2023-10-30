@@ -917,7 +917,7 @@ def test_ariaTreeGrid_browseMode():
 	actualSpeech = _chrome.getSpeechAfterKey("tab")
 	_asserts.strings_match(
 		actualSpeech,
-		"issue 790.  link"
+		"Treegrid Pattern  link"
 	)
 	# Jump to the ARIA treegrid with the next table quicknav command.
 	# The browse mode caret will be inside the table on the caption before the first row.
@@ -2296,7 +2296,7 @@ def test_ARIASwitchRole():
 		SPEECH_SEP.join([
 			"frame",
 			"main landmark",
-			"Example",
+			"About This Example",
 			"heading  level 2"
 		]),
 		message="Move to first heading 2 in frame",
