@@ -63,6 +63,7 @@ from .speech import (
 	spellTextInfo,
 	splitTextIndentation,
 )
+from .extensions import speechCanceled
 from .priorities import Spri
 
 from .types import (
@@ -140,6 +141,7 @@ __all__ = [
 	"SpeechMode",
 	"spellTextInfo",
 	"splitTextIndentation",
+	"speechCanceled",
 ]
 
 import synthDriverHandler

@@ -25,6 +25,7 @@ import speechDictHandler
 import characterProcessing
 import languageHandler
 from . import manager
+from .extensions import speechCanceled
 from .commands import (
 	# Commands that are used in this file.
 	BreakCommand,
@@ -156,6 +157,7 @@ def cancelSpeech():
 	elif _speechState.speechMode == SpeechMode.beeps:
 		return
 	_manager.cancel()
+	speechCanceled.notify()
 	_speechState.beenCanceled = True
 	_speechState.isPaused = False
 
