@@ -710,7 +710,6 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 				item = self.menu.Append(wx.ID_ANY, _("&Check for update..."))
 				self.Bind(wx.EVT_MENU, frame.onCheckForUpdateCommand, item)
 
-
 		# Translators: The label for the menu item to open About dialog to get information about NVDA.
 		item = menu_help.Append(wx.ID_ABOUT, _("&About..."), _("About NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onAboutCommand, item)
