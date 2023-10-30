@@ -1,8 +1,7 @@
-#tests/unit/test_speechXml.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2017-2023 NV Access Limited, Leonard de Ruijter
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2017-2023 NV Access Limited, Leonard de Ruijter
 
 """Unit tests for the speechXml module.
 """
