@@ -2289,14 +2289,15 @@ def test_ARIASwitchRole():
 			<iframe src="{testFile}"></iframe>
 		"""
 	)
-	# Jump to the first heading 2 in the iframe.
+	# Jump to the second heading 2 in the iframe.
+	_chrome.getSpeechAfterKey("2")
 	actualSpeech = _chrome.getSpeechAfterKey("2")
 	_asserts.strings_match(
 		actualSpeech,
 		SPEECH_SEP.join([
 			"frame",
 			"main landmark",
-			"About This Example",
+			"Example",
 			"heading  level 2"
 		]),
 		message="Move to first heading 2 in frame",
