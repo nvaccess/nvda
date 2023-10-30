@@ -776,7 +776,7 @@ Per avere una maggiore velocità nell'esplorazione, NVDA fornisce alcuni tasti p
 Si noti che non tutti questi comandi sono supportati in ogni tipo di documento.
 
 %kc:beginInclude
-I seguenti tasti premuti da soli portano al campo successivo, tenendo premuto Shift invece portano al campo precedente.
+I seguenti tasti premuti da soli portano al campo successivo, tenendo premuto Maiusc invece portano al campo precedente.
 - h: intestazione
 - l: elenco
 - i: elemento di elenco
@@ -812,6 +812,26 @@ Se si desidera utilizzare questi tasti e allo stesso tempo essere in grado di mu
 %kc:beginInclude
 Per attivare o disattivare la navigazione a lettere singole per il documento corrente, premere NVDA + shift + spazio.
 %kc:endInclude
+
++++ Altri comandi di navigazione +++[OtherNavigationCommands]
+
+Oltre ai comandi di navigazione rapida sopra elencati, NVDA dispone di comandi a cui non sono assegnati tasti predefiniti.
+Per utilizzare questi comandi, è necessario prima assegnare loro dei gesti utilizzando la [finestra di dialogo Gesti e tasti di immissione #InputGestures].
+Ecco un elenco dei comandi disponibili:
+- Articolo
+- Gruppo
+- Scheda
+-
+
+Si tenga presente che esistono due comandi per ogni tipo di elemento, per andare avanti nel documento e indietro nel documento, perciò bisogna assegnare dei gesti a entrambi i comandi per poter navigare velocemente in entrambe le direzioni.
+Ad esempio, se si vuole utilizzare i tasti ``y`` / ``Maiusc+y`` per navigare rapidamente tra le schede, procedere come segue:
+
+Aprire la finestra di dialogo gesti e tasti di immissione dalla modalità navigazione.
+Cercare l'elemento "Vai alla scheda successiva" nella sezione modalità navigazione.
+Assegnare il tasto ``y`` al gesto.
+Cercare l'elemento "Vai alla scheda precedente.
+Assegnare ``Maiusc+y`` al gesto.
+
 
 ++ Elenco elementi ++[ElementsList]
 La lista degli elementi consente l'accesso ad un elenco di vari tipi di elementi presenti sul documento, a seconda dell'applicazione in uso.
@@ -1329,7 +1349,12 @@ Se si accede spesso a categorie che non dispongono di tasti di scelta rapida ded
 
 Qui di seguito vengono descritte le categorie presenti nella finestra impostazioni di NVDA..
 
-+++ Generale (NVDA+control+g) +++[GeneralSettings]
++++ Generale +++[GeneralSettings]
+
+%kc:setting
+==== Apri impostazioni Generali ====
+tasto: ``NVDA+control+g``
+
 La categoria generale delle impostazioni di NVDA contiene soprattutto opzioni inerenti il cambio della lingua dello screen reader e se debba essere effettuato un controllo automatico della presenza di aggiornamenti.
 Questa categoria contiene le seguenti opzioni:
 
@@ -1408,7 +1433,12 @@ Queste informazioni risultano di grandissimo aiuto a Nv Access per dare priorit�
 Se la funzione è attivata, NVDA avviserà l'utente nel caso vi sia un aggiornamento in sospeso all'avvio, dando la possibilità di effettuare l'installazione.
 è anche possibile installare l'aggiornamento in sospeso manualmente dalla finestra di uscita di NVDA (se attivata), dal menu di NVDA, o quando si esegue un nuovo controllo dal menu aiuto.
 
-+++ Impostazioni voce (NVDA+control+v) +++[SpeechSettings]
++++ Impostazioni voce +++[SpeechSettings]
+
+%kc:setting
+==== Apri Impostazioni Voce ====
+Tasto: ``NVDA+control+v``
+
 La categoria voce nella finestra impostazioni di NVDA contiene  opzioni che permettono di modificare il sintetizzatore da utilizzare nonché le caratteristiche delle varie voci come tono, velocità, etc.
 Per informazioni su come modificare molti di questi parametri da qualunque punto ci si trovi, si veda la sezione [modificare al volo le Impostazioni del sintetizzatore #SynthSettingsRing].
 
@@ -1517,7 +1547,12 @@ Questo può essere utile nel caso in cui si incontrino difficoltà nella compren
 
 Tale funzione verrà inibita nel caso in cui venga letto del testo durante il secondo di ritardo, oppure se viene premuto il tasto control..
 
-+++ Seleziona sintetizzatore (NVDA+control+s) +++[SelectSynthesizer]
++++ Seleziona sintetizzatore +++[SelectSynthesizer]
+
+%kc:setting
+==== Apri la finestra di dialogo seleziona sintetizzatore ====
+Tasto: ``NVDA+control+s``
+
 La finestra Sintetizzatore, che si apre premendo il pulsante cambia... dalla categoria voce della finestra impostazioni di NVDA, consente di selezionare con quale sintesi vocale NVDA debba parlare.
 Una volta scelto il sintetizzatore desiderato, premere OK affinché NVDA lo carichi ed inizi ad utilizzarlo.
 Se durante il caricamento della nuova sintesi vocale apparisse un messaggio d'errore, NVDA provvederà a ripristinare il vecchio sintetizzatore e l'utente verrà avvisato con un messaggio.
@@ -1529,22 +1564,6 @@ Per un elenco di tutte le sintesi vocali supportate da NVDA, si veda la sezione 
 
 Un elemento speciale che sarà sempre disponibile in questo elenco è chiamato "nessun sintetizzatore", che permette di utilizzare NVDA senza alcun riscontro vocale.
 Ciò può venir incontro a quegli utenti che preferiscono avvalersi esclusivamente del supporto braille, oppure a qualche sviluppatore vedente che desidera utilizzare solo la funzionalità "visualizzatore sintesi vocale".
-
-==== Periferica audio da utilizzare ====[SelectSynthesizerOutputDevice]
-Questa opzione permette di selezionare la scheda audio che NVDA utilizzerà per mandare i messaggi al sintetizzatore.
-
-%kc:setting
-==== Modalità attenuazione audio ====[SelectSynthesizerDuckingMode]
-Tasto: NVDA+shift+d
-
-Questa funzione, disponibile a partire da Windows8 in poi, consente di decidere se NVDA debba abbassare il volume delle altre applicazioni quando NVDA sta parlando, o per tutto il tempo in cui NVDA è in esecuzione.
-- Nessuna attenuazione: NVDA non abbasserà mai il volume di altre applicazioni.
-- Attenua quando vengono riprodotti altri suoni: NVDA abbasserà il volume di altri flussi audio soltanto quando la sintesi vocale sta parlando. Si noti che potrebbe non funzionare per tutti i sintetizzatori.
-- Attenua sempre: NVDA manterrà gli altri flussi audio sempre con un volume più basso per tutto il tempo in cui NVDA è in esecuzione.
--
-
-Questa funzione è disponibile soltanto se NVDA è stato installato nel sistema.
-Non è possibile supportare l'attenuazione audio in versioni portable o temporanee di NVDA.
 
 +++ Modificare al volo le impostazioni del sintetizzatore +++[SynthSettingsRing]
 Se si vogliono modificare i parametri della voce senza dover aprire la finestra inerente tali impostazioni, esistono alcuni tasti rapidi che consentono di spostarsi tra i parametri più comuni da qualunque punto ci si trovi:
@@ -1719,7 +1738,10 @@ La disattivazione di questa opzione può migliorare la leggibilità.
 
 Per attivare o disattivare i punti 7 e 8 per la selezione da qualsiasi posto, si prega di assegnare un gesto personalizzato utilizzando la [finestra di dialogo tasti e gesti di immissione #InputGestures].
 
-+++ Selezione display braille (NVDA+control+a) +++[SelectBrailleDisplay]
++++ Selezione display braille +++[SelectBrailleDisplay]
+==== Apri la finestra di dialogo Seleziona display Braille ====
+Tasto: ``NVDA+control+a``
+
 La finestra di dialogo Selezione display Braille, che si apre tramite il pulsante "cambia..." nella categoria Braille delle impostazioni di NVDA, permette di scegliere quale barra braille NVDA dovrà usare.
 Una volta selezionato il proprio display braille, premere OK per fare in modo che NVDA lo carichi e si possa iniziare ad utilizzarlo.
 Se si verifica un errore durante il caricamento della barra braille, NVDA avviserà l'utente con un messaggio per poi continuare ad usare quella precedente, se esistente.
@@ -1728,12 +1750,22 @@ Se si verifica un errore durante il caricamento della barra braille, NVDA avvise
 Si tratta di una casella combinata formata da svariati elementi, a seconda dei driver installati sul proprio sistema. 
 Spostarsi con le frecce verticali per selezionarne uno.
 
-L'opzione "automatico" consente a NVDA di cercare in background la presenza di un gran numero di modelli di Display Braille, ad ogni modo non tutti supportano ancora la rilevazione automaticadella barra braille, quindi nel caso non venisse trovata la propria barra braille, selezionarla manualmente.
-Quando questa opzione viene selezionata e si collega un modello supportato di display braille tramite USB o Bluetooth, NVDA si connetterà automaticamente con quel display.
-
+L'opzione "automatico" consente a NVDA di cercare in background la presenza di un gran numero di modelli di Display Braille.
+Quando questa funzione è abilitata e si collega un display supportato tramite USB o Bluetooth, NVDA si connetterà automaticamente a quel display.
+ 
 Nessun display  braille significa che non si sta utilizzando il Braille.
 
 Si veda la sezione [Display Braille supportati #SupportedBrailleDisplays] per maggiori informazioni sui modelli disponibili e su quali è possibile servirsi della rilevazione automatica.
+
+==== Display da rilevare automaticamente ====[SelectBrailleDisplayAutoDetect]
+Quando display braille è impostato su "Automatico", le caselle di controllo in questo elenco consentono di abilitare e disabilitare i driver che saranno coinvolti nel processo di rilevamento automatico.
+Ciò consente di escludere i driver di barre braille che non si utilizzano regolarmente.
+Ad esempio, se si possiede solo un display che richiede il funzionamento del driver Baum, si può abilitare soltanto quello, disabilitando gli altri in modo da velocizzare e migliorare le operazioni di rilevamento.
+
+Per impostazione predefinita, tutti i driver che supportano il rilevamento automatico sono abilitati.
+Anche qualsiasi nuovo driver, proveniente ad esempio da una nuova versione di NVDA o da un componente aggiuntivo, sarà abilitato per impostazione predefinita.
+
+è possibile consultare la documentazione del proprio display Braille nella sezione [Display Braille supportati #SupportedBrailleDisplays] per verificare se il modello supporta il rilevamento automatico. 
 
 ==== Porta ====[SelectBrailleDisplayPort]
 Questa opzione, se disponibile, permette di scegliere la porta, oppure il tipo di connessione da utilizzare per comunicare con il display braille selezionato.
@@ -1750,6 +1782,47 @@ Si consiglia di consultare la documentazione presente nella sezione [Display bra
 Nota: se si collegano contemporaneamente al computer più display Braille che utilizzano lo stesso driver (ad es. due display braille Seika),
 risulta attualmente impossibile far sapere a NVDA quale display usare.
 Pertanto si consiglia di collegare al pc un solo Display Braille di un determinato tipo/produttore alla volta.
+
++++ Audio +++[AudioSettings]
+
+%kc:setting
+==== Apri impostazioni audio ====
+Tasto: ``NVDA+control+u``
+
+La categoria Audio nella finestra di dialogo Impostazioni NVDA contiene opzioni che consentono di modificare diversi aspetti della periferica audio di uscit.
+
+==== Periferica audio da utilizzare ====[SelectSynthesizerOutputDevice]
+Questa opzione permette di selezionare la scheda audio che NVDA utilizzerà per mandare i messaggi al sintetizzatore.
+
+%kc:setting
+==== Modalità attenuazione audio ====[SelectSynthesizerDuckingMode]
+Tasto: ``NVDA+shift+d``
+
+Questa funzione, disponibile a partire da Windows8 in poi, consente di decidere se NVDA debba abbassare il volume delle altre applicazioni quando NVDA sta parlando, o per tutto il tempo in cui NVDA è in esecuzione.
+- Nessuna attenuazione: NVDA non abbasserà mai il volume di altre applicazioni.
+- Attenua quando vengono riprodotti altri suoni: NVDA abbasserà il volume di altri flussi audio soltanto quando la sintesi vocale sta parlando. Si noti che potrebbe non funzionare per tutti i sintetizzatori.
+- Attenua sempre: NVDA manterrà gli altri flussi audio sempre con un volume più basso per tutto il tempo in cui NVDA è in esecuzione.
+-
+
+Questa funzione è disponibile soltanto se NVDA è stato installato nel sistema.
+Non è possibile supportare l'attenuazione audio in versioni portable o temporanee di NVDA.
+
+==== Il volume dei suoni di NVDA segue il volume della voce ====[SoundVolumeFollowsVoice]
+: Default
+  Disattivato
+: Opzioni
+  Disattivato, Attivato
++:
++
+
+Quando questa opzione è abilitata, il volume dei suoni e dei segnali acustici di NVDA seguirà l'impostazione del volume della voce in uso.
+Se si riduce il volume della voce, anche il volume dei suoni diminuirà.
+Allo stesso modo, se si aumenta il volume della voce, aumenterà anche quello dei suoni..
+Inoltre, ha effetto solo quando l'impostazione "Usa WASAPI per l'output audio" è abilitata.
+
+==== Volume dei suoni di NVDA ====[SoundVolume]
+Questo cursore di avanzamento consente di impostare il volume dei suoni e dei beep di NVDA.
+L'impostazione ha effetto solo quando "Usa WASAPI per l'output audio" è abilitato e "Il volume dei suoni di NVDA segue il volume della voce" è disabilitato.
 
 +++ Visione +++[VisionSettings]
 La categoria visione nelle impostazioni di NVDA consente di attivare, disattivare e configurare i [miglioramenti visivi #Vision].
@@ -1789,7 +1862,12 @@ in NVDA si possono aggiungere ulteriori miglioramenti visivi tramite [i componen
 Nel caso in cui siano presenti impostazioni regolabili, esse verranno visualizzate in questa sezione, nel gruppo dedicato a quel determinato miglioramento visivo.
 Fare riferimento alla documentazione del miglioramento visivo in merito alla spiegazioni delle sue impostazioni.
 
-+++ Tastiera (NVDA+control+k) +++[KeyboardSettings]
++++ Tastiera +++[KeyboardSettings]
+
+%kc:setting
+==== Apri impostazioni tastiera ====
+Tasto: ``NVDA+control+k``
+
 La categoria impostazioni tastiera della finestra impostazioni di NVDA contiene  opzioni che modificano il comportamento dello screen reader quando l'utente digita i caratteri sulla tastiera.
 Questa categoria Contiene le seguenti opzioni:
 
@@ -1847,7 +1925,12 @@ Questa funzione risulta disponibile soltanto se l'opzione Leggi errori di ortogr
 Quest'opzione permette all'utente di controllare se le pressioni di tasti, generate da programmi che si basano sul riconoscimento vocale o sulle tastiere a schermo, debbano essere processate da NVDA.
 L'opzione risulta attiva di default, sebbene alcuni utenti che utilizzano la lingua di immissione Vietnamita dovrebbero disattivare questa funzione nel caso si servano del software di scrittura Unikey.
 
-+++[Mouse (NVDA+control+m) +++
++++ Mouse +++[MouseSettings]
+
+%kc:setting
+==== Apri impostazioni mouse ====
+Tasto: ``NVDA+control+m``
+
 La categoria Mouse della finestra impostazioni di NVDA permette di attivare o meno il tracciamento del mouse, ascoltarne la posizione con segnali audio e altre opzioni aggiuntive.
 Contiene le seguenti opzioni:
 
@@ -1923,7 +2006,11 @@ Quando questa casella di controllo è attiva, NVDA filtrerà la gerarchia di ogg
 
 Per abilitare o disabilitare la modalità semplice da qualsiasi punto ci si trovi, assegnare un gesto personalizzato servendosi della [finestra gesti e tasti di immissione #InputGestures].
 
-+++ Presentazione oggetti (NVDA+Control+o) +++[ObjectPresentationSettings]
++++ Presentazione oggetti +++[ObjectPresentationSettings]
+%kc:setting
+==== Apri le impostazioni presentazione oggetti ====
+Tasto: ``NVDA+control+o``
+
 La categoria presentazione oggetti delle impostazioni di NVDA è utilizzata per impostare la quantità di informazioni che dovranno essere fornite in merito ai controlli quali descrizione, informazioni sulla posizione, e così via.
 Queste opzioni in genere non si applicano alla modalità di navigazione.
 Esse si riferiscono agli annunci inerenti il focus e la navigazione ad oggetti di NVDA, ma non alla lettura del testo, come può avvenire per le modalità usate sul web che implicano l'uso del cursore virtuale.
@@ -2013,7 +2100,12 @@ Dopo che i dati di precomposizione sono stati associati ad un simbolo pittografi
 Questa opzione permette di stabilire se NVDA debba o meno annunciare i nuovi simboli man mano che compaiono nella stringa di composizione.
 L'opzione è attiva di default.
 
-+++ Modalità navigazione (NVDA+Control+b) +++[BrowseModeSettings]
++++ Modalità navigazione +++[BrowseModeSettings]
+
+%kc:setting
+==== Apri impostazioni modalità navigazione ====
+Tasto: ``NVDA+control+b``
+
 Questa categoria di impostazioni consente di stabilire come NVDA si debba comportare nella navigazione ed esplorazione di documenti o pagine complesse, come ad esempio le pagine web.
 Contiene le seguenti opzioni:
 
@@ -2034,7 +2126,7 @@ Ad esempio, una riga che visivamente è formata da più collegamenti verrà pres
 Se invece la casella di controllo è disattivata, ciascun elemento sarà posto in una riga differente.
 Questo per alcuni utenti si traduce in una navigazione più comoda ma meno simile alla disposizione reale degli oggetti.
 
-  ==== Attiva modalità navigazione al caricamento della pagina ====
+==== Attiva modalità navigazione al caricamento della pagina ====
 Questa casella abilita o disabilita la modalità navigazione automatica al caricamento di una pagina.
 Quando questa opzione è disabilitata, la modalità di navigazione può ancora essere attivata manualmente sulle pagine o nei documenti in cui essa è supportata.
 Si veda la [sezione modalità navigazione #BrowseMode] per l'elenco delle applicazioni compatibili.
@@ -2084,7 +2176,12 @@ Ciò potrebbe comportare un'esperienza di navigazione più rapida e una migliore
 Il focus verrà ancora aggiornato sull'elemento quando si interagisce con esso (ad esempio premendo un pulsante, selezionando una casella di controllo).
 L'abilitazione di questa opzione può migliorare il supporto per alcuni siti Web a scapito delle prestazioni e della stabilità.
 
-+++ Formato documento (NVDA+Control+d) +++[documentFormattingSettings]
++++ Formato documento +++[DocumentFormattingSettings]
+
+%kc:setting
+==== Apri Impostazioni formattazione documento ====
+Tasto: ``NVDA+control+d``
+
 la maggior parte delle opzioni in questa categoria servono a configurare quali informazioni inerente la formattazione NVDA dovrà pronunciare quando si scorre un documento con le frecce. 
 Ad esempio, se attiviamo la casella di controllo "Leggi il nome del font", NVDA annuncerà tale cambiamento ogni qualvolta se ne incontrerà uno, muovendosi con i tasti cursore in un documento.
 
@@ -2108,6 +2205,7 @@ Le opzioni di formattazione documento sono divise in gruppi.
  - Numeri di pagina
  - Numeri di riga
  - Annuncio rientro righe (disattivo, voce, toni, voce e toni) #DocumentFormattingSettingsLineIndentation]
+ - Ignora righe vuote nel segnalare i rientri
  - Rientro paragrafi (ad esempio rientro prima riga)
  - Spaziatura righe (singola, doppia etc)
  - Allineamento
@@ -2150,6 +2248,8 @@ Il segnale acustico aumenterà di altezza ad ogni spazio, mentre per una tabulaz
 - Sia voce che beep: con questa opzione attiva i rientri saranno letti utilizzando entrambi i metodi spiegati sopra.
 -
 
+Se si seleziona la casella di controllo "Ignora le righe vuote nel segnalare i rientri", i cambiamenti per i rientri non saranno annunciati per le righe vuote.
+Ciò può essere utile quando si legge un documento in cui vengono utilizzate righe vuote per separare blocchi di testo rientrati, come nel codice sorgente di programmazione.
 +++ Navigazione documento+++[DocumentNavigation]
 Questa categoria consente di regolare vari aspetti della navigazione del documento.
 
@@ -2180,6 +2280,12 @@ Contiene le seguenti opzioni:
 ==== Lingua di riconoscimento ====[Win10OcrSettingsRecognitionLanguage]
 Questa casella combinata permette di scegliere la lingua da utilizzare per il riconoscimento del testo.
 Per scorrere tra le lingue disponibili ovunque ci si trovi, assegnare un gesto personalizzato utilizzando la [finestra di dialogo Gesti e tasti di immissione #InputGestures].
+
+==== Aggiorna periodicamente il contenuto riconosciuto ====[Win10OcrSettingsAutoRefresh]
+Quando questa casella è abilitata, NVDA aggiornerà automaticamente il contenuto riconosciuto non appena si verifica un cambiamento  nell'area di riconoscimento.
+Ciò può essere molto utile quando si desidera monitorare contenuti in continua evoluzione, ad esempio un video con i sottotitoli.
+L'aggiornamento avviene ogni secondo e mezzo.
+Questa opzione è disabilitata di default.
 
 +++ Impostazioni avanzate +++
 Attenzione! Le impostazioni in questa categoria sono per utenti esperti e potrebbero causare il mancato funzionamento di NVDA se configurate in modo errato.
@@ -2373,23 +2479,6 @@ Con diverse API GUI storicamente popolari, il testo può essere visualizzato con
 Questa opzione attiva la gestione dell'audio attraverso un sistema chiamato  Windows Audio Session API (WASAPI).
 WASAPI è un framework audio più moderno che può migliorare la reattività, le prestazioni e la stabilità dell'audio di NVDA, compresi sia il parlato che i suoni.
 Dopo aver modificato questa opzione, sarà necessario riavviare NVDA affinché i cambiamenti abbiano effetto.
-
-==== Il volume dei suoni di NVDA segue il volume della voce ====[SoundVolumeFollowsVoice]
-: Default
-  Disattivato
-: Opzioni
-  Disattivato, Attivato
-+:
-+
-
-Quando questa opzione è abilitata, il volume dei suoni e dei segnali acustici di NVDA seguirà l'impostazione del volume della voce in uso.
-Se si riduce il volume della voce, anche il volume dei suoni diminuirà.
-Allo stesso modo, se si aumenta il volume della voce, aumenterà anche quello dei suoni..
-Inoltre, ha effetto solo quando l'impostazione "Usa WASAPI per l'output audio" è abilitata.
-
-==== Volume dei suoni di NVDA ====[SoundVolume]
-Questo cursore di avanzamento consente di impostare il volume dei suoni e dei beep di NVDA.
-L'impostazione ha effetto solo quando "Usa WASAPI per l'output audio" è abilitato e "Il volume dei suoni di NVDA segue il volume della voce" è disabilitato.
 
 ==== Categorie Debug Logging ====[AdvancedSettingsDebugLoggingCategories]
 Le caselle di controllo presenti  in questo elenco consentono di abilitare  categorie specifiche di messaggi log di NVDA.

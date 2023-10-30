@@ -352,6 +352,7 @@ class MainFrame(wx.Frame):
 		if self.sysTrayIcon and self.sysTrayIcon.menu_tools_toggleSpeechViewer:
 			self.sysTrayIcon.menu_tools_toggleSpeechViewer.Check(isEnabled)
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onToggleSpeechViewerCommand(self, evt):
 		if not speechViewer.isActive:
 			speechViewer.activate()
@@ -363,6 +364,7 @@ class MainFrame(wx.Frame):
 		if self.sysTrayIcon and self.sysTrayIcon.menu_tools_toggleBrailleViewer:
 			self.sysTrayIcon.menu_tools_toggleBrailleViewer.Check(created)
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onToggleBrailleViewerCommand(self, evt):
 		import brailleViewer
 		if brailleViewer.isBrailleViewerActive():
@@ -500,21 +502,23 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# Translators: The label for the menu item to open NVDA Log Viewer.
 			item = menu_tools.Append(wx.ID_ANY, _("View &log"))
 			self.Bind(wx.EVT_MENU, frame.onViewLogCommand, item)
-		# Translators: The label for the menu item to toggle Speech Viewer.
-		item = self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("&Speech viewer"))
-		item.Check(speechViewer.isActive)
-		self.Bind(wx.EVT_MENU, frame.onToggleSpeechViewerCommand, item)
 
-		self.menu_tools_toggleBrailleViewer: wx.MenuItem = menu_tools.AppendCheckItem(
-			wx.ID_ANY,
-			# Translators: The label for the menu item to toggle Braille Viewer.
-			_("&Braille viewer")
-		)
-		item = self.menu_tools_toggleBrailleViewer
-		self.Bind(wx.EVT_MENU, frame.onToggleBrailleViewerCommand, item)
-		import brailleViewer
-		self.menu_tools_toggleBrailleViewer.Check(brailleViewer.isBrailleViewerActive())
-		brailleViewer.postBrailleViewerToolToggledAction.register(frame.onBrailleViewerChangedState)
+			# Translators: The label for the menu item to toggle Speech Viewer.
+			item = self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("&Speech viewer"))
+			item.Check(speechViewer.isActive)
+			self.Bind(wx.EVT_MENU, frame.onToggleSpeechViewerCommand, item)
+
+			self.menu_tools_toggleBrailleViewer: wx.MenuItem = menu_tools.AppendCheckItem(
+				wx.ID_ANY,
+				# Translators: The label for the menu item to toggle Braille Viewer.
+				_("&Braille viewer")
+			)
+
+			item = self.menu_tools_toggleBrailleViewer
+			self.Bind(wx.EVT_MENU, frame.onToggleBrailleViewerCommand, item)
+			import brailleViewer
+			self.menu_tools_toggleBrailleViewer.Check(brailleViewer.isBrailleViewerActive())
+			brailleViewer.postBrailleViewerToolToggledAction.register(frame.onBrailleViewerChangedState)
 
 		if not config.isAppX and NVDAState.shouldWriteToDisk():
 			# Translators: The label of a menu item to open the Add-on store

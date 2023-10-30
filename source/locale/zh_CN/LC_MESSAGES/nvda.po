@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-13 00:02+0000\n"
+"POT-Creation-Date: 2023-10-20 00:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: hwf1324 <1398969445@qq.com>\n"
 "Language-Team: \n"
@@ -570,6 +570,7 @@ msgstr "%s 级标题"
 msgid "vlnk"
 msgstr "以访问"
 
+# Fix regression introduced by changes to position reporting in 77395. This regression results in a missing pause before position are reported. To fix this, we insert a comma before the position information.
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
@@ -578,7 +579,7 @@ msgstr "以访问"
 #. {total} is replaced with the total number of items in the group.
 #, python-brace-format
 msgid "{number} of {total}"
-msgstr "{total} 之 {number} 项"
+msgstr "，{total} 之 {number} 项"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
 #. %s is replaced with the level.
@@ -8719,11 +8720,11 @@ msgstr "安装 NVDA(&I)"
 
 #. Translators: The label for the menu item to run the COM registration fix tool
 msgid "Run COM Registration Fixing tool..."
-msgstr "运行 COM 注册修复工具..."
+msgstr "运行 COM 注册修复工具(&R)..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
-msgstr "重新加载插件"
+msgstr "重新加载插件(&G)"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
 msgid "&Tools"
@@ -9068,7 +9069,8 @@ msgid ""
 "The following add-ons are incompatible with NVDA version {}. These add-ons "
 "can not be enabled. Please contact the add-on author for further assistance."
 msgstr ""
-"以下插件与 NVDA版 本 {} 不兼容。无法启用这些插件。请联系插件作者以获取进一步的帮助。"
+"以下插件与 NVDA版 本 {} 不兼容。无法启用这些插件。请联系插件作者以获取进一步"
+"的帮助。"
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
 msgid "Incompatible add-ons"
@@ -11131,7 +11133,8 @@ msgid ""
 "improve NVDA?"
 msgstr ""
 "为了在未来改进 NVDA，NV Access 希望从正在运行的 NVDA 副本收集使用数据。\n"
-"数据包括操作系统版本、NVDA 版本、语言、所在国家/地区、以及某些 NVDA 配置，如语音合成器，盲文点显器和盲文表等。\n"
+"数据包括操作系统版本、NVDA 版本、语言、所在国家/地区、以及某些 NVDA 配置，如"
+"语音合成器，盲文点显器和盲文表等。\n"
 "NVDA 不会将语音或盲文内容发送给 NV Access。\n"
 "关于收集数据的完整列表，请参阅用户指南的数据收集部分。\n"
 "您是否允许 NV Access 定期收集这些数据以改进 NVDA？"
