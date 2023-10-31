@@ -1,3 +1,8 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2023 NV Access Limited, Łukasz Golonka, Leonard de Ruijter
+# This file is covered by the GNU Lesser General Public License, version 2.1.
+# See the file license.txt for more details.
+
 import ctypes
 import time
 
