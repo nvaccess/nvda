@@ -2295,8 +2295,6 @@ def test_ARIASwitchRole():
 	_asserts.strings_match(
 		actualSpeech,
 		SPEECH_SEP.join([
-			"frame",
-			"main landmark",
 			"Example",
 			"heading  level 2"
 		]),
