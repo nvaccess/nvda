@@ -364,7 +364,7 @@ class SsmlParser(SpeechXmlParser):
 	def __init__(self, markCallback: MarkCallbackT | None = None):
 		"""Constructor.
 
-		:param markCallback: An optional callback called for every mark command in the SSSML.
+		:param markCallback: An optional callback called for every mark command in the SSML.
 			The mark command in the SSML will be translated to a CallbackCommand instance.
 		"""
 		self._markCallback = markCallback
