@@ -10,7 +10,6 @@ Kept here so they can be re-used without having to worry about circular imports.
 from collections.abc import Sequence
 from typing import (
 	Union,
-	List,
 	Iterable, Any, Optional, Generator,
 )
 

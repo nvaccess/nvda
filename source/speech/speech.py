@@ -204,7 +204,7 @@ def _getSpeakSsmlSpeech(
 ) -> SpeechSequence:
 	"""Gets the speech sequence for given SSML.
 	:param ssml: The SSML data to speak
-	:param markCallback: An optional callback called for every mark command in the SSSML.
+	:param markCallback: An optional callback called for every mark command in the SSML.
 	:param _prefixSpeechCommand: A SpeechCommand to append before the sequence.
 	"""
 	if ssml is None:
@@ -227,7 +227,7 @@ def speakSsml(
 ) -> None:
 	"""Speaks a given speech sequence provided as ssml.
 	:param ssml: The SSML data to speak.
-	:param markCallback: An optional callback called for every mark command in the SSSML.
+	:param markCallback: An optional callback called for every mark command in the SSML.
 	:param symbolLevel: The symbol verbosity level.
 	:param _prefixSpeechCommand: A SpeechCommand to append before the sequence.
 	:param priority: The speech priority.
