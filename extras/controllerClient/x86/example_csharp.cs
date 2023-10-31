@@ -1,4 +1,4 @@
-﻿// Copyright(C) 2017-2019 NV Access Limited, Arnold Loubriat
+﻿// Copyright(C) 2017-2023 NV Access Limited, Arnold Loubriat, Leonard de Ruijter
 // This file is covered by the GNU Lesser General Public License, version 2.1.
 // See the file license.txt for more details.
 
@@ -13,16 +13,16 @@ namespace NVAccess
 	/// </summary>
 	static class NVDA
 	{
-		[DllImport("nvdaControllerClient32.dll", CharSet = CharSet.Unicode)]
+		[DllImport("nvdaControllerClient.dll", CharSet = CharSet.Unicode)]
 		private static extern int nvdaController_brailleMessage(string message);
 
-		[DllImport("nvdaControllerClient32.dll")]
+		[DllImport("nvdaControllerClient.dll")]
 		private static extern int nvdaController_cancelSpeech();
 
-		[DllImport("nvdaControllerClient32.dll", CharSet = CharSet.Unicode)]
+		[DllImport("nvdaControllerClient.dll", CharSet = CharSet.Unicode)]
 		private static extern int nvdaController_speakText(string text);
 
-		[DllImport("nvdaControllerClient32.dll")]
+		[DllImport("nvdaControllerClient.dll")]
 		private static extern int nvdaController_testIfRunning();
 
 		/// <summary>

@@ -69,6 +69,7 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
  - Example: ``speech.speakSsml('<speak><prosody pitch="200%">hello</prosody><break time="500ms" /><prosody rate="50%">John</prosody></speak>')``
  - The SSML parsing capabilities are backed by the ``SsmlParser`` class in the ``speechXml`` module.
  -
+- The file names of the NVDA Controller Library no longer contain a suffix denoting the architecture, i.e. ``nvdaControllerClient32/64.dll`` are now called ``nvdaControllerClient.dll``. (#15718, #15717, @LeonarddeR)
 - Updated ``include`` dependencies:
   - detours to ``4b8c659f549b0ab21cf649377c7a84eb708f5e68``. (#15695)
   - ia2 to ``3d8c7f0b833453f761ded6b12d8be431507bfe0b``. (#15695)
