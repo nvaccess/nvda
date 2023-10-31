@@ -489,8 +489,7 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 		from gui._addonStoreGui.controls.messageDialogs import _shouldInstallWhenAddonTooOldDialog
 		if _shouldInstallWhenAddonTooOldDialog(parentWindow, bundle._addonGuiModel):
 			# Install incompatible version
-			if not bundle.overrideIncompatibility:
-				bundle.enableCompatibilityOverride()
+			bundle.enableCompatibilityOverride()
 		else:
 			# Exit early, addon is not up to date with the latest API version.
 			return False
