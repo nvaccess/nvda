@@ -1,4 +1,5 @@
 ## Updating dependencies
+Updates should be reflected in the [createDevEnvironment guide](../projectDocs/dev/createDevEnvironment.md) and the [change log](../user_docs/en/changes.t2t).
 
 ### Detours
 https://github.com/microsoft/Detours
