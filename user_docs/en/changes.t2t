@@ -58,6 +58,13 @@ Add-ons will need to be re-tested and have their manifest updated.
 - The ``BrailleDisplayDriver`` base class now has ``numRows`` and ``numCols`` properties to provide information about multi line braille displays.
 Setting ``numCells`` is still supported for single line braille displays and ``numCells`` will return the total number of cells for multi line braille displays. (#15386)
 - Updated BrlAPI for BRLTTY to version 0.8.5, and its corresponding python module to a Python 3.11 compatible build. (#15652, @LeonarddeR)
+- Updated ``include`` dependencies:
+  - detours to ``4b8c659f549b0ab21cf649377c7a84eb708f5e68``. (#15695)
+  - ia2 to ``3d8c7f0b833453f761ded6b12d8be431507bfe0b``. (#15695)
+  - sonic to ``8694c596378c24e340c09ff2cd47c065494233f1``. (#15695)
+  - w3c-aria-practices to ``9a5e55ccbeb0f1bf92b6127c9865da8426d1c864``. (#15695)
+  - wil to ``5e9be7b2d2fe3834a7107f430f7d4c0631f69833``. (#15695)
+  -
 -
 
 === API Breaking Changes ===
@@ -66,11 +73,11 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
 
 - NVDA is now built with Python 3.11. (#12064)
 - Updated pip dependencies:
-  - configobj to 5.1.0dev commit e2ba4457. (#15544)
+  - configobj to 5.1.0dev commit ``e2ba4457c4651fa54f8d59d8dcdd3da950e956b8``. (#15544)
   - Comtypes to 1.2.0. (#15513, @codeofdusk)
   - fast_diff_match_patch to 2.0.1. (#15514, @codeofdusk)
   - Flake8 to 4.0.1. (#15636, @lukaszgo1)
-  - py2exe to 0.13.0.1dev commit 4e7b2b2c60face592e67cb1bc935172a20fa371d. (#15544) 
+  - py2exe to 0.13.0.1dev commit ``4e7b2b2c60face592e67cb1bc935172a20fa371d``. (#15544) 
   - robotframework to 6.1.1. (#15544)
   - SCons to 4.5.2. (#15529)
   - sphinx to 7.2.6. (#15544)
