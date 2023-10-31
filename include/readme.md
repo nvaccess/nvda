@@ -28,7 +28,7 @@ TODO
 https://www.github.com/michaeldcurran/microsoft-ui-uiautomation/
 
 We are stuck on our own fork.
-The fork specifically adds support for CallExtension / IsExtensionSupported to the high-level API, see PR microsoft/microsoft-ui-uiautomation#84 and #95.
+The fork specifically adds support for connection bound objects to the high-level API, see PR microsoft/microsoft-ui-uiautomation#95.
 
 ### nsis
 [NSIS-build readme](https://github.com/nvaccess/NSIS-build)
