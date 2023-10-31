@@ -4,7 +4,9 @@ Updates should be reflected in the [createDevEnvironment guide](../projectDocs/d
 ### Detours
 https://github.com/microsoft/Detours
 
-Fetch latest from master
+Fetch latest from master.
+Test using [the steps here](../projectDocs/design/displayModel.md).
+An example control is the file properties dialog from file explorer.
 
 ### eSpeak
 https://github.com/espeak-ng/espeak-ng
@@ -15,8 +17,6 @@ https://github.com/espeak-ng/espeak-ng
 https://github.com/LinuxA11y/IAccessible2
 
 Fetch latest from master.
-Test using [the steps here](../projectDocs/design/displayModel.md).
-An example control is the file properties dialog from file explorer.
 
 ### javaAccessBridge32
 [javaAccessBridge32-bin readme](https://github.com/nvaccess/javaAccessBridge32-bin)
