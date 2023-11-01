@@ -45,11 +45,12 @@ import garbageHandler
 import winKernel
 import wave
 import config
-from logHandler import log
+from logHandler import log, getOnErrorLogged
 import os.path
 import extensionPoints
 import NVDAHelper
 import core
+import globalVars
 
 
 __all__ = (
@@ -1056,6 +1057,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 def initialize():
 	global WavePlayer
 	if not config.conf["audio"]["WASAPI"]:
+		getOnErrorLogged().register(playErrorSound)
 		return
 	WavePlayer = WasapiWavePlayer
 	NVDAHelper.localLib.wasPlay_create.restype = c_void_p
@@ -1073,7 +1075,19 @@ def initialize():
 		func.restype = HRESULT
 		func.errcheck = _wasPlay_errcheck
 	NVDAHelper.localLib.wasPlay_startup()
+	getOnErrorLogged().register(playErrorSound)
 
 
 def usingWasapiWavePlayer() -> bool:
 	return issubclass(WavePlayer, WasapiWavePlayer)
+
+
+def playErrorSound():
+	if isInError():
+		if _isDebugForNvWave():
+			log.debug("No beep for log; nvwave is in error state")
+		return
+	try:
+		playWaveFile(os.path.join(globalVars.appDir, "waves", "error.wav"))
+	except Exception:
+		pass
