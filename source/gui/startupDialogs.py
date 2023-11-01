@@ -269,7 +269,7 @@ class AskAllowUsageStatsDialog(
 		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""A dialog asking if the user wishes to allow NVDA usage stats to be collected by NV Access."""
-
+	
 	helpId = "UsageStatsDialog"
 
 	def __init__(self, parent):
