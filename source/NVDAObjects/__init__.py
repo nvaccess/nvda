@@ -1427,8 +1427,7 @@ This code is executed if a gain focus event is received by this object.
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("name: %s" % ret)
-		ret = self.role
-		info.append("role: %s" % ret)
+		info.append(f"role: {self.role.name}")
 		info.append(f"processID: {self.processID}")
 		try:
 			ret = repr(self.roleText)
@@ -1436,7 +1435,7 @@ This code is executed if a gain focus event is received by this object.
 			ret = f"exception: {e}"
 		info.append(f"roleText: {ret}")
 		try:
-			ret = ", ".join(str(state) for state in self.states)
+			ret = ", ".join(state.name for state in self.states)
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("states: %s" % ret)
