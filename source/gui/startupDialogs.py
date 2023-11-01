@@ -38,7 +38,7 @@ class WelcomeDialog(
 		"By default, the numpad Insert and main Insert keys may both be used as the NVDA key.\n"
 		"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 		"Press NVDA+n at any time to activate the NVDA menu.\n"
-		"From this menu, you can configure NVDA, get help and access other NVDA functions."
+		"From this menu, you can configure NVDA, get help, and access other NVDA functions."
 	)
 	_instances: Set["WelcomeDialog"] = weakref.WeakSet()
 
@@ -269,7 +269,7 @@ class AskAllowUsageStatsDialog(
 		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""A dialog asking if the user wishes to allow NVDA usage stats to be collected by NV Access."""
-	
+
 	helpId = "UsageStatsDialog"
 
 	def __init__(self, parent):
