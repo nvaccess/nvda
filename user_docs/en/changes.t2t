@@ -53,6 +53,8 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 
 - Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
+- Building NVDA now requires Visual Studio 2022.
+Please refer to the [NVDA docs https://github.com/nvaccess/nvda/blob/release-2024.1/projectDocs/dev/createDevEnvironment.md] for the specific list of Visual Studio components. (#14313)
 - Added the following extension points:
  - ``treeInterceptorHandler.post_browseModeStateChange``. (#14969, @nvdaes)
  - ``speech.speechCanceled``. (#15700, @LeonarddeR)
