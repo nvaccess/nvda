@@ -18,12 +18,15 @@ Windows 8.1 is the minimum Windows version supported. (#15544)
 - Updated LibLouis braille translator to 3.27.0. (#15435, @codeofdusk)
   - Added new Thai and Romanian Braille tables.
   -
+- CLDR emoji and symbol annotations has been updated to version 44.0. (#15712, @OzancanKaratas)
 - The following commands now support two and three presses to spell the reported information and spell with character descriptions: report selection, report clipboard text and report focused object. (#15449, @CyrilleB79)
 - The option "Report role when mouse enters object" in NVDA's mouse settings category has been renamed to "Report object when mouse enters it".
 This option now announces additional relevant information about an object when the mouse enters it, such as states (checked/pressed) or cell coordinates in a table. (#15420, @LeonarddeR)
 - When requesting formatting information on Excel cells, borders and background will only be reported if there is such formatting. (#15560, @CyrilleB79)
 - The command to toggle the screen curtain now has a default gesture: ``NVDA+control+escape``. (#10560, @CyrilleB79)
 - NVDA will again no longer report unlabelled groupings such as in recent versions of Microsoft Office 365 menus. (#15638)
+- The "Help" submenu of the NVDA menu has been split up into "Documentation" and "Help".
+New items have beeen added to "Help" for the NV Access "Get Help" page and Shop. (#14631)
 - NVDA's support for [Poedit https://poedit.net] is overhauled for Poedit version 3 and above.
 Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on enhanced accessibility in Poedit, such as shortcuts to read translator notes and comments. (#15313, #7303, @LeonarddeR)
 - Braille viewer and speech viewer are now disabled in secure mode. (#15680)
@@ -42,6 +45,7 @@ This makes the announcement of spelling errors work when announcing a line in Wr
 It is also updated with UIA enabled, when typing text and braille is tethered to review and review follows caret. (#3276)
 - Multi line braille displays will no longer crash the BRLTTY driver and are treated as one continuous display. (#15386)
 - NVDA no longer sometimes freezes briefly when multiple sounds are played in rapid succession. (#15311)
+- NVDA will announce dialog content for more Windows 10 and 11 dialogs. (#15729, @josephsl)
 -
 
 == Changes for Developers ==
@@ -58,6 +62,18 @@ Add-ons will need to be re-tested and have their manifest updated.
 - The ``BrailleDisplayDriver`` base class now has ``numRows`` and ``numCols`` properties to provide information about multi line braille displays.
 Setting ``numCells`` is still supported for single line braille displays and ``numCells`` will return the total number of cells for multi line braille displays. (#15386)
 - Updated BrlAPI for BRLTTY to version 0.8.5, and its corresponding python module to a Python 3.11 compatible build. (#15652, @LeonarddeR)
+- Added the ``speech.speakSsml`` function, which allows you to write NVDA speech sequences using [SSML https://www.w3.org/TR/speech-synthesis11/].  (#15699, @LeonarddeR)
+ - The following tags are currently supported and translated to appropriate NVDA speech commands:
+  - ``Prosody`` (``pitch``, ``rate`` and ``volume``). Only multiplication (e.g. ``200%`` are supported.
+  - ``say-as`` with the ``interpret`` attribute set to ``characters``
+  - ``voice`` with the ``xml:lang`` set to an XML language
+  - ``break`` with the ``time`` attribute set to a value in milliseconds, e.g. ``200ms``
+  - ``mark`` with the ``name`` attribute set to a mark name, e.g. ``mark1``, requires providing a callback
+  -
+ - Example: ``speech.speakSsml('<speak><prosody pitch="200%">hello</prosody><break time="500ms" /><prosody rate="50%">John</prosody></speak>')``
+ - The SSML parsing capabilities are backed by the ``SsmlParser`` class in the ``speechXml`` module.
+ -
+- The file names of the NVDA Controller Library no longer contain a suffix denoting the architecture, i.e. ``nvdaControllerClient32/64.dll`` are now called ``nvdaControllerClient.dll``. (#15718, #15717, @LeonarddeR)
 - Updated ``include`` dependencies:
   - detours to ``4b8c659f549b0ab21cf649377c7a84eb708f5e68``. (#15695)
   - ia2 to ``3d8c7f0b833453f761ded6b12d8be431507bfe0b``. (#15695)

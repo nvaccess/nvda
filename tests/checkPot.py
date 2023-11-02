@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2021 NV Access Limited, Ethan Holliger, Dinesh Kaushal, Leonard de Ruijter,
+# Copyright (C) 2017-2023 NV Access Limited, Ethan Holliger, Dinesh Kaushal, Leonard de Ruijter,
 # Joseph Lee, Julien Cochuyt, Łukasz Golonka
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
@@ -56,7 +56,6 @@ EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
 	'Display',
 	'left',
 	'right',
-	'NVDA &web site',
 	'E&xit',
 	'Error renaming profile.',
 	'Use this profile for:',
