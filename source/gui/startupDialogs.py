@@ -38,7 +38,7 @@ class WelcomeDialog(
 		"By default, the numpad Insert and main Insert keys may both be used as the NVDA key.\n"
 		"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 		"Press NVDA+n at any time to activate the NVDA menu.\n"
-		"From this menu, you can configure NVDA, get help and access other NVDA functions."
+		"From this menu, you can configure NVDA, get help, and access other NVDA functions."
 	)
 	_instances: Set["WelcomeDialog"] = weakref.WeakSet()
 
