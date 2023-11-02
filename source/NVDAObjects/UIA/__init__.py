@@ -1010,15 +1010,23 @@ class UIA(Window):
 		for ID in IDs:
 			elementCache[ID]=cacheElement
 
-	def findOverlayClasses(self,clsList):
-		UIAControlType=self.UIAElement.cachedControlType
-		UIAClassName=self.UIAElement.cachedClassName
+	# C901 'findOverlayClasses' is too complex
+	# Note: when working on findOverlayClasses, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def findOverlayClasses(self, clsList):  # NOQA: C901
+		UIAControlType = self.UIAElement.cachedControlType
+		UIAClassName = self.UIAElement.cachedClassName
 		# #11445: to avoid COM errors, do not fetch cached UIA Automation Id from the underlying element.
 		UIAAutomationId = self.UIAAutomationId
-		if UIAClassName=="NetUITWMenuItem" and UIAControlType==UIAHandler.UIA_MenuItemControlTypeId and not self.name and not self.previous:
+		if (
+			UIAClassName == "NetUITWMenuItem"
+			and UIAControlType == UIAHandler.UIA_MenuItemControlTypeId
+			and not self.name
+			and not self.previous
+		):
 			# Bounces focus from a netUI dead placeholder menu item when no item is selected up to the menu itself.
 			clsList.append(PlaceholderNetUITWMenuItem)
-		elif UIAClassName=="WpfTextView":
+		elif UIAClassName == "WpfTextView":
 			clsList.append(WpfTextView)
 		elif (
 			UIAClassName == "ListViewItem"
@@ -1027,7 +1035,7 @@ class UIA(Window):
 		):
 			from NVDAObjects.behaviors import RowWithFakeNavigation
 			clsList.append(RowWithFakeNavigation)
-		elif UIAClassName=="NetUIDropdownAnchor":
+		elif UIAClassName == "NetUIDropdownAnchor":
 			clsList.append(NetUIDropdownAnchor)
 		elif self.windowClassName == "EXCEL6" and self.role == controlTypes.Role.PANE:
 			from .excel import BadExcelFormulaEdit
@@ -1051,12 +1059,16 @@ class UIA(Window):
 			or UIAAutomationId.startswith('UIA_AutomationId_Word_Content')
 		):
 			from .wordDocument import WordDocument, WordDocumentNode
-			if self.role==controlTypes.Role.DOCUMENT:
+			if self.role == controlTypes.Role.DOCUMENT:
 				clsList.append(WordDocument)
 			else:
 				clsList.append(WordDocumentNode)
-		# #5136: Windows 8.x and Windows 10 uses different window class and other attributes for toast notifications.
-		elif UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId: #Windows 8.x
+		# #5136: Windows 8.x and Windows 10 uses different window class
+		# and other attributes for toast notifications.
+		elif (
+			UIAClassName == "ToastContentHost"
+			and UIAControlType == UIAHandler.UIA_ToolTipControlTypeId
+		):  # Windows 8.x
 			clsList.append(Toast_win8)
 		elif (
 			self.windowClassName == "Windows.UI.Core.CoreWindow"
@@ -1064,9 +1076,10 @@ class UIA(Window):
 			and "ToastView" in UIAAutomationId
 		):  # Windows 10
 			clsList.append(Toast_win10)
-		# #8118: treat UIA tool tips (including those found in UWP apps) as proper tool tips, especially those found in Microsoft Edge and other apps.
+		# #8118: treat UIA tool tips (including those found in UWP apps) as proper tool tips,
+		# especially those found in Microsoft Edge and other apps.
 		# Windows 8.x toast, although a form of tool tip, is covered separately.
-		elif UIAControlType==UIAHandler.UIA_ToolTipControlTypeId:
+		elif UIAControlType == UIAHandler.UIA_ToolTipControlTypeId:
 			clsList.append(ToolTip)
 		elif(
 			self.UIAElement.cachedFrameworkID in ("InternetExplorer", "MicrosoftEdge")
@@ -1074,7 +1087,7 @@ class UIA(Window):
 			and not self.appModule.appName == 'iexplore'
 		):
 			from . import spartanEdge
-			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.Role.PANE:
+			if UIAClassName in ("Internet Explorer_Server", "WebView") and self.role == controlTypes.Role.PANE:
 				clsList.append(spartanEdge.EdgeHTMLRootContainer)
 			elif (
 				self.UIATextPattern
@@ -1090,9 +1103,9 @@ class UIA(Window):
 					isinstance(self.parent, spartanEdge.EdgeHTMLRootContainer)
 					or not isinstance(self.parent, spartanEdge.EdgeNode)
 				)
-			): 
+			):
 				clsList.append(spartanEdge.EdgeHTMLRoot)
-			elif self.role==controlTypes.Role.LIST:
+			elif self.role == controlTypes.Role.LIST:
 				clsList.append(spartanEdge.EdgeList)
 			else:
 				clsList.append(spartanEdge.EdgeNode)
@@ -1127,30 +1140,34 @@ class UIA(Window):
 			clsList.insert(0, DevExpressXtraRichEdit)
 		if UIAControlType == UIAHandler.UIA_ProgressBarControlTypeId:
 			clsList.insert(0, ProgressBar)
-		if UIAClassName=="ControlPanelLink":
+		if UIAClassName == "ControlPanelLink":
 			clsList.append(ControlPanelLink)
-		if UIAClassName=="UIColumnHeader":
+		if UIAClassName == "UIColumnHeader":
 			clsList.append(UIColumnHeader)
-		elif UIAClassName=="UIItem":
+		elif UIAClassName == "UIItem":
 			clsList.append(UIItem)
-		elif UIAClassName=="SensitiveSlider":
-			clsList.append(SensitiveSlider) 
-		if UIAControlType==UIAHandler.UIA_TreeItemControlTypeId:
+		elif UIAClassName == "SensitiveSlider":
+			clsList.append(SensitiveSlider)
+		if UIAControlType == UIAHandler.UIA_TreeItemControlTypeId:
 			clsList.append(TreeviewItem)
-		if UIAControlType==UIAHandler.UIA_MenuItemControlTypeId:
+		if UIAControlType == UIAHandler.UIA_MenuItemControlTypeId:
 			clsList.append(MenuItem)
 		# Some combo boxes and looping selectors do not expose value pattern.
-		elif (UIAControlType==UIAHandler.UIA_ComboBoxControlTypeId
-		# #5231: Announce values in time pickers by "transforming" them into combo box without value pattern objects.
-		or (UIAControlType==UIAHandler.UIA_ListControlTypeId and "LoopingSelector" in UIAClassName)):
+		elif (
+			UIAControlType == UIAHandler.UIA_ComboBoxControlTypeId
+			# #5231: Announce values in time pickers by "transforming" them into
+			# combo box without value pattern objects.
+			or (UIAControlType == UIAHandler.UIA_ListControlTypeId and "LoopingSelector" in UIAClassName)
+		):
 			try:
 				if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsValuePatternAvailablePropertyId):
 					clsList.append(ComboBoxWithoutValuePattern)
 			except COMError:
 				pass
-		elif UIAControlType==UIAHandler.UIA_ListItemControlTypeId:
+		elif UIAControlType == UIAHandler.UIA_ListItemControlTypeId:
 			clsList.append(ListItem)
-		# #5942: In Windows 10 build 14332 and later, Microsoft rewrote various dialog code including that of User Account Control.
+		# #5942: In Windows 10 build 14332 and later, Microsoft rewrote various dialog code
+		# including that of User Account Control.
 		# #8405: there are more dialogs scattered throughout Windows 10 and various apps.
 		# Dialog detection is a bit easier on build 17682 and later thanks to IsDialog property.
 		try:
@@ -1163,19 +1180,26 @@ class UIA(Window):
 			isDialog = (self.UIAIsWindowElement and UIAClassName in UIAHandler.UIADialogClassNames)
 		if isDialog:
 			clsList.append(Dialog)
-		# #6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
+		# #6241: Try detecting all possible suggestions containers and search fields
+		# scattered throughout Windows 10 and later.
 		if UIAAutomationId in ("SearchTextBox", "TextBox"):
 			clsList.append(SearchField)
 		# #12790: detect suggestions list views firing layout invalidated event.
 		if UIAAutomationId == "SuggestionsList":
 			clsList.append(SuggestionsList)
 		try:
-			# Nested block here in order to catch value error and variable binding error when attempting to access automation ID for invalid elements.
+			# Nested block here in order to catch value error and variable binding error
+			# when attempting to access automation ID for invalid elements.
 			try:
-				# #6241: Raw UIA base tree walker is better than simply looking at self.parent when locating suggestion list items.
+				# #6241: Raw UIA base tree walker is better than simply looking at self.parent
+				# when locating suggestion list items.
 				# #10329: 2019 Windows Search results require special handling due to UI redesign.
-				parentElement=UIAHandler.handler.baseTreeWalker.GetParentElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
-				# Sometimes, fetching parent (list control) via base tree walker fails, especially when dealing with suggestions in Windows10 Start menu.
+				parentElement = UIAHandler.handler.baseTreeWalker.GetParentElementBuildCache(
+					self.UIAElement,
+					UIAHandler.handler.baseCacheRequest
+				)
+				# Sometimes, fetching parent (list control) via base tree walker fails,
+				# especially when dealing with suggestions in Windows10 Start menu.
 				# Oddly, we need to take care of context menu for Start search suggestions as well.
 				if parentElement.cachedAutomationId.lower() in ("suggestionslist", "contextmenu"):
 					clsList.append(SuggestionListItem)
@@ -1222,7 +1246,7 @@ class UIA(Window):
 			sysListView32.findExtraOverlayClasses(self, clsList)
 
 		# Add editableText support if UIA supports a text pattern
-		if self.TextInfo==UIATextInfo:
+		if self.TextInfo == UIATextInfo:
 			if UIAHandler.autoSelectDetectionAvailable:
 				clsList.append(EditableTextWithAutoSelectDetection)
 			else:
@@ -1231,7 +1255,7 @@ class UIA(Window):
 		clsList.append(UIA)
 
 		if self.UIAIsWindowElement:
-			super(UIA,self).findOverlayClasses(clsList)
+			super(UIA, self).findOverlayClasses(clsList)
 			if self.UIATextPattern:
 				# Since there is a UIA text pattern, there is no need to use the win32 edit support at all.
 				# However, UIA classifies (rich) edit controls with a role of document and doesn't add a multiline state.
