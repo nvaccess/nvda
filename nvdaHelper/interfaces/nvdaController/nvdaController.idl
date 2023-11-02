@@ -85,7 +85,7 @@ interface NvdaController {
 	error_status_t __stdcall brailleMessage([in,string] const wchar_t* message);
 
 /**
- * Retrieves the the process identifier (PID) of NVDA's process.
+ * Retrieves the process identifier (PID) of NVDA's process.
  */
 	error_status_t __stdcall getProcessId([out] unsigned long* pid);
 
@@ -106,7 +106,7 @@ interface NvdaController {
 	);
 
 /**
- * Called by NVDA when a mark in provided SSML is reached.
+ * Called by NVDA when a mark in provided SSML is reached after calling speakSsml synchronously.
  * @param mark The name of the reached mark.
  */
 	[callback] error_status_t __stdcall onSsmlMarkReached([in, string] const wchar_t* mark);
