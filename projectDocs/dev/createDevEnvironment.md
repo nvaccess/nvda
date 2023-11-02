@@ -81,6 +81,8 @@ For reference, the following run time dependencies are included in Git submodule
 * [Microsoft UI Automation Remote Operations Library, forked from @microsoft by @michaeldcurran](https://www.github.com/michaeldcurran/microsoft-ui-uiautomation/)
 	* Commit 224b22f3bf9e
 	* The fork specifically adds support for CallExtension / IsExtensionSupported to the high-level API, see pr microsoft/microsoft-ui-uiautomation#84 and #95.
+* [NVDA DiffMatchPatch](https://github.com/codeofdusk/nvda_dmp)
+
 
 Additionally, the following build time dependencies are included in the miscDeps git submodule: 
 
