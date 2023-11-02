@@ -1156,7 +1156,10 @@ class UIA(Window):
 		try:
 			isDialog = self._getUIACacheablePropertyValue(UIAHandler.UIA_IsDialogPropertyId)
 		except COMError:
-			# We can fallback to a known set of dialog classes for window elements.
+			# #15729: prepare to fallback if encountering a dialog when UIA says it is not.
+			isDialog = False
+		# We can fallback to a known set of dialog classes for window elements.
+		if not isDialog:
 			isDialog = (self.UIAIsWindowElement and UIAClassName in UIAHandler.UIADialogClassNames)
 		if isDialog:
 			clsList.append(Dialog)
