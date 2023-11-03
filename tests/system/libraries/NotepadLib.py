@@ -80,8 +80,12 @@ class NotepadLib:
 	def start_notepad(self, filePath: str, expectedTitlePattern: re.Pattern) -> _Window:
 		builtIn.log(f"starting notepad: {filePath}")
 		NotepadLib.processRFHandleForStart = process.start_process(
-			"c:\\windows\\notepad.exe",
-			filePath,
+			"start"  # windows utility to start a process
+			# https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/start
+			" /wait"  # Starts an application and waits for it to end.
+			" notepad"
+			f' "{filePath}"',
+			shell=True,
 			alias='NotepadAlias',
 		)
 		process.process_should_be_running(NotepadLib.processRFHandleForStart)
