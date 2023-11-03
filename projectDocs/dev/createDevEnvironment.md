@@ -46,7 +46,8 @@ To replicate the production build environment, use the 3.11.x minor version of P
 	* When you are intending to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://aka.ms/vs/17/release/vs_Community.exe), which is also used by AppVeyor
 	* The Professional and Enterprise versions are also supported
 	* Preview versions are *not* supported
-* When installing Visual Studio, you need to enable the following:
+* When installing Visual Studio, additional components must be included
+	* You can automatically fetch these using [NVDAs .vsconfig](../../.vsconfig) using the [import feature of the VS installer](https://learn.microsoft.com/en-us/visualstudio/install/import-export-installation-configurations?view=vs-2022#import-a-configuration)
 	* In the list on the Workloads tab, in the Desktop grouping:
 		* Desktop development with C++.
 			* Once selected, ensure "C++ Clang tools for Windows" is included under the optional grouping.
