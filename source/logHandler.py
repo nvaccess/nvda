@@ -141,16 +141,16 @@ def getCodePath(f):
 	return ".".join(x for x in (path,className,funcName) if x)
 
 
-_onErrorLogged = None
+_onErrorSoundRequested = None
 
 
-def getOnErrorLogged():
-	global _onErrorLogged
+def getOnErrorSoundRequested():
+	global _onErrorSoundRequested
 	
 	import extensionPoints
-	if not _onErrorLogged:
-		_onErrorLogged = extensionPoints.Action()
-	return _onErrorLogged
+	if not _onErrorSoundRequested:
+		_onErrorSoundRequested = extensionPoints.Action()
+	return _onErrorSoundRequested
 
 
 def shouldPlayErrorSound() -> bool:
@@ -353,7 +353,7 @@ class FileHandler(logging.FileHandler):
 			except:
 				pass
 		elif record.levelno >= logging.ERROR and shouldPlayErrorSound():
-			getOnErrorLogged().notify()
+			getOnErrorSoundRequested().notify()
 		return super().handle(record)
 
 class Formatter(logging.Formatter):
