@@ -25,7 +25,7 @@ for count in range(4):
 
 # Test SSML output
 @ctypes.WINFUNCTYPE(ctypes.c_ulong, ctypes.c_wchar_p)
-def onMarkReached(name):
+def onMarkReached(name: str) -> int:
 	print(f"Reached SSML mark with name: {name}")
 	return 0
 
@@ -37,7 +37,7 @@ ssml = (
 	'<speak>'
 	'This is one sentence. '
 	'<mark name="test" />'
-	'<prosody pitch="200%">This sentense is pronounced with higher pitch.</prosody>'
+	'<prosody pitch="200%">This sentence is pronounced with higher pitch.</prosody>'
 	'<mark name="test2" />'
 	'This is a third sentence. '
 	'<mark name="test3" />'

@@ -71,15 +71,16 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
  - The SSML parsing capabilities are backed by the ``SsmlParser`` class in the ``speechXml`` module.
  -
 - Changes to the NVDA Controller Client library:
- - The file names of the Library no longer contain a suffix denoting the architecture, i.e. ``nvdaControllerClient32/64.dll`` are now called ``nvdaControllerClient.dll``. (#15718, #15717, @LeonarddeR)
+ - The file names of the library no longer contain a suffix denoting the architecture, i.e. ``nvdaControllerClient32/64.dll`` are now called ``nvdaControllerClient.dll``. (#15718, #15717, @LeonarddeR)
  - Added the following functions to the controller client: (#15734, #11028, #5638, @LeonarddeR)
   - ``nvdaController_getProcessId``: To get the process id (PID) of the current instance of NVDA the controller client is using.
-  - nvdaController_speakSsml: To instruct NVDA to speak according to the given SSML. This function also supports:
-   - Providing the symbol level.
-   - Providing the priority of speech to be spoken.
-   - speaking both synchronously (blockking) and asynchronously (instant return).
-   - The exported ``_nvdaController_onSsmlMarkReached`` pointer can be assigned to a callback function that is called in synchronous mode for every ``<mark />`` tag encountered in the SSML sequence.
-   -
+  - ``nvdaController_speakSsml``: To instruct NVDA to speak according to the given SSML. This function also supports:
+    - Providing the symbol level.
+    - Providing the priority of speech to be spoken.
+    - Speaking both synchronously (blocking) and asynchronously (instant return).
+    - The exported ``_nvdaController_onSsmlMarkReached`` pointer can be assigned to a callback function that is called in synchronous mode for every ``<mark />`` tag encountered in the SSML sequence.
+    -
+  -
  - Note: Version 1.1 of the controller client only supports NVDA 2024.1 and above. Version 1.0 supports all past and present versions of NVDA, including 2024.1.
  -
 - Updated ``include`` dependencies:

@@ -84,7 +84,7 @@ def nvdaController_speakSsml(
 		symbolLevel: int,
 		priority: "SpeechPriority",
 		asynchronous: bool,
-):
+) -> int | SystemErrorCodes:
 	focus = api.getFocusObject()
 	if focus.sleepMode == focus.SLEEP_FULL:
 		return -1
@@ -159,7 +159,7 @@ def nvdaController_cancelSpeech():
 
 
 @WINFUNCTYPE(c_long,c_wchar_p)
-def nvdaController_brailleMessage(text):
+def nvdaController_brailleMessage(text: str) -> SystemErrorCodes:
 	focus=api.getFocusObject()
 	if focus.sleepMode==focus.SLEEP_FULL:
 		return -1
