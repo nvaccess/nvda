@@ -1078,6 +1078,10 @@ def initialize():
 	getOnErrorLogged().register(playErrorSound)
 
 
+def terminate():
+	getOnErrorLogged().unregister(playErrorSound)
+
+
 def usingWasapiWavePlayer() -> bool:
 	return issubclass(WavePlayer, WasapiWavePlayer)
 
