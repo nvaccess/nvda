@@ -46,6 +46,7 @@ It is also updated with UIA enabled, when typing text and braille is tethered to
 - Multi line braille displays will no longer crash the BRLTTY driver and are treated as one continuous display. (#15386)
 - NVDA no longer sometimes freezes briefly when multiple sounds are played in rapid succession. (#15311)
 - NVDA will announce dialog content for more Windows 10 and 11 dialogs. (#15729, @josephsl)
+- NVDA will no longer fail to read a newly loaded page in Microsoft Edge when using UI Automation. (#15736)
 -
 
 == Changes for Developers ==
