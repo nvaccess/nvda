@@ -26,6 +26,10 @@ cpp_quote("This license can be found at:")
 cpp_quote("http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html")
 cpp_quote("*/")
 
+/**
+ * Facilitates the ability to prioritize speech.
+ * These values ​​correspond to the values ​​of speech.priorities.SpeechPriority in NVDA.
+ */
 typedef [v1_enum] enum {
 /**
  * Indicates that a speech sequence should have normal priority.
@@ -44,6 +48,10 @@ typedef [v1_enum] enum {
 	SPEECH_PRIORITY_NOW = 2
 } SPEECH_PRIORITY;
 
+/**
+ * The desired symbol level in a speech sequence.
+ * These values ​​correspond to the values ​​of characterProcessing.SymbolLevel in NVDA.
+ */
 typedef [v1_enum] enum {
 	SYMBOL_LEVEL_NONE = 0,
 	SYMBOL_LEVEL_SOME = 100,
