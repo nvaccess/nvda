@@ -79,8 +79,11 @@ def nvdaController_speakText(text):
 	return SystemErrorCodes.SUCCESS
 
 
+# C901 'nvdaController_speakSsml' is too complex
+# Note: when working on nvdaController_speakSsml, look for opportunities to simplify
+# and move logic out into smaller helper functions.
 @WINFUNCTYPE(c_long, c_wchar_p, c_int, c_int, c_bool)
-def nvdaController_speakSsml(
+def nvdaController_speakSsml(  # noqa: C901
 		ssml: str,
 		symbolLevel: "SymbolLevel",
 		priority: "SpeechPriority",
@@ -91,9 +94,9 @@ def nvdaController_speakSsml(
 		return SystemErrorCodes.ACCESS_DENIED
 
 	import speech
-	from speech.speech import _getSpeakSsmlSpeech
-	from speech.priorities import SpeechPriority
 	from characterProcessing import SymbolLevel
+	from speech.priorities import SpeechPriority
+	from speech.speech import _getSpeakSsmlSpeech
 
 	try:
 		symbolLevel = SymbolLevel(symbolLevel)
@@ -102,21 +105,20 @@ def nvdaController_speakSsml(
 		return SystemErrorCodes.INVALID_PARAMETER
 
 	try:
-		priority=SpeechPriority(priority)
+		priority = SpeechPriority(priority)
 	except ValueError:
 		log.exception("Invalid SpeechPriority")
 		return SystemErrorCodes.INVALID_PARAMETER
 
-	if asynchronous:
-		prefixSpeechCommand = None
-		markCallable = None
-	else:
+	prefixSpeechCommand = None
+	markCallable = None
+	if not asynchronous:
 		from queue import SimpleQueue
+
+		markQueue = SimpleQueue()
 
 		import synthDriverHandler
 		from speech.commands import CallbackCommand
-
-		markQueue = SimpleQueue()
 
 		def onDoneSpeaking():
 			markQueue.put_nowait(None)
@@ -124,14 +126,14 @@ def nvdaController_speakSsml(
 		def onSpeechCanceled():
 			markQueue.put_nowait(False)
 
-		def callback():
+		def prefixCallback():
 			synthDriverHandler.synthDoneSpeaking.register(onDoneSpeaking)
 			speech.speechCanceled.register(onSpeechCanceled)
 
 		def markCallable(name: str):
 			markQueue.put_nowait(name)
 
-		prefixSpeechCommand = CallbackCommand(callback)
+		prefixSpeechCommand = CallbackCommand(prefixCallback)
 
 	try:
 		sequence = _getSpeakSsmlSpeech(ssml, markCallable, prefixSpeechCommand)
@@ -143,8 +145,8 @@ def nvdaController_speakSsml(
 		queueHandler.eventQueue,
 		speech.speak,
 		speechSequence=sequence,
-		symbolLevel=SymbolLevel(symbolLevel),
-		priority=SpeechPriority(priority)
+		symbolLevel=symbolLevel,
+		priority=priority
 	)
 	if not asynchronous:
 		try:
@@ -156,8 +158,8 @@ def nvdaController_speakSsml(
 						return SystemErrorCodes.CANCELLED
 					case str() as name:
 						onSsmlMarkReached(name)
-					case _:
-						log.error(f"Unknown item in SSML mark queue: {_}")
+					case _ as unknown:
+						log.error(f"Unknown item in SSML mark queue: {unknown}")
 		finally:
 			speech.speechCanceled.unregister(onSpeechCanceled)
 			synthDriverHandler.synthDoneSpeaking.unregister(onDoneSpeaking)

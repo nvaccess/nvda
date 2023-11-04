@@ -141,7 +141,7 @@ def isBlank(text):
 RE_CONVERT_WHITESPACE = re.compile("[\0\r\n]")
 
 
-def processText(locale: str ,text: str, symbolLevel: characterProcessing.SymbolLevel) -> str:
+def processText(locale: str, text: str, symbolLevel: characterProcessing.SymbolLevel) -> str:
 	text = speechDictHandler.processText(text)
 	text = characterProcessing.processSpeechSymbols(locale, text, symbolLevel)
 	text = RE_CONVERT_WHITESPACE.sub(" ", text)
