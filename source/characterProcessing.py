@@ -617,7 +617,7 @@ class SpeechSymbolProcessor(object):
 			else:
 				return suffix
 
-	def processText(self, text: str, level: SymbolLevel):
+	def processText(self, text: str, level: SymbolLevel) -> str:
 		self._level = level
 		return self._regexp.sub(self._regexpRepl, text)
 
