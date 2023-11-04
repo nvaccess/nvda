@@ -707,7 +707,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 
 			if updateCheck:
 				# Translators: The label of a menu item to manually check for an updated version of NVDA.
-				item = self.menu.Append(wx.ID_ANY, _("&Check for update..."))
+				item = self.menu.Append(wx.ID_ANY, _("Check for &update..."))
 				self.Bind(wx.EVT_MENU, frame.onCheckForUpdateCommand, item)
 
 		# Translators: The label for the menu item to open About dialog to get information about NVDA.
