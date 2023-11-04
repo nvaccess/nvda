@@ -88,6 +88,11 @@ def nvdaController_speakSsml(
 	focus = api.getFocusObject()
 	if focus.sleepMode == focus.SLEEP_FULL:
 		return SystemErrorCodes.ACCESS_DENIED
+
+	if symbolLevel == -1:
+		# The user configured symbol level must be used.
+		symbolLevel = None
+
 	import speech
 	from speech.speech import _getSpeakSsmlSpeech
 
