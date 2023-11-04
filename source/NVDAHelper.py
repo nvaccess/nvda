@@ -40,6 +40,7 @@ from winAPI.constants import SystemErrorCodes
 
 if typing.TYPE_CHECKING:
 	from speech.priorities import SpeechPriority
+	from characterProcessing import SymbolLevel
 
 versionedLibPath = os.path.join(globalVars.appDir, 'lib')
 versionedLibARM64Path = os.path.join(globalVars.appDir, 'libArm64')
@@ -81,7 +82,7 @@ def nvdaController_speakText(text):
 @WINFUNCTYPE(c_long, c_wchar_p, c_int, c_int, c_bool)
 def nvdaController_speakSsml(
 		ssml: str,
-		symbolLevel: int,
+		symbolLevel: "SymbolLevel",
 		priority: "SpeechPriority",
 		asynchronous: bool,
 ) -> int | SystemErrorCodes:
@@ -89,12 +90,22 @@ def nvdaController_speakSsml(
 	if focus.sleepMode == focus.SLEEP_FULL:
 		return SystemErrorCodes.ACCESS_DENIED
 
-	if symbolLevel == -1:
-		# The user configured symbol level must be used.
-		symbolLevel = None
-
 	import speech
 	from speech.speech import _getSpeakSsmlSpeech
+	from speech.priorities import SpeechPriority
+	from characterProcessing import SymbolLevel
+
+	try:
+		symbolLevel = SymbolLevel(symbolLevel)
+	except ValueError:
+		log.exception("Invalid symbolLevel")
+		return SystemErrorCodes.INVALID_PARAMETER
+
+	try:
+		priority=SpeechPriority(priority)
+	except ValueError:
+		log.exception("Invalid SpeechPriority")
+		return SystemErrorCodes.INVALID_PARAMETER
 
 	if asynchronous:
 		prefixSpeechCommand = None
@@ -127,12 +138,13 @@ def nvdaController_speakSsml(
 	except Exception:
 		log.error("Error parsing SSML", exc_info=True)
 		return SystemErrorCodes.INVALID_PARAMETER
+
 	queueHandler.queueFunction(
 		queueHandler.eventQueue,
 		speech.speak,
 		speechSequence=sequence,
-		symbolLevel=symbolLevel,
-		priority=priority
+		symbolLevel=SymbolLevel(symbolLevel),
+		priority=SpeechPriority(priority)
 	)
 	if not asynchronous:
 		try:

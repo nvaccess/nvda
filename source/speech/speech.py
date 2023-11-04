@@ -983,8 +983,8 @@ def speak(  # noqa: C901
 	import inputCore
 	inputCore.logTimeSinceInput()
 	log.io("Speaking %r" % speechSequence)
-	if symbolLevel is None:
-		symbolLevel=config.conf["speech"]["symbolLevel"]
+	if symbolLevel in (characterProcessing.SymbolLevel.UNCHANGED, None):
+		symbolLevel = characterProcessing.SymbolLevel(config.conf["speech"]["symbolLevel"])
 	curLanguage=defaultLanguage
 	inCharacterMode=False
 	for index in range(len(speechSequence)):
