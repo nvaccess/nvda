@@ -26,7 +26,7 @@ cpp_quote("This license can be found at:")
 cpp_quote("http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html")
 cpp_quote("*/")
 
-typedef enum {
+typedef [v1_enum] enum {
 /**
  * Indicates that a speech sequence should have normal priority.
  */
@@ -44,7 +44,7 @@ typedef enum {
 	SPEECH_PRIORITY_NOW = 2
 } SPEECH_PRIORITY;
 
-typedef enum {
+typedef [v1_enum] enum {
 	SYMBOL_LEVEL_NONE = 0,
 	SYMBOL_LEVEL_SOME = 100,
 	SYMBOL_LEVEL_MOST = 200,

@@ -87,7 +87,7 @@ def nvdaController_speakSsml(
 ) -> int | SystemErrorCodes:
 	focus = api.getFocusObject()
 	if focus.sleepMode == focus.SLEEP_FULL:
-		return -1
+		return SystemErrorCodes.ACCESS_DENIED
 	import speech
 	from speech.speech import _getSpeakSsmlSpeech
 

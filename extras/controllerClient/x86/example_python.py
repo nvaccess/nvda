@@ -48,5 +48,5 @@ ssml = (
 	'<mark name="test5" />'
 	'</speak>'
 )
-clientLib.nvdaController_speakSsml(ssml, 0, 0, False)
+clientLib.nvdaController_speakSsml(ssml, -1, 0, False)
 clientLib.nvdaController_brailleMessage("Test completed!")
