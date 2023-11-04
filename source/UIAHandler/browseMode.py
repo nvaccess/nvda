@@ -21,6 +21,7 @@ import treeInterceptorHandler
 import cursorManager
 import textInfos
 import browseMode
+from logHandler import log
 from NVDAObjects.UIA import UIA
 
 class UIADocumentWithTableNavigation(documentBase.DocumentWithTableNavigation):
@@ -519,7 +520,15 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 			return False
 		# Ensure that this object is a descendant of the document or is the document itself. 
 		runtimeID=VARIANT()
-		self.rootNVDAObject.UIAElement._IUIAutomationElement__com_GetCurrentPropertyValue(UIAHandler.UIA_RuntimeIdPropertyId,byref(runtimeID))
+		try:
+			self.rootNVDAObject.UIAElement._IUIAutomationElement__com_GetCurrentPropertyValue(
+				UIAHandler.UIA_RuntimeIdPropertyId, byref(runtimeID)
+			)
+		except COMError:
+			log.debugWarning(
+				"Could not get runtimeID of document. Most likely document is dead."
+			)
+			return False
 		UIACondition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_RuntimeIdPropertyId,runtimeID)
 		UIAWalker=UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
 		try:
