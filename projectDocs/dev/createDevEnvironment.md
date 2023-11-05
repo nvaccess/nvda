@@ -76,7 +76,7 @@ For reference, the following run time dependencies are included in Git submodule
 * lilli.dll, version 2.1.0.0
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
 * [Nullsoft Install System](https://nsis.sourceforge.io), version 3.08
-* [Java Access Bridge 32 bit, from Zulu Community OpenJDK build 13.0.1+10Zulu (13.28.11)](https://github.com/nvaccess/javaAccessBridge32-bin)
+* [Java Access Bridge 32 bit, from Zulu Community OpenJDK build 17.0.9+8Zulu (17.46.19)](https://github.com/nvaccess/javaAccessBridge32-bin)
 * [wil](https://github.com/microsoft/wil/)
 * [Microsoft UI Automation Remote Operations Library, forked from @microsoft by @michaeldcurran](https://www.github.com/michaeldcurran/microsoft-ui-uiautomation/)
 	* Commit 224b22f3bf9e
