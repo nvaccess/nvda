@@ -56,7 +56,7 @@ To replicate the production build environment, use the 3.11.x minor version of P
 		* MSVC v143 - VS 2022 C++ ARM64 build tools
 		* MSVC v143 - VS 2022 C++ x64/x86 build tools
 		* C++ ATL for v143 build tools (x86 & x64)
-		* C++ ATL for v143 build tools (ARM64)
+		* C++ ATL for v143 build tools (ARM64/ARM64EC)
 
 ### Git Submodules
 Some of the dependencies are contained in Git submodules.
