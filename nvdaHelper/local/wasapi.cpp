@@ -215,8 +215,8 @@ class WasapiPlayer {
 	// stream. This is used to call the callback.
 	std::vector<std::pair<unsigned int, UINT64>> feedEnds;
 	UINT64 clockFreq;
-	// The duration of audio sent (buffered) so far in ms.
-	UINT64 sentMs = 0;
+	// The total number of frames buffered so far.
+	UINT32 sentFrames = 0;
 	unsigned int nextFeedId = 0;
 	AutoHandle wakeEvent;
 	unsigned int defaultDeviceChangeCount;
@@ -300,7 +300,7 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 		}
 		feedEnds.clear();
 		// This is the start of a new stream as far as WASAPI is concerned.
-		sentMs = 0;
+		sentFrames = 0;
 		return true;
 	};
 
@@ -375,7 +375,7 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 		data += sendBytes;
 		size -= sendBytes;
 		remainingFrames -= sendFrames;
-		sentMs += framesToMs(sendFrames);
+		sentFrames += sendFrames;
 	}
 
 	if (playState == PlayState::playing) {
@@ -389,7 +389,7 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 		// callbacks. Otherwise, we might fire a newly added callback before its
 		// feed() call returns, which will fail because the caller doesn't know about
 		// this new id yet.
-		feedEnds.push_back({*id, sentMs});
+		feedEnds.push_back({*id, framesToMs(sentFrames)});
 	}
 	return S_OK;
 }
@@ -416,7 +416,7 @@ UINT64 WasapiPlayer::getPlayPos() {
 		// If we get an error, playback has probably been interrupted; e.g. because
 		// the device disconnected. Treat this as if playback has finished so we
 		// don't wait forever and so that we fire any pending callbacks.
-		return sentMs;
+		return framesToMs(sentFrames);
 	}
 	return pos * 1000 / clockFreq;
 }
@@ -453,12 +453,13 @@ HRESULT WasapiPlayer::stop() {
 
 void WasapiPlayer::completeStop() {
 	nextFeedId = 0;
-	sentMs = 0;
+	sentFrames = 0;
 	feedEnds.clear();
 	playState = PlayState::stopped;
 }
 
 HRESULT WasapiPlayer::sync() {
+	UINT64 sentMs = framesToMs(sentFrames);
 	for (UINT64 playPos = getPlayPos(); playPos < sentMs;
 			playPos = getPlayPos()) {
 		if (playState != PlayState::playing) {
