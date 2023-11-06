@@ -62,6 +62,8 @@ import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import hwIo
+import NVDAObjects
+import editableText
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
@@ -388,14 +390,8 @@ def NVDAObjectHasUsefulText(obj: "NVDAObject") -> bool:
 		return True
 	elif obj._hasNavigableText:
 		return True
-	elif controlTypes.State.READONLY in obj.states:
-		textInfoObj: textInfos.TextInfo = obj.makeTextInfo(textInfos.POSITION_ALL)
-		if (
-			textInfoObj.text != obj.name
-			and textInfoObj.text != obj.description
-			and textInfoObj != obj.TextInfo
-		):
-			return True
+	elif isinstance(obj, editableText.EditableText):
+		return True
 	return False
 
 
