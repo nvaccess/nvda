@@ -281,8 +281,8 @@ class TouchHandler(threading.Thread):
 				pass
 		interval=self.trackerManager.pendingEmitInterval
 		if interval and interval>0:
-			# Ensure we are pumpped again by the time more pending multiTouch trackers are ready
-			self.pendingEmitsTimer.Start(interval*1000,True)
+			# Ensure we are pumped again by the time more pending multiTouch trackers are ready
+			self.pendingEmitsTimer.Start(int(interval * 1000), True)
 		else:
 			# Stop the timer in case we were pumpped due to something unrelated but just happened to be at the appropriate time to clear any remaining trackers 
 			self.pendingEmitsTimer.Stop()
