@@ -29,10 +29,6 @@ def onMarkReached(name: str) -> int:
 	print(f"Reached SSML mark with name: {name}")
 	return 0
 
-
-ctypes.cast(clientLib._nvdaController_onSsmlMarkReached, ctypes.POINTER(ctypes.c_void_p)).contents.value = (
-	ctypes.cast(onMarkReached, ctypes.c_void_p).value
-)
 ssml = (
 	'<speak>'
 	'This is one sentence. '
@@ -48,5 +44,7 @@ ssml = (
 	'<mark name="test5" />'
 	'</speak>'
 )
+clientLib.nvdaController_setOnSsmlMarkReachedCallback(onMarkReached);
 clientLib.nvdaController_speakSsml(ssml, -1, 0, False)
+clientLib.nvdaController_setOnSsmlMarkReachedCallback(None);
 clientLib.nvdaController_brailleMessage("Test completed!")

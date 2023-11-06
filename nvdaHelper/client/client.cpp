@@ -42,17 +42,27 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 		if (RPC_S_OK != status) {
 			return FALSE;
 		}
+		status = RpcBindingFromStringBinding(rpcWstr, &nvdaController2BindingHandle);
+		if (RPC_S_OK != status) {
+			return FALSE;
+		}
 	} else if(reason==DLL_PROCESS_DETACH) {
+		RpcBindingFree(&nvdaController2BindingHandle);
 		RpcBindingFree(&nvdaControllerBindingHandle);
 	}
 	return TRUE;
 }
 
-error_status_t(__stdcall *_nvdaController_onSsmlMarkReached)(const wchar_t*) = nullptr;
+onSsmlMarkReachedFuncType _onSsmlMarkReached = nullptr;
 
 error_status_t __stdcall nvdaController_onSsmlMarkReached(const wchar_t* mark) {
-	if (_nvdaController_onSsmlMarkReached == nullptr) {
+	if (_onSsmlMarkReached == nullptr) {
 		return ERROR_CALL_NOT_IMPLEMENTED;
 	}
-	return _nvdaController_onSsmlMarkReached(mark);
+	return _onSsmlMarkReached(mark);
+}
+
+error_status_t __stdcall nvdaController_setOnSsmlMarkReachedCallback(onSsmlMarkReachedFuncType callback) {
+	_onSsmlMarkReached = callback;
+	return ERROR_SUCCESS;
 }

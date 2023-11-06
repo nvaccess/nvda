@@ -20,6 +20,12 @@ interface NvdaController {
 	[fault_status,comm_status] speakText();
 	[fault_status,comm_status] cancelSpeech();
 	[fault_status,comm_status] brailleMessage();
+}
+
+[
+	implicit_handle(handle_t nvdaController2BindingHandle)
+]
+interface NvdaController2 {
 	[fault_status,comm_status] getProcessId();
 	[fault_status,comm_status] speakSsml();
 	[fault_status,comm_status] onSsmlMarkReached();

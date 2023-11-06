@@ -30,7 +30,7 @@ cpp_quote("*/")
  * Facilitates the ability to prioritize speech.
  * These values ​​correspond to the values ​​of speech.priorities.SpeechPriority in NVDA.
  */
-typedef [v1_enum] enum {
+typedef [v1_enum] enum tagSPEECH_PRIORITY{
 /**
  * Indicates that a speech sequence should have normal priority.
  */
@@ -52,7 +52,7 @@ typedef [v1_enum] enum {
  * The desired symbol level in a speech sequence.
  * These values ​​correspond to the values ​​of characterProcessing.SymbolLevel in NVDA.
  */
-typedef [v1_enum] enum {
+typedef [v1_enum] enum tagSYMBOL_LEVEL {
 	SYMBOL_LEVEL_NONE = 0,
 	SYMBOL_LEVEL_SOME = 100,
 	SYMBOL_LEVEL_MOST = 200,
@@ -62,11 +62,25 @@ typedef [v1_enum] enum {
 } SYMBOL_LEVEL;
 
 /**
- * Allows the controling of NVDA from a remote process
+ * Type signature for a callback that may be implemented by a client.
+ * The callback is called for every mark in the SSML as received by speakSsml when called synchronously.
+ * @param mark The name of the reached mark.
+ */
+typedef error_status_t(__stdcall *onSsmlMarkReachedFuncType)([in, string] const wchar_t* mark);
+
+/**
+ * Setts the callback used when marks are reached within SSML.
+ * The callback is called for every mark in the SSML as received by speakSsml when called synchronously.
+ * Param callback The callback to use, NULL to reset.
+ */
+error_status_t __stdcall setOnSsmlMarkReachedCallback(onSsmlMarkReachedFuncType callback);
+
+/**
+ * Allows controling of NVDA from a remote process
  */
 [
 	uuid(DFF50B99-F7FD-4ca7-A82C-DAEB3E025295),
-	version(1.1),
+	version(1.0),
 ]
 interface NvdaController {
 
@@ -91,7 +105,16 @@ interface NvdaController {
  * @param message the message that will be temporarily shown on the display
  */
 	error_status_t __stdcall brailleMessage([in,string] const wchar_t* message);
+};
 
+/**
+ * Adds additional methods to control NVDA from a remote process
+ */
+[
+	uuid(3D168D45-CB58-4270-8257-4E0BE515D557),
+	version(1.0),
+]
+interface NvdaController2 {
 /**
  * Retrieves the process identifier (PID) of NVDA's process.
  */
@@ -115,6 +138,8 @@ interface NvdaController {
 
 /**
  * Called by NVDA when a mark in provided SSML is reached after calling speakSsml synchronously.
+ * This callback is implemented by the controller client library.
+ * It forwards the call to the callback registered with 
  * @param mark The name of the reached mark.
  */
 	[callback] error_status_t __stdcall onSsmlMarkReached([in, string] const wchar_t* mark);

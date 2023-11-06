@@ -27,7 +27,8 @@ using namespace std;
 typedef RPC_STATUS(RPC_ENTRY *RpcServerRegisterIf3_functype)(RPC_IF_HANDLE,UUID __RPC_FAR*,RPC_MGR_EPV __RPC_FAR*,unsigned int,unsigned int,unsigned int,RPC_IF_CALLBACK_FN __RPC_FAR*,void __RPC_FAR*);
 
 RPC_IF_HANDLE availableInterfaces[]={
-	nvdaController_NvdaController_v1_1_s_ifspec,
+	nvdaController_NvdaController_v1_0_s_ifspec,
+	nvdaController_NvdaController2_v1_0_s_ifspec,
 	nvdaControllerInternal_NvdaControllerInternal_v1_0_s_ifspec
 };
 
