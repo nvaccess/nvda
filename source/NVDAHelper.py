@@ -171,7 +171,6 @@ def nvdaController_cancelSpeech():
 	focus=api.getFocusObject()
 	if focus.sleepMode==focus.SLEEP_FULL:
 		return -1
-	import queueHandler
 	import speech
 	queueHandler.queueFunction(queueHandler.eventQueue,speech.cancelSpeech)
 	return SystemErrorCodes.SUCCESS
@@ -183,7 +182,6 @@ def nvdaController_brailleMessage(text: str) -> SystemErrorCodes:
 	if focus.sleepMode==focus.SLEEP_FULL:
 		return -1
 	if config.conf["braille"]["reportLiveRegions"]:
-		import queueHandler
 		import braille
 		queueHandler.queueFunction(queueHandler.eventQueue, braille.handler.message, text)
 	return SystemErrorCodes.SUCCESS
@@ -236,7 +234,6 @@ def nvdaControllerInternal_reportLiveRegion(text: str, politeness: str):
 	focus = api.getFocusObject()
 	if focus.sleepMode == focus.SLEEP_FULL:
 		return -1
-	import queueHandler
 	import speech
 	import braille
 	from aria import AriaLivePoliteness
@@ -501,7 +498,6 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	#Never announce changes while in sayAll (#1676)
 	if sayAll.SayAllHandler.isRunning():
 		return 0
-	import queueHandler
 	import ui
 	buf=create_unicode_buffer(1024)
 	res=windll.kernel32.GetLocaleInfoW(languageID,2,buf,1024)
