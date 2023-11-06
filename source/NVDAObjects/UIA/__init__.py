@@ -2019,11 +2019,13 @@ class UIA(Window):
 		if index==0:
 			if self.UIAInvokePattern:
 				self.UIAInvokePattern.Invoke()
+				return
 			elif self.UIATogglePattern:
 				self.UIATogglePattern.toggle()
+				return
 			elif self.UIASelectionItemPattern:
 				self.UIASelectionItemPattern.select()
-			return
+				return
 		raise NotImplementedError
 
 	def _get_hasFocus(self):
