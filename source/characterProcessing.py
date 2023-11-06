@@ -140,6 +140,10 @@ def getCharacterDescription(locale: str, character: str) -> Optional[List[str]]:
 
 # Speech symbol levels
 class SymbolLevel(IntEnum):
+	"""The desired symbol level in a speech sequence or in configuration.
+	Note: This enum has its counterpart in the NVDAController RPC interface (nvdaController.idl).
+	Additions to this enum should also be reflected in nvdaController.idl.
+	"""
 	NONE = 0
 	SOME = 100
 	MOST = 200
