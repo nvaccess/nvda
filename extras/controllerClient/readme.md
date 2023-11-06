@@ -1,4 +1,4 @@
-# NVDA Controller Client API 1.1 Documentation
+# NVDA Controller Client API 2.0 Documentation
 
 ## Introduction
 
@@ -8,9 +8,11 @@ The client API is implemented as a dll (dynamic link library). The functions in 
 
 ## Compatibility notice
 
-Version 1.1 of the controller client was introduced in NVDA 2024.1, offering support to speak SSML speech sequences.
-While this version of the client adds more functionality, it is *not compatible* with NVDA 2023.3 and below.
-If you do not necessarily rely on the support to speak SSML, you are encouraged to use version 1.0 of the client library that is linked below.
+Version 2.0 of the controller client was introduced in NVDA 2024.1, offering the following additional functions compared to version 1.0:
+	- nvdaController_getProcessId
+	- nvdaController_speakSsml
+
+These functions are supported in NVDA 2024.1 and newer. On older versions, they return error code 1717 (RPC_S_UNKNOWN_IF).
 
 ## Security practices
 
@@ -25,8 +27,6 @@ You can build locally or download pre-built, details:
 - **Latest, in development version:**
   - The libraries are built by Appveyor (our CI).
   - Downloads are available from the artifacts tab.
-- **Latest build of version 1.0 of the library, supporting NVDA 2023.3 and below:**
-  - Download the `nvda_2023.3_controllerClient.zip` file: [Direct link](https://www.nvaccess.org/files/nvda/releases/2023.3/nvda_2023.3_controllerClient.zip)
 - **Build them yourself:**
   - Follow the project `readme.txt` for general build requirements/dependencies.
   - Run `scons source client`
