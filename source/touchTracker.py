@@ -341,7 +341,7 @@ class TrackerManager(object):
 			#Only emit trackers if there are not unknown actions
 			hasUnknownTrackers=self.numUnknownTrackers
 			if not hasUnknownTrackers:
-				for tracker in self.multiTouchTrackers:
+				for tracker in self.multiTouchTrackers.copy():
 					# isolated holds can be dropped as we only care when they are tapAndHolds (and preheld is handled later)
 					#All trackers can be emitted with no delay except for tap which must wait for the timeout (to detect plural taps)
 					trackerTimeout=tracker.pluralTimeout-t if tracker.pluralTimeout is not None else 0 
