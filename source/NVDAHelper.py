@@ -88,7 +88,7 @@ def nvdaController_speakSsml(  # noqa: C901
 		symbolLevel: "SymbolLevel",
 		priority: "SpeechPriority",
 		asynchronous: bool,
-) -> int | SystemErrorCodes:
+) -> SystemErrorCodes:
 	focus = api.getFocusObject()
 	if focus.sleepMode == focus.SLEEP_FULL:
 		return SystemErrorCodes.ACCESS_DENIED
