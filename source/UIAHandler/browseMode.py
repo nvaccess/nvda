@@ -501,10 +501,13 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 		raise NotImplementedError
 
 	def _activateNVDAObject(self,obj):
-		try:
-			obj.doAction()
-		except NotImplementedError:
-			pass
+		while obj in self:
+			try:
+				obj.doAction()
+				return
+			except NotImplementedError:
+				pass
+			obj = obj.parent
 
 	def _get_isAlive(self):
 		if not winUser.isWindow(self.rootNVDAObject.windowHandle):
