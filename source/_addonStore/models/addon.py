@@ -121,6 +121,7 @@ class _AddonStoreModel(_AddonGUIModel):
 	URL: str
 	sha256: str
 	addonVersionNumber: MajorMinorPatch
+	reviewUrl: Optional[str]
 
 	@property
 	def tempDownloadPath(self) -> str:
@@ -236,6 +237,7 @@ class InstalledAddonStoreModel(_AddonManifestModel, _AddonStoreModel):
 	addonVersionNumber: MajorMinorPatch
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
+	reviewUrl: Optional[str]
 	legacy: bool = False
 	"""
 	Legacy add-ons contain invalid metadata
@@ -269,6 +271,7 @@ class AddonStoreModel(_AddonStoreModel):
 	addonVersionNumber: MajorMinorPatch
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
+	reviewUrl: Optional[str]
 	legacy: bool = False
 	"""
 	Legacy add-ons contain invalid metadata
@@ -300,6 +303,7 @@ def _createInstalledStoreModelFromData(addon: Dict[str, Any]) -> InstalledAddonS
 		sha256=addon["sha256"],
 		minNVDAVersion=MajorMinorPatch(**addon["minNVDAVersion"]),
 		lastTestedVersion=MajorMinorPatch(**addon["lastTestedVersion"]),
+		reviewUrl=addon.get("reviewUrl"),
 		legacy=addon.get("legacy", False),
 	)
 
@@ -321,6 +325,7 @@ def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
 		sha256=addon["sha256"],
 		minNVDAVersion=MajorMinorPatch(**addon["minNVDAVersion"]),
 		lastTestedVersion=MajorMinorPatch(**addon["lastTestedVersion"]),
+		reviewUrl=addon.get("reviewUrl"),
 		legacy=addon.get("legacy", False),
 	)
 
