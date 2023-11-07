@@ -377,9 +377,7 @@ def NVDAObjectHasUsefulText(obj: "NVDAObject") -> bool:
 	"""Does obj contain useful text to display in braille
 
 	:param obj: object to check
-	:type obj: NVDAObject
 	:return: True if there is useful text, False if not
-	:rtype: bool
 	"""
 	if objectBelowLockScreenAndWindowsIsLocked(obj):
 		return False
