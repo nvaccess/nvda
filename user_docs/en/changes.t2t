@@ -89,7 +89,7 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
     - Providing the priority of speech to be spoken.
     - Speaking both synchronously (blocking) and asynchronously (instant return).
     -
-  - ``nvdaController_setOnSsmlMarkReachedCallback```: To register a callback of type ``onSsmlMarkReachedFuncType`` that is called in synchronous mode for every ``<mark />`` tag encountered in the SSML sequence provided to ``nvdaController_speakSsml``.
+  - ``nvdaController_setOnSsmlMarkReachedCallback``: To register a callback of type ``onSsmlMarkReachedFuncType`` that is called in synchronous mode for every ``<mark />`` tag encountered in the SSML sequence provided to ``nvdaController_speakSsml``.
   -
  - Note: the new functions in the controller client only support NVDA 2024.1 and above.
  -
