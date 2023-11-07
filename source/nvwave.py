@@ -840,7 +840,11 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			return
 		if self._player:
 			NVDAHelper.localLib.wasPlay_destroy(self._player)
-			del self._instances[self._player]
+			# Because _instances is a WeakValueDictionary, it will remove the
+			# reference to this instance by itself. We don't need to do it explicitly
+			# here. Furthermore, doing it explicitly might cause an exception because
+			# a weakref callback can run before __del__ in some cases, which would mean
+			# it has already been removed from _instances.
 			self._player = None
 
 	def open(self):
