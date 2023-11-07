@@ -41,14 +41,17 @@ You can build locally or download pre-built, details:
 * `nvdaController.h`
   - A C header file containing declarations for all the provided functions.
 
-The **`extras/controllerClient/x86` directory** also contains example usage:
+The **`extras/controllerClient/Examples` directory** also contains example usage:
 
 * `example_python.py`
   - an example Python program that uses the NVDA controller client API.
 * `example_c.c`
   - The source code for an example C program that uses the NVDA controller client API.
-* `example_csharp.cs`
-  - The source code for an example C# program that uses the NVDA controller client API.
+* `example_csharp`
+  - The source code for an example C# project on NET Standard 2.0 that uses the NVDA controller client API.
+
+Running these examples requires a copy of **`nvdaControllerClient.dll`** in its path that matches the architecture of the example.
+For example, if you want to test the Python example on an X64 version of Python, you need the **`x64/nvdaControllerClient.dll`** file.
 
 ## Available Functions
 

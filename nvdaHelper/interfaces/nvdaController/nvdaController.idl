@@ -117,6 +117,7 @@ interface NvdaController {
 interface NvdaController2 {
 /**
  * Retrieves the process identifier (PID) of NVDA's process.
+ * @param pid Out parameter that receives the process id.
  */
 	error_status_t __stdcall getProcessId([out] unsigned long* pid);
 
