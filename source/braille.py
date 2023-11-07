@@ -62,6 +62,7 @@ import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import hwIo
+from editableText import EditableText
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
@@ -373,15 +374,20 @@ BLUETOOTH_PORT =  ("bluetooth", _("Bluetooth"))
 
 
 def NVDAObjectHasUsefulText(obj: "NVDAObject") -> bool:
+	"""Does obj contain useful text to display in braille
+
+	:param obj: object to check
+	:return: True if there is useful text, False if not
+	"""
 	if objectBelowLockScreenAndWindowsIsLocked(obj):
 		return False
 	import displayModel
 	if issubclass(obj.TextInfo,displayModel.DisplayModelTextInfo):
 		# #1711: Flat review (using displayModel) should always be presented on the braille display
 		return True
-	else:
-		# Let the NVDAObject choose if the text should be presented
-		return obj._hasNavigableText
+	if obj._hasNavigableText or isinstance(obj, EditableText):
+		return True
+	return False
 
 
 def _getDisplayDriver(moduleName: str, caseSensitive: bool = True) -> Type["BrailleDisplayDriver"]:
