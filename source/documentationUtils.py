@@ -1,9 +1,10 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Łukasz Golonka
+# Copyright (C) 2006-2023 NV Access Limited, Łukasz Golonka
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
+from typing import Optional
 import os
 
 import globalVars
@@ -11,8 +12,7 @@ import languageHandler
 import NVDAState
 
 
-
-def getDocFilePath(fileName, localized=True):
+def getDocFilePath(fileName: str, localized: bool = True) -> Optional[str]:
 	if not getDocFilePath.rootPath:
 		if NVDAState.isRunningAsSource():
 			getDocFilePath.rootPath = os.path.join(globalVars.appDir, "..", "user_docs")
