@@ -2,15 +2,15 @@
 
 ## Introduction
 
-This client API allows an application to communicate with NVDA 2024.1 and above, in order to do such things as speak text or braille a message.
+This client API allows an application to communicate with NVDA, in order to do such things as speak text or braille a message.
 
 The client API is implemented as a dll (dynamic link library). The functions in this dll can be called from any programming language that supports looking up and calling of any symbol in a dll (such as ctypes in Python), or by linking to it for languages like C and C++.
 
 ## Compatibility notice
 
 Version 2.0 of the controller client was introduced in NVDA 2024.1, offering the following additional functions compared to version 1.0:
-	- nvdaController_getProcessId
-	- nvdaController_speakSsml
+- nvdaController_getProcessId
+- nvdaController_speakSsml
 
 These functions are supported in NVDA 2024.1 and newer. On older versions, they return error code 1717 (RPC_S_UNKNOWN_IF).
 
