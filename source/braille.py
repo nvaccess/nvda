@@ -387,7 +387,9 @@ def NVDAObjectHasUsefulText(obj: "NVDAObject") -> bool:
 	if issubclass(obj.TextInfo,displayModel.DisplayModelTextInfo):
 		# #1711: Flat review (using displayModel) should always be presented on the braille display
 		return True
-	if obj._hasNavigableText or isinstance(obj, EditableText):
+	# Late import to avoid import error
+	from NVDAObjects.behaviors import _FakeTableCell
+	if obj._hasNavigableText or isinstance(obj, EditableText) or isinstance(obj, _FakeTableCell):
 		return True
 	return False
 
