@@ -8,9 +8,9 @@ Communication with display is done here. See class L{BrailleDisplayDriver}
 for description of most important functions.
 """
 
+import ftdi2
 import serial
 import time
-import winreg
 
 from collections import deque
 from bdDetect import KEY_SERIAL, DriverRegistrar
@@ -66,7 +66,7 @@ from .constants import (
 	ALBATROSS_VID,
 	ALBATROSS_PID,
 	ALBATROSS_BUS_DEVICE_DESC,
-	SER_NUM_KEY_LENGTH
+	FTDI_SER_NUM_LENGTH,
 )
 from .gestures import _gestureMap
 
@@ -214,30 +214,23 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			raise RuntimeError("No Albatross found")
 
 	def _albatross_port(self, port: str) -> bool:
-		"""Check if this is albatross usb serial port
+		"""Check if this is albatross usb serial port or other suitable serial port
 
 		:param port: port to check
 		:type port: str
-		:return: False, if correct vid and pid but bus device description does not
-		 match, or check fails; otherwise True
+		:return: False, if correct vid and pid but bus device description and
+		serial number do not match; otherwise True
 		:rtype: bool
 		"""
 		p = next(list_ports.grep(port))
 		if hex(p.vid) == ALBATROSS_VID and hex(p.pid) == ALBATROSS_PID:
-			try:
-				subKey = (
-					r"SYSTEM\Setup\Upgrade\PnP\CurrentControlSet\Control\DeviceMigration"
-					+ "\\" + r"Devices\USB\VID_0403&PID_6001" + "\\"
-					+ p.serial_number[:SER_NUM_KEY_LENGTH]
-				)
-				regKey = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, subKey)
-				valueData = winreg.QueryValueEx(regKey, "BusDeviceDesc")[0]
-				winreg.CloseKey(regKey)
-				if valueData != ALBATROSS_BUS_DEVICE_DESC:
-					return False
-			except OSError:
-				log.debug("registry key open or getting value data failed", exc_info=True)
-				return False
+			for entry in ftdi2.get_device_info_list():
+				if (
+					str(entry["SerialNumber"], encoding='UTF-8') == p.serial_number[:FTDI_SER_NUM_LENGTH]
+					and entry["Description"] == ALBATROSS_BUS_DEVICE_DESC
+				):
+					return True
+			return False
 		return True
 
 	def _initConnection(self) -> bool:

@@ -317,10 +317,10 @@ ALBATROSS_PID = "0x6001"
 """Ftdi product id of usb serial port
 """
 
-ALBATROSS_BUS_DEVICE_DESC = "Albatross Braille Display"
-"""Bus reported device description
+ALBATROSS_BUS_DEVICE_DESC = b"Albatross Braille Display"
+"""Bus reported device description as bytes
 """
 
-SER_NUM_KEY_LENGTH = 8
-"""Ftdi serial number is truncated when used as registry key
+FTDI_SER_NUM_LENGTH = 8
+"""ftdi serial number length (are additional characters for sub devices?)
 """
