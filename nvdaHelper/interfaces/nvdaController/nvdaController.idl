@@ -69,7 +69,7 @@ typedef [v1_enum] enum tagSYMBOL_LEVEL {
 typedef error_status_t(__stdcall *onSsmlMarkReachedFuncType)([in, string] const wchar_t* mark);
 
 /**
- * Setts the callback used when marks are reached within SSML.
+ * Sets the callback used when marks are reached within SSML.
  * The callback is called for every mark in the SSML as received by speakSsml when called synchronously.
  * Param callback The callback to use, NULL to reset.
  */
