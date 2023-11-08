@@ -79,6 +79,10 @@ appModuleHandler.initialize()
 import vision  # noqa: E402
 vision.initialize()
 
+import speech  # noqa: E402
+
+speech.initialize()
+
 import braille
 # Disable auto detection of braille displays when unit testing.
 config.conf['braille']['display'] = "noBraille"

@@ -68,6 +68,8 @@ class TestSeikantkDriver_HID(unittest.TestCase):
 		seikaTestDriver.simulateMessageReceived(example16Cell)
 		self.assertEqual(22, seikaTestDriver.numBtns)
 		self.assertEqual(16, seikaTestDriver.numCells)
+		self.assertEqual(16, seikaTestDriver.numCols)
+		self.assertEqual(1, seikaTestDriver.numRows)
 		self.assertEqual(16, seikaTestDriver.numRoutingKeys)
 		self.assertEqual(SBDDesc.decode("UTF-8"), seikaTestDriver._description)
 
@@ -75,6 +77,8 @@ class TestSeikantkDriver_HID(unittest.TestCase):
 		seikaTestDriver.simulateMessageReceived(example40Cell)
 		self.assertEqual(22, seikaTestDriver.numBtns)
 		self.assertEqual(40, seikaTestDriver.numCells)
+		self.assertEqual(40, seikaTestDriver.numCols)
+		self.assertEqual(1, seikaTestDriver.numRows)
 		self.assertEqual(40, seikaTestDriver.numRoutingKeys)
 		self.assertEqual(SBDDesc.decode("UTF-8"), seikaTestDriver._description)
 
@@ -115,6 +119,8 @@ class TestSeikantkDriver_Serial(unittest.TestCase):
 		seikaTestDriver.simulateMessageReceived(example16Cell)
 		self.assertEqual(22, seikaTestDriver.numBtns)
 		self.assertEqual(16, seikaTestDriver.numCells)
+		self.assertEqual(16, seikaTestDriver.numCols)
+		self.assertEqual(1, seikaTestDriver.numRows)
 		self.assertEqual(16, seikaTestDriver.numRoutingKeys)
 		self.assertEqual(SBDDesc.decode("UTF-8"), seikaTestDriver._description)
 
@@ -122,6 +128,8 @@ class TestSeikantkDriver_Serial(unittest.TestCase):
 		seikaTestDriver.simulateMessageReceived(example40Cell)
 		self.assertEqual(22, seikaTestDriver.numBtns)
 		self.assertEqual(40, seikaTestDriver.numCells)
+		self.assertEqual(40, seikaTestDriver.numCols)
+		self.assertEqual(1, seikaTestDriver.numRows)
 		self.assertEqual(40, seikaTestDriver.numRoutingKeys)
 		self.assertEqual(SBDDesc.decode("UTF-8"), seikaTestDriver._description)
 
@@ -171,7 +179,6 @@ class TestGestureMap(unittest.TestCase):
 class TestBRLTTY(unittest.TestCase):
 	"""Tests the integrity of the bundled brlapi module."""
 
-	@unittest.skip("BRLAPI is temporarily unavailable in NVDA alpha during the python upgrade for 2024.1")
 	def test_brlapi(self):
 		try:
 			# SUpress Flake8 F401 imported but unused, as we're testing the import

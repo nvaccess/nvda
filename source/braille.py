@@ -62,6 +62,7 @@ import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import hwIo
+from editableText import EditableText
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
@@ -373,15 +374,20 @@ BLUETOOTH_PORT =  ("bluetooth", _("Bluetooth"))
 
 
 def NVDAObjectHasUsefulText(obj: "NVDAObject") -> bool:
+	"""Does obj contain useful text to display in braille
+
+	:param obj: object to check
+	:return: True if there is useful text, False if not
+	"""
 	if objectBelowLockScreenAndWindowsIsLocked(obj):
 		return False
 	import displayModel
 	if issubclass(obj.TextInfo,displayModel.DisplayModelTextInfo):
 		# #1711: Flat review (using displayModel) should always be presented on the braille display
 		return True
-	else:
-		# Let the NVDAObject choose if the text should be presented
-		return obj._hasNavigableText
+	if obj._hasNavigableText or isinstance(obj, EditableText):
+		return True
+	return False
 
 
 def _getDisplayDriver(moduleName: str, caseSensitive: bool = True) -> Type["BrailleDisplayDriver"]:
@@ -2873,11 +2879,26 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	numCells: int
 
 	def _get_numCells(self) -> int:
-		"""Obtain the number of braille cells on this  display.
+		"""Obtain the number of braille cells on this display.
 		@note: 0 indicates that braille should be disabled.
+		@note: For multi line displays, this is the total number of cells (e.g. numRows * numCols)
 		@return: The number of cells.
 		"""
-		return 0
+		return self.numRows * self.numCols
+
+	def _set_numCells(self, numCells: int):
+		if self.numRows > 1:
+			raise ValueError("Please set numCols explicitly and don't set numCells for multi line braille displays")
+		self.numCols = numCells
+
+	#: Number of rows of the braille display, this will be 1 for most displays
+	#: Note: Setting this to 0 will cause numCells to be 0 and hence will disable braille.
+	numRows: int = 1
+
+	#: Number of columns (cells per row) of the braille display
+	#: 0 indicates that braille should be disabled.
+	numCols: int = 0
+
 
 	def __repr__(self):
 		return f"{self.__class__.__name__}({self.name!r}, numCells={self.numCells!r})"
