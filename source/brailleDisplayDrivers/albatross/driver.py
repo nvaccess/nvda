@@ -217,10 +217,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"""Check if this is albatross usb serial port or other suitable serial port
 
 		:param port: port to check
-		:type port: str
 		:return: False, if correct vid and pid but bus device description and
 		serial number do not match; otherwise True
-		:rtype: bool
 		"""
 		p = next(list_ports.grep(port))
 		if hex(p.vid) == ALBATROSS_VID and hex(p.pid) == ALBATROSS_PID:
