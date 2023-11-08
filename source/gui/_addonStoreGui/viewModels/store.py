@@ -44,7 +44,6 @@ from logHandler import log
 
 from ..controls.messageDialogs import (
 	_shouldEnableWhenAddonTooOldDialog,
-	_shouldEnableWhenMultipleAddonsTooOldDialog,
 	_shouldProceedToRemoveAddonDialog,
 	_shouldProceedToRemoveMultipleAddonDialog,
 	_shouldInstallWhenAddonTooOldDialog,
@@ -232,32 +231,75 @@ class AddonStoreVM:
 		assert path is not None
 		startfile(path)
 
-	def removeAddon(self, listItemVM: AddonListItemVM[_AddonGUIModel], askConfirmation: bool = True) -> None:
+	def removeAddon(
+			self,
+			listItemVM: AddonListItemVM[_AddonGUIModel],
+			askConfirmation: bool = True,
+			useRememberChoiceCheckbox: bool = False,
+	) -> tuple[bool, bool]:
+		from gui import mainFrame
 		assert addonDataManager
 		assert listItemVM.model
-		if not askConfirmation or _shouldProceedToRemoveAddonDialog(listItemVM.model):
+		if askConfirmation:
+			res, shouldRememberChoice = _shouldProceedToRemoveAddonDialog(
+				mainFrame,
+				listItemVM.model,
+				useRememberChoiceCheckbox=useRememberChoiceCheckbox,
+			)
+		else:
+			res = True
+			shouldRememberChoice = True
+		if res:
 			addonDataManager._deleteCacheInstalledAddon(listItemVM.model.name)
 			assert listItemVM.model._addonHandlerModel is not None
 			listItemVM.model._addonHandlerModel.requestRemove()
 			self.refresh()
 			listItemVM.status = getStatus(listItemVM.model)
+		return res, shouldRememberChoice
 
 	def removeAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]) -> None:
-		if not _shouldProceedToRemoveMultipleAddonDialog(nAddons=len(listItemVMs)):
-			log.debug("Aborting batch remove add-ons.")
-			return
+		shoulRemove = True
+		shouldRememberChoice = False
 		for aVM in listItemVMs:
 			if aVM.status == AvailableAddonStatus.PENDING_REMOVE:
 				log.debug(f"Skipping {aVM.Id} as it is already pending remove")
 			else:
-				self.removeAddon(aVM, askConfirmation=False)
+				if shouldRememberChoice:
+					if shoulRemove:
+						self.removeAddon(aVM, askConfirmation=False)
+					else:
+						log.debug(
+							f"Skipping {aVM.Id} as removal has been previously declined for all remaining"
+							" add-ons."
+						)
+				else:
+					shoulRemove, shouldRememberChoice = self.removeAddon(
+						aVM,
+						askConfirmation=True,
+						useRememberChoiceCheckbox=True,
+					)
 
-	def installOverrideIncompatibilityForAddon(self, listItemVM: AddonListItemVM) -> None:
+	def installOverrideIncompatibilityForAddon(
+			self,
+			listItemVM: AddonListItemVM,
+			askConfirmation: bool = True,
+			useRememberChoiceCheckbox: bool = False,
+	) -> tuple[bool, bool]:
 		from gui import mainFrame
-		if _shouldInstallWhenAddonTooOldDialog(mainFrame, listItemVM.model):
+		if askConfirmation:
+			res, shouldRememberChoice = _shouldInstallWhenAddonTooOldDialog(
+				mainFrame,
+				listItemVM.model,
+				useRememberChoiceCheckbox=useRememberChoiceCheckbox,
+			)
+		else:
+			res = True
+			shouldRememberChoice = True
+		if res:
 			listItemVM.model.enableCompatibilityOverride()
 			self.getAddon(listItemVM)
-			self.refresh()
+		self.refresh()
+		return res, shouldRememberChoice
 
 	_enableErrorMessage: str = pgettext(
 		"addonStore",
@@ -295,37 +337,49 @@ class AddonStoreVM:
 			self,
 			listItemVM: AddonListItemVM[_AddonManifestModel],
 			askConfirmation: bool = True,
-	) -> None:
+			useRememberChoiceCheckbox: bool = False,
+	) -> tuple[bool, bool]:
 		from ... import mainFrame
-		if not askConfirmation or _shouldEnableWhenAddonTooOldDialog(mainFrame, listItemVM.model):
+		if askConfirmation:
+			res, shouldRememberChoice = _shouldEnableWhenAddonTooOldDialog(
+				mainFrame,
+				listItemVM.model,
+				
+				useRememberChoiceCheckbox=useRememberChoiceCheckbox,
+			)
+		else:
+			res = True
+			shouldRememberChoice = True
+		if res:
 			listItemVM.model.enableCompatibilityOverride()
 			self._handleEnableDisable(listItemVM, True)
+		return res, shouldRememberChoice
 
 	def enableAddon(self, listItemVM: AddonListItemVM) -> None:
 		self._handleEnableDisable(listItemVM, True)
 
 	def enableAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]) -> None:
-		disabledIncompatibleAddons = [
-			aVM for aVM in listItemVMs
-			if aVM.status in (
-				AvailableAddonStatus.INCOMPATIBLE_DISABLED,
-				AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
-			)
-			and not aVM.model.isCompatible
-			and aVM.model.canOverrideCompatibility
-		]
-		if (
-			len(disabledIncompatibleAddons) > 0
-			and not _shouldEnableWhenMultipleAddonsTooOldDialog(len(disabledIncompatibleAddons))
-		):
-			log.debug("Override incompatibility has been declined. Aborting batch enable add-ons.")
-			return
+		shouldEnableIncompatible = True
+		shouldRememberChoice = False
 		for aVM in listItemVMs:
 			if aVM.status in (
 				AvailableAddonStatus.INCOMPATIBLE_DISABLED,
 				AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
 			) and not aVM.model.isCompatible and aVM.model.canOverrideCompatibility:
-				self.enableOverrideIncompatibilityForAddon(aVM, askConfirmation=False)
+				if shouldRememberChoice:
+					if shouldEnableIncompatible:
+						self.enableOverrideIncompatibilityForAddon(aVM, askConfirmation=False)
+					else:
+						log.debug(
+							f"Skipping {aVM.Id} as override incompatibility has been previously declined for all remaining"
+							" add-ons."
+						)
+				else:
+					shouldEnableIncompatible, shouldRememberChoice = self.enableOverrideIncompatibilityForAddon(
+						aVM,
+						askConfirmation=True,
+						useRememberChoiceCheckbox=True,
+					)
 			elif aVM.status in (
 				AvailableAddonStatus.DISABLED,
 				AvailableAddonStatus.PENDING_DISABLE,
@@ -367,16 +421,31 @@ class AddonStoreVM:
 		self._downloader.download(listItemVM, self._downloadComplete, self.onDisplayableError)
 
 	def getAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]) -> None:
+		shouldInstallIncompatible = True
+		shouldRememberChoice = False
 		for aVM in listItemVMs:
-			if aVM.status not in (
+			if aVM.status in (
 				AvailableAddonStatus.AVAILABLE,
 				AvailableAddonStatus.UPDATE,
 			):
-				log.debug(f"Skipping {aVM.Id} as it is not available or updatable")
-			elif not aVM.model.isCompatible and aVM.model.canOverrideCompatibility:
-				self.installOverrideIncompatibilityForAddon(aVM)
-			else:
 				self.getAddon(aVM)
+			elif not aVM.model.isCompatible and aVM.model.canOverrideCompatibility:
+				if shouldRememberChoice:
+					if shouldInstallIncompatible:
+						self.installOverrideIncompatibilityForAddon(aVM, askConfirmation=False)
+					else:
+						log.debug(
+							f"Skipping {aVM.Id} as override incompatibility has been previously declined for all remaining"
+							" add-ons."
+						)
+				else:
+					shouldInstallIncompatible, shouldRememberChoice = self.installOverrideIncompatibilityForAddon(
+						aVM,
+						askConfirmation=True,
+						useRememberChoiceCheckbox=True
+					)
+			else:
+				log.debug(f"Skipping {aVM.Id} as it is not available or updatable")
 
 	def _downloadComplete(
 			self,

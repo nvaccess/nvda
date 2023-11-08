@@ -125,7 +125,7 @@ class AddonListItemVM(Generic[_AddonModelT]):
 		return self._model.listItemVMId
 
 	def canUseInstallAction(self):
-		return self.status == AvailableAddonStatus.AVAILABLE,
+		return self.status == AvailableAddonStatus.AVAILABLE
 
 	def canUseInstallOverrideIncompatibilityAction(self):
 		return self.status == AvailableAddonStatus.INCOMPATIBLE and self.model.canOverrideCompatibility

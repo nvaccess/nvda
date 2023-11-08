@@ -32,6 +32,10 @@ if TYPE_CHECKING:
 
 
 class ErrorAddonInstallDialogWithYesNoButtons(ErrorAddonInstallDialog):
+	def __init__(self, *args, useRememberChoiceCheckbox=False, **kwargs):
+		self.useRememberChoiceCheckbox = useRememberChoiceCheckbox
+		super().__init__(*args, **kwargs)
+
 	def _addButtons(self, buttonHelper: ButtonHelper) -> None:
 		addonInfoButton = buttonHelper.addButton(
 			self,
@@ -57,6 +61,21 @@ class ErrorAddonInstallDialogWithYesNoButtons(ErrorAddonInstallDialog):
 		)
 		noButton.SetDefault()
 		noButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.NO))
+
+	def _addContents(self, contentsSizer: BoxSizerHelper):
+		if self.useRememberChoiceCheckbox:
+			# Translators: A checkbox in the dialog to remember the choice made when installing or enabling
+			# incompatible add-ons, or when removing add-ons.
+			self.rememberChoiceCheckbox = wx.CheckBox(
+				self,
+				label=pgettext("addonStore", "Remember this choice for subsequent add-ons"),
+			)
+			contentsSizer.addItem(self.rememberChoiceCheckbox)
+
+	def shouldRememberChoice(self):
+		if self.useRememberChoiceCheckbox:
+			return self.rememberChoiceCheckbox.IsChecked()
+		return False
 
 
 def _shouldProceedWhenInstalledAddonVersionUnknown(
@@ -92,20 +111,27 @@ def _shouldProceedWhenInstalledAddonVersionUnknown(
 
 
 def _shouldProceedToRemoveAddonDialog(
-		addon: "SupportsVersionCheck"
+		parent,
+		addon: "SupportsVersionCheck",
+		useRememberChoiceCheckbox: bool = False,
 ) -> bool:
-	return messageBox(
-		pgettext(
-			"addonStore",
-			# Translators: Presented when attempting to remove the selected add-on.
-			# {addon} is replaced with the add-on name.
-			"Are you sure you wish to remove the {addon} add-on from NVDA? "
-			"This cannot be undone."
-		).format(addon=addon.name),
+	removeMessage = pgettext(
+		"addonStore",
+		# Translators: Presented when attempting to remove the selected add-on.
+		# {addon} is replaced with the add-on name.
+		"Are you sure you wish to remove the {addon} add-on from NVDA? "
+		"This cannot be undone."
+	).format(addon=addon.name)
+	dlg = ErrorAddonInstallDialogWithYesNoButtons(
+		parent=parent,
 		# Translators: Title for message asking if the user really wishes to remove the selected Add-on.
-		pgettext("addonStore", "Remove Add-on"),
-		wx.YES_NO | wx.NO_DEFAULT | wx.ICON_WARNING
-	) == wx.YES
+		title=pgettext("addonStore", "Remove Add-on"),
+		message=removeMessage,
+		showAddonInfoFunction=lambda: _showAddonInfo(addon),
+		useRememberChoiceCheckbox=useRememberChoiceCheckbox,
+	)
+	res = displayDialogAsModal(dlg)
+	return (res == wx.YES), dlg.shouldRememberChoice()
 
 
 def _shouldProceedToRemoveMultipleAddonDialog(nAddons) -> bool:
@@ -124,8 +150,9 @@ def _shouldProceedToRemoveMultipleAddonDialog(nAddons) -> bool:
 
 def _shouldInstallWhenAddonTooOldDialog(
 		parent: wx.Window,
-		addon: _AddonGUIModel
-) -> bool:
+		addon: _AddonGUIModel,
+		useRememberChoiceCheckbox: bool = False,
+) -> tuple[bool, bool]:
 	incompatibleMessage = pgettext(
 		"addonStore",
 		# Translators: The message displayed when installing an add-on package that is incompatible
@@ -142,20 +169,23 @@ def _shouldInstallWhenAddonTooOldDialog(
 	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
 	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
 	)
-	res = displayDialogAsModal(ErrorAddonInstallDialogWithYesNoButtons(
+	dlg = ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
 		title=pgettext("addonStore", "Add-on not compatible"),
 		message=incompatibleMessage,
-		showAddonInfoFunction=lambda: _showAddonInfo(addon)
-	))
-	return res == wx.YES
+		showAddonInfoFunction=lambda: _showAddonInfo(addon),
+		useRememberChoiceCheckbox=useRememberChoiceCheckbox,
+	)
+	res = displayDialogAsModal(dlg)
+	return (res == wx.YES), dlg.shouldRememberChoice()
 
 
 def _shouldEnableWhenAddonTooOldDialog(
 		parent: wx.Window,
-		addon: _AddonGUIModel
-) -> bool:
+		addon: _AddonGUIModel,
+		useRememberChoiceCheckbox: bool = False,
+) -> tuple[bool, bool]:
 	incompatibleMessage = pgettext(
 		"addonStore",
 		# Translators: The message displayed when enabling an add-on package that is incompatible
@@ -172,36 +202,16 @@ def _shouldEnableWhenAddonTooOldDialog(
 	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
 	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
 	)
-	res = displayDialogAsModal(ErrorAddonInstallDialogWithYesNoButtons(
+	dlg = ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
 		title=pgettext("addonStore", "Add-on not compatible"),
 		message=incompatibleMessage,
-		showAddonInfoFunction=lambda: _showAddonInfo(addon)
-	))
-	return res == wx.YES
-
-
-def _shouldEnableWhenMultipleAddonsTooOldDialog(
-		nAddons: int,
-) -> bool:
-	incompatibleMessage = pgettext(
-		"addonStore",
-		# Translators: The message displayed when enabling one or more incompatible add-on packages
-		# because the add-ons are too old for the running version of NVDA.
-		"Warning: {nAddons} add-ons are incompatible. "
-		"Check for an updated version of these add-on if possible. "
-		"Enabling may cause unstable behavior in NVDA.\n"
-		"Proceed with enabling anyway? "
-		).format(
-	nAddons=nAddons,
+		showAddonInfoFunction=lambda: _showAddonInfo(addon),
+		useRememberChoiceCheckbox=useRememberChoiceCheckbox,
 	)
-	return messageBox(
-		incompatibleMessage,
-		# Translators: Title for message asking if the user really wishes to enable the selected Add-ons.
-		pgettext("addonStore", "Add-ons not compatible"),
-		wx.YES_NO | wx.NO_DEFAULT | wx.ICON_WARNING,
-	) == wx.YES
+	res = displayDialogAsModal(dlg)
+	return (res == wx.YES), dlg.shouldRememberChoice()
 
 
 def _showAddonInfo(addon: _AddonGUIModel) -> None:
