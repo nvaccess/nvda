@@ -4,6 +4,10 @@
 
 namespace NVAccess.NVDA
 {
+    /// <summary>
+    /// The desired symbol level in a speech sequence.
+    /// This should match the SYMBOL_LEVEL enum in nvdaController.h, which itself matches the characterProcessing.SymbolLevel enum in NVDA.
+    /// </summary>
     public enum SymbolLevel
     {
         None = 0,

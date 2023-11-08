@@ -29,7 +29,12 @@ namespace NVAccess.NVDA
         private static extern int nvdaController_getProcessId(out uint processId);
 
         [DllImport("nvdaControllerClient.dll", CharSet = CharSet.Unicode)]
-        private static extern int nvdaController_speakSsml(string ssml, SymbolLevel symbolLevel = SymbolLevel.Unchanged, SpeechPriority priority = SpeechPriority.Normal, bool asynchronous = true);
+        private static extern int nvdaController_speakSsml(
+            string ssml,
+            SymbolLevel symbolLevel = SymbolLevel.Unchanged,
+            SpeechPriority priority = SpeechPriority.Normal,
+            bool asynchronous = true
+        );
 
         [UnmanagedFunctionPointer(CallingConvention.Winapi, CharSet = CharSet.Unicode)]
         public delegate int OnSsmlMarkReached(string mark);
@@ -94,7 +99,13 @@ namespace NVAccess.NVDA
         /// <param name="symbolLevel">The symbol verbosity level.</param>
         /// <param name="priority">The priority of the speech sequence.</param>
         /// <param name="asynchronous">Whether SSML should be spoken asynchronously.</param>
-        public static void SpeakSsml(string ssml, SymbolLevel symbolLevel = SymbolLevel.Unchanged, SpeechPriority priority = SpeechPriority.Normal, bool asynchronous = true, OnSsmlMarkReached callback = null)
+        public static void SpeakSsml(
+            string ssml,
+            SymbolLevel symbolLevel = SymbolLevel.Unchanged,
+            SpeechPriority priority = SpeechPriority.Normal,
+            bool asynchronous = true,
+            OnSsmlMarkReached callback = null
+        )
         {
             int res = NVDA.nvdaController_setOnSsmlMarkReachedCallback(callback);
             if (res != 0)

@@ -41,7 +41,7 @@ You can build locally or download pre-built, details:
 * `nvdaController.h`
   - A C header file containing declarations for all the provided functions.
 
-The **`extras/controllerClient/Examples` directory** also contains example usage:
+The **`extras/controllerClient/examples` directory** also contains example usage:
 
 * `example_python.py`
   - an example Python program that uses the NVDA controller client API.
