@@ -1,0 +1,13 @@
+[package]
+name = "nvda"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+nvda-bindgen = { path = "../bindgen" }
+
+[dependencies.windows]
+version = "0.48"
+features = [
+    "Win32_Foundation",
+]
