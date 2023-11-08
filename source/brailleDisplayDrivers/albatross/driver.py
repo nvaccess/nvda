@@ -136,6 +136,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._kc = None
 		# When previous write was done (see L{KC_INTERVAL}).
 		self._writeTime = 0.0
+		# Ftdi usb devices
+		self._ftdiUsbDeviceList: list[dict[str, bytes]] = ftdi2.get_device_info_list()
 		self._searchPorts(port)
 
 	def terminate(self):
@@ -222,7 +224,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"""
 		p = next(list_ports.grep(port))
 		if hex(p.vid) == ALBATROSS_VID and hex(p.pid) == ALBATROSS_PID:
-			for entry in ftdi2.get_device_info_list():
+			for entry in self._ftdiUsbDeviceList:
 				if (
 					str(entry["SerialNumber"], encoding='UTF-8') == p.serial_number[:FTDI_SER_NUM_LENGTH]
 					and entry["Description"] == ALBATROSS_BUS_DEVICE_DESC
