@@ -2020,10 +2020,10 @@ class UIA(Window):
 			if self.UIAInvokePattern:
 				self.UIAInvokePattern.Invoke()
 				return
-			elif self.UIATogglePattern:
+			if self.UIATogglePattern:
 				self.UIATogglePattern.toggle()
 				return
-			elif self.UIASelectionItemPattern:
+			if self.UIASelectionItemPattern:
 				self.UIASelectionItemPattern.select()
 				return
 		raise NotImplementedError
