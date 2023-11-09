@@ -175,7 +175,7 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:  # noqa: 
 					addr = winreg.QueryValueEx(
 						regKey,
 						"Bluetooth_UniqueID"
-					)[0].split("#",1)[1].split("_", 1)[0]
+					)[0].split("#", 1)[1].split("_", 1)[0]
 					addr = int(addr, 16)
 					entry["bluetoothAddress"] = addr
 					if addr:
@@ -207,9 +207,9 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:  # noqa: 
 					pass
 			elif "USB" in hwID or "FTDIBUS" in hwID:
 				usbIDStart = hwID.find("VID_")
-				if usbIDStart==-1:
+				if usbIDStart == -1:
 					continue
-				entry['usbID'] = hwID[usbIDStart:usbIDStart+17] # VID_xxxx&PID_xxxx
+				entry['usbID'] = hwID[usbIDStart:usbIDStart + 17]  # VID_xxxx&PID_xxxx
 		finally:
 			ctypes.windll.advapi32.RegCloseKey(regKey)
 
@@ -396,7 +396,7 @@ def listUsbDevices(onlyAvailable=True) -> typing.Iterator[dict]:
 				raise ctypes.WinError()
 		else:
 			# The string is of the form "usb\VID_xxxx&PID_xxxx&..."
-			usbId = buf.value[4:21] # VID_xxxx&PID_xxxx
+			usbId = buf.value[4:21]  # VID_xxxx&PID_xxxx
 			entry.update({
 				"hardwareID": buf.value,
 				"usbID": usbId,
@@ -503,7 +503,7 @@ def listHidDevices(onlyAvailable=True) -> typing.Iterator[dict]:
 		_hidGuid = GUID()
 		ctypes.windll.hid.HidD_GetHidGuid(ctypes.byref(_hidGuid))
 
-	for g_hdi, idd, devinfo, buf in _listDevices(_hidGuid , onlyAvailable):
+	for g_hdi, idd, devinfo, buf in _listDevices(_hidGuid, onlyAvailable):
 		# hardware ID
 		if not SetupDiGetDeviceRegistryProperty(
 			g_hdi,
