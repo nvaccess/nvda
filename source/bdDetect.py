@@ -234,10 +234,20 @@ class _DeviceInfoFetcher(AutoPropertyObject):
 			self._btDevsCache = cache.copy() if cache else None
 
 	#: Type info for auto property: _get_comPorts
-	comPorts: List[Dict]
+	comPorts: list[dict[str, str]]
 
-	def _get_comPorts(self) -> List[Dict]:
-		return list(hwPortUtils.listComPorts(onlyAvailable=True))
+	def _get_comPorts(self) -> list[dict[str, str]]:
+		comPorts = list(hwPortUtils.listComPorts(onlyAvailable=True))
+		for port in comPorts:
+			if (usbId := port.get("usbID")) is None:
+				continue
+			if (usbDict := next(
+				(d for d in self.usbDevices if d.get("usbID") == usbId),
+				None
+			)) is not None:
+				port.update(usbDict)
+		return comPorts
+
 
 	#: Type info for auto property: _get_usbDevices
 	usbDevices: List[Dict]

@@ -116,6 +116,7 @@ DIGCF_PRESENT = 2
 DIGCF_DEVICEINTERFACE = 16
 INVALID_HANDLE_VALUE = 0
 ERROR_INSUFFICIENT_BUFFER = 122
+SPDRP_DEVICEDESC = 0
 SPDRP_HARDWAREID = 1
 SPDRP_FRIENDLYNAME = 12
 SPDRP_LOCATION_INFORMATION = 13
@@ -403,7 +404,21 @@ def listUsbDevices(onlyAvailable=True) -> typing.Iterator[dict]:
 			})
 			if _isDebug():
 				log.debug("%r" % usbId)
-			yield entry
+
+		# Devie description
+		if not SetupDiGetDeviceRegistryProperty(
+			g_hdi,
+			ctypes.byref(devinfo),
+			SPDRP_DEVICEDESC,
+			None,
+			ctypes.byref(buf), ctypes.sizeof(buf) - 1,
+			None
+		):
+			log.debugWarning(f"Couldn't get SPDRP_DEVICEDESC for {entry!r}: {ctypes.WinError()}")
+		else:
+			entry["deviceDescription"] = buf.value
+
+		yield entry
 	if _isDebug():
 		log.debug("Finished listing USB devices")
 
