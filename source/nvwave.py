@@ -1095,7 +1095,7 @@ def usingWasapiWavePlayer() -> bool:
 	return issubclass(WavePlayer, WasapiWavePlayer)
 
 
-def playErrorSound():
+def playErrorSound() -> None:
 	if isInError():
 		if _isDebugForNvWave():
 			log.debug("No beep for log; nvwave is in error state")

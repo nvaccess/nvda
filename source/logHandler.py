@@ -19,11 +19,17 @@ from types import FunctionType
 import globalVars
 import winKernel
 import buildVersion
-from typing import Optional
+from typing import (
+	Optional,
+	TYPE_CHECKING,
+)
 import exceptions
 import RPCConstants
 import NVDAState
 from NVDAState import WritePaths
+
+if TYPE_CHECKING:
+	import extensionPoints
 
 
 ERROR_INVALID_WINDOW_HANDLE = 1400
@@ -144,7 +150,7 @@ def getCodePath(f):
 _onErrorSoundRequested = None
 
 
-def getOnErrorSoundRequested():
+def getOnErrorSoundRequested() -> "extensionPoints.Action":
 	global _onErrorSoundRequested
 	
 	import extensionPoints
