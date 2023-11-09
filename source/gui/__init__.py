@@ -655,7 +655,8 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			self.Bind(wx.EVT_MENU, frame.onSaveConfigurationCommand, item)
 
 	def _appendHelpSubMenu(self, frame: MainFrame) -> None:
-		self.helpMenu = self.helpMenu = wx.Menu()
+		self.helpMenu = wx.Menu()
+
 		if not globalVars.appArgs.secure:
 			# Translators: The label of a menu item to open NVDA user guide.
 			item = self.helpMenu.Append(wx.ID_ANY, _("&User Guide"))
