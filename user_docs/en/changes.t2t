@@ -91,6 +91,8 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
   - w3c-aria-practices to ``9a5e55ccbeb0f1bf92b6127c9865da8426d1c864``. (#15695)
   - wil to ``5e9be7b2d2fe3834a7107f430f7d4c0631f69833``. (#15695)
   -
+- Device info yielded by ``hwPortUtils.listUsbDevices`` now contain a description of the USB device (key ``deviceDescription``). (#15764, @LeonarddeR)
+- For USB serial devices, ``bdDetect.getConnectedUsbDevicesForDriver`` and ``bdDetect.getDriversForConnectedUsbDevices`` now yield device matches containing a ``deviceInfo`` dictionary enriched with data about the USB device. (#15764, @LeonarddeR)
 -
 
 === API Breaking Changes ===
