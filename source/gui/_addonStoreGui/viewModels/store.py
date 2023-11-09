@@ -243,7 +243,7 @@ class AddonStoreVM:
 			),
 			AddonActionVM(
 				# Translators: Label for an action that opens the webpage to see and send feedback for the selected add-on
-				displayName=pgettext("addonStore", "See or provide &feedback"),
+				displayName=pgettext("addonStore", "Read or provide &feedback"),
 				actionHandler=lambda aVM: startfile(
 					cast(
 						str,
