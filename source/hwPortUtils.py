@@ -1,21 +1,22 @@
-#hwPortUtils.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2001-2018 Chris Liechti, NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2001-2023 Chris Liechti, NV Access Limited, Babbage B.V., Leonard de Ruijter
 # Based on serial scanner code by Chris Liechti from https://raw.githubusercontent.com/pyserial/pyserial/81167536e796cc2e13aa16abd17a14634dc3aed1/pyserial/examples/scanwin32.py
 
 """Utilities for working with hardware connection ports.
 """
 
-import itertools
 import ctypes
+import itertools
 import typing
-from ctypes.wintypes import BOOL, WCHAR, HWND, DWORD, ULONG, WORD, USHORT
 import winreg
-import winKernel
-from winKernel import SYSTEMTIME
+from ctypes.wintypes import BOOL, DWORD, HWND, ULONG, USHORT, WCHAR
+
 import config
-from logHandler import log
 import hidpi
+import winKernel
+from logHandler import log
+from winKernel import SYSTEMTIME
+
 
 def ValidHandle(value):
 	if value == 0:
@@ -127,144 +128,112 @@ def _isDebug():
 
 
 # C901 'listComPorts' is too complex. Look for opportunities to break this method down.
-def listComPorts(onlyAvailable=True) -> typing.Iterator[typing.Dict]:  # noqa: C901
+def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:  # noqa: C901
 	"""List com ports on the system.
-	@param onlyAvailable: Only return ports that are currently available.
-	@type onlyAvailable: bool
-	@return: Dicts including keys of port, friendlyName and hardwareID.
+	:param onlyAvailable: Only return ports that are currently available.
+	:return: Dicts including keys of port, friendlyName and hardwareID.
 	"""
-	flags = DIGCF_DEVICEINTERFACE
-	if onlyAvailable:
-		flags |= DIGCF_PRESENT
-
-	buf = ctypes.create_unicode_buffer(1024)
-	g_hdi = SetupDiGetClassDevs(ctypes.byref(GUID_CLASS_COMPORT), None, NULL, flags)
-	try:
-		for dwIndex in range(256):
-			entry = {}
-			did = SP_DEVICE_INTERFACE_DATA()
-			did.cbSize = ctypes.sizeof(did)
-
-			if not SetupDiEnumDeviceInterfaces(
-				g_hdi,
-				None,
-				ctypes.byref(GUID_CLASS_COMPORT),
-				dwIndex,
-				ctypes.byref(did)
-			):
-				if ctypes.GetLastError() != ERROR_NO_MORE_ITEMS:
-					raise ctypes.WinError()
-				break
-
-			dwNeeded = DWORD()
-			# get the size
-			if not SetupDiGetDeviceInterfaceDetail(
-				g_hdi,
-				ctypes.byref(did),
-				None, 0, ctypes.byref(dwNeeded),
-				None
-			):
-				# Ignore ERROR_INSUFFICIENT_BUFFER
-				if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
-					raise ctypes.WinError()
-			# allocate buffer
-			class SP_DEVICE_INTERFACE_DETAIL_DATA_W(ctypes.Structure):
-				_fields_ = (
-					('cbSize', DWORD),
-					('DevicePath', WCHAR*(dwNeeded.value - ctypes.sizeof(DWORD))),
-				)
-				def __str__(self):
-					return "DevicePath:%s" % (self.DevicePath,)
-			idd = SP_DEVICE_INTERFACE_DETAIL_DATA_W()
-			idd.cbSize = SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W
-			devinfo = SP_DEVINFO_DATA()
-			devinfo.cbSize = ctypes.sizeof(devinfo)
-			if not SetupDiGetDeviceInterfaceDetail(
-				g_hdi,
-				ctypes.byref(did),
-				ctypes.byref(idd), dwNeeded, None,
-				ctypes.byref(devinfo)
-			):
+	for g_hdi, _idd, devinfo, buf in _listDevices(GUID_CLASS_COMPORT, onlyAvailable):
+		entry = {}
+		# hardware ID
+		if not SetupDiGetDeviceRegistryProperty(
+			g_hdi,
+			ctypes.byref(devinfo),
+			SPDRP_HARDWAREID,
+			None,
+			ctypes.byref(buf), ctypes.sizeof(buf) - 1,
+			None
+		):
+			# Ignore ERROR_INSUFFICIENT_BUFFER
+			if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
 				raise ctypes.WinError()
+		else:
+			hwID = entry["hardwareID"] = buf.value
 
-			# hardware ID
-			if not SetupDiGetDeviceRegistryProperty(
-				g_hdi,
-				ctypes.byref(devinfo),
-				SPDRP_HARDWAREID,
-				None,
-				ctypes.byref(buf), ctypes.sizeof(buf) - 1,
-				None
-			):
-				# Ignore ERROR_INSUFFICIENT_BUFFER
-				if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
-					raise ctypes.WinError()
-			else:
-				hwID = entry["hardwareID"] = buf.value
-
-			regKey = ctypes.windll.setupapi.SetupDiOpenDevRegKey(g_hdi, ctypes.byref(devinfo), DICS_FLAG_GLOBAL, 0, DIREG_DEV, winreg.KEY_READ)
+		regKey = ctypes.windll.setupapi.SetupDiOpenDevRegKey(
+			g_hdi,
+			ctypes.byref(devinfo),
+			DICS_FLAG_GLOBAL,
+			0,
+			DIREG_DEV,
+			winreg.KEY_READ
+		)
+		try:
 			try:
+				port = entry["port"] = winreg.QueryValueEx(regKey, "PortName")[0]
+			except OSError:
+				# #6015: In some rare cases, this value doesn't exist.
+				log.debugWarning(f"No PortName value for hardware ID {hwID!r}")
+				continue
+			if not port:
+				log.debugWarning(f"Empty PortName value for hardware ID {hwID!r}")
+				continue
+			if hwID.startswith("BTHENUM\\"):
+				# This is a Microsoft bluetooth port.
 				try:
-					port = entry["port"] = winreg.QueryValueEx(regKey, "PortName")[0]
-				except WindowsError:
-					# #6015: In some rare cases, this value doesn't exist.
-					log.debugWarning("No PortName value for hardware ID %s" % hwID)
+					addr = winreg.QueryValueEx(
+						regKey,
+						"Bluetooth_UniqueID"
+					)[0].split("#",1)[1].split("_", 1)[0]
+					addr = int(addr, 16)
+					entry["bluetoothAddress"] = addr
+					if addr:
+						entry["bluetoothName"] = getBluetoothDeviceInfo(addr).szName
+				except Exception:
+					log.debugWarning(
+						f"Couldn't get Microsoft bt name for hardware id {hwID!r}",
+						exc_info=True
+					)
+					pass
+			elif hwID == r"Bluetooth\0004&0002":
+				# This is a Toshiba bluetooth port.
+				try:
+					entry["bluetoothAddress"], entry["bluetoothName"] = getToshibaBluetoothPortInfo(port)
+				except Exception:
+					log.debugWarning(
+						f"Couldn't get Toshiba bt name for hardware id {hwID!r}",
+						exc_info=True
+					)
+					pass
+			elif hwID == r"{95C7A0A0-3094-11D7-A202-00508B9D7D5A}\BLUETOOTHPORT":
+				try:
+					entry["bluetoothAddress"], entry["bluetoothName"] = getWidcommBluetoothPortInfo(port)
+				except Exception:
+					log.debugWarning(
+						f"Couldn't get Widcomm bt name for hardware id {hwID!r}",
+						exc_info=True
+					)
+					pass
+			elif "USB" in hwID or "FTDIBUS" in hwID:
+				usbIDStart = hwID.find("VID_")
+				if usbIDStart==-1:
 					continue
-				if not port:
-					log.debugWarning("Empty PortName value for hardware ID %s" % hwID)
-					continue
-				if hwID.startswith("BTHENUM\\"):
-					# This is a Microsoft bluetooth port.
-					try:
-						addr = winreg.QueryValueEx(regKey, "Bluetooth_UniqueID")[0].split("#", 1)[1].split("_", 1)[0]
-						addr = int(addr, 16)
-						entry["bluetoothAddress"] = addr
-						if addr:
-							entry["bluetoothName"] = getBluetoothDeviceInfo(addr).szName
-					except:
-						pass
-				elif hwID == r"Bluetooth\0004&0002":
-					# This is a Toshiba bluetooth port.
-					try:
-						entry["bluetoothAddress"], entry["bluetoothName"] = getToshibaBluetoothPortInfo(port)
-					except:
-						pass
-				elif hwID == r"{95C7A0A0-3094-11D7-A202-00508B9D7D5A}\BLUETOOTHPORT":
-					try:
-						entry["bluetoothAddress"], entry["bluetoothName"] = getWidcommBluetoothPortInfo(port)
-					except:
-						pass
-				elif "USB" in hwID or "FTDIBUS" in hwID:
-					usbIDStart = hwID.find("VID_")
-					if usbIDStart==-1:
-						continue
-					usbID = entry['usbID'] = hwID[usbIDStart:usbIDStart+17] # VID_xxxx&PID_xxxx
-			finally:
-				ctypes.windll.advapi32.RegCloseKey(regKey)
+				entry['usbID'] = hwID[usbIDStart:usbIDStart+17] # VID_xxxx&PID_xxxx
+		finally:
+			ctypes.windll.advapi32.RegCloseKey(regKey)
 
-			# friendly name
-			if not SetupDiGetDeviceRegistryProperty(
-				g_hdi,
-				ctypes.byref(devinfo),
-				SPDRP_FRIENDLYNAME,
-				None,
-				ctypes.byref(buf), ctypes.sizeof(buf) - 1,
-				None
-			):
-				# #6007: SPDRP_FRIENDLYNAME sometimes doesn't exist/isn't valid.
-				log.debugWarning("Couldn't get SPDRP_FRIENDLYNAME for %r: %s" % (port, ctypes.WinError()))
-				entry["friendlyName"] = port
-			else:
-				entry["friendlyName"] = buf.value
+		# friendly name
+		if not SetupDiGetDeviceRegistryProperty(
+			g_hdi,
+			ctypes.byref(devinfo),
+			SPDRP_FRIENDLYNAME,
+			None,
+			ctypes.byref(buf), ctypes.sizeof(buf) - 1,
+			None
+		):
+			# #6007: SPDRP_FRIENDLYNAME sometimes doesn't exist/isn't valid.
+			log.debugWarning(f"Couldn't get SPDRP_FRIENDLYNAME for {port!r}: {ctypes.WinError()}")
+			entry["friendlyName"] = port
+		else:
+			entry["friendlyName"] = buf.value
 
-			if _isDebug():
-				log.debug("%r" % entry)
-			yield entry
+		if _isDebug():
+			log.debug("%r" % entry)
+		yield entry
 
-	finally:
-		SetupDiDestroyDeviceInfoList(g_hdi)
 	if _isDebug():
 		log.debug("Finished listing com ports")
+
 
 BLUETOOTH_MAX_NAME_SIZE = 248
 BTH_ADDR = BLUETOOTH_ADDRESS = ULONGLONG
@@ -337,18 +306,20 @@ def getWidcommBluetoothPortInfo(port):
 	raise LookupError
 
 
-def listUsbDevices(onlyAvailable=True) -> typing.Iterator[typing.Dict]:
-	"""List USB devices on the system.
-	@param onlyAvailable: Only return devices that are currently available.
-	@type onlyAvailable: bool
-	@return: Generates dicts including keys of usbID (VID and PID), devicePath and hardwareID.
+def _listDevices(
+		deviceClass: GUID,
+		onlyAvailable=True
+) -> typing.Iterator[tuple[HDEVINFO, ctypes.Structure, SP_DEVINFO_DATA, ctypes.c_wchar * 1024]]:
+	"""Internal helper function to list devices on the system for a specific device class.
+	@param deviceClass: The device class GUID.
+	:param onlyAvailable: Only return devices that are currently available.
 	"""
 	flags = DIGCF_DEVICEINTERFACE
 	if onlyAvailable:
 		flags |= DIGCF_PRESENT
 
 	buf = ctypes.create_unicode_buffer(1024)
-	g_hdi = SetupDiGetClassDevs(GUID_DEVINTERFACE_USB_DEVICE, None, NULL, flags)
+	g_hdi = SetupDiGetClassDevs(ctypes.byref(deviceClass), None, NULL, flags)
 	try:
 		for dwIndex in range(256):
 			did = SP_DEVICE_INTERFACE_DATA()
@@ -357,7 +328,7 @@ def listUsbDevices(onlyAvailable=True) -> typing.Iterator[typing.Dict]:
 			if not SetupDiEnumDeviceInterfaces(
 				g_hdi,
 				None,
-				GUID_DEVINTERFACE_USB_DEVICE,
+				ctypes.byref(deviceClass),
 				dwIndex,
 				ctypes.byref(did)
 			):
@@ -383,7 +354,8 @@ def listUsbDevices(onlyAvailable=True) -> typing.Iterator[typing.Dict]:
 					('DevicePath', WCHAR*(dwNeeded.value - ctypes.sizeof(DWORD))),
 				)
 				def __str__(self):
-					return "DevicePath:%s" % (self.DevicePath,)
+					return f"DevicePath:{self.DevicePath!r}"
+
 			idd = SP_DEVICE_INTERFACE_DETAIL_DATA_W()
 			idd.cbSize = SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W
 			devinfo = SP_DEVINFO_DATA()
@@ -396,32 +368,45 @@ def listUsbDevices(onlyAvailable=True) -> typing.Iterator[typing.Dict]:
 			):
 				raise ctypes.WinError()
 
-			# hardware ID
-			if not SetupDiGetDeviceRegistryProperty(
-				g_hdi,
-				ctypes.byref(devinfo),
-				SPDRP_HARDWAREID,
-				None,
-				ctypes.byref(buf), ctypes.sizeof(buf) - 1,
-				None
-			):
-				# Ignore ERROR_INSUFFICIENT_BUFFER
-				if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
-					raise ctypes.WinError()
-			else:
-				# The string is of the form "usb\VID_xxxx&PID_xxxx&..."
-				usbId = buf.value[4:21] # VID_xxxx&PID_xxxx
-				info = {
-					"hardwareID": buf.value,
-					"usbID": usbId,
-					"devicePath": idd.DevicePath}
-				if _isDebug():
-					log.debug("%r" % usbId)
-				yield info
+			yield (g_hdi, idd, devinfo, buf)
+
 	finally:
 		SetupDiDestroyDeviceInfoList(g_hdi)
+
+
+def listUsbDevices(onlyAvailable=True) -> typing.Iterator[dict]:
+	"""List USB devices on the system.
+	:param onlyAvailable: Only return devices that are currently available.
+	:return: Generates dicts including keys of usbID (VID and PID), devicePath and hardwareID.
+	"""
+	for g_hdi, idd, devinfo, buf in _listDevices(GUID_DEVINTERFACE_USB_DEVICE, onlyAvailable):
+		entry = {}
+		# hardware ID
+		if not SetupDiGetDeviceRegistryProperty(
+			g_hdi,
+			ctypes.byref(devinfo),
+			SPDRP_HARDWAREID,
+			None,
+			ctypes.byref(buf), ctypes.sizeof(buf) - 1,
+			None
+		):
+			# Ignore ERROR_INSUFFICIENT_BUFFER
+			if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
+				raise ctypes.WinError()
+		else:
+			# The string is of the form "usb\VID_xxxx&PID_xxxx&..."
+			usbId = buf.value[4:21] # VID_xxxx&PID_xxxx
+			entry.update({
+				"hardwareID": buf.value,
+				"usbID": usbId,
+				"devicePath": idd.DevicePath
+			})
+			if _isDebug():
+				log.debug("%r" % usbId)
+			yield entry
 	if _isDebug():
 		log.debug("Finished listing USB devices")
+
 
 class HIDD_ATTRIBUTES(ctypes.Structure):
 	_fields_ = (
@@ -490,7 +475,7 @@ def _getHidInfo(hwId, path):
 _hidGuid = None
 
 
-def listHidDevices(onlyAvailable=True) -> typing.Iterator[typing.Dict]:
+def listHidDevices(onlyAvailable=True) -> typing.Iterator[dict]:
 	"""List HID devices on the system.
 	@param onlyAvailable: Only return devices that are currently available.
 	@type onlyAvailable: bool
@@ -503,78 +488,25 @@ def listHidDevices(onlyAvailable=True) -> typing.Iterator[typing.Dict]:
 		_hidGuid = GUID()
 		ctypes.windll.hid.HidD_GetHidGuid(ctypes.byref(_hidGuid))
 
-	flags = DIGCF_DEVICEINTERFACE
-	if onlyAvailable:
-		flags |= DIGCF_PRESENT
-
-	buf = ctypes.create_unicode_buffer(1024)
-	g_hdi = SetupDiGetClassDevs(_hidGuid, None, NULL, flags)
-	try:
-		for dwIndex in range(256):
-			did = SP_DEVICE_INTERFACE_DATA()
-			did.cbSize = ctypes.sizeof(did)
-
-			if not SetupDiEnumDeviceInterfaces(
-				g_hdi,
-				None,
-				_hidGuid,
-				dwIndex,
-				ctypes.byref(did)
-			):
-				if ctypes.GetLastError() != ERROR_NO_MORE_ITEMS:
-					raise ctypes.WinError()
-				break
-
-			dwNeeded = DWORD()
-			# get the size
-			if not SetupDiGetDeviceInterfaceDetail(
-				g_hdi,
-				ctypes.byref(did),
-				None, 0, ctypes.byref(dwNeeded),
-				None
-			):
-				# Ignore ERROR_INSUFFICIENT_BUFFER
-				if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
-					raise ctypes.WinError()
-			# allocate buffer
-			class SP_DEVICE_INTERFACE_DETAIL_DATA_W(ctypes.Structure):
-				_fields_ = (
-					('cbSize', DWORD),
-					('DevicePath', WCHAR*(dwNeeded.value - ctypes.sizeof(DWORD))),
-				)
-				def __str__(self):
-					return "DevicePath:%s" % (self.DevicePath,)
-			idd = SP_DEVICE_INTERFACE_DETAIL_DATA_W()
-			idd.cbSize = SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W
-			devinfo = SP_DEVINFO_DATA()
-			devinfo.cbSize = ctypes.sizeof(devinfo)
-			if not SetupDiGetDeviceInterfaceDetail(
-				g_hdi,
-				ctypes.byref(did),
-				ctypes.byref(idd), dwNeeded, None,
-				ctypes.byref(devinfo)
-			):
+	for g_hdi, idd, devinfo, buf in _listDevices(_hidGuid , onlyAvailable):
+		# hardware ID
+		if not SetupDiGetDeviceRegistryProperty(
+			g_hdi,
+			ctypes.byref(devinfo),
+			SPDRP_HARDWAREID,
+			None,
+			ctypes.byref(buf), ctypes.sizeof(buf) - 1,
+			None
+		):
+			# Ignore ERROR_INSUFFICIENT_BUFFER
+			if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
 				raise ctypes.WinError()
+		else:
+			hwId = buf.value
+			info = _getHidInfo(hwId, idd.DevicePath)
+			if _isDebug():
+				log.debug(f"{info!r}")
+			yield info
 
-			# hardware ID
-			if not SetupDiGetDeviceRegistryProperty(
-				g_hdi,
-				ctypes.byref(devinfo),
-				SPDRP_HARDWAREID,
-				None,
-				ctypes.byref(buf), ctypes.sizeof(buf) - 1,
-				None
-			):
-				# Ignore ERROR_INSUFFICIENT_BUFFER
-				if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
-					raise ctypes.WinError()
-			else:
-				hwId = buf.value
-				info = _getHidInfo(hwId, idd.DevicePath)
-				if _isDebug():
-					log.debug("%r" % info)
-				yield info
-	finally:
-		SetupDiDestroyDeviceInfoList(g_hdi)
 	if _isDebug():
 		log.debug("Finished listing HID devices")
