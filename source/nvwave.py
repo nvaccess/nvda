@@ -686,7 +686,14 @@ def playWaveFile(
 	f = wave.open(fileName,"r")
 	if f is None: raise RuntimeError("can not open file %s"%fileName)
 	if fileWavePlayer is not None:
-		fileWavePlayer.stop()
+		# There are several race conditions where the background thread might feed
+		# audio after we call stop here in the main thread. Some of these are
+		# difficult to fix with locks because they involve switches between Python
+		# and blocking native code. Just keep calling stop until we know that the
+		# backgroundd thread is done, which means it was successfully stopped. The
+		# background thread sets fileWavePlayer to None when it is done.
+		while fileWavePlayer:
+			fileWavePlayer.stop()
 	if not decide_playWaveFile.decide(
 		fileName=fileName,
 		asynchronous=asynchronous,
@@ -711,8 +718,6 @@ def playWaveFile(
 		# player for the next file anyway - so just destroy it now.
 		fileWavePlayer = None
 
-	if asynchronous and fileWavePlayerThread is not None:
-		fileWavePlayerThread.join()
 	fileWavePlayer = WavePlayer(
 		channels=f.getnchannels(),
 		samplesPerSec=f.getframerate(),
