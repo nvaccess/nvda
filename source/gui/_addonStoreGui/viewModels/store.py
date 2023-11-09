@@ -247,12 +247,12 @@ class AddonStoreVM:
 				actionHandler=lambda aVM: startfile(
 					cast(
 						str,
-						cast(_AddonStoreModel, aVM.model).reviewUrl
+						cast(_AddonStoreModel, aVM.model).reviewURL
 					)
 				),
 				validCheck=lambda aVM: (
 					isinstance(aVM.model, _AddonStoreModel)
-					and aVM.model.reviewUrl is not None
+					and aVM.model.reviewURL is not None
 				),
 				actionTarget=selectedListItem
 			),
