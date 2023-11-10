@@ -64,10 +64,10 @@ class ErrorAddonInstallDialogWithYesNoButtons(ErrorAddonInstallDialog):
 
 	def _addContents(self, contentsSizer: BoxSizerHelper):
 		if self.useRememberChoiceCheckbox:
-			# Translators: A checkbox in the dialog to remember the choice made when installing or enabling
-			# incompatible add-ons, or when removing add-ons.
 			self.rememberChoiceCheckbox = wx.CheckBox(
 				self,
+				# Translators: A checkbox in the dialog to remember the choice made when installing or enabling
+				# incompatible add-ons, or when removing add-ons.
 				label=pgettext("addonStore", "Remember this choice for subsequent add-ons"),
 			)
 			contentsSizer.addItem(self.rememberChoiceCheckbox)
