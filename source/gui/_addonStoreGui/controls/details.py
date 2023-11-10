@@ -317,7 +317,7 @@ class AddonDetails(
 					if details.reviewURL is not None:
 						self._appendDetailsLabelValue(
 							# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
-							pgettext("addonStore", "Review URL:"),
+							pgettext("addonStore", "Reviews URL:"),
 							details.reviewURL
 						)
 
