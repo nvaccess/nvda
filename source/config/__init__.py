@@ -177,7 +177,7 @@ def isInstalledCopy() -> bool:
 	winreg.CloseKey(k)
 	try:
 		return os.stat(instDir) == os.stat(globalVars.appDir)
-	except WindowsError:
+	except (WindowsError, FileNotFoundError):
 		log.error(
 			"Failed to access the installed NVDA directory,"
 			"or, a portable copy failed to access the current NVDA app directory",
