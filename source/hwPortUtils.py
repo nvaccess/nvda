@@ -9,7 +9,8 @@ import ctypes
 import itertools
 import typing
 import winreg
-from ctypes.wintypes import BOOL, DWORD, HWND, ULONG, USHORT, WCHAR
+from ctypes.wintypes import BOOL, DWORD, HWND, PDWORD, ULONG, USHORT, WCHAR
+from comtypes import GUID
 
 import config
 import hidpi
@@ -23,54 +24,44 @@ def ValidHandle(value):
 		raise ctypes.WinError()
 	return value
 
-HDEVINFO = ctypes.c_void_p
-PCWSTR = ctypes.c_wchar_p
-HWND = ctypes.c_uint
-PDWORD = ctypes.POINTER(DWORD)
-ULONG_PTR = ctypes.POINTER(ULONG)
-ULONGLONG = ctypes.c_ulonglong
-NULL = 0
 
-class GUID(ctypes.Structure):
-	_fields_ = (
-		('Data1', ctypes.c_ulong),
-		('Data2', ctypes.c_ushort),
-		('Data3', ctypes.c_ushort),
-		('Data4', ctypes.c_ubyte*8),
-	)
-	def __str__(self):
-		return u"{%08x-%04x-%04x-%s-%s}" % (
-			self.Data1,
-			self.Data2,
-			self.Data3,
-			u''.join([u"%02x" % d for d in self.Data4[:2]]),
-			u''.join([u"%02x" % d for d in self.Data4[2:]]),
-		)
+HDEVINFO = ctypes.c_void_p
+
 
 class SP_DEVINFO_DATA(ctypes.Structure):
 	_fields_ = (
 		('cbSize', DWORD),
 		('ClassGuid', GUID),
 		('DevInst', DWORD),
-		('Reserved', ULONG_PTR),
+		('Reserved', ctypes.POINTER(ULONG)),
 	)
 	def __str__(self):
 		return "ClassGuid:%s DevInst:%s" % (self.ClassGuid, self.DevInst)
 PSP_DEVINFO_DATA = ctypes.POINTER(SP_DEVINFO_DATA)
+
 
 class SP_DEVICE_INTERFACE_DATA(ctypes.Structure):
 	_fields_ = (
 		('cbSize', DWORD),
 		('InterfaceClassGuid', GUID),
 		('Flags', DWORD),
-		('Reserved', ULONG_PTR),
+		('Reserved', ctypes.POINTER(ULONG)),
 	)
 	def __str__(self):
 		return "InterfaceClassGuid:%s Flags:%s" % (self.InterfaceClassGuid, self.Flags)
 
+
 PSP_DEVICE_INTERFACE_DATA = ctypes.POINTER(SP_DEVICE_INTERFACE_DATA)
 
 PSP_DEVICE_INTERFACE_DETAIL_DATA = ctypes.c_void_p
+
+
+class DEVPROPKEY(ctypes.Structure):
+	_fields_ = (
+		('DEVPROPGUID', GUID),
+		('DEVPROPID', ULONG),
+	)
+
 
 class dummy(ctypes.Structure):
 	_fields_=((u"d1", DWORD), (u"d2", WCHAR))
@@ -82,8 +73,21 @@ SetupDiDestroyDeviceInfoList.argtypes = (HDEVINFO,)
 SetupDiDestroyDeviceInfoList.restype = BOOL
 
 SetupDiGetClassDevs = ctypes.windll.setupapi.SetupDiGetClassDevsW
-SetupDiGetClassDevs.argtypes = (ctypes.POINTER(GUID), PCWSTR, HWND, DWORD)
+SetupDiGetClassDevs.argtypes = (ctypes.POINTER(GUID), ctypes.c_wchar_p, HWND, DWORD)
 SetupDiGetClassDevs.restype = ValidHandle # HDEVINFO
+
+SetupDiGetDeviceProperty = ctypes.windll.setupapi.SetupDiGetDevicePropertyW
+SetupDiGetDeviceProperty.argtypes = (
+	HDEVINFO,  # [in]            HDEVINFO         DeviceInfoSet
+	PSP_DEVINFO_DATA,  # [in]            PSP_DEVINFO_DATA DeviceInfoData
+	ctypes.POINTER(DEVPROPKEY),  # [in]            const DEVPROPKEY *PropertyKey
+	PDWORD,  # [out]           DEVPROPTYPE      *PropertyType
+	ctypes.c_void_p,  # [out, optional] PBYTE            PropertyBuffer
+	DWORD,  # [in]            DWORD            PropertyBufferSize
+	PDWORD,  # [out, optional] PDWORD           RequiredSize
+	DWORD,  # [in]            DWORD            Flags
+)
+SetupDiGetDeviceProperty.restype = BOOL
 
 SetupDiEnumDeviceInterfaces = ctypes.windll.setupapi.SetupDiEnumDeviceInterfaces
 SetupDiEnumDeviceInterfaces.argtypes = (HDEVINFO, PSP_DEVINFO_DATA, ctypes.POINTER(GUID), DWORD, PSP_DEVICE_INTERFACE_DATA)
@@ -107,11 +111,9 @@ CM_Get_Device_ID.restype = DWORD
 CR_SUCCESS = 0
 MAX_DEVICE_ID_LEN = 200
 
-GUID_CLASS_COMPORT = GUID(0x86e0d1e0, 0x8089, 0x11d0,
-	(ctypes.c_ubyte*8)(0x9c, 0xe4, 0x08, 0x00, 0x3e, 0x30, 0x1f, 0x73))
-GUID_DEVINTERFACE_USB_DEVICE = GUID(0xA5DCBF10, 0x6530, 0x11D2,
-	(0x90, 0x1F, 0x00, 0xC0, 0x4F, 0xB9, 0x51, 0xED))
-
+GUID_CLASS_COMPORT = GUID("{86e0d1e0-8089-11d0-9ce4-08003e301f73}")
+GUID_DEVINTERFACE_USB_DEVICE = GUID("{a5dcbf10-6530-11d2-901f-00c04fb951ed}")
+DEVPKEY_Device_BusReportedDeviceDesc = DEVPROPKEY(GUID("{540b947e-8b40-45bc-a8a2-6a0b894cbda2}"), 4)
 DIGCF_PRESENT = 2
 DIGCF_DEVICEINTERFACE = 16
 INVALID_HANDLE_VALUE = 0
@@ -237,7 +239,7 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:  # noqa: 
 
 
 BLUETOOTH_MAX_NAME_SIZE = 248
-BTH_ADDR = BLUETOOTH_ADDRESS = ULONGLONG
+BTH_ADDR = BLUETOOTH_ADDRESS = ctypes.c_ulonglong
 
 class BLUETOOTH_DEVICE_INFO(ctypes.Structure):
 	_fields_ = (
@@ -320,7 +322,7 @@ def _listDevices(
 		flags |= DIGCF_PRESENT
 
 	buf = ctypes.create_unicode_buffer(1024)
-	g_hdi = SetupDiGetClassDevs(ctypes.byref(deviceClass), None, NULL, flags)
+	g_hdi = SetupDiGetClassDevs(ctypes.byref(deviceClass), None, None, flags)
 	try:
 		for dwIndex in range(256):
 			did = SP_DEVICE_INTERFACE_DATA()
@@ -405,18 +407,23 @@ def listUsbDevices(onlyAvailable=True) -> typing.Iterator[dict]:
 			if _isDebug():
 				log.debug("%r" % usbId)
 
-		# Devie description
-		if not SetupDiGetDeviceRegistryProperty(
+		# Bus reported device description
+		propRegDataType = DWORD()
+		if not SetupDiGetDeviceProperty(
 			g_hdi,
 			ctypes.byref(devinfo),
-			SPDRP_DEVICEDESC,
+			ctypes.byref(DEVPKEY_Device_BusReportedDeviceDesc),
+			ctypes.byref(propRegDataType),
+			ctypes.byref(buf),
+			ctypes.sizeof(buf) - 1,
 			None,
-			ctypes.byref(buf), ctypes.sizeof(buf) - 1,
-			None
+			0
 		):
-			log.debugWarning(f"Couldn't get SPDRP_DEVICEDESC for {entry!r}: {ctypes.WinError()}")
+			# Ignore ERROR_INSUFFICIENT_BUFFER
+			if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
+				raise ctypes.WinError()
 		else:
-			entry["deviceDescription"] = buf.value
+			entry["busReportedDeviceDescription"] = buf.value
 
 		yield entry
 	if _isDebug():
