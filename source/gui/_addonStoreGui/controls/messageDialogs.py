@@ -134,20 +134,6 @@ def _shouldProceedToRemoveAddonDialog(
 	return (res == wx.YES), dlg.shouldRememberChoice()
 
 
-def _shouldProceedToRemoveMultipleAddonDialog(nAddons) -> bool:
-	return messageBox(
-		pgettext(
-			"addonStore",
-			# Translators: Presented when attempting to remove multiple selected add-ons.
-			"Are you sure you wish to remove the {nAddons} selected add-ons from NVDA? "
-			"This cannot be undone.",
-		).format(nAddons=nAddons),
-		# Translators: Title for message asking if the user really wishes to remove the selected Add-on.
-		pgettext("addonStore", "Remove Add-ons"),
-		wx.YES_NO | wx.NO_DEFAULT | wx.ICON_WARNING
-	) == wx.YES
-
-
 def _shouldInstallWhenAddonTooOldDialog(
 		parent: wx.Window,
 		addon: _AddonGUIModel,

@@ -45,7 +45,6 @@ from logHandler import log
 from ..controls.messageDialogs import (
 	_shouldEnableWhenAddonTooOldDialog,
 	_shouldProceedToRemoveAddonDialog,
-	_shouldProceedToRemoveMultipleAddonDialog,
 	_shouldInstallWhenAddonTooOldDialog,
 	_shouldProceedWhenInstalledAddonVersionUnknown,
 )
