@@ -15,7 +15,9 @@ The production of a release consists of the following:
     - The add-on API for the release is unstable.
     Add-ons targeting this release should use "dev" channel.
 1. [Beta phase](#beta-phase) (~4 weeks)
-    - Beta1 is released 1 week after the most recent final release
+    - Beta1 is released 1 week after the most recent final release.
+    There is an exception for `20XX.1` releases.
+    The first `20XX.1` beta release will occur when all planned API breaking changes have been made.
     - A new beta is released weekly as required
     - Translations should be relatively stable.
     Translators may wish to start working on the release, however further changes to translation strings will occur.
