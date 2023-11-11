@@ -215,7 +215,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 		for match in self._getTryPorts(port):
 			portType, portId, port, portInfo = match
-			self.isBulk = portType==bdDetect.DeviceType.CUSTOM
+			self.isBulk = portType == bdDetect.DeviceType.CUSTOM
 			# Try talking to the display.
 			try:
 				if self.isBulk:
@@ -265,7 +265,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _sendIdentificationRequests(self, match: bdDetect.DeviceMatch):
 		log.debug("Considering sending identification requests for device %s"%str(match))
-		if match.type==bdDetect.DeviceType.CUSTOM: # USB Bulk
+		if match.type == bdDetect.DeviceType.CUSTOM:  # USB Bulk
 			matchedModelsMap = [
 				modelTuple for modelTuple in modelMap if(
 					modelTuple[1].usbId == match.id
