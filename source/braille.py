@@ -3003,9 +3003,9 @@ class BrailleDisplayDriver(driverHandler.Driver):
 					pass
 				else:
 					if "bluetoothName" in portInfo:
-						yield bdDetect.DeviceMatch(bdDetect.KEY_SERIAL, portInfo["bluetoothName"], portInfo["port"], portInfo)
+						yield bdDetect.DeviceMatch(bdDetect.DeviceType.SERIAL, portInfo["bluetoothName"], portInfo["port"], portInfo)
 					else:
-						yield bdDetect.DeviceMatch(bdDetect.KEY_SERIAL, portInfo["friendlyName"], portInfo["port"], portInfo)
+						yield bdDetect.DeviceMatch(bdDetect.DeviceType.SERIAL, portInfo["friendlyName"], portInfo["port"], portInfo)
 			else:
 				for match in cls._getAutoPorts(usb=isUsb, bluetooth=isBluetooth):
 					yield match

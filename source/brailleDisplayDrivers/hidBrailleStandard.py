@@ -93,7 +93,7 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 		self.numCells = 0
 
 		for portType, portId, port, portInfo in self._getTryPorts(port):
-			if portType != bdDetect.KEY_HID:
+			if portType != bdDetect.DeviceType.HID:
 				continue
 			# Try talking to the display.
 			try:
