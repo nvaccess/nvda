@@ -66,6 +66,12 @@ class DeviceType(StrEnum):
 
 def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "DETECT_USB" and NVDAState._allowDeprecatedAPI():
+		log.warning(f"{attrName} is deprecated.")
+		return 1
+	if attrName == "DETECT_BLUETOOTH" and NVDAState._allowDeprecatedAPI():
+		log.warning(f"{attrName} is deprecated.")
+		return 2
 	_deprecatedConstantsMap = {
 		"KEY_HID": DeviceType.HID,
 		"KEY_SERIAL": DeviceType.SERIAL,
