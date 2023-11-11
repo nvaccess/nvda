@@ -419,9 +419,7 @@ def listUsbDevices(onlyAvailable=True) -> typing.Iterator[dict]:
 			None,
 			0
 		):
-			# Ignore ERROR_INSUFFICIENT_BUFFER
-			if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
-				raise ctypes.WinError()
+			log.debugWarning(f"Couldn't get DEVPKEY_Device_BusReportedDeviceDesc for {entry!r}: {ctypes.WinError()}")
 		else:
 			entry["busReportedDeviceDescription"] = buf.value
 
