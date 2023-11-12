@@ -150,13 +150,7 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 				# Translators: Label for an action that updates the selected add-ons
 				displayName=pgettext("addonStore", "&Update selected add-ons"),
 				actionHandler=self._storeVM.getAddons,
-				validCheck=lambda aVMs: (
-					self._storeVM._filteredStatusKey in [
-						_StatusFilterKey.INSTALLED,
-						_StatusFilterKey.UPDATE,
-					]
-					and AddonListValidator(aVMs).canUseUpdateAction()
-				),
+				validCheck=lambda aVMs: AddonListValidator(aVMs).canUseUpdateAction(),
 				actionTarget=self._selectedAddons
 			),
 			BatchAddonActionVM(
@@ -165,6 +159,8 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 				actionHandler=self._storeVM.removeAddons,
 				validCheck=lambda aVMs: (
 					self._storeVM._filteredStatusKey in [
+						# Removing add-ons in the updatable view fails,
+						# as the updated version cannot be removed.
 						_StatusFilterKey.INSTALLED,
 						_StatusFilterKey.INCOMPATIBLE,
 					]
