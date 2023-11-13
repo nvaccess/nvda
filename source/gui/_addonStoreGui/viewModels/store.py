@@ -407,10 +407,47 @@ class AddonStoreVM:
 			else:
 				self.disableAddon(aVM)
 
-	def replaceAddon(self, listItemVM: AddonListItemVM) -> None:
+	def replaceAddon(
+			self,
+			listItemVM: AddonListItemVM,
+			askConfirmation: bool = True,
+			useRememberChoiceCheckbox: bool = False,
+	) -> tuple[bool, bool]:
 		from ... import mainFrame
-		if _shouldProceedWhenInstalledAddonVersionUnknown(mainFrame, listItemVM.model):
+		assert listItemVM.model
+		if askConfirmation:
+			res, shouldRememberChoice = _shouldProceedWhenInstalledAddonVersionUnknown(
+				mainFrame,
+				listItemVM.model,
+				useRememberChoiceCheckbox=useRememberChoiceCheckbox,
+			)
+		else:
+			res = True
+			shouldRememberChoice = True
+		if res:
 			self.getAddon(listItemVM)
+		return res, shouldRememberChoice
+
+	def replaceAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]) -> None:
+		shouldReplace = True
+		shouldRememberChoice = False
+		for aVM in listItemVMs:
+			if aVM.status != AvailableAddonStatus.REPLACE_SIDE_LOAD:
+				log.debug(f"Skipping {aVM.Id} as it is not affected by the Replace action")
+			else:
+				if shouldRememberChoice:
+					if shouldReplace:
+						self.replaceAddon(aVM, askConfirmation=False)
+					else:
+						log.debug(
+							f"Skipping {aVM.Id} as replacement has been previously declined for all remaining  add-ons."
+						)
+				else:
+					shouldReplace, shouldRememberChoice = self.replaceAddon(
+						aVM,
+						askConfirmation=True,
+						useRememberChoiceCheckbox=True,
+					)
 
 	def getAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]) -> None:
 		assert addonDataManager

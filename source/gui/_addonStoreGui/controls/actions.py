@@ -154,6 +154,13 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 				actionTarget=self._selectedAddons
 			),
 			BatchAddonActionVM(
+				# Translators: Label for an action that replaces the selected add-ons
+				displayName=pgettext("addonStore", "Re&place selected add-ons"),
+				actionHandler=self._storeVM.replaceAddons,
+				validCheck=lambda aVMs: AddonListValidator(aVMs).canUseReplaceAction(),
+				actionTarget=self._selectedAddons
+			),
+			BatchAddonActionVM(
 				# Translators: Label for an action that removes the selected add-ons
 				displayName=pgettext("addonStore", "&Remove selected add-ons"),
 				actionHandler=self._storeVM.removeAddons,
@@ -198,6 +205,12 @@ class AddonListValidator:
 	def canUseUpdateAction(self):
 		for aVM in self.addonsList:
 			if aVM.canUseUpdateAction():
+				return True
+		return False
+
+	def canUseReplaceAction(self):
+		for aVM in self.addonsList:
+			if aVM.canUseReplaceAction():
 				return True
 		return False
 

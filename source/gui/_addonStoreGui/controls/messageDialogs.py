@@ -80,8 +80,9 @@ class ErrorAddonInstallDialogWithYesNoButtons(ErrorAddonInstallDialog):
 
 def _shouldProceedWhenInstalledAddonVersionUnknown(
 		parent: wx.Window,
-		addon: _AddonGUIModel
-) -> bool:
+		addon: _AddonGUIModel,
+		useRememberChoiceCheckbox: bool = False,
+) -> tuple[bool, bool]:
 	# an installed add-on should have an addon Handler Model
 	assert addon._addonHandlerModel
 	incompatibleMessage = pgettext(
@@ -100,21 +101,23 @@ def _shouldProceedWhenInstalledAddonVersionUnknown(
 	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
 	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
 	)
-	res = displayDialogAsModal(ErrorAddonInstallDialogWithYesNoButtons(
+	dlg = ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
 		title=pgettext("addonStore", "Add-on not compatible"),
 		message=incompatibleMessage,
-		showAddonInfoFunction=lambda: _showAddonInfo(addon)
-	))
-	return res == wx.YES
+		showAddonInfoFunction=lambda: _showAddonInfo(addon),
+		useRememberChoiceCheckbox=useRememberChoiceCheckbox,
+	)
+	res = displayDialogAsModal(dlg)
+	return (res == wx.YES), dlg.shouldRememberChoice()
 
 
 def _shouldProceedToRemoveAddonDialog(
 		parent,
 		addon: "SupportsVersionCheck",
 		useRememberChoiceCheckbox: bool = False,
-) -> bool:
+) -> tuple[bool, bool]:
 	removeMessage = pgettext(
 		"addonStore",
 		# Translators: Presented when attempting to remove the selected add-on.
