@@ -18,12 +18,12 @@ from typing import (
 
 from requests.structures import CaseInsensitiveDict
 
-from _addonStore.models.addon import (
+from addonStore.models.addon import (
 	_AddonGUIModel,
 	_AddonStoreModel,
 	_AddonManifestModel,
 )
-from _addonStore.models.status import (
+from addonStore.models.status import (
 	_StatusFilterKey,
 	AvailableAddonStatus,
 )

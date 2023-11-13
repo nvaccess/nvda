@@ -251,7 +251,7 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("setting language to %s"%lang)
 	languageHandler.setLanguage(lang)
 	# Addons
-	from _addonStore import dataManager
+	from addonStore import dataManager
 	dataManager.initialize()
 	addonHandler.initialize()
 	# Hardware background i/o
@@ -532,7 +532,7 @@ def main():
 	import socket
 	socket.setdefaulttimeout(10)
 	log.debug("Initializing add-ons system")
-	from _addonStore import dataManager
+	from addonStore import dataManager
 	dataManager.initialize()
 	addonHandler.initialize()
 	if globalVars.appArgs.disableAddons:
