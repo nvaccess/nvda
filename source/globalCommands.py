@@ -3430,7 +3430,7 @@ class GlobalCommands(ScriptableObject):
 				"The clipboard contains a large portion of text. It is %s character long",
 				"The clipboard contains a large portion of text. It is %s characters long",
 				textLength,
-			) % textLength
+			) % textLength)
 
 	@script(
 		description=_(
