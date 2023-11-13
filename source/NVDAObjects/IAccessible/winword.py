@@ -17,12 +17,14 @@ import tableUtils
 import textInfos
 import eventHandler
 import scriptHandler
+from scriptHandler import script
 import ui
 from . import IAccessible
 from displayModel import EditableTextDisplayModelTextInfo
 from ..behaviors import EditableTextWithoutAutoSelectDetection
 import NVDAObjects.window.winword as winWordWindowModule
 from speech import sayAll
+import inputCore
 
 
 class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordWindowModule.WordDocument):
@@ -30,6 +32,9 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 	treeInterceptorClass = winWordWindowModule.WordDocumentTreeInterceptor
 	shouldCreateTreeInterceptor=False
 	TextInfo = winWordWindowModule.WordDocumentTextInfo
+	# Should braille and review position be updated, set to True in
+	# L{script_updateBrailleAndReviewPosition}.
+	_fromUpdateBrailleAndReviewPosition = False
 
 	def _get_ignoreEditorRevisions(self):
 		try:
@@ -46,12 +51,15 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 	#: True if formatting should be ignored (text only) such as for spellCheck error field
 	ignoreFormatting=False
 
-	def event_caret(self):
+	def event_caret(self) -> None:
 		curSelectionPos=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		lastSelectionPos=getattr(self,'_lastSelectionPos',None)
 		self._lastSelectionPos=curSelectionPos
 		if lastSelectionPos:
 			if curSelectionPos._rangeObj.isEqual(lastSelectionPos._rangeObj):
+				if self._fromUpdateBrailleAndReviewPosition:
+					super().event_caret()
+					self._fromUpdateBrailleAndReviewPosition = False
 				return
 		super(WordDocument,self).event_caret()
 
@@ -368,6 +376,32 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		info.updateCaret()
 		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
 	script_previousParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
+
+	@script(
+		gestures=(
+			"kb:control+v",
+			"kb:control+x",
+			"kb:control+y",
+			"kb:control+z",
+			"kb:alt+backspace",
+		)
+	)
+	def script_updateBrailleAndReviewPosition(self, gesture: inputCore.InputGesture) -> None:
+		"""Helper script to update braille and review position.
+		"""
+		# Ensuring braille and review position updates are allowed in caret event.
+		self._fromUpdateBrailleAndReviewPosition = True
+		gesture.send()
+		# Caret event is not always fired when control+v, control+x, control+y
+		# or control+z (alt+backspace) is pressed.
+		self.event_caret()
+
+	def _backspaceScriptHelper(self, unit: str, gesture: inputCore.InputGesture) -> None:
+		"""Helper function to update braille and review position.
+		"""
+		# Ensuring braille and review position updates are allowed in caret event.
+		self._fromUpdateBrailleAndReviewPosition = True
+		super()._backspaceScriptHelper(unit, gesture)
 
 	def focusOnActiveDocument(self, officeChartObject):
 		rangeStart=officeChartObject.Parent.Range.Start

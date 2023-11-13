@@ -25,6 +25,7 @@ import speechDictHandler
 import characterProcessing
 import languageHandler
 from . import manager
+from .extensions import speechCanceled
 from .commands import (
 	# Commands that are used in this file.
 	BreakCommand,
@@ -71,6 +72,7 @@ from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 if typing.TYPE_CHECKING:
 	import NVDAObjects
+	from speechXml import MarkCallbackT
 
 _speechState: Optional['SpeechState'] = None
 _curWordChars: List[str] = []
@@ -156,6 +158,7 @@ def cancelSpeech():
 	elif _speechState.speechMode == SpeechMode.beeps:
 		return
 	_manager.cancel()
+	speechCanceled.notify()
 	_speechState.beenCanceled = True
 	_speechState.isPaused = False
 
@@ -192,6 +195,46 @@ def speakMessage(
 	seq = _getSpeakMessageSpeech(text)
 	if seq:
 		speak(seq, symbolLevel=None, priority=priority)
+
+
+def _getSpeakSsmlSpeech(
+		ssml: str,
+		markCallback: "MarkCallbackT | None" = None,
+		_prefixSpeechCommand: SpeechCommand | None = None,
+) -> SpeechSequence:
+	"""Gets the speech sequence for given SSML.
+	:param ssml: The SSML data to speak
+	:param markCallback: An optional callback called for every mark command in the SSML.
+	:param _prefixSpeechCommand: A SpeechCommand to append before the sequence.
+	"""
+	if ssml is None:
+		return []
+	from speechXml import SsmlParser
+	parser = SsmlParser(markCallback)
+	sequence = parser.convertFromXml(ssml)
+	if sequence:
+		if _prefixSpeechCommand is not None:
+			sequence.insert(0, _prefixSpeechCommand)
+	return sequence
+
+
+def speakSsml(
+		ssml: str,
+		markCallback: "MarkCallbackT | None" = None,
+		symbolLevel: Optional[int] = None,
+		_prefixSpeechCommand: SpeechCommand | None = None,
+		priority: Spri | None = None
+) -> None:
+	"""Speaks a given speech sequence provided as ssml.
+	:param ssml: The SSML data to speak.
+	:param markCallback: An optional callback called for every mark command in the SSML.
+	:param symbolLevel: The symbol verbosity level.
+	:param _prefixSpeechCommand: A SpeechCommand to append before the sequence.
+	:param priority: The speech priority.
+	"""
+	seq = _getSpeakSsmlSpeech(ssml, markCallback, _prefixSpeechCommand)
+	if seq:
+		speak(seq, symbolLevel=symbolLevel, priority=priority)
 
 
 def getCurrentLanguage() -> str:
@@ -2369,7 +2412,7 @@ def getFormatFieldSpeech(  # noqa: C901
 	if formatConfig["reportCellBorders"] != ReportCellBorders.OFF:
 		borderStyle=attrs.get("border-style")
 		oldBorderStyle=attrsCache.get("border-style") if attrsCache is not None else None
-		if borderStyle!=oldBorderStyle:
+		if (borderStyle or oldBorderStyle is not None) and borderStyle != oldBorderStyle:
 			if borderStyle:
 				text=borderStyle
 			else:
@@ -2423,7 +2466,11 @@ def getFormatFieldSpeech(  # noqa: C901
 			textList.append(_("{backgroundColor} background").format(backgroundColor=bgColorText))
 		backgroundPattern=attrs.get("background-pattern")
 		oldBackgroundPattern=attrsCache.get("background-pattern") if attrsCache is not None else None
-		if backgroundPattern and backgroundPattern!=oldBackgroundPattern:
+		if (backgroundPattern or oldBackgroundPattern is not None) and backgroundPattern != oldBackgroundPattern:
+			if not backgroundPattern:
+				# Translators: A type of background pattern in Microsoft Excel.
+				# No pattern
+				backgroundPattern = _("none")
 			textList.append(_("background pattern {pattern}").format(pattern=backgroundPattern))
 	if  formatConfig["reportLineNumber"]:
 		lineNumber=attrs.get("line-number")

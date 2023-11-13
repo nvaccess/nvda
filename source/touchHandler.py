@@ -1,15 +1,16 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2012-2021 NV Access Limited, Joseph Lee, Babbage B.V.
+# Copyright (C) 2012-2023 NV Access Limited, Joseph Lee, Babbage B.V.
 
-"""handles touchscreen interaction (Windows 8 and later).
+"""handles touchscreen interaction.
 Used to provide input gestures for touchscreens, touch modes and other support facilities.
-In order to use touch features, NVDA must be installed on a touchscreen computer running Windows 8 and later.
+In order to use touch features, NVDA must be installed on a touchscreen computer.
 """
 
 import threading
 from ctypes import *
+from ctypes import windll
 from ctypes.wintypes import *
 import re
 import gui
@@ -280,8 +281,8 @@ class TouchHandler(threading.Thread):
 				pass
 		interval=self.trackerManager.pendingEmitInterval
 		if interval and interval>0:
-			# Ensure we are pumpped again by the time more pending multiTouch trackers are ready
-			self.pendingEmitsTimer.Start(interval*1000,True)
+			# Ensure we are pumped again by the time more pending multiTouch trackers are ready
+			self.pendingEmitsTimer.Start(int(interval * 1000), True)
 		else:
 			# Stop the timer in case we were pumpped due to something unrelated but just happened to be at the appropriate time to clear any remaining trackers 
 			self.pendingEmitsTimer.Stop()
@@ -298,7 +299,7 @@ class TouchHandler(threading.Thread):
 handler=None
 
 
-def touchSupported(debugLog: bool = False):
+def touchSupported(debugLog: bool = False) -> bool:
 	"""Returns if the system and current NVDA session supports touchscreen interaction.
 	@param debugLog: Whether to log additional details about touch support to the NVDA log.
 	"""
@@ -306,12 +307,8 @@ def touchSupported(debugLog: bool = False):
 		if debugLog:
 			log.debugWarning("Touch only supported on installed copies")
 		return False
-	if winVersion.getWinVer() < winVersion.WIN8:
-		if debugLog:
-			log.debugWarning("Touch only supported on Windows 8 and higher")
-		return False
-	maxTouches=windll.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES)
-	if maxTouches<=0:
+	maxTouches = windll.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES)
+	if maxTouches <= 0:
 		if debugLog:
 			log.debugWarning("No touch devices found")
 		return False

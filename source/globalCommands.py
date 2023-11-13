@@ -3191,7 +3191,8 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_TOOLS
 	)
-	def script_toggleSpeechViewer(self,gesture):
+	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
+	def script_toggleSpeechViewer(self, gesture: inputCore.InputGesture):
 		if gui.speechViewer.isActive:
 			# Translators: The message announced when disabling speech viewer.
 			state = _("speech viewer disabled")
@@ -3212,7 +3213,8 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_TOOLS
 	)
-	def script_toggleBrailleViewer(self, gesture):
+	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
+	def script_toggleBrailleViewer(self, gesture: inputCore.InputGesture):
 		import brailleViewer
 		if brailleViewer.isBrailleViewerActive():
 			# Translators: The message announced when disabling braille viewer.
@@ -4179,7 +4181,8 @@ class GlobalCommands(ScriptableObject):
 			"Pressed once, screen curtain is enabled until you restart NVDA. "
 			"Pressed twice, screen curtain is enabled until you disable it"
 		),
-		category=SCRCAT_VISION
+		category=SCRCAT_VISION,
+		gesture="kb:NVDA+control+escape",
 	)
 	def script_toggleScreenCurtain(self, gesture):
 		scriptCount = scriptHandler.getLastScriptRepeatCount()

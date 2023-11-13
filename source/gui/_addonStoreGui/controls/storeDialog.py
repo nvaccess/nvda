@@ -300,6 +300,10 @@ class AddonStoreDialog(SettingsDialog):
 		self.SetTitle(self._titleText)
 
 	def _toggleFilterControls(self):
+		self.channelFilterCtrl.Clear()
+		for c in _channelFilters:
+			if c != Channel.EXTERNAL:
+				self.channelFilterCtrl.Append(c.displayString)
 		if self._storeVM._filteredStatusKey in {
 			_StatusFilterKey.AVAILABLE,
 			_StatusFilterKey.UPDATE,
@@ -310,6 +314,7 @@ class AddonStoreDialog(SettingsDialog):
 			self.includeIncompatibleCtrl.Enable()
 			self.includeIncompatibleCtrl.Show()
 		else:
+			self.channelFilterCtrl.Append(Channel.EXTERNAL.displayString)
 			self._storeVM._filterChannelKey = Channel.ALL
 			self.enabledFilterCtrl.Show()
 			self.enabledFilterCtrl.Enable()

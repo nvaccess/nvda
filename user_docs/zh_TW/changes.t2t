@@ -4,6 +4,200 @@ NVDA 新版資訊
 %!includeconf: ../changes.t2tconf
 %!includeconf: ./locale.t2tconf
 
+= 2023.3 更新中文摘譯 =
+此版本包括對音訊輸出的效能、反應速度和穩定性的改進，新增了選項來控制 NVDA 聲音和嗶嗶聲的音量，或讓它們跟隨您正在使用的語音音量。
+
+NVDA 現在可以定時更新 OCR 的結果，並說出新出現的文字，這可以在 NVDA 設定對話框中的 Windows OCR 類別中進行設定。
+
+多項點字修正，改進了設備偵測和游標移動，現在可以在自動偵測中排除不需要的驅動程式，以提高自動偵測的效能，同時也加入了新的 BRLTTY 指令。
+
+附加元件商店、Microsoft Office、Microsoft Edge 快顯功能表和 Windows 小算盤的錯誤也已修正。
+
+== 新功能 ==
+- 增強的聲音管理：
+  - 新增音訊設定類別：
+    - 可用 ``NVDA+control+u`` 來開啟。 (#15497)
+    - 可讓 NVDA 音效和嗶嗶聲的音量跟隨您正在使用的語音的音量設定。 (#1409)
+    - 可獨立設定 NVDA 音效的音量。 (#1409, #15038)
+    - 更改音訊輸出裝置和切換自動音量調整的設定已從「選擇合成器」對話框移至新的音訊設定類別。
+    這些選項將從 2024.1 中的「選擇合成器」對話方塊中刪除。 (#15486, #8711)
+    -
+  - NVDA 現在將透過 Windows Audio Session API (WASAPI) 輸出音訊，這可能會提高 NVDA 語音和音效的反應、效能和穩定性。 
+  - 注意：WASAPI 與某些附加元件不相容。
+  這些附加元件有相容的更新版本，請在更新 NVDA 之前更新它們。
+  更新 NVDA 時將停用這些附加元件的不相容版本：
+    - Tony's Enhancements 1.15 或更早版本。 (#15402)
+    - NVDA global commands extension 12.0.8 或更早版本。 (#15443)
+    -
+  -
+- NVDA 現在能夠在執行光學字元辨識 (OCR) 時不斷更新結果，說出出現的新文字。 (#2797)
+  - 若要啟用此功能，請在 NVDA 設定對話框的 Windows OCR 類別中啟用「定時更新辨識內容」選項。
+  - 啟用後，您可以透過切換讀出動態內容變化 (按 NVDA+5)來切換朗讀新文字。
+  -
+- 當使用點顯器的自動偵測時，現在可以在選擇點顯器對話框中選擇要排除偵測的驅動程式。 (#15196)
+- 文件格式設定中的新選項「讀出行縮排時忽略空白行」。 (#13394)
+- 新增了未指派的手勢，可在瀏覽模式下按索引標籤群組進行導覽。 (#15046)
+-
+
+== 更新 ==
+- 點字:
+  - 當終端程式中的文字發生變更而沒有移動插入點位置時，  點顯器上的文字將能夠正確顯示。
+  這包括點字跟隨檢閱游標的情況。 (#15115)
+  - 更多 BRLTTY 按鍵組合對應到 NVDA 指令 (#6483):
+    - ``learn``: 切換 NVDA 輸入說明
+    - ``prefmenu``: 開啟 NVDA 功能表
+    - ``prefload``/``prefsave``: 載入/儲存 NVDA 組態
+    - ``time``: 顯示時間
+    - ``say_line``: 讀出檢閱遊標所在行
+    - ``say_below``: 使用檢閱游標讀出全部
+    -
+  - 僅當啟用了 BrlAPI 的 BRLTTY 個體正在執行時，BRLTTY 驅動程式才可用。 (#15335)
+  - 進皆設定中的「啟用 HID 點字支援」已被刪除，取而代之的是新選項，
+  現在您可以在選擇點顯器對話框中停用特定的點顯器驅動程式。 (#15196)
+  -
+- 附加元件商店：如果商店中提供了已安裝的附加元件，現在將在「可用附加元件」索引標籤中列出。 (#15374)
+- NVDA 功能表中的一些快捷鍵已更新。 (#15364)
+-
+
+== 錯誤修正 ==
+- Microsoft Office：
+  - 修正了未啟用文件格式設定中「讀出標題」和「讀出附註及註解」時 Microsoft Word 中的當機問題。 (#15019)
+  - 在 Word 和 Excel 中，能夠更正確讀出文字對齊方式。 (#15206, #15220)
+  - 修正了 Excel 中某些儲存格格式捷徑的報讀。 (#15527)
+  -
+- Microsoft Edge：
+  - 在 Microsoft Edge 中開啟快顯功能表時，NVDA 將不再跳回先前瀏覽模式的位置。 (#15309)
+  - NVDA 再次能夠讀出 Microsoft Edge 中下載的快顯功能表。 (#14916)
+  -
+- 點字：
+  - 使用手勢切換顯示或隱藏點字遊標和選取範圍指示器時，將能夠正確切換。 (#15115)
+  - 修正了儘管已連接另一個點字設備，但 Albatross 點字顯示器仍嘗試初始化的錯誤。 (#15226)
+  -
+- 附加元件商店：
+  - 修正了未勾選「包含不相容附加元件」時，不相容的附加元件仍列在商店中的錯誤。 (#15411)
+  - 當切換啟用或停用狀態篩選器時，因相容性原因而被阻擋的附加元件能夠被正確篩選出來。 (#15416)
+  - 修正了阻止使用外部安裝工具升級或取代已啟用的不相容附加元件的錯誤。 (#15417)
+  - 修正了安裝附加元件後需重新啟動 NVDA 才會說話的錯誤。 (#14525)
+  - 修正瞭如果先前的下載失敗或被取消則無法安裝附加元件的錯誤。 (#15469)
+  - 修正了更新 NVDA 時處理不相容附加元件的問題。 (#15414, #15412, #15437)
+  -
+- NVDA 再次能夠讀出 Windows Server、LTSC 和 LTSB 版本 Windows 32 位元小算盤的計算結果。 (#15230)
+- 修正了 NVDA 啟動過程中當機的潛在原因。 (#15517)
+-
+
+
+= 2023.3 =
+This release includes improvements to performance, responsiveness and stability of audio output.
+Options have been added to control the volume of NVDA sounds and beeps, or to have them follow the volume of the voice you are using.
+
+NVDA can now periodically refresh OCR results, speaking new text as it appears.
+This can be configured in the Windows OCR category of NVDA's settings dialog.
+
+There's been several braille fixes, improving device detection and caret movement.
+It is now possible to opt-out unwanted drivers from automatic detection, to improve autodetection performance.
+There are also new BRLTTY commands.
+
+There's also been bug fixes for the Add-on Store, Microsoft Office, Microsoft Edge context menus, and Windows Calculator.
+
+== New Features ==
+- Enhanced sound management:
+  - A new Audio Settings panel:
+    - This can be opened with ``NVDA+control+u``. (#15497)
+    - An option in Audio settings to have the volume of NVDA sounds and beeps follow the volume setting of the voice you are using. (#1409)
+    - An option in Audio settings to separately configure the volume of NVDA sounds. (#1409, #15038)
+    - The settings to change audio output device and toggle audio ducking have been moved to the new Audio settings panel from the Select Synthesizer dialog.
+    These options will be removed from the "select synthesizer" dialog in 2024.1. (#15486, #8711)
+    -
+  - NVDA will now output audio via the Windows Audio Session API (WASAPI), which may improve the responsiveness, performance and stability of NVDA speech and sounds. (#14697, #11169, #11615, #5096, #10185, #11061)
+  - Note: WASAPI is incompatible with some add-ons.
+  Compatible updates are available for these add-ons, please update them before updating NVDA.
+  Incompatible versions of these add-ons will be disabled when updating NVDA:
+    - Tony's Enhancements version 1.15 or older. (#15402)
+    - NVDA global commands extension 12.0.8 or older. (#15443)
+    -
+  -
+- NVDA is now able to continually update the result when performing optical character recognition (OCR), speaking new text as it appears. (#2797)
+  - To enable this functionality, enable the option "Periodically refresh recognized content" in the Windows OCR category of NVDA's settings dialog.
+  - Once enabled, you can toggle speaking new text by toggling report dynamic content changes (pressing ``NVDA+5``).
+  -
+- When using automatic detection of braille displays, it is now possible to opt-out drivers from detection from the braille display selection dialog. (#15196)
+- A new option in Document Formatting settings, "Ignore blank lines for line indentation reporting". (#13394)
+- Added an unassigned gesture to navigate by tab groupings in browse mode. (#15046)
+-
+
+== Changes ==
+- Braille:
+  - When the text in a terminal changes without updating the caret, the text on a braille display will now properly update when positioned on a changed line.
+  This includes situations where braille is tethered to review. (#15115)
+  - More BRLTTY key bindings are now mapped to NVDA commands (#6483):
+    - ``learn``: toggle NVDA input help
+    - ``prefmenu``: open the NVDA menu
+    - ``prefload``/``prefsave``: Load/save NVDA configuration
+    - ``time``: Show time
+    - ``say_line``: Speak the current line where the review cursor is located
+    - ``say_below``: Say all using review cursor
+    -
+  - The BRLTTY driver is only available when a BRLTTY instance with BrlAPI enabled is running. (#15335)
+  - The advanced setting to enable support for HID braille has been removed in favor of a new option.
+  You can now disable specific drivers for braille display auto detection in the braille display selection dialog. (#15196)
+  -
+- Add-on Store: Installed add-ons will now be listed in the Available Add-ons tab, if they are available in the store. (#15374)
+- Some shortcut keys have been updated in the NVDA menu. (#15364)
+-
+
+== Bug Fixes ==
+- Microsoft Office:
+  - Fixed crash in Microsoft Word when Document formatting options "report headings" and "report comments and notes" were not enabled. (#15019)
+  - In Word and Excel, text alignment will be correctly reported in more situations. (#15206, #15220)
+  - Fixes the announcement of some cell formatting shortcuts in Excel. (#15527)
+  -
+- Microsoft Edge:
+  - NVDA will no longer jump back to the last browse mode position when opening the context menu in Microsoft Edge. (#15309)
+  - NVDA is once again able to read context menus of downloads in Microsoft Edge. (#14916)
+  -
+- Braille:
+  - The braille cursor and selection indicators will now always be updated correctly after showing or hiding respective indicators with a gesture. (#15115)
+  - Fixed bug where Albatross braille displays try to initialize although another braille device has been connected. (#15226)
+  -
+- Add-on Store:
+  - Fixed bug where unchecking "include incompatible add-ons" would result in incompatible add-ons still being listed in the store. (#15411)
+  - Add-ons blocked due to compatibility reasons should now be filtered correctly when toggling the filter for enabled/disabled status. (#15416)
+  - Fixed bug preventing overridden enabled incompatible add-ons being upgraded or replaced using the external install tool. (#15417)
+  - Fixed bug where NVDA would not speak until restarted after add-on installation. (#14525)
+  - Fixed bug where add-ons cannot be installed if a previous download failed or was cancelled. (#15469)
+  - Fixed issues with handling incompatible add-ons when upgrading NVDA. (#15414, #15412, #15437)
+  -
+- NVDA once again announces calculation results in the Windows 32bit calculator on Server, LTSC and LTSB versions of Windows. (#15230)
+- NVDA no longer ignores focus changes when a nested window (grand child window) gets focus. (#15432)
+- Fixed a potential cause of crashing during NVDA startup. (#15517)
+-
+
+== Changes for Developers ==
+Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+- ``braille.handler.handleUpdate`` and ``braille.handler.handleReviewMove`` have been changed in order not to update instantly.
+Before this change, when either of these methods was called very often, this would drain many resources.
+These methods now queue an update at the end of every core cycle instead.
+They should also be thread safe, making it possible to call them from background threads. (#15163)
+- Added official support to register custom braille display drivers in the automatic braille display detection process.
+Consult the ``braille.BrailleDisplayDriver`` class documentation for more details.
+Most notably, the ``supportsAutomaticDetection`` attribute must be set to ``True`` and the ``registerAutomaticDetection`` ``classmethod`` must be implemented.  (#15196)
+-
+
+=== Deprecations ===
+- ``braille.BrailleHandler.handlePendingCaretUpdate`` is now deprecated with no public replacement.
+It will be removed in 2024.1. (#15163)
+- Importing the constants ``xlCenter``, ``xlJustify``, ``xlLeft``, ``xlRight``, ``xlDistributed``, ``xlBottom``, ``xlTop`` from ``NVDAObjects.window.excel`` is deprecated.
+Use ``XlHAlign`` or ``XlVAlign`` enumerations instead. (#15205)
+- The mapping ``NVDAObjects.window.excel.alignmentLabels`` is deprecated.
+Use the ``displayString`` methods of ``XlHAlign`` or ``XlVAlign`` enumerations instead. (#15205)
+- ``bdDetect.addUsbDevices`` and ``bdDetect.addBluetoothDevices`` have been deprecated.
+Braille display drivers should implement the ``registerAutomaticDetection`` classmethod instead.
+That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices`` and ``addBluetoothDevices`` methods can be used. (#15200)
+- The default implementation of the check method on ``BrailleDisplayDriver`` uses ``bdDetect.driverHasPossibleDevices`` for devices that are marked as thread safe.
+Starting from NVDA 2024.1, in order for the base method to use ``bdDetect.driverHasPossibleDevices``, the ``supportsAutomaticDetection`` attribute must be set to ``True`` as well. (#15200)
+-
+
+
 = 2023.2 更新中文摘譯 =
 此版本引入附加元件商店來取代原有的附加元件管理員，在附加元件商店中，您可以瀏覽、搜尋、安裝及更新社群附加元件，您現在也可在自行承擔風險的情況下手動忽略附加元件不相容的問題。
 加入新的點字功能、指令及點顯器支爰，也加入了 OCR 及平面物件導覽的輸入手勢。

@@ -28,7 +28,7 @@ controllerRPCHeader,controllerRPCClientSource=env.MSRPCStubs(
 	MSRPCStubs_prefix="nvdaController_",
 )
 
-clientLibName="nvdaControllerClient%s"%('64' if env['TARGET_ARCH']=='x86_64' else '32')
+clientLibName = "nvdaControllerClient"
 
 clientLib=env.SharedLibrary(
 	target=clientLibName,
@@ -44,11 +44,5 @@ clientLib=env.SharedLibrary(
 		"rpcrt4",
 	],
 )
-
-#if 'install' in COMMAND_LINE_TARGETS:
-#	installDir=env.Install('#../../extras/controllerClient/',clientLib)
-#	env.Default(installDir)
-
-#env.Default(clientLib)
 
 Return(['clientLib','controllerRPCHeader'])

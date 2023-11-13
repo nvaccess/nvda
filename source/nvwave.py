@@ -45,11 +45,12 @@ import garbageHandler
 import winKernel
 import wave
 import config
-from logHandler import log
+from logHandler import log, getOnErrorSoundRequested
 import os.path
 import extensionPoints
 import NVDAHelper
 import core
+import globalVars
 
 
 __all__ = (
@@ -686,7 +687,14 @@ def playWaveFile(
 	f = wave.open(fileName,"r")
 	if f is None: raise RuntimeError("can not open file %s"%fileName)
 	if fileWavePlayer is not None:
-		fileWavePlayer.stop()
+		# There are several race conditions where the background thread might feed
+		# audio after we call stop here in the main thread. Some of these are
+		# difficult to fix with locks because they involve switches between Python
+		# and blocking native code. Just keep calling stop until we know that the
+		# backgroundd thread is done, which means it was successfully stopped. The
+		# background thread sets fileWavePlayer to None when it is done.
+		while fileWavePlayer:
+			fileWavePlayer.stop()
 	if not decide_playWaveFile.decide(
 		fileName=fileName,
 		asynchronous=asynchronous,
@@ -696,6 +704,21 @@ def playWaveFile(
 			"Playing wave file canceled by handler registered to decide_playWaveFile extension point"
 		)
 		return
+
+	def play():
+		global fileWavePlayer
+		try:
+			fileWavePlayer.feed(f.readframes(f.getnframes()))
+			fileWavePlayer.idle()
+		except Exception:
+			log.exception("Error playing wave file")
+		# #11169: Files might not be played that often. Leaving the device open
+		# until the next file is played really shouldn't be a problem regardless of
+		# how long we wait, but closing the device seems to hang occasionally.
+		# There's no benefit to keeping it open - we're going to create a new
+		# player for the next file anyway - so just destroy it now.
+		fileWavePlayer = None
+
 	fileWavePlayer = WavePlayer(
 		channels=f.getnchannels(),
 		samplesPerSec=f.getframerate(),
@@ -704,21 +727,7 @@ def playWaveFile(
 		wantDucking=False,
 		purpose=AudioPurpose.SOUNDS
 	)
-
-	def play():
-		global fileWavePlayer
-		fileWavePlayer.feed(f.readframes(f.getnframes()))
-		fileWavePlayer.idle()
-		# #11169: Files might not be played that often. Leaving the device open
-		# until the next file is played really shouldn't be a problem regardless of
-		# how long we wait, but closing the device seems to hang occasionally.
-		# There's no benefit to keeping it open - we're going to create a new
-		# player for the next file anyway - so just destroy it now.
-		fileWavePlayer = None
-
 	if asynchronous:
-		if fileWavePlayerThread is not None:
-			fileWavePlayerThread.join()
 		fileWavePlayerThread = threading.Thread(
 			name=f"{__name__}.playWaveFile({os.path.basename(fileName)})",
 			target=play
@@ -837,7 +846,11 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			return
 		if self._player:
 			NVDAHelper.localLib.wasPlay_destroy(self._player)
-			del self._instances[self._player]
+			# Because _instances is a WeakValueDictionary, it will remove the
+			# reference to this instance by itself. We don't need to do it explicitly
+			# here. Furthermore, doing it explicitly might cause an exception because
+			# a weakref callback can run before __del__ in some cases, which would mean
+			# it has already been removed from _instances.
 			self._player = None
 
 	def open(self):
@@ -1053,6 +1066,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 def initialize():
 	global WavePlayer
 	if not config.conf["audio"]["WASAPI"]:
+		getOnErrorSoundRequested().register(playErrorSound)
 		return
 	WavePlayer = WasapiWavePlayer
 	NVDAHelper.localLib.wasPlay_create.restype = c_void_p
@@ -1070,7 +1084,23 @@ def initialize():
 		func.restype = HRESULT
 		func.errcheck = _wasPlay_errcheck
 	NVDAHelper.localLib.wasPlay_startup()
+	getOnErrorSoundRequested().register(playErrorSound)
+
+
+def terminate() -> None:
+	getOnErrorSoundRequested().unregister(playErrorSound)
 
 
 def usingWasapiWavePlayer() -> bool:
 	return issubclass(WavePlayer, WasapiWavePlayer)
+
+
+def playErrorSound() -> None:
+	if isInError():
+		if _isDebugForNvWave():
+			log.debug("No beep for log; nvwave is in error state")
+		return
+	try:
+		playWaveFile(os.path.join(globalVars.appDir, "waves", "error.wav"))
+	except Exception:
+		pass

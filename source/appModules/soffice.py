@@ -31,20 +31,28 @@ import vision
 
 
 class SymphonyTextInfo(IA2TextTextInfo):
+	# C901 '_getFormatFieldFromLegacyAttributesString' is too complex
+	# Note: when working on _getFormatFieldFromLegacyAttributesString, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	# This is legacy code, kept for compatibility reasons.
+	def _getFormatFieldFromLegacyAttributesString(  # noqa: C901
+			self,
+			attribsString: str,
+			offset: int
+	) -> textInfos.FormatField:
 
-	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
-		obj = self.obj
-		try:
-			startOffset,endOffset,attribsString=obj.IAccessibleTextObject.attributes(offset)
-		except COMError:
-			log.debugWarning("could not get attributes",exc_info=True)
-			return textInfos.FormatField(),(self._startOffset,self._endOffset)
+		"""Get format field with information retrieved from a text
+		attributes string containing LibreOffice's legacy custom text
+		attributes (used by LibreOffice <= 7.6), instead of attributes
+		according to the IAccessible2 text attributes specification
+		(used by LibreOffice >= 24.2).
+
+		:param attribsString: Legacy text attributes string.
+		:param offset: Character offset for which to retrieve the
+		 			   attributes.
+		:return: Format field containing the text attribute information.
+		"""
 		formatField=textInfos.FormatField()
-		if not attribsString and offset>0:
-			try:
-				attribsString=obj.IAccessibleTextObject.attributes(offset-1)[2]
-			except COMError:
-				pass
 		if attribsString:
 			formatField.update(splitIA2Attribs(attribsString))
 
@@ -101,6 +109,73 @@ class SymphonyTextInfo(IA2TextTextInfo):
 		if backgroundColor:
 			formatField['background-color']=colors.RGB.fromString(backgroundColor)
 
+		if offset == 0:
+			# Only include the list item prefix on the first line of the paragraph.
+			numbering = formatField.get("Numbering")
+			if numbering:
+				formatField["line-prefix"] = numbering.get("NumberingPrefix") or numbering.get("BulletChar")
+
+		return formatField
+
+	def _getFormatFieldAndOffsetsFromAttributes(
+			self,
+			offset: int,
+			formatConfig: Optional[dict],
+			calculateOffsets: bool
+	) -> tuple[textInfos.FormatField, tuple[int, int]]:
+		"""Get format field and offset information from either
+		attributes according to the IAccessible2 specification
+		(for LibreOffice >= 24.2) or from legacy custom
+		text attributes (used by LibreOffice <= 7.6 and Apache OpenOffice).
+		:param offset: Character offset for which to retrieve the
+		 			   attributes.
+		:param formatConfig: Format configuration.
+		:param calculateOffsets: Whether to calculate offsets.
+		:return: Format field containing the text attribute information
+				 and start and end offset of the attribute run.
+		"""
+		obj = self.obj
+		try:
+			startOffset, endOffset, attribsString = obj.IAccessibleTextObject.attributes(offset)
+		except COMError:
+			log.debugWarning("could not get attributes", exc_info=True)
+			return textInfos.FormatField(), (self._startOffset, self._endOffset)
+
+		if not attribsString and offset > 0:
+			try:
+				attribsString = obj.IAccessibleTextObject.attributes(offset - 1)[2]
+			except COMError:
+				pass
+
+		# LibreOffice >= 24.2 uses IAccessible2 text attributes, earlier versions use
+		# custom attributes, with the attributes string starting with "Version:1;"
+		if attribsString and attribsString.startswith('Version:1;'):
+			formatField = self._getFormatFieldFromLegacyAttributesString(
+				attribsString,
+				offset
+			)
+		else:
+			formatField, (startOffset, endOffset) = super()._getFormatFieldAndOffsets(
+				offset,
+				formatConfig,
+				calculateOffsets
+			)
+
+		return formatField, (startOffset, endOffset)
+
+	def _getFormatFieldAndOffsets(
+			self,
+			offset: int,
+			formatConfig: Optional[dict],
+			calculateOffsets: bool = True
+	) -> tuple[textInfos.FormatField, tuple[int, int]]:
+		formatField, (startOffset, endOffset) = self._getFormatFieldAndOffsetsFromAttributes(
+			offset,
+			formatConfig,
+			calculateOffsets
+		)
+		obj = self.obj
+
 		# optimisation: Assume a hyperlink occupies a full attribute run.
 		try:
 			if obj.IAccessibleTextObject.QueryInterface(
@@ -109,12 +184,6 @@ class SymphonyTextInfo(IA2TextTextInfo):
 				formatField["link"] = True
 		except COMError:
 			pass
-
-		if offset == 0:
-			# Only include the list item prefix on the first line of the paragraph.
-			numbering = formatField.get("Numbering")
-			if numbering:
-				formatField["line-prefix"] = numbering.get("NumberingPrefix") or numbering.get("BulletChar")
 
 		if obj.hasFocus:
 			# Symphony exposes some information for the caret position as attributes on the document object.
@@ -134,7 +203,7 @@ class SymphonyTextInfo(IA2TextTextInfo):
 				except KeyError:
 					pass
 
-		return formatField,(startOffset,endOffset)
+		return formatField, (startOffset, endOffset)
 
 	def _getLineOffsets(self, offset):
 		start, end = super(SymphonyTextInfo, self)._getLineOffsets(offset)
@@ -388,7 +457,13 @@ class AppModule(appModuleHandler.AppModule):
 		(up to the given depth) has the corresponding role."""
 		if obj.role == controlTypes.Role.STATUSBAR:
 			return obj
-		if max_depth < 1 or obj.role not in {controlTypes.Role.ROOTPANE, controlTypes.Role.WINDOW}:
+		if max_depth < 1 or obj.role not in {
+			controlTypes.Role.DIALOG,
+			controlTypes.Role.FRAME,
+			controlTypes.Role.OPTIONPANE,
+			controlTypes.Role.ROOTPANE,
+			controlTypes.Role.WINDOW
+		}:
 			return None
 		for child in obj.children:
 			status_bar = self.searchStatusBar(child, max_depth - 1)
@@ -402,9 +477,10 @@ class AppModule(appModuleHandler.AppModule):
 	def getStatusBarText(self, obj: NVDAObject) -> str:
 		text = ""
 		for child in obj.children:
-			textObj = child.IAccessibleTextObject
-			if textObj:
-				if text:
-					text += " "
-				text += textObj.textAtOffset(0, IA2.IA2_TEXT_BOUNDARY_ALL)[2]
+			if hasattr(child, 'IAccessibleTextObject'):
+				textObj = child.IAccessibleTextObject
+				if textObj:
+					if text:
+						text += " "
+					text += textObj.textAtOffset(0, IA2.IA2_TEXT_BOUNDARY_ALL)[2]
 		return text

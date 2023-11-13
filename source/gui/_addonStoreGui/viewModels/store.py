@@ -3,10 +3,6 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-# Needed for type hinting CaseInsensitiveDict
-# Can be removed in a future version of python (3.8+)
-from __future__ import annotations
-
 from os import (
 	PathLike,
 	startfile,
@@ -243,6 +239,21 @@ class AddonStoreVM:
 				displayName=pgettext("addonStore", "Source &Code"),
 				actionHandler=lambda aVM: startfile(cast(_AddonStoreModel, aVM.model).sourceURL),
 				validCheck=lambda aVM: isinstance(aVM.model, _AddonStoreModel),
+				actionTarget=selectedListItem
+			),
+			AddonActionVM(
+				# Translators: Label for an action that opens the webpage to see and send feedback for the selected add-on
+				displayName=pgettext("addonStore", "Community re&views"),
+				actionHandler=lambda aVM: startfile(
+					cast(
+						str,
+						cast(_AddonStoreModel, aVM.model).reviewURL
+					)
+				),
+				validCheck=lambda aVM: (
+					isinstance(aVM.model, _AddonStoreModel)
+					and aVM.model.reviewURL is not None
+				),
 				actionTarget=selectedListItem
 			),
 		]

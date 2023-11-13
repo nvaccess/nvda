@@ -3,10 +3,6 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-# Needed for type hinting CaseInsensitiveDict
-# Can be removed in a future version of python (3.8+)
-from __future__ import annotations
-
 import dataclasses
 import json
 import os
@@ -17,10 +13,8 @@ from typing import (
 	Generator,
 	List,
 	Optional,
-	Union,
-)
-from typing_extensions import (
 	Protocol,
+	Union,
 )
 
 from requests.structures import CaseInsensitiveDict
@@ -127,6 +121,7 @@ class _AddonStoreModel(_AddonGUIModel):
 	URL: str
 	sha256: str
 	addonVersionNumber: MajorMinorPatch
+	reviewURL: Optional[str]
 
 	@property
 	def tempDownloadPath(self) -> str:
@@ -242,6 +237,7 @@ class InstalledAddonStoreModel(_AddonManifestModel, _AddonStoreModel):
 	addonVersionNumber: MajorMinorPatch
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
+	reviewURL: Optional[str]
 	legacy: bool = False
 	"""
 	Legacy add-ons contain invalid metadata
@@ -275,6 +271,7 @@ class AddonStoreModel(_AddonStoreModel):
 	addonVersionNumber: MajorMinorPatch
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
+	reviewURL: Optional[str]
 	legacy: bool = False
 	"""
 	Legacy add-ons contain invalid metadata
@@ -306,6 +303,7 @@ def _createInstalledStoreModelFromData(addon: Dict[str, Any]) -> InstalledAddonS
 		sha256=addon["sha256"],
 		minNVDAVersion=MajorMinorPatch(**addon["minNVDAVersion"]),
 		lastTestedVersion=MajorMinorPatch(**addon["lastTestedVersion"]),
+		reviewURL=addon.get("reviewUrl"),
 		legacy=addon.get("legacy", False),
 	)
 
@@ -327,6 +325,7 @@ def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
 		sha256=addon["sha256"],
 		minNVDAVersion=MajorMinorPatch(**addon["minNVDAVersion"]),
 		lastTestedVersion=MajorMinorPatch(**addon["lastTestedVersion"]),
+		reviewURL=addon.get("reviewUrl"),
 		legacy=addon.get("legacy", False),
 	)
 
