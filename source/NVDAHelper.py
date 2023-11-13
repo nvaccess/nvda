@@ -9,7 +9,7 @@ import os
 import winreg
 import msvcrt
 import winVersion
-import versionInfo
+import buildVersion
 import winKernel
 import config
 
@@ -39,9 +39,9 @@ versionedLibAMD64Path = os.path.join(globalVars.appDir, 'lib64')
 
 if not NVDAState.isRunningAsSource():
 	# When running as a py2exe build, libraries are in a version-specific directory
-	versionedLibPath=os.path.join(versionedLibPath,versionInfo.version)
-	versionedLibAMD64Path = os.path.join(versionedLibAMD64Path, versionInfo.version)
-	versionedLibARM64Path = os.path.join(versionedLibARM64Path, versionInfo.version)
+	versionedLibPath = os.path.join(versionedLibPath, buildVersion.version)
+	versionedLibAMD64Path = os.path.join(versionedLibAMD64Path, buildVersion.version)
+	versionedLibARM64Path = os.path.join(versionedLibARM64Path, buildVersion.version)
 
 
 _remoteLib=None
