@@ -2814,7 +2814,7 @@ Select an add-on from the "Available add-ons" or "Updatable add-ons" tab.
 Then use the update, install, or replace action to start the installation.
 
 You can also install multiple add-ons at once.
-This can be done by selecting multiple add-ons in the available add-ons tab, then activating the context menu on the selection and choosing the install action.
+This can be done by selecting multiple add-ons in the available add-ons tab, then activating the context menu on the selection and choosing the "Install selected add-ons" action.
 
 To install an add-on you have obtained outside of the Add-on Store, press the "Install from external source" button.
 This will allow you to browse for an add-on package (``.nvda-addon`` file) somewhere on your computer or on a network.
@@ -2830,6 +2830,7 @@ To remove an add-on, select the add-on from the list and use the Remove action.
 NVDA will ask you to confirm removal.
 As with installing, NVDA must be restarted for the add-on to be fully removed.
 Until you do, a status of "Pending removal" will be shown for that add-on in the list.
+As with installing, you can also remove multiple add-ons at once.
 
 +++ Disabling and Enabling Add-ons +++[AddonStoreDisablingEnabling]
 To disable an add-on, use the "disable" action.
@@ -2839,6 +2840,7 @@ For each use of the enable/disable action, add-on status changes to indicate wha
 If the add-on was previously "disabled", the status will show "enabled after restart".
 If the add-on was previously "enabled", the status will show "disabled after restart".
 Just like when you install or remove add-ons, you need to restart NVDA in order for changes to take effect.
+You can also enable or disable multiple add-ons at once by selecting multiple add-ons in the available add-ons tab, then activating the context menu on the selection and choosing the appropriate action.
 
 ++ Incompatible Add-ons ++[incompatibleAddonsManager]
 Some older add-ons may no longer be compatible with the version of NVDA that you have.
