@@ -1055,6 +1055,7 @@ def initialize():
 	NVDAHelper.localLib.wasPlay_create.restype = c_void_p
 	for func in (
 		NVDAHelper.localLib.wasPlay_startup,
+		NVDAHelper.localLib.wasPlay_open,
 		NVDAHelper.localLib.wasPlay_feed,
 		NVDAHelper.localLib.wasPlay_stop,
 		NVDAHelper.localLib.wasPlay_sync,

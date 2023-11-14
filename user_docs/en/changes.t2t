@@ -57,6 +57,7 @@ It is also updated with UIA enabled, when typing text and braille is tethered to
 - NVDA no longer freezes briefly when multiple sounds are played in rapid succession. (#15757)
 - NVDA will not fail to start anymore when the configuration file is corrupted, but it will restore the configuration to default as it did in the past. (#15690, @CyrilleB79)
 - If the audio output device is set to something other than the default and that device becomes available again after being unavailable, NVDA will now switch back to the configured device instead of continuing to use the default device. (#15759)
+- NVDA now resumes audio if the configuration of the output device changes or another application releases exclusive control of the device. (#15758, #15775)
 -
 
 == Changes for Developers ==
