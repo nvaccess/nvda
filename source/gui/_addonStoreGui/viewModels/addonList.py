@@ -124,34 +124,34 @@ class AddonListItemVM(Generic[_AddonModelT]):
 	def Id(self) -> str:
 		return self._model.listItemVMId
 
-	def canUseInstallAction(self):
+	def canUseInstallAction(self) -> bool:
 		return self.status == AvailableAddonStatus.AVAILABLE
 
-	def canUseInstallOverrideIncompatibilityAction(self):
+	def canUseInstallOverrideIncompatibilityAction(self) -> bool:
 		return self.status == AvailableAddonStatus.INCOMPATIBLE and self.model.canOverrideCompatibility
 
-	def canUseUpdateAction(self):
+	def canUseUpdateAction(self) -> bool:
 		return self.status == AvailableAddonStatus.UPDATE
 
-	def canUseReplaceAction(self):
+	def canUseReplaceAction(self) -> bool:
 		return self.status == AvailableAddonStatus.REPLACE_SIDE_LOAD
 
-	def canUseRemoveAction(self):
+	def canUseRemoveAction(self) -> bool:
 		return (
 			self.model.isInstalled
 			and self.status != AvailableAddonStatus.PENDING_REMOVE
 		)
 
-	def canUseEnableAction(self):
+	def canUseEnableAction(self) -> bool:
 		return self.status == AvailableAddonStatus.DISABLED or self.status == AvailableAddonStatus.PENDING_DISABLE
 
-	def canUseEnableOverrideIncompatibilityAction(self):
+	def canUseEnableOverrideIncompatibilityAction(self) -> bool:
 		return self.status in (
 			AvailableAddonStatus.INCOMPATIBLE_DISABLED,
 			AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
 		) and self.model.canOverrideCompatibility
 
-	def canUseDisableAction(self):
+	def canUseDisableAction(self) -> bool:
 		return self.model.isInstalled and self.status not in (
 			AvailableAddonStatus.DISABLED,
 			AvailableAddonStatus.PENDING_DISABLE,

@@ -32,7 +32,7 @@ if TYPE_CHECKING:
 
 
 class ErrorAddonInstallDialogWithYesNoButtons(ErrorAddonInstallDialog):
-	def __init__(self, *args, useRememberChoiceCheckbox=False, **kwargs):
+	def __init__(self, *args, useRememberChoiceCheckbox: bool = False, **kwargs):
 		self.useRememberChoiceCheckbox = useRememberChoiceCheckbox
 		super().__init__(*args, **kwargs)
 
@@ -72,7 +72,7 @@ class ErrorAddonInstallDialogWithYesNoButtons(ErrorAddonInstallDialog):
 			)
 			contentsSizer.addItem(self.rememberChoiceCheckbox)
 
-	def shouldRememberChoice(self):
+	def shouldRememberChoice(self) -> bool:
 		if self.useRememberChoiceCheckbox:
 			return self.rememberChoiceCheckbox.IsChecked()
 		return False

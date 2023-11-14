@@ -196,31 +196,31 @@ class AddonListValidator:
 	def __init__(self, addonsList: List[AddonListItemVM]):
 		self.addonsList = addonsList
 
-	def canUseInstallAction(self):
+	def canUseInstallAction(self) -> bool:
 		for aVM in self.addonsList:
 			if aVM.canUseInstallAction() or aVM.canUseInstallOverrideIncompatibilityAction():
 				return True
 		return False
 	
-	def canUseUpdateAction(self):
+	def canUseUpdateAction(self) -> bool:
 		for aVM in self.addonsList:
 			if aVM.canUseUpdateAction():
 				return True
 		return False
 
-	def canUseReplaceAction(self):
+	def canUseReplaceAction(self) -> bool:
 		for aVM in self.addonsList:
 			if aVM.canUseReplaceAction():
 				return True
 		return False
 
-	def canUseRemoveAction(self):
+	def canUseRemoveAction(self) -> bool:
 		for aVM in self.addonsList:
 			if aVM.canUseRemoveAction():
 				return True
 		return False
 
-	def canUseEnableAction(self):
+	def canUseEnableAction(self) -> bool:
 		for aVM in self.addonsList:
 			if aVM.canUseEnableOverrideIncompatibilityAction() or aVM.canUseEnableAction():
 				return True
