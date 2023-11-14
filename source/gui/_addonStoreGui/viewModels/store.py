@@ -276,7 +276,7 @@ class AddonStoreVM:
 		shouldRememberChoice = False
 		for aVM in listItemVMs:
 			if aVM.canUseRemoveAction():
-				log.debug(f"Skipping {aVM.Id} as it is not relevant for remove action")
+				log.debug(f"Skipping {aVM.Id} ({aVM.status}) as it is not relevant for remove action")
 			else:
 				if shouldRememberChoice:
 					if shoulRemove:
@@ -395,8 +395,7 @@ class AddonStoreVM:
 				self.enableAddon(aVM)
 			else:
 				log.debug(
-					f"Skipping {aVM.Id} as it is not disabled, pending disable, incompatible disabled "
-					"or pending incompatible disabled"
+					log.debug(f"Skipping {aVM.Id} ({aVM.status}) as it is not relevant for enable action")
 				)
 
 	
@@ -407,7 +406,7 @@ class AddonStoreVM:
 	def disableAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]) -> None:
 		for aVM in listItemVMs:
 			if not aVM.canUseDisableAction():
-				log.debug(f"Skipping {aVM.Id} as it is not enabled")
+				log.debug(f"Skipping {aVM.Id} ({aVM.status}) as it is not relevant for disable action")
 			else:
 				self.disableAddon(aVM)
 
@@ -437,7 +436,7 @@ class AddonStoreVM:
 		shouldRememberChoice = False
 		for aVM in listItemVMs:
 			if not aVM.canUseReplaceAction():
-				log.debug(f"Skipping {aVM.Id} as it is not affected by the Replace action")
+				log.debug(f"Skipping {aVM.Id} ({aVM.status}) as it is not relevant for replace action")
 			else:
 				if shouldRememberChoice:
 					if shouldReplace:
@@ -485,7 +484,7 @@ class AddonStoreVM:
 						useRememberChoiceCheckbox=True
 					)
 			else:
-				log.debug(f"Skipping {aVM.Id} as it is not available or updatable")
+				log.debug(f"Skipping {aVM.Id} ({aVM.status}) as it is not available or updatable")
 
 	def _downloadComplete(
 			self,
