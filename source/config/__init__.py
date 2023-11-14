@@ -570,7 +570,7 @@ class ConfigManager(object):
 						os.unlink(backupFileName)
 					os.rename(fn, backupFileName)
 				except Exception:
-					log.error("Unable to save a copy of the corrupted configuration to {backupFileName}", exc_info=True)
+					log.error(f"Unable to save a copy of the corrupted configuration to {backupFileName}", exc_info=True)
 				self.baseConfigError = True
 				return self._initBaseConf(factoryDefaults=True)
 
