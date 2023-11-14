@@ -766,7 +766,10 @@ def main():
 				sessionTracking.pumpAll()
 			except Exception:
 				log.exception("errors in this core pump cycle")
-			baseObject.AutoPropertyObject.invalidateCaches()
+			try:
+				baseObject.AutoPropertyObject.invalidateCaches()
+			except Exception:
+				log.exception("AutoPropertyObject.invalidateCaches failed")
 			watchdog.asleep()
 			self.isPumping = False
 			# #3803: If another pump was requested during this pump execution, we need
