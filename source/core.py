@@ -850,7 +850,6 @@ def main():
 	_terminate(bdDetect)
 	_terminate(hwIo)
 	_terminate(addonHandler)
-	_terminate(nvwave)
 	_terminate(garbageHandler)
 	# DMP is only started if needed.
 	# Terminate manually (and let it write to the log if necessary)
@@ -869,6 +868,7 @@ def main():
 			)
 		except:
 			pass
+	_terminate(nvwave)
 	# #5189: Destroy the message window as late as possible
 	# so new instances of NVDA can find this one even if it freezes during exit.
 	messageWindow.destroy()
