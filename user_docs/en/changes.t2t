@@ -131,11 +131,11 @@ That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices``
 - The app module for [Poedit https://poedit.net] has been changed significantly. The ``fetchObject`` function has been removed. (#15313, #7303, @LeonarddeR)
 - The following redundant types and constants have been removed from ``hwPortUtils``:  (#15764, @LeonarddeR)
  - ``PCWSTR``
- - ``HWND`` (Replaced by ``ctypes.wintypes.HWND``)
+ - ``HWND`` (replaced by ``ctypes.wintypes.HWND``)
  - ``ULONG_PTR``
  - ``ULONGLONG``
  - ``NULL``
- - ``GUID`` (Replaced by ``comtypes.GUID``)
+ - ``GUID`` (replaced by ``comtypes.GUID``)
  -
 % Insert new list items here as the alias appModule table should be kept at the bottom of this list
 - The following app modules are removed.

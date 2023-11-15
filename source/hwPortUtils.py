@@ -342,7 +342,7 @@ def getWidcommBluetoothPortInfo(port):
 
 def _listDevices(
 		deviceClass: GUID,
-		onlyAvailable=True,
+		onlyAvailable: bool = True,,
 ) -> typing.Iterator[tuple[HDEVINFO, ctypes.Structure, SP_DEVINFO_DATA, ctypes.c_wchar * 1024]]:
 	"""Internal helper function to list devices on the system for a specific device class.
 	@param deviceClass: The device class GUID.
@@ -414,7 +414,7 @@ def _listDevices(
 		SetupDiDestroyDeviceInfoList(g_hdi)
 
 
-def listUsbDevices(onlyAvailable=True) -> typing.Iterator[dict]:
+def listUsbDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 	"""List USB devices on the system.
 	:param onlyAvailable: Only return devices that are currently available.
 	:return: Generates dicts including keys of usbID (VID and PID), devicePath and hardwareID.
@@ -456,9 +456,7 @@ def listUsbDevices(onlyAvailable=True) -> typing.Iterator[dict]:
 			None,
 			0
 		):
-			# Ignore ERROR_INSUFFICIENT_BUFFER
-			if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
-				raise ctypes.WinError()
+			log.debugWarning(f"Couldn't get DEVPKEY_Device_BusReportedDeviceDesc for {entry!r}: {ctypes.WinError()}")
 		else:
 			entry["busReportedDeviceDescription"] = buf.value
 
@@ -544,10 +542,9 @@ def _getHidInfo(hwId, path):
 _hidGuid = None
 
 
-def listHidDevices(onlyAvailable=True) -> typing.Iterator[dict]:
+def listHidDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 	"""List HID devices on the system.
 	@param onlyAvailable: Only return devices that are currently available.
-	@type onlyAvailable: bool
 	@return: Generates dicts including keys such as hardwareID,
 		usbID (in the form "VID_xxxx&PID_xxxx")
 		and devicePath.
