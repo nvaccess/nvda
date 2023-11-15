@@ -159,8 +159,54 @@ def _isDebug():
 	return config.conf["debugLog"]["hwIo"]
 
 
-# C901 'listComPorts' is too complex. Look for opportunities to break this method down.
-def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:  # noqa: C901
+def _getBluetotohPortInfo(regKey: int, hwID: str):
+	info = {}
+	try:
+		port = info["port"] = winreg.QueryValueEx(regKey, "PortName")[0]
+	except OSError:
+		# #6015: In some rare cases, this value doesn't exist.
+		log.debugWarning(f"No PortName value for hardware ID {hwID!r}")
+		return info
+	if not port:
+		log.debugWarning(f"Empty PortName value for hardware ID {hwID!r}")
+		return info
+	match hwID:
+		case h if h.startswith("BTHENUM\\"):
+			# This is a Microsoft bluetooth port.
+			try:
+				addr = winreg.QueryValueEx(
+					regKey,
+					"Bluetooth_UniqueID"
+				)[0].split("#", 1)[1].split("_", 1)[0]
+				addr = int(addr, 16)
+				info["bluetoothAddress"] = addr
+				if addr:
+					info["bluetoothName"] = getBluetoothDeviceInfo(addr).szName
+			except Exception:
+				log.debugWarning(
+					f"Couldn't get Microsoft bt name for hardware id {hwID!r}",
+					exc_info=True
+				)
+		case r"Bluetooth\0004&0002":
+			# This is a Toshiba bluetooth port.
+			try:
+				info["bluetoothAddress"], info["bluetoothName"] = getToshibaBluetoothPortInfo(port)
+			except Exception:
+				log.debugWarning(f"Couldn't get Toshiba bt name for hardware id {hwID!r}", exc_info=True)
+		case r"{95C7A0A0-3094-11D7-A202-00508B9D7D5A}\BLUETOOTHPORT":
+			try:
+				info["bluetoothAddress"], info["bluetoothName"] = getWidcommBluetoothPortInfo(port)
+			except Exception:
+				log.debugWarning(f"Couldn't get Widcomm bt name for hardware id {hwID!r}", exc_info=True)
+				pass
+		case h if "USB" in h or "FTDIBUS" in h:
+			usbIDStart = h.find("VID_")
+			if usbIDStart != -1:
+				info["usbID"] = hwID[usbIDStart:usbIDStart + 17]  # VID_xxxx&PID_xxxx
+	return info
+
+
+def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 	"""List com ports on the system.
 	:param onlyAvailable: Only return ports that are currently available.
 	:return: Dicts including keys of port, friendlyName and hardwareID.
@@ -182,6 +228,7 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:  # noqa: 
 		else:
 			hwID = entry["hardwareID"] = buf.value
 
+		# Port info
 		regKey = ctypes.windll.setupapi.SetupDiOpenDevRegKey(
 			g_hdi,
 			ctypes.byref(devinfo),
@@ -191,50 +238,12 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:  # noqa: 
 			winreg.KEY_READ
 		)
 		try:
-			try:
-				port = entry["port"] = winreg.QueryValueEx(regKey, "PortName")[0]
-			except OSError:
-				# #6015: In some rare cases, this value doesn't exist.
-				log.debugWarning(f"No PortName value for hardware ID {hwID!r}")
+			portInfo = _getBluetotohPortInfo(regKey, hwID)
+			if not portInfo:
 				continue
-			if not port:
-				log.debugWarning(f"Empty PortName value for hardware ID {hwID!r}")
-				continue
-			if hwID.startswith("BTHENUM\\"):
-				# This is a Microsoft bluetooth port.
-				try:
-					addr = winreg.QueryValueEx(
-						regKey,
-						"Bluetooth_UniqueID"
-					)[0].split("#", 1)[1].split("_", 1)[0]
-					addr = int(addr, 16)
-					entry["bluetoothAddress"] = addr
-					if addr:
-						entry["bluetoothName"] = getBluetoothDeviceInfo(addr).szName
-				except Exception:
-					log.debugWarning(
-						f"Couldn't get Microsoft bt name for hardware id {hwID!r}",
-						exc_info=True
-					)
-					pass
-			elif hwID == r"Bluetooth\0004&0002":
-				# This is a Toshiba bluetooth port.
-				try:
-					entry["bluetoothAddress"], entry["bluetoothName"] = getToshibaBluetoothPortInfo(port)
-				except Exception:
-					log.debugWarning(f"Couldn't get Toshiba bt name for hardware id {hwID!r}", exc_info=True)
-					pass
-			elif hwID == r"{95C7A0A0-3094-11D7-A202-00508B9D7D5A}\BLUETOOTHPORT":
-				try:
-					entry["bluetoothAddress"], entry["bluetoothName"] = getWidcommBluetoothPortInfo(port)
-				except Exception:
-					log.debugWarning(f"Couldn't get Widcomm bt name for hardware id {hwID!r}", exc_info=True)
-					pass
-			elif "USB" in hwID or "FTDIBUS" in hwID:
-				usbIDStart = hwID.find("VID_")
-				if usbIDStart == -1:
-					continue
-				entry["usbID"] = hwID[usbIDStart : usbIDStart + 17]  # VID_xxxx&PID_xxxx
+			else:
+				port = portInfo["port"]
+				entry.update(portInfo)
 		finally:
 			ctypes.windll.advapi32.RegCloseKey(regKey)
 
@@ -248,7 +257,7 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:  # noqa: 
 			None
 		):
 			# #6007: SPDRP_FRIENDLYNAME sometimes doesn't exist/isn't valid.
-			log.debugWarning(f"Couldn't get SPDRP_FRIENDLYNAME for {port!r}: {ctypes.WinError()}")
+			log.debugWarning(f"Couldn't get SPDRP_FRIENDLYNAME for {entry!r}: {ctypes.WinError()}")
 			entry["friendlyName"] = port
 		else:
 			entry["friendlyName"] = buf.value
@@ -342,7 +351,7 @@ def getWidcommBluetoothPortInfo(port):
 
 def _listDevices(
 		deviceClass: GUID,
-		onlyAvailable: bool = True,,
+		onlyAvailable: bool = True,
 ) -> typing.Iterator[tuple[HDEVINFO, ctypes.Structure, SP_DEVINFO_DATA, ctypes.c_wchar * 1024]]:
 	"""Internal helper function to list devices on the system for a specific device class.
 	@param deviceClass: The device class GUID.
@@ -456,7 +465,9 @@ def listUsbDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 			None,
 			0
 		):
-			log.debugWarning(f"Couldn't get DEVPKEY_Device_BusReportedDeviceDesc for {entry!r}: {ctypes.WinError()}")
+			log.debugWarning(
+				f"Couldn't get DEVPKEY_Device_BusReportedDeviceDesc for {entry!r}: {ctypes.WinError()}"
+			)
 		else:
 			entry["busReportedDeviceDescription"] = buf.value
 
@@ -521,10 +532,10 @@ def _getHidInfo(hwId, path):
 			if _isDebug():
 				log.debugWarning("HidD_GetAttributes failed")
 		buf = ctypes.create_unicode_buffer(128)
-		bytes = ctypes.sizeof(buf)
-		if ctypes.windll.hid.HidD_GetManufacturerString(handle, buf, bytes):
+		nrOfBytes = ctypes.sizeof(buf)
+		if ctypes.windll.hid.HidD_GetManufacturerString(handle, buf, nrOfBytes):
 			info["manufacturer"] = buf.value
-		if ctypes.windll.hid.HidD_GetProductString(handle, buf, bytes):
+		if ctypes.windll.hid.HidD_GetProductString(handle, buf, nrOfBytes):
 			info["product"] = buf.value
 		pd = ctypes.c_void_p()
 		if ctypes.windll.hid.HidD_GetPreparsedData(handle, ctypes.byref(pd)):
