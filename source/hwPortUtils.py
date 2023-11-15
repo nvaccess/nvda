@@ -10,6 +10,7 @@ import itertools
 import typing
 import winreg
 from ctypes.wintypes import BOOL, DWORD, HWND, PDWORD, ULONG, USHORT, WCHAR
+
 from comtypes import GUID
 
 import config
@@ -35,8 +36,11 @@ class SP_DEVINFO_DATA(ctypes.Structure):
 		('DevInst', DWORD),
 		('Reserved', ctypes.POINTER(ULONG)),
 	)
+
 	def __str__(self):
-		return "ClassGuid:%s DevInst:%s" % (self.ClassGuid, self.DevInst)
+		return f"ClassGuid:{self.ClassGuid} DevInst:{self.DevInst}"
+
+
 PSP_DEVINFO_DATA = ctypes.POINTER(SP_DEVINFO_DATA)
 
 
@@ -47,8 +51,9 @@ class SP_DEVICE_INTERFACE_DATA(ctypes.Structure):
 		('Flags', DWORD),
 		('Reserved', ctypes.POINTER(ULONG)),
 	)
+
 	def __str__(self):
-		return "InterfaceClassGuid:%s Flags:%s" % (self.InterfaceClassGuid, self.Flags)
+		return f"InterfaceClassGuid:{self.InterfaceClassGuid} Flags:{self.Flags}"
 
 
 PSP_DEVICE_INTERFACE_DATA = ctypes.POINTER(SP_DEVICE_INTERFACE_DATA)
@@ -64,8 +69,10 @@ class DEVPROPKEY(ctypes.Structure):
 
 
 class dummy(ctypes.Structure):
-	_fields_=((u"d1", DWORD), (u"d2", WCHAR))
+	_fields_ = (("d1", DWORD), ("d2", WCHAR))
 	_pack_ = 1
+
+
 SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W = ctypes.sizeof(dummy)
 
 SetupDiDestroyDeviceInfoList = ctypes.windll.setupapi.SetupDiDestroyDeviceInfoList
@@ -74,7 +81,7 @@ SetupDiDestroyDeviceInfoList.restype = BOOL
 
 SetupDiGetClassDevs = ctypes.windll.setupapi.SetupDiGetClassDevsW
 SetupDiGetClassDevs.argtypes = (ctypes.POINTER(GUID), ctypes.c_wchar_p, HWND, DWORD)
-SetupDiGetClassDevs.restype = ValidHandle # HDEVINFO
+SetupDiGetClassDevs.restype = ValidHandle  # HDEVINFO
 
 SetupDiGetDeviceProperty = ctypes.windll.setupapi.SetupDiGetDevicePropertyW
 SetupDiGetDeviceProperty.argtypes = (
@@ -90,15 +97,36 @@ SetupDiGetDeviceProperty.argtypes = (
 SetupDiGetDeviceProperty.restype = BOOL
 
 SetupDiEnumDeviceInterfaces = ctypes.windll.setupapi.SetupDiEnumDeviceInterfaces
-SetupDiEnumDeviceInterfaces.argtypes = (HDEVINFO, PSP_DEVINFO_DATA, ctypes.POINTER(GUID), DWORD, PSP_DEVICE_INTERFACE_DATA)
+SetupDiEnumDeviceInterfaces.argtypes = (
+	HDEVINFO,
+	PSP_DEVINFO_DATA,
+	ctypes.POINTER(GUID),
+	DWORD,
+	PSP_DEVICE_INTERFACE_DATA,
+)
 SetupDiEnumDeviceInterfaces.restype = BOOL
 
 SetupDiGetDeviceInterfaceDetail = ctypes.windll.setupapi.SetupDiGetDeviceInterfaceDetailW
-SetupDiGetDeviceInterfaceDetail.argtypes = (HDEVINFO, PSP_DEVICE_INTERFACE_DATA, PSP_DEVICE_INTERFACE_DETAIL_DATA, DWORD, PDWORD, PSP_DEVINFO_DATA)
+SetupDiGetDeviceInterfaceDetail.argtypes = (
+	HDEVINFO,
+	PSP_DEVICE_INTERFACE_DATA,
+	PSP_DEVICE_INTERFACE_DETAIL_DATA,
+	DWORD,
+	PDWORD,
+	PSP_DEVINFO_DATA,
+)
 SetupDiGetDeviceInterfaceDetail.restype = BOOL
 
 SetupDiGetDeviceRegistryProperty = ctypes.windll.setupapi.SetupDiGetDeviceRegistryPropertyW
-SetupDiGetDeviceRegistryProperty.argtypes = (HDEVINFO, PSP_DEVINFO_DATA, DWORD, PDWORD, ctypes.c_void_p, DWORD, PDWORD)
+SetupDiGetDeviceRegistryProperty.argtypes = (
+	HDEVINFO,
+	PSP_DEVINFO_DATA,
+	DWORD,
+	PDWORD,
+	ctypes.c_void_p,
+	DWORD,
+	PDWORD,
+)
 SetupDiGetDeviceRegistryProperty.restype = BOOL
 
 SetupDiEnumDeviceInfo = ctypes.windll.setupapi.SetupDiEnumDeviceInfo
@@ -125,6 +153,7 @@ SPDRP_LOCATION_INFORMATION = 13
 ERROR_NO_MORE_ITEMS = 259
 DICS_FLAG_GLOBAL = 0x00000001
 DIREG_DEV = 0x00000001
+
 
 def _isDebug():
 	return config.conf["debugLog"]["hwIo"]
@@ -193,25 +222,19 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:  # noqa: 
 				try:
 					entry["bluetoothAddress"], entry["bluetoothName"] = getToshibaBluetoothPortInfo(port)
 				except Exception:
-					log.debugWarning(
-						f"Couldn't get Toshiba bt name for hardware id {hwID!r}",
-						exc_info=True
-					)
+					log.debugWarning(f"Couldn't get Toshiba bt name for hardware id {hwID!r}", exc_info=True)
 					pass
 			elif hwID == r"{95C7A0A0-3094-11D7-A202-00508B9D7D5A}\BLUETOOTHPORT":
 				try:
 					entry["bluetoothAddress"], entry["bluetoothName"] = getWidcommBluetoothPortInfo(port)
 				except Exception:
-					log.debugWarning(
-						f"Couldn't get Widcomm bt name for hardware id {hwID!r}",
-						exc_info=True
-					)
+					log.debugWarning(f"Couldn't get Widcomm bt name for hardware id {hwID!r}", exc_info=True)
 					pass
 			elif "USB" in hwID or "FTDIBUS" in hwID:
 				usbIDStart = hwID.find("VID_")
 				if usbIDStart == -1:
 					continue
-				entry['usbID'] = hwID[usbIDStart:usbIDStart + 17]  # VID_xxxx&PID_xxxx
+				entry["usbID"] = hwID[usbIDStart : usbIDStart + 17]  # VID_xxxx&PID_xxxx
 		finally:
 			ctypes.windll.advapi32.RegCloseKey(regKey)
 
@@ -241,6 +264,7 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:  # noqa: 
 BLUETOOTH_MAX_NAME_SIZE = 248
 BTH_ADDR = BLUETOOTH_ADDRESS = ctypes.c_ulonglong
 
+
 class BLUETOOTH_DEVICE_INFO(ctypes.Structure):
 	_fields_ = (
 		("dwSize", DWORD),
@@ -253,8 +277,10 @@ class BLUETOOTH_DEVICE_INFO(ctypes.Structure):
 		("stLastUsed", SYSTEMTIME),
 		("szName", WCHAR * BLUETOOTH_MAX_NAME_SIZE)
 	)
+
 	def __init__(self, **kwargs):
-		super(BLUETOOTH_DEVICE_INFO, self).__init__(dwSize=ctypes.sizeof(self), **kwargs)
+		super().__init__(dwSize=ctypes.sizeof(self), **kwargs)
+
 
 def getBluetoothDeviceInfo(address):
 	devInfo = BLUETOOTH_DEVICE_INFO(address=address)
@@ -263,12 +289,16 @@ def getBluetoothDeviceInfo(address):
 		raise ctypes.WinError(res)
 	return devInfo
 
+
 def getToshibaBluetoothPortInfo(port):
-	with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\Toshiba\BluetoothStack\V1.0\EZC\DATA") as rootKey:
+	with winreg.OpenKey(
+		winreg.HKEY_CURRENT_USER,
+		r"Software\Toshiba\BluetoothStack\V1.0\EZC\DATA"
+	) as rootKey:
 		for index in itertools.count():
 			try:
 				keyName = winreg.EnumKey(rootKey, index)
-			except WindowsError:
+			except OSError:
 				break
 			with winreg.OpenKey(rootKey, keyName) as itemKey:
 				with winreg.OpenKey(itemKey, "SCORIGINAL") as scorigKey:
@@ -276,7 +306,7 @@ def getToshibaBluetoothPortInfo(port):
 						if winreg.QueryValueEx(scorigKey, "PORTNAME")[0].rstrip("\0") != port:
 							# This isn't the port we're interested in.
 							continue
-					except WindowsError:
+					except OSError:
 						# This isn't a COM port.
 						continue
 				addr = winreg.QueryValueEx(itemKey, "BDADDR")[0]
@@ -287,12 +317,13 @@ def getToshibaBluetoothPortInfo(port):
 				return addr, name
 	raise LookupError
 
+
 def getWidcommBluetoothPortInfo(port):
 	with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\Widcomm\BTConfig\AutoConnect") as rootKey:
 		for index in itertools.count():
 			try:
 				keyName = winreg.EnumKey(rootKey, index)
-			except WindowsError:
+			except OSError:
 				break
 			# The keys are the port number, but might be prefixed by 0s.
 			# For example, COM4 is 0004.
@@ -311,7 +342,7 @@ def getWidcommBluetoothPortInfo(port):
 
 def _listDevices(
 		deviceClass: GUID,
-		onlyAvailable=True
+		onlyAvailable=True,
 ) -> typing.Iterator[tuple[HDEVINFO, ctypes.Structure, SP_DEVINFO_DATA, ctypes.c_wchar * 1024]]:
 	"""Internal helper function to list devices on the system for a specific device class.
 	@param deviceClass: The device class GUID.
@@ -344,18 +375,22 @@ def _listDevices(
 			if not SetupDiGetDeviceInterfaceDetail(
 				g_hdi,
 				ctypes.byref(did),
-				None, 0, ctypes.byref(dwNeeded),
+				None,
+				0,
+				ctypes.byref(dwNeeded),
 				None
 			):
 				# Ignore ERROR_INSUFFICIENT_BUFFER
 				if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
 					raise ctypes.WinError()
+
 			# allocate buffer
 			class SP_DEVICE_INTERFACE_DETAIL_DATA_W(ctypes.Structure):
 				_fields_ = (
 					('cbSize', DWORD),
-					('DevicePath', WCHAR*(dwNeeded.value - ctypes.sizeof(DWORD))),
+					('DevicePath', WCHAR * (dwNeeded.value - ctypes.sizeof(DWORD))),
 				)
+
 				def __str__(self):
 					return f"DevicePath:{self.DevicePath!r}"
 
@@ -366,7 +401,9 @@ def _listDevices(
 			if not SetupDiGetDeviceInterfaceDetail(
 				g_hdi,
 				ctypes.byref(did),
-				ctypes.byref(idd), dwNeeded, None,
+				ctypes.byref(idd),
+				dwNeeded,
+				None,
 				ctypes.byref(devinfo)
 			):
 				raise ctypes.WinError()
@@ -437,17 +474,20 @@ class HIDD_ATTRIBUTES(ctypes.Structure):
 		("ProductID", USHORT),
 		("VersionNumber", USHORT)
 	)
+
 	def __init__(self, **kwargs):
-		super(HIDD_ATTRIBUTES, self).__init__(Size=ctypes.sizeof(HIDD_ATTRIBUTES), **kwargs)
+		super().__init__(Size=ctypes.sizeof(HIDD_ATTRIBUTES), **kwargs)
+
 
 def _getHidInfo(hwId, path):
 	info = {
 		"hardwareID": hwId,
-		"devicePath": path}
+		"devicePath": path
+	}
 	hwId = hwId.split("\\", 1)[1]
 	if hwId.startswith("VID"):
 		info["provider"] = "usb"
-		info["usbID"] = hwId[:17] # VID_xxxx&PID_xxxx
+		info["usbID"] = hwId[:17]  # VID_xxxx&PID_xxxx
 	elif hwId.startswith("{00001124-0000-1000-8000-00805f9b34fb}"):
 		info["provider"] = "bluetooth"
 	elif hwId.startswith("{00001812-0000-1000-8000-00805f9b34fb}"):
@@ -458,14 +498,20 @@ def _getHidInfo(hwId, path):
 		info["provider"] = None
 		return info
 	# Fetch additional info about the HID device.
-	from serial.win32 import CreateFile, INVALID_HANDLE_VALUE, FILE_FLAG_OVERLAPPED
-	handle = CreateFile(path, 0,
-		winKernel.FILE_SHARE_READ | winKernel.FILE_SHARE_WRITE, None,
-		winKernel.OPEN_EXISTING, FILE_FLAG_OVERLAPPED, None)
+	from serial.win32 import FILE_FLAG_OVERLAPPED, INVALID_HANDLE_VALUE, CreateFile
+
+	handle = CreateFile(
+		path,
+		0,
+		winKernel.FILE_SHARE_READ | winKernel.FILE_SHARE_WRITE,
+		None,
+		winKernel.OPEN_EXISTING,
+		FILE_FLAG_OVERLAPPED,
+		None,
+	)
 	if handle == INVALID_HANDLE_VALUE:
 		if _isDebug():
-			log.debugWarning("Opening device {dev} to get additional info failed: {exc}".format(
-				dev=path, exc=ctypes.WinError()))
+			log.debugWarning(f"Opening device {path} to get additional info failed: {ctypes.WinError()}")
 		return info
 	try:
 		attribs = HIDD_ATTRIBUTES()
@@ -493,6 +539,7 @@ def _getHidInfo(hwId, path):
 	finally:
 		winKernel.closeHandle(handle)
 	return info
+
 
 _hidGuid = None
 
