@@ -1168,7 +1168,7 @@ class UIAHandler(COMObject):
 						log.debug("Windows console treated as non-UIA")
 					return False
 			elif windowClass == "SysListView32":
-				# #15283: SysListView3 controls in Windows Forms have a native UIA implementation
+				# #15283: SysListView32 controls in Windows Forms have a native UIA implementation
 				# and lack a MSAA implementation.
 				# We need to rely on UIA for these controls, as otherwise parent/child navigation is broken.
 				# For other instances however, even when the control advertises a native UIA implementation,
