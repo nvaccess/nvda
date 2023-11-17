@@ -275,6 +275,12 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
 			braille.handler.handleCaretMove(self)
 
+	@script(
+		# Translators: a description for a script
+		description=_("Reports the text of the comment where the System caret is located."),
+		gesture="kb:NVDA+alt+c",
+		speakOnDemand=True,
+	)
 	def script_reportCurrentComment(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		info.expand(textInfos.UNIT_CHARACTER)
@@ -294,8 +300,6 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 						return
 		# Translators: a message when there is no comment to report in Microsoft Word
 		ui.message(_("No comments"))
-	# Translators: a description for a script
-	script_reportCurrentComment.__doc__=_("Reports the text of the comment where the System caret is located.")
 
 	def _moveInTable(self,row=True,forward=True):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
@@ -423,7 +427,6 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		"kb:alt+end":"caret_moveByCell",
 		"kb:alt+pageUp":"caret_moveByCell",
 		"kb:alt+pageDown":"caret_moveByCell",
-		"kb:NVDA+alt+c":"reportCurrentComment",
 	}
 
 
