@@ -185,7 +185,8 @@ class GlobalCommands(ScriptableObject):
 			"Pressing three times will spell the line using character descriptions."
 		),
 		category=SCRCAT_SYSTEMCARET,
-		gestures=("kb(desktop):NVDA+upArrow", "kb(laptop):NVDA+l")
+		gestures=("kb(desktop):NVDA+upArrow", "kb(laptop):NVDA+l"),
+		speakOnDemand=True,
 	)
 	def script_reportCurrentLine(self,gesture):
 		obj=api.getFocusObject()
@@ -259,7 +260,8 @@ class GlobalCommands(ScriptableObject):
 			"Pressing three times spells it using character descriptions."
 		),
 		category=SCRCAT_SYSTEMCARET,
-		gestures=("kb(desktop):NVDA+shift+upArrow", "kb(laptop):NVDA+shift+s")
+		gestures=("kb(desktop):NVDA+shift+upArrow", "kb(laptop):NVDA+shift+s"),
+		speakOnDemand=True,
 	)
 	def script_reportCurrentSelection(self,gesture):
 		obj=api.getFocusObject()
@@ -285,7 +287,8 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for report date and time command.
 		description=_("If pressed once, reports the current time. If pressed twice, reports the current date"),
 		category=SCRCAT_SYSTEM,
-		gesture="kb:NVDA+f12"
+		gesture="kb:NVDA+f12",
+		speakOnDemand=True,
 	)
 	def script_dateTime(self,gesture):
 		if scriptHandler.getLastScriptRepeatCount()==0:
@@ -1108,7 +1111,8 @@ class GlobalCommands(ScriptableObject):
 			"and pressing three times Copies name and value of this object to the clipboard"
 		),
 		category=SCRCAT_OBJECTNAVIGATION,
-		gestures=("kb:NVDA+numpad5", "kb(laptop):NVDA+shift+o")
+		gestures=("kb:NVDA+numpad5", "kb(laptop):NVDA+shift+o"),
+		speakOnDemand=True,
 	)
 	def script_navigatorObject_current(self, gesture: inputCore.InputGesture):
 		curObject=api.getNavigatorObject()
@@ -1173,6 +1177,7 @@ class GlobalCommands(ScriptableObject):
 			"or location of the navigator object if there is no text under review cursor."
 		),
 		category=SCRCAT_OBJECTNAVIGATION,
+		speakOnDemand=True,
 	)
 	def script_reportReviewCursorLocation(self, gesture):
 		self._reportLocationText((api.getReviewPosition(), api.getNavigatorObject()))
@@ -1183,6 +1188,7 @@ class GlobalCommands(ScriptableObject):
 			"Reports information about the location of the current navigator object."
 		),
 		category=SCRCAT_OBJECTNAVIGATION,
+		speakOnDemand=True,
 	)
 	def script_reportCurrentNavigatorObjectLocation(self, gesture):
 		self._reportLocationText((api.getNavigatorObject(),))
@@ -1195,6 +1201,7 @@ class GlobalCommands(ScriptableObject):
 			"or location of the currently focused object if there is no caret."
 		),
 		category=SCRCAT_SYSTEMCARET,
+		speakOnDemand=True,
 	)
 	def script_reportCaretLocation(self, gesture):
 		self._reportLocationText(
@@ -1208,6 +1215,7 @@ class GlobalCommands(ScriptableObject):
 			"Reports information about the location of the currently focused object."
 		),
 		category=SCRCAT_FOCUS,
+		speakOnDemand=True,
 	)
 	def script_reportFocusObjectLocation(self, gesture):
 		self._reportLocationText((api.getFocusObject(),))
@@ -1219,7 +1227,8 @@ class GlobalCommands(ScriptableObject):
 			"Pressing twice may provide further detail."
 		),
 		category=SCRCAT_OBJECTNAVIGATION,
-		gestures=("kb:NVDA+shift+numpadDelete", "kb(laptop):NVDA+shift+delete")
+		gestures=("kb:NVDA+shift+numpadDelete", "kb(laptop):NVDA+shift+delete"),
+		speakOnDemand=True,
 	)
 	def script_navigatorObject_currentDimensions(self, gesture):
 		if scriptHandler.getLastScriptRepeatCount() == 0:
@@ -1236,7 +1245,8 @@ class GlobalCommands(ScriptableObject):
 			"Pressing twice may provide further detail."
 		),
 		category=SCRCAT_SYSTEMCARET,
-		gestures=("kb:NVDA+numpadDelete", "kb(laptop):NVDA+delete")
+		gestures=("kb:NVDA+numpadDelete", "kb(laptop):NVDA+delete"),
+		speakOnDemand=True,
 	)
 	def script_caretPos_currentDimensions(self, gesture):
 		if scriptHandler.getLastScriptRepeatCount() == 0:
@@ -1554,7 +1564,8 @@ class GlobalCommands(ScriptableObject):
 			"Pressing three times will spell the line using character descriptions."
 		),
 		category=SCRCAT_TEXTREVIEW,
-		gestures=("kb:numpad8", "kb(laptop):NVDA+shift+.")
+		gestures=("kb:numpad8", "kb(laptop):NVDA+shift+."),
+		speakOnDemand=True,
 	)
 	def script_review_currentLine(self, gesture: inputCore.InputGesture):
 		info=api.getReviewPosition().copy()
@@ -1741,7 +1752,8 @@ class GlobalCommands(ScriptableObject):
 			"Pressing three times spells the word using character descriptions"
 		),
 		category=SCRCAT_TEXTREVIEW,
-		gestures=("kb:numpad5", "kb(laptop):NVDA+control+.", "ts(text):hoverUp")
+		gestures=("kb:numpad5", "kb(laptop):NVDA+control+.", "ts(text):hoverUp"),
+		speakOnDemand=True,
 	)
 	def script_review_currentWord(self, gesture: inputCore.InputGesture):
 		info=api.getReviewPosition().copy()
@@ -1871,7 +1883,8 @@ class GlobalCommands(ScriptableObject):
 			"Pressing three times reports the numeric value of the character in decimal and hexadecimal"
 		),
 		category=SCRCAT_TEXTREVIEW,
-		gestures=("kb:numpad2", "kb(laptop):NVDA+.")
+		gestures=("kb:numpad2", "kb(laptop):NVDA+."),
+		speakOnDemand=True,
 	)
 	def script_review_currentCharacter(self, gesture: inputCore.InputGesture):
 		info=api.getReviewPosition().copy()
@@ -1982,7 +1995,8 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for Review Current Symbol command.
 		description=_("Reports the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode"),
-		category=SCRCAT_TEXTREVIEW
+		category=SCRCAT_TEXTREVIEW,
+		speakOnDemand=True,
 	)
 	def script_review_currentSymbol(self,gesture):
 		info=api.getReviewPosition().copy()
@@ -2265,7 +2279,8 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for report formatting command.
 		description=_("Reports formatting info for the current review cursor position."),
-		category=SCRCAT_TEXTREVIEW
+		category=SCRCAT_TEXTREVIEW,
+		speakOnDemand=True,
 	)
 	def script_reportFormattingAtReview(self, gesture):
 		self._reportFormattingHelper(api.getReviewPosition(), False)
@@ -2285,7 +2300,8 @@ class GlobalCommands(ScriptableObject):
 			" If pressed twice, presents the information in browse mode"
 		),
 		category=SCRCAT_TEXTREVIEW,
-		gesture="kb:NVDA+shift+f"
+		gesture="kb:NVDA+shift+f",
+		speakOnDemand=True,
 	)
 	def script_reportFormatting(self, gesture):
 		repeats = scriptHandler.getLastScriptRepeatCount()
@@ -2297,7 +2313,8 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for report formatting at caret command.
 		description=_("Reports formatting info for the text under the caret."),
-		category=SCRCAT_SYSTEMCARET
+		category=SCRCAT_SYSTEMCARET,
+		speakOnDemand=True,
 	)
 	def script_reportFormattingAtCaret(self, gesture):
 		self._reportFormattingHelper(self._getTIAtCaret(True), False)
@@ -2317,7 +2334,8 @@ class GlobalCommands(ScriptableObject):
 			" If pressed twice, presents the information in browse mode"
 		),
 		category=SCRCAT_SYSTEMCARET,
-		gesture="kb:NVDA+f"
+		gesture="kb:NVDA+f",
+		speakOnDemand=True,
 	)
 	def script_reportOrShowFormattingAtCaret(self, gesture):
 		repeats = scriptHandler.getLastScriptRepeatCount()
@@ -2381,6 +2399,7 @@ class GlobalCommands(ScriptableObject):
 			"Report summary of any annotation details at the system caret."
 		),
 		category=SCRCAT_SYSTEMCARET,
+		speakOnDemand=True,
 	)
 	def script_reportDetailsSummary(self, gesture: inputCore.InputGesture):
 		"""Report the annotation details summary for the single character under the caret or the object with
@@ -2448,7 +2467,8 @@ class GlobalCommands(ScriptableObject):
 			"Pressing three times spells it using character descriptions."
 		),
 		category=SCRCAT_FOCUS,
-		gesture="kb:NVDA+tab"
+		gesture="kb:NVDA+tab",
+		speakOnDemand=True,
 	)
 	def script_reportCurrentFocus(self, gesture: inputCore.InputGesture):
 		focusObject=api.getFocusObject()
@@ -2527,6 +2547,7 @@ class GlobalCommands(ScriptableObject):
 			"Reads the current application status bar."
 		),
 		category=SCRCAT_FOCUS,
+		speakOnDemand=True,
 	)
 	def script_readStatusLine(self, gesture):
 		text = self._getStatusBarText()
@@ -2544,6 +2565,7 @@ class GlobalCommands(ScriptableObject):
 			"Spells the current application status bar."
 		),
 		category=SCRCAT_FOCUS,
+		speakOnDemand=True,
 	)
 	def script_spellStatusLine(self, gesture):
 		text = self._getStatusBarText()
@@ -2597,7 +2619,8 @@ class GlobalCommands(ScriptableObject):
 			"If pressed three times, copies the status bar to the clipboard"
 		),
 		category=SCRCAT_FOCUS,
-		gestures=("kb(desktop):NVDA+end", "kb(laptop):NVDA+shift+end")
+		gestures=("kb(desktop):NVDA+end", "kb(laptop):NVDA+shift+end"),
+		speakOnDemand=True,
 	)
 	def script_reportStatusLine(self, gesture):
 		text = self._getStatusBarText()
@@ -2619,6 +2642,7 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_FOCUS,
 		gestures=("kb:shift+numpad2", "kb(laptop):NVDA+control+shift+."),
+		speakOnDemand=True,
 	)
 	def script_reportFocusObjectAccelerator(self, gesture: inputCore.InputGesture) -> None:
 		obj = api.getFocusObject()
@@ -2706,7 +2730,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for read foreground object command (usually the foreground window).
 		description=_("Reads all controls in the active window"),
 		category=SCRCAT_FOCUS,
-		gesture="kb:NVDA+b"
+		gesture="kb:NVDA+b",
 	)
 	def script_speakForeground(self,gesture):
 		obj=api.getForegroundObject()
@@ -2901,7 +2925,8 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for report battery status command.
 		description=_("Reports battery status and time remaining if AC is not plugged in"),
 		category=SCRCAT_SYSTEM,
-		gesture="kb:NVDA+shift+b"
+		gesture="kb:NVDA+shift+b",
+		speakOnDemand=True,
 	)
 	def script_say_battery_status(self, gesture: inputCore.InputGesture) -> None:
 		reportCurrentBatteryStatus()
@@ -2926,7 +2951,8 @@ class GlobalCommands(ScriptableObject):
 			"Speaks the filename of the active application along with the name of the currently loaded appModule"
 		),
 		category=SCRCAT_TOOLS,
-		gesture="kb:NVDA+control+f1"
+		gesture="kb:NVDA+control+f1",
+		speakOnDemand=True,
 	)
 	def script_reportAppModuleInfo(self,gesture):
 		focus=api.getFocusObject()
@@ -3118,7 +3144,8 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for the report current configuration profile command.
 		description=_("Reports the name of the current NVDA configuration profile"),
-		category=SCRCAT_CONFIG
+		category=SCRCAT_CONFIG,
+		speakOnDemand=True,
 	)
 	def script_reportActiveConfigurationProfile(self, gesture):
 		activeProfileName = config.conf.profiles[-1].name
@@ -3409,7 +3436,8 @@ class GlobalCommands(ScriptableObject):
 			"Pressing three times spells it using character descriptions."
 		),
 		category=SCRCAT_SYSTEM,
-		gesture="kb:NVDA+c"
+		gesture="kb:NVDA+c",
+		speakOnDemand=True,
 	)
 	def script_reportClipboardText(self,gesture):
 		try:
@@ -3803,7 +3831,8 @@ class GlobalCommands(ScriptableObject):
 			"If pressed twice, shows the URL in a window for easier review."
 		),
 		gesture="kb:NVDA+k",
-		category=SCRCAT_TOOLS
+		category=SCRCAT_TOOLS,
+		speakOnDemand=True,
 	)
 	def script_reportLinkDestination(
 			self, gesture: inputCore.InputGesture, forceBrowseable: bool = False
