@@ -56,6 +56,7 @@ It is also updated with UIA enabled, when typing text and braille is tethered to
 - More objects which contain useful text are detected, and text content is displayed in braille. (#15605)
 - NVDA no longer freezes briefly when multiple sounds are played in rapid succession. (#15757)
 - NVDA will not fail to start anymore when the configuration file is corrupted, but it will restore the configuration to default as it did in the past. (#15690, @CyrilleB79)
+- Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283, @LeonarddeR)
 -
 
 == Changes for Developers ==
