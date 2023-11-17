@@ -86,9 +86,6 @@ goodUIAWindowClassNames = (
 badUIAWindowClassNames = (
 	# UIA events of candidate window interfere with MSAA events.
 	"Microsoft.IME.CandidateWindow.View",
-	# Known issue with "Reliability Monitor" in explorer.exe #15541.
-	# Task manager and mmc.exe are also affected, but have isBadUIAWindow workarounds.
-	"SysListView32",
 	"SysTreeView32",
 	"WuDuiListView",
 	"ComboBox",
