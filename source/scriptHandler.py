@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2022 NV Access Limited, Babbage B.V., Julien Cochuyt, Leonard de Ruijter
+# Copyright (C) 2007-2023 NV Access Limited, Babbage B.V., Julien Cochuyt, Leonard de Ruijter, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -324,6 +324,14 @@ def clearLastScript():
 	_lastScriptCount = 0
 
 
+def getCurrentScript():
+	global _lastScriptRef
+	if not _isScriptRunning:
+		return None
+	lastScriptRef = _lastScriptRef() if _lastScriptRef else None
+	return lastScriptRef
+
+
 def isScriptWaiting():
 	return bool(_numScriptsQueued)
 
@@ -335,7 +343,8 @@ def script(
 		canPropagate: bool = False,
 		bypassInputHelp: bool = False,
 		allowInSleepMode: bool = False,
-		resumeSayAllMode: Optional[int] = None
+		resumeSayAllMode: Optional[int] = None,
+		speakOnDemand: bool = False,
 ):
 	"""Define metadata for a script.
 	This function is to be used as a decorator to set metadata used by the scripting system and gesture editor.
@@ -349,6 +358,7 @@ def script(
 	@param allowInSleepMode: Whether this script should run when NVDA is in sleep mode.
 	@param resumeSayAllMode: The say all mode that should be resumed when active before executing this script.
 	One of the C{sayAll.CURSOR_*} constants.
+	@param speakOnDemand: Either this script should speak when NVDA speech mode is "on demand"
 	"""
 	if gestures is None:
 		gestures: List[str] = []
@@ -384,5 +394,6 @@ def script(
 		if resumeSayAllMode is not None:
 			decoratedScript.resumeSayAllMode = resumeSayAllMode
 		decoratedScript.allowInSleepMode = allowInSleepMode
+		decoratedScript.speakOnDemand = speakOnDemand
 		return decoratedScript
 	return script_decorator

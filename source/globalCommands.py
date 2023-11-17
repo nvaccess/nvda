@@ -2019,7 +2019,7 @@ class GlobalCommands(ScriptableObject):
 	def script_speechMode(self,gesture):
 		curMode = speech.getState().speechMode
 		speech.setSpeechMode(speech.SpeechMode.talk)
-		newMode=(curMode+1)%3
+		newMode = (curMode + 1) % len(speech.SpeechMode)
 		if newMode == speech.SpeechMode.off:
 			# Translators: A speech mode which disables speech output.
 			name=_("Speech mode off")
@@ -2029,6 +2029,9 @@ class GlobalCommands(ScriptableObject):
 		elif newMode == speech.SpeechMode.talk:
 			# Translators: The normal speech mode; i.e. NVDA will talk as normal.
 			name=_("Speech mode talk")
+		elif newMode == speech.SpeechMode.onDemand:
+			# Translators: The on demand speech mode; i.e. NVDA will talk only on commands asking to report something.
+			name = _("Speech mode on demand")
 		speech.cancelSpeech()
 		ui.message(name)
 		speech.setSpeechMode(newMode)
@@ -2674,7 +2677,8 @@ class GlobalCommands(ScriptableObject):
 			"If pressed three times, copies the title to the clipboard"
 		),
 		category=SCRCAT_FOCUS,
-		gesture="kb:NVDA+t"
+		gesture="kb:NVDA+t",
+		speakOnDemand=True,
 	)
 	def script_title(self, gesture: inputCore.InputGesture):
 		obj=api.getForegroundObject()

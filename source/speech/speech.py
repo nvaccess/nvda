@@ -82,13 +82,14 @@ class SpeechMode(IntEnum):
 	off = 0
 	beeps = 1
 	talk = 2
+	onDemand = 3
 
 
 @dataclass
 class SpeechState:
 	beenCanceled = True
 	isPaused = False
-	#: How speech should be handled; one of SpeechMode.off, SpeechMode.beeps or SpeechMode.talk.
+	#: How speech should be handled; one of SpeechMode.off, SpeechMode.beeps, SpeechMode.talk. or SpeechMode.onDemand.
 	speechMode: SpeechMode = SpeechMode.talk
 	# Length of the beep tone when speech mode is beeps
 	speechMode_beeps_ms = 15
@@ -950,6 +951,11 @@ def speak(  # noqa: C901
 		return
 	if _speechState.isPaused:
 		cancelSpeech()
+	if _speechState.speechMode == SpeechMode.onDemand:
+		from scriptHandler import getCurrentScript
+		script = getCurrentScript()
+		if not (script and getattr(script, 'speakOnDemand', False)):
+			return
 	_speechState.beenCanceled = False
 	#Filter out redundant LangChangeCommand objects 
 	#And also fill in default values
