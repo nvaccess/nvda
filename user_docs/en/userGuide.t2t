@@ -504,7 +504,7 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 | Stop speech | Control | control | 2-finger tap | Instantly stops speaking |
 | Pause Speech | shift | shift | none | Instantly pauses speech. Pressing it again will continue speaking where it left off (if pausing is supported by the current synthesizer) |
 | NVDA Menu | NVDA+n | NVDA+n | 2-finger double-tap | Pops up the NVDA menu to allow you to access preferences, tools, help, etc. |
-| Toggle Speech Mode | NVDA+s | NVDA+s | none | Toggles speech mode between speech, beeps and off. |
+| Toggle Speech Mode | NVDA+s | NVDA+s | none | Toggles speech mode between speech, speech on demand, beeps and off. |
 | Toggle Input Help Mode | NVDA+1 | NVDA+1 | none | Pressing any key in this mode will report the key, and the description of any NVDA command associated with it |
 | Quit NVDA | NVDA+q | NVDA+q | none | Exits NVDA |
 | Pass next key through | NVDA+f2 | NVDA+f2 | none | Tells NVDA to pass the next key press straight through to the active application - even if it is normally treated as an NVDA key command |
@@ -4048,7 +4048,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | Route to braille cell | ``routing`` |
 | Report text formatting under braille cell | ``secondary routing`` |
 | Toggle the way context information is presented in braille | ``attribute1+attribute3`` |
-| Toggles between the speech modes of off, beep and talk | ``attribute2+attribute4`` |
+| Toggles between the speech modes of off, beep, speech and speech on demand | ``attribute2+attribute4`` |
 | Switches to the previous review mode (e.g. object, document or screen) | ``f1`` |
 | Switches to the next review mode (e.g. object, document or screen) | ``f2`` |
 | Moves the navigator object to the object containing it | ``f3`` |

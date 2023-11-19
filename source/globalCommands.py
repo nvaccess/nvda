@@ -2022,10 +2022,11 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for toggle speech mode command.
-			"Toggles between the speech modes of off, beep and talk. "
+			"Toggles between the speech modes of off, beep, talk and speak on demand. "
 			"When set to off NVDA will not speak anything. "
 			"If beeps then NVDA will simply beep each time it its supposed to speak something. "
 			"If talk then NVDA will just speak normally."
+			"If on demand then NVDA will only speak when calling commands whose goal is to speak something, but not when moving focus or cursor."
 		),
 		category=SCRCAT_SPEECH,
 		gesture="kb:NVDA+s"
