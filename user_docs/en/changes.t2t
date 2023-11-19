@@ -57,6 +57,7 @@ It is also updated with UIA enabled, when typing text and braille is tethered to
 - NVDA no longer freezes briefly when multiple sounds are played in rapid succession. (#15757)
 - NVDA will not fail to start anymore when the configuration file is corrupted, but it will restore the configuration to default as it did in the past. (#15690, @CyrilleB79)
 - If the audio output device is set to something other than the default and that device becomes available again after being unavailable, NVDA will now switch back to the configured device instead of continuing to use the default device. (#15759)
+- It is not possible anymore to overwrite NVDA's Python console history. (#15792, @CyrilleB79)
 -
 
 == Changes for Developers ==
@@ -94,6 +95,7 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
   - w3c-aria-practices to ``9a5e55ccbeb0f1bf92b6127c9865da8426d1c864``. (#15695)
   - wil to ``5e9be7b2d2fe3834a7107f430f7d4c0631f69833``. (#15695)
   -
+- When the configuration file ``nvda.ini`` is corrupted, a backup copy is saved before it is reinitialized. (#15779, @CyrilleB79)
 -
 
 === API Breaking Changes ===
