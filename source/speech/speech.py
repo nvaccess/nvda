@@ -89,7 +89,8 @@ class SpeechMode(IntEnum):
 class SpeechState:
 	beenCanceled = True
 	isPaused = False
-	#: How speech should be handled; one of SpeechMode.off, SpeechMode.beeps, SpeechMode.talk. or SpeechMode.onDemand.
+	#: How speech should be handled; one of SpeechMode.off, SpeechMode.beeps, SpeechMode.talk. or
+	#: SpeechMode.onDemand.
 	speechMode: SpeechMode = SpeechMode.talk
 	# Length of the beep tone when speech mode is beeps
 	speechMode_beeps_ms = 15

@@ -2026,7 +2026,8 @@ class GlobalCommands(ScriptableObject):
 			"When set to off NVDA will not speak anything. "
 			"If beeps then NVDA will simply beep each time it its supposed to speak something. "
 			"If talk then NVDA will just speak normally."
-			"If on demand then NVDA will only speak when calling commands whose goal is to speak something, but not when moving focus or cursor."
+			"If on demand then NVDA will only speak when calling commands whose goal is to speak something, but not"
+			" when performing an action such as moving the focus or the cursor."
 		),
 		category=SCRCAT_SPEECH,
 		gesture="kb:NVDA+s"
