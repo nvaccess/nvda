@@ -956,10 +956,12 @@ def speak(  # noqa: C901
 		
 		import inputCore
 		from scriptHandler import getCurrentScript
+		from .sayAll import SayAllHandler
 		script = getCurrentScript()
 		if not (
 			(script and getattr(script, 'speakOnDemand', False))
 			or inputCore.manager.isInputHelpActive
+			or SayAllHandler.isRunning()
 		):
 			return
 	_speechState.beenCanceled = False

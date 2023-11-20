@@ -2161,7 +2161,8 @@ class GlobalCommands(ScriptableObject):
 			" moving the review cursor as it goes"
 		),
 		category=SCRCAT_TEXTREVIEW,
-		gestures=("kb:numpadPlus", "kb(laptop):NVDA+shift+a", "ts(text):3finger_flickDown")
+		gestures=("kb:numpadPlus", "kb(laptop):NVDA+shift+a", "ts(text):3finger_flickDown"),
+		speakOnDemand=True,
 	)
 	def script_review_sayAll(self, gesture: inputCore.InputGesture):
 		# This script is available on the lock screen via getSafeScripts
@@ -2172,7 +2173,8 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for say all with system caret command.
 		description=_("Reads from the system caret up to the end of the text, moving the caret as it goes"),
 		category=SCRCAT_SYSTEMCARET,
-		gestures=("kb(desktop):NVDA+downArrow", "kb(laptop):NVDA+a")
+		gestures=("kb(desktop):NVDA+downArrow", "kb(laptop):NVDA+a"),
+		speakOnDemand=True,
 	)
 	def script_sayAll(self, gesture: inputCore.InputGesture):
 		sayAll.SayAllHandler.readText(sayAll.CURSOR.CARET)
@@ -2734,6 +2736,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Reads all controls in the active window"),
 		category=SCRCAT_FOCUS,
 		gesture="kb:NVDA+b",
+		speakOnDemand=True,
 	)
 	def script_speakForeground(self,gesture):
 		obj=api.getForegroundObject()
