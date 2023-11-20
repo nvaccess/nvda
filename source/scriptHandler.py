@@ -348,16 +348,16 @@ def script(
 	"""Define metadata for a script.
 	This function is to be used as a decorator to set metadata used by the scripting system and gesture editor.
 	It can only decorate methods which have a name starting with "script_"
-	@param description: A short translatable description of the script to be used in the gesture editor, etc.
-	@param category: The category of the script displayed in the gesture editor.
-	@param gesture: A gesture associated with this script.
-	@param gestures: A collection of gestures associated with this script
-	@param canPropagate: Whether this script should also apply when it belongs to a  focus ancestor object.
-	@param bypassInputHelp: Whether this script should run when input help is active.
-	@param allowInSleepMode: Whether this script should run when NVDA is in sleep mode.
-	@param resumeSayAllMode: The say all mode that should be resumed when active before executing this script.
+	:param description: A short translatable description of the script to be used in the gesture editor, etc.
+	:param category: The category of the script displayed in the gesture editor.
+	:param gesture: A gesture associated with this script.
+	:param gestures: A collection of gestures associated with this script
+	:param canPropagate: Whether this script should also apply when it belongs to a  focus ancestor object.
+	:param bypassInputHelp: Whether this script should run when input help is active.
+	:param allowInSleepMode: Whether this script should run when NVDA is in sleep mode.
+	:param resumeSayAllMode: The say all mode that should be resumed when active before executing this script.
 	One of the C{sayAll.CURSOR_*} constants.
-	@param speakOnDemand: Whether this script should speak when NVDA speech mode is "on demand"
+	:param speakOnDemand: Whether this script should speak when NVDA speech mode is "on demand"
 	"""
 	if gestures is None:
 		gestures: List[str] = []
