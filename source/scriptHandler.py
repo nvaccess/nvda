@@ -325,7 +325,6 @@ def clearLastScript():
 
 
 def getCurrentScript():
-	global _lastScriptRef
 	if not _isScriptRunning:
 		return None
 	lastScriptRef = _lastScriptRef() if _lastScriptRef else None
@@ -358,7 +357,7 @@ def script(
 	@param allowInSleepMode: Whether this script should run when NVDA is in sleep mode.
 	@param resumeSayAllMode: The say all mode that should be resumed when active before executing this script.
 	One of the C{sayAll.CURSOR_*} constants.
-	@param speakOnDemand: Either this script should speak when NVDA speech mode is "on demand"
+	@param speakOnDemand: Whether this script should speak when NVDA speech mode is "on demand"
 	"""
 	if gestures is None:
 		gestures: List[str] = []

@@ -112,6 +112,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		# Translators: The description of an NVDA command to view one of the recent messages.
 		description=_("Displays one of the recent messages"),
+		gestures=[f"kb:NVDA+control+{n}" for n in range(1, MessageHistoryLength + 1)],
 		speakOnDemand=True,
 	)
 	def script_readMessage(self,gesture):
@@ -121,11 +122,6 @@ class AppModule(appModuleHandler.AppModule):
 		else:
 			# Translators: This is presented to inform the user that no instant message has been received.
 			ui.message(_("No message yet"))
-
-	def __init__(self, *args, **kwargs):
-		super(AppModule, self).__init__(*args, **kwargs)
-		for n in range(1, self.MessageHistoryLength + 1):
-			self.bindGesture("kb:NVDA+control+%s" % n, "readMessage")
 
 class mirandaIMContactList(IAccessible):
 

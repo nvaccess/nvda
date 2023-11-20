@@ -21,14 +21,11 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if controlTypes.State.READONLY in obj.states:
 			clsList.insert(0, MudText)
-	def __init__(self, *args, **kwargs):
-		super(AppModule, self).__init__(*args, **kwargs)
-		for n in range(1, self.historyLength +1):
-			self.bindGesture("kb:control+%s" % n, "readMessage")
 
 	@script(
 		# Translators: The description of an NVDA command to view one of the recent messages.
 		description=_("Displays one of the recent messages"),
+		gestures=[f"kb:control+{n}" for n in range(1, historyLength + 1)],
 		speakOnDemand=True,
 	)
 	def script_readMessage(self,gesture):
