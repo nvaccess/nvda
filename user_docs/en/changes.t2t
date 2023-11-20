@@ -98,6 +98,7 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
 - When defining a script with the script decorator, the 'speakOnDemand' boolean argument can be specified to control if a script should speak while in "on demand" mode. (#481, @CyrilleB79)
   - Scripts that provide information (e.g. say window title, report time/date) should speak in the "on demand" mode.
   - Scripts that perform an action (e.g. move the cursor, change a parameter) should not speak in the "on demand" mode.
+  -
 -
 
 === API Breaking Changes ===
