@@ -372,7 +372,7 @@ def _shouldUseWindowsTerminalNotifications() -> bool:
 
 def _isFrameworkIdWinForm(hwnd: int) -> bool:
 	"""
-	Returns whether this window belongs to an elemnt that originates from the Windows Forms framework (WinForm).
+	Returns whether this window belongs to an element that originates from the Windows Forms framework (WinForm).
 	This is used to determine whether a native UIA implementation should be used for SysListView32 controls.
 	"""
 	try:
