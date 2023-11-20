@@ -953,9 +953,14 @@ def speak(  # noqa: C901
 	if _speechState.isPaused:
 		cancelSpeech()
 	if _speechState.speechMode == SpeechMode.onDemand:
+		
+		import inputCore
 		from scriptHandler import getCurrentScript
 		script = getCurrentScript()
-		if not (script and getattr(script, 'speakOnDemand', False)):
+		if not (
+			(script and getattr(script, 'speakOnDemand', False))
+			or inputCore.manager.isInputHelpActive
+		):
 			return
 	_speechState.beenCanceled = False
 	#Filter out redundant LangChangeCommand objects 

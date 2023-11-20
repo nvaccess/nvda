@@ -146,7 +146,8 @@ class GlobalCommands(ScriptableObject):
 			"will tell you what script is associated with that input, if any."
 		),
 		category=SCRCAT_INPUT,
-		gesture="kb:NVDA+1"
+		gesture="kb:NVDA+1",
+		speakOnDemand=True,
 	)
 	def script_toggleInputHelp(self,gesture):
 		inputCore.manager.isInputHelpActive = not inputCore.manager.isInputHelpActive
