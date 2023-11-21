@@ -77,6 +77,8 @@ HorizontalTextAlignment_Justified=3
 
 # The name of the WDAG (Windows Defender Application Guard) process
 WDAG_PROCESS_NAME=u'hvsirdpclient'
+# The window class  of the WDAG (Windows Defender Application Guard) main window 
+WDAG_WINDOW_CLASS_NAME=u'RAIL_WINDOW'
 
 goodUIAWindowClassNames = (
 	# A WDAG (Windows Defender Application Guard) Window is always native UIA, even if it doesn't report as such.
@@ -1214,10 +1216,27 @@ class UIAHandler(COMObject):
 			return None
 		appModule = appModuleHandler.getAppModuleFromProcessID(processID)
 		# WDAG (Windows Defender application Guard) UIA elements should be treated as being from a remote machine, and therefore their window handles are completely invalid on this machine.
-		# Therefore, jump all the way up to the root of the WDAG process and use that window handle as it is local to this machine.
+		# Unfortunately the remote UIA tree is not parented into the local tree.
+		# Therefore, just use the currently active WDAG local window as the nearest window.
 		if appModule.appName == WDAG_PROCESS_NAME:
 			if _isDebug():
 				log.debug("Detected WDAG element")
+			gi = winUser.getGUIThreadInfo(0)
+			if (
+				winUser.getClassName(gi.hwndActive) == WDAG_WINDOW_CLASS_NAME
+				and winUser.getWindowThreadProcessID(gi.hwndActive)[0] == processID
+			):
+				if _isDebug():
+					log.debug(
+						f"using active WDAG local window {self.getWindowHandleDebugString(gi.hwndActive)}"
+					)
+				return gi.hwndActive
+			else:
+				if _isDebug():
+					log.debug(
+						f"Active window is not WDAG or is wrong instance:  {self.getWindowHandleDebugString(gi.hwndActive)}"
+					)
+				return None
 			condition = utils.createUIAMultiPropertyCondition(
 				{UIA.UIA_ClassNamePropertyId: ['ApplicationFrameWindow', 'CabinetWClass']}
 			)

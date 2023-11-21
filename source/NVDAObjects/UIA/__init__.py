@@ -1109,10 +1109,10 @@ class UIA(Window):
 				clsList.append(spartanEdge.EdgeList)
 			else:
 				clsList.append(spartanEdge.EdgeNode)
-		elif self.windowClassName == "Chrome_WidgetWin_1" and self.UIATextPattern:
-			from . import chromium
-			clsList.append(chromium.ChromiumUIA)
-		elif self.windowClassName == "Chrome_RenderWidgetHostHWND":
+		elif (
+			self.windowClassName == "Chrome_RenderWidgetHostHWND"
+			or self.UIAElement.cachedFrameworkID == "Chrome"
+		):
 			from . import chromium
 			from . import web
 			if (
@@ -1126,6 +1126,15 @@ class UIA(Window):
 				if self.role == controlTypes.Role.LIST:
 					clsList.append(web.List)
 				clsList.append(chromium.ChromiumUIA)
+		elif (
+			(
+				self.windowClassName == "Chrome_WidgetWin_1"
+				or self.UIAElement.cachedFrameworkID == "Chrome"
+			)
+			and self.UIATextPattern
+		):
+			from . import chromium
+			clsList.append(chromium.ChromiumUIA)
 		elif (
 			self.role == controlTypes.Role.DOCUMENT
 			and UIAAutomationId == "Microsoft.Windows.PDF.DocumentView"
