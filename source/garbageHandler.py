@@ -53,7 +53,7 @@ def _collectionCallback(action, info):
 		if _reportCountDuringCollection > 0:
 			log.debugWarning(f"Found at least {_reportCountDuringCollection} unreachable objects in run")
 	else:
-		log.debugWarning(f"Unknown action: {action}")
+		log.error(f"Unknown action: {action}")
 
 
 def notifyObjectDeletion(obj):
