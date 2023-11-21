@@ -529,7 +529,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			try:
 				obj.doAction()
 				break
-			except:
+			except NotImplementedError:
 				log.debugWarning("doAction failed")
 			if obj.hasIrrelevantLocation:
 				# This check covers invisible, off screen and a None location
