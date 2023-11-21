@@ -1,12 +1,13 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NVDA Contributors
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2023 NV Access, Cyrille Bougot and other NVDA Contributors
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 from comtypes import COMError
 import ctypes
 import operator
 import uuid
+import time
 from logHandler import log
 import winUser
 import speech
@@ -265,15 +266,35 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		columnText=self.fetchAssociatedHeaderCellText(cell,True)
 		ui.message("Row %s, column %s"%(rowText or "empty",columnText or "empty"))
 
-	def script_caret_moveByCell(self,gesture):
+	def script_caret_moveByCell(self, gesture: inputCore.InputGesture) -> None:
+		info = self.makeTextInfo(textInfos.POSITION_SELECTION)
+		inTable = info._rangeObj.tables.count > 0
+		if not inTable:
+			gesture.send()
+			return
+		oldSelection = info.start, info.end
 		gesture.send()
-		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		inTable=info._rangeObj.tables.count>0
-		isCollapsed=info.isCollapsed
-		if inTable:
-			info.expand(textInfos.UNIT_CELL)
-			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
-			braille.handler.handleCaretMove(self)
+		start = time.time()
+		retryInterval = 0.01
+		maxTimeout = 0.15
+		elapsed = 0
+		while True:
+			if scriptHandler.isScriptWaiting():
+				# Prevent lag if keys are pressed rapidly
+				return
+			info = self.makeTextInfo(textInfos.POSITION_SELECTION)
+			newSelection = info.start, info.end
+			if newSelection != oldSelection:
+				log.debug(f"Detected new selection after {elapsed} sec")
+				break
+			elapsed = time.time() - start
+			if elapsed >= maxTimeout:
+				log.debug(f"Canceled detecting new selection after {elapsed} sec")
+				break
+			time.sleep(retryInterval)
+		info.expand(textInfos.UNIT_CELL)
+		speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
+		braille.handler.handleCaretMove(self)
 
 	def script_reportCurrentComment(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
