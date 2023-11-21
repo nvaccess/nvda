@@ -77,8 +77,8 @@ HorizontalTextAlignment_Justified=3
 
 # The name of the WDAG (Windows Defender Application Guard) process
 WDAG_PROCESS_NAME=u'hvsirdpclient'
-# The window class  of the WDAG (Windows Defender Application Guard) main window 
-WDAG_WINDOW_CLASS_NAME=u'RAIL_WINDOW'
+# The window class  of the WDAG (Windows Defender Application Guard) main window
+WDAG_WINDOW_CLASS_NAME = u'RAIL_WINDOW'
 
 goodUIAWindowClassNames = (
 	# A WDAG (Windows Defender Application Guard) Window is always native UIA, even if it doesn't report as such.
