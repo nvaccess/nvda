@@ -45,11 +45,12 @@ import garbageHandler
 import winKernel
 import wave
 import config
-from logHandler import log
+from logHandler import log, getOnErrorSoundRequested
 import os.path
 import extensionPoints
 import NVDAHelper
 import core
+import globalVars
 
 
 __all__ = (
@@ -686,7 +687,14 @@ def playWaveFile(
 	f = wave.open(fileName,"r")
 	if f is None: raise RuntimeError("can not open file %s"%fileName)
 	if fileWavePlayer is not None:
-		fileWavePlayer.stop()
+		# There are several race conditions where the background thread might feed
+		# audio after we call stop here in the main thread. Some of these are
+		# difficult to fix with locks because they involve switches between Python
+		# and blocking native code. Just keep calling stop until we know that the
+		# backgroundd thread is done, which means it was successfully stopped. The
+		# background thread sets fileWavePlayer to None when it is done.
+		while fileWavePlayer:
+			fileWavePlayer.stop()
 	if not decide_playWaveFile.decide(
 		fileName=fileName,
 		asynchronous=asynchronous,
@@ -711,8 +719,6 @@ def playWaveFile(
 		# player for the next file anyway - so just destroy it now.
 		fileWavePlayer = None
 
-	if asynchronous and fileWavePlayerThread is not None:
-		fileWavePlayerThread.join()
 	fileWavePlayer = WavePlayer(
 		channels=f.getnchannels(),
 		samplesPerSec=f.getframerate(),
@@ -771,6 +777,8 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 	_IDLE_CHECK_INTERVAL: int = 5000
 	#: Whether there is a pending stream idle check.
 	_isIdleCheckPending: bool = False
+	#: Use the default device, this is the configSpec default value.
+	DEFAULT_DEVICE_KEY = "default"
 
 	def __init__(
 			self,
@@ -812,8 +820,10 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			if audioDucking.isAudioDuckingSupported():
 				self._audioDucker = audioDucking.AudioDucker()
 		self._purpose = purpose
+		if self._isDefaultDevice(outputDevice):
+			outputDevice = ""
 		self._player = NVDAHelper.localLib.wasPlay_create(
-			self._deviceNameToId(outputDevice),
+			outputDevice,
 			format,
 			WasapiWavePlayer._callback
 		)
@@ -1028,38 +1038,18 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			# Schedule another check here in case feed isn't called for a while.
 			cls._scheduleIdleCheck()
 
-	@staticmethod
-	def _getDevices():
-		rawDevs = BSTR()
-		NVDAHelper.localLib.wasPlay_getDevices(byref(rawDevs))
-		chunkIter = iter(rawDevs.value.split("\0"))
-		while True:
-			devId = next(chunkIter)
-			if not devId:
-				break  # Final null.
-			name = next(chunkIter)
-			yield devId, name
-
-	@staticmethod
-	def _deviceNameToId(name, fallbackToDefault=True):
-		if name == WAVE_MAPPER:
-			return ""
-		for devId, devName in WasapiWavePlayer._getDevices():
-			# WinMM device names are truncated to MAXPNAMELEN characters, so we must
-			# use startswith.
-			if devName.startswith(name):
-				return devId
+	@classmethod
+	def _isDefaultDevice(cls, name):
+		if name in (WAVE_MAPPER, cls.DEFAULT_DEVICE_KEY):
+			return True
 		# Check if this is the WinMM sound mapper device, which means default.
-		if name == next(_getOutputDevices())[1]:
-			return ""
-		if fallbackToDefault:
-			return ""
-		raise LookupError
+		return name == next(_getOutputDevices())[1]
 
 
 def initialize():
 	global WavePlayer
 	if not config.conf["audio"]["WASAPI"]:
+		getOnErrorSoundRequested().register(playErrorSound)
 		return
 	WavePlayer = WasapiWavePlayer
 	NVDAHelper.localLib.wasPlay_create.restype = c_void_p
@@ -1072,12 +1062,27 @@ def initialize():
 		NVDAHelper.localLib.wasPlay_pause,
 		NVDAHelper.localLib.wasPlay_resume,
 		NVDAHelper.localLib.wasPlay_setChannelVolume,
-		NVDAHelper.localLib.wasPlay_getDevices,
 	):
 		func.restype = HRESULT
 		func.errcheck = _wasPlay_errcheck
 	NVDAHelper.localLib.wasPlay_startup()
+	getOnErrorSoundRequested().register(playErrorSound)
+
+
+def terminate() -> None:
+	getOnErrorSoundRequested().unregister(playErrorSound)
 
 
 def usingWasapiWavePlayer() -> bool:
 	return issubclass(WavePlayer, WasapiWavePlayer)
+
+
+def playErrorSound() -> None:
+	if isInError():
+		if _isDebugForNvWave():
+			log.debug("No beep for log; nvwave is in error state")
+		return
+	try:
+		playWaveFile(os.path.join(globalVars.appDir, "waves", "error.wav"))
+	except Exception:
+		pass
