@@ -39,8 +39,8 @@ import NVDAState
 from NVDAState import WritePaths
 from types import ModuleType
 
-from _addonStore.models.status import AddonStateCategory, SupportsAddonState
-from _addonStore.models.version import MajorMinorPatch, SupportsVersionCheck
+from addonStore.models.status import AddonStateCategory, SupportsAddonState
+from addonStore.models.version import MajorMinorPatch, SupportsVersionCheck
 import extensionPoints
 from utils.caseInsensitiveCollections import CaseInsensitiveSet
 
@@ -53,7 +53,7 @@ from .packaging import (
 )
 
 if TYPE_CHECKING:
-	from _addonStore.models.addon import (  # noqa: F401
+	from addonStore.models.addon import (  # noqa: F401
 		AddonManifestModel,
 		AddonHandlerModelGeneratorT,
 		InstalledAddonStoreModel,
@@ -203,7 +203,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 				self[AddonStateCategory.DISABLED].discard(disabledAddonName)
 
 	def _cleanupCompatibleAddonsFromDowngrade(self) -> None:
-		from _addonStore.dataManager import addonDataManager
+		from addonStore.dataManager import addonDataManager
 		installedAddons = addonDataManager._installedAddonsCache.installedAddons
 		for blockedAddon in CaseInsensitiveSet(
 			self[AddonStateCategory.BLOCKED].union(
@@ -450,13 +450,13 @@ class AddonBase(SupportsAddonState, SupportsVersionCheck, ABC):
 
 	@property
 	def _addonStoreData(self) -> Optional["InstalledAddonStoreModel"]:
-		from _addonStore.dataManager import addonDataManager
+		from addonStore.dataManager import addonDataManager
 		assert addonDataManager
 		return addonDataManager._getCachedInstalledAddonData(self.name)
 
 	@property
 	def _addonGuiModel(self) -> "AddonManifestModel":
-		from _addonStore.models.addon import _createGUIModelFromManifest
+		from addonStore.models.addon import _createGUIModelFromManifest
 		return _createGUIModelFromManifest(self)
 
 
@@ -593,7 +593,7 @@ class Addon(AddonBase):
 			else:
 				if self.canOverrideCompatibility and not self.overrideIncompatibility:
 					from gui import mainFrame
-					from gui._addonStoreGui.controls.messageDialogs import _shouldInstallWhenAddonTooOldDialog
+					from gui.addonStoreGui.controls.messageDialogs import _shouldInstallWhenAddonTooOldDialog
 					if not _shouldInstallWhenAddonTooOldDialog(mainFrame, self._addonGuiModel):
 						import addonAPIVersion
 						raise AddonError("Add-on is not compatible and over ride was abandoned")

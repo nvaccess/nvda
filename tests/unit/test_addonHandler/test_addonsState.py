@@ -7,8 +7,8 @@
 
 import unittest
 
-import _addonStore.models.status
-from _addonStore.models.version import MajorMinorPatch
+import addonStore.models.status
+from addonStore.models.version import MajorMinorPatch
 import addonHandler
 import utils.caseInsensitiveCollections
 
@@ -21,7 +21,7 @@ class TestDefaultStateContent(unittest.TestCase):
 		self.assertEqual(state.manualOverridesAPIVersion.major, 2023)
 		self.assertEqual(state.manualOverridesAPIVersion.minor, 1)
 		self.assertEqual(state.manualOverridesAPIVersion.patch, 0)
-		for stateKey in _addonStore.models.status.AddonStateCategory:
+		for stateKey in addonStore.models.status.AddonStateCategory:
 			stateVals = state.pop(stateKey)
 			self.assertEqual(stateVals, utils.caseInsensitiveCollections.CaseInsensitiveSet())
 		# Verify that only known categories are in the state.
@@ -37,7 +37,7 @@ class TestStatePopulationFromPickledData(unittest.TestCase):
 
 	def test_addonNamesCaseInsensitive(self):
 		self.state.fromPickledDict({"pendingRemovesSet": set(("foo", "FOO"))})
-		self.assertEqual(self.state[_addonStore.models.status.AddonStateCategory.PENDING_REMOVE], {"foo"})
+		self.assertEqual(self.state[addonStore.models.status.AddonStateCategory.PENDING_REMOVE], {"foo"})
 
 	def test_noBackCompatInStateBackCompatSetToDefault(self):
 		self.state.fromPickledDict({"pendingRemovesSet": set(("foo", "FOO"))})
@@ -83,9 +83,9 @@ class TestStateConversionForPickling(unittest.TestCase):
 		# All keys in the state should be strings, all values should be plain sets.
 		for key in dataForPickling.keys():
 			# Compare by identity, to make sure keys are not enum members.
-			self.assertIs(key, _addonStore.models.status.AddonStateCategory(key).value)
+			self.assertIs(key, addonStore.models.status.AddonStateCategory(key).value)
 
-		for knownStateKey in _addonStore.models.status.AddonStateCategory:
+		for knownStateKey in addonStore.models.status.AddonStateCategory:
 			value = dataForPickling.pop(knownStateKey.value)
 			# Verify the values are converted to standard sets, by adding two strings which differ in case.
 			# Normal sets should preserve them both.
