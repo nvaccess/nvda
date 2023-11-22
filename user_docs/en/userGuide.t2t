@@ -504,7 +504,6 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 | Stop speech | Control | control | 2-finger tap | Instantly stops speaking |
 | Pause Speech | shift | shift | none | Instantly pauses speech. Pressing it again will continue speaking where it left off (if pausing is supported by the current synthesizer) |
 | NVDA Menu | NVDA+n | NVDA+n | 2-finger double-tap | Pops up the NVDA menu to allow you to access preferences, tools, help, etc. |
-| Toggle Speech Mode | ``NVDA+s`` | ``NVDA+s`` | none | Toggles speech mode between speech, on-demand, beeps and off. |
 | Toggle Input Help Mode | NVDA+1 | NVDA+1 | none | Pressing any key in this mode will report the key, and the description of any NVDA command associated with it |
 | Quit NVDA | NVDA+q | NVDA+q | none | Exits NVDA |
 | Pass next key through | NVDA+f2 | NVDA+f2 | none | Tells NVDA to pass the next key press straight through to the active application - even if it is normally treated as an NVDA key command |
@@ -517,6 +516,20 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 | Report date/time | NVDA+f12 | Pressing once reports the current time, pressing twice reports the date |
 | Report battery status | NVDA+shift+b | Reports the battery status i.e. whether AC power is in use or the current charge percentage. |
 | Report clipboard text | NVDA+c | Reports the Text on the clipboard if there is any. |
+%kc:endInclude
+
+++ Speech modes ++[SpeechModes]
+
+There are four speech modes available.
+* Talk: NVDA will just speak normally. This is the default speech mode.
+* On-demand: NVDA will only speak when calling commands whose goal is to speak an information (e.g. report the title of the window); but it will not speak in reaction to actions such as moving the focus or the cursor.
+* Off: NVDA will not speak anything. 
+* Beeps: NVDA will replace normal speech with quiet beeps.
+
+A gesture allows to cycle through the various speech modes:
+%kc:beginInclude
+|| Name | Desktop key | Laptop key | Touch | Description |
+| Toggle Speech Mode | ``NVDA+s`` | ``NVDA+s`` | none | Toggles speech mode between speech, on-demand, off and beeps. |
 %kc:endInclude
 
 + Navigating with NVDA +[NavigatingWithNVDA]
