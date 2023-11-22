@@ -61,7 +61,7 @@ It is also updated with UIA enabled, when typing text and braille is tethered to
 - If the audio output device is set to something other than the default and that device becomes available again after being unavailable, NVDA will now switch back to the configured device instead of continuing to use the default device. (#15759, @jcsteh)
 - It is not possible anymore to overwrite NVDA's Python console history. (#15792, @CyrilleB79)
 - NVDA now resumes audio if the configuration of the output device changes or another application releases exclusive control of the device. (#15758, #15775, @jcsteh)
-- NVDA should remain responsive when being flooded with many UI Automation events, E.g. large amounts of text in a terminal. (#14888)
+- NVDA should remain responsive when being flooded with many UI Automation events, e.g. large amounts of text in a terminal. (#14888)
 -
 
 == Changes for Developers ==
