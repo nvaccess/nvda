@@ -614,13 +614,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
-		driverRegistrar.addUsbDevices(bdDetect.KEY_SERIAL, {
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.SERIAL, {
 			"VID_0403&PID_6001",  # FTDI chip
 			"VID_0921&PID_1200",  # GoHubs chip
 		})
 
 		# Newer Handy Tech displays have a native HID processor
-		driverRegistrar.addUsbDevices(bdDetect.KEY_HID, {
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.HID, {
 			"VID_1FE4&PID_0054",  # Active Braille
 			"VID_1FE4&PID_0055",  # Connect Braille
 			"VID_1FE4&PID_0061",  # Actilino
@@ -640,7 +640,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		})
 
 		# Some older HT displays use a HID converter and an internal serial interface
-		driverRegistrar.addUsbDevices(bdDetect.KEY_HID, {
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.HID, {
 			"VID_1FE4&PID_0003",  # USB-HID adapter
 			"VID_1FE4&PID_0074",  # Braille Star 40
 			"VID_1FE4&PID_0044",  # Easy Braille
@@ -684,7 +684,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
-			self.isHid = portType == bdDetect.KEY_HID
+			self.isHid = portType == bdDetect.DeviceType.HID
 			self.isHidSerial = portId in USB_IDS_HID_CONVERTER
 			self.port = port
 			try:
