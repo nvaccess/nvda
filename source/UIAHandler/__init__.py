@@ -786,7 +786,7 @@ class UIAHandler(COMObject):
 				return
 			if not obj:
 				if _isDebug():
-					log.debug(f"handleAutomationEvent: No NVDAObject could be created")
+					log.debug("handleAutomationEvent: No NVDAObject could be created")
 				return
 			if _isDebug():
 				log.debug(
