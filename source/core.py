@@ -628,6 +628,7 @@ def main():
 	from winAPI.messageWindow import _MessageWindow
 	import versionInfo
 	messageWindow = _MessageWindow(versionInfo.name)
+
 	# initialize wxpython localization support
 	wxLocaleObj = wx.Locale()
 	wxLang = getWxLangOrNone()
