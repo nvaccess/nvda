@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-25 00:02+0000\n"
-"PO-Revision-Date: 2023-08-28 00:53+0330\n"
+"POT-Creation-Date: 2023-10-20 00:02+0000\n"
+"PO-Revision-Date: 2023-10-22 22:06+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@groups.io>\n"
 "Language: fa\n"
@@ -2059,6 +2059,22 @@ msgstr "به گروهِ قبلی میبَرَد"
 msgid "no previous grouping"
 msgstr "هیچ گروهِ قبلی‌ای نیست"
 
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next tab"
+msgstr "به سربرگِ بعدی میبَرَد."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next tab"
+msgstr "هیچ سربرگِ بعدی‌ای نیست"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous tab"
+msgstr "به سربرگِ قبلی میبَرَد."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous tab"
+msgstr "هیچ سربرگِ قبلی‌ای نیست"
+
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
@@ -2971,6 +2987,21 @@ msgstr "تنظیماتِ تورفتگیِ خط را تغییر میدهد."
 #, python-brace-format
 msgid "Report line indentation {mode}"
 msgstr "اعلامِ تورفتگیِ خط، {mode}"
+
+#. Translators: Input help mode message for toggle ignore blank lines for line indentation reporting command.
+msgid ""
+"Toggles on and off the ignoring of blank lines for line indentation reporting"
+msgstr "نادیده گرفتنِ خط‌های خالی برای اعلامِ تورفتگی را فعال یا غیرفعال میکند."
+
+#. Translators: The message announced when toggling off the ignore blank lines for line indentation
+#. reporting document formatting setting.
+msgid "Ignore blank lines for line indentation reporting off"
+msgstr "نادیده گرفتنِ خط‌های خالی هنگامِ اعلامِ تورفتگیِ خط‌ها غیرفعال شد"
+
+#. Translators: The message announced when toggling on the ignore blank lines for line indentation
+#. reporting document formatting setting.
+msgid "Ignore blank lines for line indentation reporting on"
+msgstr "نادیده گرفتنِ خط‌های خالی هنگامِ اعلامِ تورفتگیِ خط‌ها فعال شد"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
@@ -3988,6 +4019,10 @@ msgstr "پنجره‌ی انتخابِ نمایشگرِ بریلِ NVDA را ن�
 msgid "Shows NVDA's braille settings"
 msgstr "تنظیماتِ بریلِ NVDA را نشان میدهد."
 
+#. Translators: Input help mode message for go to audio settings command.
+msgid "Shows NVDA's audio settings"
+msgstr "تنظیماتِ صدای NVDA را نشان میدهد."
+
 #. Translators: Input help mode message for go to keyboard settings command.
 msgid "Shows NVDA's keyboard settings"
 msgstr "تنظیماتِ صفحه‌کلید در NVDA را نشان میدهد."
@@ -4603,6 +4638,10 @@ msgstr "پرده‌ی موقتی. تا راه‌اندازیِ بَعدیِ NVDA
 #. Translators: Reported when the screen curtain could not be enabled.
 msgid "Could not enable screen curtain"
 msgstr "نمیتوانم پرده را فعال کنم"
+
+#. Translators: Warning message when trying to enable the screen curtain when OCR is active.
+msgid "Could not enable screen curtain when performing content recognition"
+msgstr "نمیتوانم هنگامِ بازشناسیِ محتوا پرده را فعال کنم"
 
 #. Translators: Describes a command.
 msgid "Cycles through paragraph navigation styles"
@@ -6526,6 +6565,7 @@ msgstr "لطفا کمک کنید."
 
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
+#. Translators: The label for the menu item to open donate page.
 msgid "&Donate"
 msgstr "&کمک میکنم"
 
@@ -7662,6 +7702,14 @@ msgstr "در صورتِ امکان، متنِ روی مکان‌نما را فع
 msgid "Dismiss the recognition result"
 msgstr "نتیجه‌ی بازشناسی را محو میکند."
 
+#. Translators: Reported when recognition (e.g. OCR) fails.
+msgid "Recognition failed"
+msgstr "خطا در بازشناسی"
+
+#. Translators: Reported when recognition (e.g. OCR) fails during automatic refresh.
+msgid "Automatic refresh of recognition result failed"
+msgstr "تازه‌سازیِ خودکارِ نتیجه‌ی بازشناسی ناموفق بود"
+
 #. Translators: Reported when content recognition (e.g. OCR) is attempted,
 #. but the user is already reading a content recognition result.
 msgid "Already in a content recognition result"
@@ -7675,9 +7723,6 @@ msgstr "محتوا دیده نمیشود."
 #. Translators: Reporting when content recognition (e.g. OCR) begins.
 msgid "Recognizing"
 msgstr "در حالِ بازشناسی"
-
-msgid "Recognition failed"
-msgstr "خطا در بازشناسی"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
@@ -7773,6 +7818,63 @@ msgstr "بزرگتر"
 msgctxt "font size"
 msgid "smaller"
 msgstr "کوچکتر"
+
+#. Translators: Reported when text is left-aligned.
+msgid "align left"
+msgstr "چپ‌چین"
+
+#. Translators: Reported when text is centered.
+msgid "align center"
+msgstr "وسط‌چین"
+
+#. Translators: Reported when text is right-aligned.
+msgid "align right"
+msgstr "راست‌چین"
+
+#. Translators: Reported when text is justified.
+#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
+msgid "align justify"
+msgstr "هم‌تراز"
+
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "دو‌سو‌چین"
+
+#. Translators: Reported when text is centered across multiple cells.
+msgid "align centered across selection"
+msgstr "وسطچین‌شده در طولِ انتخاب"
+
+#. Translators: Reported in Excel when text is formatted with "General" alignment, i.e. the name of the
+#. alignment in Excel aligning the cell's content depending on its type: text left and numbers right.
+msgid "align general"
+msgstr "چینشِ عمومی"
+
+#. Translators: Reported in Excel when text is formatted with "Fill" alignment, i.e. the name of the
+#. alignment in Excel repeating the cell's content for the width of the cell.
+msgid "align fill"
+msgstr "چینشِ پرکننده"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "عمود‌چینِ بالا"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "عمود‌چینِ وسط"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "عمود‌چینِ پایین"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "عمود‌چینِ هم‌تراز"
+
+#. Translators: Reported when text is vertically justified but with character spacing
+#. (For some Asian content).
+msgid "vertical align distributed"
+msgstr "عمود‌چینِ پراکنده"
 
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
@@ -8740,27 +8842,27 @@ msgid "&Preferences"
 msgstr "اولوی&ت‌ها"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
-msgid "View log"
+msgid "View &log"
 msgstr "نمایشِ اِتِّفاقاتِ &ثبت شده (Log)"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
-msgid "Speech viewer"
+msgid "&Speech viewer"
 msgstr "نمایشگرِ &گفتار"
 
 #. Translators: The label for the menu item to toggle Braille Viewer.
-msgid "Braille viewer"
-msgstr "نمایشگرِ مجازیِ بریل"
+msgid "&Braille viewer"
+msgstr "نمایشگرِ مجازیِ بر&یل"
 
 #. Translators: The label of a menu item to open the Add-on store
-msgid "Add-on &store..."
+msgid "&Add-on store..."
 msgstr "&فروشگاهِ افزونه‌ها"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
-msgid "Python console"
-msgstr "میزِ فرمانِ پایتون"
+msgid "&Python console"
+msgstr "میزِ فرمانِ &پایتون"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-msgid "Create portable copy..."
+msgid "&Create portable copy..."
 msgstr "ایجادِ نسخه‌ی قابلِ &حمل..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
@@ -8769,15 +8871,15 @@ msgstr "&نصبِ NVDA"
 
 #. Translators: The label for the menu item to run the COM registration fix tool
 msgid "Run COM Registration Fixing tool..."
-msgstr "اجرای ابزارِ تعمیرِ رجیستری"
+msgstr "اجرای ابزارِ تعمیرِ &رجیستری"
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
-msgstr "بارگذاریِ مجددِ افزونه ها"
+msgstr "&بارگذاریِ مجددِ افزونه ها"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
-msgid "Tools"
-msgstr "ابزار‌ها"
+msgid "&Tools"
+msgstr "&ابزار‌ها"
 
 #. Translators: The label of a menu item to open NVDA user guide.
 msgid "&User Guide"
@@ -8811,16 +8913,12 @@ msgid "&Check for update..."
 msgstr "&بررسیِ به‌روزرسانی..."
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
-msgid "About..."
-msgstr "درباره..."
+msgid "&About..."
+msgstr "&درباره..."
 
 #. Translators: The label for the Help submenu in NVDA menu.
 msgid "&Help"
 msgstr "&راهنما"
-
-#. Translators: The label for the menu item to open donate page.
-msgid "Donate"
-msgstr "کمکِ مالی"
 
 #. Translators: The label for the menu item to run a pending update.
 msgid "Install pending &update"
@@ -8888,7 +8986,7 @@ msgstr "تمامِ تنظیمات را به حالتِ از پیش ذخیره ش
 
 #. Translators: The label for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
-msgid "&Reset configuration to factory defaults"
+msgid "Reset configuration to &factory defaults"
 msgstr "برگرداندنِ تن&ظیمات به پیش‌فرضِ تولید کننده"
 
 #. Translators: The help text for the menu item to reset settings to default settings.
@@ -9890,31 +9988,6 @@ msgstr "یک موتورِ سخنگو انتخاب کنید"
 msgid "&Synthesizer:"
 msgstr "&موتورِ سخنگو:"
 
-#. Translators: This is the label for the select output
-#. device combo in the synthesizer dialog. Examples of
-#. of an output device are default soundcard, usb
-#. headphones, etc.
-msgid "Audio output  &device:"
-msgstr "&دستگاهِ خروجیِ صدا"
-
-#. Translators: name for default (Microsoft Sound Mapper) audio output device.
-msgid "Microsoft Sound Mapper"
-msgstr "کارتِ صدای مایکروسافت"
-
-#. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
-msgid "Audio d&ucking mode:"
-msgstr "حالتِ کم شدنِ صدای &پس‌زمینه:"
-
-#. Translators: This message is presented when
-#. NVDA is unable to load the selected
-#. synthesizer.
-#, python-format
-msgid "Could not load the %s synthesizer."
-msgstr "نتوانستم موتورِ سخنگوی %s را بارگذاری کنم."
-
-msgid "Synthesizer Error"
-msgstr "خطا در موتورِ سخنگو"
-
 #. Translators: This is the label for the voice settings panel.
 msgid "Voice"
 msgstr "صدا"
@@ -10369,12 +10442,17 @@ msgstr "&شماره‌ی خط‌ها"
 msgid "Line &indentation reporting:"
 msgstr "اعلامِ &تورفتگیِ خط با"
 
-#. Translators: This message is presented in the document formatting settings panelue
+#. Translators: This is the label of a checkbox in the document formatting settings panel
+#. If this option is selected, NVDA will ignore blank lines for line indentation reporting
+msgid "Ignore &blank lines for line indentation reporting"
+msgstr "نادیده گرفتنِ خط‌های &خالی هنگامِ اعلامِ تورفتگیِ خط‌ها "
+
+#. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
 msgstr "تورفتگیِ &پاراگراف"
 
-#. Translators: This message is presented in the document formatting settings panelue
+#. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report line spacing if available.
 msgid "&Line spacing"
 msgstr "فاصله‌ی &خط‌ها"
@@ -10467,6 +10545,46 @@ msgstr "پیمایش در اسناد"
 msgid "&Paragraph style:"
 msgstr "سبْکِ &پاراگراف"
 
+#. Translators: This message is presented when
+#. NVDA is unable to load the selected synthesizer.
+#, python-format
+msgid "Could not load the %s synthesizer."
+msgstr "نتوانستم موتورِ سخنگوی %s را بارگذاری کنم."
+
+#. Translators: Dialog title presented when
+#. NVDA is unable to load the selected synthesizer.
+msgid "Synthesizer Error"
+msgstr "خطا در موتورِ سخنگو"
+
+#. Translators: This is the label for the audio settings panel.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Audio"
+msgstr "صدا"
+
+#. Translators: This is the label for the select output device combo in NVDA audio settings.
+#. Examples of an output device are default soundcard, usb headphones, etc.
+msgid "Audio output &device:"
+msgstr "&دستگاهِ خروجیِ صدا"
+
+#. Translators: name for default (Microsoft Sound Mapper) audio output device.
+msgid "Microsoft Sound Mapper"
+msgstr "کارتِ صدای مایکروسافت"
+
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog.
+msgid "Audio d&ucking mode:"
+msgstr "حالتِ کم شدنِ صدای &پس‌زمینه:"
+
+#. Translators: This is the label for a checkbox control in the
+#. Audio settings panel.
+msgid "Volume of NVDA sounds follows voice volume"
+msgstr "پیرویِ حجمِ صداهای NVDA از حجمِ صدای اصلی"
+
+#. Translators: This is the label for a slider control in the
+#. Audio settings panel.
+msgid "Volume of NVDA sounds"
+msgstr "حجمِ صداهای NVDA"
+
 #. Translators: This is the label for the addon navigation settings panel.
 msgid "Add-on Store"
 msgstr "فروشگاهِ افزونه‌ها"
@@ -10492,6 +10610,10 @@ msgstr "نویسه‌خوانِ نوریِ ویندوز"
 #. Translators: Label for an option in the Windows OCR dialog.
 msgid "Recognition &language:"
 msgstr "&زبانِ بازشناسی"
+
+#. Translators: Label for an option in the Windows OCR settings panel.
+msgid "Periodically &refresh recognized content"
+msgstr "&تازه‌سازیِ متناوبِ محتوای تشخیص‌داده‌شده"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10641,32 +10763,6 @@ msgstr "«جزئیات دارد» را برای یادداشت‌های ساخت
 msgid "Report aria-description always"
 msgstr "اعلامِ aria-description همیشه"
 
-#. Translators: Label for option in the 'Enable support for HID braille' combobox
-#. in the Advanced settings panel.
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "Default (Yes)"
-msgstr "پیش‌فرض (بله)"
-
-#. Translators: Label for option in the 'Enable support for HID braille' combobox
-#. in the Advanced settings panel.
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "Yes"
-msgstr "بله"
-
-#. Translators: Label for option in the 'Enable support for HID braille' combobox
-#. in the Advanced settings panel.
-#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
-#. in the Advanced settings panel.
-msgid "No"
-msgstr "نه"
-
-#. Translators: This is the label for a combo box in the
-#. Advanced settings panel.
-msgid "Enable support for HID braille"
-msgstr "فعالسازیِ پشتیبانی از بریلِ HID"
-
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 msgid "Report live regions:"
 msgstr "اعلامِ منطقه‌های زنده:"
@@ -10720,6 +10816,21 @@ msgstr "Difflib"
 msgid "Speak new text in Windows Terminal via:"
 msgstr "گُفتنِ متنِ جدید در پایانه‌ی ویندوز از طریق:"
 
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Default (Yes)"
+msgstr "پیش‌فرض (بله)"
+
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "Yes"
+msgstr "بله"
+
+#. Translators: Label for the 'Cancel speech for expired &focus events' combobox
+#. in the Advanced settings panel.
+msgid "No"
+msgstr "نه"
+
 #. Translators: This is the label for combobox in the Advanced settings panel.
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "تلاش برای لغوِ گفتارِ رخدادهای فکوسِ منقضی‌شده"
@@ -10748,24 +10859,9 @@ msgstr "مدت زمانِ حرکتِ نشانگر (به هزارمِ ثانیه)
 msgid "Report transparent color values"
 msgstr "اعلامِ مقدارهای رنگ‌های روشن"
 
-#. Translators: This is the label for a group of advanced options in the
-#. Advanced settings panel
-msgid "Audio"
-msgstr "صدا"
-
 #. Translators: This is the label for a checkbox control in the Advanced settings panel.
 msgid "Use WASAPI for audio output (requires restart)"
 msgstr "استفاده از WASAPI برای خروجیِ صدا (نیازمند راه‌اندازیِ دوباره)"
-
-#. Translators: This is the label for a checkbox control in the
-#. Advanced settings panel.
-msgid "Volume of NVDA sounds follows voice volume (requires WASAPI)"
-msgstr "حجم صداهای NVDA از حجم صدای اصلی پیروی می‌کند (نیازمند WASAPI است)"
-
-#. Translators: This is the label for a slider control in the
-#. Advanced settings panel.
-msgid "Volume of NVDA sounds (requires WASAPI)"
-msgstr "حجم صداهای NVDA (نیازمند WASAPI است)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -10831,6 +10927,10 @@ msgstr "یک نمایشگرِ بریل انتخاب کنید"
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
 msgstr "&نمایشگر بریل:"
+
+#. Translators: The label for a setting in braille settings to enable displays for automatic detection.
+msgid "&Displays to detect automatically:"
+msgstr "&نمایشگرهایی که خودکار شناسایی می‌شوند"
 
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
@@ -11551,60 +11651,6 @@ msgstr "مخفیست"
 #. Translators: Reported when text is not hidden.
 msgid "not hidden"
 msgstr "مخفی نیست"
-
-#. Translators: Reported when text is left-aligned.
-msgid "align left"
-msgstr "چپ‌چین"
-
-#. Translators: Reported when text is centered.
-msgid "align center"
-msgstr "وسط‌چین"
-
-#. Translators: Reported when text is right-aligned.
-msgid "align right"
-msgstr "راست‌چین"
-
-#. Translators: Reported when text is justified.
-#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
-msgid "align justify"
-msgstr "هم‌تراز"
-
-#. Translators: Reported when text is justified with character spacing (Japanese etc)
-#. See http://kohei.us/2010/01/21/distributed-text-justification/
-msgid "align distributed"
-msgstr "دو‌سو‌چین"
-
-#. Translators: Reported when text has reverted to default alignment.
-msgid "align default"
-msgstr "ترازِ پیش‌فرض"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "عمود‌چینِ بالا"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "عمود‌چینِ وسط"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "عمود‌چینِ پایین"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "عمود‌چینِ روی خط"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "عمود‌چینِ هم‌تراز"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "عمود‌چینِ پراکنده"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "عمود‌چینِ پیشفرض"
 
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
@@ -13667,6 +13713,11 @@ msgctxt "addonStore"
 msgid "Enabled, pending restart"
 msgstr "فعال شد؛ در انتظارِ راه‌اندازیِ دوباره"
 
+#. Translators: Status for addons shown in the add-on store dialog
+msgctxt "addonStore"
+msgid "Unknown status"
+msgstr "وضعیتِ نامشخص"
+
 #. Translators: The label of a tab to display installed add-ons in the add-on store.
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 msgctxt "addonStore"
@@ -14017,6 +14068,7 @@ msgid "Add-on Information"
 msgstr "اطلاعاتِ افزونه"
 
 #. Translators: The warning of a dialog
+msgctxt "addonStore"
 msgid "Add-on Store Warning"
 msgstr "هشدارِ فروشگاهِ افزونه‌ها"
 
@@ -14038,6 +14090,7 @@ msgid "&Don't show this message again"
 msgstr "این پیام را دوباره نشان &نده"
 
 #. Translators: The label of a button in a dialog
+msgctxt "addonStore"
 msgid "&OK"
 msgstr "&تأیید"
 
@@ -14062,6 +14115,7 @@ msgid "Cha&nnel:"
 msgstr "&کانال:"
 
 #. Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
+msgctxt "addonStore"
 msgid "Include &incompatible add-ons"
 msgstr "شاملِ افزونه‌های &ناسازگار"
 
@@ -14221,6 +14275,21 @@ msgstr "نمیتوانم افزونه‌ی {addon} را فعال کنم."
 msgctxt "addonStore"
 msgid "Could not disable the add-on: {addon}."
 msgstr "نمیتوانم افزونه‌ی {addon} را غیرفعال کنم."
+
+#~ msgid "Donate"
+#~ msgstr "کمکِ مالی"
+
+#~ msgid "Enable support for HID braille"
+#~ msgstr "فعالسازیِ پشتیبانی از بریلِ HID"
+
+#~ msgid "align default"
+#~ msgstr "ترازِ پیش‌فرض"
+
+#~ msgid "vertical align baseline"
+#~ msgstr "عمود‌چینِ روی خط"
+
+#~ msgid "vertical align default"
+#~ msgstr "عمود‌چینِ پیشفرض"
 
 #, fuzzy
 #~ msgid "NVDA sounds"

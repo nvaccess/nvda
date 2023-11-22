@@ -314,6 +314,13 @@ class AddonDetails(
 						details.sourceURL
 					)
 
+					if details.reviewURL is not None:
+						self._appendDetailsLabelValue(
+							# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+							pgettext("addonStore", "Reviews URL:"),
+							details.reviewURL
+						)
+
 				self.contentsPanel.Show()
 
 		self.Layout()

@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
-# Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka
+# Copyright (C) 2006-2023 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
+# Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -765,7 +765,10 @@ def main():
 				sessionTracking.pumpAll()
 			except Exception:
 				log.exception("errors in this core pump cycle")
-			baseObject.AutoPropertyObject.invalidateCaches()
+			try:
+				baseObject.AutoPropertyObject.invalidateCaches()
+			except Exception:
+				log.exception("AutoPropertyObject.invalidateCaches failed")
 			watchdog.asleep()
 			self.isPumping = False
 			# #3803: If another pump was requested during this pump execution, we need
@@ -849,6 +852,7 @@ def main():
 	_terminate(bdDetect)
 	_terminate(hwIo)
 	_terminate(addonHandler)
+	_terminate(nvwave)
 	_terminate(garbageHandler)
 	# DMP is only started if needed.
 	# Terminate manually (and let it write to the log if necessary)

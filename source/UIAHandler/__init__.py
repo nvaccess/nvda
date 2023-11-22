@@ -91,9 +91,6 @@ goodUIAWindowClassNames = (
 badUIAWindowClassNames = (
 	# UIA events of candidate window interfere with MSAA events.
 	"Microsoft.IME.CandidateWindow.View",
-	# Known issue with "Reliability Monitor" in explorer.exe #15541.
-	# Task manager and mmc.exe are also affected, but have isBadUIAWindow workarounds.
-	"SysListView32",
 	"SysTreeView32",
 	"WuDuiListView",
 	"ComboBox",
@@ -1091,7 +1088,8 @@ class UIAHandler(COMObject):
 				log.debug("Window is from NVDA's process. Treating as non-UIA")
 			return False
 		import NVDAObjects.window
-		windowClass=NVDAObjects.window.Window.normalizeWindowClassName(winUser.getClassName(hwnd))
+		rawWindowClass = winUser.getClassName(hwnd)
+		windowClass = NVDAObjects.window.Window.normalizeWindowClassName(rawWindowClass)
 		# For certain window classes, we always want to use UIA.
 		if windowClass in goodUIAWindowClassNames:
 			if isDebug:
@@ -1196,6 +1194,18 @@ class UIAHandler(COMObject):
 				if not utils._shouldUseUIAConsole(hwnd):
 					if isDebug:
 						log.debug("Windows console treated as non-UIA")
+					return False
+			elif windowClass == "SysListView32":
+				# #15283: SysListView32 controls in Windows Forms have a native UIA implementation
+				# and lack a MSAA implementation.
+				# We need to rely on UIA for these controls, as otherwise parent/child navigation is broken.
+				# For other instances however, even when the control advertises a native UIA implementation,
+				# the implementation is likely to be incomplete and MSAA should be prefered.
+				if isDebug:
+					log.debug(f"Checking framework of {rawWindowClass} window ")
+				if not utils._isFrameworkIdWinForm(hwnd):
+					if isDebug:
+						log.debug("SysListView32 treated as non-UIA")
 					return False
 			if isDebug:
 				log.debug("Treating as UIA")

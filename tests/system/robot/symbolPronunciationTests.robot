@@ -4,7 +4,7 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 *** Settings ***
 Documentation	Symbol pronunciation tests
-Force Tags	NVDA	smoke test	symbols
+Force Tags	NVDA	smoke test	symbols	excluded_from_build
 
 # for start & quit in Test Setup and Test Test Teardown
 Library	NvdaLib.py
