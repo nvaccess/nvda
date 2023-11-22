@@ -25,6 +25,7 @@ import UIAHandler.customProps
 import UIAHandler.customAnnotations
 import controlTypes
 from controlTypes import TextPosition, TextAlign
+import inputCore
 import config
 import speech
 import api
@@ -2212,7 +2213,7 @@ class XamlEditableText(EditableTextBase, UIA):
 	# to detect if the caret has moved, as it occurs too early.
 	caretMovementDetectionUsesEvents = False
 
-	def _backspaceScriptHelper(self, unit, gesture):
+	def _backspaceScriptHelper(self, unit: str, gesture: inputCore.InputGesture):
 		"""As UIA text range objects from XAML don't mutate with backspace,
 		comparing a text range copied from before backspace with a text range fetched after backspace
 		isn't reliable, as the ranges compare equal.
