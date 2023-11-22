@@ -285,6 +285,7 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 			info = self.makeTextInfo(textInfos.POSITION_SELECTION)
 			newSelection = info.start, info.end
 			if newSelection != oldSelection:
+				elapsed = time.time() - start
 				log.debug(f"Detected new selection after {elapsed} sec")
 				break
 			elapsed = time.time() - start
