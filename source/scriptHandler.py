@@ -324,7 +324,7 @@ def clearLastScript():
 	_lastScriptCount = 0
 
 
-def getCurrentScript():
+def getCurrentScript() -> Optional[_ScriptFunctionT]:
 	if not _isScriptRunning:
 		return None
 	lastScriptRef = _lastScriptRef() if _lastScriptRef else None
