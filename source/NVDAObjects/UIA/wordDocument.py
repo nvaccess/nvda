@@ -600,7 +600,7 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 	@script(
 		gesture="kb:NVDA+alt+c",
 		# Translators: a description for a script that reports the comment at the caret.
-		description=_("Reports the text of the comment where the System caret is located."),
+		description=_("Reports the text of the comment where the system caret is located."),
 		speakOnDemand=True,
 	)
 	def script_reportCurrentComment(self,gesture):

@@ -277,7 +277,7 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 
 	@script(
 		# Translators: a description for a script
-		description=_("Reports the text of the comment where the System caret is located."),
+		description=_("Reports the text of the comment where the system caret is located."),
 		gesture="kb:NVDA+alt+c",
 		speakOnDemand=True,
 	)
