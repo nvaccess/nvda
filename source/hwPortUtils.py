@@ -159,7 +159,7 @@ def _isDebug():
 	return config.conf["debugLog"]["hwIo"]
 
 
-def _getBluetotohPortInfo(regKey: int, hwID: str):
+def _getBluetoohPortInfo(regKey: int, hwID: str) -> dict:
 	info = {}
 	try:
 		port = info["port"] = winreg.QueryValueEx(regKey, "PortName")[0]
