@@ -368,3 +368,18 @@ def _shouldSelectivelyRegister() -> bool:
 def _shouldUseWindowsTerminalNotifications() -> bool:
 	"Determines whether to use notifications for new text reporting in Windows Terminal."
 	return config.conf["terminals"]["wtStrategy"] == WindowsTerminalStrategyFlag.NOTIFICATIONS
+
+
+def _isFrameworkIdWinForm(hwnd: int) -> bool:
+	"""
+	Returns whether this window belongs to an element that originates from the Windows Forms framework (WinForm).
+	This is used to determine whether a native UIA implementation should be used for SysListView32 controls.
+	"""
+	try:
+		UIAElement = UIAHandler.handler.clientObject.ElementFromHandleBuildCache(
+			hwnd, UIAHandler.handler.baseCacheRequest
+		)
+		return UIAElement.cachedFrameworkID == "WinForm"
+	except COMError:
+		log.exception(f"Couldn't get FrameworkId for window {hwnd}")
+		return False

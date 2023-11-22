@@ -32,7 +32,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
-		driverRegistrar.addUsbDevices(bdDetect.KEY_SERIAL, {
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.SERIAL, {
 			"VID_10C4&PID_EA60",  # SuperBraille 3.2
 		})
 
