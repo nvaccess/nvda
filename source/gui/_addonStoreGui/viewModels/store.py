@@ -272,14 +272,14 @@ class AddonStoreVM:
 		return shouldRemove, shouldRememberChoice
 
 	def removeAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]) -> None:
-		shoulRemove = True
+		shouldRemove = True
 		shouldRememberChoice = False
 		for aVM in listItemVMs:
 			if aVM.canUseRemoveAction():
 				log.debug(f"Skipping {aVM.Id} ({aVM.status}) as it is not relevant for remove action")
 			else:
 				if shouldRememberChoice:
-					if shoulRemove:
+					if shouldRemove:
 						self.removeAddon(aVM, askConfirmation=False)
 					else:
 						log.debug(
@@ -287,7 +287,7 @@ class AddonStoreVM:
 							" add-ons."
 						)
 				else:
-					shoulRemove, shouldRememberChoice = self.removeAddon(
+					shouldRemove, shouldRememberChoice = self.removeAddon(
 						aVM,
 						askConfirmation=True,
 						useRememberChoiceCheckbox=True,
@@ -312,7 +312,7 @@ class AddonStoreVM:
 		if shouldInstall:
 			listItemVM.model.enableCompatibilityOverride()
 			self.getAddon(listItemVM)
-		self.refresh()
+			self.refresh()
 		return shouldInstall, shouldRememberChoice
 
 	_enableErrorMessage: str = pgettext(
