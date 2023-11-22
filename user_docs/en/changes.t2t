@@ -10,7 +10,8 @@ What's New in NVDA
 - Added support for Bluetooth Low Energy HID Braille displays. (#15470)
 - The Add-on Store now supports installing add-ons in bulk by selecting multiple add-ons. (#15350)
 - From the add-on store, it's possible to open a dedicated webpage to see or provide feedback about the selected add-on. (#15576, @nvdaes)
-- A new "speech on demand" mode has been added. When speech is on demand, NVDA does not speak automatically (e.g. when moving the cursor) but still speaks when calling commands whose goal is explicitly to report something (e.g. report window title). (#481, @CyrilleB79)
+- A new "on-demand" speech mode has been added.
+When speech is on-demand, NVDA does not speak automatically (e.g. when moving the cursor) but still speaks when calling commands whose goal is explicitly to report something (e.g. report window title). (#481, @CyrilleB79)
 -
 
 
@@ -101,9 +102,9 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
   - wil to ``5e9be7b2d2fe3834a7107f430f7d4c0631f69833``. (#15695)
   -
 - When the configuration file ``nvda.ini`` is corrupted, a backup copy is saved before it is reinitialized. (#15779, @CyrilleB79)
-- When defining a script with the script decorator, the ``speakOnDemand`` boolean argument can be specified to control if a script should speak while in "on demand" mode. (#481, @CyrilleB79)
-  - Scripts that provide information (e.g. say window title, report time/date) should speak in the "on demand" mode.
-  - Scripts that perform an action (e.g. move the cursor, change a parameter) should not speak in the "on demand" mode.
+- When defining a script with the script decorator, the ``speakOnDemand`` boolean argument can be specified to control if a script should speak while in "on-demand" speech mode. (#481, @CyrilleB79)
+  - Scripts that provide information (e.g. say window title, report time/date) should speak in the "on-demand" mode.
+  - Scripts that perform an action (e.g. move the cursor, change a parameter) should not speak in the "on-demand" mode.
   -
 -
 
