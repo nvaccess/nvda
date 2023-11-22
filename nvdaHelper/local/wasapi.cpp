@@ -351,8 +351,10 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 				}
 			}
 			hr = client->GetCurrentPadding(&paddingFrames);
-			if (hr == AUDCLNT_E_DEVICE_INVALIDATED ||
-					hr == AUDCLNT_E_NOT_INITIALIZED) {
+			if (
+				hr == AUDCLNT_E_DEVICE_INVALIDATED
+				|| hr == AUDCLNT_E_NOT_INITIALIZED
+			) {
 				// Either the device we're using has just been invalidated, or it was
 				// invalidated previously and we failed to reopen. Try reopening, which
 				// might fall back to the default device if appropriate.
@@ -527,8 +529,10 @@ HRESULT WasapiPlayer::stop() {
 	// If the device has been invalidated, it has already stopped. Just ignore
 	// this and behave as if we were successful to avoid a cascade of breakage.
 	// feed() will attempt to reopen the device next time it is called.
-	if (hr != AUDCLNT_E_DEVICE_INVALIDATED &&
-			hr != AUDCLNT_E_NOT_INITIALIZED) {
+	if (
+		hr != AUDCLNT_E_DEVICE_INVALIDATED
+		&& hr != AUDCLNT_E_NOT_INITIALIZED
+	) {
 		if (FAILED(hr)) {
 			return hr;
 		}
