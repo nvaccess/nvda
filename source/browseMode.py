@@ -19,6 +19,8 @@ import weakref
 
 import wx
 import core
+import winUser
+import mouseHandler
 from logHandler import log
 import documentBase
 import review
@@ -523,10 +525,27 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		@param obj: The object to activate.
 		@type obj: L{NVDAObjects.NVDAObject}
 		"""
-		try:
-			obj.doAction()
-		except NotImplementedError:
-			log.debugWarning("doAction not implemented")
+		while obj and obj != self.rootNVDAObject:
+			try:
+				obj.doAction()
+				break
+			except NotImplementedError:
+				log.debugWarning("doAction failed")
+			if obj.hasIrrelevantLocation:
+				# This check covers invisible, off screen and a None location
+				log.debugWarning("No relevant location for object")
+				obj = obj.parent
+				continue
+			location = obj.location
+			if not location.width or not location.height:
+				obj = obj.parent
+				continue
+			log.debugWarning("Clicking with mouse")
+			oldX, oldY = winUser.getCursorPos()
+			winUser.setCursorPos(*location.center)
+			mouseHandler.doPrimaryClick()
+			winUser.setCursorPos(oldX, oldY)
+			break
 
 	def _activatePosition(self, obj=None):
 		if not obj:

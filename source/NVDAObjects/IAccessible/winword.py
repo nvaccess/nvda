@@ -1,12 +1,13 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NVDA Contributors
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2023 NV Access, Cyrille Bougot and other NVDA Contributors
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 from comtypes import COMError
 import ctypes
 import operator
 import uuid
+import time
 from logHandler import log
 import winUser
 import speech
@@ -17,12 +18,14 @@ import tableUtils
 import textInfos
 import eventHandler
 import scriptHandler
+from scriptHandler import script
 import ui
 from . import IAccessible
 from displayModel import EditableTextDisplayModelTextInfo
 from ..behaviors import EditableTextWithoutAutoSelectDetection
 import NVDAObjects.window.winword as winWordWindowModule
 from speech import sayAll
+import inputCore
 
 
 class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordWindowModule.WordDocument):
@@ -30,6 +33,9 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 	treeInterceptorClass = winWordWindowModule.WordDocumentTreeInterceptor
 	shouldCreateTreeInterceptor=False
 	TextInfo = winWordWindowModule.WordDocumentTextInfo
+	# Should braille and review position be updated, set to True in
+	# L{script_updateBrailleAndReviewPosition}.
+	_fromUpdateBrailleAndReviewPosition = False
 
 	def _get_ignoreEditorRevisions(self):
 		try:
@@ -46,12 +52,15 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 	#: True if formatting should be ignored (text only) such as for spellCheck error field
 	ignoreFormatting=False
 
-	def event_caret(self):
+	def event_caret(self) -> None:
 		curSelectionPos=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		lastSelectionPos=getattr(self,'_lastSelectionPos',None)
 		self._lastSelectionPos=curSelectionPos
 		if lastSelectionPos:
 			if curSelectionPos._rangeObj.isEqual(lastSelectionPos._rangeObj):
+				if self._fromUpdateBrailleAndReviewPosition:
+					super().event_caret()
+					self._fromUpdateBrailleAndReviewPosition = False
 				return
 		super(WordDocument,self).event_caret()
 
@@ -257,15 +266,36 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		columnText=self.fetchAssociatedHeaderCellText(cell,True)
 		ui.message("Row %s, column %s"%(rowText or "empty",columnText or "empty"))
 
-	def script_caret_moveByCell(self,gesture):
+	def script_caret_moveByCell(self, gesture: inputCore.InputGesture) -> None:
+		info = self.makeTextInfo(textInfos.POSITION_SELECTION)
+		inTable = info._rangeObj.tables.count > 0
+		if not inTable:
+			gesture.send()
+			return
+		oldSelection = info.start, info.end
 		gesture.send()
-		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		inTable=info._rangeObj.tables.count>0
-		isCollapsed=info.isCollapsed
-		if inTable:
-			info.expand(textInfos.UNIT_CELL)
-			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
-			braille.handler.handleCaretMove(self)
+		start = time.time()
+		retryInterval = 0.01
+		maxTimeout = 0.15
+		elapsed = 0
+		while True:
+			if scriptHandler.isScriptWaiting():
+				# Prevent lag if keys are pressed rapidly
+				return
+			info = self.makeTextInfo(textInfos.POSITION_SELECTION)
+			newSelection = info.start, info.end
+			if newSelection != oldSelection:
+				elapsed = time.time() - start
+				log.debug(f"Detected new selection after {elapsed} sec")
+				break
+			elapsed = time.time() - start
+			if elapsed >= maxTimeout:
+				log.debug(f"Canceled detecting new selection after {elapsed} sec")
+				break
+			time.sleep(retryInterval)
+		info.expand(textInfos.UNIT_CELL)
+		speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
+		braille.handler.handleCaretMove(self)
 
 	def script_reportCurrentComment(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
@@ -368,6 +398,32 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		info.updateCaret()
 		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
 	script_previousParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
+
+	@script(
+		gestures=(
+			"kb:control+v",
+			"kb:control+x",
+			"kb:control+y",
+			"kb:control+z",
+			"kb:alt+backspace",
+		)
+	)
+	def script_updateBrailleAndReviewPosition(self, gesture: inputCore.InputGesture) -> None:
+		"""Helper script to update braille and review position.
+		"""
+		# Ensuring braille and review position updates are allowed in caret event.
+		self._fromUpdateBrailleAndReviewPosition = True
+		gesture.send()
+		# Caret event is not always fired when control+v, control+x, control+y
+		# or control+z (alt+backspace) is pressed.
+		self.event_caret()
+
+	def _backspaceScriptHelper(self, unit: str, gesture: inputCore.InputGesture) -> None:
+		"""Helper function to update braille and review position.
+		"""
+		# Ensuring braille and review position updates are allowed in caret event.
+		self._fromUpdateBrailleAndReviewPosition = True
+		super()._backspaceScriptHelper(unit, gesture)
 
 	def focusOnActiveDocument(self, officeChartObject):
 		rangeStart=officeChartObject.Parent.Range.Start

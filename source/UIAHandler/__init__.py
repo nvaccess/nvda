@@ -86,9 +86,6 @@ goodUIAWindowClassNames = (
 badUIAWindowClassNames = (
 	# UIA events of candidate window interfere with MSAA events.
 	"Microsoft.IME.CandidateWindow.View",
-	# Known issue with "Reliability Monitor" in explorer.exe #15541.
-	# Task manager and mmc.exe are also affected, but have isBadUIAWindow workarounds.
-	"SysListView32",
 	"SysTreeView32",
 	"WuDuiListView",
 	"ComboBox",
@@ -698,7 +695,7 @@ class UIAHandler(COMObject):
 				f"handleAutomationEvent called with event {self.getUIAEventIDDebugString(eventID)} "
 				f"for element {self.getUIAElementDebugString(sender)}"
 			)
-		if not self.MTAThreadInitEvent.isSet():
+		if not self.MTAThreadInitEvent.is_set():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandleAutomationEvent: event received while not fully initialized")
@@ -799,7 +796,7 @@ class UIAHandler(COMObject):
 	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
 		if _isDebug():
 			log.debug(f"handleFocusChangedEvent called with element {self.getUIAElementDebugString(sender)}")
-		if not self.MTAThreadInitEvent.isSet():
+		if not self.MTAThreadInitEvent.is_set():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandleFocusChangedEvent: event received while not fully initialized")
@@ -888,7 +885,7 @@ class UIAHandler(COMObject):
 		# #3867: For now manually force this VARIANT type to empty to get around a nasty double free in comtypes/ctypes.
 		# We also don't use the value in this callback.
 		newValue.vt=VT_EMPTY
-		if not self.MTAThreadInitEvent.isSet():
+		if not self.MTAThreadInitEvent.is_set():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandlePropertyChangedEvent: event received while not fully initialized")
@@ -978,7 +975,7 @@ class UIAHandler(COMObject):
 				f"activityID {activityId}, "
 				f"for element {self.getUIAElementDebugString(sender)}"
 			)
-		if not self.MTAThreadInitEvent.isSet():
+		if not self.MTAThreadInitEvent.is_set():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandleNotificationEvent: event received while not fully initialized")
@@ -1023,7 +1020,7 @@ class UIAHandler(COMObject):
 			log.debug(
 				f"HandleActiveTextPositionChangedEvent called for element {self.getUIAElementDebugString(sender)}"
 			)
-		if not self.MTAThreadInitEvent.isSet():
+		if not self.MTAThreadInitEvent.is_set():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			if _isDebug():
 				log.debug("HandleActiveTextPositionchangedEvent: event received while not fully initialized")
@@ -1064,7 +1061,8 @@ class UIAHandler(COMObject):
 				log.debug("Window is from NVDA's process. Treating as non-UIA")
 			return False
 		import NVDAObjects.window
-		windowClass=NVDAObjects.window.Window.normalizeWindowClassName(winUser.getClassName(hwnd))
+		rawWindowClass = winUser.getClassName(hwnd)
+		windowClass = NVDAObjects.window.Window.normalizeWindowClassName(rawWindowClass)
 		# For certain window classes, we always want to use UIA.
 		if windowClass in goodUIAWindowClassNames:
 			if isDebug:
@@ -1169,6 +1167,18 @@ class UIAHandler(COMObject):
 				if not utils._shouldUseUIAConsole(hwnd):
 					if isDebug:
 						log.debug("Windows console treated as non-UIA")
+					return False
+			elif windowClass == "SysListView32":
+				# #15283: SysListView32 controls in Windows Forms have a native UIA implementation
+				# and lack a MSAA implementation.
+				# We need to rely on UIA for these controls, as otherwise parent/child navigation is broken.
+				# For other instances however, even when the control advertises a native UIA implementation,
+				# the implementation is likely to be incomplete and MSAA should be prefered.
+				if isDebug:
+					log.debug(f"Checking framework of {rawWindowClass} window ")
+				if not utils._isFrameworkIdWinForm(hwnd):
+					if isDebug:
+						log.debug("SysListView32 treated as non-UIA")
 					return False
 			if isDebug:
 				log.debug("Treating as UIA")

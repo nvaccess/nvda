@@ -4,10 +4,6 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-# Needed for type hinting CaseInsensitiveDict, UserDict
-# Can be removed in a future version of python (3.8+)
-from __future__ import annotations
-
 from abc import abstractmethod, ABC
 import sys
 import os.path
@@ -79,11 +75,12 @@ DELETEDIR_SUFFIX=".delete"
 isCLIParamKnown = extensionPoints.AccumulatingDecider(defaultDecision=False)
 
 
-class AddonsState(collections.UserDict):
+AddonStateDictT = Dict[AddonStateCategory, CaseInsensitiveSet[str]]
+
+
+class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[str]]):
 	"""
 	Subclasses `collections.UserDict` to preserve backwards compatibility.
-	In future versions of python (3.8+) UserDict[AddonStateCategory, CaseInsensitiveSet[str]]
-	can have type information added.
 	AddonStateCategory string enums mapped to a set of the add-on "name/id" currently in that state.
 	Add-ons that have the same ID except differ in casing cause a path collision,
 	as add-on IDs are installed to a case insensitive path.
@@ -91,12 +88,12 @@ class AddonsState(collections.UserDict):
 	"""
 
 	@staticmethod
-	def _generateDefaultStateContent() -> Dict[AddonStateCategory, CaseInsensitiveSet[str]]:
+	def _generateDefaultStateContent() -> AddonStateDictT:
 		return {
 			category: CaseInsensitiveSet() for category in AddonStateCategory
 		}
 
-	data: Dict[AddonStateCategory, CaseInsensitiveSet[str]]
+	data: AddonStateDictT
 	manualOverridesAPIVersion: MajorMinorPatch
 
 	@property
@@ -224,7 +221,7 @@ class AddonsState(collections.UserDict):
 				self[AddonStateCategory.OVERRIDE_COMPATIBILITY].discard(blockedAddon)
 
 
-state: AddonsState[AddonStateCategory, CaseInsensitiveSet[str]] = AddonsState()
+state = AddonsState()
 
 
 def getRunningAddons() -> "AddonHandlerModelGeneratorT":
@@ -754,16 +751,22 @@ def getCodeAddon(obj=None, frameDist=1):
 	# Not found!
 	raise AddonError("Code does not belong to an addon")
 
+
 def initTranslation():
 	addon = getCodeAddon(frameDist=2)
 	translations = addon.getTranslationsInstance()
+	_TRANSLATION_FUNCTIONS = {
+		translations.gettext: "_",
+		translations.ngettext: "ngettext",
+		translations.pgettext: "pgettext",
+		translations.npgettext: "npgettext"
+	}
 	# Point _ to the translation object in the globals namespace of the caller frame
-	# FIXME: should we retrieve the caller module object explicitly?
 	try:
 		callerFrame = inspect.currentframe().f_back
-		callerFrame.f_globals['_'] = translations.gettext
-		# Install our pgettext function.
-		callerFrame.f_globals['pgettext'] = languageHandler.makePgettext(translations)
+		module = inspect.getmodule(callerFrame)
+		for funcName, installAs in _TRANSLATION_FUNCTIONS.items():
+			setattr(module, installAs, funcName)
 	finally:
 		del callerFrame # Avoid reference problems with frames (per python docs)
 

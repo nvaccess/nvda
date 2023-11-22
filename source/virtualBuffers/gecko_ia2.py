@@ -17,7 +17,6 @@ import controlTypes
 import NVDAObjects.IAccessible.mozilla
 import NVDAObjects.behaviors
 import winUser
-import mouseHandler
 import IAccessibleHandler
 from scriptHandler import script
 import ui
@@ -446,29 +445,6 @@ class Gecko_ia2(VirtualBuffer):
 		ID=int(controlField['controlIdentifier_ID'])
 		obj=self.getNVDAObjectFromIdentifier(docHandle,ID)
 		obj.doAction(index)
-
-	def _activateNVDAObject(self, obj):
-		while obj and obj != self.rootNVDAObject:
-			try:
-				obj.doAction()
-				break
-			except:
-				log.debugWarning("doAction failed")
-			if obj.hasIrrelevantLocation:
-				# This check covers invisible, off screen and a None location
-				log.debugWarning("No relevant location for object")
-				obj = obj.parent
-				continue
-			location = obj.location
-			if not location.width or not location.height:
-				obj = obj.parent
-				continue
-			log.debugWarning("Clicking with mouse")
-			oldX, oldY = winUser.getCursorPos()
-			winUser.setCursorPos(*location.center)
-			mouseHandler.doPrimaryClick()
-			winUser.setCursorPos(oldX, oldY)
-			break
 
 	def _searchableTagValues(self, values):
 		return values

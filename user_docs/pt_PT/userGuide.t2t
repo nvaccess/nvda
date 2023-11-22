@@ -824,6 +824,7 @@ Eis a lista dos comandos disponíveis:
 - Agrupamento
 - Separador
 -
+
 Não se esqueça que há dois comandos para cada tipo de elemento, para mover para a frente no documento e para mover para trás no documento, e deve associar um comando a cada para poder navegar rapidamente nas duas direcções.
 Por exemplo, se quiser usar "y" / "shift+y" para navegar rapidamente entre tabs, deve fazer o seguinte:
 
@@ -1297,10 +1298,10 @@ Durante a leitura em modo de navegação, o NVDA refere-se às notas como coment
 
 Para ver, editar ou apagar uma nota:
 
-- Mova o cursor para o texto que contém a nota.
-- Aceda às opções para a selecção como descrito acima.
-- Escolha "Editar Nota".
--
++ Mova o cursor para o texto que contém a nota.
++ Aceda às opções para a selecção como descrito acima.
++ Escolha "Editar Nota".
++
 
 ++ Azardi ++[Azardi]
 %kc:beginInclude
@@ -1568,22 +1569,6 @@ Para obter uma lista dos sintetizadores que o NVDA suporta, consulte a secção 
 Um item especial que aparece sempre nesta lista é "Sem voz" e permite que use o NVDA sem saída de voz.
 Isto pode ser útil para alguém que deseja utilizar o NVDA somente com Braille, ou talvez para os programadores com visão, que só pretendem usar o Visualizador de discurso.
 
-==== Dispositivo de Saída ====[SelectSynthesizerOutputDevice]
-Esta opção permite-lhe escolher a placa de som que o NVDA indicará ao sintetizador seleccionado para usar.
-
-%kc:setting
-==== Modo de Diminuição do Volume ====[SelectSynthesizerDuckingMode]
-Comando: NVDA+shift+d
-
-No Windows 8 e superiores, esta opção permite definir se o NVDA deve diminuir o volume das outras aplicações, enquanto o NVDA está a falar ou sempre que o NVDA está em execução.
-- Sem diminuição: O NVDA nunca diminuirá os sons de outros programas. 
-- Diminuir quando a emitir voz ou sons: O NVDA diminuirá os sons de outras aplicações quando estiver a falar ou a emitir sons. Isto pode não funcionar com todos os sintetizadores. 
-- Diminuir sempre: O NVDA diminuirá todos os sons de outros programas enquanto estiver em execução.
--
-
-Esta opção só está disponível se o NVDA estiver instalado.
-Não é possível suportar o Modo de diminuição do volume, para cópias portáteis ou temporárias do NVDA.
-
 +++ Anel de configurações de Voz +++[SynthSettingsRing]
 Se pretender alterar, rapidamente, as configurações de voz, sem ir à secção "Voz" do diálogo de "configurações", existem alguns comandos do NVDA que permitem modificar algumas das configurações de voz mais comuns, em qualquer altura:
 %kc:beginInclude
@@ -1768,7 +1753,7 @@ O diálogo "Seleccionar dispositivo Braille", que pode ser aberto activando o bo
 Após escolher o dispositivo Braille, pode pressionar "OK" e o NVDA carregará os respectivos drivers.
 Se houver um erro, ao carregar o driver, o NVDA notificará com uma mensagem e continuará a usar o dispositivo anterior, ou continuará sem Braille.
 
-***==== Dispositivo Braille ====[SelectBrailleDisplayDisplay]
+==== Dispositivo Braille ====[SelectBrailleDisplayDisplay]
 Esta caixa de combinação contém diversas opções, que dependem dos drivers de dispositivos Braille disponíveis no seu sistema.
 Utilize as setas para se mover pelas mesmas.
 

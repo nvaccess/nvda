@@ -3164,7 +3164,7 @@ class AdvancedPanelControls(
 		debugLogGroup = guiHelper.BoxSizerHelper(self, sizer=debugLogSizer)
 		sHelper.addItem(debugLogGroup)
 
-		self.logCategories=[
+		self.logCategories = [
 			"hwIo",
 			"MSAA",
 			"UIA",
@@ -3179,6 +3179,7 @@ class AdvancedPanelControls(
 			"nvwave",
 			"annotations",
 			"events",
+			"garbageHandler",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
@@ -4235,12 +4236,12 @@ class VisionProviderSubPanel_Wrapper(
 			self._providerSettingsSizer,
 			border=self.scaleSize(15),
 			flag=wx.LEFT | wx.EXPAND,
-			proportion=1.0
+			proportion=1
 		)
 		settingsSizer.Add(
 			self._optionsSizer,
 			flag=wx.EXPAND,
-			proportion=1.0
+			proportion=1
 		)
 		self._checkBox.SetValue(bool(self._providerControl.getProviderInstance()))
 		if self._createProviderSettings():
@@ -4264,7 +4265,7 @@ class VisionProviderSubPanel_Wrapper(
 				self,
 				settingsCallable=getSettingsCallable
 			)
-			self._providerSettingsSizer.Add(self._providerSettings, flag=wx.EXPAND, proportion=1.0)
+			self._providerSettingsSizer.Add(self._providerSettings, flag=wx.EXPAND, proportion=1)
 		# Broad except used since we can not know what exceptions a provider might throw.
 		# We should be able to continue despite a buggy provider.
 		except Exception:
