@@ -451,7 +451,7 @@ def listUsbDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 				"devicePath": idd.DevicePath
 			})
 			if _isDebug():
-				log.debug("%r" % usbId)
+				log.debug(f"USB Id: {usbId!r}")
 
 		# Bus reported device description
 		propRegDataType = DWORD()
