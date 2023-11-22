@@ -460,16 +460,29 @@ class AddonStoreVM:
 		self._downloader.download(listItemVM, self._downloadComplete, self.onDisplayableError)
 
 	def getAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]) -> None:
+		shouldReplace = True
 		shouldInstallIncompatible = True
-		shouldRememberChoice = False
+		shouldRememberReplaceChoice = False
+		shouldRememberInstallChoice = False
 		for aVM in listItemVMs:
-			if aVM.status in (
-				AvailableAddonStatus.AVAILABLE,
-				AvailableAddonStatus.UPDATE,
-			):
+			if aVM.canUseInstallAction() or aVM.canUseUpdateAction():
 				self.getAddon(aVM)
+			elif aVM.canUseReplaceAction():
+				if shouldRememberReplaceChoice:
+					if shouldReplace:
+						self.replaceAddon(aVM, askConfirmation=False)
+					else:
+						log.debug(
+							f"Skipping {aVM.Id} as replacement has been previously declined for all remaining add-ons."
+						)
+				else:
+					shouldReplace, shouldRememberReplaceChoice = self.replaceAddon(
+						aVM,
+						askConfirmation=True,
+						useRememberChoiceCheckbox=True,
+					)
 			elif not aVM.model.isCompatible and aVM.model.canOverrideCompatibility:
-				if shouldRememberChoice:
+				if shouldRememberInstallChoice:
 					if shouldInstallIncompatible:
 						self.installOverrideIncompatibilityForAddon(aVM, askConfirmation=False)
 					else:
@@ -478,7 +491,7 @@ class AddonStoreVM:
 							" add-ons."
 						)
 				else:
-					shouldInstallIncompatible, shouldRememberChoice = self.installOverrideIncompatibilityForAddon(
+					shouldInstallIncompatible, shouldRememberInstallChoice = self.installOverrideIncompatibilityForAddon(
 						aVM,
 						askConfirmation=True,
 						useRememberChoiceCheckbox=True
