@@ -159,7 +159,7 @@ def _isDebug():
 	return config.conf["debugLog"]["hwIo"]
 
 
-def _getBluetoohPortInfo(regKey: int, hwID: str) -> dict:
+def _getBluetoothPortInfo(regKey: int, hwID: str) -> dict:
 	info = {}
 	try:
 		port = info["port"] = winreg.QueryValueEx(regKey, "PortName")[0]
@@ -238,7 +238,7 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 			winreg.KEY_READ
 		)
 		try:
-			portInfo = _getBluetotohPortInfo(regKey, hwID)
+			portInfo = _getBluetoothPortInfo(regKey, hwID)
 			if not portInfo:
 				continue
 			else:
