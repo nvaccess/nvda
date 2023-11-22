@@ -3164,7 +3164,7 @@ class AdvancedPanelControls(
 		debugLogGroup = guiHelper.BoxSizerHelper(self, sizer=debugLogSizer)
 		sHelper.addItem(debugLogGroup)
 
-		self.logCategories=[
+		self.logCategories = [
 			"hwIo",
 			"MSAA",
 			"UIA",
@@ -3179,6 +3179,7 @@ class AdvancedPanelControls(
 			"nvwave",
 			"annotations",
 			"events",
+			"garbageHandler",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
