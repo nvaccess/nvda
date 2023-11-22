@@ -241,6 +241,21 @@ class AddonStoreVM:
 				validCheck=lambda aVM: isinstance(aVM.model, _AddonStoreModel),
 				actionTarget=selectedListItem
 			),
+			AddonActionVM(
+				# Translators: Label for an action that opens the webpage to see and send feedback for the selected add-on
+				displayName=pgettext("addonStore", "Community re&views"),
+				actionHandler=lambda aVM: startfile(
+					cast(
+						str,
+						cast(_AddonStoreModel, aVM.model).reviewURL
+					)
+				),
+				validCheck=lambda aVM: (
+					isinstance(aVM.model, _AddonStoreModel)
+					and aVM.model.reviewURL is not None
+				),
+				actionTarget=selectedListItem
+			),
 		]
 
 	def helpAddon(self, listItemVM: AddonListItemVM) -> None:
