@@ -318,8 +318,6 @@ class ConsoleUI(
 		if not (0 <= newIndex < len(self.inputHistory)):
 			# No more lines in this direction.
 			return False
-		# Update the content of the history at the current position.
-		self.inputHistory[self.inputHistoryPos] = self.inputCtrl.GetValue()
 		self.inputHistoryPos = newIndex
 		self.inputCtrl.ChangeValue(self.inputHistory[newIndex])
 		self.inputCtrl.SetInsertionPointEnd()
