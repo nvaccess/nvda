@@ -62,6 +62,8 @@ It is also updated with UIA enabled, when typing text and braille is tethered to
 - It is not possible anymore to overwrite NVDA's Python console history. (#15792, @CyrilleB79)
 - NVDA now resumes audio if the configuration of the output device changes or another application releases exclusive control of the device. (#15758, #15775, @jcsteh)
 - NVDA should remain responsive when being flooded with many UI Automation events, e.g. large amounts of text in a terminal. (#14888)
+ - This new behavior can be disabled using the new Use enhanced event processing setting in NVDA's advanced settings.
+ -
 -
 
 == Changes for Developers ==
