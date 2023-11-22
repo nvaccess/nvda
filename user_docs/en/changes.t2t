@@ -51,14 +51,15 @@ It is also updated with UIA enabled, when typing text and braille is tethered to
 - NVDA no longer sometimes freezes briefly when multiple sounds are played in rapid succession. (#15311)
 - NVDA will announce dialog content for more Windows 10 and 11 dialogs. (#15729, @josephsl)
 - NVDA will no longer fail to read a newly loaded page in Microsoft Edge when using UI Automation. (#15736)
-- When using say all or commands which spell text, pauses between sentences or characters no longer gradually decrease over time. (#15739)
-- NVDA no longer sometimes freezes when speaking a large amount of text. (#15752)
+- When using say all or commands which spell text, pauses between sentences or characters no longer gradually decrease over time. (#15739, @jcsteh)
+- NVDA no longer sometimes freezes when speaking a large amount of text. (#15752, @jcsteh)
 - More objects which contain useful text are detected, and text content is displayed in braille. (#15605)
-- NVDA no longer freezes briefly when multiple sounds are played in rapid succession. (#15757)
+- NVDA no longer freezes briefly when multiple sounds are played in rapid succession. (#15757, @jcsteh)
 - NVDA will not fail to start anymore when the configuration file is corrupted, but it will restore the configuration to default as it did in the past. (#15690, @CyrilleB79)
-- If the audio output device is set to something other than the default and that device becomes available again after being unavailable, NVDA will now switch back to the configured device instead of continuing to use the default device. (#15759)
+- If the audio output device is set to something other than the default and that device becomes available again after being unavailable, NVDA will now switch back to the configured device instead of continuing to use the default device. (#15759, @jcsteh)
 - It is not possible anymore to overwrite NVDA's Python console history. (#15792, @CyrilleB79)
 - In Word, the landing cell will now be correctly reported when using the native Word commands for table navigation ``alt+home``, ``alt+end``, ``alt+pageUp`` and ``alt+pageDown``. (#15805, @CyrilleB79)
+- NVDA now resumes audio if the configuration of the output device changes or another application releases exclusive control of the device. (#15758, #15775, @jcsteh)
 -
 
 == Changes for Developers ==
