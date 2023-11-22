@@ -511,14 +511,17 @@ class UIAHandler(COMObject):
 			self.rootElement=self.clientObject.getRootElementBuildCache(self.baseCacheRequest)
 			self.reservedNotSupportedValue=self.clientObject.ReservedNotSupportedValue
 			self.ReservedMixedAttributeValue=self.clientObject.ReservedMixedAttributeValue
-			pRateLimitedEventHandler = POINTER(IUnknown)()
-			NVDAHelper.localLib.rateLimitedUIAEventHandler_create(
-				self._com_pointers_[IUnknown._iid_],
-				byref(pRateLimitedEventHandler)
-			)
+			if config.conf["UIA"]["enhancedEventProcessing"]:
+				handler = pRateLimitedEventHandler = POINTER(IUnknown)()
+				NVDAHelper.localLib.rateLimitedUIAEventHandler_create(
+					self._com_pointers_[IUnknown._iid_],
+					byref(pRateLimitedEventHandler)
+				)
+			else:
+				handler = self
 			if utils._shouldSelectivelyRegister():
-				self._createLocalEventHandlerGroup(pRateLimitedEventHandler)
-			self._registerGlobalEventHandlers(pRateLimitedEventHandler)
+				self._createLocalEventHandlerGroup(handler)
+			self._registerGlobalEventHandlers(handler)
 			if winVersion.getWinVer() >= winVersion.WIN11:
 				UIARemote.initialize(True, self.clientObject)
 		except Exception as e:
