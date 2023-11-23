@@ -2022,13 +2022,13 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		description=_(
-			# Translators: Input help mode message for toggle speech mode command.
-			"Toggles between the speech modes of off, beep, talk and on-demand."
+			# Translators: Input help mode message for cycle speech mode command.
+			"Cycles between the speech modes of off, beep, talk and on-demand."
 		),
 		category=SCRCAT_SPEECH,
 		gesture="kb:NVDA+s"
 	)
-	def script_speechMode(self,gesture):
+	def script_speechMode(self, gesture: inputCore.InputGesture) -> None:
 		curMode = speech.getState().speechMode
 		speech.setSpeechMode(speech.SpeechMode.talk)
 		newMode = (curMode + 1) % len(speech.SpeechMode)
