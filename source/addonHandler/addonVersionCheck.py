@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 import addonAPIVersion
 
 if TYPE_CHECKING:
-	from _addonStore.models.version import SupportsVersionCheck  # noqa: F401
+	from addonStore.models.version import SupportsVersionCheck  # noqa: F401
 
 
 def hasAddonGotRequiredSupport(
