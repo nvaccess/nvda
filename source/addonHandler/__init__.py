@@ -587,7 +587,7 @@ class Addon(AddonBase):
 	@property
 	def _canBeEnabled(self) -> bool:
 		return (
-			isAddonCompatible(self)  # Incompatible add-ons cannot be enabled
+			self.isCompatible  # Incompatible add-ons cannot be enabled
 			or (
 				self.canOverrideCompatibility  # Theoretically possible to mark it as compatible
 				# Its compatibility has either been overridden, or would be on the next restart
