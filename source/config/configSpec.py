@@ -288,6 +288,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	nvwave = boolean(default=false)
 	annotations = boolean(default=false)
 	events = boolean(default=false)
+	garbageHandler = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")

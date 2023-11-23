@@ -500,12 +500,6 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		raise NotImplementedError
 
-	def _activateNVDAObject(self,obj):
-		try:
-			obj.doAction()
-		except NotImplementedError:
-			pass
-
 	def _get_isAlive(self):
 		if not winUser.isWindow(self.rootNVDAObject.windowHandle):
 			return False

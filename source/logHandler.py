@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2007-2023 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
-# Accessolutions, Julien Cochuyt
+# Accessolutions, Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -19,11 +19,17 @@ from types import FunctionType
 import globalVars
 import winKernel
 import buildVersion
-from typing import Optional
+from typing import (
+	Optional,
+	TYPE_CHECKING,
+)
 import exceptions
 import RPCConstants
 import NVDAState
 from NVDAState import WritePaths
+
+if TYPE_CHECKING:
+	import extensionPoints
 
 
 ERROR_INVALID_WINDOW_HANDLE = 1400
@@ -141,15 +147,21 @@ def getCodePath(f):
 	return ".".join(x for x in (path,className,funcName) if x)
 
 
+_onErrorSoundRequested = None
+
+
+def getOnErrorSoundRequested() -> "extensionPoints.Action":
+	global _onErrorSoundRequested
+	
+	import extensionPoints
+	if not _onErrorSoundRequested:
+		_onErrorSoundRequested = extensionPoints.Action()
+	return _onErrorSoundRequested
+
+
 def shouldPlayErrorSound() -> bool:
 	"""Indicates if an error sound should be played when an error is logged.
 	"""
-	import nvwave
-	if nvwave.isInError():
-		if nvwave._isDebugForNvWave():
-			log.debug("No beep for log; nvwave is in error state")
-		return False
-
 	import config
 	# Only play the error sound if this is a test version or if the config states it explicitly.
 	return (
@@ -347,11 +359,7 @@ class FileHandler(logging.FileHandler):
 			except:
 				pass
 		elif record.levelno >= logging.ERROR and shouldPlayErrorSound():
-			import nvwave
-			try:
-				nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "error.wav"))
-			except:
-				pass
+			getOnErrorSoundRequested().notify()
 		return super().handle(record)
 
 class Formatter(logging.Formatter):
