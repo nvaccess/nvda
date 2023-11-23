@@ -49,6 +49,7 @@ class SupportsVersionCheck(Protocol):
 
 	@property
 	def overrideIncompatibility(self) -> bool:
+		"""If True, NVDA should enable this add-on where it would normally be blocked due to incompatibility."""
 		from addonHandler import AddonStateCategory, state
 		return (
 			self.name in state[AddonStateCategory.OVERRIDE_COMPATIBILITY]

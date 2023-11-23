@@ -471,6 +471,7 @@ class AddonBase(SupportsAddonState, SupportsVersionCheck, ABC):
 
 	@property
 	def _hasOverriddenCompat(self) -> bool:
+		"""If True, this add-on has been manually overriden. The affects of override may be pending restart"""
 		return (
 			self.name in state[AddonStateCategory.OVERRIDE_COMPATIBILITY]
 			or self.name in state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY]
