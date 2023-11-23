@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2023 NV Access Limited, Leonard de Ruijter.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License version 2.1, as published by
     the Free Software Foundation.
@@ -15,7 +15,7 @@ http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 cpp_quote("/*")
 cpp_quote("This file is a part of the NVDA project.")
 cpp_quote("URL: http://www.nvda-project.org/")
-cpp_quote("Copyright 2006-2010 NVDA contributers.")
+cpp_quote("Copyright 2006-2023 NV Access Limited, Leonard de Ruijter.")
 cpp_quote("This program is free software: you can redistribute it and/or modify")
 cpp_quote("it under the terms of the GNU Lesser General Public License version 2.1, as published by")
 cpp_quote("the Free Software Foundation.")
@@ -27,7 +27,56 @@ cpp_quote("http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html")
 cpp_quote("*/")
 
 /**
- * Allows the controling of NVDA from a remote process
+ * Facilitates the ability to prioritize speech.
+ * These values ​​correspond to the values ​​of speech.priorities.SpeechPriority in NVDA.
+ */
+typedef [v1_enum] enum tagSPEECH_PRIORITY{
+/**
+ * Indicates that a speech sequence should have normal priority.
+ */
+	SPEECH_PRIORITY_NORMAL = 0,
+/**
+ * Indicates that a speech sequence should be spoken after the next utterance of lower priority is complete.
+ */
+	SPEECH_PRIORITY_NEXT = 1,
+/**
+ * Indicates that a speech sequence is very important and should be spoken right now,
+ * interrupting low priority speech.
+ * After it is spoken, interrupted speech will resume.
+ * Note that this does not interrupt previously queued speech at the same priority.
+ */
+	SPEECH_PRIORITY_NOW = 2
+} SPEECH_PRIORITY;
+
+/**
+ * The desired symbol level in a speech sequence.
+ * These values ​​correspond to the values ​​of characterProcessing.SymbolLevel in NVDA.
+ */
+typedef [v1_enum] enum tagSYMBOL_LEVEL {
+	SYMBOL_LEVEL_NONE = 0,
+	SYMBOL_LEVEL_SOME = 100,
+	SYMBOL_LEVEL_MOST = 200,
+	SYMBOL_LEVEL_ALL = 300,
+	SYMBOL_LEVEL_CHAR = 1000,
+	SYMBOL_LEVEL_UNCHANGED = -1
+} SYMBOL_LEVEL;
+
+/**
+ * Type signature for a callback that may be implemented by a client.
+ * The callback is called for every mark in the SSML as received by speakSsml when called synchronously.
+ * @param mark The name of the reached mark.
+ */
+typedef error_status_t(__stdcall *onSsmlMarkReachedFuncType)([in, string] const wchar_t* mark);
+
+/**
+ * Sets the callback used when marks are reached within SSML.
+ * The callback is called for every mark in the SSML as received by speakSsml when called synchronously.
+ * Param callback The callback to use, NULL to reset.
+ */
+error_status_t __stdcall setOnSsmlMarkReachedCallback(onSsmlMarkReachedFuncType callback);
+
+/**
+ * Allows controling of NVDA from a remote process
  */
 [
 	uuid(DFF50B99-F7FD-4ca7-A82C-DAEB3E025295),
@@ -41,7 +90,7 @@ interface NvdaController {
 	error_status_t __stdcall testIfRunning();
 
 /**
- * Instructs NVDA to speak the given text.
+ * Instructs NVDA to speak the given text message.
  * @param text the text to speak.
  */
 	error_status_t __stdcall speakText([in,string] const wchar_t* text);
@@ -56,5 +105,44 @@ interface NvdaController {
  * @param message the message that will be temporarily shown on the display
  */
 	error_status_t __stdcall brailleMessage([in,string] const wchar_t* message);
+};
 
+/**
+ * Adds additional methods to control NVDA from a remote process
+ */
+[
+	uuid(3D168D45-CB58-4270-8257-4E0BE515D557),
+	version(1.0),
+]
+interface NvdaController2 {
+/**
+ * Retrieves the process identifier (PID) of NVDA's process.
+ * @param pid Out parameter that receives the process id.
+ */
+	error_status_t __stdcall getProcessId([out] unsigned long* pid);
+
+/**
+ * Instructs NVDA to speak the given Speech Synthesis Markup Language (SSML).
+ * @param ssml The ssml to speak.
+ * @param symbolLevel The symbol verbosity level.
+ * @param priority The priority of the speech sequence.
+ * @param asynchronous Whether SSML should be spoken asynchronously.
+ * If TRUE, returns instantly. Note that any onSsmlMarkReached callback isn't called in this case.
+ * If FALSE, returns either when the speech sequence is completed or canceled.
+ * The onSsmlMarkReached callback, if any, is called for every mark in the SSML.
+ */
+	error_status_t __stdcall speakSsml(
+		[in, string] const wchar_t* ssml,
+		[in, defaultvalue(SYMBOL_LEVEL_UNCHANGED)] const SYMBOL_LEVEL symbolLevel,
+		[in,defaultvalue(SPEECH_PRIORITY_NORMAL)] const SPEECH_PRIORITY priority,
+		[in, defaultvalue(TRUE)] const boolean asynchronous
+	);
+
+/**
+ * Called by NVDA when a mark in provided SSML is reached after calling speakSsml synchronously.
+ * This callback is implemented by the controller client library.
+ * It forwards the call to the callback registered with 
+ * @param mark The name of the reached mark.
+ */
+	[callback] error_status_t __stdcall onSsmlMarkReached([in, string] const wchar_t* mark);
 };
