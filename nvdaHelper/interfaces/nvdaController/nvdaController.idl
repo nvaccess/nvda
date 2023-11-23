@@ -127,8 +127,9 @@ interface NvdaController2 {
  * @param symbolLevel The symbol verbosity level.
  * @param priority The priority of the speech sequence.
  * @param asynchronous Whether SSML should be spoken asynchronously.
- * If TRUE, returns instantly.
+ * If TRUE, returns instantly. Note that any onSsmlMarkReached callback isn't called in this case.
  * If FALSE, returns either when the speech sequence is completed or canceled.
+ * The onSsmlMarkReached callback, if any, is called for every mark in the SSML.
  */
 	error_status_t __stdcall speakSsml(
 		[in, string] const wchar_t* ssml,
