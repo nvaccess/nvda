@@ -99,6 +99,8 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
   - w3c-aria-practices to ``9a5e55ccbeb0f1bf92b6127c9865da8426d1c864``. (#15695)
   - wil to ``5e9be7b2d2fe3834a7107f430f7d4c0631f69833``. (#15695)
   -
+- Device info yielded by ``hwPortUtils.listUsbDevices`` now contain the bus reported description of the USB device (key ``busReportedDeviceDescription``). (#15764, @LeonarddeR)
+- For USB serial devices, ``bdDetect.getConnectedUsbDevicesForDriver`` and ``bdDetect.getDriversForConnectedUsbDevices`` now yield device matches containing a ``deviceInfo`` dictionary enriched with data about the USB device, such as ``busReportedDeviceDescription``. (#15764, @LeonarddeR)
 - When the configuration file ``nvda.ini`` is corrupted, a backup copy is saved before it is reinitialized. (#15779, @CyrilleB79)
 -
 
@@ -136,6 +138,14 @@ That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices``
 - ``languageHandler.makeNpgettext`` and ``languageHandler.makePgettext`` have been removed.
 ``npgettext`` and ``pgettext`` are supported natively now. (#15546)
 - The app module for [Poedit https://poedit.net] has been changed significantly. The ``fetchObject`` function has been removed. (#15313, #7303, @LeonarddeR)
+- The following redundant types and constants have been removed from ``hwPortUtils``:  (#15764, @LeonarddeR)
+ - ``PCWSTR``
+ - ``HWND`` (replaced by ``ctypes.wintypes.HWND``)
+ - ``ULONG_PTR``
+ - ``ULONGLONG``
+ - ``NULL``
+ - ``GUID`` (replaced by ``comtypes.GUID``)
+ -
 % Insert new list items here as the alias appModule table should be kept at the bottom of this list
 - The following app modules are removed.
 Code which imports from one of them, should instead import from the replacement module.  (#15618, @lukaszgo1)
