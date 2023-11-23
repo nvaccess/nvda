@@ -8,7 +8,6 @@ Communication with display is done here. See class L{BrailleDisplayDriver}
 for description of most important functions.
 """
 
-import ftdi2
 import serial
 import time
 
@@ -28,13 +27,13 @@ from threading import (
 	Lock,
 )
 from typing import (
-	Iterator,
 	List,
 	Optional,
 	Tuple,
 )
 
 import braille
+import bdDetect
 import inputCore
 import ui
 
@@ -66,7 +65,6 @@ from .constants import (
 	ALBATROSS_VID,
 	ALBATROSS_PID,
 	ALBATROSS_BUS_DEVICE_DESC,
-	FTDI_SER_NUM_LENGTH,
 )
 from .gestures import _gestureMap
 
@@ -136,8 +134,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._kc = None
 		# When previous write was done (see L{KC_INTERVAL}).
 		self._writeTime = 0.0
-		# Ftdi usb devices
-		self._ftdiUsbDeviceList: list[dict[str, bytes]] = ftdi2.get_device_info_list()
 		self._searchPorts(port)
 
 	def terminate(self):
@@ -224,12 +220,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"""
 		p = next(list_ports.grep(port))
 		if hex(p.vid) == ALBATROSS_VID and hex(p.pid) == ALBATROSS_PID:
-			for entry in self._ftdiUsbDeviceList:
-				if (
-					str(entry["SerialNumber"], encoding='UTF-8') == p.serial_number[:FTDI_SER_NUM_LENGTH]
-					and entry["Description"] == ALBATROSS_BUS_DEVICE_DESC
-				):
-					return True
+			busReportedDeviceDescription: str = next(
+				bdDetect.getConnectedUsbDevicesForDriver("albatross")
+			).deviceInfo["busReportedDeviceDescription"]
+			if busReportedDeviceDescription == ALBATROSS_BUS_DEVICE_DESC:
+				return True
 			return False
 		return True
 
