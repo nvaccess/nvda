@@ -14,7 +14,6 @@ import time
 from collections import deque
 from bdDetect import DeviceType, DriverRegistrar
 from logHandler import log
-from serial.tools import list_ports
 from serial.win32 import (
 	PURGE_RXABORT,
 	PURGE_TXABORT,
@@ -33,7 +32,6 @@ from typing import (
 )
 
 import braille
-import bdDetect
 import inputCore
 import ui
 
@@ -62,9 +60,7 @@ from .constants import (
 	END_BYTE,
 	BOTH_BYTES,
 	KC_INTERVAL,
-	ALBATROSS_VID,
-	ALBATROSS_PID,
-	ALBATROSS_BUS_DEVICE_DESC,
+	BUS_DEVICE_DESC,
 )
 from .gestures import _gestureMap
 
@@ -169,7 +165,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"""
 		for self._baudRate in BAUD_RATE:
 			for portType, portId, port, portInfo in self._getTryPorts(port):
-				if not self._albatross_port(port):
+				if portInfo.get("busReportedDeviceDescription", BUS_DEVICE_DESC) != BUS_DEVICE_DESC:
 					continue
 				# For reconnection
 				self._currentPort = port
@@ -210,23 +206,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				break
 		else:
 			raise RuntimeError("No Albatross found")
-
-	def _albatross_port(self, port: str) -> bool:
-		"""Check if this is albatross usb serial port or other suitable serial port
-
-		:param port: port to check
-		:return: False, if correct vid and pid but bus device description and
-		serial number do not match; otherwise True
-		"""
-		p = next(list_ports.grep(port))
-		if hex(p.vid) == ALBATROSS_VID and hex(p.pid) == ALBATROSS_PID:
-			busReportedDeviceDescription: str = next(
-				bdDetect.getConnectedUsbDevicesForDriver("albatross")
-			).deviceInfo["busReportedDeviceDescription"]
-			if busReportedDeviceDescription == ALBATROSS_BUS_DEVICE_DESC:
-				return True
-			return False
-		return True
 
 	def _initConnection(self) -> bool:
 		"""_initConnection, _initPort, _openPort, _readInitByte and _readSettingsByte
