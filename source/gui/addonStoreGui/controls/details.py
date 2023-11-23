@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 
 import wx
 
-from _addonStore.models.addon import (
+from addonStore.models.addon import (
 	_AddonStoreModel,
 	_AddonManifestModel,
 )

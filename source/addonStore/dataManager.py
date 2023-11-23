@@ -47,7 +47,7 @@ if TYPE_CHECKING:
 	from addonHandler import Addon as AddonHandlerModel  # noqa: F401
 	# AddonGUICollectionT must only be imported when TYPE_CHECKING
 	from .models.addon import AddonGUICollectionT, _AddonStoreModel  # noqa: F401
-	from gui._addonStoreGui.viewModels.addonList import AddonListItemVM  # noqa: F401
+	from gui.addonStoreGui.viewModels.addonList import AddonListItemVM  # noqa: F401
 	from gui.message import DisplayableError  # noqa: F401
 
 

@@ -13,9 +13,9 @@ from wx.adv import BannerWindow
 from addonHandler import (
 	BUNDLE_EXTENSION,
 )
-from _addonStore.dataManager import addonDataManager
-from _addonStore.models.channel import Channel, _channelFilters
-from _addonStore.models.status import (
+from addonStore.dataManager import addonDataManager
+from addonStore.models.channel import Channel, _channelFilters
+from addonStore.models.status import (
 	EnabledStatus,
 	_statusFilters,
 	_StatusFilterKey,
