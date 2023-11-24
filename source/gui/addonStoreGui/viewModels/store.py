@@ -394,11 +394,7 @@ class AddonStoreVM:
 			elif aVM.canUseEnableAction():
 				self.enableAddon(aVM)
 			else:
-				log.debug(
-					log.debug(f"Skipping {aVM.Id} ({aVM.status}) as it is not relevant for enable action")
-				)
-
-	
+				log.debug(f"Skipping {aVM.Id} ({aVM.status}) as it is not relevant for enable action")
 
 	def disableAddon(self, listItemVM: AddonListItemVM) -> None:
 		self._handleEnableDisable(listItemVM, False)
