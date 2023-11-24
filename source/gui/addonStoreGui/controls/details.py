@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 
 import wx
 
-from _addonStore.models.addon import (
+from addonStore.models.addon import (
 	_AddonStoreModel,
 	_AddonManifestModel,
 )
@@ -313,6 +313,13 @@ class AddonDetails(
 						pgettext("addonStore", "Source URL:"),
 						details.sourceURL
 					)
+
+					if details.reviewURL is not None:
+						self._appendDetailsLabelValue(
+							# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+							pgettext("addonStore", "Reviews URL:"),
+							details.reviewURL
+						)
 
 				self.contentsPanel.Show()
 

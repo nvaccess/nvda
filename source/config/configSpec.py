@@ -31,13 +31,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [speech]
 	# The synthesizer to use
 	synth = string(default=auto)
-	# symbolLevel values:
-	#  NONE = 0
-	#  SOME = 100
-	#  MOST = 200
-	#  ALL = 300
-	#  CHAR = 1000
-	#  UNCHANGED = -1
+	# symbolLevel: One of the characterProcessing.SymbolLevel values.
 	symbolLevel = integer(default=100)
 	trustVoiceLanguage = boolean(default=true)
 	includeCLDR = boolean(default=True)
@@ -294,6 +288,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	nvwave = boolean(default=false)
 	annotations = boolean(default=false)
 	events = boolean(default=false)
+	garbageHandler = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")
