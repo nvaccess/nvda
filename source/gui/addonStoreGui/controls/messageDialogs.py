@@ -10,7 +10,7 @@ from typing import (
 import wx
 
 import addonAPIVersion
-from _addonStore.models.addon import (
+from addonStore.models.addon import (
 	_AddonGUIModel,
 	_AddonStoreModel,
 	_AddonManifestModel,
@@ -28,7 +28,7 @@ from gui.message import displayDialogAsModal, messageBox
 import windowUtils
 
 if TYPE_CHECKING:
-	from _addonStore.models.version import SupportsVersionCheck
+	from addonStore.models.version import SupportsVersionCheck
 
 
 class ErrorAddonInstallDialogWithYesNoButtons(ErrorAddonInstallDialog):

@@ -153,7 +153,7 @@ class InstallerDialog(
 		super().__init__(parent, title=_("Install NVDA"))
 
 		import addonHandler
-		from _addonStore.models.version import (
+		from addonStore.models.version import (
 			getAddonCompatibilityConfirmationMessage,
 			getAddonCompatibilityMessage,
 		)

@@ -777,6 +777,8 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 	_IDLE_CHECK_INTERVAL: int = 5000
 	#: Whether there is a pending stream idle check.
 	_isIdleCheckPending: bool = False
+	#: Use the default device, this is the configSpec default value.
+	DEFAULT_DEVICE_KEY = "default"
 
 	def __init__(
 			self,
@@ -818,8 +820,10 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			if audioDucking.isAudioDuckingSupported():
 				self._audioDucker = audioDucking.AudioDucker()
 		self._purpose = purpose
+		if self._isDefaultDevice(outputDevice):
+			outputDevice = ""
 		self._player = NVDAHelper.localLib.wasPlay_create(
-			self._deviceNameToId(outputDevice),
+			outputDevice,
 			format,
 			WasapiWavePlayer._callback
 		)
@@ -1034,33 +1038,12 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			# Schedule another check here in case feed isn't called for a while.
 			cls._scheduleIdleCheck()
 
-	@staticmethod
-	def _getDevices():
-		rawDevs = BSTR()
-		NVDAHelper.localLib.wasPlay_getDevices(byref(rawDevs))
-		chunkIter = iter(rawDevs.value.split("\0"))
-		while True:
-			devId = next(chunkIter)
-			if not devId:
-				break  # Final null.
-			name = next(chunkIter)
-			yield devId, name
-
-	@staticmethod
-	def _deviceNameToId(name, fallbackToDefault=True):
-		if name == WAVE_MAPPER:
-			return ""
-		for devId, devName in WasapiWavePlayer._getDevices():
-			# WinMM device names are truncated to MAXPNAMELEN characters, so we must
-			# use startswith.
-			if devName.startswith(name):
-				return devId
+	@classmethod
+	def _isDefaultDevice(cls, name):
+		if name in (WAVE_MAPPER, cls.DEFAULT_DEVICE_KEY):
+			return True
 		# Check if this is the WinMM sound mapper device, which means default.
-		if name == next(_getOutputDevices())[1]:
-			return ""
-		if fallbackToDefault:
-			return ""
-		raise LookupError
+		return name == next(_getOutputDevices())[1]
 
 
 def initialize():
@@ -1072,6 +1055,7 @@ def initialize():
 	NVDAHelper.localLib.wasPlay_create.restype = c_void_p
 	for func in (
 		NVDAHelper.localLib.wasPlay_startup,
+		NVDAHelper.localLib.wasPlay_open,
 		NVDAHelper.localLib.wasPlay_feed,
 		NVDAHelper.localLib.wasPlay_stop,
 		NVDAHelper.localLib.wasPlay_sync,
@@ -1079,7 +1063,6 @@ def initialize():
 		NVDAHelper.localLib.wasPlay_pause,
 		NVDAHelper.localLib.wasPlay_resume,
 		NVDAHelper.localLib.wasPlay_setChannelVolume,
-		NVDAHelper.localLib.wasPlay_getDevices,
 	):
 		func.restype = HRESULT
 		func.errcheck = _wasPlay_errcheck

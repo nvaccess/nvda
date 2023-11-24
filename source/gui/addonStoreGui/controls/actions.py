@@ -15,7 +15,7 @@ from typing import (
 
 import wx
 
-from _addonStore.models.status import _StatusFilterKey
+from addonStore.models.status import _StatusFilterKey
 from logHandler import log
 import ui
 

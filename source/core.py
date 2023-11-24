@@ -251,7 +251,7 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("setting language to %s"%lang)
 	languageHandler.setLanguage(lang)
 	# Addons
-	from _addonStore import dataManager
+	from addonStore import dataManager
 	dataManager.initialize()
 	addonHandler.initialize()
 	# Hardware background i/o
@@ -532,7 +532,7 @@ def main():
 	import socket
 	socket.setdefaulttimeout(10)
 	log.debug("Initializing add-ons system")
-	from _addonStore import dataManager
+	from addonStore import dataManager
 	dataManager.initialize()
 	addonHandler.initialize()
 	if globalVars.appArgs.disableAddons:
@@ -766,7 +766,10 @@ def main():
 				sessionTracking.pumpAll()
 			except Exception:
 				log.exception("errors in this core pump cycle")
-			baseObject.AutoPropertyObject.invalidateCaches()
+			try:
+				baseObject.AutoPropertyObject.invalidateCaches()
+			except Exception:
+				log.exception("AutoPropertyObject.invalidateCaches failed")
 			watchdog.asleep()
 			self.isPumping = False
 			# #3803: If another pump was requested during this pump execution, we need

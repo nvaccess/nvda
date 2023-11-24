@@ -17,26 +17,26 @@ from typing import (
 import threading
 
 import addonHandler
-from _addonStore.dataManager import addonDataManager
-from _addonStore.install import installAddon
-from _addonStore.models.addon import (
+from addonStore.dataManager import addonDataManager
+from addonStore.install import installAddon
+from addonStore.models.addon import (
 	_createAddonGUICollection,
 	_AddonGUIModel,
 	_AddonManifestModel,
 	_AddonStoreModel,
 )
-from _addonStore.models.channel import (
+from addonStore.models.channel import (
 	Channel,
 	_channelFilters,
 )
-from _addonStore.models.status import (
+from addonStore.models.status import (
 	EnabledStatus,
 	getStatus,
 	_statusFilters,
 	_StatusFilterKey,
 	AvailableAddonStatus,
 )
-from _addonStore.network import AddonFileDownloader
+from addonStore.network import AddonFileDownloader
 import core
 import extensionPoints
 from gui.message import DisplayableError
