@@ -487,7 +487,7 @@ class UIAHandler(COMObject):
 			if isinstance(self.clientObject,IUIAutomation6):
 				self.clientObject.CoalesceEvents=CoalesceEventsOptions_Enabled
 				self.clientObject.ConnectionRecoveryBehavior=ConnectionRecoveryBehaviorOptions_Enabled
-			log.info("UIAutomation: %s"%self.clientObject.__class__.__mro__[1].__name__)
+			log.info(f"UIAutomation: {self.clientObject.__class__.__mro__[1].__name__}")
 			self.windowTreeWalker=self.clientObject.createTreeWalker(self.clientObject.CreateNotCondition(self.clientObject.CreatePropertyCondition(UIA_NativeWindowHandlePropertyId,0)))
 			self.windowCacheRequest=self.clientObject.CreateCacheRequest()
 			self.windowCacheRequest.AddProperty(UIA_NativeWindowHandlePropertyId)
