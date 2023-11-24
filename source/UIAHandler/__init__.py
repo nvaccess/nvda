@@ -450,12 +450,7 @@ class UIAHandler(COMObject):
 	def MTAThreadFunc(self):
 		try:
 			oledll.ole32.CoInitializeEx(None,comtypes.COINIT_MULTITHREADED) 
-			isUIA8=False
-			try:
-				self.clientObject=CoCreateInstance(CUIAutomation8._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
-				isUIA8=True
-			except (COMError,WindowsError,NameError):
-				self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
+			self.clientObject=CoCreateInstance(CUIAutomation8._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
 			# #7345: Instruct UIA to never map MSAA winEvents to UIA propertyChange events.
 			# These events are not needed by NVDA, and they can cause the UI Automation client library to become unresponsive if an application firing winEvents has a slow message pump. 
 			pfm=self.clientObject.proxyFactoryMapping
