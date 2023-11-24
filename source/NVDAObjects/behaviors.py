@@ -888,7 +888,7 @@ class _FakeTableCell(NVDAObject):
 		states.discard(controlTypes.State.CHECKED)
 		return states
 	def _isEqual(self, other):
-		return(self.columnNumber == other.columnNumber)
+		return(self.columnNumber == other.columnNumber and self.rowNumber == other.rowNumber)
 
 class FocusableUnfocusableContainer(NVDAObject):
 	"""Makes an unfocusable container focusable using its first focusable descendant.
