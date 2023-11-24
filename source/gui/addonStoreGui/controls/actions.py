@@ -200,8 +200,6 @@ class AddonListValidator:
 		hasInstallable = False
 		for aVM in self.addonsList:
 			if aVM.canUseUpdateAction() or aVM.canUseReplaceAction():
-				import globalVars as gv
-				gv.dbg = aVM
 				hasUpdatable = True
 			if aVM.canUseInstallAction() or aVM.canUseInstallOverrideIncompatibilityAction():
 				hasInstallable = True
