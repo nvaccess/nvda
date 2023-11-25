@@ -359,7 +359,7 @@ class PortableCreaterDialog(
 
 		# Translators: The label of a grouping containing controls to select the destination directory
 		# in the Create Portable NVDA dialog.
-		directoryGroupText = _("Portable &directory:")
+		directoryGroupText = _("Portable directory:")
 		groupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=directoryGroupText)
 		groupHelper = sHelper.addItem(guiHelper.BoxSizerHelper(self, sizer=groupSizer))
 		groupBox = groupSizer.GetStaticBox()
