@@ -62,8 +62,7 @@ It is also updated with UIA enabled, when typing text and braille is tethered to
 - In Word, the landing cell will now be correctly reported when using the native Word commands for table navigation ``alt+home``, ``alt+end``, ``alt+pageUp`` and ``alt+pageDown``. (#15805, @CyrilleB79)
 - NVDA now resumes audio if the configuration of the output device changes or another application releases exclusive control of the device. (#15758, #15775, @jcsteh)
 - Contracted braille input works properly again. (#15773, @aaclause)
-- Braille will now follow the navigator object when moving between table cells in more controls. (#15755)
-- 
+-
 
 == Changes for Developers ==
 Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
