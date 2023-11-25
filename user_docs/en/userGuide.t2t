@@ -520,7 +520,11 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 
 ++ Speech modes ++[SpeechModes]
 
-There are four speech modes available.
+The speech mode, governs how screen content, notifications, responses to commands, and other output, is spoken during operation of NVDA.
+The default mode is "talk", and provides for the kind of speech output that is usually expected when using a screen reader.
+However, under certain circumstances, or when running particular programs, you may find one of the other speech modes valuable.
+
+The four available speech modes are:
 - Talk: The Default speech mode, NVDA will speak normally in reaction to screen changes, notifications, and actions such as moving the focus, or issuing commands.
 - On-demand: NVDA will only speak when you use commands with a reporting function (e.g. report the title of the window); but it will not speak in reaction to actions such as moving the focus or the cursor.
 - Off: NVDA will not speak anything, however unlike sleep mode, it will silently react to commands.
