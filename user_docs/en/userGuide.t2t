@@ -558,6 +558,7 @@ NVDA provides the following key commands in relation to the system caret:
 | Read current line | NVDA+upArrow | NVDA+l | Reads the line where the system caret is currently situated. Pressing twice spells the line. Pressing three times spells the line using character descriptions. |
 | Read current text selection | NVDA+Shift+upArrow | NVDA+shift+s | Reads any currently selected text |
 | Report text formatting | NVDA+f | NVDA+f | Reports the formatting of the text where the caret is currently situated. Pressing twice shows the information in browse mode |
+| Report link destination | ``NVDA+k`` | ``NVDA+k`` | Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review |
 | Report caret location | NVDA+numpadDelete | NVDA+delete | Reports information about the location of the text or object at the position of system caret. For example, this might include the percentage through the document, the distance from the edge of the page or the exact screen position. Pressing twice may provide further detail. |
 | Next sentence | alt+downArrow | alt+downArrow | Moves the caret to the next sentence and announces it. (only supported in Microsoft Word and Outlook) |
 | Previous sentence | alt+upArrow | alt+upArrow | Moves the caret to the previous sentence and announces it. (only supported in Microsoft Word and Outlook) |
@@ -2839,6 +2840,14 @@ For each use of the enable/disable action, add-on status changes to indicate wha
 If the add-on was previously "disabled", the status will show "enabled after restart".
 If the add-on was previously "enabled", the status will show "disabled after restart".
 Just like when you install or remove add-ons, you need to restart NVDA in order for changes to take effect.
+
++++ Reviewing add-ons and reading reviews +++[AddonStoreReviews]
+Before installing an add-on, you may want to read reviews by others.
+Also, it may be helpful to other users to provide feedback about add-ons you have tried.
+To read reviews for an add-on, select an add-on and use the "Community reviews" action.
+This links to a GitHub Discussion webpage, where you will be able to read and write reviews for the add-on, or even comment on specific versions.
+Please be aware that this doesn't replace direct communication with add-on developers.
+Instead, the purpose of this feature is to share feedback to help users decide if an add-on may be useful for them.
 
 ++ Incompatible Add-ons ++[incompatibleAddonsManager]
 Some older add-ons may no longer be compatible with the version of NVDA that you have.
