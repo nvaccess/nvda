@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Babbage B.V.
+# Copyright (C) 2006-2023 NV Access Limited, Babbage B.V., Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -1961,7 +1961,7 @@ class WindowRoot(GenericWindow):
 
 	def _get_presentationType(self):
 		states=self.states
-		if controlTypes.State.INVISIBLE in states or controlTypes.State.UNAVAILABLE in states:
+		if controlTypes.State.INVISIBLE in states:
 			return self.presType_unavailable
 		if not self.windowHasExtraIAccessibles(self.windowHandle):
 			return self.presType_layout
