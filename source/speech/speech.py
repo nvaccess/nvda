@@ -774,6 +774,9 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent, objRole
 	}
 	if reason in (OutputReason.FOCUSENTERED, OutputReason.MOUSE):
 		allowProperties["value"] = False
+		# #15826: For containers, there are cases where the shortcut key can be defined but not working (e.g.
+		# GROUPING). The safest strategy is then to remove the shortcut keys of containers except in the known
+		# cases where it is working and useful. The only such known case is the one of LIST.
 		if not objRole == controlTypes.Role.LIST:
 			allowProperties["keyboardShortcut"] = False
 		allowProperties["positionInfo_level"] = False
