@@ -28,6 +28,7 @@ typedef RPC_STATUS(RPC_ENTRY *RpcServerRegisterIf3_functype)(RPC_IF_HANDLE,UUID 
 
 RPC_IF_HANDLE availableInterfaces[]={
 	nvdaController_NvdaController_v1_0_s_ifspec,
+	nvdaController_NvdaController2_v1_0_s_ifspec,
 	nvdaControllerInternal_NvdaControllerInternal_v1_0_s_ifspec
 };
 

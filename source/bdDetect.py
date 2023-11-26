@@ -141,8 +141,7 @@ def getDriversForConnectedUsbDevices(
 	)
 	usbComDeviceMatches = (
 		DeviceMatch(DeviceType.SERIAL, port["usbID"], port["port"], port)
-		for port in deviceInfoFetcher.comPorts
-		if "usbID" in port
+		for port in deviceInfoFetcher.usbComPorts
 	)
 	# Tee is used to ensure that the DeviceMatches aren't created multiple times.
 	# The processing of these HID device matches, looking for a custom driver, means that all
@@ -256,9 +255,9 @@ class _DeviceInfoFetcher(AutoPropertyObject):
 			self._btDevsCache = cache.copy() if cache else None
 
 	#: Type info for auto property: _get_comPorts
-	comPorts: List[Dict]
+	comPorts: list[dict[str, str]]
 
-	def _get_comPorts(self) -> List[Dict]:
+	def _get_comPorts(self) -> list[dict[str, str]]:
 		return list(hwPortUtils.listComPorts(onlyAvailable=True))
 
 	#: Type info for auto property: _get_usbDevices
@@ -266,6 +265,21 @@ class _DeviceInfoFetcher(AutoPropertyObject):
 
 	def _get_usbDevices(self) -> List[Dict]:
 		return list(hwPortUtils.listUsbDevices(onlyAvailable=True))
+
+	#: Type info for auto property: _get_usbComPorts
+	usbComPorts: list[dict[str, str]]
+
+	def _get_usbComPorts(self) -> list[dict[str, str]]:
+		comPorts = []
+		for port in self.comPorts:
+			if (usbId := port.get("usbID")) is None:
+				continue
+			if (usbDict := next(
+				(d for d in self.usbDevices if d.get("usbID") == usbId),
+				None
+			)) is not None:
+				comPorts.append(port | usbDict)
+		return comPorts
 
 	#: Type info for auto property: _get_hidDevices
 	hidDevices: List[Dict]
@@ -454,7 +468,7 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 		),
 		(
 			DeviceMatch(DeviceType.SERIAL, port["usbID"], port["port"], port)
-			for port in deviceInfoFetcher.comPorts if "usbID" in port
+			for port in deviceInfoFetcher.usbComPorts
 		)
 	)
 	for match in usbDevs:

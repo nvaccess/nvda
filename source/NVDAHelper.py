@@ -5,6 +5,7 @@
 # See the file COPYING for more details.
 
 from typing import Optional
+import typing
 import os
 import winreg
 import msvcrt
@@ -16,9 +17,13 @@ import config
 from ctypes import *
 from ctypes import (
 	WINFUNCTYPE,
+	c_bool,
+	c_int,
 	c_long,
+	c_ulong,
 	c_wchar_p,
 	c_wchar,
+	create_unicode_buffer,
 	windll,
 )
 from ctypes.wintypes import *
@@ -31,6 +36,11 @@ import globalVars
 from logHandler import log
 import NVDAState
 from utils.security import isLockScreenModeActive
+from winAPI.constants import SystemErrorCodes
+
+if typing.TYPE_CHECKING:
+	from speech.priorities import SpeechPriority
+	from characterProcessing import SymbolLevel
 
 versionedLibPath = os.path.join(globalVars.appDir, 'lib')
 versionedLibARM64Path = os.path.join(globalVars.appDir, 'libArm64')
@@ -49,6 +59,7 @@ _remoteLoaderAMD64: "Optional[_RemoteLoader]" = None
 _remoteLoaderARM64: "Optional[_RemoteLoader]" = None
 localLib=None
 generateBeep=None
+onSsmlMarkReached = None
 VBuf_getTextInRange=None
 lastLanguageID=None
 lastLayoutString=None
@@ -63,31 +74,118 @@ def nvdaController_speakText(text):
 	focus=api.getFocusObject()
 	if focus.sleepMode==focus.SLEEP_FULL:
 		return -1
-	import queueHandler
 	import speech
 	queueHandler.queueFunction(queueHandler.eventQueue,speech.speakText,text)
-	return 0
+	return SystemErrorCodes.SUCCESS
+
+
+# C901 'nvdaController_speakSsml' is too complex
+# Note: when working on nvdaController_speakSsml, look for opportunities to simplify
+# and move logic out into smaller helper functions.
+@WINFUNCTYPE(c_long, c_wchar_p, c_int, c_int, c_bool)
+def nvdaController_speakSsml(  # noqa: C901
+		ssml: str,
+		symbolLevel: "SymbolLevel",
+		priority: "SpeechPriority",
+		asynchronous: bool,
+) -> SystemErrorCodes:
+	focus = api.getFocusObject()
+	if focus.sleepMode == focus.SLEEP_FULL:
+		return SystemErrorCodes.ACCESS_DENIED
+
+	import speech
+	from characterProcessing import SymbolLevel
+	from speech.priorities import SpeechPriority
+	from speech.speech import _getSpeakSsmlSpeech
+
+	try:
+		symbolLevel = SymbolLevel(symbolLevel)
+	except ValueError:
+		log.exception("Invalid symbolLevel")
+		return SystemErrorCodes.INVALID_PARAMETER
+
+	try:
+		priority = SpeechPriority(priority)
+	except ValueError:
+		log.exception("Invalid SpeechPriority")
+		return SystemErrorCodes.INVALID_PARAMETER
+
+	prefixSpeechCommand = None
+	markCallable = None
+	if not asynchronous:
+		from queue import SimpleQueue
+
+		markQueue = SimpleQueue()
+
+		import synthDriverHandler
+		from speech.commands import CallbackCommand
+
+		def onDoneSpeaking():
+			markQueue.put_nowait(None)
+
+		def onSpeechCanceled():
+			markQueue.put_nowait(False)
+
+		def prefixCallback():
+			synthDriverHandler.synthDoneSpeaking.register(onDoneSpeaking)
+			speech.speechCanceled.register(onSpeechCanceled)
+
+		def markCallable(name: str):
+			markQueue.put_nowait(name)
+
+		prefixSpeechCommand = CallbackCommand(prefixCallback)
+
+	try:
+		sequence = _getSpeakSsmlSpeech(ssml, markCallable, prefixSpeechCommand)
+	except Exception:
+		log.error("Error parsing SSML", exc_info=True)
+		return SystemErrorCodes.INVALID_PARAMETER
+
+	queueHandler.queueFunction(
+		queueHandler.eventQueue,
+		speech.speak,
+		speechSequence=sequence,
+		symbolLevel=symbolLevel,
+		priority=priority
+	)
+	if not asynchronous:
+		try:
+			while True:
+				match markQueue.get():
+					case None:
+						break
+					case False:
+						return SystemErrorCodes.CANCELLED
+					case str() as name:
+						onSsmlMarkReached(name)
+					case _ as unknown:
+						log.error(f"Unknown item in SSML mark queue: {unknown}")
+		finally:
+			speech.speechCanceled.unregister(onSpeechCanceled)
+			synthDriverHandler.synthDoneSpeaking.unregister(onDoneSpeaking)
+	return SystemErrorCodes.SUCCESS
+
 
 @WINFUNCTYPE(c_long)
 def nvdaController_cancelSpeech():
 	focus=api.getFocusObject()
 	if focus.sleepMode==focus.SLEEP_FULL:
 		return -1
-	import queueHandler
 	import speech
 	queueHandler.queueFunction(queueHandler.eventQueue,speech.cancelSpeech)
-	return 0
+	return SystemErrorCodes.SUCCESS
+
 
 @WINFUNCTYPE(c_long,c_wchar_p)
-def nvdaController_brailleMessage(text):
+def nvdaController_brailleMessage(text: str) -> SystemErrorCodes:
 	focus=api.getFocusObject()
 	if focus.sleepMode==focus.SLEEP_FULL:
 		return -1
 	if config.conf["braille"]["reportLiveRegions"]:
-		import queueHandler
 		import braille
 		queueHandler.queueFunction(queueHandler.eventQueue, braille.handler.message, text)
-	return 0
+	return SystemErrorCodes.SUCCESS
+
 
 def _lookupKeyboardLayoutNameWithHexString(layoutString):
 	buf=create_unicode_buffer(1024)
@@ -136,7 +234,6 @@ def nvdaControllerInternal_reportLiveRegion(text: str, politeness: str):
 	focus = api.getFocusObject()
 	if focus.sleepMode == focus.SLEEP_FULL:
 		return -1
-	import queueHandler
 	import speech
 	import braille
 	from aria import AriaLivePoliteness
@@ -401,7 +498,6 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	#Never announce changes while in sayAll (#1676)
 	if sayAll.SayAllHandler.isRunning():
 		return 0
-	import queueHandler
 	import ui
 	buf=create_unicode_buffer(1024)
 	res=windll.kernel32.GetLocaleInfoW(languageID,2,buf,1024)
@@ -537,7 +633,8 @@ class _RemoteLoader:
 
 def initialize() -> None:
 	global _remoteLib, _remoteLoaderAMD64, _remoteLoaderARM64
-	global localLib, generateBeep, VBuf_getTextInRange, lastLanguageID, lastLayoutString
+	global localLib, generateBeep, onSsmlMarkReached, VBuf_getTextInRange
+	global lastLanguageID, lastLayoutString
 	hkl=c_ulong(windll.User32.GetKeyboardLayout(0)).value
 	lastLanguageID=winUser.LOWORD(hkl)
 	KL_NAMELENGTH=9
@@ -548,6 +645,7 @@ def initialize() -> None:
 	localLib=cdll.LoadLibrary(os.path.join(versionedLibPath,'nvdaHelperLocal.dll'))
 	for name,func in [
 		("nvdaController_speakText",nvdaController_speakText),
+		("nvdaController_speakSsml", nvdaController_speakSsml),
 		("nvdaController_cancelSpeech",nvdaController_cancelSpeech),
 		("nvdaController_brailleMessage",nvdaController_brailleMessage),
 		("nvdaControllerInternal_requestRegistration",nvdaControllerInternal_requestRegistration),
@@ -574,6 +672,9 @@ def initialize() -> None:
 	generateBeep=localLib.generateBeep
 	generateBeep.argtypes=[c_char_p,c_float,c_int,c_int,c_int]
 	generateBeep.restype=c_int
+	onSsmlMarkReached = localLib.nvdaController_onSsmlMarkReached
+	onSsmlMarkReached.argtypes = [c_wchar_p]
+	onSsmlMarkReached.restype = c_ulong
 	# The rest of this function (to do with injection) only applies if NVDA is not running as a Windows store application
 	# Handle VBuf_getTextInRange's BSTR out parameter so that the BSTR will be freed automatically.
 	VBuf_getTextInRange = CFUNCTYPE(c_int, c_int, c_int, c_int, POINTER(BSTR), c_int)(
