@@ -29,8 +29,7 @@ This option now announces additional relevant information about an object when t
 - When requesting formatting information on Excel cells, borders and background will only be reported if there is such formatting. (#15560, @CyrilleB79)
 - The command to toggle the screen curtain now has a default gesture: ``NVDA+control+escape``. (#10560, @CyrilleB79)
 - NVDA will again no longer report unlabelled groupings such as in recent versions of Microsoft Office 365 menus. (#15638)
-- The "Help" submenu of the NVDA menu has been split up into "Documentation" and "Help".
-New items have beeen added to "Help" for the NV Access "Get Help" page and Shop. (#14631)
+- New items have beeen added to the Help menu for the NV Access "Get Help" page and Shop. (#14631)
 - NVDA's support for [Poedit https://poedit.net] is overhauled for Poedit version 3 and above.
 Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on enhanced accessibility in Poedit, such as shortcuts to read translator notes and comments. (#15313, #7303, @LeonarddeR)
 - Braille viewer and speech viewer are now disabled in secure mode. (#15680)
@@ -51,13 +50,18 @@ It is also updated with UIA enabled, when typing text and braille is tethered to
 - NVDA no longer sometimes freezes briefly when multiple sounds are played in rapid succession. (#15311)
 - NVDA will announce dialog content for more Windows 10 and 11 dialogs. (#15729, @josephsl)
 - NVDA will no longer fail to read a newly loaded page in Microsoft Edge when using UI Automation. (#15736)
-- When using say all or commands which spell text, pauses between sentences or characters no longer gradually decrease over time. (#15739)
-- NVDA no longer sometimes freezes when speaking a large amount of text. (#15752)
+- When using say all or commands which spell text, pauses between sentences or characters no longer gradually decrease over time. (#15739, @jcsteh)
+- NVDA no longer sometimes freezes when speaking a large amount of text. (#15752, @jcsteh)
 - More objects which contain useful text are detected, and text content is displayed in braille. (#15605)
-- NVDA no longer freezes briefly when multiple sounds are played in rapid succession. (#15757)
+- When accessing Microsoft Edge using UI Automation, NVDA is able to activate more controls in browse mode. (#14612)
+- NVDA no longer freezes briefly when multiple sounds are played in rapid succession. (#15757, @jcsteh)
 - NVDA will not fail to start anymore when the configuration file is corrupted, but it will restore the configuration to default as it did in the past. (#15690, @CyrilleB79)
-- If the audio output device is set to something other than the default and that device becomes available again after being unavailable, NVDA will now switch back to the configured device instead of continuing to use the default device. (#15759)
+- Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283, @LeonarddeR)
+- If the audio output device is set to something other than the default and that device becomes available again after being unavailable, NVDA will now switch back to the configured device instead of continuing to use the default device. (#15759, @jcsteh)
 - It is not possible anymore to overwrite NVDA's Python console history. (#15792, @CyrilleB79)
+- In Word, the landing cell will now be correctly reported when using the native Word commands for table navigation ``alt+home``, ``alt+end``, ``alt+pageUp`` and ``alt+pageDown``. (#15805, @CyrilleB79)
+- NVDA now resumes audio if the configuration of the output device changes or another application releases exclusive control of the device. (#15758, #15775, @jcsteh)
+- Contracted braille input works properly again. (#15773, @aaclause)
 -
 
 == Changes for Developers ==
@@ -87,7 +91,19 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
  - Example: ``speech.speakSsml('<speak><prosody pitch="200%">hello</prosody><break time="500ms" /><prosody rate="50%">John</prosody></speak>')``
  - The SSML parsing capabilities are backed by the ``SsmlParser`` class in the ``speechXml`` module.
  -
-- The file names of the NVDA Controller Library no longer contain a suffix denoting the architecture, i.e. ``nvdaControllerClient32/64.dll`` are now called ``nvdaControllerClient.dll``. (#15718, #15717, @LeonarddeR)
+- Changes to the NVDA Controller Client library:
+ - The file names of the library no longer contain a suffix denoting the architecture, i.e. ``nvdaControllerClient32/64.dll`` are now called ``nvdaControllerClient.dll``. (#15718, #15717, @LeonarddeR)
+ - Added the following functions to the controller client: (#15734, #11028, #5638, @LeonarddeR)
+  - ``nvdaController_getProcessId``: To get the process id (PID) of the current instance of NVDA the controller client is using.
+  - ``nvdaController_speakSsml``: To instruct NVDA to speak according to the given SSML. This function also supports:
+    - Providing the symbol level.
+    - Providing the priority of speech to be spoken.
+    - Speaking both synchronously (blocking) and asynchronously (instant return).
+    -
+  - ``nvdaController_setOnSsmlMarkReachedCallback``: To register a callback of type ``onSsmlMarkReachedFuncType`` that is called in synchronous mode for every ``<mark />`` tag encountered in the SSML sequence provided to ``nvdaController_speakSsml``.
+  -
+ - Note: the new functions in the controller client only support NVDA 2024.1 and above.
+ -
 - Updated ``include`` dependencies:
   - detours to ``4b8c659f549b0ab21cf649377c7a84eb708f5e68``. (#15695)
   - ia2 to ``3d8c7f0b833453f761ded6b12d8be431507bfe0b``. (#15695)
@@ -95,6 +111,8 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
   - w3c-aria-practices to ``9a5e55ccbeb0f1bf92b6127c9865da8426d1c864``. (#15695)
   - wil to ``5e9be7b2d2fe3834a7107f430f7d4c0631f69833``. (#15695)
   -
+- Device info yielded by ``hwPortUtils.listUsbDevices`` now contain the bus reported description of the USB device (key ``busReportedDeviceDescription``). (#15764, @LeonarddeR)
+- For USB serial devices, ``bdDetect.getConnectedUsbDevicesForDriver`` and ``bdDetect.getDriversForConnectedUsbDevices`` now yield device matches containing a ``deviceInfo`` dictionary enriched with data about the USB device, such as ``busReportedDeviceDescription``. (#15764, @LeonarddeR)
 - When the configuration file ``nvda.ini`` is corrupted, a backup copy is saved before it is reinitialized. (#15779, @CyrilleB79)
 -
 
@@ -132,6 +150,14 @@ That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices``
 - ``languageHandler.makeNpgettext`` and ``languageHandler.makePgettext`` have been removed.
 ``npgettext`` and ``pgettext`` are supported natively now. (#15546)
 - The app module for [Poedit https://poedit.net] has been changed significantly. The ``fetchObject`` function has been removed. (#15313, #7303, @LeonarddeR)
+- The following redundant types and constants have been removed from ``hwPortUtils``:  (#15764, @LeonarddeR)
+ - ``PCWSTR``
+ - ``HWND`` (replaced by ``ctypes.wintypes.HWND``)
+ - ``ULONG_PTR``
+ - ``ULONGLONG``
+ - ``NULL``
+ - ``GUID`` (replaced by ``comtypes.GUID``)
+ -
 % Insert new list items here as the alias appModule table should be kept at the bottom of this list
 - The following app modules are removed.
 Code which imports from one of them, should instead import from the replacement module.  (#15618, @lukaszgo1)
@@ -174,6 +200,9 @@ Code which imports from one of them, should instead import from the replacement 
   - ``winVersion.WIN7_SP1``
   - ``winVersion.WIN8``
   -
+- The ``bdDetect.KEY_*`` constants have been deprecated.
+Use ``bdDetect.DeviceType.*`` instead. (#15772, @LeonarddeR).
+- The ``bdDetect.DETECT_USB`` and ``bdDetect.DETECT_BLUETOOTH`` constants have been deprecated with no public replacement. (#15772, @LeonarddeR).
 -
 
 

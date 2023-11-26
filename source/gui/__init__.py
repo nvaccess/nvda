@@ -395,8 +395,8 @@ class MainFrame(wx.Frame):
 		blockAction.Context.RUNNING_LAUNCHER,
 	)
 	def onAddonStoreCommand(self, evt: wx.MenuEvent):
-		from ._addonStoreGui import AddonStoreDialog
-		from ._addonStoreGui.viewModels.store import AddonStoreVM
+		from .addonStoreGui import AddonStoreDialog
+		from .addonStoreGui.viewModels.store import AddonStoreVM
 		_storeVM = AddonStoreVM()
 		_storeVM.refresh()
 		self.popupSettingsDialog(AddonStoreDialog, _storeVM)

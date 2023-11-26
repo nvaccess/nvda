@@ -315,7 +315,7 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 
 	// Returns false if we should abort, in which case we should return hr.
 	auto reopenUsingNewDev = [&] {
-		HRESULT hr = open(true);
+		hr = open(true);
 		if (FAILED(hr)) {
 			return false;
 		}
@@ -351,9 +351,13 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 				}
 			}
 			hr = client->GetCurrentPadding(&paddingFrames);
-			if (hr == AUDCLNT_E_DEVICE_INVALIDATED) {
-				// If we're using a specific device, it's just been invalidated. Fall back
-				// to the default device.
+			if (
+				hr == AUDCLNT_E_DEVICE_INVALIDATED
+				|| hr == AUDCLNT_E_NOT_INITIALIZED
+			) {
+				// Either the device we're using has just been invalidated, or it was
+				// invalidated previously and we failed to reopen. Try reopening, which
+				// might fall back to the default device if appropriate.
 				if (!reopenUsingNewDev()) {
 					return false;
 				}
@@ -522,12 +526,20 @@ bool WasapiPlayer::didPreferredDeviceBecomeAvailable() {
 HRESULT WasapiPlayer::stop() {
 	playState = PlayState::stopping;
 	HRESULT hr = client->Stop();
-	if (FAILED(hr)) {
-		return hr;
-	}
-	hr = client->Reset();
-	if (FAILED(hr)) {
-		return hr;
+	// If the device has been invalidated, it has already stopped. Just ignore
+	// this and behave as if we were successful to avoid a cascade of breakage.
+	// feed() will attempt to reopen the device next time it is called.
+	if (
+		hr != AUDCLNT_E_DEVICE_INVALIDATED
+		&& hr != AUDCLNT_E_NOT_INITIALIZED
+	) {
+		if (FAILED(hr)) {
+			return hr;
+		}
+		hr = client->Reset();
+		if (FAILED(hr)) {
+			return hr;
+		}
 	}
 	// If there is a feed/sync call waiting, wake it up so it can immediately
 	// return to the caller.

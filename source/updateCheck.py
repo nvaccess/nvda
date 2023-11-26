@@ -50,7 +50,7 @@ import gui
 from gui import guiHelper
 from gui.message import displayDialogAsModal  # noqa: E402
 from addonHandler import getCodeAddon, AddonError, getIncompatibleAddons
-from _addonStore.models.version import (  # noqa: E402
+from addonStore.models.version import (  # noqa: E402
 	getAddonCompatibilityMessage,
 	getAddonCompatibilityConfirmationMessage,
 )
