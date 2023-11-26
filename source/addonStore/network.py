@@ -37,7 +37,7 @@ from .models.channel import Channel
 
 if TYPE_CHECKING:
 	from gui.message import DisplayableError
-	from gui._addonStoreGui.viewModels.addonList import AddonListItemVM
+	from gui.addonStoreGui.viewModels.addonList import AddonListItemVM
 
 
 _BASE_URL = "https://nvaccess.org/addonStore"

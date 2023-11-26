@@ -5,14 +5,22 @@ Cyclic references are typically a symptom of bad design, and can cause major pro
 For instance, cyclic references involving COM objects may cause a deadlock if the garbage collector happens to break the cycle and release the COM object in the wrong thread.
 
 ## How to know about a cyclic reference?
-The log may contain errors like the following.
+The log may contain messages like the following.
+
+```py
+DEBUGWARNING - garbageHandler._collectionCallback (10:45:23.172) - MainThread (21820):
+Found at least 1 unreachable objects in run
 ```
-WARNING - garbageHandler.notifyObjectDeletion (10:45:23.171) - MainThread (21820):
+
+With `garbageHandler` logging enabled in advanced preferences, a more detailed log can be created:
+
+```py
+DEBUGWARNING - garbageHandler.notifyObjectDeletion (10:45:23.171) - MainThread (21820):
 Garbage collector has found one or more unreachable objects. See further warnings for specific objects.
 ...
-WARNING - garbageHandler.notifyObjectDeletion (10:45:23.171) - MainThread (21820):
+DEBUGWARNING - garbageHandler.notifyObjectDeletion (10:45:23.171) - MainThread (21820):
 Deleting unreachable object <eventHandler._EventExecuter object at 0x1AC15350>
-ERROR - garbageHandler._collectionCallback (10:45:23.172) - MainThread (21820):
+DEBUGWARNING - garbageHandler._collectionCallback (10:45:23.172) - MainThread (21820):
 Found at least 1 unreachable objects in run
 ```
 

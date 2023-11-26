@@ -87,7 +87,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
-		driverRegistrar.addUsbDevices(bdDetect.KEY_HID, {
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.HID, {
 			"VID_1C71&PID_C111",  # Mantis Q 40
 			"VID_1C71&PID_C101",  # Chameleon 20
 			"VID_1C71&PID_C121",  # Humanware BrailleOne 20 HID
@@ -99,13 +99,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"VID_1C71&PID_C00A",  # BrailleNote Touch
 			"VID_1C71&PID_C00E",  # BrailleNote Touch v2
 		})
-		driverRegistrar.addUsbDevices(bdDetect.KEY_SERIAL, {
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.SERIAL, {
 			"VID_1C71&PID_C005",  # Brailliant BI 32, 40 and 80
 			"VID_1C71&PID_C021",  # Brailliant BI 14
 		})
 		driverRegistrar.addBluetoothDevices(
 			lambda m: (
-				m.type == bdDetect.KEY_SERIAL
+				m.type == bdDetect.DeviceType.SERIAL
 				and (
 					m.id.startswith("Brailliant B")
 					or m.id == "Brailliant 80"
@@ -113,7 +113,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				)
 			)
 			or (
-				m.type == bdDetect.KEY_HID
+				m.type == bdDetect.DeviceType.HID
 				and m.deviceInfo.get("manufacturer") == "Humanware"
 				and m.deviceInfo.get("product") in (
 					"Brailliant HID",
@@ -137,7 +137,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self.numCells = 0
 
 		for portType, portId, port, portInfo in self._getTryPorts(port):
-			self.isHid = portType == bdDetect.KEY_HID
+			self.isHid = portType == bdDetect.DeviceType.HID
 			# Try talking to the display.
 			try:
 				if self.isHid:
