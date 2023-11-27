@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020 NV Access Limited
+# Copyright (C) 2020-2021 NV Access Limited, James Teh, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -9,14 +9,13 @@ Provides a non-threaded (limited by GIL) Windows Event Hook and processing.
 
 from ctypes import WINFUNCTYPE, c_int
 
-from typing import Dict, Callable
+from typing import Dict, Callable, Set
 
 import core
 import winUser
+import config
 from .utils import getWinEventLogInfo, isMSAADebugLoggingEnabled
-
 from comInterfaces import IAccessible2Lib as IA2
-
 
 from .orderedWinEventLimiter import OrderedWinEventLimiter, MENU_EVENTIDS
 from logHandler import log
@@ -62,6 +61,25 @@ winEventIDsToNVDAEventNames = {
 }
 
 _processDestroyWinEvent = None
+
+
+EVENTS_ALLOWED_FOR_ALL_OBJS = (
+	winUser.EVENT_OBJECT_FOCUS, winUser.EVENT_SYSTEM_FOREGROUND, *MENU_EVENTIDS,
+	winUser.EVENT_SYSTEM_SWITCHEND,
+	winUser.EVENT_SYSTEM_ALERT,
+	# We need valueChange events for progress bars.
+	winUser.EVENT_OBJECT_VALUECHANGE,
+	# In IA2 rich text editors, caret events can come from a descendant of the
+	# focus. The simplest way to deal with this is to just allow this event for
+	# all objects, since they're unlikely to flood us anyway.
+	IA2.IA2_EVENT_TEXT_CARET_MOVED,
+)
+WINDOW_CLASSES_ALLOWED_FOR_SHOW_EVENTS = (
+	"Frame Notification Bar",  # notification bars
+	"tooltips_class32",  # tooltips
+	# IMM candidates
+	"mscandui21.candidate", "mscandui40.candidate", "MSCandUIWindow_Candidate",
+)
 
 
 # C901: winEventCallback is too complex
@@ -172,6 +190,24 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 			# WM_NULL to this window at this point (which happens in accessibleObjectFromEvent), Messenger will
 			# silently exit (#677). Therefore, completely ignore these events, which is useless to us anyway.
 			return
+		if config.conf["IAccessible"]["specificObjEvents"] and not (
+			objectID == winUser.OBJID_CARET
+			or eventID in EVENTS_ALLOWED_FOR_ALL_OBJS
+			or (
+				eventID == winUser.EVENT_OBJECT_SHOW
+				and windowClassName in WINDOW_CLASSES_ALLOWED_FOR_SHOW_EVENTS
+			)
+			or any(
+				isEventForNVDAObject(window, objectID, childID, obj)
+				for obj in getNVDAObjectsToMonitor()
+			)
+		):
+			if isMSAADebugLoggingEnabled():
+				log.debug(
+					"Ignoring win event due to only allowing specific object events: "
+					f"{getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+				)
+			return
 		if isMSAADebugLoggingEnabled():
 			log.debug(
 				f"Adding winEvent to limiter: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
@@ -258,3 +294,25 @@ def _shouldGetEvents():
 # winEventCallback adds these whenever it sees an event for ConsoleWindowClass windows,
 # As winEvents always contain the true thread ID.
 consoleWindowsToThreadIDs: Dict[int, int] = {}
+
+
+def getNVDAObjectsToMonitor() -> Set:
+	import api
+	objs = {
+		*api.getFocusAncestors(),
+		api.getFocusObject(),
+		# The desktop object should be in the focus ancestry, but include it here just
+		# in case. This being a set will filter out any duplicates.
+		api.getDesktopObject()
+	}
+	return objs
+
+
+def isEventForNVDAObject(windowHandle: int, objectId: int, childId: int, obj) -> bool:
+	import NVDAObjects.IAccessible
+	return (
+		isinstance(obj, NVDAObjects.IAccessible.IAccessible)
+		and windowHandle == obj.event_windowHandle
+		and objectId == obj.event_objectID
+		and childId == obj.event_childID
+	)

@@ -2938,6 +2938,25 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
+		label = _("Microsoft Active Accessibility/IAccessible2")
+		iaccessibleGroup = guiHelper.BoxSizerHelper(
+			parent=self,
+			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+		)
+		sHelper.addItem(iaccessibleGroup)
+
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Only process MSAA/IA2 &events for specific objects (focus, etc.)")
+		self.iaccessibleSpecificObjEventsCheckBox = iaccessibleGroup.addItem(wx.CheckBox(self, label=label))
+		self.bindHelpEvent("IAccessibleSpecificObjEvents", self.iaccessibleSpecificObjEventsCheckBox)
+		self.iaccessibleSpecificObjEventsCheckBox.SetValue(config.conf["IAccessible"]["specificObjEvents"])
+		self.iaccessibleSpecificObjEventsCheckBox.defaultValue = (
+			self._getDefaultValue(["IAccessible", "specificObjEvents"])
+		)
+
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
 		label = _("Annotations")
 		AnnotationsSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
 		AnnotationsBox = AnnotationsSizer.GetStaticBox()
@@ -3234,6 +3253,10 @@ class AdvancedPanelControls(
 			and self.UIAInMSExcelCheckBox.IsChecked() == self.UIAInMSExcelCheckBox.defaultValue
 			and self.consoleCombo.GetSelection() == self.consoleCombo.defaultValue
 			and self.UIAInChromiumCombo.GetSelection() == self.UIAInChromiumCombo.defaultValue
+			and (
+				self.iaccessibleSpecificObjEventsCheckBox.IsChecked()
+				== self.iaccessibleSpecificObjEventsCheckBox.defaultValue
+			)
 			and self.annotationsDetailsCheckBox.IsChecked() == self.annotationsDetailsCheckBox.defaultValue
 			and self.ariaDescCheckBox.IsChecked() == self.ariaDescCheckBox.defaultValue
 			and self.brailleLiveRegionsCombo.isValueConfigSpecDefault()
@@ -3260,6 +3283,7 @@ class AdvancedPanelControls(
 		self.UIAInMSExcelCheckBox.SetValue(self.UIAInMSExcelCheckBox.defaultValue)
 		self.consoleCombo.SetSelection(self.consoleCombo.defaultValue == 'auto')
 		self.UIAInChromiumCombo.SetSelection(self.UIAInChromiumCombo.defaultValue)
+		self.iaccessibleSpecificObjEventsCheckBox.SetValue(self.iaccessibleSpecificObjEventsCheckBox.defaultValue)
 		self.annotationsDetailsCheckBox.SetValue(self.annotationsDetailsCheckBox.defaultValue)
 		self.ariaDescCheckBox.SetValue(self.ariaDescCheckBox.defaultValue)
 		self.brailleLiveRegionsCombo.resetToConfigSpecDefault()
@@ -3291,6 +3315,7 @@ class AdvancedPanelControls(
 		)
 		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = self.cancelExpiredFocusSpeechCombo.GetSelection()
 		config.conf["UIA"]["allowInChromium"] = self.UIAInChromiumCombo.GetSelection()
+		config.conf["IAccessible"]["specificObjEvents"] = self.iaccessibleSpecificObjEventsCheckBox.IsChecked()
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()
 		diffAlgoChoice = self.diffAlgoCombo.GetSelection()
