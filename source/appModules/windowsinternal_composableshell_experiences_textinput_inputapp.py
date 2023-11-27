@@ -19,8 +19,8 @@ import ui
 import config
 import winVersion
 import controlTypes
-from NVDAObjects.UIA import UIA
-from NVDAObjects.behaviors import CandidateItem as CandidateItemBehavior, EditableTextWithAutoSelectDetection
+from NVDAObjects.UIA import UIA, XamlEditableText
+from NVDAObjects.behaviors import CandidateItem as CandidateItemBehavior
 
 
 class ImeCandidateUI(UIA):
@@ -335,4 +335,4 @@ class AppModule(appModuleHandler.AppModule):
 			# However this means NVDA's own edit field scripts will override emoji panel commands.
 			# Therefore remove text field movement commands so emoji panel commands can be used directly.
 			elif obj.UIAAutomationId == "Windows.Shell.InputApp.FloatingSuggestionUI.DelegationTextBox":
-				clsList.remove(EditableTextWithAutoSelectDetection)
+				clsList.remove(XamlEditableText)
