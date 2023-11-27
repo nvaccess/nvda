@@ -143,6 +143,8 @@ class AddonStateCategory(str, enum.Enum):
 	"""
 	BLOCKED = "blocked"
 	"""Add-ons that are blocked from running because they are incompatible"""
+	PENDING_OVERRIDE_COMPATIBILITY = "PENDING_OVERRIDE_COMPATIBILITY"
+	"""Add-ons in this state are incompatible but their compatibility would be overridden on the next restart."""
 
 
 def _getDownloadableStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
@@ -256,7 +258,7 @@ _addonStoreStateToAddonHandlerState: OrderedDict[
 		AddonStateCategory.PENDING_DISABLE,
 	},
 	AvailableAddonStatus.PENDING_INCOMPATIBLE_ENABLED: {
-		AddonStateCategory.OVERRIDE_COMPATIBILITY,
+		AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY,
 		AddonStateCategory.PENDING_ENABLE,
 	},
 	# If an add-on is being updated,

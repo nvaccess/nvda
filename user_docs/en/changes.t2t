@@ -57,6 +57,7 @@ It is also updated with UIA enabled, when typing text and braille is tethered to
 - When using say all or commands which spell text, pauses between sentences or characters no longer gradually decrease over time. (#15739, @jcsteh)
 - NVDA no longer sometimes freezes when speaking a large amount of text. (#15752, @jcsteh)
 - More objects which contain useful text are detected, and text content is displayed in braille. (#15605)
+- When reinstalling an incompatible add-on it is no longer forcefully disabled. (#15584, @lukaszgo1)
 - When accessing Microsoft Edge using UI Automation, NVDA is able to activate more controls in browse mode. (#14612)
 - NVDA no longer freezes briefly when multiple sounds are played in rapid succession. (#15757, @jcsteh)
 - NVDA will not fail to start anymore when the configuration file is corrupted, but it will restore the configuration to default as it did in the past. (#15690, @CyrilleB79)

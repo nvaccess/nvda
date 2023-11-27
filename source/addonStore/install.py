@@ -44,7 +44,9 @@ def _getAddonBundleToInstallIfValid(addonPath: str) -> "AddonBundle":
 			).format(filePath=addonPath)
 		)
 
-	if not bundle.isCompatible and not bundle.overrideIncompatibility:
+	if not bundle.isCompatible and not (
+		bundle.canOverrideCompatibility and bundle._hasOverriddenCompat
+	):
 		# This should not happen, only compatible or overridable add-ons are
 		# intended to be presented in the add-on store.
 		raise DisplayableError(
