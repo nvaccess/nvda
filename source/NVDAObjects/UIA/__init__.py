@@ -1260,7 +1260,7 @@ class UIA(Window):
 		if self.TextInfo == UIATextInfo:
 			if self.UIAFrameworkId == 'XAML':
 				# This UIA element is being exposed by the XAML framework.
-				clsList.append(InaccurateTextChangeEventEmittingEditableText)
+				clsList.append(XamlEditableText)
 			if UIAHandler.autoSelectDetectionAvailable:
 				clsList.append(EditableTextWithAutoSelectDetection)
 			else:
@@ -2233,6 +2233,10 @@ class InaccurateTextChangeEventEmittingEditableText(EditableTextBase, UIA):
 			super()._backspaceScriptHelper(unit, gesture)
 		finally:
 			self.caretMovementDetectionUsesEvents = False
+
+
+class XamlEditableText(InaccurateTextChangeEventEmittingEditableText):
+	...
 
 
 class TreeviewItem(UIA):
