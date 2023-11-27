@@ -745,7 +745,11 @@ def getObjectSpeech(
 	return sequence
 
 
-def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent, objRole):
+def _objectSpeech_calculateAllowedProps(
+		reason: OutputReason,
+		shouldReportTextContent: bool,
+		objRole: controlTypes.Role,
+):
 	allowProperties = {
 		'name': True,
 		'role': True,
