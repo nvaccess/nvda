@@ -8,6 +8,7 @@
 import typing
 from typing import Dict, Optional
 from comtypes import COMError
+
 import config
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
