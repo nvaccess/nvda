@@ -63,6 +63,7 @@ It is also updated with UIA enabled, when typing text and braille is tethered to
 - In Word, the landing cell will now be correctly reported when using the native Word commands for table navigation ``alt+home``, ``alt+end``, ``alt+pageUp`` and ``alt+pageDown``. (#15805, @CyrilleB79)
 - NVDA now resumes audio if the configuration of the output device changes or another application releases exclusive control of the device. (#15758, #15775, @jcsteh)
 - Contracted braille input works properly again. (#15773, @aaclause)
+- NVDA is again able to track the focus in applications running within Windows Defender Application Guard (WDAG). (#15164)
 -
 
 == Changes for Developers ==
