@@ -504,7 +504,6 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 | Stop speech | Control | control | 2-finger tap | Instantly stops speaking |
 | Pause Speech | shift | shift | none | Instantly pauses speech. Pressing it again will continue speaking where it left off (if pausing is supported by the current synthesizer) |
 | NVDA Menu | NVDA+n | NVDA+n | 2-finger double-tap | Pops up the NVDA menu to allow you to access preferences, tools, help, etc. |
-| Toggle Speech Mode | NVDA+s | NVDA+s | none | Toggles speech mode between speech, beeps and off. |
 | Toggle Input Help Mode | NVDA+1 | NVDA+1 | none | Pressing any key in this mode will report the key, and the description of any NVDA command associated with it |
 | Quit NVDA | NVDA+q | NVDA+q | none | Exits NVDA |
 | Pass next key through | NVDA+f2 | NVDA+f2 | none | Tells NVDA to pass the next key press straight through to the active application - even if it is normally treated as an NVDA key command |
@@ -517,6 +516,30 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 | Report date/time | NVDA+f12 | Pressing once reports the current time, pressing twice reports the date |
 | Report battery status | NVDA+shift+b | Reports the battery status i.e. whether AC power is in use or the current charge percentage. |
 | Report clipboard text | NVDA+c | Reports the Text on the clipboard if there is any. |
+%kc:endInclude
+
+++ Speech modes ++[SpeechModes]
+
+The speech mode governs how screen content, notifications, responses to commands, and other output is spoken during operation of NVDA.
+The default mode is "talk", which speaks in situations that are expected when using a screen reader.
+However, under certain circumstances, or when running particular programs, you may find one of the other speech modes valuable.
+
+The four available speech modes are:
+- Talk (Default): NVDA will speak normally in reaction to screen changes, notifications, and actions such as moving the focus, or issuing commands.
+- On-demand: NVDA will only speak when you use commands with a reporting function (e.g. report the title of the window); but it will not speak in reaction to actions such as moving the focus or the cursor.
+- Off: NVDA will not speak anything, however unlike sleep mode, it will silently react to commands.
+- Beeps: NVDA will replace normal speech with short beeps.
+-
+
+The Beeps mode may be useful when some very verbose output is scrolling in a terminal window, but you don't care what it is, only that it is continuing to scroll; or in other circumstances when the fact that there is output is more relevant than the output itself.
+
+The On-demand mode may be valuable when you don't need constant feedback about what is happening on screen or on the computer, but you periodically need to check particular things using review commands, etc.
+Examples include while recording audio, when using screen magnification, during a meeting or a call, or as an alternative to beeps mode.
+
+A gesture allows cycling through the various speech modes:
+%kc:beginInclude
+|| Name | Key | Description |
+| Cycle Speech Mode | ``NVDA+s`` | Cycles speech mode between talk, on-demand, off and beeps. |
 %kc:endInclude
 
 + Navigating with NVDA +[NavigatingWithNVDA]
@@ -2370,6 +2393,16 @@ However, for basic spreadsheet navigating / editing, this option may provide a v
 We still do not recommend that the majority of users turn this on by default, though we do welcome users of Microsoft Excel build 16.0.13522.10000 or higher to test this feature and provide feedback.
 Microsoft Excel's UI automation implementation is ever changing, and versions of Microsoft Office older than 16.0.13522.10000 may not expose enough information for this option to be of any use.
 
+==== Use enhanced event processing ====[UIAEnhancedEventProcessing]
+: Default
+  Enabled
+: Options
+  Default (Enabled), Disabled, Enabled
+:
+
+When this option is enabled, NVDA should remain responsive when being flooded with many UI Automation events, e.g. large amounts of text in a terminal.
+After changing this option, you will need to restart NVDA for the change to take effect.
+
 ==== Windows Console support ====[AdvancedSettingsConsoleUIA]
 : Default
   Automatic
@@ -2815,7 +2848,7 @@ Select an add-on from the "Available add-ons" or "Updatable add-ons" tab.
 Then use the update, install, or replace action to start the installation.
 
 You can also install multiple add-ons at once.
-This can be done by selecting multiple add-ons in the available add-ons tab, then activating the context menu on the selection and choosing the install action.
+This can be done by selecting multiple add-ons in the available add-ons tab, then activating the context menu on the selection and choosing the "Install selected add-ons" action.
 
 To install an add-on you have obtained outside of the Add-on Store, press the "Install from external source" button.
 This will allow you to browse for an add-on package (``.nvda-addon`` file) somewhere on your computer or on a network.
@@ -2831,6 +2864,7 @@ To remove an add-on, select the add-on from the list and use the Remove action.
 NVDA will ask you to confirm removal.
 As with installing, NVDA must be restarted for the add-on to be fully removed.
 Until you do, a status of "Pending removal" will be shown for that add-on in the list.
+As with installing, you can also remove multiple add-ons at once.
 
 +++ Disabling and Enabling Add-ons +++[AddonStoreDisablingEnabling]
 To disable an add-on, use the "disable" action.
@@ -2840,6 +2874,7 @@ For each use of the enable/disable action, add-on status changes to indicate wha
 If the add-on was previously "disabled", the status will show "enabled after restart".
 If the add-on was previously "enabled", the status will show "disabled after restart".
 Just like when you install or remove add-ons, you need to restart NVDA in order for changes to take effect.
+You can also enable or disable multiple add-ons at once by selecting multiple add-ons in the available add-ons tab, then activating the context menu on the selection and choosing the appropriate action.
 
 +++ Reviewing add-ons and reading reviews +++[AddonStoreReviews]
 Before installing an add-on, you may want to read reviews by others.
@@ -3523,6 +3558,19 @@ The following Braille displays are supported:
 -
 
 These displays do not support NVDA's automatic background braille display detection functionality.
+There is an option in the display's USB driver which can cause an issue with loading the display.
+Please try the following:
++ Please make sure that you have installed the [latest driver](https://www.papenmeier-rehatechnik.de/en/service/downloadcenter/software/articles/software-braille-devices.html).
++ Open the Windows Device Manager.
++ Scroll down the list to "USB Controllers" or "USB Devices".
++ Select "Papenmeier Braillex USB Device".
++ Open the properties and switch to the "Advanced" tab.
+Sometimes the "Advanced" tab doesn't appear.
+If this is the case, disconnect the braille display from the computer, exit NVDA, wait a moment and reconnect the braille display.
+Repeat this 4 to 5 times if necessary.
+If the "Advanced" tab is still not displayed, please restart the computer.
++ Disable the "Load VCP" option.
++
 
 Most devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
 The EAB can be moved in four directions where generally each direction has two switches.
@@ -4049,7 +4097,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | Route to braille cell | ``routing`` |
 | Report text formatting under braille cell | ``secondary routing`` |
 | Toggle the way context information is presented in braille | ``attribute1+attribute3`` |
-| Toggles between the speech modes of off, beep and talk | ``attribute2+attribute4`` |
+| Cycles between the speech modes of talk, on-demand, off and beeps | ``attribute2+attribute4`` |
 | Switches to the previous review mode (e.g. object, document or screen) | ``f1`` |
 | Switches to the next review mode (e.g. object, document or screen) | ``f2`` |
 | Moves the navigator object to the object containing it | ``f3`` |

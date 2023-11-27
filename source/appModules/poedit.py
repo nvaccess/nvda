@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2012-2023 Mesar Hameed, NV Access Limited, Leonard de Ruijter, Rui Fontes
+# Copyright (C) 2012-2023 Mesar Hameed, NV Access Limited, Leonard de Ruijter, Rui Fontes, Cyrille Bougot
 
 """App module for Poedit 3.4+.
 """
@@ -146,6 +146,7 @@ class AppModule(appModuleHandler.AppModule):
 			"Reports any notes for translators. If pressed twice, presents the notes in browse mode",
 		),
 		gesture="kb:control+shift+a",
+		speakOnDemand=True,
 	)
 	def script_reportAutoCommentsWindow(self, gesture):
 		self._reportControlScriptHelper(
@@ -171,6 +172,7 @@ class AppModule(appModuleHandler.AppModule):
 			"If pressed twice, presents the comment in browse mode",
 		),
 		gesture="kb:control+shift+c",
+		speakOnDemand=True,
 	)
 	def script_reportCommentsWindow(self, gesture):
 		self._reportControlScriptHelper(
@@ -195,6 +197,7 @@ class AppModule(appModuleHandler.AppModule):
 			"Reports the old source text, if any. If pressed twice, presents the text in browse mode",
 		),
 		gesture="kb:control+shift+o",
+		speakOnDemand=True,
 	)
 	def script_reportOldSourceText(self, gesture):
 		self._reportControlScriptHelper(
@@ -217,6 +220,7 @@ class AppModule(appModuleHandler.AppModule):
 			"Reports a translation warning, if any. If pressed twice, presents the warning in browse mode",
 		),
 		gesture="kb:control+shift+w",
+		speakOnDemand=True,
 	)
 	def script_reportTranslationWarning(self, gesture):
 		self._reportControlScriptHelper(
