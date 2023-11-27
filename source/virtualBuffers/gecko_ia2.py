@@ -681,7 +681,7 @@ class Gecko_ia2(VirtualBuffer):
 		ia2StartObj, childID = IAccessibleHandler.accessibleObjectFromEvent(
 			ia2StartWindow, winUser.OBJID_CLIENT, ia2StartID
 		)
-		assert (childID == 0), f"childID should be 0"
+		assert (childID == 0), "childID should be 0"
 		ia2StartObj = ia2StartObj.QueryInterface(IAccessibleText)
 		log.debug(f"ia2StartObj {ia2StartObj}")
 		textLen = 0
@@ -719,7 +719,7 @@ class Gecko_ia2(VirtualBuffer):
 			ia2EndObj, childID = IAccessibleHandler.accessibleObjectFromEvent(
 				ia2EndWindow, winUser.OBJID_CLIENT, ia2EndID
 			)
-			assert (childID == 0), f"childID should be 0"
+			assert (childID == 0), "childID should be 0"
 			ia2EndObj = ia2EndObj.QueryInterface(IAccessibleText)
 			log.debug(f"ia2EndObj {ia2EndObj}")
 		r = IA2TextSelection(ia2StartObj, ia2StartOffset, ia2EndObj, ia2EndOffset, False)
