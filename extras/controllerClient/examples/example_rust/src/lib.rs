@@ -1,5 +1,7 @@
-pub use nvda_bindgen::{error_status_t, wchar_t};
-use nvda_bindgen::{
+pub(crate) mod bindgen;
+
+pub use bindgen::{error_status_t, wchar_t};
+use bindgen::{
     nvdaController_brailleMessage, nvdaController_cancelSpeech, nvdaController_getProcessId,
     nvdaController_setOnSsmlMarkReachedCallback, nvdaController_speakSsml,
     nvdaController_speakText, nvdaController_testIfRunning, onSsmlMarkReachedFuncType,

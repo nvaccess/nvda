@@ -12,7 +12,6 @@ fn main() {
     let architecture_dir = Path::new(manifest_dir)
         .join("..")
         .join("..")
-        .join("..")
         .join(architecture)
         .canonicalize()
         .expect("Couldn't find architecture directory!");
