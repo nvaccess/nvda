@@ -1260,7 +1260,7 @@ class UIA(Window):
 		if self.TextInfo == UIATextInfo:
 			if self.UIAFrameworkId == 'XAML':
 				# This UIA element is being exposed by the XAML framework.
-				clsList.append(XamlEditableText)
+				clsList.append(InaccurateTextChangeEventEmittingEditableText)
 			if UIAHandler.autoSelectDetectionAvailable:
 				clsList.append(EditableTextWithAutoSelectDetection)
 			else:
@@ -2213,17 +2213,17 @@ class UIA(Window):
 			ui.message(dropTargetEffect)
 
 
-class XamlEditableText(EditableTextBase, UIA):
-	""" a UIA element with editable text exposed by the XAML framework."""
+class InaccurateTextChangeEventEmittingEditableText(EditableTextBase, UIA):
+	""" a UIA element with editable text exposed by the XAML framework or WPF."""
 
-	# XAML fires UIA textSelectionChange events before the caret position change is reflected
+	# XAML and WPF fire UIA textSelectionChange events before the caret position change is reflected
 	# in the related UIA text pattern.
-	# This means that, apart from deleting text, NVDA cannot rely on textSelectionChange (caret) events in XAML
-	# to detect if the caret has moved, as it occurs too early.
+	# This means that, apart from deleting text, NVDA cannot rely on textSelectionChange (caret) events
+	# in XAML or WPF to detect if the caret has moved, as it occurs too early.
 	caretMovementDetectionUsesEvents = False
 
 	def _backspaceScriptHelper(self, unit: str, gesture: inputCore.InputGesture):
-		"""As UIA text range objects from XAML don't mutate with backspace,
+		"""As UIA text range objects from XAML or WPF don't mutate with backspace,
 		comparing a text range copied from before backspace with a text range fetched after backspace
 		isn't reliable, as the ranges compare equal.
 		Therefore, we must always rely on events for caret change detection in this case.
@@ -2400,16 +2400,19 @@ class ToolTip(ToolTip, UIA):
 	event_UIA_toolTipOpened=ToolTip.event_show
 
 
-#WpfTextView fires name state changes once a second, plus when IUIAutomationTextRange::GetAttributeValue is called.
-#This causes major lags when using this control with Braille in NVDA. (#2759) 
-#For now just ignore the events.
-class WpfTextView(UIA):
+class WpfTextView(InaccurateTextChangeEventEmittingEditableText):
+	"""WpfTextView fires name state changes once a second,
+	plus when IUIAutomationTextRange::GetAttributeValue is called.
+	This causes major lag when using this control with Braille in NVDA. (#2759)
+	For now just ignore the events.
+	"""
 
 	def event_nameChange(self):
 		return
 
 	def event_stateChange(self):
 		return
+
 
 class SearchField(EditableTextWithSuggestions, UIA):
 	"""An edit field that presents suggestions based on a search term.
