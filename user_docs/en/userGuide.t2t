@@ -3523,6 +3523,19 @@ The following Braille displays are supported:
 -
 
 These displays do not support NVDA's automatic background braille display detection functionality.
+There is an option in the display's USB driver which can cause an issue with loading the display.
+Please try the following:
++ Please make sure that you have installed the [latest driver](https://www.papenmeier-rehatechnik.de/en/service/downloadcenter/software/articles/software-braille-devices.html).
++ Open the Windows Device Manager.
++ Scroll down the list to "USB Controllers" or "USB Devices".
++ Select "Papenmeier Braillex USB Device".
++ Open the properties and switch to the "Advanced" tab.
+Sometimes the "Advanced" tab doesn't appear.
+If this is the case, disconnect the braille display from the computer, exit NVDA, wait a moment and reconnect the braille display.
+Repeat this 4 to 5 times if necessary.
+If the "Advanced" tab is still not displayed, please restart the computer.
++ Disable the "Load VCP" option.
++
 
 Most devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
 The EAB can be moved in four directions where generally each direction has two switches.
