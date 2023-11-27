@@ -93,7 +93,7 @@ env.Append(
 		# Ignore all warnings as the code is not ours.
 		'/W0',
 		# Preprocessor definitions. Migrated from 'nvdaHelper/espeak/config.h'
-		'/DPACKAGE_VERSION=\\"1.52-dev\\"',  # See 'include/espeak/src/windows/config.h'
+		'/DPACKAGE_VERSION=\\"1.52-dev 530bf0ab\\"',  # See 'include/espeak/src/windows/config.h'
 		'/DHAVE_STDINT_H=1',
 		'/D__WIN32__#1',
 		'/DLIBESPEAK_NG_EXPORT',

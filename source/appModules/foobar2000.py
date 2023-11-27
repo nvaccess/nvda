@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2009-2023 NV Access Limited, Aleksey Sadovoy, James Teh, Joseph Lee, Tuukka Ojala,
-# Bram Duvigneau
+# Bram Duvigneau, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -19,6 +19,7 @@ from datetime import timedelta
 from logHandler import log
 import ui
 from utils.localisation import TimeOutputFormat
+from scriptHandler import script
 
 if TYPE_CHECKING:
 	from inputCore import InputGesture  # noqa: F401
@@ -146,6 +147,13 @@ class AppModule(appModuleHandler.AppModule):
 			ui.message(_("No track playing"))
 		return elapsedAndTotalTime
 
+	@script(
+		# Translators: The description of an NVDA command for reading the remaining time of the currently playing
+		# track in Foobar 2000.
+		description=_("Reports the remaining time of the currently playing track, if any"),
+		gesture="kb:control+shift+r",
+		speakOnDemand=True,
+	)
 	def script_reportRemainingTime(self, gesture: "InputGesture"):
 		elapsedTime, totalTime = self.getElapsedAndTotalIfPlaying()
 		parsedElapsedTime = None
@@ -163,9 +171,13 @@ class AppModule(appModuleHandler.AppModule):
 			# Translators: Reported if the remaining time can not be calculated in Foobar2000
 			ui.message(_("Remaining time not available"))
 
-	# Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
-	script_reportRemainingTime.__doc__ = _("Reports the remaining time of the currently playing track, if any")
-
+	@script(
+		# Translators: The description of an NVDA command for reading the elapsed time of the currently playing
+		# track in Foobar 2000.
+		description=_("Reports the elapsed time of the currently playing track, if any"),
+		gesture="kb:control+shift+e",
+		speakOnDemand=True,
+	)
 	def script_reportElapsedTime(self, gesture: "InputGesture"):
 		elapsedTime = self.getElapsedAndTotalIfPlaying().elapsed
 		if elapsedTime:
@@ -177,9 +189,13 @@ class AppModule(appModuleHandler.AppModule):
 			# Translators: Reported if the elapsed time is not available in Foobar2000
 			ui.message(_("Elapsed time not available"))
 
-	# Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
-	script_reportElapsedTime.__doc__ = _("Reports the elapsed time of the currently playing track, if any")
-
+	@script(
+		# Translators: The description of an NVDA command for reading the length of the currently playing track in
+		# Foobar 2000.
+		description=_("Reports the length of the currently playing track, if any"),
+		gesture="kb:control+shift+t",
+		speakOnDemand=True,
+	)
 	def script_reportTotalTime(self, gesture: "InputGesture"):
 		totalTime = self.getElapsedAndTotalIfPlaying().total
 		if totalTime:
@@ -190,12 +206,3 @@ class AppModule(appModuleHandler.AppModule):
 		else:
 			# Translators: Reported if the total time is not available in Foobar2000
 			ui.message(_("Total time not available"))
-
-	# Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
-	script_reportTotalTime.__doc__ = _("Reports the length of the currently playing track, if any")
-
-	__gestures = {
-		"kb:control+shift+r": "reportRemainingTime",
-		"kb:control+shift+e": "reportElapsedTime",
-		"kb:control+shift+t": "reportTotalTime",
-	}
