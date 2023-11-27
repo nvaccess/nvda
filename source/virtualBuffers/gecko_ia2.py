@@ -6,7 +6,6 @@
 from typing import (
 	Iterable,
 	Optional,
-	Tuple,
 )
 import typing
 import weakref
