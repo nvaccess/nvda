@@ -481,17 +481,18 @@ class UIAHandler(COMObject):
 					pfm.insertEntry(index,e)
 			# #8009: use appropriate interface based on highest supported interface.
 			# #8338: made easier by traversing interfaces supported on Windows 8 and later in reverse.
-			for interface in reversed(CUIAutomation8._com_interfaces_):
+			for interface in reversed(UIA.CUIAutomation8._com_interfaces_):
 				try:
-					self.clientObject=self.clientObject.QueryInterface(interface)
+					self.clientObject = self.clientObject.QueryInterface(interface)
 					break
 				except COMError:
 					pass
-			# Windows 10 RS5 provides new performance features for UI Automation including event coalescing and connection recovery. 
+			# Windows 10 RS5 provides new performance features for UI Automation
+			# including event coalescing and connection recovery.
 			# Enable all of these where available.
-			if isinstance(self.clientObject,IUIAutomation6):
-				self.clientObject.CoalesceEvents=CoalesceEventsOptions_Enabled
-				self.clientObject.ConnectionRecoveryBehavior=ConnectionRecoveryBehaviorOptions_Enabled
+			if isinstance(self.clientObject, UIA.IUIAutomation6):
+				self.clientObject.CoalesceEvents = UIA.CoalesceEventsOptions_Enabled
+				self.clientObject.ConnectionRecoveryBehavior = UIA.ConnectionRecoveryBehaviorOptions_Enabled
 			log.info(f"UIAutomation: {self.clientObject.__class__.__mro__[1].__name__}")
 			self.windowTreeWalker=self.clientObject.createTreeWalker(self.clientObject.CreateNotCondition(self.clientObject.CreatePropertyCondition(UIA_NativeWindowHandlePropertyId,0)))
 			self.windowCacheRequest=self.clientObject.CreateCacheRequest()
