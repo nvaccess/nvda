@@ -1028,8 +1028,6 @@ class UIA(Window):
 		):
 			# Bounces focus from a netUI dead placeholder menu item when no item is selected up to the menu itself.
 			clsList.append(PlaceholderNetUITWMenuItem)
-		elif UIAClassName == "WpfTextView":
-			clsList.append(WpfTextView)
 		elif (
 			UIAClassName == "ListViewItem"
 			and self.UIAElement.cachedFrameworkID == "WPF"
@@ -1261,6 +1259,8 @@ class UIA(Window):
 			if self.UIAFrameworkId == 'XAML':
 				# This UIA element is being exposed by the XAML framework.
 				clsList.append(XamlEditableText)
+			elif UIAClassName == "WpfTextView":
+				clsList.append(WpfTextView)
 			if UIAHandler.autoSelectDetectionAvailable:
 				clsList.append(EditableTextWithAutoSelectDetection)
 			else:
