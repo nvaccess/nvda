@@ -888,7 +888,7 @@ class _FakeTableCell(NVDAObject):
 		states.discard(controlTypes.State.CHECKED)
 		return states
 
-	def _isEqual(self, other):
+	def _isEqual(self, other: "_FakeTableCell") -> bool:
 		return (
 			self.parent == other.parent
 			and self.columnNumber == other.columnNumber
