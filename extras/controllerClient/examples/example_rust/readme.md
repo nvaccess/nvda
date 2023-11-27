@@ -1,11 +1,11 @@
 # NVDA Rust Example
 
-This Rust workspace contains example code to interface with `nvdaControllerClient`.
-To get started:
+This Rust crate contains example code to interface with `nvdaControllerClient`.
+The following instructions assume you have Rust isntalled.
 
-1. In the `bindgen` crate folder:
-	* Add a `lib` folder containing `nvdaControllerClient.lib` matching the architecture of your Rust toolchain
-	* Add a `include` folder containing `nvdaController.h`
-1. Run `cargo test`. While this workspace has no tests, it ensures that our example is build
-1. Copy ``nvdaControllerClient.dll` to `target/debug/examples`
-1. Run `cargo run --example example_rust`
+To run the example:
+
+1. Ensure the client library is built with `scons client` from the root of the NVDA repository.
+1. Run `cargo test`. While this crate has no tests, it ensures that our example is build
+1. Navigate to the architecture folder within the `controllerClient` folder, e.g. `..\..\x64`
+1. Run `cargo run --example example_rust --manifest-path ..\examples\example_rust\Cargo.toml`
