@@ -1,7 +1,7 @@
 # NVDA Rust Example
 
 This Rust crate contains example code to interface with `nvdaControllerClient`.
-The following instructions assume you have Rust isntalled.
+The following instructions assume you have Rust installed.
 
 To run the example:
 

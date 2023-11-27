@@ -1,3 +1,7 @@
+// Copyright(C) 2023 NV Access Limited, Leonard de Ruijter
+// This file is covered by the GNU Lesser General Public License, version 2.1.
+// See the file license.txt for more details.
+
 use std::path::PathBuf;
 use std::{env, path::Path};
 
