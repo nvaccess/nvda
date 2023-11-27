@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
-# Davy Kager, Leonard de Ruijter
+# Davy Kager, Leonard de Ruijter, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -876,7 +876,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_presentationType(self):
 		states=self.states
-		if controlTypes.State.INVISIBLE in states or controlTypes.State.UNAVAILABLE in states:
+		if controlTypes.State.INVISIBLE in states:
 			return self.presType_unavailable
 		role = self.role
 		landmark = self.landmark

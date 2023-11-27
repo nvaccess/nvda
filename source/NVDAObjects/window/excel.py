@@ -1671,7 +1671,9 @@ class ExcelCell(ExcelBase):
 	@script(
 		# Translators: the description  for a script for Excel
 		description=_("Reports the note on the current cell"),
-		gesture="kb:NVDA+alt+c")
+		gesture="kb:NVDA+alt+c",
+		speakOnDemand=True,
+	)
 	def script_reportComment(self,gesture):
 		commentObj=self.excelCellObject.comment
 		text=commentObj.text() if commentObj else None
