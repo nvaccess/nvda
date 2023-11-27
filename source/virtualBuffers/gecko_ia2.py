@@ -674,7 +674,7 @@ class Gecko_ia2(VirtualBuffer):
 						continue
 			break
 		if ia2StartOffset is None:
-			raise NotImplementedError
+			raise NotImplementedError(""No ia2TextStartOffset in any field")
 		log.debug(f"ia2StartWindow: {ia2StartWindow}")
 		log.debug(f"ia2StartID: {ia2StartID}")
 		log.debug(f"ia2StartOffset: {ia2StartOffset}")
@@ -708,7 +708,7 @@ class Gecko_ia2(VirtualBuffer):
 					continue
 			break
 		if ia2EndOffset is None:
-			raise NotImplementedError
+			raise NotImplementedError(""No ia2TextEndOffset in any field")
 		log.debug(f"ia2EndWindow: {repr(ia2EndWindow)}")
 		log.debug(f"ia2EndID: {repr(ia2EndID)}")
 		log.debug(f"ia2EndOffset: {ia2EndOffset}")
