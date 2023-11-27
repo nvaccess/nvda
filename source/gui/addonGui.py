@@ -20,6 +20,7 @@ from .message import displayDialogAsModal
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 import gui.contextHelp
 import ui
+import systemUtils
 
 
 def promptUserForRestart():
@@ -217,7 +218,7 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 	try:
 		# Use context manager to ensure that `done` and `Destroy` are called on the progress dialog afterwards
 		with doneAndDestroy(progressDialog):
-			gui.ExecAndPump(addonHandler.installAddonBundle, bundle)
+			systemUtils.ExecAndPump(addonHandler.installAddonBundle, bundle)
 			if prevAddon:
 				from addonStore.dataManager import addonDataManager
 				assert addonDataManager

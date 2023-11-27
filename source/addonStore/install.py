@@ -12,6 +12,7 @@ from typing import (
 	Optional,
 )
 
+import systemUtils
 from logHandler import log
 
 from .dataManager import (
@@ -83,7 +84,7 @@ def installAddon(addonPath: PathLike) -> None:
 	prevAddon = _getPreviouslyInstalledAddonById(bundle)
 
 	try:
-		installAddonBundle(bundle)
+		systemUtils.ExecAndPump(installAddonBundle, bundle)
 		if prevAddon:
 			prevAddon.requestRemove()
 	except AddonError:  # Handle other exceptions as they are known
