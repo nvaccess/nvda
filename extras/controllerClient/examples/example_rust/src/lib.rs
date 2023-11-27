@@ -1,4 +1,4 @@
-pub(crate) mod bindgen;
+mod bindgen;
 
 pub use bindgen::{error_status_t, wchar_t};
 use bindgen::{
