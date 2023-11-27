@@ -48,6 +48,16 @@ class SupportsVersionCheck(Protocol):
 	name: str
 
 	@property
+	def _hasOverriddenCompat(self) -> bool:
+		"""If True, this add-on has been manually overriden. The affects of override may be pending restart"""
+		import addonHandler
+		from addonStore.models.status import AddonStateCategory
+		return (
+			self.name in addonHandler.state[AddonStateCategory.OVERRIDE_COMPATIBILITY]
+			or self.name in addonHandler.state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY]
+		)
+
+	@property
 	def overrideIncompatibility(self) -> bool:
 		"""If True, NVDA should enable this add-on where it would normally be blocked due to incompatibility."""
 		from addonHandler import AddonStateCategory, state

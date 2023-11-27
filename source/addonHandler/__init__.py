@@ -469,14 +469,6 @@ class AddonBase(SupportsAddonState, SupportsVersionCheck, ABC):
 		from addonStore.models.addon import _createGUIModelFromManifest
 		return _createGUIModelFromManifest(self)
 
-	@property
-	def _hasOverriddenCompat(self) -> bool:
-		"""If True, this add-on has been manually overriden. The affects of override may be pending restart"""
-		return (
-			self.name in state[AddonStateCategory.OVERRIDE_COMPATIBILITY]
-			or self.name in state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY]
-		)
-
 
 class Addon(AddonBase):
 	""" Represents an Add-on available on the file system."""
