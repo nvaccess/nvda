@@ -21,3 +21,4 @@ class SystemErrorCodes(enum.IntEnum):
 	NOT_READY = 0x15
 	INVALID_PARAMETER = 0x57
 	MOD_NOT_FOUND = 0x7E
+	CANCELLED = 0x4C7

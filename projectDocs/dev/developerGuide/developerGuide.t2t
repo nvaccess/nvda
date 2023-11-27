@@ -532,6 +532,8 @@ The following keyword arguments can be used when applying the script decorator:
 - resumeSayAllMode: The say all mode that should be resumed when active before executing this script.
   The constants for say all mode can be found in the CURSOR enum in speech.sayAll.
   If resumeSayAllMode is not specified, say all does not resume after this script.
+- speakOnDemand: A boolean indicating whether this script should produce speech when called while speech mode is "on-demand".
+  This option defaults to False.
 -
 
 Though the script decorator makes the script definition process a lot easier, there are more ways of binding gestures and setting script properties.

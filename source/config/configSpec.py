@@ -31,13 +31,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [speech]
 	# The synthesizer to use
 	synth = string(default=auto)
-	# symbolLevel values:
-	#  NONE = 0
-	#  SOME = 100
-	#  MOST = 200
-	#  ALL = 300
-	#  CHAR = 1000
-	#  UNCHANGED = -1
+	# symbolLevel: One of the characterProcessing.SymbolLevel values.
 	symbolLevel = integer(default=100)
 	trustVoiceLanguage = boolean(default=true)
 	includeCLDR = boolean(default=True)
@@ -255,6 +249,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	allowInChromium = integer(0, 3, default=0)
 	# 0:default (where suitable), 1:Only when necessary, 2: where suitable, 3: always
 	allowInMSWord = integer(0, 3, default=0)
+	enhancedEventProcessing = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 
 [annotations]
 	reportDetails = boolean(default=true)
