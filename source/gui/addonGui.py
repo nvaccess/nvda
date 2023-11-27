@@ -4,13 +4,7 @@
 # Copyright (C) 2012-2023 NV Access Limited, Beqa Gozalishvili, Joseph Lee,
 # Babbage B.V., Ethan Holliger, Arnold Loubriat, Thomas Stivers
 
-import os
-from typing import (
-	List,
-	Optional,
-)
 import weakref
-from locale import strxfrm
 
 import addonAPIVersion
 import wx
@@ -20,7 +14,6 @@ import gui
 from addonHandler import Addon
 from logHandler import log
 import addonHandler
-import globalVars
 from . import guiHelper
 from . import nvdaControls
 from .message import displayDialogAsModal
@@ -134,6 +127,11 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 	@return True on success or False on failure.
 	@note See also L{addonStore.install.installAddon}
 	"""
+	from gui.addonStoreGui.controls.messageDialogs import (
+		_showAddonRequiresNVDAUpdateDialog,
+		_showConfirmAddonInstallDialog,
+		_shouldInstallWhenAddonTooOldDialog,
+	)
 	try:
 		bundle = addonHandler.AddonBundle(addonPath)
 	except:
@@ -148,10 +146,9 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 		return False  # Exit early, can't install an invalid bundle
 
 	if not bundle._hasGotRequiredSupport:
-		_showAddonRequiresNVDAUpdateDialog(parentWindow, bundle)
+		_showAddonRequiresNVDAUpdateDialog(parentWindow, bundle._addonGuiModel)
 		return False  # Exit early, addon does not have required support
 	elif bundle.canOverrideCompatibility:
-		from gui.addonStoreGui.controls.messageDialogs import _shouldInstallWhenAddonTooOldDialog
 		if _shouldInstallWhenAddonTooOldDialog(parentWindow, bundle._addonGuiModel):
 			# Install incompatible version
 			if not bundle.overrideIncompatibility:
@@ -159,7 +156,7 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 		else:
 			# Exit early, addon is not up to date with the latest API version.
 			return False
-	elif wx.YES != _showConfirmAddonInstallDialog(parentWindow, bundle):
+	elif wx.YES != _showConfirmAddonInstallDialog(parentWindow, bundle._addonGuiModel):
 		return False  # Exit early, User changed their mind about installation.
 
 	from addonStore.install import _getPreviouslyInstalledAddonById
@@ -255,53 +252,6 @@ def handleRemoteAddonInstall(addonPath: str):
 	if installAddon(gui.mainFrame, addonPath):
 		wx.CallAfter(promptUserForRestart)
 	gui.mainFrame.postPopup()
-
-
-def _showAddonRequiresNVDAUpdateDialog(
-		parent: wx.Window,
-		bundle: addonHandler.AddonBundle
-) -> None:
-	incompatibleMessage = _(
-		# Translators: The message displayed when installing an add-on package is prohibited,
-		# because it requires a later version of NVDA than is currently installed.
-		"Installation of {summary} {version} has been blocked. The minimum NVDA version required for "
-		"this add-on is {minimumNVDAVersion}, your current NVDA version is {NVDAVersion}"
-	).format(
-		summary=bundle.manifest['summary'],
-		version=bundle.manifest['version'],
-		minimumNVDAVersion=addonAPIVersion.formatForGUI(bundle.minimumNVDAVersion),
-		NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
-	)
-	from gui.addonStoreGui.controls.messageDialogs import _showAddonInfo
-	displayDialogAsModal(ErrorAddonInstallDialog(
-		parent=parent,
-		# Translators: The title of a dialog presented when an error occurs.
-		title=_("Add-on not compatible"),
-		message=incompatibleMessage,
-		showAddonInfoFunction=lambda: _showAddonInfo(bundle._addonGuiModel)
-	))
-
-
-def _showConfirmAddonInstallDialog(
-		parent: wx.Window,
-		bundle: addonHandler.AddonBundle
-) -> int:
-	confirmInstallMessage = _(
-		# Translators: A message asking the user if they really wish to install an addon.
-		"Are you sure you want to install this add-on?\n"
-		"Only install add-ons from trusted sources.\n"
-		"Addon: {summary} {version}"
-	).format(**bundle.manifest)
-
-	from gui.addonStoreGui.controls.messageDialogs import _showAddonInfo
-	return displayDialogAsModal(ConfirmAddonInstallDialog(
-		parent=parent,
-		# Translators: Title for message asking if the user really wishes to install an Addon.
-		title=_("Add-on Installation"),
-		message=confirmInstallMessage,
-		showAddonInfoFunction=lambda: _showAddonInfo(bundle._addonGuiModel)
-	))
-
 
 class IncompatibleAddonsDialog(
 		DpiScalingHelperMixinWithoutInit,
@@ -414,7 +364,7 @@ class IncompatibleAddonsDialog(
 
 	def refreshAddonsList(self):
 		self.addonsList.DeleteAllItems()
-		self.curAddons: List[Addon] = []
+		self.curAddons: list[Addon] = []
 		for idx, addon in enumerate(self.unknownCompatibilityAddonsList):
 			self.addonsList.Append((
 				addon.manifest['summary'],
