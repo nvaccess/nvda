@@ -2214,7 +2214,6 @@ class UIA(Window):
 
 
 class InaccurateTextChangeEventEmittingEditableText(EditableTextBase, UIA):
-	""" a UIA element with editable text exposed by the XAML framework or WPF."""
 
 	# XAML and WPF fire UIA textSelectionChange events before the caret position change is reflected
 	# in the related UIA text pattern.
@@ -2236,6 +2235,7 @@ class InaccurateTextChangeEventEmittingEditableText(EditableTextBase, UIA):
 
 
 class XamlEditableText(InaccurateTextChangeEventEmittingEditableText):
+	"""An UIA element with editable text exposed by the XAML framework."""
 	...
 
 
