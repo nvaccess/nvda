@@ -749,7 +749,7 @@ def _objectSpeech_calculateAllowedProps(
 		reason: OutputReason,
 		shouldReportTextContent: bool,
 		objRole: controlTypes.Role,
-):
+) -> dict[str, bool]:
 	allowProperties = {
 		'name': True,
 		'role': True,
