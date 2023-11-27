@@ -16,7 +16,7 @@ from addonStore.models.addon import (
 	_AddonManifestModel,
 )
 import config
-from gui.addonGui import ErrorAddonInstallDialog
+from gui.addonGui import ConfirmAddonInstallDialog, ErrorAddonInstallDialog
 from gui.contextHelp import ContextHelpMixin
 from gui.guiHelper import (
 	BoxSizerHelper,
@@ -166,6 +166,54 @@ def _shouldEnableWhenAddonTooOldDialog(
 		showAddonInfoFunction=lambda: _showAddonInfo(addon)
 	))
 	return res == wx.YES
+
+
+def _showAddonRequiresNVDAUpdateDialog(
+		parent: wx.Window,
+		addon: _AddonGUIModel
+) -> None:
+	incompatibleMessage = _(
+		# Translators: The message displayed when installing an add-on package is prohibited,
+		# because it requires a later version of NVDA than is currently installed.
+		"Installation of {summary} {version} has been blocked. The minimum NVDA version required for "
+		"this add-on is {minimumNVDAVersion}, your current NVDA version is {NVDAVersion}"
+		).format(
+	summary=addon.displayName,
+	version=addon.addonVersionName,
+	minimumNVDAVersion=addonAPIVersion.formatForGUI(addon.minimumNVDAVersion),
+	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
+	)
+	displayDialogAsModal(ErrorAddonInstallDialog(
+		parent=parent,
+		# Translators: The title of a dialog presented when an error occurs.
+		title=_("Add-on not compatible"),
+		message=incompatibleMessage,
+		showAddonInfoFunction=lambda: _showAddonInfo(addon)
+	))
+
+
+def _showConfirmAddonInstallDialog(
+		parent: wx.Window,
+		addon: _AddonGUIModel
+) -> int:
+	confirmInstallMessage = _(
+		# Translators: A message asking the user if they really wish to install an addon.
+		"Are you sure you want to install this add-on?\n"
+		"Only install add-ons from trusted sources.\n"
+		"Addon: {summary} {version}"
+		).format(
+	summary=addon.displayName,
+	version=addon.addonVersionName,
+	)
+
+	return displayDialogAsModal(ConfirmAddonInstallDialog(
+		parent=parent,
+		# Translators: Title for message asking if the user really wishes to install an Addon.
+		title=_("Add-on Installation"),
+		message=confirmInstallMessage,
+		showAddonInfoFunction=lambda: _showAddonInfo(addon)
+	))
+
 
 
 def _showAddonInfo(addon: _AddonGUIModel) -> None:
