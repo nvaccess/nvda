@@ -8,8 +8,10 @@ What's New in NVDA
 
 == New Features ==
 - Added support for Bluetooth Low Energy HID Braille displays. (#15470)
-- The Add-on Store now supports installing add-ons in bulk by selecting multiple add-ons. (#15350)
+- The Add-on Store now supports bulk actions (e.g. installing, enabling add-ons) by selecting multiple add-ons. (#15350, #15623, @CyrilleB79)
 - From the add-on store, it's possible to open a dedicated webpage to see or provide feedback about the selected add-on. (#15576, @nvdaes)
+- A new "on-demand" speech mode has been added.
+When speech is on-demand, NVDA does not speak automatically (e.g. when moving the cursor) but still speaks when calling commands whose goal is explicitly to report something (e.g. report window title). (#481, @CyrilleB79)
 -
 
 
@@ -20,6 +22,7 @@ Windows 8.1 is the minimum Windows version supported. (#15544)
   - Updated LibLouis braille translator to 3.27.0. (#15435, @codeofdusk)
     - Added new Thai and Romanian Braille tables.
     -
+  - eSpeak NG has been updated to 1.52-dev commit ``530bf0abf``. (#15036)
   - CLDR emoji and symbol annotations has been updated to version 44.0. (#15712, @OzancanKaratas)
   - Updated Java Access Bridge to 17.0.9+8Zulu (17.46.19). (#15744)
   -
@@ -33,6 +36,7 @@ This option now announces additional relevant information about an object when t
 - NVDA's support for [Poedit https://poedit.net] is overhauled for Poedit version 3 and above.
 Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on enhanced accessibility in Poedit, such as shortcuts to read translator notes and comments. (#15313, #7303, @LeonarddeR)
 - Braille viewer and speech viewer are now disabled in secure mode. (#15680)
+- During object navigation, disabled (unavailable) objects will not be ignored anymore. (#15477, @CyrilleB79)
 -
 
 == Bug Fixes ==
@@ -62,7 +66,11 @@ It is also updated with UIA enabled, when typing text and braille is tethered to
 - It is not possible anymore to overwrite NVDA's Python console history. (#15792, @CyrilleB79)
 - In Word, the landing cell will now be correctly reported when using the native Word commands for table navigation ``alt+home``, ``alt+end``, ``alt+pageUp`` and ``alt+pageDown``. (#15805, @CyrilleB79)
 - NVDA now resumes audio if the configuration of the output device changes or another application releases exclusive control of the device. (#15758, #15775, @jcsteh)
+- NVDA should remain responsive when being flooded with many UI Automation events, e.g. large amounts of text in a terminal. (#14888)
+ - This new behavior can be disabled using the new Use enhanced event processing setting in NVDA's advanced settings.
+ -
 - Contracted braille input works properly again. (#15773, @aaclause)
+- NVDA is again able to track the focus in applications running within Windows Defender Application Guard (WDAG). (#15164)
 -
 
 == Changes for Developers ==
@@ -92,7 +100,19 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
  - Example: ``speech.speakSsml('<speak><prosody pitch="200%">hello</prosody><break time="500ms" /><prosody rate="50%">John</prosody></speak>')``
  - The SSML parsing capabilities are backed by the ``SsmlParser`` class in the ``speechXml`` module.
  -
-- The file names of the NVDA Controller Library no longer contain a suffix denoting the architecture, i.e. ``nvdaControllerClient32/64.dll`` are now called ``nvdaControllerClient.dll``. (#15718, #15717, @LeonarddeR)
+- Changes to the NVDA Controller Client library:
+ - The file names of the library no longer contain a suffix denoting the architecture, i.e. ``nvdaControllerClient32/64.dll`` are now called ``nvdaControllerClient.dll``. (#15718, #15717, @LeonarddeR)
+ - Added the following functions to the controller client: (#15734, #11028, #5638, @LeonarddeR)
+  - ``nvdaController_getProcessId``: To get the process id (PID) of the current instance of NVDA the controller client is using.
+  - ``nvdaController_speakSsml``: To instruct NVDA to speak according to the given SSML. This function also supports:
+    - Providing the symbol level.
+    - Providing the priority of speech to be spoken.
+    - Speaking both synchronously (blocking) and asynchronously (instant return).
+    -
+  - ``nvdaController_setOnSsmlMarkReachedCallback``: To register a callback of type ``onSsmlMarkReachedFuncType`` that is called in synchronous mode for every ``<mark />`` tag encountered in the SSML sequence provided to ``nvdaController_speakSsml``.
+  -
+ - Note: the new functions in the controller client only support NVDA 2024.1 and above.
+ -
 - Updated ``include`` dependencies:
   - detours to ``4b8c659f549b0ab21cf649377c7a84eb708f5e68``. (#15695)
   - ia2 to ``3d8c7f0b833453f761ded6b12d8be431507bfe0b``. (#15695)
@@ -103,6 +123,10 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
 - Device info yielded by ``hwPortUtils.listUsbDevices`` now contain the bus reported description of the USB device (key ``busReportedDeviceDescription``). (#15764, @LeonarddeR)
 - For USB serial devices, ``bdDetect.getConnectedUsbDevicesForDriver`` and ``bdDetect.getDriversForConnectedUsbDevices`` now yield device matches containing a ``deviceInfo`` dictionary enriched with data about the USB device, such as ``busReportedDeviceDescription``. (#15764, @LeonarddeR)
 - When the configuration file ``nvda.ini`` is corrupted, a backup copy is saved before it is reinitialized. (#15779, @CyrilleB79)
+- When defining a script with the script decorator, the ``speakOnDemand`` boolean argument can be specified to control if a script should speak while in "on-demand" speech mode. (#481, @CyrilleB79)
+  - Scripts that provide information (e.g. say window title, report time/date) should speak in the "on-demand" mode.
+  - Scripts that perform an action (e.g. move the cursor, change a parameter) should not speak in the "on-demand" mode.
+  -
 -
 
 === API Breaking Changes ===
