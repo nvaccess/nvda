@@ -273,12 +273,14 @@ class Gecko_ia2(VirtualBuffer):
 	def script_toggleNativeAppSelectionMode(self, gesture: inputCore.InputGesture):
 		self._nativeAppSelectionMode = not self._nativeAppSelectionMode
 		if self._nativeAppSelectionMode:
+			# Translators: reported when native selection mode is toggled on.
 			ui.message(_("Native app selection mode enabled."))
 			try:
 				self.updateAppSelection()
 			except NotImplementedError:
 				pass
 		else:
+			# Translators: reported when native selection mode is toggled off.
 			ui.message(_("Native app selection mode disabled."))
 			try:
 				self.clearAppSelection()
@@ -290,6 +292,7 @@ class Gecko_ia2(VirtualBuffer):
 	)
 	def script_copyToClipboard(self, gesture: inputCore.InputGesture):
 		if self._nativeAppSelectionMode:
+			# Translators: Reported when browse mode passes the copy to clipboard command through to the application.
 			ui.message(_("native copy"))
 			gesture.send()
 		else:
