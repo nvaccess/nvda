@@ -37,58 +37,49 @@ pub enum SymbolLevel {
 
 pub type OnSsmlMarkReached = onSsmlMarkReachedFuncType;
 
-pub fn test_if_running() -> Result<()> {
-    let res = WIN32_ERROR(unsafe { nvdaController_testIfRunning() });
+fn is_succes(error: u32) -> Result<()> {
+    let res = WIN32_ERROR(error);
     if res != ERROR_SUCCESS {
         return Err(res.into());
     }
     Ok(())
 }
 
+pub fn test_if_running() -> Result<()> {
+    let res = unsafe { nvdaController_testIfRunning() };
+    is_succes(res)
+}
+
 pub fn cancel_speech() -> Result<()> {
-    let res = WIN32_ERROR(unsafe { nvdaController_cancelSpeech() });
-    if res != ERROR_SUCCESS {
-        return Err(res.into());
-    }
-    Ok(())
+    let res = unsafe { nvdaController_cancelSpeech() };
+    is_succes(res)
 }
 
 pub fn speak_text(text: &str, interrupt: bool) -> Result<()> {
     if interrupt {
-        cancel_speech()?
+        cancel_speech()?;
     }
     let text = HSTRING::from(text);
-    let res = WIN32_ERROR(unsafe { nvdaController_speakText(text.as_ptr()) });
-    if res != ERROR_SUCCESS {
-        return Err(res.into());
-    }
-    Ok(())
+    let res = unsafe { nvdaController_speakText(text.as_ptr()) };
+    is_succes(res)
 }
 
 pub fn braille_message(message: &str) -> Result<()> {
     let message = HSTRING::from(message);
-    let res = WIN32_ERROR(unsafe { nvdaController_brailleMessage(message.as_ptr()) });
-    if res != ERROR_SUCCESS {
-        return Err(res.into());
-    }
-    Ok(())
+    let res = unsafe { nvdaController_brailleMessage(message.as_ptr()) };
+    is_succes(res)
 }
 
 pub fn get_process_id() -> Result<u32> {
     let mut pid: u32 = 0;
-    let res = WIN32_ERROR(unsafe { nvdaController_getProcessId(&mut pid) });
-    if res != ERROR_SUCCESS {
-        return Err(res.into());
-    }
+    let res = unsafe { nvdaController_getProcessId(&mut pid) };
+    is_succes(res)?;
     Ok(pid)
 }
 
 fn set_on_ssml_mark_reached_callback(callback: OnSsmlMarkReached) -> Result<()> {
-    let res = WIN32_ERROR(unsafe { nvdaController_setOnSsmlMarkReachedCallback(callback) });
-    if res != ERROR_SUCCESS {
-        return Err(res.into());
-    }
-    Ok(())
+    let res = unsafe { nvdaController_setOnSsmlMarkReachedCallback(callback) };
+    is_succes(res)
 }
 
 pub fn speak_ssml(
@@ -99,22 +90,19 @@ pub fn speak_ssml(
     callback: onSsmlMarkReachedFuncType,
 ) -> Result<()> {
     if callback.is_some() {
-        set_on_ssml_mark_reached_callback(callback)?
+        set_on_ssml_mark_reached_callback(callback)?;
     }
     let ssml = HSTRING::from(ssml);
-    let res = WIN32_ERROR(unsafe {
+    let res = unsafe {
         nvdaController_speakSsml(
             ssml.as_ptr(),
             symbol_level as SYMBOL_LEVEL,
             priority as SPEECH_PRIORITY,
             asynchronous.into(),
         )
-    });
-    if res != ERROR_SUCCESS {
-        return Err(res.into());
-    }
+    };
     if callback.is_some() {
-        set_on_ssml_mark_reached_callback(None)?
+        set_on_ssml_mark_reached_callback(None)?;
     }
-    Ok(())
+    is_succes(res)
 }
