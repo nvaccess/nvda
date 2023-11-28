@@ -222,7 +222,6 @@ def resetConfiguration(factoryDefaults=False):
 	import vision
 	import inputCore
 	import bdDetect
-	import hwIo
 	import tones
 	log.debug("Terminating vision")
 	vision.terminate()
@@ -236,8 +235,6 @@ def resetConfiguration(factoryDefaults=False):
 	tones.terminate()
 	log.debug("Terminating background braille display detection")
 	bdDetect.terminate()
-	log.debug("Terminating background i/o")
-	hwIo.terminate()
 	log.debug("terminating addonHandler")
 	addonHandler.terminate()
 	log.debug("Reloading config")
@@ -254,9 +251,6 @@ def resetConfiguration(factoryDefaults=False):
 	from addonStore import dataManager
 	dataManager.initialize()
 	addonHandler.initialize()
-	# Hardware background i/o
-	log.debug("initializing background i/o")
-	hwIo.initialize()
 	log.debug("Initializing background braille display detection")
 	bdDetect.initialize()
 	# Tones
