@@ -5,7 +5,7 @@
 use nvda::{error_status_t, wchar_t, SpeechPriority, SymbolLevel};
 use std::thread::sleep;
 use std::time::Duration;
-use windows::core::PWSTR;
+use windows::core::{Result, PWSTR};
 
 #[no_mangle]
 unsafe extern "C" fn on_mark_reached(name: *const wchar_t) -> error_status_t {
@@ -14,20 +14,17 @@ unsafe extern "C" fn on_mark_reached(name: *const wchar_t) -> error_status_t {
     0
 }
 
-fn main() {
+fn main() -> Result<()> {
     // Test if NVDA is running.
     nvda::test_if_running().expect("Error communicating with NVDA.");
-    println!(
-        "NVDA is running as process {}",
-        nvda::get_process_id().unwrap()
-    );
+    println!("NVDA is running as process {}", nvda::get_process_id()?);
 
     // Speak and braille some messages.
     for i in 0..4 {
-        nvda::speak_text("This is a test client for NVDA!", false).unwrap();
-        nvda::braille_message(format!("Time: {} seconds.", 0.75 * (i as f32)).as_str()).unwrap();
+        nvda::speak_text("This is a test client for NVDA!", false)?;
+        nvda::braille_message(format!("Time: {} seconds.", 0.75 * (i as f32)).as_str())?;
         sleep(Duration::from_millis(625));
-        nvda::cancel_speech().unwrap();
+        nvda::cancel_speech()?;
     }
 
     let ssml = r#"
@@ -51,7 +48,7 @@ fn main() {
         SpeechPriority::Normal,
         false,
         Some(on_mark_reached),
-    )
-    .unwrap();
-    nvda::braille_message("Test completed!").unwrap();
+    )?;
+    nvda::braille_message("Test completed!")?;
+    Ok(())
 }
