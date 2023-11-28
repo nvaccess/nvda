@@ -19,6 +19,7 @@ import winUser
 import IAccessibleHandler
 from scriptHandler import script
 import ui
+import inputCore
 import oleacc
 from logHandler import log
 import textInfos
@@ -48,7 +49,7 @@ def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> typing.Dict[str
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
-	def _setSelectionOffsets(self, start, end):
+	def _setSelectionOffsets(self, start: int, end: int):
 		super()._setSelectionOffsets(start, end)
 		if self.obj._nativeAppSelectionMode:
 			if start != end:
@@ -269,7 +270,7 @@ class Gecko_ia2(VirtualBuffer):
 	@script(
 		gesture="kb:NVDA+shift+f10"
 	)
-	def script_toggleNativeAppSelectionMode(self, gesture):
+	def script_toggleNativeAppSelectionMode(self, gesture: inputCore.InputGesture):
 		self._nativeAppSelectionMode = not self._nativeAppSelectionMode
 		if self._nativeAppSelectionMode:
 			ui.message(_("Native app selection mode enabled."))
@@ -287,7 +288,7 @@ class Gecko_ia2(VirtualBuffer):
 	@script(
 		gesture="kb:control+c"
 	)
-	def script_copyToClipboard(self, gesture):
+	def script_copyToClipboard(self, gesture: inputCore.InputGesture):
 		if self._nativeAppSelectionMode:
 			ui.message(_("native copy"))
 			gesture.send()
