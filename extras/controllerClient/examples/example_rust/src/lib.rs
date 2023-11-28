@@ -13,7 +13,7 @@ use bindgen::{
 };
 use windows::{
     core::{Result, HSTRING},
-    Win32::Foundation::{ERROR_SUCCESS, WIN32_ERROR},
+    Win32::Foundation::WIN32_ERROR,
 };
 
 #[repr(u32)]
@@ -37,22 +37,18 @@ pub enum SymbolLevel {
 
 pub type OnSsmlMarkReached = onSsmlMarkReachedFuncType;
 
-fn is_succes(error: u32) -> Result<()> {
-    let res = WIN32_ERROR(error);
-    if res != ERROR_SUCCESS {
-        return Err(res.into());
-    }
-    Ok(())
+fn to_result(error: u32) -> Result<()> {
+    WIN32_ERROR(error).ok()
 }
 
 pub fn test_if_running() -> Result<()> {
     let res = unsafe { nvdaController_testIfRunning() };
-    is_succes(res)
+    to_result(res)
 }
 
 pub fn cancel_speech() -> Result<()> {
     let res = unsafe { nvdaController_cancelSpeech() };
-    is_succes(res)
+    to_result(res)
 }
 
 pub fn speak_text(text: &str, interrupt: bool) -> Result<()> {
@@ -61,25 +57,25 @@ pub fn speak_text(text: &str, interrupt: bool) -> Result<()> {
     }
     let text = HSTRING::from(text);
     let res = unsafe { nvdaController_speakText(text.as_ptr()) };
-    is_succes(res)
+    to_result(res)
 }
 
 pub fn braille_message(message: &str) -> Result<()> {
     let message = HSTRING::from(message);
     let res = unsafe { nvdaController_brailleMessage(message.as_ptr()) };
-    is_succes(res)
+    to_result(res)
 }
 
 pub fn get_process_id() -> Result<u32> {
     let mut pid: u32 = 0;
     let res = unsafe { nvdaController_getProcessId(&mut pid) };
-    is_succes(res)?;
+    to_result(res)?;
     Ok(pid)
 }
 
 fn set_on_ssml_mark_reached_callback(callback: OnSsmlMarkReached) -> Result<()> {
     let res = unsafe { nvdaController_setOnSsmlMarkReachedCallback(callback) };
-    is_succes(res)
+    to_result(res)
 }
 
 pub fn speak_ssml(
@@ -104,5 +100,5 @@ pub fn speak_ssml(
     if callback.is_some() {
         set_on_ssml_mark_reached_callback(None)?;
     }
-    is_succes(res)
+    to_result(res)
 }
