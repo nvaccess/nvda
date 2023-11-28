@@ -17,7 +17,7 @@ CommandListT = typing.List[CommandsT]
 class XMLTextParser(object): 
 
 	def __init__(self) -> None:
-		self._controlFieldStack: typing.List[textInfos.ControlField] = []
+		self._controlFieldStack: list[textInfos.ControlField] = []
 
 	def _startElementHandler(self,tagName,attrs):
 		if tagName=='unich':
