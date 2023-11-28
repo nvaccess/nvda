@@ -9,7 +9,7 @@ What's New in NVDA
 A new "on-demand" speech mode has been added.
 When speech is on-demand, NVDA does not speak automatically (e.g. when moving the cursor) but still speaks when calling commands whose goal is explicitly to report something (e.g. report window title).
 The Add-on Store now supports bulk actions (e.g. installing, enabling add-ons) by selecting multiple add-ons
-There is a new add-on action to open a reviews webpage for the selected add-on.
+There is a new action to open a reviews webpage for the selected add-on.
 
 The audio output device and ducking mode options have been removed from the "Select Synthesizer" dialog.
 They can be found in the audio settings panel which can be opened with ``NVDA+control+u``.
@@ -26,7 +26,7 @@ Windows 8.1 is the minimum Windows version supported.
 == New Features ==
 - Add-on Store:
   - The Add-on Store now supports bulk actions (e.g. installing, enabling add-ons) by selecting multiple add-ons. (#15350, #15623, @CyrilleB79)
-  - A new add-on action has been added to open a dedicated webpage to see or provide feedback about the selected add-on. (#15576, @nvdaes)
+  - A new action has been added to open a dedicated webpage to see or provide feedback about the selected add-on. (#15576, @nvdaes)
   -
 - Added support for Bluetooth Low Energy HID Braille displays. (#15470)
 - A new "on-demand" speech mode has been added.
@@ -83,7 +83,7 @@ Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on e
   This makes the announcement of spelling errors work when announcing a line in Writer. (#15648, @michaelweghorn)         
   -
 - Microsoft Office:
-  - In Excel with UIA disabled, braille is updated, and the active cell content is spoken, when ``control+y``, ``control+z`` or ``alt+backspace`` is pressed. (15547)
+  - In Excel with UIA disabled, braille is updated, and the active cell content is spoken, when ``control+y``, ``control+z`` or ``alt+backspace`` is pressed. (#15547)
   - In Word with UIA disabled braille is updated when ``control+v``, ``control+x``, ``control+y``, ``control+z``, ``alt+backspace``, ``backspace`` or ``control+backspace`` is pressed.
   It is also updated with UIA enabled, when typing text and braille is tethered to review and review follows caret. (#3276)
   - In Word, the landing cell will now be correctly reported when using the native Word commands for table navigation ``alt+home``, ``alt+end``, ``alt+pageUp`` and ``alt+pageDown``. (#15805, @CyrilleB79)
