@@ -268,7 +268,8 @@ class Gecko_ia2(VirtualBuffer):
 	_nativeAppSelectionMode = False
 
 	@script(
-		gesture="kb:NVDA+shift+f10"
+		gesture="kb:NVDA+shift+f10",
+		description="Toggles native selection mode on and off",
 	)
 	def script_toggleNativeAppSelectionMode(self, gesture: inputCore.InputGesture):
 		self._nativeAppSelectionMode = not self._nativeAppSelectionMode
