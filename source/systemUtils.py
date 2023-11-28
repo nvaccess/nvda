@@ -17,6 +17,9 @@ from ctypes import (
 	sizeof,
 	windll,
 )
+from typing import (
+	Any,
+)
 import winKernel
 import winreg
 import shellapi
@@ -207,7 +210,7 @@ class ExecAndPump(threading.Thread):
 	while blocking and pumping in the current thread.
 	"""
 
-	def __init__(self, func: Callable[[...], None], *args, **kwargs) -> None:
+	def __init__(self, func: Callable[..., Any], *args, **kwargs) -> None:
 		self.func = func
 		self.args = args
 		self.kwargs = kwargs
