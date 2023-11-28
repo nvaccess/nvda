@@ -186,7 +186,7 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
 Instead, when NVDA is running on the user profile, track the existence of the secure desktop with the extension point: ``winAPI.secureDesktop.post_secureDesktopStateChange``. (#14488)
 - ``braille.BrailleHandler.handlePendingCaretUpdate`` has been removed with no public replacement. (#15163, @LeonarddeR)
 - ``bdDetect.addUsbDevices and bdDetect.addBluetoothDevices`` have been removed.
-Braille display drivers should implement the ``registerAutomaticDetection`` ``classmethod`` instead.
+Braille display drivers should implement the ``registerAutomaticDetection`` class method instead.
 That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices`` and ``addBluetoothDevices`` methods can be used. (#15200, @LeonarddeR)
 - The default implementation of the check method on ``BrailleDisplayDriver`` now requires both the ``threadSafe`` and ``supportsAutomaticDetection`` attributes to be set to ``True``. (#15200, @LeonarddeR)
 - Passing lambda functions to ``hwIo.ioThread.IoThread.queueAsApc`` is no longer possible, as functions should be weakly referenceable. (#14627, @LeonarddeR)
