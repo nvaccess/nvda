@@ -318,7 +318,7 @@ class Hid(IoBase):
 			raise ctypes.WinError()
 
 	def close(self):
-		super(Hid, self).close()
+		super().close()
 		winKernel.closeHandle(self._file)
 		self._file = None
 		hidDll.HidD_FreePreparsedData(self._pd)

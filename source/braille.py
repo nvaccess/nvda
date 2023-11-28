@@ -1512,8 +1512,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		#: @type: int
 		self.cursorPos = None
 		#: The translated braille representation of the entire buffer.
-		#: @type: [int, ...]
-		self.brailleCells = []
+		self.brailleCells: list[int] = []
 		#: The position in L{brailleCells} where the display window starts (inclusive).
 		#: @type: int
 		self.windowStartPos = 0
@@ -1769,7 +1768,11 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 	def _get_windowRawText(self):
 		return self.bufferPositionsToRawText(self.windowStartPos,self.windowEndPos)
 
-	def _get_windowBrailleCells(self):
+	#: Typing information for auto-property: _get_next
+	windowBrailleCells: list[int]
+	"""The braille cells for the current window."""
+
+	def _get_windowBrailleCells(self) -> list[int]:
 		return self.brailleCells[self.windowStartPos:self.windowEndPos]
 
 	def routeTo(self, windowPos):
@@ -2053,7 +2056,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._keyCountForLastMessage=0
 		self._cursorPos = None
 		self._cursorBlinkUp = True
-		self._cells = []
+		self._cells: list[int] = []
 		self._cursorBlinkTimer = None
 		config.post_configProfileSwitch.register(self.handlePostConfigProfileSwitch)
 		if config.conf["braille"]["tetherTo"] == TetherTo.AUTO.value:
@@ -2284,7 +2287,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# Make sure we start the blink timer from the main thread to avoid wx assertions
 			wx.CallAfter(self._cursorBlinkTimer.Start,blinkRate)
 
-	def _writeCells(self, cells: List[int]):
+	def _writeCells(self, cells: list[int]):
 		handlerCellCount = self.displaySize
 		pre_writeCells.notify(cells=cells, rawText=self._rawText, currentCellCount=handlerCellCount)
 		displayCellCount = self.display.numCells
