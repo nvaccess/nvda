@@ -65,8 +65,8 @@ pub fn speak_text(text: &str, interrupt: bool) -> Result<()> {
     Ok(())
 }
 
-pub fn braille_message(mesage: &str) -> Result<()> {
-    let message = HSTRING::from(mesage);
+pub fn braille_message(message: &str) -> Result<()> {
+    let message = HSTRING::from(message);
     let res = WIN32_ERROR(unsafe { nvdaController_brailleMessage(message.as_ptr()) });
     if res != ERROR_SUCCESS {
         return Err(res.into());
