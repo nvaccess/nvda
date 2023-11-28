@@ -40,7 +40,7 @@ Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on e
 -
 
 == Bug Fixes ==
-- Reporting of object shortcut keys has been improved. (#10807, @CyrilleB79)
+- Reporting of object shortcut keys has been improved. (#10807, #15816, @CyrilleB79)
 - The SAPI4 synthesizer now properly supports volume, rate and pitch changes embedded in speech. (#15271, @LeonarddeR)
 - Multi line state is now correctly reported in applications using Java Access Bridge. (#14609)
 - In LibreOffice, words deleted using the ``control+backspace`` keyboard shortcut are now also properly announced when the deleted word is followed by whitespace (like spaces and tabs). (#15436, @michaelweghorn)
@@ -57,6 +57,7 @@ It is also updated with UIA enabled, when typing text and braille is tethered to
 - When using say all or commands which spell text, pauses between sentences or characters no longer gradually decrease over time. (#15739, @jcsteh)
 - NVDA no longer sometimes freezes when speaking a large amount of text. (#15752, @jcsteh)
 - More objects which contain useful text are detected, and text content is displayed in braille. (#15605)
+- When reinstalling an incompatible add-on it is no longer forcefully disabled. (#15584, @lukaszgo1)
 - When accessing Microsoft Edge using UI Automation, NVDA is able to activate more controls in browse mode. (#14612)
 - NVDA no longer freezes briefly when multiple sounds are played in rapid succession. (#15757, @jcsteh)
 - NVDA will not fail to start anymore when the configuration file is corrupted, but it will restore the configuration to default as it did in the past. (#15690, @CyrilleB79)
@@ -70,6 +71,7 @@ It is also updated with UIA enabled, when typing text and braille is tethered to
  -
 - Contracted braille input works properly again. (#15773, @aaclause)
 - NVDA is again able to track the focus in applications running within Windows Defender Application Guard (WDAG). (#15164)
+- Braille is now updated when moving the navigator object between table cells in more situations (#15755, @Emil-18)
 - The Albatross braille driver no longer handles a Esp32 microcontroller as an Albatross display. (#15671)
 -
 
@@ -171,6 +173,7 @@ That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices``
  - ``NULL``
  - ``GUID`` (replaced by ``comtypes.GUID``)
  -
+- ``gui.addonGui.AddonsDialog`` has been removed. (#15834)
 % Insert new list items here as the alias appModule table should be kept at the bottom of this list
 - The following app modules are removed.
 Code which imports from one of them, should instead import from the replacement module.  (#15618, @lukaszgo1)
