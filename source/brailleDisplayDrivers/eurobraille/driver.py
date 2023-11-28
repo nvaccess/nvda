@@ -94,7 +94,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
 			# Braille display drivers must be thread-safe to use HID, as it utilises a background thread.
-			# eurobraille drivers appear not to be thread-safe.
+			# eurobraille drivers appear not to be thread-safe. (#14872)
 			# self.isHid = portType == bdDetect.DeviceType.HID
 			self.isHid = False
 			try:
