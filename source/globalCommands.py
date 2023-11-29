@@ -275,15 +275,19 @@ class GlobalCommands(ScriptableObject):
 		except (RuntimeError, NotImplementedError):
 			info=None
 		if not info or info.isCollapsed:
-			speech.speakMessage(_("No selection"))
+			ui.message(_("No selection"))
 		else:
 			scriptCount = scriptHandler.getLastScriptRepeatCount()
+			selectMessage = ' '.join(speech.speech.getPreselectedTextSpeech(info.text))
 			if scriptCount == 0:
 				speech.speakTextSelected(info.text)
+				braille.handler.message(selectMessage)
+
 			elif len(info.text) < speech.speech.MAX_LENGTH_FOR_SELECTION_REPORTING:
 				speech.speakSpelling(info.text, useCharacterDescriptions=scriptCount > 1)
 			else:
 				speech.speakTextSelected(info.text)
+				braille.handler.message(selectMessage)
 
 	@script(
 		# Translators: Input help mode message for report date and time command.
@@ -1160,7 +1164,14 @@ class GlobalCommands(ScriptableObject):
 				else:
 					api.copyToClip(text, notify=True)
 		else:
-			speech.speakObject(curObject, reason=controlTypes.OutputReason.QUERY)
+			speechList = speech.getObjectSpeech(curObject, reason=controlTypes.OutputReason.QUERY)
+			for i in copy.copy(speechList):
+				if not isinstance(i, str):
+					speechList.remove(i)
+			text = ' '.join(speechList)
+			speech.speech.speak(speechList)
+			braille.handler.message(text)
+
 
 	@staticmethod
 	def _reportLocationText(objs: Tuple[Union[None, NVDAObject, textInfos.TextInfo], ...]) -> None:
@@ -2489,7 +2500,13 @@ class GlobalCommands(ScriptableObject):
 
 		repeatCount = scriptHandler.getLastScriptRepeatCount()
 		if repeatCount == 0:
-			speech.speakObject(focusObject, reason=controlTypes.OutputReason.QUERY)
+			speechList = speech.getObjectSpeech(focusObject, reason=controlTypes.OutputReason.QUERY)
+			for i in copy.copy(speechList):
+				if not isinstance(i, str):
+					speechList.remove(i)
+			text = ' '.join(speechList)
+			speech.speech.speak(speechList)
+			braille.handler.message(text)
 		else:
 			speech.speakSpelling(focusObject.name, useCharacterDescriptions=repeatCount > 1)
 
