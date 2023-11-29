@@ -278,7 +278,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("No selection"))
 		else:
 			scriptCount = scriptHandler.getLastScriptRepeatCount()
-			selectMessage = ' '.join(speech.speech.getPreselectedTextSpeech(info.text))
+			selectMessage = speech.speech._getSelectionMessageSpeech(_('%s selected'), info.text)[0]
 			if scriptCount == 0:
 				speech.speakTextSelected(info.text)
 				braille.handler.message(selectMessage)
