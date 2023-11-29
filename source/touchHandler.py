@@ -134,9 +134,6 @@ class TouchInputGesture(inputCore.InputGesture):
 		"quodruple":_("quadruple {action}"),
 	}
 
-	# Translators: a touch screen action using multiple fingers
-	multiFingerActionLabel=_("{numFingers} finger {action}")
-
 	def _get_speechEffectWhenExecuted(self):
 		if self.tracker.action in (touchTracker.action_hover,touchTracker.action_hoverUp): return None
 		return super(TouchInputGesture,self).speechEffectWhenExecuted
@@ -191,7 +188,12 @@ class TouchInputGesture(inputCore.InputGesture):
 				if subID.endswith('finger'):
 					numFingers=int(subID[:0-len('finger')])
 					if numFingers>1:
-						action=cls.multiFingerActionLabel.format(numFingers=numFingers,action=action)
+						action = ngettext(
+							# Translators: a touch screen action using multiple fingers
+							"{numFingers} finger {action}",
+							"{numFingers} finger {action}",
+							numFingers,
+						).format(numFingers=numFingers, action=action)
 				break
 			actions.append(action)
 		# Translators: a touch screen gesture
