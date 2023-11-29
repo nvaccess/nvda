@@ -2014,3 +2014,36 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	def script_toggleScreenLayout(self, gesture):
 		# Translators: The message reported for not supported toggling of screen layout
 		ui.message(_("Not supported in this document."))
+
+	def updateAppSelection(self):
+		"""Update the native selection in the application to match the browse mode selection in NVDA."""
+		raise NotImplementedError
+
+	def clearAppSelection(self):
+		"""Clear the native selection in the application."""
+		raise NotImplementedError
+
+	@script(
+		gesture="kb:NVDA+shift+f10",
+		description="Toggles native selection mode on and off",
+	)
+	def script_toggleNativeAppSelectionMode(self, gesture: inputCore.InputGesture):
+		if not self._nativeAppSelectionModeSupported:
+			# Translators: the message when native selection mode is not available in this browse mode document.
+			ui.message(_("Native selection mode  unsupported in this document"))
+			return
+		self._nativeAppSelectionMode = not self._nativeAppSelectionMode
+		if self._nativeAppSelectionMode:
+			# Translators: reported when native selection mode is toggled on.
+			ui.message(_("Native app selection mode enabled."))
+			try:
+				self.updateAppSelection()
+			except NotImplementedError:
+				pass
+		else:
+			# Translators: reported when native selection mode is toggled off.
+			ui.message(_("Native app selection mode disabled."))
+			try:
+				self.clearAppSelection()
+			except NotImplementedError:
+				pass

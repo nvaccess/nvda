@@ -265,39 +265,7 @@ class Gecko_ia2(VirtualBuffer):
 	#: frame/iframe in the lists is a tuple of (IAccessible2_2, uniqueId). This
 	#: cache is used across instances.
 	_framesCache = weakref.WeakKeyDictionary()
-	_nativeAppSelectionMode = False
-
-	@script(
-		gesture="kb:NVDA+shift+f10",
-		description="Toggles native selection mode on and off",
-	)
-	def script_toggleNativeAppSelectionMode(self, gesture: inputCore.InputGesture):
-		self._nativeAppSelectionMode = not self._nativeAppSelectionMode
-		if self._nativeAppSelectionMode:
-			# Translators: reported when native selection mode is toggled on.
-			ui.message(_("Native app selection mode enabled."))
-			try:
-				self.updateAppSelection()
-			except NotImplementedError:
-				pass
-		else:
-			# Translators: reported when native selection mode is toggled off.
-			ui.message(_("Native app selection mode disabled."))
-			try:
-				self.clearAppSelection()
-			except NotImplementedError:
-				pass
-
-	@script(
-		gesture="kb:control+c"
-	)
-	def script_copyToClipboard(self, gesture: inputCore.InputGesture):
-		if self._nativeAppSelectionMode:
-			# Translators: Reported when browse mode passes the copy to clipboard command through to the application.
-			ui.message(_("native copy"))
-			gesture.send()
-		else:
-			super().script_copyToClipboard(gesture)
+	_nativeAppSelectionModeSupported = True
 
 	def __init__(self,rootNVDAObject):
 		super(Gecko_ia2,self).__init__(rootNVDAObject,backendName="gecko_ia2")
