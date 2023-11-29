@@ -1165,11 +1165,12 @@ class GlobalCommands(ScriptableObject):
 					api.copyToClip(text, notify=True)
 		else:
 			speechList = speech.getObjectSpeech(curObject, reason=controlTypes.OutputReason.QUERY)
+			speech.speech.speak(speechList)
 			for i in copy.copy(speechList):
 				if not isinstance(i, str):
 					speechList.remove(i)
 			text = ' '.join(speechList)
-			speech.speech.speak(speechList)
+
 			braille.handler.message(text)
 
 
@@ -2501,11 +2502,11 @@ class GlobalCommands(ScriptableObject):
 		repeatCount = scriptHandler.getLastScriptRepeatCount()
 		if repeatCount == 0:
 			speechList = speech.getObjectSpeech(focusObject, reason=controlTypes.OutputReason.QUERY)
+			speech.speech.speak(speechList)
 			for i in copy.copy(speechList):
 				if not isinstance(i, str):
 					speechList.remove(i)
 			text = ' '.join(speechList)
-			speech.speech.speak(speechList)
 			braille.handler.message(text)
 		else:
 			speech.speakSpelling(focusObject.name, useCharacterDescriptions=repeatCount > 1)
