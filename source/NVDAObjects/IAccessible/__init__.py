@@ -1186,6 +1186,16 @@ the NVDAObject for IAccessible
 			return IAccessibleHandler.splitIA2Attribs(attribs)
 		return {}
 
+	def event_liveRegionChange(self):
+		if (
+			isinstance(self.IAccessibleObject, IA2.IAccessible2)
+			and self.appModule.helperLocalBindingHandle
+		):
+			# This is an IAccessible2 object and we can inject in-process,
+			# So the live region will be handled separately by nvdaHelperRemote.
+			return
+		super(IAccessible, self).event_liveRegionChange()
+
 	def event_IA2AttributeChange(self):
 		# We currently only care about changes to the accessible drag and drop attributes, which we map to states, so treat this as a stateChange.
 		self.event_stateChange()
