@@ -8,8 +8,10 @@ What's New in NVDA
 
 == New Features ==
 - Added support for Bluetooth Low Energy HID Braille displays. (#15470)
-- The Add-on Store now supports installing add-ons in bulk by selecting multiple add-ons. (#15350)
+- The Add-on Store now supports bulk actions (e.g. installing, enabling add-ons) by selecting multiple add-ons. (#15350, #15623, @CyrilleB79)
 - From the add-on store, it's possible to open a dedicated webpage to see or provide feedback about the selected add-on. (#15576, @nvdaes)
+- A new "on-demand" speech mode has been added.
+When speech is on-demand, NVDA does not speak automatically (e.g. when moving the cursor) but still speaks when calling commands whose goal is explicitly to report something (e.g. report window title). (#481, @CyrilleB79)
 -
 
 
@@ -20,6 +22,7 @@ Windows 8.1 is the minimum Windows version supported. (#15544)
   - Updated LibLouis braille translator to 3.27.0. (#15435, @codeofdusk)
     - Added new Thai and Romanian Braille tables.
     -
+  - eSpeak NG has been updated to 1.52-dev commit ``530bf0abf``. (#15036)
   - CLDR emoji and symbol annotations has been updated to version 44.0. (#15712, @OzancanKaratas)
   - Updated Java Access Bridge to 17.0.9+8Zulu (17.46.19). (#15744)
   -
@@ -33,10 +36,11 @@ This option now announces additional relevant information about an object when t
 - NVDA's support for [Poedit https://poedit.net] is overhauled for Poedit version 3 and above.
 Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on enhanced accessibility in Poedit, such as shortcuts to read translator notes and comments. (#15313, #7303, @LeonarddeR)
 - Braille viewer and speech viewer are now disabled in secure mode. (#15680)
+- During object navigation, disabled (unavailable) objects will not be ignored anymore. (#15477, @CyrilleB79)
 -
 
 == Bug Fixes ==
-- Reporting of object shortcut keys has been improved. (#10807, @CyrilleB79)
+- Reporting of object shortcut keys has been improved. (#10807, #15816, @CyrilleB79)
 - The SAPI4 synthesizer now properly supports volume, rate and pitch changes embedded in speech. (#15271, @LeonarddeR)
 - Multi line state is now correctly reported in applications using Java Access Bridge. (#14609)
 - In LibreOffice, words deleted using the ``control+backspace`` keyboard shortcut are now also properly announced when the deleted word is followed by whitespace (like spaces and tabs). (#15436, @michaelweghorn)
@@ -53,6 +57,8 @@ It is also updated with UIA enabled, when typing text and braille is tethered to
 - When using say all or commands which spell text, pauses between sentences or characters no longer gradually decrease over time. (#15739, @jcsteh)
 - NVDA no longer sometimes freezes when speaking a large amount of text. (#15752, @jcsteh)
 - More objects which contain useful text are detected, and text content is displayed in braille. (#15605)
+- When reinstalling an incompatible add-on it is no longer forcefully disabled. (#15584, @lukaszgo1)
+- When installing add-ons in the Add-on Store, install prompts are no longer overlapped by the restart dialog. (#15613, @lukaszgo1)
 - When accessing Microsoft Edge using UI Automation, NVDA is able to activate more controls in browse mode. (#14612)
 - NVDA no longer freezes briefly when multiple sounds are played in rapid succession. (#15757, @jcsteh)
 - NVDA will not fail to start anymore when the configuration file is corrupted, but it will restore the configuration to default as it did in the past. (#15690, @CyrilleB79)
@@ -61,7 +67,12 @@ It is also updated with UIA enabled, when typing text and braille is tethered to
 - It is not possible anymore to overwrite NVDA's Python console history. (#15792, @CyrilleB79)
 - In Word, the landing cell will now be correctly reported when using the native Word commands for table navigation ``alt+home``, ``alt+end``, ``alt+pageUp`` and ``alt+pageDown``. (#15805, @CyrilleB79)
 - NVDA now resumes audio if the configuration of the output device changes or another application releases exclusive control of the device. (#15758, #15775, @jcsteh)
+- NVDA should remain responsive when being flooded with many UI Automation events, e.g. large amounts of text in a terminal. (#14888)
+ - This new behavior can be disabled using the new Use enhanced event processing setting in NVDA's advanced settings.
+ -
 - Contracted braille input works properly again. (#15773, @aaclause)
+- NVDA is again able to track the focus in applications running within Windows Defender Application Guard (WDAG). (#15164)
+- Braille is now updated when moving the navigator object between table cells in more situations (#15755, @Emil-18)
 -
 
 == Changes for Developers ==
@@ -115,6 +126,10 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
 - For USB serial devices, ``bdDetect.getConnectedUsbDevicesForDriver`` and ``bdDetect.getDriversForConnectedUsbDevices`` now yield device matches containing a ``deviceInfo`` dictionary enriched with data about the USB device, such as ``busReportedDeviceDescription``. (#15764, @LeonarddeR)
 - When the configuration file ``nvda.ini`` is corrupted, a backup copy is saved before it is reinitialized. (#15779, @CyrilleB79)
 - Added an example to demonstrate using nvdaControllerClient.dll from Rust. (#15771, @LeonarddeR)
+- When defining a script with the script decorator, the ``speakOnDemand`` boolean argument can be specified to control if a script should speak while in "on-demand" speech mode. (#481, @CyrilleB79)
+  - Scripts that provide information (e.g. say window title, report time/date) should speak in the "on-demand" mode.
+  - Scripts that perform an action (e.g. move the cursor, change a parameter) should not speak in the "on-demand" mode.
+  -
 -
 
 === API Breaking Changes ===
@@ -159,6 +174,7 @@ That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices``
  - ``NULL``
  - ``GUID`` (replaced by ``comtypes.GUID``)
  -
+- ``gui.addonGui.AddonsDialog`` has been removed. (#15834)
 % Insert new list items here as the alias appModule table should be kept at the bottom of this list
 - The following app modules are removed.
 Code which imports from one of them, should instead import from the replacement module.  (#15618, @lukaszgo1)
@@ -204,6 +220,7 @@ Code which imports from one of them, should instead import from the replacement 
 - The ``bdDetect.KEY_*`` constants have been deprecated.
 Use ``bdDetect.DeviceType.*`` instead. (#15772, @LeonarddeR).
 - The ``bdDetect.DETECT_USB`` and ``bdDetect.DETECT_BLUETOOTH`` constants have been deprecated with no public replacement. (#15772, @LeonarddeR).
+- Using ``gui.ExecAndPump`` is deprecated - please use ``systemUtils.ExecAndPump`` instead. (#15852, @lukaszgo1)
 -
 
 

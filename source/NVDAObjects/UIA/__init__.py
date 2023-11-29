@@ -25,6 +25,7 @@ import UIAHandler.customProps
 import UIAHandler.customAnnotations
 import controlTypes
 from controlTypes import TextPosition, TextAlign
+import inputCore
 import config
 import speech
 import api
@@ -51,6 +52,7 @@ from NVDAObjects import (
 )
 from NVDAObjects.behaviors import (
 	ProgressBar,
+	EditableTextBase,
 	EditableTextWithoutAutoSelectDetection,
 	EditableTextWithAutoSelectDetection,
 	Dialog,
@@ -1026,8 +1028,6 @@ class UIA(Window):
 		):
 			# Bounces focus from a netUI dead placeholder menu item when no item is selected up to the menu itself.
 			clsList.append(PlaceholderNetUITWMenuItem)
-		elif UIAClassName == "WpfTextView":
-			clsList.append(WpfTextView)
 		elif (
 			UIAClassName == "ListViewItem"
 			and self.UIAElement.cachedFrameworkID == "WPF"
@@ -1109,10 +1109,10 @@ class UIA(Window):
 				clsList.append(spartanEdge.EdgeList)
 			else:
 				clsList.append(spartanEdge.EdgeNode)
-		elif self.windowClassName == "Chrome_WidgetWin_1" and self.UIATextPattern:
-			from . import chromium
-			clsList.append(chromium.ChromiumUIA)
-		elif self.windowClassName == "Chrome_RenderWidgetHostHWND":
+		elif (
+			self.windowClassName == "Chrome_RenderWidgetHostHWND"
+			or self.UIAElement.cachedFrameworkID == "Chrome"
+		):
 			from . import chromium
 			from . import web
 			if (
@@ -1126,6 +1126,15 @@ class UIA(Window):
 				if self.role == controlTypes.Role.LIST:
 					clsList.append(web.List)
 				clsList.append(chromium.ChromiumUIA)
+		elif (
+			(
+				self.windowClassName == "Chrome_WidgetWin_1"
+				or self.UIAElement.cachedFrameworkID == "Chrome"
+			)
+			and self.UIATextPattern
+		):
+			from . import chromium
+			clsList.append(chromium.ChromiumUIA)
 		elif (
 			self.role == controlTypes.Role.DOCUMENT
 			and UIAAutomationId == "Microsoft.Windows.PDF.DocumentView"
@@ -1247,6 +1256,11 @@ class UIA(Window):
 
 		# Add editableText support if UIA supports a text pattern
 		if self.TextInfo == UIATextInfo:
+			if self.UIAFrameworkId == 'XAML':
+				# This UIA element is being exposed by the XAML framework.
+				clsList.append(XamlEditableText)
+			elif UIAClassName == "WpfTextView":
+				clsList.append(WpfTextView)
 			if UIAHandler.autoSelectDetectionAvailable:
 				clsList.append(EditableTextWithAutoSelectDetection)
 			else:
@@ -1577,6 +1591,13 @@ class UIA(Window):
 			return self._getUIACacheablePropertyValue(UIAHandler.UIA_AutomationIdPropertyId)
 		except COMError:
 			# #11445: due to timing errors, elements will be instantiated with no automation Id present.
+			return ""
+
+	def _get_UIAFrameworkId(self) -> str:
+		try:
+			return self._getUIACacheablePropertyValue(UIAHandler.UIA_FrameworkIdPropertyId)
+		except COMError:
+			log.debugWarning("Could not fetch framework ID", exc_info=True)
 			return ""
 
 	#: Typing info for auto property _get_name()
@@ -2192,6 +2213,32 @@ class UIA(Window):
 			ui.message(dropTargetEffect)
 
 
+class InaccurateTextChangeEventEmittingEditableText(EditableTextBase, UIA):
+
+	# XAML and WPF fire UIA textSelectionChange events before the caret position change is reflected
+	# in the related UIA text pattern.
+	# This means that, apart from deleting text, NVDA cannot rely on textSelectionChange (caret) events
+	# in XAML or WPF to detect if the caret has moved, as it occurs too early.
+	caretMovementDetectionUsesEvents = False
+
+	def _backspaceScriptHelper(self, unit: str, gesture: inputCore.InputGesture):
+		"""As UIA text range objects from XAML or WPF don't mutate with backspace,
+		comparing a text range copied from before backspace with a text range fetched after backspace
+		isn't reliable, as the ranges compare equal.
+		Therefore, we must always rely on events for caret change detection in this case.
+		"""
+		self.caretMovementDetectionUsesEvents = True
+		try:
+			super()._backspaceScriptHelper(unit, gesture)
+		finally:
+			self.caretMovementDetectionUsesEvents = False
+
+
+class XamlEditableText(InaccurateTextChangeEventEmittingEditableText):
+	"""An UIA element with editable text exposed by the XAML framework."""
+	...
+
+
 class TreeviewItem(UIA):
 
 	def _get_value(self):
@@ -2357,16 +2404,19 @@ class ToolTip(ToolTip, UIA):
 	event_UIA_toolTipOpened=ToolTip.event_show
 
 
-#WpfTextView fires name state changes once a second, plus when IUIAutomationTextRange::GetAttributeValue is called.
-#This causes major lags when using this control with Braille in NVDA. (#2759) 
-#For now just ignore the events.
-class WpfTextView(UIA):
+class WpfTextView(InaccurateTextChangeEventEmittingEditableText):
+	"""WpfTextView fires name state changes once a second,
+	plus when IUIAutomationTextRange::GetAttributeValue is called.
+	This causes major lag when using this control with Braille in NVDA. (#2759)
+	For now just ignore the events.
+	"""
 
 	def event_nameChange(self):
 		return
 
 	def event_stateChange(self):
 		return
+
 
 class SearchField(EditableTextWithSuggestions, UIA):
 	"""An edit field that presents suggestions based on a search term.
