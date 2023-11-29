@@ -1883,10 +1883,17 @@ def getPropertiesSpeech(  # noqa: C901
 	rowCount=propertyValues.get('rowCount',0)
 	columnCount=propertyValues.get('columnCount',0)
 	if rowCount and columnCount:
-		# Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-		rowAndColCountTranslation: str = _("with {rowCount} rows and {columnCount} columns").format(
-			rowCount=rowCount,
-			columnCount=columnCount
+		# Translators: Sub-part of the compound string to speak number of columns and rows in a table
+		rowCountTranslation: str = _("{rowCount} rows").format(rowCount=rowCount)
+		# Translators: Sub-part of the compound string to speak number of columns and rows in a table
+		colCountTranslation: str = _("{columnCount} columns").format(columnCount=columnCount)
+		# Translators: Main part of the compound string to speak number of columns and rows in a table
+		# Example output: "with 3 rows and 2 columns"
+		# In this example {rowCountTranslation} will be replaced by "3 rows" and {colCountTranslation} by
+		# "2 columns"
+		rowAndColCountTranslation: str = _("with {rowCountTranslation} and {colCountTranslation}").format(
+			rowCountTranslation=rowCountTranslation,
+			colCountTranslation=colCountTranslation,
 		)
 		textList.append(rowAndColCountTranslation)
 	elif columnCount and not rowCount:
@@ -2784,10 +2791,19 @@ def getTableInfoSpeech(
 		newTable=False
 	textList=[]
 	if newTable:
+		# Translators: Sub-part of the compound string to report a table
 		columnCount=tableInfo.get("column-count",0)
+		# Translators: Sub-part of the compound string to report a table
 		rowCount=tableInfo.get("row-count",0)
-		# Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-		text=_("table with {columnCount} columns and {rowCount} rows").format(columnCount=columnCount,rowCount=rowCount)
+		columnCountText = _("{columnCount} columns").format(columnCount=columnCount)
+		rowCountText = _("{rowCount} rows").format(rowCount=rowCount)
+		# Translators: Main part of the compound string to report a table
+		# Example output: table with 3 columns and 5 rows
+		# {columnCountText} is replaced by "3 columns" and {rowCountText} by "5 rows"
+		text = _("table with {columnCountText} and {rowCountText}").format(
+			columnCountText=columnCountText,
+			rowCountText=rowCountText,
+		)
 		textList.append(text)
 	oldColumnNumber=oldTableInfo.get("column-number",0) if oldTableInfo else 0
 	columnNumber=tableInfo.get("column-number",0)
