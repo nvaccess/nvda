@@ -8,6 +8,8 @@ from typing import Optional
 import os
 import winreg
 import msvcrt
+import time
+import dataclasses
 import winVersion
 import versionInfo
 import winKernel
@@ -127,6 +129,12 @@ def nvdaControllerInternal_requestRegistration(uuidString):
 	return 0
 
 
+@dataclasses.dataclass
+class LiveMessage:
+	text: str
+	time: float
+
+
 @WINFUNCTYPE(c_long, c_wchar_p, c_wchar_p)
 def nvdaControllerInternal_reportLiveRegion(text: str, politeness: str):
 	assert isinstance(text, str), "Text isn't a string"
@@ -136,6 +144,17 @@ def nvdaControllerInternal_reportLiveRegion(text: str, politeness: str):
 	focus = api.getFocusObject()
 	if focus.sleepMode == focus.SLEEP_FULL:
 		return -1
+	curTime = time.time()
+	text = text.strip()
+	lastLiveMessage: LiveMessage | None  = getattr(focus, "_lastLiveMessage", None)
+	if (
+		lastLiveMessage is not None
+		and lastLiveMessage.text == text
+		and (curTime - lastLiveMessage.time) < 5
+	):
+		# Don't speak the same message multiple times in quick succession 
+		return 0
+	focus._lastLiveMessage = LiveMessage(text, curTime)
 	import queueHandler
 	import speech
 	import braille
