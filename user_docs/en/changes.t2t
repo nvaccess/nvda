@@ -73,6 +73,7 @@ It is also updated with UIA enabled, when typing text and braille is tethered to
 - Contracted braille input works properly again. (#15773, @aaclause)
 - NVDA is again able to track the focus in applications running within Windows Defender Application Guard (WDAG). (#15164)
 - Braille is now updated when moving the navigator object between table cells in more situations (#15755, @Emil-18)
+- When the status of an add-on is changed in the add-on store list while the add-on has focus, e.g. when changing  the status from "downloading" to "downloaded", the updated state is now announced correctly. (#15859, @LeonarddeR)
 -
 
 == Changes for Developers ==
