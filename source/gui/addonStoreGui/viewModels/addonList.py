@@ -18,12 +18,12 @@ from typing import (
 
 from requests.structures import CaseInsensitiveDict
 
-from _addonStore.models.addon import (
+from addonStore.models.addon import (
 	_AddonGUIModel,
 	_AddonStoreModel,
 	_AddonManifestModel,
 )
-from _addonStore.models.status import (
+from addonStore.models.status import (
 	_StatusFilterKey,
 	AvailableAddonStatus,
 )
@@ -123,6 +123,42 @@ class AddonListItemVM(Generic[_AddonModelT]):
 	@property
 	def Id(self) -> str:
 		return self._model.listItemVMId
+
+	def canUseInstallAction(self) -> bool:
+		return self.status == AvailableAddonStatus.AVAILABLE
+
+	def canUseInstallOverrideIncompatibilityAction(self) -> bool:
+		return self.status == AvailableAddonStatus.INCOMPATIBLE and self.model.canOverrideCompatibility
+
+	def canUseUpdateAction(self) -> bool:
+		return self.status == AvailableAddonStatus.UPDATE
+
+	def canUseReplaceAction(self) -> bool:
+		return self.status == AvailableAddonStatus.REPLACE_SIDE_LOAD
+
+	def canUseRemoveAction(self) -> bool:
+		return (
+			self.model.isInstalled
+			and self.status != AvailableAddonStatus.PENDING_REMOVE
+		)
+
+	def canUseEnableAction(self) -> bool:
+		return self.status == AvailableAddonStatus.DISABLED or self.status == AvailableAddonStatus.PENDING_DISABLE
+
+	def canUseEnableOverrideIncompatibilityAction(self) -> bool:
+		return self.status in (
+			AvailableAddonStatus.INCOMPATIBLE_DISABLED,
+			AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
+		) and self.model.canOverrideCompatibility
+
+	def canUseDisableAction(self) -> bool:
+		return self.model.isInstalled and self.status not in (
+			AvailableAddonStatus.DISABLED,
+			AvailableAddonStatus.PENDING_DISABLE,
+			AvailableAddonStatus.INCOMPATIBLE_DISABLED,
+			AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
+			AvailableAddonStatus.PENDING_REMOVE,
+		)
 
 	def __repr__(self) -> str:
 		return f"{self.__class__.__name__}: {self.Id}, {self.status}"

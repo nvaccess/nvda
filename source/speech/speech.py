@@ -82,13 +82,14 @@ class SpeechMode(IntEnum):
 	off = 0
 	beeps = 1
 	talk = 2
+	onDemand = 3
 
 
 @dataclass
 class SpeechState:
 	beenCanceled = True
 	isPaused = False
-	#: How speech should be handled; one of SpeechMode.off, SpeechMode.beeps or SpeechMode.talk.
+	#: How speech should be handled
 	speechMode: SpeechMode = SpeechMode.talk
 	# Length of the beep tone when speech mode is beeps
 	speechMode_beeps_ms = 15
@@ -140,11 +141,13 @@ def isBlank(text):
 
 RE_CONVERT_WHITESPACE = re.compile("[\0\r\n]")
 
-def processText(locale,text,symbolLevel):
+
+def processText(locale: str, text: str, symbolLevel: characterProcessing.SymbolLevel) -> str:
 	text = speechDictHandler.processText(text)
 	text = characterProcessing.processSpeechSymbols(locale, text, symbolLevel)
-	text = RE_CONVERT_WHITESPACE.sub(u" ", text)
+	text = RE_CONVERT_WHITESPACE.sub(" ", text)
 	return text.strip()
+
 
 def cancelSpeech():
 	"""Interupts the synthesizer from currently speaking"""
@@ -221,7 +224,7 @@ def _getSpeakSsmlSpeech(
 def speakSsml(
 		ssml: str,
 		markCallback: "MarkCallbackT | None" = None,
-		symbolLevel: Optional[int] = None,
+		symbolLevel: characterProcessing.SymbolLevel | None = None,
 		_prefixSpeechCommand: SpeechCommand | None = None,
 		priority: Spri | None = None
 ) -> None:
@@ -699,7 +702,7 @@ def getObjectSpeech(
 		or not obj._hasNavigableText
 	)
 
-	allowProperties = _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent)
+	allowProperties = _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent, obj.role)
 
 	if reason == OutputReason.FOCUSENTERED:
 		# Aside from excluding some properties, focus entered should be spoken like focus.
@@ -745,7 +748,11 @@ def getObjectSpeech(
 	return sequence
 
 
-def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
+def _objectSpeech_calculateAllowedProps(
+		reason: OutputReason,
+		shouldReportTextContent: bool,
+		objRole: controlTypes.Role,
+) -> dict[str, bool]:
 	allowProperties = {
 		'name': True,
 		'role': True,
@@ -774,7 +781,11 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 	}
 	if reason in (OutputReason.FOCUSENTERED, OutputReason.MOUSE):
 		allowProperties["value"] = False
-		allowProperties["keyboardShortcut"] = False
+		# #15826: For containers, there are cases where the shortcut key can be defined but not working (e.g.
+		# GROUPING). The safest strategy is then to remove the shortcut keys of containers except in the known
+		# cases where it is working and useful. The only such known case is the one of LIST.
+		if not objRole == controlTypes.Role.LIST:
+			allowProperties["keyboardShortcut"] = False
 		allowProperties["positionInfo_level"] = False
 	if reason == OutputReason.MOUSE:
 		# Name is often part of the text content when mouse tracking.
@@ -830,8 +841,8 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 def speakText(
 		text: str,
 		reason: OutputReason = OutputReason.MESSAGE,
-		symbolLevel: Optional[int] = None,
-		priority: Optional[Spri] = None
+		symbolLevel: characterProcessing.SymbolLevel | None = None,
+		priority: Spri | None = None
 ):
 	"""Speaks some text.
 	@param text: The text to speak.
@@ -926,7 +937,7 @@ def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> Spe
 # and move logic out into smaller helper functions.
 def speak(  # noqa: C901
 		speechSequence: SpeechSequence,
-		symbolLevel: Optional[int] = None,
+		symbolLevel: characterProcessing.SymbolLevel | None = None,
 		priority: Spri = Spri.NORMAL
 ):
 	"""Speaks a sequence of text and speech commands
@@ -950,6 +961,18 @@ def speak(  # noqa: C901
 		return
 	if _speechState.isPaused:
 		cancelSpeech()
+	if _speechState.speechMode == SpeechMode.onDemand:
+		
+		import inputCore
+		from scriptHandler import getCurrentScript
+		from .sayAll import SayAllHandler
+		script = getCurrentScript()
+		if not (
+			(script and getattr(script, 'speakOnDemand', False))
+			or inputCore.manager.isInputHelpActive
+			or SayAllHandler.isRunning()
+		):
+			return
 	_speechState.beenCanceled = False
 	#Filter out redundant LangChangeCommand objects 
 	#And also fill in default values
@@ -981,8 +1004,8 @@ def speak(  # noqa: C901
 	import inputCore
 	inputCore.logTimeSinceInput()
 	log.io("Speaking %r" % speechSequence)
-	if symbolLevel is None:
-		symbolLevel=config.conf["speech"]["symbolLevel"]
+	if symbolLevel in (characterProcessing.SymbolLevel.UNCHANGED, None):
+		symbolLevel = characterProcessing.SymbolLevel(config.conf["speech"]["symbolLevel"])
 	curLanguage=defaultLanguage
 	inCharacterMode=False
 	for index in range(len(speechSequence)):

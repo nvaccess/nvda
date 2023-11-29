@@ -5,9 +5,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import time
 import os
-import threading
 import ctypes
 import wx
 import wx.adv
@@ -116,6 +114,15 @@ def __getattr__(attrName: str) -> Any:
 			stack_info=True,
 		)
 		return SettingsPanel
+	if attrName == "ExecAndPump" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"Importing ExecAndPump from here is deprecated. "
+			"Import ExecAndPump from systemUtils instead. ",
+			# Include stack info so testers can report warning to add-on author.
+			stack_info=True,
+		)
+		import systemUtils
+		return systemUtils.ExecAndPump
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
@@ -395,8 +402,8 @@ class MainFrame(wx.Frame):
 		blockAction.Context.RUNNING_LAUNCHER,
 	)
 	def onAddonStoreCommand(self, evt: wx.MenuEvent):
-		from ._addonStoreGui import AddonStoreDialog
-		from ._addonStoreGui.viewModels.store import AddonStoreVM
+		from .addonStoreGui import AddonStoreDialog
+		from .addonStoreGui.viewModels.store import AddonStoreVM
 		_storeVM = AddonStoreVM()
 		_storeVM.refresh()
 		self.popupSettingsDialog(AddonStoreDialog, _storeVM)
@@ -769,38 +776,6 @@ def runScriptModalDialog(dialog, callback=None):
 			callback(res)
 		dialog.Destroy()
 	wx.CallAfter(run)
-
-
-class ExecAndPump(threading.Thread):
-	"""Executes the given function with given args and kwargs in a background thread while blocking and pumping in the current thread."""
-
-	def __init__(self,func,*args,**kwargs):
-		self.func=func
-		self.args=args
-		self.kwargs=kwargs
-		fname = repr(func)
-		super().__init__(
-			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}({fname})"
-		)
-		self.threadExc=None
-		self.start()
-		time.sleep(0.1)
-		threadHandle=ctypes.c_int()
-		threadHandle.value=ctypes.windll.kernel32.OpenThread(0x100000,False,self.ident)
-		msg=ctypes.wintypes.MSG()
-		while ctypes.windll.user32.MsgWaitForMultipleObjects(1,ctypes.byref(threadHandle),False,-1,255)==1:
-			while ctypes.windll.user32.PeekMessageW(ctypes.byref(msg),None,0,0,1):
-				ctypes.windll.user32.TranslateMessage(ctypes.byref(msg))
-				ctypes.windll.user32.DispatchMessageW(ctypes.byref(msg))
-		if self.threadExc:
-			raise self.threadExc
-
-	def run(self):
-		try:
-			self.func(*self.args,**self.kwargs)
-		except Exception as e:
-			self.threadExc=e
-			log.debugWarning("task had errors",exc_info=True)
 
 
 class IndeterminateProgressDialog(wx.ProgressDialog):

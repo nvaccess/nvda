@@ -39,8 +39,8 @@ import NVDAState
 from NVDAState import WritePaths
 from types import ModuleType
 
-from _addonStore.models.status import AddonStateCategory, SupportsAddonState
-from _addonStore.models.version import MajorMinorPatch, SupportsVersionCheck
+from addonStore.models.status import AddonStateCategory, SupportsAddonState
+from addonStore.models.version import MajorMinorPatch, SupportsVersionCheck
 import extensionPoints
 from utils.caseInsensitiveCollections import CaseInsensitiveSet
 
@@ -53,7 +53,7 @@ from .packaging import (
 )
 
 if TYPE_CHECKING:
-	from _addonStore.models.addon import (  # noqa: F401
+	from addonStore.models.addon import (  # noqa: F401
 		AddonManifestModel,
 		AddonHandlerModelGeneratorT,
 		InstalledAddonStoreModel,
@@ -160,6 +160,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 			self[AddonStateCategory.BLOCKED].update(self[AddonStateCategory.OVERRIDE_COMPATIBILITY])
 			# Reset overridden compatibility for add-ons that were overridden by older versions of NVDA.
 			self[AddonStateCategory.OVERRIDE_COMPATIBILITY].clear()
+			self[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].clear()
 		self.manualOverridesAPIVersion = MajorMinorPatch(*addonAPIVersion.BACK_COMPAT_TO)
 
 	def removeStateFile(self) -> None:
@@ -203,7 +204,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 				self[AddonStateCategory.DISABLED].discard(disabledAddonName)
 
 	def _cleanupCompatibleAddonsFromDowngrade(self) -> None:
-		from _addonStore.dataManager import addonDataManager
+		from addonStore.dataManager import addonDataManager
 		installedAddons = addonDataManager._installedAddonsCache.installedAddons
 		for blockedAddon in CaseInsensitiveSet(
 			self[AddonStateCategory.BLOCKED].union(
@@ -289,6 +290,12 @@ def initialize():
 	if NVDAState.shouldWriteToDisk():
 		state.save()
 	initializeModulePackagePaths()
+	if state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY]:
+		log.error(
+			"The following add-ons which were marked as compatible are no longer installed: "
+			f"{', '.join(state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY])}"
+		)
+		state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].clear()
 
 
 def terminate():
@@ -349,6 +356,9 @@ def _getAvailableAddonsFromPath(
 						newPath = a.completeInstall()
 						if newPath:
 							a = Addon(newPath)
+					if isFirstLoad and name in state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY]:
+						state[AddonStateCategory.OVERRIDE_COMPATIBILITY].add(name)
+						state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].remove(name)
 					log.debug(
 						"Found add-on {name} - {a.version}."
 						" Requires API: {a.minimumNVDAVersion}."
@@ -450,13 +460,13 @@ class AddonBase(SupportsAddonState, SupportsVersionCheck, ABC):
 
 	@property
 	def _addonStoreData(self) -> Optional["InstalledAddonStoreModel"]:
-		from _addonStore.dataManager import addonDataManager
+		from addonStore.dataManager import addonDataManager
 		assert addonDataManager
 		return addonDataManager._getCachedInstalledAddonData(self.name)
 
 	@property
 	def _addonGuiModel(self) -> "AddonManifestModel":
-		from _addonStore.models.addon import _createGUIModelFromManifest
+		from addonStore.models.addon import _createGUIModelFromManifest
 		return _createGUIModelFromManifest(self)
 
 
@@ -502,6 +512,7 @@ class Addon(AddonBase):
 			self.completeRemove()
 			state[AddonStateCategory.PENDING_INSTALL].discard(self.name)
 			state[AddonStateCategory.OVERRIDE_COMPATIBILITY].discard(self.name)
+			state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].discard(self.name)
 			# Force availableAddons to be updated
 			getAvailableAddons(refresh=True)
 		else:
@@ -566,17 +577,24 @@ class Addon(AddonBase):
 		self._extendedPackages.add(package)
 		log.debug("Addon %s added to %s package path", self.manifest['name'], package.__name__)
 
+	@property
+	def _canBeEnabled(self) -> bool:
+		return (
+			self.isCompatible  # Incompatible add-ons cannot be enabled
+			or (
+				self.canOverrideCompatibility  # Theoretically possible to mark it as compatible
+				# Its compatibility has either been overridden, or would be on the next restart
+				and self._hasOverriddenCompat
+			)
+		)
+
 	def enable(self, shouldEnable: bool) -> None:
 		"""
 		Sets this add-on to be disabled or enabled when NVDA restarts.
 		@raises: AddonError on failure.
 		"""
 		if shouldEnable:
-			if not (
-				isAddonCompatible(self)
-				or self.overrideIncompatibility
-			):
-				import addonAPIVersion
+			if not self._canBeEnabled:
 				raise AddonError(
 					"Add-on is not compatible:"
 					" minimum NVDA version {}, last tested version {},"
@@ -591,15 +609,7 @@ class Addon(AddonBase):
 				# Undoing a pending disable.
 				state[AddonStateCategory.PENDING_DISABLE].discard(self.name)
 			else:
-				if self.canOverrideCompatibility and not self.overrideIncompatibility:
-					from gui import mainFrame
-					from gui._addonStoreGui.controls.messageDialogs import _shouldInstallWhenAddonTooOldDialog
-					if not _shouldInstallWhenAddonTooOldDialog(mainFrame, self._addonGuiModel):
-						import addonAPIVersion
-						raise AddonError("Add-on is not compatible and over ride was abandoned")
 				state[AddonStateCategory.PENDING_ENABLE].add(self.name)
-			if self.overrideIncompatibility:
-				state[AddonStateCategory.BLOCKED].discard(self.name)
 		else:
 			if self.name in state[AddonStateCategory.PENDING_ENABLE]:
 				# Undoing a pending enable.

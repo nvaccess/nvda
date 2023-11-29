@@ -36,6 +36,7 @@ from config.configFlags import (
 )
 import languageHandler
 import speech
+import systemUtils
 import gui
 import gui.contextHelp
 import globalVars
@@ -918,7 +919,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		)
 		while True:
 			try:
-				gui.ExecAndPump(config.setSystemConfigToCurrentConfig)
+				systemUtils.ExecAndPump(config.setSystemConfigToCurrentConfig)
 				res=True
 				break
 			except installer.RetriableFailure:
@@ -2936,6 +2937,16 @@ class AdvancedPanelControls(
 		self.UIAInChromiumCombo.SetSelection(config.conf["UIA"]["allowInChromium"])
 		self.UIAInChromiumCombo.defaultValue = self._getDefaultValue(["UIA", "allowInChromium"])
 
+		# Translators: This is the label for a COMBOBOX in the Advanced settings panel.
+		label = _("Use en&hanced event processing (requires restart)")
+		self.enhancedEventProcessingComboBox = cast(nvdaControls.FeatureFlagCombo, UIAGroup.addLabeledControl(
+			labelText=label,
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["UIA", "enhancedEventProcessing"],
+			conf=config.conf,
+		))
+		self.bindHelpEvent("UIAEnhancedEventProcessing", self.enhancedEventProcessingComboBox)
+
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
 		label = _("Annotations")
@@ -3164,7 +3175,7 @@ class AdvancedPanelControls(
 		debugLogGroup = guiHelper.BoxSizerHelper(self, sizer=debugLogSizer)
 		sHelper.addItem(debugLogGroup)
 
-		self.logCategories=[
+		self.logCategories = [
 			"hwIo",
 			"MSAA",
 			"UIA",
@@ -3179,6 +3190,7 @@ class AdvancedPanelControls(
 			"nvwave",
 			"annotations",
 			"events",
+			"garbageHandler",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
@@ -3233,6 +3245,7 @@ class AdvancedPanelControls(
 			and self.UIAInMSExcelCheckBox.IsChecked() == self.UIAInMSExcelCheckBox.defaultValue
 			and self.consoleCombo.GetSelection() == self.consoleCombo.defaultValue
 			and self.UIAInChromiumCombo.GetSelection() == self.UIAInChromiumCombo.defaultValue
+			and self.enhancedEventProcessingComboBox.isValueConfigSpecDefault()
 			and self.annotationsDetailsCheckBox.IsChecked() == self.annotationsDetailsCheckBox.defaultValue
 			and self.ariaDescCheckBox.IsChecked() == self.ariaDescCheckBox.defaultValue
 			and self.brailleLiveRegionsCombo.isValueConfigSpecDefault()
@@ -3259,6 +3272,7 @@ class AdvancedPanelControls(
 		self.UIAInMSExcelCheckBox.SetValue(self.UIAInMSExcelCheckBox.defaultValue)
 		self.consoleCombo.SetSelection(self.consoleCombo.defaultValue == 'auto')
 		self.UIAInChromiumCombo.SetSelection(self.UIAInChromiumCombo.defaultValue)
+		self.enhancedEventProcessingComboBox.resetToConfigSpecDefault()
 		self.annotationsDetailsCheckBox.SetValue(self.annotationsDetailsCheckBox.defaultValue)
 		self.ariaDescCheckBox.SetValue(self.ariaDescCheckBox.defaultValue)
 		self.brailleLiveRegionsCombo.resetToConfigSpecDefault()
@@ -3290,6 +3304,7 @@ class AdvancedPanelControls(
 		)
 		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = self.cancelExpiredFocusSpeechCombo.GetSelection()
 		config.conf["UIA"]["allowInChromium"] = self.UIAInChromiumCombo.GetSelection()
+		self.enhancedEventProcessingComboBox.saveCurrentValueToConf()
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()
 		diffAlgoChoice = self.diffAlgoCombo.GetSelection()
