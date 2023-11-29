@@ -71,7 +71,7 @@ def doInstall(
 			installedUserConfigPath=config.getInstalledUserConfigPath()
 			if installedUserConfigPath:
 				if _canPortableConfigBeCopied():
-					gui.ExecAndPump(installer.copyUserConfig, installedUserConfigPath)
+					systemUtils.ExecAndPump(installer.copyUserConfig, installedUserConfigPath)
 	except Exception as e:
 		res=e
 		log.error("Failed to execute installer",exc_info=True)
@@ -457,7 +457,7 @@ def doCreatePortable(
 		_("Please wait while a portable copy of NVDA is created.")
 	)
 	try:
-		gui.ExecAndPump(installer.createPortableCopy, portableDirectory, copyUserConfig)
+		systemUtils.ExecAndPump(installer.createPortableCopy, portableDirectory, copyUserConfig)
 	except Exception as e:
 		log.error("Failed to create portable copy", exc_info=True)
 		d.done()

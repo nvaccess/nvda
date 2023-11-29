@@ -6,11 +6,19 @@
 
 """ System related functions."""
 import ctypes
+import time
+import threading
+from collections.abc import (
+	Callable,
+)
 from ctypes import (
 	byref,
 	create_unicode_buffer,
 	sizeof,
 	windll,
+)
+from typing import (
+	Any,
 )
 import winKernel
 import winreg
@@ -19,6 +27,7 @@ import winUser
 import functools
 import shlobj
 from os import startfile
+from logHandler import log
 from NVDAState import WritePaths
 
 
@@ -194,3 +203,37 @@ def _isSystemClockSecondsVisible() -> bool:
 		return False
 	except OSError:
 		return False
+
+
+class ExecAndPump(threading.Thread):
+	"""Executes the given function with given args and kwargs in a background thread,
+	while blocking and pumping in the current thread.
+	"""
+
+	def __init__(self, func: Callable[..., Any], *args, **kwargs) -> None:
+		self.func = func
+		self.args = args
+		self.kwargs = kwargs
+		fname = repr(func)
+		super().__init__(
+			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}({fname})"
+		)
+		self.threadExc: Exception | None = None
+		self.start()
+		time.sleep(0.1)
+		threadHandle = ctypes.c_int()
+		threadHandle.value = winKernel.kernel32.OpenThread(0x100000, False, self.ident)
+		msg = ctypes.wintypes.MSG()
+		while winUser.user32.MsgWaitForMultipleObjects(1, ctypes.byref(threadHandle), False, -1, 255) == 1:
+			while winUser.user32.PeekMessageW(ctypes.byref(msg), None, 0, 0, 1):
+				winUser.user32.TranslateMessage(ctypes.byref(msg))
+				winUser.user32.DispatchMessageW(ctypes.byref(msg))
+		if self.threadExc:
+			raise self.threadExc
+
+	def run(self):
+		try:
+			self.func(*self.args, **self.kwargs)
+		except Exception as e:
+			self.threadExc = e
+			log.debugWarning("task had errors", exc_info=True)
