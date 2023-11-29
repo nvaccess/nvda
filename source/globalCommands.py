@@ -20,6 +20,7 @@ from annotation import (
 )
 
 import audioDucking
+import copy
 import touchHandler
 import keyboardHandler
 import mouseHandler
