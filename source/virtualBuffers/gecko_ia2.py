@@ -17,9 +17,6 @@ import NVDAObjects.IAccessible.mozilla
 import NVDAObjects.behaviors
 import winUser
 import IAccessibleHandler
-from scriptHandler import script
-import ui
-import inputCore
 import oleacc
 from logHandler import log
 import textInfos

@@ -443,7 +443,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 	def script_selectAll(self,gesture):
 		self._selectionMovementScriptHelper(toPosition=textInfos.POSITION_ALL)
 
-	_nativeAppSelectionModeSupported: bool= False
+	_nativeAppSelectionModeSupported: bool = False
 	"Whether native selection mode is available in this browse mode document"
 
 	_nativeAppSelectionMode: bool = False
