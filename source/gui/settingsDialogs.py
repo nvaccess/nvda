@@ -36,6 +36,7 @@ from config.configFlags import (
 )
 import languageHandler
 import speech
+import systemUtils
 import gui
 import gui.contextHelp
 import globalVars
@@ -918,7 +919,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		)
 		while True:
 			try:
-				gui.ExecAndPump(config.setSystemConfigToCurrentConfig)
+				systemUtils.ExecAndPump(config.setSystemConfigToCurrentConfig)
 				res=True
 				break
 			except installer.RetriableFailure:

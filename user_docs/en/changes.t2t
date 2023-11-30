@@ -65,6 +65,11 @@ Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on e
 -
 
 == Bug Fixes ==
+- Add-on Store:
+  - When the status of an add-on is changed while it has focus, e.g. a change from "downloading" to "downloaded", the updated item is now announced correctly. (#15859, @LeonarddeR)
+  - When installing add-ons install prompts are no longer overlapped by the restart dialog. (#15613, @lukaszgo1)
+  - When reinstalling an incompatible add-on it is no longer forcefully disabled. (#15584, @lukaszgo1)
+  -
 - Audio:
   - NVDA no longer freezes briefly when multiple sounds are played in rapid succession. (#15311, #15757, @jcsteh)
   - If the audio output device is set to something other than the default and that device becomes available again after being unavailable, NVDA will now switch back to the configured device instead of continuing to use the default device. (#15759, @jcsteh)
@@ -95,7 +100,6 @@ Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on e
 - NVDA will no longer fail to read a newly loaded page in Microsoft Edge when using UI Automation. (#15736)
 - When using say all or commands which spell text, pauses between sentences or characters no longer gradually decrease over time. (#15739, @jcsteh)
 - NVDA no longer sometimes freezes when speaking a large amount of text. (#15752, @jcsteh)
-- When reinstalling an incompatible add-on it is no longer forcefully disabled. (#15584, @lukaszgo1)
 - When accessing Microsoft Edge using UI Automation, NVDA is able to activate more controls in browse mode. (#14612)
 - NVDA will not fail to start anymore when the configuration file is corrupted, but it will restore the configuration to default as it did in the past. (#15690, @CyrilleB79)
 - Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283, @LeonarddeR)
@@ -103,7 +107,6 @@ Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on e
 - NVDA should remain responsive when being flooded with many UI Automation events, e.g. large amounts of text in a terminal. (#14888)
  - This new behavior can be disabled using the new Use enhanced event processing setting in NVDA's advanced settings.
  -
-- NVDA is again able to track the focus in applications running within Windows Defender Application Guard (WDAG). (#15164)
 -
 
 == Changes for Developers ==
@@ -250,6 +253,7 @@ Code which imports from one of them, should instead import from the replacement 
 - The ``bdDetect.KEY_*`` constants have been deprecated.
 Use ``bdDetect.DeviceType.*`` instead. (#15772, @LeonarddeR).
 - The ``bdDetect.DETECT_USB`` and ``bdDetect.DETECT_BLUETOOTH`` constants have been deprecated with no public replacement. (#15772, @LeonarddeR).
+- Using ``gui.ExecAndPump`` is deprecated - please use ``systemUtils.ExecAndPump`` instead. (#15852, @lukaszgo1)
 -
 
 
