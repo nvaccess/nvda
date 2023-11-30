@@ -57,7 +57,7 @@ Windows 8.1 is the minimum Windows version supported. (#15544)
 They can be found in the audio settings panel which can be opened with ``NVDA+control+u``. (#15512)
 - The option "Report role when mouse enters object" in NVDA's mouse settings category has been renamed to "Report object when mouse enters it".
 This option now announces additional relevant information about an object when the mouse enters it, such as states (checked/pressed) or cell coordinates in a table. (#15420, @LeonarddeR)
-- New items have beeen added to the Help menu for the NV Access "Get Help" page and Shop. (#14631)
+- New items have been added to the Help menu for the NV Access "Get Help" page and Shop. (#14631)
 - NVDA's support for [Poedit https://poedit.net] is overhauled for Poedit version 3 and above.
 Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on enhanced accessibility in Poedit, such as shortcuts to read translator notes and comments. (#15313, #7303, @LeonarddeR)
 - Braille viewer and speech viewer are now disabled in secure mode. (#15680)
@@ -104,7 +104,7 @@ Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on e
 - NVDA will not fail to start anymore when the configuration file is corrupted, but it will restore the configuration to default as it did in the past. (#15690, @CyrilleB79)
 - Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283, @LeonarddeR)
 - It is not possible anymore to overwrite NVDA's Python console history. (#15792, @CyrilleB79)
-- NVDA should remain responsive when being flooded with many UI Automation events, e.g. large amounts of text in a terminal. (#14888)
+- NVDA should remain responsive when being flooded with many UI Automation events, e.g. when large chunks of text are printed to a terminal or when listening to voice messages in WhatsApp messenger. (#14888, #15169)
  - This new behavior can be disabled using the new Use enhanced event processing setting in NVDA's advanced settings.
  -
 - NVDA is again able to track the focus in applications running within Windows Defender Application Guard (WDAG). (#15164)
