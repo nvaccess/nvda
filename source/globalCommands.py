@@ -3461,7 +3461,7 @@ class GlobalCommands(ScriptableObject):
 				# Translators: If the number of characters on the clipboard is greater than about 1000, it reports this message and gives number of characters on the clipboard.
 				# Example output: The clipboard contains a large portion of text. It is 2300 characters long.
 				"The clipboard contains a large portion of text. It is %s character long",
-				"The clipboard contains a large portion of text. It is %s characters long",
+				"The clipboard contains a large amount of text. It is %s characters long",
 				textLength,
 			) % textLength)
 
