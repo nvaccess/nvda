@@ -561,8 +561,8 @@ class OfficeChart(OfficeChartElementList):
 				# Translators: Indicates that there is 1 series in a chart.
 				seriesValueString = _( "There is 1 series in this chart" )
 			else:
-				# Translators: Indicates the number of series in a chart where there are multiple series.
 				seriesValueString = ngettext(
+				    # Translators: Indicates the number of series in a chart where there are multiple series.
 					"There is total %d series in this chart",
 					"There are total %d series in this chart",
 					count,
