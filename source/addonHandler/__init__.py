@@ -803,7 +803,11 @@ class AddonBundle(AddonBase):
 		self._path = bundlePath
 		# Read manifest:
 		translatedInput=None
-		with zipfile.ZipFile(self._path, 'r') as z:
+		try:
+			z = zipfile.ZipFile(self._path, "r")
+		except (zipfile.BadZipfile, FileNotFoundError) as e:
+			raise AddonError(f"Invalid bundle file: {self._path}") from e
+		with z:
 			for translationPath in _translatedManifestPaths(forBundle=True):
 				try:
 					# ZipFile.open opens every file in binary mode.
