@@ -139,6 +139,7 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
  -
 - Changes to the NVDA Controller Client library:
  - The file names of the library no longer contain a suffix denoting the architecture, i.e. ``nvdaControllerClient32/64.dll`` are now called ``nvdaControllerClient.dll``. (#15718, #15717, @LeonarddeR)
+ - Added an example to demonstrate using nvdaControllerClient.dll from Rust. (#15771, @LeonarddeR)
  - Added the following functions to the controller client: (#15734, #11028, #5638, @LeonarddeR)
   - ``nvdaController_getProcessId``: To get the process id (PID) of the current instance of NVDA the controller client is using.
   - ``nvdaController_speakSsml``: To instruct NVDA to speak according to the given SSML. This function also supports:

@@ -49,6 +49,8 @@ The **`extras/controllerClient/examples` directory** also contains example usage
   - The source code for an example C program that uses the NVDA controller client API.
 * `example_csharp`
   - The source code for an example C# project on NET Standard 2.0 that uses the NVDA controller client API.
+* `example_rust`
+  - The source code for an example Rust crate providing access to the NVDA controller client API, including example code.
 
 Running these examples requires a copy of **`nvdaControllerClient.dll`** in its path that matches the architecture of the example.
 For example, if you want to test the Python example on an X64 version of Python, you need the **`x64/nvdaControllerClient.dll`** file.
