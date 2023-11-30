@@ -6,10 +6,29 @@ What's New in NVDA
 
 = 2024.1 =
 
+A new "on-demand" speech mode has been added.
+When speech is on-demand, NVDA does not speak automatically (e.g. when moving the cursor) but still speaks when calling commands whose goal is explicitly to report something (e.g. report window title).
+The Add-on Store now supports bulk actions (e.g. installing, enabling add-ons) by selecting multiple add-ons
+There is a new action to open a reviews webpage for the selected add-on.
+
+The audio output device and ducking mode options have been removed from the "Select Synthesizer" dialog.
+They can be found in the audio settings panel which can be opened with ``NVDA+control+u``.
+
+eSpeak-NG, LibLouis braille translator, and Unicode CLDR have been updated.
+New Thai and Romanian braille tables are available.
+
+== Important notes == 
+- This release breaks compatibility with existing add-ons.
+- Windows 7, and Windows 8 are no longer supported.
+Windows 8.1 is the minimum Windows version supported.
+-
+
 == New Features ==
+- Add-on Store:
+  - The Add-on Store now supports bulk actions (e.g. installing, enabling add-ons) by selecting multiple add-ons. (#15350, #15623, @CyrilleB79)
+  - A new action has been added to open a dedicated webpage to see or provide feedback about the selected add-on. (#15576, @nvdaes)
+  -
 - Added support for Bluetooth Low Energy HID Braille displays. (#15470)
-- The Add-on Store now supports bulk actions (e.g. installing, enabling add-ons) by selecting multiple add-ons. (#15350, #15623, @CyrilleB79)
-- From the add-on store, it's possible to open a dedicated webpage to see or provide feedback about the selected add-on. (#15576, @nvdaes)
 - A new "on-demand" speech mode has been added.
 When speech is on-demand, NVDA does not speak automatically (e.g. when moving the cursor) but still speaks when calling commands whose goal is explicitly to report something (e.g. report window title). (#481, @CyrilleB79)
 -
@@ -26,12 +45,18 @@ Windows 8.1 is the minimum Windows version supported. (#15544)
   - CLDR emoji and symbol annotations has been updated to version 44.0. (#15712, @OzancanKaratas)
   - Updated Java Access Bridge to 17.0.9+8Zulu (17.46.19). (#15744)
   -
-- The following commands now support two and three presses to spell the reported information and spell with character descriptions: report selection, report clipboard text and report focused object. (#15449, @CyrilleB79)
+- Key Commands:
+  - The following commands now support two and three presses to spell the reported information and spell with character descriptions: report selection, report clipboard text and report focused object. (#15449, @CyrilleB79)
+  - The command to toggle the screen curtain now has a default gesture: ``NVDA+control+escape``. (#10560, @CyrilleB79)
+  -
+- Microsoft Office:
+  - When requesting formatting information on Excel cells, borders and background will only be reported if there is such formatting. (#15560, @CyrilleB79)
+  - NVDA will again no longer report unlabelled groupings such as in recent versions of Microsoft Office 365 menus. (#15638)
+  -
+- The audio output device and ducking mode options have been removed from the "Select Synthesizer" dialog.
+They can be found in the audio settings panel which can be opened with ``NVDA+control+u``. (#15512)
 - The option "Report role when mouse enters object" in NVDA's mouse settings category has been renamed to "Report object when mouse enters it".
 This option now announces additional relevant information about an object when the mouse enters it, such as states (checked/pressed) or cell coordinates in a table. (#15420, @LeonarddeR)
-- When requesting formatting information on Excel cells, borders and background will only be reported if there is such formatting. (#15560, @CyrilleB79)
-- The command to toggle the screen curtain now has a default gesture: ``NVDA+control+escape``. (#10560, @CyrilleB79)
-- NVDA will again no longer report unlabelled groupings such as in recent versions of Microsoft Office 365 menus. (#15638)
 - New items have beeen added to the Help menu for the NV Access "Get Help" page and Shop. (#14631)
 - NVDA's support for [Poedit https://poedit.net] is overhauled for Poedit version 3 and above.
 Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on enhanced accessibility in Poedit, such as shortcuts to read translator notes and comments. (#15313, #7303, @LeonarddeR)
@@ -40,39 +65,49 @@ Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on e
 -
 
 == Bug Fixes ==
+- Add-on Store:
+  - When the status of an add-on is changed while it has focus, e.g. a change from "downloading" to "downloaded", the updated item is now announced correctly. (#15859, @LeonarddeR)
+  - When installing add-ons install prompts are no longer overlapped by the restart dialog. (#15613, @lukaszgo1)
+  - When reinstalling an incompatible add-on it is no longer forcefully disabled. (#15584, @lukaszgo1)
+  -
+- Audio:
+  - NVDA no longer freezes briefly when multiple sounds are played in rapid succession. (#15311, #15757, @jcsteh)
+  - If the audio output device is set to something other than the default and that device becomes available again after being unavailable, NVDA will now switch back to the configured device instead of continuing to use the default device. (#15759, @jcsteh)
+  - NVDA now resumes audio if the configuration of the output device changes or another application releases exclusive control of the device. (#15758, #15775, @jcsteh)
+  -
+- Braille:
+  - Multi line braille displays will no longer crash the BRLTTY driver and are treated as one continuous display. (#15386)
+  - More objects which contain useful text are detected, and text content is displayed in braille. (#15605)
+  - Contracted braille input works properly again. (#15773, @aaclause)
+  - Braille is now updated when moving the navigator object between table cells in more situations (#15755, @Emil-18)
+  -
+- LibreOffice:
+  - Words deleted using the ``control+backspace`` keyboard shortcut are now also properly announced when the deleted word is followed by whitespace (like spaces and tabs). (#15436, @michaelweghorn)
+  - Announcement of the status bar using the ``NVDA+end`` keyboard shortcut now also works for dialogs in LibreOffice version 24.2 and newer. (#15591, @michaelweghorn)
+  - All expected text attributes are now supported in LibreOffice versions 24.2 and above.
+  This makes the announcement of spelling errors work when announcing a line in Writer. (#15648, @michaelweghorn)
+  -
+- Microsoft Office:
+  - In Excel with UIA disabled, braille is updated, and the active cell content is spoken, when ``control+y``, ``control+z`` or ``alt+backspace`` is pressed. (#15547)
+  - In Word with UIA disabled braille is updated when ``control+v``, ``control+x``, ``control+y``, ``control+z``, ``alt+backspace``, ``backspace`` or ``control+backspace`` is pressed.
+  It is also updated with UIA enabled, when typing text and braille is tethered to review and review follows caret. (#3276)
+  - In Word, the landing cell will now be correctly reported when using the native Word commands for table navigation ``alt+home``, ``alt+end``, ``alt+pageUp`` and ``alt+pageDown``. (#15805, @CyrilleB79)
+  -
 - Reporting of object shortcut keys has been improved. (#10807, #15816, @CyrilleB79)
 - The SAPI4 synthesizer now properly supports volume, rate and pitch changes embedded in speech. (#15271, @LeonarddeR)
 - Multi line state is now correctly reported in applications using Java Access Bridge. (#14609)
-- In LibreOffice, words deleted using the ``control+backspace`` keyboard shortcut are now also properly announced when the deleted word is followed by whitespace (like spaces and tabs). (#15436, @michaelweghorn)
-- In LibreOffice, announcement of the status bar using the ``NVDA+end`` keyboard shortcut now also works for dialogs in LibreOffice version 24.2 and newer. (#15591, @michaelweghorn)
-- In LibreOffice, text attributes according to the [IAccessible2 text attributes specification https://wiki.linuxfoundation.org/accessibility/iaccessible2/textattributes] are supported, which is required to support announcement of text attributes in LibreOffice versions 24.2 and above.
-This makes the announcement of spelling errors work when announcing a line in Writer. (#15648, @michaelweghorn)
-- In Microsoft Excel with UIA disabled, braille is updated, and the active cell content is spoken, when ``control+y``, ``control+z`` or ``alt+backspace`` is pressed. (15547)
-- In Microsoft Word with UIA disabled braille is updated when ``control+v``, ``control+x``, ``control+y``, ``control+z``, ``alt+backspace``, ``backspace`` or ``control+backspace`` is pressed.
-It is also updated with UIA enabled, when typing text and braille is tethered to review and review follows caret. (#3276)
-- Multi line braille displays will no longer crash the BRLTTY driver and are treated as one continuous display. (#15386)
-- NVDA no longer sometimes freezes briefly when multiple sounds are played in rapid succession. (#15311)
 - NVDA will announce dialog content for more Windows 10 and 11 dialogs. (#15729, @josephsl)
 - NVDA will no longer fail to read a newly loaded page in Microsoft Edge when using UI Automation. (#15736)
 - When using say all or commands which spell text, pauses between sentences or characters no longer gradually decrease over time. (#15739, @jcsteh)
 - NVDA no longer sometimes freezes when speaking a large amount of text. (#15752, @jcsteh)
-- More objects which contain useful text are detected, and text content is displayed in braille. (#15605)
-- When reinstalling an incompatible add-on it is no longer forcefully disabled. (#15584, @lukaszgo1)
-- When installing add-ons in the Add-on Store, install prompts are no longer overlapped by the restart dialog. (#15613, @lukaszgo1)
 - When accessing Microsoft Edge using UI Automation, NVDA is able to activate more controls in browse mode. (#14612)
-- NVDA no longer freezes briefly when multiple sounds are played in rapid succession. (#15757, @jcsteh)
 - NVDA will not fail to start anymore when the configuration file is corrupted, but it will restore the configuration to default as it did in the past. (#15690, @CyrilleB79)
 - Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283, @LeonarddeR)
-- If the audio output device is set to something other than the default and that device becomes available again after being unavailable, NVDA will now switch back to the configured device instead of continuing to use the default device. (#15759, @jcsteh)
 - It is not possible anymore to overwrite NVDA's Python console history. (#15792, @CyrilleB79)
-- In Word, the landing cell will now be correctly reported when using the native Word commands for table navigation ``alt+home``, ``alt+end``, ``alt+pageUp`` and ``alt+pageDown``. (#15805, @CyrilleB79)
-- NVDA now resumes audio if the configuration of the output device changes or another application releases exclusive control of the device. (#15758, #15775, @jcsteh)
 - NVDA should remain responsive when being flooded with many UI Automation events, e.g. large amounts of text in a terminal. (#14888)
  - This new behavior can be disabled using the new Use enhanced event processing setting in NVDA's advanced settings.
  -
-- Contracted braille input works properly again. (#15773, @aaclause)
 - NVDA is again able to track the focus in applications running within Windows Defender Application Guard (WDAG). (#15164)
-- Braille is now updated when moving the navigator object between table cells in more situations (#15755, @Emil-18)
 - The Albatross braille driver no longer handles a Esp32 microcontroller as an Albatross display. (#15671)
 -
 
@@ -105,6 +140,7 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
  -
 - Changes to the NVDA Controller Client library:
  - The file names of the library no longer contain a suffix denoting the architecture, i.e. ``nvdaControllerClient32/64.dll`` are now called ``nvdaControllerClient.dll``. (#15718, #15717, @LeonarddeR)
+ - Added an example to demonstrate using nvdaControllerClient.dll from Rust. (#15771, @LeonarddeR)
  - Added the following functions to the controller client: (#15734, #11028, #5638, @LeonarddeR)
   - ``nvdaController_getProcessId``: To get the process id (PID) of the current instance of NVDA the controller client is using.
   - ``nvdaController_speakSsml``: To instruct NVDA to speak according to the given SSML. This function also supports:
@@ -156,7 +192,7 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
 Instead, when NVDA is running on the user profile, track the existence of the secure desktop with the extension point: ``winAPI.secureDesktop.post_secureDesktopStateChange``. (#14488)
 - ``braille.BrailleHandler.handlePendingCaretUpdate`` has been removed with no public replacement. (#15163, @LeonarddeR)
 - ``bdDetect.addUsbDevices and bdDetect.addBluetoothDevices`` have been removed.
-Braille display drivers should implement the ``registerAutomaticDetection`` ``classmethod`` instead.
+Braille display drivers should implement the ``registerAutomaticDetection`` class method instead.
 That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices`` and ``addBluetoothDevices`` methods can be used. (#15200, @LeonarddeR)
 - The default implementation of the check method on ``BrailleDisplayDriver`` now requires both the ``threadSafe`` and ``supportsAutomaticDetection`` attributes to be set to ``True``. (#15200, @LeonarddeR)
 - Passing lambda functions to ``hwIo.ioThread.IoThread.queueAsApc`` is no longer possible, as functions should be weakly referenceable. (#14627, @LeonarddeR)
