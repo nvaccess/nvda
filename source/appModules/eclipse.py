@@ -15,6 +15,8 @@ from speech import sayAll
 import keyboardHandler
 from scriptHandler import script
 
+category_title = "Eclipse"
+
 class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 
 	def event_suggestionsClosed(self):
@@ -52,7 +54,8 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 	@script(
 		# Translators: Input help mode message for the 'read documentation script
 		description = _("Tries to read documentation for the selected autocompletion item."),
-		gesture = "kb:nvda+d"
+		gesture = "kb:nvda+d",
+		category=category_title
 	)
 	def script_readDocumentation(self, gesture):
 		rootDocumentationWindow = None

@@ -14,6 +14,8 @@ App module for VIP Mud
 This module makes NVDA read incoming text, as well as allowing the user to review the last nine messages with control 1 through 9.
 """
 
+category_title = "Vipmud"
+
 class AppModule(appModuleHandler.AppModule):
 	lastLength=0
 	msgs =[]
@@ -26,6 +28,7 @@ class AppModule(appModuleHandler.AppModule):
 		# Translators: The description of an NVDA command to view one of the recent messages.
 		description=_("Displays one of the recent messages"),
 		gestures=[f"kb:control+{n}" for n in range(1, historyLength + 1)],
+		category=category_title,
 		speakOnDemand=True,
 	)
 	def script_readMessage(self,gesture):

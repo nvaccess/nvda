@@ -41,6 +41,8 @@ import scriptHandler
 from locationHelper import RectLTRB
 from NVDAObjects.window._msOfficeChart import OfficeChart
 
+category_title = "Powerpoint"
+
 # Window classes where PowerPoint's object model should be used 
 # These also all request to have their (incomplete) UI Automation implementations  disabled. [MS Office 2013]
 objectModelWindowClasses=set(["paneClassDC","mdiClass","screenClass"])
@@ -1242,7 +1244,8 @@ class SlideShowWindow(PaneClassDC):
 		self.treeInterceptor.reportNewSlide()
 
 class AppModule(appModuleHandler.AppModule):
-
+	scriptCategory = category_title
+	
 	hasTriedPpAppSwitch=False
 	_ppApplicationWindow=None
 	_ppApplication=None
