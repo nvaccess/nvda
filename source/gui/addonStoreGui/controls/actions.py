@@ -199,7 +199,11 @@ class AddonListValidator:
 		hasUpdatable = False
 		hasInstallable = False
 		for aVM in self.addonsList:
-			if aVM.canUseUpdateAction() or aVM.canUseReplaceAction() or aVM.canUseUpdateOverrideIncompatibilityAction():
+			if (
+				aVM.canUseUpdateAction()
+				or aVM.canUseReplaceAction()
+				or aVM.canUseUpdateOverrideIncompatibilityAction()
+			):
 				hasUpdatable = True
 			if aVM.canUseInstallAction() or aVM.canUseInstallOverrideIncompatibilityAction():
 				hasInstallable = True
