@@ -16,7 +16,7 @@ import keyboardHandler
 from scriptHandler import script
 
 # Translators: The name of a category of NVDA commands.
-categorySCRCAT_ECLIPSE = _("Eclipse")
+SCRCAT_ECLIPSE = _("Eclipse")
 
 class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 
@@ -54,9 +54,9 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 
 	@script(
 		# Translators: Input help mode message for the 'read documentation script
-		description = _("Tries to read documentation for the selected autocompletion item."),
-		gesture = "kb:nvda+d",
-		category = categorySCRCAT_ECLIPSE
+		description=_("Tries to read documentation for the selected autocompletion item."),
+		gesture="kb:nvda+d",
+		category=SCRCAT_ECLIPSE
 	)
 	def script_readDocumentation(self, gesture):
 		rootDocumentationWindow = None

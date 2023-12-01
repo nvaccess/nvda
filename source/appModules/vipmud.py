@@ -15,7 +15,7 @@ This module makes NVDA read incoming text, as well as allowing the user to revie
 """
 
 # Translators: The name of a category of NVDA commands.
-categorySCRCAT_VIPMUD = _("VipMud")
+SCRCAT_VIPMUD = _("VipMud")
 
 class AppModule(appModuleHandler.AppModule):
 	lastLength=0
@@ -29,7 +29,7 @@ class AppModule(appModuleHandler.AppModule):
 		# Translators: The description of an NVDA command to view one of the recent messages.
 		description=_("Displays one of the recent messages"),
 		gestures=[f"kb:control+{n}" for n in range(1, historyLength + 1)],
-		category=categorySCRCAT_VIPMUD,
+		category=SCRCAT_VIPMUD,
 		speakOnDemand=True,
 	)
 	def script_readMessage(self,gesture):
