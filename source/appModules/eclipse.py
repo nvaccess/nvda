@@ -15,7 +15,8 @@ from speech import sayAll
 import keyboardHandler
 from scriptHandler import script
 
-category_title = "Eclipse"
+# Translators: The name of a category of NVDA commands.
+categorySCRCAT_ECLIPSE = _("Eclipse")
 
 class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 
@@ -55,7 +56,7 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 		# Translators: Input help mode message for the 'read documentation script
 		description = _("Tries to read documentation for the selected autocompletion item."),
 		gesture = "kb:nvda+d",
-		category=category_title
+		category = categorySCRCAT_ECLIPSE
 	)
 	def script_readDocumentation(self, gesture):
 		rootDocumentationWindow = None

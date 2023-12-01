@@ -22,7 +22,8 @@ import oleacc
 from keyboardHandler import KeyboardInputGesture
 import watchdog
 
-category_title = "Miranda32"
+# Translators: The name of a category of NVDA commands.
+categorySCRCAT_MIRANDA = _("Miranda")
 
 #contact list window messages
 CLM_FIRST=0x1000    #this is the same as LVM_FIRST
@@ -115,7 +116,7 @@ class AppModule(appModuleHandler.AppModule):
 		# Translators: The description of an NVDA command to view one of the recent messages.
 		description=_("Displays one of the recent messages"),
 		gestures=[f"kb:NVDA+control+{n}" for n in range(1, MessageHistoryLength + 1)],
-		category=category_title,
+		category=categorySCRCAT_MIRANDA,
 		speakOnDemand=True,
 	)
 	def script_readMessage(self,gesture):

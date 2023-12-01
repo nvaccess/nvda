@@ -23,7 +23,8 @@ from scriptHandler import getLastScriptRepeatCount, script
 LEFT_TO_RIGHT_EMBEDDING = "\u202a"
 """Character often found in translator comments."""
 
-category_title = "Poedit"
+# Translators: The name of a category of NVDA commands.
+categorySCRCAT_POEDIT = _("Poedit")
 
 class _WindowControlIdOffset(IntEnum):
 	"""Window control ID's are not static, however, the order of ids stays the same.
@@ -147,7 +148,7 @@ class AppModule(appModuleHandler.AppModule):
 			"Reports any notes for translators. If pressed twice, presents the notes in browse mode",
 		),
 		gesture="kb:control+shift+a",
-		category=category_title,
+		category=categorySCRCAT_POEDIT,
 		speakOnDemand=True,
 	)
 	def script_reportAutoCommentsWindow(self, gesture):
@@ -174,7 +175,7 @@ class AppModule(appModuleHandler.AppModule):
 			"If pressed twice, presents the comment in browse mode",
 		),
 		gesture="kb:control+shift+c",
-		category=category_title,
+		category=categorySCRCAT_POEDIT,
 		speakOnDemand=True,
 	)
 	def script_reportCommentsWindow(self, gesture):
@@ -200,7 +201,7 @@ class AppModule(appModuleHandler.AppModule):
 			"Reports the old source text, if any. If pressed twice, presents the text in browse mode",
 		),
 		gesture="kb:control+shift+o",
-		category=category_title,
+		category=categorySCRCAT_POEDIT,
 		speakOnDemand=True,
 	)
 	def script_reportOldSourceText(self, gesture):
@@ -224,7 +225,7 @@ class AppModule(appModuleHandler.AppModule):
 			"Reports a translation warning, if any. If pressed twice, presents the warning in browse mode",
 		),
 		gesture="kb:control+shift+w",
-		category=category_title,
+		category=categorySCRCAT_POEDIT,
 		speakOnDemand=True,
 	)
 	def script_reportTranslationWarning(self, gesture):
