@@ -2023,7 +2023,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for cycle speech mode command.
-			"Cycles between the speech modes of off, beep, talk and on-demand."
+			"Cycles between enabled speech modes."
 		),
 		category=SCRCAT_SPEECH,
 		gesture="kb:NVDA+s"
@@ -2031,21 +2031,18 @@ class GlobalCommands(ScriptableObject):
 	def script_speechMode(self, gesture: inputCore.InputGesture) -> None:
 		curMode = speech.getState().speechMode
 		speech.setSpeechMode(speech.SpeechMode.talk)
-		newMode = (curMode + 1) % len(speech.SpeechMode)
-		if newMode == speech.SpeechMode.off:
-			# Translators: A speech mode which disables speech output.
-			name=_("Speech mode off")
-		elif newMode == speech.SpeechMode.beeps:
-			# Translators: A speech mode which will cause NVDA to beep instead of speaking.
-			name=_("Speech mode beeps")
-		elif newMode == speech.SpeechMode.talk:
-			# Translators: The normal speech mode; i.e. NVDA will talk as normal.
-			name=_("Speech mode talk")
-		elif newMode == speech.SpeechMode.onDemand:
-			# Translators: The on-demand speech mode; i.e. NVDA will talk only on commands asking to report something.
-			name = _("Speech mode on-demand")
+		modesList = list(speech.SpeechMode)
+		currModeIndex = modesList.index(curMode)
+		excludedModesIndexes = config.conf["speech"]["excludedSpeechModes"]
+		possibleIndexes = [i for i in range(len(modesList)) if i not in excludedModesIndexes]
+		# Sorting uses `<=`  since when sorting booleans they are threated as integers,
+		# so `False` (0) comes before `True` (1).
+		newModeIndex = sorted(possibleIndexes, key=lambda i: i <= currModeIndex)[0]
+		newMode = modesList[newModeIndex]
 		speech.cancelSpeech()
-		ui.message(name)
+		# Translators: Announced when user switches to another speech mode.
+		# 'mode' is replaced with the translated name of the new mode.
+		ui.message(_("Speech mode {mode}").format(mode=newMode.displayString))
 		speech.setSpeechMode(newMode)
 
 	@script(

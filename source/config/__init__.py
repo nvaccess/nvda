@@ -635,7 +635,12 @@ class ConfigManager(object):
 		return self.rootSection.dict()
 
 	def listProfiles(self):
-		for name in os.listdir(WritePaths.profilesDir):
+		try:
+			profileFiles = os.listdir(WritePaths.profilesDir)
+		except FileNotFoundError:
+			log.debugWarning("Profiles directory does not exist.")
+			profileFiles = []
+		for name in profileFiles:
 			name, ext = os.path.splitext(name)
 			if ext == ".ini":
 				yield name

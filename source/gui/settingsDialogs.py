@@ -404,13 +404,12 @@ class SettingsPanel(
 		"""
 		raise NotImplementedError
 
-	def isValid(self):
+	def isValid(self) -> bool:
 		"""Evaluate whether the current circumstances of this panel are valid
 		and allow saving all the settings in a L{MultiCategorySettingsDialog}.
 		Sub-classes may extend this method.
 		@returns: C{True} if validation should continue,
 			C{False} otherwise.
-		@rtype: bool
 		"""
 		return True
 
@@ -1094,6 +1093,10 @@ class SpeechSettingsPanel(SettingsPanel):
 	def onSave(self):
 		self.voicePanel.onSave()
 
+	def isValid(self) -> bool:
+		return self.voicePanel.isValid()
+
+
 class SynthesizerSelectionDialog(SettingsDialog):
 	# Translators: This is the label for the synthesizer selection dialog
 	title = _("Select Synthesizer")
@@ -1625,6 +1628,22 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.useSpellingFunctionalityCheckBox.SetValue(
 			config.conf["speech"][self.driver.name]["useSpellingFunctionality"]
 		)
+		self._appendSpeechModesList(settingsSizerHelper)
+
+	def _appendSpeechModesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
+		self._allSpeechModes = [mode for mode in speech.SpeechMode]
+		self.speechModesList: nvdaControls.CustomCheckListBox = settingsSizerHelper.addLabeledControl(
+			# Translators: Label of the list where user can enable or disable speech modes.
+			_("Switch between the following speech &modes:"),
+			nvdaControls.CustomCheckListBox,
+			choices=[mode.displayString for mode in self._allSpeechModes]
+		)
+		self.bindHelpEvent("SpeechModesDisabling", self.speechModesList)
+		excludedModes = config.conf["speech"]["excludedSpeechModes"]
+		self.speechModesList.Checked = [
+			mIndex for mIndex in range(len(self._allSpeechModes)) if mIndex not in excludedModes
+		]
+		self.speechModesList.Select(0)
 
 	def _appendDelayedCharacterDescriptions(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
 		# Translators: This is the label for a checkbox in the voice settings panel.
@@ -1657,6 +1676,37 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["speech"][self.driver.name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][self.driver.name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
 		config.conf["speech"][self.driver.name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()
+		config.conf["speech"]["excludedSpeechModes"] = [
+			mIndex for mIndex in range(len(self._allSpeechModes)) if mIndex not in self.speechModesList.CheckedItems
+		]
+
+	def isValid(self) -> bool:
+		enabledSpeechModes = self.speechModesList.CheckedItems
+		if len(enabledSpeechModes) < 2:
+			log.debugWarning("Too few speech modes enabled.")
+			gui.messageBox(
+				# translators: Message shown when not enough speech modes are enabled.
+				_("At least two speech modes have to be checked."),
+				# Translators: The title of the message box
+				_("Error"),
+				wx.OK | wx.ICON_ERROR,
+				self,
+			)
+			return False
+		if not any(
+			self._allSpeechModes[i].producesSpeech for i in enabledSpeechModes
+		):
+			log.debugWarning("None of the speech modes producing speech are enabled. This configuration is invalid.")
+			gui.messageBox(
+				# translators: Message shown when none of required speech modes are enabled.
+				_("One of speech mode talk or on-demand has to be enabled."),
+				# Translators: The title of the message box
+				_("Error"),
+				wx.OK | wx.ICON_ERROR,
+				self
+			)
+		return super().isValid()
+
 
 class KeyboardSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the keyboard settings panel.

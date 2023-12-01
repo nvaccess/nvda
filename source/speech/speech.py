@@ -2,7 +2,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
-# Julien Cochuyt, Derek Riemer, Cyrille Bougot, Leonard de Ruijter
+# Julien Cochuyt, Derek Riemer, Cyrille Bougot, Leonard de Ruijter, Łukasz Golonka
 
 """High-level functions to speak information.
 """ 
@@ -55,6 +55,7 @@ from typing import (
 	Generator,
 	Union,
 	Tuple,
+	Self,
 )
 from logHandler import log
 import config
@@ -65,10 +66,10 @@ from config.configFlags import (
 )
 import aria
 from .priorities import Spri
-from enum import IntEnum
 from dataclasses import dataclass
 from copy import copy
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
+from utils.displayString import DisplayStringIntEnum
 
 if typing.TYPE_CHECKING:
 	import NVDAObjects
@@ -78,11 +79,30 @@ _speechState: Optional['SpeechState'] = None
 _curWordChars: List[str] = []
 
 
-class SpeechMode(IntEnum):
+class SpeechMode(DisplayStringIntEnum):
 	off = 0
 	beeps = 1
 	talk = 2
 	onDemand = 3
+
+	@property
+	def _displayStringLabels(self) -> dict[Self, str]:
+		return {
+			# Translators: Name of the speech mode which disables speech output.
+			self.off: pgettext("speechModes", "off"),
+			# Translators: Name of the speech mode which will cause NVDA to beep instead of speaking.
+			self.beeps: pgettext("speechModes", "beeps"),
+			# Translators: Name of the speech mode, which, when enabled, causes NVDA to talk as normal.
+			self.talk: pgettext("speechModes", "talk"),
+			# Translators: Name of the on-demand speech mode;
+			# i.e. NVDA will talk only on commands asking to report something.
+			self.onDemand: pgettext("speechModes", "on-demand"),
+		}
+
+	@property
+	def producesSpeech(self) -> bool:
+		"""Is any speech produced when this mode is enabled?"""
+		return self in (SpeechMode.talk, SpeechMode.onDemand)
 
 
 @dataclass
