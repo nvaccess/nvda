@@ -1883,10 +1883,18 @@ def getPropertiesSpeech(  # noqa: C901
 	rowCount=propertyValues.get('rowCount',0)
 	columnCount=propertyValues.get('columnCount',0)
 	if rowCount and columnCount:
-		# Translators: Sub-part of the compound string to speak number of columns and rows in a table
-		rowCountTranslation: str = _("{rowCount} rows").format(rowCount=rowCount)
-		# Translators: Sub-part of the compound string to speak number of columns and rows in a table
-		colCountTranslation: str = _("{columnCount} columns").format(columnCount=columnCount)
+		rowCountTranslation: str = ngettext(
+			# Translators: Sub-part of the compound string to speak number of columns and rows in a table
+			"{rowCount} row",
+			"{rowCount} rows",
+			rowCount,
+		).format(rowCount=rowCount)
+		colCountTranslation: str = ngettext(
+			# Translators: Sub-part of the compound string to speak number of columns and rows in a table
+			"{columnCount} column",
+			"{columnCount} columns",
+			columnCount,
+		).format(columnCount=columnCount)
 		# Translators: Main part of the compound string to speak number of columns and rows in a table
 		# Example output: "with 3 rows and 2 columns"
 		# In this example {rowCountTranslation} will be replaced by "3 rows" and {colCountTranslation} by
@@ -2791,12 +2799,21 @@ def getTableInfoSpeech(
 		newTable=False
 	textList=[]
 	if newTable:
-		# Translators: Sub-part of the compound string to report a table
 		columnCount=tableInfo.get("column-count",0)
 		# Translators: Sub-part of the compound string to report a table
 		rowCount=tableInfo.get("row-count",0)
-		columnCountText = _("{columnCount} columns").format(columnCount=columnCount)
-		rowCountText = _("{rowCount} rows").format(rowCount=rowCount)
+		columnCountText = ngettext(
+			# Translators: Sub-part of the compound string to report a table
+			"{columnCount} column",
+			"{columnCount} columns",
+			columnCount,
+		).format(columnCount=columnCount)
+		rowCountText = ngettext(
+			# Translators: Sub-part of the compound string to report a table
+			"{rowCount} rows",
+			"{rowCount} rows",
+			rowCount,
+		).format(rowCount=rowCount)
 		# Translators: Main part of the compound string to report a table
 		# Example output: table with 3 columns and 5 rows
 		# {columnCountText} is replaced by "3 columns" and {rowCountText} by "5 rows"

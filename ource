@@ -1,0 +1,52 @@
+[1mdiff --git a/source/speech/speech.py b/source/speech/speech.py[m
+[1mindex 07bcc675d..cb86f19f1 100644[m
+[1m--- a/source/speech/speech.py[m
+[1m+++ b/source/speech/speech.py[m
+[36m@@ -1883,10 +1883,18 @@[m [mdef getPropertiesSpeech(  # noqa: C901[m
+ 	rowCount=propertyValues.get('rowCount',0)[m
+ 	columnCount=propertyValues.get('columnCount',0)[m
+ 	if rowCount and columnCount:[m
+[31m-		# Translators: Sub-part of the compound string to speak number of columns and rows in a table[m
+[31m-		rowCountTranslation: str = _("{rowCount} rows").format(rowCount=rowCount)[m
+[31m-		# Translators: Sub-part of the compound string to speak number of columns and rows in a table[m
+[31m-		colCountTranslation: str = _("{columnCount} columns").format(columnCount=columnCount)[m
+[32m+[m		[32mrowCountTranslation: str = ngettext([m[41m[m
+[32m+[m			[32m# Translators: Sub-part of the compound string to speak number of columns and rows in a table[m[41m[m
+[32m+[m			[32m"{rowCount} row",[m[41m[m
+[32m+[m			[32m"{rowCount} rows",[m[41m[m
+[32m+[m			[32mrowCount,[m[41m[m
+[32m+[m		[32m).format(rowCount=rowCount)[m[41m[m
+[32m+[m		[32mcolCountTranslation: str = ngettext([m[41m[m
+[32m+[m			[32m# Translators: Sub-part of the compound string to speak number of columns and rows in a table[m[41m[m
+[32m+[m			[32m"{columnCount} column",[m[41m[m
+[32m+[m			[32m"{columnCount} columns",[m[41m[m
+[32m+[m			[32mcolumnCount,[m[41m[m
+[32m+[m		[32m).format(columnCount=columnCount)[m[41m[m
+ 		# Translators: Main part of the compound string to speak number of columns and rows in a table[m
+ 		# Example output: "with 3 rows and 2 columns"[m
+ 		# In this example {rowCountTranslation} will be replaced by "3 rows" and {colCountTranslation} by[m
+[36m@@ -2791,12 +2799,21 @@[m [mdef getTableInfoSpeech([m
+ 		newTable=False[m
+ 	textList=[][m
+ 	if newTable:[m
+[31m-		# Translators: Sub-part of the compound string to report a table[m
+ 		columnCount=tableInfo.get("column-count",0)[m
+ 		# Translators: Sub-part of the compound string to report a table[m
+ 		rowCount=tableInfo.get("row-count",0)[m
+[31m-		columnCountText = _("{columnCount} columns").format(columnCount=columnCount)[m
+[31m-		rowCountText = _("{rowCount} rows").format(rowCount=rowCount)[m
+[32m+[m		[32mcolumnCountText = ngettext([m[41m[m
+[32m+[m			[32m# Translators: Sub-part of the compound string to report a table[m[41m[m
+[32m+[m			[32m"{columnCount} column",[m[41m[m
+[32m+[m			[32m"{columnCount} columns",[m[41m[m
+[32m+[m			[32mcolumnCount,[m[41m[m
+[32m+[m		[32m).format(columnCount=columnCount)[m[41m[m
+[32m+[m		[32mrowCountText = ngettext([m[41m[m
+[32m+[m			[32m# Translators: Sub-part of the compound string to report a table[m[41m[m
+[32m+[m			[32m"{rowCount} rows",[m[41m[m
+[32m+[m			[32m"{rowCount} rows",[m[41m[m
+[32m+[m			[32mrowCount,[m[41m[m
+[32m+[m		[32m).format(rowCount=rowCount)[m[41m[m
+ 		# Translators: Main part of the compound string to report a table[m
+ 		# Example output: table with 3 columns and 5 rows[m
+ 		# {columnCountText} is replaced by "3 columns" and {rowCountText} by "5 rows"[m
