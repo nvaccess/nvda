@@ -12,7 +12,6 @@ from typing import (
 	Dict,
 	Optional,
 )
-from unicodedata import category
 
 from comtypes import COMError, BSTR
 import comtypes.automation
@@ -54,6 +53,7 @@ import vision
 from utils.displayString import DisplayStringIntEnum
 import NVDAState
 
+# Translators: The name of a category of NVDA commands.
 SCRCAT_EXCEL = _("Excel")
 
 excel2010VersionMajor=14
