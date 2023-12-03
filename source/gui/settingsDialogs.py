@@ -1685,7 +1685,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		if len(enabledSpeechModes) < 2:
 			log.debugWarning("Too few speech modes enabled.")
 			gui.messageBox(
-				# translators: Message shown when not enough speech modes are enabled.
+				# Translators: Message shown when not enough speech modes are enabled.
 				_("At least two speech modes have to be checked."),
 				# Translators: The title of the message box
 				_("Error"),
@@ -1698,7 +1698,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		):
 			log.debugWarning("None of the speech modes producing speech are enabled. This configuration is invalid.")
 			gui.messageBox(
-				# translators: Message shown when none of required speech modes are enabled.
+				# Translators: Message shown when none of required speech modes are enabled.
 				_("One of speech mode talk or on-demand has to be enabled."),
 				# Translators: The title of the message box
 				_("Error"),
