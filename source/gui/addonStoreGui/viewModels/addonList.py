@@ -133,6 +133,9 @@ class AddonListItemVM(Generic[_AddonModelT]):
 	def canUseUpdateAction(self) -> bool:
 		return self.status == AvailableAddonStatus.UPDATE
 
+	def canUseUpdateOverrideIncompatibilityAction(self) -> bool:
+		return self.status == AvailableAddonStatus.UPDATE_INCOMPATIBLE and self.model.canOverrideCompatibility
+
 	def canUseReplaceAction(self) -> bool:
 		return self.status == AvailableAddonStatus.REPLACE_SIDE_LOAD
 

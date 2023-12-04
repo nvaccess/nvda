@@ -133,6 +133,13 @@ class AddonStoreVM:
 				actionTarget=selectedListItem
 			),
 			AddonActionVM(
+				# Translators: Label for an action that installs the selected addon
+				displayName=pgettext("addonStore", "&Update (override incompatibility)"),
+				actionHandler=self.installOverrideIncompatibilityForAddon,
+				validCheck=lambda aVM: aVM.canUseUpdateOverrideIncompatibilityAction(),
+				actionTarget=selectedListItem
+			),
+			AddonActionVM(
 				# Translators: Label for an action that replaces the selected addon with
 				# an add-on store version.
 				displayName=pgettext("addonStore", "Re&place"),
@@ -268,7 +275,7 @@ class AddonStoreVM:
 			assert listItemVM.model._addonHandlerModel is not None
 			listItemVM.model._addonHandlerModel.requestRemove()
 			self.refresh()
-			listItemVM.status = getStatus(listItemVM.model)
+			listItemVM.status = getStatus(listItemVM.model, self._filteredStatusKey)
 		return shouldRemove, shouldRememberChoice
 
 	def removeAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]) -> None:
@@ -344,7 +351,7 @@ class AddonStoreVM:
 			# ensure calling on the main thread.
 			core.callLater(delay=0, callable=self.onDisplayableError.notify, displayableError=displayableError)
 
-		listItemVM.status = getStatus(listItemVM.model)
+		listItemVM.status = getStatus(listItemVM.model, self._filteredStatusKey)
 		self.refresh()
 
 	def enableOverrideIncompatibilityForAddon(
@@ -635,7 +642,7 @@ class AddonStoreVM:
 			raise NotImplementedError(f"Unhandled status filter key {self._filteredStatusKey}")
 
 		addonsWithStatus = (
-			(model, getStatus(model))
+			(model, getStatus(model, self._filteredStatusKey))
 			for channel in addons
 			for model in addons[channel].values()
 		)
