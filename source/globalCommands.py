@@ -2035,6 +2035,10 @@ class GlobalCommands(ScriptableObject):
 		currModeIndex = modesList.index(curMode)
 		excludedModesIndexes = config.conf["speech"]["excludedSpeechModes"]
 		possibleIndexes = [i for i in range(len(modesList)) if i not in excludedModesIndexes]
+		# Sort speech modes to present next modes in the list before the ones at the beginning of the list.
+		# Use a key function which places modes whose index is higher than the currently used at the beginning.
+		# Note that since Python's sorting is stable
+		# relative ordering of elements for which key function returns the same value is preserved.
 		# Sorting uses `<=` since when sorting booleans they are threated as integers,
 		# so `False` (0) comes before `True` (1).
 		newModeIndex = sorted(possibleIndexes, key=lambda i: i <= currModeIndex)[0]
