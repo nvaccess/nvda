@@ -24,7 +24,7 @@ class _FakeInputGesture(inputCore.InputGesture):
 
 class SpeechModeSwitching(unittest.TestCase):
 
-	"""Verifies that switching between speech modes with `NVDA+S` works.
+	"""Verifies that switching between speech modes with `NVDA+s` works.
 
 	Ideally we will also ensure that name of the new speech mode is presented to the user,
 	but we don't yet track calls to ``speech.speak``, so can't make any assertions on what has been spoken.
@@ -115,7 +115,7 @@ class SpeechModeSwitching(unittest.TestCase):
 		"""Execute script multiple times and make sure we never switched to one of the disabled modes."""
 		self._setDisabledSpeechModes((speech.SpeechMode.off, speech.SpeechMode.onDemand))
 		seenModes = set()
-		for __ in range(30):  # Chosen arbitrarily, so that script wraps multipe times.
+		for __ in range(30):  # Chosen arbitrarily, so that script wraps multiple times.
 			self._executeSpeechModeCycleScript()
 			seenModes.add(self._getCurrSpeechMode())
 		self.assertEqual(seenModes, {speech.SpeechMode.talk, speech.SpeechMode.beeps})

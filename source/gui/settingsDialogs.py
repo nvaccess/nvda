@@ -1631,7 +1631,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self._appendSpeechModesList(settingsSizerHelper)
 
 	def _appendSpeechModesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
-		self._allSpeechModes = [mode for mode in speech.SpeechMode]
+		self._allSpeechModes = list(speech.SpeechMode)
 		self.speechModesList: nvdaControls.CustomCheckListBox = settingsSizerHelper.addLabeledControl(
 			# Translators: Label of the list where user can enable or disable speech modes.
 			_("Switch between the following speech &modes:"),

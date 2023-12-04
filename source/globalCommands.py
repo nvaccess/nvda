@@ -2035,7 +2035,7 @@ class GlobalCommands(ScriptableObject):
 		currModeIndex = modesList.index(curMode)
 		excludedModesIndexes = config.conf["speech"]["excludedSpeechModes"]
 		possibleIndexes = [i for i in range(len(modesList)) if i not in excludedModesIndexes]
-		# Sorting uses `<=`  since when sorting booleans they are threated as integers,
+		# Sorting uses `<=` since when sorting booleans they are threated as integers,
 		# so `False` (0) comes before `True` (1).
 		newModeIndex = sorted(possibleIndexes, key=lambda i: i <= currModeIndex)[0]
 		newMode = modesList[newModeIndex]
