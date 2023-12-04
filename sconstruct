@@ -409,6 +409,7 @@ if certFile:
 
 dist = env.NVDADist("dist", [sourceDir,userDocsDir], uiAccess=bool(certFile))
 env.Depends(dist,uninstaller)
+AlwaysBuild(dist)
 # Dir node targets don't get cleaned, so cleaning of the dist nodes has to be explicitly specified.
 env.Clean(dist, dist)
 # Clean the intermediate build directory.
