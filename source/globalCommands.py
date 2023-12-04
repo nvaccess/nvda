@@ -2023,7 +2023,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for cycle speech mode command.
-			"Cycles between enabled speech modes."
+			"Cycles between speech modes."
 		),
 		category=SCRCAT_SPEECH,
 		gesture="kb:NVDA+s"
