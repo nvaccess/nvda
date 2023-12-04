@@ -1634,7 +1634,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self._allSpeechModes = list(speech.SpeechMode)
 		self.speechModesList: nvdaControls.CustomCheckListBox = settingsSizerHelper.addLabeledControl(
 			# Translators: Label of the list where user can enable or disable speech modes.
-			_("Switch between the following speech &modes:"),
+			_("&Modes available in the Cycle speech mode command:"),
 			nvdaControls.CustomCheckListBox,
 			choices=[mode.displayString for mode in self._allSpeechModes]
 		)
