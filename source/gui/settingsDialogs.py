@@ -712,17 +712,18 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			panel.postSave()
 
 	def _doSave(self):
-		try:
-			self._validateAllPanels()
-			self._saveAllPanels()
-			self._notifyAllPanelsSaveOccurred()
-		except ValueError:
-			log.debugWarning("Error while saving settings:", exc_info=True)
-			return
+		self._validateAllPanels()
+		self._saveAllPanels()
+		self._notifyAllPanelsSaveOccurred()
 
 	def onOk(self, evt):
-		self._doSave()
-		super(MultiCategorySettingsDialog,self).onOk(evt)
+		try:
+			self._doSave()
+		except ValueError:
+			log.debugWarning("Error while saving settings:", exc_info=True)
+			evt.StopPropagation()
+		else:
+			super().onOk(evt)
 
 	def onCancel(self,evt):
 		for panel in self.catIdToInstanceMap.values():
@@ -730,8 +731,13 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		super(MultiCategorySettingsDialog,self).onCancel(evt)
 
 	def onApply(self,evt):
-		self._doSave()
-		super(MultiCategorySettingsDialog,self).onApply(evt)
+		try:
+			self._doSave()
+		except ValueError:
+			log.debugWarning("Error while saving settings:", exc_info=True)
+			evt.StopPropagation()
+		else:
+			super().onApply(evt)
 
 
 class GeneralSettingsPanel(SettingsPanel):
@@ -1692,19 +1698,8 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 				wx.OK | wx.ICON_ERROR,
 				self,
 			)
+			self.speechModesList.SetFocus()
 			return False
-		if not any(
-			self._allSpeechModes[i].producesSpeech for i in enabledSpeechModes
-		):
-			log.debugWarning("None of the speech modes producing speech are enabled. This configuration is invalid.")
-			gui.messageBox(
-				# Translators: Message shown when none of required speech modes are enabled.
-				_("One of speech mode talk or on-demand has to be enabled."),
-				# Translators: The title of the message box
-				_("Error"),
-				wx.OK | wx.ICON_ERROR,
-				self
-			)
 		return super().isValid()
 
 
@@ -1811,7 +1806,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("KeyboardSettingsHandleKeys", self.handleInjectedKeysCheckBox)
 		self.handleInjectedKeysCheckBox.SetValue(config.conf["keyboard"]["handleInjectedKeys"])
 
-	def isValid(self):
+	def isValid(self) -> bool:
 		# #2871: check whether at least one key is the nvda key.
 		if not self.modifierList.CheckedItems:
 			log.debugWarning("No NVDA key set")
@@ -1820,6 +1815,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 				_("At least one key must be used as the NVDA key."),
 				# Translators: The title of the message box
 				_("Error"), wx.OK|wx.ICON_ERROR,self)
+			self.modifierList.SetFocus()
 			return False
 		return super(KeyboardSettingsPanel, self).isValid()
 
