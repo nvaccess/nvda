@@ -275,6 +275,9 @@ addTable("fi.utb", _("Finnish 6 dot"))
 addTable("fi-fi-8dot.ctb", _("Finnish 8 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("fil-g2.ctb", _("Filipino grade 2"), contracted=True)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("fr-bfu-comp6.utb", _("French (unified) 6 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
