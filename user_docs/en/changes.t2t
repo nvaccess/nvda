@@ -14,8 +14,8 @@ There is a new action to open a reviews webpage for the selected add-on.
 The audio output device and ducking mode options have been removed from the "Select Synthesizer" dialog.
 They can be found in the audio settings panel which can be opened with ``NVDA+control+u``.
 
-eSpeak-NG, LibLouis braille translator, and Unicode CLDR have been updated.
-New Thai and Romanian braille tables are available.
+eSpeak-NG, LibLouis Braille translator, and Unicode CLDR have been updated.
+New Thai, Romanian, and Filipino Braille tables are available.
 
 == Important notes == 
 - This release breaks compatibility with existing add-ons.
@@ -38,7 +38,7 @@ When speech is on-demand, NVDA does not speak automatically (e.g. when moving th
 - NVDA no longer supports Windows 7 and Windows 8.
 Windows 8.1 is the minimum Windows version supported. (#15544)
 - Component updates:
-  - Updated LibLouis braille translator to 3.28.0. (#15435, #15876, @codeofdusk)
+  - Updated LibLouis Braille translator to [3.28.0 https://github.com/liblouis/liblouis/releases/tag/v3.28.0]. (#15435, #15876, @codeofdusk)
     - Added new Thai, Romanian, and Filipino Braille tables.
     -
   - eSpeak NG has been updated to 1.52-dev commit ``530bf0abf``. (#15036)
