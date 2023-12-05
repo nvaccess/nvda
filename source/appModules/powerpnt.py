@@ -588,14 +588,14 @@ class Shape(PpObject):
 				total=False
 				if otherIsBehind:
 					textList.append(ngettext(
-						# Translators: A message when a shape is infront of another shape on a Powerpoint slide
+						# Translators: A message when a shape is in front of another shape on a PowerPoint slide
 						"covers left of {otherShape} by {distance:.3g} point",
 						"covers left of {otherShape} by {distance:.3g} points",
 						overlapsOtherLeftBy,
 					).format(otherShape=otherLabel, distance=overlapsOtherLeftBy))
 				else:
 					textList.append(ngettext(
-						# Translators: A message when a shape is behind another shape on a powerpoint slide
+						# Translators: A message when a shape is behind another shape on a PowerPoint slide
 						"behind left of {otherShape} by {distance:.3g} point",
 						"behind left of {otherShape} by {distance:.3g} points",
 						overlapsOtherLeftBy,
@@ -605,14 +605,14 @@ class Shape(PpObject):
 				total=False
 				if otherIsBehind:
 					textList.append(ngettext(
-						# Translators: A message when a shape is infront of another shape on a Powerpoint slide
+						# Translators: A message when a shape is in front of another shape on a PowerPoint slide
 						"covers top of {otherShape} by {distance:.3g} point",
 						"covers top of {otherShape} by {distance:.3g} points",
 						overlapsOtherTopBy,
 					).format(otherShape=otherLabel, distance=overlapsOtherTopBy))
 				else:
 					textList.append(ngettext(
-						# Translators: A message when a shape is behind another shape on a powerpoint slide
+						# Translators: A message when a shape is behind another shape on a PowerPoint slide
 						"behind top of {otherShape} by {distance:.3g} point",
 						"behind top of {otherShape} by {distance:.3g} points",
 						overlapsOtherTopBy,
@@ -622,14 +622,14 @@ class Shape(PpObject):
 				total=False
 				if otherIsBehind:
 					textList.append(ngettext(
-						# Translators: A message when a shape is infront of another shape on a Powerpoint slide
+						# Translators: A message when a shape is in front of another shape on a PowerPoint slide
 						"covers right of {otherShape} by {distance:.3g} point",
 						"covers right of {otherShape} by {distance:.3g} points",
 						overlapsOtherRightBy,
 					).format(otherShape=otherLabel, distance=overlapsOtherRightBy))
 				else:
 					textList.append(ngettext(
-						# Translators: A message when a shape is behind another shape on a powerpoint slide
+						# Translators: A message when a shape is behind another shape on a PowerPoint slide
 						"behind right of {otherShape} by {distance:.3g} point",
 						"behind right of {otherShape} by {distance:.3g} points",
 						overlapsOtherRightBy,
@@ -639,24 +639,24 @@ class Shape(PpObject):
 				total=False
 				if otherIsBehind:
 					textList.append(ngettext(
-						# Translators: A message when a shape is infront of another shape on a Powerpoint slide
+						# Translators: A message when a shape is in front of another shape on a PowerPoint slide
 						"covers bottom of {otherShape} by {distance:.3g} point",
 						"covers bottom of {otherShape} by {distance:.3g} points",
 						overlapsOtherBottomBy,
 					).format(otherShape=otherLabel, distance=overlapsOtherBottomBy))
 				else:
 					textList.append(ngettext(
-						# Translators: A message when a shape is behind another shape on a powerpoint slide
+						# Translators: A message when a shape is behind another shape on a PowerPoint slide
 						"behind bottom of {otherShape} by {distance:.3g} point",
 						"behind bottom of {otherShape} by {distance:.3g} points",
 						overlapsOtherBottomBy,
 					).format(otherShape=otherLabel, distance=overlapsOtherBottomBy))
 			if total:
 				if otherIsBehind:
-					# Translators: A message when a shape is infront of another shape on a Powerpoint slide 
+					# Translators: A message when a shape is in front of another shape on a PowerPoint slide
 					textList.append(_("covers  {otherShape}").format(otherShape=otherLabel))
 				else:
-					# Translators: A message when a shape is behind another shape on a powerpoint slide
+					# Translators: A message when a shape is behind another shape on a PowerPoint slide
 					textList.append(_("behind {otherShape}").format(otherShape=otherLabel))
 		return ", ".join(textList)
 
@@ -677,7 +677,7 @@ class Shape(PpObject):
 		if left:
 			if leftDistance>=0:
 				onSlideList.append(ngettext(
-					# Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's
+					# Translators: For a shape within a PowerPoint Slide, this is the distance in points from the shape's
 					# left edge to the slide's left edge
 					"{distance:.3g} point from left slide edge",
 					"{distance:.3g} points from left slide edge",
@@ -685,7 +685,7 @@ class Shape(PpObject):
 				).format(distance=leftDistance))
 			else:
 				offSlideList.append(ngettext(
-					# Translators: For a shape too far off the left edge of a Powerpoint Slide, this is the distance in
+					# Translators: For a shape too far off the left edge of a PowerPoint Slide, this is the distance in
 					# points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
 					"Off left slide edge by {distance:.3g} point",
 					"Off left slide edge by {distance:.3g} points",
@@ -694,7 +694,7 @@ class Shape(PpObject):
 		if top:
 			if topDistance>=0:
 				onSlideList.append(ngettext(
-					# Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's
+					# Translators: For a shape within a PowerPoint Slide, this is the distance in points from the shape's
 					# top edge to the slide's top edge
 					"{distance:.3g} point from top slide edge",
 					"{distance:.3g} points from top slide edge",
@@ -702,7 +702,7 @@ class Shape(PpObject):
 				).format(distance=topDistance))
 			else:
 				offSlideList.append(ngettext(
-					# Translators: For a shape too far off the top edge of a Powerpoint Slide, this is the distance in
+					# Translators: For a shape too far off the top edge of a PowerPoint Slide, this is the distance in
 					# points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
 					"Off top slide edge by {distance:.3g} point",
 					"Off top slide edge by {distance:.3g} points",
@@ -711,7 +711,7 @@ class Shape(PpObject):
 		if right:
 			if rightDistance>=0:
 				onSlideList.append(ngettext(
-					# Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's
+					# Translators: For a shape within a PowerPoint Slide, this is the distance in points from the shape's
 					# right edge to the slide's right edge
 					"{distance:.3g} point from right slide edge",
 					"{distance:.3g} points from right slide edge",
@@ -719,7 +719,7 @@ class Shape(PpObject):
 				).format(distance=rightDistance))
 			else:
 				offSlideList.append(ngettext(
-					# Translators: For a shape too far off the right edge of a Powerpoint Slide, this is the distance in
+					# Translators: For a shape too far off the right edge of a PowerPoint Slide, this is the distance in
 					# points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
 					"Off right slide edge by {distance:.3g} point",
 					"Off right slide edge by {distance:.3g} points",
@@ -728,7 +728,7 @@ class Shape(PpObject):
 		if bottom:
 			if bottomDistance>=0:
 				onSlideList.append(ngettext(
-					# Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's
+					# Translators: For a shape within a PowerPoint Slide, this is the distance in points from the shape's
 					# bottom edge to the slide's bottom edge
 					"{distance:.3g} point from bottom slide edge",
 					"{distance:.3g} points from bottom slide edge",
@@ -736,7 +736,7 @@ class Shape(PpObject):
 				).format(distance=bottomDistance))
 			else:
 				offSlideList.append(ngettext(
-					# Translators: For a shape too far off the bottom edge of a Powerpoint Slide, this is the distance in
+					# Translators: For a shape too far off the bottom edge of a PowerPoint Slide, this is the distance in
 					# points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
 					"Off bottom slide edge by {distance:.3g} point",
 					"Off bottom slide edge by {distance:.3g} points",
