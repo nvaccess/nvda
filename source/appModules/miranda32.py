@@ -23,7 +23,7 @@ from keyboardHandler import KeyboardInputGesture
 import watchdog
 
 # Translators: The name of a category of NVDA commands.
-SCRCAT_MIRANDA = _("Miranda")
+SCRCAT_MIRANDA = _("Miranda NG")
 
 #contact list window messages
 CLM_FIRST=0x1000    #this is the same as LVM_FIRST
