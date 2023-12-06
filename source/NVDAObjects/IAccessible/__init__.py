@@ -1486,7 +1486,9 @@ the NVDAObject for IAccessible
 				info={}
 				info["level"],info["similarItemsInGroup"],info["indexInGroup"]=self.IAccessibleObject.groupPosition
 				if not info["level"]:
-					info["level"] = self.IA2Attributes["level"]
+					ia2Attrs = self.IA2Attributes
+					if "level" in ia2Attrs:
+						info["level"] = ia2Attrs["level"]
 				# Object's with an IAccessibleTableCell interface should not expose indexInGroup/similarItemsInGroup as the cell's 2d info is much more useful.
 				if self._IATableCell:
 					del info['indexInGroup']
