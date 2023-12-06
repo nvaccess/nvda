@@ -20,7 +20,7 @@ from annotation import (
 )
 
 import audioDucking
-import copy
+
 import touchHandler
 import keyboardHandler
 import mouseHandler
@@ -275,9 +275,11 @@ class GlobalCommands(ScriptableObject):
 		except (RuntimeError, NotImplementedError):
 			info=None
 		if not info or info.isCollapsed:
+			# Translators: The message reported when there is no selection
 			ui.message(_("No selection"))
 		else:
 			scriptCount = scriptHandler.getLastScriptRepeatCount()
+			# Translators: The message reported after selected text
 			selectMessage = speech.speech._getSelectionMessageSpeech(_('%s selected'), info.text)[0]
 			if scriptCount == 0:
 				speech.speakTextSelected(info.text)
@@ -2504,10 +2506,11 @@ class GlobalCommands(ScriptableObject):
 		if repeatCount == 0:
 			speechList = speech.getObjectSpeech(focusObject, reason=controlTypes.OutputReason.QUERY)
 			speech.speech.speak(speechList)
-			for i in copy.copy(speechList):
+			brailleList = speechList.copy()
+			for i in speechList:
 				if not isinstance(i, str):
-					speechList.remove(i)
-			text = ' '.join(speechList)
+					brailleList.remove(i)
+			text = ' '.join(brailleList)
 			braille.handler.message(text)
 		else:
 			speech.speakSpelling(focusObject.name, useCharacterDescriptions=repeatCount > 1)
