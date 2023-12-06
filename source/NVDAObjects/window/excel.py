@@ -1442,7 +1442,8 @@ class ExcelCell(ExcelBase):
 		# Translators: the description  for a script for Excel
 		description=_("opens a dropdown item at the current cell"),
 		gesture="kb:alt+downArrow",
-		category=SCRCAT_EXCEL)
+		category=SCRCAT_EXCEL
+	)
 	def script_openDropdown(self,gesture):
 		gesture.send()
 		d=None
@@ -1469,7 +1470,8 @@ class ExcelCell(ExcelBase):
 		# Translators: the description  for a script for Excel
 		description=_("Sets the current cell as start of column header"),
 		gesture="kb:NVDA+shift+c",
-		category=SCRCAT_EXCEL)
+		category=SCRCAT_EXCEL
+	)
 	def script_setColumnHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
@@ -1492,7 +1494,8 @@ class ExcelCell(ExcelBase):
 		# Translators: the description  for a script for Excel
 		description=_("sets the current cell as start of row header"),
 		gesture="kb:NVDA+shift+r",
-		category=SCRCAT_EXCEL)
+		category=SCRCAT_EXCEL
+	)
 	def script_setRowHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
@@ -1694,7 +1697,8 @@ class ExcelCell(ExcelBase):
 		# Translators: the description  for a script for Excel
 		description=_("Opens the note editing dialog"),
 		gesture="kb:shift+f2",
-		category=SCRCAT_EXCEL)
+		category=SCRCAT_EXCEL
+	)
 	def script_editComment(self,gesture):
 		commentObj=self.excelCellObject.comment
 		d = EditCommentDialog(
