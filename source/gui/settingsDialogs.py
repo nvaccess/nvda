@@ -1688,7 +1688,6 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 
 	def isValid(self) -> bool:
 		enabledSpeechModes = self.speechModesList.CheckedItems
-		speechModesListRequiresChange = False
 		if len(enabledSpeechModes) < 2:
 			log.debugWarning("Too few speech modes enabled.")
 			gui.messageBox(
@@ -1699,7 +1698,8 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 				wx.OK | wx.ICON_ERROR,
 				self,
 			)
-			speechModesListRequiresChange = True
+			self.speechModesList.SetFocus()
+			return False
 		if not any(
 			self._allSpeechModes[i].producesSpeech for i in enabledSpeechModes
 		):
@@ -1717,10 +1717,8 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 				wx.YES | wx.NO | wx.ICON_WARNING,
 				self,
 			) == wx.NO:
-				speechModesListRequiresChange = True
-		if speechModesListRequiresChange:
-			self.speechModesList.SetFocus()
-			return False
+				self.speechModesList.SetFocus()
+				return False
 		return super().isValid()
 
 
