@@ -1173,11 +1173,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			speechList = speech.getObjectSpeech(curObject, reason=controlTypes.OutputReason.QUERY)
 			speech.speech.speak(speechList)
-			brailleList = speechList.copy()
-			for i in speechList:
-				if not isinstance(i, str):
-					brailleList.remove(i)
-			text = ' '.join(brailleList)
+			text = ' '.join(s for s in speechList if isinstance(s, str))
 
 			braille.handler.message(text)
 
