@@ -160,6 +160,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 			self[AddonStateCategory.BLOCKED].update(self[AddonStateCategory.OVERRIDE_COMPATIBILITY])
 			# Reset overridden compatibility for add-ons that were overridden by older versions of NVDA.
 			self[AddonStateCategory.OVERRIDE_COMPATIBILITY].clear()
+			self[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].clear()
 		self.manualOverridesAPIVersion = MajorMinorPatch(*addonAPIVersion.BACK_COMPAT_TO)
 
 	def removeStateFile(self) -> None:
@@ -289,6 +290,12 @@ def initialize():
 	if NVDAState.shouldWriteToDisk():
 		state.save()
 	initializeModulePackagePaths()
+	if state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY]:
+		log.error(
+			"The following add-ons which were marked as compatible are no longer installed: "
+			f"{', '.join(state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY])}"
+		)
+		state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].clear()
 
 
 def terminate():
@@ -349,6 +356,9 @@ def _getAvailableAddonsFromPath(
 						newPath = a.completeInstall()
 						if newPath:
 							a = Addon(newPath)
+					if isFirstLoad and name in state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY]:
+						state[AddonStateCategory.OVERRIDE_COMPATIBILITY].add(name)
+						state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].remove(name)
 					log.debug(
 						"Found add-on {name} - {a.version}."
 						" Requires API: {a.minimumNVDAVersion}."
@@ -502,6 +512,7 @@ class Addon(AddonBase):
 			self.completeRemove()
 			state[AddonStateCategory.PENDING_INSTALL].discard(self.name)
 			state[AddonStateCategory.OVERRIDE_COMPATIBILITY].discard(self.name)
+			state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].discard(self.name)
 			# Force availableAddons to be updated
 			getAvailableAddons(refresh=True)
 		else:
@@ -566,17 +577,24 @@ class Addon(AddonBase):
 		self._extendedPackages.add(package)
 		log.debug("Addon %s added to %s package path", self.manifest['name'], package.__name__)
 
+	@property
+	def _canBeEnabled(self) -> bool:
+		return (
+			self.isCompatible  # Incompatible add-ons cannot be enabled
+			or (
+				self.canOverrideCompatibility  # Theoretically possible to mark it as compatible
+				# Its compatibility has either been overridden, or would be on the next restart
+				and self._hasOverriddenCompat
+			)
+		)
+
 	def enable(self, shouldEnable: bool) -> None:
 		"""
 		Sets this add-on to be disabled or enabled when NVDA restarts.
 		@raises: AddonError on failure.
 		"""
 		if shouldEnable:
-			if not (
-				isAddonCompatible(self)
-				or self.overrideIncompatibility
-			):
-				import addonAPIVersion
+			if not self._canBeEnabled:
 				raise AddonError(
 					"Add-on is not compatible:"
 					" minimum NVDA version {}, last tested version {},"
@@ -591,15 +609,7 @@ class Addon(AddonBase):
 				# Undoing a pending disable.
 				state[AddonStateCategory.PENDING_DISABLE].discard(self.name)
 			else:
-				if self.canOverrideCompatibility and not self.overrideIncompatibility:
-					from gui import mainFrame
-					from gui.addonStoreGui.controls.messageDialogs import _shouldInstallWhenAddonTooOldDialog
-					if not _shouldInstallWhenAddonTooOldDialog(mainFrame, self._addonGuiModel):
-						import addonAPIVersion
-						raise AddonError("Add-on is not compatible and over ride was abandoned")
 				state[AddonStateCategory.PENDING_ENABLE].add(self.name)
-			if self.overrideIncompatibility:
-				state[AddonStateCategory.BLOCKED].discard(self.name)
 		else:
 			if self.name in state[AddonStateCategory.PENDING_ENABLE]:
 				# Undoing a pending enable.
@@ -793,7 +803,11 @@ class AddonBundle(AddonBase):
 		self._path = bundlePath
 		# Read manifest:
 		translatedInput=None
-		with zipfile.ZipFile(self._path, 'r') as z:
+		try:
+			z = zipfile.ZipFile(self._path, "r")
+		except (zipfile.BadZipfile, FileNotFoundError) as e:
+			raise AddonError(f"Invalid bundle file: {self._path}") from e
+		with z:
 			for translationPath in _translatedManifestPaths(forBundle=True):
 				try:
 					# ZipFile.open opens every file in binary mode.

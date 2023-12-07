@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited
+# Copyright (C) 2022-2023 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -116,6 +116,8 @@ class AddonVirtualList(
 	def _itemDataUpdated(self, index: int):
 		log.debug(f"index: {index}")
 		self.RefreshItem(index)
+		# Emit a namechange event for the list item in order for NVDA to report the updated state.
+		wx.Accessible.NotifyEvent(wx.ACC_EVENT_OBJECT_NAMECHANGE, self, wx.OBJID_CLIENT, index + 1)
 
 	def OnItemSelected(self, evt: wx.ListEvent):
 		newIndex = evt.GetIndex()

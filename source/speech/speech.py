@@ -702,7 +702,7 @@ def getObjectSpeech(
 		or not obj._hasNavigableText
 	)
 
-	allowProperties = _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent)
+	allowProperties = _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent, obj.role)
 
 	if reason == OutputReason.FOCUSENTERED:
 		# Aside from excluding some properties, focus entered should be spoken like focus.
@@ -748,7 +748,11 @@ def getObjectSpeech(
 	return sequence
 
 
-def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
+def _objectSpeech_calculateAllowedProps(
+		reason: OutputReason,
+		shouldReportTextContent: bool,
+		objRole: controlTypes.Role,
+) -> dict[str, bool]:
 	allowProperties = {
 		'name': True,
 		'role': True,
@@ -777,7 +781,11 @@ def _objectSpeech_calculateAllowedProps(reason, shouldReportTextContent):
 	}
 	if reason in (OutputReason.FOCUSENTERED, OutputReason.MOUSE):
 		allowProperties["value"] = False
-		allowProperties["keyboardShortcut"] = False
+		# #15826: For containers, there are cases where the shortcut key can be defined but not working (e.g.
+		# GROUPING). The safest strategy is then to remove the shortcut keys of containers except in the known
+		# cases where it is working and useful. The only such known case is the one of LIST.
+		if not objRole == controlTypes.Role.LIST:
+			allowProperties["keyboardShortcut"] = False
 		allowProperties["positionInfo_level"] = False
 	if reason == OutputReason.MOUSE:
 		# Name is often part of the text content when mouse tracking.

@@ -45,6 +45,7 @@ class EnabledStatus(DisplayStringEnum):
 
 
 @enum.unique
+# TODO refactor rename from AvailableAddonStatus to AddonStatus
 class AvailableAddonStatus(DisplayStringEnum):
 	""" Values to represent the status of add-ons within the NVDA add-on store.
 	Although related, these are independent of the states in L{addonHandler}
@@ -53,6 +54,7 @@ class AvailableAddonStatus(DisplayStringEnum):
 	PENDING_REMOVE = enum.auto()
 	AVAILABLE = enum.auto()
 	UPDATE = enum.auto()
+	UPDATE_INCOMPATIBLE = enum.auto()
 	REPLACE_SIDE_LOAD = enum.auto()
 	"""
 	Used when an addon in the store matches an installed add-on ID.
@@ -85,6 +87,8 @@ class AvailableAddonStatus(DisplayStringEnum):
 			self.AVAILABLE: pgettext("addonStore", "Available"),
 			# Translators: Status for addons shown in the add-on store dialog
 			self.UPDATE: pgettext("addonStore", "Update Available"),
+			# Translators: Status for addons shown in the add-on store dialog
+			self.UPDATE_INCOMPATIBLE: pgettext("addonStore", "Update Available (incompatible)"),
 			# Translators: Status for addons shown in the add-on store dialog
 			self.REPLACE_SIDE_LOAD: pgettext("addonStore", "Migrate to add-on store"),
 			# Translators: Status for addons shown in the add-on store dialog
@@ -143,136 +147,8 @@ class AddonStateCategory(str, enum.Enum):
 	"""
 	BLOCKED = "blocked"
 	"""Add-ons that are blocked from running because they are incompatible"""
-
-
-def _getDownloadableStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
-	from ..dataManager import addonDataManager
-	assert addonDataManager is not None
-
-	if model.name in (d.model.name for d in addonDataManager._downloadsPendingCompletion):
-		return AvailableAddonStatus.DOWNLOADING
-
-	if model.name in (d.model.name for d, _ in addonDataManager._downloadsPendingInstall):
-		return AvailableAddonStatus.DOWNLOAD_SUCCESS
-
-	if model._addonHandlerModel is None:
-		# add-on is not installed
-		if model.isPendingInstall:
-			return AvailableAddonStatus.DOWNLOAD_SUCCESS
-
-		if not model.isCompatible:
-			# Installed incompatible add-ons have a status of disabled or running
-			return AvailableAddonStatus.INCOMPATIBLE
-
-		# Any compatible add-on which is not installed should be listed as available
-		return AvailableAddonStatus.AVAILABLE
-
-	return None
-
-
-def _getUpdateStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
-	from .addon import AddonStoreModel
-	from ..dataManager import addonDataManager
-	assert addonDataManager is not None
-
-	if not isinstance(model, AddonStoreModel):
-		# If the listed add-on is installed from a side-load
-		# and not available on the add-on store
-		# the type will not be AddonStoreModel
-		return None
-
-	addonStoreInstalledData = addonDataManager._getCachedInstalledAddonData(model.addonId)
-	if addonStoreInstalledData is not None:
-		if model.addonVersionNumber > addonStoreInstalledData.addonVersionNumber:
-			return AvailableAddonStatus.UPDATE
-	else:
-		# Parsing from a side-loaded add-on
-		try:
-			manifestAddonVersion = MajorMinorPatch._parseVersionFromVersionStr(model._addonHandlerModel.version)
-		except ValueError:
-			# Parsing failed to get a numeric version.
-			# Ideally a numeric version would be compared,
-			# however the manifest only has a version string.
-			# Ensure the user is aware that it may be a downgrade or reinstall.
-			# Encourage users to re-install or upgrade the add-on from the add-on store.
-			return AvailableAddonStatus.REPLACE_SIDE_LOAD
-
-		if model.addonVersionNumber > manifestAddonVersion:
-			return AvailableAddonStatus.UPDATE
-
-	return None
-
-
-def getStatus(model: "_AddonGUIModel") -> AvailableAddonStatus:
-	from addonHandler import state as addonHandlerState
-
-	downloadableStatus = _getDownloadableStatus(model)
-	if downloadableStatus:
-		# Is this available in the add-on store and not installed?
-		return downloadableStatus
-	else:
-		# Add-on is currently installed or pending restart
-		addonHandlerModel = model._addonHandlerModel
-		assert addonHandlerModel
-
-	for storeState, handlerStateCategories in _addonStoreStateToAddonHandlerState.items():
-		# Match special addonHandler states early for installed add-ons.
-		# Includes enabled, pending enabled, disabled, e.t.c.
-		if all(
-			model.addonId in addonHandlerState[stateCategory]
-			for stateCategory in handlerStateCategories
-		):
-			# Return the add-on store state if the add-on
-			# is in all of the addonHandlerStates
-			# required to match to an add-on store state.
-			# Most states are a 1-to-1 match,
-			# however incompatible add-ons match to two states:
-			# one to flag if that its incompatible,
-			# and another for enabled/disabled.
-			return storeState
-
-	updateStatus = _getUpdateStatus(model)
-	if updateStatus:
-		# Can add-on be updated?
-		return updateStatus
-
-	if addonHandlerModel.isRunning:
-		return AvailableAddonStatus.RUNNING
-	
-	if addonHandlerModel.isEnabled:
-		return AvailableAddonStatus.ENABLED
-
-	log.error(f"Add-on in unknown state: {model.addonId}")
-	return AvailableAddonStatus.UNKNOWN
-
-
-_addonStoreStateToAddonHandlerState: OrderedDict[
-	AvailableAddonStatus,
-	Set[AddonStateCategory]
-	] = OrderedDict({
-	# Pending states must be first as the pending state may be altering another state.
-	AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED: {
-		AddonStateCategory.BLOCKED,
-		AddonStateCategory.PENDING_DISABLE,
-	},
-	AvailableAddonStatus.PENDING_INCOMPATIBLE_ENABLED: {
-		AddonStateCategory.OVERRIDE_COMPATIBILITY,
-		AddonStateCategory.PENDING_ENABLE,
-	},
-	# If an add-on is being updated,
-	# it will be in both pending remove and pending install
-	AvailableAddonStatus.INSTALLED: {
-		AddonStateCategory.PENDING_INSTALL,
-		AddonStateCategory.PENDING_REMOVE,
-	},
-	AvailableAddonStatus.PENDING_REMOVE: {AddonStateCategory.PENDING_REMOVE},
-	AvailableAddonStatus.PENDING_ENABLE: {AddonStateCategory.PENDING_ENABLE},
-	AvailableAddonStatus.PENDING_DISABLE: {AddonStateCategory.PENDING_DISABLE},
-	AvailableAddonStatus.INCOMPATIBLE_DISABLED: {AddonStateCategory.BLOCKED},
-	AvailableAddonStatus.INCOMPATIBLE_ENABLED: {AddonStateCategory.OVERRIDE_COMPATIBILITY},
-	AvailableAddonStatus.DISABLED: {AddonStateCategory.DISABLED},
-	AvailableAddonStatus.INSTALLED: {AddonStateCategory.PENDING_INSTALL},
-})
+	PENDING_OVERRIDE_COMPATIBILITY = "PENDING_OVERRIDE_COMPATIBILITY"
+	"""Add-ons in this state are incompatible but their compatibility would be overridden on the next restart."""
 
 
 class _StatusFilterKey(DisplayStringEnum):
@@ -332,6 +208,157 @@ class _StatusFilterKey(DisplayStringEnum):
 			raise e
 
 
+def _getDownloadableStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
+	from ..dataManager import addonDataManager
+	assert addonDataManager is not None
+
+	if model.name in (d.model.name for d in addonDataManager._downloadsPendingCompletion):
+		return AvailableAddonStatus.DOWNLOADING
+
+	if model.name in (d.model.name for d, _ in addonDataManager._downloadsPendingInstall):
+		return AvailableAddonStatus.DOWNLOAD_SUCCESS
+
+	if model._addonHandlerModel is None:
+		# add-on is not installed
+		if model.isPendingInstall:
+			return AvailableAddonStatus.DOWNLOAD_SUCCESS
+
+		if not model.isCompatible:
+			# Installed incompatible add-ons have a status of disabled or running
+			return AvailableAddonStatus.INCOMPATIBLE
+
+		# Any compatible add-on which is not installed should be listed as available
+		return AvailableAddonStatus.AVAILABLE
+
+	return None
+
+
+def _getUpdateStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
+	from .addon import AddonStoreModel
+	from ..dataManager import addonDataManager
+	assert addonDataManager is not None
+
+	if not isinstance(model, AddonStoreModel):
+		# If the listed add-on is installed from a side-load
+		# and not available on the add-on store
+		# the type will not be AddonStoreModel
+		return None
+
+	addonStoreInstalledData = addonDataManager._getCachedInstalledAddonData(model.addonId)
+	if addonStoreInstalledData is not None:
+		if model.addonVersionNumber > addonStoreInstalledData.addonVersionNumber:
+			if not model.isCompatible:
+				return AvailableAddonStatus.UPDATE_INCOMPATIBLE
+			return AvailableAddonStatus.UPDATE
+	else:
+		# Parsing from a side-loaded add-on
+		try:
+			manifestAddonVersion = MajorMinorPatch._parseVersionFromVersionStr(model._addonHandlerModel.version)
+		except ValueError:
+			# Parsing failed to get a numeric version.
+			# Ideally a numeric version would be compared,
+			# however the manifest only has a version string.
+			# Ensure the user is aware that it may be a downgrade or reinstall.
+			# Encourage users to re-install or upgrade the add-on from the add-on store.
+			return AvailableAddonStatus.REPLACE_SIDE_LOAD
+
+		if model.addonVersionNumber > manifestAddonVersion:
+			if not model.isCompatible:
+				return AvailableAddonStatus.UPDATE_INCOMPATIBLE
+			return AvailableAddonStatus.UPDATE
+
+	return None
+
+
+def _getInstalledStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
+	from addonHandler import state as addonHandlerState
+	from ..dataManager import addonDataManager
+	assert addonDataManager is not None
+	assert model._addonHandlerModel is not None
+
+	for storeState, handlerStateCategories in _addonStoreStateToAddonHandlerState.items():
+		# Match special addonHandler states early for installed add-ons.
+		# Includes enabled, pending enabled, disabled, e.t.c.
+		if all(
+			model.addonId in addonHandlerState[stateCategory]
+			for stateCategory in handlerStateCategories
+		):
+			# Return the add-on store state if the add-on
+			# is in all of the addonHandlerStates
+			# required to match to an add-on store state.
+			# Most states are a 1-to-1 match,
+			# however incompatible add-ons match to two states:
+			# one to flag if that its incompatible,
+			# and another for enabled/disabled.
+			return storeState
+
+	if model._addonHandlerModel.isRunning:
+		return AvailableAddonStatus.RUNNING
+	
+	if model._addonHandlerModel.isEnabled:
+		return AvailableAddonStatus.ENABLED
+
+	return None
+
+
+def getStatus(model: "_AddonGUIModel", context: _StatusFilterKey) -> AvailableAddonStatus:
+	"""Get status for an add-on in the context of the current tab in the add-on store.
+	e.g. "update available" from the update tab, and "installed (incompatible)" from the installed tab.
+
+	:param model: Add-on to determine the status of.
+	:param context: Add-on Store tab context we are checking the status for.
+	:return: Status of add-on for the context of the current tab.
+	"""
+
+	if context in (_StatusFilterKey.AVAILABLE, _StatusFilterKey.UPDATE):
+		downloadableStatus = _getDownloadableStatus(model)
+		if downloadableStatus:
+			# Is this available in the add-on store and not installed?
+			return downloadableStatus
+
+		updateStatus = _getUpdateStatus(model)
+		if updateStatus:
+			# Can add-on be updated?
+			return updateStatus
+
+	# This add-on should be installed if we aren't fetching for the available add-ons tab
+	installedStatus = _getInstalledStatus(model)
+	if installedStatus:
+		return installedStatus
+
+	log.error(f"Add-on in unknown state: {model.addonId} {context}")
+	return AvailableAddonStatus.UNKNOWN
+
+
+_addonStoreStateToAddonHandlerState: OrderedDict[
+	AvailableAddonStatus,
+	Set[AddonStateCategory]
+	] = OrderedDict({
+	# Pending states must be first as the pending state may be altering another state.
+	AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED: {
+		AddonStateCategory.BLOCKED,
+		AddonStateCategory.PENDING_DISABLE,
+	},
+	AvailableAddonStatus.PENDING_INCOMPATIBLE_ENABLED: {
+		AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY,
+		AddonStateCategory.PENDING_ENABLE,
+	},
+	# If an add-on is being updated,
+	# it will be in both pending remove and pending install
+	AvailableAddonStatus.INSTALLED: {
+		AddonStateCategory.PENDING_INSTALL,
+		AddonStateCategory.PENDING_REMOVE,
+	},
+	AvailableAddonStatus.PENDING_REMOVE: {AddonStateCategory.PENDING_REMOVE},
+	AvailableAddonStatus.PENDING_ENABLE: {AddonStateCategory.PENDING_ENABLE},
+	AvailableAddonStatus.PENDING_DISABLE: {AddonStateCategory.PENDING_DISABLE},
+	AvailableAddonStatus.INCOMPATIBLE_DISABLED: {AddonStateCategory.BLOCKED},
+	AvailableAddonStatus.INCOMPATIBLE_ENABLED: {AddonStateCategory.OVERRIDE_COMPATIBILITY},
+	AvailableAddonStatus.DISABLED: {AddonStateCategory.DISABLED},
+	AvailableAddonStatus.INSTALLED: {AddonStateCategory.PENDING_INSTALL},
+})
+
+
 _installedAddonStatuses: Set[AvailableAddonStatus] = {
 	AvailableAddonStatus.UPDATE,
 	AvailableAddonStatus.REPLACE_SIDE_LOAD,
@@ -353,12 +380,14 @@ _statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = Order
 	_StatusFilterKey.INSTALLED: _installedAddonStatuses,
 	_StatusFilterKey.UPDATE: {
 		AvailableAddonStatus.UPDATE,
+		AvailableAddonStatus.UPDATE_INCOMPATIBLE,
 		AvailableAddonStatus.REPLACE_SIDE_LOAD,
 	},
 	_StatusFilterKey.AVAILABLE: _installedAddonStatuses.union({
 		AvailableAddonStatus.INCOMPATIBLE,
 		AvailableAddonStatus.AVAILABLE,
 		AvailableAddonStatus.UPDATE,
+		AvailableAddonStatus.UPDATE_INCOMPATIBLE,
 		AvailableAddonStatus.REPLACE_SIDE_LOAD,
 		AvailableAddonStatus.DOWNLOAD_FAILED,
 		AvailableAddonStatus.DOWNLOAD_SUCCESS,
