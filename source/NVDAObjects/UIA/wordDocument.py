@@ -41,6 +41,7 @@ import eventHandler
 
 """Support for Microsoft Word via UI Automation."""
 
+# Translators: The name of a category of NVDA commands.
 SCRCAT_SYSTEMCARET = _("System caret")
 
 class UIACustomAttributeID(enum.IntEnum):
