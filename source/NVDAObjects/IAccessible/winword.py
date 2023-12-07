@@ -214,9 +214,9 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 				return text
 
 	@script(
-			gesture="kb:NVDA+shift+c",
-			description=_("Pressing once will set this cell as the first column header for any cells lower and to the right of it within this table. Pressing twice will forget the current column header for this cell."),
-			category=SCRCAT_SYSTEMCARET
+		gesture="kb:NVDA+shift+c",
+		description=_("Pressing once will set this cell as the first column header for any cells lower and to the right of it within this table. Pressing twice will forget the current column header for this cell."),
+		category=SCRCAT_SYSTEMCARET
 	)
 	def script_setColumnHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
@@ -242,9 +242,9 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 				ui.message(_("Cannot find row {rowNumber} column {columnNumber}  in column headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
 
 	@script(
-			gesture="kb:NVDA+shift+r",
-			description=_("Pressing once will set this cell as the first row header for any cells lower and to the right of it within this table. Pressing twice will forget the current row header for this cell."),
-			category=SCRCAT_SYSTEMCARET
+		gesture="kb:NVDA+shift+r",
+		description=_("Pressing once will set this cell as the first row header for any cells lower and to the right of it within this table. Pressing twice will forget the current row header for this cell."),
+		category=SCRCAT_SYSTEMCARET
 	)
 	def script_setRowHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
@@ -270,8 +270,8 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 				ui.message(_("Cannot find row {rowNumber} column {columnNumber}  in row headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
 
 	@script(
-			gesture="kb:NVDA+shift+h",
-			category=SCRCAT_SYSTEMCARET
+		gesture="kb:NVDA+shift+h",
+		category=SCRCAT_SYSTEMCARET
 	)
 	def script_reportCurrentHeaders(self,gesture):
 		cell=self.WinwordSelectionObject.cells[1]
@@ -398,32 +398,32 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		return True
 
 	@script(
-			gesture="kb:control+alt+downArrow"
+		gesture="kb:control+alt+downArrow"
 	)
 	def script_nextRow(self,gesture):
 		self._moveInTable(row=True,forward=True)
 
 	@script(
-			gesture="kb:control+alt+upArrow"
+		gesture="kb:control+alt+upArrow"
 	)
 	def script_previousRow(self,gesture):
 		self._moveInTable(row=True,forward=False)
 
 	@script(
-			gesture="kb:control+alt+rightArrow"
+		gesture="kb:control+alt+rightArrow"
 	)
 	def script_nextColumn(self,gesture):
 		self._moveInTable(row=False,forward=True)
 
 	@script(
-			gesture="kb:control+alt+leftArrow"
+		gesture="kb:control+alt+leftArrow"
 	)
 	def script_previousColumn(self,gesture):
 		self._moveInTable(row=False,forward=False)
 
 	@script(
-			gesture="kb:control+downArrow",
-			resumeSayAllMode=sayAll.CURSOR.CARET
+		gesture="kb:control+downArrow",
+		resumeSayAllMode=sayAll.CURSOR.CARET
 	)
 	def script_nextParagraph(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
@@ -433,8 +433,8 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
 
 	@script(
-			gesture="kb:control+upArrow",
-			resumeSayAllMode=sayAll.CURSOR.CARET
+		gesture="kb:control+upArrow",
+		resumeSayAllMode=sayAll.CURSOR.CARET
 	)
 	def script_previousParagraph(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
