@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2022 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter, Bill Dengler
+# Copyright (C) 2008-2023 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -456,13 +456,13 @@ class UIAHandler(COMObject):
 
 	def MTAThreadFunc(self):
 		try:
-			oledll.ole32.CoInitializeEx(None,comtypes.COINIT_MULTITHREADED) 
-			isUIA8=False
-			try:
-				self.clientObject=CoCreateInstance(CUIAutomation8._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
-				isUIA8=True
-			except (COMError,WindowsError,NameError):
-				self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
+			oledll.ole32.CoInitializeEx(None, comtypes.COINIT_MULTITHREADED)
+			self.clientObject = CoCreateInstance(
+				UIA.CUIAutomation8._reg_clsid_,
+				# Minimum interface is IUIAutomation3 (Windows 8.1).
+				interface=UIA.CUIAutomation8._com_interfaces_[1],
+				clsctx=CLSCTX_INPROC_SERVER
+			)
 			# #7345: Instruct UIA to never map MSAA winEvents to UIA propertyChange events.
 			# These events are not needed by NVDA, and they can cause the UI Automation client library to become unresponsive if an application firing winEvents has a slow message pump. 
 			pfm=self.clientObject.proxyFactoryMapping
@@ -486,21 +486,21 @@ class UIAHandler(COMObject):
 					# Therefore remove the entry and re-insert it.
 					pfm.removeEntry(index)
 					pfm.insertEntry(index,e)
-			if isUIA8:
-				# #8009: use appropriate interface based on highest supported interface.
-				# #8338: made easier by traversing interfaces supported on Windows 8 and later in reverse.
-				for interface in reversed(CUIAutomation8._com_interfaces_):
-					try:
-						self.clientObject=self.clientObject.QueryInterface(interface)
-						break
-					except COMError:
-						pass
-				# Windows 10 RS5 provides new performance features for UI Automation including event coalescing and connection recovery. 
-				# Enable all of these where available.
-				if isinstance(self.clientObject,IUIAutomation6):
-					self.clientObject.CoalesceEvents=CoalesceEventsOptions_Enabled
-					self.clientObject.ConnectionRecoveryBehavior=ConnectionRecoveryBehaviorOptions_Enabled
-			log.info("UIAutomation: %s"%self.clientObject.__class__.__mro__[1].__name__)
+			# #8009: use appropriate interface based on highest supported interface.
+			# #8338: made easier by traversing interfaces supported on Windows 8 and later in reverse.
+			for interface in reversed(UIA.CUIAutomation8._com_interfaces_):
+				try:
+					self.clientObject = self.clientObject.QueryInterface(interface)
+					break
+				except COMError:
+					pass
+			# Windows 10 RS5 provides new performance features for UI Automation
+			# including event coalescing and connection recovery.
+			# Enable all of these where available.
+			if isinstance(self.clientObject, UIA.IUIAutomation6):
+				self.clientObject.CoalesceEvents = UIA.CoalesceEventsOptions_Enabled
+				self.clientObject.ConnectionRecoveryBehavior = UIA.ConnectionRecoveryBehaviorOptions_Enabled
+			log.info(f"UIAutomation: {self.clientObject.__class__.__mro__[1].__name__}")
 			self.windowTreeWalker=self.clientObject.createTreeWalker(self.clientObject.CreateNotCondition(self.clientObject.CreatePropertyCondition(UIA_NativeWindowHandlePropertyId,0)))
 			self.windowCacheRequest=self.clientObject.CreateCacheRequest()
 			self.windowCacheRequest.AddProperty(UIA_NativeWindowHandlePropertyId)

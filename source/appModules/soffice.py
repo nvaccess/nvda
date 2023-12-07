@@ -222,6 +222,9 @@ class SymphonyText(IAccessible, EditableText):
 	TextInfo = SymphonyTextInfo
 
 	def _get_positionInfo(self):
+		# LibreOffice versions >= 5.0 report the "level" attribute that's
+		# handled in the base class, but Apache OpenOffice doesn't,
+		# so check for the custom "heading-level" attribute first
 		level = self.IA2Attributes.get("heading-level")
 		if level:
 			return {"level": int(level)}
