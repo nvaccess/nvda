@@ -54,7 +54,7 @@ from utils.displayString import DisplayStringIntEnum
 import NVDAState
 
 # Translators: The name of a category of NVDA commands.
-SCRCAT_EXCEL = _("Excel")
+SCRCAT_SYSTEMCARET = _("System caret")
 
 excel2010VersionMajor=14
 
@@ -1442,7 +1442,7 @@ class ExcelCell(ExcelBase):
 		# Translators: the description  for a script for Excel
 		description=_("opens a dropdown item at the current cell"),
 		gesture="kb:alt+downArrow",
-		category=SCRCAT_EXCEL
+		category=SCRCAT_SYSTEMCARET
 	)
 	def script_openDropdown(self,gesture):
 		gesture.send()
@@ -1470,7 +1470,7 @@ class ExcelCell(ExcelBase):
 		# Translators: the description  for a script for Excel
 		description=_("Sets the current cell as start of column header"),
 		gesture="kb:NVDA+shift+c",
-		category=SCRCAT_EXCEL
+		category=SCRCAT_SYSTEMCARET
 	)
 	def script_setColumnHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
@@ -1494,7 +1494,7 @@ class ExcelCell(ExcelBase):
 		# Translators: the description  for a script for Excel
 		description=_("sets the current cell as start of row header"),
 		gesture="kb:NVDA+shift+r",
-		category=SCRCAT_EXCEL
+		category=SCRCAT_SYSTEMCARET
 	)
 	def script_setRowHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
@@ -1681,7 +1681,7 @@ class ExcelCell(ExcelBase):
 		# Translators: the description  for a script for Excel
 		description=_("Reports the note on the current cell"),
 		gesture="kb:NVDA+alt+c",
-		category=SCRCAT_EXCEL,
+		category=SCRCAT_SYSTEMCARET,
 		speakOnDemand=True,
 	)
 	def script_reportComment(self,gesture):
@@ -1697,7 +1697,7 @@ class ExcelCell(ExcelBase):
 		# Translators: the description  for a script for Excel
 		description=_("Opens the note editing dialog"),
 		gesture="kb:shift+f2",
-		category=SCRCAT_EXCEL
+		category=SCRCAT_SYSTEMCARET
 	)
 	def script_editComment(self,gesture):
 		commentObj=self.excelCellObject.comment

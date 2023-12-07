@@ -41,6 +41,7 @@ import eventHandler
 
 """Support for Microsoft Word via UI Automation."""
 
+SCRCAT_SYSTEMCARET = _("System caret")
 
 class UIACustomAttributeID(enum.IntEnum):
 	LINE_NUMBER = 0
@@ -601,6 +602,7 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 		gesture="kb:NVDA+alt+c",
 		# Translators: a description for a script that reports the comment at the caret.
 		description=_("Reports the text of the comment where the system caret is located."),
+		category=SCRCAT_SYSTEMCARET,
 		speakOnDemand=True,
 	)
 	def script_reportCurrentComment(self,gesture):
