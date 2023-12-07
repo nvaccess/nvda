@@ -1700,14 +1700,12 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			)
 			self.speechModesList.SetFocus()
 			return False
-		if not any(
-			self._allSpeechModes[i].producesSpeech for i in enabledSpeechModes
-		):
+		if self._allSpeechModes.index(speech.SpeechMode.talk) not in enabledSpeechModes:
 			if gui.messageBox(
 				_(
-					# Translators: Warning shown when all modes producing speech are disabled in settings.
+					# Translators: Warning shown when 'talk' speech mode is disabled in settings.
 					(
-						"You did not choose either Talk or On-Demand as one of your speech mode options. "
+						"You did not choose Talk as one of your speech mode options. "
 						"Please note that this may result in no speech output at all. "
 						"Are you sure you want to continue?"
 					)

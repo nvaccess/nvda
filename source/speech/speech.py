@@ -94,15 +94,10 @@ class SpeechMode(DisplayStringIntEnum):
 			self.beeps: pgettext("speechModes", "beeps"),
 			# Translators: Name of the speech mode which causes NVDA to speak normally.
 			self.talk: pgettext("speechModes", "talk"),
-			# Translators: Name of the on-demand speech mode;
-			# i.e. NVDA will talk only on commands asking to report something.
+			# Translators: Name of the on-demand speech mode,
+			# in which NVDA only speaks in response to commands that report content.
 			self.onDemand: pgettext("speechModes", "on-demand"),
 		}
-
-	@property
-	def producesSpeech(self) -> bool:
-		"""Is any speech produced when this mode is enabled?"""
-		return self in (SpeechMode.talk, SpeechMode.onDemand)
 
 
 @dataclass
