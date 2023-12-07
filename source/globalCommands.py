@@ -2507,9 +2507,7 @@ class GlobalCommands(ScriptableObject):
 		if repeatCount == 0:
 			speechList = speech.getObjectSpeech(focusObject, reason=controlTypes.OutputReason.QUERY)
 			speech.speech.speak(speechList)
-			brailleList = speechList.copy()
 			text = ' '.join(s for s in speechList if isinstance(s, str))
-
 			braille.handler.message(text)
 		else:
 			speech.speakSpelling(focusObject.name, useCharacterDescriptions=repeatCount > 1)
