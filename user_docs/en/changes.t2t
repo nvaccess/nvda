@@ -89,6 +89,7 @@ Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on e
   - Announcement of the status bar using the ``NVDA+end`` keyboard shortcut now also works for dialogs in LibreOffice version 24.2 and newer. (#15591, @michaelweghorn)
   - All expected text attributes are now supported in LibreOffice versions 24.2 and above.
   This makes the announcement of spelling errors work when announcing a line in Writer. (#15648, @michaelweghorn)
+  - Announcement of heading levels now also works for LibreOffice versions 24.2 and newer. (#15881, @michaelweghorn)
   -
 - Microsoft Office:
   - In Excel with UIA disabled, braille is updated, and the active cell content is spoken, when ``control+y``, ``control+z`` or ``alt+backspace`` is pressed. (#15547)
@@ -169,6 +170,8 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
   - Scripts that perform an action (e.g. move the cursor, change a parameter) should not speak in the "on-demand" mode.
   -
 - Fixed bug where deleting git-tracked files during `scons -c` resulted in missing UIA COM interfaces on rebuild. (#7070, #10833, @hwf1324)
+- Fix a bug where some code changes were not detected when building `dist`, that prevented a new build from being triggered.
+Now `dist` always rebuilds. (#13372, @hwf1324)
 -
 
 === API Breaking Changes ===
