@@ -169,6 +169,8 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
   - Scripts that perform an action (e.g. move the cursor, change a parameter) should not speak in the "on-demand" mode.
   -
 - Fixed bug where deleting git-tracked files during `scons -c` resulted in missing UIA COM interfaces on rebuild. (#7070, #10833, @hwf1324)
+- Fix a bug where some code changes were not detected when building `dist`, that prevented a new build from being triggered.
+Now `dist` always rebuilds. (#13372, @hwf1324)
 -
 
 === API Breaking Changes ===
