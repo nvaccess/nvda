@@ -99,6 +99,11 @@ class SpeechMode(DisplayStringIntEnum):
 			self.onDemand: pgettext("speechModes", "on-demand"),
 		}
 
+	@property
+	def producesSpeech(self) -> bool:
+		"""Is any speech produced when this mode is enabled?"""
+		return self in (SpeechMode.talk, SpeechMode.onDemand)
+
 
 @dataclass
 class SpeechState:

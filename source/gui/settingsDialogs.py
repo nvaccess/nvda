@@ -1688,6 +1688,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 
 	def isValid(self) -> bool:
 		enabledSpeechModes = self.speechModesList.CheckedItems
+		speechModesListRequiresChange = False
 		if len(enabledSpeechModes) < 2:
 			log.debugWarning("Too few speech modes enabled.")
 			gui.messageBox(
@@ -1698,6 +1699,26 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 				wx.OK | wx.ICON_ERROR,
 				self,
 			)
+			speechModesListRequiresChange = True
+		if not any(
+			self._allSpeechModes[i].producesSpeech for i in enabledSpeechModes
+		):
+			if gui.messageBox(
+				_(
+					# Translators: Warning shown when all modes producing speech are disabled in settings.
+					(
+						"You did not choose either Talk or On-Demand as one of your speech mode options. "
+						"Please note that this may result in no speech output at all. "
+						"Are you sure you want to continue?"
+					)
+				),
+				# Translators: Title of the warning message.
+				_("Warning"),
+				wx.YES | wx.NO | wx.ICON_WARNING,
+				self,
+			) == wx.NO:
+				speechModesListRequiresChange = True
+		if speechModesListRequiresChange:
 			self.speechModesList.SetFocus()
 			return False
 		return super().isValid()
