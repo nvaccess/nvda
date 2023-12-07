@@ -63,7 +63,7 @@ consoleUI = None
 
 class Completer(rlcompleter.Completer):
 
-	def attr_matches(self, text):
+	def attr_matches(self, text: str) -> list[str]:
 		"""attr_matches implementation as used in Python 3.9.
 		In Python 3.10, attr_matches was changed in a way that filtered out property descriptors,
 		but more importantly, no longer catches exceptions when calling getattr.
