@@ -1882,9 +1882,36 @@ def getPropertiesSpeech(  # noqa: C901
 			textList.append(rowColSpanTranslation)
 	rowCount=propertyValues.get('rowCount',0)
 	columnCount=propertyValues.get('columnCount',0)
-	rowAndColumnCountText = _rowAndColumnCountText(rowCount, columnCount)
-	if rowAndColumnCountText:
-		textList.append(rowAndColumnCountText)
+	if rowCount and columnCount:
+		rowCountTranslation: str = ngettext(
+			# Translators: Sub-part of the compound string to speak number of columns and rows in a table
+			"{rowCount} row",
+			"{rowCount} rows",
+			rowCount,
+		).format(rowCount=rowCount)
+		colCountTranslation: str = ngettext(
+			# Translators: Sub-part of the compound string to speak number of columns and rows in a table
+			"{columnCount} column",
+			"{columnCount} columns",
+			columnCount,
+		).format(columnCount=columnCount)
+		# Translators: Main part of the compound string to speak number of columns and rows in a table
+		# Example output: "with 3 rows and 2 columns"
+		# In this example {rowCountTranslation} will be replaced by "3 rows" and {colCountTranslation} by
+		# "2 columns"
+		rowAndColCountTranslation: str = _("with {rowCountTranslation} and {colCountTranslation}").format(
+			rowCountTranslation=rowCountTranslation,
+			colCountTranslation=colCountTranslation,
+		)
+		textList.append(rowAndColCountTranslation)
+	elif columnCount and not rowCount:
+		# Translators: Speaks number of columns (example output: with 4 columns).
+		columnCountTransation: str = ngettext("with %s column", "with %s columns", columnCount) % columnCount
+		textList.append(columnCountTransation)
+	elif rowCount and not columnCount:
+		# Translators: Speaks number of rows (example output: with 2 rows).
+		rowCountTranslation: str = ngettext("with %s row", "with %s rows", rowCount) % rowCount
+		textList.append(rowCountTranslation)
 	if rowCount or columnCount:
 		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
 		_speechState.oldTableID = None
@@ -1942,37 +1969,6 @@ def getPropertiesSpeech(  # noqa: C901
 				textList.append(levelTranslation)
 	types.logBadSequenceTypes(textList)
 	return textList
-
-
-def _rowAndColumnCountText(rowCount: int, columnCount: int) -> Optional[str]:
-	if rowCount and columnCount:
-		rowCountTranslation: str = ngettext(
-			# Translators: Sub-part of the compound string to speak number of columns and rows in a table
-			"{rowCount} row",
-			"{rowCount} rows",
-			rowCount,
-		).format(rowCount=rowCount)
-		colCountTranslation: str = ngettext(
-			# Translators: Sub-part of the compound string to speak number of columns and rows in a table
-			"{columnCount} column",
-			"{columnCount} columns",
-			columnCount,
-		).format(columnCount=columnCount)
-		# Translators: Main part of the compound string to speak number of columns and rows in a table
-		# Example output: "with 3 rows and 2 columns"
-		# In this example {rowCountTranslation} will be replaced by "3 rows" and {colCountTranslation} by
-		# "2 columns"
-		return _("with {rowCountTranslation} and {colCountTranslation}").format(
-			rowCountTranslation=rowCountTranslation,
-			colCountTranslation=colCountTranslation,
-		)
-	elif columnCount and not rowCount:
-		# Translators: Speaks number of columns (example output: with 4 columns).
-		return ngettext("with %s column", "with %s columns", columnCount) % columnCount
-	elif rowCount and not columnCount:
-		# Translators: Speaks number of rows (example output: with 2 rows).
-		return ngettext("with %s row", "with %s rows", rowCount) % rowCount
-	return None
 
 
 def _shouldSpeakContentFirst(
