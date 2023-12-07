@@ -38,8 +38,8 @@ When speech is on-demand, NVDA does not speak automatically (e.g. when moving th
 - NVDA no longer supports Windows 7 and Windows 8.
 Windows 8.1 is the minimum Windows version supported. (#15544)
 - Component updates:
-  - Updated LibLouis braille translator to 3.27.0. (#15435, @codeofdusk)
-    - Added new Thai and Romanian Braille tables.
+  - Updated LibLouis braille translator to 3.28.0. (#15435, #15876, @codeofdusk)
+    - Added new Thai, Romanian, and Filipino Braille tables.
     -
   - eSpeak NG has been updated to 1.52-dev commit ``530bf0abf``. (#15036)
   - CLDR emoji and symbol annotations has been updated to version 44.0. (#15712, @OzancanKaratas)
@@ -69,6 +69,7 @@ Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on e
   - When the status of an add-on is changed while it has focus, e.g. a change from "downloading" to "downloaded", the updated item is now announced correctly. (#15859, @LeonarddeR)
   - When installing add-ons install prompts are no longer overlapped by the restart dialog. (#15613, @lukaszgo1)
   - When reinstalling an incompatible add-on it is no longer forcefully disabled. (#15584, @lukaszgo1)
+  - Disabled and incompatible add-ons can now be updated. (#15568, #15029)
   - NVDA now recovers and displays an error in a case where an add-on fails to download correctly. (#15796)
   -
 - Audio:
@@ -87,6 +88,7 @@ Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on e
   - Announcement of the status bar using the ``NVDA+end`` keyboard shortcut now also works for dialogs in LibreOffice version 24.2 and newer. (#15591, @michaelweghorn)
   - All expected text attributes are now supported in LibreOffice versions 24.2 and above.
   This makes the announcement of spelling errors work when announcing a line in Writer. (#15648, @michaelweghorn)
+  - Announcement of heading levels now also works for LibreOffice versions 24.2 and newer. (#15881, @michaelweghorn)
   -
 - Microsoft Office:
   - In Excel with UIA disabled, braille is updated, and the active cell content is spoken, when ``control+y``, ``control+z`` or ``alt+backspace`` is pressed. (#15547)
