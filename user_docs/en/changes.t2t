@@ -31,7 +31,7 @@ Windows 8.1 is the minimum Windows version supported.
 - Added support for Bluetooth Low Energy HID Braille displays. (#15470)
 - A new "on-demand" speech mode has been added.
 When speech is on-demand, NVDA does not speak automatically (e.g. when moving the cursor) but still speaks when calling commands whose goal is explicitly to report something (e.g. report window title). (#481, @CyrilleB79)
-- In the NVDA's settings Speech category, it is now possible to exclude unwanted speech modes when cycling between them using ``NVDA+s`` . (#15806, @lukaszgo1)
+- In the Speech category of NVDA's settings, it is now possible to exclude unwanted speech modes from the Cycle speech modes command (``NVDA+s``). (#15806, @lukaszgo1)
   - If you are currently using the NoBeepsSpeechMode add-on consider uninstalling it ,and disabling "beeps" and "on-demand" modes in the settings.
   -
 -

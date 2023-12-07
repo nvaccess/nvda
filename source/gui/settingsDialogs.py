@@ -1639,7 +1639,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 	def _appendSpeechModesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
 		self._allSpeechModes = list(speech.SpeechMode)
 		self.speechModesList: nvdaControls.CustomCheckListBox = settingsSizerHelper.addLabeledControl(
-			# Translators: Label of the list where user can enable or disable speech modes.
+			# Translators: Label of the list where user can select speech modes that will be available.
 			_("&Modes available in the Cycle speech mode command:"),
 			nvdaControls.CustomCheckListBox,
 			choices=[mode.displayString for mode in self._allSpeechModes]
@@ -1836,7 +1836,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 				_("Error"), wx.OK|wx.ICON_ERROR,self)
 			self.modifierList.SetFocus()
 			return False
-		return super(KeyboardSettingsPanel, self).isValid()
+		return super().isValid()
 
 	def onSave(self):
 		layout=self.kbdNames[self.kbdList.GetSelection()]

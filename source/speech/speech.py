@@ -92,7 +92,7 @@ class SpeechMode(DisplayStringIntEnum):
 			self.off: pgettext("speechModes", "off"),
 			# Translators: Name of the speech mode which will cause NVDA to beep instead of speaking.
 			self.beeps: pgettext("speechModes", "beeps"),
-			# Translators: Name of the speech mode, which, when enabled, causes NVDA to talk as normal.
+			# Translators: Name of the speech mode which causes NVDA to speak normally.
 			self.talk: pgettext("speechModes", "talk"),
 			# Translators: Name of the on-demand speech mode;
 			# i.e. NVDA will talk only on commands asking to report something.

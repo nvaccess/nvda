@@ -2039,8 +2039,8 @@ class GlobalCommands(ScriptableObject):
 		# Use a key function which places modes whose index is higher than the currently used at the beginning.
 		# Note that since Python's sorting is stable
 		# relative ordering of elements for which key function returns the same value is preserved.
-		# Sorting uses `<=` since when sorting booleans they are threated as integers,
-		# so `False` (0) comes before `True` (1).
+		# Sorting uses `<=` since when sorting booleans they are handled as integers,
+		# so `False` (0) sorts before `True` (1).
 		newModeIndex = sorted(possibleIndexes, key=lambda i: i <= currModeIndex)[0]
 		newMode = modesList[newModeIndex]
 		speech.cancelSpeech()
