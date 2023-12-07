@@ -1946,22 +1946,11 @@ def getPropertiesSpeech(  # noqa: C901
 
 def _rowAndColumnCountText(rowCount: int, columnCount: int) -> Optional[str]:
 	if rowCount and columnCount:
-		rowCountTranslation: str = ngettext(
-			# Translators: Sub-part of the compound string to speak number of columns and rows in a table
-			"{rowCount} row",
-			"{rowCount} rows",
-			rowCount,
-		).format(rowCount=rowCount)
-		colCountTranslation: str = ngettext(
-			# Translators: Sub-part of the compound string to speak number of columns and rows in a table
-			"{columnCount} column",
-			"{columnCount} columns",
-			columnCount,
-		).format(columnCount=columnCount)
+		rowCountTranslation: str = _rowCountText(rowCount)
+		colCountTranslation: str = _columnCountText(columnCount)
 		# Translators: Main part of the compound string to speak number of columns and rows in a table
-		# Example output: "with 3 rows and 2 columns"
-		# In this example {rowCountTranslation} will be replaced by "3 rows" and {colCountTranslation} by
-		# "2 columns"
+		# Example: If the reported compound string is "with 3 rows and 2 columns", {rowCountTranslation} will be
+		# replaced by "3 rows" and {colCountTranslation} by "2 columns"
 		return _("with {rowCountTranslation} and {colCountTranslation}").format(
 			rowCountTranslation=rowCountTranslation,
 			colCountTranslation=colCountTranslation,
@@ -1973,6 +1962,26 @@ def _rowAndColumnCountText(rowCount: int, columnCount: int) -> Optional[str]:
 		# Translators: Speaks number of rows (example output: with 2 rows).
 		return ngettext("with %s row", "with %s rows", rowCount) % rowCount
 	return None
+
+
+def _rowCountText(count: int) -> str:
+	return ngettext(
+		# Translators: Sub-part of the compound string to speak number of rows and columns in a table.
+		# Example: If the full compound string is "table with 3 rwos and 2 columns", this substring is "3 rows".
+		"{rowCount} row",
+		"{rowCount} rows",
+		count,
+	).format(rowCount=count)
+
+
+def _columnCountText(count: int) -> str:
+	return ngettext(
+		# Translators: Sub-part of the compound string to speak number of rows and columns in a table.
+		# Example: If the full compound string is "table with 3 rwos and 2 columns", this substring is "2 columns".
+		"{columnCount} column",
+		"{columnCount} columns",
+		count,
+	).format(columnCount=count)
 
 
 def _shouldSpeakContentFirst(
@@ -2804,23 +2813,12 @@ def getTableInfoSpeech(
 	textList=[]
 	if newTable:
 		columnCount=tableInfo.get("column-count",0)
-		# Translators: Sub-part of the compound string to report a table
 		rowCount=tableInfo.get("row-count",0)
-		columnCountText = ngettext(
-			# Translators: Sub-part of the compound string to report a table
-			"{columnCount} column",
-			"{columnCount} columns",
-			columnCount,
-		).format(columnCount=columnCount)
-		rowCountText = ngettext(
-			# Translators: Sub-part of the compound string to report a table
-			"{rowCount} rows",
-			"{rowCount} rows",
-			rowCount,
-		).format(rowCount=rowCount)
+		columnCountText = _columnCountText(columnCount)
+		rowCountText = _rowCountText(rowCount)
 		# Translators: Main part of the compound string to report a table
-		# Example output: table with 3 columns and 5 rows
-		# {columnCountText} is replaced by "3 columns" and {rowCountText} by "5 rows"
+		# Example: If the reported compound string is "table with 2 columns and 3 rows", {colCountTranslation}
+		# will be replaced by "2 columns" and {rowCountTranslation} by "3 rows"
 		text = _("table with {columnCountText} and {rowCountText}").format(
 			columnCountText=columnCountText,
 			rowCountText=rowCountText,
