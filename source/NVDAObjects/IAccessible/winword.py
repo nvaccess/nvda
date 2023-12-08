@@ -251,6 +251,7 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		gesture="kb:NVDA+shift+r",
 		# Translators: The label of a shortcut of NVDA.
 		description=_(
+			"Set row header."
 			"Pressing once will set this cell as the first row header for any cells lower and "
 			"to the right of it within this table. "
 			"Pressing twice will forget the current row header for this cell."
