@@ -808,7 +808,13 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		for index,item in enumerate(commandList):
 			if isinstance(item,textInfos.FieldCommand):
 				field=item.field
-				if isinstance(field,textInfos.ControlField):
+				if (
+					isinstance(field, textInfos.ControlField)
+					# #15830: only process controlStart commands.
+					# Otherwise also processing controlEnd commands would double-process the same field attributes,
+					# As controlStart and controlEnd commands now share the same field dictionary.
+					and item.command == "controlStart"
+				):
 					item.field=self._normalizeControlField(field)
 				elif isinstance(field,textInfos.FormatField):
 					item.field=self._normalizeFormatField(field,extraDetail=extraDetail)

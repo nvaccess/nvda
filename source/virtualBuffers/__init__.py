@@ -268,7 +268,13 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		if not isinstance(command, textInfos.FieldCommand):
 			return command  # no need to normalize str or None
 		field = command.field
-		if isinstance(field, textInfos.ControlField):
+		if (
+			isinstance(field, textInfos.ControlField)
+			# #15830: only process controlStart commands.
+			# Otherwise also processing controlEnd commands would double-process the same field attributes,
+			# As controlStart and controlEnd commands now share the same field dictionary.
+			and command.command == "controlStart"
+		):
 			command.field = self._normalizeControlField(field)
 		elif isinstance(field, textInfos.FormatField):
 			command.field = self._normalizeFormatField(field)
