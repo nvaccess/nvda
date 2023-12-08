@@ -52,9 +52,7 @@ import ctypes
 import vision
 from utils.displayString import DisplayStringIntEnum
 import NVDAState
-
-# Translators: The name of a category of NVDA commands.
-SCRCAT_SYSTEMCARET = _("System caret")
+from globalCommands import SCRCAT_SYSTEMCARET
 
 excel2010VersionMajor=14
 

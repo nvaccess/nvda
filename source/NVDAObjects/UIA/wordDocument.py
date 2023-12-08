@@ -37,12 +37,9 @@ from NVDAObjects.window.winword import (
 from NVDAObjects import NVDAObject
 from scriptHandler import script
 import eventHandler
-
+from globalCommands import SCRCAT_SYSTEMCARET
 
 """Support for Microsoft Word via UI Automation."""
-
-# Translators: The name of a category of NVDA commands.
-SCRCAT_SYSTEMCARET = _("System caret")
 
 class UIACustomAttributeID(enum.IntEnum):
 	LINE_NUMBER = 0

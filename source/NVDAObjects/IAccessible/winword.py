@@ -26,9 +26,7 @@ from ..behaviors import EditableTextWithoutAutoSelectDetection
 import NVDAObjects.window.winword as winWordWindowModule
 from speech import sayAll
 import inputCore
-
-# Translators: The name of a category of NVDA commands.
-SCRCAT_SYSTEMCARET = _("System caret")
+from globalCommands import SCRCAT_SYSTEMCARET
 
 class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordWindowModule.WordDocument):
 
@@ -217,12 +215,7 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 	@script(
 		gesture="kb:NVDA+shift+c",
 		# Translators: The label of a shortcut of NVDA.
-		description=_(
-			"Set column header"
-			"Pressing once will set this cell as the first column header for any cells lower and "
-			"to the right of it within this table. "
-			"Pressing twice will forget the current column header for this cell."
-		),
+		description=_("Set column header"),
 		category=SCRCAT_SYSTEMCARET
 	)
 	def script_setColumnHeader(self,gesture):
@@ -251,12 +244,7 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 	@script(
 		gesture="kb:NVDA+shift+r",
 		# Translators: The label of a shortcut of NVDA.
-		description=_(
-			"Set row header."
-			"Pressing once will set this cell as the first row header for any cells lower and "
-			"to the right of it within this table. "
-			"Pressing twice will forget the current row header for this cell."
-		),
+		description=_("Set row header."),
 		category=SCRCAT_SYSTEMCARET
 	)
 	def script_setRowHeader(self,gesture):
@@ -284,7 +272,6 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 
 	@script(
 		gesture="kb:NVDA+shift+h",
-		category=SCRCAT_SYSTEMCARET
 	)
 	def script_reportCurrentHeaders(self,gesture):
 		cell=self.WinwordSelectionObject.cells[1]
