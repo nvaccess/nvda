@@ -539,8 +539,10 @@ Examples include while recording audio, when using screen magnification, during 
 A gesture allows cycling through the various speech modes:
 %kc:beginInclude
 || Name | Key | Description |
-| Cycle Speech Mode | ``NVDA+s`` | Cycles speech mode between talk, on-demand, off and beeps. |
+| Cycle Speech Mode | ``NVDA+s`` | Cycles between speech modes. |
 %kc:endInclude
+
+If you only need to switch between a limited subset of speech modes, see [Modes available in the Cycle speech mode command #SpeechModesDisabling] for a way to disable unwanted modes.
 
 + Navigating with NVDA +[NavigatingWithNVDA]
 NVDA allows you to explore and navigate the system in several ways, including both normal interaction and review.
@@ -1590,6 +1592,14 @@ This can be useful if it is hard to distinguish between pronunciation of symbols
 
 The delayed character description will be cancelled if other text is spoken during that time, or if you press the ``control`` key.
 
+==== Modes available in the Cycle speech mode command ====[SpeechModesDisabling]
+This checkable list allows selecting which speech modes are included when cycling between them using ``NVDA+s``.
+Modes which are unchecked are excluded.
+By default all modes are included.
+
+For example if you do not need to use "beeps" and "off" mode you should uncheck these two, and keep both "talk" and "on-demand" checked.
+Note that it is necessary to check at least two modes.
+
 +++ Select Synthesizer +++[SelectSynthesizer]
 
 %kc:setting
@@ -1925,9 +1935,7 @@ The checkboxes in this list control what keys can be used as [NVDA modifier keys
 - The extended insert key (usually found above the arrow keys, near home and end)
 -
 
-If no key is chosen as the NVDA key it may be impossible to access certain NVDA commands.
-Therefore, The NVDA settings dialog will display an error message if all keys are unselected when pressing Ok or Apply.
-After dismissing the error message, you must select at least one before being able to press Ok to dismiss the dialog properly.
+If no key is chosen as the NVDA key it may be impossible to access many NVDA commands, therefore you are required to check at least one of the modifiers.
 
 %kc:setting
 ==== Speak Typed Characters ====[KeyboardSettingsSpeakTypedCharacters]
@@ -4097,7 +4105,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | Route to braille cell | ``routing`` |
 | Report text formatting under braille cell | ``secondary routing`` |
 | Toggle the way context information is presented in braille | ``attribute1+attribute3`` |
-| Cycles between the speech modes of talk, on-demand, off and beeps | ``attribute2+attribute4`` |
+| Cycles between speech modes | ``attribute2+attribute4`` |
 | Switches to the previous review mode (e.g. object, document or screen) | ``f1`` |
 | Switches to the next review mode (e.g. object, document or screen) | ``f2`` |
 | Moves the navigator object to the object containing it | ``f3`` |
