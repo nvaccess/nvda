@@ -216,11 +216,14 @@ class AddonStoreDialog(SettingsDialog):
 		numInProgress = len(self._storeVM._downloader.progress)
 		if numInProgress:
 			res = gui.messageBox(
-				# Translators: Message shown prior to installing add-ons when closing the add-on store dialog
-				# The placeholder {} will be replaced with the number of add-ons to be installed
-				pgettext("addonStore", "Download of {} add-ons in progress, cancel downloading?").format(
-					numInProgress
-				),
+				npgettext(
+					"addonStore",
+					# Translators: Message shown prior to installing add-ons when closing the add-on store dialog
+					# The placeholder {} will be replaced with the number of add-ons to be installed
+					"Download of {} add-on in progress, cancel downloading?",
+					"Download of {} add-ons in progress, cancel downloading?",
+					numInProgress,
+				).format(numInProgress),
 				self._installationPromptTitle,
 				style=wx.YES_NO
 			)
@@ -233,15 +236,18 @@ class AddonStoreDialog(SettingsDialog):
 				return
 
 		if addonDataManager._downloadsPendingInstall:
+			nAddonsPendingInstall = len(addonDataManager._downloadsPendingInstall)
 			installingDialog = gui.IndeterminateProgressDialog(
 				self,
 				self._installationPromptTitle,
-				pgettext(
+				npgettext(
 					"addonStore",
 					# Translators: Message shown while installing add-ons after closing the add-on store dialog
 					# The placeholder {} will be replaced with the number of add-ons to be installed
-					"Installing {} add-ons, please wait."
-				).format(len(addonDataManager._downloadsPendingInstall))
+					"Installing {} add-on, please wait.",
+					"Installing {} add-ons, please wait.",
+					nAddonsPendingInstall,
+				).format(nAddonsPendingInstall)
 			)
 			self._storeVM.installPending()
 

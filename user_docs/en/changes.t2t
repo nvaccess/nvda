@@ -216,6 +216,7 @@ That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices``
  - ``GUID`` (replaced by ``comtypes.GUID``)
  -
 - ``gui.addonGui.AddonsDialog`` has been removed. (#15834)
+- ``TouchInputGesture.multiFingerActionLabel`` has been removed with no replacement. (#15864, @CyrilleB79)
 % Insert new list items here as the alias appModule table should be kept at the bottom of this list
 - The following app modules are removed.
 Code which imports from one of them, should instead import from the replacement module.  (#15618, @lukaszgo1)
