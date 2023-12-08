@@ -20,7 +20,6 @@ from annotation import (
 )
 
 import audioDucking
-
 import touchHandler
 import keyboardHandler
 import mouseHandler
@@ -260,7 +259,7 @@ class GlobalCommands(ScriptableObject):
 			"Announces the current selection in edit controls and documents. "
 			"Pressing twice spells this information. "
 			"Pressing three times spells it using character descriptions. "
-			"Pressing four times shows it in a browseable message."
+			"Pressing four times shows it in a browsable message. "
 		),
 		category=SCRCAT_SYSTEMCARET,
 		gestures=("kb(desktop):NVDA+shift+upArrow", "kb(laptop):NVDA+shift+s"),
