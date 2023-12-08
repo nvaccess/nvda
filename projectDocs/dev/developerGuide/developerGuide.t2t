@@ -782,13 +782,15 @@ Although it is highly suggested that manifests contain all fields, the fields ma
 Otherwise, the add-on will not install.
 
 - name (string, required): A short unique name for the add-on.
-This is used to differentiate add-ons internally and is not shown to the user.
-The recommended convention is lowerCamelCase.
-Special characters should be avoided.
+  - The recommended convention is lowerCamelCase.
+  - This is used to differentiate add-ons internally, and is also used as the name of the add-on's directory in the user configuration directory.
+  - Special characters should be avoided as the add-on name will be used as a folder name.
+  Expected characters are alphanumeric, space, underscore and hyphen.
+  -
 - summary (string, required): The name of the add-on as shown to the user.
 - version (string, required): The version of this add-on; e.g. 2.0.1.
 When uploading to the Add-on Store certain requirements apply:
-  - Using ``<major>.<minor>.<patch>`` format.
+  - Using ``<major>.<minor>`` or ``<major>.<minor>.<patch>`` format.
   - For a user to be able to update to this add-on, the version must be greater than the last version uploaded.
   - Add-on versions are expected to be unique for the addon name and channel, meaning that a beta, stable and dev version of the same add-on cannot share a version number.
   This is so there can be a unique ordering of newest to oldest.
@@ -797,19 +799,26 @@ When uploading to the Add-on Store certain requirements apply:
 - author (string, required): The author of this add-on, preferably in the form Full Name <email address>; e.g. Michael Curran <mick@example.com>.
 - description (string): A sentence or two describing what the add-on does.
 - url (string): A URL where this add-on, further info and upgrades can be found.
-This should start with ``https://``.
+  - Starting the URL with ``https://`` is required for submitting to the Add-on Store.
+  -
 - docFileName (string): The name of the main documentation file for this add-on; e.g. readme.html. See the [Add-on Documentation #AddonDoc] section for more details.
 - minimumNVDAVersion (string, required): The minimum required version of NVDA for this add-on to be installed or enabled.
-  - e.g "2019.1.1"
-  - Must be a three part version string I.E. Year.Major.Minor, or a two part version string of Year.Major. In the second case, Minor defaults to 0.
+  - e.g "2021.1"
+  - Must be a three part version string i.e. Year.Major.Minor, or a two part version string of Year.Major.
+  In the second case, Minor defaults to 0.
   - Defaults to "0.0.0"
   - Must be less than or equal to ``lastTestedNVDAVersion``
+  - This must match a valid API version to be submitted to the Add-on Store.
+  Valid API versions are found [on GitHub https://github.com/nvaccess/addon-datastore-transform/blob/main/nvdaAPIVersions.json].
   -
 - lastTestedNVDAVersion (string, required): The last version of NVDA this add-on has been tested with.
-  - e.g "2019.1.0"
-  - Must be a three part version string I.E. Year.Major.Minor, or a two part version string of Year.Major. In the second case, Minor defaults to 0.
+  - e.g "2022.3.3"
+  - Must be a three part version string i.e. Year.Major.Minor, or a two part version string of Year.Major.
+  In the second case, Minor defaults to 0.
   - Defaults to "0.0.0"
   - Must be greater than or equal to ``minimumNVDAVersion``
+  - This must match a valid API version to be submitted to the Add-on Store.
+  Valid API versions are found [on GitHub https://github.com/nvaccess/addon-datastore-transform/blob/main/nvdaAPIVersions.json].
   -
 -
 
@@ -829,8 +838,8 @@ description = "An example add-on showing how to create add-ons!"
 author = "Michael Curran <mick@example.com>"
 url = "https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/addons.md"
 docFileName = "readme.html"
-minimumNVDAVersion = "2018.1.0"
-lastTestedNVDAVersion = "2019.1.0"
+minimumNVDAVersion = "2021.1"
+lastTestedNVDAVersion = "2022.3.3"
 --- end ---
 ```
 
