@@ -31,6 +31,7 @@ from gui import (
 from gui.message import DisplayableError, displayDialogAsModal
 from gui.settingsDialogs import SettingsDialog
 from logHandler import log
+from utils.caseInsensitiveCollections import CaseInsensitiveSet
 
 from ..viewModels.store import AddonStoreVM
 from .actions import _MonoActionsContextMenu
@@ -268,6 +269,10 @@ class AddonStoreDialog(SettingsDialog):
 			addonDataManager._downloadsPendingInstall
 			or state[AddonStateCategory.PENDING_INSTALL]
 		):
+			# Create a copy and merge the sets to log the add-ons pending install
+			addonsPendingInstall = CaseInsensitiveSet(state[AddonStateCategory.PENDING_INSTALL])
+			addonsPendingInstall.union(a[0].model.name for a in addonDataManager._downloadsPendingInstall)
+			log.debug(f"Add-ons pending install, restart required: {addonsPendingInstall}")
 			return True
 
 		for addonsForChannel in self._storeVM._installedAddons.values():
