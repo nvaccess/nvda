@@ -9,7 +9,7 @@ Every piece of input from the user (e.g. a key press) is represented by an L{Inp
 The singleton L{InputManager} (L{manager}) manages functionality related to input from the user.
 For example, it is used to execute gestures and handle input help.
 """
-
+import ctypes
 import sys
 import os
 import weakref
@@ -27,6 +27,7 @@ from typing import (
 from gui import blockAction
 import configobj
 from speech import sayAll
+from keyboardHandler import KeyboardInputGesture
 import baseObject
 import scriptHandler
 import queueHandler
@@ -614,7 +615,27 @@ class InputManager(baseObject.AutoPropertyObject):
 				desc = script.__doc__
 				if desc:
 					textList.append(desc)
-
+#		elif isinstance(gesture, KeyboardInputGesture) and not gesture.__doc__:
+#			threadID = api.getFocusObject().windowThreadID
+#			keyboardLayout = ctypes.windll.user32.GetKeyboardLayout(threadID)
+#			buffer = ctypes.create_unicode_buffer(5)
+#			states = (ctypes.c_byte*256)()
+#			modifierList = [gesture.NORMAL_MODIFIER_KEYS[i[0]] for i in gesture.modifiers]
+#			for i in range(256):
+#				if i in modifierList:
+#					states[i] = -128 # We tell ToUnicodeEx that the modifier is down, even tho it isn't according to Windows
+#				else:
+#					states[i] = ctypes.windll.user32.GetKeyState(i)
+#			res = ctypes.windll.user32.ToUnicodeEx(gesture.vkCode, gesture.scanCode, states, buffer, ctypes.sizeof(buffer), keyboardLayout, 0x0)
+#			if res>0:
+#				charList = []
+#				for i in buffer[:res]:
+#					if ord(i.value) > 32:
+#						charList.append(i.value)
+#			if charList:
+#				textList = charList
+#			else:
+#				textList[0].replace('+', ' ')
 		log.info(logMsg)
 		if onlyLog:
 			return
