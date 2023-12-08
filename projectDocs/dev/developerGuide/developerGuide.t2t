@@ -781,7 +781,7 @@ This manifest file contains key = value pairs declaring info such as the add-on'
 Although it is highly suggested that manifests contain all fields, the fields marked as mandatory must be included.
 Otherwise, the add-on will not install.
 
-- name (string, required): A short unique name for the add-on.
+- name (string, required): A short, unique, name for the add-on.
   - The recommended convention is lowerCamelCase.
   - This is used to differentiate add-ons internally, and is also used as the name of the add-on's directory in the user configuration directory.
   - Special characters should be avoided as the add-on name will be used as a folder name.
