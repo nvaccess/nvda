@@ -48,7 +48,8 @@ Windows 8.1 is the minimum Windows version supported. (#15544)
 - Key Commands:
   - The following commands now support two and three presses to spell the reported information and spell with character descriptions: report selection, report clipboard text and report focused object. (#15449, @CyrilleB79)
   - The command to toggle the screen curtain now has a default gesture: ``NVDA+control+escape``. (#10560, @CyrilleB79)
-  -
+  - When pressed four times, the report selection command now shows the selection in a browsable message (#15858, @Emil-18)
+  - 
 - Microsoft Office:
   - When requesting formatting information on Excel cells, borders and background will only be reported if there is such formatting. (#15560, @CyrilleB79)
   - NVDA will again no longer report unlabelled groupings such as in recent versions of Microsoft Office 365 menus. (#15638)
@@ -82,6 +83,7 @@ Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on e
   - More objects which contain useful text are detected, and text content is displayed in braille. (#15605)
   - Contracted braille input works properly again. (#15773, @aaclause)
   - Braille is now updated when moving the navigator object between table cells in more situations (#15755, @Emil-18)
+  - The result of reporting current focus, current navigator object, and current selection commands is now shown in braille. (#15844, @Emil-18)
   -
 - LibreOffice:
   - Words deleted using the ``control+backspace`` keyboard shortcut are now also properly announced when the deleted word is followed by whitespace (like spaces and tabs). (#15436, @michaelweghorn)

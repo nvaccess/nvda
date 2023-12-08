@@ -258,7 +258,8 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Input help mode message for report current selection command.
 			"Announces the current selection in edit controls and documents. "
 			"Pressing twice spells this information. "
-			"Pressing three times spells it using character descriptions."
+			"Pressing three times spells it using character descriptions. "
+			"Pressing four times shows it in a browsable message. "
 		),
 		category=SCRCAT_SYSTEMCARET,
 		gestures=("kb(desktop):NVDA+shift+upArrow", "kb(laptop):NVDA+shift+s"),
@@ -274,15 +275,25 @@ class GlobalCommands(ScriptableObject):
 		except (RuntimeError, NotImplementedError):
 			info=None
 		if not info or info.isCollapsed:
-			speech.speakMessage(_("No selection"))
+			# Translators: The message reported when there is no selection
+			ui.message(_("No selection"))
 		else:
 			scriptCount = scriptHandler.getLastScriptRepeatCount()
+			# Translators: The message reported after selected text
+			selectMessage = speech.speech._getSelectionMessageSpeech(_('%s selected'), info.text)[0]
 			if scriptCount == 0:
 				speech.speakTextSelected(info.text)
+				braille.handler.message(selectMessage)
+
+			elif scriptCount == 3:
+				ui.browseableMessage(info.text)
+				return
+
 			elif len(info.text) < speech.speech.MAX_LENGTH_FOR_SELECTION_REPORTING:
 				speech.speakSpelling(info.text, useCharacterDescriptions=scriptCount > 1)
 			else:
 				speech.speakTextSelected(info.text)
+				braille.handler.message(selectMessage)
 
 	@script(
 		# Translators: Input help mode message for report date and time command.
@@ -1159,7 +1170,12 @@ class GlobalCommands(ScriptableObject):
 				else:
 					api.copyToClip(text, notify=True)
 		else:
-			speech.speakObject(curObject, reason=controlTypes.OutputReason.QUERY)
+			speechList = speech.getObjectSpeech(curObject, reason=controlTypes.OutputReason.QUERY)
+			speech.speech.speak(speechList)
+			text = ' '.join(s for s in speechList if isinstance(s, str))
+
+			braille.handler.message(text)
+
 
 	@staticmethod
 	def _reportLocationText(objs: Tuple[Union[None, NVDAObject, textInfos.TextInfo], ...]) -> None:
@@ -2488,7 +2504,10 @@ class GlobalCommands(ScriptableObject):
 
 		repeatCount = scriptHandler.getLastScriptRepeatCount()
 		if repeatCount == 0:
-			speech.speakObject(focusObject, reason=controlTypes.OutputReason.QUERY)
+			speechList = speech.getObjectSpeech(focusObject, reason=controlTypes.OutputReason.QUERY)
+			speech.speech.speak(speechList)
+			text = ' '.join(s for s in speechList if isinstance(s, str))
+			braille.handler.message(text)
 		else:
 			speech.speakSpelling(focusObject.name, useCharacterDescriptions=repeatCount > 1)
 
