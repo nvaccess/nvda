@@ -218,6 +218,7 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		gesture="kb:NVDA+shift+c",
 		# Translators: The label of a shortcut of NVDA.
 		description=_(
+			"Set column header"
 			"Pressing once will set this cell as the first column header for any cells lower and "
 			"to the right of it within this table. "
 			"Pressing twice will forget the current column header for this cell."
