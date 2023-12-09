@@ -80,22 +80,6 @@ EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
 	'Text frame',
 	# core.py:87
 	r'Your gesture map file contains errors.\n"More details about the errors can be found in the log file."',
-	# NVDAObjects\IAccessible\winword.py:229
-	'Pressing once will set this cell as the first column header for any cells '
-	'"lower and to the right of it within this table. Pressing twice will forget '
-	'"the current column header for this cell."',
-	# NVDAObjects\IAccessible\winword.py:257
-	'Pressing once will set this cell as the first row header for any cells lower '
-	'"and to the right of it within this table. Pressing twice will forget the '
-	'"current row header for this cell."',
-	# NVDAObjects\window\excel.py:1222
-	'Pressing once will set this cell as the first column header for any cells '
-	'"lower and to the right of it within this region. Pressing twice will forget '
-	'"the current column header for this cell."',
-	# NVDAObjects\window\excel.py:1244
-	'Pressing once will set this cell as the first row header for any cells lower '
-	'"and to the right of it within this region. Pressing twice will forget the '
-	'"current row header for this cell."',
 }
 
 def checkPot(fileName):

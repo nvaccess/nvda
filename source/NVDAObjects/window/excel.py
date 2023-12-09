@@ -1486,7 +1486,6 @@ class ExcelCell(ExcelBase):
 			else:
 				# Translators: a message reported in the SetColumnHeader script for Excel.
 				ui.message(_("Cannot find {address}    in column headers").format(address=self.cellCoordsText))
-	script_setColumnHeader.__doc__=_("Pressing once will set this cell as the first column header for any cells lower and to the right of it within this region. Pressing twice will forget the current column header for this cell.")
 
 	@script(
 		# Translators: the description  for a script for Excel
@@ -1510,7 +1509,6 @@ class ExcelCell(ExcelBase):
 			else:
 				# Translators: a message reported in the SetRowHeader script for Excel.
 				ui.message(_("Cannot find {address}    in row headers").format(address=self.cellCoordsText))
-	script_setRowHeader.__doc__=_("Pressing once will set this cell as the first row header for any cells lower and to the right of it within this region. Pressing twice will forget the current row header for this cell.")
 
 	@classmethod
 	def kwargsFromSuper(cls,kwargs,relation=None):
