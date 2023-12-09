@@ -16,6 +16,7 @@ NonVisual Desktop Access (NVDA) is a free and open source screen reader for the 
 Providing feedback via synthetic speech and Braille, it enables blind or vision impaired people to access computers running Windows for no more cost than a sighted person.
 NVDA is developed by [NV Access https://www.nvaccess.org/], with contributions from the community.
 
+
 ++ General Features ++[GeneralFeatures]
 NVDA allows blind and vision impaired people to access and interact with the Windows operating system and many third party applications.
 
@@ -38,6 +39,7 @@ Major highlights include:
 - The ability to highlight the system focus
 -
 
+
 ++ System Requirements ++[SystemRequirements]
 - Operating Systems: all 32-bit and 64-bit editions of Windows 8.1, Windows 10, Windows 11, and all Server Operating Systems starting from Windows Server 2012 R2.
   - both AMD64 and ARM64 variants of Windows are supported.
@@ -58,7 +60,7 @@ NVDA is bundled with [eSpeak NG https://github.com/espeak-ng/espeak-ng], a free,
 Information about other speech synthesizers that NVDA supports can be found in the [Supported Speech Synthesizers #SupportedSpeechSynths] section.
 
 ++ Braille support ++[BrailleSupport]
-For users that own a refreshable braille display, NVDA can output its information in braille.
+For users that own a refreshable braille display, NVDA uses the open source braille translator [Liblouis https://github.com/liblouis/liblouis] to output its information in braille.
 Both uncontracted and contracted braille input via a braille keyboard is also supported.
 Furthermore, NVDA will detect many braille displays automatically by default.
 Please see the [Supported Braille Displays #SupportedBrailleDisplays] section for information about the supported braille displays.
@@ -292,6 +294,7 @@ Telephone support includes local numbers in Australia and the USA.
 The [email user groups https://github.com/nvaccess/nvda/wiki/Connect] are a great source of community help, as are [certified NVDA experts https://certification.nvaccess.org/].
 
 You can make bug reports or feature requests via [GitHub https://github.com/nvaccess/nvda/blob/master/projectDocs/issues/readme.md].
+Feel also free to follow the [contribution guidelines https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/contributing.md] if you need some inspiration and you are interested to actively contribute  to the community.
 
 + More Setup Options +[MoreSetupOptions]
 
