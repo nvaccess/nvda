@@ -1437,10 +1437,7 @@ class ExcelCell(ExcelBase):
 		return self.parent.fetchAssociatedHeaderCellText(self,columnHeader=False)
 
 	@script(
-		# Translators: the description  for a script for Excel
-		description=_("opens a dropdown item at the current cell"),
 		gesture="kb:alt+downArrow",
-		category=SCRCAT_SYSTEMCARET
 	)
 	def script_openDropdown(self,gesture):
 		gesture.send()
