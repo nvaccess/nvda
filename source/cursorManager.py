@@ -449,7 +449,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 	_nativeAppSelectionMode: bool = False
 	"Whether native selection mode is turned on or off"
 
-	def script_copyToClipboard(self,gesture):
+	def script_copyToClipboard(self, gesture: inputCore.InputGesture):
 		if self._nativeAppSelectionMode:
 			# Translators: Reported when browse mode passes the copy to clipboard command through to the application.
 			ui.message(_("native copy"))

@@ -72,6 +72,8 @@ class ChromeVBuf(GeckoVBuf):
 	TextInfo = ChromeVBufTextInfo
 
 	# selecting with IAccessibleTextSelectionContainer is currently broken in Chromium.
+	# Please refer to comments on Chromium issue where this was implemented:
+	# https://bugs.chromium.org/p/chromium/issues/detail?id=1298144
 	_nativeAppSelectionModeSupported = False
 
 	def __contains__(self, obj):

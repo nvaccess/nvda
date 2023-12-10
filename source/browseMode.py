@@ -2025,12 +2025,13 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 
 	@script(
 		gesture="kb:NVDA+shift+f10",
-		description="Toggles native selection mode on and off",
+		# Translators: input help message for toggle native selection command
+		description=_("Toggles native selection mode on and off"),
 	)
 	def script_toggleNativeAppSelectionMode(self, gesture: inputCore.InputGesture):
 		if not self._nativeAppSelectionModeSupported:
 			# Translators: the message when native selection mode is not available in this browse mode document.
-			ui.message(_("Native selection mode  unsupported in this document"))
+			ui.message(_("Native selection mode unsupported in this document"))
 			return
 		self._nativeAppSelectionMode = not self._nativeAppSelectionMode
 		if self._nativeAppSelectionMode:
