@@ -258,7 +258,8 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Input help mode message for report current selection command.
 			"Announces the current selection in edit controls and documents. "
 			"Pressing twice spells this information. "
-			"Pressing three times spells it using character descriptions."
+			"Pressing three times spells it using character descriptions. "
+			"Pressing four times shows it in a browsable message. "
 		),
 		category=SCRCAT_SYSTEMCARET,
 		gestures=("kb(desktop):NVDA+shift+upArrow", "kb(laptop):NVDA+shift+s"),
@@ -274,15 +275,25 @@ class GlobalCommands(ScriptableObject):
 		except (RuntimeError, NotImplementedError):
 			info=None
 		if not info or info.isCollapsed:
-			speech.speakMessage(_("No selection"))
+			# Translators: The message reported when there is no selection
+			ui.message(_("No selection"))
 		else:
 			scriptCount = scriptHandler.getLastScriptRepeatCount()
+			# Translators: The message reported after selected text
+			selectMessage = speech.speech._getSelectionMessageSpeech(_('%s selected'), info.text)[0]
 			if scriptCount == 0:
 				speech.speakTextSelected(info.text)
+				braille.handler.message(selectMessage)
+
+			elif scriptCount == 3:
+				ui.browseableMessage(info.text)
+				return
+
 			elif len(info.text) < speech.speech.MAX_LENGTH_FOR_SELECTION_REPORTING:
 				speech.speakSpelling(info.text, useCharacterDescriptions=scriptCount > 1)
 			else:
 				speech.speakTextSelected(info.text)
+				braille.handler.message(selectMessage)
 
 	@script(
 		# Translators: Input help mode message for report date and time command.
@@ -1159,7 +1170,12 @@ class GlobalCommands(ScriptableObject):
 				else:
 					api.copyToClip(text, notify=True)
 		else:
-			speech.speakObject(curObject, reason=controlTypes.OutputReason.QUERY)
+			speechList = speech.getObjectSpeech(curObject, reason=controlTypes.OutputReason.QUERY)
+			speech.speech.speak(speechList)
+			text = ' '.join(s for s in speechList if isinstance(s, str))
+
+			braille.handler.message(text)
+
 
 	@staticmethod
 	def _reportLocationText(objs: Tuple[Union[None, NVDAObject, textInfos.TextInfo], ...]) -> None:
@@ -2023,7 +2039,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for cycle speech mode command.
-			"Cycles between the speech modes of off, beep, talk and on-demand."
+			"Cycles between speech modes."
 		),
 		category=SCRCAT_SPEECH,
 		gesture="kb:NVDA+s"
@@ -2031,21 +2047,22 @@ class GlobalCommands(ScriptableObject):
 	def script_speechMode(self, gesture: inputCore.InputGesture) -> None:
 		curMode = speech.getState().speechMode
 		speech.setSpeechMode(speech.SpeechMode.talk)
-		newMode = (curMode + 1) % len(speech.SpeechMode)
-		if newMode == speech.SpeechMode.off:
-			# Translators: A speech mode which disables speech output.
-			name=_("Speech mode off")
-		elif newMode == speech.SpeechMode.beeps:
-			# Translators: A speech mode which will cause NVDA to beep instead of speaking.
-			name=_("Speech mode beeps")
-		elif newMode == speech.SpeechMode.talk:
-			# Translators: The normal speech mode; i.e. NVDA will talk as normal.
-			name=_("Speech mode talk")
-		elif newMode == speech.SpeechMode.onDemand:
-			# Translators: The on-demand speech mode; i.e. NVDA will talk only on commands asking to report something.
-			name = _("Speech mode on-demand")
+		modesList = list(speech.SpeechMode)
+		currModeIndex = modesList.index(curMode)
+		excludedModesIndexes = config.conf["speech"]["excludedSpeechModes"]
+		possibleIndexes = [i for i in range(len(modesList)) if i not in excludedModesIndexes]
+		# Sort speech modes to present next modes in the list before the ones at the beginning of the list.
+		# Use a key function which places modes whose index is higher than the currently used at the beginning.
+		# Note that since Python's sorting is stable
+		# relative ordering of elements for which key function returns the same value is preserved.
+		# Sorting uses `<=` since when sorting booleans they are handled as integers,
+		# so `False` (0) sorts before `True` (1).
+		newModeIndex = sorted(possibleIndexes, key=lambda i: i <= currModeIndex)[0]
+		newMode = modesList[newModeIndex]
 		speech.cancelSpeech()
-		ui.message(name)
+		# Translators: Announced when user switches to another speech mode.
+		# 'mode' is replaced with the translated name of the new mode.
+		ui.message(_("Speech mode {mode}").format(mode=newMode.displayString))
 		speech.setSpeechMode(newMode)
 
 	@script(
@@ -2488,7 +2505,10 @@ class GlobalCommands(ScriptableObject):
 
 		repeatCount = scriptHandler.getLastScriptRepeatCount()
 		if repeatCount == 0:
-			speech.speakObject(focusObject, reason=controlTypes.OutputReason.QUERY)
+			speechList = speech.getObjectSpeech(focusObject, reason=controlTypes.OutputReason.QUERY)
+			speech.speech.speak(speechList)
+			text = ' '.join(s for s in speechList if isinstance(s, str))
+			braille.handler.message(text)
 		else:
 			speech.speakSpelling(focusObject.name, useCharacterDescriptions=repeatCount > 1)
 
@@ -3449,16 +3469,22 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Presented when there is no text on the clipboard.
 			ui.message(_("There is no text on the clipboard"))
 			return
-		if len(text) < 1024: 
+		textLength = len(text)
+		if textLength < 1024:
 			repeatCount = scriptHandler.getLastScriptRepeatCount()
 			if repeatCount == 0:
 				ui.message(text)
 			else:
 				speech.speakSpelling(text, useCharacterDescriptions=repeatCount > 1)
 		else:
-			# Translators: If the number of characters on the clipboard is greater than about 1000, it reports this message and gives number of characters on the clipboard.
-			# Example output: The clipboard contains a large portion of text. It is 2300 characters long.
-			ui.message(_("The clipboard contains a large portion of text. It is %s characters long") % len(text))
+			ui.message(ngettext(
+				# Translators: If the number of characters on the clipboard is greater than about 1000, it reports this
+				# message and gives number of characters on the clipboard.
+				# Example output: The clipboard contains a large amount of text. It is 2300 characters long.
+				"The clipboard contains a large amount of text. It is %s character long",
+				"The clipboard contains a large amount of text. It is %s characters long",
+				textLength,
+			) % textLength)
 
 	@script(
 		description=_(

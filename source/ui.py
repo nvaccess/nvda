@@ -155,11 +155,12 @@ def reportTextCopiedToClipboard(text: Optional[str] = None):
 		message(_("Unable to copy"))
 		return
 	# Depending on the speech synthesizer, large amount of spoken text can freeze NVDA (#11843)
-	if len(text) < 1024:
+	textLength = len(text)
+	if textLength < 1024:
 		spokenText = text
 	else:
 		# Translators: Spoken instead of a lengthy text when copied to clipboard.
-		spokenText = _("%d characters") % len(text)
+		spokenText = ngettext("%d character", "%d characters", textLength) % textLength
 	message(
 		# Translators: Announced when a text has been copied to clipboard.
 		# {text} is replaced by the copied text.

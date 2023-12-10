@@ -404,13 +404,12 @@ class SettingsPanel(
 		"""
 		raise NotImplementedError
 
-	def isValid(self):
+	def isValid(self) -> bool:
 		"""Evaluate whether the current circumstances of this panel are valid
 		and allow saving all the settings in a L{MultiCategorySettingsDialog}.
 		Sub-classes may extend this method.
 		@returns: C{True} if validation should continue,
 			C{False} otherwise.
-		@rtype: bool
 		"""
 		return True
 
@@ -713,17 +712,18 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			panel.postSave()
 
 	def _doSave(self):
-		try:
-			self._validateAllPanels()
-			self._saveAllPanels()
-			self._notifyAllPanelsSaveOccurred()
-		except ValueError:
-			log.debugWarning("Error while saving settings:", exc_info=True)
-			return
+		self._validateAllPanels()
+		self._saveAllPanels()
+		self._notifyAllPanelsSaveOccurred()
 
 	def onOk(self, evt):
-		self._doSave()
-		super(MultiCategorySettingsDialog,self).onOk(evt)
+		try:
+			self._doSave()
+		except ValueError:
+			log.debugWarning("Error while saving settings:", exc_info=True)
+			evt.StopPropagation()
+		else:
+			super().onOk(evt)
 
 	def onCancel(self,evt):
 		for panel in self.catIdToInstanceMap.values():
@@ -731,8 +731,13 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		super(MultiCategorySettingsDialog,self).onCancel(evt)
 
 	def onApply(self,evt):
-		self._doSave()
-		super(MultiCategorySettingsDialog,self).onApply(evt)
+		try:
+			self._doSave()
+		except ValueError:
+			log.debugWarning("Error while saving settings:", exc_info=True)
+			evt.StopPropagation()
+		else:
+			super().onApply(evt)
 
 
 class GeneralSettingsPanel(SettingsPanel):
@@ -1093,6 +1098,10 @@ class SpeechSettingsPanel(SettingsPanel):
 
 	def onSave(self):
 		self.voicePanel.onSave()
+
+	def isValid(self) -> bool:
+		return self.voicePanel.isValid()
+
 
 class SynthesizerSelectionDialog(SettingsDialog):
 	# Translators: This is the label for the synthesizer selection dialog
@@ -1625,6 +1634,22 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.useSpellingFunctionalityCheckBox.SetValue(
 			config.conf["speech"][self.driver.name]["useSpellingFunctionality"]
 		)
+		self._appendSpeechModesList(settingsSizerHelper)
+
+	def _appendSpeechModesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
+		self._allSpeechModes = list(speech.SpeechMode)
+		self.speechModesList: nvdaControls.CustomCheckListBox = settingsSizerHelper.addLabeledControl(
+			# Translators: Label of the list where user can select speech modes that will be available.
+			_("&Modes available in the Cycle speech mode command:"),
+			nvdaControls.CustomCheckListBox,
+			choices=[mode.displayString for mode in self._allSpeechModes]
+		)
+		self.bindHelpEvent("SpeechModesDisabling", self.speechModesList)
+		excludedModes = config.conf["speech"]["excludedSpeechModes"]
+		self.speechModesList.Checked = [
+			mIndex for mIndex in range(len(self._allSpeechModes)) if mIndex not in excludedModes
+		]
+		self.speechModesList.Select(0)
 
 	def _appendDelayedCharacterDescriptions(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
 		# Translators: This is the label for a checkbox in the voice settings panel.
@@ -1657,6 +1682,43 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["speech"][self.driver.name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][self.driver.name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
 		config.conf["speech"][self.driver.name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()
+		config.conf["speech"]["excludedSpeechModes"] = [
+			mIndex for mIndex in range(len(self._allSpeechModes)) if mIndex not in self.speechModesList.CheckedItems
+		]
+
+	def isValid(self) -> bool:
+		enabledSpeechModes = self.speechModesList.CheckedItems
+		if len(enabledSpeechModes) < 2:
+			log.debugWarning("Too few speech modes enabled.")
+			gui.messageBox(
+				# Translators: Message shown when not enough speech modes are enabled.
+				_("At least two speech modes have to be checked."),
+				# Translators: The title of the message box
+				_("Error"),
+				wx.OK | wx.ICON_ERROR,
+				self,
+			)
+			self.speechModesList.SetFocus()
+			return False
+		if self._allSpeechModes.index(speech.SpeechMode.talk) not in enabledSpeechModes:
+			if gui.messageBox(
+				_(
+					# Translators: Warning shown when 'talk' speech mode is disabled in settings.
+					(
+						"You did not choose Talk as one of your speech mode options. "
+						"Please note that this may result in no speech output at all. "
+						"Are you sure you want to continue?"
+					)
+				),
+				# Translators: Title of the warning message.
+				_("Warning"),
+				wx.YES | wx.NO | wx.ICON_WARNING,
+				self,
+			) == wx.NO:
+				self.speechModesList.SetFocus()
+				return False
+		return super().isValid()
+
 
 class KeyboardSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the keyboard settings panel.
@@ -1761,7 +1823,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("KeyboardSettingsHandleKeys", self.handleInjectedKeysCheckBox)
 		self.handleInjectedKeysCheckBox.SetValue(config.conf["keyboard"]["handleInjectedKeys"])
 
-	def isValid(self):
+	def isValid(self) -> bool:
 		# #2871: check whether at least one key is the nvda key.
 		if not self.modifierList.CheckedItems:
 			log.debugWarning("No NVDA key set")
@@ -1770,8 +1832,9 @@ class KeyboardSettingsPanel(SettingsPanel):
 				_("At least one key must be used as the NVDA key."),
 				# Translators: The title of the message box
 				_("Error"), wx.OK|wx.ICON_ERROR,self)
+			self.modifierList.SetFocus()
 			return False
-		return super(KeyboardSettingsPanel, self).isValid()
+		return super().isValid()
 
 	def onSave(self):
 		layout=self.kbdNames[self.kbdList.GetSelection()]

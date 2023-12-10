@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2007-2022 NV Access Limited, Peter Vágner, Cyrille Bougot
+# Copyright (C) 2007-2023 NV Access Limited, Peter Vágner, Cyrille Bougot
 
 import time
 import threading
@@ -326,7 +326,15 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 			attrs['table-layout']=tableLayout=="1"
 
 		# convert some table attributes to ints
-		for attr in ("table-id","table-rownumber","table-columnnumber","table-rowsspanned","table-columnsspanned"):
+		for attr in (
+			"table-id",
+			"table-rownumber",
+			"table-columnnumber",
+			"table-rowsspanned",
+			"table-columnsspanned",
+			"table-rowcount",
+			"table-columncount",
+		):
 			attrVal=attrs.get(attr)
 			if attrVal is not None:
 				attrs[attr]=int(attrVal)

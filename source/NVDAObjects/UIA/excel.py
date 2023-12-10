@@ -215,12 +215,13 @@ class ExcelCell(ExcelObject):
 		infoList.append(tmpl.format(self.cellSize))
 
 		if self.rotation is not None:
-			tmpl = pgettext(
+			infoList.append(npgettext(
 				"excel-UIA",
 				# Translators: The rotation in degrees of an Excel cell
-				"Rotation: {0} degrees"
-			)
-			infoList.append(tmpl.format(self.rotation))
+				"Rotation: {0} degree",
+				"Rotation: {0} degrees",
+				self.rotation,
+			).format(self.rotation))
 
 		if self.outlineColor is not None:
 			tmpl = pgettext(
@@ -520,12 +521,12 @@ class ExcelCell(ExcelObject):
 					author=author
 				)
 			else:
-				# Translators: a comment on a cell in Microsoft excel.
-				text = _("Comment thread: {comment}  by {author} with {numReplies} replies").format(
-					comment=comment,
-					author=author,
-					numReplies=numReplies
-				)
+				text = ngettext(
+					# Translators: a comment on a cell in Microsoft excel.
+					"Comment thread: {comment}  by {author} with {numReplies} reply",
+					"Comment thread: {comment}  by {author} with {numReplies} replies",
+					numReplies,
+				).format(comment=comment, author=author, numReplies=numReplies)
 			ui.message(text)
 		else:
 			# Translators: A message in Excel when there is no comment thread

@@ -2,7 +2,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
-# Julien Cochuyt, Derek Riemer, Cyrille Bougot, Leonard de Ruijter
+# Julien Cochuyt, Derek Riemer, Cyrille Bougot, Leonard de Ruijter, Łukasz Golonka
 
 """High-level functions to speak information.
 """ 
@@ -55,6 +55,7 @@ from typing import (
 	Generator,
 	Union,
 	Tuple,
+	Self,
 )
 from logHandler import log
 import config
@@ -65,10 +66,10 @@ from config.configFlags import (
 )
 import aria
 from .priorities import Spri
-from enum import IntEnum
 from dataclasses import dataclass
 from copy import copy
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
+from utils.displayString import DisplayStringIntEnum
 
 if typing.TYPE_CHECKING:
 	import NVDAObjects
@@ -78,11 +79,25 @@ _speechState: Optional['SpeechState'] = None
 _curWordChars: List[str] = []
 
 
-class SpeechMode(IntEnum):
+class SpeechMode(DisplayStringIntEnum):
 	off = 0
 	beeps = 1
 	talk = 2
 	onDemand = 3
+
+	@property
+	def _displayStringLabels(self) -> dict[Self, str]:
+		return {
+			# Translators: Name of the speech mode which disables speech output.
+			self.off: pgettext("speechModes", "off"),
+			# Translators: Name of the speech mode which will cause NVDA to beep instead of speaking.
+			self.beeps: pgettext("speechModes", "beeps"),
+			# Translators: Name of the speech mode which causes NVDA to speak normally.
+			self.talk: pgettext("speechModes", "talk"),
+			# Translators: Name of the on-demand speech mode,
+			# in which NVDA only speaks in response to commands that report content.
+			self.onDemand: pgettext("speechModes", "on-demand"),
+		}
 
 
 @dataclass
@@ -1097,9 +1112,10 @@ def _getSelectionMessageSpeech(
 ) -> SpeechSequence:
 	if len(text) < MAX_LENGTH_FOR_SELECTION_REPORTING:
 		return _getSpeakMessageSpeech(message % text)
+	textLength = len(text)
 	# Translators: This is spoken when the user has selected a large portion of text.
 	# Example output "1000 characters"
-	numCharactersText = _("%d characters") % len(text)
+	numCharactersText = ngettext("%d character", "%d characters", textLength) % textLength
 	return _getSpeakMessageSpeech(message % numCharactersText)
 
 
@@ -1881,21 +1897,9 @@ def getPropertiesSpeech(  # noqa: C901
 			textList.append(rowColSpanTranslation)
 	rowCount=propertyValues.get('rowCount',0)
 	columnCount=propertyValues.get('columnCount',0)
-	if rowCount and columnCount:
-		# Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
-		rowAndColCountTranslation: str = _("with {rowCount} rows and {columnCount} columns").format(
-			rowCount=rowCount,
-			columnCount=columnCount
-		)
-		textList.append(rowAndColCountTranslation)
-	elif columnCount and not rowCount:
-		# Translators: Speaks number of columns (example output: with 4 columns).
-		columnCountTransation: str = _("with %s columns") % columnCount
-		textList.append(columnCountTransation)
-	elif rowCount and not columnCount:
-		# Translators: Speaks number of rows (example output: with 2 rows).
-		rowCountTranslation: str = _("with %s rows") % rowCount
-		textList.append(rowCountTranslation)
+	rowAndColumnCountText = _rowAndColumnCountText(rowCount, columnCount)
+	if rowAndColumnCountText:
+		textList.append(rowAndColumnCountText)
 	if rowCount or columnCount:
 		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
 		_speechState.oldTableID = None
@@ -1953,6 +1957,46 @@ def getPropertiesSpeech(  # noqa: C901
 				textList.append(levelTranslation)
 	types.logBadSequenceTypes(textList)
 	return textList
+
+
+def _rowAndColumnCountText(rowCount: int, columnCount: int) -> Optional[str]:
+	if rowCount and columnCount:
+		rowCountTranslation: str = _rowCountText(rowCount)
+		colCountTranslation: str = _columnCountText(columnCount)
+		# Translators: Main part of the compound string to speak number of columns and rows in a table
+		# Example: If the reported compound string is "with 3 rows and 2 columns", {rowCountTranslation} will be
+		# replaced by "3 rows" and {colCountTranslation} by "2 columns"
+		return _("with {rowCountTranslation} and {colCountTranslation}").format(
+			rowCountTranslation=rowCountTranslation,
+			colCountTranslation=colCountTranslation,
+		)
+	elif columnCount and not rowCount:
+		# Translators: Speaks number of columns (example output: with 4 columns).
+		return ngettext("with %s column", "with %s columns", columnCount) % columnCount
+	elif rowCount and not columnCount:
+		# Translators: Speaks number of rows (example output: with 2 rows).
+		return ngettext("with %s row", "with %s rows", rowCount) % rowCount
+	return None
+
+
+def _rowCountText(count: int) -> str:
+	return ngettext(
+		# Translators: Sub-part of the compound string to speak number of rows and columns in a table.
+		# Example: If the full compound string is "table with 3 rwos and 2 columns", this substring is "3 rows".
+		"{rowCount} row",
+		"{rowCount} rows",
+		count,
+	).format(rowCount=count)
+
+
+def _columnCountText(count: int) -> str:
+	return ngettext(
+		# Translators: Sub-part of the compound string to speak number of rows and columns in a table.
+		# Example: If the full compound string is "table with 3 rwos and 2 columns", this substring is "2 columns".
+		"{columnCount} column",
+		"{columnCount} columns",
+		count,
+	).format(columnCount=count)
 
 
 def _shouldSpeakContentFirst(
@@ -2373,7 +2417,7 @@ def getFormatFieldSpeech(  # noqa: C901
 			elif textColumnCount:
 				# Translators: Indicates the text column number in a document.
 				# %s will be replaced with the number of text columns.
-				text=_("%s columns")%(textColumnCount)
+				text = ngettext("%s column", "%s columns", textColumnCount) % textColumnCount
 				textList.append(text)
 			elif textColumnNumber:
 				# Translators: Indicates the text column number in a document.
@@ -2785,8 +2829,15 @@ def getTableInfoSpeech(
 	if newTable:
 		columnCount=tableInfo.get("column-count",0)
 		rowCount=tableInfo.get("row-count",0)
-		# Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
-		text=_("table with {columnCount} columns and {rowCount} rows").format(columnCount=columnCount,rowCount=rowCount)
+		columnCountText = _columnCountText(columnCount)
+		rowCountText = _rowCountText(rowCount)
+		# Translators: Main part of the compound string to report a table
+		# Example: If the reported compound string is "table with 2 columns and 3 rows", {colCountTranslation}
+		# will be replaced by "2 columns" and {rowCountTranslation} by "3 rows"
+		text = _("table with {columnCountText} and {rowCountText}").format(
+			columnCountText=columnCountText,
+			rowCountText=rowCountText,
+		)
 		textList.append(text)
 	oldColumnNumber=oldTableInfo.get("column-number",0) if oldTableInfo else 0
 	columnNumber=tableInfo.get("column-number",0)
