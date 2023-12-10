@@ -10,6 +10,7 @@ A cursor manager provides caret navigation and selection commands for a virtual 
 
 import wx
 import core
+import inputCore
 import baseObject
 import documentBase
 import gui
