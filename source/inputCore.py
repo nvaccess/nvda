@@ -27,7 +27,6 @@ from typing import (
 from gui import blockAction
 import configobj
 from speech import sayAll
-from keyboardHandler import KeyboardInputGesture
 import baseObject
 import scriptHandler
 import queueHandler
@@ -37,6 +36,7 @@ import characterProcessing
 import config
 from fileUtils import FaultTolerantFile
 import watchdog
+import winUser
 from logHandler import log
 import globalVars
 import languageHandler
@@ -599,6 +599,8 @@ class InputManager(baseObject.AutoPropertyObject):
 		return bypass
 
 	def _handleInputHelp(self, gesture, onlyLog=False):
+		import braille
+		from keyboardHandler import KeyboardInputGesture
 		textList = [gesture.displayName]
 		script = gesture.script
 		runScript = False
@@ -615,32 +617,48 @@ class InputManager(baseObject.AutoPropertyObject):
 				desc = script.__doc__
 				if desc:
 					textList.append(desc)
-#		elif isinstance(gesture, KeyboardInputGesture) and not gesture.__doc__:
-#			threadID = api.getFocusObject().windowThreadID
-#			keyboardLayout = ctypes.windll.user32.GetKeyboardLayout(threadID)
-#			buffer = ctypes.create_unicode_buffer(5)
-#			states = (ctypes.c_byte*256)()
-#			modifierList = [gesture.NORMAL_MODIFIER_KEYS[i[0]] for i in gesture.modifiers]
-#			for i in range(256):
-#				if i in modifierList:
-#					states[i] = -128 # We tell ToUnicodeEx that the modifier is down, even tho it isn't according to Windows
-#				else:
-#					states[i] = ctypes.windll.user32.GetKeyState(i)
-#			res = ctypes.windll.user32.ToUnicodeEx(gesture.vkCode, gesture.scanCode, states, buffer, ctypes.sizeof(buffer), keyboardLayout, 0x0)
-#			if res>0:
-#				charList = []
-#				for i in buffer[:res]:
-#					if ord(i.value) > 32:
-#						charList.append(i.value)
-#			if charList:
-#				textList = charList
-#			else:
-#				textList[0].replace('+', ' ')
+		if isinstance(gesture, KeyboardInputGesture) and not script or not script.__doc__:
+			threadID = api.getFocusObject().windowThreadID
+			keyboardLayout = ctypes.windll.user32.GetKeyboardLayout(threadID)
+			buffer = ctypes.create_unicode_buffer(5)
+			states = (ctypes.c_byte*256)()
+			modifierList = []
+			for i in gesture.modifiers:
+				modifier = gesture.NORMAL_MODIFIER_KEYS.get(i[0])
+				if modifier:
+					modifierList.append(modifier)
+		
+			for i in range(256):
+				if i in modifierList:
+					states[i] = -128 # We tell ToUnicodeEx that the modifier is down, even tho it isn't according to Windows
+				else:
+					states[i] = ctypes.windll.user32.GetKeyState(i)
+			res = ctypes.windll.user32.ToUnicodeEx(gesture.vkCode, gesture.scanCode, states, buffer, ctypes.sizeof(buffer), 0x0, keyboardLayout)
+			if res<0 and not script:
+				return
+			charList = []
+			
+			if res>0:
+				valid = True
+				if winUser.VK_MENU in modifierList:
+					newBuffer = ctypes.create_unicode_buffer(5)
+					states[winUser.VK_MENU] = 0
+					newRes = ctypes.windll.user32.ToUnicodeEx(gesture.vkCode, gesture.scanCode, states, newBuffer, ctypes.sizeof(newBuffer), 0x0, keyboardLayout)
+					valid = False if buffer.value == newBuffer.value else True
+				for i in buffer[:res]:
+					if i.isprintable() and not i.isspace() and valid:
+						charList.append(i)
+			if charList and not onlyLog:
+				text = ''.join(charList)
+				speech.speech.speakSpelling(text)
+				braille.handler.message(text)
+				return
+			else:
+				textList[0] = textList[0].replace('+', ' ')
 		log.info(logMsg)
 		if onlyLog:
 			return
 
-		import braille
 		braille.handler.message("\t\t".join(textList))
 		# Punctuation must be spoken for the gesture name (the first chunk) so that punctuation keys are spoken.
 		speech.speakText(

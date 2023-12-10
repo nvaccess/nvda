@@ -65,8 +65,11 @@ This option now announces additional relevant information about an object when t
 Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on enhanced accessibility in Poedit, such as shortcuts to read translator notes and comments. (#15313, #7303, @LeonarddeR)
 - Braille viewer and speech viewer are now disabled in secure mode. (#15680)
 - During object navigation, disabled (unavailable) objects will not be ignored anymore. (#15477, @CyrilleB79)
+- Input help for keyboard has been improved. (#15891, #6621, @Emil-18)
+  - When the key combination has an NVDA command asosiated with it, it is reported as it always have been.
+  - If not, but the key combination would have resulted in a typed character if input help was off, this character is reported
+  - Else, the key combination is reported with the plus sign between key names replaced with space, so the user quickly can identify if the key combination is a NVDA command or not
 -
-
 == Bug Fixes ==
 - Add-on Store:
   - When the status of an add-on is changed while it has focus, e.g. a change from "downloading" to "downloaded", the updated item is now announced correctly. (#15859, @LeonarddeR)
