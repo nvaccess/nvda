@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
-# Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka
+# Copyright (C) 2006-2023 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
+# Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -251,7 +251,7 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("setting language to %s"%lang)
 	languageHandler.setLanguage(lang)
 	# Addons
-	from _addonStore import dataManager
+	from addonStore import dataManager
 	dataManager.initialize()
 	addonHandler.initialize()
 	# Hardware background i/o
@@ -449,7 +449,6 @@ def _initializeObjectCaches():
 	Caches the desktop object.
 	This may make information from the desktop window available on the lock screen,
 	however no known exploit is known for this.
-	2023.1 plans to ensure the desktopObject is available only when signed-in.
 
 	The desktop object must be used, as setting the object caches has side effects,
 	such as focus events.
@@ -533,7 +532,7 @@ def main():
 	import socket
 	socket.setdefaulttimeout(10)
 	log.debug("Initializing add-ons system")
-	from _addonStore import dataManager
+	from addonStore import dataManager
 	dataManager.initialize()
 	addonHandler.initialize()
 	if globalVars.appArgs.disableAddons:
@@ -767,7 +766,10 @@ def main():
 				sessionTracking.pumpAll()
 			except Exception:
 				log.exception("errors in this core pump cycle")
-			baseObject.AutoPropertyObject.invalidateCaches()
+			try:
+				baseObject.AutoPropertyObject.invalidateCaches()
+			except Exception:
+				log.exception("AutoPropertyObject.invalidateCaches failed")
 			watchdog.asleep()
 			self.isPumping = False
 			# #3803: If another pump was requested during this pump execution, we need
@@ -851,6 +853,7 @@ def main():
 	_terminate(bdDetect)
 	_terminate(hwIo)
 	_terminate(addonHandler)
+	_terminate(nvwave)
 	_terminate(garbageHandler)
 	# DMP is only started if needed.
 	# Terminate manually (and let it write to the log if necessary)

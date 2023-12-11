@@ -129,7 +129,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
-		driverRegistrar.addUsbDevices(bdDetect.KEY_SERIAL, {
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.SERIAL, {
 			"VID_1C71&PID_C004",  # Apex
 		})
 		driverRegistrar.addBluetoothDevices(lambda m: (

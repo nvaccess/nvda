@@ -15,10 +15,10 @@ For drivers in add-ons, this must be done in a global plugin.
 import itertools
 import threading
 from concurrent.futures import ThreadPoolExecutor, Future
+from enum import StrEnum
 from typing import (
 	Any,
 	Callable,
-	DefaultDict,
 	Dict,
 	Generator,
 	Iterable,
@@ -33,6 +33,7 @@ from typing import (
 	Union,
 )
 import hwPortUtils
+import NVDAState
 import braille
 import winUser
 import config
@@ -41,9 +42,8 @@ from baseObject import AutoPropertyObject
 import re
 from winAPI import messageWindow
 import extensionPoints
-import NVDAState
-from buildVersion import version_year
 from logHandler import log
+from collections import defaultdict
 
 
 HID_USAGE_PAGE_BRAILLE = 0x41
@@ -53,10 +53,45 @@ DBT_DEVNODES_CHANGED = 7
 USB_ID_REGEX = re.compile(r"^VID_[0-9A-F]{4}&PID_[0-9A-F]{4}$", re.U)
 
 
+class DeviceType(StrEnum):
+	HID = "hid"
+	"""HID devices"""
+	SERIAL = "serial"
+	"""Serial devices (COM ports)"""
+	CUSTOM = "custom"
+	"""Devices with a manufacturer specific driver"""
+	BLUETOOTH = "bluetooth"
+	"""Bluetooth devices"""
+
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "DETECT_USB" and NVDAState._allowDeprecatedAPI():
+		log.warning(f"{attrName} is deprecated.")
+		return 1
+	if attrName == "DETECT_BLUETOOTH" and NVDAState._allowDeprecatedAPI():
+		log.warning(f"{attrName} is deprecated.")
+		return 2
+	_deprecatedConstantsMap = {
+		"KEY_HID": DeviceType.HID,
+		"KEY_SERIAL": DeviceType.SERIAL,
+		"KEY_BLUETOOTH": DeviceType.BLUETOOTH,
+		"KEY_CUSTOM": DeviceType.CUSTOM,
+	}
+	if attrName in _deprecatedConstantsMap and NVDAState._allowDeprecatedAPI():
+		replacementSymbol = _deprecatedConstantsMap[attrName]
+		log.warning(
+			f"{attrName} is deprecated. "
+			f"Use bdDetect.DeviceType.{replacementSymbol.name} instead. "
+		)
+		return replacementSymbol
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
+
 class DeviceMatch(NamedTuple):
 	"""Represents a detected device.
 	"""
-	type: str
+	type: DeviceType
 	"""The type of the device."""
 	id: str
 	"""The identifier of the device."""
@@ -67,7 +102,7 @@ class DeviceMatch(NamedTuple):
 
 
 MatchFuncT = Callable[[DeviceMatch], bool]
-DriverDictT = DefaultDict[str, Union[Set[str], MatchFuncT]]
+DriverDictT = defaultdict[DeviceType, set[str] | MatchFuncT]
 
 _driverDevices = OrderedDict[str, DriverDictT]()
 
@@ -86,56 +121,8 @@ Handlers are called with these keyword arguments:
 """
 
 
-# Device type constants
-#: Key constant for HID devices
-KEY_HID = "hid"
-#: Key for serial devices (COM ports)
-KEY_SERIAL = "serial"
-#: Key for devices with a manufacturer specific driver
-KEY_CUSTOM = "custom"
-#: Key for bluetooth devices
-KEY_BLUETOOTH = "bluetooth"
-
-# Constants for USB and bluetooth detection to be used by the background thread scanner.
-DETECT_USB = 1
-DETECT_BLUETOOTH = 2
-
-
 def _isDebug():
 	return config.conf["debugLog"]["hwIo"]
-
-
-if version_year < 2024 and NVDAState._allowDeprecatedAPI():
-	def addUsbDevices(driver: str, type: str, ids: Set[str]):
-		"""Associate USB devices with a driver.
-		@param driver: The name of the driver.
-		@param type: The type of the driver, either C{KEY_HID}, C{KEY_SERIAL} or C{KEY_CUSTOM}.
-		@param ids: A set of USB IDs in the form C{"VID_xxxx&PID_XXXX"}.
-			Note that alphabetical characters in hexadecimal numbers should be uppercase.
-		@raise ValueError: When one of the provided IDs is malformed.
-		"""
-		log.warning(
-			"bdDetect.addUsbDevices is deprecated and will be removed in NVDA 2024.1. "
-			"Braille display drivers should implement the registerAutomaticDetection classmethod instead. "
-			"That method receives a DriverRegistrar object on which the addUsbDevices method can be used."
-		)
-		registrar = DriverRegistrar(driver)
-		registrar.addUsbDevices(type, ids)
-
-	def addBluetoothDevices(driver: str, matchFunc: MatchFuncT):
-		"""Associate Bluetooth HID or COM ports with a driver.
-		@param driver: The name of the driver.
-		@param matchFunc: A function which determines whether a given Bluetooth device matches.
-			It takes a L{DeviceMatch} as its only argument
-			and returns a C{bool} indicating whether it matched.
-		"""
-		log.warning(
-			"bdDetect.addBluetoothDevices is deprecated and will be removed in NVDA 2024.1. "
-			"Braille display drivers should implement the registerAutomaticDetection classmethod instead. "
-			"That method receives a DriverRegistrar object on which the addBluetoothDevices method can be used."
-		)
-		registrar = DriverRegistrar(driver)
-		registrar.addBluetoothDevices(matchFunc)
 
 
 def getDriversForConnectedUsbDevices(
@@ -149,13 +136,12 @@ def getDriversForConnectedUsbDevices(
 	@return: Generator of pairs of drivers and device information.
 	"""
 	usbCustomDeviceMatches = (
-		DeviceMatch(KEY_CUSTOM, port["usbID"], port["devicePath"], port)
+		DeviceMatch(DeviceType.CUSTOM, port["usbID"], port["devicePath"], port)
 		for port in deviceInfoFetcher.usbDevices
 	)
 	usbComDeviceMatches = (
-		DeviceMatch(KEY_SERIAL, port["usbID"], port["port"], port)
-		for port in deviceInfoFetcher.comPorts
-		if "usbID" in port
+		DeviceMatch(DeviceType.SERIAL, port["usbID"], port["port"], port)
+		for port in deviceInfoFetcher.usbComPorts
 	)
 	# Tee is used to ensure that the DeviceMatches aren't created multiple times.
 	# The processing of these HID device matches, looking for a custom driver, means that all
@@ -163,7 +149,7 @@ def getDriversForConnectedUsbDevices(
 	# The corollary is that clients of this method don't have to process all devices (and create all
 	# device matches), if one is found early the iteration can stop.
 	usbHidDeviceMatches, usbHidDeviceMatchesForCustom = itertools.tee((
-		DeviceMatch(KEY_HID, port["usbID"], port["devicePath"], port)
+		DeviceMatch(DeviceType.HID, port["usbID"], port["devicePath"], port)
 		for port in deviceInfoFetcher.hidDevices
 		if port["provider"] == "usb"
 	))
@@ -194,7 +180,7 @@ def _getStandardHidDriverName() -> str:
 
 
 def _isHIDBrailleMatch(match: DeviceMatch) -> bool:
-	return match.type == KEY_HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE
+	return match.type == DeviceType.HID and match.deviceInfo.get('HIDUsagePage') == HID_USAGE_PAGE_BRAILLE
 
 
 def getDriversForPossibleBluetoothDevices(
@@ -208,7 +194,7 @@ def getDriversForPossibleBluetoothDevices(
 	@return: Generator of pairs of drivers and port information.
 	"""
 	btSerialMatchesForCustom = (
-		DeviceMatch(KEY_SERIAL, port["bluetoothName"], port["port"], port)
+		DeviceMatch(DeviceType.SERIAL, port["bluetoothName"], port["port"], port)
 		for port in deviceInfoFetcher.comPorts
 		if "bluetoothName" in port
 	)
@@ -218,7 +204,7 @@ def getDriversForPossibleBluetoothDevices(
 	# The corollary is that clients of this method don't have to process all devices (and create all
 	# device matches), if one is found early the iteration can stop.
 	btHidDevMatchesForHid, btHidDevMatchesForCustom = itertools.tee((
-		DeviceMatch(KEY_HID, port["hardwareID"], port["devicePath"], port)
+		DeviceMatch(DeviceType.HID, port["hardwareID"], port["devicePath"], port)
 		for port in deviceInfoFetcher.hidDevices
 		if port["provider"] == "bluetooth"
 	))
@@ -226,7 +212,7 @@ def getDriversForPossibleBluetoothDevices(
 		for driver, devs in _driverDevices.items():
 			if limitToDevices and driver not in limitToDevices:
 				continue
-			matchFunc = devs[KEY_BLUETOOTH]
+			matchFunc = devs[DeviceType.BLUETOOTH]
 			if not callable(matchFunc):
 				continue
 			if matchFunc(match):
@@ -269,9 +255,9 @@ class _DeviceInfoFetcher(AutoPropertyObject):
 			self._btDevsCache = cache.copy() if cache else None
 
 	#: Type info for auto property: _get_comPorts
-	comPorts: List[Dict]
+	comPorts: list[dict[str, str]]
 
-	def _get_comPorts(self) -> List[Dict]:
+	def _get_comPorts(self) -> list[dict[str, str]]:
 		return list(hwPortUtils.listComPorts(onlyAvailable=True))
 
 	#: Type info for auto property: _get_usbDevices
@@ -279,6 +265,21 @@ class _DeviceInfoFetcher(AutoPropertyObject):
 
 	def _get_usbDevices(self) -> List[Dict]:
 		return list(hwPortUtils.listUsbDevices(onlyAvailable=True))
+
+	#: Type info for auto property: _get_usbComPorts
+	usbComPorts: list[dict[str, str]]
+
+	def _get_usbComPorts(self) -> list[dict[str, str]]:
+		comPorts = []
+		for port in self.comPorts:
+			if (usbId := port.get("usbID")) is None:
+				continue
+			if (usbDict := next(
+				(d for d in self.usbDevices if d.get("usbID") == usbId),
+				None
+			)) is not None:
+				comPorts.append(port | usbDict)
+		return comPorts
 
 	#: Type info for auto property: _get_hidDevices
 	hidDevices: List[Dict]
@@ -458,16 +459,16 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 	"""
 	usbDevs = itertools.chain(
 		(
-			DeviceMatch(KEY_CUSTOM, port["usbID"], port["devicePath"], port)
+			DeviceMatch(DeviceType.CUSTOM, port["usbID"], port["devicePath"], port)
 			for port in deviceInfoFetcher.usbDevices
 		),
 		(
-			DeviceMatch(KEY_HID, port["usbID"], port["devicePath"], port)
+			DeviceMatch(DeviceType.HID, port["usbID"], port["devicePath"], port)
 			for port in deviceInfoFetcher.hidDevices if port["provider"] == "usb"
 		),
 		(
-			DeviceMatch(KEY_SERIAL, port["usbID"], port["port"], port)
-			for port in deviceInfoFetcher.comPorts if "usbID" in port
+			DeviceMatch(DeviceType.SERIAL, port["usbID"], port["port"], port)
+			for port in deviceInfoFetcher.usbComPorts
 		)
 	)
 	for match in usbDevs:
@@ -490,17 +491,17 @@ def getPossibleBluetoothDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 	if driver == _getStandardHidDriverName():
 		matchFunc = _isHIDBrailleMatch
 	else:
-		matchFunc = _driverDevices[driver][KEY_BLUETOOTH]
+		matchFunc = _driverDevices[driver][DeviceType.BLUETOOTH]
 		if not callable(matchFunc):
 			return
 	btDevs = itertools.chain(
 		(
-			DeviceMatch(KEY_SERIAL, port["bluetoothName"], port["port"], port)
+			DeviceMatch(DeviceType.SERIAL, port["bluetoothName"], port["port"], port)
 			for port in deviceInfoFetcher.comPorts
 			if "bluetoothName" in port
 		),
 		(
-			DeviceMatch(KEY_HID, port["hardwareID"], port["devicePath"], port)
+			DeviceMatch(DeviceType.HID, port["hardwareID"], port["devicePath"], port)
 			for port in deviceInfoFetcher.hidDevices if port["provider"] == "bluetooth"
 		),
 	)
@@ -604,12 +605,12 @@ class DriverRegistrar:
 			ret = _driverDevices[self._driver] = DriverDictT(set)
 			return ret
 
-	def addUsbDevices(self, type: str, ids: Set[str]):
+	def addUsbDevices(self, type: DeviceType, ids: Set[str]):
 		"""Associate USB devices with the driver on this instance.
-		@param type: The type of the driver, either C{KEY_HID}, C{KEY_SERIAL} or C{KEY_CUSTOM}.
-		@param ids: A set of USB IDs in the form C{"VID_xxxx&PID_XXXX"}.
+		:param type: The type of the driver.
+		:param ids: A set of USB IDs in the form C{"VID_xxxx&PID_XXXX"}.
 			Note that alphabetical characters in hexadecimal numbers should be uppercase.
-		@raise ValueError: When one of the provided IDs is malformed.
+		:raise ValueError: When one of the provided IDs is malformed.
 		"""
 		malformedIds = [id for id in ids if not isinstance(id, str) or not USB_ID_REGEX.match(id)]
 		if malformedIds:
@@ -628,7 +629,7 @@ class DriverRegistrar:
 			and returns a C{bool} indicating whether it matched.
 		"""
 		devs = self._getDriverDict()
-		devs[KEY_BLUETOOTH] = matchFunc
+		devs[DeviceType.BLUETOOTH] = matchFunc
 
 	def addDeviceScanner(
 			self,

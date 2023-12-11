@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V.,
-# Davy Kager
+# Davy Kager, Leonard de Ruijter, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -876,7 +876,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def _get_presentationType(self):
 		states=self.states
-		if controlTypes.State.INVISIBLE in states or controlTypes.State.UNAVAILABLE in states:
+		if controlTypes.State.INVISIBLE in states:
 			return self.presType_unavailable
 		role = self.role
 		landmark = self.landmark
@@ -913,22 +913,25 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 			return self.presType_layout
 		name = self.name
 		description = self.description
+		# #15324: Some builds of Microsoft Office expose a space character as the name of unlabeled groupings.
+		# trying to force NVDA to announce them.
+		if name and name.isspace():
+			name = None
+		if description and description.isspace():
+			description = None
 		if not name and not description:
 			if role in (
 				controlTypes.Role.WINDOW,
 				controlTypes.Role.PANEL,
 				controlTypes.Role.PROPERTYPAGE,
 				controlTypes.Role.TEXTFRAME,
+				controlTypes.Role.GROUPING,
 				controlTypes.Role.OPTIONPANE,
 				controlTypes.Role.INTERNALFRAME,
 				controlTypes.Role.FORM,
 				controlTypes.Role.TABLEBODY,
 				controlTypes.Role.REGION,
 			):
-				return self.presType_layout
-			# Groupings should only be considered layout (I.e. filtered out)
-			# if they also don't have any position information as well as no name or description.
-			if role == controlTypes.Role.GROUPING and not self.name and not self.description and not self.positionInfo:
 				return self.presType_layout
 			if role == controlTypes.Role.TABLE and not config.conf["documentFormatting"]["reportTables"]:
 				return self.presType_layout
@@ -1204,7 +1207,7 @@ Tries to force this object to take the focus.
 
 		if not self._mouseEntered and config.conf['mouse']['reportObjectRoleOnMouseEnter']:
 			speech.cancelSpeech()
-			speech.speakObjectProperties(self,role=True)
+			speech.speakObject(self, reason=controlTypes.OutputReason.MOUSE)
 			speechWasCanceled=True
 		else:
 			speechWasCanceled=False
@@ -1424,8 +1427,7 @@ This code is executed if a gain focus event is received by this object.
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("name: %s" % ret)
-		ret = self.role
-		info.append("role: %s" % ret)
+		info.append(f"role: {self.role.name}")
 		info.append(f"processID: {self.processID}")
 		try:
 			ret = repr(self.roleText)
@@ -1433,7 +1435,7 @@ This code is executed if a gain focus event is received by this object.
 			ret = f"exception: {e}"
 		info.append(f"roleText: {ret}")
 		try:
-			ret = ", ".join(str(state) for state in self.states)
+			ret = ", ".join(state.name for state in self.states)
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("states: %s" % ret)
@@ -1481,17 +1483,20 @@ This code is executed if a gain focus event is received by this object.
 		info.extend(self.appModule.devInfo)
 		return info
 
-	def _get_sleepMode(self):
+	# Typing information for auto property _get_sleepMode
+	sleepMode: bool
+
+	# Don't cache sleepMode, as it is derived from a property which might change
+	# and we want the changed value immediately.
+	_cache_sleepMode = False
+
+	def _get_sleepMode(self) -> bool:
 		"""Whether NVDA should sleep for this object (e.g. it is self-voicing).
 		If C{True}, all  events and script requests for this object are silently dropped.
-		@rtype: bool
 		"""
 		if self.appModule:
 			return self.appModule.sleepMode
 		return False
-	# Don't cache sleepMode, as it is derived from a property which might change
-	# and we want the changed value immediately.
-	_cache_sleepMode = False
 
 	def _get_mathMl(self):
 		"""Obtain the MathML markup for an object containing math content.

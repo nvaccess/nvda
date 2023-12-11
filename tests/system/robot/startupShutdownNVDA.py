@@ -76,7 +76,7 @@ def quits_from_menu(showExitDialog=True):
 			actualSpeech,
 			"\n".join([
 				"Exit NVDA  dialog",
-				"What would you like to do?  combo box  Exit  collapsed  Alt plus d"
+				"What would you like to do?  combo box  Exit  collapsed  Alt plus  d"
 			])
 		)
 		_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little for it
@@ -105,7 +105,7 @@ def quits_from_keyboard():
 		actualSpeech,
 		"\n".join([
 			"Exit NVDA  dialog",
-			"What would you like to do?  combo box  Exit  collapsed  Alt plus d"
+			"What would you like to do?  combo box  Exit  collapsed  Alt plus  d"
 		])
 	)
 	_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little longer for it
@@ -140,10 +140,10 @@ def read_welcome_dialog():
 				"down the NVDA key while pressing other keys. By default, the numpad Insert and main Insert keys "
 				"may both be used as the NVDA key. You can also configure NVDA to use the Caps Lock as the NVDA "
 				"key. Press NVDA plus n at any time to activate the NVDA menu. From this menu, you can configure "
-				"NVDA, get help and access other NVDA functions."
+				"NVDA, get help, and access other NVDA functions."
 			),
 			"Options  grouping",
-			"Keyboard layout:  combo box  desktop  collapsed  Alt plus k"
+			"Keyboard layout:  combo box  desktop  collapsed  Alt plus  k"
 		])
 	)
 	_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little longer for it

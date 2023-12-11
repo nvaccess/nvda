@@ -1,8 +1,7 @@
-#NVDAObjects/window.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V., Bill Dengler
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2023 NV Access Limited, Babbage B.V., Bill Dengler, Cyrille Bougot
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import re
 import ctypes
@@ -30,8 +29,6 @@ except AttributeError:
 	GhostWindowFromHungWindow=None
 
 def isUsableWindow(windowHandle):
-	if not ctypes.windll.user32.IsWindowEnabled(windowHandle):
-		return False
 	if not ctypes.windll.user32.IsWindowVisible(windowHandle):
 		return False
 	if GhostWindowFromHungWindow and ctypes.windll.user32.GhostWindowFromHungWindow(windowHandle):

@@ -177,7 +177,7 @@ def isInstalledCopy() -> bool:
 	winreg.CloseKey(k)
 	try:
 		return os.stat(instDir) == os.stat(globalVars.appDir)
-	except WindowsError:
+	except (WindowsError, FileNotFoundError):
 		log.error(
 			"Failed to access the installed NVDA directory,"
 			"or, a portable copy failed to access the current NVDA app directory",
@@ -291,10 +291,7 @@ def getStartAfterLogon() -> bool:
 	has been registered to start after logon on Windows 7
 	or by earlier NVDA versions.
 	"""
-	if (
-		easeOfAccess.canConfigTerminateOnDesktopSwitch
-		and easeOfAccess.willAutoStart(easeOfAccess.AutoStartContext.AFTER_LOGON)
-	):
+	if easeOfAccess.willAutoStart(easeOfAccess.AutoStartContext.AFTER_LOGON):
 		return True
 	try:
 		k = winreg.OpenKey(winreg.HKEY_CURRENT_USER, RegistryKey.RUN.value)
@@ -348,43 +345,34 @@ def setStartAfterLogon(enable: bool) -> None:
 	"""Not to be confused with setStartOnLogonScreen.
 	
 	Toggle if NVDA automatically starts after a logon.
-	Sets easeOfAccess related registry keys on Windows 8 or newer.
-
-	On Windows 7 this sets the registry run key.
+	Sets easeOfAccess related registry keys.
 
 	When toggling off, always delete the registry run key
-	in case it was set by an earlier version of NVDA or on Windows 7 or earlier.
+	in case it was set by an earlier version of NVDA.
 	"""
 	if getStartAfterLogon() == enable:
 		return
-	if easeOfAccess.canConfigTerminateOnDesktopSwitch:
-		easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.AFTER_LOGON, enable)
-		if enable:
-			return
-		# We're disabling, so ensure the run key is cleared,
-		# as it might have been set by an old version.
-		run = False
-	else:
-		run = enable
+	easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.AFTER_LOGON, enable)
+	if enable:
+		return
+	# We're disabling, so ensure the run key is cleared,
+	# as it might have been set by an old version.
 	k = winreg.OpenKey(winreg.HKEY_CURRENT_USER, RegistryKey.RUN.value, 0, winreg.KEY_WRITE)
-	if run:
-		winreg.SetValueEx(k, "nvda", None, winreg.REG_SZ, sys.argv[0])
-	else:
-		try:
-			winreg.QueryValue(k, "nvda")
-		except FileNotFoundError:
-			log.debug(
-				"The run registry key is not set for setStartAfterLogon."
-				"This is expected for Windows 8+ which uses ease of access"
-			)
-			return
-		try:
-			winreg.DeleteValue(k, "nvda")
-		except WindowsError:
-			log.error(
-				"Couldn't unset registry key for nvda to start after logon.",
-				exc_info=True
-			)
+	try:
+		winreg.QueryValue(k, "nvda")
+	except FileNotFoundError:
+		log.debug(
+			"The run registry key is not set for setStartAfterLogon."
+			"This is expected since ease of access is used"
+		)
+		return
+	try:
+		winreg.DeleteValue(k, "nvda")
+	except WindowsError:
+		log.error(
+			"Couldn't unset registry key for nvda to start after logon.",
+			exc_info=True
+		)
 
 
 SLAVE_FILENAME = os.path.join(globalVars.appDir, "nvda_slave.exe")
@@ -571,7 +559,18 @@ class ConfigManager(object):
 				profile = self._loadConfig(fn) # a blank config returned if fn does not exist
 				self.baseConfigError = False
 			except:
-				log.error("Error loading base configuration", exc_info=True)
+				backupFileName = fn + '.corrupted.bak'
+				log.error(
+					"Error loading base configuration; the base configuration file will be reinitialized."
+					f" A copy of your previous configuration file will be saved at {backupFileName}",
+					exc_info=True,
+				)
+				try:
+					if os.path.exists(backupFileName):
+						os.unlink(backupFileName)
+					os.rename(fn, backupFileName)
+				except Exception:
+					log.error(f"Unable to save a copy of the corrupted configuration to {backupFileName}", exc_info=True)
 				self.baseConfigError = True
 				return self._initBaseConf(factoryDefaults=True)
 
@@ -597,7 +596,10 @@ class ConfigManager(object):
 		profile.newlines = "\r\n"
 		profileCopy = deepcopy(profile)
 		try:
-			writeProfileFunc = self._writeProfileToFile if NVDAState.shouldWriteToDisk() else None
+			if NVDAState.shouldWriteToDisk() and profile.filename is not None:
+				writeProfileFunc = self._writeProfileToFile
+			else:
+				writeProfileFunc = None
 			profileUpgrader.upgrade(profile, self.validator, writeProfileFunc)
 		except Exception as e:
 			# Log at level info to ensure that the profile is logged.
@@ -633,7 +635,12 @@ class ConfigManager(object):
 		return self.rootSection.dict()
 
 	def listProfiles(self):
-		for name in os.listdir(WritePaths.profilesDir):
+		try:
+			profileFiles = os.listdir(WritePaths.profilesDir)
+		except FileNotFoundError:
+			log.debugWarning("Profiles directory does not exist.")
+			profileFiles = []
+		for name in profileFiles:
 			name, ext = os.path.splitext(name)
 			if ext == ".ini":
 				yield name
@@ -712,8 +719,7 @@ class ConfigManager(object):
 				log.info("Saved configuration profile %s" % name)
 			self._dirtyProfiles.clear()
 		except PermissionError as e:
-			log.warning("Error saving configuration; probably read only file system")
-			log.debugWarning("", exc_info=True)
+			log.warning("Error saving configuration; probably read only file system", exc_info=True)
 			raise e
 		post_configSave.notify()
 

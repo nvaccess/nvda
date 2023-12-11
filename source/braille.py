@@ -62,8 +62,7 @@ import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import hwIo
-from buildVersion import version_year
-import NVDAState
+from editableText import EditableText
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
@@ -375,15 +374,20 @@ BLUETOOTH_PORT =  ("bluetooth", _("Bluetooth"))
 
 
 def NVDAObjectHasUsefulText(obj: "NVDAObject") -> bool:
+	"""Does obj contain useful text to display in braille
+
+	:param obj: object to check
+	:return: True if there is useful text, False if not
+	"""
 	if objectBelowLockScreenAndWindowsIsLocked(obj):
 		return False
 	import displayModel
 	if issubclass(obj.TextInfo,displayModel.DisplayModelTextInfo):
 		# #1711: Flat review (using displayModel) should always be presented on the braille display
 		return True
-	else:
-		# Let the NVDAObject choose if the text should be presented
-		return obj._hasNavigableText
+	if obj._hasNavigableText or isinstance(obj, EditableText):
+		return True
+	return False
 
 
 def _getDisplayDriver(moduleName: str, caseSensitive: bool = True) -> Type["BrailleDisplayDriver"]:
@@ -2485,15 +2489,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# The caret moved in a different object than the review position.
 			self._doNewObject(getFocusRegions(obj, review=False))
 
-	if version_year < 2024 and NVDAState._allowDeprecatedAPI():
-		def handlePendingCaretUpdate(self):
-			log.warning(
-				"braille.BrailleHandler.handlePendingCaretUpdate is now deprecated "
-				"with no public replacement. "
-				"It will be removed in NVDA 2024.1."
-			)
-			self._handlePendingUpdate()
-
 	def _handlePendingUpdate(self):
 		"""When any region is pending an update, updates the region and the braille display.
 		"""
@@ -2842,12 +2837,6 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		"""
 		if cls.isThreadSafe:
 			supportsAutomaticDetection = cls.supportsAutomaticDetection
-			if not supportsAutomaticDetection and NVDAState._allowDeprecatedAPI() and version_year < 2024:
-				log.warning(
-					"Starting from NVDA 2024.1, drivers that rely on bdDetect for the default check method "
-					"should have supportsAutomaticDetection set to True"
-				)
-				supportsAutomaticDetection = True
 			if supportsAutomaticDetection and bdDetect.driverHasPossibleDevices(cls.name):
 				return True
 		try:
@@ -2890,11 +2879,26 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	numCells: int
 
 	def _get_numCells(self) -> int:
-		"""Obtain the number of braille cells on this  display.
+		"""Obtain the number of braille cells on this display.
 		@note: 0 indicates that braille should be disabled.
+		@note: For multi line displays, this is the total number of cells (e.g. numRows * numCols)
 		@return: The number of cells.
 		"""
-		return 0
+		return self.numRows * self.numCols
+
+	def _set_numCells(self, numCells: int):
+		if self.numRows > 1:
+			raise ValueError("Please set numCols explicitly and don't set numCells for multi line braille displays")
+		self.numCols = numCells
+
+	#: Number of rows of the braille display, this will be 1 for most displays
+	#: Note: Setting this to 0 will cause numCells to be 0 and hence will disable braille.
+	numRows: int = 1
+
+	#: Number of columns (cells per row) of the braille display
+	#: 0 indicates that braille should be disabled.
+	numCols: int = 0
+
 
 	def __repr__(self):
 		return f"{self.__class__.__name__}({self.name!r}, numCells={self.numCells!r})"
@@ -2998,10 +3002,12 @@ class BrailleDisplayDriver(driverHandler.Driver):
 				except StopIteration:
 					pass
 				else:
-					if "bluetoothName" in portInfo:
-						yield bdDetect.DeviceMatch(bdDetect.KEY_SERIAL, portInfo["bluetoothName"], portInfo["port"], portInfo)
-					else:
-						yield bdDetect.DeviceMatch(bdDetect.KEY_SERIAL, portInfo["friendlyName"], portInfo["port"], portInfo)
+					yield bdDetect.DeviceMatch(
+						bdDetect.DeviceType.SERIAL,
+						portInfo["bluetoothName" if "bluetoothName" in portInfo else "friendlyName"],
+						portInfo["port"],
+						portInfo
+					)
 			else:
 				for match in cls._getAutoPorts(usb=isUsb, bluetooth=isBluetooth):
 					yield match

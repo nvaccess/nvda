@@ -71,7 +71,7 @@ def doInstall(
 			installedUserConfigPath=config.getInstalledUserConfigPath()
 			if installedUserConfigPath:
 				if _canPortableConfigBeCopied():
-					gui.ExecAndPump(installer.copyUserConfig, installedUserConfigPath)
+					systemUtils.ExecAndPump(installer.copyUserConfig, installedUserConfigPath)
 	except Exception as e:
 		res=e
 		log.error("Failed to execute installer",exc_info=True)
@@ -153,7 +153,7 @@ class InstallerDialog(
 		super().__init__(parent, title=_("Install NVDA"))
 
 		import addonHandler
-		from _addonStore.models.version import (
+		from addonStore.models.version import (
 			getAddonCompatibilityConfirmationMessage,
 			getAddonCompatibilityMessage,
 		)
@@ -359,7 +359,7 @@ class PortableCreaterDialog(
 
 		# Translators: The label of a grouping containing controls to select the destination directory
 		# in the Create Portable NVDA dialog.
-		directoryGroupText = _("Portable &directory:")
+		directoryGroupText = _("Portable directory:")
 		groupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=directoryGroupText)
 		groupHelper = sHelper.addItem(guiHelper.BoxSizerHelper(self, sizer=groupSizer))
 		groupBox = groupSizer.GetStaticBox()
@@ -457,7 +457,7 @@ def doCreatePortable(
 		_("Please wait while a portable copy of NVDA is created.")
 	)
 	try:
-		gui.ExecAndPump(installer.createPortableCopy, portableDirectory, copyUserConfig)
+		systemUtils.ExecAndPump(installer.createPortableCopy, portableDirectory, copyUserConfig)
 	except Exception as e:
 		log.error("Failed to create portable copy", exc_info=True)
 		d.done()

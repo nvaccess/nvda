@@ -1,9 +1,8 @@
-# -*- coding: UTF-8 -*-
-#appModules/miranda32.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Joseph Lee, Bill Dengler
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2023 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Joseph Lee, Bill Dengler,
+# Cyrille Bougot
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import ui
 import config
@@ -16,12 +15,15 @@ import appModuleHandler
 import speech
 import braille
 import controlTypes
-from scriptHandler import isScriptWaiting
+from scriptHandler import isScriptWaiting, script
 import api
 import mouseHandler
 import oleacc
 from keyboardHandler import KeyboardInputGesture
 import watchdog
+
+# Translators: The name of a category of NVDA commands.
+SCRCAT_MIRANDA = _("Miranda NG")
 
 #contact list window messages
 CLM_FIRST=0x1000    #this is the same as LVM_FIRST
@@ -110,6 +112,13 @@ class AppModule(appModuleHandler.AppModule):
 		elif (obj.windowControlID in ANSILOGS) and (obj.windowClassName=="RichEdit20A"):
 			obj._isWindowUnicode=False
 
+	@script(
+		# Translators: The description of an NVDA command to view one of the recent messages.
+		description=_("Displays one of the recent messages"),
+		gestures=[f"kb:NVDA+control+{n}" for n in range(1, MessageHistoryLength + 1)],
+		category=SCRCAT_MIRANDA,
+		speakOnDemand=True,
+	)
 	def script_readMessage(self,gesture):
 		num=int(gesture.mainKeyName[-1])
 		if len(self.lastMessages)>num-1:
@@ -117,13 +126,6 @@ class AppModule(appModuleHandler.AppModule):
 		else:
 			# Translators: This is presented to inform the user that no instant message has been received.
 			ui.message(_("No message yet"))
-	# Translators: The description of an NVDA command to view one of the recent messages.
-	script_readMessage.__doc__=_("Displays one of the recent messages")
-
-	def __init__(self, *args, **kwargs):
-		super(AppModule, self).__init__(*args, **kwargs)
-		for n in range(1, self.MessageHistoryLength + 1):
-			self.bindGesture("kb:NVDA+control+%s" % n, "readMessage")
 
 class mirandaIMContactList(IAccessible):
 

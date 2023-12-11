@@ -45,7 +45,6 @@ import appModuleHandler
 import controlTypes
 import core
 import eventHandler
-import keyboardHandler
 from logHandler import log
 import mouseHandler
 import NVDAObjects.IAccessible
@@ -773,65 +772,8 @@ def processFocusNVDAEvent(obj, force=False):
 	return True
 
 
-class SecureDesktopNVDAObject(NVDAObjects.window.Desktop):
-	"""
-	Used to indicate to the user and to API consumers (including NVDA remote),
-	that the user has switched to a secure desktop.
-	This is triggered when Windows notification EVENT_SYSTEM_DESKTOPSWITCH
-	notifies that the desktop has changed, and is handled via a gainFocus event.
-	The gainFocus event causes NVDA to enter sleep mode as the secure mode
-	NVDA instance starts on the secure screen.
-
-	This object is backed by a valid MSAA object.
-	However, as information from the Secure Desktop object should not be accessed via this instance of NVDA,
-	getting related objects returns None.
-	This object must remain a Desktop subclass to retain backwards compatibility.
-	"""
-
-	def findOverlayClasses(self, clsList):
-		clsList.append(SecureDesktopNVDAObject)
-		return clsList
-
-	def _get_name(self):
-		# Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
-		return _("Secure Desktop")
-
-	def _get_role(self):
-		return controlTypes.Role.PANE
-
-	def event_gainFocus(self):
-		from speech.speech import cancelSpeech
-		# NVDA announces the secure desktop when handling the gainFocus event.
-		# Before announcing the secure desktop and entering sleep mode,
-		# cancel speech so that speech does not overlap with the new instance of NVDA
-		# started on the secure desktop.
-		# Cancelling speech was previously handled by a foreground event,
-		# fired when focusing SecureDesktopNVDAObject.
-		# The foreground event would incorrectly fire on the foreground window of the user desktop.
-		# This foreground event is now explicitly prevented due to the security concerns of
-		# setting the foreground object to an object 'below the lock screen'.
-		cancelSpeech()
-		super().event_gainFocus()
-		# After handling the focus, NVDA should sleep while the secure desktop is active.
-		self.sleepMode = self.SLEEP_FULL
-
-	def _get_next(self) -> None:
-		return None
-
-	def _get_previous(self) -> None:
-		return None
-
-	def _get_firstChild(self) -> None:
-		return None
-
-	def _get_lastChild(self) -> None:
-		return None
-
-	def _get_parent(self) -> None:
-		return None
-
-
 def processDesktopSwitchWinEvent(window, objectID, childID):
+	from winAPI.secureDesktop import _handleSecureDesktopChange
 	if isMSAADebugLoggingEnabled():
 		log.debug(
 			f"Processing desktopSwitch winEvent: {getWinEventLogInfo(window, objectID, childID)}"
@@ -839,18 +781,23 @@ def processDesktopSwitchWinEvent(window, objectID, childID):
 	hDesk = windll.user32.OpenInputDesktop(0, False, 0)
 	if hDesk != 0:
 		windll.user32.CloseDesktop(hDesk)
-		core.callLater(200, _correctFocus)
+		core.callLater(200, _handleUserDesktop)
 	else:
-		# Switching to a secure desktop.
-		# We don't receive key up events for any keys down before switching to a secure desktop,
-		# so clear our recorded modifiers.
-		keyboardHandler.currentModifiers.clear()
-		obj = SecureDesktopNVDAObject(windowHandle=window)
-		eventHandler.executeEvent("gainFocus", obj)
+		# When hDesk == 0, the active desktop has changed.
+		# This is usually means the secure desktop has been launched,
+		# but the new desktop can also be a secondary desktop created through the Windows API.
+		# https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-createdesktopa
+		# This secondary desktop has some bugs, and as such is not properly supported (#14395).
+		# It is not immediately clear how to differentiate changing to a secondary desktop and the secure desktop.
+		# When looking to support the secondary desktop,
+		# the UX should be updated to announce "desktop change" rather than "Secure Desktop".
+		_handleSecureDesktopChange()
 
 
-def _correctFocus():
+def _handleUserDesktop():
+	from winAPI.secureDesktop import post_secureDesktopStateChange
 	eventHandler.queueEvent("gainFocus", api.getDesktopObject().objectWithFocus())
+	post_secureDesktopStateChange.notify(isSecureDesktop=False)
 
 
 def processForegroundWinEvent(window, objectID, childID):

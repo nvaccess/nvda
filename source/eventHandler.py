@@ -309,8 +309,10 @@ def executeEvent(
 		sleepMode = obj.sleepMode
 		# Handle possible virtual desktop name change event.
 		# More effective in Windows 10 Version 1903 and later.
+		from NVDAObjects.window import Window
 		if (
 			eventName == "nameChange"
+			and isinstance(obj, Window)
 			and obj.windowClassName == "#32769"
 			and _canAnnounceVirtualDesktopNames
 		):
@@ -343,8 +345,6 @@ def handlePossibleDesktopNameChange() -> None:
 
 
 def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bool:
-	from IAccessibleHandler import SecureDesktopNVDAObject
-
 	if objectBelowLockScreenAndWindowsIsLocked(
 		obj,
 		shouldLog=config.conf["debugLog"]["events"],
@@ -368,16 +368,7 @@ def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bo
 		# - api.getFocusAncestors() via api.setFocusObject() called in doPreGainFocus
 		speech._manager.removeCancelledSpeechCommands()
 
-	if (
-		api.getFocusDifferenceLevel() <= 1
-		# This object should not set off a foreground event.
-		# SecureDesktopNVDAObject uses a gainFocus event to trigger NVDA
-		# to sleep as the secure instance of NVDA starts for the
-		# secure desktop.
-		# The newForeground object fetches from the User Desktop,
-		# not the secure desktop.
-		and not isinstance(obj, SecureDesktopNVDAObject)
-	):
+	if api.getFocusDifferenceLevel() <= 1:
 		newForeground = api.getDesktopObject().objectInForeground()
 		if not newForeground:
 			log.debugWarning("Can not get real foreground, resorting to focus ancestors")

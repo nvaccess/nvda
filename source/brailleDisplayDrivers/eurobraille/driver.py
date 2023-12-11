@@ -46,7 +46,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
-		driverRegistrar.addUsbDevices(bdDetect.KEY_HID, {
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.HID, {
 			"VID_C251&PID_1122",  # Esys (version < 3.0, no SD card
 			"VID_C251&PID_1123",  # Esys (version >= 3.0, with HID keyboard, no SD card
 			"VID_C251&PID_1124",  # Esys (version < 3.0, with SD card
@@ -65,7 +65,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			"VID_C251&PID_1131",  # Reserved
 			"VID_C251&PID_1132",  # Reserved
 		})
-		driverRegistrar.addUsbDevices(bdDetect.KEY_SERIAL, {
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.SERIAL, {
 			"VID_28AC&PID_0012",  # b.note
 			"VID_28AC&PID_0013",  # b.note 2
 			"VID_28AC&PID_0020",  # b.book internal
@@ -93,7 +93,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
-			self.isHid = portType == bdDetect.KEY_HID
+			self.isHid = portType == bdDetect.DeviceType.HID
 			try:
 				if self.isHid:
 					self._dev = hwIo.Hid(

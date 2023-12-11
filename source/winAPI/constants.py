@@ -15,6 +15,10 @@ class HResult(enum.IntEnum):
 
 class SystemErrorCodes(enum.IntEnum):
 	# https://docs.microsoft.com/en-us/windows/win32/debug/system-error-codes--0-499-
+	SUCCESS = 0x0
 	ACCESS_DENIED = 0x5
+	INVALID_DATA = 0xD
+	NOT_READY = 0x15
 	INVALID_PARAMETER = 0x57
 	MOD_NOT_FOUND = 0x7E
+	CANCELLED = 0x4C7

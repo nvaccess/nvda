@@ -55,7 +55,7 @@ class ProfilesDialog(
 		self.bindHelpEvent("ProfilesBasicManagement", self.profileList)
 		item.Bind(wx.EVT_LISTBOX, self.onProfileListChoice)
 		item.Selection = self.profileNames.index(config.conf.profiles[-1].name)
-		changeProfilesSizer.Add(item, proportion=1.0)
+		changeProfilesSizer.Add(item, proportion=1)
 
 		changeProfilesSizer.AddSpacer(guiHelper.SPACE_BETWEEN_BUTTONS_VERTICAL)
 
@@ -65,7 +65,7 @@ class ProfilesDialog(
 		self.AffirmativeId = self.changeStateButton.Id
 		self.changeStateButton.SetDefault()
 		changeProfilesSizer.Add(self.changeStateButton)
-		
+
 		profilesListGroupContents.Add(changeProfilesSizer, flag = wx.EXPAND)
 		profilesListGroupContents.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
 

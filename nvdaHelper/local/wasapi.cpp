@@ -14,6 +14,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <vector>
 #include <windows.h>
+#include <atlbase.h>
 #include <atlcomcli.h>
 #include <audioclient.h>
 #include <audiopolicy.h>
@@ -72,8 +73,9 @@ class AutoHandle {
 };
 
 /**
- * Listens for default device changes. These are communicated to WasapiPlayer
- * via the getDefaultDeviceChangeCount method.
+ * Listens for default device changes and device state changes. These are
+ * communicated to WasapiPlayer via the getDefaultDeviceChangeCount and
+ * getDeviceStateChangeCount methods.
  */
 class NotificationClient: public IMMNotificationClient {
 	public:
@@ -116,6 +118,7 @@ class NotificationClient: public IMMNotificationClient {
 	}
 
 	STDMETHODIMP OnDeviceStateChanged(LPCWSTR deviceId, DWORD   newState) final {
+		++deviceStateChangeCount;
 		return S_OK;
 	}
 
@@ -133,9 +136,18 @@ class NotificationClient: public IMMNotificationClient {
 		return defaultDeviceChangeCount;
 	}
 
+	/**
+	 * A counter which increases every time a device state changes. This is
+	 * used by WasapiPlayer instances to detect such changes while playing.
+	 */
+	unsigned int getDeviceStateChangeCount() {
+		return deviceStateChangeCount;
+	}
+
 	private:
 	LONG refCount = 0;
 	unsigned int defaultDeviceChangeCount = 0;
+	unsigned int deviceStateChangeCount = 0;
 };
 
 CComPtr<NotificationClient> notificationClient;
@@ -150,9 +162,9 @@ class WasapiPlayer {
 
 	/**
 	 * Constructor.
-	 * Specify an empty (not null) deviceId to use the default device.
+	 * Specify an empty (not null) deviceName to use the default device.
 	 */
-	WasapiPlayer(wchar_t* deviceId, WAVEFORMATEX format,
+	WasapiPlayer(wchar_t* deviceName, WAVEFORMATEX format,
 		ChunkCompletedCallback callback);
 
 	/**
@@ -196,6 +208,9 @@ class WasapiPlayer {
 	// callback.
 	void waitUntilNeeded(UINT64 maxWait=INFINITE);
 
+	HRESULT getPreferredDevice(CComPtr<IMMDevice>& preferredDevice);
+	bool didPreferredDeviceBecomeAvailable();
+
 	enum class PlayState {
 		stopped,
 		playing,
@@ -207,7 +222,7 @@ class WasapiPlayer {
 	CComPtr<IAudioClock> clock;
 	// The maximum number of frames that will fit in the buffer.
 	UINT32 bufferFrames;
-	std::wstring deviceId;
+	std::wstring deviceName;
 	WAVEFORMATEX format;
 	ChunkCompletedCallback callback;
 	PlayState playState = PlayState::stopped;
@@ -215,16 +230,18 @@ class WasapiPlayer {
 	// stream. This is used to call the callback.
 	std::vector<std::pair<unsigned int, UINT64>> feedEnds;
 	UINT64 clockFreq;
-	// The duration of audio sent (buffered) so far in ms.
-	UINT64 sentMs = 0;
+	// The total number of frames buffered so far.
+	UINT32 sentFrames = 0;
 	unsigned int nextFeedId = 0;
 	AutoHandle wakeEvent;
 	unsigned int defaultDeviceChangeCount;
+	unsigned int deviceStateChangeCount;
+	bool isUsingPreferredDevice = false;
 };
 
-WasapiPlayer::WasapiPlayer(wchar_t* deviceId, WAVEFORMATEX format,
+WasapiPlayer::WasapiPlayer(wchar_t* deviceName, WAVEFORMATEX format,
 	ChunkCompletedCallback callback)
-: deviceId(deviceId), format(format), callback(callback) {
+: deviceName(deviceName), format(format), callback(callback) {
 	wakeEvent = CreateEvent(nullptr, false, false, nullptr);
 }
 
@@ -234,16 +251,24 @@ HRESULT WasapiPlayer::open(bool force) {
 		return S_OK;
 	}
 	defaultDeviceChangeCount = notificationClient->getDefaultDeviceChangeCount();
+	deviceStateChangeCount = notificationClient->getDeviceStateChangeCount();
 	CComPtr<IMMDeviceEnumerator> enumerator;
 	HRESULT hr = enumerator.CoCreateInstance(CLSID_MMDeviceEnumerator);
 	if (FAILED(hr)) {
 		return hr;
 	}
 	CComPtr<IMMDevice> device;
-	if (deviceId.empty()) {
+	isUsingPreferredDevice = false;
+	if (deviceName.empty()) {
 		hr = enumerator->GetDefaultAudioEndpoint(eRender, eConsole, &device);
 	} else {
-		hr = enumerator->GetDevice(deviceId.c_str(), &device);
+		hr = getPreferredDevice(device);
+		if (SUCCEEDED(hr)) {
+			isUsingPreferredDevice = true;
+		} else {
+			// The preferred device wasn't found. Fall back to the default device.
+			hr = enumerator->GetDefaultAudioEndpoint(eRender, eConsole, &device);
+		}
 	}
 	if (FAILED(hr)) {
 		return hr;
@@ -290,7 +315,7 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 
 	// Returns false if we should abort, in which case we should return hr.
 	auto reopenUsingNewDev = [&] {
-		HRESULT hr = open(true);
+		hr = open(true);
 		if (FAILED(hr)) {
 			return false;
 		}
@@ -300,7 +325,7 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 		}
 		feedEnds.clear();
 		// This is the start of a new stream as far as WASAPI is concerned.
-		sentMs = 0;
+		sentFrames = 0;
 		return true;
 	};
 
@@ -315,18 +340,24 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 				hr = S_OK;
 				return false;
 			}
-			if (deviceId.empty() && defaultDeviceChangeCount !=
-					notificationClient->getDefaultDeviceChangeCount()) {
-				// The default device changed.
+			if (
+				didPreferredDeviceBecomeAvailable() ||
+				// We're using the default device and the default device changed.
+				(!isUsingPreferredDevice && defaultDeviceChangeCount !=
+					notificationClient->getDefaultDeviceChangeCount())
+			) {
 				if (!reopenUsingNewDev()) {
 					return false;
 				}
 			}
 			hr = client->GetCurrentPadding(&paddingFrames);
-			if (hr == AUDCLNT_E_DEVICE_INVALIDATED) {
-				// If we're using a specific device, it's just been invalidated. Fall back
-				// to the default device.
-				deviceId.clear();
+			if (
+				hr == AUDCLNT_E_DEVICE_INVALIDATED
+				|| hr == AUDCLNT_E_NOT_INITIALIZED
+			) {
+				// Either the device we're using has just been invalidated, or it was
+				// invalidated previously and we failed to reopen. Try reopening, which
+				// might fall back to the default device if appropriate.
 				if (!reopenUsingNewDev()) {
 					return false;
 				}
@@ -375,7 +406,7 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 		data += sendBytes;
 		size -= sendBytes;
 		remainingFrames -= sendFrames;
-		sentMs += framesToMs(sendFrames);
+		sentFrames += sendFrames;
 	}
 
 	if (playState == PlayState::playing) {
@@ -389,7 +420,7 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 		// callbacks. Otherwise, we might fire a newly added callback before its
 		// feed() call returns, which will fail because the caller doesn't know about
 		// this new id yet.
-		feedEnds.push_back({*id, sentMs});
+		feedEnds.push_back({*id, framesToMs(sentFrames)});
 	}
 	return S_OK;
 }
@@ -416,7 +447,7 @@ UINT64 WasapiPlayer::getPlayPos() {
 		// If we get an error, playback has probably been interrupted; e.g. because
 		// the device disconnected. Treat this as if playback has finished so we
 		// don't wait forever and so that we fire any pending callbacks.
-		return sentMs;
+		return framesToMs(sentFrames);
 	}
 	return pos * 1000 / clockFreq;
 }
@@ -435,15 +466,80 @@ void WasapiPlayer::waitUntilNeeded(UINT64 maxWait) {
 	WaitForSingleObject(wakeEvent, (DWORD)maxWait);
 }
 
-HRESULT WasapiPlayer::stop() {
-	playState = PlayState::stopping;
-	HRESULT hr = client->Stop();
+HRESULT WasapiPlayer::getPreferredDevice(CComPtr<IMMDevice>& preferredDevice) {
+	CComPtr<IMMDeviceEnumerator> enumerator;
+	HRESULT hr = enumerator.CoCreateInstance(CLSID_MMDeviceEnumerator);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = client->Reset();
+	CComPtr<IMMDeviceCollection> devices;
+	hr = enumerator->EnumAudioEndpoints(eRender, DEVICE_STATE_ACTIVE, &devices);
 	if (FAILED(hr)) {
 		return hr;
+	}
+	UINT count = 0;
+	devices->GetCount(&count);
+	for (UINT d = 0; d < count; ++d) {
+		CComPtr<IMMDevice> device;
+		hr = devices->Item(d, &device);
+		if (FAILED(hr)) {
+			return hr;
+		}
+		CComPtr<IPropertyStore> props;
+		hr = device->OpenPropertyStore(STGM_READ, &props);
+		if (FAILED(hr)) {
+			return hr;
+		}
+		PROPVARIANT val;
+		hr = props->GetValue(PKEY_Device_FriendlyName, &val);
+		if (FAILED(hr)) {
+			return hr;
+		}
+		// WinMM device names are truncated to MAXPNAMELEN characters, including the
+		// null terminator.
+		constexpr size_t MAX_CHARS = MAXPNAMELEN - 1;
+		if (wcsncmp(val.pwszVal, deviceName.c_str(), MAX_CHARS) == 0) {
+			PropVariantClear(&val);
+			preferredDevice = std::move(device);
+			return S_OK;
+		}
+		PropVariantClear(&val);
+	}
+	return E_NOTFOUND;
+}
+
+bool WasapiPlayer::didPreferredDeviceBecomeAvailable() {
+	if (
+		// We're already using the preferred device.
+		isUsingPreferredDevice ||
+		// A preferred device was not specified.
+		deviceName.empty() ||
+		// A device hasn't recently changed state.
+		deviceStateChangeCount == notificationClient->getDeviceStateChangeCount()
+	) {
+		return false;
+	}
+	CComPtr<IMMDevice> device;
+	return SUCCEEDED(getPreferredDevice(device));
+}
+
+HRESULT WasapiPlayer::stop() {
+	playState = PlayState::stopping;
+	HRESULT hr = client->Stop();
+	// If the device has been invalidated, it has already stopped. Just ignore
+	// this and behave as if we were successful to avoid a cascade of breakage.
+	// feed() will attempt to reopen the device next time it is called.
+	if (
+		hr != AUDCLNT_E_DEVICE_INVALIDATED
+		&& hr != AUDCLNT_E_NOT_INITIALIZED
+	) {
+		if (FAILED(hr)) {
+			return hr;
+		}
+		hr = client->Reset();
+		if (FAILED(hr)) {
+			return hr;
+		}
 	}
 	// If there is a feed/sync call waiting, wake it up so it can immediately
 	// return to the caller.
@@ -453,12 +549,13 @@ HRESULT WasapiPlayer::stop() {
 
 void WasapiPlayer::completeStop() {
 	nextFeedId = 0;
-	sentMs = 0;
+	sentFrames = 0;
 	feedEnds.clear();
 	playState = PlayState::stopped;
 }
 
 HRESULT WasapiPlayer::sync() {
+	UINT64 sentMs = framesToMs(sentFrames);
 	for (UINT64 playPos = getPlayPos(); playPos < sentMs;
 			playPos = getPlayPos()) {
 		if (playState != PlayState::playing) {
@@ -515,7 +612,6 @@ HRESULT WasapiPlayer::setChannelVolume(unsigned int channel, float level) {
 	if (hr == AUDCLNT_E_DEVICE_INVALIDATED) {
 		// If we're using a specific device, it's just been invalidated. Fall back
 		// to the default device.
-		deviceId.clear();
 		hr = open(true);
 		if (FAILED(hr)) {
 			return hr;
@@ -530,13 +626,13 @@ HRESULT WasapiPlayer::setChannelVolume(unsigned int channel, float level) {
 
 /*
  * NVDA calls the functions below. Most of these just wrap calls to
- * WasapiPlayer, with the exception of wasPlay_startup and wasPlay_getDevices.
+ * WasapiPlayer, with the exception of wasPlay_startup.
  */
 
-WasapiPlayer* wasPlay_create(wchar_t* deviceId, WAVEFORMATEX format,
+WasapiPlayer* wasPlay_create(wchar_t* deviceName, WAVEFORMATEX format,
 	WasapiPlayer::ChunkCompletedCallback callback
 ) {
-	return new WasapiPlayer(deviceId, format, callback);
+	return new WasapiPlayer(deviceName, format, callback);
 }
 
 void wasPlay_destroy(WasapiPlayer* player) {
@@ -593,53 +689,4 @@ HRESULT wasPlay_startup() {
 	}
 	notificationClient = new NotificationClient();
 	return enumerator->RegisterEndpointNotificationCallback(notificationClient);
-}
-
-/**
- * Get playback device ids and friendly names.
- * devicesStr will be set to a BSTR of device ids and names separated by null
- * characters; e.g. "id1\0name1\0id2\0name2\0"
- */
-HRESULT wasPlay_getDevices(BSTR* devicesStr) {
-	CComPtr<IMMDeviceEnumerator> enumerator;
-	HRESULT hr = enumerator.CoCreateInstance(CLSID_MMDeviceEnumerator);
-	if (FAILED(hr)) {
-		return hr;
-	}
-	CComPtr<IMMDeviceCollection> devices;
-	hr = enumerator->EnumAudioEndpoints(eRender, DEVICE_STATE_ACTIVE, &devices);
-	if (FAILED(hr)) {
-		return hr;
-	}
-	UINT count = 0;
-	devices->GetCount(&count);
-	std::wostringstream s;
-	for (UINT d = 0; d < count; ++d) {
-		CComPtr<IMMDevice> device;
-		hr = devices->Item(d, &device);
-		if (FAILED(hr)) {
-			return hr;
-		}
-		wchar_t* id;
-		hr = device->GetId(&id);
-		if (FAILED(hr)) {
-			return hr;
-		}
-		s << id << L'\0';
-		CoTaskMemFree(id);
-		CComPtr<IPropertyStore> props;
-		hr = device->OpenPropertyStore(STGM_READ, &props);
-		if (FAILED(hr)) {
-			return hr;
-		}
-		PROPVARIANT val;
-		hr = props->GetValue(PKEY_Device_FriendlyName, &val);
-		if (FAILED(hr)) {
-			return hr;
-		}
-		s << val.pwszVal << L'\0';
-		PropVariantClear(&val);
-	}
-	*devicesStr = SysAllocStringLen(s.str().c_str(), (UINT)s.tellp());
-	return S_OK;
 }

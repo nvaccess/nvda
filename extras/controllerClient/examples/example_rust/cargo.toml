@@ -1,0 +1,24 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2023 NV Access Limited, Leonard de Ruijter
+# This file may be used under the terms of the GNU Lesser General Public License, version 2.1.
+# For more details see: https://www.gnu.org/licenses/lgpl-2.1.html
+
+[package]
+name = "nvda"
+version = "0.1.0"
+authors = ["NV Access Limited", "Leonard de Ruijter"]
+description = "Wrapper for the NVDA Controller client library"
+repository = "https://github.com/nvaccess/nvda/"
+readme = "README.md"
+links = "nvdaControllerClient"
+publish = false
+edition = "2021"
+
+[build-dependencies]
+bindgen = "0.69.1"
+
+[dependencies.windows]
+version = "0.52"
+features = [
+    "Win32_Foundation",
+]

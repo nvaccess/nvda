@@ -16,6 +16,7 @@ This includes information on reporting issues, triaging issues, testing, transla
 * [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
 * [Key Commands](https://www.nvaccess.org/files/nvda/documentation/keyCommands.html)
 * [Changes in the latest release](https://www.nvaccess.org/files/nvda/documentation/changes.html)
+* [Release process](./releaseProcess.md)
 
 ### Add-ons
 * [The NVDA Add-on store](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#AddonsManager)

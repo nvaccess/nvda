@@ -177,19 +177,19 @@ class DictionaryDialog(
 			wx.ListCtrl, style=wx.LC_REPORT | wx.LC_SINGLE_SEL
 		)
 		# Translators: The label for a column in dictionary entries list used to identify comments for the entry.
-		self.dictList.InsertColumn(0, _("Comment"), width=150)
+		self.dictList.AppendColumn(_("Comment"), width=150)
 		# Translators: The label for a column in dictionary entries list used to identify pattern
 		# (original word or a pattern).
-		self.dictList.InsertColumn(1, _("Pattern"), width=150)
+		self.dictList.AppendColumn(_("Pattern"), width=150)
 		# Translators: The label for a column in dictionary entries list and in a list of symbols
 		# from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-		self.dictList.InsertColumn(2, _("Replacement"), width=150)
+		self.dictList.AppendColumn(_("Replacement"), width=150)
 		# Translators: The label for a column in dictionary entries list used to identify
 		# whether the entry is case sensitive or not.
-		self.dictList.InsertColumn(3, _("case"), width=50)
+		self.dictList.AppendColumn(_("case"), width=50)
 		# Translators: The label for a column in dictionary entries list used to identify
 		# whether the entry is a regular expression, matches whole words, or matches anywhere.
-		self.dictList.InsertColumn(4, _("Type"), width=50)
+		self.dictList.AppendColumn(_("Type"), width=50)
 		self.offOn = (_("off"), _("on"))
 		for entry in self.tempSpeechDict:
 			self.dictList.Append((
