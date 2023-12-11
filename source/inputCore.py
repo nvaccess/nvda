@@ -658,9 +658,9 @@ class InputManager(baseObject.AutoPropertyObject):
 				if len(charList) == 1:
 					speech.speech.speakSpelling(text)
 				else:
-					speech.speech.speak(
-						charList,
-#						reason=controlTypes.OutputReason.MESSAGE,
+					speech.speech.speakText(
+						text,
+						reason=controlTypes.OutputReason.MESSAGE,
 						symbolLevel=characterProcessing.SymbolLevel.ALL
 					)
 				braille.handler.message(text)
