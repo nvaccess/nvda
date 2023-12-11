@@ -249,7 +249,7 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		gesture="kb:NVDA+shift+r",
 		description=_(
 			# Translators: The label of a shortcut of NVDA.
-			"Set row header. Pressing once will set this cell as the first row header for any cell lower and to he "
+			"Set row header. Pressing once will set this cell as the first row header for any cell lower and to the "
 			"right of it within this table. Pressing twice will forget the current row header for this cell."
 		),
 		category=SCRCAT_SYSTEMCARET
