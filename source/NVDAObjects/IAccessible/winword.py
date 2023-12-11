@@ -271,15 +271,6 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 				ui.message(_("Cannot find row {rowNumber} column {columnNumber}  in row headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
 
 	@script(
-		gesture="kb:NVDA+shift+h",
-	)
-	def script_reportCurrentHeaders(self,gesture):
-		cell=self.WinwordSelectionObject.cells[1]
-		rowText=self.fetchAssociatedHeaderCellText(cell,False)
-		columnText=self.fetchAssociatedHeaderCellText(cell,True)
-		ui.message("Row %s, column %s"%(rowText or "empty",columnText or "empty"))
-
-	@script(
 		gestures=(
 			"kb:alt+home",
 			"kb:alt+end",
