@@ -26,6 +26,7 @@ LEFT_TO_RIGHT_EMBEDDING = "\u202a"
 # Translators: The name of a category of NVDA commands.
 SCRCAT_POEDIT = _("Poedit")
 
+
 class _WindowControlIdOffset(IntEnum):
 	"""Window control ID's are not static, however, the order of ids stays the same.
 	Therefore, using a wxDataView control in the translations list as a reference,
