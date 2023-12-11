@@ -214,8 +214,12 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 
 	@script(
 		gesture="kb:NVDA+shift+c",
-		# Translators: The label of a shortcut of NVDA.
-		description=_("Set column header"),
+		description=_(
+			# Translators: The label of a shortcut of NVDA.
+			"Set column header. Pressing once will set this cell as the first column header for any cell lower and "
+			"to the right of it within this table. Pressing twice will forget the current column header for this "
+			"cell."
+		),
 		category=SCRCAT_SYSTEMCARET
 	)
 	def script_setColumnHeader(self,gesture):
@@ -243,8 +247,11 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 
 	@script(
 		gesture="kb:NVDA+shift+r",
-		# Translators: The label of a shortcut of NVDA.
-		description=_("Set row header."),
+		description=_(
+			# Translators: The label of a shortcut of NVDA.
+			"Set row header. Pressing once will set this cell as the first row header for any cell lower and to he "
+			"right of it within this table. Pressing twice will forget the current row header for this cell."
+		),
 		category=SCRCAT_SYSTEMCARET
 	)
 	def script_setRowHeader(self,gesture):
