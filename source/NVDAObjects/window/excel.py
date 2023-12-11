@@ -52,6 +52,7 @@ import ctypes
 import vision
 from utils.displayString import DisplayStringIntEnum
 import NVDAState
+from globalCommands import SCRCAT_SYSTEMCARET
 
 excel2010VersionMajor=14
 
@@ -1436,9 +1437,8 @@ class ExcelCell(ExcelBase):
 		return self.parent.fetchAssociatedHeaderCellText(self,columnHeader=False)
 
 	@script(
-		# Translators: the description  for a script for Excel
-		description=_("opens a dropdown item at the current cell"),
-		gesture="kb:alt+downArrow")
+		gesture="kb:alt+downArrow",
+	)
 	def script_openDropdown(self,gesture):
 		gesture.send()
 		d=None
@@ -1464,7 +1464,9 @@ class ExcelCell(ExcelBase):
 	@script(
 		# Translators: the description  for a script for Excel
 		description=_("Sets the current cell as start of column header"),
-		gesture="kb:NVDA+shift+c")
+		gesture="kb:NVDA+shift+c",
+		category=SCRCAT_SYSTEMCARET
+	)
 	def script_setColumnHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
@@ -1481,12 +1483,13 @@ class ExcelCell(ExcelBase):
 			else:
 				# Translators: a message reported in the SetColumnHeader script for Excel.
 				ui.message(_("Cannot find {address}    in column headers").format(address=self.cellCoordsText))
-	script_setColumnHeader.__doc__=_("Pressing once will set this cell as the first column header for any cells lower and to the right of it within this region. Pressing twice will forget the current column header for this cell.")
 
 	@script(
 		# Translators: the description  for a script for Excel
 		description=_("sets the current cell as start of row header"),
-		gesture="kb:NVDA+shift+r")
+		gesture="kb:NVDA+shift+r",
+		category=SCRCAT_SYSTEMCARET
+	)
 	def script_setRowHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
@@ -1503,7 +1506,6 @@ class ExcelCell(ExcelBase):
 			else:
 				# Translators: a message reported in the SetRowHeader script for Excel.
 				ui.message(_("Cannot find {address}    in row headers").format(address=self.cellCoordsText))
-	script_setRowHeader.__doc__=_("Pressing once will set this cell as the first row header for any cells lower and to the right of it within this region. Pressing twice will forget the current row header for this cell.")
 
 	@classmethod
 	def kwargsFromSuper(cls,kwargs,relation=None):
@@ -1672,6 +1674,7 @@ class ExcelCell(ExcelBase):
 		# Translators: the description  for a script for Excel
 		description=_("Reports the note on the current cell"),
 		gesture="kb:NVDA+alt+c",
+		category=SCRCAT_SYSTEMCARET,
 		speakOnDemand=True,
 	)
 	def script_reportComment(self,gesture):
@@ -1686,7 +1689,9 @@ class ExcelCell(ExcelBase):
 	@script(
 		# Translators: the description  for a script for Excel
 		description=_("Opens the note editing dialog"),
-		gesture="kb:shift+f2")
+		gesture="kb:shift+f2",
+		category=SCRCAT_SYSTEMCARET
+	)
 	def script_editComment(self,gesture):
 		commentObj=self.excelCellObject.comment
 		d = EditCommentDialog(

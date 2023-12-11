@@ -1698,7 +1698,6 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 				wx.OK | wx.ICON_ERROR,
 				self,
 			)
-			self.speechModesList.SetFocus()
 			return False
 		if self._allSpeechModes.index(speech.SpeechMode.talk) not in enabledSpeechModes:
 			if gui.messageBox(
@@ -1715,7 +1714,6 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 				wx.YES | wx.NO | wx.ICON_WARNING,
 				self,
 			) == wx.NO:
-				self.speechModesList.SetFocus()
 				return False
 		return super().isValid()
 
@@ -1832,7 +1830,6 @@ class KeyboardSettingsPanel(SettingsPanel):
 				_("At least one key must be used as the NVDA key."),
 				# Translators: The title of the message box
 				_("Error"), wx.OK|wx.ICON_ERROR,self)
-			self.modifierList.SetFocus()
 			return False
 		return super().isValid()
 
