@@ -1583,18 +1583,12 @@ However, some Microsoft Speech API synthesizers do not implement this correctly 
 If you are having problems with the pronunciation of individual characters, try disabling this option.
 
 ==== Delayed descriptions for characters on cursor movement ====[delayedCharacterDescriptions]
-: Default
-  Disabled
-: Options
-  Enabled, Disabled
-:
-
 When this setting is checked, NVDA will say the character description when you move by characters.
-
 For example, while reviewing a line by characters, when the letter "b" is read NVDA will say "Bravo" after a 1 second delay.
 This can be useful if it is hard to distinguish between pronunciation of symbols, or for hearing impaired users.
-
 The delayed character description will be cancelled if other text is spoken during that time, or if you press the ``control`` key.
+
+This setting is disabled by default.
 
 ==== Modes available in the Cycle speech mode command ====[SpeechModesDisabling]
 This checkable list allows selecting which speech modes are included when cycling between them using ``NVDA+s``.
