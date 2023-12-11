@@ -1492,7 +1492,8 @@ class ExcelCell(ExcelBase):
 		description=_(
 			# Translators: the description  for a script for Excel
 			"sets the current cell as start of row headers. Pressing once will set this cell as the first row header "
-			"for any cell lower and to the right of it within this region. Pressing twice will forget the current row header for this cell."
+			"for any cell lower and to the right of it within this region. Pressing twice will forget the current "
+			"row header for this cell."
 		),
 		gesture="kb:NVDA+shift+r",
 		category=SCRCAT_SYSTEMCARET
