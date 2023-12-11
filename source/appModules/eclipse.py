@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2010-2022 NV Access Limited
+# Copyright (C) 2010-2023 NV Access Limited, Cyrille Bougot
 
 import controlTypes
 import appModuleHandler
@@ -63,7 +63,9 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 
 		# If there aren't any suggestion selected, there is no way to find quick documentation
 		if not self.appModule.selectedItem:
-			gesture.send()
+			# Translators: When trying to read the documentation but there is no selected autocompletion item in
+			# Eclipse
+			ui.message(_("No selection"))
 			return
 
 		# Try to locate the documentation document

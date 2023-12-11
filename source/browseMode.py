@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2007-2023 NV Access Limited, Babbage B.V., James Teh, Leonard de Ruijter,
-# Thomas Stivers, Accessolutions, Julien Cochuyt
+# Thomas Stivers, Accessolutions, Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -604,8 +604,6 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			self._focusLastFocusableObject()
 			api.processPendingEvents(processEventQueue=True)
 		gesture.send()
-	# Translators: the description for the passThrough script on browseMode documents.
-	script_passThrough.__doc__ = _("Passes gesture through to the application")
 
 	def script_disablePassThrough(self, gesture):
 		if not self.passThrough or self.disableAutoPassThrough:
