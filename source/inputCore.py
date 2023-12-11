@@ -641,16 +641,28 @@ class InputManager(baseObject.AutoPropertyObject):
 			if res>0:
 				valid = True
 				if winUser.VK_MENU in modifierList:
+					# When alt is the only modifier that is down, ToUnicodeEx still writes the character to the provided buffer as tho alt wasn't down
+					# So remove alt and try again
 					newBuffer = ctypes.create_unicode_buffer(5)
 					states[winUser.VK_MENU] = 0
 					newRes = ctypes.windll.user32.ToUnicodeEx(gesture.vkCode, gesture.scanCode, states, newBuffer, ctypes.sizeof(newBuffer), 0x0, keyboardLayout)
+					# Check if newBuffer.value == buffer.value. If they do, treat the key as invalid as it wouldn't have bin written to the focused window
 					valid = False if buffer.value == newBuffer.value else True
 				for i in buffer[:res]:
-					if i.isprintable() and not i.isspace() and valid:
-						charList.append(i)
+					if not (i.isprintable() and not i.isspace() and valid):
+						charList.clear()
+						break
+					charList.append(i)
 			if charList and not onlyLog:
 				text = ''.join(charList)
-				speech.speech.speakSpelling(text)
+				if len(charList) == 1:
+					speech.speech.speakSpelling(text)
+				else:
+					speech.speech.speak(
+						charList,
+#						reason=controlTypes.OutputReason.MESSAGE,
+						symbolLevel=characterProcessing.SymbolLevel.ALL
+					)
 				braille.handler.message(text)
 				return
 			else:
