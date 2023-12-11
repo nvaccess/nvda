@@ -269,8 +269,8 @@ class AddonStoreDialog(SettingsDialog):
 			or state[AddonStateCategory.PENDING_INSTALL]
 		):
 			log.debug(
-				"Add-ons pending install, restart required.\n" 
-			 	f"Downloads pending install (add-on store installs): {addonDataManager._downloadsPendingInstall}.\n"
+				"Add-ons pending install, restart required.\n"
+				f"Downloads pending install (add-on store installs): {addonDataManager._downloadsPendingInstall}.\n"
 				f"Addons pending install (external installs): {state[AddonStateCategory.PENDING_INSTALL]}.\n"
 			)
 			return True
