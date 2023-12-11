@@ -603,10 +603,10 @@ class Gecko_ia2(VirtualBuffer):
 			return initialPos
 		return self._initialScrollObj
 	
-	def _getStartSelection(self, _ia2Sel: "_Ia2Selection", selFields: TextInfo.TextWithFieldsT):
+	def _getStartSelection(self, ia2Sel: "_Ia2Selection", selFields: TextInfo.TextWithFieldsT):
 		"""Get the start of the selection.
 
-		:param _ia2Sel: Selection object to update.
+		:param ia2Sel: Selection object to update.
 		:param selFields: List of fields in the selection.
 		:raises NotImplementedError: If the start of the selection could not be found.
 		AssertionError: If the start object query interface failed.
@@ -622,31 +622,31 @@ class Gecko_ia2(VirtualBuffer):
 				if field.command in ("controlStart", "formatChange"):
 					hwnd = field.field.get('ia2TextWindowHandle')
 					if hwnd is not None:
-						_ia2Sel.startWindow = hwnd
-						_ia2Sel.startID = field.field['ia2TextUniqueID']
-						_ia2Sel.startOffset = field.field['ia2TextStartOffset']
+						ia2Sel.startWindow = hwnd
+						ia2Sel.startID = field.field['ia2TextUniqueID']
+						ia2Sel.startOffset = field.field['ia2TextStartOffset']
 						if field.command == "formatChange":
-							_ia2Sel.startOffset += field.field.get('strippedCharsFromStart', 0)
-							_ia2Sel.startOffset += field.field['_offsetFromStartOfNode']
+							ia2Sel.startOffset += field.field.get('strippedCharsFromStart', 0)
+							ia2Sel.startOffset += field.field['_offsetFromStartOfNode']
 					if field.command == "controlStart":
 						continue
 			break
-		if _ia2Sel.startOffset is None:
+		if ia2Sel.startOffset is None:
 			raise NotImplementedError("No ia2TextStartOffset in any field")
-		log.debug(f"ia2 start window: {_ia2Sel.startWindow}")
-		log.debug(f"ia2 start ID: {_ia2Sel.startID}")
-		log.debug(f"ia2 start offset: {_ia2Sel.startOffset}")
-		_ia2Sel.startObj, childID = IAccessibleHandler.accessibleObjectFromEvent(
-			_ia2Sel.startWindow, winUser.OBJID_CLIENT, _ia2Sel.startID
+		log.debug(f"ia2 start window: {ia2Sel.startWindow}")
+		log.debug(f"ia2 start ID: {ia2Sel.startID}")
+		log.debug(f"ia2 start offset: {ia2Sel.startOffset}")
+		ia2Sel.startObj, childID = IAccessibleHandler.accessibleObjectFromEvent(
+			ia2Sel.startWindow, winUser.OBJID_CLIENT, ia2Sel.startID
 		)
 		assert (childID == 0), "childID should be 0"
-		_ia2Sel.startObj = _ia2Sel.startObj.QueryInterface(IAccessibleText)
-		log.debug(f"ia2 start obj: {_ia2Sel.startObj}")
+		ia2Sel.startObj = ia2Sel.startObj.QueryInterface(IAccessibleText)
+		log.debug(f"ia2 start obj: {ia2Sel.startObj}")
 
-	def _getEndSelection(self, _ia2Sel: "_Ia2Selection", selFields: TextInfo.TextWithFieldsT):
+	def _getEndSelection(self, ia2Sel: "_Ia2Selection", selFields: TextInfo.TextWithFieldsT):
 		"""Get the end of the selection.
 
-		:param _ia2Sel: Selection object to update.
+		:param ia2Sel: Selection object to update.
 		:param selFields: List of fields in the selection.
 		:raises NotImplementedError: If the end of the selection could not be found.
 		AssertionError: If the end object query interface failed.
@@ -662,33 +662,33 @@ class Gecko_ia2(VirtualBuffer):
 				if field.command in ("controlEnd", "formatChange"):
 					hwnd = field.field.get('ia2TextWindowHandle')
 					if hwnd is not None:
-						_ia2Sel.endWindow = hwnd
-						_ia2Sel.endID = field.field['ia2TextUniqueID']
-						_ia2Sel.endOffset = field.field['ia2TextStartOffset']
+						ia2Sel.endWindow = hwnd
+						ia2Sel.endID = field.field['ia2TextUniqueID']
+						ia2Sel.endOffset = field.field['ia2TextStartOffset']
 						if field.command == "controlEnd":
-							_ia2Sel.endOffset += 1
+							ia2Sel.endOffset += 1
 						elif field.command == "formatChange":
-							_ia2Sel.endOffset += field.field.get('strippedCharsFromStart', 0)
-							_ia2Sel.endOffset += field.field['_offsetFromStartOfNode']
-							_ia2Sel.endOffset += textLen
+							ia2Sel.endOffset += field.field.get('strippedCharsFromStart', 0)
+							ia2Sel.endOffset += field.field['_offsetFromStartOfNode']
+							ia2Sel.endOffset += textLen
 				if field.command == "controlEnd":
 					continue
 			break
-		if _ia2Sel.endOffset is None:
+		if ia2Sel.endOffset is None:
 			raise NotImplementedError("No ia2TextEndOffset in any field")
-		log.debug(f"ia2 end window: {repr(_ia2Sel.endWindow)}")
-		log.debug(f"ia2 end ID: {repr(_ia2Sel.endID)}")
-		log.debug(f"ia2 end offset: {_ia2Sel.endOffset}")
-		if _ia2Sel.endID == _ia2Sel.startID:
-			_ia2Sel.endObj = _ia2Sel.startObj
-			log.debug("Reusing _ia2Sel.startObj for _ia2Sel.endObj")
+		log.debug(f"ia2 end window: {repr(ia2Sel.endWindow)}")
+		log.debug(f"ia2 end ID: {repr(ia2Sel.endID)}")
+		log.debug(f"ia2 end offset: {ia2Sel.endOffset}")
+		if ia2Sel.endID == ia2Sel.startID:
+			ia2Sel.endObj = ia2Sel.startObj
+			log.debug("Reusing ia2Sel.startObj for ia2Sel.endObj")
 		else:
-			_ia2Sel.endObj, childID = IAccessibleHandler.accessibleObjectFromEvent(
-				_ia2Sel.endWindow, winUser.OBJID_CLIENT, _ia2Sel.endID
+			ia2Sel.endObj, childID = IAccessibleHandler.accessibleObjectFromEvent(
+				ia2Sel.endWindow, winUser.OBJID_CLIENT, ia2Sel.endID
 			)
 			assert (childID == 0), "childID should be 0"
-			_ia2Sel.endObj = _ia2Sel.endObj.QueryInterface(IAccessibleText)
-			log.debug(f"ia2 end obj {_ia2Sel.endObj}")
+			ia2Sel.endObj = ia2Sel.endObj.QueryInterface(IAccessibleText)
+			log.debug(f"ia2 end obj {ia2Sel.endObj}")
 
 	def updateAppSelection(self):
 		"""Update the native selection in the application to match the browse mode selection in NVDA."""
@@ -700,18 +700,18 @@ class Gecko_ia2(VirtualBuffer):
 			raise NotImplementedError from e
 		selInfo = self.makeTextInfo(textInfos.POSITION_SELECTION)
 		selFields = selInfo.getTextWithFields()
-		_ia2Sel = _Ia2Selection()
+		ia2Sel = _Ia2Selection()
 
 		log.debug("checking fields...")
-		self._getStartSelection(_ia2Sel, selFields)
-		self._getEndSelection(_ia2Sel, selFields)
+		self._getStartSelection(ia2Sel, selFields)
+		self._getEndSelection(ia2Sel, selFields)
 
 		log.debug("setting selection...")
 		r = IA2TextSelection(
-			_ia2Sel.startObj,
-			_ia2Sel.startOffset,
-			_ia2Sel.endObj,
-			_ia2Sel.endOffset,
+			ia2Sel.startObj,
+			ia2Sel.startOffset,
+			ia2Sel.endObj,
+			ia2Sel.endOffset,
 			False
 		)
 		paccTextSelectionContainer.SetSelections(1, byref(r))
