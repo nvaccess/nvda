@@ -1183,8 +1183,8 @@ class SlideShowTreeInterceptor(DocumentTreeInterceptor):
 		sayAll.SayAllHandler.readText(sayAll.CURSOR.CARET)
 
 	@scriptHandler.script(
-		# Translators: The description for a script
 		description=_(
+			# Translators: The description for a script
 			"Toggles between reporting the speaker notes or the actual slide content. This does not change"
 			" what is visible on-screen, but only what the user can read with NVDA"
 		),
