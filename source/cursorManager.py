@@ -10,6 +10,7 @@ A cursor manager provides caret navigation and selection commands for a virtual 
 
 import wx
 import core
+import inputCore
 import baseObject
 import documentBase
 import gui
@@ -443,7 +444,18 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 	def script_selectAll(self,gesture):
 		self._selectionMovementScriptHelper(toPosition=textInfos.POSITION_ALL)
 
-	def script_copyToClipboard(self,gesture):
+	_nativeAppSelectionModeSupported: bool = False
+	"Whether native selection mode is available in this browse mode document"
+
+	_nativeAppSelectionMode: bool = False
+	"Whether native selection mode is turned on or off"
+
+	def script_copyToClipboard(self, gesture: inputCore.InputGesture):
+		if self._nativeAppSelectionMode:
+			# Translators: Reported when browse mode passes the copy to clipboard command through to the application.
+			ui.message(_("native copy"))
+			gesture.send()
+			return
 		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		if info.isCollapsed:
 			# Translators: Reported when there is no text selected (for copying).
