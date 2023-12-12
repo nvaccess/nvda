@@ -649,11 +649,11 @@ class InputManager(baseObject.AutoPropertyObject):
 					# Check if newBuffer.value == buffer.value. If they do, treat the key as invalid as it wouldn't have bin written to the focused window
 					valid = False if buffer.value == newBuffer.value else True
 				for i in buffer[:res]:
-					if not (i.isprintable() and not i.isspace() and valid):
+					if not (i.isprintable() and not i.isspace()):
 						charList.clear()
 						break
 					charList.append(i)
-			if charList and not onlyLog:
+			if charList and not onlyLog and valid and not 'windows' in modifierList:
 				text = ''.join(charList)
 				if len(charList) == 1:
 					speech.speech.speakSpelling(text)
