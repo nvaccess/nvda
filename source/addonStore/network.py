@@ -40,7 +40,7 @@ if TYPE_CHECKING:
 	from gui.addonStoreGui.viewModels.addonList import AddonListItemVM
 
 
-_BASE_URL = "https://nvaccess.org/addonStore"
+BASE_URL = "https://nvaccess.org/addonStore"
 _LATEST_API_VER = "latest"
 """
 A string value used in the add-on store to fetch the latest version of all add-ons,
@@ -54,11 +54,11 @@ def _getCurrentApiVersionForURL() -> str:
 
 
 def _getAddonStoreURL(channel: Channel, lang: str, nvdaApiVersion: str) -> str:
-	return f"{_BASE_URL}/{lang}/{channel.value}/{nvdaApiVersion}.json"
+	return f"{BASE_URL}/{lang}/{channel.value}/{nvdaApiVersion}.json"
 
 
 def _getCacheHashURL() -> str:
-	return f"{_BASE_URL}/cacheHash.json"
+	return f"{BASE_URL}/cacheHash.json"
 
 
 class AddonFileDownloader:
