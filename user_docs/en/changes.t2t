@@ -68,7 +68,7 @@ Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on e
 - Input help for keyboard has been improved. (#15891, #6621, @Emil-18)
   - When the key combination has an NVDA command asosiated with it, it is reported as it always have been.
   - If not, but the key combination would have resulted in a typed character if input help was off, this character is reported
-  - Else, the key combination is reported with the plus sign between key names replaced with space, so the user quickly can identify if the key combination is a NVDA command or not
+  - After the character is reported, the key combination is reported with the plus sign between key names replaced with space, so the user quickly can identify if the key combination is a NVDA command or not. This also happens if the key combination isn't a character
 -
 == Bug Fixes ==
 - Add-on Store:
@@ -178,7 +178,7 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
 - Fixed bug where deleting git-tracked files during `scons -c` resulted in missing UIA COM interfaces on rebuild. (#7070, #10833, @hwf1324)
 - Fix a bug where some code changes were not detected when building `dist`, that prevented a new build from being triggered.
 Now `dist` always rebuilds. (#13372, @hwf1324)
--
+- The KeyboardInputGesture class now has a new method, _get_character, wich returns the character resulting from pressing the gesture. (#15907, @Emil-18)
 
 === API Breaking Changes ===
 These are breaking API changes.
