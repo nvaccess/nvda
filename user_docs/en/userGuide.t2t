@@ -900,6 +900,22 @@ A key command is provided to return to the original page containing the embedded
 | Move to containing browse mode document | NVDA+control+space | Moves the focus out of the current embedded object and into the document that contains it |
 %kc:endInclude
 
+++ Native Selection Mode ++[NativeSelectionMode]
+By default when selecting text with the ``shift+arrow`` keys in Browse Mode, a selection is only made within NVDA's Browse Mode representation of the document, and not within the application itself.
+This means that the selection is not visible on screen, and copying text with ``control+c`` will only copy NVDA's plain text representation of the content. i.e. formatting of tables, or whether something is a link will not be copied.
+However, NVDA has a Native Selection Mode which can be turned on in particular Browse Mode documents (so far only Mozilla Firefox) which causes the document's native selection to follow NVDA's Browse Mode selection.
+
+%kc:beginInclude
+|| Name | Key | Description |
+| Toggle Native Selection Mode on and off | ``NVDA+shift+f10`` | Toggles native selection mode on and off |
+%kc:endInclude
+
+When Native Selection Mode is turned on, copying the selection with ``control+c`` will also use the application's own copy functionality, meaning that rich content will be copied to the clipboard, rather than plain text.
+This means that pasting this content into a program such as Microsoft Word or Excel, formatting such as tables, or whether something is a link will be included.
+Please note however that in native selection mode, some accessible labels or other information that NVDA generates in Browse Mode will not be included.
+Also, although the application will try its best to match the native selection to NVDA's Browse Mode selection, it may not always be completely accurate.
+However, for scenarios where you wish to copy an entire table or paragraph of rich content, this feature should prove useful.
+ 
 + Reading Mathematical Content +[ReadingMath]
 Using MathPlayer 4 from Design Science, NVDA can read and interactively navigate supported mathematical content.
 This requires that MathPlayer 4 is installed on the computer.
