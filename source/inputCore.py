@@ -618,42 +618,13 @@ class InputManager(baseObject.AutoPropertyObject):
 				if desc:
 					textList.append(desc)
 		if isinstance(gesture, KeyboardInputGesture) and not script or not script.__doc__:
-			threadID = api.getFocusObject().windowThreadID
-			keyboardLayout = ctypes.windll.user32.GetKeyboardLayout(threadID)
-			buffer = ctypes.create_unicode_buffer(5)
-			states = (ctypes.c_byte*256)()
-			modifierList = []
-			for i in gesture.modifiers:
-				modifier = gesture.NORMAL_MODIFIER_KEYS.get(i[0])
-				if modifier:
-					modifierList.append(modifier)
-		
-			for i in range(256):
-				if i in modifierList:
-					states[i] = -128 # We tell ToUnicodeEx that the modifier is down, even tho it isn't according to Windows
-				else:
-					states[i] = ctypes.windll.user32.GetKeyState(i)
-			res = ctypes.windll.user32.ToUnicodeEx(gesture.vkCode, gesture.scanCode, states, buffer, ctypes.sizeof(buffer), 0x0, keyboardLayout)
-			if res<0 and not script:
-				return
-			charList = []
-			
-			if res>0:
-				valid = True
-				if winUser.VK_MENU in modifierList:
-					# When alt is the only modifier that is down, ToUnicodeEx still writes the character to the provided buffer as tho alt wasn't down
-					# So remove alt and try again
-					newBuffer = ctypes.create_unicode_buffer(5)
-					states[winUser.VK_MENU] = 0
-					newRes = ctypes.windll.user32.ToUnicodeEx(gesture.vkCode, gesture.scanCode, states, newBuffer, ctypes.sizeof(newBuffer), 0x0, keyboardLayout)
-					# Check if newBuffer.value == buffer.value. If they do, treat the key as invalid as it wouldn't have bin written to the focused window
-					valid = False if buffer.value == newBuffer.value else True
-				for i in buffer[:res]:
-					if not (i.isprintable() and not i.isspace()):
-						charList.clear()
-						break
-					charList.append(i)
-			if charList and not onlyLog and valid and not 'windows' in modifierList:
+			invalid = False
+			textList[0] = textList[0].replace('+', ' ')
+			charList = gesture.character
+			for i in charList:
+				if not (i.isprintable()) or i.isspace():
+					invalid = True
+			if charList and not onlyLog and not invalid:
 				text = ''.join(charList)
 				if len(charList) == 1:
 					speech.speech.speakSpelling(text)
@@ -663,10 +634,12 @@ class InputManager(baseObject.AutoPropertyObject):
 						reason=controlTypes.OutputReason.MESSAGE,
 						symbolLevel=characterProcessing.SymbolLevel.ALL
 					)
+				if gesture.mainKeyName.lower() not in text.lower() or gesture.modifiers:
+					speech.speech.speak(textList, symbolLevel=characterProcessing.SymbolLevel.ALL)
+					textList.insert(0, text)
+					text = ' '.join(textList)
 				braille.handler.message(text)
 				return
-			else:
-				textList[0] = textList[0].replace('+', ' ')
 		log.info(logMsg)
 		if onlyLog:
 			return
