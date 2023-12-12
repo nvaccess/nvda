@@ -1016,9 +1016,17 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 					// Add the chunk to the buffer.
 					if(tempNode=buffer->addTextFieldNode(parentNode,previousNode,wstring(IA2Text+chunkStart,i-chunkStart))) {
 						previousNode=tempNode;
-						// Add the IA2Text start offset as an attribute on the node.
+						// Add IA2Text start offset as an attribute on the node.
 						s << chunkStart;
 						previousNode->addAttribute(L"ia2TextStartOffset", s.str());
+						s.str(L"");
+						// Also add IA2 windowHandle and ID on the text node
+						// To make fetching IA2Ranges for selecting much easier.
+						s << docHandle;
+						previousNode->addAttribute(L"ia2TextWindowHandle", s.str());
+						s.str(L"");
+						s << ID;
+						previousNode->addAttribute(L"ia2TextUniqueID", s.str());
 						s.str(L"");
 						// Add text attributes.
 						for (map<wstring, wstring>::const_iterator it = textAttribs.begin(); it != textAttribs.end(); ++it) {
@@ -1071,6 +1079,18 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 					);
 					if (tempNode) {
 						previousNode=tempNode;
+						// Add IA2Text start offset as an attribute on the node.
+						s << i;
+						previousNode->addAttribute(L"ia2TextStartOffset", s.str());
+						s.str(L"");
+						// Also add IA2 windowHandle and ID on the text node
+						// To make fetching IA2Ranges for selecting much easier.
+						s << docHandle;
+						previousNode->addAttribute(L"ia2TextWindowHandle", s.str());
+						s.str(L"");
+						s << ID;
+						previousNode->addAttribute(L"ia2TextUniqueID", s.str());
+						s.str(L"");
 					} else {
 						LOG_DEBUG(L"Error in fillVBuf");
 					}
