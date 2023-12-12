@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2007-2023 NV Access Limited, Babbage B.V., James Teh, Leonard de Ruijter,
-# Thomas Stivers, Accessolutions, Julien Cochuyt
+# Thomas Stivers, Accessolutions, Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -604,8 +604,6 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			self._focusLastFocusableObject()
 			api.processPendingEvents(processEventQueue=True)
 		gesture.send()
-	# Translators: the description for the passThrough script on browseMode documents.
-	script_passThrough.__doc__ = _("Passes gesture through to the application")
 
 	def script_disablePassThrough(self, gesture):
 		if not self.passThrough or self.disableAutoPassThrough:
@@ -2014,3 +2012,37 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	def script_toggleScreenLayout(self, gesture):
 		# Translators: The message reported for not supported toggling of screen layout
 		ui.message(_("Not supported in this document."))
+
+	def updateAppSelection(self):
+		"""Update the native selection in the application to match the browse mode selection in NVDA."""
+		raise NotImplementedError
+
+	def clearAppSelection(self):
+		"""Clear the native selection in the application."""
+		raise NotImplementedError
+
+	@script(
+		gesture="kb:NVDA+shift+f10",
+		# Translators: input help message for toggle native selection command
+		description=_("Toggles native selection mode on and off"),
+	)
+	def script_toggleNativeAppSelectionMode(self, gesture: inputCore.InputGesture):
+		if not self._nativeAppSelectionModeSupported:
+			# Translators: the message when native selection mode is not available in this browse mode document.
+			ui.message(_("Native selection mode unsupported in this document"))
+			return
+		self._nativeAppSelectionMode = not self._nativeAppSelectionMode
+		if self._nativeAppSelectionMode:
+			# Translators: reported when native selection mode is toggled on.
+			ui.message(_("Native app selection mode enabled."))
+			try:
+				self.updateAppSelection()
+			except NotImplementedError:
+				pass
+		else:
+			# Translators: reported when native selection mode is toggled off.
+			ui.message(_("Native app selection mode disabled."))
+			try:
+				self.clearAppSelection()
+			except NotImplementedError:
+				pass

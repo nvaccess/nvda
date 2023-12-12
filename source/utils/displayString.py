@@ -11,7 +11,9 @@ from enum import (
 	IntEnum,
 	IntFlag,
 )
-from typing import Dict
+from typing import (
+	Self,
+)
 
 from logHandler import log
 
@@ -44,11 +46,10 @@ class _DisplayStringEnumMixin(ABC):
 	```
 	"""
 	@abstractproperty
-	def _displayStringLabels(self) -> Dict[Enum, str]:
+	def _displayStringLabels(self) -> dict[Self, str]:
 		"""
 		Specify a dictionary which takes members of the Enum and returns the translated display string.
 		"""
-		pass
 
 	@property
 	def displayString(self) -> str:

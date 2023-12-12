@@ -222,6 +222,9 @@ class SymphonyText(IAccessible, EditableText):
 	TextInfo = SymphonyTextInfo
 
 	def _get_positionInfo(self):
+		# LibreOffice versions >= 5.0 report the "level" attribute that's
+		# handled in the base class, but Apache OpenOffice doesn't,
+		# so check for the custom "heading-level" attribute first
 		level = self.IA2Attributes.get("heading-level")
 		if level:
 			return {"level": int(level)}
@@ -358,12 +361,20 @@ def getDistanceTextForTwips(twips):
 	converted to the local measurement unit."""
 	if languageHandler.useImperialMeasurements():
 		val = twips / 1440.0
-		# Translators: a measurement in inches
-		valText = _("{val:.2f} inches").format(val=val)
+		valText = ngettext(
+			# Translators: a measurement in inches
+			"{val:.2f} inch",
+			"{val:.2f} inches",
+			val,
+		).format(val=val)
 	else:
 		val = twips * 0.0017638889
-		# Translators: a measurement in centimetres
-		valText = _("{val:.2f} centimetres").format(val=val)
+		valText = ngettext(
+			# Translators: a measurement in centimetres
+			"{val:.2f} centimetre",
+			"{val:.2f} centimetres",
+			val,
+		).format(val=val)
 	return valText
 
 

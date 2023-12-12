@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2014-2022 NV Access Limited, Accessolutions, Julien Cochuyt
+# Copyright (C) 2014-2023 NV Access Limited, Accessolutions, Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import enum
@@ -95,11 +95,11 @@ class CharCellBackgroundColorAnimation:
 		# [0..1] proportion accumulatedElapsedTime is through totalTime
 		normalisedElapsed = min(1.0, max(0.0, (0.001 + accumulatedElapsedTime) / self._durationSeconds))
 		colourTransitionValue = self._startValue + normalisedElapsed * (1 - self._startValue)
-		currentColorTuple = _linearInterpolate(
+		currentColorTuple = tuple(int(c) for c in _linearInterpolate(
 			colourTransitionValue,
 			self._originColor.Get(includeAlpha=False),
 			self._destColor.Get(includeAlpha=False)
-		)
+		))
 		currentStyle = createBackgroundColorTextAttr(wx.Colour(*currentColorTuple))
 		index = self._textCellIndex
 		length = len(self._textCtrl.GetValue())

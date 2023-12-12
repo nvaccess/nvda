@@ -16,6 +16,7 @@ NonVisual Desktop Access (NVDA) is a free and open source screen reader for the 
 Providing feedback via synthetic speech and Braille, it enables blind or vision impaired people to access computers running Windows for no more cost than a sighted person.
 NVDA is developed by [NV Access https://www.nvaccess.org/], with contributions from the community.
 
+
 ++ General Features ++[GeneralFeatures]
 NVDA allows blind and vision impaired people to access and interact with the Windows operating system and many third party applications.
 
@@ -38,6 +39,7 @@ Major highlights include:
 - The ability to highlight the system focus
 -
 
+
 ++ System Requirements ++[SystemRequirements]
 - Operating Systems: all 32-bit and 64-bit editions of Windows 8.1, Windows 10, Windows 11, and all Server Operating Systems starting from Windows Server 2012 R2.
   - both AMD64 and ARM64 variants of Windows are supported.
@@ -59,6 +61,7 @@ Information about other speech synthesizers that NVDA supports can be found in t
 
 ++ Braille support ++[BrailleSupport]
 For users that own a refreshable braille display, NVDA can output its information in braille.
+NVDA uses the open source braille translator [LibLouis https://liblouis.io/] to generate braille sequences from text.
 Both uncontracted and contracted braille input via a braille keyboard is also supported.
 Furthermore, NVDA will detect many braille displays automatically by default.
 Please see the [Supported Braille Displays #SupportedBrailleDisplays] section for information about the supported braille displays.
@@ -292,6 +295,7 @@ Telephone support includes local numbers in Australia and the USA.
 The [email user groups https://github.com/nvaccess/nvda/wiki/Connect] are a great source of community help, as are [certified NVDA experts https://certification.nvaccess.org/].
 
 You can make bug reports or feature requests via [GitHub https://github.com/nvaccess/nvda/blob/master/projectDocs/issues/readme.md].
+The [contribution guidelines https://github.com/nvaccess/nvda/blob/master/.github/CONTRIBUTING.md] contain valuable information for contributing to the community.
 
 + More Setup Options +[MoreSetupOptions]
 
@@ -539,8 +543,10 @@ Examples include while recording audio, when using screen magnification, during 
 A gesture allows cycling through the various speech modes:
 %kc:beginInclude
 || Name | Key | Description |
-| Cycle Speech Mode | ``NVDA+s`` | Cycles speech mode between talk, on-demand, off and beeps. |
+| Cycle Speech Mode | ``NVDA+s`` | Cycles between speech modes. |
 %kc:endInclude
+
+If you only need to switch between a limited subset of speech modes, see [Modes available in the Cycle speech mode command #SpeechModesDisabling] for a way to disable unwanted modes.
 
 + Navigating with NVDA +[NavigatingWithNVDA]
 NVDA allows you to explore and navigate the system in several ways, including both normal interaction and review.
@@ -894,6 +900,22 @@ A key command is provided to return to the original page containing the embedded
 | Move to containing browse mode document | NVDA+control+space | Moves the focus out of the current embedded object and into the document that contains it |
 %kc:endInclude
 
+++ Native Selection Mode ++[NativeSelectionMode]
+By default when selecting text with the ``shift+arrow`` keys in Browse Mode, a selection is only made within NVDA's Browse Mode representation of the document, and not within the application itself.
+This means that the selection is not visible on screen, and copying text with ``control+c`` will only copy NVDA's plain text representation of the content. i.e. formatting of tables, or whether something is a link will not be copied.
+However, NVDA has a Native Selection Mode which can be turned on in particular Browse Mode documents (so far only Mozilla Firefox) which causes the document's native selection to follow NVDA's Browse Mode selection.
+
+%kc:beginInclude
+|| Name | Key | Description |
+| Toggle Native Selection Mode on and off | ``NVDA+shift+f10`` | Toggles native selection mode on and off |
+%kc:endInclude
+
+When Native Selection Mode is turned on, copying the selection with ``control+c`` will also use the application's own copy functionality, meaning that rich content will be copied to the clipboard, rather than plain text.
+This means that pasting this content into a program such as Microsoft Word or Excel, formatting such as tables, or whether something is a link will be included.
+Please note however that in native selection mode, some accessible labels or other information that NVDA generates in Browse Mode will not be included.
+Also, although the application will try its best to match the native selection to NVDA's Browse Mode selection, it may not always be completely accurate.
+However, for scenarios where you wish to copy an entire table or paragraph of rich content, this feature should prove useful.
+ 
 + Reading Mathematical Content +[ReadingMath]
 Using MathPlayer 4 from Design Science, NVDA can read and interactively navigate supported mathematical content.
 This requires that MathPlayer 4 is installed on the computer.
@@ -1590,6 +1612,14 @@ This can be useful if it is hard to distinguish between pronunciation of symbols
 
 The delayed character description will be cancelled if other text is spoken during that time, or if you press the ``control`` key.
 
+==== Modes available in the Cycle speech mode command ====[SpeechModesDisabling]
+This checkable list allows selecting which speech modes are included when cycling between them using ``NVDA+s``.
+Modes which are unchecked are excluded.
+By default all modes are included.
+
+For example if you do not need to use "beeps" and "off" mode you should uncheck these two, and keep both "talk" and "on-demand" checked.
+Note that it is necessary to check at least two modes.
+
 +++ Select Synthesizer +++[SelectSynthesizer]
 
 %kc:setting
@@ -1925,9 +1955,7 @@ The checkboxes in this list control what keys can be used as [NVDA modifier keys
 - The extended insert key (usually found above the arrow keys, near home and end)
 -
 
-If no key is chosen as the NVDA key it may be impossible to access certain NVDA commands.
-Therefore, The NVDA settings dialog will display an error message if all keys are unselected when pressing Ok or Apply.
-After dismissing the error message, you must select at least one before being able to press Ok to dismiss the dialog properly.
+If no key is chosen as the NVDA key it may be impossible to access many NVDA commands, therefore you are required to check at least one of the modifiers.
 
 %kc:setting
 ==== Speak Typed Characters ====[KeyboardSettingsSpeakTypedCharacters]
@@ -2879,8 +2907,8 @@ You can also enable or disable multiple add-ons at once by selecting multiple ad
 +++ Reviewing add-ons and reading reviews +++[AddonStoreReviews]
 Before installing an add-on, you may want to read reviews by others.
 Also, it may be helpful to other users to provide feedback about add-ons you have tried.
-To read reviews for an add-on, select an add-on and use the "Community reviews" action.
-This links to a GitHub Discussion webpage, where you will be able to read and write reviews for the add-on, or even comment on specific versions.
+To read reviews for an add-on, select an add-on from the Available or Updatable add-ons tab, and use the "Community reviews" action.
+This links to a GitHub Discussion webpage, where you will be able to read and write reviews for the add-on.
 Please be aware that this doesn't replace direct communication with add-on developers.
 Instead, the purpose of this feature is to share feedback to help users decide if an add-on may be useful for them.
 
@@ -4097,7 +4125,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | Route to braille cell | ``routing`` |
 | Report text formatting under braille cell | ``secondary routing`` |
 | Toggle the way context information is presented in braille | ``attribute1+attribute3`` |
-| Cycles between the speech modes of talk, on-demand, off and beeps | ``attribute2+attribute4`` |
+| Cycles between speech modes | ``attribute2+attribute4`` |
 | Switches to the previous review mode (e.g. object, document or screen) | ``f1`` |
 | Switches to the next review mode (e.g. object, document or screen) | ``f2`` |
 | Moves the navigator object to the object containing it | ``f3`` |
