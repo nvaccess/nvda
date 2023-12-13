@@ -165,7 +165,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"""
 		for self._baudRate in BAUD_RATE:
 			for portType, portId, port, portInfo in self._getTryPorts(port):
-				log.debug(f"busReportedDeviceDescription: {portInfo.get('busReportedDeviceDescription')}")
+				log.debug(
+					"port information:\n"
+					f"port type: {portType}\n"
+					f"port id: {portId}\n"
+					f"port: {port}\n"
+					f"port info: {portInfo}\n"
+					f"baud rate: {self._baudRate}\n"
+				)
 				if portInfo.get("busReportedDeviceDescription", BUS_DEVICE_DESC) != BUS_DEVICE_DESC:
 					continue
 				# For reconnection
