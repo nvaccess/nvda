@@ -431,11 +431,12 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		self.scanCode = scanCode
 		self.isExtended = isExtended
 		super(KeyboardInputGesture, self).__init__()
+
 	def _get_character(self):
 		threadID = api.getFocusObject().windowThreadID
 		keyboardLayout = ctypes.windll.user32.GetKeyboardLayout(threadID)
 		buffer = ctypes.create_unicode_buffer(5)
-		states = (ctypes.c_byte*256)()
+		states = (ctypes.c_byte * 256)()
 		modifierList = []
 		valid = True
 		for i in self.modifiers:
@@ -447,21 +448,39 @@ class KeyboardInputGesture(inputCore.InputGesture):
 				modifierList.append(modifier)
 		for i in range(256):
 			if i in modifierList:
-				states[i] = -128 # We tell ToUnicodeEx that the modifier is down, even tho it isn't according to Windows
+				states[i] = -128  # We tell ToUnicodeEx that the modifier is down, even tho it isn't according to Windows
 			else:
 				states[i] = ctypes.windll.user32.GetKeyState(i)
-		res = ctypes.windll.user32.ToUnicodeEx(self.vkCode, self.scanCode, states, buffer, ctypes.sizeof(buffer), 0x0, keyboardLayout)
-		if res<0:
-			return
+		res = ctypes.windll.user32.ToUnicodeEx(
+			self.vkCode,
+			self.scanCode,
+			states,
+			buffer,
+			ctypes.sizeof(buffer),
+			0x0,
+			keyboardLayout
+		)
+		if res < 0:
+			return('')
 		charList = []
-		if res>0:
+		if res > 0:
 			if winUser.VK_MENU in modifierList:
-				# When alt is the only modifier that is down, ToUnicodeEx still writes the character to the provided buffer as tho alt wasn't down
+				# When alt is the only modifier that is down,
+				#ToUnicodeEx still writes the character to the provided buffer as tho alt wasn't down
 				# So remove alt and try again
 				newBuffer = ctypes.create_unicode_buffer(5)
 				states[winUser.VK_MENU] = 0
-				newRes = ctypes.windll.user32.ToUnicodeEx(self.vkCode, self.scanCode, states, newBuffer, ctypes.sizeof(newBuffer), 0x0, keyboardLayout)
-				# Check if newBuffer.value == buffer.value. If they do, treat the key as invalid as it wouldn't have bin written to the focused window
+				ctypes.windll.user32.ToUnicodeEx(
+					self.vkCode,
+					self.scanCode,
+					states,
+					newBuffer,
+					ctypes.sizeof(newBuffer),
+					0x0,
+					keyboardLayout
+				)
+				# Check if newBuffer.value == buffer.value.
+				#If they do, treat the key as invalid as it wouldn't have bin written to the focused window
 				valid = False if buffer.value == newBuffer.value else True
 			for i in buffer[:res]:
 				charList.append(i)

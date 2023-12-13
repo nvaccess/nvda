@@ -9,7 +9,6 @@ Every piece of input from the user (e.g. a key press) is represented by an L{Inp
 The singleton L{InputManager} (L{manager}) manages functionality related to input from the user.
 For example, it is used to execute gestures and handle input help.
 """
-import ctypes
 import sys
 import os
 import weakref
@@ -36,7 +35,6 @@ import characterProcessing
 import config
 from fileUtils import FaultTolerantFile
 import watchdog
-import winUser
 from logHandler import log
 import globalVars
 import languageHandler
