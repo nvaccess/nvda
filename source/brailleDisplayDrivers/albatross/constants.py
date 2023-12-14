@@ -312,3 +312,7 @@ This behavior is built-in feature of the firmware of device.
 BUS_DEVICE_DESC = "Albatross Braille Display"
 """Bus reported device description
 """
+
+VID_AND_PID = "VID_0403&PID_6001"
+"""Vid and pid
+"""

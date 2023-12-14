@@ -61,6 +61,7 @@ from .constants import (
 	BOTH_BYTES,
 	KC_INTERVAL,
 	BUS_DEVICE_DESC,
+	VID_AND_PID,
 )
 from .gestures import _gestureMap
 
@@ -158,13 +159,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		except Exception:
 			log.exception("Error terminating albatross driver")
 
-	def _searchPorts(self, port: str):
+	def _searchPorts(self, originalPort: str):
 		"""Search ports where display can be connected.
-		@param port: port name as string
+		@param originalPort: original port name as string
 		@raises: RuntimeError if no display found
 		"""
 		for self._baudRate in BAUD_RATE:
-			for portType, portId, port, portInfo in self._getTryPorts(port):
+			for portType, portId, port, portInfo in self._getTryPorts(originalPort):
 				log.debug(
 					"port information:\n"
 					f"port type: {portType}\n"
@@ -173,7 +174,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					f"port info: {portInfo}\n"
 					f"baud rate: {self._baudRate}\n"
 				)
-				if portInfo.get("busReportedDeviceDescription", BUS_DEVICE_DESC) != BUS_DEVICE_DESC:
+				# Block port if its vid and pid are correct but bus reported
+				# device description is not "Albatross Braille Display".
+				if (
+					portId == VID_AND_PID
+					and portInfo.get("busReportedDeviceDescription") != BUS_DEVICE_DESC
+				):
 					continue
 				# For reconnection
 				self._currentPort = port
