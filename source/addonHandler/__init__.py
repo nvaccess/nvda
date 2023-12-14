@@ -216,7 +216,10 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 						log.error(f"Failed to remove {pendingInstallPath}", exc_info=True)
 
 		if self[AddonStateCategory.PENDING_INSTALL]:
-			log.error(f"Discarding {self[AddonStateCategory.PENDING_INSTALL]} from pending install add-ons as their install failed.")
+			log.error(
+				f"Discarding {self[AddonStateCategory.PENDING_INSTALL]} from pending install add-ons "
+				"as their install failed."
+			)
 			self[AddonStateCategory.PENDING_INSTALL].clear()
 
 	def _cleanupCompatibleAddonsFromDowngrade(self) -> None:
