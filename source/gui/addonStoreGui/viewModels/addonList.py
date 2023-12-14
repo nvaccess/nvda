@@ -24,6 +24,7 @@ from addonStore.models.addon import (
 	_AddonManifestModel,
 )
 from addonStore.models.status import (
+	_installedAddonStatuses,
 	_StatusFilterKey,
 	AvailableAddonStatus,
 )
@@ -155,12 +156,16 @@ class AddonListItemVM(Generic[_AddonModelT]):
 		) and self.model.canOverrideCompatibility
 
 	def canUseDisableAction(self) -> bool:
-		return self.model.isInstalled and self.status not in (
-			AvailableAddonStatus.DISABLED,
-			AvailableAddonStatus.PENDING_DISABLE,
-			AvailableAddonStatus.INCOMPATIBLE_DISABLED,
-			AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
-			AvailableAddonStatus.PENDING_REMOVE,
+		return (
+			self.model.isInstalled
+			and self.status in _installedAddonStatuses
+			and self.status not in (
+				AvailableAddonStatus.DISABLED,
+				AvailableAddonStatus.PENDING_DISABLE,
+				AvailableAddonStatus.INCOMPATIBLE_DISABLED,
+				AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
+				AvailableAddonStatus.PENDING_REMOVE,
+			)
 		)
 
 	def __repr__(self) -> str:
