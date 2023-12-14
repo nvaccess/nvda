@@ -166,20 +166,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"""
 		for self._baudRate in BAUD_RATE:
 			for portType, portId, port, portInfo in self._getTryPorts(originalPort):
-				log.debug(
-					"port information:\n"
-					f"port type: {portType}\n"
-					f"port id: {portId}\n"
-					f"port: {port}\n"
-					f"port info: {portInfo}\n"
-					f"baud rate: {self._baudRate}\n"
-				)
 				# Block port if its vid and pid are correct but bus reported
 				# device description is not "Albatross Braille Display".
 				if (
 					portId == VID_AND_PID
 					and portInfo.get("busReportedDeviceDescription") != BUS_DEVICE_DESC
 				):
+					log.debug(f"port {port} blocked; port information: {portInfo}")
 					continue
 				# For reconnection
 				self._currentPort = port
