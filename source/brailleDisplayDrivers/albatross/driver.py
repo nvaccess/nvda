@@ -93,7 +93,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def getManualPorts(cls):
 		return braille.getSerialPorts()
 
-	def __init__(self, port="auto"):
+	def __init__(self, port: str = "auto"):
 		super().__init__()
 		# Number of cells is received when initializing connection.
 		self.numCells = 0
