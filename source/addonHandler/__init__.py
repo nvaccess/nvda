@@ -5,6 +5,7 @@
 # See the file COPYING for more details.
 
 from abc import abstractmethod, ABC
+import glob
 import sys
 import os.path
 import gettext
@@ -19,7 +20,6 @@ from six import string_types
 from typing import (
 	Callable,
 	Dict,
-	List,
 	Optional,
 	Set,
 	TYPE_CHECKING,
@@ -203,6 +203,25 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 				log.debug(f"Discarding {disabledAddonName} from disabled add-ons as it has been uninstalled.")
 				self[AddonStateCategory.DISABLED].discard(disabledAddonName)
 
+	def _cleanupInstalledAddons(self) -> None:
+		# There should be no pending installs after add-ons have been loaded during initialization.
+		for path in _getDefaultAddonPaths():
+			pendingInstallPaths = glob.glob(f"{path}/*.{ADDON_PENDINGINSTALL_SUFFIX}")
+			for pendingInstallPath in pendingInstallPaths:
+				if os.path.exists(pendingInstallPath):
+					try:
+						log.error(f"Removing failed install of {pendingInstallPath}")
+						shutil.rmtree(pendingInstallPath, ignore_errors=True)
+					except OSError:
+						log.error(f"Failed to remove {pendingInstallPath}", exc_info=True)
+
+		if self[AddonStateCategory.PENDING_INSTALL]:
+			log.error(
+				f"Discarding {self[AddonStateCategory.PENDING_INSTALL]} from pending install add-ons "
+				"as their install failed."
+			)
+			self[AddonStateCategory.PENDING_INSTALL].clear()
+
 	def _cleanupCompatibleAddonsFromDowngrade(self) -> None:
 		from addonStore.dataManager import addonDataManager
 		installedAddons = addonDataManager._installedAddonsCache.installedAddons
@@ -287,6 +306,7 @@ def initialize():
 	getAvailableAddons(refresh=True, isFirstLoad=True)
 	state.cleanupRemovedDisabledAddons()
 	state._cleanupCompatibleAddonsFromDowngrade()
+	state._cleanupInstalledAddons()
 	if NVDAState.shouldWriteToDisk():
 		state.save()
 	initializeModulePackagePaths()
@@ -303,8 +323,8 @@ def terminate():
 	pass
 
 
-def _getDefaultAddonPaths() -> List[str]:
-	""" Returns paths where addons can be found.
+def _getDefaultAddonPaths() -> list[str]:
+	r""" Returns paths where addons can be found.
 	For now, only <userConfig>\addons is supported.
 	"""
 	addon_paths = []
@@ -497,13 +517,25 @@ class Addon(AddonBase):
 				_report_manifest_errors(self.manifest)
 				raise AddonError("Manifest file has errors.")
 
-	def completeInstall(self) -> str:
+	def completeInstall(self) -> Optional[str]:
+		if not os.path.exists(self.pendingInstallPath):
+			log.error(f"Pending install path {self.pendingInstallPath} does not exist")
+			return None
+
 		try:
 			os.rename(self.pendingInstallPath, self.installPath)
 			state[AddonStateCategory.PENDING_INSTALL].discard(self.name)
 			return self.installPath
 		except OSError:
 			log.error(f"Failed to complete addon installation for {self.name}", exc_info=True)
+
+		# Remove pending install folder
+		try:
+			log.error(f"Removing failed install of {self.pendingInstallPath}")
+			shutil.rmtree(self.pendingInstallPath, ignore_errors=True)
+			state[AddonStateCategory.PENDING_INSTALL].discard(self.name)
+		except OSError:
+			log.error(f"Failed to remove {self.pendingInstallPath}", exc_info=True)
 
 	def requestRemove(self):
 		"""Marks this addon for removal on NVDA restart."""
