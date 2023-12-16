@@ -70,6 +70,8 @@ _shuttingDownFlagLock = threading.Lock()
 
 
 def doStartupDialogs():
+	import wx
+
 	import config
 	import gui
 
@@ -88,7 +90,6 @@ def doStartupDialogs():
 		if not isParamKnown:
 			unknownCLIParams.append(param)
 	if unknownCLIParams:
-		import wx
 		gui.messageBox(
 			# Translators: Shown when NVDA has been started with unknown command line parameters.
 			_("The following command line parameters are unknown to NVDA: {params}").format(
@@ -100,7 +101,6 @@ def doStartupDialogs():
 			wx.OK | wx.ICON_ERROR
 		)
 	if config.conf.baseConfigError:
-		import wx
 		gui.messageBox(
 			# Translators: A message informing the user that there are errors in the configuration file.
 			_("Your configuration file contains errors. "
@@ -118,7 +118,6 @@ def doStartupDialogs():
 		gui.mainFrame.onToggleSpeechViewerCommand(evt=None)
 	import inputCore
 	if inputCore.manager.userGestureMap.lastUpdateContainedError:
-		import wx
 		gui.messageBox(_("Your gesture map file contains errors.\n"
 				"More details about the errors can be found in the log file."),
 			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION)
@@ -130,7 +129,6 @@ def doStartupDialogs():
 		if updateCheck and not config.conf['update']['askedAllowUsageStats']:
 			# a callback to save config after the usage stats question dialog has been answered.
 			def onResult(ID):
-				import wx
 				if ID in (wx.ID_YES,wx.ID_NO):
 					try:
 						config.conf.save()
@@ -138,6 +136,36 @@ def doStartupDialogs():
 						pass
 			# Ask the user if usage stats can be collected.
 			gui.runScriptModalDialog(gui.startupDialogs.AskAllowUsageStatsDialog(None), onResult)
+	addonFailureMessages: list[str] = []
+	failedUpdates = addonHandler._failedPendingInstalls.intersection(addonHandler._failedPendingRemovals)
+	failedInstalls = addonHandler._failedPendingInstalls - failedUpdates
+	failedRemovals = addonHandler._failedPendingRemovals - failedUpdates
+	if failedUpdates:
+		addonFailureMessages.append(
+			# Translators: Shown when one or more add-ons failed to update.
+			_("Following add-ons failed to update: {}").format(", ".join(failedUpdates))
+		)
+	if failedRemovals:
+		addonFailureMessages.append(
+			# Translators: Shown when one or more add-ons failed to be uninstalled.
+			_("Following add-ons failed to uninstall: {}").format(", ".join(failedRemovals))
+		)
+	if failedInstalls:
+		addonFailureMessages.append(
+			# Translators: Shown when one or more add-ons failed to be installed.
+			_("Following add-ons failed to be installed: {}").format(", ".join(failedInstalls))
+		)
+
+	if addonFailureMessages:
+		gui.messageBox(
+			_(
+				# Translators: Shown when one or more actions on add-ons failed.
+				"Some operations on add-ons failed. See the log file for more details.\n{}"
+			).format("\n".join(addonFailureMessages)),
+			# Translators: Title of message shown when requested action on add-ons failed.
+			_("Add-on failures"),
+			wx.ICON_ERROR | wx.OK
+		)
 
 
 @dataclass
