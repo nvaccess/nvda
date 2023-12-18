@@ -74,8 +74,8 @@ DELETEDIR_SUFFIX=".delete"
 # For more details see appropriate section of the developer guide.
 isCLIParamKnown = extensionPoints.AccumulatingDecider(defaultDecision=False)
 
-_failedPendingRemovals: set[str] = set()
-_failedPendingInstalls: set[str] = set()
+_failedPendingRemovals: CaseInsensitiveSet[str] = CaseInsensitiveSet()
+_failedPendingInstalls: CaseInsensitiveSet[str] = CaseInsensitiveSet()
 
 
 AddonStateDictT = Dict[AddonStateCategory, CaseInsensitiveSet[str]]
@@ -296,15 +296,17 @@ def initialize():
 			f"but are no longer present on disk: {', '.join(missingPendingInstalls)}"
 		)
 		state[AddonStateCategory.PENDING_INSTALL] -= missingPendingInstalls
+	if missingPendingOverrideCompat := (
+		state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY] - _failedPendingInstalls
+	):
+		log.error(
+			"The following add-ons which were marked as compatible are no longer installed: "
+			f"{', '.join(missingPendingOverrideCompat)}"
+		)
+		state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY] -= missingPendingOverrideCompat
 	if NVDAState.shouldWriteToDisk():
 		state.save()
 	initializeModulePackagePaths()
-	if state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY]:
-		log.error(
-			"The following add-ons which were marked as compatible are no longer installed: "
-			f"{', '.join(state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY])}"
-		)
-		state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].clear()
 
 
 def terminate():
