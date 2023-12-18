@@ -114,6 +114,7 @@ Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on e
   - Contracted braille input works properly again. (#15773, @aaclause)
   - Braille is now updated when moving the navigator object between table cells in more situations (#15755, @Emil-18)
   - The result of reporting current focus, current navigator object, and current selection commands is now shown in braille. (#15844, @Emil-18)
+  - The Albatross braille driver no longer handles a Esp32 microcontroller as an Albatross display. (#15671)
   -
 - LibreOffice:
   - Words deleted using the ``control+backspace`` keyboard shortcut are now also properly announced when the deleted word is followed by whitespace (like spaces and tabs). (#15436, @michaelweghorn)
