@@ -41,6 +41,9 @@ import scriptHandler
 from locationHelper import RectLTRB
 from NVDAObjects.window._msOfficeChart import OfficeChart
 
+# Translators: The name of a category of NVDA commands.
+SCRCAT_POWERPOINT = _("PowerPoint")
+
 # Window classes where PowerPoint's object model should be used 
 # These also all request to have their (incomplete) UI Automation implementations  disabled. [MS Office 2013]
 objectModelWindowClasses=set(["paneClassDC","mdiClass","screenClass"])
@@ -1179,11 +1182,17 @@ class SlideShowTreeInterceptor(DocumentTreeInterceptor):
 		self.makeTextInfo(textInfos.POSITION_FIRST).updateCaret()
 		sayAll.SayAllHandler.readText(sayAll.CURSOR.CARET)
 
+	@scriptHandler.script(
+		description=_(
+			# Translators: The description for a script
+			"Toggles between reporting the speaker notes or the actual slide content. This does not change"
+			" what is visible on-screen, but only what the user can read with NVDA"
+		),
+		category=SCRCAT_POWERPOINT,
+	)
 	def script_toggleNotesMode(self,gesture):
 		self.rootNVDAObject.notesMode=not self.rootNVDAObject.notesMode
 		self.rootNVDAObject.handleSlideChange()
-	# Translators: The description for a script
-	script_toggleNotesMode.__doc__=_("Toggles between reporting the speaker notes or the actual slide content. This does not change what is visible on-screen, but only what the user can read with NVDA")
 
 	def script_slideChange(self,gesture):
 		gesture.send()
@@ -1314,7 +1323,8 @@ class SlideShowWindow(PaneClassDC):
 		self.treeInterceptor.reportNewSlide()
 
 class AppModule(appModuleHandler.AppModule):
-
+	scriptCategory = SCRCAT_POWERPOINT
+	
 	hasTriedPpAppSwitch=False
 	_ppApplicationWindow=None
 	_ppApplication=None

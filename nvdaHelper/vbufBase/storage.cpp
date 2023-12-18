@@ -226,6 +226,8 @@ void VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(std::wstring
 	wostringstream s;
 	s<<L"_startOfNode=\""<<(startOffset==0?1:0)<<L"\" ";
 	s<<L"_endOfNode=\""<<(endOffset>=this->length?1:0)<<L"\" ";
+	s << L"_offsetFromStartOfNode=\"" << startOffset << L"\" ";
+	s << L"_offsetFromEndOfNode=\"" << max(0, this->length - endOffset) << L"\" ";
 	s<<L"isBlock=\""<<this->isBlock<<L"\" ";
 	s<<L"isHidden=\""<<this->isHidden<<L"\" ";
 	int childCount=0;
