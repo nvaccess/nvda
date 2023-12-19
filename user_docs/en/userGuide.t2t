@@ -1454,8 +1454,7 @@ The available logging levels are:
 - Input/output: Input from keyboard and braille displays, as well as speech and braille output will be logged.
 If you are concerned about privacy, do not set the logging level to this option.
 - Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.
-  - Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
-  -
+Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
 -
 
 ==== Start NVDA after I sign in ====[GeneralSettingsStartAfterLogOn]
@@ -2642,7 +2641,7 @@ There are three options:
   - never: Never send the actual symbol to the synthesizer.
   - always: Always send the actual symbol to the synthesizer.
   - only below symbols' level: Send the actual symbol only if the configured speech symbol level is lower than the level set for this symbol.
- For example, you might use this so that a symbol will have its replacement spoken at higher levels without pausing, while still being indicated with a pause at lower levels.
+  For example, you might use this so that a symbol will have its replacement spoken at higher levels without pausing, while still being indicated with a pause at lower levels.
   -
 -
 
@@ -2683,9 +2682,9 @@ After that, the key will be available from the Emulated system keyboard keys cat
 
 Note:
 - Emulated keys must have gestures assigned in order to persist when saving / closing the dialog.
-- An input gesture with modifier keys may not be able to be mapped to an emulated gesture without modifier
-keys. For instance, setting the emulated input 'a' and configuring an input gesture of 'ctrl+m', may result
-in the application receiving 'ctrl+a'.
+- An input gesture with modifier keys may not be able to be mapped to an emulated gesture without modifier keys.
+For instance, setting the emulated input ``a`` and configuring an input gesture of ``ctrl+m``, may result
+in the application receiving ``ctrl+a``.
 -
 
 When you are finished making changes, press the OK button to save them or the Cancel button to discard them.
