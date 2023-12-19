@@ -5,7 +5,6 @@
 # See the file COPYING for more details.
 
 from abc import abstractmethod, ABC
-import glob
 import sys
 import os.path
 import gettext
@@ -73,6 +72,9 @@ DELETEDIR_SUFFIX=".delete"
 # and should return `False` if it is not interested in it, `True` otherwise.
 # For more details see appropriate section of the developer guide.
 isCLIParamKnown = extensionPoints.AccumulatingDecider(defaultDecision=False)
+
+_failedPendingRemovals: CaseInsensitiveSet[str] = CaseInsensitiveSet()
+_failedPendingInstalls: CaseInsensitiveSet[str] = CaseInsensitiveSet()
 
 
 AddonStateDictT = Dict[AddonStateCategory, CaseInsensitiveSet[str]]
@@ -203,25 +205,6 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 				log.debug(f"Discarding {disabledAddonName} from disabled add-ons as it has been uninstalled.")
 				self[AddonStateCategory.DISABLED].discard(disabledAddonName)
 
-	def _cleanupInstalledAddons(self) -> None:
-		# There should be no pending installs after add-ons have been loaded during initialization.
-		for path in _getDefaultAddonPaths():
-			pendingInstallPaths = glob.glob(f"{path}/*.{ADDON_PENDINGINSTALL_SUFFIX}")
-			for pendingInstallPath in pendingInstallPaths:
-				if os.path.exists(pendingInstallPath):
-					try:
-						log.error(f"Removing failed install of {pendingInstallPath}")
-						shutil.rmtree(pendingInstallPath, ignore_errors=True)
-					except OSError:
-						log.error(f"Failed to remove {pendingInstallPath}", exc_info=True)
-
-		if self[AddonStateCategory.PENDING_INSTALL]:
-			log.error(
-				f"Discarding {self[AddonStateCategory.PENDING_INSTALL]} from pending install add-ons "
-				"as their install failed."
-			)
-			self[AddonStateCategory.PENDING_INSTALL].clear()
-
 	def _cleanupCompatibleAddonsFromDowngrade(self) -> None:
 		from addonStore.dataManager import addonDataManager
 		installedAddons = addonDataManager._installedAddonsCache.installedAddons
@@ -306,16 +289,23 @@ def initialize():
 	getAvailableAddons(refresh=True, isFirstLoad=True)
 	state.cleanupRemovedDisabledAddons()
 	state._cleanupCompatibleAddonsFromDowngrade()
-	state._cleanupInstalledAddons()
+	if missingPendingInstalls := state[AddonStateCategory.PENDING_INSTALL] - _failedPendingInstalls:
+		log.error(
+			"The following add-ons should be installed, "
+			f"but are no longer present on disk: {', '.join(missingPendingInstalls)}"
+		)
+		state[AddonStateCategory.PENDING_INSTALL] -= missingPendingInstalls
+	if missingPendingOverrideCompat := (
+		state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY] - _failedPendingInstalls
+	):
+		log.error(
+			"The following add-ons which were marked as compatible are no longer installed: "
+			f"{', '.join(missingPendingOverrideCompat)}"
+		)
+		state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY] -= missingPendingOverrideCompat
 	if NVDAState.shouldWriteToDisk():
 		state.save()
 	initializeModulePackagePaths()
-	if state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY]:
-		log.error(
-			"The following add-ons which were marked as compatible are no longer installed: "
-			f"{', '.join(state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY])}"
-		)
-		state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].clear()
 
 
 def terminate():
@@ -363,9 +353,10 @@ def _getAvailableAddonsFromPath(
 					):
 						try:
 							a.completeRemove()
+							continue
 						except RuntimeError:
 							log.exception(f"Failed to remove {name} add-on")
-						continue
+							_failedPendingRemovals.add(name)
 					if(
 						isFirstLoad
 						and (
@@ -376,7 +367,13 @@ def _getAvailableAddonsFromPath(
 						newPath = a.completeInstall()
 						if newPath:
 							a = Addon(newPath)
-					if isFirstLoad and name in state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY]:
+						else:  # installation failed
+							_failedPendingInstalls.add(name)
+					if (
+						isFirstLoad
+						and name in state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY]
+						and name not in _failedPendingInstalls
+					):
 						state[AddonStateCategory.OVERRIDE_COMPATIBILITY].add(name)
 						state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].remove(name)
 					log.debug(
@@ -528,14 +525,7 @@ class Addon(AddonBase):
 			return self.installPath
 		except OSError:
 			log.error(f"Failed to complete addon installation for {self.name}", exc_info=True)
-
-		# Remove pending install folder
-		try:
-			log.error(f"Removing failed install of {self.pendingInstallPath}")
-			shutil.rmtree(self.pendingInstallPath, ignore_errors=True)
-			state[AddonStateCategory.PENDING_INSTALL].discard(self.name)
-		except OSError:
-			log.error(f"Failed to remove {self.pendingInstallPath}", exc_info=True)
+			return None
 
 	def requestRemove(self):
 		"""Marks this addon for removal on NVDA restart."""
@@ -597,7 +587,7 @@ class Addon(AddonBase):
 		"""
 		# #3090: Ensure that we don't add disabled / blocked add-ons to package path.
 		# By returning here the addon does not "run"/ become active / registered.
-		if self.isDisabled or self.isBlocked or self.isPendingInstall:
+		if self.isDisabled or self.isBlocked or self.isPendingInstall or self.name in _failedPendingRemovals:
 			return
 
 		extension_path = os.path.join(self.path, package.__name__)
