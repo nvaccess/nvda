@@ -41,6 +41,7 @@ import config
 from config.configFlags import (
 	ShowMessages,
 	TetherTo,
+	BrailleMode,
 	ReportTableHeaders,
 )
 from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag
@@ -2384,7 +2385,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if (
 			not self.enabled
 			or config.conf["braille"]["showMessages"] == ShowMessages.DISABLED
-			or text is None
+			or text is None or config.conf['braille']['mode'] == BrailleMode.SPEECH_EMULATION.value
 		):
 			return
 		if self.buffer is self.messageBuffer:
@@ -2427,7 +2428,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.update()
 
 	def handleGainFocus(self, obj: "NVDAObject", shouldAutoTether: bool = True) -> None:
-		if not self.enabled:
+		if not self.enabled or config.conf['braille']['mode'] == BrailleMode.SPEECH_EMULATION.value:
 			return
 		if objectBelowLockScreenAndWindowsIsLocked(obj):
 			return
@@ -2472,7 +2473,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			obj: "NVDAObject",
 			shouldAutoTether: bool = True
 	) -> None:
-		if not self.enabled:
+		if not self.enabled or config.conf['braille']['mode'] == BrailleMode.SPEECH_EMULATION.value:
 			return
 		if objectBelowLockScreenAndWindowsIsLocked(obj):
 			return
@@ -2582,7 +2583,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._regionsPendingUpdate.add(region)
 
 	def handleReviewMove(self, shouldAutoTether=True):
-		if not self.enabled:
+		if not self.enabled or config.conf['braille']['mode'] == BrailleMode.SPEECH_EMULATION.value:
 			return
 		reviewPos = api.getReviewPosition()
 		if shouldAutoTether:
