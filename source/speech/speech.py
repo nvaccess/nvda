@@ -6,7 +6,7 @@
 
 """High-level functions to speak information.
 """ 
-
+import braille
 import itertools
 import typing
 import weakref
@@ -169,6 +169,9 @@ def cancelSpeech():
 	# Import only for this function to avoid circular import.
 	from .sayAll import SayAllHandler
 	SayAllHandler.stop()
+	_regions.clear()
+#	if config.conf['braille']['mode'] == braille.BrailleMode.SPEECH_EMULATION.value:
+#		braille.handler.mainBuffer.clear()
 	if _speechState.beenCanceled:
 		return
 	elif _speechState.speechMode == SpeechMode.off:
@@ -946,7 +949,7 @@ def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> Spe
 		indentSequence.extend(res)
 	return indentSequence
 
-
+_regions = []
 # C901 'speak' is too complex
 # Note: when working on speak, look for opportunities to simplify
 # and move logic out into smaller helper functions.
@@ -969,6 +972,22 @@ def speak(  # noqa: C901
 	import speechViewer
 	if speechViewer.isActive:
 		speechViewer.appendSpeechSequence(speechSequence)
+	if config.conf['braille']['mode'] == braille.BrailleMode.SPEECH_EMULATION.value:
+		text = ' '.join([x for x in speechSequence if isinstance(x, str)])
+		if _regions:
+			text = ' '+text
+		region = braille.TextRegion(text)
+		region.update()
+		_regions.append(region)
+		braille.handler.mainBuffer.regions = _regions.copy()
+		if not _regions:
+			braille.handler.mainBuffer.focus(_regions[0])
+		import time
+		now = time.time()
+		braille.handler.mainBuffer.update()
+		braille.handler.update()
+		if time.time() - now >5:
+			_regions.clear()
 	if _speechState.speechMode == SpeechMode.off:
 		return
 	elif _speechState.speechMode == SpeechMode.beeps:
