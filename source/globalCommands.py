@@ -43,6 +43,7 @@ import config
 from config.configFlags import (
 	TetherTo,
 	ShowMessages,
+	BrailleMode,
 )
 from config.featureFlag import FeatureFlag
 from config.featureFlagEnums import BoolFlag
@@ -113,7 +114,8 @@ SCRCAT_INPUT = _("Input")
 #: Script category for document formatting commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_DOCUMENTFORMATTING = _("Document formatting")
-
+# Translators: The message reported when in speech emulation mode, and trying to toggle a setting not supported in that mode
+speechEmulationMSG = _('Action unavailable while the braille mode is set to speech emulation')
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus.
 	"""
@@ -3288,6 +3290,9 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+control+t"
 	)
 	def script_braille_toggleTether(self, gesture):
+		if config.conf['braille']['mode'] == BrailleMode.SPEECH_EMULATION.value:
+			ui.message(speechEmulationMSG)
+			return
 		values = [x.value for x in TetherTo]
 		index = values.index(config.conf["braille"]["tetherTo"])
 		newIndex = (index+1) % len(values)
@@ -3311,6 +3316,9 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE
 	)
 	def script_braille_cycleReviewRoutingMovesSystemCaret(self, gesture: inputCore.InputGesture) -> None:
+		if config.conf['braille']['mode'] == BrailleMode.SPEECH_EMULATION.value:
+			ui.message(speechEmulationMSG)
+			return
 		# If braille is not tethered to focus, set next state of
 		# braille Move system caret when routing review cursor.
 		if TetherTo.FOCUS.value == config.conf["braille"]["tetherTo"]:
@@ -3346,6 +3354,9 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE
 	)
 	def script_braille_toggleFocusContextPresentation(self, gesture):
+		if config.conf['braille']['mode'] == BrailleMode.SPEECH_EMULATION.value:
+			ui.message(speechEmulationMSG)
+			return
 		values = [x[0] for x in braille.focusContextPresentations]
 		labels = [x[1] for x in braille.focusContextPresentations]
 		try:
@@ -3367,6 +3378,9 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE
 	)
 	def script_braille_toggleShowCursor(self, gesture):
+		if config.conf['braille']['mode'] == BrailleMode.SPEECH_EMULATION.value:
+			ui.message(speechEmulationMSG)
+			return
 		if config.conf["braille"]["showCursor"]:
 			# Translators: The message announced when toggling the braille cursor.
 			state = _("Braille cursor off")
@@ -3385,6 +3399,9 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE
 	)
 	def script_braille_cycleCursorShape(self, gesture):
+		if config.conf['braille']['mode'] == BrailleMode.SPEECH_EMULATION.value:
+			ui.message(speechEmulationMSG)
+			return
 		if not config.conf["braille"]["showCursor"]:
 			# Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
 			ui.message(_("Braille cursor is turned off"))
@@ -3411,6 +3428,9 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE
 	)
 	def script_braille_cycleShowMessages(self, gesture: inputCore.InputGesture) -> None:
+		if config.conf['braille']['mode'] == BrailleMode.SPEECH_EMULATION.value:
+			ui.message(speechEmulationMSG)
+			return
 		"""Set next state of braille show messages and reports it with ui.message."""
 		values = [x.value for x in ShowMessages]
 		index = values.index(config.conf["braille"]["showMessages"])
@@ -3429,6 +3449,9 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_braille_cycleShowSelection(self, gesture: inputCore.InputGesture) -> None:
 		"""Set next state of braille show selection and reports it with ui.message."""
+		if config.conf['braille']['mode'] == BrailleMode.SPEECH_EMULATION.value:
+			ui.message(speechEmulationMSG)
+			return
 		featureFlag: FeatureFlag = config.conf["braille"]["showSelection"]
 		boolFlag: BoolFlag = featureFlag.enumClassType
 		values = [x.value for x in boolFlag]
