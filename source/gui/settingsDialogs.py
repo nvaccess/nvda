@@ -3711,7 +3711,16 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.updateDriverSettings()
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-
+		# Translators: The label for a setting in braille settings to select wich braille mode to use
+		modeListText = _('Braille mode:')
+		modeChoices = [x.displayString for x in braille.BrailleMode]
+		self.brailleModes = sHelper.addLabeledControl(modeListText, wx.Choice, choices = modeChoices)
+		self.bindHelpEvent("BrailleMode", self.brailleModes)
+		self.brailleModes.Bind(wx.EVT_CHOICE, self.onModeChange)
+		current = braille.BrailleMode(config.conf['braille']['mode'])
+		modeList = list(braille.BrailleMode)
+		index = modeList.index(current)
+		self.brailleModes.SetSelection(index)
 		tables = brailleTables.listTables()
 		# Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 		outputsLabelText = _("&Output table:")
@@ -3935,6 +3944,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 	def onSave(self):
 		AutoSettingsMixin.onSave(self)
+		mode = list(braille.BrailleMode)[self.brailleModes.GetSelection()]
+		config.conf['braille']['mode'] = mode.value
 		config.conf["braille"]["translationTable"] = self.outTableNames[self.outTableList.GetSelection()]
 		brailleInput.handler.table = self.inTables[self.inTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
@@ -3974,6 +3985,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		tetherChoice = [x.value for x in TetherTo][evt.GetSelection()]
 		self.brailleReviewRoutingMovesSystemCaretCombo.Enable(tetherChoice != TetherTo.FOCUS.value)
 
+	def onModeChange(self, evt):
+		pass
 
 def showStartErrorForProviders(
 		parent: wx.Window,
