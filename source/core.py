@@ -69,7 +69,7 @@ _hasShutdownBeenTriggered = False
 _shuttingDownFlagLock = threading.Lock()
 
 
-def _showAddonsWarnings() -> None:
+def _showAddonsErrors() -> None:
 	addonFailureMessages: list[str] = []
 	failedUpdates = addonHandler._failedPendingInstalls.intersection(addonHandler._failedPendingRemovals)
 	failedInstalls = addonHandler._failedPendingInstalls - failedUpdates
@@ -78,8 +78,8 @@ def _showAddonsWarnings() -> None:
 		addonFailureMessages.append(
 			ngettext(
 				# Translators: Shown when one or more add-ons failed to update.
-				"The following add-on failed to update: {}",
-				"The following add-ons failed to update: {}",
+				"The following add-on failed to update: {}.",
+				"The following add-ons failed to update: {}.",
 				len(failedUpdates)
 			).format(", ".join(failedUpdates))
 		)
@@ -87,8 +87,8 @@ def _showAddonsWarnings() -> None:
 		addonFailureMessages.append(
 			ngettext(
 				# Translators: Shown when one or more add-ons failed to be uninstalled.
-				"The following add-on failed to uninstall: {}",
-				"The following add-ons failed to uninstall: {}",
+				"The following add-on failed to uninstall: {}.",
+				"The following add-ons failed to uninstall: {}.",
 				len(failedRemovals)
 			).format(", ".join(failedRemovals))
 		)
@@ -96,8 +96,8 @@ def _showAddonsWarnings() -> None:
 		addonFailureMessages.append(
 			ngettext(
 				# Translators: Shown when one or more add-ons failed to be installed.
-				"The following add-on failed to be installed: {}",
-				"The following add-ons failed to be installed: {}",
+				"The following add-on failed to be installed: {}.",
+				"The following add-ons failed to be installed: {}.",
 				len(failedInstalls)
 			).format(", ".join(failedInstalls))
 		)
@@ -111,7 +111,7 @@ def _showAddonsWarnings() -> None:
 				"Some operations on add-ons failed. See the log file for more details.\n{}"
 			).format("\n".join(addonFailureMessages)),
 			# Translators: Title of message shown when requested action on add-ons failed.
-			_("Add-on failures"),
+			_("Error"),
 			wx.ICON_ERROR | wx.OK
 		)
 
@@ -185,7 +185,7 @@ def doStartupDialogs():
 						pass
 			# Ask the user if usage stats can be collected.
 			gui.runScriptModalDialog(gui.startupDialogs.AskAllowUsageStatsDialog(None), onResult)
-	_showAddonsWarnings()
+	_showAddonsErrors()
 
 
 @dataclass
