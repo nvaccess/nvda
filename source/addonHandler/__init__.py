@@ -19,7 +19,6 @@ from six import string_types
 from typing import (
 	Callable,
 	Dict,
-	List,
 	Optional,
 	Set,
 	TYPE_CHECKING,
@@ -314,8 +313,8 @@ def terminate():
 	pass
 
 
-def _getDefaultAddonPaths() -> List[str]:
-	""" Returns paths where addons can be found.
+def _getDefaultAddonPaths() -> list[str]:
+	r""" Returns paths where addons can be found.
 	For now, only <userConfig>\addons is supported.
 	"""
 	addon_paths = []
@@ -515,13 +514,18 @@ class Addon(AddonBase):
 				_report_manifest_errors(self.manifest)
 				raise AddonError("Manifest file has errors.")
 
-	def completeInstall(self) -> str:
+	def completeInstall(self) -> Optional[str]:
+		if not os.path.exists(self.pendingInstallPath):
+			log.error(f"Pending install path {self.pendingInstallPath} does not exist")
+			return None
+
 		try:
 			os.rename(self.pendingInstallPath, self.installPath)
 			state[AddonStateCategory.PENDING_INSTALL].discard(self.name)
 			return self.installPath
 		except OSError:
 			log.error(f"Failed to complete addon installation for {self.name}", exc_info=True)
+			return None
 
 	def requestRemove(self):
 		"""Marks this addon for removal on NVDA restart."""
