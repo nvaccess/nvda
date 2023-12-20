@@ -164,12 +164,13 @@ def processText(locale: str, text: str, symbolLevel: characterProcessing.SymbolL
 	return text.strip()
 
 
-def cancelSpeech():
+def cancelSpeech(clearBrailleRegions = True):
 	"""Interupts the synthesizer from currently speaking"""
 	# Import only for this function to avoid circular import.
 	from .sayAll import SayAllHandler
 	SayAllHandler.stop()
-	_regions.clear()
+	if clearBrailleRegions:
+		_regions.clear()
 #	if config.conf['braille']['mode'] == braille.BrailleMode.SPEECH_EMULATION.value:
 #		braille.handler.mainBuffer.clear()
 	if _speechState.beenCanceled:
@@ -974,13 +975,15 @@ def speak(  # noqa: C901
 		speechViewer.appendSpeechSequence(speechSequence)
 	if config.conf['braille']['mode'] == braille.BrailleMode.SPEECH_EMULATION.value:
 		text = ' '.join([x for x in speechSequence if isinstance(x, str)])
+		currentRegions = False
 		if _regions:
 			text = ' '+text
+			currentRegions = True
 		region = braille.TextRegion(text)
 		region.update()
 		_regions.append(region)
 		braille.handler.mainBuffer.regions = _regions.copy()
-		if not _regions:
+		if not currentRegions:
 			braille.handler.mainBuffer.focus(_regions[0])
 		import time
 		now = time.time()
