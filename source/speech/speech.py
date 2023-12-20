@@ -171,8 +171,6 @@ def cancelSpeech(clearBrailleRegions = True):
 	SayAllHandler.stop()
 	if clearBrailleRegions:
 		_regions.clear()
-#	if config.conf['braille']['mode'] == braille.BrailleMode.SPEECH_EMULATION.value:
-#		braille.handler.mainBuffer.clear()
 	if _speechState.beenCanceled:
 		return
 	elif _speechState.speechMode == SpeechMode.off:
