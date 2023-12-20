@@ -3308,6 +3308,30 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Reports which position braille is tethered to
 		# (braille can be tethered automatically or to either focus or review position).
 		ui.message(_("Braille tethered %s") % TetherTo(newTetherChoice).displayString)
+	@script(
+		# Translators: Input help mode message for toggle braille mode command
+		description = _('Cycles through the available braille modes'),
+		category = SCRCAT_BRAILLE,
+		gesture = "kb:nvda+alt+t"
+	)
+	def script_toggleBrailleMode(self, gesture):
+		curMode = BrailleMode(config.conf['braille']['mode'])
+		modeList = list(BrailleMode)
+		index = modeList.index(curMode)
+		index = index+1 if not index == len(modeList)-1 else 0
+		newMode = modeList[index]
+		config.conf['braille']['mode'] = newMode.value
+		braille.handler._dismissMessage()
+#		braille.handler.mainBuffer.clear()
+		# Translators: The message reported when switching braille modes
+		message = f'{_("Braille mode")} {newMode.displayString}'
+		ui.message(message)
+		if newMode == BrailleMode.SPEECH_EMULATION:
+			return
+		if braille.handler.getTether() == TetherTo.REVIEW.value:
+			braille.handler.handleReviewMove(shouldAutoTether = braille.handler.shouldAutoTether)
+			return
+		braille.handler.handleGainFocus(api.getFocusObject())
 
 	@script(
 		# Translators: Input help mode message for cycle through
