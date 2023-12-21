@@ -189,7 +189,10 @@ def appendSpeechSequence(sequence: SpeechSequence) -> None:
 		return
 	# If the speech viewer text control has the focus, we want to disable updates
 	# Otherwise it would be impossible to select text, or even just read it (as a blind person).
-	if _guiFrame.FindFocus() == _guiFrame.textCtrl:
+	if (
+		_guiFrame.FindFocus() == _guiFrame.textCtrl
+		or _guiFrame.textCtrl.GetScreenRect().Contains(wx.GetMousePosition())
+	):
 		return
 
 	# to make the speech easier to read, we must separate the items.
@@ -198,11 +201,13 @@ def appendSpeechSequence(sequence: SpeechSequence) -> None:
 	)
 	_guiFrame.textCtrl.AppendText(text + SPEECH_SEQUENCE_SEPARATOR)
 
+
 def _cleanup():
 	global isActive
 	if not isActive:
 		return
 	_setActive(False)
+
 
 def deactivate():
 	global _guiFrame, isActive
