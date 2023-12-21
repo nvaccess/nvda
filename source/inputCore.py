@@ -526,7 +526,13 @@ class InputManager(baseObject.AutoPropertyObject):
 		immediate = getattr(gesture, "_immediate", True)
 		speechEffect = gesture.speechEffectWhenExecuted
 		if speechEffect == gesture.SPEECHEFFECT_CANCEL:
-			queueHandler.queueFunction(queueHandler.eventQueue, speech.cancelSpeech, _immediate=immediate)
+			from globalCommands import commands
+			queueHandler.queueFunction(
+				queueHandler.eventQueue,
+				speech.cancelSpeech,
+				_immediate=immediate,
+				clearBrailleRegions = not (script in [commands.script_braille_scrollBack, commands.script_braille_scrollForward])
+			)
 		elif speechEffect in (gesture.SPEECHEFFECT_PAUSE, gesture.SPEECHEFFECT_RESUME):
 			queueHandler.queueFunction(queueHandler.eventQueue, speech.pauseSpeech, speechEffect == gesture.SPEECHEFFECT_PAUSE)
 
