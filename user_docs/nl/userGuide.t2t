@@ -1538,11 +1538,10 @@ De meeste synthesizers ondersteunen deze functionaliteit.
 In het algemeen is het aan te bevelen dit selectievakje aan te vinken. Er zijn evenwel synthesizers die van de Microsoft API gebruik maken die met de uitspraak van individuele lettertekens niet goed omgaan. Als u problemen hiermee ondervindt, kunt u het selectievakje beter niet aanvinken.
 
 ==== Vertraagde beschrijving van (letter)tekens bij cursorverplaatsing ====[delayedCharacterDescriptions]
-: Standaard
-  Uitgeschakeld
-: Opties
-  Ingeschakeld, Uitgeschakeld
-:
+
+|| Standaard | Uitgeschakeld |
+|| Opties | Ingeschakeld, Uitgeschakeld |
+
 
 Wanneer deze optie is aangevinkt zal NVDA het (letter)teken nader beschrijven wanneer  u de cursor letter voor letter verplaatst.
 
@@ -1644,11 +1643,10 @@ Als u wilt dat braille in plaats daarvan objectnavigatie en tekst-review volgt, 
 In dit geval  zal Braille  de systeemfocus en systeemaanwijzer niet volgen.
 
 ==== Invoercursor verplaatsen bij routering van leescursor ====[BrailleSettingsReviewRoutingMovesSystemCaret]
-: Standaard
-  Nooit
-: Opties
-  Standaard (Nooit), Nooit, Alleen wanneer automatisch gekoppeld (tethered), Altijd
-:
+
+|| Standaard | Nooit |
+|| Opties | Standaard (Nooit), Nooit, Alleen wanneer automatisch gekoppeld (tethered), Altijd |
+
 
 Deze instelling bepaalt of de invoercursor ook verplaatst moet worden  bij het indrukken van de routing-knop.
 Deze optie staat standaard ingesteld op Nooit, wat inhoudt dat met routing de invoercursor nooit wordt verplaatst bij routing van de leescursor.
@@ -1711,11 +1709,10 @@ Als u de context echter wilt lezen (dat wil zeggen wanneer u zich in een lijst b
 Om Te tonen contextinformatie aan of uit te zetten vanaf elke willekeurige plaats kunt u een aangepaste invoerhandeling toekennen met behulp van het [dialoogvenster Invoerhandelingen #InputGestures].
 
 ==== Spraak onderbreken tijdens het scrollen ====[BrailleSettingsInterruptSpeech]
-: Standaard
-  Ingeschakeld
-: Opties
-  Standaard (Ingeschakeld), Ingeschakeldd, Uitgeschakeld
-:
+
+|| Standaard | Ingeschakeld |
+|| Opties | Standaard (Ingeschakeld), Ingeschakeldd, Uitgeschakeld |
+
 
 Met deze instelling bepaalt u of de spraak moet worden onderbroken bij vooruit-/achteruitscrollen van de brailleleesregel.
 De opdracht 'Vorige/Volgende'regel leidt altijd tot onderbreking van de spraakuitvoer.
@@ -1726,11 +1723,10 @@ Dat is de reden dat de optie, spraak onderbreken tijdens het scrollen van braill
 Door deze optie uit te schakelen kunt u wat u in braille leest gelijktijdig hardop laten voorlezen.
 
 ==== Selectie tonen ====[BrailleSettingsShowSelection]
-: Standaard
-  Ingeschakeld
-: Opties
-  Standaard (Enabled), Ingeschakeld, Uitgeschakeld
-:
+
+|| Standaard | Ingeschakeld |
+|| Opties | Standaard (Enabled), Ingeschakeld, Uitgeschakeld |
+
 
 Deze instelling bepaalt of de selectieaanwijzer (punt 7 en punt 8) op  de brailleleesregel wordt getoond.
 De optie staat standaard aan, dus wordt de selectieaanwijzer  getoond.
@@ -1801,11 +1797,10 @@ Deze optie is alleen beschikbaar als u de geïnstalleerde versie van NVDA gebrui
 audio-onderdrukking kan niet worden ondersteund bij gebruik van de draagbare en de tijdelijke versie van NVDA. 
 
 ==== Volume van NVDA-geluiden volgt stemvolume ====[SoundVolumeFollowsVoice]
-: Standaard
-  Uitgeschakeld
-: Opties
-  Uitgeschakeld, Ingeschakeld
-:
+
+|| Standaard | Uitgeschakeld |
+|| Opties | Uitgeschakeld, Ingeschakeld |
+
 
 Wanneer deze optie ingeschakeld is, zal het volume van   geluiden en piepjes die NVDA voortbrengt de volumeinstelling  van de stem die gebruikt wordt volgen.
 Als u het volume van de stem verlaagt, zal het volume van geluiden mee naar beneden gaan.
@@ -2233,11 +2228,10 @@ Dit kan handig zijn bij het lezen van een document waar blanco regels worden geb
 In deze categorie kunt u diverse aspecten  van  documentnavigatie aanpassen.
 
 ==== Alineastijl ====[ParagraphStyle]
-: Standaard
-  Door toepassing verwerkt
-: Opties
-  Standaard (Door toepassing verwerkt, nieuwe regel, meervoudigee nieuwe regelactie
-:
+
+|| Standaard | Door toepassing verwerkt |
+|| Opties | Standaard (Door toepassing verwerkt, nieuwe regel, meervoudigee nieuwe regelactie |
+
 
 Met deze vervolgkeuzelijst kunt u de alineastijl selecteren die gebruikt moet worden bij alineanavigatie met ``control+pijlOmhoog`` en ``control+pijlOmlaag``.
 De beschikbare alineastijlen zijn:
@@ -2291,11 +2285,10 @@ Deze knop is eerst dan ingeschakeld als NVDA zo is ingesteld dat het laden van a
 - 
 
 ==== Registratie betreffende gebeurtenissen en wijzigingen  in UI Automation  ====[AdvancedSettingsSelectiveUIAEventRegistration]
-: Standaard
-  Automatisch
-: Opties
-  Automatisch, Selectiefe, Globaal
-:
+
+|| Standaard | Automatisch |
+|| Opties | Automatisch, Selectiefe, Globaal |
+
 
 Met deze optie kunt u bepalen hoe NVDA gebeurtenissen (events) die door de UI Automation accessibility API van Microsoft worden gegenereerd, moeten worden geregistreerd.
 Het vervolgkeuzemenu registratie mbt UI Automation-gebeurtenissen en kenmerkbepalende  wijzigingen heeft drie opties:
@@ -2326,11 +2319,10 @@ Vooralsnog raden we de meeste gebruikers NIET aan dit standaard aan te zetten, a
 De implementatie van Microsoft Excel's UI automation is aan voortdurende verandering onderhevig, en  versies van Microsoft Office die ouder zijn dan 16.0.13522.10000 geven mogelijk niet genoeg informatie prijs, wat deze optie vokomen onbruikbaar maakt.
 
 ==== Ondersteuning Windows Consool ====[AdvancedSettingsConsoleUIA]
-: Standaard
-  Automatisch
-: Opties
-  Automatisch, UIA wanneer beschikbaar, Legacy
-:
+
+|| Standaard | Automatisch |
+|| Opties | Automatisch, UIA wanneer beschikbaar, Legacy |
+
 
 Met deze instelling wordt bepaald hoe NVDA moet omgaan met de Windows-consool die door de Opdrachtprompt, PowerShell, en het Windows Subsysteem voor Linux gebruikt wordt.
 Dit heeft geen invloed op de moderne Windows Terminal.
@@ -2378,9 +2370,9 @@ De opties zijn:
  -
  
 ==== Dynamische zones met wisselende inhoud melden ====[BrailleLiveRegions]
-: Standaard
-  Ingeschakeld
-: Opties
+
+|| Standaard | Ingeschakeld |
+ Opties
   Uitgeschakeld, Ingeschakeld
     Standaard (ingeschakeld), Uitgeschakeld, Ingeschakeld
 :
@@ -2414,11 +2406,10 @@ Wanneer er echter in terminal-toepassingen  een tekenmidden in een regel wordt i
 -
 
 ==== Nieuwe tekst in Windows Terminal via (voor)lezen ====[WtStrategy]
-: Standaard
-  Diffing
-: Opties
-  Standaard (Diffing), Diffing, UIA notificaties
-:
+
+|| Standaard | Diffing |
+|| Opties | Standaard (Diffing), Diffing, UIA notificaties |
+
 
 Met deze optie kiest u hoe NVDA bepaalt wat er aan nieuwe tekst is (en dus wat gelezen moet worden als "dynamische inhoudwijzigingen melden" ingeschakeld is) in Windows Terminal en de WPF Windows Terminal control die gebruikt wordt in Visual Studio 2022.
 Dit is niet van invloed op de Windows-console (``conhost.exe``).
@@ -2448,11 +2439,10 @@ In sommige situaties, is de tekstachtergrond mogelijk volkomen transparant, waar
 Bij verscheidene GUI API's, die al heel lang populair zijn, kan de  tekst weergegeven zijn door middel van een transparante achtergrond, maar visueel is de achtergrondkleur in orde.
 
 ==== WASAPI vor audio uitvoer gebruiken ====[WASAPI]
-: Standaard
-  Ingeschakeld
-: Opties
-  Standaard (Ingeschakeld), Uitgeschakeld, Ingeschakeld
-:
+
+|| Standaard | Ingeschakeld |
+|| Opties | Standaard (Ingeschakeld), Uitgeschakeld, Ingeschakeld |
+
 
 Met deze optie kan audiouitvoer  via Windows Audio Session API (WASAPI) ingeschakeld worden.
 WASAPI is een moderner audio-framework dat potentieel betere response-eigenschappen, prestaties en stabiliteit van de NVDA audiouitvoer biedt, zowel van spraak als klank.

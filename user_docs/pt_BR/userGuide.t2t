@@ -1538,11 +1538,10 @@ Todavia, alguns sintetizadores Microsoft Speech API não o implementam corretame
 Caso esteja enfrentando problemas com a pronúncia de caracteres individuais, experimente desabilitá-la.
 
 ==== Descrições de caracteres com atraso ao movimentar cursor ====[delayedCharacterDescriptions]
-: Padrão
-  Desabilitado
-: Opções
-  Habilitado, Desabilitado
-:
+
+|| Padrão | Desabilitado |
+|| Opções | Habilitado, Desabilitado |
+
 
 Quando esta configuração estiver marcada, o NVDA dirá a descrição do caractere quando você se mover por caracteres.
 
@@ -1648,11 +1647,10 @@ Por outro lado, se deseja que o braille acompanhe a navegação de objetos e a e
 Nesse caso, o Braille não seguirá o foco e o cursor do sistema.
 
 ==== Mover o cursor do sistema ao sincronizar cursor de exploração ====[BrailleSettingsReviewRoutingMovesSystemCaret]
-: Padrão
-  Nunca
-: Opções
-  Padrão (Nunca), Nunca, Apenas quando vinculado automaticamente, Sempre
-:
+
+|| Padrão | Nunca |
+|| Opções | Padrão (Nunca), Nunca, Apenas quando vinculado automaticamente, Sempre |
+
 
 Esta configuração determina se o cursor do sistema também deve ser movido pressionando o botão de direcionamento.
 Esta opção é definida como Nunca por padrão, o que significa que o direcionamento nunca moverá o cursor ao sincronizar o cursor de exploração.
@@ -1715,11 +1713,10 @@ No entanto, para que você leia o contexto (ou seja, que você está em uma list
 Para alternar a apresentação de contexto do foco de qualquer lugar, atribua um comando personalizado usando o [diálogo Definir Comandos #InputGestures].
 
 ==== Interromper a fala enquanto rola ====[BrailleSettingsInterruptSpeech]
-: Padrão
-  Habilitado
-: Opções
-  Padrão (Habilitado), Habilitado, Desabilitado
-:
+
+|| Padrão | Habilitado |
+|| Opções | Padrão (Habilitado), Habilitado, Desabilitado |
+
 
 Esta configuração determina se a fala deve ser interrompida quando a linha Braille é rolada para trás/frente.
 Os comandos de linha anterior/seguinte sempre interrompem a fala.
@@ -1730,11 +1727,10 @@ Por esse motivo, a opção está habilitada por padrão, interrompendo a fala ao
 A desativação desta opção permite que a fala seja ouvida ao ler Braille simultaneamente.
 
 ==== Mostrar seleção ====[BrailleSettingsShowSelection]
-: Padrão
-  Habilitado
-: Opções
-  Padrão (Habilitado), Habilitado, Desabilitado
-:
+
+|| Padrão | Habilitado |
+|| Opções | Padrão (Habilitado), Habilitado, Desabilitado |
+
 
 Esta configuração determina se o indicador de seleção (pontos 7 e 8) é mostrado pela linha braille.
 A opção está habilitada por padrão para que o indicador de seleção seja mostrado.
@@ -1815,11 +1811,10 @@ Esta opção só está disponível se o NVDA tiver sido instalado.
 Não é possível suportar o áudio prioritário em cópias portáteis e temporárias do NVDA.
 
 ==== Volume dos sons do NVDA acompanha volume da voz ====[SoundVolumeFollowsVoice]
-: Padrão
-  Desabilitado
-: Opções
-  Desabilitado, Habilitado
-:
+
+|| Padrão | Desabilitado |
+|| Opções | Desabilitado, Habilitado |
+
 
 Quando esta opção estiver ativada, o volume dos sons e bipes do NVDA seguirá a configuração de volume da voz que você está usando.
 Se você diminuir o volume da voz, o volume dos sons diminuirá.
@@ -2263,11 +2258,10 @@ Isso pode ser útil ao ler um documento onde linhas em branco são usadas para s
 Esta categoria permite ajustar vários aspectos da navegação de documento.
 
 ==== Estilo de Parágrafo ====[ParagraphStyle]
-: Padrão
-  Controlado pelo aplicativo
-: Opções
-  Padrão (Controlado pelo aplicativo), Controlado pelo aplicativo, Quebra de linha única, Quebra de multilinha
-:
+
+|| Padrão | Controlado pelo aplicativo |
+|| Opções | Padrão (Controlado pelo aplicativo), Controlado pelo aplicativo, Quebra de linha única, Quebra de multilinha |
+
 
 Esta caixa de combinação permite que você selecione o estilo de parágrafo a ser usado ao navegar pelos parágrafos com ``control+seta para cima`` e ``control+seta para baixo``.
 Os estilos de parágrafo disponíveis são:
@@ -2320,11 +2314,10 @@ Esse botão abre o diretório onde você pode colocar um código personalizado e
 Este botão só é habilitado se o NVDA estiver configurado para habilitar o carregamento de código personalizado a partir do Diretório de Scratchpad do desenvolvedor.
 
 ==== Registro para eventos de Automação UI e mudanças de propriedade ====[AdvancedSettingsSelectiveUIAEventRegistration]
-: Padrão
-  Automático
-: Opções
-  Automático, Seletivo, Global
-:
+
+|| Padrão | Automático |
+|| Opções | Automático, Seletivo, Global |
+
 
 Esta opção altera como o NVDA registra eventos disparados pela API ""[Interface de Programação de Aplicativos]"" de acessibilidade da Microsoft UI Automation ""[Automação da Interface do Usuário (UIA)]"".
 A caixa de combinação de registro para eventos de UI Automation e alterações de propriedade tem três opções:
@@ -2355,11 +2348,10 @@ Ainda não recomendamos que a maioria dos usuários ative isso por padrão, embo
 A implementação de UI Automation do Microsoft Excel está em constante mudança, e versões do Microsoft Office anteriores a 16.0.13522.10000 podem não expor informações suficientes para que essa opção seja útil.
 
 ==== Suporte ao Console do Windows ====[AdvancedSettingsConsoleUIA]
-: Padrão
-  Automático
-: Opções
-  Automático, UIA quando disponível, Legado
-:
+
+|| Padrão | Automático |
+|| Opções | Automático, UIA quando disponível, Legado |
+
 
 Esta opção seleciona como o NVDA interage com o Console Windows usado pelo prompt de comando, PowerShell e o Subsistema Windows para Linux.
 Não afeta o Terminal Windows moderno.
@@ -2407,11 +2399,10 @@ Existem as seguintes opções:
 -
 
 ==== Relatar regiões dinâmicas [live regions] ====[BrailleLiveRegions]
-: Padrão
-  Habilitado
-: Opções
-  Padrão (Habilitado), Desabilitado, Habilitado
-:
+
+|| Padrão | Habilitado |
+|| Opções | Padrão (Habilitado), Desabilitado, Habilitado |
+
 
 Esta opção seleciona se o NVDA relata alterações em algum conteúdo dinâmico da web em Braille.
 Desabilitar esta opção equivale ao comportamento do NVDA nas versões 2023.1 e anteriores, que apenas relatavam estas alterações de conteúdo por fala.
@@ -2442,11 +2433,10 @@ No entanto, nos terminais, ao inserir ou excluir um caractere no meio de uma lin
 -
 
 ==== Falar texto novo no Terminal Windows via ====[WtStrategy]
-: Padrão
-  Diffing
-: Opções
-  Padrão (Diffing), Diffing, Notificações UIA
-:
+
+|| Padrão | Diffing |
+|| Opções | Padrão (Diffing), Diffing, Notificações UIA |
+
 
 Esta opção seleciona como o NVDA determina qual texto é "novo" (e, portanto, o que falar quando "anunciar alterações de conteúdo dinâmico" está habilitado) no Terminal Windows e no controle do Terminal Windows WPF usado no Visual Studio 2022.
 Ela não afeta o Console do Windows (``conhost.exe``).
@@ -2476,11 +2466,10 @@ Em algumas situações, o fundo do texto pode ser totalmente transparente, com o
 Com várias APIs de GUI historicamente populares, o texto pode ser renderizado com um fundo transparente, mas visualmente a cor do fundo é precisa.
 
 ==== Usar WASAPI para saída de áudio ====[WASAPI]
-: Padrão
-  Habilitado
-: Opções
-  Padrão (Habilitado), Desabilitado, Habilitado
-:
+
+|| Padrão | Habilitado |
+|| Opções | Padrão (Habilitado), Desabilitado, Habilitado |
+
 
 Esta opção permite a saída de áudio por meio da Windows Audio Session API (WASAPI) ""[API de Sessão de Áudio do Windows]"".
 WASAPI é uma estrutura de áudio mais moderna que pode melhorar a capacidade de resposta, o desempenho e a estabilidade da saída de áudio do NVDA, incluindo fala e sons.

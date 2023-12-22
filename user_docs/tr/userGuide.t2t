@@ -1533,11 +1533,10 @@ Bu seçenek genel olarak etkin olmalıdır.
 Eğer karakterlerin seslendirilmemesi gibi bir sorun yaşıyorsanız bu seçeneği etkisizleştirmeniz problemi çözecektir.
 
 ==== İmleç hareketi sırasında karakter tanımını bildir ====[delayedCharacterDescriptions]
-: varsayılan
-  Devre Dışı
-: Seçenekler
-  Etkin,  Devre Dışı
-:
+
+|| varsayılan | Devre Dışı |
+|| Seçenekler | Etkin,  Devre Dışı |
+
 
 Bu ayar Etkinken, imleçle karakterler arasında gezinirken NVDA karakter tanımını otomatik olarak bildirecektir.
 
@@ -1642,9 +1641,9 @@ Braille'in nesne sunucusu ve metin inceleme imlecini takip etmesini  istiyorsan�
 Bu durumda braille sistem odağını ve düzenleme imlecini takip etmez.
 
 ==== Braille inceleme imlecini taşırken sistem düzenleme imlecini hareket ettir ====[BrailleSettingsReviewRoutingMovesSystemCaret]
-: Varsayılan
-  Hiçbir zaman
-: Seçenekler
+
+|| Varsayılan | Hiçbir zaman |
+ Seçenekler
  Varsayılan (Asla), Hiçbir zaman, Yalnızca otomatik olarak bağlandığında, Her Zaman
 
 Bu seçenek, sistem imlecinin hareket ettirme düğmesine basarak da hareket ettirilip ettirilmeyeceğini belirler.
@@ -1708,11 +1707,10 @@ Ancak bağlamı tekrar okumak için (yani bir listede olduğunuzu ve bu listenin
 Herhangi bir yerdeyken odak bağlam sunumunu değiştirmek için, [Girdi Hareketleri iletişim kutusu #InputGestures] kullanarak özel bir girdi hareketi oluşturun.
 
 ==== Kaydırma sırasında konuşmayı durdur ====[BrailleSettingsInterruptSpeech]
-: Varsayılan
-  Etkin
-: Seçenekler
-  Varsayılan (Etkin), Etkin, Devre Dışı
-:
+
+|| Varsayılan | Etkin |
+|| Seçenekler | Varsayılan (Etkin), Etkin, Devre Dışı |
+
 
 Bu ayar, Braille ekranı geri/ileri kaydırıldığında konuşmanın durdurulup durdurulmayacağını ayarlamanızı sağlar.
 Önceki/sonraki satır komutları her zaman konuşmayı durdurur.
@@ -2254,11 +2252,10 @@ Bu, programlamada  kaynak kodu  gibi girintili metin bloklarını ayırmak için
 Bu kategori belge dolaşımı ile ilgili çeşitli ayarlamaları yapmanıza yarar
 
 ==== Paragraf kipi ====[ParagraphStyle]
-: Varsayılan
-  Uygulama tarafından kontrol edilir
-: Seçenekler
-  Varsayılan (Uygulama tarafından kontrol edilir), Uygulama tarafından kontrol edilir, Tek satır sonu, Çoklu satır sonu
-:
+
+|| Varsayılan | Uygulama tarafından kontrol edilir |
+|| Seçenekler | Varsayılan (Uygulama tarafından kontrol edilir), Uygulama tarafından kontrol edilir, Tek satır sonu, Çoklu satır sonu |
+
 
 Bu seçim kutusu, ``kontrol+yukarı ok`` ve ``kontrol+aşağı ok`` tuşları ile paragraflarda gezinirken kullanılacak paragraf kipini seçmenize olanak tanır.
 Kullanılabilir paragraf kipleri şunlardır:
@@ -2311,9 +2308,9 @@ Bu düğme, geliştirirken özel kod yerleştirebileceğiniz dizini açar.
 Bu düğme yalnızca NVDA, Geliştirici Scratchpad Dizininden özel kod yüklenmesini sağlayacak şekilde yapılandırılmışsa etkindir.
  
 ==== UI Otomasyon etkinlikleri ve özellik değişiklikleri ====[AdvancedSettingsSelectiveUIAEventRegistration]
-: Varsayılan
-  Otomatik
-: Seçenekler
+
+|| Varsayılan | Otomatik |
+ Seçenekler
   Otomatik, seçiml, global
 +:
 
@@ -2348,11 +2345,10 @@ Microsoft Excel'in UI otomasyon uygulaması sürekli değişiyor ve Microsoft Of
 
 
 ==== Windows Konsol desteği ====[AdvancedSettingsConsoleUIA]
-: Varsayılan
-  Otomatik
-: Seçenekler
-  Otomatik, UIA kullanılabilir olduğunda, Eski
-:
+
+|| Varsayılan | Otomatik |
+|| Seçenekler | Otomatik, UIA kullanılabilir olduğunda, Eski |
+
 
 Bu seçenek, NVDA'nın komut istemi, PowerShell ve Linux için Windows Alt Sistemi tarafından kullanılan Windows Konsolu ile nasıl etkileşime gireceğini belirler.
 Not: modern Windows Terminali etkilenmez.
