@@ -1648,11 +1648,10 @@ Se pretender que o Braille siga apenas a navegação por objectos e a revisão d
 Assim, o Braille não seguirá o foco e o cursor do sistema,.
 
 ==== Mover o cursor de revisão do sistema ao encaminhar o cursor de revisão ====[BrailleSettingsReviewRoutingMovesSystemCaret]
-: Predefinição
-  Nunca
-: Opções
-  Predefinição (Nunca), Nunca, Apenas quando ligado automaticamente, Sempre
-:
+
+|| Predefinição | Nunca |
+|| Opções | Predefinição (Nunca), Nunca, Apenas quando ligado automaticamente, Sempre |
+
 
 Esta opção determina se o cursor do sistema também deve ser movido com o premir de um botão de encaminhamento.
 Esta opção está definida para Nunca por predefinição, o que significa que o encaminhamento nunca moverá o cursor de revisão.
@@ -1814,11 +1813,10 @@ Esta opção só está disponível se o NVDA estiver instalado.
 Não é possível suportar o Modo de diminuição do volume, para cópias portáteis ou temporárias do NVDA.
 
 ==== O volume dos sons do NVDA segue o volume da voz ====[SoundVolumeFollowsVoice]
-: Predefinição
-  Desactivado
-: Opções
-  Desactivado, Activado
-:
+
+|| Predefinição | Desactivado |
+|| Opções | Desactivado, Activado |
+
 
 Quando esta opção está activada, o volume dos sons e dos bipes do NVDA segue a definição de volume da voz que está a utilizar.
 Se diminuir o volume da voz, o volume dos sons diminui.
@@ -2262,11 +2260,10 @@ Isto pode ser útil ao ler um documento onde linhas em branco são usadas para s
 Esta secção permite ajustar vários aspectos da navegação em documentos.
 
 ==== Estilo do parágrafo ====[ParagraphStyle]
-: Predefinição
-  Tratado pela aplicação
-: Opções
-  Predifinição (Tratado pela aplicação), Tratado pela aplicação, Quebra de linha única, Quebra de várias linhas
-:
+
+|| Predefinição | Tratado pela aplicação |
+|| Opções | Predifinição (Tratado pela aplicação), Tratado pela aplicação, Quebra de linha única, Quebra de várias linhas |
+
 
 Esta caixa de combinação permite seleccionar o estilo de parágrafo para ser usado ao navegar por parágrafos com "control+seta acima" ou "control+seta abaixo".
 Os estilos de parágrafo disponíveis são:
@@ -2354,11 +2351,10 @@ Continuamos a não recomendar que a maioria dos utilizadores ative esta opção 
 A implementação da automação da interface do usuário do Microsoft Excel está sempre mudando, e as versões do Microsoft Office anteriores à 16.0.13522.10000 podem não expor informações suficientes para que essa opção seja útil.
 
 ==== Suporte à Consola Windows ====[AdvancedSettingsConsoleUIA]
-: Padrão
-  Automático
-: Opções
-  Automático, UIA quando disponível, Antigo
-:
+
+|| Padrão | Automático |
+|| Opções | Automático, UIA quando disponível, Antigo |
+
 
 Esta opção selecciona a forma como o NVDA interage com a Consola Windows utilizada pela Linha de comandos, PowerShell, e o Subsistema Windows para Linux.
 Não afecta o Terminal Windows moderno.
@@ -2406,11 +2402,10 @@ Existem as seguintes opções:
 -
 
 ==== Anunciar live regions ====[BrailleLiveRegions]
-: Predefinição
-  Activado
-: Opções
-  Predefinição (Activado), Desactivado, Activado
-:
+
+|| Predefinição | Activado |
+|| Opções | Predefinição (Activado), Desactivado, Activado |
+
 
 Esta opção selecciona se o NVDA comunica alterações em alguns conteúdos dinâmicos da Web em Braille.
 A desactivação desta opção é equivalente ao comportamento do NVDA nas versões 2023.1 e anteriores, que apenas comunicava estas alterações de conteúdo em voz.
@@ -2475,11 +2470,10 @@ Em algumas situações, o fundo do texto pode ser totalmente transparente, com o
 Com várias API's de GUI, historicamente populares, o texto pode ser apresentado com um fundo transparente, mas visualmente a cor de fundo é exacta.
 
 ==== Usar WASAPI para saída de áudio ====[WASAPI]
-: Predefinição
-  Activada
-: Opções
-  Predefinição (activada), Activada, Desactivada
-:
+
+|| Predefinição | Activada |
+|| Opções | Predefinição (activada), Activada, Desactivada |
+
 
 Esta opção activa a saída de áudio através da API de sessão de áudio do Windows (WASAPI).
 WASAPI é uma estrutura de áudio mais moderna que pode melhorar a capacidade de resposta, o desempenho e a estabilidade da saída de áudio do NVDA, incluindo a voz e os sons.
