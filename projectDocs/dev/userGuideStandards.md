@@ -18,13 +18,16 @@ Feature flags, comboboxes and checkboxes should be included using the following 
 `FeatureDescriptionAnchor` should not include the settings category.
 Once the anchor is set it cannot be updated, while settings may move categories.
 
-```text2tags
+```t2t
 ==== The name of a feature ====[FeatureDescriptionAnchor]
-: Default
-  Enabled
-: Options
-  Default (Enabled), Enabled, Disabled
-:
+
+|| Options | Default (Enabled), Enabled, Disabled |
+|| Default | Enabled |
+|| Toggle command | ``nvda+shift+e`` |
+
+|| Option || Behaviour ||
+| Enabled | behaviour of enabled |
+| Disabled | behaviour of disabled |
 
 This setting allows the feature of using functionality in a certain situation to be controlled in some way.
 If necessary, a description of a common use case that is supported by each option.

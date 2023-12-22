@@ -1536,11 +1536,10 @@ Es gibt jedoch einige SAPI-Sprachausgaben von Microsoft, bei denen dies nicht ko
 Wenn Sie Probleme mit der Aussprache mancher Zeichen haben, versuchen Sie, die Option zu deaktivieren.
 
 ==== Verzögerte Beschreibungen für Zeichen bei Cursor-Bewegung ====[delayedCharacterDescriptions]
-: Standard
-  Ausgeschaltet
-: Optionen
-  Eingeschaltet, Ausgeschaltet
-:
+
+|| Standard | Ausgeschaltet |
+|| Optionen | Eingeschaltet, Ausgeschaltet |
+
 
 Wenn diese Einstellung aktiviert ist, nennt NVDA die Zeichenbeschreibung, wenn Sie sich zeichenweise bewegen.
 
@@ -1646,11 +1645,10 @@ Wenn Sie möchten, dass die Braillezeile stattdessen der Objektnavigation und de
 In diesem Fall folgt die Braillezeile weder dem System-Fokus, noch dem System-Cursor.
 
 ==== Den System-Cursor bei der Weiterleitung des NVDA-Cursors verschieben ====[BrailleSettingsReviewRoutingMovesSystemCaret]
-: Standard
-  Niemals
-: Optionen
-  Standard (Niemals), Niemals, Nur bei automatischer Kopplung, Immer
-:
+
+|| Standard | Niemals |
+|| Optionen | Standard (Niemals), Niemals, Nur bei automatischer Kopplung, Immer |
+
 
 Diese Einstellung legt fest, ob der System-Cursor bei einem Druck auf die Routing-Taste mit verschoben werden soll.
 Diese Option ist standardmäßig auf "Niemals" eingestellt, das bedeutet, der Cursor wird bei der Weiterleitung des NVDA-Cursors nicht bewegt.
@@ -1713,11 +1711,10 @@ Wenn Sie dennoch Kontext-Informationen (wie z. B. den Namen der Liste) angezeigt
 Um die Einstellung von überall aus zu ändern, weisen Sie eine Tastenkombination mit Hilfe des Dialogs [Tastenbefehle #InputGestures] zu.
 
 ==== Unterbrechen der Sprachausgabe beim Navigieren ====[BrailleSettingsInterruptSpeech]
-: Standard
-  Eingeschaltet
-: Optionen
-  Eingeschaltet, Ausgeschaltet
-:
+
+|| Standard | Eingeschaltet |
+|| Optionen | Eingeschaltet, Ausgeschaltet |
+
 
 Diese Einstellung legt fest, ob die Sprachausgabe unterbrochen werden soll, sobald die Braillezeile vorwärts oder rückwärts gescrollt wird.
 Befehle für die vorherige bzw. nächste Zeile unterbricht immer die Sprachausgabe.
@@ -1728,11 +1725,10 @@ Aus diesem Grund ist die Option standardmäßig aktiviert und unterbricht die Sp
 Wenn Sie diese Option deaktivieren, können Sie die Sprachausgabe hören und gleichzeitig auf der Braillezeile lesen.
 
 ==== Auswahl anzeigen ====[BrailleSettingsShowSelection]
-: Standard
-  Eingeschaltet
-: Optionen
-  Standard (eingeschaltet), Eingeschaltet, Ausgeschaltet
-:
+
+|| Standard | Eingeschaltet |
+|| Optionen | Standard (eingeschaltet), Eingeschaltet, Ausgeschaltet |
+
 
 Diese Einstellung legt fest, ob die Auswahlanzeige (Punkte 7 und 8) auf der Braillezeile angezeigt werden.
 Die Option ist standardmäßig aktiviert, so dass der Auswahl-Indikator angezeigt wird.
@@ -1812,11 +1808,10 @@ Diese Option ist nur verfügbar, sofern NVDA installiert wurde.
 Die Unterstützung zum Umschalten der Audio-Quellen für portable und temporäre NVDA-Versionen ist nicht möglich.
 
 ==== Lautstärke der NVDA-Sounds folgt der Lautstärke der verwendeten Stimme ====[SoundVolumeFollowsVoice]
-: Standard
-  Ausgeschaltet
-: Optionen
-  Ausgeschaltet, Eingeschaltet
-:
+
+|| Standard | Ausgeschaltet |
+|| Optionen | Ausgeschaltet, Eingeschaltet |
+
 
 Wenn diese Option aktiviert ist, folgt die Lautstärke der NVDA-Sounds und -Signaltöne der Lautstärke-Einstellung der verwendeten Stimme.
 Wenn Sie die Lautstärke der Stimme verringern, nimmt auch die Lautstärke der Sounds ab.
@@ -2260,11 +2255,10 @@ Dies kann nützlich sein, wenn Sie ein Dokument lesen, in dem Leerzeilen zur Tre
 In dieser Kategorie können Sie verschiedene Aspekte der Dokument-Navigation anpassen.
 
 ==== Absatz-Eigenschaften ====[ParagraphStyle]
-: Standard
-  Wird von der Anwendung behandelt
-: Optionen
-  Standard (Wird von der Anwendung behandelt), Wird von der Anwendung behandelt, Einfacher Zeilenumbruch, Mehrfacher Zeilenumbruch
-:
+
+|| Standard | Wird von der Anwendung behandelt |
+|| Optionen | Standard (Wird von der Anwendung behandelt), Wird von der Anwendung behandelt, Einfacher Zeilenumbruch, Mehrfacher Zeilenumbruch |
+
 
 Dieses Kombinationsfeld ermöglicht die Absatz-Eigenschaft auszuwählen, der bei der Navigation durch Absätze mit ``STRG+Pfeiltaste nach oben`` und ``STRG+Pfeiltaste nach unten`` verwendet werden soll.
 Die verfügbaren Absatzformate sind:
@@ -2318,11 +2312,10 @@ Diese Schaltfläche öffnet das Verzeichnis, in dem Sie während der Entwicklung
 Diese Schaltfläche ist nur aktiviert, wenn NVDA so konfiguriert ist, dass benutzerdefinierter Code aus dem Developer Scratchpad-Verzeichnis geladen werden kann.
 
 ==== Registrierung zu UIA-Ereignissen und Eigenschaftsänderungen ====[AdvancedSettingsSelectiveUIAEventRegistration]
-: Standard
-  Automatisch
-: Optionen
-  Automatisch, Ausgewählt, Überall
-:
+
+|| Standard | Automatisch |
+|| Optionen | Automatisch, Ausgewählt, Überall |
+
 
 Diese Option ändert die Art und Weise, wie NVDA sich für Ereignisse registriert, die von der Microsoft UI Automation Accessibility API ausgelöst werden.
 Das Kombinationsfeld "Registrierung für UIA-Ereignisse und Eigenschaftsänderungen" enthält drei Optionen:
@@ -2353,11 +2346,10 @@ Es wird nach wie vor nicht empfohlen, dass die Mehrheit der Benutzer diese Funkt
 Die Implementierung der UIA von Microsoft Excel ändert sich ständig, und Versionen von Microsoft Office, die älter als 16.0.13522.10000 sind, geben möglicherweise nicht genügend Informationen darüber Auskunft, um diese Option zu nutzen.
 
 ==== Unterstützung der Windows-Konsole ====[AdvancedSettingsConsoleUIA]
-: Standard
-  Automatisch
-: Optionen
-  Automatisch, UIA, sofern verfügbar, Legacy
-:
+
+|| Standard | Automatisch |
+|| Optionen | Automatisch, UIA, sofern verfügbar, Legacy |
+
 
 Diese Option legt fest, wie NVDA mit der Windows-Konsole interagiert, die von der Eingabeaufforderung, der PowerShell und dem Windows-Subsystem für Linux verwendet wird.
 Das moderne Windows-Terminal ist davon nicht betroffen.
@@ -2405,11 +2397,10 @@ Die folgenden Möglichkeiten gibt es:
 -
 
 ==== Live-Regionen mitteilen ====[BrailleLiveRegions]
-: Standard
-  Eingeschaltet
-: Optionen
-  Standard (eingeschaltet), Ausgeschaltet, Eingeschaltet
-:
+
+|| Standard | Eingeschaltet |
+|| Optionen | Standard (eingeschaltet), Ausgeschaltet, Eingeschaltet |
+
 
 Mit dieser Option können Sie festlegen, ob NVDA die Änderungen in einigen dynamischen Web-Inhalten auf der Braillezeile mitteilt.
 Die Deaktivierung dieser Option entspricht dem NVDA-Versionen vor 2023.1, die diese Änderungen der Inhalte nur über die Sprachausgabe mitteilten.
@@ -2440,11 +2431,10 @@ In Terminals wird jedoch beim Einfügen oder Löschen eines Zeichens in der Mitt
 -
 
 ==== Neuen Text in Windows-Terminal mitteilen via ====[WtStrategy]
-: Standard
-  Abweichend
-: Optionen
-  Standard (Abweichend), Abweichend, UIA-Benachrichtigungen
-:
+
+|| Standard | Abweichend |
+|| Optionen | Standard (Abweichend), Abweichend, UIA-Benachrichtigungen |
+
 
 Mit dieser Option wird festgelegt, wie NVDA bestimmt, welcher Text "neu" ist (und somit, was mitgeteilt werden soll, wenn "Änderungen dynamischer Inhalte mitteilen" aktiviert ist) in Windows-Terminal und dem WPF-Windows-Terminal-Steuerelement, das in Visual Studio 2022 verwendet wird.
 Die Windows-Konsole (``conhost.exe``) ist davon nicht betroffen.
@@ -2474,11 +2464,10 @@ In einigen Situationen kann der Texthintergrund vollständig transparent sein, w
 Bei mehreren historisch beliebten APIs von grafischen Oberflächen kann der Text mit einem transparenten Hintergrund gerendert werden, aber die Hintergrundfarbe ist visuell korrekt.
 
 ==== WASAPI für die Audio-Ausgabe verwenden ====[WASAPI]
-: Standard
-  Eingeschaltet
-: Optionen
-  Standard (Eingeschaltet), Ausgeschaltet, Eingeschaltet
-:
+
+|| Standard | Eingeschaltet |
+|| Optionen | Standard (Eingeschaltet), Ausgeschaltet, Eingeschaltet |
+
 
 Diese Option aktiviert die Audio-Ausgabe über die API der Windows-Audio-Session (WASAPI).
 Das WASAPI ist ein moderneres Audio-Framework, das die Reaktionsfähigkeit, Leistung und Stabilität der Audio-Ausgabe in NVDA, einschließlich Sprachausgabe und Sounds, verbessern kann.
@@ -4174,4 +4163,3 @@ Die folgenden Werte können geändert werden:
 Wenn Sie weitere Informationen oder Hilfe bezüglich NVDA benötigen, besuchen Sie bitte die NVDA-Homepage unter NVDA_URL.
 Neben Ressourcen der Community und dem technischen Support finden Sie auch zusätzliche Dokumentationen.
 Auf diesen Seiten werden Informationen und Ressourcen zur NVDA-Entwicklung ebenfalls bereitgestellt.
-

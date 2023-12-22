@@ -19,7 +19,6 @@ from six import string_types
 from typing import (
 	Callable,
 	Dict,
-	List,
 	Optional,
 	Set,
 	TYPE_CHECKING,
@@ -73,6 +72,9 @@ DELETEDIR_SUFFIX=".delete"
 # and should return `False` if it is not interested in it, `True` otherwise.
 # For more details see appropriate section of the developer guide.
 isCLIParamKnown = extensionPoints.AccumulatingDecider(defaultDecision=False)
+
+_failedPendingRemovals: CaseInsensitiveSet[str] = CaseInsensitiveSet()
+_failedPendingInstalls: CaseInsensitiveSet[str] = CaseInsensitiveSet()
 
 
 AddonStateDictT = Dict[AddonStateCategory, CaseInsensitiveSet[str]]
@@ -287,15 +289,23 @@ def initialize():
 	getAvailableAddons(refresh=True, isFirstLoad=True)
 	state.cleanupRemovedDisabledAddons()
 	state._cleanupCompatibleAddonsFromDowngrade()
+	if missingPendingInstalls := state[AddonStateCategory.PENDING_INSTALL] - _failedPendingInstalls:
+		log.error(
+			"The following add-ons should be installed, "
+			f"but are no longer present on disk: {', '.join(missingPendingInstalls)}"
+		)
+		state[AddonStateCategory.PENDING_INSTALL] -= missingPendingInstalls
+	if missingPendingOverrideCompat := (
+		state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY] - _failedPendingInstalls
+	):
+		log.error(
+			"The following add-ons which were marked as compatible are no longer installed: "
+			f"{', '.join(missingPendingOverrideCompat)}"
+		)
+		state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY] -= missingPendingOverrideCompat
 	if NVDAState.shouldWriteToDisk():
 		state.save()
 	initializeModulePackagePaths()
-	if state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY]:
-		log.error(
-			"The following add-ons which were marked as compatible are no longer installed: "
-			f"{', '.join(state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY])}"
-		)
-		state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].clear()
 
 
 def terminate():
@@ -303,8 +313,8 @@ def terminate():
 	pass
 
 
-def _getDefaultAddonPaths() -> List[str]:
-	""" Returns paths where addons can be found.
+def _getDefaultAddonPaths() -> list[str]:
+	r""" Returns paths where addons can be found.
 	For now, only <userConfig>\addons is supported.
 	"""
 	addon_paths = []
@@ -343,9 +353,10 @@ def _getAvailableAddonsFromPath(
 					):
 						try:
 							a.completeRemove()
+							continue
 						except RuntimeError:
 							log.exception(f"Failed to remove {name} add-on")
-						continue
+							_failedPendingRemovals.add(name)
 					if(
 						isFirstLoad
 						and (
@@ -356,7 +367,13 @@ def _getAvailableAddonsFromPath(
 						newPath = a.completeInstall()
 						if newPath:
 							a = Addon(newPath)
-					if isFirstLoad and name in state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY]:
+						else:  # installation failed
+							_failedPendingInstalls.add(name)
+					if (
+						isFirstLoad
+						and name in state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY]
+						and name not in _failedPendingInstalls
+					):
 						state[AddonStateCategory.OVERRIDE_COMPATIBILITY].add(name)
 						state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].remove(name)
 					log.debug(
@@ -497,13 +514,18 @@ class Addon(AddonBase):
 				_report_manifest_errors(self.manifest)
 				raise AddonError("Manifest file has errors.")
 
-	def completeInstall(self) -> str:
+	def completeInstall(self) -> Optional[str]:
+		if not os.path.exists(self.pendingInstallPath):
+			log.error(f"Pending install path {self.pendingInstallPath} does not exist")
+			return None
+
 		try:
 			os.rename(self.pendingInstallPath, self.installPath)
 			state[AddonStateCategory.PENDING_INSTALL].discard(self.name)
 			return self.installPath
 		except OSError:
 			log.error(f"Failed to complete addon installation for {self.name}", exc_info=True)
+			return None
 
 	def requestRemove(self):
 		"""Marks this addon for removal on NVDA restart."""
@@ -565,7 +587,7 @@ class Addon(AddonBase):
 		"""
 		# #3090: Ensure that we don't add disabled / blocked add-ons to package path.
 		# By returning here the addon does not "run"/ become active / registered.
-		if self.isDisabled or self.isBlocked or self.isPendingInstall:
+		if self.isDisabled or self.isBlocked or self.isPendingInstall or self.name in _failedPendingRemovals:
 			return
 
 		extension_path = os.path.join(self.path, package.__name__)

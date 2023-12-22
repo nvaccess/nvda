@@ -116,12 +116,13 @@ The fields are as follows:
 In most cases, this is just the character or characters of the symbol.
 However, it can also be the identifier of a complex symbol.
 Certain characters cannot be typed into the file, so the following special sequences can be used:
- - \0: null
- - \t: tab
- - \n: line feed
- - \r: carriage return
- - \f: form feed
- - \#: # character (needed because # at the start of a line denotes a comment)
+  - \0: null
+  - \t: tab
+  - \n: line feed
+  - \r: carriage return
+  - \f: form feed
+  - \#: # character (needed because # at the start of a line denotes a comment)
+  -
 - replacement: The text which should be spoken for the symbol.
 If the symbol is a complex symbol, \1, \2, etc. can be used to refer to the groups matches, which will be inlined in the replacement, allowing for simpler rules.
 This also means that to get a \ character in the replacement, one has to type \\.
@@ -133,12 +134,12 @@ The default is to inherit the value or "all" if there is nothing to inherit.
 - preserve: Whether the symbol itself should be preserved to facilitate correct pronunciation by the synthesiser.
 For example, symbols which cause pauses or inflection (such as the comma in English) should be preserved.
 This field should be one of the following:
- - never: Never preserve the symbol.
- - always: Always preserve the symbol.
- - norep: Only preserve the symbol if it is not being replaced; i.e. the user has set symbol level lower than the level of this symbol.
- - -: Use the default.
- -
-The default is to inherit the value or "never" if there is nothing to inherit.
+  - never: Never preserve the symbol.
+  - always: Always preserve the symbol.
+  - norep: Only preserve the symbol if it is not being replaced; i.e. the user has set symbol level lower than the level of this symbol.
+  - -: Use the default.
+  - The default is to inherit the value or "never" if there is nothing to inherit.
+  -
 -
 Finally, a display name for the symbol can be provided in a comment after a tab at the end of the line.
 This will be shown to users when editing the symbol information and is especially useful for translators to define translated names for English complex symbols.

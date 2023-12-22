@@ -1535,11 +1535,10 @@ Niektóre syntezatory pracujące w standardzie Microsoft Speech API (SAPI)  nie 
 Jeśli napotykasz na problemy z wymową pojedynczych znaków, spróbuj wyłączyć tę opcję.
 
 ==== Opisy po nazwie liter podczas ruchu kursora ====[delayedCharacterDescriptions]
-: Domyślnie
-  Wyłączone
-: Opcje
-  Włączone, Wyłączone
-:
+
+|| Domyślnie | Wyłączone |
+|| Opcje | Włączone, Wyłączone |
+
 
 Gdy ta opcaje jest włączona, NVDA wypowie opis znaku podczas poruszania się po znakach.
 
@@ -1713,11 +1712,10 @@ Aby przeczytać informację kontekstową, konieczne będzie przewinięcie monito
 Aby w dowolnym miejscu przełączyć kontekstową prezentację fokusa, można przypisać własne zdarzenie wejścia przy pomocy [okna ustawień zdarzenia wejścia #InputGestures].
 
 ==== Przerwij mowę podczas przewijania ====[BrailleSettingsInterruptSpeech]
-: Domyślne
-  Włączone
-: Opcje
-  Domyślnie (włączone), Włączone, Wyłączone
-:
+
+|| Domyślne | Włączone |
+|| Opcje | Domyślnie (włączone), Włączone, Wyłączone |
+
 
 Ta opcja reguluje przerwanie mowy podczas przewijania tekstu na monitorze brajlowskim wstecz albo wprzód.
 Polecenia poprzedniego następnego wiersza zawsze przerywają mowę.
@@ -1728,11 +1726,10 @@ Z tego powodu opcja jest domyślnie włączona, przerywając mowę podczas przew
 Wyłączenie tej opcji umożliwia słyszenie mowy podczas symultanicznego odczytu tekstu.
 
 ==== Show selection ====[BrailleSettingsShowSelection]
-: domyślnie
-  włączone
-: opcje
-  domyślnie (włączone), włączone, wyłączone
-:
+
+|| domyślnie | włączone |
+|| opcje | domyślnie (włączone), włączone, wyłączone |
+
 
 Ta opcja reguluje pokazywanie indykatora zaznaczenia na monitorze brajlowskim.
 Ta opcja jest domyślnie włączona, co oznacza że indykator jest pokazywany.
@@ -1815,9 +1812,9 @@ Nie jest możliwe obsługiwanie przyciszania audio w przenośnych i tymczasowych
 ==== Głośność dźwięków NVDA jest spójna z głośnością  NVDA ====[SoundVolumeFollowsVoice]
 : Domyślnie
   Wyłączone
-: opcje
-  Wyłączone, Włączone
-:
+
+|| opcje | Wyłączone, Włączone |
+
 
 Gdy ta opcja jest włączona, Głośność dźwięków NVDA będzie śledzić głośność używanego syntezatora mowy.
 Jeżeli zmniejszysz głośność syntezatora mowy, głośność dźwięków także będzie zmniejszona.
@@ -2262,11 +2259,10 @@ To może być użyteczne podczas czytania tekstu z pustymi liniami do rozdzielan
 Ta kategoria umożliwia różne opcje związane z nawigacją po dokumentach.
 
 ==== Styl akapitu ====[ParagraphStyle]
-: Domyślny
-  Zarządzane przez aplikację
-: Opcje
-  Domyślnie (zarządzane przez aplikacje), zarządzane przez aplikacje, jeden rozdział wiersza, rozdział wielowierszowy
-:
+
+|| Domyślny | Zarządzane przez aplikację |
+|| Opcje | Domyślnie (zarządzane przez aplikacje), zarządzane przez aplikacje, jeden rozdział wiersza, rozdział wielowierszowy |
+
 
 To pole wyboru umożliwia wybór stylu akapitu, który ma być użyty podczas nawigacji używając skrótów ``control+strzałka w górę`` i ``control+strzałka w dół``.
 Dostępne style akapitów to:
@@ -2319,11 +2315,10 @@ Ten przycisk otwiera folder, w którym możesz umieszczać własny kod podczas p
 Przycisk jest aktywny tylko, gdy NVDA jest ustawione na wczytywanie własnego kodu z piaskownicy programisty.
 
 ==== rejestracja zdarzeń i zmian właściwości UIA ====[AdvancedSettingsSelectiveUIAEventRegistration]
-: Domyślnie
-  Automatycznie
-: Opcje
-  Automatycznie, selektywnie, globalnie
-:
+
+|| Domyślnie | Automatycznie |
+|| Opcje | Automatycznie, selektywnie, globalnie |
+
 
 Ustawienie to kontroluje, w jaki sposób NVDA rejestruje zdarzenia wysyłane przez API Microsoft UI Automation.
 Lista rozwijana Rejestracja zdarzeń i zmian właściwosci UIA zawiera trzy opcje:
@@ -2354,11 +2349,10 @@ Nie polecamy większości użytkowników włączenie tej opcji, ale zapraszamy u
 Implementacja UIA w programie Microsoft Excel UI automation zmienia się z wersję na wersje, i wersje starsze niż 16.0.13522.10000 mogą nie dostarczać żadnych korzystnych informacji.
 
 ==== Obsługa konsoli systemu Windows ====[AdvancedSettingsConsoleUIA]
-: Domyślne
-  Automatyczne
-: Opcje
-  Automatyczne, UIA gdy jest to możliwe, przestarzałe
-:
+
+|| Domyślne | Automatyczne |
+|| Opcje | Automatyczne, UIA gdy jest to możliwe, przestarzałe |
+
 
 Ta opcja reguluje interakcję z konsolą używaną przez wiersza poleceń, PowerShell, i podsystem Linux dla systemu WIndows.
 Ta opcja nie wpłynie na Windows terminal.
@@ -2408,9 +2402,9 @@ Istnieją następujące opcje:
 ==== Odczytuj żywe regiony ====[BrailleLiveRegions]
 : Domyślnie
  Włączone
-: Opcje
-   Domyślnie (włączone), wyłączone, włączone
-:
+
+|| Opcje |  Domyślnie (włączone), wyłączone, włączone |
+
 
 Ta opcja reguluje odczyt zmian w niektórych treściach dynamicznych na stronach internetowych na monitorach brajlowskich.
 Wyłączenie tej opcji jest równoznaczne z zachowaniem w wersji 2023.1 i starszych. W starszych wersjach, te zmiany były tylko wymawiane.
@@ -2441,11 +2435,10 @@ Jednakże, w wierszach poleceń, podczas wstawiania lub usuwania znaku w środku
 -
 
 ==== Czytaj nowy tekst w terminalu Windows za pomocą ====[WtStrategy]
-: Domyślnie
-  Różnicowanie
-: Opcje
-    Domyślnie (Różnicowanie), różnicowanie, powiadomienia UIA
-:
+
+|| Domyślnie | Różnicowanie |
+|| Opcje |   Domyślnie (Różnicowanie), różnicowanie, powiadomienia UIA |
+
 
 Ta opcja określa, który tekst jest nowy dla NVDA i jaki tekst ma być wymówiony gdy opcja "informuj o dynamicznych zmianach treści" jest włączona) w Windows Terminalu i oknach wpf używanych w Visual Studio 2022.
 Nie wplynie to na konsolę systemu windows (``conhost.exe``).
@@ -2475,11 +2468,10 @@ W niektórych sytuacjach, tło tekstowe może być całkowicie przejrzyste, z te
 Z niektórymi historycznie popularnymi API do wyświetlania okien, tekst może być pokazywany za pomocą przejrzystego tła, ale wizualnie kolor jest dokładny.
 
 ==== Używaj WASAPI do wyjścia audio ====[WASAPI]
-: Domyślnie
-  Włączone
-: Opcje
-    Domyślnie (włączone), włączone, wyłączone
-:
+
+|| Domyślnie | Włączone |
+|| Opcje |   Domyślnie (włączone), włączone, wyłączone |
+
 
 Ta opcja włącza wsparcie wyjścia dźwięku za pomocą interfejsu windows audio session (WASAPI).
 WASAPI to bardziej nowoczesny interfejs audio który może przyśpieszyć odzew, wydajność i stabilność wydawanego dźwięku przez NVDA, włączając w to dźwięki i mowe.
