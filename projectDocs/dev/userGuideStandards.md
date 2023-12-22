@@ -25,7 +25,7 @@ Once the anchor is set it cannot be updated, while settings may move categories.
 
 || Option || Behaviour ||
 | Enabled | behaviour of enabled |
-| Disabled | behaviour of enabled |
+| Disabled | behaviour of disabled |
 
 This setting allows the feature of using functionality in a certain situation to be controlled in some way.
 If necessary, a description of a common use case that is supported by each option.
