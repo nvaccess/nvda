@@ -3321,8 +3321,9 @@ class GlobalCommands(ScriptableObject):
 		index = index+1 if not index == len(modeList)-1 else 0
 		newMode = modeList[index]
 		config.conf['braille']['mode'] = newMode.value
-		braille.handler._dismissMessage()
-#		braille.handler.mainBuffer.clear()
+		if braille.handler.buffer == braille.handler.messageBuffer:
+			braille.handler._dismissMessage()
+		braille.handler.mainBuffer.clear()
 		# Translators: The message reported when switching braille modes
 		message = f'{_("Braille mode")} {newMode.displayString}'
 		ui.message(message)
