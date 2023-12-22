@@ -169,6 +169,7 @@ def cancelSpeech(clearBrailleRegions = True):
 	# Import only for this function to avoid circular import.
 	from .sayAll import SayAllHandler
 	SayAllHandler.stop()
+	from scriptHandler import getCurrentScript
 	if clearBrailleRegions:
 		_regions.clear()
 	if _speechState.beenCanceled:
@@ -983,12 +984,11 @@ def speak(  # noqa: C901
 		braille.handler.mainBuffer.regions = _regions.copy()
 		if not currentRegions:
 			braille.handler.mainBuffer.focus(_regions[0])
-		import time
-		now = time.time()
+		if len(braille.handler.mainBuffer.rawText) > 100000:
+			braille.handler.mainBuffer.clear()
+			_regions.clear()
 		braille.handler.mainBuffer.update()
 		braille.handler.update()
-		if time.time() - now >5:
-			_regions.clear()
 	if _speechState.speechMode == SpeechMode.off:
 		return
 	elif _speechState.speechMode == SpeechMode.beeps:
