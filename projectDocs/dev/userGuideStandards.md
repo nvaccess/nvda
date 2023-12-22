@@ -19,6 +19,8 @@ Feature flags, comboboxes and checkboxes should be included using the following 
 Once the anchor is set it cannot be updated, while settings may move categories.
 
 ```t2t
+==== The name of a feature ====[FeatureDescriptionAnchor]
+
 || Options | Default (Enabled), Enabled, Disabled |
 || Default | Enabled |
 || Toggle command | ``nvda+shift+e`` |
