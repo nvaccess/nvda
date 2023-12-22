@@ -3711,16 +3711,6 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.updateDriverSettings()
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-		# Translators: The label for a setting in braille settings to select wich braille mode to use
-		modeListText = _('Braille mode:')
-		modeChoices = [x.displayString for x in braille.BrailleMode]
-		self.brailleModes = sHelper.addLabeledControl(modeListText, wx.Choice, choices = modeChoices)
-		self.bindHelpEvent("BrailleMode", self.brailleModes)
-		self.brailleModes.Bind(wx.EVT_CHOICE, self.onModeChange)
-		current = braille.BrailleMode(config.conf['braille']['mode'])
-		modeList = list(braille.BrailleMode)
-		index = modeList.index(current)
-		self.brailleModes.SetSelection(index)
 		tables = brailleTables.listTables()
 		# Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 		outputsLabelText = _("&Output table:")
@@ -3756,26 +3746,41 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			log.debug(
 				f"Loading input tables completed, now at {timePassed:.2f} seconds from start"
 			)
+		# Translators: The label for a setting in braille settings to select wich braille mode to use
+		modeListText = _('Braille mode:')
+		modeChoices = [x.displayString for x in braille.BrailleMode]
+		self.brailleModes = sHelper.addLabeledControl(modeListText, wx.Choice, choices = modeChoices)
+		self.bindHelpEvent("BrailleSettingsBrailleMode", self.brailleModes)
+		self.brailleModes.Bind(wx.EVT_CHOICE, self.onModeChange)
+		current = braille.BrailleMode(config.conf['braille']['mode'])
+		modeList = list(braille.BrailleMode)
+		index = modeList.index(current)
+		self.brailleModes.SetSelection(index)
+		groupSizer = wx.StaticBoxSizer(wx.VERTICAL, self)
+		self.groupBox = groupSizer.GetStaticBox()
+		group = guiHelper.BoxSizerHelper(self, sizer=groupSizer)
+		sHelper.addItem(group)
+		self.groupBox.Enable(not self.brailleModes.GetSelection())
 
 		# Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 		expandAtCursorText = _("E&xpand to computer braille for the word at the cursor")
-		self.expandAtCursorCheckBox = sHelper.addItem(
-			wx.CheckBox(self, wx.ID_ANY, label=expandAtCursorText)
+		self.expandAtCursorCheckBox = group.addItem(
+			wx.CheckBox(self.groupBox, wx.ID_ANY, label=expandAtCursorText)
 		)
 		self.bindHelpEvent("BrailleSettingsExpandToComputerBraille", self.expandAtCursorCheckBox)
 		self.expandAtCursorCheckBox.SetValue(config.conf["braille"]["expandAtCursor"])
 
 		# Translators: The label for a setting in braille settings to show the cursor.
 		showCursorLabelText = _("&Show cursor")
-		self.showCursorCheckBox = sHelper.addItem(wx.CheckBox(self, label=showCursorLabelText))
+		self.showCursorCheckBox = group.addItem(wx.CheckBox(self.groupBox, label=showCursorLabelText))
 		self.bindHelpEvent("BrailleSettingsShowCursor", self.showCursorCheckBox)
 		self.showCursorCheckBox.Bind(wx.EVT_CHECKBOX, self.onShowCursorChange)
 		self.showCursorCheckBox.SetValue(config.conf["braille"]["showCursor"])
 
 		# Translators: The label for a setting in braille settings to enable cursor blinking.
 		cursorBlinkLabelText = _("Blink cursor")
-		self.cursorBlinkCheckBox = sHelper.addItem(
-			wx.CheckBox(self, label=cursorBlinkLabelText)
+		self.cursorBlinkCheckBox = group.addItem(
+			wx.CheckBox(self.groupBox, label=cursorBlinkLabelText)
 		)
 		self.bindHelpEvent("BrailleSettingsBlinkCursor", self.cursorBlinkCheckBox)
 		self.cursorBlinkCheckBox.Bind(wx.EVT_CHECKBOX, self.onBlinkCursorChange)
@@ -3789,7 +3794,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			("braille", "cursorBlinkRate")
 		).kwargs["min"])
 		maxBlinkRate = int(config.conf.getConfigValidation(("braille", "cursorBlinkRate")).kwargs["max"])
-		self.cursorBlinkRateEdit = sHelper.addLabeledControl(
+		self.cursorBlinkRateEdit = group.addLabeledControl(
 			cursorBlinkRateLabelText,
 			nvdaControls.SelectOnFocusSpinCtrl,
 			min=minBlinkRate,
@@ -3805,7 +3810,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 		# Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
 		cursorShapeFocusLabelText = _("Cursor shape for &focus:")
-		self.cursorShapeFocusList = sHelper.addLabeledControl(cursorShapeFocusLabelText, wx.Choice, choices=cursorShapeChoices)
+		self.cursorShapeFocusList = group.addLabeledControl(cursorShapeFocusLabelText, wx.Choice, choices=cursorShapeChoices)
 		self.bindHelpEvent("BrailleSettingsCursorShapeForFocus", self.cursorShapeFocusList)
 		try:
 			selection = self.cursorShapes.index(config.conf["braille"]["cursorShapeFocus"])
@@ -3817,7 +3822,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 		# Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
 		cursorShapeReviewLabelText = _("Cursor shape for &review:")
-		self.cursorShapeReviewList = sHelper.addLabeledControl(cursorShapeReviewLabelText, wx.Choice, choices=cursorShapeChoices)
+		self.cursorShapeReviewList = group.addLabeledControl(cursorShapeReviewLabelText, wx.Choice, choices=cursorShapeChoices)
 		self.bindHelpEvent("BrailleSettingsCursorShapeForReview", self.cursorShapeReviewList)
 		try:
 			selection = self.cursorShapes.index(config.conf["braille"]["cursorShapeReview"])
@@ -3833,7 +3838,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		# to decide if braille messages should be shown and automatically disappear from braille display.
 		showMessagesText = _("Show messages")
 		showMessagesChoices = [i.displayString for i in ShowMessages]
-		self.showMessagesList = sHelper.addLabeledControl(
+		self.showMessagesList = group.addLabeledControl(
 			showMessagesText,
 			wx.Choice,
 			choices=showMessagesChoices,
@@ -3850,7 +3855,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		).kwargs["max"])
 		# Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 		messageTimeoutText = _("Message &timeout (sec)")
-		self.messageTimeoutEdit = sHelper.addLabeledControl(
+		self.messageTimeoutEdit = group.addLabeledControl(
 			messageTimeoutText,
 			nvdaControls.SelectOnFocusSpinCtrl,
 			min=minTimeout,
@@ -3868,7 +3873,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		tetherListText = _("Tether B&raille:")
 		# Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
 		tetherChoices = [x[1] for x in braille.handler.tetherValues]
-		self.tetherList = sHelper.addLabeledControl(tetherListText, wx.Choice, choices=tetherChoices)
+		self.tetherList = group.addLabeledControl(tetherListText, wx.Choice, choices=tetherChoices)
 		self.bindHelpEvent("BrailleTether", self.tetherList)
 		self.tetherList.Bind(wx.EVT_CHOICE, self.onTetherToChange)
 		tetherChoice = config.conf["braille"]["tetherTo"]
@@ -3877,7 +3882,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		if gui._isDebug():
 			log.debug("Loading tether settings completed, now at %.2f seconds from start"%(time.time() - startTime))
 
-		self.brailleReviewRoutingMovesSystemCaretCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+		self.brailleReviewRoutingMovesSystemCaretCombo: nvdaControls.FeatureFlagCombo = group.addLabeledControl(
 			labelText=_(
 				# Translators: This is a label for a combo-box in the Braille settings panel.
 				"Move system caret when ro&uting review cursor"
@@ -3896,20 +3901,15 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 		# Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 		readByParagraphText = _("Read by &paragraph")
-		self.readByParagraphCheckBox = sHelper.addItem(wx.CheckBox(self, label=readByParagraphText))
+		self.readByParagraphCheckBox = group.addItem(wx.CheckBox(self.groupBox, label=readByParagraphText))
 		self.bindHelpEvent("BrailleSettingsReadByParagraph", self.readByParagraphCheckBox)
 		self.readByParagraphCheckBox.Value = config.conf["braille"]["readByParagraph"]
 
-		# Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
-		wordWrapText = _("Avoid splitting &words when possible")
-		self.wordWrapCheckBox = sHelper.addItem(wx.CheckBox(self, label=wordWrapText))
-		self.bindHelpEvent("BrailleSettingsWordWrap", self.wordWrapCheckBox)
-		self.wordWrapCheckBox.Value = config.conf["braille"]["wordWrap"]
 		# Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 		focusContextPresentationLabelText = _("Focus context presentation:")
 		self.focusContextPresentationValues = [x[0] for x in braille.focusContextPresentations]
 		focusContextPresentationChoices = [x[1] for x in braille.focusContextPresentations]
-		self.focusContextPresentationList = sHelper.addLabeledControl(focusContextPresentationLabelText, wx.Choice, choices=focusContextPresentationChoices)
+		self.focusContextPresentationList = group.addLabeledControl(focusContextPresentationLabelText, wx.Choice, choices=focusContextPresentationChoices)
 		self.bindHelpEvent("BrailleSettingsFocusContextPresentation", self.focusContextPresentationList)
 		try:
 			index=self.focusContextPresentationValues.index(config.conf["braille"]["focusContextPresentation"])
@@ -3917,6 +3917,21 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			index=0
 		self.focusContextPresentationList.SetSelection(index)
 
+		self.brailleShowSelectionCombo: nvdaControls.FeatureFlagCombo = group.addLabeledControl(
+			labelText=_(
+				# Translators: This is a label for a combo-box in the Braille settings panel.
+				"Show se&lection"
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["braille", "showSelection"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("BrailleSettingsShowSelection", self.brailleShowSelectionCombo)
+		# Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
+		wordWrapText = _("Avoid splitting &words when possible")
+		self.wordWrapCheckBox = sHelper.addItem(wx.CheckBox(self, label=wordWrapText))
+		self.bindHelpEvent("BrailleSettingsWordWrap", self.wordWrapCheckBox)
+		self.wordWrapCheckBox.Value = config.conf["braille"]["wordWrap"]
 		self.brailleInterruptSpeechCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=_(
 				# Translators: This is a label for a combo-box in the Braille settings panel.
@@ -3927,17 +3942,6 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			conf=config.conf,
 		)
 		self.bindHelpEvent("BrailleSettingsInterruptSpeech", self.brailleInterruptSpeechCombo)
-
-		self.brailleShowSelectionCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
-			labelText=_(
-				# Translators: This is a label for a combo-box in the Braille settings panel.
-				"Show se&lection"
-			),
-			wxCtrlClass=nvdaControls.FeatureFlagCombo,
-			keyPath=["braille", "showSelection"],
-			conf=config.conf,
-		)
-		self.bindHelpEvent("BrailleSettingsShowSelection", self.brailleShowSelectionCombo)
 
 		if gui._isDebug():
 			log.debug("Finished making settings, now at %.2f seconds from start"%(time.time() - startTime))
@@ -3986,7 +3990,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.brailleReviewRoutingMovesSystemCaretCombo.Enable(tetherChoice != TetherTo.FOCUS.value)
 
 	def onModeChange(self, evt):
-		pass
+		self.groupBox.Enable(not evt.GetSelection())
 
 def showStartErrorForProviders(
 		parent: wx.Window,
