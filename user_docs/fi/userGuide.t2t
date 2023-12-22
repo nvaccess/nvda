@@ -1537,11 +1537,10 @@ Jotkin SAPI-syntetisaattorit toimivat kuitenkin kummallisesti tämän ollessa k�
 Asetus kannattaa poistaa käytöstä, jos yksittäisten kirjainten lausumisessa on ongelmia.
 
 ==== Viivästetyt merkkien kuvaukset kohdistinta siirrettäessä ====[delayedCharacterDescriptions]
-: Oletus
-  Ei käytössä
-: Vaihtoehdot
-  Käytössä, Ei käytössä
-:
+
+|| Oletus | Ei käytössä |
+|| Vaihtoehdot | Käytössä, Ei käytössä |
+
 
 Kun tämä asetus on käytössä, NVDA sanoo merkin kuvauksen, kun siirryt tekstissä merkki kerrallaan.
 
@@ -1647,11 +1646,10 @@ Jos sen sijaan haluat pistenäytön seuraavan objektinavigointia ja tarkasteluko
 Tällöin pistenäyttö ei seuraa järjestelmän kohdistusta eikä kohdistinta.
 
 ==== Siirrä järjestelmäkohdistin tarkastelukohdistimen kohdalle ====[BrailleSettingsReviewRoutingMovesSystemCaret]
-: Oletus
-  Ei koskaan
-: Asetukset
-  Oletus (Ei koskaan), Ei koskaan, Vain, kun pistenäyttö seuraa automaattisesti, Aina
-:
+
+|| Oletus | Ei koskaan |
+|| Asetukset | Oletus (Ei koskaan), Ei koskaan, Vain, kun pistenäyttö seuraa automaattisesti, Aina |
+
 
 Tämä asetus määrittää, siirretäänkö järjestelmäkohdistinta kosketuskohdistinnäppäimen painalluksella.
 Asetuksen oletusarvo on Ei koskaan, mikä tarkoittaa, että kosketuskohdistinnäppäimen painaminen ei siirrä järjestelmäkohdistinta tarkastelukohdistimen kohdalle.
@@ -1714,11 +1712,10 @@ Konteksti voidaan lukea (ts. että ollaan luettelossa ja että se on osa valinta
 Kohdistuskontekstin näyttäminen -asetusta voidaan vaihtaa mistä tahansa liittämällä siihen oma näppäinkomento [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen.
 
 ==== Keskeytä puhe vieritettäessä ====[BrailleSettingsInterruptSpeech]
-: Oletus
-  Käytössä
-: Vaihtoehdot
-  Oletus (Käytössä), Käytössä, Ei käytössä
-:
+
+|| Oletus | Käytössä |
+|| Vaihtoehdot | Oletus (Käytössä), Käytössä, Ei käytössä |
+
 
 Tämä asetus määrittää, keskeytetäänkö puhe vieritettäessä pistenäyttöä eteen/taaksepäin.
 Edelliselle/seuraavalle riville siirtävät komennot keskeyttävät puheen aina.
@@ -1729,11 +1726,10 @@ Tästä syystä asetus on oletusarvoisesti käytössä, jolloin puhe keskeytetä
 Tämän asetuksen poistaminen käytöstä sallii puheen kuulumisen samalla, kun pistekirjoitusta luetaan.
 
 ==== Näytä valinta ====[BrailleSettingsShowSelection]
-: Oletus
-  Käytössä
-: Vaihtoehdot
-  Oletus (Käytössä), Käytössä, Ei käytössä
-:
+
+|| Oletus | Käytössä |
+|| Vaihtoehdot | Oletus (Käytössä), Käytössä, Ei käytössä |
+
 
 Tämä asetus määrittää, näytetäänkö valinnan ilmaisin (pisteet 7 ja 8) pistenäytöllä.
 Asetus on oletusarvoisesti käytössä, jolloin ilmaisin näytetään.
@@ -1814,11 +1810,10 @@ Tämä asetus on käytettävissä vain NVDA:n asennetussa versiossa.
 Massamuisti- ja tilapäisversiot eivät tue äänenvaimennusta.
 
 ==== NVDA-äänien voimakkuus mukautuu puheäänen voimakkuuteen ====[SoundVolumeFollowsVoice]
-: Oletus
-  Ei käytössä
-: Asetukset
-  Ei käytössä, Käytössä
-:
+
+|| Oletus | Ei käytössä |
+|| Asetukset | Ei käytössä, Käytössä |
+
 
 Kun tämä asetus on käytössä, NVDA:n äänien ja piippausten voimakkuus mukautuu käytettävän puheäänen voimakkuusasetukseen.
 Jos puheäänen voimakkuutta vähennetään, äänien voimakkuus vähenee.
@@ -2262,11 +2257,10 @@ Tästä voi olla hyötyä luettaessa asiakirjaa, jossa tyhjiä rivejä käytetä
 Tästä kategoriasta voit säätää asiakirjan selauksen asetuksia.
 
 ==== Kappaletyyli ====[ParagraphStyle]
-: Oletus
-  Sovelluksen määrittämä
-: Vaihtoehdot
-  Oletus (Sovelluksen määrittämä), Sovelluksen määrittämä, Yksi rivinvaihto, Useita rivinvaihtoja
-:
+
+|| Oletus | Sovelluksen määrittämä |
+|| Vaihtoehdot | Oletus (Sovelluksen määrittämä), Sovelluksen määrittämä, Yksi rivinvaihto, Useita rivinvaihtoja |
+
 
 Tästä yhdistelmäruudusta voit valita kappaletyylin, jota käytetään kappaleittain liikuttaessa näppäinkomennoilla ``Ctrl+Nuoli ylös`` ja ``Ctrl+Nuoli alas``.
 Seuraavat kappaletyylit ovat käytettävissä:
@@ -2319,11 +2313,10 @@ Tämä painike avaa hakemiston, johon kehittäjä voi sijoittaa koodiaan.
 Se on käytettävissä vain, jos NVDA on määritetty lataamaan mukautettua koodia kehittäjien scratchpad-hakemistosta.
 
 ==== UI Automation -tapahtumien ja ominaisuusmuutosten rekisteröinti ====[AdvancedSettingsSelectiveUIAEventRegistration]
-: Oletus
-  Automaattinen
-: Vaihtoehdot
-  Automaattinen, Valikoiva, Yleinen
-:
+
+|| Oletus | Automaattinen |
+|| Vaihtoehdot | Automaattinen, Valikoiva, Yleinen |
+
 
 Tämä asetus muuttaa tapaa, jolla NVDA rekisteröi Microsoft UI Automation -saavutettavuusrajapinnan käynnistämiä tapahtumia.
 UI Automation -tapahtumien ja ominaisuusmuutosten rekisteröinti -yhdistelmäruudussa on kolme vaihtoehtoa:
@@ -2354,11 +2347,10 @@ Emme vielä suosittele tämän asetuksen oletusarvoista käyttöön ottoa suurim
 Excelin UI automation -rajapinnan toteutus muuttuu jatkuvasti, eikä Microsoft Officen vanhemmat versiot kuin 16.0.13522.10000 anna välttämättä tarpeeksi tietoja, jotta tästä asetuksesta olisi mitään hyötyä.
 
 ==== Windows-konsolin tuki ====[AdvancedSettingsConsoleUIA]
-: Oletus
-  Automaattinen
-: Vaihtoehdot
-  Automaattinen, UIA, kun käytettävissä, Vanha
-:
+
+|| Oletus | Automaattinen |
+|| Vaihtoehdot | Automaattinen, UIA, kun käytettävissä, Vanha |
+
 
 Tämä asetus määrittää, miten NVDA toimii vuorovaikutuksessa Windows-konsolin kanssa, jota Komentokehote, PowerShell ja Windowsin Linux-alijärjestelmä käyttävät.
 Se ei vaikuta moderniin Windows Terminaliin.
@@ -2406,11 +2398,10 @@ Seuraavat vaihtoehdot ovat käytettävissä:
 -
 
 ==== Ilmaise aktiiviset alueet ====[BrailleLiveRegions]
-: Oletus
-  Käytössä
-: Asetukset
-  Oletus (Käytössä), Ei käytössä, Käytössä
-:
+
+|| Oletus | Käytössä |
+|| Asetukset | Oletus (Käytössä), Ei käytössä, Käytössä |
+
 
 Tällä asetuksella voidaan valita, näyttääkö NVDA tietyt verkkosivulla tapahtuvat dynaamiset muutokset pistenäytöllä.
 Asetuksen käytöstä poistaminen vastaa NVDA:n toiminnallisuutta versiossa 2023.1 ja sitä vanhemmissa, joissa tällaisen sisällön muutokset ilmoitettiin vain puheella.
@@ -2441,11 +2432,10 @@ Kohdistimen jälkeinen teksti kuitenkin luetaan päätteissä, kun rivin keskell
 -
 
 ==== Uuden tekstin puhumismenetelmä Windows Terminalissa ====[WtStrategy]
-: Oletus
-  Muutosten havaitseminen
-: Vaihtoehdot
-  Oletus (Muutosten havaitseminen), Muutosten havaitseminen, UIA-ilmoitukset
-:
+
+|| Oletus | Muutosten havaitseminen |
+|| Vaihtoehdot | Oletus (Muutosten havaitseminen), Muutosten havaitseminen, UIA-ilmoitukset |
+
 
 Tämä asetus valitsee, miten NVDA määrittää "uuden" tekstin (ja näin ollen sen, mitä puhutaan "Puhu dynaamisen sisällön muutokset" -asetuksen ollessa käytössä) Windows Terminalissa sekä sen WPF-säätimessä, jota käytetään Visual Studio 2022:ssa.
 Asetus ei vaikuta Windows-konsoliin (``conhost.exe``).
@@ -2475,11 +2465,10 @@ Joissakin tilanteissa tekstin tausta voi olla täysin läpinäkyvä, ja teksti o
 Useiden historiallisesti suosittujen käyttöliittymärajapintojen avulla teksti voidaan esittää läpinäkyvällä taustalla, mutta visuaalisesti taustaväri on tarkka.
 
 ==== Käytä WASAPIa äänen toistamiseen ====[WASAPI]
-: Oletus
-  Käytössä
-: Asetukset
-  Oletus (Käytössä), Ei käytössä, Käytössä
-:
+
+|| Oletus | Käytössä |
+|| Asetukset | Oletus (Käytössä), Ei käytössä, Käytössä |
+
 
 Tämä asetus mahdollistaa äänen toistamisen Windowsin äänentoistorajapinnan (WASAPI) kautta.
 WASAPI on nykyaikaisempi äänikehys, joka saattaa parantaa NVDA:n ääniulostulon reagointia, suorituskykyä ja vakautta sekä puheen että äänien toiston osalta.

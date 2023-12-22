@@ -1535,11 +1535,10 @@ Ali, neki Microsoft Speech API sintetizatori ne podržavaju ovo i čudno se pona
 Ako imate probleme sa izgovorom pojedinačnih slova, pokušajte da onemogućite ovu opciju.
 
 ==== Odloženi opisi znakova pri pomeranju kursora====[delayedCharacterDescriptions]
-: Podrazumevano
-  Onemogućeno
-: Opcije
-  Omogućeno, onemogućeno
-:
+
+|| Podrazumevano | Onemogućeno |
+|| Opcije | Omogućeno, onemogućeno |
+
 
 Kada je ovo podešavanje označeno, NVDA će izgovarati opise znakova kada se krećete znak po znak.
 
@@ -1645,11 +1644,10 @@ Ako želite da umesto toga brajev red prati objektnu navigaciju i pregled teksta
 U ovom slučaju, brajev red neće pratiti sistemski fokus i kursor.
 
 ==== Pomeranje sistemskog kursora kada se prebacuje pregledni kursor ====[BrailleSettingsReviewRoutingMovesSystemCaret]
-: Podrazumevano
-  Nikada
-: Opcije
-  Podrazumevano (nikada), nikada, samo pri automatskom vezivanju, uvek
-:
+
+|| Podrazumevano | Nikada |
+|| Opcije | Podrazumevano (nikada), nikada, samo pri automatskom vezivanju, uvek |
+
 
 Ovo podešavanje određuje da li sistemski kursor takođe treba da se pomera pritiskanjem tastera za prebacivanje.
 Ova opcija je podrazumevano podešena na nikada, što znači da prebacivanje nikada neće pomerati kursor kada se prebacuje pregledni kursor.
@@ -1712,11 +1710,10 @@ Ali, da biste pročitali sadržaj (npr. da ste u listi i da je lista deo dijalog
 Da biste menjali opcije predstavljanja sadržaja fokusa bilo gde, molimo podesite komandu koristeći [dijalog ulazne komande #InputGestures].
 
 ==== Prekini izgovor u toku pomeranja ====[BrailleSettingsInterruptSpeech]
-: Podrazumevano
-  Omogućeno
-: Opcije
-  Podrazumevano (omogućeno), omogućeno, onemogućeno
-:
+
+|| Podrazumevano | Omogućeno |
+|| Opcije | Podrazumevano (omogućeno), omogućeno, onemogućeno |
+
 
 Ovo podešavanje određuje da li treba prekinuti govor kada se brajev red pomera napred ili nazad.
 Komande pomeranja na prethodni ili sledeći red uvek prekidaju govor.
@@ -1727,11 +1724,10 @@ Zbog toga je opcija podrazumevano omogućena, što će prekinuti govor pri pomer
 Kada se ova opcija onemogući moguće je čuti govor i u isto vreme čitati brajevo pismo.
 
 ==== Prikaži izbor ====[BrailleSettingsShowSelection]
-: Podrazumevano
-  Omogućeno
-: Opcije
-  Podrazumevano (omogućeno), omogućeno, onemogućeno
-:
+
+|| Podrazumevano | Omogućeno |
+|| Opcije | Podrazumevano (omogućeno), omogućeno, onemogućeno |
+
 
 Ovo podešavanje određuje da li će se pokazivač izbora (tačke 7 i 8) prikazivati na brajevom redu.
 Opcija je podrazumevano omogućena, pa će se pokazivač izbora prikazivati.
@@ -1812,11 +1808,10 @@ Ova opcija je dostupna samo ako je NVDA instaliran.
 Nije moguće podržati stišavanje pozadinskih zvukova za prenosne i privremene kopije programa NVDA.
 
 ==== Jačina NVDA zvukova prati jačinu glasa ====[SoundVolumeFollowsVoice]
-: Podrazumevano
-  Onemogućeno
-: Opcije
-  Onemogućeno, omogućeno
-:
+
+|| Podrazumevano | Onemogućeno |
+|| Opcije | Onemogućeno, omogućeno |
+
 
 Kada se ova opcija omogući, jačina NVDA zvukova i pištanja će pratiti podešavanje jačine glasa kojeg koristite.
 Ako utišate jačinu glasa kojeg koristite, jačina NVDA zvukova će se takođe utišati.
@@ -2260,11 +2255,10 @@ Ovo može biti korisno kada čitate dokument u kojem se prazni redovi koriste da
 Ova kategorija vam dozvoljava da promenite različite aspekte navigacije kroz dokument.
 
 ==== Stil pasusa ====[ParagraphStyle]
-: Podrazumevani
-  Kontrolisan od strane aplikacije
-: Opcije
-  Podrazumevani (kontrolisan od strane aplikacije), kontrolisan od strane aplikacije, jedan novi red, više novih redova
-:
+
+|| Podrazumevani | Kontrolisan od strane aplikacije |
+|| Opcije | Podrazumevani (kontrolisan od strane aplikacije), kontrolisan od strane aplikacije, jedan novi red, više novih redova |
+
 
 Ovaj izborni okvir vam dozvoljava da izaberete stil pasusa koji će se koristiti kada se krećete po pasusima prečicama ``kontrol+strelicaGore`` i ``kontrol+strelicaDole``.
 Dostupni stilovi pasusa su:
@@ -2317,11 +2311,10 @@ Ovo dugme otvara folder u koji možete da kopirate prilagođen kod dok ga razvij
 Ovo dugme je omogućeno samo ako je NVDA podešen da učitava kod iz Scratchpad foldera.
 
 ==== Registracija za promene UI automation događaja i svojstava ====[AdvancedSettingsSelectiveUIAEventRegistration]
-: Podrazumevano
-  Automatska
-: Opcije
-  Automatska, selektivna, globalna
-:
+
+|| Podrazumevano | Automatska |
+|| Opcije | Automatska, selektivna, globalna |
+
 
 Ova opcija menja kako će NVDA registrovati događaje Microsoft UI Automation accessibility API-a.
 Izborni okvir registracije za promene UI automation događaja i svojstava ima tri opcije:
@@ -2352,11 +2345,10 @@ Mi još uvek ne preporučujemo da većina korisnika ovaj način koristi kao podr
 Microsoft Excel UI automation podrška se uvek menja, i starije Microsoft Office verzije od 16.0.13522.10000 možda ne pružaju dovoljno informacija da ova opcija bude uopšte korisna.
 
 ==== Podrška za Windows konzolu ====[AdvancedSettingsConsoleUIA]
-: Podrazumevano
-  Automatski
-: Opcije
-  Automatski, UIA kada je dostupan, zastarela
-:
+
+|| Podrazumevano | Automatski |
+|| Opcije | Automatski, UIA kada je dostupan, zastarela |
+
 
 Ova opcija određuje kako će NVDA vršiti interakciju sa Windows konzolom koju koriste komandna linija, PowerShell, i Windows podsistem za Linux.
 Ne utiče na moderni Windows terminal.
@@ -2439,11 +2431,10 @@ Ali, u terminalima, kada se znakovi ubacuju ili brišu u sredini reda, tekst nak
 -
 
 ==== Izgovaraj novi tekst u Windows terminalu koristeći ====[WtStrategy]
-: Podrazumevano
-  Prepoznavanje razlika
-: Opcije
-  Podrazumevano (prepoznavanje razlika), prepoznavanje razlika, UIA obaveštenja
-:
+
+|| Podrazumevano | Prepoznavanje razlika |
+|| Opcije | Podrazumevano (prepoznavanje razlika), prepoznavanje razlika, UIA obaveštenja |
+
 
 Ova opcija kontroliše kako NVDA određuje koji tekst je "nov" (i samim tim šta da izgovara kada je "Prijavljivanje dinamičkih promena sadržaja" omogućeno) u Windows terminalu i WPF Windows terminal kontroli koja se koristi u Visual Studiju 2022.
 Ne utiče na Windows konzolu (``conhost.exe``).
@@ -2474,11 +2465,10 @@ U nekim situacijama, pozadina teksta može da bude potpuno transparentna, a teks
 Uz nekoliko istorijski popularnih API-a za interfejse, tekst može biti sa transparentnom pozadinom, ali je vizuelno pozadinska boja precizna.
 
 ==== Koristi WASAPI za zvučni izlaz ====[WASAPI]
-: Podrazumevano
-  Omogućeno
-: Opcije
-  Podrazumevano (Omogućeno), Onemogućeno, omogućeno
-:
+
+|| Podrazumevano | Omogućeno |
+|| Opcije | Podrazumevano (Omogućeno), Onemogućeno, omogućeno |
+
 
 Ova opcija će omogućiti reprodukciju zvukova korišćenjem standarda Windows Audio Session API (WASAPI).
 WASAPI je moderniji standard zvuka koji može poboljšati brzinu, performanse i stabilnost NVDA zvukova, što uključuje govor i NVDA zvukove.
@@ -4170,4 +4160,3 @@ Sledeće vrednosti se mogu podesiti u ovom registry ključu:
 Ako vam trebaju dodatne informacije ili pomoć za program NVDA, molimo posetite NVDA sajt na lokaciji NVDA_URL.
 Ovde, možete pronaći dodatnu dokumentaciju, kao i tehničku podršku i mesta zajednice.
 Ovaj sajt takođe pruža informacije o razvoju programa NVDA.
-

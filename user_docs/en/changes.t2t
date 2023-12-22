@@ -144,6 +144,7 @@ Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on e
   - This new behavior can be disabled using the new "Use enhanced event processing" setting in NVDA's advanced settings.
   -
 - NVDA is again able to track the focus in applications running within Windows Defender Application Guard (WDAG). (#15164)
+- The speech text is no longer updated when the mouse moves in the Speech Viewer. (#15953, @hwf1324)
 -
 
 == Changes for Developers ==
@@ -2222,7 +2223,7 @@ Highlights of this release include auto detection of Freedom Scientific braille 
 
 == Changes for Developers ==
 - You can now set the "disableBrowseModeByDefault" property on app modules to leave browse mode off by default. (#8846)
-- The extended window style of a window is now exposed using the `extendedWindowStyle` property on Window objects and their derivatives. (#9136)
+- The extended window style of a window is now exposed using the ``extendedWindowStyle`` property on Window objects and their derivatives. (#9136)
 - Updated comtypes package to 1.1.7. (#9440, #8522)
 - When using the report module info command, the order of information has changed to present the module first. (#7338)
 - Added an example to demonstrate using nvdaControllerClient.dll from C#. (#9600)
@@ -2252,7 +2253,7 @@ Please refer to the list of changes further down for more details on this and ho
 - New braille tables: Afrikaans, Arabic 8 dot computer braille, Arabic grade 2, Spanish grade 2. (#4435, #9186)
 - Added an option to NVDA's mouse settings to make NVDA handle situations where the mouse is controlled by another application. (#8452) 
  - This will allow NVDA to track the mouse when a system is controlled remotely using TeamViewer or other remote control software.
-- Added the `--enable-start-on-logon` command line parameter to allow configuring whether silent installations of NVDA set NVDA to start at Windows logon or not. Specify true to start at logon or false to not start at logon. If the --enable-start-on-logon argument is not specified at all then NVDA will default to starting at logon, unless it was  already configured not to by a previous installation. (#8574)
+- Added the ``--enable-start-on-logon`` command line parameter to allow configuring whether silent installations of NVDA set NVDA to start at Windows logon or not. Specify true to start at logon or false to not start at logon. If the --enable-start-on-logon argument is not specified at all then NVDA will default to starting at logon, unless it was  already configured not to by a previous installation. (#8574)
 - It is possible to turn NVDA's logging features off by setting logging level to "disabled" from General settings panel. (#8516)
 - The presence of formulae in LibreOffice and Apache OpenOffice spreadsheets is now reported. (#860)
 - In Mozilla Firefox and Google Chrome, browse mode now reports the selected item in list boxes and trees.
@@ -2271,7 +2272,7 @@ Please refer to the list of changes further down for more details on this and ho
 - This version of NVDA will allow installing and loading of add-ons  that do not yet contain Minimum and Last Tested NVDA version information, but upgrading to future versions of NVDA (E.g. 2019.2) may automatically cause these older add-ons to be disabled.
 - The move mouse to navigator object command is now available in Microsoft Word as well as for UIA controls, particularly Microsoft Edge. (#7916, #8371)
 - Reporting of text under the mouse has been improved within Microsoft Edge and other UIA applications. (#8370)
-- When NVDA is started with the `--portable-path` command line parameter, the provided path is automatically filled in when trying to create a portable copy of NVDA using the NVDA menu. (#8623)
+- When NVDA is started with the ``--portable-path`` command line parameter, the provided path is automatically filled in when trying to create a portable copy of NVDA using the NVDA menu. (#8623)
 - Updated the path to the Norwegian braille table to reflect the standard from the year 2015. (#9170)
 - When navigating by paragraph (control+up or down arrows) or navigating by table cell (control+alt+arrows), the existence of spelling errors will no longer be announced, even if NVDA is configured to announce these automatically. This is because paragraphs and table cells can be quite large, and detecting spelling errors in some applications can be very costly. (#9217)
 - NVDA no longer automatically loads custom appModules, globalPlugins and braille and synth drivers from the NVDA user configuration directory. This code should be instead packaged as an add-on with correct version information, ensuring that incompatible code is not run with current versions of NVDA. (#9238)
@@ -2776,10 +2777,10 @@ Highlights of this release include full support for audio ducking in the Windows
  - If you want normalized identifiers, there is now an InputGesture.normalizedIdentifiers property which normalizes the identifiers returned by the identifiers property .
 - The InputGesture.logIdentifier property is now deprecated. Callers should use InputGesture.identifiers[0] instead. (#6945)
 - Removed some deprecated code:
- - `speech.REASON_*` constants: `controlTypes.REASON_*` should be used instead. (#6846)
- - `i18nName` for synth settings: `displayName` and `displayNameWithAccelerator` should be used instead. (#6846, #5185)
- - `config.validateConfig`. (#6846, #667)
- - `config.save`: `config.conf.save` should be used instead. (#6846, #667)
+ - ``speech.REASON_*`` constants: ``controlTypes.REASON_*`` should be used instead. (#6846)
+ - ``i18nName`` for synth settings: ``displayName`` and ``displayNameWithAccelerator`` should be used instead. (#6846, #5185)
+ - ``config.validateConfig``. (#6846, #667)
+ - ``config.save``: ``config.conf.save`` should be used instead. (#6846, #667)
 - The list of completions in the autocomplete context menu of the Python Console no longer shows  any object path leading up to the final symbol being completed. (#7023)
 - There is now a unit testing framework for NVDA. (#7026)
  - Unit tests and infrastructure are located in the tests/unit directory. See the docstring in the tests\unit\__init__.py file for details.

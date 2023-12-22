@@ -1535,11 +1535,10 @@ Međutim, u nekim Microsoft Speech API govornim jedinicama ova se opcija ne prim
 Ako imate problem s izgovorom pojedinačnih znakova, pokušajte s deaktiviranom opcijom.
 
 ==== Opis znakova koji kasni prilikom pomicanja kursora ====[delayedCharacterDescriptions]
-: podrazumjevano
-  Onemogućeno
-: Opcije
-  Omogućeno, Onemogućeno
-:
+
+|| podrazumjevano | Onemogućeno |
+|| Opcije | Omogućeno, Onemogućeno |
+
 
 Kada je ova postavka odabrana, NVDA će izgovoriti opis znaka prilikom pomicanja znak po znak.
 
@@ -1645,11 +1644,10 @@ Ako želite da NVDA prati pregled objekta i kursor pregleda umjesto toga, Morate
 U tom slučaju, brajica neće pratiti kursor sustava i fokus.
 
 ==== Pomeranje sistemskog kursora kada se prebacuje pregledni kursor ====[BrailleSettingsReviewRoutingMovesSystemCaret]
-: Podrazumevano
-  Nikada
-: Opcije
-  Podrazumevano (nikada), nikada, samo pri automatskom vezivanju, uvek
-:
+
+|| Podrazumevano | Nikada |
+|| Opcije | Podrazumevano (nikada), nikada, samo pri automatskom vezivanju, uvek |
+
 
 Ovo podešavanje određuje da li sistemski kursor takođe treba da se pomera pritiskanjem tastera za prebacivanje.
 Ova opcija je podrazumevano podešena na nikada, što znači da prebacivanje nikada neće pomerati kursor kada se prebacuje pregledni kursor.
@@ -1712,11 +1710,10 @@ Međutim, da biste pročitali kontekst, (npr. da se nalazite u popisu i da je ta
 Kako biste mijenjali prikaz konteksta fokusa s bilo kojeg mjesta, dodijelite prilagođeni prečac pomoću dijaloškog okvira [Ulazne geste #InputGestures].
 
 ==== Prekini govor prilikom pomicanja teksta na brajičnom redku ====[BrailleSettingsInterruptSpeech]
-: Podrazumjevano
-  Aktivirano
-: Options
-  Podrazumjevano (Omogućeno), omogućeno, onemogućeno
-:
+
+|| Podrazumjevano | Aktivirano |
+|| Options | Podrazumjevano (Omogućeno), omogućeno, onemogućeno |
+
 
 Ova opcija regulira treba li govor biti prekinut prilikom prilikom pomicanja brajičnog redka za redak u naprijed ili u nazad.
 Prečaci za pomicanje na prethodni redak ili sljedeći redak uvijek prekidaju govor.
@@ -1727,11 +1724,10 @@ Iz tog razloga opcija je uključena podrazumjevano, tako da će govor biti svaki
 Kada se onemogući ova opcija moći ćete istovremeno čuti govor i čitati brajicu.
 
 ==== Pokaži označeno ====[BrailleSettingsShowSelection]
-: podrazumjevano
-  aktivirano
-: Opcije
-  podrazumjevano (aktivirano), aktivirano, deaktivirano
-:
+
+|| podrazumjevano | aktivirano |
+|| Opcije | podrazumjevano (aktivirano), aktivirano, deaktivirano |
+
 
 Ova postavka određuje da li će se pokazivač označenog (točkice 7 i 8) prikazivati na brajičnom redku.
 Opcija je podrazumijevano omogućena, pa će se pokazivač izbora prikazivati.
@@ -1812,11 +1808,10 @@ Ova je opcija dostupna, samo ako je NVDA instaliran.
 Na prijenosnim i privremenim kopijama NVDA čitača, podrška za stišavanje zvuka nije moguća.
 
 ==== Glasnoća zvukova NVDA prati glasnoću govorne jedinice  (zahtijeva WASAPI) ====[SoundVolumeFollowsVoice]
-: Podrazumjevano
-  Onemogućeno
-: Opcije
-  Onemogućeno, omogućeno
-:
+
+|| Podrazumjevano | Onemogućeno |
+|| Opcije | Onemogućeno, omogućeno |
+
 
 Kada se ova opcija omogući, jačina govorne jedinice i NVDA zvukova će pratiti podešavanje jačine glasa kojeg koristite.
 Ako utišate jačinu glasa kojeg koristite, jačina NVDA zvukova će se takođe utišati.
@@ -2262,11 +2257,10 @@ Ovo može biti korisno pri čitanju izvornog koda nekog programa gdje se prazni 
 Ova vam kategorija omogućuje podešavanje raznih opcija vezanih uz kretanje po dokumentu.
 
 +==== Stil odlomka ====[ParagraphStyle]
-: Podrazumjevani
-  neka rukuje aplikacija
-: Opcije
-  Podrazumjevano (neka rukuje aplikacija), neka rukuje aplikacija, jednostruki pritisak entera, dvostruki pritisak entera
-:
+
+|| Podrazumjevani | neka rukuje aplikacija |
+|| Opcije | Podrazumjevano (neka rukuje aplikacija), neka rukuje aplikacija, jednostruki pritisak entera, dvostruki pritisak entera |
+
 
 Ovaj odabirni okvir omogućuje odabir stila odlomka koji bi se trebao koristiti prilikom kretanja po odlomcima uz pomoć tipkovničkih prečaca ``control+Strelica gore`` i ``control+strelica dolje``.
 Slijedeći stilovi odlomaka su dostupni:
@@ -2319,11 +2313,10 @@ Ovaj gumb otvara mapu gdje je smješten prilagođeni kod kojeg trenutačno razvi
 Ovaj gumb postoji samo kad je uključena opcija "omogući bilježnicu razvojnog programera NVDA".
 
 ==== Registracija za događaje automatizacije korisničkog sučelja i promjene svojstava ====[AdvancedSettingsSelectiveUIAEventRegistration]
-: podrazumjevano
-  Automatska
-: Opcije
-  Automatska, selektivna, globalna
-:
+
+|| podrazumjevano | Automatska |
+|| Opcije | Automatska, selektivna, globalna |
+
 
 Ova opcija mijenja način na koji NVDA registrira događaje UI automation sučelja za pristupačnost.
 Odabirni okvir Registracija za događaje automatizacije korisničkog sučelja i promjene svojstava sadrži tri opcije:
@@ -2346,11 +2339,10 @@ Ova postavka sadrži sljedeće vrijednosti:
 -
 
 ==== Podrška Windows naredbenog redka ====[AdvancedSettingsConsoleUIA]
-: Podrazumjevano
-  automatski
-: opcije
-  Automatski, UIA kada je dostupno, zastarjelo
-:
+
+|| Podrazumjevano | automatski |
+|| opcije | Automatski, UIA kada je dostupno, zastarjelo |
+
 
 Ova opcija utječe na to kako NVDA radi u korištenom Windows naredbenom redku kojeg koristi stari naredbeni redak, PowerShell, i podsustav linux za sustav Windows.
 Ovo ne utjeće na suvremeni Windows terminal.
@@ -2449,9 +2441,9 @@ Ova opcija omogućuje povećanje ograničenja čekanja, u kojem NVDA čeka da se
 Ako mislite da NVDA uvijek kasni jedan znak iza ili ponavlja retke, tada biste trebali povećati ovu vrijednost.
 
 ==== Izgovori novi tekst u Windows terminalu uz pomoć ====[WtStrategy]
-: podrazumjevano
-  difovanje
-: opcije
+
+|| podrazumjevano | difovanje |
+ opcije
  Podrazumijevano (difovanje), difovanje, Obavijesti UIA
 :
 
@@ -2474,11 +2466,10 @@ U nekim situacijama, pozadina teksta može biti potpuno transparentna, sa teksto
 Sa nekim povijesno popularnim GUI api-jima, tekst može biti prikazan sa transparentnom pozadinom, ali je vizualno pozadinska boja točna.
 
 ==== Koristi WASAPI za audio izlaz ====[WASAPI]
-: podrazumjevano
-  Onemogućeno
-: Opcije
-  Podrazumjevano (omogućeno), omogućeno, onemogućeno
-:
+
+|| podrazumjevano | Onemogućeno |
+|| Opcije | Podrazumjevano (omogućeno), omogućeno, onemogućeno |
+
 
 Ova opcija će omogućiti reprodukciju zvukova korištenjem standarda Windows Audio Session API (WASAPI).
 WASAPI je moderniji standard zvuka koji može poboljšati brzinu, performanse i stabilnost NVDA zvukova, što uključuje govor i NVDA zvukove.

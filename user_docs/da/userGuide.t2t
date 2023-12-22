@@ -1538,11 +1538,10 @@ Nogle Microsoft Speech API synteser anvender dog ikke denne funktion korrekt og 
 Hvis du har problemer med udtalen af diverse bogstaver kan du prøve at deaktivere denne indstilling.
 
 ==== Forsinkede beskrivelser af tegn ved markørbevægelser ====[delayedCharacterDescriptions]
-: Standard
-  Deaktiveret
-: Muligheder
-  Aktiveret, deaktiveret
-:
+
+|| Standard | Deaktiveret |
+|| Muligheder | Aktiveret, deaktiveret |
+
 
 Når denne indstilling er aktiveret, vil NVDA sige tegnbeskrivelsen, når du flytter markøren tegn for tegn.
 
@@ -1648,11 +1647,10 @@ Her vil punkt ikke følge navigatorobjektet eller læsemarkøren.
 Med denne indstilling ignorerer punkt systemfokus og systemmarkøren.
 
 ==== Flyt systemmarkør, når læsemarkøren flyttes med markørknapperne ====[BrailleSettingsReviewRoutingMovesSystemCaret]
-: Standard
-  Aldrig
-: Muligheder
-  Standard (aldrig), Aldrig, Kun når tøjring er indstillet til automatisk, Altid
-:
+
+|| Standard | Aldrig |
+|| Muligheder | Standard (aldrig), Aldrig, Kun når tøjring er indstillet til automatisk, Altid |
+
 
 Denne indstilling afgør, om systemmarkøren også skal flyttes med markørknapperne.
 Denne indstilling er sat til Aldrig som standard, hvilket betyder, at markørknapperne aldrig vil flytte systemmarkøren, når du flytter gennemsynsmarkøren.
@@ -1715,11 +1713,10 @@ For at du skal kunne læse konteksten (dvs. at du er på en liste, og at listen 
 Hvis du vil skifte fokuskontekstpræsentation fra hvor som helst, skal du tildele en brugerdefineret bevægelse eller et tastetryk ved hjælp af [dialogboksen Håndter Kommandoer #InputGestures].
 
 ==== Afbryd talen, mens du panorerer ====[BrailleSettingsInterruptSpeech]
-: Standard
-  Aktiveret
-: Muligheder
-  Aktiveret, deaktiveret
-:
+
+|| Standard | Aktiveret |
+|| Muligheder | Aktiveret, deaktiveret |
+
 
 Denne indstilling bestemmer, om talen skal afbrydes, når Braille-displayet rulles tilbage/fremad.
 Forrige/næste linje kommandoer afbryder altid tale.
@@ -1730,11 +1727,10 @@ Af denne grund er indstillingen aktiveret som standard, hvilket afbryder tale, n
 Deaktivering af denne indstilling gør det muligt at høre tale, mens du læser punktskrift.
 
 ==== Vis valgmarkør ====[BrailleSettingsShowSelection]
-: Standard
-  Aktiveret
-: Muligheder
-  Standard (Aktiveret), Aktiveret, deaktiveret
-:
+
+|| Standard | Aktiveret |
+|| Muligheder | Standard (Aktiveret), Aktiveret, deaktiveret |
+
 
 Denne indstilling bestemmer, om valgmarkøren (punkter 7 og 8) skal vises på punktdisplayet.
 Indstillingen er som standard aktiveret, så valgmarkøren vises.
@@ -1815,11 +1811,10 @@ Denne indstilling er kun tilgængelig, hvis NVDA er installeret.
 Det er ikke muligt at understøtte lyddæmpning for midlertidige og flytbare kopier af NVDA.
 
 ==== Lydstyrken af NVDA-lyde følger stemmelydstyrken ====[SoundVolumeFollowsVoice]
-: Standard
-  Aktiveret
-: Muligheder
-  Deaktiveret, Aktiveret
-:
+
+|| Standard | Aktiveret |
+|| Muligheder | Deaktiveret, Aktiveret |
+
 
 Når denne indstilling er aktiveret, vil lydstyrken af NVDA-lyde og bip-lyde følge stemmens lydstyrke for den stemme, du bruger.
 Hvis du sænker stemmelydstyrken, vil lydstyrken af lydeffekter også blive sænket.
@@ -2263,11 +2258,10 @@ Dette kan være nyttigt, hvis du læser et dokument, hvor blanke linjer bruges t
 Denne kategori lader dig justere forskellige indstillinger der anvendes, når du navigere rundt i dokumenter.
 
 ==== Navigering af afsnit ====[ParagraphStyle]
-: Standard
-  Håndteret af det aktuelle program
-: Indstillinger
-  Standard (Håndteret af det aktuelle program), Håndteret af det aktuelle program, Enkelt linjeskift, Flere linjeskift
-:
+
+|| Standard | Håndteret af det aktuelle program |
+|| Indstillinger | Standard (Håndteret af det aktuelle program), Håndteret af det aktuelle program, Enkelt linjeskift, Flere linjeskift |
+
 
 Disse indstillinger lader dig bestemme, hvordan du vil navigere gennem afsnit, når du bruger Ctrl+pil op og ned.
 De tilgængelige indstillinger er følgende:
@@ -2320,11 +2314,10 @@ Denne knap åbner mappen vor du kan placere din kode under udvikling.
 Denne knap vil kun være tilgængelig, hvis NVDA tillader indlæsning af tilpasset kode.
 
 ==== Registrer hændelser fra UI Automation samt egenskabsændringer ====[AdvancedSettingsSelectiveUIAEventRegistration]
-: Standard
-  Automatisk
-: Indstillinger
-  Automatisk, selektivt, globalt
-:
+
+|| Standard | Automatisk |
+|| Indstillinger | Automatisk, selektivt, globalt |
+
 
 Denne indstilling ændre, hvordan NVDA registrere og behandler hændelser fra UI Automation Accessibility API.
 Denne indstilling har tre muligheder:
@@ -2355,11 +2348,10 @@ Vi anbefaler stadig ikke, at flertallet af brugere aktiverer dette som standard,
 Microsoft Excels UI-automatiseringsimplementering ændres konstant, og versioner af Microsoft Office ældre end 16.0.13522.10000 eksponerer muligvis ikke nok information til, at denne mulighed er af nogen nytte.
 
 ==== Understøttelse af Windows-konsol ====[AdvancedSettingsConsoleUIA]
-: Standard
-  Automatisk
-: Muligheder
-  Automatisk, UIA, når dette er tilgængeligt, Forældet
-:
+
+|| Standard | Automatisk |
+|| Muligheder | Automatisk, UIA, når dette er tilgængeligt, Forældet |
+
 
 Denne indstilling bestemmer, hvordan NVDA interagerer med Windows-konsollen, der bruges af kommandoprompt, PowerShell og Windows Subsystem for Linux.
 Dette påvirker ikke den moderne Windows Terminal.
@@ -2407,11 +2399,10 @@ Følgende indstillinger er tilgængelige:
 -
 
 ==== Oplys live-områder ====[BrailleLiveRegions]
-: Standard
-  Aktiveret
-: Muligheder
-  Standard (Aktiveret) Deaktiveret, aktiveret
-:
+
+|| Standard | Aktiveret |
+|| Muligheder | Standard (Aktiveret) Deaktiveret, aktiveret |
+
 
 Denne indstilling bestemmer om NVDA skal vise opdateringer af dynamisk webindhold på punkt.
 Denne indstilling svarer til adfærden i NVDA 2023.1 og tidligere, hvor disse opdateringer kun blev oplyst via tale.
@@ -2442,11 +2433,10 @@ Dette vil dog gøre, at teksten foran systemmarkøren vil blive læst, når du i
 -
 
 ==== Sig ny tekst i Windows-terminaler via ====[WtStrategy]
-: Standard
-  Diffing
-: Muligheder
-  Standard (Diffing), UIA-meddelelser
-:
+
+|| Standard | Diffing |
+|| Muligheder | Standard (Diffing), UIA-meddelelser |
+
 
 Denne indstilling bestemmer, hvordan NVDA skal opfatte teksten i et terminalvindue som "ny" (og henholdsvis, hvad der skal læses op, når indstillingen "Dynamisk indhold" er slået til) i Windows Terminal og WPF Windows Terminal brugt i Visual Studio 2022.
 Det påvirker ikke adfærden i Windows-konsollen (``conhost.exe``).
@@ -2476,11 +2466,10 @@ I nogle tilfælde kan det være, at tekstens baggrund er fuldstændig gennemsigt
 Med flere historisk populære GUI API'er kan teksten gengives med en gennemsigtig baggrund, men visuelt er baggrundsfarven nøjagtig. 
 
 ==== Brug WASAPI til lydoutput ====[WASAPI]
-: Standard
-  Aktiveret
-: Muligheder
-  Standard (Aktiveret) Deaktiveret, Aktiveret
-:
+
+|| Standard | Aktiveret |
+|| Muligheder | Standard (Aktiveret) Deaktiveret, Aktiveret |
+
 
 Denne indstilling muliggør lydoutput via Windows Audio Session API (WASAPI).
 WASAPI er en mere moderne lydteknologi, der kan forbedre reaktionsevne, ydeevne og stabilitet for NVDA-lydoutput, herunder både tale og lydeffekter.

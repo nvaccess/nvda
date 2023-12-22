@@ -1452,10 +1452,9 @@ The available logging levels are:
 - Info: NVDA will log basic information such as startup messages and information useful for developers.
 - Debug warning: Warning messages that are not caused by severe errors will be logged.
 - Input/output: Input from keyboard and braille displays, as well as speech and braille output will be logged.
- - If you are concerned about privacy, do not set the logging level to this option.
+If you are concerned about privacy, do not set the logging level to this option.
 - Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.
- - Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
- -
+Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
 -
 
 ==== Start NVDA after I sign in ====[GeneralSettingsStartAfterLogOn]
@@ -1599,11 +1598,10 @@ However, some Microsoft Speech API synthesizers do not implement this correctly 
 If you are having problems with the pronunciation of individual characters, try disabling this option.
 
 ==== Delayed descriptions for characters on cursor movement ====[delayedCharacterDescriptions]
-: Default
-  Disabled
-: Options
-  Enabled, Disabled
-:
+
+|| Default | Disabled |
+|| Options | Enabled, Disabled |
+
 
 When this setting is checked, NVDA will say the character description when you move by characters.
 
@@ -1717,11 +1715,10 @@ If you want braille to follow object navigation and text review instead, you nee
 In this case, Braille  will not follow system focus and system caret.
 
 ==== Move system caret when routing review cursor ====[BrailleSettingsReviewRoutingMovesSystemCaret]
-: Default
-  Never
-: Options
-  Default (Never), Never, Only when tethered automatically, Always
-:
+
+|| Default | Never |
+|| Options | Default (Never), Never, Only when tethered automatically, Always |
+
 
 This setting determines if the system caret should also be moved with a routing button press.
 This option is set to Never by default, meaning that routing will never move the caret when routing the review cursor.
@@ -1784,11 +1781,10 @@ However, in order for you to read the context (i.e. that you are in a list and t
 To toggle focus context presentation from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
 ==== Interrupt speech while scrolling ====[BrailleSettingsInterruptSpeech]
-: Default
-  Enabled
-: Options
-  Default (Enabled), Enabled, Disabled
-:
+
+|| Default | Enabled |
+|| Options | Default (Enabled), Enabled, Disabled |
+
 
 This setting determines if speech should be interrupted when the Braille display is scrolled backwards/forwards.
 Previous/next line commands always interrupt speech.
@@ -1799,11 +1795,10 @@ For this reason the option is enabled by default, interrupting speech when scrol
 Disabling this option allows speech to be heard while simultaneously reading Braille.
 
 ==== Show selection ====[BrailleSettingsShowSelection]
-: Default
-  Enabled
-: Options
-  Default (Enabled), Enabled, Disabled
-:
+
+|| Default | Enabled |
+|| Options | Default (Enabled), Enabled, Disabled |
+
 
 This setting determines if selection indicator (dots 7 and 8) is shown by the braille display.
 The option is enabled by default so the selection indicator is shown.
@@ -1884,11 +1879,10 @@ This option is only available if NVDA has been installed.
 It is not possible to support audio ducking for portable and temporary copies of NVDA.
 
 ==== Volume of NVDA sounds follows voice volume ====[SoundVolumeFollowsVoice]
-: Default
-  Disabled
-: Options
-  Disabled, Enabled
-:
+
+|| Default | Disabled |
+|| Options | Disabled, Enabled |
+
 
 When this option is enabled, the volume of NVDA sounds and beeps will follow the volume setting of the voice you are using.
 If you decrease the volume of the voice, the volume of sounds will decrease.
@@ -2263,44 +2257,48 @@ For example, if you check the report font name checkbox, each time you arrow ont
 The document formatting options are organized into groups.
 You can configure reporting of:
 - Font
- - Font name
- - Font size
- - Font attributes
- - Superscripts and subscripts
- - Emphasis
- - Highlighted (Marked) text
- - Style
- - Colours
+  - Font name
+  - Font size
+  - Font attributes
+  - Superscripts and subscripts
+  - Emphasis
+  - Highlighted (Marked) text
+  - Style
+  - Colours
+  -
 - Document information
- - Comments
- - Bookmarks
- - Editor revisions
- - Spelling errors
+  - Comments
+  - Bookmarks
+  - Editor revisions
+  - Spelling errors
+  -
 - Pages and spacing
- - Page numbers
- - Line numbers
- - Line indentation reporting [(Off, Speech, Tones, Both Speech and Tones) #DocumentFormattingSettingsLineIndentation]
- - Ignore blank lines for line indentation reporting
- - Paragraph indentation (e.g. hanging indent, first line indent)
- - Line spacing (single, double, etc.)
- - Alignment
+  - Page numbers
+  - Line numbers
+  - Line indentation reporting [(Off, Speech, Tones, Both Speech and Tones) #DocumentFormattingSettingsLineIndentation]
+  - Ignore blank lines for line indentation reporting
+  - Paragraph indentation (e.g. hanging indent, first line indent)
+  - Line spacing (single, double, etc.)
+  - Alignment
+  -
 - Table information
- - Tables
- - Row/column headers (Off, Rows, Columns, Rows and columns)
- - Cell coordinates
- - Cell borders (Off, Styles, Both Colours and Styles)
+  - Tables
+  - Row/column headers (Off, Rows, Columns, Rows and columns)
+  - Cell coordinates
+  - Cell borders (Off, Styles, Both Colours and Styles)
+  -
 - Elements
- - Headings
- - Links
- - Graphics
- - Lists
- - Block quotes
- - Groupings
- - Landmarks
- - Articles
- - Frames
- - Clickable
- -
+  - Headings
+  - Links
+  - Graphics
+  - Lists
+  - Block quotes
+  - Groupings
+  - Landmarks
+  - Articles
+  - Frames
+  - Clickable
+  -
 -
 
 To toggle these settings from anywhere, please assign custom gestures using the [Input Gestures dialog #InputGestures].
@@ -2330,11 +2328,10 @@ This may be useful when reading a document where blank lines are used to separat
 This category allows you to adjust various aspects of document navigation.
 
 ==== Paragraph Style ====[ParagraphStyle]
-: Default
-  Handled by application
-: Options
-  Default (Handled by application), Handled by application, Single line break, Multi line break
-:
+
+|| Default | Handled by application |
+|| Options | Default (Handled by application), Handled by application, Single line break, Multi line break |
+
 
 This combo box allows you to select the paragraph style to be used when navigating by paragraphs with ``control+upArrow`` and ``control+downArrow``.
 The available paragraph styles are:
@@ -2387,11 +2384,10 @@ This button opens the directory where you can place custom code while developing
 This button is only enabled if NVDA is configured to enable loading custom code from the Developer Scratchpad Directory.
 
 ==== Registration for UI Automation events and property changes ====[AdvancedSettingsSelectiveUIAEventRegistration]
-: Default
-  Automatic
-: Options
-  Automatic, Selective, Global
-:
+
+|| Default | Automatic |
+|| Options | Automatic, Selective, Global |
+
 
 This option changes how NVDA registers for events fired by the Microsoft UI Automation accessibility API.
 The registration for UI Automation events and property changes combo box has three options:
@@ -2422,21 +2418,19 @@ We still do not recommend that the majority of users turn this on by default, th
 Microsoft Excel's UI automation implementation is ever changing, and versions of Microsoft Office older than 16.0.13522.10000 may not expose enough information for this option to be of any use.
 
 ==== Use enhanced event processing ====[UIAEnhancedEventProcessing]
-: Default
-  Enabled
-: Options
-  Default (Enabled), Disabled, Enabled
-:
+
+|| Default | Enabled |
+|| Options | Default (Enabled), Disabled, Enabled |
+
 
 When this option is enabled, NVDA should remain responsive when being flooded with many UI Automation events, e.g. large amounts of text in a terminal.
 After changing this option, you will need to restart NVDA for the change to take effect.
 
 ==== Windows Console support ====[AdvancedSettingsConsoleUIA]
-: Default
-  Automatic
-: Options
-  Automatic, UIA when available, Legacy
-:
+
+|| Default | Automatic |
+|| Options | Automatic, UIA when available, Legacy |
+
 
 This option selects how NVDA interacts with the Windows Console used by command prompt, PowerShell, and the Windows Subsystem for Linux.
 It does not affect the modern Windows Terminal.
@@ -2484,11 +2478,10 @@ The following options exist:
 -
 
 ==== Report live regions ====[BrailleLiveRegions]
-: Default
-  Enabled
-: Options
-  Default (Enabled), Disabled, Enabled
-:
+
+|| Default | Enabled |
+|| Options | Default (Enabled), Disabled, Enabled |
+
 
 This option selects whether NVDA reports changes in some dynamic web content in Braille.
 Disabling this option is equivalent to NVDA's behaviour in versions 2023.1 and earlier, which only reported these content changes in speech.
@@ -2519,11 +2512,10 @@ However, in terminals, when inserting or deleting a character in the middle of a
 -
 
 ==== Speak new text in Windows Terminal via ====[WtStrategy]
-: Default
-  Diffing
-: Options
-  Default (Diffing), Diffing, UIA notifications
-:
+
+|| Default | Diffing |
+|| Options | Default (Diffing), Diffing, UIA notifications |
+
 
 This option selects how NVDA determines what text is "new" (and thus what to speak when "report dynamic content changes" is enabled) in Windows Terminal and the WPF Windows Terminal control used in Visual Studio 2022.
 It does not affect the Windows Console (``conhost.exe``).
@@ -2553,11 +2545,10 @@ In some situations, the text background may be entirely transparent, with the te
 With several historically popular GUI APIs, the text may be rendered with a transparent background, but visually the background color is accurate.
 
 ==== Use WASAPI for audio output ====[WASAPI]
-: Default
-  Enabled
-: Options
-  Default (Enabled), Disabled, Enabled
-:
+
+|| Default | Enabled |
+|| Options | Default (Enabled), Disabled, Enabled |
+
 
 This option enables audio output via the Windows Audio Session API (WASAPI).
 WASAPI is a more modern audio framework which may improve the responsiveness, performance and stability of NVDA audio output, including both speech and sounds.
@@ -2635,11 +2626,11 @@ You can also set the level to character; in this case the symbol will not be spo
 This is useful if the symbol causes the synthesizer to pause or change the inflection of the voice.
 For example, a comma causes the synthesizer to pause.
 There are three options:
- - never: Never send the actual symbol to the synthesizer.
- - always: Always send the actual symbol to the synthesizer.
- - only below symbols' level: Send the actual symbol only if the configured speech symbol level is lower than the level set for this symbol.
- For example, you might use this so that a symbol will have its replacement spoken at higher levels without pausing, while still being indicated with a pause at lower levels.
- -
+  - never: Never send the actual symbol to the synthesizer.
+  - always: Always send the actual symbol to the synthesizer.
+  - only below symbols' level: Send the actual symbol only if the configured speech symbol level is lower than the level set for this symbol.
+  For example, you might use this so that a symbol will have its replacement spoken at higher levels without pausing, while still being indicated with a pause at lower levels.
+  -
 -
 
 You can add new symbols by pressing the Add button.
@@ -2678,11 +2669,11 @@ Then, press the key on the keyboard you wish to emulate.
 After that, the key will be available from the Emulated system keyboard keys category and you will be able to assign an input gesture to it as described above.
 
 Note:
- - Emulated keys must have gestures assigned in order to persist when saving / closing the dialog.
- - An input gesture with modifier keys may not be able to be mapped to an emulated gesture without modifier
- keys. For instance, setting the emulated input 'a' and configuring an input gesture of 'ctrl+m', may result
- in the application receiving 'ctrl+a'.
- -
+- Emulated keys must have gestures assigned in order to persist when saving / closing the dialog.
+- An input gesture with modifier keys may not be able to be mapped to an emulated gesture without modifier keys.
+For instance, setting the emulated input ``a`` and configuring an input gesture of ``ctrl+m``, may result
+in the application receiving ``ctrl+a``.
+-
 
 When you are finished making changes, press the OK button to save them or the Cancel button to discard them.
 
@@ -3066,10 +3057,10 @@ These voices can also be used with NVDA.
 To use these voices, you will need to install two components:
 - [Microsoft Speech Platform - Runtime (Version 11), x86 https://www.microsoft.com/download/en/details.aspx?id=27225]
 - [Microsoft Speech Platform - Runtime Languages (Version 11) https://www.microsoft.com/download/en/details.aspx?id=27224]
- - This page includes many files for both speech recognition and text-to-speech.
+  - This page includes many files for both speech recognition and text-to-speech.
  Choose the files containing the TTS data for the desired languages/voices.
  For example, the file MSSpeech_TTS_en-US_ZiraPro.msi is a U.S. English voice.
- -
+  -
 -
 
 ++ Windows OneCore Voices ++[OneCore]

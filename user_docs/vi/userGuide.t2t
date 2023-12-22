@@ -1504,11 +1504,10 @@ Tuy nhiên, một số bộ đọc của Microsoft không phát triển tính n�
 Nếu bạn gặp trục trặc khi phát âm một số kí tự nhất định, hãy thử tắt nó đi.
 
 ==== Chờ để mô tả cho kí tự khi di chuyển con trỏ ====[delayedCharacterDescriptions]
-: Mặc định
-  tắt
-: Tùy chọn
-  Bật, Tắt
-:
+
+|| Mặc định | tắt |
+|| Tùy chọn | Bật, Tắt |
+
 
 Khi bật tùy chọn này, NVDA sẽ đọc mô tả của kí tự khi di chuyển theo từng kí tự.
 
@@ -1625,11 +1624,10 @@ Nếu muốn con trỏ nổi đi theo khi duyệt đối tượng  và nội dun
 Trường hợp này, con trỏ nổi sẽ không đi theo focus và dấu nháy hệ thống.
 
 ==== Di chuyển dấu nháy hệ thống khi định tuyến con trỏ duyệt ====[BrailleSettingsReviewRoutingMovesSystemCaret]
-: Mặc định
-  Không bao giờ
-: Các tùy chọn
-  Mặc định (Không bao giờ), Không bao giờ, Chỉ khi tự đi theo, Luôn luôn
-:
+
+|| Mặc định | Không bao giờ |
+|| Các tùy chọn | Mặc định (Không bao giờ), Không bao giờ, Chỉ khi tự đi theo, Luôn luôn |
+
 
 Thiết lập này xác định việc dấu nháy hệ thống bị di chuyển khi nút định tuyến được bấm.
 Mặc định, tùy chọn này được thiết lập là không bao giờ, nghĩa là nút định tuyến sẽ không di chuyển dấu nháy hệ thống khi định tuyến con trỏ duyệt.
@@ -1692,11 +1690,10 @@ Vì vậy, nó chỉ hiển thị bạn đang đứng tại mục có focus.
 Để chuyển đổi giữa các chế độ trình bày ngữ cảnh, bạn có thể gán phím tắt / thao tác tùy chỉnh cho nó trong [hộp thoại quản lý thao tác #InputGestures].
 
 ==== Ngừng đọc trong khi cuộn ====[BrailleSettingsInterruptSpeech]
-: Mặc định
-  Bật
-: Tùy chọn
-  Mặc định (Bật), bật, Tắt
-:
+
+|| Mặc định | Bật |
+|| Tùy chọn | Mặc định (Bật), bật, Tắt |
+
 
 Thiết lập này xác định việc bộ đọc sẽ bị ngừng khi màn hình chữ nổi được cuộn lùi/tới.
 các lệnh di chuyển đến dòng trước / dòng kế đều làm NVDA ngừng đọc.
@@ -1707,11 +1704,10 @@ Vì lí do đó, tùy chọn ngừng đọc khi cuộn chữ nổi mặc định
 Tắt tùy chọn này cho phép bạn nghe đọc nội dung song song với đọc chữ nổi.
 
 ==== Hiện vùng chọn ====[BrailleSettingsShowSelection]
-: Mặc định
-  Bật
-: Các tùy chọn
-  Mặc định (Bật), Bật, Tắt
-:
+
+|| Mặc định | Bật |
+|| Các tùy chọn | Mặc định (Bật), Bật, Tắt |
+
 
 Thiết lập này giúp nhận biết khi chỉ báo vùng chọn (các chấm 7 và 8) hiện trên màn hình nổi.
 Mặc định thì tùy chọn này được bật nên chỉ báo vùng chọn sẽ được hiển thị.
@@ -2155,11 +2151,10 @@ Mỗi âm sẽ tăng cao độ lên một chút và đại diện cho một kho�
 Phân loại này cho phép bạn điều chỉnh nhiều cách khác nhau để điều hướng trong tài liệu.
 
 ==== Kiểu Đoạn ====[ParagraphStyle]
-: Mặc định
-  Quản lý bởi ứng dụng
-: Tùy chọn
-  Mặc định (Quản lý bởi ứng dụng), Quản lý bởi ứng dụng, Một dấu xuống dòng, Nhiều dấu xuống dòng
-:
+
+|| Mặc định | Quản lý bởi ứng dụng |
+|| Tùy chọn | Mặc định (Quản lý bởi ứng dụng), Quản lý bởi ứng dụng, Một dấu xuống dòng, Nhiều dấu xuống dòng |
+
 
 Hộp xổ này cho phép bạn chọn cách dùng khi điều hướng đoạn với ``control+mũi tên lên`` và ``control+mũi tên xuống``.
 Hiện có các kiểu điều hướng đoạn sau:
@@ -2206,11 +2201,10 @@ Nút này mở thư mục mà bạn có thể lưu mã nguồn trong khi đang p
 Nút này chỉ xuất hiện nếu NVDA được cấu hình để gọi mã nguồn tùy chỉnh từ thư mục Scratchpad.
 
 ==== Các chọn lọc đăng kí cho các thay đổi sự kiện và thuộc tính của UI Automation ====[AdvancedSettingsSelectiveUIAEventRegistration]
-: Mặc định
-  Tự động
-: Tùy chọn
-  Tự động, Chọn lọc, Toàn cục
-:
+
+|| Mặc định | Tự động |
+|| Tùy chọn | Tự động, Chọn lọc, Toàn cục |
+
 
 Tùy chọn này thay đổi việc NVDA đăng kí các sự kiện nổ ra bởi Microsoft UI Automation accessibility API.
 Hộp xổ Bật các chọn lọc đăng kí cho các thay đổi sự kiện và thuộc tính của UI Automation có ba tùy chọn:
@@ -2241,11 +2235,10 @@ Chúng tôi vẫn không khuyến khích đại đa số người dùng bật t�
 Việc triển khai UI automation của Microsoft Excel đang thay đổi, và các phiên bản của Microsoft Office cũ hơn 16.0.13522.10000 có thể không đủ thông tin để dùng cho tùy chọn này.
 
 ==== Hỗ trợ Windows Console ====[AdvancedSettingsConsoleUIA]
-: Mặc định
-  Tự động
-: Tùy chọn
-  Tự động, Dùng UIA khi có thể, Kiểu cũ
-:
+
+|| Mặc định | Tự động |
+|| Tùy chọn | Tự động, Dùng UIA khi có thể, Kiểu cũ |
+
 
 Tùy chọn này để thiết lập cách mà NVDA tương tác với Windows Console, được dùng bởi command prompt, PowerShell và Windows Subsystem for Linux.
 nó không ảnh hưởng đến Windows Terminal kiểu mới.
@@ -2293,11 +2286,10 @@ Hiện có các tùy chọn sau:
 -
 
 ==== Thông báo nội dung động ====[BrailleLiveRegions]
-: Mặc định
-  Bật
-: Các tùy chọn
-    Mặc định (Bật), Tắt, Bật
-:
+
+|| Mặc định | Bật |
+|| Các tùy chọn |   Mặc định (Bật), Tắt, Bật |
+
 
 Tùy chọn này cho phép NVDA thông báo các thay đổi trong một số nội dung động trên web ở chữ nổi.
 Việc tắt tùy chọn này sẽ làm cho NVDA vận hành giống như ở các phiên bản 2023.1 trở về trước, tức là chỉ thông báo các thay đổi nội dung thông qua giọng đọc.
@@ -2328,9 +2320,9 @@ Tuy nhiên, trong terminal, khi chèn hay xóa một kí tự ở giữa một d
 -
 
 ==== Đọc văn bản mới trong Windows Terminal thông qua ====[WtStrategy]
-: Mặc định
-  Diffing
-: Các tùy chọn
+
+|| Mặc định | Diffing |
+ Các tùy chọn
   Diffing, Các thông báo UIA
   :
 
@@ -2362,22 +2354,20 @@ Trong vài tình huống, văn bản nền có thể hoàn toàn trong suốt, v
 Với vài GUI APIs phổ biến trong lịch sử, văn bản có thể hiển thị với nền trong suốt, nhưng một cách trực quan thì màu nền vẫn chính xác.
 
 ==== Dùng WASAPI cho đầu ra âm thanh ====[WASAPI]
-: Mặc định
-  Tắt
-: Tùy chọn
-    Mặc định (Tắt), Bật, Tắt
-:
+
+|| Mặc định | Tắt |
+|| Tùy chọn |   Mặc định (Tắt), Bật, Tắt |
+
 
 Tùy chọn này cho phép phát ra âm thanh thông qua Windows Audio Session API (WASAPI).
 WASAPI là một hệ thống âm thanh hiện đại hơn, có thể cải thiện khả năng phản hồi, hiệu suất và tính ổn định trong việc phát âm thanh của NVDA, bao gồm cả âm thanh và giọng đọc.
 Sau khi thay đổi thiết lập, bạn sẽ phải khởi động lại NVDA để nó có hiệu lực.
 
 ==== Âm lượng âm thanh NVDA đi theo âm lượng giọng đọc ====[SoundVolumeFollowsVoice]
-: Mặc định
-  Tắt
-: Tùy chọn
-  Bật, tắt
-:
+
+|| Mặc định | Tắt |
+|| Tùy chọn | Bật, tắt |
+
 
 Khi bật tùy chọn này, âm lượng của âm thanh và tiếng beep của NVDA sẽ đi theo thiết lập âm lượng  của giọng đọc bạn đang dùng.
 Nếu bạn giảm âm lượng giọng đọc thì âm lượng của âm thanh cũng sẽ giảm.
