@@ -13,7 +13,7 @@ jobs:
     - uses: actions/setup-python@v4
       with:
         python-version: 3.11.7
-        architecture: x86
+        architecture: x64
     - name: generate pot file
       run: |
         xgettext -o nvda.pot --package-name "nvda" --package-version ${{ github.sha }} --foreign-user --add-comments=Translators:" --keyword=pgettext:1c,2 --keyword=npgettext:1c,2,3 --from-code utf-8 --language=python source/*.pyw source/**.py
