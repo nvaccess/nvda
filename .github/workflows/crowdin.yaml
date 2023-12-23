@@ -5,18 +5,19 @@ on:
 
 jobs:
   CrowdinUpload:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         ref: ${{ github.sha }}
+        submodules: 'true'
     - uses: actions/setup-python@v4
       with:
         python-version: 3.11.7
         architecture: x64
     - name: generate pot file
       run: |
-        xgettext -o "nvda.pot" --package-name "nvda" --package-version "${{ github.sha }}" --foreign-user --add-comments="Translators:" --keyword="pgettext:1c,2" --keyword="npgettext:1c,2,3" --from-code "utf-8" --language="python" source/*.pyw source/**.py
+        .\miscDeps\tools\xgettext.exe -o "nvda.pot" --package-name "nvda" --package-version "${{ github.sha }}" --foreign-user --add-comments="Translators:" --keyword="pgettext:1c,2" --keyword="npgettext:1c,2,3" --from-code "utf-8" --language="python" source/*.pyw source/**.py
     - name: Upload to Crowdin
       env:
         crowdinProjectID: ${{ secrets.crowdinProjectID }}
