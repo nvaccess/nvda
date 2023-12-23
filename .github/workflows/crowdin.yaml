@@ -2,7 +2,7 @@ name: crowdin upload
 on: push [crowdinUpload2]
 
 jobs:
-  Crowdin upload
+  Crowdin upload:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
