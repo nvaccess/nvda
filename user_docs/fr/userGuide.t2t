@@ -1527,11 +1527,10 @@ Cependant, certains synthétiseurs utilisant les API de parole Microsoft se comp
 Si vous rencontrez des problèmes à l'épellation de caractères, essayez de désactiver cette option.
 
 ==== Description différée des caractères lors du mouvement du curseur ====[delayedCharacterDescriptions]
-: Défaut
-  Désactivé
-: Options
-  Activé, Désactivé
-:
+
+|| Défaut | Désactivé |
+|| Options | Activé, Désactivé |
+
 
 Lorsque ce paramètre est coché, NVDA dira la description du caractère lorsque vous vous déplacerez par caractère.
 
@@ -1650,9 +1649,9 @@ Dans ce cas, le braille ne suivra pas le focus système et le curseur système.
 ==== Déplacer le curseur système lors du routage du curseur de revue ====[BrailleSettingsReviewRoutingMovesSystemCaret]
 : Défaut
  Jamais
-: Options
-  Défaut (Jamais), Jamais, Seulement quand le braille suit automatiquement, Toujours
-:
+
+|| Options | Défaut (Jamais), Jamais, Seulement quand le braille suit automatiquement, Toujours |
+
 
 Ce paramètre détermine si le curseur système doit également être déplacé lors d'un appui sur une touche de routage du curseur.
 Cette option est définie sur Jamais par défaut, ce qui signifie que le routage ne déplacera jamais le curseur système lors du routage du curseur de revue.
@@ -1715,11 +1714,10 @@ Cependant, si vous voulez lire le contexte (ex : que vous êtes dans une liste 
 Pour modifier l'option "Afficher le contexte du focus" de n'importe où, veuillez assigner un geste de commande personnalisé en utilisant [le dialogue Gestes de Commandes #InputGestures].
 
 ==== Interrompre la parole pendant le défilement ====[BrailleSettingsInterruptSpeech]
-: Défaut
-  Activé
-: Options
-  Défaut (Activé), Activé, Désactivé
-:
+
+|| Défaut | Activé |
+|| Options | Défaut (Activé), Activé, Désactivé |
+
 
 Ce paramètre détermine si la parole doit être interrompue lorsque l'afficheur braille défile vers l'arrière/vers l'avant.
 Les commandes de ligne précédente/suivante interrompent toujours la parole.
@@ -1730,11 +1728,10 @@ Pour cette raison, l'option est activée par défaut, interrompant la parole lor
 La désactivation de cette option permet d'entendre la parole tout en lisant simultanément le braille.
 
 ==== Afficher la sélection ====[BrailleSettingsShowSelection]
-: Défaut
-  Activé
-: Options
-  Défaut (Activé), Activé, Désactivé
-:
+
+|| Défaut | Activé |
+|| Options | Défaut (Activé), Activé, Désactivé |
+
 
 Ce réglage détermine si l'indicateur de sélection (points 7 et 8) s'affiche sur l'afficheur braille.
 L'option est activée par défaut, donc l'indicateur de sélection est affiché.
@@ -2192,11 +2189,10 @@ Cela peut être utile lors de la lecture d'un document dans lequel des lignes vi
 Cette catégorie vous permet d'ajuster divers aspects de la navigation dans les documents.
 
 ==== Style des paragraphes ====[ParagraphStyle]
-: Défaut
-  Géré par l'application
-: Options
-  Défaut (Géré par l' application), géré par l' application, Saut de ligne unique, Saut de ligne multiple
-:
+
+|| Défaut | Géré par l'application |
+|| Options | Défaut (Géré par l' application), géré par l' application, Saut de ligne unique, Saut de ligne multiple |
+
 
 Cette liste déroulante vous permet de sélectionner le style de paragraphe à utiliser lors de la navigation par paragraphes avec ``contrôle+flècheHaut`` et ``contrôle+flècheBas``.
 Les styles de paragraphe disponibles sont :
@@ -2249,11 +2245,10 @@ Ce bouton ouvre le répertoire où vous pouvez placer le code personnalisé que 
 Ce bouton n'est disponible que si NVDA est configuré pour permettre le chargement de code personnalisé depuis le répertoire Bloc-notes du développeur.
 
 ==== Enregistrement des événements et modifications de propriété UI Automation ====[AdvancedSettingsSelectiveUIAEventRegistration]
-: Défaut
-  Automatique
-: Options
-  Automatique, Sélectif, Global
-:
+
+|| Défaut | Automatique |
+|| Options | Automatique, Sélectif, Global |
+
 
 Cette option change la façon dont NVDA enregistre les événements déclenchés par l'API d'accessibilité UI Automation de Microsoft.
 La liste déroulante Enregistrement des événements et modifications de propriété UI Automation a trois options :
@@ -2284,11 +2279,10 @@ Nous ne recommandons toujours pas que la majorité des utilisateurs l'activent p
 L'implémentation de UI Automation dans Microsoft Excel est en constante évolution et les versions de Microsoft Office antérieures à 16.0.13522.10000 peuvent ne pas exposer suffisamment d'informations pour que cette option soit d'une quelconque utilité.
 
 ==== Prise en charge de la Console Windows ====[AdvancedSettingsConsoleUIA]
-: Défaut
-  Automatique
-: Options
-  Automatique, UIA si disponible, Héritée
-:
+
+|| Défaut | Automatique |
+|| Options | Automatique, UIA si disponible, Héritée |
+
 
 Cette option sélectionne la façon dont NVDA interagit avec la console Windows utilisée par l'invite de commande, PowerShell et le sous-système Windows pour Linux.
 Cela n'affecte pas le terminal Windows moderne.
@@ -2336,11 +2330,10 @@ Les options suivantes existent :
 -
 
 ==== Signaler les régions Actives ====[BrailleLiveRegions]
-: Défaut
-  Activé
-: Options
-  Défaut (Activé), Désactivé, Activé
-:
+
+|| Défaut | Activé |
+|| Options | Défaut (Activé), Désactivé, Activé |
+
 
 Cette option définit si NVDA signale les changements dans certains contenus Web dynamiques en Braille.
 Désactiver cette option équivaut au comportement de NVDA dans les versions 2023.1 et antérieures, qui ne signalaient ces changements de contenu que par la parole.
@@ -2371,11 +2364,10 @@ Cependant, dans les terminaux, lors de l'insertion ou de la suppression d'un car
 -
 
 ==== Annoncez un nouveau texte dans le terminal Windows via ====[WtStrategy]
-: Défaut
-  Comparaison du texte
-: Options
-  Défaut (Comparaison du texte), Comparaison du texte, Notifications UIA
-:
+
+|| Défaut | Comparaison du texte |
+|| Options | Défaut (Comparaison du texte), Comparaison du texte, Notifications UIA |
+
 
 Cette option sélectionne la façon dont NVDA détermine quel texte est "nouveau" (et donc ce qu'il faut prononcer lorsque "signaler les changements de contenu dynamique" est activé) dans Windows Terminal et le contrôle WPF Windows Terminal utilisé dans Visual Studio 2022.
 Elle n'affecte pas la console Windows (``conhost.exe``).
@@ -2405,11 +2397,10 @@ Dans certaines situations, l'arrière-plan du texte peut être entièrement tran
 Pour plusieurs API GUI historiquement populaires, le texte peut être rendu avec un arrière-plan transparent, mais visuellement, la couleur d'arrière-plan est précise.
 
 ==== Utiliser WASAPI pour la sortie audio ====[WASAPI]
-: Défaut
-  Activé
-: Options
-  Défaut (Activé), Désactivé, Activé
-:
+
+|| Défaut | Activé |
+|| Options | Défaut (Activé), Désactivé, Activé |
+
 
 Cette option active la sortie audio via l'API Windows Audio Session (WASAPI).
 WASAPI est une architecture audio plus moderne qui peut améliorer la réactivité, les performances et la stabilité de la sortie audio NVDA, y compris la parole et les sons.
@@ -2417,11 +2408,10 @@ Cette option est activée par défaut.
 Après avoir modifié cette option, vous devrez redémarrer NVDA pour que la modification prenne effet.
 
 ==== Le volume des sons NVDA suit le volume de la voix ====[SoundVolumeFollowsVoice]
-: Default
-  Disabled
-: Options
-  Désactivé, Activé
-:
+
+|| Default | Disabled |
+|| Options | Désactivé, Activé |
+
 
 Lorsque cette option est activée, le volume des sons et des bips de NVDA suivra le réglage du volume de la voix que vous utilisez.
 Si vous diminuez le volume de la voix, le volume des sons diminuera.

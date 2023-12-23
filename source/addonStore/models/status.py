@@ -359,9 +359,15 @@ _addonStoreStateToAddonHandlerState: OrderedDict[
 })
 
 
-_installedAddonStatuses: Set[AvailableAddonStatus] = {
-	AvailableAddonStatus.UPDATE,
-	AvailableAddonStatus.REPLACE_SIDE_LOAD,
+_installedAddonStatuses: set[AvailableAddonStatus] = {
+	# These are technically installed,
+	# but updatable add-ons only display this status
+	# in the updatable tab context.
+	# These add-ons will show up in the installed tab
+	# with an INSTALLED status or similar.
+	# AvailableAddonStatus.UPDATE,
+	# AvailableAddonStatus.UPDATE_INCOMPATIBLE,
+	# AvailableAddonStatus.REPLACE_SIDE_LOAD,
 	AvailableAddonStatus.INSTALLED,
 	AvailableAddonStatus.PENDING_DISABLE,
 	AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
