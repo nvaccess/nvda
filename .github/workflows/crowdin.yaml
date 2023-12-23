@@ -1,5 +1,7 @@
 name: crowdin upload
-on: push [crowdinUpload2]
+on:
+  push:
+    branches: [crowdinUpload2]
 
 jobs:
   Crowdin upload:
