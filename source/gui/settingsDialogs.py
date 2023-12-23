@@ -3950,6 +3950,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		AutoSettingsMixin.onSave(self)
 		mode = list(braille.BrailleMode)[self.brailleModes.GetSelection()]
 		config.conf['braille']['mode'] = mode.value
+		braille.handler.mainBuffer.clear()
 		config.conf["braille"]["translationTable"] = self.outTableNames[self.outTableList.GetSelection()]
 		brailleInput.handler.table = self.inTables[self.inTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
