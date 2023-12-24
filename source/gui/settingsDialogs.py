@@ -1649,6 +1649,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.speechModesList.Checked = [
 			mIndex for mIndex in range(len(self._allSpeechModes)) if mIndex not in excludedModes
 		]
+		self.speechModesList.Bind(wx.EVT_CHECKLISTBOX, self.onSpeechModesListChange)
 		self.speechModesList.Select(0)
 
 	def _appendDelayedCharacterDescriptions(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
@@ -1686,20 +1687,11 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			mIndex for mIndex in range(len(self._allSpeechModes)) if mIndex not in self.speechModesList.CheckedItems
 		]
 
-	def isValid(self) -> bool:
-		enabledSpeechModes = self.speechModesList.CheckedItems
-		if len(enabledSpeechModes) < 2:
-			log.debugWarning("Too few speech modes enabled.")
-			gui.messageBox(
-				# Translators: Message shown when not enough speech modes are enabled.
-				_("At least two speech modes have to be checked."),
-				# Translators: The title of the message box
-				_("Error"),
-				wx.OK | wx.ICON_ERROR,
-				self,
-			)
-			return False
-		if self._allSpeechModes.index(speech.SpeechMode.talk) not in enabledSpeechModes:
+	def onSpeechModesListChange(self, evt):
+		if (
+			evt.GetInt() == self._allSpeechModes.index(speech.SpeechMode.talk)
+			and not self.speechModesList.IsChecked(evt.GetInt())
+		):
 			if gui.messageBox(
 				_(
 					# Translators: Warning shown when 'talk' speech mode is disabled in settings.
@@ -1714,7 +1706,24 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 				wx.YES | wx.NO | wx.ICON_WARNING,
 				self,
 			) == wx.NO:
-				return False
+				self.speechModesList.SetCheckedItems(
+					list(self.speechModesList.GetCheckedItems())
+					+ [self._allSpeechModes.index(speech.SpeechMode.talk)]
+				)
+
+	def isValid(self) -> bool:
+		enabledSpeechModes = self.speechModesList.CheckedItems
+		if len(enabledSpeechModes) < 2:
+			log.debugWarning("Too few speech modes enabled.")
+			gui.messageBox(
+				# Translators: Message shown when not enough speech modes are enabled.
+				_("At least two speech modes have to be checked."),
+				# Translators: The title of the message box
+				_("Error"),
+				wx.OK | wx.ICON_ERROR,
+				self,
+			)
+			return False
 		return super().isValid()
 
 
