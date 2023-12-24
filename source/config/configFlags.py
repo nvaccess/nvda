@@ -96,6 +96,7 @@ class TetherTo(DisplayStringStrEnum):
 			TetherTo.REVIEW: _("to review"),
 		}
 
+
 @unique
 class BrailleMode(DisplayStringStrEnum):
 	"""Enumeration containing the possible config values for "Braille mode" option in braille settings.
@@ -104,6 +105,7 @@ class BrailleMode(DisplayStringStrEnum):
 	"""
 	FOLLOW_CURSORS = "followCursors"
 	SPEECH_EMULATION = 'speechEmulation'
+
 	@property
 	def _displayStringLabels(self):
 		return{

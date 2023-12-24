@@ -164,12 +164,11 @@ def processText(locale: str, text: str, symbolLevel: characterProcessing.SymbolL
 	return text.strip()
 
 
-def cancelSpeech(clearBrailleRegions = True):
+def cancelSpeech(clearBrailleRegions=True):
 	"""Interupts the synthesizer from currently speaking"""
 	# Import only for this function to avoid circular import.
 	from .sayAll import SayAllHandler
 	SayAllHandler.stop()
-	from scriptHandler import getCurrentScript
 	if clearBrailleRegions:
 		_regions.clear()
 	if _speechState.beenCanceled:
@@ -949,6 +948,7 @@ def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> Spe
 		indentSequence.extend(res)
 	return indentSequence
 
+
 _regions = []
 # C901 'speak' is too complex
 # Note: when working on speak, look for opportunities to simplify
@@ -976,7 +976,7 @@ def speak(  # noqa: C901
 		text = ' '.join([x for x in speechSequence if isinstance(x, str)])
 		currentRegions = False
 		if _regions:
-			text = ' '+text
+			text = ' ' + text
 			currentRegions = True
 		region = braille.TextRegion(text)
 		region.update()

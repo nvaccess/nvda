@@ -3749,7 +3749,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		# Translators: The label for a setting in braille settings to select wich braille mode to use
 		modeListText = _('Braille mode:')
 		modeChoices = [x.displayString for x in braille.BrailleMode]
-		self.brailleModes = sHelper.addLabeledControl(modeListText, wx.Choice, choices = modeChoices)
+		self.brailleModes = sHelper.addLabeledControl(modeListText, wx.Choice, choices=modeChoices)
 		self.bindHelpEvent("BrailleSettingsBrailleMode", self.brailleModes)
 		self.brailleModes.Bind(wx.EVT_CHOICE, self.onModeChange)
 		current = braille.BrailleMode(config.conf['braille']['mode'])
@@ -3810,7 +3810,11 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 		# Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
 		cursorShapeFocusLabelText = _("Cursor shape for &focus:")
-		self.cursorShapeFocusList = group.addLabeledControl(cursorShapeFocusLabelText, wx.Choice, choices=cursorShapeChoices)
+		self.cursorShapeFocusList = group.addLabeledControl(
+			cursorShapeFocusLabelText,
+			wx.Choice,
+			choices=cursorShapeChoices
+		)
 		self.bindHelpEvent("BrailleSettingsCursorShapeForFocus", self.cursorShapeFocusList)
 		try:
 			selection = self.cursorShapes.index(config.conf["braille"]["cursorShapeFocus"])
@@ -3822,7 +3826,11 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 		# Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
 		cursorShapeReviewLabelText = _("Cursor shape for &review:")
-		self.cursorShapeReviewList = group.addLabeledControl(cursorShapeReviewLabelText, wx.Choice, choices=cursorShapeChoices)
+		self.cursorShapeReviewList = group.addLabeledControl(
+			cursorShapeReviewLabelText,
+			wx.Choice,
+			choices=cursorShapeChoices
+		)
 		self.bindHelpEvent("BrailleSettingsCursorShapeForReview", self.cursorShapeReviewList)
 		try:
 			selection = self.cursorShapes.index(config.conf["braille"]["cursorShapeReview"])
@@ -3909,7 +3917,11 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		focusContextPresentationLabelText = _("Focus context presentation:")
 		self.focusContextPresentationValues = [x[0] for x in braille.focusContextPresentations]
 		focusContextPresentationChoices = [x[1] for x in braille.focusContextPresentations]
-		self.focusContextPresentationList = group.addLabeledControl(focusContextPresentationLabelText, wx.Choice, choices=focusContextPresentationChoices)
+		self.focusContextPresentationList = group.addLabeledControl(
+			focusContextPresentationLabelText,
+			wx.Choice,
+			choices=focusContextPresentationChoices
+		)
 		self.bindHelpEvent("BrailleSettingsFocusContextPresentation", self.focusContextPresentationList)
 		try:
 			index=self.focusContextPresentationValues.index(config.conf["braille"]["focusContextPresentation"])
@@ -3927,7 +3939,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			conf=config.conf,
 		)
 		self.bindHelpEvent("BrailleSettingsShowSelection", self.brailleShowSelectionCombo)
-		# Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
+		# Translators: The label for a setting in braille settings to enable word wrap
+		#(try to avoid splitting words at the end of the braille display).
 		wordWrapText = _("Avoid splitting &words when possible")
 		self.wordWrapCheckBox = sHelper.addItem(wx.CheckBox(self, label=wordWrapText))
 		self.bindHelpEvent("BrailleSettingsWordWrap", self.wordWrapCheckBox)

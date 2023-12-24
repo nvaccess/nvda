@@ -114,7 +114,7 @@ SCRCAT_INPUT = _("Input")
 #: Script category for document formatting commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_DOCUMENTFORMATTING = _("Document formatting")
-# Translators: The message reported when in speech emulation mode, and trying to toggle a setting not supported in that mode
+# Translators: Reported when trying to toggle an unsupported setting in speech emulation mode.
 speechEmulationMSG = _('Action unavailable while the braille mode is set to speech emulation')
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus.
@@ -3308,17 +3308,18 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Reports which position braille is tethered to
 		# (braille can be tethered automatically or to either focus or review position).
 		ui.message(_("Braille tethered %s") % TetherTo(newTetherChoice).displayString)
+
 	@script(
 		# Translators: Input help mode message for toggle braille mode command
-		description = _('Cycles through the available braille modes'),
-		category = SCRCAT_BRAILLE,
-		gesture = "kb:nvda+alt+t"
+		description=_('Cycles through the available braille modes'),
+		category=SCRCAT_BRAILLE,
+		gesture="kb:nvda+alt+t"
 	)
 	def script_toggleBrailleMode(self, gesture):
 		curMode = BrailleMode(config.conf['braille']['mode'])
 		modeList = list(BrailleMode)
 		index = modeList.index(curMode)
-		index = index+1 if not index == len(modeList)-1 else 0
+		index = index + 1 if not index == len(modeList) -1 else 0
 		newMode = modeList[index]
 		config.conf['braille']['mode'] = newMode.value
 		if braille.handler.buffer == braille.handler.messageBuffer:
@@ -3330,7 +3331,7 @@ class GlobalCommands(ScriptableObject):
 		if newMode == BrailleMode.SPEECH_EMULATION:
 			return
 		if braille.handler.getTether() == TetherTo.REVIEW.value:
-			braille.handler.handleReviewMove(shouldAutoTether = braille.handler.shouldAutoTether)
+			braille.handler.handleReviewMove(shouldAutoTether=braille.handler.shouldAutoTether)
 			return
 		braille.handler.handleGainFocus(api.getFocusObject())
 
