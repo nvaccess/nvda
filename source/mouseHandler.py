@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2022 NV Access Limited
+# Copyright (C) 2016-2023 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -201,19 +201,18 @@ def getTotalWidthAndHeightAndMinimumPosition(displays):
 	return (totalWidth, totalHeight, wx.Point(smallestX, smallestY))
 
 def executeMouseMoveEvent(x,y):
-	global currentMouseWindow
 	desktopObject=api.getDesktopObject()
 	displays = [ wx.Display(i).GetGeometry() for i in range(wx.Display.GetCount()) ]
 	x, y = getMouseRestrictedToScreens(x, y, displays)
 	screenWidth, screenHeight, minPos = getTotalWidthAndHeightAndMinimumPosition(displays)
+	oldMouseObject = api.getMouseObject()
+	mouseObject = desktopObject.objectFromPoint(x, y)
 
-	if config.conf["mouse"]["audioCoordinatesOnMouseMove"]:
+	if config.conf["mouse"]["audioCoordinatesOnMouseMove"] and not oldMouseObject.appModule.sleepMode:
 		playAudioCoordinates(x, y, screenWidth, screenHeight, minPos,
 			config.conf['mouse']['audioCoordinates_detectBrightness'],
 			config.conf['mouse']['audioCoordinates_blurFactor'])
 
-	oldMouseObject=api.getMouseObject()
-	mouseObject=desktopObject.objectFromPoint(x, y)
 	while mouseObject and mouseObject.beTransparentToMouse:
 		mouseObject=mouseObject.parent
 	if not mouseObject:
