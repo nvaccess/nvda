@@ -3940,7 +3940,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.bindHelpEvent("BrailleSettingsShowSelection", self.brailleShowSelectionCombo)
 		# Translators: The label for a setting in braille settings to enable word wrap
-		#(try to avoid splitting words at the end of the braille display).
+		# (try to avoid splitting words at the end of the braille display).
 		wordWrapText = _("Avoid splitting &words when possible")
 		self.wordWrapCheckBox = sHelper.addItem(wx.CheckBox(self, label=wordWrapText))
 		self.bindHelpEvent("BrailleSettingsWordWrap", self.wordWrapCheckBox)

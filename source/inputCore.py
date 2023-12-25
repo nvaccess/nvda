@@ -532,7 +532,7 @@ class InputManager(baseObject.AutoPropertyObject):
 				queueHandler.eventQueue,
 				speech.cancelSpeech,
 				_immediate=immediate,
-				clearBrailleRegions= clearRegions
+				clearBrailleRegions=clearRegions
 			)
 		elif speechEffect in (gesture.SPEECHEFFECT_PAUSE, gesture.SPEECHEFFECT_RESUME):
 			queueHandler.queueFunction(queueHandler.eventQueue, speech.pauseSpeech, speechEffect == gesture.SPEECHEFFECT_PAUSE)

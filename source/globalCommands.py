@@ -3319,7 +3319,7 @@ class GlobalCommands(ScriptableObject):
 		curMode = BrailleMode(config.conf['braille']['mode'])
 		modeList = list(BrailleMode)
 		index = modeList.index(curMode)
-		index = index + 1 if not index == len(modeList) -1 else 0
+		index = index + 1 if not index == len(modeList) - 1 else 0
 		newMode = modeList[index]
 		config.conf['braille']['mode'] = newMode.value
 		if braille.handler.buffer == braille.handler.messageBuffer:
