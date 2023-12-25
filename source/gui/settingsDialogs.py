@@ -1695,11 +1695,9 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			if gui.messageBox(
 				_(
 					# Translators: Warning shown when 'talk' speech mode is disabled in settings.
-					(
-						"You did not choose Talk as one of your speech mode options. "
-						"Please note that this may result in no speech output at all. "
-						"Are you sure you want to continue?"
-					)
+					"You did not choose Talk as one of your speech mode options. "
+					"Please note that this may result in no speech output at all. "
+					"Are you sure you want to continue?"
 				),
 				# Translators: Title of the warning message.
 				_("Warning"),
