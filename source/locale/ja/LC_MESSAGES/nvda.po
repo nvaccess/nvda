@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-13 10:35+1000\n"
-"PO-Revision-Date: 2023-12-17 22:53\n"
+"POT-Creation-Date: 2023-12-24 10:45+0000\n"
+"PO-Revision-Date: 2023-12-26 22:19\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -510,7 +510,7 @@ msgstr "サブメニュー"
 #. Translators: Displayed in braille when a protected control or a document is encountered.
 #: braille.py:248
 msgid "***"
-msgstr ""
+msgstr "***"
 
 #. Translators: Displayed in braille when a required form field is encountered.
 #: braille.py:250
@@ -647,12 +647,12 @@ msgstr "自動設定"
 #. Translators: String representing the USB port selection for braille displays.
 #: braille.py:369
 msgid "USB"
-msgstr ""
+msgstr "USB"
 
 #. Translators: String representing the Bluetooth port selection for braille displays.
 #: braille.py:373
 msgid "Bluetooth"
-msgstr ""
+msgstr "Bluetooth"
 
 #. Translators: Braille when there are further details/annotations that can be fetched manually.
 #: braille.py:553 speech\speech.py:1917
@@ -703,28 +703,28 @@ msgstr "レベル %s"
 #: braille.py:657
 #, python-brace-format
 msgid "r{rowNumber}-{rowSpan}"
-msgstr ""
+msgstr "r{rowNumber}-{rowSpan}"
 
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
 #: braille.py:661
 #, python-brace-format
 msgid "r{rowNumber}"
-msgstr ""
+msgstr "r{rowNumber}"
 
 #. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
 #. Occurences of %s are replaced with the corresponding column numbers.
 #: braille.py:671
 #, python-brace-format
 msgid "c{columnNumber}-{columnSpan}"
-msgstr ""
+msgstr "c{columnNumber}-{columnSpan}"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
 #: braille.py:675
 #, python-brace-format
 msgid "c{columnNumber}"
-msgstr ""
+msgstr "c{columnNumber}"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
@@ -1179,7 +1179,7 @@ msgstr "フィンランド語8点コンピューター点字"
 #. braille settings dialog.
 #: brailleTables.py:278
 msgid "Filipino grade 2"
-msgstr ""
+msgstr "フィリピン語2級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1539,7 +1539,7 @@ msgstr "パンジャブ語1級点字"
 #. braille settings dialog.
 #: brailleTables.py:458
 msgid "Romanian 6 dot"
-msgstr ""
+msgstr "ルーマニア語6点点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1707,13 +1707,13 @@ msgstr "テルグ語1級点字"
 #. braille settings dialog.
 #: brailleTables.py:545
 msgid "Thai 8 dot computer braille"
-msgstr ""
+msgstr "タイ語8点コンピュータ点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables.py:548
 msgid "Thai 6 dot"
-msgstr ""
+msgstr "タイ語6点点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2655,22 +2655,22 @@ msgstr "このドキュメントではサポートされていません"
 #. Translators: input help message for toggle native selection command
 #: browseMode.py:2027
 msgid "Toggles native selection mode on and off"
-msgstr ""
+msgstr "ネイティブ選択モードの切り替え"
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
 #: browseMode.py:2032
 msgid "Native selection mode unsupported in this document"
-msgstr ""
+msgstr "このドキュメントではネイティブ選択モードはサポートされていません"
 
 #. Translators: reported when native selection mode is toggled on.
 #: browseMode.py:2037
 msgid "Native app selection mode enabled."
-msgstr ""
+msgstr "ネイティブ選択モードは有効"
 
 #. Translators: reported when native selection mode is toggled off.
 #: browseMode.py:2044
 msgid "Native app selection mode disabled."
-msgstr ""
+msgstr "ネイティブ選択モードは無効"
 
 #. Translators: The level at which the given symbol will be spoken.
 #: characterProcessing.py:157
@@ -2881,7 +2881,7 @@ msgstr "明るい {color}"
 #, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
-msgstr ""
+msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
 #: colors.py:228
@@ -2971,47 +2971,105 @@ msgctxt "color hue"
 msgid "brown-yellow"
 msgstr "ブラウンイエローの色"
 
+#. Translators: Shown when one or more add-ons failed to update.
+#: core.py:81
+msgid "The following add-on failed to update: {}."
+msgid_plural "The following add-ons failed to update: {}."
+msgstr[0] "アドオンの更新に失敗しました: {}"
+
+#. Translators: Shown when one or more add-ons failed to be uninstalled.
+#: core.py:90
+msgid "The following add-on failed to uninstall: {}."
+msgid_plural "The following add-ons failed to uninstall: {}."
+msgstr[0] "アドオンのアンインストールに失敗しました: {}"
+
+#. Translators: Shown when one or more add-ons failed to be installed.
+#: core.py:99
+msgid "The following add-on failed to be installed: {}."
+msgid_plural "The following add-ons failed to be installed: {}."
+msgstr[0] "アドオンのインストールに失敗しました: {}"
+
+#. Translators: Shown when one or more actions on add-ons failed.
+#: core.py:111
+msgid "Some operations on add-ons failed. See the log file for more details.\n"
+"{}"
+msgstr "アドオンに対する一部の操作が失敗しました。詳細については、ログファイルを参照してください。\n"
+"{}"
+
+#. Translators: Title of message shown when requested action on add-ons failed.
+#. Translators: The title of an error message dialog.
+#. Translators: The title of the message when a downloaded update file could not be preserved.
+#. Translators: The title of a dialog presented when an error occurs.
+#. Translators: The title of an error message dialog.
+#. Translators: An title for an error displayed when saving user defined input gestures fails.
+#. Translators: The title of a dialog presented when an error occurs.
+#. Translators: the title of an error dialog.
+#. Translators: The message title displayed when the user has not specified an absolute
+#. destination directory in the Create Portable NVDA dialog.
+#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
+#. Translators: The title of an error message dialog.
+#. Translators: A message indicating that an error occurred.
+#. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
+#. Translators: The title of an error message box displayed when validating the startup dialog
+#: core.py:114 updateCheck.py:292 updateCheck.py:564 updateCheck.py:715
+#: gui\__init__.py:217 gui\__init__.py:229 gui\addonGui.py:144
+#: gui\addonGui.py:236 gui\addonGui.py:249 gui\configProfiles.py:177
+#: gui\configProfiles.py:203 gui\configProfiles.py:253
+#: gui\configProfiles.py:264 gui\configProfiles.py:269
+#: gui\configProfiles.py:306 gui\configProfiles.py:467
+#: gui\configProfiles.py:479 gui\configProfiles.py:485 gui\inputGestures.py:799
+#: gui\inputGestures.py:813 gui\installerGui.py:99 gui\installerGui.py:410
+#: gui\installerGui.py:425 gui\installerGui.py:476 gui\logViewer.py:96
+#: gui\logViewer.py:124 gui\message.py:142 gui\settingsDialogs.py:948
+#: gui\settingsDialogs.py:1697 gui\settingsDialogs.py:1832
+#: gui\settingsDialogs.py:4356 gui\settingsDialogs.py:4696
+#: gui\startupDialogs.py:122
+msgid "Error"
+msgstr "エラー"
+
 #. Translators: Shown when NVDA has been started with unknown command line parameters.
-#: core.py:94
+#: core.py:141
 #, python-brace-format
 msgid "The following command line parameters are unknown to NVDA: {params}"
 msgstr "NVDA では次のコマンドラインオプションは不明です: {params}"
 
 #. Translators: Title of the dialog letting user know
 #. that command line parameters they provided are unknown.
-#: core.py:99
+#: core.py:146
 msgid "Unknown command line parameters"
 msgstr "不明なコマンドラインオプション"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
-#: core.py:106
+#: core.py:153
 msgid "Your configuration file contains errors. Your configuration has been reset to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr "設定ファイルにエラーが含まれています。既定の設定値にリセットされました。\n"
 "エラーの詳細は、ログファイルを参照してください。"
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
-#: core.py:110
+#: core.py:157
 msgid "Configuration File Error"
 msgstr "設定ファイルエラー"
 
-#: core.py:122
+#: core.py:169
 msgid "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr "ジェスチャーマップファイルにエラーが含まれています。\n"
 "エラーの詳細は、ログファイルを参照してください。"
 
-#: core.py:124
+#: core.py:171
 msgid "gesture map File Error"
 msgstr "ジェスチャーマップファイルエラー"
 
 #. Translators: This is spoken when NVDA is starting.
-#: core.py:565
+#: core.py:613
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDAを読み込み中です。お待ちください..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-#: core.py:707
+#: core.py:755
 msgid "NVDA started"
 msgstr "NVDA起動"
 
@@ -3062,7 +3120,7 @@ msgstr "前回入力された文字列に一致するカーソル位置より前
 #. Translators: Reported when browse mode passes the copy to clipboard command through to the application.
 #: cursorManager.py:456
 msgid "native copy"
-msgstr ""
+msgstr "ネイティブコピー"
 
 #. Translators: Reported when there is no text selected (for copying).
 #. Translators: The message reported when there is no selection
@@ -3337,7 +3395,7 @@ msgstr "右マウスボタンをロックまたはロック解除"
 #. Translators: Input help mode message for report current selection command.
 #: globalCommands.py:259
 msgid "Announces the current selection in edit controls and documents. Pressing twice spells this information. Pressing three times spells it using character descriptions. Pressing four times shows it in a browsable message. "
-msgstr ""
+msgstr "エディットコントロールやドキュメントで現在選択されている内容の報告。2回押すとスペルの報告。3回押すと文字の説明。4回押すとウィンドウを開いて表示。 "
 
 #. Translators: The message reported after selected text
 #. Translators: This is spoken to indicate what has just been selected.
@@ -4262,14 +4320,14 @@ msgstr "句読点/記号の読み({})"
 #. Translators: Input help mode message for cycle speech mode command.
 #: globalCommands.py:2042
 msgid "Cycles between speech modes."
-msgstr ""
+msgstr "読み上げモードの切り替え"
 
 #. Translators: Announced when user switches to another speech mode.
 #. 'mode' is replaced with the translated name of the new mode.
 #: globalCommands.py:2065
 #, python-brace-format
 msgid "Speech mode {mode}"
-msgstr ""
+msgstr "読み上げ {mode}"
 
 #. Translators: Input help mode message for move to next document with focus command,
 #. mostly used in web browsing to move from embedded object to the webpage document.
@@ -4361,7 +4419,7 @@ msgstr "追加の詳細はありません"
 #. Translators: Input help mode message for report current focus command.
 #: globalCommands.py:2482
 msgid "Reports the object with focus. If pressed twice, spells the information. Pressing three times spells it using character descriptions."
-msgstr ""
+msgstr "フォーカスのあるオブジェクトの報告。2回押すとスペルを報告。3回押すと文字を説明。"
 
 #. Translators: Reported when there is no status line for the current program or window.
 #: globalCommands.py:2558
@@ -4446,7 +4504,7 @@ msgstr "テキストの読み上げ範囲 %s"
 #. Translators: Input help mode message for report title bar command.
 #: globalCommands.py:2719
 msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, copies the title to the clipboard"
-msgstr "現在のアプリまたは最前面のウィンドウのタイトルを報告。2回押すとタイトルをスペル読み。3回押すとタイトルをクリップボードにコピー"
+msgstr "現在のアプリまたは最前面のウィンドウのタイトルを報告。2回押すとタイトルのスペルを報告。3回押すとタイトルをクリップボードにコピー"
 
 #. Translators: Reported when there is no title text for current program or window.
 #: globalCommands.py:2740
@@ -4904,7 +4962,7 @@ msgstr "選択範囲の点字表示 %s"
 #. Translators: Input help mode message for report clipboard text command.
 #: globalCommands.py:3455
 msgid "Reports the text on the Windows clipboard. Pressing twice spells this information. Pressing three times spells it using character descriptions."
-msgstr ""
+msgstr "クリップボードテキストの報告。2回押すとスペルを報告。3回押すと文字説明。"
 
 #. Translators: Presented when there is no text on the clipboard.
 #: globalCommands.py:3470
@@ -4918,7 +4976,7 @@ msgstr "クリップボードにテキストがありません"
 #, python-format
 msgid "The clipboard contains a large amount of text. It is %s character long"
 msgid_plural "The clipboard contains a large amount of text. It is %s characters long"
-msgstr[0] ""
+msgstr[0] "クリップボードには大きなテキスト情報が含まれています。%s文字の長さです"
 
 #. Translators: Input help mode message for mark review cursor position for a select or copy command
 #. (that is, marks the current review cursor position as the starting point for text to be selected).
@@ -5328,7 +5386,7 @@ msgstr "全般"
 #. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
 #: installer.py:392
 msgid "CTRL+ALT+N"
-msgstr ""
+msgstr "CTRL+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 #: installer.py:415
@@ -5443,7 +5501,7 @@ msgstr "再生 一時停止"
 #. Translators: This is the name of the launch email key found on multimedia keyboards to open an email client.
 #: keyLabels.py:44
 msgid "email"
-msgstr ""
+msgstr "eメール"
 
 #. Translators: This is the name of the launch mediaplayer key found on multimedia keyboards to launch the mediaplayer.
 #: keyLabels.py:46
@@ -5813,7 +5871,7 @@ msgstr "既定の言語"
 #: languageHandler.py:276
 #, python-brace-format
 msgid "{desc}, {lc}"
-msgstr ""
+msgstr "{desc}, {lc}"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:20
@@ -7278,7 +7336,7 @@ msgstr "4回 {action}"
 #, python-brace-format
 msgid "{numFingers} finger {action}"
 msgid_plural "{numFingers} finger {action}"
-msgstr[0] ""
+msgstr[0] "{numFingers} 本指 {action}"
 
 #. Translators: a very quick touch and release of a finger on a touch screen
 #: touchTracker.py:33
@@ -7374,7 +7432,7 @@ msgstr "NVDAのメッセージ"
 #, python-format
 msgid "%d character"
 msgid_plural "%d characters"
-msgstr[0] ""
+msgstr[0] "%d 文字"
 
 #. Translators: Announced when a text has been copied to clipboard.
 #. {text} is replaced by the copied text.
@@ -7404,37 +7462,6 @@ msgstr "更新を確認中"
 #: updateCheck.py:290
 msgid "Error checking for update."
 msgstr "更新をチェック中にエラーが発生しました。"
-
-#. Translators: The title of an error message dialog.
-#. Translators: The title of the message when a downloaded update file could not be preserved.
-#. Translators: The title of a dialog presented when an error occurs.
-#. Translators: The title of an error message dialog.
-#. Translators: An title for an error displayed when saving user defined input gestures fails.
-#. Translators: The title of a dialog presented when an error occurs.
-#. Translators: the title of an error dialog.
-#. Translators: The message title displayed when the user has not specified an absolute
-#. destination directory in the Create Portable NVDA dialog.
-#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
-#. Translators: The title of an error message dialog.
-#. Translators: A message indicating that an error occurred.
-#. Translators: The title of the message box
-#. Translators: The title of the error dialog displayed when there is an error showing the GUI
-#. for a vision enhancement provider
-#. Translators: The title of an error message box displayed when validating the startup dialog
-#: updateCheck.py:292 updateCheck.py:564 updateCheck.py:715 gui\__init__.py:217
-#: gui\__init__.py:229 gui\addonGui.py:144 gui\addonGui.py:235
-#: gui\addonGui.py:248 gui\configProfiles.py:177 gui\configProfiles.py:203
-#: gui\configProfiles.py:253 gui\configProfiles.py:264
-#: gui\configProfiles.py:269 gui\configProfiles.py:306
-#: gui\configProfiles.py:467 gui\configProfiles.py:479
-#: gui\configProfiles.py:485 gui\inputGestures.py:799 gui\inputGestures.py:813
-#: gui\installerGui.py:99 gui\installerGui.py:410 gui\installerGui.py:425
-#: gui\installerGui.py:476 gui\logViewer.py:96 gui\logViewer.py:124
-#: gui\message.py:142 gui\settingsDialogs.py:948 gui\settingsDialogs.py:1697
-#: gui\settingsDialogs.py:1832 gui\settingsDialogs.py:4356
-#: gui\settingsDialogs.py:4696 gui\startupDialogs.py:122
-msgid "Error"
-msgstr "エラー"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
 #. Translators: The title of the dialog asking the user to Install an NVDA update.
@@ -7491,7 +7518,7 @@ msgstr "あとで通知(&L)"
 
 #. Translators: The label of a button to close a dialog.
 #. Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
-#: updateCheck.py:433 gui\addonGui.py:340
+#: updateCheck.py:433 gui\addonGui.py:341
 msgid "&Close"
 msgstr "閉じる(&C)"
 
@@ -7576,7 +7603,7 @@ msgstr "寄付を終了(&D)"
 
 #: versionInfo.py:14
 msgid "NonVisual Desktop Access"
-msgstr ""
+msgstr "NonVisual Desktop Access"
 
 #: versionInfo.py:15
 msgid "A free and open source screen reader for Microsoft Windows"
@@ -7585,7 +7612,7 @@ msgstr "無料でオープンソースのMicrosoft Windows用スクリーンリ�
 #: versionInfo.py:18
 #, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
-msgstr ""
+msgstr "Copyright (C) {years} NVDA Contributors"
 
 #. Translators: "About NVDA" dialog box message
 #: versionInfo.py:22
@@ -7754,7 +7781,7 @@ msgstr "更新可能"
 #: addonStore\models\status.py:91
 msgctxt "addonStore"
 msgid "Update Available (incompatible)"
-msgstr ""
+msgstr "更新可能(互換性なし)"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:93
@@ -7945,7 +7972,7 @@ msgstr "ディスプレイ"
 #. Translators: The name of a category of NVDA commands.
 #: appModules\eclipse.py:19
 msgid "Eclipse"
-msgstr ""
+msgstr "Eclipse"
 
 #. Translators: Input help mode message for the 'read documentation script
 #: appModules\eclipse.py:57
@@ -8056,7 +8083,7 @@ msgstr "ポピュラー・ハイライトの外"
 #. Translators: The name of a category of NVDA commands.
 #: appModules\miranda32.py:26
 msgid "Miranda NG"
-msgstr ""
+msgstr "Miranda NG"
 
 #. Translators: The description of an NVDA command to view one of the recent messages.
 #: appModules\miranda32.py:117 appModules\vipmud.py:30
@@ -8097,7 +8124,7 @@ msgstr "ニュースグループ:"
 #. Translators: This is presented in outlook or live mail, email carbon copy
 #: appModules\msimn.py:35
 msgid "CC:"
-msgstr ""
+msgstr "CC:"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #: appModules\msimn.py:37
@@ -8142,7 +8169,7 @@ msgstr "キーワード:"
 #. Translators: This is presented in outlook or live mail, email blind carbon copy
 #: appModules\msimn.py:53
 msgid "BCC:"
-msgstr ""
+msgstr "BCC:"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
 #. Translators: when an email is unread
@@ -8163,7 +8190,7 @@ msgstr "出力ペインのクリア"
 #. Translators: Description of a message spoken when clearing the Python Console output pane
 #: appModules\nvda.py:78
 msgid "Output pane cleared"
-msgstr ""
+msgstr "出力ペインをクリアしました"
 
 #. Translators: Description of a command to move to the next result in the Python Console output pane
 #: appModules\nvda.py:89
@@ -8286,7 +8313,7 @@ msgstr "会議の出席依頼"
 #. Translators: The name of a category of NVDA commands.
 #: appModules\poedit.py:27
 msgid "Poedit"
-msgstr ""
+msgstr "Poedit"
 
 #. Translators: this message is reported when there is nothing
 #. to be presented to the user in Poedit.
@@ -8296,7 +8323,7 @@ msgstr ""
 #, python-brace-format
 msgctxt "poedit"
 msgid "No {description}"
-msgstr ""
+msgstr "{description} なし"
 
 #. Translators: this message is reported when NVDA is unable to find
 #. a requested window in Poedit.
@@ -8305,64 +8332,64 @@ msgstr ""
 #, python-brace-format
 msgctxt "poedit"
 msgid "Could not find {description} window."
-msgstr ""
+msgstr "{description} ウィンドウが見つかりません。"
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules\poedit.py:149
 msgctxt "poedit"
 msgid "Reports any notes for translators. If pressed twice, presents the notes in browse mode"
-msgstr ""
+msgstr "翻訳者への注記の報告。2回押すと注記をウィンドウを開いて表示。"
 
 #. Translators: The description of the "Translator notes" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
 #: appModules\poedit.py:160
 msgctxt "poedit"
 msgid "notes for translators"
-msgstr ""
+msgstr "翻訳者への注釈"
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules\poedit.py:175
 msgctxt "poedit"
 msgid "Reports any comment in the comments window. If pressed twice, presents the comment in browse mode"
-msgstr ""
+msgstr "コメントウィンドウのすべてのコメントの報告の報告。2回押すとウィンドウを開いて表示。"
 
 #. Translators: The description of the "comment" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
 #: appModules\poedit.py:187
 msgctxt "poedit"
 msgid "comment"
-msgstr ""
+msgstr "コメント"
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules\poedit.py:202
 msgctxt "poedit"
 msgid "Reports the old source text, if any. If pressed twice, presents the text in browse mode"
-msgstr ""
+msgstr "古いソーステキストの報告。2回押すとウィンドウを開いて表示。"
 
 #. Translators: The description of the "old source text" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
 #: appModules\poedit.py:213
 msgctxt "poedit"
 msgid "old source text"
-msgstr ""
+msgstr "古いソーステキスト"
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules\poedit.py:226
 msgctxt "poedit"
 msgid "Reports a translation warning, if any. If pressed twice, presents the warning in browse mode"
-msgstr ""
+msgstr "翻訳の警告の報告。2回押すとウィンドウを開いて表示。"
 
 #. Translators: The description of the "translation warning" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
 #: appModules\poedit.py:237
 msgctxt "poedit"
 msgid "translation warning"
-msgstr ""
+msgstr "翻訳の警告"
 
 #. Translators: The name of a category of NVDA commands.
 #: appModules\powerpnt.py:45
 msgid "PowerPoint"
-msgstr ""
+msgstr "PowerPoint"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 #: appModules\powerpnt.py:119
@@ -8530,56 +8557,56 @@ msgstr "その他の項目"
 #, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} point"
 msgid_plural "covers left of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "{otherShape}の左の手前にあり距離{distance:.3g}ポイント"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:602
 #, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} point"
 msgid_plural "behind left of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "{otherShape}の左の奥にあり距離{distance:.3g}ポイント"
 
 #. Translators: A message when a shape is in front of another shape on a PowerPoint slide
 #: appModules\powerpnt.py:612
 #, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} point"
 msgid_plural "covers top of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "{otherShape}の上の手前にあり距離{distance:.3g}ポイント"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:619
 #, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} point"
 msgid_plural "behind top of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "{otherShape}の上の奥にあり距離{distance:.3g}ポイント"
 
 #. Translators: A message when a shape is in front of another shape on a PowerPoint slide
 #: appModules\powerpnt.py:629
 #, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} point"
 msgid_plural "covers right of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "covers right of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:636
 #, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} point"
 msgid_plural "behind right of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "{otherShape}の右の奥にあり距離{distance:.3g}ポイント"
 
 #. Translators: A message when a shape is in front of another shape on a PowerPoint slide
 #: appModules\powerpnt.py:646
 #, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} point"
 msgid_plural "covers bottom of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "{otherShape}の下の手前にあり距離{distance:.3g}ポイント"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:653
 #, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} point"
 msgid_plural "behind bottom of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "{otherShape}の下の奥にあり距離{distance:.3g}ポイント"
 
 #. Translators: A message when a shape is in front of another shape on a PowerPoint slide
 #: appModules\powerpnt.py:660
@@ -8599,7 +8626,7 @@ msgstr "{otherShape}の奥"
 #, python-brace-format
 msgid "{distance:.3g} point from left slide edge"
 msgid_plural "{distance:.3g} points from left slide edge"
-msgstr[0] ""
+msgstr[0] "スライド左端から距離{distance:.3g}ポイント"
 
 #. Translators: For a shape too far off the left edge of a PowerPoint Slide, this is the distance in
 #. points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
@@ -8607,7 +8634,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "Off left slide edge by {distance:.3g} point"
 msgid_plural "Off left slide edge by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "スライド左端の外側 距離{distance:.3g}ポイント"
 
 #. Translators: For a shape within a PowerPoint Slide, this is the distance in points from the shape's
 #. top edge to the slide's top edge
@@ -8615,7 +8642,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "{distance:.3g} point from top slide edge"
 msgid_plural "{distance:.3g} points from top slide edge"
-msgstr[0] ""
+msgstr[0] "スライド上端から距離{distance:.3g}ポイント"
 
 #. Translators: For a shape too far off the top edge of a PowerPoint Slide, this is the distance in
 #. points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
@@ -8623,7 +8650,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "Off top slide edge by {distance:.3g} point"
 msgid_plural "Off top slide edge by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "スライド上端の外側 距離{distance:.3g}ポイント"
 
 #. Translators: For a shape within a PowerPoint Slide, this is the distance in points from the shape's
 #. right edge to the slide's right edge
@@ -8631,7 +8658,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "{distance:.3g} point from right slide edge"
 msgid_plural "{distance:.3g} points from right slide edge"
-msgstr[0] ""
+msgstr[0] "スライド右端から距離{distance:.3g}ポイント"
 
 #. Translators: For a shape too far off the right edge of a PowerPoint Slide, this is the distance in
 #. points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
@@ -8639,7 +8666,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "Off right slide edge by {distance:.3g} point"
 msgid_plural "Off right slide edge by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "スライド右端の外側 距離{distance:.3g}ポイント"
 
 #. Translators: For a shape within a PowerPoint Slide, this is the distance in points from the shape's
 #. bottom edge to the slide's bottom edge
@@ -8647,7 +8674,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "{distance:.3g} point from bottom slide edge"
 msgid_plural "{distance:.3g} points from bottom slide edge"
-msgstr[0] ""
+msgstr[0] "スライド下端から距離{distance:.3g}ポイント"
 
 #. Translators: For a shape too far off the bottom edge of a PowerPoint Slide, this is the distance in
 #. points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
@@ -8655,7 +8682,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} point"
 msgid_plural "Off bottom slide edge by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "スライド下端の外側 距離{distance:.3g}ポイント"
 
 #. Translators: The description for a script
 #: appModules\powerpnt.py:1188
@@ -8711,14 +8738,14 @@ msgstr "{firstAddress} から {lastAddress}"
 #, python-brace-format
 msgid "{val:.2f} inch"
 msgid_plural "{val:.2f} inches"
-msgstr[0] ""
+msgstr[0] "{val:.2f}インチ"
 
 #. Translators: a measurement in centimetres
 #: appModules\soffice.py:374
 #, python-brace-format
 msgid "{val:.2f} centimetre"
 msgid_plural "{val:.2f} centimetres"
-msgstr[0] ""
+msgstr[0] "{val:.2f}センチ"
 
 #. Translators: LibreOffice, report cursor position in the current page
 #: appModules\soffice.py:393
@@ -8737,7 +8764,7 @@ msgstr "右の端"
 #. Translators: The name of a category of NVDA commands.
 #: appModules\vipmud.py:18
 msgid "VipMud"
-msgstr ""
+msgstr "VipMud"
 
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 #: appModules\winamp.py:79
@@ -8885,12 +8912,12 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille シリーズ"
 #. Translators: Name of a braille display.
 #: brailleDisplayDrivers\lilli.py:49
 msgid "MDV Lilli"
-msgstr ""
+msgstr "MDV Lilli"
 
 #. Translators: Names of braille displays
 #: brailleDisplayDrivers\nattiqbraille.py:35
 msgid "Nattiq nBraille"
-msgstr ""
+msgstr "Nattiq nBraille"
 
 #. Translators: Is used to indicate that braille support will be disabled.
 #: brailleDisplayDrivers\noBraille.py:14
@@ -8920,16 +8947,16 @@ msgstr "清華ノートテイカー"
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\superBrl.py:29
 msgid "SuperBraille"
-msgstr ""
+msgstr "SuperBraille"
 
 #. Translators: Names of braille displays.
-#: brailleDisplayDrivers\albatross\driver.py:81
+#: brailleDisplayDrivers\albatross\driver.py:82
 msgid "Caiku Albatross 46/80"
-msgstr ""
+msgstr "Caiku Albatross 46/80"
 
 #. Translators: A message when number of status cells must be changed
 #. for a braille display driver
-#: brailleDisplayDrivers\albatross\driver.py:477
+#: brailleDisplayDrivers\albatross\driver.py:486
 msgid "To use Albatross with NVDA: change number of status cells in Albatross internal menu at most "
 msgstr "NVDAでAlbatrossを使用するにはAlbatrossサブメニューでステータスセル数を設定します"
 
@@ -10662,17 +10689,17 @@ msgstr "最新情報(&N)"
 #. Translators: The label for the menu item to view the NVDA website
 #: gui\__init__.py:681
 msgid "NV Access &web site"
-msgstr ""
+msgstr "NV Access ウェブサイト (&W)"
 
 #. Translators: The label for the menu item to view the NVDA website's get help section
 #: gui\__init__.py:684
 msgid "&Help, training and support"
-msgstr ""
+msgstr "ヘルプ、トレーニングとサポート(&H)"
 
 #. Translators: The label for the menu item to view the NVDA website's get help section
 #: gui\__init__.py:687
 msgid "NV Access &shop"
-msgstr ""
+msgstr "NV Access ショップ (&S)"
 
 #. Translators: The label for the menu item to view NVDA License document.
 #: gui\__init__.py:693
@@ -10733,7 +10760,7 @@ msgstr "NVDAの再起動"
 #. Translators: A button in the addon installation warning / blocked dialog which shows
 #. more information about the addon
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
-#: gui\addonGui.py:64 gui\addonGui.py:102 gui\addonGui.py:336
+#: gui\addonGui.py:64 gui\addonGui.py:102 gui\addonGui.py:337
 msgid "&About add-on..."
 msgstr "このアドオンについて(&A)..."
 
@@ -10761,7 +10788,7 @@ msgstr "いいえ(&N)"
 #. Translators: An ok button on a message dialog.
 #: gui\addonGui.py:110 gui\nvdaControls.py:258
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #: gui\addonGui.py:142
@@ -10772,74 +10799,74 @@ msgstr "アドオン パッケージ ファイル %s を開けません。ファ
 #. Translators: A title for the dialog asking if the user wishes to update a previously installed
 #. add-on with this one.
 #. Translators: Title for message asking if the user really wishes to install an Addon.
-#: gui\addonGui.py:171 gui\addonStoreGui\controls\messageDialogs.py:247
+#: gui\addonGui.py:172 gui\addonStoreGui\controls\messageDialogs.py:247
 msgid "Add-on Installation"
 msgstr "アドオンのインストール"
 
 #. Translators: A message asking if the user wishes to update an add-on with the same version
 #. currently installed according to the version number.
-#: gui\addonGui.py:176
+#: gui\addonGui.py:177
 #, python-brace-format
 msgid "You are about to install version {newVersion} of {summary}, which appears to be already installed. Would you still like to update?"
 msgstr "{summary} はインストール済みです。バージョン {newVersion} に更新しますか？"
 
 #. Translators: A message asking if the user wishes to update a previously installed
 #. add-on with this one.
-#: gui\addonGui.py:184
+#: gui\addonGui.py:185
 #, python-brace-format
 msgid "A version of this add-on is already installed. Would you like to update {summary} version {curVersion} to version {newVersion}?"
 msgstr "{summary} バージョン {curVersion} がインストール済みです。バージョン {newVersion} に更新しますか？"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
-#: gui\addonGui.py:213
+#: gui\addonGui.py:214
 msgid "Installing Add-on"
 msgstr "アドオンをインストール中です"
 
 #. Translators: The message displayed while an addon is being installed.
-#: gui\addonGui.py:215
+#: gui\addonGui.py:216
 msgid "Please wait while the add-on is being installed."
 msgstr "アドオンがインストールされるまでお待ちください。"
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
-#: gui\addonGui.py:233
+#: gui\addonGui.py:234
 #, python-format
 msgid "Failed to install add-on from %s"
 msgstr "%s からのアドオンのインストールに失敗しました。"
 
 #. Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
-#: gui\addonGui.py:246
+#: gui\addonGui.py:247
 msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
 msgstr "Windowsストア版のNVDAではアドオンは利用できません"
 
 #. Translators: The title of the Incompatible Addons Dialog
-#: gui\addonGui.py:302
+#: gui\addonGui.py:303
 msgid "Incompatible Add-ons"
 msgstr "互換性のないアドオン"
 
 #. Translators: The title of the Incompatible Addons Dialog
-#: gui\addonGui.py:312
+#: gui\addonGui.py:313
 msgid "The following add-ons are incompatible with NVDA version {}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
 msgstr "これらのアドオンの開発者は NVDA {} との互換性を確認していません。\n"
 "アドオンは無効化されます。\n"
 "アドオンの更新については、アドオンの開発者にご相談ください。"
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
-#: gui\addonGui.py:320
+#: gui\addonGui.py:321
 msgid "Incompatible add-ons"
 msgstr "互換性のないアドオン"
 
 #. Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
-#: gui\addonGui.py:328
+#: gui\addonGui.py:329
 msgid "Package"
 msgstr "パッケージ"
 
 #. Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
-#: gui\addonGui.py:330
+#: gui\addonGui.py:331
 msgid "Version"
 msgstr "バージョン"
 
 #. Translators: The label for a column in add-ons list used to provide some explanation about incompatibility
-#: gui\addonGui.py:332
+#: gui\addonGui.py:333
 msgid "Incompatible reason"
 msgstr "互換性のない理由"
 
@@ -11136,7 +11163,7 @@ msgstr "終了オプション(&D)"
 #: gui\inputGestures.py:58
 #, python-brace-format
 msgid "{main} ({source})"
-msgstr ""
+msgstr "{main} ({source})"
 
 #. Translators: The prompt to enter a gesture in the Input Gestures dialog.
 #: gui\inputGestures.py:79
@@ -11161,7 +11188,7 @@ msgstr "エミュレートする入力ジェスチャー"
 #, python-brace-format
 msgid "{category} ({nbResults} result)"
 msgid_plural "{category} ({nbResults} results)"
-msgstr[0] ""
+msgstr[0] "{category} ({nbResults} 件の結果)"
 
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for scripts.
 #: gui\inputGestures.py:581
@@ -11352,7 +11379,7 @@ msgstr "NVDAポータブル版の場所とオプションの選択"
 #. in the Create Portable NVDA dialog.
 #: gui\installerGui.py:362
 msgid "Portable directory:"
-msgstr ""
+msgstr "ポータブル版を作成する新規のフォルダーまたはドライブ"
 
 #. Translators: The label of a button to browse for a directory.
 #: gui\installerGui.py:367
@@ -11730,7 +11757,7 @@ msgstr "サポートされている場合スペル読み機能を使用(&S)"
 #. Translators: Label of the list where user can select speech modes that will be available.
 #: gui\settingsDialogs.py:1643
 msgid "&Modes available in the Cycle speech mode command:"
-msgstr ""
+msgstr "読み上げモード切り替えコマンドで使用できるモード(&M)"
 
 #. Translators: This is the label for a checkbox in the voice settings panel.
 #: gui\settingsDialogs.py:1656
@@ -11740,7 +11767,7 @@ msgstr "テキストカーソル移動のすこし後で文字を説明(&D)"
 #. Translators: Message shown when not enough speech modes are enabled.
 #: gui\settingsDialogs.py:1695
 msgid "At least two speech modes have to be checked."
-msgstr ""
+msgstr "少なくとも2つの読み上げモードをチェックする必要があります。"
 
 #. Translators: This is the label for the keyboard settings panel.
 #: gui\settingsDialogs.py:1723
@@ -11841,7 +11868,7 @@ msgstr "テキストの読み上げ範囲(&U)"
 #. mouse settings panel.
 #: gui\settingsDialogs.py:1890
 msgid "Report &object when mouse enters it"
-msgstr ""
+msgstr "マウスカーソル位置のオブジェクトの報告(&O)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
@@ -12568,7 +12595,7 @@ msgstr "しない"
 #. Translators: This is the label for a COMBOBOX in the Advanced settings panel.
 #: gui\settingsDialogs.py:3001
 msgid "Use en&hanced event processing (requires restart)"
-msgstr ""
+msgstr "新しいイベント処理を使用(再起動が必要)(&H)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -13168,7 +13195,11 @@ msgid "Most commands for controlling NVDA require you to hold down the NVDA key 
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
 "From this menu, you can configure NVDA, get help, and access other NVDA functions."
-msgstr ""
+msgstr "キーボードでNVDAを制御するにはNVDA制御キーを使います。\n"
+"初期状態ではInsertキーがNVDA制御キーとして使えます。\n"
+"NVDA+NまたはシステムトレイのアイコンでNVDAメニューが開きます。\n"
+"NVDAメニューには、NVDAの終了、設定、ヘルプなどがあります。\n"
+"タッチモードでは2本指2回タップでNVDAメニューが開きます。"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 #: gui\startupDialogs.py:47
@@ -13241,37 +13272,37 @@ msgstr "NVDA を改善するために NV Access は NVDA の使用状況統計�
 #: gui\addonStoreGui\controls\actions.py:130
 msgctxt "addonStore"
 msgid "No actions available for the selected add-ons"
-msgstr ""
+msgstr "選択したアドオンで利用可能なアクションはありません"
 
 #. Translators: Label for an action that installs the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:141
 msgctxt "addonStore"
 msgid "&Install selected add-ons"
-msgstr ""
+msgstr "選択したアドオンをインストール(&I)"
 
 #. Translators: Label for an action that updates the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:151
 msgctxt "addonStore"
 msgid "&Update selected add-ons"
-msgstr ""
+msgstr "選択したアドオンを更新(&U)"
 
 #. Translators: Label for an action that removes the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:158
 msgctxt "addonStore"
 msgid "&Remove selected add-ons"
-msgstr ""
+msgstr "選択したアドオンを削除(&R)"
 
 #. Translators: Label for an action that enables the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:173
 msgctxt "addonStore"
 msgid "&Enable selected add-ons"
-msgstr ""
+msgstr "選択したアドオンを有効化(&E)"
 
 #. Translators: Label for an action that disables the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:180
 msgctxt "addonStore"
 msgid "&Disable selected add-ons"
-msgstr ""
+msgstr "選択したアドオンを無効化(&D)"
 
 #. Translators: Header (usually the add-on name) when add-ons are loading. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:36
@@ -13320,7 +13351,7 @@ msgstr "その他の詳細(&O)"
 msgctxt "addonStore"
 msgid "{num} add-on selected."
 msgid_plural "{num} add-ons selected."
-msgstr[0] ""
+msgstr[0] "{num} 個のアドオンが選択されています。"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:243
@@ -13338,7 +13369,7 @@ msgstr "開発者:"
 #: gui\addonStoreGui\controls\details.py:256
 msgctxt "addonStore"
 msgid "ID:"
-msgstr ""
+msgstr "ID:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:264
@@ -13398,7 +13429,7 @@ msgstr "ソース URL:"
 #: gui\addonStoreGui\controls\details.py:323
 msgctxt "addonStore"
 msgid "Reviews URL:"
-msgstr ""
+msgstr "レビュー URL:"
 
 #. Translators: A button in the addon installation warning / blocked dialog which shows
 #. more information about the addon
@@ -13424,7 +13455,7 @@ msgstr "いいえ(&N)"
 #: gui\addonStoreGui\controls\messageDialogs.py:71
 msgctxt "addonStore"
 msgid "Remember this choice for subsequent add-ons"
-msgstr ""
+msgstr "あとのアドオンのためにこの選択を記憶する"
 
 #. Translators: The message displayed when updating an add-on, but the installed version
 #. identifier can not be compared with the version to be installed.
@@ -13630,7 +13661,7 @@ msgstr "アドオンのインストール"
 msgctxt "addonStore"
 msgid "Download of {} add-on in progress, cancel downloading?"
 msgid_plural "Download of {} add-ons in progress, cancel downloading?"
-msgstr[0] ""
+msgstr[0] "{} 個のアドオンをダウンロードしています。ダウンロードをキャンセルしますか？"
 
 #. Translators: Message shown while installing add-ons after closing the add-on store dialog
 #. The placeholder {} will be replaced with the number of add-ons to be installed
@@ -13638,7 +13669,7 @@ msgstr[0] ""
 msgctxt "addonStore"
 msgid "Installing {} add-on, please wait."
 msgid_plural "Installing {} add-ons, please wait."
-msgstr[0] ""
+msgstr[0] "{} 個のアドオンをインストールしています。お待ちください。"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
@@ -13646,7 +13677,7 @@ msgstr[0] ""
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{category}:"
-msgstr ""
+msgstr "{category}:"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
 #: gui\addonStoreGui\controls\storeDialog.py:376
@@ -13663,44 +13694,44 @@ msgid "Choose Add-on Package File"
 msgstr "アドオン パッケージ ファイルを選択"
 
 #. Translators: The name of the column that contains names of addons.
-#: gui\addonStoreGui\viewModels\addonList.py:54
+#: gui\addonStoreGui\viewModels\addonList.py:55
 msgctxt "addonStore"
 msgid "Name"
 msgstr "名前"
 
 #. Translators: The name of the column that contains the status of the addon.
 #. e.g. available, downloading installing
-#: gui\addonStoreGui\viewModels\addonList.py:60
+#: gui\addonStoreGui\viewModels\addonList.py:61
 msgctxt "addonStore"
 msgid "Status"
 msgstr "状態"
 
 #. Translators: The name of the column that contains the installed addon's version string.
-#: gui\addonStoreGui\viewModels\addonList.py:65
+#: gui\addonStoreGui\viewModels\addonList.py:66
 msgctxt "addonStore"
 msgid "Installed version"
 msgstr "インストール済みのバージョン"
 
 #. Translators: The name of the column that contains the available addon's version string.
-#: gui\addonStoreGui\viewModels\addonList.py:71
+#: gui\addonStoreGui\viewModels\addonList.py:72
 msgctxt "addonStore"
 msgid "Available version"
 msgstr "利用可能なバージョン"
 
 #. Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
-#: gui\addonStoreGui\viewModels\addonList.py:77
+#: gui\addonStoreGui\viewModels\addonList.py:78
 msgctxt "addonStore"
 msgid "Channel"
 msgstr "チャンネル"
 
 #. Translators: The name of the column that contains the addon's publisher.
-#: gui\addonStoreGui\viewModels\addonList.py:82
+#: gui\addonStoreGui\viewModels\addonList.py:83
 msgctxt "addonStore"
 msgid "Publisher"
 msgstr "開発者"
 
 #. Translators: The name of the column that contains the addon's author.
-#: gui\addonStoreGui\viewModels\addonList.py:88
+#: gui\addonStoreGui\viewModels\addonList.py:89
 msgctxt "addonStore"
 msgid "Author"
 msgstr "開発者"
@@ -13727,7 +13758,7 @@ msgstr "更新(&U)"
 #: gui\addonStoreGui\viewModels\store.py:137
 msgctxt "addonStore"
 msgid "&Update (override incompatibility)"
-msgstr ""
+msgstr "更新(互換性のないアドオン)(&U)"
 
 #. Translators: Label for an action that replaces the selected addon with
 #. an add-on store version.
@@ -13788,7 +13819,7 @@ msgstr "ソースコード(&C)"
 #: gui\addonStoreGui\viewModels\store.py:234
 msgctxt "addonStore"
 msgid "Community re&views"
-msgstr ""
+msgstr "コミュニティのレビュー(&V)"
 
 #. Translators: The message displayed when the add-on cannot be enabled.
 #. {addon} is replaced with the add-on name.
@@ -13908,12 +13939,12 @@ msgstr "RGB 赤{rgb.red} 緑{rgb.green} 青{rgb.blue}"
 #, python-format
 msgid "%s item"
 msgid_plural "%s items"
-msgstr[0] ""
+msgstr[0] "%s 項目"
 
 #. Translators: The label of a shortcut of NVDA.
 #: NVDAObjects\IAccessible\winword.py:219
 msgid "Set column header. Pressing once will set this cell as the first column header for any cell lower and to the right of it within this table. Pressing twice will forget the current column header for this cell."
-msgstr ""
+msgstr "列の見出しの設定。1回押すと現在のセルとその右側のセルを列の見出しに設定。2回押すと現在のセルの列の見出しの設定をクリア"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:236
@@ -13942,7 +13973,7 @@ msgstr "行 {rowNumber} 列 {columnNumber} が列見出しから見つかりま�
 #. Translators: The label of a shortcut of NVDA.
 #: NVDAObjects\IAccessible\winword.py:252
 msgid "Set row header. Pressing once will set this cell as the first row header for any cell lower and to the right of it within this table. Pressing twice will forget the current row header for this cell."
-msgstr ""
+msgstr "行の見出しの設定。1回押すと現在のセルとその下側のセルを行の見出しに設定。2回押すと現在のセルの行の見出しの設定をクリア"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:268
@@ -13972,7 +14003,7 @@ msgstr "行 {rowNumber} 列 {columnNumber} が行見出しから見つかりま�
 #. Translators: a description for a script that reports the comment at the caret.
 #: NVDAObjects\IAccessible\winword.py:321 NVDAObjects\UIA\wordDocument.py:602
 msgid "Reports the text of the comment where the system caret is located."
-msgstr ""
+msgstr "テキストカーソル位置のコメントの報告"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 #: NVDAObjects\IAccessible\winword.py:344 NVDAObjects\UIA\wordDocument.py:613
@@ -14038,7 +14069,7 @@ msgstr "セルの高さ {0.y:.1f}ポイント"
 msgctxt "excel-UIA"
 msgid "Rotation: {0} degree"
 msgid_plural "Rotation: {0} degrees"
-msgstr[0] ""
+msgstr[0] "回転: {0} 度"
 
 #. Translators: The outline (border) colors of an Excel cell.
 #: NVDAObjects\UIA\excel.py:230
@@ -14136,7 +14167,7 @@ msgstr "現在のセルのメモまたはコメントのスレッドを報告"
 #: NVDAObjects\UIA\excel.py:507
 #, python-brace-format
 msgid "{name}: {desc}"
-msgstr ""
+msgstr "{name}: {desc}"
 
 #. Translators: message when a cell in Excel contains no note
 #: NVDAObjects\UIA\excel.py:511
@@ -14154,7 +14185,7 @@ msgstr "コメントのスレッド {comment} 更新者 {author}"
 #, python-brace-format
 msgid "Comment thread: {comment}  by {author} with {numReplies} reply"
 msgid_plural "Comment thread: {comment}  by {author} with {numReplies} replies"
-msgstr[0] ""
+msgstr[0] "コメントのスレッド {comment} 更新者 {author} 返信 {numReplies} 件"
 
 #. Translators: A message in Excel when there is no comment thread
 #: NVDAObjects\UIA\excel.py:533
@@ -14217,13 +14248,13 @@ msgstr "このドキュメントでは文の単位の移動はサポートされ
 #. headers.
 #: NVDAObjects\UIA\wordDocument.py:621
 msgid "Command not supported in this type of document. The tables have their first row cells automatically set as column headers."
-msgstr ""
+msgstr "この種類のドキュメントではサポートされていません。テーブルには最初の行のセルが列の見出しとして自動的に設定されます。"
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
 #: NVDAObjects\UIA\wordDocument.py:630
 msgid "Command not supported in this type of document. The tables have their first column cells automatically set as row headers."
-msgstr ""
+msgstr "この種類のドキュメントではサポートされていません。テーブルには最初の列のセルが行の見出しとして自動的に設定されます。"
 
 #: NVDAObjects\window\__init__.py:392
 msgid "Desktop"
@@ -14798,7 +14829,7 @@ msgstr "グラフのタイトル {chartTitle} 種類 {chartType}"
 #, python-format
 msgid "There is %d series in this chart"
 msgid_plural "There are %d series in this chart"
-msgstr[0] ""
+msgstr[0] "グラフには%d個の系列があります"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
 #: NVDAObjects\window\_msOfficeChart.py:569
@@ -14870,7 +14901,7 @@ msgstr "項目 {categoryAxisData} "
 #: NVDAObjects\window\_msOfficeChart.py:746
 #, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
-msgstr ""
+msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
@@ -15269,7 +15300,7 @@ msgstr "打ち消し線あり"
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1467
 msgid "Sets the current cell as start of column header. Pressing once will set this cell as the first column header for any cell lower and to the right of it within this region. Pressing twice will forget the current column header for this cell."
-msgstr ""
+msgstr "領域の列の見出しの設定。1回押すと現在のセルとその右側のセルを領域の列の見出しに設定。2回押すと現在のセルの列の見出しの設定をクリア"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #: NVDAObjects\window\excel.py:1479
@@ -15298,7 +15329,7 @@ msgstr "列見出し {address} が見つかりません"
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1494
 msgid "Sets the current cell as start of row headers. Pressing once will set this cell as the first row header for any cell lower and to the right of it within this region. Pressing twice will forget the current row header for this cell."
-msgstr ""
+msgstr "領域の行の見出しの設定。1回押すと現在のセルとその下側のセルを領域の行の見出しに設定。2回押すと現在のセルの行の見出しの設定をクリア"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #: NVDAObjects\window\excel.py:1506
@@ -15830,28 +15861,28 @@ msgstr "印刷されない文字を非表示にする"
 #, python-brace-format
 msgid "{offset:.3g} character"
 msgid_plural "{offset:.3g} characters"
-msgstr[0] ""
+msgstr[0] "{offset:.3g}文字"
 
 #. Translators: a measurement in Microsoft Word
 #: NVDAObjects\window\winword.py:1556
 #, python-brace-format
 msgid "{offset:.3g} inch"
 msgid_plural "{offset:.3g} inches"
-msgstr[0] ""
+msgstr[0] "{offset:.3g}インチ"
 
 #. Translators: a measurement in Microsoft Word
 #: NVDAObjects\window\winword.py:1564
 #, python-brace-format
 msgid "{offset:.3g} centimeter"
 msgid_plural "{offset:.3g} centimeters"
-msgstr[0] ""
+msgstr[0] "{offset:.3g}センチメートル"
 
 #. Translators: a measurement in Microsoft Word
 #: NVDAObjects\window\winword.py:1572
 #, python-brace-format
 msgid "{offset:.3g} millimeter"
 msgid_plural "{offset:.3g} millimeters"
-msgstr[0] ""
+msgstr[0] "{offset:.3g}ミリメートル"
 
 #. Translators: a measurement in Microsoft Word (points)
 #: NVDAObjects\window\winword.py:1578
@@ -15865,7 +15896,7 @@ msgstr "{offset:.3g}ポイント"
 #, python-brace-format
 msgid "{offset:.3g} pica"
 msgid_plural "{offset:.3g} picas"
-msgstr[0] ""
+msgstr[0] "{offset:.3g}パイカ"
 
 #. Translators: a message when switching to single line spacing  in Microsoft word
 #: NVDAObjects\window\winword.py:1598
@@ -15886,26 +15917,26 @@ msgstr "1.5行の行間"
 #: speech\speech.py:92
 msgctxt "speechModes"
 msgid "off"
-msgstr ""
+msgstr "読み上げなし"
 
 #. Translators: Name of the speech mode which will cause NVDA to beep instead of speaking.
 #: speech\speech.py:94
 msgctxt "speechModes"
 msgid "beeps"
-msgstr ""
+msgstr "ビープ音"
 
 #. Translators: Name of the speech mode which causes NVDA to speak normally.
 #: speech\speech.py:96
 msgctxt "speechModes"
 msgid "talk"
-msgstr ""
+msgstr "声"
 
 #. Translators: Name of the on-demand speech mode,
 #. in which NVDA only speaks in response to commands that report content.
 #: speech\speech.py:99
 msgctxt "speechModes"
 msgid "on-demand"
-msgstr ""
+msgstr "オンデマンド"
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #: speech\speech.py:341
@@ -15991,21 +16022,21 @@ msgstr "レベル%s"
 #: speech\speech.py:1969
 #, python-brace-format
 msgid "with {rowCountTranslation} and {colCountTranslation}"
-msgstr ""
+msgstr "{rowCountTranslation} と {colCountTranslation} で"
 
 #. Translators: Speaks number of columns (example output: with 4 columns).
 #: speech\speech.py:1975
 #, python-format
 msgid "with %s column"
 msgid_plural "with %s columns"
-msgstr[0] ""
+msgstr[0] "%s 列で"
 
 #. Translators: Speaks number of rows (example output: with 2 rows).
 #: speech\speech.py:1978
 #, python-format
 msgid "with %s row"
 msgid_plural "with %s rows"
-msgstr[0] ""
+msgstr[0] "%s 行で"
 
 #. Translators: Sub-part of the compound string to speak number of rows and columns in a table.
 #. Example: If the full compound string is "table with 3 rwos and 2 columns", this substring is "3 rows".
@@ -16013,7 +16044,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "{rowCount} row"
 msgid_plural "{rowCount} rows"
-msgstr[0] ""
+msgstr[0] "{rowCount} 行"
 
 #. Translators: Sub-part of the compound string to speak number of rows and columns in a table.
 #. Example: If the full compound string is "table with 3 rwos and 2 columns", this substring is "2 columns".
@@ -16021,7 +16052,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "{columnCount} column"
 msgid_plural "{columnCount} columns"
-msgstr[0] ""
+msgstr[0] "{columnCount} 列"
 
 #. Translators: Number of items in a list (example output: list with 5 items).
 #: speech\speech.py:2182
@@ -16064,7 +16095,7 @@ msgstr "列 {1}の{0}"
 #, python-format
 msgid "%s column"
 msgid_plural "%s columns"
-msgstr[0] ""
+msgstr[0] "%s列"
 
 #. Translators: Indicates the text column number in a document.
 #: speech\speech.py:2424
@@ -16143,7 +16174,7 @@ msgstr "{color} {backgroundColor}の背景"
 #: speech\speech.py:2528
 #, python-brace-format
 msgid "{color}"
-msgstr ""
+msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
@@ -16377,7 +16408,7 @@ msgstr "テーブルの外"
 #: speech\speech.py:2837
 #, python-brace-format
 msgid "table with {columnCountText} and {rowCountText}"
-msgstr ""
+msgstr "{columnCountText} と {rowCountText} のテーブル"
 
 #. Translators: name of the default espeak varient.
 #: synthDrivers\_espeak.py:388
