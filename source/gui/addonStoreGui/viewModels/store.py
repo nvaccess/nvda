@@ -282,7 +282,7 @@ class AddonStoreVM:
 		shouldRemove = True
 		shouldRememberChoice = False
 		for aVM in listItemVMs:
-			if aVM.canUseRemoveAction():
+			if not aVM.canUseRemoveAction():
 				log.debug(f"Skipping {aVM.Id} ({aVM.status}) as it is not relevant for remove action")
 			else:
 				if shouldRememberChoice:
