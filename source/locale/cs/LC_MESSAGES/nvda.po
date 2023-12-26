@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-13 10:35+1000\n"
-"PO-Revision-Date: 2023-12-17 22:53\n"
+"POT-Creation-Date: 2023-12-24 10:45+0000\n"
+"PO-Revision-Date: 2023-12-26 22:19\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -2655,22 +2655,22 @@ msgstr "Nepodporováno v tomto dokumentu."
 #. Translators: input help message for toggle native selection command
 #: browseMode.py:2027
 msgid "Toggles native selection mode on and off"
-msgstr ""
+msgstr "Zapíná a vypíná režim kopírování se zachovaným formátováním"
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
 #: browseMode.py:2032
 msgid "Native selection mode unsupported in this document"
-msgstr ""
+msgstr "Režim kopírování se zachovaným formátováním není podporován v tomto dokumentu"
 
 #. Translators: reported when native selection mode is toggled on.
 #: browseMode.py:2037
 msgid "Native app selection mode enabled."
-msgstr ""
+msgstr "Kopírování se zachovaným formátováním zapnuto."
 
 #. Translators: reported when native selection mode is toggled off.
 #: browseMode.py:2044
 msgid "Native app selection mode disabled."
-msgstr ""
+msgstr "Kopírování se zachovaným formátováním vypnuto."
 
 #. Translators: The level at which the given symbol will be spoken.
 #: characterProcessing.py:157
@@ -2881,7 +2881,7 @@ msgstr "jasně {color}"
 #, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
-msgstr ""
+msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
 #: colors.py:228
@@ -2971,47 +2971,114 @@ msgctxt "color hue"
 msgid "brown-yellow"
 msgstr "hnědožlutá"
 
+#. Translators: Shown when one or more add-ons failed to update.
+#: core.py:81
+msgid "The following add-on failed to update: {}."
+msgid_plural "The following add-ons failed to update: {}."
+msgstr[0] "Nezdařilo se aktualizovat následující doplněk: {}."
+msgstr[1] "Nezdařilo se aktualizovat následující doplňky: {}."
+msgstr[2] "Nezdařilo se aktualizovat následující doplňky: {}."
+msgstr[3] "Nezdařilo se aktualizovat následující doplňky: {}."
+
+#. Translators: Shown when one or more add-ons failed to be uninstalled.
+#: core.py:90
+msgid "The following add-on failed to uninstall: {}."
+msgid_plural "The following add-ons failed to uninstall: {}."
+msgstr[0] "Nezdařilo se odinstalovat následující doplněk: {}."
+msgstr[1] "Nezdařilo se odinstalovat následující doplňky: {}."
+msgstr[2] "Nezdařilo se odinstalovat následující doplňky: {}."
+msgstr[3] "Nezdařilo se odinstalovat následující doplňky: {}."
+
+#. Translators: Shown when one or more add-ons failed to be installed.
+#: core.py:99
+msgid "The following add-on failed to be installed: {}."
+msgid_plural "The following add-ons failed to be installed: {}."
+msgstr[0] "Nezdařilo se nainstalovat následující doplněk: {}."
+msgstr[1] "Nezdařilo se nainstalovat následující doplňky: {}."
+msgstr[2] "Nezdařilo se nainstalovat následující doplňky: {}."
+msgstr[3] "Nezdařilo se nainstalovat následující doplňky: {}."
+
+#. Translators: Shown when one or more actions on add-ons failed.
+#: core.py:111
+msgid "Some operations on add-ons failed. See the log file for more details.\n"
+"{}"
+msgstr "Některé operace s doplňky se nezdařily. Další podrobnosti najdete v protokolu.\n"
+"{}"
+
+#. Translators: Title of message shown when requested action on add-ons failed.
+#. Translators: The title of an error message dialog.
+#. Translators: The title of the message when a downloaded update file could not be preserved.
+#. Translators: The title of a dialog presented when an error occurs.
+#. Translators: The title of an error message dialog.
+#. Translators: An title for an error displayed when saving user defined input gestures fails.
+#. Translators: The title of a dialog presented when an error occurs.
+#. Translators: the title of an error dialog.
+#. Translators: The message title displayed when the user has not specified an absolute
+#. destination directory in the Create Portable NVDA dialog.
+#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
+#. Translators: The title of an error message dialog.
+#. Translators: A message indicating that an error occurred.
+#. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
+#. Translators: The title of an error message box displayed when validating the startup dialog
+#: core.py:114 updateCheck.py:292 updateCheck.py:564 updateCheck.py:715
+#: gui\__init__.py:217 gui\__init__.py:229 gui\addonGui.py:144
+#: gui\addonGui.py:236 gui\addonGui.py:249 gui\configProfiles.py:177
+#: gui\configProfiles.py:203 gui\configProfiles.py:253
+#: gui\configProfiles.py:264 gui\configProfiles.py:269
+#: gui\configProfiles.py:306 gui\configProfiles.py:467
+#: gui\configProfiles.py:479 gui\configProfiles.py:485 gui\inputGestures.py:799
+#: gui\inputGestures.py:813 gui\installerGui.py:99 gui\installerGui.py:410
+#: gui\installerGui.py:425 gui\installerGui.py:476 gui\logViewer.py:96
+#: gui\logViewer.py:124 gui\message.py:142 gui\settingsDialogs.py:948
+#: gui\settingsDialogs.py:1697 gui\settingsDialogs.py:1832
+#: gui\settingsDialogs.py:4356 gui\settingsDialogs.py:4696
+#: gui\startupDialogs.py:122
+msgid "Error"
+msgstr "Chyba"
+
 #. Translators: Shown when NVDA has been started with unknown command line parameters.
-#: core.py:94
+#: core.py:141
 #, python-brace-format
 msgid "The following command line parameters are unknown to NVDA: {params}"
 msgstr "Následující parametry jsou pro NVDA neznámé: {params}"
 
 #. Translators: Title of the dialog letting user know
 #. that command line parameters they provided are unknown.
-#: core.py:99
+#: core.py:146
 msgid "Unknown command line parameters"
 msgstr "Neznámé parametry příkazového řádku"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
-#: core.py:106
+#: core.py:153
 msgid "Your configuration file contains errors. Your configuration has been reset to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr "Konfigurační soubor s nastavením NVDA obsahuje chyby. Vaše nastavení byla obnovena na výchozí hodnoty.\n"
 "Více informací o chybách naleznete v protokolu."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
-#: core.py:110
+#: core.py:157
 msgid "Configuration File Error"
 msgstr "Chyba konfiguračního souboru"
 
-#: core.py:122
+#: core.py:169
 msgid "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr "Uživatelský soubor s mapou vstupních příkazů obsahuje chyby.\n"
 "Více informací o chybách naleznete v protokolu."
 
-#: core.py:124
+#: core.py:171
 msgid "gesture map File Error"
 msgstr "chyba souboru mapy vstupních příkazů"
 
 #. Translators: This is spoken when NVDA is starting.
-#: core.py:565
+#: core.py:613
 msgid "Loading NVDA. Please wait..."
 msgstr "Načítám, prosím čekejte..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-#: core.py:707
+#: core.py:755
 msgid "NVDA started"
 msgstr "NVDA spuštěn"
 
@@ -3062,7 +3129,7 @@ msgstr "najde předchozí výskyt hledaného textu od aktuální pozice kurzoru"
 #. Translators: Reported when browse mode passes the copy to clipboard command through to the application.
 #: cursorManager.py:456
 msgid "native copy"
-msgstr ""
+msgstr "zkopírováno se zachovaným formátováním"
 
 #. Translators: Reported when there is no text selected (for copying).
 #. Translators: The message reported when there is no selection
@@ -3337,7 +3404,7 @@ msgstr "Uzamkne nebo odemkne pravé tlačítko myši"
 #. Translators: Input help mode message for report current selection command.
 #: globalCommands.py:259
 msgid "Announces the current selection in edit controls and documents. Pressing twice spells this information. Pressing three times spells it using character descriptions. Pressing four times shows it in a browsable message. "
-msgstr ""
+msgstr "V editačních polích a dokumentech přečte označený text. Dvojitý stisk ho vyhláskuje. Trojitý stisk ho vyhláskuje pomocí hláskovací tabulky. čtyři stisknutí ho zobrazí jako zprávu pro prohlížení. "
 
 #. Translators: The message reported after selected text
 #. Translators: This is spoken to indicate what has just been selected.
@@ -4262,14 +4329,14 @@ msgstr "Rozšířený znak ({})"
 #. Translators: Input help mode message for cycle speech mode command.
 #: globalCommands.py:2042
 msgid "Cycles between speech modes."
-msgstr ""
+msgstr "Přepíná mezi režimy řeči."
 
 #. Translators: Announced when user switches to another speech mode.
 #. 'mode' is replaced with the translated name of the new mode.
 #: globalCommands.py:2065
 #, python-brace-format
 msgid "Speech mode {mode}"
-msgstr ""
+msgstr "Režim řeči {mode}"
 
 #. Translators: Input help mode message for move to next document with focus command,
 #. mostly used in web browsing to move from embedded object to the webpage document.
@@ -4361,7 +4428,7 @@ msgstr "Žádné další podrobnosti"
 #. Translators: Input help mode message for report current focus command.
 #: globalCommands.py:2482
 msgid "Reports the object with focus. If pressed twice, spells the information. Pressing three times spells it using character descriptions."
-msgstr ""
+msgstr "Ohlásí zaměřený objekt. Dvojitý stisk objekt vyhláskuje. Trojitý stisk ho vyhláskuje pomocí hláskovací tabulky."
 
 #. Translators: Reported when there is no status line for the current program or window.
 #: globalCommands.py:2558
@@ -4904,7 +4971,7 @@ msgstr "Zobrazení výběru %s"
 #. Translators: Input help mode message for report clipboard text command.
 #: globalCommands.py:3455
 msgid "Reports the text on the Windows clipboard. Pressing twice spells this information. Pressing three times spells it using character descriptions."
-msgstr ""
+msgstr "Přečte text ve schránce. Dvojitý stisk ho vyhláskuje. Trojitý stisk ho vyhláskuje pomocí hláskovací tabulky."
 
 #. Translators: Presented when there is no text on the clipboard.
 #: globalCommands.py:3470
@@ -4918,10 +4985,10 @@ msgstr "Žádný text ve schránce"
 #, python-format
 msgid "The clipboard contains a large amount of text. It is %s character long"
 msgid_plural "The clipboard contains a large amount of text. It is %s characters long"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Schránka obsahuje velké množství textu v počtu %s znak"
+msgstr[1] "Schránka obsahuje velké množství textu v počtu %s znaky"
+msgstr[2] "Schránka obsahuje velké množství textu v počtu %s znaku"
+msgstr[3] "Schránka obsahuje velké množství textu v počtu %s znaků"
 
 #. Translators: Input help mode message for mark review cursor position for a select or copy command
 #. (that is, marks the current review cursor position as the starting point for text to be selected).
@@ -5331,7 +5398,7 @@ msgstr "Různé"
 #. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
 #: installer.py:392
 msgid "CTRL+ALT+N"
-msgstr ""
+msgstr "CTRL+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 #: installer.py:415
@@ -5446,7 +5513,7 @@ msgstr "přehrát či pozastavit"
 #. Translators: This is the name of the launch email key found on multimedia keyboards to open an email client.
 #: keyLabels.py:44
 msgid "email"
-msgstr ""
+msgstr "email"
 
 #. Translators: This is the name of the launch mediaplayer key found on multimedia keyboards to launch the mediaplayer.
 #: keyLabels.py:46
@@ -5466,37 +5533,37 @@ msgstr "uživatelská aplikace 2"
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:52
 msgid "backspace"
-msgstr ""
+msgstr "backspace"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:54
 msgid "caps lock"
-msgstr ""
+msgstr "caps lock"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:56
 msgid "ctrl"
-msgstr ""
+msgstr "ctrl"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:58
 msgid "alt"
-msgstr ""
+msgstr "alt"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:60
 msgid "shift"
-msgstr ""
+msgstr "shift"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:62
 msgid "windows"
-msgstr ""
+msgstr "windows"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:64
 msgid "enter"
-msgstr ""
+msgstr "enter"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:66
@@ -5506,32 +5573,32 @@ msgstr "numerický enter"
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:68
 msgid "escape"
-msgstr ""
+msgstr "escape"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:72
 msgid "page up"
-msgstr ""
+msgstr "page up"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:74
 msgid "page down"
-msgstr ""
+msgstr "page down"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:76
 msgid "end"
-msgstr ""
+msgstr "end"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:78
 msgid "home"
-msgstr ""
+msgstr "home"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:80
 msgid "delete"
-msgstr ""
+msgstr "delete"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:82
@@ -5566,17 +5633,17 @@ msgstr "kontextová nabídka"
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:94
 msgid "num lock"
-msgstr ""
+msgstr "num lock"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:96
 msgid "print screen"
-msgstr ""
+msgstr "print screen"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:98
 msgid "scroll lock"
-msgstr ""
+msgstr "scroll lock"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:100
@@ -5706,7 +5773,7 @@ msgstr "numLock numerická 9"
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:150
 msgid "insert"
-msgstr ""
+msgstr "insert"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:152
@@ -5757,17 +5824,17 @@ msgstr "pauza"
 #: keyLabels.py:170
 msgctxt "keyLabel"
 msgid "tab"
-msgstr ""
+msgstr "tab"
 
 #. Translators: One of the keyboard layouts for NVDA.
 #: keyboardHandler.py:403
 msgid "desktop"
-msgstr ""
+msgstr "desktop"
 
 #. Translators: One of the keyboard layouts for NVDA.
 #: keyboardHandler.py:405
 msgid "laptop"
-msgstr ""
+msgstr "laptop"
 
 #. Translators: Reported for an unknown key press.
 #. %s will be replaced with the key code.
@@ -5816,7 +5883,7 @@ msgstr "Výchozí jazyk systému"
 #: languageHandler.py:276
 #, python-brace-format
 msgid "{desc}, {lc}"
-msgstr ""
+msgstr "{desc}, {lc}"
 
 #. Translators: The name of a language supported by NVDA.
 #: localesData.py:20
@@ -7281,10 +7348,10 @@ msgstr "čtyřnásobné {action}"
 #, python-brace-format
 msgid "{numFingers} finger {action}"
 msgid_plural "{numFingers} finger {action}"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{numFingers} prst {action}"
+msgstr[1] "{numFingers} prsty {action}"
+msgstr[2] "{numFingers} prstu {action}"
+msgstr[3] "{numFingers} prstů {action}"
 
 #. Translators: a very quick touch and release of a finger on a touch screen
 #: touchTracker.py:33
@@ -7380,10 +7447,10 @@ msgstr "Zpráva NVDA"
 #, python-format
 msgid "%d character"
 msgid_plural "%d characters"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "%d znak"
+msgstr[1] "%d znaky"
+msgstr[2] "%d znaku"
+msgstr[3] "%d znaků"
 
 #. Translators: Announced when a text has been copied to clipboard.
 #. {text} is replaced by the copied text.
@@ -7414,37 +7481,6 @@ msgstr "Kontrolují se aktualizace"
 msgid "Error checking for update."
 msgstr "Při kontrole aktualizací došlo k chybě."
 
-#. Translators: The title of an error message dialog.
-#. Translators: The title of the message when a downloaded update file could not be preserved.
-#. Translators: The title of a dialog presented when an error occurs.
-#. Translators: The title of an error message dialog.
-#. Translators: An title for an error displayed when saving user defined input gestures fails.
-#. Translators: The title of a dialog presented when an error occurs.
-#. Translators: the title of an error dialog.
-#. Translators: The message title displayed when the user has not specified an absolute
-#. destination directory in the Create Portable NVDA dialog.
-#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
-#. Translators: The title of an error message dialog.
-#. Translators: A message indicating that an error occurred.
-#. Translators: The title of the message box
-#. Translators: The title of the error dialog displayed when there is an error showing the GUI
-#. for a vision enhancement provider
-#. Translators: The title of an error message box displayed when validating the startup dialog
-#: updateCheck.py:292 updateCheck.py:564 updateCheck.py:715 gui\__init__.py:217
-#: gui\__init__.py:229 gui\addonGui.py:144 gui\addonGui.py:235
-#: gui\addonGui.py:248 gui\configProfiles.py:177 gui\configProfiles.py:203
-#: gui\configProfiles.py:253 gui\configProfiles.py:264
-#: gui\configProfiles.py:269 gui\configProfiles.py:306
-#: gui\configProfiles.py:467 gui\configProfiles.py:479
-#: gui\configProfiles.py:485 gui\inputGestures.py:799 gui\inputGestures.py:813
-#: gui\installerGui.py:99 gui\installerGui.py:410 gui\installerGui.py:425
-#: gui\installerGui.py:476 gui\logViewer.py:96 gui\logViewer.py:124
-#: gui\message.py:142 gui\settingsDialogs.py:948 gui\settingsDialogs.py:1697
-#: gui\settingsDialogs.py:1832 gui\settingsDialogs.py:4356
-#: gui\settingsDialogs.py:4696 gui\startupDialogs.py:122
-msgid "Error"
-msgstr "Chyba"
-
 #. Translators: The title of the dialog informing the user about an NVDA update.
 #. Translators: The title of the dialog asking the user to Install an NVDA update.
 #: updateCheck.py:352 updateCheck.py:486
@@ -7454,7 +7490,7 @@ msgstr "Aktualizace NVDA"
 #. Translators: A message indicating that no update to NVDA is available.
 #: updateCheck.py:370
 msgid "No update available."
-msgstr "Žádná aktualizace není k dispozici."
+msgstr "Žádné dostupné aktualizace."
 
 #. Translators: A message indicating that an updated version of NVDA has been downloaded
 #. and is pending to be installed.
@@ -7500,7 +7536,7 @@ msgstr "Připomenout &později"
 
 #. Translators: The label of a button to close a dialog.
 #. Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
-#: updateCheck.py:433 gui\addonGui.py:340
+#: updateCheck.py:433 gui\addonGui.py:341
 msgid "&Close"
 msgstr "&Zavřít"
 
@@ -7584,7 +7620,7 @@ msgstr "&Hotovo"
 
 #: versionInfo.py:14
 msgid "NonVisual Desktop Access"
-msgstr ""
+msgstr "NonVisual Desktop Access"
 
 #: versionInfo.py:15
 msgid "A free and open source screen reader for Microsoft Windows"
@@ -7711,7 +7747,7 @@ msgstr "Stabilní"
 #: addonStore\models\channel.py:30
 msgctxt "addonStore"
 msgid "Beta"
-msgstr ""
+msgstr "Beta"
 
 #. Translators: Label for add-on channel in the add-on sotre
 #: addonStore\models\channel.py:32
@@ -7756,13 +7792,13 @@ msgstr "Dostupný"
 #: addonStore\models\status.py:89
 msgctxt "addonStore"
 msgid "Update Available"
-msgstr "Aktualizace k dispozici"
+msgstr "Dostupná aktualizace"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:91
 msgctxt "addonStore"
 msgid "Update Available (incompatible)"
-msgstr ""
+msgstr "Dostupná aktualizace (nekompatibilní)"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:93
@@ -7953,7 +7989,7 @@ msgstr "Displej"
 #. Translators: The name of a category of NVDA commands.
 #: appModules\eclipse.py:19
 msgid "Eclipse"
-msgstr ""
+msgstr "Eclipse"
 
 #. Translators: Input help mode message for the 'read documentation script
 #: appModules\eclipse.py:57
@@ -8064,7 +8100,7 @@ msgstr "konec populárního zvýraznění"
 #. Translators: The name of a category of NVDA commands.
 #: appModules\miranda32.py:26
 msgid "Miranda NG"
-msgstr ""
+msgstr "Miranda NG"
 
 #. Translators: The description of an NVDA command to view one of the recent messages.
 #: appModules\miranda32.py:117 appModules\vipmud.py:30
@@ -8171,7 +8207,7 @@ msgstr "Vymazat výstupní panel"
 #. Translators: Description of a message spoken when clearing the Python Console output pane
 #: appModules\nvda.py:78
 msgid "Output pane cleared"
-msgstr ""
+msgstr "Výstupní panel vymazán"
 
 #. Translators: Description of a command to move to the next result in the Python Console output pane
 #: appModules\nvda.py:89
@@ -8273,10 +8309,10 @@ msgstr "{startTime} do {endTime}"
 #, python-brace-format
 msgid "category {categories}"
 msgid_plural "categories {categories}"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "kategorie {categories}"
+msgstr[1] "kategorie {categories}"
+msgstr[2] "kategorie {categories}"
+msgstr[3] "kategorií {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #: appModules\outlook.py:383
@@ -8297,7 +8333,7 @@ msgstr "žádost o schůzku"
 #. Translators: The name of a category of NVDA commands.
 #: appModules\poedit.py:27
 msgid "Poedit"
-msgstr ""
+msgstr "Poedit"
 
 #. Translators: this message is reported when there is nothing
 #. to be presented to the user in Poedit.
@@ -8307,7 +8343,7 @@ msgstr ""
 #, python-brace-format
 msgctxt "poedit"
 msgid "No {description}"
-msgstr ""
+msgstr "Žádné {description}"
 
 #. Translators: this message is reported when NVDA is unable to find
 #. a requested window in Poedit.
@@ -8316,64 +8352,64 @@ msgstr ""
 #, python-brace-format
 msgctxt "poedit"
 msgid "Could not find {description} window."
-msgstr ""
+msgstr "Nelze najít okno {description}."
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules\poedit.py:149
 msgctxt "poedit"
 msgid "Reports any notes for translators. If pressed twice, presents the notes in browse mode"
-msgstr ""
+msgstr "Hlásí překladatelské poznámky. Dvojitým stiskem se zobrazí v režimu prohlížení"
 
 #. Translators: The description of the "Translator notes" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
 #: appModules\poedit.py:160
 msgctxt "poedit"
 msgid "notes for translators"
-msgstr ""
+msgstr "překladatelské poznámky"
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules\poedit.py:175
 msgctxt "poedit"
 msgid "Reports any comment in the comments window. If pressed twice, presents the comment in browse mode"
-msgstr ""
+msgstr "Přečte komentáře v okně komentářů. Dvojitým stiskem se zobrazí v režimu prohlížení"
 
 #. Translators: The description of the "comment" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
 #: appModules\poedit.py:187
 msgctxt "poedit"
 msgid "comment"
-msgstr ""
+msgstr "komentáře"
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules\poedit.py:202
 msgctxt "poedit"
 msgid "Reports the old source text, if any. If pressed twice, presents the text in browse mode"
-msgstr ""
+msgstr "Přečte starý zdrojový text, pokud existuje. Dvojitým stiskem se zobrazí v režimu prohlížení"
 
 #. Translators: The description of the "old source text" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
 #: appModules\poedit.py:213
 msgctxt "poedit"
 msgid "old source text"
-msgstr ""
+msgstr "staré zdrojové texty"
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules\poedit.py:226
 msgctxt "poedit"
 msgid "Reports a translation warning, if any. If pressed twice, presents the warning in browse mode"
-msgstr ""
+msgstr "Hlásí upozornění překladu, pokud existuje. Dvojitým stiskem se zobrazí v režimu prohlížení"
 
 #. Translators: The description of the "translation warning" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
 #: appModules\poedit.py:237
 msgctxt "poedit"
 msgid "translation warning"
-msgstr ""
+msgstr "upozornění překladu"
 
 #. Translators: The name of a category of NVDA commands.
 #: appModules\powerpnt.py:45
 msgid "PowerPoint"
-msgstr ""
+msgstr "PowerPoint"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 #: appModules\powerpnt.py:119
@@ -8541,86 +8577,86 @@ msgstr "jiná položka"
 #, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} point"
 msgid_plural "covers left of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "překrývá zleva {otherShape} o {distance:.3g} bod"
+msgstr[1] "překrývá zleva {otherShape} o {distance:.3g} body"
+msgstr[2] "překrývá zleva {otherShape} o {distance:.3g} bodu"
+msgstr[3] "překrývá zleva {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:602
 #, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} point"
 msgid_plural "behind left of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "následuje zleva za {otherShape} o {distance:.3g} bod"
+msgstr[1] "následuje zleva za {otherShape} o {distance:.3g} body"
+msgstr[2] "následuje zleva za {otherShape} o {distance:.3g} bodu"
+msgstr[3] "následuje zleva za {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is in front of another shape on a PowerPoint slide
 #: appModules\powerpnt.py:612
 #, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} point"
 msgid_plural "covers top of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "překrývá zhora {otherShape} o {distance:.3g} bod"
+msgstr[1] "překrývá zhora {otherShape} o {distance:.3g} body"
+msgstr[2] "překrývá zhora {otherShape} o {distance:.3g} bodu"
+msgstr[3] "překrývá zhora {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:619
 #, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} point"
 msgid_plural "behind top of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "následuje zhora za {otherShape} o {distance:.3g} bod"
+msgstr[1] "následuje zhora za {otherShape} o {distance:.3g} body"
+msgstr[2] "následuje zhora za {otherShape} o {distance:.3g} bodu"
+msgstr[3] "následuje zhora za {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is in front of another shape on a PowerPoint slide
 #: appModules\powerpnt.py:629
 #, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} point"
 msgid_plural "covers right of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "překrývá zprava {otherShape} o {distance:.3g} bod"
+msgstr[1] "překrývá zprava {otherShape} o {distance:.3g} body"
+msgstr[2] "překrývá zprava {otherShape} o {distance:.3g} bodu"
+msgstr[3] "překrývá zprava {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:636
 #, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} point"
 msgid_plural "behind right of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "následuje zprava za {otherShape} o {distance:.3g} bod"
+msgstr[1] "následuje zprava za {otherShape} o {distance:.3g} body"
+msgstr[2] "následuje zprava za {otherShape} o {distance:.3g} bodu"
+msgstr[3] "následuje zprava za {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is in front of another shape on a PowerPoint slide
 #: appModules\powerpnt.py:646
 #, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} point"
 msgid_plural "covers bottom of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "překrývá zdola {otherShape} o {distance:.3g} bod"
+msgstr[1] "překrývá zdola {otherShape} o {distance:.3g} body"
+msgstr[2] "překrývá zdola {otherShape} o {distance:.3g} bodu"
+msgstr[3] "překrývá zdola {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:653
 #, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} point"
 msgid_plural "behind bottom of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "následuje zdola za {otherShape} o {distance:.3g} bod"
+msgstr[1] "následuje zdola za {otherShape} o {distance:.3g} body"
+msgstr[2] "následuje zdola za {otherShape} o {distance:.3g} bodu"
+msgstr[3] "následuje zdola za {otherShape} o {distance:.3g} bodů"
 
 #. Translators: A message when a shape is in front of another shape on a PowerPoint slide
 #: appModules\powerpnt.py:660
 #, python-brace-format
 msgid "covers  {otherShape}"
-msgstr "překrývá  {otherShape}"
+msgstr "před  {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:663
@@ -8634,10 +8670,10 @@ msgstr "za {otherShape}"
 #, python-brace-format
 msgid "{distance:.3g} point from left slide edge"
 msgid_plural "{distance:.3g} points from left slide edge"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{distance:.3g} bod od levého okraje snímku"
+msgstr[1] "{distance:.3g} body od levého okraje snímku"
+msgstr[2] "{distance:.3g} bodu od levého okraje snímku"
+msgstr[3] "{distance:.3g} bodů od levého okraje snímku"
 
 #. Translators: For a shape too far off the left edge of a PowerPoint Slide, this is the distance in
 #. points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
@@ -8645,10 +8681,10 @@ msgstr[3] ""
 #, python-brace-format
 msgid "Off left slide edge by {distance:.3g} point"
 msgid_plural "Off left slide edge by {distance:.3g} points"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Mimo levý okraj snímku o {distance:.3g} bod"
+msgstr[1] "Mimo levý okraj snímku o {distance:.3g} body"
+msgstr[2] "Mimo levý okraj snímku o {distance:.3g} bodu"
+msgstr[3] "Mimo levý okraj snímku o {distance:.3g} bodů"
 
 #. Translators: For a shape within a PowerPoint Slide, this is the distance in points from the shape's
 #. top edge to the slide's top edge
@@ -8656,10 +8692,10 @@ msgstr[3] ""
 #, python-brace-format
 msgid "{distance:.3g} point from top slide edge"
 msgid_plural "{distance:.3g} points from top slide edge"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{distance:.3g} bod od horního okraje snímku"
+msgstr[1] "{distance:.3g} body od horního okraje snímku"
+msgstr[2] "{distance:.3g} bodu od horního okraje snímku"
+msgstr[3] "{distance:.3g} bodů od horního okraje snímku"
 
 #. Translators: For a shape too far off the top edge of a PowerPoint Slide, this is the distance in
 #. points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
@@ -8667,10 +8703,10 @@ msgstr[3] ""
 #, python-brace-format
 msgid "Off top slide edge by {distance:.3g} point"
 msgid_plural "Off top slide edge by {distance:.3g} points"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Mimo horní okraj snímku o {distance:.3g} bod"
+msgstr[1] "Mimo horní okraj snímku o {distance:.3g} body"
+msgstr[2] "Mimo horní okraj snímku o {distance:.3g} bodu"
+msgstr[3] "Mimo horní okraj snímku o {distance:.3g} bodů"
 
 #. Translators: For a shape within a PowerPoint Slide, this is the distance in points from the shape's
 #. right edge to the slide's right edge
@@ -8678,10 +8714,10 @@ msgstr[3] ""
 #, python-brace-format
 msgid "{distance:.3g} point from right slide edge"
 msgid_plural "{distance:.3g} points from right slide edge"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{distance:.3g} bod od pravého okraje snímku"
+msgstr[1] "{distance:.3g} body od pravého okraje snímku"
+msgstr[2] "{distance:.3g} bodu od pravého okraje snímku"
+msgstr[3] "{distance:.3g} bodů od pravého okraje snímku"
 
 #. Translators: For a shape too far off the right edge of a PowerPoint Slide, this is the distance in
 #. points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
@@ -8689,10 +8725,10 @@ msgstr[3] ""
 #, python-brace-format
 msgid "Off right slide edge by {distance:.3g} point"
 msgid_plural "Off right slide edge by {distance:.3g} points"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Mimo pravý okraj snímku o {distance:.3g} bod"
+msgstr[1] "Mimo pravý okraj snímku o {distance:.3g} body"
+msgstr[2] "Mimo pravý okraj snímku o {distance:.3g} bodu"
+msgstr[3] "Mimo pravý okraj snímku o {distance:.3g} bodů"
 
 #. Translators: For a shape within a PowerPoint Slide, this is the distance in points from the shape's
 #. bottom edge to the slide's bottom edge
@@ -8700,10 +8736,10 @@ msgstr[3] ""
 #, python-brace-format
 msgid "{distance:.3g} point from bottom slide edge"
 msgid_plural "{distance:.3g} points from bottom slide edge"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{distance:.3g} bod od spodního okraje snímku"
+msgstr[1] "{distance:.3g} body od spodního okraje snímku"
+msgstr[2] "{distance:.3g} bodu od spodního okraje snímku"
+msgstr[3] "{distance:.3g} bodů od spodního okraje snímku"
 
 #. Translators: For a shape too far off the bottom edge of a PowerPoint Slide, this is the distance in
 #. points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
@@ -8711,10 +8747,10 @@ msgstr[3] ""
 #, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} point"
 msgid_plural "Off bottom slide edge by {distance:.3g} points"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Mimo spodní okraj snímku o {distance:.3g} bod"
+msgstr[1] "Mimo spodní okraj snímku o {distance:.3g} body"
+msgstr[2] "Mimo spodní okraj snímku o {distance:.3g} bodu"
+msgstr[3] "Mimo spodní okraj snímku o {distance:.3g} bodů"
 
 #. Translators: The description for a script
 #: appModules\powerpnt.py:1188
@@ -8770,20 +8806,20 @@ msgstr "{firstAddress} do {lastAddress}"
 #, python-brace-format
 msgid "{val:.2f} inch"
 msgid_plural "{val:.2f} inches"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{val:.2f} palec"
+msgstr[1] "{val:.2f} palce"
+msgstr[2] "{val:.2f} palce"
+msgstr[3] "{val:.2f} palců"
 
 #. Translators: a measurement in centimetres
 #: appModules\soffice.py:374
 #, python-brace-format
 msgid "{val:.2f} centimetre"
 msgid_plural "{val:.2f} centimetres"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{val:.2f} centimetr"
+msgstr[1] "{val:.2f} centimetry"
+msgstr[2] "{val:.2f} centimetru"
+msgstr[3] "{val:.2f} centimetrů"
 
 #. Translators: LibreOffice, report cursor position in the current page
 #: appModules\soffice.py:393
@@ -8802,7 +8838,7 @@ msgstr "vpravo"
 #. Translators: The name of a category of NVDA commands.
 #: appModules\vipmud.py:18
 msgid "VipMud"
-msgstr ""
+msgstr "VipMud"
 
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 #: appModules\winamp.py:79
@@ -8857,7 +8893,7 @@ msgstr "Nesledovat změny"
 #. Translators: The name of a braille display.
 #: brailleDisplayDrivers\alva.py:109
 msgid "Optelec ALVA 6 series/protocol converter"
-msgstr ""
+msgstr "Optelec ALVA 6 series/protocol converter"
 
 #. Translators: Message when setting HID keyboard simulation failed.
 #: brailleDisplayDrivers\alva.py:392
@@ -8889,12 +8925,12 @@ msgstr "Braillské řádky Baum/HumanWare/APH/Orbit"
 #. Translators: Names of braille displays
 #: brailleDisplayDrivers\brailleNote.py:126
 msgid "HumanWare BrailleNote"
-msgstr ""
+msgstr "HumanWare BrailleNote"
 
 #. Translators: The name of a series of braille displays.
 #: brailleDisplayDrivers\brailliantB.py:84
 msgid "HumanWare Brailliant BI/B series / BrailleNote Touch"
-msgstr ""
+msgstr "HumanWare Brailliant BI/B series / BrailleNote Touch"
 
 #. Translators: The name of a braille display.
 #: brailleDisplayDrivers\ecoBraille.py:168
@@ -8950,12 +8986,12 @@ msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille"
 #. Translators: Name of a braille display.
 #: brailleDisplayDrivers\lilli.py:49
 msgid "MDV Lilli"
-msgstr ""
+msgstr "MDV Lilli"
 
 #. Translators: Names of braille displays
 #: brailleDisplayDrivers\nattiqbraille.py:35
 msgid "Nattiq nBraille"
-msgstr ""
+msgstr "Nattiq nBraille"
 
 #. Translators: Is used to indicate that braille support will be disabled.
 #: brailleDisplayDrivers\noBraille.py:14
@@ -8980,21 +9016,21 @@ msgstr "Braillské řádky Seika"
 #. Translators: Name of a braille display.
 #: brailleDisplayDrivers\seikantk.py:104
 msgid "Seika Notetaker"
-msgstr ""
+msgstr "Seika Notetaker"
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\superBrl.py:29
 msgid "SuperBraille"
-msgstr ""
+msgstr "SuperBraille"
 
 #. Translators: Names of braille displays.
-#: brailleDisplayDrivers\albatross\driver.py:81
+#: brailleDisplayDrivers\albatross\driver.py:82
 msgid "Caiku Albatross 46/80"
-msgstr ""
+msgstr "Caiku Albatross 46/80"
 
 #. Translators: A message when number of status cells must be changed
 #. for a braille display driver
-#: brailleDisplayDrivers\albatross\driver.py:477
+#: brailleDisplayDrivers\albatross\driver.py:486
 msgid "To use Albatross with NVDA: change number of status cells in Albatross internal menu at most "
 msgstr "Pro použití řádků Albatross s NVDA: změňte maximální počet stavových buněk ve vnitřním menu Albatrossu na "
 
@@ -9167,7 +9203,7 @@ msgstr "Vždy"
 #. Translators: Label for an option in NVDA settings.
 #: config\featureFlagEnums.py:113
 msgid "Diffing"
-msgstr ""
+msgstr "Diffing"
 
 #. Translators: Label for an option in NVDA settings.
 #: config\featureFlagEnums.py:115
@@ -9246,28 +9282,28 @@ msgstr "%s pixelů"
 #, python-format
 msgctxt "font size"
 msgid "%s em"
-msgstr ""
+msgstr "%s em"
 
 #. Translators: A measurement unit of font size.
 #: controlTypes\formatFields.py:48
 #, python-format
 msgctxt "font size"
 msgid "%s ex"
-msgstr ""
+msgstr "%s ex"
 
 #. Translators: Abbreviation for relative em, a measurement of font size.
 #: controlTypes\formatFields.py:50
 #, python-format
 msgctxt "font size"
 msgid "%s rem"
-msgstr ""
+msgstr "%s rem"
 
 #. Translators: Font size measured as a percentage
 #: controlTypes\formatFields.py:54
 #, python-format
 msgctxt "font size"
 msgid "%s%%"
-msgstr ""
+msgstr "%s%%"
 
 #. Translators: A measurement unit of font size.
 #: controlTypes\formatFields.py:59
@@ -9407,7 +9443,7 @@ msgstr "aktuální"
 #. Translators: Presented when a page item is marked as current in a collection of page items
 #: controlTypes\isCurrent.py:43
 msgid "current page"
-msgstr "aktuální strana"
+msgstr "aktuální stránka"
 
 #. Translators: Presented when a step item is marked as current in a collection of step items
 #: controlTypes\isCurrent.py:45
@@ -9447,7 +9483,7 @@ msgstr "panel"
 #. Translators: The word used to denote a dialog box such as open dialog.
 #: controlTypes\role.py:217
 msgid "dialog"
-msgstr ""
+msgstr "dialog"
 
 #. Translators: The text used to identify check boxes such as select check box.
 #: controlTypes\role.py:219
@@ -9462,7 +9498,7 @@ msgstr "přepínač"
 #. Translators: The word used to identify a static text such as dialog text.
 #: controlTypes\role.py:223
 msgid "text"
-msgstr ""
+msgstr "text"
 
 #. Translators: The word used to identify edit fields such as subject edit field.
 #: controlTypes\role.py:225
@@ -9926,7 +9962,7 @@ msgstr "kurzor"
 #. Translators: Identifies a diagram (seen on some websites and on Office documents).
 #: controlTypes\role.py:416
 msgid "diagram"
-msgstr ""
+msgstr "diagram"
 
 #. Translators: Identifies a dial object.
 #: controlTypes\role.py:418
@@ -10033,7 +10069,7 @@ msgstr "výplň"
 #. Translators: Identifies a panel control for grouping related options.
 #: controlTypes\role.py:465
 msgid "panel"
-msgstr ""
+msgstr "panel"
 
 #. Translators: Identifies a password field (a protected edit field for entering passwords such as when
 #. logging into web-based email sites).
@@ -10133,11 +10169,11 @@ msgstr "kalendář"
 
 #: controlTypes\role.py:506
 msgid "video"
-msgstr ""
+msgstr "video"
 
 #: controlTypes\role.py:507
 msgid "audio"
-msgstr ""
+msgstr "audio"
 
 #. Translators: Identifies a chart element.
 #: controlTypes\role.py:509
@@ -10727,17 +10763,17 @@ msgstr "&novinky"
 #. Translators: The label for the menu item to view the NVDA website
 #: gui\__init__.py:681
 msgid "NV Access &web site"
-msgstr ""
+msgstr "&Webová stránka NV Access"
 
 #. Translators: The label for the menu item to view the NVDA website's get help section
 #: gui\__init__.py:684
 msgid "&Help, training and support"
-msgstr ""
+msgstr "&Nápověda, školení a podpora"
 
 #. Translators: The label for the menu item to view the NVDA website's get help section
 #: gui\__init__.py:687
 msgid "NV Access &shop"
-msgstr ""
+msgstr "&Obchod NV Access"
 
 #. Translators: The label for the menu item to view NVDA License document.
 #: gui\__init__.py:693
@@ -10798,7 +10834,7 @@ msgstr "Restartovat NVDA"
 #. Translators: A button in the addon installation warning / blocked dialog which shows
 #. more information about the addon
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
-#: gui\addonGui.py:64 gui\addonGui.py:102 gui\addonGui.py:336
+#: gui\addonGui.py:64 gui\addonGui.py:102 gui\addonGui.py:337
 msgid "&About add-on..."
 msgstr "&O doplňku..."
 
@@ -10826,7 +10862,7 @@ msgstr "&Ne"
 #. Translators: An ok button on a message dialog.
 #: gui\addonGui.py:110 gui\nvdaControls.py:258
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #: gui\addonGui.py:142
@@ -10837,72 +10873,72 @@ msgstr "Z umístění %s nelze balíček doplňku otevřít. Chybějící soubor
 #. Translators: A title for the dialog asking if the user wishes to update a previously installed
 #. add-on with this one.
 #. Translators: Title for message asking if the user really wishes to install an Addon.
-#: gui\addonGui.py:171 gui\addonStoreGui\controls\messageDialogs.py:247
+#: gui\addonGui.py:172 gui\addonStoreGui\controls\messageDialogs.py:247
 msgid "Add-on Installation"
 msgstr "Instalace doplňku"
 
 #. Translators: A message asking if the user wishes to update an add-on with the same version
 #. currently installed according to the version number.
-#: gui\addonGui.py:176
+#: gui\addonGui.py:177
 #, python-brace-format
 msgid "You are about to install version {newVersion} of {summary}, which appears to be already installed. Would you still like to update?"
 msgstr "Chystáte se instalovat verzi {newVersion} doplňku {summary}, která je již nainstalována. Chcete ji přesto aktualizovat?"
 
 #. Translators: A message asking if the user wishes to update a previously installed
 #. add-on with this one.
-#: gui\addonGui.py:184
+#: gui\addonGui.py:185
 #, python-brace-format
 msgid "A version of this add-on is already installed. Would you like to update {summary} version {curVersion} to version {newVersion}?"
 msgstr "Tento doplněk je již nainstalován. Chcete aktualizovat {summary} verzi {curVersion} na verzi {newVersion}?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
-#: gui\addonGui.py:213
+#: gui\addonGui.py:214
 msgid "Installing Add-on"
 msgstr "Probíhá instalace doplňku"
 
 #. Translators: The message displayed while an addon is being installed.
-#: gui\addonGui.py:215
+#: gui\addonGui.py:216
 msgid "Please wait while the add-on is being installed."
 msgstr "Prosím vyčkejte na dokončení instalace doplňku."
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
-#: gui\addonGui.py:233
+#: gui\addonGui.py:234
 #, python-format
 msgid "Failed to install add-on from %s"
 msgstr "Instalace doplňku z umístění %s se nezdařila"
 
 #. Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
-#: gui\addonGui.py:246
+#: gui\addonGui.py:247
 msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
 msgstr "Ve verzi NVDA z obchodu Windows store Nelze instalovat doplňky"
 
 #. Translators: The title of the Incompatible Addons Dialog
-#: gui\addonGui.py:302
+#: gui\addonGui.py:303
 msgid "Incompatible Add-ons"
 msgstr "Nekompatibilní doplňky"
 
 #. Translators: The title of the Incompatible Addons Dialog
-#: gui\addonGui.py:312
+#: gui\addonGui.py:313
 msgid "The following add-ons are incompatible with NVDA version {}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
 msgstr "Následující doplňky nejsou kompatibilní s NVDA {}. Tyto doplňky nelze povolit. Pro další informace kontaktujte vývojáře doplňků."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
-#: gui\addonGui.py:320
+#: gui\addonGui.py:321
 msgid "Incompatible add-ons"
 msgstr "Nekompatibilní doplňky"
 
 #. Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
-#: gui\addonGui.py:328
+#: gui\addonGui.py:329
 msgid "Package"
 msgstr "Balíček"
 
 #. Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
-#: gui\addonGui.py:330
+#: gui\addonGui.py:331
 msgid "Version"
 msgstr "Verze"
 
 #. Translators: The label for a column in add-ons list used to provide some explanation about incompatibility
-#: gui\addonGui.py:332
+#: gui\addonGui.py:333
 msgid "Incompatible reason"
 msgstr "Důvod nekompatibility"
 
@@ -11199,7 +11235,7 @@ msgstr "Co chcete u&dělat?"
 #: gui\inputGestures.py:58
 #, python-brace-format
 msgid "{main} ({source})"
-msgstr ""
+msgstr "{main} ({source})"
 
 #. Translators: The prompt to enter a gesture in the Input Gestures dialog.
 #: gui\inputGestures.py:79
@@ -11224,10 +11260,10 @@ msgstr "Zadejte příkaz pro emulaci:"
 #, python-brace-format
 msgid "{category} ({nbResults} result)"
 msgid_plural "{category} ({nbResults} results)"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{category} ({nbResults} výsledek)"
+msgstr[1] "{category} ({nbResults} výsledky)"
+msgstr[2] "{category} ({nbResults} výsledku)"
+msgstr[3] "{category} ({nbResults} výsledků)"
 
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for scripts.
 #: gui\inputGestures.py:581
@@ -11415,7 +11451,7 @@ msgstr "Prosím zvolte umístění a další možnosti pro vytvoření přenosn�
 #. in the Create Portable NVDA dialog.
 #: gui\installerGui.py:362
 msgid "Portable directory:"
-msgstr ""
+msgstr "Adresář přenosné kopie:"
 
 #. Translators: The label of a button to browse for a directory.
 #: gui\installerGui.py:367
@@ -11546,7 +11582,7 @@ msgstr "vypnuto"
 #. Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 #: gui\settingsDialogs.py:751
 msgid "info"
-msgstr ""
+msgstr "info"
 
 #. Translators: One of the log levels of NVDA (the debug warning shows debugging messages and warnings as NVDA runs).
 #: gui\settingsDialogs.py:753
@@ -11561,7 +11597,7 @@ msgstr "vstup a výstup"
 #. Translators: One of the log levels of NVDA (the debug mode shows debug messages as NVDA runs).
 #: gui\settingsDialogs.py:757
 msgid "debug"
-msgstr ""
+msgstr "debug"
 
 #. Translators: Shown for a language which has been provided from the command line
 #. 'langDesc' would be replaced with description of the given locale.
@@ -11793,7 +11829,7 @@ msgstr "Hláskování řídí hlasový výstup, je-li podporov&áno"
 #. Translators: Label of the list where user can select speech modes that will be available.
 #: gui\settingsDialogs.py:1643
 msgid "&Modes available in the Cycle speech mode command:"
-msgstr ""
+msgstr "&Režimy dostupné pro přepínání režimu řeči:"
 
 #. Translators: This is the label for a checkbox in the voice settings panel.
 #: gui\settingsDialogs.py:1656
@@ -11803,7 +11839,7 @@ msgstr "Při pohybu šipkami popisovat znaky s mírnou pro&dlevou"
 #. Translators: Message shown when not enough speech modes are enabled.
 #: gui\settingsDialogs.py:1695
 msgid "At least two speech modes have to be checked."
-msgstr ""
+msgstr "Alespoň dva režimy řeči musí být zaškrtnuty."
 
 #. Translators: This is the label for the keyboard settings panel.
 #: gui\settingsDialogs.py:1723
@@ -11904,7 +11940,7 @@ msgstr "&Jednotka ohlašování u zaměřeného textu:"
 #. mouse settings panel.
 #: gui\settingsDialogs.py:1890
 msgid "Report &object when mouse enters it"
-msgstr ""
+msgstr "Hlásit &objekt při zaměření kurzoru myši"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
@@ -12412,7 +12448,7 @@ msgstr "Chyba hlasového výstupu"
 #. Advanced settings panel
 #: gui\settingsDialogs.py:2646 gui\settingsDialogs.py:3215
 msgid "Audio"
-msgstr ""
+msgstr "Zvuk"
 
 #. Translators: This is the label for the select output device combo in NVDA audio settings.
 #. Examples of an output device are default soundcard, usb headphones, etc.
@@ -12423,7 +12459,7 @@ msgstr "&Výstupní zařízení:"
 #. Translators: name for default (Microsoft Sound Mapper) audio output device.
 #: gui\settingsDialogs.py:2659
 msgid "Microsoft Sound Mapper"
-msgstr ""
+msgstr "Microsoft Sound Mapper"
 
 #. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog.
 #: gui\settingsDialogs.py:2669
@@ -12631,7 +12667,7 @@ msgstr "Ne"
 #. Translators: This is the label for a COMBOBOX in the Advanced settings panel.
 #: gui\settingsDialogs.py:3001
 msgid "Use en&hanced event processing (requires restart)"
-msgstr ""
+msgstr "Použít vy&lepšené zpracování událostí (vyžaduje restart)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -12694,14 +12730,14 @@ msgstr "Automaticky (upřednostnit Diff Match Patch)"
 #. by character, using the diff match patch algorithm.
 #: gui\settingsDialogs.py:3087
 msgid "Diff Match Patch"
-msgstr ""
+msgstr "Diff Match Patch"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
 #: gui\settingsDialogs.py:3091
 msgid "Difflib"
-msgstr ""
+msgstr "Difflib"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 #: gui\settingsDialogs.py:3113
@@ -12843,7 +12879,7 @@ msgstr "&Automaticky zobrazit řádky:"
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 #: gui\settingsDialogs.py:3575
 msgid "&Port:"
-msgstr ""
+msgstr "&Port:"
 
 #. Translators: The message in a dialog presented when NVDA is unable to load the selected
 #. braille display.
@@ -13229,7 +13265,11 @@ msgid "Most commands for controlling NVDA require you to hold down the NVDA key 
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
 "From this menu, you can configure NVDA, get help, and access other NVDA functions."
-msgstr ""
+msgstr "Většina příkazů pro ovládání programu NVDA je tvořena soustiskem tzv. klávesy NVDA spolu s dalšími klávesami.\n"
+"Jako klávesa NVDA je standardně přednastavena klávesa Insert - buď hlavní Insert nebo Insert na numerickém bloku klávesnice.\n"
+"Jako klávesu NVDA lze místo Insertu též nastavit klávesu CapsLock.\n"
+"Pro vyvolání nabídky programu NVDA stiskněte kdykoli klávesu NVDA+n.\n"
+"V tomto menu najdete položky pro nastavení, nápovědu a další funkce programu NVDA."
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 #: gui\startupDialogs.py:47
@@ -13302,37 +13342,37 @@ msgstr "Za účelem zlepšení NVDA v budoucnu chce organizace NV Access shroma�
 #: gui\addonStoreGui\controls\actions.py:130
 msgctxt "addonStore"
 msgid "No actions available for the selected add-ons"
-msgstr ""
+msgstr "Žádná akce není k dispozici pro vybrané doplňky"
 
 #. Translators: Label for an action that installs the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:141
 msgctxt "addonStore"
 msgid "&Install selected add-ons"
-msgstr ""
+msgstr "Na&instalovat vybrané doplňky"
 
 #. Translators: Label for an action that updates the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:151
 msgctxt "addonStore"
 msgid "&Update selected add-ons"
-msgstr ""
+msgstr "&Aktualizovat vybrané doplňky"
 
 #. Translators: Label for an action that removes the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:158
 msgctxt "addonStore"
 msgid "&Remove selected add-ons"
-msgstr ""
+msgstr "&Odstranit vybrané doplňky"
 
 #. Translators: Label for an action that enables the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:173
 msgctxt "addonStore"
 msgid "&Enable selected add-ons"
-msgstr ""
+msgstr "&Povolit vybrané doplňky"
 
 #. Translators: Label for an action that disables the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:180
 msgctxt "addonStore"
 msgid "&Disable selected add-ons"
-msgstr ""
+msgstr "&Zakázat vybrané doplňky"
 
 #. Translators: Header (usually the add-on name) when add-ons are loading. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:36
@@ -13381,10 +13421,10 @@ msgstr "Další &podrobnosti:"
 msgctxt "addonStore"
 msgid "{num} add-on selected."
 msgid_plural "{num} add-ons selected."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{num} doplněk vybrán."
+msgstr[1] "{num} doplňky vybrány."
+msgstr[2] "{num} doplňku vybráno."
+msgstr[3] "{num} doplňků vybráno."
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:243
@@ -13402,7 +13442,7 @@ msgstr "Autor:"
 #: gui\addonStoreGui\controls\details.py:256
 msgctxt "addonStore"
 msgid "ID:"
-msgstr ""
+msgstr "ID:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:264
@@ -13462,7 +13502,7 @@ msgstr "Zdrojový odkaz:"
 #: gui\addonStoreGui\controls\details.py:323
 msgctxt "addonStore"
 msgid "Reviews URL:"
-msgstr ""
+msgstr "Odkaz na recenze:"
 
 #. Translators: A button in the addon installation warning / blocked dialog which shows
 #. more information about the addon
@@ -13488,7 +13528,7 @@ msgstr "&Ne"
 #: gui\addonStoreGui\controls\messageDialogs.py:71
 msgctxt "addonStore"
 msgid "Remember this choice for subsequent add-ons"
-msgstr ""
+msgstr "Zapamatovat pro další doplňky"
 
 #. Translators: The message displayed when updating an add-on, but the installed version
 #. identifier can not be compared with the version to be installed.
@@ -13636,7 +13676,7 @@ msgstr "Tuto zprávu již příště &nezobrazovat"
 #: gui\addonStoreGui\controls\messageDialogs.py:340
 msgctxt "addonStore"
 msgid "&OK"
-msgstr ""
+msgstr "&OK"
 
 #. Translators: The title of the addonStore dialog where the user can find and download add-ons
 #: gui\addonStoreGui\controls\storeDialog.py:44
@@ -13692,10 +13732,10 @@ msgstr "Instalace doplňku"
 msgctxt "addonStore"
 msgid "Download of {} add-on in progress, cancel downloading?"
 msgid_plural "Download of {} add-ons in progress, cancel downloading?"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Probíhá stahování {} doplňku, zrušit stahování?"
+msgstr[1] "Probíhá stahování {} doplňků, zrušit stahování?"
+msgstr[2] "Probíhá stahování {} doplňku, zrušit stahování?"
+msgstr[3] "Probíhá stahování {} doplňků, zrušit stahování?"
 
 #. Translators: Message shown while installing add-ons after closing the add-on store dialog
 #. The placeholder {} will be replaced with the number of add-ons to be installed
@@ -13703,10 +13743,10 @@ msgstr[3] ""
 msgctxt "addonStore"
 msgid "Installing {} add-on, please wait."
 msgid_plural "Installing {} add-ons, please wait."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Probíhá instalace {} doplňku, prosím čekejte."
+msgstr[1] "Probíhá instalace {} doplňků, prosím čekejte."
+msgstr[2] "Probíhá instalace {} doplňku, prosím čekejte."
+msgstr[3] "Probíhá instalace {} doplňků, prosím čekejte."
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
@@ -13714,7 +13754,7 @@ msgstr[3] ""
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{category}:"
-msgstr ""
+msgstr "{category}:"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
 #: gui\addonStoreGui\controls\storeDialog.py:376
@@ -13731,44 +13771,44 @@ msgid "Choose Add-on Package File"
 msgstr "Vyberte balíček doplňku pro NVDA"
 
 #. Translators: The name of the column that contains names of addons.
-#: gui\addonStoreGui\viewModels\addonList.py:54
+#: gui\addonStoreGui\viewModels\addonList.py:55
 msgctxt "addonStore"
 msgid "Name"
 msgstr "Název"
 
 #. Translators: The name of the column that contains the status of the addon.
 #. e.g. available, downloading installing
-#: gui\addonStoreGui\viewModels\addonList.py:60
+#: gui\addonStoreGui\viewModels\addonList.py:61
 msgctxt "addonStore"
 msgid "Status"
 msgstr "Stav"
 
 #. Translators: The name of the column that contains the installed addon's version string.
-#: gui\addonStoreGui\viewModels\addonList.py:65
+#: gui\addonStoreGui\viewModels\addonList.py:66
 msgctxt "addonStore"
 msgid "Installed version"
 msgstr "Nainstalovaná verze"
 
 #. Translators: The name of the column that contains the available addon's version string.
-#: gui\addonStoreGui\viewModels\addonList.py:71
+#: gui\addonStoreGui\viewModels\addonList.py:72
 msgctxt "addonStore"
 msgid "Available version"
 msgstr "Dostupná verze"
 
 #. Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
-#: gui\addonStoreGui\viewModels\addonList.py:77
+#: gui\addonStoreGui\viewModels\addonList.py:78
 msgctxt "addonStore"
 msgid "Channel"
 msgstr "Kanál"
 
 #. Translators: The name of the column that contains the addon's publisher.
-#: gui\addonStoreGui\viewModels\addonList.py:82
+#: gui\addonStoreGui\viewModels\addonList.py:83
 msgctxt "addonStore"
 msgid "Publisher"
 msgstr "Autor"
 
 #. Translators: The name of the column that contains the addon's author.
-#: gui\addonStoreGui\viewModels\addonList.py:88
+#: gui\addonStoreGui\viewModels\addonList.py:89
 msgctxt "addonStore"
 msgid "Author"
 msgstr "Autor"
@@ -13783,7 +13823,7 @@ msgstr "Na&instalovat"
 #: gui\addonStoreGui\viewModels\store.py:123
 msgctxt "addonStore"
 msgid "&Install (override incompatibility)"
-msgstr "Na&instalovat (přepsat nekompatibilní doplňek)"
+msgstr "Na&instalovat (i přes nekompatibilní)"
 
 #. Translators: Label for an action that updates the selected addon
 #: gui\addonStoreGui\viewModels\store.py:130
@@ -13795,7 +13835,7 @@ msgstr "&Aktualizovat"
 #: gui\addonStoreGui\viewModels\store.py:137
 msgctxt "addonStore"
 msgid "&Update (override incompatibility)"
-msgstr ""
+msgstr "&Aktualizovat (i přes nekompatibilní)"
 
 #. Translators: Label for an action that replaces the selected addon with
 #. an add-on store version.
@@ -13820,7 +13860,7 @@ msgstr "&Povolit"
 #: gui\addonStoreGui\viewModels\store.py:166
 msgctxt "addonStore"
 msgid "&Enable (override incompatibility)"
-msgstr "&Povolit (i přes inkompatibilní)"
+msgstr "&Povolit (i přes nekompatibilní)"
 
 #. Translators: Label for an action that removes the selected addon
 #: gui\addonStoreGui\viewModels\store.py:173
@@ -13856,7 +13896,7 @@ msgstr "&Zdrojový kód"
 #: gui\addonStoreGui\viewModels\store.py:234
 msgctxt "addonStore"
 msgid "Community re&views"
-msgstr ""
+msgstr "&Recenze"
 
 #. Translators: The message displayed when the add-on cannot be enabled.
 #. {addon} is replaced with the add-on name.
@@ -13914,7 +13954,7 @@ msgstr "{symbol} jako v {description}"
 #: NVDAObjects\behaviors.py:602
 #, python-brace-format
 msgid "{number} {candidate}"
-msgstr ""
+msgstr "{number} {candidate}"
 
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:667
@@ -13976,15 +14016,15 @@ msgstr "RGB červená {rgb.red}, zelená {rgb.green}, modrá {rgb.blue}"
 #, python-format
 msgid "%s item"
 msgid_plural "%s items"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "%s položka"
+msgstr[1] "%s položky"
+msgstr[2] "%s položky"
+msgstr[3] "%s položek"
 
 #. Translators: The label of a shortcut of NVDA.
 #: NVDAObjects\IAccessible\winword.py:219
 msgid "Set column header. Pressing once will set this cell as the first column header for any cell lower and to the right of it within this table. Pressing twice will forget the current column header for this cell."
-msgstr ""
+msgstr "Nastaví záhlaví sloupců. Jeden stisk nastaví tuto buňku jako první záhlaví sloupců pro buňky níže a vpravo v této tabulce. Dvojitý stisk toto nastavení zruší."
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:236
@@ -14013,7 +14053,7 @@ msgstr "Nelze najít řádek {rowNumber} sloupec {columnNumber}  v záhlaví slo
 #. Translators: The label of a shortcut of NVDA.
 #: NVDAObjects\IAccessible\winword.py:252
 msgid "Set row header. Pressing once will set this cell as the first row header for any cell lower and to the right of it within this table. Pressing twice will forget the current row header for this cell."
-msgstr ""
+msgstr "Nastaví záhlaví řádků. Jeden stisk nastaví tuto buňku jako první záhlaví řádků pro buňky níže a vpravo v této tabulce. Dvojitý stisk toto nastavení zruší."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:268
@@ -14043,7 +14083,7 @@ msgstr "Nelze najít řádek {rowNumber} sloupec {columnNumber}  v záhlaví ř�
 #. Translators: a description for a script that reports the comment at the caret.
 #: NVDAObjects\IAccessible\winword.py:321 NVDAObjects\UIA\wordDocument.py:602
 msgid "Reports the text of the comment where the system caret is located."
-msgstr ""
+msgstr "Přečte text komentáře pod systémovým kurzorem."
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 #: NVDAObjects\IAccessible\winword.py:344 NVDAObjects\UIA\wordDocument.py:613
@@ -14061,13 +14101,13 @@ msgstr "Mimo tabulku"
 #: NVDAObjects\UIA\__init__.py:405
 #, python-brace-format
 msgid "{val:.2f} in"
-msgstr ""
+msgstr "{val:.2f} in"
 
 #. Translators: a measurement in centimetres
 #: NVDAObjects\UIA\__init__.py:410
 #, python-brace-format
 msgid "{val:.2f} cm"
-msgstr ""
+msgstr "{val:.2f} cm"
 
 #: NVDAObjects\UIA\__init__.py:2034
 msgid "invoke"
@@ -14109,10 +14149,10 @@ msgstr "Výška buňky: {0.y:.1f} bodů"
 msgctxt "excel-UIA"
 msgid "Rotation: {0} degree"
 msgid_plural "Rotation: {0} degrees"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Otočení: {0} stupeň"
+msgstr[1] "Otočení: {0} stupně"
+msgstr[2] "Otočení: {0} stupně"
+msgstr[3] "Otočení: {0} stupňů"
 
 #. Translators: The outline (border) colors of an Excel cell.
 #: NVDAObjects\UIA\excel.py:230
@@ -14210,7 +14250,7 @@ msgstr "Přečte vlákno poznámek nebo komentářů v aktuální buňce"
 #: NVDAObjects\UIA\excel.py:507
 #, python-brace-format
 msgid "{name}: {desc}"
-msgstr ""
+msgstr "{name}: {desc}"
 
 #. Translators: message when a cell in Excel contains no note
 #: NVDAObjects\UIA\excel.py:511
@@ -14228,10 +14268,10 @@ msgstr "Vlákno komentáře: {comment}  od {author}"
 #, python-brace-format
 msgid "Comment thread: {comment}  by {author} with {numReplies} reply"
 msgid_plural "Comment thread: {comment}  by {author} with {numReplies} replies"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Vlákno komentáře: {comment} od {author} má {numReplies} odpověď"
+msgstr[1] "Vlákno komentáře: {comment} od {author} má {numReplies} odpovědi"
+msgstr[2] "Vlákno komentáře: {comment} od {author} má {numReplies} odpovědi"
+msgstr[3] "Vlákno komentáře: {comment} od {author} má {numReplies} odpovědí"
 
 #. Translators: A message in Excel when there is no comment thread
 #: NVDAObjects\UIA\excel.py:533
@@ -14294,13 +14334,13 @@ msgstr "V tomto dokumentu se nelze pohybovat po větách"
 #. headers.
 #: NVDAObjects\UIA\wordDocument.py:621
 msgid "Command not supported in this type of document. The tables have their first row cells automatically set as column headers."
-msgstr ""
+msgstr "Příkaz není podporován v tomto dokumentu. První buňky řádků v tabulkách jsou automaticky nastaveny jako záhlaví sloupců."
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
 #: NVDAObjects\UIA\wordDocument.py:630
 msgid "Command not supported in this type of document. The tables have their first column cells automatically set as row headers."
-msgstr ""
+msgstr "Příkaz není podporován v tomto dokumentu. První buňky sloupců v tabulkách jsou automaticky nastaveny jako záhlaví řádků."
 
 #: NVDAObjects\window\__init__.py:392
 msgid "Desktop"
@@ -14875,10 +14915,10 @@ msgstr "Název grafu: {chartTitle}, typ: {chartType}"
 #, python-format
 msgid "There is %d series in this chart"
 msgid_plural "There are %d series in this chart"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "%d řada v tomto grafu"
+msgstr[1] "%d řady v tomto grafu"
+msgstr[2] "%d řady v tomto grafu"
+msgstr[3] "%d řad v tomto grafu"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
 #: NVDAObjects\window\_msOfficeChart.py:569
@@ -14935,7 +14975,7 @@ msgstr "sníženo o {decrementValue} od bodu {previousIndex}, "
 #: NVDAObjects\window\_msOfficeChart.py:736
 #, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
-msgstr ""
+msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
@@ -14950,7 +14990,7 @@ msgstr "Kategorie {categoryAxisData}: "
 #: NVDAObjects\window\_msOfficeChart.py:746
 #, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
-msgstr ""
+msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
@@ -15349,7 +15389,7 @@ msgstr "Přeškrtnuté zapnuto"
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1467
 msgid "Sets the current cell as start of column header. Pressing once will set this cell as the first column header for any cell lower and to the right of it within this region. Pressing twice will forget the current column header for this cell."
-msgstr ""
+msgstr "Nastaví aktuální buňku jako začátek záhlaví sloupců. Jeden stisk nastaví tuto buňku jako první záhlaví sloupců pro buňky níže a vpravo v této oblasti. Dvojitý stisk toto nastavení zruší."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #: NVDAObjects\window\excel.py:1479
@@ -15378,7 +15418,7 @@ msgstr "Nelze najít {address}    v záhlaví sloupců"
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1494
 msgid "Sets the current cell as start of row headers. Pressing once will set this cell as the first row header for any cell lower and to the right of it within this region. Pressing twice will forget the current row header for this cell."
-msgstr ""
+msgstr "Nastaví aktuální buňku jako začátek záhlaví řádků. Jeden stisk nastaví tuto buňku jako první záhlaví řádků pro buňky níže a vpravo v této oblasti. Dvojitý stisk toto nastavení zruší."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #: NVDAObjects\window\excel.py:1506
@@ -15578,13 +15618,13 @@ msgstr "střední čárkovaný"
 #: NVDAObjects\window\excelCellBorder.py:118
 #, python-brace-format
 msgid "{weight} {style}"
-msgstr ""
+msgstr "{weight} {style}"
 
 #. Translators: border styles in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:124
 #, python-brace-format
 msgid "{color} {desc}"
-msgstr ""
+msgstr "{color} {desc}"
 
 #. Translators: border styles in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:133
@@ -15614,7 +15654,7 @@ msgstr "{desc} šikmé čáry vpravo nahoře a vpravo dole"
 #: NVDAObjects\window\excelCellBorder.py:155
 #, python-brace-format
 msgid "{desc} {position}"
-msgstr ""
+msgstr "{desc} {position}"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 #: NVDAObjects\window\winword.py:276
@@ -15814,10 +15854,10 @@ msgstr "alespoň %.1f bodů"
 msgctxt "line spacing value"
 msgid "%.1f line"
 msgid_plural "%.1f lines"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "%.1f řádek"
+msgstr[1] "%.1f řádky"
+msgstr[2] "%.1f řádku"
+msgstr[3] "%.1f řádků"
 
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 #: NVDAObjects\window\winword.py:1174
@@ -15913,40 +15953,40 @@ msgstr "Skrýt netisknutelné znaky"
 #, python-brace-format
 msgid "{offset:.3g} character"
 msgid_plural "{offset:.3g} characters"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{offset:.3g} znak"
+msgstr[1] "{offset:.3g} znaky"
+msgstr[2] "{offset:.3g} znaku"
+msgstr[3] "{offset:.3g} znaků"
 
 #. Translators: a measurement in Microsoft Word
 #: NVDAObjects\window\winword.py:1556
 #, python-brace-format
 msgid "{offset:.3g} inch"
 msgid_plural "{offset:.3g} inches"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{offset:.3g} palec"
+msgstr[1] "{offset:.3g} palce"
+msgstr[2] "{offset:.3g} palce"
+msgstr[3] "{offset:.3g} palců"
 
 #. Translators: a measurement in Microsoft Word
 #: NVDAObjects\window\winword.py:1564
 #, python-brace-format
 msgid "{offset:.3g} centimeter"
 msgid_plural "{offset:.3g} centimeters"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{offset:.3g} centimetr"
+msgstr[1] "{offset:.3g} centimetry"
+msgstr[2] "{offset:.3g} centimetru"
+msgstr[3] "{offset:.3g} centimetrů"
 
 #. Translators: a measurement in Microsoft Word
 #: NVDAObjects\window\winword.py:1572
 #, python-brace-format
 msgid "{offset:.3g} millimeter"
 msgid_plural "{offset:.3g} millimeters"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{offset:.3g} milimetr"
+msgstr[1] "{offset:.3g} milimetry"
+msgstr[2] "{offset:.3g} milimetru"
+msgstr[3] "{offset:.3g} milimetrů"
 
 #. Translators: a measurement in Microsoft Word (points)
 #: NVDAObjects\window\winword.py:1578
@@ -15960,10 +16000,10 @@ msgstr "{offset:.3g} bodů"
 #, python-brace-format
 msgid "{offset:.3g} pica"
 msgid_plural "{offset:.3g} picas"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{offset:.3g} píce"
+msgstr[1] "{offset:.3g} píce"
+msgstr[2] "{offset:.3g} píce"
+msgstr[3] "{offset:.3g} pící"
 
 #. Translators: a message when switching to single line spacing  in Microsoft word
 #: NVDAObjects\window\winword.py:1598
@@ -15984,26 +16024,26 @@ msgstr "řádkování 1.5"
 #: speech\speech.py:92
 msgctxt "speechModes"
 msgid "off"
-msgstr ""
+msgstr "vypnuto"
 
 #. Translators: Name of the speech mode which will cause NVDA to beep instead of speaking.
 #: speech\speech.py:94
 msgctxt "speechModes"
 msgid "beeps"
-msgstr ""
+msgstr "pípání"
 
 #. Translators: Name of the speech mode which causes NVDA to speak normally.
 #: speech\speech.py:96
 msgctxt "speechModes"
 msgid "talk"
-msgstr ""
+msgstr "mluvení"
 
 #. Translators: Name of the on-demand speech mode,
 #. in which NVDA only speaks in response to commands that report content.
 #: speech\speech.py:99
 msgctxt "speechModes"
 msgid "on-demand"
-msgstr ""
+msgstr "na požádání"
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #: speech\speech.py:341
@@ -16089,27 +16129,27 @@ msgstr "úroveň %s"
 #: speech\speech.py:1969
 #, python-brace-format
 msgid "with {rowCountTranslation} and {colCountTranslation}"
-msgstr ""
+msgstr "s {rowCountTranslation} a {colCountTranslation}"
 
 #. Translators: Speaks number of columns (example output: with 4 columns).
 #: speech\speech.py:1975
 #, python-format
 msgid "with %s column"
 msgid_plural "with %s columns"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "má %s sloupec"
+msgstr[1] "má %s sloupce"
+msgstr[2] "má %s sloupce"
+msgstr[3] "má %s sloupců"
 
 #. Translators: Speaks number of rows (example output: with 2 rows).
 #: speech\speech.py:1978
 #, python-format
 msgid "with %s row"
 msgid_plural "with %s rows"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "má %s řádek"
+msgstr[1] "má %s řádky"
+msgstr[2] "má %s řádku"
+msgstr[3] "má %s řádků"
 
 #. Translators: Sub-part of the compound string to speak number of rows and columns in a table.
 #. Example: If the full compound string is "table with 3 rwos and 2 columns", this substring is "3 rows".
@@ -16117,10 +16157,10 @@ msgstr[3] ""
 #, python-brace-format
 msgid "{rowCount} row"
 msgid_plural "{rowCount} rows"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{rowCount} řádek"
+msgstr[1] "{rowCount} řádky"
+msgstr[2] "{rowCount} řádku"
+msgstr[3] "{rowCount} řádků"
 
 #. Translators: Sub-part of the compound string to speak number of rows and columns in a table.
 #. Example: If the full compound string is "table with 3 rwos and 2 columns", this substring is "2 columns".
@@ -16128,20 +16168,20 @@ msgstr[3] ""
 #, python-brace-format
 msgid "{columnCount} column"
 msgid_plural "{columnCount} columns"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "{columnCount} sloupec"
+msgstr[1] "{columnCount} sloupce"
+msgstr[2] "{columnCount} sloupce"
+msgstr[3] "{columnCount} sloupců"
 
 #. Translators: Number of items in a list (example output: list with 5 items).
 #: speech\speech.py:2182
 #, python-format
 msgid "with %s item"
 msgid_plural "with %s items"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "má %s položku"
+msgstr[1] "má %s položky"
+msgstr[2] "má %s položky"
+msgstr[3] "má %s položek"
 
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #: speech\speech.py:2323 speech\speech.py:2736
@@ -16177,10 +16217,10 @@ msgstr "sloupec {0} z {1}"
 #, python-format
 msgid "%s column"
 msgid_plural "%s columns"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "%s sloupec"
+msgstr[1] "%s sloupce"
+msgstr[2] "%s sloupce"
+msgstr[3] "%s sloupců"
 
 #. Translators: Indicates the text column number in a document.
 #: speech\speech.py:2424
@@ -16259,7 +16299,7 @@ msgstr "{color} na {backgroundColor}"
 #: speech\speech.py:2528
 #, python-brace-format
 msgid "{color}"
-msgstr ""
+msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
@@ -16493,7 +16533,7 @@ msgstr "mimo tabulku"
 #: speech\speech.py:2837
 #, python-brace-format
 msgid "table with {columnCountText} and {rowCountText}"
-msgstr ""
+msgstr "tabulka s {columnCountText} a {rowCountText}"
 
 #. Translators: name of the default espeak varient.
 #: synthDrivers\_espeak.py:388
@@ -16525,7 +16565,7 @@ msgstr "Umístěno na {x}, {y}"
 #: textInfos\offsets.py:173
 #, python-brace-format
 msgid "{curPercent:.0f}%"
-msgstr ""
+msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
 #: textInfos\offsets.py:180
@@ -16583,7 +16623,7 @@ msgstr "vzor"
 #, python-brace-format
 msgctxt "time format"
 msgid "{S}"
-msgstr ""
+msgstr "{S}"
 
 #. Translators: used to format time locally.
 #. substitution rules: {S} seconds, {M} minutes
@@ -16591,7 +16631,7 @@ msgstr ""
 #, python-brace-format
 msgctxt "time format"
 msgid "{M}:{S}"
-msgstr ""
+msgstr "{M}:{S}"
 
 #. Translators: used to format time locally.
 #. substitution rules: {S} seconds, {M} minutes, {H} hours
@@ -16599,7 +16639,7 @@ msgstr ""
 #, python-brace-format
 msgctxt "time format"
 msgid "{H}:{M}:{S}"
-msgstr ""
+msgstr "{H}:{M}:{S}"
 
 #. Translators: used to format time locally.
 #. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} day
