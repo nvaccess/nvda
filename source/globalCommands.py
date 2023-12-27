@@ -3329,9 +3329,14 @@ class GlobalCommands(ScriptableObject):
 			braille.handler._dismissMessage()
 		braille.handler.mainBuffer.clear()
 		# Translators: The message reported when switching braille modes
+<<<<<<< HEAD
 		message = f'{_("Braille mode")} {newMode.displayString}'
 		ui.message(message)
 		if newMode == BrailleMode.SPEECH_OUTPUT:
+=======
+		ui.message(_("Braille mode {brailleMode}")).format(brailleMode=newMode.displayString)
+		if newMode == BrailleMode.SPEECH_EMULATION:
+>>>>>>> 4ea48b3cf96cb5c452a058b4950e3b870b38d0ff
 			return
 		if braille.handler.getTether() == TetherTo.REVIEW.value:
 			braille.handler.handleReviewMove(shouldAutoTether=braille.handler.shouldAutoTether)
