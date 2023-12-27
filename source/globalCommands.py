@@ -3293,7 +3293,7 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+control+t"
 	)
 	def script_braille_toggleTether(self, gesture):
-		if config.conf['braille']['mode'] == BrailleMode.SPEECH_OUTPUT.value:
+		if config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			ui.message(speechOutputMSG)
 			return
 		values = [x.value for x in TetherTo]
@@ -3319,24 +3319,18 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:nvda+alt+t"
 	)
 	def script_toggleBrailleMode(self, gesture):
-		curMode = BrailleMode(config.conf['braille']['mode'])
+		curMode = BrailleMode(config.conf["braille"]["mode"])
 		modeList = list(BrailleMode)
 		index = modeList.index(curMode)
 		index = index + 1 if not index == len(modeList) - 1 else 0
 		newMode = modeList[index]
-		config.conf['braille']['mode'] = newMode.value
+		config.conf["braille"]["mode"] = newMode.value
 		if braille.handler.buffer == braille.handler.messageBuffer:
 			braille.handler._dismissMessage()
 		braille.handler.mainBuffer.clear()
 		# Translators: The message reported when switching braille modes
-<<<<<<< HEAD
-		message = f'{_("Braille mode")} {newMode.displayString}'
-		ui.message(message)
+		ui.message(_("Braille mode {brailleMode}").format(brailleMode=newMode.displayString))
 		if newMode == BrailleMode.SPEECH_OUTPUT:
-=======
-		ui.message(_("Braille mode {brailleMode}")).format(brailleMode=newMode.displayString)
-		if newMode == BrailleMode.SPEECH_EMULATION:
->>>>>>> 4ea48b3cf96cb5c452a058b4950e3b870b38d0ff
 			return
 		if braille.handler.getTether() == TetherTo.REVIEW.value:
 			braille.handler.handleReviewMove(shouldAutoTether=braille.handler.shouldAutoTether)
@@ -3350,7 +3344,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE
 	)
 	def script_braille_cycleReviewRoutingMovesSystemCaret(self, gesture: inputCore.InputGesture) -> None:
-		if config.conf['braille']['mode'] == BrailleMode.SPEECH_OUTPUT.value:
+		if config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			ui.message(speechOutputMSG)
 			return
 		# If braille is not tethered to focus, set next state of
@@ -3388,7 +3382,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE
 	)
 	def script_braille_toggleFocusContextPresentation(self, gesture):
-		if config.conf['braille']['mode'] == BrailleMode.SPEECH_OUTPUT.value:
+		if config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			ui.message(speechOutputMSG)
 			return
 		values = [x[0] for x in braille.focusContextPresentations]
@@ -3412,7 +3406,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE
 	)
 	def script_braille_toggleShowCursor(self, gesture):
-		if config.conf['braille']['mode'] == BrailleMode.SPEECH_OUTPUT.value:
+		if config.conf["braille"]['mode'] == BrailleMode.SPEECH_OUTPUT.value:
 			ui.message(speechOutputMSG)
 			return
 		if config.conf["braille"]["showCursor"]:
@@ -3433,7 +3427,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE
 	)
 	def script_braille_cycleCursorShape(self, gesture):
-		if config.conf['braille']['mode'] == BrailleMode.SPEECH_OUTPUT.value:
+		if config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			ui.message(speechOutputMSG)
 			return
 		if not config.conf["braille"]["showCursor"]:
@@ -3462,7 +3456,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE
 	)
 	def script_braille_cycleShowMessages(self, gesture: inputCore.InputGesture) -> None:
-		if config.conf['braille']['mode'] == BrailleMode.SPEECH_OUTPUT.value:
+		if config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			ui.message(speechOutputMSG)
 			return
 		"""Set next state of braille show messages and reports it with ui.message."""
@@ -3483,7 +3477,7 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_braille_cycleShowSelection(self, gesture: inputCore.InputGesture) -> None:
 		"""Set next state of braille show selection and reports it with ui.message."""
-		if config.conf['braille']['mode'] == BrailleMode.SPEECH_OUTPUT.value:
+		if config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			ui.message(speechOutputMSG)
 			return
 		featureFlag: FeatureFlag = config.conf["braille"]["showSelection"]
