@@ -3747,12 +3747,12 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 				f"Loading input tables completed, now at {timePassed:.2f} seconds from start"
 			)
 		# Translators: The label for a setting in braille settings to select wich braille mode to use
-		modeListText = _('Braille mode:')
+		modeListText = _("Braille mode:")
 		modeChoices = [x.displayString for x in braille.BrailleMode]
 		self.brailleModes = sHelper.addLabeledControl(modeListText, wx.Choice, choices=modeChoices)
 		self.bindHelpEvent("BrailleSettingsBrailleMode", self.brailleModes)
 		self.brailleModes.Bind(wx.EVT_CHOICE, self.onModeChange)
-		current = braille.BrailleMode(config.conf['braille']['mode'])
+		current = braille.BrailleMode(config.conf["braille"]["mode"])
 		modeList = list(braille.BrailleMode)
 		index = modeList.index(current)
 		self.brailleModes.SetSelection(index)
