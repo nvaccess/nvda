@@ -114,6 +114,8 @@ class BrailleMode(DisplayStringStrEnum):
 			# Translators: The label for a braille mode
 			BrailleMode.SPEECH_EMULATION: _('speech emulation')
 		}
+
+
 @unique
 class ReportLineIndentation(DisplayStringIntEnum):
 	"""Enumeration containing the possible config values to report line indent.
