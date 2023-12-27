@@ -43,8 +43,8 @@ if typing.TYPE_CHECKING:
 
 _watchdogObserver: typing.Optional["WatchdogObserver"] = None
 ignoreInjected=False
-_lastInjectedKeyUp: typing.Tuple[int, int] = None
-_injectionDoneEvent: int = None
+_lastInjectedKeyUp: tuple[int, int] | None = None
+_injectionDoneEvent: int | None = None
 
 # Fake vk codes.
 # These constants should be assigned to the name that NVDA will use for the key.
@@ -577,6 +577,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 	#: The maximum amount of time (in ms) to wait for keys injected by NVDA to be
 	#: received by NVDA.
 	_INJECTION_WAIT_TIMEOUT: int = 10
+
 	def send(self):
 		global _lastInjectedKeyUp, _injectionDoneEvent
 		keys = []
