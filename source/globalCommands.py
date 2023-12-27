@@ -114,8 +114,11 @@ SCRCAT_INPUT = _("Input")
 #: Script category for document formatting commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_DOCUMENTFORMATTING = _("Document formatting")
+
 # Translators: Reported when trying to toggle an unsupported setting in speech emulation mode.
-speechEmulationMSG = _('Action unavailable while the braille mode is set to speech emulation')
+speechEmulationMSG = _("Action unavailable while the braille mode is set to speech emulation")
+
+
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus.
 	"""
