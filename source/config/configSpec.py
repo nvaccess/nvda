@@ -58,7 +58,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 # Braille settings
 [braille]
 	display = string(default=auto)
-	mode = option("followCursors", "speechEmulation", default = "followCursors")
+	mode = option("followCursors", "speechEmulation", default="followCursors")
 	translationTable = string(default=en-ueb-g1.ctb)
 	inputTable = string(default=en-ueb-g1.ctb)
 	expandAtCursor = boolean(default=true)
