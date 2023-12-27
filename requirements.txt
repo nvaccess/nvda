@@ -13,6 +13,9 @@ Pillow==10.0.1 -C "zlib=disable" -C "jpeg=disable"
 #NVDA_DMP requires diff-match-patch
 fast_diff_match_patch==2.0.1
 
+# typing_extensions are required for specifying default value for `TypeVar`, which is not yet possible with any released version of Python (see PEP 696)
+typing-extensions==4.9.0 
+
 # Packaging NVDA
 git+https://github.com/py2exe/py2exe@4e7b2b2c60face592e67cb1bc935172a20fa371d#egg=py2exe
 
