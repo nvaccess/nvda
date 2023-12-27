@@ -1687,7 +1687,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			mIndex for mIndex in range(len(self._allSpeechModes)) if mIndex not in self.speechModesList.CheckedItems
 		]
 
-	def onSpeechModesListChange(self, evt):
+	def _onSpeechModesListChange(self, evt: wx.CommandEvent):
 		if (
 			evt.GetInt() == self._allSpeechModes.index(speech.SpeechMode.talk)
 			and not self.speechModesList.IsChecked(evt.GetInt())
