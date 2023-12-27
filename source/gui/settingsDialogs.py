@@ -1649,7 +1649,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.speechModesList.Checked = [
 			mIndex for mIndex in range(len(self._allSpeechModes)) if mIndex not in excludedModes
 		]
-		self.speechModesList.Bind(wx.EVT_CHECKLISTBOX, self.onSpeechModesListChange)
+		self.speechModesList.Bind(wx.EVT_CHECKLISTBOX, self._onSpeechModesListChange)
 		self.speechModesList.Select(0)
 
 	def _appendDelayedCharacterDescriptions(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
