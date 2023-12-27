@@ -14,6 +14,7 @@ What's New in NVDA
 
 == Bug Fixes ==
 - Backspace now works correctly when using Nudi 6.1 with NVDA's "Handle keys from other applications" setting enabled. (#15822, @jcsteh)
+- Fix the error of playing audio coordinates while the application is in sleep mode when the play mouse audio coordinates feature is enabled. (#8059, hwf1324)
 -
 
 
@@ -147,7 +148,6 @@ Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on e
   -
 - NVDA is again able to track the focus in applications running within Windows Defender Application Guard (WDAG). (#15164)
 - The speech text is no longer updated when the mouse moves in the Speech Viewer. (#15952, @hwf1324)
-- Fix the error of playing audio coordinates while the application is in sleep mode when the play mouse audio coordinates feature is enabled. (#8059, hwf1324)
 -
 
 == Changes for Developers ==
