@@ -225,7 +225,7 @@ class ExecAndPump(threading.Thread, Generic[_execAndPumpResT]):
 		self.func = func
 		self.args = args
 		self.kwargs = kwargs
-		# Intentionally uses older syntacs with `Optional`, instead of `_execAndPumpResT | None`,
+		# Intentionally uses older syntax with `Optional`, instead of `_execAndPumpResT | None`,
 		# as latter is not yet supported for unions potentially containing two instances of `None`
 		# (see CPython issue 107271).
 		self.funcRes: Optional[_execAndPumpResT] = None
