@@ -972,7 +972,7 @@ def speak(  # noqa: C901
 	import speechViewer
 	if speechViewer.isActive:
 		speechViewer.appendSpeechSequence(speechSequence)
-	if config.conf['braille']['mode'] == braille.BrailleMode.SPEECH_EMULATION.value:
+	if config.conf['braille']['mode'] == braille.BrailleMode.SPEECH_OUTPUT.value:
 		text = ' '.join([x for x in speechSequence if isinstance(x, str)])
 		currentRegions = False
 		if _regions:

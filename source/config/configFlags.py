@@ -104,7 +104,7 @@ class BrailleMode(DisplayStringStrEnum):
 	use BrailleMode.MEMBER.displayString in the UI for a translatable description of this member.
 	"""
 	FOLLOW_CURSORS = "followCursors"
-	SPEECH_EMULATION = 'speechEmulation'
+	SPEECH_OUTPUT = 'speechOutput'
 
 	@property
 	def _displayStringLabels(self):
@@ -112,7 +112,7 @@ class BrailleMode(DisplayStringStrEnum):
 			# Translators: The label for a braille mode
 			BrailleMode.FOLLOW_CURSORS: _('follow cursors'),
 			# Translators: The label for a braille mode
-			BrailleMode.SPEECH_EMULATION: _('speech emulation')
+			BrailleMode.SPEECH_OUTPUT: _('speech output')
 		}
 
 
