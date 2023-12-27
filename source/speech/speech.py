@@ -950,6 +950,26 @@ def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> Spe
 
 
 _regions = []
+
+
+def _showSpeechInBraille(speechSequence):
+	text = " ".join([x for x in speechSequence if isinstance(x, str)])
+	currentRegions = False
+	if _regions:
+		text = " " + text
+		currentRegions = True
+	region = braille.TextRegion(text)
+	region.update()
+	_regions.append(region)
+	braille.handler.mainBuffer.regions = _regions.copy()
+	if not currentRegions:
+		braille.handler.mainBuffer.focus(_regions[0])
+	if len(braille.handler.mainBuffer.rawText) > 100000:
+		braille.handler.mainBuffer.clear()
+		_regions.clear()
+	braille.handler.mainBuffer.update()
+	braille.handler.update()
+
 # C901 'speak' is too complex
 # Note: when working on speak, look for opportunities to simplify
 # and move logic out into smaller helper functions.
@@ -972,23 +992,8 @@ def speak(  # noqa: C901
 	import speechViewer
 	if speechViewer.isActive:
 		speechViewer.appendSpeechSequence(speechSequence)
-	if config.conf['braille']['mode'] == braille.BrailleMode.SPEECH_OUTPUT.value:
-		text = ' '.join([x for x in speechSequence if isinstance(x, str)])
-		currentRegions = False
-		if _regions:
-			text = ' ' + text
-			currentRegions = True
-		region = braille.TextRegion(text)
-		region.update()
-		_regions.append(region)
-		braille.handler.mainBuffer.regions = _regions.copy()
-		if not currentRegions:
-			braille.handler.mainBuffer.focus(_regions[0])
-		if len(braille.handler.mainBuffer.rawText) > 100000:
-			braille.handler.mainBuffer.clear()
-			_regions.clear()
-		braille.handler.mainBuffer.update()
-		braille.handler.update()
+	if config.conf["braille"]["mode"] == braille.BrailleMode.SPEECH_OUTPUT.value:
+		_showSpeechInBraille(speechSequence)
 	if _speechState.speechMode == SpeechMode.off:
 		return
 	elif _speechState.speechMode == SpeechMode.beeps:
