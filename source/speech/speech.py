@@ -956,6 +956,9 @@ _regions = []
 
 
 def _showSpeechInBraille(speechSequence):
+	regionsText = "".join([i.rawText for i in _regions])
+	if len(regionsText) > 100000:
+		return
 	text = " ".join([x for x in speechSequence if isinstance(x, str)])
 	currentRegions = False
 	if _regions:
@@ -967,9 +970,6 @@ def _showSpeechInBraille(speechSequence):
 	braille.handler.mainBuffer.regions = _regions.copy()
 	if not currentRegions:
 		braille.handler.mainBuffer.focus(_regions[0])
-	if len(braille.handler.mainBuffer.rawText) > 100000:
-		braille.handler.mainBuffer.clear()
-		_regions.clear()
 	braille.handler.mainBuffer.update()
 	braille.handler.update()
 
