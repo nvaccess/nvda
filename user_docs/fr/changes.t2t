@@ -2,7 +2,6 @@ Quoi de Neuf dans NVDA
 
 
 %!includeconf: ../changes.t2tconf
-%!includeconf: ./locale.t2tconf
 
 = 2023.3 =
 Cette version inclue des améliorations pour les performances, la réactivité et la fiabilité de la sortie audio.
@@ -4511,4 +4510,3 @@ Les points forts principaux de cette version comprennent le support des édition
 - NVDA demande si la configuration doit être sauvegardée et s'il doit redémarrer lors du changement de langue sous le dialogue Langue de l'interface utilisateur. NVDA doit être relancé pour que les changements prennent effet.
 - Lorsqu'un synthétiseur choisi par l'utilisateur ne peut pas être chargé à l'aide du dialogue Synthétiseur, NVDA affiche une alerte à cet effet.
 - Lors du chargement d'un synthétiseur pour la première fois, NVDA lui permet de choisir les paramètres de voix, de débit et de hauteur les mieux adaptés, plutôt que de le forcer à appliquer des valeurs par défaut qu’il juge correctes. Cela corrige un problème où les synthétiseurs Eloquence et Viavoice sapi4 tendaient à parler trop vite de prime abord.
-
