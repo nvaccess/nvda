@@ -10,6 +10,7 @@ import os
 import platform
 import multiprocessing
 
+
 # Ensure we are inside the Python virtual environment.
 nvdaVenv = os.getenv("NVDA_VENV")
 virtualEnv = os.getenv("VIRTUAL_ENV")
@@ -545,3 +546,60 @@ env.Alias('appx',[installed_appx_storeSubmission,installed_appx_sideLoadable])
 env.Default(dist)
 
 env.SConscript("tests/sconscript", exports=["env", "sourceDir", "pot"])
+
+
+def generate_module_list(target, source, env):
+	""" 
+	Generate a list of Python modules from compiled '.pyc' files within a specified zipfile.
+
+    This function lists all '.pyc' files contained in a given zipfile, converts their paths to Python module
+    format, performs a sanity check to ensure a specific module is present, and then writes the list of
+    modules to a specified output file for packaging as an AppVeyor artefact.
+
+    Args:
+        target (list of SCons.Node.FS.File): A single element list containing the target file node(s) where the list of modules
+                                             will be written.
+        source (list of SCons.Node.FS.File): A single element list containing the source file node(s) to be processed. 
+											 It should contain only the zipfile from which the '.pyc' files
+                                             will be listed.
+        env (SCons.Environment): The SCons environment context under which this function is executed. This
+                                 parameter provides access to SCons construction variables, methods, and tools.
+
+    Returns:
+        None: The function does not return anything but writes the list of modules to the target file.
+
+    Raises:
+        ValueError: If the specified sanity check module (e.g., 'NVDAObjects.UIA') is not found in the
+					list of modules extracted from the zipfile.
+        FileNotFoundError: If the specified zipfile in `source` does not exist.
+	"""
+	import zipfile
+	import re
+
+	# List all .pyc files in the library.zip
+	library_zip_path = str(source[0])
+	if not os.path.exists(library_zip_path):
+		raise FileNotFoundError(f"The zipfile {library_zip_path} does not exist.")
+	pyc_files = [f for f in zipfile.ZipFile(library_zip_path, 'r').namelist() if f.endswith('.pyc')]
+
+	# convert the module paths to python module format
+	imported_modules = sorted(set([
+		re.sub(r'(.__init__|.__version__|._version)?\.pyc$', '', module_path).replace('/', '.')
+		for module_path in pyc_files
+	]))
+
+	# Sanity check for something guaranteed to be in library.zip
+	if "NVDAObjects.UIA" not in imported_modules:
+		raise ValueError(f"Expected module NVDAObjects.UIA not found in the zipfile.")
+
+	# store the list to file and export as an artefact
+	with open(str(target[0]), 'w') as file:
+		file.write('\n'.join(imported_modules))
+
+
+# Create a new builder that uses a custom action using the generate_module_list function
+env["BUILDERS"]["GenerateModuleList"] = Builder(action=Action(generate_module_list))
+
+# Define the target and source and tell SCons to use the builder
+target = os.path.join(os.getcwd(), 'output', 'library_modules.txt')
+source = os.path.join(os.getcwd(), 'dist', 'library.zip')
