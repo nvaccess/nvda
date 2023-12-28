@@ -557,11 +557,11 @@ def generate_module_list(target, source, env):
     modules to a specified output file for packaging as an AppVeyor artefact.
 
     Args:
-        target (list of SCons.Node.FS.File): A single element list containing the target file node(s) where the list of modules
-                                             will be written.
-        source (list of SCons.Node.FS.File): A single element list containing the source file node(s) to be processed. 
-											 It should contain only the zipfile from which the '.pyc' files
-                                             will be listed.
+        target (list of SCons.Node.FS.File): A single element list containing the target file node(s) where the 
+											 list of modules will be written.
+        source (list of SCons.Node.FS.File): A single element list containing the source file node(s) to be 
+											 processed. It should contain only the zipfile from which the 
+											 '.pyc' files will be listed.
         env (SCons.Environment): The SCons environment context under which this function is executed. This
                                  parameter provides access to SCons construction variables, methods, and tools.
 
@@ -582,7 +582,7 @@ def generate_module_list(target, source, env):
 		raise FileNotFoundError(f"The zipfile {library_zip_path} does not exist.")
 	pyc_files = [f for f in zipfile.ZipFile(library_zip_path, 'r').namelist() if f.endswith('.pyc')]
 
-	# convert the module paths to python module format
+	# Convert the module paths to python module format
 	imported_modules = sorted(set([
 		re.sub(r'(.__init__|.__version__|._version)?\.pyc$', '', module_path).replace('/', '.')
 		for module_path in pyc_files
@@ -592,7 +592,7 @@ def generate_module_list(target, source, env):
 	if "NVDAObjects.UIA" not in imported_modules:
 		raise ValueError(f"Expected module NVDAObjects.UIA not found in the zipfile.")
 
-	# store the list to file and export as an artefact
+	# Store the list to file and export as an artefact
 	with open(str(target[0]), 'w') as file:
 		file.write('\n'.join(imported_modules))
 
@@ -604,4 +604,6 @@ env["BUILDERS"]["GenerateModuleList"] = Builder(action=Action(generate_module_li
 target = os.path.join(os.getcwd(), 'output', 'library_modules.txt')
 source = os.path.join(os.getcwd(), 'dist', 'library.zip')
 
-env.GenerateModuleList(target, source)
+# env.GenerateModuleList(target, source)
+# Associate with 'source' target
+env.Alias('source', env.GenerateModuleList(target, source))
