@@ -600,6 +600,5 @@ env["BUILDERS"]["GenerateModuleList"] = Builder(action=Action(generate_module_li
 target = os.path.join(os.getcwd(), 'output', 'library_modules.txt')
 source = os.path.join(os.getcwd(), 'dist', 'library.zip')
 
-# env.GenerateModuleList(target, source)
-# Associate with 'source' target
-env.Alias('source', env.GenerateModuleList(target, source))
+# Execute along with 'dist' target
+env.Depends('dist', env.GenerateModuleList(target, source))
