@@ -602,7 +602,7 @@ env["BUILDERS"]["GenerateModuleList"] = Builder(action=Action(generate_module_li
 
 # Define the target and source
 # Putting the target in the output dir automatically causes AppVeyor to package it as an artefact
-target = os.path.join(os.getcwd(), 'output', 'library_modules.txt')
+target = os.path.join(outputDir.abspath, 'library_modules.txt')
 source = os.path.join(os.getcwd(), 'dist', 'library.zip')
 
 # Execute along with 'dist' target
