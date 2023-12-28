@@ -593,7 +593,7 @@ def generate_module_list(target, source, env):
 		raise ValueError(f"Expected module NVDAObjects.UIA not found in the zipfile.")
 
 	# Store the list to file
-	with open(str(target[0]), 'w') as file:
+	with open(str(target[0]), 'w', encoding="utf-8") as file:
 		file.write('\n'.join(imported_modules))
 
 
