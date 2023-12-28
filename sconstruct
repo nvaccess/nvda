@@ -603,3 +603,5 @@ env["BUILDERS"]["GenerateModuleList"] = Builder(action=Action(generate_module_li
 # Define the target and source and tell SCons to use the builder
 target = os.path.join(os.getcwd(), 'output', 'library_modules.txt')
 source = os.path.join(os.getcwd(), 'dist', 'library.zip')
+
+env.GenerateModuleList(target, source)
