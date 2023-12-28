@@ -10,7 +10,6 @@ import os
 import platform
 import multiprocessing
 
-
 # Ensure we are inside the Python virtual environment.
 nvdaVenv = os.getenv("NVDA_VENV")
 virtualEnv = os.getenv("VIRTUAL_ENV")
@@ -557,9 +556,9 @@ def generate_module_list(target, source, env):
     modules to a specified output file for packaging as an AppVeyor artefact.
 
     Args:
-        target (list of SCons.Node.FS.File): A single element list containing the target file node(s) where the 
+        target (list of SCons.Node.FS.File): A single element list containing the target file node where the 
 											 list of modules will be written.
-        source (list of SCons.Node.FS.File): A single element list containing the source file node(s) to be 
+        source (list of SCons.Node.FS.File): A single element list containing the source file node to be 
 											 processed. It should contain only the zipfile from which the 
 											 '.pyc' files will be listed.
         env (SCons.Environment): The SCons environment context under which this function is executed. This
@@ -582,7 +581,8 @@ def generate_module_list(target, source, env):
 		raise FileNotFoundError(f"The zipfile {library_zip_path} does not exist.")
 	pyc_files = [f for f in zipfile.ZipFile(library_zip_path, 'r').namelist() if f.endswith('.pyc')]
 
-	# Convert the module paths to python module format
+	# Convert the file paths to python module format
+	# eg: NVDAObjects/IAccessible/__init__.pyc --> NVDAObjects.IAccessible
 	imported_modules = sorted(set([
 		re.sub(r'(.__init__|.__version__|._version)?\.pyc$', '', module_path).replace('/', '.')
 		for module_path in pyc_files
@@ -592,7 +592,7 @@ def generate_module_list(target, source, env):
 	if "NVDAObjects.UIA" not in imported_modules:
 		raise ValueError(f"Expected module NVDAObjects.UIA not found in the zipfile.")
 
-	# Store the list to file and export as an artefact
+	# Store the list to file
 	with open(str(target[0]), 'w') as file:
 		file.write('\n'.join(imported_modules))
 
@@ -600,7 +600,8 @@ def generate_module_list(target, source, env):
 # Create a new builder that uses a custom action using the generate_module_list function
 env["BUILDERS"]["GenerateModuleList"] = Builder(action=Action(generate_module_list))
 
-# Define the target and source and tell SCons to use the builder
+# Define the target and source
+# Putting the target in the output dir automatically causes AppVeyor to package it as an artefact
 target = os.path.join(os.getcwd(), 'output', 'library_modules.txt')
 source = os.path.join(os.getcwd(), 'dist', 'library.zip')
 
