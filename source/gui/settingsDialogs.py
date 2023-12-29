@@ -3940,12 +3940,14 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			conf=config.conf,
 		)
 		self.bindHelpEvent("BrailleSettingsShowSelection", self.brailleShowSelectionCombo)
+
 		# Translators: The label for a setting in braille settings to enable word wrap
 		# (try to avoid splitting words at the end of the braille display).
 		wordWrapText = _("Avoid splitting &words when possible")
 		self.wordWrapCheckBox = sHelper.addItem(wx.CheckBox(self, label=wordWrapText))
 		self.bindHelpEvent("BrailleSettingsWordWrap", self.wordWrapCheckBox)
 		self.wordWrapCheckBox.Value = config.conf["braille"]["wordWrap"]
+
 		self.brailleInterruptSpeechCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=_(
 				# Translators: This is a label for a combo-box in the Braille settings panel.
