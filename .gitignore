@@ -29,8 +29,11 @@ dlldata.c
 .sconsign.dblite
 user_docs/*/*.html
 user_docs/*/*.css
+# TODO remove when migrating from t2t to md
+user_docs/*/*.md
 user_docs/*/keyCommands.t2t
-user_docs/build.t2tConf
+# end remove
+user_docs/*/keyCommands.md
 extras/controllerClient/x86/nvdaController.h
 extras/controllerClient/x64
 extras/controllerClient/arm64

@@ -1,9 +1,3 @@
-%!PostProc(html): ^<HTML>$ <HTML LANG='FA' DIR='RTL'>
-%!PostProc(html): TEXT="black">$  TEXT='black' STYLE='font-family: Simplified Arabic'>
-
-% add rtl macro
-%!PostProc: %ltr{(.*)} <span dir='ltr'>\1</span>
-
 % reverse the numbering, to be displayed correctly in Persian.
 %!PostProc(html): >([0-9]+)\.([0-9]+)\.([0-9]+)\.  > fa.\3fa.\2fa.\1
 %!PostProc(html): >([0-9]+)\.([0-9]+)\. > fa.\2fa.\1

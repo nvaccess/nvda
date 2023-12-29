@@ -25,7 +25,7 @@ def exists(env):
 
 def generate(env):
 	env['BUILDERS']['txt2tags']=env.Builder(
-		action=env.Action(txt2tags_actionFunc,lambda t,s,e: 'Converting %s to html'%s[0].path),
-		suffix='.html',
+		action=env.Action(txt2tags_actionFunc, lambda t, s, e: f"Converting {s[0].path} to md"),
+		suffix='.md',
 		src_suffix='.t2t'
 	)
