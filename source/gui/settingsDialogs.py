@@ -3750,7 +3750,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		modeListText = _("Braille mode:")
 		modeChoices = [x.displayString for x in braille.BrailleMode]
 		self.brailleModes = sHelper.addLabeledControl(modeListText, wx.Choice, choices=modeChoices)
-		self.bindHelpEvent("BrailleSettingsBrailleMode", self.brailleModes)
+		self.bindHelpEvent("BrailleMode", self.brailleModes)
 		self.brailleModes.Bind(wx.EVT_CHOICE, self.onModeChange)
 		current = braille.BrailleMode(config.conf["braille"]["mode"])
 		modeList = list(braille.BrailleMode)
