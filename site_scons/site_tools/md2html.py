@@ -7,6 +7,9 @@ import io
 import pathlib
 import shutil
 
+import SCons.Node.FS
+import SCons.Environment
+
 _extensions = {
 	# Supports tables, HTML mixed with markdown, code blocks and more
 	"markdown.extensions.extra",
@@ -38,7 +41,11 @@ _extensionConfigs = {
 _RTLlangCodes = {"ar", "fa", "he"}
 
 
-def md2html_actionFunc(target, source, env: dict):
+def md2html_actionFunc(
+		target: list[SCons.Node.FS.File],
+		source: list[SCons.Node.FS.File],
+		env: SCons.Environment.Environment
+):
 	import markdown
 	import versionInfo
 
@@ -102,7 +109,7 @@ def md2html_actionFunc(target, source, env: dict):
 	htmlBuffer.close()
 
 
-def exists(env: dict) -> bool:
+def exists(env: SCons.Environment.Environment) -> bool:
 	try:
 		import markdown  # noqa: F401
 		import markdown_link_attr_modifier  # noqa: F401
@@ -113,7 +120,7 @@ def exists(env: dict) -> bool:
 		return False
 
 
-def generate(env: dict):
+def generate(env: SCons.Environment.Environment):
 	env["BUILDERS"]["md2html"] = env.Builder(
 		action=env.Action(md2html_actionFunc, lambda t, s, e: f"Converting {s[0].path} to html"),
 		suffix=".html",
