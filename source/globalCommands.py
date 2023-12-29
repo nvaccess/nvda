@@ -3292,10 +3292,8 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 		gesture="kb:NVDA+control+t"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
 	def script_braille_toggleTether(self, gesture):
-		if config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
-			ui.message(speechOutputMSG)
-			return
 		values = [x.value for x in TetherTo]
 		index = values.index(config.conf["braille"]["tetherTo"])
 		newIndex = (index+1) % len(values)
