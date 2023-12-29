@@ -3756,11 +3756,12 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		modeList = list(braille.BrailleMode)
 		index = modeList.index(current)
 		self.brailleModes.SetSelection(index)
-		groupSizer = wx.StaticBoxSizer(wx.VERTICAL, self)
-		self.groupBox = groupSizer.GetStaticBox()
-		group = guiHelper.BoxSizerHelper(self, sizer=groupSizer)
-		sHelper.addItem(group)
-		self.groupBox.Enable(not self.brailleModes.GetSelection())
+		followCursorGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self)
+		self.followCursorGroupBox = followCursorGroupSizer.GetStaticBox()
+		followCursorGroupHelper= guiHelper.BoxSizerHelper(self, sizer=followCursorGroupSizer)
+		sHelper.addItem(followCursorGroupHelper)
+		self.followCursorGroupBox.Enable(not self.brailleModes.GetSelection())
+
 
 		# Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 		expandAtCursorText = _("E&xpand to computer braille for the word at the cursor")
