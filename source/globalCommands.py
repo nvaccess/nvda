@@ -3312,7 +3312,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for toggle braille mode command
-		description=_('Cycles through the available braille modes'),
+		description=_('Toggles braille mode between follow cursor and display speech output'),
 		category=SCRCAT_BRAILLE,
 		gesture="kb:nvda+alt+t"
 	)
