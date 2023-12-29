@@ -22,10 +22,7 @@ def initialize(doRemote: bool, UIAClient: POINTER(UIA.IUIAutomation)):
 	@param doRemote: true if code should be executed remotely, or false for locally.
 	@param UIAClient: the current instance of the UI Automation client library running in NVDA.
 	"""
-	global _dll
-	_dll = windll[os.path.join(NVDAHelper.versionedLibPath, "UIARemote.dll")]
-	_dll.initialize(doRemote, UIAClient)
-
+	return True
 
 def msWord_getCustomAttributeValue(
 		docElement: POINTER(UIA.IUIAutomationElement),
@@ -74,11 +71,3 @@ def msWord_getCustomAttributeValue(
 	log.info(rob.dumpLog())
 	result = rob.getResult(remote_customAttribValue)
 	return result
-
-def ding():
-	if _dll is None:
-		raise RuntimeError("UIARemote not initialized")
-	customAttribValue = VARIANT()
-	if _dll.msWord_getCustomAttributeValue(docElement, textRange, customAttribID, byref(customAttribValue)):
-		return customAttribValue.value
-	return None
