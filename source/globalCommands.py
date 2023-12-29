@@ -3316,7 +3316,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 		gesture="kb:nvda+alt+t"
 	)
-	def script_toggleBrailleMode(self, gesture):
+	def script_toggleBrailleMode(self, gesture: InputCore.InputGesture):
 		curMode = BrailleMode(config.conf["braille"]["mode"])
 		modeList = list(BrailleMode)
 		index = modeList.index(curMode)
