@@ -164,7 +164,7 @@ def processText(locale: str, text: str, symbolLevel: characterProcessing.SymbolL
 	return text.strip()
 
 
-def cancelSpeech(clearBrailleRegions=True):
+def cancelSpeech(clearBrailleRegions: bool = True):
 	"""Interupts the synthesizer from currently speaking"""
 	# Import only for this function to avoid circular import.
 	from .sayAll import SayAllHandler
