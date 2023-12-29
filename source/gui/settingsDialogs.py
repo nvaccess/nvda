@@ -4006,7 +4006,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		tetherChoice = [x.value for x in TetherTo][evt.GetSelection()]
 		self.brailleReviewRoutingMovesSystemCaretCombo.Enable(tetherChoice != TetherTo.FOCUS.value)
 
-	def onModeChange(self, evt):
+	def _onModeChange(self, evt: wx.CommandEvent):
 		self.groupBox.Enable(not evt.GetSelection())
 
 def showStartErrorForProviders(
