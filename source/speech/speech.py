@@ -973,6 +973,7 @@ def _showSpeechInBraille(speechSequence):
 	braille.handler.mainBuffer.update()
 	braille.handler.update()
 
+
 # C901 'speak' is too complex
 # Note: when working on speak, look for opportunities to simplify
 # and move logic out into smaller helper functions.
