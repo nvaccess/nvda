@@ -2385,7 +2385,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if (
 			not self.enabled
 			or config.conf["braille"]["showMessages"] == ShowMessages.DISABLED
-			or text is None or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value
+			or text is None
+			or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value
 		):
 			return
 		if self.buffer is self.messageBuffer:
