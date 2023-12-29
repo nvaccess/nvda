@@ -951,8 +951,7 @@ def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> Spe
 
 # The list containing the regions that will be shown in braille when the speak function is called
 # and the braille mode is set to speech output
-#: @type: list
-_regions = []
+_regions: list[braille.TextRegion] = []
 
 
 def _showSpeechInBraille(speechSequence):
