@@ -1679,8 +1679,11 @@ class ExcelCell(ExcelBase):
 	# In Office 2016, 365 and newer, comments are now called notes.
 	# Thus, messages dialog title and so on should refer to notes.
 	@script(
-		# Translators: the description  for a script for Excel
-		description=_("Reports the note on the current cell"),
+		description=_(
+			# Translators: the description  for a script for Excel
+			"Reports the note on the current cell. "
+			"If pressed twice, presents the information in browse mode"
+		),
 		gesture="kb:NVDA+alt+c",
 		category=SCRCAT_SYSTEMCARET,
 		speakOnDemand=True,
@@ -1689,7 +1692,14 @@ class ExcelCell(ExcelBase):
 		commentObj=self.excelCellObject.comment
 		text=commentObj.text() if commentObj else None
 		if text:
-			ui.message(text)
+			if repeats == 0:
+				ui.message(text)
+			elif repeats == 1:
+				ui.browseableMessage(
+					text,
+					# Translators: title for note on the current Excel cell dialog.
+					_("Note")
+				)
 		else:
 			# Translators: A message in Excel when there is no note
 			ui.message(_("Not on a note"))
