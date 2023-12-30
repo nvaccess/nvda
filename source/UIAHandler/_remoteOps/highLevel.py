@@ -281,8 +281,6 @@ class RemoteException(RuntimeError):
 class ExecutionFailureException(RuntimeError):
 	pass
 
-class UnsupportedOpcodeException(RuntimeError):
-	pass
 
 class RemoteOperationBuilder:
 
@@ -295,19 +293,10 @@ class RemoteOperationBuilder:
 		self._ro = lowLevel.RemoteOperation()
 		self._scopeStack: list["_RemoteScopeContext"] = []
 		self._results = None
-		self._supportedOpcodesCache = set()
 		self._loggingEnablede = enableLogging
 		if enableLogging:
 			self._log: RemoteString = self.newString()
 			self.addToResults(self._log)
-
-	def _isOpcodeSupported(self, opcode: lowLevel.InstructionType) -> bool:
-		if opcode in self._supportedOpcodesCache:
-			return True
-		result = True #self._ro.isOpcodeSupported(opcode)
-		if result:
-			self._supportedOpcodesCache.add(opcode)
-		return result
 
 	def _getNewOperandId(self) -> int:
 		return next(self._operandIdGen)
@@ -316,8 +305,6 @@ class RemoteOperationBuilder:
 		""" Adds an instruction to the instruction list and returns the index of the instruction. """
 		""" Adds an instruction to the instruction list and returns the index of the instruction. """
 		self._lastIfConditionInstructionPendingElse = None
-		if not self._isOpcodeSupported(instruction):
-			raise UnsupportedOpcodeException(f"Opcode {instruction.name} is not supported")
 		frame = inspect.currentframe().f_back
 		locationString = _getLocationString(frame)
 		self._instructions.append(
