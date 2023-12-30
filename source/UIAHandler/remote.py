@@ -40,7 +40,7 @@ def msWord_getCustomAttributeValue(
 		remote_customAttribID = rob.newInt(customAttribID)
 		remote_customAttribValue = rob.newVariant()
 		rob.addToResults(remote_customAttribValue)
-		with rob.IfBlockContext(remote_docElement.isExtensionSupported(guid_msWord_extendedTextRangePattern)):
+		with rob.IfBlock(remote_docElement.isExtensionSupported(guid_msWord_extendedTextRangePattern)):
 			rob.logMessage("msWord_getCustomAttributeValue: docElement supports extendedTextRangePattern")
 			remote_extendedTextRangePattern = rob.newExtensionTarget()
 			rob.logMessage("msWord_getCustomAttributeValue: doing callExtension for extendedTextRangePattern")
@@ -48,12 +48,12 @@ def msWord_getCustomAttributeValue(
 				guid_msWord_extendedTextRangePattern,
 				remote_extendedTextRangePattern
 			)
-			with rob.IfBlockContext(remote_extendedTextRangePattern.isNull()):
+			with rob.IfBlock(remote_extendedTextRangePattern.isNull()):
 				rob.logMessage("msWord_getCustomAttributeValue: extendedTextRangePattern is null")
 				rob.halt()
-				rob.Else()
+			with  rob.ElseBlock():
 				rob.logMessage("msWord_getCustomAttributeValue: got extendedTextRangePattern ")
-				with rob.IfBlockContext(remote_extendedTextRangePattern.isExtensionSupported(guid_msWord_getCustomAttributeValue)):
+				with rob.IfBlock(remote_extendedTextRangePattern.isExtensionSupported(guid_msWord_getCustomAttributeValue)):
 					rob.logMessage("msWord_getCustomAttributeValue: extendedTextRangePattern supports getCustomAttributeValue")
 					rob.logMessage("msWord_getCustomAttributeValue: doing callExtension for getCustomAttributeValue")
 					remote_extendedTextRangePattern.callExtension(
@@ -63,9 +63,9 @@ def msWord_getCustomAttributeValue(
 						remote_customAttribValue
 					)
 					rob.logMessage("msWord_getCustomAttributeValue: got customAttribValue of ", remote_customAttribValue)
-					rob.Else()
+				with rob.ElseBlock():
 					rob.logMessage("msWord_getCustomAttributeValue: extendedTextRangePattern does not support getCustomAttributeValue")
-			rob.Else()
+		with rob.ElseBlock():
 			rob.logMessage("msWord_getCustomAttributeValue: docElement does not support extendedTextRangePattern")
 		rob.logMessage("msWord_getCustomAttributeValue end")
 	log.info(rob.dumpLog())

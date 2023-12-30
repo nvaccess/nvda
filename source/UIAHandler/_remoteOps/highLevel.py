@@ -290,6 +290,7 @@ class RemoteOperationBuilder:
 
 	def __init__(self, enableLogging=False):
 		self._instructions: list[_InstructionRecord] = []
+		self._lastIfConditionInstructionPendingElse: _InstructionRecord | None = None
 		self._operandIdGen = itertools.count(start=1)
 		self._ro = lowLevel.RemoteOperation()
 		self._scopeStack: list["_RemoteScopeContext"] = []
@@ -314,6 +315,7 @@ class RemoteOperationBuilder:
 	def _addInstruction(self, instruction: lowLevel.InstructionType, *params: _SimpleCData):
 		""" Adds an instruction to the instruction list and returns the index of the instruction. """
 		""" Adds an instruction to the instruction list and returns the index of the instruction. """
+		self._lastIfConditionInstructionPendingElse = None
 		if not self._isOpcodeSupported(instruction):
 			raise UnsupportedOpcodeException(f"Opcode {instruction.name} is not supported")
 		frame = inspect.currentframe().f_back
@@ -376,13 +378,11 @@ class RemoteOperationBuilder:
 	def _currentScope(self) -> Optional["_RemoteScopeContext"]:
 		return self._scopeStack[-1] if self._scopeStack else None
 
-	def IfBlockContext(self, condition: RemoteBool):
+	def IfBlock(self, condition: RemoteBool):
 		return _RemoteIfBlockBuilder(self, condition)
 
-	def Else(self):
-		if not isinstance(self._currentScope, _RemoteIfBlockBuilder):
-			raise RuntimeError("Else block called outside of If block")
-		self._currentScope.Else()
+	def ElseBlock(self):
+		return _RemoteElseBlockBuilder(self)
 
 	def addToResults(self, remoteObj: _RemoteBaseObject):
 		self._ro.addToResults(remoteObj._operandId)
@@ -477,27 +477,40 @@ class _RemoteIfBlockBuilder(_RemoteScopeContext):
 			c_long(self._condition._operandId),
 			c_long(1), # offset updated in Else method 
 		)
-		self._inElse = False
 		super().__enter__()
 
-	def Else(self):
-		if self._inElse:
-			raise RuntimeError("Else block already called")
-		self._inElse = True
-		self._jumpToEndInstructionIndex = self._rob._addInstruction(
-			lowLevel.InstructionType.Fork ,
-			c_long(1), # offset updated in __exit__ method 
-		)
+	def __exit__(self, exc_type, exc_val, exc_tb):
+		super().__exit__(exc_type, exc_val, exc_tb)
 		nextInstructionIndex = self._rob._lastInstructionIndex + 1
 		relativeJumpOffset = nextInstructionIndex - self._conditionInstructionIndex
 		conditionInstruction = self._rob._getInstructionRecord(self._conditionInstructionIndex)
 		conditionInstruction.params[1].value = relativeJumpOffset
+		self._rob._lastIfConditionInstructionPendingElse = conditionInstruction
+
+
+class _RemoteElseBlockBuilder(_RemoteScopeContext):
+
+	def __init__(self, remoteOpBuilder: RemoteOperationBuilder):
+		super().__init__(remoteOpBuilder)
+
+	def __enter__(self):
+		if not self._rob._lastIfConditionInstructionPendingElse:
+			raise RuntimeError("Else block not directly preceded by If block") 
+		conditionInstruction = self._rob._lastIfConditionInstructionPendingElse
+		self._rob._lastIfConditionInstructionPendingElse = None
+		# add a final jump instruction to the previous if block to skip over the else block.
+		self._jumpInstructionIndex = self._rob._addInstruction(
+			lowLevel.InstructionType.Fork ,
+			c_long(1), # offset updated in __exit__ method 
+		)
+		# increment the false offset of the previous if block to take the new jump instruction into account. 
+		conditionInstruction.params[1].value += 1
+		super().__enter__()
 
 	def __exit__(self, exc_type, exc_val, exc_tb):
 		super().__exit__(exc_type, exc_val, exc_tb)
-		if not self._inElse:
-			self.Else()
+		# update the jump instruction to jump to the real end of the else block. 
 		nextInstructionIndex = self._rob._lastInstructionIndex + 1
-		relativeJumpOffset = nextInstructionIndex - self._jumpToEndInstructionIndex
-		jumpToEndInstruction = self._rob._getInstructionRecord(self._jumpToEndInstructionIndex)
-		jumpToEndInstruction.params[0].value = relativeJumpOffset
+		relativeJumpOffset = nextInstructionIndex - self._jumpInstructionIndex
+		jumpInstruction = self._rob._getInstructionRecord(self._jumpInstructionIndex)
+		jumpInstruction.params[0].value = relativeJumpOffset
