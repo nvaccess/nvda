@@ -378,10 +378,10 @@ class RemoteOperationBuilder:
 	def _currentScope(self) -> Optional["_RemoteScopeContext"]:
 		return self._scopeStack[-1] if self._scopeStack else None
 
-	def IfBlock(self, condition: RemoteBool):
+	def ifBlock(self, condition: RemoteBool):
 		return _RemoteIfBlockBuilder(self, condition)
 
-	def ElseBlock(self):
+	def elseBlock(self):
 		return _RemoteElseBlockBuilder(self)
 
 	def addToResults(self, remoteObj: _RemoteBaseObject):
