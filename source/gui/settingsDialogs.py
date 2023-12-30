@@ -4,7 +4,7 @@
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers,
 # Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed, Łukasz Golonka, Aaron Cannon,
 # Adriani90, André-Abush Clause, Dawid Pieper, Heiko Folkerts, Takuya Nishimoto, Thomas Stivers,
-# jakubl7545, mltony, Rob Meredith, Burman's Computer and Education Ltd.
+# jakubl7545, mltony, Rob Meredith, Burman's Computer and Education Ltd, hwf1324.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import logging
@@ -1649,6 +1649,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.speechModesList.Checked = [
 			mIndex for mIndex in range(len(self._allSpeechModes)) if mIndex not in excludedModes
 		]
+		self.speechModesList.Bind(wx.EVT_CHECKLISTBOX, self._onSpeechModesListChange)
 		self.speechModesList.Select(0)
 
 	def _appendDelayedCharacterDescriptions(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
@@ -1686,6 +1687,28 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			mIndex for mIndex in range(len(self._allSpeechModes)) if mIndex not in self.speechModesList.CheckedItems
 		]
 
+	def _onSpeechModesListChange(self, evt: wx.CommandEvent):
+		if (
+			evt.GetInt() == self._allSpeechModes.index(speech.SpeechMode.talk)
+			and not self.speechModesList.IsChecked(evt.GetInt())
+		):
+			if gui.messageBox(
+				_(
+					# Translators: Warning shown when 'talk' speech mode is disabled in settings.
+					"You did not choose Talk as one of your speech mode options. "
+					"Please note that this may result in no speech output at all. "
+					"Are you sure you want to continue?"
+				),
+				# Translators: Title of the warning message.
+				_("Warning"),
+				wx.YES | wx.NO | wx.ICON_WARNING,
+				self,
+			) == wx.NO:
+				self.speechModesList.SetCheckedItems(
+					list(self.speechModesList.GetCheckedItems())
+					+ [self._allSpeechModes.index(speech.SpeechMode.talk)]
+				)
+
 	def isValid(self) -> bool:
 		enabledSpeechModes = self.speechModesList.CheckedItems
 		if len(enabledSpeechModes) < 2:
@@ -1699,22 +1722,6 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 				self,
 			)
 			return False
-		if self._allSpeechModes.index(speech.SpeechMode.talk) not in enabledSpeechModes:
-			if gui.messageBox(
-				_(
-					# Translators: Warning shown when 'talk' speech mode is disabled in settings.
-					(
-						"You did not choose Talk as one of your speech mode options. "
-						"Please note that this may result in no speech output at all. "
-						"Are you sure you want to continue?"
-					)
-				),
-				# Translators: Title of the warning message.
-				_("Warning"),
-				wx.YES | wx.NO | wx.ICON_WARNING,
-				self,
-			) == wx.NO:
-				return False
 		return super().isValid()
 
 

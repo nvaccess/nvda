@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-13 10:35+1000\n"
-"PO-Revision-Date: 2023-12-17 22:53\n"
+"POT-Creation-Date: 2023-12-24 10:45+0000\n"
+"PO-Revision-Date: 2023-12-26 22:19\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -2971,47 +2971,107 @@ msgctxt "color hue"
 msgid "brown-yellow"
 msgstr "καφέ-κίτρινο"
 
+#. Translators: Shown when one or more add-ons failed to update.
+#: core.py:81
+msgid "The following add-on failed to update: {}."
+msgid_plural "The following add-ons failed to update: {}."
+msgstr[0] ""
+msgstr[1] ""
+
+#. Translators: Shown when one or more add-ons failed to be uninstalled.
+#: core.py:90
+msgid "The following add-on failed to uninstall: {}."
+msgid_plural "The following add-ons failed to uninstall: {}."
+msgstr[0] ""
+msgstr[1] ""
+
+#. Translators: Shown when one or more add-ons failed to be installed.
+#: core.py:99
+msgid "The following add-on failed to be installed: {}."
+msgid_plural "The following add-ons failed to be installed: {}."
+msgstr[0] ""
+msgstr[1] ""
+
+#. Translators: Shown when one or more actions on add-ons failed.
+#: core.py:111
+msgid "Some operations on add-ons failed. See the log file for more details.\n"
+"{}"
+msgstr ""
+
+#. Translators: Title of message shown when requested action on add-ons failed.
+#. Translators: The title of an error message dialog.
+#. Translators: The title of the message when a downloaded update file could not be preserved.
+#. Translators: The title of a dialog presented when an error occurs.
+#. Translators: The title of an error message dialog.
+#. Translators: An title for an error displayed when saving user defined input gestures fails.
+#. Translators: The title of a dialog presented when an error occurs.
+#. Translators: the title of an error dialog.
+#. Translators: The message title displayed when the user has not specified an absolute
+#. destination directory in the Create Portable NVDA dialog.
+#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
+#. Translators: The title of an error message dialog.
+#. Translators: A message indicating that an error occurred.
+#. Translators: The title of the message box
+#. Translators: The title of the error dialog displayed when there is an error showing the GUI
+#. for a vision enhancement provider
+#. Translators: The title of an error message box displayed when validating the startup dialog
+#: core.py:114 updateCheck.py:292 updateCheck.py:564 updateCheck.py:715
+#: gui\__init__.py:217 gui\__init__.py:229 gui\addonGui.py:144
+#: gui\addonGui.py:236 gui\addonGui.py:249 gui\configProfiles.py:177
+#: gui\configProfiles.py:203 gui\configProfiles.py:253
+#: gui\configProfiles.py:264 gui\configProfiles.py:269
+#: gui\configProfiles.py:306 gui\configProfiles.py:467
+#: gui\configProfiles.py:479 gui\configProfiles.py:485 gui\inputGestures.py:799
+#: gui\inputGestures.py:813 gui\installerGui.py:99 gui\installerGui.py:410
+#: gui\installerGui.py:425 gui\installerGui.py:476 gui\logViewer.py:96
+#: gui\logViewer.py:124 gui\message.py:142 gui\settingsDialogs.py:948
+#: gui\settingsDialogs.py:1697 gui\settingsDialogs.py:1832
+#: gui\settingsDialogs.py:4356 gui\settingsDialogs.py:4696
+#: gui\startupDialogs.py:122
+msgid "Error"
+msgstr "Σφάλμα"
+
 #. Translators: Shown when NVDA has been started with unknown command line parameters.
-#: core.py:94
+#: core.py:141
 #, python-brace-format
 msgid "The following command line parameters are unknown to NVDA: {params}"
 msgstr "Οι ακόλουθες παράμετροι της γραμμής εντολών είναι άγνωστες στο NVDA: {params}"
 
 #. Translators: Title of the dialog letting user know
 #. that command line parameters they provided are unknown.
-#: core.py:99
+#: core.py:146
 msgid "Unknown command line parameters"
 msgstr "Άγνωστες παράμετροι γραμμής εντολών"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
-#: core.py:106
+#: core.py:153
 msgid "Your configuration file contains errors. Your configuration has been reset to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr "Το αρχείο διαμόρφωσης περιέχει σφάλματα. Έγινε επαναφορά εργοστασιακών ρυθμήσεων.\n"
 "Περισσότερες πληροφορίες σχετικά με τα σφάλματα μπορείτε να βρείτε στο αρχείο καταγραφής συμβάντων."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
-#: core.py:110
+#: core.py:157
 msgid "Configuration File Error"
 msgstr "Σφάλμα Αρχείου Διαμόρφωσης"
 
-#: core.py:122
+#: core.py:169
 msgid "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr "Το αρχείο του χάρτη χειρονομιών σας περιέχει σφάλματα.\n"
 "Περισσότερες πληροφορίες σχετικά με τα σφάλματα μπορείτε να βρείτε στο αρχείο καταγραφής συμβάντων."
 
-#: core.py:124
+#: core.py:171
 msgid "gesture map File Error"
 msgstr "Σφάλμα αρχείου χάρτη χειρονομιών"
 
 #. Translators: This is spoken when NVDA is starting.
-#: core.py:565
+#: core.py:613
 msgid "Loading NVDA. Please wait..."
 msgstr "Φόρτωση του NVDA. Παρακαλώ περιμένετε..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-#: core.py:707
+#: core.py:755
 msgid "NVDA started"
 msgstr "Εκκίνηση του NVDA"
 
@@ -7408,37 +7468,6 @@ msgstr "Έλεγχος για ενημερωμένη έκδοση σε εξέλ�
 msgid "Error checking for update."
 msgstr "Σφάλμα κατά τον έλεγχο για ενημερωμένη έκδοση"
 
-#. Translators: The title of an error message dialog.
-#. Translators: The title of the message when a downloaded update file could not be preserved.
-#. Translators: The title of a dialog presented when an error occurs.
-#. Translators: The title of an error message dialog.
-#. Translators: An title for an error displayed when saving user defined input gestures fails.
-#. Translators: The title of a dialog presented when an error occurs.
-#. Translators: the title of an error dialog.
-#. Translators: The message title displayed when the user has not specified an absolute
-#. destination directory in the Create Portable NVDA dialog.
-#. Translators: Title of an error dialog shown when an error occurs while creating a portable copy of NVDA.
-#. Translators: The title of an error message dialog.
-#. Translators: A message indicating that an error occurred.
-#. Translators: The title of the message box
-#. Translators: The title of the error dialog displayed when there is an error showing the GUI
-#. for a vision enhancement provider
-#. Translators: The title of an error message box displayed when validating the startup dialog
-#: updateCheck.py:292 updateCheck.py:564 updateCheck.py:715 gui\__init__.py:217
-#: gui\__init__.py:229 gui\addonGui.py:144 gui\addonGui.py:235
-#: gui\addonGui.py:248 gui\configProfiles.py:177 gui\configProfiles.py:203
-#: gui\configProfiles.py:253 gui\configProfiles.py:264
-#: gui\configProfiles.py:269 gui\configProfiles.py:306
-#: gui\configProfiles.py:467 gui\configProfiles.py:479
-#: gui\configProfiles.py:485 gui\inputGestures.py:799 gui\inputGestures.py:813
-#: gui\installerGui.py:99 gui\installerGui.py:410 gui\installerGui.py:425
-#: gui\installerGui.py:476 gui\logViewer.py:96 gui\logViewer.py:124
-#: gui\message.py:142 gui\settingsDialogs.py:948 gui\settingsDialogs.py:1697
-#: gui\settingsDialogs.py:1832 gui\settingsDialogs.py:4356
-#: gui\settingsDialogs.py:4696 gui\startupDialogs.py:122
-msgid "Error"
-msgstr "Σφάλμα"
-
 #. Translators: The title of the dialog informing the user about an NVDA update.
 #. Translators: The title of the dialog asking the user to Install an NVDA update.
 #: updateCheck.py:352 updateCheck.py:486
@@ -7494,7 +7523,7 @@ msgstr "Υπενθύμιση &αργότερα"
 
 #. Translators: The label of a button to close a dialog.
 #. Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
-#: updateCheck.py:433 gui\addonGui.py:340
+#: updateCheck.py:433 gui\addonGui.py:341
 msgid "&Close"
 msgstr "&Κλείσιμο"
 
@@ -8944,13 +8973,13 @@ msgid "SuperBraille"
 msgstr ""
 
 #. Translators: Names of braille displays.
-#: brailleDisplayDrivers\albatross\driver.py:81
+#: brailleDisplayDrivers\albatross\driver.py:82
 msgid "Caiku Albatross 46/80"
 msgstr ""
 
 #. Translators: A message when number of status cells must be changed
 #. for a braille display driver
-#: brailleDisplayDrivers\albatross\driver.py:477
+#: brailleDisplayDrivers\albatross\driver.py:486
 msgid "To use Albatross with NVDA: change number of status cells in Albatross internal menu at most "
 msgstr "Για να χρησιμοποιήσετε το Albatross με το NVDA: αλλάξτε τον αριθμό των κελιών κατάστασης στο εσωτερικό μενού του Albatross"
 
@@ -10754,7 +10783,7 @@ msgstr "Επανεκκίνηση του NVDA"
 #. Translators: A button in the addon installation warning / blocked dialog which shows
 #. more information about the addon
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
-#: gui\addonGui.py:64 gui\addonGui.py:102 gui\addonGui.py:336
+#: gui\addonGui.py:64 gui\addonGui.py:102 gui\addonGui.py:337
 msgid "&About add-on..."
 msgstr "&Πληροφορίες για το πρόσθετο..."
 
@@ -10793,72 +10822,72 @@ msgstr "Αποτυχία ανοίγματος του πακέτου αρχείο
 #. Translators: A title for the dialog asking if the user wishes to update a previously installed
 #. add-on with this one.
 #. Translators: Title for message asking if the user really wishes to install an Addon.
-#: gui\addonGui.py:171 gui\addonStoreGui\controls\messageDialogs.py:247
+#: gui\addonGui.py:172 gui\addonStoreGui\controls\messageDialogs.py:247
 msgid "Add-on Installation"
 msgstr "Εγκατάσταση Πρόσθετου"
 
 #. Translators: A message asking if the user wishes to update an add-on with the same version
 #. currently installed according to the version number.
-#: gui\addonGui.py:176
+#: gui\addonGui.py:177
 #, python-brace-format
 msgid "You are about to install version {newVersion} of {summary}, which appears to be already installed. Would you still like to update?"
 msgstr "Θα εγκαταστήσετε την έκδοση {newVersion} του {summary}, το οποίο φαίνεται ήδη εγκατεστημένο. Εξακολουθείτε να θέλετε να την εγκαταστήσετε;"
 
 #. Translators: A message asking if the user wishes to update a previously installed
 #. add-on with this one.
-#: gui\addonGui.py:184
+#: gui\addonGui.py:185
 #, python-brace-format
 msgid "A version of this add-on is already installed. Would you like to update {summary} version {curVersion} to version {newVersion}?"
 msgstr "Υπάρχει ήδη εγκατεστημένη μία έκδοση αυτού του πρόσθετου. Θα θέλατε να ενημερώσετε {summary} την έκδοση {curVersion} στην έκδοση {newVersion};"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
-#: gui\addonGui.py:213
+#: gui\addonGui.py:214
 msgid "Installing Add-on"
 msgstr "Εγκατάσταση Πρόσθετου Σε Εξέλιξη"
 
 #. Translators: The message displayed while an addon is being installed.
-#: gui\addonGui.py:215
+#: gui\addonGui.py:216
 msgid "Please wait while the add-on is being installed."
 msgstr "Παρακαλώ περιμένετε όσο εγκαθίσταται το πρόσθετο"
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
-#: gui\addonGui.py:233
+#: gui\addonGui.py:234
 #, python-format
 msgid "Failed to install add-on from %s"
 msgstr "Αποτυχία εγκατάστασης πρόσθετου από %s"
 
 #. Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
-#: gui\addonGui.py:246
+#: gui\addonGui.py:247
 msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
 msgstr "Τα πρόσθετα δε μπορούν να εγκατασταθούν στην έκδοση του NVDA στο Windows Store"
 
 #. Translators: The title of the Incompatible Addons Dialog
-#: gui\addonGui.py:302
+#: gui\addonGui.py:303
 msgid "Incompatible Add-ons"
 msgstr "Μη συμβατά Πρόσθετα"
 
 #. Translators: The title of the Incompatible Addons Dialog
-#: gui\addonGui.py:312
+#: gui\addonGui.py:313
 msgid "The following add-ons are incompatible with NVDA version {}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
 msgstr "Τα ακόλουθα πρόσθετα είναι μη συμβατά με την έκδοση {} του NVDA. Αυτά τα πρόσθετα δεν μπορούν να ενεργοποιηθούν. Παρακαλώ επικοινωνήστε με τον δημιουργό του πρόσθετου για περισσότερες πληροφορίες."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
-#: gui\addonGui.py:320
+#: gui\addonGui.py:321
 msgid "Incompatible add-ons"
 msgstr "Μη συμβατά πρόσθετα"
 
 #. Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
-#: gui\addonGui.py:328
+#: gui\addonGui.py:329
 msgid "Package"
 msgstr "Πακέτο"
 
 #. Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
-#: gui\addonGui.py:330
+#: gui\addonGui.py:331
 msgid "Version"
 msgstr "Έκδοση"
 
 #. Translators: The label for a column in add-ons list used to provide some explanation about incompatibility
-#: gui\addonGui.py:332
+#: gui\addonGui.py:333
 msgid "Incompatible reason"
 msgstr "Λόγος ασυμβατότητας"
 
@@ -13679,44 +13708,44 @@ msgid "Choose Add-on Package File"
 msgstr "Επιλογή Αρχείου Πακέτου Πρόσθετου"
 
 #. Translators: The name of the column that contains names of addons.
-#: gui\addonStoreGui\viewModels\addonList.py:54
+#: gui\addonStoreGui\viewModels\addonList.py:55
 msgctxt "addonStore"
 msgid "Name"
 msgstr "Όνομα"
 
 #. Translators: The name of the column that contains the status of the addon.
 #. e.g. available, downloading installing
-#: gui\addonStoreGui\viewModels\addonList.py:60
+#: gui\addonStoreGui\viewModels\addonList.py:61
 msgctxt "addonStore"
 msgid "Status"
 msgstr "Κατάσταση"
 
 #. Translators: The name of the column that contains the installed addon's version string.
-#: gui\addonStoreGui\viewModels\addonList.py:65
+#: gui\addonStoreGui\viewModels\addonList.py:66
 msgctxt "addonStore"
 msgid "Installed version"
 msgstr "Εγκατεστημένη έκδοση"
 
 #. Translators: The name of the column that contains the available addon's version string.
-#: gui\addonStoreGui\viewModels\addonList.py:71
+#: gui\addonStoreGui\viewModels\addonList.py:72
 msgctxt "addonStore"
 msgid "Available version"
 msgstr "Διαθέσιμη έκδοση"
 
 #. Translators: The name of the column that contains the channel of the addon (e.g stable, beta, dev).
-#: gui\addonStoreGui\viewModels\addonList.py:77
+#: gui\addonStoreGui\viewModels\addonList.py:78
 msgctxt "addonStore"
 msgid "Channel"
 msgstr "Κανάλι"
 
 #. Translators: The name of the column that contains the addon's publisher.
-#: gui\addonStoreGui\viewModels\addonList.py:82
+#: gui\addonStoreGui\viewModels\addonList.py:83
 msgctxt "addonStore"
 msgid "Publisher"
 msgstr "Εκδότης"
 
 #. Translators: The name of the column that contains the addon's author.
-#: gui\addonStoreGui\viewModels\addonList.py:88
+#: gui\addonStoreGui\viewModels\addonList.py:89
 msgctxt "addonStore"
 msgid "Author"
 msgstr "Συντάκτης"
