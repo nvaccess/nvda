@@ -598,8 +598,11 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 
 	@script(
 		gesture="kb:NVDA+alt+c",
-		# Translators: a description for a script that reports the comment at the caret.
-		description=_("Reports the text of the comment where the system caret is located."),
+		description=_(
+			# Translators: a description for a script that reports the comment at the caret.
+			"Reports the text of the comment where the system caret is located."
+			" If pressed twice, presents the information in browse mode"
+		),
 		category=SCRCAT_SYSTEMCARET,
 		speakOnDemand=True,
 	)
@@ -607,7 +610,15 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
 		commentInfo = getCommentInfoFromPosition(caretInfo)
 		if commentInfo is not None:
-			ui.message(getPresentableCommentInfoFromPosition(commentInfo))
+			text = getPresentableCommentInfoFromPosition(commentInfo)
+			if repeats == 0:
+				ui.message(text)
+			elif repeats == 1:
+				ui.browseableMessage(
+					text,
+					# Translators: title for Word comment dialog.
+					_("Comment")
+				)
 		else:
 			# Translators: a message when there is no comment to report in Microsoft Word
 			ui.message(_("No comments"))

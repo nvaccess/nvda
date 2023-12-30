@@ -317,8 +317,11 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		braille.handler.handleCaretMove(self)
 
 	@script(
-		# Translators: a description for a script
-		description=_("Reports the text of the comment where the system caret is located."),
+		description=_(
+			# Translators: a description for a script
+			"Reports the text of the comment where the system caret is located."
+			" If pressed twice, presents the information in browse mode"
+		),
 		gesture="kb:NVDA+alt+c",
 		category=SCRCAT_SYSTEMCARET,
 		speakOnDemand=True,
@@ -338,7 +341,14 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 					except COMError:
 						break
 					if text:
-						ui.message(text)
+						if repeats == 0:
+							ui.message(text)
+						elif repeats == 1:
+							ui.browseableMessage(
+								text,
+								# Translators: title for Word comment dialog.
+								_("Comment")
+							)
 						return
 		# Translators: a message when there is no comment to report in Microsoft Word
 		ui.message(_("No comments"))
