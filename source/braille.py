@@ -2429,7 +2429,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.update()
 
 	def handleGainFocus(self, obj: "NVDAObject", shouldAutoTether: bool = True) -> None:
-		if not self.enabled or config.conf['braille']['mode'] == BrailleMode.SPEECH_OUTPUT.value:
+		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			return
 		if objectBelowLockScreenAndWindowsIsLocked(obj):
 			return
@@ -2474,7 +2474,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			obj: "NVDAObject",
 			shouldAutoTether: bool = True
 	) -> None:
-		if not self.enabled or config.conf['braille']['mode'] == BrailleMode.SPEECH_OUTPUT.value:
+		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			return
 		if objectBelowLockScreenAndWindowsIsLocked(obj):
 			return
@@ -2584,7 +2584,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._regionsPendingUpdate.add(region)
 
 	def handleReviewMove(self, shouldAutoTether=True):
-		if not self.enabled or config.conf['braille']['mode'] == BrailleMode.SPEECH_OUTPUT.value:
+		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			return
 		reviewPos = api.getReviewPosition()
 		if shouldAutoTether:
