@@ -3765,7 +3765,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.brailleModes.SetSelection(index)
 		followCursorGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self)
 		self.followCursorGroupBox = followCursorGroupSizer.GetStaticBox()
-		followCursorGroupHelper= guiHelper.BoxSizerHelper(self, sizer=followCursorGroupSizer)
+		followCursorGroupHelper = guiHelper.BoxSizerHelper(self, sizer=followCursorGroupSizer)
 		sHelper.addItem(followCursorGroupHelper)
 		self.followCursorGroupBox.Enable(not self.brailleModes.GetSelection())
 
@@ -3780,7 +3780,9 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 		# Translators: The label for a setting in braille settings to show the cursor.
 		showCursorLabelText = _("&Show cursor")
-		self.showCursorCheckBox = followCursorGroupHelper.addItem(wx.CheckBox(self.followCursorGroupBox, label=showCursorLabelText))
+		self.showCursorCheckBox = followCursorGroupHelper.addItem(
+			wx.CheckBox(self.followCursorGroupBox, label=showCursorLabelText)
+		)
 		self.bindHelpEvent("BrailleSettingsShowCursor", self.showCursorCheckBox)
 		self.showCursorCheckBox.Bind(wx.EVT_CHECKBOX, self.onShowCursorChange)
 		self.showCursorCheckBox.SetValue(config.conf["braille"]["showCursor"])
@@ -3887,7 +3889,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 		# Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 		tetherListText = _("Tether B&raille:")
-		# Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
+		# Translators: The value for a setting in the braille settings, to set whether braille should be tethered to
+		#focus or review cursor.
 		tetherChoices = [x[1] for x in braille.handler.tetherValues]
 		self.tetherList = followCursorGroupHelper.addLabeledControl(tetherListText, wx.Choice, choices=tetherChoices)
 		self.bindHelpEvent("BrailleTether", self.tetherList)
@@ -3919,7 +3922,9 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 		# Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 		readByParagraphText = _("Read by &paragraph")
-		self.readByParagraphCheckBox = followCursorGroupHelper.addItem(wx.CheckBox(self.followCursorGroupBox, label=readByParagraphText))
+		self.readByParagraphCheckBox = followCursorGroupHelper.addItem(
+			wx.CheckBox(self.followCursorGroupBox, label=readByParagraphText)
+		)
 		self.bindHelpEvent("BrailleSettingsReadByParagraph", self.readByParagraphCheckBox)
 		self.readByParagraphCheckBox.Value = config.conf["braille"]["readByParagraph"]
 
