@@ -954,7 +954,7 @@ def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> Spe
 _regions: list[braille.TextRegion] = []
 
 
-def _showSpeechInBraille(speechSequence):
+def _showSpeechInBraille(speechSequence: SpeechSequence):
 	regionsText = "".join([i.rawText for i in _regions])
 	if len(regionsText) > 100000:
 		return
