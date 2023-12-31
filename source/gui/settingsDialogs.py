@@ -3890,9 +3890,13 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		# Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 		tetherListText = _("Tether B&raille:")
 		# Translators: The value for a setting in the braille settings, to set whether braille should be tethered to
-		#focus or review cursor.
+		# focus or review cursor.
 		tetherChoices = [x[1] for x in braille.handler.tetherValues]
-		self.tetherList = followCursorGroupHelper.addLabeledControl(tetherListText, wx.Choice, choices=tetherChoices)
+		self.tetherList = followCursorGroupHelper.addLabeledControl(
+			tetherListText,
+			wx.Choice,
+			choices=tetherChoices
+		)
 		self.bindHelpEvent("BrailleTether", self.tetherList)
 		self.tetherList.Bind(wx.EVT_CHOICE, self.onTetherToChange)
 		tetherChoice = config.conf["braille"]["tetherTo"]
