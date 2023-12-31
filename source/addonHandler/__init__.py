@@ -4,6 +4,8 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from __future__ import annotations  # Avoids quoting of forward references
+
 from abc import abstractmethod, ABC
 import sys
 import os.path
@@ -19,6 +21,7 @@ from six import string_types
 from typing import (
 	Callable,
 	Dict,
+	Literal,
 	Optional,
 	Set,
 	TYPE_CHECKING,
@@ -421,25 +424,35 @@ def getAvailableAddons(
 	return (addon for addon in _availableAddons.values() if not filterFunc or filterFunc(addon))
 
 
-def installAddonBundle(bundle: "AddonBundle") -> "Addon":
+def installAddonBundle(bundle: AddonBundle) -> Addon | None:
 	""" Extracts an Addon bundle in to a unique subdirectory of the user addons directory,
 	marking the addon as needing 'install completion' on NVDA restart.
 	"""
-	bundle.extract()
-	addon = Addon(bundle.pendingInstallPath)
-	# #2715: The add-on must be added to _availableAddons here so that
-	# translations can be used in installTasks module.
-	_availableAddons[addon.path]=addon
+	addon: Addon | None = None
 	try:
-		addon.runInstallTask("onInstall")
-	except:
-		log.error("task 'onInstall' on addon '%s' failed"%addon.name,exc_info=True)
-		del _availableAddons[addon.path]
-		addon.completeRemove(runUninstallTask=False)
-		raise AddonError("Installation failed")
-	state[AddonStateCategory.PENDING_INSTALL].add(bundle.manifest['name'])
-	state.save()
-	return addon
+		bundle.extract()
+		addon = Addon(bundle.pendingInstallPath)
+		# #2715: The add-on must be added to _availableAddons here so that
+		# translations can be used in installTasks module.
+		_availableAddons[addon.path] = addon
+		try:
+			addon.runInstallTask("onInstall")
+			# Broad except used, since we can not know what exceptions might be thrown by the install tasks.
+		except Exception:
+			log.error(f"task 'onInstall' on addon '{addon.name}' failed", exc_info=True)
+			del _availableAddons[addon.path]
+			addon.completeRemove(runUninstallTask=False)
+			raise AddonError("Installation failed")
+		state[AddonStateCategory.PENDING_INSTALL].add(bundle.manifest['name'])
+		state.save()
+	finally:
+		# Regardless if installation failed or not, the created add-on object should be returned
+		# to give caller a hance to clean-up modules imported as part of install tasks.
+		# This clean-up cannot be done here, as install tasks are blocking,
+		# and this function returns as soon as they're started,
+		# so removing modules before they're done may cause unpredictable effects.
+		return addon
+
 
 class AddonError(Exception):
 	""" Represents an exception coming from the addon subsystem. """
@@ -500,6 +513,8 @@ class Addon(AddonBase):
 		"""
 		self.path = path
 		self._extendedPackages = set()
+		self._importedAddonModules: list[str] = []
+		self._modulesBeforeInstall: set[str] = set()
 		manifest_path = os.path.join(path, MANIFEST_FILENAME)
 		with open(manifest_path, 'rb') as f:
 			translatedInput = None
@@ -557,6 +572,7 @@ class Addon(AddonBase):
 				log.error("task 'onUninstall' on addon '%s' failed"%self.name,exc_info=True)
 			finally:
 				del _availableAddons[self.path]
+				self._cleanupAddonImports()
 		tempPath=tempfile.mktemp(suffix=DELETEDIR_SUFFIX,dir=os.path.dirname(self.path))
 		try:
 			os.rename(self.path,tempPath)
@@ -661,34 +677,49 @@ class Addon(AddonBase):
 			raise ValueError(f"{name} is an invalid python module name")
 		log.debug(f"Importing module {name} from plugin {self!r}")
 		# Create a qualified full name to avoid modules with the same name on sys.modules.
-		fullName = f"addons.{self.name}.{name}"
+		# Since the same add-on can be installed and its new version can be pending installation
+		# we cannot rely on add-on name being unique.
+		# To avoid conflicts, last part of the add-on's path is used
+		# i.e. the directory name whose suffix is different between add-ons installed and add-ons pending install.
+		# Since dot is used as a separator between add-on name and state suffix,
+		# all dots in the name are replaced with underscores.
+		addonPkgName = f"addons.{os.path.split(self.path)[-1].replace('.', '_')}"
+		fullName = f"{addonPkgName}.{name}"
 		# If the given name contains dots (i.e. it is a submodule import),
 		# ensure the module at the top of the hierarchy is created correctly.
 		# After that, the import mechanism will be able to resolve the submodule automatically.
 		splitName = name.split('.')
-		fullNameTop = f"addons.{self.name}.{splitName[0]}"
+		fullNameTop = f"{addonPkgName}.{splitName[0]}"
 		if fullNameTop in sys.modules:
 			# The module can safely be imported, since the top level module is known.
-			return importlib.import_module(fullName)
+			mod = importlib.import_module(fullName)
+			self._importedAddonModules.append(fullName)
+			return mod
 		# Ensure the new module is resolvable by the import system.
 		# For this, all packages in the tree have to be available in sys.modules.
 		# We add mock modules for the addons package and the addon itself.
 		# If we don't do this, namespace packages can't be imported correctly.
-		for parentName in ("addons", f"addons.{self.name}"):
+		for parentName in ("addons", addonPkgName):
 			if parentName in sys.modules:
 				# Parent package already initialized
 				continue
-			parentSpec = importlib._bootstrap.ModuleSpec(parentName, None, is_package=True)
+			parentSpec = importlib.machinery.ModuleSpec(parentName, None, is_package=True)
 			parentModule = importlib.util.module_from_spec(parentSpec)
 			sys.modules[parentModule.__name__] = parentModule
+			self._importedAddonModules.append(parentModule.__name__)
 		spec = importlib.machinery.PathFinder.find_spec(fullNameTop, [self.path])
 		if not spec:
 			raise ModuleNotFoundError(f"No module named {name!r}", name=name)
 		mod = importlib.util.module_from_spec(spec)
 		sys.modules[fullNameTop] = mod
+		self._importedAddonModules.append(fullNameTop)
 		if spec.loader:
 			spec.loader.exec_module(mod)
-		return mod if fullNameTop == fullName else importlib.import_module(fullName)
+		if fullNameTop == fullName:
+			return mod
+		importedMod = importlib.import_module(fullName)
+		self._importedAddonModules.append(fullName)
+		return importedMod
 
 	def getTranslationsInstance(self, domain='nvda'):
 		""" Gets the gettext translation instance for this add-on.
@@ -700,11 +731,17 @@ class Addon(AddonBase):
 		localedir = os.path.join(self.path, "locale")
 		return gettext.translation(domain, localedir=localedir, languages=[languageHandler.getLanguage()], fallback=True)
 
-	def runInstallTask(self,taskName,*args,**kwargs):
+	def runInstallTask(
+			self,
+			taskName: Literal["onInstall", "onUninstall"],
+			*args,
+			**kwargs
+	) -> None:
 		"""
 		Executes the function having the given taskName with the given args and kwargs,
 		in the add-on's installTasks module if it exists.
 		"""
+		self._modulesBeforeInstall = set(sys.modules.keys())
 		if not hasattr(self,'_installTasksModule'):
 			try:
 				installTasksModule = self.loadModule('installTasks')
@@ -715,6 +752,17 @@ class Addon(AddonBase):
 			func=getattr(self._installTasksModule,taskName,None)
 			if func:
 				func(*args,**kwargs)
+
+	def _cleanupAddonImports(self) -> None:
+		for modName in self._importedAddonModules:
+			log.debug(f"removing imported add-on module {modName}")
+			del sys.modules[modName]
+		self._importedAddonModules.clear()
+		for modName in set(sys.modules.keys()) - self._modulesBeforeInstall:
+				module = sys.modules[modName]
+				if module.__file__ and module.__file__.startswith(self.path):
+					log.debug(f"Removing module {module} from cache of imported modules")
+					del sys.modules[modName]
 
 	def getDocFilePath(self, fileName: Optional[str] = None) -> Optional[str]:
 		r"""Get the path to a documentation file for this add-on.
@@ -749,8 +797,8 @@ class Addon(AddonBase):
 	def isPendingInstall(self) -> bool:
 		return super().isPendingInstall and self.pendingInstallPath == self.path
 
-	def __repr__(self):
-		return f"{self.__class__.__name__} ({self.name!r}, running={self.isRunning!r})"
+	def __repr__(self) -> str:
+		return f"{self.__class__.__name__} ({self.name!r} at path {self.path!r}, running={self.isRunning!r})"
 
 
 def getCodeAddon(obj=None, frameDist=1):
