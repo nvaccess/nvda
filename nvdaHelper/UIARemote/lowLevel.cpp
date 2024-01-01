@@ -136,19 +136,32 @@ extern "C" __declspec(dllexport) HRESULT __stdcall remoteOpResult_getOperand(voi
 		return S_FALSE;
 	}
 	auto propVal = result.try_as<IPropertyValue>();
-	// Unbox value into VARIANT
-	auto propType = propVal.Type();
-	switch(propVal.Type()) {
-		case PropertyType::Int32:
-			arg_pVariant->vt = VT_I4;
-			arg_pVariant->lVal = propVal.GetInt32();
-			break;
-		case PropertyType::String:
-			arg_pVariant->vt = VT_BSTR;
-			arg_pVariant->bstrVal = SysAllocString(propVal.GetString().c_str());
-			break;
-		default:
-			return E_NOTIMPL;
+	if(propVal) {
+		// Unbox property value into VARIANT
+		auto propType = propVal.Type();
+		switch(propVal.Type()) {
+			case PropertyType::Int32:
+				arg_pVariant->vt = VT_I4;
+				arg_pVariant->lVal = propVal.GetInt32();
+				break;
+			case PropertyType::String:
+				arg_pVariant->vt = VT_BSTR;
+				arg_pVariant->bstrVal = SysAllocString(propVal.GetString().c_str());
+				break;
+			case PropertyType::Boolean:
+				arg_pVariant->vt = VT_BOOL;
+				arg_pVariant->boolVal = propVal.GetBoolean() ? VARIANT_TRUE : VARIANT_FALSE;
+			case PropertyType::Inspectable:
+				arg_pVariant->vt = VT_UNKNOWN;
+				arg_pVariant->punkVal = static_cast<::IUnknown*>(winrt::detach_abi(propVal.as<winrt::Windows::Foundation::IUnknown>()));
+			default:
+				return E_NOTIMPL;
+		}
+	} else {
+		// operand is not a property value.
+		// Just treat it as an IUnknown.
+		arg_pVariant->vt = VT_UNKNOWN;
+		arg_pVariant->punkVal = static_cast<::IUnknown*>(winrt::detach_abi(result.as<winrt::Windows::Foundation::IUnknown>()));
 	}
 	return S_OK;
 }
