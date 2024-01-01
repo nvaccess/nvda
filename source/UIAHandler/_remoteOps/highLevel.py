@@ -3,8 +3,10 @@
 # See the file COPYING for more details.
 # Copyright (C) 2023-2023 NV Access Limited
 
+import enum
+import functools
 from numbers import Number
-from typing import Optional, Self
+from typing import Optional, Self, Union
 import contextlib
 import _ctypes
 import ctypes
@@ -25,7 +27,7 @@ import struct
 import itertools
 from UIAHandler import UIA
 from . import lowLevel
-from logHandler import getCodePath
+from logHandler import log
 
 
 def _getLocationString(frame: inspect.FrameInfo) -> str:
@@ -181,7 +183,7 @@ class RemoteString(_RemoteBaseObject):
 			raise TypeError("toResult must be a RemoteString")
 		if not isinstance(other, RemoteString):
 			if isinstance(other, str):
-				other = self._rob.newString(other)
+				other = RemoteString._new(self._rob, other)
 			elif isinstance(other, _RemoteBaseObject):
 				other = other.stringify()
 			else:
@@ -214,7 +216,7 @@ class _RemoteNullable(_RemoteBaseObject):
 		)
 
 	def isNull(self) -> bool:
-		result = self._rob.newBool()
+		result = RemoteBool._new(self._rob, False)
 		self._rob._addInstruction(
 			lowLevel.InstructionType.IsNull,
 			c_long(result._operandId),
@@ -270,17 +272,11 @@ class RemoteExtensionTarget(_RemoteNullable):
 class RemoteElement(RemoteExtensionTarget):
 	_isTypeInstruction = lowLevel.InstructionType.IsElement
 
-	@classmethod
-	def _initOperand(cls, rob: "RemoteOperationBuilder", operandId: int, initialValue: UIA.IUIAutomationElement):
-		if initialValue is None:
-			return super()._initOperand(rob, operandId)
-		rob._importElement(operandId, initialValue)
-
 	def getPropertyValue(self, propertyId: int, ignoreDefault: bool=False) -> object:
 		if not isinstance(propertyId, RemoteInt):
-			propertyId = self._rob.newInt(propertyId)
+			propertyId = RemoteInt._new(self._rob, propertyId)
 		if not isinstance(ignoreDefault, RemoteBool):
-			ignoreDefault = self._rob.newBool(ignoreDefault)
+			ignoreDefault = RemoteBool._new(self._rob, ignoreDefault)
 		resultOperandId = self._rob._getNewOperandId()
 		result = RemoteVariant(self._rob, resultOperandId)
 		self._rob._addInstruction(
@@ -294,19 +290,16 @@ class RemoteElement(RemoteExtensionTarget):
 
 
 class RemoteTextRange(RemoteExtensionTarget):
-
-	@classmethod
-	def _initOperand(cls, rob: "RemoteOperationBuilder", operandId: int, initialValue: UIA.IUIAutomationTextRange):
-		if initialValue is None:
-			return super()._initOperand(rob, operandId)
-		rob._importTextRange(operandId, initialValue)
+	pass
 
 
 class RemoteGuid(_RemoteBaseObject):
 	_isTypeInstruction = lowLevel.InstructionType.IsGuid
 
 	@classmethod
-	def _initOperand(cls, rob: "RemoteOperationBuilder", operandId: int, initialValue: GUID):
+	def _initOperand(cls, rob: "RemoteOperationBuilder", operandId: int, initialValue: Union[GUID, str]):
+		if isinstance(initialValue, str):
+			initialValue = GUID(initialValue)
 		rob._addInstruction(
 			lowLevel.InstructionType.NewGuid,
 			c_long(operandId),
@@ -337,7 +330,16 @@ class RemoteOperationBuilder:
 
 	_versionBytes = struct.pack('l', 0) 
 
-	def __init__(self, enableLogging=False):
+	_pyClassToRemoteClass = {
+		int: RemoteInt,
+		bool: RemoteBool,
+		str: RemoteString,
+		GUID: RemoteGuid,
+		UIA.IUIAutomationElement: RemoteElement,
+		UIA.IUIAutomationTextRange: RemoteTextRange,
+	}
+
+	def __init__(self, enableLogging: bool=False):
 		self._instructions: list[_InstructionRecord] = []
 		self._lastIfConditionInstructionPendingElse: _InstructionRecord | None = None
 		self._operandIdGen = itertools.count(start=1)
@@ -375,11 +377,26 @@ class RemoteOperationBuilder:
 				byteCode += paramBytes
 		return byteCode
 
-	def _importElement(self, operandId: int, element: UIA.IUIAutomationElement):
+	def importElement(self, element: UIA.IUIAutomationElement) -> RemoteElement:
+		operandId = self._getNewOperandId()
 		self._ro.importElement(operandId, element)
+		return RemoteElement(self, operandId)
 
-	def _importTextRange(self, operandId: int, textRange: UIA.IUIAutomationTextRange):
+	def importTextRange(self, textRange: UIA.IUIAutomationTextRange):
+		operandId = self._getNewOperandId()
 		self._ro.importTextRange(operandId, textRange)
+		return RemoteTextRange(self, operandId)
+
+	@property
+	def _lastInstructionIndex(self):
+		return len(self._instructions) - 1
+
+	def _getInstructionRecord(self, instructionIndex: int) -> _InstructionRecord:
+		return self._instructions[instructionIndex]
+
+	@property
+	def _currentScope(self) -> Optional["_RemoteScopeContext"]:
+		return self._scopeStack[-1] if self._scopeStack else None
 
 	def newInt(self, initialValue: int=0) -> RemoteInt:
 		return RemoteInt._new(self, initialValue)
@@ -393,37 +410,23 @@ class RemoteOperationBuilder:
 	def newVariant(self) -> RemoteVariant:
 		return RemoteVariant._new(self)
 
-	def newExtensionTarget(self) -> RemoteExtensionTarget:
+	def newNULLExtensionTarget(self) -> RemoteExtensionTarget:
 		return RemoteExtensionTarget._new(self)
 
-	def newElement(self, initialValue: UIA.IUIAutomationElement) -> RemoteElement:
-		return RemoteElement._new(self, initialValue)
+	def newNULLElement(self) -> RemoteElement:
+		return RemoteElement._new(self)
 
-	def newTextRange(self, initialValue: UIA.IUIAutomationTextRange) -> RemoteTextRange:
-		return RemoteTextRange._new(self, initialValue)
+	def newNULLTextRange(self) -> RemoteTextRange:
+		return RemoteTextRange._new(self)
 
 	def newGuid(self, initialValue: GUID) -> RemoteGuid:
 		return RemoteGuid._new(self, initialValue)
-
-	@property
-	def _lastInstructionIndex(self):
-		return len(self._instructions) - 1
-
-	def _getInstructionRecord(self, instructionIndex: int) -> _InstructionRecord:
-		return self._instructions[instructionIndex]
-
-	@property
-	def _currentScope(self) -> Optional["_RemoteScopeContext"]:
-		return self._scopeStack[-1] if self._scopeStack else None
 
 	def ifBlock(self, condition: RemoteBool):
 		return _RemoteIfBlockBuilder(self, condition)
 
 	def elseBlock(self):
 		return _RemoteElseBlockBuilder(self)
-
-	def addToResults(self, remoteObj: _RemoteBaseObject):
-		self._ro.addToResults(remoteObj._operandId)
 
 	def halt(self):
 		self._addInstruction(lowLevel.InstructionType.Halt)
@@ -434,6 +437,27 @@ class RemoteOperationBuilder:
 		for string in strings:
 			self._log += string
 		self._log += "\n"
+
+	def addToResults(self, remoteObj: _RemoteBaseObject):
+		self._ro.addToResults(remoteObj._operandId)
+
+	def importObjects(self, *imports: object) -> list[_RemoteBaseObject]:
+		remoteObjects = []
+		for importObj in imports:
+			if isinstance(importObj, enum.Enum):
+				importObj = importObj.value
+			if isinstance(importObj, UIA.IUIAutomationElement):
+				remoteObj = self.importElement(importObj)
+			elif isinstance(importObj, UIA.IUIAutomationTextRange):
+				remoteObj = self.importTextRange(importObj)
+			else:
+				remoteClass = self._pyClassToRemoteClass.get(type(importObj))
+				if remoteClass:
+					remoteObj = remoteClass._new(self, importObj)
+				else:
+					raise TypeError(f"{type(importObj)} is not a supported type")
+			remoteObjects.append(remoteObj)
+		return remoteObjects
 
 	def execute(self):
 		self.halt()
@@ -482,13 +506,6 @@ class RemoteOperationBuilder:
 			output += f"{index}: {instruction.instructionType.name} {instruction.params}\n"
 		output += "--- Instructions end ---"
 		return output
-
-	def __enter__(self):
-		return self
-
-	def __exit__(self, exc_type, exc_val, exc_tb):
-			if exc_type is None:
-				self.execute()
 
 
 class _RemoteScopeContext:
@@ -552,3 +569,62 @@ class _RemoteElseBlockBuilder(_RemoteScopeContext):
 		relativeJumpOffset = nextInstructionIndex - self._jumpInstructionIndex
 		jumpInstruction = self._rob._getInstructionRecord(self._jumpInstructionIndex)
 		jumpInstruction.params[0].value = relativeJumpOffset
+
+
+class RemoteFuncAPI:
+
+	def __init__(self, rob: "RemoteOperationBuilder"):
+		self._rob = rob
+
+	def newInt(self, initialValue: int=0) -> RemoteInt:
+		return self._rob.newInt(initialValue)
+
+	def newBool(self, initialValue: bool=False) -> RemoteBool:
+		return self._rob.newBool(initialValue)
+
+	def newString(self, initialValue: str="") -> RemoteString:
+		return self._rob.newString(initialValue)
+
+	def newVariant(self) -> RemoteVariant:
+		return self._rob.newVariant()
+
+	def newNULLExtensionTarget(self) -> RemoteExtensionTarget:
+		return self._rob.newNULLExtensionTarget()
+
+	def newNULLElement(self) -> RemoteElement:
+		return self._rob.newNULLElement()
+
+	def newNULLTextRange(self) -> RemoteTextRange:
+		return self._rob.newNULLTextRange()
+
+	def newGuid(self, initialValue: GUID) -> RemoteGuid:
+		return self._rob.newGuid(initialValue)
+
+	def ifBlock(self, condition: RemoteBool):
+		return self._rob.ifBlock(condition)
+
+	def elseBlock(self):
+		return self._rob.elseBlock()
+
+	def halt(self):
+		self._rob.halt()
+
+	def logMessage(self,*strings): 
+		self._rob.logMessage(*strings)
+
+
+def execute(remoteFunc: callable, *imports: object, enableLogging=False) -> object: 
+	rob = RemoteOperationBuilder(enableLogging=enableLogging)
+	remoteObjects = rob.importObjects(*imports)
+	ba = RemoteFuncAPI(rob)
+	remoteResults = remoteFunc(ba, *remoteObjects)
+	if isinstance(remoteResults, _RemoteBaseObject):
+		remoteResults = [remoteResults]
+	for remoteResult in remoteResults:
+		rob.addToResults(remoteResult)
+	rob.execute()
+	if enableLogging:
+		log.debug(rob.dumpLog())
+	if len(remoteResults) == 1:
+		return rob.getResult(remoteResults[0])
+	return tuple(rob.getResult(remoteResult) for remoteResult in remoteResults)

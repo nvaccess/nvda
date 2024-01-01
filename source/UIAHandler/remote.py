@@ -32,17 +32,13 @@ def msWord_getCustomAttributeValue(
 	from ._remoteOps import highLevel
 	from logHandler import log
 	# Several custom extension GUIDs specific to Microsoft Word
-	guid_msWord_extendedTextRangePattern = GUID("{93514122-FF04-4B2C-A4AD-4AB04587C129}")
-	guid_msWord_getCustomAttributeValue = GUID("{081ACA91-32F2-46F0-9FB9-017038BC45F8}")
-	with highLevel.RemoteOperationBuilder(enableLogging=True) as rob:
-		remote_docElement = rob.newElement(docElement)
-		remote_textRange = rob.newTextRange(textRange)
-		remote_customAttribID = rob.newInt(customAttribID)
+	def remoteFunc(rob: highLevel.RemoteFuncAPI, remote_docElement: highLevel.RemoteElement, remote_textRange: highLevel.RemoteTextRange, remote_customAttribID: highLevel.RemoteInt):
+		guid_msWord_extendedTextRangePattern = rob.newGuid("{93514122-FF04-4B2C-A4AD-4AB04587C129}")
+		guid_msWord_getCustomAttributeValue = rob.newGuid("{081ACA91-32F2-46F0-9FB9-017038BC45F8}")
 		remote_customAttribValue = rob.newVariant()
-		rob.addToResults(remote_customAttribValue)
 		with rob.ifBlock(remote_docElement.isExtensionSupported(guid_msWord_extendedTextRangePattern)):
 			rob.logMessage("msWord_getCustomAttributeValue: docElement supports extendedTextRangePattern")
-			remote_extendedTextRangePattern = rob.newExtensionTarget()
+			remote_extendedTextRangePattern = rob.newNULLExtensionTarget()
 			rob.logMessage("msWord_getCustomAttributeValue: doing callExtension for extendedTextRangePattern")
 			remote_docElement.callExtension(
 				guid_msWord_extendedTextRangePattern,
@@ -68,6 +64,6 @@ def msWord_getCustomAttributeValue(
 		with rob.elseBlock():
 			rob.logMessage("msWord_getCustomAttributeValue: docElement does not support extendedTextRangePattern")
 		rob.logMessage("msWord_getCustomAttributeValue end")
-	log.info(rob.dumpLog())
-	result = rob.getResult(remote_customAttribValue)
-	return result
+		return remote_customAttribValue
+	customAttribValue = highLevel.execute(remoteFunc, docElement, textRange, customAttribID, enableLogging=True)
+	return customAttribValue
