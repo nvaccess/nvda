@@ -575,12 +575,12 @@ def generateModuleList(
 	library_zip_path = str(source[0])
 	if not os.path.exists(library_zip_path):
 		raise FileNotFoundError(f"The zipfile {library_zip_path} does not exist.")
-	pyc_files = [f for f in zipfile.ZipFile(library_zip_path, 'r').namelist() if f.endswith('.pyc')]
+	pyc_files = [f for f in zipfile.ZipFile(library_zip_path, "r").namelist() if f.endswith(".pyc")]
 
 	# Convert the file paths to python module format
 	# eg: NVDAObjects/IAccessible/__init__.pyc --> NVDAObjects.IAccessible
 	imported_modules = sorted(set([
-		re.sub(r'(.__init__|.__version__|._version)?\.pyc$', '', module_path).replace('/', '.')
+		re.sub(r"(.__init__|.__version__|._version)?\.pyc$", "", module_path).replace("/", ".")
 		for module_path in pyc_files
 	]))
 
@@ -589,8 +589,8 @@ def generateModuleList(
 		raise ValueError(f"Expected module NVDAObjects.UIA not found in the zipfile.")
 
 	# Store the list to file
-	with open(str(target[0]), 'w', encoding="utf-8") as file:
-		file.write('\n'.join(imported_modules))
+	with open(str(target[0]), "w", encoding="utf-8") as file:
+		file.write("\n".join(imported_modules))
 
 
 # Create a new builder that uses a custom action using the generate_module_list function
@@ -598,8 +598,8 @@ env["BUILDERS"]["GenerateModuleList"] = Builder(action=Action(generateModuleList
 
 # Define the target and source
 # Putting the target in the output dir automatically causes AppVeyor to package it as an artefact
-target = os.path.join(outputDir.abspath, 'library_modules.txt')
-source = os.path.join(os.getcwd(), 'dist', 'library.zip')
+target = os.path.join(outputDir.abspath, "library_modules.txt")
+source = os.path.join(os.getcwd(), "dist", "library.zip")
 
 # Execute along with 'dist' target
-env.Depends('dist', env.GenerateModuleList(target, source))
+env.Depends("dist", env.GenerateModuleList(target, source))
