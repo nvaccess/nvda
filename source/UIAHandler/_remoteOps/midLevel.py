@@ -6,7 +6,7 @@
 import enum
 import functools
 from numbers import Number
-from typing import Optional, Self, Union
+from typing import Optional, Self, Union, Callable
 import contextlib
 import _ctypes
 import ctypes
@@ -165,28 +165,28 @@ class _RemoteNumber(_RemoteIntegral):
 		return self
 
 	def __add__(self, other: Self | Number) -> Self:
-		return self._doBinaryOp(lowLevel.InstructionType.AddBinary, other)
+		return self._doBinaryOp(lowLevel.InstructionType.BinaryAdd, other)
 
 	def __iadd__(self, other: Self | Number) -> Self:
-		return self._doInplaceOp(lowLevel.InstructionType.AddInplace, other)
+		return self._doInplaceOp(lowLevel.InstructionType.Add, other)
 
 	def __sub__(self, other: Self | Number) -> Self:
-		return self._doBinaryOp(lowLevel.InstructionType.SubtractBinary, other)
+		return self._doBinaryOp(lowLevel.InstructionType.BinarySubtract, other)
 
 	def __isub__(self, other: Self | Number) -> Self:
-		return self._doInplaceOp(lowLevel.InstructionType.SubtractInplace, other)
+		return self._doInplaceOp(lowLevel.InstructionType.Subtract, other)
 
 	def __mul__(self, other: Self | Number) -> Self:
-		return self._doBinaryOp(lowLevel.InstructionType.MultiplyBinary, other)
+		return self._doBinaryOp(lowLevel.InstructionType.BinaryMultiply, other)
 
 	def __imul__(self, other: Self | Number) -> Self:
-		return self._doInplaceOp(lowLevel.InstructionType.MultiplyInplace, other)
+		return self._doInplaceOp(lowLevel.InstructionType.Multiply, other)
 
 	def __truediv__(self, other: Self | Number) -> Self:
-		return self._doBinaryOp(lowLevel.InstructionType.DivideBinary, other)
+		return self._doBinaryOp(lowLevel.InstructionType.BinaryDivide, other)
 
 	def __itruediv__(self, other: Self | Number) -> Self:
-		return self._doInplaceOp(lowLevel.InstructionType.DivideInplace, other)
+		return self._doInplaceOp(lowLevel.InstructionType.Divide, other)
 
 
 class RemoteInt(_RemoteNumber):
@@ -378,7 +378,6 @@ class RemoteOperationBuilder:
 		self._lastIfConditionInstructionPendingElse: _InstructionRecord | None = None
 		self._operandIdGen = itertools.count(start=1)
 		self._ro = lowLevel.RemoteOperation()
-		self._scopeStack: list["_RemoteScopeContext"] = []
 		self._results = None
 		self._loggingEnablede = enableLogging
 		if enableLogging:
@@ -428,10 +427,6 @@ class RemoteOperationBuilder:
 	def _getInstructionRecord(self, instructionIndex: int) -> _InstructionRecord:
 		return self._instructions[instructionIndex]
 
-	@property
-	def _currentScope(self) -> Optional["_RemoteScopeContext"]:
-		return self._scopeStack[-1] if self._scopeStack else None
-
 	def newInt(self, initialValue: int=0) -> RemoteInt:
 		return RemoteInt._new(self, initialValue)
 
@@ -461,6 +456,9 @@ class RemoteOperationBuilder:
 
 	def elseBlock(self):
 		return _RemoteElseBlockBuilder(self)
+
+	def whileBlock(self, conditionBuilderFunc: Callable[[], RemoteBool]):
+		return _RemoteWhileBlock(self, conditionBuilderFunc)
 
 	def halt(self):
 		self._addInstruction(lowLevel.InstructionType.Halt)
@@ -542,22 +540,10 @@ class RemoteOperationBuilder:
 		return output
 
 
-class _RemoteScopeContext:
-
-	def __init__(self, remoteOpBuilder: RemoteOperationBuilder):
-		self._rob = remoteOpBuilder
-
-	def __enter__(self):
-		self._rob._scopeStack.append(self)
-
-	def __exit__(self, exc_type, exc_val, exc_tb):
-		self._rob._scopeStack.pop()
-
-
-class _RemoteIfBlockBuilder(_RemoteScopeContext):
+class _RemoteIfBlockBuilder:
 
 	def __init__(self, remoteOpBuilder: RemoteOperationBuilder, condition: RemoteBool):
-		super().__init__(remoteOpBuilder)
+		self._rob = remoteOpBuilder
 		self._condition = condition
 
 	def __enter__(self):
@@ -566,10 +552,8 @@ class _RemoteIfBlockBuilder(_RemoteScopeContext):
 			c_long(self._condition._operandId),
 			c_long(1), # offset updated in Else method 
 		)
-		super().__enter__()
 
 	def __exit__(self, exc_type, exc_val, exc_tb):
-		super().__exit__(exc_type, exc_val, exc_tb)
 		nextInstructionIndex = self._rob._lastInstructionIndex + 1
 		relativeJumpOffset = nextInstructionIndex - self._conditionInstructionIndex
 		conditionInstruction = self._rob._getInstructionRecord(self._conditionInstructionIndex)
@@ -577,10 +561,10 @@ class _RemoteIfBlockBuilder(_RemoteScopeContext):
 		self._rob._lastIfConditionInstructionPendingElse = conditionInstruction
 
 
-class _RemoteElseBlockBuilder(_RemoteScopeContext):
+class _RemoteElseBlockBuilder:
 
 	def __init__(self, remoteOpBuilder: RemoteOperationBuilder):
-		super().__init__(remoteOpBuilder)
+		self._rob = remoteOpBuilder
 
 	def __enter__(self):
 		if not self._rob._lastIfConditionInstructionPendingElse:
@@ -594,12 +578,48 @@ class _RemoteElseBlockBuilder(_RemoteScopeContext):
 		)
 		# increment the false offset of the previous if block to take the new jump instruction into account. 
 		conditionInstruction.params[1].value += 1
-		super().__enter__()
 
 	def __exit__(self, exc_type, exc_val, exc_tb):
-		super().__exit__(exc_type, exc_val, exc_tb)
 		# update the jump instruction to jump to the real end of the else block. 
 		nextInstructionIndex = self._rob._lastInstructionIndex + 1
 		relativeJumpOffset = nextInstructionIndex - self._jumpInstructionIndex
 		jumpInstruction = self._rob._getInstructionRecord(self._jumpInstructionIndex)
 		jumpInstruction.params[0].value = relativeJumpOffset
+
+
+class _RemoteWhileBlock:
+
+	def __init__(self, remoteOpBuilder: RemoteOperationBuilder, conditionBuilderFunc: Callable[[], RemoteBool]):
+		self._rob = remoteOpBuilder
+		self._conditionBuilderFunc = conditionBuilderFunc
+
+	def __enter__(self):
+		# Add a new loop block instruction to start the while loop 
+		self._newLoopBlockInstructionIndex = self._rob._addInstruction(
+			lowLevel.InstructionType.NewLoopBlock,
+			c_long(1), # offset updated in __exit__ method
+			c_long(1), # offset updated in __exit__ method
+		)
+		# Generate the loop condition instructions and enter the if block.
+		condition = self._conditionBuilderFunc()
+		self._ifBlock = self._rob.ifBlock(condition)
+		self._ifBlock.__enter__()
+
+	def __exit__(self, exc_type, exc_val, exc_tb):
+		# Add a jump instruction to the end of the body to jump back to the start of the loop block.
+		relativeContinueOffset = self._newLoopBlockInstructionIndex - self._rob._lastInstructionIndex
+		self._rob._addInstruction(
+			lowLevel.InstructionType.Fork,
+			c_long(relativeContinueOffset)
+		)
+		#Complete the if block.
+		self._ifBlock.__exit__(exc_type, exc_val, exc_tb)
+		# Add an end loop block instruction after the if block. 
+		self._rob._addInstruction(
+			lowLevel.InstructionType.EndLoopBlock ,
+		)
+		# Update the break offset of the new loop block instruction to jump to after the end loop block instruction.
+		nextInstructionIndex = self._rob._lastInstructionIndex + 1
+		relativeBreakOffset = nextInstructionIndex - self._newLoopBlockInstructionIndex
+		newLoopBlockInstruction = self._rob._getInstructionRecord(self._newLoopBlockInstructionIndex)
+		newLoopBlockInstruction.params[0].value = relativeBreakOffset

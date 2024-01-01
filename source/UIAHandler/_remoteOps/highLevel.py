@@ -3,6 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2023-2023 NV Access Limited
 
+from typing import Callable
 from comtypes import GUID
 from logHandler import log
 from . import midLevel
@@ -52,6 +53,9 @@ class RemoteFuncAPI:
 
 	def elseBlock(self):
 		return self._rob.elseBlock()
+
+	def whileBlock(self, conditionBuilderFunc: Callable[[], RemoteBool]):
+		return self._rob.whileBlock(conditionBuilderFunc)
 
 	def halt(self):
 		self._rob.halt()
