@@ -31,10 +31,10 @@ class TestWinVersion(unittest.TestCase):
 
 	def test_moreRecentWinVer(self):
 		# Specifically to test operators.
-		minimumWinVer = winVersion.WIN7_SP1
-		audioDuckingAvailable = winVersion.WIN8
+		minimumWinVer = winVersion.WIN81
+		emojiPanelIntroduced = winVersion.WIN10_1709
 		self.assertGreaterEqual(
-			audioDuckingAvailable, minimumWinVer
+			emojiPanelIntroduced, minimumWinVer
 		)
 
 	def test_winVerKnownReleaseNameForWinVersionConstant(self):
