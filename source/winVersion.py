@@ -10,7 +10,7 @@ making sure NVDA can run on a minimum supported version of Windows.
 When working on this file, consider moving to winAPI.
 """
 
-from typing import Optional, Dict, Any
+from typing import Any
 import sys
 import os
 import functools
@@ -23,7 +23,7 @@ from logHandler import log
 # Records a mapping between Windows builds and release names.
 # These include build 10240 for Windows 10 1507 and releases with multiple release builds.
 # These are applicable to Windows 10 and later as they report the same system version (10.0).
-_BUILDS_TO_RELEASE_NAMES: Dict[int, str] = {
+_BUILDS_TO_RELEASE_NAMES: dict[int, str] = {
 	10240: "Windows 10 1507",
 	10586: "Windows 10 1511",
 	14393: "Windows 10 1607",
@@ -81,7 +81,7 @@ class WinVersion(object):
 			major: int = 0,
 			minor: int = 0,
 			build: int = 0,
-			releaseName: Optional[str] = None,
+			releaseName: str | None = None,
 			servicePack: str = "",
 			productType: str = "",
 			processorArchitecture: str = ""
