@@ -11,7 +11,6 @@ import platform
 import re
 import sys
 import zipfile
-from typing import List
 
 import SCons
 
@@ -553,9 +552,11 @@ env.Default(dist)
 env.SConscript("tests/sconscript", exports=["env", "sourceDir", "pot"])
 
 
-def generateModuleList(target: List[SCons.Node.FS.File], 
-					   source: List[SCons.Node.FS.File], 
-					   env: SCons.Environment.Environment) -> None:
+def generateModuleList(
+		target: list[SCons.Node.FS.File],
+		source: list[SCons.Node.FS.File],
+		env: SCons.Environment.Environment
+) -> None:
 	""" 
 	Generate a list of Python modules from compiled '.pyc' files within a specified zipfile.
 
