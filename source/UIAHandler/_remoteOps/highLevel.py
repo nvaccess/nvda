@@ -3,6 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2023-2023 NV Access Limited
 
+from numbers import Number
 from typing import Optional, Self
 import contextlib
 import _ctypes
@@ -102,7 +103,57 @@ class _RemoteIntegral(_RemoteBaseObject):
 		)
 
 
-class RemoteInt(_RemoteIntegral):
+class _RemoteNumber(_RemoteIntegral):
+
+	def _doBinaryOp(self, instructionType: lowLevel.InstructionType, other: Self | Number) -> Self:
+		if not isinstance(other, type(self)):
+			other = self._new(self._rob, other)
+		resultOperandId = self._rob._getNewOperandId()
+		result = type(self)(self._rob, resultOperandId)
+		self._rob._addInstruction(
+			instructionType,
+			c_long(result._operandId),
+			c_long(self._operandId),
+			c_long(other._operandId)
+		)
+		return result
+
+	def _doInplaceOp(self, instructionType: lowLevel.InstructionType, other: Self | Number) -> Self:
+		if not isinstance(other, type(self)):
+			other = self._new(self._rob, other)
+		self._rob._addInstruction(
+			instructionType,
+			c_long(self._operandId),
+			c_long(other._operandId)
+		)
+		return self
+
+	def __add__(self, other: Self | Number) -> Self:
+		return self._doBinaryOp(lowLevel.InstructionType.AddBinary, other)
+
+	def __iadd__(self, other: Self | Number) -> Self:
+		return self._doInplaceOp(lowLevel.InstructionType.AddInplace, other)
+
+	def __sub__(self, other: Self | Number) -> Self:
+		return self._doBinaryOp(lowLevel.InstructionType.SubtractBinary, other)
+
+	def __isub__(self, other: Self | Number) -> Self:
+		return self._doInplaceOp(lowLevel.InstructionType.SubtractInplace, other)
+
+	def __mul__(self, other: Self | Number) -> Self:
+		return self._doBinaryOp(lowLevel.InstructionType.MultiplyBinary, other)
+
+	def __imul__(self, other: Self | Number) -> Self:
+		return self._doInplaceOp(lowLevel.InstructionType.MultiplyInplace, other)
+
+	def __truediv__(self, other: Self | Number) -> Self:
+		return self._doBinaryOp(lowLevel.InstructionType.DivideBinary, other)
+
+	def __itruediv__(self, other: Self | Number) -> Self:
+		return self._doInplaceOp(lowLevel.InstructionType.DivideInplace, other)
+
+
+class RemoteInt(_RemoteNumber):
 	_isTypeInstruction = lowLevel.InstructionType.IsInt
 	_newInstruction = lowLevel.InstructionType.NewInt
 	_initialValueType = c_long
