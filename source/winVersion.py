@@ -105,18 +105,22 @@ class WinVersion(object):
 		On server systems, unless noted otherwise, client release names will be returned.
 		For example, 'Windows 10 1809' will be returned on Server 2019 systems.
 		"""
-		if (self.major, self.minor) == (6, 3):
-			return "Windows 8.1"
-		elif self.major == 10:
-			# From Version 1511 (build 10586), release Id/display version comes from Windows Registry.
+		match (self.major, self.minor):
+			case (6, 3):
+				return "Windows 8.1"
+			# From Windows 10 1511 (build 10586), release Id/display version comes from Windows Registry.
 			# However there are builds with no release name (Version 1507/10240)
 			# or releases with different builds.
 			# Look these up first before asking Windows Registry.
-			if self.build in _BUILDS_TO_RELEASE_NAMES:
+			case (10, 0) if self.build in _BUILDS_TO_RELEASE_NAMES:
 				return _BUILDS_TO_RELEASE_NAMES[self.build]
-			return "Windows 10 unknown"
-		else:
-			return "Windows release unknown"
+			# #15992: 10.0.22000 or later is Windows 11.
+			case (10, 0) if self.build >= 22000:
+				return "Windows 11 unknown"
+			case (10, 0):
+				return "Windows 10 unknown"
+			case _:
+				return "Windows release unknown"
 
 	def __repr__(self):
 		winVersionText = [self.releaseName]
