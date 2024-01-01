@@ -57,6 +57,12 @@ class RemoteFuncAPI:
 	def whileBlock(self, conditionBuilderFunc: Callable[[], RemoteBool]):
 		return self._rob.whileBlock(conditionBuilderFunc)
 
+	def breakLoop(self):
+		self._rob.breakLoop()
+
+	def continueLoop(self):
+		self._rob.continueLoop()
+
 	def halt(self):
 		self._rob.halt()
 

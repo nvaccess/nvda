@@ -81,6 +81,14 @@ class _RemoteBaseObject:
 		self._rob = rob
 		self._operandId = operandId
 
+	def set(self, value: object) -> None:
+		value = self._rob._ensureRemoteObject(value, useCache=True)
+		self._rob._addInstruction(
+			lowLevel.InstructionType.Set,
+			c_long(self._operandId),
+			c_long(value._operandId)
+		)
+
 	def stringify(self) -> "RemoteString":
 		resultOperandId = self._rob._getNewOperandId() 
 		result = RemoteString(self._rob, resultOperandId)
@@ -92,8 +100,7 @@ class _RemoteBaseObject:
 		return result
 
 	def _doCompare(self, comparisonType: lowLevel.ComparisonType, other: Self | object) -> bool:
-		if not isinstance(other, type(self)):
-			other = self._new(self._rob, other)
+		other = self._rob._ensureRemoteObject(other, useCache=True)
 		resultOperandId = self._rob._getNewOperandId()
 		result = RemoteBool(self._rob, resultOperandId)
 		self._rob._addInstruction(
@@ -142,8 +149,7 @@ class _RemoteNumber(_RemoteIntegral):
 		return self._doCompare(lowLevel.ComparisonType.LessThanOrEqual, other)
 
 	def _doBinaryOp(self, instructionType: lowLevel.InstructionType, other: Self | Number) -> Self:
-		if not isinstance(other, type(self)):
-			other = self._new(self._rob, other)
+		other = self._rob._ensureRemoteObject(other, useCache=True)
 		resultOperandId = self._rob._getNewOperandId()
 		result = type(self)(self._rob, resultOperandId)
 		self._rob._addInstruction(
@@ -155,8 +161,7 @@ class _RemoteNumber(_RemoteIntegral):
 		return result
 
 	def _doInplaceOp(self, instructionType: lowLevel.InstructionType, other: Self | Number) -> Self:
-		if not isinstance(other, type(self)):
-			other = self._new(self._rob, other)
+		other = self._rob._ensureRemoteObject(other, useCache=True)
 		self._rob._addInstruction(
 			instructionType,
 			c_long(self._operandId),
@@ -217,7 +222,7 @@ class RemoteString(_RemoteEqualityComparible):
 			raise TypeError("toResult must be a RemoteString")
 		if not isinstance(other, RemoteString):
 			if isinstance(other, str):
-				other = RemoteString._new(self._rob, other)
+				other = self._rob._ensureRemoteObject(other, useCache=True)
 			elif isinstance(other, _RemoteBaseObject):
 				other = other.stringify()
 			else:
@@ -307,10 +312,9 @@ class RemoteElement(RemoteExtensionTarget):
 	_isTypeInstruction = lowLevel.InstructionType.IsElement
 
 	def getPropertyValue(self, propertyId: int, ignoreDefault: bool=False) -> object:
-		if not isinstance(propertyId, RemoteInt):
-			propertyId = RemoteInt._new(self._rob, propertyId)
+		propertyId = self._rob._ensureRemoteObject(propertyId, useCache=True)
 		if not isinstance(ignoreDefault, RemoteBool):
-			ignoreDefault = RemoteBool._new(self._rob, ignoreDefault)
+			ignoreDefault = self._rob._ensureRemoteObject(ignoreDefault, useCache=True)
 		resultOperandId = self._rob._getNewOperandId()
 		result = RemoteVariant(self._rob, resultOperandId)
 		self._rob._addInstruction(
@@ -369,14 +373,13 @@ class RemoteOperationBuilder:
 		bool: RemoteBool,
 		str: RemoteString,
 		GUID: RemoteGuid,
-		UIA.IUIAutomationElement: RemoteElement,
-		UIA.IUIAutomationTextRange: RemoteTextRange,
 	}
 
 	def __init__(self, enableLogging: bool=False):
 		self._instructions: list[_InstructionRecord] = []
 		self._lastIfConditionInstructionPendingElse: _InstructionRecord | None = None
 		self._operandIdGen = itertools.count(start=1)
+		self._remotedObjectCache: dict[object, _RemoteBaseObject] = {}
 		self._ro = lowLevel.RemoteOperation()
 		self._results = None
 		self._loggingEnablede = enableLogging
@@ -460,6 +463,12 @@ class RemoteOperationBuilder:
 	def whileBlock(self, conditionBuilderFunc: Callable[[], RemoteBool]):
 		return _RemoteWhileBlock(self, conditionBuilderFunc)
 
+	def breakLoop(self):
+		self._addInstruction(lowLevel.InstructionType.BreakLoop)
+
+	def continueLoop(self):
+		self._addInstruction(lowLevel.InstructionType.ContinueLoop)
+
 	def halt(self):
 		self._addInstruction(lowLevel.InstructionType.Halt)
 
@@ -473,21 +482,32 @@ class RemoteOperationBuilder:
 	def addToResults(self, remoteObj: _RemoteBaseObject):
 		self._ro.addToResults(remoteObj._operandId)
 
+	def _ensureRemoteObject(self, obj: object, useCache=False) -> _RemoteBaseObject:
+		if isinstance(obj, enum.Enum):
+			obj = importObj.value
+		if useCache:
+			cacheKey = (type(obj), obj)
+			remoteObj = self._remotedObjectCache.get(obj)
+			if remoteObj is not None:
+				return remoteObj
+		if isinstance(obj, UIA.IUIAutomationElement):
+			remoteObj = self.importElement(obj)
+		elif isinstance(obj, UIA.IUIAutomationTextRange):
+			remoteObj = self.importTextRange(obj)
+		else:
+			remoteClass = self._pyClassToRemoteClass.get(type(obj))
+			if remoteClass:
+				remoteObj = remoteClass._new(self, obj)
+			else:
+				raise TypeError(f"{type(importObj)} is not a supported type")
+		if useCache:
+			self._remotedObjectCache[cacheKey] = remoteObj
+		return remoteObj
+
 	def importObjects(self, *imports: object) -> list[_RemoteBaseObject]:
 		remoteObjects = []
 		for importObj in imports:
-			if isinstance(importObj, enum.Enum):
-				importObj = importObj.value
-			if isinstance(importObj, UIA.IUIAutomationElement):
-				remoteObj = self.importElement(importObj)
-			elif isinstance(importObj, UIA.IUIAutomationTextRange):
-				remoteObj = self.importTextRange(importObj)
-			else:
-				remoteClass = self._pyClassToRemoteClass.get(type(importObj))
-				if remoteClass:
-					remoteObj = remoteClass._new(self, importObj)
-				else:
-					raise TypeError(f"{type(importObj)} is not a supported type")
+			remoteObj = self._ensureRemoteObject(importObj)
 			remoteObjects.append(remoteObj)
 		return remoteObjects
 
@@ -598,7 +618,7 @@ class _RemoteWhileBlock:
 		self._newLoopBlockInstructionIndex = self._rob._addInstruction(
 			lowLevel.InstructionType.NewLoopBlock,
 			c_long(1), # offset updated in __exit__ method
-			c_long(1), # offset updated in __exit__ method
+			c_long(1)
 		)
 		# Generate the loop condition instructions and enter the if block.
 		condition = self._conditionBuilderFunc()
