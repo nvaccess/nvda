@@ -91,6 +91,28 @@ class _RemoteBaseObject:
 		)
 		return result
 
+	def _doCompare(self, comparisonType: lowLevel.ComparisonType, other: Self | object) -> bool:
+		if not isinstance(other, type(self)):
+			other = self._new(self._rob, other)
+		resultOperandId = self._rob._getNewOperandId()
+		result = RemoteBool(self._rob, resultOperandId)
+		self._rob._addInstruction(
+			lowLevel.InstructionType.Compare,
+			c_long(result._operandId),
+			c_long(self._operandId),
+			c_long(other._operandId),
+			c_long(comparisonType)
+		)
+		return result
+
+
+class _RemoteEqualityComparible(_RemoteBaseObject):
+
+	def __eq__(self, other: object) -> bool:
+		return self._doCompare(lowLevel.ComparisonType.Equal, other)
+
+	def __ne__(self, other: object) -> bool:
+		return self._doCompare(lowLevel.ComparisonType.NotEqual, other)
 
 class _RemoteIntegral(_RemoteBaseObject):
 	_newInstruction: lowLevel.InstructionType
@@ -106,6 +128,18 @@ class _RemoteIntegral(_RemoteBaseObject):
 
 
 class _RemoteNumber(_RemoteIntegral):
+
+	def __gt__(self, other: Self | Number) -> bool:
+		return self._doCompare(lowLevel.ComparisonType.GreaterThan, other)
+
+	def __lt__(self, other: Self | Number) -> bool:
+		return self._doCompare(lowLevel.ComparisonType.LessThan, other)
+
+	def __ge__(self, other: Self | Number) -> bool:
+		return self._doCompare(lowLevel.ComparisonType.GreaterThanOrEqual, other)
+
+	def __le__(self, other: Self | Number) -> bool:
+		return self._doCompare(lowLevel.ComparisonType.LessThanOrEqual, other)
 
 	def _doBinaryOp(self, instructionType: lowLevel.InstructionType, other: Self | Number) -> Self:
 		if not isinstance(other, type(self)):
@@ -167,7 +201,7 @@ class RemoteBool(_RemoteIntegral):
 	_initialValueType = c_byte
 
 
-class RemoteString(_RemoteBaseObject):
+class RemoteString(_RemoteEqualityComparible):
 	_isTypeInstruction = lowLevel.InstructionType.IsString
 
 	@classmethod
@@ -293,7 +327,7 @@ class RemoteTextRange(RemoteExtensionTarget):
 	pass
 
 
-class RemoteGuid(_RemoteBaseObject):
+class RemoteGuid(_RemoteEqualityComparible):
 	_isTypeInstruction = lowLevel.InstructionType.IsGuid
 
 	@classmethod
@@ -569,62 +603,3 @@ class _RemoteElseBlockBuilder(_RemoteScopeContext):
 		relativeJumpOffset = nextInstructionIndex - self._jumpInstructionIndex
 		jumpInstruction = self._rob._getInstructionRecord(self._jumpInstructionIndex)
 		jumpInstruction.params[0].value = relativeJumpOffset
-
-
-class RemoteFuncAPI:
-
-	def __init__(self, rob: "RemoteOperationBuilder"):
-		self._rob = rob
-
-	def newInt(self, initialValue: int=0) -> RemoteInt:
-		return self._rob.newInt(initialValue)
-
-	def newBool(self, initialValue: bool=False) -> RemoteBool:
-		return self._rob.newBool(initialValue)
-
-	def newString(self, initialValue: str="") -> RemoteString:
-		return self._rob.newString(initialValue)
-
-	def newVariant(self) -> RemoteVariant:
-		return self._rob.newVariant()
-
-	def newNULLExtensionTarget(self) -> RemoteExtensionTarget:
-		return self._rob.newNULLExtensionTarget()
-
-	def newNULLElement(self) -> RemoteElement:
-		return self._rob.newNULLElement()
-
-	def newNULLTextRange(self) -> RemoteTextRange:
-		return self._rob.newNULLTextRange()
-
-	def newGuid(self, initialValue: GUID) -> RemoteGuid:
-		return self._rob.newGuid(initialValue)
-
-	def ifBlock(self, condition: RemoteBool):
-		return self._rob.ifBlock(condition)
-
-	def elseBlock(self):
-		return self._rob.elseBlock()
-
-	def halt(self):
-		self._rob.halt()
-
-	def logMessage(self,*strings): 
-		self._rob.logMessage(*strings)
-
-
-def execute(remoteFunc: callable, *imports: object, enableLogging=False) -> object: 
-	rob = RemoteOperationBuilder(enableLogging=enableLogging)
-	remoteObjects = rob.importObjects(*imports)
-	ba = RemoteFuncAPI(rob)
-	remoteResults = remoteFunc(ba, *remoteObjects)
-	if isinstance(remoteResults, _RemoteBaseObject):
-		remoteResults = [remoteResults]
-	for remoteResult in remoteResults:
-		rob.addToResults(remoteResult)
-	rob.execute()
-	if enableLogging:
-		log.debug(rob.dumpLog())
-	if len(remoteResults) == 1:
-		return rob.getResult(remoteResults[0])
-	return tuple(rob.getResult(remoteResult) for remoteResult in remoteResults)
