@@ -218,3 +218,12 @@ class InstructionType(enum.IntEnum):
 	# Extensibility
 	CallExtension = 0x53
 	IsExtensionSupported = 0x54
+
+
+class ComparisonType(enum.IntEnum):
+	Equal = 0
+	NotEqual = 1
+	GreaterThan = 2
+	LessThan = 3
+	GreaterThanOrEqual = 4
+	LessThanOrEqual = 5
