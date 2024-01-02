@@ -47,18 +47,18 @@ def _generateModuleList(
 
 	# Sanity check for something guaranteed to be in library.zip
 	if "NVDAObjects.UIA" not in importedModules:
-		raise ValueError(f"Expected module NVDAObjects.UIA not found in the zipfile.")
+		raise ValueError("Expected module NVDAObjects.UIA not found in the zipfile.")
 
 	# Store the list to file
 	with open(str(target[0]), "w", encoding="utf-8") as file:
 		file.write("\n".join(importedModules))
 
 
-def generate(env):
+def generate(env: SCons.Environment.Environment):
 	env["BUILDERS"]["GenerateModuleList"] = \
 		SCons.Builder.Builder(
 			action=SCons.Action.Action(_generateModuleList))
 
 
-def exists(env):
+def exists(env: SCons.Environment.Environment) -> bool:
     return True
