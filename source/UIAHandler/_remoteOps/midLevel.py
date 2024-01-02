@@ -376,6 +376,7 @@ class RemoteOperationBuilder:
 	}
 
 	def __init__(self, enableLogging: bool=False):
+		self._scopeJustExited: _RemoteScope | None = None
 		self._instructions: list[_InstructionRecord] = []
 		self._lastIfConditionInstructionPendingElse: _InstructionRecord | None = None
 		self._operandIdGen = itertools.count(start=1)
@@ -393,7 +394,7 @@ class RemoteOperationBuilder:
 	def _addInstruction(self, instruction: lowLevel.InstructionType, *params: _SimpleCData):
 		""" Adds an instruction to the instruction list and returns the index of the instruction. """
 		""" Adds an instruction to the instruction list and returns the index of the instruction. """
-		self._lastIfConditionInstructionPendingElse = None
+		self._scopeJustExited = None
 		frame = inspect.currentframe().f_back
 		locationString = _getLocationString(frame)
 		self._instructions.append(
@@ -461,13 +462,34 @@ class RemoteOperationBuilder:
 		return _RemoteElseBlockBuilder(self)
 
 	def whileBlock(self, conditionBuilderFunc: Callable[[], RemoteBool]):
-		return _RemoteWhileBlock(self, conditionBuilderFunc)
+		return _RemoteWhileBlockBuilder(self, conditionBuilderFunc)
 
 	def breakLoop(self):
 		self._addInstruction(lowLevel.InstructionType.BreakLoop)
 
 	def continueLoop(self):
 		self._addInstruction(lowLevel.InstructionType.ContinueLoop)
+
+	def tryBlock(self):
+		return _RemoteTryBlockBuilder(self)
+
+	def catchBlock(self):
+		return _RemoteCatchBlockBuilder(self)
+
+	def setOperationStatus(self, status: int | RemoteInt):
+			status = self._ensureRemoteObject(status, useCache=True)
+			self._addInstruction(
+				lowLevel.InstructionType.SetOperationStatus,
+				c_long(status._operandId)
+			)
+
+	def getOperationStatus(self) -> RemoteInt:
+		resultOperandId = self._getNewOperandId()
+		self._addInstruction(
+			lowLevel.InstructionType.GetOperationStatus,
+			c_long(resultOperandId)
+		)
+		return RemoteInt(self, resultOperandId)
 
 	def halt(self):
 		self._addInstruction(lowLevel.InstructionType.Halt)
@@ -560,13 +582,26 @@ class RemoteOperationBuilder:
 		return output
 
 
-class _RemoteIfBlockBuilder:
+class _RemoteScope:
 
-	def __init__(self, remoteOpBuilder: RemoteOperationBuilder, condition: RemoteBool):
-		self._rob = remoteOpBuilder
+	def __init__(self, rob: RemoteOperationBuilder):
+		self._rob = rob
+
+	def __enter__(self):
+		self._rob._scopeJustExited = None
+
+	def __exit__(self, exc_type, exc_val, exc_tb):
+		self._rob._scopeJustExited = self
+
+
+class _RemoteIfBlockBuilder(_RemoteScope):
+
+	def __init__(self, remoteOpBuilder: RemoteOperationBuilder, condition: RemoteBool): 
+		super().__init__(remoteOpBuilder)
 		self._condition = condition
 
 	def __enter__(self):
+		super().__enter__()
 		self._conditionInstructionIndex = self._rob._addInstruction(
 			lowLevel.InstructionType.ForkIfFalse ,
 			c_long(self._condition._operandId),
@@ -578,19 +613,17 @@ class _RemoteIfBlockBuilder:
 		relativeJumpOffset = nextInstructionIndex - self._conditionInstructionIndex
 		conditionInstruction = self._rob._getInstructionRecord(self._conditionInstructionIndex)
 		conditionInstruction.params[1].value = relativeJumpOffset
-		self._rob._lastIfConditionInstructionPendingElse = conditionInstruction
+		super().__exit__(exc_type, exc_val, exc_tb)
 
 
-class _RemoteElseBlockBuilder:
-
-	def __init__(self, remoteOpBuilder: RemoteOperationBuilder):
-		self._rob = remoteOpBuilder
+class _RemoteElseBlockBuilder(_RemoteScope):
 
 	def __enter__(self):
-		if not self._rob._lastIfConditionInstructionPendingElse:
+		if not isinstance(self._rob._scopeJustExited, _RemoteIfBlockBuilder):
 			raise RuntimeError("Else block not directly preceded by If block") 
-		conditionInstruction = self._rob._lastIfConditionInstructionPendingElse
-		self._rob._lastIfConditionInstructionPendingElse = None
+		ifScope = self._rob._scopeJustExited
+		super().__enter__()
+		conditionInstruction = self._rob._getInstructionRecord(ifScope._conditionInstructionIndex)
 		# add a final jump instruction to the previous if block to skip over the else block.
 		self._jumpInstructionIndex = self._rob._addInstruction(
 			lowLevel.InstructionType.Fork ,
@@ -605,15 +638,17 @@ class _RemoteElseBlockBuilder:
 		relativeJumpOffset = nextInstructionIndex - self._jumpInstructionIndex
 		jumpInstruction = self._rob._getInstructionRecord(self._jumpInstructionIndex)
 		jumpInstruction.params[0].value = relativeJumpOffset
+		super().__exit__(exc_type, exc_val, exc_tb)
 
 
-class _RemoteWhileBlock:
+class _RemoteWhileBlockBuilder(_RemoteScope):
 
 	def __init__(self, remoteOpBuilder: RemoteOperationBuilder, conditionBuilderFunc: Callable[[], RemoteBool]):
-		self._rob = remoteOpBuilder
+		super().__init__(remoteOpBuilder)
 		self._conditionBuilderFunc = conditionBuilderFunc
 
 	def __enter__(self):
+		super().__enter__()
 		# Add a new loop block instruction to start the while loop 
 		self._newLoopBlockInstructionIndex = self._rob._addInstruction(
 			lowLevel.InstructionType.NewLoopBlock,
@@ -643,3 +678,55 @@ class _RemoteWhileBlock:
 		relativeBreakOffset = nextInstructionIndex - self._newLoopBlockInstructionIndex
 		newLoopBlockInstruction = self._rob._getInstructionRecord(self._newLoopBlockInstructionIndex)
 		newLoopBlockInstruction.params[0].value = relativeBreakOffset
+		super().__exit__(exc_type, exc_val, exc_tb)
+
+
+class _RemoteTryBlockBuilder(_RemoteScope):
+
+	def __enter__(self):
+		super().__enter__()
+		self._newTryBlockInstructionIndex = self._rob._addInstruction(
+			lowLevel.InstructionType.NewTryBlock,
+			c_long(1), # offset updated in __exit__ method
+		)
+		super().__enter__()
+
+	def __exit__(self, exc_type, exc_val, exc_tb):
+		# Add an end try block instruction after the try block. 
+		self._rob._addInstruction(
+			lowLevel.InstructionType.EndTryBlock ,
+		)
+		# Update the catchoffset of the new try block instruction to jump to after the end try block instruction.
+		nextInstructionIndex = self._rob._lastInstructionIndex + 1
+		relativeCatchOffset = nextInstructionIndex - self._newTryBlockInstructionIndex
+		newTryBlockInstruction = self._rob._getInstructionRecord(self._newTryBlockInstructionIndex)
+		newTryBlockInstruction.params[0].value = relativeCatchOffset
+		super().__exit__(exc_type, exc_val, exc_tb)
+
+
+class _RemoteCatchBlockBuilder(_RemoteScope):
+
+	def __init__(self, remoteOpBuilder: RemoteOperationBuilder):
+		super().__init__(remoteOpBuilder)
+
+	def __enter__(self):
+		if not isinstance(self._rob._scopeJustExited, _RemoteTryBlockBuilder):
+			raise RuntimeError("Catch block not directly preceded by Try block")
+		tryScope = self._rob._scopeJustExited
+		super().__enter__()
+		# Add a jump instruction directly after the try block to skip over the catch block.
+		self._jumpInstructionIndex = self._rob._addInstruction(
+			lowLevel.InstructionType.Fork,
+			c_long(1), # offset updated in __exit__ method
+		)
+		# Increment the catch offset of the try block to take the new jump instruction into account.
+		newTryBlockInstruction = self._rob._getInstructionRecord(tryScope._newTryBlockInstructionIndex)
+		newTryBlockInstruction.params[0].value += 1
+
+	def __exit__(self, exc_type, exc_val, exc_tb):
+		# Update the jump instruction to jump to the real end of the catch block.
+		nextInstructionIndex = self._rob._lastInstructionIndex + 1
+		relativeJumpOffset = nextInstructionIndex - self._jumpInstructionIndex
+		jumpInstruction = self._rob._getInstructionRecord(self._jumpInstructionIndex)
+		jumpInstruction.params[0].value = relativeJumpOffset
+		super().__exit__(exc_type, exc_val, exc_tb)

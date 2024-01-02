@@ -63,6 +63,18 @@ class RemoteFuncAPI:
 	def continueLoop(self):
 		self._rob.continueLoop()
 
+	def tryBlock(self):
+		return self._rob.tryBlock()
+
+	def catchBlock(self):
+		return self._rob.catchBlock()
+
+	def setOperationStatus(self, status: int | RemoteInt):
+			self._rob.setOperationStatus(status)
+
+	def getOperationStatus(self) -> RemoteInt:
+		return self._rob.getOperationStatus()
+
 	def halt(self):
 		self._rob.halt()
 
