@@ -18,6 +18,7 @@ from ctypes import (
 	c_byte,
 	c_char,
 	c_wchar,
+	c_bool
 )
 from comtypes import GUID
 from dataclasses import dataclass
@@ -28,6 +29,16 @@ import itertools
 from UIAHandler import UIA
 from . import lowLevel
 from logHandler import log
+
+
+class RelativeOffset(c_long):
+	def __repr__(self) -> str:
+		return f"RelativeOffset {self.value}"
+
+
+class OperandId(c_long):
+	def __repr__(self) -> str:
+		return f"OperandId {self.value}"
 
 
 def _getLocationString(frame: inspect.FrameInfo) -> str:
@@ -81,12 +92,19 @@ class _RemoteBaseObject:
 		self._rob = rob
 		self._operandId = operandId
 
+	def __repr__(self) -> str:
+		return f"{self.__class__.__name__} at {self.operandId}"
+
+	@property
+	def operandId(self) -> OperandId:
+		return self._operandId
+
 	def set(self, value: object) -> None:
 		value = self._rob._ensureRemoteObject(value, useCache=True)
 		self._rob._addInstruction(
 			lowLevel.InstructionType.Set,
-			c_long(self._operandId),
-			c_long(value._operandId)
+			self.operandId,
+			value.operandId
 		)
 
 	def stringify(self) -> "RemoteString":
@@ -94,8 +112,8 @@ class _RemoteBaseObject:
 		result = RemoteString(self._rob, resultOperandId)
 		self._rob._addInstruction(
 			lowLevel.InstructionType.Stringify,
-			c_long(resultOperandId),
-			c_long(self._operandId)
+			resultOperandId,
+			self.operandId
 		)
 		return result
 
@@ -105,9 +123,9 @@ class _RemoteBaseObject:
 		result = RemoteBool(self._rob, resultOperandId)
 		self._rob._addInstruction(
 			lowLevel.InstructionType.Compare,
-			c_long(result._operandId),
-			c_long(self._operandId),
-			c_long(other._operandId),
+			result.operandId,
+			self.operandId,
+			other.operandId,
 			c_long(comparisonType)
 		)
 		return result
@@ -129,7 +147,7 @@ class _RemoteIntegral(_RemoteBaseObject):
 	def _initOperand(cls, rob: "RemoteOperationBuilder", operandId: int, initialValue: object):
 		rob._addInstruction(
 			cls._newInstruction,
-			c_long(operandId),
+			operandId,
 			cls._initialValueType(initialValue)
 		)
 
@@ -154,9 +172,9 @@ class _RemoteNumber(_RemoteIntegral):
 		result = type(self)(self._rob, resultOperandId)
 		self._rob._addInstruction(
 			instructionType,
-			c_long(result._operandId),
-			c_long(self._operandId),
-			c_long(other._operandId)
+			result.operandId,
+			self.operandId,
+			other.operandId
 		)
 		return result
 
@@ -164,8 +182,8 @@ class _RemoteNumber(_RemoteIntegral):
 		other = self._rob._ensureRemoteObject(other, useCache=True)
 		self._rob._addInstruction(
 			instructionType,
-			c_long(self._operandId),
-			c_long(other._operandId)
+			self.operandId,
+			other.operandId
 		)
 		return self
 
@@ -203,7 +221,7 @@ class RemoteInt(_RemoteNumber):
 class RemoteBool(_RemoteIntegral):
 	_isTypeInstruction = lowLevel.InstructionType.IsBool
 	_newInstruction = lowLevel.InstructionType.NewBool
-	_initialValueType = c_byte
+	_initialValueType = c_bool
 
 
 class RemoteString(_RemoteEqualityComparible):
@@ -213,7 +231,7 @@ class RemoteString(_RemoteEqualityComparible):
 	def _initOperand(cls, rob: "RemoteOperationBuilder", operandId: int, initialValue: str):
 		rob._addInstruction(
 			lowLevel.InstructionType.NewString,
-			c_long(operandId),
+			operandId,
 			ctypes.create_unicode_buffer(initialValue)
 		)
 
@@ -229,9 +247,9 @@ class RemoteString(_RemoteEqualityComparible):
 				raise TypeError("other must be a RemoteString, a str, or a _RemoteBaseObject")
 		self._rob._addInstruction(
 			lowLevel.InstructionType.RemoteStringConcat ,
-			c_long(toResult._operandId),
-			c_long(self._operandId),
-			c_long(other._operandId)
+			toResult.operandId,
+			self.operandId,
+			other.operandId
 		)
 
 	def __add__(self, other: Self | _RemoteBaseObject | str) -> Self:
@@ -251,15 +269,15 @@ class _RemoteNullable(_RemoteBaseObject):
 	def _initOperand(cls, rob: "RemoteOperationBuilder", operandId: int, initialValue: None=None):
 		rob._addInstruction(
 			lowLevel.InstructionType.NewNull,
-			c_long(operandId),
+			operandId,
 		)
 
 	def isNull(self) -> bool:
 		result = RemoteBool._new(self._rob, False)
 		self._rob._addInstruction(
 			lowLevel.InstructionType.IsNull,
-			c_long(result._operandId),
-			c_long(self._operandId)
+			result.operandId,
+			self.operandId
 		)
 		return result
 
@@ -271,40 +289,38 @@ class RemoteVariant(_RemoteNullable):
 			raise TypeError("remoteClass must be a subclass of _RemoteBaseObject")
 		result = self._rob.newBool()
 		self._rob._addInstruction(
-			lowLevel.InstructionType.IsType,
-			c_long(result._operandId),
-			c_long(self._operandId)
+			remoteClass._isTypeInstruction,
+			result.operandId,
+			self.operandId
 		)
 		return result
 
 	def asType(self, remoteClass: type[_RemoteBaseObject]) -> _RemoteBaseObject:
-		return remoteClass(self._rob, self._operandId)
+		return remoteClass(self._rob, self.operandId)
 
 
 class RemoteExtensionTarget(_RemoteNullable):
 
 	def isExtensionSupported(self, extensionGuid: GUID) -> bool:
-		if not isinstance(extensionGuid, RemoteGuid):
-			extensionGuid = self._rob.newGuid(extensionGuid)
+		extensionGuid = self._rob._ensureRemoteObject(extensionGuid, useCache=True)
 		resultOperandId = self._rob._getNewOperandId()
 		result = RemoteBool(self._rob, resultOperandId)
 		self._rob._addInstruction(
 			lowLevel.InstructionType.IsExtensionSupported,
-			c_long(result._operandId),
-			c_long(self._operandId),
-			c_ulong(extensionGuid._operandId)
+			result.operandId,
+			self.operandId,
+			extensionGuid
 		)
 		return result
 
 	def callExtension(self, extensionGuid: GUID, *params: _RemoteBaseObject) -> None:
-		if not isinstance(extensionGuid, RemoteGuid):
-			extensionGuid = self._rob.newGuid(extensionGuid)
+		extensionGuid = self._rob._ensureRemoteObject(extensionGuid, useCache=True)
 		self._rob._addInstruction(
 			lowLevel.InstructionType.CallExtension,
-			c_long(self._operandId),
-			c_ulong(extensionGuid._operandId),
+			self.operandId,
+			extensionGuid.operandId,
 			c_long(len(params)),
-			*(c_long(p._operandId) for p in params)
+			*(p.operandId for p in params)
 		)
 
 
@@ -319,10 +335,10 @@ class RemoteElement(RemoteExtensionTarget):
 		result = RemoteVariant(self._rob, resultOperandId)
 		self._rob._addInstruction(
 			lowLevel.InstructionType.GetPropertyValue,
-			c_long(result._operandId),
-			c_long(self._operandId),
-			c_long(propertyId._operandId),
-			c_long(ignoreDefault._operandId)
+			result.operandId,
+			self.operandId,
+			propertyId.operandId,
+			ignoreDefault.operandId
 		)
 		return result
 
@@ -340,11 +356,8 @@ class RemoteGuid(_RemoteEqualityComparible):
 			initialValue = GUID(initialValue)
 		rob._addInstruction(
 			lowLevel.InstructionType.NewGuid,
-			c_long(operandId),
-			c_ulong(initialValue.Data1),
-			c_ushort(initialValue.Data2),
-			c_ushort(initialValue.Data3),
-			*(c_byte(b) for b in initialValue.Data4)
+			operandId,
+			initialValue
 		)
 
 
@@ -379,7 +392,7 @@ class RemoteOperationBuilder:
 		self._scopeJustExited: _RemoteScope | None = None
 		self._instructions: list[_InstructionRecord] = []
 		self._lastIfConditionInstructionPendingElse: _InstructionRecord | None = None
-		self._operandIdGen = itertools.count(start=1)
+		self.operandIdGen = itertools.count(start=1)
 		self._remotedObjectCache: dict[object, _RemoteBaseObject] = {}
 		self._ro = lowLevel.RemoteOperation()
 		self._results = None
@@ -388,10 +401,10 @@ class RemoteOperationBuilder:
 			self._log: RemoteString = self.newString()
 			self.addToResults(self._log)
 
-	def _getNewOperandId(self) -> int:
-		return next(self._operandIdGen)
+	def _getNewOperandId(self) -> OperandId | RelativeOffset:
+		return OperandId(next(self.operandIdGen))
 
-	def _addInstruction(self, instruction: lowLevel.InstructionType, *params: _SimpleCData):
+	def _addInstruction(self, instruction: lowLevel.InstructionType, *params: Union[_SimpleCData, ctypes.Array, _RemoteBaseObject]):
 		""" Adds an instruction to the instruction list and returns the index of the instruction. """
 		""" Adds an instruction to the instruction list and returns the index of the instruction. """
 		self._scopeJustExited = None
@@ -480,14 +493,14 @@ class RemoteOperationBuilder:
 			status = self._ensureRemoteObject(status, useCache=True)
 			self._addInstruction(
 				lowLevel.InstructionType.SetOperationStatus,
-				c_long(status._operandId)
+				status.operandId
 			)
 
 	def getOperationStatus(self) -> RemoteInt:
 		resultOperandId = self._getNewOperandId()
 		self._addInstruction(
 			lowLevel.InstructionType.GetOperationStatus,
-			c_long(resultOperandId)
+			resultOperandId
 		)
 		return RemoteInt(self, resultOperandId)
 
@@ -502,11 +515,11 @@ class RemoteOperationBuilder:
 		self._log += "\n"
 
 	def addToResults(self, remoteObj: _RemoteBaseObject):
-		self._ro.addToResults(remoteObj._operandId)
+		self._ro.addToResults(remoteObj.operandId)
 
 	def _ensureRemoteObject(self, obj: object, useCache=False) -> _RemoteBaseObject:
 		if isinstance(obj, enum.Enum):
-			obj = importObj.value
+			obj = obj.value
 		if useCache:
 			cacheKey = (type(obj), obj)
 			remoteObj = self._remotedObjectCache.get(obj)
@@ -521,7 +534,7 @@ class RemoteOperationBuilder:
 			if remoteClass:
 				remoteObj = remoteClass._new(self, obj)
 			else:
-				raise TypeError(f"{type(importObj)} is not a supported type")
+				raise TypeError(f"{type(obj)} is not a supported type")
 		if useCache:
 			self._remotedObjectCache[cacheKey] = remoteObj
 		return remoteObj
@@ -559,7 +572,7 @@ class RemoteOperationBuilder:
 	def getResult(self, remoteObj: _RemoteBaseObject) -> object:
 		if not self._results:
 			raise RuntimeError("Not executed")
-		operandId = remoteObj._operandId
+		operandId = remoteObj.operandId
 		if not self._results.hasOperand(operandId):
 			raise LookupError("No such operand")
 		return self._results.getOperand(operandId).value
@@ -604,8 +617,8 @@ class _RemoteIfBlockBuilder(_RemoteScope):
 		super().__enter__()
 		self._conditionInstructionIndex = self._rob._addInstruction(
 			lowLevel.InstructionType.ForkIfFalse ,
-			c_long(self._condition._operandId),
-			c_long(1), # offset updated in Else method 
+			self._condition.operandId,
+			RelativeOffset(1), # offset updated in Else method 
 		)
 
 	def __exit__(self, exc_type, exc_val, exc_tb):
@@ -627,7 +640,7 @@ class _RemoteElseBlockBuilder(_RemoteScope):
 		# add a final jump instruction to the previous if block to skip over the else block.
 		self._jumpInstructionIndex = self._rob._addInstruction(
 			lowLevel.InstructionType.Fork ,
-			c_long(1), # offset updated in __exit__ method 
+			RelativeOffset(1), # offset updated in __exit__ method 
 		)
 		# increment the false offset of the previous if block to take the new jump instruction into account. 
 		conditionInstruction.params[1].value += 1
@@ -652,8 +665,8 @@ class _RemoteWhileBlockBuilder(_RemoteScope):
 		# Add a new loop block instruction to start the while loop 
 		self._newLoopBlockInstructionIndex = self._rob._addInstruction(
 			lowLevel.InstructionType.NewLoopBlock,
-			c_long(1), # offset updated in __exit__ method
-			c_long(1)
+			RelativeOffset(1), # offset updated in __exit__ method
+			RelativeOffset(1)
 		)
 		# Generate the loop condition instructions and enter the if block.
 		condition = self._conditionBuilderFunc()
@@ -665,7 +678,7 @@ class _RemoteWhileBlockBuilder(_RemoteScope):
 		relativeContinueOffset = self._newLoopBlockInstructionIndex - self._rob._lastInstructionIndex
 		self._rob._addInstruction(
 			lowLevel.InstructionType.Fork,
-			c_long(relativeContinueOffset)
+			RelativeOffset(relativeContinueOffset)
 		)
 		#Complete the if block.
 		self._ifBlock.__exit__(exc_type, exc_val, exc_tb)
@@ -687,7 +700,7 @@ class _RemoteTryBlockBuilder(_RemoteScope):
 		super().__enter__()
 		self._newTryBlockInstructionIndex = self._rob._addInstruction(
 			lowLevel.InstructionType.NewTryBlock,
-			c_long(1), # offset updated in __exit__ method
+			RelativeOffset(1), # offset updated in __exit__ method
 		)
 		super().__enter__()
 
@@ -717,7 +730,7 @@ class _RemoteCatchBlockBuilder(_RemoteScope):
 		# Add a jump instruction directly after the try block to skip over the catch block.
 		self._jumpInstructionIndex = self._rob._addInstruction(
 			lowLevel.InstructionType.Fork,
-			c_long(1), # offset updated in __exit__ method
+			RelativeOffset(1), # offset updated in __exit__ method
 		)
 		# Increment the catch offset of the try block to take the new jump instruction into account.
 		newTryBlockInstruction = self._rob._getInstructionRecord(tryScope._newTryBlockInstructionIndex)
