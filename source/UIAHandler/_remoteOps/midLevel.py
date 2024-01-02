@@ -309,7 +309,7 @@ class RemoteExtensionTarget(_RemoteNullable):
 			lowLevel.InstructionType.IsExtensionSupported,
 			result.operandId,
 			self.operandId,
-			extensionGuid
+			extensionGuid.operandId
 		)
 		return result
 
@@ -420,6 +420,7 @@ class RemoteOperationBuilder:
 		for instruction in self._instructions:
 			byteCode += struct.pack('l', instruction.instructionType)
 			for param in instruction.params:
+				print(f"param: {param}")
 				paramBytes = (c_char*ctypes.sizeof(param)).from_address(ctypes.addressof(param)).raw
 				if isinstance(param, _ctypes.Array) and param._type_ == c_wchar:
 					paramBytes = paramBytes[:-2]
@@ -518,6 +519,8 @@ class RemoteOperationBuilder:
 		self._ro.addToResults(remoteObj.operandId)
 
 	def _ensureRemoteObject(self, obj: object, useCache=False) -> _RemoteBaseObject:
+		if isinstance(obj, _RemoteBaseObject):
+			return obj
 		if isinstance(obj, enum.Enum):
 			obj = obj.value
 		if useCache:
