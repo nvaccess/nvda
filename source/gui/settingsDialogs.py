@@ -3718,6 +3718,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.updateDriverSettings()
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		
 		tables = brailleTables.listTables()
 		# Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 		outputsLabelText = _("&Output table:")
@@ -3753,8 +3754,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			log.debug(
 				f"Loading input tables completed, now at {timePassed:.2f} seconds from start"
 			)
-
-		# Translators: The label for a setting in braille settings to select wich braille mode to use
+		# Translators: The label for a setting in braille settings to select which braille mode to use
 		modeListText = _("Braille mode:")
 		modeChoices = [x.displayString for x in braille.BrailleMode]
 		self.brailleModes = sHelper.addLabeledControl(modeListText, wx.Choice, choices=modeChoices)
@@ -3769,6 +3769,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		followCursorGroupHelper = guiHelper.BoxSizerHelper(self, sizer=followCursorGroupSizer)
 		sHelper.addItem(followCursorGroupHelper)
 		self.followCursorGroupBox.Enable(not self.brailleModes.GetSelection())
+
 
 		# Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 		expandAtCursorText = _("E&xpand to computer braille for the word at the cursor")
