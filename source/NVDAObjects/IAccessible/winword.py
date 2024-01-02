@@ -341,6 +341,7 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 					except COMError:
 						break
 					if text:
+						repeats = scriptHandler.getLastScriptRepeatCount()
 						if repeats == 0:
 							ui.message(text)
 						elif repeats == 1:

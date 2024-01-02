@@ -12,6 +12,7 @@ import enum
 from comtypes import COMError
 import winVersion
 import mathPres
+import scriptHandler
 from scriptHandler import isScriptWaiting
 import textInfos
 import UIAHandler
@@ -611,6 +612,7 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 		commentInfo = getCommentInfoFromPosition(caretInfo)
 		if commentInfo is not None:
 			text = getPresentableCommentInfoFromPosition(commentInfo)
+			repeats = scriptHandler.getLastScriptRepeatCount()
 			if repeats == 0:
 				ui.message(text)
 			elif repeats == 1:
