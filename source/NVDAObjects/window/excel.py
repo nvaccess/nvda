@@ -1680,7 +1680,7 @@ class ExcelCell(ExcelBase):
 	# Thus, messages dialog title and so on should refer to notes.
 	@script(
 		description=_(
-			# Translators: the description  for a script for Excel
+			# Translators: the description for a script for Excel
 			"Reports the note on the current cell. "
 			"If pressed twice, presents the information in browse mode"
 		),
