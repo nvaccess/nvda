@@ -1692,6 +1692,7 @@ class ExcelCell(ExcelBase):
 		commentObj=self.excelCellObject.comment
 		text=commentObj.text() if commentObj else None
 		if text:
+			repeats = scriptHandler.getLastScriptRepeatCount()
 			if repeats == 0:
 				ui.message(text)
 			elif repeats == 1:
