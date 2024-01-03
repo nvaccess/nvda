@@ -345,6 +345,7 @@ class AddonStoreDialog(SettingsDialog):
 		self._setListLabels()
 		self._storeVM.refresh()
 		self.Layout()
+
 		# avoid erratic focus on the contained panel
 		if not self.addonListTabs.HasFocus():
 			self.addonListTabs.SetFocus()
