@@ -202,7 +202,6 @@ class KeyCommandsPreprocessor(Preprocessor):
 		level = self._kcLastHeadingLevel + 1
 		# Only write headings we haven't yet written.
 		for level, heading in enumerate(self._headings[level:], level):
-			# # Write the heading and a blank line.
 			self._kcLines.append(heading.group(0))
 		self._kcLastHeadingLevel = level
 

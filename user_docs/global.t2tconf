@@ -4,10 +4,3 @@
 % Remove the Table of Contents heading from the toc.
 % For some reason t2t to md conversion always forces the TOC at the top of the document 
 %!PostProc(md): '^#.*\{#toc\}.*$' ''
-
-% Some of our files contain the UTF-8 BOM.
-% txt2tags doesn't care about encodings internally,
-% so it will just include the BOM at the start of the title.
-% TODO is this needed?
-% Therefore, strip the BOM from the title.
-%!PostProc(html): \<(TITLE|H1)\>\xef\xbb\xbf <\1>
