@@ -15,6 +15,9 @@ What's New in NVDA
 == Bug Fixes ==
 - Backspace now works correctly when using Nudi 6.1 with NVDA's "Handle keys from other applications" setting enabled. (#15822, @jcsteh)
 - Fixed a bug where audio coordinates would be played while the application is in sleep mode when "Play audio coordinates when mouse moves" is enabled. (#8059, @hwf1324)
+- Add-on Store:
+  - When pressing ctrl+tab, focus properly moves to the new current tab title. (#14986, @ABuffEr)
+  -
 -
 
 
@@ -105,7 +108,6 @@ Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on e
   - When reinstalling an incompatible add-on it is no longer forcefully disabled. (#15584, @lukaszgo1)
   - Disabled and incompatible add-ons can now be updated. (#15568, #15029)
   - NVDA now recovers and displays an error in a case where an add-on fails to download correctly. (#15796)
-  - When pressing ctrl+tab, focus properly moves to the new current tab title. (#14986, @ABuffEr)
   -
 - Audio:
   - NVDA no longer freezes briefly when multiple sounds are played in rapid succession. (#15311, #15757, @jcsteh)
