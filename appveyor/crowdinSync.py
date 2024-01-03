@@ -57,8 +57,10 @@ def uploadSourceFile(crowdinFileID: int, localFilePath: str) -> None:
 	storageID = r.json()["data"]["id"]
 	print(f"Updating file {crowdinFileID} on Crowdin with storage ID {storageID}")
 	r = projectRequest(
-		f"files/{crowdinFileID}", method=requests.put,
-		json={"storageId": storageID})
+		f"files/{crowdinFileID}",
+		method=requests.put,
+		json={"storageId": storageID}
+	)
 	revisionId = r.json()["data"]["revisionId"]
 	print(f"Updated to revision {revisionId}")
 
