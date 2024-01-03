@@ -48,7 +48,7 @@ def projectRequest(path: str, **kwargs) -> requests.Response:
 
 def uploadSourceFile(crowdinFileID: int, localFilePath: str) -> None:
 	fn = os.path.basename(localFilePath)
-	print(f"Uploading {localFilePath}  to Crowdin temporary storage as {fn}")
+	print(f"Uploading {localFilePath} to Crowdin temporary storage as {fn}")
 	with open(localFilePath, "rb") as f:
 		r = request(
 			"storages", method=requests.post,
