@@ -6,13 +6,7 @@
 
 
 import argparse
-import glob
 import os
-import shutil
-import subprocess
-import sys
-import time
-import zipfile
 
 import requests
 
@@ -26,11 +20,11 @@ if not PROJECT_ID:
 
 
 def request(
-		path: str,
-		method=requests.get,
-		headers: dict[str, str] | None =None,
-		**kwargs
-	) -> requests.Response:
+	path: str,
+	method=requests.get,
+	headers: dict[str, str] | None = None,
+	**kwargs
+) -> requests.Response:
 	if headers is None:
 		headers = {}
 	headers["Authorization"] = f"Bearer {AUTH_TOKEN}"
@@ -47,22 +41,26 @@ def request(
 		raise
 	return r
 
+
 def projectRequest(path: str, **kwargs) -> requests.Response:
 	return request(f"projects/{PROJECT_ID}/{path}", **kwargs)
+
 
 def uploadSourceFile(crowdinFileID: int, localFilePath: str) -> None:
 	fn = os.path.basename(localFilePath)
 	print(f"Uploading {localFilePath}  to Crowdin temporary storage as {fn}")
 	with open(localFilePath, "rb") as f:
-		r = request("storages", method=requests.post,
-				headers={"Crowdin-API-FileName": fn}, data=f
+		r = request(
+			"storages", method=requests.post,
+			headers={"Crowdin-API-FileName": fn}, data=f
 		)
 	storageID = r.json()["data"]["id"]
 	print(f"Updating file {crowdinFileID} on Crowdin with storage ID {storageID}")
-	r = projectRequest(f"files/{crowdinFileID}", method=requests.put,
+	r = projectRequest(
+		f"files/{crowdinFileID}", method=requests.put,
 		json={"storageId": storageID})
 	revisionId = r.json()["data"]["revisionId"]
-	print(f"Updated to revision {revisionId}") 
+	print(f"Updated to revision {revisionId}")
 
 
 def main():
