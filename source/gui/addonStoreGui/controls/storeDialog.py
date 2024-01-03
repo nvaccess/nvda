@@ -334,11 +334,14 @@ class AddonStoreDialog(SettingsDialog):
 
 	def onListTabPageChange(self, evt: wx.EVT_CHOICE):
 		self.searchFilterCtrl.SetValue("")
+
 		self._storeVM._filterEnabledDisabled = EnabledStatus.ALL
 		self.enabledFilterCtrl.SetSelection(0)
+
 		self._storeVM._filteredStatusKey = self._statusFilterKey
 		self.addonListView._refreshColumns()
 		self._toggleFilterControls()
+
 		channelFilterIndex = list(_channelFilters.keys()).index(self._storeVM._filterChannelKey)
 		self.channelFilterCtrl.SetSelection(channelFilterIndex)
 		self._storeVM.listVM.setSelection(None)
