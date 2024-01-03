@@ -17,7 +17,7 @@ import zipfile
 import requests
 
 
-AUTH_TOKEN = os.getenv("crowdinAuthToken")
+AUTH_TOKEN = os.getenv("crowdinAuthToken", "").strip()
 if not AUTH_TOKEN:
 	raise ValueError("crowdinAuthToken environment variable not set")
 PROJECT_ID = os.getenv("crowdinProjectID")
