@@ -6,13 +6,14 @@
 
 
 import argparse
-import time
-import os
 import glob
-import sys
-import zipfile
+import os
 import shutil
 import subprocess
+import sys
+import time
+import zipfile
+
 import requests
 
 
