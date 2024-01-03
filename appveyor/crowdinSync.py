@@ -51,8 +51,10 @@ def uploadSourceFile(crowdinFileID: int, localFilePath: str) -> None:
 	print(f"Uploading {localFilePath} to Crowdin temporary storage as {fn}")
 	with open(localFilePath, "rb") as f:
 		r = request(
-			"storages", method=requests.post,
-			headers={"Crowdin-API-FileName": fn}, data=f
+			"storages",
+			method=requests.post,
+			headers={"Crowdin-API-FileName": fn},
+			data=f
 		)
 	storageID = r.json()["data"]["id"]
 	print(f"Updating file {crowdinFileID} on Crowdin with storage ID {storageID}")
