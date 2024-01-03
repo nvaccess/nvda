@@ -47,10 +47,10 @@ def request(
 		raise
 	return r
 
-def projectRequest(path: str, **kwargs):
+def projectRequest(path: str, **kwargs) -> requests.Response:
 	return request(f"projects/{PROJECT_ID}/{path}", **kwargs)
 
-def uploadSourceFile(crowdinFileID: int, localFilePath: str):
+def uploadSourceFile(crowdinFileID: int, localFilePath: str) -> None:
 	fn = os.path.basename(localFilePath)
 	print(f"Uploading {localFilePath}  to Crowdin temporary storage as {fn}")
 	with open(localFilePath, "rb") as f:
@@ -63,7 +63,7 @@ def uploadSourceFile(crowdinFileID: int, localFilePath: str):
 		json={"storageId": storageID})
 	revisionId = r.json()["data"]["revisionId"]
 	print(f"Updated to revision {revisionId}") 
-	return r
+
 
 def main():
 	parser = argparse.ArgumentParser(
