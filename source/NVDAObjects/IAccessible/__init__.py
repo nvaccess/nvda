@@ -1338,6 +1338,10 @@ the NVDAObject for IAccessible
 		if not cell:
 			return None
 		try:
+			cellIA2UID = cell.QueryInterface(IA2.IAccessible2).uniqueID 
+		except COMError:
+			cellIA2UID = None
+		try:
 			headers, nHeaders = getattr(cell, axis + "HeaderCells")
 		except COMError:
 			return None
@@ -1348,8 +1352,16 @@ the NVDAObject for IAccessible
 			# Each header must be fetched from the headers array once and only once,
 			# as it gets released when it gets garbage collected.
 			for i in range(nHeaders):
+				header = headers[i]
+				# Chromium exposes cells as their own headers, so exclude cells with the same `Iaccessible2::uniqueID`.
+				if cellIA2UID is not None:	# No point checking if we don't have this cell's UID
+					try:
+						if cellIA2UID == header.QueryInterface(IA2.IAccessible2).uniqueID:
+							continue
+					except COMError:
+						pass	# Assume different UIDs for safety
 				try:
-					text = headers[i].QueryInterface(IA2.IAccessible2).accName(0)
+					text = header.QueryInterface(IA2.IAccessible2).accName(0)
 				except COMError:
 					continue
 				if not text:
