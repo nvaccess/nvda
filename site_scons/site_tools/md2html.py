@@ -10,7 +10,7 @@ import shutil
 import SCons.Node.FS
 import SCons.Environment
 
-_extensions = {
+DEFAULT_EXTENSIONS = frozenset({
 	# Supports tables, HTML mixed with markdown, code blocks and more
 	"markdown.extensions.extra",
 	# Allows TOC with [TOC], allows anchors set by "# Title {#foo}"
@@ -25,7 +25,7 @@ _extensions = {
 	"markdown_link_attr_modifier",
 	# Adds links to GitHub authors, issues and PRs
 	"mdx_gh_links",
-}
+})
 
 _extensionConfigs = {
 	"markdown_link_attr_modifier": {
@@ -87,12 +87,18 @@ def md2html_actionFunc(
 	mdBuffer.seek(0)
 	# Make next write append at end of buffer
 	htmlBuffer.seek(0, io.SEEK_END)
+
+	extensions = set(DEFAULT_EXTENSIONS)
+	if target[0].path.endswith("keyCommands.html"):
+		from keyCommandsDoc import KeyCommandsExtension
+		extensions.add(KeyCommandsExtension())
+
 	markdown.markdownFromFile(
 		input=mdBuffer,
 		output=htmlBuffer,
 		encoding="utf-8",
 		# https://python-markdown.github.io/extensions/
-		extensions=_extensions,
+		extensions=extensions,
 		extension_configs=_extensionConfigs,
 	)
 
@@ -115,6 +121,7 @@ def exists(env: SCons.Environment.Environment) -> bool:
 		import markdown_link_attr_modifier  # noqa: F401
 		import mdx_truly_sane_lists  # noqa: F401
 		import mdx_gh_links  # noqa: F401
+		import keyCommandsDoc  # noqa: F401
 		return True
 	except ImportError:
 		return False
@@ -122,7 +129,7 @@ def exists(env: SCons.Environment.Environment) -> bool:
 
 def generate(env: SCons.Environment.Environment):
 	env["BUILDERS"]["md2html"] = env.Builder(
-		action=env.Action(md2html_actionFunc, lambda t, s, e: f"Converting {s[0].path} to html"),
+		action=env.Action(md2html_actionFunc, lambda t, s, e: f"Converting {s[0].path} to {t[0].path}"),
 		suffix=".html",
 		src_suffix=".md"
 	)
