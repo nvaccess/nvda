@@ -20,7 +20,7 @@ import requests
 AUTH_TOKEN = os.getenv("crowdinAuthToken", "").strip()
 if not AUTH_TOKEN:
 	raise ValueError("crowdinAuthToken environment variable not set")
-PROJECT_ID = os.getenv("crowdinProjectID")
+PROJECT_ID = os.getenv("crowdinProjectID", "").strip()
 if not PROJECT_ID:
 	raise ValueError("crowdinProjectID environment variable not set")
 
