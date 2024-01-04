@@ -18,18 +18,22 @@ def _generateModuleList(
 		source: list[SCons.Node.FS.File],
 		env: SCons.Environment.Environment
 ) -> None:
-	""" 
+	"""
 	Generate a list of Python modules from compiled '.pyc' files within a specified zipfile.
 
 	This function lists all '.pyc' files contained in a given zipfile, converts their paths to Python module
 	format, performs a sanity check to ensure a specific module is present, and then writes the list of
 	modules to a specified output file for packaging as an AppVeyor artefact.
 
-	:param target: A single element list containing the target file node where the list of modules will be written.
-	:param source: A single element list containing the source file node to be processed. It should contain only the zipfile from which the '.pyc' files will be listed.
-	:param env: The SCons environment context under which this function is executed. This parameter provides access to SCons construction variables, methods, and tools.
+	:param target: A single element list containing the target file node where the list of modules will be 
+				written.
+	:param source: A single element list containing the source file node to be processed. It should contain
+	 			only the zipfile from which the '.pyc' files will be listed.
+	:param env: The SCons environment context under which this function is executed. This parameter provides 
+				access to SCons construction variables, methods, and tools.
 	:return: None. The function does not return anything but writes the list of modules to the target file.
-	:raises ValueError: If the specified sanity check module (e.g., 'NVDAObjects.UIA') is not found in the list of modules extracted from the zipfile.
+	:raises ValueError: If the specified sanity check module (e.g., 'NVDAObjects.UIA') is not found in the 
+						list of modules extracted from the zipfile.
 	:raises FileNotFoundError: If the specified zipfile in `source` does not exist.
 	"""
 	# List all .pyc files in the library.zip
