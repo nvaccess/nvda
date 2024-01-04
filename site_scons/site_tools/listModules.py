@@ -40,10 +40,10 @@ def _generateModuleList(
 
 	# Convert the file paths to python module format
 	# eg: NVDAObjects/IAccessible/__init__.pyc --> NVDAObjects.IAccessible
-	importedModules = sorted(set([
+	importedModules = sorted({
 		re.sub(r"(.__init__|.__version__|._version)?\.pyc$", "", module_path).replace("/", ".")
 		for module_path in pycFiles
-	]))
+	})
 
 	# Sanity check for something guaranteed to be in library.zip
 	if "NVDAObjects.UIA" not in importedModules:
