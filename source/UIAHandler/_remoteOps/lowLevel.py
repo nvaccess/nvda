@@ -19,6 +19,11 @@ from UIAHandler import UIA
 import NVDAHelper
 
 
+class OperandId(c_int):
+	def __repr__(self) -> str:
+		return f"OperandId {self.value}"
+
+
 _dll = oledll[os.path.join(NVDAHelper.versionedLibPath, "UIARemote.dll")]
 
 
@@ -47,12 +52,12 @@ class RemoteOperationResult:
 		_dll.remoteOpResult_getStatus(self._pResults, byref(val))
 		return RemoteOperationStatus(val.value)
 
-	def hasOperand(self, operandId: int) -> bool:
+	def hasOperand(self, operandId: OperandId) -> bool:
 		val = c_bool()
 		_dll.remoteOpResult_hasOperand(self._pResults, operandId, byref(val))
 		return val.value
 
-	def getOperand(self, operandId: int) -> VARIANT:
+	def getOperand(self, operandId: OperandId) -> VARIANT:
 		val = VARIANT()
 		_dll.remoteOpResult_getOperand(self._pResults, operandId, byref(val))
 		return val
@@ -67,13 +72,13 @@ class RemoteOperation:
 		self._pRemoteOperation = c_void_p()
 		_dll.remoteOp_create(byref(self._pRemoteOperation))
 
-	def importElement(self, operandId: int, element: POINTER(UIA.IUIAutomationElement)):
+	def importElement(self, operandId: OperandId, element: POINTER(UIA.IUIAutomationElement)):
 		_dll.remoteOp_importElement(self._pRemoteOperation, operandId, element)
 
-	def importTextRange(self, operandId: int, textRange: POINTER(UIA.IUIAutomationTextRange)):
+	def importTextRange(self, operandId: OperandId, textRange: POINTER(UIA.IUIAutomationTextRange)):
 		_dll.remoteOp_importTextRange(self._pRemoteOperation, operandId, textRange)
 
-	def addToResults(self, operandId: int):
+	def addToResults(self, operandId: OperandId):
 		_dll.remoteOp_addToResults(self._pRemoteOperation, operandId)
 
 	def isOpcodeSupported(self, opcode: int) -> bool:
