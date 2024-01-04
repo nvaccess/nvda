@@ -349,6 +349,10 @@ class AddonStoreDialog(SettingsDialog):
 		self._storeVM.refresh()
 		self.Layout()
 
+		# avoid erratic focus on the contained panel
+		if not self.addonListTabs.HasFocus():
+			self.addonListTabs.SetFocus()
+
 	def onChannelFilterChange(self, evt: wx.EVT_CHOICE):
 		self._storeVM._filterChannelKey = self._channelFilterKey
 		self._storeVM.listVM.setSelection(None)
