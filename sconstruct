@@ -522,7 +522,7 @@ potSourceFiles = [
 ]
 
 pot = env.Command(
-	outputDir.File("%s.pot" % outFilePrefix),
+	outputDir.File("nvda.pot"),
 	potSourceFiles,
 	makePot
 )
