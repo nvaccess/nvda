@@ -435,12 +435,6 @@ keyCommandsFile = env.Command(
 	userDocsDir.File('en/keyCommands.html'),
 	Copy('$TARGET', '$SOURCE')
 )
-keyCommandsMDFile = env.Command(
-	outputDir.File("keyCommands.md"),
-	userDocsDir.File('en/keyCommands.md'),
-	Copy('$TARGET', '$SOURCE')
-)
-env.Depends(keyCommandsFile, keyCommandsMDFile)
 env.Depends(keyCommandsFile, outputStylesFile)
 env.Depends(keyCommandsFile, userGuideFile)
 env.Alias('keyCommands', keyCommandsFile)
