@@ -16,7 +16,6 @@ mdFile = env.txt2tags('developerGuide.t2t')
 env.SideEffect('_txt2tags', mdFile)
 htmlFile = env.md2html('developerGuide.md')
 env.Depends(htmlFile, mdFile)
-env.SideEffect('_md2html', htmlFile)
 devGuideMD = env.Command(
 	target=devDocsOutputDir.File('developerGuide.md'),
 	source=mdFile,
