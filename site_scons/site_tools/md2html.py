@@ -43,29 +43,16 @@ _extensionConfigs = {
 _RTLlangCodes = {"ar", "fa", "he"}
 
 
-def md2html_actionFunc(
-		target: list[SCons.Node.FS.File],
-		source: list[SCons.Node.FS.File],
-		env: SCons.Environment.Environment
-):
-	import markdown
+def _replaceNVDATags(md: str, env: SCons.Environment.Environment) -> str:
 	import versionInfo
-	from keyCommandsDoc import KeyCommandsExtension
-	isKeyCommands = target[0].path.endswith("keyCommands.html")
-
-	with open(source[0].path, "rb") as mdFile:
-		mdStr = mdFile.read()
-
 	# Replace tags in source file
-	mdStr = mdStr.replace(b"NVDA_VERSION", env["version"].encode("utf-8"))
-	mdStr = mdStr.replace(b"NVDA_URL", versionInfo.url.encode("utf-8"))
-	mdStr = mdStr.replace(b"NVDA_COPYRIGHT_YEARS", versionInfo.copyrightYears.encode("utf-8"))
+	md = md.replace("NVDA_VERSION", env["version"])
+	md = md.replace("NVDA_URL", versionInfo.url)
+	md = md.replace("NVDA_COPYRIGHT_YEARS", versionInfo.copyrightYears)
+	return md
 
-	# Write replaced source to buffer
-	mdBuffer = io.BytesIO()
-	mdBuffer.write(mdStr)
 
-	title: str
+def _getTitle(mdBuffer: io.BytesIO, isKeyCommands: bool = False) -> str:
 	if isKeyCommands:
 		TITLE_RE = re.compile(r"^<!-- KC:title: (.*) -->$")
 		# Make next read at start of buffer
@@ -73,10 +60,9 @@ def md2html_actionFunc(
 		for line in mdBuffer.readlines():
 			match = TITLE_RE.match(line.decode("utf-8").strip())
 			if match:
-				title = match.group(1)
-				break
-		if not title:
-			raise ValueError("No KC:title command found in userGuide.md")
+				return match.group(1)
+
+		raise ValueError("No KC:title command found in userGuide.md")
 
 	else:
 		# Make next read at start of buffer
@@ -84,7 +70,30 @@ def md2html_actionFunc(
 		# Remove heading hashes and trailing whitespace to get the tab title
 		title = mdBuffer.readline().decode("utf-8").strip().lstrip("# ")
 
+	return title
+
+
+def md2html_actionFunc(
+		target: list[SCons.Node.FS.File],
+		source: list[SCons.Node.FS.File],
+		env: SCons.Environment.Environment
+):
+	import markdown
+	isKeyCommands = target[0].path.endswith("keyCommands.html")
+
+	with open(source[0].path, "r", encoding="utf-8") as mdFile:
+		mdStr = mdFile.read()
+
+	mdStr = _replaceNVDATags(mdStr, env)
+
+	# Write replaced source to buffer.
+	# md has a bug with StringIO, so BytesIO is required.
+	mdBuffer = io.BytesIO()
+	mdBuffer.write(mdStr.encode("utf-8"))
+
 	lang = pathlib.Path(source[0].path).parent.name
+	title = _getTitle(mdBuffer, isKeyCommands)
+	# md has a bug with StringIO, so BytesIO is required.
 	htmlBuffer = io.BytesIO()
 	htmlBuffer.write(
 		f"""
@@ -97,7 +106,7 @@ def md2html_actionFunc(
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-	""".encode("utf-8")
+	""".strip().encode("utf-8")
 	)
 
 	# Make next read from start of buffer
@@ -107,12 +116,12 @@ def md2html_actionFunc(
 
 	extensions = set(DEFAULT_EXTENSIONS)
 	if isKeyCommands:
+		from keyCommandsDoc import KeyCommandsExtension
 		extensions.add(KeyCommandsExtension())
 
 	markdown.markdownFromFile(
 		input=mdBuffer,
 		output=htmlBuffer,
-		encoding="utf-8",
 		# https://python-markdown.github.io/extensions/
 		extensions=extensions,
 		extension_configs=_extensionConfigs,
@@ -131,7 +140,7 @@ def md2html_actionFunc(
 	htmlBuffer.close()
 
 
-def exists(env: SCons.Environment.Environment) -> bool:	
+def exists(env: SCons.Environment.Environment) -> bool:
 	for ext in [
 		"markdown",
 		"markdown_link_attr_modifier",
