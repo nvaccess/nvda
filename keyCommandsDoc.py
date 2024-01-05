@@ -93,7 +93,6 @@ class Regex(Enum):
 class KeyCommandsError(Exception):
 	"""Raised due to an error encountered in the User Guide related to generation of the Key Commands document.
 	"""
-	pass
 
 
 class KeyCommandsExtension(Extension):
