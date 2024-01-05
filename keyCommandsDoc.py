@@ -57,7 +57,7 @@ For example:
 
 from enum import auto, Enum, IntEnum, StrEnum
 import re
-from typing import Iterator
+from collections.abc import Iterator
 
 from markdown import Extension, Markdown
 from markdown.preprocessors import Preprocessor
