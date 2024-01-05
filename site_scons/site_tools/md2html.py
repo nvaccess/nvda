@@ -3,6 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
+from importlib.util import find_spec
 import io
 import pathlib
 import shutil
@@ -115,16 +116,17 @@ def md2html_actionFunc(
 	htmlBuffer.close()
 
 
-def exists(env: SCons.Environment.Environment) -> bool:
-	try:
-		import markdown  # noqa: F401
-		import markdown_link_attr_modifier  # noqa: F401
-		import mdx_truly_sane_lists  # noqa: F401
-		import mdx_gh_links  # noqa: F401
-		import keyCommandsDoc  # noqa: F401
-		return True
-	except ImportError:
-		return False
+def exists(env: SCons.Environment.Environment) -> bool:	
+	for ext in [
+		"markdown",
+		"markdown_link_attr_modifier",
+		"mdx_truly_sane_lists",
+		"mdx_gh_links",
+		"keyCommandsDoc",
+	]:
+		if find_spec(ext) is None:
+			return False
+	return True
 
 
 def generate(env: SCons.Environment.Environment):
