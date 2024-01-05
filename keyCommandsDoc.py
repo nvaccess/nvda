@@ -127,6 +127,8 @@ class KeyCommandsPreprocessor(Preprocessor):
 		self._settingsNumLayouts: int = 0
 		#: The current line number being processed, used to present location of syntax errors
 		self._lineNum: int = 0
+		# We want to skip the title line to replace it with the KC:TITLE command argument.
+		self._skippedTitle = False
 
 	def run(self, lines: list[str]) -> list[str]:
 		# Turn this into an iterator so we can use next() to seek through lines.
@@ -134,6 +136,11 @@ class KeyCommandsPreprocessor(Preprocessor):
 		for line in self._ugLines:
 			line = line.strip()
 			self._lineNum += 1
+
+			# We want to skip the title line to replace it with the KC:TITLE command argument.
+			if line.startswith("# ") and not self._skippedTitle:
+				self._skippedTitle = True
+				continue
 
 			m = Regex.COMMAND.value.match(line)
 			if m:
@@ -156,7 +163,7 @@ class KeyCommandsPreprocessor(Preprocessor):
 			if self._kcSect > Section.HEADER:
 				raise KeyCommandsError(f"{self._lineNum}, title command is not valid here")
 			# Write the title and two blank lines to complete the txt2tags header section.
-			self._kcLines.append(arg + LINE_END * 2)
+			self._kcLines.append("# " + arg + LINE_END * 2)
 			self._kcSect = Section.BODY
 			return
 

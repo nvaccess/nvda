@@ -6,6 +6,7 @@
 from importlib.util import find_spec
 import io
 import pathlib
+import re
 import shutil
 
 import SCons.Node.FS
@@ -49,6 +50,8 @@ def md2html_actionFunc(
 ):
 	import markdown
 	import versionInfo
+	from keyCommandsDoc import KeyCommandsExtension
+	isKeyCommands = target[0].path.endswith("keyCommands.html")
 
 	with open(source[0].path, "rb") as mdFile:
 		mdStr = mdFile.read()
@@ -62,11 +65,24 @@ def md2html_actionFunc(
 	mdBuffer = io.BytesIO()
 	mdBuffer.write(mdStr)
 
-	# Make next read at start of buffer
-	mdBuffer.seek(0)
-	titleStr = mdBuffer.readline()
-	# Remove heading hashes and trailing whitespace to get the tab title
-	titleStr = titleStr.lstrip(b"# ").rstrip().decode("utf-8")
+	title: str
+	if isKeyCommands:
+		TITLE_RE = re.compile(r"^<!-- KC:title: (.*) -->$")
+		# Make next read at start of buffer
+		mdBuffer.seek(0)
+		for line in mdBuffer.readlines():
+			match = TITLE_RE.match(line.decode("utf-8").strip())
+			if match:
+				title = match.group(1)
+				break
+		if not title:
+			raise ValueError("No KC:title command found in userGuide.md")
+
+	else:
+		# Make next read at start of buffer
+		mdBuffer.seek(0)
+		# Remove heading hashes and trailing whitespace to get the tab title
+		title = mdBuffer.readline().decode("utf-8").strip().lstrip("# ")
 
 	lang = pathlib.Path(source[0].path).parent.name
 	htmlBuffer = io.BytesIO()
@@ -76,7 +92,7 @@ def md2html_actionFunc(
 <html lang="{lang}" dir="{"rtl" if lang in _RTLlangCodes else "ltr"}">
 <head>
 <meta charset="utf-8">
-<title>{titleStr}</title>
+<title>{title}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -90,8 +106,7 @@ def md2html_actionFunc(
 	htmlBuffer.seek(0, io.SEEK_END)
 
 	extensions = set(DEFAULT_EXTENSIONS)
-	if target[0].path.endswith("keyCommands.html"):
-		from keyCommandsDoc import KeyCommandsExtension
+	if isKeyCommands:
 		extensions.add(KeyCommandsExtension())
 
 	markdown.markdownFromFile(
