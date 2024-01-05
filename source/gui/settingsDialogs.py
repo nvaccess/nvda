@@ -1689,7 +1689,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 
 	def _onSpeechModesListChange(self, evt: wx.CommandEvent):
 		# continue event propagation to custom control event handler
-		# to guarantee checkbox status notify
+		# to guarantee user is notified about checkbox being checked or unchecked
 		evt.Skip()
 		if (
 			evt.GetInt() == self._allSpeechModes.index(speech.SpeechMode.talk)
