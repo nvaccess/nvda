@@ -96,8 +96,13 @@ class KeyCommandsError(Exception):
 
 
 class KeyCommandsExtension(Extension):
+	# Magic number, priorities are not well documented.
+	# It's unclear what the range of priorities are to compare to, but 25 seems to work, 1 doesn't.
+	# See https://python-markdown.github.io/extensions/api/#registries
+	PRIORITY = 25
+
 	def extendMarkdown(self, md: Markdown):
-		md.preprocessors.register(KeyCommandsPreprocessor(md), 'key_commands', 25)
+		md.preprocessors.register(KeyCommandsPreprocessor(md), 'key_commands', self.PRIORITY)
 
 
 class KeyCommandsPreprocessor(Preprocessor):
