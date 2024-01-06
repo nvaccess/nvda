@@ -758,7 +758,7 @@ def processFocusNVDAEvent(obj, force=False):
 	@return: C{True} if the focus event is valid and was queued, C{False} otherwise.
 	@rtype: boolean
 	"""
-	if not force and obj.role==Role.TABLEROW:
+	if not force and obj.role == Role.TABLEROW:
 		# when the focus changes to another cell within the same table row, the childID is still the same
 		log.debug(f"Forcing IAccessible focus event for table row {obj}")
 		force = True
