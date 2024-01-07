@@ -4,6 +4,7 @@
 # Copyright (C) 2023-2023 NV Access Limited
 
 
+import contextlib
 from abc import ABCMeta, abstractmethod
 import typing
 from typing import (
@@ -142,7 +143,7 @@ class _InstructionRecord:
 		self.validatedParamNames = _validateInstructionParams(instructionType, *params)
 
 	def __repr__(self):
-		return f"{self.instructionType.name}({', '.join(map(repr, self.params))})\n{self.locationString}"
+		return f"{self.instructionType.name}({', '.join(map(repr, self.params))})"
 
 
 LocalTypeVar = TypeVar('LocalTypeVar')
@@ -597,6 +598,10 @@ class RemoteOperationBuilder:
 
 	def getInstruction(self, instructionIndex: int, section: str = "main") -> _InstructionRecord:
 		instructions = self.getInstructionList(section)
+		return instructions[instructionIndex]
+
+	def lookupInstructionByGlobalIndex(self, instructionIndex: int) -> _InstructionRecord:
+		instructions = [instruction for instructionList in self._instructionListBySection.values() for instruction in instructionList]
 		return instructions[instructionIndex]
 
 	def ifBlock(self, condition: RemoteBool):

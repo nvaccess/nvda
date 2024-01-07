@@ -210,6 +210,16 @@ def execute(
 		rox.setLogOperandId(buildCache.logOperandId)
 	try:
 		rox.execute(argsByteCode + buildCache.bytecode)
+	except midLevel.RemoteException as e:
+		try:
+			errorInstruction = rob.lookupInstructionByGlobalIndex(e.errorLocation)
+		except IndexError:
+			errorInstruction = None
+		if errorInstruction:
+			log.error(
+				f"Remote error {e.extendedError} at Instruction {e.errorLocation}: {errorInstruction}"
+			)
+		raise
 	finally:
 		if remoteLogging:
 			_dumpExecutionLog(rox)
