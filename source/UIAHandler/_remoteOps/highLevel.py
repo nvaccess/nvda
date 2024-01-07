@@ -99,6 +99,7 @@ class _RemoteFuncBuildCache:
 	argOperandIds: list[midLevel.OperandId]
 	bytecode: bytes
 	resultOperandIds: list[midLevel.OperandId]
+	remoteLogging: bool = False
 	logOperandId: midLevel.OperandId | None = None
 
 
@@ -128,7 +129,8 @@ def _addArgsToBuilder(
 
 def _fetchAndValidateBuildCache(
 	remoteFunc: Callable,
-	*remoteArgs: midLevel._RemoteBaseObject
+	*remoteArgs: midLevel._RemoteBaseObject,
+	remoteLogging: bool = False
 ) -> _RemoteFuncBuildCache | None:
 	buildCache = getattr(remoteFunc, '_remoteFuncBuildCache', None)
 	if buildCache is not None:
@@ -138,6 +140,9 @@ def _fetchAndValidateBuildCache(
 		):
 			log.error("Ignoring Remote function build cache: argument mismatch")
 			buildCache = None
+		elif buildCache.remoteLogging != remoteLogging:
+			log.warning("Ignoring Remote function build cache: remoteLogging mismatch")
+			buildCache = None
 	return buildCache
 
 
@@ -145,14 +150,12 @@ def _buildRemoteFunc(
 	rob: midLevel.RemoteOperationBuilder,
 	remoteFunc: Callable,
 	*remoteArgs: midLevel._RemoteBaseObject,
-	enableLogging: bool = False
+	remoteLogging: bool = False
 ) -> _RemoteFuncBuildCache:
 	rfa = RemoteFuncAPI(rob)
 	remoteResults = remoteFunc(rfa, *remoteArgs)
 	if isinstance(remoteResults, midLevel._RemoteBaseObject):
 		remoteResults = [remoteResults]
-	if enableLogging:
-		log.info(f"{rob.dumpInstructions()}")
 	byteCode = b''
 	for sectionName in ('constants', 'main'):
 		byteCode += rob.getInstructionList(sectionName).getByteCode()
@@ -160,6 +163,7 @@ def _buildRemoteFunc(
 		argOperandIds=[arg.operandId for arg in remoteArgs],
 		bytecode=byteCode,
 		resultOperandIds=[result.operandId for result in remoteResults],
+		remoteLogging=remoteLogging,
 		logOperandId=rob._getLogOperandId()
 	)
 	setattr(remoteFunc, '_remoteFuncBuildCache', buildCache)
@@ -180,16 +184,25 @@ def _getExecutionResults(rox: midLevel.RemoteOperationExecutor, buildCache: _Rem
 	return tuple(rox.getResult(operandId) for operandId in buildCache.resultOperandIds)
 
 
-def execute(remoteFunc: Callable, *args: object, enableLogging=False) -> object:
+def execute(
+	remoteFunc: Callable,
+	*args: object,
+	remoteLogging=False,
+	dumpInstructions=False
+) -> object:
 	ro = lowLevel.RemoteOperation()
-	rob = midLevel.RemoteOperationBuilder(ro, enableLogging=enableLogging)
+	rob = midLevel.RemoteOperationBuilder(ro, remoteLogging=remoteLogging)
 	remoteArgs = _addArgsToBuilder(rob, *args)
 	argsByteCode = rob.getInstructionList('imports').getByteCode()
-	buildCache = _fetchAndValidateBuildCache(remoteFunc, *remoteArgs)
+	buildCache: _RemoteFuncBuildCache | None = None
+	if not dumpInstructions:
+		buildCache = _fetchAndValidateBuildCache(remoteFunc, *remoteArgs, remoteLogging=remoteLogging)
 	if buildCache is None:
-		buildCache = _buildRemoteFunc(rob, remoteFunc, *remoteArgs, enableLogging=enableLogging)
+		buildCache = _buildRemoteFunc(rob, remoteFunc, *remoteArgs, remoteLogging=remoteLogging)
+		if dumpInstructions:
+			log.info(f"{rob.dumpInstructions()}")
 	else:
-		log.info("Using Remote function build cache")
+		log.info("Reusing Remote function build cache")
 	rox = midLevel.RemoteOperationExecutor(ro)
 	for operandId in buildCache.resultOperandIds:
 		rox.addToResults(operandId)
@@ -198,6 +211,6 @@ def execute(remoteFunc: Callable, *args: object, enableLogging=False) -> object:
 	try:
 		rox.execute(argsByteCode + buildCache.bytecode)
 	finally:
-		if enableLogging:
+		if remoteLogging:
 			_dumpExecutionLog(rox)
 	return _getExecutionResults(rox, buildCache)

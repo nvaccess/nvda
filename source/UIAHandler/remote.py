@@ -71,6 +71,7 @@ def msWord_getCustomAttributeValue(
 	customAttribValue = highLevel.execute(
 		_remote_msWord_getCustomAttributeValue,
 		docElement, textRange, customAttribID,
-		enableLogging=True
+		remoteLogging=True,
+		dumpInstructions=True
 	)
 	return customAttribValue

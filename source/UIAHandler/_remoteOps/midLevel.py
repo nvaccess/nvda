@@ -537,7 +537,7 @@ class _InstructionList(list[_InstructionRecord]):
 
 class RemoteOperationBuilder:
 
-	def __init__(self, ro: lowLevel.RemoteOperation, enableLogging: bool = False):
+	def __init__(self, ro: lowLevel.RemoteOperation, remoteLogging: bool = False):
 		self._ro = ro
 		self._scopeJustExited: _RemoteScope | None = None
 		sectionNames = ["imports", "constants", "main"]
@@ -547,8 +547,8 @@ class RemoteOperationBuilder:
 		self._remotedArgCache: dict[object, _RemoteBaseObject] = {}
 		self.operandIdGen = itertools.count(start=1)
 		self._results = None
-		self._loggingEnablede = enableLogging
-		if enableLogging:
+		self._loggingEnablede = remoteLogging
+		if remoteLogging:
 			self._log: RemoteString = RemoteString._new(self)
 
 	def _getNewOperandId(self) -> OperandId:
@@ -644,11 +644,11 @@ class RemoteOperationBuilder:
 	def logMessage(self, *strings):
 		if not self._loggingEnablede:
 			return
-		self.addComment("Begin logging")
+		self.addComment("Begin logMessage code")
 		for string in strings:
 			self._log += string
 		self._log += "\n"
-		self.addComment("End logging")
+		self.addComment("End logMessage code")
 
 	def dumpInstructions(self) -> str:
 		output = "--- Instructions start ---\n"
