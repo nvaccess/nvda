@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2021-2022 NV Access Limited, Joseph Lee
+# Copyright (C) 2021-2024 NV Access Limited, Joseph Lee
 
 """Unit tests for the Windows version module."""
 
@@ -31,10 +31,10 @@ class TestWinVersion(unittest.TestCase):
 
 	def test_moreRecentWinVer(self):
 		# Specifically to test operators.
-		minimumWinVer = winVersion.WIN7_SP1
-		audioDuckingAvailable = winVersion.WIN8
+		minimumWinVer = winVersion.WIN81
+		emojiPanelIntroduced = winVersion.WIN10_1709
 		self.assertGreaterEqual(
-			audioDuckingAvailable, minimumWinVer
+			emojiPanelIntroduced, minimumWinVer
 		)
 
 	def test_winVerKnownReleaseNameForWinVersionConstant(self):
@@ -85,3 +85,12 @@ class TestWinVersion(unittest.TestCase):
 		# Use os.environ to guard against platform.machine() giving odd results.
 		actualArchitecture = os.environ.get("PROCESSOR_ARCHITEW6432", os.environ["PROCESSOR_ARCHITECTURE"])
 		self.assertEqual(winVersion.getWinVer().processorArchitecture, actualArchitecture)
+
+	def test_winVerUnknownWin11BuildToReleaseName(self):
+		# Despite system version being 10.0, build 22000 or later is Windows 11.
+		# See if build 25398 (zinc milestone) is recognized as a Windows 11 "unknown" release.
+		zincMajor, zincMinor, zincBuild = 10, 0, 25398
+		win11ZincInfo = winVersion.WinVersion(
+			major=zincMajor, minor=zincMinor, build=zincBuild
+		)
+		self.assertEqual(win11ZincInfo.releaseName, "Windows 11 unknown")

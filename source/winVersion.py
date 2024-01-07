@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Bill Dengler, Joseph Lee
+# Copyright (C) 2006-2024 NV Access Limited, Bill Dengler, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -10,7 +10,7 @@ making sure NVDA can run on a minimum supported version of Windows.
 When working on this file, consider moving to winAPI.
 """
 
-from typing import Optional, Dict, Any
+from typing import Any
 import sys
 import os
 import functools
@@ -23,7 +23,7 @@ from logHandler import log
 # Records a mapping between Windows builds and release names.
 # These include build 10240 for Windows 10 1507 and releases with multiple release builds.
 # These are applicable to Windows 10 and later as they report the same system version (10.0).
-_BUILDS_TO_RELEASE_NAMES: Dict[int, str] = {
+_BUILDS_TO_RELEASE_NAMES: dict[int, str] = {
 	10240: "Windows 10 1507",
 	10586: "Windows 10 1511",
 	14393: "Windows 10 1607",
@@ -81,7 +81,7 @@ class WinVersion(object):
 			major: int = 0,
 			minor: int = 0,
 			build: int = 0,
-			releaseName: Optional[str] = None,
+			releaseName: str | None = None,
 			servicePack: str = "",
 			productType: str = "",
 			processorArchitecture: str = ""
@@ -105,18 +105,22 @@ class WinVersion(object):
 		On server systems, unless noted otherwise, client release names will be returned.
 		For example, 'Windows 10 1809' will be returned on Server 2019 systems.
 		"""
-		if (self.major, self.minor) == (6, 3):
-			return "Windows 8.1"
-		elif self.major == 10:
-			# From Version 1511 (build 10586), release Id/display version comes from Windows Registry.
+		match (self.major, self.minor):
+			case (6, 3):
+				return "Windows 8.1"
+			# From Windows 10 1511 (build 10586), release Id/display version comes from Windows Registry.
 			# However there are builds with no release name (Version 1507/10240)
 			# or releases with different builds.
 			# Look these up first before asking Windows Registry.
-			if self.build in _BUILDS_TO_RELEASE_NAMES:
+			case (10, 0) if self.build in _BUILDS_TO_RELEASE_NAMES:
 				return _BUILDS_TO_RELEASE_NAMES[self.build]
-			return "Windows 10 unknown"
-		else:
-			return "Windows release unknown"
+			# #15992: 10.0.22000 or later is Windows 11.
+			case (10, 0) if self.build >= 22000:
+				return "Windows 11 unknown"
+			case (10, 0):
+				return "Windows 10 unknown"
+			case _:
+				return "Windows release unknown"
 
 	def __repr__(self):
 		winVersionText = [self.releaseName]
