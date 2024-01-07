@@ -4,30 +4,47 @@
 # Copyright (C) 2023-2023 NV Access Limited
 
 
+from typing import Type
+from dataclasses import dataclass
 from ctypes import (
 	oledll,
 	byref,
-	POINTER,
 	c_void_p,
-	c_int,
+	c_long,
+	c_ulong,
+	c_wchar,
+	c_double,
 	c_bool
 )
+import ctypes
 from comtypes.automation import VARIANT
+from comtypes import GUID
 import os
 import enum
 from UIAHandler import UIA
 import NVDAHelper
 
 
-class OperandId(c_int):
+class OperandId(c_ulong):
+
+	def __eq__(self, other: object) -> bool:
+		if type(other) is OperandId:
+			return self.value == other.value
+		return False
+
 	def __repr__(self) -> str:
 		return f"OperandId {self.value}"
+
+
+class RelativeOffset(c_long):
+	def __repr__(self) -> str:
+		return f"RelativeOffset {self.value}"
 
 
 _dll = oledll[os.path.join(NVDAHelper.versionedLibPath, "UIARemote.dll")]
 
 
-class RemoteOperationResult:
+class RemoteOperationResultSet:
 
 	def __init__(self, pResults: c_void_p):
 		if not pResults or not isinstance(pResults, c_void_p):
@@ -36,19 +53,19 @@ class RemoteOperationResult:
 
 	@property
 	def errorLocation(self) -> int:
-		val = c_int()
+		val = c_long()
 		_dll.remoteOpResult_getErrorLocation(self._pResults, byref(val))
 		return val.value
 
 	@property
 	def extendedError(self) -> int:
-		val = c_int()
+		val = c_long()
 		_dll.remoteOpResult_getExtendedError(self._pResults, byref(val))
 		return val.value
 
 	@property
 	def status(self) -> int:
-		val = c_int()
+		val = c_long()
 		_dll.remoteOpResult_getStatus(self._pResults, byref(val))
 		return RemoteOperationStatus(val.value)
 
@@ -72,10 +89,10 @@ class RemoteOperation:
 		self._pRemoteOperation = c_void_p()
 		_dll.remoteOp_create(byref(self._pRemoteOperation))
 
-	def importElement(self, operandId: OperandId, element: POINTER(UIA.IUIAutomationElement)):
+	def importElement(self, operandId: OperandId, element: UIA.IUIAutomationElement):
 		_dll.remoteOp_importElement(self._pRemoteOperation, operandId, element)
 
-	def importTextRange(self, operandId: OperandId, textRange: POINTER(UIA.IUIAutomationTextRange)):
+	def importTextRange(self, operandId: OperandId, textRange: UIA.IUIAutomationTextRange):
 		_dll.remoteOp_importTextRange(self._pRemoteOperation, operandId, textRange)
 
 	def addToResults(self, operandId: OperandId):
@@ -89,7 +106,7 @@ class RemoteOperation:
 	def execute(self, byteCodeArray: bytes):
 		pResults = c_void_p()
 		_dll.remoteOp_execute(self._pRemoteOperation, byteCodeArray, len(byteCodeArray), byref(pResults))
-		return RemoteOperationResult(pResults)
+		return RemoteOperationResultSet(pResults)
 
 	def __del__(self):
 		_dll.remoteOp_free(self._pRemoteOperation)
@@ -232,3 +249,323 @@ class ComparisonType(enum.IntEnum):
 	LessThan = 3
 	GreaterThanOrEqual = 4
 	LessThanOrEqual = 5
+
+
+@dataclass
+class ParamSpec:
+	name: str
+	ctype: Type[ctypes._SimpleCData | ctypes.Array | ctypes.Structure]
+
+
+@dataclass
+class InstructionSpec:
+	paramSpecs: list[ParamSpec]
+	finalParamRepeat: bool = False
+
+	def __init__(
+		self,
+		*params: tuple[str, Type[ctypes._SimpleCData | ctypes.Array | ctypes.Structure]],
+		finalParamRepeat: bool = False
+	):
+		self.paramSpecs = [ParamSpec(*p) for p in params]
+		self.finalParamRepeat = finalParamRepeat
+
+
+InstructionSpecs: dict[InstructionType, InstructionSpec] = {
+	InstructionType.Nop: InstructionSpec(),
+	InstructionType.Set: InstructionSpec(
+		("target", OperandId),
+		("source", OperandId)
+	),
+	InstructionType.ForkIfTrue: InstructionSpec(
+		("condition", OperandId),
+		("trueBranch", RelativeOffset),
+	),
+	InstructionType.ForkIfFalse: InstructionSpec(
+		("condition", OperandId),
+		("falseBranch", RelativeOffset),
+	),
+	InstructionType.Fork: InstructionSpec(
+		("branch", RelativeOffset),
+	),
+	InstructionType.Halt: InstructionSpec(),
+	InstructionType.NewLoopBlock: InstructionSpec(
+		('break', RelativeOffset),
+		('continue', RelativeOffset)
+	),
+	InstructionType.EndLoopBlock: InstructionSpec(),
+	InstructionType.BreakLoop: InstructionSpec(),
+	InstructionType.ContinueLoop: InstructionSpec(),
+	InstructionType.NewTryBlock: InstructionSpec(
+		('catch', RelativeOffset),
+	),
+	InstructionType.EndTryBlock: InstructionSpec(),
+	InstructionType.SetOperationStatus: InstructionSpec(
+		('result', OperandId),
+		('status', c_ulong)
+	),
+	InstructionType.GetOperationStatus: InstructionSpec(
+		('result', OperandId),
+	),
+	InstructionType.Add: InstructionSpec(
+		('target', OperandId),
+		('value', OperandId)
+	),
+	InstructionType.Subtract: InstructionSpec(
+		('target', OperandId),
+		('value', OperandId)
+	),
+	InstructionType.Multiply: InstructionSpec(
+		('target', OperandId),
+		('value', OperandId)
+	),
+	InstructionType.Divide: InstructionSpec(
+		('target', OperandId),
+		('value', OperandId)
+	),
+	InstructionType.BinaryAdd: InstructionSpec(
+		('result', OperandId),
+		('left', OperandId),
+		('right', OperandId)
+	),
+	InstructionType.BinarySubtract: InstructionSpec(
+		('result', OperandId),
+		('left', OperandId),
+		('right', OperandId)
+	),
+	InstructionType.BinaryMultiply: InstructionSpec(
+		('result', OperandId),
+		('left', OperandId),
+		('right', OperandId)
+	),
+	InstructionType.BinaryDivide: InstructionSpec(
+		('result', OperandId),
+		('left', OperandId),
+		('right', OperandId)
+	),
+	InstructionType.InPlaceBoolNot: InstructionSpec(
+		('target', OperandId)
+	),
+	InstructionType.InPlaceBoolAnd: InstructionSpec(
+		('target', OperandId),
+		('value', OperandId)
+	),
+	InstructionType.InPlaceBoolOr: InstructionSpec(
+		('target', OperandId),
+		('value', OperandId)
+	),
+	InstructionType.BoolNot: InstructionSpec(
+		('result', OperandId),
+		('value', OperandId)
+	),
+	InstructionType.BoolAnd: InstructionSpec(
+		('result', OperandId),
+		('left', OperandId),
+		('right', OperandId)
+	),
+	InstructionType.BoolOr: InstructionSpec(
+		('result', OperandId),
+		('left', OperandId),
+		('right', OperandId)
+	),
+	InstructionType.Compare: InstructionSpec(
+		('result', OperandId),
+		('left', OperandId),
+		('right', OperandId),
+		('comparison', c_ulong)
+	),
+	InstructionType.NewInt: InstructionSpec(
+		('result', OperandId),
+		('value', c_long)
+	),
+	InstructionType.NewUint: InstructionSpec(
+		('result', OperandId),
+		('value', c_ulong)
+	),
+	InstructionType.NewBool: InstructionSpec(
+		('result', OperandId),
+		('value', c_bool)
+	),
+	InstructionType.NewDouble: InstructionSpec(
+		('result', OperandId),
+		('value', c_double)
+	),
+	InstructionType.NewChar: InstructionSpec(
+		('result', OperandId),
+		('value', c_wchar)
+	),
+	InstructionType.NewString: InstructionSpec(
+		('result', OperandId),
+		('length', c_ulong),
+		('value', ctypes.Array[c_wchar])
+	),
+	InstructionType.NewPoint: InstructionSpec(
+		('result', OperandId),
+		('x', c_double),
+		('y', c_double)
+	),
+	InstructionType.NewRect: InstructionSpec(
+		('result', OperandId),
+		('left', c_double),
+		('top', c_double),
+		('width', c_double),
+		('height', c_double)
+	),
+	# InstructionType.NewArray: InstructionSpec(),
+	# InstructionType.NewStringMap: InstructionSpec(),
+	InstructionType.NewNull: InstructionSpec(
+		('result', OperandId)
+	),
+	# InstructionType.GetPointProperty: InstructionSpec(),
+	# InstructionType.GetRectProperty: InstructionSpec(),
+	# InstructionType.RemoteArrayAppend: InstructionSpec(),
+	# InstructionType.RemoteArraySetAt: InstructionSpec(),
+	# InstructionType.RemoteArrayRemoveAt: InstructionSpec(),
+	# InstructionType.RemoteArrayGetAt: InstructionSpec(),
+	# InstructionType.RemoteArraySize: InstructionSpec(),
+	# InstructionType.RemoteStringMapInsert: InstructionSpec(),
+	# InstructionType.RemoteStringMapRemove: InstructionSpec(),
+	# InstructionType.RemoteStringMapHasKey: InstructionSpec(),
+	# InstructionType.RemoteStringMapLookup: InstructionSpec(),
+	# InstructionType.RemoteStringMapSize: InstructionSpec(),
+	InstructionType.RemoteStringGetAt: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId),
+		('index', c_ulong)
+	),
+	InstructionType.RemoteStringSubstr: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId),
+		('start', c_ulong),
+		('length', c_ulong)
+	),
+	InstructionType.RemoteStringConcat: InstructionSpec(
+		('result', OperandId),
+		('left', OperandId),
+		('right', OperandId)
+	),
+	InstructionType.RemoteStringSize: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId)
+	),
+	InstructionType.GetPropertyValue: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId),
+		('propertyId', OperandId),
+		('ignoreDefault', OperandId)
+	),
+	InstructionType.Navigate: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId),
+		('direction', c_ulong)
+	),
+	InstructionType.IsNull: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId)
+	),
+	InstructionType.IsNotSupported: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId)
+	),
+	InstructionType.IsMixedAttribute: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId)
+	),
+	InstructionType.IsBool: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId)
+	),
+	InstructionType.IsInt: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId)
+	),
+	InstructionType.IsUint: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId)
+	),
+	InstructionType.IsDouble: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId)
+	),
+	InstructionType.IsChar: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId)
+	),
+	InstructionType.IsString: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId)
+	),
+	InstructionType.IsPoint: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId)
+	),
+	InstructionType.IsRect: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId)
+	),
+	InstructionType.IsArray: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId)
+	),
+	InstructionType.IsStringMap: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId)
+	),
+	InstructionType.IsElement: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId)
+	),
+	InstructionType.NewGuid: InstructionSpec(
+		('result', OperandId),
+		('value', GUID)
+	),
+	InstructionType.IsGuid: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId)
+	),
+	InstructionType.LookupId: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId)
+	),
+	InstructionType.LookupGuid: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId)
+	),
+	InstructionType.NewCacheRequest: InstructionSpec(
+		('result', OperandId)
+	),
+	InstructionType.IsCacheRequest: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId)
+	),
+	InstructionType.CacheRequestAddProperty: InstructionSpec(
+		('target', OperandId),
+		('propertyId', OperandId)
+	),
+	InstructionType.CacheRequestAddPattern: InstructionSpec(
+		('target', OperandId),
+		('patternId', OperandId)
+	),
+	# InstructionType.PopulateCache: InstructionSpec(),
+	InstructionType.Stringify: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId)
+	),
+	InstructionType.GetMetadataValue: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId),
+		('key', OperandId)
+	),
+	InstructionType.CallExtension: InstructionSpec(
+		('target', OperandId),
+		('extensionGuid', OperandId),
+		('argCount', c_ulong),
+		('arg', OperandId),
+		finalParamRepeat=True
+	),
+	InstructionType.IsExtensionSupported: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId),
+		('extensionGuid', OperandId)
+	)
+}

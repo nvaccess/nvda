@@ -4,8 +4,8 @@
 # Copyright (C) 2023-2023 NV Access Limited
 
 
-from itertools import chain
 from abc import ABCMeta, abstractmethod
+import typing
 from typing import (
 	Self,
 	Callable,
@@ -15,13 +15,12 @@ from typing import (
 	cast,
 )
 import types
-import _ctypes
 import ctypes
 from ctypes import (
 	_SimpleCData,
 	c_long,
+	c_ulong,
 	c_char,
-	c_wchar,
 	c_bool
 )
 from comtypes import GUID
@@ -32,7 +31,7 @@ import struct
 import itertools
 from UIAHandler import UIA
 from . import lowLevel
-from .lowLevel import OperandId
+from .lowLevel import OperandId, RelativeOffset
 
 
 def ensureString(val: str | None) -> str:
@@ -51,11 +50,6 @@ def ensureGuid(val: GUID | str | None) -> GUID:
 	elif val is None:
 		return GUID()
 	raise TypeError("val must be a GUID, a str, or None")
-
-
-class RelativeOffset(c_long):
-	def __repr__(self) -> str:
-		return f"RelativeOffset {self.value}"
 
 
 def _getLocationString(frame: types.FrameType) -> str:
@@ -81,11 +75,61 @@ def _getLocationString(frame: types.FrameType) -> str:
 	return locationString
 
 
+def _validateInstructionParams(
+	instructionType: lowLevel.InstructionType,
+	*params: ctypes._SimpleCData | ctypes.Array | ctypes.Structure
+):
+	try:
+		instructionSpec = lowLevel.InstructionSpecs[instructionType]
+	except KeyError:
+		raise ValueError(f"Unknown instruction type {instructionType.name}")
+	paramNames: list[str] = []
+	for index, param in enumerate(params):
+		if index >= len(instructionSpec.paramSpecs):
+			if instructionSpec.finalParamRepeat:
+				finalParamIndex = len(instructionSpec.paramSpecs) - 1
+				finalParamCount = cast(ctypes._SimpleCData, params[finalParamIndex - 1]).value
+				if (index - finalParamIndex) <= finalParamCount:
+					index = finalParamIndex
+				else:
+					raise ValueError(
+						f"Final parameter of instruction {instructionType.name} "
+						f"must be given {finalParamCount} times, "
+						"but more were given"
+					)
+			else:
+				raise ValueError(f"Too many parameters for instruction {instructionType.name}")
+		paramSpec = instructionSpec.paramSpecs[index]
+		validParam = False
+		if type(param) is paramSpec.ctype:
+			validParam = True
+		elif index > 0 and isinstance(param, ctypes.Array) and typing.get_origin(paramSpec.ctype) is ctypes.Array:
+			if typing.get_args(paramSpec.ctype)[0] is param._type_:
+				arrayLength = cast(c_ulong, params[index - 1]).value
+				if len(param) != arrayLength:
+					raise ValueError(
+						f"param {index} ({paramSpec.name}) "
+						f" of instruction {instructionType.name} "
+						f"must have length {arrayLength}, not {len(param)}"
+					)
+				validParam = True
+		if not validParam:
+			raise TypeError(
+				f"param {index} ({paramSpec.name}) "
+				f"of instruction {instructionType.name} "
+				f"must be of type {paramSpec.ctype.__name__}, "
+				f"not {type(param).__name__}"
+			)
+		paramNames.append(paramSpec.name)
+	return paramNames
+
+
 @dataclass
 class _InstructionRecord:
 	instructionType: lowLevel.InstructionType
 	params: tuple[_SimpleCData | ctypes.Array | ctypes.Structure, ...]
-	locationString: str | None
+	validatedParamNames: list[str] | None = None
+	locationString: str | None = None
 
 	def __init__(
 		self, instructionType: lowLevel.InstructionType,
@@ -95,6 +139,7 @@ class _InstructionRecord:
 		self.instructionType = instructionType
 		self.params = params
 		self.locationString = locationString
+		self.validatedParamNames = _validateInstructionParams(instructionType, *params)
 
 	def __repr__(self):
 		return f"{self.instructionType.name}({', '.join(map(repr, self.params))})\n{self.locationString}"
@@ -111,8 +156,8 @@ class _RemoteBaseObject(Generic[LocalTypeVar], metaclass=ABCMeta):
 	@classmethod
 	def _new(cls, rob: "RemoteOperationBuilder", initialValue: LocalTypeVar | None = None) -> Self:
 		obj = cls(rob)
-		for instruction in obj._generateInitInstructions(initialValue):
-			rob._addInstruction(instruction.instructionType, *instruction.params)
+		for record in obj._generateInitInstructions(initialValue):
+			rob.addInstructionRecord(record)
 		return obj
 
 	@abstractmethod
@@ -125,23 +170,24 @@ class _RemoteBaseObject(Generic[LocalTypeVar], metaclass=ABCMeta):
 	def ensureArgumentIsRemote(
 		cls, rob: "RemoteOperationBuilder",
 		obj: Self | LocalTypeVar,
-		useCache: bool = False
+		readOnly: bool = False
 	) -> Self:
 		if isinstance(obj, cls):
 			remoteObj = cast(Self, obj)
 			if remoteObj._rob is not rob:
 				raise RuntimeError("Object belongs to a different RemoteOperationBuilder")
 			return remoteObj
-		if useCache:
+		if readOnly:
 			cacheKey = (cls, obj)
 			cachedRemoteObj = rob._remotedArgCache.get(cacheKey)
 			if cachedRemoteObj is not None:
 				assert isinstance(cachedRemoteObj, cls)
 				return cast(Self, cachedRemoteObj)
 		remoteObj = cls(rob)
-		for instruction in remoteObj._generateInitInstructions(cast(LocalTypeVar, obj)):
-			rob._addInstruction(instruction.instructionType, *instruction.params, globalSection=useCache)
-		if useCache:
+		for record in remoteObj._generateInitInstructions(cast(LocalTypeVar, obj)):
+			section = "constants" if readOnly else "main"
+			rob.addInstructionRecord(record, section)
+		if readOnly:
 			rob._remotedArgCache[cacheKey] = remoteObj
 		return remoteObj
 
@@ -157,8 +203,8 @@ class _RemoteBaseObject(Generic[LocalTypeVar], metaclass=ABCMeta):
 		return self._operandId
 
 	def set(self, value: Self | LocalTypeVar) -> None:
-		remoteValue = type(self).ensureArgumentIsRemote(self._rob, value, useCache=True)
-		self._rob._addInstruction(
+		remoteValue = type(self).ensureArgumentIsRemote(self._rob, value, readOnly=True)
+		self._rob.addInstruction(
 			lowLevel.InstructionType.Set,
 			self.operandId,
 			remoteValue.operandId
@@ -166,7 +212,7 @@ class _RemoteBaseObject(Generic[LocalTypeVar], metaclass=ABCMeta):
 
 	def stringify(self) -> "RemoteString":
 		remoteResult = RemoteString(self._rob)
-		self._rob._addInstruction(
+		self._rob.addInstruction(
 			lowLevel.InstructionType.Stringify,
 			remoteResult.operandId,
 			self.operandId
@@ -174,14 +220,14 @@ class _RemoteBaseObject(Generic[LocalTypeVar], metaclass=ABCMeta):
 		return remoteResult
 
 	def _doCompare(self, comparisonType: lowLevel.ComparisonType, other: Self | LocalTypeVar) -> "RemoteBool":
-		remoteOther = type(self).ensureArgumentIsRemote(self._rob, other, useCache=True)
+		remoteOther = type(self).ensureArgumentIsRemote(self._rob, other, readOnly=True)
 		remoteResult = RemoteBool(self._rob)
-		self._rob._addInstruction(
+		self._rob.addInstruction(
 			lowLevel.InstructionType.Compare,
 			remoteResult.operandId,
 			self.operandId,
 			remoteOther.operandId,
-			c_long(comparisonType)
+			c_ulong(comparisonType)
 		)
 		return remoteResult
 
@@ -232,9 +278,9 @@ class _RemoteNumber(_RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 		return self._doCompare(lowLevel.ComparisonType.LessThanOrEqual, other)
 
 	def _doBinaryOp(self, instructionType: lowLevel.InstructionType, other: Self | LocalTypeVar) -> Self:
-		remoteOther = type(self).ensureArgumentIsRemote(self._rob, other, useCache=True)
+		remoteOther = type(self).ensureArgumentIsRemote(self._rob, other, readOnly=True)
 		remoteResult = type(self)(self._rob)
-		self._rob._addInstruction(
+		self._rob.addInstruction(
 			instructionType,
 			remoteResult.operandId,
 			self.operandId,
@@ -243,8 +289,8 @@ class _RemoteNumber(_RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 		return remoteResult
 
 	def _doInplaceOp(self, instructionType: lowLevel.InstructionType, other: Self | LocalTypeVar) -> Self:
-		remoteOther = type(self).ensureArgumentIsRemote(self._rob, other, useCache=True)
-		self._rob._addInstruction(
+		remoteOther = type(self).ensureArgumentIsRemote(self._rob, other, readOnly=True)
+		self._rob.addInstruction(
 			instructionType,
 			self.operandId,
 			remoteOther.operandId
@@ -292,6 +338,7 @@ class RemoteString(_RemoteEqualityComparible[str]):
 		yield _InstructionRecord(
 			lowLevel.InstructionType.NewString,
 			self.operandId,
+			c_ulong(len(initialStringValue) + 1),
 			ctypes.create_unicode_buffer(initialStringValue)
 		)
 
@@ -299,15 +346,15 @@ class RemoteString(_RemoteEqualityComparible[str]):
 	def ensureArgumentIsRemote(
 		cls, rob: "RemoteOperationBuilder",
 		obj: Self | str | _RemoteBaseObject,
-		useCache: bool = False,
+		readOnly: bool = False,
 	) -> "RemoteString":
 		if not isinstance(obj, cls) and isinstance(obj, _RemoteBaseObject):
 			return cast(_RemoteBaseObject, obj).stringify()
-		return super().ensureArgumentIsRemote(rob, obj, useCache)
+		return super().ensureArgumentIsRemote(rob, obj, readOnly)
 
 	def _concat(self, other: Self | str | _RemoteBaseObject, toResult: Self) -> None:
-		remoteOther = type(self).ensureArgumentIsRemote(self._rob, other, useCache=True)
-		self._rob._addInstruction(
+		remoteOther = type(self).ensureArgumentIsRemote(self._rob, other, readOnly=True)
+		self._rob.addInstruction(
 			lowLevel.InstructionType.RemoteStringConcat,
 			toResult.operandId,
 			self.operandId,
@@ -336,7 +383,7 @@ class _RemoteNullable(_RemoteBaseObject[LocalTypeVar], Generic[LocalTypeVar]):
 
 	def isNull(self) -> RemoteBool:
 		remoteResult = RemoteBool(self._rob)
-		self._rob._addInstruction(
+		self._rob.addInstruction(
 			lowLevel.InstructionType.IsNull,
 			remoteResult.operandId,
 			self.operandId
@@ -349,13 +396,13 @@ class RemoteVariant(_RemoteNullable):
 	def isType(self, remoteClass: type[_RemoteBaseObject]) -> RemoteBool:
 		if not issubclass(remoteClass, _RemoteBaseObject):
 			raise TypeError("remoteClass must be a subclass of _RemoteBaseObject")
-		result = self._rob.newBool()
-		self._rob._addInstruction(
+		remoteResult = RemoteBool(self._rob)
+		self._rob.addInstruction(
 			remoteClass._isTypeInstruction,
-			result.operandId,
+			remoteResult.operandId,
 			self.operandId
 		)
-		return result
+		return remoteResult
 
 	def asType(self, remoteClass: type[_RemoteBaseObject]) -> _RemoteBaseObject:
 		return remoteClass(self._rob, self.operandId)
@@ -364,9 +411,9 @@ class RemoteVariant(_RemoteNullable):
 class RemoteExtensionTarget(_RemoteNullable[LocalTypeVar], Generic[LocalTypeVar]):
 
 	def isExtensionSupported(self, extensionGuid: GUID) -> RemoteBool:
-		extensionGuid = RemoteGuid.ensureArgumentIsRemote(self._rob, extensionGuid, useCache=True)
+		extensionGuid = RemoteGuid.ensureArgumentIsRemote(self._rob, extensionGuid, readOnly=True)
 		remoteResult = RemoteBool(self._rob)
-		self._rob._addInstruction(
+		self._rob.addInstruction(
 			lowLevel.InstructionType.IsExtensionSupported,
 			remoteResult.operandId,
 			self.operandId,
@@ -375,12 +422,12 @@ class RemoteExtensionTarget(_RemoteNullable[LocalTypeVar], Generic[LocalTypeVar]
 		return remoteResult
 
 	def callExtension(self, extensionGuid: GUID, *params: _RemoteBaseObject) -> None:
-		extensionGuid = RemoteGuid.ensureArgumentIsRemote(self._rob, extensionGuid, useCache=True)
-		self._rob._addInstruction(
+		extensionGuid = RemoteGuid.ensureArgumentIsRemote(self._rob, extensionGuid, readOnly=True)
+		self._rob.addInstruction(
 			lowLevel.InstructionType.CallExtension,
 			self.operandId,
 			extensionGuid.operandId,
-			c_long(len(params)),
+			c_ulong(len(params)),
 			*(p.operandId for p in params)
 		)
 
@@ -393,10 +440,10 @@ class RemoteElement(RemoteExtensionTarget[UIA.IUIAutomationElement]):
 		propertyId: int | RemoteInt,
 		ignoreDefault: bool | RemoteBool = False
 	) -> RemoteVariant:
-		remotePropertyId = RemoteInt.ensureArgumentIsRemote(self._rob, propertyId, useCache=True)
-		remoteIgnoreDefault = RemoteBool.ensureArgumentIsRemote(self._rob, ignoreDefault, useCache=True)
-		remoteResult = self._rob.newVariant()
-		self._rob._addInstruction(
+		remotePropertyId = RemoteInt.ensureArgumentIsRemote(self._rob, propertyId, readOnly=True)
+		remoteIgnoreDefault = RemoteBool.ensureArgumentIsRemote(self._rob, ignoreDefault, readOnly=True)
+		remoteResult = RemoteVariant(self._rob)
+		self._rob.addInstruction(
 			lowLevel.InstructionType.GetPropertyValue,
 			remoteResult.operandId,
 			self.operandId,
@@ -433,66 +480,102 @@ class InstructionLimitExceededException(RuntimeError):
 
 
 class RemoteException(RuntimeError):
-	pass
+	errorLocation: int
+	extendedError: int
+
+	def __init__(self, errorLocation: int, extendedError: int):
+		super().__init__(f"Remote exception at instruction {errorLocation}")
+		self.errorLocation = errorLocation
+		self.extendedError = extendedError
 
 
 class ExecutionFailureException(RuntimeError):
 	pass
 
 
+class _InstructionList(list[_InstructionRecord]):
+
+	_byteCodeCache: bytes | None = None
+	_isModified: bool = False
+	_commentsByInstructionIndex: dict[int, list[str]]
+
+	def __init__(self):
+		super().__init__()
+		self._commentsByInstructionIndex = {}
+
+	def prependComment(self, instructionIndex: int, comment: str):
+		if instructionIndex not in self._commentsByInstructionIndex:
+			self._commentsByInstructionIndex[instructionIndex] = []
+		self._commentsByInstructionIndex[instructionIndex].append(comment)
+
+	def getPrependedComments(self, instructionIndex: int) -> list[str]:
+		return self._commentsByInstructionIndex.get(instructionIndex, [])
+
+	def addInstructionRecord(self, record: _InstructionRecord, section: str = "main") -> int:
+		if record.locationString is None:
+			frame = inspect.currentframe()
+			if frame:
+				frame = frame.f_back
+				if frame:
+					record.locationString = _getLocationString(frame)
+		self.append(record)
+		self._isModified = True
+		return len(self) - 1
+
+	def getByteCode(self):
+		if not self._isModified and self._byteCodeCache is not None:
+			return self._byteCodeCache
+		byteCode = b''
+		for instruction in self:
+			byteCode += struct.pack('l', instruction.instructionType)
+			for param in instruction.params:
+				paramBytes = (c_char * ctypes.sizeof(param)).from_address(ctypes.addressof(param)).raw
+				byteCode += paramBytes
+		self._byteCodeCache = byteCode
+		return byteCode
+
+
 class RemoteOperationBuilder:
 
-	_versionBytes = struct.pack('l', 0)
-
-	def __init__(self, enableLogging: bool = False):
+	def __init__(self, ro: lowLevel.RemoteOperation, enableLogging: bool = False):
+		self._ro = ro
 		self._scopeJustExited: _RemoteScope | None = None
-		self._globalInstructions: list[_InstructionRecord] = []
-		self._mainInstructions: list[_InstructionRecord] = []
+		sectionNames = ["imports", "constants", "main"]
+		self._instructionListBySection: dict[str, _InstructionList] = {
+			sectionName: _InstructionList() for sectionName in sectionNames
+		}
 		self._remotedArgCache: dict[object, _RemoteBaseObject] = {}
 		self.operandIdGen = itertools.count(start=1)
-		self._ro = lowLevel.RemoteOperation()
 		self._results = None
 		self._loggingEnablede = enableLogging
 		if enableLogging:
-			self._log: RemoteString = self.newString()
-			self.addToResults(self._log)
+			self._log: RemoteString = RemoteString._new(self)
 
 	def _getNewOperandId(self) -> OperandId:
 		return OperandId(next(self.operandIdGen))
 
-	def _addInstruction(
+	def getInstructionList(self, section: str) -> _InstructionList:
+		return self._instructionListBySection[section]
+
+	def addInstruction(
 		self,
 		instruction: lowLevel.InstructionType,
 		*params: _SimpleCData | ctypes.Array | ctypes.Structure,
-		globalSection: bool = False
+		section: str = "main"
 	):
-		""" Adds an instruction to the instruction list and returns the index of the instruction. """
-		self._scopeJustExited = None
-		locationString: str | None = None
-		frame = inspect.currentframe()
-		if frame:
-			frame = frame.f_back
-			if frame:
-				locationString = _getLocationString(frame)
-		record = _InstructionRecord(instruction, *params, locationString=locationString)
-		if globalSection:
-			self._globalInstructions.append(record)
-			return len(self._globalInstructions) - 1
-		else:
-			self._mainInstructions.append(record)
-			return len(self._mainInstructions) - 1
+		record = _InstructionRecord(instruction, *params)
+		return self.addInstructionRecord(record, section)
 
-	def _generateByteCode(self) -> bytes:
-		byteCode = b''
-		for instruction in chain(self._globalInstructions, self._mainInstructions):
-			byteCode += struct.pack('l', instruction.instructionType)
-			for param in instruction.params:
-				paramBytes = (c_char * ctypes.sizeof(param)).from_address(ctypes.addressof(param)).raw
-				if isinstance(param, _ctypes.Array) and param._type_ == c_wchar:
-					paramBytes = paramBytes[:-2]
-					byteCode += struct.pack('l', len(param) - 1)
-				byteCode += paramBytes
-		return byteCode
+	def addInstructionRecord(self, record: _InstructionRecord, section: str = "main") -> int:
+		instructionsList = self.getInstructionList(section)
+		index = instructionsList.addInstructionRecord(record, section)
+		self._scopeJustExited = None
+		return index
+
+	def addComment(self, comment: str, section: str = "main"):
+		instructions = self.getInstructionList(section)
+		instructionIndex = len(instructions)
+		instructions.prependComment(instructionIndex, comment)
 
 	def importElement(self, element: UIA.IUIAutomationElement) -> RemoteElement:
 		operandId = self._getNewOperandId()
@@ -504,41 +587,17 @@ class RemoteOperationBuilder:
 		self._ro.importTextRange(operandId, textRange)
 		return RemoteTextRange(self, operandId)
 
-	def _getLastInstructionIndex(self, globalSection: bool = False):
-		if globalSection:
-			return len(self._globalInstructions) - 1
-		else:
-			return len(self._mainInstructions) - 1
+	def getLastInstructionIndex(self, section: str = "main") -> int:
+		instructions = self.getInstructionList(section)
+		return len(instructions) - 1
 
-	def _getInstruction(self, instructionIndex: int, globalSection: bool = False) -> _InstructionRecord:
-		if globalSection:
-			return self._globalInstructions[instructionIndex]
-		else:
-			return self._mainInstructions[instructionIndex]
+	def getNextInstructionIndex(self, section: str = "main") -> int:
+		instructions = self.getInstructionList(section)
+		return len(instructions)
 
-	def newInt(self, initialValue: int = 0) -> RemoteInt:
-		return RemoteInt._new(self, initialValue)
-
-	def newBool(self, initialValue: bool = False) -> RemoteBool:
-		return RemoteBool._new(self, initialValue)
-
-	def newString(self, initialValue: str = "") -> RemoteString:
-		return RemoteString._new(self, initialValue)
-
-	def newVariant(self) -> RemoteVariant:
-		return RemoteVariant._new(self)
-
-	def newNULLExtensionTarget(self) -> RemoteExtensionTarget:
-		return RemoteExtensionTarget._new(self)
-
-	def newNULLElement(self) -> RemoteElement:
-		return RemoteElement._new(self)
-
-	def newNULLTextRange(self) -> RemoteTextRange:
-		return RemoteTextRange._new(self)
-
-	def newGuid(self, initialValue: GUID) -> RemoteGuid:
-		return RemoteGuid._new(self, initialValue)
+	def getInstruction(self, instructionIndex: int, section: str = "main") -> _InstructionRecord:
+		instructions = self.getInstructionList(section)
+		return instructions[instructionIndex]
 
 	def ifBlock(self, condition: RemoteBool):
 		return _RemoteIfBlockBuilder(self, condition)
@@ -550,10 +609,10 @@ class RemoteOperationBuilder:
 		return _RemoteWhileBlockBuilder(self, conditionBuilderFunc)
 
 	def breakLoop(self):
-		self._addInstruction(lowLevel.InstructionType.BreakLoop)
+		self.addInstruction(lowLevel.InstructionType.BreakLoop)
 
 	def continueLoop(self):
-		self._addInstruction(lowLevel.InstructionType.ContinueLoop)
+		self.addInstruction(lowLevel.InstructionType.ContinueLoop)
 
 	def tryBlock(self):
 		return _RemoteTryBlockBuilder(self)
@@ -562,82 +621,56 @@ class RemoteOperationBuilder:
 		return _RemoteCatchBlockBuilder(self)
 
 	def setOperationStatus(self, status: int | RemoteInt):
-		remoteStatus = RemoteInt.ensureArgumentIsRemote(self, status, useCache=True)
-		self._addInstruction(
+		remoteStatus = RemoteInt.ensureArgumentIsRemote(self, status, readOnly=True)
+		self.addInstruction(
 			lowLevel.InstructionType.SetOperationStatus,
 			remoteStatus.operandId
 		)
 
 	def getOperationStatus(self) -> RemoteInt:
 		remoteResult = RemoteInt(self)
-		self._addInstruction(
+		self.addInstruction(
 			lowLevel.InstructionType.GetOperationStatus,
 			remoteResult.operandId
 		)
 		return remoteResult
 
 	def halt(self):
-		self._addInstruction(lowLevel.InstructionType.Halt)
+		self.addInstruction(lowLevel.InstructionType.Halt)
+
+	def _getLogOperandId(self) -> OperandId:
+		return self._log.operandId
 
 	def logMessage(self, *strings):
 		if not self._loggingEnablede:
 			return
+		self.addComment("Begin logging")
 		for string in strings:
 			self._log += string
 		self._log += "\n"
-
-	def addToResults(self, remoteObj: _RemoteBaseObject):
-		self._ro.addToResults(remoteObj.operandId)
-
-	def execute(self):
-		self.halt()
-		byteCode = self._generateByteCode()
-		self._results = self._ro.execute(self._versionBytes + byteCode)
-		status = self._results.status
-		if status == lowLevel.RemoteOperationStatus.MalformedBytecode:
-			raise MalformedBytecodeException()
-		elif status == lowLevel.RemoteOperationStatus.InstructionLimitExceeded:
-			raise InstructionLimitExceededException()
-		elif status == lowLevel.RemoteOperationStatus.UnhandledException:
-			instructionRecord = self._getInstruction(self._results.errorLocation)
-			message = (
-				f"\nError at instruction {self._results.errorLocation}: "
-				f"{instructionRecord}\n"
-				f"Extended error: {self._results.extendedError}\n"
-			)
-			if self._loggingEnablede:
-				try:
-					logText = self.dumpLog()
-					message += f"\n{logText}"
-				except Exception as e:
-					message += f"\nFailed to dump log: {e}\n"
-			message += self.dumpInstructions()
-			raise RemoteException(message)
-		elif status == lowLevel.RemoteOperationStatus.ExecutionFailure:
-			raise ExecutionFailureException()
-
-	def getResult(self, remoteObj: _RemoteBaseObject) -> object:
-		if not self._results:
-			raise RuntimeError("Not executed")
-		operandId = remoteObj.operandId
-		if not self._results.hasOperand(operandId):
-			raise LookupError("No such operand")
-		return self._results.getOperand(operandId).value
-
-	def dumpLog(self):
-		if not self._loggingEnablede:
-			raise RuntimeError("Logging not enabled")
-		if self._log is None:
-			return "Empty remote log"
-		output = "--- remote log start ---\n"
-		output += self.getResult(self._log)
-		output += "--- remote log end ---"
-		return output
+		self.addComment("End logging")
 
 	def dumpInstructions(self) -> str:
 		output = "--- Instructions start ---\n"
-		for index, instruction in enumerate(chain(self._globalInstructions, self._mainInstructions)):
-			output += f"{index}: {instruction.instructionType.name} {instruction.params}\n"
+		globalInstructionIndex = 0
+		for sectionName, instructions in self._instructionListBySection.items():
+			output += f"{sectionName}:\n"
+			for localInstructionIndex, instruction in enumerate(instructions):
+				comments = instructions.getPrependedComments(localInstructionIndex)
+				for comment in comments:
+					output += f"#{comment}\n"
+				output += f"{globalInstructionIndex}: {instruction.instructionType.name} ("
+				paramOutputs = []
+				for paramIndex, param in enumerate(instruction.params):
+					if instruction.validatedParamNames is not None:
+						paramName = instruction.validatedParamNames[paramIndex]
+					else:
+						paramName = "param"
+					paramOutput = f"{paramName} {param}"
+					paramOutputs.append(paramOutput)
+				paramsOutput = ", ".join(paramOutputs)
+				output += f"{paramsOutput})\n"
+				globalInstructionIndex += 1
 		output += "--- Instructions end ---"
 		return output
 
@@ -660,20 +693,25 @@ class _RemoteIfBlockBuilder(_RemoteScope):
 		super().__init__(remoteOpBuilder)
 		self._condition = condition
 
-	def __enter__(self):
+	def __enter__(self, silent: bool = False):
+		self._silent = silent
 		super().__enter__()
-		self._conditionInstructionIndex = self._rob._addInstruction(
+		self._conditionInstructionIndex = self._rob.addInstruction(
 			lowLevel.InstructionType.ForkIfFalse,
 			self._condition.operandId,
 			RelativeOffset(1),  # offset updated in Else method
 		)
+		if not silent:
+			self._rob.addComment("If block body")
 
 	def __exit__(self, exc_type, exc_val, exc_tb):
-		nextInstructionIndex = self._rob._getLastInstructionIndex() + 1
+		nextInstructionIndex = self._rob.getLastInstructionIndex() + 1
 		relativeJumpOffset = nextInstructionIndex - self._conditionInstructionIndex
-		conditionInstruction = self._rob._getInstruction(self._conditionInstructionIndex)
+		conditionInstruction = self._rob.getInstruction(self._conditionInstructionIndex)
 		conditionInstruction.params[1].value = relativeJumpOffset
 		super().__exit__(exc_type, exc_val, exc_tb)
+		if not self._silent:
+			self._rob.addComment("End of if block body")
 
 
 class _RemoteElseBlockBuilder(_RemoteScope):
@@ -683,20 +721,23 @@ class _RemoteElseBlockBuilder(_RemoteScope):
 			raise RuntimeError("Else block not directly preceded by If block")
 		ifScope = self._rob._scopeJustExited
 		super().__enter__()
-		conditionInstruction = self._rob._getInstruction(ifScope._conditionInstructionIndex)
+		conditionInstruction = self._rob.getInstruction(ifScope._conditionInstructionIndex)
 		# add a final jump instruction to the previous if block to skip over the else block.
-		self._jumpInstructionIndex = self._rob._addInstruction(
+		self._rob.addComment("Jump over else block")
+		self._jumpInstructionIndex = self._rob.addInstruction(
 			lowLevel.InstructionType.Fork,
 			RelativeOffset(1),  # offset updated in __exit__ method
 		)
 		# increment the false offset of the previous if block to take the new jump instruction into account.
 		conditionInstruction.params[1].value += 1
+		self._rob.addComment("Else block body")
 
 	def __exit__(self, exc_type, exc_val, exc_tb):
+		self._rob.addComment("End of else block body")
 		# update the jump instruction to jump to the real end of the else block.
-		nextInstructionIndex = self._rob._getLastInstructionIndex() + 1
+		nextInstructionIndex = self._rob.getLastInstructionIndex() + 1
 		relativeJumpOffset = nextInstructionIndex - self._jumpInstructionIndex
-		jumpInstruction = self._rob._getInstruction(self._jumpInstructionIndex)
+		jumpInstruction = self._rob.getInstruction(self._jumpInstructionIndex)
 		jumpInstruction.params[0].value = relativeJumpOffset
 		super().__exit__(exc_type, exc_val, exc_tb)
 
@@ -710,33 +751,37 @@ class _RemoteWhileBlockBuilder(_RemoteScope):
 	def __enter__(self):
 		super().__enter__()
 		# Add a new loop block instruction to start the while loop
-		self._newLoopBlockInstructionIndex = self._rob._addInstruction(
+		self._newLoopBlockInstructionIndex = self._rob.addInstruction(
 			lowLevel.InstructionType.NewLoopBlock,
 			RelativeOffset(1),  # offset updated in __exit__ method
 			RelativeOffset(1)
 		)
 		# Generate the loop condition instructions and enter the if block.
+		self._rob.addComment("Loop condition")
 		condition = self._conditionBuilderFunc()
 		self._ifBlock = self._rob.ifBlock(condition)
-		self._ifBlock.__enter__()
+		self._ifBlock.__enter__(silent=True)
+		self._rob.addComment("Loop block body")
 
 	def __exit__(self, exc_type, exc_val, exc_tb):
+		self._rob.addComment("End of loop block body")
 		# Add a jump instruction to the end of the body to jump back to the start of the loop block.
-		relativeContinueOffset = self._newLoopBlockInstructionIndex - self._rob._getLastInstructionIndex()
-		self._rob._addInstruction(
+		self._rob.addComment("Jump back to loop condition")
+		relativeContinueOffset = self._newLoopBlockInstructionIndex - self._rob.getLastInstructionIndex()
+		self._rob.addInstruction(
 			lowLevel.InstructionType.Fork,
 			RelativeOffset(relativeContinueOffset)
 		)
 		# Complete the if block.
 		self._ifBlock.__exit__(exc_type, exc_val, exc_tb)
 		# Add an end loop block instruction after the if block.
-		self._rob._addInstruction(
+		self._rob.addInstruction(
 			lowLevel.InstructionType.EndLoopBlock,
 		)
 		# Update the break offset of the new loop block instruction to jump to after the end loop block instruction.
-		nextInstructionIndex = self._rob._getLastInstructionIndex() + 1
+		nextInstructionIndex = self._rob.getLastInstructionIndex() + 1
 		relativeBreakOffset = nextInstructionIndex - self._newLoopBlockInstructionIndex
-		newLoopBlockInstruction = self._rob._getInstruction(self._newLoopBlockInstructionIndex)
+		newLoopBlockInstruction = self._rob.getInstruction(self._newLoopBlockInstructionIndex)
 		newLoopBlockInstruction.params[0].value = relativeBreakOffset
 		super().__exit__(exc_type, exc_val, exc_tb)
 
@@ -745,21 +790,23 @@ class _RemoteTryBlockBuilder(_RemoteScope):
 
 	def __enter__(self):
 		super().__enter__()
-		self._newTryBlockInstructionIndex = self._rob._addInstruction(
+		self._newTryBlockInstructionIndex = self._rob.addInstruction(
 			lowLevel.InstructionType.NewTryBlock,
 			RelativeOffset(1),  # offset updated in __exit__ method
 		)
 		super().__enter__()
+		self._rob.addComment("Try block body")
 
 	def __exit__(self, exc_type, exc_val, exc_tb):
+		self._rob.addComment("End of try block body")
 		# Add an end try block instruction after the try block.
-		self._rob._addInstruction(
+		self._rob.addInstruction(
 			lowLevel.InstructionType.EndTryBlock,
 		)
 		# Update the catchoffset of the new try block instruction to jump to after the end try block instruction.
-		nextInstructionIndex = self._rob._getLastInstructionIndex() + 1
+		nextInstructionIndex = self._rob.getLastInstructionIndex() + 1
 		relativeCatchOffset = nextInstructionIndex - self._newTryBlockInstructionIndex
-		newTryBlockInstruction = self._rob._getInstruction(self._newTryBlockInstructionIndex)
+		newTryBlockInstruction = self._rob.getInstruction(self._newTryBlockInstructionIndex)
 		newTryBlockInstruction.params[0].value = relativeCatchOffset
 		super().__exit__(exc_type, exc_val, exc_tb)
 
@@ -775,18 +822,63 @@ class _RemoteCatchBlockBuilder(_RemoteScope):
 		tryScope = self._rob._scopeJustExited
 		super().__enter__()
 		# Add a jump instruction directly after the try block to skip over the catch block.
-		self._jumpInstructionIndex = self._rob._addInstruction(
+		self._rob.addComment("Jump over catch block")
+		self._jumpInstructionIndex = self._rob.addInstruction(
 			lowLevel.InstructionType.Fork,
 			RelativeOffset(1),  # offset updated in __exit__ method
 		)
 		# Increment the catch offset of the try block to take the new jump instruction into account.
-		newTryBlockInstruction = self._rob._getInstruction(tryScope._newTryBlockInstructionIndex)
+		newTryBlockInstruction = self._rob.getInstruction(tryScope._newTryBlockInstructionIndex)
 		newTryBlockInstruction.params[0].value += 1
+		self._rob.addComment("Catch block body")
 
 	def __exit__(self, exc_type, exc_val, exc_tb):
+		self._rob.addComment("End of catch block body")
 		# Update the jump instruction to jump to the real end of the catch block.
-		nextInstructionIndex = self._rob._getLastInstructionIndex() + 1
+		nextInstructionIndex = self._rob.getLastInstructionIndex() + 1
 		relativeJumpOffset = nextInstructionIndex - self._jumpInstructionIndex
-		jumpInstruction = self._rob._getInstruction(self._jumpInstructionIndex)
+		jumpInstruction = self._rob.getInstruction(self._jumpInstructionIndex)
 		jumpInstruction.params[0].value = relativeJumpOffset
 		super().__exit__(exc_type, exc_val, exc_tb)
+
+
+class RemoteOperationExecutor:
+
+	_versionBytes = struct.pack('l', 0)
+
+	def __init__(self, ro: lowLevel.RemoteOperation):
+		self._ro = ro
+		self._logOperandId: OperandId | None = None
+
+	def addToResults(self, operandId: OperandId):
+		self._ro.addToResults(operandId)
+
+	def setLogOperandId(self, operandId: OperandId):
+		self.addToResults(operandId)
+		self._logOperandId = operandId
+
+	def execute(self, byteCode: bytes):
+		self._results = self._ro.execute(self._versionBytes + byteCode)
+		status = self._results.status
+		if status == lowLevel.RemoteOperationStatus.MalformedBytecode:
+			raise MalformedBytecodeException()
+		elif status == lowLevel.RemoteOperationStatus.InstructionLimitExceeded:
+			raise InstructionLimitExceededException()
+		elif status == lowLevel.RemoteOperationStatus.UnhandledException:
+			raise RemoteException(self._results.errorLocation, self._results.extendedError)
+		elif status == lowLevel.RemoteOperationStatus.ExecutionFailure:
+			raise ExecutionFailureException()
+
+	def getResult(self, operandId: OperandId) -> object:
+		if not self._results:
+			raise RuntimeError("Not executed")
+		if not self._results.hasOperand(operandId):
+			raise LookupError("No such operand")
+		return self._results.getOperand(operandId).value
+
+	def getLogOutput(self):
+		if not self._results:
+			raise RuntimeError("Not executed")
+		if self._logOperandId is None:
+			return "Empty remote log"
+		return self.getResult(self._logOperandId)
