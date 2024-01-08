@@ -10,6 +10,7 @@ Other features include reporting candidates for misspellings if suggestions for 
 and managing cloud clipboard paste.
 This is applicable on Windows 10 Fall Creators Update and later."""
 
+from typing import Callable
 import appModuleHandler
 import api
 import eventHandler
@@ -21,6 +22,7 @@ import winVersion
 import controlTypes
 from NVDAObjects.UIA import UIA, XamlEditableText
 from NVDAObjects.behaviors import CandidateItem as CandidateItemBehavior, EditableTextWithAutoSelectDetection
+from NVDAObjects import NVDAObject
 
 
 class ImeCandidateUI(UIA):
