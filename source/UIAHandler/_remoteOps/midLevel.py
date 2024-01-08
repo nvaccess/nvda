@@ -814,7 +814,10 @@ class _RemoteCatchBlockBuilder(_RemoteScope):
 		# Increment the catch offset of the try block to take the new jump instruction into account.
 		newTryBlockInstruction = self._rob.getInstruction(tryScope._newTryBlockInstructionIndex)
 		newTryBlockInstruction.params[0].value += 1
+		e = self._rob.getOperationStatus()
+		self._rob.setOperationStatus(0)
 		self._rob.addComment("Catch block body")
+		return e
 
 	def __exit__(self, exc_type, exc_val, exc_tb):
 		self._rob.addComment("End of catch block body")
