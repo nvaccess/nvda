@@ -23,7 +23,7 @@ from .midLevel import (
 )
 
 
-_pyTypeToRemoteType: dict[Type[object], Type[midLevel._RemoteBaseObject]] = {
+_pyTypeToRemoteType: dict[Type[object], Type[midLevel.RemoteBaseObject]] = {
 	int: RemoteInt,
 	bool: RemoteBool,
 	str: RemoteString,
@@ -44,7 +44,7 @@ class InstructionLimitExceededException(RuntimeError):
 class RemoteException(RuntimeError):
 	errorLocation: int
 	extendedError: int
-	instructionRecord: midLevel._InstructionRecord | None = None
+	instructionRecord: midLevel.InstructionRecord | None = None
 
 	def __str__(self) -> str:
 		message = f"extendedError {self.extendedError} at instruction {self.errorLocation}"
@@ -132,10 +132,10 @@ class _RemoteFuncBuildCache:
 def _addArgsToBuilder(
 	rob: midLevel.RemoteOperationBuilder,
 	*args: object
-) -> list[midLevel._RemoteBaseObject]:
+) -> list[midLevel.RemoteBaseObject]:
 	remoteArgs = []
 	for arg in args:
-		remoteArg: midLevel._RemoteBaseObject
+		remoteArg: midLevel.RemoteBaseObject
 		if isinstance(arg, UIA.IUIAutomationElement):
 			remoteArg = rob.importElement(arg)
 		elif isinstance(arg, UIA.IUIAutomationTextRange):
@@ -146,7 +146,7 @@ def _addArgsToBuilder(
 			remoteType = _pyTypeToRemoteType.get(type(arg))
 			if remoteType is None:
 				raise TypeError(f"Unsupported argument type: {type(arg)}")
-			remoteArg = cast(Type[midLevel._RemoteBaseObject], remoteType)(rob)
+			remoteArg = cast(Type[midLevel.RemoteBaseObject], remoteType)(rob)
 			for record in remoteArg._generateInitInstructions(arg):
 				rob.addInstructionRecord(record, section="imports")
 		remoteArgs.append(remoteArg)
@@ -155,7 +155,7 @@ def _addArgsToBuilder(
 
 def _fetchAndValidateBuildCache(
 	remoteFunc: Callable,
-	*remoteArgs: midLevel._RemoteBaseObject,
+	*remoteArgs: midLevel.RemoteBaseObject,
 	remoteLogging: bool = False
 ) -> _RemoteFuncBuildCache | None:
 	buildCache = getattr(remoteFunc, '_remoteFuncBuildCache', None)
@@ -175,12 +175,12 @@ def _fetchAndValidateBuildCache(
 def _buildRemoteFunc(
 	rob: midLevel.RemoteOperationBuilder,
 	remoteFunc: Callable,
-	*remoteArgs: midLevel._RemoteBaseObject,
+	*remoteArgs: midLevel.RemoteBaseObject,
 	remoteLogging: bool = False
 ) -> _RemoteFuncBuildCache:
 	rfa = RemoteFuncAPI(rob)
 	remoteResults = remoteFunc(rfa, *remoteArgs)
-	if isinstance(remoteResults, midLevel._RemoteBaseObject):
+	if isinstance(remoteResults, midLevel.RemoteBaseObject):
 		remoteResults = [remoteResults]
 	byteCode = b''
 	for sectionName in ('constants', 'main'):
@@ -190,7 +190,7 @@ def _buildRemoteFunc(
 		bytecode=byteCode,
 		resultOperandIds=[result.operandId for result in remoteResults],
 		remoteLogging=remoteLogging,
-		logOperandId=rob._getLogOperandId()
+		logOperandId=rob._getLogOperandId() if remoteLogging else None
 	)
 	setattr(remoteFunc, '_remoteFuncBuildCache', buildCache)
 	return buildCache
