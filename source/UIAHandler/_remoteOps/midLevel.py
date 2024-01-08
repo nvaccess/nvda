@@ -475,19 +475,19 @@ class InstructionList(list[InstructionRecord]):
 
 	_byteCodeCache: bytes | None = None
 	_isModified: bool = False
-	_commentsByInstructionIndex: dict[int, list[str]]
+	_metaStringsByInstructionIndex: dict[int, list[str]]
 
 	def __init__(self):
 		super().__init__()
-		self._commentsByInstructionIndex = {}
+		self._metaStringsByInstructionIndex = {}
 
-	def prependComment(self, instructionIndex: int, comment: str):
-		if instructionIndex not in self._commentsByInstructionIndex:
-			self._commentsByInstructionIndex[instructionIndex] = []
-		self._commentsByInstructionIndex[instructionIndex].append(comment)
+	def prependMetaString(self, instructionIndex: int, comment: str):
+		if instructionIndex not in self._metaStringsByInstructionIndex:
+			self._metaStringsByInstructionIndex[instructionIndex] = []
+		self._metaStringsByInstructionIndex[instructionIndex].append(comment)
 
-	def getPrependedComments(self, instructionIndex: int) -> list[str]:
-		return self._commentsByInstructionIndex.get(instructionIndex, [])
+	def getPrependedMetaStrings(self, instructionIndex: int) -> list[str]:
+		return self._metaStringsByInstructionIndex.get(instructionIndex, [])
 
 	def addInstructionRecord(self, record: InstructionRecord, section: str = "main") -> int:
 		if record.locationString is None:
@@ -552,20 +552,26 @@ class RemoteOperationBuilder:
 		self._scopeJustExited = None
 		return index
 
-	def addComment(self, comment: str, section: str = "main"):
+	def _addMetaString(self, metaString: str, section: str):
 		instructions = self.getInstructionList(section)
 		instructionIndex = len(instructions)
-		instructions.prependComment(instructionIndex, comment)
+		instructions.prependMetaString(instructionIndex, metaString)
+
+	def addComment(self, comment: str, section: str = "main"):
+		self._addMetaString(f"# {comment}", section)
+
+	def addMetaCommand(self, command: str, section: str = "main"):
+		self._addMetaString(f"[{command}]", section)
 
 	def importElement(self, element: UIA.IUIAutomationElement) -> RemoteElement:
 		operandId = self._getNewOperandId()
-		self.addComment(f"Import element as {operandId}", section="imports")
+		self.addMetaCommand(f"ImportElement into {operandId}, value {element}", section="imports")
 		self._ro.importElement(operandId, element)
 		return RemoteElement(self, operandId)
 
 	def importTextRange(self, textRange: UIA.IUIAutomationTextRange):
 		operandId = self._getNewOperandId()
-		self.addComment(f"Import textRange as {operandId}", section="imports")
+		self.addMetaCommand(f"ImportTextRange into {operandId}, value {textRange}", section="imports")
 		self._ro.importTextRange(operandId, textRange)
 		return RemoteTextRange(self, operandId)
 
@@ -648,9 +654,9 @@ class RemoteOperationBuilder:
 		for sectionName, instructions in self._instructionListBySection.items():
 			output += f"{sectionName}:\n"
 			for localInstructionIndex, instruction in enumerate(instructions):
-				comments = instructions.getPrependedComments(localInstructionIndex)
+				comments = instructions.getPrependedMetaStrings(localInstructionIndex)
 				for comment in comments:
-					output += f"#{comment}\n"
+					output += f"{comment}\n"
 				output += f"{globalInstructionIndex}: {instruction.instructionType.name} ("
 				paramOutputs = []
 				for paramIndex, param in enumerate(instruction.params):
