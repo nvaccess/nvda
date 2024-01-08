@@ -305,6 +305,18 @@ class AppModule(appModuleHandler.AppModule):
 			ui.message(obj.name)
 		nextHandler()
 
+	def event_UIA_notification(
+			self, obj: NVDAObject, nextHandler: Callable[[], None],
+			displayString: str | None = None, activityId: str | None = None, **kwargs
+	):
+		# #16009: Windows 11 modern keyboard uses UIA notification event to announce things.
+		# These include voice typing availability message and appearance of Suggested Actions
+		# when data such as phone number is copied to the clipboard (Windows 11 22H2).
+		# Apart from emoji panel and clipboard history, modern keyboard elements are not focusable,
+		# therefore notifications must be announced here and no more.
+		ui.message(displayString)
+
+
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if isinstance(obj, UIA):
 			if obj.role == controlTypes.Role.LISTITEM and (
