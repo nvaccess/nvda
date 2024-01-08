@@ -31,10 +31,6 @@ user_docs/*/*.html
 user_docs/*/*.css
 # TODO remove when migrating from t2t to md as markdown files will be committed.
 user_docs/*/*.md
-# build.t2tconf and keyCommands.t2t are no longer generated, they can be removed in future.
-# They are kept for developers who may have it in their working copy when switching branches as we transition to md.
-user_docs/*/keyCommands.t2t
-user_docs/build.t2tConf
 extras/controllerClient/x86/nvdaController.h
 extras/controllerClient/x64
 extras/controllerClient/arm64
