@@ -28,7 +28,7 @@ def _generateModuleList(
 	:param target: A single element list containing the target file node where the list of modules will be
 				written.
 	:param source: A single element list containing the source file node to be processed. It should contain
-	 			only the zipfile from which the '.pyc' files will be listed.
+				only the zipfile from which the '.pyc' files will be listed.
 	:param env: The SCons environment context under which this function is executed. This parameter provides
 				access to SCons construction variables, methods, and tools.
 	:return: None. The function does not return anything but writes the list of modules to the target file.
@@ -59,10 +59,9 @@ def _generateModuleList(
 
 
 def generate(env: SCons.Environment.Environment):
-	env["BUILDERS"]["GenerateModuleList"] = \
-		SCons.Builder.Builder(
-			action=SCons.Action.Action(_generateModuleList))
+	env["BUILDERS"]["GenerateModuleList"] = SCons.Builder.Builder(
+		action=SCons.Action.Action(_generateModuleList))
 
 
 def exists(env: SCons.Environment.Environment) -> bool:
-    return True
+	return True
