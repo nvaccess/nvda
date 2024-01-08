@@ -31,6 +31,32 @@ _pyTypeToRemoteType: dict[Type[object], Type[midLevel._RemoteBaseObject]] = {
 }
 
 
+class MalformedBytecodeException(RuntimeError):
+	pass
+
+
+@dataclass
+class InstructionLimitExceededException(RuntimeError):
+	results: list[object]
+
+
+@dataclass
+class RemoteException(RuntimeError):
+	errorLocation: int
+	extendedError: int
+	instructionRecord: midLevel._InstructionRecord | None = None
+
+	def __str__(self) -> str:
+		message = f"extendedError {self.extendedError} at instruction {self.errorLocation}"
+		if self.instructionRecord is not None:
+			message += f": {self.instructionRecord}"
+		return message
+
+
+class ExecutionFailureException(RuntimeError):
+	pass
+
+
 class RemoteFuncAPI:
 
 	def __init__(self, rob: midLevel.RemoteOperationBuilder):
@@ -170,18 +196,22 @@ def _buildRemoteFunc(
 	return buildCache
 
 
-def _dumpExecutionLog(rox: midLevel.RemoteOperationExecutor):
-	log.info(
-		"--- Execution log start ---:\n"
-		f"{rox.getLogOutput()}"
-		"--- Execution log end ---"
-	)
+def _dumpRemoteLog(resultSet: lowLevel.RemoteOperationResultSet, buildCache: _RemoteFuncBuildCache):
+	if buildCache.logOperandId is not None and resultSet.hasOperand(buildCache.logOperandId):
+		logOutput = resultSet.getOperand(buildCache.logOperandId).value
+		log.info(f"--- Remote log start ---:\n{logOutput}--- Remote log end ---")
 
-
-def _getExecutionResults(rox: midLevel.RemoteOperationExecutor, buildCache: _RemoteFuncBuildCache):
+def _getExecutionResults(resultSet: lowLevel.RemoteOperationResultSet, buildCache: _RemoteFuncBuildCache):
+	results = []
+	for operandId in buildCache.resultOperandIds:
+		if resultSet.hasOperand(operandId):
+			result = resultSet.getOperand(operandId).value
+		else:
+			result = None
+		results.append(result)
 	if len(buildCache.resultOperandIds) == 1:
-		return rox.getResult(buildCache.resultOperandIds[0])
-	return tuple(rox.getResult(operandId) for operandId in buildCache.resultOperandIds)
+		return results[0]
+	return results
 
 
 def execute(
@@ -203,24 +233,25 @@ def execute(
 			log.info(f"{rob.dumpInstructions()}")
 	else:
 		log.info("Reusing Remote function build cache")
-	rox = midLevel.RemoteOperationExecutor(ro)
 	for operandId in buildCache.resultOperandIds:
-		rox.addToResults(operandId)
+		ro.addToResults(operandId)
 	if buildCache.logOperandId is not None:
-		rox.setLogOperandId(buildCache.logOperandId)
-	try:
-		rox.execute(argsByteCode + buildCache.bytecode)
-	except midLevel.RemoteException as e:
-		try:
-			errorInstruction = rob.lookupInstructionByGlobalIndex(e.errorLocation)
-		except IndexError:
-			errorInstruction = None
-		if errorInstruction:
-			log.error(
-				f"Remote error {e.extendedError} at Instruction {e.errorLocation}: {errorInstruction}"
-			)
-		raise
-	finally:
-		if remoteLogging:
-			_dumpExecutionLog(rox)
-	return _getExecutionResults(rox, buildCache)
+		ro.addToResults(buildCache.logOperandId)
+	resultSet = ro.execute(rob._versionBytes + argsByteCode + buildCache.bytecode)
+	if resultSet.status == lowLevel.RemoteOperationStatus.ExecutionFailure:
+		raise ExecutionFailureException()
+	elif resultSet.status == lowLevel.RemoteOperationStatus.MalformedBytecode:
+		raise MalformedBytecodeException()
+	if remoteLogging:
+		_dumpRemoteLog(resultSet, buildCache)
+	results = _getExecutionResults(resultSet, buildCache)
+	if resultSet.status == lowLevel.RemoteOperationStatus.InstructionLimitExceeded:
+		raise InstructionLimitExceededException(results=results)
+	elif resultSet.status == lowLevel.RemoteOperationStatus.UnhandledException:
+		instructionRecord = rob.lookupInstructionByGlobalIndex(resultSet.errorLocation) if dumpInstructions else None
+		raise RemoteException(
+			errorLocation=resultSet.errorLocation,
+			extendedError=resultSet.extendedError,
+			instructionRecord=instructionRecord
+		)
+	return results

@@ -4,7 +4,6 @@
 # Copyright (C) 2023-2023 NV Access Limited
 
 
-import contextlib
 from abc import ABCMeta, abstractmethod
 import typing
 from typing import (
@@ -178,8 +177,8 @@ class _RemoteBaseObject(Generic[LocalTypeVar], metaclass=ABCMeta):
 			if remoteObj._rob is not rob:
 				raise RuntimeError("Object belongs to a different RemoteOperationBuilder")
 			return remoteObj
+		cacheKey = (cls, obj)
 		if readOnly:
-			cacheKey = (cls, obj)
 			cachedRemoteObj = rob._remotedArgCache.get(cacheKey)
 			if cachedRemoteObj is not None:
 				assert isinstance(cachedRemoteObj, cls)
@@ -409,20 +408,34 @@ class RemoteVariant(_RemoteNullable):
 		return remoteClass(self._rob, self.operandId)
 
 
+class RemoteGuid(_RemoteEqualityComparible[GUID]):
+	_isTypeInstruction = lowLevel.InstructionType.IsGuid
+
+	def _generateInitInstructions(
+		self, initialValue: GUID | str | None = None
+	) -> Iterable[_InstructionRecord]:
+		guid = ensureGuid(initialValue)
+		yield _InstructionRecord(
+			lowLevel.InstructionType.NewGuid,
+			self.operandId,
+			guid
+		)
+
+
 class RemoteExtensionTarget(_RemoteNullable[LocalTypeVar], Generic[LocalTypeVar]):
 
 	def isExtensionSupported(self, extensionGuid: GUID) -> RemoteBool:
-		extensionGuid = RemoteGuid.ensureArgumentIsRemote(self._rob, extensionGuid, readOnly=True)
+		remote_extensionGuid = RemoteGuid.ensureArgumentIsRemote(self._rob, extensionGuid, readOnly=True)
 		remoteResult = RemoteBool(self._rob)
 		self._rob.addInstruction(
 			lowLevel.InstructionType.IsExtensionSupported,
 			remoteResult.operandId,
 			self.operandId,
-			extensionGuid.operandId
+			remote_extensionGuid.operandId
 		)
 		return remoteResult
 
-	def callExtension(self, extensionGuid: GUID, *params: _RemoteBaseObject) -> None:
+	def callExtension(self, extensionGuid: GUID | RemoteGuid, *params: _RemoteBaseObject) -> None:
 		extensionGuid = RemoteGuid.ensureArgumentIsRemote(self._rob, extensionGuid, readOnly=True)
 		self._rob.addInstruction(
 			lowLevel.InstructionType.CallExtension,
@@ -455,42 +468,6 @@ class RemoteElement(RemoteExtensionTarget[UIA.IUIAutomationElement]):
 
 
 class RemoteTextRange(RemoteExtensionTarget[UIA.IUIAutomationTextRange]):
-	pass
-
-
-class RemoteGuid(_RemoteEqualityComparible[GUID]):
-	_isTypeInstruction = lowLevel.InstructionType.IsGuid
-
-	def _generateInitInstructions(
-		self, initialValue: GUID | str | None = None
-	) -> Iterable[_InstructionRecord]:
-		guid = ensureGuid(initialValue)
-		yield _InstructionRecord(
-			lowLevel.InstructionType.NewGuid,
-			self.operandId,
-			guid
-		)
-
-
-class MalformedBytecodeException(RuntimeError):
-	pass
-
-
-class InstructionLimitExceededException(RuntimeError):
-	pass
-
-
-class RemoteException(RuntimeError):
-	errorLocation: int
-	extendedError: int
-
-	def __init__(self, errorLocation: int, extendedError: int):
-		super().__init__(f"Remote exception at instruction {errorLocation}")
-		self.errorLocation = errorLocation
-		self.extendedError = extendedError
-
-
-class ExecutionFailureException(RuntimeError):
 	pass
 
 
@@ -537,6 +514,8 @@ class _InstructionList(list[_InstructionRecord]):
 
 
 class RemoteOperationBuilder:
+
+	_versionBytes: bytes = struct.pack('l', 0)
 
 	def __init__(self, ro: lowLevel.RemoteOperation, remoteLogging: bool = False):
 		self._ro = ro
@@ -845,45 +824,3 @@ class _RemoteCatchBlockBuilder(_RemoteScope):
 		jumpInstruction = self._rob.getInstruction(self._jumpInstructionIndex)
 		jumpInstruction.params[0].value = relativeJumpOffset
 		super().__exit__(exc_type, exc_val, exc_tb)
-
-
-class RemoteOperationExecutor:
-
-	_versionBytes = struct.pack('l', 0)
-
-	def __init__(self, ro: lowLevel.RemoteOperation):
-		self._ro = ro
-		self._logOperandId: OperandId | None = None
-
-	def addToResults(self, operandId: OperandId):
-		self._ro.addToResults(operandId)
-
-	def setLogOperandId(self, operandId: OperandId):
-		self.addToResults(operandId)
-		self._logOperandId = operandId
-
-	def execute(self, byteCode: bytes):
-		self._results = self._ro.execute(self._versionBytes + byteCode)
-		status = self._results.status
-		if status == lowLevel.RemoteOperationStatus.MalformedBytecode:
-			raise MalformedBytecodeException()
-		elif status == lowLevel.RemoteOperationStatus.InstructionLimitExceeded:
-			raise InstructionLimitExceededException()
-		elif status == lowLevel.RemoteOperationStatus.UnhandledException:
-			raise RemoteException(self._results.errorLocation, self._results.extendedError)
-		elif status == lowLevel.RemoteOperationStatus.ExecutionFailure:
-			raise ExecutionFailureException()
-
-	def getResult(self, operandId: OperandId) -> object:
-		if not self._results:
-			raise RuntimeError("Not executed")
-		if not self._results.hasOperand(operandId):
-			raise LookupError("No such operand")
-		return self._results.getOperand(operandId).value
-
-	def getLogOutput(self):
-		if not self._results:
-			raise RuntimeError("Not executed")
-		if self._logOperandId is None:
-			return "Empty remote log"
-		return self.getResult(self._logOperandId)
