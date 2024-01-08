@@ -631,9 +631,15 @@ class RemoteOperationBuilder:
 		if not self._loggingEnablede:
 			return
 		self.addComment("Begin logMessage code")
-		for string in strings:
+		lastIndex = len(strings) - 1
+		requiresNewLine = True
+		for index, string in enumerate(strings):
+			if index == lastIndex and isinstance(string, str):
+				string += "\n"
+				requiresNewLine = False
 			self._log += string
-		self._log += "\n"
+		if requiresNewLine:
+			self._log += "\n"
 		self.addComment("End logMessage code")
 
 	def dumpInstructions(self) -> str:
