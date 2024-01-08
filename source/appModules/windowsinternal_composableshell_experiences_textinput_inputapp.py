@@ -308,8 +308,12 @@ class AppModule(appModuleHandler.AppModule):
 		nextHandler()
 
 	def event_UIA_notification(
-			self, obj: NVDAObject, nextHandler: Callable[[], None],
-			displayString: str | None = None, activityId: str | None = None, **kwargs
+			self,
+			obj: NVDAObject,
+			nextHandler: Callable[[], None],
+			displayString: str | None = None,
+			activityId: str | None = None,
+			**kwargs
 	):
 		# #16009: Windows 11 modern keyboard uses UIA notification event to announce things.
 		# These include voice typing availability message and appearance of Suggested Actions
