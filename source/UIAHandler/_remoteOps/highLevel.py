@@ -131,10 +131,18 @@ class _RemoteFuncBuildCache:
 
 def _addArgsToBuilder(
 	rob: midLevel.RemoteOperationBuilder,
+	remoteFunc: Callable,
 	*args: object
 ) -> list[midLevel.RemoteBaseObject]:
 	remoteArgs = []
-	for arg in args:
+	funcCode = remoteFunc.__code__
+	funcName = funcCode.co_qualname
+	funcArgNames = funcCode.co_varnames[1:funcCode.co_argcount]
+	if len(args) != len(funcArgNames):
+		raise TypeError(f"{funcName} takes {len(funcArgNames)} positional arguments but {len(args)} were given")
+	for argIndex, arg in enumerate(args):
+		argName = funcArgNames[argIndex]
+		rob.addComment(f"Loading argument: {argName}", section="imports")
 		remoteArg: midLevel.RemoteBaseObject
 		if isinstance(arg, UIA.IUIAutomationElement):
 			remoteArg = rob.importElement(arg)
@@ -222,7 +230,7 @@ def execute(
 ) -> object:
 	ro = lowLevel.RemoteOperation()
 	rob = midLevel.RemoteOperationBuilder(ro, remoteLogging=remoteLogging)
-	remoteArgs = _addArgsToBuilder(rob, *args)
+	remoteArgs = _addArgsToBuilder(rob, remoteFunc, *args)
 	argsByteCode = rob.getInstructionList('imports').getByteCode()
 	buildCache: _RemoteFuncBuildCache | None = None
 	if not dumpInstructions:

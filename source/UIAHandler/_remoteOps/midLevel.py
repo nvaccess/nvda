@@ -559,11 +559,13 @@ class RemoteOperationBuilder:
 
 	def importElement(self, element: UIA.IUIAutomationElement) -> RemoteElement:
 		operandId = self._getNewOperandId()
+		self.addComment(f"Import element as {operandId}", section="imports")
 		self._ro.importElement(operandId, element)
 		return RemoteElement(self, operandId)
 
 	def importTextRange(self, textRange: UIA.IUIAutomationTextRange):
 		operandId = self._getNewOperandId()
+		self.addComment(f"Import textRange as {operandId}", section="imports")
 		self._ro.importTextRange(operandId, textRange)
 		return RemoteTextRange(self, operandId)
 
