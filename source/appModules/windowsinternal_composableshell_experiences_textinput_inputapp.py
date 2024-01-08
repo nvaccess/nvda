@@ -314,8 +314,11 @@ class AppModule(appModuleHandler.AppModule):
 		# when data such as phone number is copied to the clipboard (Windows 11 22H2).
 		# Apart from emoji panel and clipboard history, modern keyboard elements are not focusable,
 		# therefore notifications must be announced here and no more.
+		# For suggested actions, report the first suggestion because keyboard interaction is impossible.
+		# Also, suggested action is the element name, not the display string.
+		if activityId == "Windows.Shell.InputApp.SmartActions.Popup":
+			displayString = obj.name
 		ui.message(displayString)
-
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if isinstance(obj, UIA):
