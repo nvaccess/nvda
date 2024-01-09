@@ -13,20 +13,20 @@ import SCons
 
 def _generateModuleList(
 		target: list[SCons.Node.FS.File],
-		source: list[SCons.Node.FS.File],
+		source: list[SCons.Node.FS.Dir],
 		env: SCons.Environment.Environment
 ) -> None:
 	"""
-	Generate a list of Python modules from compiled '.pyc' files within a specified zipfile.
+	Generate a list of Python modules from compiled '.pyc' files within `library.zip` in the source folder.
 
-	This function lists all '.pyc' files contained in a given zipfile, converts their paths to Python module
+	This function lists all '.pyc' files contained in `library.zip`, converts their paths to Python module
 	format, performs a sanity check to ensure a specific module is present, and then writes the list of
 	modules to a specified output file for packaging as an AppVeyor artefact.
 
 	:param target: A single element list containing the target file node where the list of modules will be
 				written.
 	:param source: A single element list containing the source NVDA dist folder to be processed.
-	The folder should contain `library.zip` from which the '.pyc' files will be listed.
+				The folder should contain `library.zip` from which the '.pyc' files will be listed.
 	:param env: The SCons environment context under which this function is executed. This parameter provides
 				access to SCons construction variables, methods, and tools.
 	:return: None. The function does not return anything but writes the list of modules to the target file.
