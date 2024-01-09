@@ -1,31 +1,47 @@
-###
-#This file is a part of the NVDA project.
-#URL: http://www.nvda-project.org/
-#Copyright 2010 James Teh <jamie@jantrid.net>.
-#This program is free software: you can redistribute it and/or modify
-#it under the terms of the GNU General Public License version 2.0, as published by
-#the Free Software Foundation.
-#This program is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-#This license can be found at:
-#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-###
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2010-2024 NV Access Limited, James Teh
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
-def txt2tags_actionFunc(target,source,env):
+import SCons
+
+
+def txt2tags_actionFunc(
+		target: list[SCons.Node.FS.File],
+		source: list[SCons.Node.FS.File],
+		env: SCons.Environment.Environment
+):
 	import txt2tags
-	txt2tags.exec_command_line([str(source[0])])
+	from keyCommandsDoc import Command
 
-def exists(env):
+	with open(source[0].path, "r", encoding="utf-8") as mdFile:
+		mdOriginal = mdFile.read()
+		mdStr = str(mdOriginal)
+
+	with open(source[0].path, "w", encoding="utf-8") as mdFile:
+		# Substitute t2t key commands with markdown comments temporarily
+		for command in Command:
+			mdStr = command.t2tRegex().sub(lambda m: f"<!-- KC:{m.group(1)} -->", mdStr)
+		mdFile.write(mdStr)
+
+	txt2tags.exec_command_line([source[0].path])
+
+	with open(source[0].path, "w", encoding="utf-8") as mdFile:
+		# Restore to original
+		mdFile.write(mdOriginal)
+
+
+def exists(env: SCons.Environment.Environment) -> bool:
 	try:
 		import txt2tags
 		return True
 	except ImportError:
 		return False
 
-def generate(env):
-	env['BUILDERS']['txt2tags']=env.Builder(
-		action=env.Action(txt2tags_actionFunc,lambda t,s,e: 'Converting %s to html'%s[0].path),
-		suffix='.html',
+
+def generate(env: SCons.Environment.Environment):
+	env["BUILDERS"]["txt2tags"] = env.Builder(
+		action=env.Action(txt2tags_actionFunc, lambda t, s, e: f"Converting {s[0].path} to md"),
+		suffix='.md',
 		src_suffix='.t2t'
 	)
