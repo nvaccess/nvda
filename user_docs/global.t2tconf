@@ -1,24 +1,6 @@
-%!Target: html
+%!Target: md
 %!Encoding: UTF-8
 
 % Remove the Table of Contents heading from the toc.
-%!PostProc(html): '^.*\<LI\>\<A HREF="#toc"\>.*\</A\>.*$' ''
-
-% h1 in html should really be the document title only.
-% Therefore, change h1 through h5 in the output to h2 through h6.
-%!PostProc(html): ^<H5>(.*)</H5>$ <H6>\1</H6>
-%!PostProc(html): ^<H4>(.*)</H4>$ <H5>\1</H5>
-%!PostProc(html): ^<H3>(.*)</H3>$ <H4>\1</H4>
-%!PostProc(html): ^<H2>(.*)</H2>$ <H3>\1</H3>
-%!PostProc(html): ^<H1>(.*)</H1>$ <H2>\1</H2>
-
-% Some of our files contain the UTF-8 BOM.
-% txt2tags doesn't care about encodings internally,
-% so it will just include the BOM at the start of the title.
-% Therefore, strip the BOM from the title.
-%!PostProc(html): \<(TITLE|H1)\>\xef\xbb\xbf <\1>
-
-%!Options: --style styles.css
-
-% This provides the macros NVDA_VERSION, NVDA_URL and NVDA_COPYRIGHT_YEARS.
-%!includeconf: build.t2tconf
+% For some reason t2t to md conversion always forces the TOC at the top of the document 
+%!PostProc(md): '^#.*\{#toc\}.*$' ''

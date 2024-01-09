@@ -7,6 +7,10 @@ body {
   color: #333;
 }
 
+:lang(ar) body *, :lang(fa) body * {
+  font-family: "Simplified Arabic", "Traditional Arabic", "Arial", sans-serif !important;
+}
+
 h1 {
   color:white;
   background-color: #472F5F; /* NVDA purple */

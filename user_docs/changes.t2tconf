@@ -1,12 +1,1 @@
 %!includeconf: global.t2tconf
-
-% Make ticket references into links.
-%!PreProc: "#([0-9]+)" "[#\1 https://github.com/nvaccess/nvda/issues/\1]"
-
-% Make GitHub username references into links.
-% Github username may only contain alphanumeric characters or hyphens.
-% Maximum is 39 characters.
-%!PreProc: ", @([A-Za-z0-9\-]{1,39})" ", [@\1 https://github.com/nvaccess/nvda/commits?author=\1]"
-
-% Make links open in a new tab/window.
-%!PostProc(html): '(<A HREF=".*?")>' '\1 target="_blank">'
