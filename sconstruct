@@ -546,7 +546,6 @@ env.SConscript("tests/sconscript", exports=["env", "sourceDir", "pot"])
 
 # Generate a list of Python modules from compiled '.pyc' files in library.zip
 env.Tool("listModules")
-source = os.path.join(os.getcwd(), "dist", "library.zip")
 # Putting the target in the output dir automatically causes AppVeyor to package it as an artefact
 target = os.path.join(outputDir.abspath, "library_modules.txt")
-env.Alias("moduleList", env.GenerateModuleList(target, source))
+env.Alias("moduleList", env.GenerateModuleList(target, "dist"))

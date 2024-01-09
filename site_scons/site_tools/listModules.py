@@ -1,7 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2010-2024 NV Access Limited, James Teh, Michael Curran, Peter Vágner, Joseph Lee,
-# Reef Turner, Babbage B.V., Leonard de Ruijter, Łukasz Golonka, Accessolutions, Julien Cochuyt,
-# Cyrille Bougot, Gerald Hartig
+# Copyright (C) 2024 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,8 +25,8 @@ def _generateModuleList(
 
 	:param target: A single element list containing the target file node where the list of modules will be
 				written.
-	:param source: A single element list containing the source file node to be processed. It should contain
-				only the zipfile from which the '.pyc' files will be listed.
+	:param source: A single element list containing the source NVDA dist folder to be processed.
+	The folder should contain `library.zip` from which the '.pyc' files will be listed.
 	:param env: The SCons environment context under which this function is executed. This parameter provides
 				access to SCons construction variables, methods, and tools.
 	:return: None. The function does not return anything but writes the list of modules to the target file.
@@ -37,7 +35,7 @@ def _generateModuleList(
 	:raises FileNotFoundError: If the specified zipfile in `source` does not exist.
 	"""
 	# List all .pyc files in the library.zip
-	libraryZipPath = str(source[0])
+	libraryZipPath = os.path.join(source[0].path, "library.zip")
 	if not os.path.exists(libraryZipPath):
 		raise FileNotFoundError(f"The zipfile {libraryZipPath} does not exist.")
 	pycFiles = [f for f in zipfile.ZipFile(libraryZipPath, "r").namelist() if f.endswith(".pyc")]
