@@ -8,6 +8,9 @@
 Generates the Key Commands document from the User Guide.
 Works as a Python Markdown Extension:
 https://python-markdown.github.io/extensions/
+
+Refer to user guide standards for more information on syntax rules:
+https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/userGuideStandards.md
 """
 
 from enum import auto, Enum, IntEnum, StrEnum
