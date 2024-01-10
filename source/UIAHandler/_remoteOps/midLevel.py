@@ -202,6 +202,15 @@ class RemoteBaseObject(Generic[LocalTypeVar], metaclass=ABCMeta):
 	def operandId(self) -> OperandId:
 		return self._operandId
 
+	def copy(self) -> Self:
+		remoteResult = type(self)(self._rob)
+		self._rob.addInstruction(
+			lowLevel.InstructionType.Set,
+			remoteResult.operandId,
+			self.operandId
+		)
+		return remoteResult
+
 	def set(self, value: Self | LocalTypeVar) -> None:
 		remoteValue = type(self).ensureArgumentIsRemote(self._rob, value, readOnly=True)
 		self._rob.addInstruction(
