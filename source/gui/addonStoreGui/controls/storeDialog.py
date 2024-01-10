@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2022-2024 NV Access Limited, Cyrille Bougot, łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -86,9 +86,9 @@ class AddonStoreDialog(SettingsDialog):
 			self.addonListTabs.SetSelection(availableTabIndex)
 		self.addonListTabs.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onListTabPageChange, self.addonListTabs)
 
-		self.filterCtrlHelper = guiHelper.BoxSizerHelper(self, wx.VERTICAL)
-		self._createFilterControls()
-		tabPageHelper.addItem(self.filterCtrlHelper.sizer, flag=wx.EXPAND)
+		filterCtrlHelper = guiHelper.BoxSizerHelper(self, wx.VERTICAL)
+		self._createFilterControls(filterCtrlHelper)
+		tabPageHelper.addItem(filterCtrlHelper.sizer, flag=wx.EXPAND)
 
 		tabPageHelper.sizer.AddSpacer(5)
 
@@ -141,16 +141,16 @@ class AddonStoreDialog(SettingsDialog):
 		self.banner.SetGradient(normalBgColour, normalBgColour)
 		self.settingsSizer.Add(self.banner, flag=wx.CENTER)
 
-	def _createFilterControls(self):
+	def _createFilterControls(self, filterCtrlHelper: guiHelper.BoxSizerHelper) -> None:
 		filterCtrlsLine0 = guiHelper.BoxSizerHelper(self, wx.HORIZONTAL)
 		filterCtrlsLine1 = guiHelper.BoxSizerHelper(self, wx.HORIZONTAL)
-		self.filterCtrlHelper.addItem(filterCtrlsLine0.sizer)
+		filterCtrlHelper.addItem(filterCtrlsLine0.sizer)
 
 		# Add margin left padding
 		FILTER_MARGIN_PADDING = 15
 		filterCtrlsLine0.sizer.AddSpacer(FILTER_MARGIN_PADDING)
 		filterCtrlsLine1.sizer.AddSpacer(FILTER_MARGIN_PADDING)
-		self.filterCtrlHelper.addItem(filterCtrlsLine1.sizer, flag=wx.EXPAND, proportion=1)
+		filterCtrlHelper.addItem(filterCtrlsLine1.sizer, flag=wx.EXPAND, proportion=1)
 
 		self.channelFilterCtrl = cast(wx.Choice, filterCtrlsLine0.addLabeledControl(
 			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.

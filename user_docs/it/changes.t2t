@@ -2,7 +2,6 @@
 
 
 %!includeconf: ../changes.t2tconf
-%!includeconf: ./locale.t2tconf
 
 = 2023.3 =
 Questa versione include miglioramenti alle prestazioni, alla reattività e alla stabilità dell'uscita audio.
@@ -4429,4 +4428,3 @@ Le maggiori novità di questa release riguardano la capacità di funzionare anch
 - NVDA now asks if it should save configuration and restart if the user has just changed the language in the User Interface Settings Dialog. NVDA must be restarted for the language change to fully take effect.
 - If a synthesizer can not be loaded, when choosing it from the synthesizer dialog, a message box alerts the user to the fact.
 - When loading a synthesizer for the first time, NVDA lets the synthesizer choose the most suitable voice, rate and pitch parameters, rather than forcing it to defaults it thinks are ok. This fixes a problem where Eloquence and Viavoice sapi4 synths start speaking way too fast for the first time.
-

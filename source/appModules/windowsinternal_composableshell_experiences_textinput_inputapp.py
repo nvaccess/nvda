@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2023 NV Access Limited, Joseph Lee
+# Copyright (C) 2017-2024 NV Access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -10,6 +10,7 @@ Other features include reporting candidates for misspellings if suggestions for 
 and managing cloud clipboard paste.
 This is applicable on Windows 10 Fall Creators Update and later."""
 
+from typing import Callable
 import appModuleHandler
 import api
 import eventHandler
@@ -21,6 +22,7 @@ import winVersion
 import controlTypes
 from NVDAObjects.UIA import UIA, XamlEditableText
 from NVDAObjects.behaviors import CandidateItem as CandidateItemBehavior, EditableTextWithAutoSelectDetection
+from NVDAObjects import NVDAObject
 
 
 class ImeCandidateUI(UIA):
@@ -304,6 +306,25 @@ class AppModule(appModuleHandler.AppModule):
 		):
 			ui.message(obj.name)
 		nextHandler()
+
+	def event_UIA_notification(
+			self,
+			obj: NVDAObject,
+			nextHandler: Callable[[], None],
+			displayString: str | None = None,
+			activityId: str | None = None,
+			**kwargs
+	):
+		# #16009: Windows 11 modern keyboard uses UIA notification event to announce things.
+		# These include voice typing availability message and appearance of Suggested Actions
+		# when data such as phone number is copied to the clipboard (Windows 11 22H2).
+		# Apart from emoji panel and clipboard history, modern keyboard elements are not focusable,
+		# therefore notifications must be announced here and no more.
+		# For suggested actions, report the first suggestion because keyboard interaction is impossible.
+		# Also, suggested action is the element name, not the display string.
+		if activityId == "Windows.Shell.InputApp.SmartActions.Popup":
+			displayString = obj.name
+		ui.message(displayString)
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if isinstance(obj, UIA):
