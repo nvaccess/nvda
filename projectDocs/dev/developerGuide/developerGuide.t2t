@@ -1028,6 +1028,11 @@ For examples of how to define and use new extension points, please see the code 
 || Type | Extension Point | Description |
 | ``Decider`` | ``decide_executeGesture`` | Notifies when a gesture is about to be executed, allowing other code to decide if it should be. |
 
+++ logHandler ++[logHandlerExtPts]
+
+|| Type | Extension Point | Description |
+| ``Action`` | ``_onErrorSoundRequested`` | Triggered every time an error sound needs to be played. This extension point should not be used directly but retrieved calling ``getOnErrorSoundRequested()`` instead. |
+
 ++ nvwave ++[nvwaveExtPts]
 || Type | Extension Point | Description |
 | ``Decider`` | ``decide_playWaveFile`` | Notifies when a wave file is about to be played, allowing other code to decide if it should be. |

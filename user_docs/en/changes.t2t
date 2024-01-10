@@ -170,6 +170,7 @@ Please refer to the [NVDA docs https://github.com/nvaccess/nvda/blob/release-202
 - Added the following extension points:
   - ``treeInterceptorHandler.post_browseModeStateChange``. (#14969, @nvdaes)
   - ``speech.speechCanceled``. (#15700, @LeonarddeR)
+  - ``_onErrorSoundRequested`` (should be retrieved calling ``logHandler.getOnErrorSoundRequested()``) (#15691, @CyrilleB79)
   -
 - It is now possible to use plural forms in an add-on's translations. (#15661, @beqabeqa473)
 - Included python3.dll in the binary distribution for use by add-ons with external libraries utilizing the [stable ABI https://docs.python.org/3.11/c-api/stable.html]. (#15674, @mzanm)
