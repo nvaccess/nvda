@@ -7,6 +7,7 @@
 from typing import (
 	Any,
 	Callable,
+	Generator,
 	Union,
 	cast,
 )
@@ -16,6 +17,7 @@ import collections
 import winsound
 import time
 import weakref
+import re
 
 import wx
 import core
@@ -440,9 +442,53 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def _iterNotLinkBlock(self, direction="next", pos=None):
 		raise NotImplementedError
 
+	def _iterSimilarParagraph(
+			self,
+			kind: str,
+			paragraphFunction: Callable[[textInfos.TextInfo], Optional[Any]],
+			desiredValue: Optional[Any] = None,
+			direction: str = "next",
+			pos: textInfos.TextInfo = None,
+	) -> Generator[TextInfoQuickNavItem, None, None]:
+		info = pos.copy()
+		info.collapse()
+		info.expand(textInfos.UNIT_PARAGRAPH)
+		if desiredValue is None:
+			desiredValue = paragraphFunction(info)
+		while True:
+			# move by one paragraph in the desired direction
+			info.collapse(end=direction == 'next')
+			if direction == 'previous':
+				if info.move(textInfos.UNIT_CHARACTER, -1) == 0:
+					return
+			info.expand(textInfos.UNIT_PARAGRAPH)
+			if info.isCollapsed:
+				return
+			value = paragraphFunction(info)
+			if value == desiredValue:
+				yield TextInfoQuickNavItem(kind, self, info.copy())
+
+
 	def _quickNavScript(self,gesture, itemType, direction, errorMessage, readUnit):
 		if itemType=="notLinkBlock":
 			iterFactory=self._iterNotLinkBlock
+		elif itemType == "textParagraph":
+			punctuationMarksRegex = re.compile(
+				config.conf["virtualBuffers"]["textParagraphRegex"],
+				re.UNICODE,
+			)
+
+			def paragraphFunc(info: textInfos.TextInfo) -> bool:
+				return punctuationMarksRegex .search(info.text) is not None
+
+			def iterFactory(direction: str, pos: textInfos.TextInfo) -> Generator[TextInfoQuickNavItem, None, None]:
+				return self._iterSimilarParagraph(
+					kind="textParagraph",
+					paragraphFunction=paragraphFunc,
+					desiredValue=True,
+					direction=direction,
+					pos=pos,
+				)
 		else:
 			iterFactory=lambda direction,info: self._iterNodesByType(itemType,direction,info)
 		info=self.selection
@@ -948,6 +994,18 @@ qn(
 	prevDoc=_("moves to the previous tab"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous tab")
+)
+qn(
+	"textParagraph", key="p",
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next text paragraph"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next text paragraph"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous text paragraph"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous text paragraph"),
+	readUnit=textInfos.UNIT_PARAGRAPH,
 )
 del qn
 

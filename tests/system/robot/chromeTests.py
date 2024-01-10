@@ -2473,3 +2473,48 @@ def test_i13307():
 		]),
 		message="jumping into region with aria-labelledby should speak label",
 	)
+
+
+def test_textParagraphNavigation():
+	_chrome.prepareChrome("""
+		<!-- First a bunch of paragraphs that don't match text regex -->
+		<p>Header</p>
+		<p>Liberal MP: 1904–1908</p>
+		<p>.</p>
+		<p>!</p>
+		<p>?</p>
+		<p>…</p>
+		<p>5.</p>
+		<p>test....</p>
+		<p>a.b</p>
+		<p></p>
+		<!-- Now a bunch of matching paragraphs -->
+		<p>Hello, world!</p>
+		<p>He replied, "That's wonderful."</p>
+		<p>He replied, "That's wonderful".</p>
+		<p>He replied, "That's wonderful."[4]</p>
+		<p>Предложение по-русски.</p>
+		<p>我不会说中文！</p>
+		<p>Bye-bye, world!</p>
+	""")
+
+	expectedParagraphs = [
+		'''Hello, world!''',
+		'''He replied,  That's wonderful.''',
+		'''He replied,  That's wonderful .''',
+		'''He replied,  That's wonderful.  4''',
+		'''Предложение по-русски.''',
+		'''我不会说中文！''',
+		'''Bye-bye, world!''',
+	]
+	for p in expectedParagraphs:
+		actualSpeech = _chrome.getSpeechAfterKey("p")
+		_asserts.strings_match(actualSpeech, p)
+	actualSpeech = _chrome.getSpeechAfterKey("p")
+	_asserts.strings_match(actualSpeech, "no next text paragraph")
+
+	for p in expectedParagraphs[-2::-1]:
+		actualSpeech = _chrome.getSpeechAfterKey("shift+p")
+		_asserts.strings_match(actualSpeech, p)
+	actualSpeech = _chrome.getSpeechAfterKey("shift+p")
+	_asserts.strings_match(actualSpeech, "no previous text paragraph")
