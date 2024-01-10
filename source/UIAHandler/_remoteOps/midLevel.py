@@ -322,6 +322,12 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 		return self._doInplaceOp(lowLevel.InstructionType.Divide, other)
 
 
+class RemoteUint(RemoteNumber[int]):
+	_isTypeInstruction = lowLevel.InstructionType.IsUint
+	_newInstruction = lowLevel.InstructionType.NewUint
+	_initialValueType = c_ulong
+
+
 class RemoteInt(RemoteNumber[int]):
 	_isTypeInstruction = lowLevel.InstructionType.IsInt
 	_newInstruction = lowLevel.InstructionType.NewInt
