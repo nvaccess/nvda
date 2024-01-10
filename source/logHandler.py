@@ -147,12 +147,21 @@ def getCodePath(f):
 	return ".".join(x for x in (path,className,funcName) if x)
 
 
-_onErrorSoundRequested = None
+_onErrorSoundRequested: Optional["extensionPoints.Action"] = None
+"""
+Triggered every time an error sound needs to be played.
+When nvwave is initialized, it registers the handler responsible for playing the error sound.
+This extension point should not be used directly but retrieved calling `getOnErrorSoundRequested()` instead.
+It has been encapsulated in a function to avoid circular import.
+"""
 
 
 def getOnErrorSoundRequested() -> "extensionPoints.Action":
+	"""Creates _onErrorSoundRequested extension point if needed (i.e. on first use only) and returns it.
+	"""
+
 	global _onErrorSoundRequested
-	
+
 	import extensionPoints
 	if not _onErrorSoundRequested:
 		_onErrorSoundRequested = extensionPoints.Action()

@@ -24,6 +24,7 @@ import mouseHandler
 from logHandler import log
 import documentBase
 import review
+import inputCore
 import scriptHandler
 import eventHandler
 import nvwave
@@ -1502,9 +1503,16 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		scriptHandler.queueScript(script, gesture)
 
 	currentExpandedControl=None #: an NVDAObject representing the control that has just been expanded with the collapseOrExpandControl script.
-	def script_collapseOrExpandControl(self, gesture):
+
+	def script_collapseOrExpandControl(self, gesture: inputCore.InputGesture):
 		if not config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
 			self._focusLastFocusableObject()
+			# Give the application time to focus the control.
+			core.callLater(100, self._collapseOrExpandControl_scriptHelper, gesture)
+		else:
+			self._collapseOrExpandControl_scriptHelper(gesture)
+
+	def _collapseOrExpandControl_scriptHelper(self, gesture: inputCore.InputGesture):
 		oldFocus = api.getFocusObject()
 		oldFocusStates = oldFocus.states
 		gesture.send()
