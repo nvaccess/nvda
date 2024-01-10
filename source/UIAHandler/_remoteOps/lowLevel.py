@@ -411,18 +411,37 @@ InstructionSpecs: dict[InstructionType, InstructionSpec] = {
 		('width', c_double),
 		('height', c_double)
 	),
-	# InstructionType.NewArray: InstructionSpec(),
+	 InstructionType.NewArray: InstructionSpec(
+		('result', OperandId)
+	),
 	# InstructionType.NewStringMap: InstructionSpec(),
 	InstructionType.NewNull: InstructionSpec(
 		('result', OperandId)
 	),
 	# InstructionType.GetPointProperty: InstructionSpec(),
 	# InstructionType.GetRectProperty: InstructionSpec(),
-	# InstructionType.RemoteArrayAppend: InstructionSpec(),
-	# InstructionType.RemoteArraySetAt: InstructionSpec(),
-	# InstructionType.RemoteArrayRemoveAt: InstructionSpec(),
-	# InstructionType.RemoteArrayGetAt: InstructionSpec(),
-	# InstructionType.RemoteArraySize: InstructionSpec(),
+	InstructionType.RemoteArrayAppend: InstructionSpec(
+		('target', OperandId),
+		('value', OperandId)
+	),
+	InstructionType.RemoteArraySetAt: InstructionSpec(
+		('target', OperandId),
+		('index', OperandId),
+		('value', OperandId)
+	),
+	InstructionType.RemoteArrayRemoveAt: InstructionSpec(
+		('target', OperandId),
+		('index', OperandId)
+	),
+	InstructionType.RemoteArrayGetAt: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId),
+		('index', OperandId)
+	),
+	InstructionType.RemoteArraySize: InstructionSpec(
+		('result', OperandId),
+		('target', OperandId)
+	),
 	# InstructionType.RemoteStringMapInsert: InstructionSpec(),
 	# InstructionType.RemoteStringMapRemove: InstructionSpec(),
 	# InstructionType.RemoteStringMapHasKey: InstructionSpec(),

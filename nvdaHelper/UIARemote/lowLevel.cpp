@@ -1,5 +1,6 @@
 #include <uiAutomationClient.h>
 #include <winrt/windows.foundation.h>
+#include <winrt/windows.foundation.collections.h>
 #include <winrt/windows.ui.uiautomation.core.h>
 
 using namespace winrt::Windows::Foundation;
@@ -124,16 +125,10 @@ extern "C" __declspec(dllexport) void __stdcall remoteOpResult_free(void* arg_pR
 	winrt::attach_abi(results, arg_pResults);
 }
 
-extern "C" __declspec(dllexport) HRESULT __stdcall remoteOpResult_getOperand(void* arg_pResults, int arg_registerID, VARIANT* arg_pVariant) {
-	AutomationRemoteOperationResult results {nullptr};
-	winrt::copy_from_abi(results, arg_pResults);
-	if(!results) {
-		return E_INVALIDARG;
-	}
-	auto result = results.GetOperand(AutomationRemoteOperationOperandId{arg_registerID});
+HRESULT IInspectableToVariant(winrt::Windows::Foundation::IInspectable result, VARIANT* arg_pVariant) {
 	if(!result) {
 		// operand is NULL.
-		return S_FALSE;
+		return S_OK;
 	}
 	auto propVal = result.try_as<IPropertyValue>();
 	if(propVal) {
@@ -157,11 +152,38 @@ extern "C" __declspec(dllexport) HRESULT __stdcall remoteOpResult_getOperand(voi
 			default:
 				return E_NOTIMPL;
 		}
-	} else {
-		// operand is not a property value.
-		// Just treat it as an IUnknown.
-		arg_pVariant->vt = VT_UNKNOWN;
-		arg_pVariant->punkVal = static_cast<::IUnknown*>(winrt::detach_abi(result.as<winrt::Windows::Foundation::IUnknown>()));
+		return S_OK;
 	}
+	auto vec = result.try_as<winrt::Windows::Foundation::Collections::IVector<winrt::Windows::Foundation::IInspectable>>();
+	if(vec) {
+		// Unbox vector into VARIANT array.
+		auto vecSize = vec.Size();
+		arg_pVariant->vt = VT_ARRAY | VT_VARIANT;
+		arg_pVariant->parray = SafeArrayCreateVector(VT_VARIANT, 0, vecSize);
+		if(!arg_pVariant->parray) {
+			return E_OUTOFMEMORY;
+		}
+		for(ULONG i = 0; i < vecSize; i++) {
+			auto vecItem = vec.GetAt(i);
+			auto hr = IInspectableToVariant(vecItem, &static_cast<VARIANT*>(arg_pVariant->parray->pvData)[i]);
+			if(FAILED(hr)) {
+				return hr;
+			}
+		}
+		return S_OK;
+	}
+	// Just treat it as an IUnknown.
+	arg_pVariant->vt = VT_UNKNOWN;
+	arg_pVariant->punkVal = static_cast<::IUnknown*>(winrt::detach_abi(result.as<winrt::Windows::Foundation::IUnknown>()));
 	return S_OK;
+}
+
+extern "C" __declspec(dllexport) HRESULT __stdcall remoteOpResult_getOperand(void* arg_pResults, int arg_registerID, VARIANT* arg_pVariant) {
+	AutomationRemoteOperationResult results {nullptr};
+	winrt::copy_from_abi(results, arg_pResults);
+	if(!results) {
+		return E_INVALIDARG;
+	}
+	auto result = results.GetOperand(AutomationRemoteOperationOperandId{arg_registerID});
+	return IInspectableToVariant(result, arg_pVariant);
 }

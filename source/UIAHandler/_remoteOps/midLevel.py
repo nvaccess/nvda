@@ -408,6 +408,56 @@ class RemoteVariant(RemoteNullable):
 		return remoteClass(self._rob, self.operandId)
 
 
+class RemoteArray(RemoteBaseObject):
+
+	def _generateInitInstructions(self, initialValue: None = None) -> Iterable[InstructionRecord]:
+		yield InstructionRecord(
+			lowLevel.InstructionType.NewArray,
+			self.operandId
+		)
+
+	def append(self, remoteValue: RemoteBaseObject) -> None:
+		self._rob.addInstruction(
+			lowLevel.InstructionType.RemoteArrayAppend,
+			self.operandId,
+			remoteValue.operandId
+		)
+
+	def __setitem__(self, index: RemoteUint | RemoteInt, remoteValue: RemoteBaseObject) -> None:
+		self._rob.addInstruction(
+			lowLevel.InstructionType.RemoteArraySetAt,
+			self.operandId,
+			index.operandId,
+			remoteValue.operandId
+		)
+
+	def __getitem__(self, index: RemoteUint | RemoteInt) -> RemoteVariant:
+		remoteResult = RemoteVariant(self._rob)
+		self._rob.addInstruction(
+			lowLevel.InstructionType.RemoteArrayGetAt,
+			remoteResult.operandId,
+			self.operandId,
+			index.operandId
+		)
+		return remoteResult
+
+	def remove(self, index: RemoteUint | RemoteInt) -> None:
+		self._rob.addInstruction(
+			lowLevel.InstructionType.RemoteArrayRemoveAt,
+			self.operandId,
+			index.operandId
+		)
+
+	def size(self) -> RemoteUint:
+		remoteResult = RemoteUint(self._rob)
+		self._rob.addInstruction(
+			lowLevel.InstructionType.RemoteArraySize,
+			remoteResult.operandId,
+			self.operandId
+		)
+		return remoteResult
+
+
 class RemoteGuid(RemoteEqualityComparible[GUID]):
 	_isTypeInstruction = lowLevel.InstructionType.IsGuid
 
