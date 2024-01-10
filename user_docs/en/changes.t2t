@@ -2,15 +2,11 @@ What's New in NVDA
 
 
 %!includeconf: ../changes.t2tconf
-%!includeconf: ./locale.t2tconf
 
 = 2024.2 =
 
 == New Features ==
-- A new braille mode called "display speech output" has been added. (#15898, @Emil-18)
-  - When active, the braille display shows exactly what NVDA is speaking.
-  - It can be toggled by pressing ``NVDA+alt+t``, or from the braille settings dialog.
-  -
+- In Windows 11, NVDA will announce alerts from voice typing and suggested actions including the top suggestion when copying data such as phone numbers to the clipboard (Windows 11 2022 Update and later). (#16009, @josephsl)
 -
 
 
@@ -116,6 +112,7 @@ Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on e
   - When reinstalling an incompatible add-on it is no longer forcefully disabled. (#15584, @lukaszgo1)
   - Disabled and incompatible add-ons can now be updated. (#15568, #15029)
   - NVDA now recovers and displays an error in a case where an add-on fails to download correctly. (#15796)
+  - NVDA no longer fails to restart intermittently after opening and closing Add-on Store. (#16019, @lukaszgo1)
   -
 - Audio:
   - NVDA no longer freezes briefly when multiple sounds are played in rapid succession. (#15311, #15757, @jcsteh)
@@ -159,6 +156,8 @@ Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on e
   -
 - NVDA is again able to track the focus in applications running within Windows Defender Application Guard (WDAG). (#15164)
 - The speech text is no longer updated when the mouse moves in the Speech Viewer. (#15953, @hwf1324)
+- NVDA will again switch back to browse mode when closing combo boxes with ``escape`` or ``alt+upArrow`` in Firefox or Chrome. (#15653)
+- Arrowing up and down in combo boxes in iTunes will no longer inappropriately switch back to browse mode. (#15653)
 -
 
 == Changes for Developers ==
@@ -171,6 +170,7 @@ Please refer to the [NVDA docs https://github.com/nvaccess/nvda/blob/release-202
 - Added the following extension points:
   - ``treeInterceptorHandler.post_browseModeStateChange``. (#14969, @nvdaes)
   - ``speech.speechCanceled``. (#15700, @LeonarddeR)
+  - ``_onErrorSoundRequested`` (should be retrieved calling ``logHandler.getOnErrorSoundRequested()``) (#15691, @CyrilleB79)
   -
 - It is now possible to use plural forms in an add-on's translations. (#15661, @beqabeqa473)
 - Included python3.dll in the binary distribution for use by add-ons with external libraries utilizing the [stable ABI https://docs.python.org/3.11/c-api/stable.html]. (#15674, @mzanm)
