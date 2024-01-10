@@ -210,7 +210,8 @@ class KeyCommandsPreprocessor(Preprocessor):
 		name = m.group("txt")
 
 		# The next few lines should be table rows for each layout.
-		# Alternatively, if the key is common to all layouts, there will be a single line of text specifying the key after a colon.
+		# Alternatively, if the key is common to all layouts,
+		# there will be a single line of text specifying the key after a colon.
 		keys: list[str] = []
 		for _layout in range(self._settingsNumLayouts):
 			line = self._seekNonEmptyLine()
