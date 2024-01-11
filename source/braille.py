@@ -2036,13 +2036,9 @@ def _showSpeechInBraille(speechSequence: list):
 	handler.update()
 
 
-pre_speech.register(_showSpeechInBraille)
 def clearBrailleRegions(clearBrailleRegions):
 	if clearBrailleRegions:
 		_regions.clear()
-
-
-pre_speechCanceled.register(clearBrailleRegions)
 
 
 class BrailleHandler(baseObject.AutoPropertyObject):
@@ -2790,6 +2786,8 @@ def initialize():
 	if newDriverName:
 		config.conf["braille"]["display"] = newDriverName
 	handler.setDisplayByName(config.conf["braille"]["display"])
+	pre_speech.register(_showSpeechInBraille)
+	pre_speechCanceled.register(clearBrailleRegions)
 
 def pumpAll():
 	"""Runs tasks at the end of each core cycle. For now just region updates, e.g. for caret movement."""
@@ -2799,6 +2797,8 @@ def terminate():
 	global handler
 	handler.terminate()
 	handler = None
+	pre_speechCanceled.unRegister(clearBrailleRegions)
+	pre_speech.unRegister(_showSpeechInBraille)
 
 
 class BrailleDisplayDriver(driverHandler.Driver):
