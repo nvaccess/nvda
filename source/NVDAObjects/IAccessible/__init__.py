@@ -1354,7 +1354,7 @@ the NVDAObject for IAccessible
 					try:
 						headerUniqueID = header.QueryInterface(IA2.IAccessible2).uniqueID
 					except COMError:
-						log.debugWarning("could not get IAccessible2::uniqueID to use as headerUniqueID",exc_info=True)
+						log.debugWarning("could not get IAccessible2::uniqueID to use as headerUniqueID", exc_info=True)
 						headerUniqueID = None
 					if self.IA2UniqueID == headerUniqueID:
 						continue
