@@ -25,7 +25,7 @@ import speechDictHandler
 import characterProcessing
 import languageHandler
 from . import manager
-from .extensions import speechCanceled
+from .extensions import speechCanceled, pre_speechCanceled, pre_speech
 from .commands import (
 	# Commands that are used in this file.
 	BreakCommand,
@@ -169,8 +169,7 @@ def cancelSpeech(clearBrailleRegions: bool = True):
 	# Import only for this function to avoid circular import.
 	from .sayAll import SayAllHandler
 	SayAllHandler.stop()
-	if clearBrailleRegions:
-		_regions.clear()
+	pre_speechCanceled.notify(clearBrailleRegions = clearBrailleRegions)
 	if _speechState.beenCanceled:
 		return
 	elif _speechState.speechMode == SpeechMode.off:
@@ -949,30 +948,6 @@ def getIndentationSpeech(indentation: str, formatConfig: Dict[str, bool]) -> Spe
 	return indentSequence
 
 
-# The list containing the regions that will be shown in braille when the speak function is called
-# and the braille mode is set to speech output
-_regions: list[braille.TextRegion] = []
-
-
-def _showSpeechInBraille(speechSequence: SpeechSequence):
-	regionsText = "".join([i.rawText for i in _regions])
-	if len(regionsText) > 100000:
-		return
-	text = " ".join([x for x in speechSequence if isinstance(x, str)])
-	currentRegions = False
-	if _regions:
-		text = " " + text
-		currentRegions = True
-	region = braille.TextRegion(text)
-	region.update()
-	_regions.append(region)
-	braille.handler.mainBuffer.regions = _regions.copy()
-	if not currentRegions:
-		braille.handler.mainBuffer.focus(_regions[0])
-	braille.handler.mainBuffer.update()
-	braille.handler.update()
-
-
 # C901 'speak' is too complex
 # Note: when working on speak, look for opportunities to simplify
 # and move logic out into smaller helper functions.
@@ -995,8 +970,7 @@ def speak(  # noqa: C901
 	import speechViewer
 	if speechViewer.isActive:
 		speechViewer.appendSpeechSequence(speechSequence)
-	if config.conf["braille"]["mode"] == braille.BrailleMode.SPEECH_OUTPUT.value:
-		_showSpeechInBraille(speechSequence)
+	pre_speech.notify(speechSequence = speechSequence, symbolLevel = symbolLevel, priority = priority)
 	if _speechState.speechMode == SpeechMode.off:
 		return
 	elif _speechState.speechMode == SpeechMode.beeps:
