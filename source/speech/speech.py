@@ -6,7 +6,6 @@
 
 """High-level functions to speak information.
 """ 
-import braille
 import itertools
 import typing
 import weakref
