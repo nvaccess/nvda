@@ -12,7 +12,7 @@ def txt2tags_actionFunc(
 		env: SCons.Environment.Environment
 ):
 	import txt2tags
-	from keyCommandsDoc import Command
+	from user_docs.keyCommandsDoc import Command
 
 	with open(source[0].path, "r", encoding="utf-8") as mdFile:
 		mdOriginal = mdFile.read()
