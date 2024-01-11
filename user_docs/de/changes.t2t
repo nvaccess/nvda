@@ -2,7 +2,6 @@ Was ist neu in NVDA
 
 
 %!includeconf: ../changes.t2tconf
-%!includeconf: ./locale.t2tconf
 
 = 2023.3 =
 Diese Version enthält Verbesserungen bei der Leistung, Reaktionsfähigkeit und Stabilität der Audio-Ausgabe.
@@ -4521,4 +4520,3 @@ Die wichtigsten Neuerungen dieser Version sind u. a. die Unterstützung von 64-B
 - NVDA fragt nun nach, ob nach einem Sprachenwechsel die Konfiguration gespeichert und neu gestartet werden soll. Ein Neustart von NVDA ist nach einem sprachenwechsel notwendig.
 - Wenn bei der Auswahl eines Synthesizers aus dem Sprachausgabendialog dieser nicht geladen werden kann, wird der Anwender darüber informiert.
 - Wird eine Sprachausgabe das erste mal geladen, wird nach einer passenden Stimme gesucht bzw. passende Werte für Geschwindigkeit, Lautstärke und Stimmhöhe eingestellt. Dies behebt Probleme mit den sapi4-Versionen von Eloquence und viavoice, die bisher zu schnell gesprochen haben.
-

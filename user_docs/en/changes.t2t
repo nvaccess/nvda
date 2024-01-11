@@ -2,12 +2,15 @@ What's New in NVDA
 
 
 %!includeconf: ../changes.t2tconf
-%!includeconf: ./locale.t2tconf
 
 = 2024.2 =
 
 == New Features ==
+
 - Reporting row and column headers is now supported in contenteditable HTML elements. (#14113)
+- In Windows 11, NVDA will announce alerts from voice typing and suggested actions including the top suggestion when copying data such as phone numbers to the clipboard (Windows 11 2022 Update and later). (#16009, @josephsl)
+-
+
 
 
 == Changes ==
@@ -16,6 +19,9 @@ What's New in NVDA
 == Bug Fixes ==
 - Backspace now works correctly when using Nudi 6.1 with NVDA's "Handle keys from other applications" setting enabled. (#15822, @jcsteh)
 - Fixed a bug where audio coordinates would be played while the application is in sleep mode when "Play audio coordinates when mouse moves" is enabled. (#8059, @hwf1324)
+- Add-on Store:
+  - When pressing ``ctrl+tab``, focus properly moves to the new current tab title. (#14986, @ABuffEr)
+  -
 -
 
 
@@ -109,6 +115,7 @@ Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on e
   - When reinstalling an incompatible add-on it is no longer forcefully disabled. (#15584, @lukaszgo1)
   - Disabled and incompatible add-ons can now be updated. (#15568, #15029)
   - NVDA now recovers and displays an error in a case where an add-on fails to download correctly. (#15796)
+  - NVDA no longer fails to restart intermittently after opening and closing Add-on Store. (#16019, @lukaszgo1)
   -
 - Audio:
   - NVDA no longer freezes briefly when multiple sounds are played in rapid succession. (#15311, #15757, @jcsteh)
@@ -152,6 +159,8 @@ Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on e
   -
 - NVDA is again able to track the focus in applications running within Windows Defender Application Guard (WDAG). (#15164)
 - The speech text is no longer updated when the mouse moves in the Speech Viewer. (#15953, @hwf1324)
+- NVDA will again switch back to browse mode when closing combo boxes with ``escape`` or ``alt+upArrow`` in Firefox or Chrome. (#15653)
+- Arrowing up and down in combo boxes in iTunes will no longer inappropriately switch back to browse mode. (#15653)
 -
 
 == Changes for Developers ==
@@ -164,6 +173,7 @@ Please refer to the [NVDA docs https://github.com/nvaccess/nvda/blob/release-202
 - Added the following extension points:
   - ``treeInterceptorHandler.post_browseModeStateChange``. (#14969, @nvdaes)
   - ``speech.speechCanceled``. (#15700, @LeonarddeR)
+  - ``_onErrorSoundRequested`` (should be retrieved calling ``logHandler.getOnErrorSoundRequested()``) (#15691, @CyrilleB79)
   -
 - It is now possible to use plural forms in an add-on's translations. (#15661, @beqabeqa473)
 - Included python3.dll in the binary distribution for use by add-ons with external libraries utilizing the [stable ABI https://docs.python.org/3.11/c-api/stable.html]. (#15674, @mzanm)

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited
+# Copyright (C) 2022 NV Access Limited, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,7 +69,7 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 			oldPowerState=PowerState.AC_OFFLINE,
 		)
 		self.assertEqual(
-			['1 percent', '1 hours and 1 minutes remaining', "Unplugged"],
+			['1 percent', '1 hour and 1 minute remaining', "Unplugged"],
 			actualSpeech,
 		)
 
@@ -96,7 +96,7 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 			oldPowerState=PowerState.AC_OFFLINE,
 		)
 		self.assertEqual(
-			["Plugged in", '1 percent', '1 hours and 1 minutes remaining'],
+			["Plugged in", '1 percent', '1 hour and 1 minute remaining'],
 			actualSpeech,
 		)
 
@@ -110,7 +110,7 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 			oldPowerState=PowerState.AC_ONLINE,
 		)
 		self.assertEqual(
-			["Unplugged", '1 percent', '1 hours and 1 minutes remaining'],
+			["Unplugged", '1 percent', '1 hour and 1 minute remaining'],
 			actualSpeech,
 		)
 
