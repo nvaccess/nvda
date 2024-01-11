@@ -65,6 +65,8 @@ from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import hwIo
 from editableText import EditableText
 
+from speech.extensions import pre_speech, pre_speechCanceled
+
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
 
@@ -2008,6 +2010,39 @@ For example, when a system is controlling a remote system with braille,
 the local braille handler should be disabled as long as the system is in control of the remote system.
 Handlers are called without arguments.
 """
+
+
+# The list containing the regions that will be shown in braille when the speak function is called
+# and the braille mode is set to speech output
+_regions: list[TextRegion] = []
+
+
+def _showSpeechInBraille(speechSequence: list):
+	regionsText = "".join([i.rawText for i in _regions])
+	if len(regionsText) > 100000:
+		return
+	text = " ".join([x for x in speechSequence if isinstance(x, str)])
+	currentRegions = False
+	if _regions:
+		text = " " + text
+		currentRegions = True
+	region = TextRegion(text)
+	region.update()
+	_regions.append(region)
+	handler.mainBuffer.regions = _regions.copy()
+	if not currentRegions:
+		handler.mainBuffer.focus(_regions[0])
+	handler.mainBuffer.update()
+	handler.update()
+
+
+pre_speech.register(_showSpeechInBraille)
+def clearBrailleRegions(clearBrailleRegions):
+	if clearBrailleRegions:
+		_regions.clear()
+
+
+pre_speechCanceled.register(clearBrailleRegions)
 
 
 class BrailleHandler(baseObject.AutoPropertyObject):
