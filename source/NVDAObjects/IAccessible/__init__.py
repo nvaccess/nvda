@@ -1349,17 +1349,18 @@ the NVDAObject for IAccessible
 			# as it gets released when it gets garbage collected.
 			for i in range(nHeaders):
 				header = headers[i]
+				headerIA2Ptr = header.QueryInterface(IA2.IAccessible2)
 				# Chromium exposes cells as their own headers, so exclude cells with the same `Iaccessible2::uniqueID`.
 				if self.IA2UniqueID is not None:  # No point checking if we don't have this cell's UID
 					try:
-						headerUniqueID = header.QueryInterface(IA2.IAccessible2).uniqueID
+						headerUniqueID = headerIA2Ptr.uniqueID
 					except COMError:
 						log.debugWarning("could not get IAccessible2::uniqueID to use as headerUniqueID", exc_info=True)
 						headerUniqueID = None
 					if self.IA2UniqueID == headerUniqueID:
 						continue
 				try:
-					text = header.QueryInterface(IA2.IAccessible2).accName(0)
+					text = headerIA2Ptr.accName(0)
 				except COMError:
 					continue
 				if not text:
