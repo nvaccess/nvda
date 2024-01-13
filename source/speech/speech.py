@@ -168,7 +168,7 @@ def cancelSpeech(clearBrailleRegions: bool = True):
 	# Import only for this function to avoid circular import.
 	from .sayAll import SayAllHandler
 	SayAllHandler.stop()
-	pre_speechCanceled.notify(clearBrailleRegions = clearBrailleRegions)
+	pre_speechCanceled.notify(clearBrailleRegions=clearBrailleRegions)
 	if _speechState.beenCanceled:
 		return
 	elif _speechState.speechMode == SpeechMode.off:
@@ -969,7 +969,7 @@ def speak(  # noqa: C901
 	import speechViewer
 	if speechViewer.isActive:
 		speechViewer.appendSpeechSequence(speechSequence)
-	pre_speech.notify(speechSequence = speechSequence, symbolLevel = symbolLevel, priority = priority)
+	pre_speech.notify(speechSequence=speechSequence, symbolLevel=symbolLevel, priority=priority)
 	if _speechState.speechMode == SpeechMode.off:
 		return
 	elif _speechState.speechMode == SpeechMode.beeps:
