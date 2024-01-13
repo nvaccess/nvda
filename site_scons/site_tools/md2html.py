@@ -116,7 +116,7 @@ def md2html_actionFunc(
 
 	extensions = set(DEFAULT_EXTENSIONS)
 	if isKeyCommands:
-		from keyCommandsDoc import KeyCommandsExtension
+		from user_docs.keyCommandsDoc import KeyCommandsExtension
 		extensions.add(KeyCommandsExtension())
 
 	markdown.markdownFromFile(
@@ -146,7 +146,7 @@ def exists(env: SCons.Environment.Environment) -> bool:
 		"markdown_link_attr_modifier",
 		"mdx_truly_sane_lists",
 		"mdx_gh_links",
-		"keyCommandsDoc",
+		"user_docs.keyCommandsDoc",
 	]:
 		if find_spec(ext) is None:
 			return False

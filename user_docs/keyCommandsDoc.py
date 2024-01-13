@@ -1,58 +1,16 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2023-2024 NV Access Limited, Mesar Hameed, Takuya Nishimoto
+# Copyright (C) 2010-2024 NV Access Limited, Mesar Hameed, Takuya Nishimoto
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 """
-TODO: move to site_scons/site_tools
-
 Generates the Key Commands document from the User Guide.
 Works as a Python Markdown Extension:
 https://python-markdown.github.io/extensions/
 
-TODO move docs to docs folder
-
-Generation of the Key Commands document requires certain commands to be included in the user guide.
-These commands must begin at the start of the line and take the form::
-	%kc:command: arg
-
-The kc:title command must appear first and specifies the title of the Key Commands document.
-For example:
-	%kc:title: NVDA Key Commands
-
-The rest of these commands are used to include key commands into the document.
-Appropriate headings from the User Guide will be included implicitly.
-
-The kc:beginInclude command begins a block of text which should be included verbatim.
-The block ends at the kc:endInclude command.
-For example::
-	%kc:beginInclude
-	|| Name | Desktop command | Laptop command | Description |
-	...
-	%kc:endInclude
-
-The kc:settingsSection command indicates the beginning of a section documenting individual settings.
-It specifies the header row for a table summarising the settings indicated by the kc:setting command
-(see below).
-In order, it must consist of a name column, a column for each keyboard layout and a description column.
-For example::
-	%kc:settingsSection: || Name | Desktop command | Laptop command | Description |
-
-The kc:setting command indicates a section for an individual setting.
-It must be followed by:
-	* A heading containing the name of the setting;
-	* A table row for each keyboard layout, or if the key is common to all layouts,
-	a single line of text specifying the key after a colon;
-	* A blank line; and
-	* A line describing the setting.
-For example:
-	%kc:setting
-	==== Braille Tethered To ====
-	| Desktop command | NVDA+control+t |
-	| Laptop Command | NVDA+control+t |
-	This option allows you to choose whether the braille display will follow the system focus,
-	or whether it follows the navigator object / review cursor.
+Refer to user guide standards for more information on syntax rules:
+https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/userGuideStandards.md
 """
 
 from enum import auto, Enum, IntEnum, StrEnum
@@ -252,7 +210,8 @@ class KeyCommandsPreprocessor(Preprocessor):
 		name = m.group("txt")
 
 		# The next few lines should be table rows for each layout.
-		# Alternatively, if the key is common to all layouts, there will be a single line of text specifying the key after a colon.
+		# Alternatively, if the key is common to all layouts,
+		# there will be a single line of text specifying the key after a colon.
 		keys: list[str] = []
 		for _layout in range(self._settingsNumLayouts):
 			line = self._seekNonEmptyLine()
