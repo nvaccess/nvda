@@ -3,32 +3,17 @@
 # See the file COPYING for more details.
 # Copyright (C) 2023-2023 NV Access Limited
 
-import enum
+from __future__ import annotations
+from typing import Callable, Type, TypeVar
 from dataclasses import dataclass
-from typing import Callable, cast, Type
 from comtypes import GUID
-from UIAHandler import UIA
 from logHandler import log
 from . import lowLevel
 from . import midLevel
 from .midLevel import (
 	RemoteInt,
 	RemoteBool,
-	RemoteString,
-	RemoteVariant,
-	RemoteExtensionTarget,
-	RemoteElement,
-	RemoteTextRange,
-	RemoteGuid
 )
-
-
-_pyTypeToRemoteType: dict[Type[object], Type[midLevel.RemoteBaseObject]] = {
-	int: RemoteInt,
-	bool: RemoteBool,
-	str: RemoteString,
-	GUID: RemoteGuid
-}
 
 
 class MalformedBytecodeException(RuntimeError):
@@ -57,67 +42,81 @@ class ExecutionFailureException(RuntimeError):
 	pass
 
 
-class RemoteFuncAPI:
+class RemoteFuncAPI(midLevel._RemoteBase):
 
-	def __init__(self, rob: midLevel.RemoteOperationBuilder):
-		self._rob = rob
+	def __init__(self, builder: midLevel.RemoteOperationBuilder):
+		self.bind(builder)
 
-	def newInt(self, initialValue: int = 0) -> RemoteInt:
-		return RemoteInt._new(self._rob, initialValue)
+	_TV_newRemoteObject = TypeVar('_TV_newRemoteObject', bound=midLevel.RemoteBaseObject)
+	def _newRemoteObject(self, RemoteClass: Type[_TV_newRemoteObject]) -> _TV_newRemoteObject:
+		obj = RemoteClass()
+		obj.bind(self.builder)
+		return obj
 
-	def newBool(self, initialValue: bool = False) -> RemoteBool:
-		return RemoteBool._new(self._rob, initialValue)
+	_TV_newRemoteValue = TypeVar('_TV_newRemoteValue', bound=midLevel.RemoteValue)
+	def _newRemoteValue(self, RemoteClass: Type[_TV_newRemoteValue], value: _TV_newRemoteValue | object) -> _TV_newRemoteValue:
+		if isinstance(value, RemoteClass):
+			value.bind(self.builder)
+			return value.copy()
+		obj = RemoteClass(value)
+		obj.bind(self.builder)
+		return obj
 
-	def newString(self, initialValue: str = "") -> RemoteString:
-		return RemoteString._new(self._rob, initialValue)
+	def newUint(self, value: midLevel.RemoteUint | int = 0) -> midLevel.RemoteUint:
+		return self._newRemoteValue(midLevel.RemoteUint, value)
 
-	def newNULLVariant(self) -> RemoteVariant:
-		return RemoteVariant._new(self._rob)
+	def newInt(self, value: midLevel.RemoteInt | int = 0) -> midLevel.RemoteInt:
+		return self._newRemoteValue(midLevel.RemoteInt, value)
 
-	def newNULLExtensionTarget(self) -> RemoteExtensionTarget:
-		return RemoteExtensionTarget._new(self._rob)
+	def newString(self, value: str = "") -> midLevel.RemoteString: 
+		return self._newRemoteValue(midLevel.RemoteString, value)
 
-	def newNULLElement(self) -> RemoteElement:
-		return RemoteElement._new(self._rob)
+	def newBool(self, value: bool = False) -> midLevel.RemoteBool:
+		return self._newRemoteValue(midLevel.RemoteBool, value)
 
-	def newNULLTextRange(self) -> RemoteTextRange:
-		return RemoteTextRange._new(self._rob)
+	def newGuid(self, value: GUID | str = "") -> midLevel.RemoteGuid:
+		return self._newRemoteValue(midLevel.RemoteGuid, value)
 
-	def newGuid(self, initialValue: GUID) -> RemoteGuid:
-		return RemoteGuid._new(self._rob, initialValue)
+	def newVariant(self) -> midLevel.RemoteVariant:
+		return self._newRemoteObject(midLevel.RemoteVariant)
+
+	def newArray(self):
+		obj = midLevel.RemoteArray()
+		obj.bind(self.builder)
+		return obj
 
 	def ifBlock(self, condition: midLevel.RemoteBool):
-		return self._rob.ifBlock(condition)
+		return self.builder.ifBlock(condition)
 
 	def elseBlock(self):
-		return self._rob.elseBlock()
+		return self.builder.elseBlock()
 
 	def whileBlock(self, conditionBuilderFunc: Callable[[], RemoteBool]):
-		return self._rob.whileBlock(conditionBuilderFunc)
+		return self.builder.whileBlock(conditionBuilderFunc)
 
 	def breakLoop(self):
-		self._rob.breakLoop()
+		self.builder.breakLoop()
 
 	def continueLoop(self):
-		self._rob.continueLoop()
+		self.builder.continueLoop()
 
 	def tryBlock(self):
-		return self._rob.tryBlock()
+		return self.builder.tryBlock()
 
 	def catchBlock(self):
-		return self._rob.catchBlock()
+		return self.builder.catchBlock()
 
-	def setOperationStatus(self, status: int | RemoteInt):
-		self._rob.setOperationStatus(status)
+	def setOperationStatus(self, status: RemoteInt):
+		self.builder.setOperationStatus(status)
 
 	def getOperationStatus(self) -> RemoteInt:
-		return self._rob.getOperationStatus()
+		return self.builder.getOperationStatus()
 
 	def halt(self):
-		self._rob.halt()
+		self.builder.halt()
 
-	def logMessage(self, *strings):
-		self._rob.logMessage(*strings)
+	def logMessage(self, *strings: str | midLevel.RemoteString):
+		self.builder.logMessage(*strings)
 
 
 @dataclass
@@ -127,39 +126,6 @@ class _RemoteFuncBuildCache:
 	resultOperandIds: list[midLevel.OperandId]
 	remoteLogging: bool = False
 	logOperandId: midLevel.OperandId | None = None
-
-
-def _addArgsToBuilder(
-	rob: midLevel.RemoteOperationBuilder,
-	remoteFunc: Callable,
-	*args: object
-) -> list[midLevel.RemoteBaseObject]:
-	remoteArgs = []
-	funcCode = remoteFunc.__code__
-	funcName = funcCode.co_qualname
-	funcArgNames = funcCode.co_varnames[1:funcCode.co_argcount]
-	if len(args) != len(funcArgNames):
-		raise TypeError(f"{funcName} takes {len(funcArgNames)} positional arguments but {len(args)} were given")
-	for argIndex, arg in enumerate(args):
-		argName = funcArgNames[argIndex]
-		rob.addComment(f"Loading argument: {argName}", section="imports")
-		remoteArg: midLevel.RemoteBaseObject
-		if isinstance(arg, UIA.IUIAutomationElement):
-			remoteArg = rob.importElement(arg)
-		elif isinstance(arg, UIA.IUIAutomationTextRange):
-			remoteArg = rob.importTextRange(arg)
-		else:
-			if isinstance(arg, enum.Enum):
-				arg = arg.value
-			remoteType = _pyTypeToRemoteType.get(type(arg))
-			if remoteType is None:
-				raise TypeError(f"Unsupported argument type: {type(arg)}")
-			remoteArg = cast(Type[midLevel.RemoteBaseObject], remoteType)(rob)
-			for record in remoteArg._generateInitInstructions(arg):
-				rob.addInstructionRecord(record, section="imports")
-		remoteArgs.append(remoteArg)
-	return remoteArgs
-
 
 def _fetchAndValidateBuildCache(
 	remoteFunc: Callable,
@@ -181,24 +147,24 @@ def _fetchAndValidateBuildCache(
 
 
 def _buildRemoteFunc(
-	rob: midLevel.RemoteOperationBuilder,
+	builder: midLevel.RemoteOperationBuilder,
 	remoteFunc: Callable,
 	*remoteArgs: midLevel.RemoteBaseObject,
 	remoteLogging: bool = False
 ) -> _RemoteFuncBuildCache:
-	rfa = RemoteFuncAPI(rob)
+	rfa = RemoteFuncAPI(builder)
 	remoteResults = remoteFunc(rfa, *remoteArgs)
 	if isinstance(remoteResults, midLevel.RemoteBaseObject):
 		remoteResults = [remoteResults]
 	byteCode = b''
 	for sectionName in ('constants', 'main'):
-		byteCode += rob.getInstructionList(sectionName).getByteCode()
+		byteCode += builder.getInstructionList(sectionName).getByteCode()
 	buildCache = _RemoteFuncBuildCache(
 		argOperandIds=[arg.operandId for arg in remoteArgs],
 		bytecode=byteCode,
 		resultOperandIds=[result.operandId for result in remoteResults],
 		remoteLogging=remoteLogging,
-		logOperandId=rob._getLogOperandId() if remoteLogging else None
+		logOperandId=builder._getLogOperandId() if remoteLogging else None
 	)
 	setattr(remoteFunc, '_remoteFuncBuildCache', buildCache)
 	return buildCache
@@ -221,31 +187,31 @@ def _getExecutionResults(resultSet: lowLevel.RemoteOperationResultSet, buildCach
 		return results[0]
 	return results
 
-
 def execute(
 	remoteFunc: Callable,
-	*args: object,
+	*args: midLevel.RemoteBaseObject,
 	remoteLogging=False,
-	dumpInstructions=False
+	dumpInstructions=False,
 ) -> object:
 	ro = lowLevel.RemoteOperation()
-	rob = midLevel.RemoteOperationBuilder(ro, remoteLogging=remoteLogging)
-	remoteArgs = _addArgsToBuilder(rob, remoteFunc, *args)
-	argsByteCode = rob.getInstructionList('imports').getByteCode()
+	builder = midLevel.RemoteOperationBuilder(ro, remoteLogging=remoteLogging)
+	for arg in args:
+		arg.bind(builder, section="imports")
+	argsByteCode = builder.getInstructionList('imports').getByteCode()
 	buildCache: _RemoteFuncBuildCache | None = None
 	if not dumpInstructions:
-		buildCache = _fetchAndValidateBuildCache(remoteFunc, *remoteArgs, remoteLogging=remoteLogging)
+		buildCache = _fetchAndValidateBuildCache(remoteFunc, *args, remoteLogging=remoteLogging)
 	if buildCache is None:
-		buildCache = _buildRemoteFunc(rob, remoteFunc, *remoteArgs, remoteLogging=remoteLogging)
+		buildCache = _buildRemoteFunc(builder, remoteFunc, *args, remoteLogging=remoteLogging)
 		if dumpInstructions:
-			log.info(f"{rob.dumpInstructions()}")
+			log.info(f"{builder.dumpInstructions()}")
 	else:
 		log.info("Reusing Remote function build cache")
 	for operandId in buildCache.resultOperandIds:
 		ro.addToResults(operandId)
 	if buildCache.logOperandId is not None:
 		ro.addToResults(buildCache.logOperandId)
-	resultSet = ro.execute(rob._versionBytes + argsByteCode + buildCache.bytecode)
+	resultSet = ro.execute(builder._versionBytes + argsByteCode + buildCache.bytecode)
 	if resultSet.status == lowLevel.RemoteOperationStatus.ExecutionFailure:
 		raise ExecutionFailureException()
 	elif resultSet.status == lowLevel.RemoteOperationStatus.MalformedBytecode:
@@ -256,7 +222,7 @@ def execute(
 	if resultSet.status == lowLevel.RemoteOperationStatus.InstructionLimitExceeded:
 		raise InstructionLimitExceededException(results=results)
 	elif resultSet.status == lowLevel.RemoteOperationStatus.UnhandledException:
-		instructionRecord = rob.lookupInstructionByGlobalIndex(resultSet.errorLocation) if dumpInstructions else None
+		instructionRecord = builder.lookupInstructionByGlobalIndex(resultSet.errorLocation) if dumpInstructions else None
 		raise RemoteException(
 			errorLocation=resultSet.errorLocation,
 			extendedError=resultSet.extendedError,
