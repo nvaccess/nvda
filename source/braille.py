@@ -2018,6 +2018,8 @@ _regions: list[TextRegion] = []
 
 
 def _showSpeechInBraille(speechSequence: list):
+	if config.conf["braille"]["mode"] == BrailleMode.FOLLOW_CURSORS.value:
+		return
 	regionsText = "".join([i.rawText for i in _regions])
 	if len(regionsText) > 100000:
 		return
