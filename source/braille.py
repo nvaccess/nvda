@@ -1446,8 +1446,9 @@ class ReviewTextInfoRegion(TextInfoRegion):
 	_withinSelection: bool = False
 
 	def _getSelection(self) -> textInfos.TextInfo:
-		"""Gets selection and saves it for use in :class:`TextInfoRegion` update function.
-		:return: Reading unit from selection or review position
+		"""Gets selection for use in update function.
+		:return: selection, reading unit from it, or review position when
+		there is no selection or showing selection is disabled
 		"""
 		if not config.conf["braille"]["showSelection"]:
 			self._currentSelection = None
