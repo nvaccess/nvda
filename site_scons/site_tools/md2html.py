@@ -1,8 +1,9 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2023 NV Access Limited
+# Copyright (C) 2023-2024 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
+from copy import deepcopy
 from importlib.util import find_spec
 import io
 import pathlib
@@ -29,7 +30,7 @@ DEFAULT_EXTENSIONS = frozenset({
 	"mdx_gh_links",
 })
 
-_extensionConfigs = {
+EXTENSIONS_CONFIG = {
 	"markdown_link_attr_modifier": {
 		"new_tab": "external_only",
 		"auto_title": "on",
@@ -40,7 +41,19 @@ _extensionConfigs = {
 	},
 }
 
-_RTLlangCodes = {"ar", "fa", "he"}
+RTL_LANG_CODES = frozenset({"ar", "fa", "he"})
+
+HTML_HEADERS = """
+<!DOCTYPE html>
+<html lang="{lang}" dir="{dir}">
+<head>
+<meta charset="utf-8">
+<title>{title}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+""".strip()
 
 
 def _replaceNVDATags(md: str, env: SCons.Environment.Environment) -> str:
@@ -52,13 +65,13 @@ def _replaceNVDATags(md: str, env: SCons.Environment.Environment) -> str:
 	return md
 
 
-def _getTitle(mdBuffer: io.BytesIO, isKeyCommands: bool = False) -> str:
+def _getTitle(mdBuffer: io.StringIO, isKeyCommands: bool = False) -> str:
 	if isKeyCommands:
 		TITLE_RE = re.compile(r"^<!-- KC:title: (.*) -->$")
 		# Make next read at start of buffer
 		mdBuffer.seek(0)
 		for line in mdBuffer.readlines():
-			match = TITLE_RE.match(line.decode("utf-8").strip())
+			match = TITLE_RE.match(line.strip())
 			if match:
 				return match.group(1)
 
@@ -68,9 +81,66 @@ def _getTitle(mdBuffer: io.BytesIO, isKeyCommands: bool = False) -> str:
 		# Make next read at start of buffer
 		mdBuffer.seek(0)
 		# Remove heading hashes and trailing whitespace to get the tab title
-		title = mdBuffer.readline().decode("utf-8").strip().lstrip("# ")
+		title = mdBuffer.readline().strip().lstrip("# ")
 
 	return title
+
+
+def _createAttributeFilter() -> dict[str, set[str]]:
+	# Create attribute filter exceptions for HTML sanitization
+	import nh3
+	allowedAttributes: dict[str, set[str]] = deepcopy(nh3.ALLOWED_ATTRIBUTES)
+
+	attributesWithAnchors = {"h1", "h2", "h3", "h4", "h5", "h6", "td"}
+	attributesWithClass = {"div", "span", "a"}
+
+	# Allow IDs for anchors
+	for attr in attributesWithAnchors:
+		if attr not in allowedAttributes:
+			allowedAttributes[attr] = set()
+		allowedAttributes[attr].add("id")
+
+	# Allow class for styling
+	for attr in attributesWithClass:
+		if attr not in allowedAttributes:
+			allowedAttributes[attr] = set()
+		allowedAttributes[attr].add("class")
+
+	# link rel and target is set by markdown_link_attr_modifier
+	allowedAttributes["a"].update({"rel", "target"})
+
+	return allowedAttributes
+
+
+ALLOWED_ATTRIBUTES = _createAttributeFilter()
+
+
+def _generateSanitizedHTML(md: str, isKeyCommands: bool = False) -> str:
+	import markdown
+	import nh3
+
+	extensions = set(DEFAULT_EXTENSIONS)
+	if isKeyCommands:
+		from user_docs.keyCommandsDoc import KeyCommandsExtension
+		extensions.add(KeyCommandsExtension())
+
+	htmlOutput = markdown.markdown(
+		text=md,
+		extensions=extensions,
+		extension_configs=EXTENSIONS_CONFIG,
+	)
+
+	# Sanitize html output from markdown to prevent XSS from translators
+	htmlOutput = nh3.clean(
+		htmlOutput,
+		attributes=ALLOWED_ATTRIBUTES,
+		# link rel is handled by markdown_link_attr_modifier
+		link_rel=None,
+		# Keep key command comments and similar
+		strip_comments=False,
+	)
+
+	return htmlOutput
 
 
 def md2html_actionFunc(
@@ -78,7 +148,6 @@ def md2html_actionFunc(
 		source: list[SCons.Node.FS.File],
 		env: SCons.Environment.Environment
 ):
-	import markdown
 	isKeyCommands = target[0].path.endswith("keyCommands.html")
 
 	with open(source[0].path, "r", encoding="utf-8") as mdFile:
@@ -86,57 +155,34 @@ def md2html_actionFunc(
 
 	mdStr = _replaceNVDATags(mdStr, env)
 
-	# Write replaced source to buffer.
-	# md has a bug with StringIO, so BytesIO is required.
-	mdBuffer = io.BytesIO()
-	mdBuffer.write(mdStr.encode("utf-8"))
+	with io.StringIO() as mdBuffer:
+		mdBuffer.write(mdStr)
+		title = _getTitle(mdBuffer, isKeyCommands)
 
 	lang = pathlib.Path(source[0].path).parent.name
-	title = _getTitle(mdBuffer, isKeyCommands)
-	# md has a bug with StringIO, so BytesIO is required.
-	htmlBuffer = io.BytesIO()
+	htmlBuffer = io.StringIO()
 	htmlBuffer.write(
-		f"""
-<!DOCTYPE html>
-<html lang="{lang}" dir="{"rtl" if lang in _RTLlangCodes else "ltr"}">
-<head>
-<meta charset="utf-8">
-<title>{title}</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
-	""".strip().encode("utf-8")
+		HTML_HEADERS.format(
+			lang=lang,
+			dir="rtl" if lang in RTL_LANG_CODES else "ltr",
+			title=title,
+		)
 	)
 
-	# Make next read from start of buffer
-	mdBuffer.seek(0)
+	htmlOutput = _generateSanitizedHTML(mdStr, isKeyCommands)
 	# Make next write append at end of buffer
 	htmlBuffer.seek(0, io.SEEK_END)
-
-	extensions = set(DEFAULT_EXTENSIONS)
-	if isKeyCommands:
-		from user_docs.keyCommandsDoc import KeyCommandsExtension
-		extensions.add(KeyCommandsExtension())
-
-	markdown.markdownFromFile(
-		input=mdBuffer,
-		output=htmlBuffer,
-		# https://python-markdown.github.io/extensions/
-		extensions=extensions,
-		extension_configs=_extensionConfigs,
-	)
+	htmlBuffer.write(htmlOutput)
 
 	# Make next write append at end of buffer
 	htmlBuffer.seek(0, io.SEEK_END)
-	htmlBuffer.write(b"\n</body>\n</html>\n")
+	htmlBuffer.write("\n</body>\n</html>\n")
 
-	with open(target[0].path, "wb") as targetFile:
+	with open(target[0].path, "w", encoding="utf-8") as targetFile:
 		# Make next read at start of buffer
 		htmlBuffer.seek(0)
 		shutil.copyfileobj(htmlBuffer, targetFile)
 
-	mdBuffer.close()
 	htmlBuffer.close()
 
 
@@ -146,6 +192,7 @@ def exists(env: SCons.Environment.Environment) -> bool:
 		"markdown_link_attr_modifier",
 		"mdx_truly_sane_lists",
 		"mdx_gh_links",
+		"nh3",
 		"user_docs.keyCommandsDoc",
 	]:
 		if find_spec(ext) is None:
