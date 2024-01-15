@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2021 NV Access Limited, James Teh, Michael Curran, Leonard de Ruijter, Reef Turner,
+# Copyright (C) 2008-2024 NV Access Limited, James Teh, Michael Curran, Leonard de Ruijter, Reef Turner,
 # Julien Cochuyt
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
@@ -17,7 +17,6 @@ import gui
 from scriptHandler import script
 import speech
 import textInfos
-import braille
 import config
 from logHandler import log
 import ui
@@ -27,6 +26,7 @@ if typing.TYPE_CHECKING:
 
 
 nvdaMenuIaIdentity = None
+
 
 class NvdaDialog(IAccessible):
 	"""Fix to ensure NVDA message dialogs get reported when they pop up.
@@ -256,3 +256,16 @@ class AppModule(appModuleHandler.AppModule):
 		elif self.isNvdaPythonConsoleUIOutputCtrl(obj):
 			clsList.insert(0, NvdaPythonConsoleUIOutputClear)
 			clsList.insert(0, NvdaPythonConsoleUIOutputCtrl)
+
+	@gui.blockAction.when(
+		gui.blockAction.Context.SECURE_MODE,
+		gui.blockAction.Context.WINDOWS_LOCKED,
+	)
+	@script(gesture="kb:control+v")
+	def script_paste(self, gesture: "inputCore.InputGesture") -> None:
+		# This function has no description and does not appear in input gestures
+		# as it should not be modified by the user.
+		# This function processes the paste gesture when performed in NVDA windows for security reasons.
+		# When in secure mode, or while Windows is locked, the default paste behaviour is blocked.
+		# Refer to this NVDA security advisory for details: https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj
+		gesture.send()
