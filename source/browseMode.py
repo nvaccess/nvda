@@ -7,6 +7,7 @@
 from typing import (
 	Any,
 	Callable,
+	Generator,
 	Union,
 	cast,
 )
@@ -439,10 +440,24 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 
 	def _iterNotLinkBlock(self, direction="next", pos=None):
 		raise NotImplementedError
+	
+	def _iterTextStyle(
+			self,
+			kind: str,
+			direction: str = "next",
+			pos: textInfos.TextInfo = None,
+	) -> Generator[TextInfoQuickNavItem, None, None]:
+		raise NotImplementedError
 
 	def _quickNavScript(self,gesture, itemType, direction, errorMessage, readUnit):
 		if itemType=="notLinkBlock":
 			iterFactory=self._iterNotLinkBlock
+		elif itemType in ["sameStyle", "differentStyle"]:
+			def iterFactory(
+					direction: str,
+					info: textInfos.TextInfo,
+			) -> Generator[TextInfoQuickNavItem, None, None]:
+				return self._iterTextStyle(itemType, direction, info)
 		else:
 			iterFactory=lambda direction,info: self._iterNodesByType(itemType,direction,info)
 		info=self.selection
@@ -948,6 +963,30 @@ qn(
 	prevDoc=_("moves to the previous tab"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous tab")
+)
+qn(
+	"sameStyle",
+	key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next same style text"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("No next same style text"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous same style text"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("No previous same style text")
+)
+qn(
+	"differentStyle",
+	key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next different style text"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("No next different style text"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous different style text"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("No previous different style text")
 )
 del qn
 
@@ -2000,6 +2039,129 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			if self._isSuitableNotLinkBlock(textRange):
 				yield TextInfoQuickNavItem("notLinkBlock", self, textRange)
 			item1=item2
+
+	STYLE_ATTRIBUTES = frozenset([
+		'background-color',
+		'color',
+		'font-family,',
+		'font-size',
+		'bold',
+		'italic',
+		'marked',
+		'strikethrough',
+		'text-line-through-style',
+		'underline',
+		'text-underline-style',
+	])
+
+	def _extractStyles(
+			self,
+			info: textInfos.TextInfo,
+	) -> "textInfos.TextInfo.TextWithFieldsT":
+		"""
+		This function calls TextInfo.getTextWithFields(), and then processes fiields in the following way:
+		1. Highlighted(marked) text is currently reported as Role.MARKED_CONTENT, and not formatChange.
+		For ease of further handling we create a new boolean format field "marked"
+		and set its value according to presence of Role.MARKED_CONTENT.
+		2. Then we drop all control fields, leaving only formatChange fields and text.
+		"""
+		stack = [{}]
+		result = []
+		for field in info.getTextWithFields():
+			if isinstance(field, textInfos.FieldCommand):
+				if field.command == 'controlStart':
+					style = {**stack[-1]}
+					if field.field['role'] == controlTypes.Role.MARKED_CONTENT:
+						style['marked'] = True
+					stack.append(style)
+				elif field.command == 'controlEnd':
+					del stack[-1]
+				elif field.command == 'formatChange':
+					field.field = {
+						k: v
+						for k, v in {**field.field, **stack[-1]}.items()
+						if k in self.STYLE_ATTRIBUTES
+					}
+					result.append(field)
+				else:
+					raise RuntimeError()
+			elif isinstance(field, str):
+				result.append(field)
+			else:
+				raise RuntimeError
+		return result
+
+	def _iterTextStyle(
+			self,
+			kind: str,
+			direction: str = "next",
+			pos: textInfos.TextInfo = None
+	) -> Generator[TextInfoQuickNavItem, None, None]:
+		sameStyle = kind == 'sameStyle'
+		initialTextInfo = pos.copy()
+		initialTextInfo.collapse()
+		result = initialTextInfo.move(textInfos.UNIT_CHARACTER, 1, endPoint='end')
+		if result == 0:
+			result = initialTextInfo.move(textInfos.UNIT_CHARACTER, -1, endPoint='start')
+			if result == 0:
+				# Translators: Error message for same/different style QuickNav command
+				ui.message(_("Cannot determine current style"))
+				raise RuntimeError
+		styles = self._extractStyles(initialTextInfo)
+		if (
+			len(styles) == 0
+			or not isinstance(styles[0], textInfos.FieldCommand)
+			or styles[0].command != 'formatChange'
+		):
+			# Translators: Error message for same/different style QuickNav command
+			ui.message(_("Cannot determine current style"))
+			raise RuntimeError
+		initialStyle = styles[0]
+
+		firstParagraph = True
+		paragraph = pos.copy()
+		tmpInfo = pos.copy()
+		tmpInfo.expand(textInfos.UNIT_PARAGRAPH)
+		paragraph.setEndPoint(tmpInfo, which='endToEnd' if direction == 'next' else 'startToStart')
+		while True:
+			if not paragraph.isCollapsed:
+				styles = self._extractStyles(paragraph)
+				firstStyleWithinParagraph = True
+				iterationRange = range(len(styles)) if direction == 'next' else range(len(styles) - 1, -1, -1)
+				for i in iterationRange:
+					if not isinstance(styles[i], textInfos.FieldCommand):
+						continue
+					if (
+						(styles[i].field == initialStyle.field) == sameStyle
+						and (
+							not firstStyleWithinParagraph
+							or not firstParagraph
+						)
+					):
+						# Found text that matches desired style!
+						startOffset = sum([
+							len(s)
+							for s in styles[:i]
+							if isinstance(s, str)
+						])
+						endOffset = len(styles[i + 1])
+						textRange = paragraph.copy()
+						textRange.collapse()
+						textRange.move(textInfos.UNIT_CHARACTER, startOffset)
+						textRange.move(textInfos.UNIT_CHARACTER, endOffset, endPoint='end')
+						yield TextInfoQuickNavItem(kind, self, textRange)
+					firstStyleWithinParagraph = False
+			firstParagraph = False
+			if direction == 'next':
+				paragraph.collapse(end=True)
+			else:
+				paragraph.collapse(end=False)
+				result = paragraph.move(textInfos.UNIT_CHARACTER, -1)
+				if result == 0:
+					return
+			paragraph.expand(textInfos.UNIT_PARAGRAPH)
+			if paragraph.isCollapsed:
+				return
 
 	__gestures={
 		"kb:alt+upArrow": "collapseOrExpandControl",
