@@ -400,12 +400,12 @@ _updatableStatuses: set[AvailableAddonStatus] = {
 _statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = OrderedDict({
 	_StatusFilterKey.INSTALLED: _installedAddonStatuses,
 	_StatusFilterKey.UPDATE: _updatableStatuses.union(_installingStatuses),
-	_StatusFilterKey.AVAILABLE: _installedAddonStatuses \
-		.union(_installingStatuses) \
-		.union(_updatableStatuses) \
-		.union({
-			AvailableAddonStatus.INCOMPATIBLE,
-			AvailableAddonStatus.AVAILABLE,
+	_StatusFilterKey.AVAILABLE: _installedAddonStatuses
+	.union(_installingStatuses)
+	.union(_updatableStatuses)
+	.union({
+		AvailableAddonStatus.INCOMPATIBLE,
+		AvailableAddonStatus.AVAILABLE,
 	}),
 	_StatusFilterKey.INCOMPATIBLE: {
 		AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
