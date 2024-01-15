@@ -160,7 +160,6 @@ def md2html_actionFunc(
 		title = _getTitle(mdBuffer, isKeyCommands)
 
 	lang = pathlib.Path(source[0].path).parent.name
-	# md has a bug with StringIO, so BytesIO is required.
 	htmlBuffer = io.StringIO()
 	htmlBuffer.write(
 		HTML_HEADERS.format(
