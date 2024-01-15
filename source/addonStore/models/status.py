@@ -382,25 +382,30 @@ _installedAddonStatuses: set[AvailableAddonStatus] = {
 	AvailableAddonStatus.DOWNLOAD_SUCCESS,
 }
 
+_installingStatuses: set[AvailableAddonStatus] = {
+	AvailableAddonStatus.DOWNLOAD_FAILED,
+	AvailableAddonStatus.DOWNLOAD_SUCCESS,
+	AvailableAddonStatus.DOWNLOADING,
+	AvailableAddonStatus.INSTALLING,
+	AvailableAddonStatus.INSTALL_FAILED,
+	AvailableAddonStatus.INSTALLED,
+}
+
+_updatableStatuses: set[AvailableAddonStatus] = {
+	AvailableAddonStatus.UPDATE,
+	AvailableAddonStatus.UPDATE_INCOMPATIBLE,
+	AvailableAddonStatus.REPLACE_SIDE_LOAD,
+}
+
 _statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = OrderedDict({
 	_StatusFilterKey.INSTALLED: _installedAddonStatuses,
-	_StatusFilterKey.UPDATE: {
-		AvailableAddonStatus.UPDATE,
-		AvailableAddonStatus.UPDATE_INCOMPATIBLE,
-		AvailableAddonStatus.REPLACE_SIDE_LOAD,
-	},
-	_StatusFilterKey.AVAILABLE: _installedAddonStatuses.union({
-		AvailableAddonStatus.INCOMPATIBLE,
-		AvailableAddonStatus.AVAILABLE,
-		AvailableAddonStatus.UPDATE,
-		AvailableAddonStatus.UPDATE_INCOMPATIBLE,
-		AvailableAddonStatus.REPLACE_SIDE_LOAD,
-		AvailableAddonStatus.DOWNLOAD_FAILED,
-		AvailableAddonStatus.DOWNLOAD_SUCCESS,
-		AvailableAddonStatus.DOWNLOADING,
-		AvailableAddonStatus.INSTALLING,
-		AvailableAddonStatus.INSTALL_FAILED,
-		AvailableAddonStatus.INSTALLED,
+	_StatusFilterKey.UPDATE: _updatableStatuses.union(_installingStatuses),
+	_StatusFilterKey.AVAILABLE: _installedAddonStatuses \
+		.union(_installingStatuses) \
+		.union(_updatableStatuses) \
+		.union({
+			AvailableAddonStatus.INCOMPATIBLE,
+			AvailableAddonStatus.AVAILABLE,
 	}),
 	_StatusFilterKey.INCOMPATIBLE: {
 		AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
