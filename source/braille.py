@@ -2805,6 +2805,9 @@ def terminate():
 	global handler
 	handler.terminate()
 	handler = None
+	# noqa: F401 avoid module level import to prevent cyclical dependency
+	# between speech and braille
+	from speech.extensions import pre_speech, pre_speechCanceled
 	pre_speechCanceled.unRegister(clearBrailleRegions)
 	pre_speech.unRegister(_showSpeechInBraille)
 
