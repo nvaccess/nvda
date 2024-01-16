@@ -2018,6 +2018,7 @@ _regions: list[TextRegion] = []
 if typing.TYPE_CHECKING:
 	from speech.types import SpeechSequence
 
+
 def _showSpeechInBraille(speechSequence: "SpeechSequence"):
 	if config.conf["braille"]["mode"] == BrailleMode.FOLLOW_CURSORS.value:
 		return
