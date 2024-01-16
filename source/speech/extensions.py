@@ -35,6 +35,5 @@ Notifies when code attempts to speak text.
 @type symbolLevel: characterProcessing.SymbolLevel
 
 @param priority: The speech priority.
-
 @type priority: priorities.Spri
 """
