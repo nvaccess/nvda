@@ -19,8 +19,7 @@ pre_speechCanceled = Action()
 """
 Notifies when speech is about to be canceled.
 
-@param clearBrailleRegions: wether the braille regions should be cleared in speech output braille mode.
-
+@param clearBrailleRegions: whether the braille regions should be cleared in speech output braille mode.
 @type clearBrailleRegions: bool
 """
 
