@@ -116,6 +116,10 @@ class BrailleEdge(Model):
 		})
 		return keys
 
+class BrailleEmotion(BrailleEdge):
+    name = "Braille Emotion"
+    usbId = "VID_1A86&PID_55D3"
+
 class BrailleSense2S(BrailleSense):
 	"""Braille Sense with one scroll key on both sides.
 	Also referred to as Braille Sense Classic."""
@@ -171,6 +175,7 @@ modelMap = [(cls.deviceId,cls) for cls in (
 	BrailleSenseQX,
 	BrailleSenseQ,
 	BrailleEdge,
+	BrailleEmotion,
 	SmartBeetle,
 	BrailleSense4S,
 	BrailleSense2S,
