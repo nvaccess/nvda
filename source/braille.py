@@ -2017,7 +2017,10 @@ Handlers are called without arguments.
 _regions: list[TextRegion] = []
 
 
-def _showSpeechInBraille(speechSequence: list):
+if typing.TYPE_CHECKING:
+	from speech.types import SpeechSequence
+
+def _showSpeechInBraille(speechSequence: "SpeechSequence"):
 	if config.conf["braille"]["mode"] == BrailleMode.FOLLOW_CURSORS.value:
 		return
 	regionsText = "".join([i.rawText for i in _regions])
