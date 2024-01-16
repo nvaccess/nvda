@@ -35,6 +35,7 @@ from dataclasses import dataclass
 import os
 import struct
 import itertools
+import enum
 from UIAHandler import UIA
 from . import lowLevel
 from .lowLevel import OperandId, RelativeOffset
@@ -154,6 +155,8 @@ class _RemoteBase:
 def processArg(arg: object) -> RemoteBaseObject:
 	if isinstance(arg, RemoteBaseObject):
 		return arg
+	if isinstance(arg, enum.Enum):
+		arg = arg.value
 	RemoteType = _LocalTypeToRemoteType.get(type(arg))
 	if RemoteType is not None:
 		if issubclass(RemoteType, CacheableRemoteValue):
@@ -442,6 +445,15 @@ class RemoteBool(RemoteIntegral[bool]):
 	LocalType = bool
 	_defaultInitialValue = False
 
+	def negative(self):
+		resultOperandId = self.builder._getNewOperandId()
+		self.builder.addInstruction(
+			lowLevel.InstructionType.BoolNot,
+			resultOperandId,
+			self.operandId
+		)
+		return RemoteBool.fromOperandId(self.builder, resultOperandId)
+
 
 class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 
@@ -569,7 +581,7 @@ class RemoteString(CacheableRemoteValue[str]):
 		return type(self).fromOperandId(self.builder, resultOperandId)
 
 	@remoteFunc_mutable
-	def __iadd__(self, other: RemoteString) -> Self:
+	def __iadd__(self, other: RemoteBaseObject) -> Self:
 		self.builder.addInstruction(
 			lowLevel.InstructionType.RemoteStringConcat,
 			self.operandId,
@@ -675,6 +687,9 @@ class RemoteGuid(CacheableRemoteValue[GUID]):
 
 class RemoteExtensionTarget(RemoteVariantSupportedType):
 
+	def isNull(self):
+		return RemoteVariant.fromOperandId(self.builder, self.operandId).isNull()
+
 	@remoteFunc
 	def isExtensionSupported(self, extensionGuid: RemoteGuid) -> RemoteBool:
 		resultOperandId = self.builder._getNewOperandId()
@@ -721,6 +736,32 @@ class RemoteElement(RemoteExtensionTarget, RemoteValue[UIA.IUIAutomationElement]
 			ignoreDefault.operandId
 		)
 		return RemoteVariant.fromOperandId(self.builder, resultOperandId)
+
+	@remoteFunc
+	def _navigate(self, navigationDirection: RemoteInt) -> RemoteElement:
+		resultOperandId = self.builder._getNewOperandId()
+		self.builder.addInstruction(
+			lowLevel.InstructionType.Navigate,
+			resultOperandId,
+			self.operandId,
+			navigationDirection.operandId
+		)
+		return RemoteElement.fromOperandId(self.builder, resultOperandId)
+
+	def getParentElement(self) -> RemoteElement:
+		return self._navigate(lowLevel.NavigationType.Parent)
+
+	def getFirstChildElement(self) -> RemoteElement:
+		return self._navigate(lowLevel.NavigationType.FirstChild)
+
+	def getLastChildElement(self) -> RemoteElement:
+		return self._navigate(lowLevel.NavigationType.LastChild)
+
+	def getNextSiblingElement(self) -> RemoteElement:
+		return self._navigate(lowLevel.NavigationType.NextSibling)
+
+	def getPreviousSiblingElement(self) -> RemoteElement:
+		return self._navigate(lowLevel.NavigationType.PreviousSibling)
 
 
 class RemoteTextRange(RemoteExtensionTarget, RemoteValue[UIA.IUIAutomationTextRange]):

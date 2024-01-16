@@ -251,6 +251,14 @@ class ComparisonType(enum.IntEnum):
 	LessThanOrEqual = 5
 
 
+class NavigationType(enum.IntEnum):
+	Parent = 0
+	NextSibling = 1
+	PreviousSibling = 2
+	FirstChild = 3
+	LastChild = 4
+
+
 @dataclass
 class ParamSpec:
 	name: str
@@ -476,7 +484,7 @@ InstructionSpecs: dict[InstructionType, InstructionSpec] = {
 	InstructionType.Navigate: InstructionSpec(
 		('result', OperandId),
 		('target', OperandId),
-		('direction', c_ulong)
+		('direction', OperandId)
 	),
 	InstructionType.IsNull: InstructionSpec(
 		('result', OperandId),
