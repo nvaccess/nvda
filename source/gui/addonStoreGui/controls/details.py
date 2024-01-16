@@ -19,6 +19,8 @@ from ..viewModels.addonList import AddonDetailsVM, AddonListField
 
 from .actions import _MonoActionsContextMenu
 
+from buildVersion import formatVersionForGUI
+
 _fontFaceName = "Segoe UI"
 _fontFaceName_semiBold = "Segoe UI Semibold"
 
@@ -268,13 +270,13 @@ class AddonDetails(
 					self._appendDetailsLabelValue(
 						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 						pgettext("addonStore", "Minimum NVDA version:"),
-						"".join(map(str, details._addonHandlerModel.minimumNVDAVersion))
+						formatVersionForGUI(*details._addonHandlerModel.minimumNVDAVersion)
 					)
 
 					self._appendDetailsLabelValue(
 						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 						pgettext("addonStore", "Last tested NVDA version:"),
-						"".join(map(str, details._addonHandlerModel.lastTestedNVDAVersion))
+						formatVersionForGUI(*details._addonHandlerModel.lastTestedNVDAVersion)
 					)
 
 				if currentStatusKey not in AddonListField.availableAddonVersionName.hideStatuses:
