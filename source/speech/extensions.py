@@ -32,7 +32,6 @@ Notifies when code attempts to speak text.
 @type speechSequence: speech.SpeechSequence
 
 @param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
-
 @type symbolLevel: characterProcessing.SymbolLevel
 
 @param priority: The speech priority.
