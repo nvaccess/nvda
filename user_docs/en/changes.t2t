@@ -30,11 +30,11 @@ What's New in NVDA
 Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
 
 - Instantiating ``winVersion.WinVersion`` objects with unknown Windows versions above 10.0.22000 such as 10.0.25398 returns "Windows 11 unknown" instead of "Windows 10 unknown" for release name. (#15992, @josephsl)
--Added the following extension points:
-  - speech.pre_speech. (#15898, @Emil-18)
-  - speech.pre_speechCanceled. (#15898, @Emil-18)
+- Added the following extension points:
+  - ``speech.pre_speech``. (#15898, @Emil-18)
+  - ``speech.pre_speechCanceled``. (#15898, @Emil-18)
   -
-
+-
 === Deprecations ===
 
 
