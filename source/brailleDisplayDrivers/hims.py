@@ -116,6 +116,7 @@ class BrailleEdge(Model):
 		})
 		return keys
 
+
 class BrailleEmotion(BrailleEdge):
 	name = "Braille Emotion"
 	usbId = "VID_1A86&PID_55D3"
