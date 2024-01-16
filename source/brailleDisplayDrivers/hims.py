@@ -117,8 +117,8 @@ class BrailleEdge(Model):
 		return keys
 
 class BrailleEmotion(BrailleEdge):
-    name = "Braille Emotion"
-    usbId = "VID_1A86&PID_55D3"
+	name = "Braille Emotion"
+	usbId = "VID_1A86&PID_55D3"
 
 class BrailleSense2S(BrailleSense):
 	"""Braille Sense with one scroll key on both sides.
@@ -195,13 +195,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		# Bulk devices
 		driverRegistrar.addUsbDevices(bdDetect.DeviceType.CUSTOM, {
 			"VID_045E&PID_930A",  # Braille Sense & Smart Beetle
-   			"VID_045E&PID_930B",  # Braille EDGE 40
+			"VID_045E&PID_930B",  # Braille EDGE 40
 		})
 
 		# Sync Braille, serial device
 		driverRegistrar.addUsbDevices(bdDetect.DeviceType.SERIAL, {
 			"VID_0403&PID_6001",
-   			"VID_1A86&PID_55D3",  # Braille Emotion 40
+			"VID_1A86&PID_55D3",  # Braille Emotion 40
 		})
 
 		driverRegistrar.addBluetoothDevices(lambda m: any(m.id.startswith(prefix) for prefix in (
