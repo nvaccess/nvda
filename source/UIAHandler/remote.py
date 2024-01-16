@@ -11,7 +11,6 @@ from ._remoteOps.midLevel import (
 	remoteFunc,
 	RemoteInt,
 	RemoteGuid,
-	CachedRemoteGuid,
 	RemoteExtensionTarget,
 	RemoteElement,
 	RemoteTextRange,
@@ -39,8 +38,8 @@ def _remote_msWord_getCustomAttributeValue(
 	remote_textRange: RemoteTextRange,
 	remote_customAttribID: RemoteInt
 ):
-	guid_msWord_extendedTextRangePattern = CachedRemoteGuid("{93514122-FF04-4B2C-A4AD-4AB04587C129}")
-	guid_msWord_getCustomAttributeValue = CachedRemoteGuid("{081ACA91-32F2-46F0-9FB9-017038BC45F8}")
+	guid_msWord_extendedTextRangePattern = RemoteGuid("{93514122-FF04-4B2C-A4AD-4AB04587C129}", const=True)
+	guid_msWord_getCustomAttributeValue = RemoteGuid("{081ACA91-32F2-46F0-9FB9-017038BC45F8}", const=True)
 	remote_customAttribValue = RemoteVariant()
 	with rfa.ifBlock(remote_docElement.isExtensionSupported(guid_msWord_extendedTextRangePattern)):
 		rfa.logMessage("docElement supports extendedTextRangePattern")

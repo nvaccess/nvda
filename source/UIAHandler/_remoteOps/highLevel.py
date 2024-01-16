@@ -48,13 +48,22 @@ class RemoteFuncAPI(midLevel._RemoteBase):
 		self.bind(builder)
 
 	_TV_newRemoteObject = TypeVar('_TV_newRemoteObject', bound=midLevel.RemoteBaseObject)
+
 	def _newRemoteObject(self, RemoteClass: Type[_TV_newRemoteObject]) -> _TV_newRemoteObject:
 		obj = RemoteClass()
 		obj.bind(self.builder)
 		return obj
 
-	_TV_newRemoteValue = TypeVar('_TV_newRemoteValue', bound=midLevel.RemoteValue)
-	def _newRemoteValue(self, RemoteClass: Type[_TV_newRemoteValue], value: _TV_newRemoteValue | object) -> _TV_newRemoteValue:
+	_TV_newRemoteValue = TypeVar(
+		'_TV_newRemoteValue',
+		bound=midLevel.RemoteValue
+	)
+
+	def _newRemoteValue(
+		self,
+		RemoteClass: Type[_TV_newRemoteValue],
+		value: _TV_newRemoteValue | object
+	) -> _TV_newRemoteValue:
 		if isinstance(value, RemoteClass):
 			value.bind(self.builder)
 			return value.copy()
@@ -68,7 +77,10 @@ class RemoteFuncAPI(midLevel._RemoteBase):
 	def newInt(self, value: midLevel.RemoteInt | int = 0) -> midLevel.RemoteInt:
 		return self._newRemoteValue(midLevel.RemoteInt, value)
 
-	def newString(self, value: str = "") -> midLevel.RemoteString: 
+	def newFloat(self, value: midLevel.RemoteFloat | float = 0.0) -> midLevel.RemoteFloat:
+		return self._newRemoteValue(midLevel.RemoteFloat, value)
+
+	def newString(self, value: str = "") -> midLevel.RemoteString:
 		return self._newRemoteValue(midLevel.RemoteString, value)
 
 	def newBool(self, value: bool = False) -> midLevel.RemoteBool:
@@ -106,6 +118,7 @@ class RemoteFuncAPI(midLevel._RemoteBase):
 	def catchBlock(self):
 		return self.builder.catchBlock()
 
+	@midLevel.remoteFunc
 	def setOperationStatus(self, status: RemoteInt):
 		self.builder.setOperationStatus(status)
 
@@ -126,6 +139,19 @@ class _RemoteFuncBuildCache:
 	resultOperandIds: list[midLevel.OperandId]
 	remoteLogging: bool = False
 	logOperandId: midLevel.OperandId | None = None
+
+
+def _addArgumentsToBuilder(
+	builder: midLevel.RemoteOperationBuilder,
+	*args: object
+) -> list[midLevel.RemoteBaseObject]:
+	remoteArgs = []
+	for arg in args:
+		remoteArg = midLevel.processArg(arg)
+		remoteArg.bind(builder, section='imports')
+		remoteArgs.append(remoteArg)
+	return remoteArgs
+
 
 def _fetchAndValidateBuildCache(
 	remoteFunc: Callable,
@@ -154,10 +180,11 @@ def _buildRemoteFunc(
 ) -> _RemoteFuncBuildCache:
 	rfa = RemoteFuncAPI(builder)
 	remoteResults = remoteFunc(rfa, *remoteArgs)
+	rfa.halt()
 	if isinstance(remoteResults, midLevel.RemoteBaseObject):
 		remoteResults = [remoteResults]
 	byteCode = b''
-	for sectionName in ('constants', 'main'):
+	for sectionName in ('globals', 'main'):
 		byteCode += builder.getInstructionList(sectionName).getByteCode()
 	buildCache = _RemoteFuncBuildCache(
 		argOperandIds=[arg.operandId for arg in remoteArgs],
@@ -175,6 +202,7 @@ def _dumpRemoteLog(resultSet: lowLevel.RemoteOperationResultSet, buildCache: _Re
 		logOutput = resultSet.getOperand(buildCache.logOperandId).value
 		log.info(f"--- Remote log start ---:\n{logOutput}--- Remote log end ---")
 
+
 def _getExecutionResults(resultSet: lowLevel.RemoteOperationResultSet, buildCache: _RemoteFuncBuildCache):
 	results = []
 	for operandId in buildCache.resultOperandIds:
@@ -187,6 +215,7 @@ def _getExecutionResults(resultSet: lowLevel.RemoteOperationResultSet, buildCach
 		return results[0]
 	return results
 
+
 def execute(
 	remoteFunc: Callable,
 	*args: midLevel.RemoteBaseObject,
@@ -195,14 +224,13 @@ def execute(
 ) -> object:
 	ro = lowLevel.RemoteOperation()
 	builder = midLevel.RemoteOperationBuilder(ro, remoteLogging=remoteLogging)
-	for arg in args:
-		arg.bind(builder, section="imports")
-	argsByteCode = builder.getInstructionList('imports').getByteCode()
 	buildCache: _RemoteFuncBuildCache | None = None
+	remoteArgs = _addArgumentsToBuilder(builder, *args)
+	argsByteCode = builder.getInstructionList('imports').getByteCode()
 	if not dumpInstructions:
-		buildCache = _fetchAndValidateBuildCache(remoteFunc, *args, remoteLogging=remoteLogging)
+		buildCache = _fetchAndValidateBuildCache(remoteFunc, *remoteArgs, remoteLogging=remoteLogging)
 	if buildCache is None:
-		buildCache = _buildRemoteFunc(builder, remoteFunc, *args, remoteLogging=remoteLogging)
+		buildCache = _buildRemoteFunc(builder, remoteFunc, *remoteArgs, remoteLogging=remoteLogging)
 		if dumpInstructions:
 			log.info(f"{builder.dumpInstructions()}")
 	else:
@@ -222,7 +250,10 @@ def execute(
 	if resultSet.status == lowLevel.RemoteOperationStatus.InstructionLimitExceeded:
 		raise InstructionLimitExceededException(results=results)
 	elif resultSet.status == lowLevel.RemoteOperationStatus.UnhandledException:
-		instructionRecord = builder.lookupInstructionByGlobalIndex(resultSet.errorLocation) if dumpInstructions else None
+		if dumpInstructions:
+			instructionRecord = builder.lookupInstructionByGlobalIndex(resultSet.errorLocation)
+		else:
+			instructionRecord = None
 		raise RemoteException(
 			errorLocation=resultSet.errorLocation,
 			extendedError=resultSet.extendedError,

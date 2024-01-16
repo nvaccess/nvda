@@ -411,7 +411,7 @@ InstructionSpecs: dict[InstructionType, InstructionSpec] = {
 		('width', c_double),
 		('height', c_double)
 	),
-	 InstructionType.NewArray: InstructionSpec(
+	InstructionType.NewArray: InstructionSpec(
 		('result', OperandId)
 	),
 	# InstructionType.NewStringMap: InstructionSpec(),
