@@ -2791,6 +2791,9 @@ def initialize():
 	if newDriverName:
 		config.conf["braille"]["display"] = newDriverName
 	handler.setDisplayByName(config.conf["braille"]["display"])
+	# noqa: F401 avoid module level import to prevent cyclical dependency
+	# between speech and braille
+	from speech.extensions import pre_speech, pre_speechCanceled
 	pre_speech.register(_showSpeechInBraille)
 	pre_speechCanceled.register(clearBrailleRegions)
 
