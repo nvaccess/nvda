@@ -1473,8 +1473,8 @@ class ReviewTextInfoRegion(TextInfoRegion):
 			return info
 		if (
 			self._currentSelection is None
-			or self._currentSelection.compareEndPoints(info, "startToStart") != 0
-			or self._currentSelection.compareEndPoints(info, "endToEnd") != 0
+			or self._currentSelection.start != info.start
+			or self._currentSelection.end != info.end
 		):
 			# Selection changed, update also review position
 			self._currentSelection = info.copy()
@@ -1489,13 +1489,13 @@ class ReviewTextInfoRegion(TextInfoRegion):
 		readingUnit = api.getReviewPosition().copy()
 		readingUnit.expand(self._getReadingUnit())
 		# Selection may not contain whole reading unit.
-		if readingUnit.compareEndPoints(self._currentSelection, "startToStart") < 0:
-			readingUnit.setEndPoint(self._currentSelection, "startToStart")
-		if readingUnit.compareEndPoints(self._currentSelection, "endToEnd") > 0:
-			readingUnit.setEndPoint(self._currentSelection, "endToEnd")
+		if readingUnit.start < self._currentSelection.start:
+			readingUnit.start = self._currentSelection.start
+		if readingUnit.end > self._currentSelection.end:
+			readingUnit.end = self._currentSelection.end
 		if (
-			readingUnit.compareEndPoints(info, "startToEnd") >= 0
-			or readingUnit.compareEndPoints(info, "endToStart") <= 0
+			readingUnit.start >= info.end
+			or readingUnit.end <= info.start
 		):
 			# Review position is outside of selection
 			self.brailleSelectionStart = self.brailleSelectionEnd = None
