@@ -3721,7 +3721,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.updateDriverSettings()
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-		
+
 		tables = brailleTables.listTables()
 		# Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 		outputsLabelText = _("&Output table:")
