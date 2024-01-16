@@ -65,8 +65,6 @@ from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import hwIo
 from editableText import EditableText
 
-from speech.extensions import pre_speech, pre_speechCanceled
-
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
 
