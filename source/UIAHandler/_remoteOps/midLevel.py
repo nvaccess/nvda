@@ -16,6 +16,7 @@ from typing import (
 	TypeVar,
 	cast
 )
+import operator
 import types
 import inspect
 import functools
@@ -885,6 +886,123 @@ class RemoteTextRange(RemoteExtensionTarget, RemoteValue[UIA.IUIAutomationTextRa
 			target=self,
 			unit=unit
 		)
+
+	@remoteFunc_mutable
+	def moveEndpointByUnit(self, endpoint: RemoteInt, unit: RemoteInt, count: RemoteInt):
+		result = RemoteInt.fromOperandId(self.builder, self.builder._getNewOperandId())
+		self.builder.addInstruction2(
+			lowLevel.InstructionType.TextRangeMoveEndpointByUnit,
+			result=result,
+			target=self,
+			endpoint=endpoint,
+			unit=unit,
+			count=count
+		)
+		return result
+
+	@remoteFunc_mutable
+	def moveEndpointByRange(self, srcEndpoint: RemoteInt, otherRange: RemoteTextRange, otherEndpoint: RemoteInt):
+		self.builder.addInstruction2(
+			lowLevel.InstructionType.TextRangeMoveEndpointByRange,
+			target=self,
+			srcEndpoint=srcEndpoint,
+			otherRange=otherRange,
+			otherEndpoint=otherEndpoint
+		)
+
+	@remoteFunc
+	def getAttributeValue(self, attributeId: RemoteInt) -> RemoteVariant:
+		result = RemoteVariant.fromOperandId(self.builder, self.builder._getNewOperandId())
+		self.builder.addInstruction2(
+			lowLevel.InstructionType.TextRangeGetAttributeValue,
+			result=result,
+			target=self,
+			attributeId=attributeId
+		)
+		return result
+
+	@remoteFunc
+	def compareEndpoints(self, thisEndpoint: RemoteInt, otherRange: RemoteTextRange, otherEndpoint: RemoteInt) -> RemoteInt:
+		result = RemoteInt.fromOperandId(self.builder, self.builder._getNewOperandId())
+		self.builder.addInstruction2(
+			lowLevel.InstructionType.TextRangeCompareEndpoints,
+			result=result,
+			target=self,
+			thisEndpoint=thisEndpoint,
+			otherRange=otherRange,
+			otherEndpoint=otherEndpoint
+		)
+		return result
+
+	def getLogicalAdapter(self, reverse=False) -> RemoteTextRangeLogicalAdapter:
+		return RemoteTextRangeLogicalAdapter(self, reverse=reverse)
+
+
+class _RemoteTextRangeEndpoint(_RemoteBase):
+
+	def __init__(self, textRange: RemoteTextRange, start=True, reverse=False):
+		self._textrange = textRange
+		self._endpoint = lowLevel.TextPatternRangeEndpoint.Start if start^reverse else lowLevel.TextPatternRangeEndpoint.End
+		self._logicalLt = operator.lt if reverse else operator.gt
+		self._logicalLe = operator.le if reverse else operator.ge
+		self._logicalGt = operator.gt if reverse else operator.lt
+		self._logicalGe = operator.ge if reverse else operator.le
+
+	def _compareWith(self, other: _RemoteTextRangeEndpoint) -> RemoteInt:
+		return self._textrange.compareEndpoints(self._endpoint, other._textrange, other._endpoint)
+
+	def _moveTo(self, other: _RemoteTextRangeEndpoint):
+		self._textrange.moveEndpointByRange(self._endpoint, other._textrange, other._endpoint)
+
+	@remoteFunc_mutable
+	def moveByUnit(self, unit: RemoteInt, count: RemoteInt) -> RemoteInt:
+		return self._textrange.moveEndpointByUnit(self._endpoint, unit, count)
+
+	def __lt__(self, other: _RemoteTextRangeEndpoint) -> RemoteBool:
+		return self._logicalLt(self._compareWith(other), 0)
+
+	def __le__(self, other: _RemoteTextRangeEndpoint) -> RemoteBool:
+		return self._logicalLe(self._compareWith(other), 0)
+
+	def __gt__(self, other: _RemoteTextRangeEndpoint) -> RemoteBool:
+		return self._logicalGt(self._compareWith(other), 0)
+
+	def __ge__(self, other: _RemoteTextRangeEndpoint) -> RemoteBool:
+		return self._logicalGe(self._compareWith(other), 0)
+
+	def __eq__(self, other: _RemoteTextRangeEndpoint) -> RemoteBool:
+		return operator.eq(self._compareWith(other), 0)
+
+	def __ne__(self, other: _RemoteTextRangeEndpoint) -> RemoteBool:
+		return operator.ne(self._compareWith(other), 0)
+
+
+class RemoteTextRangeLogicalAdapter(_RemoteBase):
+	reverse: bool = False
+
+	def __init__(self, textRange: RemoteTextRange, reverse: bool = False):
+		self._textRange = textRange
+		self._reverse = reverse
+
+	def getTextRange(self) -> RemoteTextRange:
+		return self._textRange
+
+	@property
+	def start(self) -> _RemoteTextRangeEndpoint:
+		return _RemoteTextRangeEndpoint(self._textRange, start=True, reverse=self._reverse)
+	@start.setter
+	def start(self, value: _RemoteTextRangeEndpoint):
+		self.start._moveTo(value)
+
+	@property
+	def end(self) -> _RemoteTextRangeEndpoint:
+		return _RemoteTextRangeEndpoint(self._textRange, start=False, reverse=self._reverse)
+	@end.setter
+	def end(self, value: _RemoteTextRangeEndpoint):
+		self.end._moveTo(value)
+
+	def clone(self):
+		return self._textRange.clone().getLogicalAdapter(self.reverse)
 
 
 class InstructionList(list[InstructionRecord2]):
