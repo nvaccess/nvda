@@ -7,10 +7,10 @@
 from typing import (
 	Any,
 	Callable,
-	Generator,
 	Union,
 	cast,
 )
+from collections.abc import Generator
 import os
 import itertools
 import collections
