@@ -227,7 +227,7 @@ def _getExecutionResults(resultSet: lowLevel.RemoteOperationResultSet, buildCach
 
 def execute(
 	remoteFunc: Callable,
-	*args: midLevel.RemoteBaseObject,
+	*args: object,
 	remoteLogging=False,
 	dumpInstructions=False,
 ) -> object:

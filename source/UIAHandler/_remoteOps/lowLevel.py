@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2023-2023 NV Access Limited
 
-
+from __future__ import annotations
 from typing import Type
 from dataclasses import dataclass
 from ctypes import (
@@ -37,6 +37,7 @@ class OperandId(c_ulong):
 
 
 class RelativeOffset(c_long):
+
 	def __repr__(self) -> str:
 		return f"RelativeOffset {self.value}"
 
@@ -241,6 +242,27 @@ class InstructionType(enum.IntEnum):
 	CallExtension = 0x53
 	IsExtensionSupported = 0x54
 
+	# text ranges
+	TextRangeClone = 0x271e0103
+	TextRangeCompare = 0x271e0104
+	TextRangeCompareEndpoints = 0x271e0105
+	TextRangeExpandToEnclosingUnit = 0x271e0106
+	TextRangeFindAttribute = 0x271e0107
+	TextRangeFindText = 0x271e0108,
+	TextRangeGetAttributeValue = 0x271e0109
+	TextRangeGetBoundingRectangles = 0x271e010a
+	TextRangeGetEnclosingElement = 0x271e010b
+	TextRangeGetText = 0x271e010c
+	TextRangeMove = 0x271e010d
+	TextRangeMoveEndpointByUnit = 0x271e010e
+	TextRangeMoveEndpointByRange = 0x271e010f
+	TextRangeSelect = 0x271e0110
+	TextRangeAddToSelection = 0x271e0111
+	TextRangeRemoveFromSelection = 0x271e0112
+	TextRangeScrollIntoView = 0x271e0113
+	TextRangeGetChildren = 0x271e0114
+	TextRangeShowContextMenu = 0x271e0115
+
 
 class ComparisonType(enum.IntEnum):
 	Equal = 0
@@ -251,12 +273,41 @@ class ComparisonType(enum.IntEnum):
 	LessThanOrEqual = 5
 
 
-class NavigationType(enum.IntEnum):
+class NavigationDirection(enum.IntEnum):
 	Parent = 0
 	NextSibling = 1
 	PreviousSibling = 2
 	FirstChild = 3
 	LastChild = 4
+
+
+@dataclass
+class TextUnit(enum.IntEnum):
+	Character = 0
+	Format = 1
+	Word = 2
+	Line = 3
+	Paragraph = 4
+	Page = 5
+	Document = 6
+
+
+@dataclass
+class TextPatternRangeEndpoint(enum.IntEnum):
+	Start = 0
+	End = 1
+
+
+PropertyId = enum.IntEnum(
+	"PropertyId",
+	{k[4:-10]: v for k, v in vars(UIA).items() if k.endswith("PropertyId")}
+)
+
+
+AttributeId = enum.IntEnum(
+	"AttributeId",
+	{k[4:-11]: v for k, v in vars(UIA).items() if k.endswith("AttributeId")}
+)
 
 
 @dataclass

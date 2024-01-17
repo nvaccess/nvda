@@ -82,7 +82,7 @@ def msWord_getCustomAttributeValue(
 ) -> Optional[Any]:
 	customAttribValue = highLevel.execute(
 		_remote_msWord_getCustomAttributeValue,
-		RemoteElement(docElement), RemoteTextRange(textRange), RemoteInt(customAttribID),
+		docElement, textRange, customAttribID,
 		remoteLogging=False,
 		dumpInstructions=True
 	)

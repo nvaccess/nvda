@@ -38,7 +38,36 @@ import itertools
 import enum
 from UIAHandler import UIA
 from . import lowLevel
-from .lowLevel import OperandId, RelativeOffset
+from .lowLevel import OperandId, RelativeOffset 
+
+
+_ctypeIntEnumCache: dict[Type[enum.IntEnum], Type[_SimpleCData]] = {}
+def _makeCtypeIntEnum(enumType: Type[enum.IntEnum]) -> Type[_SimpleCData]:
+	cachedCls = _ctypeIntEnumCache.get(enumType)
+	if cachedCls is not None:
+		return cachedCls
+	ctype = c_long
+	class cls(ctype):
+		def __repr__(self):
+			return f"{ctype.__name__} {repr(enumType(self.value))}"
+	cls.__name__ = f"{ctype.__name__}_{enumType.__name__}"
+	cast(Type[_SimpleCData], cls)
+	_ctypeIntEnumCache[enumType] = cls
+	return cls
+
+
+_RemoteIntEnumCache: dict[Type[enum.IntEnum], Type[RemoteInt]] = {}
+def _makeRemoteIntEnum(enumType: Type[enum.IntEnum]) -> Type[RemoteInt]:
+	cachedCls = _RemoteIntEnumCache.get(enumType)
+	if cachedCls is not None:
+		return cachedCls
+	class cls(RemoteInt):
+		LocalType = enumType
+		_ctype= _makeCtypeIntEnum(enumType)
+	cls.__name__ = f"Remote{enumType.__name__}"
+	cast(Type[RemoteInt], cls)
+	_RemoteIntEnumCache[enumType] = cls
+	return cls
 
 
 def _getLocationString(frame: types.FrameType) -> str:
@@ -128,17 +157,18 @@ class InstructionRecord2:
 		self.paramNames = list(kwargs.keys())
 
 	def getByteCode(self) -> bytes:
+		print(f"{self.instructionType.name}")
 		byteCode = struct.pack('l', self.instructionType)
 		for param in self.params:
 			if isinstance(param, RemoteBaseObject):
 				param = param.operandId
+			print(f"{type(param).__name__}")
 			paramBytes = (c_char * ctypes.sizeof(param)).from_address(ctypes.addressof(param)).raw
 			byteCode += paramBytes
 		return byteCode
 
 	def dumpInstruction(self) -> str:
-		output = f"{self.instructionType.name}("
-		paramsOutput = []
+		output = f"{self.instructionType.name}"
 		for index, param in enumerate(self.params):
 			paramName = self.paramNames[index]
 			paramOutput = f"{paramName}="
@@ -146,9 +176,7 @@ class InstructionRecord2:
 				paramOutput += f"c_wchar_array({repr(param.value)})"
 			else:
 				paramOutput += f"{param}"
-			paramsOutput.append(paramOutput)
-		output += ", ".join(paramsOutput)
-		output += ")"
+			output += f"\n\t{paramOutput}"
 		return output
 
 
@@ -184,15 +212,17 @@ class _RemoteBase:
 def processArg(arg: object) -> RemoteBaseObject:
 	if isinstance(arg, RemoteBaseObject):
 		return arg
-	if isinstance(arg, enum.Enum):
-		arg = arg.value
+	RemoteType: Type[RemoteValue] | None = None
+	if isinstance(arg, enum.IntEnum):
+		RemoteType = _makeRemoteIntEnum(type(arg))
+		return RemoteType(arg, const=True)
 	RemoteType = _LocalTypeToRemoteType.get(type(arg))
 	if RemoteType is not None:
 		if issubclass(RemoteType, CacheableRemoteValue):
 			return RemoteType(arg, const=True)
 		else:
 			return RemoteType(arg)
-	raise TypeError(f"Argument {arg} must be or convertable to a Remote type")
+	raise TypeError(f"Argument {repr(arg)} must be or convertable to a Remote type")
 
 
 _remoteFunc_self = TypeVar('_remoteFunc_self', bound=_RemoteBase)
@@ -251,7 +281,13 @@ class RemoteBaseObject(_RemoteBase):
 		builder = self._builderRef() if self._builderRef is not None else None
 		if builder is None:
 			return f"unbound {self.__class__.__name__}"
-		return f"{self.__class__.__name__} at {self.operandId}"
+		output = ""
+		if self._section == "imports":
+			output += "imported "
+		if not self._mutable:
+			output += "const "
+		output += f"{self.__class__.__name__} at {self.operandId}"
+		return output
 
 	@property
 	def operandId(self) -> OperandId:
@@ -276,6 +312,7 @@ class RemoteBaseObject(_RemoteBase):
 			builder.addInstructionRecord(record, section=section)
 		return operandId
 
+	_section: str | None = None 
 	_defaultSectionForInitInstructions: str = "main"
 
 	def bind(self, builder: RemoteOperationBuilder, section: str | None = None):
@@ -288,9 +325,12 @@ class RemoteBaseObject(_RemoteBase):
 			else:
 				# already bound.
 				return
-		operandId = self._initOperand(builder, section or self._defaultSectionForInitInstructions)
+		if section is None:
+			section = self._defaultSectionForInitInstructions
+		operandId = self._initOperand(builder, section)
 		super().bind(builder)
 		self._operandId = operandId
+		self._section = section
 
 	@remoteFunc
 	def stringify(self) -> RemoteString:
@@ -413,15 +453,15 @@ class RemoteValue(RemoteSetable, RemoteVariantSupportedType, Generic[LocalTypeVa
 		return operandId
 
 	def _doCompare(self, comparisonType: lowLevel.ComparisonType, other: Self) -> RemoteBool:
-		resultOperandId = self.builder._getNewOperandId()
-		self.builder.addInstruction(
+		result = RemoteBool.fromOperandId(self.builder, self.builder._getNewOperandId())
+		self.builder.addInstruction2(
 			lowLevel.InstructionType.Compare,
-			resultOperandId,
-			self.operandId,
-			other.operandId,
-			c_ulong(comparisonType)
+			result=result,
+			target=self,
+			other=other,
+			comparison=_makeCtypeIntEnum(lowLevel.ComparisonType)(comparisonType)
 		)
-		return RemoteBool.fromOperandId(self.builder, resultOperandId)
+		return result
 
 	@remoteFunc
 	def isEqual(self, other: Self) -> RemoteBool:
@@ -447,6 +487,12 @@ class CacheableRemoteValue(RemoteValue[LocalTypeVar], Generic[LocalTypeVar]):
 		if not self._mutable:
 			builder._remotedArgCache[cacheKey] = operandId
 		return operandId
+
+	def __repr__(self) -> str:
+		output = super().__repr__()
+		if not self._mutable:
+			output += f" with cached value {repr(self.initialValue)}"
+		return output
 
 
 class RemoteIntegral(CacheableRemoteValue[LocalTypeVar], Generic[LocalTypeVar]):
@@ -721,21 +767,21 @@ class RemoteExtensionTarget(RemoteVariantSupportedType):
 
 	@remoteFunc
 	def isExtensionSupported(self, extensionGuid: RemoteGuid) -> RemoteBool:
-		resultOperandId = self.builder._getNewOperandId()
-		self.builder.addInstruction(
+		result = RemoteBool.fromOperandId(self.builder, self.builder._getNewOperandId())
+		self.builder.addInstruction2(
 			lowLevel.InstructionType.IsExtensionSupported,
-			resultOperandId,
-			self.operandId,
-			extensionGuid.operandId
+			result=result,
+			target=self,
+			extensionId=extensionGuid
 		)
-		return RemoteBool.fromOperandId(self.builder, resultOperandId)
+		return result
 
 	@remoteFunc_mutable
 	def callExtension(self, extensionGuid: RemoteGuid, *params: RemoteBaseObject) -> None:
 		self.builder.addInstruction2(
 			lowLevel.InstructionType.CallExtension,
 			target=self,
-			extensionGuid=extensionGuid,
+			extensionId=extensionGuid,
 			paramCount=c_ulong(len(params)),
 			**{f"param{index}": param for index, param  in enumerate(params, start=1)}
 		)
@@ -768,29 +814,29 @@ class RemoteElement(RemoteExtensionTarget, RemoteValue[UIA.IUIAutomationElement]
 
 	@remoteFunc
 	def _navigate(self, navigationDirection: RemoteInt) -> RemoteElement:
-		resultOperandId = self.builder._getNewOperandId()
-		self.builder.addInstruction(
+		result = RemoteElement.fromOperandId(self.builder, self.builder._getNewOperandId())
+		self.builder.addInstruction2(
 			lowLevel.InstructionType.Navigate,
-			resultOperandId,
-			self.operandId,
-			navigationDirection.operandId
+			result=result,
+			target=self,
+			direction=navigationDirection
 		)
-		return RemoteElement.fromOperandId(self.builder, resultOperandId)
+		return result
 
 	def getParentElement(self) -> RemoteElement:
-		return self._navigate(lowLevel.NavigationType.Parent)
+		return self._navigate(lowLevel.NavigationDirection.Parent)
 
 	def getFirstChildElement(self) -> RemoteElement:
-		return self._navigate(lowLevel.NavigationType.FirstChild)
+		return self._navigate(lowLevel.NavigationDirection.FirstChild)
 
 	def getLastChildElement(self) -> RemoteElement:
-		return self._navigate(lowLevel.NavigationType.LastChild)
+		return self._navigate(lowLevel.NavigationDirection.LastChild)
 
 	def getNextSiblingElement(self) -> RemoteElement:
-		return self._navigate(lowLevel.NavigationType.NextSibling)
+		return self._navigate(lowLevel.NavigationDirection.NextSibling)
 
 	def getPreviousSiblingElement(self) -> RemoteElement:
-		return self._navigate(lowLevel.NavigationType.PreviousSibling)
+		return self._navigate(lowLevel.NavigationDirection.PreviousSibling)
 
 
 class RemoteTextRange(RemoteExtensionTarget, RemoteValue[UIA.IUIAutomationTextRange]):
@@ -800,6 +846,45 @@ class RemoteTextRange(RemoteExtensionTarget, RemoteValue[UIA.IUIAutomationTextRa
 		if section != "imports":
 			raise RuntimeError("RemoteTextRange can only be initialized in the imports section")
 		return builder.importTextRange(self.initialValue)
+
+	@remoteFunc
+	def clone(self):
+		result = RemoteTextRange.fromOperandId(self.builder, self.builder._getNewOperandId())
+		self.builder.addInstruction2(
+			lowLevel.InstructionType.TextRangeClone,
+			result=result,
+			target=self
+		)
+		return result
+
+	@remoteFunc
+	def getEnclosingElement(self) -> RemoteElement:
+		result = RemoteElement.fromOperandId(self.builder, self.builder._getNewOperandId())
+		self.builder.addInstruction2(
+			lowLevel.InstructionType.TextRangeGetEnclosingElement,
+			result=result,
+			target=self
+		)
+		return result
+
+	@remoteFunc
+	def getText(self, maxLength: RemoteInt) -> RemoteString:
+		result = RemoteString.fromOperandId(self.builder, self.builder._getNewOperandId())
+		self.builder.addInstruction2(
+			lowLevel.InstructionType.TextRangeGetText,
+			result=result,
+			target=self,
+			maxLength=maxLength
+		)
+		return result
+
+	@remoteFunc_mutable
+	def expandToEnclosingUnit(self, unit: RemoteInt):
+		self.builder.addInstruction2(
+			lowLevel.InstructionType.TextRangeExpandToEnclosingUnit,
+			target=self,
+			unit=unit
+		)
 
 
 class InstructionList(list[InstructionRecord2]):
@@ -1187,4 +1272,9 @@ _LocalTypeToRemoteType: dict[Type[object], Type[RemoteValue]] = {
 	GUID: RemoteGuid,
 	POINTER(UIA.IUIAutomationElement): RemoteElement,
 	POINTER(UIA.IUIAutomationTextRange): RemoteTextRange,
+	#lowLevel.NavigationDirection: _makeRemoteIntEnum(lowLevel.NavigationDirection),
+	#lowLevel.TextUnit: _makeRemoteIntEnum(lowLevel.TextUnit),
+	#lowLevel.TextPatternRangeEndpoint: _makeRemoteIntEnum(lowLevel.TextPatternRangeEndpoint),
+	#lowLevel.PropertyId: _makeRemoteIntEnum(lowLevel.PropertyId),
+	#lowLevel.AttributeId: _makeRemoteIntEnum(lowLevel.AttributeId),
 }
