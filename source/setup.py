@@ -259,13 +259,14 @@ freeze(
 				"__pycache__",
 		))
 	+ getRecursiveDataFiles(
-		"documentation", "../user_docs",
+		"documentation",
+		"../user_docs",
 		excludes=(
 			"*.t2t",
 			"*.t2tconf",
 			"*.md",
 			"*.py",
-			"*/__pycache__",
+			"*/user_docs/__pycache__/*",
 			"*/user_docs/styles.css",
 			"*/developerGuide.*"
 		)
