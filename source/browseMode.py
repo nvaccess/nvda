@@ -446,9 +446,9 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			self,
 			kind: str,
 			paragraphFunction: Callable[[textInfos.TextInfo], Optional[Any]],
-			desiredValue: Optional[Any] = None,
-			direction: str = "next",
-			pos: textInfos.TextInfo = None,
+			desiredValue: Optional[Any],
+			direction: str,
+			pos: textInfos.TextInfo,
 	) -> Generator[TextInfoQuickNavItem, None, None]:
 		info = pos.copy()
 		info.collapse()
@@ -475,7 +475,6 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		elif itemType == "textParagraph":
 			punctuationMarksRegex = re.compile(
 				config.conf["virtualBuffers"]["textParagraphRegex"],
-				re.UNICODE,
 			)
 
 			def paragraphFunc(info: textInfos.TextInfo) -> bool:

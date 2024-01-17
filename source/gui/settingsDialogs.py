@@ -2286,7 +2286,7 @@ class BrowseModePanel(SettingsPanel):
 	def isValid(self) -> bool:
 		regex = self.textParagraphRegexEdit .GetValue()
 		try:
-			re.compile(regex, re.UNICODE)
+			re.compile(regex)
 		except re.error as e:
 			log.debugWarning("Failed to compile text paragraph regex", exc_info=True)
 			gui.messageBox(
@@ -2297,7 +2297,6 @@ class BrowseModePanel(SettingsPanel):
 				wx.OK | wx.ICON_ERROR,
 				self,
 			)
-			self.textParagraphRegexEdit.SetFocus()
 			return False
 		return super().isValid()
 
