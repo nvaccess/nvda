@@ -1485,14 +1485,8 @@ class ReviewTextInfoRegion(TextInfoRegion):
 			self._currentSelection = info.copy()
 			return info
 		# Selection unchanged
-		readingUnit: textInfos.TextInfo
-		readingUnit = api.getReviewPosition().copy()
+		readingUnit: textInfos.TextInfo = api.getReviewPosition().copy()
 		readingUnit.expand(self._getReadingUnit())
-		# Selection may not contain whole reading unit.
-		if readingUnit.start < self._currentSelection.start:
-			readingUnit.start = self._currentSelection.start
-		if readingUnit.end > self._currentSelection.end:
-			readingUnit.end = self._currentSelection.end
 		if (
 			readingUnit.start >= info.end
 			or readingUnit.end <= info.start
@@ -1506,6 +1500,11 @@ class ReviewTextInfoRegion(TextInfoRegion):
 			return info
 		else:
 			# Review position is within selection
+			# Selection may not contain whole reading unit.
+			if readingUnit.start < self._currentSelection.start:
+				readingUnit.start = self._currentSelection.start
+			if readingUnit.end > self._currentSelection.end:
+				readingUnit.end = self._currentSelection.end
 			self._withinSelection = True
 			return readingUnit
 
