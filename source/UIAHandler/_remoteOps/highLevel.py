@@ -16,8 +16,16 @@ from .midLevel import (
 )
 
 
+@dataclass
 class MalformedBytecodeException(RuntimeError):
-	pass
+	errorLocation: int
+	instructionRecord: midLevel.InstructionRecord2 | None = None
+
+	def __str__(self) -> str:
+		message = f"Malformed bytes at or near instruction {self.errorLocation}"
+		if self.instructionRecord is not None:
+			message += f": {self.instructionRecord.dumpInstruction()}"
+		return message
 
 
 @dataclass
@@ -29,12 +37,13 @@ class InstructionLimitExceededException(RuntimeError):
 class RemoteException(RuntimeError):
 	errorLocation: int
 	extendedError: int
-	instructionRecord: midLevel.InstructionRecord | None = None
+	instructionRecord: midLevel.InstructionRecord2 | None = None
 
 	def __str__(self) -> str:
-		message = f"extendedError {self.extendedError} at instruction {self.errorLocation}"
+		message = f"Error at instruction {self.errorLocation}"
 		if self.instructionRecord is not None:
-			message += f": {self.instructionRecord}"
+			message += f":\n{self.instructionRecord.dumpInstruction()}"
+		message += f"\nextendedError {self.extendedError}"
 		return message
 
 
@@ -243,7 +252,14 @@ def execute(
 	if resultSet.status == lowLevel.RemoteOperationStatus.ExecutionFailure:
 		raise ExecutionFailureException()
 	elif resultSet.status == lowLevel.RemoteOperationStatus.MalformedBytecode:
-		raise MalformedBytecodeException()
+		instructionRecord = None
+		errorLocation = resultSet.errorLocation
+		if errorLocation >= 0:
+			try:
+				instructionRecord = builder.lookupInstructionByGlobalIndex(resultSet.errorLocation)
+			except IndexError:
+				pass
+		raise MalformedBytecodeException(errorLocation=errorLocation, instructionRecord=instructionRecord)
 	if remoteLogging:
 		_dumpRemoteLog(resultSet, buildCache)
 	results = _getExecutionResults(resultSet, buildCache)

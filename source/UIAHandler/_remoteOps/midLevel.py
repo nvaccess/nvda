@@ -66,7 +66,7 @@ def _getLocationString(frame: types.FrameType) -> str:
 
 def _validateInstructionParams(
 	instructionType: lowLevel.InstructionType,
-	*params: ctypes._SimpleCData | ctypes.Array | ctypes.Structure
+	*params: RemoteBaseObject | ctypes._SimpleCData | ctypes.Array | ctypes.Structure
 ):
 	try:
 		instructionSpec = lowLevel.InstructionSpecs[instructionType]
@@ -90,7 +90,7 @@ def _validateInstructionParams(
 				raise ValueError(f"Too many parameters for instruction {instructionType.name}")
 		paramSpec = instructionSpec.paramSpecs[index]
 		validParam = False
-		if type(param) is paramSpec.ctype:
+		if True: #type(param) is paramSpec.ctype:
 			validParam = True
 		elif index > 0 and isinstance(param, ctypes.Array) and typing.get_origin(paramSpec.ctype) is ctypes.Array:
 			if typing.get_args(paramSpec.ctype)[0] is param._type_:
@@ -112,26 +112,55 @@ def _validateInstructionParams(
 		paramNames.append(paramSpec.name)
 	return paramNames
 
-
 @dataclass
-class InstructionRecord:
+class InstructionRecord2:
 	instructionType: lowLevel.InstructionType
-	params: tuple[_SimpleCData | ctypes.Array | ctypes.Structure, ...]
-	validatedParamNames: list[str] | None = None
+	params: list[RemoteBaseObject | _SimpleCData | ctypes.Array | ctypes.Structure]
+	paramNames: list[str]
 	locationString: str | None = None
 
 	def __init__(
 		self, instructionType: lowLevel.InstructionType,
-		*params: _SimpleCData | ctypes.Array | ctypes.Structure,
-		locationString: str | None = None
+		**kwargs: RemoteBaseObject | _SimpleCData | ctypes.Array | ctypes.Structure
 	):
 		self.instructionType = instructionType
-		self.params = params
-		self.locationString = locationString
-		self.validatedParamNames = _validateInstructionParams(instructionType, *params)
+		self.params = list(kwargs.values())
+		self.paramNames = list(kwargs.keys())
 
-	def __repr__(self):
-		return f"{self.instructionType.name}({', '.join(map(repr, self.params))})"
+	def getByteCode(self) -> bytes:
+		byteCode = struct.pack('l', self.instructionType)
+		for param in self.params:
+			if isinstance(param, RemoteBaseObject):
+				param = param.operandId
+			paramBytes = (c_char * ctypes.sizeof(param)).from_address(ctypes.addressof(param)).raw
+			byteCode += paramBytes
+		return byteCode
+
+	def dumpInstruction(self) -> str:
+		output = f"{self.instructionType.name}("
+		paramsOutput = []
+		for index, param in enumerate(self.params):
+			paramName = self.paramNames[index]
+			paramOutput = f"{paramName}="
+			if isinstance(param, ctypes.Array) and param._type_ == c_wchar:
+				paramOutput += f"c_wchar_array({repr(param.value)})"
+			else:
+				paramOutput += f"{param}"
+			paramsOutput.append(paramOutput)
+		output += ", ".join(paramsOutput)
+		output += ")"
+		return output
+
+
+class InstructionRecord(InstructionRecord2):
+	
+	def __init__(
+		self, instructionType: lowLevel.InstructionType,
+		*params: RemoteBaseObject | _SimpleCData | ctypes.Array | ctypes.Structure,
+	):
+		self.instructionType = instructionType
+		self.paramNames = _validateInstructionParams(instructionType, *params)
+		self.params = list(params)
 
 
 class _RemoteBase:
@@ -703,12 +732,12 @@ class RemoteExtensionTarget(RemoteVariantSupportedType):
 
 	@remoteFunc_mutable
 	def callExtension(self, extensionGuid: RemoteGuid, *params: RemoteBaseObject) -> None:
-		self.builder.addInstruction(
+		self.builder.addInstruction2(
 			lowLevel.InstructionType.CallExtension,
-			self.operandId,
-			extensionGuid.operandId,
-			c_ulong(len(params)),
-			*(p.operandId for p in params)
+			target=self,
+			extensionGuid=extensionGuid,
+			paramCount=c_ulong(len(params)),
+			**{f"param{index}": param for index, param  in enumerate(params, start=1)}
 		)
 
 
@@ -727,15 +756,15 @@ class RemoteElement(RemoteExtensionTarget, RemoteValue[UIA.IUIAutomationElement]
 		propertyId: RemoteInt,
 		ignoreDefault: RemoteBool = RemoteBool(False, const=True)
 	) -> RemoteVariant:
-		resultOperandId = self.builder._getNewOperandId()
-		self.builder.addInstruction(
+		result = RemoteVariant. fromOperandId(self.builder, self.builder._getNewOperandId())
+		self.builder.addInstruction2(
 			lowLevel.InstructionType.GetPropertyValue,
-			resultOperandId,
-			self.operandId,
-			propertyId.operandId,
-			ignoreDefault.operandId
+			result=result,
+			target=self,
+			propertyId=propertyId,
+			ignoreDefault=ignoreDefault
 		)
-		return RemoteVariant.fromOperandId(self.builder, resultOperandId)
+		return result
 
 	@remoteFunc
 	def _navigate(self, navigationDirection: RemoteInt) -> RemoteElement:
@@ -773,7 +802,7 @@ class RemoteTextRange(RemoteExtensionTarget, RemoteValue[UIA.IUIAutomationTextRa
 		return builder.importTextRange(self.initialValue)
 
 
-class InstructionList(list[InstructionRecord]):
+class InstructionList(list[InstructionRecord2]):
 
 	_byteCodeCache: bytes | None = None
 	_isModified: bool = False
@@ -791,7 +820,7 @@ class InstructionList(list[InstructionRecord]):
 	def getPrependedMetaStrings(self, instructionIndex: int) -> list[str]:
 		return self._metaStringsByInstructionIndex.get(instructionIndex, [])
 
-	def addInstructionRecord(self, record: InstructionRecord, section: str = "main") -> int:
+	def addInstructionRecord(self, record: InstructionRecord2, section: str = "main") -> int:
 		if record.locationString is None:
 			frame = inspect.currentframe()
 			if frame:
@@ -807,10 +836,7 @@ class InstructionList(list[InstructionRecord]):
 			return self._byteCodeCache
 		byteCode = b''
 		for instruction in self:
-			byteCode += struct.pack('l', instruction.instructionType)
-			for param in instruction.params:
-				paramBytes = (c_char * ctypes.sizeof(param)).from_address(ctypes.addressof(param)).raw
-				byteCode += paramBytes
+			byteCode += instruction.getByteCode()
 		self._byteCodeCache = byteCode
 		return byteCode
 
@@ -841,16 +867,24 @@ class RemoteOperationBuilder:
 	def getInstructionList(self, section: str) -> InstructionList:
 		return self._instructionListBySection[section]
 
+	def addInstruction2(
+		self,
+		instruction: lowLevel.InstructionType,
+		**params: RemoteBaseObject | _SimpleCData | ctypes.Array | ctypes.Structure,
+	):
+		record = InstructionRecord2(instruction, **params)
+		return self.addInstructionRecord(record)
+
 	def addInstruction(
 		self,
 		instruction: lowLevel.InstructionType,
-		*params: _SimpleCData | ctypes.Array | ctypes.Structure,
+		*params: RemoteBaseObject | _SimpleCData | ctypes.Array | ctypes.Structure,
 		section: str = "main"
 	):
 		record = InstructionRecord(instruction, *params)
 		return self.addInstructionRecord(record, section)
 
-	def addInstructionRecord(self, record: InstructionRecord, section: str = "main") -> int:
+	def addInstructionRecord(self, record: InstructionRecord2, section: str = "main") -> int:
 		instructionsList = self.getInstructionList(section)
 		index = instructionsList.addInstructionRecord(record, section)
 		self._scopeJustExited = None
@@ -887,11 +921,11 @@ class RemoteOperationBuilder:
 		instructions = self.getInstructionList(section)
 		return len(instructions)
 
-	def getInstruction(self, instructionIndex: int, section: str = "main") -> InstructionRecord:
+	def getInstruction(self, instructionIndex: int, section: str = "main") -> InstructionRecord2:
 		instructions = self.getInstructionList(section)
 		return instructions[instructionIndex]
 
-	def lookupInstructionByGlobalIndex(self, instructionIndex: int) -> InstructionRecord:
+	def lookupInstructionByGlobalIndex(self, instructionIndex: int) -> InstructionRecord2:
 		instructions = [
 			instruction
 			for instructionList in self._instructionListBySection.values()
@@ -967,21 +1001,9 @@ class RemoteOperationBuilder:
 				comments = instructions.getPrependedMetaStrings(localInstructionIndex)
 				for comment in comments:
 					output += f"{comment}\n"
-				output += f"{globalInstructionIndex}: {instruction.instructionType.name} ("
-				paramOutputs = []
-				for paramIndex, param in enumerate(instruction.params):
-					if instruction.validatedParamNames is not None:
-						paramName = instruction.validatedParamNames[paramIndex]
-					else:
-						paramName = "param"
-					paramOutput = f"{paramName} "
-					if isinstance(param, ctypes.Array) and param._type_ == c_wchar:
-						paramOutput += f"c_wchar_array({repr(param.value)})"
-					else:
-						paramOutput += f"{param}"
-					paramOutputs.append(paramOutput)
-				paramsOutput = ", ".join(paramOutputs)
-				output += f"{paramsOutput})\n"
+				output += f"{globalInstructionIndex}: "
+				output += instruction.dumpInstruction()
+				output += "\n"
 				globalInstructionIndex += 1
 		output += "--- Instructions end ---"
 		return output
@@ -1020,7 +1042,7 @@ class RemoteIfBlockBuilder(RemoteScope):
 		nextInstructionIndex = self.builder.getLastInstructionIndex() + 1
 		relativeJumpOffset = nextInstructionIndex - self._conditionInstructionIndex
 		conditionInstruction = self.builder.getInstruction(self._conditionInstructionIndex)
-		conditionInstruction.params[1].value = relativeJumpOffset
+		cast(RelativeOffset, conditionInstruction.params[1]).value = relativeJumpOffset
 		super().__exit__(exc_type, exc_val, exc_tb)
 		if not self._silent:
 			self.builder.addComment("End of if block body")
@@ -1041,7 +1063,7 @@ class RemoteElseBlockBuilder(RemoteScope):
 			RelativeOffset(1),  # offset updated in __exit__ method
 		)
 		# increment the false offset of the previous if block to take the new jump instruction into account.
-		conditionInstruction.params[1].value += 1
+		cast(RelativeOffset, conditionInstruction.params[1]).value += 1
 		self.builder.addComment("Else block body")
 
 	def __exit__(self, exc_type, exc_val, exc_tb):
@@ -1050,7 +1072,7 @@ class RemoteElseBlockBuilder(RemoteScope):
 		nextInstructionIndex = self.builder.getLastInstructionIndex() + 1
 		relativeJumpOffset = nextInstructionIndex - self._jumpInstructionIndex
 		jumpInstruction = self.builder.getInstruction(self._jumpInstructionIndex)
-		jumpInstruction.params[0].value = relativeJumpOffset
+		cast(RelativeOffset, jumpInstruction.params[0]).value = relativeJumpOffset
 		super().__exit__(exc_type, exc_val, exc_tb)
 
 
@@ -1094,7 +1116,7 @@ class RemoteWhileBlockBuilder(RemoteScope):
 		nextInstructionIndex = self.builder.getLastInstructionIndex() + 1
 		relativeBreakOffset = nextInstructionIndex - self._newLoopBlockInstructionIndex
 		newLoopBlockInstruction = self.builder.getInstruction(self._newLoopBlockInstructionIndex)
-		newLoopBlockInstruction.params[0].value = relativeBreakOffset
+		cast(RelativeOffset, newLoopBlockInstruction.params[0]).value = relativeBreakOffset
 		super().__exit__(exc_type, exc_val, exc_tb)
 
 
@@ -1119,7 +1141,7 @@ class RemoteTryBlockBuilder(RemoteScope):
 		nextInstructionIndex = self.builder.getLastInstructionIndex() + 1
 		relativeCatchOffset = nextInstructionIndex - self._newTryBlockInstructionIndex
 		newTryBlockInstruction = self.builder.getInstruction(self._newTryBlockInstructionIndex)
-		newTryBlockInstruction.params[0].value = relativeCatchOffset
+		cast(RelativeOffset, newTryBlockInstruction.params[0]).value = relativeCatchOffset
 		super().__exit__(exc_type, exc_val, exc_tb)
 
 
@@ -1141,7 +1163,7 @@ class RemoteCatchBlockBuilder(RemoteScope):
 		)
 		# Increment the catch offset of the try block to take the new jump instruction into account.
 		newTryBlockInstruction = self.builder.getInstruction(tryScope._newTryBlockInstructionIndex)
-		newTryBlockInstruction.params[0].value += 1
+		cast(RelativeOffset, newTryBlockInstruction.params[0]).value += 1
 		e = self.builder.getOperationStatus()
 		self.builder.setOperationStatus(RemoteInt(0, const=True))
 		self.builder.addComment("Catch block body")
@@ -1153,7 +1175,7 @@ class RemoteCatchBlockBuilder(RemoteScope):
 		nextInstructionIndex = self.builder.getLastInstructionIndex() + 1
 		relativeJumpOffset = nextInstructionIndex - self._jumpInstructionIndex
 		jumpInstruction = self.builder.getInstruction(self._jumpInstructionIndex)
-		jumpInstruction.params[0].value = relativeJumpOffset
+		cast(RelativeOffset, jumpInstruction.params[0]).value = relativeJumpOffset
 		super().__exit__(exc_type, exc_val, exc_tb)
 
 
