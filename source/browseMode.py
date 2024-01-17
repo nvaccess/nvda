@@ -53,6 +53,7 @@ import gui.contextHelp
 from abc import ABCMeta, abstractmethod
 import globalVars
 from typing import Optional
+from textUtils import WideStringOffsetConverter
 
 
 def reportPassThrough(treeInterceptor,onlyIfChanged=True):
@@ -2140,11 +2141,11 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 					):
 						# Found text that matches desired style!
 						startOffset = sum([
-							len(s)
+							WideStringOffsetConverter(s).wideStringLength
 							for s in styles[:i]
 							if isinstance(s, str)
 						])
-						endOffset = len(styles[i + 1])
+						endOffset = WideStringOffsetConverter(styles[i + 1]).wideStringLength
 						textRange = paragraph.copy()
 						textRange.collapse()
 						textRange.move(textInfos.UNIT_CHARACTER, startOffset)
