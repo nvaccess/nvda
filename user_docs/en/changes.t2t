@@ -7,7 +7,9 @@ What's New in NVDA
 
 == New Features ==
 - In Windows 11, NVDA will announce alerts from voice typing and suggested actions including the top suggestion when copying data such as phone numbers to the clipboard (Windows 11 2022 Update and later). (#16009, @josephsl)
--
+- Add-on Store:
+  - The minimal version and the latest tested version of NVDA for an extension appear in the "Other Information" field of an extension
+
 
 
 == Changes ==
@@ -62,7 +64,6 @@ Windows 8.1 is the minimum Windows version supported.
 - Add-on Store:
   - The Add-on Store now supports bulk actions (e.g. installing, enabling add-ons) by selecting multiple add-ons. (#15350, #15623, @CyrilleB79)
   - A new action has been added to open a dedicated webpage to see or provide feedback about the selected add-on. (#15576, @nvdaes)
-  -
 - Added support for Bluetooth Low Energy HID Braille displays. (#15470)
 - A new Native Selection mode (toggled by ``NVDA+shift+f10``) is now available in NVDA's browse mode for Mozilla Firefox.
 When turned on, selecting text in browse mode will also manipulate Firefox's own native selection.
