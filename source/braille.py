@@ -1526,28 +1526,40 @@ class ReviewTextInfoRegion(TextInfoRegion):
 		):
 			return
 		from globalCommands import commands
-		startOfLineScriptNames: set[str] = {
+		startOfNextOrPreviousLineScriptNames: set[str] = {
 			commands.script_braille_nextLine.__name__,
 			commands.script_braille_previousLine.__name__,
 			commands.script_braille_scrollForward.__name__,
 			commands.script_review_nextLine.__name__,
 			commands.script_review_previousLine.__name__,
-			commands.script_review_startOfLine.__name__,
 		}
-		endOfLineScriptNames: set[str] = {
+		startOfCurrentLineOrControlScriptNames: set[str] = {
+			commands.script_review_startOfLine.__name__,
+			commands.script_review_top.__name__,
+		}
+		endOfLineOrControlScriptNames: set[str] = {
 			commands.script_braille_scrollBack.__name__,
 			commands.script_review_endOfLine.__name__,
+			commands.script_review_bottom.__name__,
 		}
 		focusScriptNames: set[str] = {
 			commands.script_braille_toFocus.__name__,
 			commands.script_navigatorObject_toFocus.__name__,
 		}
-		if self._currentScriptName in startOfLineScriptNames:
-			# Move to start of next/current/previous line
+		if (
+			(
+				self._currentScriptName in startOfNextOrPreviousLineScriptNames
+				and previousReadingUnit is not None
+				and previousReadingUnit.start != self._readingInfo.start
+				and previousReadingUnit.end != self._readingInfo.end
+			)
+			or self._currentScriptName in startOfCurrentLineOrControlScriptNames
+		):
+			# Move to start of next/current/previous line or control
 			self.brailleSelectionStart = 0
 			self.brailleSelectionEnd = 1
-		elif self._currentScriptName in endOfLineScriptNames:
-			# Scroll back to the previous line or move to end of current line
+		elif self._currentScriptName in endOfLineOrControlScriptNames:
+			# Scroll back to the previous line or move to end of current line or control
 			self.brailleSelectionEnd = self.rawToBraillePos[len(self.rawText) - 1]
 			self.brailleSelectionStart = self.brailleSelectionEnd - 1
 		elif self._currentScriptName in focusScriptNames:
