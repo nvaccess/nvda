@@ -1481,7 +1481,8 @@ class ReviewTextInfoRegion(TextInfoRegion):
 			if self.obj.isTextSelectionAnchoredAtStart:
 				self._currentSelection.move(textInfos.UNIT_CHARACTER, -1, "end")
 			self._currentSelection.collapse(end=self.obj.isTextSelectionAnchoredAtStart)
-			api.setReviewPosition(self._currentSelection)
+			# Enqueue to avoid recursion error
+			queueHandler.queueFunction(queueHandler.eventQueue, api.setReviewPosition, self._currentSelection)
 			self._currentSelection = info.copy()
 			return info
 		# Selection unchanged
