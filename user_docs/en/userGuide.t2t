@@ -850,7 +850,7 @@ Here is a list of available commands:
 - Article
 - Grouping
 - Tab
--
+-2
 
 Keep in mind that there are two commands for each type of element, for moving forward in the document and backward in the document, and you must assign gestures to both commands in order to be able to quickly navigate in both directions.
 For example, if you want to use the ``y`` / ``shift+y`` keys to quickly navigate through tabs, you would do the following:
@@ -1890,6 +1890,17 @@ This option is not available if you have started NVDA with [WASAPI disabled for 
 ==== Volume of NVDA sounds ====[SoundVolume]
 This slider allows you to set the volume of NVDA sounds and beeps.
 This setting only takes effect when "Volume of NVDA sounds follows voice volume" is disabled.
+This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
+
+==== Sound split====[SelectSoundSplitMode]
+Key: ``NVDA+alt+s``
+
+This option allows you to make NVDA sound output to be directed to either left or right channel and application volume to be directed to the other channel. This could be useful for headphones users.
+- Disabled sound split: both NVDA and other applications output sounds to both left and right channels.
+- NVDA on the left and applications on the right: NVDA will speak in the left channel, while other applications will play sounds in the right channel.
+- NVDA on the right and applications on the left: NVDA will speak in the right channel, while other applications will play sounds in the left channel.
+-
+
 This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
 
 +++ Vision +++[VisionSettings]

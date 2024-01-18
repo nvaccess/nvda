@@ -597,6 +597,9 @@ def main():
 	log.debug("Initializing tones")
 	import tones
 	tones.initialize()
+	log.debug("Initializing sound split")
+	import audio
+	audio.initialize()
 	import speechDictHandler
 	log.debug("Speech Dictionary processing")
 	speechDictHandler.initialize()

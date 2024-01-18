@@ -113,6 +113,9 @@ SCRCAT_INPUT = _("Input")
 #: Script category for document formatting commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_DOCUMENTFORMATTING = _("Document formatting")
+#: Script category for audio streaming commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_AUDIOSTREAMING = _("Audio streaming")
 
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus.
@@ -123,6 +126,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Describes the Cycle audio ducking mode command.
 			"Cycles through audio ducking modes which determine when NVDA lowers the volume of other sounds"
 		),
+		category=SCRCAT_AUDIOSTREAMING,
 		gesture="kb:NVDA+shift+d"
 	)
 	def script_cycleAudioDuckingMode(self,gesture):
@@ -4381,6 +4385,18 @@ class GlobalCommands(ScriptableObject):
 		newFlag: config.featureFlag.FeatureFlag = nextParagraphStyle()
 		config.conf["documentNavigation"]["paragraphStyle"] = newFlag.name
 		ui.message(newFlag.displayString)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Cycles through sound split modes",
+		),
+		category=SCRCAT_AUDIOSTREAMING,
+		gesture="kb:NVDA+alt+s",
+	)
+	def script_cycleSoundSplit(self, gesture: "inputCore.InputGesture") -> None:
+		import audio
+		audio.toggleSoundSplitState()
 
 
 #: The single global commands instance.

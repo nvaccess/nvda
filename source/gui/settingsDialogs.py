@@ -42,6 +42,7 @@ import gui.contextHelp
 import globalVars
 from logHandler import log
 import nvwave
+import audio
 import audioDucking
 import queueHandler
 import braille
@@ -2710,6 +2711,28 @@ class AudioPanel(SettingsPanel):
 
 		self._onSoundVolChange(None)
 
+		# Translators: This is a label for the sound split combo box in the Audio Settings dialog.
+		soundSplitLabelText = _("Sound split mode:")
+		self.soundSplitComboBox = sHelper.addLabeledControl(
+			soundSplitLabelText,
+			wx.Choice,
+			choices=[mode.displayString for mode in audio.SoundSplitState]
+		)
+		self.bindHelpEvent("SelectSoundSplitMode", self.soundSplitComboBox)
+		index = config.conf["audio"]["soundSplitState"]
+		self.soundSplitComboBox.SetSelection(index)
+
+		# Translators: This is a label for the sound split Toggle Mode combo box in the Audio Settings dialog.
+		soundSplitToggleModeLabelText = _("NVDA+Alt+S command behavior:")
+		self.soundSplitToggleModeComboBox = sHelper.addLabeledControl(
+			soundSplitToggleModeLabelText,
+			wx.Choice,
+			choices=[mode.displayString for mode in audio.SoundSplitToggleMode]
+		)
+		self.bindHelpEvent("SelectSoundSplitToggleMode", self.soundSplitToggleModeComboBox)
+		index = config.conf["audio"]["soundSplitToggleMode"]
+		self.soundSplitToggleModeComboBox.SetSelection(index)
+
 	def onSave(self):
 		if config.conf["speech"]["outputDevice"] != self.deviceList.GetStringSelection():
 			# Synthesizer must be reload if output device changes
@@ -2725,6 +2748,12 @@ class AudioPanel(SettingsPanel):
 
 		config.conf["audio"]["soundVolumeFollowsVoice"] = self.soundVolFollowCheckBox.IsChecked()
 		config.conf["audio"]["soundVolume"] = self.soundVolSlider.GetValue()
+
+		index = self.soundSplitComboBox.GetSelection()
+		config.conf["audio"]["soundSplitState"] = index
+		audio.setSoundSplitState(audio.SoundSplitState(index))
+		index = self.soundSplitToggleModeComboBox.GetSelection()
+		config.conf["audio"]["soundSplitToggleMode"] = index
 
 		if audioDucking.isAudioDuckingSupported():
 			index = self.duckingList.GetSelection()
@@ -2743,6 +2772,8 @@ class AudioPanel(SettingsPanel):
 			wasapi
 			and not self.soundVolFollowCheckBox.IsChecked()
 		)
+		self.soundSplitComboBox.Enable(wasapi)
+		self.soundSplitToggleModeComboBox.Enable(wasapi)
 
 
 class AddonStorePanel(SettingsPanel):
