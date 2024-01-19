@@ -220,9 +220,7 @@ class MainFrame(wx.Frame):
 	def popupSettingsDialog(self, dialog: Type[SettingsDialog], *args, **kwargs):
 		self.prePopup()
 		try:
-			d = dialog(self, *args, **kwargs)
-			if d:
-				d.Show()
+			dialog(self, *args, **kwargs).Show()
 		except SettingsDialog.MultiInstanceErrorWithDialog as errorWithDialog:
 			errorWithDialog.dialog.SetFocus()
 		except MultiCategorySettingsDialog.CategoryUnavailableError:
