@@ -270,13 +270,13 @@ class AddonDetails(
 					self._appendDetailsLabelValue(
 						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 						pgettext("addonStore", "Minimum NVDA version:"),
-						formatVersionForGUI(*details._addonHandlerModel.minimumNVDAVersion)
+						formatVersionForGUI(*details.minimumNVDAVersion)
 					)
 
 					self._appendDetailsLabelValue(
 						# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 						pgettext("addonStore", "Last tested NVDA version:"),
-						formatVersionForGUI(*details._addonHandlerModel.lastTestedNVDAVersion)
+						formatVersionForGUI(*details.lastTestedNVDAVersion)
 					)
 
 				if currentStatusKey not in AddonListField.availableAddonVersionName.hideStatuses:
