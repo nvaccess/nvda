@@ -262,7 +262,7 @@ freeze(
 		"documentation",
 		"../user_docs",
 		excludes=tuple(
-			"*%s" % ext for ext in importlib.machinery.SOURCE_SUFFIXES + importlib.machinery.BYTECODE_SUFFIXES
+			f"*{ext}" for ext in importlib.machinery.SOURCE_SUFFIXES + importlib.machinery.BYTECODE_SUFFIXES
 			) + (
 		"__pycache__",
 		"*.t2t",
