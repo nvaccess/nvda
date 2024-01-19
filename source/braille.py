@@ -2040,7 +2040,7 @@ def _showSpeechInBraille(speechSequence: "SpeechSequence"):
 	handler.update()
 
 
-def clearBrailleRegions(clearBrailleRegions):
+def clearBrailleRegions(clearBrailleRegions: bool):
 	if clearBrailleRegions:
 		_regions.clear()
 
