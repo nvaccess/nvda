@@ -145,7 +145,9 @@ class SettingsDialog(
 		if state is cls.DialogState.DESTROYED and not multiInstanceAllowed:
 			# The dialog has been destroyed by wx, but the instance is still available.
 			# This indicates there is something keeping it alive.
-			raise RuntimeError(f"Cannot open new settings dialog while instance still exists: {firstMatchingInstance!r}")
+			raise RuntimeError(
+				f"Cannot open new settings dialog while instance still exists: {firstMatchingInstance!r}"
+			)
 		obj = super().__new__(cls, *args, **kwargs)
 		SettingsDialog._instances[obj] = cls.DialogState.CREATED
 		return obj
