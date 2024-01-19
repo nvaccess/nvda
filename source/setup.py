@@ -258,6 +258,19 @@ freeze(
 			) + (
 				"__pycache__",
 		))
-		+ getRecursiveDataFiles('documentation', '../user_docs', excludes=('*.t2t', '*.t2tconf', '*/developerGuide.*'))
+	+ getRecursiveDataFiles(
+		"documentation",
+		"../user_docs",
+		excludes=tuple(
+			f"*{ext}" for ext in importlib.machinery.SOURCE_SUFFIXES + importlib.machinery.BYTECODE_SUFFIXES
+			) + (
+		"__pycache__",
+		"*.t2t",
+		"*.t2tconf",
+		"*.md",
+		"*/user_docs/styles.css",
+		"*/developerGuide.*"
+		)
+	)
 	),
 )
