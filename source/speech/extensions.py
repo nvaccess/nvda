@@ -19,7 +19,7 @@ pre_speechCanceled = Action()
 """
 Notifies when speech is about to be canceled.
 
-@param clearBrailleRegions: whether the braille regions should be cleared in speech output braille mode.
+@param clearBrailleRegions: whether the braille regions should be cleared in speech output braille
 @type clearBrailleRegions: bool
 """
 
@@ -28,7 +28,6 @@ pre_speech = Action()
 Notifies when code attempts to speak text.
 
 @param speechSequence: the sequence of text and L{SpeechCommand} objects to speak
-
 @type speechSequence: speech.SpeechSequence
 
 @param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
