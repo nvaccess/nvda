@@ -10,6 +10,7 @@ from comtypes.automation import VARIANT
 import array
 import winUser
 import UIAHandler
+import UIAHandler.remote
 from .utils import (
 	createUIAMultiPropertyCondition,
 	getDeepestLastChildUIAElementInWalker,
@@ -161,7 +162,12 @@ def UIAHeadingQuicknavIterator(
 ):
 	reverse = bool(direction == "previous")
 	entireDocument = document.makeTextInfo(textInfos.POSITION_ALL)
+	import tones; tones.beep(550,50)
 	if position is None:
+		headings = UIAHandler.remote.collectHeadingsInTextRange(entireDocument._rangeObj)
+		for level, label, rangeObj in headings:
+			yield HeadingUIATextInfoQuickNavItem(itemType, document, rangeObj, level=level)
+		return
 		searchArea = entireDocument
 	else:
 		searchArea = position.copy()
