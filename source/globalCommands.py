@@ -66,6 +66,7 @@ import winVersion
 from base64 import b16encode
 import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
+import audio
 
 
 #: Script category for text review commands.
@@ -115,7 +116,7 @@ SCRCAT_INPUT = _("Input")
 SCRCAT_DOCUMENTFORMATTING = _("Document formatting")
 #: Script category for audio streaming commands.
 # Translators: The name of a category of NVDA commands.
-SCRCAT_AUDIOSTREAMING = _("Audio streaming")
+SCRCAT_AUDIO = _("Audio")
 
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus.
@@ -126,7 +127,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Describes the Cycle audio ducking mode command.
 			"Cycles through audio ducking modes which determine when NVDA lowers the volume of other sounds"
 		),
-		category=SCRCAT_AUDIOSTREAMING,
+		category=SCRCAT_AUDIO,
 		gesture="kb:NVDA+shift+d"
 	)
 	def script_cycleAudioDuckingMode(self,gesture):
@@ -4391,11 +4392,10 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Describes a command.
 			"Cycles through sound split modes",
 		),
-		category=SCRCAT_AUDIOSTREAMING,
+		category=SCRCAT_AUDIO,
 		gesture="kb:NVDA+alt+s",
 	)
 	def script_cycleSoundSplit(self, gesture: "inputCore.InputGesture") -> None:
-		import audio
 		audio.toggleSoundSplitState()
 
 

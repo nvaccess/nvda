@@ -78,6 +78,7 @@ import weakref
 import time
 import keyLabels
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
+import json
 
 #: The size that settings panel text descriptions should be wrapped at.
 # Ensure self.scaleSize is used to adjust for OS scaling adjustments.
@@ -2709,8 +2710,6 @@ class AudioPanel(SettingsPanel):
 		self.bindHelpEvent("SoundVolume", self.soundVolSlider)
 		self.soundVolSlider.SetValue(config.conf["audio"]["soundVolume"])
 
-		self._onSoundVolChange(None)
-
 		# Translators: This is a label for the sound split combo box in the Audio Settings dialog.
 		soundSplitLabelText = _("Sound split mode:")
 		self.soundSplitComboBox = sHelper.addLabeledControl(
@@ -2722,16 +2721,51 @@ class AudioPanel(SettingsPanel):
 		index = config.conf["audio"]["soundSplitState"]
 		self.soundSplitComboBox.SetSelection(index)
 
-		# Translators: This is a label for the sound split Toggle Mode combo box in the Audio Settings dialog.
-		soundSplitToggleModeLabelText = _("NVDA+Alt+S command behavior:")
-		self.soundSplitToggleModeComboBox = sHelper.addLabeledControl(
-			soundSplitToggleModeLabelText,
-			wx.Choice,
-			choices=[mode.displayString for mode in audio.SoundSplitToggleMode]
+		self._appendSoundSplitModesList(sHelper)
+
+		self._onSoundVolChange(None)
+
+	def _appendSoundSplitModesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
+		self._allSoundSplitModes = list(audio.SoundSplitState)
+		self.soundSplitModesList: nvdaControls.CustomCheckListBox = settingsSizerHelper.addLabeledControl(
+			# Translators: Label of the list where user can select sound split modes that will be available.
+			_("&Modes available in the Cycle sound split mode command:"),
+			nvdaControls.CustomCheckListBox,
+			choices=[mode.displayString for mode in self._allSoundSplitModes]
 		)
-		self.bindHelpEvent("SelectSoundSplitToggleMode", self.soundSplitToggleModeComboBox)
-		index = config.conf["audio"]["soundSplitToggleMode"]
-		self.soundSplitToggleModeComboBox.SetSelection(index)
+		self.bindHelpEvent("customizeSoundSplitModes", self.soundSplitModesList)
+		includedModes: list[int] = json.loads(config.conf["audio"]["includedSoundSplitModes"])
+		self.soundSplitModesList.Checked = [
+			mIndex for mIndex in range(len(self._allSoundSplitModes)) if mIndex in includedModes
+		]
+		self.soundSplitModesList.Bind(wx.EVT_CHECKLISTBOX, self._onSoundSplitModesListChange)
+		self.soundSplitModesList.Select(0)
+
+	def _onSoundSplitModesListChange(self, evt: wx.CommandEvent):
+		# continue event propagation to custom control event handler
+		# to guarantee user is notified about checkbox being checked or unchecked
+		evt.Skip()
+		if (
+			evt.GetInt() == self._allSoundSplitModes.index(audio.SoundSplitState.OFF)
+			and not self.soundSplitModesList.IsChecked(evt.GetInt())
+		):
+			if gui.messageBox(
+				_(
+					# Translators: Warning shown when 'OFF' sound split mode is disabled in settings.
+					"You did not choose 'Off' as one of your sound split mode options. "
+					"Please note that this may result in no speech output at all "
+					"in case if one of your audio channels is malfunctioning. "
+					"Are you sure you want to continue?"
+				),
+				# Translators: Title of the warning message.
+				_("Warning"),
+				wx.YES | wx.NO | wx.ICON_WARNING,
+				self,
+			) == wx.NO:
+				self.soundSplitModesList.SetCheckedItems(
+					list(self.soundSplitModesList.GetCheckedItems())
+					+ [self._allSoundSplitModes.index(audio.SoundSplitState.OFF)]
+				)
 
 	def onSave(self):
 		if config.conf["speech"]["outputDevice"] != self.deviceList.GetStringSelection():
@@ -2752,9 +2786,11 @@ class AudioPanel(SettingsPanel):
 		index = self.soundSplitComboBox.GetSelection()
 		config.conf["audio"]["soundSplitState"] = index
 		audio.setSoundSplitState(audio.SoundSplitState(index))
-		index = self.soundSplitToggleModeComboBox.GetSelection()
-		config.conf["audio"]["soundSplitToggleMode"] = index
-
+		config.conf["audio"]["includedSoundSplitModes"] = json.dumps([
+			mIndex
+			for mIndex in range(len(self._allSoundSplitModes))
+			if mIndex in self.soundSplitModesList.CheckedItems
+		])
 		if audioDucking.isAudioDuckingSupported():
 			index = self.duckingList.GetSelection()
 			config.conf["audio"]["audioDuckingMode"] = index
@@ -2773,7 +2809,22 @@ class AudioPanel(SettingsPanel):
 			and not self.soundVolFollowCheckBox.IsChecked()
 		)
 		self.soundSplitComboBox.Enable(wasapi)
-		self.soundSplitToggleModeComboBox.Enable(wasapi)
+		self.soundSplitModesList.Enable(wasapi)
+
+	def isValid(self) -> bool:
+		enabledSoundSplitModes = self.soundSplitModesList.CheckedItems
+		if len(enabledSoundSplitModes) < 1:
+			log.debugWarning("No sound split modes enabled.")
+			gui.messageBox(
+				# Translators: Message shown when no sound split modes are enabled.
+				_("At least one sound split mode has to be checked."),
+				# Translators: The title of the message box
+				_("Error"),
+				wx.OK | wx.ICON_ERROR,
+				self,
+			)
+			return False
+		return super().isValid()
 
 
 class AddonStorePanel(SettingsPanel):

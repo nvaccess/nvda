@@ -272,6 +272,7 @@ def resetConfiguration(factoryDefaults=False):
 	import bdDetect
 	import hwIo
 	import tones
+	import audio
 	log.debug("Terminating vision")
 	vision.terminate()
 	log.debug("Terminating braille")
@@ -282,6 +283,8 @@ def resetConfiguration(factoryDefaults=False):
 	speech.terminate()
 	log.debug("terminating tones")
 	tones.terminate()
+	log.debug("terminating sound split")
+	audio.terminate()
 	log.debug("Terminating background braille display detection")
 	bdDetect.terminate()
 	log.debug("Terminating background i/o")
@@ -309,6 +312,9 @@ def resetConfiguration(factoryDefaults=False):
 	bdDetect.initialize()
 	# Tones
 	tones.initialize()
+	# Sound split
+	log.debug("initializing sound split")
+	audio.initialize()
 	#Speech
 	log.debug("initializing speech")
 	speech.initialize()

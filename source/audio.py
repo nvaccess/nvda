@@ -16,86 +16,78 @@ import comtypes
 import config
 from enum import IntEnum, unique
 import globalVars
+import json
 from logHandler import log
 import nvwave
-from typing import Tuple, Optional, Dict, List, Callable, NoReturn
+from typing import Callable
 import ui
 from utils.displayString import DisplayStringIntEnum
+import _ctypes
 
-VolumeTupleT = Tuple[float, float]
+VolumeTupleT = tuple[float, float]
 
 
 @unique
 class SoundSplitState(DisplayStringIntEnum):
 	OFF = 0
-	NVDA_LEFT = 1
-	NVDA_RIGHT = 2
+	NVDA_LEFT_APPS_RIGHT = 1
+	NVDA_LEFT_APPS_BOTH = 2
+	NVDA_RIGHT_APPS_LEFT = 3
+	NVDA_RIGHT_APPS_BOTH = 4
+	NVDA_BOTH_APPS_LEFT = 5
+	NVDA_BOTH_APPS_RIGHT = 6
 
 	@property
-	def _displayStringLabels(self) -> Dict[IntEnum, str]:
+	def _displayStringLabels(self) -> dict[IntEnum, str]:
 		return {
 			# Translators: Sound split state
 			SoundSplitState.OFF: _("Disabled sound split"),
 			# Translators: Sound split state
-			SoundSplitState.NVDA_LEFT: _("NVDA on the left and applications on the right"),
+			SoundSplitState.NVDA_LEFT_APPS_RIGHT: _("NVDA on the left and applications on the right"),
 			# Translators: Sound split state
-			SoundSplitState.NVDA_RIGHT: _("NVDA on the right and applications on the left"),
+			SoundSplitState.NVDA_LEFT_APPS_BOTH: _("NVDA on the left and applications in both channels"),
+			# Translators: Sound split state
+			SoundSplitState.NVDA_RIGHT_APPS_LEFT: _("NVDA on the right and applications on the left"),
+			# Translators: Sound split state
+			SoundSplitState.NVDA_RIGHT_APPS_BOTH: _("NVDA on the right and applications in both channels"),
+			# Translators: Sound split state
+			SoundSplitState.NVDA_BOTH_APPS_LEFT: _("NVDA in both channels and applications on the left"),
+			# Translators: Sound split state
+			SoundSplitState.NVDA_BOTH_APPS_RIGHT: _("NVDA in both channels and applications on the right"),
 		}
 	
 	def getAppVolume(self) -> VolumeTupleT:
-		return {
-			SoundSplitState.OFF: (1.0, 1.0),
-			SoundSplitState.NVDA_LEFT: (0.0, 1.0),
-			SoundSplitState.NVDA_RIGHT: (1.0, 0.0),
-		}[self]
-	
+		if self == SoundSplitState.OFF or 'APPS_BOTH' in self.name:
+			return (1.0, 1.0)
+		elif 'APPS_LEFT' in self.name:
+			return (1.0, 0.0)
+		elif 'APPS_RIGHT' in self.name:
+			return (0.0, 1.0)
+		else:
+			raise RuntimeError
+
 	def getNVDAVolume(self) -> VolumeTupleT:
-		return {
-			SoundSplitState.OFF: (1.0, 1.0),
-			SoundSplitState.NVDA_LEFT: (1.0, 0.0),
-			SoundSplitState.NVDA_RIGHT: (0.0, 1.0),
-		}[self]
-
-
-@unique
-class SoundSplitToggleMode(DisplayStringIntEnum):
-	OFF_LEFT_RIGHT = 0
-	OFF_AND_NVDA_LEFT = 1
-	OFF_AND_NVDA_RIGHT = 2
-
-	@property
-	def _displayStringLabels(self) -> Dict[IntEnum, str]:
-		return {
-			# Translators: Sound split toggle mode
-			SoundSplitToggleMode.OFF_AND_NVDA_LEFT: _("Cycles through off and NVDA on the left"),
-			# Translators: Sound split toggle mode
-			SoundSplitToggleMode.OFF_AND_NVDA_RIGHT: _("Cycles through off and NVDA on the right"),
-			# Translators: Sound split toggle mode
-			SoundSplitToggleMode.OFF_LEFT_RIGHT: _("Cycles through off, NVDA on the left and NVDA on the right"),
-		}
-	
-	def getPossibleStates(self) -> List[SoundSplitState]:
-		result = [SoundSplitState.OFF]
-		if 'LEFT' in self.name:
-			result.append(SoundSplitState.NVDA_LEFT)
-		if 'RIGHT' in self.name:
-			result.append(SoundSplitState.NVDA_RIGHT)
-		return result
-	
-	def getClosestState(self, state: SoundSplitState) -> SoundSplitState:
-		states = self.getPossibleStates()
-		if state in states:
-			return state
-		return states[-1]
+		if self == SoundSplitState.OFF or 'NVDA_BOTH' in self.name:
+			return (1.0, 1.0)
+		elif 'NVDA_LEFT' in self.name:
+			return (1.0, 0.0)
+		elif 'NVDA_RIGHT' in self.name:
+			return (0.0, 1.0)
+		else:
+			raise RuntimeError
 
 
 sessionManager: audiopolicy.IAudioSessionManager2 = None
-activeCallback: Optional[comtypes.COMObject] = None
+activeCallback: comtypes.COMObject | None = None
 
 
 def initialize() -> None:
 	global sessionManager
-	sessionManager = getSessionManager()
+	try:
+		sessionManager = getSessionManager()
+	except _ctypes.COMError as e:
+		log.error("Could not initialize audio session manager! ", e)
+		return
 	if sessionManager is None:
 		log.error("Could not initialize audio session manager! ")
 		return
@@ -107,13 +99,15 @@ def initialize() -> None:
 
 @atexit.register
 def terminate():
+	global activeCallback
 	if nvwave.usingWasapiWavePlayer():
 		setSoundSplitState(SoundSplitState.OFF)
 		if activeCallback is not None:
 			unregisterCallback(activeCallback)
+	activeCallback = None
 
 
-def getDefaultAudioDevice(kind: EDataFlow = EDataFlow.eRender) -> Optional[mmdeviceapi.IMMDevice]:
+def getDefaultAudioDevice(kind: EDataFlow = EDataFlow.eRender) -> mmdeviceapi.IMMDevice | None:
 	deviceEnumerator = comtypes.CoCreateInstance(
 		CLSID_MMDeviceEnumerator,
 		mmdeviceapi.IMMDeviceEnumerator,
@@ -136,9 +130,9 @@ def getSessionManager() -> audiopolicy.IAudioSessionManager2:
 
 
 def applyToAllAudioSessions(
-		func: Callable[[audiopolicy.IAudioSessionControl2], NoReturn],
+		func: Callable[[audiopolicy.IAudioSessionControl2], None],
 		applyToFuture: bool = True,
-) -> Optional[comtypes.COMObject]:
+) -> comtypes.COMObject | None:
 	sessionEnumerator: audiopolicy.IAudioSessionEnumerator = sessionManager.GetSessionEnumerator()
 	for i in range(sessionEnumerator.GetCount()):
 		session: audiopolicy.IAudioSessionControl = sessionEnumerator.GetSession(i)
@@ -168,7 +162,8 @@ def setSoundSplitState(state: SoundSplitState) -> None:
 		unregisterCallback(activeCallback)
 		activeCallback = None
 	leftVolume, rightVolume = state.getAppVolume()
-
+	leftNVDAVolume, rightNVDAVolume = state.getNVDAVolume()
+	
 	def volumeSetter(session2: audiopolicy.IAudioSessionControl2) -> None:
 		channelVolume: audioclient.IChannelAudioVolume = session2.QueryInterface(audioclient.IChannelAudioVolume)
 		channelCount = channelVolume.GetChannelCount()
@@ -181,8 +176,8 @@ def setSoundSplitState(state: SoundSplitState) -> None:
 			channelVolume.SetChannelVolume(0, leftVolume, None)
 			channelVolume.SetChannelVolume(1, rightVolume, None)
 		else:
-			channelVolume.SetChannelVolume(1, leftVolume, None)
-			channelVolume.SetChannelVolume(0, rightVolume, None)
+			channelVolume.SetChannelVolume(0, leftNVDAVolume, None)
+			channelVolume.SetChannelVolume(1, rightNVDAVolume, None)
 
 	activeCallback = applyToAllAudioSessions(volumeSetter)
 
@@ -196,15 +191,14 @@ def toggleSoundSplitState() -> None:
 		)
 		ui.message(message)
 		return
-	toggleMode = SoundSplitToggleMode(config.conf['audio']['soundSplitToggleMode'])
 	state = SoundSplitState(config.conf['audio']['soundSplitState'])
-	allowedStates = toggleMode.getPossibleStates()
+	allowedStates: list[int] = json.loads(config.conf["audio"]["includedSoundSplitModes"])
 	try:
 		i = allowedStates.index(state)
 	except ValueError:
 		i = -1
 	i = (i + 1) % len(allowedStates)
-	newState = allowedStates[i]
+	newState = SoundSplitState(allowedStates[i])
 	setSoundSplitState(newState)
 	config.conf['audio']['soundSplitState'] = newState.value
 	ui.message(newState.displayString)
