@@ -67,6 +67,7 @@ from editableText import EditableText
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
+	from speech.types import SpeechSequence
 
 
 roleLabels: typing.Dict[controlTypes.Role, str] = {
@@ -2013,10 +2014,6 @@ Handlers are called without arguments.
 # The list containing the regions that will be shown in braille when the speak function is called
 # and the braille mode is set to speech output
 _regions: list[TextRegion] = []
-
-
-if typing.TYPE_CHECKING:
-	from speech.types import SpeechSequence
 
 
 def _showSpeechInBraille(speechSequence: "SpeechSequence"):
