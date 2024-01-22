@@ -613,6 +613,11 @@ def main():
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
 	import wx
 	import six
+
+	# Disables wx logging in secure mode due to a security issue: GHSA-h7pp-6jqw-g3pj
+	# This is due to the wx.LogSysError dialog allowing a file explorer dialog to be opened.
+	wx.Log.EnableLogging(not globalVars.appArgs.secure)
+
 	log.info("Using wx version %s with six version %s"%(wx.version(), six.__version__))
 	class App(wx.App):
 		def OnAssert(self,file,line,cond,msg):

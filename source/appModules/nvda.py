@@ -256,16 +256,3 @@ class AppModule(appModuleHandler.AppModule):
 		elif self.isNvdaPythonConsoleUIOutputCtrl(obj):
 			clsList.insert(0, NvdaPythonConsoleUIOutputClear)
 			clsList.insert(0, NvdaPythonConsoleUIOutputCtrl)
-
-	@gui.blockAction.when(
-		gui.blockAction.Context.SECURE_MODE,
-		gui.blockAction.Context.WINDOWS_LOCKED,
-	)
-	@script(gesture="kb:control+v")
-	def script_paste(self, gesture: "inputCore.InputGesture") -> None:
-		# This function has no description and does not appear in input gestures
-		# as it should not be modified by the user.
-		# This function processes the paste gesture when performed in NVDA windows for security reasons.
-		# When in secure mode, or while Windows is locked, the default paste behaviour is blocked.
-		# Refer to this NVDA security advisory for details: https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj
-		gesture.send()
