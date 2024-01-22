@@ -23,6 +23,7 @@ What's New in NVDA
 - Add-on Store:
   - When pressing ``ctrl+tab``, focus properly moves to the new current tab title. (#14986, @ABuffEr)
   -
+- In Adobe Reader, NVDA no longer ignores alternative text set on formulas in PDFs. (#12715)
 -
 
 
@@ -319,6 +320,18 @@ Code which imports from one of them, should instead import from the replacement 
 Use ``bdDetect.DeviceType.*`` instead. (#15772, @LeonarddeR).
 - The ``bdDetect.DETECT_USB`` and ``bdDetect.DETECT_BLUETOOTH`` constants have been deprecated with no public replacement. (#15772, @LeonarddeR).
 - Using ``gui.ExecAndPump`` is deprecated - please use ``systemUtils.ExecAndPump`` instead. (#15852, @lukaszgo1)
+-
+
+
+= 2023.3.2 =
+This is a patch release to fix a security issue.
+The security patch in 2023.3.1 was not resolved correctly.
+Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Security Fixes ==
+- The security patch in 2023.3.1 was not resolved correctly.
+Prevents possible system access and arbitrary code execution with system privileges for unauthenticated users.
+([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
 -
 
 
