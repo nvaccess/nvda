@@ -108,7 +108,7 @@ class BrailleMode(DisplayStringStrEnum):
 
 	@property
 	def _displayStringLabels(self):
-		return{
+		return {
 			# Translators: The label for a braille mode
 			BrailleMode.FOLLOW_CURSORS: _("follow cursors"),
 			# Translators: The label for a braille mode
