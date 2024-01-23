@@ -2100,11 +2100,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.ackTimerHandle = None
 		louisHelper.terminate()
 
-
 	# The list containing the regions that will be shown in braille when the speak function is called
 	# and the braille mode is set to speech output
 	_showSpeechInBrailleRegions: list[TextRegion] = []
-
 
 	def _showSpeechInBraille(self, speechSequence: "SpeechSequence"):
 		if config.conf["braille"]["mode"] == BrailleMode.FOLLOW_CURSORS.value:
@@ -2128,11 +2126,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		handler.mainBuffer.update()
 		handler.update()
 
-
 	def clearBrailleRegions(self, clearBrailleRegions: bool):
 		if clearBrailleRegions:
 			self._showSpeechInBrailleRegions.clear()
-
 
 	def getTether(self):
 		return self._tether
