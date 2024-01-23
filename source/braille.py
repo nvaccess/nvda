@@ -2025,7 +2025,8 @@ def _showSpeechInBraille(speechSequence: "SpeechSequence"):
 	text = " ".join([x for x in speechSequence if isinstance(x, str)])
 	currentRegions = False
 	if _regions:
-		text = " " + text
+		text = f" {text}"
+
 		currentRegions = True
 	region = TextRegion(text)
 	region.update()
