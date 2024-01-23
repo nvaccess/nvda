@@ -5,6 +5,7 @@
 
 
 from typing import Optional, Any
+from logHandler import log
 from comInterfaces import UIAutomationClient as UIA
 from ._remoteOps import highLevel
 from ._remoteOps import remoteAlgorithms
@@ -36,16 +37,16 @@ def msWord_getCustomAttributeValue(
 	)
 	return customAttribValue
 
-def collectHeadingsInTextRange(
+def collectAllHeadingsInTextRange(
 	textRange: UIA.IUIAutomationTextRange
 ) -> list[tuple[int, str, UIA.IUIAutomationElement]]:
 	headings = []
-	count = 10
-	while count > 0:
-		count -= 1
-		levels: list[int]
-		labels: list[str]
-		ranges: list[UIA.IUIAutomationTextRange]
+	count = 0
+	while count < 20:
+		count += 1
+		levels: list[int] = []
+		labels: list[str] = []
+		ranges: list[UIA.IUIAutomationTextRange] = []
 		try:
 			levels, labels, ranges = highLevel.execute(
 				remoteAlgorithms.remote_collectAllHeadingsInTextRange,
@@ -54,9 +55,41 @@ def collectHeadingsInTextRange(
 				dumpInstructions=True
 			)
 		except highLevel.InstructionLimitExceededException as e:
+			log.warning(f"{e}\n{count=}")
 			levels, labels, ranges = e.results
 		else:
-			count = 0
-		for heading in zip(levels, labels, ranges):
+			count = 20
+		textRanges = []
+		for index, punk in enumerate(ranges):
+			subrange = punk.QueryInterface(UIA.IUIAutomationTextRange)
+			textRanges.append(subrange)
+		for heading in zip(levels, labels, textRanges):
 			headings.append(heading)
 	return headings
+
+def findFirstHeadingInTextRange(
+	textRange: UIA.IUIAutomationTextRange, wantedLevel: int | None = None, reverse: bool = False
+) -> tuple[int, str, UIA.IUIAutomationElement] | None:
+	count = 0
+	while count < 20:
+		count += 1
+		try:
+			level, label, subrange = highLevel.execute(
+				remoteAlgorithms.remote_findFirstHeadingInTextRange,
+				textRange,
+				wantedLevel or 0,
+				reverse,
+				remoteLogging=False,
+				dumpInstructions=True
+			)
+		except highLevel.InstructionLimitExceededException as e:
+			log.warning(f"{e}\n{count=}")
+			continue
+		except Exception:
+			log.error("Could not execute remote function", exc_info=True)
+			raise
+		else:
+			if level == 0:
+				return None
+			subrange = subrange.QueryInterface(UIA.IUIAutomationTextRange)
+			return level, label, subrange

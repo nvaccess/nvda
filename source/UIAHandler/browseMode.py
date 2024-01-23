@@ -9,6 +9,7 @@ from comtypes import COMError
 from comtypes.automation import VARIANT
 import array
 import winUser
+import winVersion
 import UIAHandler
 import UIAHandler.remote
 from .utils import (
@@ -144,9 +145,14 @@ def UIATextAttributeQuicknavIterator(ItemClass,itemType,document,position,direct
 
 class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 
-	def __init__(self,itemType,document,position,level=0):
+	def __init__(self,itemType,document,position,label=None, level=0):
 		super(HeadingUIATextInfoQuickNavItem,self).__init__(itemType,document,position)
 		self.level=level
+		self._label = label
+
+	@property
+	def label(self):
+		return self._label or super().label
 
 	def isChild(self,parent):
 		if not isinstance(parent,HeadingUIATextInfoQuickNavItem):
@@ -161,13 +167,9 @@ def UIAHeadingQuicknavIterator(
 		direction: str = "next"
 ):
 	reverse = bool(direction == "previous")
+	wantedLevel = int(itemType[7:]) if len(itemType) > 7 else None
 	entireDocument = document.makeTextInfo(textInfos.POSITION_ALL)
-	import tones; tones.beep(550,50)
 	if position is None:
-		headings = UIAHandler.remote.collectHeadingsInTextRange(entireDocument._rangeObj)
-		for level, label, rangeObj in headings:
-			yield HeadingUIATextInfoQuickNavItem(itemType, document, rangeObj, level=level)
-		return
 		searchArea = entireDocument
 	else:
 		searchArea = position.copy()
@@ -175,6 +177,19 @@ def UIAHeadingQuicknavIterator(
 			searchArea.start = entireDocument.start
 		else:
 			searchArea.end = entireDocument.end
+	if winVersion.getWinVer() >= winVersion.WIN11:
+		if position is None:
+			headings = UIAHandler.remote.collectAllHeadingsInTextRange(searchArea._rangeObj)
+			for level, label, rangeObj in headings:
+				pos = document.makeTextInfo(rangeObj)
+				yield HeadingUIATextInfoQuickNavItem(itemType, document, pos, label=label, level=level)
+		else:
+			heading = UIAHandler.remote.findFirstHeadingInTextRange(searchArea._rangeObj, wantedLevel, reverse)
+			if heading is not None:
+				level, label, rangeObj = heading
+				pos = document.makeTextInfo(rangeObj)
+				yield HeadingUIATextInfoQuickNavItem(itemType, document, pos, label=label, level=level)
+		return
 	firstLoop=True
 	for subrange in iterUIARangeByUnit(searchArea._rangeObj, UIAHandler.TextUnit_Paragraph, reverse=reverse):
 		if firstLoop:
@@ -188,7 +203,6 @@ def UIAHeadingQuicknavIterator(
 		# In Python 3, comparing an int with a pointer raises a TypeError.
 		if isinstance(styleIDValue, int) and UIAHandler.StyleId_Heading1 <= styleIDValue <= UIAHandler.StyleId_Heading9:
 			foundLevel = (styleIDValue - UIAHandler.StyleId_Heading1) + 1
-			wantedLevel = int(itemType[7:]) if len(itemType) > 7 else None
 			if not wantedLevel or wantedLevel==foundLevel: 
 				tempInfo = document.makeTextInfo(subrange)
 				yield HeadingUIATextInfoQuickNavItem(itemType, document, tempInfo, level=foundLevel)

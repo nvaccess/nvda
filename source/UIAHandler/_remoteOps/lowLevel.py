@@ -4,21 +4,15 @@
 # Copyright (C) 2023-2023 NV Access Limited
 
 from __future__ import annotations
-from typing import Type
-from dataclasses import dataclass
 from ctypes import (
 	oledll,
 	byref,
 	c_void_p,
 	c_long,
 	c_ulong,
-	c_wchar,
-	c_double,
 	c_bool
 )
-import ctypes
 from comtypes.automation import VARIANT
-from comtypes import GUID
 import os
 import enum
 from UIAHandler import UIA

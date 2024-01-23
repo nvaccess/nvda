@@ -5,7 +5,6 @@
 
 
 from __future__ import annotations
-import typing
 from typing import (
 	Type,
 	Self,
@@ -14,8 +13,7 @@ from typing import (
 	Iterable,
 	Generic,
 	TypeVar,
-	cast,
-	ContextManager
+	cast
 )
 import types
 import inspect
@@ -40,7 +38,7 @@ import itertools
 import enum
 from UIAHandler import UIA
 from . import lowLevel
-from .lowLevel import OperandId, RelativeOffset 
+from .lowLevel import OperandId, RelativeOffset
 
 
 class c_long_enum(c_long):
@@ -51,12 +49,16 @@ class c_long_enum(c_long):
 
 
 _ctypeIntEnumCache: dict[Type[enum.IntEnum], Type[_SimpleCData]] = {}
+
+
 def _makeCtypeIntEnum(enumType: Type[enum.IntEnum]) -> Type[_SimpleCData]:
 	cachedCls = _ctypeIntEnumCache.get(enumType)
 	if cachedCls is not None:
 		return cachedCls
+
 	class cls(c_long_enum):
-			_enumType = enumType
+		_enumType = enumType
+
 	cls.__name__ = f"{cls.__name__}_{enumType.__name__}"
 	cast(Type[_SimpleCData], cls)
 	_ctypeIntEnumCache[enumType] = cls
@@ -64,13 +66,17 @@ def _makeCtypeIntEnum(enumType: Type[enum.IntEnum]) -> Type[_SimpleCData]:
 
 
 _RemoteEnumCache: dict[Type[enum.IntEnum], Type[RemoteInt]] = {}
+
+
 def _makeRemoteEnum(enumType: Type[enum.IntEnum]) -> Type[RemoteInt]:
 	cachedCls = _RemoteEnumCache.get(enumType)
 	if cachedCls is not None:
 		return cachedCls
+
 	class cls(RemoteInt):
 		LocalType = enumType
-		_ctype= _makeCtypeIntEnum(enumType)
+		_ctype = _makeCtypeIntEnum(enumType)
+
 	cls.__name__ = f"RemoteEnum_{enumType.__name__}"
 	cast(Type[RemoteInt], cls)
 	_RemoteEnumCache[enumType] = cls
@@ -100,8 +106,22 @@ def _getLocationString(frame: types.FrameType) -> str:
 	return locationString
 
 
+class Record:
+
+	def dumpRecord(self) -> str:
+		raise NotImplementedError()
+
+
 @dataclass
-class InstructionRecord:
+class MetaStringRecord(Record):
+	metaString: str
+
+	def dumpRecord(self) -> str:
+		return self.metaString
+
+
+@dataclass
+class InstructionRecord(Record):
 	instructionType: lowLevel.InstructionType
 	params: list[RemoteBaseObject | _SimpleCData | ctypes.Array | ctypes.Structure]
 	paramNames: list[str]
@@ -124,7 +144,7 @@ class InstructionRecord:
 			byteCode += paramBytes
 		return byteCode
 
-	def dumpInstruction(self) -> str:
+	def dumpRecord(self) -> str:
 		output = f"{self.instructionType.name}"
 		for index, param in enumerate(self.params):
 			paramName = self.paramNames[index]
@@ -212,7 +232,9 @@ class RemoteFuncWrapper:
 		return f"({', '.join([argsString, kwargsString])})"
 
 	def _execRawFunc(self, func, funcSelf, *args, **kwargs):
-		funcSelf.builder.addComment(f"Entering function {func.__qualname__}{self.generateArgsKwargsString(*args, **kwargs)}")
+		funcSelf.builder.addComment(
+			f"Entering function {func.__qualname__}{self.generateArgsKwargsString(*args, **kwargs)}"
+		)
 		res = func(funcSelf, *args, **kwargs)
 		funcSelf.builder.addComment(f"Exiting function {func.__qualname__}")
 		return res
@@ -245,12 +267,15 @@ class RemoteContextManager(RemoteFuncWrapper):
 	@contextlib.contextmanager
 	def _execRawFunc(self, func, funcSelf, *args, **kwargs):
 		context = contextlib.contextmanager(func)
-		funcSelf.builder.addComment(f"Entering context manager {func.__qualname__}{self.generateArgsKwargsString(*args, **kwargs)}")
+		funcSelf.builder.addComment(
+			f"Entering context manager {func.__qualname__}{self.generateArgsKwargsString(*args, **kwargs)}"
+		)
 		with context(funcSelf, *args, **kwargs) as val:
 			funcSelf.builder.addComment("Yielding back to caller")
 			yield val
 			funcSelf.builder.addComment(f"Reentering context manager {func.__qualname__}")
 		funcSelf.builder.addComment(f"Exiting context manager {func.__qualname__}")
+
 
 remoteContextManager = RemoteContextManager()
 
@@ -307,7 +332,7 @@ class RemoteBaseObject(_RemoteBase):
 			builder.addInstructionRecord(record, section=section)
 		return operandId
 
-	_section: str | None = None 
+	_section: str | None = None
 	_defaultSectionForInitInstructions: str = "main"
 
 	def bind(self, builder: RemoteOperationBuilder, section: str | None = None):
@@ -443,11 +468,15 @@ class RemoteValue(RemoteSetable, RemoteVariantSupportedType, Generic[LocalTypeVa
 
 	LocalType: Type[LocalTypeVar]
 	_initialValue: LocalTypeVar | None = None
-	_defaultInitialValue: LocalTypeVar | None = None
+
+	def _generateDefaultInitialValue(self) -> LocalTypeVar:
+		return self.LocalType()
 
 	def __init__(self, initialValue: LocalTypeVar | None = None, const=False):
 		if initialValue is not None and not isinstance(initialValue, self.LocalType):
-			raise TypeError(f"initialValue must be of type {self.LocalType.__name__} not {type(initialValue).__name__}")
+			raise TypeError(
+				f"initialValue must be of type {self.LocalType.__name__} not {type(initialValue).__name__}"
+			)
 		super().__init__()
 		self._mutable = not const
 		if const:
@@ -465,10 +494,7 @@ class RemoteValue(RemoteSetable, RemoteVariantSupportedType, Generic[LocalTypeVa
 	def initialValue(self) -> LocalTypeVar:
 		if self._initialValue is not None:
 			return self._initialValue
-		defaultInitialValue = self._defaultInitialValue
-		if defaultInitialValue is not None:
-			return defaultInitialValue
-		raise RuntimeError("No initial or default value")
+		return self._generateDefaultInitialValue()
 
 	def _initOperand(self, builder: RemoteOperationBuilder, section: str) -> OperandId:
 		operandId = builder._getNewOperandId()
@@ -494,6 +520,7 @@ class RemoteValue(RemoteSetable, RemoteVariantSupportedType, Generic[LocalTypeVa
 	@remoteFunc
 	def __ne__(self, other: Self) -> RemoteBool:
 		return self._doCompare(lowLevel.ComparisonType.NotEqual, other)
+
 
 class CacheableRemoteValue(RemoteValue[LocalTypeVar], Generic[LocalTypeVar]):
 
@@ -658,6 +685,7 @@ class RemoteUint(RemoteNumber[int]):
 	LocalType = int
 	_defaultInitialValue = 0
 
+
 class RemoteInt(RemoteNumber[int]):
 	_isTypeInstruction = lowLevel.InstructionType.IsInt
 	_newInstruction = lowLevel.InstructionType.NewInt
@@ -681,7 +709,10 @@ class RemoteIntEnum(RemoteInt):
 		super().__init__(initialValue, const=const)
 
 	def _generateCacheKey(self):
-		return (type(self), self.initialValue.value if isinstance(self.initialValue, enum.IntEnum) else self.initialValue)
+		return (
+			type(self),
+			self.initialValue.value if isinstance(self.initialValue, enum.IntEnum) else self.initialValue
+		)
 
 	@remoteFunc
 	def set(self, other: Self):
@@ -835,6 +866,14 @@ class RemoteGuid(CacheableRemoteValue[GUID]):
 
 class RemoteExtensionTarget(RemoteVariantSupportedType):
 
+	def _initOperand(self, builder: RemoteOperationBuilder, section: str) -> OperandId:
+		operandId = builder._getNewOperandId()
+		builder.addInstruction(
+			lowLevel.InstructionType.NewNull,
+			result=operandId
+		)
+		return operandId
+
 	@remoteFunc
 	def isNull(self):
 		return RemoteVariant.fromOperandId(self.builder, self.operandId)._isType(RemoteNull)
@@ -857,18 +896,20 @@ class RemoteExtensionTarget(RemoteVariantSupportedType):
 			target=self,
 			extensionId=extensionGuid,
 			paramCount=c_ulong(len(params)),
-			**{f"param{index}": param for index, param  in enumerate(params, start=1)}
+			**{f"param{index}": param for index, param in enumerate(params, start=1)}
 		)
 
 
-class RemoteElement(RemoteExtensionTarget, RemoteValue[UIA.IUIAutomationElement]):
+class RemoteElement(RemoteExtensionTarget, RemoteValue[POINTER(UIA.IUIAutomationElement)]):
 	_isTypeInstruction = lowLevel.InstructionType.IsElement
-	LocalType = UIA.IUIAutomationElement
+	LocalType = POINTER(UIA.IUIAutomationElement)
 
 	def _initOperand(self, builder: RemoteOperationBuilder, section: str) -> OperandId:
-		if section != "imports":
-			raise RuntimeError("RemoteElement can only be initialized in the imports section")
-		return builder.importElement(self.initialValue)
+		if self.initialValue:
+			if section != "imports":
+				raise RuntimeError("RemoteElement can only be initialized in the imports section")
+			return builder.importElement(self.initialValue)
+		return super()._initOperand(builder, section)
 
 	@remoteFunc
 	def getPropertyValue(
@@ -918,13 +959,15 @@ class RemoteElement(RemoteExtensionTarget, RemoteValue[UIA.IUIAutomationElement]
 		return self._navigate(lowLevel.NavigationDirection.PreviousSibling)
 
 
-class RemoteTextRange(RemoteExtensionTarget, RemoteValue[UIA.IUIAutomationTextRange]):
-	LocalType = UIA.IUIAutomationTextRange
+class RemoteTextRange(RemoteExtensionTarget, RemoteValue[POINTER(UIA.IUIAutomationTextRange)]):
+	LocalType = POINTER(UIA.IUIAutomationTextRange)
 
 	def _initOperand(self, builder: RemoteOperationBuilder, section: str) -> OperandId:
-		if section != "imports":
-			raise RuntimeError("RemoteTextRange can only be initialized in the imports section")
-		return builder.importTextRange(self.initialValue)
+		if self.initialValue:
+			if section != "imports":
+				raise RuntimeError("RemoteTextRange can only be initialized in the imports section")
+			return builder.importTextRange(self.initialValue)
+		return super()._initOperand(builder, section)
 
 	@remoteFunc
 	def clone(self):
@@ -1000,7 +1043,9 @@ class RemoteTextRange(RemoteExtensionTarget, RemoteValue[UIA.IUIAutomationTextRa
 		return result
 
 	@remoteFunc
-	def compareEndpoints(self, thisEndpoint: RemoteInt, otherRange: RemoteTextRange, otherEndpoint: RemoteInt) -> RemoteInt:
+	def compareEndpoints(
+		self, thisEndpoint: RemoteInt, otherRange: RemoteTextRange, otherEndpoint: RemoteInt
+	) -> RemoteInt:
 		result = RemoteInt.fromOperandId(self.builder, self.builder._getNewOperandId())
 		self.builder.addInstruction(
 			lowLevel.InstructionType.TextRangeCompareEndpoints,
@@ -1012,8 +1057,7 @@ class RemoteTextRange(RemoteExtensionTarget, RemoteValue[UIA.IUIAutomationTextRa
 		)
 		return result
 
-	@remoteFunc
-	def getLogicalAdapter(self, reverse: RemoteBool) -> RemoteTextRangeLogicalAdapter:
+	def getLogicalAdapter(self, reverse=False) -> RemoteTextRangeLogicalAdapter:
 		obj = RemoteTextRangeLogicalAdapter(self, reverse=reverse)
 		return obj
 
@@ -1023,80 +1067,70 @@ class _RemoteTextRangeEndpoint(_RemoteBase):
 	def __init__(self, textRangeLA: RemoteTextRangeLogicalAdapter, isStart: bool):
 		self._la = textRangeLA
 		self.bind(textRangeLA.builder)
-		self._endpoint = RemoteIntEnum(lowLevel.TextPatternRangeEndpoint.Start)
-		self._endpoint.bind(self.builder)
-		with self.builder.ifBlock(self._la.isReversed):
-			self._endpoint.set(lowLevel.TextPatternRangeEndpoint.End)
+		self._endpoint = (
+			lowLevel.TextPatternRangeEndpoint.Start
+			if isStart ^ self.isReversed
+			else lowLevel.TextPatternRangeEndpoint.End
+		)
 
 	@property
 	def textRange(self: _RemoteTextRangeEndpoint) -> RemoteTextRange:
 		return self._la.textRange
 
 	@property
-	def isReversed(self: _RemoteTextRangeEndpoint) -> RemoteBool:
+	def isReversed(self: _RemoteTextRangeEndpoint) -> bool:
 		return self._la.isReversed
 
 	@property
-	def endpoint(self: _RemoteTextRangeEndpoint) -> RemoteInt:
+	def endpoint(self: _RemoteTextRangeEndpoint) -> lowLevel.TextPatternRangeEndpoint:
 		return self._endpoint
 
-	@remoteFunc
 	def compareWith(self, other: _RemoteTextRangeEndpoint) -> RemoteInt:
 		res = self.textRange.compareEndpoints(self.endpoint, other.textRange, other.endpoint)
 		if self.isReversed:
 			res *= -1
 		return res
 
-	@remoteFunc_mutable
 	def moveTo(self, other: _RemoteTextRangeEndpoint):
 		self.textRange.moveEndpointByRange(self.endpoint, other.textRange, other.endpoint)
 
-	@remoteFunc_mutable
 	def moveByUnit(self, unit: RemoteInt, count: int | RemoteInt) -> RemoteInt:
-		with self.builder.ifBlock(self.isReversed):
-			res = self.textRange.moveEndpointByUnit(self.endpoint, unit, count * -1)
-		with self.builder.elseBlock():
-			res = self.textRange.moveEndpointByUnit(self.endpoint, unit, count)
+		realCount = (count * -1) if self.isReversed else count
+		res = self.textRange.moveEndpointByUnit(self.endpoint, unit, realCount)
 		return res
 
-	@remoteFunc
 	def __lt__(self, other: _RemoteTextRangeEndpoint) -> RemoteBool:
 		return self.compareWith(other).__lt__(0)
 
-	@remoteFunc
 	def __le__(self, other: _RemoteTextRangeEndpoint) -> RemoteBool:
 		return self.compareWith(other).__le__(0)
 
-	@remoteFunc
 	def __gt__(self, other: _RemoteTextRangeEndpoint) -> RemoteBool:
 		return self.compareWith(other).__gt__(0)
 
-	@remoteFunc
 	def __ge__(self, other: _RemoteTextRangeEndpoint) -> RemoteBool:
 		return self.compareWith(other).__ge__(0)
 
-	@remoteFunc
 	def __eq__(self, other: _RemoteTextRangeEndpoint) -> RemoteBool:
 		return self.compareWith(other) == 0
 
-	@remoteFunc
 	def __ne__(self, other: _RemoteTextRangeEndpoint) -> RemoteBool:
-		return (self == other) == False
+		return (self == other).inverse()
 
 
 class RemoteTextRangeLogicalAdapter(_RemoteBase):
 
-	def __init__(self, textRange: RemoteTextRange, reverse: RemoteBool):
+	def __init__(self, textRange: RemoteTextRange, reverse=False):
 		self.bind(textRange.builder)
 		self._textRange = textRange
-		self._isReversed = reverse.copy()
+		self._isReversed = reverse
 
 	@property
 	def textRange(self) -> RemoteTextRange:
 		return self._textRange
 
 	@property
-	def isReversed(self) -> RemoteBool:
+	def isReversed(self) -> bool:
 		return self._isReversed
 
 	@property
@@ -1119,48 +1153,43 @@ class RemoteTextRangeLogicalAdapter(_RemoteBase):
 	def end(self, value: _RemoteTextRangeEndpoint):
 		self.end.moveTo(value)
 
-	@remoteFunc
 	def clone(self):
 		return self.textRange.clone().getLogicalAdapter(self.isReversed)
 
 
-class InstructionList(list[InstructionRecord]):
+class RecordList:
 
-	_byteCodeCache: bytes | None = None
-	_isModified: bool = False
-	_metaStringsByInstructionIndex: dict[int, list[str]]
+	_allRecords: list[Record]
+	_instructionRecords: list[InstructionRecord]
 
 	def __init__(self):
 		super().__init__()
-		self._metaStringsByInstructionIndex = {}
+		self._allRecords = []
+		self._instructionRecords = []
 
-	def prependMetaString(self, instructionIndex: int, comment: str):
-		if instructionIndex not in self._metaStringsByInstructionIndex:
-			self._metaStringsByInstructionIndex[instructionIndex] = []
-		self._metaStringsByInstructionIndex[instructionIndex].append(comment)
+	def addMetaStringRecord(self, record: MetaStringRecord):
+		self._allRecords.append(record)
 
-	def getPrependedMetaStrings(self, instructionIndex: int) -> list[str]:
-		return self._metaStringsByInstructionIndex.get(instructionIndex, [])
-
-	def addInstructionRecord(self, record: InstructionRecord, section: str = "main") -> int:
-		if record.locationString is None:
-			frame = inspect.currentframe()
-			if frame:
-				frame = frame.f_back
-				if frame:
-					record.locationString = _getLocationString(frame)
-		self.append(record)
-		self._isModified = True
-		return len(self) - 1
+	def addInstructionRecord(self, record: InstructionRecord) -> int:
+		self._allRecords.append(record)
+		if isinstance(record, InstructionRecord):
+			self._instructionRecords.append(record)
+		return len(self._instructionRecords) - 1
 
 	def getByteCode(self):
-		if not self._isModified and self._byteCodeCache is not None:
-			return self._byteCodeCache
 		byteCode = b''
-		for instruction in self:
+		for instruction in self._instructionRecords:
 			byteCode += instruction.getByteCode()
-		self._byteCodeCache = byteCode
 		return byteCode
+
+	def getInstructionRecord(self, index) -> InstructionRecord:
+		return self._instructionRecords[index]
+
+	def getInstructionCount(self) -> int:
+		return len(self._instructionRecords)
+
+	def iterRecords(self) -> Iterable[Record]:
+		return iter(self._allRecords)
 
 
 class RemoteOperationBuilder:
@@ -1171,23 +1200,24 @@ class RemoteOperationBuilder:
 		self._ro = ro
 		self._scopeJustExited: RemoteScope | None = None
 		sectionNames = ["imports", "globals", "main"]
-		self._instructionListBySection: dict[str, InstructionList] = {
-			sectionName: InstructionList() for sectionName in sectionNames
+		self._recordListBySection: dict[str, RecordList] = {
+			sectionName: RecordList() for sectionName in sectionNames
 		}
 		self._remotedArgCache: dict[object, OperandId] = {}
 		self.operandIdGen = itertools.count(start=1)
 		self._results = None
 		self._loggingEnablede = remoteLogging
 		if remoteLogging:
+			self.addComment("Logger object", section="globals")
 			self._log: RemoteString = RemoteString("")
-			self._log.bind(self)
+			self._log.bind(self, section="globals")
 
 	def _getNewOperandId(self) -> OperandId:
 		operandId = OperandId(next(self.operandIdGen))
 		return operandId
 
-	def getInstructionList(self, section: str) -> InstructionList:
-		return self._instructionListBySection[section]
+	def getRecordList(self, section: str) -> RecordList:
+		return self._recordListBySection[section]
 
 	def addInstruction(
 		self,
@@ -1198,15 +1228,15 @@ class RemoteOperationBuilder:
 		return self.addInstructionRecord(record)
 
 	def addInstructionRecord(self, record: InstructionRecord, section: str = "main") -> int:
-		instructionsList = self.getInstructionList(section)
-		index = instructionsList.addInstructionRecord(record, section)
+		recordList = self.getRecordList(section)
+		index = recordList.addInstructionRecord(record)
 		self._scopeJustExited = None
 		return index
 
 	def _addMetaString(self, metaString: str, section: str):
-		instructions = self.getInstructionList(section)
-		instructionIndex = len(instructions)
-		instructions.prependMetaString(instructionIndex, metaString)
+		record = MetaStringRecord(metaString)
+		recordList = self.getRecordList(section)
+		recordList.addMetaStringRecord(record)
 
 	def addComment(self, comment: str, section: str = "main"):
 		self._addMetaString(f"# {comment}", section)
@@ -1227,24 +1257,25 @@ class RemoteOperationBuilder:
 		return operandId
 
 	def getLastInstructionIndex(self, section: str = "main") -> int:
-		instructions = self.getInstructionList(section)
-		return len(instructions) - 1
+		records = self.getRecordList(section)
+		return records.getInstructionCount() - 1
 
 	def getNextInstructionIndex(self, section: str = "main") -> int:
-		instructions = self.getInstructionList(section)
-		return len(instructions)
+		records = self.getRecordList(section)
+		return records.getInstructionCount()
 
-	def getInstruction(self, instructionIndex: int, section: str = "main") -> InstructionRecord:
-		instructions = self.getInstructionList(section)
-		return instructions[instructionIndex]
+	def getInstruction(self, index: int, section: str = "main") -> InstructionRecord:
+		records = self.getRecordList(section)
+		return records.getInstructionRecord(index)
 
-	def lookupInstructionByGlobalIndex(self, instructionIndex: int) -> InstructionRecord:
-		instructions = [
-			instruction
-			for instructionList in self._instructionListBySection.values()
-			for instruction in instructionList
-		]
-		return instructions[instructionIndex]
+	def lookupInstructionByGlobalIndex(self, index: int) -> InstructionRecord:
+		baseIndex = 0
+		for records in self._recordListBySection.values():
+			instructionCount = records.getInstructionCount()
+			if baseIndex + instructionCount > index:
+				return records.getInstructionRecord(index - baseIndex)
+			baseIndex += instructionCount
+		raise IndexError(f"Instruction index {index} out of range")
 
 	def ifBlock(self, condition: RemoteBool):
 		return RemoteIfBlockBuilder(self, condition)
@@ -1309,16 +1340,14 @@ class RemoteOperationBuilder:
 	def dumpInstructions(self) -> str:
 		output = "--- Instructions start ---\n"
 		globalInstructionIndex = 0
-		for sectionName, instructions in self._instructionListBySection.items():
+		for sectionName, records in self._recordListBySection.items():
 			output += f"{sectionName}:\n"
-			for localInstructionIndex, instruction in enumerate(instructions):
-				comments = instructions.getPrependedMetaStrings(localInstructionIndex)
-				for comment in comments:
-					output += f"{comment}\n"
-				output += f"{globalInstructionIndex}: "
-				output += instruction.dumpInstruction()
+			for record in records.iterRecords():
+				if isinstance(record, InstructionRecord):
+					output += f"{globalInstructionIndex}: "
+					globalInstructionIndex += 1
+				output += record.dumpRecord()
 				output += "\n"
-				globalInstructionIndex += 1
 		output += "--- Instructions end ---"
 		return output
 
