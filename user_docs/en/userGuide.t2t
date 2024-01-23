@@ -915,12 +915,14 @@ Also, although the application will try its best to match the native selection t
 However, for scenarios where you wish to copy an entire table or paragraph of rich content, this feature should prove useful.
  
 + Reading Mathematical Content +[ReadingMath]
-Using MathPlayer 4 from Design Science, NVDA can read and interactively navigate supported mathematical content.
-This requires that MathPlayer 4 is installed on the computer.
-MathPlayer is available as a free download from the [MathPlayer information page https://info.wiris.com/mathplayer-info].
-After installing MathPlayer, restart NVDA.
-
-NVDA supports the following types of mathematical content:
+NVDA can read and navigate mathematical content on the web and in other applications, providing access in both speech and braille. 
+However, in order for NVDA to read and interact with mathematical content, you will first need to install a Math component for NvDA.
+There are several NVDA add-ons available in the NVDA Add-on Store that provide support for math, including the [MathCAT NVDA add-on https://nsoiffer.github.io/MathCAT/] and [Access8Math https://github.com/tsengwoody/Access8Math]. 
+Please refer to the [Add-on Store section #AddonsManager] to learn how to browse and install available add-ons in NVDA.
+NVDA also can make use of the older [MathPlayer https://info.wiris.com/mathplayer-info] software from Wiris if found on your system, though this software is no longer maintained.
+  
+++ Supported math content ++[SupportedMathContent]
+With an appropriate math component installed, NVDA supports the following types of mathematical content:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer and Google Chrome.
 - Microsoft Word 365 Modern Math Equations via UI automation:
 NVDA is able to read and interact with math equations in Microsoft Word 365/2016 build 14326 and higher.
@@ -959,14 +961,28 @@ By default, the review cursor follows the system caret, so you can usually use t
 | Interact with math content | NVDA+alt+m | Begins interaction with math content. |
 %kc:endInclude
 
-At this point, you can use MathPlayer commands such as the arrow keys to explore the expression.
+At this point, NVDA will enter Math mode, where you can use commands such as the arrow keys to explore the expression.
 For example, you can move through the expression with the left and right arrow keys and zoom into a portion of the expression such as a fraction using the down arrow key.
-Please see the [MathPlayer documentation https://docs.wiris.com/mathplayer/en/mathplayer-user-manual.html] for further information.
 
 When you wish to return to the document, simply press the escape key.
 
+For more information on available commands and preferences for reading and navigating within math content, please refer to the documentation for your particular math component you have installed.
+- [MathCAT documentation https://nsoiffer.github.io/MathCAT/users.html]
+- [Access8Math documentation https://github.com/tsengwoody/Access8Math]
+- [MathPlayer documentation https://docs.wiris.com/mathplayer/en/mathplayer-user-manual.html]
+-
+
 Sometimes mathematical content might be displayed as a button or other type of element which, when activated, can display a dialog or more information related to the formula.
 To activate the button or the element containing the formula, press ctrl+enter.
+
+++ Installing MathPlayer ++[InstallingMathPlayer]
+Although it is generally recommended to use one of the newer NVDA add-ons to support math in NVDA, in certain limited scenarios MathPlayer may still be a more suitable choice.
+E.g. MathPlayer may support a particular language or Braille code that is unsupported in newer add-ons.
+MathPlayer is available for free from the Wiris website.
+[Download MathPlayer https://downloads.wiris.com/mathplayer/MathPlayerSetup.exe].
+After installing MathPlayer, you will need to restart NVDA. 
+Please note that information about MathPlayer may state that it is only for older browsers such as Internet Explorer 8.
+This is only referring to using MathPlayer to display mathematical content visually, and can be ignored by those using it to read or navigate math with NVDA.
 
 + Braille +[Braille]
 If you own a braille display, NVDA can display information in braille.
@@ -1609,7 +1625,7 @@ This can be useful if it is hard to distinguish between pronunciation of symbols
 The delayed character description will be cancelled if other text is spoken during that time, or if you press the ``control`` key.
 
 ==== Modes available in the Cycle speech mode command ====[SpeechModesDisabling]
-This checkable list allows selecting which speech modes are included when cycling between them using ``NVDA+s``.
+This checkable list allows selecting which [speech modes #SpeechModes] are included when cycling between them using ``NVDA+s``.
 Modes which are unchecked are excluded.
 By default all modes are included.
 
