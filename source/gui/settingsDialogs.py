@@ -2733,7 +2733,7 @@ class AudioPanel(SettingsPanel):
 			nvdaControls.CustomCheckListBox,
 			choices=[mode.displayString for mode in self._allSoundSplitModes]
 		)
-		self.bindHelpEvent("customizeSoundSplitModes", self.soundSplitModesList)
+		self.bindHelpEvent("CustomizeSoundSplitModes", self.soundSplitModesList)
 		includedModes: list[int] = json.loads(config.conf["audio"]["includedSoundSplitModes"])
 		self.soundSplitModesList.Checked = [
 			mIndex for mIndex in range(len(self._allSoundSplitModes)) if mIndex in includedModes
