@@ -2019,28 +2019,28 @@ _showSpeechInBrailleRegions: list[TextRegion] = []
 def _showSpeechInBraille(speechSequence: "SpeechSequence"):
 	if config.conf["braille"]["mode"] == BrailleMode.FOLLOW_CURSORS.value:
 		return
-	regionsText = "".join([i.rawText for i in _regions])
+	regionsText = "".join([i.rawText for i in _showSpeechInBrailleRegions])
 	if len(regionsText) > 100000:
 		return
 	text = " ".join([x for x in speechSequence if isinstance(x, str)])
 	currentRegions = False
-	if _regions:
+	if _showSpeechInBrailleRegions:
 		text = f" {text}"
 
 		currentRegions = True
 	region = TextRegion(text)
 	region.update()
-	_regions.append(region)
-	handler.mainBuffer.regions = _regions.copy()
+	_showSpeechInBrailleRegions.append(region)
+	handler.mainBuffer.regions = _showSpeechInBrailleRegions.copy()
 	if not currentRegions:
-		handler.mainBuffer.focus(_regions[0])
+		handler.mainBuffer.focus(_showSpeechInBrailleRegions[0])
 	handler.mainBuffer.update()
 	handler.update()
 
 
 def clearBrailleRegions(clearBrailleRegions: bool):
 	if clearBrailleRegions:
-		_regions.clear()
+		_showSpeechInBrailleRegions.clear()
 
 
 class BrailleHandler(baseObject.AutoPropertyObject):
@@ -2799,14 +2799,14 @@ def pumpAll():
 	handler._handlePendingUpdate()
 
 def terminate():
-	global handler
-	handler.terminate()
-	handler = None
 	# noqa: F401 avoid module level import to prevent cyclical dependency
 	# between speech and braille
 	from speech.extensions import pre_speech, pre_speechCanceled
-	pre_speechCanceled.unRegister(clearBrailleRegions)
-	pre_speech.unRegister(_showSpeechInBraille)
+	pre_speechCanceled.unregister(clearBrailleRegions)
+	pre_speech.unregister(_showSpeechInBraille)
+	global handler
+	handler.terminate()
+	handler = None
 
 
 class BrailleDisplayDriver(driverHandler.Driver):
