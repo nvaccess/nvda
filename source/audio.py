@@ -16,7 +16,6 @@ import comtypes
 import config
 from enum import IntEnum, unique
 import globalVars
-import json
 from logHandler import log
 import nvwave
 from typing import Callable
@@ -163,7 +162,7 @@ def setSoundSplitState(state: SoundSplitState) -> None:
 		activeCallback = None
 	leftVolume, rightVolume = state.getAppVolume()
 	leftNVDAVolume, rightNVDAVolume = state.getNVDAVolume()
-	
+
 	def volumeSetter(session2: audiopolicy.IAudioSessionControl2) -> None:
 		channelVolume: audioclient.IChannelAudioVolume = session2.QueryInterface(audioclient.IChannelAudioVolume)
 		channelCount = channelVolume.GetChannelCount()
@@ -192,7 +191,7 @@ def toggleSoundSplitState() -> None:
 		ui.message(message)
 		return
 	state = SoundSplitState(config.conf['audio']['soundSplitState'])
-	allowedStates: list[int] = json.loads(config.conf["audio"]["includedSoundSplitModes"])
+	allowedStates: list[int] = config.conf["audio"]["includedSoundSplitModes"]
 	try:
 		i = allowedStates.index(state)
 	except ValueError:

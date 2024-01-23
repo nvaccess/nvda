@@ -78,7 +78,6 @@ import weakref
 import time
 import keyLabels
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
-import json
 
 #: The size that settings panel text descriptions should be wrapped at.
 # Ensure self.scaleSize is used to adjust for OS scaling adjustments.
@@ -2734,7 +2733,7 @@ class AudioPanel(SettingsPanel):
 			choices=[mode.displayString for mode in self._allSoundSplitModes]
 		)
 		self.bindHelpEvent("CustomizeSoundSplitModes", self.soundSplitModesList)
-		includedModes: list[int] = json.loads(config.conf["audio"]["includedSoundSplitModes"])
+		includedModes: list[int] = config.conf["audio"]["includedSoundSplitModes"]
 		self.soundSplitModesList.Checked = [
 			mIndex for mIndex in range(len(self._allSoundSplitModes)) if mIndex in includedModes
 		]
@@ -2786,11 +2785,11 @@ class AudioPanel(SettingsPanel):
 		index = self.soundSplitComboBox.GetSelection()
 		config.conf["audio"]["soundSplitState"] = index
 		audio.setSoundSplitState(audio.SoundSplitState(index))
-		config.conf["audio"]["includedSoundSplitModes"] = json.dumps([
+		config.conf["audio"]["includedSoundSplitModes"] = [
 			mIndex
 			for mIndex in range(len(self._allSoundSplitModes))
 			if mIndex in self.soundSplitModesList.CheckedItems
-		])
+		]
 		if audioDucking.isAudioDuckingSupported():
 			index = self.duckingList.GetSelection()
 			config.conf["audio"]["audioDuckingMode"] = index
