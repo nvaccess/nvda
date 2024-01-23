@@ -2013,7 +2013,7 @@ Handlers are called without arguments.
 
 # The list containing the regions that will be shown in braille when the speak function is called
 # and the braille mode is set to speech output
-_regions: list[TextRegion] = []
+_showSpeechInBrailleRegions: list[TextRegion] = []
 
 
 def _showSpeechInBraille(speechSequence: "SpeechSequence"):
