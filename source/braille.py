@@ -2011,38 +2011,6 @@ Handlers are called without arguments.
 """
 
 
-# The list containing the regions that will be shown in braille when the speak function is called
-# and the braille mode is set to speech output
-_showSpeechInBrailleRegions: list[TextRegion] = []
-
-
-def _showSpeechInBraille(speechSequence: "SpeechSequence"):
-	if config.conf["braille"]["mode"] == BrailleMode.FOLLOW_CURSORS.value:
-		return
-	regionsText = "".join([i.rawText for i in _showSpeechInBrailleRegions])
-	if len(regionsText) > 100000:
-		return
-	text = " ".join([x for x in speechSequence if isinstance(x, str)])
-	currentRegions = False
-	if _showSpeechInBrailleRegions:
-		text = f" {text}"
-
-		currentRegions = True
-	region = TextRegion(text)
-	region.update()
-	_showSpeechInBrailleRegions.append(region)
-	handler.mainBuffer.regions = _showSpeechInBrailleRegions.copy()
-	if not currentRegions:
-		handler.mainBuffer.focus(_showSpeechInBrailleRegions[0])
-	handler.mainBuffer.update()
-	handler.update()
-
-
-def clearBrailleRegions(clearBrailleRegions: bool):
-	if clearBrailleRegions:
-		_showSpeechInBrailleRegions.clear()
-
-
 class BrailleHandler(baseObject.AutoPropertyObject):
 	# TETHER_AUTO, TETHER_FOCUS, TETHER_REVIEW and tetherValues
 	# are deprecated, but remain to retain API backwards compatibility
@@ -2101,8 +2069,19 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.ackTimerHandle = winKernel.createWaitableTimer()
 
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
+		# noqa: F401 avoid module level import to prevent cyclical dependency
+		# between speech and braille
+		from speech.extensions import pre_speech, pre_speechCanceled
+		pre_speech.register(self._showSpeechInBraille)
+		pre_speechCanceled.register(self.clearBrailleRegions)
+
 
 	def terminate(self):
+		# noqa: F401 avoid module level import to prevent cyclical dependency
+		# between speech and braille
+		from speech.extensions import pre_speech, pre_speechCanceled
+		pre_speechCanceled.unregister(self.clearBrailleRegions)
+		pre_speech.unregister(self._showSpeechInBraille)
 		self._disableDetection()
 		if self._messageCallLater:
 			self._messageCallLater.Stop()
@@ -2120,6 +2099,40 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			winKernel.closeHandle(self.ackTimerHandle)
 			self.ackTimerHandle = None
 		louisHelper.terminate()
+
+
+	# The list containing the regions that will be shown in braille when the speak function is called
+	# and the braille mode is set to speech output
+	_showSpeechInBrailleRegions: list[TextRegion] = []
+
+
+	def _showSpeechInBraille(self, speechSequence: "SpeechSequence"):
+		if config.conf["braille"]["mode"] == BrailleMode.FOLLOW_CURSORS.value:
+			return
+		_showSpeechInBrailleRegions = self._showSpeechInBrailleRegions
+		regionsText = "".join([i.rawText for i in _showSpeechInBrailleRegions])
+		if len(regionsText) > 100000:
+			return
+		text = " ".join([x for x in speechSequence if isinstance(x, str)])
+		currentRegions = False
+		if _showSpeechInBrailleRegions:
+			text = f" {text}"
+
+			currentRegions = True
+		region = TextRegion(text)
+		region.update()
+		_showSpeechInBrailleRegions.append(region)
+		self.mainBuffer.regions = _showSpeechInBrailleRegions.copy()
+		if not currentRegions:
+			handler.mainBuffer.focus(_showSpeechInBrailleRegions[0])
+		handler.mainBuffer.update()
+		handler.update()
+
+
+	def clearBrailleRegions(self, clearBrailleRegions: bool):
+		if clearBrailleRegions:
+			self._showSpeechInBrailleRegions.clear()
+
 
 	def getTether(self):
 		return self._tether
@@ -2788,22 +2801,12 @@ def initialize():
 	if newDriverName:
 		config.conf["braille"]["display"] = newDriverName
 	handler.setDisplayByName(config.conf["braille"]["display"])
-	# noqa: F401 avoid module level import to prevent cyclical dependency
-	# between speech and braille
-	from speech.extensions import pre_speech, pre_speechCanceled
-	pre_speech.register(_showSpeechInBraille)
-	pre_speechCanceled.register(clearBrailleRegions)
 
 def pumpAll():
 	"""Runs tasks at the end of each core cycle. For now just region updates, e.g. for caret movement."""
 	handler._handlePendingUpdate()
 
 def terminate():
-	# noqa: F401 avoid module level import to prevent cyclical dependency
-	# between speech and braille
-	from speech.extensions import pre_speech, pre_speechCanceled
-	pre_speechCanceled.unregister(clearBrailleRegions)
-	pre_speech.unregister(_showSpeechInBraille)
 	global handler
 	handler.terminate()
 	handler = None
