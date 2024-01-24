@@ -5,13 +5,12 @@ The NVDA repository is located at https://github.com/nvaccess/nvda.
 
 If you plan on contributing to NVDA, you will need to [fork and clone](https://docs.github.com/en/get-started/quickstart/fork-a-repo) the repository.
 
+After forking the repository into your user account (`YOUR-USERNAME`), clone with `--recursive` to fetch all required submodules.
 
-```
-# Fork the repository into your user account (YOUR-USERNAME)
-
-# Clone with --recursive to fetch all required submodules
+```sh
 git clone --recursive https://github.com/YOUR-USERNAME/nvda.git
 ```
+
 
 ### Keeping the fork in sync
 When you fork the repository, GitHub will create a copy of the master branch.
