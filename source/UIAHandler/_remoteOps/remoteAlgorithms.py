@@ -4,7 +4,7 @@
 # Copyright (C) 2023-2023 NV Access Limited
 
 from __future__ import annotations
-from typing import ContextManager, Any
+import typing
 from collections.abc import Generator
 from comtypes import GUID
 from .midLevel import (
@@ -12,11 +12,12 @@ from .midLevel import (
 	remoteContextManager,
 	RemoteUint,
 	RemoteInt,
+	RemoteIntEnum,
 	RemoteString,
 	RemoteArray,
 	RemoteExtensionTarget,
 	RemoteElement,
-		RemoteTextRange,
+	RemoteTextRange,
 	RemoteVariant
 )
 from .highLevel import RemoteFuncAPI
@@ -28,7 +29,12 @@ from .lowLevel import (
 
 
 @remoteContextManager
-def remote_unsignedRange(rfa: RemoteFuncAPI, start: RemoteUint, stop: RemoteUint, step: RemoteUint):
+def remote_unsignedRange(
+	rfa: RemoteFuncAPI,
+	start: RemoteUint,
+	stop: RemoteUint,
+	step: RemoteUint
+) -> typing.Generator[RemoteUint, None, None]:
 	counter = start.copy()
 	with rfa.whileBlock(lambda: counter < stop):
 		yield counter
@@ -36,7 +42,12 @@ def remote_unsignedRange(rfa: RemoteFuncAPI, start: RemoteUint, stop: RemoteUint
 
 
 @remoteContextManager
-def remote_signedRange(rfa: RemoteFuncAPI, start: RemoteInt, stop: RemoteInt, step: RemoteInt) -> Generator[RemoteInt, None, None]:
+def remote_signedRange(
+	rfa: RemoteFuncAPI,
+	start: RemoteInt,
+	stop: RemoteInt,
+	step: RemoteInt
+) -> Generator[RemoteInt, None, None]:
 	counter = rfa.newInt(start)
 	with rfa.whileBlock(lambda: counter < stop):
 		yield counter
@@ -50,14 +61,18 @@ def remote_forEachItemInArray(rfa: RemoteFuncAPI, array: RemoteArray) -> Generat
 
 
 @remoteContextManager
-def remote_forEachUnitInTextRange(rfa: RemoteFuncAPI, textRange: RemoteTextRange, unit: RemoteInt, reverse=False ) -> Generator[RemoteTextRange, None, None]:
+def remote_forEachUnitInTextRange(
+	rfa: RemoteFuncAPI,
+	textRange: RemoteTextRange,
+	unit: RemoteIntEnum[TextUnit],
+	reverse=False
+) -> Generator[RemoteTextRange, None, None]:
 	logicalTextRange = textRange.getLogicalAdapter(reverse)
 	logicalTempRange = logicalTextRange.clone()
 	logicalTempRange.end = logicalTempRange.start
 	with rfa.whileBlock(lambda: logicalTempRange.end < logicalTextRange.end):
 		unitsMoved = logicalTempRange.end.moveByUnit(unit, 1)
 		endDelta = logicalTempRange.end.compareWith(logicalTextRange.end)
-		rfa.logRuntimeMessage("unitsMoved=",unitsMoved.stringify(),", endDelta=",endDelta.stringify(), "tempRange text=\"",logicalTempRange.textRange.getText(20),"\"")
 		with rfa.ifBlock((unitsMoved == 0) | (endDelta > 0)):
 			logicalTempRange.end = logicalTextRange.end
 		yield logicalTempRange.textRange
@@ -68,7 +83,12 @@ def remote_forEachUnitInTextRange(rfa: RemoteFuncAPI, textRange: RemoteTextRange
 
 
 @remoteContextManager
-def remote_forEachParagraphWithHeadingStyle(rfa: RemoteFuncAPI, textRange: RemoteTextRange, skipFirstUnit=False, reverse=False) -> Generator[tuple[RemoteTextRange, RemoteInt], None, None]:
+def remote_forEachParagraphWithHeadingStyle(
+	rfa: RemoteFuncAPI,
+	textRange: RemoteTextRange,
+	skipFirstUnit=False,
+	reverse=False
+) -> Generator[tuple[RemoteTextRange, RemoteInt], None, None]:
 	if skipFirstUnit:
 		logicalTextRange = textRange.getLogicalAdapter(reverse)
 		logicalTextRange.start.moveByUnit(TextUnit.Paragraph, 1)
@@ -78,12 +98,15 @@ def remote_forEachParagraphWithHeadingStyle(rfa: RemoteFuncAPI, textRange: Remot
 		with rfa.ifBlock(val.isInt()):
 			intVal = val.asType(RemoteInt)
 			with rfa.ifBlock((intVal >= StyleId.Heading1) & (intVal <= StyleId.Heading9)):
-				level = (intVal - StyleId.Heading1) + 1 
+				level = (intVal - StyleId.Heading1) + 1
 				yield paragraphRange, level
 
 
 @remoteFunc
-def remote_collectAllHeadingsInTextRange(rfa: RemoteFuncAPI, textRange: RemoteTextRange) -> tuple[RemoteArray, RemoteArray, RemoteArray]:
+def remote_collectAllHeadingsInTextRange(
+	rfa: RemoteFuncAPI,
+	textRange: RemoteTextRange
+) -> tuple[RemoteArray, RemoteArray, RemoteArray]:
 	levels = rfa.newArray()
 	labels = rfa.newArray()
 	ranges = rfa.newArray()
@@ -95,11 +118,18 @@ def remote_collectAllHeadingsInTextRange(rfa: RemoteFuncAPI, textRange: RemoteTe
 
 
 @remoteFunc
-def remote_findFirstHeadingInTextRange(rfa: RemoteFuncAPI, textRange: RemoteTextRange, wantedLevel: RemoteInt, reverse=False) -> tuple[RemoteInt, RemoteString, RemoteTextRange]:
+def remote_findFirstHeadingInTextRange(
+	rfa: RemoteFuncAPI,
+	textRange: RemoteTextRange,
+	wantedLevel: RemoteInt,
+	reverse=False
+) -> tuple[RemoteInt, RemoteString, RemoteTextRange]:
 	foundLevel = rfa.newInt(0)
 	foundLabel = rfa.newString("")
 	foundRange = rfa.newNullTextRange()
-	with remote_forEachParagraphWithHeadingStyle(rfa, textRange, skipFirstUnit=True, reverse=reverse) as (paragraphRange, level):
+	with remote_forEachParagraphWithHeadingStyle(
+		rfa, textRange, skipFirstUnit=True, reverse=reverse
+	) as (paragraphRange, level):
 		with rfa.ifBlock((wantedLevel <= 0) | (level == wantedLevel)):
 			label = paragraphRange.getText(-1)
 			foundLevel.set(level)

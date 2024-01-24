@@ -11,8 +11,6 @@ from ._remoteOps import highLevel
 from ._remoteOps import remoteAlgorithms
 
 
-
-
 _dll = None
 
 
@@ -23,6 +21,7 @@ def initialize(doRemote: bool, UIAClient: UIA.IUIAutomation):
 	@param UIAClient: the current instance of the UI Automation client library running in NVDA.
 	"""
 	return True
+
 
 def msWord_getCustomAttributeValue(
 	docElement: UIA.IUIAutomationElement,
@@ -36,6 +35,7 @@ def msWord_getCustomAttributeValue(
 		dumpInstructions=False
 	)
 	return customAttribValue
+
 
 def collectAllHeadingsInTextRange(
 	textRange: UIA.IUIAutomationTextRange
@@ -66,6 +66,7 @@ def collectAllHeadingsInTextRange(
 		for heading in zip(levels, labels, textRanges):
 			headings.append(heading)
 	return headings
+
 
 def findFirstHeadingInTextRange(
 	textRange: UIA.IUIAutomationTextRange, wantedLevel: int | None = None, reverse: bool = False

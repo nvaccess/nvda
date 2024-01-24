@@ -7,6 +7,9 @@
 from __future__ import annotations
 from typing import (
 	Type,
+	Any,
+	Generator,
+	ContextManager,
 	Self,
 	Callable,
 	Concatenate,
@@ -264,13 +267,19 @@ remoteFunc_mutable = RemoteFuncWrapper(mutable=True)
 
 class RemoteContextManager(RemoteFuncWrapper):
 
+	def __call__(
+		self,
+		func: Callable[Concatenate[_remoteFunc_self, ...], Generator[_remoteFunc_return, None, None]]
+	) -> Callable[Concatenate[_remoteFunc_self, ...], ContextManager[_remoteFunc_return]]:
+		contextFunc = contextlib.contextmanager(func)
+		return super().__call__(contextFunc)
+
 	@contextlib.contextmanager
-	def _execRawFunc(self, func, funcSelf, *args, **kwargs):
-		context = contextlib.contextmanager(func)
+	def _execRawFunc(self, func, funcSelf, *args, **kwargs) -> Generator[Any, None, None]:
 		funcSelf.builder.addComment(
 			f"Entering context manager {func.__qualname__}{self.generateArgsKwargsString(*args, **kwargs)}"
 		)
-		with context(funcSelf, *args, **kwargs) as val:
+		with func(funcSelf, *args, **kwargs) as val:
 			funcSelf.builder.addComment("Yielding back to caller")
 			yield val
 			funcSelf.builder.addComment(f"Reentering context manager {func.__qualname__}")
@@ -694,13 +703,16 @@ class RemoteInt(RemoteNumber[int]):
 	_defaultInitialValue = 0
 
 
-class RemoteIntEnum(RemoteInt):
-	localType = enum.IntEnum
-	_enumType: Type[enum.IntEnum]
+_RemoteIntEnum_LocalTypeVar = TypeVar('_RemoteIntEnum_LocalTypeVar', bound=enum.IntEnum)
 
-	def __init__(self, initialValue: enum.IntEnum | int | None = None, const=False):
-		if isinstance(initialValue, enum.IntEnum):
-			self._enumType = type(initialValue)
+
+class RemoteIntEnum(RemoteInt, Generic[_RemoteIntEnum_LocalTypeVar]):
+	localType = enum.IntEnum
+	_enumType: _RemoteIntEnum_LocalTypeVar
+
+	def __init__(self, initialValue: _RemoteIntEnum_LocalTypeVar | None = None, const=False):
+		if initialValue is not None:
+			self._enumType = cast(_RemoteIntEnum_LocalTypeVar, type(initialValue))
 			self._ctype = _makeCtypeIntEnum(type(initialValue))
 		elif initialValue is None:
 			raise TypeError("initialValue must be given")
@@ -1094,7 +1106,11 @@ class _RemoteTextRangeEndpoint(_RemoteBase):
 	def moveTo(self, other: _RemoteTextRangeEndpoint):
 		self.textRange.moveEndpointByRange(self.endpoint, other.textRange, other.endpoint)
 
-	def moveByUnit(self, unit: RemoteInt, count: int | RemoteInt) -> RemoteInt:
+	def moveByUnit(
+		self,
+		unit: lowLevel.TextUnit | RemoteIntEnum[lowLevel.TextUnit],
+		count: int | RemoteInt
+	) -> RemoteInt:
 		realCount = (count * -1) if self.isReversed else count
 		res = self.textRange.moveEndpointByUnit(self.endpoint, unit, realCount)
 		return res

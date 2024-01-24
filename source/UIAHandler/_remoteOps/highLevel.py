@@ -173,7 +173,8 @@ class RemoteFuncAPI(midLevel._RemoteBase):
 class _RemoteFuncBuildCache:
 	localArgs: list[object]
 	importedOperandIds: list[midLevel.OperandId]
-	bytecode: bytes
+	globalsByteCode: bytes
+	mainByteCode: bytes
 	resultOperandIds: list[midLevel.OperandId]
 	logOperandId: midLevel.OperandId | None = None
 
@@ -213,6 +214,42 @@ def _validateBuildCache(
 	return True
 
 
+def _buildRemotefunction(
+	builder: midLevel.RemoteOperationBuilder,
+	remoteFunc: Callable[Concatenate[RemoteFuncAPI, ...], Any],
+	rfa: RemoteFuncAPI,
+	*args: object,
+	**kwargs: object
+) -> _RemoteFuncBuildCache:
+	importedOperandIds, localArgs = _importArguments(builder, remoteFunc, *args, **kwargs)
+	logOperandId = builder.getLogOperandId()
+	buildCache = getattr(remoteFunc, '_remoteFuncBuildCache', None)
+	if buildCache:
+		if not _validateBuildCache(
+			buildCache, importedOperandIds=importedOperandIds, localArgs=localArgs, logOperandId=logOperandId
+		):
+			buildCache = None
+	if buildCache is None:
+		remoteResults = remoteFunc(rfa, *args, **kwargs)
+		rfa.halt()
+		if isinstance(remoteResults, midLevel.RemoteBaseObject):
+			remoteResults = [remoteResults]
+		globalsByteCode = builder.getRecordList('globals').getByteCode()
+		mainByteCode = builder.getRecordList('main').getByteCode()
+		buildCache = _RemoteFuncBuildCache(
+			localArgs=localArgs,
+			importedOperandIds=importedOperandIds,
+			globalsByteCode=globalsByteCode,
+			mainByteCode=mainByteCode,
+			resultOperandIds=[result.operandId for result in remoteResults],
+			logOperandId=logOperandId
+		)
+		remoteFunc._remoteFuncBuildCache = buildCache
+	else:
+		log.info(f"Reusing Remote function build cache for {remoteFunc.__qualname__}")
+	return buildCache
+
+
 def _dumpRemoteLog(resultSet: lowLevel.RemoteOperationResultSet, buildCache: _RemoteFuncBuildCache):
 	if buildCache.logOperandId is not None and resultSet.hasOperand(buildCache.logOperandId):
 		logOutput = resultSet.getOperand(buildCache.logOperandId).value
@@ -232,7 +269,7 @@ def _getExecutionResults(resultSet: lowLevel.RemoteOperationResultSet, buildCach
 	return results
 
 
-_execute_ReturnType = TypeVar('_execute_ReturnType')
+# _execute_ReturnType = TypeVar('_execute_ReturnType')
 
 
 def execute(
@@ -244,42 +281,19 @@ def execute(
 ) -> Any:
 	ro = lowLevel.RemoteOperation()
 	builder = midLevel.RemoteOperationBuilder(ro, remoteLogging=remoteLogging)
-	logOperandId = builder.getLogOperandId()
-	buildCache: _RemoteFuncBuildCache | None = None
 	rfa = RemoteFuncAPI(builder)
 	processedArgs, processedKwargs = midLevel.processArgs(remoteFunc, rfa, *args, **kwargs)
-	importedOperandIds, localArgs = _importArguments(builder, remoteFunc, *processedArgs, **processedKwargs)
-	importsByteCode = builder.getRecordList('imports').getByteCode()
-	buildCache = getattr(remoteFunc, '_remoteFuncBuildCache', None)
-	if buildCache:
-		if not _validateBuildCache(
-			buildCache, importedOperandIds=importedOperandIds, localArgs=localArgs, logOperandId=logOperandId
-		):
-			buildCache = None
-	if buildCache is None:
-		remoteResults = remoteFunc(rfa, *processedArgs, **processedKwargs)
-		rfa.halt()
-		if isinstance(remoteResults, midLevel.RemoteBaseObject):
-			remoteResults = [remoteResults]
-		globalsByteCode = builder.getRecordList('globals').getByteCode()
-		mainByteCode = builder.getRecordList('main').getByteCode()
-		buildCache = _RemoteFuncBuildCache(
-			localArgs=localArgs,
-			importedOperandIds=importedOperandIds,
-			bytecode=globalsByteCode + mainByteCode,
-			resultOperandIds=[result.operandId for result in remoteResults],
-			logOperandId=logOperandId
-		)
-		remoteFunc._remoteFuncBuildCache = buildCache
-	else:
-		log.info(f"Reusing Remote function build cache for {remoteFunc.__qualname__}")
+	buildCache = _buildRemotefunction(builder, remoteFunc, rfa, *processedArgs, **processedKwargs)
 	for operandId in buildCache.resultOperandIds:
 		ro.addToResults(operandId)
 	if buildCache.logOperandId is not None:
 		ro.addToResults(buildCache.logOperandId)
 	if dumpInstructions:
 		log.info(f"{builder.dumpInstructions()}")
-	resultSet = ro.execute(builder._versionBytes + importsByteCode + buildCache.bytecode)
+	importsByteCode = builder.getRecordList('imports').getByteCode()
+	globalsByteCode = buildCache.globalsByteCode
+	mainByteCode = buildCache.mainByteCode
+	resultSet = ro.execute(builder._versionBytes + importsByteCode + globalsByteCode + mainByteCode)
 	if resultSet.status == lowLevel.RemoteOperationStatus.ExecutionFailure:
 		raise ExecutionFailureException()
 	instructionRecord = None

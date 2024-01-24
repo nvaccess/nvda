@@ -24,7 +24,7 @@ import cursorManager
 import textInfos
 import browseMode
 from logHandler import log
-from NVDAObjects.UIA import UIA
+from NVDAObjects.UIA import UIA, UIATextInfo
 
 class UIADocumentWithTableNavigation(documentBase.DocumentWithTableNavigation):
 
@@ -145,7 +145,14 @@ def UIATextAttributeQuicknavIterator(ItemClass,itemType,document,position,direct
 
 class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 
-	def __init__(self,itemType,document,position,label=None, level=0):
+	def __init__(
+		self,
+		itemType: str,
+		document: UIA,
+		position: UIATextInfo,
+		label: str | None = None,
+		level: int = 0
+	):
 		super(HeadingUIATextInfoQuickNavItem,self).__init__(itemType,document,position)
 		self.level=level
 		self._label = label
