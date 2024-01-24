@@ -56,24 +56,26 @@ class SoundSplitState(DisplayStringIntEnum):
 		}
 	
 	def getAppVolume(self) -> VolumeTupleT:
-		if self == SoundSplitState.OFF or 'APPS_BOTH' in self.name:
-			return (1.0, 1.0)
-		elif self in [SoundSplitState.NVDA_RIGHT_APPS_LEFT, SoundSplitState.NVDA_BOTH_APPS_LEFT]:
-			return (1.0, 0.0)
-		elif 'APPS_RIGHT' in self.name:
-			return (0.0, 1.0)
-		else:
-			raise RuntimeError
+		match self:
+			case SoundSplitState.OFF | SoundSplitState.NVDA_LEFT_APPS_BOTH | SoundSplitState.NVDA_RIGHT_APPS_BOTH:
+				return (1.0, 1.0)
+			case SoundSplitState.NVDA_RIGHT_APPS_LEFT | SoundSplitState.NVDA_BOTH_APPS_LEFT:
+				return (1.0, 0.0)
+			case SoundSplitState.NVDA_LEFT_APPS_RIGHT | SoundSplitState.NVDA_BOTH_APPS_RIGHT:
+				return (0.0, 1.0)
+			case _:
+				raise RuntimeError
 
 	def getNVDAVolume(self) -> VolumeTupleT:
-		if self == SoundSplitState.OFF or 'NVDA_BOTH' in self.name:
-			return (1.0, 1.0)
-		elif 'NVDA_LEFT' in self.name:
-			return (1.0, 0.0)
-		elif 'NVDA_RIGHT' in self.name:
-			return (0.0, 1.0)
-		else:
-			raise RuntimeError
+		match self:
+			case SoundSplitState.OFF | SoundSplitState.NVDA_BOTH_APPS_LEFT | SoundSplitState.NVDA_BOTH_APPS_RIGHT:
+				return (1.0, 1.0)
+			case SoundSplitState.NVDA_LEFT_APPS_RIGHT | SoundSplitState.NVDA_LEFT_APPS_BOTH:
+				return (1.0, 0.0)
+			case SoundSplitState.NVDA_RIGHT_APPS_LEFT | SoundSplitState.NVDA_RIGHT_APPS_BOTH:
+				return (0.0, 1.0)
+			case _:
+				raise RuntimeError
 
 
 sessionManager: audiopolicy.IAudioSessionManager2 = None
