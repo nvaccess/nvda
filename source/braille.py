@@ -1450,6 +1450,7 @@ class ReviewTextInfoRegion(TextInfoRegion):
 		:return: selection, reading unit from it, or review position when
 		there is no selection or showing selection is disabled
 		"""
+		self._withinSelection = False
 		if not config.conf["braille"]["showSelection"]:
 			self._currentSelection = None
 			return api.getReviewPosition().copy()
@@ -1568,10 +1569,19 @@ class ReviewTextInfoRegion(TextInfoRegion):
 		else:
 			# Do not scroll because do not know where
 			self.brailleSelectionStart = self.brailleSelectionEnd = None
-		self._withinSelection = False
 		self._currentScriptName = None
 
 	def _routeToTextInfo(self, info: textInfos.TextInfo):
+		"""Move cursor to new cell, or activate if it is already there.
+		:param info: TextInfo object where cursor should be moved
+		"""
+		if (
+			self._withinSelection
+			and info.start == api.getReviewPosition().start
+			and not _routingShouldMoveSystemCaret()
+		):
+			# Activate with second press also within selection
+			info.activate()
 		super()._routeToTextInfo(info)
 		if not _routingShouldMoveSystemCaret():
 			return
