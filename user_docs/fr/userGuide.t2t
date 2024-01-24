@@ -1526,8 +1526,9 @@ Si vous rencontrez des problèmes à l'épellation de caractères, essayez de d�
 
 ==== Description différée des caractères lors du mouvement du curseur ====[delayedCharacterDescriptions]
 
-|| Défaut | Désactivé |
-|| Options | Activé, Désactivé |
+|| . {.hideHeaderRow} | . |
+| Options | Activé, Désactivé |
+| Défaut | Désactivé |
 
 
 Lorsque ce paramètre est coché, NVDA dira la description du caractère lorsque vous vous déplacerez par caractère.
@@ -1713,8 +1714,9 @@ Pour modifier l'option "Afficher le contexte du focus" de n'importe où, veuille
 
 ==== Interrompre la parole pendant le défilement ====[BrailleSettingsInterruptSpeech]
 
-|| Défaut | Activé |
-|| Options | Défaut (Activé), Activé, Désactivé |
+|| . {.hideHeaderRow} | . |
+| Options | Défaut (Activé), Activé, Désactivé |
+| Défaut | Activé |
 
 
 Ce paramètre détermine si la parole doit être interrompue lorsque l'afficheur braille défile vers l'arrière/vers l'avant.
@@ -1727,8 +1729,9 @@ La désactivation de cette option permet d'entendre la parole tout en lisant sim
 
 ==== Afficher la sélection ====[BrailleSettingsShowSelection]
 
-|| Défaut | Activé |
-|| Options | Défaut (Activé), Activé, Désactivé |
+|| . {.hideHeaderRow} | . |
+| Options | Défaut (Activé), Activé, Désactivé |
+| Défaut | Activé |
 
 
 Ce réglage détermine si l'indicateur de sélection (points 7 et 8) s'affiche sur l'afficheur braille.
@@ -2188,8 +2191,9 @@ Cette catégorie vous permet d'ajuster divers aspects de la navigation dans les 
 
 ==== Style des paragraphes ====[ParagraphStyle]
 
-|| Défaut | Géré par l'application |
-|| Options | Défaut (Géré par l' application), géré par l' application, Saut de ligne unique, Saut de ligne multiple |
+|| . {.hideHeaderRow} | . |
+| Options | Défaut (Géré par l' application), géré par l' application, Saut de ligne unique, Saut de ligne multiple |
+| Défaut | Géré par l'application |
 
 
 Cette liste déroulante vous permet de sélectionner le style de paragraphe à utiliser lors de la navigation par paragraphes avec ``contrôle+flècheHaut`` et ``contrôle+flècheBas``.
@@ -2244,8 +2248,9 @@ Ce bouton n'est disponible que si NVDA est configuré pour permettre le chargeme
 
 ==== Enregistrement des événements et modifications de propriété UI Automation ====[AdvancedSettingsSelectiveUIAEventRegistration]
 
-|| Défaut | Automatique |
-|| Options | Automatique, Sélectif, Global |
+|| . {.hideHeaderRow} | . |
+| Options | Automatique, Sélectif, Global |
+| Défaut | Automatique |
 
 
 Cette option change la façon dont NVDA enregistre les événements déclenchés par l'API d'accessibilité UI Automation de Microsoft.
@@ -2278,8 +2283,9 @@ L'implémentation de UI Automation dans Microsoft Excel est en constante évolut
 
 ==== Prise en charge de la Console Windows ====[AdvancedSettingsConsoleUIA]
 
-|| Défaut | Automatique |
-|| Options | Automatique, UIA si disponible, Héritée |
+|| . {.hideHeaderRow} | . |
+| Options | Automatique, UIA si disponible, Héritée |
+| Défaut | Automatique |
 
 
 Cette option sélectionne la façon dont NVDA interagit avec la console Windows utilisée par l'invite de commande, PowerShell et le sous-système Windows pour Linux.
@@ -2329,8 +2335,9 @@ Les options suivantes existent :
 
 ==== Signaler les régions Actives ====[BrailleLiveRegions]
 
-|| Défaut | Activé |
-|| Options | Défaut (Activé), Désactivé, Activé |
+|| . {.hideHeaderRow} | . |
+| Options | Défaut (Activé), Désactivé, Activé |
+| Défaut | Activé |
 
 
 Cette option définit si NVDA signale les changements dans certains contenus Web dynamiques en Braille.
@@ -2363,8 +2370,9 @@ Cependant, dans les terminaux, lors de l'insertion ou de la suppression d'un car
 
 ==== Annoncez un nouveau texte dans le terminal Windows via ====[WtStrategy]
 
-|| Défaut | Comparaison du texte |
-|| Options | Défaut (Comparaison du texte), Comparaison du texte, Notifications UIA |
+|| . {.hideHeaderRow} | . |
+| Options | Défaut (Comparaison du texte), Comparaison du texte, Notifications UIA |
+| Défaut | Comparaison du texte |
 
 
 Cette option sélectionne la façon dont NVDA détermine quel texte est "nouveau" (et donc ce qu'il faut prononcer lorsque "signaler les changements de contenu dynamique" est activé) dans Windows Terminal et le contrôle WPF Windows Terminal utilisé dans Visual Studio 2022.
@@ -2396,8 +2404,9 @@ Pour plusieurs API GUI historiquement populaires, le texte peut être rendu avec
 
 ==== Utiliser WASAPI pour la sortie audio ====[WASAPI]
 
-|| Défaut | Activé |
-|| Options | Défaut (Activé), Désactivé, Activé |
+|| . {.hideHeaderRow} | . |
+| Options | Défaut (Activé), Désactivé, Activé |
+| Défaut | Activé |
 
 
 Cette option active la sortie audio via l'API Windows Audio Session (WASAPI).
@@ -2407,8 +2416,9 @@ Après avoir modifié cette option, vous devrez redémarrer NVDA pour que la mod
 
 ==== Le volume des sons NVDA suit le volume de la voix ====[SoundVolumeFollowsVoice]
 
-|| Default | Disabled |
-|| Options | Désactivé, Activé |
+|| . {.hideHeaderRow} | . |
+| Options | Désactivé, Activé |
+| Default | Disabled |
 
 
 Lorsque cette option est activée, le volume des sons et des bips de NVDA suivra le réglage du volume de la voix que vous utilisez.

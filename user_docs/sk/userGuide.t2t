@@ -1537,8 +1537,9 @@ Ak pozorujete problémy s vyslovovaním jednotlivých znakov, skúste túto voľ
 
 ==== Foneticky hláskovať pri čítaní po znakoch ====[delayedCharacterDescriptions]
 
-|| predvolene | vypnuté |
-|| Možnosti | Vypnuté, zapnuté |
+|| . {.hideHeaderRow} | . |
+| Možnosti | Vypnuté, zapnuté |
+| predvolene | vypnuté |
 
 
 Ak je táto možnosť zapnutá, bude NVDA vyslovovať aj fonetické popisky pre znaky, ktoré prečítate pod kurzorom.
@@ -1646,8 +1647,9 @@ V tomto prípade nebude brailový riadok sledovať systémový a textový kurzor
 
 ==== Smerové tlačidlá posúvajú systémový aj prezerací kurzor ====[BrailleSettingsReviewRoutingMovesSystemCaret]
 
-|| Predvolené | Nikdy |
-|| Možnosti | Predvolené (nikdy), nikdy, Len ak je zviazaný automaticky, vždy |
+|| . {.hideHeaderRow} | . |
+| Možnosti | Predvolené (nikdy), nikdy, Len ak je zviazaný automaticky, vždy |
+| Predvolené | Nikdy |
 
 
 Toto nastavenie určuje, či sa systémový kurzor posúva pri použití smerových tlačidiel na brailovom riadku.
@@ -1712,8 +1714,9 @@ Ak chcete toto nastavenie meniť kedykoľvek z klávesnice, môžete si k nemu p
 
 ==== Prerušiť reč počas posúvania ====[BrailleSettingsInterruptSpeech]
 
-|| Predvolene | zapnuté |
-|| Možnosti | Predvolené (zapnuté), zapnuté, vypnuté |
+|| . {.hideHeaderRow} | . |
+| Možnosti | Predvolené (zapnuté), zapnuté, vypnuté |
+| Predvolene | zapnuté |
 
 
 Toto nastavenie určuje, či má byť reč prerušená, ak posuniete brailový riadok vpred alebo späť.
@@ -1726,8 +1729,9 @@ Ak túto možnosť vypnete, je možné počúvať hlas a čítať text zároveň
 
 ==== Ukázať výber ====[BrailleSettingsShowSelection]
 
-|| Predvolené | Povolené |
-|| Možnosti | Predvolené (povolené), povolené, zakázané |
+|| . {.hideHeaderRow} | . |
+| Možnosti | Predvolené (povolené), povolené, zakázané |
+| Predvolené | Povolené |
 
 
 Určuje, či bude výber vyznačený na brailovom riadku bodmi 7 a 8.
@@ -1810,8 +1814,9 @@ Nemôžete ju využiť, ak NVDA beží v portable režime alebo z dočasnej kóp
 
 ==== Hlasitosť zvukov je rovnaká ako hlasitosť reči ====[SoundVolumeFollowsVoice]
 
-|| predvolené | vypnuté |
-|| Možnosti | vypnuté, zapnuté |
+|| . {.hideHeaderRow} | . |
+| Možnosti | vypnuté, zapnuté |
+| predvolené | vypnuté |
 
 
 Ak je táto možnosť zapnutá, hlasitosť zvukov sa prispôsobí hlasitosti reči.
@@ -2257,8 +2262,9 @@ Táto kategória nastavení umožňuje upraviť rôzne možnosti navigácie v do
 
 ==== Za odsek považovať ====[ParagraphStyle]
 
-|| Predvolené | Podľa aplikácie |
-|| Možnosti | Predvolené (podľa aplikácie), Podľa aplikácie, jeden zlom riadka, viacero zlomov riadka |
+|| . {.hideHeaderRow} | . |
+| Možnosti | Predvolené (podľa aplikácie), Podľa aplikácie, jeden zlom riadka, viacero zlomov riadka |
+| Predvolené | Podľa aplikácie |
 
 
 Toto nastavenie určuje, čo bude považované za odseky, pri pohybe pomocou skratiek ``ctrl+šípka hore`` a ``ctrl+šípka dole``.
@@ -2313,8 +2319,9 @@ Toto tlačidlo sa zobrazí, len ak povolíte načítavanie vlastných modulov z 
 
 ==== Sledovanie zmien a udalostí UI Automation ====[AdvancedSettingsSelectiveUIAEventRegistration]
 
-|| Predvolené | Automaticky |
-|| Možnosti | Automaticky, Vybraté, Globálne |
+|| . {.hideHeaderRow} | . |
+| Možnosti | Automaticky, Vybraté, Globálne |
+| Predvolené | Automaticky |
 
 
 Určuje, ako NVDA spracúva udalosti prijaté z rozhrania Microsoft UI Automation.
@@ -2347,8 +2354,9 @@ Implementácia rozhrania UI automation v programe Microsoft Excel sa stále zlep
 
 ==== Podpora pre konzolu Windows ====[AdvancedSettingsConsoleUIA]
 
-|| Predvolene | Automaticky |
-|| Možnosti | Automaticky, UIA ak je dostupné, staršie |
+|| . {.hideHeaderRow} | . |
+| Možnosti | Automaticky, UIA ak je dostupné, staršie |
+| Predvolene | Automaticky |
 
 
 Určuje, ako NVDA spolupracuje s Windows konzolami v príkazovom riadku, PowerShell a Windows Subsystémom pre Linux.
@@ -2398,8 +2406,9 @@ V minulosti asistenčné technológie neoznamovali tieto zdroje, nakoľko nebolo
 
 ==== Oznamovať dynamicky menený obsah označený pomocou Live Region ====[BrailleLiveRegions]
 
-|| Predvolené | Zapnuté |
-|| Možnosti | predvolené (zapnuté), Vypnuté, zapnuté |
+|| . {.hideHeaderRow} | . |
+| Možnosti | predvolené (zapnuté), Vypnuté, zapnuté |
+| Predvolené | Zapnuté |
 
 
 Toto nastavenie určuje, či bude NVDA oznamovať niektoré typy dynamicky meneného obsahu na brailovom riadku.
@@ -2432,8 +2441,9 @@ Ak však v terminály použijete túto metódu a súčasne odstránite text upro
 
 ==== Oznamovať nový text vo Windows termináloch cez ====[WtStrategy]
 
-|| Predvolené | Diffing |
-|| Možnosti | Predvolené (Diffing), Diffing, Upozornenia rozhrania UIA |
+|| . {.hideHeaderRow} | . |
+| Možnosti | Predvolené (Diffing), Diffing, Upozornenia rozhrania UIA |
+| Predvolené | Diffing |
 
 
 Toto nastavenie určuje, ako NVDA identifikuje nový text vo Windows konzole a WPF Windows Termináloch používaných vo Visual Studio 2022. Nový text je potom automaticky oznamovaný, ak je zapnuté oznamovanie dynamicky meneného obsahu.
@@ -2465,8 +2475,9 @@ Tiež je možné stretnúť sa s tým, že text je zobrazený s priehľadnou far
 
 ==== Na výstup pre reč a zvuky používať rozhranie WASAPI ====[WASAPI]
 
-|| Predvolené | Zapnuté |
-|| Možnosti | Predvolené (zapnuté), Vypnuté, zapnuté |
+|| . {.hideHeaderRow} | . |
+| Možnosti | Predvolené (zapnuté), Vypnuté, zapnuté |
+| Predvolené | Zapnuté |
 
 
 Táto možnosť umožňuje na posielanie zvukového výstupu z NVDA využiť rozhranie Windows Audio Session API (WASAPI).
