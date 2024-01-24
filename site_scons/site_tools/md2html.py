@@ -14,12 +14,10 @@ import SCons.Node.FS
 import SCons.Environment
 
 DEFAULT_EXTENSIONS = frozenset({
-	# Supports tables, HTML mixed with markdown, code blocks and more
+	# Supports tables, HTML mixed with markdown, code blocks, custom attributes and more
 	"markdown.extensions.extra",
-	# Allows TOC with [TOC], allows anchors set by "# Title {#foo}"
+	# Allows TOC with [TOC]"
 	"markdown.extensions.toc",
-	# Allows setting attributes with {@id=foo}
-	"markdown.extensions.legacy_attrs",
 	# Adds code highlighting to code blocks
 	"markdown.extensions.codehilite",
 	# Makes list behaviour better, including 2 space indents by default
@@ -92,7 +90,7 @@ def _createAttributeFilter() -> dict[str, set[str]]:
 	allowedAttributes: dict[str, set[str]] = deepcopy(nh3.ALLOWED_ATTRIBUTES)
 
 	attributesWithAnchors = {"h1", "h2", "h3", "h4", "h5", "h6", "td"}
-	attributesWithClass = {"div", "span", "a"}
+	attributesWithClass = {"div", "span", "a", "th", "td"}
 
 	# Allow IDs for anchors
 	for attr in attributesWithAnchors:
