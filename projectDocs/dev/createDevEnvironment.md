@@ -3,12 +3,14 @@ The NVDA project uses the [git](https://www.git-scm.com/) version control system
 
 The NVDA repository is located at https://github.com/nvaccess/nvda.
 
-If you plan on contributing to NVDA, you should [fork and clone](https://docs.github.com/en/get-started/quickstart/fork-a-repo) the repository.
+If you plan on contributing to NVDA, you will need to [fork and clone](https://docs.github.com/en/get-started/quickstart/fork-a-repo) the repository.
 
-Use the `--recursive` option when performing `git clone` to fetch the required git submodules we use.
 
 ```
-git clone --recursive https://github.com/nvaccess/nvda.git
+# Fork the repository into your user account (YOUR-USERNAME)
+
+# Clone with --recursive to fetch all required submodules
+git clone --recursive https://github.com/YOUR-USERNAME/nvda.git
 ```
 
 ### Keeping the fork in sync
