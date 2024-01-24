@@ -7,6 +7,10 @@ If you plan on contributing to NVDA, you should [fork and clone](https://docs.gi
 
 Use the `--recursive` option when performing `git clone` to fetch the required git submodules we use.
 
+```
+git clone --recursive https://github.com/nvaccess/nvda.git
+```
+
 ### Keeping the fork in sync
 When you fork the repository, GitHub will create a copy of the master branch.
 However, this branch will not be updated when the nvaccess master branch is updated.
