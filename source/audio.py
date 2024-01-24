@@ -58,7 +58,7 @@ class SoundSplitState(DisplayStringIntEnum):
 	def getAppVolume(self) -> VolumeTupleT:
 		if self == SoundSplitState.OFF or 'APPS_BOTH' in self.name:
 			return (1.0, 1.0)
-		elif 'APPS_LEFT' in self.name:
+		elif self in [SoundSplitState.NVDA_RIGHT_APPS_LEFT, SoundSplitState.NVDA_BOTH_APPS_LEFT]:
 			return (1.0, 0.0)
 		elif 'APPS_RIGHT' in self.name:
 			return (0.0, 1.0)
