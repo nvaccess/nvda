@@ -321,7 +321,7 @@ class GlobalCommands(ScriptableObject):
 	def script_FirstValueSynthRing(self, gesture):
 		settingName = globalVars.settingsRing.currentSettingName
 		if not settingName:
-			# Translators: Reported when there are no settings to configure in synth settings ring 
+			# Translators: Reported when there are no settings to configure in synth settings ring
 			# Translators: (example: when there is no setting for language).
 			ui.message(_("No settings"))
 			return
