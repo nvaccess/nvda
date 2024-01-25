@@ -32,4 +32,4 @@ Objectives and Functioning:
 * The group's contributions are instrumental in maintaining and elevating our security standards.
 * Their insights and recommendations are directly incorporated into our development process, leading to more secure and reliable software.
 
-We welcome participation from our user community. If you have a keen interest in security and wish to contribute, please [contact us](mailto:info@nvaccess.org]).
+We welcome participation from our user community. If you have a keen interest in security and wish to contribute, please [contact us](mailto:info@nvaccess.org).
