@@ -145,11 +145,10 @@ class SettingsDialog(
 		if state is cls.DialogState.DESTROYED and not multiInstanceAllowed:
 			# The dialog has been destroyed by wx, but the instance is still available.
 			# This indicates there is something keeping it alive.
-			log.debugWarning(f"Opening new settings dialog while instance still exists: {firstMatchingInstance!r}")
-			# Handle gracefully
-			SettingsDialog._instances[firstMatchingInstance] = cls.DialogState.CREATED
-			return firstMatchingInstance
-		obj = super(SettingsDialog, cls).__new__(cls, *args, **kwargs)
+			raise RuntimeError(
+				f"Cannot open new settings dialog while instance still exists: {firstMatchingInstance!r}"
+			)
+		obj = super().__new__(cls, *args, **kwargs)
 		SettingsDialog._instances[obj] = cls.DialogState.CREATED
 		return obj
 
@@ -1688,6 +1687,9 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		]
 
 	def _onSpeechModesListChange(self, evt: wx.CommandEvent):
+		# continue event propagation to custom control event handler
+		# to guarantee user is notified about checkbox being checked or unchecked
+		evt.Skip()
 		if (
 			evt.GetInt() == self._allSpeechModes.index(speech.SpeechMode.talk)
 			and not self.speechModesList.IsChecked(evt.GetInt())
