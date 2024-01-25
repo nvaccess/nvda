@@ -19,7 +19,21 @@ from UIAHandler import UIA
 import NVDAHelper
 
 
+"""
+This module contains classes and constants for the low-level Windows UI Automation Remote Operations API,
+I.e. Windows.UI.UIAutomation.core.
+The low-level UI Automation Remote Operations API is a binary API
+that allows for the execution of special byte code specific to uI Automation,
+allowing for the execution of multiple UI Automation operations in a remote provider,
+via one cross-process call.
+"""
+
+
 class OperandId(c_ulong):
+	"""
+	An operand ID is a unique identifier for an operand (or register) in the remote operation VM.
+	It is an unsigned 32 bit integer.
+	"""
 
 	def __eq__(self, other: object) -> bool:
 		if type(other) is OperandId:
@@ -31,6 +45,9 @@ class OperandId(c_ulong):
 
 
 class RelativeOffset(c_long):
+	"""
+	A relative offset is a signed 32 bit integer that represents an offset from the current instruction pointer.
+	"""
 
 	def __repr__(self) -> str:
 		return f"RelativeOffset {self.value}"
@@ -40,6 +57,9 @@ _dll = oledll[os.path.join(NVDAHelper.versionedLibPath, "UIARemote.dll")]
 
 
 class RemoteOperationResultSet:
+	"""
+	Wraps a Windows.UI.UIAutomation.Core.AutomationRemoteOperationResultSet.
+	"""
 
 	def __init__(self, pResults: c_void_p):
 		if not pResults or not isinstance(pResults, c_void_p):
@@ -48,28 +68,47 @@ class RemoteOperationResultSet:
 
 	@property
 	def errorLocation(self) -> int:
+		""" The index of the instruction where the error occured."""
 		val = c_long()
 		_dll.remoteOpResult_getErrorLocation(self._pResults, byref(val))
 		return val.value
 
 	@property
 	def extendedError(self) -> int:
+		"""
+		The error HRESULT produced by the instruction that caused the error.
+		"""
 		val = c_long()
 		_dll.remoteOpResult_getExtendedError(self._pResults, byref(val))
 		return val.value
 
 	@property
-	def status(self) -> int:
+	def status(self) -> RemoteOperationStatus:
+		"""
+		The status of the remote operation.
+		E.g. success, malformed bytecode, etc.
+		"""
 		val = c_long()
 		_dll.remoteOpResult_getStatus(self._pResults, byref(val))
 		return RemoteOperationStatus(val.value)
 
 	def hasOperand(self, operandId: OperandId) -> bool:
+		"""
+		Returns true if the result set contains an operand with the given ID.
+		I.e. The operand was requested as a result before execution,
+		and the remote operation successfully produced a value for it.
+		"""
 		val = c_bool()
 		_dll.remoteOpResult_hasOperand(self._pResults, operandId, byref(val))
 		return val.value
 
 	def getOperand(self, operandId: OperandId) -> VARIANT:
+		"""
+		Returns the value of the operand with the given ID.
+		In order to succeed,
+		the operand must have been requested as a result before execution,
+		and the remote operation must have successfully produced a value for it.
+		"""
 		val = VARIANT()
 		_dll.remoteOpResult_getOperand(self._pResults, operandId, byref(val))
 		return val
@@ -79,28 +118,53 @@ class RemoteOperationResultSet:
 
 
 class RemoteOperation:
+	"""
+	Creats and wraps a Windows.UI.UIAutomation.Core.CoreAutomationRemoteOperation.
+	"""
 
 	def __init__(self):
 		self._pRemoteOperation = c_void_p()
 		_dll.remoteOp_create(byref(self._pRemoteOperation))
 
 	def importElement(self, operandId: OperandId, element: UIA.IUIAutomationElement):
+		"""
+		Imports a UI automation element into the remote operation VM at the given operand ID.
+		:param operandId: The operand ID to import the element into.
+		:param element: The element to import.
+		"""
 		_dll.remoteOp_importElement(self._pRemoteOperation, operandId, element)
 
 	def importTextRange(self, operandId: OperandId, textRange: UIA.IUIAutomationTextRange):
+		"""
+		Imports a UI automation text range into the remote operation VM at the given operand ID.
+		:param operandId: The operand ID to import the text range into.
+		:param textRange: The text range to import.
+		"""
 		_dll.remoteOp_importTextRange(self._pRemoteOperation, operandId, textRange)
 
 	def addToResults(self, operandId: OperandId):
+		"""
+		Requests that an operand be made available after execution in the results set.
+		:param operandId: The operand ID to add to the results.
+		"""
 		_dll.remoteOp_addToResults(self._pRemoteOperation, operandId)
 
-	def isOpcodeSupported(self, opcode: int) -> bool:
+	def isOpcodeSupported(self, opcode: InstructionType) -> bool:
+		"""
+		Returns true if the given opcode (instruction) is supported by the remote operation VM.
+		:param opcode: The opcode to check.
+		"""
 		val = c_bool()
 		_dll.remoteOp_isOpcodeSupported(self._pRemoteOperation, opcode, byref(val))
 		return val.value
 
-	def execute(self, byteCodeArray: bytes):
+	def execute(self, byteCode: bytes):
+		"""
+		Executes the given byte code in the remote operation VM.
+		:param byteCode: The byte code array to execute.
+		"""
 		pResults = c_void_p()
-		_dll.remoteOp_execute(self._pRemoteOperation, byteCodeArray, len(byteCodeArray), byref(pResults))
+		_dll.remoteOp_execute(self._pRemoteOperation, byteCode, len(byteCode), byref(pResults))
 		return RemoteOperationResultSet(pResults)
 
 	def __del__(self):
