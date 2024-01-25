@@ -2114,7 +2114,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			or not isinstance(styles[0], textInfos.FieldCommand)
 			or styles[0].command != 'formatChange'
 		):
-			# Translators: Error message for same/different style QuickNav command
+			# Translators: Error message for same/different style quick navigation commands
 			ui.message(_("Cannot determine current style"))
 			raise RuntimeError
 		initialStyle = styles[0]
