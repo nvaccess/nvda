@@ -2105,7 +2105,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		if result == 0:
 			result = initialTextInfo.move(textInfos.UNIT_CHARACTER, -1, endPoint='start')
 			if result == 0:
-				# Translators: Error message for same/different style QuickNav command
+				# Translators: Error message for same/different style quick navigation command
 				ui.message(_("Cannot determine current style"))
 				raise RuntimeError
 		styles = self._extractStyles(initialTextInfo)
