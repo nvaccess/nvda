@@ -843,6 +843,22 @@ If you want to use these while still being able to use your cursor keys to read 
 To toggle single letter navigation on and off for the current document, press NVDA+shift+space.
 %kc:endInclude
 
++++ Text navigation command +++[TextNavigationCommand]
+
+As mentioned above, you can jupm to next or previous text paragraph by pressing ``p`` or ``shift+p``. Here we define text paragraph to be a paragraph that appears to be written in complete sentences. This can be useful to find the beginning of readable content on various webpages, such as:
+- News websites
+- Forums
+- Blog posts
+- 
+
+These commands can also be helpful for skipping certain kinds of clutter, such as:
+- Ads
+- Menus
+- Headers
+- 
+
+Please note, however, that while NVDA tries its best to identify text paragraphs, the algorithm is not perfect and can make mistakes.
+
 +++ Other navigation commands +++[OtherNavigationCommands]
 
 In addition to the quick navigation commands listed above, NVDA has commands that have no default keys assigned.
@@ -2566,6 +2582,10 @@ Only turn one of these on if specifically instructed to by an NVDA developer e.g
 This option allows you to specify if NVDA will play an error sound in case an error is logged.
 Choosing Only in test versions (default) makes NVDA play error sounds only if the current NVDA version is a test version (alpha, beta or run from source).
 Choosing Yes allows to enable error sounds whatever your current NVDA version is.
+
+==== Regular expression for text paragraph quick navigation commands ====[TextParagraphRegexEdit]
+
+This field allows users to customize regular expression for detecting text paragraphs in browse mode. [Text navigation command#TextNavigationCommand] would search for paragraphs matched by this regular expression.
 
 ++ miscellaneous Settings ++[MiscSettings]
 Besides the [NVDA Settings #NVDASettings] dialog, The Preferences sub-menu of the NVDA Menu contains several other items which are outlined below.

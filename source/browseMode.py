@@ -442,6 +442,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def _iterNotLinkBlock(self, direction="next", pos=None):
 		raise NotImplementedError
 
+	MAX_ITERATIONS_FOR_SIMILAR_PARAGRAPH = 100000
 	def _iterSimilarParagraph(
 			self,
 			kind: str,
@@ -455,7 +456,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		info.expand(textInfos.UNIT_PARAGRAPH)
 		if desiredValue is None:
 			desiredValue = paragraphFunction(info)
-		while True:
+		for i in range(self.MAX_ITERATIONS_FOR_SIMILAR_PARAGRAPH):
 			# move by one paragraph in the desired direction
 			info.collapse(end=direction == 'next')
 			if direction == 'previous':

@@ -2272,35 +2272,6 @@ class BrowseModePanel(SettingsPanel):
 			config.conf["virtualBuffers"]["autoFocusFocusableElements"]
 		)
 
-		# Translators: This is the label for a textfield in the
-		# browse mode settings panel.
-		textParagraphRegexLabelText = _("Regular expression for text paragraph navigation")
-		self.textParagraphRegexEdit = sHelper.addLabeledControl(
-			textParagraphRegexLabelText,
-			wxCtrlClass=wx.TextCtrl,
-			size=(self.scaleSize(300), -1),
-		)
-		self.textParagraphRegexEdit.SetValue(config.conf["virtualBuffers"]["textParagraphRegex"])
-		self.bindHelpEvent("BrowseModeSettingsTextParagraphRegexEdit ", self.textParagraphRegexEdit)
-
-	def isValid(self) -> bool:
-		regex = self.textParagraphRegexEdit .GetValue()
-		try:
-			re.compile(regex)
-		except re.error as e:
-			log.debugWarning("Failed to compile text paragraph regex", exc_info=True)
-			gui.messageBox(
-				# Translators: Message shown when invalid text paragraph regex entered
-				_("Failed to compile text paragraph regular expression: %s") % str(e),
-				# Translators: The title of the message box
-				_("Error"),
-				wx.OK | wx.ICON_ERROR,
-				self,
-			)
-			return False
-		return super().isValid()
-
-
 	def onSave(self):
 		config.conf["virtualBuffers"]["maxLineLength"]=self.maxLengthEdit.GetValue()
 		config.conf["virtualBuffers"]["linesPerPage"]=self.pageLinesEdit.GetValue()
@@ -2314,9 +2285,6 @@ class BrowseModePanel(SettingsPanel):
 		config.conf["virtualBuffers"]["trapNonCommandGestures"]=self.trapNonCommandGesturesCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = (
 			self.autoFocusFocusableElementsCheckBox.IsChecked()
-		)
-		config.conf["virtualBuffers"]["textParagraphRegex"] = (
-			self.textParagraphRegexEdit .GetValue()
 		)
 
 
@@ -3328,6 +3296,34 @@ class AdvancedPanelControls(
 
 		self.Layout()
 
+		# Translators: This is the label for a textfield in the
+		# browse mode settings panel.
+		textParagraphRegexLabelText = _("Regular expression for text paragraph navigation")
+		self.textParagraphRegexEdit = sHelper.addLabeledControl(
+			textParagraphRegexLabelText,
+			wxCtrlClass=wx.TextCtrl,
+			size=(self.Parent.scaleSize(300), -1),
+		)
+		self.textParagraphRegexEdit.SetValue(config.conf["virtualBuffers"]["textParagraphRegex"])
+		self.bindHelpEvent("BrowseModeSettingsTextParagraphRegexEdit ", self.textParagraphRegexEdit)
+
+	def isValid(self) -> bool:
+		regex = self.textParagraphRegexEdit .GetValue()
+		try:
+			re.compile(regex)
+		except re.error as e:
+			log.debugWarning("Failed to compile text paragraph regex", exc_info=True)
+			gui.messageBox(
+				# Translators: Message shown when invalid text paragraph regex entered
+				_("Failed to compile text paragraph regular expression: %s") % str(e),
+				# Translators: The title of the message box
+				_("Error"),
+				wx.OK | wx.ICON_ERROR,
+				self,
+			)
+			return False
+		return super().isValid()
+
 	def onOpenScratchpadDir(self,evt):
 		path=config.getScratchpadDir(ensureExists=True)
 		os.startfile(path)
@@ -3427,6 +3423,9 @@ class AdvancedPanelControls(
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
 		config.conf["featureFlag"]["playErrorSound"] = self.playErrorSoundCombo.GetSelection()
+		config.conf["virtualBuffers"]["textParagraphRegex"] = (
+			self.textParagraphRegexEdit .GetValue()
+		)
 
 
 class AdvancedPanel(SettingsPanel):

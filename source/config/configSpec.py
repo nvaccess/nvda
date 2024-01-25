@@ -7,31 +7,7 @@
 
 from io import StringIO
 from configobj import ConfigObj
-
-DEFAULT_TEXT_PARAGRAPH_REGEX = (
-	r"({lookBehind}{optQuote}{punc}{optQuote}{optWiki}{lookAhead}|{cjk})".format(
-		# Look behind clause ensures that we have a text character before text punctuation mark.
-		# We have a positive lookBehind \w that resolves to a text character in any language,
-		# coupled with negative lookBehind \d that excludes digits.
-		lookBehind=r'(?<=\w)(?<!\d)',
-		# In some cases quote or closing parenthesis might appear right before or right after text punctuation.
-		# For example:
-		# > He replied, "That's wonderful."
-		optQuote=r'["”»)]?',
-		# Actual punctuation marks that suggest end of sentence.
-		# We don't include symbols like comma and colon, because of too many false positives.
-		punc=r'[.!?…]{1,3}',
-		# On Wikipedia references appear right after period in sentences, the following clause takes this
-		# into account. For example:
-		# > On his father's side, he was a direct descendant of John Churchill.[3]
-		optWiki=r'(\[\d+\])*',
-		# LookAhead clause checks that punctuation mark must be followed by either space,
-		# or newLine symbol or end of string.
-		lookAhead=r'(?=[\r\n  ]|$)',
-		# We also check for CJK full-width punctuation marks without any extra rules.
-		cjk=r'[．！？：；]',
-	)
-)
+from . import configDefaults
 
 #: The version of the schema outlined in this file. Increment this when modifying the schema and
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
@@ -208,7 +184,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enableOnPageLoad = boolean(default=true)
 	autoFocusFocusableElements = boolean(default=False)
 	loadChromiumVBufOnBusyState = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
-	textParagraphRegex = string(default="{DEFAULT_TEXT_PARAGRAPH_REGEX}")
+	textParagraphRegex = string(default="{configDefaults.DEFAULT_TEXT_PARAGRAPH_REGEX}")
 
 [touch]
 	enabled = boolean(default=true)
