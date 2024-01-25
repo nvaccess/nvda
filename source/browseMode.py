@@ -444,6 +444,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		raise NotImplementedError
 
 	MAX_ITERATIONS_FOR_SIMILAR_PARAGRAPH = 100000
+	
 	def _iterSimilarParagraph(
 			self,
 			kind: str,

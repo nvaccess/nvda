@@ -24,7 +24,8 @@ DEFAULT_TEXT_PARAGRAPH_REGEX = (
 		# LookAhead clause checks that punctuation mark must be followed by either space,
 		# or newLine symbol or end of string.
 		lookAhead=r'(?=[\r\n  ]|$)',
-		# Include question mark and exclamation mark with no extra conditions, since they don't trigger as many false positives.
+		# Include question mark and exclamation mark with no extra conditions,
+		# since they don't trigger as many false positives.
 		punc2=r'[?!]',
 		# We also check for CJK full-width punctuation marks without any extra rules.
 		cjk=r'[．！？：；]',
