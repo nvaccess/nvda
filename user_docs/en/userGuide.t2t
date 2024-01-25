@@ -1613,8 +1613,9 @@ If you are having problems with the pronunciation of individual characters, try 
 
 ==== Delayed descriptions for characters on cursor movement ====[delayedCharacterDescriptions]
 
-|| Default | Disabled |
-|| Options | Enabled, Disabled |
+|| . {.hideHeaderRow} | . |
+| Options | Enabled, Disabled |
+| Default | Disabled |
 
 
 When this setting is checked, NVDA will say the character description when you move by characters.
@@ -1730,8 +1731,9 @@ In this case, Braille  will not follow system focus and system caret.
 
 ==== Move system caret when routing review cursor ====[BrailleSettingsReviewRoutingMovesSystemCaret]
 
-|| Default | Never |
-|| Options | Default (Never), Never, Only when tethered automatically, Always |
+|| . {.hideHeaderRow} | . |
+| Options | Default (Never), Never, Only when tethered automatically, Always |
+| Default | Never |
 
 
 This setting determines if the system caret should also be moved with a routing button press.
@@ -1796,8 +1798,9 @@ To toggle focus context presentation from anywhere, please assign a custom gestu
 
 ==== Interrupt speech while scrolling ====[BrailleSettingsInterruptSpeech]
 
-|| Default | Enabled |
-|| Options | Default (Enabled), Enabled, Disabled |
+|| . {.hideHeaderRow} | . |
+| Options | Default (Enabled), Enabled, Disabled |
+| Default | Enabled |
 
 
 This setting determines if speech should be interrupted when the Braille display is scrolled backwards/forwards.
@@ -1810,8 +1813,9 @@ Disabling this option allows speech to be heard while simultaneously reading Bra
 
 ==== Show selection ====[BrailleSettingsShowSelection]
 
-|| Default | Enabled |
-|| Options | Default (Enabled), Enabled, Disabled |
+|| . {.hideHeaderRow} | . |
+| Options | Default (Enabled), Enabled, Disabled |
+| Default | Enabled |
 
 
 This setting determines if selection indicator (dots 7 and 8) is shown by the braille display.
@@ -1894,8 +1898,9 @@ It is not possible to support audio ducking for portable and temporary copies of
 
 ==== Volume of NVDA sounds follows voice volume ====[SoundVolumeFollowsVoice]
 
-|| Default | Disabled |
-|| Options | Disabled, Enabled |
+|| . {.hideHeaderRow} | . |
+| Options | Disabled, Enabled |
+| Default | Disabled |
 
 
 When this option is enabled, the volume of NVDA sounds and beeps will follow the volume setting of the voice you are using.
@@ -2343,8 +2348,9 @@ This category allows you to adjust various aspects of document navigation.
 
 ==== Paragraph Style ====[ParagraphStyle]
 
-|| Default | Handled by application |
-|| Options | Default (Handled by application), Handled by application, Single line break, Multi line break |
+|| . {.hideHeaderRow} | . |
+| Options | Default (Handled by application), Handled by application, Single line break, Multi line break |
+| Default | Handled by application |
 
 
 This combo box allows you to select the paragraph style to be used when navigating by paragraphs with ``control+upArrow`` and ``control+downArrow``.
@@ -2399,8 +2405,9 @@ This button is only enabled if NVDA is configured to enable loading custom code 
 
 ==== Registration for UI Automation events and property changes ====[AdvancedSettingsSelectiveUIAEventRegistration]
 
-|| Default | Automatic |
-|| Options | Automatic, Selective, Global |
+|| . {.hideHeaderRow} | . |
+| Options | Automatic, Selective, Global |
+| Default | Automatic |
 
 
 This option changes how NVDA registers for events fired by the Microsoft UI Automation accessibility API.
@@ -2433,8 +2440,9 @@ Microsoft Excel's UI automation implementation is ever changing, and versions of
 
 ==== Use enhanced event processing ====[UIAEnhancedEventProcessing]
 
-|| Default | Enabled |
-|| Options | Default (Enabled), Disabled, Enabled |
+|| . {.hideHeaderRow} | . |
+| Options | Default (Enabled), Disabled, Enabled |
+| Default | Enabled |
 
 
 When this option is enabled, NVDA should remain responsive when being flooded with many UI Automation events, e.g. large amounts of text in a terminal.
@@ -2442,8 +2450,9 @@ After changing this option, you will need to restart NVDA for the change to take
 
 ==== Windows Console support ====[AdvancedSettingsConsoleUIA]
 
-|| Default | Automatic |
-|| Options | Automatic, UIA when available, Legacy |
+|| . {.hideHeaderRow} | . |
+| Options | Automatic, UIA when available, Legacy |
+| Default | Automatic |
 
 
 This option selects how NVDA interacts with the Windows Console used by command prompt, PowerShell, and the Windows Subsystem for Linux.
@@ -2493,8 +2502,9 @@ The following options exist:
 
 ==== Report live regions ====[BrailleLiveRegions]
 
-|| Default | Enabled |
-|| Options | Default (Enabled), Disabled, Enabled |
+|| . {.hideHeaderRow} | . |
+| Options | Default (Enabled), Disabled, Enabled |
+| Default | Enabled |
 
 
 This option selects whether NVDA reports changes in some dynamic web content in Braille.
@@ -2527,8 +2537,9 @@ However, in terminals, when inserting or deleting a character in the middle of a
 
 ==== Speak new text in Windows Terminal via ====[WtStrategy]
 
-|| Default | Diffing |
-|| Options | Default (Diffing), Diffing, UIA notifications |
+|| . {.hideHeaderRow} | . |
+| Options | Default (Diffing), Diffing, UIA notifications |
+| Default | Diffing |
 
 
 This option selects how NVDA determines what text is "new" (and thus what to speak when "report dynamic content changes" is enabled) in Windows Terminal and the WPF Windows Terminal control used in Visual Studio 2022.
@@ -2560,8 +2571,9 @@ With several historically popular GUI APIs, the text may be rendered with a tran
 
 ==== Use WASAPI for audio output ====[WASAPI]
 
-|| Default | Enabled |
-|| Options | Default (Enabled), Disabled, Enabled |
+|| . {.hideHeaderRow} | . |
+| Options | Default (Enabled), Disabled, Enabled |
+| Default | Enabled |
 
 
 This option enables audio output via the Windows Audio Session API (WASAPI).
