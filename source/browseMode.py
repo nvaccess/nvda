@@ -2060,7 +2060,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			info: textInfos.TextInfo,
 	) -> "textInfos.TextInfo.TextWithFieldsT":
 		"""
-		This function calls TextInfo.getTextWithFields(), and then processes fiields in the following way:
+		This function calls TextInfo.getTextWithFields(), and then processes fields in the following way:
 		1. Highlighted(marked) text is currently reported as Role.MARKED_CONTENT, and not formatChange.
 		For ease of further handling we create a new boolean format field "marked"
 		and set its value according to presence of Role.MARKED_CONTENT.
@@ -2072,7 +2072,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			if isinstance(field, textInfos.FieldCommand):
 				if field.command == 'controlStart':
 					style = {**stack[-1]}
-					if field.field['role'] == controlTypes.Role.MARKED_CONTENT:
+					if field.field.get('role') == controlTypes.Role.MARKED_CONTENT:
 						style['marked'] = True
 					stack.append(style)
 				elif field.command == 'controlEnd':
