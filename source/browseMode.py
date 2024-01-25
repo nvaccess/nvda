@@ -25,6 +25,7 @@ import winUser
 import mouseHandler
 from logHandler import log
 import documentBase
+from documentBase import _Movement
 import review
 import inputCore
 import scriptHandler
@@ -448,9 +449,11 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			kind: str,
 			paragraphFunction: Callable[[textInfos.TextInfo], Optional[Any]],
 			desiredValue: Optional[Any],
-			direction: documentBase._Movement,
+			direction: _Movement,
 			pos: textInfos.TextInfo,
 	) -> Generator[TextInfoQuickNavItem, None, None]:
+		if direction not in [_Movement.NEXT, _Movement.PREVIOUS]:
+			raise RuntimeError
 		info = pos.copy()
 		info.collapse()
 		info.expand(textInfos.UNIT_PARAGRAPH)
@@ -458,8 +461,8 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			desiredValue = paragraphFunction(info)
 		for i in range(self.MAX_ITERATIONS_FOR_SIMILAR_PARAGRAPH):
 			# move by one paragraph in the desired direction
-			info.collapse(end=direction == 'next')
-			if direction == 'previous':
+			info.collapse(end=direction == _Movement.NEXT)
+			if direction == _Movement.PREVIOUS:
 				if info.move(textInfos.UNIT_CHARACTER, -1) == 0:
 					return
 			info.expand(textInfos.UNIT_PARAGRAPH)
@@ -486,7 +489,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 					kind="textParagraph",
 					paragraphFunction=paragraphFunc,
 					desiredValue=True,
-					direction=direction,
+					direction=_Movement(direction),
 					pos=pos,
 				)
 		else:

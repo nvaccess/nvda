@@ -3305,7 +3305,7 @@ class AdvancedPanelControls(
 			size=(self.Parent.scaleSize(300), -1),
 		)
 		self.textParagraphRegexEdit.SetValue(config.conf["virtualBuffers"]["textParagraphRegex"])
-		self.bindHelpEvent("BrowseModeSettingsTextParagraphRegexEdit ", self.textParagraphRegexEdit)
+		self.bindHelpEvent("TextParagraphRegexEdit", self.textParagraphRegexEdit)
 
 	def isValid(self) -> bool:
 		regex = self.textParagraphRegexEdit .GetValue()
