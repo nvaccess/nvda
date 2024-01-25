@@ -447,7 +447,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			kind: str,
 			paragraphFunction: Callable[[textInfos.TextInfo], Optional[Any]],
 			desiredValue: Optional[Any],
-			direction: str,
+			direction: documentBase._Movement,
 			pos: textInfos.TextInfo,
 	) -> Generator[TextInfoQuickNavItem, None, None]:
 		info = pos.copy()
@@ -478,7 +478,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			)
 
 			def paragraphFunc(info: textInfos.TextInfo) -> bool:
-				return punctuationMarksRegex .search(info.text) is not None
+				return punctuationMarksRegex.search(info.text) is not None
 
 			def iterFactory(direction: str, pos: textInfos.TextInfo) -> Generator[TextInfoQuickNavItem, None, None]:
 				return self._iterSimilarParagraph(
@@ -995,7 +995,8 @@ qn(
 	prevError=_("no previous tab")
 )
 qn(
-	"textParagraph", key="p",
+	"textParagraph",
+	key="p",
 	# Translators: Input help message for a quick navigation command in browse mode.
 	nextDoc=_("moves to the next text paragraph"),
 	# Translators: Message presented when the browse mode element is not found.
