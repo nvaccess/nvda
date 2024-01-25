@@ -6,5 +6,11 @@
 from .soundSplit import (
 	SoundSplitState,
 	setSoundSplitState,
-	toggleSoundSplitState
+	toggleSoundSplitState,
 )
+
+__all__ = [
+	"SoundSplitState",
+	"setSoundSplitState",
+	"toggleSoundSplitState",
+]
