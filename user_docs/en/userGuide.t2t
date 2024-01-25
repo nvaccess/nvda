@@ -843,7 +843,7 @@ If you want to use these while still being able to use your cursor keys to read 
 To toggle single letter navigation on and off for the current document, press NVDA+shift+space.
 %kc:endInclude
 
-+++ Text navigation command +++[TextNavigationCommand]
++++ Text paragraph navigation command +++[TextNavigationCommand]
 
 As mentioned above, you can jupm to next or previous text paragraph by pressing ``p`` or ``shift+p``. Here we define text paragraph to be a paragraph that appears to be written in complete sentences. This can be useful to find the beginning of readable content on various webpages, such as:
 - News websites
@@ -857,7 +857,7 @@ These commands can also be helpful for skipping certain kinds of clutter, such a
 - Headers
 - 
 
-Please note, however, that while NVDA tries its best to identify text paragraphs, the algorithm is not perfect and can make mistakes.
+Please note, however, that while NVDA tries its best to identify text paragraphs, the algorithm is not perfect and at times can make mistakes. Please also note that this command is different from paragraph navigation commands ``control+downArrow/upArrow`` - text paragraph navigation only jumps between text paragraphs, while paragraph navigation commands take cursor to previous/next paragraphs regardless of whether they contain text or not.
 
 +++ Other navigation commands +++[OtherNavigationCommands]
 
