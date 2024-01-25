@@ -2497,11 +2497,17 @@ def test_textParagraphNavigation():
 	""")
 
 	expectedParagraphs = [
+		# Tests exclamation sign
 		"Hello, world!",
+		# Tests Period with preceding quote
 		"He replied,  That's wonderful.",
+		# Tests period with trailing quote
 		"He replied,  That's wonderful .",
+		# Tests wikipedia-style reference
 		"He replied,  That's wonderful.  4",
+		# Tests compatibility with Russian Cyrillic script
 		"Предложение по-русски.",
+		# Tests regex condition for CJK full width character terminators
 		"我不会说中文！",
 		"Bye-bye, world!",
 	]

@@ -3308,7 +3308,7 @@ class AdvancedPanelControls(
 		self.bindHelpEvent("TextParagraphRegexEdit", self.textParagraphRegexEdit)
 
 	def isValid(self) -> bool:
-		regex = self.textParagraphRegexEdit .GetValue()
+		regex = self.textParagraphRegexEdit.GetValue()
 		try:
 			re.compile(regex)
 		except re.error as e:
@@ -3424,7 +3424,7 @@ class AdvancedPanelControls(
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
 		config.conf["featureFlag"]["playErrorSound"] = self.playErrorSoundCombo.GetSelection()
 		config.conf["virtualBuffers"]["textParagraphRegex"] = (
-			self.textParagraphRegexEdit .GetValue()
+			self.textParagraphRegexEdit.GetValue()
 		)
 
 
