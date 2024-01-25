@@ -313,6 +313,35 @@ class GlobalCommands(ScriptableObject):
 		ui.message(text)
 
 	@script(
+		# Translators: Input help mode message for set the first value in the synth ring setting.
+		description=_("Set the first value of the current setting in the synth settings ring"),
+		category=SCRCAT_SPEECH,
+		gestures=("kb(desktop):NVDA+control+home", "kb(laptop):NVDA+shift+control+home")
+	)
+	def script_FirstValueSynthRing(self,gesture):
+		settingName=globalVars.settingsRing.currentSettingName
+		if not settingName:
+			# Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
+			ui.message(_("No settings"))
+			return
+		settingValue=globalVars.settingsRing.first()
+		ui.message("%s %s" % (settingName,settingValue))
+
+	@script(
+		# Translators: Input help mode message for set the last value in the synth ring settings.
+		description=_("Set the last value of the current setting in the synth settings ring"),
+		category=SCRCAT_SPEECH,
+		gestures=("kb(desktop):NVDA+control+end", "kb(laptop):NVDA+shift+control+end")
+	)
+	def script_LastValueSynthRing(self,gesture):
+		settingName=globalVars.settingsRing.currentSettingName
+		if not settingName:
+			ui.message(_("No settings"))
+			return
+		settingValue=globalVars.settingsRing.last()
+		ui.message("%s %s" % (settingName,settingValue))
+
+	@script(
 		# Translators: Input help mode message for increase synth setting value command.
 		description=_("Increases the currently active setting in the synth settings ring"),
 		category=SCRCAT_SPEECH,
@@ -321,7 +350,6 @@ class GlobalCommands(ScriptableObject):
 	def script_increaseSynthSetting(self,gesture):
 		settingName=globalVars.settingsRing.currentSettingName
 		if not settingName:
-			# Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
 			ui.message(_("No settings"))
 			return
 		settingValue=globalVars.settingsRing.increase()

@@ -14,6 +14,16 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		self.max = setting.maxVal if isinstance(setting, NumericDriverSetting) else max
 		self.step = setting.normalStep if isinstance(setting, NumericDriverSetting) else 1
 
+	def first(self):
+		val = self.min
+		self.value = val
+		return self._getReportValue(val)
+
+	def last(self):
+		val = self.max
+		self.value = val
+		return self._getReportValue(val)
+
 	def increase(self):
 		val = min(self.max,self.value+self.step)
 		self.value = val
@@ -122,6 +132,18 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 		if self._current is not None:
 			self._current = (self._current - 1) % len(self.settings)
 			return self.currentSettingName
+		return None
+
+	def first(self):
+		""" set the current setting to the first value """
+		if self._current is not None:
+			return self.settings[self._current].first()
+		return None
+
+	def last(self):
+		""" set the current setting to the last value """
+		if self._current is not None:
+			return self.settings[self._current].last()
 		return None
 
 	def increase(self):
