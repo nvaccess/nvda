@@ -357,6 +357,20 @@ class GlobalCommands(ScriptableObject):
 		ui.message("%s %s" % (settingName,settingValue))
 
 	@script(
+		# Translators: Input help mode message for quick jump between values forward in the synth settings ring.
+		description=_("Jumps forward the value of the current active setting in the synth settings ring"),
+		category=SCRCAT_SPEECH,
+		gestures=("kb(desktop):NVDA+control+pageUp", "kb(laptop):NVDA+shift+control+pageUp")
+	)
+	def script_jumpForwardSynthSetting(self, gesture):
+		settingName = globalVars.settingsRing.currentSettingName
+		if not settingName:
+			ui.message(_("No settings"))
+			return
+		settingValue = globalVars.settingsRing.increase_4x()
+		ui.message("%s %s" % (settingName, settingValue))
+
+	@script(
 		# Translators: Input help mode message for decrease synth setting value command.
 		description=_("Decreases the currently active setting in the synth settings ring"),
 		category=SCRCAT_SPEECH,
@@ -369,6 +383,20 @@ class GlobalCommands(ScriptableObject):
 			return
 		settingValue=globalVars.settingsRing.decrease()
 		ui.message("%s %s" % (settingName,settingValue))
+
+	@script(
+		# Translators: Input help mode message for quick jump between values backward in the synth settings ring.
+		description=_("Jumps backward the value of the current active setting in the synth settings ring"),
+		category=SCRCAT_SPEECH,
+		gestures=("kb(desktop):NVDA+control+pageDown", "kb(laptop):NVDA+control+shift+pageDown")
+	)
+	def script_jumpBackwardSynthSetting(self, gesture):
+		settingName = globalVars.settingsRing.currentSettingName
+		if not settingName:
+			ui.message(_("No settings"))
+			return
+		settingValue = globalVars.settingsRing.decrease_4x()
+		ui.message("%s %s" % (settingName, settingValue))
 
 	@script(
 		# Translators: Input help mode message for next synth setting command.

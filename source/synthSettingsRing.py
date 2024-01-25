@@ -29,8 +29,18 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		self.value = val
 		return self._getReportValue(val)
 
+	def increase_4x(self):
+		val = min(self.max,self.value+self.step*4)
+		self.value = val
+		return self._getReportValue(val)
+
 	def decrease(self):
 		val = max(self.min,self.value-self.step)
+		self.value = val
+		return self._getReportValue(val)
+
+	def decrease_4x(self):
+		val = max(self.min,self.value-self.step*4)
 		self.value = val
 		return self._getReportValue(val)
 
@@ -152,10 +162,22 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			return self.settings[self._current].increase()
 		return None
 
+	def increase_4x(self):
+		""" increases the currentSetting (by a multiplier 4x, to quickly jump between options or values forward) and returns its new value """
+		if self._current is not None:
+			return self.settings[self._current].increase_4x()
+		return None
+
 	def decrease(self):
 		""" decreases the currentSetting and returns its new value """
 		if self._current is not None:
 			return self.settings[self._current].decrease()
+		return None
+
+	def decrease_4x(self):
+		""" decreases the currentSetting (by a multiplier of 4x, to quickly jump between options or values backward) and returns its new value """
+		if self._current is not None:
+			return self.settings[self._current].decrease_4x()
 		return None
 
 	def updateSupportedSettings(self,synth):
