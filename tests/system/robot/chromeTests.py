@@ -2499,13 +2499,13 @@ def test_textParagraphNavigation():
 	""")
 
 	expectedParagraphs = [
-		'''Hello, world!''',
-		'''He replied,  That's wonderful.''',
-		'''He replied,  That's wonderful .''',
-		'''He replied,  That's wonderful.  4''',
-		'''Предложение по-русски.''',
-		'''我不会说中文！''',
-		'''Bye-bye, world!''',
+		"Hello, world!",
+		"He replied,  That's wonderful.",
+		"He replied,  That's wonderful .",
+		"He replied,  That's wonderful.  4",
+		"Предложение по-русски.",
+		"我不会说中文！",
+		"Bye-bye, world!",
 	]
 	for p in expectedParagraphs:
 		actualSpeech = _chrome.getSpeechAfterKey("p")
