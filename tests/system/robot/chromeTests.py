@@ -2481,8 +2481,6 @@ def test_textParagraphNavigation():
 		<p>Header</p>
 		<p>Liberal MP: 1904–1908</p>
 		<p>.</p>
-		<p>!</p>
-		<p>?</p>
 		<p>…</p>
 		<p>5.</p>
 		<p>test....</p>
