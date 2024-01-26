@@ -117,9 +117,21 @@ class BrailleEdge(Model):
 		return keys
 
 
-class BrailleEmotion(BrailleEdge):
-	name = "Braille Emotion"
+class BrailleEdge2S(BrailleEdge):
+	"""This device is BrailleEdge which doesn't use hims driver. It only use spp connection.
+	"""
 	usbId = "VID_1A86&PID_55D3"
+
+	def _get_keys(self):
+		keys = Model._get_keys(self)
+
+		keys.update({
+			0x01 << 16: "leftSideScrollUp",
+			0x02 << 16: "rightSideScrollUp",
+			0x04 << 16: "rightSideScrollDown",
+			0x08 << 16: "leftSideScrollDown",
+		})
+		return keys
 
 
 class BrailleSense2S(BrailleSense):
@@ -177,7 +189,7 @@ modelMap = [(cls.deviceId,cls) for cls in (
 	BrailleSenseQX,
 	BrailleSenseQ,
 	BrailleEdge,
-	BrailleEmotion,
+	BrailleEdge2S,
 	SmartBeetle,
 	BrailleSense4S,
 	BrailleSense2S,
@@ -203,7 +215,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		# Sync Braille, serial device
 		driverRegistrar.addUsbDevices(bdDetect.DeviceType.SERIAL, {
 			"VID_0403&PID_6001",
-			"VID_1A86&PID_55D3",  # Braille Emotion 40
+			"VID_1A86&PID_55D3",  # Braille Edge2S 40
 		})
 
 		driverRegistrar.addBluetoothDevices(lambda m: any(m.id.startswith(prefix) for prefix in (
@@ -273,23 +285,20 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _sendIdentificationRequests(self, match: bdDetect.DeviceMatch):
 		log.debug("Considering sending identification requests for device %s"%str(match))
-		if match.type == bdDetect.DeviceType.CUSTOM:  # USB Bulk
-			matchedModelsMap = [
-				modelTuple for modelTuple in modelMap if(
-					modelTuple[1].usbId == match.id
-				)
-			]
-		elif "bluetoothName" in match.deviceInfo: # Bluetooth
+		if "bluetoothName" in match.deviceInfo:  # Bluetooth
 			matchedModelsMap = [
 				modelTuple for modelTuple in modelMap if(
 					modelTuple[1].bluetoothPrefix
 					and match.id.startswith(modelTuple[1].bluetoothPrefix)
 				)
 			]
-		else: # The only serial device we support which is not bluetooth, is a Sync Braille
-			self._model = SyncBraille()
-			log.debug("Use %s as model without sending an additional identification request"%self._model.name)
-			return
+		else:  # USB Bulk, Serial
+			matchedModelsMap = [
+				modelTuple for modelTuple in modelMap if(
+					modelTuple[1].usbId == match.id
+				)
+			]
+		
 		if not matchedModelsMap:
 			log.debugWarning("The provided device match to send identification requests didn't yield any results")
 			matchedModelsMap = modelMap
