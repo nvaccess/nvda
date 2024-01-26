@@ -315,8 +315,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for set the first value in the synth ring setting.
 		description=_("Set the first value of the current setting in the synth settings ring"),
-		category=SCRCAT_SPEECH,
-		gestures=("kb(desktop):NVDA+control+home", "kb(laptop):NVDA+shift+control+home")
+		category=SCRCAT_SPEECH
 	)
 	def script_FirstValueSynthRing(self, gesture):
 		settingName = globalVars.settingsRing.currentSettingName
@@ -331,8 +330,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		# Translators: Input help mode message for set the last value in the synth ring settings.
 		description=_("Set the last value of the current setting in the synth settings ring"),
-		category=SCRCAT_SPEECH,
-		gestures=("kb(desktop):NVDA+control+end", "kb(laptop):NVDA+shift+control+end")
+		category=SCRCAT_SPEECH
 	)
 	def script_LastValueSynthRing(self, gesture):
 		settingName = globalVars.settingsRing.currentSettingName
