@@ -54,6 +54,7 @@ class SoundSplitState(DisplayStringIntEnum):
 			# Translators: Sound split state
 			SoundSplitState.NVDA_BOTH_APPS_RIGHT: _("NVDA in both channels and applications on the right"),
 		}
+
 	def getAppVolume(self) -> VolumeTupleT:
 		match self:
 			case SoundSplitState.OFF | SoundSplitState.NVDA_LEFT_APPS_BOTH | SoundSplitState.NVDA_RIGHT_APPS_BOTH:
