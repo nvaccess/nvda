@@ -55,7 +55,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	soundVolumeFollowsVoice = boolean(default=false)
 	soundVolume = integer(default=100, min=0, max=100)
 	soundSplitState = integer(default=0)
-	includedSoundSplitModes =int_list(default=list(0, 1, 3))
+	includedSoundSplitModes =int_list(default=list(0, 1, 2))
 
 # Braille settings
 [braille]
