@@ -236,12 +236,12 @@ The actual commands will not execute while in input help mode.
 || Name | Desktop key | Laptop key | Description |
 | Move to next synth setting | ``NVDA+control+rightArrow`` | ``NVDA+shift+control+rightArrow`` | Moves to the next available speech setting after the current, wrapping around to the first setting again after the last |
 | Move to previous synth setting | ``NVDA+control+leftArrow`` | ``NVDA+shift+control+leftArrow`` | Moves to the next available speech setting before the current, wrapping around to the last setting after the first |
-| Set the first value of the current synth setting | ``NVDA+control+home`` | ``NVDA+shift+control+home`` | Set the current speech setting to the first value. E.G. When you're on a rate setting, it will set the rate to 0; when you're on a voice setting, it will set the first voice. |
 | Increment current synth setting | ``NVDA+control+upArrow`` | ``NVDA+shift+control+upArrow`` | increases the current speech setting you are on. E.g. increases the rate, chooses the next voice, increases the volume |
 | Jump forward the current synth setting | ``NVDA+control+pageUp`` | ``NVDA+shift+control+pageUp`` | Jumps forward the value of the current speech setting you're on. E.G. When you're on a voice setting, it will jump forward every 20 voices; when you're on slider settings (rate, pitch, etc) it will jump forward the value up to 20% |
 | Decrement current synth setting | ``NVDA+control+downArrow`` | ``NVDA+shift+control+downArrow`` | decreases the current speech setting you are on. E.g. decreases the rate, chooses the previous voice, decreases the volume |
 | Jump backward the current synth setting | ``NVDA+control+pageDown`` | ``NVDA+shift+control+pageDown`` | Jumps backward the value of the current speech setting you're on. E.G. When you're on a voice setting, it will jump backward every 20 voices; when you're on a slider setting, it will jump backward the value up to 20% |
-| Set the last value of the current synth setting | ``NVDA+control+end`` | ``NVDA+shift+control+end`` | Set the current speech setting to the last value. E.G. When you're on a rate setting, it will set the rate to 100; when you're on a voice setting, it will set the last voice. |
+
+It is also possible to set the first or last value of the current synth setting by assign custom gestures in [Input Gestures dialog #InputGestures], under the speech category. This means, for example, when you're on a rate setting, it will set the rate to 0 or 100; when you're on a voice setting, it will set the first or last voice.
 
 +++ Web navigation +++[WebNavigation]
 The full list of Single Letter Navigation keys is in the [Browse Mode #BrowseMode] section of the user guide.
@@ -1661,12 +1661,10 @@ If you wish to quickly change speech settings without going to the Speech catego
 || Name | Desktop key | Laptop key | Description |
 | Move to next synth setting | NVDA+control+rightArrow | NVDA+shift+control+rightArrow | Moves to the next available speech setting after the current, wrapping around to the first setting again after the last |
 | Move to previous synth setting | NVDA+control+leftArrow | NVDA+shift+control+leftArrow | Moves to the next available speech setting before the current, wrapping around to the last setting after the first |
-| Set the first value of the current synth setting | ``NVDA+control+home`` | ``NVDA+shift+control+home`` | Set the current speech setting to the first value. E.G. When you're on a rate setting, it will set the rate to 0; when you're on a voice setting, it will set the first voice. |
 | Increment current synth setting | NVDA+control+upArrow | NVDA+shift+control+upArrow | increases the current speech setting you are on. E.g. increases the rate, chooses the next voice, increases the volume |
 | Jump forward the current synth setting | ``NVDA+control+pageUp`` | ``NVDA+shift+control+pageUp`` | Jumps forward the value of the current speech setting you're on. E.G. When you're on a voice setting, it will jump forward every 20 voices; when you're on slider settings (rate, pitch, etc) it will jump forward the value up to 20% |
 | Decrement current synth setting | NVDA+control+downArrow | NVDA+shift+control+downArrow | decreases the current speech setting you are on. E.g. decreases the rate, chooses the previous voice, decreases the volume |
 | Jump backward the current synth setting | ``NVDA+control+pageDown`` | ``NVDA+shift+control+pageDown`` | Jumps backward the value of the current speech setting you're on. E.G. When you're on a voice setting, it will jump backward every 20 voices; when you're on a slider setting, it will jump backward the value up to 20% |
-| Set the last value of the current synth setting | ``NVDA+control+end`` | ``NVDA+shift+control+end`` | Set the current speech setting to the last value. E.G. When you're on a rate setting, it will set the rate to 100; when you're on a voice setting, it will set the last voice. |
 %kc:endInclude
 
 +++ Braille +++[BrailleSettings]
