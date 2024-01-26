@@ -437,6 +437,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 	}
 
 	BSTR stdName = NULL;
+	BSTR tagName = NULL;
 	int textFlags = 0;
 	// Whether to render just a space in place of the content.
 	bool renderSpace = false;
@@ -453,8 +454,18 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 				// This is an inline element.
 				parentNode->isBlock=false;
 			}
-			if (wcscmp(stdName, L"Formula") == 0) {
-				// We don't want the content of formulas,
+		}
+
+		// Get tagName.
+		if ((res = domElement->GetTagName(&tagName)) != S_OK) {
+			LOG_DEBUG(L"IPDDomElement::GetTagName returned " << res);
+			tagName = NULL;
+		}
+		if (tagName) {
+			parentNode->addAttribute(L"acrobat::tagname", tagName);
+			if (wcscmp(tagName, L"math") == 0) {
+				// We don't want the content of math nodes here,
+				// As it will be fetched by NVDAObjects outside of the virtualBuffer.
 				// but we still want a space so the user can get at them.
 				renderSpace = true;
 			}
@@ -736,6 +747,8 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		delete pageNum;
 	if (stdName)
 		SysFreeString(stdName);
+	if (tagName)
+		SysFreeString(tagName);
 	if (domElement) {
 		LOG_DEBUG(L"Releasing IPDDomElement");
 		domElement->Release();

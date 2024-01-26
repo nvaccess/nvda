@@ -14,3 +14,5 @@ for the purposes of IDEs and tools.
 Only UIAutomation.py is not generated, UIA has historically been updated regularly and the version on
 Appveyor build servers could not be guaranteed.
 
+To manually add files in `source/comInterfaces`, exclude them from the 'exclude' parameter of the 'Clean' function in `comInterfaces_sconscript`.
+This is because SCons removes files from `source/comInterfaces` during cleanup (`scons -c`).

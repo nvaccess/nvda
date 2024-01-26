@@ -13,6 +13,10 @@ What's New in NVDA
 
 == Changes ==
 
+- Add-on Store:
+  - The minimum and the last tested NVDA version for an add-on are now displayed in the "other details" area. (#15776, @Nael-Sayegh)
+  -
+-
 
 == Bug Fixes ==
 - Backspace now works correctly when using Nudi 6.1 with NVDA's "Handle keys from other applications" setting enabled. (#15822, @jcsteh)
@@ -20,6 +24,7 @@ What's New in NVDA
 - Add-on Store:
   - When pressing ``ctrl+tab``, focus properly moves to the new current tab title. (#14986, @ABuffEr)
   -
+- In Adobe Reader, NVDA no longer ignores alternative text set on formulas in PDFs. (#12715)
 -
 
 
@@ -156,7 +161,7 @@ Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on e
   - This new behavior can be disabled using the new "Use enhanced event processing" setting in NVDA's advanced settings.
   -
 - NVDA is again able to track the focus in applications running within Windows Defender Application Guard (WDAG). (#15164)
-- The speech text is no longer updated when the mouse moves in the Speech Viewer. (#15953, @hwf1324)
+- The speech text is no longer updated when the mouse moves in the Speech Viewer. (#15952, @hwf1324)
 - NVDA will again switch back to browse mode when closing combo boxes with ``escape`` or ``alt+upArrow`` in Firefox or Chrome. (#15653)
 - Arrowing up and down in combo boxes in iTunes will no longer inappropriately switch back to browse mode. (#15653)
 -
@@ -313,6 +318,18 @@ Code which imports from one of them, should instead import from the replacement 
 Use ``bdDetect.DeviceType.*`` instead. (#15772, @LeonarddeR).
 - The ``bdDetect.DETECT_USB`` and ``bdDetect.DETECT_BLUETOOTH`` constants have been deprecated with no public replacement. (#15772, @LeonarddeR).
 - Using ``gui.ExecAndPump`` is deprecated - please use ``systemUtils.ExecAndPump`` instead. (#15852, @lukaszgo1)
+-
+
+
+= 2023.3.2 =
+This is a patch release to fix a security issue.
+The security patch in 2023.3.1 was not resolved correctly.
+Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Security Fixes ==
+- The security patch in 2023.3.1 was not resolved correctly.
+Prevents possible system access and arbitrary code execution with system privileges for unauthenticated users.
+([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
 -
 
 
