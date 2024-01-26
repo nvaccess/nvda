@@ -3295,6 +3295,40 @@ class AdvancedPanelControls(
 
 		self.Layout()
 
+		silenceDurationLabelText = _(
+			# Translators: The label for a setting in advanced panel to change silence duration
+			"Duration in seconds of silence or white noise played to keep audio device open (or 0 to disable)"
+		)
+		minDuration = int(config.conf.getConfigValidation(
+			("audio", "silenceTimeSeconds")
+		).kwargs["min"])
+		maxDuration = int(config.conf.getConfigValidation(("audio", "silenceTimeSeconds")).kwargs["max"])
+		self.silenceDurationEdit = sHelper.addLabeledControl(
+			silenceDurationLabelText,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=minDuration,
+			max=maxDuration,
+			initial=config.conf["audio"]["silenceTimeSeconds"]
+		)
+		self.bindHelpEvent("silenceDuration", self.silenceDurationEdit)
+		self.silenceDurationEdit.Bind(wx.EVT_TEXT, self._onSilenceDurationChanged)
+
+		# Translators: This is the label for a slider control in the
+		# advanced settings panel.
+		label = _("White noise Volume - or set to 0 for silence")
+		self.whiteNoiseVolSlider: nvdaControls.EnhancedInputSlider = sHelper.addLabeledControl(
+			label,
+			nvdaControls.EnhancedInputSlider,
+			minValue=0,
+			maxValue=100
+		)
+		self.bindHelpEvent("whiteNoiseVolume", self.whiteNoiseVolSlider)
+		self.whiteNoiseVolSlider.SetValue(config.conf["audio"]["whiteNoiseVolume"])
+		self._onSilenceDurationChanged(None)
+
+	def _onSilenceDurationChanged(self, event: wx.Event) -> None:
+		self.whiteNoiseVolSlider.Enable(self.silenceDurationEdit.GetValue() > 0)
+
 	def onOpenScratchpadDir(self,evt):
 		path=config.getScratchpadDir(ensureExists=True)
 		os.startfile(path)
@@ -3394,6 +3428,8 @@ class AdvancedPanelControls(
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
 		config.conf["featureFlag"]["playErrorSound"] = self.playErrorSoundCombo.GetSelection()
+		config.conf["audio"]["silenceTimeSeconds"] = self.silenceDurationEdit.GetValue()
+		config.conf["audio"]["whiteNoiseVolume"] = self.whiteNoiseVolSlider.GetValue()
 
 
 class AdvancedPanel(SettingsPanel):

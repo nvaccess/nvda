@@ -23,6 +23,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <Functiondiscoverykeys_devpkey.h>
 #include <mmdeviceapi.h>
 #include <common/log.h>
+#include <random>
 
 /**
  * Support for audio playback using WASAPI.
@@ -189,7 +190,6 @@ class WasapiPlayer {
 	HRESULT pause();
 	HRESULT resume();
 	HRESULT setChannelVolume(unsigned int channel, float level);
-
 	private:
 	void maybeFireCallback();
 
@@ -643,11 +643,12 @@ class SilencePlayer {
 	SilencePlayer(wchar_t* deviceName);
 	HRESULT init();
 	// Play silence for the specified duration.
-	void playFor(DWORD ms);
+	void playFor(DWORD ms, float volume);
 	void terminate();
 
 	private:
 	static WAVEFORMATEX getFormat();
+	void generateWhiteNoise(float volume);
 	// The code which is run in the silence thread.
 	void run();
 
@@ -660,10 +661,18 @@ class SilencePlayer {
 	// The time (not duration) at which silence should end.
 	ULONGLONG endTime = 0;
 	std::thread silenceThread;
+	float volume;
+	std::vector<INT16> whiteNoiseData;
 };
 
 SilencePlayer::SilencePlayer(wchar_t* deviceName):
-player(deviceName, getFormat(), nullptr) {
+player(deviceName, getFormat(), nullptr),
+whiteNoiseData(
+	SILENCE_BYTES  / (
+		sizeof(INT16) / sizeof(unsigned char)
+	)
+),
+volume(-1) {
 	wakeEvent = CreateEvent(nullptr, false, false, nullptr);
 }
 
@@ -679,6 +688,19 @@ WAVEFORMATEX SilencePlayer::getFormat() {
 	return format;
 }
 
+void SilencePlayer::generateWhiteNoise(float volume) {
+	if (volume == 0) {
+		return;
+	}
+	UINT32 n = whiteNoiseData.size();
+	const double mean = 0.0;
+	const double stddev = volume * 256;
+	std::default_random_engine generator;
+	std::normal_distribution<double> dist(mean, stddev);
+	for (UINT32 i = 0; i < n; i++) {
+		whiteNoiseData[i] = (INT16)dist(generator);
+	}
+}
 HRESULT SilencePlayer::init() {
 	HRESULT hr = player.open();
 	if (FAILED(hr)) {
@@ -703,13 +725,20 @@ void SilencePlayer::run() {
 		// as we're looping. This is fine because we're only pushing BUFFER_MS each
 		// iteration.
 		while (GetTickCount64() < endTime) {
-			player.feed(nullptr, SILENCE_BYTES, nullptr);
+			unsigned char* whiteNoisePtr = volume > 0
+				? reinterpret_cast<unsigned char*>(&whiteNoiseData[0])
+				: nullptr;
+			player.feed(whiteNoisePtr, SILENCE_BYTES, nullptr);
 		}
 		player.idle();
 	}
 }
 
-void SilencePlayer::playFor(DWORD ms) {
+void SilencePlayer::playFor(DWORD ms, float volume) {
+	if (volume != this->volume) {
+		generateWhiteNoise(volume);
+		this->volume = volume;
+	}
 	endTime = ms == INFINITE ? ULLONG_MAX : GetTickCount64() + ms;
 	SetEvent(wakeEvent);
 }
@@ -798,9 +827,9 @@ HRESULT wasSilence_init(wchar_t* deviceName) {
 	return silence->init();
 }
 
-void wasSilence_playFor(DWORD ms) {
+void wasSilence_playFor(DWORD ms, float volume) {
 	assert(silence);
-	silence->playFor(ms);
+	silence->playFor(ms, volume);
 }
 
 void wasSilence_terminate() {

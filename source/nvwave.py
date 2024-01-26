@@ -834,13 +834,13 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		self.open()
 		self._lastActiveTime: typing.Optional[float] = None
 		self._isPaused: bool = False
-		# todo: Make silence configurable.
-		if WasapiWavePlayer._silenceDevice != outputDevice:
+		if config.conf["audio"]["silenceTimeSeconds"] > 0 and WasapiWavePlayer._silenceDevice != outputDevice:
 			# The output device has changed. (Re)initialize silence.
 			if self._silenceDevice is not None:
 				NVDAHelper.localLib.wasSilence_terminate()
-			NVDAHelper.localLib.wasSilence_init(outputDevice)
-			WasapiWavePlayer._silenceDevice = outputDevice
+			if config.conf["audio"]["silenceTimeSeconds"] > 0:
+				NVDAHelper.localLib.wasSilence_init(outputDevice)
+				WasapiWavePlayer._silenceDevice = outputDevice
 
 	@wasPlay_callback
 	def _callback(cppPlayer, feedId):
@@ -921,8 +921,11 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			self._doneCallbacks[feedId.value] = onDone
 		self._lastActiveTime = time.time()
 		self._scheduleIdleCheck()
-		# todo: Make silence duration configurable.
-		NVDAHelper.localLib.wasSilence_playFor(30000)
+		if config.conf["audio"]["silenceTimeSeconds"] > 0:
+			NVDAHelper.localLib.wasSilence_playFor(
+				1000 * config.conf["audio"]["silenceTimeSeconds"],
+				c_float(config.conf["audio"]["whiteNoiseVolume"] / 100.0),
+			)
 
 	def sync(self):
 		"""Synchronise with playback.

@@ -2594,6 +2594,16 @@ This option allows you to specify if NVDA will play an error sound in case an er
 Choosing Only in test versions (default) makes NVDA play error sounds only if the current NVDA version is a test version (alpha, beta or run from source).
 Choosing Yes allows to enable error sounds whatever your current NVDA version is.
 
+==== Silence duration ====[silenceDuration]
+
+This edit box specifies how long NVDA plays silence after every utterance. We play silence to keep audio device open and avoid certain glitches like dropped parts of utterances, that happen due to audio devices (especially Bluetooth and wireless devices) entering stand by mode.
+
+You can specify silence duration to be 0 in order to disable this feature.
+
+==== White noise volume slider ====[whiteNoiseVolume]
+
+When you set white noise volume to any value above zero, then instead of silence NVDA would playh white noise in order to keep audio device open. This feature is useful for debugging audio issues.
+
 ++ miscellaneous Settings ++[MiscSettings]
 Besides the [NVDA Settings #NVDASettings] dialog, The Preferences sub-menu of the NVDA Menu contains several other items which are outlined below.
 
