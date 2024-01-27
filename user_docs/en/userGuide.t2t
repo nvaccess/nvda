@@ -2598,6 +2598,9 @@ Choosing Yes allows to enable error sounds whatever your current NVDA version is
 
 This edit box specifies how long NVDA plays silence after every utterance. We play silence to keep audio device open and avoid certain glitches like dropped parts of utterances, that happen due to audio devices (especially Bluetooth and wireless devices) entering stand by mode.
 
+* Too low value would mean  audio may be cut-off more often.
+• Too high value would mean the battery of sound output device discharges faster.
+
 You can specify silence duration to be 0 in order to disable this feature.
 
 ==== White noise volume slider ====[whiteNoiseVolume]

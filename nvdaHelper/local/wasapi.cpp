@@ -190,6 +190,7 @@ class WasapiPlayer {
 	HRESULT pause();
 	HRESULT resume();
 	HRESULT setChannelVolume(unsigned int channel, float level);
+
 	private:
 	void maybeFireCallback();
 
