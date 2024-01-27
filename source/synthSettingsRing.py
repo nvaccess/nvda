@@ -30,7 +30,7 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		return self._getReportValue(val)
 
 	def increase_4x(self):
-		val = min(self.max, self.value + setting.largeStep * 2)
+		val = min(self.max, self.value + self.setting.largeStep * 2)
 		self.value = val
 		return self._getReportValue(val)
 
@@ -40,7 +40,7 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		return self._getReportValue(val)
 
 	def decrease_4x(self):
-		val = max(self.min, self.value - setting.normalStep * 2)
+		val = max(self.min, self.value - self.setting.normalStep * 2)
 		self.value = val
 		return self._getReportValue(val)
 
