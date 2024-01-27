@@ -259,32 +259,33 @@ freeze(
 		(".", glob("../miscDeps/python/*.dll")),
 		(".", ['message.html']),
 		(".", [os.path.join(sys.base_prefix, "python3.dll")]),
-	] + (
-		getLocaleDataFiles()
-		+ getRecursiveDataFiles("synthDrivers", "synthDrivers",
-			excludes=tuple(
-				"*%s" % ext
-				for ext in importlib.machinery.SOURCE_SUFFIXES + importlib.machinery.BYTECODE_SUFFIXES
+		] + (
+	getLocaleDataFiles()
+	+ getRecursiveDataFiles(
+		"synthDrivers",
+		"synthDrivers",
+		excludes=tuple(
+			f"*{ext}" for ext in importlib.machinery.SOURCE_SUFFIXES + importlib.machinery.BYTECODE_SUFFIXES
 			) + (
-				"*.exp",
-				"*.lib",
-				"*.pdb",
-				"__pycache__"
-		))
-		+ getRecursiveDataFiles("brailleDisplayDrivers", "brailleDisplayDrivers",
-			excludes=tuple(
-				"*%s" % ext
-				for ext in importlib.machinery.SOURCE_SUFFIXES + importlib.machinery.BYTECODE_SUFFIXES
+		"*.exp",
+		"*.lib",
+		"*.pdb"
+	))
+	+ getRecursiveDataFiles(
+		"brailleDisplayDrivers",
+		"brailleDisplayDrivers",
+		excludes=tuple(
+			f"*{ext}" for ext in importlib.machinery.SOURCE_SUFFIXES + importlib.machinery.BYTECODE_SUFFIXES
 			) + (
-				"__pycache__",
-		))
+		"*.md",
+		)
+	)
 	+ getRecursiveDataFiles(
 		"documentation",
 		"../user_docs",
 		excludes=tuple(
 			f"*{ext}" for ext in importlib.machinery.SOURCE_SUFFIXES + importlib.machinery.BYTECODE_SUFFIXES
 			) + (
-		"__pycache__",
 		"*.t2t",
 		"*.t2tconf",
 		"*.md",
