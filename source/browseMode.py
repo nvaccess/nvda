@@ -2044,7 +2044,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	STYLE_ATTRIBUTES = frozenset([
 		'background-color',
 		'color',
-		'font-family,',
+		'font-family',
 		'font-size',
 		'bold',
 		'italic',
