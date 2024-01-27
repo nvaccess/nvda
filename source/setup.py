@@ -25,6 +25,7 @@ from py2exe import freeze  # noqa: E402
 from py2exe.dllfinder import DllFinder  # noqa: E402
 import wx
 import importlib.machinery
+
 # Explicitly put the nvda_dmp dir on the build path so the DMP library is included
 sys.path.append(os.path.join("..", "include", "nvda_dmp"))
 RT_MANIFEST = 24
@@ -32,6 +33,8 @@ manifestTemplateFilePath = "manifest.template.xml"
 
 # py2exe's idea of whether a dll is a system dll appears to be wrong sometimes, so monkey patch it.
 orig_determine_dll_type = DllFinder.determine_dll_type
+
+
 def determine_dll_type(self, imagename):
 	dll = os.path.basename(imagename).lower()
 	if dll.startswith("api-ms-win-") or dll in ("powrprof.dll", "mpr.dll", "crypt32.dll"):
@@ -39,6 +42,8 @@ def determine_dll_type(self, imagename):
 		# Including them can cause serious problems when a binary build is run on a different version of Windows.
 		return None
 	return orig_determine_dll_type(self, imagename)
+
+
 DllFinder.determine_dll_type = determine_dll_type
 
 
@@ -84,6 +89,7 @@ def getLocaleDataFiles():
 	localeDicFiles=[(os.path.dirname(f), (f,)) for f in glob("locale/*/*.dic")]
 	NVDALocaleGestureMaps=[(os.path.dirname(f), (f,)) for f in glob("locale/*/gestures.ini")]
 	return list(localeMoFiles)+localeDicFiles+NVDALocaleGestureMaps
+
 
 def getRecursiveDataFiles(dest,source,excludes=()):
 	rulesList=[]
