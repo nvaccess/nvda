@@ -18,9 +18,7 @@ Handlers are called without arguments.
 pre_speechCanceled = Action()
 """
 Notifies when speech is about to be canceled.
-
-@param clearBrailleRegions: whether the braille regions should be cleared in speech output braille
-@type clearBrailleRegions: bool
+Handlers are called without arguments.
 """
 
 pre_speech = Action()
