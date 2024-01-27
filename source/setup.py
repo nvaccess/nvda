@@ -91,11 +91,25 @@ def getLocaleDataFiles():
 	return list(localeMoFiles)+localeDicFiles+NVDALocaleGestureMaps
 
 
-def getRecursiveDataFiles(dest,source,excludes=()):
-	rulesList=[]
-	rulesList.append((dest,
-		[f for f in glob("%s/*"%source) if not any(fnmatch.fnmatch(f,exclude) for exclude in excludes) and os.path.isfile(f)]))
-	[rulesList.extend(getRecursiveDataFiles(os.path.join(dest,dirName),os.path.join(source,dirName),excludes=excludes)) for dirName in os.listdir(source) if os.path.isdir(os.path.join(source,dirName)) and not dirName.startswith('.')]
+def getRecursiveDataFiles(dest, source, excludes=()):
+	rulesList = []
+	for file in glob(f"{source}/*"):
+		if (
+			not any(fnmatch.fnmatch(file, exclude) for exclude in excludes)
+			and os.path.isfile(file)
+		):
+			rulesList.append((
+				dest,
+				[file]))
+	for dirName in os.listdir(source):
+		if os.path.isdir(os.path.join(source, dirName)) and not dirName.startswith('.'):
+			rulesList.extend(
+				getRecursiveDataFiles(
+					os.path.join(dest, dirName),
+					os.path.join(source, dirName),
+					excludes=excludes
+				)
+			)
 	return rulesList
 
 
