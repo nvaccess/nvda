@@ -27,6 +27,7 @@ from annotation import _AnnotationRolesT
 import driverHandler
 import pkgutil
 import importlib
+import contextlib
 import ctypes.wintypes
 import threading
 import time
@@ -2126,9 +2127,19 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		handler.mainBuffer.update()
 		handler.update()
 
-	def clearBrailleRegions(self, clearBrailleRegions: bool):
-		if clearBrailleRegions:
+	_suppressClearBrailleRegions: bool = False
+
+	@contextlib.contextmanager
+	def suppressClearBrailleRegions(self, script):
+		from globalCommands import commands
+		suppress = script in [commands.script_braille_scrollBack, commands.script_braille_scrollForward]
+		self._suppressClearBrailleRegions = suppress
+		yield
+
+	def clearBrailleRegions(self):
+		if not self._suppressClearBrailleRegions:
 			self._showSpeechInBrailleRegions.clear()
+		self._suppressClearBrailleRegions = False
 
 	def getTether(self):
 		return self._tether
