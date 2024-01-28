@@ -265,7 +265,7 @@ freeze(
 		"synthDrivers",
 		"synthDrivers",
 		excludes=tuple(
-			importlib.machinery.all_suffixes()
+			f"*{ext}" for ext in importlib.machinery.all_suffixes()
 			) + (
 		"*.exp",
 		"*.lib",
@@ -275,7 +275,7 @@ freeze(
 		"brailleDisplayDrivers",
 		"brailleDisplayDrivers",
 		excludes=tuple(
-			importlib.machinery.all_suffixes()
+			f"*{ext}" for ext in importlib.machinery.all_suffixes()
 			) + (
 		"*.md",
 		)
@@ -284,7 +284,7 @@ freeze(
 		"documentation",
 		"../user_docs",
 		excludes=tuple(
-			importlib.machinery.all_suffixes()
+			f"*{ext}" for ext in importlib.machinery.all_suffixes()
 			) + (
 		"*.t2t",
 		"*.t2tconf",
