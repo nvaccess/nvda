@@ -13,6 +13,7 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		self.min = setting.minVal if isinstance(setting, NumericDriverSetting) else min
 		self.max = setting.maxVal if isinstance(setting, NumericDriverSetting) else max
 		self.step = setting.normalStep if isinstance(setting, NumericDriverSetting) else 1
+		self.largeStep = self.setting.largeStep if isinstance(setting, NumericDriverSetting) else 10
 
 	def first(self):
 		val = self.min
@@ -29,8 +30,8 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		self.value = val
 		return self._getReportValue(val)
 
-	def increase_4x(self):
-		val = min(self.max, self.value + self.setting.largeStep * 2)
+	def increase_large(self):
+		val = min(self.max, self.value + self.largeStep * 2)
 		self.value = val
 		return self._getReportValue(val)
 
@@ -39,8 +40,8 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		self.value = val
 		return self._getReportValue(val)
 
-	def decrease_4x(self):
-		val = max(self.min, self.value - self.setting.largeStep * 2)
+	def decrease_large(self):
+		val = max(self.min, self.value - self.largeStep * 2)
 		self.value = val
 		return self._getReportValue(val)
 
@@ -162,10 +163,10 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			return self.settings[self._current].increase()
 		return None
 
-	def increase_4x(self):
+	def increase_large(self):
 		""" jumps forward the currentSetting (by a multiplier 4x) and returns its new value """
 		if self._current is not None:
-			return self.settings[self._current].increase_4x()
+			return self.settings[self._current].increase_large()
 		return None
 
 	def decrease(self):
@@ -174,10 +175,10 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			return self.settings[self._current].decrease()
 		return None
 
-	def decrease_4x(self):
+	def decrease_large(self):
 		""" jumps backward the currentSetting (by a multiplier of 4x) and returns its new value """
 		if self._current is not None:
-			return self.settings[self._current].decrease_4x()
+			return self.settings[self._current].decrease_large()
 		return None
 
 	def updateSupportedSettings(self,synth):
