@@ -3770,7 +3770,6 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.followCursorGroupBox = followCursorGroupSizer.GetStaticBox()
 		followCursorGroupHelper = guiHelper.BoxSizerHelper(self, sizer=followCursorGroupSizer)
 		sHelper.addItem(followCursorGroupHelper)
-		self.followCursorGroupBox.Enable(not self.brailleModes.GetSelection())
 
 
 		# Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
@@ -3961,7 +3960,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			conf=config.conf,
 		)
 		self.bindHelpEvent("BrailleSettingsShowSelection", self.brailleShowSelectionCombo)
-
+		self.followCursorGroupBox.Enable(not self.brailleModes.GetSelection())
 		# Translators: The label for a setting in braille settings to enable word wrap
 		# (try to avoid splitting words at the end of the braille display).
 		wordWrapText = _("Avoid splitting &words when possible")
