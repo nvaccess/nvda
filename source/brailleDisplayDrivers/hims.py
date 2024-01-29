@@ -122,7 +122,7 @@ class BrailleEdge2S(BrailleEdge):
 	"""
 	usbId = "VID_1A86&PID_55D3"
 
-	def _get_keys(self):
+	def _get_keys(self) -> dict[str, str]:
 		keys = Model._get_keys(self)
 
 		keys.update({
