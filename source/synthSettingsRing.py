@@ -30,7 +30,7 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		self.value = val
 		return self._getReportValue(val)
 
-	def increase_large(self):
+	def increaseLarge(self):
 		val = min(self.max, self.value + self.largeStep * 2)
 		self.value = val
 		return self._getReportValue(val)
@@ -163,7 +163,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			return self.settings[self._current].increase()
 		return None
 
-	def increase_large(self):
+	def increaseLarge(self):
 		""" jumps forward the currentSetting (by a multiplier 4x) and returns its new value """
 		if self._current is not None:
 			return self.settings[self._current].increase_large()
@@ -175,7 +175,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			return self.settings[self._current].decrease()
 		return None
 
-	def decrease_large(self):
+	def decreaseLarge(self):
 		""" jumps backward the currentSetting (by a multiplier of 4x) and returns its new value """
 		if self._current is not None:
 			return self.settings[self._current].decrease_large()

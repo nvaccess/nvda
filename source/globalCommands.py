@@ -365,7 +365,7 @@ class GlobalCommands(ScriptableObject):
 		if not settingName:
 			ui.message(_("No settings"))
 			return
-		settingValue = globalVars.settingsRing.increase_large()
+		settingValue = globalVars.settingsRing.increaseLarge()
 		ui.message("%s %s" % (settingName, settingValue))
 
 	@script(
@@ -393,7 +393,7 @@ class GlobalCommands(ScriptableObject):
 		if not settingName:
 			ui.message(_("No settings"))
 			return
-		settingValue = globalVars.settingsRing.decrease_large()
+		settingValue = globalVars.settingsRing.decreaseLarge()
 		ui.message("%s %s" % (settingName, settingValue))
 
 	@script(
