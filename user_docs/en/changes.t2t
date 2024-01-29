@@ -4,6 +4,15 @@ What's New in NVDA
 %!includeconf: ../changes.t2tconf
 %!includeconf: ./locale.t2tconf
 
+= 2023.3.3 =
+This is a patch release to fix a security issue.
+Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Security Fixes ==
+- Prevents possible reflected XSS attack from crafted content to cause arbitrary code execution.
+([GHSA-xg6w-23rw-39r8 https://github.com/nvaccess/nvda/security/advisories/GHSA-xg6w-23rw-39r8])
+-
+
 = 2023.3.2 =
 This is a patch release to fix a security issue.
 The security patch in 2023.3.1 was not resolved correctly.
