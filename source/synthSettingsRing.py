@@ -16,11 +16,13 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		self.largeStep = self.setting.largeStep if isinstance(setting, NumericDriverSetting) else 10
 
 	def first(self):
+		"""Sets the value of the current synth setting to the first value."""
 		val = self.min
 		self.value = val
 		return self._getReportValue(val)
 
 	def last(self):
+		"""Sets the value of the current synth setting to the last value."""
 		val = self.max
 		self.value = val
 		return self._getReportValue(val)
@@ -31,6 +33,7 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		return self._getReportValue(val)
 
 	def increaseLarge(self):
+		"""Increases the value of the current synth setting by a larger step."""
 		val = min(self.max, self.value + self.largeStep * 2)
 		self.value = val
 		return self._getReportValue(val)
@@ -41,6 +44,7 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		return self._getReportValue(val)
 
 	def decreaseLarge(self):
+		"""Decreases the value of the current synth setting by a larger step."""
 		val = max(self.min, self.value - self.largeStep * 2)
 		self.value = val
 		return self._getReportValue(val)
