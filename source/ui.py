@@ -12,9 +12,16 @@ See L{gui} for the graphical user interface.
 
 import os
 import sys
-from ctypes import windll, byref, POINTER, addressof
+from ctypes import (
+	windll,
+	oledll,
+	byref,
+	POINTER
+)
+import comtypes.client
 from comtypes import IUnknown
 from comtypes import automation 
+from comtypes import COMError
 from html import escape
 from logHandler import log
 import gui
@@ -25,6 +32,7 @@ import globalVars
 from typing import Optional
 
 from utils.security import isRunningOnSecureDesktop
+
 
 # From urlmon.h
 URL_MK_UNIFORM = 1
@@ -88,7 +96,6 @@ def browseableMessage(message: str, title: Optional[str] = None, isHtml: bool = 
 	@param title: The title for the message.
 	@param isHtml: Whether the message is html
 	"""
-	splitWith: str = "__NVDA:split-here__"  # Unambiguous regex splitter for javascript in message.html, #14667
 	if isRunningOnSecureDesktop():
 		import wx  # Late import to prevent circular dependency.
 		wx.CallAfter(_warnBrowsableMessageNotAvailableOnSecureScreens, title)
@@ -104,14 +111,22 @@ def browseableMessage(message: str, title: Optional[str] = None, isHtml: bool = 
 		title = _("NVDA Message")
 	if not isHtml:
 		message = f"<pre>{escape(message)}</pre>"
-	dialogString = f"{title}{splitWith}{message}"
-	dialogArguements = automation.VARIANT( dialogString )
+	try:
+		d = comtypes.client.CreateObject("Scripting.Dictionary")
+	except COMError:
+		log.error("Scripting.Dictionary component unavailable")
+		# Translators: reported when unable to display a browsable message.
+		message(_("Unable to display browseable message"))
+		return
+	d.add("title", title)
+	d.add("message", message)
+	dialogArgsVar = automation.VARIANT(d)
 	gui.mainFrame.prePopup() 
 	windll.mshtml.ShowHTMLDialogEx( 
 		gui.mainFrame.Handle , 
 		moniker , 
 		HTMLDLG_MODELESS , 
-		addressof( dialogArguements ) , 
+		byref(dialogArgsVar), 
 		DIALOG_OPTIONS, 
 		None
 	)
