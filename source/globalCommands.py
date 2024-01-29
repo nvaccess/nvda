@@ -113,6 +113,10 @@ SCRCAT_INPUT = _("Input")
 #: Script category for document formatting commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_DOCUMENTFORMATTING = _("Document formatting")
+#: Synth settings ring.
+# Translators: Reported when there are no settings to configure in synth settings ring
+# (example: when there is no setting for language).
+SCR_NOSETTINGS = _("No settings")
 
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus.
@@ -320,9 +324,7 @@ class GlobalCommands(ScriptableObject):
 	def script_firstValueSynthRing(self, gesture: inputCore.InputGesture):
 		settingName = globalVars.settingsRing.currentSettingName
 		if not settingName:
-			# Translators: Reported when there are no settings to configure in synth settings ring
-			#(example: when there is no setting for language).
-			ui.message(_("No settings"))
+			ui.message(SCR_NOSETTINGS)
 			return
 		settingValue = globalVars.settingsRing.first()
 		ui.message("%s %s" % (settingName, settingValue))
@@ -335,9 +337,7 @@ class GlobalCommands(ScriptableObject):
 	def script_lastValueSynthRing(self, gesture: inputCore.InputGesture):
 		settingName = globalVars.settingsRing.currentSettingName
 		if not settingName:
-			# Translators: Reported when there are no settings to configure in synth settings ring
-			#(example: when there is no setting for language).
-			ui.message(_("No settings"))
+			ui.message(SCR_NOSETTINGS)
 			return
 		settingValue = globalVars.settingsRing.last()
 		ui.message("%s %s" % (settingName, settingValue))
@@ -351,9 +351,7 @@ class GlobalCommands(ScriptableObject):
 	def script_increaseSynthSetting(self,gesture):
 		settingName=globalVars.settingsRing.currentSettingName
 		if not settingName:
-			# Translators: Reported when there are no settings to configure in synth settings ring
-			#(example: when there is no setting for language).
-			ui.message(_("No settings"))
+			ui.message(SCR_NOSETTINGS)
 			return
 		settingValue=globalVars.settingsRing.increase()
 		ui.message("%s %s" % (settingName,settingValue))
@@ -367,9 +365,7 @@ class GlobalCommands(ScriptableObject):
 	def script_increaseLargeSynthSetting(self, gesture: inputCore.InputGesture):
 		settingName = globalVars.settingsRing.currentSettingName
 		if not settingName:
-			# Translators: Reported when there are no settings to configure in synth settings ring
-			#(example: when there is no setting for language).
-			ui.message(_("No settings"))
+			ui.message(SCR_NOSETTINGS)
 			return
 		settingValue = globalVars.settingsRing.increaseLarge()
 		ui.message("%s %s" % (settingName, settingValue))
@@ -383,7 +379,7 @@ class GlobalCommands(ScriptableObject):
 	def script_decreaseSynthSetting(self,gesture):
 		settingName=globalVars.settingsRing.currentSettingName
 		if not settingName:
-			ui.message(_("No settings"))
+			ui.message(SCR_NOSETTINGS)
 			return
 		settingValue=globalVars.settingsRing.decrease()
 		ui.message("%s %s" % (settingName,settingValue))
@@ -397,9 +393,7 @@ class GlobalCommands(ScriptableObject):
 	def script_decreaseLargeSynthSetting(self, gesture: inputCore.InputGesture):
 		settingName = globalVars.settingsRing.currentSettingName
 		if not settingName:
-			# Translators: Reported when there are no settings to configure in synth settings ring
-			#(example: when there is no setting for language).
-			ui.message(_("No settings"))
+			ui.message(SCR_NOSETTINGS)
 			return
 		settingValue = globalVars.settingsRing.decreaseLarge()
 		ui.message("%s %s" % (settingName, settingValue))
@@ -413,7 +407,7 @@ class GlobalCommands(ScriptableObject):
 	def script_nextSynthSetting(self,gesture):
 		nextSettingName=globalVars.settingsRing.next()
 		if not nextSettingName:
-			ui.message(_("No settings"))
+			ui.message(SCR_NOSETTINGS)
 			return
 		nextSettingValue=globalVars.settingsRing.currentSettingValue
 		ui.message("%s %s"%(nextSettingName,nextSettingValue))
@@ -427,7 +421,7 @@ class GlobalCommands(ScriptableObject):
 	def script_previousSynthSetting(self,gesture):
 		previousSettingName=globalVars.settingsRing.previous()
 		if not previousSettingName:
-			ui.message(_("No settings"))
+			ui.message(SCR_NOSETTINGS)
 			return
 		previousSettingValue=globalVars.settingsRing.currentSettingValue
 		ui.message("%s %s"%(previousSettingName,previousSettingValue))
