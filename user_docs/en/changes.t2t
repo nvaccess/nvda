@@ -3,6 +3,39 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2024.2 =
+
+== New Features ==
+- In Windows 11, NVDA will announce alerts from voice typing and suggested actions including the top suggestion when copying data such as phone numbers to the clipboard (Windows 11 2022 Update and later). (#16009, @josephsl)
+-
+
+
+== Changes ==
+
+- Add-on Store:
+  - The minimum and the last tested NVDA version for an add-on are now displayed in the "other details" area. (#15776, @Nael-Sayegh)
+  -
+-
+
+== Bug Fixes ==
+- Backspace now works correctly when using Nudi 6.1 with NVDA's "Handle keys from other applications" setting enabled. (#15822, @jcsteh)
+- Fixed a bug where audio coordinates would be played while the application is in sleep mode when "Play audio coordinates when mouse moves" is enabled. (#8059, @hwf1324)
+- Add-on Store:
+  - When pressing ``ctrl+tab``, focus properly moves to the new current tab title. (#14986, @ABuffEr)
+  -
+- In Adobe Reader, NVDA no longer ignores alternative text set on formulas in PDFs. (#12715)
+-
+
+
+== Changes for Developers ==
+Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+
+- Instantiating ``winVersion.WinVersion`` objects with unknown Windows versions above 10.0.22000 such as 10.0.25398 returns "Windows 11 unknown" instead of "Windows 10 unknown" for release name. (#15992, @josephsl)
+-
+
+=== Deprecations ===
+
+
 = 2024.1 =
 
 A new "on-demand" speech mode has been added.
@@ -287,6 +320,15 @@ Use ``bdDetect.DeviceType.*`` instead. (#15772, @LeonarddeR).
 - Using ``gui.ExecAndPump`` is deprecated - please use ``systemUtils.ExecAndPump`` instead. (#15852, @lukaszgo1)
 -
 
+
+= 2023.3.3 =
+This is a patch release to fix a security issue.
+Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Security Fixes ==
+- Prevents possible reflected XSS attack from crafted content to cause arbitrary code execution.
+([GHSA-xg6w-23rw-39r8 https://github.com/nvaccess/nvda/security/advisories/GHSA-xg6w-23rw-39r8])
+-
 
 = 2023.3.2 =
 This is a patch release to fix a security issue.

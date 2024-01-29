@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-22 01:02+0000\n"
-"PO-Revision-Date: 2024-01-22 02:42\n"
+"POT-Creation-Date: 2024-01-24 23:24+0000\n"
+"PO-Revision-Date: 2024-01-28 22:06\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -3072,7 +3072,7 @@ msgid "Loading NVDA. Please wait..."
 msgstr "Carregando o NVDA; por favor aguarde..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-#: core.py:755
+#: core.py:760
 msgid "NVDA started"
 msgstr "NVDA ativado"
 
@@ -3963,7 +3963,7 @@ msgstr "ligado anunciar quando clicável"
 #. Translators: Input help mode message for cycle through automatic language switching mode command.
 #: globalCommands.py:935
 msgid "Cycles through the possible choices for automatic language switching: off, language only and language and dialect."
-msgstr ""
+msgstr "Alterna entre as escolhas possíveis para mudança automática de idioma: desligada, somente idioma e idioma e dialeto."
 
 #. Translators: A message reported when executing the cycle automatic language switching mode command.
 #: globalCommands.py:944
@@ -4833,7 +4833,7 @@ msgstr "desabilitado visualizador de fala"
 #. Translators: The message announced when enabling speech viewer.
 #: globalCommands.py:3255
 msgid "speech viewer enabled"
-msgstr "abilitado visualizador de fala"
+msgstr "habilitado visualizador de fala"
 
 #. Translators: Input help mode message for toggle Braille viewer command.
 #: globalCommands.py:3263
@@ -5252,7 +5252,7 @@ msgstr "Desabilitados disparadores de perfis de configurações"
 #. Translators: The message announced when re-enabling all configuration profile triggers.
 #: globalCommands.py:4144
 msgid "Configuration profile triggers enabled"
-msgstr "Abilitados disparadores de perfis de configurações"
+msgstr "Habilitados disparadores de perfis de configurações"
 
 #. Translators: Describes a command.
 #: globalCommands.py:4149
@@ -5323,22 +5323,22 @@ msgstr "Cortina de tela não disponível"
 #. Translators: Reported when the screen curtain is enabled.
 #: globalCommands.py:4323
 msgid "Screen curtain enabled"
-msgstr "Abilitada cortina de tela"
+msgstr "Habilitada cortina de tela"
 
 #. Translators: Reported when the screen curtain is temporarily enabled.
 #: globalCommands.py:4326
 msgid "Temporary Screen curtain, enabled until next restart"
-msgstr "Cortina de tela temporária, abilitada até o próximo reinício"
+msgstr "Cortina de tela temporária, habilitada até o próximo reinício"
 
 #. Translators: Reported when the screen curtain could not be enabled.
 #: globalCommands.py:4339
 msgid "Could not enable screen curtain"
-msgstr "Não consegui abilitar a cortina de tela"
+msgstr "Não consegui habilitar a cortina de tela"
 
 #. Translators: Warning message when trying to enable the screen curtain when OCR is active.
 #: globalCommands.py:4367 visionEnhancementProviders\screenCurtain.py:291
 msgid "Could not enable screen curtain when performing content recognition"
-msgstr "Não consegui abilitar cortina de tela ao executar reconhecimento de conteúdo"
+msgstr "Não consegui habilitar cortina de tela ao executar reconhecimento de conteúdo"
 
 #. Translators: Describes a command.
 #: globalCommands.py:4375
@@ -7647,7 +7647,7 @@ msgstr "{longName} ({name})\n"
 msgid "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
 msgstr "Não é possível instalar o complemento do NVDA a partir do caminho {path}.\n"
-"Você tem de estar com o NVDA rodando para poder instalar complementos."
+"Você tem de estar executando o NVDA para poder instalar complementos."
 
 #. Translators: A title of the dialog shown when fetching add-on data from the store fails
 #: addonStore\dataManager.py:181
@@ -7755,7 +7755,7 @@ msgstr "Externo"
 #: addonStore\models\status.py:125
 msgctxt "addonStore"
 msgid "Enabled"
-msgstr "Abilitado"
+msgstr "Habilitado"
 
 #. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
 #. Translators: Status for addons shown in the add-on store dialog
@@ -7858,19 +7858,19 @@ msgstr "Desabilitado (incompatível)"
 #: addonStore\models\status.py:117
 msgctxt "addonStore"
 msgid "Enabled (incompatible), pending restart"
-msgstr "Abilitado (incompatível), aguardando reinício"
+msgstr "Habilitado (incompatível), aguardando reinício"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:119
 msgctxt "addonStore"
 msgid "Enabled (incompatible)"
-msgstr "Abilitado (incompatível)"
+msgstr "Habilitado (incompatível)"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:121
 msgctxt "addonStore"
 msgid "Enabled, pending restart"
-msgstr "Abilitado, aguardando reinício"
+msgstr "Habilitado, aguardando reinício"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:127
@@ -7954,7 +7954,7 @@ msgstr "É necessária uma versão atualizada do NVDA. NVDA versão {nvdaVersion
 #, python-brace-format
 msgctxt "addonStore"
 msgid "An updated version of this add-on is required. The minimum supported API version is now {nvdaVersion}. This add-on was last tested with {lastTestedNVDAVersion}. You can enable this add-on at your own risk. "
-msgstr "É necessária uma versão atualizada deste complemento. A versão mínima de API suportada agora é {nvdaVersion}. Este complemento foi testado por último com a {lastTestedNVDAVersion}. Você pode abilitar este complemento por sua conta e risco. "
+msgstr "É necessária uma versão atualizada deste complemento. A versão mínima de API suportada agora é {nvdaVersion}. Este complemento foi testado por último com a {lastTestedNVDAVersion}. Você pode habilitar este complemento por sua conta e risco. "
 
 #. Translators: A message indicating that some add-ons will be disabled
 #. unless reviewed before installation.
@@ -8854,7 +8854,7 @@ msgstr "Não suportada configuração de simulação de teclado HID"
 #: brailleDisplayDrivers\alva.py:395
 #: brailleDisplayDrivers\eurobraille\driver.py:375
 msgid "HID keyboard simulation enabled"
-msgstr "Abilitada simulação de teclado HID"
+msgstr "Habilitada simulação de teclado HID"
 
 #. Translators: Message when HID keyboard simulation is disabled.
 #: brailleDisplayDrivers\alva.py:398
@@ -8911,7 +8911,7 @@ msgstr "Linhas braille Handy Tech"
 #. Translators: message when braille input is enabled
 #: brailleDisplayDrivers\handyTech.py:1007
 msgid "Braille input enabled"
-msgstr "Abilitada entrada por braille"
+msgstr "Habilitada entrada por braille"
 
 #. Translators: message when braille input is disabled
 #: brailleDisplayDrivers\handyTech.py:1010
@@ -10509,7 +10509,7 @@ msgstr "Sobre o NVDA"
 #. Translators: A message to warn the user when starting the COM Registration Fixing tool
 #: gui\__init__.py:444
 msgid "You are about to run the COM Registration Fixing tool. This tool will try to fix common system problems that stop NVDA from being able to access content in many programs including Firefox and Internet Explorer. This tool must make changes to the System registry and therefore requires administrative access. Are you sure you wish to proceed?"
-msgstr "Você está prestes a rodar a Ferramenta de correção de registro COM. Ela tentará corrigir problemas comuns de sistema que não deixam o NVDA acessar conteúdos em muitos programas incluindo Firefox e Internet Explorer. A ferramenta necessita fazer alterações no registro do sistema e por isso requer acesso administrativo. Tem certeza que deseja prosseguir?"
+msgstr "Você está prestes a executar a Ferramenta de correção de registro COM. Ela tentará corrigir problemas comuns de sistema que não deixam o NVDA acessar conteúdos em muitos programas incluindo Firefox e Internet Explorer. A ferramenta necessita fazer alterações no registro do sistema e por isso requer acesso administrativo. Tem certeza que deseja prosseguir?"
 
 #. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
 #. Translators: The title of a warning dialog.
@@ -10606,7 +10606,7 @@ msgstr "&Instalar o NVDA..."
 #. Translators: The label for the menu item to run the COM registration fix tool
 #: gui\__init__.py:549
 msgid "Run COM Registration Fixing tool..."
-msgstr "Rodar Ferramenta de Correção de Registro COM..."
+msgstr "Executar Ferramenta de Correção de Registro COM..."
 
 #. Translators: The label for the menu item to reload plugins.
 #: gui\__init__.py:553
@@ -11284,7 +11284,7 @@ msgstr "Por favor aguarde enquanto o NVDA está sendo instalado"
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
 #: gui\installerGui.py:82
 msgid "The installation is unable to remove or overwrite a file. Another copy of NVDA may be running on another logged-on user account. Please make sure all installed copies of NVDA are shut down and try the installation again."
-msgstr "A instalação não consegue remover ou sobrescrever um arquivo. Uma cópia do NVDA pode estar rodando noutra conta de usuário logada. Por favor certifique-se que todas as cópias instaladas do NVDA estão desligadas e tente instalar de novo."
+msgstr "A instalação não consegue remover ou sobrescrever um arquivo. Uma cópia do NVDA pode estar executando noutra conta de usuário logada. Por favor certifique-se que todas as cópias instaladas do NVDA estão desligadas e tente instalar de novo."
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
@@ -13520,8 +13520,8 @@ msgstr "Remover Complemento"
 msgctxt "addonStore"
 msgid "Warning: add-on is incompatible: {name} {version}. Check for an updated version of this add-on if possible. The last tested NVDA version for this add-on is {lastTestedNVDAVersion}, your current NVDA version is {NVDAVersion}. Installation may cause unstable behavior in NVDA.\n"
 "Proceed with installation anyway? "
-msgstr "Alerta: Complemento é incompatível: {name} {version}. Procure uma versão atualizada deste complemento se possível. A última versão de NVDA testada para este complemento é {lastTestedNVDAVersion}; Sua versão atual de NVDA é {NVDAVersion}. Abilitar pode causar comportamento instável no NVDA.\n"
-"Prosseguir com a abilitação mesmo assim? "
+msgstr "Alerta: Complemento é incompatível: {name} {version}. Procure uma versão atualizada deste complemento se possível. A última versão de NVDA testada para este complemento é {lastTestedNVDAVersion}; Sua versão atual de NVDA é {NVDAVersion}. Habilitar pode causar comportamento instável no NVDA.\n"
+"Prosseguir com a habilitação mesmo assim? "
 
 #. Translators: The message displayed when enabling an add-on package that is incompatible
 #. because the add-on is too old for the running version of NVDA.
@@ -13530,8 +13530,8 @@ msgstr "Alerta: Complemento é incompatível: {name} {version}. Procure uma vers
 msgctxt "addonStore"
 msgid "Warning: add-on is incompatible: {name} {version}. Check for an updated version of this add-on if possible. The last tested NVDA version for this add-on is {lastTestedNVDAVersion}, your current NVDA version is {NVDAVersion}. Enabling may cause unstable behavior in NVDA.\n"
 "Proceed with enabling anyway? "
-msgstr "Alerta: Complemento é incompatível: {name} {version}. Procure uma versão atualizada deste complemento se possível. A última versão de NVDA testada para este complemento é {lastTestedNVDAVersion}; Sua versão atual de NVDA é {NVDAVersion}. Abilitar pode causar comportamento instável no NVDA.\n"
-"Prosseguir com a abilitação mesmo assim? "
+msgstr "Alerta: Complemento é incompatível: {name} {version}. Procure uma versão atualizada deste complemento se possível. A última versão de NVDA testada para este complemento é {lastTestedNVDAVersion}; Sua versão atual de NVDA é {NVDAVersion}. Habilitar pode causar comportamento instável no NVDA.\n"
+"Prosseguir com a habilitação mesmo assim? "
 
 #. Translators: The message displayed when installing an add-on package is prohibited,
 #. because it requires a later version of NVDA than is currently installed.
@@ -13663,7 +13663,7 @@ msgstr "Incluir complementos &incompatíveis"
 #: gui\addonStoreGui\controls\storeDialog.py:179
 msgctxt "addonStore"
 msgid "Ena&bled/disabled:"
-msgstr "A&bilitado/desabilitado:"
+msgstr "Ha&bilitado/desabilitado:"
 
 #. Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
 #: gui\addonStoreGui\controls\storeDialog.py:187
@@ -13807,7 +13807,7 @@ msgstr "A&bilitar"
 #: gui\addonStoreGui\viewModels\store.py:166
 msgctxt "addonStore"
 msgid "&Enable (override incompatibility)"
-msgstr "Abilitar (ignorar incompatibilidad&e)"
+msgstr "Habilitar (ignorar incompatibilidad&e)"
 
 #. Translators: Label for an action that removes the selected addon
 #: gui\addonStoreGui\viewModels\store.py:173
@@ -13851,7 +13851,7 @@ msgstr "Resen&has da comunidade"
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Could not enable the add-on: {addon}."
-msgstr "Não consegui abilitar o complemento {addon}."
+msgstr "Não consegui habilitar o complemento {addon}."
 
 #. Translators: The message displayed when the add-on cannot be disabled.
 #. {addon} is replaced with the add-on name.
@@ -16660,7 +16660,7 @@ msgstr "&Tocar som ao alternar Cortina de Tela"
 #: visionEnhancementProviders\screenCurtain.py:140
 msgid "Enabling Screen Curtain will make the screen of your computer completely black. Ensure you will be able to navigate without any use of your screen before continuing. \n\n"
 "Do you wish to continue?"
-msgstr "Abilitar a Cortina de Tela tornará a tela do computador completamente preta. Certifique-se que será capaz de navegar sem qualquer uso da tela antes de continuar. \n\n"
+msgstr "Habilitar a Cortina de Tela tornará a tela do computador completamente preta. Certifique-se que será capaz de navegar sem qualquer uso da tela antes de continuar. \n\n"
 "Deseja continuar?"
 
 #. Translators: option to enable screen curtain in the vision settings panel

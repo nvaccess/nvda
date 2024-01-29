@@ -3,9 +3,14 @@ The NVDA project uses the [git](https://www.git-scm.com/) version control system
 
 The NVDA repository is located at https://github.com/nvaccess/nvda.
 
-If you plan on contributing to NVDA, you should [fork and clone](https://docs.github.com/en/get-started/quickstart/fork-a-repo) the repository.
+If you plan on contributing to NVDA, you will need to [fork and clone](https://docs.github.com/en/get-started/quickstart/fork-a-repo) the repository.
 
-Use the `--recursive` option when performing `git clone` to fetch the required git submodules we use.
+After forking the repository into your user account (`YOUR-USERNAME`), clone with `--recursive` to fetch all required submodules.
+
+```sh
+git clone --recursive https://github.com/YOUR-USERNAME/nvda.git
+```
+
 
 ### Keeping the fork in sync
 When you fork the repository, GitHub will create a copy of the master branch.
@@ -53,7 +58,7 @@ To replicate the production build environment, use the 3.11.x minor version of P
 			* Once selected, ensure "C++ Clang tools for Windows" is included under the optional grouping.
 	* On the Individual components tab, ensure the following items are selected:
 		* Windows 11 SDK (10.0.22621.0)
-		* MSVC v143 - VS 2022 C++ ARM64 build tools
+		* MSVC v143 - VS 2022 C++ ARM64/ARM64EC build tools
 		* MSVC v143 - VS 2022 C++ x64/x86 build tools
 		* C++ ATL for v143 build tools (x86 & x64)
 		* C++ ATL for v143 build tools (ARM64/ARM64EC)
