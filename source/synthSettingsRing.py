@@ -40,7 +40,7 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		self.value = val
 		return self._getReportValue(val)
 
-	def decrease_large(self):
+	def decreaseLarge(self):
 		val = max(self.min, self.value - self.largeStep * 2)
 		self.value = val
 		return self._getReportValue(val)
