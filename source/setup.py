@@ -91,7 +91,7 @@ def getLocaleDataFiles():
 	return list(localeMoFiles)+localeDicFiles+NVDALocaleGestureMaps
 
 
-def getRecursiveDataFiles(dest: str, source: str, excludes: tuple = ()):
+def getRecursiveDataFiles(dest: str, source: str, excludes: tuple = ()) -> list[str, list[str]]:
 	rulesList: list[str, list[str]] = []
 	for file in glob(f"{source}/*"):
 		if (
