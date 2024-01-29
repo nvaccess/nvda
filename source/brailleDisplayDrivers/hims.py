@@ -118,7 +118,8 @@ class BrailleEdge(Model):
 
 
 class BrailleEdge2S(BrailleEdge):
-	"""This device is BrailleEdge which doesn't use hims driver. It only use spp connection.
+	"""This device is the BrailleEdge which doesn't use the hims driver.
+	It only uses a SPP connection.
 	"""
 	usbId = "VID_1A86&PID_55D3"
 
