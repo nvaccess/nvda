@@ -317,11 +317,11 @@ class GlobalCommands(ScriptableObject):
 		description=_("Set the first value of the current setting in the synth settings ring"),
 		category=SCRCAT_SPEECH
 	)
-	def script_FirstValueSynthRing(self, gesture):
+	def script_firstValueSynthRing(self, gesture):
 		settingName = globalVars.settingsRing.currentSettingName
 		if not settingName:
 			# Translators: Reported when there are no settings to configure in synth settings ring
-			# Translators: (example: when there is no setting for language).
+			(example: when there is no setting for language).
 			ui.message(_("No settings"))
 			return
 		settingValue = globalVars.settingsRing.first()
@@ -332,7 +332,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Set the last value of the current setting in the synth settings ring"),
 		category=SCRCAT_SPEECH
 	)
-	def script_LastValueSynthRing(self, gesture):
+	def script_lastValueSynthRing(self, gesture):
 		settingName = globalVars.settingsRing.currentSettingName
 		if not settingName:
 			ui.message(_("No settings"))
@@ -355,7 +355,7 @@ class GlobalCommands(ScriptableObject):
 		ui.message("%s %s" % (settingName,settingValue))
 
 	@script(
-		# Translators: Input help mode message for decrease synth setting value command in larger steps.
+		# Translators: Input help mode message for increasing synth setting value command in larger steps.
 		description=_("Increases the currently active setting in the synth settings ring in a larger step"),
 		category=SCRCAT_SPEECH,
 		gestures=("kb(desktop):NVDA+control+pageUp", "kb(laptop):NVDA+shift+control+pageUp")
@@ -383,7 +383,7 @@ class GlobalCommands(ScriptableObject):
 		ui.message("%s %s" % (settingName,settingValue))
 
 	@script(
-		# Translators: Input help mode message for decrease synth setting value command in larger steps.
+		# Translators: Input help mode message for decreasing synth setting value command in larger steps.
 		description=_("Decreases the currently active setting in the synth settings ring in a larger step"),
 		category=SCRCAT_SPEECH,
 		gestures=("kb(desktop):NVDA+control+pageDown", "kb(laptop):NVDA+control+shift+pageDown")
