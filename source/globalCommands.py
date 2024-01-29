@@ -317,11 +317,11 @@ class GlobalCommands(ScriptableObject):
 		description=_("Set the first value of the current setting in the synth settings ring"),
 		category=SCRCAT_SPEECH
 	)
-	def script_firstValueSynthRing(self, gesture):
+	def script_firstValueSynthRing(self, gesture: inputCore.InputGesture):
 		settingName = globalVars.settingsRing.currentSettingName
 		if not settingName:
 			# Translators: Reported when there are no settings to configure in synth settings ring
-			(example: when there is no setting for language).
+			#(example: when there is no setting for language).
 			ui.message(_("No settings"))
 			return
 		settingValue = globalVars.settingsRing.first()
@@ -332,9 +332,11 @@ class GlobalCommands(ScriptableObject):
 		description=_("Set the last value of the current setting in the synth settings ring"),
 		category=SCRCAT_SPEECH
 	)
-	def script_lastValueSynthRing(self, gesture):
+	def script_lastValueSynthRing(self, gesture: inputCore.InputGesture):
 		settingName = globalVars.settingsRing.currentSettingName
 		if not settingName:
+			# Translators: Reported when there are no settings to configure in synth settings ring
+			#(example: when there is no setting for language).
 			ui.message(_("No settings"))
 			return
 		settingValue = globalVars.settingsRing.last()
@@ -349,6 +351,8 @@ class GlobalCommands(ScriptableObject):
 	def script_increaseSynthSetting(self,gesture):
 		settingName=globalVars.settingsRing.currentSettingName
 		if not settingName:
+			# Translators: Reported when there are no settings to configure in synth settings ring
+			#(example: when there is no setting for language).
 			ui.message(_("No settings"))
 			return
 		settingValue=globalVars.settingsRing.increase()
@@ -360,9 +364,11 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_SPEECH,
 		gestures=("kb(desktop):NVDA+control+pageUp", "kb(laptop):NVDA+shift+control+pageUp")
 	)
-	def script_increaseLargeSynthSetting(self, gesture):
+	def script_increaseLargeSynthSetting(self, gesture: inputCore.InputGesture):
 		settingName = globalVars.settingsRing.currentSettingName
 		if not settingName:
+			# Translators: Reported when there are no settings to configure in synth settings ring
+			#(example: when there is no setting for language).
 			ui.message(_("No settings"))
 			return
 		settingValue = globalVars.settingsRing.increaseLarge()
@@ -388,9 +394,11 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_SPEECH,
 		gestures=("kb(desktop):NVDA+control+pageDown", "kb(laptop):NVDA+control+shift+pageDown")
 	)
-	def script_decreaseLargeSynthSetting(self, gesture):
+	def script_decreaseLargeSynthSetting(self, gesture: inputCore.InputGesture):
 		settingName = globalVars.settingsRing.currentSettingName
 		if not settingName:
+			# Translators: Reported when there are no settings to configure in synth settings ring
+			#(example: when there is no setting for language).
 			ui.message(_("No settings"))
 			return
 		settingValue = globalVars.settingsRing.decreaseLarge()
