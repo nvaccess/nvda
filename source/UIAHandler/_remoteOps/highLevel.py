@@ -4,34 +4,29 @@
 # Copyright (C) 2023-2023 NV Access Limited
 
 from __future__ import annotations
+import inspect
 from typing import (
 	Callable,
-	Type,
 	TypeVar,
 	Any,
-	Concatenate
+	Concatenate,
+	ParamSpec
 )
 from dataclasses import dataclass
-import itertools
-from comtypes import GUID
 from logHandler import log
 from . import lowLevel
 from . import midLevel
-from .midLevel import (
-	RemoteInt,
-	RemoteBool,
-)
 
 
 @dataclass
 class MalformedBytecodeException(RuntimeError):
 	errorLocation: int
-	instructionRecord: midLevel.InstructionRecord | None = None
+	instructionRecord: midLevel.Instruction | None = None
 
 	def __str__(self) -> str:
 		message = f"\nMalformed bytes at or near instruction {self.errorLocation}"
 		if self.instructionRecord is not None:
-			message += f": {self.instructionRecord.dumpRecord()}"
+			message += f": {self.instructionRecord.dumpInstruction()}"
 		return message
 
 
@@ -39,12 +34,12 @@ class MalformedBytecodeException(RuntimeError):
 class InstructionLimitExceededException(RuntimeError):
 	errorLocation: int
 	results: list[Any]
-	instructionRecord: midLevel.InstructionRecord | None = None
+	instructionRecord: midLevel.Instruction | None = None
 
 	def __str__(self) -> str:
 		message = f"Limit reached at instruction {self.errorLocation}"
 		if self.instructionRecord is not None:
-			message += f": {self.instructionRecord.dumpRecord()}"
+			message += f": {self.instructionRecord.dumpInstruction()}"
 		return message
 
 
@@ -52,12 +47,12 @@ class InstructionLimitExceededException(RuntimeError):
 class RemoteException(RuntimeError):
 	errorLocation: int
 	extendedError: int
-	instructionRecord: midLevel.InstructionRecord | None = None
+	instructionRecord: midLevel.Instruction | None = None
 
 	def __str__(self) -> str:
 		message = f"\nError at instruction {self.errorLocation}"
 		if self.instructionRecord is not None:
-			message += f": {self.instructionRecord.dumpRecord()}"
+			message += f": {self.instructionRecord.dumpInstruction()}"
 		message += f"\nextendedError {self.extendedError}"
 		return message
 
@@ -66,140 +61,63 @@ class ExecutionFailureException(RuntimeError):
 	pass
 
 
-class RemoteFuncAPI(midLevel._RemoteBase):
-
-	def __init__(self, builder: midLevel.RemoteOperationBuilder):
-		self.bind(builder)
-
-	_TV_newRemoteObject = TypeVar('_TV_newRemoteObject', bound=midLevel.RemoteBaseObject)
-
-	def _newRemoteObject(self, RemoteClass: Type[_TV_newRemoteObject]) -> _TV_newRemoteObject:
-		obj = RemoteClass()
-		obj.bind(self.builder)
-		return obj
-
-	_TV_newRemoteValue = TypeVar(
-		'_TV_newRemoteValue',
-		bound=midLevel.RemoteValue
-	)
-
-	def _newRemoteValue(
-		self,
-		RemoteClass: Type[_TV_newRemoteValue],
-		value: _TV_newRemoteValue | object
-	) -> _TV_newRemoteValue:
-		if isinstance(value, RemoteClass):
-			value.bind(self.builder)
-			return value.copy()
-		obj = RemoteClass(value)
-		obj.bind(self.builder)
-		return obj
-
-	def newUint(self, value: midLevel.RemoteUint | int = 0) -> midLevel.RemoteUint:
-		return self._newRemoteValue(midLevel.RemoteUint, value)
-
-	def newInt(self, value: midLevel.RemoteInt | int = 0) -> midLevel.RemoteInt:
-		return self._newRemoteValue(midLevel.RemoteInt, value)
-
-	def newFloat(self, value: midLevel.RemoteFloat | float = 0.0) -> midLevel.RemoteFloat:
-		return self._newRemoteValue(midLevel.RemoteFloat, value)
-
-	def newString(self, value: str = "") -> midLevel.RemoteString:
-		return self._newRemoteValue(midLevel.RemoteString, value)
-
-	def newBool(self, value: bool = False) -> midLevel.RemoteBool:
-		return self._newRemoteValue(midLevel.RemoteBool, value)
-
-	def newGuid(self, value: GUID | str = "") -> midLevel.RemoteGuid:
-		return self._newRemoteValue(midLevel.RemoteGuid, value)
-
-	def newVariant(self) -> midLevel.RemoteVariant:
-		return self._newRemoteObject(midLevel.RemoteVariant)
-
-	def newArray(self):
-		obj = midLevel.RemoteArray()
-		obj.bind(self.builder)
-		return obj
-
-	def newNullElement(self):
-		obj = midLevel.RemoteElement(None)
-		obj.bind(self.builder)
-		return obj
-
-	def newNullTextRange(self):
-		obj = midLevel.RemoteTextRange(None)
-		obj.bind(self.builder)
-		return obj
-
-	def ifBlock(self, condition: midLevel.RemoteBool):
-		return self.builder.ifBlock(condition)
-
-	def elseBlock(self):
-		return self.builder.elseBlock()
-
-	def whileBlock(self, conditionBuilderFunc: Callable[[], RemoteBool]):
-		return self.builder.whileBlock(conditionBuilderFunc)
-
-	def breakLoop(self):
-		self.builder.breakLoop()
-
-	def continueLoop(self):
-		self.builder.continueLoop()
-
-	def tryBlock(self):
-		return self.builder.tryBlock()
-
-	def catchBlock(self):
-		return self.builder.catchBlock()
-
-	@midLevel.remoteFunc
-	def setOperationStatus(self, status: RemoteInt):
-		self.builder.setOperationStatus(status)
-
-	def getOperationStatus(self) -> RemoteInt:
-		return self.builder.getOperationStatus()
-
-	def halt(self):
-		self.builder.halt()
-
-	def logRuntimeMessage(self, *strings: str | midLevel.RemoteString):
-		self.builder.logMessage(*strings)
-
-	def addCompiletimeComment(self, message: str):
-		self.builder.addComment(message)
-
-
 @dataclass
 class _RemoteFuncBuildCache:
-	localArgs: list[object]
-	importedOperandIds: list[midLevel.OperandId]
+	metaArgsString: str
+	importedOperandIds: dict[str, midLevel.OperandId]
 	globalsByteCode: bytes
 	mainByteCode: bytes
 	resultOperandIds: list[midLevel.OperandId]
 	logOperandId: midLevel.OperandId | None = None
 
 
+_remoteFunc_paramSpec = ParamSpec('_remoteFunc_paramSpec')
+_remoteFunc_return = TypeVar('_remoteFunc_return')
+
 def _importArguments(
 	builder: midLevel.RemoteOperationBuilder,
-	func: Callable,
-	*args: object,
-	**kwargs: object
-) -> tuple[list[lowLevel.OperandId], list[object]]:
-	importedOperandIds = []
-	localArgs = []
-	for arg in itertools.chain(args, kwargs.values()):
-		if isinstance(arg, midLevel.RemoteBaseObject):
-			arg.bind(builder, section='imports')
-			importedOperandIds.append(arg.operandId)
+	func: Callable[Concatenate[midLevel.RemoteAPI, _remoteFunc_paramSpec], object],
+	ra: midLevel.RemoteAPI,
+	*args: _remoteFunc_paramSpec.args,
+	**kwargs: _remoteFunc_paramSpec.kwargs
+) -> tuple[dict[str, lowLevel.OperandId], str]:
+	funcSig = inspect.signature(func)
+	boundSig = funcSig.bind(ra, *args, **kwargs)
+	boundSig.apply_defaults()
+	importedArgs: dict[str, midLevel.RemoteBaseObject] = {}
+	metaArgs: dict[str, object] = {}
+	for index, (name, val) in enumerate(boundSig.arguments.items()):
+		if index == 0:
+			# Skip ra
+			continue
+		if isinstance(val, midLevel.RemoteBaseObject):
+			val.bind(builder, builder._getNewOperandId())
+			val._initOperand("imports")
+			importedArgs[name] = val
 		else:
-			localArgs.append(arg)
-	return importedOperandIds, localArgs
+			metaArgs[name] = val
+	if metaArgs:
+		output = "Meta arguments:\n"
+		output += "\n".join(
+			f"{name} = {val}" for name, val in metaArgs.items()
+		)
+		log.info(output)
+	if importedArgs:
+		output = "Imported arguments:\n"
+		output += "\n".join(
+			f"{name} = {val.operandId}" for name, val in importedArgs.items()
+		)
+		log.info(output)
+	return (
+		{name: val.operandId for name, val in importedArgs.items()},
+		str(metaArgs)
+	)
 
 
 def _validateBuildCache(
 	buildCache: _RemoteFuncBuildCache,
-	importedOperandIds: list[midLevel.OperandId],
-	localArgs: list[object],
+	importedOperandIds: dict[str, midLevel.OperandId],
+	metaArgsString: str,
 	logOperandId: midLevel.OperandId | None,
 ) -> bool:
 	if buildCache.importedOperandIds != importedOperandIds:
@@ -208,45 +126,55 @@ def _validateBuildCache(
 	elif buildCache.logOperandId != logOperandId:
 		log.warning("Ignoring Remote function build cache: remoteLogging mismatch")
 		return False
-	elif buildCache.localArgs != localArgs:
-		log.warning("Ignoring Remote function build cache: localArgs mismatch")
+	elif buildCache.metaArgsString != metaArgsString:
+		log.error("Ignoring Remote function build cache: meta arguments mismatch")
 		return False
 	return True
 
 
 def _buildRemotefunction(
 	builder: midLevel.RemoteOperationBuilder,
-	remoteFunc: Callable[Concatenate[RemoteFuncAPI, ...], Any],
-	rfa: RemoteFuncAPI,
-	*args: object,
-	**kwargs: object
+	remoteFunc: Callable[Concatenate[midLevel.RemoteAPI, _remoteFunc_paramSpec], object],
+	ra: midLevel.RemoteAPI,
+	*args: _remoteFunc_paramSpec.args,
+	**kwargs: _remoteFunc_paramSpec.kwargs
 ) -> _RemoteFuncBuildCache:
-	importedOperandIds, localArgs = _importArguments(builder, remoteFunc, *args, **kwargs)
+	log.info(f"Building Remote function {remoteFunc.__qualname__}")
+	importedOperandIds, metaArgsString = _importArguments(builder, remoteFunc, ra, *args, **kwargs)
 	logOperandId = builder.getLogOperandId()
-	buildCache = getattr(remoteFunc, '_remoteFuncBuildCache', None)
+	buildCacheAttrName = f"_remoteFuncBuildCache_{metaArgsString}"
+	buildCache = getattr(remoteFunc, buildCacheAttrName, None)
 	if buildCache:
 		if not _validateBuildCache(
-			buildCache, importedOperandIds=importedOperandIds, localArgs=localArgs, logOperandId=logOperandId
+			buildCache, importedOperandIds=importedOperandIds, metaArgsString=metaArgsString, logOperandId=logOperandId
 		):
 			buildCache = None
 	if buildCache is None:
-		remoteResults = remoteFunc(rfa, *args, **kwargs)
-		rfa.halt()
-		if isinstance(remoteResults, midLevel.RemoteBaseObject):
-			remoteResults = [remoteResults]
-		globalsByteCode = builder.getRecordList('globals').getByteCode()
-		mainByteCode = builder.getRecordList('main').getByteCode()
+		remoteResult = remoteFunc(ra, *args, **kwargs)
+		ra.halt()
+		remoteResults = []
+		if isinstance(remoteResult, (tuple, list)):
+			remoteResults.extend(remoteResult)
+		else:
+			remoteResults.append(remoteResult)
+		log.info(
+			"--- Instructions Start ---\n"
+			f"{builder.dumpInstructions()}"
+			"--- Instructions End ---"
+		)
+		globals = builder.getInstructionList('globals')
+		main = builder.getInstructionList('main')
 		buildCache = _RemoteFuncBuildCache(
-			localArgs=localArgs,
+			metaArgsString=metaArgsString,
 			importedOperandIds=importedOperandIds,
-			globalsByteCode=globalsByteCode,
-			mainByteCode=mainByteCode,
+			globalsByteCode=globals.getByteCode(),
+			mainByteCode=main.getByteCode(),
 			resultOperandIds=[result.operandId for result in remoteResults],
 			logOperandId=logOperandId
 		)
-		remoteFunc._remoteFuncBuildCache = buildCache
+		setattr(remoteFunc, buildCacheAttrName, buildCache)
 	else:
-		log.info(f"Reusing Remote function build cache for {remoteFunc.__qualname__}")
+		log.info(f"Reusing Remote function build cache {buildCacheAttrName}")
 	return buildCache
 
 
@@ -273,24 +201,19 @@ def _getExecutionResults(resultSet: lowLevel.RemoteOperationResultSet, buildCach
 
 
 def execute(
-	remoteFunc: Callable[Concatenate[RemoteFuncAPI, ...], Any],
-	*args: object,
-	remoteLogging=False,
-	dumpInstructions=False,
-	**kwargs
+	remoteFunc: Callable[Concatenate[midLevel.RemoteAPI, _remoteFunc_paramSpec], object],
+	*args: _remoteFunc_paramSpec.args,
+	**kwargs: _remoteFunc_paramSpec.kwargs
 ) -> Any:
 	ro = lowLevel.RemoteOperation()
-	builder = midLevel.RemoteOperationBuilder(ro, remoteLogging=remoteLogging)
-	rfa = RemoteFuncAPI(builder)
-	processedArgs, processedKwargs = midLevel.processArgs(remoteFunc, rfa, *args, **kwargs)
-	buildCache = _buildRemotefunction(builder, remoteFunc, rfa, *processedArgs, **processedKwargs)
+	builder = midLevel.RemoteOperationBuilder(ro, remoteLogging=False)
+	ra = midLevel.RemoteAPI(builder)
+	buildCache = _buildRemotefunction(builder, remoteFunc, ra, *args, **kwargs)
 	for operandId in buildCache.resultOperandIds:
 		ro.addToResults(operandId)
 	if buildCache.logOperandId is not None:
 		ro.addToResults(buildCache.logOperandId)
-	if dumpInstructions:
-		log.info(f"{builder.dumpInstructions()}")
-	importsByteCode = builder.getRecordList('imports').getByteCode()
+	importsByteCode = builder.getInstructionList('imports').getByteCode()
 	globalsByteCode = buildCache.globalsByteCode
 	mainByteCode = buildCache.mainByteCode
 	resultSet = ro.execute(builder._versionBytes + importsByteCode + globalsByteCode + mainByteCode)
@@ -298,14 +221,14 @@ def execute(
 		raise ExecutionFailureException()
 	instructionRecord = None
 	errorLocation = resultSet.errorLocation
-	if dumpInstructions and errorLocation >= 0:
+	if errorLocation >= 0:
 		try:
 			instructionRecord = builder.lookupInstructionByGlobalIndex(resultSet.errorLocation)
-		except IndexError:
+		except (IndexError, RuntimeError):
 			pass
 	if resultSet.status == lowLevel.RemoteOperationStatus.MalformedBytecode:
 		raise MalformedBytecodeException(errorLocation=errorLocation, instructionRecord=instructionRecord)
-	if remoteLogging:
+	if builder._loggingEnablede :
 		_dumpRemoteLog(resultSet, buildCache)
 	results = _getExecutionResults(resultSet, buildCache)
 	if resultSet.status == lowLevel.RemoteOperationStatus.InstructionLimitExceeded:

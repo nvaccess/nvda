@@ -9,6 +9,11 @@ from logHandler import log
 from comInterfaces import UIAutomationClient as UIA
 from ._remoteOps import highLevel
 from ._remoteOps import remoteAlgorithms
+from ._remoteOps.midLevel import (
+	RemoteElement,
+	RemoteTextRange,
+	RemoteInt
+)
 
 
 _dll = None
@@ -30,9 +35,7 @@ def msWord_getCustomAttributeValue(
 ) -> Optional[Any]:
 	customAttribValue = highLevel.execute(
 		remoteAlgorithms._remote_msWord_getCustomAttributeValue,
-		docElement, textRange, customAttribID,
-		remoteLogging=False,
-		dumpInstructions=False
+		RemoteElement(docElement), RemoteTextRange(textRange), RemoteInt(customAttribID)
 	)
 	return customAttribValue
 
@@ -50,9 +53,7 @@ def collectAllHeadingsInTextRange(
 		try:
 			levels, labels, ranges = highLevel.execute(
 				remoteAlgorithms.remote_collectAllHeadingsInTextRange,
-				textRange,
-				remoteLogging=False,
-				dumpInstructions=True
+				RemoteTextRange(textRange)
 			)
 		except highLevel.InstructionLimitExceededException as e:
 			log.warning(f"{e}\n{count=}")
@@ -77,11 +78,9 @@ def findFirstHeadingInTextRange(
 		try:
 			level, label, subrange = highLevel.execute(
 				remoteAlgorithms.remote_findFirstHeadingInTextRange,
-				textRange,
+				RemoteTextRange(textRange),
 				wantedLevel or 0,
-				reverse,
-				remoteLogging=False,
-				dumpInstructions=True
+				reverse
 			)
 		except highLevel.InstructionLimitExceededException as e:
 			log.warning(f"{e}\n{count=}")
