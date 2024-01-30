@@ -1924,13 +1924,17 @@ class GlobalCommands(ScriptableObject):
 			speech.spellTextInfo(info,useCharacterDescriptions=True)
 		else:
 			try:
-				c = ord(info.text)
+				cList = [ord(c) for c in info.text]
 			except TypeError:
 				c = None
-			if c is not None:
-				speech.speakMessage("%d," % c)
-				speech.speakSpelling(hex(c))
-				braille.handler.message(f"{c}, {hex(c)}")
+			if cList:
+				
+				for c in cList:
+					speech.speakMessage("%d," % c)
+					# Report hex along with decimal only when there is one character; else, it's confusing.
+					if len(cList) == 1:
+						speech.speakSpelling(hex(c))
+				braille.handler.message("; ".join(f"{c}, {hex(c)}" for c in cList))
 			else:
 				log.debugWarning("Couldn't calculate ordinal for character %r" % info.text)
 				speech.speakTextInfo(info, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.OutputReason.CARET)
