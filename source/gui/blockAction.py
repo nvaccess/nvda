@@ -53,8 +53,8 @@ class Context(_Context, Enum):
 	)
 	BRAILLE_MODE_SPEECH_OUTPUT = (
 		lambda: config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value,
-		# Translators: Reported when trying to toggle an unsupported setting in speech emulation mode.
-		_("Action unavailable while the braille mode is set to speech emulation"),
+		# Translators: Reported when trying to toggle an unsupported setting in speech output mode.
+		_("Action unavailable while the braille mode is set to speech output"),
 	)
 
 def when(*contexts: Context):
