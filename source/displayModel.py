@@ -21,7 +21,7 @@ from textInfos.offsets import OffsetsTextInfo
 import watchdog
 from logHandler import log
 import windowUtils
-from locationHelper import RectLTRB, RectLTWH
+from locationHelper import RectLTRB, RectLTWH, Point
 import textUtils
 from typing import (
 	Union,
@@ -292,7 +292,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			limitRect=position
 			position=textInfos.POSITION_ALL
 		if limitRect is not None:
-			self._location = limitRect.left, limitRect.top, limitRect.right, limitRect.bottom
+			self._location = limitRect
 		else:
 			self._location = None
 		super(DisplayModelTextInfo, self).__init__(obj, position)
@@ -306,23 +306,27 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		List[int]
 	]:
 		# All returned coordinates are logical coordinates.
-		if self._location:
-			left, top, right, bottom = self._location
-		else:
-			try:
-				left, top, width, height = self.obj.location
-			except TypeError:
-				# No location; nothing we can do.
-				return [], [], [], []
-			right = left + width
-			bottom = top + height
+		location = self._location if self._location else self.obj.location
+		if location is None or not any(location):
+			# No location; nothing we can do.
+			return [], [], [], []
 		bindingHandle=self.obj.appModule.helperLocalBindingHandle
 		if not bindingHandle:
 			log.debugWarning("AppModule does not have a binding handle")
 			return [], [], [], []
-		left,top=windowUtils.physicalToLogicalPoint(self.obj.windowHandle,left,top)
-		right,bottom=windowUtils.physicalToLogicalPoint(self.obj.windowHandle,right,bottom)
-		text,rects=getWindowTextInRect(bindingHandle, self.obj.windowHandle, left, top, right, bottom, self.minHorizontalWhitespace, self.minVerticalWhitespace,self.stripOuterWhitespace,self.includeDescendantWindows)
+		location = location.toLogical(self.obj.windowHandle)
+		text, rects = getWindowTextInRect(
+			bindingHandle,
+			self.obj.windowHandle,
+			location.left,
+			location.top,
+			location.right,
+			location.bottom,
+			self.minHorizontalWhitespace,
+			self.minVerticalWhitespace,
+			self.stripOuterWhitespace,
+			self.includeDescendantWindows
+		)
 		if not text:
 			return [], [], [], []
 		text="<control>%s</control>"%text
@@ -641,11 +645,10 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		if offset>=len(rects):
 			raise RuntimeError("offset %d out of range")
 		rect = rects[offset]
-		x = rect.left
-		y= rect.center.y
-		x,y=windowUtils.logicalToPhysicalPoint(self.obj.windowHandle,x,y)
-		oldX,oldY=winUser.getCursorPos()
-		winUser.setCursorPos(x,y)
+		# Place the cursor at the left coordinate of the character, vertically centered.
+		point = Point(rect.left, rect.center.y).toPhysical(self.obj.windowHandle)
+		oldX, oldY = winUser.getCursorPos()
+		winUser.setCursorPos(*point)
 		mouseHandler.doPrimaryClick()
 		winUser.setCursorPos(oldX,oldY)
 

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V.
+# Copyright (C) 2006-2023 NV Access Limited, Babbage B.V., Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -21,6 +21,7 @@ from typing import (
 
 import winKernel
 from textUtils import WCHAR_ENCODING
+from logHandler import log
 import enum
 import NVDAState
 from logHandler import log
@@ -664,12 +665,22 @@ def VkKeyScanEx(ch, hkl):
 
 def ScreenToClient(hwnd, x, y):
 	point = POINT(x, y)
-	user32.ScreenToClient(hwnd, byref(point))
+	if not user32.ScreenToClient(hwnd, byref(point)):
+		log.error(
+			f"Couldn't convert screen coordinates x={x}, y={y} to client coordinates for hwnd={hwnd}:"
+			f" {WinError()}",
+			stack_info=True
+		)
 	return point.x, point.y
 
 def ClientToScreen(hwnd, x, y):
 	point = POINT(x, y)
-	user32.ClientToScreen(hwnd, byref(point))
+	if not user32.ClientToScreen(hwnd, byref(point)):
+		log.error(
+			f"Couldn't convert client coordinates x={x}, y={y} to screen coordinates for hwnd={hwnd}:"
+			f" {WinError()}",
+			stack_info=True
+		)
 	return point.x, point.y
 
 def NotifyWinEvent(event, hwnd, idObject, idChild):
