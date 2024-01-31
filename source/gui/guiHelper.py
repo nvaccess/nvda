@@ -1,6 +1,5 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2023 NV Access Limited
+# Copyright (C) 2016-2024 NV Access Limited, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -44,6 +43,7 @@ class myDialog(wx.Dialog):
 	...
 """
 from contextlib import contextmanager
+import weakref
 from typing import (
 	Generic,
 	Optional,
@@ -314,7 +314,7 @@ class BoxSizerHelper:
 			@type orientation: wx.HORIZONTAL or wx.VERTICAL
 			@param sizer: the sizer to use rather than constructing one.
 		"""
-		self._parent = parent
+		self._parentRef = weakref.ref(parent)
 		self.hasFirstItemBeenAdded = False
 		if orientation and sizer:
 			raise ValueError("Supply either orientation OR sizer. Not both.")
@@ -384,7 +384,7 @@ class BoxSizerHelper:
 			Relies on guiHelper.LabeledControlHelper and thus guiHelper.associateElements, and therefore inherits any
 			limitations from there.
 		"""
-		parent = self._parent
+		parent = self._parentRef()
 		if isinstance(self.sizer, wx.StaticBoxSizer):
 			parent = self.sizer.GetStaticBox()
 		labeledControl = LabeledControlHelper(parent, labelText, wxCtrlClass, **kwargs)
@@ -422,11 +422,11 @@ class BoxSizerHelper:
 		elif isinstance(buttons, (wx.Sizer, wx.Button)):
 			toAdd = buttons
 		elif isinstance(buttons, int):
-			toAdd = self._parent.CreateButtonSizer(buttons)
+			toAdd = self._parentRef().CreateButtonSizer(buttons)
 		else:
 			raise NotImplementedError("Unknown type: {}".format(buttons))
 		if separated:
-			parentBox = self._parent
+			parentBox = self._parentRef()
 			if isinstance(self.sizer, wx.StaticBoxSizer):
 				parentBox = self.sizer.GetStaticBox()
 			self.addItem(wx.StaticLine(parentBox), flag=wx.EXPAND)

@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
+# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
 # Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot, Rob Meredith, Luke Davis,
 # Burman's Computer and Education Ltd.
@@ -932,7 +932,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for cycle through automatic language switching mode command.
-			"Cycles through speech modes for automatic language switching: "
+			"Cycles through the possible choices for automatic language switching: "
 			"off, language only and language and dialect."
 		),
 		category=SCRCAT_SPEECH,
@@ -1922,13 +1922,17 @@ class GlobalCommands(ScriptableObject):
 			speech.spellTextInfo(info,useCharacterDescriptions=True)
 		else:
 			try:
-				c = ord(info.text)
+				cList = [ord(c) for c in info.text]
 			except TypeError:
 				c = None
-			if c is not None:
-				speech.speakMessage("%d," % c)
-				speech.speakSpelling(hex(c))
-				braille.handler.message(f"{c}, {hex(c)}")
+			if cList:
+				
+				for c in cList:
+					speech.speakMessage("%d," % c)
+					# Report hex along with decimal only when there is one character; else, it's confusing.
+					if len(cList) == 1:
+						speech.speakSpelling(hex(c))
+				braille.handler.message("; ".join(f"{c}, {hex(c)}" for c in cList))
 			else:
 				log.debugWarning("Couldn't calculate ordinal for character %r" % info.text)
 				speech.speakTextInfo(info, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.OutputReason.CARET)

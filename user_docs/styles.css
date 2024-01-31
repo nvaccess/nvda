@@ -94,3 +94,7 @@ dl > dd {
   font-size: small;
   font-style: italic;
 }
+
+thead:has(tr > th.hideHeaderRow) {
+  display: none;
+}
