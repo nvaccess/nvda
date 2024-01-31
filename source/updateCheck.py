@@ -395,7 +395,7 @@ class UpdateResultDialog(
 				reviewAddonsButton.Bind(wx.EVT_BUTTON, self.onReviewAddonsButton)
 			self.installPendingButton = bHelper.addButton(
 				self,
-				# Translators: The label of a button to install a pending NVDA update.
+				# Translators: The label of a button to apply a pending NVDA update.
 				# {version} will be replaced with the version; e.g. 2011.3.
 				label=_("&Update to NVDA {version}").format(**updateInfo)
 			)
@@ -509,7 +509,7 @@ class UpdateAskInstallDialog(
 			# Translators: The label of a button to review add-ons prior to NVDA update.
 			reviewAddonsButton = bHelper.addButton(self, label=_("&Review add-ons..."))
 			reviewAddonsButton.Bind(wx.EVT_BUTTON, self.onReviewAddonsButton)
-		# Translators: The label of a button to install an NVDA update.
+		# Translators: The label of a button to apply an NVDA update.
 		installButton = bHelper.addButton(self, wx.ID_OK, label=_("&Update now"))
 		installButton.Bind(wx.EVT_BUTTON, self.onInstallButton)
 		if not showAddonCompat:
