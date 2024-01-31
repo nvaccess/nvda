@@ -2134,7 +2134,11 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			if not paragraph.isCollapsed:
 				styles = self._extractStyles(paragraph)
 				firstStyleWithinParagraph = True
-				iterationRange = range(len(styles)) if direction == documentBase._Movement.NEXT else range(len(styles) - 1, -1, -1)
+				iterationRange = (
+					range(len(styles))
+					if direction == documentBase._Movement.NEXT
+					else range(len(styles) - 1, -1, -1)
+				)
 				for i in iterationRange:
 					if not isinstance(styles[i], textInfos.FieldCommand):
 						continue
