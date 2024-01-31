@@ -1533,8 +1533,9 @@ In caso ciò avvenga, consigliamo di disattivare questa caratteristica.
 
 ==== Descrizione ritardata dei caratteri al movimento del cursore ====
 
-|| Default | Disabilitata |
-|| Opzioni | Abilitata, disabilitata |
+|| . {.hideHeaderRow} | . |
+| Opzioni | Abilitata, disabilitata |
+| Default | Disabilitata |
 
 
 Quando questa impostazione viene attivata, NVDA pronuncerà una descrizione del carattere man mano che ci si sposta lettera per lettera.
@@ -1641,8 +1642,9 @@ Così facendo, il braille non seguirà mai il focus / cursore di sistema.
 
 ==== Sposta il cursore di sistema con cursor routing anche se il braille segue il cursore di controllo ====[BrailleSettingsReviewRoutingMovesSystemCaret]
 
-|| Default | Mai |
-|| Opzioni | Default (Mai), Mai, Solo quando l'inseguimento è su automatico, Sempre |
+|| . {.hideHeaderRow} | . |
+| Opzioni | Default (Mai), Mai, Solo quando l'inseguimento è su automatico, Sempre |
+| Default | Mai |
 
 
 Questa impostazione determina se anche il cursore di sistema debba essere spostato con la pressione di un cursor routing.
@@ -1707,8 +1709,9 @@ Per modificare la presentazione delle informazioni di contesto da qualsiasi punt
 
 ==== Interrompi la voce durante lo scorrimento ====[BrailleSettingsInterruptSpeech]
 
-|| Default | Abilitato |
-|| Opzioni | Default (Abilitato), Abilitato, Disabilitato |
+|| . {.hideHeaderRow} | . |
+| Opzioni | Default (Abilitato), Abilitato, Disabilitato |
+| Default | Abilitato |
 
 
 Questa impostazione determina se la sintesi vocale debba interrompersi quando si scorre il display braille indietro o avanti..
@@ -1721,8 +1724,9 @@ La disattivazione di questa opzione consente di ascoltare la sintesi indipendent
 
 ==== Mostra selezione ====[BrailleSettingsShowSelection]
 
-|| Default | Attivato |
-|| Opzioni | Default (Attivato), Attivato, disattivato |
+|| . {.hideHeaderRow} | . |
+| Opzioni | Default (Attivato), Attivato, disattivato |
+| Default | Attivato |
 
 
 Questa impostazione determina se l'indicatore di selezione (punti 7 e 8) debba essere visualizzato nel display braille.
@@ -2249,8 +2253,9 @@ Questa categoria consente di regolare vari aspetti della navigazione del documen
 
 ==== Stile Paragrafo ====[ParagraphStyle]
 
-|| Predefinito | Gestito dall'applicazione |
-|| Opzioni | Predefinito (Gestito dall'applicazione), Gestito dall'applicazione, Interruzione riga singola, Interruzione di più righe |
+|| . {.hideHeaderRow} | . |
+| Opzioni | Predefinito (Gestito dall'applicazione), Gestito dall'applicazione, Interruzione riga singola, Interruzione di più righe |
+| Predefinito | Gestito dall'applicazione |
 
 
 Questa casella combinata permette di selezionare lo stile del paragrafo da utilizzare quando si naviga tra gli stessi tramite "control+freccia su" e "control+freccia giù".
@@ -2305,8 +2310,9 @@ Il bottone risulta attivo solo nel caso in cui NVDA sia configurato per caricare
 
 ==== Registrazione per eventi UI Automation e cambiamenti di proprietà ====[AdvancedSettingsSelectiveUIAEventRegistration]
 
-|| Default | Automatica |
-|| Opzioni | Automatica, Selettiva, Globale |
+|| . {.hideHeaderRow} | . |
+| Opzioni | Automatica, Selettiva, Globale |
+| Default | Automatica |
 
 
 Questa opzione modifica il modo in cui NVDA registra gli eventi attivati dall'API di accessibilità di Microsoft UI Automation.
@@ -2342,8 +2348,9 @@ Quando questa opzione è abilitata, NVDA utilizzerà una nuova versione ancora i
 
 ==== Supporto alla Console di Windows ====[AdvancedSettingsConsoleUIA]
 
-|| Default | Automatico |
-|| Opzioni | Automatico, UIA se disponibile, Meno recenti |
+|| . {.hideHeaderRow} | . |
+| Opzioni | Automatico, UIA se disponibile, Meno recenti |
+| Default | Automatico |
 
 
 Questa opzione permette di selezionare la modalità con cui NVDA interagisce con la console di Windows utilizzata dal prompt dei comandi, PowerShell e il sottosistema Windows per Linux.
@@ -2393,8 +2400,9 @@ Sono disponibili le seguenti opzioni:
 
 ==== Segnala regioni live ====[BrailleLiveRegions]
 
-|| Default | Attivato |
-|| Opzioni | Default (Attivato), Disattivato, Attivato |
+|| . {.hideHeaderRow} | . |
+| Opzioni | Default (Attivato), Disattivato, Attivato |
+| Default | Attivato |
 
 
 Questa opzione stabilisce se NVDA debba segnalare i cambiamenti in alcuni contenuti web dinamici in Braille.
@@ -2427,8 +2435,9 @@ Tuttavia, nei terminali, quando si inserisce o si elimina un carattere nel mezzo
 
 ==== Leggi nuovo testo in Windows Terminal tramite ====[WtStrategy]
 
-|| Predefinito | Diffing |
-|| Opzioni | Default (Diffing), Diffing, Notifiche UIA |
+|| . {.hideHeaderRow} | . |
+| Opzioni | Default (Diffing), Diffing, Notifiche UIA |
+| Predefinito | Diffing |
 
 
 Questa opzione determina il metodo utilizzato da NVDA per stabilire quale testo risulti "nuovo" (e quindi cosa pronunciare quando l'opzione "Leggi i cambiamenti dei contenuti dinamici" è abilitata) nella finestra del terminale di Windows e nel controllo WPF Windows Terminal utilizzato in Visual Studio 2022.
@@ -2460,8 +2469,9 @@ Con diverse API GUI storicamente popolari, il testo può essere visualizzato con
 
 ==== Usa WASAPI per l'output audio ====[WASAPI]
 
-|| Default | Disattivato |
-|| Opzioni | Default (Disattivato), Disattivato, Attivato |
+|| . {.hideHeaderRow} | . |
+| Opzioni | Default (Disattivato), Disattivato, Attivato |
+| Default | Disattivato |
 
 
 Questa opzione attiva la gestione dell'audio attraverso un sistema chiamato  Windows Audio Session API (WASAPI).
