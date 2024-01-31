@@ -446,7 +446,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			self,
 			kind: str,
 			direction: str = "next",
-			pos: textInfos.TextInfo = None,
+			pos: textInfos.TextInfo | None = None,
 	) -> Generator[TextInfoQuickNavItem, None, None]:
 		raise NotImplementedError
 
