@@ -3297,7 +3297,7 @@ class AdvancedPanelControls(
 
 		silenceDurationLabelText = _(
 			# Translators: The label for a setting in advanced panel to change silence duration
-			"Duration in seconds of silence or white noise played to keep audio device open (or 0 to disable)"
+			"Duration in seconds of silence to keep audio device open"
 		)
 		minDuration = int(config.conf.getConfigValidation(
 			("audio", "silenceTimeSeconds")
