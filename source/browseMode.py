@@ -949,6 +949,18 @@ qn(
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous tab")
 )
+qn(
+	"figure", key="y",
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next figure"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next figure"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous figure"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous figure")
+)
+
 del qn
 
 
