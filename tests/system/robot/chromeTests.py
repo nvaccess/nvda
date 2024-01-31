@@ -2477,7 +2477,7 @@ def test_i13307():
 
 def test_styleNav():
 	""" Tests that same style and different style navigation work correctly in browse mode.
-	Bydefault these commands don't have assigned gestures,
+	By default these commands don't have assigned gestures,
 	so we will assign temporary gestures just for testing.
 	"""
 	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
