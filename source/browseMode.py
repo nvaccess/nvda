@@ -2130,7 +2130,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		tmpInfo.expand(textInfos.UNIT_PARAGRAPH)
 		paragraph.setEndPoint(tmpInfo, which='endToEnd' if direction == 'next' else 'startToStart')
 		MAX_ITER_LIMIT = 10**6
-		for _ in range(MAX_ITER_LIMIT):
+		for __ in range(MAX_ITER_LIMIT):
 			if not paragraph.isCollapsed:
 				styles = self._extractStyles(paragraph)
 				firstStyleWithinParagraph = True
