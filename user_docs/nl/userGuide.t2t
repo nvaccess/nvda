@@ -1144,8 +1144,9 @@ Hiertoe moet u er in de eerste plaats voor zorgen dat de optie “Kolom-/Rijkopp
 Ten tweede moet NVDA voor elke tabel weten in welke kolom of rij de kolom-/rijkoppen staan.
 Nadat u naar de eerste cel in de kolom of rij bent gegaan waar de kolom- of rijkoppen zich bevinden, kunt u de volgende commando’s gebruiken:
 %kc:beginInclude
-|| Naam | Toets | Beschrijving |
-|| Kolomkoppen instellen | NVDA+shift+c | Door eenmaal indrukken weet NVDA dat dit de eerste cel is in de rij waar de kolomkoppen in staan die automatisch moeten worden gemeld bij het gaan van kolom naar kolom in de rijen eronder. Door tweemaal drukken wordt de instelling opgeheven. | 
+|| . {.hideHeaderRow} | . |
+| Kolomkoppen instellen | NVDA+shift+c | Door eenmaal indrukken weet NVDA dat dit de eerste cel is in de rij waar de kolomkoppen in staan die automatisch moeten worden gemeld bij het gaan van kolom naar kolom in de rijen eronder. Door tweemaal drukken wordt de instelling opgeheven. |
+| Naam | Toets | Beschrijving | 
 | Rijkoppen instellen | NVDA+shift+r | Door eenmaal indrukken weet NVDA dat dit de eerste cel is in de kolom waar de rijkoppen in staan die automatisch moeten worden gemeld bij het gaan van rij naar rij na deze kolom. Door tweemaal drukken wordt de instelling opgeheven. |
 %kc:endInclude
 Deze instellingen worden als bladwijzers die compatibel zijn met andere schermlezers zoals JAWS, in het document opgeslagen. Dit houdt in dat andere gebruikers die het document op een later moment openen direct gebruik kunnen maken van de reeds ingestelde kolom- en rijkoppen.
@@ -1537,8 +1538,9 @@ In het algemeen is het aan te bevelen dit selectievakje aan te vinken. Er zijn e
 
 ==== Vertraagde beschrijving van (letter)tekens bij cursorverplaatsing ====[delayedCharacterDescriptions]
 
-|| Standaard | Uitgeschakeld |
-|| Opties | Ingeschakeld, Uitgeschakeld |
+|| . {.hideHeaderRow} | . |
+| Opties | Ingeschakeld, Uitgeschakeld |
+| Standaard | Uitgeschakeld |
 
 
 Wanneer deze optie is aangevinkt zal NVDA het (letter)teken nader beschrijven wanneer  u de cursor letter voor letter verplaatst.
@@ -1642,8 +1644,9 @@ In dit geval  zal Braille  de systeemfocus en systeemaanwijzer niet volgen.
 
 ==== Invoercursor verplaatsen bij routering van leescursor ====[BrailleSettingsReviewRoutingMovesSystemCaret]
 
-|| Standaard | Nooit |
-|| Opties | Standaard (Nooit), Nooit, Alleen wanneer automatisch gekoppeld (tethered), Altijd |
+|| . {.hideHeaderRow} | . |
+| Opties | Standaard (Nooit), Nooit, Alleen wanneer automatisch gekoppeld (tethered), Altijd |
+| Standaard | Nooit |
 
 
 Deze instelling bepaalt of de invoercursor ook verplaatst moet worden  bij het indrukken van de routing-knop.
@@ -1708,8 +1711,9 @@ Om Te tonen contextinformatie aan of uit te zetten vanaf elke willekeurige plaat
 
 ==== Spraak onderbreken tijdens het scrollen ====[BrailleSettingsInterruptSpeech]
 
-|| Standaard | Ingeschakeld |
-|| Opties | Standaard (Ingeschakeld), Ingeschakeldd, Uitgeschakeld |
+|| . {.hideHeaderRow} | . |
+| Opties | Standaard (Ingeschakeld), Ingeschakeldd, Uitgeschakeld |
+| Standaard | Ingeschakeld |
 
 
 Met deze instelling bepaalt u of de spraak moet worden onderbroken bij vooruit-/achteruitscrollen van de brailleleesregel.
@@ -1722,8 +1726,9 @@ Door deze optie uit te schakelen kunt u wat u in braille leest gelijktijdig hard
 
 ==== Selectie tonen ====[BrailleSettingsShowSelection]
 
-|| Standaard | Ingeschakeld |
-|| Opties | Standaard (Enabled), Ingeschakeld, Uitgeschakeld |
+|| . {.hideHeaderRow} | . |
+| Opties | Standaard (Enabled), Ingeschakeld, Uitgeschakeld |
+| Standaard | Ingeschakeld |
 
 
 Deze instelling bepaalt of de selectieaanwijzer (punt 7 en punt 8) op  de brailleleesregel wordt getoond.
@@ -1796,8 +1801,9 @@ audio-onderdrukking kan niet worden ondersteund bij gebruik van de draagbare en 
 
 ==== Volume van NVDA-geluiden volgt stemvolume ====[SoundVolumeFollowsVoice]
 
-|| Standaard | Uitgeschakeld |
-|| Opties | Uitgeschakeld, Ingeschakeld |
+|| . {.hideHeaderRow} | . |
+| Opties | Uitgeschakeld, Ingeschakeld |
+| Standaard | Uitgeschakeld |
 
 
 Wanneer deze optie ingeschakeld is, zal het volume van   geluiden en piepjes die NVDA voortbrengt de volumeinstelling  van de stem die gebruikt wordt volgen.
@@ -2227,8 +2233,9 @@ In deze categorie kunt u diverse aspecten  van  documentnavigatie aanpassen.
 
 ==== Alineastijl ====[ParagraphStyle]
 
-|| Standaard | Door toepassing verwerkt |
-|| Opties | Standaard (Door toepassing verwerkt, nieuwe regel, meervoudigee nieuwe regelactie |
+|| . {.hideHeaderRow} | . |
+| Opties | Standaard (Door toepassing verwerkt, nieuwe regel, meervoudigee nieuwe regelactie |
+| Standaard | Door toepassing verwerkt |
 
 
 Met deze vervolgkeuzelijst kunt u de alineastijl selecteren die gebruikt moet worden bij alineanavigatie met ``control+pijlOmhoog`` en ``control+pijlOmlaag``.
@@ -2284,8 +2291,9 @@ Deze knop is eerst dan ingeschakeld als NVDA zo is ingesteld dat het laden van a
 
 ==== Registratie betreffende gebeurtenissen en wijzigingen  in UI Automation  ====[AdvancedSettingsSelectiveUIAEventRegistration]
 
-|| Standaard | Automatisch |
-|| Opties | Automatisch, Selectiefe, Globaal |
+|| . {.hideHeaderRow} | . |
+| Opties | Automatisch, Selectiefe, Globaal |
+| Standaard | Automatisch |
 
 
 Met deze optie kunt u bepalen hoe NVDA gebeurtenissen (events) die door de UI Automation accessibility API van Microsoft worden gegenereerd, moeten worden geregistreerd.
@@ -2318,8 +2326,9 @@ De implementatie van Microsoft Excel's UI automation is aan voortdurende verande
 
 ==== Ondersteuning Windows Consool ====[AdvancedSettingsConsoleUIA]
 
-|| Standaard | Automatisch |
-|| Opties | Automatisch, UIA wanneer beschikbaar, Legacy |
+|| . {.hideHeaderRow} | . |
+| Opties | Automatisch, UIA wanneer beschikbaar, Legacy |
+| Standaard | Automatisch |
 
 
 Met deze instelling wordt bepaald hoe NVDA moet omgaan met de Windows-consool die door de Opdrachtprompt, PowerShell, en het Windows Subsysteem voor Linux gebruikt wordt.
@@ -2405,8 +2414,9 @@ Wanneer er echter in terminal-toepassingen  een tekenmidden in een regel wordt i
 
 ==== Nieuwe tekst in Windows Terminal via (voor)lezen ====[WtStrategy]
 
-|| Standaard | Diffing |
-|| Opties | Standaard (Diffing), Diffing, UIA notificaties |
+|| . {.hideHeaderRow} | . |
+| Opties | Standaard (Diffing), Diffing, UIA notificaties |
+| Standaard | Diffing |
 
 
 Met deze optie kiest u hoe NVDA bepaalt wat er aan nieuwe tekst is (en dus wat gelezen moet worden als "dynamische inhoudwijzigingen melden" ingeschakeld is) in Windows Terminal en de WPF Windows Terminal control die gebruikt wordt in Visual Studio 2022.
@@ -2438,8 +2448,9 @@ Bij verscheidene GUI API's, die al heel lang populair zijn, kan de  tekst weerge
 
 ==== WASAPI vor audio uitvoer gebruiken ====[WASAPI]
 
-|| Standaard | Ingeschakeld |
-|| Opties | Standaard (Ingeschakeld), Uitgeschakeld, Ingeschakeld |
+|| . {.hideHeaderRow} | . |
+| Opties | Standaard (Ingeschakeld), Uitgeschakeld, Ingeschakeld |
+| Standaard | Ingeschakeld |
 
 
 Met deze optie kan audiouitvoer  via Windows Audio Session API (WASAPI) ingeschakeld worden.
