@@ -445,7 +445,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def _iterTextStyle(
 			self,
 			kind: str,
-			direction: str = "next",
+			direction: documentBase._Movement = documentBase._Movement.NEXT,
 			pos: textInfos.TextInfo | None = None,
 	) -> Generator[TextInfoQuickNavItem, None, None]:
 		raise NotImplementedError
@@ -458,7 +458,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 					direction: str,
 					info: textInfos.TextInfo | None,
 			) -> Generator[TextInfoQuickNavItem, None, None]:
-				return self._iterTextStyle(itemType, direction, info)
+				return self._iterTextStyle(itemType, documentBase._Movement(direction), info)
 		else:
 			iterFactory=lambda direction,info: self._iterNodesByType(itemType,direction,info)
 		info=self.selection
@@ -2095,9 +2095,14 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	def _iterTextStyle(
 			self,
 			kind: str,
-			direction: str = "next",
+			direction: documentBase._Movement = documentBase._Movement.NEXT,
 			pos: textInfos.TextInfo | None = None
 	) -> Generator[TextInfoQuickNavItem, None, None]:
+		if direction not in [
+			documentBase._Movement.NEXT,
+			documentBase._Movement.PREVIOUS,
+		]:
+			raise RuntimeError(f"direction must be either next or previous; got {direction}")
 		sameStyle = kind == 'sameStyle'
 		initialTextInfo = pos.copy()
 		initialTextInfo.collapse()
@@ -2107,7 +2112,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			if result == 0:
 				# Translators: Error message for same/different style quick navigation command
 				ui.message(_("Cannot determine current style"))
-				raise RuntimeError
+				raise RuntimeError("Cannot determine current style")
 		styles = self._extractStyles(initialTextInfo)
 		if (
 			len(styles) == 0
@@ -2116,7 +2121,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		):
 			# Translators: Error message for same/different style quick navigation commands
 			ui.message(_("Cannot determine current style"))
-			raise RuntimeError
+			raise RuntimeError("Cannot determine current style")
 		initialStyle = styles[0]
 
 		firstParagraph = True
@@ -2129,7 +2134,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			if not paragraph.isCollapsed:
 				styles = self._extractStyles(paragraph)
 				firstStyleWithinParagraph = True
-				iterationRange = range(len(styles)) if direction == 'next' else range(len(styles) - 1, -1, -1)
+				iterationRange = range(len(styles)) if direction == documentBase._Movement.NEXT else range(len(styles) - 1, -1, -1)
 				for i in iterationRange:
 					if not isinstance(styles[i], textInfos.FieldCommand):
 						continue
@@ -2154,7 +2159,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 						yield TextInfoQuickNavItem(kind, self, textRange)
 					firstStyleWithinParagraph = False
 			firstParagraph = False
-			if direction == 'next':
+			if direction == documentBase._Movement.NEXT:
 				paragraph.collapse(end=True)
 			else:
 				paragraph.collapse(end=False)
