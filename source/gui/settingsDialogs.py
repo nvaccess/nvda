@@ -3237,6 +3237,23 @@ class AdvancedPanelControls(
 		))
 		self.bindHelpEvent("WASAPI", self.wasapiComboBox)
 
+		silenceDurationLabelText = _(
+			# Translators: The label for a setting in advanced panel to change silence duration
+			"Duration in seconds of silence to keep audio device open"
+		)
+		minDuration = int(config.conf.getConfigValidation(
+			("audio", "silenceTimeSeconds")
+		).kwargs["min"])
+		maxDuration = int(config.conf.getConfigValidation(("audio", "silenceTimeSeconds")).kwargs["max"])
+		self.silenceDurationEdit = audioGroup.addLabeledControl(
+			silenceDurationLabelText,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=minDuration,
+			max=maxDuration,
+			initial=config.conf["audio"]["silenceTimeSeconds"]
+		)
+		self.bindHelpEvent("silenceDuration", self.silenceDurationEdit)
+
 		# Translators: This is the label for a group of advanced options in the
 		# Advanced settings panel
 		label = _("Debug logging")
@@ -3294,23 +3311,6 @@ class AdvancedPanelControls(
 		self.playErrorSoundCombo.defaultValue = self._getDefaultValue(["featureFlag", "playErrorSound"])
 
 		self.Layout()
-
-		silenceDurationLabelText = _(
-			# Translators: The label for a setting in advanced panel to change silence duration
-			"Duration in seconds of silence to keep audio device open"
-		)
-		minDuration = int(config.conf.getConfigValidation(
-			("audio", "silenceTimeSeconds")
-		).kwargs["min"])
-		maxDuration = int(config.conf.getConfigValidation(("audio", "silenceTimeSeconds")).kwargs["max"])
-		self.silenceDurationEdit = sHelper.addLabeledControl(
-			silenceDurationLabelText,
-			nvdaControls.SelectOnFocusSpinCtrl,
-			min=minDuration,
-			max=maxDuration,
-			initial=config.conf["audio"]["silenceTimeSeconds"]
-		)
-		self.bindHelpEvent("silenceDuration", self.silenceDurationEdit)
 
 	def onOpenScratchpadDir(self,evt):
 		path=config.getScratchpadDir(ensureExists=True)

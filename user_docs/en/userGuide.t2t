@@ -2584,6 +2584,15 @@ Disabling WASAPI will disable the following options:
 - [Volume of NVDA sounds #SoundVolume]
 -
 
+==== Silence duration ====[silenceDuration]
+
+This edit box specifies how long NVDA plays silence after every utterance. We play silence to keep audio device open and avoid certain glitches like dropped parts of utterances, that happen due to audio devices (especially Bluetooth and wireless devices) entering stand by mode.
+
+* Too low value would mean  audio may be cut-off more often.
+• Too high value would mean the battery of sound output device discharges faster.
+
+You can specify silence duration to be 0 in order to disable this feature.
+
 ==== Debug logging categories ====[AdvancedSettingsDebugLoggingCategories]
 The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.
 Logging these messages can result in decreased performance and large log files.
@@ -2593,15 +2602,6 @@ Only turn one of these on if specifically instructed to by an NVDA developer e.g
 This option allows you to specify if NVDA will play an error sound in case an error is logged.
 Choosing Only in test versions (default) makes NVDA play error sounds only if the current NVDA version is a test version (alpha, beta or run from source).
 Choosing Yes allows to enable error sounds whatever your current NVDA version is.
-
-==== Silence duration ====[silenceDuration]
-
-This edit box specifies how long NVDA plays silence after every utterance. We play silence to keep audio device open and avoid certain glitches like dropped parts of utterances, that happen due to audio devices (especially Bluetooth and wireless devices) entering stand by mode.
-
-* Too low value would mean  audio may be cut-off more often.
-• Too high value would mean the battery of sound output device discharges faster.
-
-You can specify silence duration to be 0 in order to disable this feature.
 
 ++ miscellaneous Settings ++[MiscSettings]
 Besides the [NVDA Settings #NVDASettings] dialog, The Preferences sub-menu of the NVDA Menu contains several other items which are outlined below.
