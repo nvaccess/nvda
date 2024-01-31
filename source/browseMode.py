@@ -2096,7 +2096,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			self,
 			kind: str,
 			direction: str = "next",
-			pos: textInfos.TextInfo = None
+			pos: textInfos.TextInfo | None = None
 	) -> Generator[TextInfoQuickNavItem, None, None]:
 		sameStyle = kind == 'sameStyle'
 		initialTextInfo = pos.copy()
