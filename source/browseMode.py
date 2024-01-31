@@ -456,7 +456,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		elif itemType in ["sameStyle", "differentStyle"]:
 			def iterFactory(
 					direction: str,
-					info: textInfos.TextInfo,
+					info: textInfos.TextInfo | None,
 			) -> Generator[TextInfoQuickNavItem, None, None]:
 				return self._iterTextStyle(itemType, direction, info)
 		else:
