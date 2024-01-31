@@ -7,9 +7,9 @@ What's New in NVDA
 
 == New Features ==
 - In Windows 11, NVDA will announce alerts from voice typing and suggested actions including the top suggestion when copying data such as phone numbers to the clipboard (Windows 11 2022 Update and later). (#16009, @josephsl)
+- Added support for the BrailleEdgeS2 braille device. (#16033)
 - Playing silence after every utterance in order to keep audio device open (#14386, @jcsteh, @mltony)
 -
-
 
 == Changes ==
 
@@ -320,6 +320,15 @@ Use ``bdDetect.DeviceType.*`` instead. (#15772, @LeonarddeR).
 - Using ``gui.ExecAndPump`` is deprecated - please use ``systemUtils.ExecAndPump`` instead. (#15852, @lukaszgo1)
 -
 
+
+= 2023.3.3 =
+This is a patch release to fix a security issue.
+Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Security Fixes ==
+- Prevents possible reflected XSS attack from crafted content to cause arbitrary code execution.
+([GHSA-xg6w-23rw-39r8 https://github.com/nvaccess/nvda/security/advisories/GHSA-xg6w-23rw-39r8])
+-
 
 = 2023.3.2 =
 This is a patch release to fix a security issue.

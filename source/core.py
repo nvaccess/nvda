@@ -9,6 +9,7 @@
 
 from dataclasses import dataclass
 from typing import (
+	TYPE_CHECKING,
 	Any,
 	List,
 	Optional,
@@ -30,6 +31,9 @@ import extensionPoints
 import garbageHandler
 import NVDAState
 from NVDAState import WritePaths
+
+if TYPE_CHECKING:
+	import wx
 
 
 def __getattr__(attrName: str) -> Any:
@@ -527,6 +531,66 @@ def _doLoseFocus():
 			log.exception("Lose focus error")
 
 
+def _setUpWxApp() -> "wx.App":
+	import six
+	import wx
+
+	import config
+	import nvwave
+	import speech
+
+	log.info(f"Using wx version {wx.version()} with six version {six.__version__}")
+
+	# Disables wx logging in secure mode due to a security issue: GHSA-h7pp-6jqw-g3pj
+	# This is due to the wx.LogSysError dialog allowing a file explorer dialog to be opened.
+	wx.Log.EnableLogging(not globalVars.appArgs.secure)
+
+	class App(wx.App):
+		def OnAssert(self, file: str, line: str, cond: str, msg: str):
+			message = f"{file}, line {line}:\nassert {cond}: {msg}"
+			log.debugWarning(message, codepath="wxWidgets", stack_info=True)
+
+		def InitLocale(self):
+			"""Custom implementation of `InitLocale` which ensures that wxPython does not change the locale.
+			The current wx implementation (as of wxPython 4.1.1) sets Python locale to an invalid one
+			which triggers Python issue 36792 (#12160).
+			The new implementation (wxPython 4.1.2) sets locale to "C" (basic Unicode locale).
+			While this is not wrong as such NVDA manages locale themselves using `languageHandler`
+			and it is better to remove wx from the equation so this method is a No-op.
+			This code may need to be revisited when we update Python / wxPython.
+			"""
+			pass
+
+	app = App(redirect=False)
+
+	# We support queryEndSession events, but in general don't do anything for them.
+	# However, when running as a Windows Store application, we do want to request to be restarted for updates
+	def onQueryEndSession(evt):
+		if config.isAppX:
+			# Automatically restart NVDA on Windows Store update
+			ctypes.windll.kernel32.RegisterApplicationRestart(None, 0)
+
+	app.Bind(wx.EVT_QUERY_END_SESSION, onQueryEndSession)
+
+	def onEndSession(evt):
+		# NVDA will be terminated as soon as this function returns, so save configuration if appropriate.
+		config.saveOnExit()
+		speech.cancelSpeech()
+		if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
+			try:
+				nvwave.playWaveFile(
+					os.path.join(globalVars.appDir, "waves", "exit.wav"),
+					asynchronous=False
+				)
+			except Exception:
+				log.exception("Error playing exit sound")
+		log.info("Windows session ending")
+
+	app.Bind(wx.EVT_END_SESSION, onEndSession)
+
+	return app
+
+
 def main():
 	"""NVDA's core main loop.
 	This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI.
@@ -611,53 +675,10 @@ def main():
 		log.debugWarning("Slow starting core (%.2f sec)" % timeSinceStart)
 		# Translators: This is spoken when NVDA is starting.
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
+
 	import wx
-	import six
+	app = _setUpWxApp()
 
-	# Disables wx logging in secure mode due to a security issue: GHSA-h7pp-6jqw-g3pj
-	# This is due to the wx.LogSysError dialog allowing a file explorer dialog to be opened.
-	wx.Log.EnableLogging(not globalVars.appArgs.secure)
-
-	log.info("Using wx version %s with six version %s"%(wx.version(), six.__version__))
-	class App(wx.App):
-		def OnAssert(self,file,line,cond,msg):
-			message="{file}, line {line}:\nassert {cond}: {msg}".format(file=file,line=line,cond=cond,msg=msg)
-			log.debugWarning(message,codepath="WX Widgets",stack_info=True)
-
-		def InitLocale(self):
-			"""Custom implementation of `InitLocale` which ensures that wxPython does not change the locale.
-			The current wx implementation (as of wxPython 4.1.1) sets Python locale to an invalid one
-			which triggers Python issue 36792 (#12160).
-			The new implementation (wxPython 4.1.2) sets locale to "C" (basic Unicode locale).
-			While this is not wrong as such NVDA manages locale themselves using `languageHandler`
-			and it is better to remove wx from the equation so this method is a No-op.
-			This code may need to be revisited when we update Python / wxPython.
-			"""
-			pass
-
-
-	app = App(redirect=False)
-	# We support queryEndSession events, but in general don't do anything for them.
-	# However, when running as a Windows Store application, we do want to request to be restarted for updates
-	def onQueryEndSession(evt):
-		if config.isAppX:
-			# Automatically restart NVDA on Windows Store update
-			ctypes.windll.kernel32.RegisterApplicationRestart(None,0)
-	app.Bind(wx.EVT_QUERY_END_SESSION, onQueryEndSession)
-	def onEndSession(evt):
-		# NVDA will be terminated as soon as this function returns, so save configuration if appropriate.
-		config.saveOnExit()
-		speech.cancelSpeech()
-		if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
-			try:
-				nvwave.playWaveFile(
-					os.path.join(globalVars.appDir, "waves", "exit.wav"),
-					asynchronous=False
-				)
-			except:
-				pass
-		log.info("Windows session ending")
-	app.Bind(wx.EVT_END_SESSION, onEndSession)
 	log.debug("Initializing braille input")
 	import brailleInput
 	brailleInput.initialize()
