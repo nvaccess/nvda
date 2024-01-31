@@ -455,10 +455,10 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			iterFactory=self._iterNotLinkBlock
 		elif itemType in ["sameStyle", "differentStyle"]:
 			def iterFactory(
-					direction: str,
+					direction: documentBase._Movement,
 					info: textInfos.TextInfo | None,
 			) -> Generator[TextInfoQuickNavItem, None, None]:
-				return self._iterTextStyle(itemType, documentBase._Movement(direction), info)
+				return self._iterTextStyle(itemType, direction, info)
 		else:
 			iterFactory=lambda direction,info: self._iterNodesByType(itemType,direction,info)
 		info=self.selection
