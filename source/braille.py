@@ -1550,7 +1550,6 @@ class ReviewTextInfoRegion(TextInfoRegion):
 		if (
 			(
 				self._currentScriptName in startOfNextOrPreviousLineScriptNames
-				and previousReadingUnit is not None
 				and previousReadingUnit.start != self._readingInfo.start
 				and previousReadingUnit.end != self._readingInfo.end
 			)
