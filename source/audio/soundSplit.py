@@ -187,8 +187,8 @@ def toggleSoundSplitState() -> None:
 	if not nvwave.usingWasapiWavePlayer():
 		message = _(
 			# Translators: error message when wasapi is turned off.
-			"Sound split is only available in wasapi mode. "
-			"Please enable wasapi on the Advanced panel in NVDA Settings."
+			"Sound split cannot be used. "
+			"Please enable WASAPI in the Advanced category in NVDA Settings to use it."
 		)
 		ui.message(message)
 		return
