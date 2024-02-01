@@ -25,7 +25,7 @@ What's New in NVDA
   - When pressing ``ctrl+tab``, focus properly moves to the new current tab title. (#14986, @ABuffEr)
   -
 - In Adobe Reader, NVDA no longer ignores alternative text set on formulas in PDFs. (#12715)
-- Changed several gestures for BrailleSense devices to ensure the gestures work on French keyboards. (#15306)
+- Changed several gestures for BrailleSense devices to avoid conflicts with characters of the French braille table. (#15306)
   - ``alt+leftArrow`` is now mapped to ``dot2+dot7+space``
   - ``alt+rightArrow`` is now mapped to ``dot5+dot7_space``
   - ``alt+upArrow`` is now mapped to ``dot2+dot3+dot7+space``
