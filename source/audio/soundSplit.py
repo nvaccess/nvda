@@ -40,7 +40,7 @@ class SoundSplitState(DisplayStringIntEnum):
 	def _displayStringLabels(self) -> dict[IntEnum, str]:
 		return {
 			# Translators: Sound split state
-			SoundSplitState.OFF: _("Disabled sound split"),
+			SoundSplitState.OFF: pgettext("SoundSplit", "Disabled"),
 			# Translators: Sound split state
 			SoundSplitState.NVDA_LEFT_APPS_RIGHT: _("NVDA on the left and applications on the right"),
 			# Translators: Sound split state
