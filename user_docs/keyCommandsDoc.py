@@ -178,7 +178,7 @@ class KeyCommandsPreprocessor(Preprocessor):
 			self._kcLines.append(heading.group(0))
 		self._kcLastHeadingLevel = level
 
-	def _heading(self, m: re.Match, appendHeading=True):
+	def _heading(self, m: re.Match, appendHeading: bool = True):
 		# We work with 0 based heading levels.
 		# Ignoring the title, the highest heading in a markdown document is 2 (##).
 		# Thus why we must subtract 2 here.
