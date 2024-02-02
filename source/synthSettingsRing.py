@@ -3,7 +3,7 @@ import config
 import synthDriverHandler
 import queueHandler
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
-
+from typing import Any
 
 class SynthSetting(baseObject.AutoPropertyObject):
 	"""a numeric synth setting. Has functions to set, get, increase and decrease its value """
