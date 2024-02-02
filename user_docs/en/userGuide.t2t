@@ -2591,7 +2591,7 @@ This edit box specifies how long NVDA plays silence after every utterance. NVDA 
 * Too low value would mean  audio may be cut-off more often.
 * Too high value would mean the battery of sound output device discharges faster.
 
-You can specify silence duration to be 0 in order to disable this feature.
+You can specify silence duration to be 0 in order to disable this feature. This slider is only availabel when wasapi mode is enabled.
 
 ==== Debug logging categories ====[AdvancedSettingsDebugLoggingCategories]
 The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.
