@@ -3252,7 +3252,7 @@ class AdvancedPanelControls(
 			max=maxDuration,
 			initial=config.conf["audio"]["silenceTimeSeconds"]
 		)
-		self.bindHelpEvent("silenceDuration", self.silenceDurationEdit)
+		self.bindHelpEvent("SilenceDuration", self.silenceDurationEdit)
 
 		# Translators: This is the label for a group of advanced options in the
 		# Advanced settings panel
