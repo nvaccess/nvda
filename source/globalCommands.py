@@ -324,7 +324,7 @@ class GlobalCommands(ScriptableObject):
 	def script_firstValueSynthRing(self, gesture: inputCore.InputGesture):
 		settingName = globalVars.settingsRing.currentSettingName
 		if not settingName:
-			ui.message(SCR_NOSETTINGS)
+			ui.message(NO_SETTINGS_MSG)
 			return
 		settingValue = globalVars.settingsRing.first()
 		ui.message("%s %s" % (settingName, settingValue))
@@ -337,7 +337,7 @@ class GlobalCommands(ScriptableObject):
 	def script_lastValueSynthRing(self, gesture: inputCore.InputGesture):
 		settingName = globalVars.settingsRing.currentSettingName
 		if not settingName:
-			ui.message(SCR_NOSETTINGS)
+			ui.message(NO_SETTINGS_MSG)
 			return
 		settingValue = globalVars.settingsRing.last()
 		ui.message("%s %s" % (settingName, settingValue))
@@ -351,7 +351,7 @@ class GlobalCommands(ScriptableObject):
 	def script_increaseSynthSetting(self,gesture):
 		settingName=globalVars.settingsRing.currentSettingName
 		if not settingName:
-			ui.message(SCR_NOSETTINGS)
+			ui.message(NO_SETTINGS_MSG)
 			return
 		settingValue=globalVars.settingsRing.increase()
 		ui.message("%s %s" % (settingName,settingValue))
@@ -365,7 +365,7 @@ class GlobalCommands(ScriptableObject):
 	def script_increaseLargeSynthSetting(self, gesture: inputCore.InputGesture):
 		settingName = globalVars.settingsRing.currentSettingName
 		if not settingName:
-			ui.message(SCR_NOSETTINGS)
+			ui.message(NO_SETTINGS_MSG)
 			return
 		settingValue = globalVars.settingsRing.increaseLarge()
 		ui.message("%s %s" % (settingName, settingValue))
@@ -379,7 +379,7 @@ class GlobalCommands(ScriptableObject):
 	def script_decreaseSynthSetting(self,gesture):
 		settingName=globalVars.settingsRing.currentSettingName
 		if not settingName:
-			ui.message(SCR_NOSETTINGS)
+			ui.message(NO_SETTINGS_MSG)
 			return
 		settingValue=globalVars.settingsRing.decrease()
 		ui.message("%s %s" % (settingName,settingValue))
@@ -393,7 +393,7 @@ class GlobalCommands(ScriptableObject):
 	def script_decreaseLargeSynthSetting(self, gesture: inputCore.InputGesture):
 		settingName = globalVars.settingsRing.currentSettingName
 		if not settingName:
-			ui.message(SCR_NOSETTINGS)
+			ui.message(NO_SETTINGS_MSG)
 			return
 		settingValue = globalVars.settingsRing.decreaseLarge()
 		ui.message("%s %s" % (settingName, settingValue))
@@ -407,7 +407,7 @@ class GlobalCommands(ScriptableObject):
 	def script_nextSynthSetting(self,gesture):
 		nextSettingName=globalVars.settingsRing.next()
 		if not nextSettingName:
-			ui.message(SCR_NOSETTINGS)
+			ui.message(NO_SETTINGS_MSG)
 			return
 		nextSettingValue=globalVars.settingsRing.currentSettingValue
 		ui.message("%s %s"%(nextSettingName,nextSettingValue))
@@ -421,7 +421,7 @@ class GlobalCommands(ScriptableObject):
 	def script_previousSynthSetting(self,gesture):
 		previousSettingName=globalVars.settingsRing.previous()
 		if not previousSettingName:
-			ui.message(SCR_NOSETTINGS)
+			ui.message(NO_SETTINGS_MSG)
 			return
 		previousSettingValue=globalVars.settingsRing.currentSettingValue
 		ui.message("%s %s"%(previousSettingName,previousSettingValue))
