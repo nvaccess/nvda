@@ -170,7 +170,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 	def increaseLarge(self) -> Any:
 		""" increases the currentSetting in a larger step, (20 items, 20%) and returns its new value """
 		if self._current is not None:
-			return self.settings[self._current].increase_large()
+			return self.settings[self._current].increaseLarge()
 		return None
 
 	def decrease(self):
@@ -182,7 +182,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 	def decreaseLarge(self) -> Any:
 		""" Decreases the currentSetting in a larger step, (20 items, 20%) and returns its new value """
 		if self._current is not None:
-			return self.settings[self._current].decrease_large()
+			return self.settings[self._current].decreaseLarge()
 		return None
 
 	def updateSupportedSettings(self,synth):
