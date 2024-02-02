@@ -113,10 +113,10 @@ SCRCAT_INPUT = _("Input")
 #: Script category for document formatting commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_DOCUMENTFORMATTING = _("Document formatting")
-#: Synth settings ring.
+
 # Translators: Reported when there are no settings to configure in synth settings ring
 # (example: when there is no setting for language).
-SCR_NOSETTINGS = _("No settings")
+NO_SETTINGS_MSG = _("No settings")
 
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus.
