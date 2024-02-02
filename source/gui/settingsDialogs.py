@@ -3322,7 +3322,7 @@ class AdvancedPanelControls(
 	def _onWasapiChange(self, evt: wx.CommandEvent) -> None:
 		self.silenceDurationEdit.Enable(
 			config.conf["audio"]["WASAPI"]
-			and self.wasapiComboBox._getControlCurrentValue().value != 2 # wasapi not disabled
+			and self.wasapiComboBox._getControlCurrentValue().value != 2  # wasapi not disabled
 		)
 
 	def _getDefaultValue(self, configPath):
