@@ -5,14 +5,18 @@
 
 
 from typing import Optional, Any
-from logHandler import log
+from comtypes import GUID
 from comInterfaces import UIAutomationClient as UIA
-from ._remoteOps import highLevel
 from ._remoteOps import remoteAlgorithms
-from ._remoteOps.midLevel import (
-	RemoteElement,
-	RemoteTextRange,
+from ._remoteOps.remoteAPI import (
+	RemoteExtensionTarget,
 	RemoteInt
+)
+from ._remoteOps import RemoteOperation
+from ._remoteOps.lowLevel import (
+	TextUnit,
+	AttributeId,
+	StyleId
 )
 
 
@@ -33,63 +37,108 @@ def msWord_getCustomAttributeValue(
 	textRange: UIA.IUIAutomationTextRange,
 	customAttribID: int
 ) -> Optional[Any]:
-	customAttribValue = highLevel.execute(
-		remoteAlgorithms._remote_msWord_getCustomAttributeValue,
-		RemoteElement(docElement), RemoteTextRange(textRange), RemoteInt(customAttribID)
-	)
-	return customAttribValue
-
+	guid_msWord_extendedTextRangePattern = GUID("{93514122-FF04-4B2C-A4AD-4AB04587C129}")
+	guid_msWord_getCustomAttributeValue = GUID("{081ACA91-32F2-46F0-9FB9-017038BC45F8}")
+	ro = RemoteOperation(enableRemoteLogging=True)
+	remoteDocElement = ro.importElement(docElement)
+	remoteTextRange = ro.importTextRange(textRange)
+	with ro.buildContext() as ra:
+		remoteCustomAttribValue = ra.newVariant()
+		with ra.ifBlock(remoteDocElement.isExtensionSupported(guid_msWord_extendedTextRangePattern)):
+			ra.logRuntimeMessage("docElement supports extendedTextRangePattern")
+			remoteResult = ra.newVariant()
+			ra.logRuntimeMessage("doing callExtension for extendedTextRangePattern")
+			remoteDocElement.callExtension(
+				guid_msWord_extendedTextRangePattern,
+				remoteResult
+			)
+			with ra.ifBlock(remoteResult.isNull()):
+				ra.logRuntimeMessage("extendedTextRangePattern is null")
+				ra.halt()
+			with ra.elseBlock():
+				ra.logRuntimeMessage("got extendedTextRangePattern ")
+				remoteExtendedTextRangePattern = remoteResult.asType(RemoteExtensionTarget)
+				with ra.ifBlock(
+					remoteExtendedTextRangePattern.isExtensionSupported(guid_msWord_getCustomAttributeValue)
+				):
+					ra.logRuntimeMessage("extendedTextRangePattern supports getCustomAttributeValue")
+					ra.logRuntimeMessage("doing callExtension for getCustomAttributeValue")
+					remoteExtendedTextRangePattern.callExtension(
+						guid_msWord_getCustomAttributeValue,
+						remoteTextRange,
+						customAttribID,
+						remoteCustomAttribValue
+					)
+					ra.logRuntimeMessage("got customAttribValue of ", remoteCustomAttribValue.stringify())
+				with ra.elseBlock():
+					ra.logRuntimeMessage("extendedTextRangePattern does not support getCustomAttributeValue")
+		with ra.elseBlock():
+			ra.logRuntimeMessage("docElement does not support extendedTextRangePattern")
+		ra.logRuntimeMessage("msWord_getCustomAttributeValue end")
+	ro.addToResults(remoteCustomAttribValue)
+	ro._execute()
+	if remoteCustomAttribValue.isLocalValueAvailable:
+		return remoteCustomAttribValue.localValue
 
 def collectAllHeadingsInTextRange(
 	textRange: UIA.IUIAutomationTextRange
 ) -> list[tuple[int, str, UIA.IUIAutomationElement]]:
 	headings = []
-	count = 0
-	while count < 20:
-		count += 1
-		levels: list[int] = []
-		labels: list[str] = []
-		ranges: list[UIA.IUIAutomationTextRange] = []
-		try:
-			levels, labels, ranges = highLevel.execute(
-				remoteAlgorithms.remote_collectAllHeadingsInTextRange,
-				RemoteTextRange(textRange)
-			)
-		except highLevel.InstructionLimitExceededException as e:
-			log.warning(f"{e}\n{count=}")
-			levels, labels, ranges = e.results
-		else:
-			count = 20
-		textRanges = []
-		for index, punk in enumerate(ranges):
-			subrange = punk.QueryInterface(UIA.IUIAutomationTextRange)
-			textRanges.append(subrange)
-		for heading in zip(levels, labels, textRanges):
-			headings.append(heading)
+	ro = RemoteOperation()
+	remoteTextRange = ro.importTextRange(textRange)
+	with ro.buildContext() as ra:
+		levels = ra.newArray()
+		labels = ra.newArray()
+		ranges = ra.newArray()
+		with remoteAlgorithms.remote_forEachUnitInTextRange(ra, remoteTextRange, TextUnit.Paragraph) as paragraphRange:
+			val = paragraphRange.getAttributeValue(AttributeId.StyleId)
+			with ra.ifBlock(val.isInt()):
+				intVal = val.asType(RemoteInt)
+				with ra.ifBlock((intVal >= StyleId.Heading1) & (intVal <= StyleId.Heading9)):
+					level = (intVal - StyleId.Heading1) + 1
+					label = paragraphRange.getText(-1)
+					levels.append(level)
+					labels.append(label)
+					ranges.append(paragraphRange)
+	ro.addToResults(levels, labels, ranges)
+	for done in ro.executeUntilSuccess():
+		localLevels = levels.localValue
+		localLabels = labels.localValue
+		localRanges = [r.QueryInterface(UIA.IUIAutomationTextRange) for r in ranges.localValue]
+		headings.extend(zip(localLevels, localLabels, localRanges))
 	return headings
 
 
 def findFirstHeadingInTextRange(
-	textRange: UIA.IUIAutomationTextRange, wantedLevel: int | None = None, reverse: bool = False
+	textRange: UIA.IUIAutomationTextRange,
+	wantedLevel: int | None = None,
+	reverse: bool = False
 ) -> tuple[int, str, UIA.IUIAutomationElement] | None:
-	count = 0
-	while count < 20:
-		count += 1
-		try:
-			level, label, subrange = highLevel.execute(
-				remoteAlgorithms.remote_findFirstHeadingInTextRange,
-				RemoteTextRange(textRange),
-				wantedLevel or 0,
-				reverse
-			)
-		except highLevel.InstructionLimitExceededException as e:
-			log.warning(f"{e}\n{count=}")
-			continue
-		except Exception:
-			log.error("Could not execute remote function", exc_info=True)
-			raise
-		else:
-			if level == 0:
+	ro = RemoteOperation()
+	remoteTextRange = ro.importTextRange(textRange)
+	with ro.buildContext() as ra:
+		remoteWantedLevel = ra.newInt(wantedLevel or 0)
+		foundLevel = ra.newInt(0)
+		foundLabel = ra.newString("")
+		foundParagraphRange = ra.newNullTextRange()
+		remoteTextRange.getLogicalAdapter(reverse).start.moveByUnit(TextUnit.Paragraph, 1)
+		with remoteAlgorithms.remote_forEachUnitInTextRange(ra, remoteTextRange, TextUnit.Paragraph, reverse=reverse) as paragraphRange:
+			val = paragraphRange.getAttributeValue(AttributeId.StyleId)
+			with ra.ifBlock(val.isInt()):
+				intVal = val.asType(RemoteInt)
+				with ra.ifBlock((intVal >= StyleId.Heading1) & (intVal <= StyleId.Heading9)):
+					level = (intVal - StyleId.Heading1) + 1
+					with ra.ifBlock((remoteWantedLevel == 0) | (level == remoteWantedLevel)):
+						foundLevel.set(level)
+						foundLabel.set(paragraphRange.getText(-1))
+						foundParagraphRange.set(paragraphRange)
+						ra.breakLoop()
+	ro.addToResults(foundLevel, foundLabel, foundParagraphRange)
+	for done in  ro.executeUntilSuccess():
+		if done:
+			localFoundParagraphRange = foundParagraphRange.localValue
+			if not localFoundParagraphRange:
 				return None
-			subrange = subrange.QueryInterface(UIA.IUIAutomationTextRange)
-			return level, label, subrange
+			localFoundLevel = foundLevel.localValue
+			localFoundLabel = foundLabel.localValue
+			return localFoundLevel, localFoundLabel, localFoundParagraphRange.QueryInterface(UIA.IUIAutomationTextRange)

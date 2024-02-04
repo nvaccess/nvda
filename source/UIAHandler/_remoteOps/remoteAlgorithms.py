@@ -7,10 +7,12 @@ from __future__ import annotations
 import typing
 from collections.abc import Generator
 from comtypes import GUID
-from .midLevel import (
+from .remoteFuncWrapper import (
+	remoteFunc,
+	remoteContextManager
+)
+from .remoteAPI import (
 	RemoteAPI,
-	remoteMethod,
-	remoteContextManager,
 	RemoteUint,
 	RemoteInt,
 	RemoteIntEnum,
@@ -100,7 +102,7 @@ def remote_forEachParagraphWithHeadingStyle(
 				yield paragraphRange, level
 
 
-@remoteMethod
+@remoteFunc
 def remote_collectAllHeadingsInTextRange(
 	ra: RemoteAPI,
 	textRange: RemoteTextRange
@@ -115,7 +117,7 @@ def remote_collectAllHeadingsInTextRange(
 	return levels, labels, ranges
 
 
-@remoteMethod
+@remoteFunc
 def remote_findFirstHeadingInTextRange(
 	ra: RemoteAPI,
 	textRange: RemoteTextRange,
@@ -137,7 +139,7 @@ def remote_findFirstHeadingInTextRange(
 	return foundLevel, foundLabel, foundRange
 
 
-@remoteMethod
+@remoteFunc
 def _remote_msWord_getCustomAttributeValue(
 	ra: RemoteAPI,
 	remote_docElement: RemoteElement,

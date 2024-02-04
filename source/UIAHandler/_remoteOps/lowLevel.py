@@ -110,7 +110,9 @@ class RemoteOperationResultSet:
 		and the remote operation must have successfully produced a value for it.
 		"""
 		val = VARIANT()
-		_dll.remoteOpResult_getOperand(self._pResults, operandId, byref(val))
+		res = _dll.remoteOpResult_getOperand(self._pResults, operandId, byref(val))
+		if res != 0:
+			raise LookupError(f"Operand {operandId} not found in results")
 		return val
 
 	def __del__(self):
