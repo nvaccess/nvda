@@ -146,7 +146,15 @@ parser.add_argument(
 		"The lowest level of message logged (debug 10, input/output 12, debugwarning 15, info 20, off 100),"
 	),
 )
-parser.add_argument('-c','--config-path',dest='configPath',default=None,type=str,help="The path where all settings for NVDA are stored")
+parser.add_argument(
+	"-c",
+	"--config-path",
+	dest="configPath",
+	default=None,
+	type=str,
+	help="The path where all settings for NVDA are stored. "
+	"The default value is forced if secure mode is enabled. "
+)
 parser.add_argument(
 	'--lang',
 	dest='language',
