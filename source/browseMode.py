@@ -2040,7 +2040,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				# Translators: the message when native selection mode is not available in this browse mode document.
 				ui.message(_("Native selection mode unsupported in this browse mode document"))
 			else:
-				# Translators: the message when native selection mode is not available in this browse mode document.
+				# Translators: the message when native selection mode cannot be turned off in this browse mode document.
 				ui.message(_("Native selection mode cannot be turned off in this browse mode document"))
 			return
 		nativeAppSelectionModeOn = not self._nativeAppSelectionMode
