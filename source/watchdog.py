@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2021 NV Access Limited
+# Copyright (C) 2008-2024 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -200,17 +200,19 @@ def _shouldRecoverAfterMinTimeout():
 		return True
 	# Import late to avoid circular import.
 	import api
+	from NVDAObjects.window import Window
 	#If a system menu has been activated but NVDA's focus is not yet in the menu then use min timeout
 	if info.flags&winUser.GUI_SYSTEMMENUMODE and info.hwndMenuOwner and api.getFocusObject().windowClassName!='#32768':
 		return True 
 	if winUser.getClassName(info.hwndFocus) in safeWindowClassSet:
 		return False
-	if not winUser.isDescendantWindow(info.hwndActive, api.getFocusObject().windowHandle):
+	focus = api.getFocusObject()
+	if (not isinstance(focus, Window)) or (not winUser.isDescendantWindow(info.hwndActive, focus.windowHandle)):
 		# The foreground window has changed.
 		return True
 	newHwnd=info.hwndFocus
 	newThreadID=winUser.getWindowThreadProcessID(newHwnd)[1]
-	return newThreadID!=api.getFocusObject().windowThreadID
+	return newThreadID != focus.windowThreadID
 
 def _recoverAttempt():
 	try:
