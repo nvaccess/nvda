@@ -2058,7 +2058,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		else:
 			try:
 				self.clearAppSelection()
-			except (NotImplementedError, COMError):
+			except NotImplementedError:
 				log.debugWarning("clearAppSelection failed", exc_info=True)
 			self._nativeAppSelectionMode = False
 			# Translators: reported when native selection mode is toggled off.
