@@ -2036,21 +2036,30 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	)
 	def script_toggleNativeAppSelectionMode(self, gesture: inputCore.InputGesture):
 		if not self._nativeAppSelectionModeSupported:
-			# Translators: the message when native selection mode is not available in this browse mode document.
-			ui.message(_("Native selection mode unsupported in this document"))
+			if not self._nativeAppSelectionMode:
+				# Translators: the message when native selection mode is not available in this browse mode document.
+				ui.message(_("Native selection mode unsupported in this browse mode document"))
+			else:
+				# Translators: the message when native selection mode cannot be turned off in this browse mode document.
+				ui.message(_("Native selection mode cannot be turned off in this browse mode document"))
 			return
-		self._nativeAppSelectionMode = not self._nativeAppSelectionMode
-		if self._nativeAppSelectionMode:
-			# Translators: reported when native selection mode is toggled on.
-			ui.message(_("Native app selection mode enabled."))
+		nativeAppSelectionModeOn = not self._nativeAppSelectionMode
+		if nativeAppSelectionModeOn:
 			try:
 				self.updateAppSelection()
 			except NotImplementedError:
-				pass
+				log.debugWarning("updateAppSelection failed", exc_info=True)
+				# Translators: the message when native selection mode is not available in this browse mode document.
+				ui.message(_("Native selection mode unsupported in this document"))
+				return
+			self._nativeAppSelectionMode = True
+			# Translators: reported when native selection mode is toggled on.
+			ui.message(_("Native app selection mode enabled"))
 		else:
-			# Translators: reported when native selection mode is toggled off.
-			ui.message(_("Native app selection mode disabled."))
 			try:
 				self.clearAppSelection()
 			except NotImplementedError:
-				pass
+				log.debugWarning("clearAppSelection failed", exc_info=True)
+			self._nativeAppSelectionMode = False
+			# Translators: reported when native selection mode is toggled off.
+			ui.message(_("Native app selection mode disabled"))
