@@ -10,12 +10,14 @@ from typing import (
 	Union,
 	cast,
 )
+from collections.abc import Generator
 import os
 import itertools
 import collections
 import winsound
 import time
 import weakref
+import re
 
 import wx
 import core
@@ -23,6 +25,7 @@ import winUser
 import mouseHandler
 from logHandler import log
 import documentBase
+from documentBase import _Movement
 import review
 import inputCore
 import scriptHandler
@@ -440,9 +443,56 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def _iterNotLinkBlock(self, direction="next", pos=None):
 		raise NotImplementedError
 
+	MAX_ITERATIONS_FOR_SIMILAR_PARAGRAPH = 100_000
+	
+	def _iterSimilarParagraph(
+			self,
+			kind: str,
+			paragraphFunction: Callable[[textInfos.TextInfo], Optional[Any]],
+			desiredValue: Optional[Any],
+			direction: _Movement,
+			pos: textInfos.TextInfo,
+	) -> Generator[TextInfoQuickNavItem, None, None]:
+		if direction not in [_Movement.NEXT, _Movement.PREVIOUS]:
+			raise RuntimeError
+		info = pos.copy()
+		info.collapse()
+		info.expand(textInfos.UNIT_PARAGRAPH)
+		if desiredValue is None:
+			desiredValue = paragraphFunction(info)
+		for i in range(self.MAX_ITERATIONS_FOR_SIMILAR_PARAGRAPH):
+			# move by one paragraph in the desired direction
+			info.collapse(end=direction == _Movement.NEXT)
+			if direction == _Movement.PREVIOUS:
+				if info.move(textInfos.UNIT_CHARACTER, -1) == 0:
+					return
+			info.expand(textInfos.UNIT_PARAGRAPH)
+			if info.isCollapsed:
+				return
+			value = paragraphFunction(info)
+			if value == desiredValue:
+				yield TextInfoQuickNavItem(kind, self, info.copy())
+
+
 	def _quickNavScript(self,gesture, itemType, direction, errorMessage, readUnit):
 		if itemType=="notLinkBlock":
 			iterFactory=self._iterNotLinkBlock
+		elif itemType == "textParagraph":
+			punctuationMarksRegex = re.compile(
+				config.conf["virtualBuffers"]["textParagraphRegex"],
+			)
+
+			def paragraphFunc(info: textInfos.TextInfo) -> bool:
+				return punctuationMarksRegex.search(info.text) is not None
+
+			def iterFactory(direction: str, pos: textInfos.TextInfo) -> Generator[TextInfoQuickNavItem, None, None]:
+				return self._iterSimilarParagraph(
+					kind="textParagraph",
+					paragraphFunction=paragraphFunc,
+					desiredValue=True,
+					direction=_Movement(direction),
+					pos=pos,
+				)
 		else:
 			iterFactory=lambda direction,info: self._iterNodesByType(itemType,direction,info)
 		info=self.selection
@@ -948,6 +998,19 @@ qn(
 	prevDoc=_("moves to the previous tab"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous tab")
+)
+qn(
+	"textParagraph",
+	key="p",
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next text paragraph"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next text paragraph"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous text paragraph"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous text paragraph"),
+	readUnit=textInfos.UNIT_PARAGRAPH,
 )
 del qn
 
