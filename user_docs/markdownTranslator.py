@@ -12,7 +12,6 @@ https://python-markdown.github.io/extensions/
 
 import re
 import os
-from collections.abc import Iterator
 from collections import Counter
 import polib
 from markdown import Extension, Markdown
@@ -80,7 +79,7 @@ class TranslationTreeprocessor(Treeprocessor):
 				raise
 		if poPath:
 			if os.path.exists(poPath):
-				print(f"Loading po file at {poPath}") 
+				print(f"Loading po file at {poPath}")
 				try:
 					self.poFile = polib.pofile(poPath, encoding='utf-8')
 				except Exception as e:
@@ -170,7 +169,7 @@ class TranslationTreeprocessor(Treeprocessor):
 		level = int(element.tag[1])
 		text = element.text
 		text = self.re_blockAnchor.sub(r"\1", text)
-		self.headingPath[level-2:] = [text]
+		self.headingPath[level - 2:] = [text]
 		self.tagPath = []
 		for counter in self.tagCounters:
 			counter.clear()
