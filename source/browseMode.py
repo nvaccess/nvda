@@ -443,7 +443,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def _iterNotLinkBlock(self, direction="next", pos=None):
 		raise NotImplementedError
 
-	MAX_ITERATIONS_FOR_SIMILAR_PARAGRAPH = 100000
+	MAX_ITERATIONS_FOR_SIMILAR_PARAGRAPH = 100_000
 	
 	def _iterSimilarParagraph(
 			self,

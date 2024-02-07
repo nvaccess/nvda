@@ -845,7 +845,9 @@ To toggle single letter navigation on and off for the current document, press NV
 
 +++ Text paragraph navigation command +++[TextNavigationCommand]
 
-As mentioned above, you can jupm to next or previous text paragraph by pressing ``p`` or ``shift+p``. Here we define text paragraph to be a paragraph that appears to be written in complete sentences. This can be useful to find the beginning of readable content on various webpages, such as:
+You can jump to the next or previous text paragraph by pressing ``p`` or ``shift+p``.
+Text paragraphs are defined by a group of text that appears to be written in complete sentences.
+This can be useful to find the beginning of readable content on various webpages, such as:
 - News websites
 - Forums
 - Blog posts
@@ -857,7 +859,9 @@ These commands can also be helpful for skipping certain kinds of clutter, such a
 - Headers
 - 
 
-Please note, however, that while NVDA tries its best to identify text paragraphs, the algorithm is not perfect and at times can make mistakes. Please also note that this command is different from paragraph navigation commands ``control+downArrow/upArrow`` - text paragraph navigation only jumps between text paragraphs, while paragraph navigation commands take cursor to previous/next paragraphs regardless of whether they contain text or not.
+Please note, however, that while NVDA tries its best to identify text paragraphs, the algorithm is not perfect and at times can make mistakes.
+Additionally, this command is different from paragraph navigation commands ``control+downArrow/upArrow``.
+Text paragraph navigation only jumps between text paragraphs, while paragraph navigation commands take the cursor to the previous/next paragraphs regardless of whether they contain text or not.
 
 +++ Other navigation commands +++[OtherNavigationCommands]
 
@@ -2585,7 +2589,8 @@ Choosing Yes allows to enable error sounds whatever your current NVDA version is
 
 ==== Regular expression for text paragraph quick navigation commands ====[TextParagraphRegexEdit]
 
-This field allows users to customize regular expression for detecting text paragraphs in browse mode. [Text navigation command#TextNavigationCommand] would search for paragraphs matched by this regular expression.
+This field allows users to customize regular expression for detecting text paragraphs in browse mode.
+The [text paragraph navigation command #TextNavigationCommand] searches for paragraphs matched by this regular expression.
 
 ++ miscellaneous Settings ++[MiscSettings]
 Besides the [NVDA Settings #NVDASettings] dialog, The Preferences sub-menu of the NVDA Menu contains several other items which are outlined below.
