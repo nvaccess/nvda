@@ -54,7 +54,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	WASAPI = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	soundVolumeFollowsVoice = boolean(default=false)
 	soundVolume = integer(default=100, min=0, max=100)
-	silenceTimeSeconds = integer(default=30,min=0,max=3600)
+	silenceTimeSeconds = integer(default=30, min=0, max=3600)
 	whiteNoiseVolume = integer(default=0, min=0, max=100)
 
 # Braille settings
