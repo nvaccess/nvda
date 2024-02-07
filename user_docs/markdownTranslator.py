@@ -162,7 +162,7 @@ class TranslationTreeprocessor(Treeprocessor):
 		if tagLabel:
 			if element.tag in ["table", "ul", "ol"]:
 				tagLabel += f" {tagNum}"
-			if element.tag == 'td':
+			if element.tag == 'td' and self.curHeaderCells:
 				header = self.curHeaderCells[tagNum - 1]
 				tagLabel += f" ({header})"
 		return tagLabel
@@ -184,6 +184,10 @@ class TranslationTreeprocessor(Treeprocessor):
 				return
 			if element.text.startswith('\x02'):
 				# This is a comment, ignore it
+				return
+		if element.tag == "th":
+			if element.text in (". {.hideHeaderRow}", "."):
+				# This is a header cell that should be hidden, ignore it
 				return
 		addedTag = False
 		self.tagCounters[-1][element.tag] += 1
