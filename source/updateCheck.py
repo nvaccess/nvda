@@ -371,7 +371,9 @@ class UpdateResultDialog(
 		elif canOfferPendingUpdate:
 			# Translators: A message indicating that a new version of NVDA has been downloaded
 			# and is ready to proceed with the update.
-			message = _("Update to NVDA version {version} has been downloaded and is ready to apply.").format(**updateInfo)
+			message = _(
+				"Update to NVDA version {version} has been downloaded and is ready to apply."
+			).format(**updateInfo)
 
 			self.apiVersion = pendingUpdateDetails[2]
 			self.backCompatTo = pendingUpdateDetails[3]
