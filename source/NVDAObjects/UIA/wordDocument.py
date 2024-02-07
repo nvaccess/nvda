@@ -554,6 +554,12 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 		# such as "delete back word" when Control+Backspace is pressed.
 		if activityId == "AccSN2":  # Delete activity ID
 			return
+		# copy to clipboard
+		if activityId == 'AccSN3':
+			ti = self.treeInterceptor
+			if ti and not ti.passThrough:
+				# Browse mode provides its own copy to clipboard message.
+				return
 		super(WordDocument, self).event_UIA_notification(**kwargs)
 
 	# The following overide of the EditableText._caretMoveBySentenceHelper private method
