@@ -699,22 +699,26 @@ class Gecko_ia2(VirtualBuffer):
 		except COMError as e:
 			raise NotImplementedError from e
 		selInfo = self.makeTextInfo(textInfos.POSITION_SELECTION)
-		selFields = selInfo.getTextWithFields()
-		ia2Sel = _Ia2Selection()
+		if not selInfo.isCollapsed:
+			selFields = selInfo.getTextWithFields()
+			ia2Sel = _Ia2Selection()
 
-		log.debug("checking fields...")
-		self._getStartSelection(ia2Sel, selFields)
-		self._getEndSelection(ia2Sel, selFields)
+			log.debug("checking fields...")
+			self._getStartSelection(ia2Sel, selFields)
+			self._getEndSelection(ia2Sel, selFields)
 
-		log.debug("setting selection...")
-		r = IA2TextSelection(
-			ia2Sel.startObj,
-			ia2Sel.startOffset,
-			ia2Sel.endObj,
-			ia2Sel.endOffset,
-			False
-		)
-		paccTextSelectionContainer.SetSelections(1, byref(r))
+			log.debug("setting selection...")
+			r = IA2TextSelection(
+				ia2Sel.startObj,
+				ia2Sel.startOffset,
+				ia2Sel.endObj,
+				ia2Sel.endOffset,
+				False
+			)
+			paccTextSelectionContainer.SetSelections(1, byref(r))
+		else:  # No selection
+			r = IA2TextSelection(None, 0, None, 0, False)
+			paccTextSelectionContainer.SetSelections(0, byref(r))
 
 	def clearAppSelection(self):
 		"""Clear the native selection in the application."""

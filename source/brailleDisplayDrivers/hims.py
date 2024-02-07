@@ -596,7 +596,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				"br(hims):dot2+dot7+f1",
 			),
 			"kb:alt+leftArrow": (
-				"br(hims):dot2+dot7",
+				"br(hims):dot2+dot7+space",
 			),
 			"kb:rightArrow": (
 				"br(hims):dot6+space",
@@ -612,7 +612,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				"br(hims):dot5+dot7+f1",
 			),
 			"kb:alt+rightArrow": (
-				"br(hims):dot5+dot7",
+				"br(hims):dot5+dot7+space",
 			),
 			"kb:pageUp": (
 				"br(hims):dot1+dot2+dot6+space",
@@ -634,7 +634,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				"br(hims):dot2+dot3+dot7+f1",
 			),
 			"kb:alt+upArrow": (
-				"br(hims):dot2+dot3+dot7",
+				"br(hims):dot2+dot3+dot7+space",
 			),
 			"kb:shift+upArrow": (
 				"br(hims):leftSideScrollDown+space",
@@ -659,7 +659,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				"br(hims):dot5+dot6+dot7+f1",
 			),
 			"kb:alt+downArrow": (
-				"br(hims):dot5+dot6+dot7",
+				"br(hims):dot5+dot6+dot7+space",
 			),
 			"kb:shift+downArrow": (
 				"br(hims):space+rightSideScrollDown",
