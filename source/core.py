@@ -945,6 +945,7 @@ def main():
 			)
 		except:
 			pass
+	# We cannot terminate nvwave until after we perform nvwave.playWaveFile
 	_terminate(nvwave)
 	# #5189: Destroy the message window as late as possible
 	# so new instances of NVDA can find this one even if it freezes during exit.
