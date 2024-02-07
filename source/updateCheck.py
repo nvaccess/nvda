@@ -369,9 +369,9 @@ class UpdateResultDialog(
 			# Translators: A message indicating that no update to NVDA is available.
 			message = _("No update available.")
 		elif canOfferPendingUpdate:
-			# Translators: A message indicating that an updated version of NVDA has been downloaded
-			# and is ready to apply.
-			message = _("NVDA version {version} has been downloaded and is ready to apply.").format(**updateInfo)
+			# Translators: A message indicating that a new version of NVDA has been downloaded
+			# and is ready to proceed with the update.
+			message = _("Update to NVDA version {version} has been downloaded and is ready to apply.").format(**updateInfo)
 
 			self.apiVersion = pendingUpdateDetails[2]
 			self.backCompatTo = pendingUpdateDetails[3]
@@ -486,8 +486,8 @@ class UpdateAskInstallDialog(
 		super().__init__(parent, title=_("NVDA Update"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
-		# Translators: A message indicating that an updated version of NVDA is ready to apply.
-		message = _("NVDA version {version} is ready to apply.\n").format(version=version)
+		# Translators: A message indicating that an update to NVDA is ready to apply.
+		message = _("Update to NVDA version {version} is ready to apply.\n").format(version=version)
 
 		showAddonCompat = any(getIncompatibleAddons(
 			currentAPIVersion=self.apiVersion,
