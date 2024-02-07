@@ -1534,8 +1534,9 @@ Jeśli napotykasz na problemy z wymową pojedynczych znaków, spróbuj wyłączy
 
 ==== Opisy po nazwie liter podczas ruchu kursora ====[delayedCharacterDescriptions]
 
-|| Domyślnie | Wyłączone |
-|| Opcje | Włączone, Wyłączone |
+|| . {.hideHeaderRow} | . |
+| Opcje | Włączone, Wyłączone |
+| Domyślnie | Wyłączone |
 
 
 Gdy ta opcaje jest włączona, NVDA wypowie opis znaku podczas poruszania się po znakach.
@@ -1711,8 +1712,9 @@ Aby w dowolnym miejscu przełączyć kontekstową prezentację fokusa, można pr
 
 ==== Przerwij mowę podczas przewijania ====[BrailleSettingsInterruptSpeech]
 
-|| Domyślne | Włączone |
-|| Opcje | Domyślnie (włączone), Włączone, Wyłączone |
+|| . {.hideHeaderRow} | . |
+| Opcje | Domyślnie (włączone), Włączone, Wyłączone |
+| Domyślne | Włączone |
 
 
 Ta opcja reguluje przerwanie mowy podczas przewijania tekstu na monitorze brajlowskim wstecz albo wprzód.
@@ -1725,8 +1727,9 @@ Wyłączenie tej opcji umożliwia słyszenie mowy podczas symultanicznego odczyt
 
 ==== Show selection ====[BrailleSettingsShowSelection]
 
-|| domyślnie | włączone |
-|| opcje | domyślnie (włączone), włączone, wyłączone |
+|| . {.hideHeaderRow} | . |
+| opcje | domyślnie (włączone), włączone, wyłączone |
+| domyślnie | włączone |
 
 
 Ta opcja reguluje pokazywanie indykatora zaznaczenia na monitorze brajlowskim.
@@ -2258,8 +2261,9 @@ Ta kategoria umożliwia różne opcje związane z nawigacją po dokumentach.
 
 ==== Styl akapitu ====[ParagraphStyle]
 
-|| Domyślny | Zarządzane przez aplikację |
-|| Opcje | Domyślnie (zarządzane przez aplikacje), zarządzane przez aplikacje, jeden rozdział wiersza, rozdział wielowierszowy |
+|| . {.hideHeaderRow} | . |
+| Opcje | Domyślnie (zarządzane przez aplikacje), zarządzane przez aplikacje, jeden rozdział wiersza, rozdział wielowierszowy |
+| Domyślny | Zarządzane przez aplikację |
 
 
 To pole wyboru umożliwia wybór stylu akapitu, który ma być użyty podczas nawigacji używając skrótów ``control+strzałka w górę`` i ``control+strzałka w dół``.
@@ -2314,8 +2318,9 @@ Przycisk jest aktywny tylko, gdy NVDA jest ustawione na wczytywanie własnego ko
 
 ==== rejestracja zdarzeń i zmian właściwości UIA ====[AdvancedSettingsSelectiveUIAEventRegistration]
 
-|| Domyślnie | Automatycznie |
-|| Opcje | Automatycznie, selektywnie, globalnie |
+|| . {.hideHeaderRow} | . |
+| Opcje | Automatycznie, selektywnie, globalnie |
+| Domyślnie | Automatycznie |
 
 
 Ustawienie to kontroluje, w jaki sposób NVDA rejestruje zdarzenia wysyłane przez API Microsoft UI Automation.
@@ -2348,8 +2353,9 @@ Implementacja UIA w programie Microsoft Excel UI automation zmienia się z wersj
 
 ==== Obsługa konsoli systemu Windows ====[AdvancedSettingsConsoleUIA]
 
-|| Domyślne | Automatyczne |
-|| Opcje | Automatyczne, UIA gdy jest to możliwe, przestarzałe |
+|| . {.hideHeaderRow} | . |
+| Opcje | Automatyczne, UIA gdy jest to możliwe, przestarzałe |
+| Domyślne | Automatyczne |
 
 
 Ta opcja reguluje interakcję z konsolą używaną przez wiersza poleceń, PowerShell, i podsystem Linux dla systemu WIndows.
@@ -2434,8 +2440,9 @@ Jednakże, w wierszach poleceń, podczas wstawiania lub usuwania znaku w środku
 
 ==== Czytaj nowy tekst w terminalu Windows za pomocą ====[WtStrategy]
 
-|| Domyślnie | Różnicowanie |
-|| Opcje |   Domyślnie (Różnicowanie), różnicowanie, powiadomienia UIA |
+|| . {.hideHeaderRow} | . |
+| Opcje |   Domyślnie (Różnicowanie), różnicowanie, powiadomienia UIA |
+| Domyślnie | Różnicowanie |
 
 
 Ta opcja określa, który tekst jest nowy dla NVDA i jaki tekst ma być wymówiony gdy opcja "informuj o dynamicznych zmianach treści" jest włączona) w Windows Terminalu i oknach wpf używanych w Visual Studio 2022.
@@ -2467,8 +2474,9 @@ Z niektórymi historycznie popularnymi API do wyświetlania okien, tekst może b
 
 ==== Używaj WASAPI do wyjścia audio ====[WASAPI]
 
-|| Domyślnie | Włączone |
-|| Opcje |   Domyślnie (włączone), włączone, wyłączone |
+|| . {.hideHeaderRow} | . |
+| Opcje |   Domyślnie (włączone), włączone, wyłączone |
+| Domyślnie | Włączone |
 
 
 Ta opcja włącza wsparcie wyjścia dźwięku za pomocą interfejsu windows audio session (WASAPI).

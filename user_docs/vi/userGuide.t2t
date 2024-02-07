@@ -1503,8 +1503,9 @@ Nếu bạn gặp trục trặc khi phát âm một số kí tự nhất định
 
 ==== Chờ để mô tả cho kí tự khi di chuyển con trỏ ====[delayedCharacterDescriptions]
 
-|| Mặc định | tắt |
-|| Tùy chọn | Bật, Tắt |
+|| . {.hideHeaderRow} | . |
+| Tùy chọn | Bật, Tắt |
+| Mặc định | tắt |
 
 
 Khi bật tùy chọn này, NVDA sẽ đọc mô tả của kí tự khi di chuyển theo từng kí tự.
@@ -1623,8 +1624,9 @@ Trường hợp này, con trỏ nổi sẽ không đi theo focus và dấu nháy
 
 ==== Di chuyển dấu nháy hệ thống khi định tuyến con trỏ duyệt ====[BrailleSettingsReviewRoutingMovesSystemCaret]
 
-|| Mặc định | Không bao giờ |
-|| Các tùy chọn | Mặc định (Không bao giờ), Không bao giờ, Chỉ khi tự đi theo, Luôn luôn |
+|| . {.hideHeaderRow} | . |
+| Các tùy chọn | Mặc định (Không bao giờ), Không bao giờ, Chỉ khi tự đi theo, Luôn luôn |
+| Mặc định | Không bao giờ |
 
 
 Thiết lập này xác định việc dấu nháy hệ thống bị di chuyển khi nút định tuyến được bấm.
@@ -1689,8 +1691,9 @@ Vì vậy, nó chỉ hiển thị bạn đang đứng tại mục có focus.
 
 ==== Ngừng đọc trong khi cuộn ====[BrailleSettingsInterruptSpeech]
 
-|| Mặc định | Bật |
-|| Tùy chọn | Mặc định (Bật), bật, Tắt |
+|| . {.hideHeaderRow} | . |
+| Tùy chọn | Mặc định (Bật), bật, Tắt |
+| Mặc định | Bật |
 
 
 Thiết lập này xác định việc bộ đọc sẽ bị ngừng khi màn hình chữ nổi được cuộn lùi/tới.
@@ -1703,8 +1706,9 @@ Tắt tùy chọn này cho phép bạn nghe đọc nội dung song song với đ
 
 ==== Hiện vùng chọn ====[BrailleSettingsShowSelection]
 
-|| Mặc định | Bật |
-|| Các tùy chọn | Mặc định (Bật), Bật, Tắt |
+|| . {.hideHeaderRow} | . |
+| Các tùy chọn | Mặc định (Bật), Bật, Tắt |
+| Mặc định | Bật |
 
 
 Thiết lập này giúp nhận biết khi chỉ báo vùng chọn (các chấm 7 và 8) hiện trên màn hình nổi.
@@ -2150,8 +2154,9 @@ Phân loại này cho phép bạn điều chỉnh nhiều cách khác nhau để
 
 ==== Kiểu Đoạn ====[ParagraphStyle]
 
-|| Mặc định | Quản lý bởi ứng dụng |
-|| Tùy chọn | Mặc định (Quản lý bởi ứng dụng), Quản lý bởi ứng dụng, Một dấu xuống dòng, Nhiều dấu xuống dòng |
+|| . {.hideHeaderRow} | . |
+| Tùy chọn | Mặc định (Quản lý bởi ứng dụng), Quản lý bởi ứng dụng, Một dấu xuống dòng, Nhiều dấu xuống dòng |
+| Mặc định | Quản lý bởi ứng dụng |
 
 
 Hộp xổ này cho phép bạn chọn cách dùng khi điều hướng đoạn với ``control+mũi tên lên`` và ``control+mũi tên xuống``.
@@ -2200,8 +2205,9 @@ Nút này chỉ xuất hiện nếu NVDA được cấu hình để gọi mã ng
 
 ==== Các chọn lọc đăng kí cho các thay đổi sự kiện và thuộc tính của UI Automation ====[AdvancedSettingsSelectiveUIAEventRegistration]
 
-|| Mặc định | Tự động |
-|| Tùy chọn | Tự động, Chọn lọc, Toàn cục |
+|| . {.hideHeaderRow} | . |
+| Tùy chọn | Tự động, Chọn lọc, Toàn cục |
+| Mặc định | Tự động |
 
 
 Tùy chọn này thay đổi việc NVDA đăng kí các sự kiện nổ ra bởi Microsoft UI Automation accessibility API.
@@ -2234,8 +2240,9 @@ Việc triển khai UI automation của Microsoft Excel đang thay đổi, và c
 
 ==== Hỗ trợ Windows Console ====[AdvancedSettingsConsoleUIA]
 
-|| Mặc định | Tự động |
-|| Tùy chọn | Tự động, Dùng UIA khi có thể, Kiểu cũ |
+|| . {.hideHeaderRow} | . |
+| Tùy chọn | Tự động, Dùng UIA khi có thể, Kiểu cũ |
+| Mặc định | Tự động |
 
 
 Tùy chọn này để thiết lập cách mà NVDA tương tác với Windows Console, được dùng bởi command prompt, PowerShell và Windows Subsystem for Linux.
@@ -2285,8 +2292,9 @@ Hiện có các tùy chọn sau:
 
 ==== Thông báo nội dung động ====[BrailleLiveRegions]
 
-|| Mặc định | Bật |
-|| Các tùy chọn |   Mặc định (Bật), Tắt, Bật |
+|| . {.hideHeaderRow} | . |
+| Các tùy chọn |   Mặc định (Bật), Tắt, Bật |
+| Mặc định | Bật |
 
 
 Tùy chọn này cho phép NVDA thông báo các thay đổi trong một số nội dung động trên web ở chữ nổi.
@@ -2353,8 +2361,9 @@ Với vài GUI APIs phổ biến trong lịch sử, văn bản có thể hiển 
 
 ==== Dùng WASAPI cho đầu ra âm thanh ====[WASAPI]
 
-|| Mặc định | Tắt |
-|| Tùy chọn |   Mặc định (Tắt), Bật, Tắt |
+|| . {.hideHeaderRow} | . |
+| Tùy chọn |   Mặc định (Tắt), Bật, Tắt |
+| Mặc định | Tắt |
 
 
 Tùy chọn này cho phép phát ra âm thanh thông qua Windows Audio Session API (WASAPI).
@@ -2363,8 +2372,9 @@ Sau khi thay đổi thiết lập, bạn sẽ phải khởi động lại NVDA �
 
 ==== Âm lượng âm thanh NVDA đi theo âm lượng giọng đọc ====[SoundVolumeFollowsVoice]
 
-|| Mặc định | Tắt |
-|| Tùy chọn | Bật, tắt |
+|| . {.hideHeaderRow} | . |
+| Tùy chọn | Bật, tắt |
+| Mặc định | Tắt |
 
 
 Khi bật tùy chọn này, âm lượng của âm thanh và tiếng beep của NVDA sẽ đi theo thiết lập âm lượng  của giọng đọc bạn đang dùng.

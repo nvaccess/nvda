@@ -12,13 +12,10 @@ function escapeKeyPress(e) {
 };
 
 function windowOnLoad() {
-	// #5875: string.prototype.split strips the tail when a limit is supplied,
-	// so use a regexp instead.
-	var args = window.dialogArguments.match(/^(.*?)__NVDA:split-here__([\s\S]*)$/);
-	// args[0] is the whole string.
-	if (args && args.length == 3){
-		document.title= args[1];
-		messageID.innerHTML= args[2];
+	var args = window.dialogArguments;
+	if (args) {
+		document.title = args.item('title');
+		messageID.innerHTML = args.item('message');
 	}
 } 
 //-->
