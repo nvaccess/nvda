@@ -4,7 +4,7 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 *** Settings ***
 Documentation	HTML test cases in Chrome
-Force Tags	NVDA	smoke test	browser	chrome
+Force Tags	NVDA	smoke test	browser	chrome	excluded_from_build
 
 # for start & quit in Test Setup and Test Test Teardown
 Library	NvdaLib.py

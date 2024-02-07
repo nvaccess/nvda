@@ -6,19 +6,33 @@ What's New in NVDA
 = 2024.2 =
 
 == New Features ==
+- New key commands:
+  - New Quick Navigation command ``p`` for jumping to next/previous text paragraph in browse mode. (#15998, @mltony)
+  -
 - In Windows 11, NVDA will announce alerts from voice typing and suggested actions including the top suggestion when copying data such as phone numbers to the clipboard (Windows 11 2022 Update and later). (#16009, @josephsl)
-- New Quick Navigation command ``p`` for jumping to next/previous text paragraph in browse mode. (#15998, @mltony)
+- Added support for the BrailleEdgeS2 braille device. (#16033)
 -
 
 
 == Changes ==
 
+- Add-on Store:
+  - The minimum and the last tested NVDA version for an add-on are now displayed in the "other details" area. (#15776, @Nael-Sayegh)
+  -
+-
 
 == Bug Fixes ==
 - Backspace now works correctly when using Nudi 6.1 with NVDA's "Handle keys from other applications" setting enabled. (#15822, @jcsteh)
 - Fixed a bug where audio coordinates would be played while the application is in sleep mode when "Play audio coordinates when mouse moves" is enabled. (#8059, @hwf1324)
 - Add-on Store:
   - When pressing ``ctrl+tab``, focus properly moves to the new current tab title. (#14986, @ABuffEr)
+  -
+- In Adobe Reader, NVDA no longer ignores alternative text set on formulas in PDFs. (#12715)
+- Changed several gestures for BrailleSense devices to avoid conflicts with characters of the French braille table. (#15306)
+  - ``alt+leftArrow`` is now mapped to ``dot2+dot7+space``
+  - ``alt+rightArrow`` is now mapped to ``dot5+dot7+space``
+  - ``alt+upArrow`` is now mapped to ``dot2+dot3+dot7+space``
+  - ``alt+downArrow`` is now mapped to ``dot5+dot6+dot7+space``
   -
 -
 
@@ -68,6 +82,7 @@ Windows 8.1 is the minimum Windows version supported.
 - A new Native Selection mode (toggled by ``NVDA+shift+f10``) is now available in NVDA's browse mode for Mozilla Firefox.
 When turned on, selecting text in browse mode will also manipulate Firefox's own native selection.
 Copying text with ``control+c`` will pass straight through to Firefox, thus copying the rich content, rather than NVDA's plain text representation. (#15830)
+- When copying text in Microsoft Word with NVDA's browse mode enabled, formatting is now also included. (#16129)
 - A new "on-demand" speech mode has been added.
 When speech is on-demand, NVDA does not speak automatically (e.g. when moving the cursor) but still speaks when calling commands whose goal is explicitly to report something (e.g. report window title). (#481, @CyrilleB79)
 - In the Speech category of NVDA's settings, it is now possible to exclude unwanted speech modes from the Cycle speech modes command (``NVDA+s``). (#15806, @lukaszgo1)
@@ -156,7 +171,7 @@ Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on e
   - This new behavior can be disabled using the new "Use enhanced event processing" setting in NVDA's advanced settings.
   -
 - NVDA is again able to track the focus in applications running within Windows Defender Application Guard (WDAG). (#15164)
-- The speech text is no longer updated when the mouse moves in the Speech Viewer. (#15953, @hwf1324)
+- The speech text is no longer updated when the mouse moves in the Speech Viewer. (#15952, @hwf1324)
 - NVDA will again switch back to browse mode when closing combo boxes with ``escape`` or ``alt+upArrow`` in Firefox or Chrome. (#15653)
 - Arrowing up and down in combo boxes in iTunes will no longer inappropriately switch back to browse mode. (#15653)
 -
@@ -315,6 +330,36 @@ Use ``bdDetect.DeviceType.*`` instead. (#15772, @LeonarddeR).
 - Using ``gui.ExecAndPump`` is deprecated - please use ``systemUtils.ExecAndPump`` instead. (#15852, @lukaszgo1)
 -
 
+
+= 2023.3.3 =
+This is a patch release to fix a security issue.
+Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Security Fixes ==
+- Prevents possible reflected XSS attack from crafted content to cause arbitrary code execution.
+([GHSA-xg6w-23rw-39r8 https://github.com/nvaccess/nvda/security/advisories/GHSA-xg6w-23rw-39r8])
+-
+
+= 2023.3.2 =
+This is a patch release to fix a security issue.
+The security patch in 2023.3.1 was not resolved correctly.
+Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Security Fixes ==
+- The security patch in 2023.3.1 was not resolved correctly.
+Prevents possible system access and arbitrary code execution with system privileges for unauthenticated users.
+([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
+-
+
+
+= 2023.3.1 =
+This is a patch release to fix a security issue.
+Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Security Fixes ==
+- Prevents possible system access and arbitrary code execution with system privileges for unauthenticated users.
+([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
+-
 
 = 2023.3 =
 This release includes improvements to performance, responsiveness and stability of audio output.

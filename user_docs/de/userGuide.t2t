@@ -1535,8 +1535,9 @@ Wenn Sie Probleme mit der Aussprache mancher Zeichen haben, versuchen Sie, die O
 
 ==== Verzögerte Beschreibungen für Zeichen bei Cursor-Bewegung ====[delayedCharacterDescriptions]
 
-|| Standard | Ausgeschaltet |
-|| Optionen | Eingeschaltet, Ausgeschaltet |
+|| . {.hideHeaderRow} | . |
+| Optionen | Eingeschaltet, Ausgeschaltet |
+| Standard | Ausgeschaltet |
 
 
 Wenn diese Einstellung aktiviert ist, nennt NVDA die Zeichenbeschreibung, wenn Sie sich zeichenweise bewegen.
@@ -1644,8 +1645,9 @@ In diesem Fall folgt die Braillezeile weder dem System-Fokus, noch dem System-Cu
 
 ==== Den System-Cursor bei der Weiterleitung des NVDA-Cursors verschieben ====[BrailleSettingsReviewRoutingMovesSystemCaret]
 
-|| Standard | Niemals |
-|| Optionen | Standard (Niemals), Niemals, Nur bei automatischer Kopplung, Immer |
+|| . {.hideHeaderRow} | . |
+| Optionen | Standard (Niemals), Niemals, Nur bei automatischer Kopplung, Immer |
+| Standard | Niemals |
 
 
 Diese Einstellung legt fest, ob der System-Cursor bei einem Druck auf die Routing-Taste mit verschoben werden soll.
@@ -1710,8 +1712,9 @@ Um die Einstellung von überall aus zu ändern, weisen Sie eine Tastenkombinatio
 
 ==== Unterbrechen der Sprachausgabe beim Navigieren ====[BrailleSettingsInterruptSpeech]
 
-|| Standard | Eingeschaltet |
-|| Optionen | Eingeschaltet, Ausgeschaltet |
+|| . {.hideHeaderRow} | . |
+| Optionen | Eingeschaltet, Ausgeschaltet |
+| Standard | Eingeschaltet |
 
 
 Diese Einstellung legt fest, ob die Sprachausgabe unterbrochen werden soll, sobald die Braillezeile vorwärts oder rückwärts gescrollt wird.
@@ -1724,8 +1727,9 @@ Wenn Sie diese Option deaktivieren, können Sie die Sprachausgabe hören und gle
 
 ==== Auswahl anzeigen ====[BrailleSettingsShowSelection]
 
-|| Standard | Eingeschaltet |
-|| Optionen | Standard (eingeschaltet), Eingeschaltet, Ausgeschaltet |
+|| . {.hideHeaderRow} | . |
+| Optionen | Standard (eingeschaltet), Eingeschaltet, Ausgeschaltet |
+| Standard | Eingeschaltet |
 
 
 Diese Einstellung legt fest, ob die Auswahlanzeige (Punkte 7 und 8) auf der Braillezeile angezeigt werden.
@@ -1807,8 +1811,9 @@ Die Unterstützung zum Umschalten der Audio-Quellen für portable und temporäre
 
 ==== Lautstärke der NVDA-Sounds folgt der Lautstärke der verwendeten Stimme ====[SoundVolumeFollowsVoice]
 
-|| Standard | Ausgeschaltet |
-|| Optionen | Ausgeschaltet, Eingeschaltet |
+|| . {.hideHeaderRow} | . |
+| Optionen | Ausgeschaltet, Eingeschaltet |
+| Standard | Ausgeschaltet |
 
 
 Wenn diese Option aktiviert ist, folgt die Lautstärke der NVDA-Sounds und -Signaltöne der Lautstärke-Einstellung der verwendeten Stimme.
@@ -2254,8 +2259,9 @@ In dieser Kategorie können Sie verschiedene Aspekte der Dokument-Navigation anp
 
 ==== Absatz-Eigenschaften ====[ParagraphStyle]
 
-|| Standard | Wird von der Anwendung behandelt |
-|| Optionen | Standard (Wird von der Anwendung behandelt), Wird von der Anwendung behandelt, Einfacher Zeilenumbruch, Mehrfacher Zeilenumbruch |
+|| . {.hideHeaderRow} | . |
+| Optionen | Standard (Wird von der Anwendung behandelt), Wird von der Anwendung behandelt, Einfacher Zeilenumbruch, Mehrfacher Zeilenumbruch |
+| Standard | Wird von der Anwendung behandelt |
 
 
 Dieses Kombinationsfeld ermöglicht die Absatz-Eigenschaft auszuwählen, der bei der Navigation durch Absätze mit ``STRG+Pfeiltaste nach oben`` und ``STRG+Pfeiltaste nach unten`` verwendet werden soll.
@@ -2311,8 +2317,9 @@ Diese Schaltfläche ist nur aktiviert, wenn NVDA so konfiguriert ist, dass benut
 
 ==== Registrierung zu UIA-Ereignissen und Eigenschaftsänderungen ====[AdvancedSettingsSelectiveUIAEventRegistration]
 
-|| Standard | Automatisch |
-|| Optionen | Automatisch, Ausgewählt, Überall |
+|| . {.hideHeaderRow} | . |
+| Optionen | Automatisch, Ausgewählt, Überall |
+| Standard | Automatisch |
 
 
 Diese Option ändert die Art und Weise, wie NVDA sich für Ereignisse registriert, die von der Microsoft UI Automation Accessibility API ausgelöst werden.
@@ -2345,8 +2352,9 @@ Die Implementierung der UIA von Microsoft Excel ändert sich ständig, und Versi
 
 ==== Unterstützung der Windows-Konsole ====[AdvancedSettingsConsoleUIA]
 
-|| Standard | Automatisch |
-|| Optionen | Automatisch, UIA, sofern verfügbar, Legacy |
+|| . {.hideHeaderRow} | . |
+| Optionen | Automatisch, UIA, sofern verfügbar, Legacy |
+| Standard | Automatisch |
 
 
 Diese Option legt fest, wie NVDA mit der Windows-Konsole interagiert, die von der Eingabeaufforderung, der PowerShell und dem Windows-Subsystem für Linux verwendet wird.
@@ -2396,8 +2404,9 @@ Die folgenden Möglichkeiten gibt es:
 
 ==== Live-Regionen mitteilen ====[BrailleLiveRegions]
 
-|| Standard | Eingeschaltet |
-|| Optionen | Standard (eingeschaltet), Ausgeschaltet, Eingeschaltet |
+|| . {.hideHeaderRow} | . |
+| Optionen | Standard (eingeschaltet), Ausgeschaltet, Eingeschaltet |
+| Standard | Eingeschaltet |
 
 
 Mit dieser Option können Sie festlegen, ob NVDA die Änderungen in einigen dynamischen Web-Inhalten auf der Braillezeile mitteilt.
@@ -2430,8 +2439,9 @@ In Terminals wird jedoch beim Einfügen oder Löschen eines Zeichens in der Mitt
 
 ==== Neuen Text in Windows-Terminal mitteilen via ====[WtStrategy]
 
-|| Standard | Abweichend |
-|| Optionen | Standard (Abweichend), Abweichend, UIA-Benachrichtigungen |
+|| . {.hideHeaderRow} | . |
+| Optionen | Standard (Abweichend), Abweichend, UIA-Benachrichtigungen |
+| Standard | Abweichend |
 
 
 Mit dieser Option wird festgelegt, wie NVDA bestimmt, welcher Text "neu" ist (und somit, was mitgeteilt werden soll, wenn "Änderungen dynamischer Inhalte mitteilen" aktiviert ist) in Windows-Terminal und dem WPF-Windows-Terminal-Steuerelement, das in Visual Studio 2022 verwendet wird.
@@ -2463,8 +2473,9 @@ Bei mehreren historisch beliebten APIs von grafischen Oberflächen kann der Text
 
 ==== WASAPI für die Audio-Ausgabe verwenden ====[WASAPI]
 
-|| Standard | Eingeschaltet |
-|| Optionen | Standard (Eingeschaltet), Ausgeschaltet, Eingeschaltet |
+|| . {.hideHeaderRow} | . |
+| Optionen | Standard (Eingeschaltet), Ausgeschaltet, Eingeschaltet |
+| Standard | Eingeschaltet |
 
 
 Diese Option aktiviert die Audio-Ausgabe über die API der Windows-Audio-Session (WASAPI).
