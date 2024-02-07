@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2010-2023 NV Access Limited, World Light Information Limited,
+# Copyright (C) 2010-2024 NV Access Limited, World Light Information Limited,
 # Hong Kong Blind Union, Babbage B.V., Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -528,17 +528,18 @@ class SpeechSymbolProcessor(object):
 		multiChars.sort(key=lambda identifier: len(identifier), reverse=True)
 
 		# Build the regexp.
-		patterns = [
-			# Strip repeated spaces from the end of the line to stop them from being picked up by repeated.
-			r"(?P<rstripSpace>  +$)",
-			# Repeated characters: more than 3 repeats.
-			r"(?P<repeated>(?P<repTmp>%s)(?P=repTmp){3,})" % characters
-		]
+		patterns: list[str] = []
 		# Complex symbols.
 		# Each complex symbol has its own named group so we know which symbol matched.
 		patterns.extend(
 			u"(?P<c{index}>{pattern})".format(index=index, pattern=symbol.pattern)
 			for index, symbol in enumerate(complexSymbolsList))
+		patterns.extend([
+			# Strip repeated spaces from the end of the line to stop them from being picked up by repeated.
+			r"(?P<rstripSpace>  +$)",
+			# Repeated characters: more than 3 repeats.
+			r"(?P<repeated>(?P<repTmp>%s)(?P=repTmp){3,})" % characters
+		])
 		# Simple symbols.
 		# These are all handled in one named group.
 		# Because the symbols are just text, we know which symbol matched just by looking at the matched text.
