@@ -112,7 +112,7 @@ def _createAttributeFilter() -> dict[str, set[str]]:
 ALLOWED_ATTRIBUTES = _createAttributeFilter()
 
 
-def _generateSanitizedHTML(md: str, isKeyCommands: bool = False) -> str:
+def _generateSanitizedHTML(md: str, docName: str, isKeyCommands: bool = False, potPath=None, poPath=None) -> str:
 	import markdown
 	import nh3
 
@@ -120,7 +120,8 @@ def _generateSanitizedHTML(md: str, isKeyCommands: bool = False) -> str:
 	if isKeyCommands:
 		from user_docs.keyCommandsDoc import KeyCommandsExtension
 		extensions.add(KeyCommandsExtension())
-
+	from user_docs.markdownTranslator import TranslationExtension
+	extensions.add(TranslationExtension(docName, potPath=potPath, poPath=poPath))
 	htmlOutput = markdown.markdown(
 		text=md,
 		extensions=extensions,
@@ -181,7 +182,14 @@ def md2html_actionFunc(
 		)
 	)
 
-	htmlOutput = _generateSanitizedHTML(mdStr, isKeyCommands)
+	if lang == "en":
+		potPath = source[0].abspath.replace('.md', '.pot')
+		poPath = None
+	else:
+		potPath = None
+		poPath = source[0].abspath.replace('.md', '.po')
+	docName = target[0].name
+	htmlOutput = _generateSanitizedHTML(mdStr, docName, isKeyCommands=isKeyCommands, potPath=potPath, poPath=poPath)
 	# Make next write append at end of buffer
 	htmlBuffer.seek(0, io.SEEK_END)
 	htmlBuffer.write(htmlOutput)
