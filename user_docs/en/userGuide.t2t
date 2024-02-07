@@ -2586,7 +2586,9 @@ Disabling WASAPI will disable the following options:
 
 ==== Silence duration ====[SilenceDuration]
 
-This edit box specifies how long NVDA plays silence after every utterance. NVDA plays silence to keep audio device open and avoid certain glitches like dropped parts of utterances, that happen due to audio devices (especially Bluetooth and wireless devices) entering stand by mode.
+This edit box specifies how long NVDA plays silence after every utterance.
+NVDA plays silence to keep audio device open and avoid certain glitches like dropped parts of utterances.
+This can happen due to audio devices (especially Bluetooth and wireless devices) entering stand-by mode.
 
 * Too low value would mean  audio may be cut-off more often.
 * Too high value would mean the battery of sound output device discharges faster.
