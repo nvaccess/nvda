@@ -1,7 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2010-2022 NV Access Limited, Bram Duvigneau
+# Copyright (C) 2010-2024 NV Access Limited, Bram Duvigneau
+
 from typing import (
 	Optional,
 	Dict,
@@ -172,6 +173,8 @@ class CompoundTextInfo(textInfos.TextInfo):
 			field["table-id"] = 1 # FIXME
 			field["table-rownumber"] = obj.rowNumber
 			field["table-columnnumber"] = obj.columnNumber
+			field["table-rowheadertext"] = obj.rowHeaderText
+			field["table-columnheadertext"] = obj.columnHeaderText
 			# Row/column span is not supported by all implementations (e.g. LibreOffice)
 			try:
 				field['table-rowsspanned']=obj.rowSpan
