@@ -834,7 +834,10 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		self.open()
 		self._lastActiveTime: typing.Optional[float] = None
 		self._isPaused: bool = False
-		if config.conf["audio"]["keepAudioAwakeTimeSeconds"] > 0 and WasapiWavePlayer._silenceDevice != outputDevice:
+		if (
+			config.conf["audio"]["keepAudioAwakeTimeSeconds"] > 0
+			and WasapiWavePlayer._silenceDevice != outputDevice
+		):
 			# The output device has changed. (Re)initialize silence.
 			if self._silenceDevice is not None:
 				NVDAHelper.localLib.wasSilence_terminate()

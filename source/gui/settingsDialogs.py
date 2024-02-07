@@ -3239,7 +3239,8 @@ class AdvancedPanelControls(
 		self.bindHelpEvent("WASAPI", self.wasapiComboBox)
 
 		silenceDurationLabelText = _(
-			# Translators: The label for a setting in advanced panel to change the duration of keeping audio device awake
+			# Translators: The label for a setting in advanced panel
+			# to change the duration of keeping audio device awake
 			"Duration in seconds of keeping audio device awake"
 		)
 		minDuration = int(config.conf.getConfigValidation(
