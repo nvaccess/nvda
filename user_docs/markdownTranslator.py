@@ -109,7 +109,6 @@ class TranslationTreeprocessor(Treeprocessor):
 		)
 		oldEntry = self.potFile.find(st=text, msgctxt=context)
 		if oldEntry:
-			print(f"Found existing entry for {text}: {oldEntry.msgstr}")
 			oldCommentLines = oldEntry.comment.splitlines() if oldEntry.comment else []
 			newCommentLines = comment.splitlines() if comment else []
 			for newCommentLine in newCommentLines:
@@ -160,7 +159,7 @@ class TranslationTreeprocessor(Treeprocessor):
 		tagNum = self.getTagNumber(element)
 		tagLabel = self.friendlyTagNames.get(element.tag)
 		if tagLabel:
-			if element.tag in ["table", "ul", "ol"]:
+			if element.tag not in ["h1", "h2", "h3", "h4", "h5", "h6"]:
 				tagLabel += f" {tagNum}"
 			if element.tag == 'td' and self.curHeaderCells:
 				header = self.curHeaderCells[tagNum - 1]
