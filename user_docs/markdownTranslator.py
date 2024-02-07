@@ -189,12 +189,12 @@ class TranslationTreeprocessor(Treeprocessor):
 				# This is a header cell that should be hidden, ignore it
 				return
 		addedTag = False
+		self.tagCounters[-1][element.tag] += 1
 		tagLabel = self.makeTagLabel(element)
 		if not tagLabel:
 			for child in element:
 				self.walkTree(child)
 			return
-		self.tagCounters[-1][element.tag] += 1
 		if element.tag == 'th':
 			self.curHeaderCells.append(element.text)
 		self.processText(element, tagLabel, 'text')
