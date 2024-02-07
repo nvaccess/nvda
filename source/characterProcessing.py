@@ -528,7 +528,7 @@ class SpeechSymbolProcessor(object):
 		multiChars.sort(key=lambda identifier: len(identifier), reverse=True)
 
 		# Build the regexp.
-		patterns = []
+		patterns: list[str] = []
 		# Complex symbols.
 		# Each complex symbol has its own named group so we know which symbol matched.
 		patterns.extend(
