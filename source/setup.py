@@ -123,7 +123,7 @@ _py2ExeWindows = [
 		"other_resources": [_genManifestTemplate(shouldHaveUIAccess=False)],
 		"version_info": {
 			"version": formatBuildVersionString(),
-			"description": description,
+			"description": name,
 			"product_name": name,
 			"product_version": version,
 			"copyright": NVDAcopyright,
