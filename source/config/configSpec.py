@@ -7,6 +7,7 @@
 
 from io import StringIO
 from configobj import ConfigObj
+from . import configDefaults
 
 #: The version of the schema outlined in this file. Increment this when modifying the schema and
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
@@ -183,6 +184,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enableOnPageLoad = boolean(default=true)
 	autoFocusFocusableElements = boolean(default=False)
 	loadChromiumVBufOnBusyState = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
+	textParagraphRegex = string(default="{configDefaults.DEFAULT_TEXT_PARAGRAPH_REGEX}")
 
 [touch]
 	enabled = boolean(default=true)
