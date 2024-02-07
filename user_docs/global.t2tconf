@@ -1,6 +1,0 @@
-%!Target: md
-%!Encoding: UTF-8
-
-% Remove the Table of Contents heading from the toc.
-% For some reason t2t to md conversion always forces the TOC at the top of the document 
-%!PostProc(md): '^#.*\{#toc\}.*$' ''
