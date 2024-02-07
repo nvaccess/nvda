@@ -702,6 +702,7 @@ void SilencePlayer::generateWhiteNoise(float volume) {
 		whiteNoiseData[i] = (INT16)dist(generator);
 	}
 }
+
 HRESULT SilencePlayer::init() {
 	HRESULT hr = player.open();
 	if (FAILED(hr)) {
