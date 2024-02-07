@@ -2607,8 +2607,8 @@ Disabling WASAPI will disable the following options:
 
 ==== Duration of keeping audio device awake ====[KeepAudioAwakeDuration]
 
-This edit box specifies how long NVDA keeps audio device awake after every utterance.
-NVDA does that by playing silence to keep audio device open and avoid certain glitches like dropped parts of utterances.
+This edit box specifies how long NVDA keeps audio device awake after every speech sequence.
+NVDA does that by playing silence to keep audio device open and avoid certain glitches like dropped parts of speech sequences.
 This can happen due to audio devices (especially Bluetooth and wireless devices) entering stand-by mode.
 
 Lower values may mean audio would be cut-off more often, as a device may enter stand-by mode, causing the next speech to be clipped.
