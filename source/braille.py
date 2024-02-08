@@ -2116,8 +2116,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		currentRegions = False
 		if _showSpeechInBrailleRegions:
 			text = f" {text}"
-
 			currentRegions = True
+
 		region = TextRegion(text)
 		region.update()
 		_showSpeechInBrailleRegions.append(region)
