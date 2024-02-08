@@ -2613,10 +2613,10 @@ This can happen due to audio devices (especially Bluetooth and wireless devices)
 This might also be helpful in certain other use cases, such as running NVDA inside a virtual machine, such as Citrix Virtual Desktop, or on certain models of laptops.
 
 Lower values may mean audio would be cut-off more often, as a device may enter stand-by mode, causing the next speech to be clipped.
-Too high a value may mean the battery of the sound output device discharges faster, as it stays active for longer while no sound is being sent.
+A too high value may mean the battery of the sound output device discharges faster, as it stays active for longer while no sound is being sent.
 
-You can specify silence duration to be 0 in order to disable this feature.
-This slider is only available when [WASAPI mode #WASAPI] is enabled.
+You can specify the duration to be 0 in order to disable this feature.
+This feature is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI].
 
 ==== Debug logging categories ====[AdvancedSettingsDebugLoggingCategories]
 The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.
