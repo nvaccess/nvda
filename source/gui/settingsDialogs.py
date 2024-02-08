@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers,
 # Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed, Łukasz Golonka, Aaron Cannon,
@@ -3235,7 +3235,6 @@ class AdvancedPanelControls(
 			keyPath=["audio", "WASAPI"],
 			conf=config.conf,
 		))
-		self.wasapiComboBox .Bind(wx.EVT_CHOICE, self._onWasapiChange)
 		self.bindHelpEvent("WASAPI", self.wasapiComboBox)
 
 		silenceDurationLabelText = _(
@@ -3256,7 +3255,7 @@ class AdvancedPanelControls(
 		)
 		self.silenceDurationEdit.defaultValue = self._getDefaultValue(["audio", "keepAudioAwakeTimeSeconds"])
 		self.bindHelpEvent("KeepAudioAwakeDuration", self.silenceDurationEdit)
-		self._onWasapiChange(None)
+		self.silenceDurationEdit.Enable(nvwave.usingWasapiWavePlayer())
 
 		# Translators: This is the label for a group of advanced options in the
 		# Advanced settings panel
@@ -3348,12 +3347,6 @@ class AdvancedPanelControls(
 		path=config.getScratchpadDir(ensureExists=True)
 		os.startfile(path)
 
-	def _onWasapiChange(self, evt: wx.CommandEvent) -> None:
-		self.silenceDurationEdit.Enable(
-			config.conf["audio"]["WASAPI"]
-			and self.wasapiComboBox._getControlCurrentValue().value != 2  # wasapi not disabled
-		)
-
 	def _getDefaultValue(self, configPath):
 		return config.conf.getConfigValidation(configPath).default
 
@@ -3382,6 +3375,7 @@ class AdvancedPanelControls(
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
 			and self.reportTransparentColorCheckBox.GetValue() == self.reportTransparentColorCheckBox.defaultValue
 			and self.wasapiComboBox.isValueConfigSpecDefault()
+			and self.silenceDurationEdit.GetValue() == self.silenceDurationEdit.defaultValue
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and self.playErrorSoundCombo.GetSelection() == self.playErrorSoundCombo.defaultValue
 			and True  # reduce noise in diff when the list is extended.
