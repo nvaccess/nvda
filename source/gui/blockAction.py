@@ -57,6 +57,7 @@ class Context(_Context, Enum):
 		_("Action unavailable while the braille mode is set to speech output"),
 	)
 
+
 def when(*contexts: Context):
 	"""Returns a function wrapper.
 	A function decorated with `when` will exit early if any supplied context in `contexts` is active.
