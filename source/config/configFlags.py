@@ -107,7 +107,7 @@ class BrailleMode(DisplayStringStrEnum):
 	SPEECH_OUTPUT = "speechOutput"
 
 	@property
-	def _displayStringLabels(self):
+	def _displayStringLabels(self) -> dict["BrailleMode", str]:
 		return {
 			# Translators: The label for a braille mode
 			BrailleMode.FOLLOW_CURSORS: _("follow cursors"),
