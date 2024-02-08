@@ -828,6 +828,7 @@ The following keys by themselves jump to the next available element, while addin
 - o: embedded object (audio and video player, application, dialog, etc.)
 - 1 to 6: headings at levels 1 to 6 respectively
 - a: annotation (comment, editor revision, etc.)
+- ``p``: text paragraph
 - w: spelling error
 -
 To move to the beginning or end of containing elements such as lists and tables:
@@ -841,6 +842,26 @@ If you want to use these while still being able to use your cursor keys to read 
 %kc:beginInclude
 To toggle single letter navigation on and off for the current document, press NVDA+shift+space.
 %kc:endInclude
+
++++ Text paragraph navigation command +++[TextNavigationCommand]
+
+You can jump to the next or previous text paragraph by pressing ``p`` or ``shift+p``.
+Text paragraphs are defined by a group of text that appears to be written in complete sentences.
+This can be useful to find the beginning of readable content on various webpages, such as:
+- News websites
+- Forums
+- Blog posts
+- 
+
+These commands can also be helpful for skipping certain kinds of clutter, such as:
+- Ads
+- Menus
+- Headers
+- 
+
+Please note, however, that while NVDA tries its best to identify text paragraphs, the algorithm is not perfect and at times can make mistakes.
+Additionally, this command is different from paragraph navigation commands ``control+downArrow/upArrow``.
+Text paragraph navigation only jumps between text paragraphs, while paragraph navigation commands take the cursor to the previous/next paragraphs regardless of whether they contain text or not.
 
 +++ Other navigation commands +++[OtherNavigationCommands]
 
@@ -2596,6 +2617,19 @@ Disabling WASAPI will disable the following options:
 - [Volume of NVDA sounds #SoundVolume]
 -
 
+==== Duration of keeping audio device awake ====[KeepAudioAwakeDuration]
+
+This edit box specifies how long NVDA keeps the audio device awake after every speech sequence.
+NVDA does this by playing silence to keep the audio device open and avoid certain glitches like dropped parts of speech sequences.
+This can happen due to audio devices (especially Bluetooth and wireless devices) entering stand-by mode.
+This might also be helpful in certain other use cases, such as running NVDA inside a virtual machine, such as Citrix Virtual Desktop, or on certain models of laptops.
+
+Lower values may mean audio would be cut-off more often, as a device may enter stand-by mode, causing the next speech to be clipped.
+Too high a value may mean the battery of the sound output device discharges faster, as it stays active for longer while no sound is being sent.
+
+You can specify silence duration to be 0 in order to disable this feature.
+This slider is only available when [WASAPI mode #WASAPI] is enabled.
+
 ==== Debug logging categories ====[AdvancedSettingsDebugLoggingCategories]
 The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.
 Logging these messages can result in decreased performance and large log files.
@@ -2605,6 +2639,11 @@ Only turn one of these on if specifically instructed to by an NVDA developer e.g
 This option allows you to specify if NVDA will play an error sound in case an error is logged.
 Choosing Only in test versions (default) makes NVDA play error sounds only if the current NVDA version is a test version (alpha, beta or run from source).
 Choosing Yes allows to enable error sounds whatever your current NVDA version is.
+
+==== Regular expression for text paragraph quick navigation commands ====[TextParagraphRegexEdit]
+
+This field allows users to customize regular expression for detecting text paragraphs in browse mode.
+The [text paragraph navigation command #TextNavigationCommand] searches for paragraphs matched by this regular expression.
 
 ++ miscellaneous Settings ++[MiscSettings]
 Besides the [NVDA Settings #NVDASettings] dialog, The Preferences sub-menu of the NVDA Menu contains several other items which are outlined below.
@@ -3499,19 +3538,19 @@ Please see the display's documentation for descriptions of where these keys can 
 | control+shift+leftArrow key | dot2+dot8+space+f1 |
 | control+leftArrow key | dot2+space |
 | shift+alt+leftArrow key | dot2+dot7+f1 |
-| alt+leftArrow key | dot2+dot7 |
+| ``alt+leftArrow`` | ``dot2+dot7+space`` |
 | rightArrow key | dot6+space, leftSideRightArrow |
 | control+shift+rightArrow key | dot5+dot8+space+f1 |
 | control+rightArrow key | dot5+space |
 | shift+alt+rightArrow key | dot5+dot7+f1 |
-| alt+rightArrow key | dot5+dot7 |
+| ``alt+rightArrow`` | ``dot5+dot7+space`` |
 | pageUp key | dot1+dot2+dot6+space |
 | control+pageUp key | dot1+dot2+dot6+dot8+space |
 | upArrow key | dot1+space, leftSideUpArrow |
 | control+shift+upArrow key | dot2+dot3+dot8+space+f1 |
 | control+upArrow key | dot2+dot3+space |
 | shift+alt+upArrow key | dot2+dot3+dot7+f1 |
-| alt+upArrow key | dot2+dot3+dot7 |
+| ``alt+upArrow`` | ``dot2+dot3+dot7+space`` |
 | shift+upArrow key | leftSideScrollDown+space |
 | pageDown key | dot3+dot4+dot5+space |
 | control+pageDown key | dot3+dot4+dot5+dot8+space |
@@ -3519,7 +3558,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | control+shift+downArrow key | dot5+dot6+dot8+space+f1 |
 | control+downArrow key | dot5+dot6+space |
 | shift+alt+downArrow key | dot5+dot6+dot7+f1 |
-| alt+downArrow key | dot5+dot6+dot7 |
+| ``alt+downArrow`` | ``dot5+dot6+dot7+space`` |
 | shift+downArrow key | space+rightSideScrollDown |
 | escape key | dot1+dot5+space, f4, brailleedge:f1 |
 | delete key | dot1+dot3+dot5+space, dot1+dot4+dot5+space |
@@ -3684,8 +3723,8 @@ These are (ordered from left to right):
 Currently, the right thumb key is not in use.
 The inner keys are both mapped to space.
 
-|| Name | Key |
 %kc:beginInclude
+|| Name | Key |
 | escape key | space with dot 7 |
 | upArrow key | space with dot 2 |
 | leftArrow key | space with dot 1 |

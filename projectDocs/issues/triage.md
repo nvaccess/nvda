@@ -140,15 +140,22 @@ We also have a label for `enhancement`, think of this as a more internal facing 
 
 ### Triaged status
 An issue is triaged if it is ready to be worked on.
-Once a bug has clear steps to reproduce and is well documented, the `triaged` label can be applied.
 New features and enhancements should be [well defined](#new-features-1) before applying the `triaged` label.
+Once a bug has clear steps to reproduce and is well documented, the `triaged` label can be applied.
+A `triaged` issue should also have a [priority label](#priority).
+Generally these labels are provided by NV Access only, particularly for issues that are controversial, or priority is unclear.
 
-If it is a complex issue, technical investigation may be required. This can be indicated with adding the label `blocked/needs-technical-investigation`.
+For controversial changes, a product decision from NV Access may be required before applying the `triaged` label.
+This can be indicated with adding the label `blocked/needs-product-decision`.
+
+If an issue has been checked by NV Access, and needs further triage, the `needs-triage` label will be applied.
+Please notify NV Access when you believe the issue is ready for the `triaged` label.
 
 A `triaged` issue that requires a complex fix may require advice from NV Access, such as a project plan, before implementation is started.
-An issue with a simple solution should get labelled `good first issue`.
 
-For controversial changes, a product decision from NV Access may be required before applying the `triaged` label. This can be indicated with adding the label `blocked/needs-product-decision`.
+An issue with a simple solution should get labelled `good first issue`.
+If it is a complex issue, technical investigation may be required.
+This can be indicated with adding the label `blocked/needs-technical-investigation`.
 
 ### Priority
 Bugs/regressions are given priorities based on an estimate of their severity and impact.
@@ -167,6 +174,7 @@ Bugs/regressions are given priorities based on an estimate of their severity and
   - Popular task not supported and no work around
   - Misleading information or misleading handling from a popular task or feature
 - `P3`:
+  - Crash, freeze, instability or performance issue that affects one user, i.e. it cannot be reproduced by anyone else.
   - Feature does not work as expected
   - Task not supported and no work around
   - Misleading information or misleading handling
