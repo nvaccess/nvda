@@ -3237,7 +3237,7 @@ class AdvancedPanelControls(
 		))
 		self.bindHelpEvent("WASAPI", self.wasapiComboBox)
 
-		silenceDurationLabelText = _(
+		audioAwakeDurationLabelText = _(
 			# Translators: The label for a setting in advanced panel
 			# to change the duration of keeping audio device awake
 			"Duration in seconds of keeping audio device awake"
@@ -3246,16 +3246,16 @@ class AdvancedPanelControls(
 			("audio", "keepAudioAwakeTimeSeconds")
 		).kwargs["min"])
 		maxDuration = int(config.conf.getConfigValidation(("audio", "keepAudioAwakeTimeSeconds")).kwargs["max"])
-		self.silenceDurationEdit = audioGroup.addLabeledControl(
-			silenceDurationLabelText,
+		self.audioAwakeDurationEdit = audioGroup.addLabeledControl(
+			audioAwakeDurationLabelText,
 			nvdaControls.SelectOnFocusSpinCtrl,
 			min=minDuration,
 			max=maxDuration,
 			initial=config.conf["audio"]["keepAudioAwakeTimeSeconds"]
 		)
-		self.silenceDurationEdit.defaultValue = self._getDefaultValue(["audio", "keepAudioAwakeTimeSeconds"])
-		self.bindHelpEvent("KeepAudioAwakeDuration", self.silenceDurationEdit)
-		self.silenceDurationEdit.Enable(nvwave.usingWasapiWavePlayer())
+		self.audioAwakeDurationEdit.defaultValue = self._getDefaultValue(["audio", "keepAudioAwakeTimeSeconds"])
+		self.bindHelpEvent("KeepAudioAwakeDuration", self.audioAwakeDurationEdit)
+		self.audioAwakeDurationEdit.Enable(nvwave.usingWasapiWavePlayer())
 
 		# Translators: This is the label for a group of advanced options in the
 		# Advanced settings panel
@@ -3375,7 +3375,7 @@ class AdvancedPanelControls(
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
 			and self.reportTransparentColorCheckBox.GetValue() == self.reportTransparentColorCheckBox.defaultValue
 			and self.wasapiComboBox.isValueConfigSpecDefault()
-			and self.silenceDurationEdit.GetValue() == self.silenceDurationEdit.defaultValue
+			and self.audioAwakeDurationEdit.GetValue() == self.audioAwakeDurationEdit.defaultValue
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and self.playErrorSoundCombo.GetSelection() == self.playErrorSoundCombo.defaultValue
 			and True  # reduce noise in diff when the list is extended.
@@ -3403,7 +3403,7 @@ class AdvancedPanelControls(
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
 		self.wasapiComboBox.resetToConfigSpecDefault()
-		self.silenceDurationEdit.SetValue(self.silenceDurationEdit.defaultValue)
+		self.audioAwakeDurationEdit.SetValue(self.audioAwakeDurationEdit.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self.playErrorSoundCombo.SetSelection(self.playErrorSoundCombo.defaultValue)
 		self._defaultsRestored = True
@@ -3436,7 +3436,7 @@ class AdvancedPanelControls(
 			self.reportTransparentColorCheckBox.IsChecked()
 		)
 		self.wasapiComboBox.saveCurrentValueToConf()
-		config.conf["audio"]["keepAudioAwakeTimeSeconds"] = self.silenceDurationEdit.GetValue()
+		config.conf["audio"]["keepAudioAwakeTimeSeconds"] = self.audioAwakeDurationEdit.GetValue()
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
 		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
 		self.brailleLiveRegionsCombo.saveCurrentValueToConf()
