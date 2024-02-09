@@ -2061,7 +2061,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	) -> "textInfos.TextInfo.TextWithFieldsT":
 		"""
 		This function calls TextInfo.getTextWithFields(), and then processes fields in the following way:
-		1. Highlighted(marked) text is currently reported as Role.MARKED_CONTENT, and not formatChange.
+		1. Highlighted (marked) text is currently reported as Role.MARKED_CONTENT, and not formatChange.
 		For ease of further handling we create a new boolean format field "marked"
 		and set its value according to presence of Role.MARKED_CONTENT.
 		2. Then we drop all control fields, leaving only formatChange fields and text.
