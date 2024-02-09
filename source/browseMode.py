@@ -2137,7 +2137,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			if isinstance(field, textInfos.FieldCommand):
 				if field.command == "controlStart":
 					style = {**stack[-1]}
-					if field.field.get('role') == controlTypes.Role.MARKED_CONTENT:
+					if field.field.get("role") == controlTypes.Role.MARKED_CONTENT:
 						style["marked"] = True
 					stack.append(style)
 				elif field.command == "controlEnd":
@@ -2168,7 +2168,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			documentBase._Movement.PREVIOUS,
 		]:
 			raise RuntimeError(f"direction must be either next or previous; got {direction}")
-		sameStyle = kind == 'sameStyle'
+		sameStyle = kind == "sameStyle"
 		initialTextInfo = pos.copy()
 		initialTextInfo.collapse()
 		result = initialTextInfo.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
@@ -2193,7 +2193,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		paragraph = pos.copy()
 		tmpInfo = pos.copy()
 		tmpInfo.expand(textInfos.UNIT_PARAGRAPH)
-		paragraph.setEndPoint(tmpInfo, which="endToEnd" if direction == 'next' else "startToStart")
+		paragraph.setEndPoint(tmpInfo, which="endToEnd" if direction == documentBase._Movement.NEXT else "startToStart")
 		MAX_ITER_LIMIT = 10**6
 		for __ in range(MAX_ITER_LIMIT):
 			if not paragraph.isCollapsed:
@@ -2224,7 +2224,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 						textRange = paragraph.copy()
 						textRange.collapse()
 						textRange.move(textInfos.UNIT_CHARACTER, startOffset)
-						textRange.move(textInfos.UNIT_CHARACTER, endOffset, endPoint='end')
+						textRange.move(textInfos.UNIT_CHARACTER, endOffset, endPoint="end")
 						yield TextInfoQuickNavItem(kind, self, textRange)
 					firstStyleWithinParagraph = False
 			firstParagraph = False

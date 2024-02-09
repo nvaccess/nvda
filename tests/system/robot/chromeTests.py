@@ -2533,27 +2533,27 @@ def test_styleNav():
 	spy.assignGesture(
 		"kb:s",
 		"browseMode",
-		'BrowseModeTreeInterceptor',
+		"BrowseModeTreeInterceptor",
 		"nextSameStyle",
 	)
 
 	spy.assignGesture(
 		"kb:shift+s",
 		"browseMode",
-		'BrowseModeTreeInterceptor',
+		"BrowseModeTreeInterceptor",
 		"previousSameStyle",
 	)
 	spy.assignGesture(
 		"kb:d",
 		"browseMode",
-		'BrowseModeTreeInterceptor',
+		"BrowseModeTreeInterceptor",
 		"nextDifferentStyle",
 	)
 
 	spy.assignGesture(
 		"kb:shift+d",
 		"browseMode",
-		'BrowseModeTreeInterceptor',
+		"BrowseModeTreeInterceptor",
 		"previousDifferentStyle",
 	)
 
