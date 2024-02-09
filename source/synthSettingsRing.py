@@ -20,7 +20,7 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		self.value = val
 		return self._getReportValue(val)
 
-	def last(self) -> Any:
+	def last(self) -> str:
 		"""Sets the value of the current synth setting to the last value."""
 		val = self.max
 		self.value = val
@@ -31,7 +31,7 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		self.value = val
 		return self._getReportValue(val)
 
-	def increaseLarge(self) -> Any:
+	def increaseLarge(self) -> str:
 		"""Increases the value of the current synth setting by a larger step."""
 		val = min(self.max, self.value + self.largeStep * 2)
 		self.value = val
@@ -42,7 +42,7 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		self.value = val
 		return self._getReportValue(val)
 
-	def decreaseLarge(self) -> Any:
+	def decreaseLarge(self) -> str:
 		"""Decreases the value of the current synth setting by a larger step."""
 		val = max(self.min, self.value - self.largeStep * 2)
 		self.value = val
@@ -154,7 +154,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			return self.settings[self._current].first()
 		return None
 
-	def last(self) -> Any:
+	def last(self) -> str | None:
 		""" set the current setting to the last value """
 		if self._current is not None:
 			return self.settings[self._current].last()
@@ -166,7 +166,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			return self.settings[self._current].increase()
 		return None
 
-	def increaseLarge(self) -> Any:
+	def increaseLarge(self) -> str | None:
 		""" increases the currentSetting in a larger step, (20 items, 20%) and returns its new value """
 		if self._current is not None:
 			return self.settings[self._current].increaseLarge()
@@ -178,7 +178,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			return self.settings[self._current].decrease()
 		return None
 
-	def decreaseLarge(self) -> Any:
+	def decreaseLarge(self) -> str | None:
 		""" Decreases the currentSetting in a larger step, (20 items, 20%) and returns its new value """
 		if self._current is not None:
 			return self.settings[self._current].decreaseLarge()
