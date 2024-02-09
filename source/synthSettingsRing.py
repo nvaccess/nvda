@@ -1,8 +1,15 @@
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2024 NV Access Limited
+
+from typing import Any
+
+from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 import baseObject
 import config
-import synthDriverHandler
 import queueHandler
-from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
+import synthDriverHandler
 
 
 class SynthSetting(baseObject.AutoPropertyObject):
@@ -85,11 +92,14 @@ class BooleanSynthSetting(SynthSetting):
 	def _getReportValue(self, val):
 		return _("on") if val else _("off")
 
+
 class SynthSettingsRing(baseObject.AutoPropertyObject):
 	"""
-	A synth settings ring which enables the user to change to the next and previous settings and ajust the selected one
-	It was written to facilitate the implementation of a way to change the settings resembling the window-eyes way.
+	A synth settings ring which enables the user to change to the next and previous settings,
+	as well as adjust the selected one.
 	"""
+
+	settings: list[SynthSetting] | None
 
 	def __init__(self,synth):
 		try:
@@ -107,9 +117,9 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 	def _get_currentSettingValue(self):
 		return self.settings[self._current].reportValue
 
-	def _set_currentSettingValue(self,value):
+	def _set_currentSettingValue(self, value: Any):
 		if self._current is not None:
-			self.settings[_current].value = val
+			self.settings[self._current].value = value
 
 	def next(self):
 		""" changes to the next setting and returns its name """
@@ -145,7 +155,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			if self._current is not None and hasattr(self,'settings')
 			else None
 		)
-		list = []
+		list: list[SynthSetting] = []
 		for s in synth.supportedSettings:
 			if not s.availableInSettingsRing: continue
 			if prevID == s.id: #restore the last setting

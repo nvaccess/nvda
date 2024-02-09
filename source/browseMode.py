@@ -11,12 +11,14 @@ from typing import (
 	Union,
 	cast,
 )
+from collections.abc import Generator
 import os
 import itertools
 import collections
 import winsound
 import time
 import weakref
+import re
 
 import wx
 import core
@@ -24,6 +26,7 @@ import winUser
 import mouseHandler
 from logHandler import log
 import documentBase
+from documentBase import _Movement
 import review
 import inputCore
 import scriptHandler
@@ -450,15 +453,63 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	) -> Generator[TextInfoQuickNavItem, None, None]:
 		raise NotImplementedError
 
+	MAX_ITERATIONS_FOR_SIMILAR_PARAGRAPH = 100_000
+	
+	def _iterSimilarParagraph(
+			self,
+			kind: str,
+			paragraphFunction: Callable[[textInfos.TextInfo], Optional[Any]],
+			desiredValue: Optional[Any],
+			direction: _Movement,
+			pos: textInfos.TextInfo,
+	) -> Generator[TextInfoQuickNavItem, None, None]:
+		if direction not in [_Movement.NEXT, _Movement.PREVIOUS]:
+			raise RuntimeError
+		info = pos.copy()
+		info.collapse()
+		info.expand(textInfos.UNIT_PARAGRAPH)
+		if desiredValue is None:
+			desiredValue = paragraphFunction(info)
+		for i in range(self.MAX_ITERATIONS_FOR_SIMILAR_PARAGRAPH):
+			# move by one paragraph in the desired direction
+			info.collapse(end=direction == _Movement.NEXT)
+			if direction == _Movement.PREVIOUS:
+				if info.move(textInfos.UNIT_CHARACTER, -1) == 0:
+					return
+			info.expand(textInfos.UNIT_PARAGRAPH)
+			if info.isCollapsed:
+				return
+			value = paragraphFunction(info)
+			if value == desiredValue:
+				yield TextInfoQuickNavItem(kind, self, info.copy())
+
+
 	def _quickNavScript(self,gesture, itemType, direction, errorMessage, readUnit):
 		if itemType=="notLinkBlock":
 			iterFactory=self._iterNotLinkBlock
+		elif itemType == "textParagraph":
+			punctuationMarksRegex = re.compile(
+				config.conf["virtualBuffers"]["textParagraphRegex"],
+			)
+
+			def paragraphFunc(info: textInfos.TextInfo) -> bool:
+				return punctuationMarksRegex.search(info.text) is not None
+
+			def iterFactory(direction: str, pos: textInfos.TextInfo) -> Generator[TextInfoQuickNavItem, None, None]:
+				return self._iterSimilarParagraph(
+					kind="textParagraph",
+					paragraphFunction=paragraphFunc,
+					desiredValue=True,
+					direction=_Movement(direction),
+					pos=pos,
+				)
 		elif itemType in ["sameStyle", "differentStyle"]:
 			def iterFactory(
 					direction: documentBase._Movement,
 					info: textInfos.TextInfo | None,
 			) -> Generator[TextInfoQuickNavItem, None, None]:
 				return self._iterTextStyle(itemType, direction, info)
+
 		else:
 			iterFactory=lambda direction,info: self._iterNodesByType(itemType,direction,info)
 		info=self.selection
@@ -964,6 +1015,19 @@ qn(
 	prevDoc=_("moves to the previous tab"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous tab")
+)
+qn(
+	"textParagraph",
+	key="p",
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next text paragraph"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next text paragraph"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous text paragraph"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous text paragraph"),
+	readUnit=textInfos.UNIT_PARAGRAPH,
 )
 qn(
 	"sameStyle",
@@ -2210,21 +2274,30 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	)
 	def script_toggleNativeAppSelectionMode(self, gesture: inputCore.InputGesture):
 		if not self._nativeAppSelectionModeSupported:
-			# Translators: the message when native selection mode is not available in this browse mode document.
-			ui.message(_("Native selection mode unsupported in this document"))
+			if not self._nativeAppSelectionMode:
+				# Translators: the message when native selection mode is not available in this browse mode document.
+				ui.message(_("Native selection mode unsupported in this browse mode document"))
+			else:
+				# Translators: the message when native selection mode cannot be turned off in this browse mode document.
+				ui.message(_("Native selection mode cannot be turned off in this browse mode document"))
 			return
-		self._nativeAppSelectionMode = not self._nativeAppSelectionMode
-		if self._nativeAppSelectionMode:
-			# Translators: reported when native selection mode is toggled on.
-			ui.message(_("Native app selection mode enabled."))
+		nativeAppSelectionModeOn = not self._nativeAppSelectionMode
+		if nativeAppSelectionModeOn:
 			try:
 				self.updateAppSelection()
 			except NotImplementedError:
-				pass
+				log.debugWarning("updateAppSelection failed", exc_info=True)
+				# Translators: the message when native selection mode is not available in this browse mode document.
+				ui.message(_("Native selection mode unsupported in this document"))
+				return
+			self._nativeAppSelectionMode = True
+			# Translators: reported when native selection mode is toggled on.
+			ui.message(_("Native app selection mode enabled"))
 		else:
-			# Translators: reported when native selection mode is toggled off.
-			ui.message(_("Native app selection mode disabled."))
 			try:
 				self.clearAppSelection()
 			except NotImplementedError:
-				pass
+				log.debugWarning("clearAppSelection failed", exc_info=True)
+			self._nativeAppSelectionMode = False
+			# Translators: reported when native selection mode is toggled off.
+			ui.message(_("Native app selection mode disabled"))

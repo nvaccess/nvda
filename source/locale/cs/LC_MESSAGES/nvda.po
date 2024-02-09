@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-24 23:24+0000\n"
-"PO-Revision-Date: 2024-01-28 22:05\n"
+"POT-Creation-Date: 2024-02-02 04:36+0000\n"
+"PO-Revision-Date: 2024-02-05 21:03\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -4569,7 +4569,7 @@ msgstr "Fragment protokolu zkopírován do schránky"
 #. Translators: Presented when unable to copy to the clipboard because of an error.
 #. Translators: Presented when unable to copy to the clipboard because of an error
 #. or the clipboard content did not match what was just copied.
-#: globalCommands.py:2834 ui.py:155
+#: globalCommands.py:2834 ui.py:170
 msgid "Unable to copy"
 msgstr "Nelze zkopírovat"
 
@@ -7415,7 +7415,7 @@ msgstr "přemístění nahoru"
 
 #. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
 #. when Windows is on a secure screen (sign-on screen / UAC prompt).
-#: ui.py:58
+#: ui.py:66
 msgid "This feature is unavailable while on secure screens such as the sign-on screen or UAC prompt."
 msgstr "Funkce je nedostupná při zabezpečených obrazovkách jako např. přihlašovací obrazovka nevo výzva kontroly uživatelských účtů."
 
@@ -7424,26 +7424,31 @@ msgstr "Funkce je nedostupná při zabezpečených obrazovkách jako např. při
 #. of the Window that could not be opened for context.
 #. The {title} will be replaced with the title.
 #. The title may be something like "Formatting".
-#: ui.py:67
+#: ui.py:75
 #, python-brace-format
 msgid "This feature ({title}) is unavailable while on secure screens such as the sign-on screen or UAC prompt."
 msgstr "Funkce ({title}) je nedostupná při zabezpečených obrazovkách jako např. přihlašovací obrazovka nebo výzva kontroly uživatelských účtů."
 
 #. Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message
 #. dialog.
-#: ui.py:79
+#: ui.py:87
 msgid "Feature unavailable."
 msgstr "Nedostupná funkce."
 
 #. Translators: The title for the dialog used to present general NVDA messages in browse mode.
-#: ui.py:104
+#: ui.py:111
 msgid "NVDA Message"
 msgstr "Zpráva NVDA"
+
+#. Translators: reported when unable to display a browsable message.
+#: ui.py:119
+msgid "Unable to display browseable message"
+msgstr "Nelze zobrazit zprávu k prohlížení"
 
 #. Translators: Spoken instead of a lengthy text when copied to clipboard.
 #. Translators: This is spoken when the user has selected a large portion of text.
 #. Example output "1000 characters"
-#: ui.py:163 speech\speech.py:1118
+#: ui.py:178 speech\speech.py:1118
 #, python-format
 msgid "%d character"
 msgid_plural "%d characters"
@@ -7454,14 +7459,14 @@ msgstr[3] "%d znaků"
 
 #. Translators: Announced when a text has been copied to clipboard.
 #. {text} is replaced by the copied text.
-#: ui.py:167
+#: ui.py:182
 #, python-brace-format
 msgid "Copied to clipboard: {text}"
 msgstr "Zkopírováno: {text}"
 
 #. Translators: Displayed in braille when a text has been copied to clipboard.
 #. {text} is replaced by the copied text.
-#: ui.py:170
+#: ui.py:185
 #, python-brace-format
 msgid "Copied: {text}"
 msgstr "Zkop: {text}"
