@@ -3,7 +3,6 @@ import config
 import synthDriverHandler
 import queueHandler
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
-from typing import Any
 
 class SynthSetting(baseObject.AutoPropertyObject):
 	"""a numeric synth setting. Has functions to set, get, increase and decrease its value """
@@ -15,7 +14,7 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		self.step = setting.normalStep if isinstance(setting, NumericDriverSetting) else 1
 		self.largeStep = self.setting.largeStep if isinstance(setting, NumericDriverSetting) else 10
 
-	def first(self) -> Any:
+	def first(self) -> str:
 		"""Sets the value of the current synth setting to the first value."""
 		val = self.min
 		self.value = val
@@ -149,7 +148,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			return self.currentSettingName
 		return None
 
-	def first(self) -> Any:
+	def first(self) -> str | None:
 		""" set the current setting to the first value """
 		if self._current is not None:
 			return self.settings[self._current].first()
