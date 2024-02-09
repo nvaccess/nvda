@@ -2042,17 +2042,17 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			item1=item2
 
 	STYLE_ATTRIBUTES = frozenset([
-		'background-color',
-		'color',
-		'font-family',
-		'font-size',
-		'bold',
-		'italic',
-		'marked',
-		'strikethrough',
-		'text-line-through-style',
-		'underline',
-		'text-underline-style',
+		"background-color",
+		"color",
+		"font-family",
+		"font-size",
+		"bold",
+		"italic",
+		"marked",
+		"strikethrough",
+		"text-line-through-style",
+		"underline",
+		"text-underline-style",
 	])
 
 	def _extractStyles(
@@ -2065,19 +2065,20 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		For ease of further handling we create a new boolean format field "marked"
 		and set its value according to presence of Role.MARKED_CONTENT.
 		2. Then we drop all control fields, leaving only formatChange fields and text.
+		@raise RuntimeError: found unknown command in getTextWithFields()
 		"""
-		stack = [{}]
-		result = []
+		stack: list[textInfos.FormatField] = [{}]
+		result: "textInfos.TextInfo.TextWithFieldsT" = []
 		for field in info.getTextWithFields():
 			if isinstance(field, textInfos.FieldCommand):
-				if field.command == 'controlStart':
+				if field.command == "controlStart":
 					style = {**stack[-1]}
 					if field.field.get('role') == controlTypes.Role.MARKED_CONTENT:
-						style['marked'] = True
+						style["marked"] = True
 					stack.append(style)
-				elif field.command == 'controlEnd':
+				elif field.command == "controlEnd":
 					del stack[-1]
-				elif field.command == 'formatChange':
+				elif field.command == "formatChange":
 					field.field = {
 						k: v
 						for k, v in {**field.field, **stack[-1]}.items()
@@ -2085,11 +2086,11 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 					}
 					result.append(field)
 				else:
-					raise RuntimeError()
+					raise RuntimeError("Unrecognized command in the field")
 			elif isinstance(field, str):
 				result.append(field)
 			else:
-				raise RuntimeError
+				raise RuntimeError("Unrecognized field in TextInfo.getTextWithFields()")
 		return result
 
 	def _iterTextStyle(
@@ -2106,9 +2107,9 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		sameStyle = kind == 'sameStyle'
 		initialTextInfo = pos.copy()
 		initialTextInfo.collapse()
-		result = initialTextInfo.move(textInfos.UNIT_CHARACTER, 1, endPoint='end')
+		result = initialTextInfo.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
 		if result == 0:
-			result = initialTextInfo.move(textInfos.UNIT_CHARACTER, -1, endPoint='start')
+			result = initialTextInfo.move(textInfos.UNIT_CHARACTER, -1, endPoint="start")
 			if result == 0:
 				# Translators: Error message for same/different style quick navigation command
 				ui.message(_("Cannot determine current style"))
@@ -2117,7 +2118,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		if (
 			len(styles) == 0
 			or not isinstance(styles[0], textInfos.FieldCommand)
-			or styles[0].command != 'formatChange'
+			or styles[0].command != "formatChange"
 		):
 			# Translators: Error message for same/different style quick navigation commands
 			ui.message(_("Cannot determine current style"))
@@ -2128,7 +2129,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		paragraph = pos.copy()
 		tmpInfo = pos.copy()
 		tmpInfo.expand(textInfos.UNIT_PARAGRAPH)
-		paragraph.setEndPoint(tmpInfo, which='endToEnd' if direction == 'next' else 'startToStart')
+		paragraph.setEndPoint(tmpInfo, which="endToEnd" if direction == 'next' else "startToStart")
 		MAX_ITER_LIMIT = 10**6
 		for __ in range(MAX_ITER_LIMIT):
 			if not paragraph.isCollapsed:
