@@ -95,8 +95,8 @@ class BooleanSynthSetting(SynthSetting):
 
 class SynthSettingsRing(baseObject.AutoPropertyObject):
 	"""
-	A synth settings ring which enables the user to change to the next and previous settings and adjust the selected one.
-	It was written to facilitate the implementation of a way to change the settings resembling the window-eyes way.
+	A synth settings ring which enables the user to change to the next and previous settings,
+	as well as adjust the selected one.
 	"""
 
 	settings: list[SynthSetting] | None
