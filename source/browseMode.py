@@ -2193,7 +2193,10 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		paragraph = pos.copy()
 		tmpInfo = pos.copy()
 		tmpInfo.expand(textInfos.UNIT_PARAGRAPH)
-		paragraph.setEndPoint(tmpInfo, which="endToEnd" if direction == documentBase._Movement.NEXT else "startToStart")
+		paragraph.setEndPoint(
+			tmpInfo,
+			which="endToEnd" if direction == documentBase._Movement.NEXT else "startToStart",
+		)
 		MAX_ITER_LIMIT = 10**6
 		for __ in range(MAX_ITER_LIMIT):
 			if not paragraph.isCollapsed:
