@@ -78,6 +78,8 @@ import weakref
 import time
 import keyLabels
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
+import json
+from documentNavigation import sentenceNavigation
 
 #: The size that settings panel text descriptions should be wrapped at.
 # Ensure self.scaleSize is used to adjust for OS scaling adjustments.
@@ -2645,9 +2647,60 @@ class DocumentNavigationPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("ParagraphStyle", self.paragraphStyleCombo)
 
+		# Translators: This is a label for sentence reconstruction in the document navigation dialog
+		label = _("&Sentencew Sentence reconstruction:")
+		self.sentenceReconstructionCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=label,
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["documentNavigation", "sentenceReconstruction"],
+			conf=config.conf
+		)
+		self.bindHelpEvent("SentenceReconstruction", self.sentenceReconstructionCombo)
+
+		language = speech.getCurrentLanguage()
+		prettyLanguage = languageHandler.getLanguageDescription(language)
+		# Translators: This is placeholder for the situation when we couldn't determine current language.
+		# It is used in document navigation settings panel to describe non-breaking prefixes edit box.
+		prettyLanguage = prettyLanguage or _("Unknown language")
+		# Translators: This is the label for a textfield in the
+		# Document Navigation settings panel.
+		label = _("Non-breaking prefixes [%s]")
+		label = label % prettyLanguage
+		self.nonBreakingPrefixesEdit = sHelper.addLabeledControl(
+			label,
+			wxCtrlClass=wx.TextCtrl,
+		)
+		j = json.loads(config.conf["documentNavigation"]["nonBreakingPrefixRegex"])
+		value = j.get(language, "")
+		self.nonBreakingPrefixesEdit .SetValue(value)
+		self.bindHelpEvent("NonBreakingPrefixesEdit ", self.nonBreakingPrefixesEdit)
+
+	def isValid(self) -> bool:
+		nbp = self.nonBreakingPrefixesEdit .GetValue()
+		try:
+			sentenceNavigation.getSentenceStopRegex(nonBreakingPrefixes=nbp)
+		except re.error as e:
+			log.debugWarning("Failed to compile text paragraph regex", exc_info=True)
+			gui.messageBox(
+				# Translators: Message shown when invalid text paragraph regex entered
+				_("Failed to compile text paragraph regular expression: %s") % str(e),
+				# Translators: The title of the message box
+				_("Error"),
+				wx.OK | wx.ICON_ERROR,
+				self,
+			)
+			return False
+		return True
+
+
 	def onSave(self):
 		self.paragraphStyleCombo.saveCurrentValueToConf()
-
+		self.sentenceReconstructionCombo.saveCurrentValueToConf()
+		language = speech.getCurrentLanguage()
+		j = json.loads(config.conf["documentNavigation"]["nonBreakingPrefixRegex"])
+		nbp = self.nonBreakingPrefixesEdit .GetValue()
+		j[language] = nbp
+		config.conf["documentNavigation"]["nonBreakingPrefixRegex"] = json.dumps(j)
 
 def _synthWarningDialog(newSynth: str):
 	gui.messageBox(

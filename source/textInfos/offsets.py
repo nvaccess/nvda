@@ -24,6 +24,7 @@ from typing import (
 	Self,
 )
 from logHandler import log
+from documentNavigation.sentenceNavigation import SentenceContext
 
 @dataclass
 class Offsets:
@@ -505,6 +506,12 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			return 0,self._getStoryLength()
 		elif unit==textInfos.UNIT_OFFSET:
 			return offset,offset+1
+		elif unit == textInfos.UNIT_SENTENCE:
+			textInfo = self.copy()
+			textInfo._startOffset, textInfo._endOffset = offset, offset
+			context = SentenceContext(textInfo)
+			sentence = context.moveSentence(0)
+			return sentence._startOffset, sentence._endOffset
 		else:
 			raise ValueError("unknown unit: %s"%unit)
 		return offsetsFunc(offset)

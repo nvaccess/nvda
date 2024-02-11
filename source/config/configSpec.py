@@ -244,6 +244,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [documentNavigation]
 	paragraphStyle = featureFlag(optionsEnum="ParagraphNavigationFlag", behaviorOfDefault="application")
+	sentenceReconstruction = featureFlag(optionsEnum="SentenceReconstructionFlag", behaviorOfDefault="same_style_paragraphs")  # noqa: E501 Breaking this line makes invalid config
+	nonBreakingPrefixRegex = string(default='{configDefaults.nonBreakingPrefix}')
 
 [reviewCursor]
 	simpleReviewMode = boolean(default=True)
