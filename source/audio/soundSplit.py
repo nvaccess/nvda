@@ -12,10 +12,8 @@ import nvwave
 from pycaw.api.audiopolicy import IAudioSessionManager2
 from pycaw.callbacks import AudioSessionNotification
 from pycaw.utils import AudioSession, AudioUtilities
-from typing import Callable
 import ui
 from utils.displayString import DisplayStringIntEnum
-import _ctypes
 
 VolumeTupleT = tuple[float, float]
 
@@ -72,7 +70,7 @@ class SoundSplitState(DisplayStringIntEnum):
 				raise RuntimeError(f"{self=}")
 
 
-audioSessionManager: IAudioSessionManager2|None = None
+audioSessionManager: IAudioSessionManager2 | None = None
 activeCallback: AudioSessionNotification = None
 
 
