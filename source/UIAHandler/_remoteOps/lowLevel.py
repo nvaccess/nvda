@@ -43,6 +43,9 @@ class OperandId(c_ulong):
 	def __repr__(self) -> str:
 		return f"OperandId {self.value}"
 
+	def __hash__(self) -> int:
+		return hash(self.value)
+
 
 class RelativeOffset(c_long):
 	"""
@@ -102,7 +105,7 @@ class RemoteOperationResultSet:
 		_dll.remoteOpResult_hasOperand(self._pResults, operandId, byref(val))
 		return val.value
 
-	def getOperand(self, operandId: OperandId) -> VARIANT:
+	def getOperand(self, operandId: OperandId) -> object:
 		"""
 		Returns the value of the operand with the given ID.
 		In order to succeed,
@@ -113,7 +116,7 @@ class RemoteOperationResultSet:
 		res = _dll.remoteOpResult_getOperand(self._pResults, operandId, byref(val))
 		if res != 0:
 			raise LookupError(f"Operand {operandId} not found in results")
-		return val
+		return val.value
 
 	def __del__(self):
 		_dll.remoteOpResult_free(self._pResults)
@@ -308,7 +311,7 @@ class InstructionType(enum.IntEnum):
 	TextRangeCompareEndpoints = 0x271e0105
 	TextRangeExpandToEnclosingUnit = 0x271e0106
 	TextRangeFindAttribute = 0x271e0107
-	TextRangeFindText = 0x271e0108,
+	TextRangeFindText = 0x271e0108
 	TextRangeGetAttributeValue = 0x271e0109
 	TextRangeGetBoundingRectangles = 0x271e010a
 	TextRangeGetEnclosingElement = 0x271e010b

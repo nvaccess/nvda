@@ -16,8 +16,10 @@ import ctypes
 from ctypes import (
 	_SimpleCData,
 	c_char,
+	c_long,
 	c_wchar
 )
+import enum
 from dataclasses import dataclass
 import weakref
 import struct
@@ -113,7 +115,13 @@ class InstructionBase(metaclass=ABCMeta):
 
 	def getByteCode(self) -> bytes:
 		byteCode = struct.pack('l', self.opCode.value)
-		for param in self.params.values():
+		params = list(self.params.values())
+		if len(params) > 0 and isinstance(params[-1], list):
+			# If the last parameter is a list, it is a variable length parameter.
+			params[-1:] = params[-1]
+		for param in params:
+			if isinstance(param, enum.IntEnum):
+				param = c_long(param.value)
 			if isinstance(param, Operand):
 				param = param.operandId
 			paramBytes = (c_char * ctypes.sizeof(param)).from_address(ctypes.addressof(param)).raw
@@ -127,9 +135,12 @@ class InstructionBase(metaclass=ABCMeta):
 			if isinstance(param, ctypes.Array) and param._type_ == c_wchar:
 				paramOutput += f"c_wchar_array({repr(param.value)})"
 			else:
-				paramOutput += f"{param}"
+				paramOutput += f"{repr(param)}"
 			output += f"\n\t{paramOutput}"
 		return output
+
+	def localExecute(self, registers: dict[OperandId, object]):
+		raise NotImplementedError()
 
 
 @dataclass
@@ -219,7 +230,7 @@ class RemoteOperationBuilder:
 
 	_versionBytes: bytes = struct.pack('l', 0)
 	_sectionNames = ["imports", "globals", "main"]
-	_lastOperandIdRequested= OperandId(1)
+	_lastOperandIdRequested = OperandId(1)
 
 	@property
 	def lastOperandIdRequested(self) -> OperandId:
@@ -235,20 +246,16 @@ class RemoteOperationBuilder:
 
 	def requestNewOperandId(self) -> OperandId:
 		operandID = self.lastOperandIdRequested
-		self._lastOperandIdRequested= OperandId(operandID.value + 1)
+		self._lastOperandIdRequested = OperandId(operandID.value + 1)
 		return operandID
 
-	def getInstructionList(self, section: str = "main") -> InstructionList:
+	def getInstructionList(self, section) -> InstructionList:
 		return self._instructionListBySection[section]
 
-	def lookupInstructionByGlobalIndex(self, index: int) -> InstructionBase:
-		baseIndex = 0
-		for instructionList in self._instructionListBySection.values():
-			instructionCount = instructionList.getInstructionCount()
-			if baseIndex + instructionCount > index:
-				return instructionList.getInstruction(index - baseIndex)
-			baseIndex += instructionCount
-		raise IndexError(f"Instruction index {index} out of range")
+	def getAllInstructions(self) -> list[InstructionBase]:
+		return list(itertools.chain.from_iterable(
+			instructionList._instructions for instructionList in self._instructionListBySection.values()
+		))
 
 	def getByteCode(self) -> bytes:
 		byteCode = self._versionBytes

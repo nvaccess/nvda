@@ -82,7 +82,9 @@ class RemoteContextManager(_BaseRemoteFuncWrapper):
 
 	def __call__(
 		self,
-		func: Callable[Concatenate[_remoteFunc_self, _remoteFunc_paramSpec], Generator[_remoteFunc_return, None, None]]
+		func: Callable[
+			Concatenate[_remoteFunc_self, _remoteFunc_paramSpec], Generator[_remoteFunc_return, None, None]
+		]
 	) -> Callable[Concatenate[_remoteFunc_self, _remoteFunc_paramSpec], ContextManager[_remoteFunc_return]]:
 		contextFunc = contextlib.contextmanager(func)
 		return super().__call__(contextFunc)
@@ -100,10 +102,10 @@ class RemoteContextManager(_BaseRemoteFuncWrapper):
 			f"Entering context manager {func.__qualname__}{self.generateArgsKwargsString(*args, **kwargs)}"
 		)
 		with func(funcSelf, *args, **kwargs) as val:
-			main.addComment("Yielding to outer scope") 
+			main.addComment("Yielding to outer scope")
 			yield val
 			main.addComment(f"Reentering context manager {func.__qualname__}")
-		funcSelf.rob.getInstructionList().addComment(f"Exiting context manager {func.__qualname__}")
+		funcSelf.rob.getInstructionList('main').addComment(f"Exiting context manager {func.__qualname__}")
 
 
 remoteFunc = _BaseRemoteFuncWrapper()

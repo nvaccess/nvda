@@ -42,6 +42,7 @@ def remote_unsignedRange(
 		yield counter
 		counter += step
 
+
 @remoteContextManager
 def remote_signedRange(
 	ra: RemoteAPI,
@@ -66,7 +67,7 @@ def remote_forEachUnitInTextRange(
 	ra: RemoteAPI,
 	textRange: RemoteTextRange,
 	unit: RemoteIntEnum[TextUnit] | TextUnit,
-	reverse: bool =False
+	reverse: bool = False
 ) -> Generator[RemoteTextRange, None, None]:
 	logicalTextRange = textRange.getLogicalAdapter(reverse)
 	logicalTempRange = logicalTextRange.clone()
@@ -87,8 +88,8 @@ def remote_forEachUnitInTextRange(
 def remote_forEachParagraphWithHeadingStyle(
 	ra: RemoteAPI,
 	textRange: RemoteTextRange,
-	skipFirstUnit: bool =False,
-	reverse: bool =False
+	skipFirstUnit: bool = False,
+	reverse: bool = False
 ) -> Generator[tuple[RemoteTextRange, RemoteInt], None, None]:
 	if skipFirstUnit:
 		logicalTextRange = textRange.getLogicalAdapter(reverse)
@@ -122,7 +123,7 @@ def remote_findFirstHeadingInTextRange(
 	ra: RemoteAPI,
 	textRange: RemoteTextRange,
 	wantedLevel: RemoteInt | int = 0,
-	reverse: bool =False
+	reverse: bool = False
 ) -> tuple[RemoteInt, RemoteString, RemoteTextRange]:
 	foundLevel = ra.newInt(0)
 	foundLabel = ra.newString("")
