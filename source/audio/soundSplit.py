@@ -4,20 +4,14 @@
 # See the file COPYING for more details.
 
 import atexit
-from comInterfaces.coreAudio.constants import (
-	CLSID_MMDeviceEnumerator,
-	EDataFlow,
-	ERole,
-)
-import comInterfaces.coreAudio.audioclient as audioclient
-import comInterfaces.coreAudio.audiopolicy as audiopolicy
-import comInterfaces.coreAudio.mmdeviceapi as mmdeviceapi
-import comtypes
 import config
 from enum import IntEnum, unique
 import globalVars
 from logHandler import log
 import nvwave
+from pycaw.api.audiopolicy import IAudioSessionManager2
+from pycaw.callbacks import AudioSessionNotification
+from pycaw.utils import AudioSession, AudioUtilities
 from typing import Callable
 import ui
 from utils.displayString import DisplayStringIntEnum
@@ -78,109 +72,69 @@ class SoundSplitState(DisplayStringIntEnum):
 				raise RuntimeError(f"{self=}")
 
 
-sessionManager: audiopolicy.IAudioSessionManager2 = None
-activeCallback: comtypes.COMObject | None = None
+audioSessionManager: IAudioSessionManager2|None = None
+activeCallback: AudioSessionNotification = None
 
 
 def initialize() -> None:
-	global sessionManager
-	try:
-		sessionManager = getSessionManager()
-	except _ctypes.COMError as e:
-		log.error("Could not initialize audio session manager! ", e)
-		return
-	if sessionManager is None:
-		log.error("Could not initialize audio session manager! ")
-		return
 	if nvwave.usingWasapiWavePlayer():
+		global audioSessionManager
+		audioSessionManager = AudioUtilities.GetAudioSessionManager()
 		state = SoundSplitState(config.conf['audio']['soundSplitState'])
-		global activeCallback
-		activeCallback = setSoundSplitState(state)
+		setSoundSplitState(state)
 
 
 @atexit.register
 def terminate():
-	global activeCallback
 	if nvwave.usingWasapiWavePlayer():
 		setSoundSplitState(SoundSplitState.OFF)
-		if activeCallback is not None:
-			unregisterCallback(activeCallback)
-	activeCallback = None
-
-
-def getDefaultAudioDevice(kind: EDataFlow = EDataFlow.eRender) -> mmdeviceapi.IMMDevice | None:
-	deviceEnumerator = comtypes.CoCreateInstance(
-		CLSID_MMDeviceEnumerator,
-		mmdeviceapi.IMMDeviceEnumerator,
-		comtypes.CLSCTX_INPROC_SERVER,
-	)
-	device = deviceEnumerator.GetDefaultAudioEndpoint(
-		kind.value,
-		ERole.eMultimedia.value,
-	)
-	return device
-
-
-def getSessionManager() -> audiopolicy.IAudioSessionManager2:
-	audioDevice = getDefaultAudioDevice()
-	if audioDevice is None:
-		raise RuntimeError("No default output audio device found!")
-	tmp = audioDevice.Activate(audiopolicy.IAudioSessionManager2._iid_, comtypes.CLSCTX_ALL, None)
-	sessionManager: audiopolicy.IAudioSessionManager2 = tmp.QueryInterface(audiopolicy.IAudioSessionManager2)
-	return sessionManager
+		unregisterCallback()
 
 
 def applyToAllAudioSessions(
-		func: Callable[[audiopolicy.IAudioSessionControl2], None],
+		callback: AudioSessionNotification,
 		applyToFuture: bool = True,
-) -> comtypes.COMObject | None:
-	sessionEnumerator: audiopolicy.IAudioSessionEnumerator = sessionManager.GetSessionEnumerator()
-	for i in range(sessionEnumerator.GetCount()):
-		session: audiopolicy.IAudioSessionControl = sessionEnumerator.GetSession(i)
-		session2: audiopolicy.IAudioSessionControl2 = session.QueryInterface(audiopolicy.IAudioSessionControl2)
-		func(session2)
+) -> None:
+	unregisterCallback()
 	if applyToFuture:
-		class AudioSessionNotification(comtypes.COMObject):
-			_com_interfaces_ = (audiopolicy.IAudioSessionNotification,)
-
-			def OnSessionCreated(self, session: audiopolicy.IAudioSessionControl):
-				session2 = session.QueryInterface(audiopolicy.IAudioSessionControl2)
-				func(session2)
-		callback = AudioSessionNotification()
-		sessionManager.RegisterSessionNotification(callback)
-		return callback
-	else:
-		return None
+		audioSessionManager.RegisterSessionNotification(callback)
+		# The following call is required to make callback to work:
+		audioSessionManager.GetSessionEnumerator()
+		global activeCallback
+		activeCallback = callback
+	sessions: list[AudioSession] = AudioUtilities.GetAllSessions()
+	for session in sessions:
+		callback.on_session_created(session)
 
 
-def unregisterCallback(callback: comtypes.COMObject) -> None:
-	sessionManager .UnregisterSessionNotification(callback)
+def unregisterCallback() -> None:
+	global activeCallback
+	if activeCallback is not None:
+		audioSessionManager.UnregisterSessionNotification(activeCallback)
+		activeCallback = None
 
 
 def setSoundSplitState(state: SoundSplitState) -> None:
-	global activeCallback
-	if activeCallback is not None:
-		unregisterCallback(activeCallback)
-		activeCallback = None
 	leftVolume, rightVolume = state.getAppVolume()
 	leftNVDAVolume, rightNVDAVolume = state.getNVDAVolume()
 
-	def volumeSetter(session2: audiopolicy.IAudioSessionControl2) -> None:
-		channelVolume: audioclient.IChannelAudioVolume = session2.QueryInterface(audioclient.IChannelAudioVolume)
-		channelCount = channelVolume.GetChannelCount()
-		if channelCount != 2:
-			pid = session2.GetProcessId()
-			log.warning(f"Audio session for pid {pid} has {channelCount} channels instead of 2 - cannot set volume!")
-			return
-		pid: int = session2.GetProcessId()
-		if pid != globalVars.appPid:
-			channelVolume.SetChannelVolume(0, leftVolume, None)
-			channelVolume.SetChannelVolume(1, rightVolume, None)
-		else:
-			channelVolume.SetChannelVolume(0, leftNVDAVolume, None)
-			channelVolume.SetChannelVolume(1, rightNVDAVolume, None)
+	class VolumeSetter(AudioSessionNotification):
+		def on_session_created(self, new_session: AudioSession):
+			pid = new_session.ProcessId
+			channelVolume = new_session.channelAudioVolume()
+			channelCount = channelVolume.GetChannelCount()
+			if channelCount != 2:
+				log.warning(f"Audio session for pid {pid} has {channelCount} channels instead of 2 - cannot set volume!")
+				return
+			if pid != globalVars.appPid:
+				channelVolume.SetChannelVolume(0, leftVolume, None)
+				channelVolume.SetChannelVolume(1, rightVolume, None)
+			else:
+				channelVolume.SetChannelVolume(0, leftNVDAVolume, None)
+				channelVolume.SetChannelVolume(1, rightNVDAVolume, None)
 
-	activeCallback = applyToAllAudioSessions(volumeSetter)
+	volumeSetter = VolumeSetter()
+	applyToAllAudioSessions(volumeSetter)
 
 
 def toggleSoundSplitState() -> None:
