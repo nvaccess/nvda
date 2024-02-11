@@ -178,29 +178,27 @@ class KeyCommandsPreprocessor(Preprocessor):
 			self._kcLines.append(heading.group(0))
 		self._kcLastHeadingLevel = level
 
-	def _heading(self, m: re.Match):
+	def _heading(self, m: re.Match, appendHeading: bool = True):
 		# We work with 0 based heading levels.
-		level = len(m.group("id")) - 1
+		# Ignoring the title, the highest heading in a markdown document is 2 (##).
+		# Thus why we must subtract 2 here.
+		level = len(m.group("id")) - 2
 		try:
 			del self._headings[level:]
 		except IndexError:
 			pass
-		self._headings.append(m)
+		if appendHeading:
+			self._headings.append(m)
 		self._kcLastHeadingLevel = min(self._kcLastHeadingLevel, level - 1)
 
 	def _handleSetting(self):
 		if not self._settingsHeaderRow:
 			raise KeyCommandsError("%d, setting command cannot be used before settingsSection command" % self._lineNum)
 
-		if self._areHeadingsPending():
-			# There are new headings to write.
-			# If there was a previous settings table, it ends here, so write a blank line.
-			self._kcLines.append("")
-			self._writeHeadings()
-			# New headings were written, so we need to output the header row.
-			self._kcLines.append(self._settingsHeaderRow)
-			numCols = self._settingsNumLayouts + 2  # name + description + layouts
-			self._kcLines.append("|" + "---|" * numCols)
+		tableHeadersRequired = False
+		if not self._kcLines[-2].startswith("|"):
+			# We are currently not in a table so a header row needs to be written.
+			tableHeadersRequired = True
 
 		# The next line should be a heading which is the name of the setting.
 		line = self._seekNonEmptyLine()
@@ -208,32 +206,42 @@ class KeyCommandsPreprocessor(Preprocessor):
 		if not m:
 			raise KeyCommandsError(f"{self._lineNum}, setting command must be followed by heading")
 		name = m.group("txt")
+		# Although we will present the heading text as a table row rather than a heading,
+		# we still must track the heading in order to:
+		# Forget any previous headings deeper than this one, and
+		# to keep the current heading level up to date.
+		self._heading(m, appendHeading=False)
 
 		# The next few lines should be table rows for each layout.
 		# Alternatively, if the key is common to all layouts,
 		# there will be a single line of text specifying the key after a colon.
 		keys: list[str] = []
-		for _layout in range(self._settingsNumLayouts):
-			line = self._seekNonEmptyLine()
+		line = self._seekNonEmptyLine()
+		m = Regex.SETTING_SINGLE_KEY.value.match(line)
+		if m:
+			keys.append(m.group(1))
+		else:
+			firstLoop = True
+			for _layout in range(self._settingsNumLayouts):
+				if firstLoop:
+					firstLoop = False
+				else:
+					line = self._seekNonEmptyLine()
 
-			m = Regex.SETTING_SINGLE_KEY.value.match(line)
-			if m:
-				keys.append(m.group(1))
-				break
-			elif not Regex.TABLE_ROW.value.match(line):
-				raise KeyCommandsError(
-					f"{self._lineNum}, setting command: "
-					"There must be one table row for each keyboard layout"
-				)
+				if not Regex.TABLE_ROW.value.match(line):
+					raise KeyCommandsError(
+						f"{self._lineNum}, setting command: "
+						"There must be one table row for each keyboard layout"
+					)
 
-			# This is a table row.
-			# The key will be the second column.
-			try:
-				key = line.strip("|").split("|")[1].strip()
-			except IndexError:
-				raise KeyCommandsError(f"{self._lineNum}, setting command: Key entry not found in table row.")
-			else:
-				keys.append(key)
+				# This is a table row.
+				# The key will be the second column.
+				try:
+					key = line.strip("|").split("|")[1].strip()
+				except IndexError:
+					raise KeyCommandsError(f"{self._lineNum}, setting command: Key entry not found in table row.")
+				else:
+					keys.append(key)
 
 		if 1 == len(keys) < self._settingsNumLayouts:
 			# The key has only been specified once, so it is the same in all layouts.
@@ -252,9 +260,26 @@ class KeyCommandsPreprocessor(Preprocessor):
 
 		# Finally, the next line should be the description.
 		desc = self._seekNonEmptyLine()
-		self._kcLines.append(f"| {name} | {' | '.join(keys)} | {desc} |")
-		if not self._kcLines[-2].startswith("|"):
-			# The previous line was not a table, so this is a new table.
-			# Write the header row.
-			numCols = len(keys) + 2  # name + description + layouts
+
+		if self._areHeadingsPending():
+			# There are new headings to write.
+			# If there was a previous settings table, it ends here, so write a blank line.
+			self._kcLines.append("")
+			self._writeHeadings()
+			# New headings were written, so we need to output the header row.
+			tableHeadersRequired = True
+
+		if tableHeadersRequired:
+			self._kcLines.append(self._settingsHeaderRow)
+			numCols = self._settingsNumLayouts + 2  # name + description + layouts
 			self._kcLines.append("|" + "---|" * numCols)
+		else:
+			# this is a continuation of a table.
+			# Therefore, remove the blank line previously added to end the table.
+			del self._kcLines[-1]
+
+		self._kcLines.append(f"| {name} | {' | '.join(keys)} | {desc} |")
+		# Indicate the end of the table with a blank line.
+		# Note that this may end up getting removed on the next call
+		# if another setting continues this table.
+		self._kcLines.append("")
