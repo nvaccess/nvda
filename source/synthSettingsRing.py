@@ -4,6 +4,7 @@ import synthDriverHandler
 import queueHandler
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 
+
 class SynthSetting(baseObject.AutoPropertyObject):
 	"""a numeric synth setting. Has functions to set, get, increase and decrease its value """
 	def __init__(self,synth,setting,min=0,max=100):
