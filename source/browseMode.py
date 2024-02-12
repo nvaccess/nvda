@@ -175,13 +175,20 @@ class QuickNavItem(object, metaclass=ABCMeta):
 class TextInfoQuickNavItem(QuickNavItem):
 	""" Represents a quick nav item in a browse mode document who's positions are represented by a L{textInfos.TextInfo}. """
 
-	def __init__(self,itemType,document,textInfo):
+	def __init__(
+			self,
+			itemType: str,
+			document: treeInterceptorHandler.TreeInterceptor,
+			textInfo: textInfos.TextInfo,
+			outputReason: OutputReason = OutputReason.QUICKNAV,
+	):
 		"""
 		See L{QuickNavItem.__init__} for itemType and document argument definitions.
 		@param textInfo: the textInfo position this item represents.
 		@type textInfo: L{textInfos.TextInfo}
 		"""
 		self.textInfo=textInfo
+		self.outputReason = outputReason
 		super(TextInfoQuickNavItem,self).__init__(itemType,document)
 
 	def __lt__(self,other):
@@ -213,7 +220,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 			if info.compareEndPoints(fieldInfo, "endToEnd") > 0:
 				# We've expanded past the end of the field, so limit to the end of the field.
 				info.setEndPoint(fieldInfo, "endToEnd")
-		speech.speakTextInfo(info, reason=OutputReason.QUICKNAV)
+		speech.speakTextInfo(info, reason=self.outputReason)
 
 	def activate(self):
 		self.textInfo.obj._activatePosition(info=self.textInfo)
@@ -471,7 +478,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 				return
 			value = paragraphFunction(info)
 			if value == desiredValue:
-				yield TextInfoQuickNavItem(kind, self, info.copy())
+				yield TextInfoQuickNavItem(kind, self, info.copy(), outputReason=OutputReason.CARET)
 
 
 	def _quickNavScript(self,gesture, itemType, direction, errorMessage, readUnit):

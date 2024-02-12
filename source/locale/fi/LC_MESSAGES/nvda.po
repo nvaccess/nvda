@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-02 04:36+0000\n"
-"PO-Revision-Date: 2024-02-05 21:03\n"
+"POT-Creation-Date: 2024-02-09 02:00+0000\n"
+"PO-Revision-Date: 2024-02-11 22:51\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -2658,19 +2658,29 @@ msgid "Toggles native selection mode on and off"
 msgstr "Ottaa käyttöön tai poistaa käytöstä alkuperäisen valintatilan."
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
-#: browseMode.py:2040
+#: browseMode.py:2041
+msgid "Native selection mode unsupported in this browse mode document"
+msgstr "Alkuperäistä valintatilaa ei tueta tässä selaustila-asiakirjassa"
+
+#. Translators: the message when native selection mode cannot be turned off in this browse mode document.
+#: browseMode.py:2044
+msgid "Native selection mode cannot be turned off in this browse mode document"
+msgstr "Alkuperäistä valintatilaa ei voi poistaa käytöstä tässä selaustila-asiakirjassa"
+
+#. Translators: the message when native selection mode is not available in this browse mode document.
+#: browseMode.py:2053
 msgid "Native selection mode unsupported in this document"
 msgstr "Alkuperäistä valintatilaa ei tueta tässä asiakirjassa"
 
 #. Translators: reported when native selection mode is toggled on.
-#: browseMode.py:2045
-msgid "Native app selection mode enabled."
-msgstr "Sovelluksen alkuperäinen valintatila käytössä"
+#: browseMode.py:2057
+msgid "Native app selection mode enabled"
+msgstr "Alkuperäinen valintatila käytössä"
 
 #. Translators: reported when native selection mode is toggled off.
-#: browseMode.py:2052
-msgid "Native app selection mode disabled."
-msgstr "Sovelluksen alkuperäinen valintatila ei käytössä"
+#: browseMode.py:2065
+msgid "Native app selection mode disabled"
+msgstr "Alkuperäinen valintatila poistettu käytöstä"
 
 #. Translators: The level at which the given symbol will be spoken.
 #: characterProcessing.py:157
@@ -3685,31 +3695,31 @@ msgstr "Rivinumerot puhutaan"
 #. Translators: Input help mode message for toggle report line indentation command.
 #: globalCommands.py:635
 msgid "Cycles through line indentation settings"
-msgstr "Vaihtaa rivien sisennysten puhumisen asetusta."
+msgstr "Vaihtaa rivien sisennysten ilmoittamisen asetusta."
 
 #. Translators: A message reported when cycling through line indentation settings.
 #. {mode} will be replaced with the mode; i.e. Off, Speech, Tones or Both Speech and Tones.
 #: globalCommands.py:645
 #, python-brace-format
 msgid "Report line indentation {mode}"
-msgstr "Rivien sisennysten puhuminen {mode}"
+msgstr "Rivien sisennysten ilmoittaminen {mode}"
 
 #. Translators: Input help mode message for toggle ignore blank lines for line indentation reporting command.
 #: globalCommands.py:649
 msgid "Toggles on and off the ignoring of blank lines for line indentation reporting"
-msgstr "Ottaa käyttöön tai poistaa käytöstä tyhjien rivien ohittamisen rivien sisennyksiä puhuttaessa."
+msgstr "Ottaa käyttöön tai poistaa käytöstä tyhjien rivien ohittamisen rivien sisennyksiä ilmoitettaessa."
 
 #. Translators: The message announced when toggling off the ignore blank lines for line indentation
 #. reporting document formatting setting.
 #: globalCommands.py:658
 msgid "Ignore blank lines for line indentation reporting off"
-msgstr "Tyhjiä rivejä ei ohiteta rivien sisennyksiä puhuttaessa"
+msgstr "Tyhjiä rivejä ei ohiteta rivien sisennyksiä ilmoitettaessa"
 
 #. Translators: The message announced when toggling on the ignore blank lines for line indentation
 #. reporting document formatting setting.
 #: globalCommands.py:662
 msgid "Ignore blank lines for line indentation reporting on"
-msgstr "Tyhjät rivit ohitetaan rivien sisennyksiä puhuttaessa"
+msgstr "Tyhjät rivit ohitetaan rivien sisennyksiä ilmoitettaessa"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 #: globalCommands.py:666
@@ -4765,7 +4775,7 @@ msgstr "Avaa oletuspuhesanaston valintaikkunan."
 #. Translators: Input help mode message for opening voice-specific dictionary dialog.
 #: globalCommands.py:3131
 msgid "Shows the NVDA voice-specific dictionary dialog"
-msgstr "Avaa äänikohtaisen sanaston valintaikkunan."
+msgstr "Avaa puheäänikohtaisen sanaston valintaikkunan."
 
 #. Translators: Input help mode message for opening temporary dictionary.
 #: globalCommands.py:3140
@@ -5819,25 +5829,25 @@ msgid "tab"
 msgstr "sarkain"
 
 #. Translators: One of the keyboard layouts for NVDA.
-#: keyboardHandler.py:403
+#: keyboardHandler.py:399
 msgid "desktop"
 msgstr "pöytäkone"
 
 #. Translators: One of the keyboard layouts for NVDA.
-#: keyboardHandler.py:405
+#: keyboardHandler.py:401
 msgid "laptop"
 msgstr "kannettava"
 
 #. Translators: Reported for an unknown key press.
 #. %s will be replaced with the key code.
-#: keyboardHandler.py:488
+#: keyboardHandler.py:484
 #, python-format
 msgid "unknown %s"
 msgstr "tuntematon %s"
 
 #. Translators: a state that denotes a control is currently on
 #. E.g. a switch control.
-#: keyboardHandler.py:551 synthSettingsRing.py:86 controlTypes\state.py:198
+#: keyboardHandler.py:547 synthSettingsRing.py:86 controlTypes\state.py:198
 #: gui\speechDict.py:193
 msgid "on"
 msgstr "käytössä"
@@ -5846,7 +5856,7 @@ msgstr "käytössä"
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:551 synthSettingsRing.py:86 controlTypes\state.py:221
+#: keyboardHandler.py:547 synthSettingsRing.py:86 controlTypes\state.py:221
 #: gui\settingsDialogs.py:2048 gui\speechDict.py:193
 msgid "off"
 msgstr "ei käytössä"
@@ -5854,13 +5864,13 @@ msgstr "ei käytössä"
 #. Translators: Used when describing keys on the system keyboard with a particular layout.
 #. %s is replaced with the layout name.
 #. For example, in English, this might produce "laptop keyboard".
-#: keyboardHandler.py:646
+#: keyboardHandler.py:642
 #, python-format
 msgid "%s keyboard"
 msgstr "Näppäimistö: %s"
 
 #. Translators: Used when describing keys on the system keyboard applying to all layouts.
-#: keyboardHandler.py:651
+#: keyboardHandler.py:647
 msgid "keyboard, all layouts"
 msgstr "näppäimistö, kaikki asettelut"
 
@@ -7228,13 +7238,13 @@ msgstr "Kieli"
 #. Translators: Label for a setting in voice settings dialog.
 #: synthDriverHandler.py:137
 msgid "&Voice"
-msgstr "&Ääni"
+msgstr "Puhe&ääni"
 
 #. Translators: Label for a setting in synth settings ring.
 #: synthDriverHandler.py:140
 msgctxt "synth setting"
 msgid "Voice"
-msgstr "Ääni"
+msgstr "Puheääni"
 
 #. Translators: Label for a setting in voice settings dialog.
 #: synthDriverHandler.py:149
@@ -9148,7 +9158,7 @@ msgstr "Ei koskaan"
 #. Translators: Label for setting to move the system caret when routing review cursor with braille.
 #: config\featureFlagEnums.py:92
 msgid "Only when tethered automatically"
-msgstr "Vain, kun pistenäyttö seuraa automaattisesti"
+msgstr "Vain kun pistenäyttö seuraa automaattisesti"
 
 #. Translators: Label for setting to move the system caret when routing review cursor with braille.
 #: config\featureFlagEnums.py:94
@@ -10645,7 +10655,7 @@ msgstr "Valintaikkuna, jossa voidaan lisätä sanastomerkintöjä oletussanastoo
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
 #: gui\__init__.py:612
 msgid "&Voice dictionary..."
-msgstr "&Äänikohtainen..."
+msgstr "Puhe&äänikohtainen..."
 
 #. Translators: The help text for the menu item
 #. to open Voice specific speech dictionary dialog.
@@ -11721,7 +11731,7 @@ msgstr "&Syntetisaattori:"
 #. Translators: This is the label for the voice settings panel.
 #: gui\settingsDialogs.py:1489
 msgid "Voice"
-msgstr "Ääni"
+msgstr "Puheääni"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
@@ -11746,7 +11756,7 @@ msgstr "Välimerkki- ja symboli&taso:"
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
 #: gui\settingsDialogs.py:1556
 msgid "Trust voice's language when processing characters and symbols"
-msgstr "Käytä äänen kieltä merkkejä ja symboleita käsiteltäessä"
+msgstr "Käytä puheäänen kieltä merkkejä ja symboleita käsiteltäessä"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, data from the unicode CLDR will be used
@@ -12268,7 +12278,7 @@ msgstr "Rivien &sisennysten ilmoittaminen:"
 #. If this option is selected, NVDA will ignore blank lines for line indentation reporting
 #: gui\settingsDialogs.py:2438
 msgid "Ignore &blank lines for line indentation reporting"
-msgstr "Ohita t&yhjät rivit rivien sisennystä ilmoitettaessa"
+msgstr "Ohita t&yhjät rivit rivien sisennyksiä ilmoitettaessa"
 
 #. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -12579,7 +12589,7 @@ msgstr "Automaattinen (UIA etusijalla)"
 #. panel to have NVDA use UIA in the Windows Console when available.
 #: gui\settingsDialogs.py:2965
 msgid "UIA when available"
-msgstr "UIA, kun käytettävissä"
+msgstr "UIA kun käytettävissä"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA use its legacy Windows Console support
@@ -12757,7 +12767,7 @@ msgstr "Ilmoita läpinäkyvien värien arvot"
 #. Translators: This is the label for a checkbox control in the Advanced settings panel.
 #: gui\settingsDialogs.py:3232
 msgid "Use WASAPI for audio output (requires restart)"
-msgstr "Käytä WASAPIa äänen toistamiseen (edellyttää uudelleenkäynnistystä)"
+msgstr "Käytä WASAPIa äänentoistoon (edellyttää uudelleenkäynnistystä)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -13208,7 +13218,7 @@ msgstr "Oletussanasto"
 #: gui\speechDict.py:332
 #, python-format
 msgid "Voice dictionary (%s)"
-msgstr "Äänikohtainen sanasto (%s)"
+msgstr "Puheäänikohtainen sanasto (%s)"
 
 #. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long
 #. as NvDA is running).
@@ -14031,12 +14041,12 @@ msgstr "Riviä {rowNumber} ja saraketta {columnNumber} ei löydy riviotsikoista"
 
 #. Translators: a description for a script
 #. Translators: a description for a script that reports the comment at the caret.
-#: NVDAObjects\IAccessible\winword.py:321 NVDAObjects\UIA\wordDocument.py:602
+#: NVDAObjects\IAccessible\winword.py:321 NVDAObjects\UIA\wordDocument.py:608
 msgid "Reports the text of the comment where the system caret is located."
 msgstr "Lukee kommentin tekstin järjestelmäkohdistimen nykyisestä sijainnista."
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-#: NVDAObjects\IAccessible\winword.py:344 NVDAObjects\UIA\wordDocument.py:613
+#: NVDAObjects\IAccessible\winword.py:344 NVDAObjects\UIA\wordDocument.py:619
 msgid "No comments"
 msgstr "Ei kommentteja"
 
@@ -14231,13 +14241,13 @@ msgstr "Taulukon loppu"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: NVDAObjects\UIA\wordDocument.py:61 NVDAObjects\window\winword.py:1670
+#: NVDAObjects\UIA\wordDocument.py:61 NVDAObjects\window\winword.py:1671
 msgid "&Annotations"
 msgstr "&Merkinnät"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: NVDAObjects\UIA\wordDocument.py:64 NVDAObjects\window\winword.py:1676
+#: NVDAObjects\UIA\wordDocument.py:64 NVDAObjects\window\winword.py:1677
 msgid "&Errors"
 msgstr "V&irheet"
 
@@ -14272,19 +14282,19 @@ msgid "Comment: {comment} by {author} on {date}"
 msgstr "Kommentti: {comment}, muokkaaja: {author}, päivämäärä: {date}"
 
 #. Translators: a message when navigating by sentence is unavailable in MS Word
-#: NVDAObjects\UIA\wordDocument.py:568
+#: NVDAObjects\UIA\wordDocument.py:574
 msgid "Navigating by sentence not supported in this document"
 msgstr "Lauseittain liikkumista ei tueta tässä asiakirjassa"
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
-#: NVDAObjects\UIA\wordDocument.py:621
+#: NVDAObjects\UIA\wordDocument.py:627
 msgid "Command not supported in this type of document. The tables have their first row cells automatically set as column headers."
 msgstr "Komentoa ei tueta tässä asiakirjatyypissä. Ensimmäisen rivin solut määritetään automaattisesti taulukoiden sarakeotsikoiksi."
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
-#: NVDAObjects\UIA\wordDocument.py:630
+#: NVDAObjects\UIA\wordDocument.py:636
 msgid "Command not supported in this type of document. The tables have their first column cells automatically set as row headers."
 msgstr "Komentoa ei tueta tässä asiakirjatyypissä. Ensimmäisen rivin solut määritetään automaattisesti taulukoiden riviotsikoiksi."
 
@@ -15256,7 +15266,7 @@ msgstr "Näyttää luettelon tämän laskentataulukon elementeistä."
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: NVDAObjects\window\excel.py:667 NVDAObjects\window\winword.py:1673
+#: NVDAObjects\window\excel.py:667 NVDAObjects\window\winword.py:1674
 msgid "&Charts"
 msgstr "&Kaaviot"
 
@@ -15286,37 +15296,37 @@ msgstr "väliltä {start} ja {end}"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1113 NVDAObjects\window\winword.py:1355
+#: NVDAObjects\window\excel.py:1113 NVDAObjects\window\winword.py:1356
 msgid "Bold off"
 msgstr "Lihavointi pois"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1115 NVDAObjects\window\winword.py:1352
+#: NVDAObjects\window\excel.py:1115 NVDAObjects\window\winword.py:1353
 msgid "Bold on"
 msgstr "Lihavointi käytössä"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1127 NVDAObjects\window\winword.py:1369
+#: NVDAObjects\window\excel.py:1127 NVDAObjects\window\winword.py:1370
 msgid "Italic off"
 msgstr "Kursivointi pois"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1129 NVDAObjects\window\winword.py:1366
+#: NVDAObjects\window\excel.py:1129 NVDAObjects\window\winword.py:1367
 msgid "Italic on"
 msgstr "Kursivointi käytössä"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1141 NVDAObjects\window\winword.py:1383
+#: NVDAObjects\window\excel.py:1141 NVDAObjects\window\winword.py:1384
 msgid "Underline off"
 msgstr "Alleviivaus pois"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1143 NVDAObjects\window\winword.py:1380
+#: NVDAObjects\window\excel.py:1143 NVDAObjects\window\winword.py:1381
 msgid "Underline on"
 msgstr "Alleviivaus käytössä"
 
@@ -15802,96 +15812,96 @@ msgstr[0] "%.1f rivi"
 msgstr[1] "%.1f riviä"
 
 #. Translators: the title of the message dialog desplaying an MS Word table description.
-#: NVDAObjects\window\winword.py:1174
+#: NVDAObjects\window\winword.py:1175
 msgid "Table description"
 msgstr "Taulukon kuvaus"
 
 #. Translators: the default (automatic) color in Microsoft Word
-#: NVDAObjects\window\winword.py:1273
+#: NVDAObjects\window\winword.py:1274
 msgid "automatic color"
 msgstr "automaattinen väri"
 
 #. Translators: a an alignment in Microsoft Word
-#: NVDAObjects\window\winword.py:1394
+#: NVDAObjects\window\winword.py:1395
 msgid "Left aligned"
 msgstr "Tasattu vasemmalle"
 
 #. Translators: a an alignment in Microsoft Word
-#: NVDAObjects\window\winword.py:1396
+#: NVDAObjects\window\winword.py:1397
 msgid "centered"
 msgstr "Keskitetty"
 
 #. Translators: a an alignment in Microsoft Word
-#: NVDAObjects\window\winword.py:1398
+#: NVDAObjects\window\winword.py:1399
 msgid "Right aligned"
 msgstr "Tasattu oikealle"
 
 #. Translators: a an alignment in Microsoft Word
-#: NVDAObjects\window\winword.py:1400
+#: NVDAObjects\window\winword.py:1401
 msgid "Justified"
 msgstr "Tasattu molempiin reunoihin"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\winword.py:1431
+#: NVDAObjects\window\winword.py:1432
 msgid "Superscript"
 msgstr "Yläindeksi"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\winword.py:1434
+#: NVDAObjects\window\winword.py:1435
 msgid "Subscript"
 msgstr "Alaindeksi"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\winword.py:1437
+#: NVDAObjects\window\winword.py:1438
 msgid "Baseline"
 msgstr "Perusviiva"
 
 #. Translators: a message reported when a paragraph is moved below another paragraph
-#: NVDAObjects\window\winword.py:1449
+#: NVDAObjects\window\winword.py:1450
 #, python-format
 msgid "Moved below %s"
 msgstr "Siirretty kappaleen %s alapuolelle"
 
 #. Translators: a message reported when a paragraph is moved below a blank paragraph
-#: NVDAObjects\window\winword.py:1452
+#: NVDAObjects\window\winword.py:1453
 msgid "Moved below blank paragraph"
 msgstr "Siirretty tyhjän kappaleen alapuolelle"
 
 #. Translators: a message reported when a paragraph is moved above another paragraph
-#: NVDAObjects\window\winword.py:1465
+#: NVDAObjects\window\winword.py:1466
 #, python-format
 msgid "Moved above %s"
 msgstr "Siirretty kappaleen %s yläpuolelle"
 
 #. Translators: a message reported when a paragraph is moved above a blank paragraph
-#: NVDAObjects\window\winword.py:1468
+#: NVDAObjects\window\winword.py:1469
 msgid "Moved above blank paragraph"
 msgstr "Siirretty tyhjän kappaleen yläpuolelle"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
-#: NVDAObjects\window\winword.py:1479
+#: NVDAObjects\window\winword.py:1480
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "tyyli: {styleName}, jäsennystaso {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
-#: NVDAObjects\window\winword.py:1489
+#: NVDAObjects\window\winword.py:1490
 #, python-brace-format
 msgid "{size:g} point font"
 msgstr "fonttikoko {size:g} pistettä"
 
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
-#: NVDAObjects\window\winword.py:1505
+#: NVDAObjects\window\winword.py:1506
 msgid "Display nonprinting characters"
 msgstr "Näytä tulostumattomat merkit"
 
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
-#: NVDAObjects\window\winword.py:1508
+#: NVDAObjects\window\winword.py:1509
 msgid "Hide nonprinting characters"
 msgstr "Piilota tulostumattomat merkit"
 
 #. Translators: a measurement in Microsoft Word
-#: NVDAObjects\window\winword.py:1546
+#: NVDAObjects\window\winword.py:1547
 #, python-brace-format
 msgid "{offset:.3g} character"
 msgid_plural "{offset:.3g} characters"
@@ -15899,7 +15909,7 @@ msgstr[0] "{offset:.3g} merkki"
 msgstr[1] "{offset:.3g} merkkiä"
 
 #. Translators: a measurement in Microsoft Word
-#: NVDAObjects\window\winword.py:1556
+#: NVDAObjects\window\winword.py:1557
 #, python-brace-format
 msgid "{offset:.3g} inch"
 msgid_plural "{offset:.3g} inches"
@@ -15907,7 +15917,7 @@ msgstr[0] "{offset:.3g} tuuma"
 msgstr[1] "{offset:.3g} tuumaa"
 
 #. Translators: a measurement in Microsoft Word
-#: NVDAObjects\window\winword.py:1564
+#: NVDAObjects\window\winword.py:1565
 #, python-brace-format
 msgid "{offset:.3g} centimeter"
 msgid_plural "{offset:.3g} centimeters"
@@ -15915,7 +15925,7 @@ msgstr[0] "{offset:.3g} senttimetri"
 msgstr[1] "{offset:.3g} senttimetriä"
 
 #. Translators: a measurement in Microsoft Word
-#: NVDAObjects\window\winword.py:1572
+#: NVDAObjects\window\winword.py:1573
 #, python-brace-format
 msgid "{offset:.3g} millimeter"
 msgid_plural "{offset:.3g} millimeters"
@@ -15923,14 +15933,14 @@ msgstr[0] "{offset:.3g} millimetri"
 msgstr[1] "{offset:.3g} millimetriä"
 
 #. Translators: a measurement in Microsoft Word (points)
-#: NVDAObjects\window\winword.py:1578
+#: NVDAObjects\window\winword.py:1579
 #, python-brace-format
 msgid "{offset:.3g} pt"
 msgstr "{offset:.3g} pistettä"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
-#: NVDAObjects\window\winword.py:1584
+#: NVDAObjects\window\winword.py:1585
 #, python-brace-format
 msgid "{offset:.3g} pica"
 msgid_plural "{offset:.3g} picas"
@@ -15938,17 +15948,17 @@ msgstr[0] "{offset:.3g} pica"
 msgstr[1] "{offset:.3g} picaa"
 
 #. Translators: a message when switching to single line spacing  in Microsoft word
-#: NVDAObjects\window\winword.py:1598
+#: NVDAObjects\window\winword.py:1599
 msgid "Single line spacing"
 msgstr "Yksinkertainen riviväli"
 
 #. Translators: a message when switching to double line spacing  in Microsoft word
-#: NVDAObjects\window\winword.py:1601
+#: NVDAObjects\window\winword.py:1602
 msgid "Double line spacing"
 msgstr "Kaksinkertainen riviväli"
 
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
-#: NVDAObjects\window\winword.py:1604
+#: NVDAObjects\window\winword.py:1605
 msgid "1.5 line spacing"
 msgstr "Riviväli 1,5"
 
@@ -16389,7 +16399,7 @@ msgstr "sisennys ensimmäisellä rivillä"
 #. Translators: the message when there is no paragraph format first line indent
 #: speech\speech.py:2715
 msgid "no first line indent"
-msgstr "ei ensimmäisen rivin sisennystä"
+msgstr "ei sisennystä ensimmäisellä rivillä"
 
 #. Translators: a type of line spacing (E.g. single line spacing)
 #: speech\speech.py:2731

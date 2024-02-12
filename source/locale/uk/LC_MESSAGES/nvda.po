@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-02 04:36+0000\n"
-"PO-Revision-Date: 2024-02-05 21:03\n"
+"POT-Creation-Date: 2024-02-09 02:00+0000\n"
+"PO-Revision-Date: 2024-02-11 22:51\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
@@ -2658,19 +2658,29 @@ msgid "Toggles native selection mode on and off"
 msgstr "Перемикає режим рідного виділення між «увімкнено» та «вимкнено»"
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
-#: browseMode.py:2040
+#: browseMode.py:2041
+msgid "Native selection mode unsupported in this browse mode document"
+msgstr "В цьому документі у режимі огляду не підтримується режим рідного виділення"
+
+#. Translators: the message when native selection mode cannot be turned off in this browse mode document.
+#: browseMode.py:2044
+msgid "Native selection mode cannot be turned off in this browse mode document"
+msgstr "В цьому документі у режимі огляду неможливо увімкнути режим рідного виділення"
+
+#. Translators: the message when native selection mode is not available in this browse mode document.
+#: browseMode.py:2053
 msgid "Native selection mode unsupported in this document"
 msgstr "У цьому документі не підтримується режим рідного виділення"
 
 #. Translators: reported when native selection mode is toggled on.
-#: browseMode.py:2045
-msgid "Native app selection mode enabled."
-msgstr "Увімкнено режим рідного виділення для програми."
+#: browseMode.py:2057
+msgid "Native app selection mode enabled"
+msgstr "Режим рідного виділення у застосунку увімкнено"
 
 #. Translators: reported when native selection mode is toggled off.
-#: browseMode.py:2052
-msgid "Native app selection mode disabled."
-msgstr "Вимкнено режим рідного виділення для програми."
+#: browseMode.py:2065
+msgid "Native app selection mode disabled"
+msgstr "Режим рідного виділення у застосунку вимкнено"
 
 #. Translators: The level at which the given symbol will be spoken.
 #: characterProcessing.py:157
@@ -3404,7 +3414,7 @@ msgstr "Блокує або розблоковує праву кнопку ми�
 #. Translators: Input help mode message for report current selection command.
 #: globalCommands.py:259
 msgid "Announces the current selection in edit controls and documents. Pressing twice spells this information. Pressing three times spells it using character descriptions. Pressing four times shows it in a browsable message. "
-msgstr "Оголошує поточне виділення в елементах керування редагуванням і документах. Подвійне натискання читає цю інформацію посимвольно. Потрійне — озвучує її за допомогою опису символів. Чотириразове натискання показує її як повідомлення, доступне для перегляду. "
+msgstr "Оголошує поточне виділення в елементах керування редагуванням і документах. Подвійне натискання читає цю інформацію посимвольно. Потрійне — озвучує її за допомогою опису символів. Чотириразове натискання показує її як повідомлення в режимі огляду. "
 
 #. Translators: The message reported after selected text
 #. Translators: This is spoken to indicate what has just been selected.
@@ -5827,25 +5837,25 @@ msgid "tab"
 msgstr "таб"
 
 #. Translators: One of the keyboard layouts for NVDA.
-#: keyboardHandler.py:403
+#: keyboardHandler.py:399
 msgid "desktop"
 msgstr "desktop"
 
 #. Translators: One of the keyboard layouts for NVDA.
-#: keyboardHandler.py:405
+#: keyboardHandler.py:401
 msgid "laptop"
 msgstr "laptop"
 
 #. Translators: Reported for an unknown key press.
 #. %s will be replaced with the key code.
-#: keyboardHandler.py:488
+#: keyboardHandler.py:484
 #, python-format
 msgid "unknown %s"
 msgstr "невідомо %s"
 
 #. Translators: a state that denotes a control is currently on
 #. E.g. a switch control.
-#: keyboardHandler.py:551 synthSettingsRing.py:86 controlTypes\state.py:198
+#: keyboardHandler.py:547 synthSettingsRing.py:86 controlTypes\state.py:198
 #: gui\speechDict.py:193
 msgid "on"
 msgstr "увімкнено"
@@ -5854,7 +5864,7 @@ msgstr "увімкнено"
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:551 synthSettingsRing.py:86 controlTypes\state.py:221
+#: keyboardHandler.py:547 synthSettingsRing.py:86 controlTypes\state.py:221
 #: gui\settingsDialogs.py:2048 gui\speechDict.py:193
 msgid "off"
 msgstr "вимкнено"
@@ -5862,13 +5872,13 @@ msgstr "вимкнено"
 #. Translators: Used when describing keys on the system keyboard with a particular layout.
 #. %s is replaced with the layout name.
 #. For example, in English, this might produce "laptop keyboard".
-#: keyboardHandler.py:646
+#: keyboardHandler.py:642
 #, python-format
 msgid "%s keyboard"
 msgstr "Клавіатура %s"
 
 #. Translators: Used when describing keys on the system keyboard applying to all layouts.
-#: keyboardHandler.py:651
+#: keyboardHandler.py:647
 msgid "keyboard, all layouts"
 msgstr "клавіатура, усі розкладки"
 
@@ -14090,12 +14100,12 @@ msgstr "Не вдалося знайти рядок {rowNumber} стовпець
 
 #. Translators: a description for a script
 #. Translators: a description for a script that reports the comment at the caret.
-#: NVDAObjects\IAccessible\winword.py:321 NVDAObjects\UIA\wordDocument.py:602
+#: NVDAObjects\IAccessible\winword.py:321 NVDAObjects\UIA\wordDocument.py:608
 msgid "Reports the text of the comment where the system caret is located."
 msgstr "Повідомляє текст коментаря у місці розташування системної каретки."
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-#: NVDAObjects\IAccessible\winword.py:344 NVDAObjects\UIA\wordDocument.py:613
+#: NVDAObjects\IAccessible\winword.py:344 NVDAObjects\UIA\wordDocument.py:619
 msgid "No comments"
 msgstr "Немає коментарів"
 
@@ -14136,7 +14146,7 @@ msgstr "{} пропозиції"
 #: NVDAObjects\UIA\excel.py:196
 msgctxt "excel-UIA"
 msgid "Shows a browseable message Listing information about a cell's appearance such as outline and fill colors, rotation and size"
-msgstr "Показує доступне для перегляду повідомлення з інформацією про зовнішній вигляд комірки, наприклад, кольори контура й заливки, обертання та розмір"
+msgstr "Показує доступне для огляду повідомлення з інформацією про зовнішній вигляд комірки, наприклад, кольори контуру й заливки, обертання та розмір"
 
 #. Translators: The width of the cell in points
 #: NVDAObjects\UIA\excel.py:206
@@ -14294,13 +14304,13 @@ msgstr "Поза таблицею"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: NVDAObjects\UIA\wordDocument.py:61 NVDAObjects\window\winword.py:1670
+#: NVDAObjects\UIA\wordDocument.py:61 NVDAObjects\window\winword.py:1671
 msgid "&Annotations"
 msgstr "&Анотація"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: NVDAObjects\UIA\wordDocument.py:64 NVDAObjects\window\winword.py:1676
+#: NVDAObjects\UIA\wordDocument.py:64 NVDAObjects\window\winword.py:1677
 msgid "&Errors"
 msgstr "&Помилки"
 
@@ -14335,19 +14345,19 @@ msgid "Comment: {comment} by {author} on {date}"
 msgstr "Коментар: {comment} від {author} в {date}"
 
 #. Translators: a message when navigating by sentence is unavailable in MS Word
-#: NVDAObjects\UIA\wordDocument.py:568
+#: NVDAObjects\UIA\wordDocument.py:574
 msgid "Navigating by sentence not supported in this document"
 msgstr "Навігація по реченнях у цьому документі не підтримується"
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
-#: NVDAObjects\UIA\wordDocument.py:621
+#: NVDAObjects\UIA\wordDocument.py:627
 msgid "Command not supported in this type of document. The tables have their first row cells automatically set as column headers."
 msgstr "У цьому типі документа команда не підтримується. У таблицях перші комірки рядків автоматично встановлюються як заголовки стовпців."
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
-#: NVDAObjects\UIA\wordDocument.py:630
+#: NVDAObjects\UIA\wordDocument.py:636
 msgid "Command not supported in this type of document. The tables have their first column cells automatically set as row headers."
 msgstr "У цьому типі документа команда не підтримується. У таблицях перші комірки стовпців автоматично встановлюються як заголовки рядків."
 
@@ -15321,7 +15331,7 @@ msgstr "Списки різних типів елементів у цьому а
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: NVDAObjects\window\excel.py:667 NVDAObjects\window\winword.py:1673
+#: NVDAObjects\window\excel.py:667 NVDAObjects\window\winword.py:1674
 msgid "&Charts"
 msgstr "&Діаграми"
 
@@ -15351,37 +15361,37 @@ msgstr "{start} через {end}"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1113 NVDAObjects\window\winword.py:1355
+#: NVDAObjects\window\excel.py:1113 NVDAObjects\window\winword.py:1356
 msgid "Bold off"
 msgstr "Напівжирний вимкнено"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1115 NVDAObjects\window\winword.py:1352
+#: NVDAObjects\window\excel.py:1115 NVDAObjects\window\winword.py:1353
 msgid "Bold on"
 msgstr "Напівжирний увімкнено"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1127 NVDAObjects\window\winword.py:1369
+#: NVDAObjects\window\excel.py:1127 NVDAObjects\window\winword.py:1370
 msgid "Italic off"
 msgstr "Курсив вимкнено"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1129 NVDAObjects\window\winword.py:1366
+#: NVDAObjects\window\excel.py:1129 NVDAObjects\window\winword.py:1367
 msgid "Italic on"
 msgstr "Курсив увімкнено"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1141 NVDAObjects\window\winword.py:1383
+#: NVDAObjects\window\excel.py:1141 NVDAObjects\window\winword.py:1384
 msgid "Underline off"
 msgstr "Підкреслений вимкнено"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1143 NVDAObjects\window\winword.py:1380
+#: NVDAObjects\window\excel.py:1143 NVDAObjects\window\winword.py:1381
 msgid "Underline on"
 msgstr "Підкреслений увімкнено"
 
@@ -15869,96 +15879,96 @@ msgstr[2] "%.1f рядків"
 msgstr[3] "%.1f рядка"
 
 #. Translators: the title of the message dialog desplaying an MS Word table description.
-#: NVDAObjects\window\winword.py:1174
+#: NVDAObjects\window\winword.py:1175
 msgid "Table description"
 msgstr "Опис таблиці"
 
 #. Translators: the default (automatic) color in Microsoft Word
-#: NVDAObjects\window\winword.py:1273
+#: NVDAObjects\window\winword.py:1274
 msgid "automatic color"
 msgstr "автоматичний колір"
 
 #. Translators: a an alignment in Microsoft Word
-#: NVDAObjects\window\winword.py:1394
+#: NVDAObjects\window\winword.py:1395
 msgid "Left aligned"
 msgstr "Вирівняно зліва"
 
 #. Translators: a an alignment in Microsoft Word
-#: NVDAObjects\window\winword.py:1396
+#: NVDAObjects\window\winword.py:1397
 msgid "centered"
 msgstr "центровано"
 
 #. Translators: a an alignment in Microsoft Word
-#: NVDAObjects\window\winword.py:1398
+#: NVDAObjects\window\winword.py:1399
 msgid "Right aligned"
 msgstr "Вирівняно справа"
 
 #. Translators: a an alignment in Microsoft Word
-#: NVDAObjects\window\winword.py:1400
+#: NVDAObjects\window\winword.py:1401
 msgid "Justified"
 msgstr "По ширині"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\winword.py:1431
+#: NVDAObjects\window\winword.py:1432
 msgid "Superscript"
 msgstr "Надрядковий"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\winword.py:1434
+#: NVDAObjects\window\winword.py:1435
 msgid "Subscript"
 msgstr "Підрядковий"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\winword.py:1437
+#: NVDAObjects\window\winword.py:1438
 msgid "Baseline"
 msgstr "Базова лінія"
 
 #. Translators: a message reported when a paragraph is moved below another paragraph
-#: NVDAObjects\window\winword.py:1449
+#: NVDAObjects\window\winword.py:1450
 #, python-format
 msgid "Moved below %s"
 msgstr "Переміщено нижче %s"
 
 #. Translators: a message reported when a paragraph is moved below a blank paragraph
-#: NVDAObjects\window\winword.py:1452
+#: NVDAObjects\window\winword.py:1453
 msgid "Moved below blank paragraph"
 msgstr "Переміщено нижче порожнього абзацу"
 
 #. Translators: a message reported when a paragraph is moved above another paragraph
-#: NVDAObjects\window\winword.py:1465
+#: NVDAObjects\window\winword.py:1466
 #, python-format
 msgid "Moved above %s"
 msgstr "Переміщено вище %s"
 
 #. Translators: a message reported when a paragraph is moved above a blank paragraph
-#: NVDAObjects\window\winword.py:1468
+#: NVDAObjects\window\winword.py:1469
 msgid "Moved above blank paragraph"
 msgstr "Переміщено вище порожнього абзацу"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
-#: NVDAObjects\window\winword.py:1479
+#: NVDAObjects\window\winword.py:1480
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "{styleName} стиль, рівень структури {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
-#: NVDAObjects\window\winword.py:1489
+#: NVDAObjects\window\winword.py:1490
 #, python-brace-format
 msgid "{size:g} point font"
 msgstr "{size:g} пунктів шрифту"
 
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
-#: NVDAObjects\window\winword.py:1505
+#: NVDAObjects\window\winword.py:1506
 msgid "Display nonprinting characters"
 msgstr "Показувати недруковані символи"
 
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
-#: NVDAObjects\window\winword.py:1508
+#: NVDAObjects\window\winword.py:1509
 msgid "Hide nonprinting characters"
 msgstr "Приховати недруковані символи"
 
 #. Translators: a measurement in Microsoft Word
-#: NVDAObjects\window\winword.py:1546
+#: NVDAObjects\window\winword.py:1547
 #, python-brace-format
 msgid "{offset:.3g} character"
 msgid_plural "{offset:.3g} characters"
@@ -15968,7 +15978,7 @@ msgstr[2] "{offset:.3g} символів"
 msgstr[3] "{offset:.3g} символу"
 
 #. Translators: a measurement in Microsoft Word
-#: NVDAObjects\window\winword.py:1556
+#: NVDAObjects\window\winword.py:1557
 #, python-brace-format
 msgid "{offset:.3g} inch"
 msgid_plural "{offset:.3g} inches"
@@ -15978,7 +15988,7 @@ msgstr[2] "{offset:.3g} дюймів"
 msgstr[3] "{offset:.3g} дюйма"
 
 #. Translators: a measurement in Microsoft Word
-#: NVDAObjects\window\winword.py:1564
+#: NVDAObjects\window\winword.py:1565
 #, python-brace-format
 msgid "{offset:.3g} centimeter"
 msgid_plural "{offset:.3g} centimeters"
@@ -15988,7 +15998,7 @@ msgstr[2] "{offset:.3g} сантиметрів"
 msgstr[3] "{offset:.3g} сантиметра"
 
 #. Translators: a measurement in Microsoft Word
-#: NVDAObjects\window\winword.py:1572
+#: NVDAObjects\window\winword.py:1573
 #, python-brace-format
 msgid "{offset:.3g} millimeter"
 msgid_plural "{offset:.3g} millimeters"
@@ -15998,14 +16008,14 @@ msgstr[2] "{offset:.3g} міліметрів"
 msgstr[3] "{offset:.3g} міліметра"
 
 #. Translators: a measurement in Microsoft Word (points)
-#: NVDAObjects\window\winword.py:1578
+#: NVDAObjects\window\winword.py:1579
 #, python-brace-format
 msgid "{offset:.3g} pt"
 msgstr "{offset:.3g} пунктів"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
-#: NVDAObjects\window\winword.py:1584
+#: NVDAObjects\window\winword.py:1585
 #, python-brace-format
 msgid "{offset:.3g} pica"
 msgid_plural "{offset:.3g} picas"
@@ -16015,17 +16025,17 @@ msgstr[2] "{offset:.3g} пайок"
 msgstr[3] "{offset:.3g} пайки"
 
 #. Translators: a message when switching to single line spacing  in Microsoft word
-#: NVDAObjects\window\winword.py:1598
+#: NVDAObjects\window\winword.py:1599
 msgid "Single line spacing"
 msgstr "Одинарний міжрядковий інтервал"
 
 #. Translators: a message when switching to double line spacing  in Microsoft word
-#: NVDAObjects\window\winword.py:1601
+#: NVDAObjects\window\winword.py:1602
 msgid "Double line spacing"
 msgstr "Подвійний міжрядковий інтервал"
 
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
-#: NVDAObjects\window\winword.py:1604
+#: NVDAObjects\window\winword.py:1605
 msgid "1.5 line spacing"
 msgstr "Полуторний міжрядковий інтервал"
 
