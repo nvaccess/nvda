@@ -528,11 +528,16 @@ class InputManager(baseObject.AutoPropertyObject):
 		if speechEffect == gesture.SPEECHEFFECT_CANCEL:
 			# Import late to avoid circular import.
 			import braille
+			def delayedCanceledSpeech():
+				import time
+				time.sleep(3)
+				speech.cancelSpeech()
+
 			with braille.handler.suppressClearBrailleRegions(script):
 				queueHandler.queueFunction(
 					queueHandler.eventQueue,
-					speech.cancelSpeech,
-					_immediate=immediate,
+					delayedCanceledSpeech,
+					_immediate=False,
 				)
 		elif speechEffect in (gesture.SPEECHEFFECT_PAUSE, gesture.SPEECHEFFECT_RESUME):
 			queueHandler.queueFunction(queueHandler.eventQueue, speech.pauseSpeech, speechEffect == gesture.SPEECHEFFECT_PAUSE)
