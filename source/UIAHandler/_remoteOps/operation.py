@@ -58,7 +58,6 @@ class Operation:
 	_remoteLog: remoteAPI.RemoteString | None = None
 	_rob: builder.RemoteOperationBuilder
 	_requestedResults: list[remoteAPI.RemoteBaseObject]
-	_isConnectionBound = False
 	_built = False
 	_executed = False
 
@@ -74,7 +73,6 @@ class Operation:
 		operandId = self._rob.requestNewOperandId()
 		self._importElement(operandId, element)
 		self._rob.getInstructionList('imports').addMetaCommand(f"import element into {operandId}")
-		self._isConnectionBound = True
 		return remoteAPI.RemoteElement(self._rob, operandId)
 
 	def _importTextRange(self, operandId: lowLevel.OperandId, textRange: UIA.IUIAutomationTextRange):
@@ -84,7 +82,6 @@ class Operation:
 		operandId = self._rob.requestNewOperandId()
 		self._importTextRange(operandId, textRange)
 		self._rob.getInstructionList('imports').addMetaCommand(f"import textRange into {operandId}")
-		self._isConnectionBound = True
 		return remoteAPI.RemoteTextRange(self._rob, operandId)
 
 	def _addToResults(self, operand: remoteAPI.RemoteBaseObject):
@@ -100,8 +97,6 @@ class Operation:
 	def buildContext(self):
 		if self._built:
 			raise RuntimeError("RemoteOperation cannot be built more than once")
-		if not self._isConnectionBound:
-			raise RuntimeError("RemoteOperation must be bound to a connection before building")
 		ra = remoteAPI.RemoteAPI(self._rob, enableRemoteLogging=self._loggingEnabled)
 		self._remoteLog = logObj = ra.getLogObject()
 		if logObj is not None:
@@ -186,6 +181,7 @@ class OperationResult:
 
 class RemoteOperation(Operation):
 	_ro: lowLevel.RemoteOperation
+	_isConnectionBound = False
 
 	def __init__(self, enableLogging: bool = False):
 		super().__init__(enableLogging)
@@ -193,14 +189,18 @@ class RemoteOperation(Operation):
 
 	def _importElement(self, operandId: lowLevel.OperandId, element: UIA.IUIAutomationElement):
 		self._ro.importElement(operandId, element)
+		self._isConnectionBound = True
 
 	def _importTextRange(self, operandId: lowLevel.OperandId, textRange: UIA.IUIAutomationTextRange):
 		self._ro.importTextRange(operandId, textRange)
+		self._isConnectionBound = True
 
 	def _addToResults(self, operand: remoteAPI.RemoteBaseObject):
 		self._ro.addToResults(operand.operandId)
 
 	def _execute(self):
+		if not self._isConnectionBound:
+			raise RuntimeError("RemoteOperation must be bound to a connection before execution")
 		byteCode = self._rob.getByteCode()
 		resultSet = self._ro.execute(byteCode)
 		return OperationResult(
