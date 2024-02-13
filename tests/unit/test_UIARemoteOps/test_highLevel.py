@@ -7,12 +7,17 @@
 Unit tests for the high-level UI Automation Remote Operations API. 
 """
 
-import unittest
+from unittest import TestCase
+from unittest.mock import Mock
+from ctypes import POINTER
+from UIAHandler import UIA
+import UIAHandler._remoteOps.operation as operation
+from UIAHandler._remoteOps.lowLevel import (
+	PropertyId,
+)
 
-from UIAHandler._remoteOps import operation
 
-
-class TestHighLevel(unittest.TestCase):
+class TestHighLevel(TestCase):
 
 	def test_bool_false(self):
 		op = operation.LocalOperation()
@@ -312,3 +317,18 @@ class TestHighLevel(unittest.TestCase):
 
 		op.execute()
 		self.assertEqual(u.localValue, "hello world")
+
+	def test_element_getName(self):
+		uiaElement = Mock(spec=POINTER(UIA.IUIAutomationElement))
+
+		op = operation.LocalOperation()
+		element = op.importElement(uiaElement)
+
+		with op.buildContext() as ra:
+			name = element.getPropertyValue(PropertyId.Name)
+			op.addToResults(name)
+
+		uiaElement.GetCurrentPropertyValueEx.return_value = "foo"
+		op.execute()
+		uiaElement.GetCurrentPropertyValueEx.assert_called_once_with(PropertyId.Name, False)
+		self.assertEqual(name.localValue, "foo")
