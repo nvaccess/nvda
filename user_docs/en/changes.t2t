@@ -11,6 +11,15 @@ What's New in NVDA
   -
 - Reporting row and column headers is now supported in contenteditable HTML elements. (#14113)
 - In Windows 11, NVDA will announce alerts from voice typing and suggested actions including the top suggestion when copying data such as phone numbers to the clipboard (Windows 11 2022 Update and later). (#16009, @josephsl)
+- New input gestures:
+  - Added commands to jump first, last, forward and backward through the synth settings ring. (#13768, #16095, @rmcpantoja)
+    - Setting the first/last setting in the synth settings ring has no assigned gesture
+    - Decrease and increase the current setting of the synth settings ring in a larger step:
+      - Desktop: ``NVDA+control+pageUp`` or ``NVDA+control+pageDown``.
+      - Laptop: ``NVDA+control+shift+pageUp`` or ``NVDA+control+shift+pageDown``.
+      -
+    -
+  -
 - Added support for the BrailleEdgeS2 braille device. (#16033)
 - A new braille mode called "display speech output" has been added. (#15898, @Emil-18)
   - When active, the braille display shows exactly what NVDA is speaking.
@@ -252,7 +261,6 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
 - Updated pip dependencies:
   - configobj to 5.1.0dev commit ``e2ba4457c4651fa54f8d59d8dcdd3da950e956b8``. (#15544)
   - Comtypes to 1.2.0. (#15513, @codeofdusk)
-  - fast_diff_match_patch to 2.0.1. (#15514, @codeofdusk)
   - Flake8 to 4.0.1. (#15636, @lukaszgo1)
   - py2exe to 0.13.0.1dev commit ``4e7b2b2c60face592e67cb1bc935172a20fa371d``. (#15544) 
   - robotframework to 6.1.1. (#15544)
