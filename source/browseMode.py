@@ -2157,6 +2157,45 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				raise RuntimeError("Unrecognized field in TextInfo.getTextWithFields()")
 		return result
 
+	def _mergeIdenticalStyles(
+			self,
+			sequence: "textInfos.TextInfo.TextWithFieldsT",
+	) -> "textInfos.TextInfo.TextWithFieldsT":
+		currentStyle = None
+		redundantIndices = set()
+		for i, item in enumerate(sequence):
+			if i == 0:
+				currentStyle = item
+			elif isinstance(item, textInfos.FieldCommand):
+				if item.field == currentStyle.field:
+					redundantIndices.add(i)
+				currentStyle = item
+		sequence = [item for i, item in enumerate(sequence) if i not in redundantIndices]
+		# Now merging adjacent strings
+		result = []
+		if True:
+			for k, g in itertools.groupby(sequence, key=type):
+				if k == str:
+					result.append("".join(g))
+				else:
+					result.extend(list(g))
+		if False:
+			n = len(sequence)
+			i = 0
+			while i < n:
+				if isinstance(sequence[i], str):
+					for j in range(i+ 1, n):
+						if not isinstance(sequence[i], str):
+							break
+					else:
+						j = n
+					result.append("".join(sequence[i:j]))
+					i = j
+				else:
+					result.append(sequence[i])
+					i += 1
+		return result
+
 	def _iterTextStyle(
 			self,
 			kind: str,
@@ -2187,6 +2226,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			# Translators: Error message for same/different style quick navigation commands
 			ui.message(_("Cannot determine current style"))
 			raise RuntimeError("Cannot determine current style")
+		styles = self._mergeIdenticalStyles(styles)
 		initialStyle = styles[0]
 
 		firstParagraph = True
@@ -2200,7 +2240,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		MAX_ITER_LIMIT = 10**6
 		for __ in range(MAX_ITER_LIMIT):
 			if not paragraph.isCollapsed:
-				styles = self._extractStyles(paragraph)
+				styles = self._mergeIdenticalStyles(self._extractStyles(paragraph))
 				firstStyleWithinParagraph = True
 				iterationRange = (
 					range(len(styles))
