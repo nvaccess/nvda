@@ -493,7 +493,7 @@ def _unraisableExceptHook(unraisable: _UnraisableHookArgs) -> None:
 	if unraisable.err_msg:
 		msg = f"{unraisable.err_msg}: {unraisable.object!r}"
 	else:
-		msg = "{Exception ignored in}: {unraisable.object!r}"
+		msg = f"Exception ignored in: {unraisable.object!r}"
 	log.exception(exc_info=(unraisable.exc_type, unraisable.exc_value, unraisable.exc_traceback), codepath=msg)
 
 
