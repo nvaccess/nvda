@@ -888,7 +888,7 @@ class GeneralSettingsPanel(SettingsPanel):
 				item.Disable()
 			settingsSizerHelper.addItem(item)
 			# Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
-			item=self.allowUsageStatsCheckBox=wx.CheckBox(self,label=_("Allow the NVDA project to gather NVDA usage statistics"))
+			item=self.allowUsageStatsCheckBox=wx.CheckBox(self,label=_("Allow NV Access to gather NVDA usage statistics"))
 			self.bindHelpEvent("GeneralSettingsGatherUsageStats", self.allowUsageStatsCheckBox)
 			item.Value=config.conf["update"]["allowUsageStats"]
 			if globalVars.appArgs.secure:
