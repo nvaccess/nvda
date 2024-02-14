@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-02 04:36+0000\n"
-"PO-Revision-Date: 2024-02-05 21:03\n"
+"POT-Creation-Date: 2024-02-09 02:00+0000\n"
+"PO-Revision-Date: 2024-02-11 22:51\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -475,7 +475,7 @@ msgstr "sggstn"
 #. Translators: Identifies a definition.
 #: braille.py:223 controlTypes\role.py:531
 msgid "definition"
-msgstr ""
+msgstr "definition"
 
 #. Translators: Displayed in braille when an object is a switch control
 #: braille.py:225
@@ -495,7 +495,7 @@ msgstr "只读"
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
 #: braille.py:242
 msgid "-"
-msgstr ""
+msgstr "-"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
 #: braille.py:244
@@ -510,7 +510,7 @@ msgstr "子菜单"
 #. Translators: Displayed in braille when a protected control or a document is encountered.
 #: braille.py:248
 msgid "***"
-msgstr ""
+msgstr "***"
 
 #. Translators: Displayed in braille when a required form field is encountered.
 #: braille.py:250
@@ -525,7 +525,7 @@ msgstr "无效"
 #. Translators: Displayed in braille when an object supports autocompletion.
 #: braille.py:254
 msgid "..."
-msgstr ""
+msgstr "..."
 
 #. Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
 #: braille.py:256
@@ -1707,7 +1707,7 @@ msgstr "特卢固语 1 级盲文"
 #. braille settings dialog.
 #: brailleTables.py:545
 msgid "Thai 8 dot computer braille"
-msgstr ""
+msgstr "泰语 8 点计算机盲文"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2655,22 +2655,32 @@ msgstr "在此文档不支持。"
 #. Translators: input help message for toggle native selection command
 #: browseMode.py:2035
 msgid "Toggles native selection mode on and off"
-msgstr ""
+msgstr "打开或关闭应用原生选择"
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
-#: browseMode.py:2040
+#: browseMode.py:2041
+msgid "Native selection mode unsupported in this browse mode document"
+msgstr "此文档不支持应用原生选择"
+
+#. Translators: the message when native selection mode cannot be turned off in this browse mode document.
+#: browseMode.py:2044
+msgid "Native selection mode cannot be turned off in this browse mode document"
+msgstr "此文档无法禁用应用原生选择"
+
+#. Translators: the message when native selection mode is not available in this browse mode document.
+#: browseMode.py:2053
 msgid "Native selection mode unsupported in this document"
-msgstr ""
+msgstr "本文档不支持应用原生选择"
 
 #. Translators: reported when native selection mode is toggled on.
-#: browseMode.py:2045
-msgid "Native app selection mode enabled."
-msgstr ""
+#: browseMode.py:2057
+msgid "Native app selection mode enabled"
+msgstr "已启用应用原生选择"
 
 #. Translators: reported when native selection mode is toggled off.
-#: browseMode.py:2052
-msgid "Native app selection mode disabled."
-msgstr ""
+#: browseMode.py:2065
+msgid "Native app selection mode disabled"
+msgstr "已禁用应用原生选择"
 
 #. Translators: The level at which the given symbol will be spoken.
 #: characterProcessing.py:157
@@ -2881,7 +2891,7 @@ msgstr "亮{color}"
 #, python-brace-format
 msgctxt "color variation"
 msgid "{color}"
-msgstr ""
+msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
 #: colors.py:228
@@ -2975,25 +2985,26 @@ msgstr "棕黄色"
 #: core.py:81
 msgid "The following add-on failed to update: {}."
 msgid_plural "The following add-ons failed to update: {}."
-msgstr[0] ""
+msgstr[0] "以下插件更新失败：{}。"
 
 #. Translators: Shown when one or more add-ons failed to be uninstalled.
 #: core.py:90
 msgid "The following add-on failed to uninstall: {}."
 msgid_plural "The following add-ons failed to uninstall: {}."
-msgstr[0] ""
+msgstr[0] "以下插件移除失败：{}。"
 
 #. Translators: Shown when one or more add-ons failed to be installed.
 #: core.py:99
 msgid "The following add-on failed to be installed: {}."
 msgid_plural "The following add-ons failed to be installed: {}."
-msgstr[0] ""
+msgstr[0] "以下插件安装失败：{}。"
 
 #. Translators: Shown when one or more actions on add-ons failed.
 #: core.py:111
 msgid "Some operations on add-ons failed. See the log file for more details.\n"
 "{}"
-msgstr ""
+msgstr "对插件的某些操作失败。有关更多详细信息，请参阅日志文件。\n"
+"{}"
 
 #. Translators: Title of message shown when requested action on add-ons failed.
 #. Translators: The title of an error message dialog.
@@ -3119,7 +3130,7 @@ msgstr "从光标处向上查找您之前键入的文本"
 #. Translators: Reported when browse mode passes the copy to clipboard command through to the application.
 #: cursorManager.py:456
 msgid "native copy"
-msgstr ""
+msgstr "原生复制"
 
 #. Translators: Reported when there is no text selected (for copying).
 #. Translators: The message reported when there is no selection
@@ -3139,7 +3150,7 @@ msgstr "未选择文本"
 #, python-format
 msgctxt "font size"
 msgid "%s pt"
-msgstr ""
+msgstr "%s pt"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -3394,7 +3405,7 @@ msgstr "按下或松开鼠标右键"
 #. Translators: Input help mode message for report current selection command.
 #: globalCommands.py:259
 msgid "Announces the current selection in edit controls and documents. Pressing twice spells this information. Pressing three times spells it using character descriptions. Pressing four times shows it in a browsable message. "
-msgstr ""
+msgstr "读出编辑控件或文档中已选择的文本，连按两次逐字朗读，连按三次用短字符描述逐字解释，连按四次在浏览模式下显示。"
 
 #. Translators: The message reported after selected text
 #. Translators: This is spoken to indicate what has just been selected.
@@ -3959,7 +3970,7 @@ msgstr "读出可点击"
 #. Translators: Input help mode message for cycle through automatic language switching mode command.
 #: globalCommands.py:935
 msgid "Cycles through the possible choices for automatic language switching: off, language only and language and dialect."
-msgstr ""
+msgstr "在语言和方言切换模式之间循环切换：关闭，仅自动语言切换，自动语言及自动方言切换。"
 
 #. Translators: A message reported when executing the cycle automatic language switching mode command.
 #: globalCommands.py:944
@@ -4319,14 +4330,14 @@ msgstr "已展开符号 ({})"
 #. Translators: Input help mode message for cycle speech mode command.
 #: globalCommands.py:2042
 msgid "Cycles between speech modes."
-msgstr ""
+msgstr "在语音模式之间循环切换。"
 
 #. Translators: Announced when user switches to another speech mode.
 #. 'mode' is replaced with the translated name of the new mode.
 #: globalCommands.py:2065
 #, python-brace-format
 msgid "Speech mode {mode}"
-msgstr ""
+msgstr "{mode}"
 
 #. Translators: Input help mode message for move to next document with focus command,
 #. mostly used in web browsing to move from embedded object to the webpage document.
@@ -4418,7 +4429,7 @@ msgstr "没有附加的详细信息"
 #. Translators: Input help mode message for report current focus command.
 #: globalCommands.py:2482
 msgid "Reports the object with focus. If pressed twice, spells the information. Pressing three times spells it using character descriptions."
-msgstr ""
+msgstr "读出有焦点的对象，连按两次逐字朗读，连按三次用短字符描述逐字解释。"
 
 #. Translators: Reported when there is no status line for the current program or window.
 #: globalCommands.py:2558
@@ -4961,7 +4972,7 @@ msgstr "盲文选择指示光标 %s"
 #. Translators: Input help mode message for report clipboard text command.
 #: globalCommands.py:3455
 msgid "Reports the text on the Windows clipboard. Pressing twice spells this information. Pressing three times spells it using character descriptions."
-msgstr ""
+msgstr "读出 Windows 剪贴板中的文本，连按两次逐字朗读，连按三次用短字符描述逐字解释。"
 
 #. Translators: Presented when there is no text on the clipboard.
 #: globalCommands.py:3470
@@ -4975,7 +4986,7 @@ msgstr "剪贴板内没有文本"
 #, python-format
 msgid "The clipboard contains a large amount of text. It is %s character long"
 msgid_plural "The clipboard contains a large amount of text. It is %s characters long"
-msgstr[0] ""
+msgstr[0] "剪贴板内包含大量文本，共有 %s 个字符"
 
 #. Translators: Input help mode message for mark review cursor position for a select or copy command
 #. (that is, marks the current review cursor position as the starting point for text to be selected).
@@ -5385,7 +5396,7 @@ msgstr "杂项"
 #. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
 #: installer.py:392
 msgid "CTRL+ALT+N"
-msgstr ""
+msgstr "CTRL+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 #: installer.py:415
@@ -5530,22 +5541,22 @@ msgstr "大写锁定"
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:56
 msgid "ctrl"
-msgstr ""
+msgstr "Ctrl"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:58
 msgid "alt"
-msgstr ""
+msgstr "Alt"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:60
 msgid "shift"
-msgstr ""
+msgstr "Shift"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:62
 msgid "windows"
-msgstr ""
+msgstr "Windows"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:64
@@ -5811,28 +5822,28 @@ msgstr "中断"
 #: keyLabels.py:170
 msgctxt "keyLabel"
 msgid "tab"
-msgstr ""
+msgstr "tab"
 
 #. Translators: One of the keyboard layouts for NVDA.
-#: keyboardHandler.py:403
+#: keyboardHandler.py:399
 msgid "desktop"
 msgstr "台式机"
 
 #. Translators: One of the keyboard layouts for NVDA.
-#: keyboardHandler.py:405
+#: keyboardHandler.py:401
 msgid "laptop"
 msgstr "笔记本"
 
 #. Translators: Reported for an unknown key press.
 #. %s will be replaced with the key code.
-#: keyboardHandler.py:488
+#: keyboardHandler.py:484
 #, python-format
 msgid "unknown %s"
 msgstr "%s 未知"
 
 #. Translators: a state that denotes a control is currently on
 #. E.g. a switch control.
-#: keyboardHandler.py:551 synthSettingsRing.py:86 controlTypes\state.py:198
+#: keyboardHandler.py:547 synthSettingsRing.py:86 controlTypes\state.py:198
 #: gui\speechDict.py:193
 msgid "on"
 msgstr "开"
@@ -5841,7 +5852,7 @@ msgstr "开"
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:551 synthSettingsRing.py:86 controlTypes\state.py:221
+#: keyboardHandler.py:547 synthSettingsRing.py:86 controlTypes\state.py:221
 #: gui\settingsDialogs.py:2048 gui\speechDict.py:193
 msgid "off"
 msgstr "关"
@@ -5849,13 +5860,13 @@ msgstr "关"
 #. Translators: Used when describing keys on the system keyboard with a particular layout.
 #. %s is replaced with the layout name.
 #. For example, in English, this might produce "laptop keyboard".
-#: keyboardHandler.py:646
+#: keyboardHandler.py:642
 #, python-format
 msgid "%s keyboard"
 msgstr "%s键盘"
 
 #. Translators: Used when describing keys on the system keyboard applying to all layouts.
-#: keyboardHandler.py:651
+#: keyboardHandler.py:647
 msgid "keyboard, all layouts"
 msgstr "键盘，所有布局"
 
@@ -7335,7 +7346,7 @@ msgstr "{action}四次"
 #, python-brace-format
 msgid "{numFingers} finger {action}"
 msgid_plural "{numFingers} finger {action}"
-msgstr[0] ""
+msgstr[0] "{numFingers}指{action}"
 
 #. Translators: a very quick touch and release of a finger on a touch screen
 #: touchTracker.py:33
@@ -7427,7 +7438,7 @@ msgstr "NVDA 消息"
 #. Translators: reported when unable to display a browsable message.
 #: ui.py:119
 msgid "Unable to display browseable message"
-msgstr ""
+msgstr "无法显示可浏览消息"
 
 #. Translators: Spoken instead of a lengthy text when copied to clipboard.
 #. Translators: This is spoken when the user has selected a large portion of text.
@@ -7436,7 +7447,7 @@ msgstr ""
 #, python-format
 msgid "%d character"
 msgid_plural "%d characters"
-msgstr[0] ""
+msgstr[0] "%d 个字符"
 
 #. Translators: Announced when a text has been copied to clipboard.
 #. {text} is replaced by the copied text.
@@ -7784,7 +7795,7 @@ msgstr "可更新"
 #: addonStore\models\status.py:91
 msgctxt "addonStore"
 msgid "Update Available (incompatible)"
-msgstr ""
+msgstr "可更新（不兼容）"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:93
@@ -7976,7 +7987,7 @@ msgstr "显示"
 #. Translators: The name of a category of NVDA commands.
 #: appModules\eclipse.py:19
 msgid "Eclipse"
-msgstr ""
+msgstr "Eclipse"
 
 #. Translators: Input help mode message for the 'read documentation script
 #: appModules\eclipse.py:57
@@ -8087,7 +8098,7 @@ msgstr "离开热点高亮"
 #. Translators: The name of a category of NVDA commands.
 #: appModules\miranda32.py:26
 msgid "Miranda NG"
-msgstr ""
+msgstr "Miranda NG"
 
 #. Translators: The description of an NVDA command to view one of the recent messages.
 #: appModules\miranda32.py:117 appModules\vipmud.py:30
@@ -8194,7 +8205,7 @@ msgstr "清除输出窗格"
 #. Translators: Description of a message spoken when clearing the Python Console output pane
 #: appModules\nvda.py:78
 msgid "Output pane cleared"
-msgstr ""
+msgstr "已清除输出窗格"
 
 #. Translators: Description of a command to move to the next result in the Python Console output pane
 #: appModules\nvda.py:89
@@ -8317,7 +8328,7 @@ msgstr "会议请求"
 #. Translators: The name of a category of NVDA commands.
 #: appModules\poedit.py:27
 msgid "Poedit"
-msgstr ""
+msgstr "Poedit"
 
 #. Translators: this message is reported when there is nothing
 #. to be presented to the user in Poedit.
@@ -8327,7 +8338,7 @@ msgstr ""
 #, python-brace-format
 msgctxt "poedit"
 msgid "No {description}"
-msgstr ""
+msgstr "无 {description}"
 
 #. Translators: this message is reported when NVDA is unable to find
 #. a requested window in Poedit.
@@ -8336,64 +8347,64 @@ msgstr ""
 #, python-brace-format
 msgctxt "poedit"
 msgid "Could not find {description} window."
-msgstr ""
+msgstr "未找到 {description} 窗口。"
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules\poedit.py:149
 msgctxt "poedit"
 msgid "Reports any notes for translators. If pressed twice, presents the notes in browse mode"
-msgstr ""
+msgstr "朗读翻译注释，按两次在浏览模式中显示该注释。"
 
 #. Translators: The description of the "Translator notes" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
 #: appModules\poedit.py:160
 msgctxt "poedit"
 msgid "notes for translators"
-msgstr ""
+msgstr "翻译注释。"
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules\poedit.py:175
 msgctxt "poedit"
 msgid "Reports any comment in the comments window. If pressed twice, presents the comment in browse mode"
-msgstr ""
+msgstr "朗读窗口内的批注，连按两次在浏览模式中显示该批注"
 
 #. Translators: The description of the "comment" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
 #: appModules\poedit.py:187
 msgctxt "poedit"
 msgid "comment"
-msgstr ""
+msgstr "批注"
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules\poedit.py:202
 msgctxt "poedit"
 msgid "Reports the old source text, if any. If pressed twice, presents the text in browse mode"
-msgstr ""
+msgstr "读出旧的源文本（如果有）。连按两次，在浏览模式下显示该信息"
 
 #. Translators: The description of the "old source text" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
 #: appModules\poedit.py:213
 msgctxt "poedit"
 msgid "old source text"
-msgstr ""
+msgstr "旧的源文本"
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules\poedit.py:226
 msgctxt "poedit"
 msgid "Reports a translation warning, if any. If pressed twice, presents the warning in browse mode"
-msgstr ""
+msgstr "读出翻译警告（如果有）。连按两次，在浏览模式下显示该信息"
 
 #. Translators: The description of the "translation warning" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
 #: appModules\poedit.py:237
 msgctxt "poedit"
 msgid "translation warning"
-msgstr ""
+msgstr "翻译警告"
 
 #. Translators: The name of a category of NVDA commands.
 #: appModules\powerpnt.py:45
 msgid "PowerPoint"
-msgstr ""
+msgstr "PowerPoint"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 #: appModules\powerpnt.py:119
@@ -8561,56 +8572,56 @@ msgstr "其他项目"
 #, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} point"
 msgid_plural "covers left of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "覆盖{otherShape}的左边距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:602
 #, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} point"
 msgid_plural "behind left of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "被{otherShape}覆盖的左边距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is in front of another shape on a PowerPoint slide
 #: appModules\powerpnt.py:612
 #, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} point"
 msgid_plural "covers top of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "覆盖{otherShape}上边的距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:619
 #, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} point"
 msgid_plural "behind top of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "被{otherShape}覆盖的上边距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is in front of another shape on a PowerPoint slide
 #: appModules\powerpnt.py:629
 #, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} point"
 msgid_plural "covers right of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "覆盖{otherShape}的右边距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:636
 #, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} point"
 msgid_plural "behind right of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "被{otherShape}覆盖的右边距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is in front of another shape on a PowerPoint slide
 #: appModules\powerpnt.py:646
 #, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} point"
 msgid_plural "covers bottom of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "覆盖{otherShape}的底边距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:653
 #, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} point"
 msgid_plural "behind bottom of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "被{otherShape}覆盖的底边距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is in front of another shape on a PowerPoint slide
 #: appModules\powerpnt.py:660
@@ -8630,7 +8641,7 @@ msgstr "被{otherShape}覆盖"
 #, python-brace-format
 msgid "{distance:.3g} point from left slide edge"
 msgid_plural "{distance:.3g} points from left slide edge"
-msgstr[0] ""
+msgstr[0] "与幻灯片左边的距离为{distance:.3g}磅"
 
 #. Translators: For a shape too far off the left edge of a PowerPoint Slide, this is the distance in
 #. points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
@@ -8638,7 +8649,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "Off left slide edge by {distance:.3g} point"
 msgid_plural "Off left slide edge by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "幻灯片左边的超出距离为{distance:.3g}磅"
 
 #. Translators: For a shape within a PowerPoint Slide, this is the distance in points from the shape's
 #. top edge to the slide's top edge
@@ -8646,7 +8657,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "{distance:.3g} point from top slide edge"
 msgid_plural "{distance:.3g} points from top slide edge"
-msgstr[0] ""
+msgstr[0] "与幻灯片上边的距离为{distance:.3g}"
 
 #. Translators: For a shape too far off the top edge of a PowerPoint Slide, this is the distance in
 #. points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
@@ -8654,7 +8665,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "Off top slide edge by {distance:.3g} point"
 msgid_plural "Off top slide edge by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "幻灯片上边的超出距离为{distance:.3g}磅"
 
 #. Translators: For a shape within a PowerPoint Slide, this is the distance in points from the shape's
 #. right edge to the slide's right edge
@@ -8662,7 +8673,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "{distance:.3g} point from right slide edge"
 msgid_plural "{distance:.3g} points from right slide edge"
-msgstr[0] ""
+msgstr[0] "与幻灯片右边的距离为{distance:.3g}"
 
 #. Translators: For a shape too far off the right edge of a PowerPoint Slide, this is the distance in
 #. points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
@@ -8670,7 +8681,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "Off right slide edge by {distance:.3g} point"
 msgid_plural "Off right slide edge by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "幻灯片右边的超出距离为{distance:.3g}磅"
 
 #. Translators: For a shape within a PowerPoint Slide, this is the distance in points from the shape's
 #. bottom edge to the slide's bottom edge
@@ -8678,7 +8689,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "{distance:.3g} point from bottom slide edge"
 msgid_plural "{distance:.3g} points from bottom slide edge"
-msgstr[0] ""
+msgstr[0] "与幻灯片底边的距离为{distance:.3g}"
 
 #. Translators: For a shape too far off the bottom edge of a PowerPoint Slide, this is the distance in
 #. points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
@@ -8686,7 +8697,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} point"
 msgid_plural "Off bottom slide edge by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "幻灯片底边的超出距离为{distance:.3g}磅"
 
 #. Translators: The description for a script
 #: appModules\powerpnt.py:1188
@@ -8742,14 +8753,14 @@ msgstr "{firstAddress} 到 {lastAddress}"
 #, python-brace-format
 msgid "{val:.2f} inch"
 msgid_plural "{val:.2f} inches"
-msgstr[0] ""
+msgstr[0] "{val:.2f} 英寸"
 
 #. Translators: a measurement in centimetres
 #: appModules\soffice.py:374
 #, python-brace-format
 msgid "{val:.2f} centimetre"
 msgid_plural "{val:.2f} centimetres"
-msgstr[0] ""
+msgstr[0] "{val:.2f} 厘米"
 
 #. Translators: LibreOffice, report cursor position in the current page
 #: appModules\soffice.py:393
@@ -8768,7 +8779,7 @@ msgstr "右"
 #. Translators: The name of a category of NVDA commands.
 #: appModules\vipmud.py:18
 msgid "VipMud"
-msgstr ""
+msgstr "VipMud"
 
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 #: appModules\winamp.py:79
@@ -8855,7 +8866,7 @@ msgstr "Baum/HumanWare/APH/Orbit 点显器"
 #. Translators: Names of braille displays
 #: brailleDisplayDrivers\brailleNote.py:126
 msgid "HumanWare BrailleNote"
-msgstr ""
+msgstr "HumanWare BrailleNote"
 
 #. Translators: The name of a series of braille displays.
 #: brailleDisplayDrivers\brailliantB.py:84
@@ -8865,7 +8876,7 @@ msgstr "HumanWare Brailliant BI/B 系列"
 #. Translators: The name of a braille display.
 #: brailleDisplayDrivers\ecoBraille.py:168
 msgid "EcoBraille displays"
-msgstr ""
+msgstr "EcoBraille 点显器"
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\freedomScientific.py:164
@@ -8931,12 +8942,12 @@ msgstr "无点显器"
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\papenmeier.py:120
 msgid "Papenmeier BRAILLEX newer models"
-msgstr ""
+msgstr "Papenmeier BRAILLEX 新型号"
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\papenmeier_serial.py:62
 msgid "Papenmeier BRAILLEX older models"
-msgstr ""
+msgstr "Papenmeier BRAILLEX 旧型号"
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\seika.py:27
@@ -8956,7 +8967,7 @@ msgstr "超点"
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\albatross\driver.py:82
 msgid "Caiku Albatross 46/80"
-msgstr ""
+msgstr "Caiku Albatross 46/80"
 
 #. Translators: A message when number of status cells must be changed
 #. for a braille display driver
@@ -8967,7 +8978,7 @@ msgstr "要将 Albatross 与 NVDA 一起使用：必须在 Albatross 内部菜�
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\eurobraille\constants.py:10
 msgid "Eurobraille displays"
-msgstr ""
+msgstr "欧洲盲文点显器"
 
 #. Translators: Message when HID keyboard simulation is unavailable.
 #: brailleDisplayDrivers\eurobraille\driver.py:362
@@ -9133,7 +9144,7 @@ msgstr "总是"
 #. Translators: Label for an option in NVDA settings.
 #: config\featureFlagEnums.py:113
 msgid "Diffing"
-msgstr ""
+msgstr "Diffing"
 
 #. Translators: Label for an option in NVDA settings.
 #: config\featureFlagEnums.py:115
@@ -9212,28 +9223,28 @@ msgstr "%s 个像素"
 #, python-format
 msgctxt "font size"
 msgid "%s em"
-msgstr ""
+msgstr "%s em"
 
 #. Translators: A measurement unit of font size.
 #: controlTypes\formatFields.py:48
 #, python-format
 msgctxt "font size"
 msgid "%s ex"
-msgstr ""
+msgstr "%s ex"
 
 #. Translators: Abbreviation for relative em, a measurement of font size.
 #: controlTypes\formatFields.py:50
 #, python-format
 msgctxt "font size"
 msgid "%s rem"
-msgstr ""
+msgstr "%s rem"
 
 #. Translators: Font size measured as a percentage
 #: controlTypes\formatFields.py:54
 #, python-format
 msgctxt "font size"
 msgid "%s%%"
-msgstr ""
+msgstr "%s%%"
 
 #. Translators: A measurement unit of font size.
 #: controlTypes\formatFields.py:59
@@ -10693,17 +10704,17 @@ msgstr "更新日志(&N)"
 #. Translators: The label for the menu item to view the NVDA website
 #: gui\__init__.py:681
 msgid "NV Access &web site"
-msgstr ""
+msgstr "NV Access 网站(&W)"
 
 #. Translators: The label for the menu item to view the NVDA website's get help section
 #: gui\__init__.py:684
 msgid "&Help, training and support"
-msgstr ""
+msgstr "帮助、培训和支持(&H)"
 
 #. Translators: The label for the menu item to view the NVDA website's get help section
 #: gui\__init__.py:687
 msgid "NV Access &shop"
-msgstr ""
+msgstr "NV Access 商店(&S)"
 
 #. Translators: The label for the menu item to view NVDA License document.
 #: gui\__init__.py:693
@@ -11190,7 +11201,7 @@ msgstr "按下手势进行模拟："
 #, python-brace-format
 msgid "{category} ({nbResults} result)"
 msgid_plural "{category} ({nbResults} results)"
-msgstr[0] ""
+msgstr[0] "{category}（{nbResults} 结果）"
 
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for scripts.
 #: gui\inputGestures.py:581
@@ -11378,7 +11389,7 @@ msgstr "要想建立一个 NVDA 的便携版本，请选择位置和其他选项
 #. in the Create Portable NVDA dialog.
 #: gui\installerGui.py:362
 msgid "Portable directory:"
-msgstr ""
+msgstr "便携版目录："
 
 #. Translators: The label of a button to browse for a directory.
 #: gui\installerGui.py:367
@@ -11756,7 +11767,7 @@ msgstr "激活拼读功能（若支持）(&S)"
 #. Translators: Label of the list where user can select speech modes that will be available.
 #: gui\settingsDialogs.py:1643
 msgid "&Modes available in the Cycle speech mode command:"
-msgstr ""
+msgstr "循环语音模式中可用的模式(&M)"
 
 #. Translators: This is the label for a checkbox in the voice settings panel.
 #: gui\settingsDialogs.py:1657
@@ -11766,12 +11777,14 @@ msgstr "光标移动时延迟字符描述(&D)"
 #. Translators: Warning shown when 'talk' speech mode is disabled in settings.
 #: gui\settingsDialogs.py:1701
 msgid "You did not choose Talk as one of your speech mode options. Please note that this may result in no speech output at all. Are you sure you want to continue?"
-msgstr ""
+msgstr "您将取消“正常朗读”作为可切换的语音模式之一。\n"
+"请注意，这可能导致没有语音输出。\n"
+"您确定要继续吗？"
 
 #. Translators: Message shown when not enough speech modes are enabled.
 #: gui\settingsDialogs.py:1721
 msgid "At least two speech modes have to be checked."
-msgstr ""
+msgstr "必须至少选中两种语音模式。"
 
 #. Translators: This is the label for the keyboard settings panel.
 #: gui\settingsDialogs.py:1733
@@ -11872,7 +11885,7 @@ msgstr "文本识别单元(&U):"
 #. mouse settings panel.
 #: gui\settingsDialogs.py:1900
 msgid "Report &object when mouse enters it"
-msgstr ""
+msgstr "鼠标进入时读出对象(&O)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
@@ -12435,7 +12448,7 @@ msgstr "触控输入模式(&T)"
 #. Translators: The title of the Windows OCR panel.
 #: gui\settingsDialogs.py:2788
 msgid "Windows OCR"
-msgstr ""
+msgstr "Windows OCR"
 
 #. Translators: Label for an option in the Windows OCR dialog.
 #: gui\settingsDialogs.py:2806
@@ -12599,7 +12612,7 @@ msgstr "从不"
 #. Translators: This is the label for a COMBOBOX in the Advanced settings panel.
 #: gui\settingsDialogs.py:3011
 msgid "Use en&hanced event processing (requires restart)"
-msgstr ""
+msgstr "使用增强的事件处理（需要重新启动）(&H)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -12662,14 +12675,14 @@ msgstr "自动（首选 Diff Match Patch）"
 #. by character, using the diff match patch algorithm.
 #: gui\settingsDialogs.py:3097
 msgid "Diff Match Patch"
-msgstr ""
+msgstr "Diff Match Patch"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
 #: gui\settingsDialogs.py:3101
 msgid "Difflib"
-msgstr ""
+msgstr "Difflib"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 #: gui\settingsDialogs.py:3123
@@ -13198,7 +13211,11 @@ msgid "Most commands for controlling NVDA require you to hold down the NVDA key 
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
 "From this menu, you can configure NVDA, get help, and access other NVDA functions."
-msgstr ""
+msgstr "大多数控制 NVDA 的命令要求您在按住 NVDA 键的同时按其他键。\n"
+"默认情况下，数字键盘的插入和主键盘的插入键都可以用作 NVDA 键。\n"
+"您还可以将 NVDA 配置为使用大写锁定键作为 NVDA 键。\n"
+"随时可按 NVDA+n 激活 NVDA 菜单。\n"
+"从此菜单中，您可以配置 NVDA、获取帮助、访问其他 NVDA 功能。"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 #: gui\startupDialogs.py:47
@@ -13273,37 +13290,37 @@ msgstr "为了在未来改进 NVDA，NV Access 希望从正在运行的 NVDA 副
 #: gui\addonStoreGui\controls\actions.py:130
 msgctxt "addonStore"
 msgid "No actions available for the selected add-ons"
-msgstr ""
+msgstr "所选插件无可用操作"
 
 #. Translators: Label for an action that installs the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:141
 msgctxt "addonStore"
 msgid "&Install selected add-ons"
-msgstr ""
+msgstr "安装所选(&I)"
 
 #. Translators: Label for an action that updates the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:151
 msgctxt "addonStore"
 msgid "&Update selected add-ons"
-msgstr ""
+msgstr "更新所选(&U)"
 
 #. Translators: Label for an action that removes the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:158
 msgctxt "addonStore"
 msgid "&Remove selected add-ons"
-msgstr ""
+msgstr "移除所选(&R)"
 
 #. Translators: Label for an action that enables the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:173
 msgctxt "addonStore"
 msgid "&Enable selected add-ons"
-msgstr ""
+msgstr "启用所选(&E)"
 
 #. Translators: Label for an action that disables the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:180
 msgctxt "addonStore"
 msgid "&Disable selected add-ons"
-msgstr ""
+msgstr "禁用所选(&D)"
 
 #. Translators: Header (usually the add-on name) when add-ons are loading. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:36
@@ -13352,7 +13369,7 @@ msgstr "其他详情(&O)："
 msgctxt "addonStore"
 msgid "{num} add-on selected."
 msgid_plural "{num} add-ons selected."
-msgstr[0] ""
+msgstr[0] "{num} 个插件已选择。"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:243
@@ -13430,7 +13447,7 @@ msgstr "来源："
 #: gui\addonStoreGui\controls\details.py:323
 msgctxt "addonStore"
 msgid "Reviews URL:"
-msgstr ""
+msgstr "评论 URL："
 
 #. Translators: A button in the addon installation warning / blocked dialog which shows
 #. more information about the addon
@@ -13456,7 +13473,7 @@ msgstr "否(&N)"
 #: gui\addonStoreGui\controls\messageDialogs.py:71
 msgctxt "addonStore"
 msgid "Remember this choice for subsequent add-ons"
-msgstr ""
+msgstr "记住此选择"
 
 #. Translators: The message displayed when updating an add-on, but the installed version
 #. identifier can not be compared with the version to be installed.
@@ -13662,7 +13679,7 @@ msgstr "插件安装"
 msgctxt "addonStore"
 msgid "Download of {} add-on in progress, cancel downloading?"
 msgid_plural "Download of {} add-ons in progress, cancel downloading?"
-msgstr[0] ""
+msgstr[0] "正在下载 {} 个插件，要取消下载吗？"
 
 #. Translators: Message shown while installing add-ons after closing the add-on store dialog
 #. The placeholder {} will be replaced with the number of add-ons to be installed
@@ -13670,7 +13687,7 @@ msgstr[0] ""
 msgctxt "addonStore"
 msgid "Installing {} add-on, please wait."
 msgid_plural "Installing {} add-ons, please wait."
-msgstr[0] ""
+msgstr[0] "{} 个插件正在安装，请稍候。"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
@@ -13759,7 +13776,7 @@ msgstr "更新(&U)"
 #: gui\addonStoreGui\viewModels\store.py:137
 msgctxt "addonStore"
 msgid "&Update (override incompatibility)"
-msgstr ""
+msgstr "更新（覆盖不兼容）(&U)"
 
 #. Translators: Label for an action that replaces the selected addon with
 #. an add-on store version.
@@ -13820,7 +13837,7 @@ msgstr "源代码(&C)"
 #: gui\addonStoreGui\viewModels\store.py:234
 msgctxt "addonStore"
 msgid "Community re&views"
-msgstr ""
+msgstr "社区评论（英文网页）(&V)"
 
 #. Translators: The message displayed when the add-on cannot be enabled.
 #. {addon} is replaced with the add-on name.
@@ -13933,19 +13950,19 @@ msgstr "任务栏"
 #: NVDAObjects\IAccessible\msOffice.py:155
 #, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
-msgstr ""
+msgstr "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 
 #. Translators: a message reported when opening when expanding a node in a tree view.
 #: NVDAObjects\IAccessible\sysTreeView32.py:186
 #, python-format
 msgid "%s item"
 msgid_plural "%s items"
-msgstr[0] ""
+msgstr[0] "%s 项"
 
 #. Translators: The label of a shortcut of NVDA.
 #: NVDAObjects\IAccessible\winword.py:219
 msgid "Set column header. Pressing once will set this cell as the first column header for any cell lower and to the right of it within this table. Pressing twice will forget the current column header for this cell."
-msgstr ""
+msgstr "设置列标题。按一次，设置此单元格作为在其右边和下边形成的表格的列标题，按两次清除此设置。"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:236
@@ -13974,7 +13991,7 @@ msgstr "无法在列标题中找到{rowNumber}行{columnNumber}列"
 #. Translators: The label of a shortcut of NVDA.
 #: NVDAObjects\IAccessible\winword.py:252
 msgid "Set row header. Pressing once will set this cell as the first row header for any cell lower and to the right of it within this table. Pressing twice will forget the current row header for this cell."
-msgstr ""
+msgstr "设置行标题。按一次，设置此单元格作为在其右边和下边形成的表格的行标题，按两次清除该设置。"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:268
@@ -14002,12 +14019,12 @@ msgstr "无法在行标题中找到{rowNumber}行{columnNumber}列"
 
 #. Translators: a description for a script
 #. Translators: a description for a script that reports the comment at the caret.
-#: NVDAObjects\IAccessible\winword.py:321 NVDAObjects\UIA\wordDocument.py:602
+#: NVDAObjects\IAccessible\winword.py:321 NVDAObjects\UIA\wordDocument.py:608
 msgid "Reports the text of the comment where the system caret is located."
-msgstr ""
+msgstr "读出系统输入焦点所在的批注文本。"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-#: NVDAObjects\IAccessible\winword.py:344 NVDAObjects\UIA\wordDocument.py:613
+#: NVDAObjects\IAccessible\winword.py:344 NVDAObjects\UIA\wordDocument.py:619
 msgid "No comments"
 msgstr "无批注"
 
@@ -14070,7 +14087,7 @@ msgstr "单元格高度：{0.y:.1f} pt"
 msgctxt "excel-UIA"
 msgid "Rotation: {0} degree"
 msgid_plural "Rotation: {0} degrees"
-msgstr[0] ""
+msgstr[0] "旋转： {0} 度"
 
 #. Translators: The outline (border) colors of an Excel cell.
 #: NVDAObjects\UIA\excel.py:230
@@ -14168,7 +14185,7 @@ msgstr "读出当前单元格的批注线程"
 #: NVDAObjects\UIA\excel.py:507
 #, python-brace-format
 msgid "{name}: {desc}"
-msgstr ""
+msgstr "{name}: {desc}"
 
 #. Translators: message when a cell in Excel contains no note
 #: NVDAObjects\UIA\excel.py:511
@@ -14186,7 +14203,7 @@ msgstr "批注线程：{comment} 批注 {author}"
 #, python-brace-format
 msgid "Comment thread: {comment}  by {author} with {numReplies} reply"
 msgid_plural "Comment thread: {comment}  by {author} with {numReplies} replies"
-msgstr[0] ""
+msgstr[0] "批注： {comment} ，来自 {author}， {numReplies} 个回复"
 
 #. Translators: A message in Excel when there is no comment thread
 #: NVDAObjects\UIA\excel.py:533
@@ -14200,13 +14217,13 @@ msgstr "离开表格"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: NVDAObjects\UIA\wordDocument.py:61 NVDAObjects\window\winword.py:1670
+#: NVDAObjects\UIA\wordDocument.py:61 NVDAObjects\window\winword.py:1671
 msgid "&Annotations"
 msgstr "注释(&A)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: NVDAObjects\UIA\wordDocument.py:64 NVDAObjects\window\winword.py:1676
+#: NVDAObjects\UIA\wordDocument.py:64 NVDAObjects\window\winword.py:1677
 msgid "&Errors"
 msgstr "错误(&E)"
 
@@ -14241,21 +14258,21 @@ msgid "Comment: {comment} by {author} on {date}"
 msgstr "批注： {comment} 由 {author} 创建于 {date}"
 
 #. Translators: a message when navigating by sentence is unavailable in MS Word
-#: NVDAObjects\UIA\wordDocument.py:568
+#: NVDAObjects\UIA\wordDocument.py:574
 msgid "Navigating by sentence not supported in this document"
 msgstr "当前文档不支持句子导航"
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
-#: NVDAObjects\UIA\wordDocument.py:621
+#: NVDAObjects\UIA\wordDocument.py:627
 msgid "Command not supported in this type of document. The tables have their first row cells automatically set as column headers."
-msgstr ""
+msgstr "此类文档不支持的命令。表格的第一行单元格将被自动设置为列标题。"
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
-#: NVDAObjects\UIA\wordDocument.py:630
+#: NVDAObjects\UIA\wordDocument.py:636
 msgid "Command not supported in this type of document. The tables have their first column cells automatically set as row headers."
-msgstr ""
+msgstr "此类文档不支持的命令。表格的第一列单元格将被自动设置为行标题。"
 
 #: NVDAObjects\window\__init__.py:392
 msgid "Desktop"
@@ -14830,7 +14847,7 @@ msgstr "图表标题： {chartTitle}， 类型： {chartType}"
 #, python-format
 msgid "There is %d series in this chart"
 msgid_plural "There are %d series in this chart"
-msgstr[0] ""
+msgstr[0] "此图表共有 %d 个系列"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
 #: NVDAObjects\window\_msOfficeChart.py:569
@@ -14902,7 +14919,7 @@ msgstr "类别 {categoryAxisData} "
 #: NVDAObjects\window\_msOfficeChart.py:746
 #, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
-msgstr ""
+msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
@@ -15056,7 +15073,7 @@ msgstr "系列 {seriesName} 的图例条目 {seriesCount} 的 {seriesIndex}"
 #: NVDAObjects\window\_msOfficeChart.py:947
 #, python-brace-format
 msgid "Legend entry {legendEntryIndex} of {legendEntryCount}"
-msgstr ""
+msgstr "Legend entry {legendEntryIndex} of {legendEntryCount}"
 
 #. Translators: Details about a legend key for a series in a Microsoft office chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
@@ -15224,7 +15241,7 @@ msgstr "在此列表中列举了各种类型的元素"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: NVDAObjects\window\excel.py:667 NVDAObjects\window\winword.py:1673
+#: NVDAObjects\window\excel.py:667 NVDAObjects\window\winword.py:1674
 msgid "&Charts"
 msgstr "图表(&C)"
 
@@ -15254,37 +15271,37 @@ msgstr "{start} 到 {end}"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1113 NVDAObjects\window\winword.py:1355
+#: NVDAObjects\window\excel.py:1113 NVDAObjects\window\winword.py:1356
 msgid "Bold off"
 msgstr "关闭粗体"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1115 NVDAObjects\window\winword.py:1352
+#: NVDAObjects\window\excel.py:1115 NVDAObjects\window\winword.py:1353
 msgid "Bold on"
 msgstr "打开粗体"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1127 NVDAObjects\window\winword.py:1369
+#: NVDAObjects\window\excel.py:1127 NVDAObjects\window\winword.py:1370
 msgid "Italic off"
 msgstr "关闭斜体"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1129 NVDAObjects\window\winword.py:1366
+#: NVDAObjects\window\excel.py:1129 NVDAObjects\window\winword.py:1367
 msgid "Italic on"
 msgstr "打开斜体"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1141 NVDAObjects\window\winword.py:1383
+#: NVDAObjects\window\excel.py:1141 NVDAObjects\window\winword.py:1384
 msgid "Underline off"
 msgstr "关闭下划线"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\excel.py:1143 NVDAObjects\window\winword.py:1380
+#: NVDAObjects\window\excel.py:1143 NVDAObjects\window\winword.py:1381
 msgid "Underline on"
 msgstr "打开下划线"
 
@@ -15301,7 +15318,7 @@ msgstr "删除线开"
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1467
 msgid "Sets the current cell as start of column header. Pressing once will set this cell as the first column header for any cell lower and to the right of it within this region. Pressing twice will forget the current column header for this cell."
-msgstr ""
+msgstr "将当前单元格设置为列标题的开始。按一次设置此单元格为第一个列标题单元格，包括其右方和下方的单元格在内都属于此区域，连按两次清除此单元格的列标题设置。"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #: NVDAObjects\window\excel.py:1479
@@ -15330,7 +15347,7 @@ msgstr "无法再列标题中找到 {address}"
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1494
 msgid "Sets the current cell as start of row headers. Pressing once will set this cell as the first row header for any cell lower and to the right of it within this region. Pressing twice will forget the current row header for this cell."
-msgstr ""
+msgstr "将当前单元格设置为行标题的开始。按一次设置此单元格为第一个行标题单元格，包括其右方和下方的单元格在内都属于此区域，连按两次清除此单元格的行标题设置。"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #: NVDAObjects\window\excel.py:1506
@@ -15530,13 +15547,13 @@ msgstr "中央虚线"
 #: NVDAObjects\window\excelCellBorder.py:118
 #, python-brace-format
 msgid "{weight} {style}"
-msgstr ""
+msgstr "{weight} {style}"
 
 #. Translators: border styles in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:124
 #, python-brace-format
 msgid "{color} {desc}"
-msgstr ""
+msgstr "{color} {desc}"
 
 #. Translators: border styles in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:133
@@ -15566,7 +15583,7 @@ msgstr "{desc} 右上和右下对角线"
 #: NVDAObjects\window\excelCellBorder.py:155
 #, python-brace-format
 msgid "{desc} {position}"
-msgstr ""
+msgstr "{desc} {position}"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 #: NVDAObjects\window\winword.py:276
@@ -15769,148 +15786,148 @@ msgid_plural "%.1f lines"
 msgstr[0] "%.1f 行"
 
 #. Translators: the title of the message dialog desplaying an MS Word table description.
-#: NVDAObjects\window\winword.py:1174
+#: NVDAObjects\window\winword.py:1175
 msgid "Table description"
 msgstr "表格描述"
 
 #. Translators: the default (automatic) color in Microsoft Word
-#: NVDAObjects\window\winword.py:1273
+#: NVDAObjects\window\winword.py:1274
 msgid "automatic color"
 msgstr "自动颜色"
 
 #. Translators: a an alignment in Microsoft Word
-#: NVDAObjects\window\winword.py:1394
+#: NVDAObjects\window\winword.py:1395
 msgid "Left aligned"
 msgstr "左对齐"
 
 #. Translators: a an alignment in Microsoft Word
-#: NVDAObjects\window\winword.py:1396
+#: NVDAObjects\window\winword.py:1397
 msgid "centered"
 msgstr "居中"
 
 #. Translators: a an alignment in Microsoft Word
-#: NVDAObjects\window\winword.py:1398
+#: NVDAObjects\window\winword.py:1399
 msgid "Right aligned"
 msgstr "右对齐"
 
 #. Translators: a an alignment in Microsoft Word
-#: NVDAObjects\window\winword.py:1400
+#: NVDAObjects\window\winword.py:1401
 msgid "Justified"
 msgstr "段落重排"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\winword.py:1431
+#: NVDAObjects\window\winword.py:1432
 msgid "Superscript"
 msgstr "上标"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\winword.py:1434
+#: NVDAObjects\window\winword.py:1435
 msgid "Subscript"
 msgstr "下标"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#: NVDAObjects\window\winword.py:1437
+#: NVDAObjects\window\winword.py:1438
 msgid "Baseline"
 msgstr "基准线"
 
 #. Translators: a message reported when a paragraph is moved below another paragraph
-#: NVDAObjects\window\winword.py:1449
+#: NVDAObjects\window\winword.py:1450
 #, python-format
 msgid "Moved below %s"
 msgstr "下移 %s"
 
 #. Translators: a message reported when a paragraph is moved below a blank paragraph
-#: NVDAObjects\window\winword.py:1452
+#: NVDAObjects\window\winword.py:1453
 msgid "Moved below blank paragraph"
 msgstr "移动到下方的空白段落"
 
 #. Translators: a message reported when a paragraph is moved above another paragraph
-#: NVDAObjects\window\winword.py:1465
+#: NVDAObjects\window\winword.py:1466
 #, python-format
 msgid "Moved above %s"
 msgstr "上移 %s"
 
 #. Translators: a message reported when a paragraph is moved above a blank paragraph
-#: NVDAObjects\window\winword.py:1468
+#: NVDAObjects\window\winword.py:1469
 msgid "Moved above blank paragraph"
 msgstr "移动到上方的空白段落"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
-#: NVDAObjects\window\winword.py:1479
+#: NVDAObjects\window\winword.py:1480
 #, python-brace-format
 msgid "{styleName} style, outline level {outlineLevel}"
 msgstr "{styleName} 样式，大纲级别 {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
-#: NVDAObjects\window\winword.py:1489
+#: NVDAObjects\window\winword.py:1490
 #, python-brace-format
 msgid "{size:g} point font"
 msgstr "{size:g} pt 字体"
 
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
-#: NVDAObjects\window\winword.py:1505
+#: NVDAObjects\window\winword.py:1506
 msgid "Display nonprinting characters"
 msgstr "显示非打印字符"
 
 #. Translators: a message when toggling Display Nonprinting Characters in Microsoft word
-#: NVDAObjects\window\winword.py:1508
+#: NVDAObjects\window\winword.py:1509
 msgid "Hide nonprinting characters"
 msgstr "隐藏非打印字符"
 
 #. Translators: a measurement in Microsoft Word
-#: NVDAObjects\window\winword.py:1546
+#: NVDAObjects\window\winword.py:1547
 #, python-brace-format
 msgid "{offset:.3g} character"
 msgid_plural "{offset:.3g} characters"
-msgstr[0] ""
+msgstr[0] "{offset:.3g} 个字符"
 
 #. Translators: a measurement in Microsoft Word
-#: NVDAObjects\window\winword.py:1556
+#: NVDAObjects\window\winword.py:1557
 #, python-brace-format
 msgid "{offset:.3g} inch"
 msgid_plural "{offset:.3g} inches"
-msgstr[0] ""
+msgstr[0] "{offset:.3g} 英寸"
 
 #. Translators: a measurement in Microsoft Word
-#: NVDAObjects\window\winword.py:1564
+#: NVDAObjects\window\winword.py:1565
 #, python-brace-format
 msgid "{offset:.3g} centimeter"
 msgid_plural "{offset:.3g} centimeters"
-msgstr[0] ""
+msgstr[0] "{offset:.3g} 厘米"
 
 #. Translators: a measurement in Microsoft Word
-#: NVDAObjects\window\winword.py:1572
+#: NVDAObjects\window\winword.py:1573
 #, python-brace-format
 msgid "{offset:.3g} millimeter"
 msgid_plural "{offset:.3g} millimeters"
-msgstr[0] ""
+msgstr[0] "{offset:.3g} 毫米"
 
 #. Translators: a measurement in Microsoft Word (points)
-#: NVDAObjects\window\winword.py:1578
+#: NVDAObjects\window\winword.py:1579
 #, python-brace-format
 msgid "{offset:.3g} pt"
-msgstr ""
+msgstr "{offset:.3g} pt"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
-#: NVDAObjects\window\winword.py:1584
+#: NVDAObjects\window\winword.py:1585
 #, python-brace-format
 msgid "{offset:.3g} pica"
 msgid_plural "{offset:.3g} picas"
-msgstr[0] ""
+msgstr[0] "{offset:.3g} 十二点活字"
 
 #. Translators: a message when switching to single line spacing  in Microsoft word
-#: NVDAObjects\window\winword.py:1598
+#: NVDAObjects\window\winword.py:1599
 msgid "Single line spacing"
 msgstr "单倍行距"
 
 #. Translators: a message when switching to double line spacing  in Microsoft word
-#: NVDAObjects\window\winword.py:1601
+#: NVDAObjects\window\winword.py:1602
 msgid "Double line spacing"
 msgstr "2 倍行距"
 
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
-#: NVDAObjects\window\winword.py:1604
+#: NVDAObjects\window\winword.py:1605
 msgid "1.5 line spacing"
 msgstr "1.5 倍行距"
 
@@ -15918,26 +15935,26 @@ msgstr "1.5 倍行距"
 #: speech\speech.py:92
 msgctxt "speechModes"
 msgid "off"
-msgstr ""
+msgstr "不朗读"
 
 #. Translators: Name of the speech mode which will cause NVDA to beep instead of speaking.
 #: speech\speech.py:94
 msgctxt "speechModes"
 msgid "beeps"
-msgstr ""
+msgstr "提示音"
 
 #. Translators: Name of the speech mode which causes NVDA to speak normally.
 #: speech\speech.py:96
 msgctxt "speechModes"
 msgid "talk"
-msgstr ""
+msgstr "正常朗读"
 
 #. Translators: Name of the on-demand speech mode,
 #. in which NVDA only speaks in response to commands that report content.
 #: speech\speech.py:99
 msgctxt "speechModes"
 msgid "on-demand"
-msgstr ""
+msgstr "手动朗读"
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #: speech\speech.py:341
@@ -16023,21 +16040,21 @@ msgstr "%s 级"
 #: speech\speech.py:1969
 #, python-brace-format
 msgid "with {rowCountTranslation} and {colCountTranslation}"
-msgstr ""
+msgstr "共 {rowCountTranslation} {colCountTranslation}"
 
 #. Translators: Speaks number of columns (example output: with 4 columns).
 #: speech\speech.py:1975
 #, python-format
 msgid "with %s column"
 msgid_plural "with %s columns"
-msgstr[0] ""
+msgstr[0] "共 %s 列"
 
 #. Translators: Speaks number of rows (example output: with 2 rows).
 #: speech\speech.py:1978
 #, python-format
 msgid "with %s row"
 msgid_plural "with %s rows"
-msgstr[0] ""
+msgstr[0] "共 %s 行"
 
 #. Translators: Sub-part of the compound string to speak number of rows and columns in a table.
 #. Example: If the full compound string is "table with 3 rwos and 2 columns", this substring is "3 rows".
@@ -16045,7 +16062,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "{rowCount} row"
 msgid_plural "{rowCount} rows"
-msgstr[0] ""
+msgstr[0] "{rowCount} 行"
 
 #. Translators: Sub-part of the compound string to speak number of rows and columns in a table.
 #. Example: If the full compound string is "table with 3 rwos and 2 columns", this substring is "2 columns".
@@ -16053,7 +16070,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "{columnCount} column"
 msgid_plural "{columnCount} columns"
-msgstr[0] ""
+msgstr[0] "{columnCount} 列"
 
 #. Translators: Number of items in a list (example output: list with 5 items).
 #: speech\speech.py:2182
@@ -16096,7 +16113,7 @@ msgstr "{1} 之 {0} 列"
 #, python-format
 msgid "%s column"
 msgid_plural "%s columns"
-msgstr[0] ""
+msgstr[0] "%s 列"
 
 #. Translators: Indicates the text column number in a document.
 #: speech\speech.py:2424
@@ -16409,7 +16426,7 @@ msgstr "离开表格"
 #: speech\speech.py:2837
 #, python-brace-format
 msgid "table with {columnCountText} and {rowCountText}"
-msgstr ""
+msgstr "包含 {columnCountText} {rowCountText} 的表格"
 
 #. Translators: name of the default espeak varient.
 #: synthDrivers\_espeak.py:388
@@ -16441,7 +16458,7 @@ msgstr "像素坐标 {x}、{y}"
 #: textInfos\offsets.py:173
 #, python-brace-format
 msgid "{curPercent:.0f}%"
-msgstr ""
+msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
 #: textInfos\offsets.py:180
@@ -16499,7 +16516,7 @@ msgstr "式样"
 #, python-brace-format
 msgctxt "time format"
 msgid "{S}"
-msgstr ""
+msgstr "{S}"
 
 #. Translators: used to format time locally.
 #. substitution rules: {S} seconds, {M} minutes
@@ -16507,7 +16524,7 @@ msgstr ""
 #, python-brace-format
 msgctxt "time format"
 msgid "{M}:{S}"
-msgstr ""
+msgstr "{M}:{S}"
 
 #. Translators: used to format time locally.
 #. substitution rules: {S} seconds, {M} minutes, {H} hours
@@ -16515,7 +16532,7 @@ msgstr ""
 #, python-brace-format
 msgctxt "time format"
 msgid "{H}:{M}:{S}"
-msgstr ""
+msgstr "{H}:{M}:{S}"
 
 #. Translators: used to format time locally.
 #. substitution rules: {S} seconds, {M} minutes, {H} hours, {D} day
@@ -16666,7 +16683,7 @@ msgstr "已断开电源"
 #, python-brace-format
 msgid "{hours:d} hour"
 msgid_plural "{hours:d} hours"
-msgstr[0] ""
+msgstr[0] "{hours:d} 小时"
 
 #. Translators: This is the minute string part of the estimated remaining runtime of the laptop battery.
 #. E.g. if the full string is "1 hour and 34 minutes remaining", this string is "34 minutes".
@@ -16674,14 +16691,14 @@ msgstr[0] ""
 #, python-brace-format
 msgid "{minutes:d} minute"
 msgid_plural "{minutes:d} minutes"
-msgstr[0] ""
+msgstr[0] "{minutes:d} 分"
 
 #. Translators: This is the main string for the estimated remaining runtime of the laptop battery.
 #. E.g. hourText is replaced by "1 hour" and minuteText by "34 minutes".
 #: winAPI\_powerTracking.py:250
 #, python-brace-format
 msgid "{hourText} and {minuteText} remaining"
-msgstr ""
+msgstr "剩余 {hourText} {minuteText}"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 #: winAPI\secureDesktop.py:53

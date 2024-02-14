@@ -13,7 +13,7 @@ import copy
 import os
 from enum import IntEnum
 from locale import strxfrm
-
+import re
 import typing
 import wx
 from NVDAState import WritePaths
@@ -3235,7 +3235,28 @@ class AdvancedPanelControls(
 			keyPath=["audio", "WASAPI"],
 			conf=config.conf,
 		))
+		self.wasapiComboBox .Bind(wx.EVT_CHOICE, self._onWasapiChange)
 		self.bindHelpEvent("WASAPI", self.wasapiComboBox)
+
+		silenceDurationLabelText = _(
+			# Translators: The label for a setting in advanced panel
+			# to change the duration of keeping audio device awake
+			"Duration in seconds of keeping audio device awake"
+		)
+		minDuration = int(config.conf.getConfigValidation(
+			("audio", "keepAudioAwakeTimeSeconds")
+		).kwargs["min"])
+		maxDuration = int(config.conf.getConfigValidation(("audio", "keepAudioAwakeTimeSeconds")).kwargs["max"])
+		self.silenceDurationEdit = audioGroup.addLabeledControl(
+			silenceDurationLabelText,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=minDuration,
+			max=maxDuration,
+			initial=config.conf["audio"]["keepAudioAwakeTimeSeconds"]
+		)
+		self.silenceDurationEdit.defaultValue = self._getDefaultValue(["audio", "keepAudioAwakeTimeSeconds"])
+		self.bindHelpEvent("KeepAudioAwakeDuration", self.silenceDurationEdit)
+		self._onWasapiChange(None)
 
 		# Translators: This is the label for a group of advanced options in the
 		# Advanced settings panel
@@ -3295,9 +3316,43 @@ class AdvancedPanelControls(
 
 		self.Layout()
 
+		# Translators: This is the label for a textfield in the
+		# browse mode settings panel.
+		textParagraphRegexLabelText = _("Regular expression for text paragraph navigation")
+		self.textParagraphRegexEdit = sHelper.addLabeledControl(
+			textParagraphRegexLabelText,
+			wxCtrlClass=wx.TextCtrl,
+			size=(self.Parent.scaleSize(300), -1),
+		)
+		self.textParagraphRegexEdit.SetValue(config.conf["virtualBuffers"]["textParagraphRegex"])
+		self.bindHelpEvent("TextParagraphRegexEdit", self.textParagraphRegexEdit)
+
+	def isValid(self) -> bool:
+		regex = self.textParagraphRegexEdit.GetValue()
+		try:
+			re.compile(regex)
+		except re.error as e:
+			log.debugWarning("Failed to compile text paragraph regex", exc_info=True)
+			gui.messageBox(
+				# Translators: Message shown when invalid text paragraph regex entered
+				_("Failed to compile text paragraph regular expression: %s") % str(e),
+				# Translators: The title of the message box
+				_("Error"),
+				wx.OK | wx.ICON_ERROR,
+				self,
+			)
+			return False
+		return super().isValid()
+
 	def onOpenScratchpadDir(self,evt):
 		path=config.getScratchpadDir(ensureExists=True)
 		os.startfile(path)
+
+	def _onWasapiChange(self, evt: wx.CommandEvent) -> None:
+		self.silenceDurationEdit.Enable(
+			config.conf["audio"]["WASAPI"]
+			and self.wasapiComboBox._getControlCurrentValue().value != 2  # wasapi not disabled
+		)
 
 	def _getDefaultValue(self, configPath):
 		return config.conf.getConfigValidation(configPath).default
@@ -3354,6 +3409,7 @@ class AdvancedPanelControls(
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
 		self.wasapiComboBox.resetToConfigSpecDefault()
+		self.silenceDurationEdit.SetValue(self.silenceDurationEdit.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self.playErrorSoundCombo.SetSelection(self.playErrorSoundCombo.defaultValue)
 		self._defaultsRestored = True
@@ -3386,6 +3442,7 @@ class AdvancedPanelControls(
 			self.reportTransparentColorCheckBox.IsChecked()
 		)
 		self.wasapiComboBox.saveCurrentValueToConf()
+		config.conf["audio"]["keepAudioAwakeTimeSeconds"] = self.silenceDurationEdit.GetValue()
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
 		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
 		self.brailleLiveRegionsCombo.saveCurrentValueToConf()
@@ -3394,6 +3451,9 @@ class AdvancedPanelControls(
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
 		config.conf["featureFlag"]["playErrorSound"] = self.playErrorSoundCombo.GetSelection()
+		config.conf["virtualBuffers"]["textParagraphRegex"] = (
+			self.textParagraphRegexEdit.GetValue()
+		)
 
 
 class AdvancedPanel(SettingsPanel):

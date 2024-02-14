@@ -1167,6 +1167,7 @@ class BrowseModeWordDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeI
 class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	TextInfo=BrowseModeWordDocumentTextInfo
+	_nativeAppSelectionMode = True
 
 	def _activateLongDesc(self,controlField):
 		longDesc=controlField.get('longdescription')
