@@ -2561,7 +2561,7 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
-		self.figuresCheckBox = elementsGroup.addItem(wx.CheckBox(elementsGroupBox, label=_("&Figures")))
+		self.figuresCheckBox = elementsGroup.addItem(wx.CheckBox(elementsGroupBox, label=_("&Figures and captions")))
 		self.figuresCheckBox.Value=config.conf["documentFormatting"]["reportFigures"]
 
 		# Translators: This is the label for a checkbox in the
