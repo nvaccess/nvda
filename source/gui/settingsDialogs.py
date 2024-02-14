@@ -887,7 +887,6 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
-			# Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
 			item = self.allowUsageStatsCheckBox = wx.CheckBox(
 				self,
 				# Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
