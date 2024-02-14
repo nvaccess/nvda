@@ -2184,7 +2184,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			i = 0
 			while i < n:
 				if isinstance(sequence[i], str):
-					for j in range(i+ 1, n):
+					for j in range(i + 1, n):
 						if not isinstance(sequence[i], str):
 							break
 					else:
