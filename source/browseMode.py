@@ -1007,7 +1007,7 @@ qn(
 	prevError=_("no previous tab")
 )
 qn(
-	"figure", key="y",
+	"figure", key=None,
 	# Translators: Input help message for a quick navigation command in browse mode.
 	nextDoc=_("moves to the next figure"),
 	# Translators: Message presented when the browse mode element is not found.
