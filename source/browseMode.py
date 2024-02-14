@@ -2275,7 +2275,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 						textRange.collapse()
 						textRange.move(textInfos.UNIT_CHARACTER, startOffset)
 						textRange.move(textInfos.UNIT_CHARACTER, endOffset, endPoint="end")
-						yield TextInfoQuickNavItem(kind, self, textRange)
+						yield TextInfoQuickNavItem(kind, self, textRange, OutputReason.CARET)
 					firstStyleWithinParagraph = False
 			firstParagraph = False
 			if direction == documentBase._Movement.NEXT:
