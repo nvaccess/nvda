@@ -890,6 +890,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			# Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
 			item = self.allowUsageStatsCheckBox = wx.CheckBox(
 				self,
+				# Translators: Label of checkbox in general settings
 				label=_("Allow NV Access to gather NVDA usage statistics")
 			)
 			self.bindHelpEvent("GeneralSettingsGatherUsageStats", self.allowUsageStatsCheckBox)
