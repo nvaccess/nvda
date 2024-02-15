@@ -2,9 +2,10 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2011-2023 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka
+# Copyright (C) 2011-2024 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka
 
 import ctypes
+import pathlib
 import winreg
 import time
 import os
@@ -22,8 +23,8 @@ import easeOfAccess
 import COMRegistrationFixes
 import winKernel
 from typing import (
-	Any,
 	Dict,
+	Iterable,
 	Union,
 )
 import NVDAState
@@ -205,6 +206,7 @@ def removeOldProgramFiles(destPath):
 		for fn in files:
 			fn = os.path.join(root, fn)
 			# No need to use tryRemoveFile here because these files should never be locked.
+			# TODO: should we use tryRemoveFile anyway here?
 			if os.path.isdir(fn):
 				shutil.rmtree(fn)
 			else:
@@ -566,7 +568,13 @@ def _deleteKeyAndSubkeys(key, subkey):
 class RetriableFailure(Exception):
 	pass
 
-def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
+
+def tryRemoveFile(
+		path: str,
+		numRetries: int = 6,
+		retryInterval: float = 0.5,
+		rebootOK: bool = False
+):
 	dirPath=os.path.dirname(path)
 	tempPath=tempfile.mktemp(dir=dirPath)
 	try:
@@ -581,7 +589,7 @@ def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
 				os.remove(tempPath)
 			return
 		except OSError:
-			pass
+			log.debugWarning(f"Failed to delete file {tempPath}, attempt {count}/{numRetries}", exc_info=True)
 		time.sleep(retryInterval)
 	if rebootOK:
 		log.debugWarning("Failed to delete file %s, marking for delete on reboot"%tempPath)
@@ -592,12 +600,13 @@ def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
 			# #9847: Move file to None to delete it.
 			winKernel.moveFileEx(pathQualifier+tempPath,None,winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
 		except WindowsError:
-			log.debugWarning("Failed to delete file %s, marking for delete on reboot"%tempPath, exc_info=True)
-		return
+			log.debugWarning(f"Failed to mark file {tempPath} for delete on reboot", exc_info=True)
+		else:
+			return
 	try:
 		os.rename(tempPath,path)
-	except:
-		log.error("Unable to rename back to %s before retriable failier"%path)
+	except Exception:
+		log.exception(f"Unable to rename back to {path} before retriable failure")
 	raise RetriableFailure("File %s could not be removed"%path)
 
 def tryCopyFile(sourceFilePath,destFilePath):
@@ -622,9 +631,60 @@ def tryCopyFile(sourceFilePath,destFilePath):
 			raise OSError("Unable to copy file %s to %s, error %d"%(sourceFilePath,destFilePath,errorCode))
 
 
+_nvdaExes = {
+	"nvda.exe",
+	"nvda_noUIAccess.exe",
+	"nvda_uiAccess.exe",
+	"nvda_dmp.exe",
+	"nvda_slave.exe"
+}
+
+
+def _revertGroupDelete(tempDir: str, installDir: str):
+	"""Move all files in tempDir back to installDir, retaining the same relative path"""
+	for tempFile in pathlib.Path(tempDir).rglob("*"):
+		relativePath = tempFile.relative_to(tempDir)
+		originalPath = os.path.join(installDir, relativePath.as_posix())
+		try:
+			os.rename(tempFile.absolute(), originalPath)
+		except OSError:
+			log.exception(f"Failed to rename {tempFile} back to {originalPath}")
+
+
+def _deleteInstallerFileGroupOrFail(installDir: str, relativeFilepaths: Iterable[str]):
+	"""
+	Delete a group of files in the installer folder.
+	If any file fails to be deleted, revert the deletion of all other files.
+
+	:param installDir: an iterable of file paths relative to installDir
+	:param relativeFilepaths: an iterable of file paths relative to installDir
+
+	:raises RetriableFailure: if the files fail to be deleted.
+	"""
+	tempDir = tempfile.mkdtemp()
+	for filepath in relativeFilepaths:
+		originalPath = os.path.join(installDir, filepath)
+		if not pathlib.Path(originalPath).exists():
+			log.debug(f"Skipping remove for non-existent file: {originalPath}")
+			continue
+		tempPath = os.path.join(tempDir, filepath)
+		pathlib.Path(tempPath).parent.mkdir(parents=True, exist_ok=True)
+		try:
+			os.rename(originalPath, tempPath)
+		except OSError:
+			log.exception(f"Failed to move {originalPath} to {tempPath}")
+			_revertGroupDelete(tempDir, installDir)
+			raise RetriableFailure("Failed to move files to temp directory for deletion")
+
+	try:
+		shutil.rmtree(tempDir)
+	except OSError:
+		# Ignore this failure, as the temp directory should get deleted eventually
+		log.debugWarning(f"Failed to remove temp directory {tempDir}", exc_info=True)
+
+
 def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = True):
 	prevInstallPath=getInstallPath(noDefault=True)
-	unregisterInstallation(keepDesktopShortcut=shouldCreateDesktopShortcut)
 	installDir=defaultInstallPath
 	startMenuFolder=defaultStartMenuFolder
 	# Remove all the main executables always.
@@ -633,10 +693,11 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 	# so we shouldn't proceed.
 	# 2. The appropriate executable for nvda.exe will be determined by
 	# which executables exist after copying program files.
-	for f in ("nvda.exe","nvda_noUIAccess.exe","nvda_UIAccess.exe","nvda_service.exe","nvda_slave.exe"):
-		f=os.path.join(installDir,f)
-		if os.path.isfile(f):
-			tryRemoveFile(f)
+	# Some exes are no longer used, but we remove them anyway from legacy copies.
+	# nvda_service.exe was removed in 2017.4 (#7625).
+	# TODO: nvda_eoaProxy.exe should be added to this list in 2024.1 (#15544).
+	_deleteInstallerFileGroupOrFail(prevInstallPath, _nvdaExes.union({"nvda_service.exe"}))
+	unregisterInstallation(keepDesktopShortcut=shouldCreateDesktopShortcut)
 	if prevInstallPath:
 		removeOldLoggedFiles(prevInstallPath)
 	removeOldProgramFiles(installDir)
@@ -675,11 +736,8 @@ def removeOldLoggedFiles(installPath):
 
 def createPortableCopy(destPath,shouldCopyUserConfig=True):
 	assert os.path.isabs(destPath), f"Destination path {destPath} is not absolute"
-	#Remove all the main executables always
-	for f in ("nvda.exe","nvda_noUIAccess.exe","nvda_UIAccess.exe"):
-		f=os.path.join(destPath,f)
-		if os.path.isfile(f):
-			tryRemoveFile(f)
+	# Remove all the main executables always
+	_deleteInstallerFileGroupOrFail(destPath, {"nvda.exe", "nvda_noUIAccess.exe", "nvda_UIAccess.exe"})
 	removeOldProgramFiles(destPath)
 	copyProgramFiles(destPath)
 	tryCopyFile(os.path.join(destPath,"nvda_noUIAccess.exe"),os.path.join(destPath,"nvda.exe"))
