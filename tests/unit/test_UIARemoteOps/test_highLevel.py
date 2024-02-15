@@ -332,3 +332,16 @@ class TestHighLevel(TestCase):
 		op.execute()
 		uiaElement.GetCurrentPropertyValueEx.assert_called_once_with(PropertyId.Name, False)
 		self.assertEqual(name.localValue, "foo")
+
+	def test_instructionLimitExceeded(self):
+		op = operation.LocalOperation(maxInstructions=100)
+
+		with op.buildContext() as ra:
+			i = ra.newInt(0)
+			with ra.whileBlock(lambda: i < 1000):
+				i += 1
+			op.addToResults(i)
+
+		with self.assertRaises(operation.InstructionLimitExceededException):
+			op.execute()
+		self.assertEqual(i.localValue, 24)

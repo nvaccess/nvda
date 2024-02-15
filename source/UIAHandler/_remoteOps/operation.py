@@ -215,9 +215,9 @@ class RemoteOperation(Operation):
 class LocalOperation(Operation):
 	_executor: localExecute.LocalExecutor
 
-	def __init__(self, enableLogging: bool = False):
+	def __init__(self, enableLogging: bool = False, maxInstructions: int | None =None):
 		super().__init__(enableLogging)
-		self._executor = localExecute.LocalExecutor()
+		self._executor = localExecute.LocalExecutor(maxInstructions=maxInstructions)
 
 	def _importElement(self, operandId: lowLevel.OperandId, element: UIA.IUIAutomationElement):
 		self._executor.storeRegisterValue(operandId, element)

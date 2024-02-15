@@ -21,6 +21,10 @@ class BreakLoopException(Exception):
 	pass
 
 
+class InstructionLimitExceededException(Exception):
+	pass
+
+
 @dataclass
 class LocalOperationResultSet:
 	_registers: dict[lowLevel.OperandId, object]
@@ -41,9 +45,12 @@ class LocalExecutor:
 	_instructions: list[builder.InstructionBase]
 	_ip: int
 	_instructionLoopDepth = 0
+	_instructionCounter = 0
+	_maxInstructions = None
 
-	def __init__(self):
+	def __init__(self, maxInstructions: int | None = None):
 		self._registers = {}
+		self._maxInstructions = maxInstructions
 
 	def storeRegisterValue(self, operandId: lowLevel.OperandId, value: object):
 		self._registers[operandId] = value
@@ -147,10 +154,15 @@ class LocalExecutor:
 		try:
 			while self._ip < len(self._instructions):
 				instruction = self._instructions[self._ip]
+				self._instructionCounter += 1
+				if self._maxInstructions is not None and self._instructionCounter > self._maxInstructions:
+					raise InstructionLimitExceededException()
 				if stopInstruction is not None and type(instruction) is stopInstruction:
 					self._ip += 1
 					break
 				self._executeInstruction(instruction, breakAddress, continueAddress)
+		except InstructionLimitExceededException:
+			raise
 		except HaltException:
 			pass
 		except BreakLoopException:
@@ -166,9 +178,13 @@ class LocalExecutor:
 	def execute(self):
 		self._ip = 0
 		status = lowLevel.RemoteOperationStatus.Success
-		self._instructionLoop()
-		if self._operationStatus != 0:
-			status = lowLevel.RemoteOperationStatus.UnhandledException
+		try:
+			self._instructionLoop()
+		except InstructionLimitExceededException:
+			status = lowLevel.RemoteOperationStatus.InstructionLimitExceeded
+		else:
+			if self._operationStatus != 0:
+				status = lowLevel.RemoteOperationStatus.UnhandledException
 		return LocalOperationResultSet(
 			_registers=self._registers,
 			status=status,
