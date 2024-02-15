@@ -2366,9 +2366,10 @@ class ToolTip(ToolTip, UIA):
 	event_UIA_toolTipOpened=ToolTip.event_show
 
 
-#WpfTextView fires name state changes once a second, plus when IUIAutomationTextRange::GetAttributeValue is called.
-#This causes major lags when using this control with Braille in NVDA. (#2759) 
-#For now just ignore the events.
+# WpfTextView fires name state changes once a second,
+# plus when IUIAutomationTextRange::GetAttributeValue is called.
+# This causes major lags when using this control with Braille in NVDA. (#2759)
+# For now just ignore the events.
 class WpfTextView(UIA):
 
 	def event_nameChange(self):
