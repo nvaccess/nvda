@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2024 NV Access Limited
 
-"""Unit tests for the installer  module.
+"""Unit tests for the installer module.
 """
 
 import pathlib
@@ -11,6 +11,7 @@ import tempfile
 import unittest
 
 import installer
+
 
 class Test_BatchDeletion(unittest.TestCase):
 	"""Tests for deleting previous installation files safely in a batch for the installation process.
