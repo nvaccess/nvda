@@ -13,7 +13,10 @@ import unittest
 import installer
 
 class Test_BatchDeletion(unittest.TestCase):
-	"""A test for the extension points on the input manager."""
+	"""Tests for deleting previous installation files safely in a batch for the installation process.
+	If any file fails to be deleted, the entire operation should be aborted.
+	This ensure installations don't end up in a partially uninstalled state.
+	"""
 
 	def setUp(self) -> None:
 		self._originalTempDir = tempfile.mkdtemp()
@@ -44,3 +47,20 @@ class Test_BatchDeletion(unittest.TestCase):
 		# Assert files are back where they started
 		for file in self._sampleFiles:
 			self.assertTrue(pathlib.Path(self._originalTempDir, file).exists())
+
+	def test_deleteNonExistantFilesSuccess(self):
+		# Delete all expected files
+		for file in self._sampleFiles:
+			pathlib.Path(self._originalTempDir, file).unlink()
+
+		installer._deleteInstallerFileGroupOrFail(self._originalTempDir, self._sampleFiles)
+		for file in self._sampleFiles:
+			self.assertFalse(pathlib.Path(self._originalTempDir, file).exists())
+
+	def test_deleteNonExistantFileSuccess(self):
+		# Delete 1 file
+		pathlib.Path(self._originalTempDir, self._sampleFiles[1]).unlink()
+
+		installer._deleteInstallerFileGroupOrFail(self._originalTempDir, self._sampleFiles)
+		for file in self._sampleFiles:
+			self.assertFalse(pathlib.Path(self._originalTempDir, file).exists())
