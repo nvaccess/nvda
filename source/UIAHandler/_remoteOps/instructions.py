@@ -532,7 +532,7 @@ class ElementGetPropertyValue(_TypedInstruction):
 		element = cast(UIA.IUIAutomationElement, registers[self.target.operandId])
 		propertyId = cast(int, registers[self.propertyId.operandId])
 		ignoreDefault = cast(bool, registers[self.ignoreDefault.operandId])
-		value = element.GetCurrentPropertyValue(propertyId, ignoreDefault)
+		value = element.GetCurrentPropertyValueEx(propertyId, ignoreDefault)
 		registers[self.result.operandId] = value
 
 
