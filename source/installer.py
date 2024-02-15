@@ -696,7 +696,7 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 	# Some exes are no longer used, but we remove them anyway from legacy copies.
 	# nvda_service.exe was removed in 2017.4 (#7625).
 	# TODO: nvda_eoaProxy.exe should be added to this list in 2024.1 (#15544).
-	_deleteInstallerFileGroupOrFail(prevInstallPath, _nvdaExes.union({"nvda_service.exe"}))
+	_deleteInstallerFileGroupOrFail(installDir, _nvdaExes.union({"nvda_service.exe"}))
 	unregisterInstallation(keepDesktopShortcut=shouldCreateDesktopShortcut)
 	if prevInstallPath:
 		removeOldLoggedFiles(prevInstallPath)
