@@ -36,14 +36,14 @@ class Test_BatchDeletion(unittest.TestCase):
 				f.unlink()
 
 	def test_deleteFilesSuccess(self):
-		installer._deleteInstallerFileGroupOrFail(self._originalTempDir, self._sampleFiles)
+		installer._deleteFileGroupOrFail(self._originalTempDir, self._sampleFiles)
 		for file in self._sampleFiles:
 			self.assertFalse(pathlib.Path(self._originalTempDir, file).exists())
 
 	def test_deleteFilesFailure(self):
 		with self.assertRaises(installer.RetriableFailure):
 			with open(pathlib.Path(self._originalTempDir, self._sampleFiles[1]), "r"):
-				installer._deleteInstallerFileGroupOrFail(self._originalTempDir, self._sampleFiles)
+				installer._deleteFileGroupOrFail(self._originalTempDir, self._sampleFiles)
 
 		# Assert files are back where they started
 		for file in self._sampleFiles:
@@ -54,7 +54,7 @@ class Test_BatchDeletion(unittest.TestCase):
 		for file in self._sampleFiles:
 			pathlib.Path(self._originalTempDir, file).unlink()
 
-		installer._deleteInstallerFileGroupOrFail(self._originalTempDir, self._sampleFiles)
+		installer._deleteFileGroupOrFail(self._originalTempDir, self._sampleFiles)
 		for file in self._sampleFiles:
 			self.assertFalse(pathlib.Path(self._originalTempDir, file).exists())
 
@@ -62,6 +62,6 @@ class Test_BatchDeletion(unittest.TestCase):
 		# Delete 1 file
 		pathlib.Path(self._originalTempDir, self._sampleFiles[1]).unlink()
 
-		installer._deleteInstallerFileGroupOrFail(self._originalTempDir, self._sampleFiles)
+		installer._deleteFileGroupOrFail(self._originalTempDir, self._sampleFiles)
 		for file in self._sampleFiles:
 			self.assertFalse(pathlib.Path(self._originalTempDir, file).exists())

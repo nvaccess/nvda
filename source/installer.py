@@ -651,7 +651,7 @@ def _revertGroupDelete(tempDir: str, installDir: str):
 			log.exception(f"Failed to rename {tempFile} back to {originalPath}")
 
 
-def _deleteInstallerFileGroupOrFail(installDir: str, relativeFilepaths: Iterable[str]):
+def _deleteFileGroupOrFail(installDir: str, relativeFilepaths: Iterable[str]):
 	"""
 	Delete a group of files in the installer folder.
 	If any file fails to be deleted, revert the deletion of all other files.
@@ -696,7 +696,7 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 	# Some exes are no longer used, but we remove them anyway from legacy copies.
 	# nvda_service.exe was removed in 2017.4 (#7625).
 	# TODO: nvda_eoaProxy.exe should be added to this list in 2024.1 (#15544).
-	_deleteInstallerFileGroupOrFail(installDir, _nvdaExes.union({"nvda_service.exe"}))
+	_deleteFileGroupOrFail(installDir, _nvdaExes.union({"nvda_service.exe"}))
 	unregisterInstallation(keepDesktopShortcut=shouldCreateDesktopShortcut)
 	if prevInstallPath:
 		removeOldLoggedFiles(prevInstallPath)
@@ -737,7 +737,7 @@ def removeOldLoggedFiles(installPath):
 def createPortableCopy(destPath,shouldCopyUserConfig=True):
 	assert os.path.isabs(destPath), f"Destination path {destPath} is not absolute"
 	# Remove all the main executables always
-	_deleteInstallerFileGroupOrFail(destPath, {"nvda.exe", "nvda_noUIAccess.exe", "nvda_UIAccess.exe"})
+	_deleteFileGroupOrFail(destPath, {"nvda.exe", "nvda_noUIAccess.exe", "nvda_UIAccess.exe"})
 	removeOldProgramFiles(destPath)
 	copyProgramFiles(destPath)
 	tryCopyFile(os.path.join(destPath,"nvda_noUIAccess.exe"),os.path.join(destPath,"nvda.exe"))
