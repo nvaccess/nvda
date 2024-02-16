@@ -721,7 +721,8 @@ def playWaveFile(
 			fileWavePlayerThread.join()
 		fileWavePlayerThread = threading.Thread(
 			name=f"{__name__}.playWaveFile({os.path.basename(fileName)})",
-			target=play
+			target=play,
+			daemon=True,
 		)
 		fileWavePlayerThread.start()
 	else:

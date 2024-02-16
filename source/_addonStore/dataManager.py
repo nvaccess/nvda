@@ -109,7 +109,7 @@ class _DataManager:
 
 	def terminate(self):
 		if self._getAddonsThread.is_alive():
-			self._getAddonsThread.join(timeout=FETCH_TIMEOUT_S + 1)
+			self._getAddonsThread.join(timeout=1)
 
 	def _getLatestAddonsDataForVersion(self, apiVersion: str) -> Optional[bytes]:
 		url = _getAddonStoreURL(self._preferredChannel, self._lang, apiVersion)

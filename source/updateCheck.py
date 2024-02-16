@@ -256,9 +256,9 @@ class UpdateChecker(garbageHandler.TrackedObject):
 		"""
 		t = threading.Thread(
 			name=f"{self.__class__.__module__}.{self.check.__qualname__}",
-			target=self._bg
+			target=self._bg,
+			daemon = True,
 		)
-		t.daemon = True
 		self._started()
 		t.start()
 
@@ -617,9 +617,9 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 		self._progressDialog.Raise()
 		t = threading.Thread(
 			name=f"{self.__class__.__module__}.{self.start.__qualname__}",
-			target=self._bg
+			target=self._bg,
+			daemon=True,
 		)
-		t.daemon = True
 		t.start()
 
 	def _guiExec(self, func, *args):

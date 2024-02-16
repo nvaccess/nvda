@@ -427,9 +427,9 @@ class UIAHandler(COMObject):
 		self.MTAThreadInitException=None
 		self.MTAThread = threading.Thread(
 			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}.MTAThread",
-			target=self.MTAThreadFunc
+			target=self.MTAThreadFunc,
+			daemon=True,
 		)
-		self.MTAThread.daemon=True
 		self.MTAThread.start()
 		self.MTAThreadInitEvent.wait(2)
 		if self.MTAThreadInitException:

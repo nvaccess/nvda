@@ -292,7 +292,9 @@ def initialize():
 	NVDAHelper._setDllFuncPointer(NVDAHelper.localLib, "_notifySendMessageCancelled", _notifySendMessageCancelled)
 	_watcherThread = threading.Thread(
 		name=__name__,
-		target=_watcher
+		target=_watcher,
+		# TODO: should we change this? does this need to be kept alive to handle crashes?
+		daemon=True,
 	)
 	alive()
 	_watcherThread.start()
