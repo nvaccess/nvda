@@ -669,9 +669,15 @@ def _deleteFileGroupOrFail(installDir: str, relativeFilepaths: Iterable[str]):
 			continue
 		tempPath = os.path.join(tempDir, filepath)
 		pathlib.Path(tempPath).parent.mkdir(parents=True, exist_ok=True)
+		shutil.copyfile(originalPath, tempPath)
 		try:
-			os.rename(originalPath, tempPath)
+			os.remove(originalPath)
 		except OSError:
+			# If the file failed to be deleted, revert the deletion of all other files
+			# and raise a RetriableFailure.
+
+			# Delete this specific copied file as the remove failed.
+			os.remove(tempPath)
 			log.exception(f"Failed to move {originalPath} to {tempPath}")
 			_revertGroupDelete(tempDir, installDir)
 			raise RetriableFailure("Failed to move files to temp directory for deletion")
