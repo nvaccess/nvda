@@ -56,6 +56,7 @@ if TYPE_CHECKING:
 
 
 addonDataManager: Optional["_DataManager"] = None
+FETCH_TIMEOUT_S = 120  # seconds
 
 
 def initialize():
@@ -65,6 +66,16 @@ def initialize():
 		return
 	log.debug("initializing addonStore data manager")
 	addonDataManager = _DataManager()
+
+
+def terminate():
+	global addonDataManager
+	if config.isAppX:
+		log.info("Add-ons not supported when running as a Windows Store application")
+		return
+	addonDataManager.terminate()
+	log.debug("terminating addonStore data manager")
+	addonDataManager = None
 
 
 class _DataManager:
@@ -89,15 +100,21 @@ class _DataManager:
 		self._compatibleAddonCache = self._getCachedAddonData(self._cacheCompatibleFile)
 		self._installedAddonsCache = _InstalledAddonsCache()
 		# Fetch available add-ons cache early
-		threading.Thread(
+		self._getAddonsThread = threading.Thread(
 			target=self.getLatestCompatibleAddons,
 			name="initialiseAvailableAddons",
-		).start()
+			daemon=True,
+		)
+		self._getAddonsThread.start()
+
+	def terminate(self):
+		if self._getAddonsThread.is_alive():
+			self._getAddonsThread.join(timeout=FETCH_TIMEOUT_S + 1)
 
 	def _getLatestAddonsDataForVersion(self, apiVersion: str) -> Optional[bytes]:
 		url = _getAddonStoreURL(self._preferredChannel, self._lang, apiVersion)
 		try:
-			response = requests.get(url)
+			response = requests.get(url, timeout=FETCH_TIMEOUT_S)
 		except requests.exceptions.RequestException as e:
 			log.debugWarning(f"Unable to fetch addon data: {e}")
 			return None
