@@ -129,7 +129,7 @@ class _DataManager:
 	def _getCacheHash(self) -> Optional[str]:
 		url = _getCacheHashURL()
 		try:
-			response = requests.get(url)
+			response = requests.get(url, timeout=FETCH_TIMEOUT_S)
 		except requests.exceptions.RequestException as e:
 			log.debugWarning(f"Unable to get cache hash: {e}")
 			return None

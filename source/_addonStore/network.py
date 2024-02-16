@@ -178,7 +178,9 @@ class AddonFileDownloader:
 		if not NVDAState.shouldWriteToDisk():
 			return False
 
-		with requests.get(addonData.model.URL, stream=True) as r:
+		# Some add-ons are quite large, so we need to allow for a long download time.
+		MAX_ADDON_DOWNLOAD_TIME = 60 * 60 * 6  # 6 hours
+		with requests.get(addonData.model.URL, stream=True, timeout=MAX_ADDON_DOWNLOAD_TIME) as r:
 			with open(downloadFilePath, 'wb') as fd:
 				# Most add-ons are small. This value was chosen quite arbitrarily, but with the intention to allow
 				# interrupting the download. This is particularly important on a slow connection, to provide
