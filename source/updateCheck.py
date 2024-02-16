@@ -257,7 +257,7 @@ class UpdateChecker(garbageHandler.TrackedObject):
 		t = threading.Thread(
 			name=f"{self.__class__.__module__}.{self.check.__qualname__}",
 			target=self._bg,
-			daemon = True,
+			daemon=True,
 		)
 		self._started()
 		t.start()
