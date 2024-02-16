@@ -12,7 +12,7 @@ from ._remoteOps.remoteAPI import (
 	RemoteExtensionTarget,
 	RemoteInt
 )
-from ._remoteOps.operation import RemoteOperation
+from ._remoteOps.operation import Operation
 from ._remoteOps.lowLevel import (
 	TextUnit,
 	AttributeId,
@@ -39,7 +39,7 @@ def msWord_getCustomAttributeValue(
 ) -> Optional[Any]:
 	guid_msWord_extendedTextRangePattern = GUID("{93514122-FF04-4B2C-A4AD-4AB04587C129}")
 	guid_msWord_getCustomAttributeValue = GUID("{081ACA91-32F2-46F0-9FB9-017038BC45F8}")
-	ro = RemoteOperation()
+	ro = Operation()
 	remoteDocElement = ro.importElement(docElement)
 	remoteTextRange = ro.importTextRange(textRange)
 	with ro.buildContext() as ra:
@@ -76,7 +76,7 @@ def msWord_getCustomAttributeValue(
 			ra.logRuntimeMessage("docElement does not support extendedTextRangePattern")
 		ra.logRuntimeMessage("msWord_getCustomAttributeValue end")
 	ro.addToResults(remoteCustomAttribValue)
-	ro._execute()
+	ro.execute()
 	if remoteCustomAttribValue.isLocalValueAvailable:
 		return remoteCustomAttribValue.localValue
 
@@ -85,7 +85,7 @@ def collectAllHeadingsInTextRange(
 	textRange: UIA.IUIAutomationTextRange
 ) -> list[tuple[int, str, UIA.IUIAutomationElement]]:
 	headings = []
-	ro = RemoteOperation(enableLogging=True)
+	ro = Operation(enableLogging=True)
 	remoteTextRange = ro.importTextRange(textRange)
 	with ro.buildContext() as ra:
 		levels = ra.newArray()
@@ -117,13 +117,13 @@ def findFirstHeadingInTextRange(
 	wantedLevel: int | None = None,
 	reverse: bool = False
 ) -> tuple[int, str, UIA.IUIAutomationElement] | None:
-	ro = RemoteOperation(enableLogging=True)
-	remoteTextRange = ro.importTextRange(textRange)
+	ro = Operation(enableLogging=True)
 	with ro.buildContext() as ra:
+		remoteTextRange = ra.newTextRange(textRange, static=True)
 		remoteWantedLevel = ra.newInt(wantedLevel or 0)
 		foundLevel = ra.newInt(0)
 		foundLabel = ra.newString("")
-		foundParagraphRange = ra.newNullTextRange()
+		foundParagraphRange = ra.newTextRange()
 		remoteTextRange.getLogicalAdapter(reverse).start.moveByUnit(TextUnit.Paragraph, 1)
 		with remoteAlgorithms.remote_forEachUnitInTextRange(
 			ra, remoteTextRange, TextUnit.Paragraph, reverse=reverse
@@ -150,5 +150,5 @@ def findFirstHeadingInTextRange(
 			return (
 				localFoundLevel,
 				localFoundLabel,
-				localFoundParagraphRange.QueryInterface(UIA.IUIAutomationTextRange)
+				localFoundParagraphRange
 			)

@@ -20,7 +20,7 @@ from UIAHandler._remoteOps.lowLevel import (
 class TestHighLevel(TestCase):
 
 	def test_bool_false(self):
-		op = operation.LocalOperation()
+		op = operation.Operation(localMode=True)
 
 		with op.buildContext() as ra:
 			b = ra.newBool(False)
@@ -30,7 +30,7 @@ class TestHighLevel(TestCase):
 		self.assertFalse(b.localValue)
 
 	def test_bool_setTrue(self):
-		op = operation.LocalOperation()
+		op = operation.Operation(localMode=True)
 
 		with op.buildContext() as ra:
 			b = ra.newBool(False)
@@ -41,7 +41,7 @@ class TestHighLevel(TestCase):
 		self.assertTrue(b.localValue)
 
 	def test_bool_inverse(self):
-		op = operation.LocalOperation()
+		op = operation.Operation(localMode=True)
 
 		with op.buildContext() as ra:
 			t = ra.newBool(True)
@@ -55,7 +55,7 @@ class TestHighLevel(TestCase):
 		self.assertTrue(f_inverse.localValue)
 
 	def test_bool_and(self):
-		op = operation.LocalOperation()
+		op = operation.Operation(localMode=True)
 
 		with op.buildContext() as ra:
 			t = ra.newBool(True)
@@ -73,7 +73,7 @@ class TestHighLevel(TestCase):
 		self.assertFalse(f_and_f.localValue)
 
 	def test_bool_or(self):
-		op = operation.LocalOperation()
+		op = operation.Operation(localMode=True)
 
 		with op.buildContext() as ra:
 			t = ra.newBool(True)
@@ -91,7 +91,7 @@ class TestHighLevel(TestCase):
 		self.assertFalse(f_or_f.localValue)
 
 	def test_if_true(self):
-		op = operation.LocalOperation()
+		op = operation.Operation(localMode=True)
 		with op.buildContext() as ra:
 			true_condition = ra.newBool(True)
 			was_in_if = ra.newBool(False)
@@ -107,7 +107,7 @@ class TestHighLevel(TestCase):
 		self.assertFalse(was_in_else.localValue)
 
 	def test_if_false(self):
-		op = operation.LocalOperation()
+		op = operation.Operation(localMode=True)
 		with op.buildContext() as ra:
 			false_condition = ra.newBool(False)
 			was_in_if = ra.newBool(False)
@@ -123,7 +123,7 @@ class TestHighLevel(TestCase):
 		self.assertTrue(was_in_else.localValue)
 
 	def test_else_no_if(self):
-		op = operation.LocalOperation()
+		op = operation.Operation(localMode=True)
 
 		with op.buildContext() as ra:
 			with self.assertRaises(RuntimeError):
@@ -131,7 +131,7 @@ class TestHighLevel(TestCase):
 					pass
 
 	def test_error(self):
-		op = operation.LocalOperation()
+		op = operation.Operation(localMode=True)
 
 		with op.buildContext() as ra:
 			i = ra.newInt(3)
@@ -142,7 +142,7 @@ class TestHighLevel(TestCase):
 			op.execute()
 
 	def test_try_with_no_error(self):
-		op = operation.LocalOperation()
+		op = operation.Operation(localMode=True)
 
 		with op.buildContext() as ra:
 			i = ra.newInt(3)
@@ -158,14 +158,14 @@ class TestHighLevel(TestCase):
 		self.assertFalse(was_in_catch.localValue)
 
 	def test_try_with_error(self):
-		op = operation.LocalOperation()
+		op = operation.Operation(localMode=True)
 
 		with op.buildContext() as ra:
 			i = ra.newInt(3)
 			was_in_catch = ra.newBool(False)
 			with ra.tryBlock():
 				j = i / 0
-			with ra.catchBlock() as e:
+			with ra.catchBlock():
 				was_in_catch.set(True)
 		op.addToResults(was_in_catch)
 
@@ -174,7 +174,7 @@ class TestHighLevel(TestCase):
 
 
 	def test_int_inplace_add(self):
-		op = operation.LocalOperation()
+		op = operation.Operation(localMode=True)
 
 		with op.buildContext() as ra:
 			i = ra.newInt(5)
@@ -186,7 +186,7 @@ class TestHighLevel(TestCase):
 		self.assertEqual(i.localValue, 8)
 
 	def test_int_binary_add(self):
-		op = operation.LocalOperation()
+		op = operation.Operation(localMode=True)
 
 		with op.buildContext() as ra:
 			i = ra.newInt(3)
@@ -198,7 +198,7 @@ class TestHighLevel(TestCase):
 		self.assertEqual(k.localValue, 7)
 
 	def test_compare_lowToHigh(self):
-		op = operation.LocalOperation()
+		op = operation.Operation(localMode=True)
 
 		with op.buildContext() as ra:
 			i = ra.newInt(3)
@@ -220,7 +220,7 @@ class TestHighLevel(TestCase):
 		self.assertFalse(gt.localValue)
 
 	def test_compare_highToLow(self):
-		op = operation.LocalOperation()
+		op = operation.Operation(localMode=True)
 
 		with op.buildContext() as ra:
 			i = ra.newInt(4)
@@ -242,7 +242,7 @@ class TestHighLevel(TestCase):
 		self.assertTrue(gt.localValue)
 
 	def test_compare_same(self):
-		op = operation.LocalOperation()
+		op = operation.Operation(localMode=True)
 
 		with op.buildContext() as ra:
 			i = ra.newInt(3)
@@ -264,7 +264,7 @@ class TestHighLevel(TestCase):
 		self.assertFalse(gt.localValue)
 
 	def test_while(self):
-		op = operation.LocalOperation()
+		op = operation.Operation(localMode=True)
 
 		with op.buildContext() as ra:
 			counter = ra.newInt(0)
@@ -276,7 +276,7 @@ class TestHighLevel(TestCase):
 		self.assertEqual(counter.localValue, 8)
 
 	def test_breakLoop(self):
-		op = operation.LocalOperation()
+		op = operation.Operation(localMode=True)
 
 		with op.buildContext() as ra:
 			counter = ra.newInt(0)
@@ -290,7 +290,7 @@ class TestHighLevel(TestCase):
 		self.assertEqual(counter.localValue, 4)
 
 	def test_continueLoop(self):
-		op = operation.LocalOperation()
+		op = operation.Operation(localMode=True)
 
 		with op.buildContext() as ra:
 			i = ra.newInt(0)
@@ -307,7 +307,7 @@ class TestHighLevel(TestCase):
 		self.assertEqual(j.localValue, 6)
 
 	def test_string_concat(self):
-		op = operation.LocalOperation()
+		op = operation.Operation(localMode=True)
 
 		with op.buildContext() as ra:
 			s = ra.newString("hello")
@@ -321,10 +321,10 @@ class TestHighLevel(TestCase):
 	def test_element_getName(self):
 		uiaElement = Mock(spec=POINTER(UIA.IUIAutomationElement))
 
-		op = operation.LocalOperation()
+		op = operation.Operation(localMode=True)
 		element = op.importElement(uiaElement)
 
-		with op.buildContext() as ra:
+		with op.buildContext():
 			name = element.getPropertyValue(PropertyId.Name)
 			op.addToResults(name)
 
@@ -334,14 +334,55 @@ class TestHighLevel(TestCase):
 		self.assertEqual(name.localValue, "foo")
 
 	def test_instructionLimitExceeded(self):
-		op = operation.LocalOperation(maxInstructions=100)
+		op = operation.Operation(localMode=True)
 
 		with op.buildContext() as ra:
 			i = ra.newInt(0)
-			with ra.whileBlock(lambda: i < 1000):
+			with ra.whileBlock(lambda: i < 20000):
 				i += 1
 			op.addToResults(i)
 
 		with self.assertRaises(operation.InstructionLimitExceededException):
 			op.execute()
-		self.assertEqual(i.localValue, 24)
+		self.assertEqual(i.localValue, 2499)
+
+	def test_instructionLimitExceeded_with_static(self):
+		op = operation.Operation(localMode=True)
+
+		with op.buildContext() as ra:
+			i = ra.newInt(0, static=True)
+			with ra.whileBlock(lambda: i < 20000):
+				i += 1
+			op.addToResults(i)
+
+		executionCount = 0
+		for done in op.executeUntilSuccess():
+			executionCount += 1
+		self.assertEqual(i.localValue, 20000)
+		self.assertEqual(executionCount, 9)
+
+	def test_remote_instructionLimitExceeded_with_static(self):
+		from comtypes import CoCreateInstance, CLSCTX_INPROC_SERVER
+		client = CoCreateInstance(UIA.CUIAutomation8._reg_clsid_, interface=UIA.CUIAutomation8._com_interfaces_[1], clsctx=CLSCTX_INPROC_SERVER)
+		focus = client.GetFocusedElement()
+		op = operation.Operation()
+
+		with op.buildContext() as ra:
+			element = ra.newElement(focus, static=True)
+			i = ra.newInt(0, static=True)
+			with ra.whileBlock(lambda: element.isNull().inverse()):
+				name = element.getPropertyValue(PropertyId.Name)
+				element.set(element.getParentElement())
+				i += 1
+				j = ra.newInt(0)
+				with ra.whileBlock(lambda: j < 10000):
+					j += 1
+			op.addToResults(name)
+			op.addToResults(i)
+
+		executionCount = 0
+		for done in op.executeUntilSuccess():
+			executionCount += 1
+		#print(f"Name: {name.localValue}")
+		self.assertEqual(i.localValue, 5)
+		self.assertEqual(executionCount, 6)

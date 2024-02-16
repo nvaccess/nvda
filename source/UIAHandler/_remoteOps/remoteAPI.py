@@ -36,6 +36,7 @@ from .remoteFuncWrapper import (
 	remoteMethod,
 	remoteMethod_mutable
 )
+from . import operation
 
 
 class c_long_enum(c_long):
@@ -93,10 +94,10 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 	_IsTypeInstruction: Type[builder.InstructionBase]
 	LocalType: Type[LocalTypeVar] | None = None
 	_initialValue: LocalTypeVar | None = None
-	_resultSet: lowLevel.RemoteOperationResultSet | None = None
+	_executionResult: operation.ExecutionResult | None = None
 
-	def _setResultSet(self, resultSet: lowLevel.RemoteOperationResultSet) -> None:
-		self._resultSet = resultSet
+	def _setExecutionResult(self, executionResult: operation.ExecutionResult):
+		self._executionResult = executionResult
 
 	def __bool__(self) -> bool:
 		raise TypeError(f"Cannot convert {self.__class__.__name__} to bool")
@@ -115,9 +116,7 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 	def _generateInitInstructions(self) -> Iterable[instructions.InstructionBase]:
 		raise NotImplementedError()
 
-	def _initOperand(self, initialValue: LocalTypeVar | None = None, section: str | None = None, const=False):
-		if section is None:
-			section = self._defaultSectionForInitInstructions
+	def _initOperand(self, initialValue: LocalTypeVar | None = None, const=False):
 		if initialValue is not None:
 			if self.LocalType is None:
 				raise TypeError(f"{type(self).__name__} does not support an initial value")
@@ -128,7 +127,7 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 				)
 		self._initialValue = initialValue
 		self._mutable = not const
-		instructionList = self.rob.getInstructionList(section)
+		instructionList = self.rob.getDefaultInstructionList()
 		for instruction in self._generateInitInstructions():
 			instructionList.addInstruction(instruction)
 
@@ -137,11 +136,13 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 		cls,
 		rob: builder.RemoteOperationBuilder,
 		initialValue: LocalTypeVar | None = None,
-		section: str | None = None,
+		operandId: lowLevel.OperandId | None = None,
 		const: bool = False
 	) -> Self:
-		obj = cls(rob, rob.requestNewOperandId())
-		obj._initOperand(initialValue=initialValue, section=section, const=const)
+		if operandId is None:
+			operandId = rob.requestNewOperandId()
+		obj = cls(rob, operandId)
+		obj._initOperand(initialValue=initialValue, const=const)
 		return obj
 
 	@classmethod
@@ -167,7 +168,8 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 			if not isinstance(cachedRemoteObj, RemoteType):
 				raise RuntimeError(f"Cache entry for {cacheKey} is not of type {RemoteType.__name__}")
 			return cast(RemoteType, cachedRemoteObj)
-		remoteObj = RemoteType.createNew(rob, obj, section="globals", const=True)
+		with rob.overrideDefaultSection('const'):
+			remoteObj = RemoteType.createNew(rob, obj, const=True)
 		rob._remotedArgCache[cacheKey] = remoteObj
 		return remoteObj
 
@@ -179,18 +181,18 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 
 	@property
 	def isLocalValueAvailable(self):
-		return self._resultSet is not None and self._resultSet.hasOperand(self.operandId)
+		return self._executionResult is not None and self._executionResult.hasOperand(self.operandId)
 
 	@property
 	def localValue(self) -> LocalTypeVar:
-		if self._resultSet is None:
+		if self._executionResult is None:
 			raise RuntimeError("Operation not executed")
-		value = self._resultSet.getOperand(self.operandId)
+		value = self._executionResult.getOperand(self.operandId)
 		return cast(LocalTypeVar, value)
 
 	@remoteMethod_mutable
 	def set(self, other: Self | LocalTypeVar):
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.Set(
 				target=self,
 				value=type(self).ensureRemote(self.rob, other)
@@ -200,7 +202,7 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 	@remoteMethod
 	def copy(self) -> Self:
 		copy = type(self)(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.Set(
 				target=copy,
 				value=self
@@ -210,7 +212,7 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 
 	def _doCompare(self, comparisonType: lowLevel.ComparisonType, other: Self | LocalTypeVar) -> RemoteBool:
 		result = RemoteBool(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.Compare(
 				result=result,
 				left=self,
@@ -231,7 +233,7 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 	@remoteMethod
 	def stringify(self) -> RemoteString:
 		result = RemoteString(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.Stringify(
 				result=result,
 				target=self
@@ -251,7 +253,7 @@ class RemoteVariant(RemoteBaseObject):
 		if not issubclass(RemoteClass, RemoteBaseObject):
 			raise TypeError("remoteClass must be a subclass of RemoteBaseObject")
 		result = RemoteBool(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			RemoteClass._IsTypeInstruction(
 				result=result,
 				target=self
@@ -333,7 +335,7 @@ class RemoteBool(RemoteIntegral[bool]):
 	@remoteMethod
 	def inverse(self) -> RemoteBool:
 		result = RemoteBool(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.BoolNot(
 				result=result,
 				target=self
@@ -344,7 +346,7 @@ class RemoteBool(RemoteIntegral[bool]):
 	@remoteMethod
 	def __and__(self, other: Self | bool) -> RemoteBool:
 		result = type(self)(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.BoolAnd(
 				result=result,
 				left=self,
@@ -356,7 +358,7 @@ class RemoteBool(RemoteIntegral[bool]):
 	@remoteMethod
 	def __rand__(self, other: Self | bool) -> RemoteBool:
 		result = type(self)(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.BoolAnd(
 				result=result,
 				left=self,
@@ -368,7 +370,7 @@ class RemoteBool(RemoteIntegral[bool]):
 	@remoteMethod
 	def __or__(self, other: Self | bool) -> RemoteBool:
 		result = type(self)(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.BoolOr(
 				result=result,
 				left=self,
@@ -380,7 +382,7 @@ class RemoteBool(RemoteIntegral[bool]):
 	@remoteMethod
 	def __ror__(self, other: Self | bool) -> RemoteBool:
 		result = type(self)(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.BoolOr(
 				result=result,
 				left=self,
@@ -411,7 +413,7 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 	@remoteMethod
 	def __add__(self, other: Self | LocalTypeVar) -> Self:
 		result = type(self)(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.BinaryAdd(
 				result=result,
 				left=self,
@@ -423,7 +425,7 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 	@remoteMethod
 	def __sub__(self, other: Self | LocalTypeVar) -> Self:
 		result = type(self)(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.BinarySubtract(
 				result=result,
 				left=self,
@@ -435,7 +437,7 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 	@remoteMethod
 	def __mul__(self, other: Self | LocalTypeVar) -> Self:
 		result = type(self)(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.BinaryMultiply(
 				result=result,
 				left=self,
@@ -447,7 +449,7 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 	@remoteMethod
 	def __truediv__(self, other: Self | LocalTypeVar) -> Self:
 		result = type(self)(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.BinaryDivide(
 				result=result,
 				left=self,
@@ -459,7 +461,7 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 	@remoteMethod
 	def __radd__(self, other: Self | LocalTypeVar) -> Self:
 		result = type(self)(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.BinaryAdd(
 				result=result,
 				left=self,
@@ -471,7 +473,7 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 	@remoteMethod
 	def __rsub__(self, other: Self | LocalTypeVar) -> Self:
 		result = type(self)(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.BinarySubtract(
 				result=result,
 				left=self,
@@ -483,7 +485,7 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 	@remoteMethod
 	def __rmul__(self, other: Self | LocalTypeVar) -> Self:
 		result = type(self)(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.BinaryMultiply(
 				result=result,
 				left=self,
@@ -495,7 +497,7 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 	@remoteMethod
 	def __rtruediv__(self, other: Self | LocalTypeVar) -> Self:
 		result = type(self)(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.BinaryDivide(
 				result=result,
 				left=self,
@@ -506,7 +508,7 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 
 	@remoteMethod_mutable
 	def __iadd__(self, other: Self | LocalTypeVar) -> Self:
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.InplaceAdd(
 				target=self,
 				value=type(self).ensureRemote(self.rob, other)
@@ -516,7 +518,7 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 
 	@remoteMethod_mutable
 	def __isub__(self, other: Self | LocalTypeVar) -> Self:
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.InplaceSubtract(
 				target=self,
 				value=type(self).ensureRemote(self.rob, other)
@@ -526,7 +528,7 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 
 	@remoteMethod_mutable
 	def __imul__(self, other: Self | LocalTypeVar) -> Self:
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.InplaceMultiply(
 				target=self,
 				value=type(self).ensureRemote(self.rob, other)
@@ -536,7 +538,7 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 
 	@remoteMethod_mutable
 	def __itruediv__(self, other: Self | LocalTypeVar) -> Self:
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.InplaceDivide(
 				target=self,
 				value=type(self).ensureRemote(self.rob, other)
@@ -572,12 +574,12 @@ class RemoteIntEnum(RemoteInt, Generic[_RemoteIntEnum_LocalTypeVar]):
 	localType = enum.IntEnum
 	_enumType: _RemoteIntEnum_LocalTypeVar
 
-	def _initOperand(self, initialValue: _RemoteIntEnum_LocalTypeVar, section: str | None = None, const=False):
+	def _initOperand(self, initialValue: _RemoteIntEnum_LocalTypeVar, const=False):
 		if not isinstance(initialValue, enum.IntEnum):
 			raise TypeError(f"initialValue must be of type {enum.IntEnum.__name__} not {type(initialValue).__name__}")
 		self.LocalType = type(initialValue)
 		self._ctype = _makeCtypeIntEnum(type(initialValue))
-		super()._initOperand(initialValue=initialValue, section=section, const=const)
+		super()._initOperand(initialValue=initialValue, const=const)
 
 	@classmethod
 	def ensureRemote(
@@ -618,7 +620,7 @@ class RemoteString(RemoteBaseObject[str]):
 
 	def _concat(self, other: Self | str) -> Self:
 		result = type(self)(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.StringConcat(
 				result=result,
 			left=self,
@@ -637,7 +639,7 @@ class RemoteString(RemoteBaseObject[str]):
 
 	@remoteMethod_mutable
 	def __iadd__(self, other: Self | str) -> Self:
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.StringConcat(
 				result=self,
 				left=self,
@@ -648,7 +650,7 @@ class RemoteString(RemoteBaseObject[str]):
 
 	@remoteMethod_mutable
 	def set(self, other: Self | str):
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.NewString(
 				result=self,
 				length=c_ulong(1),
@@ -674,7 +676,7 @@ class RemoteArray(RemoteBaseObject):
 	@remoteMethod
 	def __getitem__(self, index: RemoteUint | RemoteInt | int) -> RemoteVariant:
 		result = RemoteVariant(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.ArrayGetAt(
 				result=result,
 				target=self,
@@ -686,7 +688,7 @@ class RemoteArray(RemoteBaseObject):
 	@remoteMethod
 	def size(self) -> RemoteUint:
 		result = RemoteUint(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.ArraySize(
 				result=result,
 				target=self
@@ -696,7 +698,7 @@ class RemoteArray(RemoteBaseObject):
 
 	@remoteMethod_mutable
 	def append(self, value: RemoteBaseObject | int | float | str) -> None:
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.ArrayAppend(
 				target=self,
 				value=RemoteBaseObject.ensureRemote(self.rob, value)
@@ -709,7 +711,7 @@ class RemoteArray(RemoteBaseObject):
 		index: RemoteUint | RemoteInt | int,
 		value: RemoteBaseObject | int | float | str
 	) -> None:
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.ArraySetAt(
 				target=self,
 				index=RemoteIntBase.ensureRemote(self.rob, index),
@@ -719,7 +721,7 @@ class RemoteArray(RemoteBaseObject):
 
 	@remoteMethod_mutable
 	def remove(self, index: RemoteUint | RemoteInt | int) -> None:
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.ArrayRemoveAt(
 				target=self,
 				index=RemoteIntBase.ensureRemote(self.rob, index)
@@ -757,7 +759,7 @@ class RemoteExtensionTarget(RemoteBaseObject[LocalTypeVar], Generic[LocalTypeVar
 	@remoteMethod
 	def isExtensionSupported(self, extensionId: RemoteGuid | GUID) -> RemoteBool:
 		result = RemoteBool(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.IsExtensionSupported(
 				result=result,
 				target=self,
@@ -772,7 +774,7 @@ class RemoteExtensionTarget(RemoteBaseObject[LocalTypeVar], Generic[LocalTypeVar
 		extensionId: RemoteGuid | GUID,
 		*params: RemoteBaseObject | int | float | str
 	) -> None:
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.CallExtension(
 				target=self,
 				extensionId=RemoteGuid.ensureRemote(self.rob, extensionId),
@@ -786,10 +788,17 @@ class RemoteElement(RemoteExtensionTarget[POINTER(UIA.IUIAutomationElement)]):
 	_IsTypeInstruction = instructions.IsElement
 	LocalType = POINTER(UIA.IUIAutomationElement)
 
-	def _initOperand(self, initialValue: None = None, section: str | None = None, const=False):
+	def _initOperand(self, initialValue: None = None, const=False):
 		if initialValue is not None:
 			raise TypeError("Cannot initialize RemoteElement with an initial value.")
-		return super()._initOperand(section=section)
+		return super()._initOperand()
+
+	@property
+	def localValue(self) -> UIA.IUIAutomationElement:
+		value = super().localValue
+		if value is None:
+			return POINTER(UIA.IUIAutomationElement)()
+		return cast(UIA.IUIAutomationElement, value.QueryInterface(UIA.IUIAutomationElement))
 
 	@remoteMethod
 	def getPropertyValue(
@@ -798,7 +807,7 @@ class RemoteElement(RemoteExtensionTarget[POINTER(UIA.IUIAutomationElement)]):
 		ignoreDefault: RemoteBool | bool = False
 	) -> RemoteVariant:
 		result = RemoteVariant(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.ElementGetPropertyValue(
 				result=result,
 				target=self,
@@ -810,7 +819,7 @@ class RemoteElement(RemoteExtensionTarget[POINTER(UIA.IUIAutomationElement)]):
 
 	def _navigate(self, navigationDirection: lowLevel.NavigationDirection) -> RemoteElement:
 		result = RemoteElement(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.ElementNavigate(
 				result=result,
 				target=self,
@@ -843,15 +852,22 @@ class RemoteElement(RemoteExtensionTarget[POINTER(UIA.IUIAutomationElement)]):
 class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]):
 	LocalType = POINTER(UIA.IUIAutomationTextRange)
 
-	def _initOperand(self, initialValue: None = None, section: str | None = None, const=False):
+	def _initOperand(self, initialValue: None = None, const=False):
 		if initialValue is not None:
 			raise TypeError("Cannot initialize RemoteTextRange with an initial value.")
-		return super()._initOperand(section=section)
+		return super()._initOperand()
+
+	@property
+	def localValue(self) -> UIA.IUIAutomationTextRange:
+		value = super().localValue
+		if value is None:
+			return POINTER(UIA.IUIAutomationTextRange)()
+		return cast(UIA.IUIAutomationTextRange, value.QueryInterface(UIA.IUIAutomationTextRange))
 
 	@remoteMethod
 	def clone(self):
 		result = RemoteTextRange(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.TextRangeClone(
 				result=result,
 				target=self
@@ -862,7 +878,7 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 	@remoteMethod
 	def getEnclosingElement(self) -> RemoteElement:
 		result = RemoteElement(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.TextRangeGetEnclosingElement(
 				result=result,
 				target=self
@@ -873,7 +889,7 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 	@remoteMethod
 	def getText(self, maxLength: RemoteInt | int) -> RemoteString:
 		result = RemoteString(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.TextRangeGetText(
 				result=result,
 				target=self,
@@ -884,7 +900,7 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 
 	@remoteMethod_mutable
 	def expandToEnclosingUnit(self, unit: RemoteIntEnum[lowLevel.TextUnit] | lowLevel.TextUnit):
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.TextRangeExpandToEnclosingUnit(
 				target=self,
 				unit=RemoteIntEnum.ensureRemote(self.rob, unit)
@@ -899,7 +915,7 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 		count: RemoteInt | int
 	):
 		result = RemoteInt(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.TextRangeMoveEndpointByUnit(
 				result=result,
 				target=self,
@@ -917,7 +933,7 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 		otherRange: RemoteTextRange,
 		otherEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint
 	):
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.TextRangeMoveEndpointByRange(
 				target=self,
 				srcEndpoint=RemoteIntEnum.ensureRemote(self.rob, srcEndpoint),
@@ -932,7 +948,7 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 		attributeId: RemoteIntEnum[lowLevel.AttributeId] | lowLevel.AttributeId
 	) -> RemoteVariant:
 		result = RemoteVariant(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.TextRangeGetAttributeValue(
 				result=result,
 				target=self,
@@ -949,7 +965,7 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 		otherEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint
 	) -> RemoteInt:
 		result = RemoteInt(self.rob, self.rob.requestNewOperandId())
-		self.rob.getInstructionList('main').addInstruction(
+		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.TextRangeCompareEndpoints(
 				result=result,
 				target=self,
@@ -1071,54 +1087,48 @@ class RemoteTextRangeLogicalAdapter(builder._RemoteBase):
 
 
 class RemoteAPI(builder._RemoteBase):
+	_op: operation.Operation
+	_rob: builder.RemoteOperationBuilder
 	_logObj: RemoteString | None = None
 
-	def __init__(self, rob: builder.RemoteOperationBuilder, enableRemoteLogging: bool = False):
-		super().__init__(rob)
+	def __init__(self, op: operation.Operation, enableRemoteLogging=False):
+		super().__init__(op._rob)
+		self._op = op
 		self._logObj = self.newString() if enableRemoteLogging else None
 
 	_newObject_RemoteType = TypeVar('_newObject_RemoteType', bound=RemoteBaseObject)
 
-	def _newObject(self, RemoteType: Type[_newObject_RemoteType], value: Any) -> _newObject_RemoteType:
-		if isinstance(value, RemoteType):
-			return value.copy()
-		return RemoteType.createNew(self.rob, value)
+	def _newObject(self, RemoteType: Type[_newObject_RemoteType], value: Any, static=False) -> _newObject_RemoteType:
+		section = "static" if static else "main"
+		with self.rob.overrideDefaultSection(section):
+			obj = RemoteType.createNew(self.rob, value)
+		if static:
+			self._op._registerStaticOperand(obj)
+		return obj
 
-	def newUint(self, value: RemoteUint | int = 0) -> RemoteUint:
-		if isinstance(value, RemoteUint):
-			return value.copy()
-		return RemoteUint.createNew(self.rob, value)
+	def newUint(self, value: int = 0, static=False) -> RemoteUint:
+		return self._newObject(RemoteUint, value, static=static)
 
-	def newInt(self, value: RemoteInt | int = 0) -> RemoteInt:
-		if isinstance(value, RemoteInt):
-			return value.copy()
-		return RemoteInt.createNew(self.rob, value)
+	def newInt(self, value: int = 0, static=False) -> RemoteInt:
+		return self._newObject(RemoteInt, value, static=static)
 
-	def newFloat(self, value: RemoteFloat | float = 0.0) -> RemoteFloat:
-		if isinstance(value, RemoteFloat):
-			return value.copy()
-		return RemoteFloat.createNew(self.rob, value)
+	def newFloat(self, value: float = 0.0, static=False) -> RemoteFloat:
+		return self._newObject(RemoteFloat, value, static=static)
 
-	def newString(self, value: RemoteString | str = "") -> RemoteString:
-		if isinstance(value, RemoteString):
-			return value.copy()
-		return RemoteString.createNew(self.rob, value)
+	def newString(self, value: str = "", static=False) -> RemoteString:
+		return self._newObject(RemoteString, value, static=static)
 
-	def newBool(self, value: RemoteBool | bool = False) -> RemoteBool:
-		if isinstance(value, RemoteBool):
-			return value.copy()
-		return RemoteBool.createNew(self.rob, value)
+	def newBool(self, value: bool = False, static=False) -> RemoteBool:
+		return self._newObject(RemoteBool, value, static=static)
 
-	def newGuid(self, value: RemoteGuid | GUID | str | None = None) -> RemoteGuid:
-		if isinstance(value, RemoteGuid):
-			return value.copy()
-		elif value is None:
+	def newGuid(self, value: GUID | str | None = None, static=False) -> RemoteGuid:
+		if value is None:
 			realValue = GUID()
 		elif isinstance(value, str):
 			realValue = GUID(value)
 		else:
 			realValue = value
-		return RemoteGuid.createNew(self.rob, realValue)
+		return self._newObject(RemoteGuid, realValue, static=static)
 
 	def newVariant(self) -> RemoteVariant:
 		return RemoteVariant.createNew(self.rob)
@@ -1126,16 +1136,31 @@ class RemoteAPI(builder._RemoteBase):
 	def newArray(self) -> RemoteArray:
 		return RemoteArray.createNew(self.rob)
 
-	def newNullElement(self) -> RemoteElement:
-		return RemoteElement.createNew(self.rob)
+	def newElement(self, value: UIA.IUIAutomationElement | None = None, static=False) -> RemoteElement:
+		if value is not None:
+			obj = self._op.importElement(value)
+			if static:
+				self._op._registerStaticOperand(obj)
+			return obj
+		else:
+			return self._newObject(RemoteElement, value, static=static)
 
-	def newNullTextRange(self) -> RemoteTextRange:
-		return RemoteTextRange.createNew(self.rob)
+	def newTextRange(self, value: UIA.IUIAutomationTextRange | None = None, static=False) -> RemoteTextRange:
+		if value is not None:
+			obj = self._op.importTextRange(value)
+			section = "static" if static else "main"
+			with self.rob.overrideDefaultSection(section):
+				obj = obj.clone()
+			if static:
+				self._op._registerStaticOperand(obj)
+			return obj
+		else:
+			return self._newObject(RemoteTextRange, value, static=static)
 
 	def getOperationStatus(self) -> RemoteInt:
-		main = self.rob.getInstructionList('main')
+		instructionList = self.rob.getDefaultInstructionList()
 		result = RemoteInt(self.rob, self.rob.requestNewOperandId())
-		main.addInstruction(
+		instructionList.addInstruction(
 			instructions.GetOperationStatus(
 				result=result
 			)
@@ -1143,8 +1168,8 @@ class RemoteAPI(builder._RemoteBase):
 		return result
 
 	def setOperationStatus(self, status: RemoteInt | int):
-		main = self.rob.getInstructionList('main')
-		main.addInstruction(
+		instructionList = self.rob.getDefaultInstructionList()
+		instructionList.addInstruction(
 			instructions.SetOperationStatus(
 				status=RemoteInt.ensureRemote(self.rob, status)
 			)
@@ -1154,18 +1179,18 @@ class RemoteAPI(builder._RemoteBase):
 
 	@contextlib.contextmanager
 	def ifBlock(self, condition: RemoteBool, silent=False):
-		main = self.rob.getInstructionList('main')
+		instructionList = self.rob.getDefaultInstructionList()
 		conditionInstruction = instructions.ForkIfFalse(
 			condition=condition,
 			branch=RelativeOffset(1),  # offset updated after yield
 		)
-		conditionInstructionIndex = main.addInstruction(conditionInstruction)
+		conditionInstructionIndex = instructionList.addInstruction(conditionInstruction)
 		if not silent:
-			main.addComment("If block body")
+			instructionList.addComment("If block body")
 		yield
 		if not silent:
-			main.addComment("End of if block body")
-		nextInstructionIndex = main.getInstructionCount()
+			instructionList.addComment("End of if block body")
+		nextInstructionIndex = instructionList.getInstructionCount()
 		conditionInstruction.branch = RelativeOffset(nextInstructionIndex - conditionInstructionIndex)
 		self._scopeInstructionJustExited = conditionInstruction
 
@@ -1174,42 +1199,42 @@ class RemoteAPI(builder._RemoteBase):
 		scopeInstructionJustExited = self._scopeInstructionJustExited
 		if not isinstance(scopeInstructionJustExited, instructions.ForkIfFalse):
 			raise RuntimeError("Else block not directly preceded by If block")
-		main = self.rob.getInstructionList('main')
+		instructionList = self.rob.getDefaultInstructionList()
 		ifConditionInstruction = cast(instructions.ForkIfFalse, scopeInstructionJustExited)
 		# add a final jump instruction to the previous if block to skip over the else block.
 		if not silent:
-			main.addComment("Jump over else block")
+			instructionList.addComment("Jump over else block")
 		jumpElseInstruction = instructions.Fork(RelativeOffset(1))  # offset updated after yield
-		jumpElseInstructionIndex = main.addInstruction(jumpElseInstruction)
+		jumpElseInstructionIndex = instructionList.addInstruction(jumpElseInstruction)
 		# increment the false offset of the previous if block to take the new jump instruction into account.
 		ifConditionInstruction.branch.value += 1
 		if not silent:
-			main.addComment("Else block body")
+			instructionList.addComment("Else block body")
 		yield
 		if not silent:
-			main.addComment("End of else block body")
+			instructionList.addComment("End of else block body")
 		# update the jump instruction to jump to the real end of the else block.
-		nextInstructionIndex = main.getInstructionCount()
+		nextInstructionIndex = instructionList.getInstructionCount()
 		jumpElseInstruction.jumpTo = RelativeOffset(nextInstructionIndex - jumpElseInstructionIndex)
 		self._scopeInstructionJustExited = None
 
 	def continueLoop(self):
-		main = self.rob.getInstructionList('main')
-		main.addInstruction(instructions.ContinueLoop())
+		instructionList = self.rob.getDefaultInstructionList()
+		instructionList.addInstruction(instructions.ContinueLoop())
 
 	def breakLoop(self):
-		main = self.rob.getInstructionList('main')
-		main.addInstruction(instructions.BreakLoop())
+		instructionList = self.rob.getDefaultInstructionList()
+		instructionList.addInstruction(instructions.BreakLoop())
 
 	@contextlib.contextmanager
 	def whileBlock(self, conditionBuilderFunc: Callable[[], RemoteBool], silent=False):
-		main = self.rob.getInstructionList('main')
+		instructionList = self.rob.getDefaultInstructionList()
 		# Add a new loop block instruction to start the while loop
 		loopBlockInstruction = instructions.NewLoopBlock(
 			breakBranch=RelativeOffset(1),  # offset updated after yield
 			continueBranch=RelativeOffset(1)
 		)
-		loopBlockInstructionIndex = main.addInstruction(loopBlockInstruction)
+		loopBlockInstructionIndex = instructionList.addInstruction(loopBlockInstruction)
 		# generate the loop condition.
 		# This must be evaluated lazily via a callable
 		# because any instructions that produce the condition bool
@@ -1219,34 +1244,34 @@ class RemoteAPI(builder._RemoteBase):
 		with self.ifBlock(condition, silent=True):
 			# Add the loop body
 			if not silent:
-				main.addComment("While block body")
+				instructionList.addComment("While block body")
 			yield
 			if not silent:
-				main.addComment("End of while block body")
+				instructionList.addComment("End of while block body")
 			self.continueLoop()
-		main.addInstruction(instructions.EndLoopBlock())
+		instructionList.addInstruction(instructions.EndLoopBlock())
 		# update the loop break offset to jump to the end of the loop body
-		nextInstructionIndex = main.getInstructionCount()
+		nextInstructionIndex = instructionList.getInstructionCount()
 		loopBlockInstruction.breakBranch = RelativeOffset(nextInstructionIndex - loopBlockInstructionIndex)
 		self._scopeInstructionJustExited = loopBlockInstruction
 
 	@contextlib.contextmanager
 	def tryBlock(self, silent=False):
-		main = self.rob.getInstructionList('main')
+		instructionList = self.rob.getDefaultInstructionList()
 		# Add a new try block instruction to start the try block
 		tryBlockInstruction = instructions.NewTryBlock(
 			catchBranch=RelativeOffset(1),  # offset updated after yield
 		)
-		tryBlockInstructionIndex = main.addInstruction(tryBlockInstruction)
+		tryBlockInstructionIndex = instructionList.addInstruction(tryBlockInstruction)
 		# Add the try block body
 		if not silent:
-			main.addComment("Try block body")
+			instructionList.addComment("Try block body")
 		yield
 		if not silent:
-			main.addComment("End of try block body")
-		main.addInstruction(instructions.EndTryBlock())
+			instructionList.addComment("End of try block body")
+		instructionList.addInstruction(instructions.EndTryBlock())
 		# update the try block catch offset to jump to the end of the try block body
-		nextInstructionIndex = main.getInstructionCount()
+		nextInstructionIndex = instructionList.getInstructionCount()
 		tryBlockInstruction.catchBranch = RelativeOffset(nextInstructionIndex - tryBlockInstructionIndex)
 		self._scopeInstructionJustExited = tryBlockInstruction
 
@@ -1255,15 +1280,15 @@ class RemoteAPI(builder._RemoteBase):
 		scopeInstructionJustExited = self._scopeInstructionJustExited
 		if not isinstance(scopeInstructionJustExited, instructions.NewTryBlock):
 			raise RuntimeError("Catch block not directly preceded by Try block")
-		main = self.rob.getInstructionList('main')
+		instructionList = self.rob.getDefaultInstructionList()
 		tryBlockInstruction = cast(instructions.NewTryBlock, scopeInstructionJustExited)
 		# add a final jump instruction to the previous try block to skip over the catch block.
 		if not silent:
-			main.addComment("Jump over catch block")
+			instructionList.addComment("Jump over catch block")
 		jumpCatchInstruction = instructions.Fork(
 			jumpTo=RelativeOffset(1)  # offset updated after yield
 		)
-		jumpCatchInstructionIndex = main.addInstruction(jumpCatchInstruction)
+		jumpCatchInstructionIndex = instructionList.addInstruction(jumpCatchInstruction)
 		# increment the catch offset of the previous try block to take the new jump instruction into account.
 		tryBlockInstruction.catchBranch.value += 1
 		# fetch the error status that caused the catch
@@ -1272,25 +1297,25 @@ class RemoteAPI(builder._RemoteBase):
 		self.setOperationStatus(0)
 		# Add the catch block body
 		if not silent:
-			main.addComment("Catch block body")
+			instructionList.addComment("Catch block body")
 		yield status
 		if not silent:
-			main.addComment("End of catch block body")
+			instructionList.addComment("End of catch block body")
 		# update the jump instruction to jump to the real end of the catch block.
-		nextInstructionIndex = main.getInstructionCount()
+		nextInstructionIndex = instructionList.getInstructionCount()
 		jumpCatchInstruction.jumpTo = RelativeOffset(nextInstructionIndex - jumpCatchInstructionIndex)
 		self._scopeInstructionJustExited = None
 
 	def halt(self):
-		main = self.rob.getInstructionList('main')
-		main.addInstruction(instructions.Halt())
+		instructionList = self.rob.getDefaultInstructionList()
+		instructionList.addInstruction(instructions.Halt())
 
 	def logRuntimeMessage(self, *args: str | RemoteBaseObject) -> None:
 		if self._logObj is None:
 			return
-		main = self.rob.getInstructionList('main')
+		instructionList = self.rob.getDefaultInstructionList()
 		logObj = self._logObj
-		main.addComment("Begin logMessage code")
+		instructionList.addComment("Begin logMessage code")
 		lastIndex = len(args) - 1
 		requiresNewLine = True
 		for index, arg in enumerate(args):
@@ -1306,14 +1331,14 @@ class RemoteAPI(builder._RemoteBase):
 			logObj += string
 		if requiresNewLine:
 			logObj += "\n"
-		main.addComment("End logMessage code")
+		instructionList.addComment("End logMessage code")
 
 	def getLogObject(self) -> RemoteString | None:
 		return self._logObj
 
 	def addCompiletimeComment(self, comment: str):
-		main = self.rob.getInstructionList('main')
-		main.addComment(comment)
+		instructionList = self.rob.getDefaultInstructionList()
+		instructionList.addComment(comment)
 
 
 def getRemoteTypeForLocalType(LocalType: Type[object]) -> Type[RemoteBaseObject]:

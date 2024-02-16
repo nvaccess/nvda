@@ -24,6 +24,7 @@ from dataclasses import dataclass
 import weakref
 import struct
 import itertools
+import contextlib
 from . import lowLevel
 from .lowLevel import OperandId
 
@@ -98,8 +99,8 @@ class Operand(_RemoteBase):
 
 	def __repr__(self) -> str:
 		output = ""
-		if self._sectionForInitInstructions == "imports":
-			output += "imported "
+		if self._sectionForInitInstructions == "static":
+			output += "static "
 		if not self._mutable:
 			output += "const "
 		output += f"{self.__class__.__name__} at {self.operandId}"
@@ -225,12 +226,19 @@ class InstructionList:
 			output += "\n"
 		return output
 
+	def clear(self):
+		self._all.clear()
+		self._instructions.clear()
+		self._modified = False
+		self._byteCodeCache = None
+
 
 class RemoteOperationBuilder:
 
 	_versionBytes: bytes = struct.pack('l', 0)
-	_sectionNames = ["imports", "globals", "main"]
+	_sectionNames = ["imports", "static", "const", "main"]
 	_lastOperandIdRequested = OperandId(1)
+	_defaultSection: str = "main"
 
 	@property
 	def lastOperandIdRequested(self) -> OperandId:
@@ -251,6 +259,16 @@ class RemoteOperationBuilder:
 
 	def getInstructionList(self, section) -> InstructionList:
 		return self._instructionListBySection[section]
+
+	def getDefaultInstructionList(self) -> InstructionList:
+		return self.getInstructionList(self._defaultSection)
+
+	@contextlib.contextmanager
+	def overrideDefaultSection(self, section: str):
+		oldDefaultSection = self._defaultSection
+		self._defaultSection = section
+		yield
+		self._defaultSection = oldDefaultSection
 
 	def getAllInstructions(self) -> list[InstructionBase]:
 		return list(itertools.chain.from_iterable(

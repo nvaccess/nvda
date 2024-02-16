@@ -6,7 +6,7 @@
 from __future__ import annotations
 import contextlib
 from typing import (
-	Callable,
+	Type,
 	Iterable
 )
 from dataclasses import dataclass
@@ -16,7 +16,37 @@ from . import lowLevel
 from . import builder
 from . import remoteAPI
 from . import instructions
-from . import localExecute
+
+
+@dataclass
+class ExecutionResult:
+	status: int
+	errorLocation: int
+	extendedError: int
+
+	def hasOperand(self, operandId: lowLevel.OperandId) -> bool:
+		raise NotImplementedError
+
+	def getOperand(self, operandId: lowLevel.OperandId) -> remoteAPI.RemoteBaseObject:
+		raise NotImplementedError
+
+
+class Executor:
+
+	def importElement(self, operandId: lowLevel.OperandId, element: UIA.IUIAutomationElement):
+		raise NotImplementedError
+
+	def importTextRange(self, operandId: lowLevel.OperandId, textRange: UIA.IUIAutomationTextRange):
+		raise NotImplementedError
+
+	def addToResults(self, operandId: lowLevel.OperandId):
+		raise NotImplementedError
+
+	def loadInstructions(self, rob: builder.RemoteOperationBuilder):
+		raise NotImplementedError
+
+	def execute(self) -> ExecutionResult:
+		raise NotImplementedError
 
 
 @dataclass
@@ -53,51 +83,120 @@ class UnhandledException(OperationException):
 	pass
 
 
+@dataclass
+class RemoteExecutionResult(ExecutionResult):
+	resultSet: lowLevel.RemoteOperationResultSet
+
+	def hasOperand(self, operandId: lowLevel.OperandId) -> bool:
+		return self.resultSet.hasOperand(operandId)
+
+	def getOperand(self, operandId: lowLevel.OperandId) -> object:
+		return self.resultSet.getOperand(operandId)
+
+
+class RemoteExecutor(Executor):
+	_ro: lowLevel.RemoteOperation
+	_isConnectionBound = False
+	_byteCode: bytes = b""
+
+	def __init__(self):
+		self._ro = lowLevel.RemoteOperation()
+
+	def importElement(self, operandId: lowLevel.OperandId, element: UIA.IUIAutomationElement):
+		self._ro.importElement(operandId, element)
+		self._isConnectionBound = True
+
+	def importTextRange(self, operandId: lowLevel.OperandId, textRange: UIA.IUIAutomationTextRange):
+		self._ro.importTextRange(operandId, textRange)
+		self._isConnectionBound = True
+
+	def addToResults(self, operandId: lowLevel.OperandId):
+		self._ro.addToResults(operandId)
+
+	def loadInstructions(self, rob: builder.RemoteOperationBuilder):
+		self._byteCode = rob.getByteCode()
+
+	def execute(self) -> ExecutionResult:
+		if not self._isConnectionBound:
+			raise RuntimeError("RemoteExecutor must be bound to a connection before execution")
+		resultSet = self._ro.execute(self._byteCode)
+		return RemoteExecutionResult(
+			status=resultSet.status,
+			errorLocation=resultSet.errorLocation,
+			extendedError=resultSet.extendedError,
+			resultSet=resultSet
+		)
+
+
 class Operation:
+	_executorClass: Type[Executor] = RemoteExecutor
 	_loggingEnabled: bool
 	_remoteLog: remoteAPI.RemoteString | None = None
 	_rob: builder.RemoteOperationBuilder
+	_importedElements: dict[lowLevel.OperandId, UIA.IUIAutomationElement]
+	_importedTextRanges: dict[lowLevel.OperandId, UIA.IUIAutomationTextRange]
 	_requestedResults: list[remoteAPI.RemoteBaseObject]
+	_staticOperands: list[remoteAPI.RemoteBaseObject]
 	_built = False
 	_executed = False
 
-	def __init__(self, enableLogging: bool = False):
+	def __init__(self, enableLogging: bool = False, localMode=False):
 		self._loggingEnabled = enableLogging
+		self._localMode = localMode
+		if localMode:
+			from .localExecute import LocalExecutor 
+			self._executorClass = LocalExecutor
 		self._rob = builder.RemoteOperationBuilder()
+		self._importedElements = {}
+		self._importedTextRanges = {}
 		self._requestedResults = []
+		self._staticOperands = []
 
-	def _importElement(self, operandId: lowLevel.OperandId, element: UIA.IUIAutomationElement):
-		raise NotImplementedError
-
-	def importElement(self, element: UIA.IUIAutomationElement) -> remoteAPI.RemoteElement:
-		operandId = self._rob.requestNewOperandId()
-		self._importElement(operandId, element)
-		self._rob.getInstructionList('imports').addMetaCommand(f"import element into {operandId}")
+	def importElement(self, element: UIA.IUIAutomationElement, operandId: lowLevel.OperandId | None = None) -> remoteAPI.RemoteElement:
+		if operandId is None:
+			operandId = self._rob.requestNewOperandId()
+		self._importedElements[operandId] = element
 		return remoteAPI.RemoteElement(self._rob, operandId)
 
-	def _importTextRange(self, operandId: lowLevel.OperandId, textRange: UIA.IUIAutomationTextRange):
-		raise NotImplementedError
-
-	def importTextRange(self, textRange: UIA.IUIAutomationTextRange) -> remoteAPI.RemoteTextRange:
-		operandId = self._rob.requestNewOperandId()
-		self._importTextRange(operandId, textRange)
-		self._rob.getInstructionList('imports').addMetaCommand(f"import textRange into {operandId}")
+	def importTextRange(self, textRange: UIA.IUIAutomationTextRange, operandId: lowLevel.OperandId | None = None) -> remoteAPI.RemoteTextRange:
+		if operandId is None:
+			operandId = self._rob.requestNewOperandId()
+		self._importedTextRanges[operandId] = textRange
 		return remoteAPI.RemoteTextRange(self._rob, operandId)
-
-	def _addToResults(self, operand: remoteAPI.RemoteBaseObject):
-		raise NotImplementedError
 
 	def addToResults(self, *operands: remoteAPI.RemoteBaseObject):
 		for operand in operands:
-			self._addToResults(operand)
 			self._requestedResults.append(operand)
-			self._rob.getInstructionList('main').addMetaCommand(f"add result {operand}")
+
+	def _registerStaticOperand(self, operand: remoteAPI.RemoteBaseObject):
+		self._staticOperands.append(operand)
+		self.addToResults(operand)
+
+	def _refreshStaticInstructions(self):
+		with self._rob.overrideDefaultSection('static'):
+			self._rob.getDefaultInstructionList().clear()
+			for operand in self._staticOperands:
+				if isinstance(operand, remoteAPI.RemoteElement):
+					localElement = operand.localValue
+					if not localElement:
+						remoteAPI.RemoteNull.createNew(self._rob, operandId=operand.operandId)
+					else:
+						self.importElement(operand.localValue, operandId=operand.operandId)
+				elif isinstance(operand, remoteAPI.RemoteTextRange):
+					localTextRange = operand.localValue
+					if not localTextRange:
+						remoteAPI.RemoteNull.createNew(self._rob, operandId=operand.operandId)
+					else:
+						self.importTextRange(operand.localValue, operandId=operand.operandId)
+				else:
+					type(operand).createNew(self._rob, initialValue=operand.localValue, operandId=operand.operandId)
+
 
 	@contextlib.contextmanager
 	def buildContext(self):
 		if self._built:
 			raise RuntimeError("RemoteOperation cannot be built more than once")
-		ra = remoteAPI.RemoteAPI(self._rob, enableRemoteLogging=self._loggingEnabled)
+		ra = remoteAPI.RemoteAPI(self, enableRemoteLogging=self._loggingEnabled)
 		self._remoteLog = logObj = ra.getLogObject()
 		if logObj is not None:
 			self.addToResults(logObj)
@@ -112,15 +211,20 @@ class Operation:
 			)
 		self._built = True
 
-	def _execute(self):
-		raise NotImplementedError
-
 	def _executeAndHandleResults(self) -> None:
 		if not self._built:
 			raise RuntimeError("RemoteOperation must be built before execution")
-		resultSet = self._execute()
+		executor = self._executorClass()
+		for operandId, element in self._importedElements.items():
+			executor.importElement(operandId, element)
+		for operandId, textRange in self._importedTextRanges.items():
+			executor.importTextRange(operandId, textRange)
 		for operand in self._requestedResults:
-			operand._setResultSet(resultSet)
+			executor.addToResults(operand.operandId)
+		executor.loadInstructions(self._rob)
+		resultSet = executor.execute()
+		for operand in self._requestedResults:
+			operand._setExecutionResult(resultSet)
 		if resultSet.status == lowLevel.RemoteOperationStatus.ExecutionFailure:
 			raise ExecutionFailureException()
 		instructionRecord = None
@@ -159,6 +263,8 @@ class Operation:
 	def executeUntilSuccess(self, maxTries: int = 100) -> Iterable[bool]:
 		count = 0
 		for count in range(1, maxTries + 1):
+			if count > 1:
+				self._refreshStaticInstructions()
 			log.info(f"Executing RemoteOperation, try {count}")
 			try:
 				self._executeAndHandleResults()
@@ -168,74 +274,3 @@ class Operation:
 			except InstructionLimitExceededException:
 				log.info("instruction limit exceeded")
 				yield False
-
-
-@dataclass
-class OperationResult:
-	status: int
-	errorLocation: int
-	extendedError: int
-	hasOperand: Callable[[lowLevel.OperandId], bool]
-	getOperand: Callable[[lowLevel.OperandId], object]
-
-
-class RemoteOperation(Operation):
-	_ro: lowLevel.RemoteOperation
-	_isConnectionBound = False
-
-	def __init__(self, enableLogging: bool = False):
-		super().__init__(enableLogging)
-		self._ro = lowLevel.RemoteOperation()
-
-	def _importElement(self, operandId: lowLevel.OperandId, element: UIA.IUIAutomationElement):
-		self._ro.importElement(operandId, element)
-		self._isConnectionBound = True
-
-	def _importTextRange(self, operandId: lowLevel.OperandId, textRange: UIA.IUIAutomationTextRange):
-		self._ro.importTextRange(operandId, textRange)
-		self._isConnectionBound = True
-
-	def _addToResults(self, operand: remoteAPI.RemoteBaseObject):
-		self._ro.addToResults(operand.operandId)
-
-	def _execute(self):
-		if not self._isConnectionBound:
-			raise RuntimeError("RemoteOperation must be bound to a connection before execution")
-		byteCode = self._rob.getByteCode()
-		resultSet = self._ro.execute(byteCode)
-		return OperationResult(
-			status=resultSet.status,
-			errorLocation=resultSet.errorLocation,
-			extendedError=resultSet.extendedError,
-			hasOperand=resultSet.hasOperand,
-			getOperand=resultSet.getOperand
-		)
-
-
-class LocalOperation(Operation):
-	_executor: localExecute.LocalExecutor
-
-	def __init__(self, enableLogging: bool = False, maxInstructions: int | None =None):
-		super().__init__(enableLogging)
-		self._executor = localExecute.LocalExecutor(maxInstructions=maxInstructions)
-
-	def _importElement(self, operandId: lowLevel.OperandId, element: UIA.IUIAutomationElement):
-		self._executor.storeRegisterValue(operandId, element)
-
-	def _importTextRange(self, operandId: lowLevel.OperandId, textRange: UIA.IUIAutomationTextRange):
-		self._executor.storeRegisterValue(operandId, textRange)
-
-	def _addToResults(self, operand: remoteAPI.RemoteBaseObject):
-		return
-
-	def _execute(self):
-		instructions = self._rob.getAllInstructions()
-		self._executor.loadInstructions(instructions)
-		resultSet = self._executor.execute()
-		return OperationResult(
-			status=resultSet.status,
-			errorLocation=resultSet.errorLocation,
-			extendedError=resultSet.extendedError,
-			hasOperand=resultSet.hasOperand,
-			getOperand=resultSet.getOperand
-		)

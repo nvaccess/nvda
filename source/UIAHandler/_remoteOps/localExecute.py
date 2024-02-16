@@ -9,8 +9,21 @@ from dataclasses import dataclass
 from comtypes import COMError
 from . import lowLevel
 from logHandler import log
+from UIAHandler import UIA
 from . import builder
 from . import instructions
+from . import operation
+
+
+@dataclass
+class LocalExecutionResult(operation.ExecutionResult):
+	results: dict[lowLevel.OperandId, object]
+
+	def hasOperand(self, operandId: lowLevel.OperandId) -> bool:
+		return operandId in self.results
+
+	def getOperand(self, operandId: lowLevel.OperandId) -> object:
+		return self.results[operandId]
 
 
 class HaltException(Exception):
@@ -18,6 +31,10 @@ class HaltException(Exception):
 
 
 class BreakLoopException(Exception):
+	pass
+
+
+class BadOperationStatusException(Exception):
 	pass
 
 
@@ -39,18 +56,28 @@ class LocalOperationResultSet:
 		return self._registers[operandId]
 
 
-class LocalExecutor:
+class LocalExecutor(operation.Executor):
 	_registers: dict[lowLevel.OperandId, object]
+	_requestedResults: set[lowLevel.OperandId]
 	_operationStatus: int = 0
 	_instructions: list[builder.InstructionBase]
 	_ip: int
 	_instructionLoopDepth = 0
 	_instructionCounter = 0
-	_maxInstructions = None
+	_maxInstructions = 10000
 
-	def __init__(self, maxInstructions: int | None = None):
+	def __init__(self):
 		self._registers = {}
-		self._maxInstructions = maxInstructions
+		self._requestedResults = set()
+
+	@property
+	def operationStatus(self) -> int:
+		return self._operationStatus
+	@operationStatus.setter
+	def operationStatus(self, value: int):
+		self._operationStatus = value
+		if value < 0:
+			raise BadOperationStatusException()
 
 	def storeRegisterValue(self, operandId: lowLevel.OperandId, value: object):
 		self._registers[operandId] = value
@@ -58,18 +85,13 @@ class LocalExecutor:
 	def fetchRegisterValue(self, operandId: lowLevel.OperandId) -> object:
 		return self._registers[operandId]
 
-	def loadInstructions(self, instructions: list[builder.InstructionBase]):
-		self._instructions = instructions.copy()
-		self._ip = 0
-
-	def _setOperationStatusFromException(self, e: Exception):
-		if isinstance(e, HaltException):
-			# Halting is not an error.
-			return
-		elif isinstance(e, COMError):
-			self._operationStatus = e.hresult
+	def _operationStatusFromException(self, e: Exception):
+		if isinstance(e, COMError):
+			return e.hresult
+		elif isinstance(e, ZeroDivisionError):
+			return -805306220
 		else:
-			self._operationStatus = -1
+			return 0
 
 	def _execute_ForkIfFalse(self, instruction: instructions.ForkIfFalse):
 		condition = self._registers[instruction.condition.operandId]
@@ -95,11 +117,6 @@ class LocalExecutor:
 		catchAddress = self._ip + instruction.catchBranch.value
 		self._instructionLoop(instructions.EndTryBlock, catchAddress=catchAddress)
 
-	def _execute_BreakLoop(self, instruction: instructions.BreakLoop, breakAddress: int | None):
-		if breakAddress is not None:
-			self._ip = breakAddress
-			raise BreakLoopException()
-		raise RuntimeError("BreakLoop instruction encountered outside of loop")
 
 	def _execute_ContinueLoop(self, instruction: instructions.ContinueLoop, continueAddress: int | None):
 		if continueAddress is not None:
@@ -108,11 +125,11 @@ class LocalExecutor:
 			raise RuntimeError("ContinueLoop instruction encountered outside of loop")
 
 	def _execute_SetOperationStatus(self, instruction: instructions.SetOperationStatus):
-		self._operationStatus = cast(int, self._registers[instruction.status.operandId])
+		self.operationStatus = cast(int, self._registers[instruction.status.operandId])
 		self._ip += 1
 
 	def _execute_GetOperationStatus(self, instruction: instructions.GetOperationStatus):
-		self._registers[instruction.result.operandId] = self._operationStatus
+		self._registers[instruction.result.operandId] = self.operationStatus
 		self._ip += 1
 
 	def _executeInstruction(
@@ -132,7 +149,7 @@ class LocalExecutor:
 		elif type(instruction) is instructions.NewTryBlock:
 			self._execute_NewTryBlock(instruction)
 		elif type(instruction) is instructions.BreakLoop:
-			self._execute_BreakLoop(instruction, breakAddress)
+			raise BreakLoopException()
 		elif type(instruction) is instructions.ContinueLoop:
 			self._execute_ContinueLoop(instruction, continueAddress)
 		elif type(instruction) is instructions.SetOperationStatus:
@@ -160,33 +177,50 @@ class LocalExecutor:
 				if stopInstruction is not None and type(instruction) is stopInstruction:
 					self._ip += 1
 					break
-				self._executeInstruction(instruction, breakAddress, continueAddress)
-		except InstructionLimitExceededException:
-			raise
-		except HaltException:
-			pass
+				try:
+					self._executeInstruction(instruction, breakAddress, continueAddress)
+				except Exception as e:
+					self.operationStatus = self._operationStatusFromException(e)
+					raise 
 		except BreakLoopException:
-			pass
-		except Exception as e:
+			if breakAddress is not None:
+				self._ip = breakAddress
+			else:
+				raise RuntimeError("BreakLoop instruction encountered outside of loop")
+		except BadOperationStatusException:
 			if catchAddress is not None:
 				self._ip = catchAddress
-			self._setOperationStatusFromException(e)
-			log.error("Exception during local execution", exc_info=True)
+			else:
+				raise
 		finally:
 			self._instructionLoopDepth -= 1
 
-	def execute(self):
+	def importElement(self, operandId: lowLevel.OperandId, element: UIA.IUIAutomationElement):
+		self._registers[operandId] = element
+
+	def importTextRange(self, operandId: lowLevel.OperandId, textRange: UIA.IUIAutomationTextRange):
+		self._registers[operandId] = textRange
+
+	def addToResults(self, operandId: lowLevel.OperandId):
+		self._requestedResults.add(operandId)
+
+	def loadInstructions(self, rob: builder.RemoteOperationBuilder):
+		self._instructions = rob.getAllInstructions()
+
+	def execute(self) -> LocalExecutionResult:
 		self._ip = 0
+		self._instructionCounter = 0
 		status = lowLevel.RemoteOperationStatus.Success
 		try:
 			self._instructionLoop()
+		except HaltException:
+			pass
 		except InstructionLimitExceededException:
 			status = lowLevel.RemoteOperationStatus.InstructionLimitExceeded
-		else:
-			if self._operationStatus != 0:
-				status = lowLevel.RemoteOperationStatus.UnhandledException
-		return LocalOperationResultSet(
-			_registers=self._registers,
+		except BadOperationStatusException:
+			status = lowLevel.RemoteOperationStatus.UnhandledException
+		return LocalExecutionResult(
+			results = {k: v for k, v in self._registers.items() if k in self._requestedResults},
 			status=status,
 			errorLocation=self._ip,
 			extendedError=self._operationStatus
