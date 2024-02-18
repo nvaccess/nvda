@@ -2131,16 +2131,29 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			info: textInfos.TextInfo,
 	) -> "textInfos.TextInfo.TextWithFieldsT":
 		"""
-		This function calls TextInfo.getTextWithFields(), and then processes fields in the following way:
-		1. Highlighted (marked) text is currently reported as Role.MARKED_CONTENT, and not formatChange.
-		For ease of further handling we create a new boolean format field "marked"
-		and set its value according to presence of Role.MARKED_CONTENT.
-		2. Then we drop all control fields, leaving only formatChange fields and text.
-		@raise RuntimeError: found unknown command in getTextWithFields()
+			This function calls TextInfo.getTextWithFields(), and then processes fields in the following way:
+			1. Highlighted (marked) text is currently reported as Role.MARKED_CONTENT, and not formatChange.
+			For ease of further handling we create a new boolean format field "marked"
+			and set its value according to presence of Role.MARKED_CONTENT.
+			2. Then we drop all control fields, leaving only formatChange fields and text.
+			@raise RuntimeError: found unknown command in getTextWithFields()
 		"""
 		stack: list[textInfos.FormatField] = [{}]
 		result: "textInfos.TextInfo.TextWithFieldsT" = []
-		for field in info.getTextWithFields():
+		reportFormattingOptions = (
+			"reportFontName",
+			"reportFontSize",
+			"reportFontAttributes",
+			"reportSuperscriptsAndSubscripts",
+			"reportHighlight",
+			"reportColor",
+			"reportStyle",
+		)
+		formatConfig = dict()
+		for i in config.conf["documentFormatting"]:
+			formatConfig[i] = i in reportFormattingOptions
+
+		for field in info.getTextWithFields(formatConfig):
 			if isinstance(field, textInfos.FieldCommand):
 				if field.command == "controlStart":
 					style = {**stack[-1]}
@@ -2168,6 +2181,13 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			self,
 			sequence: "textInfos.TextInfo.TextWithFieldsT",
 	) -> "textInfos.TextInfo.TextWithFieldsT":
+		"""
+			This function is used to postprocess styles output of _extractStyles function.
+			Raw output of _extractStyles function might contain identical styles,
+			since textInfos might contain formatChange fields for other reasons
+			rather than style change.
+			This function removes redundant formatChange fields and merges str items as appropriate.
+		"""
 		currentStyle = None
 		redundantIndices = set()
 		for i, item in enumerate(sequence):
@@ -2202,6 +2222,96 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 					result.append(sequence[i])
 					i += 1
 		return result
+	
+	def _expandStyle(
+			self,
+			textRange: textInfos.TextInfo,
+			style: dict,
+			direction: documentBase._Movement,
+	):
+		"""
+			Given textRange in given style, this function expands textRange
+			in the desired direction as long as all text still belongs to the same style.
+			This function can expand textInfos across paragraphs.
+		"""
+		resultInfo = textRange.copy()
+		paragraphInfo = textRange.copy()
+		paragraphInfo.collapse()
+		paragraphInfo.expand(textInfos.UNIT_PARAGRAPH)
+		compareResult = textRange.compareEndPoints(
+			paragraphInfo,
+			"endToEnd" if direction == documentBase._Movement.NEXT else "startToStart"
+		)
+		if compareResult != 0:
+			# initial text range is not even touching end of paragraph in the desired direction,
+			# so no need to expand, since style ends within the same paragraph.
+			return textRange
+		MAX_ITER_LIMIT = 1000
+		for __ in range(MAX_ITER_LIMIT):
+			if direction == documentBase._Movement.NEXT:
+				try:
+					paragraphInfo.collapse(end=True)
+				except RuntimeError:
+					# Microsoft Word raises RuntimeError when collapsing textInfo to the last character of the document.
+					break
+			else:
+				paragraphInfo.collapse(end=False)
+				result = paragraphInfo.move(textInfos.UNIT_CHARACTER, -1)
+				if result == 0:
+					break
+			paragraphInfo.expand(textInfos.UNIT_PARAGRAPH)
+			if paragraphInfo.isCollapsed:
+				break
+
+			styles = self._mergeIdenticalStyles(self._extractStyles(paragraphInfo))
+			if direction == documentBase._Movement.NEXT:
+				iteration = range(len(styles))
+			else:
+				iteration = range(len(styles) - 1, -1, -1)
+			for i in iteration:
+				if isinstance(styles[i], str):
+					continue
+				if styles[i].field != style.field:
+					paragraphText = "".join(s for s in styles if isinstance(s, str))
+					pythonicStartIndex = sum(len(s) for s in styles[:i] if isinstance(s, str))
+					pythonicEndIndex = pythonicStartIndex + len(styles[i + 1])
+					converter = WideStringOffsetConverter(paragraphText)
+					startOffset, endOffset = converter.strToWideOffsets(pythonicStartIndex, pythonicEndIndex)
+					paragraphInfo.collapse()
+					if direction == documentBase._Movement.NEXT:
+						paragraphInfo.move(textInfos.UNIT_CHARACTER, startOffset)
+						resultInfo.setEndPoint(paragraphInfo, which="endToEnd")
+					else:
+						paragraphInfo.move(textInfos.UNIT_CHARACTER, endOffset)
+						resultInfo.setEndPoint(paragraphInfo, which="startToStart")
+					return resultInfo
+			else:
+				resultInfo.setEndPoint(
+					paragraphInfo,
+					which="endToEnd" if direction == documentBase._Movement.NEXT else "startToStart",
+				)
+		return resultInfo
+	
+	def _moveToNextParagraph(
+			self,
+			paragraph: textInfos.TextInfo,
+			direction: documentBase._Movement,
+	) -> bool:
+		if direction == documentBase._Movement.NEXT:
+			try:
+				paragraph.collapse(end=True)
+			except RuntimeError:
+				# Microsoft Word raises RuntimeError when collapsing textInfo to the last character of the document.
+				return False
+		else:
+			paragraph.collapse(end=False)
+			result = paragraph.move(textInfos.UNIT_CHARACTER, -1)
+			if result == 0:
+				return False
+		paragraph.expand(textInfos.UNIT_PARAGRAPH)
+		if paragraph.isCollapsed:
+			return False
+		return True
 
 	def _iterTextStyle(
 			self,
@@ -2215,40 +2325,62 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		]:
 			raise RuntimeError(f"direction must be either next or previous; got {direction}")
 		sameStyle = kind == "sameStyle"
+
 		initialTextInfo = pos.copy()
 		initialTextInfo.collapse()
-		result = initialTextInfo.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
-		if result == 0:
-			result = initialTextInfo.move(textInfos.UNIT_CHARACTER, -1, endPoint="start")
-			if result == 0:
-				# Translators: Error message for same/different style quick navigation command
-				ui.message(_("Cannot determine current style"))
-				raise RuntimeError("Cannot determine current style")
-		styles = self._extractStyles(initialTextInfo)
-		if (
-			len(styles) == 0
-			or not isinstance(styles[0], textInfos.FieldCommand)
-			or styles[0].command != "formatChange"
-		):
-			# Translators: Error message for same/different style quick navigation commands
-			ui.message(_("Cannot determine current style"))
-			raise RuntimeError("Cannot determine current style")
-		styles = self._mergeIdenticalStyles(styles)
-		initialStyle = styles[0]
-
-		firstParagraph = True
-		paragraph = pos.copy()
-		tmpInfo = pos.copy()
+		if direction == documentBase._Movement.PREVIOUS:
+			# If going backwards, need to include character at the cursor.
+			if 0 == initialTextInfo.move(textInfos.UNIT_CHARACTER, 1, endPoint="end"):
+				return
+		paragraph = initialTextInfo.copy()
+		tmpInfo = initialTextInfo.copy()
 		tmpInfo.expand(textInfos.UNIT_PARAGRAPH)
 		paragraph.setEndPoint(
 			tmpInfo,
 			which="endToEnd" if direction == documentBase._Movement.NEXT else "startToStart",
 		)
-		MAX_ITER_LIMIT = 10**6
+		# At this point paragraphInfo represents incomplete paragraph:
+		# if direction == "next", it spans from cursor to the end of current paragraph
+		# if direction == "previous" then it spans from the beginning of current paragraph until cursor+1
+		# For all following iterations paragraph will represent a complete paragraph.
+		styles = self._mergeIdenticalStyles(self._extractStyles(paragraph))
+		initialStyle = styles[0 if direction == documentBase._Movement.NEXT else -2]
+		# Creating currentTextInfo - text written in initialStyle in this paragraph.
+		currentTextInfo = initialTextInfo.copy()
+		if direction == documentBase._Movement.NEXT:
+			currentTextInfo.collapse()
+			offset = WideStringOffsetConverter(styles[1]).wideStringLength
+			currentTextInfo.move(textInfos.UNIT_CHARACTER, offset, endPoint="end")
+		else:
+			currentTextInfo.collapse(end=True)
+			offset = WideStringOffsetConverter(styles[-1]).wideStringLength
+			currentTextInfo.move(textInfos.UNIT_CHARACTER, -offset, endPoint="start")
+		# Now expand it to other paragraph in desired direction if applicable.
+		currentTextInfo = self._expandStyle(currentTextInfo, initialStyle, direction)
+		# At this point currentTextInfo represents textInfo written in the same style; may span across paragraphs
+		# We collapse it in the desired direction
+		try:
+			currentTextInfo.collapse(end=direction == documentBase._Movement.NEXT)
+		except RuntimeError:
+			# Microsoft Word raises RuntimeError when collapsing textInfo to the last character of the document.
+			return
+		# And now compute incomplete paragraph spanning from relevant end of currentTextInfo
+		# until the end/beginning of the paragraph.
+		paragraph = currentTextInfo.copy()
+		tmpInfo = currentTextInfo.copy()
+		tmpInfo.expand(textInfos.UNIT_PARAGRAPH)
+		if tmpInfo.isCollapsed:
+			return
+		else:
+			paragraph.setEndPoint(
+				tmpInfo,
+				which="endToEnd" if direction == documentBase._Movement.NEXT else "startToStart",
+			)
+
+		MAX_ITER_LIMIT = 1000
 		for __ in range(MAX_ITER_LIMIT):
 			if not paragraph.isCollapsed:
 				styles = self._mergeIdenticalStyles(self._extractStyles(paragraph))
-				firstStyleWithinParagraph = True
 				iterationRange = (
 					range(len(styles))
 					if direction == documentBase._Movement.NEXT
@@ -2257,13 +2389,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				for i in iterationRange:
 					if not isinstance(styles[i], textInfos.FieldCommand):
 						continue
-					if (
-						(styles[i].field == initialStyle.field) == sameStyle
-						and (
-							not firstStyleWithinParagraph
-							or not firstParagraph
-						)
-					):
+					if (styles[i].field == initialStyle.field) == sameStyle:
 						# Found text that matches desired style!
 						startOffset = sum([
 							WideStringOffsetConverter(s).wideStringLength
@@ -2271,22 +2397,23 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 							if isinstance(s, str)
 						])
 						endOffset = WideStringOffsetConverter(styles[i + 1]).wideStringLength
+						postEndOffset = sum([
+							WideStringOffsetConverter(s).wideStringLength
+							for s in styles[i + 2:]
+							if isinstance(s, str)
+						])
 						textRange = paragraph.copy()
 						textRange.collapse()
 						textRange.move(textInfos.UNIT_CHARACTER, startOffset)
 						textRange.move(textInfos.UNIT_CHARACTER, endOffset, endPoint="end")
+						needToExpand = (
+							(direction == documentBase._Movement.NEXT and postEndOffset == 0)
+							or (direction == documentBase._Movement.PREVIOUS and startOffset == 0)
+						)
+						if needToExpand:
+							textRange = self._expandStyle(textRange, styles[i], direction)
 						yield TextInfoQuickNavItem(kind, self, textRange, OutputReason.CARET)
-					firstStyleWithinParagraph = False
-			firstParagraph = False
-			if direction == documentBase._Movement.NEXT:
-				paragraph.collapse(end=True)
-			else:
-				paragraph.collapse(end=False)
-				result = paragraph.move(textInfos.UNIT_CHARACTER, -1)
-				if result == 0:
-					return
-			paragraph.expand(textInfos.UNIT_PARAGRAPH)
-			if paragraph.isCollapsed:
+			if not self._moveToNextParagraph(paragraph, direction):
 				return
 
 	__gestures={
