@@ -7,6 +7,9 @@ from __future__ import annotations
 import contextlib
 from typing import (
 	Type,
+	Any,
+	Generator,
+	Callable,
 	Iterable
 )
 from dataclasses import dataclass
@@ -135,8 +138,10 @@ class Operation:
 	_rob: builder.RemoteOperationBuilder
 	_importedElements: dict[lowLevel.OperandId, UIA.IUIAutomationElement]
 	_importedTextRanges: dict[lowLevel.OperandId, UIA.IUIAutomationTextRange]
-	_requestedResults: list[remoteAPI.RemoteBaseObject]
+	_requestedResults: dict[lowLevel.OperandId, remoteAPI.RemoteBaseObject]
 	_staticOperands: list[remoteAPI.RemoteBaseObject]
+	_returnIdOperand: remoteAPI.RemoteInt | None = None
+	_yieldListOperand: remoteAPI.RemoteArray | None = None
 	_built = False
 	_executed = False
 
@@ -149,24 +154,30 @@ class Operation:
 		self._rob = builder.RemoteOperationBuilder()
 		self._importedElements = {}
 		self._importedTextRanges = {}
-		self._requestedResults = []
+		self._requestedResults = {}
 		self._staticOperands = []
 
 	def importElement(self, element: UIA.IUIAutomationElement, operandId: lowLevel.OperandId | None = None) -> remoteAPI.RemoteElement:
 		if operandId is None:
 			operandId = self._rob.requestNewOperandId()
 		self._importedElements[operandId] = element
+		self._rob.getDefaultInstructionList().addMetaCommand(
+			f"importElement into {operandId}, value  {element}"
+		)
 		return remoteAPI.RemoteElement(self._rob, operandId)
 
 	def importTextRange(self, textRange: UIA.IUIAutomationTextRange, operandId: lowLevel.OperandId | None = None) -> remoteAPI.RemoteTextRange:
 		if operandId is None:
 			operandId = self._rob.requestNewOperandId()
 		self._importedTextRanges[operandId] = textRange
+		self._rob.getDefaultInstructionList().addMetaCommand(
+			f"importTextRange into {operandId}, value  {textRange}"
+		)
 		return remoteAPI.RemoteTextRange(self._rob, operandId)
 
 	def addToResults(self, *operands: remoteAPI.RemoteBaseObject):
 		for operand in operands:
-			self._requestedResults.append(operand)
+			self._requestedResults[operand.operandId] = operand
 
 	def _registerStaticOperand(self, operand: remoteAPI.RemoteBaseObject):
 		self._staticOperands.append(operand)
@@ -191,7 +202,6 @@ class Operation:
 				else:
 					type(operand).createNew(self._rob, initialValue=operand.localValue, operandId=operand.operandId)
 
-
 	@contextlib.contextmanager
 	def buildContext(self):
 		if self._built:
@@ -211,7 +221,27 @@ class Operation:
 			)
 		self._built = True
 
-	def _executeAndHandleResults(self) -> None:
+	def buildFunction(
+		self,
+		func: Callable[[remoteAPI.RemoteAPI], None]
+	) -> Operation:
+		with self.buildContext() as ra:
+			self._returnIdOperand = ra.newInt(-1)
+			self.addToResults(self._returnIdOperand)
+			func(ra)
+		return self
+
+	def buildIterableFunction(
+		self,
+		func: Callable[[remoteAPI.RemoteAPI], None]
+	) -> Operation:
+		with self.buildContext() as ra:
+			self._yieldListOperand = ra.newArray()
+			self.addToResults(self._yieldListOperand)
+			func(ra)
+		return self
+
+	def _execute(self) -> ExecutionResult:
 		if not self._built:
 			raise RuntimeError("RemoteOperation must be built before execution")
 		executor = self._executorClass()
@@ -219,23 +249,23 @@ class Operation:
 			executor.importElement(operandId, element)
 		for operandId, textRange in self._importedTextRanges.items():
 			executor.importTextRange(operandId, textRange)
-		for operand in self._requestedResults:
-			executor.addToResults(operand.operandId)
+		for operandId in self._requestedResults:
+			executor.addToResults(operandId)
 		executor.loadInstructions(self._rob)
-		resultSet = executor.execute()
-		for operand in self._requestedResults:
-			operand._setExecutionResult(resultSet)
-		if resultSet.status == lowLevel.RemoteOperationStatus.ExecutionFailure:
+		executionResult = executor.execute()
+		for operand in self._requestedResults.values():
+			operand._setExecutionResult(executionResult)
+		if executionResult.status == lowLevel.RemoteOperationStatus.ExecutionFailure:
 			raise ExecutionFailureException()
 		instructionRecord = None
-		errorLocation = resultSet.errorLocation
+		errorLocation = executionResult.errorLocation
 		if errorLocation >= 0:
 			instructions = self._rob.getAllInstructions()
 			try:
 				instructionRecord = instructions[errorLocation]
 			except (IndexError, RuntimeError):
 				pass
-		if resultSet.status == lowLevel.RemoteOperationStatus.MalformedBytecode:
+		if executionResult.status == lowLevel.RemoteOperationStatus.MalformedBytecode:
 			raise MalformedBytecodeException(errorLocation=errorLocation, instructionRecord=instructionRecord)
 		if self._remoteLog is not None:
 			logOutput = self._remoteLog.localValue
@@ -244,33 +274,64 @@ class Operation:
 				f"{logOutput}"
 				"--- remote log end ---"
 			)
-		if resultSet.status == lowLevel.RemoteOperationStatus.InstructionLimitExceeded:
+		if executionResult.status == lowLevel.RemoteOperationStatus.InstructionLimitExceeded:
 			raise InstructionLimitExceededException(
-				errorLocation=resultSet.errorLocation,
+				errorLocation=executionResult.errorLocation,
 				instructionRecord=instructionRecord,
 			)
-		elif resultSet.status == lowLevel.RemoteOperationStatus.UnhandledException:
+		elif executionResult.status == lowLevel.RemoteOperationStatus.UnhandledException:
 			raise UnhandledException(
-				errorLocation=resultSet.errorLocation,
-				extendedError=resultSet.extendedError,
+				errorLocation=executionResult.errorLocation,
+				extendedError=executionResult.extendedError,
 				instructionRecord=instructionRecord,
 			)
+		return executionResult
 
-	def execute(self):
+	def execute(self) -> Any:
 		log.info("Executing RemoteOperation")
-		self._executeAndHandleResults()
+		executionResult = self._execute()
+		if self._returnIdOperand is None:
+			raise RuntimeError("RemoteOperation has no return operand")
+		returnId = self._returnIdOperand.localValue
+		if returnId >= 0:
+			returnValue = self._requestedResults[lowLevel.OperandId(returnId)].localValue
+			return returnValue
 
 	def executeUntilSuccess(self, maxTries: int = 100) -> Iterable[bool]:
 		count = 0
-		for count in range(1, maxTries + 1):
+		while True:
+			count += 1
 			if count > 1:
 				self._refreshStaticInstructions()
-			log.info(f"Executing RemoteOperation, try {count}")
 			try:
-				self._executeAndHandleResults()
-				log.info("RemoteOperation executed successfully")
-				yield True
+				return self.execute()
+			except InstructionLimitExceededException:
+				if count == maxTries:
+					raise
+
+	def iterExecute(self) -> Generator[Any, None, None]:
+		if self._yieldListOperand is None:
+			raise RuntimeError("RemoteOperation has no yield list operand")
+		log.info("Executing iterable RemoteOperation")
+		instructionLimit = None
+		try:
+			self._execute()
+		except InstructionLimitExceededException as e:
+			instructionLimit = e
+		for value in self._yieldListOperand.localValue:
+			yield value
+		if instructionLimit is not None:
+			raise instructionLimit
+
+	def iterExecuteUntilSuccess(self, maxTries: int = 100) -> Generator[Any, None, None]:
+		count = 0
+		while True:
+			count += 1
+			if count > 1:
+				self._refreshStaticInstructions()
+			try:
+				yield from self.iterExecute()
 				return
 			except InstructionLimitExceededException:
-				log.info("instruction limit exceeded")
-				yield False
+				if count == maxTries:
+					raise

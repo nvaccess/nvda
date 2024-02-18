@@ -4,7 +4,12 @@
 # Copyright (C) 2021-2022 NV Access Limited
 
 
-from typing import Optional, Any
+from typing import (
+	Optional,
+	Any,
+	Generator,
+	cast
+)
 from comtypes import GUID
 from comInterfaces import UIAutomationClient as UIA
 from ._remoteOps import remoteAlgorithms
@@ -12,7 +17,8 @@ from ._remoteOps.remoteAPI import (
 	RemoteExtensionTarget,
 	RemoteInt
 )
-from ._remoteOps.operation import Operation
+from ._remoteOps import operation
+from ._remoteOps import remoteAPI
 from ._remoteOps.lowLevel import (
 	TextUnit,
 	AttributeId,
@@ -39,10 +45,12 @@ def msWord_getCustomAttributeValue(
 ) -> Optional[Any]:
 	guid_msWord_extendedTextRangePattern = GUID("{93514122-FF04-4B2C-A4AD-4AB04587C129}")
 	guid_msWord_getCustomAttributeValue = GUID("{081ACA91-32F2-46F0-9FB9-017038BC45F8}")
-	ro = Operation()
-	remoteDocElement = ro.importElement(docElement)
-	remoteTextRange = ro.importTextRange(textRange)
-	with ro.buildContext() as ra:
+	op = operation.Operation()
+
+	@op.buildFunction
+	def code(ra: remoteAPI.RemoteAPI):
+		remoteDocElement = ra.newElement(docElement)
+		remoteTextRange = ra.newTextRange(textRange)
 		remoteCustomAttribValue = ra.newVariant()
 		with ra.ifBlock(remoteDocElement.isExtensionSupported(guid_msWord_extendedTextRangePattern)):
 			ra.logRuntimeMessage("docElement supports extendedTextRangePattern")
@@ -70,27 +78,24 @@ def msWord_getCustomAttributeValue(
 						remoteCustomAttribValue
 					)
 					ra.logRuntimeMessage("got customAttribValue of ", remoteCustomAttribValue.stringify())
+					ra.Return(remoteCustomAttribValue)
 				with ra.elseBlock():
 					ra.logRuntimeMessage("extendedTextRangePattern does not support getCustomAttributeValue")
 		with ra.elseBlock():
 			ra.logRuntimeMessage("docElement does not support extendedTextRangePattern")
 		ra.logRuntimeMessage("msWord_getCustomAttributeValue end")
-	ro.addToResults(remoteCustomAttribValue)
-	ro.execute()
-	if remoteCustomAttribValue.isLocalValueAvailable:
-		return remoteCustomAttribValue.localValue
 
+	customAttribValue = op.execute()
+	return customAttribValue
 
 def collectAllHeadingsInTextRange(
 	textRange: UIA.IUIAutomationTextRange
-) -> list[tuple[int, str, UIA.IUIAutomationElement]]:
-	headings = []
-	ro = Operation(enableLogging=True)
-	remoteTextRange = ro.importTextRange(textRange)
-	with ro.buildContext() as ra:
-		levels = ra.newArray()
-		labels = ra.newArray()
-		ranges = ra.newArray()
+) -> Generator[tuple[int, str, UIA.IUIAutomationElement], None, None]:
+	op = operation.Operation(enableLogging=True)
+
+	@op.buildIterableFunction
+	def code(ra: remoteAPI.RemoteAPI):
+		remoteTextRange = ra.newTextRange(textRange, static=True)
 		with remoteAlgorithms.remote_forEachUnitInTextRange(
 			ra, remoteTextRange, TextUnit.Paragraph
 		) as paragraphRange:
@@ -100,16 +105,10 @@ def collectAllHeadingsInTextRange(
 				with ra.ifBlock((intVal >= StyleId.Heading1) & (intVal <= StyleId.Heading9)):
 					level = (intVal - StyleId.Heading1) + 1
 					label = paragraphRange.getText(-1)
-					levels.append(level)
-					labels.append(label)
-					ranges.append(paragraphRange)
-	ro.addToResults(levels, labels, ranges)
-	for done in ro.executeUntilSuccess():
-		localLevels = levels.localValue
-		localLabels = labels.localValue
-		localRanges = [r.QueryInterface(UIA.IUIAutomationTextRange) for r in ranges.localValue]
-		headings.extend(zip(localLevels, localLabels, localRanges))
-	return headings
+					ra.Yield(level, label, paragraphRange)
+
+	for level, label, paragraphRange in op.iterExecuteUntilSuccess():
+		yield level, label, paragraphRange.QueryInterface(UIA.IUIAutomationTextRange)
 
 
 def findFirstHeadingInTextRange(
@@ -117,13 +116,12 @@ def findFirstHeadingInTextRange(
 	wantedLevel: int | None = None,
 	reverse: bool = False
 ) -> tuple[int, str, UIA.IUIAutomationElement] | None:
-	ro = Operation(enableLogging=True)
-	with ro.buildContext() as ra:
+	op = operation.Operation(enableLogging=True)
+
+	@op.buildFunction
+	def code(ra: remoteAPI.RemoteAPI):
 		remoteTextRange = ra.newTextRange(textRange, static=True)
 		remoteWantedLevel = ra.newInt(wantedLevel or 0)
-		foundLevel = ra.newInt(0)
-		foundLabel = ra.newString("")
-		foundParagraphRange = ra.newTextRange()
 		remoteTextRange.getLogicalAdapter(reverse).start.moveByUnit(TextUnit.Paragraph, 1)
 		with remoteAlgorithms.remote_forEachUnitInTextRange(
 			ra, remoteTextRange, TextUnit.Paragraph, reverse=reverse
@@ -135,20 +133,15 @@ def findFirstHeadingInTextRange(
 					level = (intVal - StyleId.Heading1) + 1
 					with ra.ifBlock((remoteWantedLevel == 0) | (level == remoteWantedLevel)):
 						ra.logRuntimeMessage("found heading at level ", level)
-						foundLevel.set(level)
-						foundLabel.set(paragraphRange.getText(-1))
-						foundParagraphRange.set(paragraphRange)
-						ra.breakLoop()
-	ro.addToResults(foundLevel, foundLabel, foundParagraphRange)
-	for done in ro.executeUntilSuccess():
-		if done:
-			localFoundParagraphRange = foundParagraphRange.localValue
-			if not localFoundParagraphRange:
-				return None
-			localFoundLevel = foundLevel.localValue
-			localFoundLabel = foundLabel.localValue
-			return (
-				localFoundLevel,
-				localFoundLabel,
-				localFoundParagraphRange
-			)
+						label = paragraphRange.getText(-1)
+						ra.Return(level, label, paragraphRange)
+
+	res = op.executeUntilSuccess()
+	if res is None:
+		return None
+	level, label, paragraphRange = res
+	return (
+		cast(int, level),
+		cast(str, label),
+		cast(UIA.IUIAutomationTextRange, paragraphRange.QueryInterface(UIA.IUIAutomationTextRange))
+	)

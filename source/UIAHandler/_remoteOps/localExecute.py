@@ -64,9 +64,10 @@ class LocalExecutor(operation.Executor):
 	_ip: int
 	_instructionLoopDepth = 0
 	_instructionCounter = 0
-	_maxInstructions = 10000
+	_maxInstructions: int
 
-	def __init__(self):
+	def __init__(self, maxInstructions=10000):
+		self._maxInstructions = maxInstructions
 		self._registers = {}
 		self._requestedResults = set()
 

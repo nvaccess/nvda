@@ -11,7 +11,8 @@ from unittest import TestCase
 from unittest.mock import Mock
 from ctypes import POINTER
 from UIAHandler import UIA
-import UIAHandler._remoteOps.operation as operation
+from UIAHandler._remoteOps import operation
+from UIAHandler._remoteOps import remoteAPI
 from UIAHandler._remoteOps.lowLevel import (
 	PropertyId,
 )
@@ -22,77 +23,84 @@ class TestHighLevel(TestCase):
 	def test_bool_false(self):
 		op = operation.Operation(localMode=True)
 
-		with op.buildContext() as ra:
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
 			b = ra.newBool(False)
-			op.addToResults(b)
+			ra.Return(b)
 
-		op.execute()
-		self.assertFalse(b.localValue)
+		b = op.execute()
+		self.assertFalse(b)
 
 	def test_bool_setTrue(self):
 		op = operation.Operation(localMode=True)
 
-		with op.buildContext() as ra:
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
 			b = ra.newBool(False)
-			op.addToResults(b)
 			b.set(True)
+			ra.Return(b)
 
-		op.execute()
-		self.assertTrue(b.localValue)
+		b = op.execute()
+		self.assertTrue(b)
 
 	def test_bool_inverse(self):
 		op = operation.Operation(localMode=True)
 
-		with op.buildContext() as ra:
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
 			t = ra.newBool(True)
 			f = ra.newBool(False)
 			t_inverse = t.inverse()
 			f_inverse = f.inverse()
-			op.addToResults(t_inverse, f_inverse)
+			ra.Return(t_inverse, f_inverse)
 
-		op.execute()
-		self.assertFalse(t_inverse.localValue)
-		self.assertTrue(f_inverse.localValue)
+		t_inverse, f_inverse = op.execute()
+		self.assertFalse(t_inverse)
+		self.assertTrue(f_inverse)
 
 	def test_bool_and(self):
 		op = operation.Operation(localMode=True)
 
-		with op.buildContext() as ra:
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
 			t = ra.newBool(True)
 			f = ra.newBool(False)
 			t_and_t = t & t
 			t_and_f = t & f
 			f_and_t = f & t
 			f_and_f = f & f
-			op.addToResults(t_and_t, t_and_f, f_and_t, f_and_f)
+			ra.Return(t_and_t, t_and_f, f_and_t, f_and_f)
 
-		op.execute()
-		self.assertTrue(t_and_t.localValue)
-		self.assertFalse(t_and_f.localValue)
-		self.assertFalse(f_and_t.localValue)
-		self.assertFalse(f_and_f.localValue)
+		t_and_t, t_and_f, f_and_t, f_and_f = op.execute()
+		self.assertTrue(t_and_t)
+		self.assertFalse(t_and_f)
+		self.assertFalse(f_and_t)
+		self.assertFalse(f_and_f)
 
 	def test_bool_or(self):
 		op = operation.Operation(localMode=True)
 
-		with op.buildContext() as ra:
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
 			t = ra.newBool(True)
 			f = ra.newBool(False)
 			t_or_t = t | t
 			t_or_f = t | f
 			f_or_t = f | t
 			f_or_f = f | f
-			op.addToResults(t_or_t, t_or_f, f_or_t, f_or_f)
+			ra.Return(t_or_t, t_or_f, f_or_t, f_or_f)
 
-		op.execute()
-		self.assertTrue(t_or_t.localValue)
-		self.assertTrue(t_or_f.localValue)
-		self.assertTrue(f_or_t.localValue)
-		self.assertFalse(f_or_f.localValue)
+		t_or_t, t_or_f, f_or_t, f_or_f = op.execute()
+		self.assertTrue(t_or_t)
+		self.assertTrue(t_or_f)
+		self.assertTrue(f_or_t)
+		self.assertFalse(f_or_f)
 
 	def test_if_true(self):
 		op = operation.Operation(localMode=True)
-		with op.buildContext() as ra:
+
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
 			true_condition = ra.newBool(True)
 			was_in_if = ra.newBool(False)
 			was_in_else = ra.newBool(False)
@@ -100,15 +108,17 @@ class TestHighLevel(TestCase):
 				was_in_if.set(True)
 			with ra.elseBlock():
 				was_in_else.set(True)
-			op.addToResults(was_in_if, was_in_else)
+			ra.Return(was_in_if, was_in_else)
 
-		op.execute()
-		self.assertTrue(was_in_if.localValue)
-		self.assertFalse(was_in_else.localValue)
+		was_in_if, was_in_else = op.execute()
+		self.assertTrue(was_in_if)
+		self.assertFalse(was_in_else)
 
 	def test_if_false(self):
 		op = operation.Operation(localMode=True)
-		with op.buildContext() as ra:
+
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
 			false_condition = ra.newBool(False)
 			was_in_if = ra.newBool(False)
 			was_in_else = ra.newBool(False)
@@ -116,27 +126,57 @@ class TestHighLevel(TestCase):
 				was_in_if.set(True)
 			with ra.elseBlock():
 				was_in_else.set(True)
-			op.addToResults(was_in_if, was_in_else)
+			ra.Return(was_in_if, was_in_else)
 
-		op.execute()
-		self.assertFalse(was_in_if.localValue)
-		self.assertTrue(was_in_else.localValue)
+		was_in_if, was_in_else = op.execute()
+		self.assertFalse(was_in_if)
+		self.assertTrue(was_in_else)
 
 	def test_else_no_if(self):
 		op = operation.Operation(localMode=True)
 
-		with op.buildContext() as ra:
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
 			with self.assertRaises(RuntimeError):
 				with ra.elseBlock():
 					pass
 
+	def test_multiple_returns_first(self):
+		op = operation.Operation(localMode=True)
+
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
+			condition = ra.newBool(True)
+			with ra.ifBlock(condition):
+				ra.Return(1)
+			with ra.elseBlock():
+				ra.Return(2)
+
+		res = op.execute()
+		self.assertEqual(res, 1)
+
+	def test_multiple_returns_second(self):
+		op = operation.Operation(localMode=True)
+
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
+			condition = ra.newBool(False)
+			with ra.ifBlock(condition):
+				ra.Return(1)
+			with ra.elseBlock():
+				ra.Return(2)
+
+		res = op.execute()
+		self.assertEqual(res, 2)
+
 	def test_error(self):
 		op = operation.Operation(localMode=True)
 
-		with op.buildContext() as ra:
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
 			i = ra.newInt(3)
 			j = i / 0
-			op.addToResults(j)
+			ra.Return(j)
 
 		with self.assertRaises(operation.UnhandledException):
 			op.execute()
@@ -144,63 +184,68 @@ class TestHighLevel(TestCase):
 	def test_try_with_no_error(self):
 		op = operation.Operation(localMode=True)
 
-		with op.buildContext() as ra:
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
 			i = ra.newInt(3)
 			was_in_catch = ra.newBool(False)
 			with ra.tryBlock():
 				j = i + 1
 			with ra.catchBlock():
 				was_in_catch.set(True)
-		op.addToResults(j, was_in_catch)
+			ra.Return(j, was_in_catch)
 
-		op.execute()
-		self.assertEqual(j.localValue, 4)
-		self.assertFalse(was_in_catch.localValue)
+		j, was_in_catch = op.execute()
+		self.assertEqual(j, 4)
+		self.assertFalse(was_in_catch)
 
 	def test_try_with_error(self):
 		op = operation.Operation(localMode=True)
 
-		with op.buildContext() as ra:
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
 			i = ra.newInt(3)
 			was_in_catch = ra.newBool(False)
 			with ra.tryBlock():
 				j = i / 0
 			with ra.catchBlock():
 				was_in_catch.set(True)
-		op.addToResults(was_in_catch)
+			ra.Return(was_in_catch)
 
-		op.execute()
-		self.assertTrue(was_in_catch.localValue)
+		was_in_catch = op.execute()
+		self.assertTrue(was_in_catch)
 
 
 	def test_int_inplace_add(self):
 		op = operation.Operation(localMode=True)
 
-		with op.buildContext() as ra:
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
 			i = ra.newInt(5)
 			j = ra.newInt(3)
 			i += j
-			op.addToResults(i)
+			ra.Return(i)
 
-		op.execute()
-		self.assertEqual(i.localValue, 8)
+		i = op.execute()
+		self.assertEqual(i, 8)
 
 	def test_int_binary_add(self):
 		op = operation.Operation(localMode=True)
 
-		with op.buildContext() as ra:
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
 			i = ra.newInt(3)
 			j = ra.newInt(4)
 			k = i + j
-			op.addToResults(k)
+			ra.Return(k)
 
-		op.execute()
-		self.assertEqual(k.localValue, 7)
+		k = op.execute()
+		self.assertEqual(k, 7)
 
 	def test_compare_lowToHigh(self):
 		op = operation.Operation(localMode=True)
 
-		with op.buildContext() as ra:
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
 			i = ra.newInt(3)
 			j = ra.newInt(4)
 			lt = i < j
@@ -209,20 +254,21 @@ class TestHighLevel(TestCase):
 			ne = i != j
 			ge = i >= j
 			gt = i > j
-			op.addToResults(lt, le, eq, ne, ge, gt)
+			ra.Return(lt, le, eq, ne, ge, gt)
 
-		op.execute()
-		self.assertTrue(lt.localValue)
-		self.assertTrue(le.localValue)
-		self.assertFalse(eq.localValue)
-		self.assertTrue(ne.localValue)
-		self.assertFalse(ge.localValue)
-		self.assertFalse(gt.localValue)
+		lt, le, eq, ne, ge, gt = op.execute()
+		self.assertTrue(lt)
+		self.assertTrue(le)
+		self.assertFalse(eq)
+		self.assertTrue(ne)
+		self.assertFalse(ge)
+		self.assertFalse(gt)
 
 	def test_compare_highToLow(self):
 		op = operation.Operation(localMode=True)
 
-		with op.buildContext() as ra:
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
 			i = ra.newInt(4)
 			j = ra.newInt(3)
 			lt = i < j
@@ -231,20 +277,21 @@ class TestHighLevel(TestCase):
 			ne = i != j
 			ge = i >= j
 			gt = i > j
-			op.addToResults(lt, le, eq, ne, ge, gt)
+			ra.Return(lt, le, eq, ne, ge, gt)
 
-		op.execute()
-		self.assertFalse(lt.localValue)
-		self.assertFalse(le.localValue)
-		self.assertFalse(eq.localValue)
-		self.assertTrue(ne.localValue)
-		self.assertTrue(ge.localValue)
-		self.assertTrue(gt.localValue)
+		lt, le, eq, ne, ge, gt = op.execute()
+		self.assertFalse(lt)
+		self.assertFalse(le)
+		self.assertFalse(eq)
+		self.assertTrue(ne)
+		self.assertTrue(ge)
+		self.assertTrue(gt)
 
 	def test_compare_same(self):
 		op = operation.Operation(localMode=True)
 
-		with op.buildContext() as ra:
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
 			i = ra.newInt(3)
 			j = ra.newInt(3)
 			lt = i < j
@@ -253,46 +300,49 @@ class TestHighLevel(TestCase):
 			ne = i != j
 			ge = i >= j
 			gt = i > j
-			op.addToResults(lt, le, eq, ne, ge, gt)
+			ra.Return(lt, le, eq, ne, ge, gt)
 
-		op.execute()
-		self.assertFalse(lt.localValue)
-		self.assertTrue(le.localValue)
-		self.assertTrue(eq.localValue)
-		self.assertFalse(ne.localValue)
-		self.assertTrue(ge.localValue)
-		self.assertFalse(gt.localValue)
+		lt, le, eq, ne, ge, gt = op.execute()
+		self.assertFalse(lt)
+		self.assertTrue(le)
+		self.assertTrue(eq)
+		self.assertFalse(ne)
+		self.assertTrue(ge)
+		self.assertFalse(gt)
 
 	def test_while(self):
 		op = operation.Operation(localMode=True)
 
-		with op.buildContext() as ra:
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
 			counter = ra.newInt(0)
 			with ra.whileBlock(lambda: counter < 7):
 				counter += 2
-			op.addToResults(counter)
+			ra.Return(counter)
 
-		op.execute()
-		self.assertEqual(counter.localValue, 8)
+		counter = op.execute()
+		self.assertEqual(counter, 8)
 
 	def test_breakLoop(self):
 		op = operation.Operation(localMode=True)
 
-		with op.buildContext() as ra:
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
 			counter = ra.newInt(0)
 			with ra.whileBlock(lambda: counter < 7):
 				counter += 2
 				with ra.ifBlock(counter == 4):
 					ra.breakLoop()
-			op.addToResults(counter)
+			ra.Return(counter)
 
-		op.execute()
-		self.assertEqual(counter.localValue, 4)
+		counter = op.execute()
+		self.assertEqual(counter, 4)
 
 	def test_continueLoop(self):
 		op = operation.Operation(localMode=True)
 
-		with op.buildContext() as ra:
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
 			i = ra.newInt(0)
 			j = ra.newInt(0)
 			with ra.whileBlock(lambda: i < 7):
@@ -300,89 +350,103 @@ class TestHighLevel(TestCase):
 				with ra.ifBlock(i == 4):
 					ra.continueLoop()
 				j += 1
-			op.addToResults(i, j)
+			ra.Return(i, j)
 
-		op.execute()
-		self.assertEqual(i.localValue, 7)
-		self.assertEqual(j.localValue, 6)
+		i, j = op.execute()
+		self.assertEqual(i, 7)
+		self.assertEqual(j, 6)
 
 	def test_string_concat(self):
 		op = operation.Operation(localMode=True)
 
-		with op.buildContext() as ra:
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
 			s = ra.newString("hello")
 			t = ra.newString(" world")
 			u = (s + t)
-			op.addToResults(u)
+			ra.Return(u)
 
-		op.execute()
-		self.assertEqual(u.localValue, "hello world")
+		u = op.execute()
+		self.assertEqual(u, "hello world")
 
 	def test_element_getName(self):
 		uiaElement = Mock(spec=POINTER(UIA.IUIAutomationElement))
-
 		op = operation.Operation(localMode=True)
-		element = op.importElement(uiaElement)
 
-		with op.buildContext():
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
+			element = ra.newElement(uiaElement)
 			name = element.getPropertyValue(PropertyId.Name)
-			op.addToResults(name)
+			ra.Return(name)
 
 		uiaElement.GetCurrentPropertyValueEx.return_value = "foo"
-		op.execute()
+		name = op.execute()
 		uiaElement.GetCurrentPropertyValueEx.assert_called_once_with(PropertyId.Name, False)
-		self.assertEqual(name.localValue, "foo")
+		self.assertEqual(name, "foo")
 
 	def test_instructionLimitExceeded(self):
 		op = operation.Operation(localMode=True)
 
-		with op.buildContext() as ra:
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
 			i = ra.newInt(0)
 			with ra.whileBlock(lambda: i < 20000):
 				i += 1
-			op.addToResults(i)
+			ra.Return(i)
 
 		with self.assertRaises(operation.InstructionLimitExceededException):
 			op.execute()
-		self.assertEqual(i.localValue, 2499)
 
 	def test_instructionLimitExceeded_with_static(self):
 		op = operation.Operation(localMode=True)
 
-		with op.buildContext() as ra:
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
+			executionCount = ra.newInt(0, static=True)
+			executionCount += 1
 			i = ra.newInt(0, static=True)
 			with ra.whileBlock(lambda: i < 20000):
 				i += 1
-			op.addToResults(i)
+			ra.Return(executionCount, i)
 
-		executionCount = 0
-		for done in op.executeUntilSuccess():
-			executionCount += 1
-		self.assertEqual(i.localValue, 20000)
+		executionCount, i = op.executeUntilSuccess()
+		self.assertEqual(i, 20000)
 		self.assertEqual(executionCount, 9)
 
-	def test_remote_instructionLimitExceeded_with_static(self):
-		from comtypes import CoCreateInstance, CLSCTX_INPROC_SERVER
-		client = CoCreateInstance(UIA.CUIAutomation8._reg_clsid_, interface=UIA.CUIAutomation8._com_interfaces_[1], clsctx=CLSCTX_INPROC_SERVER)
-		focus = client.GetFocusedElement()
-		op = operation.Operation()
+	def test_iterableFunction(self):
+		op = operation.Operation(localMode=True)
 
-		with op.buildContext() as ra:
-			element = ra.newElement(focus, static=True)
-			i = ra.newInt(0, static=True)
-			with ra.whileBlock(lambda: element.isNull().inverse()):
-				name = element.getPropertyValue(PropertyId.Name)
-				element.set(element.getParentElement())
+		@op.buildIterableFunction
+		def code(ra: remoteAPI.RemoteAPI):
+			i = ra.newInt(0)
+			with ra.whileBlock(lambda: i < 4):
+				ra.Yield(i)
 				i += 1
-				j = ra.newInt(0)
-				with ra.whileBlock(lambda: j < 10000):
-					j += 1
-			op.addToResults(name)
-			op.addToResults(i)
 
-		executionCount = 0
-		for done in op.executeUntilSuccess():
+		results = []
+		for i in op.iterExecute():
+			results.append(i)
+		self.assertEqual(results, [0, 1, 2, 3])
+
+	def test_long_iterableFunction(self):
+		op = operation.Operation(localMode=True)
+
+		@op.buildIterableFunction
+		def code(ra: remoteAPI.RemoteAPI):
+			executionCount = ra.newInt(0, static=True)
 			executionCount += 1
-		#print(f"Name: {name.localValue}")
-		self.assertEqual(i.localValue, 5)
-		self.assertEqual(executionCount, 6)
+			i = ra.newInt(0, static=True)
+			j = ra.newInt(0, static=True)
+			with ra.whileBlock(lambda: i < 5000):
+				with ra.ifBlock(j == 1000):
+					ra.Yield(i)
+					j.set(0)
+				i += 1
+				j += 1
+			ra.Yield(executionCount)
+
+		results = []
+		for i in op.iterExecuteUntilSuccess():
+			results.append(i)
+		self.assertEqual(results[:-1], list(range(1000, 5000, 1000)))
+		self.assertEqual(results[-1], 4)

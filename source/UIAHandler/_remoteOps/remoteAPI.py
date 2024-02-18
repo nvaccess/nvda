@@ -1096,6 +1096,36 @@ class RemoteAPI(builder._RemoteBase):
 		self._op = op
 		self._logObj = self.newString() if enableRemoteLogging else None
 
+	def Return(self, *values: RemoteBaseObject | int | float | str | bool | None):
+		self.addCompiletimeComment(f"Returning {values}")
+		remoteValues = [RemoteBaseObject.ensureRemote(self.rob, value) for value in values]
+		if len(remoteValues) == 1:
+			remoteValue = remoteValues[0]
+		else:
+			remoteValue = self.newArray()
+			for value in remoteValues:
+				remoteValue.append(value)
+		if self._op._returnIdOperand is None:
+			raise RuntimeError("ReturnIdOperand not set not created")
+		self._op._returnIdOperand.set(remoteValue.operandId.value)
+		self._op.addToResults(remoteValue)
+		self.halt()
+
+	def Yield(self, *values: RemoteBaseObject | int | float | str | bool | None):
+		self.addCompiletimeComment(f"Begin yield {values}")
+		remoteValues = [RemoteBaseObject.ensureRemote(self.rob, value) for value in values]
+		if len(remoteValues) == 1:
+			remoteValue = remoteValues[0]
+		else:
+			remoteValue = self.newArray()
+			for value in remoteValues:
+				remoteValue.append(value)
+		if self._op._yieldListOperand is None:
+			raise RuntimeError("YieldIdOperand not set not created")
+		self._op._yieldListOperand.append(remoteValue)
+		self._op.addToResults(remoteValue)
+		self.addCompiletimeComment("Yield done")
+
 	_newObject_RemoteType = TypeVar('_newObject_RemoteType', bound=RemoteBaseObject)
 
 	def _newObject(self, RemoteType: Type[_newObject_RemoteType], value: Any, static=False) -> _newObject_RemoteType:
