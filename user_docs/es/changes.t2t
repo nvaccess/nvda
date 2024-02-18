@@ -3,6 +3,321 @@ Qué hay de Nuevo en NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2024.1 =
+
+Se ha añadido un nuevo modo de voz "bajo demanda".
+Cuando la voz esté bajo demanda, NVDA no habla automáticamente (ej. al mover el cursor) pero aún habla al dar órdenes cuyo objetivo sea explícitamente anunciar algo (ej. anunciar el título de la ventana).
+En la categoría Voz de las opciones de NVDA, ahora es posible excluir modos de voz no deseados desde la orden recorrer modos de voz (``NVDA+s``).
+
+Un nuevo modo de selección nativa (conmutado con ``NVDA+shift+f10``) ahora está disponible en el modo exploración de NVDA para Mozilla Firefox.
+Cuando se active, seleccionar texto en modo exploración también manipulará la propia selección nativa en Firefox.
+Copiar el texto con ``control+c`` pasará directamente a Firefox, copiando así el contenido enriquecido, en lugar de la representación en texsto plano de NVDA.
+
+La Tienda de Complementos ahora admite acciones masivas (ej. instalar, habilitar complementos) seleccionando varios complementos
+Hay una nueva acción para abrir una página de reseñas para el complemento seleccionado.
+
+Las opciones dispositivo de salida audio y  modo de atenuación se han eliminado del diálogo "Seleccionar Sintetizador".
+Ahora pueden encontrarse en en el panel de opciones de audio el cual se puede abrir con ``NVDA+control+u``.
+
+Se han actualizado eSpeak-NG, el transcriptor braille Liblouis y el Unicode CLDR.
+Están disponibles nuevas tablas braille Thai, Filipino y Rumano.
+
+Hay muchos otros fallos corregidos, particularmente para la Tienda de Complementos, para el braille, para Libre Office, para Microsoft Office y para el audio.
+
+== Notas importantes == 
+- Esta versión rompe la compatibilidad con los complementos existentes.
+- Ya no se soportan Windows 7 y Windows 8.
+Windows 8.1 es la versión mínima soportada.
+-
+
+== Nuevas Características ==
+- Tienda de Complementos:
+  - La Tienda de Complementos ahora admite acciones masivas (ej. instalar, habilitar complementos) seleccionando varios complementos. (#15350, #15623, @CyrilleB79)
+  - Se ha añadido una nueva acción para abrir una página web dedicada para ver o proporcionar comentarios acerca del complemento seleccionado. (#15576, @nvdaes)
+  -
+- Añadido el soporte para pantallas braille Bluetooth Low Energy HID. (#15470)
+- Un nuevo modo de selección nativa (conmutado con ``NVDA+shift+f10``) ahora está disponible en el modo exploración de NVDA para Mozilla Firefox.
+Cuando se active, seleccionar texto en modo exploración también manipulará la propia selección nativa en Firefox.
+Copiar el texto con ``control+c`` pasará directamente a Firefox, copiando así el contenido enriquecido, en lugar de la representación en texsto plano de NVDA. (#15830)
+- Al copiar texto en Microsoft Word con el modo exploración de NVDA activado, ahora se incluye también el formato. (#16129)
+- Se ha añadido un nuevo modo de voz "bajo demanda".
+Cuando la voz esté bajo demanda, NVDA no habla automáticamente (ej. al mover el cursor) pero aún habla al dar órdenes cuyo objetivo sea explícitamente anunciar algo (ej. anunciar el título de la ventana). (#481, @CyrilleB79)
+- En la categoría Voz de las opciones de NVDA, ahora es posible excluir modos de voz no deseados desde la orden recorrer modos de voz (``NVDA+s``). (#15806, @lukaszgo1)
+  - Si utilizas actualmente el complemento NoBeepsSpeechMode plantéate desinstalarlo y deshabilitar los modos "pitidos" y "bajo demanda" en las opciones.
+  -
+-
+
+== Cambios ==
+- NVDA ya no soporta Windows 7 y Windows 8.
+Windows 8.1 es la versión mínima soportada. (#15544)
+- Actualización de componentes:
+  - Actualizado el transcriptor braille LibLouis a [3.28.0 https://github.com/liblouis/liblouis/releases/tag/v3.28.0]. (#15435, #15876, @codeofdusk)
+    - Añadidas nuevas tablas braille para Thai, Rumano y Filipino.
+    -
+  - eSpeak NG ha sido actualizado a 1.52-dev commit ``530bf0abf``. (#15036)
+  - CLDR emoji y symbol annotations han sido actualizados a la versión 44.0. (#15712, @OzancanKaratas)
+  - Actualizado Java Access Bridge a 17.0.9+8Zulu (17.46.19). (#15744)
+  -
+- Teclas de órdenes:
+  - Las siguientes órdenes ahora admiten dos y tres pulsaciones para deletrear la información anunciada y para deletrear con descripción de caracteres: anunciar selección, anunciar texto del portapapeles y anunciar objeto enfocado. (#15449, @CyrilleB79)
+  - La orden para conmutar la Cortina de Pantalla ahora tiene un gesto predeterminado: ``NVDA+control+escape``. (#10560, @CyrilleB79)
+  - Al pulsar cuatro veces, la orden de anunciar selección ahora muestra la selección en un mensaje explorable. (#15858, @Emil-18)
+  - 
+- Microsoft Office:
+  - Al solicitar información de formato en celdas de Excel, márgenes y fondo sólo se anunciará si hay ese formato. (#15560, @CyrilleB79)
+  - NVDA no anunciará de nuevo grupos no etiquetados como en menús en versiones recientes de Microsoft Office 365. (#15638)
+  -
+- Las opciones dispositivo de salida audio y  modo de atenuación se han eliminado del diálogo "Seleccionar Sintetizador".
+Ahora pueden encontrarse en en el panel de opciones de audio el cual se puede abrir con ``NVDA+control+u``. (#15512, @codeofdusk)
+- La opción "Anunciar rol cuando el ratón entre en el objeto" en la categoría opciones de Ratón de NVDA se ha renombrado a "Anunciar objeto cuando el ratón entre en él".
+Esta opción ahora anuncia información relevante adicional acerca de un objeto cuando el ratón entre en él, tal como los estados  (marcado/pulsado) o coordenadas de celda en una tabla. (#15420, @LeonarddeR)
+- Se han añadido nuevos elementos al menú Ayuda para la página "Obtener Ayuda" y para la tienda de NV Access. (#14631)
+- El soporte de NVDA para [Poedit https://poedit.net] ha sido revisado para Poedit versión 3 y superiores.
+Se recomienda mucho a los usuarios de Poedit 1 que actualicen a Poedit 3 si quieren contar con la accesibilidad mejorada en Poedit, como los atajos para leer las notas y los comentarios para el traductor. (#15313, #7303, @LeonarddeR)
+- El visualizador Braille y el visualizador de voz ahora se han desactivado en modo seguro. (#15680)
+- Durante la navegación de objetos, los objetos deshabilitados (no disponibles) ya no se ignorarán. (#15477, @CyrilleB79)
+-
+
+== Corrección de Fallos ==
+- Tienda de Complementos:
+  - Cuando se cambie el estado de un complemento mientras tenga el foco, ej. un cambio de "descargando" a "descargado", el elemento actualizado ahora se anuncia correctamente. (#15859, @LeonarddeR)
+  - Al instalar complementos, los avisos de instalación ya no se solapan con el diálogo de reinicio. (#15613, @lukaszgo1)
+  - Al reinstalar un complemento incompatible, ya no se desactiva forzosamente. (#15584, @lukaszgo1)
+  - Los complementos deshabilitados e incompatibles ahora se pueden actualizar. (#15568, #15029)
+  - NVDA ahora se recupera y muestra un error en caso de que un complemento no se descargue correctamente. (#15796)
+  - NVDA ya no falla al reiniciarse intermitentemente después de abrir y cerrar la Tienda de Complementos. (#16019, @lukaszgo1)
+  -
+- Audio:
+  - NVDA ya no se conjela brevemente cuando se reproducen varios sonidos en sucesión rápida. (#15311, #15757, @jcsteh)
+  - Si el dispositivo de salida de audio está configurado a algo distinto del predeterminado y ese dispositivo volviera a estar disponible después de no estarlo, NVDA ahora cambiará nuevamente al dispositivo configurado en lugar de seguir utilizando el predeterminado. (#15759, @jcsteh)
+  - NVDA ahora reanuda el audio si la configuración del dispositivo cambia u otra aplicación libera el control exclusivo del dispositivo. (#15758, #15775, @jcsteh)
+  -
+- Braille:
+  - Las pantallas braillde con varias líneas ya no bloquearán el controlador BRLTTY y se tratarán como una pantalla contínua. (#15386)
+  - Se detectan más objetos que contienen texto útil y el contenido del texto se muestra en braille. (#15605)
+  - La entrada de braille contraído vuelve a funcionar correctamente. (#15773, @aaclause)
+  - El braille ahora se actualiza al mover el navegador de objetos entre celdas de tabla en más situaciones. (#15755, @Emil-18)
+  - Ahora se muestra en braille el resultado de las órdenes anunciar foco actual, navegador de objetos actual y selección actual. (#15844, @Emil-18)
+  - El controlador braille de la Albatross ya no maneja un microcontrolador Esp32 como una pantalla Albatross. (#15671)
+  -
+- LibreOffice:
+  - Las palabras eliminadas utilizando el atajo de teclado ``control+retroceso`` ahora también se anuncian apropiadamente cuando las palabras borradas van seguidas de espacios en blanco(como espacios y tabuladores). (#15436, @michaelweghorn)
+  - El anuncio de la barra de estado utilizando el atajo de teclado ``NVDA+fin`` ahora también funciona para diálogos en LibreOffice versión 24.2 y posteriores. (#15591, @michaelweghorn)
+  - Ahora se admiten todos los atributos de texto esperados en las versiones de LibreOffice 24.2 y superiores.
+  Esto hace que el anuncio de errores de ortografía funcione al anunciar una línea en Writer. (#15648, @michaelweghorn)
+  - El anunciado de niveles de encabezado ahora también funciona para LibreOffice versiones 24.2 y posteriores. (#15881, @michaelweghorn)
+  -
+- Microsoft Office:
+  - En Excel con UIA deshabilitado, el braille se actualiza y se verbaliza la celda activa cuando se pulse ``control+y``, ``control+z`` o ``alt+retroceso``. (#15547)
+  - En Word con UIA deshabilitado el braille se actualiza cuando se pulsa ``control+v``, ``control+x``, ``control+y``, ``control+z``, ``alt+retroceso``, ``retroceso`` o ``control+retroceso``.
+  También se actualiza con UIA habilitado cuando se teclea texto y el braille siga a los cursores de revisión y del sistema. (#3276)
+  - En Word, ahora se anunciará correctamente la celda donde se aterrice cuando se utilicen las órdenes nativas de Word para la navegación de tabla ``alt+inicio``, ``alt+fin``, ``alt+rePág`` y ``alt+avPág``. (#15805, @CyrilleB79)
+  -
+- Se ha mejorado el anunciado de los atajos de teclado de los objetos. (#10807, #15816, @CyrilleB79)
+- El sintetizador de voz SAPI4 ahora soporta correctamente  los cambios de volumen, velocidad y tono integrados en la voz. (#15271, @LeonarddeR)
+- Ahora se anuncia correctamente del estado multilínea en aplicaciones que utilizan Access Bridge. (#14609)
+- NVDA anunciará contenido de diálogo para más diálogos en Windows 10 y 11. (#15729, @josephsl)
+- NVDA ya no fallará al leer una página recién cargada en Microsoft Edge al utilizar UI Automation. (#15736)
+- Cuando se utiliza leer todo u órdenes que deletreen testo, las pausas entre frases o caracteres ya no disminuyen gradualmente con el tiempo. (#15739, @jcsteh)
+- NVDA ya no se congela a veces cuando se verbaliza una gran cantidad de texto. (#15752, @jcsteh)
+- Al acceder a Microsoft Edge utilizando UI Automation, NVDA puede activar más controles en modo exploración. (#14612)
+- NVDA ya no fallará al arrancar cuando el fichero de configuración esté corrompido, sino que restaurará la configuración a la predeterminada como lo hacía en el pasado. (#15690, @CyrilleB79)
+- Corregido el soporte para los controles System List view (``SysListView32``) en aplicaciones Windows Forms. (#15283, @LeonarddeR)
+- Ya no es posible sobrescribir el historial de la consola Python de NVDA. (#15792, @CyrilleB79)
+- NVDA debería continuar respondiendo cuando se inunda con muchos eventos UI Automation, ej. cuando se imprimen grandes trozos de texto en una terminal o cuando se escuchan mensajes de voz en WhatsApp messenger. (#14888, #15169)
+  - Este nuevo comportamiento se puede deshabilitar utilizando la nueva opción "Utilizar proceso mejorado de eventos" en las opciones avanzadas de NVDA.
+  -
+- NVDA es capaz de nuevo de seguir el foco en aplicaciones que se ejecuten dentro de Windows Defender Application Guard (WDAG). (#15164)
+- El texto verbalizado ya no se actualiza cuando el ratón se mueve en el Visualizador de Voz. (#15952, @hwf1324)
+- NVDA volverá a cambiar al modo exploración al cerrar cuadros combinados con ``escape`` o ``alt+Flecha arriba`` en Firefox o Chrome. (#15653)
+- Moverse arriba y abajo con las flechas en cuadros combinados en iTunes ya no cambiará inapropiadamente a modo exploración. (#15653)
+-
+
+== Cambios para Desarrolladores ==
+Por favor consulta [la guía del desarrollador https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] para información sobre el proceso de obsolescencia y eliminación de la API de NVDA.
+
+- Nota: esta es una versión que rompe la compatibilidad con la API de complementos.
+Los complementos necesitarán volver a comprobarse y tener sus manifiestos actualizados.
+- Compilar NVDA ahora requiere de Visual Studio 2022.
+Por favor consulta los [NVDA docs https://github.com/nvaccess/nvda/blob/release-2024.1/projectDocs/dev/createDevEnvironment.md] para una lista específica de componentes de Visual Studio. (#14313)
+- Añadidos los siguientes puntos de extensión:
+  - ``treeInterceptorHandler.post_browseModeStateChange``. (#14969, @nvdaes)
+  - ``speech.speechCanceled``. (#15700, @LeonarddeR)
+  - ``_onErrorSoundRequested`` (debería recuperarse llamando ``logHandler.getOnErrorSoundRequested()``) (#15691, @CyrilleB79)
+  -
+- Ahora es posible utilizar formas plurales en las traducciones de complementos. (#15661, @beqabeqa473)
+- Incluido python3.dll en la distribución de binarios para utilizar por complementos con librerías externas utilizando la [stable ABI https://docs.python.org/3.11/c-api/stable.html]. (#15674, @mzanm)
+- La clase base ``BrailleDisplayDriver`` ahora tiene las propiedades ``numRows`` y ``numCols`` para proporcionar información acerca de pantallas braille de varias líneas.
+La configuración de ``numCells`` todavía está admitida para pantallas braille de una sola línea y ``numCells`` devolverá el número total de celdas para pantallas braille de varias líneas. (#15386)
+- Actualizado BrlAPI para BRLTTY a la versión 0.8.5y su correspondiente módulo python a la compilación compatible Python 3.11. (#15652, @LeonarddeR)
+- Añadida la función ``speech.speakSsml``, que te permite escribir secuencias de voz de NVDA utilizando [SSML https://www.w3.org/TR/speech-synthesis11/]. (#15699, @LeonarddeR)
+  - Las siguientes etiquetas se admiten actualmente y se traducen a las órdenes de voz  apropiadas de NVDA:
+    - ``Prosody`` (``pitch``, ``rate`` y ``volume``). sólo multiplicación (ej. ``200%`` se soporta.
+    - ``say-as`` con el atributo ``interpret`` configurado a ``characters``
+    - ``voice`` con el ``xml:lang`` configurado a un lenguaje XML
+    - ``break`` con el atributo ``time`` configurado a un valor en milésimas de segundo, ej. ``200ms``
+    - ``mark`` con el atributo ``name`` configurado a un nombre de marca, ej. ``mark1``, requiere proporcionar una callback
+    -
+  - Ejemplo: ``speech.speakSsml('<speak><prosody pitch="200%">hello</prosody><break time="500ms" /><prosody rate="50%">John</prosody></speak>')``
+  - Las funciones de análisis sintáctico de SSML están respaldadas por la clase ``SsmlParser`` en el módulo ``speechXml``.
+  -
+- Cambios para la librería NVDA Controller Client:
+  - Added an example to demonstrate using nvdaControllerClient.dll from Rust. (#15771, @LeonarddeR)
+  - Los nombres de fichero de la librería ya no contienen un sufijo denotando la arquitectura, es decir, ``nvdaControllerClient32/64.dll`` ahora se llama ``nvdaControllerClient.dll``. (#15718, #15717, @LeonarddeR)
+  - Añadidas las siguientes funciones al controller client: (#15734, #11028, #5638, @LeonarddeR)
+    - ``nvdaController_getProcessId``: para obtener el id de proceso (PID) de la instancia actual que está utilizando el NVDA controller client.
+    - ``nvdaController_speakSsml``: para instruir a NVDA que hable de acuerdo con el SSML dado. Esta función también soporta:
+      - Proporcionar el nivel de símbolos.
+      - Proporcionar la prioridad de la voz a ser verbalizada.
+      - Verbalizar síncronamente (bloqueando) y asíncronamente (devolución instantánea).
+      -
+    - ``nvdaController_setOnSsmlMarkReachedCallback``: Para registrar una llamada de tipo ``onSsmlMarkReachedFuncType`` eso se llama en modo síncrono para cada ``<mark />`` tag encontrado en la secuencia SSML proporcionada a ``nvdaController_speakSsml``.
+    -
+  - Nota: las funciones nuevas en el controller client sólo soportan NVDA 2024.1 y posteriores.
+  -
+- Actualizadas dependencias ``include``:
+  - detours a ``4b8c659f549b0ab21cf649377c7a84eb708f5e68``. (#15695)
+  - ia2 a ``3d8c7f0b833453f761ded6b12d8be431507bfe0b``. (#15695)
+  - sonic a ``8694c596378c24e340c09ff2cd47c065494233f1``. (#15695)
+  - w3c-aria-practices a ``9a5e55ccbeb0f1bf92b6127c9865da8426d1c864``. (#15695)
+  - wil a ``5e9be7b2d2fe3834a7107f430f7d4c0631f69833``. (#15695)
+  -
+- Información del dispositivo por ``hwPortUtils.listUsbDevices`` ahora contiene el bus que anuncia la descripción del dispositivo USB (key ``busReportedDeviceDescription``). (#15764, @LeonarddeR)
+- Para dispositivos USB serie, ``bdDetect.getConnectedUsbDevicesForDriver`` y ``bdDetect.getDriversForConnectedUsbDevices`` ahora produce coincidencias de dispositivo que contienen un diccionario ``deviceInfo`` enriquecido con datos sobre el dispositivo USB, como ``busReportedDeviceDescription``. (#15764, @LeonarddeR)
+- Cuando el fichero de configuración ``nvda.ini`` está corrompido, se guarda una copia de seguridad antes de reiniciarse. (#15779, @CyrilleB79)
+- Cuando se define un script con el decorador de script, el argumento booleano ``speakOnDemand`` puede especificarse para controlar si un script debería hablar mientras se esté en el modo de voz "bajo demanda". (#481, @CyrilleB79)
+  - Los Scripts que proporcionan información (ej. decir título de ventana, anunciar hora/fecha) deberían hablar en el modo de voz "bajo demanda".
+  - Los Scripts que realicen una acción (ej. mover el cursor, cambiar un parámetro) no deberían verbalizarse en el modo "bajo demanda".
+  -
+- Corregido un fallo donde al eliminar ficheros git-tracked durante ``scons -c`` resultaba en falta de interfaces UIA COM al recompilar. (#7070, #10833, @hwf1324)
+- Corregido un fallo donde algunos cambios de código no se detectaban al compilar ``dist``, lo que impedía que se activara una nueva compilación.
+Ahora ``dist`` siempre recompila. (#13372, @hwf1324)
+-
+
+=== Cambios que Rompen la API ===
+Estos son los cambios que rompen la API.
+Por favor abre un GitHub issue si tu complemento tiene un problema con la actualización a la nueva API.
+
+- NVDA ahora se compila con Python 3.11. (#12064)
+- Actualizadas las dependencias pip:
+  - configobj a 5.1.0dev commit ``e2ba4457c4651fa54f8d59d8dcdd3da950e956b8``. (#15544)
+  - Comtypes a 1.2.0. (#15513, @codeofdusk)
+  - fast_diff_match_patch a 2.0.1. (#15514, @codeofdusk)
+  - Flake8 a 4.0.1. (#15636, @lukaszgo1)
+  - py2exe a 0.13.0.1dev commit ``4e7b2b2c60face592e67cb1bc935172a20fa371d``. (#15544) 
+  - robotframework a 6.1.1. (#15544)
+  - SCons a 4.5.2. (#15529, @LeonarddeR)
+  - sphinx a 7.2.6. (#15544)
+  - wxPython a 4.2.1. (#12551)
+  -
+- Dependencias pip eliminadas:
+  - typing_extensions, estas se soportarían nativamente en Python 3.11 (#15544)
+  - nota, en su lugar se utiliza unittest-xml-reporting para generar informes XML. (#15544)
+  -
+- ``IAccessibleHandler.SecureDesktopNVDAObject`` se ha eliminado.
+En su lugar, cuando NVDA está en ejecución en el perfil de usuario, rastrea la existencia del escritorio seguro con el punto de extensión: ``winAPI.secureDesktop.post_secureDesktopStateChange``. (#14488)
+- ``braille.BrailleHandler.handlePendingCaretUpdate`` se ha eliminado sin remplazo público. (#15163, @LeonarddeR)
+- ``bdDetect.addUsbDevices y bdDetect.addBluetoothDevices`` se han eliminado.
+Los controladores de pantallas braille deberían implementar el método de la clase ``registerAutomaticDetection`` en su lugar.
+Ese método recibe un objeto ``DriverRegistrar`` en el que los métodos ``addUsbDevices`` y ``addBluetoothDevices`` pueden usarse. (#15200, @LeonarddeR)
+- La implementación predeterminada del método de  comprobación en ``BrailleDisplayDriver`` ahora requiere que los atributos ``threadSafe`` y ``supportsAutomaticDetection`` estén configurados a ``True``. (#15200, @LeonarddeR)
+- Pasar funciones lambda a ``hwIo.ioThread.IoThread.queueAsApc`` ya no es posible, ya que las funciones deberían ser débilmente referenciables. (#14627, @LeonarddeR)
+- ``IoThread.autoDeleteApcReference`` ha sido eliminada. (#14924, @LeonarddeR)
+- Para admitir cambios de tonos para mayúsculas, los sintetizadores deben declarar ahora explícitamente su comptaibilidad con ``PitchCommand`` en el atributo ``supportedCommands`` en el controlador. (#15433, @LeonarddeR)
+- ``speechDictHandler.speechDictVars`` se ha eliminado. Utiliza ``NVDAState.WritePaths.speechDictsDir`` en lugar de ``speechDictHandler.speechDictVars.speechDictsPath``. (#15614, @lukaszgo1)
+- ``languageHandler.makeNpgettext`` y ``languageHandler.makePgettext`` se han eliminado.
+``npgettext`` y ``pgettext`` ahora se soportan nativamente. (#15546)
+- El app module para [Poedit https://poedit.net] ha sido cambiado significativamente. La función ``fetchObject`` function se ha eliminado. (#15313, #7303, @LeonarddeR)
+- Los siguientes tipos y constantes redundantes se han eliminado  de ``hwPortUtils``: (#15764, @LeonarddeR)
+  - ``PCWSTR``
+  - ``HWND`` (remplazado por ``ctypes.wintypes.HWND``)
+  - ``ULONG_PTR``
+  - ``ULONGLONG``
+  - ``NULL``
+  - ``GUID`` (remplazado por ``comtypes.GUID``)
+  -
+- ``gui.addonGui.AddonsDialog`` se ha eliminado. (#15834)
+- ``touchHandler.TouchInputGesture.multiFingerActionLabel`` se ha eliminado sin remplazo. (#15864, @CyrilleB79)
+- ``NVDAObjects.IAccessible.winword.WordDocument.script_reportCurrentHeaders`` se ha eliminado sin remplazo. (#15904, @CyrilleB79)
+% Inserta nuevos elementos de lista aquí según la tabla de alias de appModule debería mantenerse al fondo de esta lista
+- Los siguientes app modules se han eliminado.
+El código que importe de uno de ellos debería importar de sus substitutos. (#15618, @lukaszgo1)
+-
+
+|| Nombre del módulo eliminado | Módulo de remplazo |
+| ``azardi-2.0`` | ``azardi20`` |
+| ``azuredatastudio`` | ``code`` |
+| ``azuredatastudio-insiders`` | ``code`` |
+| ``calculatorapp`` | ``calculator`` |
+| ``code - insiders`` | ``code`` |
+| ``commsapps`` | ``hxmail`` |
+| ``dbeaver`` | ``eclipse`` |
+| ``digitaleditionspreview`` | ``digitaleditions`` |
+| ``esybraille`` | ``esysuite`` |
+| ``hxoutlook`` | ``hxmail`` |
+| ``miranda64`` | ``miranda32`` |
+| ``mpc-hc`` | ``mplayerc`` |
+| ``mpc-hc64`` | ``mplayerc`` |
+| ``notepad++`` | ``notepadPlusPlus`` |
+| ``searchapp`` | ``searchui`` |
+| ``searchhost`` | ``searchui`` |
+| ``springtoolsuite4`` | ``eclipse`` |
+| ``sts`` | ``eclipse`` |
+| ``teamtalk3`` | ``teamtalk4classic`` |
+| ``textinputhost`` | ``windowsinternal_composableshell_experiences_textinput_inputapp`` |
+| ``totalcmd64`` | ``totalcmd`` |
+| ``win32calc`` | ``calc`` |
+| ``winmail`` | ``msimn`` |
+| ``zend-eclipse-php`` | ``eclipse`` |
+| ``zendstudio`` | ``eclipse`` |
+
+=== Obsolescencias ===
+
+- Utilizar ``watchdog.getFormattedStacksForAllThreads`` está obsoleto - por favor utiliza ``logHandler.getFormattedStacksForAllThreads`` en su lugar. (#15616, @lukaszgo1)
+- ``easeOfAccess.canConfigTerminateOnDesktopSwitch`` ha quedado obsoleto, ya que quedó obsoleto al terminarse el soporte de Windows 7. (#15644, @LeonarddeR)
+- ``winVersion.isFullScreenMagnificationAvailable`` ha quedado obsoleto - utiliza ``visionEnhancementProviders.screenCurtain.ScreenCurtainProvider.canStart`` en su lugar. (#15664, @josephsl)
+- Las siguientes constantes de versión de Windows han quedado obsoletas  del módulo winVersion (#15647, @josephsl):
+  - ``winVersion.WIN7``
+  - ``winVersion.WIN7_SP1``
+  - ``winVersion.WIN8``
+  -
+- Las constantes ``bdDetect.KEY_*`` han quedado obsoletas.
+Utiliza ``bdDetect.DeviceType.*`` en su lugar. (#15772, @LeonarddeR).
+- Las constantes ``bdDetect.DETECT_USB`` y ``bdDetect.DETECT_BLUETOOTH`` han quedado obsoletas  sin remplazo público. (#15772, @LeonarddeR).
+- Utilizar ``gui.ExecAndPump`` está obsoleto - por favor utiliza ``systemUtils.ExecAndPump`` en su lugar. (#15852, @lukaszgo1)
+-
+
+
+= 2023.3.3 =
+Se trata de un parche para solucionar un problema de seguridad.
+Por favor revela responsablemente los problemas de seguridad siguiendo las [políticas de seguridad https://github.com/nvaccess/nvda/blob/master/security.md] de NVDA.
+
+== Correcciones de seguridad ==
+- Evita un posible ataque XSS reflejado a partir de contenido crafteado para provocar la ejecución de código arbitrario.
+([GHSA-xg6w-23rw-39r8 https://github.com/nvaccess/nvda/security/advisories/GHSA-xg6w-23rw-39r8])
+-
+
+= 2023.3.2 =
+Se trata de un parche para solucionar un problema de seguridad.
+El parche de seguridad en 2023.3.1 no se resolvió correctamente.
+Por favor revela responsablemente los problemas de seguridad siguiendo las [políticas de seguridad https://github.com/nvaccess/nvda/blob/master/security.md] de NVDA.
+
+== Correcciones de Seguridad ==
+- El parche de seguridad en 2023.3.1 no se resolvió correctamente.
+Evita el posible acceso al sistema y la ejecución de código arbitrario con privilegios del sistema para usuarios no autenticados..
+([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
+-
+
+
+= 2023.3.1 =
+Se trata de un parche para solucionar un problema de seguridad.
+Por favor revela responsablemente los problemas de seguridad siguiendo las [políticas de seguridad https://github.com/nvaccess/nvda/blob/master/security.md] de NVDA.
+
+== Correcciones de Seguridad ==
+- Evita el posible acceso al sistema y la ejecución de código arbitrario con privilegios del sistema para usuarios no autenticados.
+([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
+-
+
 = 2023.3 =
 Esta versión incluye mejoras en el rendimiento, la respuesta y la estabilidad de la salida de audio.
 Se han añadido opciones para controlar el volumen de los sonidos y pitidos de NVDA, o para tenerlos siguiendo el volumen de la voz que estés usando.
@@ -22,10 +337,10 @@ También se han corregido errores en la tienda de complementos, en Microsoft Off
     - Esto puede abrirse con ``NVDA+control+u``. (#15497)
     - Una opción para hacer que el volumen de los sonidos y pitidos de NVDA siga a la configuración de volúmen de la voz que estés utilizando. (#1409)
     - Una opción para configurar por separado el volumen de los sonidos de NVDA. (#1409, #15038)
-    - NVDA ahora sacará el audio a través de la Windows Audio Session API (WASAPI), lo que puede mejorar la respuesta, el rendimiento y la estabilidad de la voz y de los sonidos de NVDA. (#14697)
     - Las opciones para cambiar el dispositivo de salida de audio y conmutar la atenuación de audio se han movido al nuevo diálogo Opciones de audio del diálogo Seleccionar Sintetizador.
     Estas opciones se eliminarán del diálogo "seleccionar Sintetizador" en 2024.1. (#15486, #8711)
     -
+  - NVDA ahora sacará el audio a través de la Windows Audio Session API (WASAPI), lo que puede mejorar la respuesta, el rendimiento y la estabilidad de la voz y de los sonidos de NVDA. (#14697)
   - Nota: WASAPI es incompatible con algunos complementos.
   Hay actualizaciones compatibles disponibles para estos complementos, por favor actualízalos antes de actualizar NVDA.
   Las versiones incompatibles de estos complementos se deshabilitarán al actualizar NVDA:
@@ -52,7 +367,8 @@ También se han corregido errores en la tienda de complementos, en Microsoft Off
     - prefload y prefsave: carga y guarda la configuración de NVDA
     - time: muestra la hora
     - say_line: verbaliza la línea actual donde esté colocado el cursor de revisión
-    - say_below: lee todo utilizando el cursor de revisión
+    -
+	- say_below: lee todo utilizando el cursor de revisión
   - El controlador BRLTTY sólo está disponible cuando esté en ejecución una instancia BRLTTY con BrlAPI habilitado. (#15335)
   - Se ha eliminado la configuración avanzada para habilitar la compatibilidad con HID braille en favor de una nueva opción.
   Ahora puedes desactivar la auto detección de controladores específicos para pantallas braille en el diálogo de selección de pantalla braille. (#15196)
@@ -79,6 +395,7 @@ También se han corregido errores en la tienda de complementos, en Microsoft Off
   - Corregido un fallo donde al desmarcar "incluir complementos incompatibles" provocaría que los complementos incompatibles siguieran apareciendo en la tienda. (#15411)
   - Los complementos bloqueados debido a razones de compatibilidad ahora deberían filtrarse correctamente al conmutar el filtro por estado habilitado y deshabilitado. (#15416)
   - Corregido un fallo que evita que se actualicen o substituyan complementos incompatibles instalados y habilitados mediante la herramienta de instalación externa. (#15417)
+  - Corregido un fallo donde NVDA no hablaría hasta que se reiniciase después de la instalación de un complemento. (#14525)
   - Corregido un fallo donde los complementos no pueden instalarse si falló o se canceló una descarga anterior. (#15469)
   - Corregidos problemas con el manejo de complementos imcompatibles al actualizar NVDA. (#15414, #15412, #15437)
   -
@@ -262,7 +579,6 @@ Por favor, consulta [la Guía del Desarrollador https://www.nvaccess.org/files/n
 
 - Se han añadido convenciones sugeridas a la especificación del manifiesto de complemento.
 Son opcionales para la compatibilidad con NVDA, pero se recomiendan o exigen para el envío a la tienda de complementos.
-Las nuevas convenciones sugeridas son:
   - Utilizar ``lowerCamelCase`` para el campo de nombre.
   - Utilizar el formato ``<major>.<minor>.<patch>`` para el campo versión (requerido para el almacén de datos del complemento).
   - Utilizar ``https://`` como esquema para el campo url (requerido para el almacén de datos del complemento).
@@ -869,8 +1185,7 @@ Para autores de complementos, por favor abre un comentario de GitHub si estos ca
 
 
 - Se puso como obsoleto ``appModuleHandler.NVDAProcessID`` - utiliza ``globalVars.appPid`` en su lugar. (#13646)
-- ``gui.quit`` ha sido puesto como obsoleto para eliminarlo en 2023.1. (#13498)
-  - Utiliza ``wx.CallAfter(mainFrame.onExitCommand, None)`` directamente en su lugar.
+- ``gui.quit`` ha sido puesto como obsoleto. Utiliza ``wx.CallAfter(mainFrame.onExitCommand, None)`` directamente en su lugar.
   -
 % Inserta nuevos elementos de lista aquí como el alias appModule la tabla debería permanecer en la parte inferior de esta lista
 - Algunos alias appModules se marcan como obsoletos.
@@ -941,6 +1256,7 @@ Nota:
  - Esto incluye documentos en el propio Microsoft Word y también en el lector y redactor de mensajes en Microsoft Outlook. 
  -
 -
+
 
 == Cambios ==
 - Espeak-ng se ha actualizado a 1.51-dev commit ``7e5457f91e10``. (#12950)
@@ -1055,7 +1371,6 @@ Esto puede reducir dramáticamente los tiempos de compilación en sistemas multi
 - La propiedad ``UIAAutomationId`` para objetos UIA debería preferirse a ``cachedAutomationId``. (#13125, #11447)
   - ``cachedAutomationId`` puede utilizarse si se obtiene directamente del elemento.
   -
--
 - ``NVDAObjects.window.scintilla.CharacterRangeStruct`` se ha movido a ``NVDAObjects.window.scintilla.Scintilla.CharacterRangeStruct``. (#13364)
 - El booleano ``gui.isInMessageBox`` se eliminó, por favor utiliza la función ``gui.message.isModalMessageBoxActive`` en su lugar. (#12984, #13376)
 - ``controlTypes`` se ha separado en varios submodules. (#12510, #13588)
@@ -1117,6 +1432,7 @@ Por favor, comunica responsablemente los fallos de seguridad a info@nvaccess.org
 - Corrección de seguridad: se evita la navegación de objetos fuera de la pantalla de bloqueo en Windows 10 y Windows 11. (#13328)
 - Corrección de seguridad: El cuadro de diálogo del Administrador de complementos está ahora desactivado en las pantallas seguras. (#13059)
 - Corrección de seguridad: La ayuda de contexto de NVDA ya no está disponible en pantallas seguras. (#13353)
+-
 
 
 = 2021.3.1 =
@@ -1156,6 +1472,7 @@ Los usuarios afectados tendrán que descargar esta actualización manualmente.
 - Soporte para la nueva especificación HID Braille que pretende estandarizar el soporte para pantallas Braille. (#12523)
  - Los dispositivos que admitan esta especificación se autodetectarán por NVDA.
  - Para más detalles técnicos sobre la implementación de NVDA de esta especificación, consulta https://github.com/nvaccess/nvda/blob/master/devDocs/hidBrailleTechnicalNotes.md
+ -
 - Añadido el soporte para el dispositivo braille VisioBraille Vario 4. (#12607)
 - Se pueden habilitar las notificaciones de error (opciones avanzadas) cuando se utilice cualquier versión de NVDA. (#12672)
 - En Windows 10 y posterior, NVDA anunciará el recuento de sugerencias al introducir términos de búsqueda en aplicaciones como la configuración y la Tienda de Microsoft. (#7330, #12758, #12790)
@@ -1387,13 +1704,10 @@ Nota:
 - Se ha eliminado REASON_QUICKNAV de browseMode - utiliza controlTypes.OutputReason.QUICKNAV en su lugar. (#11969)
 - La propiedad ``NVDAObject`` (y derivados) ahora devuelve estrictamente la clase Enum ``controlTypes.IsCurrent``. (#11782)
   - La propiedad ``isCurrent`` ya no es Opcional, y por tanto no devolverá Ninguno.
-  - Cuando un objeto no es actual, se devuelve ``controlTypes.IsCurrent.NO``.
-- Se ha eliminado la asignación ``controlTypes.isCurrentLabels``. (#11782)
-  - En su lugar, utiliza la propiedad ``displayString`` en un valor del enum ``controlTypes.IsCurrent``. EG ``controlTypes.IsCurrent.YES.displayString``
-- La propiedad ``NVDAObject`` (y derivados) ahora devuelve estrictamente ``controlTypes.IsCurrent``. (#11782)
-  - ``isCurrent`` ya no es Opcional, y por tanto no devolverá None, cuando un objeto no es actual ``controlTypes.IsCurrent.NO`` se devuelve.
-- Se ha eliminado ``controlTypes.isCurrentLabels``, en su lugar se utiliza la propiedad ``displayString`` en un valor del enum ``controlTypes.IsCurrent``. (#11782)
-  - Ej.: ``controlTypes.IsCurrent.YES.displayString``
+    - Cuando un objeto no es actual, se devuelve ``controlTypes.IsCurrent.NO``.
+- El mapeado ``controlTypes.isCurrentLabels`` se ha eliminado. (#11782)
+  - En su lugar utiliza la propiedad ``displayString`` en un valor enum ``controlTypes.IsCurrent``.
+  - Por ejemplo: ``controlTypes.IsCurrent.YES.displayString``
 - Se ha eliminado ``winKernel.GetTimeFormat`` - se debe utilizar ``winKernel.GetTimeFormatEx``. 
 - Se ha eliminado ``winKernel.GetDateFormat`` - se utiliza ``winKernel.GetDateFormatEx`` en su lugar. (#12139)
 - Se ha eliminado ``gui.DriverSettingsMixin`` - utiliza ``gui.AutoSettingsMixin``. (#12144)
@@ -1523,12 +1837,14 @@ Más muchas otras importantes correcciones de fallos  y mejoras.
 - NVDA ya no se bloquea cuando se utilice el inglés grado 2 de Estados unidos y se expande a braille computerizado cuando esté sobre el cursor al mostrar cierto contenido como una URL en braille. (#11754)
 - Es posible de nuevo anunciar información de formato para la celda de Excel enfocada utilizando NVDA+F. (#11914)
 - La entrada QWERTY en pantallas braille Papenmeier que lo admitan funciona de nuevo y ya no causa que NVDA se congele aleatoriamente. (#11944)
+- En navegadores basados en Chromium, se resolvieron varios casos donde la navegación de tablas no funcionaba y NVDA no anunciaba el número de filas y columnas de la tabla. (#12359)
 
 
 == Cambios para Desarrolladores ==
 - Las pruebas de sistema ahora pueden enviar teclas utilizando spy.emulateKeyPress, que toma un identificador de tecla que se ajusta a los propios nombres de tecla de NVDA y por defecto también la bloquea hasta que se ejecute la acción. (#11581)
 - NVDA ya no requiere que el directorio actual sea el directorio de la aplicación NVDA para funcionar. (#6491)
 - La opción aria live politeness para live regions ahora puede encontrarse en objetos de NVDA que utilicen la propiedad liveRegionPoliteness. (#11596)
+- Ahora es posible definir gestos separados para documentos de Outlook y Word. (#11196)
 
 
 = 2020.3 =
@@ -1837,6 +2153,7 @@ Otros aspectos destacados en esta versión incluyen el soporte para 64 bits para
 - Un framework que permite a los desarrolladores crear proveedores de mejoras visuales; módulos que pueden cambiar el contenido de la pantalla, opcionalmente basados en la entrada de NVDA acerca de localizaciones de los objetos. (#9064)
  - Los complementos pueden abrupar sus propios proveedores en una carpeta visionEnhancementProviders.
  - Consulta los módulos vision y visionEnhancementProviders para la implementación del framework y ejemplos, respectivamente.
+ - Los proporcionadores de mejoras de visión están habilitados y configurados a través de la categoría 'visión' en el diálogo opciones de NVDA.
 - Las propiedades de la clase Abstract ahora se soportan en objetos que heredan de baseObject.AutoPropertyObject (ej.:. NVDAObjects y TextInfos). (#10102)
 - Se introdujo displayModel.UNIT_DISPLAYCHUNK como una constante de unidad textInfos específica para DisplayModelTextInfo. (#10165)
  - Esta nueva constante permite andar sobre el texto en un DisplayModelTextInfo de modo que se asemeja más a cómo se guardan los trozos de texto en el modelo subyacente.
@@ -2135,6 +2452,7 @@ Lo subrayable de esta versión incluye la detección automática de muchas panta
  - El enrutamiento del cursor en braille ahora funciona correctamente cuando se está en una lista en un documento de Word. (#7971)
  - Las viñetas/números recién insertados en un documento Word se anuncian correctamente tanto en voz como en braille. (#7970)
 - En Windows 10 1803 y posteriores, ahora es posible instalar complementos si está activada la característica "Utilizar Unicode UTF-8 para el soporte de idioma en todo el mundo". (#8599)
+- NVDA ya no hará completamente inusable a iTunes 12.9 y posteriores para interactuar. (#8744)
 
 
 == Cambios para Desarrolladores ==
@@ -2447,7 +2765,6 @@ Lo reseñable de esta versión incluye soporte completo para la atenuación de a
 
 == Corrección de Fallos ==
 - Los elementos de menú en páginas Web (las casillas de verificación y los botones de opción de los elementos de menús) ahora pueden activarse mientras se esté en modo exploración. (#6735)
-- Ahora se traduce el anunciado de nombres de hojas en Excel. (#6848)
 - Pulsar Escape mientras el indicativo "confirmar eliminación" del perfil de configuración está activo ahora cierra el diálogo. (#6851)
 - Corregidos algunos cuelgues en Mozilla Firefox y otras aplicaciones Gecko donde está habilitada la característica multi-proceso. (#6885)
 - El anunciado del color de fondo en la revisión de pantalla ahora es más preciso cuando el texto se dibujó con un fondo transparente. (#6467) 
@@ -2463,8 +2780,6 @@ Lo reseñable de esta versión incluye soporte completo para la atenuación de a
 - NVDA ya no anuncia "Web Runtime grouping" al enfocar documentos en Microsoft Edge en la Actualización Windows 10 Creators (#6948)
 - Ahora se soportan todas las versiones existentes de SecureCRT. (#6302)
 - Adobe Acrobat Reader ya no se rompe en ciertos documentos PDF (específicamente, en aquellos que contengan  atributos empty ActualText). (#7021, #7034)
-- Ahora se soportan todas las versiones existentes de SecureCRT.  (#6302)
-- Adobe Acrobat Reader ya no se rompe en ciertos documentos PDF (especialmente, en aquellos que contienen atributos ActualText vacíos). (#7021, #7034)
 - En modo exploración en Microsoft Edge, las tablas interactivas (ARIA grids) ya no se saltan cuando se navegan con t y shift+t. (#6977)
 - En modo exploración, al pulsar shift+inicio después de seleccionar hacia adelante ahora deselecciona hasta el comienzo de la línea según se esperaba. (#5746)
 - En modo exploración, seleccionar todo (control+a) ya no falla para seleccionar texto si el cursor del sistema no está al comienzo del texto. (#6909)
@@ -2759,6 +3074,14 @@ Lo reseñable de esta versión incluye la capacidad de bajar opcionalmente el vo
  - hwIo.Serial extiende pyserial para llamar una llamada cuando los datos se reciban en lugar de que los controladores tengan que buscarlos.
  - hwIo.Hid proporciona soporte para que las pantallas braille se comuniquen a través de USB HID.
  - hwPortUtils y hwIo pueden proporcionar opcionalmente el registro detallado de depuración, incluyendo dispositivos encontrados y todos los datos enviados y recibidos.
+- Hay varias propiedades nuevas accesibles de los gestos de la pantalla táctil: (#5652)
+ - Los objetos MultitouchTracker ahora contienen una propiedad childTrackers que contiene el MultiTouchTrackers el tracker se componía de. Por ejemplo, 2 dedos doble tap tiene trackers de hijo o dos taps de dos dedos. Los taps de dos dedos en sí mismos tiene trackers hijos para dos taps.
+ - Los objetos MultiTouchTracker ahora también contienen una propiedad rawSingleTouchTracker si el tracker fue el resultado de un solo dedo haciendo un tap, flick o desplazamiento. El SingleTouchTracker permite acceder al ID subyacente asignado al dedo por el sistema operativo y si el dedo sigue o no en contacto en el momento actula.
+ - TouchInputGestures ahora tiene propiedades x e y, eliminando la necesidad de acceder al tracker por cosas triviales.
+ - TouchInputGestures ahora contiene una propiedad preheldTracker, la cual es un objeto MultitouchTracker representando los otros dedos sujetos mientras se realiza esta acción.
+- Se pueden dar dos nuevos gestos de pantalla táctil: (#5652)
+ - Pulsar y mantener en Plural tap (ej.: doble tap y mantener)
+ - Un identificador generalizado con el recuento de dedos eliminados para el mantenimiento pulsado  (ej.: hold+hover for 1finger_hold+hover).
 
 
 = 2015.4 =
@@ -2895,7 +3218,7 @@ Lo reseñable de esta  versión incluye la capacidad de leer gráficos en  Micro
 - En Internet Explorer y otros controles MSHTML, al pulsar g o shift+g para navegar por gráficos ahora se incluyen elementos marcados como imágenes para propósitos de accesibilidad (por ejemplo ARIA role img). (#5062)
 
 
- == Cambios para Desarrolladores ==
+== Cambios para Desarrolladores ==
 - brailleInput.handler.sendChars(mychar) ya no filtrará un carácter si es igual al carácter anterior, asegurándose que la tecla enviada  se liberó correctamente.
 - Los scripts para cambiar los modos táctiles ahora cumplen con las nuevas etiquetas añadidas a touchHandler.touchModeLabels. (#4699)
 - Los complementos pueden proveer sus propias implementaciones de presentación matemática. Mira el paquete mathPres para detalles. (#4509)
@@ -3053,6 +3376,7 @@ Lo reseñable en esta versión  incluye el modo exploración para documentos en 
  - Al pulsar   esta orden dos veces se producirá el antiguo comportamiento del anunciado de la información de localización para todo el control.
 - Nuevo idioma: Catalán. 
 
+
 == Cambios ==
 - Actualizado el transcriptor braille liblouis a 2.5.4. (#4103)
 
@@ -3202,6 +3526,7 @@ Lo reseñable en esta versión  incluye el modo exploración para documentos en 
 
 == Nuevas Características ==
 - Los campos de formulario  ahora se anuncian en documentos de Microsoft word. (#2295)
+- NVDA ahora puede anunciar información de revisión en Microsoft Word cuando el seguimiento de cambios esté activado. Ten en cuenta que Anunciar revisiones del editor en en diálogo opciones de documentos de NVDA (desactivado por omisión) debe estar habilitado también para que se anuncien. (#1670)
 - Las listas desplegables en Microsoft Excel 2003 a 2010 ahora se anuncian cuando se abran y naveguen. (#3382)
 - Una nueva opción 'Permitir Lectura superficial en Verbalizar Todo' en el diálogo Opciones de Teclado permite la navegación por un documento con las órdenes de navegación rápida del modo exploración y movimientos de línea / párrafo, mientras permanece leyendo todo. Esta opción está desactivada de forma predeterminada. (#2766) 
 - Ahora hay un diálogo Gestos de Entrada para permitir la fácil personalización de los gestos de entrada(tales como teclas en el teclado) para órdenes de NVDA. (#1532)
@@ -3214,7 +3539,6 @@ Lo reseñable en esta versión  incluye el modo exploración para documentos en 
 - Zend Studio ahora funciona igual que Eclipse. (#3420)
 - El cambio de estado de ciertas casillas de verificación en el diálogo de reglas de correo de Microsoft Outlook 2010 ahora se anuncia automáticamente. (#3063)
 - NVDA ahora anunciará el estado fijado para controles fijos tales como  pestañas en Mozilla Firefox. (#3372)
-- NVDA ahora puede anunciar información de revisión en Microsoft Word cuando el Control de Cambios  esté habilitado. Ten en cuenta que Anunciar revisiones del editor debe estar habilitado en el diálogo de formateado de documentos de NVDA (desactivado predeterminadamente) también para que sean anunciados. (#1670)
 - Ahora es posible vincular scripts a gestos de teclado que contengan las teclas Alt y/o Windows como modificadoras. Anteriormente, si se hacía esto, la ejecución del script causaba la activación del menú Inicio o de la barra de menú. (#3472)
 - Al seleccionar texto en documentos en modo exploración (por ejemplo al utilizar control+shift+fin) ya no causa que se cambie la distribución de teclado en sistemas con varias distribuciones de teclado instaladas. (#3472)
 - Internet Explorer ya no debería colgarse o volverse inusable  cuando se cierra NVDA. (#3397)
@@ -3264,7 +3588,6 @@ Lo reseñable en esta versión  incluye el modo exploración para documentos en 
 == Cambios ==
 - En una pantalla táctil, realizando un deslizamiento con un solo dedo a la izquierda o a la derecha cuando se esté en modo objeto, ahora te mueves hacia atrás o adelante por  todos los objetos y no sólo por aquellos que estén en el mismo contenedor. Utiliza  un deslizamiento con 2 dedos a la izquierda o a la derecha para realizar la acción original de anterior/siguiente objeto limitado al actual contenedor.
 - La casilla de verificación Anunciar tablas de diseño que se encuentra en el diálogo Opciones de modo exploración  ahora se ha renombrado como Incluir Tablas de Diseño para reflejar que la navegación rápida no las localizará si la casilla está desmarcada. (#3140)
-- Realizando un deslizamiento a la izquierda o a la derecha con un solo dedo cuando se esté en modo objeto ahora se mueve a anterior o siguiente en una vista plana de la navegación de objetos. Utiliza un deslizamiento con 2 dedos a la izquierda o a la derecha para llevar a cabo la orden original de objeto anterior/siguiente limitada al nivel  actual.
 - La revisión plana ha sido reemplazada por los modos de revisión de objetos, documentos y pantalla. (#2996)
  - La revisión de objetos revisa el texto sólo dentro del navegador de objetos, la revisión de documentos revisa todo el texto en un documento en modo exploración (si hay alguno) y la revisión de pantalla revisa el texto en la pantalla para la aplicación actual.
 - Las órdenes que anteriormente movían a o desde revisión plana ahora cambian entre estos nuevos modos de revisión.
@@ -3666,7 +3989,6 @@ Lo subrayable de esta versión incluye características para una lectura más fl
 = 2011.3 =
 Lo subrayable en esta versión incluye el cambio automático de idioma de la voz cuando se leen documentos con la información de idioma apropiada;  soporte para ambientes Java Runtime de 64 bit; anunciado de formato de texto en modo exploración en aplicaciones de Mozilla; mejor manejo de rupturas y cuelgues de aplicaciones; y correcciones iniciales para Windows 8.
 
-
 == Nuevas Características ==
 - NVDA ahora puede cambiar el idioma del sintetizador eSpeak al vuelo cuando lee ciertos documentos web/pdf con la información de idioma apropiada. El cambio automático de idioma/dialecto puede activarse o desactivarse desde el diálogo Opciones de Voz. (#845) 
 - En Mozilla Gecko (ej.: Firefox) los niveles de encabezado ahora se anuncian cuando se utiliza la navegación de objetos.
@@ -3679,6 +4001,7 @@ Lo subrayable en esta versión incluye el cambio automático de idioma de la voz
 - El porcentaje de cuánto cambia el tono cuando se verbalice una letra mayúscula ahora es configurable desde el diálogo Opciones de voz. Por lo tanto, esto reemplaza la antigua casilla de verificación elevar el tono para mayúsculas (por lo tanto para desactivar esta característica pon el porcentaje a 0). (#255)
 - El color de texto y fondo ahora se incluyen en el anunciado de formato para celdas en Microsoft Excel. (#1655)
 - En aplicaciones que utilizen el Java Access Bridge, la orden activar actual navegador de objetos ahora funciona en controles donde sea apropiado. (#1744)
+- Nuevo idioma: Tamil.
 - Soporte básico para Design Science MathPlayer.
 
 
@@ -4007,6 +4330,8 @@ Las características más notables de esta versión incluyen una gran simplifica
  - NVDA+7 teclado numérico cambia a revisión plana, colocando el cursor de revisión en la posición del objeto actual, permitiéndote revisar la pantalla (o un documento si se está dentro de uno) con las órdenes de revisión de texto.
  - NVDA+1 teclado numérico mueve el cursor de revisión al objeto representado por el texto en la posición del cursor de revisión, permitiéndote navegar por objetos desde ese punto.
 - Las opciones de usuario actuales de NVDA pueden copiarse para utilizarse en las pantallas de autentificación/UAC, presionando un botón en el diálogo Opciones Generales.
+- Soporte para Mozilla Firefox 4.
+- Soporte para Microsoft Internet Explorer 9.
 
 
 == Ccambios ==
@@ -4027,6 +4352,7 @@ Las características más notables de esta versión incluyen una gran simplifica
 
 == Corrección de Fallos ==
 - En µTorrent, el elemento enfocado en la lista de torrents ya no informa repetidamente o escamotea el foco cuando se abre un menú.
+- En µTorrent, los nombres de los ficheros en la lista de contenidos de Torrent ahora se anuncian.
 - En aplicaciones de Mozilla, ahora el foco se detecta correctamente cuando aterriza en una tabla vacía o árbol.
 - En aplicaciones de Mozilla, "no verificado" ahora se informa correctamente para controles marcables tales como celdas de tabla marcables. (#571)
 - En aplicaciones de Mozilla, el texto de diálogos aria correctamente implementados ya no se ignora y ahora se informará cuando el diálogo aparezca.
@@ -4035,6 +4361,7 @@ Las características más notables de esta versión incluyen una gran simplifica
 - Detenido un raro cuelgue en Internet Explorer cuando se navega por marcos o iFrames.
 - En documentos de Microsoft Word, las líneas de derecha a izquierda (tales como en el texto árabe) pueden leerse de nuevo. (#627)
 - Fuerte reducción de retraso cuando grandes cantidades de texto se mostraban en una consola de órdenes de Windows en sistemas de 64 bits. (#622)
+- Si Skype ya está arrancado  cuando arranque NVDA, ya no es necesario reiniciar Skype para habilitar la accesibilidad. Esto también puede ser cierto para otras aplicaciones que comprueben la bandera del sistema para el lector de pantalla.
 - En aplicaciones de Microsoft Office, NVDA ya no se bloquea cuando se presionó verbalizar primer plano (NVDA+b) o cuando se navegan algunos objetos en barras de herramientas. (#616)
 - Corregida la verbalización incorrecta de números que contienen un 0 después de un separador; ej.: 1.023. (#593)
 - Adobe Acrobat Pro y Reader 9 ya no se bloquean cuando se cierra un fichero o se llevan a cabo otras ciertas tareas. (#613)
@@ -4048,11 +4375,15 @@ Las características más notables de esta versión incluyen una gran simplifica
 - En Loudtalks, ahora es posible acceder a la lista de contactos.
 - La URL del documento y "MSAAHTML Registered Handler" ya no se anuncia a veces falso en Internet Explorer y otros controles MSHTML. (#811)
 - En árboles en en el IDE de Eclipse,  el elemento enfocado anteriormente ya no se anuncia incorrectamente cuando el foco se mueve a un nuevo elemento.
+- NVDA ahora funciona correctamente en un sistema donde el actual directorio de trabajo se haya eliminado de la ruta de búsqueda de las DLL (configurando la entrada de registro CWDIllegalInDllSearch a 0xFFFFFFFF). Ten en cuenta que esto no es relevante para la mayoría de los usuarios. (#907)
+- Cuando las órdenes de navegación de tablas se utilicen fuera de una en Microsoft Word, "borde de tabla" ya no hablan después de "no en tabla". (#921)
+- Cuando las órdenes de navegación de tabla no puedan mover debido a estar en el borde de una tabla en Microsoft Word, "borde de tabla" ahora habla en el idioma configurado d NVDA en lugar de siempre en inglés. (#921)
+- En Outlook Express, Windows Mail y Windows Live Mail, el estado de las casillas de verificación en listas de reglas de mensajes ahora se anuncia. (#576)
+- La descripción de las reglas de mensajes ahora puede leerse en Windows Live Mail 2010.
 
 
 = 2010.1 =
 Esta revisión se enfoca principalmente en corrección de fallos y mejoras a la experiencia del usuario, incluyendo algunas correcciones significativas de estabilidad.
-
 
 == Nuevas características ==
 - NVDA ya no falla al arrancar en un sistema sin dispositivos de salida de audio. Obviamente, será necesario utilizar una pantalla braille o el Display synthesiser para la salida en este caso. (#425)
@@ -4060,12 +4391,14 @@ Esta revisión se enfoca principalmente en corrección de fallos y mejoras a la 
 - Si verbalizar teclas de órdenes está activada NVDA ahora anunciará los nombres de las teclas multimedia (ex.: reproducir, detener, página de inicio, etc.) cuando sean presionadas. (#472)
 - NVDA ahora anuncia la palabra que esté siendo eliminada cuando se presiona control+retroceso en controles que lo soporten. (#491)
 - Las flechas de cursor ahora pueden ser utilizadas en la ventana del formateador Web para navegar y leer el texto. (#452)
+- La lista de entradas en la libreta de direcciones de Microsoft Office Outlook ahora está soportada.
 - Mejor soporte de documentos empotrados editables de NVDA (modo de diseño) en Internet Explorer. (#402)
 - Un script nuevo (nvda+shift+menos del teclado numérico) te permite mover el foco del sistema al navegador de objetos actual.
 - Nuevos scripts para bloquear y desbloquear los botones izquierdo y derecho del ratón. Útil para llevar a cabo operaciones de arrastrar y soltar. shift+dividir del teclado numérico para bloquear/desbloquear el izquierdo, shift+multiplicar del teclado numérico para bloquear/desbloquear el derecho.
 - Nuevas tablas de transcripción braille: braille computerizado alemán de 8 puntos, Alemán grado 2, braille computerizado Finlandés de 8 puntos, Chino (Hong Kong, Cantonés), Chino (Taiwan, Mandarín). (#344, #369, #415, #450)
 - Ahora es posible desactivar la creación del atajo del escritorio (y así la tecla de atajo) cuando se instala NVDA. (#518)
 - NVDA ahora puede utilizar IAccessible2 cuando se presenta en aplicaciones de 64 bit. (#479)
+- Mejorado el soporte para regiones vivas en aplicaciones de Mozilla. (#246)
 - La API NVDA Controller Client ahora se proporciona para permitir a las aplicaciones controlar a NVDA; ej.: para verbalizar texto, silenciar la voz, mostrar un mensaje en Braille, etc.
 - Los mensajes de información y error ahora se leen en la pantalla del logon en Windows Vista y Windows 7. (#506)
 - En Adobe Reader, los formularios PDF interactivos desarrollados con Adobe LiveCycle ahora son soportados. (#475)
@@ -4109,6 +4442,13 @@ Esta revisión se enfoca principalmente en corrección de fallos y mejoras a la 
 - NVDA ya no anuncia que un documento de Firefox se ha llenado (ej.: debido a una actualización o refresco) cuando ese documento está en segundo plano. Esto también causaba que la barra de estado de la aplicación en primer plano sea anunciada falsamente.
 - Cuando se cambian distribuciones de teclado de Windows (con control+shift o alt+shift), el nombre completo de la distribución se anuncia en voz y braille. Anteriormente sólo se anunciaba en voz, y distribuciones alternativas (ej.: Dvorak) no se anunciaban.
 - Si el anunciado de tablas se desactivó, la información de tabla ya no se anuncia cuando el foco ccambie.
+- Ciertos controles estándar de vista en árbol en aplicaciones de 64 bit (ej.: la vista en árbol de contenidos en Microsoft HTML Help) ahora son accesibles. (#473)
+- Corregidos algunos problemas con mensajes de registro que contienen caracteres no ASCII. Esto podía provocar errores expúreos en algunos casos en sistemas que no estén en inglés. (#581)
+- La información en el diálogo Acerca de en NVDA ahora aparece en el idioma configurado del usuario en lugar de aparecer siempre en inglés. (#586)
+- Ya no se encuentran problemas al utilizar el anillo de opciones del sintetizador después de que la voz se cambie a una que tenga menos opciones que la voz anterior.
+- En Skype 4.2, los nombres de contacto ya no se verbalizan dos veces en la lista de contactos.
+- Corregidas algunas fugas de memoria potencialmente importantes en la interface gráfica de usuario y en los búferes virtuales. (#590, #591)
+- Solucionado un eror desagradable en algunos sintetizadores SAPI 4 que estaba causando frecuentes fallos y bloqueos NVDA. (#597)
 
 
 = 2009.1 =
@@ -4144,6 +4484,7 @@ Lo más resaltable de esta versión incluye el soporte para ediciones de 64 bit 
 - La selección de título de documento y línea actual ahora se verbaliza cuando muevas el foco dentro de un modo virtual. Esto hace que el comportamiento cuando se mueve el foco en los modos virtuales sea consistente como en un documento normal. (#210)
 - En los modos virtuales, ahora puedes interactuar con objetos empotrados (tales como contenidos Adobe Flash y Sun Java) presionando intro sobre el objeto. Si es accesible, puedes entonces tabular por él como cualquier otra aplicación. Para regresar el foco al documento, presiona NVDA+espacio. (#431)
 - En los modos virtuales, o y shift+o mueven al siguiente y al anterior objeto empotrado, respectivamente.
+- NVDA ahora puede acceder completamente a aplicaciones que se ejecuten como administrador en Windows Vista y posterior. Debes instalar una versión oficial de NVDA para que esto funcione. Esto no funciona para versiones portables y snapshots. (#397)
 
 
 == Cambios ==
@@ -4155,6 +4496,7 @@ Lo más resaltable de esta versión incluye el soporte para ediciones de 64 bit 
 - El script  navigatorObject_where (ctrl+NVDA+numpad5) ha sido eliminado. Esta combinación de teclas no funcionaba en algunos teclados, ni el script era útil.
 - El script navigatorObject_currentDimentions ha sido remapeado a NVDA+supr del teclado numérico. La antigua combinación de teclas no funcionaba en algunos teclados. Este script ahora también anuncia la anchura y la altura del objeto en lugar de las coordenadas derecha/inferior.
 - Mejorado el rendimiento (especialmente en netbooks) cuando ocurren muchos pitidos en sucesión rápida; ej.: movimientos rápidos con el ratón con las coordenadas de audio activadas. (#396)
+- Los sonidos de error de NVDA ya no se reproducen en versiones candidatas y finales. Ten een cuentan que los errores todavía se registran.
 
 
 == Corrección de Fallos ==
@@ -4179,10 +4521,16 @@ Lo más resaltable de esta versión incluye el soporte para ediciones de 64 bit 
 - Cuando se leen campos de texto en aplicaciones que utilizan el Java Access Bridge (incluyendo OpenOffice.org), NVDA ahora funciona correctamente cuando el anunciado de números de línea está activado.
 - La orden de copia en revisión (NVDA+f10) maneja elegantemente el caso donde sea utilizado en una posición antes del marcador de inicio. Anteriormente, esto podía causar problemas tales como cuelgues en Notepad++.
 - Cierto caracter de control (0x1) ya no causa una extraña conducta en eSpeak (tal como cambios en el volumen tono) cuando se la encuentra en un texto. (#437)
+- La orden anunciar selección de texto (NVDA+shift+flecha arriba) ahora informa con elegancia de que no hay selección en objetos que no soporten selección de texto.
+- Corregido el fallo donde al pulsar la tecla intro en ciertos botones o enlaces de Miranda-IM causaba que NVDA se congelase. (#440)
+- La línea actual o selección ahora se respeta correctamente al deletrear o copiar el navegador de objetos actual.
+- Se ha solucionado un error de Windows que provocaba que se dijera basura después del nombre de los controles de enlace en los diálogos de Windows Explorer e Internet Explorer. (#451)
+- Corregido un problema con el anunciado de la orden de hora y la fecha (NVDA+f12). anteriormente, anuncciado de fecha fue truncado en algunos sistemas. (#471)
+- Corregido el problema donde el indicador del lector de pantalla del sistema a veces se borraba de forma inadecuada después de interactuar con pantallas seguras de Windows. Esto podía causar problemas en aplicaciones que comprueban el indicador del lector de pantalla como Skype, Adobe Reader y Jart. (#462)
+- En un cuadro combinado de Internet Explorer 6, el elemento activo ahora se anuncia cuando cambia. (#342)
 
 
-= 0.6p3 =
-
+	= 0.6p3 =
 
 == Nuevas Características ==
 - Como la barra de fórmulas de Microsoft Excel es inaccesible para NVDA, se proporciona un cuadro de diálogo específico de NVDA para editar cuando el usuario presione f2 sobre una celda. 
@@ -4259,8 +4607,6 @@ Lo más resaltable de esta versión incluye el soporte para ediciones de 64 bit 
 
 
 = 0.6p2 =
-
-
 - Mejorada la voz predeterminada de ESpeak en NVDA
 - Añadida una disposición de teclado para ordenadores portátiles. Las disposiciones de teclado pueden ser configuradas desde el diálogo de Opciones de teclado de NVDA. (#60)
 - Soporte para grupos de elementos en controles SysListView32, encontrados principalmente en Windows Vista. (#27)
@@ -4343,7 +4689,7 @@ Lo más resaltable de esta versión incluye el soporte para ediciones de 64 bit 
 - De forma predeterminada los nuevos modos virtuales representan el documento en una disposición de pantalla (enlaces y controles no están en líneas separadas a menos que realmente sean visualmente así). Puedes conmutar esta característica con NVDA+v.
 - Es posible moverse por párrafos con control+flecha arriba y control+flecha abajo.
 - Mejorado el soporte para contenido dinámico
-- Mejorado por encima  toda la precisión de la lectura de líneas y campos cuando se sube o se baja con las flechas. 
+- Mejorada por encima  toda la precisión de la lectura de líneas y campos cuando se sube o se baja con las flechas. 
 
 
 == Internacionalización ==
@@ -4433,6 +4779,8 @@ Lo más resaltable de esta versión incluye el soporte para ediciones de 64 bit 
 
 = 0.5 =
 - NVDA tiene ahora un sintetizador incorporado llammado eSpeak, desarrollado por Jonathan Duddington. Es muy ágil y ligero, y tiene soporte para muchos idiomas diferentes. Los sintetizadores Sapi todavía pueden ser utilizados, pero eSpeak será utilizado predeterminadamente. eSpeak no depende de ningún software especial para ser instalado, así que puede ser utilizado con NVDA en cualquier ordenador, en un lápiz de memoria USB, o cualquier otro. Para más información sobre eSpeak, o para encontrar otras versiones, ve a https://espeak.sourceforge.net/.
+ - eSpeak no depende de ningún software especial para instalarse, así que puede utilizarse con NVDA en cualquier ordenador, en una memoria USB o en cualquier lugar. 
+ - Para más información sobre eSpeak, o para encontrar otras versiones, ve a http://espeak.sourceforge.net/.
 - Corrección del fallo donde era anunciado el caracter incorrecto cuando se presionaba Suprimir en paneles editables de Internet Explorer / Outlook Express.
 - añadido soporte para más campos de edición en Skype.
 - Los modos virtuales sólo se cargan cuando el foco está sobre la ventana que necesita ser cargada. Esto arregla algunos problemas cuando el panel anterior está activado en Outlook Express.
