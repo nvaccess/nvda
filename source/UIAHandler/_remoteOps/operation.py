@@ -150,12 +150,17 @@ class Operation:
 	_built = False
 	_executed = False
 
-	def __init__(self, enableCompiletimeLogging: bool =False, enableRuntimeLogging: bool = False, localMode=False):
+	def __init__(
+		self,
+		enableCompiletimeLogging: bool = False,
+		enableRuntimeLogging: bool = False,
+		localMode=False
+	):
 		self._compiletimeLoggingEnabled = enableCompiletimeLogging
 		self._runtimeLoggingEnabled = enableRuntimeLogging
 		self._localMode = localMode
 		if localMode:
-			from .localExecute import LocalExecutor 
+			from .localExecute import LocalExecutor
 			self._executorClass = LocalExecutor
 		self._rob = builder.RemoteOperationBuilder()
 		self._importedElements = {}
@@ -163,7 +168,11 @@ class Operation:
 		self._requestedResults = {}
 		self._staticOperands = []
 
-	def importElement(self, element: UIA.IUIAutomationElement, operandId: lowLevel.OperandId | None = None) -> remoteAPI.RemoteElement:
+	def importElement(
+		self,
+		element: UIA.IUIAutomationElement,
+		operandId: lowLevel.OperandId | None = None
+	) -> remoteAPI.RemoteElement:
 		if operandId is None:
 			operandId = self._rob.requestNewOperandId()
 		self._importedElements[operandId] = element
@@ -172,7 +181,11 @@ class Operation:
 		)
 		return remoteAPI.RemoteElement(self._rob, operandId)
 
-	def importTextRange(self, textRange: UIA.IUIAutomationTextRange, operandId: lowLevel.OperandId | None = None) -> remoteAPI.RemoteTextRange:
+	def importTextRange(
+		self,
+		textRange: UIA.IUIAutomationTextRange,
+		operandId: lowLevel.OperandId | None = None
+	) -> remoteAPI.RemoteTextRange:
 		if operandId is None:
 			operandId = self._rob.requestNewOperandId()
 		self._importedTextRanges[operandId] = textRange
@@ -247,22 +260,11 @@ class Operation:
 			func(ra)
 		return self
 
-	def _execute(self) -> ExecutionResult:
-		if not self._built:
-			raise RuntimeError("RemoteOperation must be built before execution")
-		executor = self._executorClass()
-		for operandId, element in self._importedElements.items():
-			executor.importElement(operandId, element)
-		for operandId, textRange in self._importedTextRanges.items():
-			executor.importTextRange(operandId, textRange)
-		for operandId in self._requestedResults:
-			executor.addToResults(operandId)
-		executor.loadInstructions(self._rob)
+	def _handleExecutionResult(self, executionResult: ExecutionResult):
+		for operand in self._requestedResults.values():
+			operand._setExecutionResult(executionResult)
+		shouldDumpInstructions = False
 		try:
-			executionResult = executor.execute()
-			for operand in self._requestedResults.values():
-				operand._setExecutionResult(executionResult)
-			shouldDumpInstructions = False
 			if executionResult.status == lowLevel.RemoteOperationStatus.ExecutionFailure:
 				shouldDumpInstructions = True
 				raise ExecutionFailureException()
@@ -304,17 +306,30 @@ class Operation:
 					f"{self._rob.dumpInstructions()}"
 					"--- Instructions End ---"
 				)
+
+	def _execute(self) -> ExecutionResult:
+		if not self._built:
+			raise RuntimeError("RemoteOperation must be built before execution")
+		executor = self._executorClass()
+		for operandId, element in self._importedElements.items():
+			executor.importElement(operandId, element)
+		for operandId, textRange in self._importedTextRanges.items():
+			executor.importTextRange(operandId, textRange)
+		for operandId in self._requestedResults:
+			executor.addToResults(operandId)
+		executor.loadInstructions(self._rob)
+		executionResult = executor.execute()
+		self._handleExecutionResult(executionResult)
 		return executionResult
 
 	def execute(self) -> Any:
-		executionResult = self._execute()
+		self._execute()
 		if self._returnIdOperand is None:
 			raise RuntimeError("RemoteOperation has no return operand")
 		returnId = self._returnIdOperand.localValue
 		if returnId < 0:
-			raise NoReturnException() 
-		returnValue = self._requestedResults[lowLevel.OperandId(returnId)].localValue
-		return returnValue
+			raise NoReturnException()
+		return self._requestedResults[lowLevel.OperandId(returnId)].localValue
 
 	def executeUntilSuccess(self, maxTries: int = 100) -> Iterable[bool]:
 		count = 0

@@ -8,7 +8,6 @@ from typing import Type, cast
 from dataclasses import dataclass
 from comtypes import COMError
 from . import lowLevel
-from logHandler import log
 from UIAHandler import UIA
 from . import builder
 from . import instructions
@@ -74,6 +73,7 @@ class LocalExecutor(operation.Executor):
 	@property
 	def operationStatus(self) -> int:
 		return self._operationStatus
+
 	@operationStatus.setter
 	def operationStatus(self, value: int):
 		self._operationStatus = value
@@ -117,7 +117,6 @@ class LocalExecutor(operation.Executor):
 		self._ip += 1
 		catchAddress = self._ip + instruction.catchBranch.value
 		self._instructionLoop(instructions.EndTryBlock, catchAddress=catchAddress)
-
 
 	def _execute_ContinueLoop(self, instruction: instructions.ContinueLoop, continueAddress: int | None):
 		if continueAddress is not None:
@@ -182,7 +181,7 @@ class LocalExecutor(operation.Executor):
 					self._executeInstruction(instruction, breakAddress, continueAddress)
 				except Exception as e:
 					self.operationStatus = self._operationStatusFromException(e)
-					raise 
+					raise
 		except BreakLoopException:
 			if breakAddress is not None:
 				self._ip = breakAddress
@@ -221,7 +220,7 @@ class LocalExecutor(operation.Executor):
 		except BadOperationStatusException:
 			status = lowLevel.RemoteOperationStatus.UnhandledException
 		return LocalExecutionResult(
-			results = {k: v for k, v in self._registers.items() if k in self._requestedResults},
+			results={k: v for k, v in self._registers.items() if k in self._requestedResults},
 			status=status,
 			errorLocation=self._ip,
 			extendedError=self._operationStatus

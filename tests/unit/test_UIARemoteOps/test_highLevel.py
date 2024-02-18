@@ -1,10 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2023 NV Access Limited 
+# Copyright (C) 2023 NV Access Limited
 
 """
-Unit tests for the high-level UI Automation Remote Operations API. 
+Unit tests for the high-level UI Automation Remote Operations API.
 """
 
 from unittest import TestCase
@@ -218,14 +218,13 @@ class TestHighLevel(TestCase):
 			i = ra.newInt(3)
 			was_in_catch = ra.newBool(False)
 			with ra.tryBlock():
-				j = i / 0
+				i / 0
 			with ra.catchBlock():
 				was_in_catch.set(True)
 			ra.Return(was_in_catch)
 
 		was_in_catch = op.execute()
 		self.assertTrue(was_in_catch)
-
 
 	def test_int_inplace_add(self):
 		op = operation.Operation(localMode=True)

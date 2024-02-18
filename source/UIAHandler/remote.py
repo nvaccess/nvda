@@ -88,6 +88,7 @@ def msWord_getCustomAttributeValue(
 	customAttribValue = op.execute()
 	return customAttribValue
 
+
 def collectAllHeadingsInTextRange(
 	textRange: UIA.IUIAutomationTextRange
 ) -> Generator[tuple[int, str, UIA.IUIAutomationElement], None, None]:

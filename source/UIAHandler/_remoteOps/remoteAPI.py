@@ -1103,7 +1103,7 @@ class RemoteAPI(builder._RemoteBase):
 		else:
 			remoteValue = self.newArray()
 			self.addCompiletimeComment(
-				f"Created {remoteValue} for returning values {remoteValues}" 
+				f"Created {remoteValue} for returning values {remoteValues}"
 			)
 			for value in remoteValues:
 				remoteValue.append(value)
@@ -1124,7 +1124,7 @@ class RemoteAPI(builder._RemoteBase):
 		else:
 			remoteValue = self.newArray()
 			self.addCompiletimeComment(
-				f"Created {remoteValue} for yielding values {remoteValues}" 
+				f"Created {remoteValue} for yielding values {remoteValues}"
 			)
 			for value in remoteValues:
 				remoteValue.append(value)
@@ -1136,7 +1136,12 @@ class RemoteAPI(builder._RemoteBase):
 
 	_newObject_RemoteType = TypeVar('_newObject_RemoteType', bound=RemoteBaseObject)
 
-	def _newObject(self, RemoteType: Type[_newObject_RemoteType], value: Any, static=False) -> _newObject_RemoteType:
+	def _newObject(
+		self,
+		RemoteType: Type[_newObject_RemoteType],
+		value: Any,
+		static=False
+	) -> _newObject_RemoteType:
 		section = "static" if static else "main"
 		with self.rob.overrideDefaultSection(section):
 			obj = RemoteType.createNew(self.rob, value)
@@ -1176,7 +1181,7 @@ class RemoteAPI(builder._RemoteBase):
 
 	def newElement(self, value: UIA.IUIAutomationElement | None = None, static=False) -> RemoteElement:
 		section = "static" if static else "main"
-		with self.rob.overrideDefaultSection(section):	
+		with self.rob.overrideDefaultSection(section):
 			if value is not None:
 				obj = self._op.importElement(value)
 				if static:
