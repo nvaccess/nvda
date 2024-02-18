@@ -137,7 +137,8 @@ class RemoteExecutor(Executor):
 
 class Operation:
 	_executorClass: Type[Executor] = RemoteExecutor
-	_loggingEnabled: bool
+	_compiletimeLoggingEnabled: bool
+	_runtimeLoggingEnabled: bool
 	_remoteLog: remoteAPI.RemoteString | None = None
 	_rob: builder.RemoteOperationBuilder
 	_importedElements: dict[lowLevel.OperandId, UIA.IUIAutomationElement]
@@ -149,8 +150,9 @@ class Operation:
 	_built = False
 	_executed = False
 
-	def __init__(self, enableLogging: bool = False, localMode=False):
-		self._loggingEnabled = enableLogging
+	def __init__(self, enableCompiletimeLogging: bool =False, enableRuntimeLogging: bool = False, localMode=False):
+		self._compiletimeLoggingEnabled = enableCompiletimeLogging
+		self._runtimeLoggingEnabled = enableRuntimeLogging
 		self._localMode = localMode
 		if localMode:
 			from .localExecute import LocalExecutor 
@@ -210,13 +212,13 @@ class Operation:
 	def buildContext(self):
 		if self._built:
 			raise RuntimeError("RemoteOperation cannot be built more than once")
-		ra = remoteAPI.RemoteAPI(self, enableRemoteLogging=self._loggingEnabled)
+		ra = remoteAPI.RemoteAPI(self, enableRemoteLogging=self._runtimeLoggingEnabled)
 		self._remoteLog = logObj = ra.getLogObject()
 		if logObj is not None:
 			self.addToResults(logObj)
 		yield ra
 		ra.halt()
-		if self._loggingEnabled:
+		if self._compiletimeLoggingEnabled:
 			log.info(
 				"RemoteOperation built.\n"
 				"--- Instructions Start ---\n"
@@ -256,43 +258,55 @@ class Operation:
 		for operandId in self._requestedResults:
 			executor.addToResults(operandId)
 		executor.loadInstructions(self._rob)
-		executionResult = executor.execute()
-		for operand in self._requestedResults.values():
-			operand._setExecutionResult(executionResult)
-		if executionResult.status == lowLevel.RemoteOperationStatus.ExecutionFailure:
-			raise ExecutionFailureException()
-		instructionRecord = None
-		errorLocation = executionResult.errorLocation
-		if errorLocation >= 0:
-			instructions = self._rob.getAllInstructions()
-			try:
-				instructionRecord = instructions[errorLocation]
-			except (IndexError, RuntimeError):
-				pass
-		if executionResult.status == lowLevel.RemoteOperationStatus.MalformedBytecode:
-			raise MalformedBytecodeException(errorLocation=errorLocation, instructionRecord=instructionRecord)
-		if self._remoteLog is not None:
-			logOutput = self._remoteLog.localValue
-			log.info(
-				"--- remote log start ---\n"
-				f"{logOutput}"
-				"--- remote log end ---"
-			)
-		if executionResult.status == lowLevel.RemoteOperationStatus.InstructionLimitExceeded:
-			raise InstructionLimitExceededException(
-				errorLocation=executionResult.errorLocation,
-				instructionRecord=instructionRecord,
-			)
-		elif executionResult.status == lowLevel.RemoteOperationStatus.UnhandledException:
-			raise UnhandledException(
-				errorLocation=executionResult.errorLocation,
-				extendedError=executionResult.extendedError,
-				instructionRecord=instructionRecord,
-			)
+		try:
+			executionResult = executor.execute()
+			for operand in self._requestedResults.values():
+				operand._setExecutionResult(executionResult)
+			shouldDumpInstructions = False
+			if executionResult.status == lowLevel.RemoteOperationStatus.ExecutionFailure:
+				shouldDumpInstructions = True
+				raise ExecutionFailureException()
+			instructionRecord = None
+			errorLocation = executionResult.errorLocation
+			if errorLocation >= 0:
+				instructions = self._rob.getAllInstructions()
+				try:
+					instructionRecord = instructions[errorLocation]
+				except (IndexError, RuntimeError):
+					pass
+			if executionResult.status == lowLevel.RemoteOperationStatus.MalformedBytecode:
+				shouldDumpInstructions = True
+				raise MalformedBytecodeException(errorLocation=errorLocation, instructionRecord=instructionRecord)
+			if self._remoteLog is not None:
+				logOutput = self._remoteLog.localValue
+				if logOutput:
+					log.info(
+						"--- remote log start ---\n"
+						f"{logOutput}"
+						"--- remote log end ---"
+					)
+			if executionResult.status == lowLevel.RemoteOperationStatus.InstructionLimitExceeded:
+				raise InstructionLimitExceededException(
+					errorLocation=executionResult.errorLocation,
+					instructionRecord=instructionRecord,
+				)
+			elif executionResult.status == lowLevel.RemoteOperationStatus.UnhandledException:
+				shouldDumpInstructions = True
+				raise UnhandledException(
+					errorLocation=executionResult.errorLocation,
+					extendedError=executionResult.extendedError,
+					instructionRecord=instructionRecord,
+				)
+		finally:
+			if shouldDumpInstructions:
+				log.info(
+					"--- Instructions Start ---\n"
+					f"{self._rob.dumpInstructions()}"
+					"--- Instructions End ---"
+				)
 		return executionResult
 
 	def execute(self) -> Any:
-		log.info("Executing RemoteOperation")
 		executionResult = self._execute()
 		if self._returnIdOperand is None:
 			raise RuntimeError("RemoteOperation has no return operand")
@@ -317,7 +331,6 @@ class Operation:
 	def iterExecute(self) -> Generator[Any, None, None]:
 		if self._yieldListOperand is None:
 			raise RuntimeError("RemoteOperation has no yield list operand")
-		log.info("Executing iterable RemoteOperation")
 		instructionLimit = None
 		try:
 			self._execute()

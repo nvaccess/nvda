@@ -102,12 +102,6 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 	def __bool__(self) -> bool:
 		raise TypeError(f"Cannot convert {self.__class__.__name__} to bool")
 
-	def __repr__(self) -> str:
-		output = super().__repr__()
-		if not self._mutable:
-			output += f" with cached value {repr(self.initialValue)}"
-		return output
-
 	def _generateDefaultInitialValue(self) -> LocalTypeVar:
 		if self.LocalType is None:
 			raise TypeError("LocalType not set")
@@ -167,9 +161,15 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 		if cachedRemoteObj is not None:
 			if not isinstance(cachedRemoteObj, RemoteType):
 				raise RuntimeError(f"Cache entry for {cacheKey} is not of type {RemoteType.__name__}")
+			rob.getDefaultInstructionList().addComment(
+				f"Using cached {cachedRemoteObj} for constant value {repr(obj)}"
+			)
 			return cast(RemoteType, cachedRemoteObj)
 		with rob.overrideDefaultSection('const'):
 			remoteObj = RemoteType.createNew(rob, obj, const=True)
+		rob.getDefaultInstructionList().addComment(
+			f"Using cached {remoteObj} for constant value {repr(obj)}"
+		)
 		rob._remotedArgCache[cacheKey] = remoteObj
 		return remoteObj
 
@@ -1097,18 +1097,23 @@ class RemoteAPI(builder._RemoteBase):
 		self._logObj = self.newString() if enableRemoteLogging else None
 
 	def Return(self, *values: RemoteBaseObject | int | float | str | bool | None):
-		self.addCompiletimeComment(f"Returning {values}")
 		remoteValues = [RemoteBaseObject.ensureRemote(self.rob, value) for value in values]
 		if len(remoteValues) == 1:
 			remoteValue = remoteValues[0]
 		else:
 			remoteValue = self.newArray()
+			self.addCompiletimeComment(
+				f"Created {remoteValue} for returning values {remoteValues}" 
+			)
 			for value in remoteValues:
 				remoteValue.append(value)
 		if self._op._returnIdOperand is None:
 			raise RuntimeError("ReturnIdOperand not set not created")
-		self._op._returnIdOperand.set(remoteValue.operandId.value)
 		self._op.addToResults(remoteValue)
+		self.addCompiletimeComment(
+			f"Returning {remoteValue}"
+		)
+		self._op._returnIdOperand.set(remoteValue.operandId.value)
 		self.halt()
 
 	def Yield(self, *values: RemoteBaseObject | int | float | str | bool | None):
@@ -1118,13 +1123,16 @@ class RemoteAPI(builder._RemoteBase):
 			remoteValue = remoteValues[0]
 		else:
 			remoteValue = self.newArray()
+			self.addCompiletimeComment(
+				f"Created {remoteValue} for yielding values {remoteValues}" 
+			)
 			for value in remoteValues:
 				remoteValue.append(value)
 		if self._op._yieldListOperand is None:
 			raise RuntimeError("YieldIdOperand not set not created")
-		self._op._yieldListOperand.append(remoteValue)
 		self._op.addToResults(remoteValue)
-		self.addCompiletimeComment("Yield done")
+		self.addCompiletimeComment(f"Yielding {remoteValue}")
+		self._op._yieldListOperand.append(remoteValue)
 
 	_newObject_RemoteType = TypeVar('_newObject_RemoteType', bound=RemoteBaseObject)
 
@@ -1167,25 +1175,27 @@ class RemoteAPI(builder._RemoteBase):
 		return RemoteArray.createNew(self.rob)
 
 	def newElement(self, value: UIA.IUIAutomationElement | None = None, static=False) -> RemoteElement:
-		if value is not None:
-			obj = self._op.importElement(value)
-			if static:
-				self._op._registerStaticOperand(obj)
-			return obj
-		else:
-			return self._newObject(RemoteElement, value, static=static)
+		section = "static" if static else "main"
+		with self.rob.overrideDefaultSection(section):	
+			if value is not None:
+				obj = self._op.importElement(value)
+				if static:
+					self._op._registerStaticOperand(obj)
+				return obj
+			else:
+				return self._newObject(RemoteElement, value, static=static)
 
 	def newTextRange(self, value: UIA.IUIAutomationTextRange | None = None, static=False) -> RemoteTextRange:
-		if value is not None:
-			obj = self._op.importTextRange(value)
-			section = "static" if static else "main"
-			with self.rob.overrideDefaultSection(section):
+		section = "static" if static else "main"
+		with self.rob.overrideDefaultSection(section):
+			if value is not None:
+				obj = self._op.importTextRange(value)
 				obj = obj.clone()
-			if static:
-				self._op._registerStaticOperand(obj)
-			return obj
-		else:
-			return self._newObject(RemoteTextRange, value, static=static)
+				if static:
+					self._op._registerStaticOperand(obj)
+				return obj
+			else:
+				return self._newObject(RemoteTextRange, value, static=static)
 
 	def getOperationStatus(self) -> RemoteInt:
 		instructionList = self.rob.getDefaultInstructionList()

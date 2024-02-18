@@ -77,7 +77,7 @@ def msWord_getCustomAttributeValue(
 						customAttribID,
 						remoteCustomAttribValue
 					)
-					ra.logRuntimeMessage("got customAttribValue of ", remoteCustomAttribValue.stringify())
+					ra.logRuntimeMessage("got customAttribValue of ", remoteCustomAttribValue)
 					ra.Return(remoteCustomAttribValue)
 				with ra.elseBlock():
 					ra.logRuntimeMessage("extendedTextRangePattern does not support getCustomAttributeValue")
@@ -91,7 +91,7 @@ def msWord_getCustomAttributeValue(
 def collectAllHeadingsInTextRange(
 	textRange: UIA.IUIAutomationTextRange
 ) -> Generator[tuple[int, str, UIA.IUIAutomationElement], None, None]:
-	op = operation.Operation(enableLogging=True)
+	op = operation.Operation()
 
 	@op.buildIterableFunction
 	def code(ra: remoteAPI.RemoteAPI):
@@ -116,7 +116,7 @@ def findFirstHeadingInTextRange(
 	wantedLevel: int | None = None,
 	reverse: bool = False
 ) -> tuple[int, str, UIA.IUIAutomationElement] | None:
-	op = operation.Operation(enableLogging=True)
+	op = operation.Operation()
 
 	@op.buildFunction
 	def code(ra: remoteAPI.RemoteAPI):

@@ -236,7 +236,7 @@ class InstructionList:
 class RemoteOperationBuilder:
 
 	_versionBytes: bytes = struct.pack('l', 0)
-	_sectionNames = ["imports", "static", "const", "main"]
+	_sectionNames = ["static", "const", "main"]
 	_lastOperandIdRequested = OperandId(1)
 	_defaultSection: str = "main"
 
