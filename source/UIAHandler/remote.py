@@ -136,10 +136,10 @@ def findFirstHeadingInTextRange(
 						label = paragraphRange.getText(-1)
 						ra.Return(level, label, paragraphRange)
 
-	res = op.executeUntilSuccess()
-	if res is None:
+	try:
+		level, label, paragraphRange = op.executeUntilSuccess()
+	except operation.NoReturnException:
 		return None
-	level, label, paragraphRange = res
 	return (
 		cast(int, level),
 		cast(str, label),

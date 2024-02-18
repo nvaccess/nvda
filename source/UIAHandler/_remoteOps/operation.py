@@ -86,6 +86,10 @@ class UnhandledException(OperationException):
 	pass
 
 
+class NoReturnException(Exception):
+	pass
+
+
 @dataclass
 class RemoteExecutionResult(ExecutionResult):
 	resultSet: lowLevel.RemoteOperationResultSet
@@ -293,9 +297,10 @@ class Operation:
 		if self._returnIdOperand is None:
 			raise RuntimeError("RemoteOperation has no return operand")
 		returnId = self._returnIdOperand.localValue
-		if returnId >= 0:
-			returnValue = self._requestedResults[lowLevel.OperandId(returnId)].localValue
-			return returnValue
+		if returnId < 0:
+			raise NoReturnException() 
+		returnValue = self._requestedResults[lowLevel.OperandId(returnId)].localValue
+		return returnValue
 
 	def executeUntilSuccess(self, maxTries: int = 100) -> Iterable[bool]:
 		count = 0

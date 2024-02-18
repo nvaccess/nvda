@@ -169,6 +169,18 @@ class TestHighLevel(TestCase):
 		res = op.execute()
 		self.assertEqual(res, 2)
 
+	def test_no_return(self):
+		op = operation.Operation(localMode=True)
+
+		@op.buildFunction
+		def code(ra: remoteAPI.RemoteAPI):
+			condition = ra.newBool(False)
+			with ra.ifBlock(condition):
+				ra.Return(1)
+
+		with self.assertRaises(operation.NoReturnException):
+			op.execute()
+
 	def test_error(self):
 		op = operation.Operation(localMode=True)
 
