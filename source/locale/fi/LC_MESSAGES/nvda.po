@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-09 02:00+0000\n"
-"PO-Revision-Date: 2024-02-11 22:51\n"
+"POT-Creation-Date: 2024-02-18 21:46+0000\n"
+"PO-Revision-Date: 2024-02-18 23:13\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -3422,7 +3422,7 @@ msgstr "%s valittu"
 #. Translators: Input help mode message for report date and time command.
 #: globalCommands.py:300
 msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
-msgstr "Lukee kerran painettaessa kellonajan ja kahdesti painettaessa päivämäärän."
+msgstr "Puhuu kerran painettaessa kellonajan ja kahdesti painettaessa päivämäärän."
 
 #. Translators: Input help mode message for increase synth setting value command.
 #: globalCommands.py:317
@@ -3560,17 +3560,17 @@ msgstr "Ylä- ja alaindeksejä ei puhuta"
 #. Translators: Input help mode message for toggle report revisions command.
 #: globalCommands.py:491
 msgid "Toggles on and off the reporting of revisions"
-msgstr "Ottaa käyttöön tai poistaa käytöstä merkintöjen puhumisen."
+msgstr "Ottaa käyttöön tai poistaa käytöstä muokkaajan merkintöjen puhumisen."
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 #: globalCommands.py:497
 msgid "report revisions off"
-msgstr "Merkintöjä ei puhuta"
+msgstr "Muokkaajan merkintöjä ei puhuta"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 #: globalCommands.py:501
 msgid "report revisions on"
-msgstr "Merkinnät puhutaan"
+msgstr "Muokkaajan merkinnät puhutaan"
 
 #. Translators: Input help mode message for toggle report emphasis command.
 #: globalCommands.py:507
@@ -4076,7 +4076,7 @@ msgstr "Yksinkertainen tarkastelutila käytössä"
 #. Translators: Input help mode message for report current navigator object command.
 #: globalCommands.py:1121
 msgid "Reports the current navigator object. Pressing twice spells this information, and pressing three times Copies name and value of this object to the clipboard"
-msgstr "Ilmoittaa nykyisen navigointiobjektin. Kahdesti painettaessa tiedot tavataan ja kolmesti painettaessa objektin nimi ja arvo kopioidaan leikepöydälle."
+msgstr "Puhuu nykyisen navigointiobjektin. Kahdesti painettaessa se tavataan ja kolmesti painettaessa objektin nimi ja arvo kopioidaan leikepöydälle."
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -4094,36 +4094,36 @@ msgstr "Ei sijaintitietoja"
 #. review cursor, falling back to the location of navigator object if needed.
 #: globalCommands.py:1193
 msgid "Reports information about the location of the text at the review cursor, or location of the navigator object if there is no text under review cursor."
-msgstr "Lukee tarkastelukohdistimen kohdalla olevan tekstin sijaintitiedot tai navigointiobjektin sijainnin, mikäli tarkastelukohdistimen kohdalla ei ole tekstiä."
+msgstr "Puhuu tarkastelukohdistimen kohdalla olevan tekstin sijaintitiedot tai navigointiobjektin sijainnin, mikäli tarkastelukohdistimen kohdalla ei ole tekstiä."
 
 #. Translators: Description for a keyboard command which reports location of the navigator object.
 #: globalCommands.py:1205
 msgid "Reports information about the location of the current navigator object."
-msgstr "Lukee nykyisen navigointiobjektin sijaintitiedot."
+msgstr "Puhuu nykyisen navigointiobjektin sijaintitiedot."
 
 #. Translators: Description for a keyboard command which reports location of the
 #. current caret position falling back to the location of focused object if needed.
 #: globalCommands.py:1217
 msgid "Reports information about the location of the text at the caret, or location of the currently focused object if there is no caret."
-msgstr "Lukee järjestelmäkohdistimen kohdalla olevan tekstin sijaintitiedot tai aktiivisen objektin sijainnin, mikäli järjestelmäkohdistinta ei ole."
+msgstr "Puhuu järjestelmäkohdistimen kohdalla olevan tekstin sijaintitiedot tai aktiivisen objektin sijainnin, mikäli järjestelmäkohdistinta ei ole."
 
 #. Translators: Description for a keyboard command which reports location of the
 #. currently focused object.
 #: globalCommands.py:1232
 msgid "Reports information about the location of the currently focused object."
-msgstr "Lukee aktiivisen objektin sijaintitiedot."
+msgstr "Puhuu aktiivisen objektin sijaintitiedot."
 
 #. Translators: Description for report review cursor location command.
 #: globalCommands.py:1243
 msgid "Reports information about the location of the text or object at the review cursor. Pressing twice may provide further detail."
-msgstr "Lukee tarkastelukohdistimen kohdalla olevan tekstin tai objektin sijaintitiedot. Kahdesti painaminen antaa lisätietoja."
+msgstr "Puhuu tarkastelukohdistimen kohdalla olevan tekstin tai objektin sijaintitiedot. Kahdesti painaminen antaa lisätietoja."
 
 #. Translators: Description for a keyboard command
 #. which reports location of the text at the caret position
 #. or object with focus if there is no caret.
 #: globalCommands.py:1261
 msgid "Reports information about the location of the text or object at the position of system caret. Pressing twice may provide further detail."
-msgstr "Lukee järjestelmäkohdistimen kohdalla olevan tekstin tai objektin sijaintitiedot. Kahdesti painaminen saattaa antaa lisätietoja."
+msgstr "Puhuu järjestelmäkohdistimen kohdalla olevan tekstin tai objektin sijaintitiedot. Kahdesti painaminen saattaa antaa lisätietoja."
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 #: globalCommands.py:1277
@@ -4213,12 +4213,12 @@ msgstr "Ei toimintoa"
 #. Translators: Input help mode message for move review cursor to top line command.
 #: globalCommands.py:1523
 msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
-msgstr "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin ylimmälle riville ja lukee sen."
+msgstr "Siirtää tarkastelukohdistimen ylimmälle riville nykyisessä navigointiobjektissa ja puhuu sen."
 
 #. Translators: Input help mode message for move review cursor to previous line command.
 #: globalCommands.py:1546
 msgid "Moves the review cursor to the previous line of the current navigator object and speaks it"
-msgstr "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin edelliselle riville ja lukee sen."
+msgstr "Siirtää tarkastelukohdistimen edelliselle riville nykyisessä navigointiobjektissa ja puhuu sen."
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 #. Translators: Reported when attempting to move to the previous result in the Python Console
@@ -4231,17 +4231,17 @@ msgstr "Yläreuna"
 #. Translators: Input help mode message for read current line under review cursor command.
 #: globalCommands.py:1579
 msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions."
-msgstr "Lukee nykyisen navigointiobjektin rivin, jolla tarkastelukohdistin on. Jos tätä komentoa painetaan kahdesti, rivi tavataan. Kolmesti painettaessa se tavataan merkkikuvauksia käyttäen."
+msgstr "Puhuu rivin, jolla tarkastelukohdistin on nykyisessä navigointiobjektissa. Jos tätä komentoa painetaan kahdesti, rivi tavataan. Kolmesti painettaessa se tavataan merkkikuvauksia käyttäen."
 
 #. Translators: Input help mode message for move review cursor to next line command.
 #: globalCommands.py:1606
 msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
-msgstr "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin seuraavalle riville ja lukee sen."
+msgstr "Siirtää tarkastelukohdistimen seuraavalle riville nykyisessä navigointiobjektissa ja puhuu sen."
 
 #. Translators: Input help mode message for move review cursor to previous page command.
 #: globalCommands.py:1643
 msgid "Moves the review cursor to the previous page of the current navigator object and speaks it"
-msgstr "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin edelliselle sivulle ja lukee sen."
+msgstr "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin edelliselle sivulle ja puhuu sen."
 
 #. Translators: a message reported when movement by page is unsupported
 #: globalCommands.py:1656 globalCommands.py:1690
@@ -4251,37 +4251,37 @@ msgstr "Sivu kerrallaan siirtymistä ei tueta"
 #. Translators: Input help mode message for move review cursor to next page command.
 #: globalCommands.py:1675
 msgid "Moves the review cursor to the next page of the current navigator object and speaks it"
-msgstr "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin seuraavalle sivulle ja lukee sen."
+msgstr "Siirtää tarkastelukohdistimen seuraavalle sivulle nykyisessä navigointiobjektissa ja puhuu sen."
 
 #. Translators: Input help mode message for move review cursor to bottom line command.
 #: globalCommands.py:1712
 msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
-msgstr "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin alimmalle riville ja lukee sen."
+msgstr "Siirtää tarkastelukohdistimen alimmalle riville nykyisessä navigointiobjektissa ja puhuu sen."
 
 #. Translators: Input help mode message for move review cursor to previous word command.
 #: globalCommands.py:1735
 msgid "Moves the review cursor to the previous word of the current navigator object and speaks it"
-msgstr "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin edellisen sanan kohdalle ja lukee sen."
+msgstr "Siirtää tarkastelukohdistimen edellisen sanan kohdalle nykyisessä navigointiobjektissa ja puhuu sen."
 
 #. Translators: Input help mode message for report current word under review cursor command.
 #: globalCommands.py:1767
 msgid "Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions"
-msgstr "Lukee nykyisen navigointiobjektin sanan, jonka kohdalla tarkastelukohdistin on. Jos tätä komentoa painetaan kahdesti, sana tavataan. Kolmesti painettaessa se tavataan merkkikuvauksia käyttäen."
+msgstr "Puhuu sanan, jonka kohdalla tarkastelukohdistin on nykyisessä navigointiobjektissa. Jos tätä komentoa painetaan kahdesti, sana tavataan. Kolmesti painettaessa se tavataan merkkikuvauksia käyttäen."
 
 #. Translators: Input help mode message for move review cursor to next word command.
 #: globalCommands.py:1795
 msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
-msgstr "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin seuraavan sanan kohdalle ja lukee sen."
+msgstr "Siirtää tarkastelukohdistimen seuraavan sanan kohdalle nykyisessä navigointiobjektissa ja puhuu sen."
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
 #: globalCommands.py:1832
 msgid "Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
-msgstr "Siirtää tarkastelukohdistimen sen kohdalla olevan rivin ensimmäiseen merkkiin nykyisessä navigointiobjektissa ja lukee sen."
+msgstr "Siirtää tarkastelukohdistimen sen kohdalla olevan rivin ensimmäiseen merkkiin nykyisessä navigointiobjektissa ja puhuu sen."
 
 #. Translators: Input help mode message for move review cursor to previous character command.
 #: globalCommands.py:1861
 msgid "Moves the review cursor to the previous character of the current navigator object and speaks it"
-msgstr "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin edellisen merkin kohdalle ja lukee sen."
+msgstr "Siirtää tarkastelukohdistimen edellisen merkin kohdalle nykyisessä navigointiobjektissa ja puhuu sen."
 
 #. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
 #: globalCommands.py:1875
@@ -4291,12 +4291,12 @@ msgstr "Vasen reuna"
 #. Translators: Input help mode message for report current character under review cursor command.
 #: globalCommands.py:1898
 msgid "Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"
-msgstr "Lukee merkin, jonka kohdalla tarkastelukohdistin on nykyisessä navigointiobjektissa. Kahdesti painettaessa luetaan kuvaus tai esimerkki kyseisestä merkistä. Kolmesti painettaessa luetaan merkin numeerinen arvo desimaaleina ja heksadesimaaleina."
+msgstr "Puhuu merkin, jonka kohdalla tarkastelukohdistin on nykyisessä navigointiobjektissa. Kahdesti painettaessa luetaan kuvaus tai esimerkki kyseisestä merkistä. Kolmesti painettaessa luetaan merkin numeerinen arvo desimaaleina ja heksadesimaaleina."
 
 #. Translators: Input help mode message for move review cursor to next character command.
 #: globalCommands.py:1939
 msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
-msgstr "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin seuraavan merkin kohdalle ja lukee sen."
+msgstr "Siirtää tarkastelukohdistimen seuraavan merkin kohdalle nykyisessä navigointiobjektissa ja puhuu sen."
 
 #. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
 #: globalCommands.py:1953
@@ -4306,7 +4306,7 @@ msgstr "Oikea reuna"
 #. Translators: Input help mode message for move review cursor to end of current line command.
 #: globalCommands.py:1976
 msgid "Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
-msgstr "Siirtää tarkastelukohdistimen sen kohdalla olevan rivin viimeiseen merkkiin nykyisessä navigointiobjektissa ja lukee sen."
+msgstr "Siirtää tarkastelukohdistimen sen kohdalla olevan rivin viimeiseen merkkiin nykyisessä navigointiobjektissa ja puhuu sen."
 
 #. Translators: Input help mode message for Review Current Symbol command.
 #: globalCommands.py:2014
@@ -4392,7 +4392,7 @@ msgstr "Muotoilu"
 #. Translators: Input help mode message for report formatting command.
 #: globalCommands.py:2298
 msgid "Reports formatting info for the current review cursor position."
-msgstr "Ilmoittaa muotoilutiedot nykyisestä tarkastelukohdistimen sijainnista."
+msgstr "Puhuu muotoilutiedot nykyisestä tarkastelukohdistimen sijainnista."
 
 #. Translators: Input help mode message for show formatting at review cursor command.
 #: globalCommands.py:2307
@@ -4402,12 +4402,12 @@ msgstr "Näyttää muotoilutiedot selaustilassa nykyisestä tarkastelukohdistime
 #. Translators: Input help mode message for report formatting command.
 #: globalCommands.py:2316
 msgid "Reports formatting info for the current review cursor position. If pressed twice, presents the information in browse mode"
-msgstr "Lukee asiakirjan muotoilutiedot tarkastelukohdistimen nykyisestä sijainnista. Kahdesti painettaessa tiedot näytetään selaustilassa."
+msgstr "Puhuu asiakirjan muotoilutiedot tarkastelukohdistimen nykyisestä sijainnista. Kahdesti painettaessa ne näytetään selaustilassa."
 
 #. Translators: Input help mode message for report formatting at caret command.
 #: globalCommands.py:2332
 msgid "Reports formatting info for the text under the caret."
-msgstr "Ilmoittaa kohdistimen alla olevan tekstin muotoilutiedot."
+msgstr "Puhuu kohdistimen alla olevan tekstin muotoilutiedot."
 
 #. Translators: Input help mode message for show formatting at caret position command.
 #: globalCommands.py:2341
@@ -4417,12 +4417,12 @@ msgstr "Näyttää selaustilassa kohdistimen alla olevan tekstin muotoilutiedot.
 #. Translators: Input help mode message for report formatting at caret command.
 #: globalCommands.py:2350
 msgid "Reports formatting info for the text under the caret. If pressed twice, presents the information in browse mode"
-msgstr "Lukee kohdistimen alla olevan tekstin muotoilutiedot. Kahdesti painettaessa tiedot näytetään selaustilassa."
+msgstr "Puhuu kohdistimen alla olevan tekstin muotoilutiedot. Kahdesti painettaessa ne näytetään selaustilassa."
 
 #. Translators: the description for the reportDetailsSummary script.
 #: globalCommands.py:2416
 msgid "Report summary of any annotation details at the system caret."
-msgstr "Ilmoita järjestelmäkohdistimen kohdalla olevan merkinnän kaikkien tietojen yhteenveto."
+msgstr "Puhuu järjestelmäkohdistimen kohdalla olevan merkinnän tietojen yhteenvedon."
 
 #. Translators: message given when there is no annotation details for the reportDetailsSummary script.
 #: globalCommands.py:2437
@@ -4478,7 +4478,7 @@ msgstr "Lukee nykyisen sovelluksen tilarivin. Kahdesti painettaessa tiedot tavat
 #. accelerator key of the currently focused object.
 #: globalCommands.py:2661
 msgid "Reports the shortcut key of the currently focused object"
-msgstr "Ilmoittaa aktiivisen objektin pikanäppäimen."
+msgstr "Puhuu aktiivisen objektin pikanäppäimen."
 
 #. Translators: reported when a user requests the accelerator key
 #. of the currently focused object, but there is none set.
@@ -4489,7 +4489,7 @@ msgstr "Ei pikanäppäintä"
 #. Translators: Input help mode message for toggle mouse tracking command.
 #: globalCommands.py:2680
 msgid "Toggles the reporting of information as the mouse moves"
-msgstr "Ottaa käyttöön tai poistaa käytöstä tietojen lukemisen hiiren liikkuessa."
+msgstr "Ottaa käyttöön tai poistaa käytöstä tietojen puhumisen hiiren liikkuessa."
 
 #. Translators: presented when the mouse tracking is toggled.
 #: globalCommands.py:2687
@@ -4517,7 +4517,7 @@ msgstr "Hiiren teksti&yksikön tarkkuus %s"
 #. Translators: Input help mode message for report title bar command.
 #: globalCommands.py:2719
 msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, copies the title to the clipboard"
-msgstr "Lukee nykyisen sovelluksen taietualalla olevan ikkunan nimen. Kahdesti painettaessa nimi tavataan ja kolmesti painettaessa se kopioidaan leikepöydälle."
+msgstr "Puhuu nykyisen sovelluksen taietualalla olevan ikkunan nimen. Kahdesti painettaessa se tavataan ja kolmesti painettaessa kopioidaan leikepöydälle."
 
 #. Translators: Reported when there is no title text for current program or window.
 #: globalCommands.py:2740
@@ -4670,7 +4670,7 @@ msgstr "Kohdistus siirretään automaattisesti kohdistettaviin elementteihin"
 #. Translators: Input help mode message for report battery status command.
 #: globalCommands.py:2947
 msgid "Reports battery status and time remaining if AC is not plugged in"
-msgstr "Ilmoittaa akun tilan ja jäljellä olevan ajan, jos verkkovirta ei ole käytössä."
+msgstr "Puhuu akun tilan ja jäljellä olevan ajan, jos verkkovirta ei ole käytössä."
 
 #. Translators: Input help mode message for pass next key through command.
 #: globalCommands.py:2958
@@ -4685,7 +4685,7 @@ msgstr "Ohita seuraava näppäinpainallus"
 #. Translators: Input help mode message for report current program name and app module name command.
 #: globalCommands.py:2972
 msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
-msgstr "Lukee aktiivisen sovelluksen tiedostonimen ja ladatun sovellusmoduulin."
+msgstr "Puhuu aktiivisen sovelluksen tiedostonimen ja ladatun sovellusmoduulin."
 
 #. Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 #. This message will not be presented if there is no module for the current program.
@@ -4795,7 +4795,7 @@ msgstr "Avaa Näppäinkomennot-valintaikkunan."
 #. Translators: Input help mode message for the report current configuration profile command.
 #: globalCommands.py:3167
 msgid "Reports the name of the current NVDA configuration profile"
-msgstr "Kertoo nykyisen NVDA-asetusprofiilin nimen."
+msgstr "Puhuu nykyisen NVDA-asetusprofiilin nimen."
 
 #. Translators: Message announced when the command to report the current configuration profile and
 #. the default configuration profile is active.
@@ -5227,12 +5227,12 @@ msgstr "%stila"
 #. Translators: Input help mode message for a touchscreen gesture.
 #: globalCommands.py:4045
 msgid "Reports the object and content directly under your finger"
-msgstr "Lukee suoraan sormen alla olevan objektin ja sisällön."
+msgstr "Puhuu suoraan sormen alla olevan objektin ja sisällön."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 #: globalCommands.py:4055
 msgid "Reports the new object or content under your finger if different to where your finger was last"
-msgstr "Lukee sormen alla olevan uuden objektin tai sisällön, mikäli se eroaa aiemmasta."
+msgstr "Puhuu sormen alla olevan uuden objektin tai sisällön, mikäli se eroaa aiemmasta."
 
 #. Translators: Input help mode message for touch right click command.
 #: globalCommands.py:4081
@@ -5298,17 +5298,17 @@ msgstr "Vaihtaa Windowsin tekstintunnistuksen käytettävissä olevien kielten v
 #. Translators: Input help mode message for toggle report CLDR command.
 #: globalCommands.py:4213
 msgid "Toggles on and off the reporting of CLDR characters, such as emojis"
-msgstr "Ottaa käyttöön emojien ilmaisemisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön emojien puhumisen tai poistaa sen käytöstä."
 
 #. Translators: presented when the report CLDR is toggled.
 #: globalCommands.py:4219
 msgid "report CLDR characters off"
-msgstr "Emojien ilmaiseminen pois"
+msgstr "Emojeita ei puhuta"
 
 #. Translators: presented when the report CLDR is toggled.
 #: globalCommands.py:4223
 msgid "report CLDR characters on"
-msgstr "Emojien ilmaiseminen käytössä"
+msgstr "Emojit puhutaan"
 
 #. Translators: Describes a command.
 #: globalCommands.py:4234
@@ -5600,12 +5600,12 @@ msgstr "Home"
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:80
 msgid "delete"
-msgstr "del"
+msgstr "delete"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:82
 msgid "numpad delete"
-msgstr "laskimen del"
+msgstr "laskimen delete"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:84
@@ -5775,7 +5775,7 @@ msgstr "numlock laskimen 9"
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:150
 msgid "insert"
-msgstr "Insert"
+msgstr "insert"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:152
@@ -7898,28 +7898,28 @@ msgstr "Tuntematon tila"
 #: addonStore\models\status.py:166
 msgctxt "addonStore"
 msgid "Installed add-ons"
-msgstr "Asennetut"
+msgstr "Asennetut lisäosat"
 
 #. Translators: The label of a tab to display updatable add-ons in the add-on store.
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 #: addonStore\models\status.py:169
 msgctxt "addonStore"
 msgid "Updatable add-ons"
-msgstr "Päivitettävissä"
+msgstr "Päivitettävät lisäosat"
 
 #. Translators: The label of a tab to display available add-ons in the add-on store.
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 #: addonStore\models\status.py:172
 msgctxt "addonStore"
 msgid "Available add-ons"
-msgstr "Saatavilla"
+msgstr "Saatavilla olevat lisäosat"
 
 #. Translators: The label of a tab to display incompatible add-ons in the add-on store.
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
 #: addonStore\models\status.py:175
 msgctxt "addonStore"
 msgid "Installed incompatible add-ons"
-msgstr "Yhteensopimattomat"
+msgstr "Asennetut yhteensopimattomat lisäosat"
 
 #. Translators: The label of the add-ons list in the corresponding panel.
 #. Preferably use the same accelerator key for the four labels.
@@ -7927,7 +7927,7 @@ msgstr "Yhteensopimattomat"
 #: addonStore\models\status.py:184
 msgctxt "addonStore"
 msgid "Installed &add-ons"
-msgstr "Ase&nnetut"
+msgstr "Ase&nnetut lisäosat"
 
 #. Translators: The label of the add-ons list in the corresponding panel.
 #. Preferably use the same accelerator key for the four labels.
@@ -7935,7 +7935,7 @@ msgstr "Ase&nnetut"
 #: addonStore\models\status.py:188
 msgctxt "addonStore"
 msgid "Updatable &add-ons"
-msgstr "&Päivitettävissä"
+msgstr "&Päivitettävät lisäosat"
 
 #. Translators: The label of the add-ons list in the corresponding panel.
 #. Preferably use the same accelerator key for the four labels.
@@ -7943,7 +7943,7 @@ msgstr "&Päivitettävissä"
 #: addonStore\models\status.py:192
 msgctxt "addonStore"
 msgid "Available &add-ons"
-msgstr "Saatav&illa"
+msgstr "Saatav&illa olevat lisäosat"
 
 #. Translators: The label of the add-ons list in the corresponding panel.
 #. Preferably use the same accelerator key for the four labels.
@@ -7951,7 +7951,7 @@ msgstr "Saatav&illa"
 #: addonStore\models\status.py:196
 msgctxt "addonStore"
 msgid "Installed incompatible &add-ons"
-msgstr "&Yhteensopimattomat"
+msgstr "Asennetut &yhteensopimattomat lisäosat"
 
 #. Translators: The reason an add-on is not compatible.
 #. A more recent version of NVDA is required for the add-on to work.
