@@ -146,9 +146,11 @@ HRESULT IInspectableToVariant(winrt::Windows::Foundation::IInspectable result, V
 			case PropertyType::Boolean:
 				arg_pVariant->vt = VT_BOOL;
 				arg_pVariant->boolVal = propVal.GetBoolean() ? VARIANT_TRUE : VARIANT_FALSE;
+				break;
 			case PropertyType::Inspectable:
 				arg_pVariant->vt = VT_UNKNOWN;
 				arg_pVariant->punkVal = static_cast<::IUnknown*>(winrt::detach_abi(propVal.as<winrt::Windows::Foundation::IUnknown>()));
+				break;
 			default:
 				return E_NOTIMPL;
 		}
