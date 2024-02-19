@@ -139,7 +139,7 @@ class InstructionBase(metaclass=ABCMeta):
 			else:
 				paramOutput += f"{repr(param)}"
 			paramOutputList.append(paramOutput)
-		output += f"(" + ", ".join(paramOutputList) + ")"
+		output += "(" + ", ".join(paramOutputList) + ")"
 		return output
 
 	def localExecute(self, registers: dict[OperandId, object]):

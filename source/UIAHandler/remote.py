@@ -123,7 +123,7 @@ def findFirstHeadingInTextRange(
 	def code(ra: remoteAPI.RemoteAPI):
 		remoteTextRange = ra.newTextRange(textRange, static=True)
 		remoteWantedLevel = ra.newInt(wantedLevel or 0)
-		executionCount= ra.newInt(0, static=True)
+		executionCount = ra.newInt(0, static=True)
 		executionCount += 1
 		ra.logRuntimeMessage("executionCount is ", executionCount)
 		with ra.ifBlock(executionCount == 1):

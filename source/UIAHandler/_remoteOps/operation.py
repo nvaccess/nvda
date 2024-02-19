@@ -309,9 +309,9 @@ class Operation:
 	def _executeUntilSuccess(self, maxTries: int) -> Generator[ExecutionResult, None, None]:
 		self._executionCount = 0
 		try:
-			while self._executionCount< maxTries:
-				self._executionCount+= 1
-				if self._executionCount> 1:
+			while self._executionCount < maxTries:
+				self._executionCount += 1
+				if self._executionCount > 1:
 					self._refreshStaticInstructions()
 				executionResult = self._execute()
 				self._dumpRemoteLog()
