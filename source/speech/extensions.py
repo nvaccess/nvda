@@ -8,6 +8,7 @@ Extension points for speech.
 """
 
 from extensionPoints import Action, Filter
+from speech.types import SpeechSequence
 
 speechCanceled = Action()
 """
@@ -15,7 +16,7 @@ Notifies when speech is canceled.
 Handlers are called without arguments.
 """
 
-filterSpeechSequence = Filter()
+filterSpeechSequence = Filter[SpeechSequence]()
 """
 Filters speech sequence before it passes to synthDriver.
 Handlers are called with sequence argument.
