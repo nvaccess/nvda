@@ -420,7 +420,7 @@ class TestHighLevel(TestCase):
 				i += 1
 			ra.Return(executionCount, i)
 
-		executionCount, i = op.executeUntilSuccess()
+		executionCount, i = op.execute(maxTries=20)
 		self.assertEqual(i, 20000)
 		self.assertEqual(executionCount, 9)
 
@@ -457,7 +457,7 @@ class TestHighLevel(TestCase):
 			ra.Yield(executionCount)
 
 		results = []
-		for i in op.iterExecuteUntilSuccess():
+		for i in op.iterExecute(maxTries=20):
 			results.append(i)
 		self.assertEqual(results[:-1], list(range(1000, 5000, 1000)))
 		self.assertEqual(results[-1], 4)

@@ -108,7 +108,7 @@ def collectAllHeadingsInTextRange(
 					label = paragraphRange.getText(-1)
 					ra.Yield(level, label, paragraphRange)
 
-	for level, label, paragraphRange in op.iterExecuteUntilSuccess():
+	for level, label, paragraphRange in op.iterExecute(maxTries=20):
 		yield level, label, paragraphRange.QueryInterface(UIA.IUIAutomationTextRange)
 
 
@@ -123,7 +123,12 @@ def findFirstHeadingInTextRange(
 	def code(ra: remoteAPI.RemoteAPI):
 		remoteTextRange = ra.newTextRange(textRange, static=True)
 		remoteWantedLevel = ra.newInt(wantedLevel or 0)
-		remoteTextRange.getLogicalAdapter(reverse).start.moveByUnit(TextUnit.Paragraph, 1)
+		executionCount= ra.newInt(0, static=True)
+		executionCount += 1
+		ra.logRuntimeMessage("executionCount is ", executionCount)
+		with ra.ifBlock(executionCount == 1):
+			ra.logRuntimeMessage("Doing initial move")
+			remoteTextRange.getLogicalAdapter(reverse).start.moveByUnit(TextUnit.Paragraph, 1)
 		with remoteAlgorithms.remote_forEachUnitInTextRange(
 			ra, remoteTextRange, TextUnit.Paragraph, reverse=reverse
 		) as paragraphRange:
@@ -138,7 +143,7 @@ def findFirstHeadingInTextRange(
 						ra.Return(level, label, paragraphRange)
 
 	try:
-		level, label, paragraphRange = op.executeUntilSuccess()
+		level, label, paragraphRange = op.execute(maxTries=20)
 	except operation.NoReturnException:
 		return None
 	return (

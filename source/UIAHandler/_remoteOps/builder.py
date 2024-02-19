@@ -131,13 +131,15 @@ class InstructionBase(metaclass=ABCMeta):
 
 	def dumpInstruction(self) -> str:
 		output = f"{self.opCode.name}"
+		paramOutputList = []
 		for paramName, param in self.params.items():
 			paramOutput = f"{paramName}="
 			if isinstance(param, ctypes.Array) and param._type_ == c_wchar:
 				paramOutput += f"c_wchar_array({repr(param.value)})"
 			else:
 				paramOutput += f"{repr(param)}"
-			output += f"\n\t{paramOutput}"
+			paramOutputList.append(paramOutput)
+		output += f"(" + ", ".join(paramOutputList) + ")"
 		return output
 
 	def localExecute(self, registers: dict[OperandId, object]):
