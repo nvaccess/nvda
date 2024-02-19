@@ -342,6 +342,14 @@ Use ``bdDetect.DeviceType.*`` instead. (#15772, @LeonarddeR).
 -
 
 
+= 2023.3.4 =
+This is a patch release to fix an installer issue.
+
+== Bug Fixes ==
+- Fixed bug which caused the NVDA process to fail to exit correctly.
+When running the installer, this resulted in the installation entering an unrecoverable state. (#16122, #16123)
+-
+
 = 2023.3.3 =
 This is a patch release to fix a security issue.
 Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
