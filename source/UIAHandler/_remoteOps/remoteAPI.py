@@ -459,6 +459,10 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 		return result
 
 	@remoteMethod
+	def __mod__(self, other: Self | LocalTypeVar) -> Self:
+		return (self - (self / other) * other)
+
+	@remoteMethod
 	def __radd__(self, other: Self | LocalTypeVar) -> Self:
 		result = type(self)(self.rob, self.rob.requestNewOperandId())
 		self.rob.getDefaultInstructionList().addInstruction(
@@ -506,6 +510,10 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 		)
 		return result
 
+	@remoteMethod
+	def __rmod__(self, other: Self | LocalTypeVar) -> Self:
+		return (other - (other / self) * self)
+
 	@remoteMethod_mutable
 	def __iadd__(self, other: Self | LocalTypeVar) -> Self:
 		self.rob.getDefaultInstructionList().addInstruction(
@@ -546,9 +554,16 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 		)
 		return self
 
+	@remoteMethod_mutable
+	def __imod__(self, other: Self | LocalTypeVar) -> Self:
+		self -= (self / other) * other
+		return self
+
 
 class RemoteIntBase(RemoteNumber[int]):
-		pass
+	__floordiv__ = RemoteNumber.__truediv__
+	__rfloordiv__ = RemoteNumber.__rtruediv__
+	__ifloordiv__ = RemoteNumber.__itruediv__
 
 
 class RemoteUint(RemoteIntBase):

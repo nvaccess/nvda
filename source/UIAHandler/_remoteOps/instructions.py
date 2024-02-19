@@ -250,7 +250,13 @@ class BinaryDivide(_TypedInstruction):
 	right: builder.Operand
 
 	def localExecute(self, registers: dict[lowLevel.OperandId, object]):
-		registers[self.result.operandId] = registers[self.left.operandId] / registers[self.right.operandId]
+		left = registers[self.left.operandId]
+		right = registers[self.right.operandId]
+		if isinstance(left, int) and isinstance(right, int):
+			result = left // right
+		else:
+			result = left / right
+		registers[self.result.operandId] = result
 
 
 @dataclass
@@ -290,7 +296,12 @@ class InplaceDivide(_TypedInstruction):
 	value: builder.Operand
 
 	def localExecute(self, registers: dict[lowLevel.OperandId, object]):
-		registers[self.target.operandId] /= registers[self.value.operandId]
+		target = registers[self.target.operandId]
+		value = registers[self.value.operandId]
+		if isinstance(target, int) and isinstance(value, int):
+			registers[self.target.operandId] //= value
+		else:
+			registers[self.target.operandId] /= value
 
 
 @dataclass
