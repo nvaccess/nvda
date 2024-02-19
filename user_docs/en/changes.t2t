@@ -8,7 +8,8 @@ What's New in NVDA
 This is a patch release to fix an installer issue.
 
 == Bug Fixes ==
-- Fixes bug which caused NVDA installation to fail to an unrecoverable state. (#16122)
+- Fixed bug which caused the NVDA process to fail to exit correctly. (#16123)
+- Fixed bug where if the previous NVDA process failed to exit correctly, an NVDA installation could fail to an unrecoverable state. (#16122)
 -
 
 = 2023.3.3 =

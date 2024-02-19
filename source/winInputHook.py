@@ -91,7 +91,8 @@ def initialize():
 	if hookThreadRefCount==1:
 		hookThread = threading.Thread(
 			name=__name__,  # winInputHook
-			target=hookThreadFunc
+			target=hookThreadFunc,
+			daemon=True,
 		)
 		hookThread.start()
 
