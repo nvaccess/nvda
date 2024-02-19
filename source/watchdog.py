@@ -293,7 +293,6 @@ def initialize():
 	_watcherThread = threading.Thread(
 		name=__name__,
 		target=_watcher,
-		# TODO: should we change this? does this need to be kept alive to handle crashes?
 		daemon=True,
 	)
 	alive()
