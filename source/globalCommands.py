@@ -5,7 +5,7 @@
 # Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
 # Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot, Rob Meredith, Luke Davis,
-# Burman's Computer and Education Ltd, Beka Gozalishvili.
+# Burman's Computer and Education Ltd, Beka Gozalishvili
 
 import itertools
 from typing import (
@@ -4449,7 +4449,8 @@ class GlobalCommands(ScriptableObject):
 		"""Cycle through available output devices.
 		@param forward: boolean flag if false cycles in backward direction.
 		"""
-		deviceNames = nvwave.getFriendlyOutputDeviceNames()
+		deviceNames = nvwave.getOutputDeviceNames()
+		friendlyDeviceNames = nvwave.getFriendlyOutputDeviceNames()
 		currentIndex = 0
 		currentOutputDevice = config.conf["speech"]["outputDevice"]
 		if currentOutputDevice in deviceNames:
@@ -4457,11 +4458,12 @@ class GlobalCommands(ScriptableObject):
 		direction = 1 if forward else -1
 		newIndex = (currentIndex + direction) % len(deviceNames)
 		device = deviceNames[newIndex]
+		friendlyDevice = friendlyDeviceNames[newIndex]
 		if not nvwave.setOutputDevice(device):
 			# Translators: Error while switching to an output audio device.
-			ui.message(_("Failed to set {device} as an output audio device").format(device=device))
+			ui.message(_("Failed to set {device} as an output audio device").format(device=friendlyDevice))
 			return
-		ui.message(device)
+		ui.message(friendlyDevice)
 
 	@script(
 		description=_(
@@ -4481,7 +4483,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_SPEECH,
 	)
 	def script_switchToPreviousOutputDevice(self, gesture: inputCore.InputGesture) -> None:
-		self._cycleOutputAudioDevices(-False)
+		self._cycleOutputAudioDevices(False)
 
 
 #: The single global commands instance.

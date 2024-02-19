@@ -1,10 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers,
 # Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed, Łukasz Golonka, Aaron Cannon,
 # Adriani90, André-Abush Clause, Dawid Pieper, Heiko Folkerts, Takuya Nishimoto, Thomas Stivers,
-# jakubl7545, mltony, Rob Meredith, Burman's Computer and Education Ltd, hwf1324.
+# jakubl7545, mltony, Rob Meredith, Burman's Computer and Education Ltd, hwf1324, Beka Gozalishvili
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import logging
@@ -1122,24 +1122,23 @@ class SynthesizerSelectionDialog(SettingsDialog):
 		self.synthList.SetFocus()
 
 	def updateSynthesizerList(self):
-		driverList=getSynthList()
-		self.synthNames=[x[0] for x in driverList]
-		options=[x[1] for x in driverList]
+		self.driverList = getSynthList()
 		self.synthList.Clear()
-		self.synthList.AppendItems(options)
+		[self.synthList.Append(synth.description, synth) for synth in self.driverList]
 		try:
-			index=self.synthNames.index(getSynth().name)
-			self.synthList.SetSelection(index)
+			currentSelection = self.synthList.FindString(getSynth().description)
+			self.synthList.Select(currentSelection)
 		except:
 			pass
 
 	def onOk(self, evt):
-		if not self.synthNames:
+		if not self.driverList:
 			# The list of synths has not been populated yet, so we didn't change anything in this panel
 			return
 
-		newSynth = self.synthNames[self.synthList.GetSelection()]
-		if not setSynth(newSynth):
+		selectedIndex = self.synthList.GetSelection()
+		newSynth = self.synthList.GetClientData(selectedIndex)
+		if not setSynth(newSynth.name):
 			_synthWarningDialog(newSynth)
 			return
 
@@ -2638,11 +2637,11 @@ class DocumentNavigationPanel(SettingsPanel):
 		self.paragraphStyleCombo.saveCurrentValueToConf()
 
 
-def _synthWarningDialog(newSynth: str):
+def _synthWarningDialog(newSynth: SynthDriver):
 	gui.messageBox(
 		# Translators: This message is presented when
 		# NVDA is unable to load the selected synthesizer.
-		_("Could not load the %s synthesizer.") % newSynth,
+		_("Could not load the {name} synthesizer.").format(name=newSynth.description),
 		# Translators: Dialog title presented when
 		# NVDA is unable to load the selected synthesizer.
 		_("Synthesizer Error"),
@@ -2708,8 +2707,7 @@ class AudioPanel(SettingsPanel):
 	def onSave(self):
 		if config.conf["speech"]["outputDevice"] != self.deviceList.GetStringSelection():
 			# Synthesizer must be reload if output device changes
-			if not nvwave.setOutputDevice(self.deviceList.GetStringSelection()):
-				_synthWarningDialog(currentSynth.name)
+			nvwave.setOutputDevice(self.deviceList.GetStringSelection(), _synthWarningDialog)
 
 		config.conf["audio"]["soundVolumeFollowsVoice"] = self.soundVolFollowCheckBox.IsChecked()
 		config.conf["audio"]["soundVolume"] = self.soundVolSlider.GetValue()
