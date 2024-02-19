@@ -107,6 +107,9 @@ def getQualifiedDriverClassNameForStats(cls):
 	return "%s (core)"%name
 
 
+UPDATE_FETCH_TIMEOUT_S = 30  # seconds
+
+
 def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 	"""Check for an updated version of NVDA.
 	This will block, so it generally shouldn't be called from the main thread.
@@ -151,14 +154,16 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 		params.update(extraParams)
 	url = "%s?%s" % (CHECK_URL, urllib.parse.urlencode(params))
 	try:
-		res = urllib.request.urlopen(url)
+		log.debug(f"Fetching update data from {url}")
+		res = urllib.request.urlopen(url, timeout=UPDATE_FETCH_TIMEOUT_S)
 	except IOError as e:
 		if isinstance(e.reason, ssl.SSLCertVerificationError) and e.reason.reason == "CERTIFICATE_VERIFY_FAILED":
 			# #4803: Windows fetches trusted root certificates on demand.
 			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves
 			_updateWindowsRootCertificates()
 			# and then retry the update check.
-			res = urllib.request.urlopen(url)
+			log.debug(f"Fetching update data from {url}")
+			res = urllib.request.urlopen(url, timeout=UPDATE_FETCH_TIMEOUT_S)
 		else:
 			raise
 	if res.code != 200:
@@ -253,9 +258,9 @@ class UpdateChecker(garbageHandler.TrackedObject):
 		"""
 		t = threading.Thread(
 			name=f"{self.__class__.__module__}.{self.check.__qualname__}",
-			target=self._bg
+			target=self._bg,
+			daemon=True,
 		)
-		t.daemon = True
 		self._started()
 		t.start()
 
@@ -614,9 +619,9 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 		self._progressDialog.Raise()
 		t = threading.Thread(
 			name=f"{self.__class__.__module__}.{self.start.__qualname__}",
-			target=self._bg
+			target=self._bg,
+			daemon=True,
 		)
-		t.daemon = True
 		t.start()
 
 	def _guiExec(self, func, *args):
@@ -656,7 +661,12 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 		# #2352: Some security scanners such as Eset NOD32 HTTP Scanner
 		# cause huge read delays while downloading.
 		# Therefore, set a higher timeout.
-		remote = urllib.request.urlopen(url, timeout=120)
+		# The NVDA exe is about 35 MB.
+		# The average download speed in the world is 0.5 MB/s
+		# in some developing countries with the slowest internet.
+		# This yields an expected download time of 10min on slower networks.
+		UPDATE_DOWNLOAD_TIMEOUT = 60 * 30  # 30 min
+		remote = urllib.request.urlopen(url, timeout=UPDATE_DOWNLOAD_TIMEOUT)
 		if remote.code != 200:
 			raise RuntimeError("Download failed with code %d" % remote.code)
 		size = int(remote.headers["content-length"])
@@ -851,12 +861,17 @@ class CERT_CHAIN_PARA(ctypes.Structure):
 	)
 
 def _updateWindowsRootCertificates():
+	log.debug("Updating Windows root certificates")
 	crypt = ctypes.windll.crypt32
 	# Get the server certificate.
 	sslCont = ssl._create_unverified_context()
 	# We must specify versionType so the server doesn't return a 404 error and
 	# thus cause an exception.
-	u = urllib.request.urlopen(CHECK_URL + "?versionType=stable", context=sslCont)
+	u = urllib.request.urlopen(
+		CHECK_URL + "?versionType=stable",
+		context=sslCont,
+		timeout=UPDATE_FETCH_TIMEOUT_S,
+	)
 	cert = u.fp.raw._sock.getpeercert(True)
 	u.close()
 	# Convert to a form usable by Windows.
