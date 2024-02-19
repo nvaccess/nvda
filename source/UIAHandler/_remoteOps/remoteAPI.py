@@ -25,7 +25,11 @@ from ctypes import (
 	c_bool,
 	POINTER
 )
-from comtypes import GUID
+from comtypes import (
+	GUID,
+	IUnknown,
+	COMError
+)
 import enum
 from UIAHandler import UIA
 from . import lowLevel
@@ -682,6 +686,31 @@ class RemoteString(RemoteBaseObject[str]):
 
 
 class RemoteArray(RemoteBaseObject):
+
+	_LOCAL_COM_INTERFACES = [
+		UIA.IUIAutomationElement,
+		UIA.IUIAutomationTextRange
+	]
+
+	def _correctCOMPointers(self, *items: object) -> list:
+		correctedItems = []
+		for i, item in enumerate(items):
+			if isinstance(item, IUnknown):
+				for interface in self._LOCAL_COM_INTERFACES:
+					try:
+						item = item.QueryInterface(interface)
+						break
+					except COMError:
+						pass
+			elif isinstance(item, tuple):
+				item = self._correctCOMPointers(*item)
+			correctedItems.append(item)
+		return correctedItems
+
+	@property
+	def localValue(self) -> list:
+		items = super().localValue
+		return self._correctCOMPointers(*items)
 
 	def _generateInitInstructions(self) -> Iterable[instructions.InstructionBase]:
 		yield instructions.NewArray(

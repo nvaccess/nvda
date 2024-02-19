@@ -109,7 +109,7 @@ def collectAllHeadingsInTextRange(
 					ra.Yield(level, label, paragraphRange)
 
 	for level, label, paragraphRange in op.iterExecute(maxTries=20):
-		yield level, label, paragraphRange.QueryInterface(UIA.IUIAutomationTextRange)
+		yield level, label, paragraphRange
 
 
 def findFirstHeadingInTextRange(
@@ -149,5 +149,5 @@ def findFirstHeadingInTextRange(
 	return (
 		cast(int, level),
 		cast(str, label),
-		cast(UIA.IUIAutomationTextRange, paragraphRange.QueryInterface(UIA.IUIAutomationTextRange))
+		cast(UIA.IUIAutomationTextRange, paragraphRange)
 	)
