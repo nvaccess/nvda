@@ -79,7 +79,6 @@ def initialize():
 		target=server.serve_forever,
 		daemon=True,
 	)
-	thread.daemon = True
 	thread.start()
 
 def terminate():

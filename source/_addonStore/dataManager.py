@@ -100,20 +100,23 @@ class _DataManager:
 		self._compatibleAddonCache = self._getCachedAddonData(self._cacheCompatibleFile)
 		self._installedAddonsCache = _InstalledAddonsCache()
 		# Fetch available add-ons cache early
-		self._getAddonsThread = threading.Thread(
+		self._initialiseAvailableAddonsThread = threading.Thread(
 			target=self.getLatestCompatibleAddons,
 			name="initialiseAvailableAddons",
 			daemon=True,
 		)
-		self._getAddonsThread.start()
+		self._initialiseAvailableAddonsThread.start()
 
 	def terminate(self):
-		if self._getAddonsThread.is_alive():
-			self._getAddonsThread.join(timeout=1)
+		if self._initialiseAvailableAddonsThread.is_alive():
+			self._initialiseAvailableAddonsThread.join(timeout=1)
+		if self._initialiseAvailableAddonsThread.is_alive():
+			log.debugWarning("initialiseAvailableAddons thread did not terminate immediately")
 
 	def _getLatestAddonsDataForVersion(self, apiVersion: str) -> Optional[bytes]:
 		url = _getAddonStoreURL(self._preferredChannel, self._lang, apiVersion)
 		try:
+			log.debug(f"Fetching add-on data from {url}")
 			response = requests.get(url, timeout=FETCH_TIMEOUT_S)
 		except requests.exceptions.RequestException as e:
 			log.debugWarning(f"Unable to fetch addon data: {e}")
@@ -129,6 +132,7 @@ class _DataManager:
 	def _getCacheHash(self) -> Optional[str]:
 		url = _getCacheHashURL()
 		try:
+			log.debug(f"Fetching add-on data from {url}")
 			response = requests.get(url, timeout=FETCH_TIMEOUT_S)
 		except requests.exceptions.RequestException as e:
 			log.debugWarning(f"Unable to get cache hash: {e}")

@@ -154,6 +154,7 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 		params.update(extraParams)
 	url = "%s?%s" % (CHECK_URL, urllib.parse.urlencode(params))
 	try:
+		log.debug(f"Fetching update data from {url}")
 		res = urllib.request.urlopen(url, timeout=UPDATE_FETCH_TIMEOUT_S)
 	except IOError as e:
 		if isinstance(e.reason, ssl.SSLCertVerificationError) and e.reason.reason == "CERTIFICATE_VERIFY_FAILED":
@@ -161,6 +162,7 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves
 			_updateWindowsRootCertificates()
 			# and then retry the update check.
+			log.debug(f"Fetching update data from {url}")
 			res = urllib.request.urlopen(url, timeout=UPDATE_FETCH_TIMEOUT_S)
 		else:
 			raise
@@ -859,6 +861,7 @@ class CERT_CHAIN_PARA(ctypes.Structure):
 	)
 
 def _updateWindowsRootCertificates():
+	log.debug("Updating Windows root certificates")
 	crypt = ctypes.windll.crypt32
 	# Get the server certificate.
 	sslCont = ssl._create_unverified_context()
