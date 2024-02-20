@@ -302,6 +302,7 @@ class UIAHandler(COMObject):
 		UIA.IUIAutomationNotificationEventHandler,
 		UIA.IUIAutomationActiveTextPositionChangedEventHandler,
 	]
+	_rateLimitedEventHandler: IUnknown | None = None
 
 	#: A cache of UIA notification kinds to friendly names for logging
 	_notificationKindsToNamesCache = {
@@ -440,6 +441,15 @@ class UIAHandler(COMObject):
 			raise self.MTAThreadInitException
 
 	def terminate(self):
+		# Terminate the rate limited event handler if it exists.
+		# We must do this from the main thread to totally ensure that the thread is terminated,
+		# As this is a c++ thread so Python canot kill it off at process exit.
+		if config.conf["UIA"]["enhancedEventProcessing"]:
+			if self._rateLimitedEventHandler:
+				log.debug("UIAHandler: Terminating enhanced event processing")
+				NVDAHelper.localLib.rateLimitedUIAEventHandler_terminate(self._rateLimitedEventHandler)
+
+		# Terminate the MTA thread
 		MTAThreadHandle = ctypes.wintypes.HANDLE(
 			windll.kernel32.OpenThread(
 				winKernel.SYNCHRONIZE,
@@ -514,10 +524,10 @@ class UIAHandler(COMObject):
 			self.reservedNotSupportedValue=self.clientObject.ReservedNotSupportedValue
 			self.ReservedMixedAttributeValue=self.clientObject.ReservedMixedAttributeValue
 			if config.conf["UIA"]["enhancedEventProcessing"]:
-				handler = pRateLimitedEventHandler = POINTER(IUnknown)()
+				handler = self._rateLimitedEventHandler = POINTER(IUnknown)()
 				NVDAHelper.localLib.rateLimitedUIAEventHandler_create(
 					self._com_pointers_[IUnknown._iid_],
-					byref(pRateLimitedEventHandler)
+					byref(self._rateLimitedEventHandler)
 				)
 			else:
 				handler = self
@@ -543,6 +553,7 @@ class UIAHandler(COMObject):
 		del self.localEventHandlerGroup
 		del self.localEventHandlerGroupWithTextChanges
 		del self.globalEventHandlerGroup
+		self._rateLimitedEventHandler = None
 
 	def _registerGlobalEventHandlers(self, handler: "UIAHandler"):
 		self.clientObject.AddFocusChangedEventHandler(self.baseCacheRequest, handler)
