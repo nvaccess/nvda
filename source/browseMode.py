@@ -2138,6 +2138,9 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			2. Then we drop all control fields, leaving only formatChange fields and text.
 			@raise RuntimeError: found unknown command in getTextWithFields()
 		"""
+		from NVDAObjects.UIA.wordDocument import WordBrowseModeDocument
+		from NVDAObjects.window.winword import WordDocumentTreeInterceptor
+		microsoftWordMode: bool = isinstance(self, (WordBrowseModeDocument, WordDocumentTreeInterceptor))
 		stack: list[textInfos.FormatField] = [{}]
 		result: "textInfos.TextInfo.TextWithFieldsT" = []
 		reportFormattingOptions = (
@@ -2148,17 +2151,22 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			"reportHighlight",
 			"reportColor",
 			"reportStyle",
+			"reportLinks",
 		)
 		formatConfig = dict()
 		for i in config.conf["documentFormatting"]:
 			formatConfig[i] = i in reportFormattingOptions
 
-		for field in info.getTextWithFields(formatConfig):
+		fields = info.getTextWithFields(formatConfig)
+		for field in fields:
 			if isinstance(field, textInfos.FieldCommand):
 				if field.command == "controlStart":
 					style = {**stack[-1]}
-					if field.field.get("role") == controlTypes.Role.MARKED_CONTENT:
+					role = field.field.get("role")
+					if role == controlTypes.Role.MARKED_CONTENT:
 						style["marked"] = True
+					elif role == controlTypes.Role.LINK and microsoftWordMode:
+						style["color"] = "MSWordLinkColor"
 					stack.append(style)
 				elif field.command == "controlEnd":
 					del stack[-1]
@@ -2200,27 +2208,11 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		sequence = [item for i, item in enumerate(sequence) if i not in redundantIndices]
 		# Now merging adjacent strings
 		result = []
-		if True:
-			for k, g in itertools.groupby(sequence, key=type):
-				if k == str:
-					result.append("".join(g))
-				else:
-					result.extend(list(g))
-		if False:
-			n = len(sequence)
-			i = 0
-			while i < n:
-				if isinstance(sequence[i], str):
-					for j in range(i + 1, n):
-						if not isinstance(sequence[i], str):
-							break
-					else:
-						j = n
-					result.append("".join(sequence[i:j]))
-					i = j
-				else:
-					result.append(sequence[i])
-					i += 1
+		for k, g in itertools.groupby(sequence, key=type):
+			if k == str:
+				result.append("".join(g))
+			else:
+				result.extend(list(g))
 		return result
 	
 	def _expandStyle(
