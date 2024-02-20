@@ -2715,7 +2715,6 @@ class AudioPanel(SettingsPanel):
 		audioAwakeTimeLabelText = _(
 			# Translators: The label for a setting in Audio settings panel
 			# to change how long the audio device is kept awake after speech
-
 			"Time to &keep audio device awake after speech (seconds)"
 		)
 		minTime = int(config.conf.getConfigValidation(("audio", "audioAwakeTime")).kwargs["min"])
