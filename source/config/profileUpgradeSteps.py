@@ -376,3 +376,14 @@ def upgradeConfigFrom_10_to_11(profile: ConfigObj) -> None:
 			"hidBrailleStandard added to braille display auto detection excluded displays. "
 			f"List is now: {profile['braille']['auto']['excludedDisplays']}"
 		)
+
+
+def upgradeConfigFrom_11_to_12(profile) -> None:
+	"Reporting of object help texts can now be configured separately to descriptions."
+	try:
+		profile['presentation']['reportObjectHelpTexts'] = (
+			profile['presentation']['reportObjectDescriptions']
+		)
+	except KeyError:
+		# Setting does not exist, no need for upgrade of this setting
+		log.debug("reportObjectDescriptions not present, no action taken.")
