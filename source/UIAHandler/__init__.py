@@ -443,7 +443,7 @@ class UIAHandler(COMObject):
 	def terminate(self):
 		# Terminate the rate limited event handler if it exists.
 		# We must do this from the main thread to totally ensure that the thread is terminated,
-		# As this is a c++ thread so Python canot kill it off at process exit.
+		# As this is a c++ thread so Python cannot kill it off at process exit.
 		if config.conf["UIA"]["enhancedEventProcessing"]:
 			if self._rateLimitedEventHandler:
 				log.debug("UIAHandler: Terminating enhanced event processing")
