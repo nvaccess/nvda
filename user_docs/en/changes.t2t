@@ -346,8 +346,8 @@ Use ``bdDetect.DeviceType.*`` instead. (#15772, @LeonarddeR).
 This is a patch release to fix an installer issue.
 
 == Bug Fixes ==
-- Fixed bug which caused the NVDA process to fail to exit correctly.
-When running the installer, this resulted in the installation entering an unrecoverable state. (#16122, #16123)
+- Fixed bug which caused the NVDA process to fail to exit correctly. (#16123)
+- Fixed bug where if the previous NVDA process failed to exit correctly, an NVDA installation could fail to an unrecoverable state. (#16122)
 -
 
 = 2023.3.3 =

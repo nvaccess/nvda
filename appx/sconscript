@@ -62,7 +62,6 @@ signExec=env['signExec'] if env['certFile'] else None
 
 # Files from NVDA's distribution that cannot be included in the appx due to policy or security restrictions
 excludedDistFiles = [
-	'nvda_service.exe',
 	'nvda_slave.exe',
 	'nvda_noUIAccess.exe',
 	'lib/IAccessible2Proxy.dll',
