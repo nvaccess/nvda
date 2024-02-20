@@ -1,17 +1,15 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
-# Joseph Lee, Arnold Loubriat, Leonard de Ruijter
+# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Joseph Lee, Arnold Loubriat, Leonard de Ruijter, Beka Gozalishvili
 
 import pkgutil
 import importlib
 from typing import (
-	List,
 	Optional,
 	OrderedDict,
 	Set,
-	Tuple,
 )
 from locale import strxfrm
 
@@ -409,10 +407,10 @@ def _getSynthDriver(name) -> SynthDriver:
 	return importlib.import_module("synthDrivers.%s" % name, package="synthDrivers").SynthDriver
 
 
-def getSynthList() -> List[Tuple[str, str]]:
+def getSynthList() -> list[SynthDriver]:
 	from synthDrivers.silence import SynthDriver as SilenceSynthDriver
 
-	synthList: List[Tuple[str, str]] = []
+	synthList: list[SynthDriver] = []
 	# The synth that should be placed at the end of the list.
 	lastSynth = None
 	for loader, name, isPkg in pkgutil.iter_modules(synthDrivers.__path__):
@@ -426,14 +424,14 @@ def getSynthList() -> List[Tuple[str, str]]:
 		try:
 			if synth.check():
 				if synth.name == SilenceSynthDriver.name:
-					lastSynth = (synth.name, synth.description)
+					lastSynth = synth
 				else:
-					synthList.append((synth.name, synth.description))
+					synthList.append(synth)
 			else:
 				log.debugWarning("Synthesizer '%s' doesn't pass the check, excluding from list" % name)
 		except:  # noqa: E722 # Legacy bare except
 			log.error("", exc_info=True)
-	synthList.sort(key=lambda s: strxfrm(s[1]))
+	synthList.sort(key=lambda s: strxfrm(s.description))
 	if lastSynth:
 		synthList.append(lastSynth)
 	return synthList

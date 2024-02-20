@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2023 NV Access Limited, Aleksey Sadovoy, Cyrille Bougot, Peter Vágner, Babbage B.V.,
-# Leonard de Ruijter, James Teh
+# Copyright (C) 2007-2024 NV Access Limited, Aleksey Sadovoy, Cyrille Bougot, Peter Vágner, Babbage B.V.,
+# Leonard de Ruijter, James Teh, Beka Gozalishvili
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -51,13 +51,16 @@ import extensionPoints
 import NVDAHelper
 import core
 import globalVars
-
+from synthDriverHandler import getSynth, setSynth, SynthDriver
+import tones
 
 __all__ = (
 	"WavePlayer",
 	"getOutputDeviceNames",
+	"getFriendlyOutputDeviceNames",
 	"outputDeviceIDToName",
 	"outputDeviceNameToID",
+	"setOutputDevice",
 	"decide_playWaveFile",
 )
 
@@ -632,6 +635,18 @@ def getOutputDeviceNames():
 	"""
 	return [name for ID, name in _getOutputDevices()]
 
+
+def getFriendlyOutputDeviceNames() -> list[str]:
+	"""Obtain the names of all audio output devices (including microsoft sound mapper) on the system.
+	@return: The names of all output devices (including microsoft sound mapper) on the system.
+	"""
+	deviceNames = getOutputDeviceNames()
+	# #11349: On Windows 10 20H1 and 20H2, Microsoft Sound Mapper returns an empty string.
+	if deviceNames[0] in ("", "Microsoft Sound Mapper"):
+		# Translators: name for default (Microsoft Sound Mapper) audio output device.
+		deviceNames[0] = _("Microsoft Sound Mapper")
+	return deviceNames
+
 def outputDeviceIDToName(ID):
 	"""Obtain the name of an output device given its device ID.
 	@param ID: The device ID.
@@ -666,6 +681,26 @@ def outputDeviceNameToID(name: str, useDefaultIfInvalid=False) -> int:
 		return WAVE_MAPPER
 	else:
 		raise LookupError("No such device name")
+
+
+def setOutputDevice(
+		deviceName: str,
+		onSynthSetFailed: Callable[[SynthDriver], None] | None = None,
+):
+	"""Set an output audio device.
+	@param deviceName: The device name.
+	@param onSynthSetFailed: A callable to show an error if setting synthesizer fails.
+	"""
+	config.conf["speech"]["outputDevice"] = deviceName
+	currentSynth = getSynth()
+	if not setSynth(currentSynth.name):
+		onSynthSetFailed(currentSynth)
+		return
+
+	# Reinitialize the tones module to update the audio device
+	tones.terminate()
+	tones.initialize()
+	return True
 
 
 fileWavePlayer: Optional[WavePlayer] = None
