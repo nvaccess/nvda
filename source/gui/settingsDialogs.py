@@ -2711,8 +2711,9 @@ class AudioPanel(SettingsPanel):
 		
 		audioAwakeDurationLabelText = _(
 			# Translators: The label for a setting in Audio settings panel
-			# to change the duration of keeping audio device awake
-			"Duration of &keeping audio device awake (sec)"
+			# to change how long the audio device is kept awake after speech
+
+			"Time to &keep audio device awake after speech (seconds)"
 		)
 		minDuration = int(config.conf.getConfigValidation(("audio", "keepAudioAwakeTimeSeconds")).kwargs["min"])
 		maxDuration = int(config.conf.getConfigValidation(("audio", "keepAudioAwakeTimeSeconds")).kwargs["max"])
