@@ -2709,23 +2709,23 @@ class AudioPanel(SettingsPanel):
 
 		self._onSoundVolChange(None)
 		
-		audioAwakeDurationLabelText = _(
+		audioAwakeTimeLabelText = _(
 			# Translators: The label for a setting in Audio settings panel
 			# to change how long the audio device is kept awake after speech
 
 			"Time to &keep audio device awake after speech (seconds)"
 		)
-		minDuration = int(config.conf.getConfigValidation(("audio", "keepAudioAwakeTimeSeconds")).kwargs["min"])
-		maxDuration = int(config.conf.getConfigValidation(("audio", "keepAudioAwakeTimeSeconds")).kwargs["max"])
-		self.audioAwakeDurationEdit = sHelper.addLabeledControl(
-			audioAwakeDurationLabelText,
+		minTime = int(config.conf.getConfigValidation(("audio", "audioAwakeTime")).kwargs["min"])
+		maxTime = int(config.conf.getConfigValidation(("audio", "audioAwakeTime")).kwargs["max"])
+		self.audioAwakeTimeEdit = sHelper.addLabeledControl(
+			audioAwakeTimeLabelText,
 			nvdaControls.SelectOnFocusSpinCtrl,
-			min=minDuration,
-			max=maxDuration,
-			initial=config.conf["audio"]["keepAudioAwakeTimeSeconds"]
+			min=minTime,
+			max=maxTime,
+			initial=config.conf["audio"]["audioAwakeTime"]
 		)
-		self.bindHelpEvent("KeepAudioAwakeDuration", self.audioAwakeDurationEdit)
-		self.audioAwakeDurationEdit.Enable(nvwave.usingWasapiWavePlayer())
+		self.bindHelpEvent("AudioAwakeTime", self.audioAwakeTimeEdit)
+		self.audioAwakeTimeEdit.Enable(nvwave.usingWasapiWavePlayer())
 
 	def onSave(self):
 		if config.conf["speech"]["outputDevice"] != self.deviceList.GetStringSelection():
@@ -2748,7 +2748,7 @@ class AudioPanel(SettingsPanel):
 			config.conf["audio"]["audioDuckingMode"] = index
 			audioDucking.setAudioDuckingMode(index)
 		
-		config.conf["audio"]["keepAudioAwakeTimeSeconds"] = self.audioAwakeDurationEdit.GetValue()
+		config.conf["audio"]["audioAwakeTime"] = self.audioAwakeTimeEdit.GetValue()
 
 	def onPanelActivated(self):
 		self._onSoundVolChange(None)
