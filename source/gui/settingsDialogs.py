@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers,
 # Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed, Łukasz Golonka, Aaron Cannon,
@@ -2711,6 +2711,23 @@ class AudioPanel(SettingsPanel):
 		self.soundVolSlider.SetValue(config.conf["audio"]["soundVolume"])
 
 		self._onSoundVolChange(None)
+		
+		audioAwakeTimeLabelText = _(
+			# Translators: The label for a setting in Audio settings panel
+			# to change how long the audio device is kept awake after speech
+			"Time to &keep audio device awake after speech (seconds)"
+		)
+		minTime = int(config.conf.getConfigValidation(("audio", "audioAwakeTime")).kwargs["min"])
+		maxTime = int(config.conf.getConfigValidation(("audio", "audioAwakeTime")).kwargs["max"])
+		self.audioAwakeTimeEdit = sHelper.addLabeledControl(
+			audioAwakeTimeLabelText,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=minTime,
+			max=maxTime,
+			initial=config.conf["audio"]["audioAwakeTime"]
+		)
+		self.bindHelpEvent("AudioAwakeTime", self.audioAwakeTimeEdit)
+		self.audioAwakeTimeEdit.Enable(nvwave.usingWasapiWavePlayer())
 
 	def onSave(self):
 		if config.conf["speech"]["outputDevice"] != self.deviceList.GetStringSelection():
@@ -2732,6 +2749,8 @@ class AudioPanel(SettingsPanel):
 			index = self.duckingList.GetSelection()
 			config.conf["audio"]["audioDuckingMode"] = index
 			audioDucking.setAudioDuckingMode(index)
+		
+		config.conf["audio"]["audioAwakeTime"] = self.audioAwakeTimeEdit.GetValue()
 
 	def onPanelActivated(self):
 		self._onSoundVolChange(None)
@@ -3238,28 +3257,7 @@ class AdvancedPanelControls(
 			keyPath=["audio", "WASAPI"],
 			conf=config.conf,
 		))
-		self.wasapiComboBox .Bind(wx.EVT_CHOICE, self._onWasapiChange)
 		self.bindHelpEvent("WASAPI", self.wasapiComboBox)
-
-		silenceDurationLabelText = _(
-			# Translators: The label for a setting in advanced panel
-			# to change the duration of keeping audio device awake
-			"Duration in seconds of keeping audio device awake"
-		)
-		minDuration = int(config.conf.getConfigValidation(
-			("audio", "keepAudioAwakeTimeSeconds")
-		).kwargs["min"])
-		maxDuration = int(config.conf.getConfigValidation(("audio", "keepAudioAwakeTimeSeconds")).kwargs["max"])
-		self.silenceDurationEdit = audioGroup.addLabeledControl(
-			silenceDurationLabelText,
-			nvdaControls.SelectOnFocusSpinCtrl,
-			min=minDuration,
-			max=maxDuration,
-			initial=config.conf["audio"]["keepAudioAwakeTimeSeconds"]
-		)
-		self.silenceDurationEdit.defaultValue = self._getDefaultValue(["audio", "keepAudioAwakeTimeSeconds"])
-		self.bindHelpEvent("KeepAudioAwakeDuration", self.silenceDurationEdit)
-		self._onWasapiChange(None)
 
 		# Translators: This is the label for a group of advanced options in the
 		# Advanced settings panel
@@ -3351,12 +3349,6 @@ class AdvancedPanelControls(
 		path=config.getScratchpadDir(ensureExists=True)
 		os.startfile(path)
 
-	def _onWasapiChange(self, evt: wx.CommandEvent) -> None:
-		self.silenceDurationEdit.Enable(
-			config.conf["audio"]["WASAPI"]
-			and self.wasapiComboBox._getControlCurrentValue().value != 2  # wasapi not disabled
-		)
-
 	def _getDefaultValue(self, configPath):
 		return config.conf.getConfigValidation(configPath).default
 
@@ -3412,7 +3404,6 @@ class AdvancedPanelControls(
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
 		self.wasapiComboBox.resetToConfigSpecDefault()
-		self.silenceDurationEdit.SetValue(self.silenceDurationEdit.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self.playErrorSoundCombo.SetSelection(self.playErrorSoundCombo.defaultValue)
 		self._defaultsRestored = True
@@ -3445,7 +3436,6 @@ class AdvancedPanelControls(
 			self.reportTransparentColorCheckBox.IsChecked()
 		)
 		self.wasapiComboBox.saveCurrentValueToConf()
-		config.conf["audio"]["keepAudioAwakeTimeSeconds"] = self.silenceDurationEdit.GetValue()
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
 		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
 		self.brailleLiveRegionsCombo.saveCurrentValueToConf()

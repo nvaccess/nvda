@@ -1943,6 +1943,20 @@ This slider allows you to set the volume of NVDA sounds and beeps.
 This setting only takes effect when "Volume of NVDA sounds follows voice volume" is disabled.
 This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
 
+==== Time to keep audio device awake after speech ====[AudioAwakeTime]
+
+This edit box specifies how long NVDA keeps the audio device awake after speech ends.
+This allows NVDA to avoid certain speech glitches like dropped parts of words.
+This can happen due to audio devices (especially Bluetooth and wireless devices) entering standby mode.
+This might also be helpful in other use cases, such as when running NVDA inside a virtual machine (e.g. Citrix Virtual Desktop), or on certain laptops.
+
+Lower values may allow audio to be cut-off more often, as a device may enter standby mode too soon, causing the start of the following speech to be clipped.
+Setting the value too high may cause the battery of the sound output device to discharge faster, as it stays active for longer while no sound is being sent.
+
+
+You can set the time to zero in order to disable this feature.
+This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
+
 +++ Vision +++[VisionSettings]
 The Vision category in the NVDA Settings dialog allows you to enable, disable and configure [visual aids #Vision].
 
@@ -2613,19 +2627,6 @@ Disabling WASAPI will disable the following options:
 - [Volume of NVDA sounds follows voice volume #SoundVolumeFollowsVoice]
 - [Volume of NVDA sounds #SoundVolume]
 -
-
-==== Duration of keeping audio device awake ====[KeepAudioAwakeDuration]
-
-This edit box specifies how long NVDA keeps the audio device awake after every speech sequence.
-NVDA does this by playing silence to keep the audio device open and avoid certain glitches like dropped parts of speech sequences.
-This can happen due to audio devices (especially Bluetooth and wireless devices) entering stand-by mode.
-This might also be helpful in certain other use cases, such as running NVDA inside a virtual machine, such as Citrix Virtual Desktop, or on certain models of laptops.
-
-Lower values may mean audio would be cut-off more often, as a device may enter stand-by mode, causing the next speech to be clipped.
-Too high a value may mean the battery of the sound output device discharges faster, as it stays active for longer while no sound is being sent.
-
-You can specify silence duration to be 0 in order to disable this feature.
-This slider is only available when [WASAPI mode #WASAPI] is enabled.
 
 ==== Debug logging categories ====[AdvancedSettingsDebugLoggingCategories]
 The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.
