@@ -170,6 +170,7 @@ class Ia2Web(IAccessible):
 		return self.annotations.roles[0]
 
 	def _get_isCurrent(self) -> controlTypes.IsCurrent:
+		log.debugWarning("impl required for: %s" % repr(self), stack_info=True)
 		ia2attrCurrent: str = self.IA2Attributes.get("current", "false")
 		try:
 			return controlTypes.IsCurrent(ia2attrCurrent)
@@ -251,6 +252,11 @@ class Ia2Web(IAccessible):
 		except ValueError:
 			log.error(f"Unknown live politeness of {politeness}", exc_info=True)
 			super().liveRegionPoliteness
+	
+	def _get_role(self):
+		if self.IA2Attributes.get("tag", "").casefold() == "figure":
+			return controlTypes.Role.FIGURE
+		return super()._get_role()
 
 
 class Document(Ia2Web):
