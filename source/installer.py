@@ -651,7 +651,12 @@ def _revertGroupDelete(tempDir: str, installDir: str):
 			log.exception(f"Failed to rename {tempFile} back to {originalPath}")
 
 
-def _deleteFileGroupOrFail(installDir: str, relativeFilepaths: Iterable[str]):
+def _deleteFileGroupOrFail(
+		installDir: str,
+		relativeFilepaths: Iterable[str],
+		numTries: int = 6,
+		retryWeightInterval: float = 0.5
+):
 	"""
 	Delete a group of files in the installer folder.
 	If any file fails to be deleted, revert the deletion of all other files.
@@ -662,37 +667,50 @@ def _deleteFileGroupOrFail(installDir: str, relativeFilepaths: Iterable[str]):
 	:raises RetriableFailure: if the files fail to be deleted.
 	"""
 	tempDir = tempfile.mkdtemp()
-	for filepath in relativeFilepaths:
-		originalPath = os.path.join(installDir, filepath)
-		if not pathlib.Path(originalPath).exists():
-			log.debug(f"Skipping remove for non-existent file: {originalPath}")
-			continue
-		tempPath = os.path.join(tempDir, filepath)
-		pathlib.Path(tempPath).parent.mkdir(parents=True, exist_ok=True)
-		shutil.copyfile(originalPath, tempPath)
-		try:
-			os.remove(originalPath)
-		except OSError:
-			# If the file failed to be deleted, revert the deletion of all other files
-			# and raise a RetriableFailure.
-
-			# Delete this specific copied file as the remove failed.
-			os.remove(tempPath)
-			log.exception(f"Failed to move {originalPath} to {tempPath}")
-			_revertGroupDelete(tempDir, installDir)
-			raise RetriableFailure("Failed to move files to temp directory for deletion")
-
 	try:
-		shutil.rmtree(tempDir)
-	except OSError:
-		# Ignore this failure, as the temp directory should get deleted eventually
-		log.debugWarning(f"Failed to remove temp directory {tempDir}", exc_info=True)
+		for filepath in relativeFilepaths:
+			originalPath = os.path.join(installDir, filepath)
+			if not pathlib.Path(originalPath).exists():
+				log.debug(f"Skipping remove for non-existent file: {originalPath}")
+				continue
+			tempPath = os.path.join(tempDir, filepath)
+			pathlib.Path(tempPath).parent.mkdir(parents=True, exist_ok=True)
+			shutil.copyfile(originalPath, tempPath)
+			for count in range(1, numTries + 1):
+				if count > 1:
+					time.sleep(retryWeightInterval)
+				try:
+					os.remove(originalPath)
+				except OSError as e:
+					log.warning(f"Failed to delete file {originalPath}: {e}, attempt {count}/{numTries}")
+				else:
+					log.debug(f"Deleted {originalPath}")
+					break
+			else:
+				# If the file failed to be deleted, revert the deletion of all other files
+				# and raise a RetriableFailure.
+
+				# Delete this specific copied file as the remove failed.
+				os.remove(tempPath)
+				log.error(f"Failed to move {originalPath} to {tempPath}")
+				_revertGroupDelete(tempDir, installDir)
+				raise RetriableFailure("Failed to move files to temp directory for deletion")
+	finally:
+		try:
+			shutil.rmtree(tempDir)
+		except OSError:
+			# Ignore this failure, as the temp directory should get deleted eventually
+			log.debugWarning(f"Failed to remove temp directory {tempDir}", exc_info=True)
 
 
 def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = True):
 	prevInstallPath=getInstallPath(noDefault=True)
 	installDir=defaultInstallPath
 	startMenuFolder=defaultStartMenuFolder
+	# Give some time for the installed NVDA (which may have been running on a secure screen)
+	# to shut down before we start deleting files.
+	time.sleep(1)
+
 	# Remove all the main executables always.
 	# We do this for two reasons:
 	# 1. If this fails, it means another copy of NVDA is running elsewhere,
@@ -702,7 +720,12 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 	# Some exes are no longer used, but we remove them anyway from legacy copies.
 	# nvda_service.exe was removed in 2017.4 (#7625).
 	# TODO: nvda_eoaProxy.exe should be added to this list in 2024.1 (#15544).
-	_deleteFileGroupOrFail(installDir, _nvdaExes.union({"nvda_service.exe"}))
+	_deleteFileGroupOrFail(
+		installDir,
+		_nvdaExes.union({"nvda_service.exe"}),
+		numTries=6,
+		retryWeightInterval=0.5
+	)
 	unregisterInstallation(keepDesktopShortcut=shouldCreateDesktopShortcut)
 	if prevInstallPath:
 		removeOldLoggedFiles(prevInstallPath)
