@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-09 02:00+0000\n"
-"PO-Revision-Date: 2024-02-11 22:51\n"
+"POT-Creation-Date: 2024-02-18 21:46+0000\n"
+"PO-Revision-Date: 2024-02-18 23:13\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -2660,12 +2660,12 @@ msgstr "切換原生選取模式的開或關"
 #. Translators: the message when native selection mode is not available in this browse mode document.
 #: browseMode.py:2041
 msgid "Native selection mode unsupported in this browse mode document"
-msgstr ""
+msgstr "此文件不支援原生選取模式"
 
 #. Translators: the message when native selection mode cannot be turned off in this browse mode document.
 #: browseMode.py:2044
 msgid "Native selection mode cannot be turned off in this browse mode document"
-msgstr ""
+msgstr "此文件無法停用原生選取模式"
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
 #: browseMode.py:2053
@@ -2675,12 +2675,12 @@ msgstr "此文件不支援原生選取模式"
 #. Translators: reported when native selection mode is toggled on.
 #: browseMode.py:2057
 msgid "Native app selection mode enabled"
-msgstr ""
+msgstr "原生選取模式已啟用"
 
 #. Translators: reported when native selection mode is toggled off.
 #: browseMode.py:2065
 msgid "Native app selection mode disabled"
-msgstr ""
+msgstr "原生選取模式已停用"
 
 #. Translators: The level at which the given symbol will be spoken.
 #: characterProcessing.py:157
@@ -7437,7 +7437,7 @@ msgstr "NVDA 訊息"
 #. Translators: reported when unable to display a browsable message.
 #: ui.py:119
 msgid "Unable to display browseable message"
-msgstr ""
+msgstr "無法顯示可瀏覽的訊息"
 
 #. Translators: Spoken instead of a lengthy text when copied to clipboard.
 #. Translators: This is spoken when the user has selected a large portion of text.
@@ -11880,7 +11880,7 @@ msgstr "讀出文字範圍(&U):"
 #. mouse settings panel.
 #: gui\settingsDialogs.py:1900
 msgid "Report &object when mouse enters it"
-msgstr ""
+msgstr "鼠標進入時讀出物件(&O)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
@@ -12607,7 +12607,7 @@ msgstr "否"
 #. Translators: This is the label for a COMBOBOX in the Advanced settings panel.
 #: gui\settingsDialogs.py:3011
 msgid "Use en&hanced event processing (requires restart)"
-msgstr ""
+msgstr "使用增強的事件處理(需要重新啟動)(&H)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -13205,7 +13205,11 @@ msgid "Most commands for controlling NVDA require you to hold down the NVDA key 
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
 "From this menu, you can configure NVDA, get help, and access other NVDA functions."
-msgstr ""
+msgstr "大多數控制 NVDA 的命令需要您在按住 NVDA 鍵的同時按其他鍵。\n"
+"預設情况下，數字鍵盤的 Insert 和主見盤的 Insert 鍵都可以用作 NVDA 鍵。\n"
+"您還可以將 NVDA 配置為使用大寫鎖定鍵作為 NVDA 鍵。\n"
+"隨時可按 NVDA+n 開啟 NVDA 功能表。\n"
+"從此功能表中，您可以配置 NVDA、取得說明、存取其他 NVDA 功能。"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 #: gui\startupDialogs.py:47
@@ -13435,7 +13439,7 @@ msgstr "來源 URL:"
 #: gui\addonStoreGui\controls\details.py:323
 msgctxt "addonStore"
 msgid "Reviews URL:"
-msgstr ""
+msgstr "評論連結："
 
 #. Translators: A button in the addon installation warning / blocked dialog which shows
 #. more information about the addon
@@ -13823,7 +13827,7 @@ msgstr "原始碼(&C)"
 #: gui\addonStoreGui\viewModels\store.py:234
 msgctxt "addonStore"
 msgid "Community re&views"
-msgstr ""
+msgstr "社群評論"
 
 #. Translators: The message displayed when the add-on cannot be enabled.
 #. {addon} is replaced with the add-on name.
@@ -14007,7 +14011,7 @@ msgstr "在第 {rowNumber} 列第 {columnNumber} 欄找不到列標題"
 #. Translators: a description for a script that reports the comment at the caret.
 #: NVDAObjects\IAccessible\winword.py:321 NVDAObjects\UIA\wordDocument.py:608
 msgid "Reports the text of the comment where the system caret is located."
-msgstr "讀出系統游標所在的註解文字"
+msgstr "讀出系統游標所在的註解文字。"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 #: NVDAObjects\IAccessible\winword.py:344 NVDAObjects\UIA\wordDocument.py:619
@@ -14189,7 +14193,7 @@ msgstr "註解對話: {comment} 由 {author} 加註"
 #, python-brace-format
 msgid "Comment thread: {comment}  by {author} with {numReplies} reply"
 msgid_plural "Comment thread: {comment}  by {author} with {numReplies} replies"
-msgstr[0] ""
+msgstr[0] "註解對話: {comment} 由 {author} 加註包含 {numReplies} 則回覆"
 
 #. Translators: A message in Excel when there is no comment thread
 #: NVDAObjects\UIA\excel.py:533
@@ -14252,13 +14256,13 @@ msgstr "本文件不支援以句子導覽"
 #. headers.
 #: NVDAObjects\UIA\wordDocument.py:627
 msgid "Command not supported in this type of document. The tables have their first row cells automatically set as column headers."
-msgstr ""
+msgstr "此類文件不支援此指令。表格的第一列儲存格自動設定為欄標題。"
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
 #: NVDAObjects\UIA\wordDocument.py:636
 msgid "Command not supported in this type of document. The tables have their first column cells automatically set as row headers."
-msgstr ""
+msgstr "此類文件不支援此指令。表格的第一欄儲存格自動設定為列標題。"
 
 #: NVDAObjects\window\__init__.py:392
 msgid "Desktop"
@@ -14790,7 +14794,7 @@ msgstr "圖表底板"
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:451
 msgid "Nothing"
-msgstr ""
+msgstr "Nothing"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:453
@@ -14833,7 +14837,7 @@ msgstr "圖表標題: {chartTitle},類型: {chartType}"
 #, python-format
 msgid "There is %d series in this chart"
 msgid_plural "There are %d series in this chart"
-msgstr[0] ""
+msgstr[0] "此圖表有 %d 個數列"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
 #: NVDAObjects\window\_msOfficeChart.py:569
@@ -16026,21 +16030,21 @@ msgstr "第 %s 級"
 #: speech\speech.py:1969
 #, python-brace-format
 msgid "with {rowCountTranslation} and {colCountTranslation}"
-msgstr ""
+msgstr "有 {rowCountTranslation} {colCountTranslation}"
 
 #. Translators: Speaks number of columns (example output: with 4 columns).
 #: speech\speech.py:1975
 #, python-format
 msgid "with %s column"
 msgid_plural "with %s columns"
-msgstr[0] ""
+msgstr[0] "有 %s 欄"
 
 #. Translators: Speaks number of rows (example output: with 2 rows).
 #: speech\speech.py:1978
 #, python-format
 msgid "with %s row"
 msgid_plural "with %s rows"
-msgstr[0] ""
+msgstr[0] "有 %s 列"
 
 #. Translators: Sub-part of the compound string to speak number of rows and columns in a table.
 #. Example: If the full compound string is "table with 3 rwos and 2 columns", this substring is "3 rows".

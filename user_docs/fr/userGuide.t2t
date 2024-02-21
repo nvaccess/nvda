@@ -15,6 +15,7 @@ NonVisual Desktop Access (NVDA) est une revue d'écran gratuite et à source ouv
 En donnant des informations via une voix synthétique et le braille, il permet aux personnes aveugles ou malvoyantes d'accéder à un ordinateur sans coût additionnel par rapport à une personne voyante.
 NVDA est développé par [NV Access https://www.nvaccess.org/], avec des contributions de la communauté.
 
+
 ++ Caractéristiques Générales ++[GeneralFeatures]
 En restituant l'information par synthèse vocale ou en braille, NVDA permet aux personnes aveugles et malvoyantes d'utiliser le système d'exploitation Windows ainsi que beaucoup d'applications disponibles dans cet environnement.
 
@@ -37,10 +38,9 @@ Ses points forts sont :
 - La possibilité de mettre en évidence le focus système
 -
 
+
 ++ Configuration Système Requise ++[SystemRequirements]
-- Systèmes d'Exploitation : toutes les éditions 32-bit et 64-bit de Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11, et toutes les versions serveur à partir de Windows Server 2008 R2.
-  - Pour Windows 7, NVDA requiert le Service Pack 1 ou ultérieur.
-  - Pour Windows Server 2008 R2, NVDA requiert le Service Pack 1 ou ultérieur.
+- Systèmes d'Exploitation : toutes les éditions 32-bit et 64-bit de Windows 8.1, Windows 10, Windows 11, et toutes les versions serveur à partir de Windows Server 2012 R2.
   - les variantes AMD64 et ARM64 de Windows sont prises en charge.
   -
 - au moins 150 Mo d'espace de stockage.
@@ -60,6 +60,7 @@ Pour des informations concernant les autres synthétiseurs de parole pris en cha
 
 ++ Support du Braille ++[BrailleSupport]
 Pour les utilisateurs possédant un terminal braille, NVDA peut afficher ses informations en braille.
+NVDA utilise le traducteur braille à source ouverte [LibLouis https://liblouis.io/] pour générer des séquences braille à partir de texte.
 La saisie braille en intégral ou abrégé via un clavier braille est également supportée.
 De plus, NVDA détectera automatiquement beaucoup de terminaux braille par défaut.
 Reportez-vous à la section [Terminaux braille pris en charge #SupportedbrailleDisplays] pour les informations concernant les terminaux braille.
@@ -211,18 +212,18 @@ Les commandes réelles ne s'exécuteront pas en mode d'aide à la saisie.
 || Nom | Touche ordinateur de bureau | Touche ordinateur portable | Description |
 | Dire tout | ``NVDA+flècheBas`` | ``NVDA+a`` | Commence à lire à partir de la position courante en la déplaçant au fur et à mesure |
 | Lire la ligne courante | ``NVDA+flècheHaut`` | ``NVDA+l`` | Lit la ligne. Un double appui épelle la ligne. Un triple appui épelle la ligne en utilisant la description de caractères (Alpha, Bravo, Charlie, etc) |
-| Lire la sélection | ``NVDA+maj+flècheHaut`` | ``NVDA+maj+s`` | Lit tout texte sélectionné |
-| Lire le texte du presse-papiers | ``NVDA+c`` | ``NVDA+c`` | Lit tout texte dans le presse-papiers |
+| Lire la sélection | ``NVDA+maj+flècheHaut`` | ``NVDA+maj+s`` | Lit tout texte sélectionné. Un double appui épelle l'information. Un triple appui l'épelle en code international |
+| Lire le texte du presse-papiers | ``NVDA+c`` | ``NVDA+c`` | Lit tout texte dans le presse-papiers. Un double appui épelle l'information. Un triple appui l'épelle en code international |
 
 +++ Annoncer la position et autres informations +++[ReportingLocation]
 || Nom | Touche ordinateur de bureau | Touche ordinateur portable | Description |
 | Titre de la fenêtre | ``NVDA+t`` | ``NVDA+t`` | Annonce le titre de la fenêtre actuellement active. Un double appui épelle l'information. Un triple appui la copie dans le presse-papiers |
-| Annoncer le focus | ``NVDA+tab`` | ``NVDA+tab`` | Annonce le contrôle actuellement en focus. Un double appui épelle l'information |
+| Annoncer le focus | ``NVDA+tab`` | ``NVDA+tab`` | Annonce le contrôle actuellement en focus. Un double appui épelle l'information. Un triple appui l'épelle en code international |
 | Lire la fenêtre | ``NVDA+b`` | ``NVDA+b`` | Lit entièrement la fenêtre courante (utile pour les dialogues) |
 | Lire la barre d'état | ``NVDA+fin`` | ``NVDA+maj+fin`` | Annonce la barre d'état si NVDA en trouve une. Un double appui épelle l'information. Un triple appui la copie dans le presse-papiers |
 | Lire l'heure | ``NVDA+f12`` | ``NVDA+f12`` | Un appui annonce l'heure courante, un double appui annonce la date. L'heure et la date sont annoncées dans le format spécifié dans les paramètres Windows pour l'horloge de la barre d'état système. |
 | Annoncer la mise en forme du texte | ``NVDA+f`` | ``NVDA+f`` | Annonce la mise en forme du texte. Un double appui affiche l'information dans une fenêtre |
-| Annoncer le lien de destination | ``NVDA+k`` | ``NVDA+k`` | Un appui annonce l'URL de destination du lien à la position courante du curseur ou du focus. Deux appuis l'affichent dans une fenêtre pour une revue plus attentive |
+| Annoncer la destination du lien | ``NVDA+k`` | ``NVDA+k`` | Un appui annonce l'URL de destination du lien à la position courante du curseur ou du focus. Deux appuis l'affichent dans une fenêtre pour une revue plus attentive |
 
 +++ Choisir les informations lues par NVDA +++[ToggleWhichInformationNVDAReads]
 || Nom | Touche ordinateur de bureau | Touche ordinateur portable | Description |
@@ -291,6 +292,8 @@ L'assistance téléphonique est disponible pour les numéros situés en Australi
 
 Les [groupes d'utilisateurs par e-mail https://github.com/nvaccess/nvda/wiki/Connect] sont une excellente source d'aide communautaire, tout comme les [experts NVDA certifiés https://certification.nvaccess.org/].
 
+Vous pouvez créer des rapports de bogues ou des demandes de fonctionnalités via [GitHub https://github.com/nvaccess/nvda/blob/master/projectDocs/issues/readme.md].
+Les [contribution guidelines https://github.com/nvaccess/nvda/blob/master/.github/CONTRIBUTING.md] (en anglais) contiennent des informations précieuses pour contribuer à la communauté.
 
 + Plus d'Options de Configuration +[MoreSetupOptions]
 
@@ -355,9 +358,9 @@ Les copies portables et temporaires de NVDA ont les restrictions suivantes :
 - L'impossibilité de démarrer automatiquement pendant et/ou après la connexion.
 - L'impossibilité d'interagir avec les applications démarrées avec les privilèges administrateur, sauf bien sûr si NVDA a été démarré avec ces privilèges (non recommandé) ;
 - L'impossibilité de lire les écrans de contrôle de compte utilisateur (UAC) lorsque l'on tente de démarrer une application avec les privilèges administrateur ;
-- Windows 8 et au-delà : l'impossibilité d'utiliser un écran tactile comme support d'entrée ;
-- Windows 8 et au-delà : l'impossibilité de prendre en charge des fonctionnalités comme le mode navigation ou l'annonce des caractères saisis dans les applications du Windows Store.
-- Windows 8 et au-delà : l'atténuation audio n'est pas supportée.
+- L'impossibilité d'utiliser un écran tactile comme support d'entrée ;
+- L'impossibilité de prendre en charge des fonctionnalités comme le mode navigation ou l'annonce des caractères saisis dans les applications du Windows Store.
+- L'atténuation audio n'est pas supportée.
 -
 
 
@@ -419,7 +422,7 @@ Bien que la plupart des ordinateurs portables ne comportent pas de pavé numéri
 Si votre ordinateur portable ne peut pas le faire ou ne vous permet pas de désactiver le verrouillage numérique, vous pourrez alors basculer vers la disposition Ordinateur Portable.
 
 ++ Gestes Tactiles de NVDA ++[NVDATouchGestures]
-Si vous utilisez NVDA sur un système possédant un écran tactile, et utilisant Windows 8 ou supérieur, vous pouvez aussi contrôler NVDA directement via l'écran tactile.
+Si vous utilisez NVDA sur un système possédant un écran tactile, vous pouvez aussi contrôler NVDA directement via l'écran tactile.
 Tant que NVDA est actif, à moins que le support de l'interaction tactile soit désactivée, toutes les manipulations sur l'écran tactile vont directement à NVDA.
 Ainsi, toutes les actions qui peuvent être faites normalement sans NVDA ne fonctionneront pas.
 %kc:beginInclude
@@ -503,7 +506,6 @@ Lorsque le menu apparaît, vous pouvez utiliser les touches fléchées pour navi
 | Arrêt parole | Contrôle | Contrôle | tape 2 doigts | Arrêt instantané de la parole |
 | Pause parole | Maj | Maj | Aucun | Pause instantanée de la parole, un second appui reprend la parole là où elle s'était arrêtée |
 | Menu NVDA | NVDA+n | NVDA+n | Double-tape 2 doigts | Affiche le menu NVDA pour vous permettre d'accéder aux préférences, outils, aide etc. |
-| Choix du Mode de Parole | NVDA+s | NVDA+s | Aucun | Permet de choisir le mode de parole : parole, bips, silence. |
 | Passage en mode aide à la saisie | NVDA+1 | NVDA+1 | Aucun | Dans ce mode, l'appui sur n'importe quelle touche donnera son nom et la description de la commande NVDA qui lui est éventuellement associée |
 | Quitter NVDA | NVDA+q | NVDA+q | Aucun | Quitter NVDA |
 | Ignorer la touche suivante | NVDA+f2 | NVDA+f2 | Aucun | Indique à NVDA de passer la touche suivante directement à l'application - même si cette touche correspond normalement à une commande NVDA |
@@ -517,6 +519,35 @@ Lorsque le menu apparaît, vous pouvez utiliser les touches fléchées pour navi
 | Annoncer l'état de la batterie | NVDA+maj+b | Annonce le pourcentage de charge de la batterie ou si l'adaptateur secteur est connectée |
 | Annoncer le contenu du presse-papiers | NVDA+c | Lit le contenu du presse-papier s'il y a lieu |
 %kc:endInclude
+
+++ Mode de parole ++[SpeechModes]
+
+Le mode de parole détermine la façon dont le contenu de l'écran, les notifications, les réponses aux commandes et autres sorties sont prononcés pendant le fonctionnement de NVDA.
++The default mode is "talk", which speaks in situations that are expected when using a screen reader.
+Le mode par défaut est "activée", où la parole est utilisée dans les situations attendues lors de l'utilisation d'un lecteur d'écran.
+Cependant, dans certaines circonstances, ou lors de l'exécution de programmes particuliers, l'un des autres modes de parole peut s'avérer utile.
+
+Les quatre modes de parole disponibles sont :
+- Activée (par défaut) : NVDA parlera normalement en réaction aux changements d'écran, aux notifications et aux actions telles que déplacer le focus ou émettre des commandes.
+- À la demande : NVDA ne parlera que lorsque vous utilisez des commandes avec une fonction d'annonce (par exemple annoncer le titre de la fenêtre) ; mais il ne parlera pas en réaction à des actions telles que le déplacement du focus ou du curseur.
+- Désactivée : NVDA ne dira rien, mais contrairement au mode veille, il réagira silencieusement aux commandes.
+- remplacée par des bips : NVDA remplacera la parole normale par des bips courts.
+-
+
+Le mode bips peut être utile lorsqu'une sortie très importante défile dans une fenêtre de terminal, mais vous ne vous souciez pas de ce que c'est, seulement du fait qu'elle continue à défiler ; ou dans d’autres circonstances où le fait qu’il y ait une sortie est plus pertinent que la production elle-même.
+
+Le mode À la demande peut s'avérer utile lorsque vous n'avez pas besoin d'un retour constant sur ce qui se passe à l'écran ou sur l'ordinateur, mais que vous devez périodiquement vérifier des éléments particuliers à l'aide de commandes de revue, etc.
++Examples include while recording audio, when using screen magnification, during a meeting or a call, or as an alternative to beeps mode.
+Les exemples incluent lors d'un enregistrement audio, lors de l'utilisation d'un agrandissement de l'écran, lors d'une réunion ou d'un appel, ou comme alternative au mode bips.
+
+Un geste permet de parcourir les différents modes de parole :
+%kc:beginInclude
+|| Nom | Touche | Description |
+| Faire défiler les modes de parole | ``NVDA+s`` | Passer d’un mode vocal à l’autre |
+%kc:endInclude
+
+If you only need to switch between a limited subset of speech modes, see [Modes available in the Cycle speech mode command #SpeechModesDisabling] for a way to disable unwanted modes.
+Si vous avez seulement besoin de basculer entre un sous-ensemble limité de modes de parole, voir [Modes disponibles dans la commande Faire défiler les modes de parole #SpeechModesDisabling] pour savoir comment désactiver les modes non souhaités.
 
 + Naviguer avec NVDA +[NavigatingWithNVDA]
 NVDA vous permet de naviguer dans le système ou de l'explorer de différentes manières, soit en interaction normale, soit en revue.
@@ -557,6 +588,7 @@ NVDA fournit les commandes clavier suivantes relatives au curseur système :
 | Lire ligne courante | NVDA+flèche haut | NVDA+l | Lit la ligne où se trouve le curseur système. Un double appui épelle la ligne. Un triple appui l'épelle en code international. |
 | Lire texte sélectionné | NVDA+Maj+flèche haut | NVDA+Maj+s | Lit tout le texte actuellement sélectionné |
 | Annoncer la mise en forme du texte | NVDA+f | NVDA+f | annonce la mise en forme du texte à la position actuelle du curseur. Un double appui présente l'information en mode navigation |
+| Annoncer la destination du lien | ``NVDA+k`` | ``NVDA+k`` | Un appui annonce l'URL de destination du lien à la position courante du curseur ou du focus. Deux appuis l'affichent dans une fenêtre pour une revue plus attentive |
 | Annoncer la position du curseur | NVDA+pavnumEffacement | NVDA+effacement | Aucun | Annonce des informations sur l'emplacement du texte ou de l'objet à la position du curseur système. Par exemple, cela peut inclure le pourcentage dans le document, la distance depuis le bord de la page ou la position exacte sur l'écran. Appuyer deux fois peut fournir plus de détails. |
 | Phrase suivante | alt+flècheBas | alt+flècheBas | Amène le curseur à la phrase suivante et la lit. (Supporté seulement sous Microsoft Word et Outlook) |
 | Phrase précédente | alt+flècheHaut | alt+flècheHaut | Amène le curseur à la phrase précédente et la lit. (Supporté seulement sous Microsoft Word et Outlook) |
@@ -871,7 +903,7 @@ Une touche de commande permet de retourner à la page contenant l'objet embarqu�
 + Lecture de Contenu Mathématique +[ReadingMath]
 En utilisant MathPlayer 4 de Design Science, NVDA peut lire et naviguer interactivement dans le contenu mathématique supporté.
 Cela nécessite que MathPlayer 4 soit installé sur l'ordinateur.
-MathPlayer est disponible en téléchargement gratuit sur : https://www.dessci.com/en/products/mathplayer/.
+MathPlayer est disponible en téléchargement gratuit sur la [page d'information de MathPlayer https://info.wiris.com/mathplayer-info].
 Après avoir installé MathPlayer, redémarrez NVDA.
 
 NVDA supporte les types de contenu mathématiques suivants :
@@ -887,7 +919,7 @@ Pour plus de détails, veuillez consulter [Équations au format linéaire utilis
 NVDA peut lire et parcourir les équations MathType dans Microsoft Powerpoint et Microsoft Word.
 MathType doit être installé pour que cela fonctionne.
 La version de démonstration est suffisante.
-Elle peut être téléchargée à partir de https://www.dessci.com/en/products/mathtype/
+Elle peut être téléchargée depuis la [page de présentation de MathType https://www.wiris.com/en/mathtype/].
 - Adobe Reader.
 Notez que ceci n'est pas un standard officiel, ce qui fait qu'actuellement, il n'existe pas de logiciels grand public pouvant produire ce contenu.
 - Kindle Reader pour PC :
@@ -915,7 +947,7 @@ Par défaut, le curseur de revue suit le curseur système, vous pouvez donc gén
 
 Arrivé là, vous pouvez utiliser les commandes MathPlayer telles que les flèches pour explorer l'expression.
 Par exemple, vous pouvez vous déplacer dans l'expression avec les flèches gauche et droite puis zoomer sur une partie de l'expression telle qu'une fraction en utilisant la flèche basse.
-Veuillez consulter [la documentation de MathPlayer sur les commandes de navigation https://www.dessci.com/en/products/mathplayer/navigation_commands.htm] pour plus d'informations.
+Veuillez consulter [la documentation de MathPlayer https://docs.wiris.com/mathplayer/en/mathplayer-user-manual.html] pour plus d'informations.
 
 Quand vous voulez retourner au document, pressez simplement la touche échap.
 
@@ -1087,6 +1119,11 @@ Pour cette situation, NVDA contient une fonctionnalité appelée "Rideau d'Écra
 
 Vous pouvez activer le Rideau d'Écran dans la [catégorie vision #VisionSettings] du dialogue [Paramètres NVDA Settings #NVDASettings].
 
+%kc:beginInclude
+|| Nom | Touche | Description |
+| Activer ou désactiver le rideau d'écran | ``NVDA+contrôle+échap`` | Activer pour rendre l'écran noir ou désactiver pour afficher le contenu de l'écran. Un appui active le rideau d'écran jusqu'au prochain redémarrage de NVDA. Deux appuis activent le rideau d'écran jusqu'à ce que vous le désactiviez. |
+%kc:endInclude
+
 Quand le Rideau d'Écran est activé, certaines tâches directement liées à ce qui apparaît sur l'écran telles que [la reconnaissance optique de caractères #Win10Ocr] ou la prise d'une copie d'écran ne peuvent pas être effectuées.
 
 En raison d'un changement dans l'API de grossissement de Windows, le Rideau d'Écran a dû être mis à jour pour prendre en charge les dernières versions de Windows.
@@ -1130,8 +1167,11 @@ NVDA fournit ses propres fonctionnalités additionnelles dans quelques applicati
 
 +++ Lecture Automatique des En-têtes de Lignes et de Colonnes +++[WordAutomaticColumnAndRowHeaderReading]
 NVDA est capable d'annoncer automatiquement les en-têtes des lignes et des colonnes quand on navigue dans un tableau sous Microsoft Word.
-Ceci nécessite d'abord que l'option "En-têtes de ligne et de colonne" soit activée dans la catégorie "Mise en Forme des Documents" qui se trouve dans le dialogue [Paramètres #NVDASettings] de NVDA.
-Ensuite, NVDA doit savoir quelle ligne ou colonne contient les titres dans le tableau considéré.
+Ceci nécessite que l'option "En-têtes de ligne et de colonne" soit activée dans la catégorie "Mise en Forme des Documents" qui se trouve dans le dialogue [Paramètres #NVDASettings] de NVDA.
+
+Si vous utilisez [UIA pour accéder aux documents Word #MSWordUIA], qui est le choix par défaut pour les versions récentes de Word et Windows, les cellules de la première ligne seront automatiquement considérées comme en-têtes de colonnes ; de même, les cellules de la première colonne seront automatiquement considérées comme en-têtes de lignes.
+
+Au contraire, si vous n'utilisez pas [UIA pour accéder aux documents Word #MSWordUIA], vous devrez indiquer à NVDA quelle ligne ou colonne contient les en-têtes pour chaque tableau.
 Après vous être placé sur la première cellule dans la colonne ou la ligne contenant les titres, utilisez l'une des commandes suivantes :
 %kc:beginInclude
 || Nom | Touche | Description |
@@ -1255,10 +1295,14 @@ Note : Les raccourcis ci-dessus fonctionnent seulement avec le format de chaîn
 %kc:endInclude
 
 ++ Poedit ++[Poedit]
+NVDA offre un support amélioré pour Poedit 3.4 ou plus récent.
+
 %kc:beginInclude
 || Nom | Touche | Description |
-| Annonce de la fenêtre de commentaires | contrôle+maj+c | Annonce tout commentaire dans la fenêtre de commentaires. |
-| Annonce des notes pour les traducteurs | contrôle+maj+a | Annonce les notes pour les traducteurs. |
+| Annonce des notes pour les traducteurs | ``contrôle+maj+a`` | Annonce les notes pour les traducteurs. Deux appuis présente les notes en mode navigation |
+| Annonce de la fenêtre de commentaires | ``contrôle+maj+c`` | Annonce tout commentaire dans la fenêtre de commentaires. Deux appuis présente le commentaire en mode navigation |
++| Annonce de l'ancien texte source | ``contrôle+shift+o`` | Annonce l'ancien texte source s'il y en a un. Deux appuis présente le texte en mode navigation |
++| Annonce l'avertissement de traduction | ``contrôle+shift+w`` | Annonce l'avertissement de traduction, s'il y en a un. Deux appuis présente l'avertissement en mode navigation |
 %kc:endInclude
 
 ++ Kindle pour PC ++[Kindle]
@@ -1330,6 +1374,10 @@ Beaucoup de ces paramètres se trouvent dans le dialogue multipage [Paramètres 
 Dans tous les dialogues, appuyez sur le bouton "OK" pour valider vos modifications.
 Pour annuler les modifications, appuyez sur le bouton "Annuler" ou sur la touche "échap".
 Pour certains dialogues, vous pouvez activer le bouton Appliquer pour que les paramètres prennent effet immédiatement sans fermer le dialogue.
+La plupart des dialogue NVDA prennent en charge l'aide contextuelle.
+%kc:beginInclude
+Dans un dialogue, un appui sur ``f1`` ouvre le guide de l'utilisateur au paragraphe relatif au paramètre sélectionné ou au dialogue actuel.
+%kc:endInclude
 Certains paramètres peuvent aussi être modifiés en utilisant des raccourcis clavier que vous trouverez dans les sections ci-dessous.
 
 ++ Paramètres de NVDA ++[NVDASettings]
@@ -1350,7 +1398,12 @@ Si vous accédez fréquemment à une catégorie qui n'a pas de raccourci dédié
 
 Les catégories de paramètres du dialogue Paramètres sont décrite ci-dessous.
 
-+++ Général (NVDA+contrôle+g) +++[GeneralSettings]
++++ Général +++[GeneralSettings]
+
+%kc:setting
+==== Ouvrir les paramètres généraux ====
+Raccourci clavier : ``NVDA+contrôle+g``
+
 La catégorie Général du dialogue Paramètres définit le comportement global de NVDA tel que la langue de l'interface et la vérification des mises à jour.
 Elle contient les options suivantes :
 
@@ -1429,7 +1482,12 @@ Ces informations aident grandement NV Access pour prioritiser les futurs dévelo
 Si ceci est activé, NVDA vous informera quand il y a une mise à jour en attente au démarrage, et vous offrira la possibilité de l'installer.
 Vous pouvez aussi installer manuellement la mise à jour en attente depuis le dialogue de sortie de NVDA (si activé), depuis le menu NVDA, ou quand vous exécutez une vérification depuis le menu Aide.
 
-+++ Parole (NVDA+contrôle+v) +++[SpeechSettings]
++++ Parole +++[SpeechSettings]
+
+%kc:setting
+==== Ouvrir les paramètres de parole ====
+Raccourci clavier : ``NVDA+contrôle+v``
+
 La catégorie "Parole" dans le dialogue Paramètres de NVDA, contient des options vous permettant de changer le synthétiseur vocal ainsi que les caractéristiques de la voix pour le synthétiseur choisi.
 Pour une manière plus rapide de contrôler les paramètres vocaux depuis n'importe où, reportez-vous à la section [boucle des paramètres synthétiseur #SynthSettingsRing].
 
@@ -1538,7 +1596,20 @@ Cela peut être utile s'il est difficile de distinguer la prononciation des symb
 
 La description différée du caractère sera annulée si un autre texte est prononcé pendant ce temps, ou si vous appuyez sur la touche ``contrôle``.
 
-+++ Choix du Synthétiseur (NVDA+contrôle+s) +++[SelectSynthesizer]
+==== Modes disponibles dans la commande Faire défiler les modes de parole ====[SpeechModesDisabling]
+Les cases à cocher dans cette liste vous permettent de choisir quels modes de parole sont inclus lors du passage de l'un à l'autre en utilisant ``NVDA+s``.
+Les modes non cochés sont exclus.
+Par défaut, tous les modes sont inclus.
+
+Par exemple, si vous n'avez pas besoin d'utiliser les modes "bips" et "désactivée", vous devez décocher ces deux modes et laisser cochés les modes "activée" et "à la demande".
+A noter qu'il est nécessaire de cocher au moins deux modes.
+
++++ Choix du synthétiseur +++[SelectSynthesizer]
+
+%kc:setting
+==== Ouvrir le dialogue sélection du synthétiseur ====
+Raccourci clavier : ``NVDA+contrôle+s``
+
 Le dialogue Synthétiseur, qui s'ouvre en activant le bouton Changer dans la catégorie Parole du dialogue Paramètres, permet de choisir le synthétiseur de parole qui sera utilisé par NVDA.
 Une fois que vous aurez choisi votre synthétiseur, appuyez sur "OK" et NVDA chargera le synthétiseur choisi.
 S'il y a une erreur au chargement du synthétiseur, NVDA vous en informera par un message, puis continuera à utiliser le synthétiseur précédent.
@@ -1551,23 +1622,7 @@ Pour une liste des synthétiseurs de parole pris en charge par NVDA, reportez-vo
 L'élément particulier "Pas de parole" apparaîtra toujours dans cette liste.
 Cela peut être utile pour quelqu'un qui veut utiliser NVDA seulement avec le braille, ou peut-être pour un développeur voyant qui ne veut utiliser que la visionneuse de parole.
 
-==== Sortie audio ====[SelectSynthesizerOutputDevice]
-Cette option vous permet de choisir le périphérique audio par lequel NVDA doit indiquer au synthétiseur sélectionné de parler.
-
-%kc:setting
-==== Mode d'Atténuation Audio ====[SelectSynthesizerDuckingMode]
-Raccourci : NVDA+maj+d
-
-Sous Windows 8 et au-delà, cette option vous permet de choisir si NVDA doit baisser le volume des autres applications quand il parle, ou tout le temps quand il est en cours d'exécution.
-- Ne jamais atténuer : NVDA ne baissera jamais le volume des autres applications.
-- Atténuer les autres sources quand NVDA parle : NVDA ne baissera le son des autres applications que quand il parle ou émet un son. Ceci peut ne pas fonctionner avec tous les synthétiseurs.
-- Toujours atténuer : NVDA réduira le son des autres applications tout le long de son exécution.
--
-
-Cette option n'est disponible que si NVDA a été installé.
-Il n'est pas possible de supporter l'atténuation audio pour les versions portables et temporaires de NVDA.
-
-+++ Boucle des Paramètres Synthétiseur +++[SynthSettingsRing]
++++ Boucle des paramètres synthétiseur +++[SynthSettingsRing]
 Si vous voulez changer rapidement les paramètres vocaux sans passer par la catégorie Voix du dialogue Paramètres, il y a quelques touches de commandes qui vous permettent de le faire de n'importe où quand NVDA est en fonction.
 %kc:beginInclude
 || Nom | Ordinateur de bureau | Ordinateur portable | Description |
@@ -1646,10 +1701,10 @@ Si vous voulez que le braille suive la navigation par objet et la revue de texte
 Dans ce cas, le braille ne suivra pas le focus système et le curseur système.
 
 ==== Déplacer le curseur système lors du routage du curseur de revue ====[BrailleSettingsReviewRoutingMovesSystemCaret]
-: Défaut
- Jamais
 
-|| Options | Défaut (Jamais), Jamais, Seulement quand le braille suit automatiquement, Toujours |
+|| . {.hideHeaderRow} | . |
+| Options | Défaut (Jamais), Jamais, Seulement quand le braille suit automatiquement, Toujours |
+| Défaut | Jamais |
 
 
 Ce paramètre détermine si le curseur système doit également être déplacé lors d'un appui sur une touche de routage du curseur.
@@ -1741,7 +1796,12 @@ La désactivation de cette option peut améliorer la lisibilité.
 
 Pour basculer l'affichage de la sélection de n'importe où, veuillez attribuer un geste personnalisé à l'aide de la [boîte de dialogue Gestes de commandes #InputGestures].
 
-+++ Choisir l'Afficheur Braille (NVDA+contrôle+a) +++[SelectBrailleDisplay]
++++ Choisir l'afficheur braille +++[SelectBrailleDisplay]
+
+%kc:setting
+==== Ouvrir le dialogue de sélection de l'afficheur braille ====
+Raccourci clavier : ``NVDA+contrôle+a``
+
 Le dialogue Choisir l'Afficheur Braille, qui peut être ouvert en activant le bouton Changer... dans la catégorie Braille du dialogue Paramètres, vous permet de choisir l'afficheur Braille qui sera utilisé par NVDA.
 Quand vous aurez choisi votre afficheur braille, vous pourrez presser le bouton OK et NVDA chargera l'afficheur sélectionné.
 S'il y a une erreur au chargement du pilote de l'afficheur, NVDA vous avertira par un message et continuera à utiliser l'afficheur précédent si défini.
@@ -1783,6 +1843,45 @@ Note : Si vous connectez plusieurs Afficheurs Braille utilisant le même pilote
 il est actuellement impossible de dire à NVDA quel afficheur utiliser.
 Par conséquent, il est recommandé de ne connecter qu'un seul afficheur braille d'un type/fabricant donné à votre machine à la fois.
 
++++ Audio +++[AudioSettings]
+
+%kc:setting
+==== Ouvrir les paramètres audio ====
+Raccourci clavier : ``NVDA+contrôle+u``
+
+La catégorie Audio du dialogue des Paramètres de NVDA contient des options qui vous permettent de modifier plusieurs aspects de la sortie audio.
+
+==== Sortie audio ====[SelectSynthesizerOutputDevice]
+Cette option vous permet de choisir le périphérique audio par lequel NVDA doit indiquer au synthétiseur sélectionné de parler.
+
+%kc:setting
+==== Mode d'Atténuation Audio ====[SelectSynthesizerDuckingMode]
+Raccourci clavier : ``NVDA+maj+d``
+
+Cette option vous permet de choisir si NVDA doit baisser le volume des autres applications quand il parle, ou tout le temps quand il est en cours d'exécution.
+- Ne jamais atténuer : NVDA ne baissera jamais le volume des autres applications.
+- Atténuer les autres sources quand NVDA parle : NVDA ne baissera le son des autres applications que quand il parle ou émet un son. Ceci peut ne pas fonctionner avec tous les synthétiseurs.
+- Toujours atténuer : NVDA réduira le son des autres applications tout le long de son exécution.
+-
+
+Cette option n'est disponible que si NVDA a été installé.
+Il n'est pas possible de supporter l'atténuation audio pour les versions portables et temporaires de NVDA.
+
+==== Le volume des sons NVDA suit le volume de la voix ====[SoundVolumeFollowsVoice]
+
+|| . {.hideHeaderRow} | . |
+| Options | Désactivé, Activé |
+| Défaut | Désactivé |
+
+
+Lorsque cette option est activée, le volume des sons et des bips de NVDA suivra le réglage du volume de la voix que vous utilisez.
+Si vous diminuez le volume de la voix, le volume des sons diminuera.
+De même, si vous augmentez le volume de la voix, le volume des sons augmentera.
+
+==== Volume des sons NVDA ====[SoundVolume]
+Ce potentiomètre vous permet de régler le volume des sons et des bips de NVDA.
+Ce paramètre ne prend effet que lorsque "Le volume des sons NVDA suit le volume de la voix" est désactivé.
+
 +++ Vision +++[VisionSettings]
 La catégorie Vision du dialogue des paramètres NVDA vous permet d'activer, désactiver et configurer les [aides visuelles #Vision].
 
@@ -1811,8 +1910,6 @@ Si vous êtes sûr, vous pouvez choisir le bouton Oui pour activer le Rideau d'�
 Si vous ne voulez plus voir cet avertissement à chaque fois, vous pouvez changer ce comportement dans le dialogue qui affiche le message.
 Vous pouvez toujours restaurer l'avertissement en cochant la case "Toujours afficher un avertissement au chargement du Rideau d'Écran" à côté de la case "Rendre l'écran noir".
 
-Pour activer ou désactiver le Rideau d'Écran de n'importe où, veuillez assigner un geste personnalisé en utilisant le dialogue [Gestes de Commandes #InputGestures].
-
 Par défaut, des sons sont émis quand le Rideau d'Écran est activé ou désactivé.
 Si vous souhaitez changer ce comportement, vous pouvez décocher la case " Émettre un son lors du basculement du rideau d'écran ".
 
@@ -1821,7 +1918,12 @@ Des services d'aide visuelle additionnels peuvent être fournis dans des [Extens
 Si ces services ont des paramètres ajustables, ils seront affichés dans cette catégorie de paramètres dans des groupes séparés.
 Pour les paramètres supportés par un service, veuillez vous référer à la documentation pour ce service.
 
-+++ Clavier (NVDA+contrôle+k) +++[KeyboardSettings]
++++ Clavier +++[KeyboardSettings]
+
+%kc:setting
+==== Ouvrir les paramètres Clavier ====
+Raccourci clavier : ``NVDA+contrôle+k``
+
 La catégorie Clavier du dialogue Paramètres de NVDA contient des options qui définissent le comportement de NVDA quand vous utilisez ou tapez sur votre clavier.
 Cette catégorie de paramètres contient les options suivantes :
 
@@ -1835,9 +1937,7 @@ Les cases à cocher de cette liste contrôlent quelles touches peuvent être uti
 - La touche insertion étendue (elle se trouve généralement au-dessus des flèches, près de début et fin)
 -
 
-Si aucune touche n'est choisie pour être la touche NVDA, il peut être impossible d'accéder à certaines commandes NVDA.
-Par conséquent, le dialogue Paramètres affichera un message d'erreur si aucune touche n'est sélectionnée en appuyant sur "OK".
-Après avoir fermé le message d'erreur, vous devrez sélectionner au moins une touche avant de pouvoir appuyer sur "OK" pour fermer le dialogue correctement.
+Si aucune touche n'est choisie pour être la touche NVDA, il peut être impossible d'accéder à de nombreuses commandes de NVDA, vous devez donc cocher au moins une des touches.
 
 %kc:setting
 ==== Écho clavier par caractère ====[KeyboardSettingsSpeakTypedCharacters]
@@ -1879,7 +1979,12 @@ Cette option n'est disponible que si l'annonce des fautes d'orthographe est acti
 Cette option permet à l'utilisateur de choisir si les combinaisons de touches générées par des applications telles que les claviers à l'écran et les logiciels de reconnaissance vocale doivent être traitées par NVDA.
 Cette option est activée par défaut, mais certains utilisateurs souhaiteraient la désactiver, comme ceux tapant en vietnamien avec le logiciel de dactylographie UniKey, car cela causerait la saisie de caractères incorrects.
 
-+++ Souris (NVDA+contrôle+m) +++[MouseSettings]
++++ Souris +++[MouseSettings]
+
+%kc:setting
+==== Ouvrire les paramètres de souris ====
+Raccourci clavier : ``NVDA+contrôle+m``
+
 La catégorie Souris du dialogue Paramètres de NVDA permet de définir le mode de suivi de la souris par NVDA, de sonoriser les coordonnées de la souris par des bips et de définir d'autres options d'utilisation de la souris.
 Elle contient les options suivantes :
 
@@ -1899,8 +2004,12 @@ Les options sont caractère, mot, ligne ou paragraphe.
 
 Pour activer la résolution d'unités de texte de n'importe où, veuillez assigner un geste de commande personnalisé en utilisant le dialogue [Gestes de Commandes #InputGestures].
 
-==== Quand la souris entre dans un objet, annoncer son type ====[MouseSettingsRole]
-Quand cette case est cochée, NVDA annonce le type de l'objet quand la souris y entre.
+==== Annoncer l'objet quand la souris y entre ====[MouseSettingsRole]
+Quand cette case est cochée, NVDA annonce des informations sur les objets quand la souris y entre.
+Cela comprend le rôle (type) de l'objet ainsi que les états (coché/appuyé), les coordonnées des cellules dans les tableaux, etc.
++Note that the announcement of some object details might be dependent on how other settings are set, such as in the [object presentation #ObjectPresentationSettings] or [Document Formatting #DocumentFormattingSettings] categories.
+Veuillez Noter que l'annonce de certains détails d'objet peut dépendre de la façon dont d'autres paramètres sont définis, tels que les paramètres dans les catégories [Présentation des objets #ObjectPresentationSettings] ou [Mise en Forme des Documents #DocumentFormattingSettings].
+
 
 ==== Sonoriser les coordonnées quand la souris se déplace ====[MouseSettingsAudio]
 Quand cette case est cochée, NVDA émet des bips quand la souris se déplace, pour que l'utilisateur puisse se figurer la position de la souris sur l'écran.
@@ -1916,8 +2025,8 @@ Cette option permet à l'utilisateur d'ignorer les événements relatifs à la s
 Cette option est décochée par défaut.
 Si vous cochez cette option et que l'option "suivi de la souris" est activée, NVDA n'annoncera pas ce qui est sous la souris si la souris est déplacée par une autre application.
 
-+++ Interaction Tactile +++[TouchInteraction]
-Cette catégorie, disponible seulement sur un ordinateur exécutant Windows 8 et au-delà et possédant des capacités tactiles, vous permet de configurer la manière dont NVDA interagit avec l'écran tactile.
++++ Interaction tactile +++[TouchInteraction]
+Cette catégorie, disponible seulement sur un ordinateur possédant des capacités tactiles, vous permet de configurer la manière dont NVDA interagit avec l'écran tactile.
 Elle contient les options suivantes :
 
 ==== Activer le support d'interaction tactile ====[TouchSupportEnable]
@@ -1931,7 +2040,7 @@ Cette case à cocher vous permet d'indiquer la méthode que vous désirez utilis
 Quand elle est cochée, quand vous repérez une touche sur le clavier tactile, vous pouvez retirer votre doigt et la touche sélectionnée sera pressée.
 Quand elle est décochée, vous devez double-taper sur la touche du clavier tactile pour la presser.
 
-+++ Curseur de Revue +++[ReviewCursorSettings]
++++ Curseur de revue +++[ReviewCursorSettings]
 La catégorie Curseur de Revue du dialogue Paramètres de NVDA sert à configurer le comportement du curseur de revue de NVDA.
 Elle contient les options suivantes :
 
@@ -1955,7 +2064,12 @@ Quand l'option est activée, NVDA filtre la hiérarchie des objets que l'on peut
 
 Pour activer ou désactiver le mode de revue simple depuis n'importe où, veuillez lui assigner un geste de commande personnalisé en utilisant le [dialogue Gestes de Commandes #InputGestures].
 
-+++ Présentation des Objets (NVDA+contrôle+o) +++[ObjectPresentationSettings]
++++ Présentation des objets +++[ObjectPresentationSettings]
+
+%kc:setting
+==== Ouvrir les paramètres de présentation des objets ====
+Raccourci clavier : ``NVDA+contrôle+o``
+
 La catégorie Présentation des Objets du dialogue Paramètres de NVDA sert à définir la quantité d'informations annoncées par NVDA pour les contrôles tels que leur description, leur position etc.
 Ces options ne s'appliquent généralement pas au mode navigation.
 Elles s'appliquent généralement aux annonces de focus et à la navigation par objets de NVDA, mais pas à la lecture de contenu textuel, par ex. mode navigation.
@@ -2015,7 +2129,7 @@ Par exemple, quand vous entrez du texte dans la boîte de recherche du menu dém
 Pour certains champs d'édition comme le champ de recherche dans diverses applications Windows 10, NVDA peut vous signaler qu'une liste de suggestions est apparue quand vous tapez du texte.
 La liste de suggestions se ferme quand vous quittez le champ d'édition, et pour certains champs, NVDA peut vous en avertir quand ça arrive.
 
-+++ Composition de Saisie +++[InputCompositionSettings]
++++ Composition de saisie +++[InputCompositionSettings]
 La catégorie Composition de la Saisie permet de contrôler comment NVDA annonce la saisie des caractères asiatiques, avec IME ou les services de texte et langue d'entrée.
 Notez que, comme les méthodes de saisie varient considérablement selon les fonctions disponibles et la façon dont elles transmettent l'information, il sera probablement nécessaire de configurer ces options différemment pour chaque méthode de saisie, pour obtenir la meilleure expérience de saisie possible.
 
@@ -2045,7 +2159,12 @@ Après que les données de lecture ou de précomposition ont été combinées en
 Cette option permet de choisir si oui ou non NVDA doit annoncer tous les symboles quand ils apparaissent dans la chaîne de composition.
 Cette option est activée par défaut.
 
-+++ Mode Navigation (NVDA+contrôle+b) +++[BrowseModeSettings]
++++ Mode navigation +++[BrowseModeSettings]
+
+%kc:setting
+==== Ouvrir les paramètres du mode navigation ====
+Raccourci clavier : ``NVDA+contrôle+b``
+
 La catégorie Mode Navigation du dialogue Paramètres de NVDA sert à configurer le comportement de NVDA quand vous naviguez dans des documents complexes tels que des pages web.
 Elle contient les options suivantes :
 
@@ -2116,7 +2235,12 @@ Cela pourrait apporter une expérience de navigation plus rapide et une meilleur
 Le focus sera alors mis à jour lors d'une interaction avec un élément particulier (ex : l'appui d'un bouton, le cochage d'une case à cocher).
 Activer cette option peut améliorer le support de quelques sites web au détriment de la performance et de la stabilité.
 
-+++ Mise en Forme des Documents (NVDA+contrôle+d) +++[DocumentFormattingSettings]
++++ Mise en forme des documents (NVDA+contrôle+d) +++[DocumentFormattingSettings]
+
+%kc:setting
+==== Ouvrir les paramètres de mise en forme des documents ====
+Raccourci clavier : ``NVDA+contrôle+d``
+
 La plupart des options de cette catégorie servent à définir quelles informations de mise en forme vous souhaitez entendre automatiquement lorsque vous parcourez un document.
 Par exemple, si on coche la case "Annoncer le nom de la police", à chaque fois que les flèches amènent sur un texte avec une police différente, le nom de la police est annoncé.
 
@@ -2186,7 +2310,7 @@ La hauteur du son montera pour chaque espace, et pour une tabulation, la hauteur
 Si vous cochez la case « Ignorer les lignes vides pour l'annonce de retrait de ligne », les modifications d'indentation ne seront pas signalées pour les lignes vides.
 Cela peut être utile lors de la lecture d'un document dans lequel des lignes vides sont utilisées pour séparer des blocs de texte en retrait, comme dans le code source de programmation.
 
-+++ Navigation dans les Documents +++[DocumentNavigation]
++++ Navigation dans les documents +++[DocumentNavigation]
 Cette catégorie vous permet d'ajuster divers aspects de la navigation dans les documents.
 
 ==== Style des paragraphes ====[ParagraphStyle]
@@ -2223,7 +2347,7 @@ Cela peut être très utile lorsque vous souhaitez surveiller un contenu en cons
 Le rafraîchissement a lieu toutes les secondes et demie.
 Cette option est désactivée par défaut.
 
-+++ Paramètres Avancés +++[AdvancedSettings]
++++ Paramètres avancés +++[AdvancedSettings]
 Avertissement ! Les paramètres dans cette catégorie sont pour les utilisateurs avancés et peuvent provoquer un mauvais fonctionnement de NVDA si mal configurés.
 Ne modifiez ces paramètres que si vous êtes sûr de ce que vous faites ou si un développeur NVDA vous a demandé de le faire.
 
@@ -2280,6 +2404,16 @@ Par exemple, la liste des éléments de NVDA pour lister les formules et les com
 Cependant, pour la navigation/l'édition de base d'une feuille de calcul, cette option peut améliorer considérablement les performances.
 Nous ne recommandons toujours pas que la majorité des utilisateurs l'activent par défaut, mais nous invitons les utilisateurs de Microsoft Excel version 16.0.13522.10000 ou supérieure à tester cette fonctionnalité et à nous faire part de leurs commentaires.
 L'implémentation de UI Automation dans Microsoft Excel est en constante évolution et les versions de Microsoft Office antérieures à 16.0.13522.10000 peuvent ne pas exposer suffisamment d'informations pour que cette option soit d'une quelconque utilité.
+
+==== Utiliser le traitement des événements amélioré ====[UIAEnhancedEventProcessing]
+: Défaut
+  Activé
+: Options
+  Défaut (Activé), Désactivé, Activé
+:
+
+Lorsque cette option est activée, NVDA devrait rester réactif lorsqu'il est submergé de nombreux événements UI Automation, par ex. de grandes quantités de texte dans un terminal.
+Après avoir modifié cette option, vous devrez redémarrer NVDA pour que la modification prenne effet.
 
 ==== Prise en charge de la Console Windows ====[AdvancedSettingsConsoleUIA]
 
@@ -2414,22 +2548,6 @@ WASAPI est une architecture audio plus moderne qui peut améliorer la réactivit
 Cette option est activée par défaut.
 Après avoir modifié cette option, vous devrez redémarrer NVDA pour que la modification prenne effet.
 
-==== Le volume des sons NVDA suit le volume de la voix ====[SoundVolumeFollowsVoice]
-
-|| . {.hideHeaderRow} | . |
-| Options | Désactivé, Activé |
-| Default | Disabled |
-
-
-Lorsque cette option est activée, le volume des sons et des bips de NVDA suivra le réglage du volume de la voix que vous utilisez.
-Si vous diminuez le volume de la voix, le volume des sons diminuera.
- De même, si vous augmentez le volume de la voix, le volume des sons augmentera.
-Cette option ne prend effet que lorsque "Utiliser WASAPI pour la sortie audio" est activé.
-
-==== Volume des sons NVDA ====[SoundVolume]
-Ce potentiomètre vous permet de régler le volume des sons et des bips de NVDA.
-Ce paramètre ne prend effet que lorsque "Utiliser WASAPI pour la sortie audio" est activé et que "Le volume des sons NVDA suit le volume de la voix" est désactivé.
-
 ==== Catégories de journalisation de débogage ====[AdvancedSettingsDebugLoggingCategories]
 Les cases à cocher dans cette liste vous permettent d'activer des catégories spécifiques de messages de débogage dans le journal de NVDA.
 La journalisation de ces messages peut dégrader la performance et produire de gros fichiers de journal.
@@ -2440,10 +2558,10 @@ Cette option vous permet de spécifier si NVDA joue un son d'erreur au cas où u
 En sélectionnant Uniquement dans les versions de test (par défaut), NVDA émet des sons d'erreur uniquement si la version actuelle de NVDA est une version de test (alpha, bêta ou exécutée à partir de la source).
 En sélectionnant Oui les sons d'erreur sont activés quelle que soit votre version actuelle de NVDA.
 
-++ Autres Paramètres ++[MiscSettings]
+++ Autres paramètres ++[MiscSettings]
 En plus du dialogue [Paramètres #NVDASettings], le sous-menu Préférences du menu NVDA contient plusieurs autres éléments décrits ci-dessous.
 
-+++ Dictionnaires de Prononciation +++[SpeechDictionaries]
++++ Dictionnaires de prononciation +++[SpeechDictionaries]
 Le menu "Dictionnaires de prononciation" du menu "Préférences" contient des dialogues qui vous permettent de gérer la manière dont NVDA prononce certains mots ou phrases.
 Il y a actuellement trois types de dictionnaires.
 Ce sont :
@@ -2477,9 +2595,9 @@ Ainsi, en utilisant l'exemple précédent de remplacement du mot "oiseau" par le
 
 Une expression régulière est un modèle contenant des symboles particuliers vous permettant de trouver une correspondance sur plus d'un caractère à la fois, ou seulement sur les lettres ou les chiffres etc.
 Les expressions régulières ne sont pas expliquées dans ce manuel.
-Pour un tutoriel d'introduction, veuillez consulter [https://docs.python.org/fr/3.7/howto/regex.html].
+Pour un tutoriel d'introduction, veuillez consulter le [Guide des expressions régulières de Python https://docs.python.org/3.11/howto/regex.html].
 
-+++ Prononciation des Ponctuations et symboles +++[SymbolPronunciation]
++++ Prononciation des ponctuations et symboles +++[SymbolPronunciation]
 Ce dialogue vous permet de modifier la façon dont les ponctuations et autres symboles sont prononcés ainsi que le niveau de symbole auquel ils sont annoncés.
 
 La langue pour laquelle la prononciation des symboles est en cours d'édition sera indiquée dans le titre du dialogue.
@@ -2516,7 +2634,7 @@ Quand vous avez fini, cliquez sur le bouton "OK" pour sauvegarder vos modificati
 Dans le cas de symboles complexes, le champ Remplacement peut inclure quelques références aux groupes du texte source. Par exemple, pour un modèle correspondant à une date complète, \1, \2 et \3 devraient apparaître dans le champ, pour être remplacés par les parties correspondantes de la date.
 Ainsi, dans le champ Remplacement, les barres obliques normales doivent être doublées, ex : "a\\b" doit être tapé pour obtenir le remplacement de "a\b".
 
-+++ Gestes de Commandes +++[InputGestures]
++++ Gestes de commandes +++[InputGestures]
 Dans ce dialogue, vous pouvez configurer les gestes de commandes (raccourcis clavier, boutons d'un afficheur braille etc.) pour les commandes NVDA.
 
 Seules les commandes qui sont applicables immédiatement avant l'ouverture du dialogue sont affichées.
@@ -2549,7 +2667,7 @@ Note :
 
 Lorsque vous avez terminé vos modifications, appuyez sur le bouton "OK" pour les sauvegarder ou sur le bouton "Annuler" pour les ignorer.
 
-++ Sauvegarder et Recharger la Configuration ++[SavingAndReloading]
+++ Sauvegarder et recharger la configuration ++[SavingAndReloading]
 Par défaut NVDA sauvegarde automatiquement vos paramètres.
 Notez cependant que ce comportement peut être modifié dans le dialogue "Paramètres généraux" du menu "Préférences".
 Pour sauvegarder manuellement les paramètres à n'importe quel moment, utilisez l'élément "Sauvegarder la configuration" dans le menu NVDA.
@@ -2564,7 +2682,7 @@ Les touches de commandes suivantes sont également utiles :
 | Réinitialiser la configuration | NVDA+contrôle+r | NVDA+contrôle+r | Appuyez une fois pour réinitialiser à la configuration qui existait lors de votre dernière sauvegarde. Appuyez trois fois pour revenir à la configuration par défaut de NVDA. |
 %kc:endInclude
 
-++ Profils de Configuration ++[ConfigurationProfiles]
+++ Profils de configuration ++[ConfigurationProfiles]
 Parfois, vous souhaiteriez avoir des paramètres différents pour des situations différentes.
 Par exemple, vous pourriez avoir l'annonce de retrait activée pendant que vous éditez ou l'annonce des attributs de la police activée pendant que vous corrigez.
 NVDA vous permet de faire cela en utilisant des profils de configuration.
@@ -2575,7 +2693,7 @@ La plupart des paramètres peuvent être modifiés dans les profils de configura
 Les profils de configuration peuvent être activés manuellement soit à partir d'un dialogue soit en utilisant un geste de commande personnalisé.
 Ils peuvent également être activés automatiquement grâce à des déclencheurs tels que le passage à une application particulière.
 
-+++ Gestion Basique +++[ProfilesBasicManagement]
++++ Gestion basique +++[ProfilesBasicManagement]
 Vous pouvez gérer les profils de configuration en sélectionnant "Profils de configuration" dans le menu NVDA.
 Vous pouvez aussi le faire en utilisant un raccourci clavier :
 %kc:beginInclude
@@ -2591,7 +2709,7 @@ Pour renommer ou supprimer un profil, appuyez sur le bouton "Renommer" ou "Suppr
 
 Appuyez sur le bouton "Fermer" pour fermer le dialogue.
 
-+++ Création d'un Profil +++[ProfilesCreating]
++++ Création d'un profil +++[ProfilesCreating]
 Pour créer un profil, appuyez sur le bouton "Nouveau".
 
 Dans le dialogue "Nouveau profil", vous pouvez entrer un nom pour le profil.
@@ -2603,7 +2721,7 @@ Reportez-vous [ci-dessous #ConfigProfileTriggers] pour plus d'informations.
 
 Appuyer sur "OK" crée le profil et ferme le dialogue de configuration de sorte que vous pouvez le modifier.
 
-+++ Activation Manuelle +++[ConfigProfileManual]
++++ Activation manuelle +++[ConfigProfileManual]
 Vous pouvez activer manuellement un profil en sélectionnant un profil et en cliquant sur le bouton "Activation manuelle".
 Une fois activé, d'autres profils peuvent toujours être activés par des déclencheurs, mais les paramètres dans le profil activé manuellement remplacent ceux des profils activés par ces déclencheurs.
 Par exemple, si un profil est déclenché pour l'application actuelle et que l'annonce des liens est activée dans ce profil mais désactivée dans le profil activé manuellement, les liens ne seront pas annoncés.
@@ -2624,7 +2742,7 @@ Vous pouvez sélectionner "Configuration normale" si vous ne voulez pas utiliser
 
 Cliquez sur le bouton "Fermer" pour revenir au dialogue "Profils de configuration".
 
-+++ Éditer un Profil +++[ConfigProfileEditing]
++++ Éditer un profil +++[ConfigProfileEditing]
 Si vous avez activé manuellement un profil, les paramètres modifiés seront sauvegardés dans ce profil.
 Autrement, tous les paramètres modifiés seront sauvegardés dans le profil le plus récemment déclenché.
 Par exemple, si vous avez associé un profil avec l'application "Bloc-notes" et que vous basculez vers le "Bloc-notes", tous les paramètres modifiés seront sauvegardés dans ce profil.
@@ -2632,7 +2750,7 @@ Enfin, s'il n'y a ni profil activé manuellement, ni profil déclenché, tous le
 
 Pour éditer le profil utilisé dans "Dire Tout", vous devez [activer manuellement #ConfigProfileManual] ce profil.
 
-+++ Désactiver Temporairement tous les Déclencheurs +++[ConfigProfileDisablingTriggers]
++++ Désactiver temporairement tous les déclencheurs +++[ConfigProfileDisablingTriggers]
 Parfois, il peut être utile de désactiver temporairement les déclencheurs.
 Par exemple, vous voudrez peut-être modifier un profil activé manuellement ou votre configuration normale sans profils déclenchés interférents.
 Vous pouvez le faire en cochant la case "Désactiver temporairement tous les déclencheurs" dans le dialogue "Profils de configuration".
@@ -2647,7 +2765,7 @@ Chaque profil a sa propre entrée dans la catégorie profils de configuration.
 Quand vous renommez un profil, tous les gestes que vous avez ajoutés restent disponibles.
 La suppression d'un profil entraîne la suppression de tous les gestes qui lui sont associés.
 
-++ Emplacement des Fichiers de Configuration ++[LocationOfConfigurationFiles]
+++ Emplacement des fichiers de configuration ++[LocationOfConfigurationFiles]
 Les versions portables de NVDA enregistrent tous les paramètres et extensions dans un répertoire nommé "userConfig" situé dans le répertoire de votre copie portable de NVDA.
 
 Les versions installées de NVDA enregistrent tous les paramètres et extensions dans un répertoire spécial de NVDA situé dans votre profil utilisateur Windows.
@@ -2735,12 +2853,15 @@ La fonctionnalité des extensions est illimitée dans NVDA.
 Cela peut inclure l'accès à vos données personnelles ou même à l'ensemble du système.
 
 Vous pouvez installer et mettre à jour des extensions en [parcourant les extensions disponibles #AddonStoreBrowsing].
-Sélectionnez une extension dans l'onglet "Extensions disponibles" ou "Extensions pouvant être mises à jour".
+Sélectionnez une extension dans l'onglet "Extensions disponibles" ou "Mises à jour".
 Utilisez ensuite l'action de mise à jour, d'installation ou de remplacement pour démarrer l'installation.
+
+Vous pouvez également installer plusieurs extensions à la fois.
+Cela se fait en sélectionnant plusieurs extensions dans l'onglet des extensions disponibles, puis en activant le menu contextuel sur la sélection et en choisissant l'action "Installer les extensions sélectionnées".
 
 Pour installer une extension que vous avez obtenue en dehors de l'Add-on Store, appuyez sur le bouton "Installer à partir d'une source externe".
 Cela vous permettra de rechercher un paquet d'extension (fichier ``.nvda-addon``) quelque part sur votre ordinateur ou sur un réseau.
- Une fois que vous avez ouvert le paquet d'extension le processus d'installation commencera.
+Une fois que vous avez ouvert le paquet d'extension le processus d'installation commencera.
 
 Si NVDA est installé et en cours d'exécution sur votre système, vous pouvez également ouvrir un fichier d'extension directement depuis le navigateur ou le système de fichiers pour commencer le processus d'installation.
 
@@ -2751,42 +2872,62 @@ Une fois l'extension installée, NVDA doit être redémarré pour que l'extensio
 Pour supprimer une extension, sélectionnez-la  dans la liste et utilisez l'action Supprimer.
 NVDA vous demandera de confirmer la suppression.
 Comme pour l'installation, NVDA doit être redémarré pour que l'extension soit complètement supprimée.
- Jusqu'à ce que vous le fassiez, un statut "En attente de suppression" sera affiché pour cette extension dans la liste.
+En attendant, un statut "En attente de suppression" sera affiché pour cette extension dans la liste.
+Comme pour l'installation, vous pouvez également supprimer plusieurs extensions à la fois.
 
 Pour désactiver une extension, utilisez l'action "désactiver".
 Pour activer une extension précédemment désactivée, utilisez l'action "activer".
 Vous pouvez désactiver une extension si l'état de l'extension indique qu'elle est "activée" ou l'activer si l'extension est "désactivée".
 +++ Désactivation et activation des extensions +++[AddonStoreDisablingEnabling]
 Pour chaque utilisation de l'action activer/désactiver, le statut de l'extension change pour indiquer ce qui se passera au redémarrage de NVDA.
- Si l'extension était auparavant "désactivée", l'état affichera "activé après le redémarrage".
- Si l'extension était précédemment "activée", l'état affichera "désactivé après le redémarrage".
+Si l'extension était auparavant "désactivée", l'état affichera "activé après le redémarrage".
+Si l'extension était précédemment "activée", l'état affichera "désactivé après le redémarrage".
 Tout comme lorsque vous installez ou supprimez des extensions, vous devez redémarrer NVDA pour que les modifications prennent effet.
+Vous pouvez également activer ou désactiver plusieurs extensions à la fois en sélectionnant plusieurs extensions dans l'onglet des extensions disponibles, puis en activant le menu contextuel sur la sélection et en choisissant l'action appropriée.
 
++++ Examiner les extension et lire les avis +++[AddonStoreReviews]
+Avant d'installer une extension, vous souhaiterez peut-être lire les avis des autres.
+En outre, il peut être utile pour les autres utilisateurs de fournir des commentaires sur les extensions que vous avez testées.
+Pour lire les avis sur une extension, sélectionnez une extension dans l'onglet extensions disponibles ou mises à jour et utilisez l'action « Avis de la communauté ».
+Ce lien renvoie vers une page Web de discussion GitHub, où vous pourrez lire et rédiger des avis sur l'extension.
+Veuillez noter que cela ne remplace pas une communication directe avec les développeurs d'extension.
+Le but de cette fonctionnalité est plutôt de partager des commentaires pour aider les utilisateurs à décider si une extension peut leur être utile.
+ 
 ++ Extensions incompatibles ++[incompatibleAddonsManager]
 Certaines extensions anciennes peuvent ne plus être compatibles avec la version de NVDA que vous possédez.
 Si vous utilisez une ancienne version de NVDA, certaines nouvelles extensions peuvent ne pas être compatibles non plus.
- Toute tentative d'installation d'une extension incompatible entraînera une erreur expliquant pourquoi l'extension est considérée comme incompatible.
+Toute tentative d'installation d'une extension incompatible entraînera une erreur expliquant pourquoi l'extension est considérée comme incompatible.
 
 Pour les extensions plus anciennes, vous pouvez ignorer l'incompatibilité à vos risques et périls.
 Les extensions incompatibles peuvent ne pas fonctionner avec votre version de NVDA et peuvent provoquer un comportement instable ou inattendu, y compris des plantages.
 Vous pouvez ignorer la compatibilité lors de l'activation ou de l'installation d'une extension.
- Si l'extension incompatible cause des problèmes ultérieurement, vous pouvez la désactiver ou la supprimer.
+Si l'extension incompatible cause des problèmes ultérieurement, vous pouvez la désactiver ou la supprimer.
 
 Si vous rencontrez des problèmes pour exécuter NVDA et que vous avez récemment mis à jour ou installé une extension, en particulier s'il s'agit d'une extension incompatible, vous pouvez essayer d'exécuter temporairement NVDA avec toutes les extensions désactivées.
 Pour redémarrer NVDA avec toutes les extensions désactivées, choisissez l'option appropriée lorsque vous quittez NVDA.
 Vous pouvez également utiliser l'[option de ligne de commande #CommandLineOptions] ``--disable-addons``.
 
-Vous pouvez parcourir les extensions incompatibles disponibles à l'aide des [onglets d'extensions disponibles et pouvant être mises à jour #AddonStoreFilterStatus].
+Vous pouvez parcourir les extensions incompatibles disponibles à l'aide des [onglets d'extensions disponibles et mises à jour #AddonStoreFilterStatus].
 Vous pouvez parcourir les extensions incompatibles installées à l'aide de l'[onglet extensions incompatibles #AddonStoreFilterStatus].
 
 + Outils Additionnels +[ExtraTools]
 
 ++ Visionneuse du Journal ++[LogViewer]
-La visionneuse du journal, située dans "Outils" du menu NVDA, vous permet de consulter tous les événements enregistrés depuis votre dernier démarrage de NVDA.
-Un appui sur NVDA+F1 ouvre la visionneuse du journal et affiche des informations pour le développeur à propos de l'objet navigateur courant.
+La visionneuse du journal, située dans "Outils" du menu NVDA, vous permet de consulter les événements enregistrés depuis le démarrage de la dernière session de NVDA.
 
-En plus de lire le contenu, vous pouvez également sauvegarder une copie du journal ou réactualiser la visionneuse de manière à voir les événements les plus récents.
-Ces actions sont disponibles dans le menu de la visionneuse.
+En plus de lire le contenu, vous pouvez également sauvegarder une copie du journal ou réactualiser la visionneuse de manière à charger les nouveaux événements générés après que la visionneuse ait été ouverte.
+Ces actions sont disponibles dans le menu Journal de la visionneuse.
+
+Le fichier qui s'affiche lorsque vous ouvrez la visionneuse de journaux est enregistré sur votre ordinateur à l'emplacement du fichier ``%temp%\nvda.log``.
+Un nouveau fichier de journal est créé à chaque démarrage de NVDA.
+A ce moment, le fichier de journal de la session NVDA précédente est déplacé vers ``%temp%\nvda-old.log``.
+
+Vous pouvez également copier un fragment du fichier de journal courant dans le presse-papiers sans ouvrir la visionneuse de journaux.
+%kc:beginInclude
+|| Nom | Touche | Description |
+| Ouvrir la visionneuse de journaux | ``NVDA+f1`` | Ouvre la visionneuse de journaux et affiche des informations pour le développeur sur l'objet navigateur courant. |
+| Copier un fragment du journal dans le presse-papiers | ``NVDA+contrôle+maj+f1`` | Au premier appui, le point de départ pour le contenu du journal qui doit être capturé est défini. Au deuxième appui, le contenu du journal depuis le point de départ est copié dans votre presse-papiers. |
+%kc:endInclude
 
 ++ Visionneuse de Parole ++[SpeechViewer]
 Pour les développeurs voyants ou les personnes présentant NVDA à un public voyant, une fenêtre flottante est disponible, affichant tout ce que dit NVDA.
@@ -2864,13 +3005,23 @@ Spécifiquement, Les problèmes suivants peuvent être réglés par l'exécution
 ++ Recharger les modules ++[ReloadPlugins]
 Cet élément, quand on l'active, recharge les modules applicatifs et globaux sans avoir à redémarrer NVDA, ce qui peut être utile pour les développeurs.
 
+Les modules applicatifs (appModules) gèrent la manière dont NVDA interagit avec des applications spécifiques.
+Les modules globaux (globalPlugins) gèrent la manière dont NVDA interagit avec toutes les applications.
+
+Les raccourcis clavier NVDA suivants peuvent également être utiles :
+%kc:beginInclude
+|| Nom | Touche | Description |
+| Recharger les modules | ``NVDA+contrôle+f3`` | Recharger les modules globaux et applicatifs |
+| Annoncer le module applicatif chargé et l'exécutable | ``NVDA+contrôle+f1`` | Annoncer le nom du module applicatif, s'il y en a un, et le nom de l'exécutable associé à l'application qui a le focus clavier. |
+%kc:endInclude
+
 + Synthétiseurs de Parole Pris en Charge +[SupportedSpeechSynths]
 Cette section contient des informations concernant les synthétiseurs de parole pris en charge par NVDA.
 Pour une liste encore plus importante de synthétiseurs gratuits ou du commerce que vous pouvez acheter et télécharger pour utilisation avec NVDA, veuillez consulter la page [https://www.nvda-project.org/wiki/ExtraVoices https://www.nvda-project.org/wiki/ExtraVoices].
 
 ++ eSpeak NG ++[eSpeakNG]
 Le synthétiseur [eSpeak nG https://github.com/espeak-ng/espeak-ng] est intégré dans NVDA et ne dépend d'aucun pilote ou programme additionnel pour être installé.
-Sous Windows 7, 8 et 8.1, NVDA utilise eSpeak NG par défaut ([Windows OneCore #OneCore] est utilisé sous Windows 10 et versions ultérieures par défaut).
+Sous Windows 8.1, NVDA utilise eSpeak NG par défaut ([Windows OneCore #OneCore] est utilisé sous Windows 10 et versions ultérieures par défaut).
 Comme ce synthétiseur est intégré dans NVDA, il est le plus indiqué quand vous voulez exécuter NVDA depuis une clé USB sur un autre système.
 
 Chaque voix fournie avec eSpeak NG correspond à une langue différente.
@@ -2895,8 +3046,8 @@ La plate-forme Microsoft Speech fournit des voix pour beaucoup de langues, norma
 Ces voix peuvent également être utilisées avec NVDA.
 
 Pour utiliser ces voix, vous devrez installer deux composants :
-- Microsoft Speech Platform - Runtime (Version 11) x86: https://www.microsoft.com/download/en/details.aspx?id=27225
-- Microsoft Speech Platform - Runtime Languages (Version 11): https://www.microsoft.com/download/en/details.aspx?id=27224
+- [Microsoft Speech Platform - Runtime (Version 11), x86 https://www.microsoft.com/download/en/details.aspx?id=27225]
+- [Microsoft Speech Platform - Runtime Languages (Version 11) https://www.microsoft.com/download/en/details.aspx?id=27224]
  - Cette page contient beaucoup de fichiers tant pour la reconnaissance de parole que pour la synthèse vocale.
  Choisissez les fichiers contenant la synthèse vocale pour la langue désirée.
  Par exemple, le fichier MSSpeech_TTS_fr-FR_Hortense.msi est une voix francophone française.
@@ -2917,7 +3068,7 @@ Recherchez la langue de base (telle que Anglais ou Français), puis trouvez la v
 Sélectionnez toutes les langues désirées et utilisez le bouton "Ajouter" pour les ajouter.
 Une fois les langues ajoutées, redémarrez NVDA.
 
-Veuillez consulter cet article de Microsoft pour une liste de voix disponibles : https://support.microsoft.com/fr-fr/windows/annexe-a-langues-et-voix-prises-en-charge-4486e345-7730-53da-fcfe-55cc64300f01
+Veuillez consulter [Langues et voix prises en charge https://support.microsoft.com/fr-fr/windows/annexe-a-langues-et-voix-prises-en-charge-4486e345-7730-53da-fcfe-55cc64300f01] pour une liste de voix disponibles.
 
 + Terminaux Braille Pris en Charge +[SupportedbrailleDisplays]
 Cette section contient des informations sur les terminaux braille pris en charge par NVDA.
@@ -2945,7 +3096,7 @@ Les terminaux suivants supportent cette fonctionnalité de détection automatiqu
 ++ Les Terminaux Focus et PAC Mate de chez Freedom Scientific ++[FreedomScientificFocus]
 Tous les terminaux Focus et PAC Mate de chez [Freedom Scientific https://www.freedomscientific.com/] sont pris en charge quand ils sont connectés en USB ou Bluetooth.
 Vous devrez installer les pilotes de terminaux braille de Freedom Scientific sur votre système.
-Si vous ne les avez pas déjà, vous pourrez les obtenir sur https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Si vous ne les avez pas déjà, vous pourrez les obtenir sur la [page du pilote d'affichage braille Focus Blue https://support.freedomscientific.com/Downloads/Focus/FocusBlueBrailleDisplayDriver].
 Bien que cette page ne mentionne que le terminal Focus 40 Blue, le pilote supporte tous les terminaux de Freedom Scientific.
 
 Par défaut, NVDA peut automatiquement détecter et se connecter à ces afficheurs via USB ou Bluetooth.
@@ -3264,8 +3415,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series ++[Hims]
 NVDA supporte les afficheurs braille Braille Sense, Braille EDGE, Smart Beetle et Sync Braille de [Hims https://www.hims-inc.com/] quand ils sont connectés via USB ou Bluetooth.
-Si vous connectez votre afficheur braille par USB, vous devrez installer les pilotes USB de HIMS sur votre système.
-Vous pouvez les télécharger ici : http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
+Si vous connectez votre afficheur braille par USB, vous devrez installer les [pilotes USB de HIMS http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip] sur votre système.
 
 Voici les assignations de touches pour ce terminal sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
@@ -3339,7 +3489,7 @@ Les afficheurs braille Seika suivants de Nippon Telesoft sont pris en charge en 
 - [Seika Version 3, 4, et 5 (40 cellules), Seika80 (80 cellules) #SeikaBrailleDisplays]
 - [MiniSeika (16, 24 cellules), V6, et V6Pro (40 cellules) #SeikaNotetaker]
 -
-Vous pouvez trouver plus d'informations concernant ces afficheurs sur https://en.seika-braille.com/down/index.html.
+Vous pouvez trouver plus d'informations concernant ces afficheurs sur leur [Page de téléchargement de démos et de pilotes https://en.seika-braille.com/down/index.html].
 
 
 +++ Seika Version 3, 4, et 5 (40 cellules), Seika80 (80 cellules) +++[SeikaBrailleDisplays]
@@ -3417,6 +3567,20 @@ Les afficheurs braille suivant sont supportés :
 -
 
 Ces terminaux ne supporte pas la détection automatique en arrière-plan.
+
+Il existe une option dans le pilote USB de l'afficheur qui peut entraîner un problème de chargement de l'afficheur.
+Veuillez essayez ce qui suit:
++ Veuillez vous assurer que vous avez installé le [dernier pilote](https://www.papenmeier-rehatechnik.de/en/service/downloadcenter/software/articles/software-braille-devices.html).
++ Ouvrez le Gestionnaire de périphériques Windows.
++ Faites défiler la liste jusqu'à "Contrôleurs USB" ou "Périphériques USB".
++ Sélectionnez "Périphérique USB Papenmeier Braillex".
++ Ouvrez les propriétés et passez à l'onglet "Avancé".
+Parfois, l'onglet "Avancé" n'apparaît pas.
+Si tel est le cas, déconnectez la plage braille de l'ordinateur, quittez NVDA, attendez un moment et reconnectez la plage braille.
+Répétez cette opération 4 à 5 fois si nécessaire.
+Si l'onglet "Avancé" ne s'affiche toujours pas, veuillez redémarrer l'ordinateur.
++ Désactivez l'option "Load VCP".
++
 
 La plupart des afficheurs ont une barre d'accès facile (EAB) qui permet des opérations intuitives et rapides.
 L'EAB peut être bougé dans quatre directions et chaque direction a deux crans.
@@ -3943,7 +4107,7 @@ Veuillez consulter la documentation de l'afficheur pour savoir où trouver ces t
 | Aller à la cellule braille | ``routing`` |
 | Annoncer la mise en forme du texte sous la cellule braille | ``secondary routing`` |
 | Choisir la manière dont l'information contextuelle est présentée en braille | ``attribute1+attribute3`` |
-| Choisir entre les modes de parole désactivé, bip and parole | ``attribute2+attribute4`` |
+| Faire défiler les modes de parole | ``attribute2+attribute4`` |
 | Passer au mode de revue précédent (ex : objet, document ou écran) | ``f1`` |
 | Passer au mode de revue suivant (ex : objet, document ou écran) | ``f2`` |
 | Amener l'objet navigateur à l'objet le contenant | ``f3`` |
@@ -4027,6 +4191,7 @@ Le mode sécurisé désactive :
 - [L'Add-on Store #AddonsManager]
 - La [console Python NVDA #PythonConsole]
 - La [Visionneuse du journal #LogViewer] et la journalisation
+- La [Visionneuse Braille #BrailleViewer] et la [Visionneuse de parole #SpeechViewer]
 - L'ouverture de documents externes depuis le menu NVDA, comme le guide de l'utilisateur ou le fichier des contributeurs.
 -
 
@@ -4113,6 +4278,6 @@ Les valeurs suivantes peuvent être définies dans ces clés de registre :
 | ``forceSecureMode`` | DWORD | 0 (par défaut) pour désactiver, 1 pour activer | Si activé, force [le mode sécurisé #SecureMode] à être activé lors de l'exécution de NVDA. |
 
 + Informations Complémentaires +[FurtherInformation]
-Si vous avez besoin d'informations complémentaires ou d'aide concernant l'utilisation de NVDA, veuillez visiter le site NVDA à NVDA_URL.
+Si vous avez besoin d'informations complémentaires ou d'aide concernant l'utilisation de NVDA, veuillez visiter le [site web de NVDA NVDA_URL].
 Sur ce site, vous pourrez trouver des informations complémentaires telles que des listes de discussion spécialisées et d'autres ressources communautaires pour vous aider à utiliser NVDA.
 Ce site fournit également des informations concernant le développement de NVDA.
