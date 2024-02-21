@@ -24,7 +24,8 @@ import UIAHandler
 import UIAHandler.customProps
 import UIAHandler.customAnnotations
 import controlTypes
-from controlTypes import TextPosition
+from controlTypes import TextPosition, TextAlign
+import inputCore
 import config
 import speech
 import api
@@ -51,6 +52,7 @@ from NVDAObjects import (
 )
 from NVDAObjects.behaviors import (
 	ProgressBar,
+	EditableTextBase,
 	EditableTextWithoutAutoSelectDetection,
 	EditableTextWithAutoSelectDetection,
 	Dialog,
@@ -69,6 +71,13 @@ paragraphIndentIDs = {
 	UIAHandler.UIA_IndentationFirstLineAttributeId,
 	UIAHandler.UIA_IndentationLeadingAttributeId,
 	UIAHandler.UIA_IndentationTrailingAttributeId,
+}
+
+textAlignLabels = {
+	UIAHandler.HorizontalTextAlignment_Left: TextAlign.LEFT,
+	UIAHandler.HorizontalTextAlignment_Centered: TextAlign.CENTER,
+	UIAHandler.HorizontalTextAlignment_Right: TextAlign.RIGHT,
+	UIAHandler.HorizontalTextAlignment_Justified: TextAlign.JUSTIFY,
 }
 
 
@@ -270,19 +279,13 @@ class UIATextInfo(textInfos.TextInfo):
 		if formatConfig["reportParagraphIndentation"]:
 			formatField.update(self._getFormatFieldIndent(fetcher, ignoreMixedValues=ignoreMixedValues))
 		if formatConfig["reportAlignment"]:
-			val=fetcher.getValue(UIAHandler.UIA_HorizontalTextAlignmentAttributeId,ignoreMixedValues=ignoreMixedValues)
-			if val==UIAHandler.HorizontalTextAlignment_Left:
-				val="left"
-			elif val==UIAHandler.HorizontalTextAlignment_Centered:
-				val="center"
-			elif val==UIAHandler.HorizontalTextAlignment_Right:
-				val="right"
-			elif val==UIAHandler.HorizontalTextAlignment_Justified:
-				val="justify"
-			else:
-				val=None
-			if val:
-				formatField['text-align']=val
+			val = fetcher.getValue(
+				UIAHandler.UIA_HorizontalTextAlignmentAttributeId,
+				ignoreMixedValues=ignoreMixedValues,
+			)
+			textAlign = textAlignLabels.get(val)
+			if textAlign:
+				formatField['text-align'] = textAlign
 		if formatConfig["reportColor"]:
 			val=fetcher.getValue(UIAHandler.UIA_BackgroundColorAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if isinstance(val,int):
@@ -459,9 +462,6 @@ class UIATextInfo(textInfos.TextInfo):
 			# sometimes rangeFromChild can return a NULL range
 			if not self._rangeObj: raise LookupError
 		elif isinstance(position,locationHelper.Point):
-			if winVersion.getWinVer() <= winVersion.WIN7_SP1:
-				# #9435: RangeFromPoint causes a freeze in UIA client library in the Windows 7 start menu!
-				raise NotImplementedError("RangeFromPoint not supported on Windows 7")
 			self._rangeObj: IUIAutomationTextRangeT = self.obj.UIATextPattern.RangeFromPoint(position.toPOINT())
 		elif isinstance(position, UIAHandler.IUIAutomationTextRange):
 			position = typing.cast(IUIAutomationTextRangeT, position)
@@ -1012,16 +1012,22 @@ class UIA(Window):
 		for ID in IDs:
 			elementCache[ID]=cacheElement
 
-	def findOverlayClasses(self,clsList):
-		UIAControlType=self.UIAElement.cachedControlType
-		UIAClassName=self.UIAElement.cachedClassName
+	# C901 'findOverlayClasses' is too complex
+	# Note: when working on findOverlayClasses, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def findOverlayClasses(self, clsList):  # NOQA: C901
+		UIAControlType = self.UIAElement.cachedControlType
+		UIAClassName = self.UIAElement.cachedClassName
 		# #11445: to avoid COM errors, do not fetch cached UIA Automation Id from the underlying element.
 		UIAAutomationId = self.UIAAutomationId
-		if UIAClassName=="NetUITWMenuItem" and UIAControlType==UIAHandler.UIA_MenuItemControlTypeId and not self.name and not self.previous:
+		if (
+			UIAClassName == "NetUITWMenuItem"
+			and UIAControlType == UIAHandler.UIA_MenuItemControlTypeId
+			and not self.name
+			and not self.previous
+		):
 			# Bounces focus from a netUI dead placeholder menu item when no item is selected up to the menu itself.
 			clsList.append(PlaceholderNetUITWMenuItem)
-		elif UIAClassName=="WpfTextView":
-			clsList.append(WpfTextView)
 		elif (
 			UIAClassName == "ListViewItem"
 			and self.UIAElement.cachedFrameworkID == "WPF"
@@ -1029,7 +1035,7 @@ class UIA(Window):
 		):
 			from NVDAObjects.behaviors import RowWithFakeNavigation
 			clsList.append(RowWithFakeNavigation)
-		elif UIAClassName=="NetUIDropdownAnchor":
+		elif UIAClassName == "NetUIDropdownAnchor":
 			clsList.append(NetUIDropdownAnchor)
 		elif self.windowClassName == "EXCEL6" and self.role == controlTypes.Role.PANE:
 			from .excel import BadExcelFormulaEdit
@@ -1053,12 +1059,16 @@ class UIA(Window):
 			or UIAAutomationId.startswith('UIA_AutomationId_Word_Content')
 		):
 			from .wordDocument import WordDocument, WordDocumentNode
-			if self.role==controlTypes.Role.DOCUMENT:
+			if self.role == controlTypes.Role.DOCUMENT:
 				clsList.append(WordDocument)
 			else:
 				clsList.append(WordDocumentNode)
-		# #5136: Windows 8.x and Windows 10 uses different window class and other attributes for toast notifications.
-		elif UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId: #Windows 8.x
+		# #5136: Windows 8.x and Windows 10 uses different window class
+		# and other attributes for toast notifications.
+		elif (
+			UIAClassName == "ToastContentHost"
+			and UIAControlType == UIAHandler.UIA_ToolTipControlTypeId
+		):  # Windows 8.x
 			clsList.append(Toast_win8)
 		elif (
 			self.windowClassName == "Windows.UI.Core.CoreWindow"
@@ -1066,9 +1076,10 @@ class UIA(Window):
 			and "ToastView" in UIAAutomationId
 		):  # Windows 10
 			clsList.append(Toast_win10)
-		# #8118: treat UIA tool tips (including those found in UWP apps) as proper tool tips, especially those found in Microsoft Edge and other apps.
+		# #8118: treat UIA tool tips (including those found in UWP apps) as proper tool tips,
+		# especially those found in Microsoft Edge and other apps.
 		# Windows 8.x toast, although a form of tool tip, is covered separately.
-		elif UIAControlType==UIAHandler.UIA_ToolTipControlTypeId:
+		elif UIAControlType == UIAHandler.UIA_ToolTipControlTypeId:
 			clsList.append(ToolTip)
 		elif(
 			self.UIAElement.cachedFrameworkID in ("InternetExplorer", "MicrosoftEdge")
@@ -1076,7 +1087,7 @@ class UIA(Window):
 			and not self.appModule.appName == 'iexplore'
 		):
 			from . import spartanEdge
-			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.Role.PANE:
+			if UIAClassName in ("Internet Explorer_Server", "WebView") and self.role == controlTypes.Role.PANE:
 				clsList.append(spartanEdge.EdgeHTMLRootContainer)
 			elif (
 				self.UIATextPattern
@@ -1092,16 +1103,16 @@ class UIA(Window):
 					isinstance(self.parent, spartanEdge.EdgeHTMLRootContainer)
 					or not isinstance(self.parent, spartanEdge.EdgeNode)
 				)
-			): 
+			):
 				clsList.append(spartanEdge.EdgeHTMLRoot)
-			elif self.role==controlTypes.Role.LIST:
+			elif self.role == controlTypes.Role.LIST:
 				clsList.append(spartanEdge.EdgeList)
 			else:
 				clsList.append(spartanEdge.EdgeNode)
-		elif self.windowClassName == "Chrome_WidgetWin_1" and self.UIATextPattern:
-			from . import chromium
-			clsList.append(chromium.ChromiumUIA)
-		elif self.windowClassName == "Chrome_RenderWidgetHostHWND":
+		elif (
+			self.windowClassName == "Chrome_RenderWidgetHostHWND"
+			or self.UIAElement.cachedFrameworkID == "Chrome"
+		):
 			from . import chromium
 			from . import web
 			if (
@@ -1116,6 +1127,15 @@ class UIA(Window):
 					clsList.append(web.List)
 				clsList.append(chromium.ChromiumUIA)
 		elif (
+			(
+				self.windowClassName == "Chrome_WidgetWin_1"
+				or self.UIAElement.cachedFrameworkID == "Chrome"
+			)
+			and self.UIATextPattern
+		):
+			from . import chromium
+			clsList.append(chromium.ChromiumUIA)
+		elif (
 			self.role == controlTypes.Role.DOCUMENT
 			and UIAAutomationId == "Microsoft.Windows.PDF.DocumentView"
 		):
@@ -1129,52 +1149,66 @@ class UIA(Window):
 			clsList.insert(0, DevExpressXtraRichEdit)
 		if UIAControlType == UIAHandler.UIA_ProgressBarControlTypeId:
 			clsList.insert(0, ProgressBar)
-		if UIAClassName=="ControlPanelLink":
+		if UIAClassName == "ControlPanelLink":
 			clsList.append(ControlPanelLink)
-		if UIAClassName=="UIColumnHeader":
+		if UIAClassName == "UIColumnHeader":
 			clsList.append(UIColumnHeader)
-		elif UIAClassName=="UIItem":
+		elif UIAClassName == "UIItem":
 			clsList.append(UIItem)
-		elif UIAClassName=="SensitiveSlider":
-			clsList.append(SensitiveSlider) 
-		if UIAControlType==UIAHandler.UIA_TreeItemControlTypeId:
+		elif UIAClassName == "SensitiveSlider":
+			clsList.append(SensitiveSlider)
+		if UIAControlType == UIAHandler.UIA_TreeItemControlTypeId:
 			clsList.append(TreeviewItem)
-		if UIAControlType==UIAHandler.UIA_MenuItemControlTypeId:
+		if UIAControlType == UIAHandler.UIA_MenuItemControlTypeId:
 			clsList.append(MenuItem)
 		# Some combo boxes and looping selectors do not expose value pattern.
-		elif (UIAControlType==UIAHandler.UIA_ComboBoxControlTypeId
-		# #5231: Announce values in time pickers by "transforming" them into combo box without value pattern objects.
-		or (UIAControlType==UIAHandler.UIA_ListControlTypeId and "LoopingSelector" in UIAClassName)):
+		elif (
+			UIAControlType == UIAHandler.UIA_ComboBoxControlTypeId
+			# #5231: Announce values in time pickers by "transforming" them into
+			# combo box without value pattern objects.
+			or (UIAControlType == UIAHandler.UIA_ListControlTypeId and "LoopingSelector" in UIAClassName)
+		):
 			try:
 				if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsValuePatternAvailablePropertyId):
 					clsList.append(ComboBoxWithoutValuePattern)
 			except COMError:
 				pass
-		elif UIAControlType==UIAHandler.UIA_ListItemControlTypeId:
+		elif UIAControlType == UIAHandler.UIA_ListItemControlTypeId:
 			clsList.append(ListItem)
-		# #5942: In Windows 10 build 14332 and later, Microsoft rewrote various dialog code including that of User Account Control.
+		# #5942: In Windows 10 build 14332 and later, Microsoft rewrote various dialog code
+		# including that of User Account Control.
 		# #8405: there are more dialogs scattered throughout Windows 10 and various apps.
 		# Dialog detection is a bit easier on build 17682 and later thanks to IsDialog property.
 		try:
 			isDialog = self._getUIACacheablePropertyValue(UIAHandler.UIA_IsDialogPropertyId)
 		except COMError:
-			# We can fallback to a known set of dialog classes for window elements.
+			# #15729: prepare to fallback if encountering a dialog when UIA says it is not.
+			isDialog = False
+		# We can fallback to a known set of dialog classes for window elements.
+		if not isDialog:
 			isDialog = (self.UIAIsWindowElement and UIAClassName in UIAHandler.UIADialogClassNames)
 		if isDialog:
 			clsList.append(Dialog)
-		# #6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
+		# #6241: Try detecting all possible suggestions containers and search fields
+		# scattered throughout Windows 10 and later.
 		if UIAAutomationId in ("SearchTextBox", "TextBox"):
 			clsList.append(SearchField)
 		# #12790: detect suggestions list views firing layout invalidated event.
 		if UIAAutomationId == "SuggestionsList":
 			clsList.append(SuggestionsList)
 		try:
-			# Nested block here in order to catch value error and variable binding error when attempting to access automation ID for invalid elements.
+			# Nested block here in order to catch value error and variable binding error
+			# when attempting to access automation ID for invalid elements.
 			try:
-				# #6241: Raw UIA base tree walker is better than simply looking at self.parent when locating suggestion list items.
+				# #6241: Raw UIA base tree walker is better than simply looking at self.parent
+				# when locating suggestion list items.
 				# #10329: 2019 Windows Search results require special handling due to UI redesign.
-				parentElement=UIAHandler.handler.baseTreeWalker.GetParentElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
-				# Sometimes, fetching parent (list control) via base tree walker fails, especially when dealing with suggestions in Windows10 Start menu.
+				parentElement = UIAHandler.handler.baseTreeWalker.GetParentElementBuildCache(
+					self.UIAElement,
+					UIAHandler.handler.baseCacheRequest
+				)
+				# Sometimes, fetching parent (list control) via base tree walker fails,
+				# especially when dealing with suggestions in Windows10 Start menu.
 				# Oddly, we need to take care of context menu for Start search suggestions as well.
 				if parentElement.cachedAutomationId.lower() in ("suggestionslist", "contextmenu"):
 					clsList.append(SuggestionListItem)
@@ -1221,7 +1255,12 @@ class UIA(Window):
 			sysListView32.findExtraOverlayClasses(self, clsList)
 
 		# Add editableText support if UIA supports a text pattern
-		if self.TextInfo==UIATextInfo:
+		if self.TextInfo == UIATextInfo:
+			if self.UIAFrameworkId == 'XAML':
+				# This UIA element is being exposed by the XAML framework.
+				clsList.append(XamlEditableText)
+			elif UIAClassName == "WpfTextView":
+				clsList.append(WpfTextView)
 			if UIAHandler.autoSelectDetectionAvailable:
 				clsList.append(EditableTextWithAutoSelectDetection)
 			else:
@@ -1230,7 +1269,7 @@ class UIA(Window):
 		clsList.append(UIA)
 
 		if self.UIAIsWindowElement:
-			super(UIA,self).findOverlayClasses(clsList)
+			super(UIA, self).findOverlayClasses(clsList)
 			if self.UIATextPattern:
 				# Since there is a UIA text pattern, there is no need to use the win32 edit support at all.
 				# However, UIA classifies (rich) edit controls with a role of document and doesn't add a multiline state.
@@ -1552,6 +1591,13 @@ class UIA(Window):
 			return self._getUIACacheablePropertyValue(UIAHandler.UIA_AutomationIdPropertyId)
 		except COMError:
 			# #11445: due to timing errors, elements will be instantiated with no automation Id present.
+			return ""
+
+	def _get_UIAFrameworkId(self) -> str:
+		try:
+			return self._getUIACacheablePropertyValue(UIAHandler.UIA_FrameworkIdPropertyId)
+		except COMError:
+			log.debugWarning("Could not fetch framework ID", exc_info=True)
 			return ""
 
 	#: Typing info for auto property _get_name()
@@ -1994,11 +2040,13 @@ class UIA(Window):
 		if index==0:
 			if self.UIAInvokePattern:
 				self.UIAInvokePattern.Invoke()
-			elif self.UIATogglePattern:
+				return
+			if self.UIATogglePattern:
 				self.UIATogglePattern.toggle()
-			elif self.UIASelectionItemPattern:
+				return
+			if self.UIASelectionItemPattern:
 				self.UIASelectionItemPattern.select()
-			return
+				return
 		raise NotImplementedError
 
 	def _get_hasFocus(self):
@@ -2163,6 +2211,32 @@ class UIA(Window):
 					break
 		if dropTargetEffect:
 			ui.message(dropTargetEffect)
+
+
+class InaccurateTextChangeEventEmittingEditableText(EditableTextBase, UIA):
+
+	# XAML and WPF fire UIA textSelectionChange events before the caret position change is reflected
+	# in the related UIA text pattern.
+	# This means that, apart from deleting text, NVDA cannot rely on textSelectionChange (caret) events
+	# in XAML or WPF to detect if the caret has moved, as it occurs too early.
+	caretMovementDetectionUsesEvents = False
+
+	def _backspaceScriptHelper(self, unit: str, gesture: inputCore.InputGesture):
+		"""As UIA text range objects from XAML or WPF don't mutate with backspace,
+		comparing a text range copied from before backspace with a text range fetched after backspace
+		isn't reliable, as the ranges compare equal.
+		Therefore, we must always rely on events for caret change detection in this case.
+		"""
+		self.caretMovementDetectionUsesEvents = True
+		try:
+			super()._backspaceScriptHelper(unit, gesture)
+		finally:
+			self.caretMovementDetectionUsesEvents = False
+
+
+class XamlEditableText(InaccurateTextChangeEventEmittingEditableText):
+	"""An UIA element with editable text exposed by the XAML framework."""
+	...
 
 
 class TreeviewItem(UIA):
@@ -2330,16 +2404,19 @@ class ToolTip(ToolTip, UIA):
 	event_UIA_toolTipOpened=ToolTip.event_show
 
 
-#WpfTextView fires name state changes once a second, plus when IUIAutomationTextRange::GetAttributeValue is called.
-#This causes major lags when using this control with Braille in NVDA. (#2759) 
-#For now just ignore the events.
-class WpfTextView(UIA):
+class WpfTextView(InaccurateTextChangeEventEmittingEditableText):
+	"""WpfTextView fires name state changes once a second,
+	plus when IUIAutomationTextRange::GetAttributeValue is called.
+	This causes major lag when using this control with Braille in NVDA. (#2759)
+	For now just ignore the events.
+	"""
 
 	def event_nameChange(self):
 		return
 
 	def event_stateChange(self):
 		return
+
 
 class SearchField(EditableTextWithSuggestions, UIA):
 	"""An edit field that presents suggestions based on a search term.

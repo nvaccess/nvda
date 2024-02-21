@@ -1,5 +1,9 @@
 *.mo
 source/comInterfaces/*.py
+!source/comInterfaces/__init__.py
+# These are manually generated and updated, so don't delete them
+!source/comInterfaces/UIAutomationClient.py
+!source/comInterfaces/_944DE083_8FB8_45CF_BCB7_C477ACB2F897_0_1_0.py
 *.log
 source/userConfig
 build
@@ -25,8 +29,8 @@ dlldata.c
 .sconsign.dblite
 user_docs/*/*.html
 user_docs/*/*.css
-user_docs/*/keyCommands.t2t
-user_docs/build.t2tConf
+# TODO remove when migrating from t2t to md as markdown files will be committed.
+user_docs/*/*.md
 extras/controllerClient/x86/nvdaController.h
 extras/controllerClient/x64
 extras/controllerClient/arm64
@@ -41,6 +45,7 @@ uninstaller/UAC.nsh
 tests/unit/nvda.ini
 tests/system/settingsCache/*
 !tests/system/settingsCache/2020.4/*.txt
+source/locale/en/LC_MESSAGES/nvda.po
 source/locale/*/cldr.dic
 .vscode
 .vs

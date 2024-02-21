@@ -2,7 +2,96 @@
 
 
 %!includeconf: ../changes.t2tconf
-%!includeconf: ./locale.t2tconf
+= 2023.3 =
+Bản phát hành này bao gồm những cải tiến về sự vận hành, khả năng phản hồi và tính ổn định của đầu ra âm thanh.
+Đã thêm các tùy chọn để điều khiển âm lượng âm thanh và tiếng beep của NVDA, hoặc cho phép chúng đi theo âm lượng của giọng đọc mà bạn đang dùng.
+
+Giờ đây, NVDA có thể định kì làm mới kết quả nhận dạng văn bản (OCR), sẽ đọc nội dung văn bản mới ngay khi nó xuất hiện.
+Điều này, có thể thiết lập ở phân loại Windows OCR trong hộp thoại cài đặt NVDA.
+
+Cũng đã sửa vài lỗi liên quan đến chữ nổi, cải thiện khả năng nhận thiết bị và việc di chuyển dấu nháy.
+Giờ đây, đã có thể từ chối những trình điều khiển không mong muốn từ việc tự dò tìm thiết bị để cải thiện sự vận hành của công việc này.
+Cũng đã có thêm những lệnh mới cho BRLTTY.
+
+Nhiều lỗi cho Cửa Hàng Add-On (Add-on Store), Microsoft Office, trình đơn ngữ cảnh của Microsoft Edge, và Windows Calculator cũng đã được khắc phục.
+
+== Các tính năng mới ==
+- Các cải tiến về quản lí âm thanh:
+  - Một bảng thiết lập âm thanh mới:
+    - Có thể mở bảng thiết lập này bằng ``NVDA+control+u``. (#15497)
+  - Tùy chọn trong cài đặt âm thanh để âm lượng âm thanh và tiếng beep của NVDA  đi theo thiết lập âm thanh của giọng đọc mà bạn đang dùng. (#1409)
+  - Tùy chọn trong cài đặt âm thanh cho phép cấu hình riêng biệt âm lượng của NVDA. (#1409, #15038)
+    - Các thiết lập cho việc thay đổi đầu ra âm thanh và bật / tắt chức năng giảm âm lượng đã được chuyển đến bảng thiết lập âm thanh mới trong hộp thoại chọn bộ đọc.
+    Các tùy chọn này sẽ bị gỡ khỏi hộp thoại "chọn bộ đọc" trong phiên bản 2024.1. (#15486, #8711)
+    -
+  - NVDA giờ đây có thể cho ra âm thanh thông qua Windows Audio Session API (WASAPI), vốn có thể cải tiến việc phản hồi, khả năng vận hành cũng như tính ổn định cho bộ đọc và âm thanh của NVDA. (#14697, #11169, #11615, #5096, #10185, #11061)
+  Nếu bật WASAPI thì có thể cấu hình một số thiết lập sau đây.
+  - Lưu ý: WASAPI không tương thích với vài add-on.
+  Sẽ có cập nhật tính tương thích cho các add-on này. Vui lòng cập nhật chúng trước khi cập nhật NVDA.
+  Các phiên bản không tương thích của những add-on này sẽ bị tắt khi cập nhật NVDA:
+    - Tony's Enhancements phiên bản 1.15 trở về trước. (#15402)
+    - NVDA global commands extension 12.0.8 trở về trước. (#15443)
+    -
+  -
+- NVDA giờ đây có khả năng liên tục cập nhật kết quả khi thực hiện nhận dạng văn bản (OCR), văn bản mới sẽ được đọc khi chúng xuất hiện. (#2797)
+  - Để dùng chức năng này, hãy bật tùy chọn "Định kì cập nhật nội dung được nhận dạng" ở phân loại Windows OCR trong hộp thoại cài đặt của NVDA.
+  - Khi được bật, bạn có thể bật / tắt việc đọc văn bản mới bằng cách bật / tắt tùy chọn thông báo thay đổi nội dung động (bấm ``NVDA+5``).
+  -
+- Khi dùng chức năng tự dò tìm màn hình chữ nổi, giờ đây đã có thể vô hiệu hóa các trình điều khiển trong hộp thoại chọn màn hình chữ nổi. (#15196)
+- Một tùy chọn mới trong cài đặt định dạng tài liệu, "Bỏ các dòng trống khi thông báo thụt lề". (#13394)
+- Đã thêm một thao tác chưa gán lệnh để điều hướng qua các điều khiển dạng tab groupings (tạm dịch là điều khiển qua các thẻ) trong chế độ duyệt. (#15046)
+-
+
+== Các thay đổi ==
+- Chữ nổi:
+  - Khi thay đổi văn bản trong cửa sổ terminal mà không cập nhật dấu nháy, văn bản trên màn hình chữ nổi giờ đây sẽ cập nhật đúng khi được định vị trên một dòng đã được thay đổi.
+  Điều này bao gồm cho các tình huống con trỏ nổi đi theo con trỏ duyệt. (#15115)
+  - Nhiều tổ hợp phím của BRLTTY giờ đây đã được gán vào lệnh của NVDA. (#6483):
+    - ``learn``: Bật / tắt chế độ trợ giúp nhập của NVDA
+    - ``prefmenu``: Mở trình đơn NVDA
+    - ``prefload``/``prefsave``: Tải / lưu cấu hình NVDA
+    - ``time``: Hiện ngày giờ
+    - ``say_line``: Đọc dòng hiện tại, nơi con trỏ duyệt đang đứng
+    - ``say_below``: Đọc tất cả, sử dụng con trỏ duyệt
+    -
+  - Trình điều khiển BRLTTY  chỉ hoạt động khi một phiên bản BRLTTY được bật BrlAPI đang chạy. (#15335)
+  - Thiết lập nâng cao để  bật hỗ trợ cho HID braille đã bị gỡ bỏ để thay thế bằng một tùy chọn mới.
+  Giờ đây, bạn có thể tắt một trình điều khiển cụ thể cho màn hình chữ nổi thuộc nhóm tự dò tìm trong hộp thoại chọn màn hình chữ nổi. (#15196)
+  -
+- Cửa hàng add-on: các add-on đã cài đặt giờ đây sẽ được liệt kê ở thẻ Các add-on hiện có, nếu chúng có tồn tại trên cửa hàng. (#15374)
+- Đã cập nhật vài phím tắt trên trình đơn NVDA. (#15364)
+-
+
+== Sửa lỗi ==
+- Microsoft Office:
+  - Sửa lỗi bị treo trong Microsoft Word khi tùy chọn trong cài đặt định dạng tài liệu "báo tiêu đề" và "báo chú thích" không được bật. (#15019)
+  - Trong Word và Excel, căn lề văn bản sẽ được thông báo chính xác trong nhiều tình huống hơn. (#15206, #15220)
+  - Sửa lỗi thông báo của vài phím tắt định dạng ô trong Excel. (#15527)
+  -
+- Microsoft Edge:
+  - NVDA sẽ không còn nhảy ngược về vị trí cuối cùng ở chế độ duyệt khi mở trình đơn ngữ cảnh trong Microsoft Edge. (#15309)
+  - NVDA lại một lần nữa đọc được trình đơn ngữ cảnh của trang tải về trong Microsoft Edge. (#14916)
+  -
+- Chữ nổi:
+  - Con trỏ nổi và chỉ báo lựa chọn giờ đây sẽ luôn được cập nhật một cách chính xác sau khi hiện hoặc ẩn các chỉ báo tương ứng bằng thao tác. (#15115)
+  - Sửa lỗi làm cho màn hình nổi Albatross  nỗ lực khởi tạo dù đã có một thiết bị khác được kết nối. (#15226)
+  -
+- Cửa Hàng Add-on:
+  - Sửa lỗi khi bỏ chọn mục "Bao gồm các add-on không tương thích" sẽ cho ra kết quả là các add-on không tương thích vẫn được liệt kê trong cửa hàng. (#15411)
+   - Các Add-on bị khóa vì lí do tương thích giờ đây sẽ được lọc một cách chính xác khi bật / tắt bộ lọc để bật / tắt trạng thái. (#15416)
+  - Sửa lỗi ngăn chặn cập nhật  các add-on không tương thích theo kiểu cài đè hoặc thay thế bằng các công cụ cài đặt bên ngoài. (#15417)
+  - Sửa lỗi  NVDA không đọc cho đến khi khởi động lại sau khi cài đặt add-on. (#14525)
+  - Sửa lỗi không thể cài đặt add-on nếu một bản tải về trước đó bị thất bại hoặc bị hủy bỏ. (#15469)
+  - Sửa các lỗi về quản lí các add-on không tương thích khi cập nhật NVDA. (#15414, #15412, #15437)
+  -
+- NVDA lại một lần nữa thông báo kết quả tính toán trong Windows 32bit calculator trên các phiên bản Server, LTSC và LTSB của Windows. (#15230)
+- NVDA không còn bỏ qua các thay đổi focus khi một của sổ cháu  (grand child window) cós focus. (#15432)
+- Sửa lỗi gây treo máy khi khởi động NVDA. (#15517)
+-
+
+== Các thay đổi cho nhà phát triển ==
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
+
 
 = 2023.2 =
 Bản phát hành này giới thiệu cửa hàng Add-on để thay thế cho trình quản lí add-on.
@@ -13,16 +102,16 @@ Tính năng mới cho chữ nổi, thêm lệnh và thêm màn hình được h�
 Thêm thao tác mới cho việc nhận dạng văn bản (OCR) và điều hướng đối tượng phẳng.
 Cải thiện cho việc điều hướng và đọc định dạng trong Microsoft Office
 
-Sửa nhiều lỗi, đặc biệt là cho chữ nổi, Microsoft Office, trình duyệt web và Windows 11.
+Sửa nhiều lỗi, đặc biệt là lỗi liên quan đến chữ nổi, Microsoft Office, trình duyệt web và Windows 11.
 
 Đã cập nhật eSpeak-NG, thư viện phiên dịch chữ nổi LibLouis, và Unicode CLDR.
 
 == Tính năng mới ==
 - Add-on Store (Cửa Hàng Add-On) đã được tích hợp vào NVDA. (#13985)
-  - Duyệt, tìm kiếm, cài đặt và cập nhật cộng đồng add-on.
+  - Duyệt, tìm kiếm, cài đặt và cập nhật add-on từ cộng đồng.
   - Xử lý thủ công các vấn đề về tương thích với những add-on lỗi thời.
   - Công cụ Quản Lý Các Add-On đã bị gỡ bỏ và được thay thế bởi Add-on Store.
-  - Xem tài liệu hướng dẫn để biết thêm thông tin.
+  - Xem tài liệu hướng dẫn sử dụng để biết thêm thông tin.
   -
 - Các thao tác mới:
   - Thao tác chưa gán lệnh để chuyển qua những ngôn ngữ có sẵn cho Windows OCR. (#13036)
@@ -120,7 +209,7 @@ Việc thông báo thanh trạng thái (kích hoạt bằng lệnh ``NVDA+end``)
   - Khi nỗ lực thông báo đường dẫn cho một liên kết không có thuộc tính href, NVDA sẽ không còn rơi vào trạng thái im lặng.
   Thay vào đó, NVDA sẽ thông báo liên kết không có đường dẫn. (#14723)
   - Trong chế độ duyệt, NVDA không còn bỏ qua một cách không chính xác focus di chuyển đến một điều khiển cha hay điều khiển con. Ví dụ: di chuyển từ một điều khiển đến thành phần cha của nó thành phần trong danh sách hoặc ô lưới. (#14611)
-    - Lưu ý là sửa lỗi này chỉ áp dụng khi  tắt tùy chọn Tự đưa con trỏ &hệ thống đến các thành phần có thể có focus trong cài đặt chế độ duyệt (là tùy chọn mặc định).
+    - Lưu ý là sửa lỗi này chỉ áp dụng khi  tắt tùy chọn Tự đưa con trỏ hệ thống đến các thành phần có thể có focus trong cài đặt chế độ duyệt (là tùy chọn mặc định).
     -  -
   -
 - Sửa các lỗi trên Windows 11:

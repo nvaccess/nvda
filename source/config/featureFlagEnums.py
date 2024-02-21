@@ -12,14 +12,11 @@ All feature flags enums should
 """
 import enum
 import typing
+from typing import Protocol
 
 from utils.displayString import (
 	DisplayStringEnum,
 	_DisplayStringEnumMixin,
-)
-
-from typing_extensions import (
-	Protocol,  # Python 3.8 adds native support
 )
 
 

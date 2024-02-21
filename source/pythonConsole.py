@@ -63,9 +63,63 @@ consoleUI = None
 
 class Completer(rlcompleter.Completer):
 
+	def attr_matches(self, text: str) -> list[str]:
+		"""attr_matches implementation as used in Python 3.9.
+		In Python 3.10, attr_matches was changed in a way that filtered out property descriptors,
+		but more importantly, no longer catches exceptions when calling getattr.
+		This causes serious issues for baseObject.Getter descriptors
+		when a getter raises NotImplementedError, for example (#15872).
+		"""
+		import re
+
+		m = re.match(r"(\w+(\.\w+)*)\.(\w*)", text)
+		if not m:
+			return []
+		expr, attr = m.group(1, 3)
+		try:
+			thisobject = eval(expr, self.namespace)
+		except Exception:
+			return []
+
+		# get the content of the object, except __builtins__
+		words = set(dir(thisobject))
+		words.discard("__builtins__")
+
+		if hasattr(thisobject, "__class__"):
+			words.add("__class__")
+			words.update(rlcompleter.get_class_members(thisobject.__class__))
+		matches = []
+		n = len(attr)
+		if attr == "":
+			noprefix = "_"
+		elif attr == "_":
+			noprefix = "__"
+		else:
+			noprefix = None
+		while True:
+			for word in words:
+				if word[:n] == attr and not (noprefix and word[: n + 1] == noprefix):
+					match = f"{expr}.{word}"
+					try:
+						val = getattr(thisobject, word)
+					except Exception:
+						pass  # Include even if attribute not set
+					else:
+						match = self._callable_postfix(val, match)
+					matches.append(match)
+			if matches or not noprefix:
+				break
+			if noprefix == "_":
+				noprefix = "__"
+			else:
+				noprefix = None
+		matches.sort()
+		return matches
+
 	def _callable_postfix(self, val, word):
 		# Just because something is callable doesn't always mean we want to call it.
 		return word
+
 
 class CommandCompiler(codeop.CommandCompiler):
 	"""
@@ -318,8 +372,6 @@ class ConsoleUI(
 		if not (0 <= newIndex < len(self.inputHistory)):
 			# No more lines in this direction.
 			return False
-		# Update the content of the history at the current position.
-		self.inputHistory[self.inputHistoryPos] = self.inputCtrl.GetValue()
 		self.inputHistoryPos = newIndex
 		self.inputCtrl.ChangeValue(self.inputHistory[newIndex])
 		self.inputCtrl.SetInsertionPointEnd()

@@ -2,7 +2,7 @@
 # Many more options available, see docs:
 # https://www.appveyor.com/docs/appveyor-yml/
 
-os: Visual Studio 2019
+os: Visual Studio 2022
 version: "{branch}-{build}"
 
 branches:
@@ -20,7 +20,7 @@ init:
       "INIT, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
 
 environment:
- PY_PYTHON: 3.7-32
+ PY_PYTHON: 3.11-32
  secure_authenticode_pass:
   secure: Way+hJyhbiLG/cmCo4+dHHzS5DiSvk/45o6frnIQ27GBX6nVDsh7jwQ7fSnqxBRP
  secure_ssh_pass:
@@ -28,6 +28,9 @@ environment:
  mozillaSymsAuthToken:
   secure: p37Fxo78fsRdmR8v8TPz978QvVaqvbjdIBzFe8ZOpX0FUprm46rkhd374QM1CqMO
  symstore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symstore.exe
+ crowdinProjectID: 598017
+ crowdinAuthToken:
+  secure: E3084gj4JeMZKvZIOLIhqZefuSo/tj7iYPt4yK0geOI/eQgmPvoXt37Xq0KwvXzvZiJny4AsMj1rKMTVxio8EG8KA0YsYYuy+WV1wpFRIn25zGQS+DZ/yycL75SmTWfr
 
 install:
  - ps: |

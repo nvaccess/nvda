@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited, Rui Batista
+# Copyright (C) 2022 NV Access Limited, Rui Batista, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -229,9 +229,23 @@ def _getBatteryInformation(systemPowerStatus: SystemPowerStatus) -> List[str]:
 	SECONDS_PER_HOUR = 3600
 	SECONDS_PER_MIN = 60
 	if systemPowerStatus.BatteryLifeTime != BATTERY_LIFE_TIME_UNKNOWN:
-		# Translators: This is the estimated remaining runtime of the laptop battery.
-		text.append(_("{hours:d} hours and {minutes:d} minutes remaining").format(
-			hours=systemPowerStatus.BatteryLifeTime // SECONDS_PER_HOUR,
-			minutes=(systemPowerStatus.BatteryLifeTime % SECONDS_PER_HOUR) // SECONDS_PER_MIN
-		))
+		nHours = systemPowerStatus.BatteryLifeTime // SECONDS_PER_HOUR
+		hourText = ngettext(
+			# Translators: This is the hour string part of the estimated remaining runtime of the laptop battery.
+			# E.g. if the full string is "1 hour and 34 minutes remaining", this string is "1 hour".
+			"{hours:d} hour",
+			"{hours:d} hours",
+			nHours,
+		).format(hours=nHours)
+		nMinutes = (systemPowerStatus.BatteryLifeTime % SECONDS_PER_HOUR) // SECONDS_PER_MIN
+		minuteText = ngettext(
+			# Translators: This is the minute string part of the estimated remaining runtime of the laptop battery.
+			# E.g. if the full string is "1 hour and 34 minutes remaining", this string is "34 minutes".
+			"{minutes:d} minute",
+			"{minutes:d} minutes",
+			nMinutes,
+		).format(minutes=nMinutes)
+		# Translators: This is the main string for the estimated remaining runtime of the laptop battery.
+		# E.g. hourText is replaced by "1 hour" and minuteText by "34 minutes".
+		text.append(_("{hourText} and {minuteText} remaining").format(hourText=hourText, minuteText=minuteText))
 	return text

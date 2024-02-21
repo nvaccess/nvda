@@ -4,9 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-# Needed for type hinting CaseInsensitiveDict, UserDict
-# Can be removed in a future version of python (3.8+)
-from __future__ import annotations
+from __future__ import annotations  # Avoids quoting of forward references
 
 from abc import abstractmethod, ABC
 import sys
@@ -23,11 +21,12 @@ from six import string_types
 from typing import (
 	Callable,
 	Dict,
-	List,
+	Literal,
 	Optional,
 	Set,
 	TYPE_CHECKING,
 	Tuple,
+	Union,
 )
 import zipfile
 from configobj import ConfigObj
@@ -42,8 +41,8 @@ import NVDAState
 from NVDAState import WritePaths
 from types import ModuleType
 
-from _addonStore.models.status import AddonStateCategory, SupportsAddonState
-from _addonStore.models.version import SupportsVersionCheck
+from addonStore.models.status import AddonStateCategory, SupportsAddonState
+from addonStore.models.version import MajorMinorPatch, SupportsVersionCheck
 import extensionPoints
 from utils.caseInsensitiveCollections import CaseInsensitiveSet
 
@@ -56,7 +55,7 @@ from .packaging import (
 )
 
 if TYPE_CHECKING:
-	from _addonStore.models.addon import (  # noqa: F401
+	from addonStore.models.addon import (  # noqa: F401
 		AddonManifestModel,
 		AddonHandlerModelGeneratorT,
 		InstalledAddonStoreModel,
@@ -77,12 +76,16 @@ DELETEDIR_SUFFIX=".delete"
 # For more details see appropriate section of the developer guide.
 isCLIParamKnown = extensionPoints.AccumulatingDecider(defaultDecision=False)
 
+_failedPendingRemovals: CaseInsensitiveSet[str] = CaseInsensitiveSet()
+_failedPendingInstalls: CaseInsensitiveSet[str] = CaseInsensitiveSet()
 
-class AddonsState(collections.UserDict):
+
+AddonStateDictT = Dict[AddonStateCategory, CaseInsensitiveSet[str]]
+
+
+class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[str]]):
 	"""
 	Subclasses `collections.UserDict` to preserve backwards compatibility.
-	In future versions of python (3.8+) UserDict[AddonStateCategory, CaseInsensitiveSet[str]]
-	can have type information added.
 	AddonStateCategory string enums mapped to a set of the add-on "name/id" currently in that state.
 	Add-ons that have the same ID except differ in casing cause a path collision,
 	as add-on IDs are installed to a case insensitive path.
@@ -90,30 +93,55 @@ class AddonsState(collections.UserDict):
 	"""
 
 	@staticmethod
-	def _generateDefaultStateContent() -> Dict[AddonStateCategory, CaseInsensitiveSet[str]]:
+	def _generateDefaultStateContent() -> AddonStateDictT:
 		return {
 			category: CaseInsensitiveSet() for category in AddonStateCategory
 		}
 
-	data: Dict[AddonStateCategory, CaseInsensitiveSet[str]]
+	data: AddonStateDictT
+	manualOverridesAPIVersion: MajorMinorPatch
 
 	@property
 	def statePath(self) -> os.PathLike:
 		"""Returns path to the state file. """
 		return WritePaths.addonStateFile
 
+	def setDefaultStateValues(self) -> None:
+		self.update(self._generateDefaultStateContent())
+
+		# Set default value for manualOverridesAPIVersion.
+		# The ability to override add-ons only appeared in 2023.2,
+		# where the BACK_COMPAT_TO API version was 2023.1.0.
+		self.manualOverridesAPIVersion = MajorMinorPatch(2023, 1, 0)
+
+	def fromPickledDict(
+			self,
+			pickledState: Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT, MajorMinorPatch]]
+	) -> None:
+		# Load from pickledState
+		if "backCompatToAPIVersion" in pickledState:
+			self.manualOverridesAPIVersion = MajorMinorPatch(*pickledState["backCompatToAPIVersion"])
+		for category in AddonStateCategory:
+			# Make pickles case insensitive
+			self[AddonStateCategory(category)] = CaseInsensitiveSet(pickledState.get(category, set()))
+
+	def toDict(self) -> Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT]]:
+		# We cannot pickle instance of `AddonsState` directly
+		# since older versions of NVDA aren't aware about this class and they're expecting
+		# the state to be using inbuilt data types only.
+		picklableState: Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT]] = dict()
+		for category in self.data:
+			picklableState[category.value] = set(self.data[category])
+		picklableState["backCompatToAPIVersion"] = tuple(self.manualOverridesAPIVersion)
+		return picklableState
+
 	def load(self) -> None:
 		"""Populates state with the default content and then loads values from the config."""
-		state = self._generateDefaultStateContent()
-		self.update(state)
+		self.setDefaultStateValues()
 		try:
 			# #9038: Python 3 requires binary format when working with pickles.
 			with open(self.statePath, "rb") as f:
-				pickledState: Dict[str, Set[str]] = pickle.load(f)
-				for category in pickledState:
-					# Make pickles case insensitive
-					state[AddonStateCategory(category)] = CaseInsensitiveSet(pickledState[category])
-				self.update(state)
+				pickledState: Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT]] = pickle.load(f)
 		except FileNotFoundError:
 			pass  # Clean config - no point logging in this case
 		except IOError:
@@ -122,8 +150,28 @@ class AddonsState(collections.UserDict):
 			log.debugWarning("Failed to unpickle state", exc_info=True)
 		except Exception:
 			log.exception()
+		else:
+			self.fromPickledDict(pickledState)
+		if self.manualOverridesAPIVersion != addonAPIVersion.BACK_COMPAT_TO:
+			log.debug(
+				"BACK_COMPAT_TO API version for manual compatibility overrides has changed. "
+				f"NVDA API has been upgraded: from {self.manualOverridesAPIVersion} to {addonAPIVersion.BACK_COMPAT_TO}"
+			)
+		if self.manualOverridesAPIVersion < addonAPIVersion.BACK_COMPAT_TO:
+			# Reset compatibility overrides as the API version has upgraded.
+			# For the installer, this is not written to disk.
+			# Portable/temporary copies will write this on the first run.
+			# Mark overridden compatible add-ons as blocked.
+			self[AddonStateCategory.BLOCKED].update(self[AddonStateCategory.OVERRIDE_COMPATIBILITY])
+			# Reset overridden compatibility for add-ons that were overridden by older versions of NVDA.
+			self[AddonStateCategory.OVERRIDE_COMPATIBILITY].clear()
+			self[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].clear()
+		self.manualOverridesAPIVersion = MajorMinorPatch(*addonAPIVersion.BACK_COMPAT_TO)
 
 	def removeStateFile(self) -> None:
+		if not NVDAState.shouldWriteToDisk():
+			log.debugWarning("NVDA should not write to disk from secure mode or launcher", stack_info=True)
+			return
 		try:
 			os.remove(self.statePath)
 		except FileNotFoundError:
@@ -141,13 +189,7 @@ class AddonsState(collections.UserDict):
 			try:
 				# #9038: Python 3 requires binary format when working with pickles.
 				with open(self.statePath, "wb") as f:
-					# We cannot pickle instance of `AddonsState` directly
-					# since older versions of NVDA aren't aware about this class and they're expecting
-					# the state to be using inbuilt data types only.
-					pickleableState: Dict[str, Set[str]] = dict()
-					for category in self.data:
-						pickleableState[category.value] = set(self.data[category])
-					pickle.dump(pickleableState, f, protocol=0)
+					pickle.dump(self.toDict(), f, protocol=0)
 			except (IOError, pickle.PicklingError):
 				log.debugWarning("Error saving state", exc_info=True)
 		else:
@@ -166,8 +208,26 @@ class AddonsState(collections.UserDict):
 				log.debug(f"Discarding {disabledAddonName} from disabled add-ons as it has been uninstalled.")
 				self[AddonStateCategory.DISABLED].discard(disabledAddonName)
 
+	def _cleanupCompatibleAddonsFromDowngrade(self) -> None:
+		from addonStore.dataManager import addonDataManager
+		installedAddons = addonDataManager._installedAddonsCache.installedAddons
+		for blockedAddon in CaseInsensitiveSet(
+			self[AddonStateCategory.BLOCKED].union(
+				self[AddonStateCategory.OVERRIDE_COMPATIBILITY]
+			)
+		):
+			# Iterate over copy of set to prevent updating the set while iterating over it.
+			if blockedAddon not in installedAddons and blockedAddon not in self[AddonStateCategory.PENDING_INSTALL]:
+				log.debug(f"Discarding {blockedAddon} from blocked add-ons as it has been uninstalled.")
+				self[AddonStateCategory.BLOCKED].discard(blockedAddon)
+				self[AddonStateCategory.OVERRIDE_COMPATIBILITY].discard(blockedAddon)
+			elif installedAddons[blockedAddon].isCompatible:
+				log.debug(f"Discarding {blockedAddon} from blocked add-ons as it has become compatible.")
+				self[AddonStateCategory.BLOCKED].discard(blockedAddon)
+				self[AddonStateCategory.OVERRIDE_COMPATIBILITY].discard(blockedAddon)
 
-state: AddonsState[AddonStateCategory, CaseInsensitiveSet[str]] = AddonsState()
+
+state = AddonsState()
 
 
 def getRunningAddons() -> "AddonHandlerModelGeneratorT":
@@ -188,8 +248,16 @@ def getIncompatibleAddons(
 				addon,
 				currentAPIVersion=currentAPIVersion,
 				backwardsCompatToVersion=backCompatToAPIVersion
+			)
+			and (
+				# Add-ons that override incompatibility are not considered incompatible.
+				not addon.overrideIncompatibility
+				# If we are upgrading NVDA API versions,
+				# then the add-on compatibility override will be reset
+				or backCompatToAPIVersion > addonAPIVersion.BACK_COMPAT_TO
+			)
 		)
-	))
+	)
 
 
 def removeFailedDeletion(path: os.PathLike):
@@ -206,7 +274,7 @@ def disableAddonsIfAny():
 	# Pull in and enable add-ons that should be disabled and enabled, respectively.
 	state[AddonStateCategory.DISABLED] |= state[AddonStateCategory.PENDING_DISABLE]
 	state[AddonStateCategory.DISABLED] -= state[AddonStateCategory.PENDING_ENABLE]
-	# Remove disabled add-ons from having overriden compatibility
+	# Remove disabled add-ons from having overridden compatibility
 	state[AddonStateCategory.OVERRIDE_COMPATIBILITY] -= state[AddonStateCategory.DISABLED]
 	# Clear pending disables and enables
 	state[AddonStateCategory.PENDING_DISABLE].clear()
@@ -222,8 +290,23 @@ def initialize():
 	# #3090: Are there add-ons that are supposed to not run for this session?
 	disableAddonsIfAny()
 	getAvailableAddons(refresh=True, isFirstLoad=True)
+	state.cleanupRemovedDisabledAddons()
+	state._cleanupCompatibleAddonsFromDowngrade()
+	if missingPendingInstalls := state[AddonStateCategory.PENDING_INSTALL] - _failedPendingInstalls:
+		log.error(
+			"The following add-ons should be installed, "
+			f"but are no longer present on disk: {', '.join(missingPendingInstalls)}"
+		)
+		state[AddonStateCategory.PENDING_INSTALL] -= missingPendingInstalls
+	if missingPendingOverrideCompat := (
+		state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY] - _failedPendingInstalls
+	):
+		log.error(
+			"The following add-ons which were marked as compatible are no longer installed: "
+			f"{', '.join(missingPendingOverrideCompat)}"
+		)
+		state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY] -= missingPendingOverrideCompat
 	if NVDAState.shouldWriteToDisk():
-		state.cleanupRemovedDisabledAddons()
 		state.save()
 	initializeModulePackagePaths()
 
@@ -233,8 +316,8 @@ def terminate():
 	pass
 
 
-def _getDefaultAddonPaths() -> List[str]:
-	""" Returns paths where addons can be found.
+def _getDefaultAddonPaths() -> list[str]:
+	r""" Returns paths where addons can be found.
 	For now, only <userConfig>\addons is supported.
 	"""
 	addon_paths = []
@@ -273,9 +356,10 @@ def _getAvailableAddonsFromPath(
 					):
 						try:
 							a.completeRemove()
+							continue
 						except RuntimeError:
 							log.exception(f"Failed to remove {name} add-on")
-						continue
+							_failedPendingRemovals.add(name)
 					if(
 						isFirstLoad
 						and (
@@ -286,6 +370,15 @@ def _getAvailableAddonsFromPath(
 						newPath = a.completeInstall()
 						if newPath:
 							a = Addon(newPath)
+						else:  # installation failed
+							_failedPendingInstalls.add(name)
+					if (
+						isFirstLoad
+						and name in state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY]
+						and name not in _failedPendingInstalls
+					):
+						state[AddonStateCategory.OVERRIDE_COMPATIBILITY].add(name)
+						state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].remove(name)
 					log.debug(
 						"Found add-on {name} - {a.version}."
 						" Requires API: {a.minimumNVDAVersion}."
@@ -331,25 +424,35 @@ def getAvailableAddons(
 	return (addon for addon in _availableAddons.values() if not filterFunc or filterFunc(addon))
 
 
-def installAddonBundle(bundle: "AddonBundle") -> "Addon":
+def installAddonBundle(bundle: AddonBundle) -> Addon | None:
 	""" Extracts an Addon bundle in to a unique subdirectory of the user addons directory,
 	marking the addon as needing 'install completion' on NVDA restart.
 	"""
-	bundle.extract()
-	addon = Addon(bundle.pendingInstallPath)
-	# #2715: The add-on must be added to _availableAddons here so that
-	# translations can be used in installTasks module.
-	_availableAddons[addon.path]=addon
+	addon: Addon | None = None
 	try:
-		addon.runInstallTask("onInstall")
-	except:
-		log.error("task 'onInstall' on addon '%s' failed"%addon.name,exc_info=True)
-		del _availableAddons[addon.path]
-		addon.completeRemove(runUninstallTask=False)
-		raise AddonError("Installation failed")
-	state[AddonStateCategory.PENDING_INSTALL].add(bundle.manifest['name'])
-	state.save()
-	return addon
+		bundle.extract()
+		addon = Addon(bundle.pendingInstallPath)
+		# #2715: The add-on must be added to _availableAddons here so that
+		# translations can be used in installTasks module.
+		_availableAddons[addon.path] = addon
+		try:
+			addon.runInstallTask("onInstall")
+			# Broad except used, since we can not know what exceptions might be thrown by the install tasks.
+		except Exception:
+			log.error(f"task 'onInstall' on addon '{addon.name}' failed", exc_info=True)
+			del _availableAddons[addon.path]
+			addon.completeRemove(runUninstallTask=False)
+			raise AddonError("Installation failed")
+		state[AddonStateCategory.PENDING_INSTALL].add(bundle.manifest['name'])
+		state.save()
+	finally:
+		# Regardless if installation failed or not, the created add-on object should be returned
+		# to give caller a hance to clean-up modules imported as part of install tasks.
+		# This clean-up cannot be done here, as install tasks are blocking,
+		# and this function returns as soon as they're started,
+		# so removing modules before they're done may cause unpredictable effects.
+		return addon
+
 
 class AddonError(Exception):
 	""" Represents an exception coming from the addon subsystem. """
@@ -387,13 +490,13 @@ class AddonBase(SupportsAddonState, SupportsVersionCheck, ABC):
 
 	@property
 	def _addonStoreData(self) -> Optional["InstalledAddonStoreModel"]:
-		from _addonStore.dataManager import addonDataManager
+		from addonStore.dataManager import addonDataManager
 		assert addonDataManager
 		return addonDataManager._getCachedInstalledAddonData(self.name)
 
 	@property
 	def _addonGuiModel(self) -> "AddonManifestModel":
-		from _addonStore.models.addon import _createGUIModelFromManifest
+		from addonStore.models.addon import _createGUIModelFromManifest
 		return _createGUIModelFromManifest(self)
 
 
@@ -410,6 +513,8 @@ class Addon(AddonBase):
 		"""
 		self.path = path
 		self._extendedPackages = set()
+		self._importedAddonModules: list[str] = []
+		self._modulesBeforeInstall: set[str] = set()
 		manifest_path = os.path.join(path, MANIFEST_FILENAME)
 		with open(manifest_path, 'rb') as f:
 			translatedInput = None
@@ -424,13 +529,18 @@ class Addon(AddonBase):
 				_report_manifest_errors(self.manifest)
 				raise AddonError("Manifest file has errors.")
 
-	def completeInstall(self) -> str:
+	def completeInstall(self) -> Optional[str]:
+		if not os.path.exists(self.pendingInstallPath):
+			log.error(f"Pending install path {self.pendingInstallPath} does not exist")
+			return None
+
 		try:
 			os.rename(self.pendingInstallPath, self.installPath)
 			state[AddonStateCategory.PENDING_INSTALL].discard(self.name)
 			return self.installPath
 		except OSError:
 			log.error(f"Failed to complete addon installation for {self.name}", exc_info=True)
+			return None
 
 	def requestRemove(self):
 		"""Marks this addon for removal on NVDA restart."""
@@ -439,6 +549,7 @@ class Addon(AddonBase):
 			self.completeRemove()
 			state[AddonStateCategory.PENDING_INSTALL].discard(self.name)
 			state[AddonStateCategory.OVERRIDE_COMPATIBILITY].discard(self.name)
+			state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].discard(self.name)
 			# Force availableAddons to be updated
 			getAvailableAddons(refresh=True)
 		else:
@@ -461,6 +572,7 @@ class Addon(AddonBase):
 				log.error("task 'onUninstall' on addon '%s' failed"%self.name,exc_info=True)
 			finally:
 				del _availableAddons[self.path]
+				self._cleanupAddonImports()
 		tempPath=tempfile.mktemp(suffix=DELETEDIR_SUFFIX,dir=os.path.dirname(self.path))
 		try:
 			os.rename(self.path,tempPath)
@@ -491,7 +603,7 @@ class Addon(AddonBase):
 		"""
 		# #3090: Ensure that we don't add disabled / blocked add-ons to package path.
 		# By returning here the addon does not "run"/ become active / registered.
-		if self.isDisabled or self.isBlocked or self.isPendingInstall:
+		if self.isDisabled or self.isBlocked or self.isPendingInstall or self.name in _failedPendingRemovals:
 			return
 
 		extension_path = os.path.join(self.path, package.__name__)
@@ -503,17 +615,24 @@ class Addon(AddonBase):
 		self._extendedPackages.add(package)
 		log.debug("Addon %s added to %s package path", self.manifest['name'], package.__name__)
 
+	@property
+	def _canBeEnabled(self) -> bool:
+		return (
+			self.isCompatible  # Incompatible add-ons cannot be enabled
+			or (
+				self.canOverrideCompatibility  # Theoretically possible to mark it as compatible
+				# Its compatibility has either been overridden, or would be on the next restart
+				and self._hasOverriddenCompat
+			)
+		)
+
 	def enable(self, shouldEnable: bool) -> None:
 		"""
 		Sets this add-on to be disabled or enabled when NVDA restarts.
 		@raises: AddonError on failure.
 		"""
 		if shouldEnable:
-			if not (
-				isAddonCompatible(self)
-				or self.overrideIncompatibility
-			):
-				import addonAPIVersion
+			if not self._canBeEnabled:
 				raise AddonError(
 					"Add-on is not compatible:"
 					" minimum NVDA version {}, last tested version {},"
@@ -528,15 +647,7 @@ class Addon(AddonBase):
 				# Undoing a pending disable.
 				state[AddonStateCategory.PENDING_DISABLE].discard(self.name)
 			else:
-				if self.canOverrideCompatibility and not self.overrideIncompatibility:
-					from gui import mainFrame
-					from gui._addonStoreGui.controls.messageDialogs import _shouldInstallWhenAddonTooOldDialog
-					if not _shouldInstallWhenAddonTooOldDialog(mainFrame, self._addonGuiModel):
-						import addonAPIVersion
-						raise AddonError("Add-on is not compatible and over ride was abandoned")
 				state[AddonStateCategory.PENDING_ENABLE].add(self.name)
-			if self.overrideIncompatibility:
-				state[AddonStateCategory.BLOCKED].discard(self.name)
 		else:
 			if self.name in state[AddonStateCategory.PENDING_ENABLE]:
 				# Undoing a pending enable.
@@ -566,34 +677,49 @@ class Addon(AddonBase):
 			raise ValueError(f"{name} is an invalid python module name")
 		log.debug(f"Importing module {name} from plugin {self!r}")
 		# Create a qualified full name to avoid modules with the same name on sys.modules.
-		fullName = f"addons.{self.name}.{name}"
+		# Since the same add-on can be installed and its new version can be pending installation
+		# we cannot rely on add-on name being unique.
+		# To avoid conflicts, last part of the add-on's path is used
+		# i.e. the directory name whose suffix is different between add-ons installed and add-ons pending install.
+		# Since dot is used as a separator between add-on name and state suffix,
+		# all dots in the name are replaced with underscores.
+		addonPkgName = f"addons.{os.path.split(self.path)[-1].replace('.', '_')}"
+		fullName = f"{addonPkgName}.{name}"
 		# If the given name contains dots (i.e. it is a submodule import),
 		# ensure the module at the top of the hierarchy is created correctly.
 		# After that, the import mechanism will be able to resolve the submodule automatically.
 		splitName = name.split('.')
-		fullNameTop = f"addons.{self.name}.{splitName[0]}"
+		fullNameTop = f"{addonPkgName}.{splitName[0]}"
 		if fullNameTop in sys.modules:
 			# The module can safely be imported, since the top level module is known.
-			return importlib.import_module(fullName)
+			mod = importlib.import_module(fullName)
+			self._importedAddonModules.append(fullName)
+			return mod
 		# Ensure the new module is resolvable by the import system.
 		# For this, all packages in the tree have to be available in sys.modules.
 		# We add mock modules for the addons package and the addon itself.
 		# If we don't do this, namespace packages can't be imported correctly.
-		for parentName in ("addons", f"addons.{self.name}"):
+		for parentName in ("addons", addonPkgName):
 			if parentName in sys.modules:
 				# Parent package already initialized
 				continue
-			parentSpec = importlib._bootstrap.ModuleSpec(parentName, None, is_package=True)
+			parentSpec = importlib.machinery.ModuleSpec(parentName, None, is_package=True)
 			parentModule = importlib.util.module_from_spec(parentSpec)
 			sys.modules[parentModule.__name__] = parentModule
+			self._importedAddonModules.append(parentModule.__name__)
 		spec = importlib.machinery.PathFinder.find_spec(fullNameTop, [self.path])
 		if not spec:
 			raise ModuleNotFoundError(f"No module named {name!r}", name=name)
 		mod = importlib.util.module_from_spec(spec)
 		sys.modules[fullNameTop] = mod
+		self._importedAddonModules.append(fullNameTop)
 		if spec.loader:
 			spec.loader.exec_module(mod)
-		return mod if fullNameTop == fullName else importlib.import_module(fullName)
+		if fullNameTop == fullName:
+			return mod
+		importedMod = importlib.import_module(fullName)
+		self._importedAddonModules.append(fullName)
+		return importedMod
 
 	def getTranslationsInstance(self, domain='nvda'):
 		""" Gets the gettext translation instance for this add-on.
@@ -605,11 +731,17 @@ class Addon(AddonBase):
 		localedir = os.path.join(self.path, "locale")
 		return gettext.translation(domain, localedir=localedir, languages=[languageHandler.getLanguage()], fallback=True)
 
-	def runInstallTask(self,taskName,*args,**kwargs):
+	def runInstallTask(
+			self,
+			taskName: Literal["onInstall", "onUninstall"],
+			*args,
+			**kwargs
+	) -> None:
 		"""
 		Executes the function having the given taskName with the given args and kwargs,
 		in the add-on's installTasks module if it exists.
 		"""
+		self._modulesBeforeInstall = set(sys.modules.keys())
 		if not hasattr(self,'_installTasksModule'):
 			try:
 				installTasksModule = self.loadModule('installTasks')
@@ -620,6 +752,17 @@ class Addon(AddonBase):
 			func=getattr(self._installTasksModule,taskName,None)
 			if func:
 				func(*args,**kwargs)
+
+	def _cleanupAddonImports(self) -> None:
+		for modName in self._importedAddonModules:
+			log.debug(f"removing imported add-on module {modName}")
+			del sys.modules[modName]
+		self._importedAddonModules.clear()
+		for modName in set(sys.modules.keys()) - self._modulesBeforeInstall:
+				module = sys.modules[modName]
+				if module.__file__ and module.__file__.startswith(self.path):
+					log.debug(f"Removing module {module} from cache of imported modules")
+					del sys.modules[modName]
 
 	def getDocFilePath(self, fileName: Optional[str] = None) -> Optional[str]:
 		r"""Get the path to a documentation file for this add-on.
@@ -654,8 +797,8 @@ class Addon(AddonBase):
 	def isPendingInstall(self) -> bool:
 		return super().isPendingInstall and self.pendingInstallPath == self.path
 
-	def __repr__(self):
-		return f"{self.__class__.__name__} ({self.name!r}, running={self.isRunning!r})"
+	def __repr__(self) -> str:
+		return f"{self.__class__.__name__} ({self.name!r} at path {self.path!r}, running={self.isRunning!r})"
 
 
 def getCodeAddon(obj=None, frameDist=1):
@@ -688,16 +831,29 @@ def getCodeAddon(obj=None, frameDist=1):
 	# Not found!
 	raise AddonError("Code does not belong to an addon")
 
+
 def initTranslation():
+	"""Initializes the translation of an add-on so that the Gettext functions (_, ngettext, npgettext and
+	pgettext) point to the add-on's translation rather than to NVDA's one.
+	This function should be called at the top of any module containing translatable strings and belonging to
+	an add-on. It cannot be called in a module that does not belong to an add-on (e.g. in a subdirectory of the
+	scratchpad).
+	"""
+
 	addon = getCodeAddon(frameDist=2)
 	translations = addon.getTranslationsInstance()
+	_TRANSLATION_FUNCTIONS = {
+		translations.gettext: "_",
+		translations.ngettext: "ngettext",
+		translations.pgettext: "pgettext",
+		translations.npgettext: "npgettext"
+	}
 	# Point _ to the translation object in the globals namespace of the caller frame
-	# FIXME: should we retrieve the caller module object explicitly?
 	try:
 		callerFrame = inspect.currentframe().f_back
-		callerFrame.f_globals['_'] = translations.gettext
-		# Install our pgettext function.
-		callerFrame.f_globals['pgettext'] = languageHandler.makePgettext(translations)
+		module = inspect.getmodule(callerFrame)
+		for funcName, installAs in _TRANSLATION_FUNCTIONS.items():
+			setattr(module, installAs, funcName)
 	finally:
 		del callerFrame # Avoid reference problems with frames (per python docs)
 
@@ -724,7 +880,11 @@ class AddonBundle(AddonBase):
 		self._path = bundlePath
 		# Read manifest:
 		translatedInput=None
-		with zipfile.ZipFile(self._path, 'r') as z:
+		try:
+			z = zipfile.ZipFile(self._path, "r")
+		except (zipfile.BadZipfile, FileNotFoundError) as e:
+			raise AddonError(f"Invalid bundle file: {self._path}") from e
+		with z:
 			for translationPath in _translatedManifestPaths(forBundle=True):
 				try:
 					# ZipFile.open opens every file in binary mode.

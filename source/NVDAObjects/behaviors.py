@@ -1,8 +1,8 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler
+# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler,
+# Burman's Computer and Education Ltd.
 
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 Behaviors described in this mix-in include providing table navigation commands for certain table rows, terminal input and output support, announcing notifications and suggestion items and so on.
@@ -350,9 +350,9 @@ class LiveText(NVDAObject):
 			return
 		thread = self._monitorThread = threading.Thread(
 			name=f"{self.__class__.__qualname__}._monitorThread",
-			target=self._monitor
+			target=self._monitor,
+			daemon=True,
 		)
-		thread.daemon = True
 		self._keepMonitoring = True
 		self._event.clear()
 		thread.start()
@@ -474,6 +474,13 @@ class Terminal(LiveText, EditableText):
 		"""Using caret events in consoles sometimes causes the last character of the
 		prompt to be read when quickly deleting text."""
 		return False
+
+	def event_textChange(self) -> None:
+		"""Fired when the text changes.
+		@note: Updates also braille.
+		"""
+		super().event_textChange()
+		braille.handler.handleUpdate(self)
 
 
 class EnhancedTermTypedCharSupport(Terminal):
@@ -881,6 +888,12 @@ class _FakeTableCell(NVDAObject):
 		states.discard(controlTypes.State.CHECKED)
 		return states
 
+	def _isEqual(self, other: "_FakeTableCell") -> bool:
+		return (
+			self.parent == other.parent
+			and self.columnNumber == other.columnNumber
+			and self.rowNumber == other.rowNumber
+		)
 
 class FocusableUnfocusableContainer(NVDAObject):
 	"""Makes an unfocusable container focusable using its first focusable descendant.

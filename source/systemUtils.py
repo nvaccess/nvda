@@ -6,12 +6,28 @@
 
 """ System related functions."""
 import ctypes
+import time
+import threading
+from collections.abc import (
+	Callable,
+)
 from ctypes import (
 	byref,
 	create_unicode_buffer,
 	sizeof,
 	windll,
 )
+from typing import (
+	Generic,
+	Optional,
+)
+from typing_extensions import (
+	# Uses `TypeVar` from `typing_extensions`, to be able to specify default type.
+	# This should be changed to use version from `typing`
+	# when updating to version of Python supporting PEP 696.
+	TypeVar,
+)
+
 import winKernel
 import winreg
 import shellapi
@@ -19,6 +35,7 @@ import winUser
 import functools
 import shlobj
 from os import startfile
+from logHandler import log
 from NVDAState import WritePaths
 
 
@@ -194,3 +211,44 @@ def _isSystemClockSecondsVisible() -> bool:
 		return False
 	except OSError:
 		return False
+
+
+_execAndPumpResT = TypeVar("_execAndPumpResT", default=None)
+
+
+class ExecAndPump(threading.Thread, Generic[_execAndPumpResT]):
+	"""Executes the given function with given args and kwargs in a background thread,
+	while blocking and pumping in the current thread.
+	"""
+
+	def __init__(self, func: Callable[..., _execAndPumpResT], *args, **kwargs) -> None:
+		self.func = func
+		self.args = args
+		self.kwargs = kwargs
+		# Intentionally uses older syntax with `Optional`, instead of `_execAndPumpResT | None`,
+		# as latter is not yet supported for unions potentially containing two instances of `None`
+		# (see CPython issue 107271).
+		self.funcRes: Optional[_execAndPumpResT] = None
+		fname = repr(func)
+		super().__init__(
+			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}({fname})"
+		)
+		self.threadExc: Exception | None = None
+		self.start()
+		time.sleep(0.1)
+		threadHandle = ctypes.c_int()
+		threadHandle.value = winKernel.kernel32.OpenThread(0x100000, False, self.ident)
+		msg = ctypes.wintypes.MSG()
+		while winUser.user32.MsgWaitForMultipleObjects(1, ctypes.byref(threadHandle), False, -1, 255) == 1:
+			while winUser.user32.PeekMessageW(ctypes.byref(msg), None, 0, 0, 1):
+				winUser.user32.TranslateMessage(ctypes.byref(msg))
+				winUser.user32.DispatchMessageW(ctypes.byref(msg))
+		if self.threadExc:
+			raise self.threadExc
+
+	def run(self):
+		try:
+			self.funcRes = self.func(*self.args, **self.kwargs)
+		except Exception as e:
+			self.threadExc = e
+			log.debugWarning("task had errors", exc_info=True)

@@ -193,7 +193,7 @@ def callback(wav,numsamples,event):
 class BgThread(threading.Thread):
 	def __init__(self):
 		super().__init__(name=f"{self.__class__.__module__}.{self.__class__.__qualname__}")
-		self.setDaemon(True)
+		self.daemon = True
 
 	def run(self):
 		global isSpeaking

@@ -62,6 +62,67 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	# Translators: Names of braille displays.
 	description = _("Baum/HumanWare/APH/Orbit braille displays")
 	isThreadSafe = True
+	supportsAutomaticDetection = True
+
+	@classmethod
+	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.HID, {
+			"VID_0904&PID_3001",  # RefreshaBraille 18
+			"VID_0904&PID_6101",  # VarioUltra 20
+			"VID_0904&PID_6103",  # VarioUltra 32
+			"VID_0904&PID_6102",  # VarioUltra 40
+			"VID_0904&PID_4004",  # Pronto! 18 V3
+			"VID_0904&PID_4005",  # Pronto! 40 V3
+			"VID_0904&PID_4007",  # Pronto! 18 V4
+			"VID_0904&PID_4008",  # Pronto! 40 V4
+			"VID_0904&PID_6001",  # SuperVario2 40
+			"VID_0904&PID_6002",  # SuperVario2 24
+			"VID_0904&PID_6003",  # SuperVario2 32
+			"VID_0904&PID_6004",  # SuperVario2 64
+			"VID_0904&PID_6005",  # SuperVario2 80
+			"VID_0904&PID_6006",  # Brailliant2 40
+			"VID_0904&PID_6007",  # Brailliant2 24
+			"VID_0904&PID_6008",  # Brailliant2 32
+			"VID_0904&PID_6009",  # Brailliant2 64
+			"VID_0904&PID_600A",  # Brailliant2 80
+			"VID_0904&PID_6201",  # Vario 340
+			"VID_0483&PID_A1D3",  # Orbit Reader 20
+			"VID_0904&PID_6301",  # Vario 4
+		})
+
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.SERIAL, {
+			"VID_0403&PID_FE70",  # Vario 40
+			"VID_0403&PID_FE71",  # PocketVario
+			"VID_0403&PID_FE72",  # SuperVario/Brailliant 40
+			"VID_0403&PID_FE73",  # SuperVario/Brailliant 32
+			"VID_0403&PID_FE74",  # SuperVario/Brailliant 64
+			"VID_0403&PID_FE75",  # SuperVario/Brailliant 80
+			"VID_0904&PID_2001",  # EcoVario 24
+			"VID_0904&PID_2002",  # EcoVario 40
+			"VID_0904&PID_2007",  # VarioConnect/BrailleConnect 40
+			"VID_0904&PID_2008",  # VarioConnect/BrailleConnect 32
+			"VID_0904&PID_2009",  # VarioConnect/BrailleConnect 24
+			"VID_0904&PID_2010",  # VarioConnect/BrailleConnect 64
+			"VID_0904&PID_2011",  # VarioConnect/BrailleConnect 80
+			"VID_0904&PID_2014",  # EcoVario 32
+			"VID_0904&PID_2015",  # EcoVario 64
+			"VID_0904&PID_2016",  # EcoVario 80
+			"VID_0904&PID_3000",  # RefreshaBraille 18
+		})
+
+		driverRegistrar.addBluetoothDevices(lambda m: any(m.id.startswith(prefix) for prefix in (
+			"Baum SuperVario",
+			"Baum PocketVario",
+			"Baum SVario",
+			"HWG Brailliant",
+			"Refreshabraille",
+			"VarioConnect",
+			"BrailleConnect",
+			"Pronto!",
+			"VarioUltra",
+			"Orbit Reader 20",
+			"Vario 4",
+		)))
 
 	@classmethod
 	def getManualPorts(cls):
@@ -75,7 +136,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
-			self.isHid = portType == bdDetect.KEY_HID
+			self.isHid = portType == bdDetect.DeviceType.HID
 			try:
 				if self.isHid:
 					self._dev = hwIo.Hid(port, onReceive=self._onReceive)

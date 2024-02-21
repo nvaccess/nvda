@@ -32,6 +32,7 @@ import textInfos.offsets
 import colors
 import controlTypes
 from controlTypes import TextPosition
+from controlTypes.formatFields import TextAlign
 import treeInterceptorHandler
 import browseMode
 import review
@@ -807,7 +808,13 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		for index,item in enumerate(commandList):
 			if isinstance(item,textInfos.FieldCommand):
 				field=item.field
-				if isinstance(field,textInfos.ControlField):
+				if (
+					isinstance(field, textInfos.ControlField)
+					# #15830: only process controlStart commands.
+					# Otherwise also processing controlEnd commands would double-process the same field attributes,
+					# As controlStart and controlEnd commands now share the same field dictionary.
+					and item.command == "controlStart"
+				):
 					item.field=self._normalizeControlField(field)
 				elif isinstance(field,textInfos.FormatField):
 					item.field=self._normalizeFormatField(field,extraDetail=extraDetail)
@@ -972,6 +979,9 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if fontSize is not None:
 			# Translators: Abbreviation for points, a measurement of font size.
 			field["font-size"] = pgettext("font size", "%s pt") % fontSize
+		textAlign = field.pop('text-align', None)
+		if textAlign:
+			field['text-align'] = TextAlign(textAlign)
 		return field
 
 	def expand(self,unit):
@@ -1157,6 +1167,7 @@ class BrowseModeWordDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeI
 class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	TextInfo=BrowseModeWordDocumentTextInfo
+	_nativeAppSelectionMode = True
 
 	def _activateLongDesc(self,controlField):
 		longDesc=controlField.get('longdescription')
@@ -1531,30 +1542,50 @@ class WordDocument(Window):
 		useCharacterUnit=options.useCharacterUnit
 		if useCharacterUnit:
 			offset=offset/self.WinwordSelectionObject.font.size
-			# Translators: a measurement in Microsoft Word
-			return _("{offset:.3g} characters").format(offset=offset)
+			return ngettext(
+				# Translators: a measurement in Microsoft Word
+				"{offset:.3g} character",
+				"{offset:.3g} characters",
+				offset,
+			).format(offset=offset)
 		else:
 			unit=options.measurementUnit
 			if unit==wdInches:
 				offset=offset/72.0
-				# Translators: a measurement in Microsoft Word
-				return _("{offset:.3g} inches").format(offset=offset)
+				return ngettext(
+					# Translators: a measurement in Microsoft Word
+					"{offset:.3g} inch",
+					"{offset:.3g} inches",
+					offset,
+				).format(offset=offset)
 			elif unit==wdCentimeters:
 				offset=offset/28.35
-				# Translators: a measurement in Microsoft Word
-				return _("{offset:.3g} centimeters").format(offset=offset)
+				return ngettext(
+					# Translators: a measurement in Microsoft Word
+					"{offset:.3g} centimeter",
+					"{offset:.3g} centimeters",
+					offset,
+				).format(offset=offset)
 			elif unit==wdMillimeters:
 				offset=offset/2.835
-				# Translators: a measurement in Microsoft Word
-				return _("{offset:.3g} millimeters").format(offset=offset)
+				return ngettext(
+					# Translators: a measurement in Microsoft Word
+					"{offset:.3g} millimeter",
+					"{offset:.3g} millimeters",
+					offset,
+				).format(offset=offset)
 			elif unit==wdPoints:
 				# Translators: a measurement in Microsoft Word (points)
 				return _("{offset:.3g} pt").format(offset=offset)
 			elif unit==wdPicas:
 				offset=offset/12.0
-				# Translators: a measurement in Microsoft Word
-				# See http://support.microsoft.com/kb/76388 for details.
-				return _("{offset:.3g} picas").format(offset=offset)
+				return ngettext(
+					# Translators: a measurement in Microsoft Word
+					# See http://support.microsoft.com/kb/76388 for details.
+					"{offset:.3g} pica",
+					"{offset:.3g} picas",
+					offset,
+				).format(offset=offset)
 
 	def script_changeLineSpacing(self,gesture):
 		if not self.WinwordSelectionObject:

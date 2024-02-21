@@ -1,6 +1,5 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2023 NV Access Limited
+# Copyright (C) 2016-2024 NV Access Limited, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -44,6 +43,7 @@ class myDialog(wx.Dialog):
 	...
 """
 from contextlib import contextmanager
+import weakref
 from typing import (
 	Generic,
 	Optional,
@@ -136,7 +136,6 @@ def associateElements(firstElement: wx.Control, secondElement: wx.Control) -> wx
 	# likely a labelled control from LabeledControlHelper
 	if isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (
 		wx.Button,
-		wx.CheckBox,
 		wx.Choice,
 		wx.Slider,
 		wx.SpinCtrl,
@@ -146,6 +145,12 @@ def associateElements(firstElement: wx.Control, secondElement: wx.Control) -> wx
 		sizer.Add(firstElement, flag=wx.ALIGN_CENTER_VERTICAL)
 		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
 		sizer.Add(secondElement)
+	elif isinstance(firstElement, wx.StaticText) and isinstance(secondElement, wx.CheckBox):
+		# checkbox should go first, and label should go after
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sizer.Add(secondElement)
+		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
+		sizer.Add(firstElement, flag=wx.ALIGN_CENTER_VERTICAL)
 	# staticText and (ListCtrl, ListBox or TreeCtrl)
 	elif isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (wx.ListCtrl,wx.ListBox,wx.TreeCtrl)):
 		sizer = wx.BoxSizer(wx.VERTICAL)
@@ -309,7 +314,7 @@ class BoxSizerHelper:
 			@type orientation: wx.HORIZONTAL or wx.VERTICAL
 			@param sizer: the sizer to use rather than constructing one.
 		"""
-		self._parent = parent
+		self._parentRef = weakref.ref(parent)
 		self.hasFirstItemBeenAdded = False
 		if orientation and sizer:
 			raise ValueError("Supply either orientation OR sizer. Not both.")
@@ -349,6 +354,9 @@ class BoxSizerHelper:
 				keywordArgs["flag"] = keywordArgs.get("flag", 0) | wx.EXPAND
 			else:
 				raise NotImplementedError("Adding PathSelectionHelper to a horizontal BoxSizerHelper is not implemented")
+		elif isinstance(item, wx.CheckBox):
+			if self.sizer.GetOrientation() == wx.HORIZONTAL:
+				keywordArgs["flag"] = keywordArgs.get("flag", 0) | wx.EXPAND
 		elif isinstance(item, LabeledControlHelper):
 			raise NotImplementedError("Use addLabeledControl instead")
 
@@ -376,7 +384,7 @@ class BoxSizerHelper:
 			Relies on guiHelper.LabeledControlHelper and thus guiHelper.associateElements, and therefore inherits any
 			limitations from there.
 		"""
-		parent = self._parent
+		parent = self._parentRef()
 		if isinstance(self.sizer, wx.StaticBoxSizer):
 			parent = self.sizer.GetStaticBox()
 		labeledControl = LabeledControlHelper(parent, labelText, wxCtrlClass, **kwargs)
@@ -414,11 +422,11 @@ class BoxSizerHelper:
 		elif isinstance(buttons, (wx.Sizer, wx.Button)):
 			toAdd = buttons
 		elif isinstance(buttons, int):
-			toAdd = self._parent.CreateButtonSizer(buttons)
+			toAdd = self._parentRef().CreateButtonSizer(buttons)
 		else:
 			raise NotImplementedError("Unknown type: {}".format(buttons))
 		if separated:
-			parentBox = self._parent
+			parentBox = self._parentRef()
 			if isinstance(self.sizer, wx.StaticBoxSizer):
 				parentBox = self.sizer.GetStaticBox()
 			self.addItem(wx.StaticLine(parentBox), flag=wx.EXPAND)

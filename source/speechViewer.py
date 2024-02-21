@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Thomas Stivers, Accessolutions, Julien Cochuyt
+# Copyright (C) 2006-2023 NV Access Limited, Thomas Stivers, Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -12,6 +12,7 @@ import gui
 import config
 from logHandler import log
 from speech import SpeechSequence
+from gui import blockAction
 import gui.contextHelp
 from utils.security import isLockScreenModeActive, post_sessionLockStateChanged
 
@@ -155,9 +156,10 @@ _guiFrame: Optional[SpeechViewerFrame] = None
 isActive: bool = False
 
 
+@blockAction.when(blockAction.Context.SECURE_MODE)
 def activate():
 	"""
-		Function to call to trigger the speech viewer window to open.
+	Function to call to trigger the speech viewer window to open.
 	"""
 	_setActive(True, SpeechViewerFrame(_cleanup))
 
@@ -187,7 +189,10 @@ def appendSpeechSequence(sequence: SpeechSequence) -> None:
 		return
 	# If the speech viewer text control has the focus, we want to disable updates
 	# Otherwise it would be impossible to select text, or even just read it (as a blind person).
-	if _guiFrame.FindFocus() == _guiFrame.textCtrl:
+	if (
+		_guiFrame.FindFocus() == _guiFrame.textCtrl
+		or _guiFrame.textCtrl.GetScreenRect().Contains(wx.GetMousePosition())
+	):
 		return
 
 	# to make the speech easier to read, we must separate the items.
@@ -196,11 +201,13 @@ def appendSpeechSequence(sequence: SpeechSequence) -> None:
 	)
 	_guiFrame.textCtrl.AppendText(text + SPEECH_SEQUENCE_SEPARATOR)
 
+
 def _cleanup():
 	global isActive
 	if not isActive:
 		return
 	_setActive(False)
+
 
 def deactivate():
 	global _guiFrame, isActive

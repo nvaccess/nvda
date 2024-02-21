@@ -8,7 +8,9 @@ import abc
 import ctypes
 import enum
 from typing import (
-	Optional, Dict,
+	Any,
+	Dict,
+	Optional,
 )
 
 from comtypes import COMError, BSTR
@@ -39,7 +41,7 @@ from winAPI.winUser.constants import SysColorIndex
 import mouseHandler
 from displayModel import DisplayModelTextInfo
 import controlTypes
-from controlTypes import TextPosition
+from controlTypes import TextPosition, TextAlign, VerticalTextAlign
 from . import Window
 from .. import NVDAObjectTextInfo
 import scriptHandler
@@ -48,35 +50,104 @@ import browseMode
 import inputCore
 import ctypes
 import vision
+from utils.displayString import DisplayStringIntEnum
+import NVDAState
+from globalCommands import SCRCAT_SYSTEMCARET
 
 excel2010VersionMajor=14
 
 xlNone=-4142
 xlSimple=-4154
 xlExtended=3
-xlCenter=-4108
-xlJustify=-4130
-xlLeft=-4131
-xlRight=-4152
-xlDistributed=-4117
-xlBottom=-4107
-xlTop=-4160
+
+
+class XlHAlign(DisplayStringIntEnum):
+	# XlHAlign enumeration from https://docs.microsoft.com/en-us/office/vba/api/excel.xlhalign
+	CENTER = -4108
+	CENTER_ACROSS_SELECTION = 7
+	DISTRIBUTED = -4117
+	FILL = 5
+	GENERAL = 1
+	JUSTIFY = -4130
+	LEFT = -4131
+	RIGHT = -4152
+
+	@property
+	def _displayStringLabels(self):
+		return _horizontalAlignmentLabels
+
+
+class XlVAlign(DisplayStringIntEnum):
+	# XlVAlign enumeration from https://docs.microsoft.com/en-us/office/vba/api/excel.xlvalign
+	BOTTOM = -4107
+	CENTER = -4108
+	DISTRIBUTED = -4117
+	JUSTIFY = -4130
+	TOP = -4160
+
+	@property
+	def _displayStringLabels(self):
+		return _verticalAlignmentLabels
+
+
+_horizontalAlignmentLabels = {
+	XlHAlign.CENTER: TextAlign.CENTER,
+	XlHAlign.CENTER_ACROSS_SELECTION: TextAlign.CENTER_ACROSS_SELECTION,
+	XlHAlign.DISTRIBUTED: TextAlign.DISTRIBUTE,
+	XlHAlign.FILL: TextAlign.FILL,
+	XlHAlign.GENERAL: TextAlign.GENERAL,
+	XlHAlign.JUSTIFY: TextAlign.JUSTIFY,
+	XlHAlign.LEFT: TextAlign.LEFT,
+	XlHAlign.RIGHT: TextAlign.RIGHT,
+}
+
+_verticalAlignmentLabels = {
+	XlVAlign.BOTTOM: VerticalTextAlign.BOTTOM,
+	XlVAlign.CENTER: VerticalTextAlign.CENTER,
+	XlVAlign.DISTRIBUTED: VerticalTextAlign.DISTRIBUTE,
+	XlVAlign.JUSTIFY: VerticalTextAlign.JUSTIFY,
+	XlVAlign.TOP: VerticalTextAlign.TOP,
+}
+
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	_deprecatedConstantsMap = {
+		"xlCenter": -4108,  # XlHAlign.CENTER or XlVAlign.CENTER
+		"xlJustify": -4130,  # XlHAlign.JUSTIFY or XlVAlign.JUSTIFY
+		"xlLeft": XlHAlign.LEFT.value,
+		"xlRight": XlHAlign.RIGHT.value,
+		"xlDistributed": -4117,  # XlHAlign.DDISTRIBUTED or XlVAlign.DDISTRIBUTED
+		"xlBottom": XlVAlign.BOTTOM.value,
+		"xlTop": XlVAlign.TOP.value,
+		"alignmentLabels": {
+			XlHAlign.CENTER.value: "center",
+			XlHAlign.JUSTIFY.value: "justify",
+			XlHAlign.LEFT.value: "left",
+			XlHAlign.RIGHT.value: "right",
+			XlHAlign.DISTRIBUTED.value: "distributed",
+			XlVAlign.BOTTOM.value: "botom",
+			XlVAlign.TOP.value: "top",
+			1: "default",
+		}
+	}
+	if attrName in _deprecatedConstantsMap and NVDAState._allowDeprecatedAPI():
+		replacementSymbol = _deprecatedConstantsMap[attrName]
+		log.warning(
+			f"Importing {attrName} from here is deprecated. "
+			f"Import XlVAlign or XlHAlign enumerations instead.",
+			stack_info=True,
+		)
+		return replacementSymbol
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
+
 xlDown=-4121
 xlToLeft=-4159
 xlToRight=-4161
 xlUp=-4162
 xlCellWidthUnitToPixels = 7.5919335705812574139976275207592
 xlSheetVisible=-1
-alignmentLabels={
-	xlCenter:"center",
-	xlJustify:"justify",
-	xlLeft:"left",
-	xlRight:"right",
-	xlDistributed:"distributed",
-	xlBottom:"botom",
-	xlTop:"top",
-	1:"default",
-}
 
 xlA1 = 1
 xlRC = 2
@@ -951,6 +1022,9 @@ class ExcelWorksheet(ExcelBase):
 		"kb:control+a",
 		"kb:control+v",
 		"kb:shift+f11",
+		"kb:control+y",
+		"kb:control+z",
+		"kb:alt+backspace",
 	), canPropagate=True)
 
 	def script_changeSelection(self,gesture):
@@ -1028,7 +1102,7 @@ class ExcelWorksheet(ExcelBase):
 			ui.message(msgOff)
 
 	@script(
-		gestures=["kb:control+b", "kb:control+shift+2"],
+		gestures=["kb:control+b", "kb:control+2"],
 		canPropagate=True,
 	)
 	def script_toggleBold(self, gesture):
@@ -1042,7 +1116,7 @@ class ExcelWorksheet(ExcelBase):
 		)
 
 	@script(
-		gestures=["kb:control+i", "kb:control+shift+3"],
+		gestures=["kb:control+i", "kb:control+3"],
 		canPropagate=True,
 	)
 	def script_toggleItalic(self, gesture):
@@ -1056,7 +1130,7 @@ class ExcelWorksheet(ExcelBase):
 		)
 
 	@script(
-		gestures=["kb:control+u", "kb:control+shift+4"],
+		gestures=["kb:control+u", "kb:control+4"],
 		canPropagate=True,
 	)
 	def script_toggleUnderline(self, gesture):
@@ -1070,7 +1144,7 @@ class ExcelWorksheet(ExcelBase):
 		)
 
 	@script(
-		gesture="kb:control+shift+5",
+		gesture="kb:control+5",
 		canPropagate=True,
 	)
 	def script_toggleStrikethrough(self, gesture):
@@ -1097,11 +1171,17 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			cellObj=self.obj.excelCellObject
 		fontObj=cellObj.font
 		if formatConfig['reportAlignment']:
-			value=alignmentLabels.get(self.obj.excelCellObject.horizontalAlignment)
-			if value:
+			try:
+				value = XlHAlign(self.obj.excelCellObject.horizontalAlignment).displayString
+			except ValueError:
+				pass
+			else:
 				formatField['text-align']=value
-			value=alignmentLabels.get(self.obj.excelCellObject.verticalAlignment)
-			if value:
+			try:
+				value = XlVAlign(self.obj.excelCellObject.verticalAlignment).displayString
+			except ValueError:
+				pass
+			else:
 				formatField['vertical-align']=value
 		if formatConfig['reportFontName']:
 			formatField['font-name']=fontObj.name
@@ -1139,7 +1219,8 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 				pass
 			try:
 				pattern = cellObj.Interior.Pattern
-				formatField['background-pattern'] = backgroundPatternLabels.get(pattern)
+				if pattern != xlPatternNone:
+					formatField['background-pattern'] = backgroundPatternLabels.get(pattern)
 				if pattern in (xlPatternLinearGradient, xlPatternRectangularGradient):
 					formatField['background-color']=(colors.RGB.fromCOLORREF(int(cellObj.Interior.Gradient.ColorStops(1).Color)))
 					formatField['background-color2']=(colors.RGB.fromCOLORREF(int(cellObj.Interior.Gradient.ColorStops(2).Color)))
@@ -1356,9 +1437,8 @@ class ExcelCell(ExcelBase):
 		return self.parent.fetchAssociatedHeaderCellText(self,columnHeader=False)
 
 	@script(
-		# Translators: the description  for a script for Excel
-		description=_("opens a dropdown item at the current cell"),
-		gesture="kb:alt+downArrow")
+		gesture="kb:alt+downArrow",
+	)
 	def script_openDropdown(self,gesture):
 		gesture.send()
 		d=None
@@ -1382,9 +1462,15 @@ class ExcelCell(ExcelBase):
 		eventHandler.queueEvent("gainFocus",d)
 
 	@script(
-		# Translators: the description  for a script for Excel
-		description=_("Sets the current cell as start of column header"),
-		gesture="kb:NVDA+shift+c")
+		description=_(
+			# Translators: the description for a script for Excel
+			"Sets the current cell as start of column header. Pressing once will set this cell as the first column "
+			"header for any cell lower and to the right of it within this region. Pressing twice will forget the "
+			"current column header for this cell."
+		),
+		gesture="kb:NVDA+shift+c",
+		category=SCRCAT_SYSTEMCARET
+	)
 	def script_setColumnHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
@@ -1401,12 +1487,17 @@ class ExcelCell(ExcelBase):
 			else:
 				# Translators: a message reported in the SetColumnHeader script for Excel.
 				ui.message(_("Cannot find {address}    in column headers").format(address=self.cellCoordsText))
-	script_setColumnHeader.__doc__=_("Pressing once will set this cell as the first column header for any cells lower and to the right of it within this region. Pressing twice will forget the current column header for this cell.")
 
 	@script(
-		# Translators: the description  for a script for Excel
-		description=_("sets the current cell as start of row header"),
-		gesture="kb:NVDA+shift+r")
+		description=_(
+			# Translators: the description for a script for Excel
+			"Sets the current cell as start of row headers. Pressing once will set this cell as the first row header "
+			"for any cell lower and to the right of it within this region. Pressing twice will forget the current "
+			"row header for this cell."
+		),
+		gesture="kb:NVDA+shift+r",
+		category=SCRCAT_SYSTEMCARET
+	)
 	def script_setRowHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
@@ -1423,7 +1514,6 @@ class ExcelCell(ExcelBase):
 			else:
 				# Translators: a message reported in the SetRowHeader script for Excel.
 				ui.message(_("Cannot find {address}    in row headers").format(address=self.cellCoordsText))
-	script_setRowHeader.__doc__=_("Pressing once will set this cell as the first row header for any cells lower and to the right of it within this region. Pressing twice will forget the current row header for this cell.")
 
 	@classmethod
 	def kwargsFromSuper(cls,kwargs,relation=None):
@@ -1591,7 +1681,10 @@ class ExcelCell(ExcelBase):
 	@script(
 		# Translators: the description  for a script for Excel
 		description=_("Reports the note on the current cell"),
-		gesture="kb:NVDA+alt+c")
+		gesture="kb:NVDA+alt+c",
+		category=SCRCAT_SYSTEMCARET,
+		speakOnDemand=True,
+	)
 	def script_reportComment(self,gesture):
 		commentObj=self.excelCellObject.comment
 		text=commentObj.text() if commentObj else None
@@ -1604,7 +1697,9 @@ class ExcelCell(ExcelBase):
 	@script(
 		# Translators: the description  for a script for Excel
 		description=_("Opens the note editing dialog"),
-		gesture="kb:shift+f2")
+		gesture="kb:shift+f2",
+		category=SCRCAT_SYSTEMCARET
+	)
 	def script_editComment(self,gesture):
 		commentObj=self.excelCellObject.comment
 		d = EditCommentDialog(

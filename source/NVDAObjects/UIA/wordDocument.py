@@ -36,10 +36,10 @@ from NVDAObjects.window.winword import (
 )
 from NVDAObjects import NVDAObject
 from scriptHandler import script
-
+import eventHandler
+from globalCommands import SCRCAT_SYSTEMCARET
 
 """Support for Microsoft Word via UI Automation."""
-
 
 class UIACustomAttributeID(enum.IntEnum):
 	LINE_NUMBER = 0
@@ -544,13 +544,22 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 	def event_textChange(self):
 		# Ensure Braille is updated when text changes,
 		# As Microsoft Word does not fire caret events when typing text, even though the caret does move.
-		braille.handler.handleCaretMove(self)
+		# Update braille also when tethered to review, and review position
+		# if review follows caret.
+		if not eventHandler.isPendingEvents("caret", self):
+			eventHandler.queueEvent("caret", self)
 
 	def event_UIA_notification(self, activityId=None, **kwargs):
 		# #10851: in recent Word 365 releases, UIA notification will cause NVDA to announce edit functions
 		# such as "delete back word" when Control+Backspace is pressed.
 		if activityId == "AccSN2":  # Delete activity ID
 			return
+		# copy to clipboard
+		if activityId == 'AccSN3':
+			ti = self.treeInterceptor
+			if ti and not ti.passThrough:
+				# Browse mode provides its own copy to clipboard message.
+				return
 		super(WordDocument, self).event_UIA_notification(**kwargs)
 
 	# The following overide of the EditableText._caretMoveBySentenceHelper private method
@@ -596,7 +605,9 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 	@script(
 		gesture="kb:NVDA+alt+c",
 		# Translators: a description for a script that reports the comment at the caret.
-		description=_("Reports the text of the comment where the System caret is located.")
+		description=_("Reports the text of the comment where the system caret is located."),
+		category=SCRCAT_SYSTEMCARET,
+		speakOnDemand=True,
 	)
 	def script_reportCurrentComment(self,gesture):
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
@@ -607,3 +618,21 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 			# Translators: a message when there is no comment to report in Microsoft Word
 			ui.message(_("No comments"))
 		return
+
+	@script(gesture="kb:NVDA+shift+c")
+	def script_setColumnHeader(self, gesture):
+		ui.message(_(
+			# Translators: The message reported in Microsoft Word for document types not supporting setting custom
+			# headers.
+			"Command not supported in this type of document. "
+			"The tables have their first row cells automatically set as column headers."
+		))
+
+	@script(gesture="kb:NVDA+shift+r")
+	def script_setRowHeader(self, gesture):
+		ui.message(_(
+			# Translators: The message reported in Microsoft Word for document types not supporting setting custom
+			# headers.
+			"Command not supported in this type of document. "
+			"The tables have their first column cells automatically set as row headers."
+		))

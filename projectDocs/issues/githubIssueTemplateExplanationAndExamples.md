@@ -44,7 +44,7 @@ Most tools allow you to copy text out of them.
   the issue reads as expected.
 * If you have trouble following this template, or with the initial investigation that is required,
   please politely ask for assistance from the fantastic community of people on the
-  [NVDA users mailing list](https://github.com/nvaccess/nvda-community/wiki/Connect#international-users-mailing-list-english)
+  [NVDA users mailing list](https://github.com/nvaccess/nvda/wiki/Connect#international-users-mailing-list-english)
 
 
 ## Feature Request template

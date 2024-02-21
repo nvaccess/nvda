@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2007-2023 NV Access Limited, Babbage B.V., James Teh, Leonard de Ruijter,
-# Thomas Stivers, Accessolutions, Julien Cochuyt
+# Thomas Stivers, Accessolutions, Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -10,18 +10,24 @@ from typing import (
 	Union,
 	cast,
 )
+from collections.abc import Generator
 import os
 import itertools
 import collections
 import winsound
 import time
 import weakref
+import re
 
 import wx
 import core
+import winUser
+import mouseHandler
 from logHandler import log
 import documentBase
+from documentBase import _Movement
 import review
+import inputCore
 import scriptHandler
 import eventHandler
 import nvwave
@@ -169,13 +175,20 @@ class QuickNavItem(object, metaclass=ABCMeta):
 class TextInfoQuickNavItem(QuickNavItem):
 	""" Represents a quick nav item in a browse mode document who's positions are represented by a L{textInfos.TextInfo}. """
 
-	def __init__(self,itemType,document,textInfo):
+	def __init__(
+			self,
+			itemType: str,
+			document: treeInterceptorHandler.TreeInterceptor,
+			textInfo: textInfos.TextInfo,
+			outputReason: OutputReason = OutputReason.QUICKNAV,
+	):
 		"""
 		See L{QuickNavItem.__init__} for itemType and document argument definitions.
 		@param textInfo: the textInfo position this item represents.
 		@type textInfo: L{textInfos.TextInfo}
 		"""
 		self.textInfo=textInfo
+		self.outputReason = outputReason
 		super(TextInfoQuickNavItem,self).__init__(itemType,document)
 
 	def __lt__(self,other):
@@ -207,7 +220,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 			if info.compareEndPoints(fieldInfo, "endToEnd") > 0:
 				# We've expanded past the end of the field, so limit to the end of the field.
 				info.setEndPoint(fieldInfo, "endToEnd")
-		speech.speakTextInfo(info, reason=OutputReason.QUICKNAV)
+		speech.speakTextInfo(info, reason=self.outputReason)
 
 	def activate(self):
 		self.textInfo.obj._activatePosition(info=self.textInfo)
@@ -437,9 +450,56 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def _iterNotLinkBlock(self, direction="next", pos=None):
 		raise NotImplementedError
 
+	MAX_ITERATIONS_FOR_SIMILAR_PARAGRAPH = 100_000
+	
+	def _iterSimilarParagraph(
+			self,
+			kind: str,
+			paragraphFunction: Callable[[textInfos.TextInfo], Optional[Any]],
+			desiredValue: Optional[Any],
+			direction: _Movement,
+			pos: textInfos.TextInfo,
+	) -> Generator[TextInfoQuickNavItem, None, None]:
+		if direction not in [_Movement.NEXT, _Movement.PREVIOUS]:
+			raise RuntimeError
+		info = pos.copy()
+		info.collapse()
+		info.expand(textInfos.UNIT_PARAGRAPH)
+		if desiredValue is None:
+			desiredValue = paragraphFunction(info)
+		for i in range(self.MAX_ITERATIONS_FOR_SIMILAR_PARAGRAPH):
+			# move by one paragraph in the desired direction
+			info.collapse(end=direction == _Movement.NEXT)
+			if direction == _Movement.PREVIOUS:
+				if info.move(textInfos.UNIT_CHARACTER, -1) == 0:
+					return
+			info.expand(textInfos.UNIT_PARAGRAPH)
+			if info.isCollapsed:
+				return
+			value = paragraphFunction(info)
+			if value == desiredValue:
+				yield TextInfoQuickNavItem(kind, self, info.copy(), outputReason=OutputReason.CARET)
+
+
 	def _quickNavScript(self,gesture, itemType, direction, errorMessage, readUnit):
 		if itemType=="notLinkBlock":
 			iterFactory=self._iterNotLinkBlock
+		elif itemType == "textParagraph":
+			punctuationMarksRegex = re.compile(
+				config.conf["virtualBuffers"]["textParagraphRegex"],
+			)
+
+			def paragraphFunc(info: textInfos.TextInfo) -> bool:
+				return punctuationMarksRegex.search(info.text) is not None
+
+			def iterFactory(direction: str, pos: textInfos.TextInfo) -> Generator[TextInfoQuickNavItem, None, None]:
+				return self._iterSimilarParagraph(
+					kind="textParagraph",
+					paragraphFunction=paragraphFunc,
+					desiredValue=True,
+					direction=_Movement(direction),
+					pos=pos,
+				)
 		else:
 			iterFactory=lambda direction,info: self._iterNodesByType(itemType,direction,info)
 		info=self.selection
@@ -523,10 +583,27 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		@param obj: The object to activate.
 		@type obj: L{NVDAObjects.NVDAObject}
 		"""
-		try:
-			obj.doAction()
-		except NotImplementedError:
-			log.debugWarning("doAction not implemented")
+		while obj and obj != self.rootNVDAObject:
+			try:
+				obj.doAction()
+				break
+			except NotImplementedError:
+				log.debugWarning("doAction failed")
+			if obj.hasIrrelevantLocation:
+				# This check covers invisible, off screen and a None location
+				log.debugWarning("No relevant location for object")
+				obj = obj.parent
+				continue
+			location = obj.location
+			if not location.width or not location.height:
+				obj = obj.parent
+				continue
+			log.debugWarning("Clicking with mouse")
+			oldX, oldY = winUser.getCursorPos()
+			winUser.setCursorPos(*location.center)
+			mouseHandler.doPrimaryClick()
+			winUser.setCursorPos(oldX, oldY)
+			break
 
 	def _activatePosition(self, obj=None):
 		if not obj:
@@ -585,8 +662,6 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			self._focusLastFocusableObject()
 			api.processPendingEvents(processEventQueue=True)
 		gesture.send()
-	# Translators: the description for the passThrough script on browseMode documents.
-	script_passThrough.__doc__ = _("Passes gesture through to the application")
 
 	def script_disablePassThrough(self, gesture):
 		if not self.passThrough or self.disableAutoPassThrough:
@@ -919,6 +994,30 @@ qn(
 	prevDoc=_("moves to the previous grouping"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous grouping")
+)
+qn(
+	"tab", key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next tab"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next tab"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous tab"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous tab")
+)
+qn(
+	"textParagraph",
+	key="p",
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next text paragraph"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next text paragraph"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous text paragraph"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous text paragraph"),
+	readUnit=textInfos.UNIT_PARAGRAPH,
 )
 del qn
 
@@ -1474,9 +1573,16 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		scriptHandler.queueScript(script, gesture)
 
 	currentExpandedControl=None #: an NVDAObject representing the control that has just been expanded with the collapseOrExpandControl script.
-	def script_collapseOrExpandControl(self, gesture):
+
+	def script_collapseOrExpandControl(self, gesture: inputCore.InputGesture):
 		if not config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
 			self._focusLastFocusableObject()
+			# Give the application time to focus the control.
+			core.callLater(100, self._collapseOrExpandControl_scriptHelper, gesture)
+		else:
+			self._collapseOrExpandControl_scriptHelper(gesture)
+
+	def _collapseOrExpandControl_scriptHelper(self, gesture: inputCore.InputGesture):
 		oldFocus = api.getFocusObject()
 		oldFocusStates = oldFocus.states
 		gesture.send()
@@ -1984,3 +2090,46 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	def script_toggleScreenLayout(self, gesture):
 		# Translators: The message reported for not supported toggling of screen layout
 		ui.message(_("Not supported in this document."))
+
+	def updateAppSelection(self):
+		"""Update the native selection in the application to match the browse mode selection in NVDA."""
+		raise NotImplementedError
+
+	def clearAppSelection(self):
+		"""Clear the native selection in the application."""
+		raise NotImplementedError
+
+	@script(
+		gesture="kb:NVDA+shift+f10",
+		# Translators: input help message for toggle native selection command
+		description=_("Toggles native selection mode on and off"),
+	)
+	def script_toggleNativeAppSelectionMode(self, gesture: inputCore.InputGesture):
+		if not self._nativeAppSelectionModeSupported:
+			if not self._nativeAppSelectionMode:
+				# Translators: the message when native selection mode is not available in this browse mode document.
+				ui.message(_("Native selection mode unsupported in this browse mode document"))
+			else:
+				# Translators: the message when native selection mode cannot be turned off in this browse mode document.
+				ui.message(_("Native selection mode cannot be turned off in this browse mode document"))
+			return
+		nativeAppSelectionModeOn = not self._nativeAppSelectionMode
+		if nativeAppSelectionModeOn:
+			try:
+				self.updateAppSelection()
+			except NotImplementedError:
+				log.debugWarning("updateAppSelection failed", exc_info=True)
+				# Translators: the message when native selection mode is not available in this browse mode document.
+				ui.message(_("Native selection mode unsupported in this document"))
+				return
+			self._nativeAppSelectionMode = True
+			# Translators: reported when native selection mode is toggled on.
+			ui.message(_("Native app selection mode enabled"))
+		else:
+			try:
+				self.clearAppSelection()
+			except NotImplementedError:
+				log.debugWarning("clearAppSelection failed", exc_info=True)
+			self._nativeAppSelectionMode = False
+			# Translators: reported when native selection mode is toggled off.
+			ui.message(_("Native app selection mode disabled"))

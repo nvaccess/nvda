@@ -38,10 +38,41 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	# Translators: Names of braille displays.
 	description = constants.description
 	isThreadSafe = True
+	supportsAutomaticDetection = True
 	timeout = 0.2
 	supportedSettings = (
 		braille.BrailleDisplayDriver.HIDInputSetting(useConfig=True),
 	)
+
+	@classmethod
+	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.HID, {
+			"VID_C251&PID_1122",  # Esys (version < 3.0, no SD card
+			"VID_C251&PID_1123",  # Esys (version >= 3.0, with HID keyboard, no SD card
+			"VID_C251&PID_1124",  # Esys (version < 3.0, with SD card
+			"VID_C251&PID_1125",  # Esys (version >= 3.0, with HID keyboard, with SD card
+			"VID_C251&PID_1126",  # Esys (version >= 3.0, no SD card
+			"VID_C251&PID_1127",  # Reserved
+			"VID_C251&PID_1128",  # Esys (version >= 3.0, with SD card
+			"VID_C251&PID_1129",  # Reserved
+			"VID_C251&PID_112A",  # Reserved
+			"VID_C251&PID_112B",  # Reserved
+			"VID_C251&PID_112C",  # Reserved
+			"VID_C251&PID_112D",  # Reserved
+			"VID_C251&PID_112E",  # Reserved
+			"VID_C251&PID_112F",  # Reserved
+			"VID_C251&PID_1130",  # Esytime
+			"VID_C251&PID_1131",  # Reserved
+			"VID_C251&PID_1132",  # Reserved
+		})
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.SERIAL, {
+			"VID_28AC&PID_0012",  # b.note
+			"VID_28AC&PID_0013",  # b.note 2
+			"VID_28AC&PID_0020",  # b.book internal
+			"VID_28AC&PID_0021",  # b.book external
+		})
+
+		driverRegistrar.addBluetoothDevices(lambda m: m.id.startswith("Esys"))
 
 	@classmethod
 	def getManualPorts(cls):
@@ -62,7 +93,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
-			self.isHid = portType == bdDetect.KEY_HID
+			self.isHid = portType == bdDetect.DeviceType.HID
 			try:
 				if self.isHid:
 					self._dev = hwIo.Hid(

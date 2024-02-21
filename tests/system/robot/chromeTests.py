@@ -34,8 +34,12 @@ SPEECH_CALL_SEP = '\n'
 #: single space is used to separate semantics in braille output.
 BRAILLE_SEP = " "
 
-ARIAExamplesDir = os.path.join(
-	_NvdaLib._locations.repoRoot, "include", "w3c-aria-practices", "examples"
+ARIAPatternsDir = os.path.join(
+	_NvdaLib._locations.repoRoot,
+	"include",
+	"w3c-aria-practices",
+	"content",
+	"patterns",
 )
 
 
@@ -894,7 +898,7 @@ def test_ariaTreeGrid_browseMode():
 	"""
 	Ensure that ARIA treegrids are accessible as a standard table in browse mode.
 	"""
-	testFile = os.path.join(ARIAExamplesDir, "treegrid", "treegrid-1.html")
+	testFile = os.path.join(ARIAPatternsDir, "treegrid", "examples", "treegrid-1.html")
 	_chrome.prepareChrome(
 		f"""
 			<iframe src="{testFile}"></iframe>
@@ -913,7 +917,7 @@ def test_ariaTreeGrid_browseMode():
 	actualSpeech = _chrome.getSpeechAfterKey("tab")
 	_asserts.strings_match(
 		actualSpeech,
-		"issue 790.  link"
+		"Treegrid Pattern  link"
 	)
 	# Jump to the ARIA treegrid with the next table quicknav command.
 	# The browse mode caret will be inside the table on the caption before the first row.
@@ -991,7 +995,7 @@ def test_ariaCheckbox_browseMode():
 	"""
 	Navigate to an unchecked checkbox in reading mode.
 	"""
-	testFile = os.path.join(ARIAExamplesDir, "checkbox", "checkbox.html")
+	testFile = os.path.join(ARIAPatternsDir, "checkbox", "examples", "checkbox.html")
 	_chrome.prepareChrome(
 		f"""
 			<iframe src="{testFile}"></iframe>
@@ -2234,7 +2238,7 @@ def test_i10890():
 	# Chrome sometimes exposes tables as clickable, sometimes not.
 	# This test does not need to know, so disable reporting of clickables.
 	spy.set_configValue(["documentFormatting", "reportClickable"], False)
-	testFile = os.path.join(ARIAExamplesDir, "grid", "datagrids.html")
+	testFile = os.path.join(ARIAPatternsDir, "grid", "examples", "data-grids.html")
 	_chrome.prepareChrome(
 		f"""
 			<iframe src="{testFile}"></iframe>
@@ -2279,19 +2283,18 @@ def test_ARIASwitchRole():
 	"""
 	Ensure that ARIA switch controls have an appropriate role and states in browse mode.
 	"""
-	testFile = os.path.join(ARIAExamplesDir, "switch", "switch.html")
+	testFile = os.path.join(ARIAPatternsDir, "switch", "examples", "switch.html")
 	_chrome.prepareChrome(
 		f"""
 			<iframe src="{testFile}"></iframe>
 		"""
 	)
-	# Jump to the first heading 2 in the iframe.
+	# Jump to the second heading 2 in the iframe.
+	_chrome.getSpeechAfterKey("2")
 	actualSpeech = _chrome.getSpeechAfterKey("2")
 	_asserts.strings_match(
 		actualSpeech,
 		SPEECH_SEP.join([
-			"frame",
-			"main landmark",
 			"Example",
 			"heading  level 2"
 		]),
@@ -2470,3 +2473,52 @@ def test_i13307():
 		]),
 		message="jumping into region with aria-labelledby should speak label",
 	)
+
+
+def test_textParagraphNavigation():
+	_chrome.prepareChrome("""
+		<!-- First a bunch of paragraphs that don't match text regex -->
+		<p>Header</p>
+		<p>Liberal MP: 1904–1908</p>
+		<p>.</p>
+		<p>…</p>
+		<p>5.</p>
+		<p>test....</p>
+		<p>a.b</p>
+		<p></p>
+		<!-- Now a bunch of matching paragraphs -->
+		<p>Hello, world!</p>
+		<p>He replied, "That's wonderful."</p>
+		<p>He replied, "That's wonderful".</p>
+		<p>He replied, "That's wonderful."[4]</p>
+		<p>Предложение по-русски.</p>
+		<p>我不会说中文！</p>
+		<p>Bye-bye, world!</p>
+	""")
+
+	expectedParagraphs = [
+		# Tests exclamation sign
+		"Hello, world!",
+		# Tests Period with preceding quote
+		"He replied,  That's wonderful.",
+		# Tests period with trailing quote
+		"He replied,  That's wonderful .",
+		# Tests wikipedia-style reference
+		"He replied,  That's wonderful.  4",
+		# Tests compatibility with Russian Cyrillic script
+		"Предложение по-русски.",
+		# Tests regex condition for CJK full width character terminators
+		"我不会说中文！",
+		"Bye-bye, world!",
+	]
+	for p in expectedParagraphs:
+		actualSpeech = _chrome.getSpeechAfterKey("p")
+		_asserts.strings_match(actualSpeech, p)
+	actualSpeech = _chrome.getSpeechAfterKey("p")
+	_asserts.strings_match(actualSpeech, "no next text paragraph")
+
+	for p in expectedParagraphs[-2::-1]:
+		actualSpeech = _chrome.getSpeechAfterKey("shift+p")
+		_asserts.strings_match(actualSpeech, p)
+	actualSpeech = _chrome.getSpeechAfterKey("shift+p")
+	_asserts.strings_match(actualSpeech, "no previous text paragraph")

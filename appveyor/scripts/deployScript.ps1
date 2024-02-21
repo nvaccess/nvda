@@ -1,6 +1,11 @@
 $ErrorActionPreference = "Stop";
 if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:versionType) {
 	# Not a try build.
+	if ($env:APPVEYOR_REPO_BRANCH -eq "beta") {
+		# Upload files to Crowdin for translation
+		py -m pip install --no-warn-script-location requests
+		py appveyor\crowdinSync.py uploadSourceFile 2 output\nvda.pot 2>&1
+	}
 	# Notify our server.
 	$exe = Get-ChildItem -Name output\*.exe
 	$hash = (Get-FileHash "output\$exe" -Algorithm SHA1).Hash.ToLower()
@@ -27,6 +32,7 @@ if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:versionType) {
 	cat deploy.json | ssh nvaccess@deploy.nvaccess.org nvdaAppveyorHook
 
 	# Upload symbols to Mozilla.
+	py -m pip install --upgrade --no-warn-script-location pip
 	py -m pip install --no-warn-script-location requests
 	Try {
 		py appveyor\mozillaSyms.py

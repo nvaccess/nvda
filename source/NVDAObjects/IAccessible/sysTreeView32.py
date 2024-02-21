@@ -182,7 +182,8 @@ class TreeViewItem(IAccessible):
 		announceContains = self is api.getFocusObject() and controlTypes.State.EXPANDED in self.states and controlTypes.State.EXPANDED not in getattr(self,'_speakObjectPropertiesCache',{}).get('states',frozenset())
 		super(TreeViewItem,self).event_stateChange()
 		if announceContains:
-			speech.speakMessage(_("%s items")%self.childCount)
+			# Translators: a message reported when opening when expanding a node in a tree view.
+			speech.speakMessage(ngettext("%s item", "%s items", self.childCount) % self.childCount)
 
 class BrokenCommctrl5Item(IAccessible):
 	"""Handle broken CommCtrl v5 SysTreeView32 items in 64 bit applications.

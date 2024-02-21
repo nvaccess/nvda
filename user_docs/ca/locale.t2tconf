@@ -1,8 +1,5 @@
 % locale.t2tconf for Catalan
 
-% Set document language
-%!PostProc(html): '^<HTML' '<HTML LANG="ca"'
-
 % macro to allow hreflang attribute
 % rewrite en_[string url] to <a hreflang="en" href="url">string</a>
-%!postproc(html): '(?i)([a-z-_]+)_<a href' '<A HREFLANG="\1" HREF'
+%!PreProc: '([A-za-z-_]+)_\[([^\]]*)\]' '[{@hreflang=\1}\2]'

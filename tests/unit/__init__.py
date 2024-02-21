@@ -79,8 +79,13 @@ appModuleHandler.initialize()
 import vision  # noqa: E402
 vision.initialize()
 
+import speech  # noqa: E402
+
+speech.initialize()
+
 import brailleTables  # noqa: E402
 brailleTables.initialize()
+
 import braille
 # Disable auto detection of braille displays when unit testing.
 config.conf['braille']['display'] = "noBraille"
@@ -94,6 +99,19 @@ def getFakeCellCount(numCells: int) -> int:
 
 
 braille.filter_displaySize.register(getFakeCellCount)
+_original_handleReviewMove = braille.handler.handleReviewMove
+
+
+def _patched_handleReviewMove(shouldAutoTether=True):
+	"""
+	For braille unit tests that rely on updating the review cursor, ensure that we simulate a core cycle
+	by executing BrailleHandler._handlePendingUpdate after Braillehandler.handleReviewMove
+	"""
+	_original_handleReviewMove(shouldAutoTether)
+	braille.handler._handlePendingUpdate()
+
+
+braille.handler.handleReviewMove = _patched_handleReviewMove
 
 # Changing braille displays might call braille.handler.disableDetection(),
 # which requires the bdDetect.deviceInfoFetcher to be set.

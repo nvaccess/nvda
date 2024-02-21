@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2010-2022 NV Access Limited
+# Copyright (C) 2010-2023 NV Access Limited, Cyrille Bougot
 
 import controlTypes
 import appModuleHandler
@@ -14,6 +14,9 @@ import api
 from speech import sayAll
 import keyboardHandler
 from scriptHandler import script
+
+# Translators: The name of a category of NVDA commands.
+SCRCAT_ECLIPSE = _("Eclipse")
 
 class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 
@@ -51,15 +54,18 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 
 	@script(
 		# Translators: Input help mode message for the 'read documentation script
-		description = _("Tries to read documentation for the selected autocompletion item."),
-		gesture = "kb:nvda+d"
+		description=_("Tries to read documentation for the selected autocompletion item."),
+		gesture="kb:nvda+d",
+		category=SCRCAT_ECLIPSE
 	)
 	def script_readDocumentation(self, gesture):
 		rootDocumentationWindow = None
 
 		# If there aren't any suggestion selected, there is no way to find quick documentation
 		if not self.appModule.selectedItem:
-			gesture.send()
+			# Translators: When trying to read the documentation but there is no selected autocompletion item in
+			# Eclipse
+			ui.message(_("No selection"))
 			return
 
 		# Try to locate the documentation document

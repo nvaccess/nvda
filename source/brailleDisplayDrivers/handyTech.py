@@ -169,8 +169,8 @@ class Model(AutoPropertyObject):
 	def postInit(self):
 		"""Executed after model initialisation.
 
-		Subclasses may extend this method to perform actions on initialization 
-		of the display. Don't use __init__ for this, since the model ID has 
+		Subclasses may extend this method to perform actions on initialization
+		of the display. Don't use __init__ for this, since the model ID has
 		not been set, which is needed for sending packets to the display.
 		"""
 
@@ -605,11 +605,59 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	# Translators: The name of a series of braille displays.
 	description = _("Handy Tech braille displays")
 	isThreadSafe = True
+	supportsAutomaticDetection = True
 	receivesAckPackets = True
 	timeout = 0.2
 	_sleepcounter = 0
 	_messageWindow = None
 	_instances = weakref.WeakSet()
+
+	@classmethod
+	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.SERIAL, {
+			"VID_0403&PID_6001",  # FTDI chip
+			"VID_0921&PID_1200",  # GoHubs chip
+		})
+
+		# Newer Handy Tech displays have a native HID processor
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.HID, {
+			"VID_1FE4&PID_0054",  # Active Braille
+			"VID_1FE4&PID_0055",  # Connect Braille
+			"VID_1FE4&PID_0061",  # Actilino
+			"VID_1FE4&PID_0064",  # Active Star 40
+			"VID_1FE4&PID_0081",  # Basic Braille 16
+			"VID_1FE4&PID_0082",  # Basic Braille 20
+			"VID_1FE4&PID_0083",  # Basic Braille 32
+			"VID_1FE4&PID_0084",  # Basic Braille 40
+			"VID_1FE4&PID_008A",  # Basic Braille 48
+			"VID_1FE4&PID_0086",  # Basic Braille 64
+			"VID_1FE4&PID_0087",  # Basic Braille 80
+			"VID_1FE4&PID_008B",  # Basic Braille 160
+			"VID_1FE4&PID_008C",  # Basic Braille 84
+			"VID_1FE4&PID_0093",  # Basic Braille Plus 32
+			"VID_1FE4&PID_0094",  # Basic Braille Plus 40
+			"VID_1FE4&PID_00A4",  # Activator
+		})
+
+		# Some older HT displays use a HID converter and an internal serial interface
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.HID, {
+			"VID_1FE4&PID_0003",  # USB-HID adapter
+			"VID_1FE4&PID_0074",  # Braille Star 40
+			"VID_1FE4&PID_0044",  # Easy Braille
+		})
+
+		driverRegistrar.addBluetoothDevices(lambda m: any(m.id.startswith(prefix) for prefix in (
+			"Actilino AL",
+			"Active Braille AB",
+			"Active Star AS",
+			"Basic Braille BB",
+			"Basic Braille Plus BP",
+			"Braille Star 40 BS",
+			"Braillino BL",
+			"Braille Wave BW",
+			"Easy Braille EBR",
+			"Activator AC",
+		)))
 
 	@classmethod
 	def getManualPorts(cls):
@@ -636,7 +684,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
-			self.isHid = portType == bdDetect.KEY_HID
+			self.isHid = portType == bdDetect.DeviceType.HID
 			self.isHidSerial = portId in USB_IDS_HID_CONVERTER
 			self.port = port
 			try:
@@ -885,7 +933,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				self._model = MODELS.get(modelId)(self)
 				self.numCells = self._model.numCells
 			elif self._model.deviceId != modelId:
-				# Somehow the model ID of this display changed, probably another display 
+				# Somehow the model ID of this display changed, probably another display
 				# plugged in the same (already open) serial port.
 				self.terminate()
 

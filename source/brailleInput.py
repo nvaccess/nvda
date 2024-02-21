@@ -142,7 +142,7 @@ class BrailleInputHandler(AutoPropertyObject):
 				if len(newText)>1:
 					# Emulation of multiple characters at once is unsupported
 					# Clear newText, so this function returns C{False} if not at end of word
-					newText = u""
+					newText = ""
 				else:
 					self.emulateKey(newText)
 			else:
@@ -152,7 +152,7 @@ class BrailleInputHandler(AutoPropertyObject):
 			# We only need to buffer one word.
 			# Clear the previous word (anything before the cursor) from the buffer.
 			del self.bufferBraille[:pos]
-			self.bufferText = u""
+			self.bufferText = ""
 			self.cellsWithText.clear()
 			self.currentModifiers.clear()
 			self.untranslatedStart = 0
@@ -301,7 +301,8 @@ class BrailleInputHandler(AutoPropertyObject):
 		"""
 		region = braille.handler.mainBuffer.regions[-1] if braille.handler.mainBuffer.regions else None
 		if isinstance(region, braille.TextInfoRegion):
-			braille.handler._doCursorMove(region)
+			braille.handler._regionsPendingUpdate.add(region)
+			braille.handler._handlePendingUpdate()
 
 	def eraseLastCell(self):
 		# Get the index of the cell being erased.
