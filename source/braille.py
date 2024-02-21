@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2023 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
+# Copyright (C) 2008-2024 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
 # Leonard de Ruijter, Burman's Computer and Education Ltd., Julien Cochuyt
 
 import itertools
@@ -2027,7 +2027,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def __init__(self):
 		louisHelper.initialize(brailleTables.tablesDirs)
-		self._table: Optional[brailleTables.BrailleTable] = None
+		self._table: brailleTables.BrailleTable | None = None
 		self.display: Optional[BrailleDisplayDriver] = None
 		self._displaySize: int = 0
 		"""
@@ -2621,16 +2621,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			log.debugWarning("Error in initial display", exc_info=True)
 
 	def handlePostConfigProfileSwitch(self):
-		displayName = config.conf["braille"]["display"]
-		# #7459: the syncBraille has been dropped in favor of the native hims driver.
-		# Migrate to renamed drivers as smoothly as possible.
-		newDisplayName = RENAMED_DRIVERS.get(displayName)
-		if newDisplayName:
-			displayName = config.conf["braille"]["display"] = newDisplayName
-		if self.display is None or not (
-			# Do not choose a new display if:
+		display = config.conf["braille"]["display"]
+		# Do not choose a new display if:
+		if not (
 			# The display in the new profile is equal to the last requested display name
-			displayName == self._lastRequestedDisplayName
+			display == self._lastRequestedDisplayName
 			# or the new profile uses auto detection, which supports detection of the currently active display.
 			or (display == AUTO_DISPLAY_NAME and bdDetect.driverIsEnabledForAutoDetection(self.display.name))
 		):
@@ -2769,7 +2764,6 @@ def initialize():
 	log.info("Using liblouis version %s" % louis.version())
 	import serial
 	log.info("Using pySerial version %s"%serial.VERSION)
-	bdDetect.initializeDetectionData()
 	handler = BrailleHandler()
 	handler.handlePostConfigProfileSwitch()
 	config.post_configProfileSwitch.register(handler.handlePostConfigProfileSwitch)

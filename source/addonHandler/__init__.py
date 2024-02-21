@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2023 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
+# Copyright (C) 2012-2024 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
 # Joseph Lee, Babbage B.V., Arnold Loubriat, Łukasz Golonka, Leonard de Ruijter, , Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -1023,7 +1023,7 @@ docFileName = string(default=None)
 		@param translatedInput: translated manifest input
 		@type translatedInput: file-like object
 		"""
-		super(AddonManifest, self).__init__(input, configspec=self.configspec, encoding='utf-8', default_encoding='utf-8')
+		super().__init__(input, configspec=self.configspec, encoding='utf-8', default_encoding='utf-8')
 		self._errors = None
 		val = Validator({"apiVersion":validate_apiVersionString})
 		result = self.validate(val, copy=True, preserve_errors=True)
@@ -1045,6 +1045,9 @@ docFileName = string(default=None)
 				value = tableConfig.get("displayName")
 				if value:
 					self["brailleTables"][fileName]["displayName"] = value
+				else:
+					error = f"No display name provided for braille table '{fileName}'"
+					self._errors = error if not self._errors else "\n".join((self._errors, error))
 
 	@property
 	def errors(self):

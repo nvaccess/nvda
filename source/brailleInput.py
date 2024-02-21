@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2012-2021 NV Access Limited, Rui Batista, Babbage B.V., Julien Cochuyt
+# Copyright (C) 2012-2024 NV Access Limited, Rui Batista, Babbage B.V., Julien Cochuyt, Leonard de Ruijter
 
 import time
 from typing import Optional, List, Set
@@ -52,8 +52,8 @@ class BrailleInputHandler(AutoPropertyObject):
 	currentModifiers: Set[str]
 
 	def __init__(self):
-		super(BrailleInputHandler,self).__init__()
-		self._table: Optional[brailleTables.BrailleTable] = None
+		super().__init__()
+		self._table: brailleTables.BrailleTable | None = None
 		#: A buffer of entered braille cells so that state set by previous cells can be maintained;
 		#: e.g. capital and number signs.
 		self.bufferBraille = []

@@ -1,21 +1,21 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2022 NV Access Limited, Joseph Lee, Babbage B.V., , Julien Cochuyt
+# Copyright (C) 2008-2024 NV Access Limited, Joseph Lee, Babbage B.V., , Julien Cochuyt, Leonard de Ruijter
 
 """Manages information about available braille translation tables.
 """
 
-import os
 import collections
-from configobj import ConfigObj
+import os
 from locale import strxfrm
+from typing import NamedTuple
+
+from configobj import ConfigObj
 
 import config
 import globalVars
 from logHandler import log
-
 
 #: The directory in which liblouis braille tables are located.
 TABLES_DIR = os.path.join(globalVars.appDir, "louis", "tables")
@@ -23,14 +23,21 @@ TABLES_DIR = os.path.join(globalVars.appDir, "louis", "tables")
 #: List of directories for braille tables lookup, including custom tables.
 tablesDirs = [TABLES_DIR]
 
-#: Information about a braille table.
-#: This has the following attributes:
-#: * fileName: The file name of the table.
-#: * displayname: The name of the table as displayed to the user. This should be translatable.
-#: * contracted: C{True} if the table is contracted, C{False} if uncontracted.
-#: * output: C{True} if this table can be used for output, C{False} if not.
-#: * input: C{True} if this table can be used for input, C{False} if not.
-BrailleTable = collections.namedtuple("BrailleTable", ("fileName", "displayName", "contracted", "output", "input"))
+
+class BrailleTable(NamedTuple):
+	"""Information about a braille table.
+	"""
+	fileName: str
+	"""The file name of the table."""
+	displayName: str
+	"""The name of the table as displayed to the user. This should be translatable."""
+	contracted: bool
+	"""True if the table is contracted, False if uncontracted."""
+	output: bool
+	"""True if this table can be used for output, False if not."""
+	input: bool
+	"""True if this table can be used for input, False if not."""
+
 
 #: Maps file names to L{BrailleTable} objects.
 #: The parent map will be loaded at import time with the builtin tables.
@@ -39,19 +46,20 @@ BrailleTable = collections.namedtuple("BrailleTable", ("fileName", "displayName"
 _tables = collections.ChainMap()
 
 
-def addTable(fileName, displayName, contracted=False, output=True, input=True):
+def addTable(
+		fileName: str,
+		displayName: str,
+		contracted: bool = False,
+		output: bool = True,
+		input: bool = True
+):
 	"""Register a braille translation table.
 	At least one of C{input} or C{output} must be C{True}.
-	@param fileName: The file name of the table.
-	@type fileName: basestring
-	@param displayname: The name of the table as displayed to the user. This should be translatable.
-	@type displayName: unicode
-	@param contracted: C{True} if the table is contracted, C{False} if uncontracted.
-	@type cContracted: bool
-	@param output: C{True} if this table can be used for output, C{False} if not.
-	@type output: bool
-	@param input: C{True} if this table can be used for input, C{False} if not.
-	@type input: bool
+	:param fileName: The file name of the table.
+	:param displayname: The name of the table as displayed to the user. This should be translatable.
+	:param contracted: True if the table is contracted, False if uncontracted.
+	:param output: True if this table can be used for output, False if not.
+	:param input: True if this table can be used for input, False if not.
 	"""
 	if not output and not input:
 		raise ValueError("input and output cannot both be False")
@@ -67,12 +75,12 @@ def getTable(fileName: str) -> BrailleTable:
 	return _tables[fileName]
 
 
-def listTables():
+def listTables() -> list[BrailleTable]:
 	"""List all registered braille tables.
 	@return: A list of braille tables.
-	@rtype: list of L{BrailleTable}
 	"""
 	return sorted(_tables.values(), key=lambda table: strxfrm(table.displayName))
+
 
 #: Maps old table names to new table names for tables renamed in newer versions of liblouis.
 RENAMED_TABLES = {

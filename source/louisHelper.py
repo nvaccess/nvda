@@ -1,28 +1,25 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2023 NV Access Limited, Babbage B.V., Julien Cochuyt
+# Copyright (C) 2018-2024 NV Access Limited, Babbage B.V., Julien Cochuyt, Leonard de Ruijter
 
 """Helper module to ease communication to and from liblouis."""
 
+import os
 from ctypes import (
 	WINFUNCTYPE,
 	c_char_p,
 	c_void_p,
 	cast,
 )
-import os
 from typing import List
-import louis
-from logHandler import log
+
 import config
-from logHandler import log
 import globalVars
-import os
+from logHandler import log
 
 with os.add_dll_directory(globalVars.appDir):
 	import louis
-
 
 
 LOUIS_TO_NVDA_LOG_LEVELS = {
@@ -38,9 +35,9 @@ _tablesDirs = []
 
 
 @WINFUNCTYPE(c_void_p, c_char_p, c_char_p)
-def _resolveTable(tablesList, base):
+def _resolveTable(tablesList: str, base: str) -> None:
 	"""Resolve braille table file names to file paths.
-	
+
 	Unlike the default table resolver from liblouis, this implementation does
 	not confer any special role to the directory of the first table of the list
 	and completely ignores the C{base} parameter, the liblouis data path and the
@@ -51,8 +48,7 @@ def _resolveTable(tablesList, base):
 	If they point to an existing file, absolute paths in L{tablesList} are
 	returned as-is.
 	"""
-	# We only receive ASCII for now, but it will most likely be MBCS once liblouis issue #698 is fixed.
-	tables = tablesList.decode("mbcs").split(",")
+	tables = tablesList.decode(louis.fileSystemEncoding).split(",")
 	paths = []
 	for table in tables:
 		for dir_ in _tablesDirs:
@@ -60,10 +56,7 @@ def _resolveTable(tablesList, base):
 			# That is, if L{table} is absolute, it is returned unchanged.
 			path = os.path.join(dir_, table)
 			if os.path.isfile(path):
-				# This already works without liblouis issue #698 being fixed.
-				# That is, table file names cannot (yet) contain non-ASCII characters,
-				# but the name of the directory in which they are located can.
-				paths.append(path.encode("mbcs"))
+				paths.append(path.encode(louis.fileSystemEncoding))
 				if _isDebug():
 					log.debug(f"Resolved \"{table}\" to \"{path}\"")
 				break
