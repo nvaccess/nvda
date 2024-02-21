@@ -42,7 +42,7 @@ HRESULT rateLimitedUIAEventHandler_create(IUnknown* pExistingHandler, RateLimite
 // @note This function will block until the RateLimitedEventHandler's flusher thread has terminated. 
 // @return S_OK on success or a failure code otherwise
 HRESULT rateLimitedUIAEventHandler_terminate(RateLimitedEventHandler* pRateLimitedEventHandler) {
-	if(activeRateLimitedEventHandlers.find(pRateLimitedEventHandler) == activeRateLimitedEventHandlers.end()) {
+	if (activeRateLimitedEventHandlers.find(pRateLimitedEventHandler) == activeRateLimitedEventHandlers.end()) {
 		LOG_ERROR(L"rateLimitedUIAEventHandler_terminate: pRateLimitedEventHandler not found in activeRateLimitedEventHandlers");
 		return E_INVALIDARG;
 	}

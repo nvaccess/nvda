@@ -76,10 +76,10 @@ void RateLimitedEventHandler::flusherThreadFunc(std::stop_token stopToken) {
 			LOG_DEBUG(L"flusherThreadFunc sleeping...");
 			m_flushConditionVar.wait(lock, [this, stopToken](){
 				LOG_DEBUG(L"FLUSHER THREAD notified, CHECKING WAKE CONDITION");
-				if(this->m_needsFlush ) {
+				if (this->m_needsFlush) {
 					LOG_DEBUG(L"Will wake as needsFlush is true");
 					return true;
-				} else if(stopToken.stop_requested()) {
+				} else if (stopToken.stop_requested()) {
 					LOG_DEBUG(L"Will wake as stop requested");
 					return true;
 				}
@@ -87,12 +87,12 @@ void RateLimitedEventHandler::flusherThreadFunc(std::stop_token stopToken) {
 				return false;
 			});
 			LOG_DEBUG(L"flusherThread woke up");
-			if(this->m_needsFlush ) {
+			if (this->m_needsFlush) {
 				m_needsFlush = false;
 				needsFlush = true;
 			}
 		} // m_mtx released here.
-		if(needsFlush) {
+		if (needsFlush) {
 			LOG_DEBUG(L"flusherThreadFunc: Flushing events...");
 			flushEvents();
 		}
