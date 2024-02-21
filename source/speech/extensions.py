@@ -19,7 +19,6 @@ Handlers are called without arguments.
 filter_speechSequence = Filter[SpeechSequence]()
 """
 Filters speech sequence before it passes to synthDriver.
-Handlers are called with speechSequence argument.
 
 :param value: the speech sequence to be filtered.
 :type value: SpeechSequence
