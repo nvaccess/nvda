@@ -21,6 +21,7 @@ from typing import (
 	Optional,
 	Dict,
 	Tuple,
+	Self,
 )
 
 import baseObject
@@ -402,11 +403,11 @@ class TextInfo(baseObject.AutoPropertyObject):
 
 	def unitIndex(self,unit):
 		"""
-@param unit: a unit constant for which you want to retreave an index
-@type: string
-@returns: The 1-based index of this unit, out of all the units of this type in the object
-@rtype: int
-"""  
+		@param unit: a unit constant for which you want to retreave an index
+		@type: string
+		@returns: The 1-based index of this unit, out of all the units of this type in the object
+		@rtype: int
+		"""
 		raise NotImplementedError
 
 	def unitCount(self,unit):
@@ -656,6 +657,183 @@ class TextInfo(baseObject.AutoPropertyObject):
 		@raise LookupError: If MathML can't be retrieved for this field.
 		"""
 		raise NotImplementedError
+	
+	def moveToPythonicOffset(
+			self,
+			pythonicOffset: int,
+	) -> Self:
+		"""
+			This function moves textInfos by Pythonic characters.
+
+			Illustration:
+				Suppose we have TextInfo that represents a paragraph of text:
+				```
+				> s = paragraphInfo.text
+				> s
+				'Hello, world!\r'
+				```
+				Suppose that we would like to put the cursor at the first letter of the word 'world'.
+				That means jumping to index 7:
+				```
+				> s[7:]
+				'world!\r'
+				```
+				Here is how this can be done:
+				```
+				> info = paragraphInfo.moveToPythonicOffset(7)
+				> info.setEndPoint(paragraphInfo, "endToEnd")
+				> info.text
+				'world!\r'
+				```
+
+			Background:
+				In many applications there is no one-to-one mapping of Pythonic characters and TextInfo characters,
+				e.g. when calling TextInfo.move(UNIT_CHARACTER, n).
+				There are a couple of reasons for this discrepancy:
+				1. In Wide character encoding, some 4-byte unicode characters are represented as two surrogate characters,
+				whereas in pythonic string they would be represented by a single character.
+				2. In non-offset TextInfos (e.g. UIATextInfo)
+				there is no guarantee on the fact that TextInfos.move(UNIT_CHARACTER, 1)would actually move by
+				exactly 1 character.
+				A good illustration of this is in Microsoft Word with UIA enabled always,
+				the first character of a bullet list item would be represented by three pythonic characters:
+				* Bullet character "•"
+				* Tab character \t
+				* And the first character of of list item per se.
+
+				In many use cases (e.g., sentence navigation, style navigation),
+				we identify pythonic character that we would like to move our TextInfo to.
+				TextInfos.move(UNIT_CHARACTER, n) would cause many side effects.
+				This function provides a clean and reliable way to jump to a given pythonic offset.
+
+			Assumptions:
+				1. This function operates on a non-collapsed TextInfo only. IN a typical scenario, we might want
+				to jump to a certain offset within a paragraph or a line. In this case this function
+				should be called on TextInfo representing said paragraph or line.
+				The reason for that is that for some implementations we might
+				need to access text of paragraph/line in order to accurately compute result offset.
+				2. It assumes that 1 character of application-specific TextInfo representation
+				maps to 1 or more characters of pythonic representation.
+				3. This function is also written with an assumption that a character
+				in application-specific TextInfo representation might not map to any pythonic characters,
+				although this scenario has never been observed in any applications.
+				4. Also this function assumes that most characters have 1:1 mapping between pythonic
+				and application-specific representations.
+				This assumption is not required, however if this assumption is True, the function will converge fast.
+				If theis assumption is false, then it might take many iterations to find the right TextInfo.
+
+			Algorithm:
+				This generic implementation essentially a biased binary search.
+				On every iteration we operate on a pythonic string and its TextInfo counterpart stored in info variable.
+				We would like to reach a certain offset within that pythonic string,
+				that is stored in pythonicOffsetLeft variable.
+				In every iteration of the loop:
+				1. We try to either move from the left end of info by pythonicOffsetLeft  characters
+				or from the right end by -pythonicOffsetRight characters - depending which move is shorter.
+				We store destination point as collapsed TextInfo tmpInfo.
+				2. We compute number of pythonic characters from the beginning of info until tmpInfo
+				and store it in actualPythonicOffset variable.
+				3. We will compare actualPythonicOffset with pythonicOffsetLeft  : if they are equal,
+				then we just found desired TextInfo.
+				Otherwise we use tmpInfo as the middle point of binary search and we recurse either to the left
+				or to the right, depending where desired offset lies.
+
+				One extra part of the algorithm serves to prevent certain conditions:
+				if we happen to move on the step 1 from the same point twice
+				in two consecutive iterations of the loop, then on the second time we will move tmpInfo
+				exactly to the opposite end of info,
+				and the algorithm will fail on sanity check condition in the for loop.
+				To avoid this situation we track last move and the direction of last divide
+				in variables lastMove and lastRecursedLeft.
+				If we detect that we are about to move from the same endpoint for the second time,
+				we reduce the count of characters by 1 to make sure
+				the algorithm makes some progress on each iteration.
+		"""
+		text = self.text
+		if pythonicOffset < 0 or pythonicOffset > len(text):
+			raise ValueError
+		if pythonicOffset == 0 or pythonicOffset == len(text):
+			result = self.copy()
+			result.collapse(end=pythonicOffset > 0)
+			return result
+		
+		info = self.copy()
+		# Total Pythonic Length represents length in python characters of Current TextInfo we're workoing with.
+		# We start with self, and then gradually divide and conquer in order to find desired offset.
+		totalPythonicOffset = len(text)
+
+		# pythonicOffsetLeft and pythonicOffsetRight represent distance in pythonic characters
+		# from left and right ends of info correspondingly until desired location.
+		pythonicOffsetLeft = pythonicOffset
+		pythonicOffsetRight = totalPythonicOffset - pythonicOffsetLeft
+
+		# We store lastMove - by how many characters we moved last time, and
+		# lastRecursedLeft - whether last recursion happened to the left and not to the right -
+		# in order to avoid certain corner cases.
+		lastMove: int | None = None
+		lastRecursedLeft: bool | None = None
+		
+		MAX_BINARY_SEARCH_ITERATIONS = 1000
+		for __ in range(MAX_BINARY_SEARCH_ITERATIONS):
+			tmpInfo = info.copy()
+			if pythonicOffsetLeft <= pythonicOffsetRight:
+				# Move from the left end of info. Let's compute by how many characters in moveCharacters variable.
+				tmpInfo.collapse()
+				if lastRecursedLeft is not None and lastRecursedLeft is True and lastMove > 0:
+					# Here we check that last time we also attempted to move from the same left end.
+					# And apparently we overshot last time. In order to avoid infinite loop
+					# or overshooting again, reduce movement by 1.
+					moveCharacters = lastMove - 1
+					if moveCharacters == 0:
+						raise RuntimeError("Unable to find desired offset in TextInfo.")
+				else:
+					moveCharacters = pythonicOffsetLeft
+				
+				code = tmpInfo.move(UNIT_CHARACTER, moveCharacters, endPoint="end")
+				lastMove = moveCharacters
+				tmpText = tmpInfo.text
+				actualPythonicOffset = len(tmpText)
+				tmpInfo.collapse(end=True)
+			else:
+				# Move from the right end of info.
+				tmpInfo.collapse(end=True)
+				if lastRecursedLeft is not None and lastRecursedLeft is False and lastMove < 0:
+					# lastMove was negative, so adding +1 to reduce its absolute value
+					moveCharacters = lastMove + 1
+					if moveCharacters == 0:
+						raise RuntimeError("Unable to find desired offset in TextInfo.")
+				else:
+					moveCharacters = -pythonicOffsetRight
+				code = tmpInfo.move(UNIT_CHARACTER, moveCharacters, endPoint="start")
+				lastMove = moveCharacters
+				tmpText = tmpInfo.text
+				actualPythonicOffset = totalPythonicOffset - len(tmpText)
+				tmpInfo.collapse()
+			if code == 0:
+				raise RuntimeError("Move by character operation unexpectedly failed.")
+			if actualPythonicOffset <= 0 or actualPythonicOffset >= totalPythonicOffset:
+				raise RuntimeError(f"InvalidState: {actualPythonicOffset=} {totalPythonicOffset=}")
+			if actualPythonicOffset == pythonicOffsetLeft:
+				return tmpInfo
+			elif actualPythonicOffset < pythonicOffsetLeft:
+				# Recursing right
+				lastRecursedLeft = False
+				text = text[actualPythonicOffset:]
+				pythonicOffsetLeft -= actualPythonicOffset
+				totalPythonicOffset = pythonicOffsetLeft + pythonicOffsetRight
+				info.setEndPoint(tmpInfo, which="startToStart")
+			else:  # actualPythonicOffset > pythonicOffsetLeft
+				# Recursing left
+				lastRecursedLeft = True
+				text = text[:actualPythonicOffset]
+				totalPythonicOffset = actualPythonicOffset
+				pythonicOffsetRight = totalPythonicOffset - pythonicOffsetLeft
+				info.setEndPoint(tmpInfo, which="endToEnd")
+		raise RuntimeError("Infinite loop during binary search.")
+
+
+
+
 
 RE_EOL = re.compile("\r\n|[\n\r]")
 def convertToCrlf(text):
