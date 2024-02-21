@@ -991,7 +991,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Toggles on and off the reporting of figures and captions"),
 		category=SCRCAT_DOCUMENTFORMATTING
 	)
-	def script_toggleReportFigures(self, gesture):
+	def script_toggleReportFigures(self, gesture: inputCore.InputGesture):
 		if config.conf["documentFormatting"]["reportFigures"]:
 			# Translators: The message announced when toggling the report figures and captions document formatting
 			# setting.
