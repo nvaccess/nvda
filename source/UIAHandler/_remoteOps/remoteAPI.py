@@ -12,6 +12,7 @@ from typing import (
 	Callable,
 	ParamSpec,
 	Iterable,
+	Generator,
 	Generic,
 	TypeVar,
 	cast
@@ -38,7 +39,8 @@ from . import instructions
 from . import builder
 from .remoteFuncWrapper import (
 	remoteMethod,
-	remoteMethod_mutable
+	remoteMethod_mutable,
+	remoteContextManager
 )
 from . import operation
 
@@ -718,7 +720,7 @@ class RemoteArray(RemoteBaseObject):
 		)
 
 	@remoteMethod
-	def __getitem__(self, index: RemoteUint | RemoteInt | int) -> RemoteVariant:
+	def __getitem__(self, index: RemoteIntBase | int) -> RemoteVariant:
 		result = RemoteVariant(self.rob, self.rob.requestNewOperandId())
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.ArrayGetAt(
@@ -752,7 +754,7 @@ class RemoteArray(RemoteBaseObject):
 	@remoteMethod_mutable
 	def __setitem__(
 		self,
-		index: RemoteUint | RemoteInt | int,
+		index: RemoteIntBase | int,
 		value: RemoteBaseObject | int | float | str
 	) -> None:
 		self.rob.getDefaultInstructionList().addInstruction(
@@ -764,7 +766,7 @@ class RemoteArray(RemoteBaseObject):
 		)
 
 	@remoteMethod_mutable
-	def remove(self, index: RemoteUint | RemoteInt | int) -> None:
+	def remove(self, index: RemoteIntBase | int) -> None:
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.ArrayRemoveAt(
 				target=self,
@@ -1343,6 +1345,36 @@ class RemoteAPI(builder._RemoteBase):
 		nextInstructionIndex = instructionList.getInstructionCount()
 		loopBlockInstruction.breakBranch = RelativeOffset(nextInstructionIndex - loopBlockInstructionIndex)
 		self._scopeInstructionJustExited = loopBlockInstruction
+
+	_range_intTypeVar = TypeVar('_range_intTypeVar', bound=RemoteIntBase)
+
+	@remoteContextManager
+	def forEachNumInRange(
+		self,
+		start: _range_intTypeVar | int,
+		stop: _range_intTypeVar | int,
+		step: _range_intTypeVar | int = 1
+	) -> Generator[RemoteIntBase, None, None]:
+		RemoteType: Type[RemoteIntBase] = RemoteInt
+		for arg in (start, stop, step):
+			if isinstance(arg, RemoteUint):
+				RemoteType = RemoteUint
+				break
+		remoteStart = cast(RemoteIntBase, RemoteType).ensureRemote(self.rob, cast(RemoteIntBase, start))
+		remoteStop = cast(RemoteIntBase, RemoteType).ensureRemote(self.rob, cast(RemoteIntBase, stop))
+		remoteStep = cast(RemoteIntBase, RemoteType).ensureRemote(self.rob, cast(RemoteIntBase, step))
+		counter = remoteStart.copy()
+		with self.whileBlock(lambda: counter < remoteStop):
+			yield cast(RemoteIntBase, counter)
+			counter += remoteStep
+
+	@remoteContextManager
+	def forEachItemInArray(
+		self,
+		array: RemoteArray
+	) -> Generator[RemoteVariant, None, None]:
+		with self.forEachNumInRange(0, array.size()) as index:
+			yield array[index]
 
 	@contextlib.contextmanager
 	def tryBlock(self, silent=False):

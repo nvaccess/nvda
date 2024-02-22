@@ -329,6 +329,24 @@ with ra.catchBlock() as errorCode:
 ```
 If it is an element or text range method that causes the error, the error code will be the COM HRESULT for that method E.g. `E_INVALIDARG`. Other errors such as divide by 0 have their own error codes.
 
+### Higher-level algorithms
+#### Looping over a range of numbers
+Although you can use a while loop and a counter to loop over a range of numbers, the library provides a helper method `ra.forEachNumInRange` which takes start, stop, and optional step arguments. This method can be used in a `with` statement to loop over a range of numbers like so:
+```
+with ra.forEachNumInRange(0,10, 2) as num:
+	# do something with num
+```
+
+#### Looping over arrays
+To simplifying looping over each item in an array, the library provides `ra.forEachItemInArray` which can be used in a `with` statement like such:
+```
+array = ra.newArray()
+# Populate the array...
+
+with ra.forEachItemInArray(array) as item:
+	# do something with the item...
+```
+
 ## Executing an operation
 Once an operation is built, you will want to actually execute it on the remote provider.
 To execute the operation, call `Operation.execute`. this method takes no arguments, and returns any values previously returned with `ra.Return`. these values are brought back to NvDA and converted to real Python types.

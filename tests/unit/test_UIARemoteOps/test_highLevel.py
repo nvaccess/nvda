@@ -669,3 +669,32 @@ class TestHighLevel(TestCase):
 			results.append(i)
 		self.assertEqual(results[:-1], list(range(1000, 5000, 1000)))
 		self.assertEqual(results[-1], 4)
+
+	def test_forEachNumInRange(self):
+		op = operation.Operation(localMode=True)
+
+		@op.buildIterableFunction
+		def code(ra: remoteAPI.RemoteAPI):
+			with ra.forEachNumInRange(10, 15) as i:
+				ra.Yield(i)
+
+		results = []
+		for i in op.iterExecute():
+			results.append(i)
+		self.assertEqual(results, [10, 11, 12, 13, 14])
+
+	def test_forEachItemInArray(self):
+		op = operation.Operation(localMode=True)
+
+		@op.buildIterableFunction
+		def code(ra: remoteAPI.RemoteAPI):
+			array = ra.newArray()
+			with ra.forEachNumInRange(0, 10, 2) as i:
+				array.append(i)
+			with ra.forEachItemInArray(array) as item:
+				ra.Yield(item)
+
+		results = []
+		for i in op.iterExecute():
+			results.append(i)
+		self.assertEqual(results, [0, 2, 4, 6, 8])
