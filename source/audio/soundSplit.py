@@ -56,7 +56,7 @@ class SoundSplitState(DisplayStringIntEnum):
 			case SoundSplitState.NVDA_LEFT_APPS_RIGHT | SoundSplitState.NVDA_BOTH_APPS_RIGHT:
 				return (0.0, 1.0)
 			case _:
-				raise RuntimeError(f"{self=}")
+				raise RuntimeError(f"Unexpected or unknown state {self=}")
 
 	def getNVDAVolume(self) -> VolumeTupleT:
 		match self:
