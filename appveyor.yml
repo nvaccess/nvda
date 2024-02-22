@@ -13,12 +13,6 @@ branches:
   - /try-.*/
   - /release-.*/
 
-# scripts that are called at very beginning, before repo cloning
-init:
-  # set the init time for the build, used to calculate the time taken for each stage of the build.
-  - ps: |
-      "INIT, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
-
 environment:
  PY_PYTHON: 3.11-32
  secure_authenticode_pass:
@@ -31,6 +25,12 @@ environment:
  crowdinProjectID: 598017
  crowdinAuthToken:
   secure: E3084gj4JeMZKvZIOLIhqZefuSo/tj7iYPt4yK0geOI/eQgmPvoXt37Xq0KwvXzvZiJny4AsMj1rKMTVxio8EG8KA0YsYYuy+WV1wpFRIn25zGQS+DZ/yycL75SmTWfr
+
+# scripts that are called at very beginning, before repo cloning
+init:
+  # set the init time for the build, used to calculate the time taken for each stage of the build.
+  - ps: |
+      "INIT, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
 
 install:
  - ps: |
