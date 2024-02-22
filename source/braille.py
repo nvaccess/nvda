@@ -2622,12 +2622,15 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def handlePostConfigProfileSwitch(self):
 		display = config.conf["braille"]["display"]
-		# Do not choose a new display if:
-		if not (
-			# The display in the new profile is equal to the last requested display name
-			display == self._lastRequestedDisplayName
-			# or the new profile uses auto detection, which supports detection of the currently active display.
-			or (display == AUTO_DISPLAY_NAME and bdDetect.driverIsEnabledForAutoDetection(self.display.name))
+		if (
+			self.display is None
+			# Do not choose a new display if:
+			or not (
+				# The display in the new profile is equal to the last requested display name
+				display == self._lastRequestedDisplayName
+				# or the new profile uses auto detection, which supports detection of the currently active display.
+				or (display == AUTO_DISPLAY_NAME and bdDetect.driverIsEnabledForAutoDetection(self.display.name))
+			)
 		):
 			self.setDisplayByName(display)
 		elif (
