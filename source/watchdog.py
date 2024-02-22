@@ -295,7 +295,8 @@ def initialize():
 	NVDAHelper._setDllFuncPointer(NVDAHelper.localLib, "_notifySendMessageCancelled", _notifySendMessageCancelled)
 	_watcherThread = threading.Thread(
 		name=__name__,
-		target=_watcher
+		target=_watcher,
+		daemon=True,
 	)
 	alive()
 	_watcherThread.start()

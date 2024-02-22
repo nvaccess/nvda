@@ -39,6 +39,7 @@ class SpeechSpySynthDriver(synthDriverHandler.SynthDriver):
 		self._doSpeechThread = threading.Thread(
 			target=self._processSpeech,
 			name="speech spy synth driver",
+			daemon=True,
 		)
 		self._doSpeechThread.start()
 

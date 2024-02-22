@@ -202,7 +202,6 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
 - Updated pip dependencies:
   - configobj to 5.1.0dev commit ``e2ba4457c4651fa54f8d59d8dcdd3da950e956b8``. (#15544)
   - Comtypes to 1.2.0. (#15513, @codeofdusk)
-  - fast_diff_match_patch to 2.0.1. (#15514, @codeofdusk)
   - Flake8 to 4.0.1. (#15636, @lukaszgo1)
   - py2exe to 0.13.0.1dev commit ``4e7b2b2c60face592e67cb1bc935172a20fa371d``. (#15544) 
   - robotframework to 6.1.1. (#15544)
@@ -287,6 +286,14 @@ Use ``bdDetect.DeviceType.*`` instead. (#15772, @LeonarddeR).
 - Using ``gui.ExecAndPump`` is deprecated - please use ``systemUtils.ExecAndPump`` instead. (#15852, @lukaszgo1)
 -
 
+
+= 2023.3.4 =
+This is a patch release to fix an installer issue.
+
+== Bug Fixes ==
+- Fixed bug which caused the NVDA process to fail to exit correctly. (#16123)
+- Fixed bug where if the previous NVDA process failed to exit correctly, an NVDA installation could fail to an unrecoverable state. (#16122)
+-
 
 = 2023.3.3 =
 This is a patch release to fix a security issue.
