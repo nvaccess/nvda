@@ -14,6 +14,7 @@ from pycaw.callbacks import AudioSessionNotification
 from pycaw.utils import AudioSession, AudioUtilities
 import ui
 from utils.displayString import DisplayStringIntEnum
+from dataclasses import dataclass
 
 VolumeTupleT = tuple[float, float]
 
@@ -80,6 +81,8 @@ def initialize() -> None:
 		audioSessionManager = AudioUtilities.GetAudioSessionManager()
 		state = SoundSplitState(config.conf["audio"]["soundSplitState"])
 		setSoundSplitState(state)
+	else:
+		log.debug("Cannot initialize sound split as WASAPI is disabled")
 
 
 @atexit.register
@@ -87,12 +90,21 @@ def terminate():
 	if nvwave.usingWasapiWavePlayer():
 		setSoundSplitState(SoundSplitState.OFF)
 		unregisterCallback()
+	else:
+		log.debug("Skipping terminating sound split as wasapi is mode is not enabled.")
 
 
 def applyToAllAudioSessions(
 		callback: AudioSessionNotification,
 		applyToFuture: bool = True,
 ) -> None:
+	"""
+		Executes provided callback function on all active audio sessions.
+		Additionally, if applyToFuture is True, then it will register a notification with audio session manager,
+		which will execute the same callback for all future sessions as they are created.
+		That notification will be active until next invokation of this function,
+		or until unregisterCallback() is called.
+	"""
 	unregisterCallback()
 	if applyToFuture:
 		audioSessionManager.RegisterSessionNotification(callback)
@@ -112,27 +124,38 @@ def unregisterCallback() -> None:
 		activeCallback = None
 
 
-def setSoundSplitState(state: SoundSplitState) -> None:
+@dataclass(unsafe_hash=True)
+class VolumeSetter(AudioSessionNotification):
+	leftVolume: float
+	rightVolume: float
+	leftNVDAVolume: float
+	rightNVDAVolume: float
+	foundSessionWithNot2Channels: bool = False
+
+	def on_session_created(self, new_session: AudioSession):
+		pid = new_session.ProcessId
+		channelVolume = new_session.channelAudioVolume()
+		channelCount = channelVolume.GetChannelCount()
+		if channelCount != 2:
+			log.warning(f"Audio session for pid {pid} has {channelCount} channels instead of 2 - cannot set volume!")
+			self.foundSessionWithNot2Channels = True
+			return
+		if pid != globalVars.appPid:
+			channelVolume.SetChannelVolume(0, self.leftVolume, None)
+			channelVolume.SetChannelVolume(1, self.rightVolume, None)
+		else:
+			channelVolume.SetChannelVolume(0, self.leftNVDAVolume, None)
+			channelVolume.SetChannelVolume(1, self.rightNVDAVolume, None)
+
+
+def setSoundSplitState(state: SoundSplitState) -> dict:
 	leftVolume, rightVolume = state.getAppVolume()
 	leftNVDAVolume, rightNVDAVolume = state.getNVDAVolume()
-
-	class VolumeSetter(AudioSessionNotification):
-		def on_session_created(self, new_session: AudioSession):
-			pid = new_session.ProcessId
-			channelVolume = new_session.channelAudioVolume()
-			channelCount = channelVolume.GetChannelCount()
-			if channelCount != 2:
-				log.warning(f"Audio session for pid {pid} has {channelCount} channels instead of 2 - cannot set volume!")
-				return
-			if pid != globalVars.appPid:
-				channelVolume.SetChannelVolume(0, leftVolume, None)
-				channelVolume.SetChannelVolume(1, rightVolume, None)
-			else:
-				channelVolume.SetChannelVolume(0, leftNVDAVolume, None)
-				channelVolume.SetChannelVolume(1, rightNVDAVolume, None)
-
-	volumeSetter = VolumeSetter()
+	volumeSetter = VolumeSetter(leftVolume, rightVolume, leftNVDAVolume, rightNVDAVolume)
 	applyToAllAudioSessions(volumeSetter)
+	return {
+		"foundSessionWithNot2Channels": volumeSetter.foundSessionWithNot2Channels,
+	}
 
 
 def toggleSoundSplitState() -> None:
@@ -152,6 +175,14 @@ def toggleSoundSplitState() -> None:
 		i = -1
 	i = (i + 1) % len(allowedStates)
 	newState = SoundSplitState(allowedStates[i])
-	setSoundSplitState(newState)
+	result = setSoundSplitState(newState)
 	config.conf["audio"]["soundSplitState"] = newState.value
 	ui.message(newState.displayString)
+	if result["foundSessionWithNot2Channels"]:
+		msg = _(
+			# Translators: warning message when sound split trigger wasn't successful due to one of audio sessions
+			# had number of channels other than 2 .
+			"Warning: couldn't set volumes for sound split: "
+			"one of audio sessions is either mono, or has more than 2 audio channels."
+		)
+		ui.message(msg)
