@@ -7,7 +7,8 @@
 Extension points for speech.
 """
 
-from extensionPoints import Action
+from extensionPoints import Action, Filter
+from speech.types import SpeechSequence
 
 speechCanceled = Action()
 """
@@ -33,4 +34,12 @@ Notifies when code attempts to speak text.
 
 @param priority: The speech priority.
 @type priority: priorities.Spri
+
+filter_speechSequence = Filter[SpeechSequence]()
+"""
+Filters speech sequence before it passes to synthDriver.
+
+:param value: the speech sequence to be filtered.
+:type value: SpeechSequence
+
 """

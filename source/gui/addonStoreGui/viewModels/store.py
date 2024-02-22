@@ -560,7 +560,12 @@ class AddonStoreVM:
 			_StatusFilterKey.AVAILABLE,
 			_StatusFilterKey.UPDATE,
 		}:
-			threading.Thread(target=self._getAvailableAddonsInBG, name="getAddonData").start()
+			self._refreshAddonsThread = threading.Thread(
+				target=self._getAvailableAddonsInBG,
+				name="getAddonData",
+				daemon=True,
+			)
+			self._refreshAddonsThread.start()
 
 		elif self._filteredStatusKey in {
 			_StatusFilterKey.INSTALLED,

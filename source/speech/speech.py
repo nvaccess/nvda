@@ -25,6 +25,7 @@ import characterProcessing
 import languageHandler
 from . import manager
 from .extensions import speechCanceled, pre_speechCanceled, pre_speech
+from .extensions import filter_speechSequence, speechCanceled
 from .commands import (
 	# Commands that are used in this file.
 	BreakCommand,
@@ -960,6 +961,7 @@ def speak(  # noqa: C901
 	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
 	@param priority: The speech priority.
 	"""
+	speechSequence = filter_speechSequence.apply(speechSequence)
 	logBadSequenceTypes(speechSequence)
 	# in case priority was explicitly passed in as None, set to default.
 	priority: Spri = Spri.NORMAL if priority is None else priority
