@@ -31,11 +31,11 @@ class BrailleTable(NamedTuple):
 	"""The file name of the table."""
 	displayName: str
 	"""The name of the table as displayed to the user. This should be translatable."""
-	contracted: bool
+	contracted: bool = False
 	"""True if the table is contracted, False if uncontracted."""
-	output: bool
+	output: bool = True
 	"""True if this table can be used for output, False if not."""
-	input: bool
+	input: bool = True
 	"""True if this table can be used for input, False if not."""
 
 
