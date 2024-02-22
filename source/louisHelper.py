@@ -8,9 +8,9 @@
 import os
 from ctypes import (
 	WINFUNCTYPE,
+	addressof,
 	c_char_p,
 	c_void_p,
-	cast,
 )
 from typing import List
 
@@ -34,8 +34,10 @@ LOUIS_TO_NVDA_LOG_LEVELS = {
 _tablesDirs = []
 
 
+# Note: liblouis table resolvers return char**,
+# but POINTER(c_char_p) is unsupported as a ctypes callback return type.
 @WINFUNCTYPE(c_void_p, c_char_p, c_char_p)
-def _resolveTable(tablesList: str, base: str) -> None:
+def _resolveTable(tablesList: str, base: str) -> int | None:
 	"""Resolve braille table file names to file paths.
 
 	Unlike the default table resolver from liblouis, this implementation does
@@ -64,13 +66,12 @@ def _resolveTable(tablesList: str, base: str) -> None:
 			if _isDebug():
 				log.error(f"Could not resolve table \"{table}\". Search paths: {_tablesDirs}")
 			return None
-	# Keeping a reference to the last returned value to ensure the returned
-	# value is not GC'ed before it is copied on liblouis' side.
-	# See https://github.com/liblouis/liblouis/issues/315
-	_resolveTable.lastRes = arr = (c_char_p * len(paths))(*paths)
+	if not paths:
+		return None
+	arr = (c_char_p * len(paths))(*paths)
 	# ctypes calls c_void_p on the returned value.
-	# See https://bugs.python.org/issue1574593#msg30207
-	return cast(arr, c_void_p).value
+	# Return the address of the array.
+	return addressof(arr)
 
 
 @louis.LogCallback
