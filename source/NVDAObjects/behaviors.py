@@ -350,9 +350,9 @@ class LiveText(NVDAObject):
 			return
 		thread = self._monitorThread = threading.Thread(
 			name=f"{self.__class__.__qualname__}._monitorThread",
-			target=self._monitor
+			target=self._monitor,
+			daemon=True,
 		)
-		thread.daemon = True
 		self._keepMonitoring = True
 		self._event.clear()
 		thread.start()

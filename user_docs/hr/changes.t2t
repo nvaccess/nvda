@@ -7,6 +7,167 @@
 Informacije za programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 
+= 2024.1 =
+
+Dodan je novi modus govora čitanja informacija na zahtjev.
+Kada je modus govora postavlejen da izgovara informacije na zahtjev, NVDA ne čita informacije automatski na primjer prilikom pomicanja kursora, ali još uvijek izgovara informacije ikoje se dobivaju oz pomoć prečaca, čiji je cilj izgovaranja određenih informacija na primjer, izgovaranje naslovne trake.
+U kategoriji "govor" NVDA postavki, sada je moguće izostavljanje neželjenih modusa govora iz odabira modusa govora (``NVDA+s``).
+
+Novi način kopiranja sa sačuvanim oblikovanjem, koji se poziva uz pomoć prečaca NVDA+f10 dostupan je na web stranicama u Mozilla Firefoxu.
+Kada se uključi, koristit će se izvorno označavanje u Mizilli firefoxu.
+Kopiranje teksta uz pomoć prečaca ``control+c`` biti će proslijeđeno direktno Mozilli firefoxu što znaći da će tekst biti kopiran sa sačuvanim oblikovanjem, umjesto čistog teksta bez oblikovanja.
+
+NVDA store sada podržava višestruke radnje na primjer: instaliranje ili uključivanje dodataka tako da se označi više dodataka
+Dodana je nova radnja za otvaranje web stranice recenzija za bilo koji označeni dodatak.
+
+Opcije odabira zvučne kartice i načina stišavanja govora su uklonjene iz dijaloškog okvira "odabir govorne jedinice".
+Ove se opcije mogu pronaći u novom dijaloškom okviru postavki zvuka koji se poziva prečacem ``NVDA+control+u``.
+
+Nadograđeni su eSpeak-NG, LibLouis braille translator, i Unicode CLDR.
+Dodane su nove brajične tablice za tajski, filipinski i rumunjski jezik.
+
+Ispravljeno je puno pogrešaka, uglavnom u Add-on Storeu, podršci za brajicu, Libre Officeu, Microsoft Officeu i podršci za zvuk.
+
+== Važne napomene == 
+- Ova inačica narušava kompatibilnost sa postojećim dodacima.
+- Windows 7, i Windows 8 više nisu podržani operacijski sustavi.
+Windows 8.1 je minimalna verzija operacijskog sustava Windows.
+-
+
+== Nove značajke ==
+- Add-on Store:
+  - Add-on Store sada podržava višestruke radnje na primjer instaliranje, uključivanje više dodataka) tako da se odabere više dodataka. (#15350, #15623, @CyrilleB79)
+  - Dodana je opcija koja služi za davanje povratne informacije o dodacima putem posebne web stranice za svaki dodatak. (#15576, @nvdaes)
+  -
+- Dodana podrška za Bluetooth niskonaponske brajične redke. (#15470)
+- Dodano je kopiranje sa sačuvanim oblikovanjem (koje se uključuje ili isključuje uz pomoć prečaca ``NVDA+shift+f10``) na web stranicama u Mozilla firefoxu.
+Kada je uključeno, koristit će se izvorno označavanje u Mozilla firefoxu.
+Kopirat će se tekst sa sačuvanim oblikovanjem, umjesto teksta koji pokazuje NVDA bez sačuvanog oblikovanja. (#15830)
+- Prilikom kopiranja teksta u Microsoft Wordu sa uključenim modusom čitanja, oblikovanje će se također kopirati. (#16129)
+- Dodan je novi modus govora "na zahtjev".
+Kada je govor podešen na zahtjev, NVDA neće govoriti automatski (na primjer, prilikom pomicanja kursora) ali govori kada se pozivaju prečaci čiji je cilj čitanje određene informacije (na primjer izgovaranje naslovne trake). (#481, @CyrilleB79)
+- U kategoriji govor postavki NVDA, sada je moguće isključiti neželjene moduse govora iz odabira prečacem odabira modusa govora (``NVDA+s``). (#15806, @lukaszgo1)
+  - Ako koristite dodatak NoBeepsSpeechMode razmislite o njegovom uklanjanju, i onemogućavanjem "zvučnih signala" "i načina na zahtjev" u postavkama.
+  -
+-
+
+== Izmjene ==
+- NVDA više ne podržava Windows 7 i Windows 8.
+Windows 8.1 je minimalna podržana verzija sustava Windows. (#15544)
+- Nadogradnje komponenata:
+  - Nadograđen LibLouis brajični prevoditelj na inačicu [3.28.0 https://github.com/liblouis/liblouis/releases/tag/v3.28.0]. (#15435, #15876, @codeofdusk)
+    - Dodane nove brajične tablice za Tajski, Rumunjski i Filipinski.
+    -
+  - eSpeak NG je nadograđen na 1.52-dev commit ``530bf0abf``. (#15036)
+  - Prijevodi simbola i Emoji znakova su nadograđeni na verziju 44.0. (#15712, @OzancanKaratas)
+  - Nadograđena Java Access Bridge to 17.0.9+8Zulu (17.46.19). (#15744)
+  -
+- Tipkovnički prečaci:
+  - Slijedeći tipkovnički prečaci od sada podržavaju dvostruke i trostruke pritiske za slovkanje informacije, te sricanje uz pomoć fonetskog opisa znakova: čitaj označeni tekst, čitaj tekst u međuspremniku i čitaj fokusirani objekt. (#15449, @CyrilleB79)
+  - Prečac za uključivanje i isključivanje zaslonske zavjese sada ima podrazumjevani tipkovnički prečac: ``NVDA+control+escape``. (#10560, @CyrilleB79)
+  - Kada se pritisne četiri puta, prečac za čitanje označenog teksta sada prikazuje označeni tekst u poruci koja se može pročitati. (#15858, @Emil-18)
+  - 
+- Microsoft Office:
+  - Kada treba pročitati oblikovanje ćelije u Excelu pozadina i rubovi biti će pročitani samo ako takvo oblikovanje postoji. (#15560, @CyrilleB79)
+  - NVDA više neće čitati neoznačene grupe kao što su to u posljednjim inačicama Microsoft Office 365 izbornicima. (#15638)
+  -
+- Opcija za odabir zvučne kartice i opcije načina stišavanja govora uklonjene su iz dijaloškog okvira "Odabir govorne jedinice".
+Možete ih pronaći u panelu postavki zvuka koji se može otvoriti pritiskom prečaca ``NVDA+control+u``. (#15512, @codeofdusk)
+- Opcija "Izgovori tip objekta kada se nađe pod mišem" u postavkama miša je preimenovan u "Pročitaj objekt kada se nađe pod mišem".
+Ova opcija izgovara više relevantnih informacija kada se objekt nađe pod mišem poput stanja: označeno ili pritisnuto ili koordinate ćelija u tablici. (#15420, @LeonarddeR)
+- Nove stavke su dodane u izbornik pomoć Pomoć obuka i podrška i NV acces trgovina. (#14631)
+- Podrška NVDA za [Poedit https://poedit.net] je kompletno prepisana za inačicu 3 i novije.
+Korisnicima Poedita  1 se preporućuje nadogradnja na Poedit 3 ako žele koristiti unapređenu pristupačnost Poedita, kao što su to prečaci za čitanje bilježaka za prevoditelje i komentara. (#15313, #7303, @LeonarddeR)
+- Preglednik brajice i preglednik govora od sada su isključeni u Sigurnom načinu. (#15680)
+- Prilikom korištenja objektne navigacije, onemogućeni (nedostupni) više neće biti ignorirani. (#15477, @CyrilleB79)
+-
+
+== Ispravke grešaka ==
+- Add-on Store:
+  - Ako je status dodatka promijenjen kada se nalazi u fokusu, na primjer promjena iz "preuzimanje" u "preuzeto", osvježena se stavka sada potpuno izgovara. (#15859, @LeonarddeR)
+  - Prilikom instalacije dodataka instalacijska pitanja se više ne prekrivaju dijaloškim okvirom ponovnog pokretanja. (#15613, @lukaszgo1)
+  - Prilikom reinstalacije nekompatibilnog dodatka isti se neće nasilno onemogućavati. (#15584, @lukaszgo1)
+  - Onemogućeni i nekompatibilni dodaci se sada mogu ažurirati. (#15568, #15029)
+  - NVDA sa sada obnavlja i pokazuje grešku u slučaju neuspješnog preuzimanja dodatka. (#15796)
+  - NVDA se više ne pokreće ponovno poslije ponovnog otvaranja i zatvaranja Add'on storea. (#16019, @lukaszgo1)
+  -
+- Zvuk:
+  - NVDA se više ne smrzava kada se zvukovi reproduciraju brzo. (#15311, #15757, @jcsteh)
+  - Ako je zvučna kartica postavljena na jednu od onih koja nije podrazumijevana a ta kartica postane dostupna, NVDA NVDA će se prebaciti na tu zvučnu karticu. (#15759, @jcsteh)
+  - NVDA će sada ponovno reproducirati zvuk ako konfiguracija zvučne kartice bude promijenjena ili druga aplikacija prestane ekskluzivno koristiti zvučnu karticu. (#15758, #15775, @jcsteh)
+  -
+- Brajica:
+  - Višeredni brajični redci više neće dovesti upravljački program BRLTTY do rušenja, te su tretirani kao jedan kontinuirani brajični redak. (#15386)
+  - Od sada se na brajičnom redku prikazuju objekti koji sadrže koristan tekst. (#15605)
+  - SAda ponovno radi upisivanje brajičnih znakova kada se koristi kratkopis. (#15773, @aaclause)
+  - Od sada se brajica osvježava prilikom pomicanja objekta navigatora u više situacija (#15755, @Emil-18)
+  - Rezultati izgovora trenutnog fokusa, trenutnog objekta navigatora i trenutnog označavanja sada se prikazuju na brajičnom redku. (#15844, @Emil-18)
+  - Albatross upravljački program više ne prepoznaje Esp32 mikrokontroler kao Albatross brajični redak. (#15671)
+  -
+- LibreOffice:
+  - Riječi izbrisane uz pomoć prečaca ``control+backspace`` sada se također ispravno izgovaraju kada nakon izbrisane riječi slijedi bjelina (raznaci i tabulatori). (#15436, @michaelweghorn)
+  - Čitanje trake stanja koristeći tipkovnički prečac ``NVDA+end`` sada također radi u Libre office dialoškim okvirima u inačicama 24.2 and novijim. (#15591, @michaelweghorn)
+  - Svi očekivani atributi teksta sada su podržani U Libreoffice inačicama 24.2 i novijim.
+  Ova ispravka omogućuje čitanje pravopisnih pogrešaka prilikom čitanja redaka u Writeru. (#15648, @michaelweghorn)
+  - Čitanje razine naslova sada također radi u LibreOfficeu inačicama 24.2 i novijim. (#15881, @michaelweghorn)
+  -
+- Microsoft Office:
+  - U Excelu sa isključenim UIA, brajica se osvježava, a aktivni sadržaj ćelije se izgovara, kada se pritisne ``control+y``, ``control+z`` ili ``alt+backspace``. (#15547)
+  - U Wordu sa isključenim Uia brajica se osvježava kada se pritisnu ``control+v``, ``control+x``, ``control+y``, ``control+z``, ``alt+backspace``, ``backspace`` ili ``control+backspace``.
+  Također se osvježava kada je UIA omogućen, kada se  upisuje tekst, a brajica je povezana na pregled a pregled prati kursor sustava. (#3276)
+  - U Wordu, trenutna ćelija će se izgovoriti koristeći izvorne prečace Worda za navigaciju po tablicama ``alt+home``, ``alt+end``, ``alt+pageUp`` and ``alt+pageDown``. (#15805, @CyrilleB79)
+  -
+- Izgovaranje tipkovničkih prečaca je unapređeno. (#10807, #15816, @CyrilleB79)
+- SAPI4 govorna jedinice sada pravilno podržavaju promjene glasnoće, brzine i visine ugrađene u govor. (#15271, @LeonarddeR)
+- Stanje višerednog objekta sada se pravilno čita u aplikacijama koje koriste Java Access Bridge. (#14609)
+- NVDA će sada čitati više sadržaja dijaloških okvira za više Windows 10 i 11 dijaloških okvira. (#15729, @josephsl)
+- NVDA će sada čitati novu učitanu stranicu u Microsoft Edgeu prilikom korištenja UI automation. (#15736)
+- Prilikom korištenja prečaca za čitanje cijelog teksta ili slovkanja teksta, pauze između rečenica ili znakova više ne smanjuju postupno tokom vremena. (#15739, @jcsteh)
+- NVDA više se ne smrzava prilikom čitanja velike količine teksta. (#15752, @jcsteh)
+- Prilikom pristupanja Microsoft Edgeu koristeći UI automation, NVDA sada može aktivirati više kontrola u modusu čitanja. (#14612)
+- NVDA će se sada pokretati ispravno kada je konfiguracijska datoteka oštećena, ali će se konfiguracija vratiti na zadane vrijednosti kao što je to bilo i u prošlosti. (#15690, @CyrilleB79)
+- Ispravljena podrška za System List view (``SysListView32``) kontrole U Windows forms aplikacijama. (#15283, @LeonarddeR)
+- Sada nije više moguće nadpisivanje NVDA povjesti Python konzole. (#15792, @CyrilleB79)
+- NVDA će ostati brz i stabilan kada postane preopterećen sa UI automation događajima, na primjer prilikom prikazivanja velike količine teksta u Windows terminalu ili prilikom slušanja glasovnih poruka u  WhatsAppu. (#14888, #15169)
+  - Ovo novo ponašanje može se isključiti koristeći opciju "Koristi unapređeno procesuiranje događaja" u NVDA naprednim postavkama.
+  -
+- NVDA sada ponovno može slijediti fokus u aplikacijama unutar WIndows defender application guarda (WDAG). (#15164)
+- Izgovoreni tekst se više ne ažurira prilikom pomicanja miša u Pregledniku govora. (#15952, @hwf1324)
+- NVDA će se opet prebaciti u modus čitanja prilikom zatvaranja odabirnih okvira koristeći tipku ``escape`` ili ``alt+strelicu gore`` u Firefox ili Chrome. (#15653)
+- Kretanje strelicama gore ili dolje u iTunesu više se neće prebacivati nazad u modus čitanja. (#15653)
+-
+
+
+= 2023.3.3 =
+Ovo je verzija zakrpe koja ispravlja sigurnosni propust.
+Molimo odgovorno prijavljujte probleme sigurnosti u skladu sa NVDA [politikom sigurnosti https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Ispravke sigurnosnih propusta ==
+- Prevencija mogućeg povratnog XSS izgrađenog koda koji prouzrokuje arbitrarno izvršavanje koda.
+([GHSA-xg6w-23rw-39r8 https://github.com/nvaccess/nvda/security/advisories/GHSA-xg6w-23rw-39r8])
+-
+
+= 2023.3.2 =
+Ovo je verzija zakrpe koja ispravlja sigurnosni propust.
+Sigurnosni propust iz verzije 2023.3.1 nije bio implementiran ispravno.
+Molimo odgovorno prijavljujte probleme sigurnosti u skladu sa NVDA [politikom sigurnosti https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Ispravke sigurnosti ==
+- Sigurnosni propust iz verzije 2023.3.1 nije bio implementiran ispravno.
+Prevenira mogući pristup sustavu i arbitrarno pokretanje koda sa privilegijama sustava za neautentificirane korisnike.
+([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
+-
+
+
+= 2023.3.1 =
+Ovo je verzija zakrpe koja ispravlja sigurnosni propust.
+Molimo odgovorno prijavljujte probleme sigurnosti u skladu sa NVDA [politikom sigurnosti https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Ispravke sigurnosti ==
+- Prevenira mogući pristup sustavu i arbitrarno pokretanje koda sa privilegijama sustava za neautentificirane korisnike.
+([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
+
+
 = 2023.3 =
 Ova inačica uključuje poboljšanja stabilnosti i performansi pri izlazu zvuka.
 Dodane su opcije za kontrolu glasnoće NVDA zvukova i zvučnih signala, ili ujednačavanja sa glasnoćom glasa koji koristite.
