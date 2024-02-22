@@ -967,9 +967,6 @@ def speak(  # noqa: C901
 
 	if not speechSequence:  # Pointless - nothing to speak
 		return
-	import speechViewer
-	if speechViewer.isActive:
-		speechViewer.appendSpeechSequence(speechSequence)
 	if _speechState.speechMode == SpeechMode.off:
 		return
 	elif _speechState.speechMode == SpeechMode.beeps:
