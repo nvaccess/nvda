@@ -31,13 +31,15 @@ if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:versionType) {
 	# Otherwise ssh will freeze on input!
 	cat deploy.json | ssh nvaccess@deploy.nvaccess.org nvdaAppveyorHook
 
-	# Upload symbols to Mozilla.
-	py -m pip install --upgrade --no-warn-script-location pip
-	py -m pip install --no-warn-script-location requests
-	Try {
-		py appveyor\mozillaSyms.py
-	}
-	Catch {
-		Add-AppveyorMessage "Unable to upload symbols to Mozilla"
+	# Upload symbols to Mozilla if feature enabled.
+	if ($env:feature_buildSymbols -and $env:feature_uploadSymbolsToMozilla) {
+		py -m pip install --upgrade --no-warn-script-location pip
+		py -m pip install --no-warn-script-location requests
+		Try {
+			py appveyor\mozillaSyms.py
+		}
+		Catch {
+			Add-AppveyorMessage "Unable to upload symbols to Mozilla"
+		}
 	}
 }
