@@ -4,30 +4,19 @@
 # Copyright (C) 2023-2023 NV Access Limited
 
 from __future__ import annotations
-import typing
 from collections.abc import Generator
-from comtypes import GUID
 from .remoteFuncWrapper import (
-	remoteFunc,
 	remoteContextManager
 )
 from .remoteAPI import (
 	RemoteAPI,
-	RemoteUint,
-	RemoteInt,
 	RemoteIntEnum,
-	RemoteString,
-	RemoteArray,
-	RemoteExtensionTarget,
-	RemoteElement,
-	RemoteTextRange,
-	RemoteVariant
+	RemoteTextRange
 )
 from .lowLevel import (
-	TextUnit,
-	AttributeId,
-	StyleId
+	TextUnit
 )
+
 
 @remoteContextManager
 def remote_forEachUnitInTextRange(

@@ -151,13 +151,3 @@ def findFirstHeadingInTextRange(
 		cast(str, label),
 		cast(UIA.IUIAutomationTextRange, paragraphRange)
 	)
-
-def test():
-	op = operation.Operation(enableCompiletimeLogging=True)
-	@op.buildIterableFunction
-	def code(ra: remoteAPI.RemoteAPI):
-		counter = ra.newInt(0, static=True)
-		with ra.whileBlock(lambda: counter < 20000):
-			with ra.ifBlock((counter % 1000) == 0):
-				ra.Yield(counter)
-			counter += 1
