@@ -705,6 +705,7 @@ Note: numpad keys require the Num Lock to be turned off to work properly.
 
 A good way to remember the basic text review commands  when using the Desktop layout  is to think of them as being in a grid of three by three, with top to bottom being line, word and character and left to right being previous, current and next.
 The layout is illustrated as follows:
+|| . {.hideHeaderRow} | . | . |
 | Previous line | Current line | Next line |
 | Previous word | Current word | Next word |
 | Previous character | Current character | Next character |
@@ -876,6 +877,7 @@ In addition to the quick navigation commands listed above, NVDA has commands tha
 To use these commands, you first need to assign gestures to them using the [Input Gestures dialog #InputGestures].
 Here is a list of available commands:
 - Article
+- Figure
 - Grouping
 - Tab
 -
@@ -1943,6 +1945,20 @@ This slider allows you to set the volume of NVDA sounds and beeps.
 This setting only takes effect when "Volume of NVDA sounds follows voice volume" is disabled.
 This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
 
+==== Time to keep audio device awake after speech ====[AudioAwakeTime]
+
+This edit box specifies how long NVDA keeps the audio device awake after speech ends.
+This allows NVDA to avoid certain speech glitches like dropped parts of words.
+This can happen due to audio devices (especially Bluetooth and wireless devices) entering standby mode.
+This might also be helpful in other use cases, such as when running NVDA inside a virtual machine (e.g. Citrix Virtual Desktop), or on certain laptops.
+
+Lower values may allow audio to be cut-off more often, as a device may enter standby mode too soon, causing the start of the following speech to be clipped.
+Setting the value too high may cause the battery of the sound output device to discharge faster, as it stays active for longer while no sound is being sent.
+
+
+You can set the time to zero in order to disable this feature.
+This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
+
 +++ Vision +++[VisionSettings]
 The Vision category in the NVDA Settings dialog allows you to enable, disable and configure [visual aids #Vision].
 
@@ -2346,6 +2362,7 @@ You can configure reporting of:
   - Landmarks
   - Articles
   - Frames
+  - Figures and captions
   - Clickable
   -
 -
@@ -2613,19 +2630,6 @@ Disabling WASAPI will disable the following options:
 - [Volume of NVDA sounds follows voice volume #SoundVolumeFollowsVoice]
 - [Volume of NVDA sounds #SoundVolume]
 -
-
-==== Duration of keeping audio device awake ====[KeepAudioAwakeDuration]
-
-This edit box specifies how long NVDA keeps the audio device awake after every speech sequence.
-NVDA does this by playing silence to keep the audio device open and avoid certain glitches like dropped parts of speech sequences.
-This can happen due to audio devices (especially Bluetooth and wireless devices) entering stand-by mode.
-This might also be helpful in certain other use cases, such as running NVDA inside a virtual machine, such as Citrix Virtual Desktop, or on certain models of laptops.
-
-Lower values may mean audio would be cut-off more often, as a device may enter stand-by mode, causing the next speech to be clipped.
-Too high a value may mean the battery of the sound output device discharges faster, as it stays active for longer while no sound is being sent.
-
-You can specify silence duration to be 0 in order to disable this feature.
-This slider is only available when [WASAPI mode #WASAPI] is enabled.
 
 ==== Debug logging categories ====[AdvancedSettingsDebugLoggingCategories]
 The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.
@@ -4315,11 +4319,13 @@ nvda -q
 
 Some of the command line options have a short and a long version, while some of them have only a long version.
 For those which have a short version, you can combine them like this:
-|`` nvda -mc CONFIGPATH`` | This will start NVDA with startup sounds and message disabled, and the specified configuration |
+|| . {.hideHeaderRow} | . |
+| ``nvda -mc CONFIGPATH`` | This will start NVDA with startup sounds and message disabled, and the specified configuration |
 | ``nvda -mc CONFIGPATH --disable-addons`` | Same as above, but with add-ons disabled |
 
 Some of the command line options accept additional parameters; e.g. how detailed the logging should be or the path to the user configuration directory.
 Those parameters should be placed after the option, separated from the option by a space when using the short version or an equals sign (``=``) when using the long version; e.g.:
+|| . {.hideHeaderRow} | . |
 | ``nvda -l 10`` | Tells NVDA to start with log level set to debug |
 | ``nvda --log-file=c:\nvda.log`` | Tells NVDA to write its log to ``c:\nvda.log`` |
 | ``nvda --log-level=20 -f c:\nvda.log`` | Tells NVDA to start with log level set to info and to write its log to ``c:\nvda.log`` |
