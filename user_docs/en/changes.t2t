@@ -8,8 +8,10 @@ What's New in NVDA
 == New Features ==
 - New key commands:
   - New Quick Navigation command ``p`` for jumping to next/previous text paragraph in browse mode. (#15998, @mltony)
+  - New unassigned Quick Navigation command to jump to the next/previous figure. (#10826)
   -
 - Reporting row and column headers is now supported in contenteditable HTML elements. (#14113)
+- Added the option to disable the reporting of figures and captions in Document Formatting settings. (#10826, #14349)
 - In Windows 11, NVDA will announce alerts from voice typing and suggested actions including the top suggestion when copying data such as phone numbers to the clipboard (Windows 11 2022 Update and later). (#16009, @josephsl)
 - New input gestures:
   - Added commands to jump first, last, forward and backward through the synth settings ring. (#13768, #16095, @rmcpantoja)
@@ -19,6 +21,7 @@ What's New in NVDA
       - Laptop: ``NVDA+control+shift+pageUp`` or ``NVDA+control+shift+pageDown``.
       -
     -
+  - Added a new unassigned input gesture to toggle the reporting of figures and captions. (#10826, #14349)
   -
 - Added support for the BrailleEdgeS2 braille device. (#16033)
 - NVDA will keep the audio device awake after speech stops, in order to prevent the start of the next speech being clipped with some audio devices such as Bluetooth headphones. (#14386, @jcsteh, @mltony)

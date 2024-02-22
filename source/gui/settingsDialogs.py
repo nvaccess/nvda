@@ -2562,6 +2562,12 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.framesCheckBox = elementsGroup.addItem(wx.CheckBox(elementsGroupBox, label=_("Fra&mes")))
 		self.framesCheckBox.Value=config.conf["documentFormatting"]["reportFrames"]
 
+		self.figuresCheckBox = elementsGroup.addItem(
+			# Translators: This is the label for a checkbox in the
+			# document formatting settings panel.
+			wx.CheckBox(elementsGroupBox, label=_("&Figures and captions")))
+		self.figuresCheckBox.Value = config.conf["documentFormatting"]["reportFigures"]
+
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
 		self.clickableCheckBox = elementsGroup.addItem(wx.CheckBox(elementsGroupBox, label=_("&Clickable")))
@@ -2617,6 +2623,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportLandmarks"]=self.landmarksCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportArticles"] = self.articlesCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFrames"]=self.framesCheckBox.Value
+		config.conf["documentFormatting"]["reportFigures"] = self.figuresCheckBox.Value
 		config.conf["documentFormatting"]["reportClickable"]=self.clickableCheckBox.Value
 
 

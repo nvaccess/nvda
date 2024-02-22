@@ -234,6 +234,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportLandmarks = boolean(default=true)
 	reportArticles = boolean(default=false)
 	reportFrames = boolean(default=true)
+	reportFigures = boolean(default=true)
 	reportClickable = boolean(default=true)
 
 [documentNavigation]

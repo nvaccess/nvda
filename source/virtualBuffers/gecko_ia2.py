@@ -549,6 +549,11 @@ class Gecko_ia2(VirtualBuffer):
 			attrs = [
 				{"IAccessible::role": [oleacc.ROLE_SYSTEM_PAGETAB]}
 			]
+		elif nodeType == "figure":
+			attrs = [
+				{"Iaccessible::role": [oleacc.ROLE_SYSTEM_GROUPING]},
+				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("figure")]}
+			]
 		else:
 			return None
 		return attrs
