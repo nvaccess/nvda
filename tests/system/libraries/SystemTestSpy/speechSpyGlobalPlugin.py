@@ -106,6 +106,23 @@ class NVDASpyLib:
 		ultimateKey = keyPath[-1]
 		penultimateConf[ultimateKey] = val
 
+	def assignGesture(
+			self,
+			gesture: str,
+			module: str,
+			className: str,
+			script: Optional[str],
+			replace: bool = False
+	):
+		import inputCore
+		inputCore.manager.userGestureMap.add(
+			gesture,
+			module,
+			className,
+			script,
+			replace,
+		)
+
 	fakeTranslations: typing.Optional[gettext.NullTranslations] = None
 
 	def override_translationString(self, invariantString: str, replacementString: str):
