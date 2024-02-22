@@ -10,7 +10,7 @@ if ($env:release) {
 if ($env:versionType) {
 	$sconsArgs += " updateVersionType=$env:versionType"
 }
-$sconsArgs += ' publisher="NV Access"'
+$sconsArgs += " publisher=`"$env:scons_publisher`""
 if(!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
 	$sconsArgs += " certFile=appveyor\authenticode.pfx certTimestampServer=http://timestamp.digicert.com"
 }
