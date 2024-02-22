@@ -71,7 +71,7 @@ class SoundSplitState(DisplayStringIntEnum):
 
 
 audioSessionManager: IAudioSessionManager2 | None = None
-activeCallback: AudioSessionNotification = None
+activeCallback: AudioSessionNotification | None = None
 
 
 def initialize() -> None:
