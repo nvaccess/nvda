@@ -1605,7 +1605,11 @@ class WordDocument(Window):
 			ui.message(_("1.5 line spacing"))
 
 	@script(gesture="kb:control+0")
-	def script_changeParagraphSpacing(self, gesture):
+from typing import TYPE_CHECKING:
+	import inputCore
+...
+
+	def script_changeParagraphSpacing(self, gesture: "inputCore.InputGesture"):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
 			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
