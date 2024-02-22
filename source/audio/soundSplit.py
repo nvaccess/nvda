@@ -78,7 +78,7 @@ def initialize() -> None:
 	if nvwave.usingWasapiWavePlayer():
 		global audioSessionManager
 		audioSessionManager = AudioUtilities.GetAudioSessionManager()
-		state = SoundSplitState(config.conf['audio']['soundSplitState'])
+		state = SoundSplitState(config.conf["audio"]["soundSplitState"])
 		setSoundSplitState(state)
 
 
