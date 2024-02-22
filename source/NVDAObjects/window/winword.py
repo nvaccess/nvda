@@ -9,6 +9,7 @@ import time
 from typing import (
 	Optional,
 	Dict,
+	TYPE_CHECKING,
 )
 
 from comtypes import COMError, GUID, BSTR
@@ -43,6 +44,9 @@ from ..behaviors import EditableTextWithoutAutoSelectDetection
 from . import _msOfficeChart
 import locationHelper
 from enum import IntEnum
+
+if TYPE_CHECKING:
+	import inputCore
 
 #Word constants
 
@@ -1605,10 +1609,6 @@ class WordDocument(Window):
 			ui.message(_("1.5 line spacing"))
 
 	@script(gesture="kb:control+0")
-from typing import TYPE_CHECKING:
-	import inputCore
-...
-
 	def script_changeParagraphSpacing(self, gesture: "inputCore.InputGesture"):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
