@@ -144,7 +144,7 @@ def toggleSoundSplitState() -> None:
 		)
 		ui.message(message)
 		return
-	state = SoundSplitState(config.conf['audio']['soundSplitState'])
+	state = SoundSplitState(config.conf["audio"]["soundSplitState"])
 	allowedStates: list[int] = config.conf["audio"]["includedSoundSplitModes"]
 	try:
 		i = allowedStates.index(state)
