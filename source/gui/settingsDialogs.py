@@ -2752,7 +2752,7 @@ class AudioPanel(SettingsPanel):
 					# Translators: Warning shown when 'OFF' sound split mode is disabled in settings.
 					"You did not choose 'Off' as one of your sound split mode options. "
 					"Please note that this may result in no speech output at all "
-					"in case if one of your audio channels is malfunctioning. "
+					"in case one of your audio channels is malfunctioning. "
 					"Are you sure you want to continue?"
 				),
 				# Translators: Title of the warning message.
