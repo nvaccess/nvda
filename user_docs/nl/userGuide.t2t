@@ -9,23 +9,20 @@ NVDA NVDA_VERSION Gebruikershandleiding
 
 + Inleiding +[Introduction]
 Welkom bij NVDA!
-
 NonVisual Desktop Access (NVDA) is een gratis en open source schermlezer voor het Microsoft Windows besturingssysteem.
-Door het geven van informatie in synthetische spraak en braille stelt NVDA blinden en slechtzienden in staat om toegang te krijgen tot computers met het Windows besturingssysteem zonder bijkomende kosten.
+Door het geven van feedback in synthetische spraak en braille stelt NVDA slechtzienden en blinden in staat om toegang te krijgen tot computers met het Windows besturingssysteem zonder bijkomende kosten.
 NVDA wordt ontwikkeld door [NV Access https://www.nvaccess.org/], met bijdragen van de gebruikers.
-
 
 ++ Algemene kenmerken ++[GeneralFeatures]
 NVDA stelt blinden en slechtzienden in staat om te werken met het Windows besturingssysteem en veel toepassingen van derden.
 
-Een kort videofilmpje, ["Wat is NVDA?" https://www.youtube.com/watch?v=tCFyyqy9mqo] is available from the NV Access YouTube channel.
+Een korte videodemonstratie, ["Wat is NVDA?" https://www.youtube.com/watch?v=tCFyyqy9mqo] is te volgen op  het YouTube-kanaal van NV Access.
 
 Belangrijke functies en mogelijkheden:
 - Ondersteuning voor populaire toepassingen zoals webbrowsers, emailprogramma’s, chatprogramma’s en kantoorapplicaties
 - Ingebouwde spraakmodule met ondersteuning voor meer dan 80 talen
 - Vermeldding van tekstopmaakeigenschappen , voor zover beschikbaar, zoals naam lettertype, grootte, stijl- en spelfouten
 - Tekst onder de muis wordt automatisch voorgelezen en er kan een akoestisch signaal worden ingesteld dat de muispositie aangeeft
-- Ondersteuning voor veel brailleleesregels, inclusief invoer van computerbraille voor leesregels met een brailletoetsenbord
 - Ondersteuning voor veel brailleleesregels waaronder er veel zijn die automatisch herkend worden, alsmede brailleinvoer op brailleleesregels met een brailletoetsenbord
 - Kan via usb-stick (flash drive) of ander draagbare media worden gedraaid zonder dat installatie nodig is
 - Eenvoudige installatie dankzij gesproken ondersteuning
@@ -41,18 +38,20 @@ Belangrijke functies en mogelijkheden:
 
 ++ Systeemvereisten ++[SystemRequirements]
 - Besturingssystemen: alle 32-bit en 64-bit edities van Windows 8.1, Windows 10, Windows 11, en alle Server besturingsSystemen vanaf  Windows Server 2012 R2.
-   - zowel AMD64- als ARM64-varianten van Windows worden ondersteund.
+  - zowel AMD64- als ARM64-varianten van Windows worden ondersteund.
    - 
 - tenminste 150 mb aan opslagruimte.
 -
 
+
 ++ Internationalisering ++[Internationalization]
+
 Het is belangrijk dat mensen overal ter wereld, ongeacht de taal die zij spreken, gelijke toegang krijgen tot technologie.
 Behalve de Engelse versie van NVDA is het programma beschikbaar in nog 54 andere talen, waaronder Afrikaans, Albanees, Amherisch, Arabisch, Aragonees, bulgaars, Birmees, Catalaans, Chinees (Vereenvoudigd en Traditioneel), Croatisch, Deens, Duits (Duitsland en Zwitserland), Fins, Frans, Galisisch, Georgisch, Grieks, Hebreeuws, Hindi, Hongaars, Iers, IJslands, Italiaans, Japans, Kannada, Koreaans, Kyrgyzisch, Litouws, Macedonisch, Mongools, Nederlands, Nepalees, Noors, Oekraïens, Pharsi, Pools, Portugees (Brazilië en Portugal), Punjabi, Roemeens, Russisch, Servisch, Sloveens, Slowaaks, Spaans (Spanje en Columbië), Tamil, Thai, Tsjechisch, Turks, Viëtnamees en Zweeds.
 
 ++ Ondersteuning voor spraaksynthese ++[SpeechSynthesizerSupport]
-U kunt een van de momenteel beschikbare talen kiezen om meldingen van NVDA, de interface of de inhoud van documenten te laten voorlezen.
-Bovendien is het mogelijk de inhoud van een document te laten voorlezen in een willekeurige andere taal als op de computer een spraakmodule is geïnstalleerd die die taal spreekt.
+Je kunt een van de momenteel beschikbare talen kiezen om meldingen van NVDA, de interface of de inhoud van documenten te laten voorlezen, maarhet is ook mogelijk content te laten voorlezen in een willekeurige andere taal als op de pc een spraakmodule is geïnstalleerd die die taal spreekt.
+
 
 De gratis, open source spraakmodule [eSpeak NG https://github.com/espeak-ng/espeak-ng], die over een groot aantal talen beschikt, is standaard in de NVDA screen reader opgenomen.
 
@@ -374,7 +373,7 @@ U kunt het programma ook starten door in het dialoogvenster Uitvoeren de letters
 Als NVDA al actief is, zal de toepassing opnieuw gestart worden.
 U kunt ook [commandoregelopties opgeven #CommandLineOption] waarmee u NVDA herstart (-r), beëindigt (-q), add -ons uitschakelt (--disable-addons), etc.
 
-In geval van een geïnstalleerde versie slaat NVDA de configuratie standaard op in de map roaming application data van de huidige gebruiker (bijv. "C:\Users\<user>\AppData\Roaming").
+In geval van een geïnstalleerde versie slaat NVDA de configuratie standaard op in de map roaming application data van de huidige gebruiker (bijv. "``C:\Users\<user>\AppData\Roaming``").
 Het is mogelijk dit te wijzigen en wel zodanig dat in plaats daarvan NVDA de configuratie ophaalt uitthe map met de lokale applicatiedata.
 Raadpleeg voor meer details de paragraaf over [systeem-brede parameters #SystemWideParameters].
 
@@ -400,7 +399,7 @@ Het inschakelen van het derde selectievakje zorgt ervoor dat dit welkomsscherm v
 +++ Dialoogvenster Gebruiksgegevensstatistiek +++[UsageStatsDialog]
 Met ingang van NVDA 2018.3, wordt de gebruiker gevraagd of hij / zij toestaat dat gegevens over het gebruik naar NV Access worden gestuurd met het doel NVDA verder te verbeteren.
 Wanneer NVDA de eerste keer start, verschijnt er een dialoogvenster  met de vraag of u ermee akkoord gaat dat er gegevens naar NV Access worden gestuurd tijdens uw gebruik van NVDA.
-U leest meer over de door NV Access verzamelde data in het onderdeel Algemene  Instellingen , [ het NVDA project toestaan NVDA gebruiksstatistieken te verzamelen #GeneralSettingsGatherUsageStats].
+U leest meer over de door NV Access verzamelde data in het onderdeel Algemene  Instellingen , [ NV Access toestaan NVDA-gebruiksstatistieken te verzamelen #GeneralSettingsGatherUsageStats].
 Merk op dat  door op "ja" of "nee"  te drukken  uw keuze wordt opgeslagen en dat  dit dialoogvenster dan niet meer zal verschijnen, tenzij u NVDA opnieuw installeert.
 U kunt het verzamelen van data echter handmatig in- of uitschakelen via de Instellingen van NVDA in de categorie Algemeen. Om de instelling handmatig te wijzigen zet of verwijdert u een vinkje in het selectievakje  met bijschrift Sta het NVDA project toe NVDA gebruiksstatistieken te verzamelen #GeneralSettingsGatherUsageStats].
 
@@ -705,6 +704,7 @@ Let op: voor een goede werking van de numerieke toetsen moet NumLock worden uitg
 
 Om de basiscommando’s voor het navigeren met de leescursor beter te kunnen onthouden zou u zich een tabel kunnen voorstellen met drie kolommen en drie rijen. Van boven naar beneden: regel, woord en karakter, en van links naar rechts; vorig, huidig en volgend. 
 Dit ziet er dan als volgt uit:
+|| . {.hideHeaderRow} | . | . |
 | Vorige regel | Huidige regel | Volgende regel |
 | Vorig woord | Huidig woord | Volgend woord |
 | Vorig karakter | Huidige karakter | Volgende karakter |
@@ -923,12 +923,14 @@ En hoewel de toepassing zo goed mogelijk probeert de intrinsieke selectie te lat
 Echter, in scenario's waarbij  je een hele tabel of alinea  verrijkte content wilt kopiëren, kan deze optie heel handig blijken te zijn.
  
 + Inhoud van wiskundige aard lezen +[ReadingMath]
-Met MathPlayer 4 van Design Science, kan NVDA ondersteunde wiskundige inhoud lezen en u er interactief in laten navigeren.
-Hiervoor moet MathPlayer 4 op uw computer zijn geïnstalleerd.
-MathPlayer is gratis te downloaden van de [MathPlayer informatiepagina https://info.wiris.com/mathplayer-info].
-Na installatie van MathPlayer, NVDA opnieuw starten.
-
-NVDA ondersteunt de volgende types wiskundige inhoud:
+Met NVDA kun je inhoud van wiskundige aard op het web en in andere toepassingen lezen en er in navigeren, waarbij zowel spraak als braille gebruikt kunnen worden. 
+Om NVDA in staat te stellen, wiskundige inhoud te lezen en er interactief mee om te gaan moet je evenwel eerst   een Math component voor NvDA installeren.
+Er zijn verscheidene NVDA add-ons te krijgen in de NVDA Add-on Store die ondersteuning bieden voor math (wiskunde), waaronder de NVDA add-on [MathCAT  https://nsoiffer.github.io/MathCAT/] and [Access8Math https://github.com/tsengwoody/Access8Math]. 
+Ga naar de  [Add-on Store en lees onder  #AddonsManager]hoe je door de beschikbare add-ons bladert en deze installeert in NVDA.
+In NVDA kan ook de oudere [MathPlayer https://info.wiris.com/mathplayer-info] gebruikt worden; (software van Wiris) als deze op je systeem staat, hoewel deze software niet langer onderhouden wordt.
+  
+++ Ondersteunde wiskundige inhoud ++[SupportedMathContent]
+Vooropgesteld dat er een geschikte math component is geïnstalleerd, biedt NVDA ondersteuning  voor de  volgende types wiskundige inhoud:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer en Google Chrome.
  - Microsoft Word 365 Modern Math Equations via UI automation:
 NVDA kan wiskundige vergelijkingen in Microsoft Word 365/2016 build 14326 en hoger lezen  en er interactief mee omgaan.
@@ -967,14 +969,28 @@ Standaard volgt de leescursor de systeemcursor, dus kunt u deze gewoonlijk gebru
 | Interactie met wiskundige inhoud | NVDA+alt+m | interactie met wiskundige inhoud starten. |
 %kc:endInclude
 
-Nu kunt u MathPlayer-commando’s zoals de pijltjestoetsen gebruiken om de stelling te verkennen.
+Nu schakelt NVDA naar de Math-modus, waarin  je commando’s zoals de pijltjestoetsen kunt gebruiken om de stelling te verkennen.
 U kunt bij voorbeeld horizontaal door de stelling gaan met de linker en rechter pijltoets en inzoemen op een onderdeel van de stelling zoals een breuk met behulp van pijl omlaag.
-Raadpleeg voor nadere informatie de documentatie van MathPlayer:https://docs.wiris.com/mathplayer/en/mathplayer-user-manual.html].
 
 Als u naar het document wilt teruggaan drukt u op Escape.
 
+Raadpleeg voor meer informatie over beschikbare commando's en voorkeuren voor het lezen en navigeren in wiskundige inhoud, de documentatie van de specifieke math component die je hebt geïnstalleerd.
+- [MathCAT documentatie https://nsoiffer.github.io/MathCAT/users.html]
+- [Access8Math documentatie https://github.com/tsengwoody/Access8Math]
+- [MathPlayer documentatie https://docs.wiris.com/mathplayer/en/mathplayer-user-manual.html]
+-
+
 Wiskundige inhoud kan soms worden weergegeven als een knop of een ander type besturingselement waarmee bij activering ervan , een dialoogvenster  of meer informatie kan worden getoond welke betrekking heeft op de formule.
 Om  de knop of het besturingselement metdaarin  de formule te activeren, gebruikt u de toetscombinatie ctrl+enter.
+
+++ MathPlayer installeren ++[InstallingMathPlayer]
+Hoewel het in 't algemeen aan te bevelen is om een van de nieuwere NVDA add-ons te gebruiken om met wiskundige inhoud te werken  in NVDA, kan MathPlayer onder bepaalde omstandigheden een meer geschikte keus zijn.
+MathPlayer kan bijv. ondersteuning voor een specifieke taal of Braill- code bieden waarvoor geen ondersteuning is in de nieuwere add-ons.
+MathPlayer is gratis verkrijgbaar op de website van Wiris.
+[Download MathPlayer https://downloads.wiris.com/mathplayer/MathPlayerSetup.exe].
+Na installatie van  MathPlayer, moet NVDA opnieuw gestart worden. 
+Merk op dat in de informatie over  MathPlayer kan staan dat deze alleen bestemd is voor oudere browsers zoals Internet Explorer 8.
+Hiermee wordt uitsluitend gedoeld op het gebruik van MathPlayer om wiskundige inhoud visueel weer te geven, en kan worden genegeerd door gebruikers  die met NVDA inhoud van wiskundige aard willen lezen of erin willen navigeren.
 
 + Braille +[Braille]
 Als u over een brailleleesregel beschikt, kan NVDA informatie in braille weergeven.
@@ -1483,9 +1499,9 @@ De volgende informatie wordt altijd verstuurd:
 - Huidige NVDA-versie
 - Versie besturingssysteem
 - Of het besturingssysteem 64- of 32-bit is
+-
 
-
-==== NVDA toestaan dat gebruiksstatistieken worden verzameld ten behoeve van het NVDA-project ====[GeneralSettingsGatherUsageStats]
+==== NV Access toestaan NVDA-gebruiksstatistieken te verzamelen ====[GeneralSettingsGatherUsageStats]
 Als dit wordt toegestaan zal NV Access de informatie van update checks gebruiken om het aantal NVDA-gebruikers vast te stellen met inbegrip van specifieke demografische gegevens zoals besturingssysteem en land van oorsprong.
 Merk op dat uw IP-adres nooit wordt bewaard, al wordt het wel gebruikt tijdens de update-check om uw land te bepalen.
 Naast de vereiste informatie voor het controleren op updates, wordt de volgende extra informatie momenteel ook verstuurd:
@@ -1599,8 +1615,8 @@ In het algemeen is het aan te bevelen dit selectievakje aan te vinken. Er zijn e
 ==== Vertraagde beschrijving van (letter)tekens bij cursorverplaatsing ====[delayedCharacterDescriptions]
 
 || . {.hideHeaderRow} | . |
-| Opties | Ingeschakeld, Uitgeschakeld |
-| Standaard | Uitgeschakeld |
+|| Opties | Ingeschakeld, Uitgeschakeld |
+|| Standaard | Uitgeschakeld |
 
 
 Wanneer deze optie is aangevinkt zal NVDA het (letter)teken nader beschrijven wanneer  u de cursor letter voor letter verplaatst.
@@ -1611,7 +1627,7 @@ Dit kan handig zijn als het lastig is het verschil in uitspraak te horen tussen 
 De vertraagde nadere beschrijving van lettertekens komt niet ten uitvoer als er in de tussentijd andere tekst wordt voorgelezen of als u op de ``control`` toets drukt.
 
 ==== Modi beschikbaar in de Opdrachtreeks spraakmodus command ====[SpeechModesDisabling]
-Deze lijst met items die aangekruist kunnen wordenom te bepalen welke spraakmodi worden meegenomen als je door de lijst gaat met ``NVDA+s``.
+Deze lijst met items die aangekruist kunnen worden om te bepalen [welke spraakmodi #SpeechModes] worden meegenomen als je door de lijst gaat met ``NVDA+s``.
 Modi die niet zijn aangekruist worden niet meegenomen.
 Standaard worden alle modi meegenomen.
 
@@ -1712,8 +1728,8 @@ In dit geval  zal Braille  de systeemfocus en systeemaanwijzer niet volgen.
 ==== Invoercursor verplaatsen bij routering van leescursor ====[BrailleSettingsReviewRoutingMovesSystemCaret]
 
 || . {.hideHeaderRow} | . |
-| Opties | Standaard (Nooit), Nooit, Alleen wanneer automatisch gekoppeld (tethered), Altijd |
-| Standaard | Nooit |
+|| Opties | Standaard (Nooit), Nooit, Alleen bij automatisch tethering, Altijd |
+|| Standaard | Nooit |
 
 
 Deze instelling bepaalt of de invoercursor ook verplaatst moet worden  bij het indrukken van de routing-knop.
@@ -1779,8 +1795,8 @@ Om Te tonen contextinformatie aan of uit te zetten vanaf elke willekeurige plaat
 ==== Spraak onderbreken tijdens het scrollen ====[BrailleSettingsInterruptSpeech]
 
 || . {.hideHeaderRow} | . |
-| Opties | Standaard (Ingeschakeld), Ingeschakeldd, Uitgeschakeld |
-| Standaard | Ingeschakeld |
+|| Opties | Standaard (Ingeschakeld), Ingeschakeld, Uitgeschakeld |
+|| Standaard | Ingeschakeld |
 
 
 Met deze instelling bepaalt u of de spraak moet worden onderbroken bij vooruit-/achteruitscrollen van de brailleleesregel.
@@ -1794,8 +1810,8 @@ Door deze optie uit te schakelen kunt u wat u in braille leest gelijktijdig hard
 ==== Selectie tonen ====[BrailleSettingsShowSelection]
 
 || . {.hideHeaderRow} | . |
-| Opties | Standaard (Enabled), Ingeschakeld, Uitgeschakeld |
-| Standaard | Ingeschakeld |
+|| Opties | Standaard (Ingeschakeld), Ingeschakeld, Uitgeschakeld |
+|| Standaard | Ingeschakeld |
 
 
 Deze instelling bepaalt of de selectieaanwijzer (punt 7 en punt 8) op  de brailleleesregel wordt getoond.
@@ -1869,8 +1885,8 @@ audio-onderdrukking kan niet worden ondersteund bij gebruik van de draagbare en 
 ==== Volume van NVDA-geluiden volgt stemvolume ====[SoundVolumeFollowsVoice]
 
 || . {.hideHeaderRow} | . |
-| Opties | Uitgeschakeld, Ingeschakeld |
-| Standaard | Uitgeschakeld |
+|| Opties | Uitgeschakeld, Ingeschakeld |
+|| Standaard | Uitgeschakeld |
 
 
 Wanneer deze optie ingeschakeld is, zal het volume van   geluiden en piepjes die NVDA voortbrengt de volumeinstelling  van de stem die gebruikt wordt volgen.
@@ -2305,8 +2321,8 @@ In deze categorie kunt u diverse aspecten  van  documentnavigatie aanpassen.
 ==== Alineastijl ====[ParagraphStyle]
 
 || . {.hideHeaderRow} | . |
-| Opties | Standaard (Door toepassing verwerkt, nieuwe regel, meervoudigee nieuwe regelactie |
-| Standaard | Door toepassing verwerkt |
+|| Opties | Standaard (Verwerkt door applicatie), Verwerkt door applicatie, Enkelvoudig regeleinde, Meervoudige regeleinde |
+|| Standaard | Verwerkt door applicatie |
 
 
 Met deze vervolgkeuzelijst kunt u de alineastijl selecteren die gebruikt moet worden bij alineanavigatie met ``control+pijlOmhoog`` en ``control+pijlOmlaag``.
@@ -2363,8 +2379,8 @@ Deze knop is eerst dan ingeschakeld als NVDA zo is ingesteld dat het laden van a
 ==== Registratie betreffende gebeurtenissen en wijzigingen  in UI Automation  ====[AdvancedSettingsSelectiveUIAEventRegistration]
 
 || . {.hideHeaderRow} | . |
-| Opties | Automatisch, Selectiefe, Globaal |
-| Standaard | Automatisch |
+|| Opties | Automatisch, Selectief, Globaal |
+|| Standaard | Automatisch |
 
 
 Met deze optie kunt u bepalen hoe NVDA gebeurtenissen (events) die door de UI Automation accessibility API van Microsoft worden gegenereerd, moeten worden geregistreerd.
@@ -2396,11 +2412,11 @@ Vooralsnog raden we de meeste gebruikers NIET aan dit standaard aan te zetten, a
 De implementatie van Microsoft Excel's UI automation is aan voortdurende verandering onderhevig, en  versies van Microsoft Office die ouder zijn dan 16.0.13522.10000 geven mogelijk niet genoeg informatie prijs, wat deze optie vokomen onbruikbaar maakt.
 
 ==== enhanced event processing gebruiken ====[UIAEnhancedEventProcessing]
-: Standaard
-  Ingeschakeld
-: Opties
-  Standaard (Ingeschakeld), Uitgeschakeld, Ingeschakeld
-:
+
+|| . {.hideHeaderRow} | . |
+|| Opties | Standaard (Ingeschakeld), Uitgeschakeld, Ingeschakeld |
+|| Standaard | Ingeschakeld |
+
 
 Wanneer deze optie is ingeschakeld, zou NVDA nog steeds moeten blijven reageren ook als er flinke aantallen UI Automation acties zijn, bijv. grote hoeveelheden tekst in een terminal.
 Na wijziging in deze optie moet NVDA opnieuw gestart worden om de wijziging van kracht te laten worden.
@@ -2408,8 +2424,8 @@ Na wijziging in deze optie moet NVDA opnieuw gestart worden om de wijziging van 
 ==== Ondersteuning Windows Consool ====[AdvancedSettingsConsoleUIA]
 
 || . {.hideHeaderRow} | . |
-| Opties | Automatisch, UIA wanneer beschikbaar, Legacy |
-| Standaard | Automatisch |
+|| Opties | Automatisch, UIA wanneer beschikbaar, Legacy |
+|| Standaard | Automatisch |
 
 
 Met deze instelling wordt bepaald hoe NVDA moet omgaan met de Windows-consool die door de Opdrachtprompt, PowerShell, en het Windows Subsysteem voor Linux gebruikt wordt.
@@ -2459,11 +2475,10 @@ De opties zijn:
  
 ==== Dynamische zones met wisselende inhoud melden ====[BrailleLiveRegions]
 
+|| . {.hideHeaderRow} | . |
+|| Opties | Standaard (Ingeschakeld), Uitgeschakeld, Ingeschakeld |
 || Standaard | Ingeschakeld |
- Opties
-  Uitgeschakeld, Ingeschakeld
-    Standaard (ingeschakeld), Uitgeschakeld, Ingeschakeld
-:
+
 
 Met deze optie kunt u ervoor kiezen om NVDA bepaalde dynamische web-content in braille te laten melden.
 Als deze optie uitgeschakeld wordt, reageert NVDA zoals  dat het geval was in versiess 2023.1 en eerder, toen alleen wijzigingen van de inhoud in gesproken vorm werden gemeld.
@@ -2496,8 +2511,8 @@ Wanneer er echter in terminal-toepassingen  een tekenmidden in een regel wordt i
 ==== Nieuwe tekst in Windows Terminal via (voor)lezen ====[WtStrategy]
 
 || . {.hideHeaderRow} | . |
-| Opties | Standaard (Diffing), Diffing, UIA notificaties |
-| Standaard | Diffing |
+|| Opties | Standaard (Diffing), Diffing, UIA notificaties |
+|| Standaard | Diffing |
 
 
 Met deze optie kiest u hoe NVDA bepaalt wat er aan nieuwe tekst is (en dus wat gelezen moet worden als "dynamische inhoudwijzigingen melden" ingeschakeld is) in Windows Terminal en de WPF Windows Terminal control die gebruikt wordt in Visual Studio 2022.
@@ -2530,8 +2545,8 @@ Bij verscheidene GUI API's, die al heel lang populair zijn, kan de  tekst weerge
 ==== WASAPI vor audio uitvoer gebruiken ====[WASAPI]
 
 || . {.hideHeaderRow} | . |
-| Opties | Standaard (Ingeschakeld), Uitgeschakeld, Ingeschakeld |
-| Standaard | Ingeschakeld |
+|| Opties | Standaard (Ingeschakeld), Uitgeschakeld, Ingeschakeld |
+|| Standaard | Ingeschakeld |
 
 
 Met deze optie kan audiouitvoer  via Windows Audio Session API (WASAPI) ingeschakeld worden.
@@ -2937,7 +2952,7 @@ Als het vakje is aangevinkt, opent het spraakweergavevenster zich zodra NVDA wor
 Het spraakweergavevenster zal in principe elke keer dat het wordt geopend dezelfde plaats en grootte hebben als toen het de laatste keer gesloten werd.
 
 Als het spraakweergavevenster ingeschakeld is, wordt de getoonde tekst voortdurend vernieuwd om het voorlezen bij te houden.
-Maar klikt u in of verplaatst u de focus naar het viewer venster, dan wordt het verversen van de tekst tijdelijk gestopt. U kunt zo gemakkelijk de getoonde tekst selecteren en kopiëren.
+Maar hou je de muis boven of verplaats je de focus naar het viewer venster, dan wordt het verversen van de tekst tijdelijk gestopt om zo  gemakkelijk de getoonde tekst te kunnen selecteren en kopiëren.
 
 Als u het Spraakweergavevenster altijd en overal wilt kunnen in- of uischakelen, kunt u daarvoor aangepaste invoerhandelingen aanmaken met behulp van [Invoerhandelingen koppelen onder Opties #InputGestures].
 
@@ -3636,8 +3651,8 @@ Van links naar rechts zijn dit:
 Momenteel is de rechterduimtoets buiten gebruik.
 De twee binnenste toetsen zijn als spatietoets gedefinieerd.
 
-|| Naam | Toets |
 %kc:beginInclude
+|| Naam | Toets |
 | backspace-toets | punt 7 |
 | enter-toets | punt 8 |
 | escape-toets | spatie + punt 7 |
@@ -4228,11 +4243,13 @@ nvda -q
 
 Er zijn commandoregel-opties die een lange en een korte notatie hebben, terwijl andere alleen een lange notatie hebben.
 De opties met een korte notatie kunnen als volgt worden gecombineerd: 
+|| . {.hideHeaderRow} | . |
 | nvda -mc CONFIGPATH | Hiermee  start NVDA terwijl opstartgeluid en melding uit staat, en met de opgegeven configuratie |
 | nvda -mc CONFIGPATH --disable-addons | hetzelfde als hierboven, maar met uitgeschakelde add-ons |
 
 Aan sommige commandoregelopties kunnen extra parameters worden toegevoegd, zoals het niveau van loggen of het pad naar het configuratie bestand van de gebruiker. 
 Die parameters moeten achter de optie worden geplaatst en moeten daarvan gescheiden worden door een spatie wanneer het de korte notatie betreft terwijl bij de lange notatie het = teken wordt gebruikt. Voorbeelden zijn:
+|| . {.hideHeaderRow} | . |
 | nvda -l 10 | Geeft NVDA opdracht te starten met log-niveau ingesteld op debug |
 | nvda --log-file=c:\nvda.log | Geeft NVDA opdracht te loggen naar c:\nvda.log |
 | nvda --log-level=20 -f c:\nvda.log | Geeft NVDA opdracht te starten met het log-niveau ingesteld op info en te loggen naar c:\nvda.log |
