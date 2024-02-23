@@ -137,6 +137,14 @@ Poedit 1:n käyttäjiä kannustetaan päivittämään versioon 3, mikäli haluav
 Katso muutokset tämän dokumentin [englanninkielisestä versiosta ../en/changes.html].
 
 
+= 2023.3.4 =
+Tämä versio korjaa asennusohjelmassa ilmenneen ongelman.
+
+== Bugikorjaukset ==
+- Korjattu ongelma, joka aiheutti sen, ettei NVDA-prosessi sulkeutunut oikein. (#16123)
+- Korjattu bugi, joka aiheutti sen, että jos aiempi NVDA-prosessi ei sulkeutunut oikein, NVDA:n asennus saattoi epäonnistua ja joutua palautumattomaan tilaan. (#16122)
+-
+
 = 2023.3.3 =
 Tämä on korjausversio tietoturvaongelman korjaamiseksi.
 Ilmoita tietoturvaongelmista vastuullisesti noudattaen NVDA:n [tietoturvakäytäntöä https://github.com/nvaccess/nvda/blob/master/security.md].
