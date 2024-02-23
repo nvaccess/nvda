@@ -34,6 +34,7 @@ Notifies when code attempts to speak text.
 
 @param priority: The speech priority.
 @type priority: priorities.Spri
+"""
 
 filter_speechSequence = Filter[SpeechSequence]()
 """
