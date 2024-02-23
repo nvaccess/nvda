@@ -25,6 +25,12 @@ environment:
  crowdinProjectID: 598017
  crowdinAuthToken:
   secure: E3084gj4JeMZKvZIOLIhqZefuSo/tj7iYPt4yK0geOI/eQgmPvoXt37Xq0KwvXzvZiJny4AsMj1rKMTVxio8EG8KA0YsYYuy+WV1wpFRIn25zGQS+DZ/yycL75SmTWfr
+ # Comment out/unset any of the feature_* variables to disable the respective build feature.
+ feature_buildSymbols: True
+ feature_uploadSymbolsToMozilla: True
+ feature_buildAppx: True
+ feature_crowdinSync: True
+ feature_signing: True
 
 # scripts that are called at very beginning, before repo cloning
 init:
