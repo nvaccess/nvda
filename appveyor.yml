@@ -26,7 +26,6 @@ environment:
  crowdinAuthToken:
   secure: E3084gj4JeMZKvZIOLIhqZefuSo/tj7iYPt4yK0geOI/eQgmPvoXt37Xq0KwvXzvZiJny4AsMj1rKMTVxio8EG8KA0YsYYuy+WV1wpFRIn25zGQS+DZ/yycL75SmTWfr
  # Comment out/unset any of the feature_* variables to disable the respective build feature.
- feature_trackTiming: True
  feature_buildSymbols: True
  feature_uploadSymbolsToMozilla: True
  feature_buildAppx: True
@@ -37,29 +36,21 @@ environment:
 init:
   # set the init time for the build, used to calculate the time taken for each stage of the build.
   - ps: |
-      if ($env:feature_trackTiming) {
-        "INIT, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
-      }
+      "INIT, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
 
 install:
  - ps: |
-    if ($env:feature_trackTiming) {
-      "INSTALL_START, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
-    }
+    "INSTALL_START, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
  - ps: appveyor\scripts\setBuildVersionVars.ps1
  - ps: appveyor\scripts\decryptFilesForSigning.ps1
  - py -m pip install --upgrade --no-warn-script-location pip
  - git submodule update --init
  - ps: |
-    if ($env:feature_trackTiming) {
-      "INSTALL_END, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
-    }
+    "INSTALL_END, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
 
 build_script:
  - ps: |
-     if ($env:feature_trackTiming) {
-       "BUILD_START, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
-     }
+     "BUILD_START, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
  - ps: appveyor\scripts\setSconsArgs.ps1
  - scons source %sconsArgs%
  - scons %sconsOutTargets% %sconsArgs%
@@ -70,35 +61,25 @@ build_script:
  - 7z a -tzip -r ..\output\symbols.zip *.dl_ *.ex_ *.pd_
  - cd ..
  - ps: |
-     if ($env:feature_trackTiming) {
-       "BUILD_END, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
-     }
+     "BUILD_END, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
 
 before_test:
  - ps: |
-     if ($env:feature_trackTiming) {
-       "TESTSETUP_START, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
-     }
+     "TESTSETUP_START, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
  - ps: appveyor\scripts\tests\beforeTests.ps1
  - ps: appveyor\scripts\installNVDA.ps1
  - ps: |
-     if ($env:feature_trackTiming) {
-       "TESTSETUP_END, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
-     }
+     "TESTSETUP_END, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
 
 test_script:
  - ps: |
-     if ($env:feature_trackTiming) {
-       "TEST_START, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
-     }
+     "TEST_START, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
  - ps: appveyor\scripts\tests\translationCheck.ps1
  - ps: appveyor\scripts\tests\unitTests.ps1
  - ps: appveyor\scripts\tests\lintCheck.ps1
  - ps: appveyor\scripts\tests\systemTests.ps1
  - ps: |
-     if ($env:feature_trackTiming) {
-       "TEST_END, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
-     }
+     "TEST_END, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
 
 after_test:
  - ps: appveyor\scripts\tests\checkTestFailure.ps1
@@ -116,7 +97,5 @@ on_failure:
 on_finish:
  - ps: appveyor\scripts\pushPackagingInfo.ps1
  - ps: |
-     if ($env:feature_trackTiming) {
-       "FINISH_END, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
-     }
+     "FINISH_END, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
  - ps: appveyor\scripts\logCiTiming.ps1
