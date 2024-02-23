@@ -11,7 +11,7 @@ if ($env:versionType) {
 	$sconsArgs += " updateVersionType=$env:versionType"
 }
 $sconsArgs += " publisher=`"$env:scons_publisher`""
-if(!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
+if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:feature_signing) {
 	$sconsArgs += " certFile=appveyor\authenticode.pfx certTimestampServer=http://timestamp.digicert.com"
 }
 $sconsArgs += " version_build=$env:APPVEYOR_BUILD_NUMBER"
