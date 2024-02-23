@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop";
 $sconsOutTargets = "launcher developerGuide changes userGuide keyCommands client moduleList"
-if(!$env:APPVEYOR_PULL_REQUEST_NUMBER) {
+if(!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:feature_buildAppx) {
 	$sconsOutTargets += " appx"
 }
 $sconsArgs = "version=$env:version"
