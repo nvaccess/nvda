@@ -16,6 +16,13 @@ Notifies when speech is canceled.
 Handlers are called without arguments.
 """
 
+speechSequencePreFilter = Action()
+"""
+Notifies when new speech sequence appears.
+
+:param value: the speech sequence before filtering .
+"""
+
 filter_speechSequence = Filter[SpeechSequence]()
 """
 Filters speech sequence before it passes to synthDriver.

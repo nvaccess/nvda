@@ -12,7 +12,7 @@ import gui
 import config
 from logHandler import log
 from speech import SpeechSequence
-from speech.extensions import filter_speechSequence
+from speech.extensions import speechSequencePreFilter
 from gui import blockAction
 import gui.contextHelp
 from utils.security import isLockScreenModeActive, post_sessionLockStateChanged
@@ -48,7 +48,7 @@ class SpeechViewerFrame(
 			style=wx.CAPTION | wx.CLOSE_BOX | wx.RESIZE_BORDER | wx.STAY_ON_TOP
 		)
 		post_sessionLockStateChanged.register(self.onSessionLockStateChange)
-		filter_speechSequence.register(appendSpeechSequence)
+		speechSequencePreFilter.register(appendSpeechSequence)
 		self._isDestroyed = False
 		self.onDestroyCallBack = onDestroyCallBack
 		self.Bind(wx.EVT_CLOSE, self.onClose)
@@ -130,7 +130,7 @@ class SpeechViewerFrame(
 	def onDestroy(self, evt: wx.Event):
 		self._isDestroyed = True
 		post_sessionLockStateChanged.unregister(self.onSessionLockStateChange)
-		filter_speechSequence.unregister(appendSpeechSequence)
+		speechSequencePreFilter.unregister(appendSpeechSequence)
 		log.debug("SpeechViewer destroyed")
 		self.onDestroyCallBack()
 		evt.Skip()
@@ -184,26 +184,25 @@ SPEECH_ITEM_SEPARATOR = "  "
 SPEECH_SEQUENCE_SEPARATOR = "\n"
 
 
-def appendSpeechSequence(sequence: SpeechSequence) -> SpeechSequence:
+def appendSpeechSequence(sequence: SpeechSequence) -> None:
 	""" Appends a speech sequence to the speech viewer.
 	@param sequence: To append, items are separated with . Concluding with a newline.
 	"""
 	if not isActive:
-		return sequence
+		return
 	# If the speech viewer text control has the focus, we want to disable updates
 	# Otherwise it would be impossible to select text, or even just read it (as a blind person).
 	if (
 		_guiFrame.FindFocus() == _guiFrame.textCtrl
 		or _guiFrame.textCtrl.GetScreenRect().Contains(wx.GetMousePosition())
 	):
-		return sequence
+		return
 
 	# to make the speech easier to read, we must separate the items.
 	text = SPEECH_ITEM_SEPARATOR.join(
 		speech for speech in sequence if isinstance(speech, str)
 	)
 	_guiFrame.textCtrl.AppendText(text + SPEECH_SEQUENCE_SEPARATOR)
-	return sequence
 
 
 def _cleanup():
