@@ -14,6 +14,7 @@ NVDA NVDA_VERSION 用户指南
 通过语音合成或盲文显示的形式，盲人和低视力人群能够较为方便地使用运行 Windows 操作系统的计算机。
 NVDA 由 [NV Access https://www.nvaccess.org/] 和其他贡献者共同开发（译者注：中文相关的教程和资讯，也可访问：[NVDA 中文站 https://www.nvdacn.com/]获取）。
 
+
 ++ 主要功能 ++[GeneralFeatures]
 NVDA 可供盲人和低视力人群使用 Windows 操作系统，以及与众多第三方应用程序进行交互。
 
@@ -36,10 +37,9 @@ NVDA 可供盲人和低视力人群使用 Windows 操作系统，以及与众多
 - 能够以高亮突出显示各种焦点。
 -
 
+
 ++ 系统需求 ++[SystemRequirements]
-- 操作系统：所有 32 位或者 64 位的 Windows 7 Sp1、Windows 8、Windows 8.1、Windows 10，Windows 11（从 2008 R2 起的所有服务器系统）。
-  - 对于 Windows 7 版本，NVDA 要求 SP1 或更高。
-  - 对于 Windows Server 2008 R2 服务器操作系统，NVDA 要求 SP1 或更高。
+- 操作系统：所有 32 位或者 64 位版本的 Windows 8.1、Windows 10、Windows 11 系统，以及从 2012 R2 起的所有服务器系统。
   - 支持 Windows 的 AMD64 和 ARM64 平台。
   -
 - 至少需要 150 MB 的磁盘空间。
@@ -59,8 +59,9 @@ NVDA 集成的 [eSpeak NG https://github.com/espeak-ng/espeak-ng] 是一个免�
 
 ++ 点显器支持 ++[BrailleSupport]
 对于拥有可刷新式盲文点显器的用户，NVDA 可将信息以盲文形式输出到点显器上。
-NVDA 支持简写或非简写盲文输入。
-NVDA 还可以自动检测某些型号的点显器以实现即插即用。
+NVDA 使用开源盲文翻译器 [LibLouis https://liblouis.io/] 从文本中生成盲文序列。
+还支持通过盲文键盘进行简写或非简写的盲文输入。
+此外，NVDA 还可以自动检测某些型号的点显器以实现即插即用。
 请参看[支持的点显器 #SupportedBrailleDisplays]一节，查看有关于点显器支持方面的信息。
 
 NVDA 支持显示多种语言的简写或非简写盲文以及电脑盲文。
@@ -211,13 +212,13 @@ NVDA 键也可以设定为``大小写锁定``键。
 || 名称 | 台式机键盘 | 笔记本键盘 | 描述 |
 | 全文朗读 | ``NVDA+下光标`` | ``NVDA+a`` | 从当前位置开始朗读，并随朗读向下移动焦点。 |
 | 朗读当前行 | ``NVDA+上光标`` | ``NVDA+l`` | 朗读当前行。连按两次拼读该行。连按三次用字符解释的方式拼读该行（如 Alpha，Bravo，Charlie 等。） |
-| 朗读选择的文本 | ``NVDA+shift+上光标`` | ``NVDA+shift+s`` | 朗读选择的所有文本。 |
-| 朗读剪贴板文本 | ``NVDA+c`` | ``NVDA+c`` | 朗读剪贴板中的任何文本。 |
+| 朗读选择的文本 | ``NVDA+shift+上光标`` | ``NVDA+shift+s`` | 朗读选择的所有文本。连按两次会拼读该信息。连按三次用字符描述拼读它 |
+| 朗读剪贴板文本 | ``NVDA+c`` | ``NVDA+c`` | 朗读剪贴板中的任何文本。连按两次会拼读该信息。连按三次用字符描述拼读它 |
 
 +++ 朗读位置和其它信息 +++[ReportingLocation]
 || 名称 | 台式机键盘 | 笔记本键盘 | 描述 |
 | 朗读窗口标题 | ``NVDA+t`` | ``NVDA+t`` | 朗读当前激活窗口的标题。连按两次会拼读此信息。连按三次会复制此信息到剪贴板。 |
-| 朗读焦点 | ``NVDA+tab`` | ``NVDA+tab`` | 朗读当前焦点所在的控件。连按两次会拼读此信息。 |
+| 朗读焦点 | ``NVDA+tab`` | ``NVDA+tab`` | 朗读当前焦点所在的控件。连按两次会拼读此信息。连按三次用字符描述拼读它 |
 | 朗读窗口 | ``NVDA+b`` | ``NVDA+b`` | 朗读整个当前窗口（用于对话框）。 |
 | 朗读状态栏 | ``NVDA+end`` | ``NVDA+shift+end`` | 如果 NVDA 能找到状态栏则朗读它。连按两次会拼读此信息。连按三次会复制此信息到剪贴板。 |
 | 读出当前所聚焦对象的快捷键 | ``shift+数字键盘2`` | ``NVDA+control+shift+.`` | 读出当前所聚焦对象的快捷键（或加速键） |
@@ -291,6 +292,8 @@ NV Access 还出售[电话支持 https://www.nvaccess.org/product/nvda-telephone
 
 还有一个[电子邮件用户组 https://github.com/nvaccess/nvda/wiki/Connect]是寻求社区帮助的重要来源[经过认证的 NVDA 专家 https://certification.nvaccess.org/]也是如此。
 
+您可以通过 [GitHub https://github.com/nvaccess/nvda/blob/master/projectDocs/issues/readme.md] 提交错误报告或功能请求。
+[贡献指南 https://github.com/nvaccess/nvda/blob/master/.github/CONTRIBUTING.md]包含为社区做出贡献的宝贵信息。
 
 + 更多安装选项 +[MoreSetupOptions]
 
@@ -354,10 +357,9 @@ NV Access 还出售[电话支持 https://www.nvaccess.org/product/nvda-telephone
 NVDA 的便携版和临时副本还有以下限制：
 - 无法与使用管理员权限运行的应用程序进行交互，当然，除非 NVDA 本身也已经运行在管理员权限之下(不推荐)。
 - 尝试启动具有管理权限的应用程序时无法读取用户帐户控制（UAC）界面。
-- Windows 8 及以上：无法支持使用触摸屏进行输入。
-- Windows 8 及以上：无法在 Windows 商店应用中提供诸如浏览模式和朗读输入字符等功能。
-- Windows 8 及以上：无法支持音频闪避功能。
--
+- 无法支持使用触摸屏进行输入。
+- 无法在 Windows 商店应用中提供诸如浏览模式和朗读输入字符等功能。
+- 无法支持音频闪避功能。
 -
 
 
@@ -369,7 +371,7 @@ NVDA 的便携版和临时副本还有以下限制：
 如果 NVDA 已经在运行，它将重新启动。
 您也可以使用一些[命令行选项 #CommandLineOptions]，使用这些命令行选项可以退出 NVDA（-q）、停用插件（--disable-addons）等。
 
-NVDA 安装版的配置在“漫游”应用程序配置文件夹（比如 "C:\Users\<用户名>\AppData\Roaming"）。
+NVDA 安装版的配置在“漫游”应用程序配置文件夹（比如 "``C:\Users\<用户名>\AppData\Roaming``"）。
 可以更改注册表把安装版的配置存放在“本地”应用程序配置文件夹（比如 "C:\Users\<用户名>\AppData\Local"）。
 请查看[系统范围参数 #SystemWideParameters]这一节，了解更多信息。
 
@@ -419,7 +421,7 @@ NVDA 目前共有两套被称为键盘布局的快捷键配置：一套是台式
 如果您的笔记本不能这样做或者不允许关闭数字键盘，您或许会希望切换到笔记本键盘布局来代替。
 
 ++ NVDA 触摸手势 ++[NVDATouchGestures]
-如果您正在使用的设备带有触摸屏并且运行在 Windows8 或者更高版本的操作系统，您也可以通过触摸屏来控制 NVDA。
+如果您正在使用的设备带有触摸屏，您也可以通过触摸屏来控制 NVDA。
 当 NVDA 正在运行时，所有触摸动作都将直接被 NVDA 接管。
 因而，所有在运行 NVDA 之前通常能使用的动作/首饰都将暂时不可用。
 %kc:beginInclude
@@ -518,6 +520,32 @@ NVDA 菜单允许您控制 NVDA 设置、访问帮助、保存或者恢复您的
 | 朗读剪贴板文本 | NVDA+c | 朗读剪贴板内的任何字符。 |
 %kc:endInclude
 
+++ Speech modes ++[SpeechModes]
+
+The speech mode governs how screen content, notifications, responses to commands, and other output is spoken during operation of NVDA.
+The default mode is "talk", which speaks in situations that are expected when using a screen reader.
+However, under certain circumstances, or when running particular programs, you may find one of the other speech modes valuable.
+
+The four available speech modes are:
+- Talk (Default): NVDA will speak normally in reaction to screen changes, notifications, and actions such as moving the focus, or issuing commands.
+- On-demand: NVDA will only speak when you use commands with a reporting function (e.g. report the title of the window); but it will not speak in reaction to actions such as moving the focus or the cursor.
+- Off: NVDA will not speak anything, however unlike sleep mode, it will silently react to commands.
+- Beeps: NVDA will replace normal speech with short beeps.
+-
+
+The Beeps mode may be useful when some very verbose output is scrolling in a terminal window, but you don't care what it is, only that it is continuing to scroll; or in other circumstances when the fact that there is output is more relevant than the output itself.
+
+The On-demand mode may be valuable when you don't need constant feedback about what is happening on screen or on the computer, but you periodically need to check particular things using review commands, etc.
+Examples include while recording audio, when using screen magnification, during a meeting or a call, or as an alternative to beeps mode.
+
+A gesture allows cycling through the various speech modes:
+%kc:beginInclude
+|| Name | Key | Description |
+| Cycle Speech Mode | ``NVDA+s`` | Cycles between speech modes. |
+%kc:endInclude
+
+If you only need to switch between a limited subset of speech modes, see [Modes available in the Cycle speech mode command #SpeechModesDisabling] for a way to disable unwanted modes.
+
 + 使用 NVDA 进行导航 +[NavigatingWithNVDA]
 NVDA 允许您使用多种方式对系统进行浏览和导航，包括传统交互模式和 浏览光标（Review）。
 
@@ -556,6 +584,7 @@ NVDA 提供下列与系统输入焦点相关的快捷命令：
 | 全文朗读 | NVDA+下光标 | NVDA+a | 从系统输入焦点的当前位置开始朗读，焦点会随着朗读的内容移动。 |
 | 朗读当前行 | NVDA+上光标 | NVDA+l | 朗读系统输入焦点所在的行，连按两次拼读该行。 |
 | 朗读文本格式 | NVDA+f | NVDA+f | 朗读系统输入焦点当前位置的文本的格式信息，连按两次可使用浏览模式显示格式信息。 |
+| Report link destination | ``NVDA+k`` | ``NVDA+k`` | Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review |
 | 读出系统光标的位置信息 | NVDA+数字键盘删除 | NVDA+删除 | 读出系统光标处文本或对象的位置信息。例如，可能包括光标位置在文档内的百分比、与页面边缘的距离或确切的屏幕位置。连按两次获取详细信息。 |
 | 朗读当前选择的文本 | NVDA+Shift+上光标 | NVDA+shift+s | 朗读当前选择的所有文本 |
 | 下一个句子 | alt+下光标 | alt+下光标 | 移动系统焦点到下一个句子仅在 word 和 Outlook 中受到支持。 |
@@ -869,14 +898,36 @@ NVDA支持以下应用中的文档
 | 移动到浏览模式文档容器 | NVDA+control+空格 | 移动焦点到此嵌入对象之外，返回到包含此对象的文档。 |
 %kc:endInclude
 
-+ 阅读数学内容 +[ReadingMath]
-使用 Design Science 发行的 MathPlayer 4，NVDA 可以阅读数学内容并与之交互。
-这要求您首先安装 MathPlayer 4。
-可免费从以下地址下载 MathPlayer：https://www.dessci.com/en/products/mathplayer/。
-安装 MathPlayer 后，需重启 NVDA。
+++ Native Selection Mode ++[NativeSelectionMode]
+By default when selecting text with the ``shift+arrow`` keys in Browse Mode, a selection is only made within NVDA's Browse Mode representation of the document, and not within the application itself.
+This means that the selection is not visible on screen, and copying text with ``control+c`` will only copy NVDA's plain text representation of the content. i.e. formatting of tables, or whether something is a link will not be copied.
+However, NVDA has a Native Selection Mode which can be turned on in particular Browse Mode documents (so far only Mozilla Firefox) which causes the document's native selection to follow NVDA's Browse Mode selection.
 
-NVDA 支持以下数学内容：
-- Mozilla Firefox、Microsoft Internet Explorer 和 Google Chrome内的 MathML 内容。
+%kc:beginInclude
+|| Name | Key | Description |
+| Toggle Native Selection Mode on and off | ``NVDA+shift+f10`` | Toggles native selection mode on and off |
+%kc:endInclude
+
+When Native Selection Mode is turned on, copying the selection with ``control+c`` will also use the application's own copy functionality, meaning that rich content will be copied to the clipboard, rather than plain text.
+This means that pasting this content into a program such as Microsoft Word or Excel, formatting such as tables, or whether something is a link will be included.
+Please note however that in native selection mode, some accessible labels or other information that NVDA generates in Browse Mode will not be included.
+Also, although the application will try its best to match the native selection to NVDA's Browse Mode selection, it may not always be completely accurate.
+However, for scenarios where you wish to copy an entire table or paragraph of rich content, this feature should prove useful.
+
++ 阅读数学内容 +[ReadingMath]
+-使用 Design Science 发行的 MathPlayer 4，NVDA 可以阅读数学内容并与之交互。
+-这要求您首先安装 MathPlayer 4。
+-可免费从 [MathPlayer information 页面 https://info.wiris.com/mathplayer-info]下载 MathPlayer。
+-安装 MathPlayer 后，需重启 NVDA。
+NVDA can read and navigate mathematical content on the web and in other applications, providing access in both speech and braille.
+However, in order for NVDA to read and interact with mathematical content, you will first need to install a Math component for NvDA.
+There are several NVDA add-ons available in the NVDA Add-on Store that provide support for math, including the [MathCAT NVDA add-on https://nsoiffer.github.io/MathCAT/] and [Access8Math https://github.com/tsengwoody/Access8Math].
+Please refer to the [Add-on Store section #AddonsManager] to learn how to browse and install available add-ons in NVDA.
+NVDA also can make use of the older [MathPlayer https://info.wiris.com/mathplayer-info] software from Wiris if found on your system, though this software is no longer maintained.
+
+++ Supported math content ++[SupportedMathContent]
+With an appropriate math component installed, NVDA 支持以下类型的数学内容：
+- Mozilla Firefox、Microsoft Internet Explorer 和 Google Chrome 内的 MathML 内容。
 - UIA 模式下 Microsoft Word 中的新版数学公式：
 NVDA 能够阅读 Microsoft Word 365/2016 build 14326 及更高版本软件中的数学公式并与之交互。
 但请注意，必须将先前创建的 MathType 公式转换为 Office Math。
@@ -888,7 +939,7 @@ Microsoft Word 提供了基于线性格式的数学公式导航支持，同时�
 NVDA 支持在 Microsoft Powerpoint 和 Microsoft word 中阅读和导航 MathType 公式。
 您必须先安装 MathType 软件才可以使用该功能。
 安装试用版即可。
-可以访问以下地址下载该软件 https://www.dessci.com/en/products/mathtype/
+可以访问 [MathType presentation 页面 https://www.wiris.com/en/mathtype/]下载该软件
 - Adobe Reader 中的数学公式：
 注意，这仍不是一个官方标准，所以目前制作这些内容的软件没有可用的公开版本。
 - Kindle Reader for PC 中的数学公式：
@@ -914,14 +965,28 @@ NVDA 支持在 Kindle for PC 中阅读和导航包含可访问性数学内容的
 | 与数学内容交互 | NVDA+alt+m | 开始与数学内容进行交互。 |
 %kc:endInclude
 
-在此时，您可以使用 MathPlayer 的命令(如)光标键)来浏览表达式。
+在此时，NVDA 将进入数学模式，您可以使用光标键等命令来浏览表达式。
 举例来说，您可以使用左右光标键经过表达式并缩放到表达式的其中一个部分，如分数等。
-请查看 MathPlayer 的文档获取更多信息。
 
-当您希望返回到文档时，简单的按下“esc”键即可。"
+当您希望返回到文档时，简单的按下 ``esc`` 键即可。
+
+For more information on available commands and preferences for reading and navigating within math content, please refer to the documentation for your particular math component you have installed.
+- [MathCAT documentation https://nsoiffer.github.io/MathCAT/users.html]
+- [Access8Math documentation https://github.com/tsengwoody/Access8Math]
+- [MathPlayer 的文档 https://docs.wiris.com/mathplayer/en/mathplayer-user-manual.html]
+-
 
 有时，数学内容可能显示为按钮或其他类型的元素，这些元素被激活时可以显示对话框或与公式有关的更多信息。
 要激活按钮或包含公式的元素，请按ctrl + enter。
+
+++ Installing MathPlayer ++[InstallingMathPlayer]
+Although it is generally recommended to use one of the newer NVDA add-ons to support math in NVDA, in certain limited scenarios MathPlayer may still be a more suitable choice.
+E.g. MathPlayer may support a particular language or Braille code that is unsupported in newer add-ons.
+MathPlayer is available for free from the Wiris website.
+[Download MathPlayer https://downloads.wiris.com/mathplayer/MathPlayerSetup.exe].
+After installing MathPlayer, you will need to restart NVDA.
+Please note that information about MathPlayer may state that it is only for older browsers such as Internet Explorer 8.
+This is only referring to using MathPlayer to display mathematical content visually, and can be ignored by those using it to read or navigate math with NVDA.
 
 + 盲文 +[Braille]
 如果您拥有点显器，NVDA可以以盲文的形式显示屏幕上的信息
@@ -1088,6 +1153,11 @@ NVDA提供了几种内置的视觉增强提供程序。
 
 您可以在[NVDA 设置面板 #NVDASettings][视觉增强 #VisionSettings] 一栏内开启黑屏。
 
+%kc:beginInclude
+|| Name | Key | Description |
+| Toggles the state of the screen curtain | ``NVDA+control+escape`` | Enable to make the screen black or disable to show the contents of the screen. Pressed once, screen curtain is enabled until you restart NVDA. Pressed twice, screen curtain is enabled until you disable it. |
+%kc:endInclude
+
 如果启用黑屏，所有依靠屏幕所显示内容而执行的动作均不可用，如执行 [OCR #Win10Ocr] 或截屏等。
 
 因 Windows Magnification API 更新的缘故，“黑屏”功能必须更新以支持更新的操作系统。
@@ -1131,8 +1201,11 @@ NVDA 为一些特定的应用程序提供了独有的额外特性，让您可以
 
 +++ 自动行列标题朗读 +++[WordAutomaticColumnAndRowHeaderReading]
 NVDA 可在您使用 Microsoft Word 浏览表格时自动读出恰当的行列标题。
-这一特性首先要求启用 NVDA“文档格式”对话框的“朗读行列标题”选项。
-其次，NVDA 需要知道，在给定的表格里，哪一行或哪一列包含正确的行列标题。
+这一特性要求启用 NVDA“文档格式”对话框的“朗读行列标题”选项。可在[NVDA 设置 #NVDASettings]对话框中找到。
+
+If you use [UIA to access Word documents #MSWordUIA], which is default in recent versions of Word and Windows, the cells of the first row will automatically be considered as column headers; similarly, the cells of the first column will automatically be considered as row headers.
+
+On the contrary, if you do not use [UIA to access Word documents #MSWordUIA], you will have to indicate to NVDA which row or column contains the headers in any given table.
 在移动到包含标题的行或者列的第一个单元后，可使用下面任一命令：
 %kc:beginInclude
 || 名称 | 按键 | 描述 |
@@ -1256,10 +1329,14 @@ Excel 工作簿可包含表单。
 %kc:endInclude
 
 ++ Poedit ++[Poedit]
+NVDA offers enhanced support for Poedit 3.4 or newer.
+
 %kc:beginInclude
 || 名称 | 按键 | 描述 |
-| 朗读注释窗口 | control+shift+c | 朗读注释窗口的所有注释。 |
-| 朗读翻译者注释 | control+shift+a | 为翻译者朗读注释。 |
+| 朗读翻译者注释 | ``control+shift+a`` | 为翻译者朗读注释。 If pressed twice, presents the notes in browse mode |
+| 朗读注释 | ``control+shift+c`` | 朗读注释窗口的所有注释。 If pressed twice, presents the comment in browse mode |
+| Report Old Source Text | ``control+shift+o`` | Reports the old source text, if any. If pressed twice, presents the text in browse mode |
+| Report Translation Warning | ``control+shift+w`` | Reports a translation warning, if any. If pressed twice, presents the warning in browse mode |
 %kc:endInclude
 
 ++ Kindle for PC ++[Kindle]
@@ -1331,6 +1408,10 @@ NVDA支持命令提示符，PowerShell 以及 Linux 子系统的 Windows 控制�
 在这些对话框里面，按确定按钮保存设置并关闭对话框。
 按取消按钮或者ESC键撤销更改并关闭对话框。
 有的对话框有个应用按钮，点击它可以在不关闭对话框的情况下应用设置。
+大多数 NVDA 对话框支持上下文帮助。
+%kc:beginInclude
+When in a dialog, pressing ``f1`` opens the User Guide at the paragraph related to the focused setting or the current dialog.
+%kc:endInclude
 有的设置可以用快捷键更改，下面相应章节有说明。
 
 ++ NVDA设置对话框 ++[NVDASettings]
@@ -1389,10 +1470,9 @@ NVDA 的许多配置参数位于设置对话框，在该对话框中可以方便
 - 基本信息 启动信息以及对开发者有用的其他信息。
 - 调试警告 包括信息级别的日志以及不严重的错误
 - 输入/输出 包括上面几个级别的日志以及键盘和点显器的输入信息、语音和点显器输出信息，这些日志可能包含您的个人隐私，如果您希望保护隐私请不要把日志级别设为输入/输出。
- - 如果您关心个人隐私安全，请不要把日志级别调整到输入/输出。
+如果您担心个人隐私安全，请不要把日志级别调整到输入/输出。
 - 调试 包括上面几个级别的日志以及对调试有用的信息，这些日志同样可能包含您的个人隐私，如果您希望保护隐私请不要把日志级别设为调试。
- - 如果您关心个人隐私安全，请不要把日志级别调整到调试。
- -
+就像输入/输出一样，如果您担心个人隐私安全，请不要把日志级别调整到调试。
 -
 
 ==== 系统启动后自动运行 NVDA ====[GeneralSettingsStartAfterLogOn]
@@ -1548,6 +1628,14 @@ NVDA 更新服务器只根据您的 IP 地址判断用户所在的国家/地区�
 若难以区分某个字符的发音，或者对于听力障碍的用户来说，这可能是个有用的功能。
 
 如果在读出描述期间朗读了其他内容，或者如果您按下了“Control”键，延迟字符描述会被打断。
+
+==== Modes available in the Cycle speech mode command ====[SpeechModesDisabling]
+This checkable list allows selecting which [speech modes #SpeechModes] are included when cycling between them using ``NVDA+s``.
+Modes which are unchecked are excluded.
+By default all modes are included.
+
+For example if you do not need to use "beeps" and "off" mode you should uncheck these two, and keep both "talk" and "on-demand" checked.
+Note that it is necessary to check at least two modes.
 
 +++ 选择语音合成器 +++[SelectSynthesizer]
 
@@ -1803,7 +1891,7 @@ NVDA 设置中的音频类别涵盖了可以让您调节有关音频输出的多
 ==== 音频闪避模式 ====[SelectSynthesizerDuckingMode]
 按键：``NVDA+shift+d``
 
-在 Windows 8 或以上版本的操作系统中，此选项可以让您选择，是否在 NVDA 朗读时，亦或是在 NVDA 运行时，减小其他程序的音量。
+此选项可以让您选择，是否在 NVDA 朗读时，亦或是在 NVDA 运行时，减小其他程序的音量。
 - 从不闪避： NVDA 将不会减小其他声音的音量。
 - 输出语音或声音时闪避：仅当在 NVDA 朗读或播放声音时减小其他声音的音量。该选项对于个别语音合成器可能无效。
 - 总是闪避：在 NVDA 运行的整个过程中，其他音频的音量会被保持在一个较低的水平上。
@@ -1857,8 +1945,6 @@ NVDA 将显示警告，提示您的屏幕将在激活这个选项后变黑。
 如果您不再希望每次都看到此警告消息，则可以在显示该消息的对话框中更改此行为。
 您始终可以通过选中“使屏幕变黑”复选框旁边的“在开启黑屏时始终显示警告”复选框来恢复警告。
 
-如果您想在任意位置开关黑屏，请在[按键与手势对话框 #InputGestures]中添加一个手势或快捷键。
-
 默认情况下，开关黑屏功能时会播放声音。
 当您不想听到声音，可以取消选中“切换黑屏时”复选框。
 
@@ -1886,9 +1972,7 @@ NVDA 设置对话框中的“键盘设置”部分包含一些选项，用于设
 - 数字键盘的插入键
 -
 
-如果没有选择任何按键作为 NVDA 键，某些 NVDA 命令就可能无法使用。
-因而，如果在没有选择任何按键之前点击“确认”按钮，“键盘设置”对话框将显示一个错误信息。
-在解除错误消息之后，您必须最少选择一个按键才能通过按下“确认”来正确地退出对话框。
+如果没有选择任何按键作为 NVDA 键，某些 NVDA 命令就可能无法使用。因而，您必须最少选择一个按键。
 
 %kc:setting
 ==== 朗读输入字符 ====[KeyboardSettingsSpeakTypedCharacters]
@@ -1955,8 +2039,10 @@ NVDA 设置对话框中的“鼠标设置”分类允许 NVDA 跟踪鼠标，用
 
 要从任何地方切换文本单位，请使用[按键与手势对话框 #InputGestures]分配自定义手势或快捷键。
 
-==== 读出鼠标所进入对象的类型 ====[MouseSettingsRole]
-如果此复选框被选中，NVDA 将读出鼠标所进入的对象的类型。
+==== 鼠标进入时读出对象 ====[MouseSettingsRole]
+如果此复选框被选中，NVDA 将读出鼠标所进入的对象的信息。
+This includes the role (type) of the object as well as states (checked/pressed), cell coordinates in tables, etc.
+Note that the announcement of some object details might be dependent on how other settings are set, such as in the [object presentation #ObjectPresentationSettings] or [Document Formatting #DocumentFormattingSettings] categories.
 
 ==== 鼠标移动时播放音频坐标 ====[MouseSettingsAudio]
 选择此复选框，NVDA 会在鼠标移动时播放提示音，结合屏幕的尺寸，用户可以计算出鼠标的位置。
@@ -1973,7 +2059,7 @@ NVDA 设置对话框中的“鼠标设置”分类允许 NVDA 跟踪鼠标，用
 如果您还选中了启用鼠标导航复选框，NVDA不会读出这些软件远程控制端对鼠标的操作。
 
 +++ 使用触摸屏与系统交互 +++[TouchInteraction]
-这个部分只有在设备有触摸屏并且系统是 Windows 8 或者更高的版本才可用。
+这个部分只有在设备有触摸屏时可用。
 这个分类包含以下选项
 
 ==== 启用触摸支持 ====[TouchSupportEnable]
@@ -2194,44 +2280,48 @@ NVDA 设置对话框中的“鼠标设置”分类允许 NVDA 跟踪鼠标，用
 文档格式信息被分成了若干组。
 您可以配置的选项包括：
 - 字体
- - 字体名称
- - 字体大小
- - 字体属性
- - 上标和下标
- - 强调
- - 突出显示（高亮）文本
- - 缩进
- - 颜色
+  - 字体名称
+  - 字体大小
+  - 字体属性
+  - 上标和下标
+  - 强调
+  - 突出显示（高亮）文本
+  - 缩进
+  - 颜色
+  -
 - 文档信息
- - 注释
- - 书签
- - 编辑者修订
- - 拼写错误
+  - 注释
+  - 书签
+  - 编辑者修订
+  - 拼写错误
+  -
 - 页面和间距
- - 页码
- - 行号
- - 行缩进提示[（关闭，语音，声音，语音和声音） #DocumentFormattingSettingsLineIndentation]
- - 忽略空白行的行缩进
- - 段落缩进（例如 悬挂式缩进，首行缩进）
- - 行间距（单倍行距，双倍行距等）
- - 对齐方式
+  - 页码
+  - 行号
+  - 行缩进提示[（关闭，语音，声音，语音和声音） #DocumentFormattingSettingsLineIndentation]
+  - 忽略空白行的行缩进
+  - 段落缩进（例如 悬挂式缩进，首行缩进）
+  - 行间距（单倍行距，双倍行距等）
+  - 对齐方式
+  -
 - 表格信息
- - 表格
- - 行/列标题朗读（关闭、行标题和列标题、行标题、列标题）
- - 表格的单元格坐标
- - 单元格边界（关闭、边框样式、边框颜色和样式）
+  - 表格
+  - 行/列标题朗读（关闭、行标题和列标题、行标题、列标题）
+  - 表格的单元格坐标
+  - 单元格边界（关闭、边框样式、边框颜色和样式）
+  -
 - 元素
- - 标题
- - 链接
- - 图像
- - 列表
- - 引用区
- - 组
- - 路标
- - 文章
- - 框架
- - 可点击
- -
+  - 标题
+  - 链接
+  - 图像
+  - 列表
+  - 引用区
+  - 组
+  - 路标
+  - 文章
+  - 框架
+  - 可点击
+  -
 -
 
 要想在任何地方切换这些设置，可在[按键与手势对话框 #InputGestures]设置一个自定义手势或快捷键
@@ -2351,6 +2441,14 @@ NVDA 设置对话框中的“鼠标设置”分类允许 NVDA 跟踪鼠标，用
 但对于基础的导航和编辑功能，启用该选项可能会带来明显的性能改进。
 尽管如此，我们仍然不推荐大多数用户启用该功能，但我们也欢迎使用 Microsoft Excel 内部版本 16.0.13522.10000 或更高版本的用户测试此功能并提供反馈。
 Microsoft Excel 的 UI Automation 接口实现不断变化，早于 16.0.13522.10000 版本的 Office 可能无法提供足够多的信息来支持此功能。
+
+==== Use enhanced event processing ====[UIAEnhancedEventProcessing]
+|| . {.hideHeaderRow} | . |
+| Options | Default (Enabled), Disabled, Enabled |
+| Default | Enabled |
+
+When this option is enabled, NVDA should remain responsive when being flooded with many UI Automation events, e.g. large amounts of text in a terminal.
+After changing this option, you will need to restart NVDA for the change to take effect.
 
 ==== Windows 控制台支持 ====[AdvancedSettingsConsoleUIA]
 
@@ -2537,7 +2635,7 @@ NVDA 的语音字典比之单词替换更为强大。
 
 “正则表达式”是一个包含特殊符号的匹配模板，允许您在一次匹配超过一个字符串，仅匹配数字或仅匹配字母等等，这些仅仅是一些例子罢了。
 本指南不会教你如何使用正则表达式。
-您可以参考[Python正则表达式文档 https://docs.python.org/3.7/howto/regex.html]来学习。
+您可以参考 [Python 的正则表达式文档 https://docs.python.org/3.11/howto/regex.html]来学习。
 
 +++ 标点符号发音 +++[SymbolPronunciation]
 此对话框允许您修改标点符号的发音，并指定语音输出标点符号的级别。
@@ -2558,11 +2656,11 @@ NVDA 的语音字典比之单词替换更为强大。
 这对于让合成器读取该标点时的语调或停顿发生改变非常有用。
 例如，一个逗号可以让合成器暂停。
 这里有三个选项：
- - 从不：从不发送标点到合成器。
- - 总是:总是发送标点符号本身到合成器。
- - 仅当低于标点自身的级别时传送： 仅当配置的标点级别低于为标点设置的级别时，传送标点本身到合成器。
- 例如，您可能可以用它来让标点在处于比自身级别更高时不暂停且拥有替换文本，而在比自身级别低时暂停。
- -
+  - 从不：从不发送标点到合成器。
+  - 总是:总是发送标点符号本身到合成器。
+  - 仅当低于标点自身的级别时传送： 仅当配置的标点级别低于为标点设置的级别时，传送标点本身到合成器。
+  例如，您可能可以用它来让标点在处于比自身级别更高时不暂停且拥有替换文本，而在比自身级别低时暂停。
+  -
 -
 
 您可以通过点击“添加”按钮增加新的符号。
@@ -2601,11 +2699,11 @@ NVDA 的语音字典比之单词替换更为强大。
 之后，该键将在“模拟系统按键”类别中可用，并且您将能够如上所述为其分配按键或手势。
 
 注意:
- - 要模拟的键需要有快捷键或手势，要不然无法保存。
- - 有辅助键的按键模拟没有辅助键的按键会出问题，
- 比如用 ctrl+m 模拟 a 键，最后效果是和 ctrl+a 一样
- 因为模拟 a 键的时候，ctrl 键仍然被按下，故程序收到的是 Ctrl+a。
- -
+- 要模拟的键需要有快捷键或手势，要不然无法保存。
+- 有辅助键的按键模拟没有辅助键的按键会出问题，
+比如用 ctrl+m 模拟 a 键，最后效果是和 ctrl+a 一样
+因为模拟 a 键的时候，ctrl 键仍然被按下，故程序收到的是 Ctrl+a。
+-
 
 当您完成修改之后，点击“确认”保存设置或点击“取消”按钮放弃。
 
@@ -2798,6 +2896,9 @@ NVDA 的插件商店可以让您浏览和管理插件。
 从“可安装的插件”或“可更新的插件”选项卡中选择一个插件。
 然后使用更新、安装或替换操作开始安装。
 
+您还可以一次性安装多个插件。
+This can be done by selecting multiple add-ons in the available add-ons tab, then activating the context menu on the selection and choosing the "Install selected add-ons" action.
+
 要安装从插件商店外部获取的插件，请按“从外部源安装”按钮。
 这可以让您在计算机或网络上的某个位置浏览插件包（``.nvda-addon`` 文件）。
 打开插件包后，安装过程将开始。
@@ -2811,6 +2912,7 @@ NVDA 的插件商店可以让您浏览和管理插件。
 NVDA 将询问您是否确认移除。
 与安装一样，必须重新启动 NVDA 才能完全删除该插件。
 在重启之前，列表中该插件的状态会显示为“待删除”。
+与安装一样，您也可以一次性删除多个插件。
 
 +++ 禁用和启用插件 +++[AddonStoreDisablingEnabling]
 要禁用特定插件，请使用“禁用”操作。
@@ -2820,6 +2922,15 @@ NVDA 将询问您是否确认移除。
 如果该插件之前被“禁用”，则状态将显示“已启用，重启后生效”。
 如果该插件之前已“启用”，则状态将显示“已禁用，重启后生效”。
 就像安装或删除插件时一样，您需要重新启动 NVDA 才能使更改生效。
+You can also enable or disable multiple add-ons at once by selecting multiple add-ons in the available add-ons tab, then activating the context menu on the selection and choosing the appropriate action.
+
++++ Reviewing add-ons and reading reviews +++[AddonStoreReviews]
+Before installing an add-on, you may want to read reviews by others.
+Also, it may be helpful to other users to provide feedback about add-ons you have tried.
+To read reviews for an add-on, select an add-on from the Available or Updatable add-ons tab, and use the "Community reviews" action.
+This links to a GitHub Discussion webpage, where you will be able to read and write reviews for the add-on.
+Please be aware that this doesn't replace direct communication with add-on developers.
+Instead, the purpose of this feature is to share feedback to help users decide if an add-on may be useful for them.
 
 ++ 不兼容的插件 ++[incompatibleAddonsManager]
 某些较旧的插件可能已经不兼容您当前版本的 NVDA 了。
@@ -2841,11 +2952,21 @@ NVDA 将询问您是否确认移除。
 + 附加工具 +[ExtraTools]
 
 ++ 日志查看器 ++[LogViewer]
-在 NVDA 的“工具”菜单下能找到“日志查看器”，允许您查看所有自上次启动 NVDA 开始到现在的所有日志输出。
-按 NVDA+F1 可以打开日志查看器，并且在日志查看器里面显示当前导航对象的详细信息。
+在 NVDA 的“工具”菜单下能找到“日志查看器”，允许您查看自最新 NVDA 会话启动以来发生的日志记录输出。
 
-除了阅读内容，您还可以保存日志文件的副本，或刷新查看器，因为日志查看器只会显示在该对话框被打开之前的最近输出。
+除了阅读内容，您还可以保存日志文件的副本，或刷新查看器，以便加载打开日志查看器后生成的新日志输出。
 此动作可在日志查看器的“日志”菜单下找到。
+
+打开日志查看器时显示的文件保存在计算机上的文件位置 ``%temp%\nvda.log``。
+每次启动 NVDA 时都会创建一个新的日志文件。
+发生这种情况时，前一个 NVDA 会话的日志文件将移至 ``%temp%\nvda-old.log``。
+
+You can also copy a fragment of the current log file to the clipboard without opening the log viewer.
+%kc:beginInclude
+|| 名称 | 按键 | 描述 |
+| 打开日志查看器 | ``NVDA+f1`` | 打开日志查看器并显示有关当前导航对象的开发人员信息。 |
+| 将日志片段复制到剪贴板 | ``NVDA+control+shift+f1`` | When this command is pressed once, it sets a starting point for the log content that should be captured. When pressed a second time, it copies the log content since the start point to your clipboard. |
+%kc:endInclude
 
 ++ 朗读查看器 ++[SpeechViewer]
 对于明眼的软件开发者或希望向明眼观众演示 NVDA 的人们，有一个浮动的窗口可以查看 NVDA 所有的语音输出文本。
@@ -2858,7 +2979,7 @@ NVDA 将询问您是否确认移除。
 此窗口若被关闭，重新打开时也将以相同的尺寸出现在相同的位置。
 
 当朗读查看器启用时，它会不断地更新，从而向您显示最近朗读的文本。
-然而，当您点击或把焦点放在查看器之内，NVDA 就会暂停文本的更新，您可以轻松的选择或者复制已有的文本。
+然而，当您将鼠标移动到查看器上或把焦点放在查看器内，NVDA 就会暂停文本的更新，您可以轻松的选择或者复制已有的文本。
 
 要想在任何地方切换朗读查看器的开关，请在[按键与手势对话框 #InputGestures]定义一个自定义手势或快捷键。
 
@@ -2922,6 +3043,15 @@ NVDA工具菜单下面的 NVDA Python 控制台是调试 NVDA、了解 NVDA内�
 
 ++ 重载插件 ++[ReloadPlugins]
 一旦此项目被激活，即可在不重新启动 NVDA 的情况下重新加载程序模块和全局插件，此功能对于开发者非常有用。
+App modules manage how NVDA interacts with specific applications.
+Global plugins manage how NVDA interacts with all applications.
+
+The following NVDA key commands may also be useful:
+%kc:beginInclude
+|| Name | Key | Description |
+| Reload plugins | ``NVDA+control+f3`` | Reloads NVDA's global plugins and app modules. |
+| Report loaded app module and executable | ``NVDA+control+f1`` | Report the name of the app module, if any, and the name of the executable associated with the application which has the keyboard focus. |
+%kc:endInclude
 
 + 支持的语音合成器 +[SupportedSpeechSynths]
 此章节包含 NVDA 支持的合成器的信息。
@@ -2929,7 +3059,7 @@ NVDA工具菜单下面的 NVDA Python 控制台是调试 NVDA、了解 NVDA内�
 
 ++ eSpeak NG++[eSpeakNG]
 [eSpeak NG https://github.com/espeak-ng/espeak-ng] 语音合成器预装在 NVDA 之中，不需要安装特别的驱动或者组件。
-在 Windows 7、8 以及 8.1 上 NVDA 默认使用 eSpeak NG（Windows 10 或后续的操作系统的NVDA则是默认使用[Windows OneCore #OneCore]）。
+在 Windows 8.1 上 NVDA 默认使用 eSpeak NG（Windows 10 或后续的操作系统的NVDA则是默认使用[Windows OneCore #OneCore]）。
 作为 NVDA 的预装合成器，对于在其他系统通过 U 盘驱动器运行 NVDA 来说，这是一个很好的选择。
 
 每个 eSpeak NG 的语音都可以说一种不同的语言。
@@ -2950,16 +3080,16 @@ SAPI 5 是一个微软软件语音合成器标准。
 当在 NVDA 使用此合成器时，“可用的语音”(访问[语音设置对话框 #VoiceSettings]或者通过[循环切换合成器设置 #SynthSettingsRing])将包含所有安装在系统的 SAPI5 的语音合成器引擎的所有语音。
 
 ++ Microsoft Speech Platform ++[MicrosoftSpeechPlatform]
-Microsoft Speech Platform (微软语音平台)包含许多语言的声音，它通常用来进行基础语音应用程序服务的开发。
+Microsoft Speech Platform（微软语音平台）包含许多语言的声音，它通常用来进行基础语音应用程序服务的开发。
 此语音也可用于 NVDA。
 
 要想使用此语音，您必须安装以下两种组件：
-- Microsoft Speech Platform 运行库 - [第 11 版 32 位运行库 https://www.microsoft.com/download/en/details.aspx?id=27225]
-- Microsoft Speech Platform 语音包 - [第 11 版语音包 https://www.microsoft.com/download/en/details.aspx?id=27224]
- - 此页面包含了许多用于语音识别和文字转语音的文件。
- 为您希望的语言和语音选择包含 TTS 数据的文件。
- 例如，文件 MSSpeech_TTS_en-US_ZiraPro.msi 是一个美国英语的语音包。
- -
+- [Microsoft Speech Platform 运行库 - 第 11 版 32 位运行库 https://www.microsoft.com/download/en/details.aspx?id=27225]
+- [Microsoft Speech Platform 语音包 - 第 11 版语音包 https://www.microsoft.com/download/en/details.aspx?id=27224]
+  - 此页面包含了许多用于语音识别和文字转语音的文件。
+  为您希望的语言和语音选择包含 TTS 数据的文件。
+  例如，文件 MSSpeech_TTS_en-US_ZiraPro.msi 是一个美国英语的语音包。
+  -
 -
 
 ++ Windows OneCore 语音 ++[OneCore]
@@ -2976,7 +3106,8 @@ Windows 10 及更高版本操作系统内置了新的语音，被称作“OneCor
 选择您所需的任何语言，然后使用“添加”按钮进行添加。
 添加后，请重新启动 NVDA 以使新添加的语音生效。
 
-可参考微软发布的[这篇文章 https://support.microsoft.com/zh-cn/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01]，获取可用语音列表和安装说明。
+可参考微软发布的[支持的语言和语音 https://support.microsoft.com/zh-cn/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01]，获取可用语音列表和安装说明。
+
 
 + 支持的点显器 +[SupportedBrailleDisplays]
 本节包含有关NVDA支持的点显器的信息。
@@ -3004,7 +3135,7 @@ NVDA能够通过USB或蓝牙自动检测连接许多点显器。
 ++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
 All Focus and PAC Mate displays from [Freedom Scientific https://www.freedomscientific.com/] are supported when connected via USB or bluetooth.
 You will need the Freedom Scientific braille display drivers installed on your system.
-If you do not have them already, you can obtain them from https://support.freedomscientific.com/Downloads/Focus/FocusBlueBrailleDisplayDriver.
+If you do not have them already, you can obtain them from the [Focus Blue Braille Display Driver page https://support.freedomscientific.com/Downloads/Focus/FocusBlueBrailleDisplayDriver].
 Although this page only mentions the Focus Blue display, the drivers support all Freedom Scientific Focus and Pacmate displays.
 
 By default, NVDA can automatically detect and connect to these displays either via USB or bluetooth.
@@ -3323,8 +3454,7 @@ Please see the display's documentation for descriptions of where these keys can 
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series ++[Hims]
 NVDA supports Braille Sense, Braille EDGE, Smart Beetle and Sync Braille displays from [Hims https://www.hims-inc.com/] when connected via USB or bluetooth.
-If connecting via USB, you will need to install the USB drivers from HIMS on your system.
-You can download these from here: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
+If connecting via USB, you will need to install the [USB drivers from HIMS http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip] on your system.
 
 Following are the key assignments for these displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -3398,7 +3528,7 @@ Please see the display's documentation for descriptions of where these keys can 
 - [Seika V3/ V4/ V5（40方）/ Seika80（80方） #SeikaBrailleDisplays]
 - [MiniSeika （16 / 24方） V6/V6Pro（40方） #SeikaNotetaker]
 -
-您可以在 https://en.seika-braille.com/down/index.html 找到有关该系列点显器的详细信息。
+您可以在他们的 [Demo and Driver Download 页面 https://en.seika-braille.com/down/index.html]找到有关该系列点显器的详细信息。
 
 
 +++ Seika V3/ V4/ V5（40方）/ Seika80（80方） +++[SeikaBrailleDisplays]
@@ -3477,6 +3607,19 @@ The following Braille displays are supported:
 -
 
 These displays do not support NVDA's automatic background braille display detection functionality.
+There is an option in the display's USB driver which can cause an issue with loading the display.
+Please try the following:
++ Please make sure that you have installed the [latest driver https://www.papenmeier-rehatechnik.de/en/service/downloadcenter/software/articles/software-braille-devices.html].
++ Open the Windows Device Manager.
++ Scroll down the list to "USB Controllers" or "USB Devices".
++ Select "Papenmeier Braillex USB Device".
++ Open the properties and switch to the "Advanced" tab.
+Sometimes the "Advanced" tab doesn't appear.
+If this is the case, disconnect the braille display from the computer, exit NVDA, wait a moment and reconnect the braille display.
+Repeat this 4 to 5 times if necessary.
+If the "Advanced" tab is still not displayed, please restart the computer.
++ Disable the "Load VCP" option.
++
 
 Most devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
 The EAB can be moved in four directions where generally each direction has two switches.
@@ -3533,8 +3676,8 @@ These are (ordered from left to right):
 Currently, the right thumb key is not in use.
 The inner keys are both mapped to space.
 
-|| Name | Key |
 %kc:beginInclude
+|| Name | Key |
 | escape key | space with dot 7 |
 | upArrow key | space with dot 2 |
 | leftArrow key | space with dot 1 |
@@ -4003,7 +4146,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | Route to braille cell | ``routing`` |
 | Report text formatting under braille cell | ``secondary routing`` |
 | Toggle the way context information is presented in braille | ``attribute1+attribute3`` |
-| Toggles between the speech modes of off, beep and talk | ``attribute2+attribute4`` |
+| Cycles between speech modes | ``attribute2+attribute4`` |
 | Switches to the previous review mode (e.g. object, document or screen) | ``f1`` |
 | Switches to the next review mode (e.g. object, document or screen) | ``f2`` |
 | Moves the navigator object to the object containing it | ``f3`` |
@@ -4087,6 +4230,7 @@ NVDA 还可以使用 ``-s`` [命令行选项 #CommandLineOptions]在安全模式
 - [插件商店 #AddonsManager]
 - [NVDA Python 控制台 #PythonConsole]
 - [日志查看器 #LogViewer]和日志记录。
+- [盲文查看器 #BrailleViewer]和[朗读查看器 #SpeechViewer]
 - 从 NVDA 菜单中打开外部文档，例如用户指南或贡献者名单。
 -
 
@@ -4173,6 +4317,6 @@ nvda -q
 | ``forceSecureMode`` | DWORD | 0（默认）禁用，1 启用 | 如果启用，则在运行 NVDA 时强制启用[安全模式 #SecureMode]。 |
 
 + 更多信息 +[FurtherInformation]
-如果您希望获得更多信息或关于 NVDA 的帮助，可通过 NVDA_URL 访问 NVDA 官方网站。
+如果您希望获得更多信息或关于 NVDA 的帮助，可访问 [NVDA 官方网站 NVDA_URL]。
 在这里，您可以找到更多的文档、技术支持及社区资源。
 这个网站还提供了 NVDA 开发的相关信息。
