@@ -154,7 +154,6 @@ class WideStringOffsetConverter(OffsetConverter):
 		"""
 		super().strToEncodedOffsets(strStart, strEnd, raiseOnError)
 		strStart = max(0, min(strStart, self.strLength))
-		strEnd = max(0, min(strEnd, self.strLength))
 		# Optimisation, don't do anything special if offsets are collapsed at the start.
 		if 0 == strEnd == strStart:
 			return (0, 0)
@@ -166,6 +165,7 @@ class WideStringOffsetConverter(OffsetConverter):
 			wideStringStart= len(precedingBytes) // self._bytesPerIndex
 		if strEnd is None:
 			return wideStringStart
+		strEnd = max(0, min(strEnd, self.strLength))
 		if strStart == strEnd:
 			return (wideStringStart, wideStringStart)
 		encodedRange: bytes = self.decoded[strStart:strEnd].encode(self._encoding, errors="surrogatepass")
