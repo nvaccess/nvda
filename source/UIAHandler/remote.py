@@ -25,7 +25,9 @@ def initialize(doRemote: bool, UIAClient: POINTER(UIA.IUIAutomation)):
 	_dll = windll[os.path.join(NVDAHelper.versionedLibPath, "UIARemote.dll")]
 	_dll.initialize(doRemote, UIAClient)
 
+
 def terminate():
+	""" Terminates UIA remote operations support."""
 	_dll.cleanup()
 
 
