@@ -146,12 +146,12 @@ def UIATextAttributeQuicknavIterator(ItemClass,itemType,document,position,direct
 class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 
 	def __init__(
-		self,
-		itemType: str,
-		document: UIA,
-		position: UIATextInfo,
-		label: str | None = None,
-		level: int = 0
+			self,
+			itemType: str,
+			document: UIA,
+			position: UIATextInfo,
+			label: str | None = None,
+			level: int = 0
 	):
 		super(HeadingUIATextInfoQuickNavItem,self).__init__(itemType,document,position)
 		self.level=level

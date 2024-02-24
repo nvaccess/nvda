@@ -39,9 +39,9 @@ def initialize(doRemote: bool, UIAClient: UIA.IUIAutomation):
 
 
 def msWord_getCustomAttributeValue(
-	docElement: UIA.IUIAutomationElement,
-	textRange: UIA.IUIAutomationTextRange,
-	customAttribID: int
+		docElement: UIA.IUIAutomationElement,
+		textRange: UIA.IUIAutomationTextRange,
+		customAttribID: int
 ) -> Optional[Any]:
 	guid_msWord_extendedTextRangePattern = GUID("{93514122-FF04-4B2C-A4AD-4AB04587C129}")
 	guid_msWord_getCustomAttributeValue = GUID("{081ACA91-32F2-46F0-9FB9-017038BC45F8}")
@@ -90,7 +90,7 @@ def msWord_getCustomAttributeValue(
 
 
 def collectAllHeadingsInTextRange(
-	textRange: UIA.IUIAutomationTextRange
+		textRange: UIA.IUIAutomationTextRange
 ) -> Generator[tuple[int, str, UIA.IUIAutomationElement], None, None]:
 	op = operation.Operation()
 
@@ -113,9 +113,9 @@ def collectAllHeadingsInTextRange(
 
 
 def findFirstHeadingInTextRange(
-	textRange: UIA.IUIAutomationTextRange,
-	wantedLevel: int | None = None,
-	reverse: bool = False
+		textRange: UIA.IUIAutomationTextRange,
+		wantedLevel: int | None = None,
+		reverse: bool = False
 ) -> tuple[int, str, UIA.IUIAutomationElement] | None:
 	op = operation.Operation()
 
