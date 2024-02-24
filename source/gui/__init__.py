@@ -30,7 +30,9 @@ from .message import (
 	# messageBox is accessed through `gui.messageBox` as opposed to `gui.message.messageBox` throughout NVDA,
 	# be cautious when removing
 	messageBox,
+	displayDialogAsModal,
 )
+from nvdaControls import MessageDialog
 from . import blockAction
 from .speechDict import (
 	DefaultDictionaryDialog,
@@ -67,6 +69,7 @@ from . import logViewer
 import speechViewer
 import winUser
 import api
+import gui.contextHelp as contextHelp
 import NVDAState
 
 
@@ -439,34 +442,99 @@ class MainFrame(wx.Frame):
 		blockAction.Context.MODAL_DIALOG_OPEN,
 	)
 	def onRunCOMRegistrationFixesCommand(self, evt):
-		if messageBox(
-			# Translators: A message to warn the user when starting the COM Registration Fixing tool 
-			_("You are about to run the COM Registration Fixing tool. This tool will try to fix common system problems that stop NVDA from being able to access content in many programs including Firefox and Internet Explorer. This tool must make changes to the System registry and therefore requires administrative access. Are you sure you wish to proceed?"),
-			# Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool 
-			_("Warning"),wx.YES|wx.NO|wx.ICON_WARNING,self
-		)==wx.NO:
+		"""Manages the interactive running of the COM Registration Fixing Tool.
+		Shows a dialog to the user, giving a brief overview of what is going to happen.
+		If the user chooses to continue: runs the tool, and displays a completion dialog.
+		Silently cancels the run attempt if the user fails or declines the UAC prompt.
+		"""
+		self.prePopup()
+		# Translators: Explain the COM Registration Fixing tool to users before running
+		INTRO_MESSAGE = _("""Welcome to the COM Registration Fixing tool.
+This tool is used by NVDA to fix problems it may have as it tries to interact
+with various applications, or with Windows itself.
+	It examines the system registry for corrupted or missing accessibility entries and will correct them.
+Those entries can sometimes be damaged by installing or uninstalling programs,
+or other system events. This can result in "unknown" or "pane" being spoken instead of the content you
+were expecting, or previously accessible elements suddenly no longer reading correctly.
+	
+	You have most likely been asked to run this tool by NVDA support or a power user trying to assist you.
+
+Because it may need to modify the Windows registry, if you have User Account Control (UAC) active, you will
+be prompted by UAC before it can do its job. This is normal and you should answer using the Yes button.
+
+Do you wish to try to repair the registry at this time?""")  # noqa: E501 Flake8 sees this block as one line
+		class CRFTInfoPromptDialog(MessageDialog):
+			def _addButtons(self, buttonHelper):
+				"""Adds continue / cancel buttons.
+				"""
+				continueButton = buttonHelper.addButton(
+					self,
+					id=wx.ID_OK,
+					# Translators: a button in the COM Registration Fixing Tool info dialog which will run the tool.
+					label=_("&Continue")
+				)
+				continueButton.SetDefault()
+				continueButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
+				cancel = buttonHelper.addButton(
+					self,
+					id=wx.ID_CANCEL,
+					# Translators: Cancels the COM Registration Fixing Tool.
+					label=_("Cancel")
+				)
+				cancel.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
+			response = displayDialogAsModal(CRFTInfoPromptDialog(
+				self,
+				# Translators: The title of the notice dialog displayed when launching the COM Registration Fixing tool 
+				_("Fix COM Registrations"),
+				INTRO_MESSAGE
+			))
+		if response == wx.CANCEL:
+			log.debug("Run of COM Registration Fixing Tool canceled before UAC.")
 			return
-		progressDialog = IndeterminateProgressDialog(mainFrame,
-			# Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool 
+		progressDialog = IndeterminateProgressDialog(
+			mainFrame,
+			# Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
 			_("COM Registration Fixing Tool"),
-			# Translators: The message displayed while NVDA is running the COM Registration fixing tool 
-			_("Please wait while NVDA tries to fix your system's COM registrations.")
+			# Translators: The message displayed while NVDA is running the COM Registration fixing tool
+			_("Please wait while NVDA attempts to fix your system's COM registrations...")
 		)
 		try:
+			error = None
 			systemUtils.execElevated(config.SLAVE_FILENAME, ["fixCOMRegistrations"])
-		except:
-			log.error("Could not execute fixCOMRegistrations command",exc_info=True) 
-		progressDialog.done()
-		del progressDialog
+		except WindowsError as e:
+			# 1223 is "The operation was canceled by the user."
+			if e.winerror == 1223:
+				# Same as if the user selected "no" in the initial dialog.
+				log.debug("Run of COM Registration Fixing Tool canceled during UAC.")
+				return
+			else:
+				log.error("Could not execute fixCOMRegistrations command", exc_info=True)
+				error = e  # Hold for later display to the user
+				return
+		except Exception as e:
+			log.error("Could not execute fixCOMRegistrations command", exc_info=True)
+			return
+		finally:  # Clean up the progress dialog, and display any important error to the user before returning
+			progressDialog.done()
+			del progressDialog
+			# If there was a Windows error, inform the user because it may have support value
+			if error is not None:
+				messageBox(
+					_(
+						# Translators: message shown to the user on COM Registration Fix fail
+						"The COM Registration Fixing Tool was unsuccessful. This Windows "
+						"error may provide more information.    {}"
+					).format(error),
+					# Translators: title of the dialog showing the COM Registration Fix failure
+					_("COM Registration Fix Tool Failed"), wx.OK
+				)
+		# Display success dialog if there were no errors
 		messageBox(
-			_(
-				# Translators: The message displayed when the COM Registration Fixing tool completes.
-				"The COM Registration Fixing tool has finished. "
-				"It is highly recommended that you restart your computer now, to make sure the changes take full effect."
-			),
-			# Translators: The title of a dialog presented when the COM Registration Fixing tool is complete. 
-			_("COM Registration Fixing Tool"),
-			wx.OK
+			# Translators: Message shown when the COM Registration Fixing tool completes.
+			_("The COM Registration Fixing Tool has completed successfully."),
+			# Translators: The title of a dialog presented when the COM Registration
+			# Fixing Tool completes successfully.
+			_("COM Registration Fixing Tool"), wx.OK
 		)
 
 	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
