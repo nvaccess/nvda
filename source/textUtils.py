@@ -319,7 +319,7 @@ class UTF8OffsetConverter(OffsetConverter):
 
 	A single character in UTF-8 encoding might take 1, 2, or 4 bytes.
 	Examples of applications using UTF-8 encoding are all Scintilla-based text editors,
-	including Notepad++ and AkelPad.
+	including Notepad++.
 	"""
 
 	_encoding: str = UTF8_ENCODING
