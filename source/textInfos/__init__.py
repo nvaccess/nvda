@@ -403,7 +403,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 
 	def unitIndex(self,unit):
 		"""
-		@param unit: a unit constant for which you want to retreave an index
+		@param unit: a unit constant for which you want to retrieve an index
 		@type: string
 		@returns: The 1-based index of this unit, out of all the units of this type in the object
 		@rtype: int
