@@ -707,7 +707,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 				This function provides a clean and reliable way to jump to a given pythonic offset.
 
 			Assumptions:
-				1. This function operates on a non-collapsed TextInfo only. IN a typical scenario, we might want
+				1. This function operates on a non-collapsed TextInfo only. In a typical scenario, we might want
 				to jump to a certain offset within a paragraph or a line. In this case this function
 				should be called on TextInfo representing said paragraph or line.
 				The reason for that is that for some implementations we might
