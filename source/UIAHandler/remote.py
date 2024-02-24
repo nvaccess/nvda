@@ -117,7 +117,7 @@ def findFirstHeadingInTextRange(
 	wantedLevel: int | None = None,
 	reverse: bool = False
 ) -> tuple[int, str, UIA.IUIAutomationElement] | None:
-	op = operation.Operation(enableCompiletimeLogging=True)
+	op = operation.Operation()
 
 	@op.buildFunction
 	def code(ra: remoteAPI.RemoteAPI):
