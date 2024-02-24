@@ -720,7 +720,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 				4. Also this function assumes that most characters have 1:1 mapping between pythonic
 				and application-specific representations.
 				This assumption is not required, however if this assumption is True, the function will converge fast.
-				If theis assumption is false, then it might take many iterations to find the right TextInfo.
+				If this assumption is false, then it might take many iterations to find the right TextInfo.
 
 			Algorithm:
 				This generic implementation essentially a biased binary search.
