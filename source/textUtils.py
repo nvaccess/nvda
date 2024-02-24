@@ -233,6 +233,10 @@ class WideStringOffsetConverter(OffsetConverter):
 			# Compensate for the case where we stretched our offsets earlier
 			strEnd -= (correctedBytesEnd - bytesEnd) // self._bytesPerIndex
 		return (strStart, strEnd)
+	
+	wideStringLength = encodedStringLength
+	strToWideOffsets = strToEncodedOffsets
+	wideToStrOffsets = encodedToStrOffsets
 
 
 def getTextFromRawBytes(
