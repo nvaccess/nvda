@@ -69,11 +69,9 @@ class OffsetConverter:
 		if strStart < 0 or strStart > self.strLength:
 			if raiseOnError:
 				raise IndexError("str start index out of range")
-			strStart = max(0, min(strStart, self.strLength))
 		if strEnd is not None and (strEnd < 0 or strEnd > self.strLength):
 			if raiseOnError:
 				raise IndexError("str end index out of range")
-			strEnd = max(0, min(strEnd, self.strLength))
 
 	@abstractmethod
 	def encodedToStrOffsets(
@@ -101,7 +99,6 @@ class OffsetConverter:
 		if encodedStart < 0 or encodedStart > self.encodedStringLength:
 			if raiseOnError:
 				raise IndexError("Wide string start index out of range")
-			encodedStart = max(0, min(encodedStart, self.encodedStringLength))
 		if encodedEnd is not None and (encodedEnd < 0 or encodedEnd > self.encodedStringLength):
 			if raiseOnError:
 				raise IndexError("Wide string end index out of range")
@@ -156,6 +153,8 @@ class WideStringOffsetConverter(OffsetConverter):
 		@raise ValueError: if strEnd < strStart
 		"""
 		super().strToEncodedOffsets(strStart, strEnd, raiseOnError)
+		strStart = max(0, min(strStart, self.strLength))
+		strEnd = max(0, min(strEnd, self.strLength))
 		# Optimisation, don't do anything special if offsets are collapsed at the start.
 		if 0 == strEnd == strStart:
 			return (0, 0)
@@ -205,6 +204,7 @@ class WideStringOffsetConverter(OffsetConverter):
 		if encodedEnd is None:
 			return self.encodedToStrOffsets(encodedStart, encodedStart, raiseOnError)[0]
 		super().encodedToStrOffsets(encodedStart, encodedEnd, raiseOnError)
+		encodedStart = max(0, min(encodedStart, self.encodedStringLength))
 		encodedEnd = max(0, min(encodedEnd, self.encodedStringLength))
 		bytesStart: int = encodedStart * self._bytesPerIndex
 		bytesEnd: int = encodedEnd * self._bytesPerIndex
