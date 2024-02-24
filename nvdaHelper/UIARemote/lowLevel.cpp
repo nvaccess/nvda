@@ -120,9 +120,10 @@ extern "C" __declspec(dllexport) HRESULT __stdcall remoteOpResult_hasOperand(voi
 	return S_OK;
 }
 
-extern "C" __declspec(dllexport) void __stdcall remoteOpResult_free(void* arg_pResults) {
+extern "C" __declspec(dllexport) HRESULT __stdcall remoteOpResult_free(void* arg_pResults) {
 	AutomationRemoteOperationResult results {nullptr};
 	winrt::attach_abi(results, arg_pResults);
+	return S_OK;
 }
 
 HRESULT IInspectableToVariant(winrt::Windows::Foundation::IInspectable result, VARIANT* arg_pVariant) {
