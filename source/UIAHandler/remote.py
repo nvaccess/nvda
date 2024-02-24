@@ -29,6 +29,11 @@ def terminate():
 	_dll.cleanup()
 
 
+def terminate():
+	""" Terminates UIA remote operations support."""
+	_dll.cleanup()
+
+
 def msWord_getCustomAttributeValue(
 		docElement: POINTER(UIA.IUIAutomationElement),
 		textRange: POINTER(UIA.IUIAutomationTextRange),
