@@ -102,7 +102,7 @@ In this example, the values TextUnit_Word and 1 will be automatically remoted.
 #### Equality checks
 All types support equality checks:
 ```
-a = ra.newBool(True)
+i = ra.newBool(True)
 j = ra.newBool(False)
 k = i == j
 ```
@@ -231,7 +231,7 @@ textRange = ra.newElement(UIATextRange)
 ```
 Note that under the hood the text range is automatically cloned after it has been remoted, so that any manipulation of the remote text range (such as moving its ends) is not reflected in the original IUIAutomationTextRange you gave it.
 
-#### Retreaving text, comparison and manipulation
+#### Retrieving text, comparison and manipulation
 the majority of methods found on IUIAutomationTextRange are available on remote text ranges, including:
 * getText`
 * `compareEndpoints`
@@ -256,7 +256,7 @@ ra.Return(wordcount)
 ```
 
 #### Text range logical adapter to improve logic and readability
-The verboseness of many of the compare and move text range methods can make it hard to quickly read the code and gain a good idea of what the algorithm is actually doing. It is also quite tricky to write an algorithm that is easily reversed. Therefore remote text ranges have a `getLogicalAdapter` method, taking a single boolean `reverse` argument which returns a special object which raps a remote text range, and provides friendly start and end properties, which take the reversal into account.
+The verboseness of many of the compare and move text range methods can make it hard to quickly read the code and gain a good idea of what the algorithm is actually doing. It is also quite tricky to write an algorithm that is easily reversed. Therefore remote text ranges have a `getLogicalAdapter` method, taking a single boolean `reverse` argument which returns a special object which wraps a remote text range, and provides friendly start and end properties, which take the reversal into account.
 Here is an example of how you could write an algorithm to fetch the first 20 words in the text range, either from the start or end:
 ```
 textRange = ra.newTextRange(UIATextRange)
@@ -375,7 +375,7 @@ Also, currently it is impossible to mark arrays as `static`, as arrays cannot be
 Again, in future the library could be extended to support this, but it would involve having to marshal out all items, and marshal them back in, appending them to the array one at a time, which would also be costly.
 
 #### Building iterable functions
-A commn use of remote operations is to walk a text range or element tree, and collect data which would be returned in an array. However, as arrays can not be marked as `static`, this would involve a lot of extra code to handle execution continuation after the instruciton limit is reached. Therefore the library supports a `Operation.buildIterableFunction` decorator, which can be used in place of `Operator.bildFunction`. Within a fuction that uses this decorator, rather than using ra.Return to return value and halt, instead you can use `ra.Yield` which will yield a value and continue to execute (until the instruction limit is reached of course). To actually execute an iterable function though, instead of using `Operation.execute`, you use `Operation.iterExecute` as the generator to a `for` loop, which will iterate over the yielded values.
+A commn use of remote operations is to walk a text range or element tree, and collect data which would be returned in an array. However, as arrays can not be marked as `static`, this would involve a lot of extra code to handle execution continuation after the instruciton limit is reached. Therefore the library supports a `Operation.buildIterableFunction` decorator, which can be used in place of `Operator.buildFunction`. Within a fuction that uses this decorator, rather than using ra.Return to return value and halt, instead you can use `ra.Yield` which will yield a value and continue to execute (until the instruction limit is reached of course). To actually execute an iterable function though, instead of using `Operation.execute`, you use `Operation.iterExecute` as the generator to a `for` loop, which will iterate over the yielded values.
 ```
 op = Operation()
 
