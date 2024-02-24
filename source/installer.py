@@ -655,11 +655,13 @@ def _deleteFileGroupOrFail(
 		installDir: str,
 		relativeFilepaths: Iterable[str],
 		numTries: int = 6,
-		retryWeightInterval: float = 0.5
+		retryWaitInterval: float = 0.5
 ):
 	"""
 	Delete a group of files in the installer folder.
-	If any file fails to be deleted, revert the deletion of all other files.
+	Each file tries to be deleted up to `numTries` times,
+	with a wait of `retryWaitInterval` seconds between each attempt.
+	If all tries to delete a file fail, revert the deletion of all other files.
 
 	:param installDir: an iterable of file paths relative to installDir
 	:param relativeFilepaths: an iterable of file paths relative to installDir
@@ -678,7 +680,7 @@ def _deleteFileGroupOrFail(
 			shutil.copyfile(originalPath, tempPath)
 			for count in range(1, numTries + 1):
 				if count > 1:
-					time.sleep(retryWeightInterval)
+					time.sleep(retryWaitInterval)
 				try:
 					os.remove(originalPath)
 				except OSError as e:
@@ -724,7 +726,7 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 		installDir,
 		_nvdaExes.union({"nvda_service.exe"}),
 		numTries=6,
-		retryWeightInterval=0.5
+		retryWaitInterval=0.5
 	)
 	unregisterInstallation(keepDesktopShortcut=shouldCreateDesktopShortcut)
 	if prevInstallPath:
