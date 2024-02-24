@@ -2622,6 +2622,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def handlePostConfigProfileSwitch(self):
 		display = config.conf["braille"]["display"]
+		# #7459: the syncBraille has been dropped in favor of the native hims driver.
+		# Migrate to renamed drivers as smoothly as possible.
+		newDriverName = RENAMED_DRIVERS.get(display)
+		if newDriverName:
+			display = config.conf["braille"]["display"] = newDriverName
 		if (
 			self.display is None
 			# Do not choose a new display if:
