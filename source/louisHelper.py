@@ -89,7 +89,7 @@ def _isDebug():
 	return config.conf["debugLog"]["louis"]
 
 
-def initialize(tablesDirs: List[str]):
+def initialize(tablesDirs: list[str]):
 	if _isDebug():
 		log.debug(f"Tables directories: {tablesDirs}")
 	# Register the liblouis logging callback.
