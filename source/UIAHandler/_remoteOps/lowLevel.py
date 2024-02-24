@@ -124,7 +124,7 @@ class RemoteOperationResultSet:
 
 class RemoteOperation:
 	"""
-	Creats and wraps a Windows.UI.UIAutomation.Core.CoreAutomationRemoteOperation.
+	Creates and wraps a Windows.UI.UIAutomation.Core.CoreAutomationRemoteOperation.
 	"""
 
 	def __init__(self):
