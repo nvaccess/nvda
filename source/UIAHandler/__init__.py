@@ -528,6 +528,8 @@ class UIAHandler(COMObject):
 			else:
 				break
 		self.clientObject.RemoveAllEventHandlers()
+		if winVersion.getWinVer() >= winVersion.WIN11:
+			UIARemote.terminate()
 
 	def _registerGlobalEventHandlers(self):
 		self.clientObject.AddFocusChangedEventHandler(self.baseCacheRequest, self)
