@@ -52,7 +52,6 @@ def code(ra: RemoteAPI):
 	# Call some methods on ra...
 ```
 
-
 ### Returning values
 To return a value or values from a remote operation, use the `ra.Return` method, passing one or more remote values as arguments:
 ```
@@ -64,6 +63,7 @@ def code(ra: RemoteAPI):
 	mod = j % 7
 	ra.Return(div, mod)
 ```
+
 Note that all build functions must return at least one value. Otherwise, `Operation.execute` will raise a `NoReturnException`.
 
 ### All operations require at least one element or text range
@@ -86,6 +86,7 @@ with ra.ifblock(condition):
 with ra.elseBlock():
 	# do stuff if condition is false...
 ```
+
 From Python's point of view, the code inside both the if and else blocks will be run, as as it is declaring (not executing) the code here.
 This will be covered more in further sections about control flow. But the most important thing to remember here is that you should avoid using any of Python's own control flow (such as if or while, as it most likely will not do what you expected). The remote API has all the control flow you need, such as ifBlock, elseBlock, whileBlock, tryBlock, again covered in later sections.
 
@@ -96,6 +97,7 @@ For example:
 textRange = ra.newTextRange(UIATextRange)
 textRange.move(TextUnit_Word, 1)
 ```
+
 In this example, the values TextUnit_Word and 1 will be automatically remoted.
 
 ### Basic remote types
@@ -115,6 +117,7 @@ i = ra.newBool(False)
 # But now set it to true
 i.set(True)
 ```
+
 for most types, `set` will copy the value, I.e. setting `a` to `b` and then manipulating `b` will not change `a`. However, for certain types such as elements, text ranges and arrays, these are held by reference and therefore manipulating the value it was set two will change the underlying object for both variables.
 
 #### Booleans
@@ -128,6 +131,7 @@ Booleans support logical operations:
 * and: `a & b`
 * or: `a | b`
 * Inverse: `a.inverse()`
+
 Unfortunately the Python language does not allow overriding `!=`, `and` and `or` to return custom types. Thus why the above operators were chosen.
 
 #### Ints and floats
@@ -136,7 +140,9 @@ Remote operations support declaring and manipulating int and float types.
 myInt = ra.newInt(5)
 myFloat = ra.newFloat(7.2)
 ```
-There is also unsigned ints (`ra.newUint`) but the only place you may need to use this is for interacting with the size of a remote array (covered later).
+
+There is also unsigned int (`ra.newUint`) but the only place you may need to use this is for interacting with the size of a remote array (covered later).
+
 Please note that remote operations do not allow ints and floats to be converted to one another.
 
 ##### Arithmetic
@@ -185,6 +191,7 @@ s = ra.newString("Hello ")
 t = ra.newString("world")
 u = s + t
 ```
+
 Or they can be concatinated in-place:
 ```
 s = ra.newString("Hello ")
@@ -205,6 +212,7 @@ To fetch properties from an element, use `getPropertyValue`:
 name = element.getPropertyValue(UIA_NamePropertyId)
 controlType = element.getPropertyValue(UIA_ControlTypePropertyId)
 ```
+
 Any of the standard UI Automation property IDs can be used here.
 
 #### Navigating the element tree
@@ -221,6 +229,7 @@ To make an element point to another physical UI Automation element, call its `se
 parent = element.getParentElement()
 element.set(parent)
 ```
+
 This is useful when walking the element tree.
 
 ### UI Automation text ranges
@@ -229,6 +238,7 @@ To create a new remote text range, call `ra.newTextRange`, giving it an existing
 ```
 textRange = ra.newElement(UIATextRange)
 ```
+
 Note that under the hood the text range is automatically cloned after it has been remoted, so that any manipulation of the remote text range (such as moving its ends) is not reflected in the original IUIAutomationTextRange you gave it.
 
 #### Retrieving text, comparison and manipulation
@@ -240,6 +250,7 @@ the majority of methods found on IUIAutomationTextRange are available on remote 
 * `expandToEnclosingUnit`
 * `getEnclosingElement`
 * ...
+
 Refer to the `RemoteTextRange` class in remoteAPI.py, or official [IUIAutomationTextRange documentation](https://learn.microsoft.com/en-us/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationtextrange) for all the call signatures.
 But as an example, here is an algorithm that can count the number of words in a text range:
 ```
@@ -285,6 +296,7 @@ with ra.whileBlock(lambda: counter < 20):
 # Return the words array.
 ra.Return(words)
 ```
+
 and by simply changing the False to True, the algorithm is automatically reversed, as the start and end properties reverse, and the numUnits argument on the methods have their sign flipped.
 As shown above, `start` and `end` properties can be assigned to which moves the endpoint, and they can be moved by a unit with `moveByUnit`. they can also be compared with `<`, `<=`, `==`, `>=`, and `>`. If you still want the comparison delta (like with `compareEndpoints` the properties also have a `compareWith` method which takes another endpoint and gives back a number less than 0, 0 or greater than 0.
 
@@ -310,14 +322,10 @@ with ra.whileBlock(lambda: counter < 5):
 	# do some actions
 	counter += 1
 ```
+
 `ra.breakLoop` and `ra.continueLoop` methods can be called within the loop body to break or continue respectively.
+
 Please note that the condition of the while loop must be placed in a lambda as it needs to be fully evaluated within the top of the loop. If this was not done, the instructions that produced the final boolean condition would appear before the loop and never get re-run on subsequent iterations. 
-```
-counter = ra.newInt(0)
-with ra.whileBlock(counter < 6):
-	# do stuff
-	counter += 1
-```
 
 #### try-catch
 If an action causes an error, it is possible to catch the error by placing those actions in a `with` statement using the `ra.tryBlock` method. When using `ra.tryBlock`, a second `with` statement using `ra.catchBlock` must follow straight after. If an error occurs within the `tryBlock` `with` statement, then execution jumps to the `catchBlock` `with` statement. You can capture the exact error code as the value of the `with` statement.
@@ -327,6 +335,7 @@ with ra.tryBlock():
 with ra.catchBlock() as errorCode:
 	# do stuff...
 ```
+
 If it is an element or text range method that causes the error, the error code will be the COM HRESULT for that method E.g. `E_INVALIDARG`. Other errors such as divide by 0 have their own error codes.
 
 ### Higher-level algorithms
@@ -359,6 +368,7 @@ To aide in writing algorithms that can handle this instruction limit and continu
 
 #### Automatic retry
 `Operation.execute` takes a `maxTries` keyword argument which is set to 1 by default, meaning that the operation will only be executed once, and if the instruction  limit is hit, then `InstructionLimitExceededException` is raised. However, if `maxTries` is greater than 1, `Operation.execute` will automatically retry the more times until the operation executes without hitting the limit, or when `maxTries` is reached.
+
 This in itself however is not too useful unless some other changes are made to the algorithm itself, so that it is suitable for running multiple times by remembering where it left off.
 
 #### Static values
@@ -368,9 +378,13 @@ counter = ra.newInt(0, static=True)
 with ra.whileBlock(lambda: counter < 20000):
 	counter += 1
 ```
+
 The above example will most definitely hit the instruction limit, however, because static was set to true, on the next execution counter will be re-initialized with the last value it was before the limit was hit.
+
 Please note though that the execution will still start again from the first instruction, so the algorithm still needs to be written to take this into account.
+
 It could be possible in future to implement the library to start from the exact instruction where the limit was hit, but this would mean marshalling each and every declared remote variable out and then back in, which could be costly. Thus why It currently only does it for ones marked as `static`.
+
 Also, currently it is impossible to mark arrays as `static`, as arrays cannot be initialized with a value in the low-level remote operations framework.
 Again, in future the library could be extended to support this, but it would involve having to marshal out all items, and marshal them back in, appending them to the array one at a time, which would also be costly.
 
@@ -390,7 +404,9 @@ def code(ra: RemoteAPI):
 for item in op.iterExecute(maxTries=10):
 	print(f"{item=}")
 ```
+
 The above example will print 0, 1000, 2000, 3000...
+
 Although the `for` loop will see each yielded value separately, they will only physically yield either when the instruction limit is reached, and or when the execution finally reaches the end, which still means that as many actions as possible are executed in one cross-process call.
 
 ## Debugging
@@ -466,8 +482,11 @@ Looking at the dump we can see the library stores instructions in three specific
 * `static`: for initializing static instructions. this section is replaced befor each execution.
 * `const`: This section holds values which have been automatically remoted, and are used through out the rest of the instructions.
 * `main`: the instructions implementing the main logic of the operation.
+
 We can also see that a part from each numbered instruction and its parameters, there are also comments which help to understand the higher-level logic, such as when entering and exiting particular methods.
+
 We can see that yielding values is actualy implemented by the library internally as an array.
+
 and finally, we can see that the modulo (%) operator is actually emulated by the equation: `a - (a / b) * b`, as the low-level remote operations framework does not actually support modulo.
 
 ### Adding compiletime comments
@@ -475,9 +494,11 @@ It is possible to add comments to the instruction dump when building an operatio
 
 ### Runtime remote logging
 Setting an Operation's `enableRuntimeLogging` keyword argument to True, eables remote logging at execution time. `ra.logRuntimeMessage` can be called to log a message at runtime. It takes one or more literal strings and or remote values, and concatinates them together remotely. For remote values that are not strings, `logRuntimeMessage` uses the remote value's `stringify` method to produce a string representation of the value.
+
 After the operation is executed, the remote log is marshalled back and dumped to NvDA's log, thereby giving the ability to trace what is happening during the execution. though be aware that as remote logging itself involves creating and manipulating remote values, then the number of instructions can change quite significantly with remote logging enabled. 
 
 ### Local mode
 when unit testing this library, or in a scenario where remote operations is unavailable but you want to use the exact same algorithm but locally, you can set the Operation's `localMode` keyword argument to True. this causes all instructions to be executed locally, rather than in a remote provider. This will of course be significantly slower, as every instruction that manipulates an element or text range will be itself one cross-process call.
 However, it is a useful means of testing and debugging, and much care has been taken to ensure that the results and side-effects are identical to executing it remotely. 
+
 This differs some what from Microsoft's original remote operations library which implemented its local mode so that instructions were executed locally at build time, and executing did nothing. this library produces instructions just as it would remotely, but it is these low-level instructions that are executed locally at execution time, following all the same rules and limitations that executing remotely would. Thus, it is more suited to debugging / testing, rather than as a means of executing where remote operations is unavailable, as code could be written much more efficiently using comtypes IUIAutomation interfaces directly.
