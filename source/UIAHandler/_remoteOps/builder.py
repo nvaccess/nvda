@@ -123,7 +123,7 @@ class InstructionBase(metaclass=ABCMeta):
 		for param in params:
 			if isinstance(param, enum.IntEnum):
 				param = c_long(param.value)
-			if isinstance(param, Operand):
+			elif isinstance(param, Operand):
 				param = param.operandId
 			paramBytes = (c_char * ctypes.sizeof(param)).from_address(ctypes.addressof(param)).raw
 			byteCode += paramBytes
