@@ -96,6 +96,7 @@ O NVDA funciona com todas as versões recentes do Microsoft Windows.
 Leia os [Requisitos de sistema #SystemRequirements] para mais detalhes.
 
 +++ Passos para Descarregar o NVDA +++[StepsForDownloadingNVDA]
+
 Estas etapas assumem alguma familiaridade com a navegação de uma página web.
 
 - Abra o seu navegador (pressione a tecla "Windows", escreva o nome do seu navegador, por exemplo "Chrome", sem aspas, e pressione "Enter");
@@ -141,6 +142,7 @@ Note que as alterações às configurações não são guardadas.
 - "Cancelar": Isto fecha o NVDA sem executar qualquer acção.
 -
 
+
 Se planeia utilizar sempre o NVDA no computador, deve optar por instalar o NVDA.
 A instalação do  NVDA permitirá funcionalidades adicionais tais como o arranque automático após o início de sessão, a capacidade de ler a janela de início de sessão no Windows e outras [janelas de ambiente seguro #SecureScreens].
 Estas funcionalidades não estão disponíveis nas cópias portáteis e temporárias.
@@ -179,7 +181,6 @@ A tecla modificadora do NVDA e o esquema do teclado podem ser alterados mais tar
 Estas configuram se o NVDA deve iniciar automaticamente.
 + Pressione "Enter" para fechar a janela com o NVDA já em execução.
 +
-
 
 ++ Utilizar o NVDA ++[RunningNVDA]
 
@@ -250,7 +251,6 @@ A lista completa das teclas de Navegação com uma única letra está na secçã
 | Tabela | "t" | Avançar para a próxima tabela |
 | Voltar para trás | "shift+letra" | Pressione "shift" e qualquer uma das letras acima para se mover para o elemento anterior desse tipo |
 | Lista de elementos | "NVDA+f7" | Lista vários tipos de elementos, tais como links e cabeçalhos |
-
 
 ++ Preferências ++[Preferences]
 
@@ -512,6 +512,14 @@ Quando o menu for apresentado, pode utilizar as teclas de setas para navegar no 
 | Alternar entre activar e desactivar o modo de suspensão numa aplicação | NVDA+shift+s | NVDA+shift+z | nenhum | O modo de suspensão desactiva todos os comandos do NVDA e a saída de voz/Braille, para a aplicação actual. Isto é muito útil em aplicações que fornecem voz ou características de leitores de ecrã. Pressione este comando novamente, para desactivar o modo de suspensão. |
 %kc:endInclude
 
+++ Anunciar Informação do Sistema ++[ReportingSystemInformation]
+%kc:beginInclude
+|| Nome | Comando de Teclado | Descrição |
+| Anunciar a hora/data | NVDA+f12 | Ao pressionar uma vez, informa a hora actual; se pressionar duas vezes, anuncia a data |
+| Anunciar o estado da bateria | NVDA+shift+b | Anuncia o estado da bateria. Ex: quando a fonte de alimentação está em utilização ou a percentagem actual da bateria. |
+| Anunciar o texto na área de transferência | NVDA+c | Anuncia o texto que se encontra na área de transferência, caso exista. |
+%kc:endInclude
+
 ++ Modos de voz ++[SpeechModes]
 
 O modo de voz determina como o conteúdo do ecrã, notificações, resposta aos comandos e outras informações são faladas durante a execução do NVDA.
@@ -537,14 +545,6 @@ Um comando permite alternar entre os vários modos:
 %kc:endInclude
 
 Se apenas precisar de alguns dos modos, veja [Modos disponíveis no comando para o ciclo de Modos de voz #SpeechModesDisabling] para uma maneira de desactivar os modos de que não necessita.
-
- ++ Anunciar Informação do Sistema ++[ReportingSystemInformation]
-%kc:beginInclude
-|| Nome | Comando de Teclado | Descrição |
-| Anunciar a hora/data | NVDA+f12 | Ao pressionar uma vez, informa a hora actual; se pressionar duas vezes, anuncia a data |
-| Anunciar o estado da bateria | NVDA+shift+b | Anuncia o estado da bateria. Ex: quando a fonte de alimentação está em utilização ou a percentagem actual da bateria. |
-| Anunciar o texto na área de transferência | NVDA+c | Anuncia o texto que se encontra na área de transferência, caso exista. |
-%kc:endInclude
 
 + Navegar Com O NVDA +[NavigatingWithNVDA]
 O NVDA permite-lhe explorar e navegar pelo sistema, de diversas formas, incluindo a interacção normal e a revisão.
@@ -1512,7 +1512,7 @@ Se esta opção estiver activa, e  se houver uma actualização pendente para in
 Também poderá proceder à instalação, manualmente, através do menu de "saída", do NVDA, se activado, pelo menu do NVDA ou ao proceder à verificação de actualizações pela opção "Ajuda", do menu do NVDA.
 
 +++ Voz +++[SpeechSettings]
-+
+
 %kc:setting
 ==== Abrir configurações de voz ====
 Comando: ``NVDA+control+v``
@@ -1523,11 +1523,11 @@ Para uma alternativa mais rápida de controlar os parâmetros de voz, a partir d
 Nesta secção encontramos as seguintes opções:
 
 ==== Alterar Sintetizador ====[SpeechSettingsChange]
-O primeiro controlo focado nesta secção informa-nos do sintetizador que está em uso. O segundo é um botão, "Alterar", que activa o diálogo [Seleccionar sintetizador #SelectSynthesizer], que lhe permite seleccionar o sintetizador, o dispositivo de saída e o nível de diminuição do volume.
+O primeiro controlo focado nesta secção informa-nos do sintetizador que está em uso. O segundo é um botão, "Alterar", que activa o diálogo [Seleccionar sintetizador #SelectSynthesizer], que lhe permite seleccionar o sintetizador a usar.
 Quando aberto a partir do diálogo Configurações, será sobreposto a este.
 Nesta situação, quer guarde ou cancele as alterações, voltará ao diálogo de configurações.
 
-====Voz ====[SpeechSettingsVoice]
+==== Voz ====[SpeechSettingsVoice]
 Esta opção é uma caixa de combinação, que lista todas as vozes do sintetizador que está, actualmente, a ser utilizado.
 Pode utilizar as setas, para ouvir os diversos itens.
 As setas Acima e Esquerda sobem pela lista, enquanto as Setas Abaixo e Direita descem pela lista.
@@ -1542,7 +1542,7 @@ Se usar outro sintetizador, talvez também possa configurar a variante, se o sin
 Esta opção permite-lhe alterar a velocidade da voz.
 Trata-se de uma barra deslizante, que vai de 0 a 100 (sendo 0 a velocidade mais lenta e 100 a mais rápida).
 
-+==== Turbo de voz ====[SpeechSettingsRateBoost]
+==== Turbo de voz ====[SpeechSettingsRateBoost]
 Activando esta opção aumentará, significativamente, a velocidade da voz, se tal for suportado pelo sintetizador.
 
 ==== Entoação ====[SpeechSettingsPitch]
@@ -1814,7 +1814,6 @@ Desactivar esta opção permite que a voz seja ouvida enquanto, simultaneamente,
 ==== Indicador de selecção ====[BrailleSettingsShowSelection]
 
 || . {.hideHeaderRow} | . |
-| Predefinição | Activado |
 | Opções | Padrão (Activado), Activado, Desactivado |
 | Predefinição | Activado |
 
@@ -1869,7 +1868,8 @@ Esta opção não aparecerá, se o seu dispositivo Braille apenas suportar a det
 
 Pode consultar a informação sobre o seu dispositivo Braille na secção [Dispositivos Braille Suportados #SupportedBrailleDisplays] para mais detalhes dos tipos de comunicação suportados e portas disponíveis.
 
-Por favor, note que se ligar vários dispositivos Braille à sua máquina ao mesmo tempo, usando o mesmo driver, (por exemplo, ligando dois dispositivos Handytech, actualmente é impossível dizer ao NVDA qual dispositivo usar.
+Por favor, note que se ligar vários dispositivos Braille à sua máquina ao mesmo tempo, usando o mesmo driver, (por exemplo, ligando dois dispositivos Handytech,
+actualmente é impossível dizer ao NVDA qual dispositivo usar.
 Portanto, é recomendável ligar apenas um dispositivo Braille de um determinado tipo / fabricante à sua máquina de cada vez.
 
 +++ Configurações de áudio +++[AudioSettings]
@@ -2002,7 +2002,7 @@ Comando: NVDA+4
 
 Se activada, o NVDA irá anunciar todas as teclas, que não sejam caracteres ou pontuações, que pressione no teclado. Isto inclui Control mais uma letra ou as setas direccionais.
 
-==== Tocar som para erros ortográficos ao escrever ====[KeyboardSettingsAlertForSpellingErrors]
+==== Reproduzir som para erros ortográficos ao escrever ====[KeyboardSettingsAlertForSpellingErrors]
 Quando activada, será reproduzido um som, quando uma palavra acabada de escrever contenha um erro ortográfico.
 Esta opção só está disponível se a opção Anunciar erros ortográficos estiver marcada na secção [Formatação de documentos #DocumentFormattingSettings] do das configurações do NVDA.
 
@@ -2095,7 +2095,7 @@ Para activar ou desactivar o Modo de revisão simples, em qualquer local, por fa
 
 +++ Apresentação de Objectos +++[ObjectPresentationSettings]
 
-+%kc:setting
+%kc:setting
 ==== Abrir configurações da apresentação de objectos ====
 Comando: ``NVDA+control+o``
 
@@ -2136,7 +2136,7 @@ Esta opção controla o modo como o NVDA anuncia a evolução das barras de prog
 
 Tem as seguintes opções:
 - Desligado: As barras de progresso não serão anunciadas, quando houver alguma alteração.
-- Falar: Esta opção indica ao NVDA para anunciar as barras de progresso em percentagens. Cada vez que há uma alteração à Barra de Progresso, o NVDA anuncia o novo valor.
+- Falar: Esta opção indica ao NVDA para anunciar as barras de progresso em percentagens. Cada vez que há uma alteração à Barra de progresso, o NVDA anuncia o novo valor.
 - bip: Esta opção instrui o leitor de ecrã para reproduzir um bip, cada vez que houver uma alteração à barra de progresso. O bip mais agudo informa que a barra de progresso chegou ao fim.
 - Falar e bip: Esta opção diz ao NVDA para reproduzir um bip e anunciar o valor, quando houver uma alteração à barra de progresso.
 -
@@ -2189,7 +2189,7 @@ Esta opção permite-lhe escolher se o NVDA deve anunciar, ou não, novos símbo
 Esta opção está activada, por padrão.
 
 +++ Modo de Navegação +++[BrowseModeSettings]
-+
+
 %kc:setting
 ==== Abrir configurações do modo de navegação ====
 Comando: ``NVDA+control+b``
@@ -2458,7 +2458,7 @@ Após alterar esta opção, tem de reiniciar o NVDA para que a alteração tenha
 Esta opção selecciona a forma como o NVDA interage com a Consola Windows utilizada pela Linha de comandos, PowerShell, e o Subsistema Windows para Linux.
 Não afecta o Terminal Windows moderno.
 No Windows 10 versão 1709, a Microsoft [adicionou suporte à UI Automation API à consola https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], trazendo melhorias na performance e estabilidade para os leitores de ecrã que a suportem.
- Em situações em que a UI Automation  não está disponível ou é conhecida por resultar numa experiência de utilização inferior, o antigo suporte do NVDA  à consola Windows está disponível como último recurso.
+Em situações em que a UI Automation  não está disponível ou é conhecida por resultar numa experiência de utilização inferior, o antigo suporte do NVDA  à consola Windows está disponível como último recurso.
 A caixa de combinação "Suporte à consola Windows" tem três opções:
 - Automático: Utiliza a UI Automation na versão da Consola Windows incluída com o Windows 11 versão 22H2 e posteriores.
 Esta opção é recomendada e definida por padrão.
@@ -2496,7 +2496,7 @@ Existem as seguintes opções:
 		- Existem muitas fontes de "accDescription", e várias têm uma semântica mista ou não fiável;
     Historicamente AT não tem sido capaz de diferenciar fontes de "descrição" tipicamente não era falada devido à semântica mista.
   - Esta opção está em desenvolvimento muito precoce, e depende de características dos navegadores  ainda não amplamente disponíveis;
-  - Espera-se que funcione com o Chromium 92.0.4479.0+.
+  - Espera-se que funcione com o Chromium 92.0.4479.0+
   -
 -
 
@@ -2515,7 +2515,7 @@ Este parâmetro controla se os caracteres são falados seguindo as opções [An�
 Por motivos de segurança, este parâmetro deve manter-se desactivado.
 No entanto, pode querer activá-lo se detectar problemas de performance ou instabilidade na introdução de caracteres e/ou anúncio de palavras em consolas, ou trabalhar em ambientes seguros e preferir ter o anúncio das palavras-passe.
 
-==== Usar suporte melhorado para caracteres introduzidos em Consolas Windows antigas quando disponível ====[AdvancedSettingsKeyboardSupportInLegacy]
+==== Usar suporte melhorado de caracteres introduzidos em Consolas Windows antigas se disponível ====[AdvancedSettingsKeyboardSupportInLegacy]
 Esta opção permite um método alternativo para detectar caracteres introduzidos em consolas Windows antigas.
 Apesar de melhorar a performance e evitar que alguns anúncios sejam soletrados, pode ser incompatível com alguns programas em modo terminal.
 Esta funcionalidade está disponível, e activada por padrão, no Windows 10, versões 1607 e posteriores, quando a UI Automation não estiver disponível ou estiver desactivada.
@@ -2527,7 +2527,7 @@ Esta opção controla como o NVDA determina o novo texto a ser falado nas consol
 A caixa de combinação "algoritmo diff" tem três opções:
 - Automático: Esta opção faz com que o NVDA prefira Diff Match Patch na maioria das situações, mas que volte a Difflib em aplicações problemáticas, tais como versões antigas de Consolas Windows e Mintty.
 - Diff Match Patch: Esta opção faz com que o NVDA calcule as alterações ao texto por caracter em terminais, mesmo em situações em que não é recomendável.
- Isto pode melhorar a performance quando é escrito muito texto na consola, e permite maior acerto no anúncio de alterações no meio das linhas.
+Isto pode melhorar a performance quando é escrito muito texto na consola, e permite maior acerto no anúncio de alterações no meio das linhas.
 No entanto, em algumas aplicações, a leitura de novo texto pode ficar cortada ou inconsistente.
 - Difflib: Esta opção faz com que o NVDA calcule as alterações ao texto por linha, mesmo em situações em que não é recomendável.
 É idêntico ao comportamento do NVDA até à versão 2020.4.
@@ -2547,7 +2547,7 @@ Não afecta a Consola do Windows ("conhost.exe").
 A caixa de combinação "Falar novo texto no Terminal Windows via:" tem três opções:
 - Predefinição: Esta opção é actualmente equivalente a "diffing", mas prevê-se que mude assim que o suporte para notificações UIA estiver mais desenvolvido.
 - Diffing: Esta opção utiliza o algoritmo Diff seleccionado para calcular as alterações cada vez que o terminal apresenta um novo texto.
-- Isto é idêntico ao comportamento do NVDA nas versões 2022.4 e anteriores.
+Isto é idêntico ao comportamento do NVDA nas versões 2022.4 e anteriores.
 - Notificações UIA: Esta opção transfere a responsabilidade de determinar que texto será falado para o próprio Terminal Windows, o que significa que o NVDA já não tem de determinar que texto actualmente no ecrã é "novo".
 Isto deverá melhorar acentuadamente o desempenho e a estabilidade do Terminal Windows, mas esta funcionalidade ainda não está completa.
 Em particular, caracteres digitados que não são mostrados no ecrã, tais como palavras-passe, são anunciados quando esta opção está seleccionada.
@@ -3012,7 +3012,7 @@ Para mais informações, leia o [Guia de desenvolvimento do NVDA https://www.nva
 Esta opção abre a [Loja de extras do NVDA #AddonsManager].
 Para mais informações, leia o capítulo: [Extras e a Loja de extras #AddonsManager].
 
- ++ Criar uma cópia portátil ++[CreatePortableCopy]
+++ Criar uma cópia portátil ++[CreatePortableCopy]
 Esta opção abre uma caixa de diálogo que permite criar uma cópia portátil do NVDA a partir da versão instalada.
 Quando estiver a executar uma cópia portátil do NVDA, terá uma opção adicional do menu Ferramentas, chamada "instalar o NVDA".
  
@@ -3050,7 +3050,7 @@ Os seguintes comandos do NVDA também podem ser úteis:
 | Anuncia o executável e o extra (appModule) carregado | ``NVDA+control+f1`` | Anuncia o nome do extra (app module), se algum, e o nome do executável associado que tem o foco. |
 %kc:endInclude
 
- + Sintetizadores de Voz Suportados +[SupportedSpeechSynths]
++ Sintetizadores de Voz Suportados +[SupportedSpeechSynths]
 Esta secção contém informação sobre os sintetizadores de voz suportados pelo NVDA.
 Para uma lista ainda mais extensa de sintetizadores de voz, gratuitos e comerciais, que pode comprar e descarregar para usar com o NVDA, por favor, consulte a [página de sintetizadores adicionais https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
@@ -3106,7 +3106,7 @@ Uma vez adicionadas, reinicie o NVDA.
 Por favor consulte [Idiomas e vozes suportados https://support.microsoft.com/pt-pt/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01] para uma lista de vozes disponíveis.
 
 
- + Dispositivos Braille Suportados +[SupportedBrailleDisplays]
++ Dispositivos Braille Suportados +[SupportedBrailleDisplays]
 Esta secção contém informação sobre os dispositivos Braille suportados pelo NVDA.
 
 ++ Dispositivos que suportam a detecção automática em segundo plano ++[AutomaticDetection]
@@ -3260,8 +3260,8 @@ Para modelos USB mais antigos, precisará de instalar os drivers USB da HandyTec
 Os seguintes modelos não são automaticamente suportados, mas podem ser usados com o [Handy Tech universal driver https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] e o extra do NVDA:
 - Braillino
 - Bookworm
+- Linhas Modular com versão de firmware 1.13 ou inferior. Note que o firmware destas linhas pode ser actualizado.
 -
-
 Seguem-se as associações de teclas para estes dispositivos braille com o NVDA.
 Por favor, consulte a documentação do seu dispositivo braille para obter a descrição de onde estas teclas podem ser encontradas.
 %kc:beginInclude
@@ -3909,13 +3909,13 @@ Por isso, e para manter a compatibilidade com outros leitores de ecrã em Taiwan
 
 ++ Dispositivos Eurobraille ++[Eurobraille]
 Os dispositivos Braille b.book, b.note, Esys, Esytime e Iris da [Eurobraille https://www.eurobraille.fr/] são suportados pelo NVDA.
-Estes dispositivos possuem um teclado Braille com 10 teclas. 
- das duas teclas colocadas como uma barra de Espaço, a tecla esquerda corresponde ao backspace e a tecla direita ao Espaço.
+Estes dispositivos possuem um teclado Braille com 10 teclas.
+Por favor, consulte a documentação destes dispositivos Braille para obter a descrição destas teclas.
+Das duas teclas colocadas como uma barra de Espaço, a tecla esquerda corresponde ao backspace e a tecla direita ao Espaço.
+
 Ligados via USB, estes dispositivos têm um teclado USB autónomo.
 É possível activar/desactivar este teclado usando a caixa de verificação "Simulação de introdução pelo teclado HID" das configurações Braille.
 O teclado Braille, descrito abaixo, refere-se a quando esta caixa de verificação está desmarcada.
-Seguem-se as associações de comandos dos dispositivos EuroBraille com o NVDA.
-Por favor, consulte a documentação destes dispositivos Braille para obter a descrição de onde estas teclas podem ser encontradas.
 
 +++  Funções do teclado Braille +++[EurobrailleBraille]
 %kc:beginInclude
@@ -4065,7 +4065,7 @@ Por favor, consulte a documentação destes dispositivos Braille para obter a de
 | "control+home" key | "l1+l2+l3", "l2+l3+l4" |
 | "control+end" key | "l6+l7+l8", "l5+l6+l7" |
 | Toggle HID Keyboard simulation | "l1+joystick1Down", "l8+joystick1Down" |
- %kc:endInclude
+%kc:endInclude
 
 ++ Linhas Nattiq nBraille ++[NattiqTechnologies]
 O NVDA suporta as linhas Braille da [Nattiq Technologies https://www.nattiq.com/] quando ligadas por USB.
@@ -4155,9 +4155,9 @@ Por favor, consulte a documentação destas linhas Braille para obter a descriç
 | Lê a barra de estado e move o objeto de navegação para ela | "f1+end1", "f9+end2" |
 | Alternar entre as formas do cursor Braile | "f1+eCursor1", "f9+eCursor2" | +| Alterna a forma do cursor braile
 | Alternar o cursor Braille | "f1+cursor1", "f9+cursor2"
-***| Cycle the braille show messages mode | "f1+f2", "f9+f10" |
-| Cycle the braille show selection state | "f1+f5", "f9+f14" |
-| Cycle the "braille move system caret when routing review cursor" states | "f1+f3", "f9+f11" |
+| Cycle the braille show messages mode | "f1+f2", "f9+f10" |
+| Alternart o estado do Braille mostrar a selecção | "f1+f5", "f9+f14" |
+| Alterna entre as opções do "Braille move o cursor do sistema quando o cursor de revisão é encaminhado" | "f1+f3", "f9+f11" |
 | Activar o objecto de navegação actual | "f7+f8" |
 | Anunciar hora/data | "f9" |
 | Anunciar o estado da bateria e tempo restante se não ligada à corrente | "f10" |
@@ -4254,37 +4254,37 @@ Os ecrãs Seguro incluem:
 ++ Opções de linha de comandos ++[CommandLineOptions]
 O NVDA pode aceitar uma ou mais opções adicionais, quando inicia, que alteram o seu comportamento.
 Pode passar todas as opções que necessitar.
-Estas opções podem ser passadas ao iniciar a partir de um atalho (nas propriedades do atalho), a partir do diálogo Executar (Menu Iniciar -> Executar ou Windows+r) ou a partir da linha de comandos.
+Estas opções podem ser passadas ao iniciar a partir de um atalho (nas propriedades do atalho), a partir do diálogo Executar (Menu Iniciar -> Executar ou Windows+r) ou da linha de comandos.
 As opções devem ser separadas do nome do ficheiro executável do NVDA e de outras opções por um espaço.
 Por exemplo, uma opção útil é "--disable-addons", que indica ao NVDA para suspender todos os extras.
 Isto permite determinar se um problema é provocado por algum extra e para recuperar de um problema grave provocado por um extra.
 
 Como exemplo, pode sair da cópia em execução do NVDA escrevendo o seguinte na janela Executar::
 
-"""
+```
 nvda -q
-"""
+```
 
 Algumas das opções têm uma versão curta e uma longa, enquanto algumas só têm a longa.
 Para as que têm uma versão curta, pode combiná-las como se segue:
-| "nvda -mc CONFIGPATH" | Isto iniciará o NVDA com os sons e mensagens de início desactivadas e a configuração especificada |
-| "nvda -mc CONFIGPATH --disable-addons" | Igual à anterior mas também com os extras desactivados |
+|`` nvda -mc CONFIGPATH`` | Isto iniciará o NVDA com os sons e mensagens de início desactivadas e a configuração especificada |
+| ``nvda -mc CONFIGPATH --disable-addons`` | Igual à anterior mas também com os extras desactivados |
 
 Algumas das opções da linha de comando aceitam parâmetros adicionais, por exemplo quão detalhado o ficheiro de log deve ser ou o caminho para as configurações do utilizador.
 Esses parâmetros devem ser colocados depois da opção, separados da opção por um espaço, se estivermos a usar a versão curta ou um sinal de igual (=), se usarmos a versão longa. Por exemplo:
-| "nvda -l 10" | Informa o NVDA para iniciar com o nível de registo definido para depuração |
-| "nvda --log-file=c:\nvda.log" | Informa o NVDA para escrever o ficheiro de log em c:\nvda.log |
-| "nvda --log-level=20 -f c:\nvda.log" | Informa o NVDA para iniciar com o nível de registo definido para info e para guardar o ficheiro em c:\nvda.log |
+| ``nvda -l 10`` | Informa o NVDA para iniciar com o nível de registo definido para depuração |
+| ``nvda --log-file=c:\nvda.log`` | Informa o NVDA para escrever o ficheiro de log em c:\nvda.log |
+| ``nvda --log-level=20 -f c:\nvda.log`` | Informa o NVDA para iniciar com o nível de registo definido para info e para guardar o ficheiro em c:\nvda.log |
 
 Seguidamente, apresentam-se as opções para a linha de comando para o NVDA
 || Curta | Longa | Descrição |
 | "-h" | "--help" | Mostra a ajuda da linha de comandos e sai |
 | "-q" | "--quit" | Sai da cópia em execução do NVDA |
 | "-k" | "--check-running" | Anuncia se o NVDA está em execução via código de saída; 0 se em execução, 1 se não em execução |
-| "-f NomeDoFicheiroDeRegisto" | "--log-file=NomeDoFicheiroDeRegisto" | Especifica em que ficheiro devem ser escritas as informações de registo |
+| "-f NomeDoFicheiroDeRegisto" | "--log-file=NomeDoFicheiroDeRegisto" | Especifica em que ficheiro escrever as informações de registo |
 | "-l LOGLEVEL" | "--log-level=LOGLEVEL" | O nível mais baixo de mensagens registadas (depuração 10, input/output 12, aviso de depuração 15, info 20, desactivado 100) |
-| "-c CAMINHO" | "--config-path=CAMINHO" | O caminho para onde estão as configurações do NVDA |
-| None | "--lang=LANGUAGE" | Sobreõe-se ao idioma  configurado no NVDA. "Windows" para o padrão do utilizador actual, "pt_PT" para português, etc. |
+| "-c CAMINHO" | "--config-path=CAMINHO" | O caminho onde estão as configurações do NVDA |
+| None | "--lang=LANGUAGE" | Sobrepõe-se ao idioma  configurado no NVDA. "Windows" para o padrão do utilizador actual, "pt_PT" para português, etc. |
 | "-m" | "--minimal" | Sem sons, sem interface, sem mensagem de início, etc |
 | "-s" | "--secure" | Inicia o NVDA em [modo seguro #SecureMode] |
 | None | "--disable-addons" | Os extras serão desacttivados |

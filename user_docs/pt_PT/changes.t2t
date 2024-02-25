@@ -4,24 +4,31 @@ Traduzido pela Equipa portuguesa do NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2024.1 =
+
 Foi adicionado um novo modo de voz "a pedido".
 Quando o modo de voz está configurado para "a pedido", o NVDA não fala automaticamente (por exemplo, ao mover o cursor) mas ainda fala ao chamar comandos cujo objetivo é explicitamente anunciar algo (por exemplo, anunciar o título da janela).
 Na categoria Voz das configurações do NVDA, passa a ser possível excluir modos de voz não desejados do comando Alternar modos de voz (`NVDA+s`).
+
 Um novo modo de Seleção Nativa (ativado por `NVDA+shift+f10`) está agora disponível no modo de navegação do NVDA para o Mozilla Firefox.
 Quando ativado, selecionar texto no modo de navegação também manipulará a seleção nativa do Firefox.
 Copiar texto com `control+c` passará diretamente para o Firefox, copiando o conteúdo HTML, em vez da representação em texto simples do NVDA.
+
 A Loja de extras passa a suportar ações em massa (por exemplo, instalar ou activar extras) seleccionando múltiplos extras.
 Há uma nova acção para abrir uma página de avaliações para o extra seleccionado.
+
 As opções de dispositivo de saída de áudio e modo de redução de volume foram removidas do diálogo "Seleccionar Sintetizador".
 Passam a ser encontradas no painel de configurações de áudio que pode ser aberto com `NVDA+control+u`.
+
 eSpeak-NG, conversor Braille LibLouis e Unicode CLDR foram actualizados.
 Disponíveis novas tabelas Braille para Tailandês, Filipino e Romeno.
+
 Muitas correcções de erros, particularmente para a Loja de extras, Braille, Libre Office, Microsoft Office e áudio.
 
 == Notas Importantes ==
 - Esta versão quebra a compatibilidade com add-ons existentes.
 - Windows 7 e Windows 8 já não são suportados.
 Windows 8.1 é a versão mínima do Windows suportada.
+-
 
 == Novas Funcionalidades ==
 - Loja de Extras:
@@ -29,24 +36,30 @@ Windows 8.1 é a versão mínima do Windows suportada.
   - Uma nova acção foi adicionada para abrir uma página dedicada para ver ou fornecer informações sobre o extra seleccionado. (#15576, @nvdaes)
   -
 - Suporte adicionado para dispositivos Braille Bluetooth Low Energy HID. (#15470)
-- Um novo modo de Selecção Nativa (activado por `NVDA+shift+f10`) está agora disponível no modo de navegação do NVDA para o Mozilla Firefox. Quando activado, seleccionar texto no modo de navegação também manipula a selecção nativa do Firefox. Copiar texto com `control+c` passa directamente para o Firefox, copiando o conteúdo HTML, em vez da representação em texto simples do NVDA. (#15830)
+- Um novo modo de Selecção Nativa (activado por `NVDA+shift+f10`) está agora disponível no modo de navegação do NVDA para o Mozilla Firefox.
+Quando activado, seleccionar texto no modo de navegação também manipula a selecção nativa do Firefox.
+Copiar texto com `control+c` passa directamente para o Firefox, copiando o conteúdo HTML, em vez da representação em texto simples do NVDA. (#15830)
 - Ao copiar texto no Microsoft Word com o modo de navegação do NVDA activado, a formatação passa a ser incluída. (#16129)
-- Um novo modo de voz "a pedido" foi adicionado. Quando a voz está configurada para "a pedido" o NVDA não fala automaticamente (por exemplo, ao mover o cursor) mas ainda fala ao activar comandos cujo objectivo é explicitamente anunciar algo (por exemplo, anunciar o título da janela). (#481, @CyrilleB79)
+- Um novo modo de voz, "a pedido", foi adicionado.
+Quando a voz está configurada para "a pedido" o NVDA não fala automaticamente (por exemplo, ao mover o cursor) mas ainda fala ao activar comandos cujo objectivo é explicitamente anunciar algo (por exemplo, anunciar o título da janela). (#481, @CyrilleB79)
 - Na categoria Voz das configurações do NVDA, agora é possível excluir modos de voz não desejados do comando "Alternar modos de voz" (`NVDA+s`). (#15806, @lukaszgo1)
-- Se está actualmente a usar o extra "Modos de voz", considere desinstalá-lo e desactivar os modos "bips" e "a pedido" nas configurações.
+  - Se está actualmente a usar o extra "Modos de voz", considere desinstalá-lo e desactivar os modos "bips" e "a pedido" nas configurações.
+  -
+-
 
 == Alterações ==
 - O NVDA deixa de suportar o Windows 7 e o Windows 8. Windows 8.1 passa a ser a versão mínima do Windows suportada. (#15544)
 - Actualização de Componentes:
   - Actualizado o conversor Braille LibLouis para [3.28.0 https://github.com/liblouis/liblouis/releases/tag/v3.28.0]. (#15435, #15876, @codeofdusk)
-  - Adicionadas tabelas Braille para Tailandês, Romeno e Filipino.
+    - Adicionadas tabelas Braille para Tailandês, Romeno e Filipino.
+    -
   - eSpeak NG actualizado para 1.52-dev commit `530bf0abf`. (#15036)
   - Anotações de emoji e símbolos CLDR foram actualizadas para a versão 44.0. (#15712, @OzancanKaratas)
   - Actualizado o Java Access Bridge para 17.0.9+8Zulu (17.46.19). (#15744)
   -
 - Comandos de Teclado:
   - Os seguintes comandos passam a suportar duas e três pressões para soletrar a informação anunciada e soletrar com descrição de caracteres: "Anunciar selecçãoactual", "Anunciar o texto da área de transferência" e "Anunciar objecto em foco". (#15449, @CyrilleB79)
-  - O comando para alternar a cortina de ecrã passa a ser um comando padrão: `NVDA+control+escape`. (#10560, @CyrilleB79)
+  - O comando para alternar a cortina de ecrã passa a ser um comando predefinido: `NVDA+control+escape`. (#10560, @CyrilleB79)
   - Quando pressionado quatro vezes, o comando "Anunciar selecção actual" passa a mostrar a informação numa mensagem navegável. (#15858, @Emil-18)
   -
 - Microsoft Office:
@@ -181,7 +194,6 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
 - Updated pip dependencies:
   - configobj to 5.1.0dev commit ``e2ba4457c4651fa54f8d59d8dcdd3da950e956b8``. (#15544)
   - Comtypes to 1.2.0. (#15513, @codeofdusk)
-  - fast_diff_match_patch to 2.0.1. (#15514, @codeofdusk)
   - Flake8 to 4.0.1. (#15636, @lukaszgo1)
   - py2exe to 0.13.0.1dev commit ``4e7b2b2c60face592e67cb1bc935172a20fa371d``. (#15544) 
   - robotframework to 6.1.1. (#15544)
@@ -191,7 +203,7 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
   -
 - Removed pip dependencies:
   - typing_extensions, these should be supported natively in Python 3.11 (#15544)
-  - nose, instead unittest-xml-reporting is used to generate XML reports. (#15544)
+  - note, instead unittest-xml-reporting is used to generate XML reports. (#15544)
   -
 - ``IAccessibleHandler.SecureDesktopNVDAObject`` has been removed.
 Instead, when NVDA is running on the user profile, track the existence of the secure desktop with the extension point: ``winAPI.secureDesktop.post_secureDesktopStateChange``. (#14488)

@@ -153,6 +153,17 @@ extern "C" __declspec(dllexport) bool __stdcall initialize(bool doRemote, IUIAut
 	return true;
 }
 
+// Cleans up the remote operations library.
+extern "C" __declspec(dllexport) void __stdcall cleanup() {
+	if (_isInitialized) {
+		LOG_INFO(L"Cleaning up the UIA Remote Operations abstraction library...")
+		UiaOperationAbstraction::Cleanup();
+		_isInitialized = false;
+		LOG_INFO(L"Done")
+	}
+}
+
+
 BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	if(reason==DLL_PROCESS_ATTACH) {
 		GetModuleFileName(hModule,dllDirectory,MAX_PATH);
