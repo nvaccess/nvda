@@ -526,7 +526,7 @@ Chế độ đọc (speech mode ) điều chỉnh cách đọc nội dung màn h
 Chế độ mặc định là "đọc", nghĩa là sẽ đọc ở những tình huống được mong đợi với trình đọc màn hình.
 Tuy nhiên, trong một số trường hợp nhất định hoặc khi chạy các chương trình cụ thể, bạn có thể thấy các chế độ đọc khác là có giá trị.
 
-Hiện có bốn chế độ đọc bao gồm:
+Hiện có bốn chế độ đọc, bao gồm:
 - Đọc (mặc định): NVDA sẽ đọc bình thường khi có các thay đổi trên màn hình, thông báo và các hoạt động như di chuyển tiêu điểm hoặc dùng lệnh.
 - Theo yêu cầu: NVDA sẽ chỉ đọc khi bạn sử dụng các lệnh có chức năng thông báo (ví dụ: thông báo tiêu đề của cửa sổ); nhưng nó sẽ không đọc trong các hành động như di chuyển tiêu điểm hoặc con trỏ.
 - Tắt: NVDA sẽ không đọc gì, nhưng không giống với chế độ ngủ, mà nó sẽ phản hồi một cách im lặng những lệnh được đưa ra.
@@ -536,7 +536,7 @@ Hiện có bốn chế độ đọc bao gồm:
 Chế độ Beeps có thể hữu dụng khi một số thông tin đầu ra dài dòng đang cuộn trong cửa sổ terminal, nhưng bạn không quan tâm nó là gì, chỉ biết rằng nó đang tiếp tục cuộn; hoặc trong những trường hợp khác mà bạn quan tâm đến việc có thông tin đầu ra hơn là nội dung thông tin đó.
 
 Chế độ Theo yêu cầu có thể hữu dụng khi bạn không cần phản hồi liên tục về những gì đang diễn ra trên màn hình hay trên máy tính, nhưng lại muốn kiểm tra định kì một cái gì đó bằng cách dùng lệnh để xem lại, v...v....
-Các ví dụ bao gồm khi thu âm, khi dùng trình phóng to màn hình, trong một cuộc gọi hay cuộc họp, hay là một hình thức thay thế cho chế độ beeps.
+Các ví dụ bao gồm khi thu âm, khi dùng trình phóng to màn hình, trong một cuộc gọi hay cuộc họp, hoặc là một hình thức thay thế cho chế độ beeps.
 
 Thao tác để chuyển qua lại giữa các chế độ đọc:
 %kc:beginInclude
@@ -854,12 +854,12 @@ Sau đây là danh sách các lệnh đó:
 -
 
 Hãy nhớ rằng sẽ có hai lệnh cho mỗi loại thành phần, để di chuyển tới và lùi trong một tài liệu, và bạn phải gán thao tác / phím tắt cho cả hai lệnh để  di chuyển theo hai hướng.
-Ví dụ, nếu muốn dùng phím lệnh ``y`` / ``shift+y`` để nhanh chóng di chuyển qua các tab, bạn sẽ làm như sau:
+Ví dụ, nếu muốn dùng phím lệnh ``y`` / ``shift+y`` để nhanh chóng di chuyển qua các thẻ, bạn sẽ làm như sau:
 
 + Mở hộp thoại quản lý các thao tác từ chế độ duyệt.
-+ Tìm mục có tên "chuyển đến tab kế tiếp" trong phần chế độ duyệt.
-+ Gán phím ``y`` key cho thao tác.
-+ Tìm mục "chuyển đến tab trước".
++ Tìm mục có tên "chuyển đến thẻ kế tiếp" trong phần chế độ duyệt.
++ Gán phím ``y`` cho thao tác.
++ Tìm mục "chuyển đến thẻ trước".
 + Gán ``shift+y`` cho thao tác.
 +
 
@@ -899,31 +899,31 @@ Một lệnh được cung cấp để trở về trang gốc chứa đối tư�
 | Quay về chế độ duyệt tài liệu | NVDA+control+khoảng trắng | Quay về chế độ duyệt tài liệu |
 %kc:endInclude
 
-++ Chế độ chọn thật ++[NativeSelectionMode]
+++ Chế độ chọn thực tế ++[NativeSelectionMode]
 Mặc định thì khi chọn văn bản với ``shift+các phím mũi tên`` trong chế độ duyệt, vùng chọn chỉ được tạo trong phần trình bày ở chế độ duyệt của NVDA, không thể hiện trong ứng dụng.
-Điều này có nghĩa là vùng chọn không được thể hiện trên màn hình, và việc sao chép văn bản với ``control+c`` sẽ chỉ sao chép phần trình bày bằng văn bản thô của NVDAcho nội dung hiện tại. định dạng bảng biểu hay các liên kết sẽ khonchẳng hạn, sẽ không được sao chép.
-Tuy nhiên, NVDA có chế độ tạm dịch là vùng chọn thật, có thể bật ở một số tài liệu trong chế độ duyệt (hiện tại chỉ hỗ trợ cho Mozilla Firefox) sẽ làm cho vùng chọn thực tế trong tài liệu sẽ đi theo vùng chọn ở chế độ duyệt của NVDA.
+Điều này có nghĩa là vùng chọn không được thể hiện trên màn hình, và việc sao chép văn bản với ``control+c`` sẽ chỉ sao chép phần trình bày bằng văn bản thô của NVDA cho nội dung hiện tại. Định dạng bảng biểu hay các liên kết  chẳng hạn, sẽ không được sao chép.
+Tuy nhiên, NVDA có chế độ   chọn thực tế, có thể bật ở một số tài liệu trong chế độ duyệt (hiện tại chỉ hỗ trợ cho Mozilla Firefox) sẽ làm cho vùng chọn thực tế trong tài liệu sẽ đi theo vùng chọn ở chế độ duyệt của NVDA.
 
 %kc:beginInclude
 || Tên | Phím | Mô tả |
-| Bật / tắt chế độ chọn thật | ``NVDA+shift+f10`` | Bật / tắt chế độ chọn thật |
+| Bật / tắt chế độ chọn thực tế | ``NVDA+shift+f10`` | Bật / tắt chế độ chọn thực tế |
 %kc:endInclude
 +
-Khi bật chế độ chọn thật, việc sao chép vùng chọn bằng ``control+c`` sẽ dùng tính năng sao chép của ứng dụng, nghĩa là nội dung đa dạng thức sẽ được chép vào bộ nhớ tạm, thay vì chỉ chép văn bản thô.
+Khi bật chế độ chọn thực tế, việc sao chép vùng chọn bằng ``control+c`` sẽ dùng tính năng sao chép của ứng dụng, nghĩa là nội dung đa dạng thức sẽ được chép vào bộ nhớ tạm, thay vì chỉ chép văn bản thô.
 Điều này có nghĩa là mang nội dung đó dán vào các chương trình như Microsoft Word hay Excel, các định dạng như bảng biểu, hay liên kết sẽ được giữ nguyên.
-Tuy nhiên, xin lưu ý là ở chế độ chọn thật, một vài nhãn tiếp cận hoặc những thông tin khác mà NVDA tạo ra trong chế độ duyệt sẽ không được bao gồm.
+Tuy nhiên, xin lưu ý là ở chế độ chọn thực tế, một vài nhãn tiếp cận hoặc những thông tin khác mà NVDA tạo ra trong chế độ duyệt sẽ không được bao gồm.
 Thêm nữa, dù cho ứng dụng đã nỗ lực để tạo vùng chọn sao cho khớp với vùng chọn trong chế độ duyệt của NVDA, kết quả cho ra không phải lúc nào cũng chính xác.
 Tuy nhiên, đối với những trường hợp bạn muốn sao chép toàn bộ bảng hoặc đoạn văn có nội dung đa dạng thức, tính năng này sẽ hữu ích.
  
 + Đọc nội dung toán học +[ReadingMath]
-NVDA có thể đọc và duyệt các nội dung toán học trên web và trong các ứng dụng khác, cung cấp khả năng truy cập bantg82 cả tiếng nio1 và chữ nổi.
-Tuy nhiên, để NVDA có thể đọc và tương tác với các nội dugn toán học, trước tiên, bạn cần cài một thành phần toán học cho NVDA.
+NVDA có thể đọc và duyệt các nội dung toán học trên web và trong các ứng dụng khác, cung cấp khả năng truy cập bằng cả tiếng nói và chữ nổi.
+Tuy nhiên, để có thể đọc và tương tác với các nội dung toán học, trước tiên, bạn cần cài một thành phần hỗ trợ toán học cho NVDA.
 Có một vài add-on trên cửa hàng add-on của NVDA cung cấp hỗ trợ cho toán học, bao gồm [MathCAT NVDA add-on https://nsoiffer.github.io/MathCAT/] và [Access8Math https://github.com/tsengwoody/Access8Math]. 
 Vui lòng xem phần [Cửa hàng Add-on #AddonsManager] để biết cách tìm và cài đặt các add-on hiện hành trong NVDA.
 NVDA cũng có thể sử dụng phiên bản cũ của phần mềm [MathPlayer https://info.wiris.com/mathplayer-info] từ Wiris nếu có cài trên máy bạn, vì phần mềm này không còn được duy trì nữa.
   
 ++ Các nội dung toán học được hỗ trợ ++[SupportedMathContent]
-Với các thành phần toán học thích hợp được cài đặt, NVDA hỗ trợ các kiểu nội dung toán học sau đây:
+Với các thành phần hỗ trợ toán học thích hợp được cài đặt, NVDA hỗ trợ các kiểu nội dung toán học sau đây:
 - Chương trình MathML chạy trên Mozilla Firefox, Microsoft Internet Explorer và Google Chrome.
 - Công thức toán mới của Microsoft Word 365 thông qua UI automation:
 NVDA đã có khả năng đọc và tương tác với các công thức toán trong Microsoft Word 365/2016 bản dựng 14326 trở lên.
@@ -967,7 +967,7 @@ Ví dụ, bạn dùng mũi tên trái và phải để di chuyển trong biểu 
 
 Bấm escape nếu bạn muốn trở về tài liệu.
 
-Để có thêm thông tin về các lệnh  hiện hành và các cài đặt để đọc và di chuyển trong nội dung toán học, vui lòng xem tài liệu hướng dẫn của thành phần toàn học mà bạn đã cài đặt.
+Để có thêm thông tin về các lệnh  hiện hành và các cài đặt cho việc đọc và di chuyển trong nội dung toán học, vui lòng xem tài liệu hướng dẫn của thành phần hỗ trợ toán học mà bạn đã cài đặt.
 - [Tài liệu MathCAT https://nsoiffer.github.io/MathCAT/users.html]
 - [Tài liệu  Access8Math https://github.com/tsengwoody/Access8Math]
 - [Tài liệu MathPlayer https://docs.wiris.com/mathplayer/en/mathplayer-user-manual.html]
@@ -977,12 +977,12 @@ Bấm escape nếu bạn muốn trở về tài liệu.
 Để kích hoạt nút bấm hay thành phần chứa công thức, bấm ctrl+enter.
 
 ++ Cài đặt MathPlayer ++[InstallingMathPlayer]
-Mặc dù việc dùng một trong những add-on NVDA  mới hơn để đọc nội dung toán là được khuyến cáo, nhưng trong một số tình huống nhất định, MathPlayer vẫn là một lựa chọn thích hợp hơn.
-Ví dụ, MathPlayer có thể hỗ trợ một ngôn ngữ hay mã chữ nổi cụ thể nào đó mà chưa được hỗ trợ trong các add-on nói trên.
+Mặc dù việc dùng một trong những add-on NVDA  mới hơn để đọc nội dung toán được khuyến cáo, nhưng trong một số tình huống nhất định, MathPlayer vẫn là một lựa chọn thích hợp hơn.
+Ví dụ, MathPlayer có thể hỗ trợ một ngôn ngữ hay mã chữ nổi cụ thể nào đó chưa được hỗ trợ trong các add-on nói trên.
 MathPlayer được cung cấp miễn phí từ trang web của Wiris.
 [Tải về MathPlayer https://downloads.wiris.com/mathplayer/MathPlayerSetup.exe].
 Sau khi cài đặt MathPlayer, bạn cần phải khởi động lại NVDA. 
-Xin lưu ý là những thông tin về MathPlayer có thể nói là chỉ dành cho các trình duyệt cũ như Internet Explorer 8.
+Xin lưu ý rằng những thông tin về MathPlayer có thể nói là chỉ dành cho các trình duyệt cũ như Internet Explorer 8.
 Điều này chỉ đề cập việc dùng MathPlayer để hiển thị nội dung toán học một cách trực quan và có thể bị bỏ qua bởi những ai chỉ dùng nó để đọc hoặc di chuyển trong nội dung toán học với NVDA.
 
 + Chữ Nổi +[Braille]
@@ -1182,7 +1182,7 @@ NVDA có thể dùng công cụ này để nhận dạng văn bản trong hình 
 Bạn có thể chọn ngôn ngữ nhận dạng trong phân loại [Windows OCR #Win10OcrSettings] trong [hộp thoại cấu hình NVDA #NVDASettings].
 Có thể cài đặt thêm ngôn ngữ nhận dạng bằng cách mở start menu, chọn Settings (cài đặt), mở Time & Language (ngôn ngữ và thời gian) -> Region & Language (ngôn ngữ và vùng), sau đó chọn Add a language (thêm ngôn ngữ).
 
-Nếu muốn theo dõi các nội dung thường xuyên thay đổi, như là xem một video với tiêu đề chẳng hạn, bạn có thể bật tùy chỉnh tự động cập nhật nội dung được nhận dạng.
+Nếu muốn theo dõi các nội dung thường xuyên thay đổi, như là xem một video với phụ đề chẳng hạn, bạn có thể bật tùy chỉnh tự động cập nhật nội dung được nhận dạng.
 Cũng có thể thực hiện tác vụ này trong [phân loại Windows OCR #Win10OcrSettings] ở [Hộp thoại cài đặt NVDA #NVDASettings] dialog.
 
 Windows OCR có thể không tương thích một phần hay toàn phần với [hỗ trợ nhìn của NVDA #Vision] hoặc các tiện ích hỗ trợ nhìn bên ngoài. Bạn sẽ phải tắt các tiện ích này trước khi thực hiện nhận dạng.
@@ -1330,7 +1330,7 @@ NVDA cung cấp hỗ trợ nâng cao cho Poedit 3.4 hoặc mới hơn.
 
 %kc:beginInclude
 || Chức năng | Phím tắt | Mô tả |
-| Thông báo chú thích cho người phiên dịch | ``control+shift+a`` | Thông báo chú thích cho người phiên dịch. Bấm hai lần để hiện thông tin đó trong chế độ duyệt |
+| Thông báo lưu ý cho người phiên dịch | ``control+shift+a`` | Thông báo chú thích cho người phiên dịch. Bấm hai lần để hiện thông tin đó trong chế độ duyệt |
 | Thông báo chú thích | ``control+shift+c`` | Thông báo chú thích trong cửa sổ chú thích. Bấm hai lần để hiện thông tin đó trong chế độ duyệt |
 | Thông báo văn bản nguồn cũ | ``control+shift+o`` | Thông báo văn bản nguồn cũ nếu có. Bấm hai lần để hiển thị nội dung trong chế độ duyệt |
 | Thông báo cảnh báo phiên dịch | ``control+shift+w`` | Thông báo các cảnh báo phiên dịch nếu có. Bấm hai lần để hiển thị nội dung trong chế độ duyệt |
@@ -1409,7 +1409,7 @@ Hầu hết các hộp thoại của NVDA đều có thông tin giúp đỡ theo
 kc:beginInclude
 Khi ở trong một hộp thoại, bấm ``f1`` để mở hướng dẫn sử dụng tại đoạn liên quan đến cài đặt con trỏ hay hộp thoại hiện tại.
 %kc:endInclude
-Một số thiết lập có thể thay đổi thông qua các phím tắt sẽ được giới thiệu chi tiết ở những phần liên quan bên dưới.
+Một số thiết lập có thể thay đổi thông qua phím tắt sẽ được giới thiệu chi tiết ở những phần liên quan bên dưới.
 
 ++ Cài đặt NVDA ++[NVDASettings]
 %kc:settingsSection: || Tên | Phím máy bàn | Phím xách tay | Mô tả |
@@ -1834,7 +1834,7 @@ Phím tắt: ``NVDA+control+a``
 
 Hộp thoại chọn màn hình nổi, có thể mở bằng cách kích hoạt nút Thay đổi... trong phân loại chữ nổi của hộp thoại cấu hình NVDA,cho phép bạn chọn màn hình để hiển thị đầu ra chữ nổi trong NVDA.
 Khi chọn được màn hình mong muốn, bạn có thể bấm Đồng ý và NVDA sẽ gọi màn hình đã chọn.
-Nếu có  lỗi khi gọi các driver của màn hình, NVDA sẽ thông báo và tiếp tục dùng màn hình trước đó nếu có.
+Nếu có  lỗi khi gọi các trình điều khiển của màn hình, NVDA sẽ thông báo và tiếp tục dùng màn hình trước đó nếu có.
 
 ==== Màn Hình Nổi ====[SelectBrailleDisplayDisplay]
 Hộp xổ này có  vài tùy chọn, phụ thuộc vào driver màn hình nổi nào đang được cài trên máy bạn.
@@ -1848,14 +1848,14 @@ Không có Braille nghĩa là máy bạn không dùng màn hình nổi.
 Vui lòng xem phần [Các màn hình nổi được hỗ trợ #SupportedBrailleDisplays] để biết thêm thông tin về các màn hình được hỗ trợ và những màn hình nào trong số đó có hỗ trợ việc ngầm tự nhận biết.
 
 ==== Các màn hình tự động dò tìm ====[SelectBrailleDisplayAutoDetect]
-Khi tùy chọn màn hình nỏi được thiết lập là "Tự động", các hộp kiểm trong danh sách điều khiển này cho phép bạn bật hoặc tắt các trình điều kiển màn hình sẽ tham gia vào quá trình dò tìm tự động.
+Khi tùy chọn màn hình nổi được thiết lập là "Tự động", các hộp kiểm trong danh sách điều khiển này cho phép bạn bật hoặc tắt các trình điều khiển màn hình sẽ tham gia vào quá trình dò tìm tự động.
 Điều này cho phép loại bỏ trình điều khiển của các màn hình chữ nổi mà bạn không dùng thường xuyên.
-Ví dụ như bạn chỉ sở hữu một màn hình chữ nổi yêu cầu trình điều khiển của Baum để hoạt độnt, bạn có thể bật trình điều khiển của Baum, trong khi tắt các trình điều khiển khác.
+Ví dụ như bạn chỉ sở hữu một màn hình chữ nổi yêu cầu trình điều khiển của Baum để hoạt động, bạn có thể bật trình điều khiển của Baum, trong khi tắt các trình điều khiển khác.
 
 Mặc định, tất cả các trình điều khiển có hỗ trợ tự dò tìm đều được bật.
 Ví dụ như  mọi trình điều khiển được thêm vào trong các phiên bản sau này của NVDA hay  trong một  add-on, mặc định cũng sẽ được bật lên.
 
-Bạn có thể tham khảo tài liệu dành cho màn hình chữ nổi của mình trong phần [Các màn hình nổi được hỗ trợ #SupportedBrailleDisplays] để kiểm tra việc hỗ trợ từ dò tìm của trình điều khiển cho các màn hình.
+Bạn có thể tham khảo tài liệu dành cho màn hình chữ nổi của mình trong phần [Các màn hình nổi được hỗ trợ #SupportedBrailleDisplays] để kiểm tra việc hỗ trợ tự dò tìm của trình điều khiển cho các màn hình.
 
 ==== Cổng ====[SelectBrailleDisplayPort]
 Tùy chọn này, nếu có, cho phép bạn chọn cổng hoặc loại kết nối sử dụng để giao tiếp với màn hình nổi được chọn.
@@ -1889,7 +1889,7 @@ Tùy chọn này cho phép bạn chọn thiết bị âm thanh cho bộ đọc m
 Phím tắt: ``NVDA+shift+d``
 
 Tùy chọn này cho phép bạn cấu hình NVDA sẽ giảm âm lượng của các ứng dụng khác khi NVDA đang đọc, hoặc luôn giảm khi chạy NVDA.
-- Không giảm (no ducking): NVDA không giảm âm lượng âm thanh từ các ứng dụng khác.
+- Không giảm: NVDA không giảm âm lượng âm thanh từ các ứng dụng khác.
 - Giảm khi đọc và phát âm thanh: NVDA chỉ giảm âm lượng âm thanh của các ứng dụng khác khi NVDA đọc hoặc phát âm thanh. Chức năng này có thể không hoạt động với mọi bộ đọc.
 - Luôn luôn giảm: NVDA giảm âm lượng âm thanh của ứng dụng khác trong suốt thời gian chạy chương trình.
 -
@@ -1953,7 +1953,7 @@ Khi các trình hỗ trợ tồn tại các cài đặt có thể thiết lập,
 +++ Bàn phím +++[KeyboardSettings]
 
 %kc:setting
-==== Mở cài đẵt bàn phím ====
+==== Mở cài đặt bàn phím ====
 Phím tắt: ``NVDA+control+k``
 
 Phân loại bàn phím  trong hộp thoại cấu hình NVDA có các tùy chọn cho việc dùng chương trình này với bàn phím.
@@ -2268,7 +2268,7 @@ Bật tùy chọn này có thể cải thiện hỗ trợ cho vài trang web vì
 +++ Định Dạng Tài Liệu +++[DocumentFormattingSettings]
 
 %kc:setting
-==== Mở cài đặt dịnh dạng tài liệu ====
+==== Mở cài đặt định dạng tài liệu ====
 Phím tắt: ``NVDA+control+d``
 
 Hầu hết các tùy chọn trong phân loại này là để cấu hình những định dạng nào sẽ được đọc lên khi bạn di chuyển con trỏ trong tài liệu.
@@ -2313,7 +2313,7 @@ Bạn có thể chọn các mục sau:
   - Hình ảnh
   - Danh sách
   - Đoạn trích dẫn
-  - Grouping
+  - Nhóm
   - cột mốc
   - Bài viết
   - Khung
@@ -2342,7 +2342,7 @@ Mỗi âm sẽ tăng cao độ lên một chút và đại diện cho một kho�
 -
 
 Nếu bạn đánh dấu chọn vào hộp kiểm "Bỏ qua dòng trắng khi thông báo thụt lề", thay đổi thụt lề cho dòng trắng sẽ không được thông báo.
-Điều này có thể hữu ích khi đọc một tài liệu mà dòng trắng được dùng ngăn cách các khối văn bản được thụt lề, như là mã nguồn trong lập trình chẳng hạn.
+Điều này có thể hữu ích khi đọc một tài liệu mà dòng trắng dùng để ngăn cách các khối văn bản được thụt lề, như là mã nguồn trong lập trình chẳng hạn.
 
 +++ Điều Hướng Tài Liệu +++[DocumentNavigation]
 Phân loại này cho phép bạn điều chỉnh nhiều cách khác nhau để điều hướng trong tài liệu.
@@ -2378,7 +2378,7 @@ Hộp xổ này cho phép chọn ngôn ngữ dùng để nhận dạng.
 ==== Định kì cập nhật nội dung đã nhận dạng ====[Win10OcrSettingsAutoRefresh]
 Khi bật hộp kiểm này, NVDA sẽ tự cập nhật những nội dung đã nhận dạng khi tiêu điểm ở kết quả nhận dạng.
 Điều này có thể rất hữu ích nếu bạn muốn theo dõi các nội dung thay đổi thường xuyên, xem một video có phụ đề chẳng hạn.
-Viêc cập nhật sẽ được thực hiện sau mỗi 1.5 giây.
+Việc cập nhật sẽ được thực hiện sau mỗi 1.5 giây.
 Tùy chọn này, mặc định không được bật.
 
 +++ Cài đặt nâng cao +++[AdvancedSettings]
@@ -2896,8 +2896,8 @@ Rồi bấm vào các nút cập nhật, cài đặt, hành động thay thế �
 Bạn có thể cài nhiều add-on cùng một lúc.
 Có thể làm điều này bằng cách chọn nhiều add-on trong thẻ add-on hiện hành, rồi kích hoạt trình đơn ngữ cảnh và chọn mục "Cài đặt các add-on đã chọn".
 
-Để cài một add-on ngoài Cửa Hàng Add-On, bấm nút "Cài đặt từ các nguồn bên ngoài" button.
-Điều này sẽ cho phép bạn tìm kiếm một gói add-on (tập tin ``.nvda-addon``) ở đâu đó trên máy tính hoặc từ hệ thống mạng.
+Để cài một add-on ngoài Cửa Hàng Add-On, bấm nút "Cài đặt từ các nguồn bên ngoài".
+Thao tác này sẽ cho phép bạn tìm kiếm một gói add-on (tập tin ``.nvda-addon``) ở đâu đó trên máy tính hoặc từ hệ thống mạng.
 Khi bạn mở gói add-on thì quá trình cài đặt sẽ bắt đầu.
 
 Nếu đã cài NVDA vào hệ thống, bạn cũng có thể mở trực tiếp một tập tin add-on từ trình duyệt hoặc trình quản lý dữ liệu để cài đặt.
@@ -2910,7 +2910,7 @@ Sau khi cài đặt một add-on, NVDA phải được khởi động lại đ�
 NVDA sẽ yêu cầu bạn xác nhận việc gỡ add-on.
 Giống như khi cài đặt, NVDA cũng phải được khởi động lại để add-on được gỡ hoàn toàn.
 Cho đến khi bạn khởi động lại, trạng thái "Đang chờ để gỡ" sẽ hiển thị cho add-on đó trong danh sách.
-Giống như khi cài đặt, bạn cũng có thể gỡ cài đặt nhiều add-ons cùng lúc.
+Giống như khi cài đặt, bạn cũng có thể gỡ cài đặt nhiều add-on cùng lúc.
 
 +++ Bật / tắt Add-on +++[AddonStoreDisablingEnabling]
 Để tắt một add-on, hãy dùng hành động "tắt".
@@ -2921,7 +2921,7 @@ Nếu add-on "đã tắt" trước đó, trạng thái sẽ hiển thị là "b�
 Nếu add-on "đã bật" trước đó, trạng thái sẽ hiển thị là "tắt sau khi khởi động lại".
 Giống như khi cài hoặc gỡ cài đặt các add-on, bạn cần phải khởi động lại NVDA để các thay đổi có hiệu lực.
 Bạn cũng có thể bật hoặc tắt nhiều add-on cùng một lúc bằng cách chọn các add-on trong danh sách, rồi mở trình đơn ngữ cảnh và chọn hành động phù hợp.
-+
+
 +++ Đánh giá và xem đánh giá add-on +++[AddonStoreReviews]
 Trước khi cài một add-on, có thể bạn cần xem đánh giá từ những người dùng khác.
 Ngoài ra, việc những người dùng khác cung cấp phản hồi về các add-on mà bạn đã thử cũng có thể hữu ích.
@@ -2952,11 +2952,11 @@ Bạn có thể tìm kiếm các add-on không tương thích đã cài đặt  
 ++ Trình hiển thị Log ++[LogViewer]
 Trình hiển thị log, được mở từ trình đơn Công cụ của NVDA, cho phép bạn xem các thông tin đầu ra ở phiên làm việc gần nhất mà NVDA được gọi chạy.
 
-Ngoài việc đọc nội dung, bạn cũng có thể Lưu bản sao của log thành tập tin hoặc làm mới trình xem log ể tải thông tin đầu ra mới được tạo sau khi mở Trình xem log.
+Ngoài việc đọc nội dung, bạn cũng có thể Lưu bản sao của log thành tập tin hoặc làm mới trình xem log để tải thông tin đầu ra mới được tạo sau khi mở Trình xem log.
 Các hành động này có trong trình đơn Nhật kí của trình xem log.
 
 Tập tin được hiển thị khi bạn mở trình xem log được lưu trên máy tính tại đường dẫn ``%temp%\nvda.log``.
-Tập tin này sẽ được làm mới mỗi khi khio73 động NVDA.
+Tập tin này sẽ được làm mới mỗi khi khởi động NVDA.
 Khi điều này diễn ra, tập tin log trước đó của NVDA sẽ được chuyển đến ``%temp%\nvda-old.log``.
  
 Bạn cũng có thể sao chép một đoạn log hiện tại vào bộ nhớ tạm mà không cần mở trình xem log.
@@ -3047,8 +3047,8 @@ Global plugins (mô đun toàn cục) quản lý việc tương tác của NVDA 
 Các phím lệnh sau đây của NVDA cũng có thể hữu dụng:
 %kc:beginInclude
 || Tên | Phím | Mô tả |
-| Cập nhật plugins | ``NVDA+control+f3`` | Cập nhật các mô đun cục bộ và mô đun toàn cục của NVDA. |
-| Thông báo các mô đun đã tải và thực thi | ``NVDA+control+f1`` | Thông báo tên của các mô đun cục bộ nếu có, và tên của tập tin thức thi tại ví trí con trỏ. |
+| Cập nhật plugin | ``NVDA+control+f3`` | Cập nhật các mô đun cục bộ và mô đun toàn cục của NVDA. |
+| Thông báo các mô đun đã tải và thực thi | ``NVDA+control+f1`` | Thông báo tên của các mô đun cục bộ nếu có, và tên của tập tin thực thi tại vị trí con trỏ. |
 %kc:endInclude
 
 + Các bộ đọc được hỗ trợ +[SupportedSpeechSynths]
@@ -3611,10 +3611,10 @@ Hãy thử làm các bước sau:
 + Cuộn danh sách xuống đến "USB Controllers" hoặc "USB Devices".
 + Chọn  "Papenmeier Braillex USB Device".
 + Mở properties và chuyển đến thẻ "Advanced".
-Thỉnh thoảng, thẻ "Advanced" không xuất hiẹn.
+Thỉnh thoảng, thẻ "Advanced" không xuất hiện.
 Trường hợp này, ngắt kết nối màn hình khỏi máy tính, tắt NVDA, chờ vài phút và kết nối lại.
 Nếu cần, làm lại bốn hoặc năm lần.
-Nếu thể "Advanced" vẫn không hiển thị, vui lòng khởi động lại máy tính.
+Nếu thẻ "Advanced" vẫn không hiển thị, vui lòng khởi động lại máy tính.
 + Tắt tùy chọn "Load VCP".
 +
 
@@ -4105,12 +4105,12 @@ Vui lòng xem [Danh sách phím kết hợp của BRLTTY http://mielke.cc/brltty
 | Chuyển đến dòng kế | lndn (đi xuống một dòng) |
 | Rút về ô chữ nổi | route (đưa con trỏ về ký tự hiện tại) |
 | Bật / tắt trợ giúp nhập | ``learn`` (bật / tắt chế độ trợ giúp nhập) |
-| Mở trình đơn NVDA menu | ``prefmenu`` (tắt / mởtrình đơn tùy chỉnh) |
-| Phục hio62 cấu hình | ``prefload`` (phục hio62 tùy chỉnh từ ổ đĩa) |
+| Mở trình đơn NVDA | ``prefmenu`` (tắt / mởtrình đơn tùy chỉnh) |
+| Phục hồi cấu hình | ``prefload`` (phục hồi tùy chỉnh từ ổ đĩa) |
 | Lưu cấu hình | ``prefsave`` (lưu tùy chỉnh xuống đĩa) |
-| Thông báo thời gian | ``time`` (hiên thị ngày giờ hiển tại) |
+| Thông báo thời gian | ``time`` (hiển thị ngày giờ hiện tại) |
 | Đọc dòng tại vị trí con trỏ duyệt | ``say_line`` (đọc dòng hiện tại) |
-| Đọc tất cả bằn con trỏ duyệt | ``say_below`` (đọc từ dòng hiện tại về cuio61 màn hình) |
+| Đọc tất cả bằn con trỏ duyệt | ``say_below`` (đọc từ dòng hiện tại về cuối màn hình) |
 %kc:endInclude
 
 ++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
