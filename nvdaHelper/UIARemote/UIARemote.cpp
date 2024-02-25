@@ -153,9 +153,9 @@ extern "C" __declspec(dllexport) bool __stdcall initialize(bool doRemote, IUIAut
 	return true;
 }
 
-// Cleans up the remote opperations library.
+// Cleans up the remote operations library.
 extern "C" __declspec(dllexport) void __stdcall cleanup() {
-	if(_isInitialized) {
+	if (_isInitialized) {
 		LOG_INFO(L"Cleaning up the UIA Remote Operations abstraction library...")
 		UiaOperationAbstraction::Cleanup();
 		_isInitialized = false;
