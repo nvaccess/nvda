@@ -69,8 +69,8 @@ Note that all build functions must return at least one value. Otherwise, `Operat
 ### All operations require at least one element or text range
 The primary reason for writing a remote operation is to perform actions upon one or more UI automation elements or text ranges. And as a remote operation is executed in a remote provider, it needs to be connection bound, meaning that it needs to be associated with at least one element or text range from that provider process. Therefore, all remote operations require at least one element (via ra.newElement) or text range (via ra.newTextRange) to be declared. Also, all elements and text ranges in the operation must be from the same provider process.
 
-### Declaritive style and control flow
-When building a remote operation, the actions are specified in a declaritive style. In other words, the code internally builds up a set of low-level instructions under the hood which will later be executed remotely.
+### Declarative style and control flow
+When building a remote operation, the actions are specified in a declarative style. In other words, the code internally builds up a set of low-level instructions under the hood which will later be executed remotely.
 This is most evident when specifying control flow such as a while loop:
 ```
 counter = ra.newInt(0)
@@ -146,7 +146,7 @@ There is also unsigned int (`ra.newUint`) but the only place you may need to use
 Please note that remote operations do not allow ints and floats to be converted to one another.
 
 ##### Arithmetic
-Ints, uints and floats all support the standard arithmetic operations: add, subtract, multiply, devide and modulo. There are both binary and inplace operators for these.
+Ints, uints and floats all support the standard arithmetic operations: add, subtract, multiply, divide and modulo. There are both binary and in-place operators for these.
 ```
 i = ra.newInt(5)
 j = ra.newInt(6)
@@ -184,15 +184,15 @@ o = i > j
 s = ra.newString("Hello")
 ```
 
-##### Concatination
-Strings can be concatinated to create a new string:
+##### Concatenation
+Strings can be concatenated to create a new string:
 ```
 s = ra.newString("Hello ")
 t = ra.newString("world")
 u = s + t
 ```
 
-Or they can be concatinated in-place:
+Or they can be concatenated in-place:
 ```
 s = ra.newString("Hello ")
 t = ra.newString("world")
@@ -389,7 +389,7 @@ Also, currently it is impossible to mark arrays as `static`, as arrays cannot be
 Again, in future the library could be extended to support this, but it would involve having to marshal out all items, and marshal them back in, appending them to the array one at a time, which would also be costly.
 
 #### Building iterable functions
-A commn use of remote operations is to walk a text range or element tree, and collect data which would be returned in an array. However, as arrays can not be marked as `static`, this would involve a lot of extra code to handle execution continuation after the instruciton limit is reached. Therefore the library supports a `Operation.buildIterableFunction` decorator, which can be used in place of `Operator.buildFunction`. Within a fuction that uses this decorator, rather than using ra.Return to return value and halt, instead you can use `ra.Yield` which will yield a value and continue to execute (until the instruction limit is reached of course). To actually execute an iterable function though, instead of using `Operation.execute`, you use `Operation.iterExecute` as the generator to a `for` loop, which will iterate over the yielded values.
+A common use of remote operations is to walk a text range or element tree, and collect data which would be returned in an array. However, as arrays can not be marked as `static`, this would involve a lot of extra code to handle execution continuation after the instruction limit is reached. Therefore the library supports a `Operation.buildIterableFunction` decorator, which can be used in place of `Operator.buildFunction`. Within a function that uses this decorator, rather than using ra.Return to return value and halt, instead you can use `ra.Yield` which will yield a value and continue to execute (until the instruction limit is reached of course). To actually execute an iterable function though, instead of using `Operation.execute`, you use `Operation.iterExecute` as the generator to a `for` loop, which will iterate over the yielded values.
 ```
 op = Operation()
 
@@ -479,13 +479,13 @@ main:
 ```
 
 Looking at the dump we can see the library stores instructions in three specific sections: 
-* `static`: for initializing static instructions. this section is replaced befor each execution.
+* `static`: for initializing static instructions. this section is replaced before each execution.
 * `const`: This section holds values which have been automatically remoted, and are used through out the rest of the instructions.
 * `main`: the instructions implementing the main logic of the operation.
 
 We can also see that a part from each numbered instruction and its parameters, there are also comments which help to understand the higher-level logic, such as when entering and exiting particular methods.
 
-We can see that yielding values is actualy implemented by the library internally as an array.
+We can see that yielding values is actually implemented by the library internally as an array.
 
 and finally, we can see that the modulo (%) operator is actually emulated by the equation: `a - (a / b) * b`, as the low-level remote operations framework does not actually support modulo.
 
@@ -493,7 +493,7 @@ and finally, we can see that the modulo (%) operator is actually emulated by the
 It is possible to add comments to the instruction dump when building an operation by using `ra.addCompiletimeComment`. It takes a single argument which is a literal string value.
 
 ### Runtime remote logging
-Setting an Operation's `enableRuntimeLogging` keyword argument to True, eables remote logging at execution time. `ra.logRuntimeMessage` can be called to log a message at runtime. It takes one or more literal strings and or remote values, and concatinates them together remotely. For remote values that are not strings, `logRuntimeMessage` uses the remote value's `stringify` method to produce a string representation of the value.
+Setting an Operation's `enableRuntimeLogging` keyword argument to True enables remote logging at execution time. `ra.logRuntimeMessage` can be called to log a message at runtime. It takes one or more literal strings and or remote values, and concatinates them together remotely. For remote values that are not strings, `logRuntimeMessage` uses the remote value's `stringify` method to produce a string representation of the value.
 
 After the operation is executed, the remote log is marshalled back and dumped to NvDA's log, thereby giving the ability to trace what is happening during the execution. though be aware that as remote logging itself involves creating and manipulating remote values, then the number of instructions can change quite significantly with remote logging enabled. 
 
