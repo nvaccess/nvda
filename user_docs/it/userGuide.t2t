@@ -1089,9 +1089,9 @@ Infine, sono state definite le seguenti abbreviazioni per i punti di riferimento
 
 ++ Immissione Braille ++[BrailleInput]
 NVDA supporta l'immissione di caratteri tramite la tastiera stile perkins presente sui Display Braille.
-è possibile selezionare la tabella di traduzione per inserire il testo tramite la casella combinata [immissione braille #BrailleSettingsInputTable] nella categoria braille della finestra [Impostazioni NVDA #NVDASettings].
+è possibile selezionare la tabella di traduzione per inserire il testo tramite la casella combinata [immissione braille #BrailleSettingsInputTable] nella categoria braille della finestra [Impostazioni NVDA #NVDASettings].Quando viene utilizzato il braille non contratto (ossia quello classico presente in Italia), il testo viene inserito nel momento in cui si digitano i caratteri.
 
-Quando viene utilizzato il braille non contratto (ossia quello classico presente in Italia), il testo viene inserito nel momento in cui si digitano i caratteri.
+Quando si utilizza il Braille non contratto, il testo viene inserito non appena viene immesso.
 Quando invece si usa il braille contratto, il testo viene inserito alla pressione della barra spaziatrice oppure premendo invio alla fine di una parola.
 Si noti che il processo di traduzione funziona soltanto sulla parola digitata, non può quindi prendere in considerazione altro testo eventualmente esistente.
 Per esempio, se si utilizza un codice braille che prevede il segnanumero e poi un numero, nel caso si prema Backspace sarà necessario ridigitare il segnanumero per inserire altre cifre.
@@ -1102,7 +1102,7 @@ Punto 8 elabora il braille inserito e aggiunge un invio.
 Tasto 7 + tasto 8 elabora il braille inserito, senza l'aggiunta di un invio o di uno spazio..
 %kc:endInclude
 
-++++ Immissione di scorciatoie da tastiera +++[BrailleKeyboardShortcuts]
++++ Immissione di scorciatoie da tastiera +++[BrailleKeyboardShortcuts]
 NVDA supporta l'immissione di scorciatoie da tastiera e l'emulazione della pressione dei tasti utilizzando il display braille.
 Tale emulazione può avvenire in due modi: assegnando una combinazione braille corrispondente alla pressione dei tasti desiderati, oppure servendosi dei tasti modificatori virtuali.
 
@@ -1181,6 +1181,9 @@ NVDA si serve di questa caratteristica per riconoscere il testo contenuto nelle 
 
 è possibile impostare la lingua di riconoscimento dalla [categoria OCR Windows #Win10OcrSettings] della finestra [Impostazioni NVDA #NVDASettings].
 Si possono installare altre lingue aprendo il menu avvio, scegliendo poi Impostazioni, Ora e Lingua -> Paese e Lingua e quindi aggiungi lingua.
+
+Quando si desidera controllare contenuti in continua evoluzione, ad esempio un video con i sottotitoli, è possibile attivare l'aggiornamento automatico del contenuto riconosciuto.
+Ciò può anche essere effettuato nella [Categoria OCR di Windows #Win10OcrSettings] delle [Impostazioni di NVDA #NVDASettings] dialog.
 
 La funzione OCR di Windows potrebbe risultare non pienamente compatibile con gli [strumenti di visione #Vision] o altri componenti che influenzano la visualizzazione a schermo. Sarà necessario disabilitare questo genere di applicazioni prima di procedere al riconoscimento OCR.
 
@@ -1413,7 +1416,6 @@ Alcune impostazioni possono anche essere cambiate utilizzando dei tasti rapidi, 
 NVDA fornisce diversi parametri di configurazione che possono essere modificati utilizzando la finestra di dialogo delle impostazioni.
 Per semplificare la ricerca del tipo di impostazioni che si desidera modificare, tale finestra visualizza un elenco di categorie di configurazione tra cui scegliere.
 Quando si seleziona una categoria, tutte le impostazioni ad essa correlate vengono mostrate nella finestra di dialogo.
-Una volta selezionato un elemento, appariranno opzioni inerenti soltanto alla categoria selezionata.
 Per muoversi tra le categorie, servirsi di ``tab`` o ``shift+tab`` per raggiungere l'elenco, quindi spostarsi con i tasti freccia su e giù per scorrere le voci che lo compongono.
 Da qualsiasi punto della finestra, è possibile anche passare alla categoria successiva premendo ``ctrl+tab``, o tornare indietro premendo ``shift+ctrl+tab``.
 
@@ -1468,7 +1470,6 @@ I livelli di log disponibili sono i seguenti:
 Se vi sono problemi con la privacy, non abilitare mai questa funzione.
 - Debug: Oltre alle informazioni, agli avvisi e ai messaggi di input / output, verranno loggati ulteriori messaggi di debug. 
 Proprio come input / output, Se vi sono problemi con la privacy, non abilitare mai questa funzione.
- -
 - 
 
 ==== Esegui NVDA dopo l'accesso ====[GeneralSettingsStartAfterLogOn]
@@ -1625,16 +1626,6 @@ Questo può essere utile nel caso in cui si incontrino difficoltà nella compren
 
 Tale funzione verrà inibita nel caso in cui venga letto del testo durante il secondo di ritardo, oppure se viene premuto il tasto control..
 
-+++ Seleziona sintetizzatore +++[SelectSynthesizer]
-
-%kc:setting
-==== Apri la finestra di dialogo seleziona sintetizzatore ====
-Tasto: ``NVDA+control+s``
-
-La finestra Sintetizzatore, che si apre premendo il pulsante cambia... dalla categoria voce della finestra impostazioni di NVDA, consente di selezionare con quale sintesi vocale NVDA debba parlare.
-Una volta scelto il sintetizzatore desiderato, premere OK affinché NVDA lo carichi ed inizi ad utilizzarlo.
-Se durante il caricamento della nuova sintesi vocale apparisse un messaggio d'errore, NVDA provvederà a ripristinare il vecchio sintetizzatore e l'utente verrà avvisato con un messaggio.
-
 ==== Opzioni disponibili per il comando passa tra le modalità di voce ====[SpeechModesDisabling]
 Questo elenco di caselle di controllo consente di selezionare le [modalità di voce #SpeechModes] da includere quando si passa da una all'altra utilizzando la combinazione di tasti ``NVDA+s``.
 Le modalità che saranno deselezionate verranno escluse dalle scelte possibili.
@@ -1642,6 +1633,16 @@ Per impostazione predefinita sono incluse tutte le modalità.
 
 Ad esempio, se non si desidera utilizzare le modalità "beep" e "spenta", sarà sufficiente deselezionarle, mantenendo selezionati sia "parla" che "su richiesta".
 Si noti che è necessario mantenere attivate almeno due modalità.
+
++++ Selezionare un sintetizzatore +++[SelectSynthesizer]
+
+%kc:setting
+==== Apre la finestra di dialogo Seleziona sintetizzatore ====
+Tasto: ``NVDA+control+s``
+
+Questa opzione, che può essere aperta attivando il pulsante Cambia... dalla categoria voce della finestra impostazioni di NVDA, permette di selezionare il sintetizzatore che NVDA utilizzerà per parlare. 
+Una volta selezionato il sintetizzatore preferito, premere Ok e NVDA lo utilizzerà come richiesto.
+Se si verifica un errore durante il caricamento del sintetizzatore, NVDA avviserà l'utente con un messaggio e continuerà a utilizzare quello precedente.
 
 ==== Sintetizzatore ====[SelectSynthesizerSynthesizer]
 Questa opzione permette di selezionare il sintetizzatore che NVDA utilizzerà per parlare. 
