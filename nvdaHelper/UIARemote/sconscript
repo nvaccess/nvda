@@ -15,32 +15,19 @@
 Import([
 	'env',
 	'localLib',
-	'MSUIA_lib_outDir',
-	'MSUIA_include_outDir',
-])
-
-env = env.Clone()
-env.Append(CPPPATH=Dir('#include/wil/include'))
-env.Append(CPPPATH=MSUIA_include_outDir)
-# Re-enable permissive mode as disabling it isn't supported for UiaOperationAbstraction.h
-env['CCFLAGS'].remove('/permissive-')
-env.Append(CCFLAGS=[
-	'/MD',
-	# Swap C++20 for C++17 as C++20 is not yet supported by UiaOperationAbstraction.h
-	'/std:c++17',
 ])
 
 UIARemoteLib=env.SharedLibrary(
 	target="UIARemote",
 	source=[
 		env['projectResFile'],
-		"UIARemote.cpp",
+		"lowLevel.cpp",
 	],
 	LIBS=[
 		"runtimeobject",
 		"UIAutomationCore",
+		"oleaut32",
 		localLib[2],
-		MSUIA_lib_outDir.File('UiaOperationAbstraction.lib'),
 	],
 )
 
