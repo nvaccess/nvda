@@ -31,11 +31,11 @@ class _BaseRemoteFuncWrapper:
 		return f"({', '.join([argsString, kwargsString])})"
 
 	def _execRawFunc(
-		self,
-		func: Callable[Concatenate[_remoteFunc_self, _remoteFunc_paramSpec], _remoteFunc_return],
-		funcSelf: _remoteFunc_self,
-		*args: _remoteFunc_paramSpec.args,
-		**kwargs: _remoteFunc_paramSpec.kwargs
+			self,
+			func: Callable[Concatenate[_remoteFunc_self, _remoteFunc_paramSpec], _remoteFunc_return],
+			funcSelf: _remoteFunc_self,
+			*args: _remoteFunc_paramSpec.args,
+			**kwargs: _remoteFunc_paramSpec.kwargs
 	) -> _remoteFunc_return:
 		main = funcSelf.rob.getInstructionList('main')
 		main.addComment(
@@ -46,14 +46,14 @@ class _BaseRemoteFuncWrapper:
 		return res
 
 	def __call__(
-		self,
-		func: Callable[Concatenate[_remoteFunc_self, _remoteFunc_paramSpec], _remoteFunc_return],
+			self,
+			func: Callable[Concatenate[_remoteFunc_self, _remoteFunc_paramSpec], _remoteFunc_return],
 	) -> Callable[Concatenate[_remoteFunc_self, _remoteFunc_paramSpec], _remoteFunc_return]:
 		@functools.wraps(func)
 		def wrapper(
-			funcSelf: _remoteFunc_self,
-			*args: _remoteFunc_paramSpec.args,
-			**kwargs: _remoteFunc_paramSpec.kwargs
+				funcSelf: _remoteFunc_self,
+				*args: _remoteFunc_paramSpec.args,
+				**kwargs: _remoteFunc_paramSpec.kwargs
 		) -> _remoteFunc_return:
 			return self._execRawFunc(func, funcSelf, *args, **kwargs)
 		return wrapper
@@ -67,11 +67,11 @@ class RemoteMethodWrapper(_BaseRemoteFuncWrapper):
 		self._mutable = mutable
 
 	def _execRawFunc(
-		self,
-		func: Callable[Concatenate[_remoteFunc_self, _remoteFunc_paramSpec], _remoteFunc_return],
-		funcSelf: _remoteFunc_self,
-		*args: _remoteFunc_paramSpec.args,
-		**kwargs: _remoteFunc_paramSpec.kwargs
+			self,
+			func: Callable[Concatenate[_remoteFunc_self, _remoteFunc_paramSpec], _remoteFunc_return],
+			funcSelf: _remoteFunc_self,
+			*args: _remoteFunc_paramSpec.args,
+			**kwargs: _remoteFunc_paramSpec.kwargs
 	) -> _remoteFunc_return:
 		if self._mutable and not funcSelf._mutable:
 			raise RuntimeError(f"{funcSelf.__class__.__name__} is not mutable")
@@ -81,21 +81,21 @@ class RemoteMethodWrapper(_BaseRemoteFuncWrapper):
 class RemoteContextManager(_BaseRemoteFuncWrapper):
 
 	def __call__(
-		self,
-		func: Callable[
-			Concatenate[_remoteFunc_self, _remoteFunc_paramSpec], Generator[_remoteFunc_return, None, None]
-		]
+			self,
+			func: Callable[
+				Concatenate[_remoteFunc_self, _remoteFunc_paramSpec], Generator[_remoteFunc_return, None, None]
+			]
 	) -> Callable[Concatenate[_remoteFunc_self, _remoteFunc_paramSpec], ContextManager[_remoteFunc_return]]:
 		contextFunc = contextlib.contextmanager(func)
 		return super().__call__(contextFunc)
 
 	@contextlib.contextmanager
 	def _execRawFunc(
-		self,
-		func: Callable[Concatenate[_remoteFunc_self, _remoteFunc_paramSpec], ContextManager[_remoteFunc_return]],
-		funcSelf: _remoteFunc_self,
-		*args: _remoteFunc_paramSpec.args,
-		**kwargs: _remoteFunc_paramSpec.kwargs
+			self,
+			func: Callable[Concatenate[_remoteFunc_self, _remoteFunc_paramSpec], ContextManager[_remoteFunc_return]],
+			funcSelf: _remoteFunc_self,
+			*args: _remoteFunc_paramSpec.args,
+			**kwargs: _remoteFunc_paramSpec.kwargs
 	) -> Generator[_remoteFunc_return, None, None]:
 		main = funcSelf.rob.getInstructionList('main')
 		main.addComment(

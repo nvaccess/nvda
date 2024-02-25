@@ -163,10 +163,10 @@ class Operation:
 	_executionCount = 0
 
 	def __init__(
-		self,
-		enableCompiletimeLogging: bool = False,
-		enableRuntimeLogging: bool = False,
-		localMode=False
+			self,
+			enableCompiletimeLogging: bool = False,
+			enableRuntimeLogging: bool = False,
+			localMode=False
 	):
 		self._compiletimeLoggingEnabled = enableCompiletimeLogging
 		self._runtimeLoggingEnabled = enableRuntimeLogging
@@ -181,9 +181,9 @@ class Operation:
 		self._staticOperands = []
 
 	def importElement(
-		self,
-		element: UIA.IUIAutomationElement,
-		operandId: lowLevel.OperandId | None = None
+			self,
+			element: UIA.IUIAutomationElement,
+			operandId: lowLevel.OperandId | None = None
 	) -> remoteAPI.RemoteElement:
 		if operandId is None:
 			operandId = self._rob.requestNewOperandId()
@@ -194,9 +194,9 @@ class Operation:
 		return remoteAPI.RemoteElement(self._rob, operandId)
 
 	def importTextRange(
-		self,
-		textRange: UIA.IUIAutomationTextRange,
-		operandId: lowLevel.OperandId | None = None
+			self,
+			textRange: UIA.IUIAutomationTextRange,
+			operandId: lowLevel.OperandId | None = None
 	) -> remoteAPI.RemoteTextRange:
 		if operandId is None:
 			operandId = self._rob.requestNewOperandId()
@@ -248,8 +248,8 @@ class Operation:
 		self._built = True
 
 	def buildFunction(
-		self,
-		func: Callable[[remoteAPI.RemoteAPI], None]
+			self,
+			func: Callable[[remoteAPI.RemoteAPI], None]
 	) -> Operation:
 		with self.buildContext() as ra:
 			self._returnIdOperand = ra.newInt(-1)
@@ -258,8 +258,8 @@ class Operation:
 		return self
 
 	def buildIterableFunction(
-		self,
-		func: Callable[[remoteAPI.RemoteAPI], None]
+			self,
+			func: Callable[[remoteAPI.RemoteAPI], None]
 	) -> Operation:
 		with self.buildContext() as ra:
 			self._yieldListOperand = ra.newArray()

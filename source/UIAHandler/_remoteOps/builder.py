@@ -152,9 +152,9 @@ class GenericInstruction(InstructionBase):
 	_params: dict[str, Operand | _SimpleCData | ctypes.Array | ctypes.Structure]
 
 	def __init__(
-		self,
-		opCode: lowLevel.InstructionType,
-		**kwargs: Operand | _SimpleCData | ctypes.Array | ctypes.Structure
+			self,
+			opCode: lowLevel.InstructionType,
+			**kwargs: Operand | _SimpleCData | ctypes.Array | ctypes.Structure
 	):
 		self.opCode = opCode
 		self._params = kwargs
@@ -190,9 +190,9 @@ class InstructionList:
 		return self.getInstructionCount() - 1
 
 	def addGenericInstruction(
-		self,
-		opCode: lowLevel.InstructionType,
-		**params: Operand | _SimpleCData | ctypes.Array | ctypes.Structure,
+			self,
+			opCode: lowLevel.InstructionType,
+			**params: Operand | _SimpleCData | ctypes.Array | ctypes.Structure,
 	) -> int:
 		return self.addInstruction(GenericInstruction(opCode, **params))
 

@@ -133,11 +133,11 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 
 	@classmethod
 	def createNew(
-		cls,
-		rob: builder.RemoteOperationBuilder,
-		initialValue: LocalTypeVar | None = None,
-		operandId: lowLevel.OperandId | None = None,
-		const: bool = False
+			cls,
+			rob: builder.RemoteOperationBuilder,
+			initialValue: LocalTypeVar | None = None,
+			operandId: lowLevel.OperandId | None = None,
+			const: bool = False
 	) -> Self:
 		if operandId is None:
 			operandId = rob.requestNewOperandId()
@@ -323,8 +323,7 @@ class RemoteIntegral(RemoteBaseObject[LocalTypeVar], Generic[LocalTypeVar]):
 	_NewInstruction: Type[builder.InstructionBase]
 	_ctype: Type[_SimpleCData]
 
-	def _generateInitInstructions(
-		self) -> Iterable[instructions.InstructionBase]:
+	def _generateInitInstructions(self) -> Iterable[instructions.InstructionBase]:
 		yield self._NewInstruction(
 			result=self,
 			value=self._ctype(self.initialValue)
@@ -604,9 +603,9 @@ class RemoteIntEnum(RemoteInt, Generic[_RemoteIntEnum_LocalTypeVar]):
 
 	@classmethod
 	def ensureRemote(
-		cls,
-		rob: builder.RemoteOperationBuilder,
-		obj: RemoteIntEnum[_RemoteIntEnum_LocalTypeVar] | _RemoteIntEnum_LocalTypeVar
+			cls,
+			rob: builder.RemoteOperationBuilder,
+			obj: RemoteIntEnum[_RemoteIntEnum_LocalTypeVar] | _RemoteIntEnum_LocalTypeVar
 	) -> RemoteIntEnum[_RemoteIntEnum_LocalTypeVar]:
 		remoteObj = super().ensureRemote(rob, cast(Any, obj))
 		return cast(RemoteIntEnum[_RemoteIntEnum_LocalTypeVar], remoteObj)
@@ -644,8 +643,8 @@ class RemoteString(RemoteBaseObject[str]):
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.StringConcat(
 				result=result,
-			left=self,
-			right=type(self).ensureRemote(self.rob, other)
+				left=self,
+				right=type(self).ensureRemote(self.rob, other)
 			)
 		)
 		return result
@@ -753,9 +752,9 @@ class RemoteArray(RemoteBaseObject):
 
 	@remoteMethod_mutable
 	def __setitem__(
-		self,
-		index: RemoteIntBase | int,
-		value: RemoteBaseObject | int | float | str
+			self,
+			index: RemoteIntBase | int,
+			value: RemoteBaseObject | int | float | str
 	) -> None:
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.ArraySetAt(
@@ -816,9 +815,9 @@ class RemoteExtensionTarget(RemoteBaseObject[LocalTypeVar], Generic[LocalTypeVar
 
 	@remoteMethod_mutable
 	def callExtension(
-		self,
-		extensionId: RemoteGuid | GUID,
-		*params: RemoteBaseObject | int | float | str
+			self,
+			extensionId: RemoteGuid | GUID,
+			*params: RemoteBaseObject | int | float | str
 	) -> None:
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.CallExtension(
@@ -848,9 +847,9 @@ class RemoteElement(RemoteExtensionTarget[POINTER(UIA.IUIAutomationElement)]):
 
 	@remoteMethod
 	def getPropertyValue(
-		self,
-		propertyId: RemoteIntEnum[lowLevel.PropertyId] | lowLevel.PropertyId,
-		ignoreDefault: RemoteBool | bool = False
+			self,
+			propertyId: RemoteIntEnum[lowLevel.PropertyId] | lowLevel.PropertyId,
+			ignoreDefault: RemoteBool | bool = False
 	) -> RemoteVariant:
 		result = RemoteVariant(self.rob, self.rob.requestNewOperandId())
 		self.rob.getDefaultInstructionList().addInstruction(
@@ -955,10 +954,10 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 
 	@remoteMethod_mutable
 	def moveEndpointByUnit(
-		self,
-		endpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint,
-		unit: RemoteIntEnum[lowLevel.TextUnit] | lowLevel.TextUnit,
-		count: RemoteInt | int
+			self,
+			endpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint,
+			unit: RemoteIntEnum[lowLevel.TextUnit] | lowLevel.TextUnit,
+			count: RemoteInt | int
 	):
 		result = RemoteInt(self.rob, self.rob.requestNewOperandId())
 		self.rob.getDefaultInstructionList().addInstruction(
@@ -974,10 +973,10 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 
 	@remoteMethod_mutable
 	def moveEndpointByRange(
-		self,
-		srcEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint,
-		otherRange: RemoteTextRange,
-		otherEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint
+			self,
+			srcEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint,
+			otherRange: RemoteTextRange,
+			otherEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint
 	):
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.TextRangeMoveEndpointByRange(
@@ -990,8 +989,8 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 
 	@remoteMethod
 	def getAttributeValue(
-		self,
-		attributeId: RemoteIntEnum[lowLevel.AttributeId] | lowLevel.AttributeId
+			self,
+			attributeId: RemoteIntEnum[lowLevel.AttributeId] | lowLevel.AttributeId
 	) -> RemoteVariant:
 		result = RemoteVariant(self.rob, self.rob.requestNewOperandId())
 		self.rob.getDefaultInstructionList().addInstruction(
@@ -1005,10 +1004,10 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 
 	@remoteMethod
 	def compareEndpoints(
-		self,
-		thisEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint,
-		otherRange: RemoteTextRange,
-		otherEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint
+			self,
+			thisEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint,
+			otherRange: RemoteTextRange,
+			otherEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint
 	) -> RemoteInt:
 		result = RemoteInt(self.rob, self.rob.requestNewOperandId())
 		self.rob.getDefaultInstructionList().addInstruction(
@@ -1030,9 +1029,9 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 class _RemoteTextRangeEndpoint(builder._RemoteBase):
 
 	def __init__(
-		self,
-		rob: builder.RemoteOperationBuilder,
-		textRangeLA: RemoteTextRangeLogicalAdapter, isStart: bool
+			self,
+			rob: builder.RemoteOperationBuilder,
+			textRangeLA: RemoteTextRangeLogicalAdapter, isStart: bool
 	):
 		super().__init__(rob)
 		self._la = textRangeLA
@@ -1064,9 +1063,9 @@ class _RemoteTextRangeEndpoint(builder._RemoteBase):
 		self.textRange.moveEndpointByRange(self.endpoint, other.textRange, other.endpoint)
 
 	def moveByUnit(
-		self,
-		unit: RemoteIntEnum[lowLevel.TextUnit] | lowLevel.TextUnit,
-		count: RemoteInt | int
+			self,
+			unit: RemoteIntEnum[lowLevel.TextUnit] | lowLevel.TextUnit,
+			count: RemoteInt | int
 	) -> RemoteInt:
 		realCount = (count * -1) if self.isReversed else count
 		res = self.textRange.moveEndpointByUnit(self.endpoint, unit, realCount)
@@ -1094,9 +1093,9 @@ class _RemoteTextRangeEndpoint(builder._RemoteBase):
 class RemoteTextRangeLogicalAdapter(builder._RemoteBase):
 
 	def __init__(
-		self,
-		rob: builder.RemoteOperationBuilder,
-		textRange: RemoteTextRange, reverse=False
+			self,
+			rob: builder.RemoteOperationBuilder,
+			textRange: RemoteTextRange, reverse=False
 	):
 		super().__init__(rob)
 		self._textRange = textRange
@@ -1183,10 +1182,10 @@ class RemoteAPI(builder._RemoteBase):
 	_newObject_RemoteType = TypeVar('_newObject_RemoteType', bound=RemoteBaseObject)
 
 	def _newObject(
-		self,
-		RemoteType: Type[_newObject_RemoteType],
-		value: Any,
-		static=False
+			self,
+			RemoteType: Type[_newObject_RemoteType],
+			value: Any,
+			static=False
 	) -> _newObject_RemoteType:
 		section = "static" if static else "main"
 		with self.rob.overrideDefaultSection(section):
@@ -1350,10 +1349,10 @@ class RemoteAPI(builder._RemoteBase):
 
 	@remoteContextManager
 	def forEachNumInRange(
-		self,
-		start: _range_intTypeVar | int,
-		stop: _range_intTypeVar | int,
-		step: _range_intTypeVar | int = 1
+			self,
+			start: _range_intTypeVar | int,
+			stop: _range_intTypeVar | int,
+			step: _range_intTypeVar | int = 1
 	) -> Generator[RemoteIntBase, None, None]:
 		RemoteType: Type[RemoteIntBase] = RemoteInt
 		for arg in (start, stop, step):
@@ -1370,8 +1369,8 @@ class RemoteAPI(builder._RemoteBase):
 
 	@remoteContextManager
 	def forEachItemInArray(
-		self,
-		array: RemoteArray
+			self,
+			array: RemoteArray
 	) -> Generator[RemoteVariant, None, None]:
 		with self.forEachNumInRange(0, array.size()) as index:
 			yield array[index]

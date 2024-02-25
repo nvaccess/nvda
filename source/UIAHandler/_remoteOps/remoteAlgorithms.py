@@ -20,10 +20,10 @@ from .lowLevel import (
 
 @remoteContextManager
 def remote_forEachUnitInTextRange(
-	ra: RemoteAPI,
-	textRange: RemoteTextRange,
-	unit: RemoteIntEnum[TextUnit] | TextUnit,
-	reverse: bool = False
+		ra: RemoteAPI,
+		textRange: RemoteTextRange,
+		unit: RemoteIntEnum[TextUnit] | TextUnit,
+		reverse: bool = False
 ) -> Generator[RemoteTextRange, None, None]:
 	logicalTextRange = textRange.getLogicalAdapter(reverse)
 	logicalTempRange = logicalTextRange.clone()
