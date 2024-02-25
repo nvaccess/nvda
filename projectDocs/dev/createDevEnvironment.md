@@ -85,9 +85,6 @@ For reference, the following run time dependencies are included in Git submodule
 * [Nullsoft Install System](https://nsis.sourceforge.io), version 3.08
 * [Java Access Bridge 32 bit, from Zulu Community OpenJDK build 17.0.9+8Zulu (17.46.19)](https://github.com/nvaccess/javaAccessBridge32-bin)
 * [wil](https://github.com/microsoft/wil/)
-* [Microsoft UI Automation Remote Operations Library, forked from @microsoft by @michaeldcurran](https://www.github.com/michaeldcurran/microsoft-ui-uiautomation/)
-	* Commit 224b22f3bf9e
-	* The fork specifically adds support for CallExtension / IsExtensionSupported to the high-level API, see pr microsoft/microsoft-ui-uiautomation#84 and #95.
 * [NVDA DiffMatchPatch](https://github.com/codeofdusk/nvda_dmp)
 
 Additionally, the following build time dependencies are included in the miscDeps git submodule: 
