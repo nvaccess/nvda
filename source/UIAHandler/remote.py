@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2021-2022 NV Access Limited
+# Copyright (C) 2021-2024 NV Access Limited
 
 
 from typing import (
@@ -24,9 +24,6 @@ from ._remoteOps.lowLevel import (
 	AttributeId,
 	StyleId
 )
-
-
-_dll = None
 
 
 def initialize(doRemote: bool, UIAClient: UIA.IUIAutomation):
