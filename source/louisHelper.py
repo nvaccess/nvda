@@ -12,7 +12,6 @@ from ctypes import (
 	c_char_p,
 	c_void_p,
 )
-from typing import List
 
 import config
 import globalVars
