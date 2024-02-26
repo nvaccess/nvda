@@ -49,6 +49,7 @@ What's New in NVDA
   - ``alt+upArrow`` is now mapped to ``dot2+dot3+dot7+space``
   - ``alt+downArrow`` is now mapped to ``dot5+dot6+dot7+space``
   -
+- The fallback braille input table is now equal to the fallback output table, which is Unified English Braille Code grade 1. (#9863, @JulienCochuyt, @LeonarddeR)
 -
 
 
@@ -56,7 +57,13 @@ What's New in NVDA
 Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
 
 - Instantiating ``winVersion.WinVersion`` objects with unknown Windows versions above 10.0.22000 such as 10.0.25398 returns "Windows 11 unknown" instead of "Windows 10 unknown" for release name. (#15992, @josephsl)
+- Support for custom braille tables has been added. (#3304, #16208, @JulienCochuyt, @LeonarddeR)
+ - Tables can be provided in the ``brailleTables`` folder in an add-on package.
+ - Table metadata can be added to an optional ``brailleTables`` section in the add-on manifest or to a ``.ini`` file with the same format found in the brailleTables subdirectory of the scratchpad directory.
+ - Please consult the [braille translation tables section in the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#BrailleTables] for more details.
+ -
 -
+
 
 === Deprecations ===
 
