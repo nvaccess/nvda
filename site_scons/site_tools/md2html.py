@@ -148,7 +148,6 @@ def md2html_actionFunc(
 ):
 	isKeyCommands = target[0].path.endswith("keyCommands.html")
 	isUserGuide = target[0].path.endswith("userGuide.html")
-	isChanges = target[0].path.endswith("changes.html")
 
 	with open(source[0].path, "r", encoding="utf-8") as mdFile:
 		mdStr = mdFile.read()
@@ -163,10 +162,8 @@ def md2html_actionFunc(
 
 	if isKeyCommands or isUserGuide:
 		extraStylesheet = '<link rel="stylesheet" href="numberedHeadings.css">'
-	elif isChanges:
-		extraStylesheet = ""
 	else:
-		raise RuntimeError("Unexpected target file name")
+		extraStylesheet = ""
 
 	htmlBuffer = io.StringIO()
 	htmlBuffer.write(
