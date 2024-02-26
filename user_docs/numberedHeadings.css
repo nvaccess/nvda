@@ -46,7 +46,7 @@ https://stackoverflow.com/a/35391887
 */
 :lang(ar) .toc > ul > li ul li:before, :lang(fa) .toc > ul > li ul li:before {
   counter-increment: toc-counters 1;
-  content: counters(toc-counters, ".", arabic-indic) " "; /* generates inherited counters from parents */
+  content: counters(toc-counters, ".", arabic-indic) ". "; /* generates inherited counters from parents */
 }
 
 
