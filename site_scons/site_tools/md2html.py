@@ -49,8 +49,8 @@ HTML_HEADERS = """
 <title>{title}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="styles.css">
+{extraStylesheet}
 </head>
-<body>
 """.strip()
 
 
@@ -147,6 +147,8 @@ def md2html_actionFunc(
 		env: SCons.Environment.Environment
 ):
 	isKeyCommands = target[0].path.endswith("keyCommands.html")
+	isUserGuide = target[0].path.endswith("userGuide.html")
+	isChanges = target[0].path.endswith("changes.html")
 
 	with open(source[0].path, "r", encoding="utf-8") as mdFile:
 		mdStr = mdFile.read()
@@ -158,12 +160,21 @@ def md2html_actionFunc(
 		title = _getTitle(mdBuffer, isKeyCommands)
 
 	lang = pathlib.Path(source[0].path).parent.name
+
+	if isKeyCommands or isUserGuide:
+		extraStylesheet = '<link rel="stylesheet" href="numberedHeadings.css">'
+	elif isChanges:
+		extraStylesheet = ""
+	else:
+		raise RuntimeError("Unexpected target file name")
+
 	htmlBuffer = io.StringIO()
 	htmlBuffer.write(
 		HTML_HEADERS.format(
 			lang=lang,
 			dir="rtl" if lang in RTL_LANG_CODES else "ltr",
 			title=title,
+			extraStylesheet=extraStylesheet,
 		)
 	)
 
