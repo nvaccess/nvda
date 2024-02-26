@@ -51,6 +51,7 @@ HTML_HEADERS = """
 <link rel="stylesheet" href="styles.css">
 {extraStylesheet}
 </head>
+<body>
 """.strip()
 
 
@@ -148,6 +149,8 @@ def md2html_actionFunc(
 ):
 	isKeyCommands = target[0].path.endswith("keyCommands.html")
 	isUserGuide = target[0].path.endswith("userGuide.html")
+	isDevGuide = target[0].path.endswith("developerGuide.html")
+	isChanges = target[0].path.endswith("changes.html")
 
 	with open(source[0].path, "r", encoding="utf-8") as mdFile:
 		mdStr = mdFile.read()
@@ -160,10 +163,12 @@ def md2html_actionFunc(
 
 	lang = pathlib.Path(source[0].path).parent.name
 
-	if isKeyCommands or isUserGuide:
+	if isUserGuide or isDevGuide:
 		extraStylesheet = '<link rel="stylesheet" href="numberedHeadings.css">'
-	else:
+	elif isChanges or isKeyCommands:
 		extraStylesheet = ""
+	else:
+		raise ValueError(f"Unknown target type for {target[0].path}")
 
 	htmlBuffer = io.StringIO()
 	htmlBuffer.write(
