@@ -244,6 +244,9 @@ def _getUpdateStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
 		# the type will not be AddonStoreModel
 		return None
 
+	if model._anyPendingInstallForId:
+		return None
+
 	addonStoreInstalledData = addonDataManager._getCachedInstalledAddonData(model.addonId)
 	if addonStoreInstalledData is not None:
 		if model.addonVersionNumber > addonStoreInstalledData.addonVersionNumber:
@@ -483,6 +486,15 @@ class SupportsAddonState(SupportsVersionCheck, Protocol):
 	@property
 	def isPendingDisable(self) -> bool:
 		return self.name in self._stateHandler[AddonStateCategory.PENDING_DISABLE]
+
+	@property
+	def _anyPendingInstallForId(self) -> bool:
+		from ..dataManager import addonDataManager
+		return (
+			Path(self.pendingInstallPath).exists()
+			or self.name in (d.model.name for d, _ in addonDataManager._downloadsPendingInstall)
+			or self.name in (d.model.name for d in addonDataManager._downloadsPendingCompletion)
+		)
 
 	@property
 	def requiresRestart(self) -> bool:
