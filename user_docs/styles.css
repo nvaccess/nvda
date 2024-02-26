@@ -98,3 +98,52 @@ dl > dd {
 thead:has(tr > th.hideHeaderRow) {
   display: none;
 }
+
+/* Numbering for table of contents.
+.toc > ul > li is used as the base for the numbering.
+This is because the first and only first level TOC element is the heading for the page, so it should be skipped.
+*/
+.toc > ul > li {
+  list-style-type: none;
+  counter-reset: css-counter 0; /* initializes counter to 0; use -1 for zero-based numbering */
+}
+
+.toc > ul > li li {
+  counter-increment: css-counter 1; /* Increase the counter by 1. */
+}
+
+.toc > ul > li li:before {
+  content: counter(css-counter) ". "; /* Apply counter before children's content. */
+}
+
+.toc > ul > li ul {
+  list-style-type: none;
+  counter-reset: css-counters 0; /* intializes counter, set -1 for zero-based counters */
+}
+
+.toc > ul > li ul li:before {
+  counter-increment: css-counters;
+  content: counters(css-counters, ".") " "; /* generates inherited counters from parents */
+}
+
+/* RTL */
+
+/* Note there is a known bug where the numbering is not reversed for RTL languages.
+
+Desired:
+lorem ١.١
+ipsum ٢.١
+dolar ٣.١
+
+Actual:
+lorem ١.١
+ipsum ١.٢
+dolar ١.٣
+
+This is due to counters always appending to the end of the list, and not the start.
+Ideally there would be an option to reverse the numbering for RTL languages. 
+*/
+:lang(ar) .toc > ul > li ul li:before, :lang(fa) .toc > ul > li ul li:before {
+  counter-increment: css-counters;
+  content: counters(css-counters, ".", arabic-indic) " "; /* generates inherited counters from parents */
+}
