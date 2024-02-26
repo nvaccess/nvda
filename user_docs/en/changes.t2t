@@ -192,7 +192,9 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
 - Fixed bug where deleting git-tracked files during ``scons -c`` resulted in missing UIA COM interfaces on rebuild. (#7070, #10833, @hwf1324)
 - Fix a bug where some code changes were not detected when building ``dist``, that prevented a new build from being triggered.
 Now ``dist`` always rebuilds. (#13372, @hwf1324)
+- A ``gui.nvdaControls.MessageDialog`` with default type of standard, no longer throws a None conversion exception because no sound is assigned. (#16223, @XLTechie)
 -
+
 
 === API Breaking Changes ===
 These are breaking API changes.
