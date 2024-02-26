@@ -2,51 +2,81 @@
 .toc > ul > li is used as the base for the numbering.
 This is because the first and only first level TOC element is the heading for the page, so it should be skipped.
 */
-.toc > ul > li {
+.toc > ul > li > ul {
   list-style-type: none;
-  counter-reset: toc-counter;
+  counter-reset: toc1-counter;
 }
 
-.toc > ul > li li {
-  counter-increment: toc-counter 1;
+.toc > ul > li > ul > li:before {
+  counter-increment: toc1-counter;
+  content: counter(toc1-counter) ". ";
 }
 
-.toc > ul > li li:before {
-  content: counter(toc-counter) ". ";
-}
-
-.toc > ul > li ul {
+.toc > ul > li > ul > li > ul {
   list-style-type: none;
-  counter-reset: toc-counters;
+  counter-reset: toc2-counter;
 }
 
-.toc > ul > li ul li:before {
-  counter-increment: toc-counters;
-  content: counters(toc-counters, ".") ". "; /* generates inherited counters from parents */
+.toc > ul > li > ul > li > ul > li:before {
+  counter-increment: toc2-counter;
+  content: counter(toc1-counter) "." counter(toc2-counter) ". ";
+}
+
+.toc > ul > li > ul > li > ul > li > ul {
+  list-style-type: none;
+  counter-reset: toc3-counter;
+}
+
+.toc > ul > li > ul > li > ul > li > ul > li:before {
+  counter-increment: toc3-counter;
+  content: counter(toc1-counter) "." counter(toc2-counter) "." counter(toc3-counter) ". ";
+}
+
+.toc > ul > li > ul > li > ul > li > ul > li > ul {
+  list-style-type: none;
+  counter-reset: toc4-counter;
+}
+
+.toc > ul > li > ul > li > ul > li > ul > li > ul > li:before {
+  counter-increment: toc4-counter;
+  content: counter(toc1-counter) "." counter(toc2-counter) "." counter(toc3-counter) "." counter(toc4-counter) ". ";
+}
+
+.toc > ul > li > ul > li > ul > li > ul > li > ul > li > ul {
+  list-style-type: none;
+  counter-reset: toc5-counter;
+}
+
+.toc > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li:before {
+  counter-increment: toc5-counter;
+  content: counter(toc1-counter) "." counter(toc2-counter) "." counter(toc3-counter) "." counter(toc4-counter) "." counters(toc5-counter) ". ";
 }
 
 /* RTL */
 
-/* Note there is a known bug where the numbering is not reversed for RTL languages.
+:lang(ar) .toc > ul > li > ul > li:before,
+:lang(fa) .toc > ul > li > ul > li:before {
+  content: counter(toc1-counter, arabic-indic) ". ";
+}
 
-Desired:
-lorem ١.١
-ipsum ٢.١
-dolar ٣.١
+:lang(ar) .toc > ul > li > ul > li > ul > li:before,
+:lang(fa) .toc > ul > li > ul > li > ul > li:before {
+  content: counter(toc2-counter, arabic-indic) "." counter(toc1-counter, arabic-indic) ". ";
+}
 
-Actual:
-lorem ١.١
-ipsum ١.٢
-dolar ١.٣
+:lang(ar) .toc > ul > li > ul > li > ul > li > ul > li:before,
+:lang(fa) .toc > ul > li > ul > li > ul > li > ul > li:before {
+  content: counter(toc3-counter, arabic-indic) "." counter(toc2-counter, arabic-indic) "." counter(toc1-counter, arabic-indic) ". ";
+}
 
-This is due to counters always appending to the end of the list, and not the start.
-Ideally there would be an option to reverse the numbering for RTL languages.
+:lang(ar) .toc > ul > li > ul > li > ul > li > ul > li > ul > li:before,
+:lang(fa) .toc > ul > li > ul > li > ul > li > ul > li > ul > li:before {
+  content: counter(toc4-counter, arabic-indic) "." counter(toc3-counter, arabic-indic) "." counter(toc2-counter, arabic-indic) "." counter(toc1-counter, arabic-indic) ". ";
+}
 
-https://stackoverflow.com/a/35391887
-*/
-:lang(ar) .toc > ul > li ul li:before, :lang(fa) .toc > ul > li ul li:before {
-  counter-increment: toc-counters 1;
-  content: counters(toc-counters, ".", arabic-indic) ". "; /* generates inherited counters from parents */
+:lang(ar) .toc > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li:before,
+:lang(fa) .toc > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li:before {
+  content: counter(toc5-counter, arabic-indic) "." counter(toc4-counter, arabic-indic) "." counter(toc3-counter, arabic-indic) "." counter(toc2-counter, arabic-indic) "." counter(toc1-counter, arabic-indic) ". ";
 }
 
 
@@ -58,26 +88,26 @@ h1 {
 
 h2 {
   counter-reset: h3counter;
-  counter-increment: h2counter 1;
+  counter-increment: h2counter;
 }
 
 h3 {
   counter-reset: h4counter;
-  counter-increment: h3counter 1;
+  counter-increment: h3counter;
 }
 
 h4 {
   counter-reset: h5counter;
-  counter-increment: h4counter 1;
+  counter-increment: h4counter;
 }
 
 h5 {
   counter-reset: h6counter;
-  counter-increment: h5counter 1;
+  counter-increment: h5counter;
 }
 
 h6 {
-  counter-increment: h6counter 1;
+  counter-increment: h6counter;
 }
 
 h2:before {
