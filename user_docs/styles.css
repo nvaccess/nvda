@@ -141,7 +141,9 @@ ipsum ١.٢
 dolar ١.٣
 
 This is due to counters always appending to the end of the list, and not the start.
-Ideally there would be an option to reverse the numbering for RTL languages. 
+Ideally there would be an option to reverse the numbering for RTL languages.
+
+https://stackoverflow.com/a/35391887
 */
 :lang(ar) .toc > ul > li ul li:before, :lang(fa) .toc > ul > li ul li:before {
   counter-increment: css-counters;
