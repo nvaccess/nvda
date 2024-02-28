@@ -7,7 +7,7 @@ This is because the first and only first level TOC element is the heading for th
   counter-reset: toc1-counter;
 }
 
-.toc > ul > li > ul > li:before {
+.toc > ul > li > ul > li a:before {
   counter-increment: toc1-counter;
   content: counter(toc1-counter) ". ";
 }
@@ -17,7 +17,7 @@ This is because the first and only first level TOC element is the heading for th
   counter-reset: toc2-counter;
 }
 
-.toc > ul > li > ul > li > ul > li:before {
+.toc > ul > li > ul > li > ul > li a:before {
   counter-increment: toc2-counter;
   content: counter(toc1-counter) "." counter(toc2-counter) ". ";
 }
@@ -27,7 +27,7 @@ This is because the first and only first level TOC element is the heading for th
   counter-reset: toc3-counter;
 }
 
-.toc > ul > li > ul > li > ul > li > ul > li:before {
+.toc > ul > li > ul > li > ul > li > ul > li a:before {
   counter-increment: toc3-counter;
   content: counter(toc1-counter) "." counter(toc2-counter) "." counter(toc3-counter) ". ";
 }
@@ -37,7 +37,7 @@ This is because the first and only first level TOC element is the heading for th
   counter-reset: toc4-counter;
 }
 
-.toc > ul > li > ul > li > ul > li > ul > li > ul > li:before {
+.toc > ul > li > ul > li > ul > li > ul > li > ul > li a:before {
   counter-increment: toc4-counter;
   content: counter(toc1-counter) "." counter(toc2-counter) "." counter(toc3-counter) "." counter(toc4-counter) ". ";
 }
@@ -47,35 +47,35 @@ This is because the first and only first level TOC element is the heading for th
   counter-reset: toc5-counter;
 }
 
-.toc > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li:before {
+.toc > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li a:before {
   counter-increment: toc5-counter;
   content: counter(toc1-counter) "." counter(toc2-counter) "." counter(toc3-counter) "." counter(toc4-counter) "." counters(toc5-counter) ". ";
 }
 
 /* RTL */
 
-:lang(ar) .toc > ul > li > ul > li:before,
-:lang(fa) .toc > ul > li > ul > li:before {
+:lang(ar) .toc > ul > li > ul > li a:before,
+:lang(fa) .toc > ul > li > ul > li a:before {
   content: counter(toc1-counter, arabic-indic) ". ";
 }
 
-:lang(ar) .toc > ul > li > ul > li > ul > li:before,
-:lang(fa) .toc > ul > li > ul > li > ul > li:before {
+:lang(ar) .toc > ul > li > ul > li > ul > li a:before,
+:lang(fa) .toc > ul > li > ul > li > ul > li a:before {
   content: counter(toc2-counter, arabic-indic) "." counter(toc1-counter, arabic-indic) ". ";
 }
 
-:lang(ar) .toc > ul > li > ul > li > ul > li > ul > li:before,
-:lang(fa) .toc > ul > li > ul > li > ul > li > ul > li:before {
+:lang(ar) .toc > ul > li > ul > li > ul > li > ul > li a:before,
+:lang(fa) .toc > ul > li > ul > li > ul > li > ul > li a:before {
   content: counter(toc3-counter, arabic-indic) "." counter(toc2-counter, arabic-indic) "." counter(toc1-counter, arabic-indic) ". ";
 }
 
-:lang(ar) .toc > ul > li > ul > li > ul > li > ul > li > ul > li:before,
-:lang(fa) .toc > ul > li > ul > li > ul > li > ul > li > ul > li:before {
+:lang(ar) .toc > ul > li > ul > li > ul > li > ul > li > ul > li a:before,
+:lang(fa) .toc > ul > li > ul > li > ul > li > ul > li > ul > li a:before {
   content: counter(toc4-counter, arabic-indic) "." counter(toc3-counter, arabic-indic) "." counter(toc2-counter, arabic-indic) "." counter(toc1-counter, arabic-indic) ". ";
 }
 
-:lang(ar) .toc > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li:before,
-:lang(fa) .toc > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li:before {
+:lang(ar) .toc > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li a:before,
+:lang(fa) .toc > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li a:before {
   content: counter(toc5-counter, arabic-indic) "." counter(toc4-counter, arabic-indic) "." counter(toc3-counter, arabic-indic) "." counter(toc2-counter, arabic-indic) "." counter(toc1-counter, arabic-indic) ". ";
 }
 
