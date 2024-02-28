@@ -269,6 +269,7 @@ freeze(
 		"*.t2tconf",
 		"*.md",
 		"*/user_docs/styles.css",
+		"*/user_docs/numberedHeadings.css",
 		"*/developerGuide.*"
 		)
 	)
