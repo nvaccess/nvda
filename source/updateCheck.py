@@ -372,7 +372,7 @@ class UpdateResultDialog(
 			message = _(
 				# Translators: A message indicating that a new version of NVDA has been downloaded and is ready to proceed
 				# with the update.
-				"Update to NVDA version {version} has been downloaded and is ready to apply."
+				"Update to NVDA version {version} has been downloaded and is ready to be applied."
 			).format(**updateInfo)
 
 			self.apiVersion = pendingUpdateDetails[2]
@@ -488,8 +488,8 @@ class UpdateAskInstallDialog(
 		super().__init__(parent, title=_("NVDA Update"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
-		# Translators: A message indicating that an update to NVDA is ready to apply.
-		message = _("Update to NVDA version {version} is ready to apply.\n").format(version=version)
+		# Translators: A message indicating that an update to NVDA is ready to be applied.
+		message = _("Update to NVDA version {version} is ready to be applied.\n").format(version=version)
 
 		showAddonCompat = any(getIncompatibleAddons(
 			currentAPIVersion=self.apiVersion,
