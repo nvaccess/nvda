@@ -175,7 +175,9 @@ freeze(
 	],
 	options={
 		"verbose": 2,
-		"optimize": 0,
+		# Removes assertions for builds.
+		# https://docs.python.org/3.11/tutorial/modules.html#compiled-python-files
+		"optimize": 1,
 		"bundle_files": 3,
 		"dist_dir": "../dist",
 		"excludes": [
