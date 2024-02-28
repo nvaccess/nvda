@@ -506,7 +506,6 @@ void GeckoVBufBackend_t::fillVBufAriaError(
 	VBufStorage_controlFieldNode_t& nodeBeingFilled,
 	const std::wstring& nodeBeingFilledRole
 ){
-	
 	// Elements with `aria-errormessage` set.
 	auto idsOfErrorTargets = getAllRelationIdsForRelationType(IA2_RELATION_ERROR, pacc);
 	if(idsOfErrorTargets.size() > 0) {
@@ -518,9 +517,6 @@ void GeckoVBufBackend_t::fillVBufAriaError(
 	if(idsOfErrorFors.size() > 0) {
 		// nodeBeingFilled.addAttribute(L"isError", L"true");
 	}
-
-
-
 }
 
 
