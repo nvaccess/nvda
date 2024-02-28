@@ -91,7 +91,7 @@ def terminate():
 		setSoundSplitState(SoundSplitState.OFF)
 		unregisterCallback()
 	else:
-		log.debug("Skipping terminating sound split as wasapi is mode is not enabled.")
+		log.debug("Skipping terminating sound split as WASAPI is disabled.")
 
 
 def applyToAllAudioSessions(
