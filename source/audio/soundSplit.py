@@ -68,7 +68,7 @@ class SoundSplitState(DisplayStringIntEnum):
 			case SoundSplitState.NVDA_RIGHT_APPS_LEFT | SoundSplitState.NVDA_RIGHT_APPS_BOTH:
 				return (0.0, 1.0)
 			case _:
-				raise RuntimeError(f"{self=}")
+				raise RuntimeError(f"Unexpected or unknown state {self=}")
 
 
 audioSessionManager: IAudioSessionManager2 | None = None
