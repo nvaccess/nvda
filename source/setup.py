@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Joseph Lee
+# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -123,7 +123,7 @@ _py2ExeWindows = [
 		"other_resources": [_genManifestTemplate(shouldHaveUIAccess=False)],
 		"version_info": {
 			"version": formatBuildVersionString(),
-			"description": description,
+			"description": name,
 			"product_name": name,
 			"product_version": version,
 			"copyright": NVDAcopyright,
