@@ -2754,7 +2754,7 @@ class AudioPanel(SettingsPanel):
 		self._allSoundSplitModes = list(audio.SoundSplitState)
 		self.soundSplitModesList: nvdaControls.CustomCheckListBox = settingsSizerHelper.addLabeledControl(
 			# Translators: Label of the list where user can select sound split modes that will be available.
-			_("&Modes available in the Cycle sound split mode command:"),
+			_("&Modes available in the 'Cycle sound split mode' command:"),
 			nvdaControls.CustomCheckListBox,
 			choices=[mode.displayString for mode in self._allSoundSplitModes]
 		)
