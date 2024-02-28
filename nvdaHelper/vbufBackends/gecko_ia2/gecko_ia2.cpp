@@ -506,6 +506,18 @@ void GeckoVBufBackend_t::fillVBufAriaError(
 	VBufStorage_controlFieldNode_t& nodeBeingFilled,
 	const std::wstring& nodeBeingFilledRole
 ){
+	LOG_INFO(L"Getting ARIA error details");
+	auto idsOfErrorTargets = getAllRelationIdsForRelationType(IA2_RELATION_ERROR, pacc);
+	if(idsOfErrorTargets.size() > 0) {
+		nodeBeingFilled.addAttribute(L"hasError", L"true");
+	}
+
+	auto idsOfErrorFors = getAllRelationIdsForRelationType(IA2_RELATION_ERROR_FOR, pacc);
+	if(idsOfErrorFors.size() > 0) {
+		nodeBeingFilled.addAttribute(L"isError", L"true");
+	}
+
+
 
 }
 
