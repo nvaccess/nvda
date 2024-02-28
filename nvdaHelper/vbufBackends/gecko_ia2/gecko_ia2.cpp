@@ -499,6 +499,17 @@ void GeckoVBufBackend_t::fillVBufAriaDetails(
 }
 
 
+void GeckoVBufBackend_t::fillVBufAriaError(
+	int docHandle,
+	CComPtr<IAccessible2> pacc,
+	VBufStorage_buffer_t& buffer,
+	VBufStorage_controlFieldNode_t& nodeBeingFilled,
+	const std::wstring& nodeBeingFilledRole
+){
+
+}
+
+
 VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	IAccessible2* pacc,
 	VBufStorage_buffer_t* buffer,
@@ -1300,6 +1311,14 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	}
 
 	fillVBufAriaDetails(
+		docHandle,
+		smartPacc,
+		*buffer,
+		*parentNode,
+		roleAttr
+	);
+
+	fillVBufAriaError(
 		docHandle,
 		smartPacc,
 		*buffer,

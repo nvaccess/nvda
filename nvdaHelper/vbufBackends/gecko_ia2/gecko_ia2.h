@@ -49,6 +49,14 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 		const std::wstring& nodeBeingFilledRole
 	);
 
+	void fillVBufAriaError(
+		int docHandle,
+		CComPtr<IAccessible2> pacc,
+		VBufStorage_buffer_t& buffer,
+		VBufStorage_controlFieldNode_t& nodeBeingFilled,
+		const std::wstring& nodeBeingFilledRole
+	);
+
 	void versionSpecificInit(IAccessible2* pacc);
 
 	void fillTableCellInfo_IATable2(VBufStorage_controlFieldNode_t* node, IAccessibleTableCell* paccTableCell);
