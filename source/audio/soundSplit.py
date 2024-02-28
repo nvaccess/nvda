@@ -172,6 +172,7 @@ def toggleSoundSplitState() -> None:
 	try:
 		i = allowedStates.index(state)
 	except ValueError:
+		# State not found, resetting to default (OFF)
 		i = -1
 	i = (i + 1) % len(allowedStates)
 	newState = SoundSplitState(allowedStates[i])
