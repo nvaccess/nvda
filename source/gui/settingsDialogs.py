@@ -1105,7 +1105,7 @@ class SpeechSettingsPanel(SettingsPanel):
 		return self.voicePanel.isValid()
 
 
-class SynthesizerSelectionDialog(SettingsDialog):
+class SynthesizerSelectionDialog:
 	# Translators: This is the label for the synthesizer selection dialog
 	title = _("Select Synthesizer")
 	helpId = "SynthesizerSelection"
@@ -3615,7 +3615,7 @@ class BrailleSettingsPanel(SettingsPanel):
 		self.brailleSubPanel.onSave()
 
 
-class BrailleDisplaySelectionDialog(SettingsDialog):
+class BrailleDisplaySelectionDialog:
 	# Translators: This is the label for the braille display selection dialog.
 	title = _("Select Braille Display")
 	helpId = "SelectBrailleDisplay"
