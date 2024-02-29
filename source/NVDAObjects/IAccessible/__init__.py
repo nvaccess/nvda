@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Babbage B.V., Cyrille Bougot
+# Copyright (C) 2006-2024 NV Access Limited, Babbage B.V., Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -1348,8 +1348,23 @@ the NVDAObject for IAccessible
 			# Each header must be fetched from the headers array once and only once,
 			# as it gets released when it gets garbage collected.
 			for i in range(nHeaders):
+				header = headers[i]
 				try:
-					text = headers[i].QueryInterface(IA2.IAccessible2).accName(0)
+					headerIA2Ptr = header.QueryInterface(IA2.IAccessible2)
+				except COMError:
+					log.debugWarning("could not get IAccessible2 pointer for table header", exc_info=True)
+					continue
+				# Chromium exposes cells as their own headers, so exclude cells with the same `Iaccessible2::uniqueID`.
+				if self.IA2UniqueID is not None:  # No point checking if we don't have this cell's UID
+					try:
+						headerUniqueID = headerIA2Ptr.uniqueID
+					except COMError:
+						log.debugWarning("could not get IAccessible2::uniqueID to use as headerUniqueID", exc_info=True)
+						headerUniqueID = None
+					if self.IA2UniqueID == headerUniqueID:
+						continue
+				try:
+					text = headerIA2Ptr.accName(0)
 				except COMError:
 					continue
 				if not text:

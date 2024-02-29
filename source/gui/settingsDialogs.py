@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers,
 # Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed, Łukasz Golonka, Aaron Cannon,
@@ -13,7 +13,7 @@ import copy
 import os
 from enum import IntEnum
 from locale import strxfrm
-
+import re
 import typing
 import wx
 from NVDAState import WritePaths
@@ -887,8 +887,11 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
-			# Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
-			item=self.allowUsageStatsCheckBox=wx.CheckBox(self,label=_("Allow the NVDA project to gather NVDA usage statistics"))
+			item = self.allowUsageStatsCheckBox = wx.CheckBox(
+				self,
+				# Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+				label=_("Allow NV Access to gather NVDA usage statistics")
+			)
 			self.bindHelpEvent("GeneralSettingsGatherUsageStats", self.allowUsageStatsCheckBox)
 			item.Value=config.conf["update"]["allowUsageStats"]
 			if globalVars.appArgs.secure:
@@ -2559,6 +2562,12 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.framesCheckBox = elementsGroup.addItem(wx.CheckBox(elementsGroupBox, label=_("Fra&mes")))
 		self.framesCheckBox.Value=config.conf["documentFormatting"]["reportFrames"]
 
+		self.figuresCheckBox = elementsGroup.addItem(
+			# Translators: This is the label for a checkbox in the
+			# document formatting settings panel.
+			wx.CheckBox(elementsGroupBox, label=_("&Figures and captions")))
+		self.figuresCheckBox.Value = config.conf["documentFormatting"]["reportFigures"]
+
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
 		self.clickableCheckBox = elementsGroup.addItem(wx.CheckBox(elementsGroupBox, label=_("&Clickable")))
@@ -2614,6 +2623,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportLandmarks"]=self.landmarksCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportArticles"] = self.articlesCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFrames"]=self.framesCheckBox.Value
+		config.conf["documentFormatting"]["reportFigures"] = self.figuresCheckBox.Value
 		config.conf["documentFormatting"]["reportClickable"]=self.clickableCheckBox.Value
 
 
@@ -2708,6 +2718,23 @@ class AudioPanel(SettingsPanel):
 		self.soundVolSlider.SetValue(config.conf["audio"]["soundVolume"])
 
 		self._onSoundVolChange(None)
+		
+		audioAwakeTimeLabelText = _(
+			# Translators: The label for a setting in Audio settings panel
+			# to change how long the audio device is kept awake after speech
+			"Time to &keep audio device awake after speech (seconds)"
+		)
+		minTime = int(config.conf.getConfigValidation(("audio", "audioAwakeTime")).kwargs["min"])
+		maxTime = int(config.conf.getConfigValidation(("audio", "audioAwakeTime")).kwargs["max"])
+		self.audioAwakeTimeEdit = sHelper.addLabeledControl(
+			audioAwakeTimeLabelText,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=minTime,
+			max=maxTime,
+			initial=config.conf["audio"]["audioAwakeTime"]
+		)
+		self.bindHelpEvent("AudioAwakeTime", self.audioAwakeTimeEdit)
+		self.audioAwakeTimeEdit.Enable(nvwave.usingWasapiWavePlayer())
 
 	def onSave(self):
 		if config.conf["speech"]["outputDevice"] != self.deviceList.GetStringSelection():
@@ -2729,6 +2756,8 @@ class AudioPanel(SettingsPanel):
 			index = self.duckingList.GetSelection()
 			config.conf["audio"]["audioDuckingMode"] = index
 			audioDucking.setAudioDuckingMode(index)
+		
+		config.conf["audio"]["audioAwakeTime"] = self.audioAwakeTimeEdit.GetValue()
 
 	def onPanelActivated(self):
 		self._onSoundVolChange(None)
@@ -3295,6 +3324,34 @@ class AdvancedPanelControls(
 
 		self.Layout()
 
+		# Translators: This is the label for a textfield in the
+		# browse mode settings panel.
+		textParagraphRegexLabelText = _("Regular expression for text paragraph navigation")
+		self.textParagraphRegexEdit = sHelper.addLabeledControl(
+			textParagraphRegexLabelText,
+			wxCtrlClass=wx.TextCtrl,
+			size=(self.Parent.scaleSize(300), -1),
+		)
+		self.textParagraphRegexEdit.SetValue(config.conf["virtualBuffers"]["textParagraphRegex"])
+		self.bindHelpEvent("TextParagraphRegexEdit", self.textParagraphRegexEdit)
+
+	def isValid(self) -> bool:
+		regex = self.textParagraphRegexEdit.GetValue()
+		try:
+			re.compile(regex)
+		except re.error as e:
+			log.debugWarning("Failed to compile text paragraph regex", exc_info=True)
+			gui.messageBox(
+				# Translators: Message shown when invalid text paragraph regex entered
+				_("Failed to compile text paragraph regular expression: %s") % str(e),
+				# Translators: The title of the message box
+				_("Error"),
+				wx.OK | wx.ICON_ERROR,
+				self,
+			)
+			return False
+		return super().isValid()
+
 	def onOpenScratchpadDir(self,evt):
 		path=config.getScratchpadDir(ensureExists=True)
 		os.startfile(path)
@@ -3394,6 +3451,9 @@ class AdvancedPanelControls(
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
 		config.conf["featureFlag"]["playErrorSound"] = self.playErrorSoundCombo.GetSelection()
+		config.conf["virtualBuffers"]["textParagraphRegex"] = (
+			self.textParagraphRegexEdit.GetValue()
+		)
 
 
 class AdvancedPanel(SettingsPanel):

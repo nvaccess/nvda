@@ -12,6 +12,7 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
+#include <thread>
 #include <vector>
 #include <windows.h>
 #include <atlbase.h>
@@ -22,16 +23,18 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <Functiondiscoverykeys_devpkey.h>
 #include <mmdeviceapi.h>
 #include <common/log.h>
+#include <random>
 
 /**
  * Support for audio playback using WASAPI.
  * Most of the core work happens in the WasapiPlayer class. Because Python
  * ctypes can't call C++ classes, NVDA interfaces with this using the wasPlay_*
- * functions.
+ * and wasSilence_* functions.
  */
 
 constexpr REFERENCE_TIME REFTIMES_PER_MILLISEC = 10000;
-constexpr REFERENCE_TIME BUFFER_SIZE = 400 * REFTIMES_PER_MILLISEC;
+constexpr DWORD BUFFER_MS = 400;
+constexpr REFERENCE_TIME BUFFER_SIZE = BUFFER_MS * REFTIMES_PER_MILLISEC;
 
 const CLSID CLSID_MMDeviceEnumerator = __uuidof(MMDeviceEnumerator);
 const IID IID_IMMDeviceEnumerator = __uuidof(IMMDeviceEnumerator);
@@ -385,8 +388,13 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 		if (FAILED(hr)) {
 			return hr;
 		}
-		memcpy(buffer, data, sendBytes);
-		hr = render->ReleaseBuffer(sendFrames, 0);
+		if (data) {
+			memcpy(buffer, data, sendBytes);
+			hr = render->ReleaseBuffer(sendFrames, 0);
+		} else {
+			// Null data means play silence.
+			hr = render->ReleaseBuffer(sendFrames, AUDCLNT_BUFFERFLAGS_SILENT);
+		}
 		if (FAILED(hr)) {
 			return hr;
 		}
@@ -403,7 +411,9 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 			playState = PlayState::playing;
 		}
 		maybeFireCallback();
-		data += sendBytes;
+		if (data) {
+			data += sendBytes;
+		}
 		size -= sendBytes;
 		remainingFrames -= sendFrames;
 		sentFrames += sendFrames;
@@ -624,9 +634,129 @@ HRESULT WasapiPlayer::setChannelVolume(unsigned int channel, float level) {
 	return volume->SetChannelVolume(channel, level);
 }
 
+/**
+ * Asynchronously play silence for requested durations.
+ * Silence is played in a background thread. The duration can be adjusted from
+ * any thread.
+ */
+class SilencePlayer {
+	public:
+	SilencePlayer(wchar_t* deviceName);
+	HRESULT init();
+	// Play silence for the specified duration.
+	void playFor(DWORD ms, float volume);
+	void terminate();
+
+	private:
+	static WAVEFORMATEX getFormat();
+	void generateWhiteNoise(float volume);
+	// The code which is run in the silence thread.
+	void run();
+
+	static constexpr DWORD SAMPLES_PER_SEC = 48000;
+	// How many bytes of silence in each buffer.
+	static constexpr unsigned int SILENCE_BYTES = SAMPLES_PER_SEC * 2 * BUFFER_MS
+		/ 1000;
+	WasapiPlayer player;
+	AutoHandle wakeEvent;
+	// The time (not duration) at which silence should end.
+	ULONGLONG endTime = 0;
+	std::thread silenceThread;
+	float volume;
+	std::vector<INT16> whiteNoiseData;
+};
+
+SilencePlayer::SilencePlayer(wchar_t* deviceName):
+player(deviceName, getFormat(), nullptr),
+whiteNoiseData(
+	SILENCE_BYTES  / (
+		sizeof(INT16) / sizeof(unsigned char)
+	)
+),
+volume(-1) {
+	wakeEvent = CreateEvent(nullptr, false, false, nullptr);
+}
+
+WAVEFORMATEX SilencePlayer::getFormat() {
+	WAVEFORMATEX format;
+	format.wFormatTag = WAVE_FORMAT_PCM;
+	format.nChannels = 1;
+	format.nSamplesPerSec = SAMPLES_PER_SEC;
+	format.wBitsPerSample = 16;
+	format.nBlockAlign = 2;
+	format.nAvgBytesPerSec = SAMPLES_PER_SEC * 2;
+	format.cbSize = 0;
+	return format;
+}
+
+void SilencePlayer::generateWhiteNoise(float volume) {
+	if (volume == 0) {
+		return;
+	}
+	UINT32 n = whiteNoiseData.size();
+	const double mean = 0.0;
+	const double stddev = volume * 256;
+	std::default_random_engine generator;
+	std::normal_distribution<double> dist(mean, stddev);
+	for (UINT32 i = 0; i < n; i++) {
+		whiteNoiseData[i] = (INT16)dist(generator);
+	}
+}
+
+HRESULT SilencePlayer::init() {
+	HRESULT hr = player.open();
+	if (FAILED(hr)) {
+		return hr;
+	}
+	silenceThread = std::thread(&SilencePlayer::run, this);
+	return S_OK;
+}
+
+void SilencePlayer::run() {
+	for (;;) {
+		// Wait for silence or termination to be requested.
+		WaitForSingleObject(wakeEvent, INFINITE);
+		if (endTime == 0) {
+			// We have been asked to terminate.
+			// std::thread cannot be destroyed while it is attached, so detach it first.
+			silenceThread.detach();
+			delete this;
+			return;
+		}
+		// Play silence until the desired time. This time might increase or decrease
+		// as we're looping. This is fine because we're only pushing BUFFER_MS each
+		// iteration.
+		while (GetTickCount64() < endTime) {
+			unsigned char* whiteNoisePtr = volume > 0
+				? reinterpret_cast<unsigned char*>(&whiteNoiseData[0])
+				: nullptr;
+			player.feed(whiteNoisePtr, SILENCE_BYTES, nullptr);
+		}
+		player.idle();
+	}
+}
+
+void SilencePlayer::playFor(DWORD ms, float volume) {
+	if (volume != this->volume) {
+		generateWhiteNoise(volume);
+		this->volume = volume;
+	}
+	endTime = ms == INFINITE ? ULLONG_MAX : GetTickCount64() + ms;
+	SetEvent(wakeEvent);
+}
+
+void SilencePlayer::terminate() {
+	// 0 signals silenceThread to exit.
+	endTime = 0;
+	// If silenceThread is feeding, this will make feed return early.
+	player.stop();
+	// If silenceThread is waiting, this will wake it up.
+	SetEvent(wakeEvent);
+}
+
 /*
  * NVDA calls the functions below. Most of these just wrap calls to
- * WasapiPlayer, with the exception of wasPlay_startup.
+ * WasapiPlayer or SilencePlayer, with the exception of wasPlay_startup.
  */
 
 WasapiPlayer* wasPlay_create(wchar_t* deviceName, WAVEFORMATEX format,
@@ -689,4 +819,24 @@ HRESULT wasPlay_startup() {
 	}
 	notificationClient = new NotificationClient();
 	return enumerator->RegisterEndpointNotificationCallback(notificationClient);
+}
+
+SilencePlayer* silence = nullptr;
+
+HRESULT wasSilence_init(wchar_t* deviceName) {
+	assert(!silence);
+	silence = new SilencePlayer(deviceName);
+	return silence->init();
+}
+
+void wasSilence_playFor(DWORD ms, float volume) {
+	assert(silence);
+	silence->playFor(ms, volume);
+}
+
+void wasSilence_terminate() {
+	assert(silence);
+	silence->terminate();
+	// silence will delete itself once the thread terminates.
+	silence = nullptr;
 }

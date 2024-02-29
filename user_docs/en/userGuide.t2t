@@ -237,7 +237,14 @@ The actual commands will not execute while in input help mode.
 | Move to next synth setting | ``NVDA+control+rightArrow`` | ``NVDA+shift+control+rightArrow`` | Moves to the next available speech setting after the current, wrapping around to the first setting again after the last |
 | Move to previous synth setting | ``NVDA+control+leftArrow`` | ``NVDA+shift+control+leftArrow`` | Moves to the next available speech setting before the current, wrapping around to the last setting after the first |
 | Increment current synth setting | ``NVDA+control+upArrow`` | ``NVDA+shift+control+upArrow`` | increases the current speech setting you are on. E.g. increases the rate, chooses the next voice, increases the volume |
+| Increment the current synth setting in a larger step | ``NVDA+control+pageUp`` | ``NVDA+shift+control+pageUp`` | Increases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump forward every 20 voices; when you're on slider settings (rate, pitch, etc) it will jump forward the value up to 20% |
+
 | Decrement current synth setting | ``NVDA+control+downArrow`` | ``NVDA+shift+control+downArrow`` | decreases the current speech setting you are on. E.g. decreases the rate, chooses the previous voice, decreases the volume |
+| Decrement the current synth setting in a larger step | ``NVDA+control+pageDown`` | ``NVDA+shift+control+pageDown`` | Decreases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump backward every 20 voices; when you're on a slider setting, it will jump backward the value up to 20%. |
+
+It is also possible to set the first or last value of the current synth setting by assign custom gestures in [Input Gestures dialog #InputGestures], under the speech category.
+This means, for example, when you're on a rate setting, it will set the rate to 0 or 100.
+When you're on a voice setting, it will set the first or last voice.
 
 +++ Web navigation +++[WebNavigation]
 The full list of Single Letter Navigation keys is in the [Browse Mode #BrowseMode] section of the user guide.
@@ -398,7 +405,7 @@ The third lets you control if this Welcome dialog should appear each time NVDA s
 +++ Data usage statistics dialog +++[UsageStatsDialog]
 Starting from NVDA 2018.3, the user is asked if they want to allow usage data to be sent to NV Access in order to help improve NVDA in the future.
 When starting NVDA for the first time, a dialog will appear which will ask you if you want to accept sending data to NV Access while using NVDA.
-You can read more info about the data gathered by NV Access in the general settings section, [Allow the NVDA project to gather NVDA usage statistics #GeneralSettingsGatherUsageStats].
+You can read more info about the data gathered by NV Access in the general settings section, [Allow NV Access to gather NVDA usage statistics #GeneralSettingsGatherUsageStats].
 Note: pressing on "yes" or "no" will save this setting and the dialog will never appear again unless you reinstall NVDA.
 However, you can enable or disable the data gathering process manually in NVDA's general settings panel. For changing this setting manually, you can check or uncheck the checkbox called [Allow the NVDA project to gather NVDA usage statistics #GeneralSettingsGatherUsageStats].
 
@@ -698,6 +705,7 @@ Note: numpad keys require the Num Lock to be turned off to work properly.
 
 A good way to remember the basic text review commands  when using the Desktop layout  is to think of them as being in a grid of three by three, with top to bottom being line, word and character and left to right being previous, current and next.
 The layout is illustrated as follows:
+|| . {.hideHeaderRow} | . | . |
 | Previous line | Current line | Next line |
 | Previous word | Current word | Next word |
 | Previous character | Current character | Next character |
@@ -828,6 +836,7 @@ The following keys by themselves jump to the next available element, while addin
 - o: embedded object (audio and video player, application, dialog, etc.)
 - 1 to 6: headings at levels 1 to 6 respectively
 - a: annotation (comment, editor revision, etc.)
+- ``p``: text paragraph
 - w: spelling error
 -
 To move to the beginning or end of containing elements such as lists and tables:
@@ -842,12 +851,33 @@ If you want to use these while still being able to use your cursor keys to read 
 To toggle single letter navigation on and off for the current document, press NVDA+shift+space.
 %kc:endInclude
 
++++ Text paragraph navigation command +++[TextNavigationCommand]
+
+You can jump to the next or previous text paragraph by pressing ``p`` or ``shift+p``.
+Text paragraphs are defined by a group of text that appears to be written in complete sentences.
+This can be useful to find the beginning of readable content on various webpages, such as:
+- News websites
+- Forums
+- Blog posts
+- 
+
+These commands can also be helpful for skipping certain kinds of clutter, such as:
+- Ads
+- Menus
+- Headers
+- 
+
+Please note, however, that while NVDA tries its best to identify text paragraphs, the algorithm is not perfect and at times can make mistakes.
+Additionally, this command is different from paragraph navigation commands ``control+downArrow/upArrow``.
+Text paragraph navigation only jumps between text paragraphs, while paragraph navigation commands take the cursor to the previous/next paragraphs regardless of whether they contain text or not.
+
 +++ Other navigation commands +++[OtherNavigationCommands]
 
 In addition to the quick navigation commands listed above, NVDA has commands that have no default keys assigned.
 To use these commands, you first need to assign gestures to them using the [Input Gestures dialog #InputGestures].
 Here is a list of available commands:
 - Article
+- Figure
 - Grouping
 - Tab
 -
@@ -1494,7 +1524,7 @@ The following information is always sent:
 - Whether the Operating System is 64 or 32 bit
 -
 
-==== Allow the NVDA project to gather NVDA usage statistics ====[GeneralSettingsGatherUsageStats]
+==== Allow NV Access to gather NVDA usage statistics ====[GeneralSettingsGatherUsageStats]
 If this is enabled, NV Access will use the information from update checks in order to track  the number of NVDA users including particular demographics such as Operating system and country of origin.
 Note that although your IP address will be used to calculate your country during the update check, the IP address is never kept.
 Apart from the mandatory information required to check for updates, the following extra information is also currently sent:
@@ -1658,7 +1688,9 @@ If you wish to quickly change speech settings without going to the Speech catego
 | Move to next synth setting | NVDA+control+rightArrow | NVDA+shift+control+rightArrow | Moves to the next available speech setting after the current, wrapping around to the first setting again after the last |
 | Move to previous synth setting | NVDA+control+leftArrow | NVDA+shift+control+leftArrow | Moves to the next available speech setting before the current, wrapping around to the last setting after the first |
 | Increment current synth setting | NVDA+control+upArrow | NVDA+shift+control+upArrow | increases the current speech setting you are on. E.g. increases the rate, chooses the next voice, increases the volume |
+| Increment the current synth setting in a larger step | ``NVDA+control+pageUp`` | ``NVDA+shift+control+pageUp`` | Increases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump forward every 20 voices; when you're on slider settings (rate, pitch, etc) it will jump forward the value up to 20% |
 | Decrement current synth setting | NVDA+control+downArrow | NVDA+shift+control+downArrow | decreases the current speech setting you are on. E.g. decreases the rate, chooses the previous voice, decreases the volume |
+| Decrement the current synth setting in a larger step | ``NVDA+control+pageDown`` | ``NVDA+shift+control+pageDown`` | Decreases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump backward every 20 voices; when you're on a slider setting, it will jump backward the value up to 20% |
 %kc:endInclude
 
 +++ Braille +++[BrailleSettings]
@@ -1911,6 +1943,20 @@ This option is not available if you have started NVDA with [WASAPI disabled for 
 ==== Volume of NVDA sounds ====[SoundVolume]
 This slider allows you to set the volume of NVDA sounds and beeps.
 This setting only takes effect when "Volume of NVDA sounds follows voice volume" is disabled.
+This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
+
+==== Time to keep audio device awake after speech ====[AudioAwakeTime]
+
+This edit box specifies how long NVDA keeps the audio device awake after speech ends.
+This allows NVDA to avoid certain speech glitches like dropped parts of words.
+This can happen due to audio devices (especially Bluetooth and wireless devices) entering standby mode.
+This might also be helpful in other use cases, such as when running NVDA inside a virtual machine (e.g. Citrix Virtual Desktop), or on certain laptops.
+
+Lower values may allow audio to be cut-off more often, as a device may enter standby mode too soon, causing the start of the following speech to be clipped.
+Setting the value too high may cause the battery of the sound output device to discharge faster, as it stays active for longer while no sound is being sent.
+
+
+You can set the time to zero in order to disable this feature.
 This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
 
 +++ Vision +++[VisionSettings]
@@ -2316,6 +2362,7 @@ You can configure reporting of:
   - Landmarks
   - Articles
   - Frames
+  - Figures and captions
   - Clickable
   -
 -
@@ -2593,6 +2640,11 @@ Only turn one of these on if specifically instructed to by an NVDA developer e.g
 This option allows you to specify if NVDA will play an error sound in case an error is logged.
 Choosing Only in test versions (default) makes NVDA play error sounds only if the current NVDA version is a test version (alpha, beta or run from source).
 Choosing Yes allows to enable error sounds whatever your current NVDA version is.
+
+==== Regular expression for text paragraph quick navigation commands ====[TextParagraphRegexEdit]
+
+This field allows users to customize regular expression for detecting text paragraphs in browse mode.
+The [text paragraph navigation command #TextNavigationCommand] searches for paragraphs matched by this regular expression.
 
 ++ miscellaneous Settings ++[MiscSettings]
 Besides the [NVDA Settings #NVDASettings] dialog, The Preferences sub-menu of the NVDA Menu contains several other items which are outlined below.
@@ -3672,8 +3724,8 @@ These are (ordered from left to right):
 Currently, the right thumb key is not in use.
 The inner keys are both mapped to space.
 
-|| Name | Key |
 %kc:beginInclude
+|| Name | Key |
 | escape key | space with dot 7 |
 | upArrow key | space with dot 2 |
 | leftArrow key | space with dot 1 |
@@ -4267,11 +4319,13 @@ nvda -q
 
 Some of the command line options have a short and a long version, while some of them have only a long version.
 For those which have a short version, you can combine them like this:
-|`` nvda -mc CONFIGPATH`` | This will start NVDA with startup sounds and message disabled, and the specified configuration |
+|| . {.hideHeaderRow} | . |
+| ``nvda -mc CONFIGPATH`` | This will start NVDA with startup sounds and message disabled, and the specified configuration |
 | ``nvda -mc CONFIGPATH --disable-addons`` | Same as above, but with add-ons disabled |
 
 Some of the command line options accept additional parameters; e.g. how detailed the logging should be or the path to the user configuration directory.
 Those parameters should be placed after the option, separated from the option by a space when using the short version or an equals sign (``=``) when using the long version; e.g.:
+|| . {.hideHeaderRow} | . |
 | ``nvda -l 10`` | Tells NVDA to start with log level set to debug |
 | ``nvda --log-file=c:\nvda.log`` | Tells NVDA to write its log to ``c:\nvda.log`` |
 | ``nvda --log-level=20 -f c:\nvda.log`` | Tells NVDA to start with log level set to info and to write its log to ``c:\nvda.log`` |

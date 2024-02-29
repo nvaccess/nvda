@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2023 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
-# Accessolutions, Julien Cochuyt, Cyrille Bougot
+# Copyright (C) 2007-2024 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
+# Accessolutions, Julien Cochuyt, Cyrille Bougot, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -23,6 +23,7 @@ from typing import (
 	Literal,
 	NamedTuple,
 	Optional,
+	Protocol,
 	TYPE_CHECKING,
 )
 import exceptions
@@ -479,6 +480,23 @@ def _threadExceptHook(excInfoObj: _ThreadExceptHookArgs_t) -> None:
 	log.exception(msg, (excInfoObj.exc_type, excInfoObj.exc_value, excInfoObj.exc_traceback))
 
 
+class _UnraisableHookArgs(Protocol):
+
+	exc_type: type[BaseException]
+	exc_value: BaseException | None
+	exc_traceback: TracebackType | None
+	err_msg: str | None
+	object: object
+
+
+def _unraisableExceptHook(unraisable: _UnraisableHookArgs) -> None:
+	if unraisable.err_msg:
+		msg = f"{unraisable.err_msg}: {unraisable.object!r}"
+	else:
+		msg = f"Exception ignored in: {unraisable.object!r}"
+	log.exception(exc_info=(unraisable.exc_type, unraisable.exc_value, unraisable.exc_traceback), codepath=msg)
+
+
 def _showwarning(message, category, filename, lineno, file=None, line=None):
 	log.debugWarning(warnings.formatwarning(message, category, filename, lineno, line).rstrip(), codepath="Python warning")
 
@@ -559,6 +577,7 @@ def initialize(shouldDoRemoteLogging=False):
 	log.root.addHandler(logHandler)
 	redirectStdout(log)
 	sys.excepthook = _excepthook
+	sys.unraisablehook = _unraisableExceptHook
 	threading.excepthook = _threadExceptHook
 	warnings.showwarning = _showwarning
 	warnings.simplefilter("default", DeprecationWarning)

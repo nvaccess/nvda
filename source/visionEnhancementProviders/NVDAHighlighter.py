@@ -418,10 +418,10 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		winGDI.gdiPlusInitialize()
 		self._highlighterThread = threading.Thread(
 			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}",
-			target=self._run
+			target=self._run,
+			daemon=True,
 		)
 		self._highlighterRunningEvent = threading.Event()
-		self._highlighterThread.daemon = True
 		self._highlighterThread.start()
 		# Make sure the highlighter thread doesn't exit early.
 		waitResult = self._highlighterRunningEvent.wait(0.2)

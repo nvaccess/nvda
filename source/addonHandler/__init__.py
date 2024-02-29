@@ -833,6 +833,13 @@ def getCodeAddon(obj=None, frameDist=1):
 
 
 def initTranslation():
+	"""Initializes the translation of an add-on so that the Gettext functions (_, ngettext, npgettext and
+	pgettext) point to the add-on's translation rather than to NVDA's one.
+	This function should be called at the top of any module containing translatable strings and belonging to
+	an add-on. It cannot be called in a module that does not belong to an add-on (e.g. in a subdirectory of the
+	scratchpad).
+	"""
+
 	addon = getCodeAddon(frameDist=2)
 	translations = addon.getTranslationsInstance()
 	_TRANSLATION_FUNCTIONS = {

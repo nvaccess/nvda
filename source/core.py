@@ -292,6 +292,10 @@ def resetConfiguration(factoryDefaults=False):
 	hwIo.terminate()
 	log.debug("terminating addonHandler")
 	addonHandler.terminate()
+	# Addons
+	from addonStore import dataManager
+	log.debug("terminating addon dataManager")
+	dataManager.terminate()
 	log.debug("Reloading config")
 	config.conf.reset(factoryDefaults=factoryDefaults)
 	logHandler.setLogLevelFromConfig()
@@ -302,8 +306,6 @@ def resetConfiguration(factoryDefaults=False):
 		lang = config.conf["general"]["language"]
 	log.debug("setting language to %s"%lang)
 	languageHandler.setLanguage(lang)
-	# Addons
-	from addonStore import dataManager
 	dataManager.initialize()
 	addonHandler.initialize()
 	# Hardware background i/o
@@ -927,7 +929,7 @@ def main():
 	_terminate(bdDetect)
 	_terminate(hwIo)
 	_terminate(addonHandler)
-	_terminate(nvwave)
+	_terminate(dataManager, name="addon dataManager")
 	_terminate(garbageHandler)
 	# DMP is only started if needed.
 	# Terminate manually (and let it write to the log if necessary)
@@ -946,6 +948,8 @@ def main():
 			)
 		except:
 			pass
+	# We cannot terminate nvwave until after we perform nvwave.playWaveFile
+	_terminate(nvwave)
 	# #5189: Destroy the message window as late as possible
 	# so new instances of NVDA can find this one even if it freezes during exit.
 	messageWindow.destroy()
