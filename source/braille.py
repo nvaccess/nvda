@@ -2130,7 +2130,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	_suppressClearBrailleRegions: bool = False
 
 	@contextlib.contextmanager
-	def suppressClearBrailleRegions(self, script: inputCore.InputGestureScriptT):
+	def suppressClearBrailleRegions(self, script: "inputCore.InputGestureScript"):
 		from globalCommands import commands
 		suppress = script in [commands.script_braille_scrollBack, commands.script_braille_scrollForward]
 		self._suppressClearBrailleRegions = suppress
