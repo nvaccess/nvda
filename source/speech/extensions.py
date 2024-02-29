@@ -16,6 +16,14 @@ Notifies when speech is canceled.
 Handlers are called without arguments.
 """
 
+pre_filter_speechSequence = Action()
+"""
+Notifies before filtering speech sequence.
+
+:param value: speech sequence.
+:type value: SpeechSequence
+"""
+
 post_filter_speechSequence = Action()
 """
 Notifies when requested speech has been filtered and is ready to be passed onto the synthesizer.

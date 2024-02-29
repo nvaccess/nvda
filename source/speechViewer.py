@@ -12,7 +12,7 @@ import gui
 import config
 from logHandler import log
 from speech import SpeechSequence
-from speech.extensions import speechSequencePreFilter
+from speech.extensions import post_filter_speechSequence
 from gui import blockAction
 import gui.contextHelp
 from utils.security import isLockScreenModeActive, post_sessionLockStateChanged
@@ -48,7 +48,7 @@ class SpeechViewerFrame(
 			style=wx.CAPTION | wx.CLOSE_BOX | wx.RESIZE_BORDER | wx.STAY_ON_TOP
 		)
 		post_sessionLockStateChanged.register(self.onSessionLockStateChange)
-		speechSequencePreFilter.register(appendSpeechSequence)
+		post_filter_speechSequence.register(appendSpeechSequence)
 		self._isDestroyed = False
 		self.onDestroyCallBack = onDestroyCallBack
 		self.Bind(wx.EVT_CLOSE, self.onClose)
@@ -130,7 +130,7 @@ class SpeechViewerFrame(
 	def onDestroy(self, evt: wx.Event):
 		self._isDestroyed = True
 		post_sessionLockStateChanged.unregister(self.onSessionLockStateChange)
-		speechSequencePreFilter.unregister(appendSpeechSequence)
+		post_filter_speechSequence.unregister(appendSpeechSequence)
 		log.debug("SpeechViewer destroyed")
 		self.onDestroyCallBack()
 		evt.Skip()
