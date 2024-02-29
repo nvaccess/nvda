@@ -528,7 +528,7 @@ class InputManager(baseObject.AutoPropertyObject):
 		if speechEffect == gesture.SPEECHEFFECT_CANCEL:
 			# Import late to avoid circular import.
 			import braille
-			@braille.handler.suppressClearBrailleRegions(script):
+			@braille.handler.suppressClearBrailleRegions(script)
 			def suppressCancelSpeech():
 				speech.cancelSpeech()
 
