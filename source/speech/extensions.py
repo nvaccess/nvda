@@ -16,11 +16,18 @@ Notifies when speech is canceled.
 Handlers are called without arguments.
 """
 
-speechSequencePreFilter = Action()
+post_filter_speechSequence = Action()
 """
-Notifies when new speech sequence appears.
+Notifies when requested speech has been filtered and is ready to be passed onto the synthesizer.
 
-:param value: the speech sequence before filtering .
+:param value: a planned speech sequence.
+:type value: SpeechSequence
+What NVDA would speak with speech turned on and uninterrupted.
+A speech sequence that has been requested somewhere in NVDA,
+and is finished being processed or modified by external modules such as add-ons.
+Prepared speech may be cancelled or processed further to prepare it for the synthesizer.
+This extension point is useful for tracking prepared speech in NVDA.
+i.e. for speech viewer, capturing speech history, or mirroring speech in braille.
 """
 
 filter_speechSequence = Filter[SpeechSequence]()
