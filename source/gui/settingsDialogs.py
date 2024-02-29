@@ -1073,7 +1073,7 @@ class SpeechSettingsPanel(SettingsPanel):
 			evt.Skip()
 
 	def onChangeSynth(self, evt):
-		changeSynth = SynthesizerSelectionDialog(self, multiInstanceAllowed=True)
+		changeSynth = SynthesizerSelectionDialog(None, multiInstanceAllowed=True)
 		ret = changeSynth.ShowModal()
 		if ret == wx.ID_OK:
 			self.Freeze()
@@ -3584,7 +3584,7 @@ class BrailleSettingsPanel(SettingsPanel):
 			evt.Skip()
 
 	def onChangeDisplay(self, evt):
-		changeDisplay = BrailleDisplaySelectionDialog(self, multiInstanceAllowed=True)
+		changeDisplay = BrailleDisplaySelectionDialog(None, multiInstanceAllowed=True)
 		ret = changeDisplay.ShowModal()
 		if ret == wx.ID_OK:
 			self.Freeze()
