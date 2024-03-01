@@ -398,7 +398,7 @@ A terceira permite configurar se este diálogo de boas vindas aparecerá sempre 
 +++ Diálogo de estatísticas de uso de dados +++[UsageStatsDialog]
 A partir do NVDA 2018.3, o usuário é perguntado se deseja permitir que os dados de uso sejam enviados à NV Access para ajudar a melhorar o NVDA no futuro.
 Ao iniciar o NVDA pela primeira vez, será exibida uma caixa de diálogo perguntando se você deseja aceitar o envio de dados à NV Access enquanto estiver usando o NVDA.
-Você pode ler mais informações sobre os dados coletados pela NV Access na seção de configurações gerais, [Permitir que o projeto NVDA colete estatísticas de uso do NVDA #GeneralSettingsGatherUsageStats].
+Você pode ler mais informações sobre os dados coletados pela NV Access na seção de configurações gerais, [Permitir que a NV Access colete estatísticas de uso do NVDA #GeneralSettingsGatherUsageStats].
 Nota: pressionar "sim" ou "não" salvará essa configuração e o diálogo nunca aparecerá novamente, a menos que você reinstale o NVDA.
 No entanto, você pode habilitar ou desabilitar o processo de coleta de dados manualmente no painel de configurações gerais do NVDA. Para alterar essa configuração manualmente, você pode marcar ou desmarcar a caixa de seleção chamada [Permitir que o Projeto NVDA colete estatísticas de uso do NVDA #GeneralSettingsGatherUsageStats].
 
@@ -698,6 +698,7 @@ Nota: As teclas do bloco numérico requerem que o Num Lock esteja desativado par
 
 Uma boa forma de assimilar os comandos básicos de exploração de texto quando se usa o esquema para computadores de mesa, é imaginá-los como sendo uma tabela de três por três, do início até ao fim por linha, palavra e caractere, e da esquerda para a direita por anterior, atual e seguinte.
 O esquema é ilustrado como se segue:
+|| . {.hideHeaderRow} | . | . |
 | Linha Anterior | Linha Atual | Próxima Linha |
 | Palavra Anterior | Palavra Atual | Próxima Palavra |
 | Caractere Anterior | Caractere Atual | Próximo Caractere |
@@ -1494,7 +1495,7 @@ As seguintes informações são sempre enviadas:
 - Se o Sistema Operacional é 64 ou 32 bit
 -
 
-==== Permitir que o Projeto NVDA colete estatísticas de uso do NVDA ====[GeneralSettingsGatherUsageStats]
+==== Permitir que a NV Access colete estatísticas de uso do NVDA ====[GeneralSettingsGatherUsageStats]
 Se isso estiver habilitado, a NV Access usará as informações das procuras de atualização para rastrear o número de usuários do NVDA, incluindo informações demográficas específicas, como Sistema operacional e país de origem.
 Note que, embora seu endereço IP seja usado para calcular seu país durante a verificação de atualização, o endereço IP nunca é armazenado.
 Além das informações obrigatórias necessárias para procurar por atualizações, as seguintes informações extras também são enviadas:
@@ -4267,11 +4268,13 @@ nvda -q
 
 Algumas das opções de linha de comando possuem uma versão curta e uma longa, enquanto outras delas contam apenas com uma versão longa.
 Para aquelas que possuem uma versão curta, você pode combiná-las do seguinte modo:
+|| . {.hideHeaderRow} | . |
 | ``nvda -mc CAMINHODECONFIG`` | Isso iniciará o NVDA com sons e mensagens de inicialização desabilitados, e a configuração especificada |
 | ``nvda -mc CAMINHODECONFIG --disable-addons`` | O mesmo que acima, mas com os complementos desabilitados |
 
 Algumas das opções aceitam parâmetros adicionais, por exemplo, qual o grau de detalhamento do log ou o caminho para a pasta de configurações do usuário.
 Esses parâmetros devem ser inseridos depois da opção, separados desta por um espaço quando for usada a versão curta ou um sinal de igual (``=``) caso seja usada a versão longa. Por exemplo:
+|| . {.hideHeaderRow} | . |
 | ``nvda -l 10`` | Informa ao NVDA para iniciar com o grau de informações no log configurado para depuração |
 | ``nvda --log-file=c:\nvda.log`` | Informa ao NVDA para registrar seu log em ``c:\nvda.log`` |
 | ``nvda --log-level=20 -f c:\nvda.log`` | Informa ao NVDA para iniciar com o grau de informações no log configurado para informações e também registrar seu log em ``c:\nvda.log`` |
