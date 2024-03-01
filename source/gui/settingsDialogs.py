@@ -3584,7 +3584,7 @@ class BrailleSettingsPanel(SettingsPanel):
 			evt.Skip()
 
 	def onChangeDisplay(self, evt):
-		changeDisplay = BrailleDisplaySelectionDialog(None, multiInstanceAllowed=True)
+		changeDisplay = BrailleDisplaySelectionDialog(self, multiInstanceAllowed=True)
 		ret = changeDisplay.ShowModal()
 		if ret == wx.ID_OK:
 			self.Freeze()
