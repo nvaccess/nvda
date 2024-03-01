@@ -1073,7 +1073,7 @@ class SpeechSettingsPanel(SettingsPanel):
 			evt.Skip()
 
 	def onChangeSynth(self, evt):
-		changeSynth = SynthesizerSelectionDialog(None, multiInstanceAllowed=True)
+		changeSynth = SynthesizerSelectionDialog(self, multiInstanceAllowed=True)
 		ret = changeSynth.ShowModal()
 		if ret == wx.ID_OK:
 			self.Freeze()
