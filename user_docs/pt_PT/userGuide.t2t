@@ -698,7 +698,8 @@ Nota: As teclas do bloco numérico exigem que o NumLock esteja desligado, para q
 
 Uma boa maneira de recordar os comandos básicos de revisão de texto, quando se usa o esquema de teclado Desktop, é imaginar que estão organizados numa grelha de três por três, de cima para baixo, por linha, palavra e caracter, e da esquerda para a direita, por anterior, actual e seguinte.
 A disposição é ilustrada como se segue:
-|| Linha anterior | Linha actual | Próxima linha |
+|| . {.hideHeaderRow} | . | . |
+| Linha anterior | Linha actual | Próxima linha |
 | Palavra anterior | Palavra actual | Próxima palavra |
 | Caracter anterior | Caracter actual | Próximo caracter |
 
@@ -1494,7 +1495,7 @@ As seguintes informações são sempre enviadas:
 - Se o sistema operativo é de 64 ou 32 bit;
 -
 
-==== Permitir que o projeto do NVDA recolha estatísticas de utilização do NVDA ====[GeneralSettingsGatherUsageStats]
+==== Permitir que a NV Access recolha estatísticas de utilização do NVDA ====[GeneralSettingsGatherUsageStats]
 Se esta opção estiver activada, a NV Access usará a informação obtida pela verificação de actualizações para determinar o número de utilizadores do NVDA, incluindo informações como sistema operativo, e país de origem.
 Note que apesar do seu endereço IP ser usado para determinar o seu país, ele nunca é guardado.
 Para além das informações obrigatórias para a selecção da actualização, as seguintes informações adicionais também serão enviadas:
@@ -2488,8 +2489,8 @@ Para "Anunciar sumário de quaisquer detalhes da nota no ponto de inserção", p
 %kc:endInclude
 
 Existem as seguintes opções: 
-- "Anunciar "tem detalhes" para anotações estruturadas": permite o anúncio se o controlo tiver mais detalhes.
-- Anunciar sempre aria-description":
+- "Anunciar 'tem detalhes' para anotações estruturadas": permite o anúncio se o controlo tiver mais detalhes.
+- "Anunciar sempre aria-description":
   Quando a fonte da "descrição" é aria-description, a descrição é anunciada.
   Isto é útil para anotações na web.
   Nota:
@@ -4267,11 +4268,13 @@ nvda -q
 
 Algumas das opções têm uma versão curta e uma longa, enquanto algumas só têm a longa.
 Para as que têm uma versão curta, pode combiná-las como se segue:
-|`` nvda -mc CONFIGPATH`` | Isto iniciará o NVDA com os sons e mensagens de início desactivadas e a configuração especificada |
+|| . {.hideHeaderRow} | . | . |
+| `` nvda -mc CONFIGPATH`` | Isto iniciará o NVDA com os sons e mensagens de início desactivadas e a configuração especificada |
 | ``nvda -mc CONFIGPATH --disable-addons`` | Igual à anterior mas também com os extras desactivados |
 
 Algumas das opções da linha de comando aceitam parâmetros adicionais, por exemplo quão detalhado o ficheiro de log deve ser ou o caminho para as configurações do utilizador.
 Esses parâmetros devem ser colocados depois da opção, separados da opção por um espaço, se estivermos a usar a versão curta ou um sinal de igual (=), se usarmos a versão longa. Por exemplo:
+|| . {.hideHeaderRow} | . | . |
 | ``nvda -l 10`` | Informa o NVDA para iniciar com o nível de registo definido para depuração |
 | ``nvda --log-file=c:\nvda.log`` | Informa o NVDA para escrever o ficheiro de log em c:\nvda.log |
 | ``nvda --log-level=20 -f c:\nvda.log`` | Informa o NVDA para iniciar com o nível de registo definido para info e para guardar o ficheiro em c:\nvda.log |

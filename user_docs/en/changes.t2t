@@ -349,7 +349,12 @@ Use ``bdDetect.DeviceType.*`` instead. (#15772, @LeonarddeR).
 
 
 = 2023.3.4 =
-This is a patch release to fix an installer issue.
+This is a patch release to fix a security issue and installer issue.
+Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Security Fixes ==
+- Prevents loading custom configuration while secure mode is forced.
+([GHSA-727q-h8j2-6p45 https://github.com/nvaccess/nvda/security/advisories/GHSA-727q-h8j2-6p45])
 
 == Bug Fixes ==
 - Fixed bug which caused the NVDA process to fail to exit correctly. (#16123)

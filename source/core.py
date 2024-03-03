@@ -607,7 +607,17 @@ def main():
 		setDPIAwareness()
 
 	import config
-	if not WritePaths.configDir:
+	from utils.security import isRunningOnSecureDesktop
+	if (
+		# No config flag was set, use default config path.
+		not WritePaths.configDir
+		or (
+			# Secure mode enabled, force default config path.
+			globalVars.appArgs.secure
+			# Secure desktop config is forced to sys.prefix/systemConfig
+			and not isRunningOnSecureDesktop()
+		)
+	):
 		WritePaths.configDir = config.getUserDefaultConfigPath(
 			useInstalledPathIfExists=globalVars.appArgs.launcher
 		)

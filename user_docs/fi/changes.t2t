@@ -249,7 +249,7 @@ Bugikorjauksia lisäosakauppaan, Microsoft Officeen, Edgen pikavalikoihin sekä 
   - Korjattu bugi, jossa Albatross-pistenäytöt yrittävät alustaa itsensä, vaikka toinen pistenäyttö on kytkettynä. (#15226)
   -
 - Lisäosakauppa:
-  - Korjattu bugi, joka aiheutti sen, että yhteensopimattomat lisäosat näytettiin, vaikka "Näytä yhteensopimattomat lisäosat" -valintaruudun valinta oli poistettu. (#15411)
+  - Korjattu bugi, joka aiheutti yhteensopimattomien lisäosien näyttämisen, vaikka "Näytä yhteensopimattomat lisäosat" -valintaruudun valinta oli poistettu. (#15411)
   - Yhteensopivuussyistä estetyt lisäosat suodatetaan nyt asianmukaisesti, kun Käytössä/ei käytössä -suodattimen tilaa vaihdetaan. (#15416)
   - Korjattu bugi, joka esti käytössä olevien yhteensopivuusohitettujen lisäosien päivittämisen tai korvaamisen ulkoisesta lähteestä asennetulla versiolla. (#15417)
   - Korjattu bugi, joka aiheutti sen, ettei NVDA puhunut mitään lisäosan asennuksen jälkeen ennen kuin se käynnistettiin uudelleen. (#14525)
@@ -276,7 +276,7 @@ Liikkumista ja muotoilun ilmoittamista on paranneltu Microsoft Officessa.
 
 Useita erityisesti pistekirjoitukseen, Microsoft Officeen, verkkoselaimiin ja Windows 11:een liittyviä bugikorjauksia.
 
-eSpeak-NG, LibLouis-pistekirjoituskääntäjä ja Unicode-CLDR on päivitetty.
+eSpeak-NG, LibLouis-pistekääntäjä ja Unicode-CLDR on päivitetty.
 
 == Uudet ominaisuudet ==
 - NVDA:han on lisätty lisäosakauppa. (#13985)
@@ -340,7 +340,7 @@ eSpeak-NG, LibLouis-pistekirjoituskääntäjä ja Unicode-CLDR on päivitetty.
 == Muutokset ==
 - Päivitetyt osat:
   - eSpeak NG päivitetty versioksi 1.52-dev muutos ``ed9a7bcf``. (#15036)
-  - LibLouis-pistekirjoituskääntäjä päivitetty versioksi [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0]. (#14970)
+  - LibLouis-pistekääntäjä päivitetty versioksi [3.26.0 https://github.com/liblouis/liblouis/releases/tag/v3.26.0]. (#14970)
   - CLDR päivitetty versioksi 43.0. (#14918)
   -
 - LibreOfficen muutokset:
@@ -462,7 +462,7 @@ Sama kuin ``NVDA+K``:n kahdesti painaminen, mutta hyödyllisempi pistenäyttöje
 
 
 == Muutokset ==
-- Päivitetty LibLouis-pistekirjoituskääntäjä versioksi [3.24.0 https://github.com/liblouis/liblouis/releases/tag/v3.24.0]. (#14436)
+- Päivitetty LibLouis-pistekääntäjä versioksi [3.24.0 https://github.com/liblouis/liblouis/releases/tag/v3.24.0]. (#14436)
   - Merkittäviä päivityksiä unkarilaiseen, UEB- ja kiinalaiseen bopomofopistekirjoitukseen.
   - Tuki tanskalaiselle 2022-pistekirjoitusstandardille.
   - Uusia pistetaulukoita georgialaiselle kaunokirjalliselle pistekirjoitukselle, swahilille (Kenia) sekä njandžalle (Malawi).
@@ -559,7 +559,7 @@ Lisätty uusia kiinalaisia, ruotsalaisia, gandalaisia ja ruandalaisia pistetaulu
 - eSpeak NG on päivitetty versioksi 1.52-dev muutos ``735ecdb8``. (#14060, #14079, #14118, #14203)
   - Korjattu latinalaisten kirjainten lukeminen mandariinikiinaa käytettäessä. (#12952, #13572, #14197)
   -
-- Päivitetty LibLouis-pistekirjoituskääntäjä versioksi [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
+- Päivitetty LibLouis-pistekääntäjä versioksi [3.23.0 https://github.com/liblouis/liblouis/releases/tag/v3.23.0]. (#14112)
   - Lisätty pistetaulukoita:
     - Kiinalainen yleinen pistekirjoitus (yksinkertaistetut merkit)
     - Ruandalainen kaunokirjallinen pistekirjoitus
@@ -762,7 +762,7 @@ LibLouis on päivitetty, joka sisältää uuden pistetaulukon.
 == Muutokset ==
 - NSIS on päivitetty versioksi 3.08. (#9134)
 - Yhteinen Unicode-kielitietovarasto (CLDR) on päivitetty versioksi 41.0. (#13582)
-- Päivitetty liblouis-pistekirjoituskääntäjä versioksi [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]. (#13775)
+- Päivitetty liblouis-pistekääntäjä versioksi [3.22.0 https://github.com/liblouis/liblouis/releases/tag/v3.22.0]. (#13775)
   - Uusi pistetaulukko: saksa, taso 2 (yksityiskohtainen)
   -
 - Lisätty uusi rooli "varattu"-ilmaisinsäätimille. (#10644)
@@ -859,7 +859,7 @@ Huom:
 
 == Muutokset ==
 - ESpeak-NG on päivitetty versioksi 1.51-dev muutos ``7e5457f91e10``. (#12950)
-- Liblouis-pistekirjoituskääntäjä päivitetty versioksi [3.21.0 https://github.com/liblouis/liblouis/releases/tag/v3.21.0]. (#13141, #13438)
+- Liblouis-pistekääntäjä päivitetty versioksi [3.21.0 https://github.com/liblouis/liblouis/releases/tag/v3.21.0]. (#13141, #13438)
   - Lisätty uusi pistetaulukko: japanilainen kaunokirjallinen pistekirjoitus (kantenji).
   - Lisätty uusi pistetaulukko: saksalainen 6 pisteen tietokonemerkistö.
   - Lisätty katalonialainen tason 1 pistetaulukko. (#13408)
@@ -977,7 +977,7 @@ Tämä on pieni päivitys, joka korjaa useita  version 2021.3 ongelmia.
 = 2021.3 =
 Tämä versio lisää tuen uudelle HID Braille -protokollalle.
 Sen tarkoituksena on standardoida pistenäyttöjen tuki, jossa ei tarvita valmistajakohtaisia ajureita.
-Päivityksiä eSpeak-NG:hen ja LibLouis-pistekirjoituskääntäjään, mukaan lukien uusi venäläinen ja vendalainen taulukko.
+Päivityksiä eSpeak-NG:hen ja LibLouis-pistekääntäjään, mukaan lukien uusi venäläinen ja vendalainen taulukko.
 Virheäänet voidaan ottaa käyttöön NVDA:n vakaissa versioissa uudella Lisäasetukset-paneelin asetuksella.
 Jatkuva luku vierittää nyt näkymää Wordissa pitääkseen nykyisen sijainnin näkyvissä.
 Paljon parannuksia käytettäessä Officea UIA:n kanssa.
@@ -1010,7 +1010,7 @@ Asianomaisten käyttäjien on ladattava tämä päivitys manuaalisesti.
 - Kun tilarivi luetaan ``NVDA+End``-näppäinkomennolla, tarkastelukohdistinta ei enää siirretä sen kohdalle.
 Mikäli tarvitset tätä toiminnallisuutta, määritä näppäinkomento asianmukaiselle skriptille Näppäinkomennot-valintaikkunan Objektinavigointi-kategoriassa. (#8600)
 - Kun avaat jo avatun valintaikkunan, NVDA ei näytä enää virhettä vaan siirtää kohdistuksen avoimeen valintaikkunaan. (#5383)
-- Päivitetty liblouis-pistekirjoituskääntäjä versioksi [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]. (#12810)
+- Päivitetty liblouis-pistekääntäjä versioksi [3.19.0 https://github.com/liblouis/liblouis/releases/tag/v3.19.0]. (#12810)
  - Uusia pistetaulukoita: venäläinen taso 1, venda taso 1, venda taso 2
  -
 - "Merkitty sisältö" tai "mrkt" -ilmoitusten asemesta sanotaan "korostus" tai näytetään pistenäytöllä "krt". (#12892)
@@ -1058,7 +1058,7 @@ Tämä versio esittelee alustavan Windows 11 -tuen.
 Testaus on suoritettu käyttöjärjestelmän esiversioilla, koska lopullista versiota ei ole vielä julkaistu.
 Tähän sisältyy tärkeä näyttöverhon korjaus (katso tärkeät huomautukset).
 COM-rekisteröintien korjaustyökalu voi ratkaista useampia NVDA:n käytössä ilmeneviä ongelmia.
-eSpeak-syntetisaattoria ja LibLouis-pistekirjoituskääntäjää on päivitetty.
+eSpeak-syntetisaattoria ja LibLouis-pistekääntäjää on päivitetty.
 Lisäksi useita bugikorjauksia ja parannuksia erityisesti pistekirjoitustukeen, Windows-päätteisiin, laskimeen, emojipaneeliin sekä leikepöydän historiaan.
 
 
@@ -1082,7 +1082,7 @@ Turvallisuussyistä uutta Windows-versiota käytettäessä näytetäänvahvistus
 == Muutokset ==
 - eSpeak-NG on päivitetty versioksi 1.51-dev muutos ``ab11439b18238b7a08b965d1d5a6ef31cbb05cbb``. (#12449, #12202, #12280, #12568)
 - NVDA sanoo "artikkeli" sisällön jälkeen, jos artikkeli-valintaruutu on valittu asetusvalintaikkunan Asiakirjojen muotoilu -paneelissa. (#11103)
-- Päivitetty liblouis-pistekirjoituskääntäjä versioksi [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
+- Päivitetty liblouis-pistekääntäjä versioksi [3.18.0 https://github.com/liblouis/liblouis/releases/tag/v3.18.0]. (#12526)
  - Uusia pistetaulukoita: bulgarialainen taso 1, burmalainen taso 1, burmalainen taso 2, kazakkilainen taso 1, khmeriläinen taso 1, pohjoiskurdilainen taso 0, sepediläinen taso 1, sepediläinen taso 2, sesotholainen taso 1, sesotholainen taso 2, setswanalainen taso 1, setswanalainen taso 2, tataarilainen taso 1, vietnamilainen taso 0, vietnamilainen taso 2, etelävietnamilainen taso 1, xhosalainen taso 1, xhosalainen taso 2, jakuuttilainen taso 1, zululainen taso 1, zululainen taso 2.
  -
 - Windows 10:n tekstintunnistus nimettiin uudelleen Windowsin tekstintunnistukseksi. (#12690)
@@ -1115,7 +1115,7 @@ Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/change
 = 2021.1 =
 Tämä versio sisältää valinnaisen kokeellisen UIA-tuen Excelille ja Chromium-pohjaisille selaimille.
 Korjauksia useille kielille sekä linkkien käyttämiseen pistenäytöltä.
-Päivityksiä Unicode-CLDR:ään, matemaattisiin symboleihin ja LibLouis-pistekirjoituskääntäjään.
+Päivityksiä Unicode-CLDR:ään, matemaattisiin symboleihin ja LibLouis-pistekääntäjään.
 Lisäksi useita bugikorjauksia ja parannuksia esim. Officeen, Visual Studioon sekä useisiin kieliin.
 
 Huom:
@@ -1144,7 +1144,7 @@ Huom:
 - Lisäasetukset-paneelin "Yritä perua vanhentuneiden kohdistustapahtumien puhe" -asetus on nyt oletusarvoisesti käytössä. (#10885)
  - Toiminto voidaan poistaa käytöstä määrittämällä tämän asetuksen arvoksi "Ei".
  - Verkkopohjaisissa sovelluksissa (esim. Gmail) ei enää puhuta vanhentunutta tietoa siirrettäessä kohdistusta nopeasti.
-- Liblouis-pistekirjoituskääntäjä päivitetty versioksi [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
+- Liblouis-pistekääntäjä päivitetty versioksi [3.17.0 https://github.com/liblouis/liblouis/releases/tag/v3.17.0]. (#12137)
  - Uusia pistetaulukoita: valkovenäläinen kaunokirjallisuuden pistekirjoitus, valkovenäläinen tietokonemerkistö, urdu taso 1, urdu taso 2.
 - Adobe Flash -sisällön tuki on poistettu NVDA:sta, koska Adobe on aktiivisesti varoittanut Flashin käytöstä. (#11131)
 - NVDA sulkeutuu, vaikka sen ikkunoita olisi avoinna. Sulkeutumisprosessi sulkee nyt kaikki NVDA:n ikkunat ja valintaikkunat. (#1740)
@@ -1187,7 +1187,7 @@ Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/change
 
 
 = 2020.4 =
-Tämä versio sisältää uusia kiinalaisia syöttömenetelmiä ja päivitetyn Liblouis-pistekirjoituskääntäjän sekä elementtilistan.
+Tämä versio sisältää uusia kiinalaisia syöttömenetelmiä ja päivitetyn Liblouis-pistekääntäjän sekä elementtilistan.
 Tilannekohtainen ohje on nyt käytettävissä painettaessa F1 NVDA:n valintaikkunoissa.
 Parannuksia symboleiden lausumissääntöihin, puhesanastoihin, pistekirjoitusilmoituksiin ja pikalukuun.
 Bugikorjauksia ja parannuksia Sähköposti-sovellukseen, Outlookiin, Teamsiin, Visual Studioon, Azure Data Studioon sekä Foobar2000:een.
@@ -1209,7 +1209,7 @@ Lisäksi monia muita tärkeitä bugikorjauksia ja parannuksia.
 
 
 == Muutokset ==
-- Päivitetty liblouis-pistekirjoituskääntäjä versioksi 3.16.1:
+- Päivitetty liblouis-pistekääntäjä versioksi 3.16.1:
  - Korjaa useita kaatumisia
  - Lisää baškiirinkielisen tason 1 pistetaulukon.
  - Lisää taulukon koptinkieliselle 8 pisteen tietokonemerkistölle.
@@ -1341,7 +1341,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. tuki uudelle Natti
 
 
 == Muutokset ==
-- Päivitetty liblouis-pistekirjoituskääntäjä versiosta 3.12 versioksi [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0]. (#10832, #11221)
+- Päivitetty liblouis-pistekääntäjä versiosta 3.12 versioksi [3.14.0 https://github.com/liblouis/liblouis/releases/tag/v3.14.0]. (#10832, #11221)
 - Ylä- ja alaindeksien ilmaisemista säädetään nyt omalla erillisellä asetuksellaan, eikä fonttimääreiden ilmaiseminen vaikuta enää niihin. (#10919)
 - VS Codeen tehtyjen muutosten takia NVDA ei enää poista oletusarvoisesti selaustilaa käytöstä tässä sovelluksessa. (#10888)
 - NVDA ei enää sano "yläreuna" ja "alareuna", kun tarkastelukohdistin siirretään suoraan nykyisen navigointiobjektin ensimmäiselle tai viimeiselle riville Siirrä ylimmälle riville- ja Siirrä alimmalle riville -komentoja käyttäen. (#9551)
@@ -1386,7 +1386,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. tuki useille uusil
 == Muutokset ==
 - NVDA estää järjestelmää lukittumasta tai siirtymästä lepotilaan, kun jatkuva luku on käynnissä. (#10643)
 - Tuki prosessin ulkopuolisille tekstikehyksille Mozilla Firefoxissa. (#10707)
-- Päivitetty liblouis-pistekirjoituskääntäjä versioksi 3.12. (#10161)
+- Päivitetty liblouis-pistekääntäjä versioksi 3.12. (#10161)
 
 
 == Bugikorjaukset ==
@@ -1443,7 +1443,7 @@ Muita merkittäviä muutoksia tässä versiossa ovat mm. 64-bittinen tuki Java-v
 - NVDA:n versionumero tallennetaan nyt lokiin ensimmäisenä ilmoituksena. Näin tapahtuu, vaikka lokin tallennus olisi poistettu käytöstä yleisistä asetuksista. (#9803)
 - Asetukset-valintaikkuna ei enää salli lokitason muuttamista, mikäli se on ohitettu komentorivivalitsimella. (#10209)
 - NVDA kertoo nyt Microsoft Wordissa tulostumattomien merkkien näyttötilan painettaessa tilanvaihtopikanäppäintä Ctrl+Vaihto+8. (#10241)
-- Päivitetty Liblouis-pistekirjoituskääntäjä muutoksella 58d67e63. (#10094)
+- Päivitetty Liblouis-pistekääntäjä muutoksella 58d67e63. (#10094)
 - Kun emojien puhuminen on käytössä, ne sanotaan kaikilla välimerkkitasoilla. (#8826)
 - NVDA:han sisältyvät kolmannen osapuolen Python-paketit, kuten comtypes, tallentavat nyt varoituksensa ja virheensä NVDA:n lokiin. (#10393)
 - Päivitetty Unicode Common Locale Data -tietokannan emojiselitteet versioksi 36.0. (#10426)
@@ -1532,7 +1532,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat Freedom Scientificin p
 - Selaustilan elementtilistan suodatuskentän pikanäppäin on muutettu englanninkielisessä käyttöliittymässä Alt+Y:ksi. (#8728)
 - Kun automaattisesti tunnistettu pistenäyttö kytketään bluetoothin kautta, NVDA jatkaa saman ajurin tukemien USB-näyttöjen etsimistä ja vaihtaa USB-yhteyteen, mikäli sellainen tulee saataville. (#8853)
 - eSpeak-NG päivitetty muutoksella 67324cc.
-- Liblouis-pistekirjoituskääntäjä päivitetty versioksi 3.10.0. (#9439)
+- Liblouis-pistekääntäjä päivitetty versioksi 3.10.0. (#9439)
 - NVDA sanoo nyt "valittu" ilmoitettuaan ensin käyttäjän valitseman tekstin. (#9028, #9909)
 - Vuorovaikutustila on oletusarvoisesti käytössä Microsoft Visual Studio Codessa. (#9828)
 
@@ -1599,7 +1599,7 @@ Saat lisätietoja tästä sekä lisäosien paremmasta versioinnista lukemalla al
 
 
 == Muutokset ==
-- Päivitetty liblouis-pistekirjoituskääntäjä versioksi 3.8.0. (#9013)
+- Päivitetty liblouis-pistekääntäjä versioksi 3.8.0. (#9013)
 - Lisäosien tekijät voivat nyt pakottaa lisäosilleen NVDA:n vähimmäisversion. NVDA ei asenna eikä lataa lisäosaa, jonka NVDA-vähimmäisversio on nykyistä uudempi. (#6275)
 - Tekijät voivat nyt määrittää viimeisimmän NVDA-version, jolla heidän lisäosansa on testattu. Mikäli lisäosa on testattu vain nykyistä vanhemmalla NVDA-versiolla, NVDA ei asenna eikä lataa sitä. (#6275)
 - Tämä NVDA:n versio sallii sellaisten lisäosien asentamisen, jotka eivät vielä sisällä tietoa vähimmäis- ja viimeisimmästä testatusta versiosta, mutta tuleviin versioihin (esim. 2019.2) päivittäminen voi poistaa ne käytöstä automaattisesti.
@@ -1666,7 +1666,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. suorituskyvyn para
 - Objektien lukeminen -valintaikkunan "Lue ohjeselitteet" -asetuksen uusi nimi on "Lue ilmoitukset", jotta siihen sisältyy ilmoitusruutujen lukeminen Windows 8:ssa ja uudemmissa. (#5789)
 - NVDA-toimintonäppäimiä käyttöön ottavat tai käytöstä poistavat valintaruudut  näytetään nyt näppäimistöasetuksissa erillisten sijaan luettelona.
 - NVDA ei enää näytä tarpeetonta tietoa luettaessa kelloa ilmoitusalueelta joissakin Windows-versioissa. (#4364)
-- Päivitetty liblouis-pistekirjoituskääntäjä versioksi 3.7.0. (#8697)
+- Päivitetty liblouis-pistekääntäjä versioksi 3.7.0. (#8697)
 - Päivitetty eSpeak-NG muutoksella 919f3240cbb.
 
 
@@ -1725,7 +1725,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat useiden pistenäyttöj
 - ALVA BC6 -näytöissä näppäinyhdistelmä sp2+sp3 puhuu päivämäärän ja kellonajan, kun taas sp1+sp2 jäljittelee Windows-näppäintä. (#8230)
 - Käyttäjältä kysytään nyt kerran NVDA:n käynnistyessä, sallitaanko käyttötilastojen lähettäminen NV Accessille automaattisen päivitystarkistuksen yhteydessä. (#8217)
 - Jos käyttäjä on sallinut käyttötilastojen lähettämisen, NVDA lähettää nyt päivitystä tarkistettaessa nykyisen syntetisaattorin ja käytössä olevan pistenäytön nimen, jotta niiden ajurien tulevaa kehitystä voidaan priorisoida paremmin. (#8217)
-- Päivitetty liblouis-pistekirjoituskääntäjä versioksi 3.6.0. (#8365)
+- Päivitetty liblouis-pistekääntäjä versioksi 3.6.0. (#8365)
 - Venäläisen 8 pisteen pistetaulukon tiedostopolku korjattu. (#8446)
 - Päivitetty eSpeak-ng versioksi 1.49.3dev muutos 910f4c2. (#8561)
 
@@ -1787,7 +1787,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat tuki taulukoille Kindl
 
 == Muutokset ==
 - Lisäosien hallinnan Tila-saraketta on muutettu siten, että se ilmaisee käynnissä- tai pysäytetty-tilojen sijaan, onko lisäosa "käytössä" vai poistettu käytöstä ("ei käytössä"). (#7929)
-- Päivitetty liblouis-pistekirjoituskääntäjä versioksi 3.5.0. (#7839)
+- Päivitetty liblouis-pistekääntäjä versioksi 3.5.0. (#7839)
 - Liettualaisen pistetaulukon uusi nimi on nyt "liettua, 6 pisteen merkistö", jotta vältetään sekaannus uuden 8 pisteen taulukon kanssa. (#7839)
 - Kanadanranskalaiset tason 1 ja 2 taulukot on poistettu. Niiden asemesta käytetään ranskalaista yhdenmukaistettua 6 pisteen tietokonemerkistön ja tason 2 taulukoita. (#7839)
 - Alva BC6-, EuroBraille- ja Papenmeier-pistenäyttöjen toissijaiset kosketuskohdistinnäppäimet ilmoittavat nyt pistesolussa olevan tekstin muotoilutiedot. (#7106)
@@ -1907,7 +1907,7 @@ Huomaa, että tämä versio ei enää tue Windows XP:tä tai Vistaa. Vähimmäis
 - Kun näppäinkomentoja liitetään Baum-pistenäytön näppäimiin, ne voidaan rajoittaa vain käytössä olevaan näyttöön (esim. VarioUltra tai Pronto). (#7517)
 - Selaustilan elementtilistan Suodata-kentän pikanäppäin on muutettu englanninkielisessä käyttöliittymässä Alt+F:stä Alt+E:ksi. (#7569)
 - Lisätty selaustilaan määrittämätön näppäinkomento, jolla asettelutaulukoiden ilmaiseminen voidaan ottaa lennossa käyttöön tai poistaa se käytöstä. Komento löytyy Näppäinkomennot-valintaikkunan Selaustila-kategoriasta. (#7634)
-- Päivitetty liblouis-pistekirjoituskääntäjä versioksi 3.3.0. (#7565)
+- Päivitetty liblouis-pistekääntäjä versioksi 3.3.0. (#7565)
 - Puhesanastovalintaikkunan säännöllisen lausekkeen valintapainikkeen pikanäppäin on vaihdettu englanninkielisessä käyttöliittymässä Alt+R:stä Alt+E:ksi. (#6782)
 - Puhesanastotiedostot on nyt versioitu ja siirretty speechDicts/voiceDicts.v1-hakemistoon. (#7592)
 - Versioitujen tiedostojen (käyttäjän asetukset ja puhesanastot) muutoksia ei enää tallenneta, kun NVDA:ta ajetaan käynnistimestään. (#7688)
@@ -1974,7 +1974,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat lyhennepistekirjoituks
 - Entistä useampia säädintyyppejä ja -tiloja sekä kiintopisteitä on lyhennetty pistekirjoituksella. Katso täydellinen luettelo käyttöoppaan "Säädintyyppien ja -tilojen sekä kiintopisteiden lyhenteet" -kappaleesta, joka löytyy Pistekirjoitus-kohdan alta. (#7188, #3975)
 - eSpeak NG on päivitetty versioksi 1.49.1 (#7280).
 - Pistekirjoitusasetukset-valintaikkunan tulostus- ja syöttötaulukkoluettelot lajitellaan nyt aakkosjärjestykseen. (#6113)
-- Päivitetty liblouis-pistekirjoituskääntäjä versioksi 3.2.0. (#6935)
+- Päivitetty liblouis-pistekääntäjä versioksi 3.2.0. (#6935)
 - Oletusarvoinen pistetaulukko on nyt "englanti (yhdenmukaistettu), taso 1". (#6952)
 - NVDA näyttää nyt pistenäytöllä oletusarvoisesti vain osan muuttuneista kontekstitiedoista kohdistuksen siirtyessä objektiin. (#217)
  - Ennen tietoja näytettiin mahdollisimman paljon riippumatta siitä, onko ne näytetty aiemmin.
@@ -2277,7 +2277,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat mahdollisuus valinnais
 == Muutokset ==
 - Korostuksen ilmoittaminen ei ole nyt oletusarvoisesti käytössä. (#4920)
 - Microsoft Excelissä käytettävän elementtilistan Kaavat-vaihtoehdon pikanäppäimeksi on NVDA:n englanninkielisessä käyttöliittymässä muutettu Alt+R, jotta se ei ole sama kuin Filter-muokkauskentällä. (#5527)
-- Liblouis-pistekirjoituskääntäjä päivitetty versioksi 2.6.5. (#5574)
+- Liblouis-pistekääntäjä päivitetty versioksi 2.6.5. (#5574)
 - Teksti-sanaa ei enää puhuta siirrettäessä kohdistusta tai tarkastelukohdistinta tekstiobjekteihin. (#5452)
 
 
@@ -2337,7 +2337,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. suorituskyvyn para
 == Muutokset ==
 - NVDA:n Asiakirjojen muotoiluasetukset -valintaikkunan Lue muokkaajan merkinnät -asetus on nyt oletusarvoisesti käytössä. (#4920)
 - Kun Microsoft Wordissa liikutaan merkki kerrallaan NVDA:n Lue muokkaajan merkinnät -asetuksen ollessa käytössä, tietoja luetaan nyt vähemmän muutoksia jäljitettäessä, mikä tekee tekstissä liikkumisesta sujuvampaa. Käytä elementtilistaa lisätietojen näyttämiseen. (#4920)
-- Liblouis-pistekirjoituskääntäjä päivitetty versioksi 2.6.4. (#5341)
+- Liblouis-pistekääntäjä päivitetty versioksi 2.6.4. (#5341)
 
 - Useat symbolit (matemaattiset perusmerkit mukaan lukien) on siirretty jotain-tasolle, jotta ne puhutaan oletusarvoisesti. (#3799)
 - Puheessa pitäisi nyt kuulua tauko alku- ja loppusulkujen sekä lyhyen ajatusviivan (–) kohdalla, mikäli syntetisaattori tukee tätä ominaisuutta. (#3799)
@@ -2387,7 +2387,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat alustava tuki Windows 
 
 
 == Muutokset ==
-- Liblouis-pistekirjoituskääntäjä päivitetty versioksi 2.6.3. (#5137)
+- Liblouis-pistekääntäjä päivitetty versioksi 2.6.3. (#5137)
 - Kun nykyistä vanhempaa NVDA:n versiota yritetään asentaa, tästä varoitetaan nyt, ettei se ole suositeltavaa ja että NVDA tulisi poistaa ensin kokonaan ennen jatkamista. (#5037)
 
 
@@ -2430,7 +2430,7 @@ Tämän version keskeisimpiä ominaisuuksia ovat mm. kaavioiden lukeminen Micros
 - Asiakirjojen muotoiluasetukset -valintaikkunan Ilmoita luettelot-, Lue linkit-, Lue rivinumerot- ja Lue fontti -valintaruutujen näppäinkomentoja on muutettu NVDA:n englanninkielisessä käyttöliittymässä. (#4650)
 - NVDA:n Hiiriasetukset-valintaikkunan Ilmaise hiiren koordinaatit äänimerkeillä- ja Äänikoordinaattien voimakkuutta säädetään ruudun kirkkauden mukaan -asetuksille on lisätty näppäinkomennot. (#4916)
 - Värien nimien lukemista paranneltu merkittävästi. (#4984)
-- Liblouis-pistekirjoituskääntäjä päivitetty versioksi 2.6.2. (#4777)
+- Liblouis-pistekääntäjä päivitetty versioksi 2.6.2. (#4777)
 
 == Bugikorjaukset ==
 - Merkkien kuvaukset käsitellään nyt asianmukaisesti tiettyjen intialaisten kielten yhdistelmämerkeille. (#4582)
@@ -2519,7 +2519,7 @@ Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/change
 == Muutokset ==
 - Asiakirjan tarkastelu otetaan automaattisesti käyttöön, jos objekti, johon siirryit objektinavigoinnilla, on selaustila-asiakirjassa mutta objekti, jossa olit aiemmin, ei ollut. Tätä tapahtui aiemmin vain, jos navigointiobjektia siirrettiin kohdistuksen muuttumisen vuoksi. (#4369)
 - Pistenäyttö- ja Syntetisaattori-yhdistelmäruutujen sisältö näkyy nyt aakkosjärjestyksessä omissa valintaikkunoissaan Ei pistenäyttöä/Ei puhetta -vaihtoehtoja lukuun ottamatta, jotka ovat alimmaisina. (#2724)
-- Liblouis-pistekirjoituskääntäjä päivitetty versioksi 2.6.0. (#4434, #3835)
+- Liblouis-pistekääntäjä päivitetty versioksi 2.6.0. (#4434, #3835)
 - E:n ja Shift+E:n painaminen selaustilassa muokkauskenttiin siirtymiseksi siirtää nyt myös muokattaviin yhdistelmäruutuihin. Tällaisia ovat esim. Google-haun uusimman version hakukenttä. (#4436)
 - NVDA-kuvakkeen napsauttaminen vasemmalla hiiren painikkeella tehtäväpalkin ilmoitusalueella avaa nyt NVDA-valikon sen sijaan, ettei tee mitään. (#4459)
 
@@ -2596,7 +2596,7 @@ Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/change
 
 
 == Muutokset ==
-- Liblouis-pistekirjoituskääntäjä päivitetty versioksi 2.5.4. (#4103)
+- Liblouis-pistekääntäjä päivitetty versioksi 2.5.4. (#4103)
 
 
 == Bugikorjaukset ==
@@ -2805,7 +2805,7 @@ Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/change
  - Navigointiobjekti seuraa automaattisesti tarkastelukohdistinta niin, että se pysyy tarkastelukohdistimen kohdalla asiakirjan- tai ruuduntarkastelutiloissa oltaessa.
  - NVDA pysyy ruuduntarkastelutilassa siihen vaihtamisen jälkeen kunnes vaihdetaan takaisin asiakirja- tai objektintarkastelutilaan.
  - NVDA voi vaihtaa automaattisesti asiakirjan- tai objektintarkastelutilassa oltaessa näiden kahden tilan välillä riippuen siitä, liikutaanko selaustila-asiakirjassa vai ei.
-- Liblouis-pistekirjoituskääntäjä päivitetty  versioksi 2.5.3. (#3371)
+- Liblouis-pistekääntäjä päivitetty  versioksi 2.5.3. (#3371)
 
 
 == Bugikorjaukset ==
@@ -2894,7 +2894,7 @@ Katso uudet näppäinkomennot [komentojen pikaoppaasta. keyCommands.html]
 
 
 == Muutokset ==
-- Liblouis-pistekirjoituskääntäjä päivitetty versioksi 2.5.2. (#2737)
+- Liblouis-pistekääntäjä päivitetty versioksi 2.5.2. (#2737)
 - Kannettavien tietokoneiden näppäinasettelu on suunniteltu täysin uudelleen, jotta se olisi intuitiivisempi ja johdonmukaisempi. (#804)
 - eSpeak-puhesyntetisaattori päivitetty versioksi 1.47.11. (#2680, #3124, #3132, #3141, #3143, #3172)
 
@@ -2987,7 +2987,7 @@ Tämän version uusia ominaisuuksia ovat mm. tuki aasialaisten kielten merkkien 
 - Lisäosien hallinnan lisäosaluettelo näyttää nyt paketin nimen ennen sen tilaa. (#2548)
 - Jos nykyisestä asennetusta lisäosasta asennetaan sama tai jokin toinen versio, virheen näyttämisen ja asennuksen keskeyttämisen sijaan NVDA kysyy nyt, halutaanko se päivittää. (#2501)
 - Objektinavigointikomennot (kaikki paitsi Lue nykyinen objekti) ovat nyt vähemmän puheliaita. Lisätiedot saadaan edelleen Lue nykyinen objekti -komennolla. (#2560)
-- liblouis-pistekirjoituskääntäjä päivitetty versioksi 2.5.1. (#2319, #2480, #2662, #2672)
+- liblouis-pistekääntäjä päivitetty versioksi 2.5.1. (#2319, #2480, #2662, #2672)
 - NVDA:n näppäinkomentojen pikaopas -asiakirja on nimetty uudelleen komentojen pikaoppaaksi, sillä se sisältää nyt sekä kosketuseleitä että näppäinkomentoja.
 - Selaustilan elementtilista muistaa nyt viimeksi näytetyn elementtityypin (esim. linkit, otsikot tai kiintopisteet) samassa NVDA-istunnossa jokaisella valintaikkunan näyttökerralla. (#365)
 - Useimmat Windows 8:n Metro-sovellukset (esim. Sähköposti tai Kalenteri) eivät enää aktivoi selaustilaa sovelluksen kaikissa osissa, vaan pelkästään niissä, joissa sitä tarvitaan.
@@ -3128,7 +3128,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat pistenäytön sujuvampi lu
 - Joitakin pistenäytöllä näytettäviä tietoja on lyhennetty. (#1955, #2043)
 - Kun järjestelmä- tai tarkastelukohdistin liikkuu, pistenäyttöä vieritetään nyt samalla tavalla kuin manuaalisesti vieritettäessä. Tämä on tarkoituksenmukaisempaa, kun pistenäyttö on määritetty lukemaan kappaleittain ja/tai välttämään sanojen katkaisua. (#1996)
 - Päivitetty uuteen espanjalaiseen tason 1 pistetaulukkoon.
-- Liblouis-pistekirjoituskääntäjä päivitetty versioksi 2.4.1.
+- Liblouis-pistekääntäjä päivitetty versioksi 2.4.1.
 
 
 == Bugikorjaukset ==
@@ -3264,7 +3264,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat merkittävät välimerkkej
 - eSpeak-puhesyntetisaattori päivitetty versioksi 1.45.03. (#1465)
 - Asettelutaulukoita ei enää lueta Mozilla Gecko -sovelluksissa siirrettäessä kohdistusta vuorovaikutustilassa tai pois asiakirjasta.
 - Selaustila toimii nyt ARIA-sovellusten sisällä olevissa asiakirjoissa Internet Explorerissa ja muissa MSHTML-säätimissä. (#1452)
-- liblouis-pistekirjoituskääntäjä päivitetty versioksi 2.3.0.
+- liblouis-pistekääntäjä päivitetty versioksi 2.3.0.
 - Jos säätimellä on kuvaus, se luetaan nyt siirryttäessä selaustilassa sen kohdalle pikanavigoinnilla tai kohdistuksella.
 - Edistymispalkit ilmoitetaan nyt selaustilassa.
 - ARIA-esitysroolilla merkityt alkiot jätetään nyt pois yksinkertaisesta tarkastelutilasta ja kohdistuksesta.
@@ -3480,7 +3480,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat huomattavasti yksinker
 - Hiiriasetukset-valintaikkunan Lue hiiren alla oleva teksti -valintaruutu korvattu Käytä hiiren seurantaa -valintaruudulla, joka sopii paremmin yhteen hiiren seurannan päälle ja pois kytkevän NVDA+M-komennon kanssa.
 - Päivitetty kannettavien tietokoneiden näppäinasettelua niin, että se sisältää kaikki pöytäkoneilla käytettävissä olevat komennot ja että se toimii oikein muillakin kuin englanninkielisillä näppäimistöillä. (#798, #800)
 - Merkittäviä parannuksia ja päivityksiä käyttöohjeisiin, mukaan lukien kannettavien tietokoneiden komentojen kuvailu ja näppäinkomentojen pikaoppaan päivittäminen niin, että se sisältää samat komennot kuin käyttöohjekin. (#455)
-- Liblouis-pistekirjoituskääntäjä päivitetty versioksi 2.1.1. Tämä päivitys korjaa joitakin kiinalaiseen pistekirjoitukseen sekä käännöstaulukossa määrittelemättömiin merkkeihin liittyviä ongelmia. (#484, #499)
+- Liblouis-pistekääntäjä päivitetty versioksi 2.1.1. Tämä päivitys korjaa joitakin kiinalaiseen pistekirjoitukseen sekä käännöstaulukossa määrittelemättömiin merkkeihin liittyviä ongelmia. (#484, #499)
 
 
 == Bugikorjaukset ==
@@ -3545,7 +3545,7 @@ Tämä versio keskittyy pääasiassa virheiden korjaamiseen ja käyttökokemukse
 - Pistenäytöllä näkyvät ilmoitukset hylätään automaattisesti jos painetaan näppäintä, joka aiheuttaa muutoksen, kuten esimerkiksi kohdistuksen siirtymisen. Aiemmin ilmoitukset pysyivät näkyvillä koko niille määritetyn ajan.
 - Asetusta, joka määrittää, seuraako pistenäyttö kohdistusta vai tarkastelukohdistinta (NVDA+Ctrl+T), voidaan nyt muuttaa Pistekirjoitusasetukset-valintaikkunasta. Asetus tallennetaan myös käyttäjän asetustiedostoon.
 - eSpeak päivitetty versioksi 1.43.03.
-- Liblouis-pistekirjoituskääntäjä päivitetty versioksi 1.8.0.
+- Liblouis-pistekääntäjä päivitetty versioksi 1.8.0.
 - Elementtien ilmoittamista näennäispuskureissa merkeittäin tai sanoittain siirryttäessä on paranneltu huomattavasti. Aiemmin luettiin paljon epäolennaisia tietoja, ja ilmoitustapa oli hyvin erilainen kuin riveittäin siirryttäessä. (#490)
 - Ctrl-näppäin ei enää tauota puhetta, vaan keskeyttää sen. Puheen tauottamiseen ja jatkamiseen käytetään nyt Shift-näppäintä.
 - Taulukon rivien ja sarakkeiden määrää ei enää lueta kohdistusmuutoksia ilmoitettaessa, koska kyseinen ilmoitus oli melko pitkä ja siitä ei useinkaan ollut hyötyä.
