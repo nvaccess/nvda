@@ -18,8 +18,6 @@ DEFAULT_EXTENSIONS = frozenset({
 	"markdown.extensions.extra",
 	# Allows TOC with [TOC]"
 	"markdown.extensions.toc",
-	# Adds code highlighting to code blocks
-	"markdown.extensions.codehilite",
 	# Makes list behaviour better, including 2 space indents by default
 	"mdx_truly_sane_lists",
 	# External links will open in a new tab, and title will be set to the link text
