@@ -202,7 +202,6 @@ Por favor abre un GitHub issue si o teu complemento ten un problema coa actualiz
 - Actualizadas as dependencias pip:
   - configobj a 5.1.0dev commit ``e2ba4457c4651fa54f8d59d8dcdd3da950e956b8``. (#15544)
   - Comtypes a 1.2.0. (#15513, @codeofdusk)
-  - fast_diff_match_patch a 2.0.1. (#15514, @codeofdusk)
   - Flake8 a 4.0.1. (#15636, @lukaszgo1)
   - py2exe a 0.13.0.1dev commit ``4e7b2b2c60face592e67cb1bc935172a20fa371d``. (#15544) 
   - robotframework a 6.1.1. (#15544)
@@ -287,6 +286,14 @@ Utiliza ``bdDetect.DeviceType.*`` a cambio. (#15772, @LeonarddeR).
 - Utilizar ``gui.ExecAndPump`` está obsoleto - por favor usa ``systemUtils.ExecAndPump`` a cambio. (#15852, @lukaszgo1)
 -
 
+
+= 2023.3.4 =
+Trátase dun parche para arranxar un problema do instalador.
+
+== Arranxo de Fallos ==
+- Arranxado un fallo que provocaba que o proceso de NVDA fallase ao non saír correctamente.
+Ao se executar o instalador, provocaba que a instalación entrase nun estado irrecuperable. (#16122, #16123)
+-
 
 = 2023.3.3 =
 Trátase dun parche para solucionar un problema de seguridade.

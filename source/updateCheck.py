@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2012-2023 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
+# Copyright (C) 2012-2024 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
 
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
@@ -40,6 +40,7 @@ import urllib.parse
 import tempfile
 import hashlib
 import ctypes.wintypes
+import requests
 import ssl
 import wx
 import languageHandler
@@ -863,17 +864,17 @@ class CERT_CHAIN_PARA(ctypes.Structure):
 def _updateWindowsRootCertificates():
 	log.debug("Updating Windows root certificates")
 	crypt = ctypes.windll.crypt32
-	# Get the server certificate.
-	sslCont = ssl._create_unverified_context()
-	# We must specify versionType so the server doesn't return a 404 error and
-	# thus cause an exception.
-	u = urllib.request.urlopen(
+	with requests.get(
+		# We must specify versionType so the server doesn't return a 404 error and
+		# thus cause an exception.
 		CHECK_URL + "?versionType=stable",
-		context=sslCont,
 		timeout=UPDATE_FETCH_TIMEOUT_S,
-	)
-	cert = u.fp.raw._sock.getpeercert(True)
-	u.close()
+		# Use an unverified connection to avoid a certificate error.
+		verify=False,
+		stream=True,
+	) as response:
+		# Get the server certificate.
+		cert = response.raw.connection.sock.getpeercert(True)
 	# Convert to a form usable by Windows.
 	certCont = crypt.CertCreateCertificateContext(
 		0x00000001, # X509_ASN_ENCODING
