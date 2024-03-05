@@ -134,7 +134,15 @@ parser=NoConsoleOptionParser()
 quitGroup = parser.add_mutually_exclusive_group()
 quitGroup.add_argument('-q','--quit',action="store_true",dest='quit',default=False,help="Quit already running copy of NVDA")
 parser.add_argument('-k','--check-running',action="store_true",dest='check_running',default=False,help="Report whether NVDA is running via the exit code; 0 if running, 1 if not running")
-parser.add_argument('-f','--log-file',dest='logFileName',type=str,help="The file where log messages should be written to")
+parser.add_argument(
+	"-f",
+	"--log-file",
+	dest="logFileName",
+	type=str,
+	help="The file where log messages should be written to. "
+	"Default destination is %TEMP%/nvda.log. "
+	"Logging is always disabled if secure mode is enabled. "
+)
 parser.add_argument(
 	'-l',
 	'--log-level',
@@ -142,11 +150,19 @@ parser.add_argument(
 	type=int,
 	default=0,  # 0 means unspecified in command line.
 	choices=[10, 12, 15, 20, 100],
-	help=(
-		"The lowest level of message logged (debug 10, input/output 12, debugwarning 15, info 20, off 100),"
-	),
+	help="The lowest level of message logged (debug 10, input/output 12, debugwarning 15, info 20, off 100). "
+	"Default value is 20 (info) or the user configured setting. "
+	"Logging is always disabled if secure mode is enabled. "
 )
-parser.add_argument('-c','--config-path',dest='configPath',default=None,type=str,help="The path where all settings for NVDA are stored")
+parser.add_argument(
+	"-c",
+	"--config-path",
+	dest="configPath",
+	default=None,
+	type=str,
+	help="The path where all settings for NVDA are stored. "
+	"The default value is forced if secure mode is enabled. "
+)
 parser.add_argument(
 	'--lang',
 	dest='language',

@@ -34,6 +34,9 @@ What's New in NVDA
   - The minimum and the last tested NVDA version for an add-on are now displayed in the "other details" area. (#15776, @Nael-Sayegh)
   -
 - Padding dots commonly used in tables of contents are not reported anymore at low punctuation levels. (#15845, @CyrilleB79)
+- Updated LibLouis Braille translator to [3.29.0 https://github.com/liblouis/liblouis/releases/tag/v3.29.0]. (#16259, @codeofdusk)
+  - Added new detailed (with capital letters indicated) Belarusian and Ukrainian Braille tables.
+  -
 -
 
 == Bug Fixes ==
@@ -269,7 +272,7 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
   - robotframework to 6.1.1. (#15544)
   - SCons to 4.5.2. (#15529, @LeonarddeR)
   - sphinx to 7.2.6. (#15544)
-  - wxPython to 4.2.1. (#12551)
+  - wxPython to 4.2.2a commit ``0205c7c1b9022a5de3e3543f9304cfe53a32b488``. (#12551, #16257)
   -
 - Removed pip dependencies:
   - typing_extensions, these should be supported natively in Python 3.11 (#15544)
@@ -350,7 +353,13 @@ Use ``bdDetect.DeviceType.*`` instead. (#15772, @LeonarddeR).
 
 
 = 2023.3.4 =
-This is a patch release to fix an installer issue.
+This is a patch release to fix a security issue and installer issue.
+Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Security Fixes ==
+- Prevents loading custom configuration while secure mode is forced.
+([GHSA-727q-h8j2-6p45 https://github.com/nvaccess/nvda/security/advisories/GHSA-727q-h8j2-6p45])
+-
 
 == Bug Fixes ==
 - Fixed bug which caused the NVDA process to fail to exit correctly. (#16123)
