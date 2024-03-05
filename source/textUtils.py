@@ -31,7 +31,7 @@ class OffsetConverter:
 		self.decoded: str = text
 
 	def __repr__(self):
-		return "{}({})".format(self.__class__.__name__, repr(self.decoded))
+		return f"{self.__class__.__name__}({repr(self.decoded)})"
 
 	@property
 	def encodedStringLength(self) -> int:
@@ -93,8 +93,7 @@ class OffsetConverter:
 		"""
 		if encodedEnd is not None and encodedEnd < encodedStart:
 			raise ValueError(
-				"encodedEnd=%d must be greater than or equal to encodedStart=%d"
-				% (encodedEnd, encodedStart)
+				f"{encodedEnd=} must be greater than or equal to {encodedStart=}"
 			)
 		if encodedStart < 0 or encodedStart > self.encodedStringLength:
 			if raiseOnError:
