@@ -401,7 +401,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
-	def unitIndex(self,unit: str) -> int:
+	def unitIndex(self, unit: str) -> int:
 		"""
 		@param unit: a unit constant for which you want to retrieve an index
 		@returns: The 1-based index of this unit, out of all the units of this type in the object
