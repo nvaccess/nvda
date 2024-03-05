@@ -9,8 +9,7 @@
 import appModuleHandler
 import controlTypes
 from NVDAObjects.IAccessible.chromium import Document
-from NVDAObjects import NVDAObject
-from NVDAObjects import NVDAObjectTextInfo
+from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 
 class VSCodeDocument(Document):
 	"""The only content in the root document node of Visual Studio code is the application object.
@@ -26,6 +25,6 @@ class AppModule(appModuleHandler.AppModule):
 		if Document in clsList and obj.IA2Attributes.get("tag") == "#document":
 			clsList.insert(0, VSCodeDocument)
 
-	def event_NVDAObject_init(self, obj):
+	def event_NVDAObject_init(self, obj: NVDAObject):
 		if obj.role != controlTypes.Role.EDITABLETEXT:
 			obj.TextInfo = NVDAObjectTextInfo
