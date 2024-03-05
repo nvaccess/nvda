@@ -10,12 +10,12 @@ Informacije za programere nisu prevedene, molimo ’pogledajte [englesku inačic
 = 2024.1 =
 
 Dodan je novi modus govora čitanja informacija na zahtjev.
-Kada je modus govora postavlejen da izgovara informacije na zahtjev, NVDA ne čita informacije automatski na primjer prilikom pomicanja kursora, ali još uvijek izgovara informacije ikoje se dobivaju oz pomoć prečaca, čiji je cilj izgovaranja određenih informacija na primjer, izgovaranje naslovne trake.
+Kada je modus govora postavljen da izgovara informacije na zahtjev, NVDA ne čita informacije automatski na primjer prilikom pomicanja kursora, ali još uvijek izgovara informacije ikoje se dobivaju oz pomoć prečaca, čiji je cilj izgovaranja određenih informacija na primjer, izgovaranje naslovne trake.
 U kategoriji "govor" NVDA postavki, sada je moguće izostavljanje neželjenih modusa govora iz odabira modusa govora (``NVDA+s``).
 
 Novi način kopiranja sa sačuvanim oblikovanjem, koji se poziva uz pomoć prečaca NVDA+f10 dostupan je na web stranicama u Mozilla Firefoxu.
-Kada se uključi, koristit će se izvorno označavanje u Mizilli firefoxu.
-Kopiranje teksta uz pomoć prečaca ``control+c`` biti će proslijeđeno direktno Mozilli firefoxu što znaći da će tekst biti kopiran sa sačuvanim oblikovanjem, umjesto čistog teksta bez oblikovanja.
+Kada se uključi, koristit će se izvorno označavanje u Mozilli firefoxu.
+Kopiranje teksta uz pomoć prečaca ``control+c`` biti će proslijeđeno direktno Mozilli firefoxu što znači da će tekst biti kopiran sa sačuvanim oblikovanjem, umjesto čistog teksta bez oblikovanja.
 
 NVDA store sada podržava višestruke radnje na primjer: instaliranje ili uključivanje dodataka tako da se označi više dodataka
 Dodana je nova radnja za otvaranje web stranice recenzija za bilo koji označeni dodatak.
@@ -60,7 +60,7 @@ Windows 8.1 je minimalna podržana verzija sustava Windows. (#15544)
     -
   - eSpeak NG je nadograđen na 1.52-dev commit ``530bf0abf``. (#15036)
   - Prijevodi simbola i Emoji znakova su nadograđeni na verziju 44.0. (#15712, @OzancanKaratas)
-  - Nadograđena Java Access Bridge to 17.0.9+8Zulu (17.46.19). (#15744)
+  - Nadograđena Java Access Bridge na 17.0.9+8Zulu (17.46.19). (#15744)
   -
 - Tipkovnički prečaci:
   - Slijedeći tipkovnički prečaci od sada podržavaju dvostruke i trostruke pritiske za slovkanje informacije, te sricanje uz pomoć fonetskog opisa znakova: čitaj označeni tekst, čitaj tekst u međuspremniku i čitaj fokusirani objekt. (#15449, @CyrilleB79)
@@ -135,6 +135,15 @@ Korisnicima Poedita  1 se preporućuje nadogradnja na Poedit 3 ako žele koristi
 - Izgovoreni tekst se više ne ažurira prilikom pomicanja miša u Pregledniku govora. (#15952, @hwf1324)
 - NVDA će se opet prebaciti u modus čitanja prilikom zatvaranja odabirnih okvira koristeći tipku ``escape`` ili ``alt+strelicu gore`` u Firefox ili Chrome. (#15653)
 - Kretanje strelicama gore ili dolje u iTunesu više se neće prebacivati nazad u modus čitanja. (#15653)
+-
+
+
+= 2023.3.4 =
+Ovo je verzija zakrpe koja ispravlja problem s instalacijom.
+
+== Ispravke grešaka ==
+- Ispravljena greška prilikom koje NVDA proces se nije mogao ispravno prekinuti. (#16123)
+- Ispravljena pogreška, prilikom koje ako prethodni NVDA proces NVDA se neuspješno prekine, NVDA instalacija može završiti i stanju neoporavljivosti. (#16122)
 -
 
 

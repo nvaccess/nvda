@@ -8,8 +8,10 @@ What's New in NVDA
 == New Features ==
 - New key commands:
   - New Quick Navigation command ``p`` for jumping to next/previous text paragraph in browse mode. (#15998, @mltony)
+  - New unassigned Quick Navigation command to jump to the next/previous figure. (#10826)
   -
 - Reporting row and column headers is now supported in contenteditable HTML elements. (#14113)
+- Added the option to disable the reporting of figures and captions in Document Formatting settings. (#10826, #14349)
 - In Windows 11, NVDA will announce alerts from voice typing and suggested actions including the top suggestion when copying data such as phone numbers to the clipboard (Windows 11 2022 Update and later). (#16009, @josephsl)
 - New input gestures:
   - Added commands to jump first, last, forward and backward through the synth settings ring. (#13768, #16095, @rmcpantoja)
@@ -19,9 +21,10 @@ What's New in NVDA
       - Laptop: ``NVDA+control+shift+pageUp`` or ``NVDA+control+shift+pageDown``.
       -
     -
+  - Added a new unassigned input gesture to toggle the reporting of figures and captions. (#10826, #14349)
   -
 - Added support for the BrailleEdgeS2 braille device. (#16033)
-- NVDA will play silence after every speech sequence in order to prevent the start of the next speech being clipped with some audio devices such as Bluetooth headphones. (#14386, @jcsteh, @mltony)
+- NVDA will keep the audio device awake after speech stops, in order to prevent the start of the next speech being clipped with some audio devices such as Bluetooth headphones. (#14386, @jcsteh, @mltony)
 -
 
 
@@ -31,6 +34,9 @@ What's New in NVDA
   - The minimum and the last tested NVDA version for an add-on are now displayed in the "other details" area. (#15776, @Nael-Sayegh)
   -
 - Padding dots commonly used in tables of contents are not reported anymore at low punctuation levels. (#15845, @CyrilleB79)
+- Updated LibLouis Braille translator to [3.29.0 https://github.com/liblouis/liblouis/releases/tag/v3.29.0]. (#16259, @codeofdusk)
+  - Added new detailed (with capital letters indicated) Belarusian and Ukrainian Braille tables.
+  -
 -
 
 == Bug Fixes ==
@@ -131,6 +137,7 @@ This option now announces additional relevant information about an object when t
 Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on enhanced accessibility in Poedit, such as shortcuts to read translator notes and comments. (#15313, #7303, @LeonarddeR)
 - Braille viewer and speech viewer are now disabled in secure mode. (#15680)
 - During object navigation, disabled (unavailable) objects will not be ignored anymore. (#15477, @CyrilleB79)
+- Added table of contents to key commands document. (#16106)
 -
 
 == Bug Fixes ==
@@ -247,7 +254,9 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
 - Fixed bug where deleting git-tracked files during ``scons -c`` resulted in missing UIA COM interfaces on rebuild. (#7070, #10833, @hwf1324)
 - Fix a bug where some code changes were not detected when building ``dist``, that prevented a new build from being triggered.
 Now ``dist`` always rebuilds. (#13372, @hwf1324)
+- A ``gui.nvdaControls.MessageDialog`` with default type of standard, no longer throws a None conversion exception because no sound is assigned. (#16223, @XLTechie)
 -
+
 
 === API Breaking Changes ===
 These are breaking API changes.
@@ -262,7 +271,7 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
   - robotframework to 6.1.1. (#15544)
   - SCons to 4.5.2. (#15529, @LeonarddeR)
   - sphinx to 7.2.6. (#15544)
-  - wxPython to 4.2.1. (#12551)
+  - wxPython to 4.2.2a commit ``0205c7c1b9022a5de3e3543f9304cfe53a32b488``. (#12551, #16257)
   -
 - Removed pip dependencies:
   - typing_extensions, these should be supported natively in Python 3.11 (#15544)
@@ -343,7 +352,13 @@ Use ``bdDetect.DeviceType.*`` instead. (#15772, @LeonarddeR).
 
 
 = 2023.3.4 =
-This is a patch release to fix an installer issue.
+This is a patch release to fix a security issue and installer issue.
+Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Security Fixes ==
+- Prevents loading custom configuration while secure mode is forced.
+([GHSA-727q-h8j2-6p45 https://github.com/nvaccess/nvda/security/advisories/GHSA-727q-h8j2-6p45])
+-
 
 == Bug Fixes ==
 - Fixed bug which caused the NVDA process to fail to exit correctly. (#16123)

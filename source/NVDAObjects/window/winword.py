@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V., Cyrille Bougot
+# Copyright (C) 2006-2024 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V., Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -9,6 +9,7 @@ import time
 from typing import (
 	Optional,
 	Dict,
+	TYPE_CHECKING,
 )
 
 from comtypes import COMError, GUID, BSTR
@@ -43,6 +44,9 @@ from ..behaviors import EditableTextWithoutAutoSelectDetection
 from . import _msOfficeChart
 import locationHelper
 from enum import IntEnum
+
+if TYPE_CHECKING:
+	import inputCore
 
 #Word constants
 
@@ -1603,6 +1607,21 @@ class WordDocument(Window):
 		elif val == wdLineSpace1pt5:
 			# Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 			ui.message(_("1.5 line spacing"))
+
+	@script(gesture="kb:control+0")
+	def script_changeParagraphSpacing(self, gesture: "inputCore.InputGesture"):
+		if not self.WinwordSelectionObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or it's within Windows Defender Application Guard.
+			# In this case, just let the gesture through and don't report anything.
+			return gesture.send()
+		val = self._WaitForValueChangeForAction(
+			lambda: gesture.send(),
+			lambda: self.WinwordSelectionObject.ParagraphFormat.SpaceBefore,
+		)
+		# Translators: a message when toggling paragraph spacing in Microsoft word
+		ui.message(_("{val:g} pt space before paragraph").format(val=val))
 
 	def initOverlayClass(self):
 		if isinstance(self, EditableTextWithoutAutoSelectDetection):

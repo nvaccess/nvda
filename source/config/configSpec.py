@@ -55,7 +55,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	WASAPI = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	soundVolumeFollowsVoice = boolean(default=false)
 	soundVolume = integer(default=100, min=0, max=100)
-	keepAudioAwakeTimeSeconds = integer(default=30, min=0, max=3600)
+	audioAwakeTime = integer(default=30, min=0, max=3600)
 	whiteNoiseVolume = integer(default=0, min=0, max=100)
 
 # Braille settings
@@ -234,6 +234,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportLandmarks = boolean(default=true)
 	reportArticles = boolean(default=false)
 	reportFrames = boolean(default=true)
+	reportFigures = boolean(default=true)
 	reportClickable = boolean(default=true)
 
 [documentNavigation]
