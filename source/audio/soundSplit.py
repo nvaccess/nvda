@@ -15,6 +15,7 @@ from pycaw.utils import AudioSession, AudioUtilities
 import ui
 from utils.displayString import DisplayStringIntEnum
 from dataclasses import dataclass
+import _ctypes
 
 VolumeTupleT = tuple[float, float]
 
