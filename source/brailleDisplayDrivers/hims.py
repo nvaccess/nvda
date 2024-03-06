@@ -139,6 +139,7 @@ class BrailleEdge2S(BrailleEdge):
 		})
 		return keys
 
+
 class BrailleEdge3S(BrailleEdge):
 	"""This device is the BrailleEdge which doesn't use the hims driver.
 	It only uses a Braille HID connection.
@@ -148,14 +149,14 @@ class BrailleEdge3S(BrailleEdge):
 	def _get_keys(self) -> dict[str, str]:
 		return OrderedDict({
 			# Braille keyboard, not used for SyncBraille
-			0x01 << 8:"dot1",
-			0x02 << 8:"dot2",
-			0x04 << 8:"dot3",
-			0x08 << 8:"dot4",
-			0x10 << 8:"dot5",
-			0x20 << 8:"dot6",
-			0x40 << 8:"dot7",
-			0x80 << 8:"dot8",
+			0x01 << 8: "dot1",
+			0x02 << 8: "dot2",
+			0x04 << 8: "dot3",
+			0x08 << 8: "dot4",
+			0x10 << 8: "dot5",
+			0x20 << 8: "dot6",
+			0x40 << 8: "dot7",
+			0x80 << 8: "dot8",
 			0x01 << 88: "space",
 			0x02 << 64: "f1",
 			0x04 << 64: "f2",
@@ -246,7 +247,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		driverRegistrar.addUsbDevices(bdDetect.DeviceType.HID, {
 			"VID_045E&PID_940A",  # Braille Edge3S 40
 		})
-     
+
 		# Bulk devices
 		driverRegistrar.addUsbDevices(bdDetect.DeviceType.CUSTOM, {
 			"VID_045E&PID_930A",  # Braille Sense & Smart Beetle
@@ -326,9 +327,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				intToByte(self.numCells),  # length
 				cellBytes
 			])
-   
+
 			self._dev.setOutputReport(outputReport)
-		else :
+		else:
 			self._sendPacket(b"\xfc", b"\x01", cellBytes)
 
 	def _sendCellCountRequest(self):
@@ -337,10 +338,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				data: bytes = self._dev.getFeature(HR_CAPS)
 				self.numCells = data[9]
 			except WindowsError:
-				return # Fail!
+				return  # Fail!
 		else:
 			log.debug("Sending cell count request...")
-			self._sendPacket(b"\xfb", b"\x01", bytes(32)) # send 32 null bytes
+			self._sendPacket(b"\xfb", b"\x01", bytes(32))  # send 32 null bytes
 
 	def _sendIdentificationRequests(self, match: bdDetect.DeviceMatch):
 		log.debug("Considering sending identification requests for device %s"%str(match))
@@ -442,20 +443,20 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				pass
 		elif mode == 0x02: # Cell count
 			self.numCells = packet[3]
-   
+
 	def _hidOnReceive(self, data: bytes):
-		if data == bytes([0x00] * 12): # All key lifted
+		if data == bytes([0x00] * 12):  # All key lifted
 			return
 
 		routingKey = int.from_bytes(data[2:7], "little", signed=False)
-		if routingKey != 0: # Routing key
+		if routingKey != 0:  # Routing key
 			try:
 				inputCore.manager.executeGesture(RoutingInputGesture(int(math.log(routingKey, 2))))
 			except inputCore.NoInputGestureAction:
 				pass
-		else: # Other key
+		else:  # Other key
 			if not self._model:
-				return 
+				return
 			_keys = int.from_bytes(data, "little", signed=False)
 			keys = set()
 			for keyHex in self._model.keys:
@@ -466,7 +467,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					if _keys == 0:
 						break
 			if _keys:
-				log.error("Unknown key(s) 0x%x received from Hims display"%_keys)
+				log.error("Unknown key(s) 0x%x received from Hims display" % _keys)
 				return
 			try:
 				inputCore.manager.executeGesture(KeyInputGesture(self._model, keys, True))
@@ -789,7 +790,7 @@ class KeyInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGe
 
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, model, keys, isHid = False):
+	def __init__(self, model, keys, isHid=False):
 		super(KeyInputGesture, self).__init__()
 		# Model identifiers should not contain spaces.
 		self.model=model.name.replace(" ", "")
@@ -801,7 +802,7 @@ class KeyInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGe
 				if isHid:
 					if 8 <= int(math.log(key, 2)) <= 15:
 						self.dots |= key >> 8
-					elif model.keys.get(key)=="space":
+					elif model.keys.get(key) == "space":
 						self.space = True
 					else:
 						# This is not braille input.
@@ -811,7 +812,7 @@ class KeyInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGe
 				else:
 					if 0xff & key:
 						self.dots |= key
-					elif model.keys.get(key)=="space":
+					elif model.keys.get(key) == "space":
 						self.space = True
 					else:
 						# This is not braille input.
