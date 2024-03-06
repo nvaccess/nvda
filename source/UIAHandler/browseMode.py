@@ -495,7 +495,8 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
 		elif nodeType == "progressBar":
 			condition = UIAHandler.handler.clientObject.createPropertyCondition(
-				UIAHandler.UIA_ControlTypePropertyId, UIAHandler.UIA_ProgressBarControlTypeId
+				UIAHandler.UIA_ControlTypePropertyId,
+				UIAHandler.UIA_ProgressBarControlTypeId
 			)
 			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
 
