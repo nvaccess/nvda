@@ -375,9 +375,11 @@ class UpdateResultDialog(
 			# Translators: A message indicating that no update to NVDA is available.
 			message = _("No update available.")
 		elif canOfferPendingUpdate:
-			# Translators: A message indicating that an updated version of NVDA has been downloaded
-			# and is pending to be installed.
-			message = _("NVDA version {version} has been downloaded and is pending installation.").format(**updateInfo)
+			message = _(
+				# Translators: A message indicating that an update to NVDA has been downloaded and is ready to be
+				# applied.
+				"Update to NVDA version {version} has been downloaded and is ready to be applied."
+			).format(**updateInfo)
 
 			self.apiVersion = pendingUpdateDetails[2]
 			self.backCompatTo = pendingUpdateDetails[3]
@@ -393,23 +395,23 @@ class UpdateResultDialog(
 				))
 				confirmationCheckbox.Bind(
 					wx.EVT_CHECKBOX,
-					lambda evt: self.installPendingButton.Enable(not self.installPendingButton.Enabled)
+					lambda evt: self.updateButton.Enable(not self.updateButton.Enabled)
 				)
 				confirmationCheckbox.SetFocus()
 				# Translators: The label of a button to review add-ons prior to NVDA update.
 				reviewAddonsButton = bHelper.addButton(self, label=_("&Review add-ons..."))
 				reviewAddonsButton.Bind(wx.EVT_BUTTON, self.onReviewAddonsButton)
-			self.installPendingButton = bHelper.addButton(
+			self.updateButton = bHelper.addButton(
 				self,
-				# Translators: The label of a button to install a pending NVDA update.
+				# Translators: The label of a button to apply a pending NVDA update.
 				# {version} will be replaced with the version; e.g. 2011.3.
-				label=_("&Install NVDA {version}").format(**updateInfo)
+				label=_("&Update to NVDA {version}").format(**updateInfo)
 			)
-			self.installPendingButton.Bind(
+			self.updateButton.Bind(
 				wx.EVT_BUTTON,
-				lambda evt: self.onInstallButton(pendingUpdateDetails[0])
+				lambda evt: self.onUpdateButton(pendingUpdateDetails[0])
 			)
-			self.installPendingButton.Enable(not showAddonCompat)
+			self.updateButton.Enable(not showAddonCompat)
 			bHelper.addButton(
 				self,
 				# Translators: The label of a button to re-download a pending NVDA update.
@@ -447,7 +449,7 @@ class UpdateResultDialog(
 		self.CentreOnScreen()
 		self.Show()
 
-	def onInstallButton(self, destPath):
+	def onUpdateButton(self, destPath):
 		_executeUpdate(destPath)
 		self.Destroy()
 
@@ -488,12 +490,12 @@ class UpdateAskInstallDialog(
 		self.apiVersion = apiVersion
 		self.backCompatTo = backCompatTo
 		self.storeUpdatesDirWritable = os.path.isdir(storeUpdatesDir) and os.access(storeUpdatesDir, os.W_OK)
-		# Translators: The title of the dialog asking the user to Install an NVDA update.
+		# Translators: The title of the dialog asking the user to apply an NVDA update.
 		super().__init__(parent, title=_("NVDA Update"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
-		# Translators: A message indicating that an updated version of NVDA is ready to be installed.
-		message = _("NVDA version {version} is ready to be installed.\n").format(version=version)
+		# Translators: A message indicating that an update to NVDA is ready to be applied.
+		message = _("Update to NVDA version {version} is ready to be applied.\n").format(version=version)
 
 		showAddonCompat = any(getIncompatibleAddons(
 			currentAPIVersion=self.apiVersion,
@@ -515,18 +517,18 @@ class UpdateAskInstallDialog(
 			# Translators: The label of a button to review add-ons prior to NVDA update.
 			reviewAddonsButton = bHelper.addButton(self, label=_("&Review add-ons..."))
 			reviewAddonsButton.Bind(wx.EVT_BUTTON, self.onReviewAddonsButton)
-		# Translators: The label of a button to install an NVDA update.
-		installButton = bHelper.addButton(self, wx.ID_OK, label=_("&Install update"))
-		installButton.Bind(wx.EVT_BUTTON, self.onInstallButton)
+		# Translators: The label of a button to update NVDA.
+		updateButton = bHelper.addButton(self, wx.ID_OK, label=_("&Update now"))
+		updateButton.Bind(wx.EVT_BUTTON, self.onUpdateButton)
 		if not showAddonCompat:
-			installButton.SetFocus()
+			updateButton.SetFocus()
 		else:
 			self.confirmationCheckbox.SetFocus()
 			self.confirmationCheckbox.Bind(
 				wx.EVT_CHECKBOX,
-				lambda evt: installButton.Enable(not installButton.Enabled)
+				lambda evt: updateButton.Enable(not updateButton.Enabled)
 			)
-			installButton.Enable(False)
+			updateButton.Enable(False)
 		if self.storeUpdatesDirWritable:
 			# Translators: The label of a button to postpone an NVDA update.
 			postponeButton = bHelper.addButton(self, wx.ID_CLOSE, label=_("&Postpone update"))
@@ -549,7 +551,7 @@ class UpdateAskInstallDialog(
 		)
 		displayDialogAsModal(incompatibleAddons)
 
-	def onInstallButton(self, evt):
+	def onUpdateButton(self, evt):
 		_executeUpdate(self.destPath)
 		self.EndModal(wx.ID_OK)
 
