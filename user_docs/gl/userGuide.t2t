@@ -1,5 +1,5 @@
-﻿
-Guía do Usuario do NVDA NVDA_VERSION
+﻿Guía do Usuario do NVDA NVDA_VERSION
+
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION Referencia Rápida de Ordes
@@ -398,7 +398,7 @@ A terceira permíteche controlar se esta caixa de benvida debería aparecer cada
 +++ Diálogo Estadísticas de Datos de Uso +++[UsageStatsDialog]
 A partir do NVDA 2018.3, pregúntase ao usuario se quere permitir que os datos de uso se envíen a NV Access para axudar a melloralo no futuro. 
 Ao comezar NVDA por primeira vez, aparecerá un diálogo que che preguntará se queres aceptar o envío de datos a NV Access mentres o usas.
-Podes ler máis información sobre a recopilación de datos por NV Access na seción Opcións Xerais, [Permitir ao proxeto do NVDA recopilar estadísticas de uso do NVDA #GeneralSettingsGatherUsageStats].
+Podes ler máis información sobre a recopilación de datos por NV Access na seción Opcións Xerais, [Permitir a NV Access recopilar estadísticas de uso do NVDA #GeneralSettingsGatherUsageStats].
 Nota: ao premer en "si" ou "non" gardarase este axuste e o diálogo non aparecerá nunca máis a menos que reinstales o NVDA.
 Sen embargo, podes activar ou desactivar o proceso de recopilación de datos manualmente no panel das opcións xerais do NVDA. Para cambiar esta opción manualmente, podes marcar ou desmarcar a caixa de verificación chamada [Permitir ao proxecto de NVDA recolectar estadísticas de uso do NVDA #GeneralSettingsGatherUsageStats].
 
@@ -698,6 +698,7 @@ nota: as teclas do teclado numérico requiren que a tecla BloqNum sexa desactiva
 
 Unha boa maneira Para lembrar  as ordes básicas de revisión de texsto cando se utiliza a distribución de escritorio é maxinalas nunha rexiña de tres por tres, indo de superior a inferior ca liña, palabra e caracter e indo de esquerda a dereita   con anterior, actual e seguinte.
 A disposición está ilustrada como segue:
+|| . {.hideHeaderRow} | . | . |
 | Liña anterior | Liña actual | Liña seguinte |
 | Palabra anterior | Palabra actual | Palabra seguinte |
 | Caracter anterior | Caracter actual | Caracter seguinte |
@@ -1494,7 +1495,7 @@ Envíase sempre a seguinte información:
 - Se o Sistema Operativo é de 64 ou de 32 bits
 -
 
-==== Permitir que o Proxecto NVDA Recolla Estadísticas de Uso do NVDA ====[GeneralSettingsGatherUsageStats]
+==== Permitir a NV Access Recoller Estadísticas de Uso do NVDA ====[GeneralSettingsGatherUsageStats]
 Se esto está activado, NV Access usará a información das procuras de actualizacións para seguir o número de usuarios do NVDA incluíndo datos demográficos particulares coma o Sistema Operativo e o país de orixe.
 Ten en conta que aíndaque o teu enderezo IP usarase para calcular o teu país durante a procura de actualizacións, o enderezo IP nunca se conservará.
 Ademáis da información obrigatoria necesaria para procurar actualizacións, tamén se envía a seguinte información adicional actualmente:
@@ -4267,14 +4268,16 @@ nvda -q
 
 Algunhas das opcións de liña de ordes teñen unha versión curta e unha longa, mentras outras só teñen unha versión longa.
 Para aquelas que teñan unha versión curta, podes combinalas así:
-| nvda -mc CONFIGPATH | Esto iniciará o NVDA con sons de arranque e a mensaxe desactivada, e a configuración especificada |
-| nvda -mc CONFIGPATH --disable-addons | O mesmo que a de arriba, pero con complementos desactivados |
+|| . {.hideHeaderRow} | . |
+| ``nvda -mc CONFIGPATH`` | Esto iniciará o NVDA con sons de arranque e a mensaxe desactivada, e a configuración especificada |
+| ``nvda -mc CONFIGPATH --disable-addons`` | O mesmo que a de arriba, pero con complementos desactivados |
 
 Algunhas das opcións de liña de ordes aceptan parámetros adicionais; ex.: cómo debería ser o grado de detalle do rexistro ou a vía para o directorio de configuración do usuario.
 Esos parámetros deberían colocarse despois da opción, separados da opción por un espazo cando se utiliza a versión ou un signo igual (=) cando se utiliza  a versión longa; ex.:
-| nvda -l 10 | di ao NVDA que se inicie co nivel de rexistro posto en depuración |
-| nvda --log-file=c:\nvda.log |  Di ao NVDA que escriba o seu rexistro en c:\nvda.log |
-| nvda --log-level=20 -f c:\nvda.log | Di ao NVDA que inicie co nivel de rexistro posto en info e que escreba o seu  rexistro en c:\nvda.log |
+|| . {.hideHeaderRow} | . |
+| ``nvda -l 10`` | di ao NVDA que se inicie co nivel de rexistro posto en depuración |
+| ``nvda --log-file=c:\nvda.log`` |  Di ao NVDA que escriba o seu rexistro en c:\nvda.log |
+| ``nvda --log-level=20 -f c:\nvda.log`` | Di ao NVDA que inicie co nivel de rexistro posto en info e que escreba o seu  rexistro en c:\nvda.log |
 
 Seguidamente van as opcións de liña de ordes para o NVDA:
 || Curta | Longa | Descripción |

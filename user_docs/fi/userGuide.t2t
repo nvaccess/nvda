@@ -3213,7 +3213,7 @@ Kun pariliitos on luotu tätä apuohjelmaa käyttäen ja NVDA ei tunnista laitet
 
 Vaikka joissakin näistä pistenäytöistä onkin pistenäppäimistö, ne huolehtivat itse pistekirjoituksen kääntämisestä tekstiksi.
 Tämä tarkoittaa, että oletusarvoisesti NVDA:n pistekirjoituksen syöttöjärjestelmää ei käytetä (ts. pistesyöttötaulukkoasetuksella ei ole vaikutusta).
-HID-näppäimistöemulointi on mahdollista poistaa käytöstä näppäinkomennolla ALVA-näytöissä, joissa on viimeisin laiteohjelmisto.
+HID-näppäimistösimulointi on mahdollista poistaa käytöstä näppäinkomennolla ALVA-näytöissä, joissa on viimeisin laiteohjelmisto.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
@@ -3226,7 +3226,7 @@ Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 | Vieritä eteenpäin | t5, etouch3 |
 | Siirrä pistesoluun | kosketuskohdistinnäppäin |
 | Ilmoita muotoilutiedot pistesolusta | toissijainen kosketuskohdistinnäppäin |
-| Vaihda HID-näppäimistösyötteen emuloinnin asetusta | t1+spEnter |
+| Vaihda HID-näppäimistösyötteen simuloinnin asetusta | t1+spEnter |
 | Siirrä ylimmälle riville | t1+t2 |
 | Siirrä alimmalle riville | t4+t5 |
 | Vaihda Pistenäyttö seuraa -asetusta | t1+t3 |
@@ -3696,7 +3696,7 @@ Huom: Nämä pistenäytöt voidaan liittää vain sarjaportin kautta.
 Tämän vuoksi Nämä näytöt eivät tue NVDA:n automaattista pistenäytön tunnistusta.
 Portti, johon laite on liitetty, tulee valita sen jälkeen, kun pistenäytön ajuri on valittu [Valitse pistenäyttö #SelectBrailleDisplay] -valintaikkunasta.
 
-Joissakin laitteissa on intuitiivisen ja nopean käytön mahdollistava helppokäyttönäppäin (EAB).
+Joissakin laitteissa on intuitiivisen ja nopean käytön mahdollistava Easy Access Bar (EAB).
 Sitä voidaan liikuttaa neljään suuntaan, joissa kussakin on yleensä kaksi kytkintä.
 Ylös-, alas-, oikea- ja vasen-näppäinten (tai EAB:n) painaminen ja alhaalla pitäminen toistaa kyseessä olevan toiminnon.
 Vanhoissa laitteissa ei ole EAB:tä; sen sijaan käytetään etupaneelin näppäimiä.
@@ -3782,7 +3782,7 @@ Seuraavia malleja tuetaan:
 Katso BrailleNote Touchin näppäinkomennot [Brailliant BI/B / BrailleNote Touch #HumanWareBrailliant] -osiosta.
 
 BrailleNote PK:ta lukuun ottamatta sekä pistekirjoitus- (BT) että QWERTY (QT) -näppäimistöä tuetaan.
-PC-näppäimistön emulointia ei tueta BrailleNote QT:ssa.
+PC-näppäimistön emulointia ei tueta BrailleNote QT:ssä.
 Voit syöttää pistekirjoitusta myös QT-näppäimistöä käyttäen.
 Katso lisätietoja BrailleNote-käyttöoppaan pistenäyttökappaleesta.
 
@@ -3915,8 +3915,8 @@ Katso näppäinten kuvaukset laitteen käyttöohjeesta.
 Kahdesta Väli-näppäimen tavoin sijoitellusta näppäimestä vasemmanpuoleinen vastaa Askelpalautinta ja oikea Väli-näppäintä.
 
 Nämä laitteet kytketään USB-liitäntään, janiissä on itsenäinen USB-näppäimistö.
-Se voidaan ottaa käyttöön tai poistaa käytöstä vaihtamalla "HID-näppäimistösyötteen emulointi" -asetusta näppäinkomentoa käyttäen.
-Alla kuvaillut pistekirjoitusnäppäimistön toiminnot ovat käytettävissä vain, kun "HID-näppäimistösyötteen emulointi" on poistettu käytöstä.
+Se voidaan ottaa käyttöön tai poistaa käytöstä vaihtamalla "HID-näppäimistösyötteen simulointi" -asetusta näppäinkomentoa käyttäen.
+Alla kuvaillut pistekirjoitusnäppäimistön toiminnot ovat käytettävissä vain, kun "HID-näppäimistösyötteen simulointi" on poistettu käytöstä.
 
 +++ Pistekirjoitusnäppäimistön toiminnot +++[EurobrailleBraille]
 %kc:beginInclude
@@ -3978,7 +3978,7 @@ Alla kuvaillut pistekirjoitusnäppäimistön toiminnot ovat käytettävissä vai
 | Vaihda ``Ctrl``-näppäimen tilaa | ``pisteet 1, 7 ja 8+väli``, ``pisteet 4, 7 ja 8+väli`` |
 | ``Alt``-näppäin | ``piste 8+väli`` |
 | Vaihda ``Alt``-näppäimen tilaa | ``pisteet 1 ja 8+väli``, ``pisteet 4 ja 8+väli`` |
-| Vaihda HID-näppäimistösyötteen emuloinnin asetusta | ``switch1Left+joystick1Down``, ``switch1Right+joystick1Down`` |
+| Vaihda HID-näppäimistösyötteen simuloinnin asetusta | ``switch1Left+joystick1Down``, ``switch1Right+joystick1Down`` |
 %kc:endInclude
 
 +++ B.bookin näppäinkomennot +++[Eurobraillebbook]
@@ -4065,7 +4065,7 @@ Alla kuvaillut pistekirjoitusnäppäimistön toiminnot ovat käytettävissä vai
 | Vaihda ``NVDA``-näppäimen tilaa | ``l7`` |
 | ``Ctrl+Home``-näppäinyhdistelmä | ``l1+l2+l3``, ``l2+l3+l4`` |
 | ``Ctrl+End``-näppäinyhdistelmä | ``l6+l7+l8``, ``l5+l6+l7`` |
-| Vaihda HID-näppäimistösyötteen emuloinnin asetusta | ``l1+joystick1Down``, ``l8+joystick1Down`` |
+| Vaihda HID-näppäimistösyötteen simuloinnin asetusta | ``l1+joystick1Down``, ``l8+joystick1Down`` |
 %kc:endInclude
 
 ++ Nattiq nBraille ++[NattiqTechnologies]

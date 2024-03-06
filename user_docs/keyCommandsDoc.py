@@ -122,6 +122,8 @@ class KeyCommandsPreprocessor(Preprocessor):
 				raise KeyCommandsError(f"{self._lineNum}, title command is not valid here")
 			# Write the title and two blank lines to complete the txt2tags header section.
 			self._kcLines.append("# " + arg + LINE_END * 2)
+			# Add table of contents marker
+			self._kcLines.append("[TOC]" + LINE_END * 2)
 			self._kcSect = Section.BODY
 			return
 

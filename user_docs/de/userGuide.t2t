@@ -2402,7 +2402,7 @@ Wenn Sie benutzerdefinierten Code an andere weitergeben möchten, sollten Sie ih
 
 ==== Developer Scratchpad-Verzeichnis öffnen ====[AdvancedSettingsOpenScratchpadDir]
 Diese Schaltfläche öffnet das Verzeichnis, in dem Sie während der Entwicklung benutzerdefinierten Code platzieren können.
-Diese Schaltfläche ist nur aktiviert, wenn NVDA so konfiguriert ist, dass benutzerdefinierter Code aus dem Developer Scratchpad-Verzeichnis geladen werden kann.
+Diese Schaltfläche ist nur aktiv, wenn NVDA so konfiguriert ist, dass benutzerdefinierter Code aus dem Developer Scratchpad-Verzeichnis geladen werden kann.
 
 ==== Registrierung zu UIA-Ereignissen und Eigenschaftsänderungen ====[AdvancedSettingsSelectiveUIAEventRegistration]
 
@@ -2418,12 +2418,12 @@ Das Kombinationsfeld "Registrierung für UIA-Ereignisse und Eigenschaftsänderun
 Wenn Sie in einer oder mehreren Anwendungen damit probleme haben sollten, empfehlen wir Ihnen, diese Funktionalität auszuprobieren, um zu sehen, ob sich die leistung dadurch verbessert.
 Bei älteren Windows-Versionen hat NVDA jedoch möglicherweise Probleme bei der Verfolgung des Fokus in einigen Steuerelementen (z. B. im Task-Manager und im Emoji-Panel).
 - Überall: NVDA registriert viele UIA-Ereignisse, die in NVDA selbst verarbeitet und verworfen werden.
-Während die Fokusverfolgung in mehr Situationen zuverlässiger ist, wird die Leistung erheblich beeinträchtigt, insbesondere in Anwendungen wie Microsoft Visual Studio.
+Während die Fokusverfolgung in verschiedenen Situationen zuverlässiger ist, wird die Leistung erheblich beeinträchtigt, insbesondere in Anwendungen wie Microsoft Visual Studio.
 -
 
 ==== UIA verwenden, um auf die Steuerelemente in Dokumenten in Microsoft Word zuzugreifen ====[MSWordUIA]
-Legt fest, ob NVDA für den Zugriff bei Dokumenten in Microsoft Word die UIA-API für Barrierefreiheit und nicht das ältere Objektmodell in Microsoft Word verwenden soll oder nicht.
-Dies gilt sowohl für Dokumente in Microsoft Word selbst als auch für Nachrichten in Microsoft Outlook.
+Legt fest, ob NVDA für den Zugriff auf Microsoft Word-Dokumente die UIA-API für Barrierefreiheit oder das ältere Objektmodell verwenden soll.
+Dies gilt sowohl für Dokumente in Microsoft Word selbst, als auch für Nachrichten in Microsoft Outlook.
 Diese Einstellung enthält die folgenden Werte:
 - Standard (sofern geeignet).
 - Nur bei Bedarf: Wenn das ältere Objektmodell in Microsoft Word überhaupt nicht verfügbar ist.
@@ -2437,7 +2437,7 @@ Dies ist eine experimentelle Funktion, und einige Funktionen von Microsoft Excel
 So sind beispielsweise die Liste der Elemente in NVDA zum Auflisten von Formeln und Kommentaren und die Schnellnavigation im Lesemodus zum Springen zu Formularfeldern in einer Kalkulationstabelle nicht verfügbar.
 Für die einfache Navigation und Bearbeitung von Tabellenkalkulationen kann diese Option jedoch eine enorme Leistungsverbesserung bedeuten.
 Es wird nach wie vor nicht empfohlen, dass die Mehrheit der Benutzer diese Funktion standardmäßig aktiviert, obwohl Benutzer von Microsoft Excel-Version 16.0.13522.10000 oder neuer dazu aufgefordert sind, diese Funktion zu testen und Feedback einzureichen.
-Die Implementierung der UIA von Microsoft Excel ändert sich ständig, und Versionen von Microsoft Office, die älter als 16.0.13522.10000 sind, geben möglicherweise nicht genügend Informationen darüber Auskunft, um diese Option zu nutzen.
+Die Implementierung der UIA von Microsoft Excel ändert sich ständig, und Versionen von Microsoft Office, die älter als 16.0.13522.10000 sind, geben möglicherweise nicht genügend Informationen darüber Aus, um diese Option zu nutzen.
 
 ==== Erweiterte Ereignisverarbeitung verwenden ====[UIAEnhancedEventProcessing]
 
@@ -2447,7 +2447,7 @@ Die Implementierung der UIA von Microsoft Excel ändert sich ständig, und Versi
 
 
 Wenn diese Option aktiviert ist, sollte NVDA weiterhin reagieren, wenn es mit vielen UI-Automatisierungsereignissen überflutet wird, z. B. große Textmengen in einem Terminalfenster.
-NVDA muss neu gestartet werden, damit eine geänderte Option wirksam wird.
+NVDA muss neu gestartet werden, damit die geänderte Einstellung wirksam wird.
 
 ==== Unterstützung der Windows-Konsole ====[AdvancedSettingsConsoleUIA]
 
@@ -2471,7 +2471,7 @@ Es wird daher nicht empfohlen, diese Option auszuwählen, wenn Sie nicht wissen,
 -
 
 ==== UIA mit Microsoft Edge und anderen Chromium-basierten Browsern verwenden, sofern verfügbar ====[ChromiumUIA]
-Ermöglicht das Festlegen, wann UIA verwendet wird, wenn es in Chromium-basierten Browsern wie Microsoft Edge verfügbar ist.
+Legt fest, wann UIA verwendet wird, wenn es in Chromium-basierten Browsern wie Microsoft Edge verfügbar ist.
 Die UIA-Unterstützung für Chromium-basierte Browser befindet sich noch in einem frühen Entwicklungsstadium und bietet möglicherweise nicht das gleiche Maß an Zugriff wie IA2.
 Das Kombinationsfeld hat die folgenden Optionen:
 - Standard (nur wenn nötig): Der NVDA-Standard, derzeit ist dies "Nur wenn nötig". Diese Voreinstellung kann sich in Zukunft ändern, wenn die Technologie ausgereift ist.
@@ -2492,7 +2492,7 @@ Die folgenden Möglichkeiten gibt es:
 - "Enthält Details"-Meldung für strukturierte Anmerkungen: Ermöglicht die Meldung, wenn der Text oder das Steuerelement weitere Details enthält.
 - "Aria-Beschreibung immer mitteilen":
   Wenn die Quelle von ``accDescription`` aria-description ist, wird die Beschreibung mitgeteilt.
-  Dies ist nützlich für Anmerkungen im Web.
+  Dies ist nützlich für Anmerkungen im Internet.
   Hinweis:
   - Es gibt viele Quellen für ``accDescription``, einige haben eine gemischte oder unzuverlässige Semantik.
     Historisch gesehen war AT nicht in der Lage, Quellen von ``accDescription`` zu unterscheiden, typischerweise wurde es aufgrund der gemischten Semantik nicht gesprochen.
@@ -2524,7 +2524,7 @@ Das Eingeben von Zeichen, die nicht auf dem Bildschirm erscheinen (z. B. bei Pas
 In Umgebungen, die nicht unterstützt werden, können Sie vorübergehend [Zeichen während der Eingabe ansagen #KeyboardSettingsSpeakTypedCharacters] und [Wörter während der Eingabe ansagen #KeyboardSettingsSpeakTypedWords] deaktivieren, wenn Sie Passwörter eingeben.
 
 ==== Diff-Algorithmus ====[DiffAlgo]
-Diese Einstellung steuert, wie NVDA neuen Text in Terminals vorgelesen werden sollen.
+Diese Einstellung steuert, wie NVDA neuen Text in Terminals vorlesen soll.
 Das Kombinationsfeld "Diff-Algorithmus" hat drei Optionen:
 - Automatisch: Diese Option bewirkt, dass NVDA in den meisten Situationen Diff Match Patch bevorzugt, aber bei problematischen Anwendungen, wie z. B. älteren Versionen der Windows-Konsole und Mintty, auf Difflib zurückgreift.
 - Diff Match Patch: Diese Option bewirkt, dass NVDA Änderungen am Terminaltext zeichenweise berechnet, auch in Situationen, in denen dies nicht empfohlen wird.
@@ -2565,8 +2565,8 @@ Mit dieser Option können Sie die Anzahl der Millisekunden konfigurieren, die NV
 Wenn Sie feststellen, dass NVDA die Einfügemarke falsch zu verfolgen scheint, z. B., wenn NVDA immer ein Zeichen hinterher liegt oder beim Navigieren manche Zeilen wiederholt, dann sollten Sie versuchen, diesen Wert zu erhöhen.
 
 ==== Transparente Farben mitteilen ====[ReportTransparentColors]
-Diese Option teilt mit, wenn Farben transparent sind. Dies ist nützlich für Entwickler von NVDA-Erweiterungen und App-Modulen, die Informationen sammeln, um die Benutzererfahrung mit einer Drittanbieteranwendung zu verbessern.
-Einige GDI-Anwendungen heben Text mit einer Hintergrundfarbe hervor, NVDA (über das Anzeigemodell) versucht, diese Farbe mitzuteilen.
+Diese Option teilt mit, wenn Farben transparent sind. Dies ist nützlich für Entwickler von NVDA-Erweiterungen und Anwendungs-Modulen, die Informationen sammeln, um die Benutzererfahrung mit einer Drittanbieteranwendung zu verbessern.
+Einige GDI-Anwendungen heben Text mit einer Hintergrundfarbe hervor, NVDA versucht, diese Farbe mittels des Anzeige-Modells mitzuteilen.
 In einigen Situationen kann der Texthintergrund vollständig transparent sein, wobei der Text über einem anderen Element der grafischen Oberfläche liegt.
 Bei mehreren historisch beliebten APIs von grafischen Oberflächen kann der Text mit einem transparenten Hintergrund gerendert werden, aber die Hintergrundfarbe ist visuell korrekt.
 
@@ -2590,7 +2590,7 @@ Mit diesen Kontrollkästchen in dieser Liste können Sie bestimmte Kategorien vo
 Das Protokollieren dieser Nachrichten kann zu Leistungseinbußen und großen Protokolldateien führen.
 Schalten Sie nur eines davon ein, wenn dies von einem NVDA-Entwickler ausdrücklich angeordnet wurde, z. B. beim Debuggen, warum ein Braille-Treiber nicht ordnungsgemäß funktioniert.
 
-==== Fehlern im Protokoll mit einem Sound kennzeichnen ====[PlayErrorSound]
+==== Fehler im Protokoll mit einem Sound kennzeichnen ====[PlayErrorSound]
 Mit dieser Option können Sie festlegen, ob NVDA einen Fehlerton abspielen soll, falls ein Fehler protokolliert wird.
 Bei Auswahl von "Nur in Testversionen" (Standard) ertönt nur dann ein NVDA-Wiedergabefehler, wenn die aktuelle NVDA-Version eine Testversion ist (Alpha-, Beta- oder Quellcode).
 Wenn Sie "Ja" auswählen, können Sie unabhängig von Ihrer aktuellen NVDA-Version die Fehlertöne aktivieren.

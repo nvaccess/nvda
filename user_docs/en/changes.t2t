@@ -9,6 +9,7 @@ What's New in NVDA
 - New key commands:
   - New Quick Navigation command ``p`` for jumping to next/previous text paragraph in browse mode. (#15998, @mltony)
   - New unassigned Quick Navigation command to jump to the next/previous figure. (#10826)
+  - New unassigned Quick Navigation command to jump to vertically aligned paragraphs. (#15999, @mltony)
   -
 - Reporting row and column headers is now supported in contenteditable HTML elements. (#14113)
 - Added the option to disable the reporting of figures and captions in Document Formatting settings. (#10826, #14349)
@@ -25,15 +26,21 @@ What's New in NVDA
   -
 - Added support for the BrailleEdgeS2 braille device. (#16033)
 - NVDA will keep the audio device awake after speech stops, in order to prevent the start of the next speech being clipped with some audio devices such as Bluetooth headphones. (#14386, @jcsteh, @mltony)
+- Sound split: (#12985, @mltony)
+  - Allows splitting NVDA sounds in one channel (e.g. left) while sounds from all other applications in the other channel (e.g. right).
+  - Toggled by ``NVDA+alt+s``.
+  -
 -
 
 
 == Changes ==
-
 - Add-on Store:
   - The minimum and the last tested NVDA version for an add-on are now displayed in the "other details" area. (#15776, @Nael-Sayegh)
   -
 - Padding dots commonly used in tables of contents are not reported anymore at low punctuation levels. (#15845, @CyrilleB79)
+- Updated LibLouis Braille translator to [3.29.0 https://github.com/liblouis/liblouis/releases/tag/v3.29.0]. (#16259, @codeofdusk)
+  - Added new detailed (with capital letters indicated) Belarusian and Ukrainian Braille tables.
+  -
 -
 
 == Bug Fixes ==
@@ -103,8 +110,10 @@ Windows 8.1 is the minimum Windows version supported.
 - Added support for Bluetooth Low Energy HID Braille displays. (#15470)
 - A new Native Selection mode (toggled by ``NVDA+shift+f10``) is now available in NVDA's browse mode for Mozilla Firefox.
 When turned on, selecting text in browse mode will also manipulate Firefox's own native selection.
-Copying text with ``control+c`` will pass straight through to Firefox, thus copying the rich content, rather than NVDA's plain text representation. (#15830)
-- When copying text in Microsoft Word with NVDA's browse mode enabled, formatting is now also included. (#16129)
+Copying text with ``control+c`` will pass straight through to Firefox, thus copying the rich content, rather than NVDA's plain text representation.
+Note however that as Firefox is handling the actual copy, NVDA will not report a "copy to clipboard" message in this mode. (#15830)
+- When copying text in Microsoft Word with NVDA's browse mode enabled, formatting is now also included.
+A side affect of this is that NVDA will no longer report a "copy to clipboard" message when pressing ``control+c`` in Microsoft Word / Outlook browse mode, as the application is now handling the copy, not NVDA. (#16129)
 - A new "on-demand" speech mode has been added.
 When speech is on-demand, NVDA does not speak automatically (e.g. when moving the cursor) but still speaks when calling commands whose goal is explicitly to report something (e.g. report window title). (#481, @CyrilleB79)
 - In the Speech category of NVDA's settings, it is now possible to exclude unwanted speech modes from the Cycle speech modes command (``NVDA+s``). (#15806, @lukaszgo1)
@@ -141,6 +150,7 @@ This option now announces additional relevant information about an object when t
 Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on enhanced accessibility in Poedit, such as shortcuts to read translator notes and comments. (#15313, #7303, @LeonarddeR)
 - Braille viewer and speech viewer are now disabled in secure mode. (#15680)
 - During object navigation, disabled (unavailable) objects will not be ignored anymore. (#15477, @CyrilleB79)
+- Added table of contents to key commands document. (#16106)
 -
 
 == Bug Fixes ==
@@ -257,7 +267,9 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
 - Fixed bug where deleting git-tracked files during ``scons -c`` resulted in missing UIA COM interfaces on rebuild. (#7070, #10833, @hwf1324)
 - Fix a bug where some code changes were not detected when building ``dist``, that prevented a new build from being triggered.
 Now ``dist`` always rebuilds. (#13372, @hwf1324)
+- A ``gui.nvdaControls.MessageDialog`` with default type of standard, no longer throws a None conversion exception because no sound is assigned. (#16223, @XLTechie)
 -
+
 
 === API Breaking Changes ===
 These are breaking API changes.
@@ -272,7 +284,7 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
   - robotframework to 6.1.1. (#15544)
   - SCons to 4.5.2. (#15529, @LeonarddeR)
   - sphinx to 7.2.6. (#15544)
-  - wxPython to 4.2.1. (#12551)
+  - wxPython to 4.2.2a commit ``0205c7c1b9022a5de3e3543f9304cfe53a32b488``. (#12551, #16257)
   -
 - Removed pip dependencies:
   - typing_extensions, these should be supported natively in Python 3.11 (#15544)
@@ -353,7 +365,13 @@ Use ``bdDetect.DeviceType.*`` instead. (#15772, @LeonarddeR).
 
 
 = 2023.3.4 =
-This is a patch release to fix an installer issue.
+This is a patch release to fix a security issue and installer issue.
+Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Security Fixes ==
+- Prevents loading custom configuration while secure mode is forced.
+([GHSA-727q-h8j2-6p45 https://github.com/nvaccess/nvda/security/advisories/GHSA-727q-h8j2-6p45])
+-
 
 == Bug Fixes ==
 - Fixed bug which caused the NVDA process to fail to exit correctly. (#16123)

@@ -244,6 +244,9 @@ def _getUpdateStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
 		# the type will not be AddonStoreModel
 		return None
 
+	if model._anyPendingInstallForId:
+		return None
+
 	addonStoreInstalledData = addonDataManager._getCachedInstalledAddonData(model.addonId)
 	if addonStoreInstalledData is not None:
 		if model.addonVersionNumber > addonStoreInstalledData.addonVersionNumber:
@@ -382,25 +385,30 @@ _installedAddonStatuses: set[AvailableAddonStatus] = {
 	AvailableAddonStatus.DOWNLOAD_SUCCESS,
 }
 
+_installingStatuses: set[AvailableAddonStatus] = {
+	AvailableAddonStatus.DOWNLOAD_FAILED,
+	AvailableAddonStatus.DOWNLOAD_SUCCESS,
+	AvailableAddonStatus.DOWNLOADING,
+	AvailableAddonStatus.INSTALLING,
+	AvailableAddonStatus.INSTALL_FAILED,
+	AvailableAddonStatus.INSTALLED,
+}
+
+_updatableStatuses: set[AvailableAddonStatus] = {
+	AvailableAddonStatus.UPDATE,
+	AvailableAddonStatus.UPDATE_INCOMPATIBLE,
+	AvailableAddonStatus.REPLACE_SIDE_LOAD,
+}
+
 _statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = OrderedDict({
 	_StatusFilterKey.INSTALLED: _installedAddonStatuses,
-	_StatusFilterKey.UPDATE: {
-		AvailableAddonStatus.UPDATE,
-		AvailableAddonStatus.UPDATE_INCOMPATIBLE,
-		AvailableAddonStatus.REPLACE_SIDE_LOAD,
-	},
-	_StatusFilterKey.AVAILABLE: _installedAddonStatuses.union({
+	_StatusFilterKey.UPDATE: _updatableStatuses.union(_installingStatuses),
+	_StatusFilterKey.AVAILABLE: _installedAddonStatuses
+	.union(_installingStatuses)
+	.union(_updatableStatuses)
+	.union({
 		AvailableAddonStatus.INCOMPATIBLE,
 		AvailableAddonStatus.AVAILABLE,
-		AvailableAddonStatus.UPDATE,
-		AvailableAddonStatus.UPDATE_INCOMPATIBLE,
-		AvailableAddonStatus.REPLACE_SIDE_LOAD,
-		AvailableAddonStatus.DOWNLOAD_FAILED,
-		AvailableAddonStatus.DOWNLOAD_SUCCESS,
-		AvailableAddonStatus.DOWNLOADING,
-		AvailableAddonStatus.INSTALLING,
-		AvailableAddonStatus.INSTALL_FAILED,
-		AvailableAddonStatus.INSTALLED,
 	}),
 	_StatusFilterKey.INCOMPATIBLE: {
 		AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
@@ -478,6 +486,15 @@ class SupportsAddonState(SupportsVersionCheck, Protocol):
 	@property
 	def isPendingDisable(self) -> bool:
 		return self.name in self._stateHandler[AddonStateCategory.PENDING_DISABLE]
+
+	@property
+	def _anyPendingInstallForId(self) -> bool:
+		from ..dataManager import addonDataManager
+		return (
+			Path(self.pendingInstallPath).exists()
+			or self.name in (d.model.name for d, _ in addonDataManager._downloadsPendingInstall)
+			or self.name in (d.model.name for d in addonDataManager._downloadsPendingCompletion)
+		)
 
 	@property
 	def requiresRestart(self) -> bool:
