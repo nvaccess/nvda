@@ -17,11 +17,14 @@ import config
 import globalVars
 from logHandler import log
 
-#: The directory in which liblouis braille tables are located.
 TABLES_DIR = os.path.join(globalVars.appDir, "louis", "tables")
-
-#: List of directories for braille tables lookup, including custom tables.
+"""The directory in which liblouis braille tables are located."""
 tablesDirs = [TABLES_DIR]
+"""List of directories for braille tables lookup, including custom tables."""
+TABLE_SOURCE_BUILTIN = "builtin"
+"""The name of the builtin table source"""
+TABLE_SOURCE_SCRATCHPAD = "scratchpad"
+"""The name of the scratchpad table source"""
 
 
 class BrailleTable(NamedTuple):
@@ -37,6 +40,10 @@ class BrailleTable(NamedTuple):
 	"""True if this table can be used for output, False if not."""
 	input: bool = True
 	"""True if this table can be used for input, False if not."""
+	source: str = TABLE_SOURCE_BUILTIN
+	"""An identifier describing the source of the table.
+	This defaults to 'builtin', but is set to the name of the add-on or "scratchpad, depending on its source.
+	"""
 
 
 #: Maps file names to L{BrailleTable} objects.
@@ -51,7 +58,8 @@ def addTable(
 		displayName: str,
 		contracted: bool = False,
 		output: bool = True,
-		input: bool = True
+		input: bool = True,
+		source: str = TABLE_SOURCE_BUILTIN
 ):
 	"""Register a braille translation table.
 	At least one of C{input} or C{output} must be C{True}.
@@ -60,10 +68,11 @@ def addTable(
 	:param contracted: True if the table is contracted, False if uncontracted.
 	:param output: True if this table can be used for output, False if not.
 	:param input: True if this table can be used for input, False if not.
+	:param source: An identifier describing the source of the table.
 	"""
 	if not output and not input:
 		raise ValueError("input and output cannot both be False")
-	table = BrailleTable(fileName, displayName, contracted, output, input)
+	table = BrailleTable(fileName, displayName, contracted, output, input, source)
 	_tables[fileName] = table
 
 
@@ -672,7 +681,7 @@ def initialize():
 			tablesDirs.append(dir_)
 		try:
 			for fileName, tableConfig in addon.manifest.get("brailleTables", {}).items():
-				addTable(fileName, **tableConfig)
+				addTable(fileName, **tableConfig, source=addon.name)
 		except Exception:
 			log.exception(f"Error while applying custom braille tables config from addon \"{addon.name}\"")
 
@@ -693,7 +702,7 @@ def initialize():
 						with open(path, "rb") as file_:
 							manifest = ConfigObj(file_, configspec=configspec)
 							for fileName, tableConfig in manifest["brailleTables"].items():
-								addTable(fileName, **tableConfig)
+								addTable(fileName, **tableConfig, source=TABLE_SOURCE_SCRATCHPAD)
 					except Exception:
 						log.exception(f"Error while applying custom braille tables config: {path}")
 
