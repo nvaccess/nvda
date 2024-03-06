@@ -1152,8 +1152,6 @@ class UIAHandler(COMObject):
 				log.debugWarning("Unable to parse productName or productVersion, version information likely unavailable", exc_info=True)
 				isOfficeApp = False
 				isOffice2013OrOlder = False
-			isOfficeApp = appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
-			isOffice2013OrOlder = int(appModule.productVersion.split(".")[0]) < 16
 			if isOfficeApp and isOffice2013OrOlder:
 				parentHwnd = winUser.getAncestor(hwnd, winUser.GA_PARENT)
 				while parentHwnd:
