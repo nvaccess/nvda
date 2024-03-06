@@ -253,10 +253,10 @@ class Ia2Web(IAccessible):
 			log.error(f"Unknown live politeness of {politeness}", exc_info=True)
 			super().liveRegionPoliteness
 	
-	def _get_role(self):
-		if self.IA2Attributes.get("tag", "").casefold() == "figure":
-			return controlTypes.Role.FIGURE
-		return super()._get_role()
+	# def _get_role(self):
+	# 	if self.IA2Attributes.get("tag", "").casefold() == "figure":
+	# 		return controlTypes.Role.FIGURE
+	# 	return super()._get_role()
 
 
 class Document(Ia2Web):

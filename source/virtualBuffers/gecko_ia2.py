@@ -131,9 +131,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		
 		if attrs.get('IAccessible2::attribute_tag',"").lower()=="blockquote":
 			role=controlTypes.Role.BLOCKQUOTE
-		elif attrs.get('IAccessible2::attribute_tag',"").lower()=="figure":
-			role = controlTypes.Role.FIGURE
-
+		
 		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs)
 		states |= IAccessibleHandler.getStatesSetFromIAccessible2Attrs(attrs)
 		role, states = controlTypes.transformRoleStates(role, states)
