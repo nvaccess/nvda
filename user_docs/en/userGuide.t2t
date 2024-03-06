@@ -1997,6 +1997,35 @@ By default only three modes are included.
 Note that it is necessary to check at least one mode.
 This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
 
+==== Applications volume ====[AppSoundVolume]
+
+This slider allows to set volume of all currently running applications except for NVDA.
+If any new applications start to output sound, their volume will also be affected.
+This slider can also be controlled via the following keyboard commands:
+
+%kc:beginInclude
+|| Name | Key | Description |
+| Increase applications volume | ``NVDA+alt+pageUp`` | Increases volume of all applications except NVDA by 5%. |
+| Decrease applications volume | ``NVDA+alt+pageDown`` | Decreases volume of all applications except NVDA by 5%. |
+
+%kc:endInclude
+
+This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
+
+==== Mute other applications ====[MuteApplications]
+
+This checkbox allows to mute all applications other than NVDA.
+If any new applications start to output sound, their sound output will also be muted.
+This checkbox can also be controlled via the following keyboard command:
+
+%kc:beginInclude
+|| Name | Key | Description |
+| Toggle mute other applications | ``NVDA+alt+Delete`` | Mutes or unmutes all applications other than NVDA. |
+
+%kc:endInclude
+
+This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
+
 +++ Vision +++[VisionSettings]
 The Vision category in the NVDA Settings dialog allows you to enable, disable and configure [visual aids #Vision].
 

@@ -150,6 +150,12 @@ class VolumeSetter(AudioSessionNotification):
 
 def setSoundSplitState(state: SoundSplitState) -> dict:
 	leftVolume, rightVolume = state.getAppVolume()
+	appsVolume = (
+		config.conf["audio"]["applicationsSoundVolume"] / 100
+		* (1 - int(config.conf["audio"]["applicationsMuted"]))
+	)
+	leftVolume *= appsVolume
+	rightVolume *= appsVolume
 	leftNVDAVolume, rightNVDAVolume = state.getNVDAVolume()
 	volumeSetter = VolumeSetter(leftVolume, rightVolume, leftNVDAVolume, rightNVDAVolume)
 	applyToAllAudioSessions(volumeSetter)
@@ -158,7 +164,7 @@ def setSoundSplitState(state: SoundSplitState) -> dict:
 	}
 
 
-def toggleSoundSplitState() -> None:
+def updateSoundSplitState(increment: int | None = None) -> None:
 	if not nvwave.usingWasapiWavePlayer():
 		message = _(
 			# Translators: error message when wasapi is turned off.
@@ -168,17 +174,21 @@ def toggleSoundSplitState() -> None:
 		ui.message(message)
 		return
 	state = SoundSplitState(config.conf["audio"]["soundSplitState"])
-	allowedStates: list[int] = config.conf["audio"]["includedSoundSplitModes"]
-	try:
-		i = allowedStates.index(state)
-	except ValueError:
-		# State not found, resetting to default (OFF)
-		i = -1
-	i = (i + 1) % len(allowedStates)
-	newState = SoundSplitState(allowedStates[i])
+	if increment is None:
+		newState = state
+	else:
+		allowedStates: list[int] = config.conf["audio"]["includedSoundSplitModes"]
+		try:
+			i = allowedStates.index(state)
+		except ValueError:
+			# State not found, resetting to default (OFF)
+			i = -1
+		i = (i + increment) % len(allowedStates)
+		newState = SoundSplitState(allowedStates[i])
 	result = setSoundSplitState(newState)
 	config.conf["audio"]["soundSplitState"] = newState.value
-	ui.message(newState.displayString)
+	if increment is not None:
+		ui.message(newState.displayString)
 	if result["foundSessionWithNot2Channels"]:
 		msg = _(
 			# Translators: warning message when sound split trigger wasn't successful due to one of audio sessions
@@ -187,3 +197,7 @@ def toggleSoundSplitState() -> None:
 			"one of audio sessions is either mono, or has more than 2 audio channels."
 		)
 		ui.message(msg)
+
+
+def toggleSoundSplitState() -> None:
+	updateSoundSplitState(increment=1)
