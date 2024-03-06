@@ -15,7 +15,7 @@ from pycaw.utils import AudioSession, AudioUtilities
 import ui
 from utils.displayString import DisplayStringIntEnum
 from dataclasses import dataclass
-import _ctypes
+from comtypes import COMError
 
 VolumeTupleT = tuple[float, float]
 
@@ -81,8 +81,8 @@ def initialize() -> None:
 		global audioSessionManager
 		try:
 			audioSessionManager = AudioUtilities.GetAudioSessionManager()
-		except _ctypes.COMError as e:
-			log.error("Could not initialize audio session manager! ", e)
+		except COMError:
+			log.exception("Could not initialize audio session manager")
 			return
 		state = SoundSplitState(config.conf["audio"]["soundSplitState"])
 		setSoundSplitState(state)
