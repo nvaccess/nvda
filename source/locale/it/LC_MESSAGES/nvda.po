@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-25 22:27+0000\n"
-"PO-Revision-Date: 2024-02-25 23:04\n"
+"POT-Creation-Date: 2024-03-06 02:06+0000\n"
+"PO-Revision-Date: 2024-03-06 02:37\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -3077,12 +3077,12 @@ msgid "gesture map File Error"
 msgstr "Errore nella mappatura del file dei gesti"
 
 #. Translators: This is spoken when NVDA is starting.
-#: core.py:615
+#: core.py:625
 msgid "Loading NVDA. Please wait..."
 msgstr "Caricamento di NVDA in corso, attendere prego"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-#: core.py:762
+#: core.py:772
 msgid "NVDA started"
 msgstr "NVDA attivato"
 
@@ -3130,16 +3130,11 @@ msgstr "Trova la stringa di testo successiva a partire dalla posizione del curso
 msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
 msgstr "Trova l'occorrenza precedente del testo  precedentemente inserito dalla posizione del cursore"
 
-#. Translators: Reported when browse mode passes the copy to clipboard command through to the application.
-#: cursorManager.py:456
-msgid "native copy"
-msgstr "copia nativa"
-
 #. Translators: Reported when there is no text selected (for copying).
 #. Translators: The message reported when there is no selection
 #. Translators: When trying to read the documentation but there is no selected autocompletion item in
 #. Eclipse
-#: cursorManager.py:462 globalCommands.py:279 appModules\eclipse.py:68
+#: cursorManager.py:460 globalCommands.py:279 appModules\eclipse.py:68
 msgid "No selection"
 msgstr "Nessuna selezione"
 
@@ -11523,7 +11518,7 @@ msgstr "Annulla"
 #. Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'
 #. The placeholder {} is replaced with the label of the option which describes current default behavior
 #. in NVDA. EG "Default (Yes)".
-#: gui\nvdaControls.py:537
+#: gui\nvdaControls.py:538
 msgid "Default ({})"
 msgstr "Predefinito ({})"
 
@@ -13862,7 +13857,7 @@ msgstr "&Recensioni della community"
 
 #. Translators: The message displayed when the add-on cannot be enabled.
 #. {addon} is replaced with the add-on name.
-#: gui\addonStoreGui\viewModels\store.py:329
+#: gui\addonStoreGui\viewModels\store.py:328
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Could not enable the add-on: {addon}."
@@ -13870,7 +13865,7 @@ msgstr "Impossibile abilitare il componente aggiuntivo: {addon}."
 
 #. Translators: The message displayed when the add-on cannot be disabled.
 #. {addon} is replaced with the add-on name.
-#: gui\addonStoreGui\viewModels\store.py:336
+#: gui\addonStoreGui\viewModels\store.py:335
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Could not disable the add-on: {addon}."
@@ -14041,12 +14036,12 @@ msgstr "Impossibile trovare riga {rowNumber} colonna {columnNumber}  nelle intes
 
 #. Translators: a description for a script
 #. Translators: a description for a script that reports the comment at the caret.
-#: NVDAObjects\IAccessible\winword.py:321 NVDAObjects\UIA\wordDocument.py:608
+#: NVDAObjects\IAccessible\winword.py:321 NVDAObjects\UIA\wordDocument.py:602
 msgid "Reports the text of the comment where the system caret is located."
 msgstr "Legge il testo del commento alla posizione del cursore di sistema."
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-#: NVDAObjects\IAccessible\winword.py:344 NVDAObjects\UIA\wordDocument.py:619
+#: NVDAObjects\IAccessible\winword.py:344 NVDAObjects\UIA\wordDocument.py:613
 msgid "No comments"
 msgstr "Non contiene commenti"
 
@@ -14282,19 +14277,19 @@ msgid "Comment: {comment} by {author} on {date}"
 msgstr "Commento: {comment} di {author} del {date}"
 
 #. Translators: a message when navigating by sentence is unavailable in MS Word
-#: NVDAObjects\UIA\wordDocument.py:574
+#: NVDAObjects\UIA\wordDocument.py:568
 msgid "Navigating by sentence not supported in this document"
 msgstr "La navigazione per frasi non è supportata in questo documento"
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
-#: NVDAObjects\UIA\wordDocument.py:627
+#: NVDAObjects\UIA\wordDocument.py:621
 msgid "Command not supported in this type of document. The tables have their first row cells automatically set as column headers."
 msgstr "Comando non supportato in questo tipo di documento. Le celle della prima riga delle tabelle sono impostate automaticamente come intestazioni di colonna."
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
-#: NVDAObjects\UIA\wordDocument.py:636
+#: NVDAObjects\UIA\wordDocument.py:630
 msgid "Command not supported in this type of document. The tables have their first column cells automatically set as row headers."
 msgstr "Comando non supportato in questo tipo di documento. Le celle della prima colonna delle tabelle sono impostate automaticamente come intestazioni di riga."
 

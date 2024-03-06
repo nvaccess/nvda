@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-25 22:27+0000\n"
-"PO-Revision-Date: 2024-02-25 23:04\n"
+"POT-Creation-Date: 2024-03-06 02:06+0000\n"
+"PO-Revision-Date: 2024-03-06 02:37\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -3073,12 +3073,12 @@ msgid "gesture map File Error"
 msgstr "手勢對應檔錯誤"
 
 #. Translators: This is spoken when NVDA is starting.
-#: core.py:615
+#: core.py:625
 msgid "Loading NVDA. Please wait..."
 msgstr "載入 NVDA 中，請稍後..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-#: core.py:762
+#: core.py:772
 msgid "NVDA started"
 msgstr "NVDA 已啟動"
 
@@ -3126,16 +3126,11 @@ msgstr "從目前游標位置找下一個先前輸入的字串"
 msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
 msgstr "從目前游標位置找上一個先前輸入的字串"
 
-#. Translators: Reported when browse mode passes the copy to clipboard command through to the application.
-#: cursorManager.py:456
-msgid "native copy"
-msgstr "原生複製"
-
 #. Translators: Reported when there is no text selected (for copying).
 #. Translators: The message reported when there is no selection
 #. Translators: When trying to read the documentation but there is no selected autocompletion item in
 #. Eclipse
-#: cursorManager.py:462 globalCommands.py:279 appModules\eclipse.py:68
+#: cursorManager.py:460 globalCommands.py:279 appModules\eclipse.py:68
 msgid "No selection"
 msgstr "沒有選取文字"
 
@@ -11495,7 +11490,7 @@ msgstr "取消"
 #. Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'
 #. The placeholder {} is replaced with the label of the option which describes current default behavior
 #. in NVDA. EG "Default (Yes)".
-#: gui\nvdaControls.py:537
+#: gui\nvdaControls.py:538
 msgid "Default ({})"
 msgstr "預設"
 
@@ -11609,7 +11604,7 @@ msgstr "啟動時通知有擱置的更新(&P)"
 #. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
 #: gui\settingsDialogs.py:894
 msgid "Allow NV Access to gather NVDA usage statistics"
-msgstr ""
+msgstr "允許 NV Access 收集 NVDA 使用情況統計"
 
 #. Translators: A message to warn the user when attempting to copy current
 #. settings to system settings.
@@ -13205,11 +13200,11 @@ msgid "Most commands for controlling NVDA require you to hold down the NVDA key 
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
 "From this menu, you can configure NVDA, get help, and access other NVDA functions."
-msgstr "大多數控制 NVDA 的命令需要您在按住 NVDA 鍵的同時按其他鍵。\n"
-"預設情况下，數字鍵盤的 Insert 和主見盤的 Insert 鍵都可以用作 NVDA 鍵。\n"
-"您還可以將 NVDA 配置為使用大寫鎖定鍵作為 NVDA 鍵。\n"
-"隨時可按 NVDA+n 開啟 NVDA 功能表。\n"
-"從此功能表中，您可以配置 NVDA、取得說明、存取其他 NVDA 功能。"
+msgstr "大多數控制 NVDA 的指令需要您在按住 NVDA 鍵的同時按下其他鍵。\n"
+"預設情況下，數字鍵盤的 Insert 鍵及主鍵盤的 Insert 鍵都可做為 NVDA 鍵。\n"
+"您也可將 Caps Lock 設定為 NVDA 鍵。\n"
+"可隨時按 NVDA+n 開啟 NVDA 功能表。\n"
+"透過此功能表可讓您設定 NVDA，取得使用說明及使用 NVDA 的其他功能。"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 #: gui\startupDialogs.py:47
@@ -13831,7 +13826,7 @@ msgstr "社群評論"
 
 #. Translators: The message displayed when the add-on cannot be enabled.
 #. {addon} is replaced with the add-on name.
-#: gui\addonStoreGui\viewModels\store.py:329
+#: gui\addonStoreGui\viewModels\store.py:328
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Could not enable the add-on: {addon}."
@@ -13839,7 +13834,7 @@ msgstr "無法啟用附加元件: {addon}。"
 
 #. Translators: The message displayed when the add-on cannot be disabled.
 #. {addon} is replaced with the add-on name.
-#: gui\addonStoreGui\viewModels\store.py:336
+#: gui\addonStoreGui\viewModels\store.py:335
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Could not disable the add-on: {addon}."
@@ -14009,12 +14004,12 @@ msgstr "在第 {rowNumber} 列第 {columnNumber} 欄找不到列標題"
 
 #. Translators: a description for a script
 #. Translators: a description for a script that reports the comment at the caret.
-#: NVDAObjects\IAccessible\winword.py:321 NVDAObjects\UIA\wordDocument.py:608
+#: NVDAObjects\IAccessible\winword.py:321 NVDAObjects\UIA\wordDocument.py:602
 msgid "Reports the text of the comment where the system caret is located."
 msgstr "讀出系統游標所在的註解文字。"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-#: NVDAObjects\IAccessible\winword.py:344 NVDAObjects\UIA\wordDocument.py:619
+#: NVDAObjects\IAccessible\winword.py:344 NVDAObjects\UIA\wordDocument.py:613
 msgid "No comments"
 msgstr "沒有註解"
 
@@ -14248,19 +14243,19 @@ msgid "Comment: {comment} by {author} on {date}"
 msgstr "註解: {comment} 由 {author} 於 {date} 加駐"
 
 #. Translators: a message when navigating by sentence is unavailable in MS Word
-#: NVDAObjects\UIA\wordDocument.py:574
+#: NVDAObjects\UIA\wordDocument.py:568
 msgid "Navigating by sentence not supported in this document"
 msgstr "本文件不支援以句子導覽"
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
-#: NVDAObjects\UIA\wordDocument.py:627
+#: NVDAObjects\UIA\wordDocument.py:621
 msgid "Command not supported in this type of document. The tables have their first row cells automatically set as column headers."
 msgstr "此類文件不支援此指令。表格的第一列儲存格自動設定為欄標題。"
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
-#: NVDAObjects\UIA\wordDocument.py:636
+#: NVDAObjects\UIA\wordDocument.py:630
 msgid "Command not supported in this type of document. The tables have their first column cells automatically set as row headers."
 msgstr "此類文件不支援此指令。表格的第一欄儲存格自動設定為列標題。"
 

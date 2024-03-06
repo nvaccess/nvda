@@ -74,7 +74,7 @@ For reference, the following run time dependencies are included in Git submodule
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.52-dev commit `530bf0abf4174dc9ca28dbacc11bd5e9ae6152cd`
 * [Sonic](https://github.com/waywardgeek/sonic), commit `8694c596378c24e340c09ff2cd47c065494233f1`
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit `3d8c7f0b833453f761ded6b12d8be431507bfe0b`
-* [liblouis](http://www.liblouis.io/), version 3.28.0
+* [liblouis](http://www.liblouis.io/), version 3.29.0
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 44.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
