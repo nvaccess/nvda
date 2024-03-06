@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-25 22:27+0000\n"
-"PO-Revision-Date: 2024-02-25 23:04\n"
+"POT-Creation-Date: 2024-03-06 02:06+0000\n"
+"PO-Revision-Date: 2024-03-06 02:37\n"
 "Last-Translator: \n"
 "Language-Team: Mongolian\n"
 "Language: mn_MN\n"
@@ -3077,12 +3077,12 @@ msgid "gesture map File Error"
 msgstr "зангааны map файлд алдаа гарлаа"
 
 #. Translators: This is spoken when NVDA is starting.
-#: core.py:615
+#: core.py:625
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA ажиллаж байна. түр хүлээнэ үү..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-#: core.py:762
+#: core.py:772
 msgid "NVDA started"
 msgstr "NVDA эхэллээ"
 
@@ -3130,16 +3130,11 @@ msgstr "одоогийн заагчын байрлалаас өмнө нь ор�
 msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
 msgstr "одоогийн заагчын байрлалаас өмнө нь оруулсан текст мөрийн өмнөх тохиолдлыг олох"
 
-#. Translators: Reported when browse mode passes the copy to clipboard command through to the application.
-#: cursorManager.py:456
-msgid "native copy"
-msgstr "эх хуулбар хуулбарлах"
-
 #. Translators: Reported when there is no text selected (for copying).
 #. Translators: The message reported when there is no selection
 #. Translators: When trying to read the documentation but there is no selected autocompletion item in
 #. Eclipse
-#: cursorManager.py:462 globalCommands.py:279 appModules\eclipse.py:68
+#: cursorManager.py:460 globalCommands.py:279 appModules\eclipse.py:68
 msgid "No selection"
 msgstr "Сонгогдоогүй"
 
@@ -11534,7 +11529,7 @@ msgstr "Болих"
 #. Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'
 #. The placeholder {} is replaced with the label of the option which describes current default behavior
 #. in NVDA. EG "Default (Yes)".
-#: gui\nvdaControls.py:537
+#: gui\nvdaControls.py:538
 msgid "Default ({})"
 msgstr "Өгөгдмөл ({})"
 
@@ -13882,7 +13877,7 @@ msgstr "Олон нийтийн шүүмжлэл"
 
 #. Translators: The message displayed when the add-on cannot be enabled.
 #. {addon} is replaced with the add-on name.
-#: gui\addonStoreGui\viewModels\store.py:329
+#: gui\addonStoreGui\viewModels\store.py:328
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Could not enable the add-on: {addon}."
@@ -13890,7 +13885,7 @@ msgstr "Хэрэглүүр идэвхжүүлж чадсангүй: {addon}."
 
 #. Translators: The message displayed when the add-on cannot be disabled.
 #. {addon} is replaced with the add-on name.
-#: gui\addonStoreGui\viewModels\store.py:336
+#: gui\addonStoreGui\viewModels\store.py:335
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Could not disable the add-on: {addon}."
@@ -14061,12 +14056,12 @@ msgstr "Мөрний толгой хэсэгт  {rowNumber} багана{columnN
 
 #. Translators: a description for a script
 #. Translators: a description for a script that reports the comment at the caret.
-#: NVDAObjects\IAccessible\winword.py:321 NVDAObjects\UIA\wordDocument.py:608
+#: NVDAObjects\IAccessible\winword.py:321 NVDAObjects\UIA\wordDocument.py:602
 msgid "Reports the text of the comment where the system caret is located."
 msgstr "Системийн тэмдэгт тайлбарын текстийг мэдээлнэ."
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-#: NVDAObjects\IAccessible\winword.py:344 NVDAObjects\UIA\wordDocument.py:619
+#: NVDAObjects\IAccessible\winword.py:344 NVDAObjects\UIA\wordDocument.py:613
 msgid "No comments"
 msgstr "Сэтгэгдлүүд алга"
 
@@ -14302,19 +14297,19 @@ msgid "Comment: {comment} by {author} on {date}"
 msgstr "Сэтгэгдэл: {comment} болон {author} байна {date}"
 
 #. Translators: a message when navigating by sentence is unavailable in MS Word
-#: NVDAObjects\UIA\wordDocument.py:574
+#: NVDAObjects\UIA\wordDocument.py:568
 msgid "Navigating by sentence not supported in this document"
 msgstr "Энэ баримт бичигт өгүүлбэрүүдийн өөрчлөлт хийхийг дэмжихгүй байна"
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
-#: NVDAObjects\UIA\wordDocument.py:627
+#: NVDAObjects\UIA\wordDocument.py:621
 msgid "Command not supported in this type of document. The tables have their first row cells automatically set as column headers."
 msgstr "Энэ төрлийн бичвэрийг комманд дэмждэггүй. Хүснэгтүүд нь эхний эгнээний нүднүүдийг баганын толгой хэлбэрээр автоматаар тохируулсан байна."
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
-#: NVDAObjects\UIA\wordDocument.py:636
+#: NVDAObjects\UIA\wordDocument.py:630
 msgid "Command not supported in this type of document. The tables have their first column cells automatically set as row headers."
 msgstr "Энэ төрлийн бичвэрийг комманд дэмждэггүй. Хүснэгтүүдэд эхний баганын нүднүүд автоматаар мөрийн толгойгоор тохируулагдсан байна."
 
