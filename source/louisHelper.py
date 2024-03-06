@@ -13,6 +13,7 @@ from ctypes import (
 	c_void_p,
 )
 
+import brailleTables
 import config
 import globalVars
 from logHandler import log
@@ -30,44 +31,58 @@ LOUIS_TO_NVDA_LOG_LEVELS = {
 	louis.LOG_FATAL: log.ERROR,
 }
 
-_tablesDirs = []
-
 
 # Note: liblouis table resolvers return char**,
 # but POINTER(c_char_p) is unsupported as a ctypes callback return type.
+# C901 '_resolveTable' is too complex due to several statements for debugging purposes.
 @WINFUNCTYPE(c_void_p, c_char_p, c_char_p)
-def _resolveTable(tablesList: bytes, base: bytes) -> int | None:
+def _resolveTable(tablesList: bytes, base: bytes | None) -> int | None:  # noqa: C901
 	"""Resolve braille table file names to file paths.
 
 	Unlike the default table resolver from liblouis, this implementation does
 	not confer any special role to the directory of the first table of the list
-	and completely ignores the C{base} parameter, the liblouis data path and the
+	and completely ignores the the liblouis data path and the
 	C{LOUIS_TABLEPATH} environment variable.
-	Instead, it only considers a list of directories (passed from
-	L{brailleTables} by L{braille.BrailleHandler}) and search in those a match
-	with the relative paths found in C{tableList}.
-	If they point to an existing file, absolute paths in L{tablesList} are
-	returned as-is.
+	Instead, when base is None, it fetches the tables as registered in the brailleTables module,
+	If they point to an existing file, the value of the absolutePath property is returned.
+	When base is not None, the imported table is either looked up into the same directory as the base table,
+	or in the directory with the built-in tables.
 	"""
 	if _isDebug():
 		log.debug(f"liblouis called table resolver wit params: tablesList={tablesList}, base={base}")
 	tables = tablesList.decode(louis.fileSystemEncoding).split(",")
+	if base is not None:
+		base: str = base.decode(louis.fileSystemEncoding)
 	paths = []
 	for table in tables:
 		if _isDebug():
 			log.debug(f"Resolving {table!r}")
-		for dir_ in _tablesDirs:
-			# L{os.path.join} returns a path relative to the first absolute path.
-			# That is, if L{table} is absolute, it is returned unchanged.
-			path = os.path.join(dir_, table)
+		resolved = False
+		if base is None:
+			try:
+				registeredTable = brailleTables.getTable(table)
+				path = registeredTable.absolutePath
+			except LookupError:
+				if _isDebug():
+					log.debug(f"Table {table!r} not registered, falling back to built-in table lookup")
+				path = os.path.join(brailleTables.TABLES_DIR, table)
 			if os.path.isfile(path):
 				paths.append(path.encode(louis.fileSystemEncoding))
 				if _isDebug():
 					log.debug(f"Resolved {table!r} to {path!r}")
-				break
+				resolved = True
 		else:
+			for directory in {os.path.dirname(base), brailleTables.TABLES_DIR}:
+				path = os.path.join(directory, table)
+				if os.path.isfile(path):
+					paths.append(path.encode(louis.fileSystemEncoding))
+					if _isDebug():
+						log.debug(f"Resolved {table!r} to {path!r} for base {base!r}")
+					resolved = True
+					break
+		if not resolved:
 			if _isDebug():
-				log.error(f"Could not resolve table {table!r}. Search paths: {_tablesDirs}")
+				log.error(f"Could not resolve table {table!r}")
 			return None
 	if not paths:
 		return None
@@ -97,9 +112,7 @@ def _isDebug():
 	return config.conf["debugLog"]["louis"]
 
 
-def initialize(tablesDirs: list[str]):
-	if _isDebug():
-		log.debug(f"Tables directories: {tablesDirs}")
+def initialize():
 	# Register the liblouis logging callback.
 	louis.registerLogCallback(louis_log)
 	# Set the log level to debug.
@@ -107,8 +120,6 @@ def initialize(tablesDirs: list[str]):
 	# i.e. error messages will be logged at the error level.
 	louis.setLogLevel(louis.LOG_DEBUG)
 	# Register the liblouis table resolver
-	global _tablesDirs
-	_tablesDirs = tablesDirs
 	louis.liblouis.lou_registerTableResolver(_resolveTable)
 
 
@@ -117,8 +128,6 @@ def terminate():
 	louis.setLogLevel(louis.LOG_OFF)
 	# Unregister the table resolver.
 	louis.liblouis.lou_registerTableResolver(None)
-	# Clear the list of tables dirs.
-	_tablesDirs.clear()
 	# Unregister the liblouis logging callback.
 	louis.registerLogCallback(None)
 	# Free liblouis resources

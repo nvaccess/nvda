@@ -19,12 +19,14 @@ from logHandler import log
 
 TABLES_DIR = os.path.join(globalVars.appDir, "louis", "tables")
 """The directory in which liblouis braille tables are located."""
-tablesDirs = [TABLES_DIR]
-"""List of directories for braille tables lookup, including custom tables."""
 TABLE_SOURCE_BUILTIN = "builtin"
 """The name of the builtin table source"""
 TABLE_SOURCE_SCRATCHPAD = "scratchpad"
 """The name of the scratchpad table source"""
+_tablesDirs = collections.ChainMap({
+	TABLE_SOURCE_BUILTIN: TABLES_DIR
+})
+"""Chainmap of directories for braille tables lookup, including custom tables."""
 
 
 class BrailleTable(NamedTuple):
@@ -45,12 +47,21 @@ class BrailleTable(NamedTuple):
 	This defaults to 'builtin', but is set to the name of the add-on or "scratchpad, depending on its source.
 	"""
 
+	@property
+	def absolutePath(self) -> str:
+		try:
+			base = _tablesDirs[self.source]
+		except KeyError as e:
+			raise KeyError(f"{self.source} is unknown in _tablesDirs") from e
+		return os.path.join(base, self.fileName)
 
-#: Maps file names to L{BrailleTable} objects.
-#: The parent map will be loaded at import time with the builtin tables.
-#: The first map will be loaded when calling L{initialize} with the custom tables,
-#: and cleared when calling L{terminate}.
+
 _tables = collections.ChainMap()
+"""Maps file names to L{BrailleTable} objects.
+The parent map will be loaded at import time with the builtin tables.
+The first map will be loaded when calling L{initialize} with the custom tables,
+and cleared when calling L{terminate}.
+"""
 
 
 def addTable(
@@ -665,38 +676,38 @@ addTable("zu-za-g1.utb", _("Zulu grade 1"))
 # braille settings dialog.
 addTable("zu-za-g2.ctb", _("Zulu grade 2"), contracted=True)
 
-# Add a new first map for the custom tables - provided in the scratchpad directory
+# Add new first maps for the custom tables - provided in the scratchpad directory
 # and/or by addons.
 _tables = _tables.new_child()
+_tablesDirs = _tablesDirs.new_child()
 
 
 def initialize():
 	# The builtin tables were added at import time to the parent map.
 	# Now, add the custom tables to the first map.
-
 	import addonHandler
 	for addon in addonHandler.getRunningAddons():
-		dir_ = os.path.join(addon.path, "brailleTables")
-		if os.path.isdir(dir_):
-			tablesDirs.append(dir_)
+		directory = os.path.join(addon.path, "brailleTables")
+		if os.path.isdir(directory):
+			_tablesDirs[addon.name] = directory
 		try:
 			for fileName, tableConfig in addon.manifest.get("brailleTables", {}).items():
 				addTable(fileName, **tableConfig, source=addon.name)
 		except Exception:
-			log.exception(f"Error while applying custom braille tables config from addon \"{addon.name}\"")
+			log.exception(f"Error while applying custom braille tables config from addon {addon.name!r}")
 
 	# Load the custom tables from the scratchpad last so it takes precedence over add-ons
 	if (
 		not globalVars.appArgs.secure
 		and config.conf['development']['enableScratchpadDir']
 	):
-		dir_ = os.path.join(config.getScratchpadDir(), "brailleTables")
-		if os.path.isdir(dir_):
-			tablesDirs.append(dir_)
+		directory = os.path.join(config.getScratchpadDir(), "brailleTables")
+		if os.path.isdir(directory):
+			_tablesDirs[TABLE_SOURCE_SCRATCHPAD] = directory
 			configspec = {"brailleTables": addonHandler.AddonManifest.configspec["brailleTables"].dict()}
-			dirList = os.listdir(dir_)
+			dirList = os.listdir(directory)
 			for fileName in dirList:
-				path = os.path.join(dir_, fileName)
+				path = os.path.join(directory, fileName)
 				if os.path.isfile(path) and fileName.endswith(".ini"):
 					try:
 						with open(path, "rb") as file_:
@@ -704,12 +715,10 @@ def initialize():
 							for fileName, tableConfig in manifest["brailleTables"].items():
 								addTable(fileName, **tableConfig, source=TABLE_SOURCE_SCRATCHPAD)
 					except Exception:
-						log.exception(f"Error while applying custom braille tables config: {path}")
+						log.exception(f"Error while applying custom braille tables config: {path!r}")
 
 
 def terminate():
-	global tablesDirs, _tables
-	# Reset to the sole builtin tables directory
-	tablesDirs[:] = [TABLES_DIR]
 	# Clear all the custom tables, preserving only the builtin ones.
+	_tablesDirs.clear()
 	_tables.clear()
