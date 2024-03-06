@@ -370,7 +370,7 @@ class UpdateResultDialog(
 			message = _("No update available.")
 		elif canOfferPendingUpdate:
 			message = _(
-				# Translators: A message indicating that a new version of NVDA has been downloaded and is ready to be
+				# Translators: A message indicating that an update to NVDA has been downloaded and is ready to be
 				# applied.
 				"Update to NVDA version {version} has been downloaded and is ready to be applied."
 			).format(**updateInfo)
