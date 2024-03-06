@@ -2026,7 +2026,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	"""
 
 	def __init__(self):
-		louisHelper.initialize(brailleTables.tablesDirs)
+		louisHelper.initialize(list(reversed(brailleTables.tablesDirs)))
 		self._table: brailleTables.BrailleTable | None = None
 		self.display: Optional[BrailleDisplayDriver] = None
 		self._displaySize: int = 0
