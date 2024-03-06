@@ -36,7 +36,7 @@ _tablesDirs = []
 # Note: liblouis table resolvers return char**,
 # but POINTER(c_char_p) is unsupported as a ctypes callback return type.
 @WINFUNCTYPE(c_void_p, c_char_p, c_char_p)
-def _resolveTable(tablesList: str, base: str) -> int | None:
+def _resolveTable(tablesList: bytes, base: bytes) -> int | None:
 	"""Resolve braille table file names to file paths.
 
 	Unlike the default table resolver from liblouis, this implementation does
@@ -49,9 +49,13 @@ def _resolveTable(tablesList: str, base: str) -> int | None:
 	If they point to an existing file, absolute paths in L{tablesList} are
 	returned as-is.
 	"""
+	if _isDebug():
+		log.debug(f"liblouis called table resolver wit params: tablesList={tablesList}, base={base}")
 	tables = tablesList.decode(louis.fileSystemEncoding).split(",")
 	paths = []
 	for table in tables:
+		if _isDebug():
+			log.debug(f"Resolving {table!r}")
 		for dir_ in _tablesDirs:
 			# L{os.path.join} returns a path relative to the first absolute path.
 			# That is, if L{table} is absolute, it is returned unchanged.
@@ -59,18 +63,23 @@ def _resolveTable(tablesList: str, base: str) -> int | None:
 			if os.path.isfile(path):
 				paths.append(path.encode(louis.fileSystemEncoding))
 				if _isDebug():
-					log.debug(f"Resolved \"{table}\" to \"{path}\"")
+					log.debug(f"Resolved {table!r} to {path!r}")
 				break
 		else:
 			if _isDebug():
-				log.error(f"Could not resolve table \"{table}\". Search paths: {_tablesDirs}")
+				log.error(f"Could not resolve table {table!r}. Search paths: {_tablesDirs}")
 			return None
 	if not paths:
 		return None
+	if _isDebug():
+		log.debug(f"Storing paths in an array of {len(paths)} null terminated strings")
 	arr = (c_char_p * len(paths))(*paths)
 	# ctypes calls c_void_p on the returned value.
 	# Return the address of the array.
-	return addressof(arr)
+	address = addressof(arr)
+	if _isDebug():
+		log.debug(f"Returning pointer to list of paths: {address}")
+	return address
 
 
 @louis.LogCallback
@@ -102,13 +111,19 @@ def initialize(tablesDirs: list[str]):
 	_tablesDirs = tablesDirs
 	louis.liblouis.lou_registerTableResolver(_resolveTable)
 
+
 def terminate():
 	# Set the log level to off.
 	louis.setLogLevel(louis.LOG_OFF)
+	# Unregister the table resolver.
+	louis.liblouis.lou_registerTableResolver(None)
+	# Clear the list of tables dirs.
+	_tablesDirs.clear()
 	# Unregister the liblouis logging callback.
 	louis.registerLogCallback(None)
 	# Free liblouis resources
 	louis.liblouis.lou_free()
+
 
 def translate(tableList, inbuf, typeform=None, cursorPos=None, mode=0):
 	"""
