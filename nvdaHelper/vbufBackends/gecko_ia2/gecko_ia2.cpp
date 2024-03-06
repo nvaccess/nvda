@@ -506,15 +506,17 @@ void GeckoVBufBackend_t::fillVBufAriaError(
 	VBufStorage_controlFieldNode_t& nodeBeingFilled,
 	const std::wstring& nodeBeingFilledRole
 ){
-	LOG_INFO(L"Getting ARIA error details");
+	
+	// Elements with `aria-errormessage` set.
 	auto idsOfErrorTargets = getAllRelationIdsForRelationType(IA2_RELATION_ERROR, pacc);
 	if(idsOfErrorTargets.size() > 0) {
 		nodeBeingFilled.addAttribute(L"hasError", L"true");
 	}
 
+	// Elements refered to by `aria-errormessage`.
 	auto idsOfErrorFors = getAllRelationIdsForRelationType(IA2_RELATION_ERROR_FOR, pacc);
 	if(idsOfErrorFors.size() > 0) {
-		nodeBeingFilled.addAttribute(L"isError", L"true");
+		// nodeBeingFilled.addAttribute(L"isError", L"true");
 	}
 
 
