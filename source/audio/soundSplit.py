@@ -78,7 +78,11 @@ activeCallback: AudioSessionNotification | None = None
 def initialize() -> None:
 	if nvwave.usingWasapiWavePlayer():
 		global audioSessionManager
-		audioSessionManager = AudioUtilities.GetAudioSessionManager()
+		try:
+			audioSessionManager = AudioUtilities.GetAudioSessionManager()
+		except _ctypes.COMError as e:
+			log.error("Could not initialize audio session manager! ", e)
+			return
 		state = SoundSplitState(config.conf["audio"]["soundSplitState"])
 		setSoundSplitState(state)
 	else:
