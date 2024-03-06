@@ -1144,6 +1144,14 @@ class UIAHandler(COMObject):
 			# Using IAccessible for NetUIHWND controls causes focus changes not to be reported
 			# when the ribbon is collapsed.
 			# Testing shows that these controls emits proper events but they are ignored by NVDA.
+			# this is not necessarily an office app, or an app with version information, for example geekbench 6.
+			try:
+				isOfficeApp = appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
+				isOffice2013OrOlder = int(appModule.productVersion.split(".")[0]) < 16
+			except Exception:
+				log.debugWarning("Unable to parse productName or productVersion, version information likely unavailable", exc_info=True)
+				isOfficeApp = False
+				isOffice2013OrOlder = False
 			isOfficeApp = appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
 			isOffice2013OrOlder = int(appModule.productVersion.split(".")[0]) < 16
 			if isOfficeApp and isOffice2013OrOlder:
