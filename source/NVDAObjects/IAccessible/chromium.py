@@ -66,9 +66,10 @@ class ChromeVBufTextInfo(GeckoVBufTextInfo):
 			# In Chromium, the checkable state is exposed erroneously on toggle buttons.
 			attrs['states'].discard(controlTypes.State.CHECKABLE)
 
-		if attrs['role'] == controlTypes.Role.GROUPING and attrs.get('IAccessible2::attribute_tag', "").lower() == "figure":
+		if (
+			attrs['role'] == controlTypes.Role.GROUPING
+			and attrs.get('IAccessible2::attribute_tag', "").lower() == "figure"):
 			# Chromium doesn't expose the `<figure>` element as a figure.
-			log.debug(attrs['role'])
 			attrs['role'] = controlTypes.Role.FIGURE
 		return attrs
 
