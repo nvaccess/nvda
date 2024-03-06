@@ -2719,7 +2719,7 @@ class AudioPanel(SettingsPanel):
 		self.soundVolSlider.SetValue(config.conf["audio"]["soundVolume"])
 
 		# Translators: This is a label for the sound split combo box in the Audio Settings dialog.
-		soundSplitLabelText = _("Sound split mode:")
+		soundSplitLabelText = _("&Sound split mode:")
 		self.soundSplitComboBox = sHelper.addLabeledControl(
 			soundSplitLabelText,
 			wx.Choice,
