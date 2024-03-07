@@ -903,12 +903,12 @@ Custom tables must be placed in the brailleTables directory of an add-on or subd
 These tables can either replace standard tables shipped with NVDA or be completely new ones.
 Tables are identified by their file name, which is a unique reference across all the different directories in which they are provided.
 In particular, providing a custom table with the same file name as a standard table does replace it.
-Table included by other tables are also subject to being replaced in this way.
+Tables included by other tables are also subject to being replaced in this way.
 
-Please refer to the [liblouis documentation http://liblouis.org/documentation/] for detailed information regarding the
+Please refer to the [liblouis documentation https://liblouis.io/documentation/] for detailed information regarding the
 braille translation tables format.
 
-When adding a new table, a few information must be provided such as its display name in the Preferences dialog, whether it supports input and/or output and whether it is for contracted braille.
+When adding a new table, some information must be provided such as its display name in the Preferences dialog, whether it supports input and/or output and whether it is for contracted braille.
 
 When an add-on ships with new tables, this information is included in its manifest in the optional brailleTables section.
 For example:
@@ -929,7 +929,7 @@ input = True
 ```
 
 In the above example, fr-bfu-tabmod-comp8.utb is a new table shipped in the brailleTables directory of the add-on, while no-no-generic.ctb is a standard table shipped with NVDA but otherwise unavailable for selection in the Preferences dialog.
-The same add-on could also contain a custom table replacing standard one with the same file name.
+The same add-on could also contain a custom table replacing the standard one with the same file name.
 In this case, no additional information is required in the manifest.
 
 Custom tables can also be placed in the brailleTables subdirectory of the scratchpad directory.

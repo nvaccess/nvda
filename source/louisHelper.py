@@ -41,11 +41,11 @@ def _resolveTable(tablesList: bytes, base: bytes | None) -> int | None:  # noqa:
 
 	Unlike the default table resolver from liblouis, this implementation does
 	not confer any special role to the directory of the first table of the list
-	and completely ignores the the liblouis data path and the
+	and completely ignores the liblouis data path and the
 	C{LOUIS_TABLEPATH} environment variable.
 	Instead, when base is None, it fetches the tables as registered in the brailleTables module,
 	If they point to an existing file, the value of the absolutePath property is returned.
-	When base is not None, the imported table is either looked up into the same directory as the base table,
+	When base is not None, the imported table is either looked up in the same directory as the base table,
 	or in the directory with the built-in tables.
 	"""
 	if _isDebug():
@@ -83,8 +83,7 @@ def _resolveTable(tablesList: bytes, base: bytes | None) -> int | None:  # noqa:
 					resolved = True
 					break
 		if not resolved:
-			if _isDebug():
-				log.error(f"Could not resolve table {table!r}")
+			log.error(f"Could not resolve table {table!r}")
 			return None
 	if _isDebug():
 		log.debug(f"Storing paths in an array of {len(paths)} null terminated strings")
