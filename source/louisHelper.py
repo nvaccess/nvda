@@ -91,7 +91,9 @@ def _resolveTable(tablesList: bytes, base: bytes | None) -> int | None:  # noqa:
 		return None
 	if _isDebug():
 		log.debug(f"Storing paths in an array of {len(paths)} null terminated strings")
-	arr = (c_char_p * len(paths))(*paths)
+	# Keeping a reference to the last returned value to ensure the returned
+	# value is not GC'ed before it is copied on liblouis' side.
+	_resolveTable._lastRes = arr = (c_char_p * len(paths))(*paths)
 	# ctypes calls c_void_p on the returned value.
 	# Return the address of the array.
 	address = addressof(arr)
