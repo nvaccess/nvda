@@ -51,14 +51,13 @@ def _resolveTable(tablesList: bytes, base: bytes | None) -> int | None:  # noqa:
 	if _isDebug():
 		log.debug(f"liblouis called table resolver wit params: tablesList={tablesList}, base={base}")
 	tables = tablesList.decode(louis.fileSystemEncoding).split(",")
-	if base is not None:
-		base: str = base.decode(louis.fileSystemEncoding)
+	baseTable: str | None = base.decode(louis.fileSystemEncoding) if base is not None else None
 	paths = []
 	for table in tables:
 		if _isDebug():
 			log.debug(f"Resolving {table!r}")
 		resolved = False
-		if base is None:
+		if baseTable is None:
 			try:
 				registeredTable = brailleTables.getTable(table)
 				path = registeredTable.absolutePath
@@ -72,7 +71,7 @@ def _resolveTable(tablesList: bytes, base: bytes | None) -> int | None:  # noqa:
 					log.debug(f"Resolved {table!r} to {path!r}")
 				resolved = True
 		else:
-			directoriesToSearch = [os.path.dirname(base)]
+			directoriesToSearch = [os.path.dirname(baseTable)]
 			if brailleTables.TABLES_DIR not in directoriesToSearch:
 				directoriesToSearch.append(brailleTables.TABLES_DIR)
 			for directory in directoriesToSearch:
@@ -80,15 +79,13 @@ def _resolveTable(tablesList: bytes, base: bytes | None) -> int | None:  # noqa:
 				if os.path.isfile(path):
 					paths.append(path.encode(louis.fileSystemEncoding))
 					if _isDebug():
-						log.debug(f"Resolved {table!r} to {path!r} for base {base!r}")
+						log.debug(f"Resolved {table!r} to {path!r} for base {baseTable!r}")
 					resolved = True
 					break
 		if not resolved:
 			if _isDebug():
 				log.error(f"Could not resolve table {table!r}")
 			return None
-	if not paths:
-		return None
 	if _isDebug():
 		log.debug(f"Storing paths in an array of {len(paths)} null terminated strings")
 	# Keeping a reference to the last returned value to ensure the returned
