@@ -3413,6 +3413,7 @@ class AdvancedPanelControls(
 		)
 		self.textParagraphRegexEdit.SetValue(config.conf["virtualBuffers"]["textParagraphRegex"])
 		self.bindHelpEvent("TextParagraphRegexEdit", self.textParagraphRegexEdit)
+		self.textParagraphRegexEdit.defaultValue = self._getDefaultValue(["virtualBuffers", "textParagraphRegex"])
 
 		self.Layout()
 
@@ -3467,6 +3468,7 @@ class AdvancedPanelControls(
 			and self.wasapiComboBox.isValueConfigSpecDefault()
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and self.playErrorSoundCombo.GetSelection() == self.playErrorSoundCombo.defaultValue
+			and self.textParagraphRegexEdit.GetValue() == self.textParagraphRegexEdit.defaultValue
 			and True  # reduce noise in diff when the list is extended.
 		)
 
@@ -3494,6 +3496,7 @@ class AdvancedPanelControls(
 		self.wasapiComboBox.resetToConfigSpecDefault()
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self.playErrorSoundCombo.SetSelection(self.playErrorSoundCombo.defaultValue)
+		self.textParagraphRegexEdit.SetValue(self.textParagraphRegexEdit.defaultValue)
 		self._defaultsRestored = True
 
 	def onSave(self):
