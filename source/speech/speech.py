@@ -28,7 +28,8 @@ from . import manager
 from .extensions import (
 	filter_speechSequence,
 	post_filter_speechSequence,
-	pre_filter_speechSequence, speechCanceled
+	pre_filter_speechSequence,
+	speechCanceled,
 )
 from .commands import (
 	# Commands that are used in this file.
