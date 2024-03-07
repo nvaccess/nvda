@@ -1033,6 +1033,54 @@ qn(
 	prevError=_("no previous figure")
 )
 qn(
+	"menuItem",
+	key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next menu item"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next menu item"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous menu item"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous menu item")
+)
+qn(
+	"toggleButton",
+	key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next toggle button"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next toggle button"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous toggle button"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous toggle button")
+)
+qn(
+	"progressBar",
+	key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next progress bar"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next progress bar"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous progress bar"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous progress bar")
+)
+qn(
+	"math",
+	key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next math formula"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next math formula"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous math formula"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous math formula")
+)
+qn(
 	"textParagraph",
 	key="p",
 	# Translators: Input help message for a quick navigation command in browse mode.
