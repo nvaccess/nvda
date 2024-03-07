@@ -780,6 +780,8 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 	_isIdleCheckPending: bool = False
 	#: Use the default device, this is the configSpec default value.
 	DEFAULT_DEVICE_KEY = "default"
+	#: The silence output device, None if not initialized.
+	_silenceDevice: typing.Optional[str] = None
 
 	def __init__(
 			self,
@@ -833,6 +835,16 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		self.open()
 		self._lastActiveTime: typing.Optional[float] = None
 		self._isPaused: bool = False
+		if (
+			config.conf["audio"]["audioAwakeTime"] > 0
+			and WasapiWavePlayer._silenceDevice != outputDevice
+		):
+			# The output device has changed. (Re)initialize silence.
+			if self._silenceDevice is not None:
+				NVDAHelper.localLib.wasSilence_terminate()
+			if config.conf["audio"]["audioAwakeTime"] > 0:
+				NVDAHelper.localLib.wasSilence_init(outputDevice)
+				WasapiWavePlayer._silenceDevice = outputDevice
 
 	@wasPlay_callback
 	def _callback(cppPlayer, feedId):
@@ -913,6 +925,11 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			self._doneCallbacks[feedId.value] = onDone
 		self._lastActiveTime = time.time()
 		self._scheduleIdleCheck()
+		if config.conf["audio"]["audioAwakeTime"] > 0:
+			NVDAHelper.localLib.wasSilence_playFor(
+				1000 * config.conf["audio"]["audioAwakeTime"],
+				c_float(config.conf["audio"]["whiteNoiseVolume"] / 100.0),
+			)
 
 	def sync(self):
 		"""Synchronise with playback.
@@ -1064,6 +1081,7 @@ def initialize():
 		NVDAHelper.localLib.wasPlay_pause,
 		NVDAHelper.localLib.wasPlay_resume,
 		NVDAHelper.localLib.wasPlay_setChannelVolume,
+		NVDAHelper.localLib.wasSilence_init,
 	):
 		func.restype = HRESULT
 		func.errcheck = _wasPlay_errcheck
@@ -1072,6 +1090,8 @@ def initialize():
 
 
 def terminate() -> None:
+	if WasapiWavePlayer._silenceDevice is not None:
+		NVDAHelper.localLib.wasSilence_terminate()
 	getOnErrorSoundRequested().unregister(playErrorSound)
 
 

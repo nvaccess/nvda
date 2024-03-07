@@ -1,8 +1,15 @@
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2024 NV Access Limited
+
+from typing import Any
+
+from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 import baseObject
 import config
-import synthDriverHandler
 import queueHandler
-from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
+import synthDriverHandler
 
 
 class SynthSetting(baseObject.AutoPropertyObject):
@@ -13,14 +20,39 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		self.min = setting.minVal if isinstance(setting, NumericDriverSetting) else min
 		self.max = setting.maxVal if isinstance(setting, NumericDriverSetting) else max
 		self.step = setting.normalStep if isinstance(setting, NumericDriverSetting) else 1
+		self.largeStep = self.setting.largeStep if isinstance(setting, NumericDriverSetting) else 10
+
+	def first(self) -> str:
+		"""Sets the value of the current synth setting to the first value."""
+		val = self.min
+		self.value = val
+		return self._getReportValue(val)
+
+	def last(self) -> str:
+		"""Sets the value of the current synth setting to the last value."""
+		val = self.max
+		self.value = val
+		return self._getReportValue(val)
 
 	def increase(self):
 		val = min(self.max,self.value+self.step)
 		self.value = val
 		return self._getReportValue(val)
 
+	def increaseLarge(self) -> str:
+		"""Increases the value of the current synth setting by a larger step."""
+		val = min(self.max, self.value + self.largeStep * 2)
+		self.value = val
+		return self._getReportValue(val)
+
 	def decrease(self):
 		val = max(self.min,self.value-self.step)
+		self.value = val
+		return self._getReportValue(val)
+
+	def decreaseLarge(self) -> str:
+		"""Decreases the value of the current synth setting by a larger step."""
+		val = max(self.min, self.value - self.largeStep * 2)
 		self.value = val
 		return self._getReportValue(val)
 
@@ -85,11 +117,14 @@ class BooleanSynthSetting(SynthSetting):
 	def _getReportValue(self, val):
 		return _("on") if val else _("off")
 
+
 class SynthSettingsRing(baseObject.AutoPropertyObject):
 	"""
-	A synth settings ring which enables the user to change to the next and previous settings and ajust the selected one
-	It was written to facilitate the implementation of a way to change the settings resembling the window-eyes way.
+	A synth settings ring which enables the user to change to the next and previous settings,
+	as well as adjust the selected one.
 	"""
+
+	settings: list[SynthSetting] | None
 
 	def __init__(self,synth):
 		try:
@@ -107,9 +142,9 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 	def _get_currentSettingValue(self):
 		return self.settings[self._current].reportValue
 
-	def _set_currentSettingValue(self,value):
+	def _set_currentSettingValue(self, value: Any):
 		if self._current is not None:
-			self.settings[_current].value = val
+			self.settings[self._current].value = value
 
 	def next(self):
 		""" changes to the next setting and returns its name """
@@ -124,16 +159,40 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			return self.currentSettingName
 		return None
 
+	def first(self) -> str | None:
+		""" set the current setting to the first value """
+		if self._current is not None:
+			return self.settings[self._current].first()
+		return None
+
+	def last(self) -> str | None:
+		""" set the current setting to the last value """
+		if self._current is not None:
+			return self.settings[self._current].last()
+		return None
+
 	def increase(self):
 		""" increases the currentSetting and returns its new value """
 		if self._current is not None:
 			return self.settings[self._current].increase()
 		return None
 
+	def increaseLarge(self) -> str | None:
+		""" increases the currentSetting in a larger step, (20 items, 20%) and returns its new value """
+		if self._current is not None:
+			return self.settings[self._current].increaseLarge()
+		return None
+
 	def decrease(self):
 		""" decreases the currentSetting and returns its new value """
 		if self._current is not None:
 			return self.settings[self._current].decrease()
+		return None
+
+	def decreaseLarge(self) -> str | None:
+		""" Decreases the currentSetting in a larger step, (20 items, 20%) and returns its new value """
+		if self._current is not None:
+			return self.settings[self._current].decreaseLarge()
 		return None
 
 	def updateSupportedSettings(self,synth):
@@ -145,7 +204,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			if self._current is not None and hasattr(self,'settings')
 			else None
 		)
-		list = []
+		list: list[SynthSetting] = []
 		for s in synth.supportedSettings:
 			if not s.availableInSettingsRing: continue
 			if prevID == s.id: #restore the last setting

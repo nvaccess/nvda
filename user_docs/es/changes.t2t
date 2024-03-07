@@ -76,6 +76,7 @@ Esta opción ahora anuncia información relevante adicional acerca de un objeto 
 Se recomienda mucho a los usuarios de Poedit 1 que actualicen a Poedit 3 si quieren contar con la accesibilidad mejorada en Poedit, como los atajos para leer las notas y los comentarios para el traductor. (#15313, #7303, @LeonarddeR)
 - El visualizador Braille y el visualizador de voz ahora se han desactivado en modo seguro. (#15680)
 - Durante la navegación de objetos, los objetos deshabilitados (no disponibles) ya no se ignorarán. (#15477, @CyrilleB79)
+- Añadido un índice al documento de órdenes clave. (#16106)
 -
 
 == Corrección de Fallos ==
@@ -192,7 +193,9 @@ La configuración de ``numCells`` todavía está admitida para pantallas braille
 - Corregido un fallo donde al eliminar ficheros git-tracked durante ``scons -c`` resultaba en falta de interfaces UIA COM al recompilar. (#7070, #10833, @hwf1324)
 - Corregido un fallo donde algunos cambios de código no se detectaban al compilar ``dist``, lo que impedía que se activara una nueva compilación.
 Ahora ``dist`` siempre recompila. (#13372, @hwf1324)
+- Un ``gui.nvdaControls.MessageDialog`` con un tipo predeterminado de estándar, ya no lanza una excepción de conversión none porque no se haya asignado ningún sonido. (#16223, @XLTechie)
 -
+
 
 === Cambios que Rompen la API ===
 Estos son los cambios que rompen la API.

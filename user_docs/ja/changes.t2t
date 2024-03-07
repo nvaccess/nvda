@@ -3,6 +3,331 @@ NVDA最新情報
 
 %!includeconf: ../changes.t2tconf
 
+= 2024.1 =
+
+新しい「オンデマンド」読み上げモードが追加されました。
+読み上げモードがオンデマンドの場合、テキストカーソルを移動するときなどにNVDAは自動的に読み上げませんが、何かの報告を目的とするコマンド（例えばウィンドウのタイトルの報告）を実行すると読み上げを行います。
+NVDAの設定の音声カテゴリでは、不要な読み上げモードを「読み上げモードの切り替え」コマンド ``NVDA+s`` から除外することができるようになりました。
+
+Mozilla FirefoxのNVDAブラウズモードで新しいネイティブ選択モード（``NVDA+shift+f10``で切り替え）が利用できます。
+有効にすると、ブラウズモードでテキストを選択すると、Firefox自身でテキストが選択されます。
+``ctrl+c``でテキストをコピーすると、Firefox自身でコピーを行うため、NVDAのプレーンテキスト表現ではなく、リッチコンテンツがコピーされます。
+
+アドオンストアは、複数のアドオンを選択してインストールやアドオンの有効化などのアクションをまとめて実行できます。
+選択したアドオンのレビューページを開く新しいアクションが追加されました。
+
+「音声エンジンの選択」ダイアログから、オーディオ出力デバイスとオーディオのダッキングのオプションが削除されました。
+これらは``NVDA+ctrl+u``で開くことができる設定ダイアログのオーディオカテゴリに移動しました。
+
+eSpeak-NG、LibLouis点訳エンジン、およびUnicode CLDRを更新しました。
+新しいタイ語、フィリピン語、ルーマニア語の点字テーブルが利用可能になりました。
+
+アドオンストア、点字、Libre Office、Microsoft Office、およびオーディオに関する多くのバグ修正を行いました。
+
+== 重要な注意事項 == 
+- このリリースでは、既存のアドオンとの互換性が失われています。
+- Windows 7およびWindows 8のサポートは終了しました。
+サポートされる最小のWindowsバージョンはWindows 8.1です。
+-
+
+== 新機能 ==
+- アドオンストア:
+  - アドオンストアは、複数のアドオンを選択してインストールやアドオンの有効化などのアクションをまとめて実行できます。(#15350, #15623, @CyrilleB79)
+  - 選択したアドオンのレビューを読んだり報告したりするページを開く新しいアクションが追加されました。(#15576, @nvdaes)
+  -
+- Bluetooth Low Energy HID 点字ディスプレイに対応しました。(#15470)
+- Mozilla FirefoxのNVDAブラウズモードで新しいネイティブ選択モード（``NVDA+shift+f10``で切り替え）が利用できます。
+有効にすると、ブラウズモードでテキストを選択したときに、Firefox自身でテキストが選択されます。
+``ctrl+c``でテキストをコピーすると、Firefox自身でコピーを行うため、NVDAのプレーンテキスト表現ではなく、リッチコンテンツがコピーされます。(#15830)
+- NVDAのブラウズモードが有効な状態でMicrosoft Word内のテキストをコピーするときに、書式設定もコピーされます。(#16129)
+- 新しい「オンデマンド」読み上げモードが追加されました。
+読み上げモードがオンデマンドの場合、テキストカーソルを移動するときなどにNVDAは自動的に読み上げませんが、何かの報告を目的とするコマンド（例えばウィンドウのタイトルの報告）を実行すると読み上げを行います。(#481, @CyrilleB79)
+- NVDAの設定の音声カテゴリでは、不要な読み上げモードを「読み上げモードの切り替え」コマンド（``NVDA+s``）から除外することができるようになりました。(#15806, @lukaszgo1)
+  - 現在NoBeepsSpeechModeアドオンを使用している場合は、アンインストールをおすすめします。「読み上げモード切り替えコマンドで使用できるモード」の設定で「ビープ音」と「オンデマンド」モードを無効にしてください。
+  -
+-
+
+== 変更点 ==
+- NVDAはWindows 7およびWindows 8への対応を終了しました。
+サポートされている最小のWindowsバージョンはWindows 8.1です。(#15544)
+- コンポーネントの更新:
+  - LibLouis点訳エンジンが[3.28.0 https://github.com/liblouis/liblouis/releases/tag/v3.28.0]に更新されました。(#15435, #15876, @codeofdusk)
+    - 新しいタイ語、ルーマニア語、フィリピン語の点字テーブルが追加されました。
+    -
+  - eSpeak NGが1.52-devコミット``530bf0abf``に更新されました。(#15036)
+  - CLDRの絵文字と記号の説明がバージョン44.0に更新されました。(#15712, @OzancanKaratas)
+  - Java Access Bridgeが17.0.9+8Zulu (17.46.19)に更新されました。(#15744)
+  -
+- キーコマンド:
+  - 「選択中テキストの読み上げ」、「クリップボードテキストの報告」、「現在のフォーカスの報告」の各コマンドは、すばやく続けて2回または3回押すと、それぞれ、1文字ずつの読み上げ、文字の説明の読み上げを行います。(#15449, @CyrilleB79)
+  - スクリーンカーテンを切り替えるコマンドに既定のジェスチャーが設定されました: ``NVDA+ctrl+esc``。(#10560, @CyrilleB79)
+  - 「選択中テキストの読み上げ」をすばやく4回押すと、ウィンドウを開いて情報を表示します。(#15858, @Emil-18)
+  - 
+- Microsoft Office:
+  - Excelのセルの書式情報を報告する設定において、罫線や背景は、それらの書式が設定されている場合にのみ報告されます。(#15560, @CyrilleB79)
+  - 最近のMicrosoft Office 365メニューなどにおいて、NVDAはラベルのないグループを報告しません。(#15638)
+  -
+- 「音声エンジンの選択」ダイアログから、オーディオ出力デバイスとオーディオのダッキングのオプションを削除しました。
+これらは``NVDA+ctrl+u``で開くことができる設定ダイアログのオーディオカテゴリに移動しました。(#15512, @codeofdusk)
+- NVDAのマウス設定カテゴリの「マウスカーソル位置の要素の種類の報告」オプションは、「マウスカーソル位置のオブジェクトの報告」に名前が変更されました。
+このオプションは、マウスカーソルがオブジェクトに差し掛かるときに、状態（チェック/押されています）やテーブル内のセル座標など、オブジェクトに関する追加の情報を報告するようになりました。 (#15420, @LeonarddeR)
+- ヘルプメニューに「ヘルプ、トレーニングとサポート」と「NV Accessショップ」の項目が追加されました。 (#14631)
+- NVDAの[Poedit https://poedit.net]対応が、Poeditバージョン3以降に向けて全面的に見直されました。
+Poeditで新たに追加されたアクセシビリティ機能（翻訳者ノートやコメントを読むためのショートカットなど）を利用したい場合は、Poedit 3への移行をおすすめします。 (#15313, #7303, @LeonarddeR)
+- 点字ビューアーと音声ビューアーは、セキュアモードでは無効になりました。 (#15680)
+- オブジェクトナビゲーションにおいて、無効（利用不可）なオブジェクトが無視されなくなりました。 (#15477, @CyrilleB79)
+- コマンド一覧表に目次を追加しました。 (#16106)
+-
+
+== バグ修正 ==
+- アドオンストア:
+  - フォーカス位置のアドオンの状態が変化した場合（例: 「ダウンロード中」から「ダウンロード済み」へ）、更新された項目が正しく報告されるようになりました。 (#15859, @LeonarddeR)
+  - アドオンのインストール時のメッセージに再起動のダイアログが重なっていた問題を修正しました。 (#15613, @lukaszgo1)
+  - 互換性のないアドオンを再インストールする際に、強制的に無効化されていた問題を修正しました。 (#15584, @lukaszgo1)
+  - 無効化されたアドオンや互換性のないアドオンも更新できるようになりました。 (#15568, #15029)
+  - アドオンのダウンロードに失敗した場合、NVDAが復旧してエラーを表示するようになりました。 (#15796)
+  - アドオンストアを開いて閉じた後、NVDAが再起動に失敗していた問題を修正しました。 (#16019, @lukaszgo1)
+  -
+- オーディオ:
+  - 複数の音声が素早く連続して再生される際、NVDAが一時的にフリーズすることがなくなりました。 (#15311, #15757, @jcsteh)
+  - オーディオ出力デバイスが既定のデバイス以外に設定されていて、そのデバイスが利用不可から再び利用可能になった場合、NVDAは既定のデバイスの使用を試みるのではなく、設定されたデバイスに戻るようになりました。 (#15759, @jcsteh)
+  - 出力デバイスの設定が変更されたり、他のアプリがデバイスの排他制御を解放したりした場合、NVDAはオーディオ出力を再開するようになりました。 (#15758, #15775, @jcsteh)
+  -
+- 点字:
+  - 複数行の点字ディスプレイを使用するとBRLTTYドライバがクラッシュした問題を修正し、一式の連続したディスプレイとして扱われるようになりました。 (#15386)
+  - 有用なテキストを含むオブジェクトをより多く検出し、テキスト内容を点字で表示するようになりました。 (#15605)
+  - 縮約点字の入力が正しく機能しなかった問題を修正しました。 (#15773, @aaclause)
+  - ナビゲーターオブジェクトをテーブルセル間で移動する際に、点字が更新されないことがある問題に対応しました。 (#15755, @Emil-18)
+  - 「現在のフォーカスの報告」「現在のナビゲーターオブジェクトの報告」「選択中テキストの読み上げ」で点字ディスプレイに出力されるようになりました。 (#15844, @Emil-18)
+  - Albatross点字ディスプレイドライバーが、Esp32マイコンをAlbatrossディスプレイとして誤検出していた問題を修正しました。 (#15671)
+  -
+- LibreOffice:
+  - 空白（スペースやタブなど）に続く単語を``ctrl+backspace`` キーボードショートカットを使用して削除したときに、適切に報告されるようになりました。 (#15436, @michaelweghorn)
+  - ``NVDA+end`` によるステータスバーの報告が、LibreOfficeバージョン24.2以降のダイアログでも機能するようになりました。 (#15591, @michaelweghorn)
+  - LibreOfficeバージョン24.2以降で、すべてのテキスト属性がサポートされるようになりました。
+  これにより、Writerで行を報告する際のスペルミスの報告が可能になりました。 (#15648, @michaelweghorn)
+  - 見出しレベルの報告が、LibreOfficeバージョン24.2以降で可能になりました。 (#15881, @michaelweghorn)
+  -
+- Microsoft Office:
+  - UIAを無効にしたExcelで、``ctrl+y``、``ctrl+z``、または``alt+backspace``が押されたときに点字出力が更新され、アクティブなセルの内容が読み上げられます。 (#15547)
+  - UIAを無効にしたWordでは、``ctrl+v``、``ctrl+x``、``ctrl+y``、``ctrl+z``、``alt+backspace``、``backspace``、または``ctrl+backspace``が押されたときに点字出力が更新されます。
+  UIAを有効にした状態でテキストを入力し、点字がレビューに連動し、レビューがテキストカーソルに追従する場合も点字出力が更新されます。 (#3276)
+  - Wordでは、ネイティブのWordコマンド``alt+home``、``alt+end``、``alt+pageUp``、``alt+pageDown``を使用してテーブルナビゲーションを行う際に、移動先のセルが正しく報告されるようになりました。 (#15805, @CyrilleB79)
+  -
+- オブジェクトのショートカットキーの報告が改善されました。 (#10807, #15816, @CyrilleB79)
+- SAPI4音声において、音声に埋め込まれた音量、速度、ピッチの変更を適切にサポートするようになりました。 (#15271, @LeonarddeR)
+- Java Access Bridgeを使用するアプリ、複数行の状態が正しく報告されるようになりました。 (#14609)
+- NVDAは、Windows 10および11のダイアログの内容をより多く報告するようになりました。 (#15729, @josephsl)
+- UIオートメーションを使用したときにMicrosoft Edgeで新しく読み込まれたページを読み上げなかった問題を修正しました。 (#15736)
+- 「すべて読み上げ」やテキストのスペル読みのコマンドにおいて、文や文字間の一時停止が徐々に短くなっていた問題を修正しました。 (#15739, @jcsteh)
+- 大量のテキストを読み上げる際にNVDAがフリーズすることがなくなりました。 (#15752, @jcsteh)
+- UIオートメーションを使用してMicrosoft Edgeを使う際に、NVDAはブラウズモードでより多くのコントロールをアクティブ化できるようになりました。 (#14612)
+- 設定ファイルが破損した場合にNVDAが起動に失敗する問題を修正しました。設定を既定の値に復元します。 (#15690, @CyrilleB79)
+- Windows FormsアプリのSystem List view（``SysListView32``）コントロールのサポートが修正されました。 (#15283, @LeonarddeR)
+- NVDAのPythonコンソールの履歴が上書き可能であった問題を修正しました。 (#15792, @CyrilleB79)
+- 多数のUIオートメーションイベントが発生した場合、例えば大量のテキストをターミナルに出力するとき、またはWhatsAppメッセンジャーでボイスメッセージを聞いているときなどにおけるNVDAの性能を改善しました。 (#14888, #15169)
+  - この新しい挙動は、NVDAの高度な設定「新しいイベント処理を使用」で無効にできます。
+  -
+- NVDAがWindows Defender Application Guard (WDAG) 内で実行されているアプリでフォーカスを追跡できなかった問題を修正しました。 (#15164)
+- スピーチビューアーでマウスカーソルを動かしても、読み上げ内容のテキストが更新されなくなりました。 (#15952, @hwf1324)
+- FirefoxやChromeでコンボボックスを``esc``または``alt+上矢印``で閉じたときにNVDAがブラウズモードに戻らなかった問題を修正しました。 (#15653)
+- iTunesのコンボボックスで上下に移動したときに不適切にブラウズモードに戻っていた問題を修正しました。 (#15653)
+-
+
+== 開発者向けの変更 ==
+- NVDAのAPIの非推奨および削除プロセスに関する情報は、[開発者ガイド https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API]を参照してください。
+
+- 注意: このリリースでは、既存のアドオンとの互換性が失われています。
+アドオンは再テストとマニフェストの更新を行う必要があります。
+- NVDA のビルドには Visual Studio 2022 が必要です。
+[NVDA ドキュメント https://github.com/nvaccess/nvda/blob/release-2024.1/projectDocs/dev/createDevEnvironment.md] で Visual Studio コンポーネントの要件を確認してください。 (#14313)
+- 拡張ポイントの追加:
+  - ``treeInterceptorHandler.post_browseModeStateChange``. (#14969, @nvdaes)
+  - ``speech.speechCanceled``. (#15700, @LeonarddeR)
+    - ``_onErrorSoundRequested``（``logHandler.getOnErrorSoundRequested()``を呼び出して取得する必要があります） (#15691, @CyrilleB79)
+  -
+- アドオンの翻訳で複数形を使用できるようになりました。 (#15661, @beqabeqa473)
+- Python [安定ABI https://docs.python.org/3.11/c-api/stable.html]を利用する外部ライブラリを含むアドオンのために、バイナリ配布がpython3.dllを含むようになりました。 (#15674, @mzanm)
+- ``BrailleDisplayDriver``基底クラスに、複数行の点字ディスプレイに関する情報を提供する``numRows``および``numCols``プロパティが追加されました。
+複数行でない点字ディスプレイのために``numCells``の設定は引き続きサポートされます。複数行の点字ディスプレイの場合は``numCells``がセルの総数を返します。 (#15386)
+- BrlAPIをBRLTTYのバージョン0.8.5に更新し、対応するpythonモジュールをPython 3.11互換のビルドに更新しました。 (#15652, @LeonarddeR)
+- ``speech.speakSsml``関数を追加しました。これにより、[SSML https://www.w3.org/TR/speech-synthesis11/]を使用してNVDAの音声シーケンスを記述できるようになります。 (#15699, @LeonarddeR)
+  - 現在サポートされているタグは以下の通りで、これらは適切なNVDAの音声コマンドに変換されます：
+    - ``Prosody``で``pitch``、``rate``、``volume``の属性値を比によって制御する（例：``200%``）
+    - ``say-as``で``interpret``属性を``characters``に設定する
+    - ``voice``で``xml:lang``属性によるXML形式で言語を設定する
+    - ``break``で``time``属性によるミリ秒単位の値（例：``200ms``）の指定
+    - ``mark``で``name``属性によるマーク名（例：``mark1``）の設定。コールバックの提供が必要
+    -
+  - 例：``speech.speakSsml('<speak><prosody pitch="200%">hello</prosody><break time="500ms" /><prosody rate="50%">John</prosody></speak>')``
+  - SSMLの解析機能は``speechXml``モジュールの``SsmlParser``クラスによってサポートされています。
+  -
+- NVDAコントローラクライアントライブラリの変更：
+  - ライブラリのファイル名にはもはやアーキテクチャを示す数字が含まれていません。つまり、``nvdaControllerClient32/64.dll``は``nvdaControllerClient.dll``になりました。 (#15718, #15717, @LeonarddeR)
+  - RustからnvdaControllerClient.dllを使用する例を追加しました。 (#15771, @LeonarddeR)
+  - コントローラクライアントに以下の関数を追加しました： (#15734, #11028, #5638, @LeonarddeR)
+    - ``nvdaController_getProcessId``：コントローラクライアントが使用している現在のNVDAインスタンスのプロセスID（PID）を取得します。
+    - ``nvdaController_speakSsml``：指定されたSSMLに従ってNVDAに読み上げをさせる関数です。この関数は以下もサポートしています：
+      - 記号読み上げレベルの指定
+      - 音声の読み上げの優先度の指定
+      - 同期的（ブロッキング）および非同期的（即時リターン）での読み上げ
+      -
+    - ``nvdaController_setOnSsmlMarkReachedCallback``：``nvdaController_speakSsml``で与えるSSMLシーケンスに含まれるすべての``<mark />``タグに対して同期モードで呼び出されるコールバックを``onSsmlMarkReachedFuncType``タイプで登録します。
+    -
+  - 注意：コントローラクライアントの新しい機能はNVDA 2024.1以降のみをサポートしています。
+  -
+- ``include``依存関係を更新しました：
+  - detoursを``4b8c659f549b0ab21cf649377c7a84eb708f5e68``に更新 (#15695)
+  - ia2を``3d8c7f0b833453f761ded6b12d8be431507bfe0b``に更新 (#15695)
+  - sonicを``8694c596378c24e340c09ff2cd47c065494233f1``に更新 (#15695)
+  - w3c-aria-practicesを``9a5e55ccbeb0f1bf92b6127c9865da8426d1c864``に更新 (#15695)
+  - wilを``5e9be7b2d2fe3834a7107f430f7d4c0631f69833``に更新 (#15695)
+  -
+- ``hwPortUtils.listUsbDevices``によって提供されるデバイス情報には、USBデバイスのバス報告記述（キー``busReportedDeviceDescription``）が含まれるようになりました。 (#15764, @LeonarddeR)
+- USBシリアルデバイスの場合、``bdDetect.getConnectedUsbDevicesForDriver``および``bdDetect.getDriversForConnectedUsbDevices``は、該当するデバイスを返すときに、USBデバイスに関するデータ（例：``busReportedDeviceDescription``）を含む``deviceInfo``辞書が利用できます。 (#15764, @LeonarddeR)
+- 設定ファイル``nvda.ini``が破損した場合、再初期化する前にバックアップコピーが保存されます。 (#15779, @CyrilleB79)
+- スクリプトデコレーターでスクリプトを定義する際に、``speakOnDemand``ブール引数を指定できます。これによりスクリプトが「オンデマンド」音声モードで読み上げるかどうかを制御できます。 (#481, @CyrilleB79)
+  - 情報を提供するスクリプト（例：ウィンドウタイトルの報告、時間/日付の報告）は「オンデマンド」モードで読み上げるべきです。
+  - アクションを実行するスクリプト（例：カーソルの移動、パラメータの変更）は「オンデマンド」モードで読み上げるべきではありません。
+  -
+- ``scons -c``中にgit追跡ファイルが削除され、リビルドのときにUIA COMインターフェースが欠落するバグを修正しました。 (#7070, #10833, @hwf1324)
+- ``dist``のビルド時に一部のコード変更が検出されず、新しいビルドがトリガーされなかったバグを修正しました。
+現在、``dist``は常に再ビルドされます。 (#13372, @hwf1324)
+- 標準タイプの``gui.nvdaControls.MessageDialog``が、サウンドが割り当てられていない場合に「Noneの変換」の例外を投げていた不具合を修正しました。 (#16223, @XLTechie)
+-
+
+
+=== API の重大な変更 ===
+API の重大な変更があります。
+あなたがアドオン開発者で新しいAPIへの移行において問題がある場合は GitHub issue を作成してください。
+
+- NVDAは現在、Python 3.11でビルドされています。 (#12064)
+- pip依存関係を更新しました：
+  - configobjを5.1.0devのコミット``e2ba4457c4651fa54f8d59d8dcdd3da950e956b8``に更新 (#15544)
+  - Comtypesを1.2.0に更新 (#15513, @codeofdusk)
+  - Flake8を4.0.1に更新 (#15636, @lukaszgo1)
+  - py2exeを0.13.0.1devのコミット``4e7b2b2c60face592e67cb1bc935172a20fa371d``に更新 (#15544)
+  - robotframeworkを6.1.1に更新 (#15544)
+  - SConsを4.5.2に更新 (#15529, @LeonarddeR)
+  - sphinxを7.2.6に更新 (#15544)
+  - wxPythonを4.2.1に更新 (#12551)
+  -
+- 削除されたpip依存関係：
+  - typing_extensions: Python 3.11でネイティブにサポートされるため不要になりました。 (#15544)
+  - nose: unittest-xml-reporting でXMLレポートを生成するようになりました。 (#15544)
+  -
+- ``IAccessibleHandler.SecureDesktopNVDAObject``が削除されました。
+代わりに、NVDAがユーザープロファイル上で実行されている場合は、拡張ポイント``winAPI.secureDesktop.post_secureDesktopStateChange``を使用してセキュアデスクトップの存在を追跡します。 (#14488)
+- ``braille.BrailleHandler.handlePendingCaretUpdate``が削除されました。公開済みの代替手段はありません。 (#15163, @LeonarddeR)
+- ``bdDetect.addUsbDevices``および``bdDetect.addBluetoothDevices``が削除されました。
+点字ディスプレイドライバは``registerAutomaticDetection``クラスメソッドを実装する必要があります。
+このメソッドは``DriverRegistrar``オブジェクトを受け取ります。そのオブジェクトで``addUsbDevices``および``addBluetoothDevices``メソッドが使用できます。 (#15200, @LeonarddeR)
+- ``BrailleDisplayDriver``のcheckメソッドのデフォルト実装は、``threadSafe``および``supportsAutomaticDetection``属性が``True``であることを要求します。 (#15200, @LeonarddeR)
+- ``hwIo.ioThread.IoThread.queueAsApc``にラムダ関数を渡すことはできません。弱参照可能な関数が必要です。 (#14627, @LeonarddeR)
+- ``IoThread.autoDeleteApcReference``が削除されました。 (#14924, @LeonarddeR)
+- 大文字のピッチ変更をサポートするために、音声エンジンはドライバーの``supportedCommands``属性で``PitchCommand``のサポートを明示する必要があります。 (#15433, @LeonarddeR)
+- ``speechDictHandler.speechDictVars``が削除されました。``speechDictHandler.speechDictVars.speechDictsPath``の代わりに``NVDAState.WritePaths.speechDictsDir``を使用します。 (#15614, @lukaszgo1)
+- ``languageHandler.makeNpgettext``および``languageHandler.makePgettext``が削除されました。
+``npgettext``および``pgettext``をネイティブにサポートします。 (#15546)
+- [Poedit https://poedit.net]のアプリモジュールが大幅に変更されました。``fetchObject``関数が削除されました。 (#15313, #7303, @LeonarddeR)
+- ``hwPortUtils``から以下の冗長な型と定数が削除されました： (#15764, @LeonarddeR)
+  - ``PCWSTR``
+  - ``HWND``（``ctypes.wintypes.HWND``を使用してください）
+  - ``ULONG_PTR``
+  - ``ULONGLONG``
+  - ``NULL``
+  - ``GUID``（``comtypes.GUID``を使用してください）
+  -
+- ``gui.addonGui.AddonsDialog``が削除されました。 (#15834)
+- ``touchHandler.TouchInputGesture.multiFingerActionLabel``が削除されました。代替手段はありません。 (#15864, @CyrilleB79)
+- ``NVDAObjects.IAccessible.winword.WordDocument.script_reportCurrentHeaders``が削除されました。代替手段はありません。 (#15904, @CyrilleB79)
+% Insert new list items here as the alias appModule table should be kept at the bottom of this list
+- 以下のアプリモジュールが削除されました。
+これらのいずれかからインポートするコードは、代わりのモジュールからインポートしてください。 (#15618, @lukaszgo1)
+-
+
+|| 削除されたモジュール | 代替のモジュール |
+| ``azardi-2.0`` | ``azardi20`` |
+| ``azuredatastudio`` | ``code`` |
+| ``azuredatastudio-insiders`` | ``code`` |
+| ``calculatorapp`` | ``calculator`` |
+| ``code - insiders`` | ``code`` |
+| ``commsapps`` | ``hxmail`` |
+| ``dbeaver`` | ``eclipse`` |
+| ``digitaleditionspreview`` | ``digitaleditions`` |
+| ``esybraille`` | ``esysuite`` |
+| ``hxoutlook`` | ``hxmail`` |
+| ``miranda64`` | ``miranda32`` |
+| ``mpc-hc`` | ``mplayerc`` |
+| ``mpc-hc64`` | ``mplayerc`` |
+| ``notepad++`` | ``notepadPlusPlus`` |
+| ``searchapp`` | ``searchui`` |
+| ``searchhost`` | ``searchui`` |
+| ``springtoolsuite4`` | ``eclipse`` |
+| ``sts`` | ``eclipse`` |
+| ``teamtalk3`` | ``teamtalk4classic`` |
+| ``textinputhost`` | ``windowsinternal_composableshell_experiences_textinput_inputapp`` |
+| ``totalcmd64`` | ``totalcmd`` |
+| ``win32calc`` | ``calc`` |
+| ``winmail`` | ``msimn`` |
+| ``zend-eclipse-php`` | ``eclipse`` |
+| ``zendstudio`` | ``eclipse`` |
+
+=== 非推奨となったAPI ===
+
+- ``watchdog.getFormattedStacksForAllThreads``の使用は非推奨です。代わりに``logHandler.getFormattedStacksForAllThreads``を使用します。 (#15616, @lukaszgo1)
+- ``easeOfAccess.canConfigTerminateOnDesktopSwitch``は非推奨です。Windows 7がサポートされなくなったためです。 (#15644, @LeonarddeR)
+- ``winVersion.isFullScreenMagnificationAvailable``は非推奨です。代わりに``visionEnhancementProviders.screenCurtain.ScreenCurtainProvider.canStart``を使用します。 (#15664, @josephsl)
+- winVersionモジュールの以下のWindowsリリース定数は非推奨です。(#15647, @josephsl):
+  - ``winVersion.WIN7``
+  - ``winVersion.WIN7_SP1``
+  - ``winVersion.WIN8``
+  -
+- ``bdDetect.KEY_*``定数は非推奨です。
+代わりに``bdDetect.DeviceType.*``を使用します。 (#15772, @LeonarddeR)
+- ``bdDetect.DETECT_USB``および``bdDetect.DETECT_BLUETOOTH``定数は非推奨です。公開済みの代替手段はありません。 (#15772, @LeonarddeR)
+- ``gui.ExecAndPump``の使用は非推奨です。代わりに``systemUtils.ExecAndPump``を使用します。 (#15852, @lukaszgo1)
+-
+
+
+= 2023.3.4 =
+インストーラーの不具合修正のためのパッチリリースです。
+
+== バグ修正 ==
+- NVDAプロセスが正しく終了しない原因となる不具合を修正しました。(#16123)
+- 直前のNVDAプロセスが正しく終了しなかった場合、NVDAのインストールが不完全になることがある不具合を修正しました。(#16122)
+-
+
+= 2023.3.3 =
+セキュリティ修正のためのパッチリリースです。
+NVDAのセキュリティ問題の開示は、[セキュリティポリシー https://github.com/nvaccess/nvda/blob/master/security.md]に従って責任を持って行ってください。
+
+== セキュリティ修正 ==
+- 任意のコード実行を引き起こす、細工されたコンテンツからの反射型 XSS 攻撃の可能性を防ぎます。
+([GHSA-xg6w-23rw-39r8 https://github.com/nvaccess/nvda/security/advisories/GHSA-xg6w-23rw-39r8])
+-
+
+= 2023.3.2 =
+セキュリティ修正のためのパッチリリースです。
+2023.3.1 のセキュリティ修正は不完全でした。
+NVDAのセキュリティ問題の開示は、[セキュリティポリシー https://github.com/nvaccess/nvda/blob/master/security.md]に従って責任を持って行ってください。
+
+== セキュリティ修正 ==
+- 2023.3.1 のセキュリティ修正は不完全でした。
+認証されていないユーザーがシステムアクセスや任意のコード実行をシステム権限で行うことを防ぐ修正を行いました。
+([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
+-
+
+
+= 2023.3.1 =
+セキュリティ修正のためのパッチリリースです。
+NVDAのセキュリティ問題の開示は、[セキュリティポリシー https://github.com/nvaccess/nvda/blob/master/security.md]に従って責任を持って行ってください。
+
+== セキュリティ修正 ==
+- 認証されていないユーザーがシステムアクセスや任意のコード実行をシステム権限で行うことを防ぐ修正を行いました。
+([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
+-
+
 = 2023.3 =
 このリリースでは、オーディオ出力の性能、応答性、および安定性が向上しました。
 NVDAの音とビープの音量を制御するオプションが追加され、使用している音声の音量に合わせることもできます。
