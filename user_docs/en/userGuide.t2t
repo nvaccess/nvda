@@ -553,6 +553,14 @@ A gesture allows cycling through the various speech modes:
 
 If you only need to switch between a limited subset of speech modes, see [Modes available in the Cycle speech mode command #SpeechModesDisabling] for a way to disable unwanted modes.
 
+++ Toggle microphone mute ++[MuteMicrophone]
+
+Toggle microphone mute command allows you to mute or unmute default microphone with a single keystroke.
+By default, there is no keyboard gesture assigned to this command.
+If you would like to use this command, please assign a keyboard gesture to it in [Input Gestures dialog #InputGestures], under the audio category.
+
+This command doesn't work if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
+
 + Navigating with NVDA +[NavigatingWithNVDA]
 NVDA allows you to explore and navigate the system in several ways, including both normal interaction and review.
 

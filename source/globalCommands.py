@@ -67,7 +67,8 @@ from base64 import b16encode
 import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import audio
-
+from pycaw.utils import AudioUtilities
+import nvwave
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -4476,6 +4477,32 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_cycleSoundSplit(self, gesture: "inputCore.InputGesture") -> None:
 		audio.toggleSoundSplitState()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggles microphone mute",
+		),
+		category=SCRCAT_AUDIO,
+		gesture=None,
+	)
+	def script_toggleMicrophoneMute(self, gesture: "inputCore.InputGesture") -> None:
+		if not nvwave.usingWasapiWavePlayer():
+			# Translators: error message for toggle microphone mute command
+			ui.message(_("Please enable wasapi in order to mute microphone"))
+			return
+		microphoneInterface = AudioUtilities.GetMicrophone()
+		if microphoneInterface is None:
+			# Translators: error message for toggle microphone mute command
+			msg = _("No microphone present")
+			ui.message(msg)
+			return
+		microphone = AudioUtilities.CreateDevice(microphoneInterface)
+		muted = microphone.EndpointVolume.GetMute()
+		muted = not muted
+		microphone.EndpointVolume.SetMute(muted, None)
+		# We do not speak microphone mute status here, since this will trigger a wasapi notification,
+		# that will trigger a spoken message. See: source/audio/notifications.py
 
 
 #: The single global commands instance.

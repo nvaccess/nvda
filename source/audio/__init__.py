@@ -8,9 +8,11 @@ from .soundSplit import (
 	setSoundSplitState,
 	toggleSoundSplitState,
 )
+from . import notifications
 
 __all__ = [
 	"SoundSplitState",
 	"setSoundSplitState",
 	"toggleSoundSplitState",
+	"notifications",
 ]
