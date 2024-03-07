@@ -72,7 +72,10 @@ def _resolveTable(tablesList: bytes, base: bytes | None) -> int | None:  # noqa:
 					log.debug(f"Resolved {table!r} to {path!r}")
 				resolved = True
 		else:
-			for directory in {os.path.dirname(base), brailleTables.TABLES_DIR}:
+			directoriesToSearch = [os.path.dirname(base)]
+			if brailleTables.TABLES_DIR not in directoriesToSearch:
+				directoriesToSearch.append(brailleTables.TABLES_DIR)
+			for directory in directoriesToSearch:
 				path = os.path.join(directory, table)
 				if os.path.isfile(path):
 					paths.append(path.encode(louis.fileSystemEncoding))
