@@ -13,12 +13,6 @@ branches:
   - /try-.*/
   - /release-.*/
 
-# scripts that are called at very beginning, before repo cloning
-init:
-  # set the init time for the build, used to calculate the time taken for each stage of the build.
-  - ps: |
-      "INIT, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
-
 environment:
  PY_PYTHON: 3.11-32
  secure_authenticode_pass:
@@ -31,6 +25,20 @@ environment:
  crowdinProjectID: 598017
  crowdinAuthToken:
   secure: E3084gj4JeMZKvZIOLIhqZefuSo/tj7iYPt4yK0geOI/eQgmPvoXt37Xq0KwvXzvZiJny4AsMj1rKMTVxio8EG8KA0YsYYuy+WV1wpFRIn25zGQS+DZ/yycL75SmTWfr
+ scons_publisher: NV Access
+ # Comment out any of the feature_* variables to disable the respective build feature.
+ # They are checked for existence of content, not specific value.
+ feature_buildSymbols: True
+ feature_uploadSymbolsToMozilla: True
+ feature_buildAppx: True
+ feature_crowdinSync: True
+ feature_signing: True
+
+# scripts that are called at very beginning, before repo cloning
+init:
+  # set the init time for the build, used to calculate the time taken for each stage of the build.
+  - ps: |
+      "INIT, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
 
 install:
  - ps: |
@@ -51,9 +59,12 @@ build_script:
  - ps: appveyor\scripts\buildSymbolStore.ps1
  # The server expects the symbols archive to be structured as ./*.ex_ not ./symbols/*.ex_.
  # Change directory to package, as 7z will structure the archive using the relative path.
- - cd symbols
- - 7z a -tzip -r ..\output\symbols.zip *.dl_ *.ex_ *.pd_
- - cd ..
+ - ps: >-
+     if ($env:feature_buildSymbols) {
+        cd symbols
+        7z a -tzip -r ..\output\symbols.zip *.dl_ *.ex_ *.pd_
+        cd ..
+     }
  - ps: |
      "BUILD_END, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
 

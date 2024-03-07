@@ -6,5 +6,9 @@ $appVeyorUrl = "https://ci.appveyor.com"
 $exe = Get-ChildItem -Name output\*.exe
 if($?){
 	$exeUrl="$appVeyorUrl/api/buildjobs/$env:APPVEYOR_JOB_ID/artifacts/output/$exe"
-	Add-AppveyorMessage "Build (for testing PR): $exeUrl"
+	if ($env:APPVEYOR_PULL_REQUEST_NUMBER -ne $null) {
+		Add-AppveyorMessage "Build (for testing PR): $exeUrl"
+	} else {
+		Add-AppveyorMessage "Build (for testing branch): $exeUrl"
+	}
 }
