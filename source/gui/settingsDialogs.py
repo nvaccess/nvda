@@ -3403,10 +3403,8 @@ class AdvancedPanelControls(
 		self.playErrorSoundCombo.SetSelection(config.conf["featureFlag"]["playErrorSound"])
 		self.playErrorSoundCombo.defaultValue = self._getDefaultValue(["featureFlag", "playErrorSound"])
 
-		self.Layout()
-
 		# Translators: This is the label for a textfield in the
-		# browse mode settings panel.
+		# advanced settings panel.
 		textParagraphRegexLabelText = _("Regular expression for text paragraph navigation")
 		self.textParagraphRegexEdit = sHelper.addLabeledControl(
 			textParagraphRegexLabelText,
@@ -3415,6 +3413,8 @@ class AdvancedPanelControls(
 		)
 		self.textParagraphRegexEdit.SetValue(config.conf["virtualBuffers"]["textParagraphRegex"])
 		self.bindHelpEvent("TextParagraphRegexEdit", self.textParagraphRegexEdit)
+
+		self.Layout()
 
 	def isValid(self) -> bool:
 		regex = self.textParagraphRegexEdit.GetValue()
