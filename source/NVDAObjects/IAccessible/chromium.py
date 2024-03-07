@@ -67,10 +67,11 @@ class ChromeVBufTextInfo(GeckoVBufTextInfo):
 			attrs['states'].discard(controlTypes.State.CHECKABLE)
 
 		if (
-			attrs['role'] == controlTypes.Role.GROUPING
-			and attrs.get('IAccessible2::attribute_tag', "").lower() == "figure"):
+			attrs["role"] == controlTypes.Role.GROUPING
+			and attrs.get("IAccessible2::attribute_tag", "").lower() == "figure"
+		):
 			# Chromium doesn't expose the `<figure>` element as a figure.
-			attrs['role'] = controlTypes.Role.FIGURE
+			attrs["role"] = controlTypes.Role.FIGURE
 		return attrs
 
 
@@ -161,9 +162,8 @@ class PresentationalList(ia2Web.Ia2Web):
 
 
 class Figure(ia2Web.Ia2Web):
-	def _get_role(self):
+	def _get_role(self) -> controlTypes.Role:
 		return controlTypes.Role.FIGURE
-		# return super()._get_role()
 
 
 def findExtraOverlayClasses(obj, clsList):

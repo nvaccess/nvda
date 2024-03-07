@@ -554,7 +554,7 @@ class Gecko_ia2(VirtualBuffer):
 				{"Iaccessible::role": [oleacc.ROLE_SYSTEM_GROUPING]},
 				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("figure")]},
 				# Needed so that navigation by figure works for HTML figures in Chromium
-				{"IAccessible2::attribute_tag": self._searchableTagValues(["figure"])}
+				{"IAccessible2::attribute_tag": self._searchableTagValues(["figure"])},
 			]
 		else:
 			return None
