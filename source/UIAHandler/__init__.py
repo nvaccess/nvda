@@ -1148,8 +1148,8 @@ class UIAHandler(COMObject):
 			try:
 				isOfficeApp = appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
 				isOffice2013OrOlder = int(appModule.productVersion.split(".")[0]) < 16
-			except Exception:
-				log.debugWarning("Unable to parse productName or productVersion, version information likely unavailable", exc_info=True)
+			except RuntimeError:
+				log.debugWarning("Failed parsing productName / productVersion, versionInfo likely missing", exc_info=True)
 				isOfficeApp = False
 				isOffice2013OrOlder = False
 			if isOfficeApp and isOffice2013OrOlder:
