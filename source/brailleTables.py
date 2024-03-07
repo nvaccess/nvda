@@ -14,6 +14,7 @@ from typing import NamedTuple
 from configobj import ConfigObj
 
 import config
+import fileUtils
 import globalVars
 from logHandler import log
 
@@ -83,8 +84,6 @@ def addTable(
 	"""
 	if not output and not input:
 		raise ValueError("input and output cannot both be False")
-	if fileName in _tables:
-		raise ValueError(f"Table {displayName!r} ({fileName!r}) already registered")
 	table = BrailleTable(fileName, displayName, contracted, output, input, source)
 	_tables[fileName] = table
 
@@ -684,17 +683,26 @@ _tables = _tables.new_child()
 _tablesDirs = _tablesDirs.new_child()
 
 
+def _loadTablesFromManifestSection(source: str, directory: str, tablesDict: dict):
+	for fileName, tableConfig in tablesDict.items():
+		fileUtils.raiseIfNotFile(os.path.join(directory, fileName))
+		addTable(fileName, **tableConfig, source=source)
+
+
 def initialize():
 	# The builtin tables were added at import time to the parent map.
 	# Now, add the custom tables to the first map.
 	import addonHandler
 	for addon in addonHandler.getRunningAddons():
-		directory = os.path.join(addon.path, "brailleTables")
-		if os.path.isdir(directory):
-			_tablesDirs[addon.name] = directory
 		try:
-			for fileName, tableConfig in addon.manifest.get("brailleTables", {}).items():
-				addTable(fileName, **tableConfig, source=addon.name)
+			tablesDict = addon.manifest.get("brailleTables", {})
+			if not tablesDict:
+				continue
+			log.debug(f"Found {len(tablesDict)} braille table entries in manifest for add-on {addon.name!r}")
+			directory = os.path.join(addon.path, "brailleTables")
+			fileUtils.raiseIfNotDir(directory)
+			_tablesDirs[addon.name] = directory
+			_loadTablesFromManifestSection(addon.name, directory, tablesDict)
 		except Exception:
 			log.exception(f"Error while applying custom braille tables config from addon {addon.name!r}")
 
@@ -703,21 +711,21 @@ def initialize():
 		not globalVars.appArgs.secure
 		and config.conf['development']['enableScratchpadDir']
 	):
-		directory = os.path.join(config.getScratchpadDir(), "brailleTables")
+		scratchpad = config.getScratchpadDir()
+		directory = os.path.join(scratchpad, "brailleTables")
 		if os.path.isdir(directory):
+			manifestPath = os.path.join(scratchpad, addonHandler.MANIFEST_FILENAME)
+			if not os.path.isfile(manifestPath):
+				return
 			_tablesDirs[TABLE_SOURCE_SCRATCHPAD] = directory
 			configspec = {"brailleTables": addonHandler.AddonManifest.configspec["brailleTables"].dict()}
-			dirList = os.listdir(directory)
-			for fileName in dirList:
-				path = os.path.join(directory, fileName)
-				if os.path.isfile(path) and fileName.endswith(".ini"):
-					try:
-						with open(path, "rb") as file_:
-							manifest = ConfigObj(file_, configspec=configspec)
-							for fileName, tableConfig in manifest["brailleTables"].items():
-								addTable(fileName, **tableConfig, source=TABLE_SOURCE_SCRATCHPAD)
-					except Exception:
-						log.exception(f"Error while applying custom braille tables config: {path!r}")
+			try:
+				with open(manifestPath, "rb") as file:
+					manifest = ConfigObj(file, configspec=configspec)
+					section = manifest["brailleTables"]
+					_loadTablesFromManifestSection(TABLE_SOURCE_SCRATCHPAD, directory, section)
+			except Exception:
+				log.exception(f"Error while applying custom braille tables config: {manifestPath!r}")
 
 
 def terminate():
