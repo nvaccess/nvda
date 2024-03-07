@@ -111,6 +111,7 @@ def louis_log(level, message):
 	codepath = "liblouis at internal log level %d" % level
 	log._log(NVDALevel, message, [], codepath=codepath)
 
+
 def _isDebug():
 	return config.conf["debugLog"]["louis"]
 
@@ -143,7 +144,7 @@ def translate(tableList, inbuf, typeform=None, cursorPos=None, mode=0):
 	* returns a list of integers instead of a string with cells, and
 	* distinguishes between cursor position 0 (cursor at first character) and None (no cursor at all)
 	"""
-	text = inbuf.replace('\0','')
+	text = inbuf.replace('\0', '')
 	braille, brailleToRawPos, rawToBraillePos, brailleCursorPos = louis.translate(
 		tableList,
 		text,
