@@ -4530,6 +4530,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: a message reporting applications volume
 			msg = _("Applications muted")
 		else:
+			# Translators: a message reporting applications volume
 			msg = _("Applications unmuted")
 		ui.message(msg)
 
