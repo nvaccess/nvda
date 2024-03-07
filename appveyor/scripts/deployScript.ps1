@@ -6,7 +6,7 @@ if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:versionType) {
 		py -m pip install --no-warn-script-location requests
 		py appveyor\crowdinSync.py uploadSourceFile 2 output\nvda.pot 2>&1
 	}
-	# Notify our server, if this is an NV Access build.
+	# Notify the NV Access server if this is an NV Access build.
 	if ($env:APPVEYOR_REPO_NAME.StartsWith("nvaccess/")) {
 		$exe = Get-ChildItem -Name output\*.exe
 		$hash = (Get-FileHash "output\$exe" -Algorithm SHA1).Hash.ToLower()
