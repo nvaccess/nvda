@@ -3431,7 +3431,7 @@ class AdvancedPanelControls(
 				self,
 			)
 			return False
-		return super().isValid()
+		return True
 
 	def onOpenScratchpadDir(self,evt):
 		path=config.getScratchpadDir(ensureExists=True)
@@ -3618,6 +3618,11 @@ class AdvancedPanel(SettingsPanel):
 		from api import processPendingEvents
 		processPendingEvents()
 		self.advancedControls.Enable(evt.IsChecked())
+
+	def isValid(self) -> bool:
+		if not self.advancedControls.isValid():
+			return False
+		return super().isValid()
 
 
 class BrailleSettingsPanel(SettingsPanel):
