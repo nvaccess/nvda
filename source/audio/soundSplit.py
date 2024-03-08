@@ -80,6 +80,7 @@ def initialize() -> None:
 		global audioSessionManager
 		audioSessionManager = AudioUtilities.GetAudioSessionManager()
 		state = SoundSplitState(config.conf["audio"]["soundSplitState"])
+		config.conf["audio"]["applicationsMuted"] = False
 		setSoundSplitState(state)
 	else:
 		log.debug("Cannot initialize sound split as WASAPI is disabled")
@@ -88,7 +89,7 @@ def initialize() -> None:
 @atexit.register
 def terminate():
 	if nvwave.usingWasapiWavePlayer():
-		setSoundSplitState(SoundSplitState.OFF)
+		setSoundSplitState(SoundSplitState.OFF, appsVolume=1.0)
 		unregisterCallback()
 	else:
 		log.debug("Skipping terminating sound split as WASAPI is disabled.")
@@ -148,12 +149,16 @@ class VolumeSetter(AudioSessionNotification):
 			channelVolume.SetChannelVolume(1, self.rightNVDAVolume, None)
 
 
-def setSoundSplitState(state: SoundSplitState) -> dict:
+def setSoundSplitState(
+		state: SoundSplitState,
+		appsVolume: float | None = None
+) -> dict:
+	if appsVolume is None:
+		appsVolume = (
+			config.conf["audio"]["applicationsSoundVolume"] / 100
+			* (1 - int(config.conf["audio"]["applicationsMuted"]))
+		)
 	leftVolume, rightVolume = state.getAppVolume()
-	appsVolume = (
-		config.conf["audio"]["applicationsSoundVolume"] / 100
-		* (1 - int(config.conf["audio"]["applicationsMuted"]))
-	)
 	leftVolume *= appsVolume
 	rightVolume *= appsVolume
 	leftNVDAVolume, rightNVDAVolume = state.getNVDAVolume()
