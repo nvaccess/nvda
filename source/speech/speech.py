@@ -25,7 +25,12 @@ import speechDictHandler
 import characterProcessing
 import languageHandler
 from . import manager
-from .extensions import filter_speechSequence, speechCanceled
+from .extensions import (
+	filter_speechSequence,
+	post_filter_speechSequence,
+	pre_filter_speechSequence,
+	speechCanceled,
+)
 from .commands import (
 	# Commands that are used in this file.
 	BreakCommand,
@@ -960,6 +965,7 @@ def speak(  # noqa: C901
 	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
 	@param priority: The speech priority.
 	"""
+	pre_filter_speechSequence.notify(sequence=speechSequence)
 	speechSequence = filter_speechSequence.apply(speechSequence)
 	logBadSequenceTypes(speechSequence)
 	# in case priority was explicitly passed in as None, set to default.
@@ -967,9 +973,7 @@ def speak(  # noqa: C901
 
 	if not speechSequence:  # Pointless - nothing to speak
 		return
-	import speechViewer
-	if speechViewer.isActive:
-		speechViewer.appendSpeechSequence(speechSequence)
+	post_filter_speechSequence.notify(sequence=speechSequence)
 	if _speechState.speechMode == SpeechMode.off:
 		return
 	elif _speechState.speechMode == SpeechMode.beeps:
