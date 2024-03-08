@@ -48,14 +48,6 @@ class BrailleTable(NamedTuple):
 	This defaults to 'builtin', but is set to the name of the add-on or "scratchpad, depending on its source.
 	"""
 
-	@property
-	def absolutePath(self) -> str:
-		try:
-			base = _tablesDirs[self.source]
-		except KeyError as e:
-			raise KeyError(f"{self.source} is unknown in _tablesDirs") from e
-		return os.path.join(base, self.fileName)
-
 
 _tables = collections.ChainMap()
 """Maps file names to L{BrailleTable} objects.

@@ -12,6 +12,7 @@ from ctypes import (
 	c_char_p,
 	c_void_p,
 )
+from typing import Generator
 
 import brailleTables
 import config
@@ -32,11 +33,39 @@ LOUIS_TO_NVDA_LOG_LEVELS = {
 }
 
 
+def _resolveTableInner(tables: list[str], base: str | None = None) -> Generator[str, None, None]:
+	for table in tables:
+		if _isDebug():
+			log.debug(f"Resolving {table!r}")
+		directoriesToSearch = [brailleTables.TABLES_DIR]
+		path = None
+		if base is None:
+			try:
+				registeredTable = brailleTables.getTable(table)
+				path = brailleTables._tablesDirs.get(registeredTable.source)
+			except LookupError:
+				if _isDebug():
+					log.debug(f"Table {table!r} not registered, falling back to built-in table lookup")
+				pass
+		else:
+			path = os.path.dirname(base)
+		if path and path not in directoriesToSearch:
+			directoriesToSearch.insert(0, path)
+		for directory in directoriesToSearch:
+			path = os.path.join(directory, table)
+			if os.path.isfile(path):
+				if _isDebug():
+					log.debug(f"Resolved {table!r} to {path!r} for base {base!r}")
+				yield path
+				break
+		else:
+			raise LookupError(f"Could not resolve table {table!r}")
+
+
 # Note: liblouis table resolvers return char**,
 # but POINTER(c_char_p) is unsupported as a ctypes callback return type.
-# C901 '_resolveTable' is too complex due to several statements for debugging purposes.
 @WINFUNCTYPE(c_void_p, c_char_p, c_char_p)
-def _resolveTable(tablesList: bytes, base: bytes | None) -> int | None:  # noqa: C901
+def _resolveTable(tablesList: bytes, base: bytes | None) -> int | None:
 	"""Resolve braille table file names to file paths.
 
 	Unlike the default table resolver from liblouis, this implementation does
@@ -51,40 +80,14 @@ def _resolveTable(tablesList: bytes, base: bytes | None) -> int | None:  # noqa:
 	if _isDebug():
 		log.debug(f"liblouis called table resolver wit params: tablesList={tablesList}, base={base}")
 	tables = tablesList.decode(louis.fileSystemEncoding).split(",")
+	if not tables:
+		return None
 	baseTable: str | None = base.decode(louis.fileSystemEncoding) if base is not None else None
-	paths = []
-	for table in tables:
-		if _isDebug():
-			log.debug(f"Resolving {table!r}")
-		resolved = False
-		if baseTable is None:
-			try:
-				registeredTable = brailleTables.getTable(table)
-				path = registeredTable.absolutePath
-			except LookupError:
-				if _isDebug():
-					log.debug(f"Table {table!r} not registered, falling back to built-in table lookup")
-				path = os.path.join(brailleTables.TABLES_DIR, table)
-			if os.path.isfile(path):
-				paths.append(path.encode(louis.fileSystemEncoding))
-				if _isDebug():
-					log.debug(f"Resolved {table!r} to {path!r}")
-				resolved = True
-		else:
-			directoriesToSearch = [os.path.dirname(baseTable)]
-			if brailleTables.TABLES_DIR not in directoriesToSearch:
-				directoriesToSearch.append(brailleTables.TABLES_DIR)
-			for directory in directoriesToSearch:
-				path = os.path.join(directory, table)
-				if os.path.isfile(path):
-					paths.append(path.encode(louis.fileSystemEncoding))
-					if _isDebug():
-						log.debug(f"Resolved {table!r} to {path!r} for base {baseTable!r}")
-					resolved = True
-					break
-		if not resolved:
-			log.error(f"Could not resolve table {table!r}")
-			return None
+	try:
+		paths = [p.encode(louis.fileSystemEncoding) for p in _resolveTableInner(tables, baseTable)]
+	except LookupError:
+		log.exception()
+		return None
 	if _isDebug():
 		log.debug(f"Storing paths in an array of {len(paths)} null terminated strings")
 	# Keeping a reference to the last returned value to ensure the returned
@@ -142,14 +145,14 @@ def translate(tableList, inbuf, typeform=None, cursorPos=None, mode=0):
 	* returns a list of integers instead of a string with cells, and
 	* distinguishes between cursor position 0 (cursor at first character) and None (no cursor at all)
 	"""
-	text = inbuf.replace('\0', '')
+	text = inbuf.replace("\0", "")
 	braille, brailleToRawPos, rawToBraillePos, brailleCursorPos = louis.translate(
 		tableList,
 		text,
 		# liblouis mutates typeform if it is a list.
 		typeform=tuple(typeform) if isinstance(typeform, list) else typeform,
 		cursorPos=cursorPos or 0,
-		mode=mode
+		mode=mode,
 	)
 	# liblouis gives us back a character string of cells, so convert it to a list of ints.
 	# For some reason, the highest bit is set, so only grab the lower 8 bits.
