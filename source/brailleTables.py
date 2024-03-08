@@ -690,7 +690,7 @@ def initialize():
 	import addonHandler
 	for addon in addonHandler.getRunningAddons():
 		try:
-			tablesDict = addon.manifest.get("brailleTables", {})
+			tablesDict = addon.manifest.get("brailleTables")
 			if not tablesDict:
 				continue
 			log.debug(f"Found {len(tablesDict)} braille table entries in manifest for add-on {addon.name!r}")
@@ -717,10 +717,13 @@ def initialize():
 			try:
 				with open(manifestPath, "rb") as file:
 					manifest = ConfigObj(file, configspec=configspec)
-					section = manifest["brailleTables"]
+					section = manifest.get("brailleTables")
+					if not section:
+						pass
+					log.debug(f"Found {len(tablesDict)} braille table entries in manifest for scratchpad")
 					_loadTablesFromManifestSection(TABLE_SOURCE_SCRATCHPAD, directory, section)
 			except Exception:
-				log.exception(f"Error while applying custom braille tables config: {manifestPath!r}")
+				log.exception("Error while applying custom braille tables config from scratchpad")
 
 
 def terminate():
