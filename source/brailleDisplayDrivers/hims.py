@@ -454,7 +454,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 		routingKey = int.from_bytes(data[2:7], "little", signed=False)
 		if routingKey != 0:  # Routing key
-			try:	
+			try:
 				inputCore.manager.executeGesture(RoutingInputGesture(int(math.log(routingKey, 2))))
 			except inputCore.NoInputGestureAction:
 				pass
@@ -465,7 +465,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			keys = set()
 			for keyHex in self._model.keys:
 				if _keys & keyHex:
-					# This key is pressed	
+					# This key is pressed
 					_keys -= keyHex
 					keys.add(keyHex)
 					if _keys == 0:
