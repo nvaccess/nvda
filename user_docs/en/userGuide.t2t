@@ -2000,7 +2000,7 @@ This option is not available if you have started NVDA with [WASAPI disabled for 
 ==== Applications volume ====[AppSoundVolume]
 
 This slider allows to set volume of all currently running applications except for NVDA.
-If any new applications start to output sound, their volume will also be affected.
+This volume setting will apply to all other applications outputting sound, even if they start after this setting is changed.
 This slider can also be controlled via the following keyboard commands:
 
 %kc:beginInclude
