@@ -92,7 +92,10 @@ def listTables() -> list[BrailleTable]:
 	"""List all registered braille tables.
 	@return: A list of braille tables.
 	"""
-	return sorted(_tables.values(), key=lambda table: (table.source != TABLE_SOURCE_BUILTIN, strxfrm(table.displayName)))
+	return sorted(
+		_tables.values(),
+		key=lambda table: (table.source != TABLE_SOURCE_BUILTIN, strxfrm(table.displayName))
+	)
 
 
 #: Maps old table names to new table names for tables renamed in newer versions of liblouis.
