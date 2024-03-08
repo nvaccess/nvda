@@ -2732,7 +2732,7 @@ class AudioPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox control in the
 		# Audio settings panel.
-		label = _("Mute application sound")
+		label = _("Mute other applications")
 		self.muteApplicationsCheckBox: wx.CheckBox = sHelper.addItem(wx.CheckBox(self, label=label))
 		self.bindHelpEvent("MuteApplications", self.muteApplicationsCheckBox)
 		self.muteApplicationsCheckBox.SetValue(config.conf["audio"]["applicationsMuted"])
