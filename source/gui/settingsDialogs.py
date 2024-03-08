@@ -3403,10 +3403,8 @@ class AdvancedPanelControls(
 		self.playErrorSoundCombo.SetSelection(config.conf["featureFlag"]["playErrorSound"])
 		self.playErrorSoundCombo.defaultValue = self._getDefaultValue(["featureFlag", "playErrorSound"])
 
-		self.Layout()
-
 		# Translators: This is the label for a textfield in the
-		# browse mode settings panel.
+		# advanced settings panel.
 		textParagraphRegexLabelText = _("Regular expression for text paragraph navigation")
 		self.textParagraphRegexEdit = sHelper.addLabeledControl(
 			textParagraphRegexLabelText,
@@ -3415,6 +3413,9 @@ class AdvancedPanelControls(
 		)
 		self.textParagraphRegexEdit.SetValue(config.conf["virtualBuffers"]["textParagraphRegex"])
 		self.bindHelpEvent("TextParagraphRegexEdit", self.textParagraphRegexEdit)
+		self.textParagraphRegexEdit.defaultValue = self._getDefaultValue(["virtualBuffers", "textParagraphRegex"])
+
+		self.Layout()
 
 	def isValid(self) -> bool:
 		regex = self.textParagraphRegexEdit.GetValue()
@@ -3431,7 +3432,7 @@ class AdvancedPanelControls(
 				self,
 			)
 			return False
-		return super().isValid()
+		return True
 
 	def onOpenScratchpadDir(self,evt):
 		path=config.getScratchpadDir(ensureExists=True)
@@ -3467,17 +3468,18 @@ class AdvancedPanelControls(
 			and self.wasapiComboBox.isValueConfigSpecDefault()
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and self.playErrorSoundCombo.GetSelection() == self.playErrorSoundCombo.defaultValue
+			and self.textParagraphRegexEdit.GetValue() == self.textParagraphRegexEdit.defaultValue
 			and True  # reduce noise in diff when the list is extended.
 		)
 
 	def restoreToDefaults(self):
 		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
 		self.selectiveUIAEventRegistrationCombo.SetSelection(
-			self.selectiveUIAEventRegistrationCombo.defaultValue == 'auto'
+			self.selectiveUIAEventRegistrationCombo.defaultValue
 		)
 		self.UIAInMSWordCombo.SetSelection(self.UIAInMSWordCombo.defaultValue)
 		self.UIAInMSExcelCheckBox.SetValue(self.UIAInMSExcelCheckBox.defaultValue)
-		self.consoleCombo.SetSelection(self.consoleCombo.defaultValue == 'auto')
+		self.consoleCombo.SetSelection(self.consoleCombo.defaultValue)
 		self.UIAInChromiumCombo.SetSelection(self.UIAInChromiumCombo.defaultValue)
 		self.enhancedEventProcessingComboBox.resetToConfigSpecDefault()
 		self.annotationsDetailsCheckBox.SetValue(self.annotationsDetailsCheckBox.defaultValue)
@@ -3485,7 +3487,7 @@ class AdvancedPanelControls(
 		self.brailleLiveRegionsCombo.resetToConfigSpecDefault()
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
-		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue == 'auto')
+		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue)
 		self.wtStrategyCombo.resetToConfigSpecDefault()
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
 		self.loadChromeVBufWhenBusyCombo.resetToConfigSpecDefault()
@@ -3494,6 +3496,7 @@ class AdvancedPanelControls(
 		self.wasapiComboBox.resetToConfigSpecDefault()
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self.playErrorSoundCombo.SetSelection(self.playErrorSoundCombo.defaultValue)
+		self.textParagraphRegexEdit.SetValue(self.textParagraphRegexEdit.defaultValue)
 		self._defaultsRestored = True
 
 	def onSave(self):
@@ -3618,6 +3621,11 @@ class AdvancedPanel(SettingsPanel):
 		from api import processPendingEvents
 		processPendingEvents()
 		self.advancedControls.Enable(evt.IsChecked())
+
+	def isValid(self) -> bool:
+		if not self.advancedControls.isValid():
+			return False
+		return super().isValid()
 
 
 class BrailleSettingsPanel(SettingsPanel):
