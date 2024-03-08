@@ -76,6 +76,7 @@ Esta opción ahora anuncia información relevante adicional acerca de un objeto 
 Se recomienda mucho a los usuarios de Poedit 1 que actualicen a Poedit 3 si quieren contar con la accesibilidad mejorada en Poedit, como los atajos para leer las notas y los comentarios para el traductor. (#15313, #7303, @LeonarddeR)
 - El visualizador Braille y el visualizador de voz ahora se han desactivado en modo seguro. (#15680)
 - Durante la navegación de objetos, los objetos deshabilitados (no disponibles) ya no se ignorarán. (#15477, @CyrilleB79)
+- Añadido un índice al documento de órdenes clave. (#16106)
 -
 
 == Corrección de Fallos ==
@@ -192,7 +193,9 @@ La configuración de ``numCells`` todavía está admitida para pantallas braille
 - Corregido un fallo donde al eliminar ficheros git-tracked durante ``scons -c`` resultaba en falta de interfaces UIA COM al recompilar. (#7070, #10833, @hwf1324)
 - Corregido un fallo donde algunos cambios de código no se detectaban al compilar ``dist``, lo que impedía que se activara una nueva compilación.
 Ahora ``dist`` siempre recompila. (#13372, @hwf1324)
+- Un ``gui.nvdaControls.MessageDialog`` con un tipo predeterminado de estándar, ya no lanza una excepción de conversión none porque no se haya asignado ningún sonido. (#16223, @XLTechie)
 -
+
 
 === Cambios que Rompen la API ===
 Estos son los cambios que rompen la API.
@@ -202,7 +205,6 @@ Por favor abre un GitHub issue si tu complemento tiene un problema con la actual
 - Actualizadas las dependencias pip:
   - configobj a 5.1.0dev commit ``e2ba4457c4651fa54f8d59d8dcdd3da950e956b8``. (#15544)
   - Comtypes a 1.2.0. (#15513, @codeofdusk)
-  - fast_diff_match_patch a 2.0.1. (#15514, @codeofdusk)
   - Flake8 a 4.0.1. (#15636, @lukaszgo1)
   - py2exe a 0.13.0.1dev commit ``4e7b2b2c60face592e67cb1bc935172a20fa371d``. (#15544) 
   - robotframework a 6.1.1. (#15544)
@@ -287,6 +289,14 @@ Utiliza ``bdDetect.DeviceType.*`` en su lugar. (#15772, @LeonarddeR).
 - Utilizar ``gui.ExecAndPump`` está obsoleto - por favor utiliza ``systemUtils.ExecAndPump`` en su lugar. (#15852, @lukaszgo1)
 -
 
+
+= 2023.3.4 =
+Se trata de un parche para corregir un problema del instalador.
+
+== Corrección de Fallos ==
+- Corregido un fallo que provocaba que el proceso de NVDA fallase al no salir correctamente.
+Al ejecutar el instalador, provocaba que la instalación entrase en un estado irrecuperable. (#16122, #16123)
+-
 
 = 2023.3.3 =
 Se trata de un parche para solucionar un problema de seguridad.

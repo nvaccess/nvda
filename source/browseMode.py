@@ -500,6 +500,21 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 					direction=_Movement(direction),
 					pos=pos,
 				)
+		elif itemType == "verticalParagraph":
+			def paragraphFunc(info: textInfos.TextInfo) -> int | None:
+				try:
+					return info.pointAtStart.x
+				except AttributeError:
+					return None
+
+			def iterFactory(direction: str, pos: textInfos.TextInfo) -> Generator[TextInfoQuickNavItem, None, None]:
+				return self._iterSimilarParagraph(
+					kind="verticalParagraph",
+					paragraphFunction=paragraphFunc,
+					desiredValue=None,
+					direction=_Movement(direction),
+					pos=pos,
+				)
 		else:
 			iterFactory=lambda direction,info: self._iterNodesByType(itemType,direction,info)
 		info=self.selection
@@ -1018,6 +1033,54 @@ qn(
 	prevError=_("no previous figure")
 )
 qn(
+	"menuItem",
+	key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next menu item"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next menu item"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous menu item"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous menu item")
+)
+qn(
+	"toggleButton",
+	key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next toggle button"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next toggle button"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous toggle button"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous toggle button")
+)
+qn(
+	"progressBar",
+	key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next progress bar"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next progress bar"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous progress bar"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous progress bar")
+)
+qn(
+	"math",
+	key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next math formula"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next math formula"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous math formula"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous math formula")
+)
+qn(
 	"textParagraph",
 	key="p",
 	# Translators: Input help message for a quick navigation command in browse mode.
@@ -1028,6 +1091,19 @@ qn(
 	prevDoc=_("moves to the previous text paragraph"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous text paragraph"),
+	readUnit=textInfos.UNIT_PARAGRAPH,
+)
+qn(
+	"verticalParagraph",
+	key=None,
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next vertically aligned paragraph"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next vertically aligned paragraph"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous vertically aligned paragraph"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous vertically aligned paragraph"),
 	readUnit=textInfos.UNIT_PARAGRAPH,
 )
 del qn

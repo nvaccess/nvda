@@ -397,7 +397,7 @@ NVDA 安装版的配置在“漫游”应用程序配置文件夹（比如 "``C:
 +++ 使用情况统计数据对话框 +++[UsageStatsDialog]
 从 NVDA 2018.3 开始，系统会询问用户是否希望将使用情况数据发送到 NV Access，以帮助在将来改进 NVDA。
 首次启动 NVDA 时，将出现一个对话框，询问您是否要在使用 NVDA 时向 NV Access 发送使用数据。
-您可以在“常规设置”部分的[允许 NVDA 获取用户统计信息 #GeneralSettingsGatherUsageStats]中阅读有关 NV Access 收集数据的更多信息。
+您可以在“常规设置”部分的[允许 NV Access 获取用户统计信息 #GeneralSettingsGatherUsageStats]中阅读有关 NV Access 收集数据的更多信息。
 注意：按“是”或“否”将保存此设置，除非重新安装 NVDA，否则该对话框将不再出现。
 但是，后续您可以在 NVDA 的常规设置面板中手动启用或禁用数据收集过程。要手动更改此设置，可以选中或取消选中[允许 NVDA 获取用户统计信息 #GeneralSettingsGatherUsageStats]复选框。
 
@@ -520,31 +520,31 @@ NVDA 菜单允许您控制 NVDA 设置、访问帮助、保存或者恢复您的
 | 朗读剪贴板文本 | NVDA+c | 朗读剪贴板内的任何字符。 |
 %kc:endInclude
 
-++ Speech modes ++[SpeechModes]
+++ 语音模式 ++[SpeechModes]
 
-The speech mode governs how screen content, notifications, responses to commands, and other output is spoken during operation of NVDA.
-The default mode is "talk", which speaks in situations that are expected when using a screen reader.
-However, under certain circumstances, or when running particular programs, you may find one of the other speech modes valuable.
+语音模式控制 NVDA 在运行期间如何读出屏幕内容、通知、命令响应和其他输出。
+默认模式是“正常朗读”，即在使用屏幕阅读器时正常读出所有内容。
+然而，在某些情况下，或在运行特定程序时，您可能会发现其他语音模式之一十分有用。
 
-The four available speech modes are:
-- Talk (Default): NVDA will speak normally in reaction to screen changes, notifications, and actions such as moving the focus, or issuing commands.
-- On-demand: NVDA will only speak when you use commands with a reporting function (e.g. report the title of the window); but it will not speak in reaction to actions such as moving the focus or the cursor.
-- Off: NVDA will not speak anything, however unlike sleep mode, it will silently react to commands.
-- Beeps: NVDA will replace normal speech with short beeps.
+四种可用的语音模式包括：
+- 正常朗读（默认）：NVDA 将正常朗读以响应屏幕变化、通知和移动焦点或发出命令等操作。
+- 手动朗读：NVDA 只会在您使用具有手动读出特定内容的按键或手势时朗读（例如读出窗口标题）；但不会对移动焦点或光标等操作做出响应。
+- 不朗读：NVDA 不会发出任何声音，但与睡眠模式不同的是会对按键或手势做出无声的响应。
+- 提示音：NVDA 将用短促的提示音取代正常语音。
 -
 
-The Beeps mode may be useful when some very verbose output is scrolling in a terminal window, but you don't care what it is, only that it is continuing to scroll; or in other circumstances when the fact that there is output is more relevant than the output itself.
+当了解输出状态比了解输出内容更重要时，提示音模式可能很有用，比如大量输出在终端窗口中滚动时，您无需了解具体的输出内容，只需确保其继续滚动。
 
-The On-demand mode may be valuable when you don't need constant feedback about what is happening on screen or on the computer, but you periodically need to check particular things using review commands, etc.
-Examples include while recording audio, when using screen magnification, during a meeting or a call, or as an alternative to beeps mode.
+当不需要屏幕或计算机发生情况的持续反馈，但需要定期使用按键或手势查看特定内容时，手动朗读模式可能很有价值。
+可能的场景包括录制音频时，使用放大镜时，会议或通话期间，亦或是作为提示音模式的替代方式。
 
-A gesture allows cycling through the various speech modes:
+下面的按键允许在各种语音模式之间循环：
 %kc:beginInclude
-|| Name | Key | Description |
-| Cycle Speech Mode | ``NVDA+s`` | Cycles between speech modes. |
+|| 名称 | 按键 | 描述 |
+| 循环语音模式 | ``NVDA+s`` | 在语音模式之间循环切换。 |
 %kc:endInclude
 
-If you only need to switch between a limited subset of speech modes, see [Modes available in the Cycle speech mode command #SpeechModesDisabling] for a way to disable unwanted modes.
+如果您只需要在少量语音模式之间切换，请参阅[循环语音模式中可用的模式 #SpeechModesDisabling]，了解禁用不需要语音模式的方法。
 
 + 使用 NVDA 进行导航 +[NavigatingWithNVDA]
 NVDA 允许您使用多种方式对系统进行浏览和导航，包括传统交互模式和 浏览光标（Review）。
@@ -564,10 +564,10 @@ NVDA 允许您使用多种方式对系统进行浏览和导航，包括传统交
 下面是一些在移动系统焦点时很有用的键盘命令：
 %kc:beginInclude
 || 名称 | 台式机键盘 | 笔记本键盘 | 描述 |
-| 朗读当前焦点 | NVDA+tab | NVDA+tab | 朗读当前焦点所在的对象和控件，连按两次将拼读此信息。 |
-| 朗读标题 | NVDA+t | NVDA+t | 朗读当前激活窗口的标题，连按两次将拼读此信息，连按三次将复制此信息到剪贴板。 |
-| 朗读激活的窗口 | NVDA+b | NVDA+b | 朗读当前窗口的所有控件(常用在对话框中)。 |
-| 朗读状态栏 | NVDA+end | NVDA+shift+end | 读出当前应用程序的状态栏，连按两次拼读该信息，连按三次复制该信息到剪贴板。 |
+| 朗读当前焦点 | ``NVDA+tab`` | ``NVDA+tab`` | 朗读当前焦点所在的对象和控件，连按两次将拼读此信息。 |
+| 朗读标题 | ``NVDA+t`` | ``NVDA+t`` | 朗读当前激活窗口的标题，连按两次将拼读此信息，连按三次将复制此信息到剪贴板。 |
+| 朗读激活的窗口 | ``NVDA+b`` | ``NVDA+b`` | 朗读当前窗口的所有控件(常用在对话框中)。 |
+| 朗读状态栏 | ``NVDA+end`` | ``NVDA+shift+end`` | 读出当前应用程序的状态栏，连按两次拼读该信息，连按三次复制该信息到剪贴板。 |
 
 %kc:endInclude
 
@@ -581,25 +581,25 @@ NVDA 将在您进行逐字、逐词甚至逐行移动时提示，也会对文本
 NVDA 提供下列与系统输入焦点相关的快捷命令：
 %kc:beginInclude
 || 名称 | 台式机键盘 | 笔记本键盘 | 描述 |
-| 全文朗读 | NVDA+下光标 | NVDA+a | 从系统输入焦点的当前位置开始朗读，焦点会随着朗读的内容移动。 |
-| 朗读当前行 | NVDA+上光标 | NVDA+l | 朗读系统输入焦点所在的行，连按两次拼读该行。 |
-| 朗读文本格式 | NVDA+f | NVDA+f | 朗读系统输入焦点当前位置的文本的格式信息，连按两次可使用浏览模式显示格式信息。 |
+| 全文朗读 | ``NVDA+下光标`` | ``NVDA+a`` | 从系统输入焦点的当前位置开始朗读，焦点会随着朗读的内容移动。 |
+| 朗读当前行 | ``NVDA+上光标`` | ``NVDA+l`` | 朗读系统输入焦点所在的行，连按两次拼读该行。 |
+| 朗读文本格式 | ``NVDA+f`` | ``NVDA+f`` | 朗读系统输入焦点当前位置的文本的格式信息，连按两次可使用浏览模式显示格式信息。 |
 | Report link destination | ``NVDA+k`` | ``NVDA+k`` | Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review |
-| 读出系统光标的位置信息 | NVDA+数字键盘删除 | NVDA+删除 | 读出系统光标处文本或对象的位置信息。例如，可能包括光标位置在文档内的百分比、与页面边缘的距离或确切的屏幕位置。连按两次获取详细信息。 |
-| 朗读当前选择的文本 | NVDA+Shift+上光标 | NVDA+shift+s | 朗读当前选择的所有文本 |
-| 下一个句子 | alt+下光标 | alt+下光标 | 移动系统焦点到下一个句子仅在 word 和 Outlook 中受到支持。 |
-| 上一个句子 | alt+上光标 | alt+上光标 | 移动系统焦点到上一个句子仅在 word 和 Outlook 中受到支持。 |
+| 读出系统光标的位置信息 | ``NVDA+数字键盘删除`` | ``NVDA+删除`` | 读出系统光标处文本或对象的位置信息。例如，可能包括光标位置在文档内的百分比、与页面边缘的距离或确切的屏幕位置。连按两次获取详细信息。 |
+| 朗读当前选择的文本 | ``NVDA+Shift+上光标`` | ``NVDA+shift+s`` | 朗读当前选择的所有文本 |
+| 下一个句子 | ``alt+下光标`` | ``alt+下光标`` | 移动系统焦点到下一个句子仅在 word 和 Outlook 中受到支持。 |
+| 上一个句子 | ``alt+上光标`` | ``alt+上光标`` | 移动系统焦点到上一个句子仅在 word 和 Outlook 中受到支持。 |
 
 当处于一个列表之内时，下面的键盘命令也是可用的：
 || 名称 | 按键 | 描述 |
-| 移动到上一列 | control+alt+左光标 | 移动输入焦点到上一列(仍在同一行内)。 |
-| 移动到下一列 | control+alt+右光标 | 移动输入焦点到下一列(仍在同一行内)。 |
-| 移动到上一行 | control+alt+上光标 | 移动输入焦点到上一行(仍在同一列内)。 |
-| 移动到下一行 | control+alt+下光标 | 移动输入焦点到下一行(仍在同一列内)。 |
-| 移动到第一列 | control+alt+行首 | 移动输入焦点到第一列(仍在同一行内)。 |
-| 移动到最后一列 | control+alt+行尾 | 移动输入焦点到最后一列(仍在同一行内)。 |
-| 移动到第一行 | control+alt+上翻页 | 移动输入焦点到第一行(仍在同一列内)。 |
-| 移动到最后一行 | control+alt+下翻页 | 移动输入焦点到最后一行(仍在同一列内)。 |
+| 移动到上一列 | ``control+alt+左光标`` | 移动输入焦点到上一列(仍在同一行内)。 |
+| 移动到下一列 | ``control+alt+右光标`` | 移动输入焦点到下一列(仍在同一行内)。 |
+| 移动到上一行 | ``control+alt+上光标`` | 移动输入焦点到上一行(仍在同一列内)。 |
+| 移动到下一行 | ``control+alt+下光标`` | 移动输入焦点到下一行(仍在同一列内)。 |
+| 移动到第一列 | ``control+alt+行首`` | 移动输入焦点到第一列(仍在同一行内)。 |
+| 移动到最后一列 | ``control+alt+行尾`` | 移动输入焦点到最后一列(仍在同一行内)。 |
+| 移动到第一行 | ``control+alt+上翻页`` | 移动输入焦点到第一行(仍在同一列内)。 |
+| 移动到最后一行 | ``control+alt+下翻页`` | 移动输入焦点到最后一行(仍在同一列内)。 |
 | 朗读当前列 | ``NVDA+control+alt+下光标`` | 从当前单元格开始垂直向下朗读至当前列的最后一个单元格。 |
 | 朗读当前行 | ``NVDA+control+alt+右光标`` | 从当前单元格开始水平向右朗读至当前行的最后一个单元格。 |
 | 朗读当前列（不移动输入焦点） | ``NVDA+control+alt+上光标`` | 在不移动输入焦点的情况下，从上到下垂直朗读当前列。 |
@@ -698,6 +698,7 @@ NVDA 允许您按照字、词、行的方式朗读[屏幕 #ScreenReview]、当�
 
 使用台式机布局时一个用来记住基本的文本查看命令的好方法就是把他们想象成一个三乘三的格子，从上到下依次是行、词、字，从左道右是上一个、当前、下一个。
 下面是布局的说明：
+|| . {.hideHeaderRow} | . | . |
 | 上一行 | 当前行 | 下一行 |
 | 上一个词 | 当前词 | 下一个词 |
 | 上一个字 | 当前字 | 下一个字 |
@@ -898,21 +899,21 @@ NVDA支持以下应用中的文档
 | 移动到浏览模式文档容器 | NVDA+control+空格 | 移动焦点到此嵌入对象之外，返回到包含此对象的文档。 |
 %kc:endInclude
 
-++ Native Selection Mode ++[NativeSelectionMode]
-By default when selecting text with the ``shift+arrow`` keys in Browse Mode, a selection is only made within NVDA's Browse Mode representation of the document, and not within the application itself.
-This means that the selection is not visible on screen, and copying text with ``control+c`` will only copy NVDA's plain text representation of the content. i.e. formatting of tables, or whether something is a link will not be copied.
-However, NVDA has a Native Selection Mode which can be turned on in particular Browse Mode documents (so far only Mozilla Firefox) which causes the document's native selection to follow NVDA's Browse Mode selection.
+++ 应用原生选择 ++[NativeSelectionMode]
+默认情况下，在浏览模式下使用 ``shift+箭头`` 键选择文本时，仅在 NVDA 的浏览模式文档中进行选择，而非在应用程序本身中选择。
+这意味着所选内容在屏幕上不可见，并且使用 ``Ctrl+c`` 复制文本将仅复制内容的纯文本形式。表格、链接等格式信息都不会被复制。
+但是，NVDA 有一个应用原生选择模式，可在特定的浏览模式文档（目前仅支持 Mozilla Firefox）中打开该模式，从而使原生的文档选择遵循 NVDA 的浏览模式选择。
 
 %kc:beginInclude
-|| Name | Key | Description |
-| Toggle Native Selection Mode on and off | ``NVDA+shift+f10`` | Toggles native selection mode on and off |
+|| 名称 | 按键 | 描述 |
+| 打开或关闭应用原生选择 | ``NVDA+shift+f10`` | 打开或关闭应用原生选择 |
 %kc:endInclude
 
-When Native Selection Mode is turned on, copying the selection with ``control+c`` will also use the application's own copy functionality, meaning that rich content will be copied to the clipboard, rather than plain text.
-This means that pasting this content into a program such as Microsoft Word or Excel, formatting such as tables, or whether something is a link will be included.
-Please note however that in native selection mode, some accessible labels or other information that NVDA generates in Browse Mode will not be included.
-Also, although the application will try its best to match the native selection to NVDA's Browse Mode selection, it may not always be completely accurate.
-However, for scenarios where you wish to copy an entire table or paragraph of rich content, this feature should prove useful.
+当应用原生选择打开时，使用 ``Ctrl+c`` 复制时，将使用应用程序的复制功能，这意味着格式信息等丰富内容将被复制到剪贴板，而不仅是纯文本。
+将这些内容粘贴到其他程序（如 Microsoft Word 或 Excel）时，格式（如表格、链接等）将包含在内。
+但请注意，在应用原生选择模式下，将不包括 NVDA 在浏览模式下生成的一些可访问标签或其他信息。
+此外，尽管应用程序会尽力将应用原生选择与 NVDA 的浏览模式选择相匹配，但可能并不总是完全准确。
+然而，对于希望复制整个表格或复杂格式的段落等情况，此功能应该很有用。
 
 + 阅读数学内容 +[ReadingMath]
 -使用 Design Science 发行的 MathPlayer 4，NVDA 可以阅读数学内容并与之交互。
@@ -1357,7 +1358,7 @@ NVDA为具有数学内容无障碍支持的书籍提供数学内容的阅读和�
 有关详细信息，请查阅[阅读数学内容 #ReadingMath]部分。
 
 +++ 文本选择 +++[KindleTextSelection]
-Kindle允许您对所选文本执行各种功能，包括获取字典定义，添加注释和突出显示，将文本复制到剪贴板以及搜索Web。
+Kindle 允许您对所选文本执行各种功能，包括获取字典定义，添加注释和突出显示，将文本复制到剪贴板以及搜索Web。
 为此，首先像在浏览模式下一样选择文本; 例如 通过使用shift和光标键。
 %kc:beginInclude
 选择文本后，按 Application 键或 Shift + F10 以显示使用选择的可用选项。
@@ -1479,7 +1480,7 @@ NVDA 的许多配置参数位于设置对话框，在该对话框中可以方便
 如果此选项被选中，NVDA 将在 Windows 登录后尽快启动。
 此选项仅可用于 NVDA 的安装版。
 
-==== 在欢迎界面启用 NVDA (需要管理员权限) ====[GeneralSettingsStartOnLogOnScreen]
+==== 在欢迎界面启用 NVDA（需要管理员权限） ====[GeneralSettingsStartOnLogOnScreen]
 如果您通过使用密码和用户登录 Windows，此选项将使 NVDA 在Windows 启动时自动运行。
 此选项仅可用于 NVDA 的安装版。
 
@@ -1498,7 +1499,7 @@ NVDA 的许多配置参数位于设置对话框，在该对话框中可以方便
 - 操作系统是 64 位还是 32 位
 -
 
-==== 允许NVDA获取用户统计信息 ====[GeneralSettingsGatherUsageStats]
+==== 允许 NV Access 获取用户统计信息 ====[GeneralSettingsGatherUsageStats]
 选中这一项之后，NV Access 会在检查更新时获取您的信息，以便统计 NVDA 用户的分布。比如使用的操作系统和所在国家的比例。
 NVDA 更新服务器只根据您的 IP 地址判断用户所在的国家/地区，但绝对不会记录您的 IP 地址。
 除了上面提到的检查更新时发送的信息之外，还包括：
@@ -1629,13 +1630,13 @@ NVDA 更新服务器只根据您的 IP 地址判断用户所在的国家/地区�
 
 如果在读出描述期间朗读了其他内容，或者如果您按下了“Control”键，延迟字符描述会被打断。
 
-==== Modes available in the Cycle speech mode command ====[SpeechModesDisabling]
-This checkable list allows selecting which [speech modes #SpeechModes] are included when cycling between them using ``NVDA+s``.
-Modes which are unchecked are excluded.
-By default all modes are included.
+==== 循环语音模式中可用的模式 ====[SpeechModesDisabling]
+这个列表中有几个复选框，决定了哪些模式可以在按 ``NVDA+s`` 循环切换[语音模式 #SpeechModes]时被切换到。
 
-For example if you do not need to use "beeps" and "off" mode you should uncheck these two, and keep both "talk" and "on-demand" checked.
-Note that it is necessary to check at least two modes.
+默认情况下包含所有模式。
+
+例如，如您不需要使用“提示音”和“不朗读”，您应取消选中这两个模式，并选中“正常朗读”和“手动朗读”。
+请注意，必须至少选中两种模式。
 
 +++ 选择语音合成器 +++[SelectSynthesizer]
 
@@ -2649,9 +2650,9 @@ NVDA 的语音字典比之单词替换更为强大。
 - “替换文本”编辑区域允许您定义用来替换此标点的文本。
 - 使用“标点符号级别”区域，您可以为希望读出的标点指定更低的级别（无、少数、多数或全部）。
 您也可以将级别设置为逐字移动；在这种情况下，无论使用的符号级别如何，都不会读出该符号，以下两种情况除外：
- - 逐字浏览时。
- - 当 NVDA 拼读包含该符号的文本时。
- -
+  - 逐字浏览时。
+  - 当 NVDA 拼读包含该符号的文本时。
+  -
 - “发送实际标点到合成器”区域定义核实把标点自身而不是替换文本传送到合成器。
 这对于让合成器读取该标点时的语调或停顿发生改变非常有用。
 例如，一个逗号可以让合成器暂停。
@@ -2701,8 +2702,8 @@ NVDA 的语音字典比之单词替换更为强大。
 注意:
 - 要模拟的键需要有快捷键或手势，要不然无法保存。
 - 有辅助键的按键模拟没有辅助键的按键会出问题，
-比如用 ctrl+m 模拟 a 键，最后效果是和 ctrl+a 一样
-因为模拟 a 键的时候，ctrl 键仍然被按下，故程序收到的是 Ctrl+a。
+比如用 ``ctrl+m`` 模拟 ``a`` 键，最后效果是和 ``ctrl+a`` 一样
+因为模拟 ``a`` 键的时候，``ctrl`` 键仍然被按下，故程序收到的是 ``Ctrl+a``。
 -
 
 当您完成修改之后，点击“确认”保存设置或点击“取消”按钮放弃。
@@ -4271,11 +4272,13 @@ nvda -q
 
 有一些命令行选项有长和短两个版本，而另外一些则只有长的版本。
 对于那些有短版本的命令行选项，您可以像这样的组合他们：
+|| . {.hideHeaderRow} | . |
 | ``nvda -mc CONFIGPATH`` | 按照指定的配置目录启动 NVDA 并在停用启动声音和启动消息。 |
 | ``nvda -mc CONFIGPATH --disable-addons`` | 在上一行的效果的基础上另外停用了插件。 |
 
 一些命令行选项接受附加参数，如日志记录级别或用户配置目录的路径。
 那些参数应该被放在选项之后，短版本使用空格分隔，长版本使用等于号(``=``)分隔。如：
+|| . {.hideHeaderRow} | . |
 | ``nvda -l 10`` | 告诉 NVDA 在日志记录级别为调试的状态下启动。 |
 | ``nvda --log-file=c:\nvda.log`` | 告诉 NVDA 记录自身的日志到 ``c:\nvda.log`` |
 | ``nvda --log-level=20 -f c:\nvda.log`` | 告诉 NVDA 设置日志记录级别为信息且将其自身的日志写在 ``c:\nvda.log`` |

@@ -554,6 +554,22 @@ class Gecko_ia2(VirtualBuffer):
 				{"Iaccessible::role": [oleacc.ROLE_SYSTEM_GROUPING]},
 				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("figure")]}
 			]
+		elif nodeType == "menuItem":
+			attrs = [
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_BUTTONMENU]}
+			]
+		elif nodeType == "toggleButton":
+			attrs = [
+				{"IAccessible::role": [IA2.IA2_ROLE_TOGGLE_BUTTON]}
+			]
+		elif nodeType == "progressBar":
+			attrs = [
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_PROGRESSBAR]}
+			]
+		elif nodeType == "math":
+			attrs = [
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_EQUATION]}
+			]
 		else:
 			return None
 		return attrs
