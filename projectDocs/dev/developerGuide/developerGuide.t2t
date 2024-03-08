@@ -896,21 +896,11 @@ NVDA will search for this file in the appropriate language directories.
 For example, if docFileName is set to readme.html and the user is using English, NVDA will open doc\en\readme.html.
 
 + Braille translation tables +[BrailleTables]
-
 Although NVDA ships with more than a hundred braille translation tables provided by [the liblouis project https://liblouis.io/] aimed at fitting most needs, it also supports the addition of custom tables.
-
 Custom tables must be placed in the brailleTables directory of an add-on or subdirectory of the scratchpad directory.
 These tables can either replace standard tables shipped with NVDA or be completely new ones.
-Tables are identified by their file name, which is a unique reference across all the different directories in which they are provided.
-However, providing a custom table with the same file name as a standard table requires you to define the table in the add-on's manifest.
-The only exception to this rule applies to tables that are included by other tables.
-While they don't have to be included in the manifest of the add-on, they can only be included from other tables that are part of the same add-on.
 
-Please refer to the [liblouis documentation https://liblouis.io/documentation/] for detailed information regarding the
-braille translation tables format.
-
-When adding a new table, some information must be provided such as its display name in the Preferences dialog, whether it supports input and/or output and whether it is for contracted braille.
-
+When adding a table, some information must be provided such as its display name in the Preferences dialog, whether it supports input and/or output and whether it is for contracted braille.
 When an add-on ships with tables, this information is included in its manifest in the optional brailleTables section.
 For example:
 ```
@@ -921,6 +911,7 @@ displayName = French (unified) 8 dot computer braille - Addition
 contracted = False
 output = True
 input = True
+
 [[no-no-8dot.utb]]
 displayName = Norwegian 8 dot computer braille - Replacement
 contracted = False
@@ -930,11 +921,21 @@ input = True
 ```
 
 In the above example, ``fr-bfu-tabmod-comp8.utb`` is a new table,  while ``no-no-8dot.utb`` replaces a table that is already included in NVDA.
-Both tables need to be shipped in the brailleTables directory of the add-on,
+Both tables need to be shipped in the brailleTables directory of the add-on.
+It is also possible to include a table in the manifest that is shipped with NVDA but otherwise unavailable for selection in the Preferences dialog.
+In that case, the table does not need to be shipped in the add-on's brailleTables directory.
+
+Providing a custom table, whether it has the same file name as a standard table or a different name, thus requires you to define the table in the add-on's manifest.
+The only exception to this rule applies to tables that are included within other tables.
+While they don't have to be included in the manifest of the add-on, they can only be included from other tables that are part of the same add-on.
+
+Please refer to the [liblouis documentation https://liblouis.io/documentation/] for detailed information regarding the braille translation tables format.
 
 Custom tables can also be placed in the brailleTables subdirectory of the scratchpad directory.
-In this case, the additional information can be placed in a file with the .ini extension in the exact same format as the example above.
-Many .ini files can provide information about different tables, allowing for a global .ini file, one .ini file per table, or any other combination.
+In this case, the table metadata can be placed in a ``manifest.ini`` file in the root of the scratchpad in the exact same format as the example above.
+Basically, this means that, whether using an add-on or the scratchpad, the requirements and implementation steps are equal.
+Note that a `manifest.ini`` file in the scratchpad is only parsed for braille table metadata.
+Other add-on metadata in the file is ignored.
 
 + NVDA Python Console +[PythonConsole]
 The NVDA Python console emulates the interactive Python interpreter from within NVDA.
