@@ -2727,7 +2727,7 @@ class AudioPanel(SettingsPanel):
 			minValue=0,
 			maxValue=100
 		)
-		self.bindHelpEvent("AppSoundVolume", self.appSoundVolSlider)
+		self.bindHelpEvent("OtherAppVolume", self.appSoundVolSlider)
 		self.appSoundVolSlider.SetValue(config.conf["audio"]["applicationsSoundVolume"])
 
 		# Translators: This is the label for a checkbox control in the
