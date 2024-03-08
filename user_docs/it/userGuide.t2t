@@ -1708,6 +1708,7 @@ L'indicatore della selezione non è affetto da questa funzione.
 Si tratta di una casella combinata che stabilisce se NVDA debba visualizzare o meno messaggi in braille e la loro durata in secondi sul display, prima che essi scompaiano automaticamente.
 
 Per attivare o disattivare la visualizzazione dei messaggi da qualsiasi posto, assegnare un gesto personalizzato utilizzando la [finestra di dialogo Gesti e tasti di immissione #InputGestures].
+
 ==== Timeout dei messaggi(sec) ====[BrailleSettingsMessageTimeout]
 Si tratta di un campo numerico che controlla per quanto tempo i messaggi di NVDA saranno mostrati sul Display Braille.
 Il messaggio sparirà immediatamente non appena si preme un cursor routing sulla barra braille, ma lo si potrà rileggere se si preme una combinazione di tasti che attivano il messaggio.
@@ -1826,6 +1827,8 @@ La disattivazione di questa opzione può migliorare la leggibilità.
 Per attivare o disattivare i punti 7 e 8 per la selezione da qualsiasi posto, si prega di assegnare un gesto personalizzato utilizzando la [finestra di dialogo tasti e gesti di immissione #InputGestures].
 
 +++ Selezione display braille +++[SelectBrailleDisplay]
+
+%kc:setting
 ==== Apri la finestra di dialogo Seleziona display Braille ====
 Tasto: ``NVDA+control+a``
 
@@ -1860,7 +1863,7 @@ Si tratta di una casella combinata che contiene le scelte possibili riferite al 
 
 Per impostazioni predefinite, NVDA supporta il riconoscimento automatico della porta, il che significa che la connessione con il dispositivo braille sarà stabilita automaticamente tramite la scansione dei dispositivi presenti nel sistema via USB e Bluetooth.
 Comunque, per alcuni display braille, sarà anche possibile stabilire manualmente la porta da utilizzare.
-Le opzioni più comuni sono "automatica" per far sì che NVDA stabilisca da solo la porta esatta da utilizzare, "USB", "bluetooth", e seriale, se il display braille supporta questo tipo di comunicazione.
+Le opzioni più comuni sono "automatica", per far sì che NVDA stabilisca da solo la porta esatta da utilizzare, "USB", "bluetooth", e seriale, se il display braille supporta questo tipo di comunicazione.
 
 Quest'ultima opzione non sarà disponibile se il display braille supporta soltanto il riconoscimento automatico delle porte.
 
@@ -1876,7 +1879,7 @@ Pertanto si consiglia di collegare al pc un solo Display Braille di un determina
 ==== Apri impostazioni audio ====
 Tasto: ``NVDA+control+u``
 
-La categoria Audio nella finestra di dialogo Impostazioni NVDA contiene opzioni che consentono di modificare diversi aspetti della periferica audio di uscit.
+La categoria Audio nella finestra di dialogo Impostazioni NVDA contiene opzioni che consentono di modificare diversi aspetti della periferica audio di uscita.
 
 ==== Periferica audio da utilizzare ====[SelectSynthesizerOutputDevice]
 Questa opzione permette di selezionare la scheda audio che NVDA utilizzerà per mandare i messaggi al sintetizzatore.
@@ -1896,11 +1899,10 @@ Non è possibile supportare l'attenuazione audio in versioni portable o temporan
 
 ==== Il volume dei suoni di NVDA segue il volume della voce ====[SoundVolumeFollowsVoice]
 
-|| Default | Disattivato |
- Opzioni
-  Disattivato, Attivato
-+:
-+
+|| . {.hideHeaderRow} | . |
+| Opzioni | Disattivato, Attivato |
+| Predefinito | Disattivato |
+
 
 Quando questa opzione è abilitata, il volume dei suoni e dei segnali acustici di NVDA seguirà l'impostazione del volume della voce in uso.
 Se si riduce il volume della voce, anche il volume dei suoni diminuirà.
@@ -1908,8 +1910,9 @@ Allo stesso modo, se si aumenta il volume della voce, aumenterà anche quello de
 Inoltre, ha effetto solo quando l'impostazione "Usa WASAPI per l'output audio" è abilitata.
 
 ==== Volume dei suoni di NVDA ====[SoundVolume]
-Questo cursore di avanzamento consente di impostare il volume dei suoni e dei beep di NVDA.
-L'impostazione ha effetto solo quando "Usa WASAPI per l'output audio" è abilitato e "Il volume dei suoni di NVDA segue il volume della voce" è disabilitato.
+Questo cursore di avanzamento consente di impostare il volume dei suoni e dei segnali acustici di NVDA.
+L'impostazione ha effetto solo quando l'opzione "Il volume dei suoni di NVDA segue il volume della voce" è disabilitata.
+La funzione non risulta disponibile se NVDA è stato avviato con l'impostazione [WASAPI disattivato per l'uscita audio #WASAPI] nelle Impostazioni avanzate.
 
 +++ Visione +++[VisionSettings]
 La categoria visione nelle impostazioni di NVDA consente di attivare, disattivare e configurare i [miglioramenti visivi #Vision].
@@ -2037,6 +2040,7 @@ Per modificare la quantità di testo letta da qualsiasi punto ci si trovi, si pr
 Se questa casella di controllo è attivata, NVDA leggerà le informazioni sugli oggetti man mano che il mouse si sposta al loro interno.
 Ciò comprende il ruolo (tipo) dell'oggetto nonché gli stati (selezionato/premuto), le coordinate delle celle nelle tabelle, ecc.
 Tenere presente che la lettura di alcuni dettagli dell'oggetto potrebbe dipendere da come sono regolate altre impostazioni, ad esempio nelle categorie [presentazione oggetti #ObjectPresentationSettings] o [Formattazione documento #DocumentFormattingSettings].
+
 ==== Coordinate audio quando il mouse si sposta ====[MouseSettingsAudio]
 Attivando questa casella di controllo si farà in modo che NVDA emetta dei segnali acustici man mano che il mouse si sposta, in modo che l'utente possa farsi un'idea della sua posizione in relazione allo schermo.
 Più in alto è la posizione del mouse sullo schermo, più acuti saranno i toni dei beep emessi.
@@ -2091,6 +2095,7 @@ Quando questa casella di controllo è attiva, NVDA filtrerà la gerarchia di ogg
 Per abilitare o disabilitare la modalità semplice da qualsiasi punto ci si trovi, assegnare un gesto personalizzato servendosi della [finestra gesti e tasti di immissione #InputGestures].
 
 +++ Presentazione oggetti +++[ObjectPresentationSettings]
+
 %kc:setting
 ==== Apri le impostazioni presentazione oggetti ====
 Tasto: ``NVDA+control+o``
@@ -2275,16 +2280,18 @@ Le opzioni di formattazione documento sono divise in gruppi.
   - nome carattere
   - dimensione carattere
   - attributi carattere
+  - Apici e pedici
   - Testo enfatizzato
   - Evidenziato (testo contrassegnato)
   - Stile
   - Colori
+  -
 - Informazioni documento
   - Commenti
   - Segnalibri
   - Revisioni
   - Errori ortografici
-  - Apici e pedici
+  -
 - Pagine e spaziatura
   - Numeri di pagina
   - Numeri di riga
@@ -2293,11 +2300,13 @@ Le opzioni di formattazione documento sono divise in gruppi.
   - Rientro paragrafi (ad esempio rientro prima riga)
   - Spaziatura righe (singola, doppia etc)
   - Allineamento
+  -
 - Informazioni tabella
   - tabelle
   - intestazioni riga/colonna (disattivato, righe, colonne, righe e colonne)
   - Coordinate delle celle delle tabelle
   - Bordi delle celle [(Disattivo, stili, sia colori che stili)
+  -
 - Elementi
   - collegamenti
   - intestazioni
@@ -2334,6 +2343,7 @@ Il segnale acustico aumenterà di altezza ad ogni spazio, mentre per una tabulaz
 
 Se si seleziona la casella di controllo "Ignora le righe vuote nel segnalare i rientri", i cambiamenti per i rientri non saranno annunciati per le righe vuote.
 Ciò può essere utile quando si legge un documento in cui vengono utilizzate righe vuote per separare blocchi di testo rientrati, come nel codice sorgente di programmazione.
+
 +++ Navigazione documento+++[DocumentNavigation]
 Questa categoria consente di regolare vari aspetti della navigazione del documento.
 
@@ -2570,8 +2580,12 @@ Con diverse API GUI storicamente popolari, il testo può essere visualizzato con
 Questa opzione attiva la gestione dell'audio attraverso un sistema chiamato Windows Audio Session API (WASAPI).
 WASAPI è un framework audio più moderno che può migliorare la reattività, le prestazioni e la stabilità dell'audio di NVDA, compresi sia il parlato che i suoni.
 Dopo aver modificato questa opzione, sarà necessario riavviare NVDA affinché i cambiamenti abbiano effetto.
+Se si disattiva il supporto a Wasapi, anche le seguenti opzioni verranno disabilitate:
+- [Il volume dei suoni di NVDA segue il volume della voce #SoundVolumeFollowsVoice]
+- [Volume dei suoni di NVDA #SoundVolume]
+-
 
-==== Categorie Debug Logging ====[AdvancedSettingsDebugLoggingCategories]
+	==== Categorie Debug Logging ====[AdvancedSettingsDebugLoggingCategories]
 Le caselle di controllo presenti in questo elenco consentono di abilitare categorie specifiche di messaggi log di NVDA.
 Si tenga presente che il log di questi messaggi può comportare un calo delle prestazioni e file di registro di grandi dimensioni.
 Attivare quindi le caselle di controllo soltanto se viene richiesto da uno sviluppatore.
@@ -2934,6 +2948,7 @@ Si può navigare tra gli add-on non compatibili tramite le [schede add-on dispon
 Inoltre, si può navigare tra gli add-on installati non compatibili tramite la [scheda add-on incompatibili #AddonStoreFilterStatus].
 
 + Strumenti aggiuntivi +[ExtraTools]
+
 ++ Visualizzatore log ++[LogViewer]
 Il visualizzatore log, situato alla voce strumenti del menu di NVDA, permette di mostrare tutte le informazioni di log dell'ultima sessione di NVDA.
 
@@ -3026,7 +3041,8 @@ In particolare, i seguenti problemi possono essere risolti eseguendo questo stru
 
 ++ Ricarica componenti aggiuntivi ++[ReloadPlugins]
 Questa voce, una volta attivata, ricarica tutti i plugin e i moduli specifici per le applicazioni senza riavviare NVDA. Risulta utile per gli sviluppatori.
-I plugin globali gestiscono il modo in cui NVDA interagisce con tutte le applicazioni.
+Gli appModule gestiscono il modo in cui NVDA interagisce con applicazioni specifiche.
+Invece, i plugin globali gestiscono il modo in cui NVDA interagisce con tutte le applicazioni.
 
 Potrebbero essere utili anche i seguenti comandi da tastiera di NVDA:
 %kc:beginInclude
@@ -3515,7 +3531,7 @@ Si possono reperire maggiori informazioni sui display nella loro [pagina di down
 
 +++ Seika Versione 3, 4, e 5 (40 celle), Seika80 (80 celle) +++[SeikaBrailleDisplays]
 - Questi display non supportano ancora la funzionalità di rilevamento automatico del display braille in background di NVDA.
-- Selezionare "Seika Braille Displays" per configurare manualmente
+- Quindi, bisogna selezionare "Seika Braille Displays" per configurarli manualmente
 - È necessario installare un driver per il dispositivo prima di utilizzare Seika v3/4/5/80.
 I driver sono [forniti dal produttore https://en.seika-braille.com/down/index.html].
 -
@@ -3537,9 +3553,10 @@ Si prega di consultare la documentazione del display per le descrizioni di dove 
 | Route to braille cell | routing |
 %kc:endInclude
 
+
 +++ MiniSeika (16, 24 celle), V6, e V6Pro (40 celle) +++[SeikaNotetaker]
 - La funzionalità di rilevamento automatico del display braille in background di NVDA è supportata tramite USB e Bluetooth.
-- Selezionare "Seika Notetaker" o "automatico" per configurare.
+- Selezionare "Seika Notetaker" o "automatico" per configurare questi display braille.
 - Non sono richiesti driver aggiuntivi quando si utilizza un display braille Seika Notetaker.
 -
 
@@ -3577,6 +3594,7 @@ Si prega di consultare la documentazione del display per le descrizioni di dove 
 | control+home | backspace+LJ up |
 | control+end | backspace+LJ down |
 
+
 ++ Nuovi modelli Papenmeier BRAILLEX ++[Papenmeier]
 Sono supportati i seguenti display braille: 
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
@@ -3585,8 +3603,7 @@ Sono supportati i seguenti display braille:
 - BRAILLEX Live 20, BRAILLEX Live e BRAILLEX Live Plus (USB e bluetooth)
 -
 
-Questi modelli non supportano ancora la funzione di rilevazione automatica in background.
-
+Questi modelli non supportano ancora la funzione di rilevamento automatica in background.
 C'è un'opzione nel driver USB del display che può causare problemi con il caricamento della barra braille.
 Provare quanto segue:
 + Assicurarsi di aver installato [il driver più recente https://www.papenmeier-rehatechnik.de/en/service/downloadcenter/software/articles/software-braille-devices.html].
@@ -3676,7 +3693,7 @@ Sono supportati i seguenti display braille:
 -
 
 Si noti che questi display braille si possono connettere solo tramite porta seriale.
-Per questo motivo, questi modelli non supportano la funzione di rilevazione automatica in background.
+Per questo motivo, questi modelli non supportano la funzione di rilevamento automatica in background.
 è quindi necessario selezionare la porta esatta alla quale la barra braille è connessa, dopo aver scelto il driver dalla finestra [Selezione Display Braille #SelectBrailleDisplay]. 
 
 La maggior parte dei dispositivi è dotata di una barra di navigazione facilitata (EAB) che permette di svolgere le operazioni in una modalità molto più rapida ed intuitiva..
@@ -4077,6 +4094,7 @@ Per i display che possiedono già una tastiera braille, Brltty gestisce autonoma
 Pertanto, le impostazioni tabella braille di immissione non sono rilevanti.
 
 BRLTTY non è coinvolto nelle funzioni di rilevamento automatico display braille di NVDA.
+
 Seguono i tasti che sono stati assegnati con NVDA a Brltty.
 Si legga la [tabella dei tasti di Brltty http://mielke.cc/brltty/doc/KeyBindings/] per comprendere come i comandi di Brltty sono mappati sul Display Braille.
 %kc:beginInclude
@@ -4084,8 +4102,15 @@ Si legga la [tabella dei tasti di Brltty http://mielke.cc/brltty/doc/KeyBindings
 | Scorre Display Braille indietro | fwinlt (va indietro di una finestra) |
 | Scorre Display Braille avanti | fwinrt (va avanti di una finestra) |
 | Sposta il Display Braille alla riga precedente | lnup (va su di una riga) |
-| Sposta il Display Braille alla riga successiva | lndn (va già di una riga) |
+| Sposta il Display Braille alla riga successiva | lndn (va giù di una riga) |
 | Route to braille cell | route (porta il cursore al carattere) |
+| Attiva / disattiva aiuto tastiera | ``learn`` (entra/esce dalla modalità apprendimento comandi) |
+| Apre il menu di NVDA | ``prefmenu`` (Entra/esce dal menu preferenze) |
+| Ripristina la configurazione | ``prefload`` (ripristina le preferenze dal disco) |
+| Salva configurazione | ``prefsave`` (salva le preferenze su disco) |
+| Annuncio orario | ``time`` (mostra la data e l'ora correnti) |
+| Legge la riga alla posizione del cursore di controllo | ``say_line`` (Legge la riga corrente) |
+| Dire tutto usando il cursore di controllo | ``say_below`` (Legge dalla posizione della riga corrente fino a fine schermo) |
 %kc:endInclude
 
 ++ Tivomatic Caiku Albatross 46/80 ++[Albatross]
@@ -4095,7 +4120,7 @@ Non è necessario installare alcun driver specifico per utilizzare questi displa
 
 Nota: la velocità di trasmissione (baudrate) 19200 è fortemente consigliata.
 Se necessario, impostare il valore di velocità baud su 19200 dal menu del dispositivo braille.
-Sebbene il driver supporti una velocità di trasmissione di 9600, non ha modo di controllare la velocità di trasmissione utilizzata dal display.
+Sebbene il driver supporti una velocità di trasmissione di 9600, non vi è modo modo di controllare la velocità di trasmissione utilizzata dal display.
 Poiché 19200 è il baud rate predefinito dalla barra, il driver utilizzerà quello come valore standard.
 Se le velocità in baud non sono le stesse, il driver potrebbe comportarsi in modo imprevisto.
 
@@ -4126,7 +4151,7 @@ Consultare la documentazione della barra braille per informazioni sulla posizion
 | Sposta il navigatore ad oggetti sull'oggetto precedente | ``f5`` |
 | Sposta il navigatore ad oggetti sull'oggetto successivo | ``f6`` |
 | Legge l'oggetto attuale del navigatore | ``f7`` |
-| Riporta informazioni sulla posizione del testo o dell'oggetto in corrispondenza del cursore di controllo | ``f8`` |
+| Legge informazioni sulla posizione del testo o dell'oggetto in corrispondenza del cursore di controllo | ``f8`` |
 | Mostra impostazioni braille | ``f1+home1``, ``f9+home2`` |
 | Legge la barra di stato e vi sposta il navigatore ad oggetti | ``f1+end1``, ``f9+end2`` |
 | Scorre tra le forme del cursore braille | ``f1+eCursor1``, ``f9+eCursor2`` |
@@ -4237,7 +4262,9 @@ Ciò permette di stabilire se un determinato problema è causato da un component
 
 Per fare un esempio, è possibile uscire da NVDA digitando la stringa seguente nella finestra esegui di Windows:
 
+```
 NVDA -q
+```
 
 Alcuni parametri possiedono una versione breve e lunga, altri invece soltanto una lunga.
 Per quelli che possiedono solo la versione breve, si possono unire nel modo seguente:

@@ -76,6 +76,7 @@ Esta opción agora anuncia información importante adicional acerca dun obxecto 
 Recoméndase moito aos usuarios de Poedit 1 que actualicen a Poedit 3 se queren contar coa accesibilidade mellorada en Poedit, coma os atallos para ler as notas e os comentarios para o traductor. (#15313, #7303, @LeonarddeR)
 - O visualizador Braille e o visualizador de voz agora desactiváronse en modo seguro. (#15680)
 - Durante a navegación de obxectos, os obxectos deshabilitados (non dispoñibles) xa non se ignorarán. (#15477, @CyrilleB79)
+- Engadido un índice ao documento de ordes chave. (#16106)
 -
 
 == Arranxo de Fallos ==
@@ -192,7 +193,9 @@ A configuración de ``numCells`` aínda está admitida para pantallas braille de
 - Arranxado un fallo onde ao eliminar ficheiros git-tracked durante ``scons -c`` resultaba en falta de interfaces UIA COM ao recompilar. (#7070, #10833, @hwf1324)
 - Arranxado un fallo onde algúns cambios de código non se detectaban ao compilar ``dist``, o que impedía que se activara unha nova compilación.
 Agora ``dist`` sempre recompila. (#13372, @hwf1324)
+- Un ``gui.nvdaControls.MessageDialog`` cun tipo predeterminado de estándar, xa non lanza unha excepción de conversión none porque non se asignara ningún son. (#16223, @XLTechie)
 -
+
 
 === Cambios que Rompen a API ===
 Estos son os cambios que rompen a API.
@@ -202,7 +205,6 @@ Por favor abre un GitHub issue si o teu complemento ten un problema coa actualiz
 - Actualizadas as dependencias pip:
   - configobj a 5.1.0dev commit ``e2ba4457c4651fa54f8d59d8dcdd3da950e956b8``. (#15544)
   - Comtypes a 1.2.0. (#15513, @codeofdusk)
-  - fast_diff_match_patch a 2.0.1. (#15514, @codeofdusk)
   - Flake8 a 4.0.1. (#15636, @lukaszgo1)
   - py2exe a 0.13.0.1dev commit ``4e7b2b2c60face592e67cb1bc935172a20fa371d``. (#15544) 
   - robotframework a 6.1.1. (#15544)
@@ -287,6 +289,14 @@ Utiliza ``bdDetect.DeviceType.*`` a cambio. (#15772, @LeonarddeR).
 - Utilizar ``gui.ExecAndPump`` está obsoleto - por favor usa ``systemUtils.ExecAndPump`` a cambio. (#15852, @lukaszgo1)
 -
 
+
+= 2023.3.4 =
+Trátase dun parche para arranxar un problema do instalador.
+
+== Arranxo de Fallos ==
+- Arranxado un fallo que provocaba que o proceso de NVDA fallase ao non saír correctamente.
+Ao se executar o instalador, provocaba que a instalación entrase nun estado irrecuperable. (#16122, #16123)
+-
 
 = 2023.3.3 =
 Trátase dun parche para solucionar un problema de seguridade.
