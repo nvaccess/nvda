@@ -11,14 +11,15 @@ def _createEmptyTempFileForDeletingFile(
 		dir: str | None = None,
 		prefix: str | None = None,
 		suffix: str | None = None,
-	) -> str:
+) -> str:
 	"""
 	Create an empty temporary file and return its path.
 
-	tempfile.mktemp is deprecated as creating a temporary file in the system's temporary directory is a security risk,
+	tempfile.mktemp is deprecated as creating a temp file in the system's temp directory is a security risk,
 	without holding it open, as the file could be created by an attacker with the same name.
-	tempfile.mkstemp / tempfile.NamedTemporaryFile was created for the purpose of creating temporary files securely.
-	However, we do not need this secure behaviour, as we are just creating a temp file to move files for future deletion.
+	mkstemp / NamedTemporaryFile was created for the purpose of creating temporary files securely.
+	However, we do not need this secure behaviour,
+	as we are just creating a temp file to move a file to for future deletion.
 	As such, we close the file handle and return the path.
 	"""
 	fh, tempPath = tempfile.mkstemp(dir=dir, suffix=suffix, prefix=prefix)

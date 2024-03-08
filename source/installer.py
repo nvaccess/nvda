@@ -620,7 +620,7 @@ def tryCopyFile(sourceFilePath,destFilePath):
 		log.debugWarning("Unable to copy %s, error %d"%(sourceFilePath,errorCode))
 		if not os.path.exists(destFilePath):
 			raise OSError("error %d copying %s to %s"%(errorCode,sourceFilePath,destFilePath))
-		tempPath = _createEmptyTempFileForDeletingFile(dir=os.path.dirname(destFilePath)
+		tempPath = _createEmptyTempFileForDeletingFile(dir=os.path.dirname(destFilePath))
 		try:
 			os.replace(destFilePath, tempPath)
 		except (WindowsError,OSError):
