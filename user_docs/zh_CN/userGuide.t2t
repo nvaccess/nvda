@@ -1334,10 +1334,10 @@ NVDA offers enhanced support for Poedit 3.4 or newer.
 
 %kc:beginInclude
 || 名称 | 按键 | 描述 |
-| 朗读翻译者注释 | ``control+shift+a`` | 为翻译者朗读注释。 If pressed twice, presents the notes in browse mode |
-| 朗读注释 | ``control+shift+c`` | 朗读注释窗口的所有注释。 If pressed twice, presents the comment in browse mode |
-| Report Old Source Text | ``control+shift+o`` | Reports the old source text, if any. If pressed twice, presents the text in browse mode |
-| Report Translation Warning | ``control+shift+w`` | Reports a translation warning, if any. If pressed twice, presents the warning in browse mode |
+| 朗读翻译者注释 | ``control+shift+a`` | 读出翻译者注释。连按两次，在浏览模式下显示该信息 |
+| 朗读批注 | ``control+shift+c`` | 读出窗口内的批注。连按两次，在浏览模式下显示该信息 |
+| 朗读旧的源文本 | ``control+shift+o`` | 读出旧的源文本（如果有）。连按两次，在浏览模式下显示该信息 |
+| 朗读翻译警告 | ``control+shift+w`` | 读出翻译警告（如果有）。连按两次，在浏览模式下显示该信息 |
 %kc:endInclude
 
 ++ Kindle for PC ++[Kindle]
@@ -4227,6 +4227,7 @@ NVDA 还可以使用 ``-s`` [命令行选项 #CommandLineOptions]在安全模式
 - 将配置和其他设置信息保存到磁盘。
 - 将按键与手势设置保存到磁盘。
 - [配置文件 #ConfigurationProfiles]创建、删除、重命名配置文件等功能。
+- 使用 [``-c`` 命令行选项 #CommandLineOptions]加载自定义配置文件夹
 - 更新 NVDA 以及创建便携版。
 - [插件商店 #AddonsManager]
 - [NVDA Python 控制台 #PythonConsole]
@@ -4288,9 +4289,9 @@ nvda -q
 | ``-h`` | ``--help`` | 显示命令行帮助并退出。 |
 | ``-q`` | ``--quit`` | 退出已运行的 NVDA 副本。 |
 | ``-k`` | ``--check-running`` | 通过退出代码报告 NVDA 是否在运行，0 表示运行，1 表示没有运行。 |
-| ``-f LOGFILENAME`` | ``--log-file=LOGFILENAME`` | 日志消息需要写入的文件。 |
-| ``-l LOGLEVEL`` | ``--log-level=LOGLEVEL`` | 日志消息记录的最低级别（调试 10、输入/输出 12、调试警告 15、信息 20、停用 100 |
-| ``-c CONFIGPATH`` | ``--config-path=CONFIGPATH`` | 所有 NVDA 设置存储的路径。 |
+| ``-f LOGFILENAME`` | ``--log-file=LOGFILENAME`` | 日志消息需要写入的文件。如果启用了安全模式，则始终禁用日志记录。 |
+| ``-l LOGLEVEL`` | ``--log-level=LOGLEVEL`` | 日志消息记录的最低级别（调试 10、输入/输出 12、调试警告 15、信息 20、停用 100）。如果启用了安全模式，则始终禁用日志记录。 |
+| ``-c CONFIGPATH`` | ``--config-path=CONFIGPATH`` | 所有 NVDA 设置存储的路径。如果启用了安全模式，则会强制使用默认值。 |
 | 无 | ``--lang=LANGUAGE`` | 覆盖设置中的 NVDA 语言。比如用户默认传入“Windows”，英语传入“en”等。 |
 | ``-m`` | ``--minimal`` | 无声、无界面、无启动通知等。 |
 | ``-s`` | ``--secure`` | 以[安全模式 #SecureMode]启动 NVDA |

@@ -4221,8 +4221,9 @@ Có thể chạy NVDA ở chế độ bảo vệ với [tùy chọn dòng lệnh
 Chế độ bảo vệ sẽ vô hiệu:
 
 - Lưu cấu hình và các thiết lập khác xuống đĩa
-- Lưu gesture map xuống đĩa
+- Lưu các thao tác được gán xuống đĩa
 - Các tính năng của [Hồ Sơ Cấu Hình #ConfigurationProfiles] như tạo, xóa, đổi tên hồ sơ, v...v....
+- Tải các thư mục cấu hình tùy biến bằng [tùy chọn dòng lệnh ``-c`` #CommandLineOptions]
 - Cập nhật NVDA và tạo bản chạy trực tiếp
 - [Cửa Hàng Add-on #AddonsManager]
 - [NVDA Python console #PythonConsole]
@@ -4284,9 +4285,9 @@ Sau đây là các tùy chọn dòng lệnh cho NVDA:
 | -h | --help | Hiển thị trợ giúp dòng lệnh và đóng |
 | -q | --quit | Đóng bản NVDA đang chạy |
  | -k | --check-running | Thông báo NVDA đang chạy hay không chạy thông qua mã exit; 0 nếu đang chạy và 1 nếu không chạy |
-| -f LOGFILENAME | --log-file=LOGFILENAME | Tập tin để ghi các thông điệp log vào |
-| -l LOGLEVEL | --log-level=LOGLEVEL | Cấp độ thấp nhất của thông điệp log (dò lỗi 10, đầu vào / đầu ra 12, cảnh báo gỡ lỗi 15, thông tin 20, vô hiệu 100) |
-| -c CONFIGPATH | --config-path=CONFIGPATH | Đường dẫn để lưu tất cả cấu hình của NVDA |
+| ``-f LOGFILENAME`` | ``--log-file=LOGFILENAME`` | Tập tin để ghi các thông điệp log vào. Việc ghi log bị vô hiệu khi bật chế độ bảo vệ. |
+| ``-l LOGLEVEL`` | ``--log-level=LOGLEVEL`` | Cấp độ thấp nhất của thông điệp log (dò lỗi 10, đầu vào / đầu ra 12, cảnh báo gỡ lỗi 15, thông tin 20, vô hiệu 100). Việc ghi log bị vô hiệu khi bật chế độ bảo vệ. |
+| ``-c CONFIGPATH`` | ``--config-path=CONFIGPATH`` | Đường dẫn để lưu tất cả cấu hình của NVDA. Giá trị mặc định là bắt buộc nếu bật chế độ bảo vệ. |
 | Không có | --lang=LANGUAGE | Bỏ qua ngôn ngữ đã cấu hình của NVDA. Thiết lập là "Windows" cho ngôn ngữ mặc định của người dùng hiện tại, "en" là tiếng Anh, v...v.... |
 | -m | --minimal | Không âm thanh, không giao diện, không thông báo bắt đầu, v...v... |
 | -s | --secure | Khởi động NVDA trong [Chế Độ bảo vệ #SecureMode] |
