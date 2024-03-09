@@ -104,27 +104,3 @@ def getFileVersionInfo(name, *attributes):
 		else:
 			fileVersionInfo[attr] = ctypes.wstring_at(r.value, l.value-1)
 	return fileVersionInfo
-
-
-def raiseIfNotDir(directory):
-	"""Convenience function based on os.path.isdir,
-	however instead of returning True/False, this function raises an exception
-	when the given path isn't a directory.
-	:raises FileNotFoundError: When the directory doesn't exist.
-	:raises LookupError: When the path exists, but isn't a directory.
-	"""
-	st = os.stat(directory)
-	if not os.path.stat.S_ISDIR(st.st_mode):
-		raise LookupError(f"The path {directory!r} isn't a directory")
-
-
-def raiseIfNotFile(file):
-	"""Convenience function based on os.path.isfile,
-	however instead of returning True/False, this function raises an exception
-	when the given path isn't a file.
-	:raises FileNotFoundError: When the file doesn't exist.
-	:raises LookupError: When the path exists, but isn't a file.
-	"""
-	st = os.stat(file)
-	if not os.path.stat.S_ISREG(st.st_mode):
-		raise LookupError(f"The path {file!r} isn't a file")

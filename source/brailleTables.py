@@ -15,7 +15,6 @@ from configobj import ConfigObj, flatten_errors
 from configobj.validate import Validator
 
 import config
-import fileUtils
 import globalVars
 from logHandler import log
 
@@ -681,7 +680,6 @@ _tablesDirs = _tablesDirs.new_child()
 
 def _loadTablesFromManifestSection(source: str, directory: str, tablesDict: dict):
 	for fileName, tableConfig in tablesDict.items():
-		fileUtils.raiseIfNotFile(os.path.join(directory, fileName))
 		addTable(
 			fileName=fileName,
 			displayName=tableConfig["displayName"],
@@ -703,8 +701,8 @@ def initialize():
 				continue
 			log.debug(f"Found {len(tablesDict)} braille table entries in manifest for add-on {addon.name!r}")
 			directory = os.path.join(addon.path, "brailleTables")
-			fileUtils.raiseIfNotDir(directory)
-			_tablesDirs[addon.name] = directory
+			if os.path.isdir(directory):
+				_tablesDirs[addon.name] = directory
 			_loadTablesFromManifestSection(addon.name, directory, tablesDict)
 		except Exception:
 			log.exception(f"Error while applying custom braille tables config from addon {addon.name!r}")
