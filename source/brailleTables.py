@@ -11,7 +11,8 @@ import os
 from locale import strxfrm
 from typing import NamedTuple
 
-from configobj import ConfigObj
+from configobj import ConfigObj, flatten_errors
+from configobj.validate import Validator
 
 import config
 import fileUtils
@@ -681,7 +682,14 @@ _tablesDirs = _tablesDirs.new_child()
 def _loadTablesFromManifestSection(source: str, directory: str, tablesDict: dict):
 	for fileName, tableConfig in tablesDict.items():
 		fileUtils.raiseIfNotFile(os.path.join(directory, fileName))
-		addTable(fileName, **tableConfig, source=source)
+		addTable(
+			fileName=fileName,
+			displayName=tableConfig["displayName"],
+			contracted=tableConfig["contracted"],
+			input=tableConfig["input"],
+			output=tableConfig["output"],
+			source=source,
+		)
 
 
 def initialize():
@@ -713,13 +721,15 @@ def initialize():
 			if not os.path.isfile(manifestPath):
 				return
 			_tablesDirs[TABLE_SOURCE_SCRATCHPAD] = directory
-			configspec = {"brailleTables": addonHandler.AddonManifest.configspec["brailleTables"].dict()}
+			configspec = {"brailleTables": addonHandler.AddonManifest.configspec["brailleTables"]}
 			try:
 				with open(manifestPath, "rb") as file:
 					manifest = ConfigObj(file, configspec=configspec)
 					section = manifest.get("brailleTables")
 					if not section:
-						pass
+						return
+					if (res := manifest.validate(Validator(), preserve_errors=True)) is not True:
+						raise ValueError(f"Errors in scratchpad manifest: {flatten_errors(manifest, res)}")
 					log.debug(f"Found {len(tablesDict)} braille table entries in manifest for scratchpad")
 					_loadTablesFromManifestSection(TABLE_SOURCE_SCRATCHPAD, directory, section)
 			except Exception:

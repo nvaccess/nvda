@@ -1045,9 +1045,6 @@ docFileName = string(default=None)
 				value = tableConfig.get("displayName")
 				if value:
 					self["brailleTables"][fileName]["displayName"] = value
-				else:
-					error = f"No display name provided for braille table '{fileName}'"
-					self._errors = error if not self._errors else "\n".join((self._errors, error))
 
 	@property
 	def errors(self):
