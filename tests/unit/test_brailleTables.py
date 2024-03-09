@@ -1,17 +1,19 @@
-#tests/unit/test_brailleTables.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2018-2024 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 """Unit tests for the brailleTables module.
 """
 
-import unittest
-import brailleTables
 import os.path
+import unittest
 
-class TestFBrailleTables(unittest.TestCase):
+import brailleTables
+import louisHelper
+
+
+class TestBrailleTables(unittest.TestCase):
 	"""Tests for braille table files and their existence."""
 
 	def test_tableExistence(self):
@@ -20,7 +22,7 @@ class TestFBrailleTables(unittest.TestCase):
 		for table in tables:
 			self.assertTrue(
 				os.path.isfile(os.path.join(brailleTables.TABLES_DIR, table.fileName)),
-				msg="{table} table not found".format(table=table.displayName)
+				msg=f"{table.displayName} table not found"
 			)
 
 	def test_renamedTableExistence(self):
@@ -28,3 +30,12 @@ class TestFBrailleTables(unittest.TestCase):
 		tableNames = [table.fileName for table in brailleTables.listTables()]
 		for name in brailleTables.RENAMED_TABLES.values():
 			self.assertIn(name, tableNames)
+
+	def test_tableResolving(self):
+		"""Test whether our custom braille table resolver can resolve all defined tables."""
+		tables = brailleTables.listTables()
+		for table in tables:
+			self.assertEqual(
+				list(louisHelper._resolveTableInner(tables=[table.fileName])),
+				[os.path.join(brailleTables.TABLES_DIR, table.fileName)],
+			)
