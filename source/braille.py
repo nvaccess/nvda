@@ -67,7 +67,8 @@ from editableText import EditableText
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
 
-
+FALLBACK_TABLE = config.conf.getConfigValidation(("braille", "translationTable")).default
+"""Table to use if the output table configuration is invalid."""
 roleLabels: typing.Dict[controlTypes.Role, str] = {
 	# Translators: Displayed in braille for an object which is a
 	# window.
@@ -2027,7 +2028,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def __init__(self):
 		louisHelper.initialize()
-		self._table: brailleTables.BrailleTable | None = None
+		self._table: brailleTables.BrailleTable = brailleTables.getTable(FALLBACK_TABLE)
 		self.display: Optional[BrailleDisplayDriver] = None
 		self._displaySize: int = 0
 		"""
@@ -2087,8 +2088,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.ackTimerHandle = None
 		louisHelper.terminate()
 
+	table: brailleTables.BrailleTable
+	"""Type definition for auto prop '_get_table/_set_table'"""
+
 	def _get_table(self) -> brailleTables.BrailleTable:
-		"""The translation table to use for braille input.
+		"""The translation table to use for braille output.
 		"""
 		return self._table
 
@@ -2654,16 +2658,15 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		newTableName = brailleTables.RENAMED_TABLES.get(tableName)
 		if newTableName:
 			tableName = config.conf["braille"]["translationTable"] = newTableName
-		if not self._table or tableName != self._table.fileName:
+		if tableName != self._table.fileName:
 			try:
 				self._table = brailleTables.getTable(tableName)
 			except LookupError:
-				defaultTableName = config.conf.getConfigValidation(("braille", "translationTable")).default
 				log.error(
 					f"Invalid translation table ({tableName}), "
-					f"falling back to default ({defaultTableName})."
+					f"falling back to default ({FALLBACK_TABLE})."
 				)
-				self._table = brailleTables.getTable(defaultTableName)
+				self._table = brailleTables.getTable(FALLBACK_TABLE)
 
 	def handleDisplayUnavailable(self):
 		"""Called when the braille display becomes unavailable.

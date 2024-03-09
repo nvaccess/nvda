@@ -27,8 +27,8 @@ Normally, all that is required is to create and execute a L{BrailleInputGesture}
 as there are built-in gesture bindings for braille input.
 """
 
-#: Table to use if the input table configuration is invalid.
 FALLBACK_TABLE = config.conf.getConfigValidation(("braille", "inputTable")).default
+"""Table to use if the input table configuration is invalid."""
 DOT7 = 1 << 6
 DOT8 = 1 << 7
 #: This bit flag must be added to all braille cells when using liblouis with dotsIO.
@@ -55,7 +55,7 @@ class BrailleInputHandler(AutoPropertyObject):
 
 	def __init__(self):
 		super().__init__()
-		self._table: brailleTables.BrailleTable | None = None
+		self._table: brailleTables.BrailleTable = brailleTables.getTable(FALLBACK_TABLE)
 		#: A buffer of entered braille cells so that state set by previous cells can be maintained;
 		#: e.g. capital and number signs.
 		self.bufferBraille = []
@@ -83,12 +83,11 @@ class BrailleInputHandler(AutoPropertyObject):
 		self.handlePostConfigProfileSwitch()
 		config.post_configProfileSwitch.register(self.handlePostConfigProfileSwitch)
 
-	# Provided by auto property: L{_get_table} and L{_set_table}
 	table: brailleTables.BrailleTable
+	"""Type definition for auto prop '_get_table/_set_table'"""
 
-	def _get_table(self):
+	def _get_table(self) -> brailleTables.BrailleTable:
 		"""The translation table to use for braille input.
-		@rtype: L{brailleTables.BrailleTable}
 		"""
 		return self._table
 
@@ -443,7 +442,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		if newTableName:
 			tableName = config.conf["braille"]["inputTable"] = newTableName
 		table = config.conf["braille"]["inputTable"]
-		if not self._table or table != self._table.fileName:
+		if table != self._table.fileName:
 			try:
 				self._table = brailleTables.getTable(tableName)
 			except LookupError:
