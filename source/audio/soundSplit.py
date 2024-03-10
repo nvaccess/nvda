@@ -15,6 +15,7 @@ from pycaw.utils import AudioSession, AudioUtilities
 import ui
 from utils.displayString import DisplayStringIntEnum
 from dataclasses import dataclass
+import os
 
 VolumeTupleT = tuple[float, float]
 
@@ -135,18 +136,27 @@ class VolumeSetter(AudioSessionNotification):
 
 	def on_session_created(self, new_session: AudioSession):
 		pid = new_session.ProcessId
+		process = new_session.Process
+		if process is not None:
+			exe = os.path.basename(process.exe())
+			isNvda = exe.lower() == "nvda.exe"
+		else:
+			isNvda = False
 		channelVolume = new_session.channelAudioVolume()
 		channelCount = channelVolume.GetChannelCount()
 		if channelCount != 2:
 			log.warning(f"Audio session for pid {pid} has {channelCount} channels instead of 2 - cannot set volume!")
 			self.foundSessionWithNot2Channels = True
 			return
-		if pid != globalVars.appPid:
-			channelVolume.SetChannelVolume(0, self.leftVolume, None)
-			channelVolume.SetChannelVolume(1, self.rightVolume, None)
-		else:
+		if pid == globalVars.appPid:
 			channelVolume.SetChannelVolume(0, self.leftNVDAVolume, None)
 			channelVolume.SetChannelVolume(1, self.rightNVDAVolume, None)
+		elif isNvda:
+			# This might be NVDA running on secure screen; don't adjust its volume
+			pass
+		else:
+			channelVolume.SetChannelVolume(0, self.leftVolume, None)
+			channelVolume.SetChannelVolume(1, self.rightVolume, None)
 
 
 def setSoundSplitState(
