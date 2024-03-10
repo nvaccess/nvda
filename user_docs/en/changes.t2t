@@ -8,8 +8,14 @@ What's New in NVDA
 == New Features ==
 - New key commands:
   - New Quick Navigation command ``p`` for jumping to next/previous text paragraph in browse mode. (#15998, @mltony)
-  - New unassigned Quick Navigation command to jump to the next/previous figure. (#10826)
-  - New unassigned Quick Navigation command to jump to vertically aligned paragraphs. (#15999, @mltony)
+  - New unassigned Quick Navigation commands, which can be used to jump to the next/previous:
+    - figure (#10826)
+    - vertically aligned paragraph (#15999, @mltony)
+    - menu item (#16001, @mltony)
+    - toggle button (#16001, @mltony)
+    - progress bar (#16001, @mltony)
+    - math formula (#16001, @mltony)
+    -
   -
 - Reporting row and column headers is now supported in contenteditable HTML elements. (#14113)
 - Added the option to disable the reporting of figures and captions in Document Formatting settings. (#10826, #14349)
@@ -58,6 +64,7 @@ What's New in NVDA
   - ``alt+upArrow`` is now mapped to ``dot2+dot3+dot7+space``
   - ``alt+downArrow`` is now mapped to ``dot5+dot6+dot7+space``
   -
+- Fixed a bug causing NVDA to fail to read the ribbon and options within Geekbench. (#16251, @mzanm)
 -
 
 
@@ -65,6 +72,7 @@ What's New in NVDA
 Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
 
 - Instantiating ``winVersion.WinVersion`` objects with unknown Windows versions above 10.0.22000 such as 10.0.25398 returns "Windows 11 unknown" instead of "Windows 10 unknown" for release name. (#15992, @josephsl)
+- Make the AppVeyor build process easier for NVDA forks, by adding configurable variables in appveyor.yml to disable or modify NV Access specific portions of the build scripts. (#16216, @XLTechie)
 -
 
 === Deprecations ===

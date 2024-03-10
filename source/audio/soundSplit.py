@@ -16,6 +16,7 @@ import ui
 from utils.displayString import DisplayStringIntEnum
 from dataclasses import dataclass
 import os
+from comtypes import COMError
 
 VolumeTupleT = tuple[float, float]
 
@@ -79,7 +80,11 @@ activeCallback: AudioSessionNotification | None = None
 def initialize() -> None:
 	if nvwave.usingWasapiWavePlayer():
 		global audioSessionManager
-		audioSessionManager = AudioUtilities.GetAudioSessionManager()
+		try:
+			audioSessionManager = AudioUtilities.GetAudioSessionManager()
+		except COMError:
+			log.exception("Could not initialize audio session manager")
+			return
 		state = SoundSplitState(config.conf["audio"]["soundSplitState"])
 		config.conf["audio"]["applicationsMuted"] = False
 		setSoundSplitState(state)
