@@ -1,18 +1,17 @@
-# A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2018-2024 NV Access Limited, Babbage B.V., Leonard de Ruijter
+#tests/unit/test_brailleTables.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
 
 """Unit tests for the brailleTables module.
 """
 
-import os.path
 import unittest
-
 import brailleTables
+import os.path
 
-
-class TestBrailleTables(unittest.TestCase):
+class TestFBrailleTables(unittest.TestCase):
 	"""Tests for braille table files and their existence."""
 
 	def test_tableExistence(self):
@@ -21,7 +20,7 @@ class TestBrailleTables(unittest.TestCase):
 		for table in tables:
 			self.assertTrue(
 				os.path.isfile(os.path.join(brailleTables.TABLES_DIR, table.fileName)),
-				msg=f"{table.displayName} table not found"
+				msg="{table} table not found".format(table=table.displayName)
 			)
 
 	def test_renamedTableExistence(self):
