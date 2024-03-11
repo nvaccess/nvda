@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2017-2024 NV Access Limited, Babbage B.V., Cyrille Bougot, Julien Cochuyt
+# Copyright (C) 2017-2023 NV Access Limited, Babbage B.V., Cyrille Bougot
 
 """NVDA unit testing.
 All unit tests should reside within this package and should be
@@ -82,9 +82,6 @@ vision.initialize()
 import speech  # noqa: E402
 
 speech.initialize()
-
-import brailleTables  # noqa: E402
-brailleTables.initialize()
 
 import braille
 # Disable auto detection of braille displays when unit testing.
