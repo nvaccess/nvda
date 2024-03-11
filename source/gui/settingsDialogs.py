@@ -1,10 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers,
 # Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed, Łukasz Golonka, Aaron Cannon,
 # Adriani90, André-Abush Clause, Dawid Pieper, Heiko Folkerts, Takuya Nishimoto, Thomas Stivers,
-# jakubl7545, mltony, Rob Meredith, Burman's Computer and Education Ltd.
+# jakubl7545, mltony, Rob Meredith, Burman's Computer and Education Ltd, hwf1324.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import logging
@@ -13,7 +13,7 @@ import copy
 import os
 from enum import IntEnum
 from locale import strxfrm
-
+import re
 import typing
 import wx
 from NVDAState import WritePaths
@@ -42,6 +42,7 @@ import gui.contextHelp
 import globalVars
 from logHandler import log
 import nvwave
+import audio
 import audioDucking
 import queueHandler
 import braille
@@ -145,11 +146,10 @@ class SettingsDialog(
 		if state is cls.DialogState.DESTROYED and not multiInstanceAllowed:
 			# The dialog has been destroyed by wx, but the instance is still available.
 			# This indicates there is something keeping it alive.
-			log.debugWarning(f"Opening new settings dialog while instance still exists: {firstMatchingInstance!r}")
-			# Handle gracefully
-			SettingsDialog._instances[firstMatchingInstance] = cls.DialogState.CREATED
-			return firstMatchingInstance
-		obj = super(SettingsDialog, cls).__new__(cls, *args, **kwargs)
+			raise RuntimeError(
+				f"Cannot open new settings dialog while instance still exists: {firstMatchingInstance!r}"
+			)
+		obj = super().__new__(cls, *args, **kwargs)
 		SettingsDialog._instances[obj] = cls.DialogState.CREATED
 		return obj
 
@@ -888,8 +888,11 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
-			# Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
-			item=self.allowUsageStatsCheckBox=wx.CheckBox(self,label=_("Allow the NVDA project to gather NVDA usage statistics"))
+			item = self.allowUsageStatsCheckBox = wx.CheckBox(
+				self,
+				# Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+				label=_("Allow NV Access to gather NVDA usage statistics")
+			)
 			self.bindHelpEvent("GeneralSettingsGatherUsageStats", self.allowUsageStatsCheckBox)
 			item.Value=config.conf["update"]["allowUsageStats"]
 			if globalVars.appArgs.secure:
@@ -1028,7 +1031,7 @@ class SpeechSettingsPanel(SettingsPanel):
 	def makeSettings(self, settingsSizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: A label for the synthesizer on the speech panel.
-		synthLabel = _("&Synthesizer")
+		synthLabel = _("Synthesizer")
 		synthBoxSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label=synthLabel)
 		synthBox = synthBoxSizer.GetStaticBox()
 		synthGroup = guiHelper.BoxSizerHelper(self, sizer=synthBoxSizer)
@@ -1649,6 +1652,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.speechModesList.Checked = [
 			mIndex for mIndex in range(len(self._allSpeechModes)) if mIndex not in excludedModes
 		]
+		self.speechModesList.Bind(wx.EVT_CHECKLISTBOX, self._onSpeechModesListChange)
 		self.speechModesList.Select(0)
 
 	def _appendDelayedCharacterDescriptions(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
@@ -1686,6 +1690,31 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			mIndex for mIndex in range(len(self._allSpeechModes)) if mIndex not in self.speechModesList.CheckedItems
 		]
 
+	def _onSpeechModesListChange(self, evt: wx.CommandEvent):
+		# continue event propagation to custom control event handler
+		# to guarantee user is notified about checkbox being checked or unchecked
+		evt.Skip()
+		if (
+			evt.GetInt() == self._allSpeechModes.index(speech.SpeechMode.talk)
+			and not self.speechModesList.IsChecked(evt.GetInt())
+		):
+			if gui.messageBox(
+				_(
+					# Translators: Warning shown when 'talk' speech mode is disabled in settings.
+					"You did not choose Talk as one of your speech mode options. "
+					"Please note that this may result in no speech output at all. "
+					"Are you sure you want to continue?"
+				),
+				# Translators: Title of the warning message.
+				_("Warning"),
+				wx.YES | wx.NO | wx.ICON_WARNING,
+				self,
+			) == wx.NO:
+				self.speechModesList.SetCheckedItems(
+					list(self.speechModesList.GetCheckedItems())
+					+ [self._allSpeechModes.index(speech.SpeechMode.talk)]
+				)
+
 	def isValid(self) -> bool:
 		enabledSpeechModes = self.speechModesList.CheckedItems
 		if len(enabledSpeechModes) < 2:
@@ -1699,22 +1728,6 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 				self,
 			)
 			return False
-		if self._allSpeechModes.index(speech.SpeechMode.talk) not in enabledSpeechModes:
-			if gui.messageBox(
-				_(
-					# Translators: Warning shown when 'talk' speech mode is disabled in settings.
-					(
-						"You did not choose Talk as one of your speech mode options. "
-						"Please note that this may result in no speech output at all. "
-						"Are you sure you want to continue?"
-					)
-				),
-				# Translators: Title of the warning message.
-				_("Warning"),
-				wx.YES | wx.NO | wx.ICON_WARNING,
-				self,
-			) == wx.NO:
-				return False
 		return super().isValid()
 
 
@@ -2550,6 +2563,12 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.framesCheckBox = elementsGroup.addItem(wx.CheckBox(elementsGroupBox, label=_("Fra&mes")))
 		self.framesCheckBox.Value=config.conf["documentFormatting"]["reportFrames"]
 
+		self.figuresCheckBox = elementsGroup.addItem(
+			# Translators: This is the label for a checkbox in the
+			# document formatting settings panel.
+			wx.CheckBox(elementsGroupBox, label=_("&Figures and captions")))
+		self.figuresCheckBox.Value = config.conf["documentFormatting"]["reportFigures"]
+
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
 		self.clickableCheckBox = elementsGroup.addItem(wx.CheckBox(elementsGroupBox, label=_("&Clickable")))
@@ -2605,6 +2624,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportLandmarks"]=self.landmarksCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportArticles"] = self.articlesCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFrames"]=self.framesCheckBox.Value
+		config.conf["documentFormatting"]["reportFigures"] = self.figuresCheckBox.Value
 		config.conf["documentFormatting"]["reportClickable"]=self.clickableCheckBox.Value
 
 
@@ -2698,7 +2718,79 @@ class AudioPanel(SettingsPanel):
 		self.bindHelpEvent("SoundVolume", self.soundVolSlider)
 		self.soundVolSlider.SetValue(config.conf["audio"]["soundVolume"])
 
+		# Translators: This is a label for the sound split combo box in the Audio Settings dialog.
+		soundSplitLabelText = _("&Sound split mode:")
+		self.soundSplitComboBox = sHelper.addLabeledControl(
+			soundSplitLabelText,
+			wx.Choice,
+			choices=[mode.displayString for mode in audio.SoundSplitState]
+		)
+		self.bindHelpEvent("SelectSoundSplitMode", self.soundSplitComboBox)
+		index = config.conf["audio"]["soundSplitState"]
+		self.soundSplitComboBox.SetSelection(index)
+
+		self._appendSoundSplitModesList(sHelper)
+
 		self._onSoundVolChange(None)
+		
+		audioAwakeTimeLabelText = _(
+			# Translators: The label for a setting in Audio settings panel
+			# to change how long the audio device is kept awake after speech
+			"Time to &keep audio device awake after speech (seconds)"
+		)
+		minTime = int(config.conf.getConfigValidation(("audio", "audioAwakeTime")).kwargs["min"])
+		maxTime = int(config.conf.getConfigValidation(("audio", "audioAwakeTime")).kwargs["max"])
+		self.audioAwakeTimeEdit = sHelper.addLabeledControl(
+			audioAwakeTimeLabelText,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=minTime,
+			max=maxTime,
+			initial=config.conf["audio"]["audioAwakeTime"]
+		)
+		self.bindHelpEvent("AudioAwakeTime", self.audioAwakeTimeEdit)
+		self.audioAwakeTimeEdit.Enable(nvwave.usingWasapiWavePlayer())
+
+	def _appendSoundSplitModesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
+		self._allSoundSplitModes = list(audio.SoundSplitState)
+		self.soundSplitModesList: nvdaControls.CustomCheckListBox = settingsSizerHelper.addLabeledControl(
+			# Translators: Label of the list where user can select sound split modes that will be available.
+			_("&Modes available in the 'Cycle sound split mode' command:"),
+			nvdaControls.CustomCheckListBox,
+			choices=[mode.displayString for mode in self._allSoundSplitModes]
+		)
+		self.bindHelpEvent("CustomizeSoundSplitModes", self.soundSplitModesList)
+		includedModes: list[int] = config.conf["audio"]["includedSoundSplitModes"]
+		self.soundSplitModesList.Checked = [
+			mIndex for mIndex in range(len(self._allSoundSplitModes)) if mIndex in includedModes
+		]
+		self.soundSplitModesList.Bind(wx.EVT_CHECKLISTBOX, self._onSoundSplitModesListChange)
+		self.soundSplitModesList.Select(0)
+
+	def _onSoundSplitModesListChange(self, evt: wx.CommandEvent):
+		# continue event propagation to custom control event handler
+		# to guarantee user is notified about checkbox being checked or unchecked
+		evt.Skip()
+		if (
+			evt.GetInt() == self._allSoundSplitModes.index(audio.SoundSplitState.OFF)
+			and not self.soundSplitModesList.IsChecked(evt.GetInt())
+		):
+			if gui.messageBox(
+				_(
+					# Translators: Warning shown when 'OFF' sound split mode is disabled in settings.
+					"You did not choose 'Off' as one of your sound split mode options. "
+					"Please note that this may result in no speech output at all "
+					"in case one of your audio channels is malfunctioning. "
+					"Are you sure you want to continue?"
+				),
+				# Translators: Title of the warning message.
+				_("Warning"),
+				wx.YES | wx.NO | wx.ICON_WARNING,
+				self,
+			) == wx.NO:
+				self.soundSplitModesList.SetCheckedItems(
+					list(self.soundSplitModesList.GetCheckedItems())
+					+ [self._allSoundSplitModes.index(audio.SoundSplitState.OFF)]
+				)
 
 	def onSave(self):
 		if config.conf["speech"]["outputDevice"] != self.deviceList.GetStringSelection():
@@ -2716,10 +2808,20 @@ class AudioPanel(SettingsPanel):
 		config.conf["audio"]["soundVolumeFollowsVoice"] = self.soundVolFollowCheckBox.IsChecked()
 		config.conf["audio"]["soundVolume"] = self.soundVolSlider.GetValue()
 
+		index = self.soundSplitComboBox.GetSelection()
+		config.conf["audio"]["soundSplitState"] = index
+		audio.setSoundSplitState(audio.SoundSplitState(index))
+		config.conf["audio"]["includedSoundSplitModes"] = [
+			mIndex
+			for mIndex in range(len(self._allSoundSplitModes))
+			if mIndex in self.soundSplitModesList.CheckedItems
+		]
 		if audioDucking.isAudioDuckingSupported():
 			index = self.duckingList.GetSelection()
 			config.conf["audio"]["audioDuckingMode"] = index
 			audioDucking.setAudioDuckingMode(index)
+		
+		config.conf["audio"]["audioAwakeTime"] = self.audioAwakeTimeEdit.GetValue()
 
 	def onPanelActivated(self):
 		self._onSoundVolChange(None)
@@ -2733,6 +2835,23 @@ class AudioPanel(SettingsPanel):
 			wasapi
 			and not self.soundVolFollowCheckBox.IsChecked()
 		)
+		self.soundSplitComboBox.Enable(wasapi)
+		self.soundSplitModesList.Enable(wasapi)
+
+	def isValid(self) -> bool:
+		enabledSoundSplitModes = self.soundSplitModesList.CheckedItems
+		if len(enabledSoundSplitModes) < 1:
+			log.debugWarning("No sound split modes enabled.")
+			gui.messageBox(
+				# Translators: Message shown when no sound split modes are enabled.
+				_("At least one sound split mode has to be checked."),
+				# Translators: The title of the message box
+				_("Error"),
+				wx.OK | wx.ICON_ERROR,
+				self,
+			)
+			return False
+		return super().isValid()
 
 
 class AddonStorePanel(SettingsPanel):
@@ -3284,7 +3403,36 @@ class AdvancedPanelControls(
 		self.playErrorSoundCombo.SetSelection(config.conf["featureFlag"]["playErrorSound"])
 		self.playErrorSoundCombo.defaultValue = self._getDefaultValue(["featureFlag", "playErrorSound"])
 
+		# Translators: This is the label for a textfield in the
+		# advanced settings panel.
+		textParagraphRegexLabelText = _("Regular expression for text paragraph navigation")
+		self.textParagraphRegexEdit = sHelper.addLabeledControl(
+			textParagraphRegexLabelText,
+			wxCtrlClass=wx.TextCtrl,
+			size=(self.Parent.scaleSize(300), -1),
+		)
+		self.textParagraphRegexEdit.SetValue(config.conf["virtualBuffers"]["textParagraphRegex"])
+		self.bindHelpEvent("TextParagraphRegexEdit", self.textParagraphRegexEdit)
+		self.textParagraphRegexEdit.defaultValue = self._getDefaultValue(["virtualBuffers", "textParagraphRegex"])
+
 		self.Layout()
+
+	def isValid(self) -> bool:
+		regex = self.textParagraphRegexEdit.GetValue()
+		try:
+			re.compile(regex)
+		except re.error as e:
+			log.debugWarning("Failed to compile text paragraph regex", exc_info=True)
+			gui.messageBox(
+				# Translators: Message shown when invalid text paragraph regex entered
+				_("Failed to compile text paragraph regular expression: %s") % str(e),
+				# Translators: The title of the message box
+				_("Error"),
+				wx.OK | wx.ICON_ERROR,
+				self,
+			)
+			return False
+		return True
 
 	def onOpenScratchpadDir(self,evt):
 		path=config.getScratchpadDir(ensureExists=True)
@@ -3320,17 +3468,18 @@ class AdvancedPanelControls(
 			and self.wasapiComboBox.isValueConfigSpecDefault()
 			and set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems)
 			and self.playErrorSoundCombo.GetSelection() == self.playErrorSoundCombo.defaultValue
+			and self.textParagraphRegexEdit.GetValue() == self.textParagraphRegexEdit.defaultValue
 			and True  # reduce noise in diff when the list is extended.
 		)
 
 	def restoreToDefaults(self):
 		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
 		self.selectiveUIAEventRegistrationCombo.SetSelection(
-			self.selectiveUIAEventRegistrationCombo.defaultValue == 'auto'
+			self.selectiveUIAEventRegistrationCombo.defaultValue
 		)
 		self.UIAInMSWordCombo.SetSelection(self.UIAInMSWordCombo.defaultValue)
 		self.UIAInMSExcelCheckBox.SetValue(self.UIAInMSExcelCheckBox.defaultValue)
-		self.consoleCombo.SetSelection(self.consoleCombo.defaultValue == 'auto')
+		self.consoleCombo.SetSelection(self.consoleCombo.defaultValue)
 		self.UIAInChromiumCombo.SetSelection(self.UIAInChromiumCombo.defaultValue)
 		self.enhancedEventProcessingComboBox.resetToConfigSpecDefault()
 		self.annotationsDetailsCheckBox.SetValue(self.annotationsDetailsCheckBox.defaultValue)
@@ -3338,7 +3487,7 @@ class AdvancedPanelControls(
 		self.brailleLiveRegionsCombo.resetToConfigSpecDefault()
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
-		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue == 'auto')
+		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue)
 		self.wtStrategyCombo.resetToConfigSpecDefault()
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
 		self.loadChromeVBufWhenBusyCombo.resetToConfigSpecDefault()
@@ -3347,6 +3496,7 @@ class AdvancedPanelControls(
 		self.wasapiComboBox.resetToConfigSpecDefault()
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
 		self.playErrorSoundCombo.SetSelection(self.playErrorSoundCombo.defaultValue)
+		self.textParagraphRegexEdit.SetValue(self.textParagraphRegexEdit.defaultValue)
 		self._defaultsRestored = True
 
 	def onSave(self):
@@ -3385,6 +3535,9 @@ class AdvancedPanelControls(
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
 		config.conf["featureFlag"]["playErrorSound"] = self.playErrorSoundCombo.GetSelection()
+		config.conf["virtualBuffers"]["textParagraphRegex"] = (
+			self.textParagraphRegexEdit.GetValue()
+		)
 
 
 class AdvancedPanel(SettingsPanel):
@@ -3469,6 +3622,11 @@ class AdvancedPanel(SettingsPanel):
 		processPendingEvents()
 		self.advancedControls.Enable(evt.IsChecked())
 
+	def isValid(self) -> bool:
+		if not self.advancedControls.isValid():
+			return False
+		return super().isValid()
+
 
 class BrailleSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the braille panel
@@ -3479,7 +3637,7 @@ class BrailleSettingsPanel(SettingsPanel):
 
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: A label for the braille display on the braille panel.
-		displayLabel = _("Braille &display")
+		displayLabel = _("Braille display")
 
 		displaySizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label=displayLabel)
 		displayBox = displaySizer.GetStaticBox()

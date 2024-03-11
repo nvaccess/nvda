@@ -35,6 +35,7 @@ import core
 import NVDAState
 from contextlib import contextmanager
 import threading
+import winKernel
 
 if typing.TYPE_CHECKING:
 	from NVDAObjects import NVDAObject  # noqa: F401
@@ -42,6 +43,8 @@ if typing.TYPE_CHECKING:
 
 _watchdogObserver: typing.Optional["WatchdogObserver"] = None
 ignoreInjected=False
+_lastInjectedKeyUp: tuple[int, int] | None = None
+_injectionDoneEvent: int | None = None
 
 # Fake vk codes.
 # These constants should be assigned to the name that NVDA will use for the key.
@@ -140,23 +143,19 @@ def shouldUseToUnicodeEx(focus: Optional["NVDAObject"] = None):
 	from NVDAObjects.window import Window
 	from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport
 	return (
+		# The focused NVDA object should be a real window
+		isinstance(focus, Window)
 		# This is only possible in Windows 10 1607 and above
-		winVersion.getWinVer() >= winVersion.WIN10_1607
+		and winVersion.getWinVer() >= winVersion.WIN10_1607
 		and (  # Either of
 			# We couldn't inject in-process, and its not a legacy console window without keyboard support.
 			# console windows have their own specific typed character support.
 			(
 				not focus.appModule.helperLocalBindingHandle
-				and (
-					not isinstance(focus, Window)
-					or focus.windowClassName != 'ConsoleWindowClass'
-				)
+				and focus.windowClassName != 'ConsoleWindowClass'
 			)
 			# or the focus is within a UWP app, where WM_CHAR never gets sent
-			or (
-				isinstance(focus, Window)
-				and focus.windowClassName.startswith('Windows.UI.Core')
-			)
+			or focus.windowClassName.startswith('Windows.UI.Core')
 			# Or this is a console with keyboard support, where WM_CHAR messages are doubled
 			or isinstance(focus, KeyboardHandlerBasedTypedCharSupport)
 		)
@@ -285,11 +284,15 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""
 	try:
 		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers
-		# Injected keys should be ignored in some cases.
-		if injected and (ignoreInjected or not config.conf['keyboard']['handleInjectedKeys']):
-			return True
-
 		keyCode = (vkCode, extended)
+		# Injected keys should be ignored in some cases.
+		if injected:
+			if not config.conf['keyboard']['handleInjectedKeys']:
+				return True
+			if ignoreInjected:
+				if keyCode == _lastInjectedKeyUp:
+					winKernel.kernel32.SetEvent(_injectionDoneEvent)
+				return True
 
 		if passKeyThroughCount >= 1:
 			if lastPassThroughKeyDown == keyCode:
@@ -623,7 +626,12 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		# Now actually execute the script.
 		super().executeScript(script)
 
+	#: The maximum amount of time (in ms) to wait for keys injected by NVDA to be
+	#: received by NVDA.
+	_INJECTION_WAIT_TIMEOUT: int = 10
+
 	def send(self):
+		global _lastInjectedKeyUp, _injectionDoneEvent
 		keys = []
 		for vk, ext in self.generalizedModifiers:
 			if vk == VK_WIN:
@@ -638,6 +646,11 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		keys.append((self.vkCode, self.scanCode, self.isExtended))
 
 		with ignoreInjection():
+			handleInjectedKeys = config.conf['keyboard']['handleInjectedKeys']
+			if handleInjectedKeys:
+				_lastInjectedKeyUp = (keys[0][0], keys[0][2])
+				if not _injectionDoneEvent:
+					_injectionDoneEvent = winKernel.createEvent()
 			if winUser.getKeyState(self.vkCode) & 32768:
 				# This key is already down, so send a key up for it first.
 				winUser.keybd_event(self.vkCode, self.scanCode, self.isExtended + 2, 0)
@@ -648,6 +661,11 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			# Send key up events for the keys in reverse order.
 			for vk, scan, ext in reversed(keys):
 				winUser.keybd_event(vk, scan, ext + 2, 0)
+			if handleInjectedKeys:
+				# Wait for the keys to be received by NVDA. We don't do this if
+				# handleInjectedKeys is disabled because we just ignore all injected keys
+				# in that case.
+				winKernel.waitForSingleObject(_injectionDoneEvent, self._INJECTION_WAIT_TIMEOUT)
 
 	@classmethod
 	def fromName(cls, name):

@@ -150,7 +150,8 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 		_showAddonRequiresNVDAUpdateDialog(parentWindow, bundle._addonGuiModel)
 		return False  # Exit early, addon does not have required support
 	elif bundle.canOverrideCompatibility:
-		if _shouldInstallWhenAddonTooOldDialog(parentWindow, bundle._addonGuiModel):
+		shouldInstall, rememberChoice = _shouldInstallWhenAddonTooOldDialog(parentWindow, bundle._addonGuiModel)
+		if shouldInstall:
 			# Install incompatible version
 			bundle.enableCompatibilityOverride()
 		else:
@@ -218,7 +219,7 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 	try:
 		# Use context manager to ensure that `done` and `Destroy` are called on the progress dialog afterwards
 		with doneAndDestroy(progressDialog):
-			systemUtils.ExecAndPump(addonHandler.installAddonBundle, bundle)
+			addonObj = systemUtils.ExecAndPump[addonHandler.Addon](addonHandler.installAddonBundle, bundle).funcRes
 			if prevAddon:
 				from addonStore.dataManager import addonDataManager
 				assert addonDataManager
@@ -235,6 +236,9 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 			_("Error"),
 			wx.OK | wx.ICON_ERROR
 		)
+	finally:
+		if addonObj is not None:
+			addonObj._cleanupAddonImports()
 	return False
 
 

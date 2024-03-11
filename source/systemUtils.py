@@ -18,8 +18,16 @@ from ctypes import (
 	windll,
 )
 from typing import (
-	Any,
+	Generic,
+	Optional,
 )
+from typing_extensions import (
+	# Uses `TypeVar` from `typing_extensions`, to be able to specify default type.
+	# This should be changed to use version from `typing`
+	# when updating to version of Python supporting PEP 696.
+	TypeVar,
+)
+
 import winKernel
 import winreg
 import shellapi
@@ -205,15 +213,22 @@ def _isSystemClockSecondsVisible() -> bool:
 		return False
 
 
-class ExecAndPump(threading.Thread):
+_execAndPumpResT = TypeVar("_execAndPumpResT", default=None)
+
+
+class ExecAndPump(threading.Thread, Generic[_execAndPumpResT]):
 	"""Executes the given function with given args and kwargs in a background thread,
 	while blocking and pumping in the current thread.
 	"""
 
-	def __init__(self, func: Callable[..., Any], *args, **kwargs) -> None:
+	def __init__(self, func: Callable[..., _execAndPumpResT], *args, **kwargs) -> None:
 		self.func = func
 		self.args = args
 		self.kwargs = kwargs
+		# Intentionally uses older syntax with `Optional`, instead of `_execAndPumpResT | None`,
+		# as latter is not yet supported for unions potentially containing two instances of `None`
+		# (see CPython issue 107271).
+		self.funcRes: Optional[_execAndPumpResT] = None
 		fname = repr(func)
 		super().__init__(
 			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}({fname})"
@@ -233,7 +248,7 @@ class ExecAndPump(threading.Thread):
 
 	def run(self):
 		try:
-			self.func(*self.args, **self.kwargs)
+			self.funcRes = self.func(*self.args, **self.kwargs)
 		except Exception as e:
 			self.threadExc = e
 			log.debugWarning("task had errors", exc_info=True)

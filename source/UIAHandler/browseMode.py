@@ -373,6 +373,7 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 	# UIA browseMode documents cannot remember caret positions across loads (I.e. when going back a page in Edge) 
 	# Because UIA TextRanges are opaque and are tied specifically to one particular document.
 	shouldRememberCaretPositionAcrossLoads=False
+	_nativeAppSelectionMode = True
 
 	def event_UIA_activeTextPositionChanged(self, obj, nextHandler, textRange=None):
 		if not self.isReady:
@@ -492,6 +493,13 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 				UIAHandler.UIA_ControlTypePropertyId, UIAHandler.UIA_TabItemControlTypeId
 			)
 			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
+		elif nodeType == "progressBar":
+			condition = UIAHandler.handler.clientObject.createPropertyCondition(
+				UIAHandler.UIA_ControlTypePropertyId,
+				UIAHandler.UIA_ProgressBarControlTypeId
+			)
+			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
+
 		elif nodeType=="nonTextContainer":
 			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:True},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ComboBoxControlTypeId})
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)

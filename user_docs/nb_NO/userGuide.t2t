@@ -984,6 +984,7 @@ Når NVDA ser etter oppdateringer, manuelt eller automatisk, må NVDA sende litt
 - Gjeldende versjon av NVDA
 - Versjon av operativsystemet
 - Om operativsystemet er 64- eller 32-biters
+-
 
 ==== La NVDA-prosjektet få tilgang til bruksstatistikk for NVDA ====[GeneralSettingsGatherUsageStats]
 Hvis dette er aktivert, vil NV Access benytte informasjon fra Se etter oppdateringer for å spore antallet brukere, inkludert visse demografiske verdier slik som operativsystem og opprinnelsesland.
@@ -994,6 +995,7 @@ Bortsett fra informasjonen som er påkrevd for å se etter oppdateringer, sendes
 - Navnet på gjeldende talesyntese som er i bruk (inkludert navnet på tillegget driveren kommer fra)
 - Navnet på gjeldende leselist som er i bruk (inkludert navnet på tillegget driveren kommer fra)
 - Gjeldende punktskrifttabell for utdata (hvis punktskrift benyttes)
+-
 
 Denne informasjonen hjelper NV Access i stor grad med å prioritere framtidig utvikling av NVDA.
 
@@ -2018,16 +2020,17 @@ Det er også mange varianter som kan velges for å justere lyden av stemmen.
    #SynthSettingsRing]) will contain all the voices from all the installed SAPI 5 engines found on your system.
 
 ++ Microsoft Speech Platform ++[MicrosoftSpeechPlatform]
-   The Microsoft Speech Platform provides voices for many languages which are normally used in the development of
-   server-based speech applications.
-   These voices can also be used with NVDA.
-   To use these voices, you will need to install two components:
+The Microsoft Speech Platform provides voices for many languages which are normally used in the development of
+server-based speech applications.
+These voices can also be used with NVDA.
+To use these voices, you will need to install two components:
+
 - Microsoft Speech Platform - Runtime (Version 11), x86: http://www.microsoft.com/download/en/details.aspx?id=27225
 - Microsoft Speech Platform - Runtime Languages (Version 11): http://www.microsoft.com/download/en/details.aspx?id=27224
-   - This page includes many files for both speech recognition and text-to-speech.
-   Choose the files containing the TTS data for the desired languages/voices.
-   For example, the file MSSpeech_TTS_en-US_ZiraPro.msi is a U.S. English voice.
--
+  - This page includes many files for both speech recognition and text-to-speech.
+  Choose the files containing the TTS data for the desired languages/voices.
+  For example, the file MSSpeech_TTS_en-US_ZiraPro.msi is a U.S. English voice.
+  -
 -
 
 ++ Windows OneCore-stemmer ++[OneCore]

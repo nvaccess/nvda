@@ -9,6 +9,7 @@
 
 from dataclasses import dataclass
 from typing import (
+	TYPE_CHECKING,
 	Any,
 	List,
 	Optional,
@@ -30,6 +31,9 @@ import extensionPoints
 import garbageHandler
 import NVDAState
 from NVDAState import WritePaths
+
+if TYPE_CHECKING:
+	import wx
 
 
 def __getattr__(attrName: str) -> Any:
@@ -67,6 +71,53 @@ class _PumpPending(Enum):
 
 _hasShutdownBeenTriggered = False
 _shuttingDownFlagLock = threading.Lock()
+
+
+def _showAddonsErrors() -> None:
+	addonFailureMessages: list[str] = []
+	failedUpdates = addonHandler._failedPendingInstalls.intersection(addonHandler._failedPendingRemovals)
+	failedInstalls = addonHandler._failedPendingInstalls - failedUpdates
+	failedRemovals = addonHandler._failedPendingRemovals - failedUpdates
+	if failedUpdates:
+		addonFailureMessages.append(
+			ngettext(
+				# Translators: Shown when one or more add-ons failed to update.
+				"The following add-on failed to update: {}.",
+				"The following add-ons failed to update: {}.",
+				len(failedUpdates)
+			).format(", ".join(failedUpdates))
+		)
+	if failedRemovals:
+		addonFailureMessages.append(
+			ngettext(
+				# Translators: Shown when one or more add-ons failed to be uninstalled.
+				"The following add-on failed to uninstall: {}.",
+				"The following add-ons failed to uninstall: {}.",
+				len(failedRemovals)
+			).format(", ".join(failedRemovals))
+		)
+	if failedInstalls:
+		addonFailureMessages.append(
+			ngettext(
+				# Translators: Shown when one or more add-ons failed to be installed.
+				"The following add-on failed to be installed: {}.",
+				"The following add-ons failed to be installed: {}.",
+				len(failedInstalls)
+			).format(", ".join(failedInstalls))
+		)
+
+	if addonFailureMessages:
+		import wx
+		import gui
+		gui.messageBox(
+			_(
+				# Translators: Shown when one or more actions on add-ons failed.
+				"Some operations on add-ons failed. See the log file for more details.\n{}"
+			).format("\n".join(addonFailureMessages)),
+			# Translators: Title of message shown when requested action on add-ons failed.
+			_("Error"),
+			wx.ICON_ERROR | wx.OK
+		)
 
 
 def doStartupDialogs():
@@ -138,6 +189,7 @@ def doStartupDialogs():
 						pass
 			# Ask the user if usage stats can be collected.
 			gui.runScriptModalDialog(gui.startupDialogs.AskAllowUsageStatsDialog(None), onResult)
+	_showAddonsErrors()
 
 
 @dataclass
@@ -224,6 +276,7 @@ def resetConfiguration(factoryDefaults=False):
 	import bdDetect
 	import hwIo
 	import tones
+	import audio
 	log.debug("Terminating vision")
 	vision.terminate()
 	log.debug("Terminating braille")
@@ -234,12 +287,18 @@ def resetConfiguration(factoryDefaults=False):
 	speech.terminate()
 	log.debug("terminating tones")
 	tones.terminate()
+	log.debug("terminating sound split")
+	audio.soundSplit.terminate()
 	log.debug("Terminating background braille display detection")
 	bdDetect.terminate()
 	log.debug("Terminating background i/o")
 	hwIo.terminate()
 	log.debug("terminating addonHandler")
 	addonHandler.terminate()
+	# Addons
+	from addonStore import dataManager
+	log.debug("terminating addon dataManager")
+	dataManager.terminate()
 	log.debug("Reloading config")
 	config.conf.reset(factoryDefaults=factoryDefaults)
 	logHandler.setLogLevelFromConfig()
@@ -250,8 +309,6 @@ def resetConfiguration(factoryDefaults=False):
 		lang = config.conf["general"]["language"]
 	log.debug("setting language to %s"%lang)
 	languageHandler.setLanguage(lang)
-	# Addons
-	from addonStore import dataManager
 	dataManager.initialize()
 	addonHandler.initialize()
 	# Hardware background i/o
@@ -261,6 +318,9 @@ def resetConfiguration(factoryDefaults=False):
 	bdDetect.initialize()
 	# Tones
 	tones.initialize()
+	# Sound split
+	log.debug("initializing sound split")
+	audio.soundSplit.initialize()
 	#Speech
 	log.debug("initializing speech")
 	speech.initialize()
@@ -479,6 +539,66 @@ def _doLoseFocus():
 			log.exception("Lose focus error")
 
 
+def _setUpWxApp() -> "wx.App":
+	import six
+	import wx
+
+	import config
+	import nvwave
+	import speech
+
+	log.info(f"Using wx version {wx.version()} with six version {six.__version__}")
+
+	# Disables wx logging in secure mode due to a security issue: GHSA-h7pp-6jqw-g3pj
+	# This is due to the wx.LogSysError dialog allowing a file explorer dialog to be opened.
+	wx.Log.EnableLogging(not globalVars.appArgs.secure)
+
+	class App(wx.App):
+		def OnAssert(self, file: str, line: str, cond: str, msg: str):
+			message = f"{file}, line {line}:\nassert {cond}: {msg}"
+			log.debugWarning(message, codepath="wxWidgets", stack_info=True)
+
+		def InitLocale(self):
+			"""Custom implementation of `InitLocale` which ensures that wxPython does not change the locale.
+			The current wx implementation (as of wxPython 4.1.1) sets Python locale to an invalid one
+			which triggers Python issue 36792 (#12160).
+			The new implementation (wxPython 4.1.2) sets locale to "C" (basic Unicode locale).
+			While this is not wrong as such NVDA manages locale themselves using `languageHandler`
+			and it is better to remove wx from the equation so this method is a No-op.
+			This code may need to be revisited when we update Python / wxPython.
+			"""
+			pass
+
+	app = App(redirect=False)
+
+	# We support queryEndSession events, but in general don't do anything for them.
+	# However, when running as a Windows Store application, we do want to request to be restarted for updates
+	def onQueryEndSession(evt):
+		if config.isAppX:
+			# Automatically restart NVDA on Windows Store update
+			ctypes.windll.kernel32.RegisterApplicationRestart(None, 0)
+
+	app.Bind(wx.EVT_QUERY_END_SESSION, onQueryEndSession)
+
+	def onEndSession(evt):
+		# NVDA will be terminated as soon as this function returns, so save configuration if appropriate.
+		config.saveOnExit()
+		speech.cancelSpeech()
+		if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
+			try:
+				nvwave.playWaveFile(
+					os.path.join(globalVars.appDir, "waves", "exit.wav"),
+					asynchronous=False
+				)
+			except Exception:
+				log.exception("Error playing exit sound")
+		log.info("Windows session ending")
+
+	app.Bind(wx.EVT_END_SESSION, onEndSession)
+
+	return app
+
+
 def main():
 	"""NVDA's core main loop.
 	This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI.
@@ -493,7 +613,17 @@ def main():
 		setDPIAwareness()
 
 	import config
-	if not WritePaths.configDir:
+	from utils.security import isRunningOnSecureDesktop
+	if (
+		# No config flag was set, use default config path.
+		not WritePaths.configDir
+		or (
+			# Secure mode enabled, force default config path.
+			globalVars.appArgs.secure
+			# Secure desktop config is forced to sys.prefix/systemConfig
+			and not isRunningOnSecureDesktop()
+		)
+	):
 		WritePaths.configDir = config.getUserDefaultConfigPath(
 			useInstalledPathIfExists=globalVars.appArgs.launcher
 		)
@@ -549,6 +679,9 @@ def main():
 	log.debug("Initializing tones")
 	import tones
 	tones.initialize()
+	log.debug("Initializing sound split")
+	import audio
+	audio.soundSplit.initialize()
 	import speechDictHandler
 	log.debug("Speech Dictionary processing")
 	speechDictHandler.initialize()
@@ -563,48 +696,10 @@ def main():
 		log.debugWarning("Slow starting core (%.2f sec)" % timeSinceStart)
 		# Translators: This is spoken when NVDA is starting.
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
+
 	import wx
-	import six
-	log.info("Using wx version %s with six version %s"%(wx.version(), six.__version__))
-	class App(wx.App):
-		def OnAssert(self,file,line,cond,msg):
-			message="{file}, line {line}:\nassert {cond}: {msg}".format(file=file,line=line,cond=cond,msg=msg)
-			log.debugWarning(message,codepath="WX Widgets",stack_info=True)
+	app = _setUpWxApp()
 
-		def InitLocale(self):
-			"""Custom implementation of `InitLocale` which ensures that wxPython does not change the locale.
-			The current wx implementation (as of wxPython 4.1.1) sets Python locale to an invalid one
-			which triggers Python issue 36792 (#12160).
-			The new implementation (wxPython 4.1.2) sets locale to "C" (basic Unicode locale).
-			While this is not wrong as such NVDA manages locale themselves using `languageHandler`
-			and it is better to remove wx from the equation so this method is a No-op.
-			This code may need to be revisited when we update Python / wxPython.
-			"""
-			pass
-
-
-	app = App(redirect=False)
-	# We support queryEndSession events, but in general don't do anything for them.
-	# However, when running as a Windows Store application, we do want to request to be restarted for updates
-	def onQueryEndSession(evt):
-		if config.isAppX:
-			# Automatically restart NVDA on Windows Store update
-			ctypes.windll.kernel32.RegisterApplicationRestart(None,0)
-	app.Bind(wx.EVT_QUERY_END_SESSION, onQueryEndSession)
-	def onEndSession(evt):
-		# NVDA will be terminated as soon as this function returns, so save configuration if appropriate.
-		config.saveOnExit()
-		speech.cancelSpeech()
-		if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
-			try:
-				nvwave.playWaveFile(
-					os.path.join(globalVars.appDir, "waves", "exit.wav"),
-					asynchronous=False
-				)
-			except:
-				pass
-		log.info("Windows session ending")
-	app.Bind(wx.EVT_END_SESSION, onEndSession)
 	log.debug("Initializing braille input")
 	import brailleInput
 	brailleInput.initialize()
@@ -853,7 +948,7 @@ def main():
 	_terminate(bdDetect)
 	_terminate(hwIo)
 	_terminate(addonHandler)
-	_terminate(nvwave)
+	_terminate(dataManager, name="addon dataManager")
 	_terminate(garbageHandler)
 	# DMP is only started if needed.
 	# Terminate manually (and let it write to the log if necessary)
@@ -872,6 +967,8 @@ def main():
 			)
 		except:
 			pass
+	# We cannot terminate nvwave until after we perform nvwave.playWaveFile
+	_terminate(nvwave)
 	# #5189: Destroy the message window as late as possible
 	# so new instances of NVDA can find this one even if it freezes during exit.
 	messageWindow.destroy()

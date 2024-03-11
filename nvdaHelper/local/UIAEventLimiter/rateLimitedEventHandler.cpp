@@ -66,25 +66,38 @@ void RateLimitedEventHandler::flusherThreadFunc(std::stop_token stopToken) {
 	LOG_DEBUG(L"flusherThread started");
 	// If this thread is requested to stop, we need to ensure we wake up.
 	std::stop_callback stopCallback{stopToken, [this](){
+		LOG_DEBUG(L"flusherThreadFunc stop callback: stop requested")
 		this->m_flushConditionVar.notify_all();
 	}};
 	do { // thread main loop
-		LOG_DEBUG(L"flusherThreadFunc sleeping...");
+		bool needsFlush = false;
 		{ std::unique_lock lock(m_mtx);
 			// sleep until a flush is needed or this thread should stop.
+			LOG_DEBUG(L"flusherThreadFunc sleeping...");
 			m_flushConditionVar.wait(lock, [this, stopToken](){
-				return this->m_needsFlush || stopToken.stop_requested();
+				LOG_DEBUG(L"FLUSHER THREAD notified, CHECKING WAKE CONDITION");
+				if (this->m_needsFlush) {
+					LOG_DEBUG(L"Will wake as needsFlush is true");
+					return true;
+				} else if (stopToken.stop_requested()) {
+					LOG_DEBUG(L"Will wake as stop requested");
+					return true;
+				}
+				LOG_DEBUG(L"Spurious wake, will sleep again");
+				return false;
 			});
 			LOG_DEBUG(L"flusherThread woke up");
-			if(stopToken.stop_requested()) {
-				LOG_DEBUG(L"flusherThread returning as stop requested"); 
-				return;
+			if (this->m_needsFlush) {
+				m_needsFlush = false;
+				needsFlush = true;
 			}
-			m_needsFlush = false;
 		} // m_mtx released here.
-		flushEvents();
+		if (needsFlush) {
+			LOG_DEBUG(L"flusherThreadFunc: Flushing events...");
+			flushEvents();
+		}
 	} while(!stopToken.stop_requested());
-	LOG_DEBUG(L"flusherThread returning");
+	LOG_DEBUG(L"flusherThread returning as stop requested");
 }
 
 HRESULT RateLimitedEventHandler::emitEvent(const AutomationEventRecord_t& record) const {
@@ -245,4 +258,11 @@ void RateLimitedEventHandler::flushEvents() {
 		}, recordVar);
 	}
 		LOG_DEBUG(L"RateLimitedUIAEventHandler::flusherThreadFunc: Done emitting events");
+}
+
+void RateLimitedEventHandler::terminate() {
+	LOG_DEBUG(L"RateLimitedUIAEventHandler::terminate called");
+	// Stop the flusher thread.
+	m_flusherThread.request_stop();
+	m_flusherThread.join();
 }

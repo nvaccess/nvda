@@ -108,6 +108,10 @@ class ControlField(Field):
 				and not formatConfig["reportLandmarks"]
 			)
 			or (role == controlTypes.Role.REGION and (not name or not formatConfig["reportLandmarks"]))
+			or (
+				role in {controlTypes.Role.FIGURE, controlTypes.Role.CAPTION}
+				and not formatConfig["reportFigures"]
+			)
 		):
 			# This is just layout as far as the user is concerned.
 			return self.PRESCAT_LAYOUT

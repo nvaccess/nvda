@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2023 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
-# Accessolutions, Julien Cochuyt, Cyrille Bougot
+# Copyright (C) 2007-2024 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
+# Accessolutions, Julien Cochuyt, Cyrille Bougot, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -15,12 +15,15 @@ import logging
 import inspect
 import winsound
 import traceback
-from types import FunctionType
+from types import FunctionType, TracebackType
 import globalVars
 import winKernel
 import buildVersion
 from typing import (
+	Literal,
+	NamedTuple,
 	Optional,
+	Protocol,
 	TYPE_CHECKING,
 )
 import exceptions
@@ -147,12 +150,21 @@ def getCodePath(f):
 	return ".".join(x for x in (path,className,funcName) if x)
 
 
-_onErrorSoundRequested = None
+_onErrorSoundRequested: Optional["extensionPoints.Action"] = None
+"""
+Triggered every time an error sound needs to be played.
+When nvwave is initialized, it registers the handler responsible for playing the error sound.
+This extension point should not be used directly but retrieved calling `getOnErrorSoundRequested()` instead.
+It has been encapsulated in a function to avoid circular import.
+"""
 
 
 def getOnErrorSoundRequested() -> "extensionPoints.Action":
+	"""Creates _onErrorSoundRequested extension point if needed (i.e. on first use only) and returns it.
+	"""
+
 	global _onErrorSoundRequested
-	
+
 	import extensionPoints
 	if not _onErrorSoundRequested:
 		_onErrorSoundRequested = extensionPoints.Action()
@@ -181,6 +193,9 @@ if NVDAState.isRunningAsSource():
 else:
 	def stripBasePathFromTracebackText(text: str) -> str:
 		return text
+
+
+_excInfo_t = tuple[type[BaseException] | None, BaseException | None, TracebackType | None]
 
 
 class Logger(logging.Logger):
@@ -249,7 +264,7 @@ class Logger(logging.Logger):
 			return
 		self._log(log.IO, msg, args, **kwargs)
 
-	def exception(self, msg="", exc_info=True, **kwargs):
+	def exception(self, msg: str = "", exc_info: Literal[True] | _excInfo_t = True, **kwargs):
 		"""Log an exception at an appropriate level.
 		Normally, it will be logged at level "ERROR".
 		However, certain exceptions which aren't considered errors (or aren't errors that we can fix) are expected and will therefore be logged at a lower level.
@@ -446,6 +461,42 @@ def _getDefaultLogFilePath():
 def _excepthook(*exc_info):
 	log.exception(exc_info=exc_info, codepath="unhandled exception")
 
+
+class _ThreadExceptHookArgs_t(NamedTuple):
+
+	exc_type: type[BaseException]
+	exc_value: BaseException | None
+	exc_traceback: TracebackType | None
+	thread: threading.Thread | None
+
+
+def _threadExceptHook(excInfoObj: _ThreadExceptHookArgs_t) -> None:
+	if excInfoObj.exc_type is SystemExit:
+		# By default Python ignores `SystemExit` raised in threads, so we are going to follow suit.
+		return
+	msg = ""
+	if excInfoObj.thread is not None:
+		msg = f"Exception in thread {excInfoObj.thread.name}:\n"
+	log.exception(msg, (excInfoObj.exc_type, excInfoObj.exc_value, excInfoObj.exc_traceback))
+
+
+class _UnraisableHookArgs(Protocol):
+
+	exc_type: type[BaseException]
+	exc_value: BaseException | None
+	exc_traceback: TracebackType | None
+	err_msg: str | None
+	object: object
+
+
+def _unraisableExceptHook(unraisable: _UnraisableHookArgs) -> None:
+	if unraisable.err_msg:
+		msg = f"{unraisable.err_msg}: {unraisable.object!r}"
+	else:
+		msg = f"Exception ignored in: {unraisable.object!r}"
+	log.exception(exc_info=(unraisable.exc_type, unraisable.exc_value, unraisable.exc_traceback), codepath=msg)
+
+
 def _showwarning(message, category, filename, lineno, file=None, line=None):
 	log.debugWarning(warnings.formatwarning(message, category, filename, lineno, line).rstrip(), codepath="Python warning")
 
@@ -526,6 +577,8 @@ def initialize(shouldDoRemoteLogging=False):
 	log.root.addHandler(logHandler)
 	redirectStdout(log)
 	sys.excepthook = _excepthook
+	sys.unraisablehook = _unraisableExceptHook
+	threading.excepthook = _threadExceptHook
 	warnings.showwarning = _showwarning
 	warnings.simplefilter("default", DeprecationWarning)
 
