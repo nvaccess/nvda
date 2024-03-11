@@ -281,18 +281,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 		for match in self._getTryPorts(port):
 			portType, portId, port, portInfo = match
-			self.isBulk = portType == bdDetect.DeviceType.CUSTOM
-			self.isHID = portType == bdDetect.DeviceType.HID
 			# Try talking to the display.
 			try:
 				match portType:
 					case bdDetect.DeviceType.HID:
-					self._dev = hwIo.Hid(port, onReceive=self._hidOnReceive)
-				elif self.isBulk:
-					# onReceiveSize based on max packet size according to USB endpoint information.
-					self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, onReceiveSize=64)
-				else:
-					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, parity=PARITY, timeout=self.timeout, writeTimeout=self.timeout, onReceive=self._onReceive)
+						self._dev = hwIo.Hid(port, onReceive=self._hidOnReceive)
+					case bdDetect.DeviceType.CUSTOM:
+						# onReceiveSize based on max packet size according to USB endpoint information.
+						self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, onReceiveSize=64)
+					case _:
+						self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, parity=PARITY, timeout=self.timeout, writeTimeout=self.timeout, onReceive=self._onReceive)
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
 				continue
