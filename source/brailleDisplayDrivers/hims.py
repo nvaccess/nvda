@@ -285,7 +285,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self.isHID = portType == bdDetect.DeviceType.HID
 			# Try talking to the display.
 			try:
-				if self.isHID:
+				match portType:
+					case bdDetect.DeviceType.HID:
 					self._dev = hwIo.Hid(port, onReceive=self._hidOnReceive)
 				elif self.isBulk:
 					# onReceiveSize based on max packet size according to USB endpoint information.
