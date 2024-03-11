@@ -232,6 +232,7 @@ def getUserDefaultConfigPath(useInstalledPathIfExists=False):
 SCRATCH_PAD_ONLY_DIRS = (
 	'appModules',
 	'brailleDisplayDrivers',
+	'brailleTables',
 	'globalPlugins',
 	'synthDrivers',
 	'visionEnhancementProviders',

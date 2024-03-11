@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
-# Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka, Cyrille Bougot
+# Copyright (C) 2006-2024 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
+# Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka, Cyrille Bougot, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -270,6 +270,7 @@ def resetConfiguration(factoryDefaults=False):
 	import config
 	import braille
 	import brailleInput
+	import brailleTables
 	import speech
 	import vision
 	import inputCore
@@ -283,6 +284,8 @@ def resetConfiguration(factoryDefaults=False):
 	braille.terminate()
 	log.debug("Terminating brailleInput")
 	brailleInput.terminate()
+	log.debug("Terminating brailleTables")
+	brailleTables.terminate()
 	log.debug("terminating speech")
 	speech.terminate()
 	log.debug("terminating tones")
@@ -325,6 +328,8 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("initializing speech")
 	speech.initialize()
 	#braille
+	log.debug("Initializing brailleTables")
+	brailleTables.initialize()
 	log.debug("Initializing brailleInput")
 	brailleInput.initialize()
 	log.debug("Initializing braille")
@@ -700,6 +705,9 @@ def main():
 	import wx
 	app = _setUpWxApp()
 
+	log.debug("Initializing brailleTables")
+	import brailleTables
+	brailleTables.initialize()
 	log.debug("Initializing braille input")
 	import brailleInput
 	brailleInput.initialize()
@@ -944,6 +952,7 @@ def main():
 	_terminate(vision)
 	_terminate(brailleInput)
 	_terminate(braille)
+	_terminate(brailleTables)
 	_terminate(speech)
 	_terminate(bdDetect)
 	_terminate(hwIo)
