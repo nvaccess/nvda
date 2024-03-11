@@ -59,7 +59,7 @@ def _resolveTableInner(tables: list[str], base: str | None = None) -> Generator[
 				yield path
 				break
 		else:
-			raise LookupError(f"Could not resolve table {table!r}")
+			raise LookupError(f"Could not resolve table {table!r}, looked in paths: {directoriesToSearch!r}")
 
 
 # Note: liblouis table resolvers return char**,

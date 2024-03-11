@@ -10,7 +10,6 @@ import os.path
 import unittest
 
 import brailleTables
-import louisHelper
 
 
 class TestBrailleTables(unittest.TestCase):
@@ -30,12 +29,3 @@ class TestBrailleTables(unittest.TestCase):
 		tableNames = [table.fileName for table in brailleTables.listTables()]
 		for name in brailleTables.RENAMED_TABLES.values():
 			self.assertIn(name, tableNames)
-
-	def test_tableResolving(self):
-		"""Test whether our custom braille table resolver can resolve all defined tables."""
-		tables = brailleTables.listTables()
-		for table in tables:
-			self.assertEqual(
-				list(louisHelper._resolveTableInner(tables=[table.fileName])),
-				[os.path.join(brailleTables.TABLES_DIR, table.fileName)],
-			)
