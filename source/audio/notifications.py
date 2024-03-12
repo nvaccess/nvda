@@ -25,8 +25,8 @@ def initialize() -> None:
 			mmClient = MMNotificationClientImpl()
 			deviceEnumerator = AudioUtilities.GetDeviceEnumerator()
 			deviceEnumerator.RegisterEndpointNotificationCallback(mmClient)
-		except COMError as e:
-			log.exception("Could not initialize audio notifications module", e)
+		except COMError:
+			log.exception("Could not initialize audio notifications module")
 			return
 
 	else:
