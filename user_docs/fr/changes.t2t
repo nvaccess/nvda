@@ -1916,7 +1916,7 @@ Les améliorations principales de cette version consistent en l'ajout de l'auto-
 
 == Changements pour les développeurs ==
 - Vous pouvez maintenant définir la propriété "disableBrowseModeByDefault" sur les modules d'application pour que le mode navigation soit désactivé par défaut. (#8846)
-- Le style de fenêtre étendu d'une fenêtre est maintenant exposé à l'aide de la propriété `extendedWindowStyle` sur les objets Window et leurs dérivés. (#9136)
+- Le style de fenêtre étendu d'une fenêtre est maintenant exposé à l'aide de la propriété ``extendedWindowStyle`` sur les objets Window et leurs dérivés. (#9136)
 - Mise à jour du paquet comtypes vers 1.1.7. (#9440, #8522)
 - Lors de l'utilisation de la commande report module info, l'ordre des informations a été modifié pour présenter d'abord le module. (#7338)
 - Ajout d'un exemple d'utilisation de nvdaControllerClient.dll avec C#. (#9600)
@@ -1941,7 +1941,7 @@ Veuillez vous reporter à la liste des modifications plus bas pour plus de déta
 - Nouvelles tables braille : Afrikaans, Arabe braille informatique 8 points, Arabe abrégé, Espagnol abrégé. (#4435, #9186)
 - Ajout d'une option dans les paramètres de la souris de NVDA pour que NVDA supporte les situations où la souris est contrôlée par une autre application. (#8452)
  - Cela permet à NVDA de suivre la souris quand un système est contrôlé à distance en utilisant TeamViewer ou un autre logiciel de contrôle à distance.
-- Ajout du paramètre de ligne de commande `--enable-start-on-logon` pour configurer si les installations silencieuses de NVDA le définissent pour démarrer à l'ouverture de session Windows ou non. Spécifiez true pour démarrer à l'ouverture de session ou false pour ne pas démarrer à l'ouverture de session. Si l'argument --enable-start-on-logon n'est pas spécifié, NVDA démarrera par défaut à l'ouverture de session, à moins qu'il n'ait déjà été configuré par une installation précédente. (#8574)
+- Ajout du paramètre de ligne de commande ``--enable-start-on-logon`` pour configurer si les installations silencieuses de NVDA le définissent pour démarrer à l'ouverture de session Windows ou non. Spécifiez true pour démarrer à l'ouverture de session ou false pour ne pas démarrer à l'ouverture de session. Si l'argument --enable-start-on-logon n'est pas spécifié, NVDA démarrera par défaut à l'ouverture de session, à moins qu'il n'ait déjà été configuré par une installation précédente. (#8574)
 - Il est possible de désactiver la journalisation de NVDA en mettant le niveau de journalisation sur "désactivé" dans le panneau de paramètres généraux. (#8516)
 - La présence de formules dans les tableaux sous LibreOffice et Apache OpenOffice est maintenant annoncée. (#860)
 - Sous Mozilla Firefox et Google Chrome, le mode navigation annonce maintenant l'élément sélectionné dans les listes déroulantes et les arborescences.
@@ -1960,7 +1960,7 @@ Veuillez vous reporter à la liste des modifications plus bas pour plus de déta
 - Cette version de NVDA autorisera l'installation et le chargement des extensions qui ne contiennent pas encore d'informations sur les versions de NVDA minimales et testées en dernier, mais la mise à niveau vers des versions ultérieures de NVDA (par exemple, 2019.2) désactivera automatiquement ces extensions plus anciennes.
 - La commande de déplacement de la souris vers l'objet navigateur est maintenant disponible sous Microsoft Word ainsi que pour les contrôles UIA, en particulier pour Microsoft Edge. (#7916, #8371)
 - L'annonce du texte sous la souris a été améliorée sous Microsoft Edge et autres applications UIA. (#8370)
-- Quand NVDA est démarré avec le paramètre de ligne de commande `--portable-path`, le chemin fourni est automatiquement rempli quand on essaie de créer une copie portable de NVDA en utilisant le menu NVDA. (#8623)
+- Quand NVDA est démarré avec le paramètre de ligne de commande ``--portable-path``, le chemin fourni est automatiquement rempli quand on essaie de créer une copie portable de NVDA en utilisant le menu NVDA. (#8623)
 - Mise à jour du chemin de la table braille Norvégienne pour refléter le standard de l'année 2015. (#9170)
 - Durant la navigation par paragraphes, (contrôle + flèches haut ou bas) ou par cellules de tableau (contrôle + alt + flèches), la présence de fautes d'orthographe n'est plus signalée, même si NVDA est configuré pour les annoncer automatiquement. En effet, les paragraphes et les cellules de tableau peuvent être très volumineux et la détection des fautes d'orthographe dans certaines applications peut s'avérer très coûteuse. (#9217)
 - NVDA ne charge plus automatiquement les appModules personnalisés, les modules globaux et les pilotes braille ou de synthétiseur depuis le répertoire de configuration utilisateur de NVDA. Ce code devrait plutôt être packagé comme une extension avec une information de version correcte, pour être sûr que du code incompatible n'est pas exécuté avec la version courante de NVDA. (#9238)
@@ -2421,7 +2421,7 @@ Les points forts de cette version incluent la saisie en braille abrégé, le sup
 Les points forts de cette versions incluent le support intégral de l'atténuation audio sous Windows 10 Creators Update; la correction de plusieurs problèmes de sélection en mode navigation, incluant les problèmes pour sélectionner tout; des améliorations significatives dans le support de Microsoft Edge; et des améliorations sur le web tels que l'indication des éléments marqués comme en cours (en utilisant aria-current).
 
 == Nouvelles Fonctionnalités ==
-- Sous Microsoft Excel, l'information de bordure de cellule peut maintenant être annoncée en utilisant `NVDA+f`. (#3044)
+- Sous Microsoft Excel, l'information de bordure de cellule peut maintenant être annoncée en utilisant ``NVDA+f``. (#3044)
 - Dans les navigateurs web, NVDA indique maintenant quand un élément a été marqué comme courant (spécifiquement, en utilisant l'attribut aria-current). (#6358)
 - Le changement de langue automatique est maintenant supporté sous Microsoft Edge. (#6852)
 - Ajout du support de la Calculatrice Windows sous Windows 10 Enterprise LTSB (Long-Term Servicing Branch) et Server. (#6914)
@@ -2465,10 +2465,10 @@ Les points forts de cette versions incluent le support intégral de l'atténuati
  - Si vous voulez des identifiants normalisés, il y a maintenant une propriété InputGesture.normalizedIdentifiers qui normalise les identifiants retournés par la propriété des identifiants.
 - La propriété InputGesture.logIdentifier est maintenant obsolète. Les appels devraient maintenant utiliser InputGesture.identifiers[0] en remplacement. (#6945)
 - Du code obsolète a été supprimé :
- - Les constantes `speech.REASON_*`, remplacées par `controlTypes.REASON_*`. (#6846)
- - `i18nName` pour les paramètres synthétiseur, remplacées par `displayName` et `displayNameWithAccelerator`. (#6846, #5185)
- - `config.validateConfig`. (#6846, #667)
- - `config.save`: remplacé par `config.conf.save`. (#6846, #667)
+ - Les constantes ``speech.REASON_*``, remplacées par ``controlTypes.REASON_*``. (#6846)
+ - ``i18nName`` pour les paramètres synthétiseur, remplacées par ``displayName`` et ``displayNameWithAccelerator``. (#6846, #5185)
+ - ``config.validateConfig``. (#6846, #667)
+ - ``config.save``: remplacé par ``config.conf.save``. (#6846, #667)
 - La liste des complétions dans le menu contextuel d'autocomplétion de la Console Python ne montre plus aucun chemin menant au symbole final à compléter. (#7023)
 - Il y a maintenant une architecture de test unitaire pour NVDA. (#7026)
  - Les tests unitaires et l'infrastructure sont situés dans le répertoire tests/unit. veuillez consulter le docstring dans le fichier tests\unit\__init__.py pour plus de détails.

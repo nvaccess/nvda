@@ -114,9 +114,12 @@ class ListCtrlAccessible(wx.Accessible):
 		if self.Window.IsChecked(childId - 1):
 			states |= wx.ACC_STATE_SYSTEM_CHECKED
 		if self.Window.IsSelected(childId - 1):
+			states |= wx.ACC_STATE_SYSTEM_SELECTED
 			# wx doesn't seem to  have a method to check whether a list item is focused.
-			# Therefore, assume that a selected item is focused,which is the case in single select list boxes.
-			states |= wx.ACC_STATE_SYSTEM_SELECTED | wx.ACC_STATE_SYSTEM_FOCUSED
+			# Therefore, assume that a selected item is focused when the list itself has focus,
+			# which is the case in single select list boxes.
+			if self.Window.HasFocus():
+				states |= wx.ACC_STATE_SYSTEM_FOCUSED
 		return (wx.ACC_OK, states)
 
 
