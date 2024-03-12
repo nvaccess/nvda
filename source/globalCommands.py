@@ -4481,7 +4481,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggles microphone mute",
+			"Toggle microphone mute",
 		),
 		category=SCRCAT_AUDIO,
 		gesture=None,
