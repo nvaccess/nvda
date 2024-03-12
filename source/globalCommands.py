@@ -4489,7 +4489,7 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleMicrophoneMute(self, gesture: "inputCore.InputGesture") -> None:
 		if not nvwave.usingWasapiWavePlayer():
 			# Translators: error message for toggle microphone mute command
-			ui.message(_("Please enable wasapi in order to mute microphone"))
+			ui.message(_("Please enable WASAPI in order to mute microphone"))
 			return
 		microphoneInterface = AudioUtilities.GetMicrophone()
 		if microphoneInterface is None:
