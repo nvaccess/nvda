@@ -57,7 +57,7 @@ class MMNotificationClientImpl(MMNotificationClient):
 		match (fmtid, pid):
 			case EVENT_MUTE:
 				defaultMicrophone = AudioUtilities.GetMicrophone()
-				defaultMicrophoneId = defaultMicrophone .GetId() if defaultMicrophone is not None else None
+				defaultMicrophoneId = defaultMicrophone.GetId() if defaultMicrophone is not None else None
 				device = deviceEnumerator.GetDevice(device_id)
 				deviceObject = AudioUtilities.CreateDevice(device)
 				if device_id == defaultMicrophoneId:
