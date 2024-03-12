@@ -35,8 +35,11 @@ def initialize() -> None:
 
 @atexit.register
 def terminate():
-	if nvwave.usingWasapiWavePlayer():
-		if mmClient is not None and deviceEnumerator is not None:
+	if (
+		nvwave.usingWasapiWavePlayer():
+		and mmClient is not None
+		and deviceEnumerator is not None
+	):
 			try:
 				deviceEnumerator.UnregisterEndpointNotificationCallback(mmClient)
 			except COMError:
