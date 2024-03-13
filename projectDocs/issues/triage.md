@@ -202,7 +202,8 @@ If you come across one of these missing attachments, please upload if you think 
 
 The NVDA project greatly appreciates the involvement and contributions of its vibrant community, and we strongly encourage community members to actively engage with the project's issues and pull requests.
 
-However, it's important to maintain a clear distinction between community contributions and the internal workflow of NV Access staff. To that end, we kindly request that community members refrain from closing or merging tickets (issues, pull requests, etc.) that are created by NV Access staff.
+However, it's important to maintain a clear distinction between community contributions and the internal workflow of NV Access staff.
+To that end, we kindly request that community members refrain from closing or merging tickets (issues, pull requests, etc.) that are created by NV Access staff.
 
 Community members are welcome and encouraged to interact with staff tickets in the following ways:
 
