@@ -43,10 +43,15 @@ What's New in NVDA
 - Add-on Store:
   - The minimum and the last tested NVDA version for an add-on are now displayed in the "other details" area. (#15776, @Nael-Sayegh)
   -
-- Padding dots commonly used in tables of contents are not reported anymore at low punctuation levels. (#15845, @CyrilleB79)
-- Updated LibLouis Braille translator to [3.29.0 https://github.com/liblouis/liblouis/releases/tag/v3.29.0]. (#16259, @codeofdusk)
-  - Added new detailed (with capital letters indicated) Belarusian and Ukrainian Braille tables.
+- Component updates:
+  - Updated LibLouis Braille translator to [3.29.0 https://github.com/liblouis/liblouis/releases/tag/v3.29.0]. (#16259, @codeofdusk)
+    - Added new detailed (with capital letters indicated) Belarusian and Ukrainian Braille tables.
+    -
+  - eSpeak NG has been updated to 1.52-dev commit ``cb62d93fd7``. (#15913)
+    - Added new language Tigrinya. 
+    -
   -
+- Padding dots commonly used in tables of contents are not reported anymore at low punctuation levels. (#15845, @CyrilleB79)
 -
 
 == Bug Fixes ==
