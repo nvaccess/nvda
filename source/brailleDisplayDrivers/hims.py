@@ -348,7 +348,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				data: bytes = self._dev.getFeature(HR_CAPS)
 				self.numCells = data[9]
 			except WindowsError:
-				return  # Fail!
+				log.exception("Failed to fetch number of cells")
+				return
 		else:
 			log.debug("Sending cell count request...")
 			self._sendPacket(b"\xfb", b"\x01", bytes(32))  # send 32 null bytes
