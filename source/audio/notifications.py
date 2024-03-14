@@ -36,7 +36,7 @@ def initialize() -> None:
 @atexit.register
 def terminate():
 	if (
-		nvwave.usingWasapiWavePlayer():
+		nvwave.usingWasapiWavePlayer()
 		and mmClient is not None
 		and deviceEnumerator is not None
 	):
