@@ -291,7 +291,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 						self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, onReceiveSize=64)
 					case _:
 						self._dev = hwIo.Serial(
-							port, baudrate=BAUD_RATE,
+							port,
+							baudrate=BAUD_RATE,
 							parity=PARITY,
 							timeout=self.timeout,
 							writeTimeout=self.timeout,
