@@ -43,7 +43,7 @@ def terminate():
 			try:
 				deviceEnumerator.UnregisterEndpointNotificationCallback(mmClient)
 			except COMError:
-				log.exception("Could not terminate audio notifications module"):
+				log.exception("Could not terminate audio notifications module")
 				return
 
 
