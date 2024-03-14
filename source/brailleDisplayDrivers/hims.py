@@ -799,7 +799,7 @@ class KeyInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGe
 
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, model, keys, isHid=False):
+	def __init__(self, model, keys, isHid: bool = False):
 		super(KeyInputGesture, self).__init__()
 		# Model identifiers should not contain spaces.
 		self.model=model.name.replace(" ", "")
