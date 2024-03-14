@@ -503,7 +503,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		elif itemType == "verticalParagraph":
 			def paragraphFunc(info: textInfos.TextInfo) -> int | None:
 				try:
-					return info.pointAtStart.x
+					return info.NVDAObjectAtStart.location[0]
 				except AttributeError:
 					return None
 
