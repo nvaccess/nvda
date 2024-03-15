@@ -38,6 +38,9 @@ class ImeCandidateUI(UIA):
 		# Therefore we must fake it here.
 		if (self.UIAAutomationId == "IME_Prediction_Window"):
 			candidateItem = self.firstChild
+			# #16283: descend one more level in Windows 11 so hardware input suggestions can be anounced.
+			if isinstance(candidateItem, ImeCandidateUI):
+				candidateItem = candidateItem.firstChild
 			eventHandler.queueEvent("UIA_elementSelected", candidateItem)
 		elif (
 			self.firstChild
