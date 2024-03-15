@@ -4223,6 +4223,7 @@ Bezbedan način rada će onemogućiti:
 - Čuvanje konfiguracije i drugih podešavanja na disku
 - Čuvanje mape komandi na disku
 - Opcije [profila podešavanja #ConfigurationProfiles] kao što su pravljenje, brisanje, preimenovanje profila i slično.
+- Učitavanje prilagođenih mapa konfiguracije korištenjem [opcije ``-c`` u naredbenom redku #CommandLineOptions]
 - Ažuriranje programa NVDA i pravljenje prenosnih kopija
 - [Prodavnicu dodataka #AddonsManager]
 - [NVDA Python konzolu #PythonConsole]
@@ -4284,9 +4285,9 @@ Slijede opcije naredbenog retka za NVDA:
 | -h | --help | Prikazuje pomoć u naredbenom retku i izlazi |
 | -q | --quit | Zaustavlja trenutačno pokrenutu kopiju NVDA čitača |
 | -k | --check-running | Izvještava o pokrenutosti NVDA putem izlaznog koda; 0 ako je pokrenut, 1 ako nije pokrenut |
-| -f LOGFILENAME | --log-file=LOGFILENAME | datoteka u kojoj poruke zapisnika trebaju biti zapisane |
-| -l LOGLEVEL | --log-level=LOGLEVEL | Najniža razina zapisivanih poruak u zapisniku (debug 10, ulaz/izlaz 12, debug upozorenje 15, info 20, onemogućeno 100) |
-| -c CONFIGPATH | --config-path=CONFIGPATH | određuje mapu u kojoj su pospremljene sve postavke |
+| -f LOGFILENAME | --log-file=LOGFILENAME | datoteka u kojoj poruke zapisnika trebaju biti zapisane. Zapisivanje dnevnika je uvijek isključeno kada je sigurni način uključen. |
+| -l LOGLEVEL | --log-level=LOGLEVEL | Najniža razina zapisivanih poruak u zapisniku (debug 10, ulaz/izlaz 12, debug upozorenje 15, info 20, onemogućeno 100). Zapisivanje dnevnika je uvijek isključeno kada je sigurni način uključen. |
+| -c CONFIGPATH | --config-path=CONFIGPATH | određuje mapu u kojoj su pospremljene sve postavke Podrazumjevana vrijednost je prisilno ako je uključen sigurni način. |
 | Nema | --lang=LANGUAGE | Nadpisuje konfigurirani NVDA jezik. Postavljen na "korisnički zadan" za trenutnog korisnika podrazumjevano, "en" za engleski, itd. |
 | -m | --minimal | bez zvuka, bez sučelja, bez poruke dobrodošlice itd |
 | -s | --secure | sigurni modus: onemogućuje Python konzolu značajke profila poput stvaranja, brisanja, preimenovanja profila itd., provjeru nadogradnji, neke potvrdne okvire u dijaloškom okviru dobrodošlice i u kategoriji općenitih postavki (npr. koristi NVDA prilikom prijave, spremi konfiguraciju poslje izlaza itd.), kao i zapisnik dnevnika i funkcije zapisa  (koristi se često na sigurnim ekranima). Imajte na umu da se postavke neće odavde spremati u mapu konfiguracije sustava te isto tako neće se spremati definirani prečaci. |
