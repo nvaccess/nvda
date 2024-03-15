@@ -4328,6 +4328,11 @@ Secure mode disables:
 Installed copies of NVDA store their configuration including add-ons in ``%APPDATA%\nvda``.
 To prevent NVDA users from modifying their configuration or add-ons directly, user access to this folder must also be restricted.
 
+Secure mode is ineffective for portable copies of NVDA.
+This limitation also applies to the temporary copy of NVDA which runs when launching the installer.
+In secure environments, a user being able to run a portable executable is the same security risk regardless of secure mode.
+It is expected that system administrators restrict unauthorized software from running on their systems, including portable copies of NVDA.
+
 NVDA users often rely on configuring their NVDA profile to suit their needs.
 This may include installing and configuring custom add-ons, which should be vetted independently to NVDA.
 Secure mode freezes changes to NVDA configuration, so please ensure that NVDA is configured appropriately before forcing secure mode.

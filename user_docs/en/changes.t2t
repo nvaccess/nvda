@@ -30,23 +30,27 @@ What's New in NVDA
     -
   - Added a new unassigned input gesture to toggle the reporting of figures and captions. (#10826, #14349)
   -
-- Added support for the BrailleEdgeS2 braille device. (#16033)
+- Added support for the BrailleEdgeS2, BrailleEdgeS3 braille device. (#16033, #16279, @EdKweon)
 - NVDA will keep the audio device awake after speech stops, in order to prevent the start of the next speech being clipped with some audio devices such as Bluetooth headphones. (#14386, @jcsteh, @mltony)
 - Sound split: (#12985, @mltony)
   - Allows splitting NVDA sounds in one channel (e.g. left) while sounds from all other applications in the other channel (e.g. right).
   - Toggled by ``NVDA+alt+s``.
   -
--
 
 
 == Changes ==
 - Add-on Store:
   - The minimum and the last tested NVDA version for an add-on are now displayed in the "other details" area. (#15776, @Nael-Sayegh)
   -
-- Padding dots commonly used in tables of contents are not reported anymore at low punctuation levels. (#15845, @CyrilleB79)
-- Updated LibLouis Braille translator to [3.29.0 https://github.com/liblouis/liblouis/releases/tag/v3.29.0]. (#16259, @codeofdusk)
-  - Added new detailed (with capital letters indicated) Belarusian and Ukrainian Braille tables.
+- Component updates:
+  - Updated LibLouis Braille translator to [3.29.0 https://github.com/liblouis/liblouis/releases/tag/v3.29.0]. (#16259, @codeofdusk)
+    - Added new detailed (with capital letters indicated) Belarusian and Ukrainian Braille tables.
+    -
+  - eSpeak NG has been updated to 1.52-dev commit ``cb62d93fd7``. (#15913)
+    - Added new language Tigrinya. 
+    -
   -
+- Padding dots commonly used in tables of contents are not reported anymore at low punctuation levels. (#15845, @CyrilleB79)
 -
 
 == Bug Fixes ==
