@@ -95,7 +95,11 @@ class ImeCandidateItem(CandidateItemBehavior, UIA):
 	def event_UIA_elementSelected(self):
 		# In Windows 11, focus event is fired when a candidate item receives focus,
 		# therefore ignore this event for now.
-		if winVersion.getWinVer() >= winVersion.WIN11:
+		# #16283: do handle hardware keyboard input suggestions.
+		if (
+			winVersion.getWinVer() >= winVersion.WIN11
+			and isinstance(api.getFocusObject().parent, ImeCandidateUI)
+		):
 			return
 		oldNav = api.getNavigatorObject()
 		if isinstance(oldNav, ImeCandidateItem) and self.name == oldNav.name:
