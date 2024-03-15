@@ -38,8 +38,10 @@ Windows 8.1 é a versión mínima soportada.
 - Engadido o soporte para pantallas braille Bluetooth Low Energy HID. (#15470)
 - Un novo modo de seleción nativa (conmutado con ``NVDA+shift+f10``) agora está dispoñible no modo exploración de NVDA para Mozilla Firefox.
 Cando se active, selecionar texto en modo exploración tamén manipulará a propria seleción nativa en Firefox.
-Copiar o texto con ``control+c`` pasará directamente a Firefox, copiando así o contido enriquecido, a cambio da representación en texsto cha de NVDA. (#15830)
-- Ao se copiar texto en Microsoft Word co modo exploración de NVDA activado, agora inclúese tamén o formato. (#16129)
+Copiar o texto con ``control+c`` pasará directamente a Firefox, copiando así o contido enriquecido, a cambio da representación en texsto cha de NVDA.
+Ten en conta sen embargo que coma o Firefox está a manexar a copia real, o NVDA non anunciará unha mensaxe "copiar ao portapapeis" neste modo. (#15830)
+- Ao se copiar texto en Microsoft Word co modo exploración de NVDA activado, agora inclúese tamén o formato.
+Un efecto secundario desto é que o NVDA xa non anunciará unha mensaxe "copiar ao portapapeis" ao premer ``control+c`` no modo exploración en Microsoft Word e en Outlook, xa que a aplicación é a que agora manexa o copiado, non NVDA. (#16129)
 - Engadiuse un novo modo de voz "baixo demanda".
 Cando a voz estea baixo demanda, o NVDA non fala automáticamente (ex. ao se mover o cursor) pero aínda fala ao se dar ordes cuxo obxetivo sexa explícitamente anunciar algo (ex. anunciar o título da xanela). (#481, @CyrilleB79)
 - Na categoría Voz das opcións de NVDA, agora é posible excluir modos de voz non desexados dende a orde percorrer modos de voz (``NVDA+s``). (#15806, @lukaszgo1)
@@ -210,7 +212,7 @@ Por favor abre un GitHub issue si o teu complemento ten un problema coa actualiz
   - robotframework a 6.1.1. (#15544)
   - SCons a 4.5.2. (#15529, @LeonarddeR)
   - sphinx a 7.2.6. (#15544)
-  - wxPython a 4.2.1. (#12551)
+  - wxPython a 4.2.2a commit ``0205c7c1b9022a5de3e3543f9304cfe53a32b488``. (#12551, #16257)
   -
 - Dependencias pip eliminadas:
   - typing_extensions, estas soportaríase nativamente en Python 3.11 (#15544)
@@ -291,7 +293,13 @@ Utiliza ``bdDetect.DeviceType.*`` a cambio. (#15772, @LeonarddeR).
 
 
 = 2023.3.4 =
-Trátase dun parche para arranxar un problema do instalador.
+Este é un parche para arranxar un fallo de seguridade e un fallo do instalador.
+Por favor comunica responsablemente os problemas de seguridade seguindo as [políticas de seguridade do NVDA https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Arranxos de segruridade ==
+- Evita cargar a configuración persoalizada mentres se forza o modo seguro .
+([GHSA-727q-h8j2-6p45 https://github.com/nvaccess/nvda/security/advisories/GHSA-727q-h8j2-6p45])
+
 
 == Arranxo de Fallos ==
 - Arranxado un fallo que provocaba que o proceso de NVDA fallase ao non saír correctamente.

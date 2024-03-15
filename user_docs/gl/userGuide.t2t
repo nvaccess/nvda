@@ -4223,6 +4223,7 @@ O modo seguro deshabilita:
 - O gardado da configuración e outras opcións en disco
 - O gardado do mapa de xestos en disco
 - Características dos [perfís de configuración #ConfigurationProfiles] como a creación, a eliminación, o renomeado de perfís etc.
+- A carga de cartafois da configuración persoalizada usando [a opción de liña de ordes ``-c`` #CommandLineOptions]
 - A actualización do NVDA e a creación de copias portables
 - A [Tenda de Complementos #AddonsManager]
 - A [consola de Python de NVDA #PythonConsole]
@@ -4281,26 +4282,26 @@ Esos parámetros deberían colocarse despois da opción, separados da opción po
 
 Seguidamente van as opcións de liña de ordes para o NVDA:
 || Curta | Longa | Descripción |
-| -h | --help | Amosa a axuda en liña de ordes e sae |
-| -q | --quit | Sae da copia que xa se estea a executar do NVDA |
-| -k | --check-running | Informa se NVDA está en execución a través do código de saída; 0 se está en execución, 1 se non está en execución |
-| -f LOGFILENAME | --log-file=LOGFILENAME | O ficheiro onde se deberían escreber as mesaxes de rexistro |
-| -l LOGLEVEL | --log-level=LOGLEVEL | O nivel máis baixo de mensaxe rexistrada (debug 10, input/output 12, debug warning 15, info 20, disabled 100) |
-| -c CONFIGPATH | --config-path=CONFIGPATH | A vía  onde se almacenan todos os axustes para o NVDA |
-| No | --lang=LANGUAGE | Sobrescribe a lingua configurada do NVDA. Estabrece "Windows" para o usuario actual por defecto, "en" para Inglés, etc. |
-| -m | --minimal | Sen sons, sen interface, sen mesaxe de inicio etc |
-| -s | --secure | Inicia o NVDA en [Modo Seguro #SecureMode] |
-| None | --disable-addons | Os complementos non terán efecto |
-| None | --no-sr-flag  | Non cambia a bandeira global do sistema do lector de pantalla |
-| None | --debug-logging | Habilita o nivel de rexistro de depuración só para esta execución. Esta configuración sobreescribirá calquera outro nivel de rexistro ( ""--loglevel"", -l) argumento dado, incluindo a opción non rexistro. |
-| None | --no-logging | Deshabilita o rexistro durante o uso do NVDA. Esta opción pode sobreescribirse se se especifica un nivel de rexistro ( ""--loglevel"", -l) dende a liña de ordes ou se o rexistro de depuración está activado. |
-| None | --install | Instálase o NVDA comezando a nova copia instalada |
-| None | --install-silent | Instala en silenzo NVDA (Non comeza a nova copia instalada) |
-| None | --enable-start-on-logon=True|False | Ao instalar, habilita [arrancar na pantalla de inicio #StartAtWindowsLogon] do NVDA |
-| None | --copy-portable-config | Ao instalar, copia a configuración portable dende a ruta proporcionada (--config-path, -c) á actual conta de usuario |
-| None | --create-portable | Crea unha copia portable do NVDA (comezando a copia recentemente creada). Require especificarse --portable-path |
-| None | --create-portable-silent | Crea unha copia portable do NVDA (non comeza a copia recentemente instalada). Require expecificarse --portable-path |
-| None | --portable-path=PORTABLEPATH | A ruta onde se creará unha copia portable |
+| ``-h`` | ``--help`` | Amosa a axuda en liña de ordes e sae |
+| ``-q`` | ``--quit`` | Sae da copia que xa se estea a executar do NVDA |
+| ``-k`` | ``--check-running`` | Informa se NVDA está en execución a través do código de saída; 0 se está en execución, 1 se non está en execución |
+| ``-f LOGFILENAME`` | ``--log-file=LOGFILENAME`` | O ficheiro onde se deberían escrebir as mensaxes do rexistro.  O rexistro sempre está desactivado se o modo seguro está habilitado. |
+| ``-l LOGLEVEL`` | ``--log-level=LOGLEVEL`` | O nivel máis baixo da mensaxe rexistrada (debug 10, input/output 12, debug warning 15, info 20, disabled 100). O rexistro está sempre deshabilitado se o modo seguro está habilitado. |
+| ``-c CONFIGPATH`` | ``--config-path=CONFIGPATH`` | A ruta onde se almacenan todas as opcións do NVDA. O valor predeterminado fórzase se o modo seguro está habilitado. |
+| ``No`` | ``--lang=LANGUAGE`` | Sobrescribe a lingua configurada do NVDA. Estabrece "Windows" para o usuario actual por defecto, "en" para Inglés, etc. |
+| ``-m`` | ``--minimal`` | Sen sons, sen interface, sen mesaxe de inicio etc |
+| ``-s`` | ``--secure`` | Inicia o NVDA en [Modo Seguro #SecureMode] |
+| ``Non`` | ``--disable-addons`` | Os complementos non terán efecto |
+| ``Non`` | ``--no-sr-flag``  | Non cambia a bandeira global do sistema do lector de pantalla |
+| ``Non`` | ``--debug-logging`` | Habilita o nivel de rexistro de depuración só para esta execución. Esta configuración sobreescribirá calquera outro nivel de rexistro ( ""--loglevel"", -l) argumento dado, incluindo a opción non rexistro. |
+| ``Non`` | ``--no-logging`` | Deshabilita o rexistro durante o uso do NVDA. Esta opción pode sobreescribirse se se especifica un nivel de rexistro ( ""--loglevel"", -l) dende a liña de ordes ou se o rexistro de depuración está activado. |
+| ``Non`` | ``--install`` | Instálase o NVDA comezando a nova copia instalada |
+| ``Non`` | ``--install-silent`` | Instala en silenzo NVDA (Non comeza a nova copia instalada) |
+| ``Non`` | ``--enable-start-on-logon=True|False`` | Ao instalar, habilita [arrancar na pantalla de inicio #StartAtWindowsLogon] do NVDA |
+| ``Non`` | ``--copy-portable-config`` | Ao instalar, copia a configuración portable dende a ruta proporcionada (--config-path, -c) á actual conta de usuario |
+| ``Non`` | ``--create-portable`` | Crea unha copia portable do NVDA (comezando a copia recentemente creada). Require especificarse --portable-path |
+| ``Non`` | ``--create-portable-silent`` | Crea unha copia portable do NVDA (non comeza a copia recentemente instalada). Require expecificarse --portable-path |
+| ``Non`` | ``--portable-path=PORTABLEPATH`` | A ruta onde se creará unha copia portable |
 
 ++ Parámetros do Sistema ++[SystemWideParameters]
 NVDA permite configurar algúns valores no rexistro do sistema que alteran o comportamento de todo o sistema do NVDA.
