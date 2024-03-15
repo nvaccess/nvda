@@ -239,6 +239,7 @@ userGuideConf = os.path.join(userDocsDir.path, 'userGuide.t2tconf')
 globalConf = os.path.join(userDocsDir.path, 'global.t2tconf')
 changesConf = os.path.join(userDocsDir.path, 'changes.t2tconf')
 styles = os.path.join(userDocsDir.path, 'styles.css')
+numberedHeadingsStyle = os.path.join(userDocsDir.path, "numberedHeadings.css")
 
 #Allow all t2t files to be converted to html in user_docs
 #As we use scons Glob this will also include the keyCommands.t2t files
@@ -257,11 +258,14 @@ for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
 	htmlFile = env.md2html(t2tFile.abspath.replace(".t2t", ".md"))
 	styleInstallPath = os.path.dirname(t2tFile.abspath)
 	installedStyle = env.Install(styleInstallPath, styles)
+	installedHeadingsStyle = env.Install(styleInstallPath, numberedHeadingsStyle)
 	env.Depends(
 		htmlFile,
 		[
 			styles,
 			installedStyle,
+			numberedHeadingsStyle,
+			installedHeadingsStyle,
 		]
 	)
 	env.Depends(htmlFile, mdFile)
@@ -413,12 +417,21 @@ env.Alias("launcher", launcher)
 clientArchive = env.ZipArchive(outputDir.File("%s_controllerClient.zip" % outFilePrefix), clientDir, relativeTo=clientDir)
 env.Alias("client", clientArchive)
 
-outputStylesFile=env.Command(outputDir.File("styles.css"),userDocsDir.File('styles.css'),Copy('$TARGET','$SOURCE'))
+outputStylesFile = env.Command(
+	outputDir.File("styles.css"),
+	userDocsDir.File("styles.css"),
+	Copy("$TARGET", "$SOURCE")
+)
+outputHeadingStylesFile = env.Command(
+	outputDir.File("numberedHeadings.css"),
+	userDocsDir.File("numberedHeadings.css"),
+	Copy("$TARGET", "$SOURCE")
+)
 changesFile=env.Command(outputDir.File("%s_changes.html" % outFilePrefix),userDocsDir.File('en/changes.html'),Copy('$TARGET','$SOURCE'))
 changesMDFile = env.Command(
 	outputDir.File("changes.md"),
 	userDocsDir.File('en/changes.md'),
-	Copy('$TARGET','$SOURCE')
+	Copy('$TARGET', '$SOURCE')
 )
 env.Depends(changesFile, changesMDFile)
 env.Depends(changesFile, outputStylesFile)

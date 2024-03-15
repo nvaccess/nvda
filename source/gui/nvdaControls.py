@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2022 NV Access Limited, Derek Riemer, Cyrille Bougot
+# Copyright (C) 2016-2024 NV Access Limited, Derek Riemer, Cyrille Bougot, Luke Davis
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import collections
@@ -291,7 +291,8 @@ class MessageDialog(DPIScaledDialog):
 			return
 
 	def _playSound(self):
-		winsound.MessageBeep(self._soundID)
+		if self._soundID is not None:
+			winsound.MessageBeep(self._soundID)
 
 	def __init__(self, parent, title, message, dialogType=DIALOG_TYPE_STANDARD):
 		DPIScaledDialog.__init__(self, parent, title=title)

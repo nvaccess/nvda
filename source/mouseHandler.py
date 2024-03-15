@@ -208,7 +208,7 @@ def executeMouseMoveEvent(x,y):
 	oldMouseObject = api.getMouseObject()
 	mouseObject = desktopObject.objectFromPoint(x, y)
 
-	if config.conf["mouse"]["audioCoordinatesOnMouseMove"] and not oldMouseObject.appModule.sleepMode:
+	if config.conf["mouse"]["audioCoordinatesOnMouseMove"] and not oldMouseObject.sleepMode:
 		playAudioCoordinates(x, y, screenWidth, screenHeight, minPos,
 			config.conf['mouse']['audioCoordinates_detectBrightness'],
 			config.conf['mouse']['audioCoordinates_blurFactor'])
