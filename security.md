@@ -50,7 +50,9 @@ We welcome participation from our user community. If you have a keen interest in
 * P2 (High):
   * Planning and Mitigation: Assessment within 2 weeks of triage.
   * Patch Release: Target patch release in the next scheduled minor release.
-* Security Advisory: A security advisory will be published concurrently with the release of the patch. The advisory will provide details of the vulnerability and rectification steps. As details of the vulnerability will be available in the code repository, immediate disclosure aligns with responsible disclosure principles.
+* Security Advisory: A security advisory will be published concurrently with the release of the patch.
+The advisory will provide details of the vulnerability and rectification steps.
+As details of the vulnerability will be available in the code repository, immediate disclosure aligns with responsible disclosure principles.
 
 ## Resource Allocation
 
