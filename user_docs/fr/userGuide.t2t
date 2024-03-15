@@ -4222,7 +4222,8 @@ Le mode sécurisé désactive :
 
 - La sauvegarde de la configuration et autres paramètres sur disque
 - La sauvegarde des gestes de commande sur disque
-- Les fonctionnalités de [Profil de Configuration #ConfigurationProfiles] Telles que créer, supprimer, renommer les profils etc.
+- Les fonctionnalités de [Profil de Configuration #ConfigurationProfiles] telles que créer, supprimer, renommer les profils etc.
+- Le chargement de la configuration depuis un dossiers personnalisés à l'aide de [l'option de ligne de commande ``-c`` #CommandLineOptions]
 - Mettre à jour NVDA et créer des copies portables
 - [L'Add-on Store #AddonsManager]
 - La [console Python NVDA #PythonConsole]
@@ -4284,9 +4285,9 @@ Voici les options de ligne de commande de NVDA :
 | ``-h`` | ``--help`` | affiche l'aide de la ligne de commande et s'arrête |
 | ``-q`` | ``--quit`` | Quitte la copie en cours d'exécution de NVDA |
 | ``-k`` | ``--check-running`` | Indique si NVDA est en cours d'exécution via le code retour; 0 si oui, 1 si non |
-| ``-f NOMDUFICHIERJOURNAL`` | ``--log-file=NOMDUFICHIERJOURNAL`` | Le fichier où les messages du journal doivent être écrits |
-| ``-l NIVEAUDEJOURNALISATION`` | ``--log-level=NIVEAUDEJOURNALISATION`` | Le niveau minimal de messages journalisés (débogage 10, entrées/sorties 12, avertissements de débogage 15, info 20, désactivé 100) |
-| ``-c CHEMINDECONFIG`` | ``--config-path=CHEMINDECONFIG`` | Le chemin vers lequel tous les paramètres de NVDA sont stockés |
+| ``-f NOMDUFICHIERJOURNAL`` | ``--log-file=NOMDUFICHIERJOURNAL`` | Le fichier où les messages du journal doivent être écrits. La journalisation est toujours désactivée si le mode sécurisé est activé. |
+| ``-l NIVEAUDEJOURNALISATION`` | ``--log-level=NIVEAUDEJOURNALISATION`` | Le niveau minimal de messages journalisés (débogage 10, entrées/sorties 12, avertissements de débogage 15, info 20, désactivé 100). La journalisation est toujours désactivée si le mode sécurisé est activé. |
+| ``-c CHEMINDECONFIG`` | ``--config-path=CHEMINDECONFIG`` | Le chemin vers lequel tous les paramètres de NVDA sont stockés. La valeur par défaut est forcée si le mode sécurisé est activé. |
 | Aucun | ``--lang=LANGUAGE`` | Remplacer la langue NVDA configurée. Choisissez "Windows" pour la langue en cours par défaut, "en" pour Anglais, etc. |
 | ``-m`` | ``--minimal`` | Pas de sons, pas d'interface, pas de message de démarrage etc. |
 | ``-s`` | ``--secure`` | Démarre NVDA en [Mode Sécurisé #SecureMode] |
