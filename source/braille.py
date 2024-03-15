@@ -1527,6 +1527,9 @@ class ReviewTextInfoRegion(TextInfoRegion):
 		):
 			return
 		from globalCommands import commands
+		# Using script names instead of scripts for comparison because
+		# scripts in commands are bound methods but scriptHandler.getCurrentScript
+		# returns script as function.
 		startOfNextOrPreviousLineScriptNames: set[str] = {
 			commands.script_braille_nextLine.__name__,
 			commands.script_braille_previousLine.__name__,
@@ -1547,6 +1550,7 @@ class ReviewTextInfoRegion(TextInfoRegion):
 			commands.script_braille_toFocus.__name__,
 			commands.script_navigatorObject_toFocus.__name__,
 		}
+		log.debug(f"nykyinen {self._currentScriptName}")
 		if (
 			(
 				self._currentScriptName in startOfNextOrPreviousLineScriptNames
