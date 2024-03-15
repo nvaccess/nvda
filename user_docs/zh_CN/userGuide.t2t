@@ -916,26 +916,22 @@ NVDA支持以下应用中的文档
 然而，对于希望复制整个表格或复杂格式的段落等情况，此功能应该很有用。
 
 + 阅读数学内容 +[ReadingMath]
--使用 Design Science 发行的 MathPlayer 4，NVDA 可以阅读数学内容并与之交互。
--这要求您首先安装 MathPlayer 4。
--可免费从 [MathPlayer information 页面 https://info.wiris.com/mathplayer-info]下载 MathPlayer。
--安装 MathPlayer 后，需重启 NVDA。
-NVDA can read and navigate mathematical content on the web and in other applications, providing access in both speech and braille.
-However, in order for NVDA to read and interact with mathematical content, you will first need to install a Math component for NvDA.
-There are several NVDA add-ons available in the NVDA Add-on Store that provide support for math, including the [MathCAT NVDA add-on https://nsoiffer.github.io/MathCAT/] and [Access8Math https://github.com/tsengwoody/Access8Math].
-Please refer to the [Add-on Store section #AddonsManager] to learn how to browse and install available add-ons in NVDA.
-NVDA also can make use of the older [MathPlayer https://info.wiris.com/mathplayer-info] software from Wiris if found on your system, though this software is no longer maintained.
+NVDA 可以阅读和导航网络和其他应用程序中的数学内容，提供语音和盲文访问。
+但是，为了让 NVDA 读取数学内容并与之交互，您首先需要安装 NVDA 的数学组件。
+NVDA 插件商店中有多个插件可提供数学支持，包括 [MathCAT NVDA 插件 https://nsoiffer.github.io/MathCAT/]和 [Access8Math https://github.com/tsengwoody/Access8Math]。
+请参阅[插件商店 #AddonsManager]部分，了解如何浏览和安装 NVDA 的可用插件。
+NVDA 也可以使用较旧的 [MathPlayer https://info.wiris.com/mathplayer-info]，尽管该软件已不再维护。
 
-++ Supported math content ++[SupportedMathContent]
-With an appropriate math component installed, NVDA 支持以下类型的数学内容：
+++ 支持的数学内容 ++[SupportedMathContent]
+安装适当的数学组件后，NVDA 支持以下类型的数学内容：
 - Mozilla Firefox、Microsoft Internet Explorer 和 Google Chrome 内的 MathML 内容。
 - UIA 模式下 Microsoft Word 中的新版数学公式：
-NVDA 能够阅读 Microsoft Word 365/2016 build 14326 及更高版本软件中的数学公式并与之交互。
+NVDA 能够阅读 Microsoft Word 365 或 2016 build 14326 及更高版本软件中的数学公式并与之交互。
 但请注意，必须将先前创建的 MathType 公式转换为 Office Math。
-方法是选中每个要转换的公式并在上下文菜单中选择 “Equation” 对象 -> 转换为 Office Math。
+方法是选中每个要转换的公式并在上下文菜单中选择 “公式” -> “转换为 Office Math”选项。
 在执行该操作之前，请确保您的 MathType 已更新到最新版本。
 Microsoft Word 提供了基于线性格式的数学公式导航支持，同时支持使用包括 LateX 在内的多种语法输入数学公式。
-有关详细信息，请参考[在 Word 中使用 UnicodeMath 和 LaTeX 的线性格式公式 https://support.microsoft.com/zh-cn/office/word-%E4%B8%AD%E4%BD%BF%E7%94%A8-unicodemath-%E5%92%8C-latex-%E7%9A%84%E7%BA%BF%E6%80%A7%E6%A0%BC%E5%BC%8F%E5%85%AC%E5%BC%8F-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
+有关详细信息，请参阅[在 Word 中使用 UnicodeMath 和 LaTeX 的线性格式公式 https://support.microsoft.com/zh-cn/office/word-%E4%B8%AD%E4%BD%BF%E7%94%A8-unicodemath-%E5%92%8C-latex-%E7%9A%84%E7%BA%BF%E6%80%A7%E6%A0%BC%E5%BC%8F%E5%85%AC%E5%BC%8F-2e00618d-b1fd-49d8-8cb4-8d17f25754f8]
 - Microsoft Powerpoint 和旧版 Microsoft Word 中的数学公式：
 NVDA 支持在 Microsoft Powerpoint 和 Microsoft word 中阅读和导航 MathType 公式。
 您必须先安装 MathType 软件才可以使用该功能。
@@ -947,15 +943,15 @@ NVDA 支持在 Microsoft Powerpoint 和 Microsoft word 中阅读和导航 MathTy
 NVDA 支持在 Kindle for PC 中阅读和导航包含可访问性数学内容的书籍。
 -
 
-当阅读一个文档时，NVDA 将会把所有支持的数学内容读出来。
-如果您正在使用点显器，数学内容同样可以以盲文输出。
+在阅读文档时，NVDA 将会读出所有支持的数学内容。
+如果您正在使用点显器，数学内容也将以盲文显示。
 
 ++ 交互式浏览 ++[InteractiveNavigation]
 如果您主要使用语音进行工作，在大多数情况下，您或许希望可以采用更小的浏览单位检查表达式，而不是马上读出整个表达式。
 
-如果您正处于浏览模式中，您可以移动光标到数学内容上然后按下“回车”键。
+如果您处于浏览模式，可以通过将光标移动到数学内容并按回车键来执行此操作。
 
-如果您没有在浏览模式时：
+如果您未处于浏览模式：
 + 移动浏览光标到数学内容。
 默认情况下，浏览光标会跟随系统输入焦点，所以，实际上您可以直接使用系统输入焦点移动到期望的内容。
 + 之后就可以使用下面的命令浏览数学内容。
@@ -963,31 +959,32 @@ NVDA 支持在 Kindle for PC 中阅读和导航包含可访问性数学内容的
 
 %kc:beginInclude
 || 名称 | 按键 | 描述 |
-| 与数学内容交互 | NVDA+alt+m | 开始与数学内容进行交互。 |
+| 与数学内容交互 | ``NVDA+alt+m`` | 开始与数学内容进行交互。 |
 %kc:endInclude
 
-在此时，NVDA 将进入数学模式，您可以使用光标键等命令来浏览表达式。
-举例来说，您可以使用左右光标键经过表达式并缩放到表达式的其中一个部分，如分数等。
+此时，NVDA 将进入数学模式，您可以使用光标键等命令来浏览表达式。
+举例来说，您可以使用左右光标键在表达式中移动，使用下光标键缩放到表达式的其中一个部分，如分数等。
 
-当您希望返回到文档时，简单的按下 ``esc`` 键即可。
+当您希望返回到文档时，只需按下 ``esc`` 键即可。
 
-For more information on available commands and preferences for reading and navigating within math content, please refer to the documentation for your particular math component you have installed.
-- [MathCAT documentation https://nsoiffer.github.io/MathCAT/users.html]
-- [Access8Math documentation https://github.com/tsengwoody/Access8Math]
-- [MathPlayer 的文档 https://docs.wiris.com/mathplayer/en/mathplayer-user-manual.html]
+有关在数学内容中阅读和导航的可用命令和选项的更多信息，请参阅已安装特定数学组件的文档。
+- [MathCAT 文档 https://nsoiffer.github.io/MathCAT/users.html]
+- [Access8Math 文档 https://github.com/tsengwoody/Access8Math]
+- [MathPlayer 文档 https://docs.wiris.com/mathplayer/en/mathplayer-user-manual.html]
 -
 
 有时，数学内容可能显示为按钮或其他类型的元素，这些元素被激活时可以显示对话框或与公式有关的更多信息。
-要激活按钮或包含公式的元素，请按ctrl + enter。
+要激活按钮或包含公式的元素，请按 ``ctrl+回车``。
 
-++ Installing MathPlayer ++[InstallingMathPlayer]
-Although it is generally recommended to use one of the newer NVDA add-ons to support math in NVDA, in certain limited scenarios MathPlayer may still be a more suitable choice.
-E.g. MathPlayer may support a particular language or Braille code that is unsupported in newer add-ons.
-MathPlayer is available for free from the Wiris website.
-[Download MathPlayer https://downloads.wiris.com/mathplayer/MathPlayerSetup.exe].
-After installing MathPlayer, you will need to restart NVDA.
-Please note that information about MathPlayer may state that it is only for older browsers such as Internet Explorer 8.
-This is only referring to using MathPlayer to display mathematical content visually, and can be ignored by those using it to read or navigate math with NVDA.
+++ 安装 MathPlayer ++[InstallingMathPlayer]
+尽管通常建议使用较新的插件来支持 NVDA 中的数学，但在某些有限的情况下，MathPlayer 可能仍然是更合适的选择。
+例如 MathPlayer 可能支持较新的插件不支持的特定语言或盲文代码。
+MathPlayer 可从 Wiris 网站免费获得。
+[下载 MathPlayer https://downloads.wiris.com/mathplayer/MathPlayerSetup.exe].
+安装 MathPlayer 后，您需要重启 NVDA。
+请注意，有关 MathPlayer 的信息可能表明它仅适用于 IE 8 等较旧的浏览器。
+这仅指使用 MathPlayer 直观地显示数学内容，通过 NVDA 阅读或导航数学的人可以忽略。
+
 
 + 盲文 +[Braille]
 如果您拥有点显器，NVDA可以以盲文的形式显示屏幕上的信息
@@ -1204,17 +1201,17 @@ NVDA 为一些特定的应用程序提供了独有的额外特性，让您可以
 NVDA 可在您使用 Microsoft Word 浏览表格时自动读出恰当的行列标题。
 这一特性要求启用 NVDA“文档格式”对话框的“朗读行列标题”选项。可在[NVDA 设置 #NVDASettings]对话框中找到。
 
-If you use [UIA to access Word documents #MSWordUIA], which is default in recent versions of Word and Windows, the cells of the first row will automatically be considered as column headers; similarly, the cells of the first column will automatically be considered as row headers.
+如果您使用 [UIA 访问 Word 文档 #MSWordUIA]（这是最近版本的 Word 和 Windows 中的默认设置），第一行的单元格将自动被视为列标题；同样，第一列的单元格也将自动被视为行标题。
 
-On the contrary, if you do not use [UIA to access Word documents #MSWordUIA], you will have to indicate to NVDA which row or column contains the headers in any given table.
-在移动到包含标题的行或者列的第一个单元后，可使用下面任一命令：
+相反，如果您不使用 [UIA 访问 Word 文档 #MSWordUIA]，则必须向 NVDA 指出在给定的表格里，哪一行或哪一列包含正确的行列标题。
+在移动到包含标题的行或者列的第一个单元格后，可使用下面任一命令：
 %kc:beginInclude
 || 名称 | 按键 | 描述 |
-| 设置列标题 | NVDA+shift+c | 按一次，告诉 NVDA，这是包含列标题的行的第一个标题单元，当在其下方的列之间切换时，自动读出那一行的列标题，连按两次清除设置。 |
-| 设置行标题 | NVDA+shift+r | 按一次，告诉 NVDA，这是包含行标题的列的第一个标题单元，当在其右方的行之间切换时，自动读出那一列的行标题，连按两次清除设置。 |
+| 设置列标题 | ``NVDA+shift+c`` | 按一次，告诉 NVDA，这是包含列标题的行的第一个标题单元，当在其下方的列之间切换时，自动读出那一行的列标题，连按两次清除设置。 |
+| 设置行标题 | ``NVDA+shift+r`` | 按一次，告诉 NVDA，这是包含行标题的列的第一个标题单元，当在其右方的行之间切换时，自动读出那一列的行标题，连按两次清除设置。 |
 %kc:endInclude
 此设置将会以书签的形式存储在文档，能与其他屏幕阅读器如 JAWS 兼容。
-这样意味着，屏幕阅读器用户在后期打开这个文档时，使用其他屏幕阅读器也同样拥有设置好的行列标题。
+这意味着，屏幕阅读器用户在后期打开这个文档时，使用其他屏幕阅读器也同样拥有设置好的行列标题。
 
 +++ Microsoft Word 的浏览模式 +++[BrowseModeInMicrosoftWord]
 与网页相似，您可在 Microsoft Word 中使用浏览模式的特性，诸如快速导航、元素列表等。

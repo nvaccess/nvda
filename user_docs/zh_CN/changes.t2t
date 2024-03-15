@@ -5,135 +5,135 @@ NVDA 更新日志
 
 = 2024.1 =
 
-A new "on-demand" speech mode has been added.
-When speech is on-demand, NVDA does not speak automatically (e.g. when moving the cursor) but still speaks when calling commands whose goal is explicitly to report something (e.g. report window title).
-In the Speech category of NVDA's settings, it is now possible to exclude unwanted speech modes from the Cycle speech modes command (``NVDA+s``).
+在本版新增了一种手动朗读模式：
+开启此模式后，NVDA 不会自动朗读信息（例如在光标移动时），但仍会响应明确朗读信息的指令（例如读出窗口标题）。
+您还可以在 NVDA 设置的“语音”类别中，从“循环语音模式中可用的模式”（``NVDA+s``）排除掉不需要的语音模式。
 
-A new Native Selection mode (toggled by ``NVDA+shift+f10``) is now available in NVDA's browse mode for Mozilla Firefox.
-When turned on, selecting text in browse mode will also manipulate Firefox's own native selection.
-Copying text with ``control+c`` will pass straight through to Firefox, thus copying the rich content, rather than NVDA's plain text representation.
+我们还支持了 Firefox 的应用原生选择模式（``NVDA+shift+f10``）：
+开启此模式后，在浏览模式下选择文本会同时操控 Firefox 的原生选择功能。
+通过 ``control+c`` 复制文本将直接传递给 Firefox，从而复制富文本内容，而非 NVDA 复制的纯文本形式。
 
-The Add-on Store now supports bulk actions (e.g. installing, enabling add-ons) by selecting multiple add-ons
-There is a new action to open a reviews webpage for the selected add-on.
+关于插件商店，一个显著的变化是，插件商店支持了批量操作：现在可以批量选择插件进行安装、启用等操作。
+同时新增了打开所选插件的网页评论功能。
 
-The audio output device and ducking mode options have been removed from the "Select Synthesizer" dialog.
-They can be found in the audio settings panel which can be opened with ``NVDA+control+u``.
+另外，自本版起，我们从“选择合成器”对话框中将“音频输出设备”和“音频闪避模式”选项移动到了“音频”设置面板。
+您可以通过 ``NVDA+control+u`` 打开此设置面板。
 
-eSpeak-NG, LibLouis braille translator, and Unicode CLDR have been updated.
-New Thai, Filipino and Romanian braille tables are available.
+如你所知，我们一如既往的对 eSpeak-NG 语音合成器、LibLouis 盲文翻译器和 Unicode CLDR 进行了更新。
+同时新增了泰语、菲律宾语和罗马尼亚语盲文表。
 
-There are many bug fixes, particularly for the Add-on Store, braille, Libre Office, Microsoft Office and audio.
+本版的其他修复主要集中于插件商店、盲文、Libre Office、Microsoft Office 和音频方面。
 
-== Important notes == 
-- This release breaks compatibility with existing add-ons.
-- Windows 7, and Windows 8 are no longer supported.
-Windows 8.1 is the minimum Windows version supported.
+== 重要提示 ==
+- 这是一个打破插件 API 兼容性的版本。
+- 不再支持 Windows 7 和 Windows 8。
+支持的最低 Windows 版本是 Windows 8.1。
 -
 
-== New Features ==
-- Add-on Store:
-  - The Add-on Store now supports bulk actions (e.g. installing, enabling add-ons) by selecting multiple add-ons. (#15350, #15623, @CyrilleB79)
-  - A new action has been added to open a dedicated webpage to see or provide feedback about the selected add-on. (#15576, @nvdaes)
+== 新特性 ==
+- 插件商店：
+  - 插件商店支持选中多个插件进行批量操作：例如批量安装、启用等。(#15350, #15623, @CyrilleB79)
+  - 新增了打开所选插件的网页评论功能，可以在该网页内提交相关插件的反馈。(#15576, @nvdaes)
   -
-- Added support for Bluetooth Low Energy HID Braille displays. (#15470)
-- A new Native Selection mode (toggled by ``NVDA+shift+f10``) is now available in NVDA's browse mode for Mozilla Firefox.
-When turned on, selecting text in browse mode will also manipulate Firefox's own native selection.
-Copying text with ``control+c`` will pass straight through to Firefox, thus copying the rich content, rather than NVDA's plain text representation.
-Note however that as Firefox is handling the actual copy, NVDA will not report a "copy to clipboard" message in this mode. (#15830)
-- When copying text in Microsoft Word with NVDA's browse mode enabled, formatting is now also included.
-A side affect of this is that NVDA will no longer report a "copy to clipboard" message when pressing ``control+c`` in Microsoft Word / Outlook browse mode, as the application is now handling the copy, not NVDA. (#16129)
-- A new "on-demand" speech mode has been added.
-When speech is on-demand, NVDA does not speak automatically (e.g. when moving the cursor) but still speaks when calling commands whose goal is explicitly to report something (e.g. report window title). (#481, @CyrilleB79)
-- In the Speech category of NVDA's settings, it is now possible to exclude unwanted speech modes from the Cycle speech modes command (``NVDA+s``). (#15806, @lukaszgo1)
-  - If you are currently using the NoBeepsSpeechMode add-on consider uninstalling it, and disabling "beeps" and "on-demand" modes in the settings.
+- 添加了对低功耗蓝牙 HID 盲文点显器的支持。(#15470)
+- 新增了适用于 Mozilla Firefox 的应用原生选择模式，``NVDA+shift+f10`` 切换。
+开启此模式后，在浏览模式下选择文本会同时操控 Firefox 的原生选择功能。
+通过 ``control+c`` 复制文本将直接传递给 Firefox，从而复制富文本内容，而非 NVDA 复制的纯文本形式。
+但请注意，由于实际的复制操作是由 Firefox 处理的，因此 NVDA 在此模式下不会提示“XXX 已复制到剪贴板”。(#15830)
+- 在 Microsoft Word/Outlook 中，NVDA 在浏览模式下复制文本时，也会复制格式信息。
+由于实际的复制操作是由应用程序处理的，因此，当您在此模式下按 ``control+c`` 不会提示“XXX 已复制到剪贴板”。(#16129)
+- 新增了手动朗读模式。
+开启此模式后，NVDA 不会自动朗读信息（例如在光标移动时），但仍会响应明确朗读信息的指令（例如读出窗口标题）。(#481, @CyrilleB79)
+- 支持在 NVDA 设置的“语音”类别中，从“循环语音模式中可用的模式”（``NVDA+s``）排除不需要的语音模式。(#15806, @lukaszgo1)
+  - 如果您当前正在使用 NoBeepsSpeechMode 插件，建议考虑将其卸载，在设置中禁用“提示音”和“手动朗读”模式，即可恢复到旧行为。
   -
 -
 
-== Changes ==
-- NVDA no longer supports Windows 7 and Windows 8.
-Windows 8.1 is the minimum Windows version supported. (#15544)
-- Component updates:
-  - Updated LibLouis braille translator to [3.28.0 https://github.com/liblouis/liblouis/releases/tag/v3.28.0]. (#15435, #15876, @codeofdusk)
-    - Added new Thai, Romanian, and Filipino Braille tables.
+== 改进 ==
+- NVDA 不再支持 Windows 7 和 Windows 8。
+最低支持版本为 Windows 8.1。(#15544)
+- 组件更新：
+  - 将 LibLouis 盲文翻译器更新到 [3.28.0 https://github.com/liblouis/liblouis/releases/tag/v3.28.0]。(#15435, #15876, @codeofdusk)
+    - 添加了新的泰语、罗马尼亚语和菲律宾语盲文表。
     -
-  - eSpeak NG has been updated to 1.52-dev commit ``530bf0abf``. (#15036)
-  - CLDR emoji and symbol annotations has been updated to version 44.0. (#15712, @OzancanKaratas)
-  - Updated Java Access Bridge to 17.0.9+8Zulu (17.46.19). (#15744)
+  - 将 eSpeak NG 更新到 1.52-dev commit ``530bf0abf``。(#15036)
+  - 将 CLDR Emoji 表情符号和符号解释库更新到 version 44.0。(#15712, @OzancanKaratas)
+  - 将 Java Access Bridge 更新到 17.0.9+8Zulu (17.46.19)。(#15744)
   -
-- Key Commands:
-  - The following commands now support two and three presses to spell the reported information and spell with character descriptions: report selection, report clipboard text and report focused object. (#15449, @CyrilleB79)
-  - The command to toggle the screen curtain now has a default gesture: ``NVDA+control+escape``. (#10560, @CyrilleB79)
-  - When pressed four times, the report selection command now shows the selection in a browsable message. (#15858, @Emil-18)
-  - 
-- Microsoft Office:
-  - When requesting formatting information on Excel cells, borders and background will only be reported if there is such formatting. (#15560, @CyrilleB79)
-  - NVDA will again no longer report unlabelled groupings such as in recent versions of Microsoft Office 365 menus. (#15638)
+- 快捷键：
+  - 以下命令现在支持连按两次逐字朗读，连按三次用短字符描述逐字解释：朗读选择的文本、朗读剪贴板文本和朗读焦点对象。(#15449, @CyrilleB79)
+  - 为切换黑屏功能分配了一个默认快捷键：``NVDA+control+escape``。(#10560, @CyrilleB79)
+  - 朗读选择的文本命令支持连按四次在可浏览对话框中显示所选择的文本。(#15858, @Emil-18)
   -
-- The audio output device and ducking mode options have been removed from the "Select Synthesizer" dialog.
-They can be found in the audio settings panel which can be opened with ``NVDA+control+u``. (#15512, @codeofdusk)
-- The option "Report role when mouse enters object" in NVDA's mouse settings category has been renamed to "Report object when mouse enters it".
-This option now announces additional relevant information about an object when the mouse enters it, such as states (checked/pressed) or cell coordinates in a table. (#15420, @LeonarddeR)
-- New items have been added to the Help menu for the NV Access "Get Help" page and Shop. (#14631)
-- NVDA's support for [Poedit https://poedit.net] is overhauled for Poedit version 3 and above.
-Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on enhanced accessibility in Poedit, such as shortcuts to read translator notes and comments. (#15313, #7303, @LeonarddeR)
-- Braille viewer and speech viewer are now disabled in secure mode. (#15680)
-- During object navigation, disabled (unavailable) objects will not be ignored anymore. (#15477, @CyrilleB79)
-- Added table of contents to key commands document. (#16106)
+- Microsoft Office：
+  - 获取 Excel 单元格的格式信息时，仅当存在此类格式时才会读出边框和背景。(#15560, @CyrilleB79)
+  - 去掉对未标记分组的朗读，例如在最新版 Microsoft Office 365 菜单中。(#15638)
+  -
+- 从“选择合成器”对话框中将“音频输出设备”和“音频闪避模式”选项移动到了“音频”设置面板。
+可以通过 ``NVDA+control+u`` 打开此设置面板。(#15512, @codeofdusk)
+- NVDA 鼠标设置类别中的“鼠标进入对象时读出角色”选项已重命名为“鼠标进入时读出对象”。
+此选项现在会在鼠标进入对象时读出有关该对象的更多相关信息，例如状态（选中/按下）或表格中的单元格坐标。(#15420, @LeonarddeR)
+- 帮助菜单中添加了新的条目，用于访问 NV Access 的“获取帮助”页面和商店。(#14631)
+- NVDA 对 [Poedit https://poedit.net] 3 及更高版本的支持进行了全面改进。
+如果用户依赖于 Poedit 中增强的可访问性功能（例如使用朗读译者注释和批注的快捷键），建议 Poedit 1 用户更新到 Poedit 3。(#15313, #7303, @LeonarddeR)
+- 在安全模式下将禁用盲文查看器和语音查看器。(#15680)
+- 在对象导航过程中，将不再忽略已禁用的（不可用）对象。(#15477, @CyrilleB79)
+- 为热键快速参考添加了目录。(#16106)
 -
 
-== Bug Fixes ==
-- Add-on Store:
-  - When the status of an add-on is changed while it has focus, e.g. a change from "downloading" to "downloaded", the updated item is now announced correctly. (#15859, @LeonarddeR)
-  - When installing add-ons install prompts are no longer overlapped by the restart dialog. (#15613, @lukaszgo1)
-  - When reinstalling an incompatible add-on it is no longer forcefully disabled. (#15584, @lukaszgo1)
-  - Disabled and incompatible add-ons can now be updated. (#15568, #15029)
-  - NVDA now recovers and displays an error in a case where an add-on fails to download correctly. (#15796)
-  - NVDA no longer fails to restart intermittently after opening and closing Add-on Store. (#16019, @lukaszgo1)
+== 错误修复 ==
+- 插件商店：
+  - 修复当列表内的插件被聚焦时，其状态发生改变（例如，从“下载中”变为“已下载”），没有及时读出变化信息的错误。(#15859, @LeonarddeR)
+  - 修复了安装插件时，安装提示会被重新启动对话框覆盖的错误。(#15613, @lukaszgo1)
+  - 修复了重新安装不兼容的插件，会被强制禁用的错误。(#15584, @lukaszgo1)
+  - 修复了因不兼容而被禁用的插件无法获取更新的错误。(#15568, #15029)
+  - 修复了插件下载失败 NVDA 未给出提示且无法重新下载的错误。(#15796)
+  - 修复了打开和关闭插件商店后，NVDA 间歇性重启的错误。(#16019, @lukaszgo1)
   -
-- Audio:
-  - NVDA no longer freezes briefly when multiple sounds are played in rapid succession. (#15311, #15757, @jcsteh)
-  - If the audio output device is set to something other than the default and that device becomes available again after being unavailable, NVDA will now switch back to the configured device instead of continuing to use the default device. (#15759, @jcsteh)
-  - NVDA now resumes audio if the configuration of the output device changes or another application releases exclusive control of the device. (#15758, #15775, @jcsteh)
+- 音频：
+  - 修复了快速连续播放多个声音时，NVDA 会短暂冻结的错误。(#15311, #15757, @jcsteh)
+  - 如果音频输出设备设置为除默认设备之外的其他设备，并且该设备在不可用后恢复，NVDA 现在会切换回设置的设备，而不是继续使用默认设备。(#15759, @jcsteh)
+  - 如果输出设备的设置发生更改或另一个应用程序释放了对该设备的独占控制，NVDA 将恢复音频输出。(#15758, #15775, @jcsteh)
   -
-- Braille:
-  - Multi line braille displays will no longer crash the BRLTTY driver and are treated as one continuous display. (#15386)
-  - More objects which contain useful text are detected, and text content is displayed in braille. (#15605)
-  - Contracted braille input works properly again. (#15773, @aaclause)
-  - Braille is now updated when moving the navigator object between table cells in more situations (#15755, @Emil-18)
-  - The result of reporting current focus, current navigator object, and current selection commands is now shown in braille. (#15844, @Emil-18)
-  - The Albatross braille driver no longer handles a Esp32 microcontroller as an Albatross display. (#15671)
+- 盲文：
+  - 修复了多行盲文点显器会导致 BRLTTY 驱动程序崩溃的错误，并将设备视为一个大型连续盲文点显器。(#15386)
+  - 能够检测到更多包含有用文本的对象，并以盲文呈现其文本内容。(#15605)
+  - 修复了盲文输入被意外破坏的回归错误。(#15773, @aaclause)
+  - 在更多情况下，在表格单元格之间移动导航对象时会更新盲文显示。(#15755, @Emil-18)
+  - 修复了读出系统焦点、读出导航对象和已选择内容未在盲文更新的错误。(#15844, @Emil-18)
+  - 修复了 Albatross 盲文驱动程序将 Esp32 微控制器误识别为 Albatross 点显器的错误。(#15671)
   -
-- LibreOffice:
-  - Words deleted using the ``control+backspace`` keyboard shortcut are now also properly announced when the deleted word is followed by whitespace (like spaces and tabs). (#15436, @michaelweghorn)
-  - Announcement of the status bar using the ``NVDA+end`` keyboard shortcut now also works for dialogs in LibreOffice version 24.2 and newer. (#15591, @michaelweghorn)
-  - All expected text attributes are now supported in LibreOffice versions 24.2 and above.
-  This makes the announcement of spelling errors work when announcing a line in Writer. (#15648, @michaelweghorn)
-  - Announcement of heading levels now also works for LibreOffice versions 24.2 and newer. (#15881, @michaelweghorn)
+- LibreOffice：
+  - 修复当单词后紧跟空白符（如空格或制表符）时，按 ``Ctrl+Backspace`` 删除该单词未正确朗读已删除内容的错误。(#15436, @michaelweghorn)
+  - 按 ``NVDA+end`` 快捷键朗读状态栏，支持了 LibreOffice 24.2 及更高版本的对话框。(#15591, @michaelweghorn)
+  - 目前 LibreOffice 24.2 及更高版本支持所有预期的文本属性。
+这使得在 Writer 中朗读一行时，依然可以朗读拼写错误。(#15648, @michaelweghorn)
+  - 现在，LibreOffice 24.2 及更高版本也支持了读出标题级别。(#15881, @michaelweghorn)
   -
-- Microsoft Office:
-  - In Excel with UIA disabled, braille is updated, and the active cell content is spoken, when ``control+y``, ``control+z`` or ``alt+backspace`` is pressed. (#15547)
-  - In Word with UIA disabled braille is updated when ``control+v``, ``control+x``, ``control+y``, ``control+z``, ``alt+backspace``, ``backspace`` or ``control+backspace`` is pressed.
-  It is also updated with UIA enabled, when typing text and braille is tethered to review and review follows caret. (#3276)
-  - In Word, the landing cell will now be correctly reported when using the native Word commands for table navigation ``alt+home``, ``alt+end``, ``alt+pageUp`` and ``alt+pageDown``. (#15805, @CyrilleB79)
+- Microsoft Office：
+  - 修复了在禁用 UIA 的 Excel 中，当按下 ``control+y``、``control+z`` 或 ``alt+backspace`` 时，未朗读操作结果且盲文显示未同时更新的错误。(#15547)
+  - 修复了在禁用 UIA 的 Word 中，当按下 ``control+v``、``control+x``、``control+y``、``control+z``、``alt+backspace``、亦或按住 ``backspace``、``control+backspace`` 时，盲文未更新的错误。
+在启用 UIA 的情况下也会更新，当输入文本时，盲文光标与浏览光标跟随，并且浏览光标跟随插入符位置。
+  - 修复了在 Word 中，使用原生 Word 表格导航快捷键 ``alt+home``、``alt+end``、``alt+pageUp``、``alt+pageDown`` 时，不读单元格坐标的错误。(#15805, @CyrilleB79)
   -
-- Reporting of object shortcut keys has been improved. (#10807, #15816, @CyrilleB79)
-- The SAPI4 synthesizer now properly supports volume, rate and pitch changes embedded in speech. (#15271, @LeonarddeR)
-- Multi line state is now correctly reported in applications using Java Access Bridge. (#14609)
-- NVDA will announce dialog content for more Windows 10 and 11 dialogs. (#15729, @josephsl)
-- NVDA will no longer fail to read a newly loaded page in Microsoft Edge when using UI Automation. (#15736)
-- When using say all or commands which spell text, pauses between sentences or characters no longer gradually decrease over time. (#15739, @jcsteh)
-- NVDA no longer sometimes freezes when speaking a large amount of text. (#15752, @jcsteh)
-- When accessing Microsoft Edge using UI Automation, NVDA is able to activate more controls in browse mode. (#14612)
-- NVDA will not fail to start anymore when the configuration file is corrupted, but it will restore the configuration to default as it did in the past. (#15690, @CyrilleB79)
-- Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283, @LeonarddeR)
-- It is not possible anymore to overwrite NVDA's Python console history. (#15792, @CyrilleB79)
-- NVDA should remain responsive when being flooded with many UI Automation events, e.g. when large chunks of text are printed to a terminal or when listening to voice messages in WhatsApp messenger. (#14888, #15169)
-  - This new behavior can be disabled using the new "Use enhanced event processing" setting in NVDA's advanced settings.
+- 对象快捷键的朗读有所改善。(#10807, #15816, @CyrilleB79)
+- SAPI4 合成器现在可以正确支持嵌入在语音中的音量、语速和音调变化。(#15271, @LeonarddeR)
+- 使用 Java Access Bridge 的应用程序中现在可以正确朗读多行状态。(#14609)
+- NVDA 可以朗读更多 Windows 10 和 11 对话框内容。(#15729, @josephsl)
+- 修复了使用 UIA 时，NVDA 无法读取 Microsoft Edge 新加载的页面的错误。(#15736)
+- 修复了使用“全文朗读”或拼写文本的命令时，句子或字符之间的停顿会随着时间推移逐渐缩短的错误。(#15739, @jcsteh)
+- 修复了 NVDA 在朗读大量文本时，会偶尔冻结的错误。(#15752, @jcsteh)
+- 修复了使用 UIA 访问 Microsoft Edge 时，NVDA 在浏览模式下无法激活个别控件的错误。(#14612)
+- 修复了配置文件被破坏时，NVDA 无法启动的错误，在这种情况下，会和以前一样将配置还原为默认值。(#15690, @CyrilleB79)
+- 修复了对 Windows Forms 应用程序中系统列表视图（SysListView32）控件的支持。(#15283, @LeonarddeR)
+- 修复了 NVDA 的 Python 控制台历史记录在个别情况下会被覆盖的错误。(#15792, @CyrilleB79)
+- 当收到大量 UIA 事件（例如，大量文本被打印到终端或在 WhatsApp Messenger 中收听语音消息时），NVDA 可以保持响应状态。(#14888, #15169)
+  - 这一新行为可以通过 NVDA “高级”设置中的设置来禁用。
   -
-- NVDA is again able to track the focus in applications running within Windows Defender Application Guard (WDAG). (#15164)
-- The speech text is no longer updated when the mouse moves in the Speech Viewer. (#15952, @hwf1324)
-- NVDA will again switch back to browse mode when closing combo boxes with ``escape`` or ``alt+upArrow`` in Firefox or Chrome. (#15653)
-- Arrowing up and down in combo boxes in iTunes will no longer inappropriately switch back to browse mode. (#15653)
+- 修复了 NVDA 无法获取在 Windows Defender 应用防护（WDAG）中运行的应用程序焦点的错误。(#15164)
+- 当鼠标在朗读查看器中移动时，朗读查看器中的文本不再更新。(#15952, @hwf1324)
+- 修复了在 Firefox 或 Chrome 中使用 ``escape`` 或 ``alt+upArrow`` 关闭组合框后，NVDA 未切换回浏览模式的错误。(#15653)
+- 修复了在 iTunes 中按上下键选择组合框中的选项时会被切换回浏览模式的错误。(#15653)
 -
 
 == Changes for Developers ==
@@ -208,7 +208,7 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
   - configobj to 5.1.0dev commit ``e2ba4457c4651fa54f8d59d8dcdd3da950e956b8``. (#15544)
   - Comtypes to 1.2.0. (#15513, @codeofdusk)
   - Flake8 to 4.0.1. (#15636, @lukaszgo1)
-  - py2exe to 0.13.0.1dev commit ``4e7b2b2c60face592e67cb1bc935172a20fa371d``. (#15544) 
+  - py2exe to 0.13.0.1dev commit ``4e7b2b2c60face592e67cb1bc935172a20fa371d``. (#15544)
   - robotframework to 6.1.1. (#15544)
   - SCons to 4.5.2. (#15529, @LeonarddeR)
   - sphinx to 7.2.6. (#15544)
@@ -2037,7 +2037,7 @@ NVDA 中的 COM 注册修复工具现在能够解决更多的系统问题。
 
 == 错误修复 ==
 - 即使创建日志文件失败，NVDA 也可以正常运行。(#6330)
-- 在最新版本的 Microsoft Word 365 中编辑文档时，按 `Control+Backspace`` 不再朗读"delete back word"，而是直接读出所删除的单词。(#10851)
+- 在最新版本的 Microsoft Word 365 中编辑文档时，按 ``Control+Backspace`` 不再朗读"delete back word"，而是直接读出所删除的单词。(#10851)
 - 在 Winamp 中，支持朗读随机播放和重复播放的切换状态。(#10945)
 - 在 1Password 中的列表项目之间切换时不再有明显的卡顿感。(#10508)
 - Windows OneCore 语音合成器不再有延迟。(#10721)
