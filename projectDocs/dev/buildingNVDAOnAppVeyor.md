@@ -164,7 +164,7 @@ Go to the [AppVeyor sign-in page](https://ci.appveyor.com/login).
     *(FixMe: more instructions may be needed here.)*
 4. Move to the "Select repository for your new project" heading, and then to the heading representing your GitHub username.
 5. Below that heading, you should find your GitHub repositories listed. Go to the one representing your NVDA fork.
-6. This part is less than perfectly accessible via the usual methods: you will need to use `NVDA+NumpadDivide`, to route the mouse to the repository name, and then `NumpadDivide` to click on it.
+6. This part is less than perfectly accessible via the usual methods: you will need to use `NVDA+numpadDivide`, to route the mouse to the repository name, and then `numpadDivide` to click on it.
     You may also be able to use object navigation to achieve this.
 7. When you have selected the repository name, an "Add" link will appear below it.
     Select that link normally, and you will have attached the repository to AppVeyor.
