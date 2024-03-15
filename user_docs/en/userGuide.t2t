@@ -321,6 +321,7 @@ Before you're able to press the Continue button you will have to use the checkbo
 There will also be a button present to review the add-ons that will be disabled.
 Refer to the [incompatible add-ons dialog section #incompatibleAddonsManager] for more help on this button.
 After installation, you are able to re-enable incompatible add-ons at your own risk from within the [Add-on Store #AddonsManager].
+But note that add-ons might introduce vulnerabilities, so check out the [note on security and privacy #AddonSecurityandPrivacy] to make sure you have all information needed before installing them.
 
 +++ Use NVDA during sign-in +++[StartAtWindowsLogon]
 This option allows you to choose whether or not NVDA should automatically start while at the Windows sign-in screen, before you have entered a password.
@@ -2924,6 +2925,32 @@ If you install an add-on with paid components and change your mind about using i
 
 The Add-on Store is accessed from the Tools submenu of the NVDA menu.
 To access the Add-on Store from anywhere, assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
++ Note on security and privacy when using Add-ons +[AddonSecurityandPrivacy]
+Installing add-ons in NVDA leads to integration of external code into NVDA's functionality in order to enhance NVDA or make new features possible.
+Add-ons can also use external libraries and third party services to serve the purpose and provide the features for which they have been developed.
+Add-ons can be developed by every person or company, and the review process for these external feature providers happens when they are submitted to the NVDA’s official add-on store.
+
+The review process of add-ons is still in development, so most of add-ons are not officially reviewed yet.
+However, many add-ons have discussions areas where users can exchange feedback. The [community review area #AddonStoreReviews] can be accessed via the actions menu of the add-on.
+
+Installed Add-ons or extensions (not only in NVDA) might in general introduce security and/or privacy vulnerabilities, depending on the permissions they need and actions they perform in order to provide the desired functionality.
+Risks can be e.g.
+- Insecure network connections
+- Files stored with insecure file permissions or in an unprotected location
+- Sensitive information written to an easily available log file
+- Web browser vulnerabilities
+- Vulnerabilities in third-party libraries
+- Cryptographic vulnerabilities, and more.
+-
+
+Users install NVDA add-ons at their own risk. Therefore, everyone should be aware of following aspects when installing them:
+- Check out the developer’s website to see if it’s a serious source you can trust.
+- Read the description carefully. Does the add-on need questionable permissions? Does it track data? Does it share sensitive data with other sources that you don’t trust?
+- Check out the [community reviews #AddonStoreReviews] for the add-on. Are there any complaints about the add-on? Are there any reports about data being taken, or for anything that makes you feel unsafe?
+- The risk of vulnerabilities increases the more add-ons you installed. So be careful to keep the overview of the sources your add-ons come from.
+- If possible, check the permissions the add-on requests. If you don’t feel safe about a permission the add-on needs, maybe it is better to uninstall it.
+-
 
 ++ Browsing add-ons ++[AddonStoreBrowsing]
 When opened, the Add-on Store displays a list of add-ons.
