@@ -1389,7 +1389,7 @@ Konsoli-ikkunan koko on kiinteä, tyypillisesti paljon pienempi kuin puskuri, jo
 Kun uutta tekstiä tulostuu näytölle, sisältöä vieritetään ylöspäin, eikä aiempi teksti ole enää näkyvissä.
 Tekstiä, jota ei näy ikkunassa, ei voi tarkastella NVDA:n tekstintarkastelukomennoilla Windows 11 22H2:ta vanhemmissa käyttöjärjestelmissä.
 Konsoli-ikkunan vierittäminen on siksi tarpeen, jotta aiempaa tekstiä voidaan lukea.
-Uudemmissa konsolin versioissa ja Windows Terminalissa on mahdollista tarkastella koko tekstipuskuria vapaasti ilman ikkunan vierittämistä.
+Uudemmissa konsolin versioissa ja Windows-päätteessä on mahdollista tarkastella koko tekstipuskuria vapaasti ilman ikkunan vierittämistä.
 %kc:beginInclude
 Seuraavat sisäänrakennetut Windows-konsolin pikanäppäimet voivat olla hyödyllisiä [tarkasteltaessa tekstiä #ReviewingText] NVDA:lla vanhemmissa Windows-konsolin versioissa:
 || Nimi | Näppäinkomento | Kuvaus |
@@ -1523,8 +1523,8 @@ Tietoja nopeammasta vaihtoehtoisesta tavasta puheparametrien säätämiseen mist
 
 Tämä kategoria sisältää seuraavat asetukset:
 
-==== Vaihda syntetisaattoria ====[SpeechSettingsChange]
-Puhe-asetuskategorian ensimmäinen vaihtoehto on Vaihda...-painike. Tämä painike avaa [Valitse syntetisaattori #SelectSynthesizer] -valintaikkunan, josta valitaan käytettävä puhesyntetisaattori ja äänilaite.
+==== Muuta syntetisaattoria ====[SpeechSettingsChange]
+Puhe-asetuskategorian ensimmäinen vaihtoehto on Muuta...-painike. Tämä painike avaa [Valitse syntetisaattori #SelectSynthesizer] -valintaikkunan, josta valitaan käytettävä puhesyntetisaattori ja äänilaite.
 Valintaikkuna avautuu Asetukset-valintaikkunan päälle.
 Valitse syntetisaattori -valintaikkunassa muutettujen asetusten tallentaminen tai hylkääminen palauttaa takaisin Asetukset-valintaikkunaan.
 
@@ -1569,23 +1569,23 @@ Asetus ei ole oletusarvoisesti käytössä.
 ==== Välimerkki- ja symbolitaso ====[SpeechSettingsSymbolLevel]
 Pikanäppäin: NVDA+P
 
-Tästä valitaan sanoina luettavien välimerkkien ja muiden symboleiden määrä.
+Tästä valitaan sanoina luettavien välimerkkien ja muiden symbolien määrä.
 Esim. kun tasoksi on valittu kaikki, kaikki merkit luetaan sanoina.
 Tämä asetus vaikuttaa kaikkiin syntetisaattoreihin.
 
 ==== Käytä puheäänen kieltä merkkejä ja symboleita käsiteltäessä ====[SpeechSettingsTrust]
-Tämä asetus, joka on oletusarvoisesti käytössä, määrittää, että NVDA käyttää puheäänen kieltä merkkien ja symboleiden puhumiseen.
+Tämä asetus, joka on oletusarvoisesti käytössä, määrittää, että NVDA käyttää puheäänen kieltä merkkien ja symbolien puhumiseen.
 Mikäli välimerkit luetaan väärällä kielellä tiettyä syntetisaattoria tai puheääntä käytettäessä, tämän asetuksen käytöstä poistaminen pakottaa NVDA:n käyttämään yleistä kieliasetusta.
 
 ==== Käytä Unicode-konsortion dataa (emojit mukaan lukien) merkkejä ja symboleita käsiteltäessä ====[SpeechSettingsCLDR]
-Kun tämä valintaruutu on valittuna, NVDA käyttääsymboleiden lisäsanastoja merkkejä ja symboleita puhuttaessa.
+Kun tämä valintaruutu on valittuna, NVDA käyttää symbolien lisäsanastoja merkkejä ja symboleita puhuttaessa.
 Nämä sanastot sisältävät merkkien kuvauksia (erityisesti emojeille), jotka tarjoaa [Unicode-konsortio https://www.unicode.org/consortium/] osana [Common Locale Data -tietokantaa http://cldr.unicode.org/].
 Mikäli NVDA:n halutaan puhuvan emoji-merkkien kuvaukset tähän dataan perustuen, tämän valintaruudun tulee olla valittuna.
 Jos kuitenkin käytössä on puhesyntetisaattori, joka jo valmiiksi tukee emojien puhumista, tämä asetus kannattaa ehkä poistaa käytöstä.
 
 Huom: Manuaalisesti lisätyt tai muokatut merkkikuvaukset tallennetaan osana käyttäjän asetuksia.
 Mikäli siis jonkin emojin kuvausta muutetaan, kyseiselle emojille käytetään muokattua kuvausta riippumatta siitä, onko tämä asetus käytössä vai ei.
-Symboleiden kuvauksia on mahdollista lisätä, muokata ja poistaa NVDA:n [Välimerkkien ja symboleiden puhuminen -valintaikkunassa. #SymbolPronunciation]
+Symbolien kuvauksia on mahdollista lisätä, muokata ja poistaa NVDA:n [Välimerkkien ja symbolien puhuminen -valintaikkunassa. #SymbolPronunciation]
 
 Unicode-konsortion datan sisällyttämistä voi vaihtaa mistä tahansa lisäämällä mukautettu näppäinkomento [Näppäinkomennot-valintaikkunaa #InputGestures] käyttäen.
 
@@ -1640,7 +1640,7 @@ Huom: Vähintään kaksi tilaa on oltava valittuna.
 ==== Avaa Valitse syntetisaattori -valintaikkuna ====
 Pikanäppäin: ``NVDA+Ctrl+S``
 
-Valitse 	syntetisaattori -valintaikkunassa, joka voidaan avata painamalla Vaihda...-painiketta Asetukset-valintaikkunan Puhe-kategoriassa, valitaan, mitä syntetisaattoria NVDA käyttää.
+Valitse 	syntetisaattori -valintaikkunassa, joka voidaan avata painamalla "Muuta..."-painiketta Asetukset-valintaikkunan Puhe-kategoriassa, valitaan, mitä syntetisaattoria NVDA käyttää.
 Kun haluttu syntetisaattori on valittu, NVDA ottaa sen käyttöön OK-painikkeen painamisen jälkeen.
 Jos syntetisaattorin lataamisessa ilmenee virhe, siitä ilmoittava viesti näytetään, eikä käytettävää syntetisaattoria vaihdeta.
 
@@ -1832,7 +1832,7 @@ Voit ottaa valinnan näyttämisen käyttöön tai poistaa sen käytöstä mistä
 ==== Avaa Valitse pistenäyttö -valintaikkuna ====
 Pikanäppäin: ``NVDA+Ctrl+A``
 
-Valitse pistenäyttö -valintaikkunasta, joka voidaan avata painamalla Vaihda...-painiketta Asetukset-valintaikkunan Pistekirjoitus-kategoriassa, valitaan, mitä pistenäyttöä NVDA käyttää pistekirjoituksen tulostamiseen.
+Valitse pistenäyttö -valintaikkunasta, joka voidaan avata painamalla "Muuta..."-painiketta Asetukset-valintaikkunan Pistekirjoitus-kategoriassa, valitaan, mitä pistenäyttöä NVDA käyttää pistekirjoituksen tulostamiseen.
 Kun haluttu pistenäyttö on valittu, NVDA ottaa sen käyttöön OK-painikkeen painamisen jälkeen.
 Mikäli näytön ajurin lataamisessa ilmenee virheitä, NVDA ilmoittaa siitä, eikä mahdollisesti käytössä olevaa pistenäyttöä vaihdeta.
 
@@ -2185,7 +2185,7 @@ Asetus on oletusarvoisesti käytössä.
 Huomaa, että jotkin vanhemmat syöttömenetelmät, kuten kiinalainen ChangJie, eivät ehkä käytä lukumerkkijonoa esiyhdistelmän merkkien säilyttämiseen, vaan käyttävät niiden sijaan suoraan merkkiyhdistelmää. Katso seuraavaa asetusta merkkiyhdistelmän lukemisen määrittämiseksi.
 
 ==== Lue merkkiyhdistelmän muutokset ====[InputCompositionCompositionStringChanges]
-Kun luku- tai esiyhdistelmätiedot on yhdistetty kelvolliseksi kuvakirjoitussymboliksi, useimmat syöttömenetelmät sijoittavat sen tilapäisesti talteen merkkiyhdistelmään muiden yhdistettyjen symboleiden kanssa ennen niiden lopullista asiakirjaan lisäämistä.
+Kun luku- tai esiyhdistelmätiedot on yhdistetty kelvolliseksi kuvakirjoitussymboliksi, useimmat syöttömenetelmät sijoittavat sen tilapäisesti talteen merkkiyhdistelmään muiden yhdistettyjen symbolien kanssa ennen niiden lopullista asiakirjaan lisäämistä.
 Tällä asetuksella voidaan valita, lukeeko NVDA uudet symbolit niiden tullessa näkyviin merkkiyhdistelmässä.
 Asetus on oletusarvoisesti käytössä.
 
@@ -2457,7 +2457,7 @@ Kun asetusta on muutettu, NVDA on käynnistettävä uudelleen, jotta muutos tule
 
 
 Tämä asetus määrittää, miten NVDA toimii vuorovaikutuksessa Windows-konsolin kanssa, jota Komentokehote, PowerShell ja Windowsin Linux-alijärjestelmä käyttävät.
-Se ei vaikuta moderniin Windows Terminaliin.
+Se ei vaikuta moderniin Windows-päätteeseen.
 Windows 10:n versiossa 1709 Microsoft [lisäsi konsoliin tuen UI Automation -rajapinnalle https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], mikä parantaa huomattavasti sitä tukevien näytönlukuohjelmien suorituskykyä ja vakautta.
 NVDA:n vanha konsolituki on käytettävissä varavaihtoehtona tilanteissa, joissa UI Automation -rajapinta ei ole käytettävissä tai sen tiedetään johtavan huonompaan käyttökokemukseen.
 Windows-konsolituen yhdistelmäruudussa on kolme vaihtoehtoa:
@@ -2536,22 +2536,22 @@ Tämä asetus saattaa vakauttaa saapuvan tekstin lukemista joissakin sovelluksis
 Kohdistimen jälkeinen teksti kuitenkin luetaan päätteissä, kun rivin keskelle lisätään tai siitä poistetaan merkki.
 -
 
-==== Uuden tekstin puhumismenetelmä Windows Terminalissa ====[WtStrategy]
+==== Uuden tekstin puhumismenetelmä Windows-päätteessä ====[WtStrategy]
 
 || . {.hideHeaderRow} | . |
 | Vaihtoehdot | Oletus (Muutosten havaitseminen), Muutosten havaitseminen, UIA-ilmoitukset |
 | Oletus | Muutosten havaitseminen |
 
 
-Tämä asetus valitsee, miten NVDA määrittää "uuden" tekstin (ja näin ollen sen, mitä puhutaan "Puhu dynaamisen sisällön muutokset" -asetuksen ollessa käytössä) Windows Terminalissa sekä sen WPF-säätimessä, jota käytetään Visual Studio 2022:ssa.
+Tämä asetus valitsee, miten NVDA määrittää "uuden" tekstin (ja näin ollen sen, mitä puhutaan "Puhu dynaamisen sisällön muutokset" -asetuksen ollessa käytössä) Windows-päätteessä sekä sen WPF-säätimessä, jota käytetään Visual Studio 2022:ssa.
 Asetus ei vaikuta Windows-konsoliin (``conhost.exe``).
-Uuden tekstin puhumismenetelmä Windows Terminalissa -yhdistelmäruudussa on kolme vaihtoehtoa:
+Uuden tekstin puhumismenetelmä Windows-päätteessä -yhdistelmäruudussa on kolme vaihtoehtoa:
 - Oletus: Tämä asetus vastaa tällä hetkellä "muutosten havaitsemista", mutta sen odotetaan muuttuvan, kun UIA-ilmoitusten tukea kehitetään edelleen.
 - Muutosten havaitseminen: Tämä asetus käyttää valittua muutostenhavaitsemismenetelmää muutosten laskemiseen joka kerta, kun päätteeseen ilmestyy uutta tekstiä.
 Tämä toimii samoin kuin NVDA 2022.4:ssä ja sitä vanhemmissa versioissa.
-- UIA-ilmoitukset: Tämä asetus siirtää vastuun puhuttavan tekstin määrittämisestä Windows Terminalille itselleen, mikä tarkoittaa, että NVDA: n ei enää tarvitse määrittää, mikä ruudulla oleva teksti on "uutta".
-Tämän pitäisi parantaa huomattavasti Windows Terminalin suorituskykyä ja vakautta, mutta ominaisuus ei ole vielä valmis.
-Erityisesti kirjoitetut merkit, joita ei näytetä ruudulla, kuten salasanat, puhutaan tämän ollessa valittuna.
+- UIA-ilmoitukset: Tämä asetus siirtää vastuun puhuttavan tekstin määrittämisestä Windows-päätteelle itselleen, mikä tarkoittaa, että NVDA:n ei enää tarvitse määrittää, mikä ruudulla oleva teksti on "uutta".
+Tämän pitäisi parantaa huomattavasti Windows-päätteen suorituskykyä ja vakautta, mutta ominaisuus ei ole vielä valmis.
+Erityisesti kirjoitetut merkit, joita ei näytetä ruudulla, esim. salasanat, puhutaan tämän ollessa valittuna.
 Lisäksi yhtenäisiä yli 1000 merkin mittaisia tekstijaksoja ei välttämättä puhuta tarkasti.
 -
 
@@ -2634,10 +2634,10 @@ Sääntölauseke on erikoismerkkejä sisältävä merkkiyhdistelmä, jonka avull
 Sääntölausekkeita ei käsitellä tässä käyttöoppaassa.
 Voit tutustua aiheeseen [Pythonin sääntölausekkeiden oppaassa https://docs.python.org/3.11/howto/regex.html].
 
-+++ Välimerkkien ja symboleiden puhuminen +++[SymbolPronunciation]
-Tässä valintaikkunassa voit muuttaa välimerkkien ja muiden symboleiden lukutapaa sekä tasoa, jolla ne puhutaan.
++++ Välimerkkien ja symbolien puhuminen +++[SymbolPronunciation]
+Tässä valintaikkunassa voit muuttaa välimerkkien ja muiden symbolien lukutapaa sekä tasoa, jolla ne puhutaan.
 
-Kieli, jonka symboleiden puhumista muokataan, näytetään valintaikkunan otsikossa.
+Kieli, jonka symbolien puhumista muokataan, näytetään valintaikkunan otsikossa.
 Huom: Tässä noudatetaan [Asetukset #NVDASettings]-valintaikkunan [Puhe-kategorian #SpeechSettings] "Käytä puheäänen kieltä merkkejä ja symboleita käsiteltäessä" -asetusta, ts. kun asetus on käytössä, puheäänen kieltä käytetään NVDA:n käyttämän kielen asemesta.
 
 Symbolia muutetaan valitsemalla se Symbolit-luettelosta.
@@ -4223,6 +4223,7 @@ Suojattu tila poistaa käytöstä:
 - NVDA:n omien ja muiden asetusten tallentamisen levylle
 - Näppäinkomentokartan tallentamisen levylle
 - [Asetusprofiilien #ConfigurationProfiles] ominaisuudet, kuten luonnin, poiston, uudelleennimeämisen jne.
+- Mukautettujen asetuskansioiden lataaminen [``-c``-komentorivivalitsinta #CommandLineOptions] käyttäen
 - NVDA:n päivittämisen ja massamuistiversion luonnin
 - [Lisäosakaupan #AddonsManager]
 - [Python-konsolin #PythonConsole]
@@ -4284,9 +4285,9 @@ Seuraavassa on luettelo NVDA:n komentorivivalitsimista:
 | ``-h`` | ``--help`` | Näyttää komentorivivalitsimien ohjeen. |
 | ``-q`` | ``--quit`` | Sulkee jo käynnissä olevan NVDA:n version. |
 | ``-k`` | ``--check-running`` | Ilmoittaa lopetuskoodilla, onko NVDA käynnissä, 0 = jos käynnissä tai 1 = jos ei käynnissä. |
-| ``-f LOKITIEDOSTO`` | ``--log-file=LOKITIEDOSTO`` | Tiedosto, johon loki-ilmoitukset tallennetaan. |
-| ``-l LOKITASO`` | ``--log-level=LOKITASO`` | Alin taso, jonka ilmoitukset tallennetaan lokiin (virheenkorjaus = 10, syöttö/tulostus = 12, virheenkorjausvaroitus = 15, tiedot = 20, ei käytössä = 100) |
-| ``-c ASETUSPOLKU`` | ``--config-path=ASETUSPOLKU`` | Hakemistopolku, johon kaikki NVDA:n asetukset tallennetaan. |
+| ``-f LOKITIEDOSTO`` | ``--log-file=LOKITIEDOSTO`` | Tiedosto, johon lokiviestit tallennetaan. Lokin tallennus on aina poissa käytöstä, jos suojattu tila on käytössä. |
+| ``-l LOKITASO`` | ``--log-level=LOKITASO`` | Alin taso, jonka viestit tallennetaan lokiin (virheenkorjaus = 10, syöttö/tulostus = 12, virheenkorjausvaroitus = 15, tiedot = 20, ei käytössä = 100). Lokin tallennus on aina poissa käytöstä, jos suojattu tila on käytössä. |
+| ``-c ASETUSPOLKU`` | ``--config-path=ASETUSPOLKU`` | Hakemistopolku, johon kaikki NVDA:n asetukset tallennetaan. Oletusarvo pakotetaan, jos suojattu tila on käytössä. |
 | Ei mitään | ``--lang=KIELI`` | Ohita NVDA:n asetuksissa määritetty kieli. Määritä kieleksi "Windows" käyttääksesi nykyistä käyttäjän oletusarvoa, "en" englantia jne. |
 | ``-m`` | ``--minimal`` | Ei ääniä, käyttöliittymää tai käynnistysilmoitusta jne. |
 | ``-s`` | ``--secure`` | Käynnistää NVDA:n [suojatussa tilassa #SecureMode]. |
