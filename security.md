@@ -35,3 +35,30 @@ Objectives and Functioning:
 * Their insights and recommendations are directly incorporated into our development process, leading to more secure and reliable software.
 
 We welcome participation from our user community. If you have a keen interest in security and wish to contribute, please [contact us](mailto:info@nvaccess.org).
+
+## Severity Levels
+
+* P1 (Critical): Vulnerabilities with a medium or higher severity (CVSS 4+) causing a significant risk to the security and privacy of NVDA users.
+* P2 (High): Vulnerabilities with a low severity (CVSS <4) that present a potential security risk.
+
+## Response Timelines (SLAs)
+
+* Acknowledgement and Triage: Within 3 business days of receipt.
+* P1 (Critical):
+  * Planning and Mitigation: Detailed assessment of the issue and assessment of possible technical solutions within 1 week of triage.
+  Development of a resolution will then begin immediately.
+  * Patch Release: Target patch release of a workaround within 2 weeks of completing assessment.
+  A thorough and complete resolution may need to be scheduled into the next minor release.
+
+* P2 (High):
+  * Planning and Mitigation: Assessment within 2 weeks of triage.
+  * Patch Release: Target patch release in the next scheduled minor release.
+* Security Advisory: A security advisory will be published concurrently with the release of the patch.
+The advisory will provide details of the vulnerability and rectification steps.
+As details of the vulnerability will be available in the code repository, immediate disclosure aligns with responsible disclosure principles.
+
+## Resource Allocation
+
+* P1 (Critical): Immediate attention from core developers and/or the Security Advisory Group. Other development tasks may be temporarily deprioritised.
+* P2 (High): Dedicated resources will be allocated, with prioritisation based on severity and available development bandwidth.
+
