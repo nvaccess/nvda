@@ -4110,7 +4110,9 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			conf=config.conf,
 		)
 		self.bindHelpEvent("BrailleSettingsShowSelection", self.brailleShowSelectionCombo)
-		self.followCursorGroupBox.Enable(list(braille.BrailleMode)[self.brailleModes.GetSelection()] is braille.BrailleMode.FOLLOW_CURSORS)
+		self.followCursorGroupBox.Enable(
+			list(braille.BrailleMode)[self.brailleModes.GetSelection()] is braille.BrailleMode.FOLLOW_CURSORS
+		)
 
 		# Translators: The label for a setting in braille settings to enable word wrap
 		# (try to avoid splitting words at the end of the braille display).
