@@ -1459,19 +1459,12 @@ class ReviewTextInfoRegion(TextInfoRegion):
 			info = self.obj.makeTextInfo(textInfos.POSITION_SELECTION)
 		except (LookupError, RuntimeError):
 			self._currentSelection = None
-			info = api.getReviewPosition().copy()
-			# Info should be collapsed, but it is not always, at least when
-			# switching from focus mode to browse mode.
-			info.collapse()
-			return info
+			return self._collapsedReviewPosition()
 		if info.isCollapsed:
 			# Cursor
 			self._currentSelection = None
-			info = api.getReviewPosition().copy()
-			# Info should be collapsed, but it is not always, at least when
-			# switching from focus mode to browse mode.
-			info.collapse()
-			return info
+			return self._collapsedReviewPosition()
+		# Selection
 		if (
 			self._currentSelection is None
 			or self._currentSelection.start != info.start
@@ -1495,11 +1488,7 @@ class ReviewTextInfoRegion(TextInfoRegion):
 		):
 			# Review position is outside of selection
 			self.brailleSelectionStart = self.brailleSelectionEnd = None
-			info = api.getReviewPosition().copy()
-			# Info should be collapsed, but it is not always, at least when
-			# switching from focus mode to browse mode.
-			info.collapse()
-			return info
+			return self._collapsedReviewPosition()
 		else:
 			# Review position is within selection
 			# Selection may not contain whole reading unit.
@@ -1509,6 +1498,16 @@ class ReviewTextInfoRegion(TextInfoRegion):
 				readingUnit.end = self._currentSelection.end
 			self._withinSelection = True
 			return readingUnit
+
+	def _collapsedReviewPosition(self) -> textInfos.TextInfo:
+		"""Gets collapsed review position.
+		:return: collapsed review position
+		"""
+		info: textInfos.TextInfo = api.getReviewPosition().copy()
+		# Info should be collapsed, but it is not always, at least when
+		# switching from focus mode to browse mode.
+		info.collapse()
+		return info
 
 	def update(self):
 		"""Updates this region.
