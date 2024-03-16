@@ -4480,7 +4480,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Increases volume of applications by 5%",
+			"Increases the volume of the other applications",
 		),
 		category=SCRCAT_AUDIO,
 		gesture="kb:NVDA+alt+pageUp",
