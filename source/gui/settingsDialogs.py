@@ -2720,7 +2720,7 @@ class AudioPanel(SettingsPanel):
 
 		# Translators: This is the label for a slider control in the
 		# Audio settings panel.
-		label = _("Volume of application sounds")
+		label = _("Volume of other applications")
 		self.appSoundVolSlider: nvdaControls.EnhancedInputSlider = sHelper.addLabeledControl(
 			label,
 			nvdaControls.EnhancedInputSlider,
