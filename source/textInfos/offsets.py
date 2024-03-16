@@ -704,11 +704,11 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def _getOffsetEncoder(self):
 		return textUtils.getOffsetConverter(self.encoding)(self.text)
 
-	def moveToPythonicOffset(
+	def moveToCodepointOffset(
 			self,
-			pythonicOffset: int,
+			codepointOffset: int,
 	) -> Self:
 		result = self.copy()
-		encodedOffset = self._getOffsetEncoder().strToEncodedOffsets(pythonicOffset)
+		encodedOffset = self._getOffsetEncoder().strToEncodedOffsets(codepointOffset)
 		result._startOffset = result._endOffset = encodedOffset
 		return result

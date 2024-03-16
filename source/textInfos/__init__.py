@@ -656,12 +656,13 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 	
-	def moveToPythonicOffset(
+	def moveToCodepointOffset(
 			self,
-			pythonicOffset: int,
+			codepointOffset: int,
 	) -> Self:
 		"""
-			This function moves textInfos by Pythonic characters.
+			This function moves textInfos by codepoint characters. A codepoint character represents exactly 1 character
+			in a Pythonic string.
 
 			Illustration:
 				Suppose we have TextInfo that represents a paragraph of text:
@@ -678,31 +679,31 @@ class TextInfo(baseObject.AutoPropertyObject):
 				```
 				Here is how this can be done:
 				```
-				> info = paragraphInfo.moveToPythonicOffset(7)
+				> info = paragraphInfo.moveToCodepointOffset(7)
 				> info.setEndPoint(paragraphInfo, "endToEnd")
 				> info.text
 				'world!\r'
 				```
 
 			Background:
-				In many applications there is no one-to-one mapping of Pythonic characters and TextInfo characters,
+				In many applications there is no one-to-one mapping of codepoint characters and TextInfo characters,
 				e.g. when calling TextInfo.move(UNIT_CHARACTER, n).
 				There are a couple of reasons for this discrepancy:
 				1. In Wide character encoding, some 4-byte unicode characters are represented as two surrogate characters,
-				whereas in pythonic string they would be represented by a single character.
+				whereas in Pythonic string they would be represented by a single character.
 				2. In non-offset TextInfos (e.g. UIATextInfo)
 				there is no guarantee on the fact that TextInfos.move(UNIT_CHARACTER, 1)would actually move by
 				exactly 1 character.
 				A good illustration of this is in Microsoft Word with UIA enabled always,
-				the first character of a bullet list item would be represented by three pythonic characters:
+				the first character of a bullet list item would be represented by three pythonic codepoint characters:
 				* Bullet character "•"
 				* Tab character \t
 				* And the first character of of list item per se.
 
 				In many use cases (e.g., sentence navigation, style navigation),
-				we identify pythonic character that we would like to move our TextInfo to.
+				we identify pythonic codepoint character that we would like to move our TextInfo to.
 				TextInfos.move(UNIT_CHARACTER, n) would cause many side effects.
-				This function provides a clean and reliable way to jump to a given pythonic offset.
+				This function provides a clean and reliable way to jump to a given codepoint offset.
 
 			Assumptions:
 				1. This function operates on a non-collapsed TextInfo only. In a typical scenario, we might want
@@ -711,27 +712,27 @@ class TextInfo(baseObject.AutoPropertyObject):
 				The reason for that is that for some implementations we might
 				need to access text of paragraph/line in order to accurately compute result offset.
 				2. It assumes that 1 character of application-specific TextInfo representation
-				maps to 1 or more characters of pythonic representation.
+				maps to 1 or more characters of codepoint representation.
 				3. This function is also written with an assumption that a character
 				in application-specific TextInfo representation might not map to any pythonic characters,
 				although this scenario has never been observed in any applications.
-				4. Also this function assumes that most characters have 1:1 mapping between pythonic
+				4. Also this function assumes that most characters have 1:1 mapping between codepoint
 				and application-specific representations.
-				This assumption is not required, however if this assumption is True, the function will converge fast.
+				This assumption is not required, however if this assumption is True, the function will converge faster.
 				If this assumption is false, then it might take many iterations to find the right TextInfo.
 
 			Algorithm:
 				This generic implementation essentially a biased binary search.
 				On every iteration we operate on a pythonic string and its TextInfo counterpart stored in info variable.
 				We would like to reach a certain offset within that pythonic string,
-				that is stored in pythonicOffsetLeft variable.
+				that is stored in codepointOffsetLeft variable.
 				In every iteration of the loop:
-				1. We try to either move from the left end of info by pythonicOffsetLeft  characters
-				or from the right end by -pythonicOffsetRight characters - depending which move is shorter.
+				1. We try to either move from the left end of info by codepointOffsetLeft  characters
+				or from the right end by -codepointOffsetRight characters - depending which move is shorter.
 				We store destination point as collapsed TextInfo tmpInfo.
 				2. We compute number of pythonic characters from the beginning of info until tmpInfo
-				and store it in actualPythonicOffset variable.
-				3. We will compare actualPythonicOffset with pythonicOffsetLeft  : if they are equal,
+				and store it in actualCodepointOffset variable.
+				3. We will compare actualCodepointOffset with codepointOffsetLeft  : if they are equal,
 				then we just found desired TextInfo.
 				Otherwise we use tmpInfo as the middle point of binary search and we recurse either to the left
 				or to the right, depending where desired offset lies.
@@ -748,22 +749,22 @@ class TextInfo(baseObject.AutoPropertyObject):
 				the algorithm makes some progress on each iteration.
 		"""
 		text = self.text
-		if pythonicOffset < 0 or pythonicOffset > len(text):
+		if codepointOffset < 0 or codepointOffset > len(text):
 			raise ValueError
-		if pythonicOffset == 0 or pythonicOffset == len(text):
+		if codepointOffset == 0 or codepointOffset == len(text):
 			result = self.copy()
-			result.collapse(end=pythonicOffset > 0)
+			result.collapse(end=codepointOffset > 0)
 			return result
 		
 		info = self.copy()
 		# Total Pythonic Length represents length in python characters of Current TextInfo we're workoing with.
 		# We start with self, and then gradually divide and conquer in order to find desired offset.
-		totalPythonicOffset = len(text)
+		totalCodepointOffset = len(text)
 
-		# pythonicOffsetLeft and pythonicOffsetRight represent distance in pythonic characters
-		# from left and right ends of info correspondingly until desired location.
-		pythonicOffsetLeft = pythonicOffset
-		pythonicOffsetRight = totalPythonicOffset - pythonicOffsetLeft
+		# codepointOffsetLeft and codepointOffsetRight represent distance in pythonic characters
+		# from left and right ends of info correspondingly to the desired location.
+		codepointOffsetLeft = codepointOffset
+		codepointOffsetRight = totalCodepointOffset - CodepointOffsetLeft
 
 		# We store lastMove - by how many characters we moved last time, and
 		# lastRecursedLeft - whether last recursion happened to the left and not to the right -
@@ -774,7 +775,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		MAX_BINARY_SEARCH_ITERATIONS = 1000
 		for __ in range(MAX_BINARY_SEARCH_ITERATIONS):
 			tmpInfo = info.copy()
-			if pythonicOffsetLeft <= pythonicOffsetRight:
+			if codepointOffsetLeft <= codepointOffsetRight:
 				# Move from the left end of info. Let's compute by how many characters in moveCharacters variable.
 				tmpInfo.collapse()
 				if lastRecursedLeft is not None and lastRecursedLeft is True and lastMove > 0:
@@ -785,12 +786,12 @@ class TextInfo(baseObject.AutoPropertyObject):
 					if moveCharacters == 0:
 						raise RuntimeError("Unable to find desired offset in TextInfo.")
 				else:
-					moveCharacters = pythonicOffsetLeft
+					moveCharacters = codepointOffsetLeft
 				
 				code = tmpInfo.move(UNIT_CHARACTER, moveCharacters, endPoint="end")
 				lastMove = moveCharacters
 				tmpText = tmpInfo.text
-				actualPythonicOffset = len(tmpText)
+				actualCodepointOffset = len(tmpText)
 				tmpInfo.collapse(end=True)
 			else:
 				# Move from the right end of info.
@@ -801,31 +802,31 @@ class TextInfo(baseObject.AutoPropertyObject):
 					if moveCharacters == 0:
 						raise RuntimeError("Unable to find desired offset in TextInfo.")
 				else:
-					moveCharacters = -pythonicOffsetRight
+					moveCharacters = -codepointOffsetRight
 				code = tmpInfo.move(UNIT_CHARACTER, moveCharacters, endPoint="start")
 				lastMove = moveCharacters
 				tmpText = tmpInfo.text
-				actualPythonicOffset = totalPythonicOffset - len(tmpText)
+				actualCodepointOffset = totalCodepointOffset - len(tmpText)
 				tmpInfo.collapse()
 			if code == 0:
 				raise RuntimeError("Move by character operation unexpectedly failed.")
-			if actualPythonicOffset <= 0 or actualPythonicOffset >= totalPythonicOffset:
-				raise RuntimeError(f"InvalidState: {actualPythonicOffset=} {totalPythonicOffset=}")
-			if actualPythonicOffset == pythonicOffsetLeft:
+			if actualCodepointOffset <= 0 or actualCodepointOffset >= totalCodepointOffset:
+				raise RuntimeError(f"InvalidState: {actualCodepointOffset=} {totalCodepointOffset=}")
+			if actualCodepointOffset == codepointOffsetLeft:
 				return tmpInfo
-			elif actualPythonicOffset < pythonicOffsetLeft:
+			elif actualCodepointOffset < codepointOffsetLeft:
 				# Recursing right
 				lastRecursedLeft = False
-				text = text[actualPythonicOffset:]
-				pythonicOffsetLeft -= actualPythonicOffset
-				totalPythonicOffset = pythonicOffsetLeft + pythonicOffsetRight
+				text = text[actualCodepointOffset:]
+				codepointOffsetLeft -= actualCodepointOffset
+				totalCodepointOffset = codepointOffsetLeft + codepointOffsetRight
 				info.setEndPoint(tmpInfo, which="startToStart")
-			else:  # actualPythonicOffset > pythonicOffsetLeft
+			else:  # actualCodepointOffset > codepointOffsetLeft
 				# Recursing left
 				lastRecursedLeft = True
-				text = text[:actualPythonicOffset]
-				totalPythonicOffset = actualPythonicOffset
-				pythonicOffsetRight = totalPythonicOffset - pythonicOffsetLeft
+				text = text[:actualCodepointOffset]
+				totalCodepointOffset = actualCodepointOffset
+				codepointOffsetRight = totalCodepointOffset - CodepointOffsetLeft
 				info.setEndPoint(tmpInfo, which="endToEnd")
 		raise RuntimeError("Infinite loop during binary search.")
 
