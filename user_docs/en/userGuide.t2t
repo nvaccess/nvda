@@ -2928,10 +2928,10 @@ To access the Add-on Store from anywhere, assign a custom gesture using the [Inp
 
 ++ Note on security and privacy when using Add-ons ++[AddonSecurityandPrivacy]
 Installing add-ons in NVDA leads to integration of external code into NVDA's functionality in order to enhance NVDA or make new features possible.
-Add-ons can also use external libraries and third party services to serve the purpose and provide the features for which they have been developed.
-Add-ons can be developed by every person or company, and the review process for these external feature providers happens when they are submitted to the NVDA’s official add-on store.
+Add-ons can also use external libraries and third party services to serve the purpose and provide the features for which they have been developed. They can be developed by every person or company.
 
-The review process of add-ons is still in development, so most of add-ons are not reviewed yet.
+Automated code checks for add-ons happen when they are submitted to the NVDA’s official add-on store. This means e.g.  they will undergo  a basic automated check for vulnerabilities by security analysis tools such as codeQL.
+There isn't currently any formal review process for add-ons performed by a human yet.
 However, many add-ons have discussions areas where users can exchange feedback. The [community review area #AddonStoreReviews] can be accessed via the actions menu of the add-on.
 
 Installed Add-ons or extensions (not only in NVDA) might in general introduce security and/or privacy vulnerabilities, depending on the permissions they need and actions they perform in order to provide the desired functionality.
