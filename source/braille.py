@@ -1486,11 +1486,10 @@ class ReviewTextInfoRegion(TextInfoRegion):
 			readingUnit.start >= info.end
 			or readingUnit.end <= info.start
 		):
-			# Review position is outside of selection
-			self.brailleSelectionStart = self.brailleSelectionEnd = None
+			# Reading unit containing review position is outside of selection
 			return self._collapsedReviewPosition()
 		else:
-			# Review position is within selection
+			# Reading unit or part of it is within selection
 			# Selection may not contain whole reading unit.
 			if readingUnit.start < self._currentSelection.start:
 				readingUnit.start = self._currentSelection.start
@@ -1549,7 +1548,6 @@ class ReviewTextInfoRegion(TextInfoRegion):
 			commands.script_braille_toFocus.__name__,
 			commands.script_navigatorObject_toFocus.__name__,
 		}
-		log.debug(f"nykyinen {self._currentScriptName}")
 		if (
 			(
 				self._currentScriptName in startOfNextOrPreviousLineScriptNames
