@@ -1510,10 +1510,11 @@ class ReviewTextInfoRegion(TextInfoRegion):
 
 	def update(self):
 		"""Updates this region.
-		Adds functionality to properly move within selection to the next
-		and previous line and to start and end of current line, to scroll forward
-		and back to the next and previous line, and to move to focus,
-		when selection is shown.
+		When "show selection" is enabled and reading unit contains selected
+		characters, adds functionality to properly move to the next and previous line,
+		to start and end of current control, to start and end of current line,
+		to scroll forward and back to the next and previous line,
+		and to move to focus.
 		"""
 		previousReadingUnit: textInfos.TextInfo | None = getattr(self, "_readingInfo", None)
 		super().update()
@@ -1569,7 +1570,6 @@ class ReviewTextInfoRegion(TextInfoRegion):
 		else:
 			# Do not scroll because do not know where
 			self.brailleSelectionStart = self.brailleSelectionEnd = None
-		self._currentScriptName = None
 
 	def _routeToTextInfo(self, info: textInfos.TextInfo):
 		"""Move cursor to new cell, or activate if it is already there.
