@@ -20,7 +20,7 @@ Le opzioni del dispositivo audio di uscita e della modalità attenuazione sono s
 Si trovano nel pannello delle impostazioni audio che può essere aperto con ``NVDA+control+u``.
 
 Aggiornati eSpeak-NG, LibLouis braille translator e Unicode CLDR.
-Sono disponibili nuove tabelle braille: tailandesi, filippine e rumene.
+Sono disponibili nuove tabelle braille: tailandese, filippino e rumeno.
 
 Sono stati risolti numerosi bug, in particolare per l'add-on store, braille, Libre Office, Microsoft Office e audio.
 
@@ -91,7 +91,7 @@ Gli utenti di Poedit 1 sono fortemente pregati ad aggiornare a Poedit 3 se desid
   - NVDA non presenta più un problema intermitttente nel riavviarsi dopo l'apertura e la chiusura dell'add-on store. (#16019, @lukaszgo1)
   -
 - Audio:
-  - NVDA non si blocca più brevemente quando vengono riprodotti più suoni in rapida successione. (#15311, #15757, @jcsteh)
+  - NVDA non si blocca più di tanto in tanto quando vengono riprodotti più suoni in rapida successione. (#15311, #15757, @jcsteh)
   - se un dispositivo audio diverso da quello predefinito, dopo  essere stato disconnesso, diventa nuovamente disponibile,  NVDA riprenderà ad utilizzarlo. (#15759, @jcsteh)
   - NVDA ora è in grado di ripristinare l'audio nel caso in cui la configurazione del dispositivo d'uscita viene modificata, o un'altra applicazione ne rilascia il controllo esclusivo. (#15758, #15775, @jcsteh)
   -
@@ -100,40 +100,40 @@ Gli utenti di Poedit 1 sono fortemente pregati ad aggiornare a Poedit 3 se desid
   - Vengono rilevati più oggetti che contengono testo utile, inoltre il contenuto del testo viene visualizzato in Braille. (#15605)
   - L'input Braille contratto funziona di nuovo correttamente. (#15773, @aaclause)
   - Quando si sposta il navigatore ad oggetti tra le celle di una tabella, il contenuto in braille viene aggiornato in maniera migliore. (#15755, @Emil-18)
-  - Viene ora mostrato in braille il risultato dei comandi "legge l'oggetto che ha il focus", legge l'oggetto su cui è il navigatore e  leggi selezione corrente. (#15844, @Emil-18)
+  - Viene ora mostrato in braille il risultato dei comandi "leggi l'oggetto che ha il focus", leggi l'oggetto su cui è il navigatore e  leggi selezione corrente. (#15844, @Emil-18)
   - Il driver braille Albatross non gestisce più un microcontrollore Esp32 come un display Albatross. (#15671)
   -
 - LibreOffice:
-  - Vengono annunciate correttamente le parole cancellate con  ``control+backspace``, anche quando la parola cancellata è seguita da spazi bianchi (come spazi e tabulazioni). (#15436, @michaelweghorn)
+  - Vengono annunciate correttamente le parole cancellate con  ``control+backspace``, anche quando la parola è seguita da spazi bianchi (come spazi e tabulazioni). (#15436, @michaelweghorn)
   - La lettura della barra di stato tramite ``NVDA+fine`` adesso funziona anche per le finestre di dialogo in LibreOffice versione 24.2 e successive. (#15591, @michaelweghorn)
   - Tutti gli attributi di testo previsti sono ora supportati nelle versioni LibreOffice 24.2 e successive.
   Ciò fa sì che l'annuncio degli errori di ortografia funzioni quando viene letta una riga in Writer. (#15648, @michaelweghorn)
   - L'annuncio dei livelli di intestazione ora funziona anche per le versioni di LibreOffice 24.2 e successive. (#15881, @michaelweghorn)
   -
 - Microsoft Office:
-  - In Excel with UIA disabled, braille is updated, and the active cell content is spoken, when ``control+y``, ``control+z`` or ``alt+backspace`` is pressed. (#15547)
-  - In Word with UIA disabled braille is updated when ``control+v``, ``control+x``, ``control+y``, ``control+z``, ``alt+backspace``, ``backspace`` or ``control+backspace`` is pressed.
-  It is also updated with UIA enabled, when typing text and braille is tethered to review and review follows caret. (#3276)
-  - In Word, the landing cell will now be correctly reported when using the native Word commands for table navigation ``alt+home``, ``alt+end``, ``alt+pageUp`` and ``alt+pageDown``. (#15805, @CyrilleB79)
+  - In Excel con UIA disabilitata, alla pressione dei tasti rapidi ``control+y``, ``control+z`` o ``alt+backspace``, il contenuto della cella attiva verrà sia letto che aggiornato conseguentemente sul display braille. (#15547)
+  - In Word con UIA disabilitata, il contenuto braille sarà aggiornato alla pressione delle combinazioni di tasti ``control+v``, ``control+x``, ``control+y``, ``control+z``, ``alt+backspace``, ``backspace`` o ``control+backspace``.
+  Verrà aggiornato anche con UIA abilitata, quando il braille segue il cursore di controllo  il cursore di controllo segue quello di sistema. (#3276)
+  - In Word, la cella di destinazione verrà ora letta correttamente quando si utilizzano i comandi nativi di Word per la navigazione nella tabella ``alt+home``, ``alt+end``, ``alt+paginaSu`` e ``alt+paginaGiù``. (#15805, @CyrilleB79)
   -
-- Reporting of object shortcut keys has been improved. (#10807, #15816, @CyrilleB79)
-- The SAPI4 synthesizer now properly supports volume, rate and pitch changes embedded in speech. (#15271, @LeonarddeR)
-- Multi line state is now correctly reported in applications using Java Access Bridge. (#14609)
-- NVDA will announce dialog content for more Windows 10 and 11 dialogs. (#15729, @josephsl)
-- NVDA will no longer fail to read a newly loaded page in Microsoft Edge when using UI Automation. (#15736)
-- When using say all or commands which spell text, pauses between sentences or characters no longer gradually decrease over time. (#15739, @jcsteh)
-- NVDA no longer sometimes freezes when speaking a large amount of text. (#15752, @jcsteh)
-- When accessing Microsoft Edge using UI Automation, NVDA is able to activate more controls in browse mode. (#14612)
-- NVDA will not fail to start anymore when the configuration file is corrupted, but it will restore the configuration to default as it did in the past. (#15690, @CyrilleB79)
-- Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283, @LeonarddeR)
-- It is not possible anymore to overwrite NVDA's Python console history. (#15792, @CyrilleB79)
-- NVDA should remain responsive when being flooded with many UI Automation events, e.g. when large chunks of text are printed to a terminal or when listening to voice messages in WhatsApp messenger. (#14888, #15169)
-  - This new behavior can be disabled using the new "Use enhanced event processing" setting in NVDA's advanced settings.
+- È stata migliorata la segnalazione dei tasti di scelta rapida degli oggetti. (#10807, #15816, @CyrilleB79)
+- Il sintetizzatore SAPI4 ora supporta correttamente i cambiamenti di volume, velocità e tono incorporati nel parlato. (#15271, @LeonarddeR)
+- Viene segnalato correttamente lo stato multiriga nelle applicazioni che utilizzano Java Access Bridge. (#14609)
+- NVDA annuncerà il contenuto delle finestre di dialogo per molte più finestre di Windows 10 e 11. (#15729, @josephsl)
+- NVDA non commetterà più errori nella lettura di una nuova pagina web appena caricata in Microsoft Edge quando si utilizza UI Automation. (#15736)
+- Quando si utilizza la funzione Dire Tutto o i comandi che gestiscono il testo, le pause tra le frasi o i caratteri non diminuiscono più gradualmente nel tempo. (#15739, @jcsteh)
+- NVDA non si blocca più nel leggere enormi quantità di testo. (#15752, @jcsteh)
+- Quando si accede a Microsoft Edge utilizzando UI Automation, NVDA è in grado di attivare più controlli nella modalità navigazione. (#14612)
+- NVDA non avrà più problemi nell'avviarsi quando il file di configurazione è danneggiato, ma ripristinerà la configurazione predefinita come in passato. (#15690, @CyrilleB79)
+- Risolto il problema con il supporto per i controlli della visualizzazione Elenco di sistema (``SysListView32``) nelle applicazioni Windows Forms. (#15283, @LeonarddeR)
+- Non è più possibile sovrascrivere la cronologia della console Python di NVDA. (#15792, @CyrilleB79)
+- NVDA dovrebbe rimanere reattivo anche quando viene inondato da molti eventi di UI Automation, ad es. quando vengono stampate grandi porzioni di testo su un terminale o quando si ascoltano messaggi vocali in WhatsApp Messenger. (#14888, #15169)
+  - Questo nuovo comportamento può essere disabilitato utilizzando la nuova impostazione "Utilizza elaborazione eventi avanzata" nelle impostazioni avanzate di NVDA.
   -
-- NVDA is again able to track the focus in applications running within Windows Defender Application Guard (WDAG). (#15164)
-- The speech text is no longer updated when the mouse moves in the Speech Viewer. (#15952, @hwf1324)
-- NVDA will again switch back to browse mode when closing combo boxes with ``escape`` or ``alt+upArrow`` in Firefox or Chrome. (#15653)
-- Arrowing up and down in combo boxes in iTunes will no longer inappropriately switch back to browse mode. (#15653)
+- NVDA è nuovamente in grado di seguire il focus nelle applicazioni in esecuzione all'interno di Windows Defender Application Guard (WDAG). (#15164)
+- Il testo parlato non viene più aggiornato quando il mouse si sposta nel Visualizzatore vocale. (#15952, @hwf1324)
+- NVDA tornerà nuovamente alla modalità navigazione quando si chiudono le caselle combinate con "escape" o "alt+freccia su" in Firefox o Chrome. (#15653)
+- L'utilizzo delle freccie su e giù nelle caselle combinate di iTunes non attiverà più erroneamente la modalità navigazione. (#15653)
 -
 
 == Changes for Developers ==
