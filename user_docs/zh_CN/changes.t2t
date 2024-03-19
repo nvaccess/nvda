@@ -61,8 +61,8 @@ NVDA 更新日志
   - 将 Java Access Bridge 更新到 17.0.9+8Zulu (17.46.19)。(#15744)
   -
 - 快捷键：
-  - 以下命令现在支持连按两次逐字朗读，连按三次用短字符描述逐字解释：朗读选择的文本、朗读剪贴板文本和朗读焦点对象。(#15449, @CyrilleB79)
-  - 为切换黑屏功能分配了一个默认快捷键：``NVDA+control+escape``。(#10560, @CyrilleB79)
+  - 读出已选择的文本、读出剪贴板中的文本和读出焦点对象命令现在支持连按两次逐字朗读，连按三次用短字符描述逐字解释。(#15449, @CyrilleB79)
+  - 分配了切换黑屏功能的默认快捷键——NVDA+control+escape。(#10560, @CyrilleB79)
   - 朗读选择的文本命令支持连按四次在可浏览对话框中显示所选择的文本。(#15858, @Emil-18)
   -
 - Microsoft Office：
@@ -136,119 +136,119 @@ NVDA 更新日志
 - 修复了在 iTunes 中按上下键选择组合框中的选项时会被切换回浏览模式的错误。(#15653)
 -
 
-== Changes for Developers ==
-Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+== 开发者需要了解的变化 ==
+有关 NVDA 的 API 弃用和删除流程的信息，请参阅[开发人员指南 https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API]。
 
-- Note: this is an Add-on API compatibility breaking release.
-Add-ons will need to be re-tested and have their manifest updated.
-- Building NVDA now requires Visual Studio 2022.
-Please refer to the [NVDA docs https://github.com/nvaccess/nvda/blob/release-2024.1/projectDocs/dev/createDevEnvironment.md] for the specific list of Visual Studio components. (#14313)
-- Added the following extension points:
-  - ``treeInterceptorHandler.post_browseModeStateChange``. (#14969, @nvdaes)
-  - ``speech.speechCanceled``. (#15700, @LeonarddeR)
-  - ``_onErrorSoundRequested`` (should be retrieved calling ``logHandler.getOnErrorSoundRequested()``) (#15691, @CyrilleB79)
+- 注意：此版本会影响插件的 API 兼容性。
+需要重新测试插件并更新其清单文件。
+- 构建 NVDA 现在需要 Visual Studio 2022。
+有关 Visual Studio 依赖组件的详细列表，请参阅 [NVDA 文档 https://github.com/nvaccess/nvda/blob/release-2024.1/projectDocs/dev/createDevEnvironment.md]。(#14313)
+- 添加了以下扩展点：
+  - ``treeInterceptorHandler.post_browseModeStateChange`` (#14969, @nvdaes)
+  - ``speech.speechCanceled`` (#15700, @LeonarddeR)
+  - ``_onErrorSoundRequested``（应该通过调用 ``logHandler.getOnErrorSoundRequested()`` 获取）(#15691, @CyrilleB79)
   -
-- It is now possible to use plural forms in an add-on's translations. (#15661, @beqabeqa473)
-- Included python3.dll in the binary distribution for use by add-ons with external libraries utilizing the [stable ABI https://docs.python.org/3.11/c-api/stable.html]. (#15674, @mzanm)
-- The ``BrailleDisplayDriver`` base class now has ``numRows`` and ``numCols`` properties to provide information about multi line braille displays.
-Setting ``numCells`` is still supported for single line braille displays and ``numCells`` will return the total number of cells for multi line braille displays. (#15386)
-- Updated BrlAPI for BRLTTY to version 0.8.5, and its corresponding python module to a Python 3.11 compatible build. (#15652, @LeonarddeR)
-- Added the ``speech.speakSsml`` function, which allows you to write NVDA speech sequences using [SSML https://www.w3.org/TR/speech-synthesis11/]. (#15699, @LeonarddeR)
-  - The following tags are currently supported and translated to appropriate NVDA speech commands:
-    - ``Prosody`` (``pitch``, ``rate`` and ``volume``). Only multiplication (e.g. ``200%`` are supported.
-    - ``say-as`` with the ``interpret`` attribute set to ``characters``
-    - ``voice`` with the ``xml:lang`` set to an XML language
-    - ``break`` with the ``time`` attribute set to a value in milliseconds, e.g. ``200ms``
-    - ``mark`` with the ``name`` attribute set to a mark name, e.g. ``mark1``, requires providing a callback
+- 在插件的翻译中现在可以使用复数形式。(#15661, @beqabeqa473)
+- 在二进制包中包含了 python3.dll，供插件使用外部库（利用[稳定 API https://docs.python.org/3.11/c-api/stable.html]。(#15674, @mzanm)
+- ``BrailleDisplayDriver`` 基类现在具有 ``numRows`` 和 ``numCols`` 属性，用于提供有关多行盲文显示器的信息。
+对于单行盲文显示器，仍然支持设置 ``numCells``，对于多行盲文显示器，``numCells`` 将返回单元格总数。(#15386)
+- 将 BRLTTY 的 BrlAPI 更新到 0.8.5 版本，并将其对应的 Python 模块更新到兼容 Python 3.11 的版本。(#15652, @LeonarddeR)
+- 添加了 ``speech.speakSsml`` 函数，您可以使用 [SSML https://www.w3.org/TR/speech-synthesis11/] 编写 NVDA 语音序列。(#15699, @LeonarddeR)
+  - 当前支持将以下标签转换为相应的 NVDA 语音命令：
+    - ``Prosody``（``pitch``，``rate`` 和 ``volume``）。仅支持倍数的形式调节（例如 ``200%``）。
+    - 将 ``say-as`` 的 ``interpret`` 属性设置为 ``characters``
+    - 将 ``voice`` 的 ``xml:lang`` 设置为 XML 的语言
+    - 将 ``break`` 的 ``time`` 属性设置为毫秒值，例如 ``200ms``
+    - 将 ``mark`` 的 ``name`` 属性设置为标记的名称，例如 ``mark1``，需要提供回调函数
     -
-  - Example: ``speech.speakSsml('<speak><prosody pitch="200%">hello</prosody><break time="500ms" /><prosody rate="50%">John</prosody></speak>')``
-  - The SSML parsing capabilities are backed by the ``SsmlParser`` class in the ``speechXml`` module.
+  - 示例： ``speech.speakSsml('<speak><prosody pitch="200%">hello</prosody><break time="500ms" /><prosody rate="50%">John</prosody></speak>')``
+  - SSML 解析功能由 ``speechXml`` 模块中的 ``SsmlParser`` 类提供支持。
   -
-- Changes to the NVDA Controller Client library:
-  - The file names of the library no longer contain a suffix denoting the architecture, i.e. ``nvdaControllerClient32/64.dll`` are now called ``nvdaControllerClient.dll``. (#15718, #15717, @LeonarddeR)
-  - Added an example to demonstrate using nvdaControllerClient.dll from Rust. (#15771, @LeonarddeR)
-  - Added the following functions to the controller client: (#15734, #11028, #5638, @LeonarddeR)
-    - ``nvdaController_getProcessId``: To get the process id (PID) of the current instance of NVDA the controller client is using.
-    - ``nvdaController_speakSsml``: To instruct NVDA to speak according to the given SSML. This function also supports:
-      - Providing the symbol level.
-      - Providing the priority of speech to be spoken.
-      - Speaking both synchronously (blocking) and asynchronously (instant return).
+- 对 NVDA Controller Client  库的改进：
+  - 库的文件名不再包含表示架构的后缀，即 ``nvdaControllerClient32/64.dll`` 现在称为 ``nvdaControllerClient.dll``。(#15718, #15717, @LeonarddeR)
+  - 添加了一个示例，演示如何使用 Rust 语言调用 nvdaControllerClient.dll。(#15771, @LeonarddeR)
+  - 添加了以下函数到 NVDA Controller Client：(#15734, #11028, #5638, @LeonarddeR)
+    - ``nvdaController_getProcessId``：获取 Controller Client 使用的当前 NVDA 实例的进程 ID (PID)。
+    - ``nvdaController_speakSsml``：指示 NVDA 根据给定的 SSML 进行朗读。此函数还支持：
+      - 提供符号级别。
+      - 提供要朗读的语音优先级。
+      - 同步（阻塞）和异步（立即返回）朗读。
       -
-    - ``nvdaController_setOnSsmlMarkReachedCallback``: To register a callback of type ``onSsmlMarkReachedFuncType`` that is called in synchronous mode for every ``<mark />`` tag encountered in the SSML sequence provided to ``nvdaController_speakSsml``.
+    - ``nvdaController_setOnSsmlMarkReachedCallback``：注册一个类型为 ``onSsmlMarkReachedFuncType`` 的回调函数，以便在使用 ``nvdaController_speakSsml`` 处理同步 SSML 过程时，遇到每个 ``<mark />`` 标签时都会调用该回调函数。(#15734, #11028, #5638, @LeonarddeR)
     -
-  - Note: the new functions in the controller client only support NVDA 2024.1 and above.
+  - 注意：NVDA Controller Client 中的新功能仅支持 NVDA 2024.1 及以上。
   -
-- Updated ``include`` dependencies:
-  - detours to ``4b8c659f549b0ab21cf649377c7a84eb708f5e68``. (#15695)
-  - ia2 to ``3d8c7f0b833453f761ded6b12d8be431507bfe0b``. (#15695)
-  - sonic to ``8694c596378c24e340c09ff2cd47c065494233f1``. (#15695)
-  - w3c-aria-practices to ``9a5e55ccbeb0f1bf92b6127c9865da8426d1c864``. (#15695)
-  - wil to ``5e9be7b2d2fe3834a7107f430f7d4c0631f69833``. (#15695)
+- 更新了 ``include`` 依赖：
+  - detours 更新到 ``4b8c659f549b0ab21cf649377c7a84eb708f5e68``。(#15695)
+  - ia2 更新到 ``3d8c7f0b833453f761ded6b12d8be431507bfe0b``。(#15695)
+  - sonic 更新到 ``8694c596378c24e340c09ff2cd47c065494233f1``。(#15695)
+  - w3c-aria-practices 更新到 ``9a5e55ccbeb0f1bf92b6127c9865da8426d1c864``。(#15695)
+  - wil 更新到 ``5e9be7b2d2fe3834a7107f430f7d4c0631f69833``。(#15695)
   -
-- Device info yielded by ``hwPortUtils.listUsbDevices`` now contain the bus reported description of the USB device (key ``busReportedDeviceDescription``). (#15764, @LeonarddeR)
-- For USB serial devices, ``bdDetect.getConnectedUsbDevicesForDriver`` and ``bdDetect.getDriversForConnectedUsbDevices`` now yield device matches containing a ``deviceInfo`` dictionary enriched with data about the USB device, such as ``busReportedDeviceDescription``. (#15764, @LeonarddeR)
-- When the configuration file ``nvda.ini`` is corrupted, a backup copy is saved before it is reinitialized. (#15779, @CyrilleB79)
-- When defining a script with the script decorator, the ``speakOnDemand`` boolean argument can be specified to control if a script should speak while in "on-demand" speech mode. (#481, @CyrilleB79)
-  - Scripts that provide information (e.g. say window title, report time/date) should speak in the "on-demand" mode.
-  - Scripts that perform an action (e.g. move the cursor, change a parameter) should not speak in the "on-demand" mode.
+- 由 ``hwPortUtils.listUsbDevices`` 提供的设备信息现在包含 USB 设备的总线报告描述（键 ``busReportedDeviceDescription``）。(#15764, @LeonarddeR)
+- 对于 USB 串行设备，``bdDetect.getConnectedUsbDevicesForDriver`` 和 ``bdDetect.getDriversForConnectedUsbDevices`` 现在返回包含 ``deviceInfo`` 字典的键值对，该字典包含有关 USB 设备的数据，例如 ``busReportedDeviceDescription``。(#15764, @LeonarddeR)
+- 当配置文件 ``nvda.ini`` 被破坏时，会在重新初始化配置之前保存备份副本。(#15779, @CyrilleB79)
+- 当使用装饰器定义手势时，可以指定 ``speakOnDemand`` 布尔参数来控制脚本是否应在“手动”语音模式下朗读。(#481, @CyrilleB79)
+  - 用于提供信息的手势（例如，读出窗口标题、读出时间/日期）应该在“手动”模式下朗读。
+  - 用于执行操作的手势（例如，移动光标、更改参数）不应该在“手动”模式下朗读。
   -
-- Fixed bug where deleting git-tracked files during ``scons -c`` resulted in missing UIA COM interfaces on rebuild. (#7070, #10833, @hwf1324)
-- Fix a bug where some code changes were not detected when building ``dist``, that prevented a new build from being triggered.
-Now ``dist`` always rebuilds. (#13372, @hwf1324)
-- A ``gui.nvdaControls.MessageDialog`` with default type of standard, no longer throws a None conversion exception because no sound is assigned. (#16223, @XLTechie)
+- 修复了在 ``scons -c`` 期间删除 git 跟踪文件会导致重建时缺少 UIA COM 接口的错误。(#7070, #10833, @hwf1324)
+- 修复了在构建 ``dist`` 时未检测到某些代码更改的错误，该错误导致无法触发新的构建。
+现在 ``dist`` 始终会被重建。(#13372, @hwf1324)
+- 默认类型为标准的 ``gui.nvdaControls.MessageDialog`` 不再抛出 None 转换异常，因为没有指定提示音。(#16223, @XLTechie)
 -
 
 
-=== API Breaking Changes ===
-These are breaking API changes.
-Please open a GitHub issue if your Add-on has an issue with updating to the new API.
+=== API 重大变更 ===
+以下是一些会破坏现有插件兼容性的 API 改动。
+如果您的插件在更新到新 API 后出现问题，请随时在 GitHub 上提交 issue 报告。
 
-- NVDA is now built with Python 3.11. (#12064)
-- Updated pip dependencies:
-  - configobj to 5.1.0dev commit ``e2ba4457c4651fa54f8d59d8dcdd3da950e956b8``. (#15544)
-  - Comtypes to 1.2.0. (#15513, @codeofdusk)
-  - Flake8 to 4.0.1. (#15636, @lukaszgo1)
-  - py2exe to 0.13.0.1dev commit ``4e7b2b2c60face592e67cb1bc935172a20fa371d``. (#15544)
-  - robotframework to 6.1.1. (#15544)
-  - SCons to 4.5.2. (#15529, @LeonarddeR)
-  - sphinx to 7.2.6. (#15544)
-  - wxPython to 4.2.2a commit ``0205c7c1b9022a5de3e3543f9304cfe53a32b488``. (#12551, #16257)
+- NVDA 现在使用 Python 3.11 进行构建。(#12064)
+- 更新了以下 pip 依赖：
+  - configobj 更新到 5.1.0dev 版本 (commit: ``e2ba4457c4651fa54f8d59d8dcdd3da950e956b8``)。(#15544)
+  - Comtypes 更新到 1.2.0 版本。(#15513, @codeofdusk)
+  - Flake8 更新到 4.0.1 版本。(#15636, @lukaszgo1)
+  - py2exe 更新到 0.13.0.dev 提交版本 (commit: ``4e7b2b2c60face592e67cb1bc935172a20fa371d``)。(#15544)
+  - robotframework 更新到 6.1.1 版本。(#15544)
+  - SCons 更新到 4.5.2 版本。(#15529, @LeonarddeR)
+  - sphinx 更新到 7.2.6 版本。(#15544)
+  - wxPython 更新到 4.2.2a 提交版本 (commit: ``0205c7c1b9022a5de3e3543f9304cfe53a32b488``)。(#12551, #16257)
   -
-- Removed pip dependencies:
-  - typing_extensions, these should be supported natively in Python 3.11 (#15544)
-  - nose, instead unittest-xml-reporting is used to generate XML reports. (#15544)
+- 删除了以下 pip 依赖：
+  - typing_extensions：Python 3.11 原生支持此功能，无需单独安装。(#15544)
+  - nose：不再使用 nose，而是使用 unittest-xml-reporting 生成 XML 报告。(#15544)
   -
-- ``IAccessibleHandler.SecureDesktopNVDAObject`` has been removed.
-Instead, when NVDA is running on the user profile, track the existence of the secure desktop with the extension point: ``winAPI.secureDesktop.post_secureDesktopStateChange``. (#14488)
-- ``braille.BrailleHandler.handlePendingCaretUpdate`` has been removed with no public replacement. (#15163, @LeonarddeR)
-- ``bdDetect.addUsbDevices and bdDetect.addBluetoothDevices`` have been removed.
-Braille display drivers should implement the ``registerAutomaticDetection`` class method instead.
-That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices`` and ``addBluetoothDevices`` methods can be used. (#15200, @LeonarddeR)
-- The default implementation of the check method on ``BrailleDisplayDriver`` now requires both the ``threadSafe`` and ``supportsAutomaticDetection`` attributes to be set to ``True``. (#15200, @LeonarddeR)
-- Passing lambda functions to ``hwIo.ioThread.IoThread.queueAsApc`` is no longer possible, as functions should be weakly referenceable. (#14627, @LeonarddeR)
-- ``IoThread.autoDeleteApcReference`` has been removed. (#14924, @LeonarddeR)
-- To support capital pitch changes, synthesizers must now explicitly declare their support for the ``PitchCommand`` in the ``supportedCommands`` attribute on the driver. (#15433, @LeonarddeR)
-- ``speechDictHandler.speechDictVars`` has been removed. Use ``NVDAState.WritePaths.speechDictsDir`` instead of ``speechDictHandler.speechDictVars.speechDictsPath``. (#15614, @lukaszgo1)
-- ``languageHandler.makeNpgettext`` and ``languageHandler.makePgettext`` have been removed.
-``npgettext`` and ``pgettext`` are supported natively now. (#15546)
-- The app module for [Poedit https://poedit.net] has been changed significantly. The ``fetchObject`` function has been removed. (#15313, #7303, @LeonarddeR)
-- The following redundant types and constants have been removed from ``hwPortUtils``: (#15764, @LeonarddeR)
+- 删除了 ``IAccessibleHandler.SecureDesktopNVDAObject``。
+当 NVDA 运行在用户配置文件上时，可以使用扩展点 ``winAPI.secureDesktop.post_secureDesktopStateChange`` 来跟踪安全桌面的存在。(#14488)
+- 删除了 ``braille.BrailleHandler.handlePendingCaretUpdate``，没有公开替代方案。(#15163, @LeonarddeR)
+- 删除了 ``bdDetect.addUsbDevices`` 和 ``bdDetect.addBluetoothDevices``。
+盲文点显器驱动应实现 ``registerAutomaticDetection`` 类方法。
+该方法接收一个 ``DriverRegistrar`` 对象，可在其上使用 ``addUsbDevices`` 和 ``addBluetoothDevices`` 方法。(#15200, @LeonarddeR)
+- ``BrailleDisplayDriver`` 上的检查方法的默认实现现在要求同时设置 ``threadSafe`` 和 ``supportsAutomaticDetection`` 属性为 ``True``。(#15200, @LeonarddeR)
+- 不允许传递 lambda 函数给 ``hwIo.ioThread.IoThread.queueAsApc``，因为函数应该是弱引用的。(#14627, @LeonarddeR)
+- 删除了 ``IoThread.autoDeleteApcReference``。(#14924, @LeonarddeR)
+- 为了支持遇到大写字母时音高变化，语音合成器现在必须在其驱动的 ``supportedCommands`` 属性中明确声明它们对 ``PitchCommand`` 的支持。(#15433, @LeonarddeR)
+- 删除了 ``speechDictHandler.speechDictVars``。使用 ``NVDAState.WritePaths.speechDictsDir`` 代替 ``speechDictHandler.speechDictVars.speechDictsPath``。(#15614, @lukaszgo1)
+- 删除了 ``languageHandler.makeNpgettext`` 和 ``languageHandler.makePgettext``。
+现在原生支持 ``npgettext`` 和 ``pgettext``。(#15546)
+- 针对 [Poedit https://poedit.net] 的应用模块进行了重大更改。删除了 ``fetchObject`` 函数。(#15313, #7303, @LeonarddeR)
+- 从 ``hwPortUtils`` 中删除了以下冗余类型和常量：(#15764)
   - ``PCWSTR``
-  - ``HWND`` (replaced by ``ctypes.wintypes.HWND``)
+  - ``HWND`` （替换为 ``ctypes.wintypes.HWND``）
   - ``ULONG_PTR``
   - ``ULONGLONG``
   - ``NULL``
-  - ``GUID`` (replaced by ``comtypes.GUID``)
+  - ``GUID`` （替换为 ``comtypes.GUID``）
   -
-- ``gui.addonGui.AddonsDialog`` has been removed. (#15834)
-- ``touchHandler.TouchInputGesture.multiFingerActionLabel`` has been removed with no replacement. (#15864, @CyrilleB79)
-- ``NVDAObjects.IAccessible.winword.WordDocument.script_reportCurrentHeaders`` has been removed with no replacement. (#15904, @CyrilleB79)
+- 删除了 ``gui.addonGui.AddonsDialog``。 (#15834)
+- 删除了 ``touchHandler.TouchInputGesture.multiFingerActionLabel`` 没有公开替代方案。(#15864, @CyrilleB79)
+- ``NVDAObjects.IAccessible.winword.WordDocument.script_reportCurrentHeaders`` 已被删除，没有公开替代方案。(#15904， @CyrilleB79)
 % Insert new list items here as the alias appModule table should be kept at the bottom of this list
-- The following app modules are removed.
-Code which imports from one of them, should instead import from the replacement module. (#15618, @lukaszgo1)
+- 以下应用模块已被删除。
+请从其相应替换模块中导入。 (#15618, @lukaszgo1)
 -
 
-|| Removed module name | Replacement module |
+|| 已删除的模块 | 用于替换的模块 |
 | ``azardi-2.0`` | ``azardi20`` |
 | ``azuredatastudio`` | ``code`` |
 | ``azuredatastudio-insiders`` | ``code`` |
@@ -275,64 +275,64 @@ Code which imports from one of them, should instead import from the replacement 
 | ``zend-eclipse-php`` | ``eclipse`` |
 | ``zendstudio`` | ``eclipse`` |
 
-=== Deprecations ===
+=== 弃用 ===
 
-- Using ``watchdog.getFormattedStacksForAllThreads`` is deprecated - please use ``logHandler.getFormattedStacksForAllThreads`` instead. (#15616, @lukaszgo1)
-- ``easeOfAccess.canConfigTerminateOnDesktopSwitch`` has been deprecated, as it became obsolete since Windows 7 is no longer supported. (#15644, @LeonarddeR)
-- ``winVersion.isFullScreenMagnificationAvailable`` has been deprecated - use ``visionEnhancementProviders.screenCurtain.ScreenCurtainProvider.canStart`` instead. (#15664, @josephsl)
-- The following Windows release constants has been deprecated from winVersion module (#15647, @josephsl):
+- 不再推荐使用 ``watchdog.getFormattedStacksForAllThreads``，请改用 ``logHandler.getFormattedStacksForAllThreads``。(#15616, @lukaszgo1)
+- ``easeOfAccess.canConfigTerminateOnDesktopSwitch`` 已被弃用，因为自 Windows 7 不再受支持后，此功能已失效。(#15644, @LeonarddeR)
+- ``winVersion.isFullScreenMagnificationAvailable`` 已被弃用，请改用 ``visionEnhancementProviders.screenCurtain.ScreenCurtainProvider.canStart``。(#15664, @josephsl)
+- ``winVersion`` 模块中的以下 Windows 版本常量已被弃用 (#15647, @josephsl)：
   - ``winVersion.WIN7``
   - ``winVersion.WIN7_SP1``
   - ``winVersion.WIN8``
   -
-- The ``bdDetect.KEY_*`` constants have been deprecated.
-Use ``bdDetect.DeviceType.*`` instead. (#15772, @LeonarddeR).
-- The ``bdDetect.DETECT_USB`` and ``bdDetect.DETECT_BLUETOOTH`` constants have been deprecated with no public replacement. (#15772, @LeonarddeR).
-- Using ``gui.ExecAndPump`` is deprecated - please use ``systemUtils.ExecAndPump`` instead. (#15852, @lukaszgo1)
+- ``bdDetect.KEY_*`` 常量已被弃用，
+请改用 ``bdDetect.DeviceType.*``。(#15772, @LeonarddeR)
+- ``bdDetect.DETECT_USB`` 和 ``bdDetect.DETECT_BLUETOOTH`` 常量已被弃用，没有公开替代方案。 (#15772, @LeonarddeR)
+- 不再推荐使用 ``gui.ExecAndPump``，请改用 ``systemUtils.ExecAndPump``。(#15852, @lukaszgo1)
 -
 
 
 = 2023.3.4 =
-This is a patch release to fix a security issue and installer issue.
-Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+这是一个修复安全问题和安装程序问题的补丁版本。
+请遵循 [NVDA 的 安全政策 https://github.com/nvaccess/nvda/blob/master/security.md]负责任地披露安全问题。
 
-== Security Fixes ==
-- Prevents loading custom configuration while secure mode is forced.
+== 安全修复 ==
+- 修复了在强制安全模式时加载自定义配置的问题。
 ([GHSA-727q-h8j2-6p45 https://github.com/nvaccess/nvda/security/advisories/GHSA-727q-h8j2-6p45])
 -
 
-== Bug Fixes ==
-- Fixed bug which caused the NVDA process to fail to exit correctly. (#16123)
-- Fixed bug where if the previous NVDA process failed to exit correctly, an NVDA installation could fail to an unrecoverable state. (#16122)
+== 错误修复 ==
+- 修复了导致 NVDA 进程无法正常退出的错误。(#16123)
+- 修复了如果之前的 NVDA 进程无法正常退出，NVDA 安装可能会失败甚至无法恢复的错误。(#16122)
 -
 
 = 2023.3.3 =
-This is a patch release to fix a security issue.
-Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+这是一个修复安全问题的补丁版本。
+请遵循 [NVDA 的 安全政策 https://github.com/nvaccess/nvda/blob/master/security.md]负责任地披露安全问题。
 
-== Security Fixes ==
-- Prevents possible reflected XSS attack from crafted content to cause arbitrary code execution.
+== 安全修复 ==
+- 修复了精心设计的恶意内容可能导致反射式 XSS 攻击并执行任意代码的问题。
 ([GHSA-xg6w-23rw-39r8 https://github.com/nvaccess/nvda/security/advisories/GHSA-xg6w-23rw-39r8])
 -
 
 = 2023.3.2 =
-This is a patch release to fix a security issue.
-The security patch in 2023.3.1 was not resolved correctly.
-Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+这是一个修复安全问题的补丁版本。
+2023.3.1 中的安全补丁未正确解决问题。
+请遵循 [NVDA 的 安全政策 https://github.com/nvaccess/nvda/blob/master/security.md]负责任地披露安全问题。
 
-== Security Fixes ==
-- The security patch in 2023.3.1 was not resolved correctly.
-Prevents possible system access and arbitrary code execution with system privileges for unauthenticated users.
+== 安全修复 ==
+- 2023.3.1 中的安全补丁未正确解决问题。
+- 修复了未经身份验证的用户可能存在的系统访问和任意代码执行权限的问题。
 ([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
 -
 
 
 = 2023.3.1 =
-This is a patch release to fix a security issue.
-Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+这是一个修复安全问题的补丁版本。
+请遵循 [NVDA 的 安全政策 https://github.com/nvaccess/nvda/blob/master/security.md]负责任地披露安全问题。
 
-== Security Fixes ==
-- Prevents possible system access and arbitrary code execution with system privileges for unauthenticated users.
+== 安全修复 ==
+- 修复了未经身份验证的用户可能存在的系统访问和任意代码执行权限的问题。
 ([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
 -
 
@@ -776,9 +776,9 @@ Please responsibly disclose security issues following NVDA's [security policy ht
 - 可以在合成器驱动支持的设置上将 useConfig 设置为 False。(#14601)
 -
 
-=== API 的破坏性修改 ===
-这里是所有的 API 破坏性修改。
-如您的插件在使用新 API 后遇到问题，请在 GitHub 打开一个 issue。
+=== API 重大变更 ===
+以下是一些会破坏现有插件兼容性的 API 改动。
+如果您的插件在更新到新 API 后出现问题，请随时在 GitHub 上提交 issue 报告。
 - 更改了配置规范，相关的配置键已被删除或修改：
   -  ``[documentFormatting]`` 部分 (#14233)：
     - ``reportLineIndentation`` 是一个整数（0 到 3）而不是一个布尔值。
