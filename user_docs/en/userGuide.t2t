@@ -2931,7 +2931,8 @@ Installing add-ons leads to the integration of non-NV Access code into NVDA, in 
 Add-ons can be created by any person or organization.
 They may include or utilize external components and third party services to serve their purpose and provide the features for which they have been developed.
 
-Automated code checks for add-ons happen when they are submitted to NVDA’s Add-on Store. This means e.g.  they will undergo  a basic automated check for vulnerabilities by security analysis tools such as codeQL.
+Various automated tests of add-ons happen before they are published in the NVDA Add-on Store.
+These include a basic automated check for vulnerabilities by security analysis tools such as [CodeQL https://codeql.github.com/].
 There isn't currently any formal review process for add-ons performed by a human.
 However, many add-ons have discussions areas where users can exchange feedback. The [community review area #AddonStoreReviews] can be accessed via the actions menu of the add-on.
 
