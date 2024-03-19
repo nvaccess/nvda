@@ -1442,15 +1442,16 @@ class ReviewTextInfoRegion(TextInfoRegion):
 
 	allowPageTurns=False
 	_currentSelection: textInfos.TextInfo | None = None
-	_currentScriptName: str | None = None
-	_withinSelection: bool = False
+	_currentScriptName: str | None
+	_readingUnitContainsSelectedCharacters: bool
 
 	def _getSelection(self) -> textInfos.TextInfo:
 		"""Gets selection for use in update function.
-		:return: selection, reading unit from it, or review position when
-		there is no selection or showing selection is disabled
+		:return: reading unit, when it contains selected characters,
+		or review position, when reading unit is outside of selection,
+		there is no selection, or showing selection is disabled
 		"""
-		self._withinSelection = False
+		self._readingUnitContainsSelectedCharacters = False
 		if not config.conf["braille"]["showSelection"]:
 			self._currentSelection = None
 			return api.getReviewPosition().copy()
@@ -1489,13 +1490,13 @@ class ReviewTextInfoRegion(TextInfoRegion):
 			# Reading unit containing review position is outside of selection
 			return self._collapsedReviewPosition()
 		else:
-			# Reading unit or part of it is within selection
-			# Selection may not contain whole reading unit.
+			# Reading unit contains selected characters
+			# All characters are not necessarily selected
 			if readingUnit.start < self._currentSelection.start:
 				readingUnit.start = self._currentSelection.start
 			if readingUnit.end > self._currentSelection.end:
 				readingUnit.end = self._currentSelection.end
-			self._withinSelection = True
+			self._readingUnitContainsSelectedCharacters = True
 			return readingUnit
 
 	def _collapsedReviewPosition(self) -> textInfos.TextInfo:
@@ -1520,7 +1521,7 @@ class ReviewTextInfoRegion(TextInfoRegion):
 		super().update()
 		if (
 			not config.conf["braille"]["showSelection"]
-			or not self._withinSelection
+			or not self._readingUnitContainsSelectedCharacters
 			or self._currentScriptName is None
 			or previousReadingUnit is None
 		):
@@ -1576,7 +1577,7 @@ class ReviewTextInfoRegion(TextInfoRegion):
 		:param info: TextInfo object where cursor should be moved
 		"""
 		if (
-			self._withinSelection
+			self._readingUnitContainsSelectedCharacters
 			and info.start == api.getReviewPosition().start
 			and not _routingShouldMoveSystemCaret()
 		):
