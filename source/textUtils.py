@@ -392,7 +392,7 @@ class IdentityOffsetConverter(OffsetConverter):
 
 	@property
 	def encodedStringLength(self) -> int:
-		return self.strLength()
+		return self.strLength
 
 	def strToEncodedOffsets(
 			self,

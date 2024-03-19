@@ -743,9 +743,9 @@ class TextInfo(baseObject.AutoPropertyObject):
 				exactly to the opposite end of info,
 				and the algorithm will fail on sanity check condition in the for loop.
 				To avoid this situation we track last move and the direction of last divide
-				in variables lastMove and lastRecursedLeft.
+				in variables lastMove and lastRecursed.
 				If we detect that we are about to move from the same endpoint for the second time,
-				we reduce the count of characters by 1 to make sure
+				we reduce the count of characters in order to make sure
 				the algorithm makes some progress on each iteration.
 		"""
 		text = self.text
@@ -757,20 +757,20 @@ class TextInfo(baseObject.AutoPropertyObject):
 			return result
 		
 		info = self.copy()
-		# Total Pythonic Length represents length in python characters of Current TextInfo we're workoing with.
+		# Total codepoint Length represents length in python characters of Current TextInfo we're workoing with.
 		# We start with self, and then gradually divide and conquer in order to find desired offset.
 		totalCodepointOffset = len(text)
 
 		# codepointOffsetLeft and codepointOffsetRight represent distance in pythonic characters
 		# from left and right ends of info correspondingly to the desired location.
 		codepointOffsetLeft = codepointOffset
-		codepointOffsetRight = totalCodepointOffset - CodepointOffsetLeft
+		codepointOffsetRight = totalCodepointOffset - codepointOffsetLeft
 
 		# We store lastMove - by how many characters we moved last time, and
-		# lastRecursedLeft - whether last recursion happened to the left and not to the right -
+		# lastRecursed - whether last recursion happened to the left (-1), right(1) or failed due to overshooting(0)
 		# in order to avoid certain corner cases.
 		lastMove: int | None = None
-		lastRecursedLeft: bool | None = None
+		lastRecursed: int | None = None
 		
 		MAX_BINARY_SEARCH_ITERATIONS = 1000
 		for __ in range(MAX_BINARY_SEARCH_ITERATIONS):
@@ -778,28 +778,41 @@ class TextInfo(baseObject.AutoPropertyObject):
 			if codepointOffsetLeft <= codepointOffsetRight:
 				# Move from the left end of info. Let's compute by how many characters in moveCharacters variable.
 				tmpInfo.collapse()
-				if lastRecursedLeft is not None and lastRecursedLeft is True and lastMove > 0:
+				if (
+					lastRecursed is not None and (
+						lastRecursed == 0 or (
+							lastRecursed < 0 and lastMove > 0
+						)
+					)
+				):
 					# Here we check that last time we also attempted to move from the same left end.
 					# And apparently we overshot last time. In order to avoid infinite loop
-					# or overshooting again, reduce movement by 1.
-					moveCharacters = lastMove - 1
-					if moveCharacters == 0:
+					# or overshooting again, reduce movement by half.
+					moveCharacters = lastMove // 2
+					if moveCharacters == 0 or moveCharacters >= lastMove:
 						raise RuntimeError("Unable to find desired offset in TextInfo.")
 				else:
 					moveCharacters = codepointOffsetLeft
-				
 				code = tmpInfo.move(UNIT_CHARACTER, moveCharacters, endPoint="end")
 				lastMove = moveCharacters
 				tmpText = tmpInfo.text
 				actualCodepointOffset = len(tmpText)
+				if not text.startswith(tmpText):
+					raise RuntimeError(f"Inner textInfo text '{tmpText}' doesn't match outer textInfo text '{text}'")
 				tmpInfo.collapse(end=True)
 			else:
 				# Move from the right end of info.
 				tmpInfo.collapse(end=True)
-				if lastRecursedLeft is not None and lastRecursedLeft is False and lastMove < 0:
-					# lastMove was negative, so adding +1 to reduce its absolute value
-					moveCharacters = lastMove + 1
-					if moveCharacters == 0:
+				if (
+					lastRecursed is not None and (
+						lastRecursed == 0 or (
+							lastRecursed > 0 and lastMove < 0
+						)
+					)
+				):
+					# lastMove was negative, inverting it since modular division of negative numbers works weird.
+					moveCharacters = -((-lastMove) // 2)
+					if moveCharacters == 0 or moveCharacters <= lastMove:
 						raise RuntimeError("Unable to find desired offset in TextInfo.")
 				else:
 					moveCharacters = -codepointOffsetRight
@@ -807,26 +820,30 @@ class TextInfo(baseObject.AutoPropertyObject):
 				lastMove = moveCharacters
 				tmpText = tmpInfo.text
 				actualCodepointOffset = totalCodepointOffset - len(tmpText)
+				if not text.endswith(tmpText):
+					raise RuntimeError(f"Inner textInfo text '{tmpText}' doesn't match outer textInfo text '{text}'")
 				tmpInfo.collapse()
 			if code == 0:
 				raise RuntimeError("Move by character operation unexpectedly failed.")
 			if actualCodepointOffset <= 0 or actualCodepointOffset >= totalCodepointOffset:
-				raise RuntimeError(f"InvalidState: {actualCodepointOffset=} {totalCodepointOffset=}")
+				# We overshot, call this recursion attempt failed and try again lower movement
+				lastRecursed = 0
+				continue
 			if actualCodepointOffset == codepointOffsetLeft:
 				return tmpInfo
 			elif actualCodepointOffset < codepointOffsetLeft:
 				# Recursing right
-				lastRecursedLeft = False
+				lastRecursed = 1
 				text = text[actualCodepointOffset:]
 				codepointOffsetLeft -= actualCodepointOffset
 				totalCodepointOffset = codepointOffsetLeft + codepointOffsetRight
 				info.setEndPoint(tmpInfo, which="startToStart")
 			else:  # actualCodepointOffset > codepointOffsetLeft
 				# Recursing left
-				lastRecursedLeft = True
+				lastRecursed = -1
 				text = text[:actualCodepointOffset]
 				totalCodepointOffset = actualCodepointOffset
-				codepointOffsetRight = totalCodepointOffset - CodepointOffsetLeft
+				codepointOffsetRight = totalCodepointOffset - codepointOffsetLeft
 				info.setEndPoint(tmpInfo, which="endToEnd")
 		raise RuntimeError("Infinite loop during binary search.")
 
