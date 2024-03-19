@@ -18,8 +18,6 @@ DEFAULT_EXTENSIONS = frozenset({
 	"markdown.extensions.extra",
 	# Allows TOC with [TOC]"
 	"markdown.extensions.toc",
-	# Adds code highlighting to code blocks
-	"markdown.extensions.codehilite",
 	# Makes list behaviour better, including 2 space indents by default
 	"mdx_truly_sane_lists",
 	# External links will open in a new tab, and title will be set to the link text
@@ -49,6 +47,7 @@ HTML_HEADERS = """
 <title>{title}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="styles.css">
+{extraStylesheet}
 </head>
 <body>
 """.strip()
@@ -147,6 +146,9 @@ def md2html_actionFunc(
 		env: SCons.Environment.Environment
 ):
 	isKeyCommands = target[0].path.endswith("keyCommands.html")
+	isUserGuide = target[0].path.endswith("userGuide.html")
+	isDevGuide = target[0].path.endswith("developerGuide.html")
+	isChanges = target[0].path.endswith("changes.html")
 
 	with open(source[0].path, "r", encoding="utf-8") as mdFile:
 		mdStr = mdFile.read()
@@ -158,12 +160,21 @@ def md2html_actionFunc(
 		title = _getTitle(mdBuffer, isKeyCommands)
 
 	lang = pathlib.Path(source[0].path).parent.name
+
+	if isUserGuide or isDevGuide:
+		extraStylesheet = '<link rel="stylesheet" href="numberedHeadings.css">'
+	elif isChanges or isKeyCommands:
+		extraStylesheet = ""
+	else:
+		raise ValueError(f"Unknown target type for {target[0].path}")
+
 	htmlBuffer = io.StringIO()
 	htmlBuffer.write(
 		HTML_HEADERS.format(
 			lang=lang,
 			dir="rtl" if lang in RTL_LANG_CODES else "ltr",
 			title=title,
+			extraStylesheet=extraStylesheet,
 		)
 	)
 

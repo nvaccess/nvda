@@ -554,6 +554,8 @@ class UIAHandler(COMObject):
 		del self.localEventHandlerGroupWithTextChanges
 		del self.globalEventHandlerGroup
 		self._rateLimitedEventHandler = None
+		if winVersion.getWinVer() >= winVersion.WIN11:
+			UIARemote.terminate()
 
 	def _registerGlobalEventHandlers(self, handler: "UIAHandler"):
 		self.clientObject.AddFocusChangedEventHandler(self.baseCacheRequest, handler)
@@ -1142,8 +1144,17 @@ class UIAHandler(COMObject):
 			# Using IAccessible for NetUIHWND controls causes focus changes not to be reported
 			# when the ribbon is collapsed.
 			# Testing shows that these controls emits proper events but they are ignored by NVDA.
-			isOfficeApp = appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
-			isOffice2013OrOlder = int(appModule.productVersion.split(".")[0]) < 16
+			try:
+				isOfficeApp = appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
+				isOffice2013OrOlder = int(appModule.productVersion.split(".")[0]) < 16
+			except RuntimeError:
+				# this is not necessarily an office app, or an app with version information, for example geekbench 6.
+				log.debugWarning(
+					"Failed parsing productName / productVersion, version information likely missing",
+					exc_info=True
+				)
+				isOfficeApp = False
+				isOffice2013OrOlder = False
 			if isOfficeApp and isOffice2013OrOlder:
 				parentHwnd = winUser.getAncestor(hwnd, winUser.GA_PARENT)
 				while parentHwnd:

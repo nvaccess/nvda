@@ -319,7 +319,6 @@ class AddonStoreVM:
 		if shouldInstall:
 			listItemVM.model.enableCompatibilityOverride()
 			self.getAddon(listItemVM)
-			self.refresh()
 		return shouldInstall, shouldRememberChoice
 
 	_enableErrorMessage: str = pgettext(
