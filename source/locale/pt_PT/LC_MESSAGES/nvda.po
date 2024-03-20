@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-06 02:06+0000\n"
-"PO-Revision-Date: 2024-03-06 02:37\n"
+"POT-Creation-Date: 2024-03-19 19:59+0000\n"
+"PO-Revision-Date: 2024-03-19 23:39\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -637,7 +637,7 @@ msgstr "Mostrar sempre o máximo de informações de contexto"
 #. (i.e. you will have to scroll back for focus context information).
 #: braille.py:347
 msgid "Only when scrolling back"
-msgstr "Mostrar apenas informação de contexto ao deslocar a linha para a esquerda"
+msgstr "Mostrar apenas informação de contexto ao deslocar a linha de Braille para a esquerda"
 
 #. Translators: String representing automatic port selection for braille displays.
 #: braille.py:357
@@ -5034,12 +5034,12 @@ msgstr "Impossível selecionar texto. Pressione duas vezes para copiar"
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:3614
 msgid "Scrolls the braille display back"
-msgstr "Movimenta a linha Braille para trás"
+msgstr "Movimenta a linha de Braille para trás"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:3623
 msgid "Scrolls the braille display forward"
-msgstr "Movimenta a linha Braille para a frente"
+msgstr "Movimenta a linha de Braille para a frente"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:3632
@@ -5054,12 +5054,12 @@ msgstr "Anuncia informações de formatação do caracter na célula Braille"
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:3653
 msgid "Moves the braille display to the previous line"
-msgstr "Move a linha Braille para a linha anterior"
+msgstr "Move a linha de Braille para a linha anterior"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:3662
 msgid "Moves the braille display to the next line"
-msgstr "Move a linha Braille para a linha seguinte"
+msgstr "Move a linha de Braille para a linha seguinte"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:3671
@@ -5069,7 +5069,7 @@ msgstr "Permite escrever em Braille através do teclado do dispositivo Braille"
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:3680
 msgid "Moves the braille display to the current focus"
-msgstr "Move a linha Braille para o foco actual"
+msgstr "Move a linha de Braille para o foco actual"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:3702
@@ -10820,7 +10820,7 @@ msgstr "&Não"
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
-#: gui\addonGui.py:110 gui\nvdaControls.py:258
+#: gui\addonGui.py:110 gui\nvdaControls.py:261
 msgid "OK"
 msgstr "OK"
 
@@ -11511,7 +11511,7 @@ msgid "Log is unavailable"
 msgstr "Registo indisponível"
 
 #. Translators: A cancel button on a message dialog.
-#: gui\nvdaControls.py:267
+#: gui\nvdaControls.py:270
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -11519,7 +11519,7 @@ msgstr "Cancelar"
 #. Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'
 #. The placeholder {} is replaced with the label of the option which describes current default behavior
 #. in NVDA. EG "Default (Yes)".
-#: gui\nvdaControls.py:538
+#: gui\nvdaControls.py:541
 msgid "Default ({})"
 msgstr "Predefinição ({})"
 
@@ -11633,7 +11633,7 @@ msgstr "Anunciar actualização &pendente no arranque"
 #. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
 #: gui\settingsDialogs.py:894
 msgid "Allow NV Access to gather NVDA usage statistics"
-msgstr ""
+msgstr "Permitir que o NV Access recolha estatísticas de utilização do NVDA"
 
 #. Translators: A message to warn the user when attempting to copy current
 #. settings to system settings.
@@ -12823,7 +12823,7 @@ msgstr "Restaurar padrões"
 #. Translators: A label for the braille display on the braille panel.
 #: gui\settingsDialogs.py:3495
 msgid "Braille &display"
-msgstr "Linha &Braille"
+msgstr "Dispositivo &Braille"
 
 #. Translators: This is the label for the braille display selection dialog.
 #: gui\settingsDialogs.py:3564
@@ -12833,7 +12833,7 @@ msgstr "Seleccionar dispositivo Braille"
 #. Translators: The label for a setting in braille settings to choose a braille display.
 #: gui\settingsDialogs.py:3573
 msgid "Braille &display:"
-msgstr "Linha &Braille:"
+msgstr "Dispositivo &Braille:"
 
 #. Translators: The label for a setting in braille settings to enable displays for automatic detection.
 #: gui\settingsDialogs.py:3579
@@ -12856,7 +12856,7 @@ msgstr "Não foi possível carregar o dispositivo {display}."
 #. braille display.
 #: gui\settingsDialogs.py:3696
 msgid "Braille Display Error"
-msgstr "Erro de Linha Braille"
+msgstr "Erro de dispositivo Braille"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 #: gui\settingsDialogs.py:3730
@@ -14228,7 +14228,7 @@ msgstr[1] "Linha de comentários: {comment} por {author} com {numReplies} respos
 #. Translators: A message in Excel when there is no comment thread
 #: NVDAObjects\UIA\excel.py:533
 msgid "No comment thread on this cell"
-msgstr "Nenhuma linha de comentário sobre esta célula"
+msgstr "Nenhuma fila de comentário nesta célula"
 
 #. Translators: announced when moving outside of a table in an Excel spreadsheet.
 #: NVDAObjects\UIA\excel.py:585
