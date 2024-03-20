@@ -155,9 +155,12 @@ This option now announces additional relevant information about an object when t
 Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on enhanced accessibility in Poedit, such as shortcuts to read translator notes and comments. (#15313, #7303, @LeonarddeR)
 - Braille viewer and speech viewer are now disabled in secure mode. (#15680)
 - During object navigation, disabled (unavailable) objects will not be ignored anymore. (#15477, @CyrilleB79)
+- Input help for keyboard has been improved. (#15891, #6621, @Emil-18)
+  - When the key combination has an NVDA command asosiated with it, it is reported as it always have been.
+  - If not, but the key combination would have resulted in a typed character if input help was off, this character is reported
+  - After the character is reported, the key combination is reported with the plus sign between key names replaced with space, so the user quickly can identify if the key combination is a NVDA command or not. This also happens if the key combination isn't a character
+  -
 - Added table of contents to key commands document. (#16106)
--
-
 == Bug Fixes ==
 - Add-on Store:
   - When the status of an add-on is changed while it has focus, e.g. a change from "downloading" to "downloaded", the updated item is now announced correctly. (#15859, @LeonarddeR)
@@ -269,11 +272,18 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
   - Scripts that provide information (e.g. say window title, report time/date) should speak in the "on-demand" mode.
   - Scripts that perform an action (e.g. move the cursor, change a parameter) should not speak in the "on-demand" mode.
   -
+<<<<<<< HEAD
+- Fixed bug where deleting git-tracked files during `scons -c` resulted in missing UIA COM interfaces on rebuild. (#7070, #10833, @hwf1324)
+- Fix a bug where some code changes were not detected when building `dist`, that prevented a new build from being triggered.
+Now `dist` always rebuilds. (#13372, @hwf1324)
+- The KeyboardInputGesture class now has a new method, _get_character, wich returns the character resulting from pressing the gesture. (#15907, @Emil-18)
+=======
 - Fixed bug where deleting git-tracked files during ``scons -c`` resulted in missing UIA COM interfaces on rebuild. (#7070, #10833, @hwf1324)
 - Fix a bug where some code changes were not detected when building ``dist``, that prevented a new build from being triggered.
 Now ``dist`` always rebuilds. (#13372, @hwf1324)
 - A ``gui.nvdaControls.MessageDialog`` with default type of standard, no longer throws a None conversion exception because no sound is assigned. (#16223, @XLTechie)
 -
+>>>>>>> master
 
 
 === API Breaking Changes ===

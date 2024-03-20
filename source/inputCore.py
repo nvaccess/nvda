@@ -9,7 +9,6 @@ Every piece of input from the user (e.g. a key press) is represented by an L{Inp
 The singleton L{InputManager} (L{manager}) manages functionality related to input from the user.
 For example, it is used to execute gestures and handle input help.
 """
-
 import sys
 import os
 import weakref
@@ -598,6 +597,8 @@ class InputManager(baseObject.AutoPropertyObject):
 		return bypass
 
 	def _handleInputHelp(self, gesture, onlyLog=False):
+		import braille
+		from keyboardHandler import KeyboardInputGesture
 		textList = [gesture.displayName]
 		script = gesture.script
 		runScript = False
@@ -614,12 +615,33 @@ class InputManager(baseObject.AutoPropertyObject):
 				desc = script.__doc__
 				if desc:
 					textList.append(desc)
-
+		if isinstance(gesture, KeyboardInputGesture) and not script or not script.__doc__:
+			invalid = False
+			textList[0] = textList[0].replace('+', ' ')
+			charList = gesture.character
+			for i in charList:
+				if not (i.isprintable()) or i.isspace():
+					invalid = True
+			if charList and not onlyLog and not invalid:
+				text = ''.join(charList)
+				if len(charList) == 1:
+					speech.speech.speakSpelling(text)
+				else:
+					speech.speech.speakText(
+						text,
+						reason=controlTypes.OutputReason.MESSAGE,
+						symbolLevel=characterProcessing.SymbolLevel.ALL
+					)
+				if gesture.mainKeyName.lower() not in text.lower() or gesture.modifiers:
+					speech.speech.speak(textList, symbolLevel=characterProcessing.SymbolLevel.ALL)
+					textList.insert(0, text)
+					text = ' '.join(textList)
+				braille.handler.message(text)
+				return
 		log.info(logMsg)
 		if onlyLog:
 			return
 
-		import braille
 		braille.handler.message("\t\t".join(textList))
 		# Punctuation must be spoken for the gesture name (the first chunk) so that punctuation keys are spoken.
 		speech.speakText(
