@@ -38,7 +38,10 @@ class SoundSplitState(DisplayStringIntEnum):
 			# Translators: Sound split state
 			SoundSplitState.OFF: pgettext("SoundSplit", "Sound split disabled"),
 			# Translators: Sound split state
-			SoundSplitState.NVDA_BOTH_APPS_BOTH: pgettext("SoundSplit", "NVDA in both channels and applications in both channels"),
+			SoundSplitState.NVDA_BOTH_APPS_BOTH: pgettext(
+				"SoundSplit",
+				"NVDA in both channels and applications in both channels",
+			),
 			# Translators: Sound split state
 			SoundSplitState.NVDA_LEFT_APPS_RIGHT: _("NVDA on the left and applications on the right"),
 			# Translators: Sound split state
@@ -55,7 +58,11 @@ class SoundSplitState(DisplayStringIntEnum):
 
 	def getAppVolume(self) -> VolumeTupleT:
 		match self:
-			case SoundSplitState.NVDA_BOTH_APPS_BOTH | SoundSplitState.NVDA_LEFT_APPS_BOTH | SoundSplitState.NVDA_RIGHT_APPS_BOTH:
+			case (
+				SoundSplitState.NVDA_BOTH_APPS_BOTH
+				| SoundSplitState.NVDA_LEFT_APPS_BOTH
+				| SoundSplitState.NVDA_RIGHT_APPS_BOTH
+			):
 				return (1.0, 1.0)
 			case SoundSplitState.NVDA_RIGHT_APPS_LEFT | SoundSplitState.NVDA_BOTH_APPS_LEFT:
 				return (1.0, 0.0)
@@ -66,7 +73,11 @@ class SoundSplitState(DisplayStringIntEnum):
 
 	def getNVDAVolume(self) -> VolumeTupleT:
 		match self:
-			case SoundSplitState.NVDA_BOTH_APPS_BOTH | SoundSplitState.NVDA_BOTH_APPS_LEFT | SoundSplitState.NVDA_BOTH_APPS_RIGHT:
+			case (
+				SoundSplitState.NVDA_BOTH_APPS_BOTH
+				| SoundSplitState.NVDA_BOTH_APPS_LEFT
+				| SoundSplitState.NVDA_BOTH_APPS_RIGHT
+			):
 				return (1.0, 1.0)
 			case SoundSplitState.NVDA_LEFT_APPS_RIGHT | SoundSplitState.NVDA_LEFT_APPS_BOTH:
 				return (1.0, 0.0)
