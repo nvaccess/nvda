@@ -15,6 +15,7 @@ from pycaw.utils import AudioSession, AudioUtilities
 import ui
 from utils.displayString import DisplayStringIntEnum
 from dataclasses import dataclass
+import os
 from comtypes import COMError
 
 VolumeTupleT = tuple[float, float]
@@ -85,6 +86,7 @@ def initialize() -> None:
 			log.exception("Could not initialize audio session manager")
 			return
 		state = SoundSplitState(config.conf["audio"]["soundSplitState"])
+		config.conf["audio"]["applicationsMuted"] = False
 		setSoundSplitState(state)
 	else:
 		log.debug("Cannot initialize sound split as WASAPI is disabled")
@@ -93,7 +95,7 @@ def initialize() -> None:
 @atexit.register
 def terminate():
 	if nvwave.usingWasapiWavePlayer():
-		setSoundSplitState(SoundSplitState.OFF)
+		setSoundSplitState(SoundSplitState.OFF, appsVolume=1.0)
 		unregisterCallback()
 	else:
 		log.debug("Skipping terminating sound split as WASAPI is disabled.")
@@ -139,22 +141,41 @@ class VolumeSetter(AudioSessionNotification):
 
 	def on_session_created(self, new_session: AudioSession):
 		pid = new_session.ProcessId
+		process = new_session.Process
+		if process is not None:
+			exe = os.path.basename(process.exe())
+			isNvda = exe.lower() == "nvda.exe"
+		else:
+			isNvda = False
 		channelVolume = new_session.channelAudioVolume()
 		channelCount = channelVolume.GetChannelCount()
 		if channelCount != 2:
 			log.warning(f"Audio session for pid {pid} has {channelCount} channels instead of 2 - cannot set volume!")
 			self.foundSessionWithNot2Channels = True
 			return
-		if pid != globalVars.appPid:
-			channelVolume.SetChannelVolume(0, self.leftVolume, None)
-			channelVolume.SetChannelVolume(1, self.rightVolume, None)
-		else:
+		if pid == globalVars.appPid:
 			channelVolume.SetChannelVolume(0, self.leftNVDAVolume, None)
 			channelVolume.SetChannelVolume(1, self.rightNVDAVolume, None)
+		elif isNvda:
+			# This might be NVDA running on secure screen; don't adjust its volume
+			pass
+		else:
+			channelVolume.SetChannelVolume(0, self.leftVolume, None)
+			channelVolume.SetChannelVolume(1, self.rightVolume, None)
 
 
-def setSoundSplitState(state: SoundSplitState) -> dict:
+def setSoundSplitState(
+		state: SoundSplitState,
+		appsVolume: float | None = None
+) -> dict:
+	if appsVolume is None:
+		appsVolume = (
+			config.conf["audio"]["applicationsSoundVolume"] / 100
+			* (1 - int(config.conf["audio"]["applicationsMuted"]))
+		)
 	leftVolume, rightVolume = state.getAppVolume()
+	leftVolume *= appsVolume
+	rightVolume *= appsVolume
 	leftNVDAVolume, rightNVDAVolume = state.getNVDAVolume()
 	volumeSetter = VolumeSetter(leftVolume, rightVolume, leftNVDAVolume, rightNVDAVolume)
 	applyToAllAudioSessions(volumeSetter)
@@ -163,7 +184,7 @@ def setSoundSplitState(state: SoundSplitState) -> dict:
 	}
 
 
-def toggleSoundSplitState() -> None:
+def updateSoundSplitState(increment: int | None = None) -> None:
 	if not nvwave.usingWasapiWavePlayer():
 		message = _(
 			# Translators: error message when wasapi is turned off.
@@ -173,17 +194,21 @@ def toggleSoundSplitState() -> None:
 		ui.message(message)
 		return
 	state = SoundSplitState(config.conf["audio"]["soundSplitState"])
-	allowedStates: list[int] = config.conf["audio"]["includedSoundSplitModes"]
-	try:
-		i = allowedStates.index(state)
-	except ValueError:
-		# State not found, resetting to default (OFF)
-		i = -1
-	i = (i + 1) % len(allowedStates)
-	newState = SoundSplitState(allowedStates[i])
+	if increment is None:
+		newState = state
+	else:
+		allowedStates: list[int] = config.conf["audio"]["includedSoundSplitModes"]
+		try:
+			i = allowedStates.index(state)
+		except ValueError:
+			# State not found, resetting to default (OFF)
+			i = -1
+		i = (i + increment) % len(allowedStates)
+		newState = SoundSplitState(allowedStates[i])
 	result = setSoundSplitState(newState)
 	config.conf["audio"]["soundSplitState"] = newState.value
-	ui.message(newState.displayString)
+	if increment is not None:
+		ui.message(newState.displayString)
 	if result["foundSessionWithNot2Channels"]:
 		msg = _(
 			# Translators: warning message when sound split trigger wasn't successful due to one of audio sessions
@@ -192,3 +217,7 @@ def toggleSoundSplitState() -> None:
 			"one of audio sessions is either mono, or has more than 2 audio channels."
 		)
 		ui.message(msg)
+
+
+def toggleSoundSplitState() -> None:
+	updateSoundSplitState(increment=1)
