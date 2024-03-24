@@ -37,9 +37,9 @@ class SoundSplitState(DisplayStringIntEnum):
 		return {
 			# Translators: Sound split state
 			SoundSplitState.OFF: pgettext("SoundSplit", "Sound split disabled"),
-			# Translators: Sound split state
 			SoundSplitState.NVDA_BOTH_APPS_BOTH: pgettext(
 				"SoundSplit",
+				# Translators: Sound split state
 				"NVDA in both channels and applications in both channels",
 			),
 			# Translators: Sound split state
@@ -100,7 +100,7 @@ def initialize() -> None:
 			log.exception("Could not initialize audio session manager")
 			return
 		state = SoundSplitState(config.conf["audio"]["soundSplitState"])
-		setSoundSplitState(state)
+		setSoundSplitState(state, initial=True)
 	else:
 		log.debug("Cannot initialize sound split as WASAPI is disabled")
 
@@ -168,14 +168,20 @@ class VolumeSetter(AudioSessionNotification):
 			channelVolume.SetChannelVolume(1, self.rightNVDAVolume, None)
 
 
-def setSoundSplitState(state: SoundSplitState) -> dict:
+def setSoundSplitState(state: SoundSplitState, initial: bool = False) -> dict:
+	applyToFuture = True
 	if state == SoundSplitState.OFF:
-		unregisterCallback()
-		return
+		if initial:
+			return {}
+		else:
+			# Disabling sound split via command or via settings
+			# We need to restore volume of all applications, but then don't set up callback for future audio sessions
+			state = SoundSplitState.NVDA_BOTH_APPS_BOTH
+			applyToFuture = False
 	leftVolume, rightVolume = state.getAppVolume()
 	leftNVDAVolume, rightNVDAVolume = state.getNVDAVolume()
 	volumeSetter = VolumeSetter(leftVolume, rightVolume, leftNVDAVolume, rightNVDAVolume)
-	applyToAllAudioSessions(volumeSetter)
+	applyToAllAudioSessions(volumeSetter, applyToFuture=applyToFuture)
 	return {
 		"foundSessionWithNot2Channels": volumeSetter.foundSessionWithNot2Channels,
 	}
@@ -195,15 +201,11 @@ def toggleSoundSplitState() -> None:
 	try:
 		i = allowedStates.index(state)
 	except ValueError:
-		# State not found, resetting to default (NVDA_BOTH_APPS_BOTH)
+		# State not found, resetting to default (OFF)
 		i = -1
 	i = (i + 1) % len(allowedStates)
 	newState = SoundSplitState(allowedStates[i])
-	if newState == SoundSplitState.OFF:
-		result = setSoundSplitState(SoundSplitState.NVDA_BOTH_APPS_BOTH)
-		setSoundSplitState(newState)
-	else:
-		result = setSoundSplitState(newState)
+	result = setSoundSplitState(newState)
 	config.conf["audio"]["soundSplitState"] = newState.value
 	ui.message(newState.displayString)
 	if result["foundSessionWithNot2Channels"]:
