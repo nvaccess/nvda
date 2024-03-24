@@ -63,6 +63,7 @@ from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverS
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import hwIo
 from editableText import EditableText
+from scriptHandler import _ScriptFunctionT
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
@@ -1442,7 +1443,7 @@ class ReviewTextInfoRegion(TextInfoRegion):
 
 	allowPageTurns=False
 	_currentSelection: textInfos.TextInfo | None = None
-	_currentScriptName: str | None
+	_currentScript: _ScriptFunctionT | None
 	_readingUnitContainsSelectedCharacters: bool
 
 	def _getSelection(self) -> textInfos.TextInfo:
@@ -1522,50 +1523,47 @@ class ReviewTextInfoRegion(TextInfoRegion):
 		if (
 			not config.conf["braille"]["showSelection"]
 			or not self._readingUnitContainsSelectedCharacters
-			or self._currentScriptName is None
+			or self._currentScript is None
 			or previousReadingUnit is None
 		):
 			return
-		from globalCommands import commands
-		# Using script names instead of scripts for comparison because
-		# scripts in commands are bound methods but scriptHandler.getCurrentScript
-		# returns script as function.
-		startOfNextOrPreviousLineScriptNames: set[str] = {
-			commands.script_braille_nextLine.__name__,
-			commands.script_braille_previousLine.__name__,
-			commands.script_braille_scrollForward.__name__,
-			commands.script_review_nextLine.__name__,
-			commands.script_review_previousLine.__name__,
+		from globalCommands import GlobalCommands
+		startOfNextOrPreviousLineScripts: set[_ScriptFunctionT] = {
+			GlobalCommands.script_braille_nextLine,
+			GlobalCommands.script_braille_previousLine,
+			GlobalCommands.script_braille_scrollForward,
+			GlobalCommands.script_review_nextLine,
+			GlobalCommands.script_review_previousLine,
 		}
-		startOfCurrentLineOrControlScriptNames: set[str] = {
-			commands.script_review_startOfLine.__name__,
-			commands.script_review_top.__name__,
+		startOfCurrentLineOrControlScripts: set[_ScriptFunctionT] = {
+			GlobalCommands.script_review_startOfLine,
+			GlobalCommands.script_review_top,
 		}
-		endOfLineOrControlScriptNames: set[str] = {
-			commands.script_braille_scrollBack.__name__,
-			commands.script_review_endOfLine.__name__,
-			commands.script_review_bottom.__name__,
+		endOfLineOrControlScripts: set[_ScriptFunctionT] = {
+			GlobalCommands.script_braille_scrollBack,
+			GlobalCommands.script_review_endOfLine,
+			GlobalCommands.script_review_bottom,
 		}
-		focusScriptNames: set[str] = {
-			commands.script_braille_toFocus.__name__,
-			commands.script_navigatorObject_toFocus.__name__,
+		focusScripts: set[_ScriptFunctionT] = {
+			GlobalCommands.script_braille_toFocus,
+			GlobalCommands.script_navigatorObject_toFocus,
 		}
 		if (
 			(
-				self._currentScriptName in startOfNextOrPreviousLineScriptNames
+				self._currentScript in startOfNextOrPreviousLineScripts
 				and previousReadingUnit.start != self._readingInfo.start
 				and previousReadingUnit.end != self._readingInfo.end
 			)
-			or self._currentScriptName in startOfCurrentLineOrControlScriptNames
+			or self._currentScript in startOfCurrentLineOrControlScripts
 		):
 			# Move to start of next/current/previous line or control
 			self.brailleSelectionStart = 0
 			self.brailleSelectionEnd = 1
-		elif self._currentScriptName in endOfLineOrControlScriptNames:
+		elif self._currentScript in endOfLineOrControlScripts:
 			# Scroll back to the previous line or move to end of current line or control
 			self.brailleSelectionEnd = self.rawToBraillePos[len(self.rawText) - 1]
 			self.brailleSelectionStart = self.brailleSelectionEnd - 1
-		elif self._currentScriptName in focusScriptNames:
+		elif self._currentScript in focusScripts:
 			# Move to start of selection
 			self.brailleSelectionEnd = self.brailleSelectionStart + 1
 		else:
@@ -2733,7 +2731,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				isinstance(region, ReviewTextInfoRegion)
 				and config.conf["braille"]["showSelection"]
 			):
-				region._currentScriptName = getattr(scriptHandler.getCurrentScript(), "__name__", None)
+				region._currentScript = scriptHandler.getCurrentScript()
 			self._regionsPendingUpdate.add(region)
 		else:
 			# We're reviewing a different object.
