@@ -63,6 +63,7 @@ from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverS
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import hwIo
 from editableText import EditableText
+from scriptHandler import _ScriptFunctionT
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
@@ -1441,11 +1442,145 @@ class CursorManagerRegion(TextInfoRegion):
 class ReviewTextInfoRegion(TextInfoRegion):
 
 	allowPageTurns=False
+	_currentSelection: textInfos.TextInfo | None = None
+	_currentScript: _ScriptFunctionT | None
+	_readingUnitContainsSelectedCharacters: bool
 
-	def _getSelection(self):
-		return api.getReviewPosition().copy()
+	def _getSelection(self) -> textInfos.TextInfo:
+		"""Gets selection for use in update function.
+		:return: reading unit, when it contains selected characters,
+		or review position, when reading unit is outside of selection,
+		there is no selection, or showing selection is disabled
+		"""
+		self._readingUnitContainsSelectedCharacters = False
+		if not config.conf["braille"]["showSelection"]:
+			self._currentSelection = None
+			return api.getReviewPosition().copy()
+		info: textInfos.TextInfo
+		try:
+			info = self.obj.makeTextInfo(textInfos.POSITION_SELECTION)
+		except (LookupError, RuntimeError):
+			self._currentSelection = None
+			return self._collapsedReviewPosition()
+		if info.isCollapsed:
+			# Cursor
+			self._currentSelection = None
+			return self._collapsedReviewPosition()
+		# Selection
+		if (
+			self._currentSelection is None
+			or self._currentSelection.start != info.start
+			or self._currentSelection.end != info.end
+		):
+			# Selection changed, update also review position
+			self._currentSelection = info.copy()
+			if self.obj.isTextSelectionAnchoredAtStart:
+				self._currentSelection.move(textInfos.UNIT_CHARACTER, -1, "end")
+			self._currentSelection.collapse(end=self.obj.isTextSelectionAnchoredAtStart)
+			# Enqueue to avoid recursion error
+			queueHandler.queueFunction(queueHandler.eventQueue, api.setReviewPosition, self._currentSelection)
+			self._currentSelection = info.copy()
+			return info
+		# Selection unchanged
+		readingUnit: textInfos.TextInfo = api.getReviewPosition().copy()
+		readingUnit.expand(self._getReadingUnit())
+		if (
+			readingUnit.start >= info.end
+			or readingUnit.end <= info.start
+		):
+			# Reading unit containing review position is outside of selection
+			return self._collapsedReviewPosition()
+		else:
+			# Reading unit contains selected characters
+			# All characters are not necessarily selected
+			if readingUnit.start < self._currentSelection.start:
+				readingUnit.start = self._currentSelection.start
+			if readingUnit.end > self._currentSelection.end:
+				readingUnit.end = self._currentSelection.end
+			self._readingUnitContainsSelectedCharacters = True
+			return readingUnit
+
+	def _collapsedReviewPosition(self) -> textInfos.TextInfo:
+		"""Gets collapsed review position.
+		:return: collapsed review position
+		"""
+		info: textInfos.TextInfo = api.getReviewPosition().copy()
+		# Info should be collapsed, but it is not always, at least when
+		# switching from focus mode to browse mode.
+		info.collapse()
+		return info
+
+	def update(self):
+		"""Updates this region.
+		When "show selection" is enabled and reading unit contains selected
+		characters, adds functionality to properly move to the next and previous line,
+		to start and end of current control, to start and end of current line,
+		to scroll forward and back to the next and previous line,
+		and to move to focus.
+		"""
+		previousReadingUnit: textInfos.TextInfo | None = getattr(self, "_readingInfo", None)
+		super().update()
+		if (
+			not config.conf["braille"]["showSelection"]
+			or not self._readingUnitContainsSelectedCharacters
+			or self._currentScript is None
+			or previousReadingUnit is None
+		):
+			return
+		from globalCommands import GlobalCommands
+		startOfNextOrPreviousLineScripts: set[_ScriptFunctionT] = {
+			GlobalCommands.script_braille_nextLine,
+			GlobalCommands.script_braille_previousLine,
+			GlobalCommands.script_braille_scrollForward,
+			GlobalCommands.script_review_nextLine,
+			GlobalCommands.script_review_previousLine,
+		}
+		startOfCurrentLineOrControlScripts: set[_ScriptFunctionT] = {
+			GlobalCommands.script_review_startOfLine,
+			GlobalCommands.script_review_top,
+		}
+		endOfLineOrControlScripts: set[_ScriptFunctionT] = {
+			GlobalCommands.script_braille_scrollBack,
+			GlobalCommands.script_review_endOfLine,
+			GlobalCommands.script_review_bottom,
+		}
+		focusScripts: set[_ScriptFunctionT] = {
+			GlobalCommands.script_braille_toFocus,
+			GlobalCommands.script_navigatorObject_toFocus,
+		}
+		if (
+			(
+				self._currentScript in startOfNextOrPreviousLineScripts
+				and previousReadingUnit.start != self._readingInfo.start
+				and previousReadingUnit.end != self._readingInfo.end
+			)
+			or self._currentScript in startOfCurrentLineOrControlScripts
+		):
+			# Move to start of next/current/previous line or control
+			self.brailleSelectionStart = 0
+			self.brailleSelectionEnd = 1
+		elif self._currentScript in endOfLineOrControlScripts:
+			# Scroll back to the previous line or move to end of current line or control
+			self.brailleSelectionEnd = self.rawToBraillePos[len(self.rawText) - 1]
+			self.brailleSelectionStart = self.brailleSelectionEnd - 1
+		elif self._currentScript in focusScripts:
+			# Move to start of selection
+			self.brailleSelectionEnd = self.brailleSelectionStart + 1
+		else:
+			# Do not scroll because do not know where
+			self.brailleSelectionStart = self.brailleSelectionEnd = None
 
 	def _routeToTextInfo(self, info: textInfos.TextInfo):
+		"""Move cursor to new cell, or activate if it is already there.
+		:param info: TextInfo object where cursor should be moved
+		"""
+		if (
+			self._readingUnitContainsSelectedCharacters
+			and info.start == api.getReviewPosition().start
+			and not _routingShouldMoveSystemCaret()
+		):
+			# Activate with second press also within selection
+			info.activate()
 		super()._routeToTextInfo(info)
 		if not _routingShouldMoveSystemCaret():
 			return
@@ -2592,6 +2727,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		region = self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
 		if region and region.obj == reviewPos.obj:
 			region.pendingCaretUpdate = True
+			if (
+				isinstance(region, ReviewTextInfoRegion)
+				and config.conf["braille"]["showSelection"]
+			):
+				region._currentScript = scriptHandler.getCurrentScript()
 			self._regionsPendingUpdate.add(region)
 		else:
 			# We're reviewing a different object.
