@@ -8,9 +8,10 @@
 """Unit tests for the textInfos module, its submodules and classes."""
 
 import unittest
-from .textProvider import BasicTextProvider
+from .textProvider import BasicTextProvider, MockBlackBoxTextInfo
 import textInfos
 from textInfos.offsets import Offsets
+import textUtils
 
 class TestCharacterOffsets(unittest.TestCase):
 	"""
@@ -173,3 +174,80 @@ class TestEndpoints(unittest.TestCase):
 		self.assertEqual((ti1._startOffset, ti1._endOffset), (3, 3))
 		ti1.start = ti2.end
 		self.assertEqual((ti1._startOffset, ti1._endOffset), (5, 5))
+
+
+class TestMoveToCodepointOffsetInBlackBoxTextInfo(unittest.TestCase):
+	THREE_CHARS = "012"
+	TEN_CHARS = "0123456789"
+	TWELVE_CHARS = "0123456789AB"
+
+	def runTestImpl(self, tokens: list[str], target: str):
+		info = MockBlackBoxTextInfo(tokens)
+		s = info.text
+		i = s.index(target)
+		j = i + len(target)
+		startInfo = info.moveToCodepointOffset(i)
+		endInfo = info.moveToCodepointOffset(j)
+		resultInfo = startInfo.copy()
+		resultInfo.setEndPoint(endInfo, "endToEnd")
+		self.assertEqual(resultInfo.text, target)
+
+	def test_simple(self):
+		self.runTestImpl(list("Hello, world!"), "world")
+
+	def test_tenCharactersLeft(self):
+		self.runTestImpl([self.TEN_CHARS, "a", "b"], "a")
+
+	def test_tenCharactersLeftRight(self):
+		self.runTestImpl([self.TEN_CHARS, "a", self.TEN_CHARS], "a")
+
+	def test_tenTwelveCharacters(self):
+		self.runTestImpl([self.TEN_CHARS, "a", self.TWELVE_CHARS], "a")
+
+	def test_TwelveTenCharacters(self):
+		self.runTestImpl([self.TWELVE_CHARS, "a", self.TEN_CHARS], "a")
+
+	def test_doubleLeftRecursion(self):
+		self.runTestImpl([self.THREE_CHARS, "a", self.THREE_CHARS, self.THREE_CHARS], "a")
+
+	def test_doubleRightRecursion(self):
+		self.runTestImpl([self.THREE_CHARS, self.THREE_CHARS, self.THREE_CHARS, "a", self.THREE_CHARS], "a")
+
+
+class TestMoveToCodepointOffsetInOffsetsTextInfo(unittest.TestCase):
+	encodings = [
+		textUtils.UTF8_ENCODING,
+		textUtils.WCHAR_ENCODING,
+		"utf_32_le",
+	]
+
+	def runTestImpl(self, text: str, target: str, encoding: str):
+		self.assertTrue(target in text, "Invalid test case", )
+		obj = BasicTextProvider(text=text, encoding=encoding)
+		info = obj.makeTextInfo(Offsets(0, 0))
+		info.expand(textInfos.UNIT_STORY)
+		s = info.text
+		self.assertEqual(text, s)
+		i = s.index(target)
+		j = i + len(target)
+		startInfo = info.moveToCodepointOffset(i)
+		endInfo = info.moveToCodepointOffset(j)
+		resultInfo = startInfo.copy()
+		resultInfo.setEndPoint(endInfo, "endToEnd")
+		self.assertEqual(resultInfo.text, target)
+
+	def runTestAllEncodings(self, text: str, target: str):
+		for encoding in self.encodings:
+			self.runTestImpl(text, target, encoding)
+
+	def test_simple(self):
+		self.runTestAllEncodings("Hello, world!", "world")
+
+	def test_russian(self):
+		self.runTestAllEncodings("Привет, мир!", "мир")
+
+	def test_chinese(self):
+		self.runTestAllEncodings("前往另一种语言写成的文章。", "文")
+
+	def test_smileyFace(self):
+		self.runTestAllEncodings("😂0😂", "0")

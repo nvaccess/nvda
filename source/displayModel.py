@@ -70,7 +70,7 @@ def processWindowChunksInLine(commandList,rects,startIndex,startOffset,endIndex,
 	for index in range(startIndex,endIndex+1):
 		item=commandList[index] if index<endIndex else None
 		if isinstance(item,str):
-			lastEndOffset += textUtils.WideStringOffsetConverter(item).wideStringLength
+			lastEndOffset += textUtils.WideStringOffsetConverter(item).encodedStringLength
 		else:
 			hwnd=item.field['hwnd'] if item else None
 			if lastHwnd is not None and hwnd!=lastHwnd:
@@ -122,7 +122,7 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 	for index in range(startIndex,endIndex+1):
 		item=commandList[index] if index<endIndex else None
 		if isinstance(item,str):
-			lastEndOffset += textUtils.WideStringOffsetConverter(item).wideStringLength
+			lastEndOffset += textUtils.WideStringOffsetConverter(item).encodedStringLength
 		elif not item or (isinstance(item,textInfos.FieldCommand) and isinstance(item.field,textInfos.FormatField)):
 			direction=item.field['direction'] if item else None
 			if direction is None or (direction!=runDirection): 
@@ -136,7 +136,7 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 						for i in range(runStartIndex,index,2):
 							command=commandList[i]
 							text=commandList[i+1]
-							rectsEnd = rectsStart + textUtils.WideStringOffsetConverter(text).wideStringLength
+							rectsEnd = rectsStart + textUtils.WideStringOffsetConverter(text).encodedStringLength
 							commandList[i+1]=command
 							shouldReverseText=command.field.get('shouldReverseText',True)
 							commandList[i]=normalizeRtlString(text[::-1] if shouldReverseText else text)
@@ -278,7 +278,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 					if startOffset is None:
 						startOffset=curOffset
 				elif isinstance(item,str):
-					curOffset += textUtils.WideStringOffsetConverter(item).wideStringLength
+					curOffset += textUtils.WideStringOffsetConverter(item).encodedStringLength
 					if inHighlightChunk:
 						endOffset=curOffset
 				else:
@@ -337,7 +337,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		for index in range(len(commandList)):
 			item=commandList[index]
 			if isinstance(item,str):
-				lastEndOffset += textUtils.WideStringOffsetConverter(item).wideStringLength
+				lastEndOffset += textUtils.WideStringOffsetConverter(item).encodedStringLength
 				displayChunkEndOffsets.append(lastEndOffset)
 			elif isinstance(item,textInfos.FieldCommand):
 				if isinstance(item.field,textInfos.FormatField):
@@ -376,7 +376,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 				baseline=item.field['baseline']
 				direction=item.field['direction']
 			elif isinstance(item,str):
-				endOffset = lastEndOffset + textUtils.WideStringOffsetConverter(item).wideStringLength
+				endOffset = lastEndOffset + textUtils.WideStringOffsetConverter(item).encodedStringLength
 				for rect in rects[lastEndOffset:endOffset]:
 					yield rect,baseline,direction
 				lastEndOffset=endOffset
@@ -391,7 +391,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		for index in range(len(storyFields)):
 			item=storyFields[index]
 			if isinstance(item,str):
-				endOffset = lastEndOffset + textUtils.WideStringOffsetConverter(item).wideStringLength
+				endOffset = lastEndOffset + textUtils.WideStringOffsetConverter(item).encodedStringLength
 				if lastEndOffset<=start<endOffset:
 					startIndex=index-1
 					relStart=start-lastEndOffset
