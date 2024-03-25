@@ -108,7 +108,9 @@ def initialize() -> None:
 @atexit.register
 def terminate():
 	if nvwave.usingWasapiWavePlayer():
-		setSoundSplitState(SoundSplitState.NVDA_BOTH_APPS_BOTH)
+		state = SoundSplitState(config.conf["audio"]["soundSplitState"])
+		if state != SoundSplitState.OFF:
+			setSoundSplitState(SoundSplitState.OFF)
 		unregisterCallback()
 	else:
 		log.debug("Skipping terminating sound split as WASAPI is disabled.")
