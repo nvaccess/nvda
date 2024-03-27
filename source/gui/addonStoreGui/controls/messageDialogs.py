@@ -104,7 +104,7 @@ def _shouldProceedWhenInstalledAddonVersionUnknown(
 	dlg = ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
-		title=pgettext("addonStore", "Add-on not compatible"),
+		title=pgettext("addonStore", "Install add-on"),
 		message=incompatibleMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon),
 		useRememberChoiceCheckbox=useRememberChoiceCheckbox,
@@ -128,7 +128,7 @@ def _shouldProceedToRemoveAddonDialog(
 	dlg = ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
 		# Translators: Title for message asking if the user really wishes to remove the selected Add-on.
-		title=pgettext("addonStore", "Remove Add-on"),
+		title=pgettext("addonStore", "Remove add-on"),
 		message=removeMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon),
 		useRememberChoiceCheckbox=useRememberChoiceCheckbox,
@@ -161,7 +161,7 @@ def _shouldInstallWhenAddonTooOldDialog(
 	dlg = ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
-		title=pgettext("addonStore", "Add-on not compatible"),
+		title=pgettext("addonStore", "Install add-on"),
 		message=incompatibleMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon),
 		useRememberChoiceCheckbox=useRememberChoiceCheckbox,
@@ -194,7 +194,7 @@ def _shouldEnableWhenAddonTooOldDialog(
 	dlg = ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
-		title=pgettext("addonStore", "Add-on not compatible"),
+		title=pgettext("addonStore", "Enable add-on"),
 		message=incompatibleMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon),
 		useRememberChoiceCheckbox=useRememberChoiceCheckbox,
@@ -221,7 +221,7 @@ def _showAddonRequiresNVDAUpdateDialog(
 	displayDialogAsModal(ErrorAddonInstallDialog(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
-		title=_("Add-on not compatible"),
+		title=pgettext("addonStore", "Add-on installation failure"),
 		message=incompatibleMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon)
 	))
