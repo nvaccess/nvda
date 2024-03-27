@@ -43,6 +43,7 @@ import config
 from config.configFlags import (
 	TetherTo,
 	ShowMessages,
+	BrailleMode,
 )
 from config.featureFlag import FeatureFlag
 from config.featureFlagEnums import BoolFlag
@@ -121,6 +122,7 @@ SCRCAT_AUDIO = _("Audio")
 # Translators: Reported when there are no settings to configure in synth settings ring
 # (example: when there is no setting for language).
 NO_SETTINGS_MSG = _("No settings")
+
 
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus.
@@ -3371,6 +3373,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 		gesture="kb:NVDA+control+t"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
 	def script_braille_toggleTether(self, gesture):
 		values = [x.value for x in TetherTo]
 		index = values.index(config.conf["braille"]["tetherTo"])
@@ -3389,11 +3392,37 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Braille tethered %s") % TetherTo(newTetherChoice).displayString)
 
 	@script(
+		# Translators: Input help mode message for toggle braille mode command
+		description=_("Toggles braille mode"),
+		category=SCRCAT_BRAILLE,
+		gesture="kb:nvda+alt+t"
+	)
+	def script_toggleBrailleMode(self, gesture: inputCore.InputGesture):
+		curMode = BrailleMode(config.conf["braille"]["mode"])
+		modeList = list(BrailleMode)
+		index = modeList.index(curMode)
+		index = index + 1 if not index == len(modeList) - 1 else 0
+		newMode = modeList[index]
+		config.conf["braille"]["mode"] = newMode.value
+		if braille.handler.buffer == braille.handler.messageBuffer:
+			braille.handler._dismissMessage()
+		braille.handler.mainBuffer.clear()
+		# Translators: The message reported when switching braille modes
+		ui.message(_("Braille mode {brailleMode}").format(brailleMode=newMode.displayString))
+		if newMode == BrailleMode.SPEECH_OUTPUT:
+			return
+		if braille.handler.getTether() == TetherTo.REVIEW.value:
+			braille.handler.handleReviewMove(shouldAutoTether=braille.handler.shouldAutoTether)
+			return
+		braille.handler.handleGainFocus(api.getFocusObject())
+
+	@script(
 		# Translators: Input help mode message for cycle through
 		# braille move system caret when routing review cursor command.
 		description=_("Cycle through the braille move system caret when routing review cursor states"),
 		category=SCRCAT_BRAILLE
 	)
+	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
 	def script_braille_cycleReviewRoutingMovesSystemCaret(self, gesture: inputCore.InputGesture) -> None:
 		# If braille is not tethered to focus, set next state of
 		# braille Move system caret when routing review cursor.
@@ -3429,6 +3458,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Toggle the way context information is presented in braille"),
 		category=SCRCAT_BRAILLE
 	)
+	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
 	def script_braille_toggleFocusContextPresentation(self, gesture):
 		values = [x[0] for x in braille.focusContextPresentations]
 		labels = [x[1] for x in braille.focusContextPresentations]
@@ -3450,6 +3480,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Toggle the braille cursor on and off"),
 		category=SCRCAT_BRAILLE
 	)
+	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
 	def script_braille_toggleShowCursor(self, gesture):
 		if config.conf["braille"]["showCursor"]:
 			# Translators: The message announced when toggling the braille cursor.
@@ -3468,6 +3499,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Cycle through the braille cursor shapes"),
 		category=SCRCAT_BRAILLE
 	)
+	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
 	def script_braille_cycleCursorShape(self, gesture):
 		if not config.conf["braille"]["showCursor"]:
 			# Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
@@ -3494,6 +3526,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Cycle through the braille show messages modes"),
 		category=SCRCAT_BRAILLE
 	)
+	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
 	def script_braille_cycleShowMessages(self, gesture: inputCore.InputGesture) -> None:
 		"""Set next state of braille show messages and reports it with ui.message."""
 		values = [x.value for x in ShowMessages]
@@ -3511,6 +3544,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Cycle through the braille show selection states"),
 		category=SCRCAT_BRAILLE
 	)
+	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
 	def script_braille_cycleShowSelection(self, gesture: inputCore.InputGesture) -> None:
 		"""Set next state of braille show selection and reports it with ui.message."""
 		featureFlag: FeatureFlag = config.conf["braille"]["showSelection"]

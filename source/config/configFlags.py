@@ -98,6 +98,25 @@ class TetherTo(DisplayStringStrEnum):
 
 
 @unique
+class BrailleMode(DisplayStringStrEnum):
+	"""Enumeration containing the possible config values for "Braille mode" option in braille settings.
+	Use BrailleMode.MEMBER.value to compare with the config;
+	use BrailleMode.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+	FOLLOW_CURSORS = "followCursors"
+	SPEECH_OUTPUT = "speechOutput"
+
+	@property
+	def _displayStringLabels(self) -> dict["BrailleMode", str]:
+		return {
+			# Translators: The label for a braille mode
+			BrailleMode.FOLLOW_CURSORS: _("follow cursors"),
+			# Translators: The label for a braille mode
+			BrailleMode.SPEECH_OUTPUT: _("display speech output")
+		}
+
+
+@unique
 class ReportLineIndentation(DisplayStringIntEnum):
 	"""Enumeration containing the possible config values to report line indent.
 	
