@@ -1724,7 +1724,9 @@ the NVDAObject for IAccessible
 		return self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.FLOWS_FROM)
 	
 	def _get_errorMessage(self) -> typing.Optional["IAccessible"]:
-		return self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.ERROR)
+		errorNode = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.ERROR)
+		if errorNode is not None:
+			return errorNode.summarizeInProcess()
 
 	def event_valueChange(self):
 		if isinstance(self, EditableTextWithAutoSelectDetection):

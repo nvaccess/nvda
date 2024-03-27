@@ -649,6 +649,7 @@ def getObjectPropertiesSpeech(  # noqa: C901
 			states.discard(controlTypes.State.SELECTED)
 			states.discard(controlTypes.State.SELECTABLE)
 			newPropertyValues['states']=states
+	newPropertyValues['errorMessage'] = obj.errorMessage
 	#Get the speech text for the properties we want to speak, and then speak it
 	speechSequence = getPropertiesSpeech(reason=reason, **newPropertyValues)
 
@@ -1956,6 +1957,11 @@ def getPropertiesSpeech(  # noqa: C901
 				_speechState.oldTreeLevel = level
 			else:
 				textList.append(levelTranslation)
+	
+	errorMessage = propertyValues.get("errorMessage", None)
+	if errorMessage:
+		textList.append(errorMessage)
+
 	types.logBadSequenceTypes(textList)
 	return textList
 
