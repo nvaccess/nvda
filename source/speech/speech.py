@@ -649,7 +649,6 @@ def getObjectPropertiesSpeech(  # noqa: C901
 			states.discard(controlTypes.State.SELECTED)
 			states.discard(controlTypes.State.SELECTABLE)
 			newPropertyValues['states']=states
-	newPropertyValues['errorMessage'] = obj.errorMessage
 	#Get the speech text for the properties we want to speak, and then speak it
 	speechSequence = getPropertiesSpeech(reason=reason, **newPropertyValues)
 
@@ -793,7 +792,8 @@ def _objectSpeech_calculateAllowedProps(
 		"columnHeaderText": True,
 		"rowSpan": True,
 		"columnSpan": True,
-		"current": True
+		"current": True,
+		"errorMessage": True,
 	}
 	if reason in (OutputReason.FOCUSENTERED, OutputReason.MOUSE):
 		allowProperties["value"] = False
