@@ -1725,6 +1725,8 @@ the NVDAObject for IAccessible
 	
 	def _get_errorMessage(self):
 		errorNode = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.ERROR)
+		log.debug(self._IA2Relations)
+		log.debug(errorNode)
 		if errorNode is not None:
 			return errorNode.summarizeInProcess()
 
