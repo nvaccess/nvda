@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2020 NV Access Limited, Leonard de Ruijter, Julien Cochuyt
+# Copyright (C) 2008-2024 NV Access Limited, Leonard de Ruijter, Julien Cochuyt, Cyrille Bougot
 
 import watchdog
 
@@ -298,6 +298,9 @@ class ConsoleUI(
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		self.outputCtrl = wx.TextCtrl(self, wx.ID_ANY, size=(500, 500), style=wx.TE_MULTILINE | wx.TE_READONLY|wx.TE_RICH)
+		font = self.outputCtrl.GetFont()
+		font.SetFaceName('Consolas')
+		self.outputCtrl.SetFont(font)
 		self.outputCtrl.Bind(wx.EVT_KEY_DOWN, self.onOutputKeyDown)
 		self.outputCtrl.Bind(wx.EVT_CHAR, self.onOutputChar)
 		mainSizer.Add(self.outputCtrl, proportion=2, flag=wx.EXPAND)
@@ -305,6 +308,9 @@ class ConsoleUI(
 		self.promptLabel = wx.StaticText(self, wx.ID_ANY)
 		inputSizer.Add(self.promptLabel, flag=wx.EXPAND)
 		self.inputCtrl = wx.TextCtrl(self, wx.ID_ANY, style=wx.TE_DONTWRAP | wx.TE_PROCESS_TAB)
+		font = self.inputCtrl.GetFont()
+		font.SetFaceName('Consolas')
+		self.inputCtrl.SetFont(font)
 		self.inputCtrl.Bind(wx.EVT_CHAR, self.onInputChar)
 		self.inputCtrl.Bind(wx.EVT_TEXT_PASTE, self.onInputPaste)
 		inputSizer.Add(self.inputCtrl, proportion=1, flag=wx.EXPAND)
