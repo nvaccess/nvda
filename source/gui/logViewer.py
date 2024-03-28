@@ -35,7 +35,7 @@ class LogViewer(
 		self.outputCtrl = wx.TextCtrl(self, wx.ID_ANY, size=(500, 500), style=wx.TE_MULTILINE | wx.TE_READONLY|wx.TE_RICH)
 		font = self.outputCtrl.GetFont()
 		# Set a fixed width font so that the error is correctly pointed in Python tracebacks.
-		font.Family = wx.FONTFAMILY_MODERN
+		font.SetFaceName('Consolas')
 		self.outputCtrl.SetFont(font)
 		self.outputCtrl.Bind(wx.EVT_KEY_DOWN, self.onOutputKeyDown)
 		mainSizer.Add(self.outputCtrl, proportion=1, flag=wx.EXPAND)
