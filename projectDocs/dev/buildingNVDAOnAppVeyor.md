@@ -389,7 +389,7 @@ notifications:
         {{message}}<br />
         {{/messages}}</p></div>
         <div><p>Artifacts:<br />
-        {{#artifacts}<ul>
+        {{#artifacts}}<ul>
         <li><a href="{{url}}">{{fileName}}</a></li>
         {{/artifacts}}</ul>
         {{/jobs}}</p></div>
