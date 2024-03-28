@@ -89,12 +89,21 @@ def _warnBrowsableMessageNotAvailableOnSecureScreens(title: Optional[str]) -> No
 	)
 
 
-def browseableMessage(message: str, title: Optional[str] = None, isHtml: bool = False) -> None:
+def browseableMessage(
+		message: str,
+		title: Optional[str] = None,
+		isHtml: bool = False,
+		closeButtonText: Optional[str] = None,
+		copyButtonText: Optional[str] = None
+) -> None:
 	"""Present a message to the user that can be read in browse mode.
 	The message will be presented in an HTML document.
-	@param message: The message in either html or text.
-	@param title: The title for the message.
-	@param isHtml: Whether the message is html
+	:param message: The message in either html or text.
+	:param title: The title for the message, defaults to "NVDA Message".
+	:param isHtml: Whether the message is html, defaults to False.
+	:param closeButtonText: Text to use as label for a "close" button, defaults to None, meaning no close button.
+	:param copyButtonText: Text to use as label for a "copy" (to clipboard) button, defaults to None,
+		meaning no copy button.
 	"""
 	if isRunningOnSecureDesktop():
 		import wx  # Late import to prevent circular dependency.
@@ -106,7 +115,7 @@ def browseableMessage(message: str, title: Optional[str] = None, isHtml: bool = 
 		raise LookupError(htmlFileName )
 	moniker = POINTER(IUnknown)()
 	windll.urlmon.CreateURLMonikerEx(0, htmlFileName, byref(moniker), URL_MK_UNIFORM)
-	if not title:
+	if title is None:
 		# Translators: The title for the dialog used to present general NVDA messages in browse mode.
 		title = _("NVDA Message")
 	if not isHtml:
@@ -123,6 +132,10 @@ def browseableMessage(message: str, title: Optional[str] = None, isHtml: bool = 
 		return
 	d.add("title", title)
 	d.add("message", message)
+	if closeButtonText is not None:
+		d.add("closeButtonText", closeButtonText)
+	if copyButtonText is not None:
+		d.add("copyButtonText", copyButtonText)
 	dialogArgsVar = automation.VARIANT(d)
 	gui.mainFrame.prePopup() 
 	windll.mshtml.ShowHTMLDialogEx( 
