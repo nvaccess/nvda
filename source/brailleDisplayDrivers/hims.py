@@ -272,26 +272,23 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts(filterFunc=lambda info: "bluetoothName" in info)
+		return braille.getSerialPorts()
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
 		self.numCells = 0
 		self._model = None
+		self._serData = b''
 
 		for match in self._getTryPorts(port):
 			portType, portId, port, portInfo = match
 			self.isBulk = portType == bdDetect.DeviceType.CUSTOM
 			self.isHID = portType == bdDetect.DeviceType.HID
+			self.isSerial = portType == bdDetect.DeviceType.SERIAL
 			# Try talking to the display.
 			try:
 				match portType:
-					case bdDetect.DeviceType.HID:
-						self._dev = hwIo.Hid(port, onReceive=self._hidOnReceive)
-					case bdDetect.DeviceType.CUSTOM:
-						# onReceiveSize based on max packet size according to USB endpoint information.
-						self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, onReceiveSize=64)
-					case _:
+					case bdDetect.DeviceType.SERIAL:
 						self._dev = hwIo.Serial(
 							port,
 							baudrate=BAUD_RATE,
@@ -300,6 +297,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 							writeTimeout=self.timeout,
 							onReceive=self._onReceive
 						)
+					case bdDetect.DeviceType.HID:
+						self._dev = hwIo.Hid(port, onReceive=self._hidOnReceive)
+					case bdDetect.DeviceType.CUSTOM:
+						# onReceiveSize based on max packet size according to USB endpoint information.
+						self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, onReceiveSize=64)
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
 				continue
@@ -497,6 +499,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			firstByte = data
 			# data only contained the first byte. Read the rest from the device.
 			stream = self._dev
+   
+		# sometimes serial data received splited data. so accmulate data until it reaches 10 bytes.
+		if self._serData:
+			self._serData += data
+			if len(self._serData) == 10:
+				firstByte = b'\xfa'
+			else:
+				return
+   
 		if firstByte == b"\x1c":
 			# A device is identifying itself
 			deviceId: bytes = stream.read(2)
@@ -504,8 +515,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			assert stream.read(1) == b"\x1f"
 			self._handleIdentification(deviceId)
 		elif firstByte == b"\xfa":
-			# Command packets are ten bytes long
-			packet = firstByte + stream.read(9)
+			# serial data first received
+			if not self._serData:
+				try:
+					# Command packets are ten bytes long
+					packet = firstByte + stream.read(9)
+				except:
+					# remained data will be received next onReceive 
+					self._serData = firstByte
+					return
+			else:
+				packet = self._serData
+				self._serData = b''
+
 			assert packet[2] == 0x01 # Fixed value
 			CHECKSUM_INDEX = 8
 			checksum: int = packet[CHECKSUM_INDEX]
