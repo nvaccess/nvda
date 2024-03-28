@@ -9,13 +9,41 @@ function escapeKeyPress(e) {
 	if(e.keyCode == 27){ // code for escape
 		window.close();
 	}
-};
+}
+
+function onCopyButtonPress() {
+	// Copy code came from http://www.codestore.net/store.nsf/unid/DOMM-4QHQE8/
+	var rng = document.body.createTextRange();
+	rng.moveToElementText(messageID);
+	rng.scrollIntoView();
+	rng.select();
+	rng.execCommand("Copy");
+	rng.collapse(false);
+	rng.select();
+}
+
+function onCloseButtonPress() {
+	//window.open('', '_self', '');  // Only enable if window.close() stops working in a future version, may fix.
+	window.close();
+}
 
 function windowOnLoad() {
 	var args = window.dialogArguments;
 	if (args) {
 		document.title = args.item('title');
 		messageID.innerHTML = args.item('message');
+		// If caller wants a close button
+		if (args.item('closeButtonText') != null) {
+			closeButton.innerHTML = args.item('closeButtonText');  // Assign the (translated) label
+			closeButton.style.display = 'inline';  // Display the button
+			buttonDiv.style.display = 'block';  // Display the div
+		}
+		// If caller wants a copy to clip button
+		if (args.item('copyButtonText') != null) {
+			copyButton.innerHTML = args.item('copyButtonText');  // Assign the (translated) label
+			copyButtonSpan.style.display = 'inline';  // Display the button
+			buttonDiv.style.display = 'block';  // Display the div
+		}
 	}
 } 
 //-->
@@ -23,5 +51,9 @@ function windowOnLoad() {
 </HEAD>
 <BODY tabindex='0' id='main_body' style="margin:1em" LANGUAGE=javascript onload="return windowOnLoad()" onkeypress="return escapeKeyPress()" >
 <div id=messageID></div>
+<div id="buttonDiv" style="display: none;"><hr>
+<span id="copyButtonSpan" style="display: none;"><button id="copyButton" onclick="onCopyButtonPress();"></button>&nbsp;</span>
+<span><button id="closeButton" style="display: none;" onclick="onCloseButtonPress();"></button></span>
+</div>
 </body>
 </html>
