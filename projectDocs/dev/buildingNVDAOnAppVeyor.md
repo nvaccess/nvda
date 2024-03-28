@@ -563,7 +563,7 @@ $sconsArgs = "version=$env:version"
 ```
 to:
 ```
-$sconsArgs = "version=$env:version -m2"
+$sconsArgs = "version=$env:version -j 2"
 ```
 
 If you save, commit, and push that change on your `_myBuild` branch: the next time you build any branch in your fork, scons will be called with the `-m2` switch, and will use both cores.
