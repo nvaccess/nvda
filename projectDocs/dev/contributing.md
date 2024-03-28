@@ -24,6 +24,7 @@ If you are new to the project, or looking for some way to help take a look at:
 
 ### Overview of contribution process:
 1. [Setup your development environment](./createDevEnvironment.md).
+        - Alternatively, you can use [AppVeyor](https://appveyor.com/) to build NVDA for you, without setting up a local development environment, by following [this how-to](./buildingNVDAOnAppveyor.md).
 1. Ensure the issue you plan to fix is [triaged](../issues/triage.md)
 1. Create a branch for the contribution, to be used for a pull request.
 	- Pull requests should be based on the latest commit in the official master branch.

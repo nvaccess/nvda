@@ -1,3 +1,4 @@
+# Building NVDA
 Before building NVDA, [create your developer environment](./createDevEnvironment.md).
 
 ## Preparing the Source Tree
