@@ -498,7 +498,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			firstByte = data
 			# data only contained the first byte. Read the rest from the device.
 			stream = self._dev
-   
+
 		# sometimes serial data received splited data. so accmulate data until it reaches 10 bytes.
 		if self._serData:
 			self._serData += data
@@ -506,7 +506,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				firstByte = b'\xfa'
 			else:
 				return
-   
+
 		if firstByte == b"\x1c":
 			# A device is identifying itself
 			deviceId: bytes = stream.read(2)
@@ -519,8 +519,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				try:
 					# Command packets are ten bytes long
 					packet = firstByte + stream.read(9)
-				except:
-					# remained data will be received next onReceive 
+				except Exception:
+					# remained data will be received next onReceive
 					self._serData = firstByte
 					return
 			else:

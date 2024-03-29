@@ -469,7 +469,7 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 		(
 			DeviceMatch(DeviceType.HID, port["usbID"], port["devicePath"], port)
 			for port in deviceInfoFetcher.hidDevices if port["provider"] == "usb"
-		)		
+		)
 	)
 	for match in usbDevs:
 		if driver == _getStandardHidDriverName():
