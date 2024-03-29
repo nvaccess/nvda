@@ -48,7 +48,7 @@ from NVDAState import WritePaths
 
 InputGestureBindingClassT = TypeVar("InputGestureBindingClassT")
 ScriptNameT = str
-ScriptT = Callable[[inputCore.InputGesture], None]
+ScriptT = Callable[[InputGesture], None]
 InputGestureScriptT = Tuple[InputGestureBindingClassT, Optional[ScriptNameT]]
 """
 The Python class and script name for each script;
