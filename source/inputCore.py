@@ -16,7 +16,7 @@ import weakref
 import time
 from typing import (
 	Any,
-	Callable
+	Callable,
 	Dict,
 	Generator,
 	List,
