@@ -284,7 +284,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			portType, portId, port, portInfo = match
 			self.isBulk = portType == bdDetect.DeviceType.CUSTOM
 			self.isHID = portType == bdDetect.DeviceType.HID
-			self.isSerial = portType == bdDetect.DeviceType.SERIAL
 			# Try talking to the display.
 			try:
 				match portType:
