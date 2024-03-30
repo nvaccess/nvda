@@ -48,7 +48,7 @@ from NVDAState import WritePaths
 
 InputGestureBindingClassT = TypeVar("InputGestureBindingClassT")
 ScriptNameT = str
-ScriptT = Callable[[InputGesture], None]
+
 InputGestureScriptT = Tuple[InputGestureBindingClassT, Optional[ScriptNameT]]
 """
 The Python class and script name for each script;
@@ -231,6 +231,7 @@ FlattenedGestureMapT = Dict[
 		Optional[Union[str, List[str]]],  # Normalized gestures
 	],
 ]
+ScriptT = Callable[[InputGesture], None]
 _InternalGestureMapT = Dict[
 	str,  # Normalized gesture
 	List[
