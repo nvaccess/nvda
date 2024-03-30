@@ -130,9 +130,6 @@ class AppModule(appModuleHandler.AppModule):
 	disableBrowseModeByDefault: bool = True
 
 	def event_UIA_elementSelected(self, obj, nextHandler):
-		# In Windows 11, candidate panel houses candidate items, not the prediction window.
-		if obj.UIAAutomationId == "TEMPLATE_PART_CandidatePanel":
-			obj = obj.firstChild
 		# Logic for IME candidate items is handled all within its own object
 		# Therefore pass these events straight on.
 		if isinstance(obj, ImeCandidateItem):
