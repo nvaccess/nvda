@@ -67,6 +67,9 @@ What's New in NVDA
   - ``alt+downArrow`` is now mapped to ``dot5+dot6+dot7+space``
   -
 - Fixed a bug causing NVDA to fail to read the ribbon and options within Geekbench. (#16251, @mzanm)
+- In Windows 11, NVDA will once again announce hardware keyboard input suggestions. (#16283, @josephsl)
+- Fixed a rare case when saving the configuration may fail to save all profiles.  (#16343, @CyrilleB79)
+-In Firefox and Chromium-based browsers,  NVDA will correctly enter focus mode when pressing enter when positioned within a presentational list (ul / ol) inside editable content. (#16325)
 - Column state change is automatically reported when selecting columns to display in Thunderbird message list. (#16323)
 -
 
@@ -76,6 +79,7 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 
 - Instantiating ``winVersion.WinVersion`` objects with unknown Windows versions above 10.0.22000 such as 10.0.25398 returns "Windows 11 unknown" instead of "Windows 10 unknown" for release name. (#15992, @josephsl)
 - Make the AppVeyor build process easier for NVDA forks, by adding configurable variables in appveyor.yml to disable or modify NV Access specific portions of the build scripts. (#16216, @XLTechie)
+- Added a how-to document, explaining the process of building NVDA forks on AppVeyor. (#16293, @XLTechie)
 -
 
 === Deprecations ===
