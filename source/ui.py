@@ -146,12 +146,12 @@ class OnlyMostRecent(_CancellableSpeechCommand):
 		self._index = len(oldCommands)
 		self._liveCommands.add(self)
 		self._uniqueID = uniqueID
-		firstLoop =  skipFirst
+		firstLoop = skipFirst
 		for oldCommand in sorted(oldCommands, key=lambda x: x._index):
 			if oldCommand._uniqueID == uniqueID and not oldCommand._killed:
 				if not firstLoop:
 					oldCommand._killed = True
-				firstLoop=False
+				firstLoop = False
 
 	def _checkIfValid(self):
 		return not self._killed
@@ -161,7 +161,7 @@ def message(
 		text: str,
 		speechPriority: Optional[speech.Spri] = None,
 		brailleText: Optional[str] = None,
-		messageID: str| None = None,
+		messageID: str | None = None,
 		speakOnlyMostRecentWithSameID=False,
 		interuptCurrentWithSameID=False,
 ):
