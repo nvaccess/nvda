@@ -16,6 +16,7 @@ from ctypes import (
 	byref,
 	POINTER,
 )
+from weakref import WeakSet
 import comtypes.client
 from comtypes import IUnknown
 from comtypes import automation
@@ -24,6 +25,7 @@ from html import escape
 from logHandler import log
 import gui
 import speech
+from speech.commands import _CancellableSpeechCommand
 import braille
 from config.configFlags import TetherTo
 import globalVars
@@ -136,17 +138,50 @@ def browseableMessage(message: str, title: Optional[str] = None, isHtml: bool = 
 	gui.mainFrame.postPopup()
 
 
+class OnlyMostRecent(_CancellableSpeechCommand):
+
+	_liveCommands = WeakSet()
+	_killed = False
+
+	def __init__(self, uniqueID, skipFirst=False):
+		super().__init__()
+		oldCommands = list(self._liveCommands)
+		self._index = len(oldCommands)
+		self._liveCommands.add(self)
+		self._uniqueID = uniqueID
+		firstLoop =  skipFirst
+		for oldCommand in sorted(oldCommands, key=lambda x: x._index):
+			if oldCommand._uniqueID == uniqueID and not oldCommand._killed:
+				if not firstLoop:
+					oldCommand._killed = True
+				firstLoop=False
+
+	def _checkIfValid(self):
+		return not self._killed
+
+
 def message(
 	text: str,
 	speechPriority: Optional[speech.Spri] = None,
 	brailleText: Optional[str] = None,
+		messageID: str| None = None,
+		speakOnlyMostRecentWithSameID=False,
+		interuptCurrentWithSameID=False,
 ):
 	"""Present a message to the user.
 	The message will be presented in both speech and braille.
 	@param text: The text of the message.
 	@param speechPriority: The speech priority.
 	@param brailleText: If specified, present this alternative text on the braille display.
+	@param messageID a unique ID for this messaged.
+	This may be used for filtering or customizing how NVDA reports the message,
+	And may be used to interupt any previous messages with the same message ID.
+	@param speakOnlyMostRecentWithSameID: only speak the most recent message with this messageID.
+	@param interuptCurrentWithSameID: blah
 	"""
+	if messageID and speakOnlyMostRecentWithSameID:
+		speech.speak([OnlyMostRecent(messageID, not interuptCurrentWithSameID), text], priority=speechPriority)
+	else:
 	speech.speakMessage(text, priority=speechPriority)
 	braille.handler.message(brailleText if brailleText is not None else text)
 

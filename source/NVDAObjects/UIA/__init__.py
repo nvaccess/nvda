@@ -2428,18 +2428,25 @@ class UIA(Window):
 		Unlike other events, the text to be announced is not the name of the object, and parameters control how the incoming notification should be processed.
 		Subclasses can override this event and can react to notification processing instructions.
 		"""
+		print(f"notification: {notificationProcessing=}, {activityId=}, {displayString=}")
 		# Do not announce notifications from background apps.
 		if self.appModule != api.getFocusObject().appModule:
 			return
-		if displayString:
-			if notificationProcessing in (
-				UIAHandler.NotificationProcessing_ImportantMostRecent,
-				UIAHandler.NotificationProcessing_MostRecent,
-			):
-				# These notifications superseed earlier notifications.
-				# Note that no distinction is made between important and non-important.
-				speech.cancelSpeech()
-			ui.message(displayString)
+		if not displayString:
+			return
+		if activityId:
+			messageID = str(self.UIAElement.getRuntimeId()) + activityId
+		else:
+			messageID = None
+		# Add a new UIA notification processing constant.
+		NotificationProcessing_ImportantCurrentThenMostRecent = 5
+		speakOnlyMostRecentWithSameID = notificationProcessing in (UIAHandler.NotificationProcessing_MostRecent, UIAHandler.NotificationProcessing_CurrentThenMostRecent, UIAHandler.NotificationProcessing_ImportantMostRecent, NotificationProcessing_ImportantCurrentThenMostRecent)
+		interuptCurrentWithSameID = notificationProcessing in (UIAHandler.NotificationProcessing_MostRecent, UIAHandler.NotificationProcessing_ImportantMostRecent)
+		if notificationProcessing in (UIAHandler.NotificationProcessing_ImportantAll, UIAHandler.NotificationProcessing_ImportantMostRecent, NotificationProcessing_ImportantCurrentThenMostRecent):
+			speechPriority = speech.Spri.NOW
+		else:
+			speechPriority = speech.Spri.NEXT
+		ui.message(displayString, speechPriority=speechPriority, messageID=messageID, speakOnlyMostRecentWithSameID=speakOnlyMostRecentWithSameID, interuptCurrentWithSameID=interuptCurrentWithSameID)
 
 	def event_UIA_dragDropEffect(self):
 		# UIA drag drop effect was introduced in Windows 8.
