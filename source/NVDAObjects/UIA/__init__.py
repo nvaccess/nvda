@@ -2440,13 +2440,31 @@ class UIA(Window):
 			messageID = None
 		# Add a new UIA notification processing constant.
 		NotificationProcessing_ImportantCurrentThenMostRecent = 5
-		speakOnlyMostRecentWithSameID = notificationProcessing in (UIAHandler.NotificationProcessing_MostRecent, UIAHandler.NotificationProcessing_CurrentThenMostRecent, UIAHandler.NotificationProcessing_ImportantMostRecent, NotificationProcessing_ImportantCurrentThenMostRecent)
-		interuptCurrentWithSameID = notificationProcessing in (UIAHandler.NotificationProcessing_MostRecent, UIAHandler.NotificationProcessing_ImportantMostRecent)
-		if notificationProcessing in (UIAHandler.NotificationProcessing_ImportantAll, UIAHandler.NotificationProcessing_ImportantMostRecent, NotificationProcessing_ImportantCurrentThenMostRecent):
+		speakOnlyMostRecentWithSameID = notificationProcessing in (
+			UIAHandler.NotificationProcessing_MostRecent,
+			UIAHandler.NotificationProcessing_CurrentThenMostRecent,
+			UIAHandler.NotificationProcessing_ImportantMostRecent,
+			NotificationProcessing_ImportantCurrentThenMostRecent,
+		)
+		interuptCurrentWithSameID = notificationProcessing in (
+			UIAHandler.NotificationProcessing_MostRecent,
+			UIAHandler.NotificationProcessing_ImportantMostRecent,
+		)
+		if notificationProcessing in (
+			UIAHandler.NotificationProcessing_ImportantAll,
+			UIAHandler.NotificationProcessing_ImportantMostRecent,
+			NotificationProcessing_ImportantCurrentThenMostRecent,
+		):
 			speechPriority = speech.Spri.NOW
 		else:
 			speechPriority = speech.Spri.NEXT
-		ui.message(displayString, speechPriority=speechPriority, messageID=messageID, speakOnlyMostRecentWithSameID=speakOnlyMostRecentWithSameID, interuptCurrentWithSameID=interuptCurrentWithSameID)
+		ui.message(
+			displayString,
+			speechPriority=speechPriority,
+			messageID=messageID,
+			speakOnlyMostRecentWithSameID=speakOnlyMostRecentWithSameID,
+			interuptCurrentWithSameID=interuptCurrentWithSameID
+		)
 
 	def event_UIA_dragDropEffect(self):
 		# UIA drag drop effect was introduced in Windows 8.
