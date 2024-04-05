@@ -1467,11 +1467,7 @@ class ReviewTextInfoRegion(TextInfoRegion):
 			self._currentSelection = None
 			return self._collapsedReviewPosition()
 		# Selection
-		if (
-			self._currentSelection is None
-			or self._currentSelection.start != info.start
-			or self._currentSelection.end != info.end
-		):
+		if self._currentSelection is None or self._currentSelection != info:
 			# Selection changed, update also review position
 			self._currentSelection = info.copy()
 			if self.obj.isTextSelectionAnchoredAtStart:
@@ -1527,6 +1523,7 @@ class ReviewTextInfoRegion(TextInfoRegion):
 			or previousReadingUnit is None
 		):
 			return
+		log.debug(f"jatketaan: {self._currentScript}")
 		from globalCommands import GlobalCommands
 		startOfNextOrPreviousLineScripts: set[_ScriptFunctionT] = {
 			GlobalCommands.script_braille_nextLine,
