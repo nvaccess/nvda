@@ -2391,7 +2391,10 @@ class GlobalCommands(ScriptableObject):
 			ui.browseableMessage(
 				message,
 				# Translators: title for formatting information dialog.
-				_("Formatting")
+				_("Formatting"),
+				copyButton=True,
+				# Translators: Close button label
+				closeButtonText=_("Close")
 			)
 
 	@staticmethod
@@ -4052,7 +4055,7 @@ class GlobalCommands(ScriptableObject):
 	) -> None:
 		"""Generates a ui.message or ui.browseableMessage of a link's destination, if focus or caret is
 		positioned on a link, or an element with an included link such as a graphic.
-		@param forceBrowseable: skips the press once check, and displays the browseableMessage version.
+		:param forceBrowseable: skips the press once check, and displays the browseableMessage version.
 		"""
 		try:
 			ti: textInfos.TextInfo = api.getCaretPosition()
@@ -4089,7 +4092,10 @@ class GlobalCommands(ScriptableObject):
 					linkDestination,
 					# Translators: Informs the user that the window contains the destination of the
 					# link with given title
-					title=_("Destination of: {name}").format(name=obj.name)
+					title=_("Destination of: {name}").format(name=obj.name),
+					# Translators: Close button label, recommending to press escape to close the message.
+					closeButtonText=_("Press escape to close"),
+					copyButton=True
 				)
 			elif presses == 0:  # One press
 				ui.message(linkDestination)  # Speak the link

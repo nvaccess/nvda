@@ -94,7 +94,7 @@ def browseableMessage(
 		title: Optional[str] = None,
 		isHtml: bool = False,
 		closeButtonText: Optional[str] = None,
-		copyButtonText: Optional[str] = None
+		copyButton: bool = False
 ) -> None:
 	"""Present a message to the user that can be read in browse mode.
 	The message will be presented in an HTML document.
@@ -102,8 +102,7 @@ def browseableMessage(
 	:param title: The title for the message, defaults to "NVDA Message".
 	:param isHtml: Whether the message is html, defaults to False.
 	:param closeButtonText: Text to use as label for a "close" button, defaults to None, meaning no close button.
-	:param copyButtonText: Text to use as label for a "copy" (to clipboard) button, defaults to None,
-		meaning no copy button.
+	:param copyButton: Whether to include a "copy" (to clipboard) button, defaults to False.
 	"""
 	if isRunningOnSecureDesktop():
 		import wx  # Late import to prevent circular dependency.
@@ -134,8 +133,9 @@ def browseableMessage(
 	d.add("message", message)
 	if closeButtonText is not None:
 		d.add("closeButtonText", closeButtonText)
-	if copyButtonText is not None:
-		d.add("copyButtonText", copyButtonText)
+	if copyButton:
+		# Translators: The text of a button to copy the text of the window to the clipboard.
+		d.add("copyButtonText", _("Copy"))
 	dialogArgsVar = automation.VARIANT(d)
 	gui.mainFrame.prePopup() 
 	windll.mshtml.ShowHTMLDialogEx( 
