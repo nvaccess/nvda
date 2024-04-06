@@ -8,8 +8,6 @@ Shell Experience Host is home to a number of things, including Action Center and
 In Windows 11 24H2 (2024 Update and Server 2025), quick settings component is part of ShellHost.exe.
 """
 
-from typing import Optional
-
 import appModuleHandler
 from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
 from NVDAObjects.UIA import UIA
@@ -21,7 +19,7 @@ from winAPI.types import HWNDValT
 
 
 class CalendarViewDayItem(UIA):
-	def _getTextFromHeaderElement(self, element: IUIAutomationElement) -> Optional[str]:
+	def _getTextFromHeaderElement(self, element: IUIAutomationElement) -> str | None:
 		# Generally we prefer text content as the header text.
 		# But although this element does expose a UIA text pattern,
 		# The text content is only the 2 character week day abbreviation.
