@@ -16,6 +16,8 @@ from NVDAObjects.UIA import UIA
 from UIAHandler import IUIAutomationElement, UIA_NamePropertyId
 import controlTypes
 import ui
+import winUser
+from winAPI.types import HWNDValT
 
 
 class CalendarViewDayItem(UIA):
@@ -72,3 +74,9 @@ class AppModule(appModuleHandler.AppModule):
 			and obj.UIAElement.cachedClassName == "CalendarViewDayItem"
 		):
 			clsList.insert(0, CalendarViewDayItem)
+
+	def isGoodUIAWindow(self, hwnd: HWNDValT) -> bool:
+		# #16348: reclassify Windows 11 24H2 control center window as UIA to allow mouse/touch interaction.
+		if winUser.getClassName(hwnd) == "ControlCenterWindow":
+			return True
+		return False
