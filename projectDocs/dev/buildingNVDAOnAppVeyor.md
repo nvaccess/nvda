@@ -336,7 +336,7 @@ If nothing even tried to build, there may be an error in your `appveyor.yml` fil
 If there is no [YAML] error, and there is no evidence of the attempted build, there may be a disconnect between your fork's repository and [AppVeyor].
 It may be useful to attempt to build master, using the "`NEW BUILD`" link, to at least determine if AppVeyor can access your GitHub repository.
 
-You may try asking for help on the [nvda-devel] mailing list, or the [AppVeyor] forums..
+You may try asking for help on the [nvda-devel] mailing list, or the [AppVeyor] forums.
 
 ## When the build completes
 

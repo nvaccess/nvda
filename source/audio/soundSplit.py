@@ -23,18 +23,25 @@ VolumeTupleT = tuple[float, float]
 @unique
 class SoundSplitState(DisplayStringIntEnum):
 	OFF = 0
-	NVDA_LEFT_APPS_RIGHT = 1
-	NVDA_LEFT_APPS_BOTH = 2
-	NVDA_RIGHT_APPS_LEFT = 3
-	NVDA_RIGHT_APPS_BOTH = 4
-	NVDA_BOTH_APPS_LEFT = 5
-	NVDA_BOTH_APPS_RIGHT = 6
+	NVDA_BOTH_APPS_BOTH = 1
+	NVDA_LEFT_APPS_RIGHT = 2
+	NVDA_LEFT_APPS_BOTH = 3
+	NVDA_RIGHT_APPS_LEFT = 4
+	NVDA_RIGHT_APPS_BOTH = 5
+	NVDA_BOTH_APPS_LEFT = 6
+	NVDA_BOTH_APPS_RIGHT = 7
+	
 
 	@property
 	def _displayStringLabels(self) -> dict[IntEnum, str]:
 		return {
 			# Translators: Sound split state
-			SoundSplitState.OFF: pgettext("SoundSplit", "Disabled"),
+			SoundSplitState.OFF: pgettext("SoundSplit", "Sound split disabled"),
+			SoundSplitState.NVDA_BOTH_APPS_BOTH: pgettext(
+				"SoundSplit",
+				# Translators: Sound split state
+				"NVDA in both channels and applications in both channels",
+			),
 			# Translators: Sound split state
 			SoundSplitState.NVDA_LEFT_APPS_RIGHT: _("NVDA on the left and applications on the right"),
 			# Translators: Sound split state
@@ -51,7 +58,11 @@ class SoundSplitState(DisplayStringIntEnum):
 
 	def getAppVolume(self) -> VolumeTupleT:
 		match self:
-			case SoundSplitState.OFF | SoundSplitState.NVDA_LEFT_APPS_BOTH | SoundSplitState.NVDA_RIGHT_APPS_BOTH:
+			case (
+				SoundSplitState.NVDA_BOTH_APPS_BOTH
+				| SoundSplitState.NVDA_LEFT_APPS_BOTH
+				| SoundSplitState.NVDA_RIGHT_APPS_BOTH
+			):
 				return (1.0, 1.0)
 			case SoundSplitState.NVDA_RIGHT_APPS_LEFT | SoundSplitState.NVDA_BOTH_APPS_LEFT:
 				return (1.0, 0.0)
@@ -62,7 +73,11 @@ class SoundSplitState(DisplayStringIntEnum):
 
 	def getNVDAVolume(self) -> VolumeTupleT:
 		match self:
-			case SoundSplitState.OFF | SoundSplitState.NVDA_BOTH_APPS_LEFT | SoundSplitState.NVDA_BOTH_APPS_RIGHT:
+			case (
+				SoundSplitState.NVDA_BOTH_APPS_BOTH
+				| SoundSplitState.NVDA_BOTH_APPS_LEFT
+				| SoundSplitState.NVDA_BOTH_APPS_RIGHT
+			):
 				return (1.0, 1.0)
 			case SoundSplitState.NVDA_LEFT_APPS_RIGHT | SoundSplitState.NVDA_LEFT_APPS_BOTH:
 				return (1.0, 0.0)
@@ -85,7 +100,7 @@ def initialize() -> None:
 			log.exception("Could not initialize audio session manager")
 			return
 		state = SoundSplitState(config.conf["audio"]["soundSplitState"])
-		setSoundSplitState(state)
+		setSoundSplitState(state, initial=True)
 	else:
 		log.debug("Cannot initialize sound split as WASAPI is disabled")
 
@@ -93,7 +108,9 @@ def initialize() -> None:
 @atexit.register
 def terminate():
 	if nvwave.usingWasapiWavePlayer():
-		setSoundSplitState(SoundSplitState.OFF)
+		state = SoundSplitState(config.conf["audio"]["soundSplitState"])
+		if state != SoundSplitState.OFF:
+			setSoundSplitState(SoundSplitState.OFF)
 		unregisterCallback()
 	else:
 		log.debug("Skipping terminating sound split as WASAPI is disabled.")
@@ -153,11 +170,20 @@ class VolumeSetter(AudioSessionNotification):
 			channelVolume.SetChannelVolume(1, self.rightNVDAVolume, None)
 
 
-def setSoundSplitState(state: SoundSplitState) -> dict:
+def setSoundSplitState(state: SoundSplitState, initial: bool = False) -> dict:
+	applyToFuture = True
+	if state == SoundSplitState.OFF:
+		if initial:
+			return {}
+		else:
+			# Disabling sound split via command or via settings
+			# We need to restore volume of all applications, but then don't set up callback for future audio sessions
+			state = SoundSplitState.NVDA_BOTH_APPS_BOTH
+			applyToFuture = False
 	leftVolume, rightVolume = state.getAppVolume()
 	leftNVDAVolume, rightNVDAVolume = state.getNVDAVolume()
 	volumeSetter = VolumeSetter(leftVolume, rightVolume, leftNVDAVolume, rightNVDAVolume)
-	applyToAllAudioSessions(volumeSetter)
+	applyToAllAudioSessions(volumeSetter, applyToFuture=applyToFuture)
 	return {
 		"foundSessionWithNot2Channels": volumeSetter.foundSessionWithNot2Channels,
 	}

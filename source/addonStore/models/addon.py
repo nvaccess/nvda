@@ -303,7 +303,7 @@ def _createInstalledStoreModelFromData(addon: Dict[str, Any]) -> InstalledAddonS
 		sha256=addon["sha256"],
 		minNVDAVersion=MajorMinorPatch(**addon["minNVDAVersion"]),
 		lastTestedVersion=MajorMinorPatch(**addon["lastTestedVersion"]),
-		reviewURL=addon.get("reviewUrl"),
+		reviewURL=addon.get("reviewURL"),
 		legacy=addon.get("legacy", False),
 	)
 

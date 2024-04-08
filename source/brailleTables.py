@@ -302,6 +302,9 @@ addTable("gu-in-g1.utb", _("Gujarati grade 1"))
 addTable("grc-international-en.utb", _("Greek international braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("grc-international-es.utb", _("Spanish for Greek text"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("he-IL.utb", _("Israeli grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
