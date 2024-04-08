@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
+# Copyright (C) 2006-2024 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
 # Joseph Lee, Babbage B.V., Łukasz Golonka, Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -786,6 +786,12 @@ class ConfigManager(object):
 			for trigSpec in delTrigs:
 				del allTriggers[trigSpec]
 			self.saveProfileTriggers()
+		# Remove the profile from the dirty profile list
+		try:
+			self._dirtyProfiles.remove(name)
+		except KeyError:
+			# The profile wasn't dirty.
+			pass
 		# Check if this profile was active.
 		delProfile = None
 		for index in range(len(self.profiles) - 1, -1, -1):

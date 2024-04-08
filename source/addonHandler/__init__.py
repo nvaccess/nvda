@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2023 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
+# Copyright (C) 2012-2024 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
 # Joseph Lee, Babbage B.V., Arnold Loubriat, Łukasz Golonka, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -10,7 +10,6 @@ from abc import abstractmethod, ABC
 import sys
 import os.path
 import gettext
-import tempfile
 import inspect
 import itertools
 import collections
@@ -45,6 +44,7 @@ from addonStore.models.status import AddonStateCategory, SupportsAddonState
 from addonStore.models.version import MajorMinorPatch, SupportsVersionCheck
 import extensionPoints
 from utils.caseInsensitiveCollections import CaseInsensitiveSet
+from utils.tempFile import _createEmptyTempFileForDeletingFile
 
 from .addonVersionCheck import (
 	isAddonCompatible,
@@ -535,7 +535,7 @@ class Addon(AddonBase):
 			return None
 
 		try:
-			os.rename(self.pendingInstallPath, self.installPath)
+			os.replace(self.pendingInstallPath, self.installPath)
 			state[AddonStateCategory.PENDING_INSTALL].discard(self.name)
 			return self.installPath
 		except OSError:
@@ -573,9 +573,9 @@ class Addon(AddonBase):
 			finally:
 				del _availableAddons[self.path]
 				self._cleanupAddonImports()
-		tempPath=tempfile.mktemp(suffix=DELETEDIR_SUFFIX,dir=os.path.dirname(self.path))
+		tempPath = _createEmptyTempFileForDeletingFile(suffix=DELETEDIR_SUFFIX, dir=os.path.dirname(self.path))
 		try:
-			os.rename(self.path,tempPath)
+			os.replace(self.path, tempPath)
 		except (WindowsError,IOError):
 			raise RuntimeError("Cannot rename add-on path for deletion")
 		shutil.rmtree(tempPath,ignore_errors=True)

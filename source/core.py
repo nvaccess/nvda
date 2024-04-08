@@ -276,6 +276,7 @@ def resetConfiguration(factoryDefaults=False):
 	import bdDetect
 	import hwIo
 	import tones
+	import audio
 	log.debug("Terminating vision")
 	vision.terminate()
 	log.debug("Terminating braille")
@@ -286,12 +287,18 @@ def resetConfiguration(factoryDefaults=False):
 	speech.terminate()
 	log.debug("terminating tones")
 	tones.terminate()
+	log.debug("terminating sound split")
+	audio.soundSplit.terminate()
 	log.debug("Terminating background braille display detection")
 	bdDetect.terminate()
 	log.debug("Terminating background i/o")
 	hwIo.terminate()
 	log.debug("terminating addonHandler")
 	addonHandler.terminate()
+	# Addons
+	from addonStore import dataManager
+	log.debug("terminating addon dataManager")
+	dataManager.terminate()
 	log.debug("Reloading config")
 	config.conf.reset(factoryDefaults=factoryDefaults)
 	logHandler.setLogLevelFromConfig()
@@ -302,8 +309,6 @@ def resetConfiguration(factoryDefaults=False):
 		lang = config.conf["general"]["language"]
 	log.debug("setting language to %s"%lang)
 	languageHandler.setLanguage(lang)
-	# Addons
-	from addonStore import dataManager
 	dataManager.initialize()
 	addonHandler.initialize()
 	# Hardware background i/o
@@ -313,6 +318,9 @@ def resetConfiguration(factoryDefaults=False):
 	bdDetect.initialize()
 	# Tones
 	tones.initialize()
+	# Sound split
+	log.debug("initializing sound split")
+	audio.soundSplit.initialize()
 	#Speech
 	log.debug("initializing speech")
 	speech.initialize()
@@ -605,7 +613,17 @@ def main():
 		setDPIAwareness()
 
 	import config
-	if not WritePaths.configDir:
+	from utils.security import isRunningOnSecureDesktop
+	if (
+		# No config flag was set, use default config path.
+		not WritePaths.configDir
+		or (
+			# Secure mode enabled, force default config path.
+			globalVars.appArgs.secure
+			# Secure desktop config is forced to sys.prefix/systemConfig
+			and not isRunningOnSecureDesktop()
+		)
+	):
 		WritePaths.configDir = config.getUserDefaultConfigPath(
 			useInstalledPathIfExists=globalVars.appArgs.launcher
 		)
@@ -661,6 +679,9 @@ def main():
 	log.debug("Initializing tones")
 	import tones
 	tones.initialize()
+	log.debug("Initializing sound split")
+	import audio
+	audio.soundSplit.initialize()
 	import speechDictHandler
 	log.debug("Speech Dictionary processing")
 	speechDictHandler.initialize()
@@ -927,6 +948,7 @@ def main():
 	_terminate(bdDetect)
 	_terminate(hwIo)
 	_terminate(addonHandler)
+	_terminate(dataManager, name="addon dataManager")
 	_terminate(garbageHandler)
 	# DMP is only started if needed.
 	# Terminate manually (and let it write to the log if necessary)

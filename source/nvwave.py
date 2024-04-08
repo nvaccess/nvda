@@ -730,7 +730,8 @@ def playWaveFile(
 	if asynchronous:
 		fileWavePlayerThread = threading.Thread(
 			name=f"{__name__}.playWaveFile({os.path.basename(fileName)})",
-			target=play
+			target=play,
+			daemon=True,
 		)
 		fileWavePlayerThread.start()
 	else:
@@ -835,13 +836,13 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		self._lastActiveTime: typing.Optional[float] = None
 		self._isPaused: bool = False
 		if (
-			config.conf["audio"]["keepAudioAwakeTimeSeconds"] > 0
+			config.conf["audio"]["audioAwakeTime"] > 0
 			and WasapiWavePlayer._silenceDevice != outputDevice
 		):
 			# The output device has changed. (Re)initialize silence.
 			if self._silenceDevice is not None:
 				NVDAHelper.localLib.wasSilence_terminate()
-			if config.conf["audio"]["keepAudioAwakeTimeSeconds"] > 0:
+			if config.conf["audio"]["audioAwakeTime"] > 0:
 				NVDAHelper.localLib.wasSilence_init(outputDevice)
 				WasapiWavePlayer._silenceDevice = outputDevice
 
@@ -924,9 +925,9 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			self._doneCallbacks[feedId.value] = onDone
 		self._lastActiveTime = time.time()
 		self._scheduleIdleCheck()
-		if config.conf["audio"]["keepAudioAwakeTimeSeconds"] > 0:
+		if config.conf["audio"]["audioAwakeTime"] > 0:
 			NVDAHelper.localLib.wasSilence_playFor(
-				1000 * config.conf["audio"]["keepAudioAwakeTimeSeconds"],
+				1000 * config.conf["audio"]["audioAwakeTime"],
 				c_float(config.conf["audio"]["whiteNoiseVolume"] / 100.0),
 			)
 

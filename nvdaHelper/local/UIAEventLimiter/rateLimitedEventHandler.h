@@ -88,4 +88,8 @@ private:
 	HRESULT STDMETHODCALLTYPE HandleNotificationEvent(IUIAutomationElement* sender, NotificationKind notificationKind, NotificationProcessing notificationProcessing, BSTR displayString, BSTR activityID);
 	HRESULT STDMETHODCALLTYPE HandleActiveTextPositionChangedEvent(IUIAutomationElement* sender, IUIAutomationTextRange* range);
 
+	/// @brief a function that stops the flusher thread.
+	// @note This call will block until the flusher thread has stopped.
+	void terminate();
+
 };
