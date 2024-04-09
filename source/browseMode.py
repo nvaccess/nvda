@@ -56,7 +56,6 @@ import gui.contextHelp
 from abc import ABCMeta, abstractmethod
 import globalVars
 from typing import Optional
-from textUtils import WideStringOffsetConverter
 
 
 def reportPassThrough(treeInterceptor,onlyIfChanged=True):
@@ -2327,21 +2326,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			return textRange
 		MAX_ITER_LIMIT = 1000
 		for __ in range(MAX_ITER_LIMIT):
-			if direction == documentBase._Movement.NEXT:
-				try:
-					paragraphInfo.collapse(end=True)
-				except RuntimeError:
-					# Microsoft Word raises RuntimeError when collapsing textInfo to the last character of the document.
-					break
-			else:
-				paragraphInfo.collapse(end=False)
-				result = paragraphInfo.move(textInfos.UNIT_CHARACTER, -1)
-				if result == 0:
-					break
-			paragraphInfo.expand(textInfos.UNIT_PARAGRAPH)
-			if paragraphInfo.isCollapsed:
+			if not self._moveToNextParagraph(paragraphInfo, direction):
 				break
-
 			styles = self._mergeIdenticalStyles(self._extractStyles(paragraphInfo))
 			if direction == documentBase._Movement.NEXT:
 				iteration = range(len(styles))
@@ -2351,18 +2337,15 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				if isinstance(styles[i], str):
 					continue
 				if styles[i].field != style.field:
-					paragraphText = "".join(s for s in styles if isinstance(s, str))
-					pythonicStartIndex = sum(len(s) for s in styles[:i] if isinstance(s, str))
-					pythonicEndIndex = pythonicStartIndex + len(styles[i + 1])
-					converter = WideStringOffsetConverter(paragraphText)
-					startOffset, endOffset = converter.strToWideOffsets(pythonicStartIndex, pythonicEndIndex)
-					paragraphInfo.collapse()
+					# We found the end of current style
+					startIndex = sum(len(s) for s in styles[:i] if isinstance(s, str))
+					endIndex = startIndex + len(styles[i + 1])
 					if direction == documentBase._Movement.NEXT:
-						paragraphInfo.move(textInfos.UNIT_CHARACTER, startOffset)
-						resultInfo.setEndPoint(paragraphInfo, which="endToEnd")
+						startInfo = paragraphInfo.moveToCodepointOffset(startIndex)
+						resultInfo.setEndPoint(startInfo, which="endToEnd")
 					else:
-						paragraphInfo.move(textInfos.UNIT_CHARACTER, endOffset)
-						resultInfo.setEndPoint(paragraphInfo, which="startToStart")
+						endInfo = paragraphInfo.moveToCodepointOffset(endIndex)
+						resultInfo.setEndPoint(endInfo, which="startToStart")
 					return resultInfo
 			else:
 				resultInfo.setEndPoint(
@@ -2376,6 +2359,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			paragraph: textInfos.TextInfo,
 			direction: documentBase._Movement,
 	) -> bool:
+		oldParagraph = paragraph.copy()
 		if direction == documentBase._Movement.NEXT:
 			try:
 				paragraph.collapse(end=True)
@@ -2389,6 +2373,12 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				return False
 		paragraph.expand(textInfos.UNIT_PARAGRAPH)
 		if paragraph.isCollapsed:
+			return False
+		if (
+			direction == documentBase._Movement.NEXT
+			and paragraph.compareEndPoints(oldParagraph, "startToStart") <= 0
+		):
+			# Sometimes in Microsoft word it just selects the same last paragraph repeatedly
 			return False
 		return True
 
@@ -2427,13 +2417,11 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		# Creating currentTextInfo - text written in initialStyle in this paragraph.
 		currentTextInfo = initialTextInfo.copy()
 		if direction == documentBase._Movement.NEXT:
-			currentTextInfo.collapse()
-			offset = WideStringOffsetConverter(styles[1]).wideStringLength
-			currentTextInfo.move(textInfos.UNIT_CHARACTER, offset, endPoint="end")
+			endInfo = paragraph.moveToCodepointOffset(len(styles[1]))
+			currentTextInfo.setEndPoint(endInfo, "endToEnd")
 		else:
-			currentTextInfo.collapse(end=True)
-			offset = WideStringOffsetConverter(styles[-1]).wideStringLength
-			currentTextInfo.move(textInfos.UNIT_CHARACTER, -offset, endPoint="start")
+			startInfo = paragraph.moveToCodepointOffset(len(paragraph.text) - len(styles[-1]))
+			currentTextInfo.setEndPoint(startInfo, "startToStart")
 		# Now expand it to other paragraph in desired direction if applicable.
 		currentTextInfo = self._expandStyle(currentTextInfo, initialStyle, direction)
 		# At this point currentTextInfo represents textInfo written in the same style; may span across paragraphs
@@ -2470,24 +2458,25 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 						continue
 					if (styles[i].field == initialStyle.field) == sameStyle:
 						# Found text that matches desired style!
-						startOffset = sum([
-							WideStringOffsetConverter(s).wideStringLength
+						startIndex = sum([
+							len(s)
 							for s in styles[:i]
 							if isinstance(s, str)
 						])
-						endOffset = WideStringOffsetConverter(styles[i + 1]).wideStringLength
-						postEndOffset = sum([
-							WideStringOffsetConverter(s).wideStringLength
-							for s in styles[i + 2:]
-							if isinstance(s, str)
-						])
-						textRange = paragraph.copy()
-						textRange.collapse()
-						textRange.move(textInfos.UNIT_CHARACTER, startOffset)
-						textRange.move(textInfos.UNIT_CHARACTER, endOffset, endPoint="end")
+						endIndex = startIndex + len(styles[i + 1])
+						startInfo = paragraph.moveToCodepointOffset(startIndex)
+						endInfo = paragraph.moveToCodepointOffset(endIndex)
+						textRange = startInfo.copy()
+						textRange.setEndPoint(endInfo, "endToEnd")
 						needToExpand = (
-							(direction == documentBase._Movement.NEXT and postEndOffset == 0)
-							or (direction == documentBase._Movement.PREVIOUS and startOffset == 0)
+							(
+								direction == documentBase._Movement.NEXT
+								and paragraph.compareEndPoints(textRange, "endToEnd") == 0
+							)
+							or (
+								direction == documentBase._Movement.PREVIOUS
+								and paragraph.compareEndPoints(textRange, "startToStart") == 0
+							)
 						)
 						if needToExpand:
 							textRange = self._expandStyle(textRange, styles[i], direction)

@@ -709,6 +709,6 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			codepointOffset: int,
 	) -> Self:
 		result = self.copy()
-		encodedOffset = self._getOffsetEncoder().strToEncodedOffsets(codepointOffset)
+		encodedOffset = self._startOffset + self._getOffsetEncoder().strToEncodedOffsets(codepointOffset)
 		result._startOffset = result._endOffset = encodedOffset
 		return result
