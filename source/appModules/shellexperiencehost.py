@@ -1,13 +1,12 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2015-2022 NV Access Limited, Joseph Lee
+# Copyright (C) 2015-2024 NV Access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""App module for Shell Experience Host, part of Windows 10.
+"""App module for Shell Experience Host, part of Windows 10 and later.
 Shell Experience Host is home to a number of things, including Action Center and other shell features.
+In Windows 11 24H2 (2024 Update and Server 2025), quick settings component is part of ShellHost.exe.
 """
-
-from typing import Optional
 
 import appModuleHandler
 from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
@@ -15,10 +14,12 @@ from NVDAObjects.UIA import UIA
 from UIAHandler import IUIAutomationElement, UIA_NamePropertyId
 import controlTypes
 import ui
+import winUser
+from winAPI.types import HWNDValT
 
 
 class CalendarViewDayItem(UIA):
-	def _getTextFromHeaderElement(self, element: IUIAutomationElement) -> Optional[str]:
+	def _getTextFromHeaderElement(self, element: IUIAutomationElement) -> str | None:
 		# Generally we prefer text content as the header text.
 		# But although this element does expose a UIA text pattern,
 		# The text content is only the 2 character week day abbreviation.
@@ -71,3 +72,9 @@ class AppModule(appModuleHandler.AppModule):
 			and obj.UIAElement.cachedClassName == "CalendarViewDayItem"
 		):
 			clsList.insert(0, CalendarViewDayItem)
+
+	def isGoodUIAWindow(self, hwnd: HWNDValT) -> bool:
+		# #16348: reclassify Windows 11 24H2 control center window as UIA to allow mouse/touch interaction.
+		if winUser.getClassName(hwnd) == "ControlCenterWindow":
+			return True
+		return False
