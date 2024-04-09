@@ -10,12 +10,14 @@ import globalVars
 from logHandler import log
 import nvwave
 from pycaw.api.audiopolicy import IAudioSessionManager2
-from pycaw.callbacks import AudioSessionNotification
+from pycaw.callbacks import AudioSessionNotification, AudioSessionEvents
 from pycaw.utils import AudioSession, AudioUtilities
 import ui
 from utils.displayString import DisplayStringIntEnum
 from dataclasses import dataclass
 from comtypes import COMError
+from threading import Lock
+import core
 
 VolumeTupleT = tuple[float, float]
 
@@ -116,6 +118,20 @@ def terminate():
 		log.debug("Skipping terminating sound split as WASAPI is disabled.")
 
 
+@dataclass(unsafe_hash=True)
+class AudioSessionNotificationWrapper(AudioSessionNotification):
+	listener: AudioSessionNotification
+
+	def on_session_created(self, new_session: AudioSession):
+		pid = new_session.ProcessId
+		with applicationExitCallbacksLock:
+			if pid not in applicationExitCallbacks:
+				volumeRestorer = VolumeRestorer(pid, new_session)
+				new_session.register_notification(volumeRestorer)
+				applicationExitCallbacks[pid] = volumeRestorer
+		self.listener.on_session_created(new_session)
+
+
 def applyToAllAudioSessions(
 		callback: AudioSessionNotification,
 		applyToFuture: bool = True,
@@ -128,6 +144,7 @@ def applyToAllAudioSessions(
 		or until unregisterCallback() is called.
 	"""
 	unregisterCallback()
+	callback = AudioSessionNotificationWrapper(callback)
 	if applyToFuture:
 		audioSessionManager.RegisterSessionNotification(callback)
 		# The following call is required to make callback to work:
@@ -218,3 +235,45 @@ def toggleSoundSplitState() -> None:
 			"one of audio sessions is either mono, or has more than 2 audio channels."
 		)
 		ui.message(msg)
+
+
+@dataclass(unsafe_hash=True)
+class VolumeRestorer(AudioSessionEvents):
+	pid: int
+	audioSession: AudioSession
+
+	def on_state_changed(self, new_state: str, new_state_id: int):
+		if new_state == "Expired":
+			# For some reason restoring volume doesn't work in this thread, so scheduling in the main thread.
+			core.callLater(0, self.restoreVolume)
+
+	def restoreVolume(self):
+		# Application connected to this audio session is terminating. Restore its volume.
+		try:
+			channelVolume = self.audioSession.channelAudioVolume()
+			channelCount = channelVolume.GetChannelCount()
+			if channelCount != 2:
+				log.warning(
+					f"Audio session for pid {self.pid} has {channelCount} channels instead of 2 - cannot set volume!"
+				)
+				return
+			channelVolume.SetChannelVolume(0, 1.0, None)
+			channelVolume.SetChannelVolume(1, 1.0, None)
+		except Exception:
+			log.exception(f"Could not restore volume of process {self.pid} upon exit.")
+		self.unregister()
+
+	def unregister(self):
+		with applicationExitCallbacksLock:
+			try:
+				del applicationExitCallbacks[self.pid]
+			except KeyError:
+				pass
+			try:
+				self.audioSession.unregister_notification()
+			except Exception:
+				log.exception(f"Cannot unregister audio session for process {self.pid}")
+
+
+applicationExitCallbacksLock = Lock()
+applicationExitCallbacks: dict[int, VolumeRestorer] = {}
