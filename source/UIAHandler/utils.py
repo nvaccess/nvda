@@ -124,13 +124,19 @@ def iterUIARangeByUnit(rangeObj,unit,reverse=False):
 	tempRange.MoveEndpointByRange(Endpoint_relativeEnd,rangeObj,Endpoint_relativeStart)
 	endRange=tempRange.Clone()
 	loopCount = 0
+	yieldRange = None
 	while relativeGTOperator(endRange.Move(unit,minRelativeDistance),0):
 		loopCount += 1
 		tempRange.MoveEndpointByRange(Endpoint_relativeEnd,endRange,Endpoint_relativeStart)
 		pastEnd=relativeGTOperator(tempRange.CompareEndpoints(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd),0)
 		if pastEnd:
 			tempRange.MoveEndpointByRange(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd)
-		yield tempRange.clone()
+		if yieldRange and bool(yieldRange.compare(tempRange)):
+			# we've looped onto range we've already yielded previously - shortcircuit to prevent
+			# infinite loop
+			return
+		yieldRange = tempRange.clone()
+		yield yieldRange
 		if pastEnd:
 			return
 		tempRange.MoveEndpointByRange(Endpoint_relativeStart,tempRange,Endpoint_relativeEnd)
