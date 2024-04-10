@@ -507,29 +507,17 @@ void GeckoVBufBackend_t::fillVBufAriaError(
 	VBufStorage_controlFieldNode_t& nodeBeingFilled,
 	const std::wstring& nodeBeingFilledRole
 ){
-	
-	// Elements with `aria-errormessage` set.
+	// Since we get error targets as IAccessible objects, not as vbuf nodes, we don't need to perform checks in both directions.
 	auto idsOfErrorTargets = getAllRelationIdsForRelationType(IA2_RELATION_ERROR, pacc);
 	if(idsOfErrorTargets.size() > 0) {
-		
-		bool gotText;
 		wstring textBuf;
-		IAccessible2 *target;
-		target = IAccessible2FromIdentifier(docHandle, idsOfErrorTargets[0]);
-		if (target != nullptr) {
-			gotText = getTextFromIAccessible(textBuf, target);
-			if (gotText) {
-				nodeBeingFilled.addAttribute(L"errorMessage", textBuf);
-			} else {
-				nodeBeingFilled.addAttribute(L"errorMessage", L"Placeholder");
-			}
-		}
-	}
 
-	// Elements refered to by `aria-errormessage`.
-	auto idsOfErrorFors = getAllRelationIdsForRelationType(IA2_RELATION_ERROR_FOR, pacc);
-	if(idsOfErrorFors.size() > 0) {
-		nodeBeingFilled.addAttribute(L"isError", L"true");
+		// Since `aria-errormessage` is an ID reference, it can only have one value. Thus, take the first target.
+		IAccessible2 *target = IAccessible2FromIdentifier(docHandle, idsOfErrorTargets[0]);
+		if (target != nullptr) {
+			if (getTextFromIAccessible(textBuf, target))
+				nodeBeingFilled.addAttribute(L"errorMessage", textBuf);
+		}
 	}
 }
 
