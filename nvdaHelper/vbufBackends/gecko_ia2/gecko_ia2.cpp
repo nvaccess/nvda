@@ -503,10 +503,28 @@ void GeckoVBufBackend_t::fillVBufAriaDetails(
 void GeckoVBufBackend_t::fillVBufAriaError(
 	int docHandle,
 	CComPtr<IAccessible2> pacc,
-	VBufStorage_buffer_t& buffer,
-	VBufStorage_controlFieldNode_t& nodeBeingFilled,
-	const std::wstring& nodeBeingFilledRole
+	VBufStorage_buffer_t& buffer, // todo: Remove as unused
+	VBufStorage_controlFieldNode_t& nodeBeingFilled, // todo: Remove as unused
+	const std::wstring& nodeBeingFilledRole // todo: remove as unused
 ){
+	/*
+	CComQIPtr<IAccessible2_2> pacc2_2 = pacc;
+	if (pacc2_2 == nullptr) {
+		return;
+	}
+	auto errorTargets = getRelationElementsOfType(IA2_RELATION_ERROR, pacc2_2, 1);
+	if(errorTargets.size() > 0) {
+		wstring textBuf;
+
+		// Since `aria-errormessage` is an ID reference, it can only have one value. Thus, take the first target.
+		IAccessible2 *target = errorTargets[0];
+		if (target != nullptr) {
+			if (getTextFromIAccessible(textBuf, target))
+				nodeBeingFilled.addAttribute(L"errorMessage", textBuf);
+		}
+	}
+	*/
+
 	// Since we get error targets as IAccessible objects, not as vbuf nodes, we don't need to perform checks in both directions.
 	auto idsOfErrorTargets = getAllRelationIdsForRelationType(IA2_RELATION_ERROR, pacc);
 	if(idsOfErrorTargets.size() > 0) {
