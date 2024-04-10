@@ -773,6 +773,7 @@ def _objectSpeech_calculateAllowedProps(
 		'role': True,
 		'roleText': True,
 		'states': True,
+		"errorMessage": True,
 		'value': True,
 		'description': True,
 		'hasDetails': config.conf["annotations"]["reportDetails"],
@@ -793,7 +794,6 @@ def _objectSpeech_calculateAllowedProps(
 		"rowSpan": True,
 		"columnSpan": True,
 		"current": True,
-		"errorMessage": True,
 	}
 	if reason in (OutputReason.FOCUSENTERED, OutputReason.MOUSE):
 		allowProperties["value"] = False
