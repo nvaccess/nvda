@@ -2313,7 +2313,7 @@ def getControlFieldSpeech(  # noqa: C901
 		out.extend(keyboardShortcutSequence)
 		if content and not speakContentFirst:
 			out.append(content)
-		out.append(errorMessageSequence)
+		out.extend(errorMessageSequence)
 
 		types.logBadSequenceTypes(out)
 		return out

@@ -515,7 +515,7 @@ void GeckoVBufBackend_t::fillVBufAriaError(
 	// Elements refered to by `aria-errormessage`.
 	auto idsOfErrorFors = getAllRelationIdsForRelationType(IA2_RELATION_ERROR_FOR, pacc);
 	if(idsOfErrorFors.size() > 0) {
-		// nodeBeingFilled.addAttribute(L"isError", L"true");
+		nodeBeingFilled.addAttribute(L"isError", L"true");
 	}
 }
 
