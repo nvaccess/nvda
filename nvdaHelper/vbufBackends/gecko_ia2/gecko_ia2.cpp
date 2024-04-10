@@ -30,6 +30,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <vbufBase/storage.h>
 #include <common/log.h>
 #include <vbufBase/utils.h>
+#include <remote/textFromIAccessible.h>
 #include "gecko_ia2.h"
 
 using namespace std;
@@ -506,10 +507,23 @@ void GeckoVBufBackend_t::fillVBufAriaError(
 	VBufStorage_controlFieldNode_t& nodeBeingFilled,
 	const std::wstring& nodeBeingFilledRole
 ){
+	
 	// Elements with `aria-errormessage` set.
 	auto idsOfErrorTargets = getAllRelationIdsForRelationType(IA2_RELATION_ERROR, pacc);
 	if(idsOfErrorTargets.size() > 0) {
-		nodeBeingFilled.addAttribute(L"hasError", L"true");
+		
+		bool gotText;
+		wstring textBuf;
+		IAccessible2 *target;
+		target = IAccessible2FromIdentifier(docHandle, idsOfErrorTargets[0]);
+		if (target != nullptr) {
+			gotText = getTextFromIAccessible(textBuf, target);
+			if (gotText) {
+				nodeBeingFilled.addAttribute(L"errorMessage", textBuf);
+			} else {
+				nodeBeingFilled.addAttribute(L"errorMessage", L"Placeholder");
+			}
+		}
 	}
 
 	// Elements refered to by `aria-errormessage`.
