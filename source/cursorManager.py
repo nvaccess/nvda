@@ -215,7 +215,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			# Translators: Input help message for find next command.
 			"find the next occurrence of the previously entered text string from the current cursor's position"
 		),
-		gesture="kb:NVDA+f3",
+		gesture="kb:NVDA+x",
 		resumeSayAllMode=sayAll.CURSOR.CARET,
 	)
 	def script_findNext(self,gesture):
@@ -233,7 +233,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			# Translators: Input help message for find previous command.
 			"find the previous occurrence of the previously entered text string from the current cursor's position"
 		),
-		gesture="kb:NVDA+shift+f3",
+		gesture="kb:NVDA+shift+x",
 		resumeSayAllMode=sayAll.CURSOR.CARET,
 	)
 	def script_findPrevious(self,gesture):
