@@ -2234,4 +2234,3 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			value = paragraphFunction(info)
 			if value == desiredValue:
 				yield TextInfoQuickNavItem(kind, self, info.copy(), outputReason=OutputReason.CARET)
-
