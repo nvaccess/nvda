@@ -503,8 +503,8 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		elif itemType == "verticalParagraph":
 			def paragraphFunc(info: textInfos.TextInfo) -> int | None:
 				try:
-					return info.NVDAObjectAtStart.location[0]
-				except AttributeError:
+					return info.location[0]
+				except (AttributeError, TypeError):
 					return None
 
 			def iterFactory(direction: str, pos: textInfos.TextInfo) -> Generator[TextInfoQuickNavItem, None, None]:
