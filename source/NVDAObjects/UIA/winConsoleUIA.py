@@ -296,7 +296,7 @@ class ConsoleUIATextInfoWorkaroundEndInclusive(ConsoleUIATextInfo):
 		charInfo = lineInfo.copy()
 		charInfo.setEndPoint(self, "endToStart")
 		text = charInfo._rangeObj.getText(-1)
-		offset = textUtils.WideStringOffsetConverter(text).wideStringLength
+		offset = textUtils.WideStringOffsetConverter(text).encodedStringLength
 		return offset
 
 	def _getWordOffsetsInThisLine(self, offset, lineInfo):
@@ -310,7 +310,7 @@ class ConsoleUIATextInfoWorkaroundEndInclusive(ConsoleUIATextInfo):
 		# not more than two alphanumeric chars in a row.
 		# Inject two alphanumeric characters at the end to fix this.
 		lineText += "xx"
-		lineTextLen = textUtils.WideStringOffsetConverter(lineText).wideStringLength
+		lineTextLen = textUtils.WideStringOffsetConverter(lineText).encodedStringLength
 		NVDAHelper.localLib.calculateWordOffsets(
 			lineText,
 			lineTextLen,

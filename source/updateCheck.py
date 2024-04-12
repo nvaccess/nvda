@@ -37,7 +37,6 @@ import pickle
 # #9818: one must import at least urllib.request in Python 3 in order to use full urllib functionality.
 import urllib.request
 import urllib.parse
-import tempfile
 import hashlib
 import ctypes.wintypes
 import requests
@@ -61,6 +60,7 @@ import shellapi
 import winUser
 import winKernel
 import fileUtils
+from utils.tempFile import _createEmptyTempFileForDeletingFile
 
 #: The URL to use for update checks.
 CHECK_URL = "https://www.nvaccess.org/nvdaUpdateCheck"
@@ -562,6 +562,7 @@ class UpdateAskInstallDialog(
 			# In Python 2, os.renames did rename files across drives, no longer allowed in Python 3 (error 17 (cannot move files across drives) is raised).
 			# This is prominent when trying to postpone an update for portable copy of NVDA if this runs from a USB flash drive or another internal storage device.
 			# Therefore use kernel32::MoveFileEx with copy allowed (0x2) flag set.
+			# TODO: consider moving to shutil.move, which supports moves across filesystems.
 			winKernel.moveFileEx(self.destPath, finalDest, winKernel.MOVEFILE_COPY_ALLOWED)
 		except:
 			log.debugWarning("Unable to rename the file from {} to {}".format(self.destPath, finalDest), exc_info=True)
@@ -601,7 +602,7 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 		self.backCompatToAPIVersion = getAPIVersionTupleFromString(updateInfo["apiCompatTo"])
 		self.versionTuple = None
 		self.fileHash = updateInfo.get("launcherHash")
-		self.destPath = tempfile.mktemp(prefix="nvda_update_", suffix=".exe")
+		self.destPath = _createEmptyTempFileForDeletingFile(prefix="nvda_update_", suffix=".exe")
 
 	def start(self):
 		"""Start the download.
