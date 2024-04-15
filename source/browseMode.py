@@ -2276,11 +2276,11 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			sequence: "textInfos.TextInfo.TextWithFieldsT",
 	) -> "textInfos.TextInfo.TextWithFieldsT":
 		"""
-			This function is used to postprocess styles output of _extractStyles function.
-			Raw output of _extractStyles function might contain identical styles,
-			since textInfos might contain formatChange fields for other reasons
-			rather than style change.
-			This function removes redundant formatChange fields and merges str items as appropriate.
+		This function is used to postprocess styles output of _extractStyles function.
+		Raw output of _extractStyles function might contain identical styles,
+		since textInfos might contain formatChange fields for other reasons
+		rather than style change.
+		This function removes redundant formatChange fields and merges str items as appropriate.
 		"""
 		currentStyle = None
 		redundantIndices = set()
@@ -2308,9 +2308,9 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			direction: documentBase._Movement,
 	):
 		"""
-			Given textRange in given style, this function expands textRange
-			in the desired direction as long as all text still belongs to the same style.
-			This function can expand textInfos across paragraphs.
+		Given textRange in given style, this function expands textRange
+		in the desired direction as long as all text still belongs to the same style.
+		This function can expand textInfos across paragraphs.
 		"""
 		resultInfo = textRange.copy()
 		paragraphInfo = textRange.copy()

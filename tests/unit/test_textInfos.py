@@ -236,7 +236,6 @@ class TestMoveToCodepointOffsetInOffsetsTextInfo(unittest.TestCase):
 		obj = BasicTextProvider(text=prefix + text, encoding=encoding)
 		info = obj.makeTextInfo(Offsets(0, 0))
 		info._startOffset = info._endOffset = prefixOffset
-		print(info._getStoryLength())
 		storyInfo = info.copy()
 		storyInfo.expand(textInfos.UNIT_STORY)
 		info.setEndPoint(storyInfo, "endToEnd")
