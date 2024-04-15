@@ -847,8 +847,8 @@ class TextInfo(baseObject.AutoPropertyObject):
 				info.setEndPoint(tmpInfo, which="endToEnd")
 		raise RuntimeError("Infinite loop during binary search.")
 
-
-
+	def _get_location(self) -> locationHelper.RectLTWH:
+		return self.NVDAObjectAtStart.location
 
 
 RE_EOL = re.compile("\r\n|[\n\r]")
