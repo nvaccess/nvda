@@ -30,7 +30,7 @@ What's New in NVDA
     -
   - Added a new unassigned input gesture to toggle the reporting of figures and captions. (#10826, #14349)
   -
-- Added support for the BrailleEdgeS2 braille device. (#16033)
+- Added support for the BrailleEdgeS2, BrailleEdgeS3 braille device. (#16033, #16279, @EdKweon)
 - NVDA will keep the audio device awake after speech stops, in order to prevent the start of the next speech being clipped with some audio devices such as Bluetooth headphones. (#14386, @jcsteh, @mltony)
 - Sound split: (#12985, @mltony)
   - Allows splitting NVDA sounds into one channel (e.g. left) while sounds from all other applications are placed in the other channel (e.g. right).
@@ -38,17 +38,21 @@ What's New in NVDA
   - The volume of the other applications can be adjusted by ``NVDA+alt+pageUp`` and ``NVDA+alt+pageDown``. (#16052, @mltony)
   - The sound of the other applications can be muted with ``NVDA+alt+delete``. (#16052, @mltony)
   -
--
 
 
 == Changes ==
 - Add-on Store:
   - The minimum and the last tested NVDA version for an add-on are now displayed in the "other details" area. (#15776, @Nael-Sayegh)
   -
-- Padding dots commonly used in tables of contents are not reported anymore at low punctuation levels. (#15845, @CyrilleB79)
-- Updated LibLouis Braille translator to [3.29.0 https://github.com/liblouis/liblouis/releases/tag/v3.29.0]. (#16259, @codeofdusk)
-  - Added new detailed (with capital letters indicated) Belarusian and Ukrainian Braille tables.
+- Component updates:
+  - Updated LibLouis Braille translator to [3.29.0 https://github.com/liblouis/liblouis/releases/tag/v3.29.0]. (#16259, @codeofdusk)
+    - Added new detailed (with capital letters indicated) Belarusian and Ukrainian Braille tables, along with a Spanish table for reading Greek texts.
+    -
+  - eSpeak NG has been updated to 1.52-dev commit ``cb62d93fd7``. (#15913)
+    - Added new language Tigrinya. 
+    -
   -
+- Padding dots commonly used in tables of contents are not reported anymore at low punctuation levels. (#15845, @CyrilleB79)
 -
 
 == Bug Fixes ==
@@ -56,6 +60,7 @@ What's New in NVDA
 - Fixed a bug where audio coordinates would be played while the application is in sleep mode when "Play audio coordinates when mouse moves" is enabled. (#8059, @hwf1324)
 - Add-on Store:
   - When pressing ``ctrl+tab``, focus properly moves to the new current tab title. (#14986, @ABuffEr)
+  - The community reviews action will be available, and the reviews webpage will be shown in the details panel, in all tabs of the store (#16179, @nvdaes)
   -
 - In Adobe Reader, NVDA no longer ignores alternative text set on formulas in PDFs. (#12715)
 - Changed several gestures for BrailleSense devices to avoid conflicts with characters of the French braille table. (#15306)
@@ -65,6 +70,12 @@ What's New in NVDA
   - ``alt+downArrow`` is now mapped to ``dot5+dot6+dot7+space``
   -
 - Fixed a bug causing NVDA to fail to read the ribbon and options within Geekbench. (#16251, @mzanm)
+- Windows 11 fixes:
+  - NVDA will once again announce hardware keyboard input suggestions. (#16283, @josephsl)
+  - In Version 24H2 (2024 Update and Windows Server 2025), mouse and touch interaction can be used in quick settings. (#16348, @josephsl)
+  -
+- Fixed a rare case when saving the configuration may fail to save all profiles.  (#16343, @CyrilleB79)
+-In Firefox and Chromium-based browsers,  NVDA will correctly enter focus mode when pressing enter when positioned within a presentational list (ul / ol) inside editable content. (#16325)
 -
 
 
@@ -73,6 +84,7 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 
 - Instantiating ``winVersion.WinVersion`` objects with unknown Windows versions above 10.0.22000 such as 10.0.25398 returns "Windows 11 unknown" instead of "Windows 10 unknown" for release name. (#15992, @josephsl)
 - Make the AppVeyor build process easier for NVDA forks, by adding configurable variables in appveyor.yml to disable or modify NV Access specific portions of the build scripts. (#16216, @XLTechie)
+- Added a how-to document, explaining the process of building NVDA forks on AppVeyor. (#16293, @XLTechie)
 -
 
 === Deprecations ===

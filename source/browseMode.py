@@ -450,8 +450,6 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def _iterNotLinkBlock(self, direction="next", pos=None):
 		raise NotImplementedError
 
-	MAX_ITERATIONS_FOR_SIMILAR_PARAGRAPH = 100_000
-	
 	def _iterSimilarParagraph(
 			self,
 			kind: str,
@@ -460,26 +458,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			direction: _Movement,
 			pos: textInfos.TextInfo,
 	) -> Generator[TextInfoQuickNavItem, None, None]:
-		if direction not in [_Movement.NEXT, _Movement.PREVIOUS]:
-			raise RuntimeError
-		info = pos.copy()
-		info.collapse()
-		info.expand(textInfos.UNIT_PARAGRAPH)
-		if desiredValue is None:
-			desiredValue = paragraphFunction(info)
-		for i in range(self.MAX_ITERATIONS_FOR_SIMILAR_PARAGRAPH):
-			# move by one paragraph in the desired direction
-			info.collapse(end=direction == _Movement.NEXT)
-			if direction == _Movement.PREVIOUS:
-				if info.move(textInfos.UNIT_CHARACTER, -1) == 0:
-					return
-			info.expand(textInfos.UNIT_PARAGRAPH)
-			if info.isCollapsed:
-				return
-			value = paragraphFunction(info)
-			if value == desiredValue:
-				yield TextInfoQuickNavItem(kind, self, info.copy(), outputReason=OutputReason.CARET)
-
+		raise NotImplementedError
 
 	def _quickNavScript(self,gesture, itemType, direction, errorMessage, readUnit):
 		if itemType=="notLinkBlock":
@@ -503,8 +482,8 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		elif itemType == "verticalParagraph":
 			def paragraphFunc(info: textInfos.TextInfo) -> int | None:
 				try:
-					return info.NVDAObjectAtStart.location[0]
-				except AttributeError:
+					return info.location[0]
+				except (AttributeError, TypeError):
 					return None
 
 			def iterFactory(direction: str, pos: textInfos.TextInfo) -> Generator[TextInfoQuickNavItem, None, None]:
@@ -2220,3 +2199,38 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			self._nativeAppSelectionMode = False
 			# Translators: reported when native selection mode is toggled off.
 			ui.message(_("Native app selection mode disabled"))
+
+	MAX_ITERATIONS_FOR_SIMILAR_PARAGRAPH = 100_000
+
+	def _iterSimilarParagraph(
+			self,
+			kind: str,
+			paragraphFunction: Callable[[textInfos.TextInfo], Optional[Any]],
+			desiredValue: Optional[Any],
+			direction: _Movement,
+			pos: textInfos.TextInfo,
+	) -> Generator[TextInfoQuickNavItem, None, None]:
+		if direction not in [_Movement.NEXT, _Movement.PREVIOUS]:
+			raise RuntimeError
+		info = pos.copy()
+		info.collapse()
+		info.expand(textInfos.UNIT_PARAGRAPH)
+		if desiredValue is None:
+			desiredValue = paragraphFunction(info)
+		for i in range(self.MAX_ITERATIONS_FOR_SIMILAR_PARAGRAPH):
+			# move by one paragraph in the desired direction
+			try:
+				info.collapse(end=direction == _Movement.NEXT)
+			except RuntimeError:
+				# Microsoft Word raises RuntimeError when collapsing textInfo to the last character of the document.
+				return
+
+			if direction == _Movement.PREVIOUS:
+				if info.move(textInfos.UNIT_CHARACTER, -1) == 0:
+					return
+			info.expand(textInfos.UNIT_PARAGRAPH)
+			if info.isCollapsed:
+				return
+			value = paragraphFunction(info)
+			if value == desiredValue:
+				yield TextInfoQuickNavItem(kind, self, info.copy(), outputReason=OutputReason.CARET)
