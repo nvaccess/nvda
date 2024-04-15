@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2020 NV Access Limited, James Teh, Dinesh Kaushal, Davy Kager, André-Abush Clause,
-# Babbage B.V., Leonard de Ruijter, Michael Curran, Accessolutions, Julien Cochuyt
+# Copyright (C) 2008-2024 NV Access Limited, James Teh, Dinesh Kaushal, Davy Kager, André-Abush Clause,
+# Babbage B.V., Leonard de Ruijter, Michael Curran, Accessolutions, Julien Cochuyt, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -113,10 +113,13 @@ def browseableMessage(message: str, title: Optional[str] = None, isHtml: bool = 
 		message = f"<pre>{escape(message)}</pre>"
 	try:
 		d = comtypes.client.CreateObject("Scripting.Dictionary")
-	except COMError:
-		log.error("Scripting.Dictionary component unavailable")
+	except (COMError, OSError):
+		log.error("Scripting.Dictionary component unavailable", exc_info=True)
+		# Store the module level message function in a new variable since it is masked by a local variable with
+		# the same name
+		messageFunction = globals()['message']
 		# Translators: reported when unable to display a browsable message.
-		message(_("Unable to display browseable message"))
+		messageFunction(_("Unable to display browseable message"))
 		return
 	d.add("title", title)
 	d.add("message", message)

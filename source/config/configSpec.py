@@ -58,7 +58,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	audioAwakeTime = integer(default=30, min=0, max=3600)
 	whiteNoiseVolume = integer(default=0, min=0, max=100)
 	soundSplitState = integer(default=0)
-	includedSoundSplitModes = int_list(default=list(0, 1, 2))
+	includedSoundSplitModes = int_list(default=list(0, 2, 3))
 
 # Braille settings
 [braille]

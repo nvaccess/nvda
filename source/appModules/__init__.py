@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2009-2023 NV Access Limited, Łukasz Golonka
+# Copyright (C) 2009-2024 NV Access Limited, Łukasz Golonka, Joseph Lee
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,6 +38,8 @@ EXECUTABLE_NAMES_TO_APP_MODS: dict[str, str] = {
 	"searchapp": "searchui",
 	# Windows search in Windows 11.
 	"searchhost": "searchui",
+	# Quick settings in Windows 11 24H2 (2024 Update and Server 2025).
+	"shellhost": "shellexperiencehost",
 	# Spring Tool Suite is based on Eclipse and should use its appModule.
 	"springtoolsuite4": "eclipse",
 	"sts": "eclipse",
