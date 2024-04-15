@@ -42,5 +42,4 @@ Filters speech sequence before it passes to synthDriver.
 
 :param value: the speech sequence to be filtered.
 :type value: SpeechSequence
-
 """
