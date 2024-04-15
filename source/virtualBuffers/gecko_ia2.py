@@ -261,7 +261,6 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		return locationHelper.RectLTWH(*location)
 
 
-
 class Gecko_ia2(VirtualBuffer):
 
 	TextInfo=Gecko_ia2_TextInfo
