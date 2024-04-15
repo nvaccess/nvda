@@ -45,6 +45,34 @@ Major highlights include:
 - at least 150 MB of storage space.
 -
 
+++ Windows tips with effect on NVDA experience ++[WindowsTips]
+In most   cases NVDA works very well together with Windows built in accessibility features. So it is important to always stay up to date  regarding Windows accessibility settings and make adjustments as needed to improve the experience when using NVDA.
+Note: NVDA also works in Windows when starting in minimal safe mode or in safe mode with network driver enabled.
+In general, Windows provides accessibility settings in following categories:
+- Vision
+- Hearing
+- Mobility
+- Learning & Interactivity
+All relevant settings can be found in the Windows settings center in Windows 10 or newer.
+Following Windows built in features and settings  will have an effect on NVDA user experience:
+- Magnifier: this feature in the vision category can  zoom in on elements visible on the screen, including cursors. It can  also zoom in on the visual indication of NVDA specific cursors or the NVDA specific viewers. The magnifier can also be turned on or off by pressing WINDOWS+PLUS or Windows+MINUS respectively.
+- Mouse, touch input and text cursor: these accessibility settings in the vision category can change the size, color and contrast of the mouse cursor, turn on a highlight for  focused elements when using touchscreens or touchpads, or  adjust the size of the text cursor. This will make it easier to see what  NVDA is currently focusing while navigating the screen.
+- Toggle keys: this feature in the interactivity settings category can also be enabled by pressing and holding the num lock key for 5 seconds. This will play a tone each time the caps lock , the num lock or the scroll keys are toggled on or off.
+- Filter keys: this feature in the interactivity settings category can also be enabled by holding the right shift key pressed for 8 seconds. Filter keys  can change the sensitivity of the key presses so that the keyboard waits a bit of time until the next key press is accepted. The waiting time can be adjusted in the Windows accessibility settings. This impacts following cases:
+  - Bounce keys (keyboard  waits a bit longer when pressing the same key multiple times)
+  - Slow keys (keyboard waits longer until it accepts key strokes)
+  - Repeat keys (keyboard waits longer until it repeats the key while holding that key pressed e.g. a letter)
+  -
+- Sticky keys: this feature in the interactivity category can lock a modifier key such as control, alt, shift, caps lock etc.
+  - Pressing the shift key 5 times and choosing "yes" in the prompt dialog will enable the sticky keys feature.
+  - Pressing two modifier keys together (such as CTRL+ALT) will disable the sticky keys feature.
+  - Using sticky keys will make it easier to press a key command which is composed of more than two or three keys, because the modifier keys will be locked so each key can be pressed separately.
+    - Pressing a modifier key once will lock that key (for example ctrl). Pressing the next modifier key (for example alt) will replace the previously pressed ctrl key.
+    - Pressing a modifier key twice will lock it permanently which is useful when  more than two modifier keys are needed (for example CTRL+SHIFT+ARROW keys).
+    - Pressing a modifier key a third time will unlock that key.
+    -
+  -
+-
 
 ++ Internationalization ++[Internationalization]
 It is important that people anywhere in the world, no matter what language they speak, get equal access to technology.
