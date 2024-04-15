@@ -2251,7 +2251,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 					if role == controlTypes.Role.MARKED_CONTENT:
 						style["marked"] = True
 					elif role == controlTypes.Role.LINK and microsoftWordMode:
-						# Due to #16196and #11427, ignoring color of links in MSWord, since it is reported incorrectly.
+						# Due to #16196 and #11427, ignoring color of links in MSWord, since it is reported incorrectly.
 						style["color"] = "MSWordLinkColor"
 					stack.append(style)
 				elif field.command == "controlEnd":
