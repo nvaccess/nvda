@@ -6,6 +6,7 @@
 
 """High-level functions to speak information.
 """ 
+
 import itertools
 import typing
 import weakref
