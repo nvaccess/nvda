@@ -36,7 +36,7 @@ What's New in NVDA
   - Allows splitting NVDA sounds in one channel (e.g. left) while sounds from all other applications in the other channel (e.g. right).
   - Toggled by ``NVDA+alt+s``.
   -
-
+-
 
 == Changes ==
 - Add-on Store:
@@ -51,6 +51,10 @@ What's New in NVDA
     -
   -
 - Padding dots commonly used in tables of contents are not reported anymore at low punctuation levels. (#15845, @CyrilleB79)
+- Changes to the COM Registration Fixing Tool:
+  - It will now show a message to the user, including the error, in the rare event of a Windows error while attempting COM re-registrations. (#12355, @XLTechie)  - The tool no longer starts with off-putting warning language. (#12351, @XLTechie)
+  - The initial window can now be exited with ``escape`` or ``alt+F4``. (#10799, @XLTechie)
+  -
 -
 
 == Bug Fixes ==
@@ -74,6 +78,7 @@ What's New in NVDA
   -
 - Fixed a rare case when saving the configuration may fail to save all profiles.  (#16343, @CyrilleB79)
 -In Firefox and Chromium-based browsers,  NVDA will correctly enter focus mode when pressing enter when positioned within a presentational list (ul / ol) inside editable content. (#16325)
+- The COM Registration Fixing Tool will no longer claim success, if it fails or is cancelled during the UAC phase. (#12345, @XLTechie)
 -
 
 
