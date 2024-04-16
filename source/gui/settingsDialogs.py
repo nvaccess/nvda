@@ -413,6 +413,32 @@ class SettingsPanel(
 		"""
 		return True
 
+	def _validationErrorMessageBox(
+			self,
+			message: str,
+			option: str,
+			category: Optional[str] = None,
+	):
+		if category is None:
+			category = self.title
+		gui.messageBox(
+			message=_(
+				# Translators: Content of the message displayed when a validation error occurs in the settings dialog
+				"{message}\n"
+				"\n"
+				'Category: "{category}"\n'
+				'Option: "{option}"'
+				).format(
+			message=message,
+			category=category,
+			option=option,
+			),
+			# Translators: The title of the message box when a setting's configuration is not valid.
+			caption=_("Invalid configuration"),
+			style=wx.OK | wx.ICON_ERROR,
+			parent=self,
+		)
+
 	def postSave(self):
 		"""Take action whenever saving settings for all panels in a L{MultiCategorySettingsDialog} succeeded.
 		Sub-classes may extend this method.
@@ -1719,13 +1745,13 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		enabledSpeechModes = self.speechModesList.CheckedItems
 		if len(enabledSpeechModes) < 2:
 			log.debugWarning("Too few speech modes enabled.")
-			gui.messageBox(
+			self._validationErrorMessageBox(
 				# Translators: Message shown when not enough speech modes are enabled.
-				_("At least two speech modes have to be checked."),
-				# Translators: The title of the message box
-				_("Error"),
-				wx.OK | wx.ICON_ERROR,
-				self,
+				message=_("At least two speech modes have to be checked."),
+				# Translators: Same as the label for the list of checkboxes where user can select speech modes that will
+				# be available in Speech Settings, but without keyboard accelerator (& character) nor final colon.
+				option=_("Modes available in the Cycle speech mode command"),
+				category=self.Parent.title,
 			)
 			return False
 		return super().isValid()
@@ -1838,11 +1864,13 @@ class KeyboardSettingsPanel(SettingsPanel):
 		# #2871: check whether at least one key is the nvda key.
 		if not self.modifierList.CheckedItems:
 			log.debugWarning("No NVDA key set")
-			gui.messageBox(
+			self._validationErrorMessageBox(
 				# Translators: Message to report wrong configuration of the NVDA key
-				_("At least one key must be used as the NVDA key."),
-				# Translators: The title of the message box
-				_("Error"), wx.OK|wx.ICON_ERROR,self)
+				message=_("At least one key must be used as the NVDA key."),
+				# Translators: Same as the label for the list of checkboxes controlling which keys are NVDA modifier
+				# keys in Keyboard Settings, but without keyboard accelerator (& character).
+				option=_("Select NVDA Modifier Keys"),
+			)
 			return False
 		return super().isValid()
 
@@ -2866,13 +2894,12 @@ class AudioPanel(SettingsPanel):
 		enabledSoundSplitModes = self.soundSplitModesList.CheckedItems
 		if len(enabledSoundSplitModes) < 1:
 			log.debugWarning("No sound split modes enabled.")
-			gui.messageBox(
+			self._validationErrorMessageBox(
 				# Translators: Message shown when no sound split modes are enabled.
-				_("At least one sound split mode has to be checked."),
-				# Translators: The title of the message box
-				_("Error"),
-				wx.OK | wx.ICON_ERROR,
-				self,
+				message=_("At least one sound split mode has to be checked."),
+				# Translators: Same as the label for the list of checkboxes controlling which sound split modes will be
+				# available. in Audio Settings, but without keyboard accelerator (& character) nor final colon.
+				option=_("Modes available in the 'Cycle sound split mode' command"),
 			)
 			return False
 		return super().isValid()
@@ -3429,9 +3456,9 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a textfield in the
 		# advanced settings panel.
-		textParagraphRegexLabelText = _("Regular expression for text paragraph navigation")
+		self.textParagraphRegexLabelText = _("Regular expression for text paragraph navigation")
 		self.textParagraphRegexEdit = sHelper.addLabeledControl(
-			textParagraphRegexLabelText,
+			self.textParagraphRegexLabelText,
 			wxCtrlClass=wx.TextCtrl,
 			size=(self.Parent.scaleSize(300), -1),
 		)
@@ -3447,13 +3474,10 @@ class AdvancedPanelControls(
 			re.compile(regex)
 		except re.error as e:
 			log.debugWarning("Failed to compile text paragraph regex", exc_info=True)
-			gui.messageBox(
+			self.Parent._validationErrorMessageBox(
 				# Translators: Message shown when invalid text paragraph regex entered
-				_("Failed to compile text paragraph regular expression: %s") % str(e),
-				# Translators: The title of the message box
-				_("Error"),
-				wx.OK | wx.ICON_ERROR,
-				self,
+				message=_("Failed to compile text paragraph regular expression: %s") % str(e),
+				option=self.textParagraphRegexLabelText,
 			)
 			return False
 		return True
