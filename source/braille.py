@@ -1526,7 +1526,6 @@ class ReviewTextInfoRegion(TextInfoRegion):
 			or previousReadingUnit is None
 		):
 			return
-		log.debug(f"jatketaan: {self._currentScript}")
 		from globalCommands import GlobalCommands
 		startOfNextOrPreviousLineScripts: set[_ScriptFunctionT] = {
 			GlobalCommands.script_braille_nextLine,
