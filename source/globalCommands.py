@@ -4520,6 +4520,12 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+alt+pageUp",
 	)
 	def script_increaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
+		state = audio.soundSplit.SoundSplitState(config.conf["audio"]["soundSplitState"])
+		if state == audio.soundSplit.SoundSplitState.OFF:
+			# Translators: An error message while trying to adjust applications volume
+			msg = _("Please enable sound split to use this command")
+			ui.message(msg)
+			return
 		volume = config.conf["audio"]["applicationsSoundVolume"]
 		volume = min(100, volume + 5)
 		config.conf["audio"]["applicationsSoundVolume"] = volume
@@ -4538,6 +4544,12 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+alt+pageDown",
 	)
 	def script_decreaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
+		state = audio.soundSplit.SoundSplitState(config.conf["audio"]["soundSplitState"])
+		if state == audio.soundSplit.SoundSplitState.OFF:
+			# Translators: An error message while trying to adjust applications volume
+			msg = _("Please enable sound split to use this command")
+			ui.message(msg)
+			return
 		volume = config.conf["audio"]["applicationsSoundVolume"]
 		volume = max(0, volume - 5)
 		config.conf["audio"]["applicationsSoundVolume"] = volume
@@ -4556,6 +4568,12 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+alt+delete",
 	)
 	def script_toggleApplicationsMute(self, gesture: "inputCore.InputGesture") -> None:
+		state = audio.soundSplit.SoundSplitState(config.conf["audio"]["soundSplitState"])
+		if state == audio.soundSplit.SoundSplitState.OFF:
+			# Translators: An error message while trying to adjust applications volume
+			msg = _("Please enable sound split to use this command")
+			ui.message(msg)
+			return
 		muted = config.conf["audio"]["applicationsMuted"]
 		muted = not muted
 		config.conf["audio"]["applicationsMuted"] = muted

@@ -212,13 +212,13 @@ def setSoundSplitState(
 			# We need to restore volume of all applications, but then don't set up callback for future audio sessions
 			state = SoundSplitState.NVDA_BOTH_APPS_BOTH
 			applyToFuture = False
+			appsVolume = appsVolume or 1.0
 	leftVolume, rightVolume = state.getAppVolume()
 	if appsVolume is None:
 		appsVolume = (
 			config.conf["audio"]["applicationsSoundVolume"] / 100
 			* (1 - int(config.conf["audio"]["applicationsMuted"]))
 		)
-
 	leftVolume *= appsVolume
 	rightVolume *= appsVolume
 	leftNVDAVolume, rightNVDAVolume = state.getNVDAVolume()
