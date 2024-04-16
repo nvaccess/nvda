@@ -4,6 +4,7 @@
 # See the file COPYING for more details.
 
 import config
+from config.configFlags import BrailleMode
 from dataclasses import dataclass
 from enum import Enum
 from functools import wraps
@@ -49,6 +50,11 @@ class Context(_Context, Enum):
 		# Translators: Reported when an action cannot be performed because NVDA is running the launcher temporary
 		# version
 		_("Action unavailable in a temporary version of NVDA"),
+	)
+	BRAILLE_MODE_SPEECH_OUTPUT = (
+		lambda: config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value,
+		# Translators: Reported when trying to toggle an unsupported setting in speech output mode.
+		_("Action unavailable while the braille mode is set to speech output"),
 	)
 
 
