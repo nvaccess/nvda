@@ -885,6 +885,8 @@ Here is a list of available commands:
 - Progress bar
 - Math formula
 - Vertically aligned paragraph
+- Same style text
+- Different style text
 -
 
 Keep in mind that there are two commands for each type of element, for moving forward in the document and backward in the document, and you must assign gestures to both commands in order to be able to quickly navigate in both directions.
@@ -1723,6 +1725,18 @@ You can move from braille table to braille table in the list by using the arrow 
 Note that this option is only useful if your braille display has a Perkins-style keyboard and this feature is supported by the braille display driver.
 If input is not supported on a display which does have a braille keyboard, this will be noted in the [Supported Braille Displays #SupportedBrailleDisplays] section.
 
+%kc:setting
+==== Braille mode ====[BrailleMode]
+Key: ``NVDA+alt+t``
+
+This option allows you to select between the available braille modes.
+
+Currently, two braille modes are supported, "follow cursors" and "display speech output".
+
+When follow cursors is selected, the braille display will follow either the system focus/caret or the navigator object/review cursor, depending on what braille is tethered to.
+
+When display speech output is selected, the braille display will show what NVDA speaks, or would have spoken if speech mode was set to "talk"
+
 ==== Expand to computer braille for the word at the cursor ====[BrailleSettingsExpandToComputerBraille]
 This option allows the word that is under the cursor to be displayed in non-contracted computer braille.
 
@@ -1984,10 +1998,14 @@ By default this command will cycle between the following modes:
 -
 
 There are more advanced sound split modes available in NVDA setting combo box.
+If you wish to adjust volume of all applications except for NVDA, consider using [the dedicated commands #OtherAppVolume].
 Please note, that sound split doesn't work as a mixer.
 For example, if an application is playing a stereo sound track while sound split is set to "NVDA on the left and applications on the right", then you will only hear the right channel of the sound track, while the left channel of the sound track will be muted.
 
 This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
+
+Please note, that if NVDA crashes, then it won't be able to restore application sounds volume, and those applications might still output sound only in one channel after NVDA crash.
+In order to mitigate this, please restart NVDA.
 
 ==== Customizing Sound split modes====[CustomizeSoundSplitModes]
 This checkable list allows selecting which sound split modes are included when cycling between them using ``NVDA+alt+s``.
@@ -1999,6 +2017,35 @@ By default only three modes are included.
 -
 
 Note that it is necessary to check at least one mode.
+This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
+
+==== Volume of other applications ====[OtherAppVolume]
+
+This slider allows you to adjust the volume of all currently running applications other than NVDA.
+This volume setting will apply to all other applications sound output, even if they start after this setting is changed.
+This volume can also be controlled via the following keyboard commands from anywhere:
+
+%kc:beginInclude
+|| Name | Key | Description |
+| Increase applications volume | ``NVDA+alt+pageUp`` | Increases volume of all applications except NVDA. |
+| Decrease applications volume | ``NVDA+alt+pageDown`` | Decreases volume of all applications except NVDA. |
+
+%kc:endInclude
+
+This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
+
+==== Mute other applications ====[MuteApplications]
+
+This checkbox allows you to mute all applications other than NVDA.
+This mute setting will apply to all other applications outputting sound, even if they start after this setting is changed.
+The following keyboard command can also be used from anywhere:
+
+%kc:beginInclude
+|| Name | Key | Description |
+| Toggle mute other applications | ``NVDA+alt+delete`` | Mutes or unmutes all applications other than NVDA. |
+
+%kc:endInclude
+
 This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
 
 +++ Vision +++[VisionSettings]
