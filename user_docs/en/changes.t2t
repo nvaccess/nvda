@@ -32,6 +32,10 @@ What's New in NVDA
     -
   - Added a new unassigned input gesture to toggle the reporting of figures and captions. (#10826, #14349)
   -
+- A new braille mode called "display speech output" has been added. (#15898, @Emil-18)
+  - When active, the braille display shows exactly what NVDA prepares to speak.
+  - It can be toggled by pressing ``NVDA+alt+t``, or from the braille settings dialog.
+  -
 - Added support for the BrailleEdgeS2, BrailleEdgeS3 braille device. (#16033, #16279, @EdKweon)
 - NVDA will keep the audio device awake after speech stops, in order to prevent the start of the next speech being clipped with some audio devices such as Bluetooth headphones. (#14386, @jcsteh, @mltony)
 - Sound split: (#12985, @mltony)
