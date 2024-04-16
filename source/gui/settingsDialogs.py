@@ -433,8 +433,8 @@ class SettingsPanel(
 			category=category,
 			option=option,
 			),
-			# Translators: The title of the message box
-			caption=_("Error"),
+			# Translators: The title of the message box when a setting's configuration is not valid.
+			caption=_("Invalid configuration"),
 			style=wx.OK | wx.ICON_ERROR,
 			parent=self,
 		)
