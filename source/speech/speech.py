@@ -2083,7 +2083,6 @@ def getControlFieldSpeech(  # noqa: C901
 	errorMessage = None
 	if State.INVALID_ENTRY in states:
 		errorMessage = attrs.get("errorMessage", None)
-	log.debug("Error message: %s", errorMessage)
 	value=attrs.get('value',"")
 
 	description: Optional[str] = None
