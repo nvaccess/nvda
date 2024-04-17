@@ -6,7 +6,8 @@
 from typing import Optional
 from ctypes import byref
 from comtypes import COMError
-from comtypes.automation import VARIANT
+from comtypes.automation import VARIANT, VT_EMPTY
+
 import array
 import winUser
 import UIAHandler
@@ -527,6 +528,8 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 				UIAHandler.UIA_RuntimeIdPropertyId, byref(runtimeID)
 			)
 		except COMError:
+			runtimeID = VARIANT()
+		if runtimeID.vt == VT_EMPTY:
 			log.debugWarning(
 				"Could not get runtimeID of document. Most likely document is dead."
 			)

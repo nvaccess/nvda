@@ -4223,6 +4223,7 @@ NVDA のセキュアモードは、ユーザーが NVDA の設定を変更する
 - 設定の保存、その他の設定ファイルの書き込み
 - 入力ジェスチャーの設定ファイルの書き込み
 - [設定プロファイル #ConfigurationProfiles] の作成、削除、名前の変更などの機能
+- [``-c``コマンドラインオプション #CommandLineOptions]によるカスタム設定フォルダの読み込み
 - NVDA の更新、ポータブル版の作成
 - [アドオンストア #AddonsManager]
 - [NVDA Python コンソール #PythonConsole]
@@ -4284,9 +4285,9 @@ nvda -q
 | ``-h`` | ``--help`` | コマンドラインのヘルプを表示して終了 |
 | ``-q`` | ``--quit`` | 現在実行中のNVDAを終了 |
 | ``-k`` | ``--check-running`` | 終了コードでNVDAが実行中かどうかを報告(実行中なら0、実行されていないなら1) |
-| ``-f LOGFILENAME`` | ``--log-file=LOGFILENAME`` | ログを出力するファイルを指定 |
-| ``-l LOGLEVEL`` | ``--log-level=LOGLEVEL`` | ログに書き込むメッセージのレベルの最低値 (デバッグ 10, 入出力 12, デバッグ警告 15, 情報 20, 警告 30, 無効 100), 既定値:警告 |
-| ``-c CONFIGPATH`` | ``--config-path=CONFIGPATH`` | NVDA設定フォルダーの場所 |
+| ``-f LOGFILENAME`` | ``--log-file=LOGFILENAME`` | ログを出力するファイルの指定。セキュアモードが有効な場合、ログ記録は常に無効 |
+| ``-l LOGLEVEL`` | ``--log-level=LOGLEVEL`` | ログに書き込むメッセージのレベルの最低値（デバッグ 10, 入出力 12, デバッグ警告 15, 情報 20, 無効 100）。セキュアモードが有効な場合、ログ記録は常に無効 |
+| ``-c CONFIGPATH`` | ``--config-path=CONFIGPATH`` | NVDA設定フォルダーの場所。セキュアモードが有効な場合、強制的に既定の値となります |
 | なし | ``--lang=LANGUAGE`` | NVDAの言語を設定します。 ``Windows`` で既定の言語、 ``en`` で英語、など |
 | ``-m`` | ``--minimal`` | サウンド、インターフェイス、開始メッセージなどを出しません |
 | ``-s`` | ``--secure`` | [セキュアモード #SecureMode] でNVDAを起動 |

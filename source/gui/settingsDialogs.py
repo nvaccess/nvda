@@ -413,6 +413,32 @@ class SettingsPanel(
 		"""
 		return True
 
+	def _validationErrorMessageBox(
+			self,
+			message: str,
+			option: str,
+			category: Optional[str] = None,
+	):
+		if category is None:
+			category = self.title
+		gui.messageBox(
+			message=_(
+				# Translators: Content of the message displayed when a validation error occurs in the settings dialog
+				"{message}\n"
+				"\n"
+				'Category: "{category}"\n'
+				'Option: "{option}"'
+				).format(
+			message=message,
+			category=category,
+			option=option,
+			),
+			# Translators: The title of the message box when a setting's configuration is not valid.
+			caption=_("Invalid configuration"),
+			style=wx.OK | wx.ICON_ERROR,
+			parent=self,
+		)
+
 	def postSave(self):
 		"""Take action whenever saving settings for all panels in a L{MultiCategorySettingsDialog} succeeded.
 		Sub-classes may extend this method.
@@ -1719,13 +1745,13 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		enabledSpeechModes = self.speechModesList.CheckedItems
 		if len(enabledSpeechModes) < 2:
 			log.debugWarning("Too few speech modes enabled.")
-			gui.messageBox(
+			self._validationErrorMessageBox(
 				# Translators: Message shown when not enough speech modes are enabled.
-				_("At least two speech modes have to be checked."),
-				# Translators: The title of the message box
-				_("Error"),
-				wx.OK | wx.ICON_ERROR,
-				self,
+				message=_("At least two speech modes have to be checked."),
+				# Translators: Same as the label for the list of checkboxes where user can select speech modes that will
+				# be available in Speech Settings, but without keyboard accelerator (& character) nor final colon.
+				option=_("Modes available in the Cycle speech mode command"),
+				category=self.Parent.title,
 			)
 			return False
 		return super().isValid()
@@ -1838,11 +1864,13 @@ class KeyboardSettingsPanel(SettingsPanel):
 		# #2871: check whether at least one key is the nvda key.
 		if not self.modifierList.CheckedItems:
 			log.debugWarning("No NVDA key set")
-			gui.messageBox(
+			self._validationErrorMessageBox(
 				# Translators: Message to report wrong configuration of the NVDA key
-				_("At least one key must be used as the NVDA key."),
-				# Translators: The title of the message box
-				_("Error"), wx.OK|wx.ICON_ERROR,self)
+				message=_("At least one key must be used as the NVDA key."),
+				# Translators: Same as the label for the list of checkboxes controlling which keys are NVDA modifier
+				# keys in Keyboard Settings, but without keyboard accelerator (& character).
+				option=_("Select NVDA Modifier Keys"),
+			)
 			return False
 		return super().isValid()
 
@@ -2718,6 +2746,25 @@ class AudioPanel(SettingsPanel):
 		self.bindHelpEvent("SoundVolume", self.soundVolSlider)
 		self.soundVolSlider.SetValue(config.conf["audio"]["soundVolume"])
 
+		# Translators: This is the label for a slider control in the
+		# Audio settings panel.
+		label = _("Volume of other applications")
+		self.appSoundVolSlider: nvdaControls.EnhancedInputSlider = sHelper.addLabeledControl(
+			label,
+			nvdaControls.EnhancedInputSlider,
+			minValue=0,
+			maxValue=100
+		)
+		self.bindHelpEvent("OtherAppVolume", self.appSoundVolSlider)
+		self.appSoundVolSlider.SetValue(config.conf["audio"]["applicationsSoundVolume"])
+
+		# Translators: This is the label for a checkbox control in the
+		# Audio settings panel.
+		label = _("Mute other applications")
+		self.muteApplicationsCheckBox: wx.CheckBox = sHelper.addItem(wx.CheckBox(self, label=label))
+		self.bindHelpEvent("MuteApplications", self.muteApplicationsCheckBox)
+		self.muteApplicationsCheckBox.SetValue(config.conf["audio"]["applicationsMuted"])
+
 		# Translators: This is a label for the sound split combo box in the Audio Settings dialog.
 		soundSplitLabelText = _("&Sound split mode:")
 		self.soundSplitComboBox = sHelper.addLabeledControl(
@@ -2807,10 +2854,13 @@ class AudioPanel(SettingsPanel):
 
 		config.conf["audio"]["soundVolumeFollowsVoice"] = self.soundVolFollowCheckBox.IsChecked()
 		config.conf["audio"]["soundVolume"] = self.soundVolSlider.GetValue()
+		config.conf["audio"]["applicationsSoundVolume"] = self.appSoundVolSlider.GetValue()
+		config.conf["audio"]["applicationsMuted"] = self.muteApplicationsCheckBox.IsChecked()
 
 		index = self.soundSplitComboBox.GetSelection()
 		config.conf["audio"]["soundSplitState"] = index
-		audio.setSoundSplitState(audio.SoundSplitState(index))
+		if nvwave.usingWasapiWavePlayer():
+			audio.setSoundSplitState(audio.SoundSplitState(index))
 		config.conf["audio"]["includedSoundSplitModes"] = [
 			mIndex
 			for mIndex in range(len(self._allSoundSplitModes))
@@ -2835,6 +2885,8 @@ class AudioPanel(SettingsPanel):
 			wasapi
 			and not self.soundVolFollowCheckBox.IsChecked()
 		)
+		self.appSoundVolSlider.Enable(wasapi)
+		self.muteApplicationsCheckBox.Enable(wasapi)
 		self.soundSplitComboBox.Enable(wasapi)
 		self.soundSplitModesList.Enable(wasapi)
 
@@ -2842,13 +2894,12 @@ class AudioPanel(SettingsPanel):
 		enabledSoundSplitModes = self.soundSplitModesList.CheckedItems
 		if len(enabledSoundSplitModes) < 1:
 			log.debugWarning("No sound split modes enabled.")
-			gui.messageBox(
+			self._validationErrorMessageBox(
 				# Translators: Message shown when no sound split modes are enabled.
-				_("At least one sound split mode has to be checked."),
-				# Translators: The title of the message box
-				_("Error"),
-				wx.OK | wx.ICON_ERROR,
-				self,
+				message=_("At least one sound split mode has to be checked."),
+				# Translators: Same as the label for the list of checkboxes controlling which sound split modes will be
+				# available. in Audio Settings, but without keyboard accelerator (& character) nor final colon.
+				option=_("Modes available in the 'Cycle sound split mode' command"),
 			)
 			return False
 		return super().isValid()
@@ -3405,9 +3456,9 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a textfield in the
 		# advanced settings panel.
-		textParagraphRegexLabelText = _("Regular expression for text paragraph navigation")
+		self.textParagraphRegexLabelText = _("Regular expression for text paragraph navigation")
 		self.textParagraphRegexEdit = sHelper.addLabeledControl(
-			textParagraphRegexLabelText,
+			self.textParagraphRegexLabelText,
 			wxCtrlClass=wx.TextCtrl,
 			size=(self.Parent.scaleSize(300), -1),
 		)
@@ -3423,13 +3474,10 @@ class AdvancedPanelControls(
 			re.compile(regex)
 		except re.error as e:
 			log.debugWarning("Failed to compile text paragraph regex", exc_info=True)
-			gui.messageBox(
+			self.Parent._validationErrorMessageBox(
 				# Translators: Message shown when invalid text paragraph regex entered
-				_("Failed to compile text paragraph regular expression: %s") % str(e),
-				# Translators: The title of the message box
-				_("Error"),
-				wx.OK | wx.ICON_ERROR,
-				self,
+				message=_("Failed to compile text paragraph regular expression: %s") % str(e),
+				option=self.textParagraphRegexLabelText,
 			)
 			return False
 		return True
@@ -3904,26 +3952,43 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			log.debug(
 				f"Loading input tables completed, now at {timePassed:.2f} seconds from start"
 			)
+		# Translators: The label for a setting in braille settings to select which braille mode to use
+		modeListText = _("Braille mode:")
+		modeChoices = [x.displayString for x in braille.BrailleMode]
+		self.brailleModes = sHelper.addLabeledControl(modeListText, wx.Choice, choices=modeChoices)
+		self.bindHelpEvent("BrailleMode", self.brailleModes)
+		self.brailleModes.Bind(wx.EVT_CHOICE, self._onModeChange)
+		current = braille.BrailleMode(config.conf["braille"]["mode"])
+		modeList = list(braille.BrailleMode)
+		index = modeList.index(current)
+		self.brailleModes.SetSelection(index)
+		followCursorGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self)
+		self.followCursorGroupBox = followCursorGroupSizer.GetStaticBox()
+		followCursorGroupHelper = guiHelper.BoxSizerHelper(self, sizer=followCursorGroupSizer)
+		sHelper.addItem(followCursorGroupHelper)
+
 
 		# Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 		expandAtCursorText = _("E&xpand to computer braille for the word at the cursor")
-		self.expandAtCursorCheckBox = sHelper.addItem(
-			wx.CheckBox(self, wx.ID_ANY, label=expandAtCursorText)
+		self.expandAtCursorCheckBox = followCursorGroupHelper.addItem(
+			wx.CheckBox(self.followCursorGroupBox, wx.ID_ANY, label=expandAtCursorText)
 		)
 		self.bindHelpEvent("BrailleSettingsExpandToComputerBraille", self.expandAtCursorCheckBox)
 		self.expandAtCursorCheckBox.SetValue(config.conf["braille"]["expandAtCursor"])
 
 		# Translators: The label for a setting in braille settings to show the cursor.
 		showCursorLabelText = _("&Show cursor")
-		self.showCursorCheckBox = sHelper.addItem(wx.CheckBox(self, label=showCursorLabelText))
+		self.showCursorCheckBox = followCursorGroupHelper.addItem(
+			wx.CheckBox(self.followCursorGroupBox, label=showCursorLabelText)
+		)
 		self.bindHelpEvent("BrailleSettingsShowCursor", self.showCursorCheckBox)
 		self.showCursorCheckBox.Bind(wx.EVT_CHECKBOX, self.onShowCursorChange)
 		self.showCursorCheckBox.SetValue(config.conf["braille"]["showCursor"])
 
 		# Translators: The label for a setting in braille settings to enable cursor blinking.
 		cursorBlinkLabelText = _("Blink cursor")
-		self.cursorBlinkCheckBox = sHelper.addItem(
-			wx.CheckBox(self, label=cursorBlinkLabelText)
+		self.cursorBlinkCheckBox = followCursorGroupHelper.addItem(
+			wx.CheckBox(self.followCursorGroupBox, label=cursorBlinkLabelText)
 		)
 		self.bindHelpEvent("BrailleSettingsBlinkCursor", self.cursorBlinkCheckBox)
 		self.cursorBlinkCheckBox.Bind(wx.EVT_CHECKBOX, self.onBlinkCursorChange)
@@ -3937,7 +4002,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			("braille", "cursorBlinkRate")
 		).kwargs["min"])
 		maxBlinkRate = int(config.conf.getConfigValidation(("braille", "cursorBlinkRate")).kwargs["max"])
-		self.cursorBlinkRateEdit = sHelper.addLabeledControl(
+		self.cursorBlinkRateEdit = followCursorGroupHelper.addLabeledControl(
 			cursorBlinkRateLabelText,
 			nvdaControls.SelectOnFocusSpinCtrl,
 			min=minBlinkRate,
@@ -3953,7 +4018,11 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 		# Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
 		cursorShapeFocusLabelText = _("Cursor shape for &focus:")
-		self.cursorShapeFocusList = sHelper.addLabeledControl(cursorShapeFocusLabelText, wx.Choice, choices=cursorShapeChoices)
+		self.cursorShapeFocusList = followCursorGroupHelper.addLabeledControl(
+			cursorShapeFocusLabelText,
+			wx.Choice,
+			choices=cursorShapeChoices
+		)
 		self.bindHelpEvent("BrailleSettingsCursorShapeForFocus", self.cursorShapeFocusList)
 		try:
 			selection = self.cursorShapes.index(config.conf["braille"]["cursorShapeFocus"])
@@ -3965,7 +4034,11 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 		# Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
 		cursorShapeReviewLabelText = _("Cursor shape for &review:")
-		self.cursorShapeReviewList = sHelper.addLabeledControl(cursorShapeReviewLabelText, wx.Choice, choices=cursorShapeChoices)
+		self.cursorShapeReviewList = followCursorGroupHelper.addLabeledControl(
+			cursorShapeReviewLabelText,
+			wx.Choice,
+			choices=cursorShapeChoices
+		)
 		self.bindHelpEvent("BrailleSettingsCursorShapeForReview", self.cursorShapeReviewList)
 		try:
 			selection = self.cursorShapes.index(config.conf["braille"]["cursorShapeReview"])
@@ -3981,7 +4054,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		# to decide if braille messages should be shown and automatically disappear from braille display.
 		showMessagesText = _("Show messages")
 		showMessagesChoices = [i.displayString for i in ShowMessages]
-		self.showMessagesList = sHelper.addLabeledControl(
+		self.showMessagesList = followCursorGroupHelper.addLabeledControl(
 			showMessagesText,
 			wx.Choice,
 			choices=showMessagesChoices,
@@ -3998,7 +4071,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		).kwargs["max"])
 		# Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 		messageTimeoutText = _("Message &timeout (sec)")
-		self.messageTimeoutEdit = sHelper.addLabeledControl(
+		self.messageTimeoutEdit = followCursorGroupHelper.addLabeledControl(
 			messageTimeoutText,
 			nvdaControls.SelectOnFocusSpinCtrl,
 			min=minTimeout,
@@ -4014,9 +4087,14 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 		# Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 		tetherListText = _("Tether B&raille:")
-		# Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
+		# Translators: The value for a setting in the braille settings, to set whether braille should be tethered to
+		# focus or review cursor.
 		tetherChoices = [x[1] for x in braille.handler.tetherValues]
-		self.tetherList = sHelper.addLabeledControl(tetherListText, wx.Choice, choices=tetherChoices)
+		self.tetherList = followCursorGroupHelper.addLabeledControl(
+			tetherListText,
+			wx.Choice,
+			choices=tetherChoices
+		)
 		self.bindHelpEvent("BrailleTether", self.tetherList)
 		self.tetherList.Bind(wx.EVT_CHOICE, self.onTetherToChange)
 		tetherChoice = config.conf["braille"]["tetherTo"]
@@ -4025,14 +4103,16 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		if gui._isDebug():
 			log.debug("Loading tether settings completed, now at %.2f seconds from start"%(time.time() - startTime))
 
-		self.brailleReviewRoutingMovesSystemCaretCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
-			labelText=_(
-				# Translators: This is a label for a combo-box in the Braille settings panel.
-				"Move system caret when ro&uting review cursor"
-			),
-			wxCtrlClass=nvdaControls.FeatureFlagCombo,
-			keyPath=["braille", "reviewRoutingMovesSystemCaret"],
-			conf=config.conf,
+		self.brailleReviewRoutingMovesSystemCaretCombo: nvdaControls.FeatureFlagCombo = (
+			followCursorGroupHelper.addLabeledControl(
+				labelText=_(
+					# Translators: This is a label for a combo-box in the Braille settings panel.
+					"Move system caret when ro&uting review cursor"
+				),
+				wxCtrlClass=nvdaControls.FeatureFlagCombo,
+				keyPath=["braille", "reviewRoutingMovesSystemCaret"],
+				conf=config.conf,
+			)
 		)
 		self.bindHelpEvent(
 			"BrailleSettingsReviewRoutingMovesSystemCaret",
@@ -4044,26 +4124,48 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 		# Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 		readByParagraphText = _("Read by &paragraph")
-		self.readByParagraphCheckBox = sHelper.addItem(wx.CheckBox(self, label=readByParagraphText))
+		self.readByParagraphCheckBox = followCursorGroupHelper.addItem(
+			wx.CheckBox(self.followCursorGroupBox, label=readByParagraphText)
+		)
 		self.bindHelpEvent("BrailleSettingsReadByParagraph", self.readByParagraphCheckBox)
 		self.readByParagraphCheckBox.Value = config.conf["braille"]["readByParagraph"]
 
-		# Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
-		wordWrapText = _("Avoid splitting &words when possible")
-		self.wordWrapCheckBox = sHelper.addItem(wx.CheckBox(self, label=wordWrapText))
-		self.bindHelpEvent("BrailleSettingsWordWrap", self.wordWrapCheckBox)
-		self.wordWrapCheckBox.Value = config.conf["braille"]["wordWrap"]
 		# Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 		focusContextPresentationLabelText = _("Focus context presentation:")
 		self.focusContextPresentationValues = [x[0] for x in braille.focusContextPresentations]
 		focusContextPresentationChoices = [x[1] for x in braille.focusContextPresentations]
-		self.focusContextPresentationList = sHelper.addLabeledControl(focusContextPresentationLabelText, wx.Choice, choices=focusContextPresentationChoices)
+		self.focusContextPresentationList = followCursorGroupHelper.addLabeledControl(
+			focusContextPresentationLabelText,
+			wx.Choice,
+			choices=focusContextPresentationChoices
+		)
 		self.bindHelpEvent("BrailleSettingsFocusContextPresentation", self.focusContextPresentationList)
 		try:
 			index=self.focusContextPresentationValues.index(config.conf["braille"]["focusContextPresentation"])
 		except:
 			index=0
 		self.focusContextPresentationList.SetSelection(index)
+
+		self.brailleShowSelectionCombo: nvdaControls.FeatureFlagCombo = followCursorGroupHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is a label for a combo-box in the Braille settings panel.
+				"Show se&lection"
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["braille", "showSelection"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("BrailleSettingsShowSelection", self.brailleShowSelectionCombo)
+		self.followCursorGroupBox.Enable(
+			list(braille.BrailleMode)[self.brailleModes.GetSelection()] is braille.BrailleMode.FOLLOW_CURSORS
+		)
+
+		# Translators: The label for a setting in braille settings to enable word wrap
+		# (try to avoid splitting words at the end of the braille display).
+		wordWrapText = _("Avoid splitting &words when possible")
+		self.wordWrapCheckBox = sHelper.addItem(wx.CheckBox(self, label=wordWrapText))
+		self.bindHelpEvent("BrailleSettingsWordWrap", self.wordWrapCheckBox)
+		self.wordWrapCheckBox.Value = config.conf["braille"]["wordWrap"]
 
 		self.brailleInterruptSpeechCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=_(
@@ -4076,24 +4178,18 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.bindHelpEvent("BrailleSettingsInterruptSpeech", self.brailleInterruptSpeechCombo)
 
-		self.brailleShowSelectionCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
-			labelText=_(
-				# Translators: This is a label for a combo-box in the Braille settings panel.
-				"Show se&lection"
-			),
-			wxCtrlClass=nvdaControls.FeatureFlagCombo,
-			keyPath=["braille", "showSelection"],
-			conf=config.conf,
-		)
-		self.bindHelpEvent("BrailleSettingsShowSelection", self.brailleShowSelectionCombo)
-
 		if gui._isDebug():
 			log.debug("Finished making settings, now at %.2f seconds from start"%(time.time() - startTime))
 
 	def onSave(self):
 		AutoSettingsMixin.onSave(self)
+		
 		braille.handler.table = self.outTables[self.outTableList.GetSelection()]
 		brailleInput.handler.table = self.inTables[self.inTableList.GetSelection()]
+		mode = list(braille.BrailleMode)[self.brailleModes.GetSelection()]
+		config.conf["braille"]["mode"] = mode.value
+		braille.handler.mainBuffer.clear()
+		config.conf["braille"]["translationTable"] = self.outTableNames[self.outTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
 		config.conf["braille"]["showCursor"] = self.showCursorCheckBox.GetValue()
 		config.conf["braille"]["cursorBlink"] = self.cursorBlinkCheckBox.GetValue()
@@ -4131,6 +4227,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		tetherChoice = [x.value for x in TetherTo][evt.GetSelection()]
 		self.brailleReviewRoutingMovesSystemCaretCombo.Enable(tetherChoice != TetherTo.FOCUS.value)
 
+	def _onModeChange(self, evt: wx.CommandEvent):
+		self.followCursorGroupBox.Enable(not evt.GetSelection())
 
 def showStartErrorForProviders(
 		parent: wx.Window,

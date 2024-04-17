@@ -27,6 +27,7 @@ from annotation import _AnnotationRolesT
 import driverHandler
 import pkgutil
 import importlib
+import contextlib
 import ctypes.wintypes
 import threading
 import time
@@ -41,6 +42,7 @@ import config
 from config.configFlags import (
 	ShowMessages,
 	TetherTo,
+	BrailleMode,
 	ReportTableHeaders,
 )
 from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag
@@ -66,6 +68,7 @@ from editableText import EditableText
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
+	from speech.types import SpeechSequence
 
 FALLBACK_TABLE = config.conf.getConfigValidation(("braille", "translationTable")).default
 """Table to use if the output table configuration is invalid."""
@@ -2068,8 +2071,19 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.ackTimerHandle = winKernel.createWaitableTimer()
 
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
+		# noqa: F401 avoid module level import to prevent cyclical dependency
+		# between speech and braille
+		from speech.extensions import pre_speech, pre_speechCanceled
+		pre_speech.register(self._showSpeechInBraille)
+		pre_speechCanceled.register(self.clearBrailleRegions)
+
 
 	def terminate(self):
+		# noqa: F401 avoid module level import to prevent cyclical dependency
+		# between speech and braille
+		from speech.extensions import pre_speech, pre_speechCanceled
+		pre_speechCanceled.unregister(self.clearBrailleRegions)
+		pre_speech.unregister(self._showSpeechInBraille)
 		self._disableDetection()
 		if self._messageCallLater:
 			self._messageCallLater.Stop()
@@ -2099,6 +2113,46 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def _set_table(self, table: brailleTables.BrailleTable):
 		self._table = table
 		config.conf["braille"]["translationTable"] = table.fileName
+
+	# The list containing the regions that will be shown in braille when the speak function is called
+	# and the braille mode is set to speech output
+	_showSpeechInBrailleRegions: list[TextRegion] = []
+
+	def _showSpeechInBraille(self, speechSequence: "SpeechSequence"):
+		if config.conf["braille"]["mode"] == BrailleMode.FOLLOW_CURSORS.value:
+			return
+		_showSpeechInBrailleRegions = self._showSpeechInBrailleRegions
+		regionsText = "".join([i.rawText for i in _showSpeechInBrailleRegions])
+		if len(regionsText) > 100000:
+			return
+		text = " ".join([x for x in speechSequence if isinstance(x, str)])
+		currentRegions = False
+		if _showSpeechInBrailleRegions:
+			text = f" {text}"
+			currentRegions = True
+
+		region = TextRegion(text)
+		region.update()
+		_showSpeechInBrailleRegions.append(region)
+		self.mainBuffer.regions = _showSpeechInBrailleRegions.copy()
+		if not currentRegions:
+			handler.mainBuffer.focus(_showSpeechInBrailleRegions[0])
+		handler.mainBuffer.update()
+		handler.update()
+
+	_suppressClearBrailleRegions: bool = False
+
+	@contextlib.contextmanager
+	def suppressClearBrailleRegions(self, script: inputCore.ScriptT):
+		from globalCommands import commands
+		suppress = script in [commands.script_braille_scrollBack, commands.script_braille_scrollForward]
+		self._suppressClearBrailleRegions = suppress
+		yield
+
+	def clearBrailleRegions(self):
+		if not self._suppressClearBrailleRegions:
+			self._showSpeechInBrailleRegions.clear()
+		self._suppressClearBrailleRegions = False
 
 	def getTether(self):
 		return self._tether
@@ -2398,6 +2452,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			not self.enabled
 			or config.conf["braille"]["showMessages"] == ShowMessages.DISABLED
 			or text is None
+			or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value
 		):
 			return
 		if self.buffer is self.messageBuffer:
@@ -2440,7 +2495,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.update()
 
 	def handleGainFocus(self, obj: "NVDAObject", shouldAutoTether: bool = True) -> None:
-		if not self.enabled:
+		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			return
 		if objectBelowLockScreenAndWindowsIsLocked(obj):
 			return
@@ -2485,7 +2540,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			obj: "NVDAObject",
 			shouldAutoTether: bool = True
 	) -> None:
-		if not self.enabled:
+		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			return
 		if objectBelowLockScreenAndWindowsIsLocked(obj):
 			return
@@ -2595,7 +2650,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._regionsPendingUpdate.add(region)
 
 	def handleReviewMove(self, shouldAutoTether=True):
-		if not self.enabled:
+		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			return
 		reviewPos = api.getReviewPosition()
 		if shouldAutoTether:
