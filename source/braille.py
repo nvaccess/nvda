@@ -828,9 +828,9 @@ def getControlFieldBraille(
 	value=field.get('value',None)
 	current = field.get('current', controlTypes.IsCurrent.NO)
 	placeholder=field.get('placeholder', None)
-	errorMessage = field.get("errorMessage", None)
-	if errorMessage and State.INVALID_ENTRY not in states:
-		errorMesage = None
+	errorMessage = None
+	if errorMessage and State.INVALID_ENTRY in states:
+		errorMessage = field.get("errorMessage", None)
 
 
 	hasDetails = field.get('hasDetails', False) and config.conf["annotations"]["reportDetails"]
