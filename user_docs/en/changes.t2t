@@ -15,6 +15,8 @@ What's New in NVDA
     - toggle button (#16001, @mltony)
     - progress bar (#16001, @mltony)
     - math formula (#16001, @mltony)
+    - same style text (#16000, @mltony)
+    - different style text (#16000, @mltony)
     -
   -
 - Reporting row and column headers is now supported in contenteditable HTML elements. (#14113)
@@ -30,11 +32,17 @@ What's New in NVDA
     -
   - Added a new unassigned input gesture to toggle the reporting of figures and captions. (#10826, #14349)
   -
+- A new braille mode called "display speech output" has been added. (#15898, @Emil-18)
+  - When active, the braille display shows exactly what NVDA prepares to speak.
+  - It can be toggled by pressing ``NVDA+alt+t``, or from the braille settings dialog.
+  -
 - Added support for the BrailleEdgeS2, BrailleEdgeS3 braille device. (#16033, #16279, @EdKweon)
 - NVDA will keep the audio device awake after speech stops, in order to prevent the start of the next speech being clipped with some audio devices such as Bluetooth headphones. (#14386, @jcsteh, @mltony)
 - Sound split: (#12985, @mltony)
-  - Allows splitting NVDA sounds in one channel (e.g. left) while sounds from all other applications in the other channel (e.g. right).
+  - Allows splitting NVDA sounds into one channel (e.g. left) while sounds from all other applications are placed in the other channel (e.g. right).
   - Toggled by ``NVDA+alt+s``.
+  - The volume of the other applications can be adjusted by ``NVDA+alt+pageUp`` and ``NVDA+alt+pageDown``. (#16052, @mltony)
+  - The sound of the other applications can be muted with ``NVDA+alt+delete``. (#16052, @mltony)
   -
 
 
@@ -74,6 +82,7 @@ What's New in NVDA
   -
 - Fixed a rare case when saving the configuration may fail to save all profiles.  (#16343, @CyrilleB79)
 -In Firefox and Chromium-based browsers,  NVDA will correctly enter focus mode when pressing enter when positioned within a presentational list (ul / ol) inside editable content. (#16325)
+- Column state change is automatically reported when selecting columns to display in Thunderbird message list. (#16323)
 -
 
 

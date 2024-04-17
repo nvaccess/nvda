@@ -26,6 +26,7 @@ import speechDictHandler
 import characterProcessing
 import languageHandler
 from . import manager
+from .extensions import speechCanceled, pre_speechCanceled, pre_speech
 from .extensions import filter_speechSequence, speechCanceled
 from .commands import (
 	# Commands that are used in this file.
@@ -170,6 +171,7 @@ def cancelSpeech():
 	# Import only for this function to avoid circular import.
 	from .sayAll import SayAllHandler
 	SayAllHandler.stop()
+	pre_speechCanceled.notify()
 	if _speechState.beenCanceled:
 		return
 	elif _speechState.speechMode == SpeechMode.off:
@@ -975,6 +977,7 @@ def speak(  # noqa: C901
 	import speechViewer
 	if speechViewer.isActive:
 		speechViewer.appendSpeechSequence(speechSequence)
+	pre_speech.notify(speechSequence=speechSequence, symbolLevel=symbolLevel, priority=priority)
 	if _speechState.speechMode == SpeechMode.off:
 		return
 	elif _speechState.speechMode == SpeechMode.beeps:

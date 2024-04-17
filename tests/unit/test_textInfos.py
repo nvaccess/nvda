@@ -221,11 +221,24 @@ class TestMoveToCodepointOffsetInOffsetsTextInfo(unittest.TestCase):
 		"utf_32_le",
 	]
 
-	def runTestImpl(self, text: str, target: str, encoding: str):
+	prefixes = [
+		"",
+		"a\n",
+		"0123456789",
+		"\r\n\r\n",
+		"Привет ",
+		"🤦😊👍",
+	]
+
+	def runTestImpl(self, prefix: str, text: str, target: str, encoding: str):
 		self.assertTrue(target in text, "Invalid test case", )
-		obj = BasicTextProvider(text=text, encoding=encoding)
+		prefixOffset = textUtils.getOffsetConverter(encoding)(prefix).encodedStringLength
+		obj = BasicTextProvider(text=prefix + text, encoding=encoding)
 		info = obj.makeTextInfo(Offsets(0, 0))
-		info.expand(textInfos.UNIT_STORY)
+		info._startOffset = info._endOffset = prefixOffset
+		storyInfo = info.copy()
+		storyInfo.expand(textInfos.UNIT_STORY)
+		info.setEndPoint(storyInfo, "endToEnd")
 		s = info.text
 		self.assertEqual(text, s)
 		i = s.index(target)
@@ -236,18 +249,19 @@ class TestMoveToCodepointOffsetInOffsetsTextInfo(unittest.TestCase):
 		resultInfo.setEndPoint(endInfo, "endToEnd")
 		self.assertEqual(resultInfo.text, target)
 
-	def runTestAllEncodings(self, text: str, target: str):
+	def runTestAllEncodingsAllPrefixes(self, text: str, target: str):
 		for encoding in self.encodings:
-			self.runTestImpl(text, target, encoding)
+			for prefix in self.prefixes:
+				self.runTestImpl(prefix, text, target, encoding)
 
 	def test_simple(self):
-		self.runTestAllEncodings("Hello, world!", "world")
+		self.runTestAllEncodingsAllPrefixes("Hello, world!", "world")
 
 	def test_russian(self):
-		self.runTestAllEncodings("Привет, мир!", "мир")
+		self.runTestAllEncodingsAllPrefixes("Привет, мир!", "мир")
 
 	def test_chinese(self):
-		self.runTestAllEncodings("前往另一种语言写成的文章。", "文")
+		self.runTestAllEncodingsAllPrefixes("前往另一种语言写成的文章。", "文")
 
 	def test_smileyFace(self):
-		self.runTestAllEncodings("😂0😂", "0")
+		self.runTestAllEncodingsAllPrefixes("😂0😂", "0")
