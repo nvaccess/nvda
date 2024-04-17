@@ -34,6 +34,7 @@ import wx
 import louisHelper
 import louis
 import gui
+from controlTypes.state import State
 import winKernel
 import keyboardHandler
 import baseObject
@@ -628,6 +629,11 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 		)
 	if roleText:
 		textList.append(roleText)
+	
+	errorMessage = propertyValues.get("errorMessage")
+	if errorMessage:
+		textList.append(errorMessage)
+
 	description = propertyValues.get("description")
 	if description:
 		textList.append(description)
@@ -710,6 +716,9 @@ class NVDAObjectRegion(Region):
 		placeholderValue = obj.placeholder
 		if placeholderValue and not obj._isTextEmpty:
 			placeholderValue = None
+		errorMessage = obj.errorMessage
+		if errorMessage and State.INVALID_ENTRY not in obj.states:
+			errorMessage = None
 
 		# determine if description should be read
 		_shouldUseDescription = (
@@ -742,6 +751,7 @@ class NVDAObjectRegion(Region):
 			keyboardShortcut=obj.keyboardShortcut if presConfig["reportKeyboardShortcuts"] else None,
 			positionInfo=obj.positionInfo if presConfig["reportObjectPositionInformation"] else None,
 			cellCoordsText=obj.cellCoordsText if config.conf["documentFormatting"]["reportTableCellCoords"] else None,
+			errorMessage=errorMessage,
 		)
 		if role == controlTypes.Role.MATH:
 			import mathPres
@@ -818,6 +828,11 @@ def getControlFieldBraille(
 	value=field.get('value',None)
 	current = field.get('current', controlTypes.IsCurrent.NO)
 	placeholder=field.get('placeholder', None)
+	errorMessage = field.get("errorMessage", None)
+	if errorMessage and State.INVALID_ENTRY not in states:
+		errorMesage = None
+
+
 	hasDetails = field.get('hasDetails', False) and config.conf["annotations"]["reportDetails"]
 	if config.conf["annotations"]["reportDetails"]:
 		detailsRoles: Set[Union[None, controlTypes.Role]] = field.get('detailsRoles')
@@ -866,6 +881,7 @@ def getControlFieldBraille(
 			value=value,
 			roleText=roleText,
 			placeholder=placeholder,
+			errorMessage=errorMessage
 		)
 
 	else:
@@ -941,6 +957,7 @@ def _getControlFieldForReportStart(
 		value: Optional[str],
 		roleText: str,
 		placeholder: Optional[str],
+		errorMessage: Optional[str],
 ) -> str:
 	props = {
 		"states": states,
@@ -951,6 +968,7 @@ def _getControlFieldForReportStart(
 		"description": description,
 		"hasDetails": hasDetails,
 		"detailsRoles": detailsRoles,
+		"errorMessage": errorMessage,
 	}
 
 	if role == controlTypes.Role.MATH:
