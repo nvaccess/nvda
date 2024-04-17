@@ -23,6 +23,7 @@ from NVDAObjects import NVDAObject
 from NVDAObjects.IAccessible import IAccessible, IA2TextTextInfo
 from NVDAObjects.behaviors import EditableText
 from logHandler import log
+from scriptHandler import script
 import speech
 import api
 import braille
@@ -474,6 +475,28 @@ class SymphonyDocument(CompoundDocument):
 		else:
 			log.warning('Backspace did not remove text as expected.')
 
+	@script(
+		gestures=[
+			# bold
+			"kb:control+b",
+			# italic
+			"kb:control+i",
+			# underline
+			"kb:control+u",
+			# superscript
+			"kb:control+shift+p",
+			# subscript
+			"kb:control+shift+b",
+			# align left
+			"kb:control+l",
+			# align center
+			"kb:control+e",
+			# align right
+			"kb:control+r",
+			# justified
+			"kb:control+j",
+		]
+	)
 	def script_toggleTextAttribute(self, gesture):
 		# reset time and enable announcement of toggled toolbar buttons
 		# s. SymphonyButton#event_stateChange
@@ -481,27 +504,6 @@ class SymphonyDocument(CompoundDocument):
 		SymphonyDocument.last_formatting_gesture_event_time = time.time()
 		# send gesture
 		gesture.send()
-
-	__gestures = {
-		# bold
-		"kb:control+b": "toggleTextAttribute",
-		# italic
-		"kb:control+i": "toggleTextAttribute",
-		# underline
-		"kb:control+u": "toggleTextAttribute",
-		# superscript
-		"kb:control+shift+p": "toggleTextAttribute",
-		# subscript
-		"kb:control+shift+b": "toggleTextAttribute",
-		# align left
-		"kb:control+l": "toggleTextAttribute",
-		# align center
-		"kb:control+e": "toggleTextAttribute",
-		# align right
-		"kb:control+r": "toggleTextAttribute",
-		# justified
-		"kb:control+j": "toggleTextAttribute",
-	}
 
 
 class AppModule(appModuleHandler.AppModule):
