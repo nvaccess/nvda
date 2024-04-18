@@ -1554,8 +1554,7 @@ class ReviewTextInfoRegion(TextInfoRegion):
 		if (
 			(
 				self._currentScript in startOfNextOrPreviousLineScripts
-				and previousReadingUnit.start != self._readingInfo.start
-				and previousReadingUnit.end != self._readingInfo.end
+				and previousReadingUnit != self._readingInfo
 			)
 			or self._currentScript in startOfCurrentLineOrControlScripts
 		):
