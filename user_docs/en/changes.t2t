@@ -44,6 +44,8 @@ What's New in NVDA
   - The volume of the other applications can be adjusted by ``NVDA+alt+pageUp`` and ``NVDA+alt+pageDown``. (#16052, @mltony)
   - The sound of the other applications can be muted with ``NVDA+alt+delete``. (#16052, @mltony)
   -
+- HP Secure Browser is now supported. (#16377)
+-
 
 
 == Changes ==
@@ -83,6 +85,10 @@ What's New in NVDA
 - Fixed a rare case when saving the configuration may fail to save all profiles.  (#16343, @CyrilleB79)
 -In Firefox and Chromium-based browsers,  NVDA will correctly enter focus mode when pressing enter when positioned within a presentational list (ul / ol) inside editable content. (#16325)
 - Column state change is automatically reported when selecting columns to display in Thunderbird message list. (#16323)
+- Fixes for Chromium-based browsers when used with UIA:
+  - Fixed bugs causing NVDA to hang. (#16393, #16394)
+  - Backspace key is now working correctly in Gmail sign-in fields. (#16395)
+  -
 -
 
 
