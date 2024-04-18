@@ -181,10 +181,15 @@ class AppModule(appModuleHandler.AppModule):
 		try:
 
 			# Autocompletion items are placed outside the main eclipse window
-			if (obj.role == controlTypes.Role.LISTITEM
+			if (
+				obj.role == controlTypes.Role.LISTITEM
 				and obj.parent.parent.parent.role == controlTypes.Role.DIALOG
 				and obj.parent.parent.parent.simpleParent == api.getDesktopObject()
-				and obj.parent.parent.parent.parent.simpleNext.role in (controlTypes.Role.BUTTON, controlTypes.Role.TOGGLEBUTTON)):
+				and obj.parent.parent.parent.parent.simpleNext.role in (
+					controlTypes.Role.BUTTON,
+					controlTypes.Role.TOGGLEBUTTON
+				)
+			):
 				clsList.insert(0, AutocompletionListItem)
 		except:
 			pass
