@@ -142,7 +142,10 @@ def getSentenceStopRegex(
 		for s in nonBreakingPrefixes.split("|")
 		if len(s) > 0
 	)
-	regex = regex.format(nonBreakingRegex=nonBreakingNLBs)
+	try:
+		regex = regex.format(nonBreakingRegex=nonBreakingNLBs)
+	except KeyError as e:
+		raise RuntimeError("Failed to substitute non-breaking prefixes into sentence regular expression. Please make sure your sentence regular expression is valid.")
 	return re.compile(regex)
 
 
