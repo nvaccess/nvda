@@ -355,16 +355,16 @@ class SymphonyTable(IAccessible):
 
 class SymphonyButton(IAccessible):
 
-    def event_stateChange(self):
+    def event_stateChange(self) -> None:
         # announce new state of toggled toolbar button to indicate formatting change
         # if registered gesture resulted in button state change
         if (
-            SymphonyDocument.announce_toolbar_button_toggle
+            SymphonyDocument.announceToolbarButtonToggle
             and self.parent
             and self.parent.role == controlTypes.Role.TOOLBAR
             and time.time()
             < (
-                SymphonyDocument.last_formatting_gesture_event_time
+                SymphonyDocument.lastFormattingGestureEventTime
                 + SymphonyDocument.GESTURE_ANNOUNCEMENT_TIMEOUT
             )
         ):
@@ -382,7 +382,7 @@ class SymphonyButton(IAccessible):
                 message = _("{textAttribute} off").format(textAttribute=self.name)
             ui.message(message)
             # disable announcement until next registered keypress enables it again
-            SymphonyDocument.announce_toolbar_button_toggle = False
+            SymphonyDocument.announceToolbarButtonToggle = False
 
         return super().event_stateChange()
 
@@ -438,8 +438,8 @@ class SymphonyDocument(CompoundDocument):
 
 	# variables used for handling announcements resulting from gestures
 	GESTURE_ANNOUNCEMENT_TIMEOUT = 0.15
-	announce_toolbar_button_toggle = False
-	last_formatting_gesture_event_time = 0
+	announceToolbarButtonToggle = False
+	lastFormattingGestureEventTime = 0
 
 	# override base class implementation because that one assumes
 	# that the text retrieved from the text info for the text unit
@@ -497,11 +497,11 @@ class SymphonyDocument(CompoundDocument):
 			"kb:control+j",
 		]
 	)
-	def script_toggleTextAttribute(self, gesture):
+	def script_toggleTextAttribute(self, gesture: inputCore.InputGesture):
 		# reset time and enable announcement of toggled toolbar buttons
-		# s. SymphonyButton#event_stateChange
-		SymphonyDocument.announce_toolbar_button_toggle = True
-		SymphonyDocument.last_formatting_gesture_event_time = time.time()
+		# see L{SymphonyButton.event_stateChange}
+		SymphonyDocument.announceToolbarButtonToggle = True
+		SymphonyDocument.lastFormattingGestureEventTime = time.time()
 		# send gesture
 		gesture.send()
 
