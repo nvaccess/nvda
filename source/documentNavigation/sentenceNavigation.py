@@ -145,7 +145,7 @@ def getSentenceStopRegex(
 	try:
 		regex = regex.format(nonBreakingRegex=nonBreakingNLBs)
 	except KeyError as e:
-		raise RuntimeError("Failed to substitute non-breaking prefixes into sentence regular expression. Please make sure your sentence regular expression is valid.")
+		raise RuntimeError("Failed to substitute non-breaking prefixes into sentence regular expression. Please make sure your sentence regular expression is valid.", e)
 	return re.compile(regex)
 
 
