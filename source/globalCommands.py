@@ -68,6 +68,7 @@ from base64 import b16encode
 import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import audio
+import nvwave
 
 
 #: Script category for text review commands.
@@ -4520,6 +4521,14 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+alt+pageUp",
 	)
 	def script_increaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
+		if not nvwave.usingWasapiWavePlayer():
+			message = _(
+				# Translators: error message when wasapi is turned off.
+				"Cannot adjust volume of other applications. "
+				"Please enable WASAPI in the Advanced category in NVDA Settings to use it."
+			)
+			ui.message(message)
+			return
 		state = audio.soundSplit.SoundSplitState(config.conf["audio"]["soundSplitState"])
 		if state == audio.soundSplit.SoundSplitState.OFF:
 			# Translators: An error message while trying to adjust applications volume
@@ -4544,6 +4553,14 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+alt+pageDown",
 	)
 	def script_decreaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
+		if not nvwave.usingWasapiWavePlayer():
+			message = _(
+				# Translators: error message when wasapi is turned off.
+				"Cannot adjust volume of other applications. "
+				"Please enable WASAPI in the Advanced category in NVDA Settings to use it."
+			)
+			ui.message(message)
+			return
 		state = audio.soundSplit.SoundSplitState(config.conf["audio"]["soundSplitState"])
 		if state == audio.soundSplit.SoundSplitState.OFF:
 			# Translators: An error message while trying to adjust applications volume
@@ -4568,6 +4585,14 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+alt+delete",
 	)
 	def script_toggleApplicationsMute(self, gesture: "inputCore.InputGesture") -> None:
+		if not nvwave.usingWasapiWavePlayer():
+			message = _(
+				# Translators: error message when wasapi is turned off.
+				"Cannot mute other applications. "
+				"Please enable WASAPI in the Advanced category in NVDA Settings to use it."
+			)
+			ui.message(message)
+			return
 		state = audio.soundSplit.SoundSplitState(config.conf["audio"]["soundSplitState"])
 		if state == audio.soundSplit.SoundSplitState.OFF:
 			# Translators: An error message while trying to adjust applications volume
