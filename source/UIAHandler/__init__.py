@@ -1144,8 +1144,17 @@ class UIAHandler(COMObject):
 			# Using IAccessible for NetUIHWND controls causes focus changes not to be reported
 			# when the ribbon is collapsed.
 			# Testing shows that these controls emits proper events but they are ignored by NVDA.
-			isOfficeApp = appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
-			isOffice2013OrOlder = int(appModule.productVersion.split(".")[0]) < 16
+			try:
+				isOfficeApp = appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
+				isOffice2013OrOlder = int(appModule.productVersion.split(".")[0]) < 16
+			except RuntimeError:
+				# this is not necessarily an office app, or an app with version information, for example geekbench 6.
+				log.debugWarning(
+					"Failed parsing productName / productVersion, version information likely missing",
+					exc_info=True
+				)
+				isOfficeApp = False
+				isOffice2013OrOlder = False
 			if isOfficeApp and isOffice2013OrOlder:
 				parentHwnd = winUser.getAncestor(hwnd, winUser.GA_PARENT)
 				while parentHwnd:
@@ -1195,7 +1204,9 @@ class UIAHandler(COMObject):
 				# As their IA2 implementation is still better at the moment.
 				# However, in cases where Chromium is running under another logon session,
 				# the IAccessible2 implementation is unavailable.
-				hasAccessToIA2 = not appModule.isRunningUnderDifferentLogonSession
+				# 'brchrome' is part of HP SureClick, a chromium-based browser which runs webpages to run in separate
+				# virtual machines - it supports UIA remoting but not IAccessible2 remoting.
+				hasAccessToIA2 = not appModule.isRunningUnderDifferentLogonSession and not appModule.appName == "brchrome"
 				if (
 					AllowUiaInChromium.getConfig() == AllowUiaInChromium.NO
 					# Disabling is only useful if we can inject in-process (and use our older code)

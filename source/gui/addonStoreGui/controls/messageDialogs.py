@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2023 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2023-2024 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -104,7 +104,7 @@ def _shouldProceedWhenInstalledAddonVersionUnknown(
 	dlg = ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
-		title=pgettext("addonStore", "Add-on not compatible"),
+		title=pgettext("addonStore", "Install add-on"),
 		message=incompatibleMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon),
 		useRememberChoiceCheckbox=useRememberChoiceCheckbox,
@@ -124,11 +124,11 @@ def _shouldProceedToRemoveAddonDialog(
 		# {addon} is replaced with the add-on name.
 		"Are you sure you wish to remove the {addon} add-on from NVDA? "
 		"This cannot be undone."
-	).format(addon=addon.name)
+	).format(addon=addon.displayName)
 	dlg = ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
 		# Translators: Title for message asking if the user really wishes to remove the selected Add-on.
-		title=pgettext("addonStore", "Remove Add-on"),
+		title=pgettext("addonStore", "Remove add-on"),
 		message=removeMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon),
 		useRememberChoiceCheckbox=useRememberChoiceCheckbox,
@@ -161,7 +161,7 @@ def _shouldInstallWhenAddonTooOldDialog(
 	dlg = ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
-		title=pgettext("addonStore", "Add-on not compatible"),
+		title=pgettext("addonStore", "Install add-on"),
 		message=incompatibleMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon),
 		useRememberChoiceCheckbox=useRememberChoiceCheckbox,
@@ -194,7 +194,7 @@ def _shouldEnableWhenAddonTooOldDialog(
 	dlg = ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
-		title=pgettext("addonStore", "Add-on not compatible"),
+		title=pgettext("addonStore", "Enable add-on"),
 		message=incompatibleMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon),
 		useRememberChoiceCheckbox=useRememberChoiceCheckbox,
@@ -221,7 +221,7 @@ def _showAddonRequiresNVDAUpdateDialog(
 	displayDialogAsModal(ErrorAddonInstallDialog(
 		parent=parent,
 		# Translators: The title of a dialog presented when an error occurs.
-		title=_("Add-on not compatible"),
+		title=pgettext("addonStore", "Add-on installation failure"),
 		message=incompatibleMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon)
 	))

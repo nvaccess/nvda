@@ -6,7 +6,8 @@
 from typing import Optional
 from ctypes import byref
 from comtypes import COMError
-from comtypes.automation import VARIANT
+from comtypes.automation import VARIANT, VT_EMPTY
+
 import array
 import winUser
 import UIAHandler
@@ -493,6 +494,13 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 				UIAHandler.UIA_ControlTypePropertyId, UIAHandler.UIA_TabItemControlTypeId
 			)
 			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
+		elif nodeType == "progressBar":
+			condition = UIAHandler.handler.clientObject.createPropertyCondition(
+				UIAHandler.UIA_ControlTypePropertyId,
+				UIAHandler.UIA_ProgressBarControlTypeId
+			)
+			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
+
 		elif nodeType=="nonTextContainer":
 			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:True},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ComboBoxControlTypeId})
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
@@ -520,6 +528,8 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 				UIAHandler.UIA_RuntimeIdPropertyId, byref(runtimeID)
 			)
 		except COMError:
+			runtimeID = VARIANT()
+		if runtimeID.vt == VT_EMPTY:
 			log.debugWarning(
 				"Could not get runtimeID of document. Most likely document is dead."
 			)

@@ -877,8 +877,9 @@ All other fields will be ignored.
 
 +++ Locale-specific Messages +++
 Each language directory can also contain gettext information, which is the system used to translate the rest of NVDA's user interface and reported messages.
-As with the rest of NVDA, an nvda.mo compiled gettext database file should be placed in the LC_MESSAGES directory within this directory.
-To allow plugins in your add-on to access gettext message information via calls to _(), you must initialize translations at the top of each Python module by calling addonHandler.initTranslation().
+As with the rest of NVDA, an ``nvda.mo`` compiled gettext database file should be placed in the ``LC_MESSAGES`` directory within this directory.
+To allow plugins in your add-on to access gettext message information via calls to ``_()``, ``ngettext()``, ``npgettext()`` and ``pgettext()`` you must initialize translations at the top of each Python module by calling ``addonHandler.initTranslation()``.
+This function cannot be called in modules that do not belong to an add-on, e.g. in a scratchpad subdirectory.
 For more information about gettext and NVDA translation in general, please read the [Translating NVDA wiki page https://github.com/nvaccess/nvda/wiki/Translating]
 
 ++ Add-on Documentation ++[AddonDoc]
@@ -1040,6 +1041,9 @@ For examples of how to define and use new extension points, please see the code 
 ++ speech ++[speechExtPts]
 || Type | Extension Point | Description |
 | ``Action`` | ``speechCanceled`` | Triggered when speech is canceled. |
+| ``Action`` | ``pre_speechCanceled`` | Triggered before speech is canceled. |
+| ``Action`` | ``pre_speech`` | Triggered before NVDA handles prepared speech. |
+| ``Filter`` | ``filter_speechSequence`` | Allows components or add-ons to filter speech sequence before it passes to the synth driver. |
 
 ++ synthDriverHandler ++[synthDriverHandlerExtPts]
 || Type | Extension Point | Description |

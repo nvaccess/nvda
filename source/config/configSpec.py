@@ -7,6 +7,7 @@
 
 from io import StringIO
 from configobj import ConfigObj
+from . import configDefaults
 
 #: The version of the schema outlined in this file. Increment this when modifying the schema and
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
@@ -54,10 +55,17 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	WASAPI = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	soundVolumeFollowsVoice = boolean(default=false)
 	soundVolume = integer(default=100, min=0, max=100)
+	audioAwakeTime = integer(default=30, min=0, max=3600)
+	whiteNoiseVolume = integer(default=0, min=0, max=100)
+	soundSplitState = integer(default=0)
+	applicationsSoundVolume = integer(default=100, min=0, max=100)
+	applicationsMuted = boolean(default=False)
+	includedSoundSplitModes = int_list(default=list(0, 2, 3))
 
 # Braille settings
 [braille]
 	display = string(default=auto)
+	mode = option("followCursors", "speechOutput", default="followCursors")
 	translationTable = string(default=en-ueb-g1.ctb)
 	inputTable = string(default=en-ueb-g1.ctb)
 	expandAtCursor = boolean(default=true)
@@ -183,6 +191,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enableOnPageLoad = boolean(default=true)
 	autoFocusFocusableElements = boolean(default=False)
 	loadChromiumVBufOnBusyState = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
+	textParagraphRegex = string(default="{configDefaults.DEFAULT_TEXT_PARAGRAPH_REGEX}")
 
 [touch]
 	enabled = boolean(default=true)
@@ -230,6 +239,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportLandmarks = boolean(default=true)
 	reportArticles = boolean(default=false)
 	reportFrames = boolean(default=true)
+	reportFigures = boolean(default=true)
 	reportClickable = boolean(default=true)
 
 [documentNavigation]

@@ -237,7 +237,14 @@ The actual commands will not execute while in input help mode.
 | Move to next synth setting | ``NVDA+control+rightArrow`` | ``NVDA+shift+control+rightArrow`` | Moves to the next available speech setting after the current, wrapping around to the first setting again after the last |
 | Move to previous synth setting | ``NVDA+control+leftArrow`` | ``NVDA+shift+control+leftArrow`` | Moves to the next available speech setting before the current, wrapping around to the last setting after the first |
 | Increment current synth setting | ``NVDA+control+upArrow`` | ``NVDA+shift+control+upArrow`` | increases the current speech setting you are on. E.g. increases the rate, chooses the next voice, increases the volume |
+| Increment the current synth setting in a larger step | ``NVDA+control+pageUp`` | ``NVDA+shift+control+pageUp`` | Increases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump forward every 20 voices; when you're on slider settings (rate, pitch, etc) it will jump forward the value up to 20% |
+
 | Decrement current synth setting | ``NVDA+control+downArrow`` | ``NVDA+shift+control+downArrow`` | decreases the current speech setting you are on. E.g. decreases the rate, chooses the previous voice, decreases the volume |
+| Decrement the current synth setting in a larger step | ``NVDA+control+pageDown`` | ``NVDA+shift+control+pageDown`` | Decreases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump backward every 20 voices; when you're on a slider setting, it will jump backward the value up to 20%. |
+
+It is also possible to set the first or last value of the current synth setting by assign custom gestures in [Input Gestures dialog #InputGestures], under the speech category.
+This means, for example, when you're on a rate setting, it will set the rate to 0 or 100.
+When you're on a voice setting, it will set the first or last voice.
 
 +++ Web navigation +++[WebNavigation]
 The full list of Single Letter Navigation keys is in the [Browse Mode #BrowseMode] section of the user guide.
@@ -829,6 +836,7 @@ The following keys by themselves jump to the next available element, while addin
 - o: embedded object (audio and video player, application, dialog, etc.)
 - 1 to 6: headings at levels 1 to 6 respectively
 - a: annotation (comment, editor revision, etc.)
+- ``p``: text paragraph
 - w: spelling error
 -
 To move to the beginning or end of containing elements such as lists and tables:
@@ -843,14 +851,42 @@ If you want to use these while still being able to use your cursor keys to read 
 To toggle single letter navigation on and off for the current document, press NVDA+shift+space.
 %kc:endInclude
 
++++ Text paragraph navigation command +++[TextNavigationCommand]
+
+You can jump to the next or previous text paragraph by pressing ``p`` or ``shift+p``.
+Text paragraphs are defined by a group of text that appears to be written in complete sentences.
+This can be useful to find the beginning of readable content on various webpages, such as:
+- News websites
+- Forums
+- Blog posts
+- 
+
+These commands can also be helpful for skipping certain kinds of clutter, such as:
+- Ads
+- Menus
+- Headers
+- 
+
+Please note, however, that while NVDA tries its best to identify text paragraphs, the algorithm is not perfect and at times can make mistakes.
+Additionally, this command is different from paragraph navigation commands ``control+downArrow/upArrow``.
+Text paragraph navigation only jumps between text paragraphs, while paragraph navigation commands take the cursor to the previous/next paragraphs regardless of whether they contain text or not.
+
 +++ Other navigation commands +++[OtherNavigationCommands]
 
 In addition to the quick navigation commands listed above, NVDA has commands that have no default keys assigned.
 To use these commands, you first need to assign gestures to them using the [Input Gestures dialog #InputGestures].
 Here is a list of available commands:
 - Article
+- Figure
 - Grouping
 - Tab
+- Menu item
+- Toggle button
+- Progress bar
+- Math formula
+- Vertically aligned paragraph
+- Same style text
+- Different style text
 -
 
 Keep in mind that there are two commands for each type of element, for moving forward in the document and backward in the document, and you must assign gestures to both commands in order to be able to quickly navigate in both directions.
@@ -1160,6 +1196,8 @@ When the Screen Curtain is active some tasks directly based on what appears on t
 Due to a change in the Windows Magnification API, Screen Curtain had to be updated to support the newest versions of Windows.
 Use NVDA 2021.2 to activate Screen Curtain with Windows 10 21H2 (10.0.19044) or later.
 For security purposes, when using a new version of Windows, get visual confirmation that the Screen Curtain makes the screen entirely black.
+
+Please note that while Windows Magnifier is running and inverted screen colors are being used, the screen curtain cannot be enabled.
 
 + Content Recognition +[ContentRecognition]
 When authors don't provide sufficient information for a screen reader user to determine the content of something, various tools can be used to attempt to recognize the content from an image.
@@ -1659,7 +1697,9 @@ If you wish to quickly change speech settings without going to the Speech catego
 | Move to next synth setting | NVDA+control+rightArrow | NVDA+shift+control+rightArrow | Moves to the next available speech setting after the current, wrapping around to the first setting again after the last |
 | Move to previous synth setting | NVDA+control+leftArrow | NVDA+shift+control+leftArrow | Moves to the next available speech setting before the current, wrapping around to the last setting after the first |
 | Increment current synth setting | NVDA+control+upArrow | NVDA+shift+control+upArrow | increases the current speech setting you are on. E.g. increases the rate, chooses the next voice, increases the volume |
+| Increment the current synth setting in a larger step | ``NVDA+control+pageUp`` | ``NVDA+shift+control+pageUp`` | Increases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump forward every 20 voices; when you're on slider settings (rate, pitch, etc) it will jump forward the value up to 20% |
 | Decrement current synth setting | NVDA+control+downArrow | NVDA+shift+control+downArrow | decreases the current speech setting you are on. E.g. decreases the rate, chooses the previous voice, decreases the volume |
+| Decrement the current synth setting in a larger step | ``NVDA+control+pageDown`` | ``NVDA+shift+control+pageDown`` | Decreases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump backward every 20 voices; when you're on a slider setting, it will jump backward the value up to 20% |
 %kc:endInclude
 
 +++ Braille +++[BrailleSettings]
@@ -1684,6 +1724,18 @@ You can move from braille table to braille table in the list by using the arrow 
 
 Note that this option is only useful if your braille display has a Perkins-style keyboard and this feature is supported by the braille display driver.
 If input is not supported on a display which does have a braille keyboard, this will be noted in the [Supported Braille Displays #SupportedBrailleDisplays] section.
+
+%kc:setting
+==== Braille mode ====[BrailleMode]
+Key: ``NVDA+alt+t``
+
+This option allows you to select between the available braille modes.
+
+Currently, two braille modes are supported, "follow cursors" and "display speech output".
+
+When follow cursors is selected, the braille display will follow either the system focus/caret or the navigator object/review cursor, depending on what braille is tethered to.
+
+When display speech output is selected, the braille display will show what NVDA speaks, or would have spoken if speech mode was set to "talk"
 
 ==== Expand to computer braille for the word at the cursor ====[BrailleSettingsExpandToComputerBraille]
 This option allows the word that is under the cursor to be displayed in non-contracted computer braille.
@@ -1912,6 +1964,88 @@ This option is not available if you have started NVDA with [WASAPI disabled for 
 ==== Volume of NVDA sounds ====[SoundVolume]
 This slider allows you to set the volume of NVDA sounds and beeps.
 This setting only takes effect when "Volume of NVDA sounds follows voice volume" is disabled.
+This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
+
+==== Time to keep audio device awake after speech ====[AudioAwakeTime]
+
+This edit box specifies how long NVDA keeps the audio device awake after speech ends.
+This allows NVDA to avoid certain speech glitches like dropped parts of words.
+This can happen due to audio devices (especially Bluetooth and wireless devices) entering standby mode.
+This might also be helpful in other use cases, such as when running NVDA inside a virtual machine (e.g. Citrix Virtual Desktop), or on certain laptops.
+
+Lower values may allow audio to be cut-off more often, as a device may enter standby mode too soon, causing the start of the following speech to be clipped.
+Setting the value too high may cause the battery of the sound output device to discharge faster, as it stays active for longer while no sound is being sent.
+
+
+You can set the time to zero in order to disable this feature.
+
+==== Sound split====[SelectSoundSplitMode]
+
+The sound split feature allows users to make use of their stereo output devices, such as headphones and speakers.
+Sound split makes it possible to have NVDA speech in one channel (e.g. left) and have all other applications play their sounds in the other channel (e.g. right).
+By default sound split is disabled, which means that all applications including NVDA will play sounds in both left and right channels.
+A gesture allows cycling through the various sound split modes:
+%kc:beginInclude
+|| Name | Key | Description |
+| Cycle Sound Split Mode | ``NVDA+alt+s`` | Cycles between sound split modes. |
+
+%kc:endInclude
+
+By default this command will cycle between the following modes:
+- Disabled sound split: both NVDA and other applications output sounds to both left and right channels.
+- NVDA on the left and applications on the right: NVDA will speak in the left channel, while other applications will play sounds in the right channel.
+- NVDA on the right and applications on the left: NVDA will speak in the right channel, while other applications will play sounds in the left channel.
+-
+
+There are more advanced sound split modes available in NVDA setting combo box.
+If you wish to adjust volume of all applications except for NVDA, consider using [the dedicated commands #OtherAppVolume].
+Please note, that sound split doesn't work as a mixer.
+For example, if an application is playing a stereo sound track while sound split is set to "NVDA on the left and applications on the right", then you will only hear the right channel of the sound track, while the left channel of the sound track will be muted.
+
+This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
+
+Please note, that if NVDA crashes, then it won't be able to restore application sounds volume, and those applications might still output sound only in one channel after NVDA crash.
+In order to mitigate this, please restart NVDA.
+
+==== Customizing Sound split modes====[CustomizeSoundSplitModes]
+This checkable list allows selecting which sound split modes are included when cycling between them using ``NVDA+alt+s``.
+Modes which are unchecked are excluded.
+By default only three modes are included.
+- Sound split disabled: both NVDA and applications play sounds in both left and right channels.
+- NVDA on the left and all other applications on the right channel.
+- NVDA on the right and all other applications on the left channel.
+-
+
+Note that it is necessary to check at least one mode.
+This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
+
+==== Volume of other applications ====[OtherAppVolume]
+
+This slider allows you to adjust the volume of all currently running applications other than NVDA.
+This volume setting will apply to all other applications sound output, even if they start after this setting is changed.
+This volume can also be controlled via the following keyboard commands from anywhere:
+
+%kc:beginInclude
+|| Name | Key | Description |
+| Increase applications volume | ``NVDA+alt+pageUp`` | Increases volume of all applications except NVDA. |
+| Decrease applications volume | ``NVDA+alt+pageDown`` | Decreases volume of all applications except NVDA. |
+
+%kc:endInclude
+
+This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
+
+==== Mute other applications ====[MuteApplications]
+
+This checkbox allows you to mute all applications other than NVDA.
+This mute setting will apply to all other applications outputting sound, even if they start after this setting is changed.
+The following keyboard command can also be used from anywhere:
+
+%kc:beginInclude
+|| Name | Key | Description |
+| Toggle mute other applications | ``NVDA+alt+delete`` | Mutes or unmutes all applications other than NVDA. |
+
+%kc:endInclude
+
 This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
 
 +++ Vision +++[VisionSettings]
@@ -2317,6 +2451,7 @@ You can configure reporting of:
   - Landmarks
   - Articles
   - Frames
+  - Figures and captions
   - Clickable
   -
 -
@@ -2594,6 +2729,11 @@ Only turn one of these on if specifically instructed to by an NVDA developer e.g
 This option allows you to specify if NVDA will play an error sound in case an error is logged.
 Choosing Only in test versions (default) makes NVDA play error sounds only if the current NVDA version is a test version (alpha, beta or run from source).
 Choosing Yes allows to enable error sounds whatever your current NVDA version is.
+
+==== Regular expression for text paragraph quick navigation commands ====[TextParagraphRegexEdit]
+
+This field allows users to customize regular expression for detecting text paragraphs in browse mode.
+The [text paragraph navigation command #TextNavigationCommand] searches for paragraphs matched by this regular expression.
 
 ++ miscellaneous Settings ++[MiscSettings]
 Besides the [NVDA Settings #NVDASettings] dialog, The Preferences sub-menu of the NVDA Menu contains several other items which are outlined below.
@@ -2923,9 +3063,9 @@ Just like when you install or remove add-ons, you need to restart NVDA in order 
 You can also enable or disable multiple add-ons at once by selecting multiple add-ons in the available add-ons tab, then activating the context menu on the selection and choosing the appropriate action.
 
 +++ Reviewing add-ons and reading reviews +++[AddonStoreReviews]
-Before installing an add-on, you may want to read reviews by others.
-Also, it may be helpful to other users to provide feedback about add-ons you have tried.
-To read reviews for an add-on, select an add-on from the Available or Updatable add-ons tab, and use the "Community reviews" action.
+You may want to read reviews by other users who have experienced an add-on, for example before you install it, or as you are learning to use it.
+Also, it is helpful to other users to provide feedback about add-ons you have tried.
+To read reviews for an add-on, select it, and use the "Community reviews" action.
 This links to a GitHub Discussion webpage, where you will be able to read and write reviews for the add-on.
 Please be aware that this doesn't replace direct communication with add-on developers.
 Instead, the purpose of this feature is to share feedback to help users decide if an add-on may be useful for them.
@@ -3488,19 +3628,19 @@ Please see the display's documentation for descriptions of where these keys can 
 | control+shift+leftArrow key | dot2+dot8+space+f1 |
 | control+leftArrow key | dot2+space |
 | shift+alt+leftArrow key | dot2+dot7+f1 |
-| alt+leftArrow key | dot2+dot7 |
+| ``alt+leftArrow`` | ``dot2+dot7+space`` |
 | rightArrow key | dot6+space, leftSideRightArrow |
 | control+shift+rightArrow key | dot5+dot8+space+f1 |
 | control+rightArrow key | dot5+space |
 | shift+alt+rightArrow key | dot5+dot7+f1 |
-| alt+rightArrow key | dot5+dot7 |
+| ``alt+rightArrow`` | ``dot5+dot7+space`` |
 | pageUp key | dot1+dot2+dot6+space |
 | control+pageUp key | dot1+dot2+dot6+dot8+space |
 | upArrow key | dot1+space, leftSideUpArrow |
 | control+shift+upArrow key | dot2+dot3+dot8+space+f1 |
 | control+upArrow key | dot2+dot3+space |
 | shift+alt+upArrow key | dot2+dot3+dot7+f1 |
-| alt+upArrow key | dot2+dot3+dot7 |
+| ``alt+upArrow`` | ``dot2+dot3+dot7+space`` |
 | shift+upArrow key | leftSideScrollDown+space |
 | pageDown key | dot3+dot4+dot5+space |
 | control+pageDown key | dot3+dot4+dot5+dot8+space |
@@ -3508,7 +3648,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | control+shift+downArrow key | dot5+dot6+dot8+space+f1 |
 | control+downArrow key | dot5+dot6+space |
 | shift+alt+downArrow key | dot5+dot6+dot7+f1 |
-| alt+downArrow key | dot5+dot6+dot7 |
+| ``alt+downArrow`` | ``dot5+dot6+dot7+space`` |
 | shift+downArrow key | space+rightSideScrollDown |
 | escape key | dot1+dot5+space, f4, brailleedge:f1 |
 | delete key | dot1+dot3+dot5+space, dot1+dot4+dot5+space |
@@ -4234,6 +4374,11 @@ Secure mode disables:
 
 Installed copies of NVDA store their configuration including add-ons in ``%APPDATA%\nvda``.
 To prevent NVDA users from modifying their configuration or add-ons directly, user access to this folder must also be restricted.
+
+Secure mode is ineffective for portable copies of NVDA.
+This limitation also applies to the temporary copy of NVDA which runs when launching the installer.
+In secure environments, a user being able to run a portable executable is the same security risk regardless of secure mode.
+It is expected that system administrators restrict unauthorized software from running on their systems, including portable copies of NVDA.
 
 NVDA users often rely on configuring their NVDA profile to suit their needs.
 This may include installing and configuring custom add-ons, which should be vetted independently to NVDA.

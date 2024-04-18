@@ -3,9 +3,14 @@ The NVDA project uses the [git](https://www.git-scm.com/) version control system
 
 The NVDA repository is located at https://github.com/nvaccess/nvda.
 
-If you plan on contributing to NVDA, you should [fork and clone](https://docs.github.com/en/get-started/quickstart/fork-a-repo) the repository.
+If you plan on contributing to NVDA, you will need to [fork and clone](https://docs.github.com/en/get-started/quickstart/fork-a-repo) the repository.
 
-Use the `--recursive` option when performing `git clone` to fetch the required git submodules we use.
+After forking the repository into your user account (`YOUR-USERNAME`), clone with `--recursive` to fetch all required submodules.
+
+```sh
+git clone --recursive https://github.com/YOUR-USERNAME/nvda.git
+```
+
 
 ### Keeping the fork in sync
 When you fork the repository, GitHub will create a copy of the master branch.
@@ -53,7 +58,7 @@ To replicate the production build environment, use the 3.11.x minor version of P
 			* Once selected, ensure "C++ Clang tools for Windows" is included under the optional grouping.
 	* On the Individual components tab, ensure the following items are selected:
 		* Windows 11 SDK (10.0.22621.0)
-		* MSVC v143 - VS 2022 C++ ARM64 build tools
+		* MSVC v143 - VS 2022 C++ ARM64/ARM64EC build tools
 		* MSVC v143 - VS 2022 C++ x64/x86 build tools
 		* C++ ATL for v143 build tools (x86 & x64)
 		* C++ ATL for v143 build tools (ARM64/ARM64EC)
@@ -66,10 +71,10 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 
 For reference, the following run time dependencies are included in Git submodules:
 
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.52-dev commit `530bf0abf4174dc9ca28dbacc11bd5e9ae6152cd`
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.52-dev commit `cb62d93fd7b61d8593b9ae432e6e2a78e3711a77`
 * [Sonic](https://github.com/waywardgeek/sonic), commit `8694c596378c24e340c09ff2cd47c065494233f1`
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit `3d8c7f0b833453f761ded6b12d8be431507bfe0b`
-* [liblouis](http://www.liblouis.io/), version 3.28.0
+* [liblouis](http://www.liblouis.io/), version 3.29.0
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 44.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)

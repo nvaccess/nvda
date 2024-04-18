@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2023 NV Access Limited, Joseph Lee
+# Copyright (C) 2017-2024 NV Access Limited, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -10,6 +10,7 @@ Other features include reporting candidates for misspellings if suggestions for 
 and managing cloud clipboard paste.
 This is applicable on Windows 10 Fall Creators Update and later."""
 
+from typing import Callable
 import appModuleHandler
 import api
 import eventHandler
@@ -21,6 +22,7 @@ import winVersion
 import controlTypes
 from NVDAObjects.UIA import UIA, XamlEditableText
 from NVDAObjects.behaviors import CandidateItem as CandidateItemBehavior, EditableTextWithAutoSelectDetection
+from NVDAObjects import NVDAObject
 
 
 class ImeCandidateUI(UIA):
@@ -36,6 +38,9 @@ class ImeCandidateUI(UIA):
 		# Therefore we must fake it here.
 		if (self.UIAAutomationId == "IME_Prediction_Window"):
 			candidateItem = self.firstChild
+			# #16283: descend one more level in Windows 11 so hardware input suggestions can be anounced.
+			if isinstance(candidateItem, ImeCandidateUI):
+				candidateItem = candidateItem.firstChild
 			eventHandler.queueEvent("UIA_elementSelected", candidateItem)
 		elif (
 			self.firstChild
@@ -90,7 +95,11 @@ class ImeCandidateItem(CandidateItemBehavior, UIA):
 	def event_UIA_elementSelected(self):
 		# In Windows 11, focus event is fired when a candidate item receives focus,
 		# therefore ignore this event for now.
-		if winVersion.getWinVer() >= winVersion.WIN11:
+		# #16283: do handle hardware keyboard input suggestions.
+		if (
+			winVersion.getWinVer() >= winVersion.WIN11
+			and isinstance(api.getFocusObject().parent, ImeCandidateUI)
+		):
 			return
 		oldNav = api.getNavigatorObject()
 		if isinstance(oldNav, ImeCandidateItem) and self.name == oldNav.name:
@@ -121,9 +130,6 @@ class AppModule(appModuleHandler.AppModule):
 	disableBrowseModeByDefault: bool = True
 
 	def event_UIA_elementSelected(self, obj, nextHandler):
-		# In Windows 11, candidate panel houses candidate items, not the prediction window.
-		if obj.UIAAutomationId == "TEMPLATE_PART_CandidatePanel":
-			obj = obj.firstChild
 		# Logic for IME candidate items is handled all within its own object
 		# Therefore pass these events straight on.
 		if isinstance(obj, ImeCandidateItem):
@@ -304,6 +310,25 @@ class AppModule(appModuleHandler.AppModule):
 		):
 			ui.message(obj.name)
 		nextHandler()
+
+	def event_UIA_notification(
+			self,
+			obj: NVDAObject,
+			nextHandler: Callable[[], None],
+			displayString: str | None = None,
+			activityId: str | None = None,
+			**kwargs
+	):
+		# #16009: Windows 11 modern keyboard uses UIA notification event to announce things.
+		# These include voice typing availability message and appearance of Suggested Actions
+		# when data such as phone number is copied to the clipboard (Windows 11 22H2).
+		# Apart from emoji panel and clipboard history, modern keyboard elements are not focusable,
+		# therefore notifications must be announced here and no more.
+		# For suggested actions, report the first suggestion because keyboard interaction is impossible.
+		# Also, suggested action is the element name, not the display string.
+		if activityId == "Windows.Shell.InputApp.SmartActions.Popup":
+			displayString = obj.name
+		ui.message(displayString)
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if isinstance(obj, UIA):

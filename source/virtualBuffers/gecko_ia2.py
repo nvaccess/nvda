@@ -29,6 +29,7 @@ import aria
 import config
 from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
 import documentBase
+import locationHelper
 
 
 def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> typing.Dict[str, typing.Any]:
@@ -252,6 +253,12 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			if val is not None:
 				attrs[name] = int(val)
 		return super(Gecko_ia2_TextInfo,self)._normalizeFormatField(attrs)
+
+	def _get_location(self) -> locationHelper.RectLTWH:
+		document = self.obj.rootNVDAObject.IAccessibleObject
+		docHandle, ID = self._getFieldIdentifierFromOffset(self._startOffset)
+		location = document.accLocation(ID)
+		return locationHelper.RectLTWH(*location)
 
 
 class Gecko_ia2(VirtualBuffer):
@@ -548,6 +555,29 @@ class Gecko_ia2(VirtualBuffer):
 		elif nodeType == "tab":
 			attrs = [
 				{"IAccessible::role": [oleacc.ROLE_SYSTEM_PAGETAB]}
+			]
+		elif nodeType == "figure":
+			attrs = [
+				{"Iaccessible::role": [oleacc.ROLE_SYSTEM_GROUPING]},
+				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("figure")]},
+				# Needed so that navigation by figure works for HTML figures in Chromium
+				{"IAccessible2::attribute_tag": self._searchableTagValues(["figure"])},
+			]
+		elif nodeType == "menuItem":
+			attrs = [
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_BUTTONMENU]}
+			]
+		elif nodeType == "toggleButton":
+			attrs = [
+				{"IAccessible::role": [IA2.IA2_ROLE_TOGGLE_BUTTON]}
+			]
+		elif nodeType == "progressBar":
+			attrs = [
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_PROGRESSBAR]}
+			]
+		elif nodeType == "math":
+			attrs = [
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_EQUATION]}
 			]
 		else:
 			return None

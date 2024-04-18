@@ -156,3 +156,9 @@ ARIA switch role
 i13307
 	[Documentation]	ensure aria-labelledby on a landmark or region is automatically spoken when jumping inside from outside using focus in browse mode
 	test_i13307
+textParagraphNavigation
+	[Documentation]	Text paragraph navigation
+	test_textParagraphNavigation
+styleNav
+	[Documentation]	Same style navigation
+	test_styleNav
