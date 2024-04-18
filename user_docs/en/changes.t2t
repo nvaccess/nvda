@@ -4,11 +4,11 @@ What's New in NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2024.2 =
-There are new commands for modifying the synth settings ring, allowing users to jump to the first or last setting, and to increase or decrease the current setting in a larger step.
-There are also new quick navigation commands, allowing userts to bind gestures to quickly jump between: paragraph, vertically aligned paragraph, same style text, different style text, menu item, toggle button, progress bar, figure, and math formula.
-
 There is a new feature called sound split.
 This allows splitting NVDA sounds into one channel (e.g. left) while sounds from all other applications are placed in the other channel (e.g. right).
+
+There are new commands for modifying the synth settings ring, allowing users to jump to the first or last setting, and to increase or decrease the current setting in a larger step.
+There are also new quick navigation commands, allowing userts to bind gestures to quickly jump between: paragraph, vertically aligned paragraph, same style text, different style text, menu item, toggle button, progress bar, figure, and math formula.
 
 There are many new braille features and bug fixes.
 A new braille mode called "display speech output" has been added.
@@ -101,7 +101,7 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
 - Fixed a bug where audio coordinates would be played while the application is in sleep mode when "Play audio coordinates when mouse moves" is enabled. (#8059, @hwf1324)
 - In Adobe Reader, NVDA no longer ignores alternative text set on formulas in PDFs. (#12715)
 - Fixed a bug causing NVDA to fail to read the ribbon and options within Geekbench. (#16251, @mzanm)
-- Fixed a rare case when saving the configuration may fail to save all profiles.  (#16343, @CyrilleB79)
+- Fixed a rare case when saving the configuration may fail to save all profiles. (#16343, @CyrilleB79)
 - In Firefox and Chromium-based browsers, NVDA will correctly enter focus mode when pressing enter when positioned within a presentational list (ul / ol) inside editable content. (#16325)
 - Column state change is automatically reported when selecting columns to display in Thunderbird message list. (#16323)
 -
