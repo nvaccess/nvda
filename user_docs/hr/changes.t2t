@@ -42,8 +42,10 @@ Windows 8.1 je minimalna verzija operacijskog sustava Windows.
 - Dodana podrška za Bluetooth niskonaponske brajične redke. (#15470)
 - Dodano je kopiranje sa sačuvanim oblikovanjem (koje se uključuje ili isključuje uz pomoć prečaca ``NVDA+shift+f10``) na web stranicama u Mozilla firefoxu.
 Kada je uključeno, koristit će se izvorno označavanje u Mozilla firefoxu.
-Kopirat će se tekst sa sačuvanim oblikovanjem, umjesto teksta koji pokazuje NVDA bez sačuvanog oblikovanja. (#15830)
-- Prilikom kopiranja teksta u Microsoft Wordu sa uključenim modusom čitanja, oblikovanje će se također kopirati. (#16129)
+Prilikom kopiranja teksta uz pomoć prečaca ``control+c`` biti će proslijeđeno izravno Firefoxu, što će kopirati i formatiranje, a ne samo oblokovanje.
+Imajte na umu da prilikom kopiranja teksta i njegovim rukovanjem od strane Firefoxa, NVDA neće izgovoriti poruku "kopirano u međuspremnik". (#15830)
+- Prilikom kopiranja teksta u Microsoft Wordu sa uključenim načinom čitanja, oblikovanje će se također kopirati.
+Posljedica ovoga je da NVDA neće izgovarati poruku "kopirano u međuspremnik" kada se pritisne ``control+c`` u Mocrosoft wordu ili Outlooku, zbog toga što aplikacija upravlja kopiranjem., umjesto NVDA. (#16129)
 - Dodan je novi modus govora "na zahtjev".
 Kada je govor podešen na zahtjev, NVDA neće govoriti automatski (na primjer, prilikom pomicanja kursora) ali govori kada se pozivaju prečaci čiji je cilj čitanje određene informacije (na primjer izgovaranje naslovne trake). (#481, @CyrilleB79)
 - U kategoriji govor postavki NVDA, sada je moguće isključiti neželjene moduse govora iz odabira prečacem odabira modusa govora (``NVDA+s``). (#15806, @lukaszgo1)
@@ -79,7 +81,8 @@ Ova opcija izgovara više relevantnih informacija kada se objekt nađe pod miše
 - Podrška NVDA za [Poedit https://poedit.net] je kompletno prepisana za inačicu 3 i novije.
 Korisnicima Poedita  1 se preporućuje nadogradnja na Poedit 3 ako žele koristiti unapređenu pristupačnost Poedita, kao što su to prečaci za čitanje bilježaka za prevoditelje i komentara. (#15313, #7303, @LeonarddeR)
 - Preglednik brajice i preglednik govora od sada su isključeni u Sigurnom načinu. (#15680)
-- Prilikom korištenja objektne navigacije, onemogućeni (nedostupni) više neće biti ignorirani. (#15477, @CyrilleB79)
+- Prilikom korištenja objektne navigacije, onemogućeni (nedostupni) objekti više neće biti ignorirani. (#15477, @CyrilleB79)
+- Dodan sadržaj u dokument "popis tipkovničkih prečaca". (#16106)
 -
 
 == Ispravke grešaka ==
@@ -139,7 +142,13 @@ Korisnicima Poedita  1 se preporućuje nadogradnja na Poedit 3 ako žele koristi
 
 
 = 2023.3.4 =
-Ovo je verzija zakrpe koja ispravlja problem s instalacijom.
+Ovo je verzija zakrpe koja ispravlja problem s instalacijom i jedan skgurnosni prropust.
+Molimo odgovorno izvještavajte o sigurnosnim propustima prateći [NVDA politiku sigurnosti https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Ispravke sigurnosti ==
+- Onemogućeno učitavanje koda prilikom prisilnog uključivanja sigurnog načina.
+([GHSA-727q-h8j2-6p45 https://github.com/nvaccess/nvda/security/advisories/GHSA-727q-h8j2-6p45])
+-
 
 == Ispravke grešaka ==
 - Ispravljena greška prilikom koje NVDA proces se nije mogao ispravno prekinuti. (#16123)

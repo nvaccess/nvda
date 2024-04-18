@@ -4223,6 +4223,7 @@ El modo seguro deshabilita:
 - El guardado de la configuración y otras opciones en disco
 - El guardado del mapa de gestos en disco
 - Características de los [perfiles de configuración #ConfigurationProfiles] tales como la creación, la eliminación, el renombrado de perfiles etc.
+- La carga de carpetas de la configuración personalizada utilizando [la opción de línea de órdenes ``-c`` #CommandLineOptions]
 - La actualización de NVDA y la creación de copias portables
 - La [Tienda de Complementos #AddonsManager]
 - La [consola de Python de NVDA #PythonConsole]
@@ -4281,26 +4282,26 @@ Esos parámetros deberían colocarse después de la opción, separados de la opc
 
 Seguidamente van las opciones de línea de órdenes para NVDA:
 || Corta | Larga | Descripción |
-| -h | --help | muestra la ayuda en línea de órdenes y sale |
-| -q | --quit | Sale de la copia que ya se esté ejecutando de NVDA |
-| -k | --check-running | Informa si NVDA está en ejecución a través del código de salida; 0 si está en ejecución, 1 si no está en ejecución |
-| -f LOGFILENAME | --log-file=LOGFILENAME | El fichero donde deberían escribirse los mensajes de registro |
-| -l LOGLEVEL | --log-level=LOGLEVEL | El nivel más bajo de mensaje registrado (debug 10, input/output 12, debug warning 15, info 20, disabled 100) |
-| -c CONFIGPATH | --config-path=CONFIGPATH | La ruta donde se almacenan todos los ajustes para NVDA |
-| No | --lang=LANGUAGE | Sobrescribe el idioma configurado de NVDA. Establece "Windows" para el usuario actual por defecto, "en" para Inglés, etc. |
-| -m | --minimal | Sin sonidos, sin interface, sin mensaje de inicio etc |
-| -s | --secure | Inicia NVDA en [Modo Seguro #SecureMode] |
-| None | --disable-addons | Los complementos no tendrán efecto |
-| None | --debug-logging | Habilita el nivel de registro de depuración sólo para esta ejecución. Esta configuración sobreescribirá cualquier otro nivel de registro ( ""--loglevel"", -l) argumento dado, incluyendo la opción no registro. |
-| None | --no-logging | Deshabilita el registro durante el uso de NVDA. Esta opción puede sobreescribirse si se especifica un nivel de registro ( ""--loglevel"", -l) desde la línea de órdenes o si el registro de depuración está activado. |
-| None | --no-sr-flag  | No cambia la bandera global de sistema del lector de pantalla |
-| None | --install | Se instala NVDA iniciando la nueva copia instalada |
-| None | --install-silent | Instala en silencio NVDA (No inicia la nueva copia instalada) |
-| None | --enable-start-on-logon=True|False | Al instalar, habilita [arrancar en la pantalla de inicio #StartAtWindowsLogon] de NVDA |
-| None | --copy-portable-config | Al instalar, copia la configuración portable desde la ruta proporcionada (--config-path, -c) a la actual cuenta de usuario |
-| None | --create-portable | Crea una copia portable de NVDA (iniciando la copia recientemente creada). Requiere especificarse --portable-path |
-| None | --create-portable-silent | Crea una copia portable de NVDA (no inicia la copia recientemente instalada). Requiere expecificarse --portable-path |
-| None | --portable-path=PORTABLEPATH | La ruta donde se creará una copia portable |
+| ``-h`` | ``--help`` | muestra la ayuda en línea de órdenes y sale |
+| ``-q`` | ``--quit`` | Sale de la copia que ya se esté ejecutando de NVDA |
+| ``-k`` | ``--check-running`` | Informa si NVDA está en ejecución a través del código de salida; 0 si está en ejecución, 1 si no está en ejecución |
+| ``-f LOGFILENAME`` | ``--log-file=LOGFILENAME`` | El fichero donde se deberían escribir los mensajes del registro.  El registro siempre está desactivado si el modo seguro está habilitado. |
+| ``-l LOGLEVEL`` | ``--log-level=LOGLEVEL`` | El nivel más bajo del mensaje registrado (debug 10, input/output 12, debug warning 15, info 20, disabled 100). El registro está siempre deshabilitado si el modo seguro está habilitado. |
+| ``-c CONFIGPATH`` | ``--config-path=CONFIGPATH`` | La ruta donde se almacenan todas las opciones de NVDA. El valor predeterminado se fuerza si el modo seguro está habilitado. |
+| ``No`` | ``--lang=LANGUAGE`` | Sobrescribe el idioma configurado de NVDA. Establece "Windows" para el usuario actual por defecto, "en" para Inglés, etc. |
+| ``-m`` | ``--minimal`` | Sin sonidos, sin interface, sin mensaje de inicio etc |
+| ``-s`` | ``--secure`` | Inicia NVDA en [Modo Seguro #SecureMode] |
+| ``No`` | ``--disable-addons`` | Los complementos no tendrán efecto |
+| ``No`` | ``--debug-logging`` | Habilita el nivel de registro de depuración sólo para esta ejecución. Esta configuración sobreescribirá cualquier otro nivel de registro ( ""--loglevel"", -l) argumento dado, incluyendo la opción no registro. |
+| ``No`` | ``--no-logging`` | Deshabilita el registro durante el uso de NVDA. Esta opción puede sobreescribirse si se especifica un nivel de registro ( ""--loglevel"", -l) desde la línea de órdenes o si el registro de depuración está activado. |
+| ``No`` | ``--no-sr-flag`` | No cambia la bandera global de sistema del lector de pantalla |
+| ``No`` | ``--install`` | Se instala NVDA iniciando la nueva copia instalada |
+| ``No`` | ``--install-silent`` | Instala en silencio NVDA (No inicia la nueva copia instalada) |
+| ``No`` | ``--enable-start-on-logon=True`` | False | Al instalar, habilita [arrancar en la pantalla de inicio #StartAtWindowsLogon] de NVDA |
+| ``No`` | ``--copy-portable-config`` | Al instalar, copia la configuración portable desde la ruta proporcionada (--config-path, -c) a la actual cuenta de usuario |
+| ``No`` | ``--create-portable`` | Crea una copia portable de NVDA (iniciando la copia recientemente creada). Requiere especificarse --portable-path |
+| ``No`` | ``--create-portable-silent`` | Crea una copia portable de NVDA (no inicia la copia recientemente instalada). Requiere expecificarse --portable-path |
+| ``No`` | ``--portable-path=PORTABLEPATH`` | La ruta donde se creará una copia portable |
 
 ++ Parámetros del Sistema ++[SystemWideParameters]
 NVDA permite configurar algunos valores en el registro del sistema que alteran el comportamiento de todo el sistema de NVDA.
