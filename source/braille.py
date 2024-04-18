@@ -1474,10 +1474,14 @@ class ReviewTextInfoRegion(TextInfoRegion):
 			# Selection changed, update also review position
 			self._currentSelection = info.copy()
 			if self.obj.isTextSelectionAnchoredAtStart:
+				# The end of the range is exclusive, so make it inclusive first.
 				self._currentSelection.move(textInfos.UNIT_CHARACTER, -1, "end")
+			# Collapse the selection to the unanchored end which is also review position.
 			self._currentSelection.collapse(end=self.obj.isTextSelectionAnchoredAtStart)
 			# Enqueue to avoid recursion error
 			queueHandler.queueFunction(queueHandler.eventQueue, api.setReviewPosition, self._currentSelection)
+			# Because self._currentSelection was modified to set review position
+			# reset it to real selection again.
 			self._currentSelection = info.copy()
 			return info
 		# Selection unchanged
