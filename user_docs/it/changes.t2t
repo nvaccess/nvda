@@ -3,6 +3,340 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2024.1 =
+
+Aggiunta una nuova modalità per la sintesi vocale, chiamata su richiesta.
+Se l'utente la attiva, NVDA non parlerà in automatico (ad esempio quando si sposta il cursore) ma lo farà soltanto nel momento in cui verranno utilizzati comandi che richiedano esplicitamente un riscontro vocale (un esempio può essere conoscere il titolo della finestra).
+è ora possibile escludere le modalità vocali indesiderate, quando si preme ``NVDA+s``, dalla categoria Voce delle impostazioni di NVDA. 
+
+è ora disponibile una nuova modalità di selezione nativa (che si attiva con ``NVDA+shift+f10``) durante la navigazione con Mozilla Firefox.
+Quando è attivata, la selezione del testo in modalità navigazione funzionerà come se si stesse evidenziando del testo direttamente con Firefox stesso..
+La copia del testo con ``control+c`` verrà gestita da Firefox, il che consente di copiare tutto il contenuto comprensivo di formattazione, tabelle, elementi grafici, piuttosto che soltanto il testo semplice.
+
+Lo Store dei componenti aggiuntivi ora supporta le azioni collettive (come l'installazione o l'abilitazione degli add-on) selezionandone più di uno.
+È disponibile una nuova azione per aprire una pagina Web di recensioni per il componente aggiuntivo selezionato.
+
+Le opzioni del dispositivo audio di uscita e della modalità attenuazione sono state rimosse dalla finestra di dialogo "Seleziona sintetizzatore".
+Si trovano nel pannello delle impostazioni audio che può essere aperto con ``NVDA+control+u``.
+
+Aggiornati eSpeak-NG, LibLouis braille translator e Unicode CLDR.
+Sono disponibili nuove tabelle braille: tailandese, filippino e rumeno.
+
+Sono stati risolti numerosi bug, in particolare per l'add-on store, braille, Libre Office, Microsoft Office e audio.
+
+== Note importanti == 
+- Questa versione interrompe la compatibilità con i componenti aggiuntivi esistenti.
+- Windows 7 e Windows 8 non sono più supportati.
+Windows 8.1 è la versione minima di Windows supportata.
+-
+
+== Novità ==
+- Add-on Store:
+  - L'Add-on Store ora supporta le azioni di massa (ad esempio installazione o attivazione di più add-on).  (#15350, #15623, @CyrilleB79)
+  - È stata aggiunta una nuova azione per aprire una pagina Web dedicata, allo scopo di visualizzare o fornire feedback sul componente aggiuntivo selezionato. (#15576, @nvdaes)
+  -
+- Aggiunto il supporto per i display Braille HID Bluetooth a bassa energia. (#15470)
+- è ora disponibile una nuova modalità di selezione nativa (che si attiva con ``NVDA+shift+f10``) durante la navigazione con Mozilla Firefox.
+Quando è attivata, la selezione del testo in modalità navigazione funzionerà come se si stesse evidenziando del testo direttamente con Firefox stesso..
+La copia del testo con ``control+c`` verrà gestita da Firefox, il che consente di copiare tutto il contenuto comprensivo di formattazione, tabelle, elementi grafici, piuttosto che soltanto il testo semplice.
+Si noti tuttavia che poiché Firefox gestisce la copia effettiva, non potremo ascoltare il classico messaggio: "copiato negli appunti", fornito da NVDA. (#15830)
+- Quando si copia testo in Microsoft Word con la modalità navigazione di NVDA abilitata, ora è inclusa anche la formattazione.
+Un effetto collaterale di ciò è che NVDA non annuncerà più il messaggio "copia negli appunti" quando si preme ``control+c`` nella modalità di navigazione di Microsoft Word / Outlook, poiché ora è l'applicazione a gestire la copia, non NVDA. (#16129)
+- Aggiunta una nuova modalità per la sintesi vocale, chiamata su richiesta.
+Se l'utente la attiva, NVDA non parlerà in automatico (ad esempio quando si sposta il cursore) ma lo farà soltanto nel momento in cui verranno utilizzati comandi che richiedano esplicitamente un riscontro vocale (un esempio può essere conoscere il titolo della finestra).
+- è ora possibile escludere le modalità vocali indesiderate, quando si preme ``NVDA+s``, dalla categoria Voce delle impostazioni di NVDA. 
+  - Se si sta utilizzando il componente aggiuntivo NoBeepsSpeechMode, si consiglia di disinstallarlo e disabilitare le modalità "bip" e "su richiesta" nelle impostazioni.
+  -
+-
+
+== Cambiamenti ==
+- NVDA non supporta più Windows 7 e Windows 8.
+Windows 8.1 è la versione minima di Windows supportata. (#15544)
+- Aggiornamento dei componenti:
+  - Aggiornato LibLouis braille translator alla versione [3.28.0 https://github.com/liblouis/liblouis/releases/tag/v3.28.0]. (#15435, #15876, @codeofdusk)
+    - Aggiunte nuove tabelle Braille tailandese, rumeno e filippino.
+    -
+  - eSpeak NG è stato aggiornato a 1.52-dev commit ``530bf0abf``. (#15036)
+  - Le emoji e le annotazioni dei simboli CLDR sono state aggiornate alla versione 44.0. (#15712, @OzancanKaratas)
+  - Aggiornato Java Access Bridge alla versione 17.0.9+8Zulu (17.46.19). (#15744)
+  -
+- Comandi da tastiera:
+  - I seguenti comandi supportano la doppia e tripla pressione per effettuare lo spelling delle informazioni annunciate e della descrizione dei caratteri: Leggi selezione, Annuncia testo negli appunti e Leggi l'oggetto focalizzato. (#15449, @CyrilleB79)
+  - Il comando per attivare/disattivare la tenda schermo ha un gesto predefinito associato: ``NVDA+control+escape``. (#10560, @CyrilleB79)
+  - Se premuto quattro volte, il comando "leggi selezione" ora mostra la selezione in una finestra navigabile. (#15858, @Emil-18)
+  - 
+- Microsoft Office:
+  - Quando si richiedono informazioni sulla formattazione delle celle di Excel, i bordi e lo sfondo verranno annunciati solo se è presente tale formattazione. (#15560, @CyrilleB79)
+  - NVDA non leggerà più i raggruppamenti senza etichetta come nelle versioni recenti dei menu di Microsoft Office 365. (#15638)
+  -
+- Le opzioni del dispositivo audio di uscita e della modalità attenuazione sono state rimosse dalla finestra di dialogo "Seleziona sintetizzatore".
+Si trovano nel pannello delle impostazioni audio che può essere aperto con ``NVDA+control+u``. (#15512, @codeofdusk)
+- Nella finestra impostazioni Mouse di NVDA, L'opzione "Annuncia ruoli quando il mouse entra in un oggetto" è stata rinominata in  "Leggi tipo e ruolo dell'oggetto sotto il mouse".
+Questa opzione ora fornisce ulteriori informazioni rilevanti su un oggetto quando il mouse vi entra, come lo stato (selezionato/premuto) o le coordinate della cella in una tabella. (#15420, @LeonarddeR)
+- Sono stati aggiunti nuovi elementi al menu Aiuto per la pagina "Ottieni aiuto" e il negozio di NV Access. (#14631)
+- Il supporto per [Poedit https://poedit.net] è stato adeguato per Poedit versione 3 e successive.
+Gli utenti di Poedit 1 sono fortemente pregati ad aggiornare a Poedit 3 se desiderano godere dell'accessibilità migliorata, come le scorciatoie per leggere le note e i commenti dei traduttori. (#15313, #7303, @LeonarddeR)
+- Il visualizzatore Braille e il visualizzatore sintesi vocale sono ora disabilitati in modalità protetta. (#15680)
+- Nella navigazione ad oggetti, gli oggetti disabilitati (non disponibili) non saranno più ignorati. (#15477, @CyrilleB79)
+- Aggiunto il sommario al documento dei comandi da tastiera. (#16106)
+-
+
+== Bug Corretti ==
+- Add-on Store:
+  - Quando lo stato di un componente aggiuntivo viene modificato mentre è attivo, ad es. da "in download" diventa "scaricato", l'elemento aggiornato viene ora annunciato correttamente. (#15859, @LeonarddeR)
+  - Quando si installano componenti aggiuntivi, le richieste di installazione non vengono più sovrapposte alla finestra di dialogo di riavvio. (#15613, @lukaszgo1)
+  - Quando si reinstalla un componente aggiuntivo incompatibile, non viene più forzatamente disabilitato. (#15584, @lukaszgo1)
+  - I componenti aggiuntivi disabilitati e incompatibili ora possono essere aggiornati. (#15568, #15029)
+  - NVDA ora visualizza un errore nel caso in cui un componente aggiuntivo non venga scaricato correttamente. (#15796)
+  - NVDA non presenta più un problema intermitttente nel riavviarsi dopo l'apertura e la chiusura dell'add-on store. (#16019, @lukaszgo1)
+  -
+- Audio:
+  - NVDA non si blocca più di tanto in tanto quando vengono riprodotti più suoni in rapida successione. (#15311, #15757, @jcsteh)
+  - se un dispositivo audio diverso da quello predefinito, dopo  essere stato disconnesso, diventa nuovamente disponibile,  NVDA riprenderà ad utilizzarlo. (#15759, @jcsteh)
+  - NVDA ora è in grado di ripristinare l'audio nel caso in cui la configurazione del dispositivo d'uscita viene modificata, o un'altra applicazione ne rilascia il controllo esclusivo. (#15758, #15775, @jcsteh)
+  -
+- Braille:
+  - I display Braille con più righe non bloccano più il driver BRLTTY e vengono trattati come un display continuo. (#15386)
+  - Vengono rilevati più oggetti che contengono testo utile, inoltre il contenuto del testo viene visualizzato in Braille. (#15605)
+  - L'input Braille contratto funziona di nuovo correttamente. (#15773, @aaclause)
+  - Quando si sposta il navigatore ad oggetti tra le celle di una tabella, il contenuto in braille viene aggiornato in maniera migliore. (#15755, @Emil-18)
+  - Viene ora mostrato in braille il risultato dei comandi "leggi l'oggetto che ha il focus", leggi l'oggetto su cui è il navigatore e  leggi selezione corrente. (#15844, @Emil-18)
+  - Il driver braille Albatross non gestisce più un microcontrollore Esp32 come un display Albatross. (#15671)
+  -
+- LibreOffice:
+  - Vengono annunciate correttamente le parole cancellate con  ``control+backspace``, anche quando la parola è seguita da spazi bianchi (come spazi e tabulazioni). (#15436, @michaelweghorn)
+  - La lettura della barra di stato tramite ``NVDA+fine`` adesso funziona anche per le finestre di dialogo in LibreOffice versione 24.2 e successive. (#15591, @michaelweghorn)
+  - Tutti gli attributi di testo previsti sono ora supportati nelle versioni LibreOffice 24.2 e successive.
+  Ciò fa sì che l'annuncio degli errori di ortografia funzioni quando viene letta una riga in Writer. (#15648, @michaelweghorn)
+  - L'annuncio dei livelli di intestazione ora funziona anche per le versioni di LibreOffice 24.2 e successive. (#15881, @michaelweghorn)
+  -
+- Microsoft Office:
+  - In Excel con UIA disabilitata, alla pressione dei tasti rapidi ``control+y``, ``control+z`` o ``alt+backspace``, il contenuto della cella attiva verrà sia letto che aggiornato conseguentemente sul display braille. (#15547)
+  - In Word con UIA disabilitata, il contenuto braille sarà aggiornato alla pressione delle combinazioni di tasti ``control+v``, ``control+x``, ``control+y``, ``control+z``, ``alt+backspace``, ``backspace`` o ``control+backspace``.
+  Verrà aggiornato anche con UIA abilitata, quando il braille segue il cursore di controllo  il cursore di controllo segue quello di sistema. (#3276)
+  - In Word, la cella di destinazione verrà ora letta correttamente quando si utilizzano i comandi nativi di Word per la navigazione nella tabella ``alt+home``, ``alt+end``, ``alt+paginaSu`` e ``alt+paginaGiù``. (#15805, @CyrilleB79)
+  -
+- È stata migliorata la segnalazione dei tasti di scelta rapida degli oggetti. (#10807, #15816, @CyrilleB79)
+- Il sintetizzatore SAPI4 ora supporta correttamente i cambiamenti di volume, velocità e tono incorporati nel parlato. (#15271, @LeonarddeR)
+- Viene segnalato correttamente lo stato multiriga nelle applicazioni che utilizzano Java Access Bridge. (#14609)
+- NVDA annuncerà il contenuto delle finestre di dialogo per molte più finestre di Windows 10 e 11. (#15729, @josephsl)
+- NVDA non commetterà più errori nella lettura di una nuova pagina web appena caricata in Microsoft Edge quando si utilizza UI Automation. (#15736)
+- Quando si utilizza la funzione Dire Tutto o i comandi che gestiscono il testo, le pause tra le frasi o i caratteri non diminuiscono più gradualmente nel tempo. (#15739, @jcsteh)
+- NVDA non si blocca più nel leggere enormi quantità di testo. (#15752, @jcsteh)
+- Quando si accede a Microsoft Edge utilizzando UI Automation, NVDA è in grado di attivare più controlli nella modalità navigazione. (#14612)
+- NVDA non avrà più problemi nell'avviarsi quando il file di configurazione è danneggiato, ma ripristinerà la configurazione predefinita come in passato. (#15690, @CyrilleB79)
+- Risolto il problema con il supporto per i controlli della visualizzazione Elenco di sistema (``SysListView32``) nelle applicazioni Windows Forms. (#15283, @LeonarddeR)
+- Non è più possibile sovrascrivere la cronologia della console Python di NVDA. (#15792, @CyrilleB79)
+- NVDA dovrebbe rimanere reattivo anche quando viene inondato da molti eventi di UI Automation, ad es. quando vengono stampate grandi porzioni di testo su un terminale o quando si ascoltano messaggi vocali in WhatsApp Messenger. (#14888, #15169)
+  - Questo nuovo comportamento può essere disabilitato utilizzando la nuova impostazione "Utilizza elaborazione eventi avanzata" nelle impostazioni avanzate di NVDA.
+  -
+- NVDA è nuovamente in grado di seguire il focus nelle applicazioni in esecuzione all'interno di Windows Defender Application Guard (WDAG). (#15164)
+- Il testo parlato non viene più aggiornato quando il mouse si sposta nel Visualizzatore vocale. (#15952, @hwf1324)
+- NVDA tornerà nuovamente alla modalità navigazione quando si chiudono le caselle combinate con "escape" o "alt+freccia su" in Firefox o Chrome. (#15653)
+- L'utilizzo delle freccie su e giù nelle caselle combinate di iTunes non attiverà più erroneamente la modalità navigazione. (#15653)
+-
+
+== Changes for Developers ==
+Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+
+- Note: this is an Add-on API compatibility breaking release.
+Add-ons will need to be re-tested and have their manifest updated.
+- Building NVDA now requires Visual Studio 2022.
+Please refer to the [NVDA docs https://github.com/nvaccess/nvda/blob/release-2024.1/projectDocs/dev/createDevEnvironment.md] for the specific list of Visual Studio components. (#14313)
+- Added the following extension points:
+  - ``treeInterceptorHandler.post_browseModeStateChange``. (#14969, @nvdaes)
+  - ``speech.speechCanceled``. (#15700, @LeonarddeR)
+  - ``_onErrorSoundRequested`` (should be retrieved calling ``logHandler.getOnErrorSoundRequested()``) (#15691, @CyrilleB79)
+  -
+- It is now possible to use plural forms in an add-on's translations. (#15661, @beqabeqa473)
+- Included python3.dll in the binary distribution for use by add-ons with external libraries utilizing the [stable ABI https://docs.python.org/3.11/c-api/stable.html]. (#15674, @mzanm)
+- The ``BrailleDisplayDriver`` base class now has ``numRows`` and ``numCols`` properties to provide information about multi line braille displays.
+Setting ``numCells`` is still supported for single line braille displays and ``numCells`` will return the total number of cells for multi line braille displays. (#15386)
+- Updated BrlAPI for BRLTTY to version 0.8.5, and its corresponding python module to a Python 3.11 compatible build. (#15652, @LeonarddeR)
+- Added the ``speech.speakSsml`` function, which allows you to write NVDA speech sequences using [SSML https://www.w3.org/TR/speech-synthesis11/]. (#15699, @LeonarddeR)
+  - The following tags are currently supported and translated to appropriate NVDA speech commands:
+    - ``Prosody`` (``pitch``, ``rate`` and ``volume``). Only multiplication (e.g. ``200%`` are supported.
+    - ``say-as`` with the ``interpret`` attribute set to ``characters``
+    - ``voice`` with the ``xml:lang`` set to an XML language
+    - ``break`` with the ``time`` attribute set to a value in milliseconds, e.g. ``200ms``
+    - ``mark`` with the ``name`` attribute set to a mark name, e.g. ``mark1``, requires providing a callback
+    -
+  - Example: ``speech.speakSsml('<speak><prosody pitch="200%">hello</prosody><break time="500ms" /><prosody rate="50%">John</prosody></speak>')``
+  - The SSML parsing capabilities are backed by the ``SsmlParser`` class in the ``speechXml`` module.
+  -
+- Changes to the NVDA Controller Client library:
+  - The file names of the library no longer contain a suffix denoting the architecture, i.e. ``nvdaControllerClient32/64.dll`` are now called ``nvdaControllerClient.dll``. (#15718, #15717, @LeonarddeR)
+  - Added an example to demonstrate using nvdaControllerClient.dll from Rust. (#15771, @LeonarddeR)
+  - Added the following functions to the controller client: (#15734, #11028, #5638, @LeonarddeR)
+    - ``nvdaController_getProcessId``: To get the process id (PID) of the current instance of NVDA the controller client is using.
+    - ``nvdaController_speakSsml``: To instruct NVDA to speak according to the given SSML. This function also supports:
+      - Providing the symbol level.
+      - Providing the priority of speech to be spoken.
+      - Speaking both synchronously (blocking) and asynchronously (instant return).
+      -
+    - ``nvdaController_setOnSsmlMarkReachedCallback``: To register a callback of type ``onSsmlMarkReachedFuncType`` that is called in synchronous mode for every ``<mark />`` tag encountered in the SSML sequence provided to ``nvdaController_speakSsml``.
+    -
+  - Note: the new functions in the controller client only support NVDA 2024.1 and above.
+  -
+- Updated ``include`` dependencies:
+  - detours to ``4b8c659f549b0ab21cf649377c7a84eb708f5e68``. (#15695)
+  - ia2 to ``3d8c7f0b833453f761ded6b12d8be431507bfe0b``. (#15695)
+  - sonic to ``8694c596378c24e340c09ff2cd47c065494233f1``. (#15695)
+  - w3c-aria-practices to ``9a5e55ccbeb0f1bf92b6127c9865da8426d1c864``. (#15695)
+  - wil to ``5e9be7b2d2fe3834a7107f430f7d4c0631f69833``. (#15695)
+  -
+- Device info yielded by ``hwPortUtils.listUsbDevices`` now contain the bus reported description of the USB device (key ``busReportedDeviceDescription``). (#15764, @LeonarddeR)
+- For USB serial devices, ``bdDetect.getConnectedUsbDevicesForDriver`` and ``bdDetect.getDriversForConnectedUsbDevices`` now yield device matches containing a ``deviceInfo`` dictionary enriched with data about the USB device, such as ``busReportedDeviceDescription``. (#15764, @LeonarddeR)
+- When the configuration file ``nvda.ini`` is corrupted, a backup copy is saved before it is reinitialized. (#15779, @CyrilleB79)
+- When defining a script with the script decorator, the ``speakOnDemand`` boolean argument can be specified to control if a script should speak while in "on-demand" speech mode. (#481, @CyrilleB79)
+  - Scripts that provide information (e.g. say window title, report time/date) should speak in the "on-demand" mode.
+  - Scripts that perform an action (e.g. move the cursor, change a parameter) should not speak in the "on-demand" mode.
+  -
+- Fixed bug where deleting git-tracked files during ``scons -c`` resulted in missing UIA COM interfaces on rebuild. (#7070, #10833, @hwf1324)
+- Fix a bug where some code changes were not detected when building ``dist``, that prevented a new build from being triggered.
+Now ``dist`` always rebuilds. (#13372, @hwf1324)
+- A ``gui.nvdaControls.MessageDialog`` with default type of standard, no longer throws a None conversion exception because no sound is assigned. (#16223, @XLTechie)
+-
+
+
+=== API Breaking Changes ===
+These are breaking API changes.
+Please open a GitHub issue if your Add-on has an issue with updating to the new API.
+
+- NVDA is now built with Python 3.11. (#12064)
+- Updated pip dependencies:
+  - configobj to 5.1.0dev commit ``e2ba4457c4651fa54f8d59d8dcdd3da950e956b8``. (#15544)
+  - Comtypes to 1.2.0. (#15513, @codeofdusk)
+  - Flake8 to 4.0.1. (#15636, @lukaszgo1)
+  - py2exe to 0.13.0.1dev commit ``4e7b2b2c60face592e67cb1bc935172a20fa371d``. (#15544) 
+  - robotframework to 6.1.1. (#15544)
+  - SCons to 4.5.2. (#15529, @LeonarddeR)
+  - sphinx to 7.2.6. (#15544)
+  - wxPython to 4.2.2a commit ``0205c7c1b9022a5de3e3543f9304cfe53a32b488``. (#12551, #16257)
+  -
+- Removed pip dependencies:
+  - typing_extensions, these should be supported natively in Python 3.11 (#15544)
+  - nose, instead unittest-xml-reporting is used to generate XML reports. (#15544)
+  -
+- ``IAccessibleHandler.SecureDesktopNVDAObject`` has been removed.
+Instead, when NVDA is running on the user profile, track the existence of the secure desktop with the extension point: ``winAPI.secureDesktop.post_secureDesktopStateChange``. (#14488)
+- ``braille.BrailleHandler.handlePendingCaretUpdate`` has been removed with no public replacement. (#15163, @LeonarddeR)
+- ``bdDetect.addUsbDevices and bdDetect.addBluetoothDevices`` have been removed.
+Braille display drivers should implement the ``registerAutomaticDetection`` class method instead.
+That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices`` and ``addBluetoothDevices`` methods can be used. (#15200, @LeonarddeR)
+- The default implementation of the check method on ``BrailleDisplayDriver`` now requires both the ``threadSafe`` and ``supportsAutomaticDetection`` attributes to be set to ``True``. (#15200, @LeonarddeR)
+- Passing lambda functions to ``hwIo.ioThread.IoThread.queueAsApc`` is no longer possible, as functions should be weakly referenceable. (#14627, @LeonarddeR)
+- ``IoThread.autoDeleteApcReference`` has been removed. (#14924, @LeonarddeR)
+- To support capital pitch changes, synthesizers must now explicitly declare their support for the ``PitchCommand`` in the ``supportedCommands`` attribute on the driver. (#15433, @LeonarddeR)
+- ``speechDictHandler.speechDictVars`` has been removed. Use ``NVDAState.WritePaths.speechDictsDir`` instead of ``speechDictHandler.speechDictVars.speechDictsPath``. (#15614, @lukaszgo1)
+- ``languageHandler.makeNpgettext`` and ``languageHandler.makePgettext`` have been removed.
+``npgettext`` and ``pgettext`` are supported natively now. (#15546)
+- The app module for [Poedit https://poedit.net] has been changed significantly. The ``fetchObject`` function has been removed. (#15313, #7303, @LeonarddeR)
+- The following redundant types and constants have been removed from ``hwPortUtils``: (#15764, @LeonarddeR)
+  - ``PCWSTR``
+  - ``HWND`` (replaced by ``ctypes.wintypes.HWND``)
+  - ``ULONG_PTR``
+  - ``ULONGLONG``
+  - ``NULL``
+  - ``GUID`` (replaced by ``comtypes.GUID``)
+  -
+- ``gui.addonGui.AddonsDialog`` has been removed. (#15834)
+- ``touchHandler.TouchInputGesture.multiFingerActionLabel`` has been removed with no replacement. (#15864, @CyrilleB79)
+- ``NVDAObjects.IAccessible.winword.WordDocument.script_reportCurrentHeaders`` has been removed with no replacement. (#15904, @CyrilleB79)
+% Insert new list items here as the alias appModule table should be kept at the bottom of this list
+- The following app modules are removed.
+Code which imports from one of them, should instead import from the replacement module. (#15618, @lukaszgo1)
+-
+
+|| Removed module name | Replacement module |
+| ``azardi-2.0`` | ``azardi20`` |
+| ``azuredatastudio`` | ``code`` |
+| ``azuredatastudio-insiders`` | ``code`` |
+| ``calculatorapp`` | ``calculator`` |
+| ``code - insiders`` | ``code`` |
+| ``commsapps`` | ``hxmail`` |
+| ``dbeaver`` | ``eclipse`` |
+| ``digitaleditionspreview`` | ``digitaleditions`` |
+| ``esybraille`` | ``esysuite`` |
+| ``hxoutlook`` | ``hxmail`` |
+| ``miranda64`` | ``miranda32`` |
+| ``mpc-hc`` | ``mplayerc`` |
+| ``mpc-hc64`` | ``mplayerc`` |
+| ``notepad++`` | ``notepadPlusPlus`` |
+| ``searchapp`` | ``searchui`` |
+| ``searchhost`` | ``searchui`` |
+| ``springtoolsuite4`` | ``eclipse`` |
+| ``sts`` | ``eclipse`` |
+| ``teamtalk3`` | ``teamtalk4classic`` |
+| ``textinputhost`` | ``windowsinternal_composableshell_experiences_textinput_inputapp`` |
+| ``totalcmd64`` | ``totalcmd`` |
+| ``win32calc`` | ``calc`` |
+| ``winmail`` | ``msimn`` |
+| ``zend-eclipse-php`` | ``eclipse`` |
+| ``zendstudio`` | ``eclipse`` |
+
+=== Deprecations ===
+
+- Using ``watchdog.getFormattedStacksForAllThreads`` is deprecated - please use ``logHandler.getFormattedStacksForAllThreads`` instead. (#15616, @lukaszgo1)
+- ``easeOfAccess.canConfigTerminateOnDesktopSwitch`` has been deprecated, as it became obsolete since Windows 7 is no longer supported. (#15644, @LeonarddeR)
+- ``winVersion.isFullScreenMagnificationAvailable`` has been deprecated - use ``visionEnhancementProviders.screenCurtain.ScreenCurtainProvider.canStart`` instead. (#15664, @josephsl)
+- The following Windows release constants has been deprecated from winVersion module (#15647, @josephsl):
+  - ``winVersion.WIN7``
+  - ``winVersion.WIN7_SP1``
+  - ``winVersion.WIN8``
+  -
+- The ``bdDetect.KEY_*`` constants have been deprecated.
+Use ``bdDetect.DeviceType.*`` instead. (#15772, @LeonarddeR).
+- The ``bdDetect.DETECT_USB`` and ``bdDetect.DETECT_BLUETOOTH`` constants have been deprecated with no public replacement. (#15772, @LeonarddeR).
+- Using ``gui.ExecAndPump`` is deprecated - please use ``systemUtils.ExecAndPump`` instead. (#15852, @lukaszgo1)
+-
+
+
+= 2023.3.4 =
+This is a patch release to fix a security issue and installer issue.
+Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Security Fixes ==
+- Prevents loading custom configuration while secure mode is forced.
+([GHSA-727q-h8j2-6p45 https://github.com/nvaccess/nvda/security/advisories/GHSA-727q-h8j2-6p45])
+-
+
+== Bug Fixes ==
+- Fixed bug which caused the NVDA process to fail to exit correctly. (#16123)
+- Fixed bug where if the previous NVDA process failed to exit correctly, an NVDA installation could fail to an unrecoverable state. (#16122)
+-
+
+= 2023.3.3 =
+This is a patch release to fix a security issue.
+Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Security Fixes ==
+- Prevents possible reflected XSS attack from crafted content to cause arbitrary code execution.
+([GHSA-xg6w-23rw-39r8 https://github.com/nvaccess/nvda/security/advisories/GHSA-xg6w-23rw-39r8])
+-
+
+= 2023.3.2 =
+This is a patch release to fix a security issue.
+The security patch in 2023.3.1 was not resolved correctly.
+Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Security Fixes ==
+- The security patch in 2023.3.1 was not resolved correctly.
+Prevents possible system access and arbitrary code execution with system privileges for unauthenticated users.
+([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
+-
+
+
+= 2023.3.1 =
+This is a patch release to fix a security issue.
+Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Security Fixes ==
+- Prevents possible system access and arbitrary code execution with system privileges for unauthenticated users.
+([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
+-
+
+
 = 2023.3 =
 Questa versione include miglioramenti alle prestazioni, alla reattività e alla stabilità dell'uscita audio.
 Sono state aggiunte opzioni per controllare il volume dei suoni e dei segnali acustici di NVDA o per fare in modo che siano identici al volume della voce.

@@ -7,6 +7,185 @@
 Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
 
 
+= 2024.1 =
+
+Dodano nowy tryb mowy "na żądanie".
+Gdy tryb mowy na żądanie jest ustawiony, NVDA Nie mówi automatycznie (na przykład, podczas poruszania się strzałkami) ale mówi podczas naciskania skrótów klawiszowych,  które mają za cel wymawianie poszczególnej informacji (na przykład, odczyt tytułu okna).
+Od teraz jest możliwe wykluczenie trybów mowy, których nie potrzebujemy z poziomu ustawień mowy w ustawieniach NVDA podczas używania polecenia przełącz tryb mowy (``NVDA+s``).
+
+Od teraz dostępny jest nowy tryb kopiowania z zachowaniem formatowania w trybie czytania , który można przełączać za pomocą skrótu ``NVDA+shift+f10``).
+Gdy jest włączony, będzie używany tryb zaznaczania Firefoxu.
+Polecenie kopiowania tekstu za pomocą skrótu ``control+c`` zostanie przekierowane do Firefoxa. To spowoduje kopiowane formatowania zamiast czystego tekstu.
+
+Add-on Store wspiera wielokrotne działania (na przykład instalowanie, włączanie dodatków) zaznaczając wiele dodatków
+Dodano nowe działanie do otwierania strony z recenzjami dodatku.
+
+Opcje "Karta dźwiękowa" i "tryb przyciszania audio" zostały usunięte z okna dialogowego"wybór syntezatora".
+Można je znaleźć w ustawieniach dźwięku, które można otworzyć za pomocą skrótu ``NVDA+control+u``.
+
+eSpeak-NG, LibLouis braille translator, i repozytorium znaków Unicode zostały zaktualizowane.
+Nowe tablice brajlowskie dla Tajskiego, filipińskiego i rumuńskiego zostały dodane.
+
+Naprawiono dużo błędów, szczególnie z Add-on Storem, wsparciem brajla, wsparciem dla Libre Office, Microsoft Office i wsparciem dźwięku.
+
+== Uwagi == 
+- Ta wersja nie jest zgodna z istniejącymi dodatkami.
+- Systemy operacyjne Windows 7 i Windows 8 nie są więcej wspierane.
+Windows 8.1 jest minimalną wspieraną wersją systemu Windows.
+-
+
+== Nowości ==
+- Add-on Store:
+  - Add-on Store od teraz wspiera wielokrotne działania (na przykład instalowanie, włączanie i wyłączanie dodatków) zaznaczając więcej dodatków. (#15350, #15623, @CyrilleB79)
+  - Dodano nowe działanie służace do otwierania  dedykowanej strony do zaopiniowania lub czytania recenzji o dodatku. (#15576, @nvdaes)
+  -
+- Dodano wsparcie dla Bluetooth niskonapięciowych monitorów brajlowskich HID. (#15470)
+- Nowy tryb kopiowania z zachowaniem formatowania przełączany za pomocą  skrótu ``NVDA+shift+f10`` jest dodany do trybu czytania dla Mprzeglądarki Mozilla firefox.
+Gdy jest włączony, zaznaczanie będzie sterowane z poziomu przeglądarki Mozilla firefox.
+Polecenie kopiowania tekstu za pomocą skrótu ``control+c`` zostanie przekierowane do Firefoxa. To spowoduje kopiowanie formatowania zamiast czystego tekstu.
+Miewajcie na uwadze, że gdy Firefox steruje kopiowaniem, NVDA nie będzie wymawiała komunikatu "skopiowano do schowka" w tym trybie. (#15830)
+- Podczas kopowania tekstu w Programie Microsoft Word w trybie czytania NVDA, formatowanie jest także brane pod uwagę.
+Skutek uboczny tej funkcji jest niemożliwość wymawiania komunikatu  "skopiowano do schowka" przez NVDA podczas naciskania skrótu ``control+c`` w trybie przeglądu Microsoft Word / Outlook, ponieaż te programy sterują kopiowaniem, nie sama NVDA. (#16129)
+- Nowy tryb mowy "na żądanie" został dodany.
+Gdy ten tryb mowy jest włączony, NVDA nie mówi automatycznie (na przykład, podczas poruszania się kursorem) ale mówi podczas wciskania skrótów klawiszowych, które mają za cel wimawianie konkretnej informacji (na przykład wymawiaj tytuł okna). (#481, @CyrilleB79)
+- Od teraz jest możliwe wykluczenie trybów mowy z listy trybów podczas przełączania za pomocą skrótu ``NVDA+s``, w ustawieniach NVDA. (#15806, @lukaszgo1)
+  - Jeżeli aktualnie używasz dodatku NoBeepsSpeechMode usuń go i wyłącz tryby "dźwięki" i "na żadanie" w ustawieniach.
+  -
+-
+
+== Zmiany ==
+- NVDA więcej nie wspiera wersji systemów operacyjnych Windows 7 i Windows 8.
+Windows 8.1 jest minimalną wspieraną wersją. (#15544)
+- Aktualizacje komponentów:
+  - Zaktualizowano LibLouis braille translator do wersji [3.28.0 https://github.com/liblouis/liblouis/releases/tag/v3.28.0]. (#15435, #15876, @codeofdusk)
+    - Dodano nowe tablice brajlowskie dla tajskiego, rumuńskiego i filipińskiego.
+    -
+  - eSpeak NG został zaktualizowany do wersji 1.52-dev commit ``530bf0abf``. (#15036)
+  - Tłumaczenie symboli i emoji z repozytorium Cldr zostały zaktualizowane do wersji 44.0. (#15712, @OzancanKaratas)
+  - Zaktualizowano Java Access Bridge do wersji 17.0.9+8Zulu (17.46.19). (#15744)
+  -
+- Skróty klawiszowe:
+  - Następujące skróty od teraz wspierają dwukrotne i trzykrotne naciśnięcia dla literowania informacji , a także literowania fonetycznego: odczyt zaznaczenia, odczyt tekstu z schowka i odczyt obiektu w fokusie. (#15449, @CyrilleB79)
+  - Od teraz polecenie do włączania i wyłączania kurtyny posiada domyślny skrót klawiszowy: ``NVDA+control+escape``. (#10560, @CyrilleB79)
+  - Gdy jest naciśnięte czterokrotnie, polecenie do odczytu zaznaczenia od teraz pokazuje zaznaczoną treść w trybie czytania. (#15858, @Emil-18)
+  - 
+- Microsoft Office:
+  - Podczas odpytywania o formatowanie komórek w programie Excel, ramki i tło będą odczytywane jeżeli istnieje takie formatowanie. (#15560, @CyrilleB79)
+  - NVDA już nie będzie odczytywała nieoznaczone grupowania, takie jak w wstążkach Microsoft Office 365. (#15638)
+  -
+- Opcje "karta dźwiękowa" i "tryb przyciszania" zostały usunięte z okna dialogowego "wybór syntezatora".
+Można je teraz znaleźć w panelu ustawień dźwieku, którego można wywołać za pomocą skrótu ``NVDA+control+u``. (#15512, @codeofdusk)
+- Nazwa opcji "Oczytaj rolę obiektu podczas poruszania się myszą" w ustawieniach myszy NVDA zostala zmieniona na "Odczytaj obiekt podczas wejścia do niego za pomocą myszy".
+Ta opcja od teraz odczytuje inne ważne informacje o obiekcie podczas wejścia do niego myszą, takie jak stan, (zaznaczony /wciśnięty) lub współrzędne komórki z tabeli. (#15420, @LeonarddeR)
+- Nowe elementy zostały dodane do meni pomoc "szkolenie i wsparcie" i "sklep NV access". (#14631)
+- Wsparcie NVDA dla programu  [Poedit https://poedit.net] zostało przepisane dla wersji 3 i nowszych.
+Użytkownicy programu Poedit 1 są zachęcani do aktualizacji do Poedit 3 jeżeli chcą używać ulepszeń dostępnosci dla programu Poedit, takich jak skróty do odczytu notatek dla tłumaczy i komentarzy. (#15313, #7303, @LeonarddeR)
+- Przegląd brajla i mowy od teraz są wyłączone w trybie bezpiecznym. (#15680)
+- Podczas używania nawigacji obiektowej, wyłączone, niedostępne obiekty od teraz nie będą więcej ignorowane. (#15477, @CyrilleB79)
+- Dodano spis treści do wykazu poleceń. (#16106)
+-
+
+== Poprawki błędów ==
+- Add-on Store:
+  - Podczas zmiany stanu aktualnie wybranego dodatku, na przykład zmiana z stanu "pobieranie" na "pobrano", odświeżony element będzie oznajmiany poprawnie. (#15859, @LeonarddeR)
+  - Podczas instalacji dodatków, instrukcje instalacji nie nakładają się na okno dialogowe ponownego uruchomienia. (#15613, @lukaszgo1)
+  - Podczas ponownej instalacji niezgodnego dodatku taki dodatek już nie jest automatycznie wyłączany. (#15584, @lukaszgo1)
+  - Wyłączone i niezgodne dodatki teraz mogąbyć aktualizowane. (#15568, #15029)
+  - NVDA od teraz odzyskuje swój proces i pokazuje błąd w przypadku nieudanego pobierania dodatku. (#15796)
+  - NVDA od teraz już nie uruchamia się ponownie bez powodu po otwarciu i zamknięciu Add-on store. (#16019, @lukaszgo1)
+  -
+- Dźwięk:
+  - NVDA już nie zawiesza się na długi okres czasu gdy więcej dźwięków odtwarza się bardzo szybko. (#15311, #15757, @jcsteh)
+  - Jeżeli karta dźwiękowa jest ustawiona na inną niżdomyślnąwartość,  a ta karta stanie sięponownie dostępna,  po czasie niedostępności, NVDA NVDA przełączy się na skonfigurowaną kartę dźwiękową, zamiast przywracania na domyślne urządzenie. (#15759, @jcsteh)
+  - NVDA teraz ponownie odtwarza dźwięk jeżeli konfiguracja karty dźwiękowej konfiguracja zmieni sięlub inna aplikacja nie używa tej karty w trybie wyłączności. (#15758, #15775, @jcsteh)
+  -
+- Brajl:
+  - Wielowierszowe monitory brajlowskie już nie spowodują wysypke sterownika BRLTTY. Te monitoryy traktowane są jako jeden nieskończony monitor brajlowski. (#15386)
+  - Od teraz wykrywano jest więcej korzystnych obiektów, a ich treść wyświetlana jest w brajlu. (#15605)
+  - Wprowadzanie brajla za pomocą skrótów brajlowskich od teraz znowu działa. (#15773, @aaclause)
+  - Brajl jest od teraz odświeżany podczas przemieszczania obiektu nawigatora po komórkach tabeli w więcej przypadkach (#15755, @Emil-18)
+  - Wynik odczytu poleceń dla aktualnego obiektu nawigatora, pod kursorem przeglądu i aktualnego zaznaczenia pokazywane są w brajlu. (#15844, @Emil-18)
+  - Sterownik Albatross już nie rozpoznaje Esp32 mikroukładu jako monitor brajlowski Albatross. (#15671)
+  -
+- LibreOffice:
+  - Słowa skasowane za pomocą skrótu ``control+backspace`` od teraz są także wymawiane, jeżeli po słowie następuję biała spacja taka jak spacja i tabulator. (#15436, @michaelweghorn)
+  - Oznajmianie paska statusu używając skrótu ``NVDA+end`` od teraz działą w oknach dialogowych LibreOffice od wersji 24.2 and i nowszych. (#15591, @michaelweghorn)
+  - od teraz wszystkie właściwości tekstu w LibreOffice od wersji 24.2 i nowszych są wspierane.
+  Ta zmiana spowodowała, że od teraz oznajmianie błędów pisowni działa podczas odczytu wiersza w LibreOffice Writerze. (#15648, @michaelweghorn)
+  - Oznajmianie nagłówków od teraz działą w LibreOffice wersji 24.2 i nowszych. (#15881, @michaelweghorn)
+  -
+- Microsoft Office:
+  - w Excelu z wyłączonym wsparciem UIA, brajl jest odświeżany, a bieżaca treść komórki zostanie przeczytana po naciśnięciu ``control+y``, ``control+z`` lub ``alt+backspace`` . (#15547)
+  - W Wordzie z wyłączonym  UIA brajl jest odświeżany po naciśnięciu skrótó ``control+v``, ``control+x``, ``control+y``, ``control+z``, ``alt+backspace``, ``backspace`` lub ``control+backspace``.
+  Brajl jest także odświeżany z włączonym UIA, podczas wpisywania tekstu gdy brajl jest ustawiony na przegląd a kursor przeglądu śledzi fokus. (#3276)
+  - W Wordzie, początkowe komórki będąwymawiane po naciśnięciu jednej z powyższych poleceń do nawigacji po tabelach ``alt+home``, ``alt+end``, ``alt+pageUp`` i ``alt+pageDown``. (#15805, @CyrilleB79)
+  -
+- Odczyt skrótów klawiszowych został ulepszony. (#10807, #15816, @CyrilleB79)
+- Syntezator mowy SAPI4 od teraz poprawnie wspiera polecenia zmiany głośnosci , prędkości i wysokości zawarte w mowie. (#15271, @LeonarddeR)
+- Stan wielowierszowej kontrolki od teraz jest prawidłowo wymawiany w aplikacjach  używajacych Java Access Bridge. (#14609)
+- NVDA potrafi odczytać więcej okien dialogowych w systemie Windows 10 i 11. (#15729, @josephsl)
+- NVDA od teraz przeczyta załadowaną stronę w przeglądarce Microsoft Edge podczas używania interfejsu dostępności UI Automation. (#15736)
+- Podczas używania polecenia czytaj wszystko oraz poleceń do literowania informacji, pauzy jużnie zmniejszająsię z czasem. (#15739, @jcsteh)
+- NVDA już nie zawiesza się w niektóych przypadkach podczas wymawiania dużej ilosci tekstu. (#15752, @jcsteh)
+- Podczas używania przeglądarki Microsoft Edge za pomocą interfejsu UI Automation, NVDA od teraz potrafi aktywować więcej kotrolek w trybie czytania. (#14612)
+- NVDA od teraz ponownie sięuruchomi gdy konfiguracja zostanie uszkodzona, a konfiguracja zostanie zresetowana, przywracając stan z poprzednich wersji NVDA. (#15690, @CyrilleB79)
+- Naprawiono wsparcie dla System List view (``SysListView32``) kontrolek w aplikacjach Windows Forms. (#15283, @LeonarddeR)
+- Od teraz już nie jest możliwe nadpisywanie historii NVDA konsssssssoli Python. (#15792, @CyrilleB79)
+- NVDA nadal będzie responsywny gdy dostanie dużo zdarzeń  UI automation, na przykład podczas wyświetlania dużej ilości tekstu w konsoli oraz podczas słuchania Whatsappie. (#14888, #15169)
+  - To nowe zachowanie można wyłączyć używając nowej opcji "używaj ulepszone przetwarzanie zdarzeń" w zaawansowanych ustawieniach NVDA.
+  -
+- NVDA od teraz ponownie potrafi śledzić fokus w  aplikachach, uruchomionych wewnątrz Windows Defender Application Guard (WDAG). (#15164)
+- Wymówiony tekst już nie jest zaktualizowania podczas poruszania się myszą w przeglądzie mowy. (#15952, @hwf1324)
+- NVDA przełączy się ponownie do trybu czytania po zamknięciu list rozwijanych za pomocą ``escape`` lub ``alt+strzałkiWgórę`` w Firefoxie lub Chromie. (#15653)
+- Poruszanie sięstrzałkami w góręi w dół w iTunes już nie spowoduje niechciane przełączenie do trybu czytania. (#15653)
+-
+
+
+= 2023.3.4 =
+To jest wersja naprawiająca łuki bezpieczeństwa i problem z instalatorem.
+Prosimy odpowiedzialnie zgłaszać łuki bezpieczeństwa zgodnie z [Politykąbezpieczeństwa NVDA https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Poprawki bezpieczeństwa ==
+- Już nie jest możliwe uruchamianie gdy tryb bezpieczny jest wymuszony.
+([GHSA-727q-h8j2-6p45 https://github.com/nvaccess/nvda/security/advisories/GHSA-727q-h8j2-6p45])
+-
+
+== Poprawki błędów ==
+- Naprawiono błąd z niepoprawnym zakończeniem procesu NVDA. (#16123)
+- Naprawiono błąd, podczas którego proces programu NVDA mógł niepoprawnie zostać zamknięty, tym samym skutkując w nieodzyskiwalnej instalacji. (#16122)
+-
+
+= 2023.3.3 =
+Jest to wersja naprawiająca łukę bezpieczeństwa.
+Prosimy odpowiednio zgłaszać  łuki bezpieczeństwa, śledząc [Politykę bezpieczeństva NVDA https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Poprawki bezpieczeństwa ==
+- Od teraz zapobiegany jest zwracany atak XSS zbudowanej treści powodujący arbitrarne uruchamianie kodu.
+([GHSA-xg6w-23rw-39r8 https://github.com/nvaccess/nvda/security/advisories/GHSA-xg6w-23rw-39r8])
+-
+
+= 2023.3.2 =
+To jest wersja naprawiająca łukę bezpieczeństwa.
+Poprawka bezpieczeństwaw w wersji 2023.3.1 nie została poprawnie wdrożona.
+Prosimy odpowiednio zgłaszać  łuki bezpieczeństwa, śledząc [Politykę bezpieczeństva NVDA https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Poprawki bezpieczeństwa ==
+- Poprawka bezpieczeństwaw w wersji 2023.3.1 nie została poprawnie wdrożona.
+Uniemożliwia uruchamianie dowolnego kodu z podwyższonymi uprawnieniami do nieuwierzytelnionych użytkowników.
+([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
+-
+
+
+= 2023.3.1 =
+To jest wersja naprawiająca łukę bezpieczeństwa.
+Prosimy odpowiednio zgłaszać  łuki bezpieczeństwa, śledząc [Politykę bezpieczeństva NVDA https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Poprawki bezpieczenstwa ==
+- Uniemożliwia uruchamianie dowolnego kodu z podwyższonymi uprawnieniami do nieuwierzytelnionych użytkowników.
+([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
+-
+
+
 = 2023.3 =
 Ta wersja zawiera ulepszenia wydajności, responsywności i stabilności dźwięku.
 Dodano opcje do kontrolowania głośności dźwięków NVDA, oraz do ich ujednolicania z głośnością mowy.

@@ -2,6 +2,188 @@
 
 
 %!includeconf: ../changes.t2tconf
+= 2024.1 =
++
+Đã thêm chế độ đọc theo yêu cầu.
+Khi ở trong chế độ này, NVDA không tự động đọc lên (ví dụ như khi di chuyển con trỏ) nhưng vẫn đọc khi gọi một lệnh được gán để thông báo thông tin gì đó (ví dụ như đọc tiêu đề cửa sổ).
+Trong phân loại giọng đọc ở phần cài đặt NVDA, đã có thể bỏ đi những chế độ đọc không mong muốn từ lệnh chuyển giữa các chế độ đọc (``NVDA+s``).
+
+Mới: chế độ chọn thực tế (bật / tắt bằng ``NVDA+shift+f10``) đã có trong chế độ duyệt của NVDA cho Mozilla Firefox.
+Khi được bật lên, việc chọn văn bản trong chế độ duyệt cũng sẽ làm cho Firefox thực hiện vùng chọn của chính nó.
+Việc sao chép văn bản với ``control+c`` sẽ gửi thẳng lệnh này đến Firefox nên nội dung được sao chép sẽ là văn bản đa dạng thức, thay vì chỉ là văn bản trơn của NVDA.
+
+Cửa hàng Add-on giờ đây đã hỗ trợ thao tác hàng loạt (cài đặt, bật / tắt các add-on) bằng cách chọn nhiều add-on
+Có thêm hành động để mở trang đánh giá cho add-on đã chọn.
+
+Thiết bị đầu ra âm thanh và các tùy chọn giảm âm  đã bị gỡ khỏi hộp thoại "Chọn bộ đọc".
+Có thể tìm thấy chúng trong bản cài đặt âm thanh, mở bằng ``NVDA+control+u``.
+
+Đã cập nhật eSpeak-NG, thư viện phiên dịch chữ nổi LibLouis và Unicode CLDR.
+Có thêm các bản chữ nổi tiếng Thái Lan, Philippines và Rumani.
+
+Sửa nhiều lỗi, đặc biệt là với Cửa Hàng Add-on, chữ nổi, Libre Office, Microsoft Office và âm thanh.
+
+== Lưu ý quan trọng == 
+- Bản phát hành này không tương thích với các add-on hiện có.
+- Không còn hỗ trợ Windows 7 và Windows 8 nữa.
+Windows 8.1 là phiên bản thấp nhất được hỗ trợ.
+-
+
+== Tính năng mới ==
+- Cửa hàng Add-on:
+  - Cửa hàng Add-on giờ đây hỗ trợ các thao tác hàng loạt (cài đặt, bật / tắt add-on) bằng cách chọn nhiều add-on. (#15350, #15623, @CyrilleB79)
+  - Một hành động mới đã được thêm vào để mở một trang web chuyên dụng nhằm xem hoặc cung cấp phản hồi về add-on đã chọn. (#15576, @nvdaes)
+  -
+- Thêm hỗ trợ cho các màn hình chữ nổi HID dùng công nghệ Bluetooth Low Energy. (#15470)
+- Chế độ chọn thực tế (bật / tắt bằng ``NVDA+shift+f10``) đã có trong chế độ duyệt của NVDA cho Mozilla Firefox.
+Khi được bật lên, việc chọn văn bản trong chế độ duyệt cũng sẽ làm cho Firefox thực hiện vùng chọn của chính nó.
+
+Việc sao chép văn bản với ``control+c`` sẽ gửi thẳng lệnh này đến Firefox nên nội dung được sao chép sẽ là văn bản đa dạng thức, thay vì chỉ là văn bản trơn của NVDA.
+Lưu ý là vì Firefox quản lí thao tác sao chép nên NVDA sẽ không thông báo "chép vào bộ nhớ tạm" trong chế độ này. (#15830)
+- Khi sao chép văn bản trong Microsoft Word mà bật chế độ duyệt của NVDA, định dạng văn bản giờ đây đã được bao gồm.
+Một tác dụng phụ của việc này là NVDA sẽ không còn báo thông điệp "chép vào bộ nhớ tạm" khi bấm ``control+c`` ở chế độ duyệt trong Microsoft Word / Outlook, vì việc sao  chép được quản lý bởi những ứng dụng đó chứ không phải bởi NVDA. (#16129)
+- Đã thêm lệnh mới cho chế độ đọc: "theo yêu cầu".
+Khi ở chế độ đọc theo yêu cầu, NVDA không tự đọc (ví dụ như khi di chuyển con trỏ) nhưng vẫn đọc khi gọi những lệnh có chức năng thông báo điều gì đó (thông báo tiêu đề cửa sổ). (#481, @CyrilleB79)
+- Ở phần Tiếng nói trong cài đặt của NVDA, giờ đây đã có thể bỏ qua các chế độ đọc không mong muốn từ lệnh chuyển giữa các chế độ đọc (``NVDA+s``). (#15806, @lukaszgo1)
+  - Nếu đang dùng add-on NoBeepsSpeechMode, hãy cân nhắc gỡ bỏ nó đi, rồi tắt các tùy chọn "beeps" và "theo yêu cầu" trong ản cài đặt.
+  -
+-
+
+== Các thay đổi ==
+- NVDA không còn hỗ trợ Windows 7 và Windows 8.
+Windows 8.1 là phiên bản thấp nhất được hỗ trợ. (#15544)
+- Cập nhật các thành phần:
+  - Đã cập nhật thư viện phiên dịch chữ nổi LibLouis lên [3.28.0 https://github.com/liblouis/liblouis/releases/tag/v3.28.0]. (#15435, #15876, @codeofdusk)
+    - Có thêm các bản chữ nổi tiếng Thái Lan, Philippines và Rumani.
+    -
+  - eSpeak NG đã được cập nhật lên 1.52-dev commit ``530bf0abf``. (#15036)
+  - Kí hiệu và chú thích biểu tượng cảm xúc CLDR đã được cập nhật lên phiên bản 44.0. (#15712, @OzancanKaratas)
+  - Đã cập nhật Java Access Bridge lên 17.0.9+8Zulu (17.46.19). (#15744)
+  -
+- Phím lệnh:
+  - Các phím lệnh sau, giờ đây đã hỗ trợ bấm hai và ba lần để đánh vần thông tin được thông báo và đánh vần với kí tự mô tả: thông báo vùng chọn, thông báo nội dung trong bộ nhớ tạm và thông báo đối tượng có focus. (#15449, @CyrilleB79)
+  - Đã có phím tắt mặc định để bật / tắt che màn hình của NVDA: ``NVDA+control+escape``. (#10560, @CyrilleB79)
+  - Khi bấm bốn lần, lệnh thông báo vùng chọn giờ đây sẽ hiển thị vùng chọn trên một cửa sổ có thể duyệt. (#15858, @Emil-18)
+  - 
+- Microsoft Office:
+  - Khi yêu cầu thông tin định dạng trên ô của Excel, đường viền, nền sẽ chỉ được thông báo nếu có định dạng đó. (#15560, @CyrilleB79)
+  - NVDA sẽ lại không còn thông báo các nhóm không có nhãn như trình đơn  trong các phiên bản gần đây của Microsoft Office 365. (#15638)
+  -
+Thiết bị đầu ra âm thanh và các tùy chọn giảm âm  đã bị gỡ khỏi hộp thoại "Chọn bộ đọc".
+Có thể tìm thấy chúng trong bản cài đặt âm thanh, mở bằng ``NVDA+control+u``. (#15512, @codeofdusk)
+- Tùy chọn "Thông báo vai trò khi chuột đi vào đối tượng" trong phân loại thiết lập chuột của NVDA đã được đổi tên thành "Thông báo đối tượng khi chuột đi vào nó".
+Tùy chọn này giờ đây thông báo thêm thông tin liên quan về một đối tượng khi chuột đi vào nó, chẳng hạn như trạng thái (đã chọn/đã bấm) hoặc tọa độ ô trong bảng. (#15420, @LeonarddeR)
+- Đã thêm tùy chọn vào trình đơn: trang trợ giúp và cửa hàng của NV Access. (#14631)
+- Hỗ trợ của NVDA cho [Poedit https://poedit.net] được cải thiện cho Poedit version phiên bản 3 trở lên.
+Người dùng Poedit 1 được khuyến khích cập nhật lên Poedit 3 nếu họ muốn dựa vào khả năng tiếp cận nâng cao trong Poedit, chẳng hạn như các phím tắt để đọc ghi chú và lưu ý cho người phiên dịch. (#15313, #7303, @LeonarddeR)
+- Trình hiển thị chữ nổi và trình hiển thị nội dung đọc giờ đây bị vô hiệu trong chế độ bảo vệ. (#15680)
+- Trong khi điều hướng đối tượng, các đối tượng bị vô hiệu (không sẵn sàng) sẽ không bị bỏ qua nữa. (#15477, @CyrilleB79)
+- Thêm mục lục cho tài liệu danh sách các phím tắt. (#16106)
+-
+
+== Sửa lỗi ==
+- Cửa hàng ad-on:
+  - Khi trạng thái của một add-on bị thay đổi trong lúc đang có focus, thay đổi từ "đang tải" thành "đã tải" chẳng hạn, thành phần đã cập nhật giờ đây sẽ được thông báo chính xác. (#15859, @LeonarddeR)
+  - Khi cài các add-on, thông báo xác nhận cài đặt không còn bị chồng chéo với hộp thoại khởi động lại. (#15613, @lukaszgo1)
+  - Khi cài lại một add-on không tương thích, nó không còn bị buộc vô hiệu nữa. (#15584, @lukaszgo1)
+  - Giờ đây, cũng đã có thể cập nhật các add-on đã vô hiệu và không tương thích. (#15568, #15029)
+  - NVDA giờ đây sẽ khôi phục và hiển thị lỗi trong trường hợp một add-on không được tải xuống đúng cách. (#15796)
+  - NVDA không còn bị lỗi khởi động lại liên tục sau khi mở và đóng Cửa Hàng Add-on. (#16019, @lukaszgo1)
+
+- Âm thanh:
+  - NVDA không còn bị treo trong thời gian ngắn khi nhiều âm thanh được phát liên tiếp. (#15311, #15757, @jcsteh)
+  - Nếu thiết bị đầu ra âm thanh được đặt thành thiết bị khác với mặc định và thiết bị đó sẽ khả dụng trở lại sau khi không khả dụng, NVDA sẽ chuyển về thiết bị đã định cấu hình thay vì tiếp tục sử dụng thiết bị mặc định. (#15759, @jcsteh)
+  - NVDA giờ đây sẽ tiếp tục âm thanh nếu cấu hình của thiết bị đầu ra thay đổi hoặc ứng dụng khác giải phóng quyền kiểm soát độc quyền của thiết bị. (#15758, #15775, @jcsteh)
+  -
+- Chữ nổi:
+  - Các màn hình chữ nổi nhiều dòng sẽ không còn bị lỗi trình điều khiển BRLTTY và được coi là một màn hình liên tục. (#15386)
+  - Nhiều đối tượng chứa các văn bản hữu ích đã được nhận dạng, và nội dung văn bản đã hiển thị trong chữ nổi. (#15605)
+  - Đầu vào chữ tắt lại hoạt động bình thường trợ lại. (#15773, @aaclause)
+  - Chữ nổi giờ đây đã cập nhật khi di chuyển đối tượng điều hướng giữa các ô trong bảng trong nhiều tình huống. (#15755, @Emil-18)
+  - Kết quả của các lệnh thông báo focus hiện tại, đối tượng điều hướng hiện tại, và vùng chọn hiện tại giờ đây đã hiển thị trong chữ nổi. (#15844, @Emil-18)
+  - Trình điều khiển Albatross không còn quản lí Esp32 microcontroller như một màn hình Albatross. (#15671)
+
+- LibreOffice:
+  - Các từ bị xóa bằng phím tắt``control+backspace`` giờ đây cũng được thông báo chính xác khi mà theo sau từ đó là khoảng trắng (là dấu cách và tab chẳng hạn). (#15436, @michaelweghorn)
+  - Việc thông báo thanh trạng thái bằng phím tắt ``NVDA+end``  giờ đây cũng sẽ hoạt động với các hộp thoại trong LibreOffice phiên bản 24.2 và mới hơn. (#15591, @michaelweghorn)
+  - Tất cả các thuộc tính văn bản mong đợi hiện được hỗ trợ trong phiên bản LibreOffice 24.2 trở lên.
+  Điều này làm cho việc thông báo lỗi chính tả có tác dụng khi thông báo một dòng trong Writer. (#15648, @michaelweghorn)
+  - Việc thông báo cấp độ tiêu đề giờ đây cũng đã hoạt động với LibreOffice phiên bản 24.2 trở lên. (#15881, @michaelweghorn)
+  -
+- Microsoft Office:
+  - Trong Excel với UIA bị tắt, chữ nổi đã được cập nhật, và ô đang hoạt động đã được đọc lên khi bấm ``control+y``, ``control+z`` hay ``alt+backspace``. (#15547)
+  - Trong Word với UIA bị tắt, chữ nổi đã được cập nhật khi bấm ``control+v``, ``control+x``, ``control+y``, ``control+z``, ``alt+backspace``, ``backspace`` hay ``control+backspace``.
+  Nó cũng được cập nhật với UIA được bật, khi đánh văn bản và con trỏ nổi đi theo con trỏ duyệt và con trỏ này đi theo dấu nháy. (#3276)
+  - Trong Word, ô đích bây giờ sẽ được báo cáo chính xác khi sử dụng các lệnh gốc của Word để điều hướng trong bảng ``alt+home``, ``alt+end``, ``alt+pageUp`` và ``alt+pageDown` `. (#15805, @CyrilleB79)
+  -
+- Đã cải thiện khả năng thông báo phím tắt của đối tượng. (#10807, #15816, @CyrilleB79)
+- Bộ đọc chuẩn SAPI4 giờ đây đã thật sự hỗ trợ các thay đổi âm lượng, tốc độ và cao độ trong cài đặt tiếng nói. (#15271, @LeonarddeR)
+- Trạng thái nhiều dòng giờ đây được thông báo chính xác trong các ứng dụng dùng Java Access Bridge. (#14609)
+- NVDA sẽ thông báo các nội dung cho nhiều hộp thoại của Windows 10 và 11. (#15729, @josephsl)
+- NVDA sẽ không còn bị lỗi khi đọc trang mới tải trong Microsoft Edge khi dùng UI Automation. (#15736)
+- Khi dùng lệnh đọc tất cả hay các lệnh để đánh vần văn bản, khoảng ngưng giữa các câu hay kí tự không còn bị giảm dần theo thời gian. (#15739, @jcsteh)
+- NVDA không còn tình trạng thỉnh thoảng bị treo khi đọc một lượng văn bản lớn. (#15752, @jcsteh)
+- Khi truy cập Microsoft Edge bằng UI Automation, NVDA có khả năng kích hoạt nhiều điều khiển trong chế độ duyệt. (#14612)
+- NVDA không còn bị lỗi không khởi động được nữa khi tập tin cấu hình bị hư hỏng,nó sẽ khôi phục cấu hình về mặc định như  đã làm  trước đây. (#15690, @CyrilleB79)
+- Sửa lỗi hộ trợ cho hệ thống các điều khiển dạng xem danh sách (``SysListView32``) trong các ứng dụng Windows Forms. (#15283, @LeonarddeR)
+- Không thể ghi đè lịch sử Python console của NVDA. (#15792, @CyrilleB79)
+- NVDA phải duy trì khả năng phản hồi khi có quá nhiều sự kiện của UI Automation, ví dụ: khi một lượng lớn văn bản được in ra cửa sổ terminal hoặc khi nghe tin nhắn thoại trong trình nhắn tin WhatsApp. (#14888, #15169)
+  - Có thể tắt kiểu hoạt động mới này bằng tùy chọn mới "Sử lí sự kiện nâng cao" trong cài đặt nâng cao của NVDA.
+  -
+- NVDA một lần nữa có thể theo dõi tiêu điểm trong các ứng dụng chạy trong Windows Defender Application Guard (WDAG). (#15164)
+- Văn bản không còn được cập nhật khi chuột di chuyển trong Trình Hiển Thị Nội Dung Đọc. (#15952, @hwf1324)
+- NVDA sẽ lại chuyển về chế độ duyệt khi đóng các hộp xổ với ``escape`` hoặc ``alt+mũi tên lên`` trong Firefox hay Chrome. (#15653)
+- Bấm mũi tên lên / xuống ở các hộp xổ trong iTunes sẽ không còn chuyển qua chế độ duyệt ngoài ý muốn. (#15653)
+-
+
+== Các thay đổi cho nhà phát triển ==
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
+
+
+= 2023.3.4 =
+Đây là bản  vá nhằm sửa lỗi bảo mật và lỗi bộ cài đặt.
+Vui lòng báo các vẫn để theo [chính sách bảo mật của NVDA https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Sửa lỗi bảo mật ==
+- Ngăn tải các cấu hình tùy biến` trong khi đang bị buộc chạy ở chế độ bảo vệ.
+([GHSA-727q-h8j2-6p45 https://github.com/nvaccess/nvda/security/advisories/GHSA-727q-h8j2-6p45])
+-
+
+== Sửa lỗi ==
+- Sửa lỗi làm cho NVDA không thoát được hoàn toàn. (#16123)
+- Sửa lỗi khi  NVDA trước đó đã không tắt được hoàn toàn, và quá trình cài đặt NVDA bị thất bại theo kiểu không thể khôi phục. (#16122)
+-
+
+= 2023.3.3 =
+Đây là bản  vá nhằm sửa các lỗi bảo mật.
+Vui lòng báo các vẫn để theo [chính sách bảo mật của NVDA https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Sửa lỗi bảo mật ==
+- - Ngăn chặn cuộc tấn công XSS được phản ánh có thể xảy ra từ nội dung được tạo để thực thi mã tùy ý.
+([GHSA-xg6w-23rw-39r8 https://github.com/nvaccess/nvda/security/advisories/GHSA-xg6w-23rw-39r8])
+-
+
+= 2023.3.2 =
+Đây là bản  vá nhằm sửa các lỗi bảo mật.
+Bản vá lỗi trong 2023.3.1 chưa giải quyết một cách triệt đễ.
+Vui lòng báo các vẫn để theo [chính sách bảo mật của NVDA https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Sửa lỗi bảo mật ==
+- Bản vá lỗi trong 2023.3.1 chưa giải quyết một cách triệt đễ.
+Ngăn chặn khả năng truy cập hệ thống và thực thi mã tùy ý với các đặc quyền hệ thống đối với người dùng chưa được xác thực.
+([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
+-
+
+
+= 2023.3.1 =
+Đây là bản  vá nhằm sửa các lỗi bảo mật.
+Vui lòng báo các vẫn để theo [chính sách bảo mật của NVDA https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Sửa lỗi ==
+- Ngăn chặn khả năng truy cập hệ thống và thực thi mã tùy ý với các đặc quyền hệ thống đối với người dùng chưa được xác thực..
+([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
+-
+
 = 2023.3 =
 Bản phát hành này bao gồm những cải tiến về sự vận hành, khả năng phản hồi và tính ổn định của đầu ra âm thanh.
 Đã thêm các tùy chọn để điều khiển âm lượng âm thanh và tiếng beep của NVDA, hoặc cho phép chúng đi theo âm lượng của giọng đọc mà bạn đang dùng.
@@ -309,7 +491,7 @@ Giống như bấm ``NVDA+k`` hai lần, nhưng có thể tiện hơn cho ngư�
   - Trên ARM, các ứng dụng x64 không còn bị cho là ứng dụng ARM64 nữa. (#14403)
   - Đã có thể tiếp cận các thành phần trong trình đơn của clipboard history (lịch sử bộ nhớ tạm) như là "pin item". (#14508)
   - Trong Windows 11 22H2 và mới hơn, lại có thể dùng chuột hoặc tương tác cảm ứng để tiếp cận các khu vực như khay hệ thống và hộp thoại "Open With". (#14538, #14539)
-+  -
+  -
 - Gợi ý đã được đọc lên khi gõ kiểu @nhắc đến trong các chú thích của Microsoft Excel. (#13764)
 - Trong thanh vị trí của Google Chrome (Google Chrome location bar), các điều khiển dạng gợi ý (switch to tab - chuyển sang thẻ mới, remove suggestion - xóa gợi ý v...v...) giờ đây đã được đọc lên khi được chọn. (#13522)
 - Khi yêu cầu thông tin định dạng, màu sắc giờ đây đã được thông báo rõ ràng trong Wordpad hay trình xem log, thay vì chỉ báo là "Màu mặc định". (#13959)
@@ -540,7 +722,7 @@ Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t 
 
 = 2022.2.4 =
 Đây là bản phát hành nhằm sửa một lỗi bảo mật.
-+
+
 == Sữa lỗi ==
 - Sửa một lỗi làm cho python console của NVDA có thể mở thông qua trình xem log ở màn hình khóa.
 ([GHSA-585m-rpvv-93qg https://github.com/nvaccess/nvda/security/advisories/GHSA-585m-rpvv-93qg])
@@ -1014,8 +1196,8 @@ Lưu ý:
 - Espeak giờ đây lại hỗ trợ tiếng Quảng Đông và tiếng Quan Thoại. (#10418)
  - Trong phiên bản  Microsoft Edge mới trên nền tảng Chromium, các trường nhập liệu như thanh địa chỉ giờ đã được đọc khi không có nội dung. (#12474)
 - Sửa lỗi trình điều khiển của Seika Braille. (#10787)
-+
-+
+
+
 == Các thay đổi cho nhà phát triển ==
 Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
 
@@ -1105,7 +1287,7 @@ Có thể đọc được nội dung có tồn tại các điểm đánh dấu (
 
 == Tính năng mới ==
 - Giờ bạn có thể bật / tắt việc đọc hình ảnh từ cài đặt định dạng tài liệu của NVDA. Lưu ý là việc tắt tùy chọn này vẫn sẽ đọc văn bản thay thế của ảnh. (#4837)
-- Giờ bạn có thể bật / tắt hỗ trợ màn hình cảm ứng của NVDA. Một tùy chọn đã được thêm vào bảng tương tác cảm ứng trong cài đặt NVDA. Phím tắt mặc định là NVDA+control+alt+t. (#9682)
+- Giờ bạn có thể bật / tắt hỗ trợ màn hình cảm ứng của NVDA. Một tùy chọn đã được thêm vào bảng tương tác cảm ứng trong cài đặt NVDA. Phím tắt mặc định là NVDA+control	alt+t. (#9682)
 - Đã thêm các bảng chữ nổi tiếng Đức mới. (#11268)
 - NVDA giờ đã nhận được văn bản có thuộc tính chỉ đọc với các điều khiển UIA. (#10494)
 - Nội dung có tồn tại các điểm đánh dấu (được làm nổi) đã được thể hiện ở cả tiếng nói và chữ nổi trên tất cả các trình duyệt. (#11436)
@@ -1421,7 +1603,7 @@ Xin xem các thay đổi  dưới đây để biết thêm chi tiết về đi�
 - Các bản chữ nổi mới: Nam Phi, chữ nổi máy tính 8 chấm Ả Rập, Ả rập cấp 2, Tây ban nha cấp 2. (#4435), #9186)
 - Thêm một tùy chọn vào cài đặt chuột của NVDA để quản lý các tình huống mà chuột được điều khiển bởi một ứng dụng khác. (#8452) 
  - Điều này sẽ cho phép NVDA theo dõi chuột khi hệ thống được điều khiển từ xa bằng TeamViewer hay các phần mềm điều khiển từ xa khác.
-- Đã thêm tham số `--disable-start-on-logon` vào tham số dòng lệnh nhằm cho phép cài NVDA ở chế độ silent  cho NVDA chạy ở màn hình đăng nhập hay không. Chỉ dịnh true để cho phép chạy ở màn hình đăng nhập hoặc false để không cho phép. Nếu đối số --enable-start-on-logon không được chỉ định thì NVDA mặc định sẽ chạy ở màn hình đăng nhập, ngoại trừ nó đã được cấu hình bởi một phiên bản trước đó là không chạy. (#8574)
+- Đã thêm tham số ``--enable-start-on-logon`` vào tham số dòng lệnh nhằm cho phép cài NVDA ở chế độ silent  cho NVDA chạy ở màn hình đăng nhập hay không. Chỉ dịnh true để cho phép chạy ở màn hình đăng nhập hoặc false để không cho phép. Nếu đối số --enable-start-on-logon không được chỉ định thì NVDA mặc định sẽ chạy ở màn hình đăng nhập, ngoại trừ nó đã được cấu hình bởi một phiên bản trước đó là không chạy. (#8574)
 - Có thể tắt tính năng log của NVDA bằng cách thiết lập mức độ log là "tắt" trong bản cài đặt chung. (#8516)
 - Các công thức của các bảng tính trình bày trong LibreOffice và Apache OpenOffice giờ đây đã được đọc. (#860)
 - Trong Mozilla Firefox và Google Chrome, chế độ duyệt  giờ đây đã đọc thành phần được chọn trong các hộp danh sách và cây thư mục.
@@ -1440,7 +1622,7 @@ Xin xem các thay đổi  dưới đây để biết thêm chi tiết về đi�
 - Phiên bản NVDA này sẽ cho phép cài và gọi các add-on chưa có thông tin về phiên bản tối thiểu và bản thử nghiệm cuối cùng của NVDA, nhưng khi nâng cấp lên các phiên bản NVDA trong tương lai (ví dụ: 2019.2) có thể khiến các add-on cũ bị vô hiệu hóa.
 - Lệnh di chuyển chuột đến đối tượng điều hướng giờ đây đã có trong Microsoft Word cũng như các điều khiển UIA, cụ thể là Microsoft Edge. (#7916, #8371)
 - Việc thông báo văn bản tại vị trí chuột đã được cải thiện trong Microsoft Edge và các ứng dụng UIA khác. (#8370)
-- Khi NVDA được khởi động với tham số dòng lệnh `--portable-path`, đường dẫn đã được cung cấp sẽ được điền tự động khi tạo bản NVDA chạy trực tiếp bằng thực đơn của NVDA. (#8623)
+- Khi NVDA được khởi động với tham số dòng lệnh ``--portable-path``, đường dẫn đã được cung cấp sẽ được điền tự động khi tạo bản NVDA chạy trực tiếp bằng thực đơn của NVDA. (#8623)
 - Đã cập nhật đường dẫn đến bản chữ nổi  tiếng Na Uy  để phản ánh đúng tiêu chuẩn từ năm 2015. (#9170)
 - Khi duyệt theo đoạn (control+các phím mũi tên) hay theo ô trong bảng (control+alt+các phím mũi tên), các lỗi chính tả đang tồn tại sẽ không còn được đọc lên nữa, ngay cả khi NVDA được cấu hình để tự đọc chúng. Điều này là do số lượng các đoạn và ô trong bảng có thể rất lớn, việc phát hiện các lỗi chính tả trong vài ứng dụng có thể mất rất nhiều thời gian. (#9217)
 - NVDA không còn tự gọi các Module ứng dụng, Plugins toàn cục, các trình điều khiển màn hình chữ nổi và bộ đọc đã tùy  chỉnh từ thư mục cấu hình người dùng NVDA.  Thay vào đó, những mã nguồn này nên được đóng gói như một add-on với thông tin phiên bản chính xác, đảm bảo rằng các đoạn mã không tương thích sẽ không chạy trên phiên bản NVDA hiện tại. (#9238)
@@ -1909,10 +2091,10 @@ Một số điểm nổi bật trong bản phát hành này bao gồm: hỗ tr�
   - Nếu muốn normalize các identifier, bây giờ bạn có thể dùng thuộc tính InputGesture.normalizedIdentifiers. Nó sẽ normalize các identifiers được trả về bởi thuộc tính identifiers.
 - Thuộc tính InputGesture.logIdentifier hiện nay sẽ không được khuyến khích tiếp tục sử dụng. Thay vào đó, có thể dùng InputGesture.identifiers[0]. (#6945)
 - Bỏ các mã không còn được khuyến khích sử dụng:
- - Các hằng số `speech.REASON_*`, thay vào đó, sẽ sử dụng `controlTypes.REASON_*`. (#6846)
- - `i18nName` để thiết lập bộ đọc. Sẽ thay thế bằng `displayName` và `displayNameWithAccelerator`. (#6846, #5185)
- - `config.validateConfig`. (#6846, #667)
- - `config.save`: thay vào đó, hãy sử dụng `config.conf.save`. (#6846, #667)
+ - Các hằng số ``speech.REASON_*``, thay vào đó, sẽ sử dụng ``controlTypes.REASON_*``. (#6846)
+ - ``i18nName`` để thiết lập bộ đọc. Sẽ thay thế bằng ``displayName`` và ``displayNameWithAccelerator``. (#6846, #5185)
+ - ``config.validateConfig``. (#6846, #667)
+ - ``config.save``: thay vào đó, hãy sử dụng ``config.conf.save``. (#6846, #667)
  - Danh sách thành phần hoàn tất trong thực đơn ngữ cảnh autocomplete (tự động hoàn tất) của PythonConsole sẽ không còn hiển thị phần đường dẫn đối tượng đứng phía trước ký hiệu cuối được hoàn tất. (#7023)
  - Hiện đã có framework kiểm thử theo đơn vị cho NVDA. (#7026)
  - Cấu trúc cơ sở hạ tầng và phần kiểm thử theo đơn vị nằm tại thư mục tests/unit. Xem docstring trong  tập tin tests\unit\__init__.py để biết thêm thông tin.
