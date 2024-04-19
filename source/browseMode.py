@@ -2392,6 +2392,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		# if direction == "previous" then it spans from the beginning of current paragraph until cursor+1
 		# For all following iterations paragraph will represent a complete paragraph.
 		styles = self._mergeIdenticalStyles(self._extractStyles(paragraph))
+		if len(styles) < 2:
+			return
 		initialStyle = styles[0 if direction == documentBase._Movement.NEXT else -2]
 		# Creating currentTextInfo - text written in initialStyle in this paragraph.
 		currentTextInfo = initialTextInfo.copy()
