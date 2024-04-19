@@ -6,7 +6,7 @@ import json
 
 
 DEFAULT_TEXT_PARAGRAPH_REGEX = (
-	r"^|({plb}{nlb}{optQuote}{dot}{optQuote}|{punc2}{optQuote}|{cjk}){optWiki}{spaces}|{n2}|\Z".format(
+	r"^|({plb}{nlb}{optQuote}{dot}{optQuote}|{punc2}{optQuote}){optWiki}{spaces}|{cjk}|{n2}|\Z".format(
 		# Look behind clause ensures that we have a text character before text punctuation mark.
 		# We have a positive lookBehind \w that resolves to a text character in any language,
 		# coupled with negative lookBehind \d that excludes digits.
