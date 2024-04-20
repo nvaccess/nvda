@@ -184,7 +184,10 @@ class AppModule(appModuleHandler.AppModule):
 			if (
 				obj.role == controlTypes.Role.LISTITEM
 				and obj.parent.parent.parent.role == controlTypes.Role.DIALOG
-				and obj.parent.parent.parent.simpleParent == api.getDesktopObject()
+				and (
+					obj.parent.parent.parent.simpleParent == api.getDesktopObject()
+					or obj.parent.parent.parent.parent.parent == api.getDesktopObject()
+				)
 				and obj.parent.parent.parent.parent.simpleNext.role in (
 					controlTypes.Role.BUTTON,
 					controlTypes.Role.TOGGLEBUTTON
