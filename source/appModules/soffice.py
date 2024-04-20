@@ -499,7 +499,7 @@ class SymphonyDocument(CompoundDocument):
 	)
 	def script_toggleTextAttribute(self, gesture: inputCore.InputGesture):
 		"""Reset time and enable announcement of toggled toolbar buttons.
-		See L{SymphonyButton.event_stateChange}
+		See :func:`SymphonyButton.event_stateChange`
 		"""
 		SymphonyDocument.announceToolbarButtonToggle = True
 		SymphonyDocument.lastFormattingGestureEventTime = time.time()
