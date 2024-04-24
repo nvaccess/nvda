@@ -515,8 +515,9 @@ void GeckoVBufBackend_t::fillVBufAriaError(
 		// Since `aria-errormessage` is an ID reference, it can only have one value. Thus, take the first target.
 		IAccessible2 *target = errorTargets[0];
 		if (target != nullptr) {
-			if (getTextFromIAccessible(textBuf, target))
+			if (getTextFromIAccessible(textBuf, target)) {
 				nodeBeingFilled.addAttribute(L"errorMessage", textBuf);
+			}
 		}
 	}
 }

@@ -1048,10 +1048,10 @@ Tries to force this object to take the focus.
 		"""
 		return None
 	
-	#: Type definition for auto prop '_get_errorMessage
-	errorMessage: typing.Optional[str]
+	#: Type definition for auto prop "_get_errorMessage"
+	errorMessage: str | None
 
-	def _get_errorMessage(self):
+	def _get_errorMessage(self) -> str | None:
 		"""Retrieves the string that describes the error for this control, else None.
 		@return: A string describing the error, else None.
 		@rtype: String or None
