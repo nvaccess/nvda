@@ -796,10 +796,10 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	bool renderSelectedItemOnly = false;
 	if (isAriaHidden) {
 		// aria-hidden
-		isVisible = false;
+		// isVisible = false;
 	} else {
 		// If a node has children, it's visible.
-		isVisible = width > 0 && height > 0 || childCount > 0;
+		// isVisible = width > 0 && height > 0 || childCount > 0;
 		// Only render the selected item for interactive lists.
 		if (role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY)) {
 			renderSelectedItemOnly = true;
