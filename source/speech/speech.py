@@ -1965,7 +1965,7 @@ def getPropertiesSpeech(  # noqa: C901
 			else:
 				textList.append(levelTranslation)
 	
-	errorMessage: Optional[str] = propertyValues.get("errorMessage", None)
+	errorMessage: str | None = propertyValues.get("errorMessage", None)
 	if errorMessage:
 		textList.append(errorMessage)
 

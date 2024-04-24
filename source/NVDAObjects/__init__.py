@@ -1052,9 +1052,9 @@ Tries to force this object to take the focus.
 	errorMessage: str | None
 
 	def _get_errorMessage(self) -> str | None:
-		"""Retrieves the string that describes the error for this control, else None.
-		@return: A string describing the error, else None.
-		@rtype: String or None
+		"""Retrieves the string that describes the error for this control, if one exists.
+
+		:return: A string describing the error, else None.
 		"""
 		return None
 

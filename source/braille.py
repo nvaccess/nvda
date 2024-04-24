@@ -960,7 +960,7 @@ def _getControlFieldForReportStart(
 		value: Optional[str],
 		roleText: str,
 		placeholder: Optional[str],
-		errorMessage: Optional[str],
+		errorMessage: str | None,
 ) -> str:
 	props = {
 		"states": states,
