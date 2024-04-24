@@ -372,7 +372,7 @@ Derudover kan du skrive NVDA i dialogboksen Kør og trykke på Enter.
 Hvis NVDA allerede kører, vil programmet blive genstartet.
 Du kan også skrive nogle [kommandolinjeparametre #CommandLineOptions], som du kan bruge til følgende: Genstarte NVDA (-r), afslut (-q) deaktivere tilføjelsesprogrammer fra (--disable-addons) osv.
 
-For installerede kopier, vil konfigurationen af NVDA blive gemt i mappen roaming application data for den aktuelle bruger som standard (f.eks. "C:\Users\<user>\AppData\Roaming").
+For installerede kopier, vil konfigurationen af NVDA blive gemt i mappen roaming application data for den aktuelle bruger som standard (f.eks. "``C:\Users\<user>\AppData\Roaming``").
 Det er muligt at ændre dette således NVDA indlæser konfigurationen fra den lokale application data mappe i stedet.
 Læs afsnittet [systemspecifikke parametre #SystemWideParameters] for flere detaljer.
 
@@ -398,7 +398,7 @@ Den tredje lader dig styre, om denne Velkomstdialog boks skal vises hver gang NV
 +++ Dialog om brugsstatistik +++[UsageStatsDialog]
 Hvis du kører NVDA 2018.3 eller nyere, vil en dialog fremkomme der beder dig tage stilling til om hvorvidt du ønsker at dele din brugsdata med NV Access. Disse data medvirker til at forbedre fremtidige versioner af NVDA.
 Når du kører NVDA første gang, vil denne dialog blive vist. Her kan du acceptere eller afvise indsamlingen af brugsstatistik til forbedring af NVDA.
-Du kan læse yderligere information om, hvilke data indsamles i NVDAs generelle indstillinger under [Tillad at NVDA-projektet indsamler brugsdata #GeneralSettingsGatherUsageStats].
+Du kan læse yderligere information om, hvilke data indsamles i NVDAs generelle indstillinger under [Tillad, at NV Access indsamler brugsdata #GeneralSettingsGatherUsageStats].
 Bemærk: Når du trykker "Ja" eller "Nej", vil denne dialog ikke fremkomme igen med mindre du geninstallerer NVDA.
 Du kan aktivere eller deaktivere denne indstilling i NVDAs generelle indstillinger ved at ændre indstillingen [Tillad at NVDA-projektet indsamler brugsdata om NVDA #GeneralSettingsGatherUsageStats].
 
@@ -698,6 +698,7 @@ Bemærk: For at det numeriske tastatur skal fungere korrekt, skal Numlock-tasten
 
 En god måde at huske kommandoerne til tekstlæsning i desktop-layout på er at sammenligne dem med en tabel eller et skema med tre gange tre felter. Fra toppen til bunden er det linje, ord og tegn. Fra venstre mod højre er det forrige, aktuelle og næste.
 Layoutet kan illustreres på følgende måde:
+|| . {.hideHeaderRow} | . | . |
 | Forrige linje | Aktuelle linje | Næste linje |
 | Forrige ord | Aktuelle ord | Næste ord |
 | Forrige tegn | Aktuelle tegn | Næste tegn |
@@ -842,7 +843,7 @@ Hvis du gerne vil kunne bruge disse genvejstaster og stadig være i stand til at
 Du kan slå bogstavnavigering til og fra i det aktuelle dokument ved at trykke på NVDA+Shift+Mellemrum.
 %kc:endInclude
 
- +++ Andre navigationskommandoer +++[OtherNavigationCommands]
++++ Andre navigationskommandoer +++[OtherNavigationCommands]
 
 Udover kommandoerne til bogstavnavigering nævnt ovenfor, har NVDA desuden også yderligere kommandoer, der ikke er tildelt et tastetryk.
 Før du kan bruge disse kommandoer, skal du tildele et tastetryk til dem ved brug af [dialogen "Håndter kommandoer" #InputGestures].
@@ -915,11 +916,13 @@ Bemærk også, at programmet vil forsøge at markere det samme indhold som i gen
 Funktionaliteten er dog nyttig i situationer, hvor du skal kopiere hele tabeller.
 
 + Læsning af matematisk materiale +[ReadingMath]
-Ved hjælp af MathPlayer 4 fra Design Science kan du med NVDA læse og navigere interaktivt i matematisk materiale.
-Dette kræver, at MathPlayer 4 er installeret på computeren.
-MathPlayer kan hentes gratis fra [MathPlayer information page https://info.wiris.com/mathplayer-info].
-Efter du har installeret MathPlayer, skal du genstarte NVDA.
+NVDA er i stand til både at læse og navigere i forskelligt matematikindhold på internettet og andre programmer, og gengive indholdet på punkt eller via tale.
+Før du kan læse og benytte matematisk indhold med NVDA, skal du først installere en komponent, der kan bearbejde indholdet.
+Der er adskillige tilføjelser tilgængelige, der kan arbejde sammen med matematisk indhold, herunder [MathCAT NVDA add-on https://nsoiffer.github.io/MathCAT/] og [Access8Math https://github.com/tsengwoody/Access8Math]. Disse kan hentes i tilføjelsescenteret.
+Læs venligst afsnittet om [Tilføjelsescenteret #AddonsManager] for at finde ud af, hvordan du installerer tilføjelser.
+NVDA kan også benytte den gamle [MathPlayer https://info.wiris.com/mathplayer-info] software fra Wiris. Bemærk dog, at softwaren ikke længere vedligeholdes.
 
+++ Understøttet matematikindhold ++[SupportedMathContent]
 NVDA understøtter følgende typer af matematisk indhold:
 - MathML i Mozilla Firefox, Microsoft Internet Explorer og Google Chrome.
 - Microsoft Word 365 moderne matematikligninger via UI automation:
@@ -959,14 +962,28 @@ Som udgangspunkt følger læsemarkøren systemmarkøren, så som regel kan du ba
 | Interager med matematikindhold | NVDA+Alt+m | Starter interaktion med matematikindhold |
 %kc:endInclude
 
-På dette tidspunkt kan du bruge MathPlayer-kommandoer, såsom piletasterne, til at udforske udtrykket.
+På dette tidspunkt vil NVDA gå ind i matematiktilstand, hvor du eksempelvis kan bruge piletasterne, til at udforske udtrykket.
 For eksempel kan du flytte gennem udtrykket med Venstre- og Højre-pil og zoome ind på en del af udtrykket, f.eks. en brøk, med Pil-ned.
-Læs venligst [dokumentationen om navigationskommandoer til MathPlayer https://docs.wiris.com/mathplayer/en/mathplayer-user-manual.html] for flere oplysninger.
 
 Når du vil tilbage til dokumentet, skal du blot trykke på Escape-tasten.
 
+For flere informationer om, hvordan du læser og navigere i matematisk indhold, skal du læse afsnittet for den pågældende tilføjelse, som du har installeret.
+- [MathCAT documentation https://nsoiffer.github.io/MathCAT/users.html]
+- [Access8Math documentation https://github.com/tsengwoody/Access8Math]
+- [MathPlayer documentation https://docs.wiris.com/mathplayer/en/mathplayer-user-manual.html]
+-
+
 Nogle gange kan matematisk indhold blive præsenteret som en knap eller en anden type element, hvilket evt. viser en dialog eller yderligere informationer om formeln, når denne aktiveres.
 For at aktivere knappen eller elementet, der indeholder formlen, tryk Ctrl+enter.
+
+++ Installation af MathPlayer ++[InstallingMathPlayer]
+Selvom det generelt anbefales, at du benytter én af de nyere tilføjelser til at læse matematisk indhold i NVDA, kan der stadig være situationer, hvor MathPlayer er et mere passende valg.
+F.eks. kan det være, at MathPlayer understøtter matematik på punktskrift for et sprog, som én af de nyere tilføjelser ikke understøtter endnu.
+MathPlayer er gratis tilgængelig fra Wiris-websiden.
+[Download MathPlayer https://downloads.wiris.com/mathplayer/MathPlayerSetup.exe].
+Efdter installationen af MathPlayer, skal du genstarte NVDA.
+Bemærk, at informationerne på siden antyder, at dette kun er for ældre browsere, som Internet Explorer 8.
+Dette er kun, hvis det matematiske indhold skal læses med øjnene, men kan ignoreres for dem, der skal læse indholdet med NVDA.
 
 + Punktskrift +
 Hvis du ejer et punktdisplay, kan NVDA vise information på punkt.
@@ -1114,7 +1131,7 @@ NVDA tilbyder nogle indbyggede visuelle forbedringer, der beskrives nedenfor.
 yderligere visuelle forbedringer kan leveres ved hjælp af [tilføjelsespakker #AddonsManager].
 
 Disse indstillinger kan ændres ved brug af [indstillingskategorien "Syn" #VisionSettings] i [NVDAs indstillingspanel #NVDASettings].
-	
+
 ++ Visuel Fremhævning ++[VisionFocusHighlight]
 Denne indstilling kan hjælpe dig med at lokalisere [markøren til systemfokus#SystemFocus], [navigatorobjektet #ObjectNavigation] og [markøren i gennemsynstilstand #BrowseMode].
 Disse positioner er fremhævet ved hjælp af et farvet rektangulært omrids.
@@ -1450,10 +1467,9 @@ De tilgængelige logningsmuligheder er:
 - Info: NVDA vil logge grundlæggende informationer under opstart og andre nyttige informationer for udviklere.
 - Fejlfinding og advarsler: Advarsler der ikke forårsages af alvorlige fejl vil logges.
 - Input/output: Denne indstilling logger både input og output fra punktdisplays, tastaturenheder samt tale.
- - Hvis du bekymre dig om dit privatliv, benyt ikke denne valgmulighed.
+Hvis du bekymre dig om dit privatliv, benyt ikke denne valgmulighed.
 - Fejlfinding: Udover diverse informationer, input/output, og beskeder om advarsler, vil yderligere fejlbeskeder logges ved brug af denne indstilling.
- - Hvis du ligeledes bekymre dig om dit privatliv, skal du ikke aktivere denne indstilling, da alt vil blive logget.
- -
+Hvis du ligeledes bekymre dig om dit privatliv, skal du ikke aktivere denne indstilling, da alt vil blive logget.
 -
 
 ==== Start NVDA automatisk, når jeg har logget på Windows ====[GeneralSettingsStartAfterLogOn]
@@ -1479,7 +1495,7 @@ Følgende informationer bliver altid sendt:
 - Om dit system er 64- eller 32 bit.
 -
 
-==== Tillad at NVDA-projektet indsamler brugsdata om NVDA ====[GeneralSettingsGatherUsageStats]
+==== Tillad, at NV Access indsamler brugsdata om NVDA ====[GeneralSettingsGatherUsageStats]
 Hvis dette er aktiveret, bruger NV Access oplysningerne indsendt under søgning af opdateringer til at spore antallet af NVDA-brugere, herunder bestemte demografiske forhold som operativsystem og oprindelsesland.
 Bemærk, at selvom din IP-adresse vil blive brugt til at beregne dit land under opdateringskontrollen, bliver IP-adressen aldrig gemt.
 Bortset fra de obligatoriske oplysninger, der kræves for at kontrollere efter opdateringer, er følgende yderligere oplysninger også sendt i øjeblikket:
@@ -1597,11 +1613,11 @@ Nogle Microsoft Speech API synteser anvender dog ikke denne funktion korrekt og 
 Hvis du har problemer med udtalen af diverse bogstaver kan du prøve at deaktivere denne indstilling.
 
 ==== Forsinkede beskrivelser af tegn ved markørbevægelser ====[delayedCharacterDescriptions]
-: Standard
-  Deaktiveret
-: Muligheder
-  Aktiveret, Deaktiveret
-:
+
+|| . {.hideHeaderRow} | . |
+| Muligheder | Aktiveret, deaktiveret |
+| Standard | Deaktiveret |
+
 
 Når denne indstilling er aktiveret, vil NVDA sige tegnbeskrivelsen, når du flytter markøren tegn for tegn.
 
@@ -1611,7 +1627,7 @@ Dette kan være nyttigt, hvis det er svært at skelne mellem udtale af symboler,
 Tegnets beskrivelse vil ikke blive oplæst, hvis andet tekst udtales, eller hvis du trykker på ``Ctrl-tasten``.
 
 ==== Taletilstande ====[SpeechModesDisabling]
-Denne liste af muligheder lader dig bestemme, hvilke taletilstande, der er tilgængelige, når du bruger kommandoen ``NVDA+s`` til at skifte mellem dem.
+Denne liste af muligheder lader dig bestemme, hvilke [taletilstande #SpeechModes], der er tilgængelige, når du bruger kommandoen ``NVDA+s`` til at skifte mellem dem.
 Tilstande, der ikke er markerede, vil ikke fremkomme.
 Som standard er alle tilstande inkluderede.
 
@@ -1858,10 +1874,10 @@ vil det ikke i øjeblikket være muligt at fortælle NVDA, hvilket display, der 
 Derfor anbefales det, at du kun forbinder ét display af en bestemt type og af et bestemt mærke til din maskine ad gangen.
 
 +++ Lyd +++[AudioSettings]
+
 %kc:setting
 ==== Åbn lydindstillinger ====
 Tast: ``NVDA+control+u``
-
 
 Denne kategori i NVDAs indstillinger lader dig ændre nogle indstillinger i forhold til lydoutput.
 
@@ -1885,7 +1901,7 @@ Det er ikke muligt at understøtte lyddæmpning for midlertidige og flytbare kop
 
 || . {.hideHeaderRow} | . |
 | Muligheder | Deaktiveret, Aktiveret |
-| Standard | Aktiveret |
+| Standard | Deaktiveret |
 
 
 Når denne indstilling er aktiveret, vil lydstyrken af NVDA-lyde og bip-lyde følge stemmens lydstyrke for den stemme, du bruger.
@@ -1936,7 +1952,7 @@ For understøttede indstillinger, skal du læse dokumentationen for det aktuelle
 
 +++ Tastatur +++[KeyboardSettings]
 
-+%kc:setting
+%kc:setting
 ==== Åbn tastaturindstillinger ====
 Tast: ``NVDA+control+k``
 
@@ -2088,7 +2104,7 @@ Denne indstillingskategori benyttes til at bestemme hvor meget information NVDA 
 Disse indstillinger bliver som udgangspunkt ikke anvendt, når du er i gennemsynstilstand.
 Indstillingerne gælder som udgangspunkt kun for rapportering af fokus, eller når du bruger objektnavigation, men dog ikke, når du læser tekstindhold (f.eks. gennemsynstilstand).
 
-==== Oplys 	værktøjstips ====[ObjectPresentationReportToolTips]
+==== Oplys værktøjstips ====[ObjectPresentationReportToolTips]
 Dette er en check box der, når den er markeret, bevirker, at NVDA oplyser værktøjstips, når de kommer til syne.
 En del vinduer og kontroller viser en lille meddelelse (eller et værktøjstip), når musemarkøren flyttes hen over dem, eller i visse tilfælde når fokus flyttes til dem.
 
@@ -2261,44 +2277,48 @@ Hvis du fx markerer check boxen "oplæs skrifttypenavn", hører du navnet på sk
 Indstillingerne for dokumentformatering er organiseret i grupper.
 Du kan tilpasse annoncering af:
 - Skrifttype
- - Navn på skrifttype 
- - Størrelse på skrifttype 
- - Skrifttypeattributter
- - hævet og sænket skrift
- - fremhævelse
- - Fremhævet (markeret) tekst
- - Typografi 
- - Farve
+  - Navn på skrifttype 
+  - Størrelse på skrifttype 
+  - Skrifttypeattributter
+  - hævet og sænket skrift
+  - fremhævelse
+  - Fremhævet (markeret) tekst
+  - Typografi 
+  - Farve
+  -
 - Dokumentinformation
- - Kommentarer
- - Bogmærker
- - Redaktørændringer
- - Stavefejl
- - Sider og linjeafstand
- - Sidetal
- - Linjenumre
- - Rapportering af linjeindrykning (fra, tale, toner eller både tale og toner) #DocumentFormattingSettingsLineIndentation]
- - Ignorer blanke linjer ved rapportering af linjeindrykning
- - Indrykning af afsnit (f.eks. hængende indrykning, indrykning af første linje)
- - Linjeafstand (enkelt, dobbel, osv.)
- - Justering
+  - Kommentarer
+  - Bogmærker
+  - Redaktørændringer
+  - Stavefejl
+  -
+- Sider og linjeafstand
+  - Sidetal
+  - Linjenumre
+  - Rapportering af linjeindrykning (fra, tale, toner eller både tale og toner) #DocumentFormattingSettingsLineIndentation]
+  - Ignorer blanke linjer ved rapportering af linjeindrykning
+  - Indrykning af afsnit (f.eks. hængende indrykning, indrykning af første linje)
+  - Linjeafstand (enkelt, dobbel, osv.)
+  - Justering
+  -
 - Tabelinformation
- - Tabeller
- - Række- og kolonneoverskræfter (fra, rækker, kolonner, rækker og kolonner)
- - Cellekoordinater
- - Cellekanter (fra, typografier, både farver og typografier)
- - Elementer
- - Overskrifter
- - Links
- - Grafik
- - Lister
- - Bloksitater
- - Grupper
- - Landmærker
- - Artikler
- - Rammer
- - Klikbart
- -
+  - Tabeller
+  - Række- og kolonneoverskræfter (fra, rækker, kolonner, rækker og kolonner)
+  - Cellekoordinater
+  - Cellekanter (fra, typografier, både farver og typografier)
+  -
+- Elementer
+  - Overskrifter
+  - Links
+  - Grafik
+  - Lister
+  - Bloksitater
+  - Grupper
+  - Landmærker
+  - Artikler
+  - Rammer
+  - Klikbart
+  -
 -
 
 For at slå disse indstillinger til eller fra, uanset hvor du befinder dig, kan du knytte en bevægelse eller et tastetryk til indstillingen med [dialogen Håndter kommandoer #InputGestures].
@@ -2330,7 +2350,7 @@ Denne kategori lader dig justere forskellige indstillinger der anvendes, når du
 ==== Navigering af afsnit ====[ParagraphStyle]
 
 || . {.hideHeaderRow} | . |
-| Indstillinger | Standard (Håndteret af det aktuelle program), Håndteret af det aktuelle program, Enkelt linjeskift, Flere linjeskift |
+| Muligheder | Standard (Håndteret af det aktuelle program), Håndteret af det aktuelle program, Enkelt linjeskift, Flere linjeskift |
 | Standard | Håndteret af det aktuelle program |
 
 
@@ -2387,7 +2407,7 @@ Denne knap vil kun være tilgængelig, hvis NVDA tillader indlæsning af tilpass
 ==== Registrer hændelser fra UI Automation samt egenskabsændringer ====[AdvancedSettingsSelectiveUIAEventRegistration]
 
 || . {.hideHeaderRow} | . |
-| Indstillinger | Automatisk, selektivt, globalt |
+| Muligheder | Automatisk, selektivt, globalt |
 | Standard | Automatisk |
 
 
@@ -2420,11 +2440,11 @@ Vi anbefaler stadig ikke, at flertallet af brugere aktiverer dette som standard,
 Microsoft Excels UI-automatiseringsimplementering ændres konstant, og versioner af Microsoft Office ældre end 16.0.13522.10000 eksponerer muligvis ikke nok information til, at denne mulighed er af nogen nytte.
 
 ==== Brug forbedret hændelsesbehandling ====[UIAEnhancedEventProcessing]
-: Standard
-  Aktiveret
-: Muligheder
-  Standard (Aktiveret), Deaktiveret, aktiveret
-:
+
+|| . {.hideHeaderRow} | . |
+| Muligheder | Standard (Aktiveret), Deaktiveret, Aktiveret |
+| Standard | Aktiveret |
+
 
 Når dette er aktiveret, burde NVDA blive ved med at reagere, selv når der modtages mange hændelser fra UI Automation, som f.eks. i terminalvinduer.
 Når du ændre denne indstilling, skal du genstarte NVDA.
@@ -2633,11 +2653,11 @@ Du kan også indstille niveauet til "tegn". I dette tilfælde bliver symbolet ik
 Dette kan være nyttigt, hvis tegnet får talesyntesen til at holde en pause eller ændre på tonehøjden.
 F.eks., et komma kan få talesyntesen til at holde en pause.
 Der er tre muligheder:
- - Aldrig: Send aldrig selve symbolet til talesyntesen.
- - Altid: Send altid selve symbolet til talesyntesen.
- - Kun under symbolets niveau: Send kun det aktuelle symbol, hvis det indstillede symbolniveau er lavere end symbolets niveau.
-    Du kan f.eks. bruge dette til at få erstatningsteksten for et symbol udtalt uden pause ved højtesymbolniveauer og stadig få indikeret symbolet ved hjælp af en pause på lavere niveauer.
- -
+  - Aldrig: Send aldrig selve symbolet til talesyntesen.
+  - Altid: Send altid selve symbolet til talesyntesen.
+  - Kun under symbolets niveau: Send kun det aktuelle symbol, hvis det indstillede symbolniveau er lavere end symbolets niveau.
+  Du kan f.eks. bruge dette til at få erstatningsteksten for et symbol udtalt uden pause ved højtesymbolniveauer og stadig få indikeret symbolet ved hjælp af en pause på lavere niveauer.
+  -
 -
 
 Du kan tilføje nye symboler ved at trykke på Tilføj-knappen.
@@ -2676,11 +2696,11 @@ Herefter skal du trykke den tast, som du ønsker at emulere.
 Den emulerede tast vil herefter vises i kategorien "Emulerede tastaturtryk" og du kan tildele en kommando som beskrevet ovenfor.
 
 Bemærk:
- - Emulerede tastaturtryk skal have en kommando tildelt, før du kan gemme dine indstillinger.
- - En kommando der benytter en funktionstast kan ikke tildeles et emuleret tastaturtryk uden
- funktionstast. F.eks. hvis man indstiller det emulerede tastaturtryk "A" til kommandoen "Control+M", ville dette forårsage at
- programmet kun modtager Control+A.
- -
+- Emulerede tastaturtryk skal have en kommando tildelt, før du kan gemme dine indstillinger.
+- En kommando der benytter en funktionstast kan ikke tildeles et emuleret tastaturtryk uden funktionstast.
+F.eks. hvis man indstiller det emulerede tastaturtryk ``A`` til kommandoen ``Control+M``, ville dette forårsage at
+programmet kun modtager ``Control+A``.
+-
 
 Når du er færdig med dine ændringer, så tryk OK for at gemme dem eller Annuller for at kassere dem.
 
@@ -2957,7 +2977,7 @@ Hvis denne er valgt, vil talevisning automatisk åbnes når NVDA startes.
 Dette vindue vil altid forsøge at åbne med samme dimensioner og samme placering, som de var, da vinduet blev lukket.
 
 Så længe talevisning er slået til, opdateres den konstant med den tekst, der netop nu læses op.
-Hvis du klikker i viseren, eller hvis den får fokus, stoppes opdateringen dog midlertidigt, så det er muligt at markere eller kopiere det aktuelle indhold.
+Hvis du holder musen over viseren, eller hvis den får fokus, stoppes opdateringen dog midlertidigt, så det er muligt at markere eller kopiere det aktuelle indhold.
 
 Hvis du gerne vil kunne slå talevisning til og fra, uanset hvor du befinder dig på computeren, kan du tilknytte en bestemt bevægelse eller et tastetryk med [dialogen "Håndter kommandoer" #InputGestures].
 
@@ -3064,10 +3084,10 @@ Stemmerne kan dog også bruges af NVDA.
 For a tbruge disse stemmer, er det nødvendigt at installere to komponenter:
 - [Microsoft Speech Platform - Runtime (Version 11), x86 https://www.microsoft.com/download/en/details.aspx?id=27225]
 - [Microsoft Speech Platform - Runtime Languages (Version 11) https://www.microsoft.com/download/en/details.aspx?id=27224]
- - Denne side indeholder mange filer for både talegenkendelse og tekst til tale.
+  - Denne side indeholder mange filer for både talegenkendelse og tekst til tale.
  Vælg filerne der indeholder det ønskede sprog/stemmer.
-  For eksempel er filen MSSpeech_TTS_en-US_ZiraPro.msI en stemme til amerikansk engelsk.
- -
+ For eksempel er filen MSSpeech_TTS_en-US_ZiraPro.msI en stemme til amerikansk engelsk.
+  -
 -
 
 ++ Windows OneCore Stemmer ++[OneCore]
@@ -3253,7 +3273,7 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | Flyt punktdisplay til næste linje | b5 |
 | Flyt til punktcelle | markørsammenføringsknapper |
 | shift+tab Tast | esc, venstre triple action-tast op+ned |
-| alt Tast | b2+b4+b5 |																																	
+| alt Tast | b2+b4+b5 |
 | escape Tast | b4+b6 |
 | tab Tast | enter, højre triple actiontast op+ned|
 | enter Tast | esc+enter, left+højre triple actiontast op+ned, joystickAction |
@@ -3441,7 +3461,7 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | Flyt til punktcelle | markørsammenføringsknapper |
 | Rul punktdisplay tilbage | venstre side rul op, højre side rul op, venstre side rul |
 | Rul punktdisplay fremad | venstre side rul ned, højre side rul ned, højre side rul |
-| Flyt punktdisplay to forrige linje | højre side rul op+venstre side rul op |
+| Flyt punktdisplay til forrige linje | højre side rul op+venstre side rul op |
 | Flyt punktdisplay til næste linje | venstre side rul ned+højre side rul ned |
 | Flyt til forrige linje med læsemarkør | højre side pil op |
 | Flyt til næste linje med læsemarkør | højre side pil ned |
@@ -3453,7 +3473,7 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | alt+tast | punkt1+punkt3+punkt4+mellemrum, f2, smartbeetle:f3, brailleedge:f4 |
 | skift-tast | f5 |
 | insert-tast | punkt2+punkt4+mellemrum, f6 |
-|tasten applikationer | punkt1+punkt2+punkt3+punkt4+mellemrum, f8 |
+| tasten applikationer | punkt1+punkt2+punkt3+punkt4+mellemrum, f8 |
 | capsLock-tast | punkt1+punkt3+punkt6+mellemrum |
 | tab-tast | punkt4+punkt5+mellemrum, f3, brailleedge:f2 |
 | tasterne skift+alt+tab | f2+f3+f1 |
@@ -3462,7 +3482,7 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | end-tast | punkt4+punkt6+mellemrum |
 | tasterne ctrl+end | punkt4+punkt5+punkt6+mellemrum |
 | hjem-tast | punkt1+punkt3+mellemrum, smartbeetle:f4 |
-| tasterne ctrl+hjem key | punkt1+punkt2+punkt3+mellemrum |
+| tasterne ctrl+hjem | punkt1+punkt2+punkt3+mellemrum |
 | tasterne alt+f4 | punkt1+punkt3+punkt5+punkt6+mellemrum |
 | venstre piletast | punkt3+mellemrum, venstre side pil venstre |
 | tasterne ctrl+skift+venstre pil | punkt2+punkt8+mellemrum+f1 |
@@ -3653,8 +3673,8 @@ Knapperne er fra venstre mod højre.
 På nuværende tidspunkt er højre thumb key ikke taget i brug.
 De midterste taster bliver begge brugt som mellemrumstaster.
 
-|| Navn | Tast |
 %kc:beginInclude
+|| Navn | Tast |
 | escape tast | mellemrum med punkt 7 |
 | Pil-op | mellemrum med punkt 2 |
 | Venstre-pil | mellemrum med punkt 1 |
@@ -4203,9 +4223,10 @@ Sikker tilstand deaktiverer:
 - Muligheden for at gemme konfiguration og andre indstillinger til disken
 - Muligheden for at gemme filen til håndtering af kommandoer til disken
 - [Konfigurationsprofiler #ConfigurationProfiles] funktioner som at oprette, slette og omdøbe profiler, osv.
+- Indlæsning af andre mapper til konfigurationer ved brug af [t``-c`` kommandolinjeparameter #CommandLineOptions]
 - Opdatering af NVDA og oprettelse af flytbare kopier
 - [Tilføjelsescenteret #AddonsManager]
-- Python-konsollen #PythonConsole]
+- [Python-konsollen #PythonConsole]
 - [Logviseren  #LogViewer] og logføring
 - [Punktskriftsviseren #BrailleViewer] og [Taleviseren #SpeechViewer]
 - Åbning af eksterne filer fra NVDAs menu, såsom brugervejledningen og filen, hvor bidragydere er anførte
@@ -4248,23 +4269,25 @@ nvda -q
 
 Nogle af kommandolinjeparametrene har både en kort og en lang version, mens andre kun har en lang version.
 Dem  som har en kort version, kan kombineres på denne måde:
+|| . {.hideHeaderRow} | . | . |
 | ``nvda -mc CONFIGPATH`` | Dette vil starte NVDA uden at afspille opstartslyden eller udtale en besked, og med den angivne konfiguration |
 | ``nvda -mc CONFIGPATH --disable-addons`` | Det samme som ovenfor, men deaktivere også tilføjelser |
 
 Med nogle af kommandolinjeparametrene kan du angive yderlige parametre, fx. hvor detaljeret loggen skal være, eller stien til mappen med brugerprofiler.
 Disse yderligere parametre skal skrives efter indstillingen og adskilles fra indstillingen af et mellemrum i den korte version og af et lighedstegn (=) i den lange version, fx.
-|`` nvda -l 10`` | Starter NVDA med logningsniveau sat til fejlfinding |
-|`` nvda --log-file=c:\nvda.log`` | Får NVDA til at skrive sin log til c:\nvda.log |
-|`` nvda --log-level=20 -f c:\nvda.log`` | Får NVDA til at starte med logniveau sat til "info" og gemme sin log i filen c:\nvda.log |
+|| . {.hideHeaderRow} | . | . |
+| ``nvda -l 10`` | Starter NVDA med logningsniveau sat til fejlfinding |
+| ``nvda --log-file=c:\nvda.log`` | Får NVDA til at skrive sin log til c:\nvda.log |
+| ``nvda --log-level=20 -f c:\nvda.log`` | Får NVDA til at starte med logniveau sat til "info" og gemme sin log i filen c:\nvda.log |
 
 De mulige kommandolinjeparametre til NVDA er følgende:
 || Kort | Lang | Beskrivelse |
-|`` -h`` | --help | Vis hjælp til kommandolinje og afslut |
-|`` -q`` | --quit | Afslut den nuværende kopi af NVDA |
-|`` -k`` | --check-running | Fortæl via exitkoden, om NVDA kører (0 hvis NVDA kører, 1 hvis den ikke gør) |
-|`` -f LOGFILENAME`` | --log-file=loggens filnavn | Filen hvor NVDAs log skal gemmes |
-|`` -l LOGLEVEL`` | --log-level=LOGNINGSNIVEAU | Det laveste niveau af meddelelser, som skal logges (fejlfinding 10, input/output 12, fejlfinding og advarsler 15, info 20, deaktiveret 100) |
-|`` -c CONFIGPATH`` | --config-path=KONFIGURATIONSSTI | Stien, hvor alle indstillinger i NVDA skal gemmes |
+| ``-h`` | ``--help`` | Vis hjælp til kommandolinje og afslut |
+| ``-q`` | ``--quit`` | Afslut den nuværende kopi af NVDA |
+| ``-k`` | ``--check-running`` | Fortæl via exitkoden, om NVDA kører (0 hvis NVDA kører, 1 hvis den ikke gør) |
+| ``-f LOGFILENAME`` | ``--log-file=loggens filnavn`` | Filen hvor NVDAs log skal gemmes. Logføring er altid deaktiveret, hvis sikker tilstand er aktiv. |
+| ``-l LOGLEVEL`` | ``--log-level=LOGNINGSNIVEAU`` | Det laveste niveau af meddelelser, som skal logges (fejlfinding 10, input/output 12, fejlfinding og advarsler 15, info 20, deaktiveret 100). Logføring er altid deaktiveret, hvis sikker tilstand er aktiv. |
+| ``-c CONFIGPATH`` | ``--config-path=KONFIGURATIONSSTI`` | Stien, hvor alle indstillinger i NVDA skal gemmes. Standardværdien vil blive brugt, hvis sikker tilstand er aktiv. |
 | None | ``--lang=SPROG`` | Brug et specifikt sprog uanset NVDAs konfiguration. Skriv "Windows" for standardsprog, "en" for engelsk, osv. |
 | ``-m`` | ``--minimal`` | Ingen lyde, ingen brugergrænseflade, ingen opstartsmeddelelser osv. |
 | ``-s`` | ``--secure`` | Sikker tilstand |

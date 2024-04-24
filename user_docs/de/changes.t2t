@@ -5,77 +5,80 @@ Was ist neu in NVDA
 
 = 2024.1 =
 
-A new "on-demand" speech mode has been added.
-When speech is on-demand, NVDA does not speak automatically (e.g. when moving the cursor) but still speaks when calling commands whose goal is explicitly to report something (e.g. report window title).
-In the Speech category of NVDA's settings, it is now possible to exclude unwanted speech modes from the Cycle speech modes command (``NVDA+s``).
+Ein neuer Sprachmodus namens "Nur bei Bedarf" wurde hinzugefügt.
+Bei aktiviertem Modus spricht NVDA bspw. beim Bewegen der Schreibmarke nicht automatisch. NVDA spricht nur noch, wenn ein Befehl ausgelößtwird, dessen Ziel es ist, eine Information wie z. B. das Lesen des Fenstertitels vorzulesen.
+In der Kategorie „Sprachausgabe“ der NVDA-Einstellungen ist es jetzt möglich, unerwünschte Sprachmodi aus dem Befehl „Sprachmodi wechseln“ („NVDA+s“) auszuschließen.
 
-A new Native Selection mode (toggled by ``NVDA+shift+f10``) is now available in NVDA's browse mode for Mozilla Firefox.
-When turned on, selecting text in browse mode will also manipulate Firefox's own native selection.
-Copying text with ``control+c`` will pass straight through to Firefox, thus copying the rich content, rather than NVDA's plain text representation.
+Ein neuer nativer Auswahlmodus (einzuschalten  mittels „NVDA+Umschalt+F10“) ist jetzt im Lesemodus von NVDA für Mozilla Firefox verfügbar.
+Wenn diese Funktion aktiviert ist, wird durch das Auswählen von Text im Lesemodus auch die native Auswahl von Firefox einbezogen.
+Das Kopieren von Text mit „Strg+C“ wird direkt an Firefox weitergeleitet, wodurch der formatierte Inhalt und nicht die reine Textdarstellung von NVDA kopiert wird.
 
-The Add-on Store now supports bulk actions (e.g. installing, enabling add-ons) by selecting multiple add-ons
-There is a new action to open a reviews webpage for the selected add-on.
+Der Store für Erweiterungen unterstützt jetzt Massenaktionen, so z. B. das Installieren oder Aktivieren von Erweiterungen durch Auswahl mehrerer Einträge in der Liste.
+Es gibt eine neue Aktion zum Öffnen einer Diskussionsseite für die ausgewählte Erweiterung.
 
-The audio output device and ducking mode options have been removed from the "Select Synthesizer" dialog.
-They can be found in the audio settings panel which can be opened with ``NVDA+control+u``.
+Die Optionen zur Auswahl des Audioausgabegeräts und die Lautstärkenreduktion anderer Anwendungen wurden aus dem Dialogfeld „Sprachausgabe auswählen“ entfernt.
+Sie finden sie in den Audio-Einstellungen, die mit „NVDA+Strg+U“ geöffnet werden können.
+eSpeak-NG, der Braille-Übersetzer LibLouis und die Unicode-CLDR wurden aktualisiert..
+Neue Brailletabellen sind verfügbar: Thai, Filipinisch und Rumänisch.
 
-eSpeak-NG, LibLouis braille translator, and Unicode CLDR have been updated.
-New Thai, Filipino and Romanian braille tables are available.
+Es gibt viele Fehlerbehebungen, vor allem für den Erweiterungs-Store, Braille, Libre Office, Microsoft Office und Audio.
 
-There are many bug fixes, particularly for the Add-on Store, braille, Libre Office, Microsoft Office and audio.
-
-== Important notes == 
-- This release breaks compatibility with existing add-ons.
-- Windows 7, and Windows 8 are no longer supported.
-Windows 8.1 is the minimum Windows version supported.
+== Wichtige Anmerkungen == 
+- Diese Version ist nicht mit vorhandenen Erweiterungen kompatibel.
+- Windows 7 und Windows 8 werden nicht mehr unterstützt.
+Windows 8.1 ist mindestens erforderlich.
 -
 
 == New Features ==
-- Add-on Store:
-  - The Add-on Store now supports bulk actions (e.g. installing, enabling add-ons) by selecting multiple add-ons. (#15350, #15623, @CyrilleB79)
-  - A new action has been added to open a dedicated webpage to see or provide feedback about the selected add-on. (#15576, @nvdaes)
+- Store für Erweiterungen:
+  - Der Store für Erweiterungen unterstützt jetzt Massenaktionen, so z. B. das Installieren oder Aktivieren von Erweiterungen durch Auswahl mehrerer Einträge in der Liste. (#15350, #15623, @CyrilleB79)
+  - Es wurde eine neue Aktion hinzugefügt, mit deren Hilfe Rückmeldungen zur gewählten Erweiterung gegeben oder gelesen werden kann. (#15576, @nvdaes)
   -
-- Added support for Bluetooth Low Energy HID Braille displays. (#15470)
-- A new Native Selection mode (toggled by ``NVDA+shift+f10``) is now available in NVDA's browse mode for Mozilla Firefox.
-When turned on, selecting text in browse mode will also manipulate Firefox's own native selection.
-Copying text with ``control+c`` will pass straight through to Firefox, thus copying the rich content, rather than NVDA's plain text representation. (#15830)
-- When copying text in Microsoft Word with NVDA's browse mode enabled, formatting is now also included. (#16129)
-- A new "on-demand" speech mode has been added.
-When speech is on-demand, NVDA does not speak automatically (e.g. when moving the cursor) but still speaks when calling commands whose goal is explicitly to report something (e.g. report window title). (#481, @CyrilleB79)
-- In the Speech category of NVDA's settings, it is now possible to exclude unwanted speech modes from the Cycle speech modes command (``NVDA+s``). (#15806, @lukaszgo1)
-  - If you are currently using the NoBeepsSpeechMode add-on consider uninstalling it, and disabling "beeps" and "on-demand" modes in the settings.
+- Unterstützung für Bluetooth Low Energy HID-Braillezeilen hinzugefügt. (#15470)
+- Ein neuer nativer Auswahlmodus (einzuschalten  via „NVDA+Umschalt+F10“) ist jetzt im Lesemodus von NVDA für Mozilla Firefox verfügbar.
+Wenn diese Funktion aktiviert ist, wird durch das Auswählen von Text im Lesemodus auch die native Auswahl von Firefox manipuliert.
+Das Kopieren von Text mit „Strg+C“ wird direkt an Firefox weitergeleitet, wodurch der formatierte Inhalt und nicht die reine Textdarstellung von NVDA kopiert wird.
+Beachten Sie jedoch, dass NVDA in diesem Modus keine Meldung „In die Zwischenablage kopiert“ ausgibt, da Firefox die eigentliche Kopie ausführt. (#15830)
+- Beim Kopieren von Text in Microsoft Word mit aktiviertem Lesemodus ist jetzt auch die Formatierung enthalten.
+Ein Nebeneffekt davon ist, dass NVDA beim Drücken von „Strg+C“ im Microsoft Word-/Outlook-Lesemodus nicht mehr die Meldung „In die Zwischenablage kopiert“ ausgibt, da die Anwendung nun die Kopie durchführt, nicht NVDA. (#16129)
+- Ein neuer Sprachmodus namens "Nur bei Bedarf" wurde hinzugefügt.
+Bei aktiviertem Modus spricht NVDA bspw. beim Bewegen der Schreibmarke nicht automatisch. NVDA spricht nur noch, wenn ein Befehl ausgelößtwird, dessen Ziel es ist, eine Information wie z. B. das Lesen des Fenstertitels vorzulesen. (#481, @CyrilleB79)
+- In der Kategorie „Sprachausgabe“ der NVDA-Einstellungen ist es jetzt möglich, unerwünschte Sprachmodi aus dem Befehl „Sprachmodi wechseln“ („NVDA+s“) auszuschließen. (#15806, @lukaszgo1)
+  - Wenn Sie derzeit die Erweiterung NoBeepsSpeechMode verwenden, sollten Sie es deinstallieren und die Modi „Signaltöne“ und „nur bei Bedarf“ in den Einstellungen deaktivieren.
   -
 -
 
-== Changes ==
-- NVDA no longer supports Windows 7 and Windows 8.
-Windows 8.1 is the minimum Windows version supported. (#15544)
-- Component updates:
-  - Updated LibLouis braille translator to [3.28.0 https://github.com/liblouis/liblouis/releases/tag/v3.28.0]. (#15435, #15876, @codeofdusk)
-    - Added new Thai, Romanian, and Filipino Braille tables.
+== Änderungen ==
+- NVDA unterstützt Windows 7 und Windows 8 nicht mehr.
+Windows 8.1 ist mindestens erforderlich. (#15544)
+- Komponentenaktualisierungen:
+  - LibLouis Braille-Übersetzer auf [3.28.0 https://github.com/liblouis/liblouis/releases/tag/v3.28.0] aktualisiert. (#15435, #15876, @codeofdusk)
+    - Neue thailändische, rumänische und philippinische Braille-Tabellen hinzugefügt.
     -
-  - eSpeak NG has been updated to 1.52-dev commit ``530bf0abf``. (#15036)
-  - CLDR emoji and symbol annotations has been updated to version 44.0. (#15712, @OzancanKaratas)
-  - Updated Java Access Bridge to 17.0.9+8Zulu (17.46.19). (#15744)
+  - eSpeak NG wurde auf 1.52-dev commit „530bf0abf“ aktualisiert. (#15036)
+  - CLDR-Emoji- und Symbolanmerkungen wurden auf Version 44.0 aktualisiert. (#15712, @OzancanKaratas)
+  - Java Access Bridge auf 17.0.9+8Zulu aktualisiert (17.46.19). (#15744)
   -
-- Key Commands:
-  - The following commands now support two and three presses to spell the reported information and spell with character descriptions: report selection, report clipboard text and report focused object. (#15449, @CyrilleB79)
-  - The command to toggle the screen curtain now has a default gesture: ``NVDA+control+escape``. (#10560, @CyrilleB79)
-  - When pressed four times, the report selection command now shows the selection in a browsable message. (#15858, @Emil-18)
+- Tastenkombinationen:
+  - Die folgenden Befehle unterstützen jetzt zwei- und dreimaliges Drücken, um die gemeldeten Informationen zu buchstabieren bzw. phonetisch zu buchstabieren: Auswahl vorlesen, Textinhalte der Zwischenablage vorlesen und fokussiertes Objekt vorlesen (#15449, @CyrilleB79)
+  - Der Befehl zum Umschalten des Bildschirmvorhangs verfügt jetzt über eine Standardgeste: „NVDA+Strg+Escape“. (#10560, @CyrilleB79)
+  - Bei viermaligem Drücken des Befehls "Auswahl vorlesen" wird der Text in einem Textfenster angezeigt. (#15858, @Emil-18)
   - 
 - Microsoft Office:
-  - When requesting formatting information on Excel cells, borders and background will only be reported if there is such formatting. (#15560, @CyrilleB79)
-  - NVDA will again no longer report unlabelled groupings such as in recent versions of Microsoft Office 365 menus. (#15638)
+  - Beim Anfordern von Formatierungsinformationen zu Excel-Zellen werden Rahmen und Hintergrund nur ausgegeben, wenn eine solche Formatierung vorhanden ist. (#15560, @CyrilleB79)
+  - NVDA gibt keine unbeschrifteten Gruppierungen mehr aus, wie sie beispielsweise in neueren Versionen von Microsoft Office 365-Menüs vorkommen. (#15638)
   -
-- The audio output device and ducking mode options have been removed from the "Select Synthesizer" dialog.
-They can be found in the audio settings panel which can be opened with ``NVDA+control+u``. (#15512, @codeofdusk)
-- The option "Report role when mouse enters object" in NVDA's mouse settings category has been renamed to "Report object when mouse enters it".
-This option now announces additional relevant information about an object when the mouse enters it, such as states (checked/pressed) or cell coordinates in a table. (#15420, @LeonarddeR)
-- New items have been added to the Help menu for the NV Access "Get Help" page and Shop. (#14631)
-- NVDA's support for [Poedit https://poedit.net] is overhauled for Poedit version 3 and above.
-Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on enhanced accessibility in Poedit, such as shortcuts to read translator notes and comments. (#15313, #7303, @LeonarddeR)
-- Braille viewer and speech viewer are now disabled in secure mode. (#15680)
-- During object navigation, disabled (unavailable) objects will not be ignored anymore. (#15477, @CyrilleB79)
+- 
+Die Optionen zur Auswahl des Audioausgabegeräts und die Lautstärkenreduktion anderer Anwendungen wurden aus dem Dialogfeld „Sprachausgabe auswählen“ entfernt.
+Sie finden sie in den Audio-Einstellungen, die mit „NVDA+Strg+U“ geöffnet werden können. (#15512, @codeofdusk)
+- Die Option "Objekttyp unter dem Mauszeiger ansagen" in den Mauseinstellungen von NVDA wurde in "Objekt ansagen, wenn die Maus hineinbewegt wird" umbenannt.
+Diese Option gibt nun zusätzlich relevante Informationen zu einem Objekt aus, wenn die Maus hineinbewegt wird. Dies sind Informationen wie z. B. Zustände (markiert/gedrückt) oder Zellkoordinaten in einer Tabelle. (#15420, @LeonarddeR)
+- Das Hilfe-Menü hat folgende neuen Einträge zu NV Access-Seiten erhalten: "Support erhalten" und "Shop". (#14631)
+- Die Unterstützung von [Poedit https://poedit.net] wurde ab Version 3 und höher komplett überarbeitet.
+Nutzer von Poedit 1 wird geraten auf die Version 3 zu aktualisieren, falls sie verbesserte Bedienbarkeit in Poedit möchten. So funktionieren die Tastenkombinationen zum Lesen von Anmerkungen für Übersetzer sowie Kommentaren wieder. (#15313, #7303, @LeonarddeR)
+- Braille- und Sprachbetrachter sind im geschützten Modus nicht nutzbar. (#15680)
+- Während der Objektnavigation werden deaktivierte (nicht verfügbare) Objekte nicht mehr ignoriert. (#15477, @CyrilleB79)
+- Inhaltsverzeichnis zur Befehlsreferenz hinzugefügt. (#16106)
 -
 
 == Bug Fixes ==
@@ -192,6 +195,7 @@ Setting ``numCells`` is still supported for single line braille displays and ``n
 - Fixed bug where deleting git-tracked files during ``scons -c`` resulted in missing UIA COM interfaces on rebuild. (#7070, #10833, @hwf1324)
 - Fix a bug where some code changes were not detected when building ``dist``, that prevented a new build from being triggered.
 Now ``dist`` always rebuilds. (#13372, @hwf1324)
+- A ``gui.nvdaControls.MessageDialog`` with default type of standard, no longer throws a None conversion exception because no sound is assigned. (#16223, @XLTechie)
 -
 
 === API Breaking Changes ===
@@ -202,13 +206,12 @@ Please open a GitHub issue if your Add-on has an issue with updating to the new 
 - Updated pip dependencies:
   - configobj to 5.1.0dev commit ``e2ba4457c4651fa54f8d59d8dcdd3da950e956b8``. (#15544)
   - Comtypes to 1.2.0. (#15513, @codeofdusk)
-  - fast_diff_match_patch to 2.0.1. (#15514, @codeofdusk)
   - Flake8 to 4.0.1. (#15636, @lukaszgo1)
   - py2exe to 0.13.0.1dev commit ``4e7b2b2c60face592e67cb1bc935172a20fa371d``. (#15544) 
   - robotframework to 6.1.1. (#15544)
   - SCons to 4.5.2. (#15529, @LeonarddeR)
   - sphinx to 7.2.6. (#15544)
-  - wxPython to 4.2.1. (#12551)
+  - wxPython to 4.2.2a commit ``0205c7c1b9022a5de3e3543f9304cfe53a32b488``. (#12551, #16257)
   -
 - Removed pip dependencies:
   - typing_extensions, these should be supported natively in Python 3.11 (#15544)
@@ -287,6 +290,20 @@ Use ``bdDetect.DeviceType.*`` instead. (#15772, @LeonarddeR).
 - Using ``gui.ExecAndPump`` is deprecated - please use ``systemUtils.ExecAndPump`` instead. (#15852, @lukaszgo1)
 -
 
+= 2023.3.4 =
+This is a patch release to fix a security issue and installer issue.
+Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+
+
+== Security Fixes ==
+- Prevents loading custom configuration while secure mode is forced.
+([GHSA-727q-h8j2-6p45 https://github.com/nvaccess/nvda/security/advisories/GHSA-727q-h8j2-6p45])
+
+
+== Bug Fixes ==
+- Fixed bug which caused the NVDA process to fail to exit correctly. (#16123)
+- Fixed bug where if the previous NVDA process failed to exit correctly, an NVDA installation could fail to an unrecoverable state. (#16122)
+-
 
 = 2023.3.3 =
 This is a patch release to fix a security issue.
