@@ -41,8 +41,8 @@ Replace the following in this PowerShell script:
 - `<Certificate Thumbprint>`: The thumbprint from [creating the certificate](#create-a-self-signed-certificate).
 ```ps1
 cd <nvdaRepositoryRoot>
-$password = ConvertTo-SecureString -Force -AsPlainText -String <Password>
-Export-PfxCertificate -FilePath local.pfx -Password $password -cert "Cert:\CurrentUser\My\<Certificate Thumbprint>"
+$password = ConvertTo-SecureString -String <Password> -Force -AsPlainText 
+Export-PfxCertificate -cert "Cert:\CurrentUser\My\<Certificate Thumbprint>" -FilePath local.pfx -Password $password
 ```
 
 ### Import the certificate
@@ -57,7 +57,7 @@ Replace the following in the PowerShell script:
 - `<Password>`: your password for the exported certificate file.
 ```ps1
 cd <nvdaRepositoryRoot>
-$password = ConvertTo-SecureString -Force -AsPlainText -String <Password>
+$password = ConvertTo-SecureString -String <Password> -Force -AsPlainText
 Import-PfxCertificate -Password $password -CertStoreLocation "Cert:\LocalMachine\Root" -FilePath local.pfx
 ```
 
@@ -109,5 +109,8 @@ Use PowerShell, running as administrator.
 Replace the following in this PowerShell script:
 - `<Certificate Thumbprint>`: The thumbprint from [creating the certificate](#create-a-self-signed-certificate).
 ```ps1
-Remove-Item -DeleteKey -Path "Cert:\LocalMachine\Root\<Certificate Thumbprint>"
+Remove-Item -Path "Cert:\LocalMachine\Root\<Certificate Thumbprint>" -DeleteKey
 ```
+
+For Windows 7, you will need to use an alternative method.
+On any supported version of Windows, you can manage certifications through the "Certificate Manager".

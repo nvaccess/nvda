@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2012-2024 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
+# Copyright (C) 2012-2023 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
 
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
@@ -37,9 +37,9 @@ import pickle
 # #9818: one must import at least urllib.request in Python 3 in order to use full urllib functionality.
 import urllib.request
 import urllib.parse
+import tempfile
 import hashlib
 import ctypes.wintypes
-import requests
 import ssl
 import wx
 import languageHandler
@@ -60,7 +60,6 @@ import shellapi
 import winUser
 import winKernel
 import fileUtils
-from utils.tempFile import _createEmptyTempFileForDeletingFile
 
 #: The URL to use for update checks.
 CHECK_URL = "https://www.nvaccess.org/nvdaUpdateCheck"
@@ -375,11 +374,9 @@ class UpdateResultDialog(
 			# Translators: A message indicating that no update to NVDA is available.
 			message = _("No update available.")
 		elif canOfferPendingUpdate:
-			message = _(
-				# Translators: A message indicating that an update to NVDA has been downloaded and is ready to be
-				# applied.
-				"Update to NVDA version {version} has been downloaded and is ready to be applied."
-			).format(**updateInfo)
+			# Translators: A message indicating that an updated version of NVDA has been downloaded
+			# and is pending to be installed.
+			message = _("NVDA version {version} has been downloaded and is pending installation.").format(**updateInfo)
 
 			self.apiVersion = pendingUpdateDetails[2]
 			self.backCompatTo = pendingUpdateDetails[3]
@@ -395,23 +392,23 @@ class UpdateResultDialog(
 				))
 				confirmationCheckbox.Bind(
 					wx.EVT_CHECKBOX,
-					lambda evt: self.updateButton.Enable(not self.updateButton.Enabled)
+					lambda evt: self.installPendingButton.Enable(not self.installPendingButton.Enabled)
 				)
 				confirmationCheckbox.SetFocus()
 				# Translators: The label of a button to review add-ons prior to NVDA update.
 				reviewAddonsButton = bHelper.addButton(self, label=_("&Review add-ons..."))
 				reviewAddonsButton.Bind(wx.EVT_BUTTON, self.onReviewAddonsButton)
-			self.updateButton = bHelper.addButton(
+			self.installPendingButton = bHelper.addButton(
 				self,
-				# Translators: The label of a button to apply a pending NVDA update.
+				# Translators: The label of a button to install a pending NVDA update.
 				# {version} will be replaced with the version; e.g. 2011.3.
-				label=_("&Update to NVDA {version}").format(**updateInfo)
+				label=_("&Install NVDA {version}").format(**updateInfo)
 			)
-			self.updateButton.Bind(
+			self.installPendingButton.Bind(
 				wx.EVT_BUTTON,
-				lambda evt: self.onUpdateButton(pendingUpdateDetails[0])
+				lambda evt: self.onInstallButton(pendingUpdateDetails[0])
 			)
-			self.updateButton.Enable(not showAddonCompat)
+			self.installPendingButton.Enable(not showAddonCompat)
 			bHelper.addButton(
 				self,
 				# Translators: The label of a button to re-download a pending NVDA update.
@@ -449,7 +446,7 @@ class UpdateResultDialog(
 		self.CentreOnScreen()
 		self.Show()
 
-	def onUpdateButton(self, destPath):
+	def onInstallButton(self, destPath):
 		_executeUpdate(destPath)
 		self.Destroy()
 
@@ -490,12 +487,12 @@ class UpdateAskInstallDialog(
 		self.apiVersion = apiVersion
 		self.backCompatTo = backCompatTo
 		self.storeUpdatesDirWritable = os.path.isdir(storeUpdatesDir) and os.access(storeUpdatesDir, os.W_OK)
-		# Translators: The title of the dialog asking the user to apply an NVDA update.
+		# Translators: The title of the dialog asking the user to Install an NVDA update.
 		super().__init__(parent, title=_("NVDA Update"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
-		# Translators: A message indicating that an update to NVDA is ready to be applied.
-		message = _("Update to NVDA version {version} is ready to be applied.\n").format(version=version)
+		# Translators: A message indicating that an updated version of NVDA is ready to be installed.
+		message = _("NVDA version {version} is ready to be installed.\n").format(version=version)
 
 		showAddonCompat = any(getIncompatibleAddons(
 			currentAPIVersion=self.apiVersion,
@@ -517,18 +514,18 @@ class UpdateAskInstallDialog(
 			# Translators: The label of a button to review add-ons prior to NVDA update.
 			reviewAddonsButton = bHelper.addButton(self, label=_("&Review add-ons..."))
 			reviewAddonsButton.Bind(wx.EVT_BUTTON, self.onReviewAddonsButton)
-		# Translators: The label of a button to update NVDA.
-		updateButton = bHelper.addButton(self, wx.ID_OK, label=_("&Update now"))
-		updateButton.Bind(wx.EVT_BUTTON, self.onUpdateButton)
+		# Translators: The label of a button to install an NVDA update.
+		installButton = bHelper.addButton(self, wx.ID_OK, label=_("&Install update"))
+		installButton.Bind(wx.EVT_BUTTON, self.onInstallButton)
 		if not showAddonCompat:
-			updateButton.SetFocus()
+			installButton.SetFocus()
 		else:
 			self.confirmationCheckbox.SetFocus()
 			self.confirmationCheckbox.Bind(
 				wx.EVT_CHECKBOX,
-				lambda evt: updateButton.Enable(not updateButton.Enabled)
+				lambda evt: installButton.Enable(not installButton.Enabled)
 			)
-			updateButton.Enable(False)
+			installButton.Enable(False)
 		if self.storeUpdatesDirWritable:
 			# Translators: The label of a button to postpone an NVDA update.
 			postponeButton = bHelper.addButton(self, wx.ID_CLOSE, label=_("&Postpone update"))
@@ -551,7 +548,7 @@ class UpdateAskInstallDialog(
 		)
 		displayDialogAsModal(incompatibleAddons)
 
-	def onUpdateButton(self, evt):
+	def onInstallButton(self, evt):
 		_executeUpdate(self.destPath)
 		self.EndModal(wx.ID_OK)
 
@@ -562,7 +559,6 @@ class UpdateAskInstallDialog(
 			# In Python 2, os.renames did rename files across drives, no longer allowed in Python 3 (error 17 (cannot move files across drives) is raised).
 			# This is prominent when trying to postpone an update for portable copy of NVDA if this runs from a USB flash drive or another internal storage device.
 			# Therefore use kernel32::MoveFileEx with copy allowed (0x2) flag set.
-			# TODO: consider moving to shutil.move, which supports moves across filesystems.
 			winKernel.moveFileEx(self.destPath, finalDest, winKernel.MOVEFILE_COPY_ALLOWED)
 		except:
 			log.debugWarning("Unable to rename the file from {} to {}".format(self.destPath, finalDest), exc_info=True)
@@ -602,7 +598,7 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 		self.backCompatToAPIVersion = getAPIVersionTupleFromString(updateInfo["apiCompatTo"])
 		self.versionTuple = None
 		self.fileHash = updateInfo.get("launcherHash")
-		self.destPath = _createEmptyTempFileForDeletingFile(prefix="nvda_update_", suffix=".exe")
+		self.destPath = tempfile.mktemp(prefix="nvda_update_", suffix=".exe")
 
 	def start(self):
 		"""Start the download.
@@ -867,17 +863,17 @@ class CERT_CHAIN_PARA(ctypes.Structure):
 def _updateWindowsRootCertificates():
 	log.debug("Updating Windows root certificates")
 	crypt = ctypes.windll.crypt32
-	with requests.get(
-		# We must specify versionType so the server doesn't return a 404 error and
-		# thus cause an exception.
+	# Get the server certificate.
+	sslCont = ssl._create_unverified_context()
+	# We must specify versionType so the server doesn't return a 404 error and
+	# thus cause an exception.
+	u = urllib.request.urlopen(
 		CHECK_URL + "?versionType=stable",
+		context=sslCont,
 		timeout=UPDATE_FETCH_TIMEOUT_S,
-		# Use an unverified connection to avoid a certificate error.
-		verify=False,
-		stream=True,
-	) as response:
-		# Get the server certificate.
-		cert = response.raw.connection.sock.getpeercert(True)
+	)
+	cert = u.fp.raw._sock.getpeercert(True)
+	u.close()
 	# Convert to a form usable by Windows.
 	certCont = crypt.CertCreateCertificateContext(
 		0x00000001, # X509_ASN_ENCODING

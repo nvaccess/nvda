@@ -25,7 +25,6 @@ from py2exe import freeze  # noqa: E402
 from py2exe.dllfinder import DllFinder  # noqa: E402
 import wx
 import importlib.machinery
-
 # Explicitly put the nvda_dmp dir on the build path so the DMP library is included
 sys.path.append(os.path.join("..", "include", "nvda_dmp"))
 RT_MANIFEST = 24
@@ -33,8 +32,6 @@ manifestTemplateFilePath = "manifest.template.xml"
 
 # py2exe's idea of whether a dll is a system dll appears to be wrong sometimes, so monkey patch it.
 orig_determine_dll_type = DllFinder.determine_dll_type
-
-
 def determine_dll_type(self, imagename):
 	dll = os.path.basename(imagename).lower()
 	if dll.startswith("api-ms-win-") or dll in ("powrprof.dll", "mpr.dll", "crypt32.dll"):
@@ -42,8 +39,6 @@ def determine_dll_type(self, imagename):
 		# Including them can cause serious problems when a binary build is run on a different version of Windows.
 		return None
 	return orig_determine_dll_type(self, imagename)
-
-
 DllFinder.determine_dll_type = determine_dll_type
 
 
@@ -90,24 +85,11 @@ def getLocaleDataFiles():
 	NVDALocaleGestureMaps=[(os.path.dirname(f), (f,)) for f in glob("locale/*/gestures.ini")]
 	return list(localeMoFiles)+localeDicFiles+NVDALocaleGestureMaps
 
-
-def getRecursiveDataFiles(dest: str, source: str, excludes: tuple = ()) -> list[tuple[str, list[str]]]:
-	rulesList: list[tuple[str, list[str]]] = []
-	for file in glob(f"{source}/*"):
-		if (
-			not any(fnmatch.fnmatch(file, exclude) for exclude in excludes)
-			and os.path.isfile(file)
-		):
-			rulesList.append((dest, [file]))
-	for dirName in os.listdir(source):
-		if os.path.isdir(os.path.join(source, dirName)) and not dirName.startswith('.'):
-			rulesList.extend(
-				getRecursiveDataFiles(
-					os.path.join(dest, dirName),
-					os.path.join(source, dirName),
-					excludes=excludes
-				)
-			)
+def getRecursiveDataFiles(dest,source,excludes=()):
+	rulesList=[]
+	rulesList.append((dest,
+		[f for f in glob("%s/*"%source) if not any(fnmatch.fnmatch(f,exclude) for exclude in excludes) and os.path.isfile(f)]))
+	[rulesList.extend(getRecursiveDataFiles(os.path.join(dest,dirName),os.path.join(source,dirName),excludes=excludes)) for dirName in os.listdir(source) if os.path.isdir(os.path.join(source,dirName)) and not dirName.startswith('.')]
 	return rulesList
 
 
@@ -259,33 +241,32 @@ freeze(
 		(".", glob("../miscDeps/python/*.dll")),
 		(".", ['message.html']),
 		(".", [os.path.join(sys.base_prefix, "python3.dll")]),
-		] + (
-	getLocaleDataFiles()
-	+ getRecursiveDataFiles(
-		"synthDrivers",
-		"synthDrivers",
-		excludes=tuple(
-			f"*{ext}" for ext in importlib.machinery.all_suffixes()
+	] + (
+		getLocaleDataFiles()
+		+ getRecursiveDataFiles("synthDrivers", "synthDrivers",
+			excludes=tuple(
+				"*%s" % ext
+				for ext in importlib.machinery.SOURCE_SUFFIXES + importlib.machinery.BYTECODE_SUFFIXES
 			) + (
-		"*.exp",
-		"*.lib",
-		"*.pdb"
-	))
-	+ getRecursiveDataFiles(
-		"brailleDisplayDrivers",
-		"brailleDisplayDrivers",
-		excludes=tuple(
-			f"*{ext}" for ext in importlib.machinery.all_suffixes()
+				"*.exp",
+				"*.lib",
+				"*.pdb",
+				"__pycache__"
+		))
+		+ getRecursiveDataFiles("brailleDisplayDrivers", "brailleDisplayDrivers",
+			excludes=tuple(
+				"*%s" % ext
+				for ext in importlib.machinery.SOURCE_SUFFIXES + importlib.machinery.BYTECODE_SUFFIXES
 			) + (
-		"*.md",
-		)
-	)
+				"__pycache__",
+		))
 	+ getRecursiveDataFiles(
 		"documentation",
 		"../user_docs",
 		excludes=tuple(
-			f"*{ext}" for ext in importlib.machinery.all_suffixes()
+			f"*{ext}" for ext in importlib.machinery.SOURCE_SUFFIXES + importlib.machinery.BYTECODE_SUFFIXES
 			) + (
+		"__pycache__",
 		"*.t2t",
 		"*.t2tconf",
 		"*.md",

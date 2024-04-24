@@ -76,7 +76,7 @@ def installAddon(addonPath: PathLike) -> None:
 	@note See also L{gui.addonGui.installAddon}
 	@raise DisplayableError on failure
 	"""
-	import addonHandler
+	from addonHandler import AddonError, installAddonBundle
 	from gui.message import DisplayableError
 
 	addonPath = cast(str, addonPath)
@@ -84,10 +84,10 @@ def installAddon(addonPath: PathLike) -> None:
 	prevAddon = _getPreviouslyInstalledAddonById(bundle)
 
 	try:
-		addonObj = systemUtils.ExecAndPump[addonHandler.Addon](addonHandler.installAddonBundle, bundle).funcRes
+		systemUtils.ExecAndPump(installAddonBundle, bundle)
 		if prevAddon:
 			prevAddon.requestRemove()
-	except addonHandler.AddonError:  # Handle other exceptions as they are known
+	except AddonError:  # Handle other exceptions as they are known
 		log.error("Error installing addon bundle from %s" % addonPath, exc_info=True)
 		raise DisplayableError(
 			displayMessage=pgettext(
@@ -97,6 +97,3 @@ def installAddon(addonPath: PathLike) -> None:
 				"Failed to install add-on from %s"
 			) % addonPath
 		)
-	finally:
-		if addonObj is not None:
-			addonObj._cleanupAddonImports()

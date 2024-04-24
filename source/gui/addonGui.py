@@ -219,7 +219,7 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 	try:
 		# Use context manager to ensure that `done` and `Destroy` are called on the progress dialog afterwards
 		with doneAndDestroy(progressDialog):
-			addonObj = systemUtils.ExecAndPump[addonHandler.Addon](addonHandler.installAddonBundle, bundle).funcRes
+			systemUtils.ExecAndPump(addonHandler.installAddonBundle, bundle)
 			if prevAddon:
 				from addonStore.dataManager import addonDataManager
 				assert addonDataManager
@@ -236,9 +236,6 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 			_("Error"),
 			wx.OK | wx.ICON_ERROR
 		)
-	finally:
-		if addonObj is not None:
-			addonObj._cleanupAddonImports()
 	return False
 
 

@@ -5,11 +5,10 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-import multiprocessing
+import sys
 import os
 import platform
-import sys
-
+import multiprocessing
 
 # Ensure we are inside the Python virtual environment.
 nvdaVenv = os.getenv("NVDA_VENV")
@@ -555,11 +554,3 @@ env.Alias('appx',[installed_appx_storeSubmission,installed_appx_sideLoadable])
 env.Default(dist)
 
 env.SConscript("tests/sconscript", exports=["env", "sourceDir", "pot"])
-
-
-# Generate a list of Python modules from compiled '.pyc' files in library.zip
-env.Tool("listModules")
-source = env.Dir(os.path.join(os.getcwd(), "dist"))
-# Putting the target in the output dir automatically causes AppVeyor to package it as an artefact
-target = env.File(os.path.join(outputDir.abspath, "library_modules.txt"))
-env.Alias("moduleList", env.GenerateModuleList(target, source))

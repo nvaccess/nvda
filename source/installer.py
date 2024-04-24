@@ -29,7 +29,6 @@ from typing import (
 )
 import NVDAState
 from NVDAState import WritePaths
-from utils.tempFile import _createEmptyTempFileForDeletingFile
 
 _wsh=None
 def _getWSH():
@@ -577,9 +576,9 @@ def tryRemoveFile(
 		rebootOK: bool = False
 ):
 	dirPath=os.path.dirname(path)
-	tempPath = _createEmptyTempFileForDeletingFile(dir=dirPath)
+	tempPath=tempfile.mktemp(dir=dirPath)
 	try:
-		os.replace(path, tempPath)
+		os.rename(path,tempPath)
 	except (WindowsError,IOError):
 		raise RetriableFailure("Failed to rename file %s before  remove"%path)
 	for count in range(numRetries):
@@ -605,7 +604,7 @@ def tryRemoveFile(
 		else:
 			return
 	try:
-		os.replace(tempPath, path)
+		os.rename(tempPath,path)
 	except Exception:
 		log.exception(f"Unable to rename back to {path} before retriable failure")
 	raise RetriableFailure("File %s could not be removed"%path)
@@ -620,9 +619,9 @@ def tryCopyFile(sourceFilePath,destFilePath):
 		log.debugWarning("Unable to copy %s, error %d"%(sourceFilePath,errorCode))
 		if not os.path.exists(destFilePath):
 			raise OSError("error %d copying %s to %s"%(errorCode,sourceFilePath,destFilePath))
-		tempPath = _createEmptyTempFileForDeletingFile(dir=os.path.dirname(destFilePath))
+		tempPath=tempfile.mktemp(dir=os.path.dirname(destFilePath))
 		try:
-			os.replace(destFilePath, tempPath)
+			os.rename(destFilePath,tempPath)
 		except (WindowsError,OSError):
 			log.error("Failed to rename %s after failed overwrite"%destFilePath,exc_info=True)
 			raise RetriableFailure("Failed to rename %s after failed overwrite"%destFilePath) 
@@ -647,7 +646,7 @@ def _revertGroupDelete(tempDir: str, installDir: str):
 		relativePath = tempFile.relative_to(tempDir)
 		originalPath = os.path.join(installDir, relativePath.as_posix())
 		try:
-			os.replace(tempFile.absolute(), originalPath)
+			os.rename(tempFile.absolute(), originalPath)
 		except OSError:
 			log.exception(f"Failed to rename {tempFile} back to {originalPath}")
 
