@@ -2545,17 +2545,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			desiredValue = paragraphFunction(info)
 		for i in range(self.MAX_ITERATIONS_FOR_SIMILAR_PARAGRAPH):
 			# move by one paragraph in the desired direction
-			try:
-				info.collapse(end=direction == _Movement.NEXT)
-			except RuntimeError:
-				# Microsoft Word raises RuntimeError when collapsing textInfo to the last character of the document.
-				return
-
-			if direction == _Movement.PREVIOUS:
-				if info.move(textInfos.UNIT_CHARACTER, -1) == 0:
-					return
-			info.expand(textInfos.UNIT_PARAGRAPH)
-			if info.isCollapsed:
+			if not self._moveToNextParagraph(info, direction):
 				return
 			value = paragraphFunction(info)
 			if value == desiredValue:
