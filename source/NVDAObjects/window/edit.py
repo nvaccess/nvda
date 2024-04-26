@@ -718,7 +718,11 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			self._rangeObj=self.obj.ITextSelectionObject.duplicate
 		elif position==textInfos.POSITION_CARET:
 			self._rangeObj=self.obj.ITextSelectionObject.duplicate
-			self._rangeObj.Collapse(True)
+			startActive: bool = (self.obj.ITextSelectionObject.Flags & comInterfaces.tom.tomSelStartActive) > 0
+			# Notice: in the following line Collapse() method is called on ITextRange object, not on TextInfo.
+			# It's boolean argument has the opposite meaning from the one in TextInfo:
+			# True means collapse to the start, while False means collapse to the end
+			self._rangeObj.Collapse(startActive)
 		elif position==textInfos.POSITION_FIRST:
 			self._rangeObj=self.obj.ITextDocumentObject.range(0,0)
 		elif position==textInfos.POSITION_LAST:
