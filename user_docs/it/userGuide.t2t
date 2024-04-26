@@ -237,7 +237,14 @@ I comandi effettivi non verranno eseguiti nella modalità di aiuto immissione.
 | Spostarsi al parametro successivo del sintetizzatore | ``NVDA+control+FrecciaDestra`` | ``NVDA+Maiusc+control+FrecciaDestra`` | Si sposta al prossimo parametro disponibile inerente la sintesi vocale e nel caso si sia raggiunto l'ultimo dell'elenco tornerà al primo |
 | Spostarsi al parametro precedente del sintetizzatore | ``NVDA+control+FrecciaSinistra`` | ``NVDA+Maiusc+control+FrecciaSinistra`` | Si sposta al parametro precedente disponibile inerente la sintesi vocale e nel caso si sia raggiunto l'ultimo dell'elenco tornerà al primo |
 | Aumentare il parametro corrente del sintetizzatore | ``NVDA+Control+Freccia su`` | ``NVDA+Maiusc+Control+Freccia su`` | Aumenta il valore del parametro sul quale si è posizionati. Ad esempio si aumenta la velocità, poi ci si sposta all'impostazione successiva, si aumenta il volume etc |
+| Aumentare il parametro corrente del sintetizzatore con un incremento maggiore | ``NVDA+control+pagina su`` | ``NVDA+shift+control+pagina su`` | Aumenta il valore del parametro del sintetizzatore su cui si è posizionati con un incremento maggiore. Ad esempio, se ci si trova nelle impostazioni per scegliere la voce, avanzerà di 20 valori alla volta invece che uno soltanto; oppure, se ci si trova nei cursori di avanzamento (velocità, tono, etc) incrementerà il valore fino al 20% |
+
 | Diminuire il parametro corrente del sintetizzatore | ``NVDA+Control+Freccia giù`` | ``NVDA+Shift+Control+Freccia giù`` | Diminuisce il valore del parametro sul quale si è posizionati. Ad esempio si diminuisce la velocità, poi ci si sposta all'impostazione successiva, si diminuisce il volume etc |
+| Diminuire il parametro corrente del sintetizzatore con un decremento maggiore | ``NVDA+control+pagina giù`` | ``NVDA+shift+control+pagina giù`` | Diminuisce il valore del parametro del sintetizzatore su cui si è posizionati con un decremento maggiore. Ad esempio, se ci si trova nelle impostazioni per scegliere la voce, tornerà indietro di 20 valori alla volta invece che uno soltanto; oppure, se ci si trova nei cursori di avanzamento (velocità, tono, etc) diminuirà il valore fino al 20% |
+
+È anche possibile impostare il primo o l'ultimo valore del parametro corrente del sintetizzatore assegnando gesti personalizzati nella [Finestra tasti e gesti di immissione #InputGestures], nella categoria Voce.
+Ciò significa, ad esempio, che se ci si trova nelle impostazioni della velocità, imposterà il valore a 0 o 100.
+Se ci si trova invece nelle impostazioni per scegliere la voce, imposterà la prima o l'ultima voce.
 
 +++ Navigazione web +++[WebNavigation]
 L'elenco completo dei tasti di navigazione a lettere singole è disponibile nella sezione [Modalità di navigazione #BrowseMode] della guida utente.
@@ -829,6 +836,7 @@ I seguenti tasti premuti da soli portano al campo successivo, tenendo premuto Ma
 - o: oggetto incorporato (audio e video player, applicazione, finestra di dialogo, etc.)
 - numeri da 1 a 6: intestazioni da 1 a 6
 - a: annotazioni (commenti, revisioni degli autori, etc.)
+- ``p``: paragrafo di testo
 - w: errori di ortografia
 -
 Per spostarsi all'inizio e alla fine degli elementi contenuti in elenchi e tabelle,:
@@ -843,14 +851,42 @@ Se si desidera utilizzare questi tasti e allo stesso tempo essere in grado di mu
 Per attivare o disattivare la navigazione a lettere singole per il documento corrente, premere NVDA + shift + spazio.
 %kc:endInclude
 
++++ Comandi di navigazione tra i paragrafi di testo +++[TextNavigationCommand]
+
+è possibile saltare al paragrafo di testo successivo o precedente premendo ``p`` o ``shift+p``.
+I paragrafi di testo sono definiti da un gruppo di frasi scritte in forma completa.
+Questo può essere utile per trovare l'inizio di un contenuto leggibile su varie pagine web, come ad esempio:
+- Siti web di notizie
+- Forum
+- Post di blog
+- 
+
+Questi comandi possono essere utili anche per saltare alcuni tipi di elementi superflui, come ad esempio:
+- Annunci
+- Menu
+- Intestazioni
+- 
+
+Si tenga presente, tuttavia, che sebbene NVDA faccia del suo meglio per identificare i paragrafi di testo, l'algoritmo non è perfetto e a volte può commettere errori.
+Inoltre, i comandi di navigazione tra i paragrafi di testo sono diversi dai comandi di navigazione tra paragrafi ``control+freccia giù/freccia su``.
+Infatti, I primi saltano da un paragrafo di testo all'altro, mentre i secondi portano il cursore al paragrafo successivo o precedente, indipendentemente dal fatto che in esso sia contenuto del testo o meno.
+
 +++ Altri comandi di navigazione +++[OtherNavigationCommands]
 
 Oltre ai comandi di navigazione rapida sopra elencati, NVDA dispone di comandi a cui non sono assegnati tasti predefiniti.
 Per utilizzare questi comandi, è necessario prima assegnare loro dei gesti utilizzando la [finestra di dialogo Gesti e tasti di immissione #InputGestures].
 Ecco un elenco dei comandi disponibili:
 - Articolo
+- Figura
 - Gruppo
 - Scheda
+- Voce di menu
+- Interruttore
+- Barra di avanzamento
+- Formula matematica
+- Paragrafo allineato verticalmente
+- Testo con stesso stile
+- Testo con stile diverso
 -
 
 Si tenga presente che esistono due comandi per ogni tipo di elemento, per andare avanti nel documento e indietro nel documento, perciò bisogna assegnare dei gesti a entrambi i comandi per poter navigare velocemente in entrambe le direzioni.
@@ -1160,6 +1196,8 @@ Quando la tenda schermo è attiva, è possibile che alcune operazioni che si bas
 A causa di alcuni cambiamenti nelle api dell'ingranditore di Windows, è risultato necessario aggiornare la tenda schermo in modo che potesse funzionare correttamente.
 Perciò, è obbligatorio servirsi di NVDA 2021.2 per attivare la tenda schermo con versioni di Windows 10 21H2 (10.0.19044) o successive.
 Per sicurezza, sarebbe meglio avere una conferma da una persona vedente che lo schermo sia effettivamente oscurato quando si aggiorna Windows ad una nuova versione.
+
+Si tenga presente che quando è attiva la lente d'ingrandimento di Windows e vengono utilizzati colori invertiti dello schermo, non può essere attivata la tenda schermo.
 
 + OCR: Riconoscimento del contenuto +[ContentRecognition]
 Un utente non vedente può trovarsi di fronte a contenuti completamente inaccessibili, in quanto gli autori degli stessi non forniscono allo screen reader le informazioni necessarie affinché quest'ultimo possa gestirle correttamente (esempio, pdf immagine).
@@ -1659,7 +1697,9 @@ Se si vogliono modificare i parametri della voce senza dover aprire la finestra 
 | Spostarsi al parametro successivo del sintetizzatore | NVDA+Control+Freccia destra | NVDA+Shift+Control+Freccia destra | Si sposta al prossimo parametro disponibile inerente la sintesi vocale e nel caso si sia raggiunto l'ultimo dell'elenco tornerà al primo |
 | Spostarsi al parametro precedente del sintetizzatore | NVDA+Control+Freccia sinistra | NVDA+Shift+Control+Freccia sinistra | Si sposta al parametro precedente disponibile inerente la sintesi vocale e nel caso si sia raggiunto l'ultimo dell'elenco tornerà al primo |
 | Aumentare il parametro corrente del sintetizzatore | NVDA+Control+Freccia su | NVDA+Shift+Control+Freccia su | Aumenta il valore del parametro sul quale si è posizionati. Ad esempio si aumenta la velocità, poi ci si sposta all'impostazione successiva, si aumenta il volume etc |
+| Aumentare il parametro corrente del sintetizzatore con un incremento maggiore | ``NVDA+control+pagina su`` | ``NVDA+shift+control+pagina su`` | Aumenta il valore del parametro del sintetizzatore su cui si è posizionati con un incremento maggiore. Ad esempio, se ci si trova nelle impostazioni per scegliere la voce, avanzerà di 20 valori alla volta invece che uno soltanto; oppure, se ci si trova nei cursori di avanzamento (velocità, tono, etc) incrementerà il valore fino al 20% |
 | Diminuire il parametro corrente del sintetizzatore | NVDA+Control+Freccia giù | NVDA+Shift+Control+Freccia giù | Diminuisce il valore del parametro sul quale si è posizionati. Ad esempio si diminuisce la velocità, poi ci si sposta all'impostazione successiva, si diminuisce il volume etc |
+| Diminuire il parametro corrente del sintetizzatore con un decremento maggiore | ``NVDA+control+pagina giù`` | ``NVDA+shift+control+pagina giù`` | Diminuisce il valore del parametro del sintetizzatore su cui si è posizionati con un decremento maggiore. Ad esempio, se ci si trova nelle impostazioni per scegliere la voce, tornerà indietro di 20 valori alla volta invece che uno soltanto; oppure, se ci si trova nei cursori di avanzamento (velocità, tono, etc) diminuirà il valore fino al 20% |
 %kc:endInclude
 
 +++ Braille +++[BrailleSettings]
@@ -1684,6 +1724,18 @@ Ci si può spostare da una tabella all'altra utilizzando le frecce.
 
 Si noti che questa opzione è utile solo se il display braille possiede una tastiera in stile Perkins e se il driver supporta tale caratteristica.
 Nel caso il display braille che si vuole adoperare sia dotato di tastiera perkins, e NVDA non sia ancora in grado di supportarla, questo verrà evidenziato nella [sezione Display Braille supportati #SupportedBrailleDisplays].
+
+%kc:setting
+==== Modalità Braille ====[BrailleMode]
+Tasto: ``NVDA+alt+t``
+
+Questa opzione consente di selezionare tra le modalità braille disponibili.
+
+Attualmente, sono supportate due modalità Braille: "Inseguimento cursori" e "Output sintesi vocale".
+
+Quando si seleziona inseguimento cursori, il display braille si aggancerà al cursore di sistema/focus o al navigatore ad oggetti/cursore di controllo, a seconda della situazione e della configurazione braille. 
+
+Quando invece risulta selezionata l'opzione "output sintesi vocale", nel display braille apparirà ciò che NVDA invia al sintetizzatore nella modalità "parlare".
 
 ==== Espandi la parola sotto il cursore utilizzando il Braille Computer ====[BrailleSettingsExpandToComputerBraille]
 Questa opzione permette la visualizzazione della parola sotto il cursore nel formato Computer Braille non contratto.
@@ -1913,6 +1965,87 @@ Inoltre, ha effetto solo quando l'impostazione "Usa WASAPI per l'output audio" �
 Questo cursore di avanzamento consente di impostare il volume dei suoni e dei segnali acustici di NVDA.
 L'impostazione ha effetto solo quando l'opzione "Il volume dei suoni di NVDA segue il volume della voce" è disabilitata.
 La funzione non risulta disponibile se NVDA è stato avviato con l'impostazione [WASAPI disattivato per l'uscita audio #WASAPI] nelle Impostazioni avanzate.
+
+==== Tempo per cui il dispositivo audio rimane in funzione dopo la sintesi ====[AudioAwakeTime]
+Questo campo editazione specifica per quanto tempo NVDA mantiene attivo il dispositivo audio dopo che la sintesi ha parlato.
+Ciò consente a NVDA di evitare alcuni problemi con la sintesi vocale, come la perdita di parti di parole.
+Questo può accadere perché i dispositivi audio (in particolare Bluetooth e wireless) entrano in modalità standby.
+La funzione potrebbe essere utile anche in altri casi d'uso, come quando si esegue NVDA all'interno di una macchina virtuale (ad esempio Citrix Virtual Desktop) o su alcuni laptop.
+
+Valori più bassi potrebbero causare interruzioni dell'audio più frequenti, poiché il dispositivo tenderà ad entrare in modalità standby troppo presto, tagliando l'inizio della frase successiva.
+Invece, impostare un valore troppo alto potrebbe portare allo scaricamento più veloce della batteria del dispositivo audio, poiché rimarrà attivo più a lungo anche quando non viene emesso alcun suono.
+
+
+È possibile impostare il tempo su zero per disabilitare questa funzione.
+
++==== bilanciamento audio====[SelectSoundSplitMode]
+
+La funzione di bilanciamento audio consente agli utenti di utilizzare i propri dispositivi di uscita stereo, come cuffie e altoparlanti.
+In questo modo, si potrà portare la voce di NVDA in un canale (ad esempio sinistro) e tutte le atre applicazioni nell'altro canale (ad esempio destro).
+Per impostazione predefinita la funzione di bilanciamento audio è disabilitata, il che significa che tutte le applicazioni, incluso NVDA, riprodurranno i suoni sia sul canale sinistro che su quello destro.
+Un gesto consente di passare tra le varie modalità di bilanciamento audio:
+%kc:beginInclude
+|| Nome | Tasto | Descrizione |
+| Passa tra le modalità di bilanciamento audio | ``NVDA+alt+s`` | Passa tra le modalità di bilanciamento audio. |
+
+%kc:endInclude
+
+Per impostazione predefinita, questo comando passerà tra le seguenti modalità:
+- bilanciamento disattivato: sia NVDA che altre applicazioni trasmettono l'audio ai canali sinistro e destro.
+- NVDA a sinistra e applicazioni a destra: NVDA parlerà nel canale sinistro, mentre le altre applicazioni riprodurranno i suoni nel canale destro.
+- NVDA a destra e applicazioni a sinistra: NVDA parlerà nel canale destro, mentre le altre applicazioni riprodurranno i suoni nel canale sinistro.
+-
+
+Sono disponibili modalità di bilanciamento audio più avanzate nella casella combinata delle impostazioni NVDA.
+If you wish to adjust volume of all applications except for NVDA, consider using [the dedicated commands #OtherAppVolume].
++Please note, that sound split doesn't work as a mixer.
++For example, if an application is playing a stereo sound track while sound split is set to "NVDA on the left and applications on the right", then you will only hear the right channel of the sound track, while the left channel of the sound track will be muted.
++
++This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
++
++Please note, that if NVDA crashes, then it won't be able to restore application sounds volume, and those applications might still output sound only in one channel after NVDA crash.
++In order to mitigate this, please restart NVDA.
++
++==== Customizing Sound split modes====[CustomizeSoundSplitModes]
++This checkable list allows selecting which sound split modes are included when cycling between them using ``NVDA+alt+s``.
++Modes which are unchecked are excluded.
++By default only three modes are included.
++- Sound split disabled: both NVDA and applications play sounds in both left and right channels.
++- NVDA on the left and all other applications on the right channel.
++- NVDA on the right and all other applications on the left channel.
++-
++
++Note that it is necessary to check at least one mode.
++This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
++
++==== Volume of other applications ====[OtherAppVolume]
++
++This slider allows you to adjust the volume of all currently running applications other than NVDA.
++This volume setting will apply to all other applications sound output, even if they start after this setting is changed.
++This volume can also be controlled via the following keyboard commands from anywhere:
++
++%kc:beginInclude
++|| Name | Key | Description |
++| Increase applications volume | ``NVDA+alt+pageUp`` | Increases volume of all applications except NVDA. |
++| Decrease applications volume | ``NVDA+alt+pageDown`` | Decreases volume of all applications except NVDA. |
++
++%kc:endInclude
++
++This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
++
++==== Mute other applications ====[MuteApplications]
++
++This checkbox allows you to mute all applications other than NVDA.
++This mute setting will apply to all other applications outputting sound, even if they start after this setting is changed.
++The following keyboard command can also be used from anywhere:
++
++%kc:beginInclude
++|| Name | Key | Description |
++| Toggle mute other applications | ``NVDA+alt+delete`` | Mutes or unmutes all applications other than NVDA. |
++
++%kc:endInclude
++
++This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
 
 +++ Visione +++[VisionSettings]
 La categoria visione nelle impostazioni di NVDA consente di attivare, disattivare e configurare i [miglioramenti visivi #Vision].
