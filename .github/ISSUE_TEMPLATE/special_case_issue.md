@@ -38,7 +38,7 @@ Mention if you have sought advice or shared this issue in community discussions 
 If possible, provide steps to demonstrate or reproduce the issue. If this section is not applicable, write "N/A."
 -->
 
-### Expected outcome or behavior
+### Expected outcome or behaviour (if applicable)
 <!--
 Describe what you expected to happen or how you expect the project to handle this kind of issue.
 -->
@@ -53,7 +53,7 @@ Attach any relevant screenshots, logs, or files that would help in diagnosing or
 Include details about your environment where relevant (e.g., operating system, NVDA version, other relevant software).
 -->
 
-### Additional information
+### Additional information (if applicable)
 <!--
 Provide any additional context or information that you think may be helpful for understanding or resolving the issue.
 -->
