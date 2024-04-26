@@ -11,6 +11,8 @@ complexSymbols:
 # Phrase endings
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
+# Series of dots used for visual presentation, e.g. in table of contents
+täyte .	\.{4,}
 # Others
 decimal comma	(?<![^\d -])\,(?=\d)
 negative number	(?<!\w)[-−]{1}(?=[$£€¥,]?\d)
@@ -34,7 +36,7 @@ symbols:
 … sentence ending	piste piste piste	all	always
 ; phrase ending	puolipiste	most	always
 : phrase ending	kaksoispiste	most	always
-
+täyte .	täytepisteet	all	always
 decimal comma		none	always
 in-word '	heitto	all	norep
 negative number	miinus	none	norep
@@ -58,6 +60,7 @@ degrees-fahrenheit	astetta faarenhaittia	none	norep
 
 # Standard punctuation/symbols
 !	huuto	all
+！	huuto	all
 "	lainaus	most
 \#	risu	some
 $	dollari	all	norep
@@ -80,12 +83,16 @@ $	dollari	all	norep
 ،	arabialainen pilkku	all	always
 -	viiva	most	always
 .	piste	some
+．	piste	some
 /	kautta	some
 :	kaksoispiste	most	norep
+：	kaksoispiste	most	norep
 ;	puolipiste	most
 ؛	arabialainen puolipiste	most
+；	puolipiste	most
 ?	kysymys	all
 ؟	arabialainen kysymys	all
+？	kysymys	all
 @	ät	some
 [	alkuhaka	most
 ]	loppuhaka	most
