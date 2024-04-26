@@ -3,6 +3,114 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2024.2 =
+Lisätty äänenjakotoiminto.
+Se mahdollistaa NVDA:n äänien jakamisen yhteen kanavaan (esim. vasempaan), kun taas muiden sovellusten äänet sijoitetaan toiseen (esim. oikeaan).
+
+Lisätty syntetisaattorin asetusrenkaan komentoja, jotka mahdollistavat ensimmäiseen tai viimeiseen asetukseen siirtymisen sekä aktiivisen asetuksen suurentamisen tai pienentämisen  enemmän kerrallaan.
+Lisätty uusia pikanavigointikomentoja: tekstikappale, pystysuunnassa tasattu kappale, samantyylinen teksti, eri tyylinen teksti, valikkokohde, vaihtopainike, edistymispalkki, kuva sekä matemaattinen kaava.
+
+Useita uusia pistekirjoitusominaisuuksia sekä bugikorjauksia.
+Lisätty "näytä puhetuloste" -pistekirjoitustila.
+Kun se on käytössä, pistenäytöllä näytetään täsmälleen se, mitä NVDA valmistautuu puhumaan.
+Lisätty tuki Braille Edge S2- ja Braille Edge S3 -pistenäytöille.
+Päivitetty LibLouis, johon on lisätty uudet yksityiskohtaiset valkovenäläiset ja ukrainalaiset pistetaulukot (isot kirjaimet näytetään) sekä espanjalainen taulukko kreikkalaisten tekstien lukemista varten.
+
+Päivitetty eSpeak, johon on lisätty tigrinjan kieli.
+
+Tehty useita pieniä bugikorjauksia sovelluksille, kuten Thunderbirdille, Adobe Readerille, verkkoselaimille, Nudille sekä Geekbenchille.
+
+== Uudet ominaisuudet ==
+- Uusia näppäinkomentoja:
+  - Uusi pikanavigointikomento ``P`` seuraavaan ja ``Vaihto+P`` edelliseen tekstikappaleeseen siirtymistä varten selaustilassa. (#15998, @mltony)
+  - Uusia määrittämättömiä pikanavigointikomentoja, joita käyttäen voidaan siirtyä seuraavaan/edelliseen:
+    - kuvaan (#10826)
+    - pystysuunnassa tasattuun kappaleeseen (#15999, @mltony)
+    - valikkokohteeseen (#16001, @mltony)
+    - vaihtopainikkeeseen (#16001, @mltony)
+    - edistymispalkkiin (#16001, @mltony)
+    - matemaattiseen kaavaan (#16001, @mltony)
+    - samantyyliseen tekstiin (#16000, @mltony)
+    - eri tyyliseen tekstiin (#16000, @mltony)
+    -
+    - Lisätty komennot syntetisaattorin asetusrenkaan ensimmäiseen ja viimeiseen asetukseen sekä eteen- ja taaksepäin siirtymistä varten. (#13768, #16095, @rmcpantoja)
+    - Ensimmäiseen ja viimeiseen asetukseen siirtymiselle ei ole määritetty näppäinkomentoa. (#13768)
+    - Pienennä ja suurenna syntetisaattorin asetusrenkaan aktiivista asetusta enemmän kerrallaan (#13768):
+      - Pöytäkone: ``NVDA+Ctrl+Page up`` tai ``NVDA+Ctrl+Page down``.
+      - Kannettava: ``NVDA+Ctrl+Vaihto+Page up`` tai ``NVDA+Ctrl+Vaihto+Page down``.
+      -
+    -
+  - Lisätty uusi määrittämätön näppäinkomento kuvien ja kuvatekstien puhumisen käyttöönottamista tai käytöstä poistamista varten. (#10826, #14349)
+  -
+- Pistekirjoitus:
+  - Lisätty tuki Braille Edge S2- ja Braille Edge S3 -pistenäytöille. (#16033, #16279, @EdKweon)
+  - Lisätty uusi "näytä puhetuloste" -pistekirjoitustila. (#15898, @Emil-18)
+    - Kun se on käytössä, pistenäytöllä näytetään, mitä NVDA valmistautuu puhumaan.
+    - Asetuksen tilaa voidaan vaihtaa painamalla ``NVDA+Alt+T`` tai pistekirjoitusasetusten paneelista.
+    -
+  -
+- Äänijako: (#12985, @mltony)
+  - Mahdollistaa NVDA:n äänien jakamisen yhteen kanavaan (esim. vasempaan), kun taas kaikkien muiden sovellusten äänet sijoitetaan toiseen (esim. oikeaan).
+  - Otetaan käyttöön tai poistetaan käytöstä näppäinkomennolla ``NVDA+Alt+S``.
+  - Muiden sovellusten äänenvoimakkuutta voidaan säätää painamalla ``NVDA+Alt+Page up`` ja ``NVDA+Alt+Page down``. (#16052, @mltony)
+  - Muiden sovellusten ääni voidaan mykistää painamalla ``NVDA+Alt+Delete``. (#16052, @mltony)
+  -
+- Rivi- ja sarakeotsikoiden puhumista tuetaan nyt contenteditable-HTML-elementeissä. (#14113)
+- Lisätty asiakirjojen muotoiluasetuksiin asetus kuvien ja kuvatekstien puhumisen käytöstä poistamiselle. (#10826, #14349)
+- NVDA puhuu Windows 11:n 2022 Update -versiossa ja sitä uudemmissa puheentunnistuksen ja ehdotettujen toimintojen ilmoitukset, paras ehdotus mukaan lukien, kun leikepöydälle kopioidaan esim. puhelinnumeroita. (#16009, @josephsl)
+- NVDA pitää äänilaitteen (esim. Bluetooth-kuulokkeet) hereillä puheen loppumisen jälkeen estääkseen seuraavan puhutun asian alun leikkautumisen. (#14386, @jcsteh, @mltony)
+- HP Secure Browser -verkkoselainta tuetaan. (#16377)
+-
+
+
+== Muutokset ==
+- Lisäosakauppa:
+  - Lisäosan tiedot NVDA:n vähimmäis- ja viimeisimmästä testatusta versiosta näytetään nyt "Muita tietoja" -osiossa. (#15776, @Nael-Sayegh)
+  - Lisäosan arviointitoiminto on käytettävissä ja arviointien verkkosivu näytetään Tiedot-paneelissa lisäosakaupan kaikissa välilehdissä. (#16179, @nvdaes)
+  -
+- Päivitetyt komponentit:
+  - Päivitetty LibLouis-pistekääntäjä versioksi [3.29.0 https://github.com/liblouis/liblouis/releases/tag/v3.29.0]. (#16259, @codeofdusk)
+    - Lisätty uudet yksityiskohtaiset valkovenäläiset ja ukrainalaiset pistetaulukot (isot kirjaimet näytetään) sekä espanjalainen taulukko kreikkalaisten tekstien lukemista varten.
+    -
+  - eSpeak NG on päivitetty versioksi 1.52-dev muutos ``cb62d93fd7``. (#15913)
+    - Lisätty tigrinjan kieli. 
+    -
+  -
+- Muutettu useita BrailleSense-pistenäyttöjen komentoja, jotta vältetään ristiriidat ranskalaisten pistekirjoitusmerkkien kanssa. (#15306)
+  - ``Alt+Nuoli vasemmalle`` on nyt ``pisteet 2 ja 7+väli``
+  - ``Alt+Nuoli oikealle`` on nyt ``pisteet 5 ja 7+väli``
+  - ``Alt+Nuoli ylös`` on nyt ``pisteet 2, 3 ja 7+väli``
+  - ``Alt+Nuoli alas`` on nyt ``pisteet 5, 6 ja 7+väli``
+  -
+- Täytepisteitä, joita yleisesti käytetään sisällysluetteloissa, ei enää puhuta alhaisilla välimerkkitasoilla. (#15845, @CyrilleB79)
+-
+
+== Bugikorjaukset ==
+- Windows 11:n korjaukset:
+  - NVDA puhuu jälleen fyysisen näppäimistön syöttöehdotukset. (#16283, @josephsl)
+  - Hiirtä ja kosketusvuorovaikutusta voidaan käyttää pika-asetuksissa versiossa 24H2 (2024 Update ja Windows Server 2025). (#16348, @josephsl)
+  -
+- Lisäosakauppa:
+  - Kohdistus siirtyy asianmukaisesti uuteen senhetkiseen välilehden otsikkoon painettaessa ``Ctrl+Sarkain``. (#14986, @ABuffEr)
+  -
+- Korjaukset Chromium-pohjaisille selaimille UIA:ta käytettäessä:
+  - Korjattu NVDA:n jumiutumisen aiheuttaneet bugit. (#16393, #16394)
+  - Askelpalautin-näppäin toimii nyt oikein Gmailin kirjautumiskentissä. (#16395)
+  -
+- Askelpalautin toimii nyt oikein käytettäessä Nudi 6.1:tä NVDA:n "Käsittele muiden sovellusten näppäinpainallukset" -asetuksen ollessa käytössä. (#15822, @jcsteh)
+- Korjattu bugi, joka aiheutti sen, että äänikoordinaatit ilmaistiin sovelluksen ollessa lepotilassa ja "Ilmaise hiiren koordinaatit äänimerkeillä" -asetuksen ollessa käytössä. (#8059, @hwf1324)
+- NVDA ei enää ohita Adobe Readerissa kaavoihin lisättyä vaihtoehtoista tekstiä PDF:issä. (#12715)
+- Korjattu bugi, joka aiheutti sen, ettei NVDA lukenut Geekbenchin valintanauhaa ja asetuksia. (#16251, @mzanm)
+- Korjattu harvinainen tilanne, jossa asetusten tallentaminen ei saattanut tallentaa kaikkia profiileja. (#16343, @CyrilleB79)
+- NVDA siirtyy Firefoxissa ja Chromium-pohjaisissa selaimissa asianmukaisesti vuorovaikutustilaan painettaessa Enteriä oltaessa esitysmuotoisen luettelon kohdalla (ul / ol) muokattavassa sisällössä. (#16325)
+- Sarakkeen tilanmuutos puhutaan automaattisesti valittaessa näytettäviä sarakkeita Thunderbirdin viestiluettelossa. (#16323)
+-
+
+
+== Muutokset kehittäjille ==
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta ../en/changes.html].
+
+
 = 2024.1 =
 
 Lisätty uusi "pyydettäessä"-puhetila.
