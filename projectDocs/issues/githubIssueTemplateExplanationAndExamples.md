@@ -10,9 +10,13 @@ If you are not familiar, please take some time to learn about
 **Warning**: In all but exceptional circumstances we require this template to be completed.
 Your issue will likely be closed if this template has not been followed.
 
-We currently have two templates, both are described on this page:
+We currently have four templates:
 - for bug reports
-- for feature requests.
+- for feature requests
+- for special case issues that cannot be easily categorised as either a bug report or a feature request
+- for security vulnerabilities
+
+As they form the vast majority of all issues raised, the Bug Report and Feature Requests issue templates are described in detail in this document. 
 
 ## General information
 The following information applies to all issues (bug reports, new features, even pull requests).
