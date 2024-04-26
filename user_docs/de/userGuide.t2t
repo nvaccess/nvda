@@ -211,7 +211,7 @@ Die eigentlichen Befehle werden im Eingabehilfemodus nicht ausgeführt.
 +++ Text vorlesen +++[ReadingText]
 || Name | Desktop key | Laptop key | Description |
 | Alles Lesen | ``NVDA+Pfeiltaste nach unten`` | ``NVDA+A`` | Beginnt an der aktuellen Position mit dem Lesen und zieht  den Fokus dabei mit. |
-| Aktuelle Zeile vorlesen | ``NVDA+Pfeiltaste nach oben`` | ``NVDA+L`` | Liest die Zeile vor. Zweimaliges Drücken buchstabiert die Zeile. Dreimaliges Drücken buchstabiert die Zeile unter Verwendung von Zeichenbeschreibungen (Alpha, Bravo, Charlie, usw.). |
+| Aktuelle Zeile vorlesen | ``NVDA+Pfeiltaste nach oben`` | ``NVDA+L`` | Liest die Zeile vor. Zweimaliges Drücken buchstabiert die Zeile. Dreimaliges Drücken buchstabiert die Zeile unter Verwendung von Zeichenbeschreibungen (Alpha, Bravo, Charlie, etc.). |
 | Auswahl vorlesen | ``NVDA+Umschalt+Pfeiltaste nach oben`` | ``NVDA+Umschalt+S`` | Liest markierten Text vor. Zweimaliges Drücken buchstabiert diesen und dreimaliges Drücken buchstabiert ihn phonetisch. |
 | Text aus der Zwischenablage vorlesen | ``NVDA+C`` | ``NVDA+C`` | Liest beliebigen Text aus der Zwischenablage vor. Zweimaliges Drücken buchstabiert diesen und dreimaliges Drücken buchstabiert ihn phonetisch. |
 
@@ -237,13 +237,19 @@ Die eigentlichen Befehle werden im Eingabehilfemodus nicht ausgeführt.
 | Zur nächsten Sprachausgaben-Einstellung wechseln | ``NVDA+Strg+Pfeiltaste nach rechts`` | ``NVDA+Umschalt+Strg+Pfeiltaste nach rechts`` | Wechselt zur nächsten verfügbaren Spracheinstellung nach der aktuellen und kehrt nach der letzten Einstellung wieder zur ersten Einstellung zurück. |
 | Zur vorherigen Sprachausgaben-Einstellung wechseln | ``NVDA+Strg+Pfeiltaste nach links`` | ``NVDA+Umschalt+Strg+Pfeiltaste nach links`` | Wechselt zur nächsten verfügbaren Spracheinstellung vor der aktuellen und geht zur letzten Einstellung nach der ersten. |
 | Erhöhen der aktuellen Sprachausgaben-Einstellung | ``NVDA+Strg+Pfeiltaste nach oben`` | ``NVDA+Umschalt+Strg+Pfeiltaste nach oben`` | Erhöht die aktuelle Spracheinstellung, auf der Sie sich befinden. Erhöht z. B. die Geschwindigkeit, wählt die nächste Stimme aus, erhöht die Lautstärke. |
+| Erhöhen der aktuellen Sprachausgaben-Einstellung in größeren Schritten | ``NVDA+Strg+Seite nach oben`` | ``NVDA+Umschalt+Strg+Seite nach oben`` | Erhöht den Wert der aktuellen Sprachausgaben-Einstellung, auf der Sie sich befinden, in größeren Schritten. Wenn Sie sich z. B. auf einer Stimmen-Einstellung befinden, springt der Wert alle 20 Stimmen vorwärts; wenn Sie sich auf Schiebereglereinstellungen (Geschwindigkeit, Tonhöhe, etc.) befinden, springt der Wert um bis zu 20 % vorwärts. |
 | Verringern der aktuellen Sprachausgaben-Einstellung | ``NVDA+Strg+Pfeiltaste nach unten`` | ``NVDA+Umschalt+Strg+Pfeiltaste nach unten`` | Verringert die aktuelle Spracheinstellung, auf der Sie sich befinden. Verringert z. B. die Geschwindigkeit, wählt die vorherige Stimme aus, verringert die Lautstärke. |
+| Verringern der aktuellen Sprachausgaben-Einstellung in größeren Schritten | ``NVDA+Strg+Seite nach unten`` | ``NVDA+Umschalt+Strg+Seite nach unten`` | Verringert den Wert der aktuellen Sprachausgaben-Einstellung, auf der Sie sich befinden, in größeren Schritten. Wenn Sie sich z. B. auf einer Stimmen-Einstellung befinden, springt der Wert alle 20 Stimmen rückwärts; wenn Sie sich auf einer Schiebereglereinstellung (Geschwindigkeit, Tonhöhe, etc.) befinden, springt der Wert um bis zu 20 % rückwärts. |
 
-+++ Web-Navigation +++[WebNavigation]
+Es ist auch möglich, den ersten oder letzten Wert der aktuellen Sprachausgaben-Einstellung zu setzen, indem Sie benutzerdefinierte Tastenbefehle im [Dialogfeld für die Tastenbefehle #InputGestures], dort die Kategorie "Sprachausgabe" auswählen und diese dann zuweisen.
+Das bedeutet, dass zum Beispiel bei der Einstellung einer Geschwindigkeit den Wert auf 0 oder 100 festgelegt wird.
+Wenn Sie sich in einer Sprachausgaben-Einstellung befinden, wird die erste oder letzte Stimme eingestellt.
+
++++ Im Web navigieren +++[WebNavigation]
 Die vollständige Liste der Navigationstasten finden Sie im Abschnitt [Lesemodus #BrowseMode] des Benutzerhandbuchs.
 || Befehl | Tastenkombination | Beschreibung |
 | Überschrift | ``H`` | Weiter zur nächsten Überschrift. |
-| Überschriftebene 1, 2, or 3 | ``1``, ``2``, ``3`` | Zur nächsten Überschrift auf der angegebenen Ebene wechseln. |
+| Überschriftebene 1, 2, oder 3 | ``1``, ``2``, ``3`` | Zur nächsten Überschrift auf der angegebenen Ebene wechseln. |
 | Formularfeld | ``F`` | Wechselt zum nächsten Formularfeld (Eingabefeld, Schaltfläche, etc.). |
 | Link | ``K`` | Wechselt zum nächsten Link. |
 | Sprungmarke | ``D`` | Wechselt zur nächsten Sprungmarke. |
@@ -251,6 +257,7 @@ Die vollständige Liste der Navigationstasten finden Sie im Abschnitt [Lesemodus
 | Tabelle | ``T`` | Wechselt zur nächsten Tabelle. |
 | Rückwärts gehen | ``Umschalt+Buchstabe`` | Drücken Sie ``Umschalten`` und einen der oben genannten Buchstaben, um zum vorherigen Element dieses Typs zu gelangen. |
 | Liste der Elemente | ``NVDA+F7`` | Listet verschiedene Arten von Elementen auf, z. B. Links und Überschriften. |
+
 
 ++ Die Einstellungen ++[Preferences]
 
@@ -807,29 +814,30 @@ Bitte beachten Sie, dass nicht alle Schnellnavigationstasten in jedem Dokumenten
 
 %kc:beginInclude
 Folgende Befehle springen ohne Umschalttaste gedrückt zum nächsten Element; zusammen mit der Umschalttaste springen Sie zum vorherigen Objekt.
-- H: Überschrift
-- L: Liste
-- I: Listeneintrag
-- T: Tabelle
-- K: Link
-- N: Nichtverlinkter Text
-- F: Formularfeld
-- U: Noch nicht besuchter Link
-- V: Bereits besuchter Link
-- E: Eingabefeld
-- B: Schalter
-- X: Kontrollfeld
-- C: Kombinationsfeld
-- R: Auswahlschalter
-- Q: Zitatblock
-- S: Trennlinie
-- M: Rahmen
-- G: Grafik
-- D: Sprungmarke
-- O: Eingebettetes Objekt (Anwendung, Dialog, Audio- und Videoplayer)
-- 1 bis 6: Überschrift der jeweiligen Ordnung
-- A: Anmerkung: Kommentar, Dokumentänderung, etc.
-- W: Rechtschreibfehler
+- ``H``: Überschrift
+- ``L``: Liste
+- ``I``: Listeneintrag
+- ``T``: Tabelle
+- ``K``: Link
+- ``N``: Nichtverlinkter Text
+- ``F``: Formularfeld
+- ``U``: Nicht besuchter Link
+- ``V``: Besuchter Link
+- ``E``: Eingabefeld
+- ``B``: Schalter
+- ``X``: Kontrollfeld
+- ``C``: Kombinationsfeld
+- ``R``: Auswahlschalter
+- ``Q``: Zitatblock
+- ``S``: Trennlinie
+- ``M``: Rahmen
+- ``G``: Grafik
+- ``D``: Sprungmarke
+- ``O``: Eingebettetes Objekt (Anwendung, Dialogfeld, Audio- und Video-Player)
+- ``1`` bis ``6``: Überschrift der jeweiligen Ordnung
+- ``A``: Anmerkung: Kommentar, Dokumentänderung, etc.
+- ``P``: Absatz
+- ``W``: Rechtschreibfehler
 -
 Verwenden Sie folgende Tastenkombinationen, um zum Beginn oder zum Ende eines Container-Objektes (Listen, Tabellen, etc.) zu springen:
 || Name | Tastenkombination | Beschreibung |
@@ -843,14 +851,42 @@ Um in solchen Web-Anwendungen eigene Kurztasten verwenden und dennoch mit den Pf
 Mit NVDA+Umschalt+Leertaste können Sie die Schnellnavigation im aktuellen Dokument ein- oder ausschalten.
 %kc:endInclude
 
++++ Befehl zur Navigation in Textabschnitten +++[TextNavigationCommand]
+
+Sie können zum nächsten oder vorherigen Textabschnitt springen, indem Sie die Taste ``P`` oder ``Umschalt+P`` drücken.
+Textabsätze sind durch eine Gruppe von Texten definiert, die in vollständigen Sätzen unterteilt werden.
+Dies kann nützlich sein, um den Anfang von lesbaren Inhalten auf verschiedenen Webseiten zu finden, z. B:
+- Nachrichten
+- Foren
+- Blogs
+- 
+
+Diese Befehle können auch hilfreich sein, um bestimmte Arten von Unordnung zu überspringen, z. B.:
+- Werbungen
+- Menüs
+- Überschriften
+- 
+
+Bitte beachten Sie jedoch, dass NVDA zwar sein Bestes tut, um Textabsätze zu erkennen, der Algorithmus jedoch nicht perfekt ist und manchmal Fehler macht.
+Außerdem unterscheidet sich dieser Befehl von den Befehlen für die Absatznavigation ``Strg+Pfeiltaste nach oben/unten``.
+Die Absatznavigation springt nur zwischen Textabschnitten, während die Befehle zur Absatznavigation den Cursor zu den vorherigen/nächsten Absätzen führen, unabhängig davon, ob sie Text enthalten oder nicht.
+
 +++ Weitere Navigationsbefehle +++[OtherNavigationCommands]
 
 Zusätzlich zu den oben aufgeführten Schnellnavigationsbefehlen verfügt NVDA über Befehle, denen keine Standard-Tasten zugewiesen sind.
 Um diese Befehle verwenden zu können, müssen Sie zunächst diese zuweisen, indem Sie das Dialogfeld für die [Tastenbefehle #InputGestures] aufrufen.
 Hier ist eine Liste der verfügbaren Befehle:
 - Artikel
+- Abbildung
 - Gruppierung
 - Tab
+- Menü
+- Umschalter
+- Fortschrittsbalken
+- Mathematische Formeln
+- Vertikal ausgerichteter Absatz
+- Text mit gleichem Stil
+- Text in einem anderen Stil
 -
 
 Beachten Sie, dass es für jeden Elementtyp zwei Befehle gibt, um sich im Dokument vorwärts und rückwärts zu bewegen, und dass Sie beiden Befehlen diese zuweisen müssen, um schnell in beide Richtungen navigieren zu können.
@@ -917,8 +953,8 @@ In Szenarien, in denen Sie eine ganze Tabelle oder einen ganzen Absatz mit umfan
  
 + Mathematische Inhalte auslesen +[ReadingMath]
 Sie können MathPlayer 4 von Design Science verwenden, um mit NVDA in mathematischen Inhalten zu navigieren. Die Inhalte werden in Sprache und Braille ausgegeben.
-Damit NVDA jedoch mathematische Inhalte lesen und mit ihnen interagieren kann, müssen Sie zunächst eine Mathematikkomponente für NvDA installieren.
-Im NVDA-Erweiterungs-Store sind mehrere NVDA-Erweiterungen verfügbar, die Mathematik unterstützen, darunter die Erweiterung [MathCAT https://nsoiffer.github.io/MathCAT/] und [Access8Math https://github .com/tsengwoody/Access8Math].
+Damit NVDA jedoch mathematische Inhalte lesen und mit ihnen interagieren kann, müssen Sie zunächst eine Mathematikkomponente für NVDA installieren.
+Im Store für NVDA-Erweiterungen sind mehrere NVDA-Erweiterungen verfügbar, die Mathematik unterstützen, darunter die Erweiterung [MathCAT https://nsoiffer.github.io/MathCAT/] und [Access8Math https://github .com/tsengwoody/Access8Math].
 Weitere Informationen zum Durchsuchen und Installieren verfügbarer Erweiterungen in NVDA finden Sie im Abschnitt [Erweiterungs-Store #AddonsManager].
 NVDA kann auch die veraltete Software [MathPlayer https://info.wiris.com/mathplayer-info] von Wiris nutzen, sofern diese auf Ihrem System vorhanden ist. Diese Software wird jedoch nicht mehr aktuallisiert.
 
@@ -978,8 +1014,8 @@ Drücken Sie Strg+Eingabe, um die Schaltfläche oder das Element, welches die Fo
 
 ++ MathPlayer installieren ++[InstallingMathPlayer]
 Obwohl allgemein empfohlen wird, eine der neueren NVDA-Erweiterungen zur Unterstützung von Mathematik in NVDA zu verwenden, kann MathPlayer in bestimmten und begrenzten Szenarios immer noch die geeignetere Wahl sein.
-Z.B. MathPlayer unterstützt möglicherweise eine bestimmte Sprache oder einen Braille-Code, der in neueren Add-ons nicht unterstützt wird.
-MathPlayer ist kostenlos auf der Wiris-Website erhältlich.
+MathPlayer z. B. unterstützt möglicherweise eine bestimmte Sprache oder einen Braille-Code, der in neueren Add-ons nicht unterstützt wird.
+MathPlayer ist kostenlos auf der Webseite von Wiris erhältlich.
 [MathPlayer herunterladen https://downloads.wiris.com/mathplayer/MathPlayerSetup.exe].
 Nach der Installation von MathPlayer müssen Sie NVDA neu starten.
 Bitte beachten Sie, dass in den Informationen zum MathPlayer angegeben sein kann, dass er nur für ältere Browser wie Internet Explorer 8 geeignet ist.
@@ -1158,10 +1194,12 @@ Sie können den Bildschirmvorhang in den [NVDA-Einstellungen #NVDASettings], in 
 Wenn der Bildschirmvorhang aktiv ist, können einige Aufgaben, die direkt auf der Bildschirmanzeige basieren, wie das Ausführen der [Texterkennung #Win10Ocr] oder das Erstellen eines Screenshots, nicht ausgeführt werden.
 
 Auf Grund einer Änderung in der API für die Windows-Lupe musste die Funktion des Bildschirmvorhangs aktualisiert werden, um die neuesten Versionen von Windows zu unterstützen.
-Verwenden Sie NVDA 2021.2, um den Bildschirmvorhang mit Windows 10 21H2 (10.0.19044) oder neuer zu aktivieren.
+Verwenden Sie NVDA 2021.2, um den Bildschirmvorhang mit Windows 10 Version 21H2 (10.0.19044) oder neuer zu aktivieren.
 Wenn Sie eine neue Windows-Version verwenden, erhalten Sie aus Sicherheitsgründen eine visuelle Bestätigung, dass der Bildschirmvorhang den Bildschirm vollständig verdunkelt.
 
-+ Erkennung von Inhalten +[ContentRecognition]
+Bitte beachten Sie, dass der Bildschirmvorhang nicht aktiviert werden kann, solange die Windows-Lupe läuft und die invertierten Bildschirmfarben verwendet werden.
+
++ Inhalte erkennen +[ContentRecognition]
 Wenn Entwickler von Anwendungen unzureichende Informationen zur Zugänglichkeit bereitstellen, können Sie zahlreiche Tools verwenden, um z. B. Text aus einem Bild auszulesen.
 NVDA unterstützt die in Windows 10 und neuer enthaltene Texterkennung, um Text aus Bildern auszulesen.
 Über NVDA-Erweiterungen können zusätzliche Tools zur Erkennung von Inhalten bereitgestellt werden.
@@ -1512,7 +1550,7 @@ Diese Informationen helfen NV Access bei der zukünftigen Entwicklung von NVDA.
 Wenn diese Option aktiviert ist, informiert NVDA nach dem Start darüber, falls ein Update noch aussteht, um diese zu installieren.
 Sie können ausstehende Updates auch manuell über das NVDA-Menü, das Dialogfeld zum Beenden von NVDA oder durch eine erneute Suche nach Updates aus dem Hilfe-Menü installieren.
 
-+++ Einstellungen für die Sprachausgabe +++[SpeechSettings]
++++ Die Sprachausgaben-Einstellungen +++[SpeechSettings]
 
 %kc:setting
 ==== Einstellungen für Sprachausgaben öffnen ====
@@ -1658,11 +1696,13 @@ Wenn Sie rasch durch die verschiedenen Sprachausgabeneinstellungen schalten möc
 || Name | "Desktop"-Tastenkombination | "Laptop"-Tastenkombination | Beschreibung |
 | Zur nächsten Sprachausgabeneinstellung springen | NVDA+Strg+Pfeiltaste nach rechts | NVDA+Strg+Umschalt+Pfeiltaste nach rechts | Springt zur nächsten verfügbaren Sprachausgabeneinstellung ausgehend von der aktuellen Einstellung; beginnt von vorne, nach dem letzten Eintrag. |
 | Zur vorherigen Sprachausgabeneinstellung springen | NVDA+Strg+Pfeiltaste nach links | NVDA+Strg+Umschalt+Pfeiltaste nach links | Springt zur vorherigen verfügbaren Sprachausgabeneinstellung ausgehend von der aktuellen Einstellung; beginnt von hinten, nach dem ersten Eintrag. |
-| Aktuelle Sprachausgabeneinstellung erhöhen | NVDA+Strg+Pfeiltaste nach oben | NVDA+Strg+Umschalt+Pfeiltaste nach oben | Erhöht die aktuelle Einstellung (z. B. die Sprechgeschwindigkeit erhöhen, die nächste Stimme auswählen, die Lautstärke erhöhen). |
-| Aktuelle Sprachausgabeneinstellung verringern | NVDA+Strg+Pfeiltaste nach unten | NVDA+Strg+Umschalt+Pfeiltaste nach unten | Verringert die aktuelle Einstellung (z. B. die Sprechgeschwindigkeit verringern, wählt die vorherige Stimme aus, verringert die Lautstärke). |
+| Aktuelle Sprachausgaben-Einstellung erhöhen | NVDA+Strg+Pfeiltaste nach oben | NVDA+Strg+Umschalt+Pfeiltaste nach oben | Erhöht die aktuelle Einstellung (z. B. die Sprechgeschwindigkeit erhöhen, die nächste Stimme auswählen, die Lautstärke erhöhen). |
+| Erhöhen der aktuellen Sprachausgaben-Einstellung in größeren Schritten | ``NVDA+Strg+Seite nach oben`` | ``NVDA+Umschalt+Strg+Seite nach oben`` | Erhöht den Wert der aktuellen Sprachausgaben-Einstellung, auf der Sie sich befinden, in größeren Schritten, z. B. wenn Sie sich auf einer Stimmen-Einstellung befinden, springt der Wert alle 20 Stimmen vorwärts; wenn Sie sich auf Schieberegler-Einstellungen (Geschwindigkeit, Tonhöhe, etc.) befinden, springt der Wert um bis zu 20 % vorwärts. |
+| Aktuelle Sprachausgaben-Einstellung verringern | NVDA+Strg+Pfeiltaste nach unten | NVDA+Strg+Umschalt+Pfeiltaste nach unten | Verringert die aktuelle Einstellung (z. B. die Sprechgeschwindigkeit verringern, wählt die vorherige Stimme aus, verringert die Lautstärke). |
+| Verringern der aktuellen Sprachausgaben-Einstellung in größeren Schritten | ``NVDA+Strg+Seite nach unten`` | ``NVDA+Umschalt+Strg+Seite nach unten`` | Verringert den Wert der aktuellen Sprachausgaben-Einstellung, auf der Sie sich befinden, in größeren Schritten. Wenn Sie sich z. B. auf einer Stimmen-Einstellung befinden, springt der Wert alle 20 Stimmen rückwärts; wenn Sie sich auf einer Schieberegler-Einstellung befinden, springt der Wert um bis zu 20 % rückwärts. |
 %kc:endInclude
 
-+++ Braille +++[BrailleSettings]
++++ Die Braille-Einstellungen +++[BrailleSettings]
 Die Kategorie "Braille" in den NVDA-Einstellungen bietet verschiedene Optionen an, um Aspekte der Ein- und -Ausgabe in Braille einzustellen.
 Folgende Optionen sind enthalten:
 
@@ -1684,6 +1724,18 @@ Von Brailletabelle zu Brailletabelle bewegen Sie sich mit den Pfeiltasten.
 
 Diese Option ist nur hilfreich, wenn Sie eine Braillezeile mit Braille-Tastatur verwenden und dieses Feature vom Braillezeilen-Treiber unterstützt wird.
 Sollte die Eingabe auf einer Braillezeile mit Braille-Tastatur nicht unterstützt werden, so wird dies im Abschnitt [unterstützte Braillezeilen #SupportedBrailleDisplays] vermerkt.
+
+%kc:setting
+==== Braille-Modus ====[BrailleMode]
+Tastenkombination: ``NVDA+Alt+T``
+
+Mit dieser Option können Sie zwischen den verfügbaren Braille-Modi auswählen.
+
+Derzeit werden zwei Braille-Modi unterstützt: "Cursor folgen" und "Sprachausgabenverlauf anzeigen".
+
+Wenn die Option "Cursor folgen" ausgewählt ist, folgt die Braillezeile entweder dem System-Fokus/-Cursor oder dem Navigationsobjekt/NVDA-Cursor, je nachdem, woran die Ausgabe auf der Braillezeile gekoppelt ist.
+
+Wenn die Option "Sprachausgabenverlauf anzeigen" ausgewählt ist, zeigt die Braillezeile an, was NVDA spricht oder gesprochen hätte, wenn der Sprachmodus auf "Sprechen" eingestellt wäre.
 
 ==== Aktuelles Wort in Computerbraille ausschreiben ====[BrailleSettingsExpandToComputerBraille]
 Diese Option legt fest, ob das Wort, welches sich unter dem Cursor befindet, in Computerbraille dargestellt werden soll oder nicht.
@@ -1745,7 +1797,7 @@ Wenn der aktuelle Darstellungsmodus auf [Bildschirm-Layout #ScreenReview] einges
 In diesem Fall versucht NVDA, das Objekt unter dem Text zu fokussieren, zu dem Sie weitergeleitet werden.
 Dasselbe gilt für [Objekt-Darstellungen #ObjectReview].
 
-You can also set this option to only move the caret when tethered automatically.
+Sie können diese Option auch so einstellen, dass die Einfügemarke nur dann bewegt wird, wenn sie automatisch gekoppelt ist.
 In diesem Fall führt das Drücken einer Cursor-Routing-Taste nur dann zu einer Verschiebung des System-Cursors oder des Fokus, wenn NVDA automatisch an den NVDA-Cursor gebunden ist, während bei einer manuellen Bindung an den NVDA-Cursor keine Bewegung erfolgt.
 
 Diese Option wird nur angezeigt, wenn "[Braille-Ausgabe koppeln #BrailleTether]" auf "Automatisch" oder "Zur Ansicht" eingestellt ist.
@@ -1912,7 +1964,89 @@ Diese Option ist nicht verfügbar, wenn Sie NVDA mit [WASAPI deaktiviert für Au
 ==== Lautstärke der NVDA-Sounds ====[SoundVolume]
 Mit diesem Schieberegler können Sie die Lautstärke der NVDA-Sounds und -Signaltöne einstellen.
 Diese Einstellung ist nur wirksam, sofern die "Lautstärke der NVDA-Sounds folgt der Lautstärke der verwendeten Stimme" deaktiviert ist.
+Diese Option ist nicht verfügbar, wenn Sie NVDA mit [WASAPI deaktiviert für Audio-Ausgabe #WASAPI] in den Erweiterten Einstellungen gestartet haben.
+
+==== Zeit, um das Audio-Gerät nach dem Sprechen nicht auszublenden ====[AudioAwakeTime]
+
+Dieses Eingabefeld legt fest, wie lange NVDA das Audio-Gerät nach Beendigung des Sprechens nicht ausblenden soll.
+Dadurch kann NVDA bestimmte Sprachfehler wie ausgelassene Wortteile vermeiden.
+Dies kann passieren, wenn Audio-Geräte (insbesondere Bluetooth- und drahtlose Geräte) in den Standby-Modus wechseln.
+Dies kann auch in anderen Anwendungsfällen hilfreich sein, z. B. bei der Ausführung von NVDA innerhalb einer virtuellen Maschine (z. B. Citrix Virtual Desktop) oder auf bestimmten Laptops.
+
+Bei niedrigeren Werten kann es vorkommen, dass der Ton oder Wortsilben häufiger abgeschnitten wird, da ein Gerät möglicherweise zu früh in den Standby-Modus wechselt, wodurch der Sprechvorgang ausgeblendet wird.
+Ein zu hoher Wert kann dazu führen, dass sich die Batterie eines externen Audio-Geräts (z. B. Kopfhörer) schneller entlädt, da sie länger aktiv bleibt, während kein Ton gesendet wird.
+
+
+Sie können die Zeitspanne auf 0 setzen, um diese Funktion zu deaktivieren.
+
+==== Sound-Teilung ====[SelectSoundSplitMode]
+
+Mit der Sound-Teilung können die Benutzer ihre Stereo-Ausgabegeräte wie Kopfhörer und Lautsprecher nutzen.
+Damit können Sie die Sprachausgabe in NVDA auf einen Kanal (z. B. links) und alle anderen Anwendungen auf dem anderen Kanal (z. B. rechts) hören.
+Standardmäßig ist die Sound-Teilung deaktiviert, was bedeutet, dass alle Anwendungen, einschließlich NVDA, Töne sowohl im linken als auch im rechten Kanal zu hören sind.
+Mit einem Tastenbefehl können Sie zwischen den verschiedenen Modi wechseln:
+%kc:beginInclude
+|| Name | Tastenkombination | Beschreibung |
+| Zwischen den Modi für die Sound-Teilung wechseln| ``NVDA+Alt+S`` | Wechselt zwischen den Modi für die Sound-Teilung. |
+
+%kc:endInclude
+
+In der Standard-Einstellung wechselt dieser Befehl zwischen den folgenden Modi:
+- Deaktivierte Sound-Teilung: Sowohl NVDA als auch andere Anwendungen sind auf beiden Kanälen zu hören.
+- NVDA links und Anwendungen rechts: NVDA spricht im linken Kanal, während andere Anwendungen im rechten Kanal zu hören sind.
+- NVDA rechts und Anwendungen links: NVDA spricht im rechten Kanal, während andere Anwendungen im linken Kanal zu hören sind.
+-
+
+In der Einstellungskombination in NVDA sind weitere erweiterte Modi für die Sound-Teilung verfügbar.
+Wenn Sie die Lautstärke aller Anwendungen mit Ausnahme von NVDA anpassen möchten, sollten Sie [den speziellen Befehl #OtherAppVolume] verwenden.
+Bitte beachten Sie, dass die Sound-Teilung nicht als Mixer funktioniert.
+Wenn beispielsweise eine Anwendung eine Stereo-Tonspur abspielt und die Sound-Teilung auf "NVDA links und Anwendungen rechts" eingestellt ist, dann hören Sie nur den rechten Kanal der Tonspur, während der linke Kanal der Tonspur stummgeschaltet wird.
+
 Diese Option ist nicht verfügbar, wenn Sie NVDA mit [WASAPI deaktiviert für Audioausgabe #WASAPI] in den Erweiterten Einstellungen gestartet haben.
+
+Bitte beachten Sie, dass bei einem Absturz von NVDA die Lautstärke der Anwendungstöne nicht wiederhergestellt werden kann und dass diese Anwendungen nach dem Absturz von NVDA den Sound möglicherweise nur noch auf einem Kanal ausgegeben werden.
+Um dieses Problem zu beheben, starten Sie bitte NVDA neu.
+
+==== Anpassen der Sound-Teilung ====[CustomizeSoundSplitModes]
+Über diese Liste können Sie auswählen, welche Sound-Split-Modi enthalten sind, wenn Sie mit ``NVDA+Alt+S`` zwischen diesen Modi wechseln.
+Modi, die nicht markiert sind, sind ausgenommen.
+Standardmäßig sind nur drei Modi enthalten.
+- Sound-Teilung deaktiviert: Sowohl NVDA als auch Anwendungen sind auf beiden kanälen zu hören.
+- NVDA auf dem linken Kanal und alle anderen Anwendungen auf dem rechten Kanal.
+- NVDA auf dem rechten Kanal und alle anderen Anwendungen auf dem linken Kanal.
+-
+
+Es ist zu beachten, dass mindestens ein Modus zu prüfen ist.
+Diese Option ist nicht verfügbar, wenn Sie NVDA mit [WASAPI deaktiviert für Audio-Ausgabe #WASAPI] in den Erweiterten Einstellungen gestartet haben.
+
+==== Lautstärke der sonstigen Anwendungen einstellen ====[OtherAppVolume]
+
+Mit diesem Schieberegler können Sie die Lautstärke aller derzeit ausgeführten Anwendungen außer NVDA einstellen.
+Diese Lautstärke-Einstellung gilt für alle weiteren Anwendungen, auch wenn sie nach der Änderung dieser Einstellung gestartet werden.
+Diese Lautstärke kann auch über die folgenden Tastaturbefehle von überall aus gesteuert werden:
+
+%kc:beginInclude
+|| Name | Tastenkombination | Beschreibung |
+| Erhöhung der Lautstärke der Anwendung | ``NVDA+Alt+Seite nach oben`` | Erhöht die Lautstärke aller Anwendungen außer NVDA. |
+| Verringerung der Lautstärke der Anwendung | ``NVDA+Alt+Seite nach unten`` | Verringert die Lautstärke aller Anwendungen außer NVDA. |
+
+%kc:endInclude
+
+Diese Option ist nicht verfügbar, wenn Sie NVDA mit [WASAPI deaktiviert für Audio-Ausgabe #WASAPI] in den Erweiterten Einstellungen gestartet haben.
+
+==== Sonstige Anwendungen stummschalten ====[MuteApplications]
+
+Mit diesem Kontrollkästchen können Sie alle anderen Anwendungen außer NVDA stummschalten.
+Diese Stummschaltung gilt für alle anderen Anwendungen, die Sounds ausgeben, auch wenn sie nach der Änderung dieser Einstellung gestartet werden.
+Der folgende Tastaturbefehl kann auch von überall aus verwendet werden:
+
+%kc:beginInclude
+|| Name | Tastenkombination | Beschreibung |
+| Sonstige Anwendungen stummschalten | ``NVDA+Alt+Entf`` | Schaltet alle Anwendungen außer NVDA stumm bzw. deaktiviert sie. |
+
+%kc:endInclude
+
+Diese Option ist nicht verfügbar, wenn Sie NVDA mit [WASAPI deaktiviert für Audio-Ausgabe #WASAPI] in den Erweiterten Einstellungen gestartet haben.
 
 +++ Visuelle Darstellungen +++[VisionSettings]
 Mit der Kategorie "Visuelle Darstellungen" in den NVDA-Einstellungen können Sie[visuelle Verbesserungen #Vision] aktivieren, deaktivieren und konfigurieren.
@@ -2038,7 +2172,7 @@ Um die Auflösung der Texteinheiten von überall her umzuschalten, weisen Sie bi
 
 ==== Objekt melden, sobald die Maus hineinbewegt wird ====[MouseSettingsRole]
 Wenn dieses Kontrollkästchen aktiviert ist, gibt NVDA Informationen zu Objekten aus, wenn sich die Maus darin bewegt.
-Dazu gehören die Rolle (Typ) des Objekts sowie Zustände (aktiviert/gedrückt), Zellkoordinaten in Tabellen usw.
+Dazu gehören die Rolle (Typ) des Objekts sowie Zustände (aktiviert/gedrückt), Zellkoordinaten in Tabellen, etc.
 Beachten Sie, dass die Ausgabe einiger Objektdetails möglicherweise davon abhängt, wie andere Einstellungen festgelegt sind, z. B. in den Kategorien [Objektpräsentation #ObjectPresentationSettings] oder [Dokumentformatierung #DocumentFormattingSettings].
 
 ==== Audio-Koordinaten bei Maus-Bewegungen ====[MouseSettingsAudio]
@@ -2317,6 +2451,7 @@ Konfigurieren können Sie die Meldungen von:
   - Sprungmarken
   - Artikel
   - Rahmen
+  - Abbildungen und Beschriftungen
   - Anklickbare Elemente
   -
 -
@@ -2594,6 +2729,11 @@ Schalten Sie nur eines davon ein, wenn dies von einem NVDA-Entwickler ausdrückl
 Mit dieser Option können Sie festlegen, ob NVDA einen Fehlerton abspielen soll, falls ein Fehler protokolliert wird.
 Bei Auswahl von "Nur in Testversionen" (Standard) ertönt nur dann ein NVDA-Wiedergabefehler, wenn die aktuelle NVDA-Version eine Testversion ist (Alpha-, Beta- oder Quellcode).
 Wenn Sie "Ja" auswählen, können Sie unabhängig von Ihrer aktuellen NVDA-Version die Fehlertöne aktivieren.
+
+==== Reguläre Ausdrücke für Schnellnavigationsbefehle zu Textabsätzen ====[TextParagraphRegexEdit]
+
+In diesem Feld können Benutzer reguläre Ausdrücke für die Erkennung von Textabschnitten im Lesemodus anpassen.
+Der [Navigationsbefehl zu Textabsätzen #TextNavigationCommand] sucht nach Absätzen, die mit diesem regulären Ausdruck übereinstimmen.
 
 ++ Verschiedene Optionen ++[MiscSettings]
 Neben den [NVDA-Einstellungen #NVDASettings], befinden sich weitere Einträge im NVDA-Menü unter "Optionen". Diese werden weiter unten erläutert.
@@ -2923,9 +3063,9 @@ Genau wie beim Installieren oder Entfernen von NVDA-Erweiterungen müssen Sie NV
 Sie können auch mehrere Erweiterungen gleichzeitig aktivieren oder deaktivieren, indem Sie auf der Registerkarte "Verfügbare Erweiterungen" mehrere Erweiterungen auswählen, dann das Kontextmenü der Auswahl aktivieren und die entsprechende Aktion auswählen.
 
 +++ Erweiterungen bewerten und Lesen von Rezensionen +++[AddonStoreReviews]
-Bevor Sie eine Erweiterung installieren, möchten Sie möglicherweise die Rezensionen anderer Nutzer lesen.
-Außerdem kann es für andere Benutzer hilfreich sein, wenn Sie Feedback zu Erweiterungen geben, die Sie ausprobiert haben.
-Um Bewertungen für eine Erweiterung zu lesen, wählen Sie eine Erweiterung auf der Registerkarte "Verfügbare Erweiterungen" oder "Aktualisierbare Erweiterungen" aus und verwenden Sie die Aktion "Community-Bewertungen".
+Vielleicht möchten Sie Bewertungen von anderen Nutzern lesen, die bereits Erfahrungen mit einer NVDA-Erweiterung gemacht haben, z. B. bevor Sie es installieren oder während Sie lernen, diese zu benutzen.
+Außerdem ist es für andere Nutzer hilfreich, wenn Sie uns Feedback zu den von Ihnen ausprobierten NVDA-Erweiterungen geben.
+Um Bewertungen für eine NVDA-Erweiterung zu lesen, wählen Sie sie aus und verwenden Sie die Aktion "Community-Bewertungen".
 Dies führt zu einer GitHub-Diskussionsseite, auf der Sie Rezensionen für die Erweiterung lesen und schreiben können.
 Bitte beachten Sie, dass dies nicht die direkte Kommunikation mit Erweiterungs-Entwicklern ersetzt.
 Stattdessen besteht der Zweck dieser Funktion darin, Feedback zu teilen, um Benutzern bei der Entscheidung zu helfen, ob eine Erweiterung für sie nützlich sein könnte.
@@ -3484,32 +3624,32 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Pos1 | Punkt1+Punkt3+Leertaste, smartbeetle:f4 |
 | Strg+Pos1 | Punkt1+Punkt2+Punkt3+Leertaste |
 | Alt+F4 | Punkt1+Punkt3+Punkt5+Punkt6+Leertaste |
-| Pfeil nac links | Punkt3+Leertaste, Pfeil nach links auf der linken Seite |
-| Strg+Umschalt+Pfeil nach links | Punkt2+Punkt8+Leertaste+F1 |
-| Strg+Pfeil nach links | Punkt2+Leertaste |
-| Umschalt+Alt+Pfeil nach links | Punkt2+Punkt7+F1 |
-| Alt+Pfeil nach links | Punkt2+Punkt7 |
-| Pfeil nach rechts | Punkt6+Leertaste, Pfeil rechts auf der linken Seite |
-| Strg+Umschalt+Pfeil nach rechts | Punkt5+Punkt8+Leertaste+F1 |
-| Strg+Pfeil nach rechts | Punkt5+Leertaste |
-| Umschalt+Alt+Pfeil nach rechts | Punkt5+Punkt7+F1 |
-| Alt+Pfeil nach rechts | Punkt5+Punkt7 |
-| Seite auf | Punkt1+Punkt2+Punkt6+Leertaste |
-| Strg+Seite auf | Punkt1+Punkt2+Punkt6+Punkt8+Leertaste |
-| Pfeil nach oben | Punkt1+Leertaste, Pfeil nach oben auf der linken Seite |
-| Strg+Umschalt+Pfeil nach oben | Punkt2+Punkt3+Punkt8+Leertaste+F1 |
-| Strg+Pfeil nach oben | Punkt2+Punkt3+Leertaste |
-| Umschalt+Alt+Pfeil nach oben | Punkt2+Punkt3+Punkt7+F1 |
-| Alt+Pfeil nach oben | Punkt2+Punkt3+Punkt7 |
-| Umschalt+Pfeil nach oben | Scroll unten auf der linken Seite + Leertaste |
-| Seite Ab | Punkt3+Punkt4+Punkt5+Leertaste |
-| Strg+Seite ab | Punkt3+Punkt4+Punkt5+Punkt8+Leertaste |
-| Pfeil nach unten | Punkt4+Leertaste, Pfeil ab auf der linken Seite |
-| Strg+Umschalt+Pfeil nach unten | Punkt5+Punkt6+Punkt8+Leertaste+F1 |
-| Strg+Pfeil nach unten | Punkt5+Punkt6+Leertaste |
-| Umschalt+Alt+Pfeil nach unten | Punkt5+Punkt6+Punkt7+F1 |
-| Alt+Pfeil nach unten | Punkt5+Punkt6+Punkt7 |
-| Umschalt+Pfeil nach unten | Scroll unten auf der rechten Seite + Leertaste |
+| Pfeiltaste nach links | Punkt3+Leertaste, Pfeil nach links auf der linken Seite |
+| Strg+Umschalt+Pfeiltaste nach links | Punkt2+Punkt8+Leertaste+F1 |
+| Strg+Pfeiltaste nach links | Punkt2+Leertaste |
+| Umschalt+Alt+Pfeiltaste nach links | Punkt2+Punkt7+F1 |
+| ``Alt+Pfeiltaste nach links`` | ``Punkt2+Punkt7+Leertaste`` |
+| Pfeiltaste nach rechts | Punkt6+Leertaste, Pfeil rechts auf der linken Seite |
+| Strg+Umschalt+Pfeiltaste nach rechts | Punkt5+Punkt8+Leertaste+F1 |
+| Strg+Pfeiltaste nach rechts | Punkt5+Leertaste |
+| Umschalt+Alt+Pfeiltaste nach rechts | Punkt5+Punkt7+F1 |
+| ``Alt+Pfeiltaste nach rechts`` | ``Punkt5+Punkt7+Leertaste`` |
+| Seite nach oben | Punkt1+Punkt2+Punkt6+Leertaste |
+| Strg+Seite nach oben | Punkt1+Punkt2+Punkt6+Punkt8+Leertaste |
+| Pfeiltaste nach oben | Punkt1+Leertaste, Pfeil nach oben auf der linken Seite |
+| Strg+Umschalt+Pfeiltaste nach oben | Punkt2+Punkt3+Punkt8+Leertaste+F1 |
+| Strg+Pfeiltaste nach oben | Punkt2+Punkt3+Leertaste |
+| Umschalt+Alt+Pfeiltaste nach oben | Punkt2+Punkt3+Punkt7+F1 |
+| ``Alt+Pfeiltaste nach oben`` | ``Punkt2+Punkt3+Punkt7+Leertaste`` |
+| Umschalt+Pfeiltaste nach oben | Scroll unten auf der linken Seite + Leertaste |
+| Seite nach unten | Punkt3+Punkt4+Punkt5+Leertaste |
+| Strg+Seite nach unten | Punkt3+Punkt4+Punkt5+Punkt8+Leertaste |
+| Pfeiltaste nach unten | Punkt4+Leertaste, Pfeil ab auf der linken Seite |
+| Strg+Umschalt+Pfeiltaste nach unten | Punkt5+Punkt6+Punkt8+Leertaste+F1 |
+| Strg+Pfeiltaste nach unten | Punkt5+Punkt6+Leertaste |
+| Umschalt+Alt+Pfeiltaste nach unten | Punkt5+Punkt6+Punkt7+F1 |
+| ``Alt+Pfeiltaste nach unten`` | ``Punkt5+Punkt6+Punkt7+Leertaste`` |
+| Umschalt+Pfeiltaste nach unten | Scroll unten auf der rechten Seite + Leertaste |
 | Escape-Taste | Punkt1+Punkt5+Leertaste, F4, brailleedge:f1 |
 | Entf | Punkt1+Punkt3+Punkt5+Leertaste, Punkt1+Punkt4+Punkt5+Leertaste |
 | F1 | Punkt1+Punkt2+Punkt5+Leertaste |
@@ -4235,9 +4375,14 @@ Im geschützten Modus sind folgende Dinge deaktiviert:
 Bei installierten NVDA-Versionen werden die Konfiguration (einschließlich der NVDA-Erweiterungen) in ``%APPDATA%\NVDA`` gespeichert.
 Um zu verhindern, dass NVDA-Benutzer die Konfiguration oder NVDA-Erweiterungen direkt anpassen können, muss der Benutzerzugriff auf diesen Ordner ebenfalls eingeschränkt werden.
 
+Der Geschützte Modus funktioniert nicht in portablen NVDA-Versionen.
+Diese Einschränkung gilt auch für die temporäre NVDA-Version, die beim Starten des Installationsprogramms ausgeführt wird.
+In sicheren Umgebungen stellt die Möglichkeit für einen Benutzer, eine portable ausführbare Datei auszuführen, unabhängig vom Sicherheitsmodus das gleiche Sicherheitsrisiko dar.
+Es wird erwartet, dass System-Administratoren die Ausführung nicht autorisierter Software auf ihren Systemen einschränken, einschließlich portabler NVDA-Versionen.
+
 NVDA-Benutzer sind oft darauf angewiesen, ihr NVDA-Profil nach ihren Bedürfnissen zu konfigurieren.
 Dies kann die Installation und Konfiguration von benutzerdefinierten NVDA-Erweiterungen beinhalten, die unabhängig von NVDA geprüft werden sollten.
-Der geschützte Modus friert quasi Änderungen an der NVDA-Konfiguration ein. Stellen Sie daher sicher, dass NVDA richtig konfiguriert ist, bevor Sie diesen Modus erzwingen.
+Der Geschützte Modus friert quasi Änderungen an der NVDA-Konfiguration ein. Stellen Sie daher sicher, dass NVDA richtig konfiguriert ist, bevor Sie diesen Modus erzwingen.
 
 ++ Geschützte Sicherheitsmeldungen ++[SecureScreens]
 NVDA läuft im [geschützten Modus #SecureMode], wenn es auf sicheren Bildschirmen ausgeführt wird, es sei denn, der [System-Parameter #SystemWideParameters] ``serviceDebug`` ist aktiviert.
