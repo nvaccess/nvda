@@ -72,6 +72,7 @@ if TYPE_CHECKING:
 
 FALLBACK_TABLE = config.conf.getConfigValidation(("braille", "translationTable")).default
 """Table to use if the output table configuration is invalid."""
+
 roleLabels: typing.Dict[controlTypes.Role, str] = {
 	# Translators: Displayed in braille for an object which is a
 	# window.

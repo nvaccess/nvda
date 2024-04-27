@@ -27,7 +27,7 @@ class TestResolvingInternal(unittest.TestCase):
 			)
 
 	def test_internalTableIncludedInternal(self):
-		"""Test the case where an internal table."""
+		"""Test the case for resolving a particular internal table."""
 		base = brailleTables.getTable("en-us-comp8-ext.utb")
 		basePath = os.path.join(brailleTables.TABLES_DIR, base.fileName)
 		fileNameToTest = "latinLetterDef8Dots.uti"
@@ -87,8 +87,8 @@ class TestResolvingCustom(unittest.TestCase):
 
 	def test_internalTableIncludedCustom(self):
 		"""Test the case where an internal table includes another table
-		tat is bundled as part of a new or replaced table.
-		In this case, eventhough the include has a replacement in an add-on or the scratchpad,
+		that is bundled as part of a new or replaced table.
+		In this case, even though the include has a replacement in an add-on or the scratchpad,
 		the built-in table should use the built-in include.
 		"""
 		base = brailleTables.getTable("nl-comp8.utb")

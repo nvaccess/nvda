@@ -20,10 +20,13 @@ from logHandler import log
 
 TABLES_DIR = os.path.join(globalVars.appDir, "louis", "tables")
 """The directory in which liblouis braille tables are located."""
+
 TABLE_SOURCE_BUILTIN = "builtin"
 """The name of the builtin table source"""
+
 TABLE_SOURCE_SCRATCHPAD = "scratchpad"
 """The name of the scratchpad table source"""
+
 _tablesDirs = collections.ChainMap({
 	TABLE_SOURCE_BUILTIN: TABLES_DIR
 })
@@ -35,17 +38,22 @@ class BrailleTable(NamedTuple):
 	"""
 	fileName: str
 	"""The file name of the table."""
+
 	displayName: str
 	"""The name of the table as displayed to the user. This should be translatable."""
+
 	contracted: bool = False
 	"""True if the table is contracted, False if uncontracted."""
+
 	output: bool = True
 	"""True if this table can be used for output, False if not."""
+
 	input: bool = True
 	"""True if this table can be used for input, False if not."""
+
 	source: str = TABLE_SOURCE_BUILTIN
 	"""An identifier describing the source of the table.
-	This defaults to 'builtin', but is set to the name of the add-on or "scratchpad, depending on its source.
+	This defaults to "builtin", but is set to the name of the add-on or "scratchpad", depending on its source.
 	"""
 
 
@@ -713,7 +721,7 @@ def initialize():
 	# Load the custom tables from the scratchpad last so it takes precedence over add-ons
 	if (
 		not globalVars.appArgs.secure
-		and config.conf['development']['enableScratchpadDir']
+		and config.conf["development"]["enableScratchpadDir"]
 	):
 		scratchpad = config.getScratchpadDir()
 		directory = os.path.join(scratchpad, "brailleTables")

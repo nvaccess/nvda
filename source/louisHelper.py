@@ -46,7 +46,6 @@ def _resolveTableInner(tables: list[str], base: str | None = None) -> Generator[
 			except LookupError:
 				if _isDebug():
 					log.debug(f"Table {table!r} not registered, falling back to built-in table lookup")
-				pass
 		else:
 			path = os.path.dirname(base)
 		if path and path not in directoriesToSearch:
