@@ -833,7 +833,7 @@ As teclas seguintes, por si mesmas, saltam para o próximo elemento disponível.
 -
 Para se mover para o início ou fim de elementos contentores como listas ou tabelas, que contêm outros elementos:
 || Nome | Comando de Teclado | Descrição |
-| Mover para o início do contentor | shift+vírgula | Move para o	 início do contentor (lista, tabela, etc.) que contém o cursor |
+| Mover para o início do contentor | shift+vírgula | Move para o início do contentor (lista, tabela, etc.) que contém o cursor |
 | Mover para depois do fim do contentor | Vírgula | Move para depois do fim do contentor (lista, tabela, etc.) que contém o cursor |
 %kc:endInclude
 
@@ -2494,7 +2494,7 @@ Existem as seguintes opções:
   Quando a fonte da "descrição" é aria-description, a descrição é anunciada.
   Isto é útil para anotações na web.
   Nota:
-		- Existem muitas fontes de "accDescription", e várias têm uma semântica mista ou não fiável;
+  - Existem muitas fontes de "accDescription", e várias têm uma semântica mista ou não fiável;
     Historicamente AT não tem sido capaz de diferenciar fontes de "descrição" tipicamente não era falada devido à semântica mista.
   - Esta opção está em desenvolvimento muito precoce, e depende de características dos navegadores  ainda não amplamente disponíveis;
   - Espera-se que funcione com o Chromium 92.0.4479.0+
@@ -4223,6 +4223,7 @@ O modo de segurança desactiva:
 - Guardar configuração e outras definições no disco
 - Guardar o mapa de comandos no disco
 - [Perfil de Configuração #ConfigurationProfiles] características tais como criação, eliminação, renomear perfis e.t.c.
+- Carregar pastas específicas de configurações usando [a opção ``-c`` de linha de comando #CommandLineOptions]
 - Actualização de NVDA e criação de cópias portáteis
 - A [loja de extras #AddonsManager]
 - A [consola Python #PythonConsole]
@@ -4284,9 +4285,9 @@ Seguidamente, apresentam-se as opções para a linha de comando para o NVDA
 | "-h" | "--help" | Mostra a ajuda da linha de comandos e sai |
 | "-q" | "--quit" | Sai da cópia em execução do NVDA |
 | "-k" | "--check-running" | Anuncia se o NVDA está em execução via código de saída; 0 se em execução, 1 se não em execução |
-| "-f NomeDoFicheiroDeRegisto" | "--log-file=NomeDoFicheiroDeRegisto" | Especifica em que ficheiro escrever as informações de registo |
-| "-l LOGLEVEL" | "--log-level=LOGLEVEL" | O nível mais baixo de mensagens registadas (depuração 10, input/output 12, aviso de depuração 15, info 20, desactivado 100) |
-| "-c CAMINHO" | "--config-path=CAMINHO" | O caminho onde estão as configurações do NVDA |
+| "-f NomeDoFicheiroDeRegisto" | "--log-file=NomeDoFicheiroDeRegisto" | Especifica em que ficheiro escrever as informações de registo. O registo é sempre desativado se o modo seguro estiver activo. |
+| "-l LOGLEVEL" | "--log-level=LOGLEVEL" | O nível mais baixo de mensagens registadas (depuração 10, input/output 12, aviso de depuração 15, info 20, desactivado 100). O registo é sempre desativado se o modo seguro estiver activo. |
+| "-c CAMINHO" | "--config-path=CAMINHO" | O caminho onde estão as configurações do NVDA. O caminho padrão é sempre utilizado se o modo seguro estiver activo. |
 | None | "--lang=LANGUAGE" | Sobrepõe-se ao idioma  configurado no NVDA. "Windows" para o padrão do utilizador actual, "pt_PT" para português, etc. |
 | "-m" | "--minimal" | Sem sons, sem interface, sem mensagem de início, etc |
 | "-s" | "--secure" | Inicia o NVDA em [modo seguro #SecureMode] |

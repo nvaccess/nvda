@@ -62,7 +62,7 @@ Pour les utilisateurs possédant un terminal braille, NVDA peut afficher ses inf
 NVDA utilise le traducteur braille à source ouverte [LibLouis https://liblouis.io/] pour générer des séquences braille à partir de texte.
 La saisie braille en intégral ou abrégé via un clavier braille est également supportée.
 De plus, NVDA détectera automatiquement beaucoup de terminaux braille par défaut.
-Reportez-vous à la section [Terminaux braille pris en charge #SupportedbrailleDisplays] pour les informations concernant les terminaux braille.
+Reportez-vous à la section [Terminaux braille pris en charge #SupportedBrailleDisplays] pour les informations concernant les terminaux braille.
 
 NVDA propose de nombreux codes braille couvrant un grand ensemble de langues. Dans bien des cas, le braille intégral et abrégé sont disponibles. Pour les utilisateurs francophones, le braille français unifié est disponible en intégral et abrégé.
 
@@ -586,7 +586,7 @@ NVDA fournit les commandes clavier suivantes relatives au curseur système :
 | Lire texte sélectionné | NVDA+Maj+flèche haut | NVDA+Maj+s | Lit tout le texte actuellement sélectionné |
 | Annoncer la mise en forme du texte | NVDA+f | NVDA+f | annonce la mise en forme du texte à la position actuelle du curseur. Un double appui présente l'information en mode navigation |
 | Annoncer la destination du lien | ``NVDA+k`` | ``NVDA+k`` | Un appui annonce l'URL de destination du lien à la position courante du curseur ou du focus. Deux appuis l'affichent dans une fenêtre pour une revue plus attentive |
-| Annoncer la position du curseur | NVDA+pavnumEffacement | NVDA+effacement | Aucun | Annonce des informations sur l'emplacement du texte ou de l'objet à la position du curseur système. Par exemple, cela peut inclure le pourcentage dans le document, la distance depuis le bord de la page ou la position exacte sur l'écran. Appuyer deux fois peut fournir plus de détails. |
+| Annoncer la position du curseur | NVDA+pavnumEffacement | NVDA+effacement | Annonce des informations sur l'emplacement du texte ou de l'objet à la position du curseur système. Par exemple, cela peut inclure le pourcentage dans le document, la distance depuis le bord de la page ou la position exacte sur l'écran. Appuyer deux fois peut fournir plus de détails. |
 | Phrase suivante | alt+flècheBas | alt+flècheBas | Amène le curseur à la phrase suivante et la lit. (Supporté seulement sous Microsoft Word et Outlook) |
 | Phrase précédente | alt+flècheHaut | alt+flècheHaut | Amène le curseur à la phrase précédente et la lit. (Supporté seulement sous Microsoft Word et Outlook) |
 
@@ -703,7 +703,7 @@ La disposition se présente ainsi :
 | Mot précédent | Mot courant | Mot suivant |
 | Caractère précédent | Caractère courant | Caractère suivant |
 
-++ Modes de Revue ++[ReviewMode]
+++ Modes de Revue ++[ReviewModes]
 Les commandes de [revue #ReviewingText] de NVDA permettent de lire le contenu de l'objet courant du navigateur, le document courant ou l'écran, selon le mode de revue sélectionné.
 
 Les commandes suivantes basculent entre les modes de revue :
@@ -1229,7 +1229,7 @@ La liste d'éléments peut lister les titres, les liens, annotations (incluant i
 %kc:beginInclude
 Pour annoncer tout commentaire à la position actuelle du curseur, pressez NVDA+alt+c.
 %kc:endInclude
- tous les commentaires pour le document ainsi que les autres demandes de modification peuvent aussi être listés dans la liste d'éléments de NVDA en choisissant le type Annotations.
+Tous les commentaires pour le document ainsi que les autres demandes de modification peuvent aussi être listés dans la liste d'éléments de NVDA en choisissant le type Annotations.
 
 ++ Microsoft Excel ++[MicrosoftExcel]
 
@@ -1380,7 +1380,7 @@ Pour afficher, éditer ou effacer une note.
 Quand vous êtes dans le tableau des livres ajoutés :
 || Nom | Touche | Description |
 | Entrer | entrer | Ouvre le livre sélectionné. |
-| Menu contextuel | applications | Ouvre le menu contextuel pour le livre sélectionné. |%kc:endInclude
+| Menu contextuel | applications | Ouvre le menu contextuel pour le livre sélectionné. |
 %kc:endInclude
 
 ++ Console Windows ++[WinConsole]
@@ -1683,7 +1683,7 @@ La table choisie sera utilisée pour traduire en texte le braille saisi à l'aid
 Vous pouvez vous déplacer de table en table en utilisant les flèches.
 
 Notez que cette option n'est utile que si votre afficheur braille dispose d'un clavier Perkins et que le pilote de celui-ci supporte cette fonctionnalité.
-Si la saisie n'est pas supportée par un afficheur qui dispose d'un clavier Perkins, cela sera noté dans la section [Afficheurs braille Supportés #SupportedbrailleDisplays].
+Si la saisie n'est pas supportée par un afficheur qui dispose d'un clavier Perkins, cela sera noté dans la section [Afficheurs braille Supportés #SupportedBrailleDisplays].
 
 ==== Afficher le mot sous le curseur en braille informatique ====[BrailleSettingsExpandToComputerBraille]
 Cette option permet d'afficher le mot sous le curseur en intégral.
@@ -1821,7 +1821,7 @@ La désactivation de cette option permet d'entendre la parole tout en lisant sim
 
 Ce réglage détermine si l'indicateur de sélection (points 7 et 8) s'affiche sur l'afficheur braille.
 L'option est activée par défaut, donc l'indicateur de sélection est affiché.
- L'indicateur de sélection peut être une distraction lors de la lecture.
+L'indicateur de sélection peut être une distraction lors de la lecture.
 La désactivation de cette option peut améliorer la lisibilité.
 
 Pour basculer l'affichage de la sélection de n'importe où, veuillez attribuer un geste personnalisé à l'aide de la [boîte de dialogue Gestes de commandes #InputGestures].
@@ -1845,7 +1845,7 @@ Quand cette fonctionnalité est activée et que vous connectez un terminal brail
 
 Pas de braille signifie que vous n'utilisez pas le braille.
 
-Reportez-vous à la section [Terminaux braille pris en charge #SupportedbrailleDisplays] pour les informations concernant les terminaux braille et ceux qui supportent la détection automatique en arrière-plan.
+Reportez-vous à la section [Terminaux braille pris en charge #SupportedBrailleDisplays] pour les informations concernant les terminaux braille et ceux qui supportent la détection automatique en arrière-plan.
 
 ==== Afficheurs à détecter automatiquement ====[SelectBrailleDisplayAutoDetect]
 Lorsque l'afficheur braille est réglé sur "Automatique", les cases à cocher de ce contrôle de liste vous permettent d'activer et de désactiver les pilotes d'affichage qui seront impliqués dans le processus de détection automatique.
@@ -1867,7 +1867,7 @@ Les options communes sont "automatique" (qui spécifie à NVDA d'employer la pro
 
 Cette option ne sera pas disponible si votre afficheur braille supporte seulement la détection automatique du port.
 
-Vous devrez consulter la documentation de votre afficheur braille dans la section [Afficheurs braille supportés #SupportedbrailleDisplays] pour plus de détails sur les types de communications supportés et les ports disponibles.
+Vous devrez consulter la documentation de votre afficheur braille dans la section [Afficheurs braille supportés #SupportedBrailleDisplays] pour plus de détails sur les types de communications supportés et les ports disponibles.
 
 Note : Si vous connectez plusieurs Afficheurs Braille utilisant le même pilote en même temps à votre machine  (Ex. connexion de deux afficheurs Seika),
 il est actuellement impossible de dire à NVDA quel afficheur utiliser.
@@ -2127,7 +2127,7 @@ Si l'annonce du rang de l'objet dans une liste est activée, cette option autori
 Quand l'option est activée, NVDA annonce le rang pour un plus grand nombre de contrôles tels que les menus et les barres d'outils. Cependant, cette information peut parfois être inexacte.
 
 ==== Annonce de la description des objets ====[ObjectPresentationReportDescriptions]
- Décochez cette case si vous pensez que vous n'avez pas besoin d'entendre leur description annoncée avec les objets.
+Décochez cette case si vous pensez que vous n'avez pas besoin d'entendre leur description annoncée avec les objets.
 
 %kc:setting
 ==== Suivi des barres de progression ====[ObjectPresentationProgressBarOutput]
@@ -2834,7 +2834,7 @@ Pour accéder à l'Add-on Store de n'importe où, attribuez un geste personnalis
 
 ++ Parcourir les extensions ++[AddonStoreBrowsing]
 Lorsqu'il est ouvert, l'Add-on Store affiche une liste d'extensions.
- Si vous n'avez pas encore installé d'extension, l'Add-on Store s'ouvrira sur une liste d'extensions disponibles à installer.
+Si vous n'avez pas encore installé d'extension, l'Add-on Store s'ouvrira sur une liste d'extensions disponibles à installer.
 Si vous avez installé des extensions, la liste affichera les extensions actuellement installées.
 
 Sélectionner une extension, en vous déplaçant dessus avec les touches fléchées haut et bas, affichera les détails de l'extension.
@@ -2855,7 +2855,7 @@ NVDA peut également désactiver certaines extensions, si elles s'avèrent incom
 Les extensions peuvent également être désactivées si vous n'en avez tout simplement pas besoin pendant une période prolongée, mais que vous ne souhaitez pas les désinstaller car vous pensez en avoir besoin à nouveau à l'avenir.
 
 Les listes d'extensions installées et incompatibles peuvent être filtrées par leur état activé ou désactivé.
- La valeur par défaut affiche les extensions activées et désactivées.
+La valeur par défaut affiche les extensions activées et désactivées.
 
 +++ Inclure les extensions incompatibles +++[AddonStoreFilterIncompatible]
 Les extensions disponibles et pouvant être mises à jour peuvent être filtrées pour inclure les [extensions incompatibles #incompatibleAddonsManager] qui sont disponibles pour l'installation.
@@ -3107,7 +3107,7 @@ Une fois les langues ajoutées, redémarrez NVDA.
 Veuillez consulter [Langues et voix prises en charge https://support.microsoft.com/fr-fr/windows/annexe-a-langues-et-voix-prises-en-charge-4486e345-7730-53da-fcfe-55cc64300f01] pour une liste de voix disponibles.
 
 
-+ Terminaux Braille Pris en Charge +[SupportedbrailleDisplays]
++ Terminaux Braille Pris en Charge +[SupportedBrailleDisplays]
 Cette section contient des informations sur les terminaux braille pris en charge par NVDA.
 
 ++ Terminaux supportant la détection automatique en arrière-plan ++[AutomaticDetection]
@@ -3582,7 +3582,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Maj+flècheBas | Espace+RJ bas, RetourArrière+RJ bas |
 | maj+flèchegauche | Espace+RJ gauche, RetourArrière+RJ gauche |
 | maj+flècheDroite | Espace+RJ droit, RetourArrière+RJ droit |
-| touche entrer | RJ centre, pointt8
+| touche entrer | RJ centre, point8
 | touche échap | Espace+RJ centre |
 | touche windows | RetourArrière+RJ centre |
 | touche espace | Espace, RetourArrière |
@@ -4222,7 +4222,8 @@ Le mode sécurisé désactive :
 
 - La sauvegarde de la configuration et autres paramètres sur disque
 - La sauvegarde des gestes de commande sur disque
-- Les fonctionnalités de [Profil de Configuration #ConfigurationProfiles] Telles que créer, supprimer, renommer les profils etc.
+- Les fonctionnalités de [Profil de Configuration #ConfigurationProfiles] telles que créer, supprimer, renommer les profils etc.
+- Le chargement de la configuration depuis un dossiers personnalisés à l'aide de [l'option de ligne de commande ``-c`` #CommandLineOptions]
 - Mettre à jour NVDA et créer des copies portables
 - [L'Add-on Store #AddonsManager]
 - La [console Python NVDA #PythonConsole]
@@ -4284,9 +4285,9 @@ Voici les options de ligne de commande de NVDA :
 | ``-h`` | ``--help`` | affiche l'aide de la ligne de commande et s'arrête |
 | ``-q`` | ``--quit`` | Quitte la copie en cours d'exécution de NVDA |
 | ``-k`` | ``--check-running`` | Indique si NVDA est en cours d'exécution via le code retour; 0 si oui, 1 si non |
-| ``-f NOMDUFICHIERJOURNAL`` | ``--log-file=NOMDUFICHIERJOURNAL`` | Le fichier où les messages du journal doivent être écrits |
-| ``-l NIVEAUDEJOURNALISATION`` | ``--log-level=NIVEAUDEJOURNALISATION`` | Le niveau minimal de messages journalisés (débogage 10, entrées/sorties 12, avertissements de débogage 15, info 20, désactivé 100) |
-| ``-c CHEMINDECONFIG`` | ``--config-path=CHEMINDECONFIG`` | Le chemin vers lequel tous les paramètres de NVDA sont stockés |
+| ``-f NOMDUFICHIERJOURNAL`` | ``--log-file=NOMDUFICHIERJOURNAL`` | Le fichier où les messages du journal doivent être écrits. La journalisation est toujours désactivée si le mode sécurisé est activé. |
+| ``-l NIVEAUDEJOURNALISATION`` | ``--log-level=NIVEAUDEJOURNALISATION`` | Le niveau minimal de messages journalisés (débogage 10, entrées/sorties 12, avertissements de débogage 15, info 20, désactivé 100). La journalisation est toujours désactivée si le mode sécurisé est activé. |
+| ``-c CHEMINDECONFIG`` | ``--config-path=CHEMINDECONFIG`` | Le chemin vers lequel tous les paramètres de NVDA sont stockés. La valeur par défaut est forcée si le mode sécurisé est activé. |
 | Aucun | ``--lang=LANGUAGE`` | Remplacer la langue NVDA configurée. Choisissez "Windows" pour la langue en cours par défaut, "en" pour Anglais, etc. |
 | ``-m`` | ``--minimal`` | Pas de sons, pas d'interface, pas de message de démarrage etc. |
 | ``-s`` | ``--secure`` | Démarre NVDA en [Mode Sécurisé #SecureMode] |
@@ -4302,7 +4303,7 @@ Voici les options de ligne de commande de NVDA :
 | Aucune | ``--create-portable-silent`` | Crée une copie portable de NVDA (sans démarrer la copie nouvellement créée). ``--portable-path`` doit être spécifié |
 | Aucune | ``--portable-path=PORTABLEPATH`` | L'emplacement où la copie portable sera créée |
 
-++ Paramètres Système++[SystemWideParameters]
+++ Paramètres Système ++[SystemWideParameters]
 NVDA permet de définir certaines valeurs dans la base de registre du système ce qui modifie le comportement général de NVDA.
 Ces valeurs sont stockées dans la base de registres sous l'une des clés suivantes :
 - Systèmes 32-bits : ``HKEY_LOCAL_MACHINE\SOFTWARE\nvda``

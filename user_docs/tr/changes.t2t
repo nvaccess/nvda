@@ -3,6 +3,336 @@ NVDA'daki Yenilikler
 
 %!includeconf: ../changes.t2tconf
 
+= 2024.1 =
+
+Yeni "isteğe bağlı" konuşma modu eklendi.
+Konuşma modu isteğe bağlı olarak ayarlandığında, NVDA imlecin hareket ettirilmesi gibi durumlarda olduğu gibi otomatik olarak konuşmaz, sadece pencere başlığının seslendirilmesi gibi işlevi özellikle bir şeyin seslendirilmesi olan komutlar uygulandığında konuşur.
+NVDA ayarlarının konuşma kategorisinde, konuşma modları arasında geçiş yapma komutundan (``NVDA+s``)istenmeyen konuşma modları kaldırılabiliyor.
+
+NVDA tarama kipinde, Mozilla Firefox için ``NVDA+şift+f10`` tuşlarıyla açılıp kapatılabilen yerel seçim kipi eklendi.
+Kip açıkken tarama kipinde metin seçildiğinde Firefox'un kendisinde de metin seçilecek.
+``Kontrol+c`` ile kopyalandığında komut Firefox'a gönderilecek. Bu sayede NVDA'nın düz metin temsili yerine zengin metin kopyalanacak.
+
+Eklenti mağazasında birden fazla eklenti seçilerek eklenti kurulumu ve etkinleştirilmesi gibi eylemler toplu olarak yapılabiliyor
+Seçilen eklenti için inceleme sayfasını açmaya yarayan yeni bir eylem eklendi.
+
+"Sentezleyici seçin" iletişim kutusundan ses çıkış cihazı ve ses zayıflaması modu seçim kutuları kaldırıldı.
+Seçim kutuları, ``NVDA+kontrol+u`` tuşuna basıldığında açılan ses ayarları bölümünde bulunabilir.
+
+eSpeak-NG, LibLouis braille translator ve Unicode CLDR güncellendi.
+Yeni Tayca, Filipin dili ve Rumence braille tabloları eklendi.
+
+Özellikle eklenti mağazası, braille, Libre Office, Microsoft Office ve ses için birçok hata düzeltmesi yapıldı.
+
+== Önemli notlar == 
+- Bu sürüm mevcut eklentilerle uyumluluğu bozar
+- Windows 7 ve Windows 8 artık desteklenmiyor.
+Desteklenen asgari Windows sürümü Windows 8.1'dir.
+-
+
+== Yeni özellikler ==
+- Eklenti mağazası:
+  Eklenti mağazasında birden fazla eklenti seçilerek eklenti kurulumu ve etkinleştirilmesi gibi eylemler toplu olarak yapılabiliyor. (#15350, #15623, @CyrilleB79)
+  - Seçili eklenti hakkında geribildirimleri görmeyi veya geribildirim göndermeyi sağlayan bir web sayfasını açan eylem eklendi. (#15576, 
+@nvdaes)
+  -
+- Bluetooth düşük enerjili HID braille ekranlar için destek eklendi. (#15470)
+- NVDA tarama kipinde, Mozilla Firefox için ``NVDA+şift+f10`` tuşlarıyla açılıp kapatılabilen yerel seçim kipi eklendi.
+Kip açıkken tarama kipinde metin seçildiğinde Firefox'un kendisinde de metin seçilecek.
+``Kontrol+c`` ile kopyalandığında komut Firefox'a gönderilecek. Bu sayede NVDA'nın düz metin temsili yerine zengin metin kopyalanacak.
+Kopyalama işlemi aslında Firefox tarafından gerçekleştirildiği için, bu mod kullanılırken NVDA "panoya kopyalandı" seslendirmesi yapmayacak. (#15830)
+- NVDA'nın tarama kipi etkinken Microsoft Word'de metin kopyalandığında, metin biçimlendirmesi de kopyalamaya dahil edilecek.
+Microsoft Word / Outlook uygulamalarında tarama kipi etkinken ``kontrol+c`` tuşlarına basıldığında NVDA "panoya kopyalandı" seslendirmesi yapmayacak. Bunun nedeni kopyalama işleminin NVDA tarafından değil, uygulama tarafından gerçekleştirilmesidir. (#16129)
+- Yeni "isteğe bağlı" konuşma modu eklendi.
+Konuşma modu isteğe bağlı olarak ayarlandığında, NVDA imlecin hareket ettirilmesi gibi durumlarda olduğu gibi otomatik olarak konuşmaz, sadece pencere başlığının seslendirilmesi gibi işlevi özellikle bir şeyin seslendirilmesi olan komutlar uygulandığında konuşur. (#481, @CyrilleB79)
+- NVDA ayarlarının konuşma kategorisinde, konuşma modları arasında geçiş yapma komutundan (``NVDA+s``)istenmeyen konuşma modları kaldırılabiliyor. (#15806, @lukaszgo1)
+  - Bipsiz konuşma modları eklentisini kullanıyorsanız eklentiyi kaldırıp ayarlardan "bipleme" ve "isteğe bağlı" modlarını devre dışı bırakabilirsiniz.
+  -
+-
+
+== Değişiklikler ==
+- NVDA artık Windows 7 ve Windows 8'i desteklemiyor.
+Desteklenen asgari Windows sürümü Windows 8.1'dir. (#15544)
+- Bileşen güncellemeleri:
+  - LibLouis braille translator [3.28.0 https://github.com/liblouis/liblouis/releases/tag/v3.28.0] sürümüne güncellendi. (#15435, #15876, @codeofdusk)
+    - Yeni Tayca, Rumence ve Filipin dili braille tabloları eklendi.
+    -
+  - eSpeak NG 1.52-dev commit ``530bf0abf`` sürümüne güncellendi. (#15036)
+  - CLDR emoji ve sembol tanımları 44.0 sürümüne güncellendi. (#15712, @OzancanKaratas)
+  - Java Access Bridge 17.0.9+8Zulu (17.46.19) sürümüne güncellendi. (#15744)
+  -
+- Tuş komutları:
+  - Şu komutlar, 2 ve 3 kez basıldığında seslendirilen bilgiyi harf harf ve karakter tanımlarıyla okumayı destekliyor: Seçimi okuma, panodaki metni okuma ve odaklanılan nesneyi okuma. (#15449, @CyrilleB79)
+  - Ekran perdesini açıp kapatma komutuna varsayılan kısayol atandı: ``NVDA+kontrol+çıkış``. (#10560, @CyrilleB79)
+  - Dört kez basıldığında, seçimi okuma komutu seçimi görüntülenebilen bir mesajda görüntülüyor. (#15858, @Emil-18)
+  -
+- Microsoft Office:
+  - Excel hücrelerinde biçimlendirme bilgisi istendiğinde, sınır çizgileri ve arka plan sadece bu tür biçimlendirme olduğunda seslendirilecek. (#15560, @CyrilleB79)
+  - NVDA, yeniden Microsoft Office 365'in yeni sürümlerinin menülerindekiler gibi etiketsiz grupları seslendirmeyecek. (#15638)
+  -
+- "Sentezleyici seçin" iletişim kutusundan ses çıkış cihazı ve ses zayıflaması modu seçim kutuları kaldırıldı.
+Seçim kutuları, ``NVDA+kontrol+u`` tuşuna basıldığında açılan ses ayarları bölümünde bulunabilir. (#15512, @codeofdusk)
+- NVDA fare ayarları kategorisindeki "Fare altındaki nesne tiplerini seslendir" seçeneğinin adı "Fare imlecinin üzerine geldiği nesneyi seslendir" olarak değişti.
+Bu seçenek işaretlendiğinde, NVDA fare imlecinin altında bulunan nesneyle ilgili ek bilgiler de sunuyor, örneğin öğenin durumu (işaretli, basılı) veya bir tablodaki hücrenin koordinatları gibi. (#15420, @LeonarddeR)
+- Yardım menüsüne NV Access'in "yardım alın" sayfası ve mağazası için öğeler eklendi. (#14631)
+- NVDA'nın [Poedit https://poedit.net] desteği Poedit'in 3. ve üzeri sürümleri için güncellendi.
+Poedit'te çevirmen notlarını ve yorumlarını okuma gibi kısayol tuşlarını içeren geliştirilmiş Poedit erişilebilirliğinden yararlanmak isteyen Poedit 1 kullanıcılarının, Poedit'i 3. sürümüne güncellemeleri önerilir. (#15313, #7303, @LeonarddeR)
+- Braille görüntüleyici ve konuşma görüntüleyici güvenli kipte devre dışı bırakıldı. (#15680)
+- Nesne dolaşımı sırasında devre dışı (geçersiz) olan nesneler yok sayılmayacak. (#15477, @CyrilleB79)
+- Komutlar rehberine içindekiler bölümü eklendi. (#16106)
+-
+
+== hata düzeltmeleri ==
+- Eklenti mağazası:
+  - Herhangi bir eklentiye odaklanıldığında eklentinin durumu değişirse, örn. "indiriliyor" durumundan "indirildi" durumuna geçerse, güncellenen öğe doğru şekilde seslendiriliyor. (#15859, @LeonarddeR)
+  - Eklenti kurulumu tamamlandığında NVDA'yı yeniden başlatma iletişim kutusu, eklenti kurulum iletişim kutularından sonra görüntüleniyor. (#15613, @lukaszgo1)
+  - Uyumsuz bir eklenti yeniden kurulduğunda kendiliğinden devre dışı bırakılmıyor. (#15584, @lukaszgo1)
+  - Devre dışı bırakılmış olan ve uyumsuz olan eklentiler güncellenebiliyor. (#15568, #15029)
+  - Bir eklenti doğru şekilde indirilemediğinde, NVDA bu durumu bildiriyor. (#15796)
+  - Eklenti mağazası açılıp kapatıldığında NVDA bazen yeniden başlayamıyordu. Bu sorun düzeltildi. (#16019, @lukaszgo1)
+  -
+- Ses:
+  - Birden çok ses peş peşe çalındığında NVDA kısa bir süre boyunca donmuyor. (#15311, #15757, @jcsteh)
+  - Ses çıkış cihazı varsayılanın dışında bir cihaz olarak ayarlanırsa, cihaz kullanılamaz duruma gelip sonrasında kullanılabilir duruma geldiğinde, NVDA varsayılan cihazı kullanmak yerine ayarlanan cihaza geri dönecek. (#15759, @jcsteh)
+  - Çıkış cihazının konfigürasyonu değiştiğinde veya başka bir uygulama cihazın özel kullanımını bıraktığında NVDA ses çalmaya devam edecek. (#15758, #15775, @jcsteh)
+  -
+- Braille:
+  - Çok satırlı braille ekranlar BRLTTY sürücüsünü çökertmeyecek ve bir sürekli ekran gibi işlem görecek. (#15386)
+  - Yararlı metin içeren daha fazla nesne algılanıyor ve metin içeriği braille olarak gösteriliyor. (#15605)
+  - Kısaltmalı braille girdisi yeniden doğru şekilde çalışıyor. (#15773, @aaclause)
+  - Nesne sunucusunun tablo hücrelerinde hareket ettirildiği daha fazla durumda braille güncellenecek. (#15755, @Emil-18)
+  - Üzerine odaklanılan nesneyi, nesne sunucusunun üzerinde bulunduğu konumu ve seçimi seslendirme komutlarının çıktısı braille olarak gösteriliyor. (#15844, @Emil-18)
+  - Albatross braille sürücüsü, Esp32 mikrodenetleyiciyi Albatross braille ekran olarak görmüyor. (#15671)
+  -
+- LibreOffice:
+  - ``kontrol+geri tuşu`` kısayolu kullanılarak silinen sözcükler, sözcükten sonra boşluk ve sekme gibi boşluklar geldiğinde de seslendiriliyor. (#15436, @michaelweghorn)
+  - ``NVDA+son`` kısayolu kullanılarak durum çubuğunun seslendirilmesi LibreOffice 24.2 ve üzeri sürümlerindeki iletişim kutularında da yapılabiliyor. (#15591, @michaelweghorn)
+  - LibreOffice 24.2 ve üzeri sürümlerinde tüm beklenen metin özellikleri destekleniyor.
+  Writer'da bir satır okunurken yazım hataları seslendirilebiliyor. (#15648, @michaelweghorn)
+  - Başlık seviyeleri LibreOffice 24.2 ve üzeri sürümlerinde de seslendiriliyor. (#15881, @michaelweghorn)
+  -
+- Microsoft Office:
+  - Excel, UIA devre dışı olarak kullanılırken ``Kontrol+y``, ``Kontrol+z`` veya ``alt+geri tuşu`` tuşlarına basıldığında braille güncelleniyor ve üzerinde bulunulan hücrenin içeriği seslendiriliyor. (#15547)
+  - Word, UIA devre dışı olarak kullanılırken ``kontrol+v``, ``kontrol+x``, ``kontrol+y``, ``kontrol+z``, ``alt+geri tuşu``, ``geri tuşu`` veya ``kontrol+geri tuşu`` tuşlarına basıldığında braille güncelleniyor.
+  UIA etkinleştirildiğinde metin yazarken, braille hareketi inceleme imlecini takip ederken ve inceleme imleci düzenleme imlecini takip ederken de braille güncelleniyor. (#3276)
+  - Word'de Word'ün yerel tablo dolaşımı komutları ``alt+baş``, ``alt+son``, ``alt+önceki sayfa`` ve ``alt+sonraki sayfa`` kullanıldığında odaklanılan hücre doğru bir şekilde seslendirilecek. (#15805, @CyrilleB79)
+  -
+- Nesne kısayollarının seslendirilmesi iyileştirildi. (#10807, #15816, @CyrilleB79)
+- SAPI4 sentezleyicisi konuşmaya gömülen ses seviyesi, hız ve ses perdesi değişikliklerini doğru şekilde destekliyor. (#15271, @LeonarddeR)
+- Java Access Bridge kullanan uygulamalarda çoklu satır durumu doğru şekilde seslendiriliyor. (#14609)
+- NVDA, daha fazla Windows 10 ve 11 iletişim kutusunun içeriğini seslendirecek. (#15729, @josephsl)
+- UI otomasyonu kullanırken NVDA Microsoft Edge'de yeni yüklenen sayfayı okuyabilecek. (#15736)
+- Tümünü oku veya metnin harf harf okunduğu komutlar kullanılırken cümleler veya karakterler arasındaki duraklama zamanla azalmayacak. (#15739, @jcsteh)
+- NVDA bazen uzun bir metin okurken donmayacak. (#15752, @jcsteh)
+- UI otomasyonu kullanılırken Microsoft Edge'de NVDA tarama kipinde daha fazla denetimi etkinleştirebilecek. (#14612)
+- Konfigürasyon dosyası bozuksa NVDA yine de çalışacak ancak geçmişte olduğu gibi konfigürasyonu fabrika ayarlarına döndürecek. (#15690, @CyrilleB79)
+- Windows Forms uygulamalarında Sistem liste görünümü (``SysListView32``) denetimleri desteği düzeltildi. (#15283, @LeonarddeR)
+- NVDA'nın Python konsolu geçmişinin üzerine yazılamayacak. (#15792, @CyrilleB79)
+- NVDA uçbirime büyük boyutta metin yazdırılması veya WhatsApp Messenger'da sesli mesaj dinlenmesi gibi peş peşe birçok UI otomasyonu etkinliğiyle karşılaştığında donmayacaktır. (#14888, #15169)
+  - Bu yeni özellik NVDA'nın gelişmiş ayarlarında bulunan "Gelişmiş etkinlik izleme kullan" ayarı kullanılarak devre dışı bırakılabilir.
+  -
+- NVDA, Windows Defender Application Guard (WDAG) içerisinde çalışan uygulamalarda odağı yeniden izleyebiliyor. (#15164)
+- Fare, konuşma görüntüleyicisinin içerisinde hareket ettiğinde konuşma metni güncellenmiyor. (#15952, @hwf1324)
+- Firefox veya Chrome'da ``çıkış`` veya ``alt+yukarı ok`` tuşları kullanılarak seçim kutuları kapatıldığında, NVDA yeniden tarama kipine geri dönecek. (#15653)
+- iTunes seçim kutularında yukarı ve aşağı ok tuşları kullanıldığında NVDA tarama kipine geri dönmeyecek. (#15653)
+-
+
+== Changes for Developers ==
+Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+
+- Note: this is an Add-on API compatibility breaking release.
+Add-ons will need to be re-tested and have their manifest updated.
+- Building NVDA now requires Visual Studio 2022.
+Please refer to the [NVDA docs https://github.com/nvaccess/nvda/blob/release-2024.1/projectDocs/dev/createDevEnvironment.md] for the specific list of Visual Studio components. (#14313)
+- Added the following extension points:
+  - ``treeInterceptorHandler.post_browseModeStateChange``. (#14969, @nvdaes)
+  - ``speech.speechCanceled``. (#15700, @LeonarddeR)
+  - ``_onErrorSoundRequested`` (should be retrieved calling ``logHandler.getOnErrorSoundRequested()``) (#15691, @CyrilleB79)
+  -
+- It is now possible to use plural forms in an add-on's translations. (#15661, @beqabeqa473)
+- Included python3.dll in the binary distribution for use by add-ons with external libraries utilizing the [stable ABI https://docs.python.org/3.11/c-api/stable.html]. (#15674, @mzanm)
+- The ``BrailleDisplayDriver`` base class now has ``numRows`` and ``numCols`` properties to provide information about multi line braille displays.
+Setting ``numCells`` is still supported for single line braille displays and ``numCells`` will return the total number of cells for multi line braille displays. (#15386)
+- Updated BrlAPI for BRLTTY to version 0.8.5, and its corresponding python module to a Python 3.11 compatible build. (#15652, @LeonarddeR)
+- Added the ``speech.speakSsml`` function, which allows you to write NVDA speech sequences using [SSML https://www.w3.org/TR/speech-synthesis11/]. (#15699, @LeonarddeR)
+  - The following tags are currently supported and translated to appropriate NVDA speech commands:
+    - ``Prosody`` (``pitch``, ``rate`` and ``volume``). Only multiplication (e.g. ``200%`` are supported.
+    - ``say-as`` with the ``interpret`` attribute set to ``characters``
+    - ``voice`` with the ``xml:lang`` set to an XML language
+    - ``break`` with the ``time`` attribute set to a value in milliseconds, e.g. ``200ms``
+    - ``mark`` with the ``name`` attribute set to a mark name, e.g. ``mark1``, requires providing a callback
+    -
+  - Example: ``speech.speakSsml('<speak><prosody pitch="200%">hello</prosody><break time="500ms" /><prosody rate="50%">John</prosody></speak>')``
+  - The SSML parsing capabilities are backed by the ``SsmlParser`` class in the ``speechXml`` module.
+  -
+- Changes to the NVDA Controller Client library:
+  - The file names of the library no longer contain a suffix denoting the architecture, i.e. ``nvdaControllerClient32/64.dll`` are now called ``nvdaControllerClient.dll``. (#15718, #15717, @LeonarddeR)
+  - Added an example to demonstrate using nvdaControllerClient.dll from Rust. (#15771, @LeonarddeR)
+  - Added the following functions to the controller client: (#15734, #11028, #5638, @LeonarddeR)
+    - ``nvdaController_getProcessId``: To get the process id (PID) of the current instance of NVDA the controller client is using.
+    - ``nvdaController_speakSsml``: To instruct NVDA to speak according to the given SSML. This function also supports:
+      - Providing the symbol level.
+      - Providing the priority of speech to be spoken.
+      - Speaking both synchronously (blocking) and asynchronously (instant return).
+      -
+    - ``nvdaController_setOnSsmlMarkReachedCallback``: To register a callback of type ``onSsmlMarkReachedFuncType`` that is called in synchronous mode for every ``<mark />`` tag encountered in the SSML sequence provided to ``nvdaController_speakSsml``.
+    -
+  - Note: the new functions in the controller client only support NVDA 2024.1 and above.
+  -
+- Updated ``include`` dependencies:
+  - detours to ``4b8c659f549b0ab21cf649377c7a84eb708f5e68``. (#15695)
+  - ia2 to ``3d8c7f0b833453f761ded6b12d8be431507bfe0b``. (#15695)
+  - sonic to ``8694c596378c24e340c09ff2cd47c065494233f1``. (#15695)
+  - w3c-aria-practices to ``9a5e55ccbeb0f1bf92b6127c9865da8426d1c864``. (#15695)
+  - wil to ``5e9be7b2d2fe3834a7107f430f7d4c0631f69833``. (#15695)
+  -
+- Device info yielded by ``hwPortUtils.listUsbDevices`` now contain the bus reported description of the USB device (key ``busReportedDeviceDescription``). (#15764, @LeonarddeR)
+- For USB serial devices, ``bdDetect.getConnectedUsbDevicesForDriver`` and ``bdDetect.getDriversForConnectedUsbDevices`` now yield device matches containing a ``deviceInfo`` dictionary enriched with data about the USB device, such as ``busReportedDeviceDescription``. (#15764, @LeonarddeR)
+- When the configuration file ``nvda.ini`` is corrupted, a backup copy is saved before it is reinitialized. (#15779, @CyrilleB79)
+- When defining a script with the script decorator, the ``speakOnDemand`` boolean argument can be specified to control if a script should speak while in "on-demand" speech mode. (#481, @CyrilleB79)
+  - Scripts that provide information (e.g. say window title, report time/date) should speak in the "on-demand" mode.
+  - Scripts that perform an action (e.g. move the cursor, change a parameter) should not speak in the "on-demand" mode.
+  -
+- Fixed bug where deleting git-tracked files during ``scons -c`` resulted in missing UIA COM interfaces on rebuild. (#7070, #10833, @hwf1324)
+- Fix a bug where some code changes were not detected when building ``dist``, that prevented a new build from being triggered.
+Now ``dist`` always rebuilds. (#13372, @hwf1324)
+- A ``gui.nvdaControls.MessageDialog`` with default type of standard, no longer throws a None conversion exception because no sound is assigned. (#16223, @XLTechie)
+-
+
+
+=== API Breaking Changes ===
+These are breaking API changes.
+Please open a GitHub issue if your Add-on has an issue with updating to the new API.
+
+- NVDA is now built with Python 3.11. (#12064)
+- Updated pip dependencies:
+  - configobj to 5.1.0dev commit ``e2ba4457c4651fa54f8d59d8dcdd3da950e956b8``. (#15544)
+  - Comtypes to 1.2.0. (#15513, @codeofdusk)
+  - Flake8 to 4.0.1. (#15636, @lukaszgo1)
+  - py2exe to 0.13.0.1dev commit ``4e7b2b2c60face592e67cb1bc935172a20fa371d``. (#15544) 
+  - robotframework to 6.1.1. (#15544)
+  - SCons to 4.5.2. (#15529, @LeonarddeR)
+  - sphinx to 7.2.6. (#15544)
+  - wxPython to 4.2.2a commit ``0205c7c1b9022a5de3e3543f9304cfe53a32b488``. (#12551, #16257)
+  -
+- Removed pip dependencies:
+  - typing_extensions, these should be supported natively in Python 3.11 (#15544)
+  - nose, instead unittest-xml-reporting is used to generate XML reports. (#15544)
+  -
+- ``IAccessibleHandler.SecureDesktopNVDAObject`` has been removed.
+Instead, when NVDA is running on the user profile, track the existence of the secure desktop with the extension point: ``winAPI.secureDesktop.post_secureDesktopStateChange``. (#14488)
+- ``braille.BrailleHandler.handlePendingCaretUpdate`` has been removed with no public replacement. (#15163, @LeonarddeR)
+- ``bdDetect.addUsbDevices and bdDetect.addBluetoothDevices`` have been removed.
+Braille display drivers should implement the ``registerAutomaticDetection`` class method instead.
+That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices`` and ``addBluetoothDevices`` methods can be used. (#15200, @LeonarddeR)
+- The default implementation of the check method on ``BrailleDisplayDriver`` now requires both the ``threadSafe`` and ``supportsAutomaticDetection`` attributes to be set to ``True``. (#15200, @LeonarddeR)
+- Passing lambda functions to ``hwIo.ioThread.IoThread.queueAsApc`` is no longer possible, as functions should be weakly referenceable. (#14627, @LeonarddeR)
+- ``IoThread.autoDeleteApcReference`` has been removed. (#14924, @LeonarddeR)
+- To support capital pitch changes, synthesizers must now explicitly declare their support for the ``PitchCommand`` in the ``supportedCommands`` attribute on the driver. (#15433, @LeonarddeR)
+- ``speechDictHandler.speechDictVars`` has been removed. Use ``NVDAState.WritePaths.speechDictsDir`` instead of ``speechDictHandler.speechDictVars.speechDictsPath``. (#15614, @lukaszgo1)
+- ``languageHandler.makeNpgettext`` and ``languageHandler.makePgettext`` have been removed.
+``npgettext`` and ``pgettext`` are supported natively now. (#15546)
+- The app module for [Poedit https://poedit.net] has been changed significantly. The ``fetchObject`` function has been removed. (#15313, #7303, @LeonarddeR)
+- The following redundant types and constants have been removed from ``hwPortUtils``: (#15764, @LeonarddeR)
+  - ``PCWSTR``
+  - ``HWND`` (replaced by ``ctypes.wintypes.HWND``)
+  - ``ULONG_PTR``
+  - ``ULONGLONG``
+  - ``NULL``
+  - ``GUID`` (replaced by ``comtypes.GUID``)
+  -
+- ``gui.addonGui.AddonsDialog`` has been removed. (#15834)
+- ``touchHandler.TouchInputGesture.multiFingerActionLabel`` has been removed with no replacement. (#15864, @CyrilleB79)
+- ``NVDAObjects.IAccessible.winword.WordDocument.script_reportCurrentHeaders`` has been removed with no replacement. (#15904, @CyrilleB79)
+% Insert new list items here as the alias appModule table should be kept at the bottom of this list
+- The following app modules are removed.
+Code which imports from one of them, should instead import from the replacement module. (#15618, @lukaszgo1)
+-
+
+|| Removed module name | Replacement module |
+| ``azardi-2.0`` | ``azardi20`` |
+| ``azuredatastudio`` | ``code`` |
+| ``azuredatastudio-insiders`` | ``code`` |
+| ``calculatorapp`` | ``calculator`` |
+| ``code - insiders`` | ``code`` |
+| ``commsapps`` | ``hxmail`` |
+| ``dbeaver`` | ``eclipse`` |
+| ``digitaleditionspreview`` | ``digitaleditions`` |
+| ``esybraille`` | ``esysuite`` |
+| ``hxoutlook`` | ``hxmail`` |
+| ``miranda64`` | ``miranda32`` |
+| ``mpc-hc`` | ``mplayerc`` |
+| ``mpc-hc64`` | ``mplayerc`` |
+| ``notepad++`` | ``notepadPlusPlus`` |
+| ``searchapp`` | ``searchui`` |
+| ``searchhost`` | ``searchui`` |
+| ``springtoolsuite4`` | ``eclipse`` |
+| ``sts`` | ``eclipse`` |
+| ``teamtalk3`` | ``teamtalk4classic`` |
+| ``textinputhost`` | ``windowsinternal_composableshell_experiences_textinput_inputapp`` |
+| ``totalcmd64`` | ``totalcmd`` |
+| ``win32calc`` | ``calc`` |
+| ``winmail`` | ``msimn`` |
+| ``zend-eclipse-php`` | ``eclipse`` |
+| ``zendstudio`` | ``eclipse`` |
+
+=== Deprecations ===
+
+- Using ``watchdog.getFormattedStacksForAllThreads`` is deprecated - please use ``logHandler.getFormattedStacksForAllThreads`` instead. (#15616, @lukaszgo1)
+- ``easeOfAccess.canConfigTerminateOnDesktopSwitch`` has been deprecated, as it became obsolete since Windows 7 is no longer supported. (#15644, @LeonarddeR)
+- ``winVersion.isFullScreenMagnificationAvailable`` has been deprecated - use ``visionEnhancementProviders.screenCurtain.ScreenCurtainProvider.canStart`` instead. (#15664, @josephsl)
+- The following Windows release constants has been deprecated from winVersion module (#15647, @josephsl):
+  - ``winVersion.WIN7``
+  - ``winVersion.WIN7_SP1``
+  - ``winVersion.WIN8``
+  -
+- The ``bdDetect.KEY_*`` constants have been deprecated.
+Use ``bdDetect.DeviceType.*`` instead. (#15772, @LeonarddeR).
+- The ``bdDetect.DETECT_USB`` and ``bdDetect.DETECT_BLUETOOTH`` constants have been deprecated with no public replacement. (#15772, @LeonarddeR).
+- Using ``gui.ExecAndPump`` is deprecated - please use ``systemUtils.ExecAndPump`` instead. (#15852, @lukaszgo1)
+-
+= 2023.3.4 =
+Bir güvenlik ve yükleyici sorununu düzeltmek için yayınlanan yama sürümüdür.
+Lütfen güvenlik sorunlarını NVDA'nın [güvenlik politikasını https://github.com/nvaccess/nvda/blob/master/security.md] takip ederek sorumlu olarak bildiriniz.
+
+== Güvenlik düzeltmeleri ==
+- Güvenli mod zorla etkinken özgün konfigürasyon yüklenmesi önleniyor.
+([GHSA-727q-h8j2-6p45 https://github.com/nvaccess/nvda/security/advisories/GHSA-727q-h8j2-6p45])
+-
+
+== Hata düzeltmeleri ==
+- NVDA işleminin yanlış şekilde sonlandırılmasına neden olan bir hata düzeltildi. (#16123)
+- Önceki NVDA işlemi doğru şekilde sonlandırılmadığında, NVDA kurulumunun kurtarılamayan bir şekilde başarısız olmasına neden olan bir hata düzeltildi. (#16122)
+-
+
+= 2023.3.3 =
+Bir güvenlik sorununu düzeltmek için yayınlanan yama sürümüdür.
+Lütfen güvenlik sorunlarını NVDA'nın [güvenlik politikasını https://github.com/nvaccess/nvda/blob/master/security.md] takip ederek sorumlu olarak bildiriniz.
+== Güvenlik düzeltmeleri ==
+- Oluşturulan içerikten potansiyel olarak yansıyan XSS saldırısının keyfi kod yürütmeye neden olması önlendi.
+([GHSA-xg6w-23rw-39r8 https://github.com/nvaccess/nvda/security/advisories/GHSA-xg6w-23rw-39r8])
+-
+
+= 2023.3.2 =
+Bir güvenlik sorununu düzeltmek için yayınlanan yama sürümüdür.
+2023.3.1 sürümünde yayınlanan güvenlik yaması doğru şekilde çözümlenmemişti.
+Lütfen güvenlik sorunlarını NVDA'nın [güvenlik politikasını https://github.com/nvaccess/nvda/blob/master/security.md] takip ederek sorumlu olarak bildiriniz.
+== Güvenlik düzeltmeleri ==
+- 2023.3.1 sürümünde yayınlanan güvenlik yaması doğru şekilde çözümlenmemişti.
+İzinsiz kullanıcılar için potansiyel sistem erişimi ve sistem izinleriyle keyfi kod yürütme önlendi.
+([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
+-
+
+
+= 2023.3.1 =
+Bir güvenlik sorununu düzeltmek için yayınlanan yama sürümüdür.
+Lütfen güvenlik sorunlarını NVDA'nın [güvenlik politikasını https://github.com/nvaccess/nvda/blob/master/security.md] takip ederek sorumlu olarak bildiriniz.
+
+== Güvenlik düzeltmeleri ==
+- İzinsiz kullanıcılar için potansiyel sistem erişimi ve sistem izinleriyle keyfi kod yürütme önlendi.
+([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
+-
+
 = 2023.3 =
 Bu sürümde ses çıkışının performansı, tepki hızı ve kararlılığı geliştirildi.
 NVDA seslerinin ve bip seslerinin ses seviyesini ayarlamak veya ses seviyesinin konuşma ses seviyesine eşitlenmesini sağlamak için seçenekler eklendi.
@@ -726,7 +1056,7 @@ There are no deprecations proposed in 2022.3.
 
 
 = 2022.2.4 =
-Güvenlik sorununu düzeltmek için yayınlanan bir yama sürümüdür.
+Güvenlik sorununu düzeltmek için yayınlanan yama sürümüdür.
 
 == Hata düzeltmeleri ==
 - Kilit ekranında log göstericiyi kullanarak NVDA Python konsolunun açılabilmesine neden olan bir açık giderildi.
@@ -734,7 +1064,7 @@ Güvenlik sorununu düzeltmek için yayınlanan bir yama sürümüdür.
 -
 
 = 2022.2.3 =
-2022.2.1 sürümünde yapılan bir API hatasını düzeltmek için yayınlanan bir yama sürümüdür.
+2022.2.1 sürümünde yapılan bir API hatasını düzeltmek için yayınlanan yama sürümüdür.
 
 == Hata düzeltmeleri ==
 - Güvenli kipe girerken NVDA'nın "güvenli kip" seslendirmesi yapmamasına neden olan bir hata düzeltildi.
@@ -742,7 +1072,7 @@ Bu hata, NVDA uzak bağlantı eklentisinin güvenli kipe girildiğini algılamam
 -
 
 = 2022.2.2 =
-Bu sürüm, 2022.2.1'de girdi hareketleriyle ilgili bir hatayı düzeltmek için yayınlanan bir yama sürümüdür.
+Bu sürüm, 2022.2.1'de girdi hareketleriyle ilgili bir hatayı düzeltmek için yayınlanan yama sürümüdür.
 
 == Hata düzeltmeleri ==
 - Girdi hareketlerinin bazı zamanlarda çalışmamasına sebep olan bir hata düzeltildi. (#14065)

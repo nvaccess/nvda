@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-06 02:06+0000\n"
-"PO-Revision-Date: 2024-03-06 02:37\n"
+"POT-Creation-Date: 2024-03-19 19:59+0000\n"
+"PO-Revision-Date: 2024-03-19 23:39\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -122,7 +122,7 @@ msgstr "biểu ngữ"
 #: aria.py:81
 msgctxt "aria"
 msgid "complementary"
-msgstr "phụ mục"
+msgstr "bổ sung"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
 #: aria.py:83
@@ -475,7 +475,7 @@ msgstr "sggstn"
 #. Translators: Identifies a definition.
 #: braille.py:223 controlTypes\role.py:531
 msgid "definition"
-msgstr "định nghĩa kiểu"
+msgstr "definition"
 
 #. Translators: Displayed in braille when an object is a switch control
 #: braille.py:225
@@ -1899,7 +1899,7 @@ msgstr "Bật di chuyển ký tự đơn"
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 #: browseMode.py:422
 msgid "Toggles single letter navigation on and off. When on, single letter keys in browse mode jump to various kinds of elements on the page. When off, these keys are passed to the application"
-msgstr "Bật/tắt di chuyển ký tự đơn. Khi bật, ở chế độ duyệt, các phím ký tự đơn sẽ chuyển đến các thành phần khác nhau trên trang. Khi tắt, những phím này sẽ gửi đến ứng dung"
+msgstr "Bật/tắt di chuyển ký tự đơn. Khi bật, ở chế độ duyệt, các phím ký tự đơn sẽ chuyển đến các thành phần khác nhau trên trang. Khi tắt, những phím này sẽ gửi đến ứng dụng"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 #. Translators: Reported when a user tries to use a find command when it isn't supported.
@@ -2522,12 +2522,12 @@ msgstr "không còn nhóm trước"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:944
 msgid "moves to the next tab"
-msgstr "chuyển đến thẻ kế"
+msgstr "chuyển đến thẻ kế tiếp"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:946
 msgid "no next tab"
-msgstr "không có thẻ kế"
+msgstr "không có thẻ kế tiếp"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:948
@@ -2607,12 +2607,12 @@ msgstr "&Chuyển đến"
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 #: browseMode.py:1478
 msgid "No long description"
-msgstr "Không có mô tả"
+msgstr "Không có mô tả dài"
 
 #. Translators: the description for the activateLongDescription script on browseMode documents.
 #: browseMode.py:1480
 msgid "Shows the long description at this position if one is found."
-msgstr "Thông báo mô tả nếu có."
+msgstr "Thông báo mô tả dài nếu có."
 
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
@@ -2660,12 +2660,12 @@ msgstr "Bật / tắt chế độ chọn thực tế"
 #. Translators: the message when native selection mode is not available in this browse mode document.
 #: browseMode.py:2041
 msgid "Native selection mode unsupported in this browse mode document"
-msgstr "Chế độ chọn thực tế không hỗ trợ cho tài liệu chế dộ duyệt này"
+msgstr "Chế độ chọn thực tế không hỗ trợ cho tài liệu chế độ duyệt này"
 
 #. Translators: the message when native selection mode cannot be turned off in this browse mode document.
 #: browseMode.py:2044
 msgid "Native selection mode cannot be turned off in this browse mode document"
-msgstr "Không thể tắt chế độ chọn thực tế trong tài lieu chế độ duyệt này"
+msgstr "Không thể tắt chế độ chọn thực tế trong tài liệu chế độ duyệt này"
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
 #: browseMode.py:2053
@@ -2775,7 +2775,7 @@ msgstr "xám tối"
 #: colors.py:181
 msgctxt "color hue"
 msgid "very dark grey"
-msgstr "rất xám tối"
+msgstr "xám rất tối"
 
 #. Translators: the color black (HSV saturation 0%, value 0%)
 #: colors.py:183
@@ -2829,19 +2829,19 @@ msgstr "xanh lục"
 #: colors.py:202
 msgctxt "color hue"
 msgid "green-aqua"
-msgstr "xanh-aqua"
+msgstr "nước xanh lá"
 
 #. Translators: The color aqua (HSV hue 180 degrees)
 #: colors.py:204
 msgctxt "color hue"
 msgid "aqua"
-msgstr "aqua"
+msgstr "nước"
 
 #. Translators: The color between  aqua and blue (HSV hue 210 degrees)
 #: colors.py:206
 msgctxt "color hue"
 msgid "aqua-blue"
-msgstr "xanh dương-aqua"
+msgstr "nước xanh dương"
 
 #. Translators: The color blue (HSV hue 240 degrees)
 #: colors.py:208
@@ -2912,7 +2912,7 @@ msgstr "{color} rất tối"
 #, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
-msgstr "{color} hơi nhợt"
+msgstr "{color} hơi nhạt"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
 #: colors.py:236
@@ -2933,7 +2933,7 @@ msgstr "{color} tối nhạt"
 #, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
-msgstr "{color} rất tối nhợt"
+msgstr "{color} rất tối nhạt"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
 #: colors.py:244
@@ -3091,7 +3091,7 @@ msgstr "Tìm kiếm"
 #. Translators: Dialog text for NvDA's find command.
 #: cursorManager.py:57
 msgid "Type the text you wish to find"
-msgstr "Nhập nội dung muốn tìm"
+msgstr "Nhập văn bản muốn tìm"
 
 #. Translators: An option in find dialog to perform case-sensitive search.
 #. Translators: This is a label for a checkbox in add dictionary entry dialog.
@@ -3240,7 +3240,7 @@ msgstr "Bật tắt báo bố cục bảng ở chế độ duyệt"
 #. Translators: The name of a category of NVDA commands.
 #: globalCommands.py:73
 msgid "Text review"
-msgstr "Duyệt nội dung"
+msgstr "Duyệt văn bản"
 
 #. Translators: The name of a category of NVDA commands.
 #: globalCommands.py:76
@@ -3325,7 +3325,7 @@ msgstr "Định dạng tài liệu"
 #. Translators: Describes the Cycle audio ducking mode command.
 #: globalCommands.py:124
 msgid "Cycles through audio ducking modes which determine when NVDA lowers the volume of other sounds"
-msgstr "Chuyển giữa các tùy chọn để NVDA giảm âm lượng của các ứng dụng khác"
+msgstr "Xoay vòng các tùy chọn để NVDA giảm âm lượng của các ứng dụng khác"
 
 #. Translators: a message when audio ducking is not supported on this machine
 #: globalCommands.py:131
@@ -3335,7 +3335,7 @@ msgstr "Không hỗ trợ chức năng giảm âm lượng"
 #. Translators: Input help mode message for toggle input help command.
 #: globalCommands.py:144
 msgid "Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any."
-msgstr "Bật tắt chế độ trợ giúp nhập. Nếu bật thì khi bấmmột phím hoặc một tổ hợp phím thì nó sẽ thông báo chức năng được gán cho phím đó nếu có."
+msgstr "Bật tắt chế độ trợ giúp nhập. Nếu bật, khi bấmmột phím hoặc một tổ hợp phím, sẽ thông báo chức năng được gán cho phím đó nếu có."
 
 #. Translators: This will be presented when the input help is toggled.
 #: globalCommands.py:155
@@ -3350,7 +3350,7 @@ msgstr "tắt chế độ trợ giúp nhập"
 #. Translators: Input help mode message for toggle sleep mode command.
 #: globalCommands.py:163
 msgid "Toggles sleep mode on and off for the active application."
-msgstr "Bật tắt chế độ ngủ của NVDA cho ứng dụng hiện tại."
+msgstr "Bật tắt chế độ ngủ cho ứng dụng hiện tại."
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 #: globalCommands.py:173
@@ -3400,7 +3400,7 @@ msgstr "Khóa hoặc mở khóa nút chuột phải"
 #. Translators: Input help mode message for report current selection command.
 #: globalCommands.py:259
 msgid "Announces the current selection in edit controls and documents. Pressing twice spells this information. Pressing three times spells it using character descriptions. Pressing four times shows it in a browsable message. "
-msgstr ""
+msgstr "Thông báo vùng chọn hiện tại ở ô nhập liệu hoặc tài liệu. Bấm hai lần để đánh vần thông tin này. Bấm ba lần để đánh vần bằng mô tả kí tự. Bấm bốn lần để hiển thị trên cửa sổ thông điệp có thể duyệt. "
 
 #. Translators: The message reported after selected text
 #. Translators: This is spoken to indicate what has just been selected.
@@ -3475,7 +3475,7 @@ msgstr "bật đọc từ khi gõ"
 #. Translators: Input help mode message for toggle speak command keys command.
 #: globalCommands.py:408
 msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
-msgstr "Bật tắt chế độ đọc phím lệnh"
+msgstr "Bật tắt việc đọc các phím được nhập nhưng không phải là kí tự cụ thể"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 #: globalCommands.py:415
@@ -3520,7 +3520,7 @@ msgstr "bật báo cỡ phông"
 #. Translators: Input help mode message for toggle report font attributes command.
 #: globalCommands.py:457
 msgid "Toggles on and off the reporting of font attributes"
-msgstr "Tắt/bật thông báo thuộc tính phông chữ"
+msgstr "Bật / tắt thông báo thuộc tính phông chữ"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 #: globalCommands.py:463
@@ -3687,7 +3687,7 @@ msgstr "bật báo số dòng"
 #. Translators: Input help mode message for toggle report line indentation command.
 #: globalCommands.py:635
 msgid "Cycles through line indentation settings"
-msgstr "Chuyển giữa các thiết lập thụt đầu dòng"
+msgstr "Xoay vòng các thiết lập thụt đầu dòng"
 
 #. Translators: A message reported when cycling through line indentation settings.
 #. {mode} will be replaced with the mode; i.e. Off, Speech, Tones or Both Speech and Tones.
@@ -3699,7 +3699,7 @@ msgstr "Báo thụt đầu dòng {mode}"
 #. Translators: Input help mode message for toggle ignore blank lines for line indentation reporting command.
 #: globalCommands.py:649
 msgid "Toggles on and off the ignoring of blank lines for line indentation reporting"
-msgstr "Bật/tắt bỏ qua dòng trắng khi thông áo thụt lề dòng"
+msgstr "Bật/tắt bỏ qua dòng trắng khi thông báo thụt lề dòng"
 
 #. Translators: The message announced when toggling off the ignore blank lines for line indentation
 #. reporting document formatting setting.
@@ -3761,7 +3761,7 @@ msgstr "bật báo bảng biểu"
 #. Translators: Input help mode message for toggle report table row/column headers command.
 #: globalCommands.py:714
 msgid "Cycle through the possible modes to report table row and column headers"
-msgstr "Đi qua các chế độ thông báo tiêu đề cột và dòng"
+msgstr "Xoay vòng các chế độ thông báo tiêu đề cột và dòng"
 
 #. Translators: Reported when the user cycles through report table header modes.
 #. {mode} will be replaced with the mode; e.g. None, Rows and columns, Rows or Columns.
@@ -3773,22 +3773,22 @@ msgstr "Thông báo các tiêu đề bảng {mode}"
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 #: globalCommands.py:728
 msgid "Toggles on and off the reporting of table cell coordinates"
-msgstr "Bật/tắt thông báo vị trí ô"
+msgstr "Bật/tắt thông báo tọa độ ô"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 #: globalCommands.py:734
 msgid "report table cell coordinates off"
-msgstr "tắt báo vị trí ô"
+msgstr "tắt báo tọa độ ô"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 #: globalCommands.py:738
 msgid "report table cell coordinates on"
-msgstr "bật báo vị trí ô"
+msgstr "bật báo tọa độ ô"
 
 #. Translators: Input help mode message for toggle report cell borders command.
 #: globalCommands.py:744
 msgid "Cycles through the cell border reporting settings"
-msgstr "Chuyển giữa các thiết lập thông báo đường viền ô"
+msgstr "Xoay vòng các thiết lập thông báo đường viền ô"
 
 #. Translators: Reported when the user cycles through report cell border modes.
 #. {mode} will be replaced with the mode; e.g. Off, Styles and Colors and styles.
@@ -3965,7 +3965,7 @@ msgstr "bật báo nếu có thể click"
 #. Translators: Input help mode message for cycle through automatic language switching mode command.
 #: globalCommands.py:935
 msgid "Cycles through the possible choices for automatic language switching: off, language only and language and dialect."
-msgstr ""
+msgstr "Xoay vòng các lựa chọn cho việc tự động chuyển ngôn ngữ: tắt, chỉ ngôn ngữ và ngôn ngữ theo vùng miền."
 
 #. Translators: A message reported when executing the cycle automatic language switching mode command.
 #: globalCommands.py:944
@@ -3985,7 +3985,7 @@ msgstr "Bật tự động chuyển ngôn ngữ"
 #. Translators: Input help mode message for cycle speech symbol level command.
 #: globalCommands.py:960
 msgid "Cycles through speech symbol levels which determine what symbols are spoken"
-msgstr "Duyệt qua các chế độ đọc ký hiệu"
+msgstr "Xoay vòng các chế độ đọc ký hiệu để chọn những kí hiệu nào sẽ được đọc lên"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -3998,7 +3998,7 @@ msgstr "Cấp độ ký hiệu %s"
 #. Translators: Input help mode message for toggle delayed character description command.
 #: globalCommands.py:980
 msgid "Toggles on and off delayed descriptions for characters on cursor movement"
-msgstr "Bật / tắt chờ để mô tả cho kí tự khi di chuyển con trỏ"
+msgstr "Bật / tắt chờ mô tả cho kí tự khi di chuyển con trỏ"
 
 #. Translators: The message announced when toggling the delayed character description setting.
 #: globalCommands.py:988
@@ -4028,7 +4028,7 @@ msgstr "Đưa đối tượng điều hướng đến đối tượng nằm dư�
 #. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
 #: globalCommands.py:1048
 msgid "Move navigator object to mouse"
-msgstr "Duyệt đến đối tượng ở vị trí con trỏ chuột"
+msgstr "Chuyển đến đối tượng ở vị trí con trỏ chuột"
 
 #. Translators: Script help message for next review mode command.
 #: globalCommands.py:1063
@@ -4315,7 +4315,7 @@ msgstr "Không có kí hiệu thay thế"
 msgid "Character: {}\n"
 "Replacement: {}"
 msgstr "Kí tự: {}\n"
-"Replacement: {}"
+"Thay thế: {}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 #: globalCommands.py:2036
@@ -4325,7 +4325,7 @@ msgstr "Kí hiệu đã mở rộng ({})"
 #. Translators: Input help mode message for cycle speech mode command.
 #: globalCommands.py:2042
 msgid "Cycles between speech modes."
-msgstr "Chuyển giữa các chế độ đọc."
+msgstr "Xoay vòng các chế độ đọc."
 
 #. Translators: Announced when user switches to another speech mode.
 #. 'mode' is replaced with the translated name of the new mode.
@@ -4424,12 +4424,12 @@ msgstr "Không có các chi tiết bổ sung"
 #. Translators: Input help mode message for report current focus command.
 #: globalCommands.py:2482
 msgid "Reports the object with focus. If pressed twice, spells the information. Pressing three times spells it using character descriptions."
-msgstr ""
+msgstr "Thông báo đối tượng với focus. Bấm hai lần để đánh vần thông tin. Bấm ba lần để đánh vần bằng kí tự mô tả."
 
 #. Translators: Reported when there is no status line for the current program or window.
 #: globalCommands.py:2558
 msgid "No status line found"
-msgstr "Không tìm thấy thanh trạng thái"
+msgstr "Không tìm thấy dòng trạng thái"
 
 #. Translators: Input help mode message for command which reads content of the status bar.
 #: globalCommands.py:2567
@@ -4486,12 +4486,12 @@ msgstr "Bật tắt chế độ thông báo thông tin khi di chuyển chuột"
 #. Translators: presented when the mouse tracking is toggled.
 #: globalCommands.py:2687
 msgid "Mouse tracking off"
-msgstr "Tắt thông báo chuột"
+msgstr "Tắt theo dõi chuột"
 
 #. Translators: presented when the mouse tracking is toggled.
 #: globalCommands.py:2691
 msgid "Mouse tracking on"
-msgstr "Bật thông báo chuột"
+msgstr "Bật theo dõi chuột"
 
 #. Translators: Input help mode message for toggle mouse text unit resolution command.
 #: globalCommands.py:2697
@@ -4509,7 +4509,7 @@ msgstr "Lượng nội dugn cho chuột là %s"
 #. Translators: Input help mode message for report title bar command.
 #: globalCommands.py:2719
 msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, copies the title to the clipboard"
-msgstr "Thông báo tên ứng dụng hoặc cửa sổ hiện hành. Bấm hai lần để đánh vần tiêu đề cửa sổ, bấm ba lần để chép lên bộ nhớ tạm"
+msgstr "Thông báo tên ứng dụng hoặc cửa sổ hiện hành. Bấm hai lần để đánh vần tiêu đề cửa sổ, bấm ba lần để chép vào bộ nhớ tạm"
 
 #. Translators: Reported when there is no title text for current program or window.
 #: globalCommands.py:2740
@@ -4554,7 +4554,7 @@ msgstr "Không thể đánh dấu vị trí log"
 #. Translators: Message when attempting to copy an empty fragment of the log file
 #: globalCommands.py:2826
 msgid "No new log entry to copy"
-msgstr "Không có nội dung log nào để sao chép"
+msgstr "Không có nội dung log mới nào để sao chép"
 
 #. Translators: Message when a fragment of the log file has been
 #. copied to clipboard
@@ -4697,67 +4697,67 @@ msgstr " %s hiện đang chạy."
 #. Translators: Input help mode message for go to general settings command.
 #: globalCommands.py:2995
 msgid "Shows NVDA's general settings"
-msgstr "Hiển thị cấu hình chung NVDA"
+msgstr "Mở cài đặt chung NVDA"
 
 #. Translators: Input help mode message for go to select synthesizer command.
 #: globalCommands.py:3005
 msgid "Shows the NVDA synthesizer selection dialog"
-msgstr "Hiển thị hộp thoại chọn bộ đọc NVDA"
+msgstr "Mở hộp thoại chọn bộ đọc NVDA"
 
 #. Translators: Input help mode message for go to speech settings command.
 #: globalCommands.py:3015
 msgid "Shows NVDA's speech settings"
-msgstr "Hiển thị cấu hình giọng đọc NVDA"
+msgstr "Mở cài đặt giọng đọc NVDA"
 
 #. Translators: Input help mode message for go to select braille display command.
 #: globalCommands.py:3025
 msgid "Shows the NVDA braille display selection dialog"
-msgstr "Hiển thị hộp thoại chọn màn hình nổi NVDA"
+msgstr "Mở hộp thoại chọn màn hình nổi NVDA"
 
 #. Translators: Input help mode message for go to braille settings command.
 #: globalCommands.py:3035
 msgid "Shows NVDA's braille settings"
-msgstr "Hiển thị cấu hình màn hình nổi NVDA"
+msgstr "Mở cài đặt màn hình nổi NVDA"
 
 #. Translators: Input help mode message for go to audio settings command.
 #: globalCommands.py:3044
 msgid "Shows NVDA's audio settings"
-msgstr "Hiện cài đặt audio của NVDA"
+msgstr "Mở cài đặt âm thanh của NVDA"
 
 #. Translators: Input help mode message for go to keyboard settings command.
 #: globalCommands.py:3054
 msgid "Shows NVDA's keyboard settings"
-msgstr "Hiển thị cấu hình bàn phím NVDA"
+msgstr "Mở cài đặt bàn phím NVDA"
 
 #. Translators: Input help mode message for go to mouse settings command.
 #: globalCommands.py:3064
 msgid "Shows NVDA's mouse settings"
-msgstr "Hiển thị cấu hình chuột NVDA"
+msgstr "Mở cài đặt chuột cho NVDA"
 
 #. Translators: Input help mode message for go to review cursor settings command.
 #: globalCommands.py:3074
 msgid "Shows NVDA's review cursor settings"
-msgstr "Hiển thị cấu hình con trỏ duyệt NVDA"
+msgstr "Mở cài đặt con trỏ duyệt NVDA"
 
 #. Translators: Input help mode message for go to input composition settings command.
 #: globalCommands.py:3083
 msgid "Shows NVDA's input composition settings"
-msgstr "Hiển thị cấu hình phương thức nhập NVDA"
+msgstr "Mở cài đặt phương thức nhập NVDA"
 
 #. Translators: Input help mode message for go to object presentation settings command.
 #: globalCommands.py:3092
 msgid "Shows NVDA's object presentation settings"
-msgstr "Hiển thị cấu hình trình bày đối tượng NVDA"
+msgstr "Mở cài đặt trình bày đối tượng NVDA"
 
 #. Translators: Input help mode message for go to browse mode settings command.
 #: globalCommands.py:3102
 msgid "Shows NVDA's browse mode settings"
-msgstr "Hiển thị cấu hình chế độ duyệt NVDA"
+msgstr "Mở cài đặt chế độ duyệt NVDA"
 
 #. Translators: Input help mode message for go to document formatting settings command.
 #: globalCommands.py:3112
 msgid "Shows NVDA's document formatting settings"
-msgstr "Hiển thị cấu hình định dạng tài liệu NVDA"
+msgstr "Mở cài đặt định dạng tài liệu NVDA"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
 #: globalCommands.py:3122
@@ -4793,7 +4793,7 @@ msgstr "Đọc tên hồ sơ cấu hình hiện tại của NVDA"
 #. the default configuration profile is active.
 #: globalCommands.py:3177
 msgid "normal configuration profile active"
-msgstr "cấu hình bình thường đang hoạt động"
+msgstr "hồ sơ cấu hình bình thường đang hoạt động"
 
 #. Translators: Message announced when the command to report the current configuration profile
 #. is active. The placeholder '{profilename}' is replaced with the name of the current active profile.
@@ -4815,17 +4815,17 @@ msgstr "Bấm một lần để khôi phục lại cấu hình đã lưu trướ
 #. Translators: Input help mode message for activate python console command.
 #: globalCommands.py:3213
 msgid "Activates the NVDA Python Console, primarily useful for development"
-msgstr "Kích hoạt trình Python Console. chức năng này rất hữu ích cho các lập trình viên"
+msgstr "Mở trình Python Console, chủ yếu dùng trong việc phát triển phần mềm"
 
 #. Translators: Input help mode message to activate Add-on Store command.
 #: globalCommands.py:3232
 msgid "Activates the Add-on Store to browse and manage add-on packages for NVDA"
-msgstr "Kích hoạt cửa hang Add-on để tìm và quản lý các gói add-on cho NVDA"
+msgstr "Mở cửa hang Add-on để tìm và quản lý các gói add-on cho NVDA"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 #: globalCommands.py:3241
 msgid "Toggles the NVDA Speech viewer, a floating window that allows you to view all the text that NVDA is currently speaking"
-msgstr "Bật / tắt trình hiển thị nội dung đọc, một cửa sổ hiển thị văn bản của nội dung mà NVDA đang đọc. đang đọc"
+msgstr "Bật / tắt trình hiển thị nội dung đọc, một cửa sổ hiển thị văn bản của nội dung mà NVDA đang đọc"
 
 #. Translators: The message announced when disabling speech viewer.
 #: globalCommands.py:3250
@@ -4892,7 +4892,7 @@ msgstr "Chữ nổi di chuyển dấu nháy hệ thống khi định tuyến con
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 #: globalCommands.py:3345
 msgid "Toggle the way context information is presented in braille"
-msgstr "Bật/tắt cách hiển thị thông tin ngữ cảnh khi thay đổi bằng chữ nổi"
+msgstr "Bật/tắt cách hiển thị thông tin ngữ cảnh trong chữ nổi"
 
 #. Translators: Reports the new state of braille focus context presentation.
 #. %s will be replaced with the context presentation setting.
@@ -4925,7 +4925,7 @@ msgstr "Xoay vòng các kiểu con trỏ Braille"
 #. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
 #: globalCommands.py:3390
 msgid "Braille cursor is turned off"
-msgstr "Con trỏ Braille tắt"
+msgstr "Con trỏ Braille đã tắt"
 
 #. Translators: Reports which braille cursor shape is activated.
 #: globalCommands.py:3406
@@ -4967,7 +4967,7 @@ msgstr "Hiển thị vùng chọn chữ nổi %s"
 #. Translators: Input help mode message for report clipboard text command.
 #: globalCommands.py:3455
 msgid "Reports the text on the Windows clipboard. Pressing twice spells this information. Pressing three times spells it using character descriptions."
-msgstr ""
+msgstr "Thông báo văn bản trong bộ nhớ tạm. Bấm hai lần để đánh vần thông tin. Bấm ba lần để đánh vần bằng kí tự mô tả."
 
 #. Translators: Presented when there is no text on the clipboard.
 #: globalCommands.py:3470
@@ -4981,7 +4981,7 @@ msgstr "Không có dữ liệu trong bộ nhớ tạm"
 #, python-format
 msgid "The clipboard contains a large amount of text. It is %s character long"
 msgid_plural "The clipboard contains a large amount of text. It is %s characters long"
-msgstr[0] ""
+msgstr[0] "Bộ nhớ tạm chứa số lượng văn bản quá lớn. Độ dài là %s kí tự"
 
 #. Translators: Input help mode message for mark review cursor position for a select or copy command
 #. (that is, marks the current review cursor position as the starting point for text to be selected).
@@ -5020,7 +5020,7 @@ msgstr "Bấm hai lần để chép hoặc thiết lập lại điểm bắt đ�
 #. Translators: Presented when there is no text selection to copy from review cursor.
 #: globalCommands.py:3579
 msgid "No text to copy"
-msgstr "Không có nội dung để sao chép"
+msgstr "Không có văn bản để sao chép"
 
 #. Translators: Presented when unable to select the marked text.
 #: globalCommands.py:3601
@@ -5207,7 +5207,7 @@ msgstr "Đã tắt tương tác cảm ứng"
 #. Translators: Input help mode message for a touchscreen gesture.
 #: globalCommands.py:4026
 msgid "Cycles between available touch modes"
-msgstr "Chuyển đổi giữa các chế độ cảm ứng"
+msgstr "Xoay vòng giữa các chế độ cảm ứng"
 
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 #: globalCommands.py:4040
@@ -5238,12 +5238,12 @@ msgstr "đối tượng không có vị trí"
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 #: globalCommands.py:4117
 msgid "Shows the NVDA Configuration Profiles dialog"
-msgstr "Hiển thị hộp thoại cấu hình profile của nVDA"
+msgstr "Hiển thị hộp thoại Hồ Sơ Cấu Hình của NVDA"
 
 #. Translators: Input help mode message for toggle configuration profile triggers command.
 #: globalCommands.py:4127
 msgid "Toggles disabling of all configuration profile triggers. Disabling remains in effect until NVDA is restarted"
-msgstr "Bật/tắt việc vô hiệu hóa tác nhân hồ sơ cấu hình. Việc vô hiệu hóa này sẽ có hiệu lực đến khi NVDA khởi động lại"
+msgstr "Bật/tắt vô hiệu hóa tác nhân hồ sơ cấu hình. Việc vô hiệu hóa này sẽ có hiệu lực đến khi NVDA khởi động lại"
 
 #. Translators: The message announced when temporarily disabling all configuration profile triggers.
 #: globalCommands.py:4136
@@ -5274,7 +5274,7 @@ msgstr "Nhận dạng nội dung tại đối tượng điều hướng bằng W
 #. Translators: Reported when Windows OCR is not available.
 #: globalCommands.py:4177 globalCommands.py:4198
 msgid "Windows OCR not available"
-msgstr "Không có Windows OCR"
+msgstr "Windows OCR không sẵn sàng"
 
 #. Translators: Reported when screen curtain is enabled.
 #: globalCommands.py:4185
@@ -5339,12 +5339,12 @@ msgstr "Không thể bật che màn hình"
 #. Translators: Warning message when trying to enable the screen curtain when OCR is active.
 #: globalCommands.py:4367 visionEnhancementProviders\screenCurtain.py:291
 msgid "Could not enable screen curtain when performing content recognition"
-msgstr "Không thể bật che màn hình khi đang nhận dạng nội dung"
+msgstr "Không thể bật che màn hình khi đang thực hiện nhận dạng nội dung"
 
 #. Translators: Describes a command.
 #: globalCommands.py:4375
 msgid "Cycles through paragraph navigation styles"
-msgstr "Chuyển giữa các kiểu điều hướng đoạn"
+msgstr "Xoay vòng các kiểu điều hướng đoạn"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -5401,7 +5401,7 @@ msgstr "Trang web NVDA"
 #. Translators: A label for a shortcut item in start menu to uninstall NVDA from the computer.
 #: installer.py:426
 msgid "Uninstall NVDA"
-msgstr "Gỡ bỏ NVDA"
+msgstr "Gỡ cài đặt NVDA"
 
 #. Translators: A label for a shortcut item in start menu to open current user's NVDA configuration directory.
 #: installer.py:436
@@ -5531,7 +5531,7 @@ msgstr "xóa lùi"
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:54
 msgid "caps lock"
-msgstr "phím khóa hoa"
+msgstr "khóa hoa"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:56
@@ -6163,7 +6163,7 @@ msgstr "Mũi tên trái cong"
 #: msoAutoShapeTypes.py:291
 msgctxt "shape"
 msgid "Curved Right Arrow"
-msgstr "Mũi tên phải congMũi tên phải"
+msgstr "Mũi tên phải cong"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6373,7 +6373,7 @@ msgstr "Biểu tượng sơ đồ hợp nhất"
 #: msoAutoShapeTypes.py:387
 msgctxt "shape"
 msgid "Multi-document flowchart symbol"
-msgstr "Biểu tượng sơ đồ nhiều tài lieu"
+msgstr "Biểu tượng sơ đồ nhiều tài liệu"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6576,28 +6576,28 @@ msgstr "Mũi tên tròn ngược chiều kim đồng hồ"
 #: msoAutoShapeTypes.py:474
 msgctxt "shape"
 msgid "Double-ended horizontal Arrow"
-msgstr ""
+msgstr "Mũi tên ngang hai đầu"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:477
 msgctxt "shape"
 msgid "Callout with Double-ended horizontal Arrow"
-msgstr ""
+msgstr "Chú thích bằng Mũi tên ngang hai đầu"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:480
 msgctxt "shape"
 msgid "Double-ended Circular arrow"
-msgstr ""
+msgstr "Mũi tên tròn hai đầu"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:483
 msgctxt "shape"
 msgid "Ribbon with left and right arrows"
-msgstr ""
+msgstr "Ribbon với mũi tên trái và phải"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6618,28 +6618,28 @@ msgstr "Mũi tên lên trái"
 #: msoAutoShapeTypes.py:492
 msgctxt "shape"
 msgid "Lightning bolt"
-msgstr ""
+msgstr "Tia chớp"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:495
 msgctxt "shape"
 msgid "Line Callout"
-msgstr ""
+msgstr "Chú thích dòng"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:498
 msgctxt "shape"
 msgid "Callout with horizontal accent bar"
-msgstr ""
+msgstr "Chú thích có thanh dấu ngang"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:501
 msgctxt "shape"
 msgid "Callout with border and horizontal accent bar"
-msgstr ""
+msgstr "Chú thích có đường viền và thanh dấu ngang"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6660,77 +6660,77 @@ msgstr "Callout with border, diagonal straight line and accent bar"
 #: msoAutoShapeTypes.py:510
 msgctxt "shape"
 msgid "Callout with diagonal callout line and accent bar"
-msgstr ""
+msgstr "Chú thích với đường chú thích chéo và thanh nhấn"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:513
 msgctxt "shape"
 msgid "Callout with border, diagonal straight line and accent bar"
-msgstr ""
+msgstr "Chú thích có đường viền, đường thẳng chéo và thanh nhấn"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:516
 msgctxt "shape"
 msgid "Callout with no border and diagonal callout line"
-msgstr ""
+msgstr "Chú thích không có đường viền và đường chú thích chéo"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:519
 msgctxt "shape"
 msgid "Callout with angled line"
-msgstr ""
+msgstr "Chú thích với đường góc cạnh"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:522
 msgctxt "shape"
 msgid "Callout with angled callout line and accent bar"
-msgstr ""
+msgstr "Chú thích với dòng chú thích góc cạnh và thanh nhấn"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:525
 msgctxt "shape"
 msgid "Callout with border, angled callout line, and accent bar"
-msgstr ""
+msgstr "Chú thích có đường viền, đường chú thích góc cạnh và thanh dấu"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:528
 msgctxt "shape"
 msgid "Callout with no border and angled callout line"
-msgstr ""
+msgstr "Chú thích không có đường viền và dòng chú thích góc cạnh"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:531
 msgctxt "shape"
 msgid "Callout with callout line segments forming a U-shape"
-msgstr ""
+msgstr "Chú thích có các đoạn dòng chú thích tạo thành hình chữ U"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:534
 msgctxt "shape"
 msgid "Callout with accent bar and callout line segments forming a U-shape"
-msgstr ""
+msgstr "Chú thích có thanh dấu và các đoạn dòng chú thích tạo thành hình chữ U"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:537
 msgctxt "shape"
 msgid "Callout with border, accent bar, and callout line segments forming a U-shape"
-msgstr ""
+msgstr "Chú thích có đường viền, thanh dấu và các đoạn dòng chú thích tạo thành hình chữ U"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:540
 msgctxt "shape"
 msgid "Callout with no border and callout line segments forming a U-shape"
-msgstr ""
+msgstr "Chú thích không có đường viền và các đoạn dòng chú thích tạo thành hình chữ U"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6793,7 +6793,7 @@ msgstr "Mặt trăng"
 #: msoAutoShapeTypes.py:567
 msgctxt "shape"
 msgid "Trapezoid with asymmetrical non-parallel sides"
-msgstr ""
+msgstr "Hình thang có các cạnh không song song không đối xứng"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6807,7 +6807,7 @@ msgstr "Ký hiệu 'không'"
 #: msoAutoShapeTypes.py:573
 msgctxt "shape"
 msgid "Notched RightArrow"
-msgstr ""
+msgstr "Mũi tên phải có khía"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6828,7 +6828,7 @@ msgstr "Ô-van"
 #: msoAutoShapeTypes.py:582
 msgctxt "shape"
 msgid "Oval-shaped callout"
-msgstr ""
+msgstr "Chú thích hình bầu dục"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6849,42 +6849,42 @@ msgstr "Ngũ giác"
 #: msoAutoShapeTypes.py:591
 msgctxt "shape"
 msgid "Incomplete Pie with wedge missing"
-msgstr ""
+msgstr "Chiếc bánh chưa hoàn thiện bị thiếu nêm"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:594
 msgctxt "shape"
 msgid "Quarter Pie Wedge"
-msgstr ""
+msgstr "Nêm bánh quý"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:597
 msgctxt "shape"
 msgid "Plaque"
-msgstr ""
+msgstr "Mảng bám"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:600
 msgctxt "shape"
 msgid "Plaque Tabs"
-msgstr ""
+msgstr "Thẻ mảng bám"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:603
 msgctxt "shape"
 msgid "Arrows pointing left right up and down"
-msgstr ""
+msgstr "Mũi tên chỉ trái phải lên và xuống"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:606
 msgctxt "shape"
 msgid "Callout with Arrows pointing left right up and down"
-msgstr ""
+msgstr "Chú thích có Mũi tên chỉ trái phải lên và xuống"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6912,7 +6912,7 @@ msgstr "Mũi tên phải"
 #: msoAutoShapeTypes.py:621
 msgctxt "shape"
 msgid "Callout with Right Arrow"
-msgstr ""
+msgstr "Chú thích bằng mũi tên phải"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6954,21 +6954,21 @@ msgstr "Hình chữ nhật với hai góc tròn"
 #: msoAutoShapeTypes.py:639
 msgctxt "shape"
 msgid "Rectangle with two-rounded corners that share a side"
-msgstr ""
+msgstr "Hình chữ nhật có hai góc tròn có chung một cạnh"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:642
 msgctxt "shape"
 msgid "Rounded rectangle"
-msgstr ""
+msgstr "Hình chữ nhật tròn"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:645
 msgctxt "shape"
 msgid "Rounded rectangle-shaped callout"
-msgstr ""
+msgstr "Chú thích hình chữ nhật tròn"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6982,42 +6982,42 @@ msgstr "Mặc cười"
 #: msoAutoShapeTypes.py:651
 msgctxt "shape"
 msgid "Rectangle with one snipped corner"
-msgstr ""
+msgstr "Hình chữ nhật bị cắt một góc"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:654
 msgctxt "shape"
 msgid "Rectangle with two snipped corners diagonally-opposed"
-msgstr ""
+msgstr "Hình chữ nhật có hai góc cắt chéo đối nhau"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:657
 msgctxt "shape"
 msgid "Rectangle with two snipped corners that share a side"
-msgstr ""
+msgstr "Hình chữ nhật có hai góc bị cắt có chung một cạnh"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:660
 msgctxt "shape"
 msgid "Rectangle with one snipped corner and one rounded corner"
-msgstr ""
+msgstr "Hình chữ nhật có một góc được cắt bớt và một góc được bo tròn"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:663
 msgctxt "shape"
 msgid "Four small squares that define a rectangular shape"
-msgstr ""
+msgstr "Bốn hình vuông nhỏ xác định hình chữ nhật"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:666
 msgctxt "shape"
 msgid "Right Arrow with Stripes"
-msgstr ""
+msgstr "Mũi tên phải có sọc"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -7045,7 +7045,7 @@ msgstr "Giọt nước"
 #: msoAutoShapeTypes.py:678
 msgctxt "shape"
 msgid "Trapezoid"
-msgstr ""
+msgstr "Hình thang"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -7059,28 +7059,28 @@ msgstr "Mũi tên lên"
 #: msoAutoShapeTypes.py:684
 msgctxt "shape"
 msgid "Callout with UpArrow"
-msgstr ""
+msgstr "Chú thích với mũi tên lên"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:687
 msgctxt "shape"
 msgid "Double-ended Arrow pointing up and down"
-msgstr ""
+msgstr "Mũi tên hai đầu chỉ lên và xuống"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:690
 msgctxt "shape"
 msgid "Callout with arrows that point up and down"
-msgstr ""
+msgstr "Chú thích có mũi tên hướng lên và xuống"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 #: msoAutoShapeTypes.py:696
 msgctxt "shape"
 msgid "U-shaped Arrow"
-msgstr ""
+msgstr "Mũi tên hình chữ U"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -7213,7 +7213,7 @@ msgstr "Trình Hiển Thị Nội Dung Đọc NVDA"
 #. whether the speech viewer is shown at startup or not.
 #: speechViewer.py:94
 msgid "&Show Speech Viewer on Startup"
-msgstr "&Hiển thị trình hiển thị nội dung đọc khi khởi động"
+msgstr "&Hiện trình hiển thị nội dung đọc khi khởi động"
 
 #. Translators: Label for a setting in voice settings dialog.
 #: synthDriverHandler.py:125
@@ -7449,7 +7449,7 @@ msgstr[0] "kí tự %d"
 #: ui.py:182
 #, python-brace-format
 msgid "Copied to clipboard: {text}"
-msgstr "Đã chép lên bộ nhớ tạm: {text}"
+msgstr "Đã chép vào bộ nhớ tạm: {text}"
 
 #. Translators: Displayed in braille when a text has been copied to clipboard.
 #. {text} is replaced by the copied text.
@@ -7461,12 +7461,12 @@ msgstr "Đã chép: {text}"
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 #: updateCheck.py:286
 msgid "Checking for Update"
-msgstr "Đang kiểm tra phiên bản mới"
+msgstr "Đang kiểm tra cập nhật"
 
 #. Translators: The progress message displayed while manually checking for an NVDA update.
 #: updateCheck.py:288
 msgid "Checking for update"
-msgstr "Đang kiểm tra phiên bản mới"
+msgstr "Đang kiểm tra cập nhật"
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 #: updateCheck.py:295
@@ -7482,7 +7482,7 @@ msgstr "Cập nhật NVDA"
 #. Translators: A message indicating that no update to NVDA is available.
 #: updateCheck.py:375
 msgid "No update available."
-msgstr "Không có phiên bản mới."
+msgstr "Không có bản cập nhật nào."
 
 #. Translators: A message indicating that an updated version of NVDA has been downloaded
 #. and is pending to be installed.
@@ -7600,7 +7600,7 @@ msgstr "&Tài trợ"
 #. in the "Please Donate" dialog.
 #: updateCheck.py:764
 msgid "&Not now"
-msgstr "&Chưa tài trợ lúc này"
+msgstr "&Chưa phải lúc này"
 
 #. Translators: The label of a button to indicate that the user is finished donating
 #. in the "Please Donate" dialog.
@@ -7806,7 +7806,7 @@ msgstr "Không tương thích"
 #: addonStore\models\status.py:97
 msgctxt "addonStore"
 msgid "Downloading"
-msgstr "Đang tải xuống"
+msgstr "Đang tải về"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:99
@@ -7989,7 +7989,7 @@ msgstr "Cố gắng đọc tài liệu cho mục tự hoàn thành đã chọn."
 #. Translators: When the help popup cannot be found for the selected autocompletion item
 #: appModules\eclipse.py:115
 msgid "Can't find the documentation window."
-msgstr "Không tìm thấy cửa sổ tài lieu."
+msgstr "Không tìm thấy cửa sổ tài liệu."
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 #: appModules\foobar2000.py:147
@@ -8023,7 +8023,7 @@ msgstr "Thông báo thời gian đã phát của bản nhạc hiện tại, nế
 #: appModules\foobar2000.py:187
 #, python-brace-format
 msgid "{elapsedTime} elapsed"
-msgstr "đẫ qua {elapsedTime}"
+msgstr "đã qua {elapsedTime}"
 
 #. Translators: Reported if the elapsed time is not available in Foobar2000
 #: appModules\foobar2000.py:190
@@ -8067,12 +8067,12 @@ msgstr "Trang {pageNumber}"
 #. Translators: Reported when text is highlighted.
 #: appModules\kindle.py:300
 msgid "highlight"
-msgstr "đánh dấu"
+msgstr "làm nổi"
 
 #. Translators: Reported when text is not highlighted.
 #: appModules\kindle.py:302
 msgid "no highlight"
-msgstr "chưa đánh dấu"
+msgstr "chưa làm nổi"
 
 #. Translators: Reported in Kindle when text has been identified as a popular highlight;
 #. i.e. it has been highlighted by several people.
@@ -8080,12 +8080,12 @@ msgstr "chưa đánh dấu"
 #: appModules\kindle.py:312
 #, python-format
 msgid "%s highlighted"
-msgstr "Lượt đánh dấu %s"
+msgstr "Đã làm nổi %s"
 
 #. Translators: Reported when moving out of a popular highlight.
 #: appModules\kindle.py:314
 msgid "out of popular highlight"
-msgstr "hết phần đánh dấu chung"
+msgstr "hết phần làm nổi chung"
 
 #. Translators: The name of a category of NVDA commands.
 #: appModules\miranda32.py:26
@@ -8111,7 +8111,7 @@ msgstr "có đính kèm"
 #. Translators: this Outlook Express message is flagged
 #: appModules\msimn.py:23
 msgid "flagged"
-msgstr "đã đọc"
+msgstr "bị gắn cờ"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 #: appModules\msimn.py:29
@@ -8192,7 +8192,7 @@ msgstr "Python Console"
 #. Translators: Description of a command to clear the Python Console output pane
 #: appModules\nvda.py:71
 msgid "Clear the output pane"
-msgstr "Xóa đầu ra"
+msgstr "Xóa bản đầu ra"
 
 #. Translators: Description of a message spoken when clearing the Python Console output pane
 #: appModules\nvda.py:78
@@ -8274,7 +8274,7 @@ msgstr "đính kèm"
 #: appModules\outlook.py:97
 #, python-format
 msgid "sent: %s"
-msgstr "đã gửi vào: %s"
+msgstr "đã gửi: %s"
 
 #. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 #: appModules\outlook.py:129
@@ -8310,7 +8310,7 @@ msgstr "Buổi hẹn {subject}, {time}"
 #. Translators: a message when the current time slot on an Outlook Calendar has an appointment
 #: appModules\outlook.py:429
 msgid "Has appointment"
-msgstr "Có buội hẹn"
+msgstr "Có buổi hẹn"
 
 #. Translators: the email is a meeting request
 #: appModules\outlook.py:493
@@ -8345,7 +8345,7 @@ msgstr "Không tìm thấy cửa sổ {description}."
 #: appModules\poedit.py:149
 msgctxt "poedit"
 msgid "Reports any notes for translators. If pressed twice, presents the notes in browse mode"
-msgstr ""
+msgstr "Thông báo chú thích cho người phiên dịch. Nếu bấm hai lần, sẽ hiển thị trong chế độ duyệt"
 
 #. Translators: The description of the "Translator notes" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
@@ -8358,7 +8358,7 @@ msgstr "lưu ý cho người phiên dịch"
 #: appModules\poedit.py:175
 msgctxt "poedit"
 msgid "Reports any comment in the comments window. If pressed twice, presents the comment in browse mode"
-msgstr ""
+msgstr "Thông báo chú thích trong cửa sổ chú thích. Bấm hai lần để hiển thị trong chế độ duyệt"
 
 #. Translators: The description of the "comment" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
@@ -8371,7 +8371,7 @@ msgstr "chú thích"
 #: appModules\poedit.py:202
 msgctxt "poedit"
 msgid "Reports the old source text, if any. If pressed twice, presents the text in browse mode"
-msgstr ""
+msgstr "Thông báo văn bản nguồn cũ nếu có. Bấm hai lần để hiển thị trong chế độ duyệt"
 
 #. Translators: The description of the "old source text" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
@@ -8384,7 +8384,7 @@ msgstr "văn bản nguồn cũ"
 #: appModules\poedit.py:226
 msgctxt "poedit"
 msgid "Reports a translation warning, if any. If pressed twice, presents the warning in browse mode"
-msgstr ""
+msgstr "Thông báo cảnh báo phiên dịch. Bấm hai lần để hiển thị cảnh báo này ở chế độ duyệt"
 
 #. Translators: The description of the "translation warning" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
@@ -8406,7 +8406,7 @@ msgstr "Phần tiêu đề"
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 #: appModules\powerpnt.py:121
 msgid "Text placeholder"
-msgstr "Phần nội dung"
+msgstr "Phần văn bản"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 #: appModules\powerpnt.py:123
@@ -8426,7 +8426,7 @@ msgstr "Phần tiêu đề dọc"
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 #: appModules\powerpnt.py:129
 msgid "Vertical Text placeholder"
-msgstr "Phần nội dung dọc"
+msgstr "Phần văn bản dọc"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 #: appModules\powerpnt.py:131
@@ -8491,7 +8491,7 @@ msgstr "Phần hình ảnh"
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 #: appModules\powerpnt.py:178
 msgid "Slide view"
-msgstr "Hiển thị slide"
+msgstr "Dạng xem slide"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 #: appModules\powerpnt.py:180
@@ -8506,7 +8506,7 @@ msgstr "Trang chú thích"
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 #: appModules\powerpnt.py:184
 msgid "Handout Master view"
-msgstr ""
+msgstr "Dạng xem Handout Master"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 #: appModules\powerpnt.py:186
@@ -8564,56 +8564,56 @@ msgstr "mục khác"
 #, python-brace-format
 msgid "covers left of {otherShape} by {distance:.3g} point"
 msgid_plural "covers left of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "bên trái của {otherShape} {distance:.3g} điểm"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:602
 #, python-brace-format
 msgid "behind left of {otherShape} by {distance:.3g} point"
 msgid_plural "behind left of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "phía sau bên trái của {otherShape} {distance:.3g} điểm"
 
 #. Translators: A message when a shape is in front of another shape on a PowerPoint slide
 #: appModules\powerpnt.py:612
 #, python-brace-format
 msgid "covers top of {otherShape} by {distance:.3g} point"
 msgid_plural "covers top of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "ở trên của {otherShape} {distance:.3g} điểm"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:619
 #, python-brace-format
 msgid "behind top of {otherShape} by {distance:.3g} point"
 msgid_plural "behind top of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "phía sau ở trên của {otherShape} {distance:.3g} điểm"
 
 #. Translators: A message when a shape is in front of another shape on a PowerPoint slide
 #: appModules\powerpnt.py:629
 #, python-brace-format
 msgid "covers right of {otherShape} by {distance:.3g} point"
 msgid_plural "covers right of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "bên phải của {otherShape} {distance:.3g} điểm"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:636
 #, python-brace-format
 msgid "behind right of {otherShape} by {distance:.3g} point"
 msgid_plural "behind right of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "phía sau bên phải của {otherShape} {distance:.3g} điểm"
 
 #. Translators: A message when a shape is in front of another shape on a PowerPoint slide
 #: appModules\powerpnt.py:646
 #, python-brace-format
 msgid "covers bottom of {otherShape} by {distance:.3g} point"
 msgid_plural "covers bottom of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "phía dưới của {otherShape} {distance:.3g} điểm"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:653
 #, python-brace-format
 msgid "behind bottom of {otherShape} by {distance:.3g} point"
 msgid_plural "behind bottom of {otherShape} by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "phía sau dưới {otherShape} {distance:.3g} điểm"
 
 #. Translators: A message when a shape is in front of another shape on a PowerPoint slide
 #: appModules\powerpnt.py:660
@@ -8625,7 +8625,7 @@ msgstr "bao phủ {otherShape}"
 #: appModules\powerpnt.py:663
 #, python-brace-format
 msgid "behind {otherShape}"
-msgstr "ản {otherShape}"
+msgstr "phía sau {otherShape}"
 
 #. Translators: For a shape within a PowerPoint Slide, this is the distance in points from the shape's
 #. left edge to the slide's left edge
@@ -8633,7 +8633,7 @@ msgstr "ản {otherShape}"
 #, python-brace-format
 msgid "{distance:.3g} point from left slide edge"
 msgid_plural "{distance:.3g} points from left slide edge"
-msgstr[0] ""
+msgstr[0] "{distance:.3g} điểm từ cạnh trái slide"
 
 #. Translators: For a shape too far off the left edge of a PowerPoint Slide, this is the distance in
 #. points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
@@ -8641,7 +8641,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "Off left slide edge by {distance:.3g} point"
 msgid_plural "Off left slide edge by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "Cách xa cạnh trái slide {distance:.3g} điểm"
 
 #. Translators: For a shape within a PowerPoint Slide, this is the distance in points from the shape's
 #. top edge to the slide's top edge
@@ -8649,7 +8649,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "{distance:.3g} point from top slide edge"
 msgid_plural "{distance:.3g} points from top slide edge"
-msgstr[0] ""
+msgstr[0] "{distance:.3g} điểm từ cạnh trên của slide"
 
 #. Translators: For a shape too far off the top edge of a PowerPoint Slide, this is the distance in
 #. points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
@@ -8657,7 +8657,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "Off top slide edge by {distance:.3g} point"
 msgid_plural "Off top slide edge by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "Cách xa cạnh trên slide {distance:.3g} điểm"
 
 #. Translators: For a shape within a PowerPoint Slide, this is the distance in points from the shape's
 #. right edge to the slide's right edge
@@ -8665,7 +8665,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "{distance:.3g} point from right slide edge"
 msgid_plural "{distance:.3g} points from right slide edge"
-msgstr[0] ""
+msgstr[0] "{distance:.3g} điểm từ cạnh phải của slide"
 
 #. Translators: For a shape too far off the right edge of a PowerPoint Slide, this is the distance in
 #. points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
@@ -8673,7 +8673,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "Off right slide edge by {distance:.3g} point"
 msgid_plural "Off right slide edge by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "Cách xa cạnh phải slide {distance:.3g} điểm"
 
 #. Translators: For a shape within a PowerPoint Slide, this is the distance in points from the shape's
 #. bottom edge to the slide's bottom edge
@@ -8681,7 +8681,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "{distance:.3g} point from bottom slide edge"
 msgid_plural "{distance:.3g} points from bottom slide edge"
-msgstr[0] ""
+msgstr[0] "{distance:.3g} điểm từ cạnh dưới của slide"
 
 #. Translators: For a shape too far off the bottom edge of a PowerPoint Slide, this is the distance in
 #. points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
@@ -8689,7 +8689,7 @@ msgstr[0] ""
 #, python-brace-format
 msgid "Off bottom slide edge by {distance:.3g} point"
 msgid_plural "Off bottom slide edge by {distance:.3g} points"
-msgstr[0] ""
+msgstr[0] "Cách xa cạnh dưới slide {distance:.3g} điểm"
 
 #. Translators: The description for a script
 #: appModules\powerpnt.py:1188
@@ -8745,14 +8745,14 @@ msgstr "{firstAddress} qua {lastAddress}"
 #, python-brace-format
 msgid "{val:.2f} inch"
 msgid_plural "{val:.2f} inches"
-msgstr[0] ""
+msgstr[0] "{val:.2f} inch"
 
 #. Translators: a measurement in centimetres
 #: appModules\soffice.py:374
 #, python-brace-format
 msgid "{val:.2f} centimetre"
 msgid_plural "{val:.2f} centimetres"
-msgstr[0] ""
+msgstr[0] "{val:.2f} centimetre"
 
 #. Translators: LibreOffice, report cursor position in the current page
 #: appModules\soffice.py:393
@@ -8771,7 +8771,7 @@ msgstr "phải"
 #. Translators: The name of a category of NVDA commands.
 #: appModules\vipmud.py:18
 msgid "VipMud"
-msgstr ""
+msgstr "VipMud"
 
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 #: appModules\winamp.py:79
@@ -9166,13 +9166,13 @@ msgstr "Nhận dạng không thành công"
 #. Translators: Reported when recognition (e.g. OCR) fails during automatic refresh.
 #: contentRecog\recogUi.py:171
 msgid "Automatic refresh of recognition result failed"
-msgstr "Quá trình tự cập nhật kết quả nhận dạng bị lỗi"
+msgstr "Quá trình tự cập nhật kết quả nhận dạng bị thất bại"
 
 #. Translators: Reported when content recognition (e.g. OCR) is attempted,
 #. but the user is already reading a content recognition result.
 #: contentRecog\recogUi.py:211
 msgid "Already in a content recognition result"
-msgstr "Đã có trong kết quả nhận dạng dạng nội dung"
+msgstr "Đã có trong kết quả nhận dạng nội dung"
 
 #. Translators: Reported when content recognition (e.g. OCR) is attempted,
 #. but the content is not visible.
@@ -9334,7 +9334,7 @@ msgstr "căn giữa qua nhiều ô"
 #. alignment in Excel aligning the cell's content depending on its type: text left and numbers right.
 #: controlTypes\formatFields.py:143
 msgid "align general"
-msgstr "căn cơ bản"
+msgstr "căn lề cơ bản"
 
 #. Translators: Reported in Excel when text is formatted with "Fill" alignment, i.e. the name of the
 #. alignment in Excel repeating the cell's content for the width of the cell.
@@ -9510,7 +9510,7 @@ msgstr "mục trên cây thư mục"
 #: controlTypes\role.py:255
 msgctxt "controlType"
 msgid "tab"
-msgstr "tab"
+msgstr "thẻ"
 
 #. Translators: Identifies a tab control such as webpage tabs in web browsers.
 #: controlTypes\role.py:257
@@ -9734,7 +9734,7 @@ msgstr "đối tượng nhúng"
 #. Translators: Identifies an end note.
 #: controlTypes\role.py:348
 msgid "end note"
-msgstr "chú thích kết thúc"
+msgstr "chú thích cuối"
 
 #. Translators: Identifies a footer (usually text).
 #: controlTypes\role.py:350
@@ -9817,7 +9817,7 @@ msgstr "terminal"
 #. addition to text; encountered on webpages and NvDA log viewer).
 #: controlTypes\role.py:383
 msgid "rich edit"
-msgstr "vùng nhập liệu có thuộc tính"
+msgstr "vùng nhập liệu đa dạng thức"
 
 #. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
 #: controlTypes\role.py:385
@@ -10148,7 +10148,7 @@ msgstr "hình giáng"
 #. Translators: Identifies marked (highlighted) content
 #: controlTypes\role.py:523
 msgid "highlighted"
-msgstr "đã đánh dấu"
+msgstr "đã làm nổi"
 
 #. Translators: Identifies a progress bar with indeterminate state, I.E. progress can not be determined.
 #: controlTypes\role.py:525
@@ -10228,7 +10228,7 @@ msgstr "chỉ đọc"
 #. Translators: This is presented when a tree view or submenu item is expanded.
 #: controlTypes\state.py:130
 msgid "expanded"
-msgstr "đã mở"
+msgstr "đã mở rộng"
 
 #. Translators: This is presented when a tree view or submenu is collapsed.
 #: controlTypes\state.py:132
@@ -10269,7 +10269,7 @@ msgstr "bắt buộc"
 #. i.e. it is dead and is no longer usable.
 #: controlTypes\state.py:147
 msgid "defunct"
-msgstr "hông tồn tại"
+msgstr "không tồn tại"
 
 #. Translators: This is presented when an invalid entry has been made.
 #: controlTypes\state.py:149
@@ -10396,7 +10396,7 @@ msgstr "mở khóa"
 #. Translators: a state that denotes the existence of a note.
 #: controlTypes\state.py:195
 msgid "has note"
-msgstr "có chú thích"
+msgstr "có ghi chú"
 
 #. Translators: Presented when a control has a pop-up dialog.
 #: controlTypes\state.py:200
@@ -10618,7 +10618,7 @@ msgstr "&Từ điển mặc định..."
 #. Translators: The help text for the menu item to open Default speech dictionary dialog.
 #: gui\__init__.py:606
 msgid "A dialog where you can set default dictionary by adding dictionary entries to the list"
-msgstr "Hộp Thoại cho phép bạn tạo ra từ điển mặc định"
+msgstr "Hộp Thoại cho phép bạn tạo ra từ điển mặc định bằng cách thêm từ vào danh sách"
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
 #: gui\__init__.py:612
@@ -10629,7 +10629,7 @@ msgstr "Từ điển &giọng đọc..."
 #. to open Voice specific speech dictionary dialog.
 #: gui\__init__.py:616
 msgid "A dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
-msgstr "Hộp thoại cho phép bạn thiết lập từ điển cho giọng đọc cụ thể bằng cách thêm mục từ vào danh sách"
+msgstr "Hộp thoại cho phép bạn thiết lập từ điển cho giọng đọc cụ thể bằng cách thêm từ vào danh sách"
 
 #. Translators: The label for the menu item to open Temporary speech dictionary dialog.
 #: gui\__init__.py:624
@@ -10639,7 +10639,7 @@ msgstr "&Từ điển tạm..."
 #. Translators: The help text for the menu item to open Temporary speech dictionary dialog.
 #: gui\__init__.py:626
 msgid "A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
-msgstr "Hộp thoại cho phép bạn thiết lập từ điển tạm thời cho một lần chạy"
+msgstr "Hộp thoại cho phép bạn thiết lập từ điển tạm thời bằng cách thêm từ vào hộp chỉnh sửa"
 
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
 #: gui\__init__.py:634
@@ -10779,7 +10779,7 @@ msgstr "&Thông tin về Add - on..."
 #: gui\addonGui.py:72 gui\startupDialogs.py:303
 #: visionEnhancementProviders\screenCurtain.py:180
 msgid "&Yes"
-msgstr "Đồng ý"
+msgstr "Đồ&ng ý"
 
 #. Translators: A button in the addon installation warning dialog which allows the user to decide not to
 #. install the add-on
@@ -10789,11 +10789,11 @@ msgstr "Đồng ý"
 #: gui\addonGui.py:82 gui\startupDialogs.py:307
 #: visionEnhancementProviders\screenCurtain.py:189
 msgid "&No"
-msgstr "Không"
+msgstr "&Không"
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
-#: gui\addonGui.py:110 gui\nvdaControls.py:258
+#: gui\addonGui.py:110 gui\nvdaControls.py:261
 msgid "OK"
 msgstr "Đồng ý"
 
@@ -10808,14 +10808,14 @@ msgstr "Lỗi khi mở tập tin Add-on%s - Tập tin không tồn tại hoặc 
 #. Translators: Title for message asking if the user really wishes to install an Addon.
 #: gui\addonGui.py:172 gui\addonStoreGui\controls\messageDialogs.py:247
 msgid "Add-on Installation"
-msgstr "Cài Add-on"
+msgstr "Cài Đặt Add-on"
 
 #. Translators: A message asking if the user wishes to update an add-on with the same version
 #. currently installed according to the version number.
 #: gui\addonGui.py:177
 #, python-brace-format
 msgid "You are about to install version {newVersion} of {summary}, which appears to be already installed. Would you still like to update?"
-msgstr "Bạn đang muốn cài đặt phiên bản {newVersion} của {summary}, mà hiện nó đã được cài trên máy. Bạn có muốn tiếp tục cập nhật không?"
+msgstr "Bạn đang muốn cài đặt phiên bản {newVersion} của {summary}, hiện đã được cài trên máy. Bạn có muốn tiếp tục cập nhật không?"
 
 #. Translators: A message asking if the user wishes to update a previously installed
 #. add-on with this one.
@@ -11102,7 +11102,7 @@ msgstr "Lỗi tạo hồ sơ - có thể hệ thống không cho phép ghi lên 
 #: gui\configProfiles.py:497
 msgid "To edit this profile, you will need to manually activate it. Once you have finished editing, you will need to manually deactivate it to resume normal usage.\n"
 "Do you wish to manually activate it now?"
-msgstr "Nếu muốn sửa hồ sơ này, bạn cần phải kích hoạt thủ công nó. Sau khi sửa xong, cần phải bỏ kích hoạt thủ công để phục hồi nó về trạng thái sử dụng bình thường.\n"
+msgstr "Để sửa hồ sơ này, bạn cần phải kích hoạt thủ công nó. Sau khi sửa xong, cần phải bỏ kích hoạt thủ công để phục hồi nó về trạng thái sử dụng bình thường.\n"
 "Bạn có muốn kích hoạt thủ không nó không?"
 
 #. Translators: The title of the confirmation dialog for manual activation of a created profile.
@@ -11359,7 +11359,7 @@ msgstr "&tiếp tục"
 #. to an older version.
 #: gui\installerGui.py:299
 msgid "You are attempting to install an earlier version of NVDA than the version currently installed. If you really wish to revert to an earlier version, you should first cancel this installation and completely uninstall NVDA before installing the earlier version."
-msgstr "Bạn đang cố gang cài phiên bản cũ hơn phiên bản NVDA hiện tại đang chạy. Nếu bạn thật sự muốn cài phiên bản cũ, trước hết bạn hủy hộp thoại cài đặt này, tháo cài đặt phiên bản NVDA hiện tại và cài phiên bản cũ."
+msgstr "Bạn đang nỗ lực cài phiên bản cũ hơn phiên bản NVDA hiện đang được cài đặt. Nếu bạn thật sự muốn cài phiên bản cũ, trước hết hãy hủy hộp thoại cài đặt này, gỡ cài đặt phiên bản NVDA hiện tại và cài phiên bản cũ."
 
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
@@ -11375,7 +11375,7 @@ msgstr "Tạo Bản NVDA chạy trực tiếp"
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
 #: gui\installerGui.py:357
 msgid "To create a portable copy of NVDA, please select the path and other options and then press Continue"
-msgstr "Để tạo bản NVDA chạy trực tiếp, chọn đường dẫn và các tùy chọn khác, sau đó kích hoạt nút Tiếp tục"
+msgstr "Để tạo bản NVDA chạy trực tiếp, chọn đường dẫn và các tùy chọn khác, sau đó bấm nút Tiếp tục"
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
@@ -11419,7 +11419,7 @@ msgstr "Vui lòng nhập đường dẫn chính xác để tạo bản chạy tr
 #. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 #: gui\installerGui.py:455
 msgid "Creating Portable Copy"
-msgstr "Đang Tạo Bản NVDA chạy trực tiếp"
+msgstr "Đang Tạo Bản chạy trực tiếp"
 
 #. Translators: The message displayed while a portable copy of NVDA is being created.
 #: gui\installerGui.py:457
@@ -11482,7 +11482,7 @@ msgid "Log is unavailable"
 msgstr "Log không hoạt động"
 
 #. Translators: A cancel button on a message dialog.
-#: gui\nvdaControls.py:267
+#: gui\nvdaControls.py:270
 msgid "Cancel"
 msgstr "Hủy bỏ"
 
@@ -11490,7 +11490,7 @@ msgstr "Hủy bỏ"
 #. Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'
 #. The placeholder {} is replaced with the label of the option which describes current default behavior
 #. in NVDA. EG "Default (Yes)".
-#: gui\nvdaControls.py:538
+#: gui\nvdaControls.py:541
 msgid "Default ({})"
 msgstr "Mặc định ({})"
 
@@ -11588,7 +11588,7 @@ msgstr "Dùng NVDA trong khi đăng nhập ( yêu cầu quyền quản trị)"
 #. Control (UAC) dialog).
 #: gui\settingsDialogs.py:865
 msgid "Use currently saved settings during sign-in and on secure screens (requires administrator privileges)"
-msgstr "Sử dụng cấu hình hiện tại trong khi đăng nhập và các màn hình bảo vệ (yêu cầu quyền quản trị)"
+msgstr "Dùng cấu hình hiện tại trong khi đăng nhập và các màn hình bảo vệ (yêu cầu quyền quản trị)"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 #: gui\settingsDialogs.py:876
@@ -11604,7 +11604,7 @@ msgstr "Báo bản &cập nhật đang chờ khi khởi động"
 #. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
 #: gui\settingsDialogs.py:894
 msgid "Allow NV Access to gather NVDA usage statistics"
-msgstr ""
+msgstr "Cho phép dự án NVDA thu thập thống kê sử dụng NVDA"
 
 #. Translators: A message to warn the user when attempting to copy current
 #. settings to system settings.
@@ -11626,7 +11626,7 @@ msgstr "Vui long chờ trong khi đang sao chép các thiết lập vào cấu h
 #. Translators: a message dialog asking to retry or cancel when copying settings  fails
 #: gui\settingsDialogs.py:936
 msgid "Unable to copy a file. Perhaps it is currently being used by another process or you have run out of disc space on the drive you are copying to."
-msgstr "Không thể copy được tập tin này."
+msgstr "Không thể sao chép được tập tin này. Nó đang được dùng bởi một chương trình khác hoặc ổ đĩa đang sao chép đến đã bị đầy."
 
 #. Translators: the title of a retry cancel dialog when copying settings  fails
 #: gui\settingsDialogs.py:938
@@ -11759,22 +11759,22 @@ msgstr "Sử dụng chức năng đánh &vần nếu có hỗ trợ"
 #. Translators: Label of the list where user can select speech modes that will be available.
 #: gui\settingsDialogs.py:1646
 msgid "&Modes available in the Cycle speech mode command:"
-msgstr ""
+msgstr "Các &chế độ hiện có trong lệnh chế độ đọc:"
 
 #. Translators: This is the label for a checkbox in the voice settings panel.
 #: gui\settingsDialogs.py:1660
 msgid "&Delayed descriptions for characters on cursor movement"
-msgstr "&Chờ để mô tả cho kí tự khi di chuyển con trỏ"
+msgstr "&Chờ mô tả cho kí tự khi di chuyển con trỏ"
 
 #. Translators: Warning shown when 'talk' speech mode is disabled in settings.
 #: gui\settingsDialogs.py:1704
 msgid "You did not choose Talk as one of your speech mode options. Please note that this may result in no speech output at all. Are you sure you want to continue?"
-msgstr ""
+msgstr "Bạn không chọn đọc cho một trong số tùy chọn chế độ đọc của mình. Lưu ý rằng điều này có thể cho kết quả là không có thông tin đầu ra bằng giọng đọc. Bạn có chắc chắn muốn tiếp tục không?"
 
 #. Translators: Message shown when not enough speech modes are enabled.
 #: gui\settingsDialogs.py:1724
 msgid "At least two speech modes have to be checked."
-msgstr ""
+msgstr "Phải chọn tối thiểu hai chế độ đọc."
 
 #. Translators: This is the label for the keyboard settings panel.
 #: gui\settingsDialogs.py:1736
@@ -11804,7 +11804,7 @@ msgstr "Đọc &ký tự khi gõ"
 #. keyboard settings panel.
 #: gui\settingsDialogs.py:1780
 msgid "Speak typed &words"
-msgstr "Đọc từ khi gõ"
+msgstr "Đọc& từ khi gõ"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -11875,7 +11875,7 @@ msgstr "Đơ&n vị nội dung tại vị trí chuột:"
 #. mouse settings panel.
 #: gui\settingsDialogs.py:1903
 msgid "Report &object when mouse enters it"
-msgstr ""
+msgstr "Thông báo đối &tượng khi chuột đi vào nó"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
@@ -12131,7 +12131,7 @@ msgstr "Định Dạng Tài Liệu"
 #. Translators: This is a label appearing on the document formatting settings panel.
 #: gui\settingsDialogs.py:2300
 msgid "The following options control the types of document formatting reported by NVDA."
-msgstr "Các tùy chọn sau kiểm soát kiểu định dạng tài lieu được thông báo bởi NVDA."
+msgstr "Các tùy chọn sau kiểm soát kiểu định dạng tài liệu được thông báo bởi NVDA."
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
@@ -12197,7 +12197,7 @@ msgstr "Thông tin tài liệu"
 #. document formatting settings panel.
 #: gui\settingsDialogs.py:2381
 msgid "No&tes and comments"
-msgstr "Chú &thích"
+msgstr "Ghi & chú và chú thích"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -12389,7 +12389,7 @@ msgstr "Âm thanh"
 #. Examples of an output device are default soundcard, usb headphones, etc.
 #: gui\settingsDialogs.py:2667
 msgid "Audio output &device:"
-msgstr "Thiết &bị đầu ra:"
+msgstr "Thiết &bị âm thanh đầu ra:"
 
 #. Translators: name for default (Microsoft Sound Mapper) audio output device.
 #: gui\settingsDialogs.py:2672
@@ -12433,7 +12433,7 @@ msgstr "Bật hỗ trợ tương tác cảm ứng"
 #. touch interaction settings panel.
 #: gui\settingsDialogs.py:2779
 msgid "&Touch typing mode"
-msgstr "Chế độ gọ &cảm ứng"
+msgstr "Chế độ nhập &cảm ứng"
 
 #. Translators: The title of the Windows OCR panel.
 #: gui\settingsDialogs.py:2791
@@ -12448,7 +12448,7 @@ msgstr "&Ngôn ngữ nhận dạng:"
 #. Translators: Label for an option in the Windows OCR settings panel.
 #: gui\settingsDialogs.py:2819
 msgid "Periodically &refresh recognized content"
-msgstr "Định kì &cập nhật nội dung được nhận dạng"
+msgstr "Định kì &cập nhật nội dung đã nhận dạng"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -12602,7 +12602,7 @@ msgstr "Không"
 #. Translators: This is the label for a COMBOBOX in the Advanced settings panel.
 #: gui\settingsDialogs.py:3014
 msgid "Use en&hanced event processing (requires restart)"
-msgstr ""
+msgstr "Sử dụng xử lý sự kiện &nâng cao (yêu cầu khởi động lại)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -12711,7 +12711,7 @@ msgstr "Của sổ ảo"
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 #: gui\settingsDialogs.py:3178
 msgid "Load Chromium virtual buffer when document busy."
-msgstr "Tải Chromium virtual buffer khi tài lieu ảo bận."
+msgstr "Tải Chromium virtual buffer khi tài liệu ảo bận."
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -12842,12 +12842,12 @@ msgstr "bảng mã đầu &vào:"
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 #: gui\settingsDialogs.py:3765
 msgid "E&xpand to computer braille for the word at the cursor"
-msgstr "&Mở rộng từ tại vị trí con trỏ theo bảng chữ nổi máy tính được viết đầy đủ"
+msgstr "&Mở rộng đến chữ nổi máy tính cho từ tại con trỏ"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
 #: gui\settingsDialogs.py:3773
 msgid "&Show cursor"
-msgstr "&Hiển thị con trỏ"
+msgstr "&hiện con trỏ"
 
 #. Translators: The label for a setting in braille settings to enable cursor blinking.
 #: gui\settingsDialogs.py:3780
@@ -13200,7 +13200,11 @@ msgid "Most commands for controlling NVDA require you to hold down the NVDA key 
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
 "From this menu, you can configure NVDA, get help, and access other NVDA functions."
-msgstr ""
+msgstr "Hầu hết các phím lệnh để điều khiển NVDA yêu cầu bạn giữ phím NVDA trong khi bấm các phím khác.\n"
+"Mặc định, phím Insert và phím Insert bàn phím số được chọn là phím NVDA.\n"
+"Bạn cũng có thể chọn phím khóa Hoa (CapsLock)làm phím NVDA.\n"
+"bấm NVDA + N bất cứ lúc nào để mở trình đơn của NVDA..\n"
+"Từ trình đơn này, bạn có thể cấu hình cho NVDA, xem trợ giúp hay truy cập các chức năng khác của NVDA."
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 #: gui\startupDialogs.py:47
@@ -13221,12 +13225,12 @@ msgstr "&Sử dụng phím Khóa Hoa làm phím bổ trợ NVDA"
 #. Translators: The label of a checkbox in the Welcome dialog.
 #: gui\startupDialogs.py:88
 msgid "&Show this dialog when NVDA starts"
-msgstr "&Hiển thị hộp thoại này khi khởi động NVDA"
+msgstr "&Hiện hộp thoại này khi khởi động NVDA"
 
 #. Translators: The title of an error message box displayed when validating the startup dialog
 #: gui\startupDialogs.py:118
 msgid "At least one NVDA modifier key must be set. Caps lock will remain as an NVDA modifier key. "
-msgstr "Phải chọn ít nhất 1 phím làm phím bổ trợ NVDA. Phím khóa hoa sẽ là phím bổ trợ NVDA. "
+msgstr "Phải chọn ít nhất một phím làm phím bổ trợ NVDA. Phím khóa hoa sẽ là phím bổ trợ NVDA. "
 
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 #: gui\startupDialogs.py:180
@@ -13273,7 +13277,7 @@ msgstr "Để cải thiện NVDA trong tương lai, NV Access mong muốn thu th
 #: gui\addonStoreGui\controls\actions.py:130
 msgctxt "addonStore"
 msgid "No actions available for the selected add-ons"
-msgstr ""
+msgstr "Không có hành động nào sẵn sàng cho các add-on được chọn"
 
 #. Translators: Label for an action that installs the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:141
@@ -13352,7 +13356,7 @@ msgstr "Các &chi tiết khác:"
 msgctxt "addonStore"
 msgid "{num} add-on selected."
 msgid_plural "{num} add-ons selected."
-msgstr[0] "{num} add-onđược chọn."
+msgstr[0] "{num} add-on được chọn."
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:243
@@ -13456,7 +13460,7 @@ msgstr "&Không"
 #: gui\addonStoreGui\controls\messageDialogs.py:71
 msgctxt "addonStore"
 msgid "Remember this choice for subsequent add-ons"
-msgstr ""
+msgstr "nhớ lựa chọn này cho các add-on tiếp theo"
 
 #. Translators: The message displayed when updating an add-on, but the installed version
 #. identifier can not be compared with the version to be installed.
@@ -13585,13 +13589,13 @@ msgstr "Thông tin Add-on"
 #: gui\addonStoreGui\controls\messageDialogs.py:303
 msgctxt "addonStore"
 msgid "Add-on Store Warning"
-msgstr "Cảnh bao từ Cửa hàng Add-on"
+msgstr "Cảnh báo từ Cửa hàng Add-on"
 
 #. Translators: Warning that is displayed before using the Add-on Store.
 #: gui\addonStoreGui\controls\messageDialogs.py:310
 msgctxt "addonStore"
 msgid "Add-ons are created by the NVDA community and are not vetted by NV Access. NV Access cannot be held responsible for add-on behavior. The functionality of add-ons is unrestricted and can include accessing your personal data or even the entire system. "
-msgstr "Các add-on được tạo bởi cộng đồng NVDA và không được xem xét bởi NV Access. NV Access không thể chịu trách nhiễm về hành vi của các add-on. Chức năng của các add-on không bị giới hạn và có thể bao gồm cả việc truy cập dữ liệu cá nhân hay thậm chí là toàn bộ hệ thống của bạn. "
+msgstr "Các add-on được tạo bởi cộng đồng NVDA và không được xem xét bởi NV Access. NV Access không thể chịu trách nhiệm về hành vi của các add-on. Chức năng của các add-on không bị giới hạn và có thể bao gồm cả việc truy cập dữ liệu cá nhân hay thậm chí là toàn bộ hệ thống của bạn. "
 
 #. Translators: The label of a checkbox in the add-on store warning dialog
 #: gui\addonStoreGui\controls\messageDialogs.py:332
@@ -13659,7 +13663,7 @@ msgstr "Cài đặt Add-on"
 msgctxt "addonStore"
 msgid "Download of {} add-on in progress, cancel downloading?"
 msgid_plural "Download of {} add-ons in progress, cancel downloading?"
-msgstr[0] ""
+msgstr[0] "Đang tải add-on {}. Bạn có muốn hủy bỏ tải về?"
 
 #. Translators: Message shown while installing add-ons after closing the add-on store dialog
 #. The placeholder {} will be replaced with the number of add-ons to be installed
@@ -13744,7 +13748,7 @@ msgstr "Cà&i đặt"
 #: gui\addonStoreGui\viewModels\store.py:123
 msgctxt "addonStore"
 msgid "&Install (override incompatibility)"
-msgstr "Cài đặt (bất kể add-on không tương thích)"
+msgstr "Cài đặt (ghi đè add-on không tương thích)"
 
 #. Translators: Label for an action that updates the selected addon
 #: gui\addonStoreGui\viewModels\store.py:130
@@ -13756,7 +13760,7 @@ msgstr "&Cập nhật"
 #: gui\addonStoreGui\viewModels\store.py:137
 msgctxt "addonStore"
 msgid "&Update (override incompatibility)"
-msgstr ""
+msgstr "&Cập nhật (ghi đè tính tương thích)"
 
 #. Translators: Label for an action that replaces the selected addon with
 #. an add-on store version.
@@ -13781,7 +13785,7 @@ msgstr "&Bật"
 #: gui\addonStoreGui\viewModels\store.py:166
 msgctxt "addonStore"
 msgid "&Enable (override incompatibility)"
-msgstr "&bật (bất kể add-on không tương thích)"
+msgstr "&bật (ghi đè add-on không tương thích)"
 
 #. Translators: Label for an action that removes the selected addon
 #: gui\addonStoreGui\viewModels\store.py:173
@@ -13890,7 +13894,7 @@ msgstr "Chuyển về cột trước"
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:719
 msgid "Moves the navigator object and focus to the next row"
-msgstr "Chuyển xuống hàn kế"
+msgstr "Chuyển xuống dòng kế"
 
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:728
@@ -13920,7 +13924,7 @@ msgstr "Chuyển đối tượng điều hướng và con trỏ đến dòng cu�
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 #: NVDAObjects\inputComposition.py:48
 msgid "Composition"
-msgstr ""
+msgstr "Thành phần"
 
 #: NVDAObjects\IAccessible\__init__.py:2162
 msgid "Taskbar"
@@ -13942,7 +13946,7 @@ msgstr[0] "%s mục"
 #. Translators: The label of a shortcut of NVDA.
 #: NVDAObjects\IAccessible\winword.py:219
 msgid "Set column header. Pressing once will set this cell as the first column header for any cell lower and to the right of it within this table. Pressing twice will forget the current column header for this cell."
-msgstr ""
+msgstr "Đặt tiêu đề cột. Bấm một lần để đặt ô này làm tiêu đề cột đầu tiên cho mọi ô phía dưới và bên phải nó trong bảng. Bấm hai lần để quên thông tin tiêu đề cột cho ô hiện tại."
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:236
@@ -13971,7 +13975,7 @@ msgstr "Không tìm thấy dòng {rowNumber} cột {columnNumber} trong các ti�
 #. Translators: The label of a shortcut of NVDA.
 #: NVDAObjects\IAccessible\winword.py:252
 msgid "Set row header. Pressing once will set this cell as the first row header for any cell lower and to the right of it within this table. Pressing twice will forget the current row header for this cell."
-msgstr ""
+msgstr "Đặt tiêu đề dòng. Bấm một lần để đặt ô này làm tiêu đề dòng đầu tiên cho mọi ô phía dưới và bên phải nó trong bảng. Bấm hai lần để quên thông tin tiêu đề dòng cho ô hiện tại."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:268
@@ -14001,7 +14005,7 @@ msgstr "Không tìm thấy dòng {rowNumber} cột {columnNumber} trong các ti�
 #. Translators: a description for a script that reports the comment at the caret.
 #: NVDAObjects\IAccessible\winword.py:321 NVDAObjects\UIA\wordDocument.py:602
 msgid "Reports the text of the comment where the system caret is located."
-msgstr ""
+msgstr "Thông báo văn bản của chú thích tại vị trí dấu nháy hệ thống."
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 #: NVDAObjects\IAccessible\winword.py:344 NVDAObjects\UIA\wordDocument.py:613
@@ -14067,7 +14071,7 @@ msgstr "Độ cao ô: {0.y:.1f} pt"
 msgctxt "excel-UIA"
 msgid "Rotation: {0} degree"
 msgid_plural "Rotation: {0} degrees"
-msgstr[0] ""
+msgstr[0] "Xoay: {0} độ"
 
 #. Translators: The outline (border) colors of an Excel cell.
 #: NVDAObjects\UIA\excel.py:230
@@ -14183,7 +14187,7 @@ msgstr "Chủ đề bình luận: {comment}  bởi {author}"
 #, python-brace-format
 msgid "Comment thread: {comment}  by {author} with {numReplies} reply"
 msgid_plural "Comment thread: {comment}  by {author} with {numReplies} replies"
-msgstr[0] ""
+msgstr[0] "Chủ đề bình luận: {comment}  bởi {author} với {numReplies} trả lời"
 
 #. Translators: A message in Excel when there is no comment thread
 #: NVDAObjects\UIA\excel.py:533
@@ -14246,13 +14250,13 @@ msgstr "Di chuyển theo câu không được hỗ trợ trong tài liệu này"
 #. headers.
 #: NVDAObjects\UIA\wordDocument.py:621
 msgid "Command not supported in this type of document. The tables have their first row cells automatically set as column headers."
-msgstr ""
+msgstr "Lệnh không hỗ trợ loại tài liệu này. Bảng đã có ô đầu tiên tự động được đặt làm tiêu đề cột."
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
 #: NVDAObjects\UIA\wordDocument.py:630
 msgid "Command not supported in this type of document. The tables have their first column cells automatically set as row headers."
-msgstr ""
+msgstr "Lệnh không hỗ trợ loại tài liệu này. Bảng đã có ô đầu tiên tự động được đặt làm tiêu đề dòng."
 
 #: NVDAObjects\window\__init__.py:392
 msgid "Desktop"
@@ -14268,32 +14272,32 @@ msgstr "Vùng 3D"
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:142
 msgid "3D Stacked Area"
-msgstr ""
+msgstr "Khu vực xếp chồng 3D"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:145
 #: NVDAObjects\window\_msOfficeChart.py:184
 msgid "100 percent Stacked Area"
-msgstr ""
+msgstr "Khu vực xếp chồng 100 phần trăm"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:148
 msgid "3D Clustered Bar"
-msgstr ""
+msgstr "Thanh cụm 3D"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:151
 msgid "3D Stacked Bar"
-msgstr ""
+msgstr "Thanh xếp chồng 3D"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:154
 msgid "3D 100 percent Stacked Bar"
-msgstr ""
+msgstr "Thanh xếp chồng 3D 100 phần trăm"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -14305,55 +14309,55 @@ msgstr "cột 3D"
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:160
 msgid "3D Clustered Column"
-msgstr ""
+msgstr "Cột cụm 3D"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:163
 msgid "3D Stacked Column"
-msgstr ""
+msgstr "Cột xếp chồng 3D"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:166
 msgid "3D 100 percent Stacked Column"
-msgstr ""
+msgstr "Cột xếp chồng 100 phần trăm 3D"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:169
 msgid "3D Line"
-msgstr ""
+msgstr "Đường 3D"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:172
 msgid "3D Pie"
-msgstr ""
+msgstr "Bánh 3D"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:175
 msgid "Exploded 3D Pie"
-msgstr ""
+msgstr "Bánh 3D Nổ"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:178
 msgid "Area"
-msgstr ""
+msgstr "Khu vực"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:181
 msgid "Stacked Area"
-msgstr ""
+msgstr "Khu vực xếp chồng"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:187
 msgid "Clustered Bar"
-msgstr ""
+msgstr "Thanh cụm"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -14365,19 +14369,19 @@ msgstr "Thanh của Pie"
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:193
 msgid "Stacked Bar"
-msgstr ""
+msgstr "Thanh xếp chồng lên nhau"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:196
 msgid "100 percent Stacked Bar"
-msgstr ""
+msgstr "Thanh xếp chồng 100 phần trăm"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:199
 msgid "Bubble"
-msgstr ""
+msgstr "bong bóng"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -14389,93 +14393,93 @@ msgstr "Bubble với hiệu ứng 3D"
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:205
 msgid "Clustered Column"
-msgstr ""
+msgstr "Cột được nhóm"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:208
 msgid "Stacked Column"
-msgstr ""
+msgstr "Cột xếp chồng"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:211
 msgid "100 percent Stacked Column"
-msgstr ""
+msgstr "Cột xếp chồng 100 phần trăm"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:214
 msgid "Clustered Cone Bar"
-msgstr ""
+msgstr "Thanh hình nón cụm"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:217
 msgid "Stacked Cone Bar"
-msgstr ""
+msgstr "Thanh hình nón xếp chồng lên nhau"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:220
 msgid "100 percent Stacked Cone Bar"
-msgstr ""
+msgstr "Thanh hình nón xếp chồng lên nhau 100 phần trăm"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:223
 msgid "3D Cone Column"
-msgstr ""
+msgstr "Cột nón 3D"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:226
 #: NVDAObjects\window\_msOfficeChart.py:247
 msgid "Clustered Cone Column"
-msgstr ""
+msgstr "Cột hình nón"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:229
 #: NVDAObjects\window\_msOfficeChart.py:250
 msgid "Stacked Cone Column"
-msgstr ""
+msgstr "Cột hình nón xếp chồng lên nhau"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:232
 msgid "100 percent Stacked Cone Column"
-msgstr ""
+msgstr "Cột hình nón xếp chồng 100 phần trăm"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:235
 msgid "Clustered Cylinder Bar"
-msgstr ""
+msgstr "Thanh xi lanh cụm"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:238
 msgid "Stacked Cylinder Bar"
-msgstr ""
+msgstr "Thanh xi lanh xếp chồng lên nhau"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:241
 msgid "100 percent Stacked Cylinder Bar"
-msgstr ""
+msgstr "Thanh xi lanh xếp chồng lên nhau 100 phần trăm"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:244
 msgid "3D Cylinder Column"
-msgstr ""
+msgstr "Cột trụ 3D"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:253
 msgid "100 percent Stacked Cylinder Column"
-msgstr ""
+msgstr "Cột xi lanh xếp chồng lên nhau 100 phần trăm"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -14505,127 +14509,127 @@ msgstr "Dòng có các điểm đánh dấu"
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:268
 msgid "Stacked Line with Markers"
-msgstr ""
+msgstr "Dòng xếp chồng với điểm đánh dấu"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:271
 msgid "100 percent Stacked Line with Markers"
-msgstr ""
+msgstr "Dòng xếp chồng 100 phần trăm với điểm đánh dấu"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:274
 msgid "Stacked Line"
-msgstr ""
+msgstr "Đường xếp chồng"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:277
 msgid "100 percent Stacked Line"
-msgstr ""
+msgstr "Đường xếp chồng 100 phần trăm"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:280
 msgid "Pie"
-msgstr ""
+msgstr "Bánh"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:283
 msgid "Exploded Pie"
-msgstr ""
+msgstr "Bánh nổ"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:286
 msgid "Pie of Pie"
-msgstr ""
+msgstr "Bánh nướng"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:289
 msgid "Clustered Pyramid Bar"
-msgstr ""
+msgstr "Thanh kim tự tháp cụm"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:292
 msgid "Stacked Pyramid Bar"
-msgstr ""
+msgstr "Thanh kim tự tháp xếp chồng lên nhau"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:295
 msgid "100 percent Stacked Pyramid Bar"
-msgstr ""
+msgstr "Thanh kim tự tháp xếp chồng lên nhau 100 phần trăm"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:298
 msgid "3D Pyramid Column"
-msgstr ""
+msgstr "Cột kim tự tháp 3D"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:301
 msgid "Clustered Pyramid Column"
-msgstr ""
+msgstr "Cột kim tự tháp cụm"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:304
 msgid "Stacked Pyramid Column"
-msgstr ""
+msgstr "Cột kim tự tháp xếp chồng lên nhau"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 #: NVDAObjects\window\_msOfficeChart.py:307
 msgid "100 percent Stacked Pyramid Column"
-msgstr ""
+msgstr "Cột kim tự tháp xếp chồng 100 phần trăm"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:310
 msgid "Radar"
-msgstr ""
+msgstr "ra đa"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:313
 msgid "Filled Radar"
-msgstr ""
+msgstr "Ra Đa đầy"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:316
 msgid "Radar with Data Markers"
-msgstr ""
+msgstr "Ra đa có điểm đánh dấu dữ liệu"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:319
 msgid "High-Low-Close"
-msgstr ""
+msgstr "Cao-Thấp-Đóng"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:322
 msgid "Open-High-Low-Close"
-msgstr ""
+msgstr "Mở-Cao-Thấp-Đóng"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:325
 msgid "Volume-High-Low-Close"
-msgstr ""
+msgstr "Khối lượng-Cao-Thấp-Đóng"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:328
 msgid "Volume-Open-High-Low-Close"
-msgstr ""
+msgstr "Khối lượng-Mở-Cao-Thấp-Đóng"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -14655,36 +14659,36 @@ msgstr "Dịch vụ 3D (wireframe)"
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:343
 msgid "Scatter"
-msgstr ""
+msgstr "Tiêu tan"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:346
 msgid "Scatter with Lines"
-msgstr ""
+msgstr "Phân tán bằng đường kẻ"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:349
 msgid "Scatter with Lines and No Data Markers"
-msgstr ""
+msgstr "Phân tán bằng đường kẻ và không có điểm đánh dấu dữ liệu"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:352
 msgid "Scatter with Smoothed Lines"
-msgstr ""
+msgstr "Phân tán với các đường làm mịn"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 #: NVDAObjects\window\_msOfficeChart.py:355
 msgid "Scatter with Smoothed Lines and No Data Markers"
-msgstr ""
+msgstr "Phân tán với các đường nét mượt mà và không có điểm đánh dấu dữ liệu"
 
 #. Translators: A slice in a pie chart.
 #: NVDAObjects\window\_msOfficeChart.py:391
 msgid "slice"
-msgstr ""
+msgstr "lát cắt"
 
 #. Translators: A column in a column chart.
 #: NVDAObjects\window\_msOfficeChart.py:394
@@ -14707,7 +14711,7 @@ msgstr "mục"
 #: NVDAObjects\window\_msOfficeChart.py:681
 #, python-brace-format
 msgid "Series color: {colorName} "
-msgstr "Day màu: {colorName} "
+msgstr "Dãy màu: {colorName} "
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:423
@@ -14717,22 +14721,22 @@ msgstr "Nhãn đơn vị hiển thị"
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:425
 msgid "Major Gridlines"
-msgstr ""
+msgstr "Đường lưới chính"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:427
 msgid "Minor Gridlines"
-msgstr ""
+msgstr "Đường lưới nhỏ"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:429
 msgid "Pivot Chart Drop Zone"
-msgstr ""
+msgstr "Vùng thả biểu đồ Pivot"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:431
 msgid "Pivot Chart Field Button"
-msgstr ""
+msgstr "Nút trường biểu đồ Pivot"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:433
@@ -14747,22 +14751,22 @@ msgstr "Bỏ dòng"
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:437
 msgid "Hi Lo Lines"
-msgstr ""
+msgstr "Hi Lo Lines"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:439
 msgid "Radar Axis Labels"
-msgstr ""
+msgstr "Ra đa nhãn trục"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:441
 msgid "Series Lines"
-msgstr ""
+msgstr "Dòng đường"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:443
 msgid "Up Bars"
-msgstr ""
+msgstr "Thanh lên"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:445
@@ -14827,13 +14831,13 @@ msgstr "Tên biểu đồ: {chartTitle}, loại: {chartType}"
 #, python-format
 msgid "There is %d series in this chart"
 msgid_plural "There are %d series in this chart"
-msgstr[0] ""
+msgstr[0] "Có chuỗi %d trong biểu đồ này"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
 #: NVDAObjects\window\_msOfficeChart.py:569
 #, python-brace-format
 msgid "series {number} {name}"
-msgstr "day {number} {name}"
+msgstr "dãy {number} {name}"
 
 #. Translators: Indicates that there are no series in a chart.
 #: NVDAObjects\window\_msOfficeChart.py:573
@@ -14884,7 +14888,7 @@ msgstr "giảm {decrementValue} từ điểm {previousIndex}, "
 #: NVDAObjects\window\_msOfficeChart.py:736
 #, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
-msgstr ""
+msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
@@ -14899,7 +14903,7 @@ msgstr "Loại {categoryAxisData}: "
 #: NVDAObjects\window\_msOfficeChart.py:746
 #, python-brace-format
 msgid "{valueAxisTitle} {valueAxisData}"
-msgstr ""
+msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
@@ -14986,7 +14990,7 @@ msgstr "Đa thức"
 #. Translators: Indicates that trendline type is Power
 #: NVDAObjects\window\_msOfficeChart.py:840
 msgid "Power"
-msgstr ""
+msgstr "Năng lượng"
 
 #. Translators: Substitute superscript two by square for R square value
 #: NVDAObjects\window\_msOfficeChart.py:853
@@ -15036,7 +15040,7 @@ msgstr "Khu vực biểu đồ "
 #: NVDAObjects\window\_msOfficeChart.py:910
 #, python-brace-format
 msgid "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: {plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: {plotAreaInsideLeft:.0f}"
-msgstr ""
+msgstr "Diện tích lô đất, chiều cao bên trong: {plotAreaInsideHeight:.0f}, chiều rộng bên trong: {plotAreaInsideWidth:.0f}, bên trong phía trên: {plotAreaInsideTop:.0f}, bên trong bên trái: {plotAreaInsideLeft:.0f}"
 
 #. Translators: Indicates the plot area of a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:913
@@ -15047,7 +15051,7 @@ msgstr "Khu vực đồ thị "
 #: NVDAObjects\window\_msOfficeChart.py:944
 #, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr ""
+msgstr "Mục nhập huyền thoại cho bộ truyện {seriesName} {seriesIndex} của {seriesCount}"
 
 #. Translators: the legend entry for a chart in Microsoft Office
 #: NVDAObjects\window\_msOfficeChart.py:947
@@ -15061,7 +15065,7 @@ msgstr "Mục nhập legend {legendEntryIndex} của {legendEntryCount}"
 #: NVDAObjects\window\_msOfficeChart.py:963
 #, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr ""
+msgstr "Chìa khóa chú giải cho bộ truyện {seriesName} {seriesIndex} của {seriesCount}"
 
 #. Translators: The text color as reported in Wordpad (Automatic) or NVDA log viewer.
 #. Translators: The background color as reported in Wordpad (Automatic) or NVDA log viewer.
@@ -15190,7 +15194,7 @@ msgstr "nét hình chéo dày"
 #. Solid color
 #: NVDAObjects\window\excel.py:276
 msgid "solid"
-msgstr ""
+msgstr "đặc"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Dark diagonal lines running from the lower left to the upper right
@@ -15298,7 +15302,7 @@ msgstr "Bật gạch giữa chữ"
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1467
 msgid "Sets the current cell as start of column header. Pressing once will set this cell as the first column header for any cell lower and to the right of it within this region. Pressing twice will forget the current column header for this cell."
-msgstr ""
+msgstr "Đặt ô hiện tại làm ô bắt đầu tiêu đề cột. Bấm một lần sẽ đặt ô này làm tiêu đề cột đầu tiên cho mọi ô phía dưới và bên phải của khu vực. Bấm hai lần sẽ quên thông tin tiêu đề cột cho ô hiện tại."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #: NVDAObjects\window\excel.py:1479
@@ -15327,7 +15331,7 @@ msgstr "Không tìm thấy {address}    trong tiêu đề của cột"
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1494
 msgid "Sets the current cell as start of row headers. Pressing once will set this cell as the first row header for any cell lower and to the right of it within this region. Pressing twice will forget the current row header for this cell."
-msgstr ""
+msgstr "Đặt ô hiện tại làm ô bắt đầu tiêu đề dòng. Bấm một lần sẽ đặt ô này làm tiêu đề dòng đầu tiên cho mọi ô phía dưới và bên phải của khu vực. Bấm hai lần sẽ quên thông tin tiêu đề dòng cho ô hiện tại."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #: NVDAObjects\window\excel.py:1506
@@ -15388,7 +15392,7 @@ msgstr "Mở hộp thoại chỉnh sửa ghi chú"
 #: NVDAObjects\window\excel.py:1708
 #, python-brace-format
 msgid "Editing note for cell {address}"
-msgstr "Sửa chú thích cho ô {address}"
+msgstr "Sửa ghi chú cho ô {address}"
 
 #. Translators: Title for the note editing  dialog
 #: NVDAObjects\window\excel.py:1710
@@ -15401,7 +15405,7 @@ msgstr "Ghi Chú"
 #: NVDAObjects\window\excel.py:1761
 #, python-brace-format
 msgid "{firstAddress}  {firstContent} through {lastAddress}  {lastContent}"
-msgstr ""
+msgstr "{firstAddress}  {firstContent} qua {lastAddress}  {lastContent}"
 
 #. Translators: border positions in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:21
@@ -15533,7 +15537,7 @@ msgstr "{style} {weight}"
 #: NVDAObjects\window\excelCellBorder.py:124
 #, python-brace-format
 msgid "{color} {desc}"
-msgstr ""
+msgstr "{color} {desc}"
 
 #. Translators: border styles in Microsoft Excel.
 #: NVDAObjects\window\excelCellBorder.py:133
@@ -15563,7 +15567,7 @@ msgstr "{desc} đường chéo xuống hướng trái và chéo lên hướng ph
 #: NVDAObjects\window\excelCellBorder.py:155
 #, python-brace-format
 msgid "{desc} {position}"
-msgstr ""
+msgstr "{desc} {position}"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 #: NVDAObjects\window\winword.py:276
@@ -15859,34 +15863,34 @@ msgstr "Ẩn các kí tự không in được"
 #, python-brace-format
 msgid "{offset:.3g} character"
 msgid_plural "{offset:.3g} characters"
-msgstr[0] ""
+msgstr[0] "{offset:.3g} kí tự"
 
 #. Translators: a measurement in Microsoft Word
 #: NVDAObjects\window\winword.py:1557
 #, python-brace-format
 msgid "{offset:.3g} inch"
 msgid_plural "{offset:.3g} inches"
-msgstr[0] ""
+msgstr[0] "{offset:.3g} inch"
 
 #. Translators: a measurement in Microsoft Word
 #: NVDAObjects\window\winword.py:1565
 #, python-brace-format
 msgid "{offset:.3g} centimeter"
 msgid_plural "{offset:.3g} centimeters"
-msgstr[0] ""
+msgstr[0] "{offset:.3g} centimeter"
 
 #. Translators: a measurement in Microsoft Word
 #: NVDAObjects\window\winword.py:1573
 #, python-brace-format
 msgid "{offset:.3g} millimeter"
 msgid_plural "{offset:.3g} millimeters"
-msgstr[0] ""
+msgstr[0] "{offset:.3g} millimeter"
 
 #. Translators: a measurement in Microsoft Word (points)
 #: NVDAObjects\window\winword.py:1579
 #, python-brace-format
 msgid "{offset:.3g} pt"
-msgstr ""
+msgstr "{offset:.3g} pt"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
@@ -15894,7 +15898,7 @@ msgstr ""
 #, python-brace-format
 msgid "{offset:.3g} pica"
 msgid_plural "{offset:.3g} picas"
-msgstr[0] ""
+msgstr[0] "{offset:.3g} pica"
 
 #. Translators: a message when switching to single line spacing  in Microsoft word
 #: NVDAObjects\window\winword.py:1599
@@ -16027,14 +16031,14 @@ msgstr "với {rowCountTranslation} và {colCountTranslation}"
 #, python-format
 msgid "with %s column"
 msgid_plural "with %s columns"
-msgstr[0] "với %s column"
+msgstr[0] "với %s cột"
 
 #. Translators: Speaks number of rows (example output: with 2 rows).
 #: speech\speech.py:1978
 #, python-format
 msgid "with %s row"
 msgid_plural "with %s rows"
-msgstr[0] "với %s row"
+msgstr[0] "với %s dòng"
 
 #. Translators: Sub-part of the compound string to speak number of rows and columns in a table.
 #. Example: If the full compound string is "table with 3 rwos and 2 columns", this substring is "3 rows".
@@ -16363,7 +16367,7 @@ msgstr "có chú thích chính thức"
 #. Translators: Reported when text no longer contains a comment.
 #: speech\speech.py:2755
 msgid "out of comment"
-msgstr "hết nhận xét"
+msgstr "hết chú thích"
 
 #. Translators: Reported when text contains a bookmark
 #: speech\speech.py:2763
@@ -16476,7 +16480,7 @@ msgstr "màu"
 #: UIAHandler\constants.py:23
 msgctxt "UIAHandler.FillType"
 msgid "gradient"
-msgstr ""
+msgstr "gradient"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
 #: UIAHandler\constants.py:25
@@ -16528,7 +16532,7 @@ msgstr "{D} ngày {H}:{M}:{S}"
 #, python-brace-format
 msgctxt "time format"
 msgid "{D} days {H}:{M}:{S}"
-msgstr "{D} ngàys {H}:{M}:{S}"
+msgstr "{D} ngày {H}:{M}:{S}"
 
 #. Translators: This is the message for a warning shown if NVDA cannot determine if
 #. Windows is locked.
@@ -16634,7 +16638,7 @@ msgstr "Ngang"
 #. Translators: The screen is oriented in such a way that the height is taller than it is wide.
 #: winAPI\_displayTracking.py:113
 msgid "Portrait"
-msgstr "In dọc"
+msgstr "Dọc"
 
 #. Translators: This is presented when there is an error retrieving the battery status.
 #: winAPI\_powerTracking.py:182

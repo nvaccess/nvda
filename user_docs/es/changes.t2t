@@ -38,8 +38,11 @@ Windows 8.1 es la versión mínima soportada.
 - Añadido el soporte para pantallas braille Bluetooth Low Energy HID. (#15470)
 - Un nuevo modo de selección nativa (conmutado con ``NVDA+shift+f10``) ahora está disponible en el modo exploración de NVDA para Mozilla Firefox.
 Cuando se active, seleccionar texto en modo exploración también manipulará la propia selección nativa en Firefox.
-Copiar el texto con ``control+c`` pasará directamente a Firefox, copiando así el contenido enriquecido, en lugar de la representación en texsto plano de NVDA. (#15830)
-- Al copiar texto en Microsoft Word con el modo exploración de NVDA activado, ahora se incluye también el formato. (#16129)
+Copiar el texto con ``control+c`` pasará directamente a Firefox, copiando así el contenido enriquecido, en lugar de la representación en texsto plano de NVDA.
++Note however that as Firefox is handling the actual copy, NVDA will not report a "copy to clipboard" message in this mode. (#15830)
+Ten en cuenta sin embargo que como Firefox está manejando la copia real, NVDA no anunciará un mensaje "copiar al portapapeles" en este modo. (#15830)
+- Al copiar texto en Microsoft Word con el modo exploración de NVDA activado, ahora se incluye también el formato.
+Un efecto colateral de esto es que NVDA ya no anunciará un mensaje "copiar al portapapeles" al pulsar ``control+c`` en el modo exploración en Microsoft Word y en Outlook, ya que la aplicación es la que ahora maneja el copiado, no NVDA. (#16129)
 - Se ha añadido un nuevo modo de voz "bajo demanda".
 Cuando la voz esté bajo demanda, NVDA no habla automáticamente (ej. al mover el cursor) pero aún habla al dar órdenes cuyo objetivo sea explícitamente anunciar algo (ej. anunciar el título de la ventana). (#481, @CyrilleB79)
 - En la categoría Voz de las opciones de NVDA, ahora es posible excluir modos de voz no deseados desde la orden recorrer modos de voz (``NVDA+s``). (#15806, @lukaszgo1)
@@ -210,7 +213,7 @@ Por favor abre un GitHub issue si tu complemento tiene un problema con la actual
   - robotframework a 6.1.1. (#15544)
   - SCons a 4.5.2. (#15529, @LeonarddeR)
   - sphinx a 7.2.6. (#15544)
-  - wxPython a 4.2.1. (#12551)
+  - wxPython a 4.2.2a commit ``0205c7c1b9022a5de3e3543f9304cfe53a32b488``. (#12551, #16257)
   -
 - Dependencias pip eliminadas:
   - typing_extensions, estas se soportarían nativamente en Python 3.11 (#15544)
@@ -291,7 +294,13 @@ Utiliza ``bdDetect.DeviceType.*`` en su lugar. (#15772, @LeonarddeR).
 
 
 = 2023.3.4 =
-Se trata de un parche para corregir un problema del instalador.
+Este es un parche para corregir un fallo de seguridad y un fallo del instalador.
+Por favor comunica responsablemente los problemas de seguridad siguiendo las [políticas de seguridad de NVDA https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Correcciones de Seguridad ==
+- Evita cargar la configuración personalizada mientras se fuerza el modo seguro .
+([GHSA-727q-h8j2-6p45 https://github.com/nvaccess/nvda/security/advisories/GHSA-727q-h8j2-6p45])
+
 
 == Corrección de Fallos ==
 - Corregido un fallo que provocaba que el proceso de NVDA fallase al no salir correctamente.
