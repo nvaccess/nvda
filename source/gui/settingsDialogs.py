@@ -3922,6 +3922,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		# Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 		outputsLabelText = _("&Output table:")
 		self.outTables = [table for table in tables if table.output]
+		self.outTableNames = [table.fileName for table in self.outTables]
 		outTableChoices = [table.displayName for table in self.outTables]
 		self.outTableList = sHelper.addLabeledControl(outputsLabelText, wx.Choice, choices=outTableChoices)
 		self.bindHelpEvent("BrailleSettingsOutputTable", self.outTableList)

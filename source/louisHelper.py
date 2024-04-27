@@ -34,6 +34,13 @@ LOUIS_TO_NVDA_LOG_LEVELS = {
 
 
 def _resolveTableInner(tables: list[str], base: str | None = None) -> Generator[str, None, None]:
+	"""Helper function to resolve braille table file names to file paths.
+	This is used by the L{_resolveTable} function to abstract the inner workings
+	from the ctypes related conversion of input and output.
+	:param tables: List of table names.
+	:param base: The base table (e.g. the table that contains include opcodes for the given tables).
+	:returns: A generator that yields the paths for the requested tables.
+	"""
 	for table in tables:
 		if _isDebug():
 			log.debug(f"Resolving {table!r}")

@@ -7,6 +7,7 @@
 """
 
 import collections
+from enum import StrEnum
 import os
 from locale import strxfrm
 from typing import NamedTuple
@@ -21,14 +22,16 @@ from logHandler import log
 TABLES_DIR = os.path.join(globalVars.appDir, "louis", "tables")
 """The directory in which liblouis braille tables are located."""
 
-TABLE_SOURCE_BUILTIN = "builtin"
-"""The name of the builtin table source"""
 
-TABLE_SOURCE_SCRATCHPAD = "scratchpad"
-"""The name of the scratchpad table source"""
+class TableSource(StrEnum):
+	BUILTIN = "builtin"
+	"""The name of the builtin table source"""
+	SCRATCHPAD = "scratchpad"
+	"""The name of the scratchpad table source"""
+
 
 _tablesDirs = collections.ChainMap({
-	TABLE_SOURCE_BUILTIN: TABLES_DIR
+	TableSource.BUILTIN: TABLES_DIR
 })
 """Chainmap of directories for braille tables lookup, including custom tables."""
 
@@ -51,9 +54,10 @@ class BrailleTable(NamedTuple):
 	input: bool = True
 	"""True if this table can be used for input, False if not."""
 
-	source: str = TABLE_SOURCE_BUILTIN
+	source: str = TableSource.BUILTIN
 	"""An identifier describing the source of the table.
-	This defaults to "builtin", but is set to the name of the add-on or "scratchpad", depending on its source.
+	This defaults to C{TableSource.BUILTIN}, but is set to the name of the add-on or "scratchpad",
+	depending on its source.
 	"""
 
 
@@ -71,7 +75,7 @@ def addTable(
 		contracted: bool = False,
 		output: bool = True,
 		input: bool = True,
-		source: str = TABLE_SOURCE_BUILTIN
+		source: str = TableSource.BUILTIN
 ):
 	"""Register a braille translation table.
 	At least one of C{input} or C{output} must be C{True}.
@@ -102,7 +106,7 @@ def listTables() -> list[BrailleTable]:
 	"""
 	return sorted(
 		_tables.values(),
-		key=lambda table: (table.source != TABLE_SOURCE_BUILTIN, strxfrm(table.displayName))
+		key=lambda table: (table.source != TableSource.BUILTIN, strxfrm(table.displayName))
 	)
 
 
@@ -729,7 +733,7 @@ def initialize():
 			manifestPath = os.path.join(scratchpad, addonHandler.MANIFEST_FILENAME)
 			if not os.path.isfile(manifestPath):
 				return
-			_tablesDirs[TABLE_SOURCE_SCRATCHPAD] = directory
+			_tablesDirs[TableSource.SCRATCHPAD] = directory
 			configspec = {"brailleTables": addonHandler.AddonManifest.configspec["brailleTables"]}
 			try:
 				with open(manifestPath, "rb") as file:
@@ -740,9 +744,12 @@ def initialize():
 					if (res := manifest.validate(Validator(), preserve_errors=True)) is not True:
 						raise ValueError(f"Errors in scratchpad manifest: {flatten_errors(manifest, res)}")
 					log.debug(f"Found {len(tablesDict)} braille table entries in manifest for scratchpad")
-					_loadTablesFromManifestSection(TABLE_SOURCE_SCRATCHPAD, directory, section)
+					_loadTablesFromManifestSection(TableSource.SCRATCHPAD, directory, section)
 			except Exception:
-				log.exception("Error while applying custom braille tables config from scratchpad")
+				log.exception(
+					"Error while applying custom braille tables config from scratchpad manifest: "
+					f"{manifestPath}"
+				)
 
 
 def terminate():
