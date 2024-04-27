@@ -3,8 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2024 NV Access Limited, Leonard de Ruijter
 
-"""Unit tests for the louisHelper module.
-"""
+"""Unit tests for the louisHelper module."""
 
 import os.path
 import unittest
@@ -36,9 +35,24 @@ class TestResolvingInternal(unittest.TestCase):
 			[os.path.join(brailleTables.TABLES_DIR, fileNameToTest)],
 		)
 
+	def test_unknownInternalTable(self):
+		"""Test the case where a table does not exist, regardless of base."""
+		fileNameToTest = "random.uti"
+		with self.assertRaises(LookupError):
+			list(louisHelper._resolveTableInner(tables=[fileNameToTest]))
+
+	def test_internalTableIncludedUnknown(self):
+		"""Test the case where an included table does not exist."""
+		base = brailleTables.getTable("en-us-comp8-ext.utb")
+		basePath = os.path.join(brailleTables.TABLES_DIR, base.fileName)
+		fileNameToTest = "random.uti"
+		with self.assertRaises(LookupError):
+			list(louisHelper._resolveTableInner(tables=[fileNameToTest], base=basePath))
+
 
 class TestResolvingCustom(unittest.TestCase):
 	"""Tests for custom braille table resolving using our custom resolver."""
+
 	tableDir: str
 
 	def setUp(self):
@@ -48,13 +62,9 @@ class TestResolvingCustom(unittest.TestCase):
 		brailleTables.addTable(
 			fileName="en-us-comp8-ext.utb",
 			displayName="English (U.S.) 8 dot computer braille override",
-			source="tests"
+			source="tests",
 		)
-		brailleTables.addTable(
-			fileName="test.utb",
-			displayName="Test table",
-			source="tests"
-		)
+		brailleTables.addTable(fileName="test.utb", displayName="Test table", source="tests")
 
 	def tearDown(self) -> None:
 		# Cleanup our modifications to the brailleTables internals.
@@ -106,6 +116,26 @@ class TestResolvingCustom(unittest.TestCase):
 		"""Test the case where a custom table includes another table that is bundled internally."""
 		base = brailleTables.getTable("test.utb")
 		basePath = os.path.join(self.tablesDir, base.fileName)
+		fileNameToTest = "braille-patterns.cti"
+		self.assertEqual(
+			list(louisHelper._resolveTableInner(tables=[fileNameToTest], base=basePath)),
+			[os.path.join(brailleTables.TABLES_DIR, fileNameToTest)],
+		)
+
+	def test_customTableIncludedUnknown(self):
+		"""Test the case where an included table does not exist."""
+		base = brailleTables.getTable("test.utb")
+		basePath = os.path.join(brailleTables.TABLES_DIR, base.fileName)
+		fileNameToTest = "random.uti"
+		with self.assertRaises(LookupError):
+			list(louisHelper._resolveTableInner(tables=[fileNameToTest], base=basePath))
+
+	def test_unknownTableIncludedInternal(self):
+		"""Test the case for resolving a table when the base folder does not exist.
+		Note that the resolver should always try to resolve from the default directory,
+		so this shouldn't raise an error.
+		"""
+		basePath = os.path.join("ran", "dom")
 		fileNameToTest = "braille-patterns.cti"
 		self.assertEqual(
 			list(louisHelper._resolveTableInner(tables=[fileNameToTest], base=basePath)),
