@@ -11,7 +11,7 @@ Before proceeding, please review the existing templates to ensure that those do 
 - Bug Report Template: https://github.com/nvaccess/nvda/issues/new?template=bug_report.md
 - Feature Request Template: https://github.com/nvaccess/nvda/issues/new?template=feature_request.md
 
-Issues may be closed if the required information is not present. 
+If required information is not provided when requested, the issue may be closed.
 For guidance on how to fill in this template, including how to provide the required files, please see:
 https://github.com/nvaccess/nvda/blob/master/projectDocs/issues/githubIssueTemplateExplanationAndExamples.md
 
