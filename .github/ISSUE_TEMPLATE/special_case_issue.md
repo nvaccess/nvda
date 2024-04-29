@@ -1,14 +1,14 @@
 ---
 name: Special Case Issue
-about: An complex or exceptional issue that doesn't fit the standard templates
+about: A complex or exceptional issue that doesn't fit the usual templates
 
 ---
 
 <!-- 
 Please read the text in this edit field before filling it in. 
 If your issue doesn't neatly fit into either the bug report or feature request categories, and it involves a more complex or unique scenario, use this template. Before proceeding, please review the existing templates to ensure that those do not better suit your needs:
-- Bug Report Template: https://github.com/nvaccess/nvda/blob/master/.github/ISSUE_TEMPLATE/bug_report.md
-- Feature Request Template: https://github.com/nvaccess/nvda/blob/master/.github/ISSUE_TEMPLATE/feature_request.md
+- Bug Report Template: https://github.com/nvaccess/nvda/issues/new?template=bug_report.md
+- Feature Request Template: https://github.com/nvaccess/nvda/issues/new?template=feature_request.md
 
 Issues may be closed if the required information is not present. For guidance on how to fill in this template, including how to provide the required files, please see:
 https://github.com/nvaccess/nvda/blob/master/projectDocs/issues/githubIssueTemplateExplanationAndExamples.md
