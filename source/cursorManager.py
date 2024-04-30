@@ -386,8 +386,10 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 				# 1. Caret at 1; selection (1, 1)
 				# 2. Shift+rightArrow: selection (1, 2)
 				newInfo.setEndPoint(oldInfo, "startToStart")
-		self.selection = newInfo
-		speech.speakSelectionChange(oldInfo,newInfo)
+		# Update selection and speak change when selection has changed
+		if oldInfo != newInfo:
+			self.selection = newInfo
+			speech.speakSelectionChange(oldInfo, newInfo)
 
 	def script_selectCharacter_forward(self,gesture):
 		self._selectionMovementScriptHelper(unit=textInfos.UNIT_CHARACTER,direction=1)

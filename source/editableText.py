@@ -434,7 +434,17 @@ class EditableTextWithoutAutoSelectDetection(EditableText):
 		newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		self._updateSelectionAnchor(oldTextInfo,newInfo)
 		speech.speakSelectionChange(oldTextInfo,newInfo)
-		braille.handler.handleCaretMove(self)
+		if (
+			config.conf["braille"]["tetherTo"] == braille.TetherTo.REVIEW.value
+			and config.conf["braille"]["showSelection"]
+		):
+			# Try to ensure that braille.handler.handleCaretMove is called only once
+			# because when braille is tethered to review, selection is not updated
+			# in word 2019 when using IAccessible.
+			if self is api.getFocusObject() and not eventHandler.isPendingEvents("caret"):
+				self.event_caret()
+		else:
+			braille.handler.handleCaretMove(self)
 
 	def script_caret_changeSelection(self,gesture):
 		try:
