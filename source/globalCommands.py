@@ -266,6 +266,48 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		description=_(
+			# Translators: Input help mode message for mouse wheel scroll up command.
+			"Scrolls up the mouse wheel at the current mouse position"
+		),
+		category=SCRCAT_MOUSE,
+		gesture="kb:windows+pageUp"
+	)
+	def script_scrollMouseWheelUp(self, gesture):
+		mouseHandler.scrollMouseWheel(winUser.WHEEL_DELTA, isVertical=True)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for mouse wheel scroll down command.
+			"Scrolls down the mouse wheel at the current mouse position"
+		),
+		category=SCRCAT_MOUSE,
+		gesture="kb:windows+pageDown"
+	)
+	def script_scrollMouseWheelDown(self, gesture):
+		mouseHandler.scrollMouseWheel(-winUser.WHEEL_DELTA, True)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for mouse wheel scroll left command.
+			"Scrolls left the mouse wheel at the current mouse position"
+		),
+		category=SCRCAT_MOUSE
+	)
+	def script_scrollMouseWheelLeft(self, gesture):
+		mouseHandler.scrollMouseWheel(-winUser.WHEEL_DELTA, isVertical=False)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for mouse wheel scroll right command.
+			"Scrolls right the mouse wheel at the current mouse position"
+			),
+		category=SCRCAT_MOUSE
+	)
+	def script_scrollMouseWheelRight(self, gesture):
+		mouseHandler.scrollMouseWheel(winUser.WHEEL_DELTA, isVertical=False)
+
+	@script(
+		description=_(
 			# Translators: Input help mode message for report current selection command.
 			"Announces the current selection in edit controls and documents. "
 			"Pressing twice spells this information. "

@@ -379,3 +379,32 @@ def unlockRightMouseButton():
 	# Translators: This is presented when the right mouse button lock is released (used for drag and drop).
 	ui.message(_("Right mouse button unlock"))
 	executeMouseEvent(winUser.MOUSEEVENTF_RIGHTUP, 0, 0)
+
+
+def scrollMouseWheel(scrollSteps: int, isVertical: bool = True) -> None:
+	"""
+	Scrolls the mouse wheel either vertically or horizontally, controlling scroll direction and amount.
+	Consult https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-mousewheel for more about mouse events.
+	@param scrollSteps: The number of steps to scroll. Each step should
+		 correspond to a fraction or multiple of WHEEL_DELTA, which is typically set to 120.
+		 This defines the standard increment or decrement in scroll position.
+	@type scrollSteps: int
+	@param isVertical: Specifies the direction of the scroll. True for vertical (default), False for horizontal.
+	@type isVertical: bool
+	"""
+	if not isinstance(scrollSteps, int):
+		log.error(f"'scrollSteps' should be an integer. Type received: {type(scrollSteps).__name__}")
+		return
+	if scrollSteps == 0:
+		return
+	scrollEvent = winUser.MOUSEEVENTF_WHEEL if isVertical else winUser.MOUSEEVENTF_HWHEEL
+	sign = -1 if scrollSteps < 0 else 1
+	totalSteps = abs(scrollSteps)
+	maxSteps = winUser.WHEEL_DELTA
+	# Decompose the scroll operation into smaller deltas to accommodate applications
+	# that may not process deltas larger than the standard efficiently.
+	while totalSteps > 0:
+		scrollStep = min(totalSteps, maxSteps)
+		scrollData = sign * scrollStep
+		executeMouseEvent(scrollEvent, 0, 0, scrollData)
+		totalSteps -= scrollStep
