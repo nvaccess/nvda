@@ -300,7 +300,7 @@ class GlobalCommands(ScriptableObject):
 		description=_(
 			# Translators: Input help mode message for mouse wheel scroll right command.
 			"Scrolls right the mouse wheel at the current mouse position"
-			),
+		),
 		category=SCRCAT_MOUSE
 	)
 	def script_scrollMouseWheelRight(self, gesture):
