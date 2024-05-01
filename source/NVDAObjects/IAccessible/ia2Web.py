@@ -24,7 +24,7 @@ from comInterfaces import IAccessible2Lib as IA2
 import controlTypes
 from logHandler import log
 from documentBase import DocumentWithTableNavigation
-from NVDAObjects.behaviors import Dialog, WebDialog 
+from NVDAObjects.behaviors import Dialog, WebDialog
 from . import IAccessible, Groupbox
 from .ia2TextMozilla import MozillaCompoundTextInfo
 import aria
@@ -121,6 +121,8 @@ class Ia2Web(IAccessible):
 		return bool(res)
 
 	def _get_positionInfo(self):
+		if self.role == controlTypes.Role.TABLECELL and self.parent is not None:
+			return self.parent.positionInfo
 		info=super(Ia2Web,self).positionInfo
 		level=info.get('level',None)
 		if not level:
