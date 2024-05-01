@@ -835,7 +835,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 				lastRecursed = 0
 				continue
 			if actualCodepointOffset < 0 or actualCodepointOffset > totalCodepointOffset:
-				raise RuntimeError(f"{actualCodepointOffset =} went out of the boundaries; {totalCodepointOffset=}")
+				raise RuntimeError(f"{actualCodepointOffset=} went out of the boundaries; {totalCodepointOffset=}")
 			if actualCodepointOffset == codepointOffsetLeft:
 				return tmpInfo
 			elif actualCodepointOffset < codepointOffsetLeft:
