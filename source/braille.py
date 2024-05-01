@@ -1476,15 +1476,16 @@ class ReviewTextInfoRegion(TextInfoRegion):
 			or self._realSelection.start != info.start
 			or self._realSelection.end != info.end
 		):
-			# Selection changed, update also review position
+			# Selection changed
 			self._realSelection = info.copy()
-			reviewPosition: textInfos.TextInfo = info.copy()
-			if self.obj.isTextSelectionAnchoredAtStart:
-				# The end of the range is exclusive, so make it inclusive first.
-				reviewPosition.move(textInfos.UNIT_CHARACTER, -1, "end")
-			# Collapse the selection to the unanchored end which is also review position.
-			reviewPosition.collapse(end=self.obj.isTextSelectionAnchoredAtStart)
 			if config.conf["reviewCursor"]["followCaret"]:
+				# Update also review position
+				reviewPosition: textInfos.TextInfo = info.copy()
+				if self.obj.isTextSelectionAnchoredAtStart:
+					# The end of the range is exclusive, so make it inclusive first.
+					reviewPosition.move(textInfos.UNIT_CHARACTER, -1, "end")
+				# Collapse the selection to the unanchored end which is also review position.
+				reviewPosition.collapse(end=self.obj.isTextSelectionAnchoredAtStart)
 				# Enqueue to avoid recursion error
 				queueHandler.queueFunction(
 					queueHandler.eventQueue,
