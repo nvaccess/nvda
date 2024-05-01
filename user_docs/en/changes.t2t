@@ -114,7 +114,7 @@ Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documen
 - Instantiating ``winVersion.WinVersion`` objects with unknown Windows versions above 10.0.22000 such as 10.0.25398 returns "Windows 11 unknown" instead of "Windows 10 unknown" for release name. (#15992, @josephsl)
 - Make the AppVeyor build process easier for NVDA forks, by adding configurable variables in appveyor.yml to disable or modify NV Access specific portions of the build scripts. (#16216, @XLTechie)
 - Added a how-to document, explaining the process of building NVDA forks on AppVeyor. (#16293, @XLTechie)
-- When a gainFocus event is queued with an object that has a valid focusRedirect property, the object pointed to by the focusRedirect property is now held by eventHandler.lastQueuedFocusObject, rather than the originally queued object. (#15843)
+- When a ``gainFocus`` event is queued with an object that has a valid ``focusRedirect`` property, the object pointed to by the ``focusRedirect`` property is now held by ``eventHandler.lastQueuedFocusObject``, rather than the originally queued object. (#15843)
 -
 
 = 2024.1 =
