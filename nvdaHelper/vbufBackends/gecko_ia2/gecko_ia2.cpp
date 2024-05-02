@@ -1266,8 +1266,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 			// If the node is interactive or otherwise relevant even when empty
 			// and it still has no content, render a space so the user can access the node.
 			previousNode = buffer->addTextFieldNode(parentNode, previousNode, EMPTY_TEXT_NODE);
-			if(previousNode&&!locale.empty()) {
-				previousNode->addAttribute(L"language",locale);
+			if (previousNode && !locale.empty()) {
+				previousNode->addAttribute(L"language", locale);
 			}
 		}
 	}
