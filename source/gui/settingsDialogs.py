@@ -543,13 +543,13 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
-		self.filterText = ""
+		self.filterList = None
 		self.filterGenerator = None
 		self.oldFilterEditValue = None
-		# Translators: The label of a text field to search for symbols in the speech symbols dialog.
-		filterText = pgettext("speechSymbols", "&Filter by:")
+		# Translators: The label of a text field to search for settings in preferences dialog.
+		filterLabel = pgettext("nvdaSettings", "&Search:")
 		self.filterEdit = sHelper.addLabeledControl(
-			labelText = filterText,
+			labelText = filterLabel,
 			wxCtrlClass=wx.TextCtrl,
 			size=(self.scaleSize(310), -1),
 		)
@@ -637,15 +637,19 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.Bind(EVT_RW_LAYOUT_NEEDED, self._onPanelLayoutChanged)
 
 	def onFilterEditTextChange(self, evt):
-		if self.filterEdit.Value:
+		curValue = self.filterEdit.Value
+		if curValue:
+			# (re)start timer
 			self.filterEditChangingTimer.StartOnce(500)
-		if self.filterEdit.Value != self.oldFilterEditValue:
+		if curValue != self.oldFilterEditValue:
+			# discard last search generator
 			self.filterGenerator = None
-		self.oldFilterEditValue = self.filterEdit.Value
+		self.oldFilterEditValue = curValue
 
 	def onFilterEditTextReady(self, evt):
-		filterText = self.filterEdit.Value
-		self.filterText = filterText.lower()
+		filterText = self.filterEdit.Value.lower()
+		filterList = filterText.split()
+		self.filterList = filterList
 		if not self.filterGenerator:
 			gen = self.searchGenerator()
 			self.filterGenerator = itertools.cycle(gen)
@@ -669,39 +673,39 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 	def searchGenerator(self):
 		# inner generator
+		# process each item of passed setting panel
 		def recurseChildren(control):
-			if isinstance(control, (wx.Panel, wx.Sizer, wx.StaticBox)):
+			if isinstance(control, (wx.Panel, wx.Sizer, wx.StaticBox)): # process items into these containers
 				controlChildren = (c for c in control.Children)
 				for child in controlChildren:
 					yield from recurseChildren(child)
 				return
-			elif isinstance(control, wx.ListBox):
+			elif isinstance(control, wx.ListBox): # process list and its items
 				controlItems = (i for i in control.Items)
 				for index,item in enumerate(controlItems):
-					label = item.replace("&", "").lower()
 					# search here, to reduce checked items
-					if self.filterText in label and control.IsEnabled():
+					if control.IsEnabled() and self.searchInLabel(item):
 						yield (control, index)
 				return
-			elif isinstance(control, wx.StaticText): # e.g.: label of a wx.TextCtrl
+			elif isinstance(control, wx.StaticText): # process label of a wx.TextCtrl
 				label = control.GetLabel()
 				sizer = control.ContainingSizer
 				lastSizerChild = sizer.Children[-1].GetWindow()
 				res = (control, lastSizerChild)
-			elif isinstance(control, wx.Choice):
+			elif isinstance(control, wx.TextCtrl): # process value of a wx.TextCtrl
+				label = control.GetValue()
+				res = (control, control)
+			elif isinstance(control, wx.Choice): # process combobox and its current value
 				index = control.GetSelection()
 				label = control.GetString(index)
 				res = (control, index)
-			elif isinstance(control, wx.TextCtrl):
-				label = control.GetValue()
-				res = (control, control)
-			else: # e.g.: wx.CheckBox, wx.Button...
+			else: # process e.g. wx.CheckBox, wx.Button...
 				label = getattr(control, "Label", "")
 				res = (control, control)
-			label = label.replace("&", "").lower()
-			if self.filterText in label and control.IsEnabled():
+			if control.IsEnabled() and self.searchInLabel(label):
 				yield res
 		# outer generator
+		# process each category/setting panel
 		index = self.catListCtrl.GetFirstSelected()
 		max = self.catListCtrl.ItemCount
 		activeCatPanels = []
@@ -713,13 +717,12 @@ class MultiCategorySettingsDialog(SettingsDialog):
 				continue
 			# get category panel instance
 			catPanel = self._getCategoryPanel(catId)
-			# instantiate category generator
+			# instantiate inner generator for selected category
 			gen = recurseChildren(catPanel)
 			# loop as long as there are results
 			while res := next(gen, None):
 				# deactivate/destroy other panels
 				for oldPanel in activeCatPanels:
-					log.info("Deactivating %s panel"%oldPanel.title)
 					oldPanel.onPanelDeactivated()
 				# select and focus category on list, to guarantee scrolling/refresh
 				self.catListCtrl.Select(catId)
@@ -727,6 +730,14 @@ class MultiCategorySettingsDialog(SettingsDialog):
 				yield res
 			# candidate current category to be deactivated in next loop
 			activeCatPanels.append(catPanel)
+
+	def searchInLabel(self, label):
+		if not label:
+			return False
+		label = label.replace("&", "").lower()
+		for term in self.filterList:
+			if term in label:
+				return True
 
 	def _getCategoryPanel(self, catId):
 		panel = self.catIdToInstanceMap.get(catId, None)
