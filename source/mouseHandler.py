@@ -382,18 +382,17 @@ def unlockRightMouseButton():
 
 
 def scrollMouseWheel(scrollSteps: int, isVertical: bool = True) -> None:
-	"""
-	Scrolls the mouse wheel either vertically or horizontally, controlling scroll direction and amount.
-	Consult https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-mousewheel for more about mouse events.
-	@param scrollSteps: The number of steps to scroll. Each step should
-		 correspond to a fraction or multiple of WHEEL_DELTA, which is typically set to 120.
-		 This defines the standard increment or decrement in scroll position.
-	@type scrollSteps: int
-	@param isVertical: Specifies the direction of the scroll. True for vertical (default), False for horizontal.
-	@type isVertical: bool
+	"""Scrolls the mouse wheel either vertically or horizontally, controlling the scroll direction and amount.
+	More details on mouse events can be found at: https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-mousewheel
+
+	:param scrollSteps: The number of steps to scroll. Each step should correspond to a fraction or multiple
+		of WHEEL_DELTA, which is typically set to 120. This defines the standard increment
+		or decrement in scroll position.
+	:param isVertical: Determines the direction of the scroll; vertical if True, horizontal if False.
+	:return: None
 	"""
 	if not isinstance(scrollSteps, int):
-		log.error(f"'scrollSteps' should be an integer. Type received: {type(scrollSteps).__name__}")
+		raise TypeError(f"'scrollSteps' should be an integer. Type received: {type(scrollSteps).__name__}")
 		return
 	if scrollSteps == 0:
 		return
