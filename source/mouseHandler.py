@@ -382,8 +382,10 @@ def unlockRightMouseButton():
 
 
 def scrollMouseWheel(scrollSteps: int, isVertical: bool = True) -> None:
-	"""Scrolls the mouse wheel either vertically or horizontally, controlling the scroll direction and amount.
-	More details on mouse events can be found at: https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-mousewheel
+	"""
+	Scrolls the mouse wheel either vertically or horizontally, controlling the scroll direction and amount.
+	More details on mouse events can be found at:
+	https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-mousewheel
 
 	:param scrollSteps: The number of steps to scroll. Each step should correspond to a fraction or multiple
 		of WHEEL_DELTA, which is typically set to 120. This defines the standard increment
