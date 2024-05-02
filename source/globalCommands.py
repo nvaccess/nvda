@@ -270,7 +270,7 @@ class GlobalCommands(ScriptableObject):
 			"Scrolls up the mouse wheel at the current mouse position"
 		),
 		category=SCRCAT_MOUSE,
-		gesture="kb:windows+pageUp"
+		gesture="kb:NVDA+Windows+pageUp"
 	)
 	def script_scrollMouseWheelUp(self, gesture):
 		mouseHandler.scrollMouseWheel(winUser.WHEEL_DELTA, isVertical=True)
@@ -281,7 +281,7 @@ class GlobalCommands(ScriptableObject):
 			"Scrolls down the mouse wheel at the current mouse position"
 		),
 		category=SCRCAT_MOUSE,
-		gesture="kb:windows+pageDown"
+		gesture="kb:NVDA+Windows+pageDown"
 	)
 	def script_scrollMouseWheelDown(self, gesture):
 		mouseHandler.scrollMouseWheel(-winUser.WHEEL_DELTA, True)
