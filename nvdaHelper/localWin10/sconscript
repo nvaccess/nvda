@@ -46,6 +46,8 @@ localWin10Lib = env.SharedLibrary(
 # VS 2017 keeps changing the path to reflect the latest major.minor.build version which we canot easily find out.
 # Therefore  Search these versioned directories from newest to oldest  to collect all the files we need.
 msvc = env.get('MSVC_VERSION')
+print(msvc)
+print(find_vc_pdir(env, msvc))
 vcRedistDirs = glob.glob(os.path.join(
     find_vc_pdir(env, msvc),
     rf"Redist\MSVC\{msvc}*\x86\Microsoft.VC{msvc.replace('.', '')}.CRT"

@@ -18,8 +18,6 @@ from typing import Tuple
 
 
 class BasicTextInfo(NVDAObjectTextInfo):
-	# NVDAHelper is not initialized, so we can't use Uniscribe.
-	useUniscribe = False
 	# Most of our code use UTF-16 as internal encoding.
 	# Mimic this behavior, so we can also implicitly test textUtils module code
 	encoding = textUtils.WCHAR_ENCODING
