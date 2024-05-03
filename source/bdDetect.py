@@ -484,7 +484,7 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 			for type, ids in devs.items():
 				if match.type == type and match.id in ids:
 					yield match
-     
+
 	for match in DeviceMathcer.matches:
 		if (match.type, match.id) in DeviceMathcer.fallBackDevices:
 			yield match
@@ -666,7 +666,8 @@ class DriverRegistrar:
 		scanForDevices.register(scanFunc)
 		if moveToStart:
 			scanForDevices.moveToEnd(scanFunc, last=False)
-   
+
+
 class DeviceMathcer:
     fallBackDevices = list()
     matches = list()
