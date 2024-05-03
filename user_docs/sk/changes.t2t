@@ -3,6 +3,181 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2024.1 =
+
+Pridaný nový režim reči, reč na vyžiadanie.
+Keď je aktívny tento režim reči, NVDA nehovorí automaticky pri zmene fokusu a nečíta upozornenia. Reaguje však na príkazy, ktorých cieľom je niečo oznámiť, napríklad prečíta názov okna.
+V nastaveniach reči je teraz možné vypnúť tie režimi reči, ktoré nepoužívate, takže nie sú viac dostupné pri prepínaný skratkou ``nvda+s``.
+
+Pridali sme novú možnosť označovania textu, tzv. formátovaný výber. Tento je možné aktivovať v prehliadači Mozilla Firefox, skratkou ``NVDA+shift+f10``.
+Keď je tento režim zapnutý, označenie textu vykonáva priamo prehliadač.
+Kopírovanie textu pomocou ``ctrl+c`` tak do schránky skopíruje formátovanú verziu textu. V štandardnom režime sa kopíruje len čistý text.
+
+V katalógu s doplnkami je teraz možné doplnky hromadne inštalovať, aktualizovať aj odstraňovať. Stačí označiť príslušné doplnky a zvoliť možnosť z kontextovej ponuky.
+Pridali sme tiež možnosť zobraziť si komentáre a recenzie komunity.
+
+Z dialógu hlasový výstup sme odstránili položky pre nastavenie zvukového zariadenia a automatického stišovania.
+Nastavenia sú presunuté do vetvy zvuk, ktorá je dostupná z nastavení NVDA a tiež skratkou ``NVDA+ctrl+u``.
+
+Aktualizovali sme hlasový výstup eSpeak-NG, prekladovú tabuľku LibLouis a databázu symbolov Unicode CLDR.
+Pridali sme nové tabuľky pre Filipínčinu, Thaičinu a Rumúnčinu.
+
+V tejto verzii je opravené množstvo chýb v katalógu s doplnkami, problémy s brailovými riadkami, Libre Office, Microsoft Office a zvukom.
+
+== Dôležité poznámky ==
+- Staršie doplnky viac nie sú kompatibilné s touto verziou.
+- NVDA viac nepodporuje Windows 7 a 8.
+NVDA je odteraz možné nainštalovať v systéme Windows od verzie 8.1.
+-
+
+== Nové vlastnosti ==
+- Katalóg s doplnkami:
+  - V katalógu s doplnkami je odteraz možné označiť viacero doplnkov a hromadne ich inštalovať, aktualizovať či odstrániť. (#15350, #15623, @CyrilleB79)
+  - V kontextovej ponuke doplnkov pribudla možnosť otvoriť stránku s komentármi a recenziami. (#15576, @nvdaes)
+  -
+- Pridaná podpora pre pripájanie brailových riadkov pomocou štandardu Bluetooth Low Energy HID. (#15470)
+- Pridali sme novú možnosť označovania textu, tzv. formátovaný výber. Tento je možné aktivovať v prehliadači Mozilla Firefox, skratkou ``NVDA+shift+f10``.
+Keď je tento režim zapnutý, označenie textu vykonáva priamo prehliadač.
+Kopírovanie textu pomocou ``ctrl+c`` tak do schránky skopíruje formátovanú verziu textu. V štandardnom režime sa kopíruje len čistý text.
+Keďže kopírovanie spracúva prehliadač, NVDA neoznámi, že text bol skopírovaný. (#15830)
+- Pri kopírovaní textu v MS Worde v režime prehliadania je do schránky skopírované aj formátovanie.
+Upozorňujeme, že NVDA v tomto prípade neoznámi, že text bol skopírovaný do schránky, nakoľko sa o kopírovanie stará Word resp. webové zobrazenie v outlooku. (#16129)
+- Pridaný nový režim reči, reč na vyžiadanie.
+Keď je aktívny tento režim reči, NVDA nehovorí automaticky pri zmene fokusu a nečíta upozornenia. Reaguje však na príkazy, ktorých cieľom je niečo oznámiť, napríklad prečíta názov okna. (#481, @CyrilleB79)
+- V nastaveniach reči je teraz možné vypnúť tie režimi reči, ktoré nepoužívate, takže nie sú viac dostupné pri prepínaní skratkou ``nvda+s``. (#15806, @lukaszgo1)
+  - Ak ste doposiaľ používali doplnok NoBeepsSpeechMode (režim reči bez pípania), odporúčame vám tento doplnok odstrániť a následne vypnúť režimi reči "na vyžiadanie" a "pípanie".
+  -
+-
+
+== Zmeny ==
+- NVDA viac nepodporuje operačné systémy Windows 7 a 8.
+NVDA je odteraz možné používať v systéme Windows od verzie 8.1. (#15544)
+- Aktualizácie komponentov:
+  - Brailová prekladová tabuľka LibLouis aktualizovaná na verziu [3.28.0 https://github.com/liblouis/liblouis/releases/tag/v3.28.0]. (#15435, #15876, @codeofdusk)
+    - Pridané tabuľky pre Thajčinu, Rumúnčinu a filipínčinu.
+    -
+  - Hlasový výstup eSpeak NG aktualizovaný na verziu 1.52-dev commit ``530bf0abf``. (#15036)
+  - Databáza symbolov a špeciálnych znakov emoji CLDR bola aktualizovaná na verziu 44.0. (#15712, @OzancanKaratas)
+  - Java Access Bridge aktualizované na verziu 17.0.9+8Zulu (17.46.19). (#15744)
+  - 
+- Klávesové skratky:
+  - Nasledujúce príkazy podporujú dvojité stlačenie, ktoré vyhláskuje obsah, a trojité stlačenie, čo foneticky vyhláskuje oznámený obsah. Oznámiť výber, oznámiť obsah schránky, oznámiť zameraný objekt. (#15449, @CyrilleB79)
+  - Pridaná skratka na prepínanie tienenia obrazovky ``NVDA+ctrl+escape``. (#10560, @CyrilleB79)
+  - Príkaz na oznámenie výberu po štvoritom stlačení zobrazí výber v režime prehliadania. (#15858, @Emil-18)
+  -
+- Microsoft Office:
+  - Pri oznamovaní informácie o formátovaní v bunkách MS Excelu, NVDA oznamuje pozadie a orámovanie len ak sú tieto atribúty nastavené. (#15560, @CyrilleB79)
+  - NVDA opäť viac neoznamuje neoznačené skupiny v ponukách MS Office 365. (#15638)
+  - 
+- Z dialógu hlasový výstup sme odstránili položky pre nastavenie zvukového zariadenia a automatického stišovania.
+Nastavenia sú presunuté do vetvy zvuk, ktorá je dostupná z nastavení NVDA a tiež skratkou ``NVDA+ctrl+u``. (#15512, @codeofdusk)
+- Možnosť "Oznámiť stav kurzora myši" bola premenovaná na "Oznámiť prvok zameraný kurzorom myši".
+Odteraz táto funkcia oznamuje okrem objektu aj jeho stav (stlačený, začiarknutý) a tiež napríklad súradnice, ak ide o tabuľku. (#15420, @LeonarddeR)
+- V menu pomocník sú odteraz nové položky, ktoré smerujú na anglické stránky NV Access s obchodom a ďalšími materiálmi. (#14631)
+- Vylepšená podpora pre program [Poedit https://poedit.net] od verzie 3.
+Používateľom, ktorý používajú verziu 1, odporúčame aktualizovať na najnovšiu verziu, aby mohli aj naďalej využívať klávesové skratky na čítanie komentárov a poznámok pre prekladateľov. (#15313, #7303, @LeonarddeR)
+- Zobrazovač reči a braillu viac nie je dostupný v bezpečnom režime. (#15680)
+- V objektovej navigácii je možné prechádzať aj cez objekty, ktoré sú nedostupné. (#15477, @CyrilleB79)
+- V dokumente so zoznamom skratiek bol pridaný obsah. (#16106)
+-
+
+== Opravy ==
+- Katalóg s doplnkami:
+  - Ak sa zmení stav zameraného doplnku (napríklad zo "sťahuje sa" na "stiahnuté"), NVDA tieto zmeny oznamuje správne. (#15859, @LeonarddeR)
+  - Počas inštalácie doplnkov nie sú okná s inštaláciou prekrývané oknami s výzvou na reštart NVDA. (#15613, @lukaszgo1)
+  - Pri preinštalovaní nekompatibilného doplnku, tento nie je viac zakázaný. (#15584, @lukaszgo1)
+  - Odteraz je možné aktualizovať aj zakázané doplnky. (#15568, #15029)
+  - NVDA odteraz upozorní, ak nebolo možné doplnok stiahnuť. (#15796)
+  - NVDA je opäť možné reštartovať po zatvorení a opätovnom otvorení katalógu s doplnkami.
+  - 
+- Zvuk:
+  - NVDA viac nezamrzne, ak sa cez zvukové zariadenie prehráva viacero zvukov súčasne alebo tesne za sebou. (#15311, #15757, @jcsteh)
+  - Ak je vybraté zvukové zariadenie iné ako predvolené a súčasne je nedostupné, NVDA automaticky začne opätovne používať toto zariadenie, keď bude dostupné. (#15759, @jcsteh)
+  - NVDA opäť dokáže používať zvukové zariadenie, ktorého nastavenia sa zmenili, alebo ktoré bolo uvoľnené inou aplikáciou, ktorá ho používala vo výhradnom režime. (#15758, #15775, @jcsteh)
+  -
+- Brailovo písmo:
+  - Viacriadkové zobrazovače nespôsobujú pád ovládača BRLTTY a sú považované za jednoriadkové. (#15386)
+  - Na brailovom riadku sa zobrazuje viacero objektov, ktoré obsahujú užitočný text. (#15605)
+  - Opäť správne funguje písanie v skratkopise. (#15773, @aaclause)
+  - Zobrazenie na riadku sa lepšie aktualizuje pri pohybe medzi bunkami tabuľky. (#15755, @Emil-18)
+  - Na brailovom riadku sa odteraz zobrazuje informácia pri použití skratiek na oznámenie fokusu, navigačného objektu a výberu. (#15844, @Emil-18)
+  - Ovládač Albatross viac nespracuje Esp32 microcontroller ako zobrazovač Albatross (#15671)
+  -
+- LibreOffice:
+  - Slová odstránené skratkou ``ctrl+backspace`` sú správne oznámené aj v prípade, že za slovom nasleduje biely znak (napríklad medzera alebo tab). (#15436, @michaelweghorn)
+  - Oznámenie stavového riadku funguje aj v dialógoch Libre Office od verzie 24.2 (#15591, @michaelweghorn)
+  - Všetky textové atribúty sú podporované v Libre Office od verzie 24.2.
+  Odteraz tak NVDA dokáže oznamovať pravopisné chyby pri čítaní po riadkoch v Libre Office writeri. (#15648, @michaelweghorn)
+  - NVDA správne oznamuje nadpisy v Libre Office od verzie 24.2. (#15881, @michaelweghorn)
+  -
+- Microsoft Office:
+  - V MS Excely pri vypnutom UIA je aktívna bunka oznámená a zobrazená na brailovom riadku po použití skratiek ``ctrl+y``, ``ctrl+z`` alebo ``alt+backspace``. (#15547)
+  - V MS worde pri vypnutom UIA sa zobrazia zmeny na brailovom riadku po použití skratiek ``ctrl+v``, ``ctrl+x``, ``ctrl+y``, ``ctrl+z``, ``alt+backspace``, ``backspace`` alebo ``ctrl+backspace``.
+  Zmeny sa zobrazujú aj pri zapnutom UIA, ak je brailový kurzor zviazaný s prezeracím kurzorom a prezerací kurzor sleduje systémový kurzor. (#3276)
+  - V MS Worde NVDA správne oznamuje bunky, pri použití skratiek ``alt+home``, ``alt+end``, ``alt+pageUp`` a ``alt+pageDown``. (#15805, @CyrilleB79)
+  -
+- Vylepšené oznamovanie klávesových skratiek objektov. (#10807, #15816, @CyrilleB79)
+- Hlasový výstup sapi4 podporuje zmeny hlasitosti, výšky a rýchlosti reči integrované do reči. (#15271, @LeonarddeR)
+- Riadkovanie je správne oznamované v aplikáciách postavených na Java Access Bridge. (#14609)
+- NVDA oznamuje obsah dialógov vo viacerých oknách Windows 10 a 11. (#15729, @josephsl)
+- NVDA viac nezamrzne pri pokuse načítať dokument v MS Edge pri aktívnom UIA. (#15736)
+- Pri plynulom čítaní alebo hláskovaní sa viac postupne neskracujú pauzy medzi vetami a znakmi. (#15739, @jcsteh)
+- NVDA viac nezamrzne pri čítaní veľkého množstva textu. (#15752, @jcsteh)
+- Pri Používaní MS Edge cez UIA, NVDA dokáže aktivovať oveľa viac prvkov v režime prehliadania. (#14612)
+- Ak je poškodený súbor s nastaveniami, NVDA viac nezamrzne, ale obnoví továrne nastavenia, tak ako to bolo aj v minulosti. (#15690, @CyrilleB79)
+- Opravená podpora pre prvky System List view (``SysListView32``) používané v aplikáciách Windows Forms. (#15283, @LeonarddeR)
+- Odteraz viac nie je možné prepísať históriu v Python Konzole. (#15792, @CyrilleB79)
+- NVDA viac nemrzne pri spracovaní veľkého množstva UIA udalostí, napríklad v terminálových oknách alebo pri prehrávaní správ cez Whatsapp. (#14888, #15169)
+  - Toto správanie je možné ovplyvniť nastavením "pokročilé spracovanie udalostí" v pokročilých nastaveniach.
+  -
+- NVDA opäť dokáže sledovať fokus v aplikáciáh bežiacich pod Windows Defender Application Guard (WDAG). (#15164)
+- Text v zobrazovači reči sa viac neaktualizuje, ak cezeň prechádza myš. (#15952, @hwf1324)
+- NVDA opäť prechádza do režimu prehliadania, ak zatvoríte zoznamový rámik skratkou ``escape`` alebo ``alt+šípka hore`` v prehliadačoch Firefox a Chrome. (#15653)
+- Pohyb šípkami v zoznamových rámikoch Itunes viac neprepína NVDa do režimu prehliadania. (#15653)
+-
+
+= 2023.3.4 =
+Táto drobná aktualizácia opravuje problémy s inštaláciou a prináša bezpečnostnú záplatu.
+Bezpečnostné chyby prosím zodpovedne nahlasujte pomocou [Inštrukcií o bezpečnosti (anglicky) https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Bezpečnostné záplaty ==
+- Nie je viac možné spustiť vlastné nastavenia, ak je vynútený bezpečný režim.
+([GHSA-727q-h8j2-6p45 https://github.com/nvaccess/nvda/security/advisories/GHSA-727q-h8j2-6p45])
+-
+
+== Opravy ==
+- Opravená chyba, ktorá spôsobovala, že sa správne neukončil proces NVDA. (#16123)
+- Opravená chyba, ktorá spôsobovala, že nebolo možné nainštalovať NVDA, ak nebol správne ukončený predchádzajúci proces. (#16122)
+-
+
+= 2023.3.3 =
+Táto aktualizácia prináša bezpečnostnú záplatu.
+Bezpečnostné chyby prosím zodpovedne nahlasujte pomocou [Inštrukcií o bezpečnosti (anglicky) https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Bezpečnostné záplaty ==
+- Nie je viac možné vkladať do html kódu reťazce, ktoré spôsobia spúšťanie aplikácií v režime prehliadania NVDA. ([GHSA-xg6w-23rw-39r8 https://github.com/nvaccess/nvda/security/advisories/GHSA-xg6w-23rw-39r8])
+-
+
+= 2023.3.2 =
+Táto aktualizácia prináša bezpečnostnú záplatu.
+
+Chyba z verzie 2023.3.1 nebola opravená správne.
+Bezpečnostné chyby prosím zodpovedne nahlasujte pomocou [Inštrukcií o bezpečnosti (anglicky) https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Bezpečnostné záplaty ==
+- Chyba z verzie 2023.3.1 nebola opravená správne.
+Odteraz viac nie je umožnené neoprávnenému používateľovi pristupovať k systému a spúšťať vlastný kód. ([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
+-
+
+
+= 2023.3.1 =
+Táto aktualizácia prináša bezpečnostnú záplatu.
+Bezpečnostné chyby prosím zodpovedne nahlasujte pomocou [Inštrukcií o bezpečnosti (anglicky) https://github.com/nvaccess/nvda/blob/master/security.md].
+
+== Bezpečnostné záplaty ==
+- Odteraz viac nie je umožnené neoprávnenému používateľovi pristupovať k systému a spúšťať vlastný kód. ([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
+-
+
 = 2023.3 =
 Táto verzia obsahuje vylepšenie stability a rýchlosti hlasového výstupu a zvukov NVDA.
 Pridali sme možnosti samostatne regulovať hlasitosť hlasového výstupu a zvukov NVDA, alebo prispôsobenie hlasitosti zvukov NVDA podľa hlasitosti hlasového výstupu.

@@ -5,250 +5,250 @@ NVDA 更新日志
 
 = 2024.1 =
 
-A new "on-demand" speech mode has been added.
-When speech is on-demand, NVDA does not speak automatically (e.g. when moving the cursor) but still speaks when calling commands whose goal is explicitly to report something (e.g. report window title).
-In the Speech category of NVDA's settings, it is now possible to exclude unwanted speech modes from the Cycle speech modes command (``NVDA+s``).
+在本版新增了一种手动朗读模式：
+开启此模式后，NVDA 不会自动朗读信息（例如在光标移动时），但仍会响应明确朗读信息的指令（例如读出窗口标题）。
+您还可以在 NVDA 设置的“语音”类别中，从“循环语音模式中可用的模式”（``NVDA+s``）排除掉不需要的语音模式。
 
-A new Native Selection mode (toggled by ``NVDA+shift+f10``) is now available in NVDA's browse mode for Mozilla Firefox.
-When turned on, selecting text in browse mode will also manipulate Firefox's own native selection.
-Copying text with ``control+c`` will pass straight through to Firefox, thus copying the rich content, rather than NVDA's plain text representation.
+我们还支持了 Firefox 的应用原生选择模式（``NVDA+shift+f10``）：
+开启此模式后，在浏览模式下选择文本会同时操控 Firefox 的原生选择功能。
+通过 ``control+c`` 复制文本将直接传递给 Firefox，从而复制富文本内容，而非 NVDA 复制的纯文本形式。
 
-The Add-on Store now supports bulk actions (e.g. installing, enabling add-ons) by selecting multiple add-ons
-There is a new action to open a reviews webpage for the selected add-on.
+关于插件商店，一个显著的变化是，插件商店支持了批量操作：现在可以批量选择插件进行安装、启用等操作。
+同时新增了打开所选插件的网页评论功能。
 
-The audio output device and ducking mode options have been removed from the "Select Synthesizer" dialog.
-They can be found in the audio settings panel which can be opened with ``NVDA+control+u``.
+另外，自本版起，我们从“选择合成器”对话框中将“音频输出设备”和“音频闪避模式”选项移动到了“音频”设置面板。
+您可以通过 ``NVDA+control+u`` 打开此设置面板。
 
-eSpeak-NG, LibLouis braille translator, and Unicode CLDR have been updated.
-New Thai, Filipino and Romanian braille tables are available.
+如你所知，我们一如既往的对 eSpeak-NG 语音合成器、LibLouis 盲文翻译器和 Unicode CLDR 进行了更新。
+同时新增了泰语、菲律宾语和罗马尼亚语盲文表。
 
-There are many bug fixes, particularly for the Add-on Store, braille, Libre Office, Microsoft Office and audio.
+本版的其他修复主要集中于插件商店、盲文、Libre Office、Microsoft Office 和音频方面。
 
-== Important notes == 
-- This release breaks compatibility with existing add-ons.
-- Windows 7, and Windows 8 are no longer supported.
-Windows 8.1 is the minimum Windows version supported.
+== 重要提示 ==
+- 这是一个打破插件 API 兼容性的版本。
+- 不再支持 Windows 7 和 Windows 8。
+支持的最低 Windows 版本是 Windows 8.1。
 -
 
-== New Features ==
-- Add-on Store:
-  - The Add-on Store now supports bulk actions (e.g. installing, enabling add-ons) by selecting multiple add-ons. (#15350, #15623, @CyrilleB79)
-  - A new action has been added to open a dedicated webpage to see or provide feedback about the selected add-on. (#15576, @nvdaes)
+== 新特性 ==
+- 插件商店：
+  - 插件商店支持选中多个插件进行批量操作：例如批量安装、启用等。(#15350, #15623, @CyrilleB79)
+  - 新增了打开所选插件的网页评论功能，可以在该网页内提交相关插件的反馈。(#15576, @nvdaes)
   -
-- Added support for Bluetooth Low Energy HID Braille displays. (#15470)
-- A new Native Selection mode (toggled by ``NVDA+shift+f10``) is now available in NVDA's browse mode for Mozilla Firefox.
-When turned on, selecting text in browse mode will also manipulate Firefox's own native selection.
-Copying text with ``control+c`` will pass straight through to Firefox, thus copying the rich content, rather than NVDA's plain text representation.
-Note however that as Firefox is handling the actual copy, NVDA will not report a "copy to clipboard" message in this mode. (#15830)
-- When copying text in Microsoft Word with NVDA's browse mode enabled, formatting is now also included.
-A side affect of this is that NVDA will no longer report a "copy to clipboard" message when pressing ``control+c`` in Microsoft Word / Outlook browse mode, as the application is now handling the copy, not NVDA. (#16129)
-- A new "on-demand" speech mode has been added.
-When speech is on-demand, NVDA does not speak automatically (e.g. when moving the cursor) but still speaks when calling commands whose goal is explicitly to report something (e.g. report window title). (#481, @CyrilleB79)
-- In the Speech category of NVDA's settings, it is now possible to exclude unwanted speech modes from the Cycle speech modes command (``NVDA+s``). (#15806, @lukaszgo1)
-  - If you are currently using the NoBeepsSpeechMode add-on consider uninstalling it, and disabling "beeps" and "on-demand" modes in the settings.
+- 添加了对低功耗蓝牙 HID 盲文点显器的支持。(#15470)
+- 新增了适用于 Mozilla Firefox 的应用原生选择模式，``NVDA+shift+f10`` 切换。
+开启此模式后，在浏览模式下选择文本会同时操控 Firefox 的原生选择功能。
+通过 ``control+c`` 复制文本将直接传递给 Firefox，从而复制富文本内容，而非 NVDA 复制的纯文本形式。
+但请注意，由于实际的复制操作是由 Firefox 处理的，因此 NVDA 在此模式下不会提示“XXX 已复制到剪贴板”。(#15830)
+- 在 Microsoft Word/Outlook 中，NVDA 在浏览模式下复制文本时，也会复制格式信息。
+由于实际的复制操作是由应用程序处理的，因此，当您在此模式下按 ``control+c`` 不会提示“XXX 已复制到剪贴板”。(#16129)
+- 新增了手动朗读模式。
+开启此模式后，NVDA 不会自动朗读信息（例如在光标移动时），但仍会响应明确朗读信息的指令（例如读出窗口标题）。(#481, @CyrilleB79)
+- 支持在 NVDA 设置的“语音”类别中，从“循环语音模式中可用的模式”（``NVDA+s``）排除不需要的语音模式。(#15806, @lukaszgo1)
+  - 如果您当前正在使用 NoBeepsSpeechMode 插件，建议考虑将其卸载，在设置中禁用“提示音”和“手动朗读”模式，即可恢复到旧行为。
   -
 -
 
-== Changes ==
-- NVDA no longer supports Windows 7 and Windows 8.
-Windows 8.1 is the minimum Windows version supported. (#15544)
-- Component updates:
-  - Updated LibLouis braille translator to [3.28.0 https://github.com/liblouis/liblouis/releases/tag/v3.28.0]. (#15435, #15876, @codeofdusk)
-    - Added new Thai, Romanian, and Filipino Braille tables.
+== 改进 ==
+- NVDA 不再支持 Windows 7 和 Windows 8。
+最低支持版本为 Windows 8.1。(#15544)
+- 组件更新：
+  - 将 LibLouis 盲文翻译器更新到 [3.28.0 https://github.com/liblouis/liblouis/releases/tag/v3.28.0]。(#15435, #15876, @codeofdusk)
+    - 添加了新的泰语、罗马尼亚语和菲律宾语盲文表。
     -
-  - eSpeak NG has been updated to 1.52-dev commit ``530bf0abf``. (#15036)
-  - CLDR emoji and symbol annotations has been updated to version 44.0. (#15712, @OzancanKaratas)
-  - Updated Java Access Bridge to 17.0.9+8Zulu (17.46.19). (#15744)
+  - 将 eSpeak NG 更新到 1.52-dev commit ``530bf0abf``。(#15036)
+  - 将 CLDR Emoji 表情符号和符号解释库更新到 version 44.0。(#15712, @OzancanKaratas)
+  - 将 Java Access Bridge 更新到 17.0.9+8Zulu (17.46.19)。(#15744)
   -
-- Key Commands:
-  - The following commands now support two and three presses to spell the reported information and spell with character descriptions: report selection, report clipboard text and report focused object. (#15449, @CyrilleB79)
-  - The command to toggle the screen curtain now has a default gesture: ``NVDA+control+escape``. (#10560, @CyrilleB79)
-  - When pressed four times, the report selection command now shows the selection in a browsable message. (#15858, @Emil-18)
-  - 
-- Microsoft Office:
-  - When requesting formatting information on Excel cells, borders and background will only be reported if there is such formatting. (#15560, @CyrilleB79)
-  - NVDA will again no longer report unlabelled groupings such as in recent versions of Microsoft Office 365 menus. (#15638)
+- 快捷键：
+  - 读出已选择的文本、读出剪贴板中的文本和读出焦点对象命令现在支持连按两次逐字朗读，连按三次用短字符描述逐字解释。(#15449, @CyrilleB79)
+  - 分配了切换黑屏功能的默认快捷键——NVDA+control+escape。(#10560, @CyrilleB79)
+  - 朗读选择的文本命令支持连按四次在可浏览对话框中显示所选择的文本。(#15858, @Emil-18)
   -
-- The audio output device and ducking mode options have been removed from the "Select Synthesizer" dialog.
-They can be found in the audio settings panel which can be opened with ``NVDA+control+u``. (#15512, @codeofdusk)
-- The option "Report role when mouse enters object" in NVDA's mouse settings category has been renamed to "Report object when mouse enters it".
-This option now announces additional relevant information about an object when the mouse enters it, such as states (checked/pressed) or cell coordinates in a table. (#15420, @LeonarddeR)
-- New items have been added to the Help menu for the NV Access "Get Help" page and Shop. (#14631)
-- NVDA's support for [Poedit https://poedit.net] is overhauled for Poedit version 3 and above.
-Users of Poedit 1 are encouraged to update to Poedit 3 if they want to rely on enhanced accessibility in Poedit, such as shortcuts to read translator notes and comments. (#15313, #7303, @LeonarddeR)
-- Braille viewer and speech viewer are now disabled in secure mode. (#15680)
-- During object navigation, disabled (unavailable) objects will not be ignored anymore. (#15477, @CyrilleB79)
-- Added table of contents to key commands document. (#16106)
+- Microsoft Office：
+  - 获取 Excel 单元格的格式信息时，仅当存在此类格式时才会读出边框和背景。(#15560, @CyrilleB79)
+  - 去掉对未标记分组的朗读，例如在最新版 Microsoft Office 365 菜单中。(#15638)
+  -
+- 从“选择合成器”对话框中将“音频输出设备”和“音频闪避模式”选项移动到了“音频”设置面板。
+可以通过 ``NVDA+control+u`` 打开此设置面板。(#15512, @codeofdusk)
+- NVDA 鼠标设置类别中的“鼠标进入对象时读出角色”选项已重命名为“鼠标进入时读出对象”。
+此选项现在会在鼠标进入对象时读出有关该对象的更多相关信息，例如状态（选中/按下）或表格中的单元格坐标。(#15420, @LeonarddeR)
+- 帮助菜单中添加了新的条目，用于访问 NV Access 的“获取帮助”页面和商店。(#14631)
+- NVDA 对 [Poedit https://poedit.net] 3 及更高版本的支持进行了全面改进。
+如果用户依赖于 Poedit 中增强的可访问性功能（例如使用朗读译者注释和批注的快捷键），建议 Poedit 1 用户更新到 Poedit 3。(#15313, #7303, @LeonarddeR)
+- 在安全模式下将禁用盲文查看器和语音查看器。(#15680)
+- 在对象导航过程中，将不再忽略已禁用的（不可用）对象。(#15477, @CyrilleB79)
+- 为热键快速参考添加了目录。(#16106)
 -
 
-== Bug Fixes ==
-- Add-on Store:
-  - When the status of an add-on is changed while it has focus, e.g. a change from "downloading" to "downloaded", the updated item is now announced correctly. (#15859, @LeonarddeR)
-  - When installing add-ons install prompts are no longer overlapped by the restart dialog. (#15613, @lukaszgo1)
-  - When reinstalling an incompatible add-on it is no longer forcefully disabled. (#15584, @lukaszgo1)
-  - Disabled and incompatible add-ons can now be updated. (#15568, #15029)
-  - NVDA now recovers and displays an error in a case where an add-on fails to download correctly. (#15796)
-  - NVDA no longer fails to restart intermittently after opening and closing Add-on Store. (#16019, @lukaszgo1)
+== 错误修复 ==
+- 插件商店：
+  - 修复当列表内的插件被聚焦时，其状态发生改变（例如，从“下载中”变为“已下载”），没有及时读出变化信息的错误。(#15859, @LeonarddeR)
+  - 修复了安装插件时，安装提示会被重新启动对话框覆盖的错误。(#15613, @lukaszgo1)
+  - 修复了重新安装不兼容的插件，会被强制禁用的错误。(#15584, @lukaszgo1)
+  - 修复了因不兼容而被禁用的插件无法获取更新的错误。(#15568, #15029)
+  - 修复了插件下载失败 NVDA 未给出提示且无法重新下载的错误。(#15796)
+  - 修复了打开和关闭插件商店后，NVDA 间歇性重启的错误。(#16019, @lukaszgo1)
   -
-- Audio:
-  - NVDA no longer freezes briefly when multiple sounds are played in rapid succession. (#15311, #15757, @jcsteh)
-  - If the audio output device is set to something other than the default and that device becomes available again after being unavailable, NVDA will now switch back to the configured device instead of continuing to use the default device. (#15759, @jcsteh)
-  - NVDA now resumes audio if the configuration of the output device changes or another application releases exclusive control of the device. (#15758, #15775, @jcsteh)
+- 音频：
+  - 修复了快速连续播放多个声音时，NVDA 会短暂冻结的错误。(#15311, #15757, @jcsteh)
+  - 如果音频输出设备设置为除默认设备之外的其他设备，并且该设备在不可用后恢复，NVDA 现在会切换回设置的设备，而不是继续使用默认设备。(#15759, @jcsteh)
+  - 如果输出设备的设置发生更改或另一个应用程序释放了对该设备的独占控制，NVDA 将恢复音频输出。(#15758, #15775, @jcsteh)
   -
-- Braille:
-  - Multi line braille displays will no longer crash the BRLTTY driver and are treated as one continuous display. (#15386)
-  - More objects which contain useful text are detected, and text content is displayed in braille. (#15605)
-  - Contracted braille input works properly again. (#15773, @aaclause)
-  - Braille is now updated when moving the navigator object between table cells in more situations (#15755, @Emil-18)
-  - The result of reporting current focus, current navigator object, and current selection commands is now shown in braille. (#15844, @Emil-18)
-  - The Albatross braille driver no longer handles a Esp32 microcontroller as an Albatross display. (#15671)
+- 盲文：
+  - 修复了多行盲文点显器会导致 BRLTTY 驱动程序崩溃的错误，并将设备视为一个大型连续盲文点显器。(#15386)
+  - 能够检测到更多包含有用文本的对象，并以盲文呈现其文本内容。(#15605)
+  - 修复了盲文输入被意外破坏的回归错误。(#15773, @aaclause)
+  - 在更多情况下，在表格单元格之间移动导航对象时会更新盲文显示。(#15755, @Emil-18)
+  - 修复了读出系统焦点、读出导航对象和已选择内容未在盲文更新的错误。(#15844, @Emil-18)
+  - 修复了 Albatross 盲文驱动程序将 Esp32 微控制器误识别为 Albatross 点显器的错误。(#15671)
   -
-- LibreOffice:
-  - Words deleted using the ``control+backspace`` keyboard shortcut are now also properly announced when the deleted word is followed by whitespace (like spaces and tabs). (#15436, @michaelweghorn)
-  - Announcement of the status bar using the ``NVDA+end`` keyboard shortcut now also works for dialogs in LibreOffice version 24.2 and newer. (#15591, @michaelweghorn)
-  - All expected text attributes are now supported in LibreOffice versions 24.2 and above.
-  This makes the announcement of spelling errors work when announcing a line in Writer. (#15648, @michaelweghorn)
-  - Announcement of heading levels now also works for LibreOffice versions 24.2 and newer. (#15881, @michaelweghorn)
+- LibreOffice：
+  - 修复当单词后紧跟空白符（如空格或制表符）时，按 ``Ctrl+Backspace`` 删除该单词未正确朗读已删除内容的错误。(#15436, @michaelweghorn)
+  - 按 ``NVDA+end`` 快捷键朗读状态栏，支持了 LibreOffice 24.2 及更高版本的对话框。(#15591, @michaelweghorn)
+  - 目前 LibreOffice 24.2 及更高版本支持所有预期的文本属性。
+这使得在 Writer 中朗读一行时，依然可以朗读拼写错误。(#15648, @michaelweghorn)
+  - 现在，LibreOffice 24.2 及更高版本也支持了读出标题级别。(#15881, @michaelweghorn)
   -
-- Microsoft Office:
-  - In Excel with UIA disabled, braille is updated, and the active cell content is spoken, when ``control+y``, ``control+z`` or ``alt+backspace`` is pressed. (#15547)
-  - In Word with UIA disabled braille is updated when ``control+v``, ``control+x``, ``control+y``, ``control+z``, ``alt+backspace``, ``backspace`` or ``control+backspace`` is pressed.
-  It is also updated with UIA enabled, when typing text and braille is tethered to review and review follows caret. (#3276)
-  - In Word, the landing cell will now be correctly reported when using the native Word commands for table navigation ``alt+home``, ``alt+end``, ``alt+pageUp`` and ``alt+pageDown``. (#15805, @CyrilleB79)
+- Microsoft Office：
+  - 修复了在禁用 UIA 的 Excel 中，当按下 ``control+y``、``control+z`` 或 ``alt+backspace`` 时，未朗读操作结果且盲文显示未同时更新的错误。(#15547)
+  - 修复了在禁用 UIA 的 Word 中，当按下 ``control+v``、``control+x``、``control+y``、``control+z``、``alt+backspace``、亦或按住 ``backspace``、``control+backspace`` 时，盲文未更新的错误。
+在启用 UIA 的情况下也会更新，当输入文本时，盲文光标与浏览光标跟随，并且浏览光标跟随插入符位置。
+  - 修复了在 Word 中，使用原生 Word 表格导航快捷键 ``alt+home``、``alt+end``、``alt+pageUp``、``alt+pageDown`` 时，不读单元格坐标的错误。(#15805, @CyrilleB79)
   -
-- Reporting of object shortcut keys has been improved. (#10807, #15816, @CyrilleB79)
-- The SAPI4 synthesizer now properly supports volume, rate and pitch changes embedded in speech. (#15271, @LeonarddeR)
-- Multi line state is now correctly reported in applications using Java Access Bridge. (#14609)
-- NVDA will announce dialog content for more Windows 10 and 11 dialogs. (#15729, @josephsl)
-- NVDA will no longer fail to read a newly loaded page in Microsoft Edge when using UI Automation. (#15736)
-- When using say all or commands which spell text, pauses between sentences or characters no longer gradually decrease over time. (#15739, @jcsteh)
-- NVDA no longer sometimes freezes when speaking a large amount of text. (#15752, @jcsteh)
-- When accessing Microsoft Edge using UI Automation, NVDA is able to activate more controls in browse mode. (#14612)
-- NVDA will not fail to start anymore when the configuration file is corrupted, but it will restore the configuration to default as it did in the past. (#15690, @CyrilleB79)
-- Fixed support for System List view (``SysListView32``) controls in Windows Forms applications. (#15283, @LeonarddeR)
-- It is not possible anymore to overwrite NVDA's Python console history. (#15792, @CyrilleB79)
-- NVDA should remain responsive when being flooded with many UI Automation events, e.g. when large chunks of text are printed to a terminal or when listening to voice messages in WhatsApp messenger. (#14888, #15169)
-  - This new behavior can be disabled using the new "Use enhanced event processing" setting in NVDA's advanced settings.
+- 对象快捷键的朗读有所改善。(#10807, #15816, @CyrilleB79)
+- SAPI4 合成器现在可以正确支持嵌入在语音中的音量、语速和音调变化。(#15271, @LeonarddeR)
+- 使用 Java Access Bridge 的应用程序中现在可以正确朗读多行状态。(#14609)
+- NVDA 可以朗读更多 Windows 10 和 11 对话框内容。(#15729, @josephsl)
+- 修复了使用 UIA 时，NVDA 无法读取 Microsoft Edge 新加载的页面的错误。(#15736)
+- 修复了使用“全文朗读”或拼写文本的命令时，句子或字符之间的停顿会随着时间推移逐渐缩短的错误。(#15739, @jcsteh)
+- 修复了 NVDA 在朗读大量文本时，会偶尔冻结的错误。(#15752, @jcsteh)
+- 修复了使用 UIA 访问 Microsoft Edge 时，NVDA 在浏览模式下无法激活个别控件的错误。(#14612)
+- 修复了配置文件被破坏时，NVDA 无法启动的错误，在这种情况下，会和以前一样将配置还原为默认值。(#15690, @CyrilleB79)
+- 修复了对 Windows Forms 应用程序中系统列表视图（SysListView32）控件的支持。(#15283, @LeonarddeR)
+- 修复了 NVDA 的 Python 控制台历史记录在个别情况下会被覆盖的错误。(#15792, @CyrilleB79)
+- 当收到大量 UIA 事件（例如，大量文本被打印到终端或在 WhatsApp Messenger 中收听语音消息时），NVDA 可以保持响应状态。(#14888, #15169)
+  - 这一新行为可以通过 NVDA “高级”设置中的设置来禁用。
   -
-- NVDA is again able to track the focus in applications running within Windows Defender Application Guard (WDAG). (#15164)
-- The speech text is no longer updated when the mouse moves in the Speech Viewer. (#15952, @hwf1324)
-- NVDA will again switch back to browse mode when closing combo boxes with ``escape`` or ``alt+upArrow`` in Firefox or Chrome. (#15653)
-- Arrowing up and down in combo boxes in iTunes will no longer inappropriately switch back to browse mode. (#15653)
+- 修复了 NVDA 无法获取在 Windows Defender 应用防护（WDAG）中运行的应用程序焦点的错误。(#15164)
+- 当鼠标在朗读查看器中移动时，朗读查看器中的文本不再更新。(#15952, @hwf1324)
+- 修复了在 Firefox 或 Chrome 中使用 ``escape`` 或 ``alt+upArrow`` 关闭组合框后，NVDA 未切换回浏览模式的错误。(#15653)
+- 修复了在 iTunes 中按上下键选择组合框中的选项时会被切换回浏览模式的错误。(#15653)
 -
 
-== Changes for Developers ==
-Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+== 开发者需要了解的变化 ==
+有关 NVDA 的 API 弃用和删除流程的信息，请参阅[开发人员指南 https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API]。
 
-- Note: this is an Add-on API compatibility breaking release.
-Add-ons will need to be re-tested and have their manifest updated.
-- Building NVDA now requires Visual Studio 2022.
-Please refer to the [NVDA docs https://github.com/nvaccess/nvda/blob/release-2024.1/projectDocs/dev/createDevEnvironment.md] for the specific list of Visual Studio components. (#14313)
-- Added the following extension points:
-  - ``treeInterceptorHandler.post_browseModeStateChange``. (#14969, @nvdaes)
-  - ``speech.speechCanceled``. (#15700, @LeonarddeR)
-  - ``_onErrorSoundRequested`` (should be retrieved calling ``logHandler.getOnErrorSoundRequested()``) (#15691, @CyrilleB79)
+- 注意：此版本会影响插件的 API 兼容性。
+需要重新测试插件并更新其清单文件。
+- 构建 NVDA 现在需要 Visual Studio 2022。
+有关 Visual Studio 依赖组件的详细列表，请参阅 [NVDA 文档 https://github.com/nvaccess/nvda/blob/release-2024.1/projectDocs/dev/createDevEnvironment.md]。(#14313)
+- 添加了以下扩展点：
+  - ``treeInterceptorHandler.post_browseModeStateChange`` (#14969, @nvdaes)
+  - ``speech.speechCanceled`` (#15700, @LeonarddeR)
+  - ``_onErrorSoundRequested``（应该通过调用 ``logHandler.getOnErrorSoundRequested()`` 获取）(#15691, @CyrilleB79)
   -
-- It is now possible to use plural forms in an add-on's translations. (#15661, @beqabeqa473)
-- Included python3.dll in the binary distribution for use by add-ons with external libraries utilizing the [stable ABI https://docs.python.org/3.11/c-api/stable.html]. (#15674, @mzanm)
-- The ``BrailleDisplayDriver`` base class now has ``numRows`` and ``numCols`` properties to provide information about multi line braille displays.
-Setting ``numCells`` is still supported for single line braille displays and ``numCells`` will return the total number of cells for multi line braille displays. (#15386)
-- Updated BrlAPI for BRLTTY to version 0.8.5, and its corresponding python module to a Python 3.11 compatible build. (#15652, @LeonarddeR)
-- Added the ``speech.speakSsml`` function, which allows you to write NVDA speech sequences using [SSML https://www.w3.org/TR/speech-synthesis11/]. (#15699, @LeonarddeR)
-  - The following tags are currently supported and translated to appropriate NVDA speech commands:
-    - ``Prosody`` (``pitch``, ``rate`` and ``volume``). Only multiplication (e.g. ``200%`` are supported.
-    - ``say-as`` with the ``interpret`` attribute set to ``characters``
-    - ``voice`` with the ``xml:lang`` set to an XML language
-    - ``break`` with the ``time`` attribute set to a value in milliseconds, e.g. ``200ms``
-    - ``mark`` with the ``name`` attribute set to a mark name, e.g. ``mark1``, requires providing a callback
+- 在插件的翻译中现在可以使用复数形式。(#15661, @beqabeqa473)
+- 在二进制包中包含了 python3.dll，供插件使用外部库（利用[稳定 API https://docs.python.org/3.11/c-api/stable.html]。(#15674, @mzanm)
+- ``BrailleDisplayDriver`` 基类现在具有 ``numRows`` 和 ``numCols`` 属性，用于提供有关多行盲文显示器的信息。
+对于单行盲文显示器，仍然支持设置 ``numCells``，对于多行盲文显示器，``numCells`` 将返回单元格总数。(#15386)
+- 将 BRLTTY 的 BrlAPI 更新到 0.8.5 版本，并将其对应的 Python 模块更新到兼容 Python 3.11 的版本。(#15652, @LeonarddeR)
+- 添加了 ``speech.speakSsml`` 函数，您可以使用 [SSML https://www.w3.org/TR/speech-synthesis11/] 编写 NVDA 语音序列。(#15699, @LeonarddeR)
+  - 当前支持将以下标签转换为相应的 NVDA 语音命令：
+    - ``Prosody``（``pitch``，``rate`` 和 ``volume``）。仅支持倍数的形式调节（例如 ``200%``）。
+    - 将 ``say-as`` 的 ``interpret`` 属性设置为 ``characters``
+    - 将 ``voice`` 的 ``xml:lang`` 设置为 XML 的语言
+    - 将 ``break`` 的 ``time`` 属性设置为毫秒值，例如 ``200ms``
+    - 将 ``mark`` 的 ``name`` 属性设置为标记的名称，例如 ``mark1``，需要提供回调函数
     -
-  - Example: ``speech.speakSsml('<speak><prosody pitch="200%">hello</prosody><break time="500ms" /><prosody rate="50%">John</prosody></speak>')``
-  - The SSML parsing capabilities are backed by the ``SsmlParser`` class in the ``speechXml`` module.
+  - 示例： ``speech.speakSsml('<speak><prosody pitch="200%">hello</prosody><break time="500ms" /><prosody rate="50%">John</prosody></speak>')``
+  - SSML 解析功能由 ``speechXml`` 模块中的 ``SsmlParser`` 类提供支持。
   -
-- Changes to the NVDA Controller Client library:
-  - The file names of the library no longer contain a suffix denoting the architecture, i.e. ``nvdaControllerClient32/64.dll`` are now called ``nvdaControllerClient.dll``. (#15718, #15717, @LeonarddeR)
-  - Added an example to demonstrate using nvdaControllerClient.dll from Rust. (#15771, @LeonarddeR)
-  - Added the following functions to the controller client: (#15734, #11028, #5638, @LeonarddeR)
-    - ``nvdaController_getProcessId``: To get the process id (PID) of the current instance of NVDA the controller client is using.
-    - ``nvdaController_speakSsml``: To instruct NVDA to speak according to the given SSML. This function also supports:
-      - Providing the symbol level.
-      - Providing the priority of speech to be spoken.
-      - Speaking both synchronously (blocking) and asynchronously (instant return).
+- 对 NVDA Controller Client  库的改进：
+  - 库的文件名不再包含表示架构的后缀，即 ``nvdaControllerClient32/64.dll`` 现在称为 ``nvdaControllerClient.dll``。(#15718, #15717, @LeonarddeR)
+  - 添加了一个示例，演示如何使用 Rust 语言调用 nvdaControllerClient.dll。(#15771, @LeonarddeR)
+  - 添加了以下函数到 NVDA Controller Client：(#15734, #11028, #5638, @LeonarddeR)
+    - ``nvdaController_getProcessId``：获取 Controller Client 使用的当前 NVDA 实例的进程 ID (PID)。
+    - ``nvdaController_speakSsml``：指示 NVDA 根据给定的 SSML 进行朗读。此函数还支持：
+      - 提供符号级别。
+      - 提供要朗读的语音优先级。
+      - 同步（阻塞）和异步（立即返回）朗读。
       -
-    - ``nvdaController_setOnSsmlMarkReachedCallback``: To register a callback of type ``onSsmlMarkReachedFuncType`` that is called in synchronous mode for every ``<mark />`` tag encountered in the SSML sequence provided to ``nvdaController_speakSsml``.
+    - ``nvdaController_setOnSsmlMarkReachedCallback``：注册一个类型为 ``onSsmlMarkReachedFuncType`` 的回调函数，以便在使用 ``nvdaController_speakSsml`` 处理同步 SSML 过程时，遇到每个 ``<mark />`` 标签时都会调用该回调函数。(#15734, #11028, #5638, @LeonarddeR)
     -
-  - Note: the new functions in the controller client only support NVDA 2024.1 and above.
+  - 注意：NVDA Controller Client 中的新功能仅支持 NVDA 2024.1 及以上。
   -
-- Updated ``include`` dependencies:
-  - detours to ``4b8c659f549b0ab21cf649377c7a84eb708f5e68``. (#15695)
-  - ia2 to ``3d8c7f0b833453f761ded6b12d8be431507bfe0b``. (#15695)
-  - sonic to ``8694c596378c24e340c09ff2cd47c065494233f1``. (#15695)
-  - w3c-aria-practices to ``9a5e55ccbeb0f1bf92b6127c9865da8426d1c864``. (#15695)
-  - wil to ``5e9be7b2d2fe3834a7107f430f7d4c0631f69833``. (#15695)
+- 更新了 ``include`` 依赖：
+  - detours 更新到 ``4b8c659f549b0ab21cf649377c7a84eb708f5e68``。(#15695)
+  - ia2 更新到 ``3d8c7f0b833453f761ded6b12d8be431507bfe0b``。(#15695)
+  - sonic 更新到 ``8694c596378c24e340c09ff2cd47c065494233f1``。(#15695)
+  - w3c-aria-practices 更新到 ``9a5e55ccbeb0f1bf92b6127c9865da8426d1c864``。(#15695)
+  - wil 更新到 ``5e9be7b2d2fe3834a7107f430f7d4c0631f69833``。(#15695)
   -
-- Device info yielded by ``hwPortUtils.listUsbDevices`` now contain the bus reported description of the USB device (key ``busReportedDeviceDescription``). (#15764, @LeonarddeR)
-- For USB serial devices, ``bdDetect.getConnectedUsbDevicesForDriver`` and ``bdDetect.getDriversForConnectedUsbDevices`` now yield device matches containing a ``deviceInfo`` dictionary enriched with data about the USB device, such as ``busReportedDeviceDescription``. (#15764, @LeonarddeR)
-- When the configuration file ``nvda.ini`` is corrupted, a backup copy is saved before it is reinitialized. (#15779, @CyrilleB79)
-- When defining a script with the script decorator, the ``speakOnDemand`` boolean argument can be specified to control if a script should speak while in "on-demand" speech mode. (#481, @CyrilleB79)
-  - Scripts that provide information (e.g. say window title, report time/date) should speak in the "on-demand" mode.
-  - Scripts that perform an action (e.g. move the cursor, change a parameter) should not speak in the "on-demand" mode.
+- 由 ``hwPortUtils.listUsbDevices`` 提供的设备信息现在包含 USB 设备的总线报告描述（键 ``busReportedDeviceDescription``）。(#15764, @LeonarddeR)
+- 对于 USB 串行设备，``bdDetect.getConnectedUsbDevicesForDriver`` 和 ``bdDetect.getDriversForConnectedUsbDevices`` 现在返回包含 ``deviceInfo`` 字典的键值对，该字典包含有关 USB 设备的数据，例如 ``busReportedDeviceDescription``。(#15764, @LeonarddeR)
+- 当配置文件 ``nvda.ini`` 被破坏时，会在重新初始化配置之前保存备份副本。(#15779, @CyrilleB79)
+- 当使用装饰器定义手势时，可以指定 ``speakOnDemand`` 布尔参数来控制脚本是否应在“手动”语音模式下朗读。(#481, @CyrilleB79)
+  - 用于提供信息的手势（例如，读出窗口标题、读出时间/日期）应该在“手动”模式下朗读。
+  - 用于执行操作的手势（例如，移动光标、更改参数）不应该在“手动”模式下朗读。
   -
-- Fixed bug where deleting git-tracked files during ``scons -c`` resulted in missing UIA COM interfaces on rebuild. (#7070, #10833, @hwf1324)
-- Fix a bug where some code changes were not detected when building ``dist``, that prevented a new build from being triggered.
-Now ``dist`` always rebuilds. (#13372, @hwf1324)
-- A ``gui.nvdaControls.MessageDialog`` with default type of standard, no longer throws a None conversion exception because no sound is assigned. (#16223, @XLTechie)
+- 修复了在 ``scons -c`` 期间删除 git 跟踪文件会导致重建时缺少 UIA COM 接口的错误。(#7070, #10833, @hwf1324)
+- 修复了在构建 ``dist`` 时未检测到某些代码更改的错误，该错误导致无法触发新的构建。
+现在 ``dist`` 始终会被重建。(#13372, @hwf1324)
+- 默认类型为标准的 ``gui.nvdaControls.MessageDialog`` 不再抛出 None 转换异常，因为没有指定提示音。(#16223, @XLTechie)
 -
 
 
-=== API Breaking Changes ===
-These are breaking API changes.
-Please open a GitHub issue if your Add-on has an issue with updating to the new API.
+=== API 重大变更 ===
+以下是一些会破坏现有插件兼容性的 API 改动。
+如果您的插件在更新到新 API 后出现问题，请随时在 GitHub 上提交 issue 报告。
 
-- NVDA is now built with Python 3.11. (#12064)
-- Updated pip dependencies:
-  - configobj to 5.1.0dev commit ``e2ba4457c4651fa54f8d59d8dcdd3da950e956b8``. (#15544)
-  - Comtypes to 1.2.0. (#15513, @codeofdusk)
-  - Flake8 to 4.0.1. (#15636, @lukaszgo1)
-  - py2exe to 0.13.0.1dev commit ``4e7b2b2c60face592e67cb1bc935172a20fa371d``. (#15544) 
-  - robotframework to 6.1.1. (#15544)
-  - SCons to 4.5.2. (#15529, @LeonarddeR)
-  - sphinx to 7.2.6. (#15544)
-  - wxPython to 4.2.2a commit ``0205c7c1b9022a5de3e3543f9304cfe53a32b488``. (#12551, #16257)
+- NVDA 现在使用 Python 3.11 进行构建。(#12064)
+- 更新了以下 pip 依赖：
+  - configobj 更新到 5.1.0dev 版本 (commit: ``e2ba4457c4651fa54f8d59d8dcdd3da950e956b8``)。(#15544)
+  - Comtypes 更新到 1.2.0 版本。(#15513, @codeofdusk)
+  - Flake8 更新到 4.0.1 版本。(#15636, @lukaszgo1)
+  - py2exe 更新到 0.13.0.dev 提交版本 (commit: ``4e7b2b2c60face592e67cb1bc935172a20fa371d``)。(#15544)
+  - robotframework 更新到 6.1.1 版本。(#15544)
+  - SCons 更新到 4.5.2 版本。(#15529, @LeonarddeR)
+  - sphinx 更新到 7.2.6 版本。(#15544)
+  - wxPython 更新到 4.2.2a 提交版本 (commit: ``0205c7c1b9022a5de3e3543f9304cfe53a32b488``)。(#12551, #16257)
   -
-- Removed pip dependencies:
-  - typing_extensions, these should be supported natively in Python 3.11 (#15544)
-  - nose, instead unittest-xml-reporting is used to generate XML reports. (#15544)
+- 删除了以下 pip 依赖：
+  - typing_extensions：Python 3.11 原生支持此功能，无需单独安装。(#15544)
+  - nose：不再使用 nose，而是使用 unittest-xml-reporting 生成 XML 报告。(#15544)
   -
-- ``IAccessibleHandler.SecureDesktopNVDAObject`` has been removed.
-Instead, when NVDA is running on the user profile, track the existence of the secure desktop with the extension point: ``winAPI.secureDesktop.post_secureDesktopStateChange``. (#14488)
-- ``braille.BrailleHandler.handlePendingCaretUpdate`` has been removed with no public replacement. (#15163, @LeonarddeR)
-- ``bdDetect.addUsbDevices and bdDetect.addBluetoothDevices`` have been removed.
-Braille display drivers should implement the ``registerAutomaticDetection`` class method instead.
-That method receives a ``DriverRegistrar`` object on which the ``addUsbDevices`` and ``addBluetoothDevices`` methods can be used. (#15200, @LeonarddeR)
-- The default implementation of the check method on ``BrailleDisplayDriver`` now requires both the ``threadSafe`` and ``supportsAutomaticDetection`` attributes to be set to ``True``. (#15200, @LeonarddeR)
-- Passing lambda functions to ``hwIo.ioThread.IoThread.queueAsApc`` is no longer possible, as functions should be weakly referenceable. (#14627, @LeonarddeR)
-- ``IoThread.autoDeleteApcReference`` has been removed. (#14924, @LeonarddeR)
-- To support capital pitch changes, synthesizers must now explicitly declare their support for the ``PitchCommand`` in the ``supportedCommands`` attribute on the driver. (#15433, @LeonarddeR)
-- ``speechDictHandler.speechDictVars`` has been removed. Use ``NVDAState.WritePaths.speechDictsDir`` instead of ``speechDictHandler.speechDictVars.speechDictsPath``. (#15614, @lukaszgo1)
-- ``languageHandler.makeNpgettext`` and ``languageHandler.makePgettext`` have been removed.
-``npgettext`` and ``pgettext`` are supported natively now. (#15546)
-- The app module for [Poedit https://poedit.net] has been changed significantly. The ``fetchObject`` function has been removed. (#15313, #7303, @LeonarddeR)
-- The following redundant types and constants have been removed from ``hwPortUtils``: (#15764, @LeonarddeR)
+- 删除了 ``IAccessibleHandler.SecureDesktopNVDAObject``。
+当 NVDA 运行在用户配置文件上时，可以使用扩展点 ``winAPI.secureDesktop.post_secureDesktopStateChange`` 来跟踪安全桌面的存在。(#14488)
+- 删除了 ``braille.BrailleHandler.handlePendingCaretUpdate``，没有公开替代方案。(#15163, @LeonarddeR)
+- 删除了 ``bdDetect.addUsbDevices`` 和 ``bdDetect.addBluetoothDevices``。
+盲文点显器驱动应实现 ``registerAutomaticDetection`` 类方法。
+该方法接收一个 ``DriverRegistrar`` 对象，可在其上使用 ``addUsbDevices`` 和 ``addBluetoothDevices`` 方法。(#15200, @LeonarddeR)
+- ``BrailleDisplayDriver`` 上的检查方法的默认实现现在要求同时设置 ``threadSafe`` 和 ``supportsAutomaticDetection`` 属性为 ``True``。(#15200, @LeonarddeR)
+- 不允许传递 lambda 函数给 ``hwIo.ioThread.IoThread.queueAsApc``，因为函数应该是弱引用的。(#14627, @LeonarddeR)
+- 删除了 ``IoThread.autoDeleteApcReference``。(#14924, @LeonarddeR)
+- 为了支持遇到大写字母时音高变化，语音合成器现在必须在其驱动的 ``supportedCommands`` 属性中明确声明它们对 ``PitchCommand`` 的支持。(#15433, @LeonarddeR)
+- 删除了 ``speechDictHandler.speechDictVars``。使用 ``NVDAState.WritePaths.speechDictsDir`` 代替 ``speechDictHandler.speechDictVars.speechDictsPath``。(#15614, @lukaszgo1)
+- 删除了 ``languageHandler.makeNpgettext`` 和 ``languageHandler.makePgettext``。
+现在原生支持 ``npgettext`` 和 ``pgettext``。(#15546)
+- 针对 [Poedit https://poedit.net] 的应用模块进行了重大更改。删除了 ``fetchObject`` 函数。(#15313, #7303, @LeonarddeR)
+- 从 ``hwPortUtils`` 中删除了以下冗余类型和常量：(#15764)
   - ``PCWSTR``
-  - ``HWND`` (replaced by ``ctypes.wintypes.HWND``)
+  - ``HWND`` （替换为 ``ctypes.wintypes.HWND``）
   - ``ULONG_PTR``
   - ``ULONGLONG``
   - ``NULL``
-  - ``GUID`` (replaced by ``comtypes.GUID``)
+  - ``GUID`` （替换为 ``comtypes.GUID``）
   -
-- ``gui.addonGui.AddonsDialog`` has been removed. (#15834)
-- ``touchHandler.TouchInputGesture.multiFingerActionLabel`` has been removed with no replacement. (#15864, @CyrilleB79)
-- ``NVDAObjects.IAccessible.winword.WordDocument.script_reportCurrentHeaders`` has been removed with no replacement. (#15904, @CyrilleB79)
+- 删除了 ``gui.addonGui.AddonsDialog``。 (#15834)
+- 删除了 ``touchHandler.TouchInputGesture.multiFingerActionLabel`` 没有公开替代方案。(#15864, @CyrilleB79)
+- ``NVDAObjects.IAccessible.winword.WordDocument.script_reportCurrentHeaders`` 已被删除，没有公开替代方案。(#15904， @CyrilleB79)
 % Insert new list items here as the alias appModule table should be kept at the bottom of this list
-- The following app modules are removed.
-Code which imports from one of them, should instead import from the replacement module. (#15618, @lukaszgo1)
+- 以下应用模块已被删除。
+请从其相应替换模块中导入。 (#15618, @lukaszgo1)
 -
 
-|| Removed module name | Replacement module |
+|| 已删除的模块 | 用于替换的模块 |
 | ``azardi-2.0`` | ``azardi20`` |
 | ``azuredatastudio`` | ``code`` |
 | ``azuredatastudio-insiders`` | ``code`` |
@@ -275,64 +275,64 @@ Code which imports from one of them, should instead import from the replacement 
 | ``zend-eclipse-php`` | ``eclipse`` |
 | ``zendstudio`` | ``eclipse`` |
 
-=== Deprecations ===
+=== 弃用 ===
 
-- Using ``watchdog.getFormattedStacksForAllThreads`` is deprecated - please use ``logHandler.getFormattedStacksForAllThreads`` instead. (#15616, @lukaszgo1)
-- ``easeOfAccess.canConfigTerminateOnDesktopSwitch`` has been deprecated, as it became obsolete since Windows 7 is no longer supported. (#15644, @LeonarddeR)
-- ``winVersion.isFullScreenMagnificationAvailable`` has been deprecated - use ``visionEnhancementProviders.screenCurtain.ScreenCurtainProvider.canStart`` instead. (#15664, @josephsl)
-- The following Windows release constants has been deprecated from winVersion module (#15647, @josephsl):
+- 不再推荐使用 ``watchdog.getFormattedStacksForAllThreads``，请改用 ``logHandler.getFormattedStacksForAllThreads``。(#15616, @lukaszgo1)
+- ``easeOfAccess.canConfigTerminateOnDesktopSwitch`` 已被弃用，因为自 Windows 7 不再受支持后，此功能已失效。(#15644, @LeonarddeR)
+- ``winVersion.isFullScreenMagnificationAvailable`` 已被弃用，请改用 ``visionEnhancementProviders.screenCurtain.ScreenCurtainProvider.canStart``。(#15664, @josephsl)
+- ``winVersion`` 模块中的以下 Windows 版本常量已被弃用 (#15647, @josephsl)：
   - ``winVersion.WIN7``
   - ``winVersion.WIN7_SP1``
   - ``winVersion.WIN8``
   -
-- The ``bdDetect.KEY_*`` constants have been deprecated.
-Use ``bdDetect.DeviceType.*`` instead. (#15772, @LeonarddeR).
-- The ``bdDetect.DETECT_USB`` and ``bdDetect.DETECT_BLUETOOTH`` constants have been deprecated with no public replacement. (#15772, @LeonarddeR).
-- Using ``gui.ExecAndPump`` is deprecated - please use ``systemUtils.ExecAndPump`` instead. (#15852, @lukaszgo1)
+- ``bdDetect.KEY_*`` 常量已被弃用，
+请改用 ``bdDetect.DeviceType.*``。(#15772, @LeonarddeR)
+- ``bdDetect.DETECT_USB`` 和 ``bdDetect.DETECT_BLUETOOTH`` 常量已被弃用，没有公开替代方案。 (#15772, @LeonarddeR)
+- 不再推荐使用 ``gui.ExecAndPump``，请改用 ``systemUtils.ExecAndPump``。(#15852, @lukaszgo1)
 -
 
 
 = 2023.3.4 =
-This is a patch release to fix a security issue and installer issue.
-Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+这是一个修复安全问题和安装程序问题的补丁版本。
+请遵循 [NVDA 的 安全政策 https://github.com/nvaccess/nvda/blob/master/security.md]负责任地披露安全问题。
 
-== Security Fixes ==
-- Prevents loading custom configuration while secure mode is forced.
+== 安全修复 ==
+- 修复了在强制安全模式时加载自定义配置的问题。
 ([GHSA-727q-h8j2-6p45 https://github.com/nvaccess/nvda/security/advisories/GHSA-727q-h8j2-6p45])
 -
 
-== Bug Fixes ==
-- Fixed bug which caused the NVDA process to fail to exit correctly. (#16123)
-- Fixed bug where if the previous NVDA process failed to exit correctly, an NVDA installation could fail to an unrecoverable state. (#16122)
+== 错误修复 ==
+- 修复了导致 NVDA 进程无法正常退出的错误。(#16123)
+- 修复了如果之前的 NVDA 进程无法正常退出，NVDA 安装可能会失败甚至无法恢复的错误。(#16122)
 -
 
 = 2023.3.3 =
-This is a patch release to fix a security issue.
-Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+这是一个修复安全问题的补丁版本。
+请遵循 [NVDA 的 安全政策 https://github.com/nvaccess/nvda/blob/master/security.md]负责任地披露安全问题。
 
-== Security Fixes ==
-- Prevents possible reflected XSS attack from crafted content to cause arbitrary code execution.
+== 安全修复 ==
+- 修复了精心设计的恶意内容可能导致反射式 XSS 攻击并执行任意代码的问题。
 ([GHSA-xg6w-23rw-39r8 https://github.com/nvaccess/nvda/security/advisories/GHSA-xg6w-23rw-39r8])
 -
 
 = 2023.3.2 =
-This is a patch release to fix a security issue.
-The security patch in 2023.3.1 was not resolved correctly.
-Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+这是一个修复安全问题的补丁版本。
+2023.3.1 中的安全补丁未正确解决问题。
+请遵循 [NVDA 的 安全政策 https://github.com/nvaccess/nvda/blob/master/security.md]负责任地披露安全问题。
 
-== Security Fixes ==
-- The security patch in 2023.3.1 was not resolved correctly.
-Prevents possible system access and arbitrary code execution with system privileges for unauthenticated users.
+== 安全修复 ==
+- 2023.3.1 中的安全补丁未正确解决问题。
+- 修复了未经身份验证的用户可能存在的系统访问和任意代码执行权限的问题。
 ([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
 -
 
 
 = 2023.3.1 =
-This is a patch release to fix a security issue.
-Please responsibly disclose security issues following NVDA's [security policy https://github.com/nvaccess/nvda/blob/master/security.md].
+这是一个修复安全问题的补丁版本。
+请遵循 [NVDA 的 安全政策 https://github.com/nvaccess/nvda/blob/master/security.md]负责任地披露安全问题。
 
-== Security Fixes ==
-- Prevents possible system access and arbitrary code execution with system privileges for unauthenticated users.
+== 安全修复 ==
+- 修复了未经身份验证的用户可能存在的系统访问和任意代码执行权限的问题。
 ([GHSA-h7pp-6jqw-g3pj https://github.com/nvaccess/nvda/security/advisories/GHSA-h7pp-6jqw-g3pj])
 -
 
@@ -776,9 +776,9 @@ Please responsibly disclose security issues following NVDA's [security policy ht
 - 可以在合成器驱动支持的设置上将 useConfig 设置为 False。(#14601)
 -
 
-=== API 的破坏性修改 ===
-这里是所有的 API 破坏性修改。
-如您的插件在使用新 API 后遇到问题，请在 GitHub 打开一个 issue。
+=== API 重大变更 ===
+以下是一些会破坏现有插件兼容性的 API 改动。
+如果您的插件在更新到新 API 后出现问题，请随时在 GitHub 上提交 issue 报告。
 - 更改了配置规范，相关的配置键已被删除或修改：
   -  ``[documentFormatting]`` 部分 (#14233)：
     - ``reportLineIndentation`` 是一个整数（0 到 3）而不是一个布尔值。
@@ -2037,7 +2037,7 @@ NVDA 中的 COM 注册修复工具现在能够解决更多的系统问题。
 
 == 错误修复 ==
 - 即使创建日志文件失败，NVDA 也可以正常运行。(#6330)
-- 在最新版本的 Microsoft Word 365 中编辑文档时，按 `Control+Backspace`` 不再朗读"delete back word"，而是直接读出所删除的单词。(#10851)
+- 在最新版本的 Microsoft Word 365 中编辑文档时，按 ``Control+Backspace`` 不再朗读"delete back word"，而是直接读出所删除的单词。(#10851)
 - 在 Winamp 中，支持朗读随机播放和重复播放的切换状态。(#10945)
 - 在 1Password 中的列表项目之间切换时不再有明显的卡顿感。(#10508)
 - Windows OneCore 语音合成器不再有延迟。(#10721)

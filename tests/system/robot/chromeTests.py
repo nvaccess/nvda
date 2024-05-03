@@ -2522,3 +2522,89 @@ def test_textParagraphNavigation():
 		_asserts.strings_match(actualSpeech, p)
 	actualSpeech = _chrome.getSpeechAfterKey("shift+p")
 	_asserts.strings_match(actualSpeech, "no previous text paragraph")
+
+
+def test_styleNav():
+	""" Tests that same style and different style navigation work correctly in browse mode.
+	By default these commands don't have assigned gestures,
+	so we will assign temporary gestures just for testing.
+	"""
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy.assignGesture(
+		"kb:s",
+		"browseMode",
+		"BrowseModeTreeInterceptor",
+		"nextSameStyle",
+	)
+
+	spy.assignGesture(
+		"kb:shift+s",
+		"browseMode",
+		"BrowseModeTreeInterceptor",
+		"previousSameStyle",
+	)
+	spy.assignGesture(
+		"kb:d",
+		"browseMode",
+		"BrowseModeTreeInterceptor",
+		"nextDifferentStyle",
+	)
+
+	spy.assignGesture(
+		"kb:shift+d",
+		"browseMode",
+		"BrowseModeTreeInterceptor",
+		"previousDifferentStyle",
+	)
+
+	_chrome.prepareChrome("""
+		<p>Hello world!</p>
+		<p>This text is <b>bold</b></p>
+		<p>Second line is <font size="15pt">large</font></p>
+		<p>Third line is <mark>highlighted</mark></p>
+		<p>Fourth line is <b>bold again</b></p>
+		<p>End of document.</p>
+	""")
+	# For some reason we need to send Control+RightArrow;
+	# otherwise getting "Test page load complete" as actual speech
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("control+rightArrow")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
+	_asserts.strings_match(actualSpeech, "Hello world!")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("shift+d")
+	_asserts.strings_match(actualSpeech, "No previous different style text")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
+	_asserts.strings_match(actualSpeech, "This text is")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
+	_asserts.strings_match(actualSpeech, "Second line is")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("shift+d")
+	_asserts.strings_match(actualSpeech, "bold")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
+	_asserts.strings_match(actualSpeech, "bold again")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
+	_asserts.strings_match(actualSpeech, "No next same style text")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("d")
+	_asserts.strings_match(actualSpeech, "End of document.")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("d")
+	_asserts.strings_match(actualSpeech, "No next different style text")
+	for s in [
+		"Second line is",
+		"Third line is",
+		"Fourth line is",
+	][::-1]:
+		actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("shift+s")
+		_asserts.strings_match(actualSpeech, s)
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("d")
+	_asserts.strings_match(actualSpeech, "large")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("shift+s")
+	_asserts.strings_match(actualSpeech, "No previous same style text")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
+	_asserts.strings_match(actualSpeech, "No next same style text")
+	
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("d")
+	_asserts.strings_match(actualSpeech, "Third line is")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("d")
+	_asserts.strings_match(actualSpeech, "highlighted  highlighted")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("shift+s")
+	_asserts.strings_match(actualSpeech, "No previous same style text")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
+	_asserts.strings_match(actualSpeech, "No next same style text")

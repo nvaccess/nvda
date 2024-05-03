@@ -4223,6 +4223,7 @@ La modalità protetta disabilita:
 - Il salvataggio della configurazione e di altre impostazioni su disco
 - Il salvataggio di gesti personalizzati su disco
 - Le funzionalità dei [profili di configurazione #ConfigurationProfiles] come la creazione, l'eliminazione, la ridenominazione dei profili, etc.
+- Il caricamento delle cartelle di configurazione personalizzate utilizzando [l'opzione della riga di comando ``-c`` #CommandLineOptions]
 - L'aggiornamento di NVDA e creazione di copie portable
 - l'[Add-on Store #AddonsManager]
 - La [console Python di NVDA #PythonConsole]
@@ -4284,9 +4285,9 @@ Ecco l'elenco dei parametri a riga di comando di NVDA:
 | -h | --help | Visualizza l'aiuto sulla riga di comando ed esce |
 | -q | --quit | Chiude eventuali copie in esecuzione di NVDA |
 | -k | --check-running | Notifica se NVDA è in esecuzione tramite exit code; 0 se in esecuzione, 1 se non lo è |
-| -f LOGFILENAME | --log-file=LOGFILENAME | Il file nel quale verrà scritto il log |
-| -l LOGLEVEL | --log-level=LOGLEVEL | Il livello più basso di un messaggio loggato (debug 10, input/output 12, debug warning 15, info 20, disabled 100) |
-| -c CONFIGPATH | --config-path=CONFIGPATH | Il percorso ove sono salvate tutte le impostazioni di NVDA |
+| -f LOGFILENAME | --log-file=LOGFILENAME | Il file nel quale verrà scritto il log. Le funzioni di log saranno sempre disabilitate se ci si trova in modalità protetta. |
+| -l LOGLEVEL | --log-level=LOGLEVEL | Il livello più basso di un messaggio loggato (debug 10, input/output 12, debug warning 15, info 20, disabled 100). Le funzioni di log saranno sempre disabilitate se ci si trova in modalità protetta. |
+| -c CONFIGPATH | --config-path=CONFIGPATH | Il percorso ove sono salvate tutte le impostazioni di NVDA. Se ci si trova in modalità protetta verrà forzato il valore predefinito. |
 | None | --lang=LANGUAGE | Sovrascrive la lingua configurata per NVDA. Impostarla a "Windows" per la lingua predefinita dell'utente, "en" per Inglese, etc. |
 | -m | --minimal | Niente suoni, niente interfaccia, niente messaggio all'avvio etc |
 | -s | --secure | Avvia NVDA in [modalità protetta #SecureMode] |
