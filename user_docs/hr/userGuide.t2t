@@ -230,25 +230,32 @@ Prečaci se neće izvršavati sve dok se nalazite u ovom načinu.
 | Čitaj upisane znakove | ``NVDA+2`` | ``NVDA+2`` | kadae je ova opcija uključena, NVDA če izgovarati sve upisane znakove na tipkovnici. |
 | Izgovaraj upsane riječi | ``NVDA+3`` | ``NVDA+3`` | Kada je ova opcija uključena, NVDA će izgovarati sve riječi napisane na tipkovnici. |
 | Čitaj naredbene tipke | ``NVDA+4`` | ``NVDA+4`` | Kada je ova opcija uključena, NVDA će izgovarati sve naredbene tipke na tipkovnici. Ovo uključuje kombinacije tipaka kao što su to control plus neko slovo. |
-| Uključi prećenje miša | ``NVDA+m`` | ``NVDA+m`` | Kaa je ova opcija uključena, NVDA će izgovarati tekst pod pokazivačem miša, u isto vrijeme kada ga pomićete. Ovo vam omogućuje nalaženje opcija na zaslonu fizički pomičući miša umjesto traženja opcija objektnom navigacijom. |
+| Uključi praćenje miša | ``NVDA+m`` | ``NVDA+m`` | Kada je ova opcija uključena, NVDA će izgovarati tekst pod pokazivačem miša, u isto vrijeme kada ga pomićete. Ovo vam omogućuje nalaženje opcija na zaslonu fizički pomičući miša umjesto traženja opcija objektnom navigacijom. |
 
 +++ Prsten govorne jedinice +++[TheSynthSettingsRing]
 || Naziv | Prečac za stolna računala | Prečac za prijenosna računala | opis |
 | Premjesti se na sljedeću postavku govorne jedinice | ``NVDA+control+Strelica desno`` | ``NVDA+shift+control+strelica desno`` | Premješta na sljedeću postavku govorne jedinice poslije aktivne postavke, ponovno se vraćajući na prvu postavku poslije posljednje |
 | Premjesti se na prethodnu postavku govorne jedinice | ``NVDA+control+strelica lijevo`` | ``NVDA+shift+control+strelica lijevo`` | Premješta na sljedeću postavku govorne jedinice prije aktivne postavke, ponovno se vraćajući na prvu postavku poslije posljednje |
 | Povećaj vrijednost postavke govorne jedinice | ``NVDA+control+strelica gore`` | ``NVDA+shift+control+strelica gore`` | Povećava vrijednost trenutne postavke govorne jedinice na kojoj se nalazite. Npr: Povećava brzinu, bira sljedeći glas, povećava glasnoću |
-| Smanji vrijednost postavke govorne jedinice | ``NVDA+control+strelica dolje`` | ``NVDA+shift+control+strelica dolje`` | smanjuje vrijednost trenutne postavke govorne jedinice na kojoj se nalazite. Npr: smanjuje brzinu, bira prethodni glas, smanjuje glasnoću |
+| Povećaj  postavku govorne jedinice u većim koracima | ``NVDA+control+pageUp`` | ``NVDA+shift+control+pageUp`` | Povećava vrijednost trenutne postavke govora na kojoj se nalazite u većim koracima. Na primjer kada se nalazite na postavci glasa, premještavat ćete se svakih dvadeset glasova; kada se nalazite na postavci sa klizačem (brzina, visina, itd.) postavka će se promijeniti za 20% |
+
+| Smanji postavku govorne jedinice | ``NVDA+control+strelica dolje`` | ``NVDA+shift+control+strelica dolje`` | smanjuje vrijednost trenutne postavke govorne jedinice na kojoj se nalazite. Npr: smanjuje brzinu, bira prethodni glas, smanjuje glasnoću |
+| Smanji postavku govorne  jedinice u većim koracima | ``NVDA+control+pageDown`` | ``NVDA+shift+control+pageDown`` | Smanjuje vrijednost trenutne postavke govorne jedinice na kojoj se nalazite u većim koracima. Na primjer kada se nalazite na postavci glas, prebacivat ćete se u nazad za dvadeset glasova; kada se nalazite na postavci klizača, prebacivat ćete se između opcija za 20%. |
+
+Također je moguće postaviti prvu ili zadnju postavku govorne jedinice. Za to morate dodijeliti prilagođeni prečac [u postavkama ulaznih gesti #InputGestures], u kategoriji govor.
+Ovo znači da kada se nalazite na postavci brzine brzina će se postaviti na nula ili sto posto.
+Kada se nalazite na postavci glasa, biti će postavljen prvi ili zadnji glas.
 
 +++ Kretanje po Web stranicama +++[WebNavigation]
 Puni se popis brzih tipki nalazi u poglavlju [Modus pregleda #BrowseMode] korisničkog priručnika.
 || Komanda | Prečac | Opis |
 | Naslov | ``h`` | Premještava na sljedeći naslov |
 | Naslov razine 1, 2, ili 3 | ``1``, ``2``, ``3`` | Premješta na naslov određene razine |
-| Polje obrasca | ``f`` | Premješta an sljedeće polje obrasca (polje za uređivanje, gumb, itd) |
+| Polje obrasca | ``f`` | Premješta na sljedeće polje obrasca (polje za uređivanje, gumb, itd) |
 | veza | ``k`` | Premješta na sljedeću poveznicu |
-| orjentir | ``d`` | premještava an sljedeći orjentir |
+| orjentir | ``d`` | premještava na sljedeći orjentir |
 | popis | ``l`` | premješta na sljedeći popis |
-| Tablica | ``t`` | Premješat na sljedeću tablicu |
+| Tablica | ``t`` | Premješta na sljedeću tablicu |
 | Premješta u nazad | ``shift+slovo`` | Pritisnite ``shift`` i bilo koje od slóva kako biste se premjestili na prethodni element tog tipa |
 | Popis elemenata | ``NVDA+f7`` | Popisuje razne tipove elemenata, poput poveznica i naslova |
 
@@ -829,6 +836,7 @@ Sljedeće tipke služe za premještanje na idući dostupni element, dodavanjem �
 - o: ugrađeni objekt (audio i video player, aplikacija, dijaloški okvir, itd.)
 - 1 do 6: naslovi od 1 do 6
 - a: zabilješka (komentar, revizija urednika, itd.)
+- ``p``: odlomak teksta
 - w: pravopisna pogreška
 -
 Da biste se premjestili na početak ili kraj sadržaja elementa kao što su popisi ili tablice:
@@ -843,14 +851,42 @@ Ako ih želite koristiti istovremeno s kursorskim tipkama kako biste mogli nesme
 Da biste isključili ili uključili brzo kretanje za trenutačni dokument, pritisnite tipke NVDA+šift+razmaknica.
 %kc:endInclude
 
++++ Prečac za kretanje po odlomcima +++[TextNavigationCommand]
+
+Možete se kretati između sljedećeg i prethodnog odlomka tako da pritisnete ``p`` ili ``shift+p``.
+Odlomci teksta su definirani kao grupa teksta koja je napisana punim rečenicama.
+Ovo može biti korisno za pronalaženje čitljivog sadržaja na raznim web stranicama poput:
+- novinskih portala
+- Foruma
+- objava na blogovima
+- 
+
+Ovaj set prečaca može biti od koristi pri preskakanju stvari koje mogu odvući pažnju korisnika poput:
+- reklama
+- izbornika
+- zaglavlja
+- 
+
+Imajte na umu, da iako NVDA pokušava najbolje otkriti odlomke teksta, algoritam nije savršen i s vremena na vrijeme mogu se pojaviti greške.
+Dodatno se ovaj prečac razlikuje od prečaca za kretanje po odlomcima ``control+strelicaDolje/gore``.
+Prečac za kretanje po odlomcima teksta premješta između odlomaka teksta, dok prečaci za kretanje po odlomcima premještaju kursor na prethodni-sljedeći odlomak, neovisno od toga sadrže li tekst ili ne.
+
 +++ Drugi prečaci za kretanje +++[OtherNavigationCommands]
 
 Osim prečaca za kretanje koji su popisani više, NVDA NVDA posjeduje prečace koji nisu definirani.
 Kako biste ih koristili, morate ih definirati koristeći [dijaloški okvir ulaznih gesti #InputGestures].
 Ovdje su popisani dostupni prečaci
 - Članak
+- figura
 - Grupiranje
 - Kartica svojstava
+- stavka izbornika
+- Preklopni gumb
+- Traka napredka
+- Matematička formula
+- Okomito poravnat odlomak
+- Tekst istog stila
+- Tekst različitog stila
 -
 
 Imajte na umu da postoje dva tipa prečaca za kretanje po elementima za kretanje u naprijed i u nazad po dokumentu te morate pridjeliti oba prečaca kako biste se mogli kretati u oba smjera.
@@ -1160,6 +1196,8 @@ Kada je zaslonska zavjesa uključena, neki zadaci koji su bazirani na sadržaju 
 Zbog izmjena u Api-ju lupe sustava windows, značajka zaslonska zavjesa  je obnovljena kako bi radila sa novijim verzijama operacijskog sustava Windows.
 Koristite NVDA 2021.2 kako biste aktivirali zaslonsku zavjesu u operacijskom sustavu Windows 10 21H2 (10.0.19044) i novijim.
 Iz sigurnosnih razloga, kada koristite noviju inačicu sustava Windows, trebali biste pitati čovjeka koji normalno vidi radi li ova funkcija.
+
+Imajte na umu kada je Windowsowa lupa uključena sa uključenom opcijom inverzije boja, zaslonska se zavjesa ne može uključiti.
 
 + Prepoznavanje sadržaja +[ContentRecognition]
 Kad autori ne daju dovoljno informacija korisniku čitača ekrana, kako bi mogao prepoznati informaciju, mogu se koristiti razni alati, kako bi se tekst mogao prepoznati sa slike.
@@ -1659,7 +1697,9 @@ Ako želite promijeniti postavke odasvud bez ulaženja u kategoriju govor u NVDA
 | Premjesti se na sljedeću postavku govorne jedinice | NVDA+kontrol+desnaStrelica | NVDA+šift+kontrol+desnaStrelica | Premješta se na sljedeću postavku govora poslije trenutačne, prebacujući se natrag na prvu postavku poslije posljednje |
 | Premjesti se na prethodnu postavku govorne jedinice | NVDA+kontrol+strelicaLijevo | NVDA+šift+kontrol+strelicaLijevo | Premješta se na sljedeću dostupnu postavku govora prije trenutačne, prebacujući se na posljednju postavku prije prve |
 | Povećaj vrijednost postavke govorne jedinice | NVDA+kontrol+strelicaGore | NVDA+šift+kontrol+strelicaGore | Povećava vrijednost postavke govora na kojoj se nalazite. Npr. povećava brzinu, izabire sljedeći glas, povećava glasnoću |
+| Povećaj postavku govorne jedinice u većim koracima | ``NVDA+control+pageUp`` | ``NVDA+shift+control+pageUp`` | Povećava vrijednost trenutne postavke govorne jedinice na kojoj se nalazite u većim koracima. Na primjer, kada se nalazite na postavci glasa, prebacivat će se po dvadeset glasova; kada se nalazite na postavkama klizača (brzina, visina, itd) vrijednost će se povečavati do 20 posto |
 | Smanji vrijednost postavke govorne jedinice | NVDA+kontrol+strelicaDolje | NVDA+šift+kontrol+strelicaDolje | Smanjuje vrijednost trenutačne postavke glasa na kojoj se nalazite. Npr. smanjuje brzinu, odabire prethodni glas, smanjuje glasnoću |
+| Smanji vrijednost trenutne postavke u većim koracima | ``NVDA+control+pageDown`` | ``NVDA+shift+control+pageDown`` | smanjuje vrijednost trenutne postavke govorne jedinice na kojoj se nalazite u većim koracima. Na primjer, kada se nalazite na postavci glasa, vraćat ćete se u nazad za dvadeset glasova; Kada se nalazite na postavci klizača, vraćat ćete se u nazad za dvadeset posto |
 %kc:endInclude
 
 +++ Brajica +++[BrailleSettings]
@@ -1684,6 +1724,18 @@ Između brajičnih tablica se možete pomicati pomoću tipki strelica.
 
 Imajte na umu da je ova opcija korisna samo u slučaju kad vaš brajični redak ima brajičnu tipkovnicu i ako upravljački program brajičnog retka podržava unos tu funkciju.
 Ako unos s brajičnog retka koji ima brajičnu tipkovnicu nije podržan, to će biti navedeno u poglavlju [Podržani brajični redci #SupportedBrailleDisplays].
+
+%kc:setting
+==== Modus brajice ====[BrailleMode]
+Prečac: ``NVDA+alt+t``
+
+Ova vam opcija omogućuje izbor dostupnih modusa brajice.
+
+Trenutno su dostupna dva modusa brajice: "prećenje kursora" i "prikaz govora".
+
+Kada je označeno praćenje kursora, brajični redak će pratiti kursor sustava ili navigator objekta ovisno o tome na koji od njih je brajica povezana.
+
+Kada je prikaz govora odabran, Brajični redak će pokazati što NVDA govori, ili što će izgovoriti ako je modus govora postavljen na"govor"
 
 ==== Proširi na kompjutorsku brajicu za riječ na položaju kursora ====[BrailleSettingsExpandToComputerBraille]
 Ova opcija omogućuje prikaz riječi pod kursorom koristeći kompjutorsku brajicu.
@@ -1913,6 +1965,88 @@ Ova postavka nije dostupna ako ste pokrenuli  NVDA sa isključenim [WASAPI za au
 Ovaj klizač vam dozvoljava regulaciju glasnoće govorne jedinice i  zvukova.
 Ova postavka se primjenjuje samo kada je opcija "Koristi WASAPI za audio izlaz" omogućena i opcija "Jačina NVDA zvukova prati jačinu glasa" onemogućena.
 Ova postavka nije dostupna ako ste pokrenuli  NVDA sa isključenim [WASAPI za audio izlaz #WASAPI] U naprednim postavkama.
+
+==== Vrijeme držanja audiouređaja budnim poslije zadnje izgovorene stavke ====[AudioAwakeTime]
+
+U ovom se polju za uređivanje određuje koliko će dugo audiouređaj ostati budan poslije završetka govora.
+Ovo omogućuje NVDA izbjegavanje većinu problema sa govorom poput izrezanih riječi.
+Ovo se može događati zbog toga što audiouređaji, a posebno oni povezani putem Bluetootha ulaze u način mirovanja.
+Ovo može biti od pomoći i u drugim slučajevima poput pokretanja NVDA u u virtualnom okruženju (npr. Citrix Virtual Desktop), ili na nekim prijenosnim računalima.
+
+Manje vrijednosti mogu prouzrokovati češće rezanje zvuka, jer audiouređaj može ulaziti u način mirovanja prečesto, što prouzrokuje češće rezanje početka govora.
+Postavljanje ove opcije na višu vrijednost može prouzročiti brže pražnjenje baterije audiouređaja, zbog toga što audiouređaj ostaje duže aktivan kada nema zvuka.
+
+
+Kako biste onemogućili ovu značajku, postavite vrijeme na nulu.
+
+==== Način podijeljenog zvuka====[SelectSoundSplitMode]
+
+Ova funkcija omogućuje korisnicima korištenje stereouređaja poput zvučnika ili slušalica.
+Ova funkcija omogućuje da zvuk govora NVDA bude na primjer u lijevom kanalu, a drugi zvukove na primjer u desnom.
+Podrazumjevano način podjeljenog zvuka je onemogućen, što znači da će svi programi, uključujući i NVDA reproducirati zvukove u oba audiokanala.
+Tipkovničkim prečacem možete se prebacivati između različitih načina podjele zvuka:
+%kc:beginInclude
+|| naziv | prečac | opis |
+| prebacuj se između načina podjele zvuka | ``NVDA+alt+s`` | Cycles between sound split modes. |
+
+%kc:endInclude
+
+Podrazumijevano, ovaj će prečac prebacivati između slijedećih modusa:
+- Onemogućena podjela zvuka: Programi i NVDA reproduciraju svoje zvukove u oba kanala.
+- NVDA u lijevom kanalu, a programi u desnom: NVDA će govoriti u lijevom kanalu, dok će drugi programi reproducirati svoje zvukove u desnom.
+- NVDA u desnom kanalu, a programi u lijevom: NVDA će govoriti u desnom kanalu, dok će zvukovi drugih programa biti reproducirani u lijevom.
+-
+
+Dostupno je više naprednih načina podjele u oabirnom okviru.
+Ako želite postaviti glasnoću za druge programe koji nisu NVDA, koristite [za to predviđene prečace #OtherAppVolume].
+Imajte na umu da ova opcija ne radi kao mikser.
+Na primjer, ako program reproducira  glazbu u stereo formatu kada je način podjele zvuka postavljen na "NVDA u lijevom kanalu a programi u desnom", tada ćete čuti desni kanal pjesme, dok će lijevi kanal biti utišan.
+
+Ova opcija nije dostupna ako ste pokrenuli NVDA sa [isključenim Wasapi za izlaz zvuka #WASAPI] in Advanced Settings.
+
+Imajte na umu da ako se NVDA sruši, glasnoća zvuka programa neće se vratiti na zadane vrijednosti, i ti programi će i dalje reproducirati zvuk samo u jednom kanalu.
+Kako biste to spriječili, molimo ponovno pokrenite NVDA.
+
+==== Prilagođavanje načina podjele zvuka====[CustomizeSoundSplitModes]
+Ovaj popis sa odabirnim okvirima omogućuje vam prilagođavanje koji će načini podjele zvuka biti dostupni pri prebacivanju uz pomoć prečaca ``NVDA+alt+s``.
+Načini koji nisu odabrani nedostupni na tom popisu.
+Podrazumjevano su dostupna tri modusa.
+- Modus podjele zvuka isključen: NVDA i drugi programi reproduraju zvuk u oba kanala.
+- NVDA u lijevom kanalu i ostali programi u desnom.
+- NVDA u desnom kanalu i sve ostali programi u lijevom.
+-
+
+Imajte na umu da je potrebno odabrati barem jedan modus.
+Ova opcija nije dostupna ako je NVDA pokrenut [sa isključenim Wasapi za audioizlaz #WASAPI] u naprednim postavkama.
+
+==== Glasnoća drugih programa ====[OtherAppVolume]
+
+Ovaj vam klizač omogućuje promjenu glasnoće drugih programam koji nisu NVDA.
+Ova će promjena glasnoće biti primijenjena čak i kada se taj program tek pokrene.
+Ova postavka glasnoće može se mijenjati i uz pomoć sljedećih tipkovničkih prečaca sa bilo kojeg mjesta:
+
+%kc:beginInclude
+|| naziv | prečac | opis |
+| povećaj glasnoću drugih programa | ``NVDA+alt+pageUp`` | Povećava glasnoću svih programa osim NVDA. |
+| Smanji glasnoću programa | ``NVDA+alt+pageDown`` | smanjuje glasnoću svih programa osim NVDA. |
+
+%kc:endInclude
+
+Ova opcija nije dostupna ako ste pokrenuli NVDA sa [isključenim Wasapi za audioizlaz #WASAPI] u naprednim postavkama.
+
+==== Utišaj druge programe ====[MuteApplications]
+
+Ovaj vam potvrdni okvir omogućuje utišavanje svih drugih programa koji nisu NVDA.
+Ova će se postavka utišavanja primijeniti čak i kada se neki drugi program tek pokrene.
+Sljedeći tipkovnički prečac se može također koristiti s bilo kojeg mjesta:
+
+%kc:beginInclude
+|| Naziv | Prečac | Opis |
+| Uključi ili isključi utišavanje drugih programa | ``NVDA+alt+delete`` | Utišava ili odtišava sve druge programe osim NVDA. |
+
+%kc:endInclude
+
+Ova opcija nije dostupna ako ste pokrenuli NVDA sa [isključenim Wasapi za audioizlaz #WASAPI] u naprednim postavkama.
 
 +++ Vid +++[VisionSettings]
 Kategorija "Vid" u dijaloškom okviru NVDA Postavke omogućuje aktiviranje, deaktiviranje i konfiguriranje [vizualnih pomagala #Vision].
@@ -2317,6 +2451,7 @@ Možete podesiti izvještavanje o sljedećim elementima:
   - orijentiri
   - članci
   - okviri
+    - figure i potpisi
   - klikajući elementi
   -
 -
@@ -2594,6 +2729,11 @@ Uključite iste samo ako vas je na to naveo Programer NVDA razvojnog tima, u slu
 Ova opcija omogućuje određivanje hoće li NVDA reproducirati zvuk u slučaju zapisane pogreške.
 Ako izaberete samo u testnim verzijama (podrazumijevano) prouzročit će da će se zvukovi reproducirati samo ako se radi o testnoj verziji (alpha, beta ili ako se pokreće iz izvornog koda).
 Ako odaberete da zvukovi će se reproducirati neovisno od verzije NVDA.
+
+==== Regularni izraz za kretanje po odlomcima ====[TextParagraphRegexEdit]
+
+Ovo polje omogućuje prilagođavanje regularnog izraza za otkrivanje odlomka modusu čitanja.
+Traženje odlomaka koristeći [Prečac za kretanje po odlomcima #TextNavigationCommand] ovisi od ovog polja.
 
 ++ Razne postavke ++[MiscSettings]
 Osim [Postavki NVDA #NVDASettings] dijaloškog okvira, podizbornik postavke, sadrži sljedeće stavke koje su opisane ispod.
@@ -2922,10 +3062,10 @@ Ako je dodatak prethodno bio "omogućen", status će prikazati "onemogućen nako
 Kao i nakon što instalirate ili uklonite dodatke, morate ponovo da pokrenete NVDA kako bi se promene primijenile.
 Također možete uključiti i isključiti više dodataka odjednom tako da označite više dodataka na kartici dostupnih dodataka, a potom aktivirajte kontekstni izbornik na označenim dodacima i odaberite potrebnu radnju.
 
-+++ Recenziranje dodaaka i čitanje recenzija +++[AddonStoreReviews]
-Prije instalacije dodatka, možda biste htjeli pročitati recenzije drugih.
-Također, bilo bi pomoćno ako biste htjeli dati povratnu informaciju drugim korisnicima.
-Kako biste pročitali recenzije, odaberite dodatak  s kartice dostupni dodaci ili dodaci koji se mogu nadograditi, i koristite radnju "Recenzije zajednice".
++++ Recenziranje dodataka i čitanje recenzija +++[AddonStoreReviews]
+Možda biste htjeli pročitati recenzije drugih korisnika koji su isprobali dodatak, na primjer prije njegove instalacije ili tokom učenja kako ga koristiti.
+Također, od pomoći je kada ostavite povratnu informaciju drugim korisnicima koji bi htjeli isprobati dodatak tried.
+Kako biste pročitali recenzije o dodatku, odaberite ga, i kliknite na radnju "recenzije zajednice".
 Ovo preusmjerava na web stranicu GitHub diskusije o tom dodatku.
 Imajte na umu da ovo nije zamjena za direktnu komunikaciju sa autormia dodataka.
 Umjesto toga, ova funkcija služi kako bi se korisnici mogli odlučiti da li im dodatak odgovara.
@@ -3488,19 +3628,19 @@ Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
 | Tipka kontrol+šift+strelica lijevo | točkica2+točkica8+razmaknica+f1 |
 | Tipka kontrol+strelica lijevo | točkica2+razmaknica |
 | Tipka šift+alt+strelica lijevo | točkica2+točkica7+f1 |
-| Tipka alt+strelica lijevo | točkica2+točkica7 |
+| ``Tipka alt+strelica lijevo`` | ``točkica2+točkica7+razmak`` |
 | Tipka strelica lijevo | točkica6+razmaknica, lijevaStranaStrelicaDesno |
 | Tipka kontrol+šift+strelica lijevo | točkica5+točkica8+razmaknica+f1 |
 | Tipka kontrol+strelica desno | točkica5+razmaknica |
 | Tipka šift+alt+strelica desno | točkica5+točkica7+f1 |
-| Tipka alt+strelica desno | točkica5+točkica7 |
+| ``Tipka alt+strelica desno`` | točkica5+točkica7+razmak |
 | Tipka pejdž ap | točkica1+točkica2+točkica6+razmaknica |
 | Tipka kontrol+pejdž ap key | točkica1+točkica2+točkica6+točkica8+razmaknica |
 | Tipka strelica gore | točkica1+razmaknica, lijevaStranaStrelicaGore |
 | Tipka kontrol+šift+strelica gore | točkica2+točkica3+točkica8+razmaknica+f1 |
 | Tipka kontrol+strelica gore | točkica2+točkica3+razmaknica |
 | Tipka šift+alt+strelica gore | točkica2+točkica3+točkica7+f1 |
-| Tipka alt+strelica gore | točkica2+točkica3+točkica7 |
+| ``Tipka alt+strelica gore`` | ``točkica2+točkica3+točkica7+razmak`` |
 | Tipka šift+strelica gore | lijevaStranaKlizačDolje+razmaknica |
 | Tipka pejdž daun | točkica3+točkica4+točkica5+razmaknica |
 | Tipka kontrol+pejdž daun | točkica3+točkica4+točkica5+točkica8+razmaknica |
@@ -3508,7 +3648,7 @@ Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
 | Tipka kontrol+šift+strelica dolje | točkica5+točkica6+točkica8+razmaknica+f1 |
 | Tipka kontrol+strelica dolje | točkica5+točkica6+razmaknica |
 | Tipka šift+alt+strelica dolje | točkica5+točkica6+točkica7+f1 |
-| Tipka alt+strelica dolje | točkica5+točkica6+točkica7 |
+| ++Tipka alt+strelica dolje++ | točkica5+točkica6+točkica7+razmak |
 | Tipka šift+strelica dolje | razmaknica+desnaStranaKlizačDolje |
 | Tipka escape | točkica1+točkica5+razmaknica, f4, brailleedge:f1 |
 | Tipka dilit | točkica1+točkica3+točkica5+razmaknica, točkica1+točkica4+točkica5+razmaknica |
@@ -4234,6 +4374,11 @@ Bezbedan način rada će onemogućiti:
 
 Instalirane kopije programa NVDA čuvaju podešavanja uključujući dodatke u ``%APPDATA%\nvda``.
 Da biste sprečili NVDA korisnike da direktno izmene podešavanja ili dodatke, korisnički pristup ovom folderu se takođe mora ograničiti.
+
+Siguran način je neefektivan za prijenosne kopije NVDA.
+Ovo ograničenje se primjenjuje i na privremenu kopiju koju porećete kada instalirate NVDA.
+U sigurnim okruženjima, korisnik koji može pokrenuti prijenosnu izvršnu datoteku je isti rizik za sigurnost neovisno o sigurnom načinu.
+Očekuje se da administratori sustava ograničavaju pokretanje neautoriziranog softvera u svojim sustavima, uključujući prijenosne kopije NVDA.
 
 NVDA korisnici često zavise od podešavanja njihovog NVDA profila kako bi zadovoljio njihove potrebe.
 Ovo može uključiti instalaciju i podešavanje prilagođenih dodataka, koje treba pregledati nezavisno od programa NVDA.

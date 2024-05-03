@@ -237,7 +237,14 @@ De faktiske kommandoer vil ikke udføres, når tastaturhjælpen er slået til. T
 | Flyt til næste indstilling | ``NVDA+ctrl+højre pil`` | ``NVDA+shift+ctrl+højre pil`` | Flytter til næste mulige indstilling efter den indstilling du er på i øjeblikket. Bemærk, at dette vil bevæge dig rundt i ring mellem de tilgængelige indstillinger, når du er på den sidste indstilling |
 | Flyt til forrige indstilling | ``NVDA+ctrl+venstre pil`` | ``NVDA+shift+ctrl+venstre pil`` | Flytter til næste mulige indstilling før den, du er på i øjeblikket. Bemærk, at dette vil bevæge dig rundt i ring mellem de tilgængelige indstillinger, når du er på den sidste indstilling |
 | Forøg den aktuelle indstilling | ``NVDA+ctrl+pil op`` | ``NVDA+shift+ctrl+pil op`` | øger den aktuelle taleindstilling, du er på. F.eks. øger hastigheden, vælger den næste stemme, øger lydstyrken |
+| Forøg den aktuelle indstilling med en større værdi | ``NVDA+Ctrl+sideOp`` | ``NVDA+shift+Ctrl+sideOp`` | Forøger den indstilling, du er på i øjeblikket, med en større værdi. Hvis du befinder dig på stemmeindstillingen, vil den springe 20 stemmer fremad, og ved brug af indstillinger som toneleje og hastighed, vil der springes fremad med 20% |
+
 | Formindsk den aktuelle indstilling | ``NVDA+ctrl+pil ned`` | ``NVDA+shift+ctrl+pil ned`` | Formindsker den aktuelle taleindstilling, du er på. F.eks. formindsker talehastigheden, vælger den forrige stemme, formindsker lydstyrken |
+| Formindsk den aktuelle indstilling med en større værdi | ``NVDA+Ctrl+sideNed`` | ``NVDA+shift+Ctrl+sideNed`` | Forøger den indstilling, du er på i øjeblikket, med en større værdi. Hvis du befinder dig på stemmeindstillingen, vil den springe 20 stemmer fremad, og ved brug af indstillinger som toneleje og hastighed, vil der springes fremad med 20% |
+
+Det er også muligt hurtigt at springe til den første og sidste mulighed for den aktuelle indstilling, hvis du tildeler en kommando til dette via dialogen [Håndter kommandoer #InputGestures] under talekategorien.
+Dette betyder, at der eksempelvis springes til 0 eller 100%, hvis du står på hastighedsindstillingen.
+Hvis du står på stemme i ringen af synteseindstillinger, vil dette springe til første og sidste stemme.
 
 +++ Navigér på internettet +++[WebNavigation]
 Den samlede liste over tastaturkommandoer for bogstavnavigation kan du læse ved at gå til afsnittet [Gennemsynstilstand #BrowseMode] i brugervejledningen.
@@ -829,6 +836,7 @@ Hvis du trykker en af de følgende taster ned alene, hopper du til den næste fo
 - o: indlejret objekt (lyd- og videoafspiller, apllikation, dialog, osv.)
 - 1-6: overskrifter på niveauer fra 1 til 6.
 - a: Annotation (kommentar, revision o.s.v.)
+- ``p``: Tekstafsnit
 - w: Stavefejl
 -
 For at flytte til begyndelsen eller slutningen af overordnede elementer, fx. lister eller tabeller:
@@ -843,14 +851,42 @@ Hvis du gerne vil kunne bruge disse genvejstaster og stadig være i stand til at
 Du kan slå bogstavnavigering til og fra i det aktuelle dokument ved at trykke på NVDA+Shift+Mellemrum.
 %kc:endInclude
 
++++ Navigationskommando til tekstafsnit +++[TextNavigationCommand]
+
+Du kan hoppe til det næste eller forrige tekstafsnit ved at trykke ``p`` eller ``shift+p``.
+Tekstafsnit defineres som en gruppe tekst, der synes at være skrevet i fuldstændige sætninger.
+Dette kan være nyttigt for at finde begyndelsen på læsbart indhold på forskellige websteder, såsom:
+- Nyhedshjemmesider
+- Fora
+- Blogindlæg
+-
+
+Disse kommandoer kan også være nyttige til at springe visse former for rod over, såsom:
+- Annoncer
+- Menuer
+- Overskrifter
+-
+
+Bemærk dog, at selvom NVDA gør sit bedste for at identificere tekstafsnit, er algoritmen ikke perfekt og kan til tider lave fejl.
+Desuden er denne kommando ikke den samme som kommandoer til navigation mellem afsnit ``controll+pil op og ned``.
+Navigation mellem tekstafsnit springer kun mellem tekstafsnit, mens kommandoer til navigation mellem afsnit tager markøren til det forrige/næste afsnit uanset om de indeholder tekst eller ej.
+
 +++ Andre navigationskommandoer +++[OtherNavigationCommands]
 
 Udover kommandoerne til bogstavnavigering nævnt ovenfor, har NVDA desuden også yderligere kommandoer, der ikke er tildelt et tastetryk.
 Før du kan bruge disse kommandoer, skal du tildele et tastetryk til dem ved brug af [dialogen "Håndter kommandoer" #InputGestures].
 Her er en liste over tilgængelige kommandoer:
 - Artikel
+- Figur
 - Gruppering
 - Fane
+- Menupunkt
+- Skifteknap
+- Behandlingslinje
+- Matematikformel
+- Lodret justeret afsnit
+- Tekst med den samme typografi
+- Tekst med en anden typografi
 -
 
 Bemærk, at to kommandoer eksisterer for hver enkelt element. Du skal derfor huske at tildele et tastetryk til kommandoerne, der flytter til forrige og næste element.
@@ -1160,6 +1196,8 @@ Vær opmærksom på at du ikke kan udføre nogle handlinger, der tager udgangspu
 Pga. ændringer i Windows Magnification API, var det nødvendigt at opdatere skærmtæppefunktionen for at understøtte de nyeste versioner af Windows.
 Benyt NVDA 2021.2 til at aktivere skærmtæppet med Windows 10 21H2 (10.0.19044) eller nyere.
 Af sikkerhedsmæssige årsager kan det være en god idé at få bekræftet af en seende person, hvorvidt skærmtæppefunktionen er aktiv og gør skærmen fuldstændigt sort, når denne benyttes med nyere versioner af Windows.
+
+Bemærk: Såfremt Windows forstørrelse er aktiv og inverterede farver er slået til, kan skærmtæppet ikke benyttes.
 
 + Indholdsgenkendelse +[ContentRecognition]
 Når forfattere ikke giver tilstrækkelig information til en skærmlæserbruger til at bestemme indholdet af noget, kan forskellige værktøjer bruges til at forsøge at genkende indholdet på et billede.
@@ -1659,7 +1697,9 @@ Hvis du ønsker hurtigt at ændre taleindstillingerne uden først at skulle åbn
 | Flyt til næste talesynteseindstilling | NVDA+Ctrl+Højre-pil | NVDA+Shift+Ctrl+Højre-pil | Flytter til den næste tilgængelige talesynteseindstilling efter den aktuelle og folder rundt til den første indstilling, når du er nået til den sidste |
 | Flyt til forrige talesynteseindstilling | NVDA+Ctrl+Venstre-pil | NVDA+Shift+Ctrl+Venstre-pil | Flytter til den forrige tilgængelige talesynteseindstilling før den aktuelle og folder rundt til den sidste indstilling, når du er nået til den første |
 | Forøg den aktuelle taleindstilling | NVDA+Ctrl+Pil-op | NVDA+Shift+Ctrl+Pil-op | Forøger den synteseindstilling, du i øjeblikket er ved at ændre, fx. forøger hastigheden, vælger den næste stemme, forøger lydstyrken |
+| Forøg den aktuelle indstilling med en større værdi | ``NVDA+Ctrl+sideOp`` | ``NVDA+shift+Ctrl+sideOp`` | Forøger den indstilling, du er på i øjeblikket, med en større værdi. Hvis du befinder dig på stemmeindstillingen, vil den springe 20 stemmer fremad, og ved brug af indstillinger som toneleje og hastighed, vil der springes fremad med 20% |
 | Formindsk den aktuelle taleindstilling | NVDA+Ctrl+Pil-ned | NVDA+Shift+Ctrl+Pil-ned | Formindsker den synteseindstilling, som du i øjeblikket er ved at ændre fx formindsker hastigheden, vælger den forrige stemme, formindsker lydstyrken |
+| Formindsk den aktuelle indstilling med en større værdi | ``NVDA+Ctrl+sideNed`` | ``NVDA+shift+Ctrl+sideNed`` | Forøger den indstilling, du er på i øjeblikket, med en større værdi. Hvis du befinder dig på stemmeindstillingen, vil den springe 20 stemmer fremad, og ved brug af indstillinger som toneleje og hastighed, vil der springes fremad med 20% |
 %kc:endInclude
 
 +++ Punktindstillinger +++[BrailleSettings]
@@ -1684,6 +1724,18 @@ Med piletasterne kan du flytte fra den ene punkttabel til den næste på listen.
 
 Bemærk, at denne indstilling kun kan bruges, hvis dit punktdisplay har et Perkins punkttastatur og funktionen er understøttet af driveren til displayet.
 Hvis indtastning ikke er understøttet af et punktdisplay med tilhørende tastatur, vil dette være noteret i kapitlet [Understøttede Punktdisplays #SupportedBrailleDisplays].
+
+%kc:setting
+==== Punkttilstand ====[BrailleMode]
+Key: ``NVDA+alt+t``
+
+Denne indstilling lader dig skifte mellem to tilstande for punktskrift.
+
+To punkttilstande er i øjeblikket tilgængelige, "følg markører" og "vis taleoutput".
+
+Når indstillingen "følg markører" er valgt, vil dit display følge systemfokus/systemmarkøren, eller navigatorobjektet/læsemarkøren, afhængigt af hvad punktmarkøren er indstillet til at følge.
+
+Hvis indstillingen er indstillet til "Vis taleoutput", vil punktdisplayet vise, hvad NVDA siger. Dette gælder også, hvis taletilstanden ikke er indstillet til "tale".
 
 ==== Udvid ordet ved markøren til computer-Braille ====[BrailleSettingsExpandToComputerBraille]
 Med denne indstilling kan du få ordet under markøren vist i uforkortet computer-braille.
@@ -1913,6 +1965,88 @@ Denne indstilling er ikke tilgængelig, hvis du slår [WASAPI fra som lydoutput 
 Denne skyder lader dig indstille lydstyrken for NVDAs lyde og bip.
 Denne indstilling træder kun i kraft, hvis "Brug WASAPI for lydoutput" er aktiveret og "Lydstyrken af NVDA-lyde følger stemmelydstyrken" er deaktiveret.
 Denne indstilling er ikke tilgængelig, hvis du slår [WASAPI fra som lydoutput #WASAPI] i NVDAs avancerede indstillinger.
+
+==== Tid til at holde lydenheden vågen efter tale ====[AudioAwakeTime]
+
+Denne combo box bestemmer, hvor længe NVDA holder lydenheden aktiv, efter at talen er stoppet.
+Dette giver NVDA mulighed for at undgå visse talefejl som udeladte dele af ord.
+Dette kan ske på grund af lydenheder (især Bluetooth- og trådløse enheder) der går i dvaletilstand.
+Dette kan også være nyttigt i andre tilfælde, såsom når NVDA kører inden i en virtuel maskine (f.eks. Citrix Virtual Desktop), eller på visse bærbare computere.
+
+Lavere værdier vil gøre, at lyd oftere bliver afbrudt, da enheden kan gå i dvaletilstand for tidligt, hvilket får begyndelsen af den efterfølgende tale til at blive afkortet.
+At indstille værdien for høj kan forårsage, at batteriet på lydudgangsenheden aflades hurtigere, da den forbliver aktiv længere, mens der ikke sendes lyd.
+
+
+Du kan indstille tiden til 0 for at deaktivere denne funktion.
+
+==== Lydopdeling ====[SelectSoundSplitMode]
+
+Lydopdelingsfunktionen giver brugere mulighed for at udnytte deres stereo-udgangsenheder, såsom hovedtelefoner og højttalere.
+Lydopdeling gør det muligt at have NVDA-tale i den ene kanal (f.eks. venstre) og have alle andre programmer afspille deres lyde i den anden kanal (f.eks. højre).
+Som standard er lydopdeling deaktiveret, hvilket betyder, at alle programmer, herunder NVDA, vil afspille lyde i både venstre og højre kanal.
+En kommando lader dig skifte mellem de forskellige lydopdelingstilstande:
+%kc:beginInclude
+|| Navn | Tawst | Beskrivelse |
+| Skift Lydopdelingstilstand | ``NVDA+alt+s`` | Skifter mellem lydopdelingstilstandene. |
+
+%kc:endInclude
+
+Som standard vil denne kommando skifte mellem følgende tilstande:
+- Deaktiveret lydopdeling: både NVDA og andre applikationer udsender lyde til både venstre og højre kanaler.
+- NVDA i venstre og programmer i højre: NVDA vil tale i venstre kanal, mens andre programmer vil afspille lyde i højre kanal.
+- NVDA i højre og programmer i venstre: NVDA vil tale i højre kanal, mens andre programmer vil afspille lyde i venstre kanal.
+-
+
+Der er flere avancerede lydopdelingstilstande tilgængelige i NVDA-indstillingerne.
+Hvis du ønsker at justere lydstyrken for alle programmer undtagen NVDA, overvej at bruge [de dedikerede kommandoer #OtherAppVolume].
+Bemærk venligst, at lydopdeling ikke fungerer som en mixer.
+For eksempel, hvis et program afspiller et stereo-lydspor, mens lydopdelingen er sat til "NVDA i venstre og programmer i højre", vil du kun høre højre kanal af lydsporet, mens venstre kanal af lydsporet vil være slået fra.
+
+Denne indstilling er ikke tilgængelig, hvis du har startet NVDA med [WASAPI deaktiveret for lydudgang #WASAPI] i avancerede indstillinger.
+
+Bemærk venligst, at hvis NVDA går ned, vil den ikke være i stand til at genoprette applikationslydstyrken, og disse applikationer kan stadig udsende lyd kun i én kanal efter NVDA-nedbrud.
+For at afhjælpe dette, genstart NVDA.
+
+==== Tilpasning af Lydopdelingstilstande ====[CustomizeSoundSplitModes]
+Denne liste lader dig vælge, hvilke lydopdelingstilstande der er inkluderet, når der skiftes mellem dem ved hjælp af ``NVDA+alt+s``.
+Tilstande, som ikke er afkrydset, fremkommer ikke.
+Som standard er kun tre tilstande inkluderet.
+- Lydopdeling deaktiveret: både NVDA og programmer afspiller lyde i både venstre og højre kanaler.
+- NVDA i venstre og alle andre programmer i højre kanal.
+- NVDA i højre og alle andre programmer i venstre kanal.
+-
+
+Bemærk, at det er nødvendigt at afkrydse mindst én tilstand.
+Denne mulighed er ikke tilgængelig, hvis du har startet NVDA med [WASAPI deaktiveret for lydudgang #WASAPI] i avancerede indstillinger.
+
+==== Lydstyrken for andre programmer ====[OtherAppVolume]
+
+Denne skyder gør det muligt at justere lydstyrken for alle aktuelt kørende programmer undtagen NVDA.
+Denne lydstyrkeindstilling vil gælde for alle programmernes lydstyrke, selvom de starter efter at denne indstilling er ændret.
+Denne lydstyrke kan også styres via følgende tastaturkommandoer fra hvor som helst:
+
+%kc:beginInclude
+|| Navn | Tast | Beskrivelse |
+| Forøg programmers lydstyrke | ``NVDA+alt+sideOp`` | Øger lydstyrken for alle programmer undtagen NVDA. |
+| Formindsk programmers lydstyrke | ``NVDA+alt+sideNed`` | Formindsker lydstyrken for alle programmer undtagen NVDA. |
+
+%kc:endInclude
+
+Denne mulighed er ikke tilgængelig, hvis du har startet NVDA med [WASAPI deaktiveret for lydudgang #WASAPI] i avancerede indstillinger.
+
+==== Slå lyden fra andre programmer fra ====[MuteApplications]
+
+Denne check box giver dig mulighed for at slå lyden fra alle programmer undtagen NVDA.
+Denne lydindstilling vil gælde for alle andre programmer, der udsender lyd, selvom de starter efter at denne indstilling er ændret.
+Følgende tastaturkommando kan også bruges fra hvor som helst:
+
+%kc:beginInclude
+|| Navn | Tast | Beskrivelse |
+| Slå lyden fra andre programmer fra eller til | ``NVDA+alt+delete`` | Slår lyden fra eller til for alle programmer undtagen NVDA. |
+
+%kc:endInclude
+
+Denne mulighed er ikke tilgængelig, hvis du har startet NVDA med [WASAPI deaktiveret for lydudgang #WASAPI] i avancerede indstillinger.
 
 +++ Syn +++[VisionSettings]
 Indstillingskategorien "Syn" lader dig aktivere, deaktivere samt konfigurere diverse [synshjælpemidler #Vision].
@@ -2317,6 +2451,7 @@ Du kan tilpasse annoncering af:
   - Landmærker
   - Artikler
   - Rammer
+  - Figurer og billedtekster
   - Klikbart
   -
 -
@@ -2594,6 +2729,11 @@ Slå kun dette til, hvis du er blevet bedt om det af en NVDA-udvikler (f.eks. fo
 Denne indstilling lader dig vælge om NVDA skal afspille en lyd, når fejl logføres.
 Ved at vælge "Kun i testversioner af NVDA", vil NVDA kun afspille lyden, hvis din version er en testversion (alpha, beta eller NVDA køres fra kildekoden). Denne indstilling er standard.
 Ved at vælge "Ja" vil en lyd afspilles, uanset din version af NVDA.
+
+==== Regulært udtryk, der bruges, når kommandoerne til at springe mellem tekstafsnit benyttes i gennemsynstilstand ====[TextParagraphRegexEdit]
+
+Dette tekstfelt lader brugere bestemme, hvilket regulære udtryk, der skal anvendes, når der søges efter tekstafsnit i gennemsynstilstand ved brug af de tilsvarende kommandoer.
+[Kommandoen til at navigere mellem tekstafsnit#TextNavigationCommand] vil benytte dette udtryk.
 
 ++ Yderligere indstillinger ++[MiscSettings]
 Udover [NVDAs indstillingsdialog #NVDASettings], indeholder menuen "Opsætning" under NVDA-menuen yderligere indstillinger, der beskrives nedenfor.
@@ -3488,19 +3628,19 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | tasterne ctrl+skift+venstre pil | punkt2+punkt8+mellemrum+f1 |
 | tasterne ctrl+venstre pil | punkt2+mellemrum |
 | skift+alt+pil venstre | punkt2+punkt7+f1 |
-| alt+pil venstre | punkt2+punkt7 |
+| ``alt+pil venstre`` | ``punkt2+punkt7`` |
 | højre piletast | punkt6+mellemrum, venstre side pil højre |
 | ctrl+skift+pil højre | punkt5+punkt8+mellemrum+f1 |
 | ctrl+pil højre | punkt5+mellemrum |
 | skift+alt+pil højre | punkt5+punkt7+f1 |
-| alt+højre pil | punkt5+punkt7 |
+| ``alt+højre pil`` | ``punkt5+punkt7`` |
 | tasten side op | punkt1+punkt2+punkt6+mellemrum |
 | tasterne ctrl+side op | punkt1+punkt2+punkt6+punkt8+mellemrum |
 | pil op | punkt1+mellemrum, venstre side pil op |
 | ctrl+skift+pil op | punkt2+punkt3+punkt8+mellemrum+f1 |
 | ctrl+pil op | punkt2+punkt3+mellemrum |
 | skift+alt+pil op | punkt2+punkt3+punkt7+f1 |
-| alt+pil op | punkt2+punkt3+punkt7 |
+| ``alt+pil op`` | ``punkt2+punkt3+punkt7`` |
 | skift+pil op | venstre side rul ned+mellemrum |
 | tasten side ned | punkt3+punkt4+punkt5+mellemrum |
 | tasterne ctrl+side ned | punkt3+punkt4+punkt5+punkt8+mellemrum |
@@ -3508,7 +3648,7 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | ctrl+skift+pil ned | punkt5+punkt6+punkt8+mellemrum+f1 |
 | ctrl+pil ned | punkt5+punkt6+mellemrum |
 | skift+alt+pil ned | punkt5+punkt6+punkt7+f1 |
-| alt+pil ned | punkt5+punkt6+punkt7 |
+| ``alt+pil ned`` | ``punkt5+punkt6+punkt7`` |
 | skift+pil ned | mellemrum+højre side rul ned |
 | esc+tast | punkt1+punkt5+mellemrum, f4, brailleedge:f1 |
 | tasten slet | punkt1+punkt3+punkt5+mellemrum, punkt1+punkt4+punkt5+mellemrum |
@@ -4234,6 +4374,11 @@ Sikker tilstand deaktiverer:
 
 Installerede versioner af NVDA lagrer deres opsætning, herunder tilføjelsesprogrammer, i ``%APPDATA%\nvda``.
 For at sikre, at NVDA-brugere ikke direkte kan ændre på opsætningen eller tilføjelserne, bør adgangen til denne mappe begrænses.
+
+Sikker tilstand er ineffektiv for bærbare kopier af NVDA.
+Denne begrænsning gælder også for den midlertidige kopi af NVDA, der kører, når installationsprogrammet startes.
+I sikre miljøer udgør en brugers mulighed for at køre en flytbar eksekverbar fil den samme sikkerhedsrisiko uanset sikker tilstand.
+Det forventes, at systemadministratorer begrænser uautoriseret software fra at køre på deres systemer, herunder flytbare kopier af NVDA.
 
 Mange NVDA-brugere tilpasser deres NVDA-profil for at få den til at passe til deres specifikke behov.
 Dette kan indebære at installere og indstille specielle tilføjelsesprogrammer, som bør gennemgås uafhængigt af selve NVDA.

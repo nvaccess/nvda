@@ -237,7 +237,14 @@ Les commandes réelles ne s'exécuteront pas en mode d'aide à la saisie.
 | Aller au paramètre synthétiseur suivant | ``NVDA+contrôle+flècheDroit`` | ``NVDA+maj+contrôle+flècheDroit`` | Va au paramètre vocal suivant disponible, retournant au premier après le dernier |
 | Aller au paramètre synthétiseur précédent | ``NVDA+contrôle+flècheGauche`` | ``NVDA+maj+contrôle+flècheGauche`` | Va au paramètre vocal précédent disponible, retournant au dernier après le premier |
 | Augmenter le paramètre synthétiseur courant | ``NVDA+contrôle+flècheHaut`` | ``NVDA+maj+contrôle+flècheHaut`` | Augmente le paramètre vocal sur lequel vous vous trouvez. Ex. augmente le débit, choisit la voix suivante, augmente le volume |
-| diminuer le paramètre synthétiseur courant | ``NVDA+contrôle+flècheBas`` | ``NVDA+maj+contrôle+flècheBas`` | diminue le paramètre vocal sur lequel vous vous trouvez. Ex. diminue le débit, choisit la voix précédente, diminue le volume |
+| Augmenter le paramètre courant dans la boucle des paramètres du synthétiseur d'un interval plus important | ``NVDA+contrôle+pagePrec`` | ``NVDA+maj+contrôle+pagePrec`` | Augmente d'un pas plus important la valeur du paramètre vocal courant sur lequel vous vous trouvez. Ex. lorsque vous êtes sur le paramètre du choix de la voix, avancer de 20 voix ; lorsque vous êtes sur un paramètres avec potentiomètre (débit, hauteur, etc.), la valeur sera incrémentée de 20% |
+| Diminuer le paramètre synthétiseur courant | ``NVDA+contrôle+flècheBas`` | ``NVDA+maj+contrôle+flècheBas`` | diminue le paramètre vocal sur lequel vous vous trouvez. Ex. diminue le débit, choisit la voix précédente, diminue le volume |
+| Diminuer le paramètre courant dans la boucle des paramètres du synthétiseur d'un interval plus important | ``NVDA+contrôle+pageSuiv`` | ``NVDA+maj+contrôle+pageSuiv`` | Diminue d'un pas plus important la valeur du paramètre vocal courant sur lequel vous vous trouvez. Ex. lorsque vous êtes sur le paramètre du choix de la voix, reculer de 20 voix ; lorsque vous êtes sur un paramètres avec potentiomètre (débit, hauteur, etc.), la valeur sera décrémentée de 20% |
+
+Il est également possible de sauter à la première ou à la dernière valeur du paramètre de synthétiseur courant en attribuant des gestes personnalisés dans la [boîte de dialogue Gestes de commandes #InputGestures], sous la catégorie parole.
+Par exemple, cela signifie que lorsque le débit est le paramètre courant, le débit sera modifié à 0 ou 100.
+When you're on a voice setting, it will set the first or last voice.
+Lorsque vous êtes sur le paramètre voix, la première ou la dernière voix sera activée.
 
 +++ Navigation sur le web +++[WebNavigation]
 La liste complète des touches de navigation à lettre unique se trouve dans la section [Mode Navigation #BrowseMode] du guide de l'utilisateur.
@@ -829,6 +836,7 @@ Les touches suivantes permettent d'aller à l'élément suivant. En les combinan
 - o : objet embarqué (lecteur audio et vidéo, application, dialogue etc.)
 - 1 ... 6 : Titres 1 ... 6.
 - a: annotation (commentaire, modification de l'éditeur, etc.)
+- ``p`` : paragraphe de texte
 - w: fautes d'orthographe
 -
 Pour se déplacer au début ou à la fin des éléments contenants comme les listes et tableaux :
@@ -843,14 +851,42 @@ Si vous voulez les utiliser tout en restant capable d'utiliser vos touches curse
 Pour activer ou désactiver la navigation rapide pour le document courant, pressez NVDA+maj+espace.
 %kc:endInclude
 
++++ Commande de navigation par paragraphe de texte +++[TextNavigationCommand]
+
+Vous pouvez passer au paragraphe de texte suivant ou précédent en appuyant sur ``p`` ou ``maj+p``.
+Les paragraphes de texte sont définis comme un groupe de texte qui semble être écrit sous forme de phrases complètes.
+Cela peut être utile pour trouver le début du contenu à lire sur diverses pages Web, telles que :
+- Les sites d'actualités
+- Les forums
+- Les articles de blog
+- 
+
+Ces commandes peuvent également être utiles pour éviter certains types de contenu, tels que :
+- Les publicités
+- Les menus
+- Les titres
+- 
+
+Veuillez noter cependant que même si NVDA fait de son mieux pour identifier les paragraphes de texte, l'algorithme n'est pas parfait et peut parfois commettre des erreurs.
+De plus, cette commande est différente des commandes de navigation par paragraphe ``contrôle+flècheBas/flècheHaut``.
+La navigation par paragraphes de texte saute uniquement entre les paragraphes de texte, tandis que les commandes de navigation par paragraphe amènent le curseur aux paragraphe précédent/suivant, qu'ils contiennent ou non du texte.
+
 +++ Autres commandes de navigation +++[OtherNavigationCommands]
 
 En plus des commandes de navigation rapide répertoriées ci-dessus, NVDA dispose de commandes auxquelles aucune touche par défaut n'est attribuée.
 Pour utiliser ces commandes, vous devez d'abord leur attribuer des gestes à l'aide de la [boîte de dialogue Gestes de commandes #InputGestures].
 Voici une liste des commandes disponibles:
 - Article
+- Figure
 - Regroupement
 - Onglet
+- Menu item
+- Bouton à bascule
+- Barre de progression
+- Formule mathématique
+- Paragraphe aligné verticalement
+- Texte de même style
+- Texte de style différent
 -
 
 Gardez à l'esprit qu'il existe deux commandes pour chaque type d'élément, pour avancer et reculer dans le document, et vous devez attribuer des gestes aux deux commandes afin de pouvoir naviguer rapidement dans les deux sens.
@@ -1160,6 +1196,8 @@ Quand le Rideau d'Écran est activé, certaines tâches directement liées à ce
 En raison d'un changement dans l'API de grossissement de Windows, le Rideau d'Écran a dû être mis à jour pour prendre en charge les dernières versions de Windows.
 Utilisez NVDA 2021.2 pour activer le Rideau d'Écran avec Windows 10 21H2 (10.0.19044) ou une version ultérieure.
 Pour des raisons de sécurité, lorsque vous utilisez une nouvelle version de Windows, obtenez une confirmation visuelle que le rideau d'écran rend l'écran entièrement noir.
+
+Veuillez noter que lorsque la Loupe Windows est en cours d'exécution et que les couleurs d'écran inversées sont utilisées, le rideau d'écran ne peut pas être activé.
 
 + Reconnaissance de Contenu +[ContentRecognition]
 Quand les auteurs ne fournissent pas assez d'informations pour qu'un utilisateur de revue d'écran puisse déterminer le contenu de quelque chose, divers outils peuvent être utilisés pour tenter de reconnaître le contenu à partir d'une image.
@@ -1659,7 +1697,9 @@ Si vous voulez changer rapidement les paramètres vocaux sans passer par la cat�
 | Aller au paramètre synthétiseur suivant | NVDA+contrôle+flèche droite | NVDA+contrôle+maj+flèche droite | Va au paramètre synthétiseur applicable suivant, retourne au premier après le dernier |
 | Aller au paramètre synthétiseur précédent | NVDA+contrôle+flèche gauche | NVDA+contrôle+maj+flèche gauche | Va au paramètre synthétiseur applicable précédent, retourne au dernier après le premier |
 | Augmenter le paramètre synthétiseur courant | NVDA+contrôle+flèche haut | NVDA+contrôle+maj+flèche haut | Augmente le paramètre synthétiseur sur lequel vous vous trouvez. Ex : augmente le débit, choisit la voix suivante, augmente le volume |
+| Augmenter le paramètre courant dans la boucle des paramètres du synthétiseur d'un interval plus important | ``NVDA+contrôle+pagePrec`` | ``NVDA+maj+contrôle+pagePrec`` | Augmente d'un pas plus important la valeur du paramètre vocal courant sur lequel vous vous trouvez. Ex. lorsque vous êtes sur le paramètre du choix de la voix, avancer de 20 voix ; lorsque vous êtes sur un paramètres avec potentiomètre (débit, hauteur, etc.), la valeur sera incrémentée de 20% |
 | Diminuer le paramètre synthétiseur courant | NVDA+contrôle+flèche bas | NVDA+contrôle+maj+flèche bas | diminue le paramètre synthétiseur sur lequel vous vous trouvez. Ex : diminue le débit, choisit la voix précédente, diminue le volume |
+| Diminuer le paramètre courant dans la boucle des paramètres du synthétiseur d'un interval plus important | ``NVDA+contrôle+pageSuiv`` | ``NVDA+maj+contrôle+pageSuiv`` | Diminue d'un pas plus important la valeur du paramètre vocal courant sur lequel vous vous trouvez. Ex. lorsque vous êtes sur le paramètre du choix de la voix, reculer de 20 voix ; lorsque vous êtes sur un paramètres avec potentiomètre (débit, hauteur, etc.), la valeur sera décrémentée de 20% |
 %kc:endInclude
 
 +++ Braille +++[BrailleSettings]
@@ -1684,6 +1724,20 @@ Vous pouvez vous déplacer de table en table en utilisant les flèches.
 
 Notez que cette option n'est utile que si votre afficheur braille dispose d'un clavier Perkins et que le pilote de celui-ci supporte cette fonctionnalité.
 Si la saisie n'est pas supportée par un afficheur qui dispose d'un clavier Perkins, cela sera noté dans la section [Afficheurs braille Supportés #SupportedBrailleDisplays].
+
+%kc:setting
+==== Mode braille ====[BrailleMode]
+Raccourci clavier : ``NVDA+alt+t``
+
+Cette option vous permet de choisir entre les modes braille disponibles.
+
+Actuellement, deux modes braille sont pris en charge : "suivre les curseurs" et "afficher la parol".
+
+When follow cursors is selected, the braille display will follow either the system focus/caret or the navigator object/review cursor, depending on what braille is tethered to.
+Lorsque suivre les curseurs est sélectionné, l'afficheur braille suivra soit le focus / le curseur système, soit l'objet navigateur / curseur de revue en fonction de ce que le braille doit suivre.
+
++When display speech output is selected, the braille display will show what NVDA speaks, or would have spoken if speech mode was set to "talk"
+Lorsque l'affichage de la parole est sélectionné, l'afficheur braille affichera ce que NVDA annonce, ou aurait annoncé si le mode de parole était réglé sur "parole activée".
 
 ==== Afficher le mot sous le curseur en braille informatique ====[BrailleSettingsExpandToComputerBraille]
 Cette option permet d'afficher le mot sous le curseur en intégral.
@@ -1913,6 +1967,88 @@ Cette option n'est pas disponible si vous avez démarré NVDA avec [WASAPI désa
 Ce potentiomètre vous permet de régler le volume des sons et des bips de NVDA.
 Ce paramètre ne prend effet que lorsque "Le volume des sons NVDA suit le volume de la voix" est désactivé.
 Cette option n'est pas disponible si vous avez démarré NVDA avec [WASAPI désactivé pour la sortie audio #WASAPI] dans les Paramètres avancés.
+
+==== Durée de maintien en éveil du périphérique audio après la parole ====[AudioAwakeTime]
+
+Cette zone d'édition spécifie combien de temps NVDA maintient le périphérique audio en éveil après la fin de la parole.
+Cela permet à NVDA d'éviter certains problèmes de parole comme des parties de mots coupées.
+Cela peut se produire lorsque des appareils audio (en particulier les appareils Bluetooth et sans fil) passent en mode veille.
+Cela peut également être utile dans d'autres cas d'utilisation, par exemple lors de l'exécution de NVDA dans une machine virtuelle (par exemple Citrix Virtual Desktop) ou sur certains ordinateurs portables.
+
+Des valeurs plus faibles peuvent permettre de couper l'audio plus souvent, car un appareil peut passer en mode veille trop tôt, provoquant ainsi une coupure du début de la parole suivante.
+Une valeur trop élevée peut entraîner une décharge plus rapide de la batterie du périphérique de sortie audio, car il reste active plus longtemps alors qu'aucun son n'est envoyé.
+
+Vous pouvez mettre cette durée à zéro afin de désactiver cette fonctionnalité.
+
+==== Séparation du son ====[SelectSoundSplitMode]
+
+La fonction de séparation du son permet aux utilisateurs d'utiliser leurs périphériques de sortie stéréo, tels que des écouteurs et des haut-parleurs.
+La séparation du son permet d'avoir la parole de NVDA sur un canal (par exemple gauche) et de faire en sorte que toutes les autres applications diffusent leur son sur l'autre canal (par exemple droit).
+Par défaut, la séparation du son est désactivée, ce qui signifie que toutes les applications, y compris NVDA, joueront les sons sur les canaux gauche et droit.
+Un geste de commande permet de parcourir les différents modes de séparation du son :
+%kc:beginInclude
+|| Nom | Touche | Description |
+| Faire défiler les modes de séparation du son | ``NVDA+alt+s`` | Passer d'un mode de séparation du son à l'autre. |
+
+%kc:endInclude
+
+Par défaut, cette commande alternera entre les modes suivants :
+- Disabled sound split: both NVDA and other applications output sounds to both left and right channels.
+- Séparation du son désactivée : NVDA et les autres applications diffuseront leur son sur les canaux gauche et droit.
+- NVDA à gauche et applications à droite : NVDA parlera dans le canal de gauche, tandis que les autres applications diffuseront leur son dans le canal de droite.
+- NVDA à droite et applications à gauche : NVDA parlera dans le canal de droite, tandis que les autres applications diffuseront leur son dans le canal de gauche.
+-
+
+Il existe des modes de séparation du son plus avancés disponibles dans la liste déroulante des paramètres NVDA.
+Si vous souhaitez régler le volume de toutes les applications à l'exception de NVDA, pensez à utiliser [les commandes dédiées #OtherAppVolume].
+Veuillez noter que le séparateur de son ne fonctionne pas comme un mélangeur audio.
+Par exemple, si une application joue une piste audio stéréo alors que la séparation du son est définie sur "NVDA à gauche et applications à droite", alors vous n'entendrez que le canal droit de la piste audio, tandis que le canal gauche de la piste sera mis en sourdine.
+
+Cette option n'est pas disponible si vous avez démarré NVDA avec [WASAPI désactivé pour la sortie audio #WASAPI] dans les Paramètres avancés.
+
+Veuillez noter que si NVDA plante, il ne sera pas en mesure de restaurer le volume sonore des applications et il se pourrait que ces applications continuent à diffuser leur son sur un seul canal après le crash de NVDA.
+Pour corriger ce problème, veuillez redémarrer NVDA.
+
+==== Personnalisation des modes de séparation du son====[CustomizeSoundSplitModes]
+Cette liste de cases à cocher permet de sélectionner quels modes de séparation du son sont inclus lors du passage de l'un à l'autre en utilisant ``NVDA+alt+s``.
+Les modes non cochés sont exclus.
+Par défaut, seuls trois modes sont inclus.
+- Séparation du son désactivée : NVDA et les applications diffusent des sons dans les canaux gauche et droit.
+- NVDA à gauche et toutes les autres applications sur le canal de droite.
+- NVDA à droite et toutes les autres applications sur le canal de gauche.
+-
+
+Veuillez noter qu'il est nécessaire de cocher au moins un mode.
+Cette option n'est pas disponible si vous avez démarré NVDA avec [WASAPI désactivé pour la sortie audio #WASAPI] dans les Paramètres avancés.
+
+==== Volume of other applications ====[OtherAppVolume]
++
++This slider allows you to adjust the volume of all currently running applications other than NVDA.
++This volume setting will apply to all other applications sound output, even if they start after this setting is changed.
++This volume can also be controlled via the following keyboard commands from anywhere:
++
++%kc:beginInclude
++|| Name | Key | Description |
++| Increase applications volume | ``NVDA+alt+pageUp`` | Increases volume of all applications except NVDA. |
++| Decrease applications volume | ``NVDA+alt+pageDown`` | Decreases volume of all applications except NVDA. |
++
++%kc:endInclude
++
++This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
++
+==== Mute other applications ====[MuteApplications]
++
++This checkbox allows you to mute all applications other than NVDA.
++This mute setting will apply to all other applications outputting sound, even if they start after this setting is changed.
++The following keyboard command can also be used from anywhere:
++
++%kc:beginInclude
++|| Name | Key | Description |
++| Toggle mute other applications | ``NVDA+alt+delete`` | Mutes or unmutes all applications other than NVDA. |
++
++%kc:endInclude
++
++This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
 
 +++ Vision +++[VisionSettings]
 La catégorie Vision du dialogue des paramètres NVDA vous permet d'activer, désactiver et configurer les [aides visuelles #Vision].
@@ -2257,7 +2393,7 @@ Dans ce cas NVDA demandera à Windows de jouer un son par défaut quand une touc
 
 %kc:setting
 ==== Amener automatiquement le focus système aux éléments focalisables ====[BrowseModeSettingsAutoFocusFocusableElements]
-touche : NVDA+8
+Raccourci clavier : NVDA+8
 
 Désactivée par défaut, cette option vous permet de choisir si le focus système doit être automatiquement positionné aux éléments pouvant prendre le focus système (liens, champs de saisie, etc.) quand on parcourt le contenu avec le curseur de mode navigation.
 Laisser cette option désactivée ne focalisera pas automatiquement les éléments focalisables quand ils seront sélectionnés avec le curseur du mode navigation.
@@ -2317,6 +2453,7 @@ On peut configurer les annonces suivantes :
   - Régions
   - Articles
   - Cadres
+  - Figures et légendes
   - Cliquable
   -
 -
@@ -2594,6 +2731,11 @@ N'activez l'une d'entre elle que si un développeur de NVDA vous l'a spécifique
 Cette option vous permet de spécifier si NVDA joue un son d'erreur au cas où une erreur est enregistrée.
 En sélectionnant Uniquement dans les versions de test (par défaut), NVDA émet des sons d'erreur uniquement si la version actuelle de NVDA est une version de test (alpha, bêta ou exécutée à partir de la source).
 En sélectionnant Oui les sons d'erreur sont activés quelle que soit votre version actuelle de NVDA.
+
+==== Expression régulière pour la navigation par paragraphes de texte ====[TextParagraphRegexEdit]
+
+Ce champ permet aux utilisateurs de personnaliser l'expression régulière pour détecter les paragraphes de texte en mode navigation.
+La [commande de navigation par paragraphe de texte #TextNavigationCommand] recherche les paragraphes correspondant à cette expression régulière.
 
 ++ Autres paramètres ++[MiscSettings]
 En plus du dialogue [Paramètres #NVDASettings], le sous-menu Préférences du menu NVDA contient plusieurs autres éléments décrits ci-dessous.
@@ -2923,10 +3065,10 @@ Tout comme lorsque vous installez ou supprimez des extensions, vous devez redém
 Vous pouvez également activer ou désactiver plusieurs extensions à la fois en sélectionnant plusieurs extensions dans l'onglet des extensions disponibles, puis en activant le menu contextuel sur la sélection et en choisissant l'action appropriée.
 
 +++ Examiner les extension et lire les avis +++[AddonStoreReviews]
-Avant d'installer une extension, vous souhaiterez peut-être lire les avis des autres.
-En outre, il peut être utile pour les autres utilisateurs de fournir des commentaires sur les extensions que vous avez testées.
-Pour lire les avis sur une extension, sélectionnez une extension dans l'onglet extensions disponibles ou mises à jour et utilisez l'action « Avis de la communauté ».
-Ce lien renvoie vers une page Web de discussion GitHub, où vous pourrez lire et rédiger des avis sur l'extension.
+Vous souhaiterez peut-être lire les avis d'autres utilisateurs qui ont déjà utilisé une extension par exemple avant de l'installer ou pendant que vous apprenez à l'utiliser.
+En outre, il est utile pour les autres utilisateurs que vous déposiez des commentaires sur les extensions que vous avez testées.
+Pour lire les avis sur une extension, sélectionnez-la et utilisez l'action « Avis de la communauté ».
+Cela renvoie vers une page Web de discussion GitHub, où vous pourrez lire et rédiger des avis sur l'extension.
 Veuillez noter que cela ne remplace pas une communication directe avec les développeurs d'extension.
 Le but de cette fonctionnalité est plutôt de partager des commentaires pour aider les utilisateurs à décider si une extension peut leur être utile.
  
@@ -3488,19 +3630,19 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | contrôle+maj+flècheGauche | point2+point8+espace+f1 |
 | contrôle+flècheGauche | point2+espace |
 | maj+alt+flècheGauche | point2+point7+f1 |
-| alt+flècheGauche | point2+point7 |
+| ``alt+flècheGauche`` | ``point2+point7+espace`` |
 | flècheDroite | point6+espace, flècheDroiteDeGauche |
 | contrôle+maj+flècheDroite | point5+point8+espace+f1 |
 | contrôle+flècheDroite | point5+espace |
 | maj+alt+flècheDroite | point5+point7+f1 |
-| alt+flècheDroite | point5+point7 |
+| ``alt+flècheDroite`` | ``point5+point7+espace`` |
 | pagePrec | point1+point2+point6+espace |
 | contrôle+pagePrec | point1+point2+point6+point8+espace |
 | Touche flècheHaut | point1+espace, flècheHautDeGauche |
 | contrôle+maj+flècheHaut | point2+point3+point8+espace+f1 |
 | contrôle+flècheHaut | point2+point3+espace |
 | maj+alt+flècheHaut | point2+point3+point7+f1 |
-| alt+flècheHaut | point2+point3+point7 |
+| ``alt+flècheHaut`` | ``point2+point3+point7+espace`` |
 | maj+flècheHaut | DéfilementBasDeGauche+espace |
 | pageSuiv | point3+point4+point5+espace |
 | contrôle+pageSuiv | point3+point4+point5+point8+espace |
@@ -3508,7 +3650,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | contrôle+maj+flècheBas | point5+point6+point8+espace+f1 |
 | contrôle+flècheBas | point5+point6+espace |
 | maj+alt+flècheBas | point5+point6+point7+f1 |
-| alt+flècheBas | point5+point6+point7 |
+| ``alt+flècheBas`` | ``point5+point6+point7+espace`` |
 | maj+flècheBas | espace+défilementBasDeDroite |
 | Touche échap | point1+point5+espace, f4, brailleedge:f1 |
 | touche effacement | point1+point3+point5+espace, point1+point4+point5+espace |
@@ -4234,6 +4376,11 @@ Le mode sécurisé désactive :
 
 Les copies installées de NVDA stockent leur configuration, y compris les extensions, dans ``%APPDATA%\nvda``.
 Pour empêcher les utilisateurs de NVDA de modifier directement leur configuration ou leurs extensions, l'accès des utilisateurs à ce dossier doit également être restreint.
+
+Le mode sécurisé est inefficace pour les copies portables de NVDA.
+Cette limitation s'applique également à la copie temporaire de NVDA qui s'exécute au lancement de l'installateur.
+Dans un environnements sécurisés, le fait qu'un utilisateur puisse exécuter un exécutable portable présente le même risque de sécurité, quele mode sécurisé soit forcé ou non.
+Il est attendu que les administrateurs système empêchent l'exécution de logiciels non autorisés sur leurs systèmes, y compris les copies portables de NVDA.
 
 Les utilisateurs de NVDA comptent souvent sur la configuration de leur profil NVDA pour répondre à leurs besoins.
 Cela peut inclure l'installation et la configuration d'extensions personnalisées, qui doivent être approuvés indépendamment de NVDA.

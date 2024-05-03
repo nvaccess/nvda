@@ -3,6 +3,118 @@ NVDA 更新日志
 
 %!includeconf: ../changes.t2tconf
 
+= 2024.2 =
+本版新增了一个名为“声音拆分”的功能，
+可以将 NVDA 的声音拆分到一个声道（例如左侧），而其他所有应用程序的声音则放在另一个声道（例如右侧）。
+
+新增了用于调节合成器设置的命令，可以跳转到第一个或最后一个设置，以及按照较大的步长增加或减小当前设置的值。
+还新增了很多有用的单键导航命令，用户可以使用分配的手势快速跳转到段落、垂直对齐的段落、相同样式的文本、不同样式的文本、菜单项、切换按钮、进度条、插图和数学公式。
+
+一如既往，在盲文点显器方面增加了一些新功能并修复了已知的错误。
+新增了一种名为“显示语音输出”的盲文模式。
+开启该功能后，盲文点显器将显示 NVDA 准备朗读的内容。
+支持了新的盲文点显器 BrailleEdgeS2 和 BrailleEdgeS3。
+LibLouis 更新后，增加了新的详细（以大写字母表示）白俄罗斯语和乌克兰语盲文表，以及用于阅读希腊文的西班牙语盲文表。
+
+更新 eSpeak 后，增加了新语言 Tigrinya 语。
+
+• 修复了 Thunderbird、Adobe Reader、浏览器、Nudi 和 Geekbench 等应用程序的许多小错误。
+
+== New Features ==
+- New key commands:
+  - New Quick Navigation command ``p`` for jumping to next/previous text paragraph in browse mode. (#15998, @mltony)
+  - New unassigned Quick Navigation commands, which can be used to jump to the next/previous:
+    - figure (#10826)
+    - vertically aligned paragraph (#15999, @mltony)
+    - menu item (#16001, @mltony)
+    - toggle button (#16001, @mltony)
+    - progress bar (#16001, @mltony)
+    - math formula (#16001, @mltony)
+    - same style text (#16000, @mltony)
+    - different style text (#16000, @mltony)
+    -
+    - Added commands to jump first, last, forward and backward through the synth settings ring. (#13768, #16095, @rmcpantoja)
+    - Setting the first/last setting in the synth settings ring has no assigned gesture. (#13768)
+    - Decrease and increase the current setting of the synth settings ring in a larger step (#13768):
+      - Desktop: ``NVDA+control+pageUp`` or ``NVDA+control+pageDown``.
+      - Laptop: ``NVDA+control+shift+pageUp`` or ``NVDA+control+shift+pageDown``.
+      -
+    -
+  - Added a new unassigned input gesture to toggle the reporting of figures and captions. (#10826, #14349)
+  -
+- Braille:
+  - Added support for the BrailleEdgeS2, BrailleEdgeS3 braille device. (#16033, #16279, @EdKweon)
+  - A new braille mode called "display speech output" has been added. (#15898, @Emil-18)
+    - When active, the braille display shows exactly what NVDA prepares to speak.
+    - It can be toggled by pressing ``NVDA+alt+t``, or from the braille settings dialog.
+    -
+  -
+- Sound split: (#12985, @mltony)
+  - Allows splitting NVDA sounds into one channel (e.g. left) while sounds from all other applications are placed in the other channel (e.g. right).
+  - Toggled by ``NVDA+alt+s``.
+  - The volume of the other applications can be adjusted by ``NVDA+alt+pageUp`` and ``NVDA+alt+pageDown``. (#16052, @mltony)
+  - The sound of the other applications can be muted with ``NVDA+alt+delete``. (#16052, @mltony)
+  -
+- Reporting row and column headers is now supported in contenteditable HTML elements. (#14113)
+- Added the option to disable the reporting of figures and captions in Document Formatting settings. (#10826, #14349)
+- In Windows 11, NVDA will announce alerts from voice typing and suggested actions including the top suggestion when copying data such as phone numbers to the clipboard (Windows 11 2022 Update and later). (#16009, @josephsl)
+- NVDA will keep the audio device awake after speech stops, in order to prevent the start of the next speech being clipped with some audio devices such as Bluetooth headphones. (#14386, @jcsteh, @mltony)
+- HP Secure Browser is now supported. (#16377)
+-
+
+
+== Changes ==
+- Add-on Store:
+  - The minimum and the last tested NVDA version for an add-on are now displayed in the "other details" area. (#15776, @Nael-Sayegh)
+  - The community reviews action will be available, and the reviews webpage will be shown in the details panel, in all tabs of the store. (#16179, @nvdaes)
+  -
+- Component updates:
+  - Updated LibLouis Braille translator to [3.29.0 https://github.com/liblouis/liblouis/releases/tag/v3.29.0]. (#16259, @codeofdusk)
+    - Added new detailed (with capital letters indicated) Belarusian and Ukrainian Braille tables, along with a Spanish table for reading Greek texts.
+    -
+  - eSpeak NG has been updated to 1.52-dev commit ``cb62d93fd7``. (#15913)
+    - Added new language Tigrinya. 
+    -
+  -
+- Changed several gestures for BrailleSense devices to avoid conflicts with characters of the French braille table. (#15306)
+  - ``alt+leftArrow`` is now mapped to ``dot2+dot7+space``
+  - ``alt+rightArrow`` is now mapped to ``dot5+dot7+space``
+  - ``alt+upArrow`` is now mapped to ``dot2+dot3+dot7+space``
+  - ``alt+downArrow`` is now mapped to ``dot5+dot6+dot7+space``
+  -
+- Padding dots commonly used in tables of contents are not reported anymore at low punctuation levels. (#15845, @CyrilleB79)
+-
+
+== Bug Fixes ==
+- Windows 11 fixes:
+  - NVDA will once again announce hardware keyboard input suggestions. (#16283, @josephsl)
+  - In Version 24H2 (2024 Update and Windows Server 2025), mouse and touch interaction can be used in quick settings. (#16348, @josephsl)
+  -
+- Add-on Store:
+  - When pressing ``ctrl+tab``, focus properly moves to the new current tab title. (#14986, @ABuffEr)
+  -
+- Fixes for Chromium-based browsers when used with UIA:
+  - Fixed bugs causing NVDA to hang. (#16393, #16394)
+  - Backspace key is now working correctly in Gmail sign-in fields. (#16395)
+  -
+- Backspace now works correctly when using Nudi 6.1 with NVDA's "Handle keys from other applications" setting enabled. (#15822, @jcsteh)
+- Fixed a bug where audio coordinates would be played while the application is in sleep mode when "Play audio coordinates when mouse moves" is enabled. (#8059, @hwf1324)
+- In Adobe Reader, NVDA no longer ignores alternative text set on formulas in PDFs. (#12715)
+- Fixed a bug causing NVDA to fail to read the ribbon and options within Geekbench. (#16251, @mzanm)
+- Fixed a rare case when saving the configuration may fail to save all profiles. (#16343, @CyrilleB79)
+- In Firefox and Chromium-based browsers, NVDA will correctly enter focus mode when pressing enter when positioned within a presentational list (ul / ol) inside editable content. (#16325)
+- Column state change is automatically reported when selecting columns to display in Thunderbird message list. (#16323)
+-
+
+
+== Changes for Developers ==
+Please refer to [the developer guide https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API] for information on NVDA's API deprecation and removal process.
+
+- Instantiating ``winVersion.WinVersion`` objects with unknown Windows versions above 10.0.22000 such as 10.0.25398 returns "Windows 11 unknown" instead of "Windows 10 unknown" for release name. (#15992, @josephsl)
+- Make the AppVeyor build process easier for NVDA forks, by adding configurable variables in appveyor.yml to disable or modify NV Access specific portions of the build scripts. (#16216, @XLTechie)
+- Added a how-to document, explaining the process of building NVDA forks on AppVeyor. (#16293, @XLTechie)
+-
+
 = 2024.1 =
 
 在本版新增了一种手动朗读模式：

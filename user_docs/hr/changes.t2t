@@ -6,11 +6,114 @@
 == Obavijest za programere ==
 Informacije za programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
+= 2024.2 =
+Dodana nova značajka način podjeljenog zvuka.
+Ta značajka omogućuje postavljanje zvuka NVDA u jedan kanal (npr. lijevi), dok su zvukovi drugih programa u drugom kanalu (na primjer desnom).
+
+Dodane su novi prečaci za promjenu postavki prstena govorne jedinice, koje omogućuju premještanje od prve do zadnje postavke, te njihovo mijenjanje u većim koracima.
+Dodane su novi prečaci brze navigacije, koji omogućuju korisnicima kretanje po: odlomcima, okomito poravnatim odlomcima, tekstu istog stila, tekstu različitog stila, stavkama izbornika, preklopnim gumbima, trakama napredovanja, figurama, te matematičkim formulama.
+
+Dodano je puno novih značajki vezanih uz brajicu, te je ispravljeno puno pogrešaka.
+Dodan je novi modus brajice "prikaz govora".
+Kada je aktivan, na brajičnom se redku prikazuje točno ono što NVDA izgovara.
+Također je dodana podrška za brajične redke BrailleEdgeS2, BrailleEdgeS3.
+LibLouis je nadograđen sa dodanim novim brajičnim tablicama sa označavanjem velikih slova za bjeloruski i ukrajinski jezik, te brajična tablica za španjolski jezik, predviđena za čitanje starogrčkog teksta.
+
+eSpeak je nadograđensa dodanim novim jezikom Tigrinja.
+
+Ispravljeno je puno pogrešaka u programima, poput Thunderbirda, Adobe Readera, web preglednika, Nudija te Geekbench-a.
+
+== Nove značajke ==
+- Novi tipkovnički prečaci:
+  - Novi prečac za brzo kretanje ``p`` za premještanje na sljedeći/prethodni odlomak teksta u modusu čitanja. (#15998, @mltony)
+  - Novi nedodijeljeni prečaci, koji se mogu koristiti za kretanje po slijedećim/prethodnim:
+    - figurama (#10826)
+    - okomito poravnatim odlomcima (#15999, @mltony)
+    - stavkama izbornika (#16001, @mltony)
+    - preklopnim gumbima (#16001, @mltony)
+    - trakama napredka (#16001, @mltony)
+    - matematičkim formulama (#16001, @mltony)
+    - tekstovima istog stila (#16000, @mltony)
+    - tekstovima različitog stila (#16000, @mltony)
+    -
+    - Dodan prečac za premještanje između prve postavke, posljednje postavke, za kretanje u naprijed te za kretanje u nazad unutar postavki prstena govorne jedinice. (#13768, #16095, @rmcpantoja)
+    - Postavljanje prve ili posljednje postavke prstena govorne jedinice nema dodijeljen prečac. (#13768)
+    - Povećavanje ili smanjivanje postavki govorne jedinice u većim koracima (#13768):
+      - Prečac za stolna računala: ``NVDA+control+pageUp`` odnosno ``NVDA+control+pageDown``.
+      - prečac za prijenosna računala: ``NVDA+control+shift+pageUp`` ili ``NVDA+control+shift+pageDown``.
+      -
+    -
+  - Dodan novi nedodijeljeni prečac za uključivanje ili isključivanje izgovora figura i potpisa. (#10826, #14349)
+  -
+- brajica:
+  - Dodana podrška za brajični redak BrailleEdgeS2, BrailleEdgeS3. (#16033, #16279, @EdKweon)
+  - Novi modus brajice "prikaz govora" je dodan. (#15898, @Emil-18)
+    - Kada je aktivan, na brajičnom se redku prikazuje točno ono što NVDA izgovara.
+    - Može se uključiti pritiskom ``NVDA+alt+t``, ili u dijaloškom okviru postavki brajice.
+    -
+  -
+- Način podijeljenog zvuka: (#12985, @mltony)
+  - Omogućuje postavljanje NVDA u jednom kanalu (na primjer lijevom) dok su zvukovi drugih programa u drugom kanalu (na primjer desnom).
+  - Regulira se uz pomoć prečaca ``NVDA+alt+s``.
+  - Glasnoća drugih programa može se podešavati prečacima ``NVDA+alt+pageUp`` i ``NVDA+alt+pageDown``. (#16052, @mltony)
+  - Zvukovi drugih programa mogu se utišati uz pomoć prečaca ``NVDA+alt+delete``. (#16052, @mltony)
+  -
+- Izgovaranje zaglavlja redaka i stupaca u ContentEditable html elementima. (#14113)
+- Dodana opcija za isključivanje čitanja figura i potpisa u postavkama oblikovanja dokumenata. (#10826, #14349)
+- U Windowsima 11, NVDA će izgovarati upozorenja glasovnog upisivanja i preporučene radnje uključujući glavnu preporučenu radnju prilikom kopiranja podataka poput telefonskih brojeva u međuspremnik (Windows 11 nadogradnja 2022 i novije inačice). (#16009, @josephsl)
+- NVDA će držati audiouređaj budnim poslije zaustavljanja govora, kako bi se izbjeglo rezanje sljedeće izgovorene fraze na nekim audiouređajima poput Bluetooth slušalica. (#14386, @jcsteh, @mltony)
+- HP Secure Browser je sada podržan. (#16377)
+-
+
+
+== Izmjene ==
+- Add-on Store:
+  - Minimalna verzija i posljednja testirana verzija dodatka sada se prikazuju u području "više detalja". (#15776, @Nael-Sayegh)
+  - Radnja "recenzije zajednice" biti će dostupna, a web stranica će se prikazati u pojedinostima u svim karticama svojstava u Add-on storeu. (#16179, @nvdaes)
+  -
+- Nadogradnje komponenti:
+  - Nadograđen LibLouis brajični prevoditelj na inačicu [3.29.0 https://github.com/liblouis/liblouis/releases/tag/v3.29.0]. (#16259, @codeofdusk)
+    - Dodane nove tablice sa prikazanim znakovima za velika slova za bjeloruski i ukrajinski, kao i brajična tablica za španjolski sa podrškom za čitanje grčkog teksta.
+    -
+  - eSpeak NG je nadograđen  na inačicu 1.52-dev commit ``cb62d93fd7``. (#15913)
+    - Dodan je novi jezik: tigrinya. 
+    -
+  -
+- Promijenjeno je nekoliko prečaca za brajični redke BrailleSense kako bi se izbjegli konflikti sa znakovima francuske brajične tablice. (#15306)
+  - ``alt+strelicaLijevo`` sada je promijenjen na prečac ``točkica2+točkica7+razmak``
+  - ``alt+strelicaDesno`` sada je promijenjen u ``točkica5+točkica7+razmaknica``
+  - ``alt+strelicaGore`` sada je promijenjen u ``točkica2+točkica3+točkica7+razmaknica``
+  - ``alt+StrelicaDolje`` sada je promijenjen u ``točkica5+točkica6+točkica7+razmaknica``
+  -
+- Višetočja koja se često koriste u tablicama sadržaja više se ne čitaju pri niskim razinama interpunkcije. (#15845, @CyrilleB79)
+-
+
+== Ispravke grešaka ==
+- Ispravke vezane uz Windows 11:
+  - NVDA će opet izgovarati prijedloge za upisivanje kada se koristi hardverska tipkovnica. (#16283, @josephsl)
+  - U inačici 24H2 (nadogradnji za 2024 godinu te Windows Server 2025), miš i dodirnik mogu se koristiti u brzim postavkama. (#16348, @josephsl)
+  -
+- Add-on Store:
+  - Kada se pritisne ``ctrl+tab``, fokus se ispravno prebacuje na novi aktualni naslov kartice svojstva. (#14986, @ABuffEr)
+  -
+- Ispravke za  preglednike bazirane na Chromiumu kada se korise uz pomoć Uia:
+  - Ispravljene greške koje su prouzrokovale zaglavljivanje NVDA. (#16393, #16394)
+  - Tipka Backspace sada ispravno radi U poljima za prijavu Gmail a. (#16395)
+  -
+- Tipka backspace sada ispravno radi kada se koristi program Nudi 6.1 sa postavkom "rukuj tipkama iz drugih programa". (#15822, @jcsteh)
+- Ispravljena je pogreška kada se reproduciraju zvučne koordinate kada se program nalazi u stanju mirovanja kada je opcija "Reproduciraj zvučne signale prilikom pomicanja miša" uključena. (#8059, @hwf1324)
+- U Adobe Readeru, više se ne ignorira alternativni tekst na formulama u PDF datotekama. (#12715)
+- Ispravljena je pogreška koja je onemogućavala čitanje opcija i ribbona u  Geekbenchu. (#16251, @mzanm)
+- Ispravljen je rijedak slučaj nemogućnosti spremanja konfiguracije, kada se nisu spremali i konfiguracijski profili. (#16343, @CyrilleB79)
+- U Firefoxu i preglednicima baziranima na Chromiumu, NVDA će ispravno aktivirati modus fokusa prilikom pritiska entera kad je fokus na prezentacijskom popisu (ul / ol) unutar sadržaja za uređivanje. (#16325)
+- Stanje promjena stupaca kada se označuju stupci za prikaz u popisu poruka u Thunderbirdu sada se ispravno čitaju. (#16323)
+-
+
 
 = 2024.1 =
 
 Dodan je novi modus govora čitanja informacija na zahtjev.
-Kada je modus govora postavljen da izgovara informacije na zahtjev, NVDA ne čita informacije automatski na primjer prilikom pomicanja kursora, ali još uvijek izgovara informacije ikoje se dobivaju oz pomoć prečaca, čiji je cilj izgovaranja određenih informacija na primjer, izgovaranje naslovne trake.
+Kada je modus govora postavljen da izgovara informacije na zahtjev, NVDA ne čita informacije automatski na primjer prilikom pomicanja kursora, ali još uvijek izgovara informacije i koje se dobivaju uz pomoć prečaca, čiji je cilj izgovaranja određenih informacija na primjer, izgovaranje naslovne trake.
 U kategoriji "govor" NVDA postavki, sada je moguće izostavljanje neželjenih modusa govora iz odabira modusa govora (``NVDA+s``).
 
 Novi način kopiranja sa sačuvanim oblikovanjem, koji se poziva uz pomoć prečaca NVDA+f10 dostupan je na web stranicama u Mozilla Firefoxu.
@@ -42,10 +145,10 @@ Windows 8.1 je minimalna verzija operacijskog sustava Windows.
 - Dodana podrška za Bluetooth niskonaponske brajične redke. (#15470)
 - Dodano je kopiranje sa sačuvanim oblikovanjem (koje se uključuje ili isključuje uz pomoć prečaca ``NVDA+shift+f10``) na web stranicama u Mozilla firefoxu.
 Kada je uključeno, koristit će se izvorno označavanje u Mozilla firefoxu.
-Prilikom kopiranja teksta uz pomoć prečaca ``control+c`` biti će proslijeđeno izravno Firefoxu, što će kopirati i formatiranje, a ne samo oblokovanje.
+Prilikom kopiranja teksta uz pomoć prečaca ``control+c`` biti će proslijeđeno izravno Firefoxu, što će kopirati i formatiranje, a ne samo oblikovanje.
 Imajte na umu da prilikom kopiranja teksta i njegovim rukovanjem od strane Firefoxa, NVDA neće izgovoriti poruku "kopirano u međuspremnik". (#15830)
 - Prilikom kopiranja teksta u Microsoft Wordu sa uključenim načinom čitanja, oblikovanje će se također kopirati.
-Posljedica ovoga je da NVDA neće izgovarati poruku "kopirano u međuspremnik" kada se pritisne ``control+c`` u Mocrosoft wordu ili Outlooku, zbog toga što aplikacija upravlja kopiranjem., umjesto NVDA. (#16129)
+Posljedica ovoga je da NVDA neće izgovarati poruku "kopirano u međuspremnik" kada se pritisne ``control+c`` u Microsoft wordu ili Outlooku, zbog toga što aplikacija upravlja kopiranjem., umjesto NVDA. (#16129)
 - Dodan je novi modus govora "na zahtjev".
 Kada je govor podešen na zahtjev, NVDA neće govoriti automatski (na primjer, prilikom pomicanja kursora) ali govori kada se pozivaju prečaci čiji je cilj čitanje određene informacije (na primjer izgovaranje naslovne trake). (#481, @CyrilleB79)
 - U kategoriji govor postavki NVDA, sada je moguće isključiti neželjene moduse govora iz odabira prečacem odabira modusa govora (``NVDA+s``). (#15806, @lukaszgo1)
@@ -79,7 +182,7 @@ Možete ih pronaći u panelu postavki zvuka koji se može otvoriti pritiskom pre
 Ova opcija izgovara više relevantnih informacija kada se objekt nađe pod mišem poput stanja: označeno ili pritisnuto ili koordinate ćelija u tablici. (#15420, @LeonarddeR)
 - Nove stavke su dodane u izbornik pomoć Pomoć obuka i podrška i NV acces trgovina. (#14631)
 - Podrška NVDA za [Poedit https://poedit.net] je kompletno prepisana za inačicu 3 i novije.
-Korisnicima Poedita  1 se preporućuje nadogradnja na Poedit 3 ako žele koristiti unapređenu pristupačnost Poedita, kao što su to prečaci za čitanje bilježaka za prevoditelje i komentara. (#15313, #7303, @LeonarddeR)
+Korisnicima Poedita  1 se preporučuje nadogradnja na Poedit 3 ako žele koristiti unapređenu pristupačnost Poedita, kao što su to prečaci za čitanje bilježaka za prevoditelje i komentara. (#15313, #7303, @LeonarddeR)
 - Preglednik brajice i preglednik govora od sada su isključeni u Sigurnom načinu. (#15680)
 - Prilikom korištenja objektne navigacije, onemogućeni (nedostupni) objekti više neće biti ignorirani. (#15477, @CyrilleB79)
 - Dodan sadržaj u dokument "popis tipkovničkih prečaca". (#16106)
@@ -91,25 +194,25 @@ Korisnicima Poedita  1 se preporućuje nadogradnja na Poedit 3 ako žele koristi
   - Prilikom instalacije dodataka instalacijska pitanja se više ne prekrivaju dijaloškim okvirom ponovnog pokretanja. (#15613, @lukaszgo1)
   - Prilikom reinstalacije nekompatibilnog dodatka isti se neće nasilno onemogućavati. (#15584, @lukaszgo1)
   - Onemogućeni i nekompatibilni dodaci se sada mogu ažurirati. (#15568, #15029)
-  - NVDA sa sada obnavlja i pokazuje grešku u slučaju neuspješnog preuzimanja dodatka. (#15796)
+  - NVDA se sada obnavlja i pokazuje grešku u slučaju neuspješnog preuzimanja dodatka. (#15796)
   - NVDA se više ne pokreće ponovno poslije ponovnog otvaranja i zatvaranja Add'on storea. (#16019, @lukaszgo1)
   -
 - Zvuk:
   - NVDA se više ne smrzava kada se zvukovi reproduciraju brzo. (#15311, #15757, @jcsteh)
-  - Ako je zvučna kartica postavljena na jednu od onih koja nije podrazumijevana a ta kartica postane dostupna, NVDA NVDA će se prebaciti na tu zvučnu karticu. (#15759, @jcsteh)
+  - Ako je zvučna kartica postavljena na jednu od onih koja nije podrazumijevana a ta kartica postane dostupna, NVDA će se prebaciti na tu zvučnu karticu. (#15759, @jcsteh)
   - NVDA će sada ponovno reproducirati zvuk ako konfiguracija zvučne kartice bude promijenjena ili druga aplikacija prestane ekskluzivno koristiti zvučnu karticu. (#15758, #15775, @jcsteh)
   -
 - Brajica:
   - Višeredni brajični redci više neće dovesti upravljački program BRLTTY do rušenja, te su tretirani kao jedan kontinuirani brajični redak. (#15386)
   - Od sada se na brajičnom redku prikazuju objekti koji sadrže koristan tekst. (#15605)
-  - SAda ponovno radi upisivanje brajičnih znakova kada se koristi kratkopis. (#15773, @aaclause)
+  - Sada ponovno radi upisivanje brajičnih znakova kada se koristi kratkopis. (#15773, @aaclause)
   - Od sada se brajica osvježava prilikom pomicanja objekta navigatora u više situacija (#15755, @Emil-18)
   - Rezultati izgovora trenutnog fokusa, trenutnog objekta navigatora i trenutnog označavanja sada se prikazuju na brajičnom redku. (#15844, @Emil-18)
   - Albatross upravljački program više ne prepoznaje Esp32 mikrokontroler kao Albatross brajični redak. (#15671)
   -
 - LibreOffice:
-  - Riječi izbrisane uz pomoć prečaca ``control+backspace`` sada se također ispravno izgovaraju kada nakon izbrisane riječi slijedi bjelina (raznaci i tabulatori). (#15436, @michaelweghorn)
-  - Čitanje trake stanja koristeći tipkovnički prečac ``NVDA+end`` sada također radi u Libre office dialoškim okvirima u inačicama 24.2 and novijim. (#15591, @michaelweghorn)
+  - Riječi izbrisane uz pomoć prečaca ``control+backspace`` sada se također ispravno izgovaraju kada nakon izbrisane riječi slijedi bjelina (razmaci i tabulatori). (#15436, @michaelweghorn)
+  - Čitanje trake stanja koristeći tipkovnički prečac ``NVDA+end`` sada također radi u Libre office dialoškim okvirima u inačicama 24.2 i novijim. (#15591, @michaelweghorn)
   - Svi očekivani atributi teksta sada su podržani U Libreoffice inačicama 24.2 i novijim.
   Ova ispravka omogućuje čitanje pravopisnih pogrešaka prilikom čitanja redaka u Writeru. (#15648, @michaelweghorn)
   - Čitanje razine naslova sada također radi u LibreOfficeu inačicama 24.2 i novijim. (#15881, @michaelweghorn)
@@ -121,20 +224,20 @@ Korisnicima Poedita  1 se preporućuje nadogradnja na Poedit 3 ako žele koristi
   - U Wordu, trenutna ćelija će se izgovoriti koristeći izvorne prečace Worda za navigaciju po tablicama ``alt+home``, ``alt+end``, ``alt+pageUp`` and ``alt+pageDown``. (#15805, @CyrilleB79)
   -
 - Izgovaranje tipkovničkih prečaca je unapređeno. (#10807, #15816, @CyrilleB79)
-- SAPI4 govorna jedinice sada pravilno podržavaju promjene glasnoće, brzine i visine ugrađene u govor. (#15271, @LeonarddeR)
+- SAPI4 govorne jedinice sada pravilno podržavaju promjene glasnoće, brzine i visine ugrađene u govor. (#15271, @LeonarddeR)
 - Stanje višerednog objekta sada se pravilno čita u aplikacijama koje koriste Java Access Bridge. (#14609)
 - NVDA će sada čitati više sadržaja dijaloških okvira za više Windows 10 i 11 dijaloških okvira. (#15729, @josephsl)
 - NVDA će sada čitati novu učitanu stranicu u Microsoft Edgeu prilikom korištenja UI automation. (#15736)
-- Prilikom korištenja prečaca za čitanje cijelog teksta ili slovkanja teksta, pauze između rečenica ili znakova više ne smanjuju postupno tokom vremena. (#15739, @jcsteh)
+- Prilikom korištenja prečaca za čitanje cijelog teksta ili slovkanja teksta, pauze između rečenica ili znakova više se ne smanjuju postupno tokom vremena. (#15739, @jcsteh)
 - NVDA više se ne smrzava prilikom čitanja velike količine teksta. (#15752, @jcsteh)
 - Prilikom pristupanja Microsoft Edgeu koristeći UI automation, NVDA sada može aktivirati više kontrola u modusu čitanja. (#14612)
 - NVDA će se sada pokretati ispravno kada je konfiguracijska datoteka oštećena, ali će se konfiguracija vratiti na zadane vrijednosti kao što je to bilo i u prošlosti. (#15690, @CyrilleB79)
 - Ispravljena podrška za System List view (``SysListView32``) kontrole U Windows forms aplikacijama. (#15283, @LeonarddeR)
-- Sada nije više moguće nadpisivanje NVDA povjesti Python konzole. (#15792, @CyrilleB79)
+- Sada nije više moguće nadpisivanje NVDA povijesti Python konzole. (#15792, @CyrilleB79)
 - NVDA će ostati brz i stabilan kada postane preopterećen sa UI automation događajima, na primjer prilikom prikazivanja velike količine teksta u Windows terminalu ili prilikom slušanja glasovnih poruka u  WhatsAppu. (#14888, #15169)
   - Ovo novo ponašanje može se isključiti koristeći opciju "Koristi unapređeno procesuiranje događaja" u NVDA naprednim postavkama.
   -
-- NVDA sada ponovno može slijediti fokus u aplikacijama unutar WIndows defender application guarda (WDAG). (#15164)
+- NVDA sada ponovno može slijediti fokus u aplikacijama unutar Windows defender application guarda (WDAG). (#15164)
 - Izgovoreni tekst se više ne ažurira prilikom pomicanja miša u Pregledniku govora. (#15952, @hwf1324)
 - NVDA će se opet prebaciti u modus čitanja prilikom zatvaranja odabirnih okvira koristeći tipku ``escape`` ili ``alt+strelicu gore`` u Firefox ili Chrome. (#15653)
 - Kretanje strelicama gore ili dolje u iTunesu više se neće prebacivati nazad u modus čitanja. (#15653)
