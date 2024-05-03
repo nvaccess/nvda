@@ -46,6 +46,7 @@ localWin10Lib = env.SharedLibrary(
 # Search available toolset directories from newest to oldest  to collect all the files we need.
 msvc = env.get('MSVC_VERSION')
 toolsets = msvc_toolset_versions(msvc, full=True)
+print(toolsets)
 vcRedistDirs = [
 	os.path.join(
 		find_vc_pdir(env, msvc),
