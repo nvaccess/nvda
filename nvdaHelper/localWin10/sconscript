@@ -15,7 +15,7 @@
 import os
 import glob
 
-from SCons.Tool.MSCommon.vc import find_vc_pdir
+from SCons.Tool.MSCommon.vc import find_vc_pdir, msvc_toolset_versions
 
 Import(
 	'env',
@@ -43,13 +43,16 @@ localWin10Lib = env.SharedLibrary(
 # UWP dlls can only be dynamically linked with the CRT,
 # but some systems might not have this version of the CRT.
 # Therefore, we must include it.
-# VS 2017 keeps changing the path to reflect the latest major.minor.build version which we canot easily find out.
-# Therefore  Search these versioned directories from newest to oldest  to collect all the files we need.
+# Search available toolset directories from newest to oldest  to collect all the files we need.
 msvc = env.get('MSVC_VERSION')
-vcRedistDirs = glob.glob(os.path.join(
-    find_vc_pdir(env, msvc),
-    rf"Redist\MSVC\{msvc}*\x86\Microsoft.VC{msvc.replace('.', '')}.CRT"
-))
+toolsets = msvc_toolset_versions(msvc, full=True)
+vcRedistDirs = [
+	os.path.join(
+		find_vc_pdir(env, msvc),
+		rf"Redist\MSVC\{toolset}\x86\Microsoft.VC{msvc.replace('.', '')}.CRT"
+	)
+	for toolset in reversed(toolsets)
+]
 if len(vcRedistDirs)==0:
 	raise RuntimeError("Could not locate vc redistributables. Perhaps the Universal Windows Platform component in visual Studio is not installed") 
 vcRedistDirs.sort(reverse=True)
