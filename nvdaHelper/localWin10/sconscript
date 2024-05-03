@@ -62,6 +62,9 @@ for fn in ("msvcp140.dll", "vccorlib140.dll", "vcruntime140.dll"):
 			env.Install(sourceDir, path)
 			break
 		else:
-			raise RuntimeError("Could not locate %s. Perhaps the Universal Windows Platform component in visual Studio is not installed"%fn) 
+			raise RuntimeError(
+				f"Could not locate {path!r}. "
+				"Perhaps the Universal Windows Platform component in visual Studio is not installed"
+			)
 
 Return(['localWin10Lib'])
