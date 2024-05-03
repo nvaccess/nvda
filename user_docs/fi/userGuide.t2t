@@ -1195,7 +1195,7 @@ Kun näyttöverho on aktiivisena, jotkin näytöllä näkyvään tietoon perustu
 
 Windowsin suurennusrajapintaan tehdyn muutoksen takia näyttöverho oli päivitettävä tukemaan uusimpia Windows-versioita.
 Käytä NVDA 2021.2:ta ottaaksesi näyttöverhon käyttöön Windows 10:n versiossa 21H2 (10.0.19044) tai sitä uudemmissa.
-Varmista turvallisuussyistä visuaalisesti uutta Windows-versiota käytettäessä, että näyttöverho pimentää ruudun kokonaan.
+Varmista tietoturvasyistä visuaalisesti uutta Windows-versiota käytettäessä, että näyttöverho pimentää ruudun kokonaan.
 
 Huom: Näyttöverhoa ei voida ottaa käyttöön, jos Windowsin suurennuslasia ja käänteisiä värejä käytetään samaan aikaan.
 
@@ -2648,7 +2648,7 @@ Asetuksen käytöstä poistaminen vastaa NVDA:n toiminnallisuutta versiossa 2023
 
 ==== Puhu salasanat kaikissa laajennetuissa päätteissä ====[AdvancedSettingsWinConsoleSpeakPasswords]
 Tämä asetus säätää, puhutaanko merkit [Puhu kirjoitetut merkit- #KeyboardSettingsSpeakTypedCharacters] tai [Puhu kirjoitetut sanat #KeyboardSettingsSpeakTypedWords] -asetusta käytettäessä tilanteissa, joissa ruutu ei päivity (kuten salasanaa syötettäessä) Windows-konsolissa UI automation -tuen ollessa käytössä ja Mintty:ssä.
-Turvallisuussyistä tämä asetus tulisi pitää poissa käytöstä.
+Tietoturvasyistä tämä asetus tulisi pitää poissa käytöstä.
 Voit kuitenkin halutessasi ottaa sen käyttöön, mikäli sinulla on konsoleissa suorituskykyongelmia tai epävakautta kirjoitettujen merkkien ja/tai sanojen puhumisessa, tai työskentelet luotetuissa ympäristöissä ja haluat, että salasanat puhutaan.
 
 ==== Käytä laajennettua kirjoitettujen merkkien tukea vanhassa Windows-konsolissa, kun käytettävissä ====[AdvancedSettingsKeyboardSupportInLegacy]
@@ -4377,7 +4377,7 @@ Estä NVDA-käyttäjiä muokkaamasta asetuksiaan tai lisäosiaan rajoittamalla h
 
 Suojattu tila ei ole tehokas NVDA:n massamuistiversioissa.
 Tämä rajoitus koskee myös tilapäisversiota, joka käynnistyy NVDA:n asennusohjelman käynnistyessä.
-Käyttäjän mahdollisuus käynnistää siirrettävä ohjelmatiedosto turvallisissa ympäristöissä muodostaa saman turvallisuusriskin riippumatta siitä, onko suojattu tila käytössä.
+Mahdollisuus massamuistiversion käynnistämiseen turvallisissa ympäristöissä muodostaa saman turvallisuusriskin riippumatta siitä, onko suojattu tila käytössä.
 Järjestelmänvalvojien odotetaan rajoittavan luvattomien ohjelmien suorittamista järjestelmissään, NVDA:n massamuistiversiot mukaan lukien.
 
 NVDA-käyttäjät luottavat usein siihen, että voivat mukauttaa NVDA-profiiliaan omiin tarpeisiinsa sopivaksi.
