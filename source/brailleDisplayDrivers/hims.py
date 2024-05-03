@@ -250,7 +250,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		# Hid device
 		driverRegistrar.addUsbDevices(bdDetect.DeviceType.HID, {
 			"VID_045E&PID_940A",  # Braille Edge3S 40
-		})
+		}, True)
 
 		# Bulk devices
 		driverRegistrar.addUsbDevices(bdDetect.DeviceType.CUSTOM, {

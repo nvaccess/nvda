@@ -463,15 +463,19 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 			for port in deviceInfoFetcher.usbDevices
 		),
 		(
-			DeviceMatch(DeviceType.SERIAL, port["usbID"], port["port"], port)
-			for port in deviceInfoFetcher.usbComPorts
-		),
-		(
 			DeviceMatch(DeviceType.HID, port["usbID"], port["devicePath"], port)
 			for port in deviceInfoFetcher.hidDevices if port["provider"] == "usb"
+		),
+		(
+			DeviceMatch(DeviceType.SERIAL, port["usbID"], port["port"], port)
+			for port in deviceInfoFetcher.usbComPorts
 		)
 	)
 	for match in usbDevs:
+		if (match.type, match.id) in DeviceMathcer.fallBackDevices:
+			DeviceMathcer.matches.append(match)
+			continue
+
 		if driver == _getStandardHidDriverName():
 			if _isHIDBrailleMatch(match):
 				yield match
@@ -480,7 +484,10 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 			for type, ids in devs.items():
 				if match.type == type and match.id in ids:
 					yield match
-
+     
+	for match in DeviceMathcer.matches:
+		if (match.type, match.id) in DeviceMathcer.fallBackDevices:
+			yield match
 
 def getPossibleBluetoothDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 	"""Get any possible Bluetooth devices associated with a particular driver.
@@ -605,7 +612,7 @@ class DriverRegistrar:
 			ret = _driverDevices[self._driver] = DriverDictT(set)
 			return ret
 
-	def addUsbDevices(self, type: DeviceType, ids: Set[str]):
+	def addUsbDevices(self, type: DeviceType, ids: Set[str], useAsFallBack: bool = False):
 		"""Associate USB devices with the driver on this instance.
 		:param type: The type of the driver.
 		:param ids: A set of USB IDs in the form C{"VID_xxxx&PID_XXXX"}.
@@ -618,9 +625,13 @@ class DriverRegistrar:
 				f"Invalid IDs provided for driver {self._driver!r}, type {type!r}: "
 				f"{', '.join(malformedIds)}"
 			)
-		devs = self._getDriverDict()
-		driverUsb = devs[type]
-		driverUsb.update(ids)
+		
+		if not useAsFallBack:
+			devs = self._getDriverDict()
+			driverUsb = devs[type]
+			driverUsb.update(ids)
+		else:
+			DeviceMathcer.fallBackDevices.extend([(type, id) for id in ids])
 
 	def addBluetoothDevices(self, matchFunc: MatchFuncT):
 		"""Associate Bluetooth HID or COM ports with the driver on this instance.
@@ -655,3 +666,7 @@ class DriverRegistrar:
 		scanForDevices.register(scanFunc)
 		if moveToStart:
 			scanForDevices.moveToEnd(scanFunc, last=False)
+   
+class DeviceMathcer:
+    fallBackDevices = list()
+    matches = list()
