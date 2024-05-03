@@ -149,8 +149,11 @@ class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
 
 class TestTextInfoRegionRouting(unittest.TestCase):
 	"""A test for TextInfoRegion.getTextInfoForBraillePos, which is used in braille cursor routing.
-	This test ensures that braille routes to the expected character when dealing with emoji containing modifier characters.
-	These emoji are threated as one character by uniscribe, however they span multiple characters on a braille display.
+	This test ensures that braille routes to the expected character when dealing with emoji
+	containing modifier characters.
+	These emoji are threated as one character by uniscribe, however they span multiple characters
+	on a braille display.
+	Note that due to the nature of this test, it relies on uniscribe to be available.
 	"""
 
 	def test_routeToEmoji(self):

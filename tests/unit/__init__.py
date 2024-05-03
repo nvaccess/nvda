@@ -125,7 +125,9 @@ config.conf['braille']['cursorBlink'] = False
 # To be able to use uniscribe in textInfos, map the NVDAHelper local library without initializing it.
 import ctypes  # noqa: E402
 import NVDAHelper  # noqa: E402
-NVDAHelper.localLib = ctypes.cdll.LoadLibrary(os.path.join(NVDAHelper.versionedLibPath,'nvdaHelperLocal.dll'))
+NVDAHelper.localLib = ctypes.cdll.LoadLibrary(
+	os.path.join(NVDAHelper.versionedLibPath, 'nvdaHelperLocal.dll')
+)
 
 # The focus and navigator objects need to be initialized to something.
 from .objectProvider import PlaceholderNVDAObject,NVDAObjectWithRole
