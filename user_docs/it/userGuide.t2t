@@ -954,7 +954,7 @@ Tuttavia, per scenari in cui si desidera copiare un'intera tabella o un paragraf
 + Lettura della matematica +[ReadingMath]
 NVDA è in grado di leggere ed interagire con la matematica sia sul web che in altre applicazioni, consentendo di fornire accesso alle informazioni tramite braille e sintesi vocale..
 Affinché ciò sia possibile, è necessario installare un add-on relativo alla matematica per NVDA.
-Sono disponibili diversi componenti aggiuntivi nello store di NVDA che forniscono supporto per la matematica, come l'add-on[MathCAT NVDA https://nsoiffer.github.io/MathCAT/] e [Access8Math https://github .com/tsengwoody/Access8Math].
+Sono disponibili diversi add-on nello store di NVDA che forniscono supporto per la matematica, come l'add-on[MathCAT NVDA https://nsoiffer.github.io/MathCAT/] e [Access8Math https://github .com/tsengwoody/Access8Math].
 Fare riferimento alla [sezione Add-on Store #AddonsManager] per sapere come sfogliare e installare i componenti aggiuntivi in NVDA.
 NVDA può anche utilizzare il vecchio software [MathPlayer https://info.wiris.com/mathplayer-info] di Wiris se presente sul sistema, sebbene questo programma non sia più sviluppato.
 
@@ -1966,7 +1966,8 @@ Questo cursore di avanzamento consente di impostare il volume dei suoni e dei se
 L'impostazione ha effetto solo quando l'opzione "Il volume dei suoni di NVDA segue il volume della voce" è disabilitata.
 La funzione non risulta disponibile se NVDA è stato avviato con l'impostazione [WASAPI disattivato per l'uscita audio #WASAPI] nelle Impostazioni avanzate.
 
-==== Tempo per cui il dispositivo audio rimane in funzione dopo la sintesi ====[AudioAwakeTime]
+==== Tempo di funzionamento del dispositivo audio dopo la sintesi ====[AudioAwakeTime]
+
 Questo campo editazione specifica per quanto tempo NVDA mantiene attivo il dispositivo audio dopo che la sintesi ha parlato.
 Ciò consente a NVDA di evitare alcuni problemi con la sintesi vocale, come la perdita di parti di parole.
 Questo può accadere perché i dispositivi audio (in particolare Bluetooth e wireless) entrano in modalità standby.
@@ -1981,7 +1982,7 @@ Invece, impostare un valore troppo alto potrebbe portare allo scaricamento più 
 +==== bilanciamento audio====[SelectSoundSplitMode]
 
 La funzione di bilanciamento audio consente agli utenti di utilizzare i propri dispositivi di uscita stereo, come cuffie e altoparlanti.
-In questo modo, si potrà portare la voce di NVDA in un canale (ad esempio sinistro) e tutte le atre applicazioni nell'altro canale (ad esempio destro).
+In questo modo, si potrà portare la voce di NVDA in un canale (ad esempio sinistro) e tutte le altre applicazioni nell'altro canale (ad esempio destro).
 Per impostazione predefinita la funzione di bilanciamento audio è disabilitata, il che significa che tutte le applicazioni, incluso NVDA, riprodurranno i suoni sia sul canale sinistro che su quello destro.
 Un gesto consente di passare tra le varie modalità di bilanciamento audio:
 %kc:beginInclude
@@ -1997,55 +1998,55 @@ Per impostazione predefinita, questo comando passerà tra le seguenti modalità:
 -
 
 Sono disponibili modalità di bilanciamento audio più avanzate nella casella combinata delle impostazioni NVDA.
-If you wish to adjust volume of all applications except for NVDA, consider using [the dedicated commands #OtherAppVolume].
-+Please note, that sound split doesn't work as a mixer.
-+For example, if an application is playing a stereo sound track while sound split is set to "NVDA on the left and applications on the right", then you will only hear the right channel of the sound track, while the left channel of the sound track will be muted.
-+
-+This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
-+
-+Please note, that if NVDA crashes, then it won't be able to restore application sounds volume, and those applications might still output sound only in one channel after NVDA crash.
-+In order to mitigate this, please restart NVDA.
-+
-+==== Customizing Sound split modes====[CustomizeSoundSplitModes]
-+This checkable list allows selecting which sound split modes are included when cycling between them using ``NVDA+alt+s``.
-+Modes which are unchecked are excluded.
-+By default only three modes are included.
-+- Sound split disabled: both NVDA and applications play sounds in both left and right channels.
-+- NVDA on the left and all other applications on the right channel.
-+- NVDA on the right and all other applications on the left channel.
-+-
-+
-+Note that it is necessary to check at least one mode.
-+This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
-+
-+==== Volume of other applications ====[OtherAppVolume]
-+
-+This slider allows you to adjust the volume of all currently running applications other than NVDA.
-+This volume setting will apply to all other applications sound output, even if they start after this setting is changed.
-+This volume can also be controlled via the following keyboard commands from anywhere:
-+
-+%kc:beginInclude
-+|| Name | Key | Description |
-+| Increase applications volume | ``NVDA+alt+pageUp`` | Increases volume of all applications except NVDA. |
-+| Decrease applications volume | ``NVDA+alt+pageDown`` | Decreases volume of all applications except NVDA. |
-+
-+%kc:endInclude
-+
-+This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
-+
-+==== Mute other applications ====[MuteApplications]
-+
-+This checkbox allows you to mute all applications other than NVDA.
-+This mute setting will apply to all other applications outputting sound, even if they start after this setting is changed.
-+The following keyboard command can also be used from anywhere:
-+
-+%kc:beginInclude
-+|| Name | Key | Description |
-+| Toggle mute other applications | ``NVDA+alt+delete`` | Mutes or unmutes all applications other than NVDA. |
-+
-+%kc:endInclude
-+
-+This option is not available if you have started NVDA with [WASAPI disabled for audio output #WASAPI] in Advanced Settings.
+Se si desidera modificare il volume di tutte le applicazioni ad eccezione di NVDA, si consiglia di servirsi dei [comandi dedicati #OtherAppVolume].
+Tenere sempre presente che la modalità bilanciamento audio di NVDA non è un mixer..
+Ad esempio, se un'applicazione riproduce una traccia stereo, e il bilanciamento è configurato con "NVDA a sinistra e applicazioni a destra", si ascolterà solo il canale destro della traccia audio, mentre il canale sinistro rimarrà dedicato a NVDA..
+
+Questa opzione non risulta disponibile se NVDA è stato avviato con [Usa Wasapi per l'output audio #WASAPI] disabilitato nelle impostazioni avanzate.
+
+Inoltre, prestare attenzione al fatto che se NVDA si arresta in modo anomalo, non sarà in grado di ripristinare il volume dei suoni dell'applicazione, per cui l'audio continuerebbe ad essere riprodotto in un solo canale.
+Per mitigare questo problema, riavviare NVDA.
+
+==== Personalizzazione delle modalità di bilanciamento audio ====[CustomizeSoundSplitModes]
+Questo elenco di caselle di controllo permette di selezionare quali modalità di bilanciamento audio saranno disponibili tramite il comando ``NVDA+alt+s``.
+Le modalità deselezionate saranno escluse.
+Per impostazioni predefinite, sono incluse solo tre modalità.
+- Bilanciamento audio disabilitato: NVDA e le applicazioni riproducono suoni sia nei canali sinistro che destro.
+- NVDA sul canale sinistro e tutte le altre applicazioni sul canale destro.
+- NVDA sul canale destro e tutte le altre applicazioni sul canale sinistro.
+-
+
+Tenere presente che è necessario selezionare almeno una modalità.
+Questa opzione non risulta disponibile se NVDA è stato avviato con [Usa Wasapi per l'output audio #WASAPI] disabilitato nelle impostazioni avanzate.
+
+==== Volume di altre applicazioni ====[OtherAppVolume]
+
+Questo controllo consente di regolare il volume di tutte le applicazioni attualmente in esecuzione diverse da NVDA.
+L'impostazione viene applicata per tutti i programmi, anche quelli che saranno eseguiti dopo aver regolato questo parametro.
+Il volume può anche essere controllato da qualsiasi luogo tramite i seguenti comandi da tastiera:
+
+%kc:beginInclude
+|| Nome | Tasto | Descrizione |
+| Alza volume applicazioni | ``NVDA+alt+paginaSu`` | Alza il volume di tutte le applicazioni ad eccezione di NVDA. |
+| Abbassa volume applicazioni | ``NVDA+alt+paginaGiù`` | Abbassa il volume di tutte le applicazioni ad eccezione di NVDA. |
+
+%kc:endInclude
+
+Questa opzione non risulta disponibile se NVDA è stato avviato con [Usa Wasapi per l'output audio #WASAPI] disabilitato nelle impostazioni avanzate.
+
+==== Disattiva l'audio delle altre applicazioni ====[MuteApplications]
+
+Questa casella di controllo consente di disattivare l'audio di tutte le applicazioni diverse da NVDA.
+L'impostazione viene applicata per tutti i programmi, anche quelli che saranno eseguiti dopo aver regolato questo parametro.
+Esiste un comando da tastiera che può essere richiamato da qualsiasi luogo:
+
+%kc:beginInclude
+|| Nome | Tasto | Descrizione |
+| Disattiva l'audio delle altre applicazioni | ``NVDA+alt+canc`` | Disattiva o riattiva tutte le applicazioni diverse da NVDA. |
+
+%kc:endInclude
+
+Questa opzione non risulta disponibile se NVDA è stato avviato con [Usa Wasapi per l'output audio #WASAPI] disabilitato nelle impostazioni avanzate.
 
 +++ Visione +++[VisionSettings]
 La categoria visione nelle impostazioni di NVDA consente di attivare, disattivare e configurare i [miglioramenti visivi #Vision].
@@ -2450,6 +2451,7 @@ Le opzioni di formattazione documento sono divise in gruppi.
   - Gruppi
   - Articoli
   - Frame
+  - Figure e didascalie
   - Quando qualcosa è cliccabile
   -
 -
@@ -2727,6 +2729,11 @@ Attivare quindi le caselle di controllo soltanto se viene richiesto da uno svilu
 Questa opzione consente di specificare se NVDA riprodurrà un suono di errore nel caso in cui venga registrato un errore.
 Scegliendo Solo nelle versioni di prova (impostazione predefinita) viene emesso un suono di errore solo se la versione corrente di NVDA è una versione di prova (alpha, beta o eseguita dai sorgenti).
 Scegliendo Sì, è possibile abilitare i suoni di errore qualunque sia la versione attuale di NVDA.
+
+==== Espressione regolare per il rilevamento dei paragrafi di testo in modalità navigazione ====[TextParagraphRegexEdit]
+
+Questo campo consente agli utenti di personalizzare l'espressione regolare per rilevare i paragrafi di testo in modalità navigazione.
+Il [comando di navigazione tra paragrafi di testo #TextNavigationCommand] cerca i paragrafi corrispondenti a questa espressione regolare.
 
 ++ Impostazioni varie ++[MiscSettings]
 Oltre alla finestra [Impostazioni NVDA #NVDASettings], il sottomenu preferenze del menu di NVDA contiene molti altri elementi che sono elencati qui di seguito.
@@ -3621,19 +3628,19 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 | tasto control+shift+freccia sinistra | punto2+punto8+spazio+f1 |
 | tasto control+frecciaSinistra | punto2+spazio |
 | tasto shift+alt+frecciaSinistra | punto2+punto7+f1 |
-| tasto alt+frecciaSinistra | punto2+punto7 |
+| tasto alt+frecciaSinistra | punto2+punto7+spazio |
 | tasto frecciaDestra | punto6+spazio, frecciaDestraLatoSinistro |
 | tasto control+shift+frecciaDestra | punto5+punto8+spazio+f1 |
 | tasto control+frecciaDestra | punto5+spazio |
 | tasto shift+alt+frecciaDestra | punto5+punto7+f1 |
-| tasto alt+frecciaDestra | punto5+punto7 |
+| tasto alt+frecciaDestra | punto5+punto7+spazio |
 | tasto paginaSu | punto1+punto2+punto6+spazio |
 | tasto control+paginaSu | punto1+punto2+punto6+punto8+spazio |
 | tasto frecciaSu | punto1+spazio, frecciaSuLatoSinistro |
 | tasto control+shift+frecciaSu | punto2+punto3+punto8+spazio+f1 |
 | tasto control+frecciaSu | punto2+punto3+spazio |
 | tasto shift+alt+frecciaSu | punto2+punto3+punto7+f1 |
-| tasto alt+frecciaSu | punto2+punto3+punto7 |
+| tasto alt+frecciaSu | punto2+punto3+punto7+spazio |
 | tasto shift+frecciaSu | ScorriGiuLatoSinistro+spazio |
 | tasto PaginaGiù | punto3+punto4+punto5+spazio |
 | tasto control+paginaGiù | punto3+punto4+punto5+punto8+spazio |
@@ -3641,7 +3648,7 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 | tasto control+shift+frecciaGiù | punto5+punto6+punto8+spazio+f1 |
 | tasto control+frecciaGiù | punto5+punto6+spazio |
 | tasto shift+alt+frecciaGiù | punto5+punto6+punto7+f1 |
-| tasto alt+frecciaGiù | punto5+punto6+punto7 |
+| tasto alt+frecciaGiù | punto5+punto6+punto7+spazio |
 | tasto shift+frecciaGiù | spazio+ScorriGiùLatoDestro |
 | tasto escape | punto1+punto5+spazio, f4, brailleedge:f1 |
 | tasto canc | punto1+punto3+punto5+spazio, punto1+punto4+punto5+spazio |
@@ -4367,6 +4374,11 @@ La modalità protetta disabilita:
 
 Le copie installate di NVDA salvano la loro configurazione, inclusi i componenti aggiuntivi, in ``%APPDATA%\nvda``.
 Per impedire agli utenti di modificare direttamente la propria configurazione o i componenti aggiuntivi, dev'essere limitato anche l'accesso a questa cartella.
+
+La modalità protetta non si può applicare per le copie portable di NVDA.
+Questo vale anche per la copia temporanea di NVDA che viene eseguita all'avvio del programma di installazione.
+Negli ambienti protetti, un utente in grado di lanciare un eseguibile portable comporta lo stesso rischio per la sicurezza indipendentemente dalla modalità protetta.
+Si lascia agli amministratori di sistema il compito di limitare l'esecuzione di software non autorizzato sui propri sistemi, comprese le copie portable di NVDA.
 
 Si tenga presente che ogni utente tende a configurare lo screen reader in modo diverso, cercando di creare un profilo il più adatto possibile alle proprie esigenze..
 Ciò spesso include l'installazione e la configurazione di add-on personalizzati, che andranno valutati indipendentemente dallo screen reader.
