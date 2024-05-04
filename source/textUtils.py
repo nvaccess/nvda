@@ -1,30 +1,32 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2021 NV Access Limited, Babbage B.V., Łukasz Golonka
+# Copyright (C) 2018-2024 NV Access Limited, Babbage B.V., Łukasz Golonka
 
 """
 Classes and utilities to deal with offsets variable width encodings, particularly utf_16.
 """
 
-import encodings
-import sys
 import ctypes
-from collections.abc import ByteString
-from typing import Tuple, Optional, Type
+import encodings
 import locale
+import unicodedata
+from abc import ABCMeta, abstractmethod, abstractproperty
+from collections import defaultdict
+from difflib import ndiff
+from functools import cached_property
+from typing import Optional, Tuple, Type
+
 from logHandler import log
-from abc import abstractmethod
 
 WCHAR_ENCODING = "utf_16_le"
 UTF8_ENCODING = "utf-8"
 USER_ANSI_CODE_PAGE = locale.getpreferredencoding()
 
 
-class OffsetConverter:
+class OffsetConverter(metaclass=ABCMeta):
 	decoded: str
-	
+
 	def __init__(self, text: str):
 		if not isinstance(text, str):
 			raise TypeError("Value must be of type str")
@@ -33,7 +35,7 @@ class OffsetConverter:
 	def __repr__(self):
 		return f"{self.__class__.__name__}({repr(self.decoded)})"
 
-	@property
+	@abstractproperty
 	def encodedStringLength(self) -> int:
 		"""Returns the length of the string in itssubclass-specific encoded representation."""
 		raise NotImplementedError
@@ -385,8 +387,6 @@ class IdentityOffsetConverter(OffsetConverter):
 		This is a dummy converter that assumes 1:1 correspondence between encoded and decoded characters.
 	"""
 
-	_encoding: str = UTF8_ENCODING
-
 	def __init__(self, text: str):
 		super().__init__(text)
 
@@ -415,6 +415,144 @@ class IdentityOffsetConverter(OffsetConverter):
 		if encodedEnd is None:
 			return encodedStart
 		return (encodedStart, encodedEnd)
+
+
+class UnicodeNormalizationOffsetConverter(OffsetConverter):
+	"""
+	Object that holds a string in both its decoded and its unicode normalized form.
+	The object allows for easy conversion between offsets in strings which may or may not be normalized,
+
+	For example, when using the NFKC algorithm, the "ĳ" ligature normalizes to "ij",
+	which takes two characters instead of one.
+	"""
+	normalizationForm: str
+	_strToEncodedOffsets: tuple[int]
+	_encodedToStrOffsets: tuple[int]
+
+	def __init__(self, text: str, normalizationForm="NFKC"):
+		super().__init__(text)
+		self.normalizationForm = normalizationForm
+		self.encoded: str = unicodedata.normalize(normalizationForm, text)
+		self._strToEncodedOffsets, self._encodedToStrOffsets = self._calculateOffsets()
+
+	def _calculateOffsets(self) -> tuple[tuple[int], tuple[int]]:
+		diff = list(ndiff(self.decoded, self.encoded))
+		diff.append("!")  # Closing the diff
+		iOrigin = iNormalized = 0
+		originBuffer = ""
+		normalizedBuffer = ""
+		originToNormalizedDict = defaultdict(list)
+		normalizedToOriginDict = defaultdict(list)
+		originPending = normalizedPending = False
+		for char in diff:
+			if char[0] == "?":
+				raise RuntimeError("Unexpected entry in diff")
+			elif char[0] == "-":
+				originBuffer += char[2:]
+				originPending = True
+			elif char[0] == "+":
+				normalizedBuffer += char[2:]
+				normalizedPending = True
+			elif char[0] == " " and (
+				(not originPending and normalizedPending) or (originPending and not normalizedPending)
+			):
+				originBuffer += char[2:]
+				normalizedBuffer += char[2:]
+			else:
+				while originBuffer and normalizedBuffer:
+					originPart = ""
+					originPartLen = 0
+					normalizedPart = ""
+					normalizedPartLen = 0
+					for i in range(len(originBuffer)):
+						originPart = originBuffer[: (i + 1)]
+						normalizedPart = unicodedata.normalize(self.normalizationForm, originPart)
+						if (
+							originPart == normalizedPart
+							or not normalizedBuffer.startswith(normalizedPart)
+						):
+							continue
+						originPartLen = len(originPart)
+						originBuffer = originBuffer[originPartLen:]
+						normalizedPartLen = len(normalizedPart)
+						normalizedBuffer = normalizedBuffer[normalizedPartLen:]
+						break
+					originMultiplier = min(originPartLen / normalizedPartLen, 1)
+					normalizedMultiplier = min(normalizedPartLen / originPartLen, 1)
+					for i in range(max(originPartLen, normalizedPartLen)):
+						tempOrigin = iOrigin + int(i * originMultiplier)
+						tempNormalized = iNormalized + int(i * normalizedMultiplier)
+						originC = originPart[i] if i < originPartLen else None
+						if originC:
+							normalizedIndex = normalizedPart.find(originC)
+							if normalizedIndex != -1:
+								tempNormalized = iNormalized + normalizedIndex
+						normalizedC = normalizedPart[i] if i < normalizedPartLen else None
+						if normalizedC:
+							originIndex = originPart.find(normalizedC)
+							if originIndex != -1:
+								tempOrigin = iOrigin + originIndex
+						originToNormalizedDict[tempOrigin].append(tempNormalized)
+						normalizedToOriginDict[tempNormalized].append(tempOrigin)
+					iOrigin += originPartLen
+					iNormalized += normalizedPartLen
+				originPending = normalizedPending = False
+				if char[0] == " ":
+					originToNormalizedDict[iOrigin].append(iNormalized)
+					normalizedToOriginDict[iNormalized].append(iOrigin)
+					iOrigin += 1
+					iNormalized += 1
+		originResult = tuple(map(min, originToNormalizedDict.values()))
+		assert len(originResult) == len(self.decoded)
+		normalizedResult = tuple(map(min, normalizedToOriginDict.values()))
+		assert len(normalizedResult) == len(self.encoded)
+		return tuple((
+			originResult,
+			normalizedResult
+		))
+
+	@cached_property
+	def encodedStringLength(self) -> int:
+		"""Returns the length of the string in its normalized representation."""
+		return len(self.encoded)
+
+	def strToEncodedOffsets(
+			self,
+			strStart: int,
+			strEnd: int | None = None,
+			raiseOnError: bool = False,
+	) -> int | Tuple[int]:
+		super().strToEncodedOffsets(strStart, strEnd, raiseOnError)
+		if strStart == 0:
+			resultStart = 0
+		else:
+			resultStart = self._strToEncodedOffsets[strStart]
+		if strEnd is None:
+			return resultStart
+		elif strStart == strEnd:
+			return (resultStart, resultStart)
+		else:
+			resultEnd = self._strToEncodedOffsets[strEnd]
+			return (resultStart, resultEnd)
+
+	def encodedToStrOffsets(
+			self,
+			encodedStart: int,
+			encodedEnd: int | None = None,
+			raiseOnError: bool = False
+	) -> int | Tuple[int]:
+		super().encodedToStrOffsets(encodedStart, encodedEnd, raiseOnError)
+		if encodedStart == 0:
+			resultStart = 0
+		else:
+			resultStart = self._encodedToStrOffsets[encodedStart]
+		if encodedEnd is None:
+			return resultStart
+		elif encodedStart == encodedEnd:
+			return (resultStart, resultStart)
+		else:
+			resultEnd = self._encodedToStrOffsets[encodedEnd]
+			return (resultStart, resultEnd)
 
 
 ENCODINGS_TO_CONVERTERS: dict[str, Type[OffsetConverter]] = {
