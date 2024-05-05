@@ -655,7 +655,10 @@ class TextInfo(baseObject.AutoPropertyObject):
 		@raise LookupError: If MathML can't be retrieved for this field.
 		"""
 		raise NotImplementedError
-	
+
+	def getTextInfoForCodepointMovement(self) -> Self:
+		return self.copy()
+
 	def moveToCodepointOffset(
 			self,
 			codepointOffset: int,
@@ -748,15 +751,15 @@ class TextInfo(baseObject.AutoPropertyObject):
 				we reduce the count of characters in order to make sure
 				the algorithm makes some progress on each iteration.
 		"""
-		text = self.text
+		info = self.getTextInfoForCodepointMovement()
+		text = info.text
 		if codepointOffset < 0 or codepointOffset > len(text):
 			raise ValueError
 		if codepointOffset == 0 or codepointOffset == len(text):
-			result = self.copy()
+			result = info.copy()
 			result.collapse(end=codepointOffset > 0)
 			return result
 		
-		info = self.copy()
 		# Total codepoint Length represents length in python characters of Current TextInfo we're workoing with.
 		# We start with self, and then gradually divide and conquer in order to find desired offset.
 		totalCodepointOffset = len(text)
