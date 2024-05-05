@@ -269,8 +269,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Input help mode message for mouse wheel scroll up command.
 			"Scrolls up the mouse wheel at the current mouse position"
 		),
-		category=SCRCAT_MOUSE,
-		gesture="kb:NVDA+Windows+pageUp"
+		category=SCRCAT_MOUSE
 	)
 	def script_scrollMouseWheelUp(self, gesture):
 		mouseHandler.scrollMouseWheel(winUser.WHEEL_DELTA, isVertical=True)
@@ -280,8 +279,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Input help mode message for mouse wheel scroll down command.
 			"Scrolls down the mouse wheel at the current mouse position"
 		),
-		category=SCRCAT_MOUSE,
-		gesture="kb:NVDA+Windows+pageDown"
+		category=SCRCAT_MOUSE
 	)
 	def script_scrollMouseWheelDown(self, gesture):
 		mouseHandler.scrollMouseWheel(-winUser.WHEEL_DELTA, True)
