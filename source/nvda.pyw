@@ -394,7 +394,7 @@ logHandler.initialize()
 if logHandler.log.getEffectiveLevel() is log.DEBUG:
 	log.debug("Provided arguments: {}".format(sys.argv[1:]))
 import buildVersion
-log.info(f"Starting NVDA version {buildVersion.version}")
+log.info(f"Starting NVDA version {buildVersion.version} {os.environ['PROCESSOR_ARCHITECTURE']}")
 log.debug("Debug level logging enabled")
 if customVenvDetected:
 	log.warning("NVDA launched using a custom Python virtual environment.")
