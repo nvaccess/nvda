@@ -63,7 +63,7 @@ class DiffMatchPatch(DiffAlgo):
 		return ti.text
 
 	@classmethod
-	def _readData(cls, size):
+	def _readData(cls, size: int) -> bytes:
 		"""Reads from stdout, raises exception on EOF."""
 		buffer = b""
 		while (requiredLength := size - len(buffer)) > 0:
