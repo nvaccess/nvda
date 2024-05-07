@@ -64,10 +64,10 @@ If you are new to the project, or looking for some way to help take a look at:
 
 #### Change log entry
 An entry intended to explain changes in NVDA to end users.
-Your proposed entry should be added to the [`changes.t2t` file](../../user_docs/en/changes.t2t) which is converted to HTML.
+Your proposed entry should be added to the [`changes.md` file](../../user_docs/en/changes.md) which is converted to HTML.
 Change log entries are not required for changes with no/minor user impact or no developer impact.
 
-Because the `changes.t2t` file is prone to conflicts, NV Access will resolve any merge conflicts with the change log entry before merging.
+Because the `changes.md` file is prone to conflicts, NV Access will resolve any merge conflicts with the change log entry before merging.
 
 These descriptions should be in the format: `"{Description of change}. (#{issue number})"`.
 Multiple issue numbers can be included, separated by comma.
@@ -76,7 +76,7 @@ Optionally, you may also include your GitHub username after the issue numbers: `
 Our processing will automatically link the issue number to the GitHub page, and your GitHub username to your contributions to NVDA.
 
 For instance:
-```t2t
+```md
 New features
 - Added a command to announce useful thing. (#1234, #4321, @myGitHub)
 

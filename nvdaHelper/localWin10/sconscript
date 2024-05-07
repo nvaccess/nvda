@@ -1,7 +1,7 @@
 ###
 # This file is a part of the NVDA project.
 # URL: http://www.nvaccess.org/
-# Copyright 2016-2020 NV Access Limited, Leonard de Ruijter
+# Copyright 2016-2024 NV Access Limited, Leonard de Ruijter
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2.0, as published by
 # the Free Software Foundation.
@@ -43,12 +43,12 @@ localWin10Lib = env.SharedLibrary(
 # UWP dlls can only be dynamically linked with the CRT,
 # but some systems might not have this version of the CRT.
 # Therefore, we must include it.
-# VS 2017 keeps changing the path to reflect the latest major.minor.build version which we canot easily find out.
+# VS keeps changing the path to reflect the latest major.minor.build version which we canot easily find out.
 # Therefore  Search these versioned directories from newest to oldest  to collect all the files we need.
 msvc = env.get('MSVC_VERSION')
 vcRedistDirs = glob.glob(os.path.join(
     find_vc_pdir(env, msvc),
-    rf"Redist\MSVC\{msvc}*\x86\Microsoft.VC{msvc.replace('.', '')}.CRT"
+    rf"Redist\MSVC\{msvc[:2]}*\x86\Microsoft.VC{msvc.replace('.', '')}.CRT"
 ))
 if len(vcRedistDirs)==0:
 	raise RuntimeError("Could not locate vc redistributables. Perhaps the Universal Windows Platform component in visual Studio is not installed") 

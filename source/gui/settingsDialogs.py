@@ -4062,16 +4062,16 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		tables = brailleTables.listTables()
 		# Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 		outputsLabelText = _("&Output table:")
-		outTables = [table for table in tables if table.output]
-		self.outTableNames = [table.fileName for table in outTables]
-		outTableChoices = [table.displayName for table in outTables]
+		self.outTables = [table for table in tables if table.output]
+		self.outTableNames = [table.fileName for table in self.outTables]
+		outTableChoices = [table.displayName for table in self.outTables]
 		self.outTableList = sHelper.addLabeledControl(outputsLabelText, wx.Choice, choices=outTableChoices)
 		self.bindHelpEvent("BrailleSettingsOutputTable", self.outTableList)
 		try:
-			selection = self.outTableNames.index(config.conf["braille"]["translationTable"])
+			selection = self.outTables.index(braille.handler.table)
 			self.outTableList.SetSelection(selection)
 		except:
-			pass
+			log.exception()
 		if shouldDebugGui:
 			timePassed = time.time() - startTime
 			log.debug(
@@ -4088,7 +4088,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			selection = self.inTables.index(brailleInput.handler.table)
 			self.inTableList.SetSelection(selection)
 		except:
-			pass
+			log.exception()
 		if shouldDebugGui:
 			timePassed = time.time() - startTime
 			log.debug(
@@ -4325,11 +4325,13 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 	def onSave(self):
 		AutoSettingsMixin.onSave(self)
+		
+		braille.handler.table = self.outTables[self.outTableList.GetSelection()]
+		brailleInput.handler.table = self.inTables[self.inTableList.GetSelection()]
 		mode = list(braille.BrailleMode)[self.brailleModes.GetSelection()]
 		config.conf["braille"]["mode"] = mode.value
 		braille.handler.mainBuffer.clear()
 		config.conf["braille"]["translationTable"] = self.outTableNames[self.outTableList.GetSelection()]
-		brailleInput.handler.table = self.inTables[self.inTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
 		config.conf["braille"]["showCursor"] = self.showCursorCheckBox.GetValue()
 		config.conf["braille"]["cursorBlink"] = self.cursorBlinkCheckBox.GetValue()

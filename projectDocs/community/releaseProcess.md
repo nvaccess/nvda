@@ -44,6 +44,7 @@ This is however unlikely to be an issue as build checks on the pull request itse
 * If a merged pull request has been identified as causing a regression, new bug, or does not work as originally reported, the pull request may be reverted at the discretion of the lead developers. Reasons in favor of not reverting the pull request may be: 
   * The pull request was submitted by an active collaborator who is likely to follow up with a suitable pull request to address the issues.
   * The bug is trivial enough to be fixed by a collaborator.
+  * Use the [PR revert template](../../.github/PULL_REQUEST_TEMPLATE/revert.md) when reverting.
 * Automatic 'alpha snapshots' are made available to the public for very early testing. See [testing guide](../testing/contributing.md).
 
 ### Beta phase
@@ -60,7 +61,8 @@ This is however unlikely to be an issue as build checks on the pull request itse
 * If a merged pull request that reached beta has been identified as causing a regression, new bug, or does not work as originally reported:
   - The pull request may be reverted at the discretion of the lead developers.
   - It may be fixed by a collaborator if the bug is trivial enough.
-  - Once a PR is reverted from `beta`, a replacement PR is very unlikely to get into the current release.
+  - Once a PR is reverted from `beta`, a replacement PR is very unlikely to be accepted into the current release.
+  - Use the [PR revert template](../../.github/PULL_REQUEST_TEMPLATE/revert.md) when reverting.
 
 ### Release Candidate phase
 
