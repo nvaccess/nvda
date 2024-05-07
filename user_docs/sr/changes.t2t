@@ -4,6 +4,110 @@ NVDA šta je novo
 %!includeconf: ../changes.t2tconf
 
 
+= 2024.2 =
+Dodata je nova opcija razdvajanje zvuka.
+Ovo vam dozvoljava da odvojite  NVDA na jednom kanalu (na primer levom) a zvukove svih ostalih aplikacija  prebacite na drugi (na primer desni).
+
+Dodate su nove komande za menjanje vrednosti u krugu podešavanja govora, koje dozvoljavaju korisnicima da skoče na prvo ili poslednje podešavanje, ili da povećaju ili smanje trenutno podešavanje većim skokom.
+Dodate su takođe nove komande brze navigacije, one dozvoljavaju korisnicima da dodaju prečice kako bi brzo skakali između: Pasusa, vertikalno poravnatih pasusa, teksta istog stila, teksta različitog stila, stavki menija, dugmadi prekidača, traka napredovanja, figura i matematičkih formula.
+
+Dodate su brojne nove karakteristike za brajeve redove i ispravljene greške.
+Dodat je novi brajev režim "Prikaži govor".
+Kada je aktivan, brajev red će prikazati tačno ono što NVDA priprema za izgovor.
+Takođe je dodata podrška za BrailleEdgeS2, BrailleEdgeS3 brajeve uređaje.
+LibLouis je ažuriran, dodajući nove detaljne (uz indikaciju velikih slova) beloruske i ukrajinske brajeve tabele, uz špansku tabelu za čitanje grčkih tekstova.
+
+eSpeak je ažuriran, dodajući novi tigrinjski jezik.
+
+Postoje brojne ispravke za sitne greške u aplikacijama, kao što su Thunderbird, Adobe Reader, Web pretraživači, Nudi i Geekbench.
+
+== Nove karakteristike ==
+- Nove prečice:
+  - Nova komanda brze navigacije ``p`` za skakanje na sledeći ili prethodni pasus teksta u režimu pretraživanja. (#15998, @mltony)
+  - Nove komande brze navigacije bez dodeljene prečice, koje se mogu koristiti za skakanje na sledeće ili prethodne:
+    - Figure (#10826)
+    - Vertikalno poravnate pasuse (#15999, @mltony)
+    - Stavke menija (#16001, @mltony)
+    - Dugmadi prekidača (#16001, @mltony)
+    - Trake napredovanja (#16001, @mltony)
+    - Matematičke formule (#16001, @mltony)
+    - Tekst istog stila (#16000, @mltony)
+    - Tekst različitog stila (#16000, @mltony)
+    -
+    - Dodate komande za skakanje na prvu ili poslednju vrednost, ili za veći skok pri menjanju podešavanja u krugu podešavanja govora. (#13768, #16095, @rmcpantoja)
+    - Podešavanje prve ili poslednje vrednosti u krugu podešavanja govora nema dodeljenu prečicu. (#13768)
+    - Smanji ili povećaj trenutno podešavanje u krugu podešavanja govora većim skokom (#13768):
+      - Desktop: ``NVDA+kontrol+pageUp`` ili ``NVDA+kontrol+pageDown``.
+      - Laptop: ``NVDA+kontrol+šift+pageUp`` ili ``NVDA+kontrol+šift+pageDown``.
+      -
+    -
+  - Dodata nova komanda bez dodeljene prečice za uključivanje ili isključivanje prijavljivanja figura i naslova slika. (#10826, #14349)
+  -
+- Brajevi redovi:
+  - Dodata podrška za BrailleEdgeS2, BrailleEdgeS3 brajeve uređaje. (#16033, #16279, @EdKweon)
+  - Dodat je novi brajev režim "Prikaži govor". (#15898, @Emil-18)
+    - Kada je aktivan, na brajevom redu će se prikazati ono što NVDA priprema za izgovor.
+    - Može se uključiti ili isključiti prečicom ``NVDA+alt+t``, ili iz dijaloga brajevih podešavanja.
+    -
+  -
+- Razdvajanje zvuka: (#12985, @mltony)
+  - Dozvoljava da odvojite NVDA zvukove na jednom kanalu (na primer levom) dok su zvukovi drugih aplikacija na drugom kanalu (na primer desnom).
+  - Uključuje se ili isključuje prečicom ``NVDA+alt+s``.
+  - Jačina drugih aplikacija se može menjati prečicama ``NVDA+alt+pageUp`` i ``NVDA+alt+pageDown``. (#16052, @mltony)
+  - Zvuk drugih aplikacija se može isključiti prečicom ``NVDA+alt+delete``. (#16052, @mltony)
+  -
+- Prijavljivanje zaglavlja redova i kolona je sada podržano u contenteditable HTML elementima. (#14113)
+- Dodata opcija kako biste onemogućili prijavljivanje figura i naslova slika u podešavanjima formatiranja dokumenta. (#10826, #14349)
+- U Windowsu 11, NVDA će izgovarati upozorenja glasovnog unosa i predloženih radnji uključujući predlog na vrhu kada kopirate podatke kao što su brojevi telefona u privremenu memoriju (Windows 11 2022 ažuriranje i novija). (#16009, @josephsl)
+- NVDA će održavati zvučni uređaj budnim nakon što se govor zaustavi, kako bi sprečio da početak sledećeg izgovorenog teksta bude isprekidan sa nekim zvučnim uređajima kao što su Bluetooth slušalice. (#14386, @jcsteh, @mltony)
+- HP Secure pretraživač je sada podržan. (#16377)
+-
+
+
+== Promene ==
+- Prodavnica dodataka:
+  - Minimalna i poslednja testirana NVDA verzija za dodatak se sada prikazuju u sekciji "Drugi detalji". (#15776, @Nael-Sayegh)
+  - Radnja za recenzije zajednice će biti dostupna i Web stranica za recenzije će se prikazivati u panelu sa detaljima, na svim karticama prodavnice. (#16179, @nvdaes)
+  -
+- Ažurirane komponente:
+  - Ažuriran LibLouis brajev prevodilac na [3.29.0 https://github.com/liblouis/liblouis/releases/tag/v3.29.0]. (#16259, @codeofdusk)
+    - Dodate nove detaljne (uz indikaciju velikih slova) beloruske i ukrajinske brajeve tabele, uz špansku tabelu za čitanje grčkih tekstova.
+    -
+  - eSpeak NG je ažuriran na 1.52-dev commit ``cb62d93fd7``. (#15913)
+    - Dodat novi tigrinjski jezik. 
+    -
+  -
+- Promenjeno nekoliko prečica za BrailleSense uređaje kako bi se sprečili konflikti sa znakovima francuske brajeve tabele. (#15306)
+  - ``alt+strelicaLevo`` je sada  ``tačka2+tačka7+razmak``
+  - ``alt+strelicaDesno`` je sada ``tačka5+tačka7+razmak``
+  - ``alt+strelicaGore`` je sada ``tačka2+tačka3+tačka7+razmak``
+  - ``alt+strelicaDole`` je sada ``tačka5+tačka6+tačka7+razmak``
+  -
+- Nizovi tačaka koji se često koriste u sadržaju teksta se više ne prijavljuju na nivoima izgovora manje interpunkcije. (#15845, @CyrilleB79)
+-
+
+== Ispravljene greške ==
+- Windows 11 ispravke:
+  - NVDA će ponovo izgovarati predloge za unos sa hardverske tastature. (#16283, @josephsl)
+  - U verziji 24H2 (2024 ažuriranje i Windows Server 2025), interakcija mišem ili ekranom osetljivim na dodir se može koristiti u brzim podešavanjima. (#16348, @josephsl)
+  -
+- Prodavnica dodataka:
+  - Kada pritisnete ``ctrl+tab``, fokus se ispravno prebacuje na novi naziv trenutne kartice. (#14986, @ABuffEr)
+  -
+- Ispravke za pretraživače zasnovane na Chromiumu kada se koriste uz UIA:
+  - Ispravljene greške koje su izazvale da se NVDA zamrzne. (#16393, #16394)
+  - Backspace taster sada ispravno radi u Gmail poljima za prijavljivanje. (#16395)
+  -
+- Taster Backspace sada ispravno radi kada koristite Nudi 6.1 uz omogućeno NVDA podešavanje  "Kontroliši tastere iz drugih aplikacija". (#15822, @jcsteh)
+- Ispravljena greška koja je izazivala da se zvučni koordinati reprodukuju dok je aplikacija u režimu spavanja kada je omogućeno podešavanje "Reprodukuj zvučne koordinate kada se miš pomera". (#8059, @hwf1324)
+- U Adobe Readeru, NVDA više ne ignoriše alternativni tekst koji je podešen za formule u PDF datotekama. (#12715)
+- Ispravljena greška koja je izazvala da NVDA ne može da pročita traku menija i opcije u programu Geekbench. (#16251, @mzanm)
+- Ispravljena retka situacija u kojoj čuvanje podešavanja ne uspe da sačuva sve profile. (#16343, @CyrilleB79)
+- U Firefoxu i pretraživačima zasnovanim na Chromiumu, NVDA će ispravno ući u režim fokusiranja kada se pritisne enter u prezentacionoj listi (ul / ol) u sadržaju koji se može uređivati. (#16325)
+- Promena stanja kolona se automatski prijavljuje kada se biraju kolone za prikazivanje u listi poruka programa Thunderbird. (#16323)
+-
+
+
 = 2024.1 =
 
 Dodat je novi režim govora "Na zahtev".
@@ -145,7 +249,7 @@ Molimo odgovorno prijavite bezbednosne probleme tako što ćete pratiti [politik
 == Bezbednosne ispravke ==
 - Sprečava učitavanje prilagođene konfiguracije kada je prisiljen bezbedni režim.
 ([GHSA-727q-h8j2-6p45 https://github.com/nvaccess/nvda/security/advisories/GHSA-727q-h8j2-6p45])
-+-
+-
 
 == Ispravljene greške ==
 - Ispravljena greška koja je izazvala da NVDA proces ne izađe ispravno. (#16123)
@@ -174,6 +278,7 @@ Sprečava mogući pristup sistemu i izvršavanje koda sa sistemskim privilegijam
 
 
 = 2023.3.1 =
+Ovo je manje ažuriranje za ispravljanje bezbednosnog problema.
 Molimo odgovorno prijavite bezbednosne probleme tako što ćete pratiti [politiku bezbednosti programa NVDA  https://github.com/nvaccess/nvda/blob/master/security.md].
 
 == Bezbednosne ispravke ==

@@ -1,7 +1,7 @@
 ﻿#locale/uk/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2023 NVDA Contributors
-#This file is covered by the GNU General Public License.
+#Copyright (c) 2011-2024 учасники NVDA
+#Цей файл захищений GNU General Public License.
 
 complexSymbols:
 # identifier	regexp
@@ -12,6 +12,8 @@ complexSymbols:
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
+# Series of dots used for visual presentation, e.g. in table of contents
+padding .	\.{4,}
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
@@ -21,12 +23,12 @@ symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-
 . sentence ending	крапка	all	always
 ! sentence ending	знак оклику	all	always
 ? sentence ending	знак питання	all	always
 ; phrase ending	крапка з комою	most	always
 : phrase ending	двокрапка	most	always
+padding .	множинні крапки	all	always
 decimal point		none	always
 in-word '	апостроф	all	norep
 negative number	мінус	none	norep
@@ -42,6 +44,7 @@ negative number	мінус	none	norep
 
 # Standard punctuation/symbols
 !	знак оклику	all
+！	знак оклику на всю ширину	all
 "	лапки	most
 \#	решітка	most
 №	номер	most
@@ -69,12 +72,16 @@ $	долар	all	norep
 ،	арабська кома	all	always
 -	дефіс	most	always
 .	крапка	some
+．	крапка на всю ширину	some
 /	слеш	some
 :	двокрапка	most	norep
+：	двокрапка на всю ширину	most	norep
 ;	крапка з комою	most
 ؛	арабська крапка з комою	most
+；	крапка з комою на всю ширину	most
 ?	знак питання	all	always
 ؟	арабський знак питання	all
+？	знак питання на всю ширину	all
 @	равлик	some
 [	ліва квадратна дужка	most
 ]	права квадратна дужка	most

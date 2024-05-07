@@ -237,7 +237,14 @@ Polecenia nie będą wykonywane, gdy pomoc klawiatury jest aktywna.
 | przejdź do następnego ustawienia syntezatora | ``NVDA+control+strzałka w prawo`` | ``NVDA+shift+control+strzałka w prawo`` | przemieszcza do następnego ustawienia syntezatora, pozwalając krążyć po ustawieniach syntezatora po ostatnim ustawieniu |
 | przejdź do poprzedniego ustawienia syntezatora | ``NVDA+control+strzałka w lewo`` | ``NVDA+shift+control+strzałka w lewo`` | przemieszcza do poprzedniego ustawienia syntezatora, pozwalając krążyć po ustawieniach syntezatora po ostatnim ustawieniu |
 | zwiększ aktualne ustawienie syntezatora | ``NVDA+control+strzałka w górę`` | ``NVDA+shift+control+strzałka w górę`` | Zwiększa aktualne ustawienie syntezatora które ustawiasz. Na przykład zwiększa prędkość, wybiera następny głos, zwiększa głośność |
+| Zwiększ aktualne ustawienie pierścienia syntezatora mowy większymi krokami | ``NVDA+control+pageUp`` | ``NVDA+shift+control+pageUp`` | zwiększa wartość aktualnego ustawienia mowy na której się znajdujesz larger większymi krokami. Na przykład gdy znajdujesz się na ustawieniu głosu, przeskakiwać będziesz o każdych 20 głosów; gdy znajdujesz się na ustawieniu z suwakiem (prędkość, wysokość, itd) Ustawienie zwiększy się o dwadzieścia procent |
+
 | Zmniejsz aktualne ustawienie syntezatora | ``NVDA+control+strzałka w dół`` | ``NVDA+shift+control+strzałka w dół`` | Zmniejsza aktualne ustawienie syntezatora które ustawiasz. Na przykład zmniejsza prędkość, wybiera poprzedni głos, zmniejsza głośność |
+| Zmniejsza aktualne ustawienie mowy większymi krokami | ``NVDA+control+pageDown`` | ``NVDA+shift+control+pageDown`` | Zmniejsza ustawienie mowy na któym sieznajdujesz mniejszym krokiem. Na przykłąd, gdy znajdujesz sięna ustawieniu głosu, będziesz sieprzemieszczał co dwadzieścia głosów; Gdy znajdujesz się na ustawieniu podobnym od suwaka, wartości zmeini sięo dwadzieścia procent. |
+
+Możesz także ustawić pierwszą lub ostatnią wartość aktualnego ustawienia mowy w pierścieniu ustawień mowy przypisując skrót w [oknie dialogowym zdarzeń wejścia #InputGestures], w kategorii mowa.
+To w praktyce oznacza, że gdy znajdujesz sie na ustawieniu prędkości, to umożliwi ustawienie jej na zero albo sto procent.
+Gdy znajdujesz się na ustawieniu głosu, będziesz w stanie ustawić pierwszy lub ostatni głos.
 
 +++ Nawigacja po stronach internetowych +++[WebNavigation]
 Pełną liste skrótów szybkiej nawigacji można znaleźć w roździale [Tryb przeglądania #BrowseMode] podręcznika użytkownika.
@@ -829,6 +836,7 @@ Naciśnięcie litery przechodzi do następnego elementu odpowiedniego typu, nato
 - O: obiekt zagnieżdżony (odtwarzacz audio lub wideo, aplikacja, okno dialogowe etc.)
 - Cyfry 1 do 6: nagłówki poziomu odpowiednio  od 1 do 6
 - A: adnotacja (komentarz, zmiana edytorska, itd.)
+- ``p``: akapit tekstu
 - w: błąd pisowni
 -
 Aby przejść na początek lub koniec elementów takich jak listy i tabele:
@@ -843,17 +851,45 @@ Jeśli chcesz używać tych skrótów i móc jednocześnie posługiwać się kla
 Aby włączyć i wyłączyć nawigację literami dla aktualnego dokumentu, naciśnij NVDA+Shift+Spacja.
 %kc:endInclude
 
++++ Skrót nawigacji po akapitach tekstowych +++[TextNavigationCommand]
+
+Można się przemieszczać po poprzednim lub następnym akapicie naciskając ``p`` lub ``shift+p``.
+Akapity są określone przez grupę tekstu napisaną całymi zdaniami.
+To może być praktyczne do zlokalizowania użytecznej treści na stronach internetowych, takich jak:
+- gazety internetowe
+- Fora
+- Wpisy blogowe
+- 
+
+To polecenei może takżę być użyteczne do omijania niektórych niepotrzebnych elementów, takich jak:
+- reklamy
+- meni
+- nagłówki
+- 
+
+moewajcie na uwadze, że ten algorytm nie jest doskonały, i czasem może nie działać prawidłowo.
+W dodatku, to polecenie różni się od polecenia ``control+strzałka w dół/w górę``.
+Nawigacja po akapitach tekstowych przemieszcza tylko po akapitach tekstowych, gdy polecenie dla nawigacji  po akapicie przemieszcza po akapitach, bez względu na to, czy istnieje tekst lub nie.
+
 +++ Inne polecenia do nawigacji +++[OtherNavigationCommands]
 
 Oprócz poleceń do szybkiej nawigacji zawartych powyżej, NVDA posiada nieskojarzone polecenia.
 Aby je używać, musisz z nimi skojarzyć skrót klawiszowy lub dotykową gestę w [oknie dialogowym zdarzeń wejścia #InputGestures].
 Oto spis dostępnych poleceń
 - Artykuł
+- Figura
 - grupowanie
 - Karta właściwości
+- Element meni
+- Przycisk przełączania
+- pasek postępu
+- Formuła matematyczna
+- pionowo wyrównany akapit
+- tekst tego samego stylu
+- Tekst różnego stylu
 -
-Zauważ, że istnieją dwie akcje dla każdego polecenia, do przemieszczania w przód albo w tyl w dokumencie, i w celu prawidłowej nawigacji w obu kierunkach, muzisz je ustawić.
 
+Zauważ, że istnieją dwie akcje dla każdego polecenia, do przemieszczania w przód albo w tyl w dokumencie, i w celu prawidłowej nawigacji w obu kierunkach, muzisz je ustawić.
 Na przykład, jeżeli chcesz używać skrótów ``y`` / ``shift+y`` do szybkiego przemieszczania się między kartami właściwości, powinieneś wykonać następujące kroki
 
 + Otwórz okno dialogowe zdarzenia wejścia z któregokolwiek dokumentu HTML.
@@ -1160,6 +1196,8 @@ Gdy kurtyna jest aktywna, niektóre zadania bezpośrednio oparte na tym co widzi
 Z powodu zmiany w API Lupy Systemu Windows, należało zaktualizować Kurtynę, aby wspierała najnowsze wersje systemu Windows.
 Użyj NVDA 2021.2 aby włączyć Kurtynę w systemie Windows 10 21H2 (10.0.19044) lub nowszych.
 Jeśli używasz nowej wersji systemu Windows, dla bezpieczeństwa upewnij się, że przy włączonej Kurtynie ekran jest zupełnie czarny.
+
+Miewajcie na uwadze, że gdy Lupa systemu Windows jest uruchomiona a odwrócone kolory są używane, kurtyne nie można włączyć.
 
 + Rozpoznawanie treści +[ContentRecognition]
 Jeśli autorzy nie dostarczają informacji pomocnej użytkownikom ekranu do odczytania treści, rozmaite narzędzia mogą zostać użyte dla rozpoznania tekstowej treści z graficznego obrazu.
@@ -1659,7 +1697,9 @@ Jeśli chcesz szybko zmienić ustawienia mowy bez wchodzenia do kategorii Mowa o
 | Do następnych ustawień głosu | NVDA+Ctrl+Strzałka w prawo | NVDA+Ctrl+Shift+Strzałka w prawo | Przechodzi do następnego parametru ustawień syntezatora, wracając do pierwszego po przejściu za ostatni. |
 | Do poprzednich ustawień głosu | NVDA+Ctrl+Strzałka w lewo | NVDA+Shift+Ctrl+Strzałka w lewo | Przechodzi do poprzedniego parametru ustawień syntezatora wracając do ostatniego po przejściu przed pierwszy. |
 | Zwiększ parametr ustawień głosu | NVDA+Ctrl+Strzałka w górę | NVDA+Ctrl+Shift+Strzałka w górę | Zwiększa aktualnie wybrany parametr ustawień syntezatora np. przyśpiesza prędkość, wybiera następny głos, zwiększa głośność. |
+| Zwiększ aktualne ustawienie większym krokiem | ``NVDA+control+pageUp`` | ``NVDA+shift+control+pageUp`` | Zwiększa wwartość aktualnego ustawienia większym krokiem. Na przykład, gdy znajdujesz się na ustawieniu głosu, zmienisz je o dwadzieścia głosó wprzód; gdy znajdujesz się na ustawieniach suwaka (prędkość, wysokość, itd) wartość zwiększy się o dwadzieścia procent |
 | Zmniejsz parametr ustawień głosu | NVDA+Ctrl+Strzałka w dół | NVDA+Ctrl+Shift+Strzałka w dół | Zmniejsza aktualnie wybrany parametr ustawień syntezatora. Na przykład: zmniejsza szybkość, wybiera poprzedni głos, zmniejsza głośność. |
+| zmniejsz aktualne ustawienie większym krokiem | ``NVDA+control+pageDown`` | ``NVDA+shift+control+pageDown`` | Zmniejsza wwartość aktualnego ustawienia większym krokiem. Na przykład, gdy znajdujesz się na ustawieniu głosu, zmienisz je o dwadzieścia głosó w tył; gdy znajdujesz się na ustawieniach suwaka (prędkość, wysokość, itd) wartość zmniejszy się o dwadzieścia procent |
 %kc:endInclude
 
 +++ Brajl +++[BrailleSettings]
@@ -1684,6 +1724,18 @@ Między elementami tej listy przełączaj się przy użyciu klawiszy strzałek.
 
 Zwróć uwagę, że ta funkcja jest przydatna tylko wówczas, gdy twój monitor brajlowski posiada klawiaturę w stylu Perkins, a funkcja wprowadzania jest obsługiwana przez sterownik monitora brajlowskiego.
 Jeśli wprowadzanie nie jest możliwe na monitorze posiadającym klawiaturę, będzie to zaznaczone w rozdziale [Obsługiwane monitory brajlowskie #SupportedBrailleDisplays].
+
+%kc:setting
+==== Tryb brajla ====[BrailleMode]
+Skrót: ``NVDA+alt+t``
+
+Ta opcja umożliwia wybór wspośród dostępnych trybów brajla.
+
+W aktualnym momencie dostępne są dwa tryby brajla, "śledzenie kursoru" i "wyświetlanie mowy".
+
+Gdy śledzenie kursoru jest włączone, monitor brajlowski będzie śledził korsor systemu/obiekt nawigatora oraz nawigację obiektową, w zależności od przywiązania brajla.
+
+Gdy "wyświetlanie mowy jest" wybrane, monitor brajlowski wyświetli to, co NVDA wymawia, lub co by wymówił, jeżeli tryb mowy byłby ustawiony na "mowa"
 
 ==== Rozwiń słowo pod kursorem do brajla komputerowego ====[BrailleSettingsExpandToComputerBraille]
 Ta opcja umożliwia wyświetlenie słowa pod kursorem w formie nieskróconego brajla komputerowego.
@@ -1913,6 +1965,88 @@ Ta opcja nie jest dostępna jeżeli uruchomiłeś NVDA z wyłączonym [WASAPI do
 Ten suwak umożliwia ustawienie głośności dźwięków NVDA razem z sygnałami dźwiękowymi.
 To ustawienie odnosi skutek gdy opcja "Używaj WASAPI do wyjścia audio" jest włączona, a opcja "Głośność dźwięków NVDA jest spójna z głośnością  NVDA" jest wyłączona.
 Ta opcja nie jest dostępna jeżeli uruchomiłeś NVDA z wyłączonym [WASAPI do wyjścia audio #WASAPI] z poziomu ustawień zaawansowanych.
+
+==== Czas podtrzymywania urządzenia audio podczas nieaktywności ====[AudioAwakeTime]
+
+To pole edycji określa, jak długo  NVDA będzie trzymała otwarte urządzenie audio po ostatniej wypowiedzi.
+To umożliwia zapobieganie problemów z mową, takich jak odcięte części słów.
+To jest skutkowane tym, że w większości urządzenia Bluetoot wchodzą do trybu uśpienia.
+Ta opcja także może być pomocna w innych przypadkach, takich jak podczas uruchamiania NVDA w wirtualnej maszynie (na przykład Citrix Virtual Desktop), lub na niektórych komputerach przenośnych.
+
+Mniejsze ustawione wartosci mogą spowodować przycinanie mowy częściej, ponieważ urządzenie wchodzi do trybu uśpienia częściej.
+Ustawienie tej wartości na wyższe wartości może spowodować szybsze rozładowanie baterii urządzenia audio, ponieważ dłużej zostaje aktywne, a żaden dźwięk nie jest wysyłany.
+
+
+Aby wyłączyć tę funkcję, ustaw wartość na zero.
+
+==== Tryb podzielonego dźwięku ====[SelectSoundSplitMode]
+
+Funkcja podzielonego dźwięku umożliwia użytkownikom używanie pełnej funkcjonalności ich stereourządzeń.
+Ta funkcja umożliwia  separowanie dźwięku i mowy NVDA w jeden kanał (na przykład lewy) i innych programów w  inny kanał (na przykład prawy).
+Domyślnie funkcja podzielonego dźwięku jest wyłączona, co oznacza, że NVDA i inne programy będą odtwarzały dźwięki w obu kanałach, lweym i prawym.
+Skrótem klawiszowym można przełączać się między brybami mowy:
+%kc:beginInclude
+|| Nazwa | skrót | Opis |
+| Przełączanie moędzy trybami mowy | ``NVDA+alt+s`` | Przełącza między trybami mowy. |
+
+%kc:endInclude
+
+Domyślnie, ty skrótem można przełączać się pomiędzy następujacymi trybami:
+- Wyłączony podział dźwiękowy: NVDA i inne programy będą w obu kanałąch.
+- NVDA w lewym kanale, a inne programy w prawym: NVDA będzie mówiłą w lewym kanale, gdy inne dźwięki będą odtwarzane w prawym kanale.
+- NVDA NVDA w prawym, a inne programy w lewym: NVDA będzie mówiła w prawym kanale, gdy inne programy będą odtwarzały dźwięki w lewym kanale.
+-
+
+Istneije więcej dostępnych zaawansowanych trybów podziału dźwięku dostępnych w liście rozwijanej ustawień.
+Jeżeli chcesz ustawić głośność innych programó oprócz NVDA, używaj [do tego dedykowanych skrótów #OtherAppVolume].
+Miewaj na uwadze,, że tryb podzielonego dźwięku nie działa jako mikser.
+Na przykład, jeżeli program odtwarza utwór w stereo, a tryb podziału dźwięku jest ustawiony na "NVDA w lewym a aplikacje w prawym", wtedy usłyszysz tylko prawy kanał utworu, a lewy kanał utworu będzie wyciszony.
+
+Ta opcja nie jest dostępna, jeżeli [wasapi #WASAPI] w zaawansowanych ustawieniach jest wyłączony.
+
+Miewaj na uwadze, jeżeli NVDA się zawiesi, głośność dźwięków dla poszczególnych programów nie będzie można przywrócić, a te programy będa nadal odtwarzały dźwięki w jednym kanale po zawieszeniu się NVDA.
+Aby rozwiązać ten program, uruchom ponownie NVDA.
+
+==== Dostosowywanie trybów mowy====[CustomizeSoundSplitModes]
+Ta lista z polami wyboru umożliwia zaznaczenie które tryby mowy są dostępne podczas przełączania między nimi używając `skrótu `NVDA+alt+s``.
+Tryby, które są odznaczone nie są dostępne do przełączania.
+Domyślnie, tylko trzy tryby są dostępne.
+- Tryb podziału mowy wyłączony: Dźwięki innych programów i NVDA będą odtworzone w obu kanałach.
+- NVDA w lewym kanale a programy w prawym  kanale.
+- NVDA w prawym kanale a inne programy w lewym.
+-
+
+Miewaj na uwadze, że musisz zaznaczyć conajmniej jeden tryb.
+Ta opcja nie jest dostępna gdy [Wasapi #WASAPI] jest wyłączony w ustawieniach zaawansowanych.
+
+==== Głośność innych aplikacji ====[OtherAppVolume]
+
+Ten suwak umożliwia ustawianie głośności innych aplikacji oprócz NVDA.
+To ustawienie będzie zastosowane, nawet przed uruchomieniem innych aplikacji.
+Ta głośność może być ustawiona globalnie za pomocą następujących skrótów klawiszowych:
+
+%kc:beginInclude
+| Nazwa | Skrót | Opis |
+| Zwiększa głośność innych programów | ``NVDA+alt+pageUp`` | Zgłaśnia inne programy oprócz NVDA. |
+| Zmniejsz głośność innych programów | ``NVDA+alt+pageDown`` | Scisza innych programów oprócz NVDA. |
+
+%kc:endInclude
+
+Ta opcja nie jest dostépna, jeæeli NVDA jest uruchomiona z [wyøáczonym Wasapi #WASAPI] w ustawieniach zaawansowanych.
+
+==== Wyciszanie innych programów ====[MuteApplications]
+
+To pole wyboru umoæliwia wyciszenie wszystkich programów, oprócz NVDA.
+To ustawienie będzie zastosowane nawet gdy  inne programy będą uruchomione po włączeniu tego ustawienia.
+To ustawienie można regulować globalnie, za pomocą następującego skrótu:
+
+%kc:beginInclude
+|| Nazwa | Skrót | Opis |
+| Wycisz,/odcisz inne programy | ``NVDA+alt+delete`` | Wycisza lub odcisza inne programy, oprócz NVDA. |
+
+%kc:endInclude
+
+Ta opcja jest niedostępe gdy NVDA jest włączona z [wyłączonym Wasapi #WASAPI] w ustawieniach zaawansowanych.
 
 +++ Ustawienia widoczności +++[VisionSettings]
 ustawienia widoczności programu NVDA pozwalają na włączanie, wyłączanie i konfigurowanie poszczególnych [ustawień pomocy wizualnych #Vision].
@@ -2317,6 +2451,7 @@ Możemy w ten sposób skonfigurować odczytywanie:
   - Punktów orientacyjnych
   - Artykułów
   - Ramek
+  - Figur i podpisów
   - Gdy element jest klikalny
   -
 -
@@ -2594,6 +2729,11 @@ Włącz określone kategorie tylko, gdy zostaniesz poinstruowany przez programis
 Ta opcja pozwala określić możliwość odtwarzania dźwięku błędu przez NVDA w przypadku zapisanego błędu.
 Wybierając "tylko w wersjach testowych" (domyślnie) spowoduje, że błędy będą odtwarzane tylko w wersjach testowych (alpha, beta lub z wersji uruchomionych z kodu źródłowego).
 Wybierając "tak" umożliwia odtwarzanie dźwięku błędu niezależnie od wersji NVDA.
+
+==== Wyrażenie regularne dla nawigacji po  akapitach ====[TextParagraphRegexEdit]
+
+To ustawienie umożliwia użytkownikom dostosowywanie wyrażenia regularnego dla wykrywania akapitów w trybie czytania.
+Poleceie [nawigacji po akapitach #TextNavigationCommand] szuka akapitów według tego wyrażenia regularnego.
 
 ++ Różne ustawienia ++[MiscSettings]
 Oprócz okna [ustawień NVDA #NVDASettings], podmenu opcje w menu NVDA zawiera kilka innych elementów, omówionych poniżej.
@@ -2923,9 +3063,9 @@ Tak jak przy instalacji lub usuwaniu dodatków, musisz ponownie uruchomić NVDA,
 Możesz także włączać lub wyłączać  więcej dodatków od razu zaznaczając je na karcie włąściwości otkrywaj dodatki, potem aktywując menu kontekstowe na zaznaczeniu i wybierając odpowiednie działanie.
 
 +++ Recenzja dodatków i czytanie recenzji +++[AddonStoreReviews]
-Przed instalacją dodatku, zechcesz przeczytać opinię innych.
-Także, pomocne jest dawanie informacji zwrotnej innym użytkowników o dodatkach, których wypróbowałeś.
-Aby przeczytać recenzje o dodatkach, wybierz dodatek z karty włąściwości otkrywaj dodatki lub do zaktualizowania, i użyj działania "Recenzje społeczności".
+Możesz zechcieć przeczytać recenzje dodatku innych użytkowników, w celu dowiadywania się o jego użyteczności, albo w procesie nauki używania tego dodatku.
+Także pomocne jest dawanie informacji zwrotnych użytkownikom, którzy chcą się dowiedzieć o dodatku.
+Aby przeczytać recenzje dla dodatku, zaznacz go, i użyj działania "Recenzje społeczności".
 To działanie przekierowuje na stronę dyskusji GitHub, na której możesz przeczytać lub napisać recenzję dodatku.
 Miewaj na uwadzę, że ta opcja nie jest zamiennikiem bezpośredniej komunikacji z autorami dodatków.
 Zamiast tego, celem tej funkcji jest dzielenie się informacją zwrotną, która ma pomóc użytkownikom zdecydować się czy dodatek jest użyteczny dla nich, czy nie.
@@ -3488,19 +3628,19 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 | Klawisz control+shift+strzałka w lewo | punkt 2+punkt 8+spacja+f1 |
 | Klawisz control+strzałka w lewo | punkt 2+spacja |
 | Klawisz shift+alt+strzałka w lewo | punkt 2+punkt 7+f1 |
-| Klawisz alt+strzałka w lewo | punkt 2+punkt 7 |
+| ``alt+StrzałkaWLewo`` | ``punkt2+punkt7+spacja`` |
 | Klawisz strzałka w prawo | punkt 6+spacja, prawa strzałka w prawo |
 | Klawisz control+shift+strzałka w prawo | punkt 5+punkt 8+spacja+f1 |
 | Klawisz control+strzałka w prawo | punkt 5+spacja |
 | Klawisz shift+alt+strzałka w prawo | punkt 5+punkt 7+f1 |
-| Klawisz alt+strzałka w prawo | punkt 5+punkt 7 |
+| ``alt+StrzałkaWPrawo`` | ``punkt5+punkt7+spacja`` |
 | Klawisz pageUp | punkt 1+punkt 2+punkt 6+spacja |
 | Klawisz control+pageUp | punkt 1+punkt 2+punkt 6+punkt 8+spacja |
 | Klawisz strzałka w górę | punkt 1+spacja, lewa strzałka w górę |
 | Klawisz control+shift+strzałka w górę | punkt 2+punkt 3+punkt 8+spacja+f1 |
 | Klawisz control+strzałka w górę | punkt 2+punkt 3+spacja |
 | Klawisz shift+alt+strzałka w górę | punkt 2+punkt 3+punkt 7+f1 |
-| Klawisz alt+strzałka w górę | punkt 2+punkt 3+punkt 7 |
+| ``alt+StrzałkaWGórę`` | ``punkt2+punkt3+punkt7+spacja`` |
 | Klawisz shift+strzałka w górę | lewy klawisz przewijania w dół+spacja |
 | Klawisz pageDown | punkt 3+punkt 4+punkt 5+spacja |
 | Klawisz control+pageDown | punkt 3+punkt 4+punkt 5+punkt 8+spacja |
@@ -3508,7 +3648,7 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 | Klawisz control+shift+strzałka w dół | punkt 5+punkt 6+punkt 8+spacja+f1 |
 | Klawisz control+strzałka w dół | punkt 5+punkt 6+spacja |
 | Klawisz shift+alt+strzałka w dół | punkt 5+punkt 6+punkt 7+f1 |
-| Klawisz alt+strzałka w dół | punkt 5+punkt 6+punkt 7 |
+| ``alt+StrzałkaWDół`` | ``punkt5+punkt6+punkt7+spacja`` |
 | Klawisz shift+strzałka w dół | spacja+prawy klawisz przewijania w dół |
 | Klawisz escape | punkt 1+punkt 5+spacja, f4, brailleedge:f1 |
 | Klawisz delete | punkt 1+punkt 3+punkt 5+spacja, punkt 1+punkt 4+punkt 5+spacja |
@@ -4233,7 +4373,12 @@ Tryb bezpieczny wyłącza:
 -
 
 Kopie zainstalowane NVDA zachowują swoją konfigurację i dodatki we folderze ``%APPDATA%\nvda``.
-Aby zapobiec zmianę konfiguracji i dodatków bezpośrednio przez użytkownika, dostęp użytkownikowi musi być zabroniony.
+Aby zapobiec zmianom konfiguracji i dodatków bezpośrednio przez użytkownika, dostęp użytkownikowi musi być zabroniony.
+
+Tryb bezpieczny jest nieefektywny dla przenośnych kopii NVDA.
+To ograniczenie zastosowywane jest także do kopii tymczasowej i instalatora NVDA.
+W środowiskach bezpiecznych, użtkownik, który jest w stanie uruchomić program przenośny jest takim samym ryzykiem bezpieczeństwa niezależnie od trybu bezpieczeństwa.
+Oczekuje się od administratorów systemu ograniczać uruchamianie nieautoryzowanych programów na ich systemach, włączając w to przenośne kopie NVDA.
 
 Użytkownicy NVDA często polegają na zmianie profili konfiguracyjnych w celu ustawienia NVDA według swoich preferencji.
 W to jest włączone także instalowanie dodatków,, sprawdzonych niezależnie od NVDA.
