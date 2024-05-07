@@ -92,7 +92,6 @@ For reference, the following run time dependencies are included in Git submodule
 
 Additionally, the following build time dependencies are included in the miscDeps git submodule: 
 
-* [txt2tags](https://txt2tags.org/), version 2.5
 * xgettext and msgfmt from [GNU gettext](https://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
 
 The following dependencies aren't needed by most people, and are not included in Git submodules:
