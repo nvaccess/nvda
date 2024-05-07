@@ -1,5 +1,19 @@
 # What's New in NVDA
 
+## 2024.3
+
+### Important notes
+
+### New Features
+
+### Bug Fixes
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+#### Deprecations
+
 
 ## 2024.2
 
@@ -4852,4 +4866,3 @@ Major highlights of this release include support for 64 bit editions of Windows;
 * NVDA now asks if it should save configuration and restart if the user has just changed the language in the User Interface Settings Dialog. NVDA must be restarted for the language change to fully take effect.
 * If a synthesizer can not be loaded, when choosing it from the synthesizer dialog, a message box alerts the user to the fact.
 * When loading a synthesizer for the first time, NVDA lets the synthesizer choose the most suitable voice, rate and pitch parameters, rather than forcing it to defaults it thinks are ok. This fixes a problem where Eloquence and Viavoice sapi4 synths start speaking way too fast for the first time.
-
