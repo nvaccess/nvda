@@ -6,6 +6,9 @@
 
 ### New Features
 
+* New key commands:
+  * Added unassigned commands for vertical and horizontal mouse wheel simulation to enhance navigation on web pages and apps with dynamic content such as Dism++. (#16462, @Cary-Rowen)
+
 ### Changes
 
 * The fallback braille input table is now equal to the fallback output table, which is Unified English Braille Code grade 1. (#9863, @JulienCochuyt, @LeonarddeR)
