@@ -395,7 +395,6 @@ def scrollMouseWheel(scrollSteps: int, isVertical: bool = True) -> None:
 	"""
 	if not isinstance(scrollSteps, int):
 		raise TypeError(f"'scrollSteps' should be an integer. Type received: {type(scrollSteps).__name__}")
-		return
 	if scrollSteps == 0:
 		return
 	scrollEvent = winUser.MOUSEEVENTF_WHEEL if isVertical else winUser.MOUSEEVENTF_HWHEEL
@@ -404,8 +403,8 @@ def scrollMouseWheel(scrollSteps: int, isVertical: bool = True) -> None:
 	maxSteps = winUser.WHEEL_DELTA
 	# Decompose the scroll operation into smaller deltas to accommodate applications
 	# that may not process deltas larger than the standard efficiently.
-	while totalSteps > 0:
-		scrollStep = min(totalSteps, maxSteps)
+	for _ in range(0, totalSteps, maxSteps)
+		scrollStep = min(maxSteps, totalSteps)
 		scrollData = sign * scrollStep
 		executeMouseEvent(scrollEvent, 0, 0, scrollData)
 		totalSteps -= scrollStep

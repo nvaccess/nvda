@@ -271,7 +271,7 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_MOUSE
 	)
-	def script_scrollMouseWheelUp(self, gesture):
+	def script_scrollMouseWheelUp(self, gesture: "inputCore.InputGesture") -> None:
 		mouseHandler.scrollMouseWheel(winUser.WHEEL_DELTA, isVertical=True)
 
 	@script(
@@ -281,8 +281,8 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_MOUSE
 	)
-	def script_scrollMouseWheelDown(self, gesture):
-		mouseHandler.scrollMouseWheel(-winUser.WHEEL_DELTA, True)
+	def script_scrollMouseWheelDown(self, gesture: "inputCore.InputGesture") -> None:
+		mouseHandler.scrollMouseWheel(-winUser.WHEEL_DELTA, isVertical=True)
 
 	@script(
 		description=_(
@@ -291,7 +291,7 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_MOUSE
 	)
-	def script_scrollMouseWheelLeft(self, gesture):
+	def script_scrollMouseWheelLeft(self, gesture: "inputCore.InputGesture") -> None:
 		mouseHandler.scrollMouseWheel(-winUser.WHEEL_DELTA, isVertical=False)
 
 	@script(
@@ -301,7 +301,7 @@ class GlobalCommands(ScriptableObject):
 		),
 		category=SCRCAT_MOUSE
 	)
-	def script_scrollMouseWheelRight(self, gesture):
+	def script_scrollMouseWheelRight(self, gesture: "inputCore.InputGesture") -> None:
 		mouseHandler.scrollMouseWheel(winUser.WHEEL_DELTA, isVertical=False)
 
 	@script(
