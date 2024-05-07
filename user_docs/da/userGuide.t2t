@@ -1966,7 +1966,7 @@ Denne skyder lader dig indstille lydstyrken for NVDAs lyde og bip.
 Denne indstilling træder kun i kraft, hvis "Brug WASAPI for lydoutput" er aktiveret og "Lydstyrken af NVDA-lyde følger stemmelydstyrken" er deaktiveret.
 Denne indstilling er ikke tilgængelig, hvis du slår [WASAPI fra som lydoutput #WASAPI] i NVDAs avancerede indstillinger.
 
-==== Tid til at holde lydenheden vågen efter tale ====[AudioAwakeTime]
+==== Tid lydenheden skal holdes i gang, når tale er stoppet ====[AudioAwakeTime]
 
 Denne combo box bestemmer, hvor længe NVDA holder lydenheden aktiv, efter at talen er stoppet.
 Dette giver NVDA mulighed for at undgå visse talefejl som udeladte dele af ord.
@@ -1986,7 +1986,7 @@ Lydopdeling gør det muligt at have NVDA-tale i den ene kanal (f.eks. venstre) o
 Som standard er lydopdeling deaktiveret, hvilket betyder, at alle programmer, herunder NVDA, vil afspille lyde i både venstre og højre kanal.
 En kommando lader dig skifte mellem de forskellige lydopdelingstilstande:
 %kc:beginInclude
-|| Navn | Tawst | Beskrivelse |
+|| Navn | Tast | Beskrivelse |
 | Skift Lydopdelingstilstand | ``NVDA+alt+s`` | Skifter mellem lydopdelingstilstandene. |
 
 %kc:endInclude
@@ -2004,10 +2004,10 @@ For eksempel, hvis et program afspiller et stereo-lydspor, mens lydopdelingen er
 
 Denne indstilling er ikke tilgængelig, hvis du har startet NVDA med [WASAPI deaktiveret for lydudgang #WASAPI] i avancerede indstillinger.
 
-Bemærk venligst, at hvis NVDA går ned, vil den ikke være i stand til at genoprette applikationslydstyrken, og disse applikationer kan stadig udsende lyd kun i én kanal efter NVDA-nedbrud.
+Bemærk venligst, at hvis NVDA går ned, vil den ikke være i stand til at genoprette programmernes lydstyrke, og disse kan stadig udsende lyd i én kanal efter NVDA-nedbrud.
 For at afhjælpe dette, genstart NVDA.
 
-==== Tilpasning af Lydopdelingstilstande ====[CustomizeSoundSplitModes]
+==== Lydopdelingstilstande, der skiftes mellem, når kommandoen til lydopdeling trykkes ====[CustomizeSoundSplitModes]
 Denne liste lader dig vælge, hvilke lydopdelingstilstande der er inkluderet, når der skiftes mellem dem ved hjælp af ``NVDA+alt+s``.
 Tilstande, som ikke er afkrydset, fremkommer ikke.
 Som standard er kun tre tilstande inkluderet.
