@@ -237,7 +237,14 @@ Os comandos reais não serão executados enquanto estiver no modo de ajuda de co
 | Mover para a próxima definição de voz | "NVDA+control+Seta Direita" | "NVDA+shift+control+Seta Direita" | Move para a seguinte definição de voz disponível depois da actual, circulando para a primeira definição de voz, depois de atingir a última |
 | Mover para a definição de voz anterior | "NVDA+control+Seta Esquerda" | "NVDA+shift+control+Seta Esquerda" | Move para a anterior definição de voz disponível depois da actual, circulando para a primeira definição de voz, depois de atingir a última |
 | Aumentar a definição de voz actual | "NVDA+control+Seta Acima" | "NVDA+shift+control+Seta Acima" | aumenta a definição de voz actual. Por exemplo: aumenta a velocidade, escolhe a voz seguinte, aumenta o volume |
+| Aumentar a definição de voz actual por um valor maior | ``NVDA+control+pageUp`` | ``NVDA+shift+control+pageUp`` | aumenta a definição de voz actual por um valor maior. Por exemplo: aumenta a velocidade em 20%, escolhe a voz 20 posições acima, aumenta o volume 20%.  |
 | Diminuir a definição de voz actual | "NVDA+control+Seta Abaixo" | "NVDA+shift+control+Seta Abaixo" | Diminui a definição de voz actual. Ex: diminui a velocidade, escolhe a voz anterior, diminui o volume |
+
+| Diminuir a definição de voz actual por um valor maior | ``NVDA+control+pageUp`` | ``NVDA+shift+control+pageUp`` | Diminui a definição de voz actual por um valor maior. Por exemplo: diminui a velocidade em 20%, escolhe a voz 20 posições abaixo, diminui o volume 20%.  |
+
+Também é possível definir o primeiro ou o último valor da definição da voz actual atribuindo comandos personalizados em  [Definir comandos #InputGestures], na categoria de voz.
+Isto significa que, por exemplo, quando estiver numa definição de taxa, esta será definida para 0 ou 100. Quando estiver numa definição de voz, esta definirá a primeira ou a última voz.
+
 
 +++ Navegação Web +++[WebNavigation]
 A lista completa das teclas de Navegação com uma única letra está na secção [Modo de Navegação #BrowseMode] do guia do utilizador.
@@ -829,6 +836,7 @@ As teclas seguintes, por si mesmas, saltam para o próximo elemento disponível.
 - O: Objecto embutido (reprodutores de áudio e vídeo, diálogos, aplicações, etc)
 - 1 até 6: títulos de 1 até 6 respectivamente
 - a: anotação (comentário, revisão do editor, etc.)
+- ``p``: parágrafo de texto
 - w: erro ortográfico
 -
 Para se mover para o início ou fim de elementos contentores como listas ou tabelas, que contêm outros elementos:
@@ -843,14 +851,42 @@ Se quiser usar esses atalhos, mantendo a possibilidade de usar as teclas de curs
 Para activar e desactivar a navegação por caracter para o documento actual, pressione NVDA+shift+espaço.
 %kc:endInclude
 
-+++ Other navigation commands +++[OtherNavigationCommands]
++++ Comando de navegação de parágrafos de texto +++[TextNavigationCommand]
+
+Pode saltar para o parágrafo de texto seguinte ou anterior pressionando ``p`` ou ``shift+p``.
+Os parágrafos de texto são definidos por um grupo de texto que parece estar escrito em frases completas.
+Isso pode ser útil para encontrar o início de conteúdo legível em várias páginas da Web, como:
+- Sites de notícias;
+- Fóruns;
+- Postagens em blogs.
+-
+
+Esses comandos também podem ser úteis para pular certos tipos de blocos que não são texto, como:
+- Anúncios;
+- Menus;
+- Cabeçalhos
+-
+
+Note, no entanto, que embora o NVDA tente o melhor possível identificar parágrafos de texto, o algoritmo não é perfeito e, às vezes, pode cometer erros.
+Além disso, esse comando é diferente dos comandos de navegação de parágrafo ``control+seta abaixo/seta acima``.
+A navegação de parágrafos de texto só salta entre parágrafos de texto, enquanto os comandos de navegação de parágrafos levam o cursor para o parágrafo anterior/seguinte, independentemente de conterem ou não texto.
+
++++ Outros comandos de navegação +++[OtherNavigationCommands]
 
 Para além dos comandos de navegação por caracter listados acima, o NVDA tem comandos que não têm nenhuma tecla associada.
 Para usar esses comandos, primeiro tem que associar uma tecla usando o [diálogo Definir comandos #InputGestures].
 Eis a lista dos comandos disponíveis:
-- Artigo
-- Agrupamento
-- Separador
+- Figura;
+- Artigo;
+- Agrupamento;
+- Separador;
+- Item de menu;
+- Botão de alternância;
+- Barra de progress;
+- Fórmula matemática;
+- Parágrafos alinhados verticalmente;
+- Texto com o mesmo estilo;
+- Texto com estilo diferente.
 -
 
 Não se esqueça que há dois comandos para cada tipo de elemento, para mover para a frente no documento e para mover para trás no documento, e deve associar um comando a cada para poder navegar rapidamente nas duas direcções.
@@ -1160,6 +1196,8 @@ Quando a Cortina de ecrã está activa algumas tarefas, directamente ligadas ao 
 Devido a alterações na API do Windows Magnification, a  "Cortina de ecrã" teve de ser actualizada para suportar as novas versões do Windows
 Use o NVDA 2021.2 para activar a Cortina de ecrã com o Windows 10 21H2 (10.0.19044) ou mais recentes.
 Para garantir a sua segurança, obtenha confirmação visual de que a Cortina de ecrã funciona corretamente com novas versões do Windows.
+
+Tenha em atenção que enquanto o Windows Magnifier estiver a ser executado e as cores do ecrã invertidas estiverem a ser utilizadas, a cortina de ecrã não pode ser activada.
 
 + Reconhecimento de Conteúdo +[ContentRecognition]
 Quando os autores não disponibilizam informação suficiente para que os utilizadores de leitores de ecrã possam determinar o conteúdo de um objecto, vários métodos podem ser usados para reconhecer o conteúdo de uma imagem.
@@ -1659,7 +1697,9 @@ Se pretender alterar, rapidamente, as configurações de voz, sem ir à secção
 | Mover para a próxima definição de voz | NVDA+control+Seta Direita | NVDA+shift+control+Seta Direita | Move para a seguinte definição de voz disponível depois da actual, circulando para a primeira definição de voz, depois de atingir a última |
 | Mover para a definição de voz anterior | NVDA+control+Seta Esquerda | NVDA+shift+control+Seta Esquerda | Move para a anterior definição de voz disponível depois da actual, circulando para a primeira definição de voz, depois de atingir a última |
 | Aumentar a definição de voz actual | NVDA+control+Seta Acima | NVDA+shift+control+Seta Acima | aumenta a definição de voz actual. Por exemplo: aumenta a velocidade, escolhe a voz seguinte, aumenta o volume |
+| Aumentar a definição de voz actual por um valor maior | ``NVDA+control+pageUp`` | ``NVDA+shift+control+pageUp`` | aumenta a definição de voz actual por um valor maior. Por exemplo: aumenta a velocidade em 20%, escolhe a voz 20 posições acima, aumenta o volume 20%.  |
 | Diminuir a definição de voz actual | NVDA+control+Seta Abaixo | NVDA+shift+control+Seta Abaixo | Diminui a definição de voz actual. Ex: diminui a velocidade, escolhe a voz anterior, diminui o volume |
+| Diminuir a definição de voz actual por um valor maior | ``NVDA+control+pageUp`` | ``NVDA+shift+control+pageUp`` | Diminui a definição de voz actual por um valor maior. Por exemplo: diminui a velocidade em 20%, escolhe a voz 20 posições abaixo, diminui o volume 20%.  |
 %kc:endInclude
 
 +++ Braille +++[BrailleSettings]
@@ -1685,6 +1725,18 @@ Pode mover-se de tabela Braille em tabela Braille, na lista, utilizando as Setas
 Note que esta opção só é útil se o dispositivo Braille tiver um teclado Braille e esta funcionalidade for suportada pelo respectivo driver.
 Se, apesar de ter teclado Braille, a escrita Braille não for suportada pelo dispositivo, isto será declarado na secção [Dispositivos Braille Suportados #SupportedBrailleDisplays].
  
+%kc:setting
+==== Modo Braille ====[BrailleMode]
+Comando: ``NVDA+alt+t``
+
+Esta opção permite-lhe alternar entre os modos Braille disponíveis.
+
+Actualmente, são suportados dois modos braille, "Seguir cursores" e "Apresentar saída de voz".
+
+Quando se selecciona Seguir cursores, o Braille seguirá o foco do sistema ou o cursor de revisão, dependendo do modo de ligação do cursor Braille.
+
+Quando está seleccionada Saída de voz, será mostrado em Braille o que o NVDA fala, ou teria falado se o modo de voz estivesse definido para "falar".
+
 ==== Expandir Para Braille De Computador Palavras Sobre O Cursor ====[BrailleSettingsExpandToComputerBraille]
 Esta opção permite que a palavra que está sob o cursor apareça em Braille de computador não contraído.
 
@@ -1913,6 +1965,88 @@ Esta opção não está disponível se tiver iniciado o NVDA com [WASAPI desacti
 Esta barra deslizante permite-lhe definir o volume dos sons e dos bips do NVDA.
 Esta definição só tem efeito quando "O volume dos sons do NVDA segue o volume da voz" está desactivado.
 Esta opção não está disponível se tiver iniciado o NVDA com [WASAPI desactivado para saída de áudio #WASAPI] nas configurações Avançadas.
+
+==== Tempo para manter o dispositivo de áudio acordado depois de falar ====[AudioAwakeTime]
+
+Esta caixa de edição especifica durante quanto tempo o NVDA mantém o dispositivo de áudio acordado após o fim da fala.
+Esta configuração permite ao NVDA evitar certas falhas na fala, como partes de palavras perdidas.
+Isto pode acontecer devido ao facto de os dispositivos de áudio (especialmente Bluetooth e dispositivos sem fios) entrarem em modo de espera.
+Também é útil noutros casos, como ao executar o NVDA dentro de uma máquina virtual (por exemplo, Citrix Virtual Desktop) ou em determinados portáteis.
+
+Os valores mais baixos podem permitir que o áudio seja cortado com mais frequência, uma vez que um dispositivo pode entrar no modo de espera demasiado cedo, fazendo com que o início da fala seguinte seja cortado.
+Definir um valor demasiado elevado pode fazer com que a bateria do dispositivo de saída de som se descarregue mais rapidamente, uma vez que ele permanece activo durante mais tempo sem ser enviado qualquer som.
+
+
+Para desactivar esta função, é possível colocar o tempo a zero.
+
+==== Divisão de som====[SelectSoundSplitMode]
+
+A funcionalidade de divisão de som permite aos utilizadores utilizar os seus dispositivos de saída estéreo, como auscultadores e altifalantes.
+A divisão de som permite que o discurso do NVDA seja reproduzido num canal (por exemplo, esquerdo) e que todas as outras aplicações reproduzam os seus sons no outro canal (por exemplo, direito).
+Por predefinição, a divisão de som está desactivada, o que significa que todas as aplicações, incluindo o NVDA, reproduzem sons nos canais esquerdo e direito.
+Um comando permite percorrer os vários modos de divisão de som:
+%kc:beginInclude
+|| Nome | Comando | Descrição |
+| Alterna entre os modos de divisão de som | ``NVDA+alt+s`` | Alterna entre os modos de divisão de som |
+
+%kc:endInclude
+
+Por predefinição, este comando alterna entre os seguintes modos:
+- Divisão de som desactivada: tanto o NVDA como as outras aplicações emitem sons para os canais esquerdo e direito;
+- NVDA à esquerda e aplicações à direita: O NVDA falará no canal esquerdo, enquanto outras aplicações reproduzirão sons no canal direito;
+- NVDA à direita e aplicações à esquerda: O NVDA falará no canal direito, enquanto outras aplicações reproduzirão sons no canal esquerdo;
+-
+
+Existem modos de divisão de som mais avançados disponíveis na caixa de combinação de definições do NVDA.
+Se pretender ajustar o volume de todas as aplicações, exceto do NVDA, considere a utilização [dos comandos dedicados #OtherAppVolume].
+Tenha em atenção que a divisão de som não funciona como um misturador.
+Por exemplo, se uma aplicação estiver a reproduzir uma faixa de som estéreo e a divisão de som estiver definida para "NVDA à esquerda e aplicações à direita", apenas ouvirá o canal direito da faixa de som, enquanto o canal esquerdo da faixa de som será silenciado.
+
+Esta opção não está disponível se tiver iniciado o NVDA com [WASAPI desativado para a saída de áudio #WASAPI] nas Definições Avançadas.
+
+Por favor, tenha em atenção que, se o NVDA falhar, não conseguirá restaurar o volume dos sons da aplicação e essas aplicações poderão continuar a emitir som apenas num canal após a falha do NVDA.
+Para atenuar esta situação, reinicie o NVDA.
+
+==== Personalizar modos de divisão de som====[CustomizeSoundSplitModes]
+Esta lista permite selecionar quais os modos de divisão de som que são incluídos quando se alterna entre eles usando ``NVDA+alt+s``.
+Os modos que não estão seleccionados são excluídos.
+Por padrão, apenas três modos são incluídos.
+- Divisão de som desactivada: tanto o NVDA como as aplicações reproduzem sons nos canais esquerdo e direito.
+- NVDA à esquerda e todas as outras aplicações no canal direito.
+- NVDA à direita e todas as outras aplicações no canal esquerdo.
+-
+
+Note que é necessário selecionar pelo menos um modo.
+Esta opção não está disponível se tiver iniciado o NVDA com [WASAPI desactivado para saída de áudio #WASAPI] nas definições avançadas.
+
+==== Volume de outras aplicações ====[OtherAppVolume]
+
+Este selector permite-lhe ajustar o volume de todas as aplicações actualmente em execução que não o NVDA.
+Esta definição de volume aplica-se à saída de som de todas as outras aplicações, mesmo que sejam iniciadas depois de esta definição ter sido alterada.
+Este volume também pode ser controlado através dos seguintes comandos de teclado a partir de qualquer lugar:
+
+%kc:beginInclude
+|| Nome | Comando | Descrição |
+| Aumentar volume das aplicações | ``NVDA+alt+pageUp`` | Aumenta o volume de todas as aplicaçõess, excepto NVDA. |
+| Diminuir volume das aplicações | ``NVDA+alt+pageDown`` | Diminui o volume de todas as aplicaçõess, excepto NVDA. |
+
+%kc:endInclude
+
+Esta opção não está disponível se tiver iniciado o NVDA com [WASAPI desativado para saída de áudio #WASAPI] nas Definições Avançadas.
+
+==== Silenciar outras aplicações ====[MuteApplications]
+
+Esta caixa de verificação permite-lhe silenciar todas as aplicações para além do NVDA.
+Esta definição de silenciamento aplicar-se-á a todas as outras aplicações que emitam som, mesmo que iniciem depois de esta definição ser alterada.
+O seguinte comando de teclado também pode ser utilizado a partir de qualquer lugar
+
+%kc:beginInclude
+|| Nome | Comando | Descrição |
+| Alterna entre silenciar ou não as outras aplicações | ``NVDA+alt+delete`` | Silencia, ou remove o silenciamento, das aplicaçõess excepto o NVDA. |
+
+%kc:endInclude
+
+Esta opção não está disponível se tiver iniciado o NVDA com [WASAPI desativado para saída de áudio #WASAPI] nas Definições Avançadas.
 
 +++ Visão +++[VisionSettings]
 A secção "Visão" das configurações do NVDA permite activar, desactivar e configurar as [Ajudas visuais #Vision].
@@ -2316,6 +2450,7 @@ Pode configurar o anúncio de:
   - Agrupamentos
   - Marcas
   - Artigos
+  - Figuras e legendas
   - Frames
   - Se clicável
   -
@@ -2594,6 +2729,11 @@ Apenas active uma destas categorias se isso for solicitado por um desenvolvedor 
 Esta opção permite especificar se o NVDA reproduz um som de erro quando um erro é registado.
 Seleccionar "Apenas em versões de teste" (padrão)" faz com que o som de erro seja reproduzido pelo NVDA apenas se a versão do NVDA actual for uma versão de teste (alfa, beta ou executada a partir da fonte).
 Seleccionar "Sim" permite activar sons de erro, seja qual for a sua versão actual do NVDA.
+
+==== Expressão regular para comandos de navegação rápida de parágrafos de texto ====[TextParagraphRegexEdit]
+
+Este campo permite aos utilizadores personalizar a expressão regular para detetar parágrafos de texto no modo de navegação.
+O [comando de navegação de parágrafos de texto #TextNavigationCommand] procura parágrafos que correspondam a esta expressão regular.
 
 ++ Outras Opções ++[MiscSettings]
 Para além das [Configurações #NVDASettings], o submenu "Preferências", do menu  do NVDA, contém outros itens, que são detalhados seguidamente.
@@ -3488,19 +3628,19 @@ Por favor, consulte a documentação do seu dispositivo braille para obter a des
 | Teclas Control+Shift+Seta à esquerda | Ponto2+ponto8+Espaço+F1 |
 | Teclas control+Seta à esquerda | Ponto2+Espaço |
 | Teclas Shift+Alt+Seta à esquerda | Ponto2+ponto7+F1 |
-| Teclas Alt+Seta à esquerda | Ponto2+ponto7 |
+| Teclas Alt+Seta à esquerda | Ponto2+ponto7+espaço |
 | Tecla Seta à direita | Ponto6+Espaço, leftSideRightArrow |
 | Teclas Control+Shift+Seta à direita | Ponto5+ponto8+Espaço+F1 |
 | Teclas Control+Seta à direita | Ponto5+Espaço |
 | Teclas Shift+Alt+Seta à direita| Ponto5+ponto7+F1 |
-| Teclas Alt+Seta à direita | Ponto5+ponto7 |
+| Teclas Alt+Seta à direita | Ponto5+ponto7+espaço |
 | Tecla pageUp | Ponto1+ponto2+ponto6+Espaço |
 | Teclas Control+PageUp | Ponto1+ponto2+ponto6+ponto8+Espaço |
 | Tecla Seta acima | Ponto1+Espaço, leftSideseta acima |
 | Teclas Control+Shift+Seta acima | Ponto2+ponto3+ponto8+Espaço+F1 |
 | Teclas Control+Seta acima | Ponto2+ponto3+Espaço |
 | Teclas Shift+Alt+Seta acima | Ponto2+ponto3+ponto7+F1 |
-| Teclas Alt+Seta acima | Ponto2+ponto3+ponto7 |
+| Teclas Alt+Seta acima | Ponto2+ponto3+ponto7+espaço |
 | Teclas Shift+Seta acima | leftSideScrollDown+Espaço |
 | Tecla pageDown | Ponto3+ponto4+ponto5+Espaço |
 | Teclas Control+pageDown | Ponto3+ponto4+ponto5+ponto8+Espaço |
@@ -3508,7 +3648,7 @@ Por favor, consulte a documentação do seu dispositivo braille para obter a des
 | Teclas Control+Shift+Seta abaixo | Ponto5+ponto6+ponto8+Espaço+F1 |
 | Teclas Control+Seta abaixo | Ponto5+ponto6+Espaço |
 | Teclas Shift+Alt+Seta abaixo | ponto5+ponto6+ponto7+F1 |
-| Teclas Alt+Seta abaixo | Ponto5+ponto6+ponto7 |
+| Teclas Alt+Seta abaixo | Ponto5+ponto6+ponto7+espaço |
 | Teclas Shift+Seta abaixo | Espaço+rightSideScrollDown |
 | Tecla Escape | Ponto1+ponto5+Espaço, F4, brailleedge: F1 |
 | Tecla Delete | Ponto1+ponto3+ponto5+Espaço, Ponto1+ponto4+ponto5+Espaço |
@@ -4216,7 +4356,7 @@ O modo seguro do NVDA impede que os utilizadores modifiquem a sua configuração
 
 O NVDA corre em modo seguro quando executado em [ecrãs seguros #SecureScreens], a menos que o "serviceDebug" [parâmetros do sistema #SystemWideParameters] esteja activado.
 Para forçar o NVDA a iniciar sempre em modo seguro, defina o "forceSecureMode" [parâmetros do sistema #SystemWideParameters].
-O NVDA também pode ser iniciado em modo seguro com o "-s" [opção de linha de comando #CommandLineOptions].
+O NVDA também pode ser iniciado em modo seguro com o parâmetro "-s" [de linha de comando #CommandLineOptions].
 
 O modo de segurança desactiva:
 
@@ -4234,6 +4374,11 @@ O modo de segurança desactiva:
 
 As cópias instaladas do NVDA armazenam as suas configurações, incluindo extras, em "%APPDATA%\nvda".
 Para evitar que os utilizadores do NVDA modifiquem as suas configurações ou extras diretamente, o acesso do utilizador a essa pasta também deve ser restrito.
+
+O modo seguro é ineficaz para cópias portáteis do NVDA.
+Esta limitação também se aplica à cópia temporária do NVDA que é executada ao iniciar o instalador.
+Em ambientes seguros, a possibilidade de um utilizador executar um executável portátil representa o mesmo risco de segurança, independentemente do modo seguro.
+Espera-se que os administradores de sistemas restrinjam a execução de software não autorizado nos seus sistemas, incluindo cópias portáteis do NVDA.
 
 Os utilizadores do NVDA geralmente dependem da configuração de seu perfil do NVDA para atender às suas necessidades.
 Isso pode incluir a instalação e configuração de extras personalizados, que devem ser verificados independentemente do NVDA.
