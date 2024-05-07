@@ -554,6 +554,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			size=(self.scaleSize(310), -1),
 		)
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
+		# create a timer to launch search when user stops typing
 		self.filterEditChangingTimer = wx.Timer(self)
 		self.Bind(wx.EVT_TIMER, self.onFilterEditTextReady, self.filterEditChangingTimer)
 
@@ -672,15 +673,17 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			if not obj.HasFocus() or landTo != obj.Selection:
 				obj.Select(landTo)
 				obj.SetFocus()
-			else: #if landTo == obj.Selection:
+			else:
 				# when there is only one result
 				ui.message(_("No other result"))
-		else:
+		else: # landTo is a wx control
 			if isinstance(landTo, wx.TextCtrl):
+				# present selection as when as user moves with tab
 				landTo.SelectAll()
 			if not landTo.HasFocus():
 				landTo.SetFocus()
 			else:
+				# when there is only one result
 				ui.message(_("No other result"))
 
 	def searchGenerator(self):
@@ -732,26 +735,23 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			activeCatPanels.append(catPanel)
 			# instantiate inner generator for selected category
 			gen = recurseChildren(catPanel)
-			# loop as long as there are results
+			# loop as long as there are results in this category
 			while res := next(gen, None):
-				# deactivate/destroy other panels
-#				for oldPanel in activeCatPanels:
-#					oldPanel.onPanelDeactivated()
 				# select and focus category on list, to guarantee scrolling/refresh
 				self._doCategoryChange(catId)
 				self.catListCtrl.Select(catId)
 				self.catListCtrl.Focus(catId)
 				yield res
+			# deactivate old panels
 			for catPanel in activeCatPanels:
 				if catPanel != self.currentCategory:
 					catPanel.onPanelDeactivated()
-			# candidate current category to be deactivated in next loop
-#			activeCatPanels.append(catPanel)
 
 	def searchInLabel(self, label):
 		if not label:
 			return False
 		label = label.replace("&", "").lower()
+		# return True if there is at least one search term in label
 		for term in self.filterList:
 			if term in label:
 				return True
