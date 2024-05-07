@@ -6,6 +6,10 @@
 
 ### New Features
 
+### Changes
+
+* The fallback braille input table is now equal to the fallback output table, which is Unified English Braille Code grade 1. (#9863, @JulienCochuyt, @LeonarddeR)
+
 ### Bug Fixes
 
 * Braille cursor routing is now much more reliable when a line contains one or more Unicode variation selectors or decomposed characters. (#10960, #16477, @mltony, @LeonarddeR)
@@ -15,6 +19,10 @@
 Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 * Fixed NVDA's build system to work properly when using Visual Studio 2022 version 17.10 and above. (#16480, @LeonarddeR)
+* Support for custom braille tables has been added. (#3304, #16208, @JulienCochuyt, @LeonarddeR)
+  * Tables can be provided in the `brailleTables` folder in an add-on package.
+  * Table metadata can be added to an optional `brailleTables` section in the add-on manifest or to a `.ini` file with the same format found in the brailleTables subdirectory of the scratchpad directory.
+  * Please consult the [braille translation tables section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#BrailleTables) for more details.
 
 #### Deprecations
 
