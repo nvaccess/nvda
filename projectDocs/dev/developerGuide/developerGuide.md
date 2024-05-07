@@ -755,9 +755,9 @@ Then the handler needs to be registered - preferably in the constructor of your 
     addonHandler.isCLIParamKnown.register(processArgs)
 ## Packaging Code as NVDA Add-ons {#Addons}
 
-To make it easy for users to share and install plugins and drivers, they can be packaged in to a single NVDA add-on package which the user can then install into a copy of NVDA via the Add-on Store found under Tools in the NVDA menu.
+To make it easy for users to share and install plugins, drivers and braille translation tables, they can be packaged in to a single NVDA add-on package which the user can then install into a copy of NVDA via the Add-on Store found under Tools in the NVDA menu.
 Add-on packages are only supported in NVDA 2012.2 and later.
-An add-on package is simply a standard zip archive with the file extension of "`nvda-addon`" which contains a manifest file, optional install/uninstall code and one or more directories containing plugins and/or drivers.
+An add-on package is simply a standard zip archive with the file extension of "`nvda-addon`" which contains a manifest file, optional install/uninstall code and one or more directories containing plugins, drivers and/or and braille translation tables.
 
 ### Non-ASCII File Names in Zip Archives {#toc34}
 
@@ -819,6 +819,9 @@ The lastTestedNVDAVersion field in particular is used to ensure that users can b
 It allows the add-on author to make an assurance that the add-on will not cause instability, or break the users system.
 When this is not provided, or is less than the current version of NVDA (ignoring minor point updates e.g. 2018.3.1) then the user will be warned not to install the add-on.
 
+The manifest can also specify information regarding the additional braille translation tables provided by the add-on.
+Please refer to the [braille translation tables section](#BrailleTables) later on in this document.
+
 #### An Example Manifest File {#toc37}
     --- start ---
     name = "myTestAddon"
@@ -839,6 +842,7 @@ The following plugins and drivers can be included in an add-on:
 * Braille display drivers: Place them in a brailleDisplayDrivers directory in the archive.
 * Global plugins: Place them in a globalPlugins directory in the archive.
 * Synthesizer drivers: Place them in a synthDrivers directory in the archive.
+* [Braille translation tables](#BrailleTables): Place them in a brailleTables directory in the archive.
 
 ### Optional install / Uninstall code {#toc39}
 
@@ -888,6 +892,49 @@ Users can access documentation for a particular add-on by opening the Add-on Sto
 This will open the file named in the docFileName parameter of the manifest.
 NVDA will search for this file in the appropriate language directories.
 For example, if docFileName is set to readme.html and the user is using English, NVDA will open doc\en\readme.html.
+
+### Braille translation tables {#BrailleTables}
+
+Although NVDA ships with more than a hundred braille translation tables provided by [the liblouis project](https://liblouis.io/) aimed at fitting most needs, it also supports the addition of custom tables.
+Custom tables must be placed in the brailleTables directory of an add-on or subdirectory of the scratchpad directory.
+These tables can either replace standard tables shipped with NVDA or be completely new ones.
+
+When adding a table, some information must be provided such as its display name in the Preferences dialog, whether it supports input and/or output and whether it is for contracted braille.
+When an add-on ships with tables, this information is included in its manifest in the optional brailleTables section.
+For example:
+```
+--- start ---
+[brailleTables]
+[[fr-bfu-tabmod-comp8.utb]]
+displayName = French (unified) 8 dot computer braille - Addition
+contracted = False
+output = True
+input = True
+
+[[no-no-8dot.utb]]
+displayName = Norwegian 8 dot computer braille - Replacement
+contracted = False
+output = True
+input = True
+--- end ---
+```
+
+In the above example, `fr-bfu-tabmod-comp8.utb` is a new table,  while `no-no-8dot.utb` replaces a table that is already included in NVDA.
+Both tables need to be shipped in the brailleTables directory of the add-on.
+It is also possible to include a table in the manifest that is shipped with NVDA but otherwise unavailable for selection in the Preferences dialog.
+In that case, the table does not need to be shipped in the add-on's brailleTables directory.
+
+Providing a custom table, whether it has the same file name as a standard table or a different name, thus requires you to define the table in the add-on's manifest.
+The only exception to this rule applies to tables that are included within other tables.
+While they don't have to be included in the manifest of the add-on, they can only be included from other tables that are part of the same add-on.
+
+Custom tables can also be placed in the brailleTables subdirectory of the scratchpad directory.
+In this case, the table metadata can be placed in a `manifest.ini` file in the root of the scratchpad in the exact same format as the example above.
+Basically, this means that, whether using an add-on or the scratchpad, the requirements and implementation steps are equal.
+Note that a `manifest.ini` file in the scratchpad is only parsed for braille table metadata.
+Other add-on metadata in the file is ignored.
+
+Please refer to the [liblouis documentation](https://liblouis.io/documentation/) for detailed information regarding the braille translation tables format.
 
 ## NVDA Python Console {#PythonConsole}
 

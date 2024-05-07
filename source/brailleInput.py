@@ -1,9 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2012-2021 NV Access Limited, Rui Batista, Babbage B.V.
+# Copyright (C) 2012-2024 NV Access Limited, Rui Batista, Babbage B.V., Julien Cochuyt, Leonard de Ruijter
 
-import os.path
 import time
 from typing import Optional, List, Set
 
@@ -28,8 +27,9 @@ Normally, all that is required is to create and execute a L{BrailleInputGesture}
 as there are built-in gesture bindings for braille input.
 """
 
-#: Table to use if the input table configuration is invalid.
-FALLBACK_TABLE = "en-ueb-g1.ctb"
+FALLBACK_TABLE = config.conf.getConfigValidation(("braille", "inputTable")).default
+"""Table to use if the input table configuration is invalid."""
+
 DOT7 = 1 << 6
 DOT8 = 1 << 7
 #: This bit flag must be added to all braille cells when using liblouis with dotsIO.
@@ -55,17 +55,8 @@ class BrailleInputHandler(AutoPropertyObject):
 	currentModifiers: Set[str]
 
 	def __init__(self):
-		super(BrailleInputHandler,self).__init__()
-		# #6140: Migrate to new table names as smoothly as possible.
-		tableName = config.conf["braille"]["inputTable"]
-		newTableName = brailleTables.RENAMED_TABLES.get(tableName)
-		if newTableName:
-			tableName = config.conf["braille"]["inputTable"] = newTableName
-		try:
-			self._table = brailleTables.getTable(tableName)
-		except LookupError:
-			log.error("Invalid table: %s" % tableName)
-			self._table = brailleTables.getTable(FALLBACK_TABLE)
+		super().__init__()
+		self._table: brailleTables.BrailleTable = brailleTables.getTable(FALLBACK_TABLE)
 		#: A buffer of entered braille cells so that state set by previous cells can be maintained;
 		#: e.g. capital and number signs.
 		self.bufferBraille = []
@@ -90,14 +81,14 @@ class BrailleInputHandler(AutoPropertyObject):
 		self._uncontSentTime = None
 		#: The modifiers currently being held virtually to be part of the next braille input gesture.
 		self.currentModifiers = set()
+		self.handlePostConfigProfileSwitch()
 		config.post_configProfileSwitch.register(self.handlePostConfigProfileSwitch)
 
-	# Provided by auto property: L{_get_table} and L{_set_table}
 	table: brailleTables.BrailleTable
+	"""Type definition for auto prop '_get_table/_set_table'"""
 
-	def _get_table(self):
+	def _get_table(self) -> brailleTables.BrailleTable:
 		"""The translation table to use for braille input.
-		@rtype: L{brailleTables.BrailleTable}
 		"""
 		return self._table
 
@@ -135,8 +126,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		if (not self.currentFocusIsTextObj or self.currentModifiers) and self._table.contracted:
 			mode |= louis.partialTrans
 		self.bufferText = louis.backTranslate(
-			[os.path.join(brailleTables.TABLES_DIR, self._table.fileName),
-			"braille-patterns.cti"],
+			[self._table.fileName, "braille-patterns.cti"],
 			data, mode=mode)[0]
 		newText = self.bufferText[oldTextLen:]
 		if newText:
@@ -185,8 +175,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		data = u"".join([chr(cell | LOUIS_DOTS_IO_START) for cell in cells])
 		oldText = self.bufferText
 		text = louis.backTranslate(
-			[os.path.join(brailleTables.TABLES_DIR, self._table.fileName),
-			"braille-patterns.cti"],
+			[self._table.fileName, "braille-patterns.cti"],
 			data, mode=louis.dotsIO | louis.noUndefinedDots | louis.partialTrans)[0]
 		self.bufferText = text
 		return oldText
@@ -448,13 +437,26 @@ class BrailleInputHandler(AutoPropertyObject):
 		self.flushBuffer()
 
 	def handlePostConfigProfileSwitch(self):
+		# #6140: Migrate to new table names as smoothly as possible.
+		tableName = config.conf["braille"]["inputTable"]
+		newTableName = brailleTables.RENAMED_TABLES.get(tableName)
+		if newTableName:
+			tableName = config.conf["braille"]["inputTable"] = newTableName
 		table = config.conf["braille"]["inputTable"]
 		if table != self._table.fileName:
-			self._table = brailleTables.getTable(table)
+			try:
+				self._table = brailleTables.getTable(tableName)
+			except LookupError:
+				log.error(
+					f"Invalid input table ({tableName}), "
+					f"falling back to default ({FALLBACK_TABLE})."
+				)
+				self._table = brailleTables.getTable(FALLBACK_TABLE)
 
 
 #: The singleton BrailleInputHandler instance.
 handler: Optional[BrailleInputHandler] = None
+
 
 def initialize():
 	global handler
