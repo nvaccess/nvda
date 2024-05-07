@@ -85,11 +85,11 @@ class DiffMatchPatch(DiffAlgo):
 				return []
 			with DiffMatchPatch._lock:
 				self._initialize()
+				oldEncodedText = oldText.encode()
+				newEncodedText = newText.encode()
 				# Sizes are packed as 32-bit ints in native byte order.
 				# Since nvda and nvda_dmp are running on the same Python
 				# platform/version, this is okay.
-				oldEncodedText = oldText.encode()
-				newEncodedText = newText.encode()
 				packedTextLength = struct.pack("=II", len(oldEncodedText), len(newEncodedText))
 				DiffMatchPatch._proc.stdin.write(packedTextLength)
 				DiffMatchPatch._proc.stdin.write(oldEncodedText)
