@@ -547,7 +547,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.filterGenerator = None
 		self.oldFilterEditValue = None
 		# Translators: The label of a text field to search for settings in preferences dialog.
-		filterLabel = pgettext("nvdaSettings", "&Search:")
+		filterLabel = pgettext("nvdaSettings", "Sea&rch:")
 		self.filterEdit = sHelper.addLabeledControl(
 			labelText = filterLabel,
 			wxCtrlClass=wx.TextCtrl,
@@ -648,21 +648,33 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 	def onFilterEditTextReady(self, evt):
 		filterText = self.filterEdit.Value.lower()
+		# separate words to OR search
 		filterList = filterText.split()
 		self.filterList = filterList
 		if not self.filterGenerator:
+			# create generator for current search
 			gen = self.searchGenerator()
+			# use itertools.cycle for circular, cached results
 			self.filterGenerator = itertools.cycle(gen)
 		try:
+			# get result as a tuple, containing
+			# wx obj whose label or value matches at least one search term,
+			# and (eventually same) obj, or index into first obj, where to set focus on
 			obj, landTo = next(self.filterGenerator)
 		except StopIteration:
+			# when no result is found
 			obj = None
 		if not obj:
 			ui.message(_("No result"))
 			return
+		# adjust selection and focus according to wx control
 		if isinstance(landTo, int):
-			obj.Select(landTo)
-			obj.SetFocus()
+			if not obj.HasFocus() or landTo != obj.Selection:
+				obj.Select(landTo)
+				obj.SetFocus()
+			else: #if landTo == obj.Selection:
+				# when there is only one result
+				ui.message(_("No other result"))
 		else:
 			if isinstance(landTo, wx.TextCtrl):
 				landTo.SelectAll()
@@ -717,19 +729,24 @@ class MultiCategorySettingsDialog(SettingsDialog):
 				continue
 			# get category panel instance
 			catPanel = self._getCategoryPanel(catId)
+			activeCatPanels.append(catPanel)
 			# instantiate inner generator for selected category
 			gen = recurseChildren(catPanel)
 			# loop as long as there are results
 			while res := next(gen, None):
 				# deactivate/destroy other panels
-				for oldPanel in activeCatPanels:
-					oldPanel.onPanelDeactivated()
+#				for oldPanel in activeCatPanels:
+#					oldPanel.onPanelDeactivated()
 				# select and focus category on list, to guarantee scrolling/refresh
+				self._doCategoryChange(catId)
 				self.catListCtrl.Select(catId)
 				self.catListCtrl.Focus(catId)
 				yield res
+			for catPanel in activeCatPanels:
+				if catPanel != self.currentCategory:
+					catPanel.onPanelDeactivated()
 			# candidate current category to be deactivated in next loop
-			activeCatPanels.append(catPanel)
+#			activeCatPanels.append(catPanel)
 
 	def searchInLabel(self, label):
 		if not label:
