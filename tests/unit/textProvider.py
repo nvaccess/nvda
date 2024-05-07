@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2017-2023 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2017-2024 NV Access Limited, Leonard de Ruijter
 
 
 """Fake text provider implementation for testing of code which uses TextInfos.
@@ -18,8 +18,6 @@ from typing import Tuple
 
 
 class BasicTextInfo(NVDAObjectTextInfo):
-	# NVDAHelper is not initialized, so we can't use Uniscribe.
-	useUniscribe = False
 	# Most of our code use UTF-16 as internal encoding.
 	# Mimic this behavior, so we can also implicitly test textUtils module code
 	encoding = textUtils.WCHAR_ENCODING
