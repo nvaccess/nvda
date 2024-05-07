@@ -7,12 +7,48 @@ Ses ayırma özelliği eklendi.
 Bu özellik, örneğin NVDA sesinin sol kanaldan gelirken diğer seslerin sağ kanaldan gelmesini sağlıyor.
 
 Sentezleyici ayar zincirini değiştirmeye yarayan kısayollar eklendi. Bu kısayollar kullanılarak ilk ve son ayara atlanabiliyor ve üzerinde bulunulan ayar daha büyük adımlarla arttırılıp azaltılabiliyor.
-Yeni hızlı dolaşım komutları da eklendi. Bu sayede şunlar arasında dolaşmak için kısayollar atanabiliyor: Paragraf, dik hizalanmış paragraf, aynı biçimde metin, farklı biçimde metin, menü öğesi, geçiş düğmesi, aşama çubuğu, aşama çubuğu, figür ve matematik formülü.
+Yeni hızlı dolaşım komutları da eklendi. Bu sayede şunlar arasında dolaşmak için kısayollar atanabiliyor: Paragraf, dik hizalanmış paragraf, aynı biçimde metin, farklı biçimde metin, menü öğesi, geçiş düğmesi, aşama çubuğu, figür ve matematik formülü.
 
 Braille ile ilgili birçok özellik eklendi ve hata düzeltmesi yapıldı.
 "Konuşmayı görüntüle" braille modu eklendi.
 Etkinleştirildiğinde braille ekran tam olarak NVDA'nın konuşacağı metni gösterir.
 BrailleEdgeS2, BrailleEdgeS3 braille cihazları için destek eklendi.
+LibLouis güncellendi, bu güncellemeyle detaylı (büyük harflerin belirtildiği) yeni Belarusça ve Ukraynaca braille tabloları eklendi. Bununla birlikte Yunanca metinlerin okunması için İspanyolca braille tablosu eklendi.
+
+ESpeak güncellendi, Tigrinya dili eklendi.
+
+Thunderbird, Adobe Reader, web tarayıcıları, Nudi ve Geekbench gibi uygulamalar için birçok küçük hata düzeltmesi yapıldı.
+
+== Yeni özellikler ==
+- Yeni tuş komutları:
+  - Tarayıcı kipinde sonraki/önceki metin paragrafına gitmek için yeni hızlı dolaşım komutu ``p``. (#15998, @mltony)
+  - Kısayolu atanmamış yeni hızlı dolaşım komutları eklendi. Bu komutlar şu önceki/sonraki nesnelere gitmek için kullanılır:
+    - Figür (#10826)
+    - Dikey hizalı paragraf (#15999, @mltony)
+    - Menü öğesi (#16001, @mltony)
+    - Geçiş düğmesi (#16001, @mltony)
+    - Aşama çubuğu (#16001, @mltony)
+    - Matematik formülü (#16001, @mltony)
+    - Aynı biçimde metin (#16000, @mltony)
+    - Farklı biçimde metin (#16000, @mltony)
+    -
+- Sentezleyici ayarları zincirinde ilk ve son ayara, ileri ve geri gitmek için komutlar eklendi. (#13768, #16095, @rmcpantoja)
+    - Sentezleyici ayarları zincirinde ilk ve son ayarı ayarlama özelliğinin kısayolu atanmamıştır. (#13768)
+    - üzerinde bulunulan ayarı daha büyük adımlarla arttırıp azaltma (#13768):
+      - Masa üstü: ``NVDA+kontrol+sayfa yukarı`` veya ``NVDA+kontrol+sayfa aşağı``.
+      - Dizüstü: ``NVDA+kontrol+şift+sayfa yukarı`` veya ``NVDA+kontrol+şift+sayfa aşağı``.
+      -
+    -
+  - Figürlerin ve resim yazılarının seslendirilmesini açıp kapatmak için kısayolu atanmamış bir girdi hareketi eklendi. (#10826, #14349)
+  -
+- Braille:
+  - BrailleEdgeS2, BrailleEdgeS3 cihazları için destek eklendi. (#16033, #16279, @EdKweon)
+  - "Konuşmayı görüntüle" braille modu eklendi. (#15898, @Emil-18)
+    - Etkinleştirildiğinde braille ekran tam olarak NVDA'nın konuşacağı metni gösterir.
+- Bu özellik ``NVDA+alt+t`` tuşlarına basarak veya braille ayarları iletişim kutusundan açılıp kapatılabilir.
+    -
+  -
+- Ses ayırma: (#12985, @mltony)
 
 = 2024.1 =
 
