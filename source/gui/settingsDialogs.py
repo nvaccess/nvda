@@ -549,7 +549,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# Translators: The label of a text field to search for settings in preferences dialog.
 		filterLabel = pgettext("nvdaSettings", "Sea&rch:")
 		self.filterEdit = sHelper.addLabeledControl(
-			labelText = filterLabel,
+			labelText=filterLabel,
 			wxCtrlClass=wx.TextCtrl,
 			size=(self.scaleSize(310), -1),
 		)
@@ -666,6 +666,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			# when no result is found
 			obj = None
 		if not obj:
+			# Translators: Message when search in settings gives no result
 			ui.message(_("No result"))
 			return
 		# adjust selection and focus according to wx control
@@ -675,8 +676,9 @@ class MultiCategorySettingsDialog(SettingsDialog):
 				obj.SetFocus()
 			else:
 				# when there is only one result
+				# Translators: Message when search in settings gives no other result
 				ui.message(_("No other result"))
-		else: # landTo is a wx control
+		else:  # landTo is a wx control
 			if isinstance(landTo, wx.TextCtrl):
 				# present selection as when as user moves with tab
 				landTo.SelectAll()
@@ -684,37 +686,38 @@ class MultiCategorySettingsDialog(SettingsDialog):
 				landTo.SetFocus()
 			else:
 				# when there is only one result
+				# Translators: Message when search in settings gives no other result
 				ui.message(_("No other result"))
 
-	def searchGenerator(self):
+	def searchGenerator(self):  # noqa: C901
 		# inner generator
 		# process each item of passed setting panel
 		def recurseChildren(control):
-			if isinstance(control, (wx.Panel, wx.Sizer, wx.StaticBox)): # process items into these containers
+			if isinstance(control, (wx.Panel, wx.Sizer, wx.StaticBox)):  # process items into these containers
 				controlChildren = (c for c in control.Children)
 				for child in controlChildren:
 					yield from recurseChildren(child)
 				return
-			elif isinstance(control, wx.ListBox): # process list and its items
+			elif isinstance(control, wx.ListBox):  # process list and its items
 				controlItems = (i for i in control.Items)
-				for index,item in enumerate(controlItems):
+				for index, item in enumerate(controlItems):
 					# search here, to reduce checked items
 					if control.IsEnabled() and self.searchInLabel(item):
 						yield (control, index)
 				return
-			elif isinstance(control, wx.StaticText): # process label of a wx.TextCtrl
+			elif isinstance(control, wx.StaticText):  # process label of a wx.TextCtrl
 				label = control.GetLabel()
 				sizer = control.ContainingSizer
 				lastSizerChild = sizer.Children[-1].GetWindow()
 				res = (control, lastSizerChild)
-			elif isinstance(control, wx.TextCtrl): # process value of a wx.TextCtrl
+			elif isinstance(control, wx.TextCtrl):  # process value of a wx.TextCtrl
 				label = control.GetValue()
 				res = (control, control)
-			elif isinstance(control, wx.Choice): # process combobox and its current value
+			elif isinstance(control, wx.Choice):  # process combobox and its current value
 				index = control.GetSelection()
 				label = control.GetString(index)
 				res = (control, index)
-			else: # process e.g. wx.CheckBox, wx.Button...
+			else:  # process e.g. wx.CheckBox, wx.Button...
 				label = getattr(control, "Label", "")
 				res = (control, control)
 			if control.IsEnabled() and self.searchInLabel(label):
@@ -763,7 +766,6 @@ class MultiCategorySettingsDialog(SettingsDialog):
 				cls = self.categoryClasses[catId]
 			except IndexError:
 				raise ValueError("Unable to create panel for unknown category ID: {}".format(catId))
-			log.info("Instantiate %s category"%cls.title)
 			panel = cls(parent=self.container)
 			panel.Hide()
 			self.containerSizer.Add(
@@ -857,7 +859,6 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		currentCat = self.currentCategory
 		newIndex = evt.GetIndex()
 		if not currentCat or newIndex != self.categoryClasses.index(currentCat.__class__):
-			log.info("onCategoryChange raised for id %d"%newIndex)
 			self._doCategoryChange(newIndex)
 		else:
 			evt.Skip()
