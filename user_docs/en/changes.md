@@ -15,7 +15,7 @@
 Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 * Fixed NVDA's build system to work properly when using Visual Studio 2022 version 17.10 and above. (#16480, @LeonarddeR)
-* A fixed width font is now used in the log viewer and in the python console so that the cursor remains in the same column during vertical navigation.
+* A fixed width font is now used in Log Viewer and in the NVDA Python Console so that the cursor remains in the same column during vertical navigation.
 It is especially useful to read the error location markers in tracebacks. (#16321,  @CyrilleB79)
 
 #### Deprecations
