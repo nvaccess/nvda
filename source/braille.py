@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2023 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
+# Copyright (C) 2008-2024 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
 # Leonard de Ruijter, Burman's Computer and Education Ltd.
 
 import itertools
@@ -27,6 +27,7 @@ from annotation import _AnnotationRolesT
 import driverHandler
 import pkgutil
 import importlib
+import contextlib
 import ctypes.wintypes
 import threading
 import time
@@ -41,6 +42,7 @@ import config
 from config.configFlags import (
 	ShowMessages,
 	TetherTo,
+	BrailleMode,
 	ReportTableHeaders,
 )
 from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag
@@ -66,6 +68,7 @@ from editableText import EditableText
 
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
+	from speech.types import SpeechSequence
 
 
 roleLabels: typing.Dict[controlTypes.Role, str] = {
@@ -1343,12 +1346,17 @@ class TextInfoRegion(Region):
 	def getTextInfoForBraillePos(self, braillePos):
 		pos = self._rawToContentPos[self.brailleToRawPos[braillePos]]
 		# pos is relative to the start of the reading unit.
-		# Therefore, get the start of the reading unit...
-		dest = self._readingInfo.copy()
-		dest.collapse()
-		# and move pos characters from there.
-		dest.move(textInfos.UNIT_CHARACTER, pos)
-		return dest
+		# Therefore, move pos code points from there.
+		# Note that, as liblouis uses 32 bit encoding internally,
+		# it is really safe to assume that one code point offset is equal to one character within liblouis.
+		try:
+			return self._readingInfo.moveToCodepointOffset(pos)
+		except (ValueError, RuntimeError):
+			log.exception(f"Error in moveToCodepointOffset, falling back to moving by {pos} characters")
+			dest = self._readingInfo.copy()
+			dest.collapse()
+			dest.move(textInfos.UNIT_CHARACTER, pos)
+			return dest
 
 	def routeTo(self, braillePos: int):
 		if self._brailleInputIndStart is not None and self._brailleInputIndStart <= braillePos < self._brailleInputIndEnd:
@@ -2067,8 +2075,19 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.ackTimerHandle = winKernel.createWaitableTimer()
 
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
+		# noqa: F401 avoid module level import to prevent cyclical dependency
+		# between speech and braille
+		from speech.extensions import pre_speech, pre_speechCanceled
+		pre_speech.register(self._showSpeechInBraille)
+		pre_speechCanceled.register(self.clearBrailleRegions)
+
 
 	def terminate(self):
+		# noqa: F401 avoid module level import to prevent cyclical dependency
+		# between speech and braille
+		from speech.extensions import pre_speech, pre_speechCanceled
+		pre_speechCanceled.unregister(self.clearBrailleRegions)
+		pre_speech.unregister(self._showSpeechInBraille)
 		self._disableDetection()
 		if self._messageCallLater:
 			self._messageCallLater.Stop()
@@ -2086,6 +2105,46 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			winKernel.closeHandle(self.ackTimerHandle)
 			self.ackTimerHandle = None
 		louisHelper.terminate()
+
+	# The list containing the regions that will be shown in braille when the speak function is called
+	# and the braille mode is set to speech output
+	_showSpeechInBrailleRegions: list[TextRegion] = []
+
+	def _showSpeechInBraille(self, speechSequence: "SpeechSequence"):
+		if config.conf["braille"]["mode"] == BrailleMode.FOLLOW_CURSORS.value:
+			return
+		_showSpeechInBrailleRegions = self._showSpeechInBrailleRegions
+		regionsText = "".join([i.rawText for i in _showSpeechInBrailleRegions])
+		if len(regionsText) > 100000:
+			return
+		text = " ".join([x for x in speechSequence if isinstance(x, str)])
+		currentRegions = False
+		if _showSpeechInBrailleRegions:
+			text = f" {text}"
+			currentRegions = True
+
+		region = TextRegion(text)
+		region.update()
+		_showSpeechInBrailleRegions.append(region)
+		self.mainBuffer.regions = _showSpeechInBrailleRegions.copy()
+		if not currentRegions:
+			handler.mainBuffer.focus(_showSpeechInBrailleRegions[0])
+		handler.mainBuffer.update()
+		handler.update()
+
+	_suppressClearBrailleRegions: bool = False
+
+	@contextlib.contextmanager
+	def suppressClearBrailleRegions(self, script: inputCore.ScriptT):
+		from globalCommands import commands
+		suppress = script in [commands.script_braille_scrollBack, commands.script_braille_scrollForward]
+		self._suppressClearBrailleRegions = suppress
+		yield
+
+	def clearBrailleRegions(self):
+		if not self._suppressClearBrailleRegions:
+			self._showSpeechInBrailleRegions.clear()
+		self._suppressClearBrailleRegions = False
 
 	def getTether(self):
 		return self._tether
@@ -2385,6 +2444,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			not self.enabled
 			or config.conf["braille"]["showMessages"] == ShowMessages.DISABLED
 			or text is None
+			or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value
 		):
 			return
 		if self.buffer is self.messageBuffer:
@@ -2427,7 +2487,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.update()
 
 	def handleGainFocus(self, obj: "NVDAObject", shouldAutoTether: bool = True) -> None:
-		if not self.enabled:
+		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			return
 		if objectBelowLockScreenAndWindowsIsLocked(obj):
 			return
@@ -2461,8 +2521,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.update()
 		# Last region should receive focus.
 		self.mainBuffer.focus(region)
-		self.scrollToCursorOrSelection(region)
-		if self.buffer is self.mainBuffer:
+		if isinstance(region, TextInfoRegion):
+			self.scrollToCursorOrSelection(region)
+		elif self.buffer is self.mainBuffer:
 			self.update()
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
@@ -2472,7 +2533,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			obj: "NVDAObject",
 			shouldAutoTether: bool = True
 	) -> None:
-		if not self.enabled:
+		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			return
 		if objectBelowLockScreenAndWindowsIsLocked(obj):
 			return
@@ -2517,7 +2578,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.mainBuffer.restoreWindow()
 			if scrollTo is not None:
 				self.scrollToCursorOrSelection(scrollTo)
-			if self.buffer is self.mainBuffer:
+			elif self.buffer is self.mainBuffer:
 				self.update()
 			elif (
 				self.buffer is self.messageBuffer
@@ -2582,7 +2643,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._regionsPendingUpdate.add(region)
 
 	def handleReviewMove(self, shouldAutoTether=True):
-		if not self.enabled:
+		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			return
 		reviewPos = api.getReviewPosition()
 		if shouldAutoTether:

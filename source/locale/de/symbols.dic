@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (c) 2011-2023 NVDA Contributors
+# Copyright (c) 2011-2024 NVDA Contributors
 # This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -11,7 +11,9 @@ complexSymbols:
 # Phrasenenden
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
-# Andere
+# Reihe von Punkten zur visuellen Darstellung, z. B. im Inhaltsverzeichnis
+Füllzeichen .	\.{4,}
+# Weitere
 Dezimaltrennzeichen	(?<![^\d -])\,(?=\d)
 ' im Wort	(?<=[^\W_])['’]
 - im Wort	(?<=[^\W_])[-]
@@ -28,6 +30,7 @@ symbols:
 ? sentence ending	Fragezeichen	all	always
 ; phrase ending	Semikolon	most	always
 : phrase ending	Doppelpunkt	most	always
+Füllzeichen .	Gepunktete Linie	all	always
 Dezimaltrennzeichen		none	always
 ' im Wort	Apostroph	all	norep
 Negative Ziffer	Minus	none	norep
@@ -48,6 +51,7 @@ Datumstrennzeichen	Punkt	none	norep
 
 # Standardzeichensetzung/-symbole
 !	Ausrufezeichen	all
+！	Breites Ausrufezeichen	all
 "	Anführungszeichen	most
 \#	Nummernzeichen	some
 $	Dollar	all	norep
@@ -70,12 +74,16 @@ $	Dollar	all	norep
 ،	arabisches Komma	all	always
 -	Strich	most	always
 .	Punkt	some
+．	Breiter Satzpunkt	some
 /	Schrägstrich	some
 :	Doppelpunkt	most	norep
+：	Breiter Doppelpunkt	most	norep
 ;	Semikolon	most
 ؛	arabisches Semikolon	most
+；	Breites Semikolon	most
 ?	Fragezeichen	all
 ؟	arabisches Fragezeichen	all
+？	Breites Fragezeichen	all
 @	ät	some
 [	Eckige Klammer auf	most
 ]	Eckige Klammer zu	most
@@ -131,7 +139,7 @@ _	Unterstrich	most
 ♣	Schwarzes Kreuz	some
 ♦	Karo	some
 ◆	Schwarzes Karo	some
-§	Paragraf	all
+§	Paragraf	some
 °	Grad	some
 «	Doppelt gewinkelte Klammer auf	most	always
 »	Doppelt gewinkelte Klammer zu	most	always

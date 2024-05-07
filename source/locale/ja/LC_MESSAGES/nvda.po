@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-06 02:06+0000\n"
-"PO-Revision-Date: 2024-03-06 02:37\n"
+"POT-Creation-Date: 2024-03-19 19:59+0000\n"
+"PO-Revision-Date: 2024-03-19 23:39\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -10796,7 +10796,7 @@ msgstr "いいえ(&N)"
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
-#: gui\addonGui.py:110 gui\nvdaControls.py:258
+#: gui\addonGui.py:110 gui\nvdaControls.py:261
 msgid "OK"
 msgstr "OK"
 
@@ -11490,7 +11490,7 @@ msgid "Log is unavailable"
 msgstr "ログが使用できません"
 
 #. Translators: A cancel button on a message dialog.
-#: gui\nvdaControls.py:267
+#: gui\nvdaControls.py:270
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -11498,7 +11498,7 @@ msgstr "キャンセル"
 #. Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'
 #. The placeholder {} is replaced with the label of the option which describes current default behavior
 #. in NVDA. EG "Default (Yes)".
-#: gui\nvdaControls.py:538
+#: gui\nvdaControls.py:541
 msgid "Default ({})"
 msgstr "既定の設定({})"
 
@@ -13965,25 +13965,25 @@ msgstr "列の見出しの設定。1回押すと現在のセルとその右側�
 #: NVDAObjects\IAccessible\winword.py:236
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr "行 {rowNumber} 列 {columnNumber} を列見出しの開始に設定"
+msgstr "{rowNumber}行{columnNumber}列を列見出しの開始に設定 "
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:239
 #, python-brace-format
 msgid "Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr "行 {rowNumber} 列 {columnNumber} は列見出しの開始に設定済み"
+msgstr "{rowNumber}行{columnNumber}列は列見出しの開始に設定済み "
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:243
 #, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
-msgstr "行 {rowNumber} 列 {columnNumber} の列見出しの設定をクリア"
+msgstr "{rowNumber}行{columnNumber}列の列見出しの設定をクリア "
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:246
 #, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
-msgstr "行 {rowNumber} 列 {columnNumber} が列見出しから見つかりません"
+msgstr "{rowNumber}行{columnNumber}列が列見出しから見つかりません "
 
 #. Translators: The label of a shortcut of NVDA.
 #: NVDAObjects\IAccessible\winword.py:252
@@ -13994,25 +13994,25 @@ msgstr "行の見出しの設定。1回押すと現在のセルとその下側�
 #: NVDAObjects\IAccessible\winword.py:268
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr "行 {rowNumber} 列 {columnNumber} を行見出しに設定"
+msgstr "{rowNumber}行{columnNumber}列を行見出しに設定 "
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:271
 #, python-brace-format
 msgid "Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr "行 {rowNumber} 列 {columnNumber} は行見出しの開始に設定済み"
+msgstr "{rowNumber}行{columnNumber}列は行見出しの開始に設定済み "
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:275
 #, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
-msgstr "行 {rowNumber} 列 {columnNumber} の行見出しの設定をクリア"
+msgstr "{rowNumber}行{columnNumber}列の行見出しの設定をクリア "
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:278
 #, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
-msgstr "行 {rowNumber} 列 {columnNumber} が行見出しから見つかりません"
+msgstr "{rowNumber}行{columnNumber}列が行見出しから見つかりません "
 
 #. Translators: a description for a script
 #. Translators: a description for a script that reports the comment at the caret.
@@ -16037,21 +16037,21 @@ msgstr "レベル%s"
 #: speech\speech.py:1969
 #, python-brace-format
 msgid "with {rowCountTranslation} and {colCountTranslation}"
-msgstr "{rowCountTranslation} と {colCountTranslation} で"
+msgstr "{rowCountTranslation}{colCountTranslation} "
 
 #. Translators: Speaks number of columns (example output: with 4 columns).
 #: speech\speech.py:1975
 #, python-format
 msgid "with %s column"
 msgid_plural "with %s columns"
-msgstr[0] "%s 列で"
+msgstr[0] "%s列 "
 
 #. Translators: Speaks number of rows (example output: with 2 rows).
 #: speech\speech.py:1978
 #, python-format
 msgid "with %s row"
 msgid_plural "with %s rows"
-msgstr[0] "%s 行で"
+msgstr[0] "%s行 "
 
 #. Translators: Sub-part of the compound string to speak number of rows and columns in a table.
 #. Example: If the full compound string is "table with 3 rwos and 2 columns", this substring is "3 rows".
@@ -16059,7 +16059,7 @@ msgstr[0] "%s 行で"
 #, python-brace-format
 msgid "{rowCount} row"
 msgid_plural "{rowCount} rows"
-msgstr[0] "{rowCount} 行"
+msgstr[0] "{rowCount}行 "
 
 #. Translators: Sub-part of the compound string to speak number of rows and columns in a table.
 #. Example: If the full compound string is "table with 3 rwos and 2 columns", this substring is "2 columns".
@@ -16067,7 +16067,7 @@ msgstr[0] "{rowCount} 行"
 #, python-brace-format
 msgid "{columnCount} column"
 msgid_plural "{columnCount} columns"
-msgstr[0] "{columnCount} 列"
+msgstr[0] "{columnCount}列 "
 
 #. Translators: Number of items in a list (example output: list with 5 items).
 #: speech\speech.py:2182
@@ -16116,7 +16116,7 @@ msgstr[0] "%s列"
 #: speech\speech.py:2424
 #, python-brace-format
 msgid "column {columnNumber}"
-msgstr "列 {columnNumber}"
+msgstr "{columnNumber}列 "
 
 #: speech\speech.py:2430
 msgid "continuous section break"
@@ -16208,7 +16208,7 @@ msgstr "網掛け {pattern}"
 #: speech\speech.py:2547
 #, python-format
 msgid "line %s"
-msgstr "行%s"
+msgstr "%s行 "
 
 #. Translators: Reported when text is no longer marked as having been inserted.
 #: speech\speech.py:2557
@@ -16423,7 +16423,7 @@ msgstr "テーブルの外"
 #: speech\speech.py:2837
 #, python-brace-format
 msgid "table with {columnCountText} and {rowCountText}"
-msgstr "{columnCountText} と {rowCountText} のテーブル"
+msgstr "{columnCountText}{rowCountText} のテーブル"
 
 #. Translators: name of the default espeak varient.
 #: synthDrivers\_espeak.py:388
