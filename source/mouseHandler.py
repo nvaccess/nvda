@@ -403,7 +403,7 @@ def scrollMouseWheel(scrollSteps: int, isVertical: bool = True) -> None:
 	maxSteps = winUser.WHEEL_DELTA
 	# Decompose the scroll operation into smaller deltas to accommodate applications
 	# that may not process deltas larger than the standard efficiently.
-	for _ in range(0, totalSteps, maxSteps)
+	for _ in range(0, totalSteps, maxSteps):
 		scrollStep = min(maxSteps, totalSteps)
 		scrollData = sign * scrollStep
 		executeMouseEvent(scrollEvent, 0, 0, scrollData)
