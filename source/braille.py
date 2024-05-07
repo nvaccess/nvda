@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2023 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
+# Copyright (C) 2008-2024 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
 # Leonard de Ruijter, Burman's Computer and Education Ltd.
 
 import itertools
@@ -1346,12 +1346,17 @@ class TextInfoRegion(Region):
 	def getTextInfoForBraillePos(self, braillePos):
 		pos = self._rawToContentPos[self.brailleToRawPos[braillePos]]
 		# pos is relative to the start of the reading unit.
-		# Therefore, get the start of the reading unit...
-		dest = self._readingInfo.copy()
-		dest.collapse()
-		# and move pos characters from there.
-		dest.move(textInfos.UNIT_CHARACTER, pos)
-		return dest
+		# Therefore, move pos code points from there.
+		# Note that, as liblouis uses 32 bit encoding internally,
+		# it is really safe to assume that one code point offset is equal to one character within liblouis.
+		try:
+			return self._readingInfo.moveToCodepointOffset(pos)
+		except (ValueError, RuntimeError):
+			log.exception(f"Error in moveToCodepointOffset, falling back to moving by {pos} characters")
+			dest = self._readingInfo.copy()
+			dest.collapse()
+			dest.move(textInfos.UNIT_CHARACTER, pos)
+			return dest
 
 	def routeTo(self, braillePos: int):
 		if self._brailleInputIndStart is not None and self._brailleInputIndStart <= braillePos < self._brailleInputIndEnd:
@@ -2638,8 +2643,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.update()
 		# Last region should receive focus.
 		self.mainBuffer.focus(region)
-		self.scrollToCursorOrSelection(region)
-		if self.buffer is self.mainBuffer:
+		if isinstance(region, TextInfoRegion):
+			self.scrollToCursorOrSelection(region)
+		elif self.buffer is self.mainBuffer:
 			self.update()
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
@@ -2694,7 +2700,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.mainBuffer.restoreWindow()
 			if scrollTo is not None:
 				self.scrollToCursorOrSelection(scrollTo)
-			if self.buffer is self.mainBuffer:
+			elif self.buffer is self.mainBuffer:
 				self.update()
 			elif (
 				self.buffer is self.messageBuffer
