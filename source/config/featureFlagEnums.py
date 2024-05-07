@@ -100,6 +100,25 @@ class ReviewRoutingMovesSystemCaretFlag(DisplayStringEnum):
 	ALWAYS = enum.auto()
 
 
+class SentenceReconstructionFlag(DisplayStringEnum):
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: Sentence reconstruction mode
+			SentenceReconstructionFlag.NEVER: _("Never reconstruct sentences across paragraphs"),
+			# Translators: Sentence reconstruction mode
+			SentenceReconstructionFlag.SAME_STYLE_PARAGRAPHS: _("Reconstruct sentences across same style paragraphs"),
+			# Translators: Sentence reconstruction mode
+			SentenceReconstructionFlag.ANY_PARAGRAPHS: _("Reconstruct sentences across any paragraphs"),
+		}
+
+	DEFAULT = enum.auto()
+	NEVER = enum.auto()
+	SAME_STYLE_PARAGRAPHS = enum.auto()
+	ANY_PARAGRAPHS = enum.auto()
+
+
+
 class WindowsTerminalStrategyFlag(DisplayStringEnum):
 	"""
 	A feature flag for defining how new text is calculated in Windows Terminal

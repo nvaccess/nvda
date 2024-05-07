@@ -594,8 +594,8 @@ NVDA provides the following key commands in relation to the system caret:
 | Report text formatting | NVDA+f | NVDA+f | Reports the formatting of the text where the caret is currently situated. Pressing twice shows the information in browse mode |
 | Report link destination | ``NVDA+k`` | ``NVDA+k`` | Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review |
 | Report caret location | NVDA+numpadDelete | NVDA+delete | Reports information about the location of the text or object at the position of system caret. For example, this might include the percentage through the document, the distance from the edge of the page or the exact screen position. Pressing twice may provide further detail. |
-| Next sentence | alt+downArrow | alt+downArrow | Moves the caret to the next sentence and announces it. (only supported in Microsoft Word and Outlook) |
-| Previous sentence | alt+upArrow | alt+upArrow | Moves the caret to the previous sentence and announces it. (only supported in Microsoft Word and Outlook) |
+| Next sentence | alt+downArrow | alt+downArrow | Moves the caret to the next sentence and announces it. |
+| Previous sentence | alt+upArrow | alt+upArrow | Moves the caret to the previous sentence and announces it. |
 
 When within a table, the following key commands are also available:
 || Name | Key | Description |
@@ -2501,6 +2501,26 @@ Note that this paragraph style cannot be used in Microsoft Word or Microsoft Out
 -
 
 You may toggle through the available paragraph styles from anywhere by assigning a key in the [Input Gestures dialog #InputGestures].
+
+==== Sentence reconstruction = ====[SentenceReconstruction]
+
+|| . {.hideHeaderRow} | . |
+| Options | Default (Reconstruct across same style paragraphs), Reconstruct across same style paragraphs, Never reconstruct sentences across paragraphs, Reconstruct sentences across any paragraphs|
+| Default | Reconstruct across same style paragraphs |
+
+
+This combo box allows you to select whether NVDA will try to identify and reconstruct sentences spanning across multiple paragraphs when navigating by sentence via``alt+upArrow`` and ``alt+downArrow``.
+Sentence reconstruction comes in handy in two typical use cases:
+- In most Most PDF files text is incorrectly split into paragraphs. Every line typically denotes a paragraph and thus most sentences span many adjacent paragraphs and in order to identify complete sentences NVDA must look into adjacent paragraphs.
+- Many email clients send emails broken up into lines, where each line also appears as a paragraph.
+-
+
+The available sentence reconstruction modes are:
+- Reconstruct sentences across same style paragraphs: NVDA will analyze preceding and following paragraphs only if they look visually similar.
+This style works best in most use cases.
+- Never reconstruct sentences across paragraphs: NVDA will never reconstruct sentences that span into adjacent paragraphs.
+- Reconstruct sentences across any paragraphs: NVDA will always attempt to reconstruct sentences spanning across paragraphs, even if paragraphs are of different style.
+-
 
 +++ Windows OCR Settings +++[Win10OcrSettings]
 The settings in this category allow you to configure [Windows OCR #Win10Ocr].

@@ -65,6 +65,7 @@ import locationHelper
 import ui
 import winVersion
 import NVDAObjects
+from documentNavigation import sentenceNavigation
 
 
 paragraphIndentIDs = {
@@ -899,8 +900,13 @@ class UIATextInfo(textInfos.TextInfo):
 		return self._getBoundingRectsFromUIARange(self._rangeObj)
 
 	def expand(self, unit: str) -> None:
-		UIAUnit=UIAHandler.NVDAUnitsToUIAUnits[unit]
-		self._rangeObj.ExpandToEnclosingUnit(UIAUnit)
+		if unit == textInfos.UNIT_SENTENCE:
+			context = sentenceNavigation.SentenceContext(self)
+			sentence = context.moveSentence(0)
+			self._rangeObj = sentence._rangeObj
+		else:
+			UIAUnit = UIAHandler.NVDAUnitsToUIAUnits[unit]
+			self._rangeObj.ExpandToEnclosingUnit(UIAUnit)
 
 	def move(
 			self,
@@ -908,17 +914,52 @@ class UIATextInfo(textInfos.TextInfo):
 			direction: int,
 			endPoint: Optional[str] = None,
 	):
-		UIAUnit=UIAHandler.NVDAUnitsToUIAUnits[unit]
-		if endPoint=="start":
-			res=self._rangeObj.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_Start,UIAUnit,direction)
-		elif endPoint=="end":
-			res=self._rangeObj.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_End,UIAUnit,direction)
+		if unit == textInfos.UNIT_SENTENCE:
+			if direction == 0:
+				return 0
+			endPointInfo = self.copy()
+			if endPoint == "start":
+				endPointInfo.collapse()
+			elif endPoint == "end":
+				endPointInfo.collapse(end=True)
+			if direction > 0:
+				iteration = range(direction)
+				direction = 1
+			else:
+				iteration = range(-direction)
+				direction = -1
+			result = 0
+			for i in iteration:
+				context = sentenceNavigation.SentenceContext(endPointInfo)
+				sentence = context.moveSentence(direction)
+				if sentence is not None:
+					result += direction
+					endPointInfo = sentence
+				else:
+					break
+			if result == 0:
+				return 0
+			endPointInfo.collapse()
+			if endPoint == "start":
+				self.setEndPoint(endPointInfo, "startToStart")
+			elif endPoint == "end":
+				self.setEndPoint(endPointInfo, "endToEnd")
+			else:
+				self._rangeObj = endPointInfo._rangeObj
+			return result
 		else:
-			res=self._rangeObj.Move(UIAUnit,direction)
-		#Some Implementations of Move and moveEndpointByUnit return a positive number even if the direction is negative
-		if direction<0 and res>0:
-			res=0-res
-		return res
+			UIAUnit = UIAHandler.NVDAUnitsToUIAUnits[unit]
+			if endPoint == "start":
+				res = self._rangeObj.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_Start, UIAUnit, direction)
+			elif endPoint == "end":
+				res = self._rangeObj.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_End, UIAUnit, direction)
+			else:
+				res = self._rangeObj.Move(UIAUnit, direction)
+			# Some Implementations of Move and moveEndpointByUnit return a positive number even if the direction is
+			# negative
+			if direction < 0 and res > 0:
+				res = 0 - res
+			return res
 
 	def copy(self):
 		return self.__class__(self.obj,None,_rangeObj=self._rangeObj)

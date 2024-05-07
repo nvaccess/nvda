@@ -56,6 +56,7 @@ import gui.contextHelp
 from abc import ABCMeta, abstractmethod
 import globalVars
 from typing import Optional
+from documentNavigation.sentenceNavigation import getSentenceStopRegex
 
 
 def reportPassThrough(treeInterceptor,onlyIfChanged=True):
@@ -473,12 +474,14 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		if itemType=="notLinkBlock":
 			iterFactory=self._iterNotLinkBlock
 		elif itemType == "textParagraph":
-			punctuationMarksRegex = re.compile(
-				config.conf["virtualBuffers"]["textParagraphRegex"],
-			)
+			punctuationMarksRegex = getSentenceStopRegex()
 
 			def paragraphFunc(info: textInfos.TextInfo) -> bool:
-				return punctuationMarksRegex.search(info.text) is not None
+				# sentence regex always matches beginning and end of string. We add some words at the end to test
+				# whether there is third match in the middle, that would be suggestive of a complete sentence.
+				text = info.text + " traiiling word"
+				matches = punctuationMarksRegex.findall(text)
+				return len(matches) >= 3
 
 			def iterFactory(direction: str, pos: textInfos.TextInfo) -> Generator[TextInfoQuickNavItem, None, None]:
 				return self._iterSimilarParagraph(
@@ -1680,6 +1683,10 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	currentExpandedControl=None #: an NVDAObject representing the control that has just been expanded with the collapseOrExpandControl script.
 
 	def script_collapseOrExpandControl(self, gesture: inputCore.InputGesture):
+		states = self.currentNVDAObject.states
+		if controlTypes.State.COLLAPSED not in states and controlTypes.State.EXPANDED not in states:
+			direction = 1 if gesture.mainKeyName == "downArrow" else -1
+			return self._caretMovementScriptHelper(gesture, textInfos.UNIT_SENTENCE, direction)
 		if not config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
 			self._focusLastFocusableObject()
 			# Give the application time to focus the control.
