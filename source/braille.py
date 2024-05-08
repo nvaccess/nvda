@@ -2560,10 +2560,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.update()
 		# Last region should receive focus.
 		self.mainBuffer.focus(region)
-		if isinstance(region, TextInfoRegion):
-			self.scrollToCursorOrSelection(region)
-		elif self.buffer is self.mainBuffer:
-			self.update()
+		if self.buffer is self.mainBuffer:
+			if isinstance(region, TextInfoRegion):
+				self.scrollToCursorOrSelection(region)
+			else:
+				self.update()
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
 
@@ -2615,12 +2616,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 					region.pendingCaretUpdate = False
 			self.mainBuffer.update()
 			self.mainBuffer.restoreWindow()
-			if scrollTo is not None:
-				if self.buffer is self.messageBuffer:
-					self._dismissMessage(shouldUpdate=False)
-				self.scrollToCursorOrSelection(scrollTo)
-			elif self.buffer is self.mainBuffer:
-				self.update()
+			if self.buffer is self.mainBuffer:
+				if scrollTo is not None:
+					self.scrollToCursorOrSelection(scrollTo)
+				else:
+					self.update()
 			elif (
 				self.buffer is self.messageBuffer
 				and keyboardHandler.keyCounter > self._keyCountForLastMessage
