@@ -61,7 +61,7 @@ def msWord_getCustomAttributeValue(
 				ra.logRuntimeMessage("extendedTextRangePattern is null")
 				ra.halt()
 			with ra.elseBlock():
-				ra.logRuntimeMessage("got extendedTextRangePattern ")
+				ra.logRuntimeMessage("got extendedTextRangePattern")
 				remoteExtendedTextRangePattern = remoteResult.asType(RemoteExtensionTarget)
 				with ra.ifBlock(
 					remoteExtendedTextRangePattern.isExtensionSupported(guid_msWord_getCustomAttributeValue)

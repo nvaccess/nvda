@@ -65,7 +65,7 @@ class LocalExecutor(operation.Executor):
 	_instructionCounter = 0
 	_maxInstructions: int
 
-	def __init__(self, maxInstructions=10000):
+	def __init__(self, maxInstructions: int = 10000):
 		self._maxInstructions = maxInstructions
 		self._registers = {}
 		self._requestedResults = set()
@@ -86,7 +86,7 @@ class LocalExecutor(operation.Executor):
 	def fetchRegisterValue(self, operandId: lowLevel.OperandId) -> object:
 		return self._registers[operandId]
 
-	def _operationStatusFromException(self, e: Exception):
+	def _operationStatusFromException(self, e: Exception) -> int:
 		if isinstance(e, COMError):
 			return e.hresult
 		elif isinstance(e, ZeroDivisionError):

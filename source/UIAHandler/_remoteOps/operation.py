@@ -83,7 +83,7 @@ class OperationException(RuntimeError):
 
 
 class ExecutionFailureException(OperationException):
-		pass
+	pass
 
 
 class MalformedBytecodeException(OperationException):
@@ -166,7 +166,7 @@ class Operation:
 			self,
 			enableCompiletimeLogging: bool = False,
 			enableRuntimeLogging: bool = False,
-			localMode=False
+			localMode: bool = False
 	):
 		self._compiletimeLoggingEnabled = enableCompiletimeLogging
 		self._runtimeLoggingEnabled = enableRuntimeLogging
@@ -300,10 +300,10 @@ class Operation:
 
 	def _dumpCompiletimeLog(self):
 		log.info(
-			f"Dumping instructions:\n"
+			"Dumping instructions:\n"
 			"--- Begin ---\n"
 			f"{self._rob.dumpInstructions()}"
-			f"--- End ---"
+			"--- End ---"
 		)
 
 	def _executeUntilSuccess(self, maxTries: int) -> Generator[ExecutionResult, None, None]:
@@ -329,10 +329,10 @@ class Operation:
 				f"Error occured on execution try {self._executionCount}"
 			)
 			e.add_note(
-				f"Dumping instructions:\n"
+				"Dumping instructions:\n"
 				"--- Begin ---\n"
 				f"{self._rob.dumpInstructions()}"
-				f"--- End ---"
+				"--- End ---"
 			)
 			raise
 

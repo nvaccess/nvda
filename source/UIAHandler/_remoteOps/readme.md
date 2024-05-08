@@ -118,7 +118,8 @@ i = ra.newBool(False)
 i.set(True)
 ```
 
-for most types, `set` will copy the value, I.e. setting `a` to `b` and then manipulating `b` will not change `a`. However, for certain types such as elements, text ranges and arrays, these are held by reference and therefore manipulating the value it was set two will change the underlying object for both variables.
+For most types, `set` will copy the value, i.e. setting `a` to `b` and then manipulating `b` will not change `a`.
+However, for certain types such as elements, text ranges and arrays, these are held by reference and therefore manipulating the value it was set two will change the underlying object for both variables.
 
 #### Booleans
 ```
@@ -243,9 +244,9 @@ Note that under the hood the text range is automatically cloned after it has bee
 
 #### Retrieving text, comparison and manipulation
 the majority of methods found on IUIAutomationTextRange are available on remote text ranges, including:
-* getText`
+* `getText`
 * `compareEndpoints`
-* moveEndpointByUnit`
+* `moveEndpointByUnit`
 * `moveEndpointByRange`
 * `expandToEnclosingUnit`
 * `getEnclosingElement`
@@ -273,7 +274,7 @@ Here is an example of how you could write an algorithm to fetch the first 20 wor
 textRange = ra.newTextRange(UIATextRange)
 words = ra.newArray()
 counter = ra.newInt(0)
-logicalTextRange = textRange.getLogicalAdapter(False)  # Change to True to reverse the algorithm.
+logicalTextRange = textRange.getLogicalAdapter(reverse=False)  # Change to True to reverse the algorithm.
 logicalTempRange = logicalTextRange.clone()
 # Collapse the range to the start
 logicalTempRange.end = logicalTempRange.start
@@ -342,7 +343,7 @@ If it is an element or text range method that causes the error, the error code w
 #### Looping over a range of numbers
 Although you can use a while loop and a counter to loop over a range of numbers, the library provides a helper method `ra.forEachNumInRange` which takes start, stop, and optional step arguments. This method can be used in a `with` statement to loop over a range of numbers like so:
 ```
-with ra.forEachNumInRange(0,10, 2) as num:
+with ra.forEachNumInRange(0, 10, 2) as num:
 	# do something with num
 ```
 
@@ -358,10 +359,14 @@ with ra.forEachItemInArray(array) as item:
 
 ## Executing an operation
 Once an operation is built, you will want to actually execute it on the remote provider.
-To execute the operation, call `Operation.execute`. this method takes no arguments, and returns any values previously returned with `ra.Return`. these values are brought back to NvDA and converted to real Python types.
+To execute the operation, call `Operation.execute`.
+This method takes no arguments, and returns any values previously returned with `ra.Return`.
+These values are brought back to NVDA and converted to real Python types.
 
 ### Instruction limits
-so as to not freeze a remote provider, Microsoft has placed a limit on how many instructions can be executed for one operation. Currently this limit is 10000. This seems a lot, but once you are dealing with many while loop iterations containing a lot of actions, it is very easy to to hit this limit.
+So as to not freeze a remote provider, Microsoft has placed a limit on how many instructions can be executed for one operation.
+Currently this limit is 10,000.
+This seems a lot, but once you are dealing with many while loop iterations containing a lot of actions, it is very easy to to hit this limit.
 If the instruction limit is reached, then `Operation.execute` will raise `InstructionLimitExceededException`. Assuming your algorithm was written appropriately, you could then re-execute it, and the remote provider will have had a chance to run its own main loop or do what ever it needs to do between operations.
 
 To aide in writing algorithms that can handle this instruction limit and continue to execute where it left off, there are several features of this Remote Operations library that can be used.
@@ -383,7 +388,8 @@ The above example will most definitely hit the instruction limit, however, becau
 
 Please note though that the execution will still start again from the first instruction, so the algorithm still needs to be written to take this into account.
 
-It could be possible in future to implement the library to start from the exact instruction where the limit was hit, but this would mean marshalling each and every declared remote variable out and then back in, which could be costly. Thus why It currently only does it for ones marked as `static`.
+It could be possible in future to implement the library to start from the exact instruction where the limit was hit, but this would mean marshalling each and every declared remote variable out and then back in, which could be costly.
+This is why it currently only does it for ones marked as `static`.
 
 Also, currently it is impossible to mark arrays as `static`, as arrays cannot be initialized with a value in the low-level remote operations framework.
 Again, in future the library could be extended to support this, but it would involve having to marshal out all items, and marshal them back in, appending them to the array one at a time, which would also be costly.
@@ -413,14 +419,15 @@ Although the `for` loop will see each yielded value separately, they will only p
 It can be tricky to debug a remote operation as it executes in the remote provider. Therefore the library contains several features which can help.
  
 ### Dumping instructions
-The library can dump all the instructions to NVDA's log each time an operation is built, by setting the Operation's `enableCompiletimeLogging` keyword argument to True. Even if left as False, instructions will still be automatically dumped to NvDA's log if there is an uncaught error while executing, or the instruction limit is reached and it has run out of tries.
+The library can dump all the instructions to NVDA's log each time an operation is built, by setting the Operation's `enableCompiletimeLogging` keyword argument to True.
+Even if left as False, instructions will still be automatically dumped to NVDA's log if there is an uncaught error while executing, or the instruction limit is reached and it has run out of tries.
 Following is code for a simple remote operation, followed by a dump of its instructions.
 ```
 counter = ra.newInt(0, static=True)
-	with ra.whileBlock(lambda: counter < 20000):
-		with ra.ifBlock((counter % 1000) == 0):
-			ra.Yield(counter)
-		counter += 1 
+with ra.whileBlock(lambda: counter < 20000):
+	with ra.ifBlock((counter % 1000) == 0):
+		ra.Yield(counter)
+	counter += 1 
 ```
 
 And now the instruction dump:
@@ -498,7 +505,9 @@ Setting an Operation's `enableRuntimeLogging` keyword argument to True enables r
 After the operation is executed, the remote log is marshalled back and dumped to NvDA's log, thereby giving the ability to trace what is happening during the execution. though be aware that as remote logging itself involves creating and manipulating remote values, then the number of instructions can change quite significantly with remote logging enabled. 
 
 ### Local mode
-when unit testing this library, or in a scenario where remote operations is unavailable but you want to use the exact same algorithm but locally, you can set the Operation's `localMode` keyword argument to True. this causes all instructions to be executed locally, rather than in a remote provider. This will of course be significantly slower, as every instruction that manipulates an element or text range will be itself one cross-process call.
+When unit testing this library, or in a scenario where remote operations is unavailable but you want to use the exact same algorithm but locally, you can set the Operation's `localMode` keyword argument to True.
+This causes all instructions to be executed locally, rather than in a remote provider.
+This will of course be significantly slower, as every instruction that manipulates an element or text range will be itself one cross-process call.
 However, it is a useful means of testing and debugging, and much care has been taken to ensure that the results and side-effects are identical to executing it remotely. 
 
 This differs some what from Microsoft's original remote operations library which implemented its local mode so that instructions were executed locally at build time, and executing did nothing. this library produces instructions just as it would remotely, but it is these low-level instructions that are executed locally at execution time, following all the same rules and limitations that executing remotely would. Thus, it is more suited to debugging / testing, rather than as a means of executing where remote operations is unavailable, as code could be written much more efficiently using comtypes IUIAutomation interfaces directly.

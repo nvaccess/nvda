@@ -25,7 +25,7 @@ _remoteFunc_return = TypeVar('_remoteFunc_return')
 
 class _BaseRemoteFuncWrapper:
 
-	def generateArgsKwargsString(self, *args, **kwargs):
+	def generateArgsKwargsString(self, *args, **kwargs) -> str:
 		argsString = ", ".join(map(repr, args))
 		kwargsString = ", ".join(f"{key}={repr(val)}" for key, val in kwargs.items())
 		return f"({', '.join([argsString, kwargsString])})"

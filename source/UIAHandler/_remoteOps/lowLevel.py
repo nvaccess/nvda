@@ -21,9 +21,9 @@ import NVDAHelper
 
 """
 This module contains classes and constants for the low-level Windows UI Automation Remote Operations API,
-I.e. Windows.UI.UIAutomation.core.
+i.e. Windows.UI.UIAutomation.core.
 The low-level UI Automation Remote Operations API is a binary API
-that allows for the execution of special byte code specific to uI Automation,
+that allows for the execution of special byte code specific to UI Automation,
 allowing for the execution of multiple UI Automation operations in a remote provider,
 via one cross-process call.
 """
@@ -71,7 +71,7 @@ class RemoteOperationResultSet:
 
 	@property
 	def errorLocation(self) -> int:
-		""" The index of the instruction where the error occured."""
+		"""The index of the instruction where the error occurred."""
 		val = c_long()
 		_dll.remoteOpResult_getErrorLocation(self._pResults, byref(val))
 		return val.value
