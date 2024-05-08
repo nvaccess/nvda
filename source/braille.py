@@ -35,6 +35,7 @@ import wx
 import louisHelper
 import louis
 import gui
+from controlTypes.state import State
 import winKernel
 import keyboardHandler
 import baseObject
@@ -632,6 +633,11 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 		)
 	if roleText:
 		textList.append(roleText)
+	
+	errorMessage = propertyValues.get("errorMessage")
+	if errorMessage:
+		textList.append(errorMessage)
+
 	description = propertyValues.get("description")
 	if description:
 		textList.append(description)
@@ -714,6 +720,9 @@ class NVDAObjectRegion(Region):
 		placeholderValue = obj.placeholder
 		if placeholderValue and not obj._isTextEmpty:
 			placeholderValue = None
+		errorMessage = obj.errorMessage
+		if errorMessage and State.INVALID_ENTRY not in obj.states:
+			errorMessage = None
 
 		# determine if description should be read
 		_shouldUseDescription = (
@@ -746,6 +755,7 @@ class NVDAObjectRegion(Region):
 			keyboardShortcut=obj.keyboardShortcut if presConfig["reportKeyboardShortcuts"] else None,
 			positionInfo=obj.positionInfo if presConfig["reportObjectPositionInformation"] else None,
 			cellCoordsText=obj.cellCoordsText if config.conf["documentFormatting"]["reportTableCellCoords"] else None,
+			errorMessage=errorMessage,
 		)
 		if role == controlTypes.Role.MATH:
 			import mathPres
@@ -822,6 +832,11 @@ def getControlFieldBraille(
 	value=field.get('value',None)
 	current = field.get('current', controlTypes.IsCurrent.NO)
 	placeholder=field.get('placeholder', None)
+	errorMessage = None
+	if errorMessage and State.INVALID_ENTRY in states:
+		errorMessage = field.get("errorMessage", None)
+
+
 	hasDetails = field.get('hasDetails', False) and config.conf["annotations"]["reportDetails"]
 	if config.conf["annotations"]["reportDetails"]:
 		detailsRoles: Set[Union[None, controlTypes.Role]] = field.get('detailsRoles')
@@ -870,6 +885,7 @@ def getControlFieldBraille(
 			value=value,
 			roleText=roleText,
 			placeholder=placeholder,
+			errorMessage=errorMessage
 		)
 
 	else:
@@ -945,6 +961,7 @@ def _getControlFieldForReportStart(
 		value: Optional[str],
 		roleText: str,
 		placeholder: Optional[str],
+		errorMessage: str | None,
 ) -> str:
 	props = {
 		"states": states,
@@ -955,6 +972,7 @@ def _getControlFieldForReportStart(
 		"description": description,
 		"hasDetails": hasDetails,
 		"detailsRoles": detailsRoles,
+		"errorMessage": errorMessage,
 	}
 
 	if role == controlTypes.Role.MATH:
@@ -1344,20 +1362,27 @@ class TextInfoRegion(Region):
 		else:
 			self._brailleInputIndStart = None
 
-	def getTextInfoForBraillePos(self, braillePos):
-		pos = self._rawToContentPos[self.brailleToRawPos[braillePos]]
-		# pos is relative to the start of the reading unit.
-		# Therefore, move pos code points from there.
-		# Note that, as liblouis uses 32 bit encoding internally,
-		# it is really safe to assume that one code point offset is equal to one character within liblouis.
-		try:
-			return self._readingInfo.moveToCodepointOffset(pos)
-		except (ValueError, RuntimeError):
-			log.exception(f"Error in moveToCodepointOffset, falling back to moving by {pos} characters")
-			dest = self._readingInfo.copy()
-			dest.collapse()
-			dest.move(textInfos.UNIT_CHARACTER, pos)
-			return dest
+	def getTextInfoForBraillePos(self, braillePos: int) -> textInfos.TextInfo:
+		"""Fetches a collapsed TextInfo at the specified braille position in the region."""
+		rawPos = self.brailleToRawPos[braillePos]
+		contentPos = self._rawToContentPos[rawPos]
+		if contentPos > 0:
+			# rawPos is relative to the start of the reading unit.
+			# Therefore, move rawPos code points from there.
+			# Note that, as liblouis uses 32 bit encoding internally,
+			# it is really safe to assume that one code point offset is equal to one character within liblouis.
+			try:
+				return self._readingInfo.moveToCodepointOffset(rawPos)
+			except (ValueError, RuntimeError):
+				log.exception(
+					f"Error in moveToCodepointOffset with {rawPos} offsets, "
+					f"falling back to moving by {contentPos} characters",
+				)
+		dest = self._readingInfo.copy()
+		dest.collapse()
+		if contentPos > 0:
+			dest.move(textInfos.UNIT_CHARACTER, contentPos)
+		return dest
 
 	def routeTo(self, braillePos: int):
 		if self._brailleInputIndStart is not None and self._brailleInputIndStart <= braillePos < self._brailleInputIndEnd:
@@ -2591,6 +2616,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.mainBuffer.update()
 			self.mainBuffer.restoreWindow()
 			if scrollTo is not None:
+				if self.buffer is self.messageBuffer:
+					self._dismissMessage(shouldUpdate=False)
 				self.scrollToCursorOrSelection(scrollTo)
 			elif self.buffer is self.mainBuffer:
 				self.update()
