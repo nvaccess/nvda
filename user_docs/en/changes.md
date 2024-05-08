@@ -11,6 +11,8 @@
 
 ### Changes
 
+* Component updates:
+  * Updated CLDR to version 45.0. (#16507, @OzancanKaratas)
 * The fallback braille input table is now equal to the fallback output table, which is Unified English Braille Code grade 1. (#9863, @JulienCochuyt, @LeonarddeR)
 * NVDA will now report figures with no accessible children, but with a label or description. (#14514)
 * When reading by line in browse mode, "caption" is no longer reported on each line of a long figure or table caption. (#14874)
@@ -96,7 +98,6 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
   * The minimum and the last tested NVDA version for an add-on are now displayed in the "other details" area. (#15776, @Nael-Sayegh)
   * The community reviews action will be available, and the reviews webpage will be shown in the details panel, in all tabs of the store. (#16179, @nvdaes)
 * Component updates:
-  * Updated CLDR to 45.0. (#16507, @OzancanKaratas)
   * Updated LibLouis Braille translator to [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0). (#16259, @codeofdusk)
     * Added new detailed (with capital letters indicated) Belarusian and Ukrainian Braille tables, along with a Spanish table for reading Greek texts.
   * eSpeak NG has been updated to 1.52-dev commit `cb62d93fd7`. (#15913)
