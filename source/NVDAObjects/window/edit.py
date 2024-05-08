@@ -844,7 +844,8 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		self.obj.ITextSelectionObject.end=self._rangeObj.end
 
 	def getTextInfoForCodepointMovement(self) -> Self:
-		# # In PoEdit ITextDocumentTextInfo sometimes cannot access the last character when that character is
+		# In PoEdit ITextDocumentTextInfo sometimes cannot access the last character when that character is
+
 		# a newline. In this case collapse(True) takes us not to the end of textInfo, but right before
 		# trailing newline character, which causes adverse side effects in moveToCodepointOffset() function.
 		# Trimming trailing newline character here to work around.
