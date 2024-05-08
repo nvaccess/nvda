@@ -9,6 +9,7 @@
 ### Changes
 
 * The fallback braille input table is now equal to the fallback output table, which is Unified English Braille Code grade 1. (#9863, @JulienCochuyt, @LeonarddeR)
+* When reading by line in browse mode, "caption" is no longer reported on each line of a long figure or table caption. (#14874)
 
 ### Bug Fixes
 
