@@ -12,6 +12,7 @@
 
 ### Bug Fixes
 
+* NVDA will announce correctly the autocomplete suggestions in Eclipse and other Eclipse-based environments on Windows 11. (#16416, @thgcode)
 * Braille cursor routing is now much more reliable when a line contains one or more Unicode variation selectors or decomposed characters. (#10960, #16477, @mltony, @LeonarddeR)
 
 ### Changes for Developers
