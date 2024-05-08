@@ -162,6 +162,8 @@ RE_CONVERT_WHITESPACE = re.compile("[\0\r\n]")
 def processText(locale: str, text: str, symbolLevel: characterProcessing.SymbolLevel) -> str:
 	text = speechDictHandler.processText(text)
 	text = characterProcessing.processSpeechSymbols(locale, text, symbolLevel)
+	if len(text) > 1 and config.conf["speech"]["unicodeNormalization"]:
+		text = unicodedata.normalize("NFKC", text)
 	text = RE_CONVERT_WHITESPACE.sub(" ", text)
 	return text.strip()
 

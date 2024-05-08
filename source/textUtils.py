@@ -417,6 +417,9 @@ class IdentityOffsetConverter(OffsetConverter):
 		return (encodedStart, encodedEnd)
 
 
+DEFAULT_UNICODE_NORMALIZATION_ALGORITHM = "NFKC"
+
+
 class UnicodeNormalizationOffsetConverter(OffsetConverter):
 	"""
 	Object that holds a string in both its decoded and its unicode normalized form.
@@ -429,7 +432,7 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 	_strToEncodedOffsets: tuple[int]
 	_encodedToStrOffsets: tuple[int]
 
-	def __init__(self, text: str, normalizationForm="NFKC"):
+	def __init__(self, text: str, normalizationForm: str = DEFAULT_UNICODE_NORMALIZATION_ALGORITHM):
 		super().__init__(text)
 		self.normalizationForm = normalizationForm
 		self.encoded: str = unicodedata.normalize(normalizationForm, text)
@@ -553,6 +556,10 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 		else:
 			resultEnd = self._encodedToStrOffsets[encodedEnd]
 			return (resultStart, resultEnd)
+
+
+def isNormalized(text: str, normalizationForm: str = DEFAULT_UNICODE_NORMALIZATION_ALGORITHM) -> bool:
+	return unicodedata.is_normalized(normalizationForm, text)
 
 
 ENCODINGS_TO_CONVERTERS: dict[str, Type[OffsetConverter]] = {

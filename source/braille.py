@@ -64,6 +64,7 @@ import queueHandler
 import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
+from textUtils import isNormalized, UnicodeNormalizationOffsetConverter
 import hwIo
 from editableText import EditableText
 
@@ -496,13 +497,28 @@ class Region(object):
 		mode = louis.dotsIO
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
 			mode |= louis.compbrlAtCursor
-		self.brailleCells, self.brailleToRawPos, self.rawToBraillePos, self.brailleCursorPos = louisHelper.translate(
+		converter: UnicodeNormalizationOffsetConverter | None = None
+		if config.conf["braille"]["unicodeNormalization"] and not isNormalized(self.rawText):
+			converter = UnicodeNormalizationOffsetConverter(self.rawText)
+			textToTranslate = converter.encoded
+			textToTranslateTypeforms = [self.rawTextTypeforms[i] for i in converter._encodedToStrOffsets]
+			cursorPos = converter.strToEncodedOffsets(self.cursorPos)
+		else:
+			textToTranslate = self.rawText
+			textToTranslateTypeforms = self.rawTextTypeforms
+			cursorPos = self.cursorPos
+		self.brailleCells, brailleToRawPos, rawToBraillePos, self.brailleCursorPos = louisHelper.translate(
 			[handler.table.fileName, "braille-patterns.cti"],
-			self.rawText,
-			typeform=self.rawTextTypeforms,
+			textToTranslate,
+			typeform=textToTranslateTypeforms,
 			mode=mode,
-			cursorPos=self.cursorPos
+			cursorPos=cursorPos
 		)
+		if converter:
+			brailleToRawPos = [converter.encodedToStrOffsets(i) for i in brailleToRawPos]
+			rawToBraillePos = [rawToBraillePos[i] for i in converter._strToEncodedOffsets]
+		self.brailleToRawPos = brailleToRawPos
+		self.rawToBraillePos = rawToBraillePos
 		if (
 			self.selectionStart is not None
 			and self.selectionEnd is not None

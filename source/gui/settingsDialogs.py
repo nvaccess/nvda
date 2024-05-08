@@ -1589,6 +1589,17 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.bindHelpEvent("SpeechSettingsTrust", self.trustVoiceLanguageCheckbox)
 		self.trustVoiceLanguageCheckbox.SetValue(config.conf["speech"]["trustVoiceLanguage"])
 
+		self.unicodeNormalizationCombo: nvdaControls.FeatureFlagCombo = settingsSizerHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is a label for a combo-box in the Braille settings panel.
+				"Unicode normali&zation"
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["speech", "unicodeNormalization"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("SpeechSettingsUnicodeNormalization", self.unicodeNormalizationCombo)
+
 		includeCLDRText = _(
 			# Translators: This is the label for a checkbox in the
 			# voice settings panel (if checked, data from the unicode CLDR will be used
@@ -1701,6 +1712,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			self.symbolLevelList.GetSelection()
 		].value
 		config.conf["speech"]["trustVoiceLanguage"] = self.trustVoiceLanguageCheckbox.IsChecked()
+		self.unicodeNormalizationCombo.saveCurrentValueToConf()
 		currentIncludeCLDR = config.conf["speech"]["includeCLDR"]
 		config.conf["speech"]["includeCLDR"] = newIncludeCldr = self.includeCLDRCheckbox.IsChecked()
 		if currentIncludeCLDR is not newIncludeCldr:
@@ -4168,6 +4180,17 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.bindHelpEvent("BrailleSettingsWordWrap", self.wordWrapCheckBox)
 		self.wordWrapCheckBox.Value = config.conf["braille"]["wordWrap"]
 
+		self.unicodeNormalizationCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is a label for a combo-box in the Braille settings panel.
+				"Unicode normali&zation"
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["braille", "unicodeNormalization"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("BrailleSettingsUnicodeNormalization", self.unicodeNormalizationCombo)
+
 		self.brailleInterruptSpeechCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=_(
 				# Translators: This is a label for a combo-box in the Braille settings panel.
@@ -4207,6 +4230,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.brailleReviewRoutingMovesSystemCaretCombo.saveCurrentValueToConf()
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
+		self.unicodeNormalizationCombo.saveCurrentValueToConf()
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[self.focusContextPresentationList.GetSelection()]
 		self.brailleInterruptSpeechCombo.saveCurrentValueToConf()
 		self.brailleShowSelectionCombo.saveCurrentValueToConf()
