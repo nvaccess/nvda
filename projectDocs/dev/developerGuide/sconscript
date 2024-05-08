@@ -11,24 +11,14 @@ env = env.Clone()
 
 devDocsOutputDir=outputDir.Dir('devDocs')
 
-#Build the developer guide and move it to the output directory
-mdFile = env.txt2tags('developerGuide.t2t')
-env.SideEffect('_txt2tags', mdFile)
+# Build the developer guide and move it to the output directory
 htmlFile = env.md2html('developerGuide.md')
-env.Depends(htmlFile, mdFile)
-devGuideMD = env.Command(
-	target=devDocsOutputDir.File('developerGuide.md'),
-	source=mdFile,
-	action=Move('$TARGET', '$SOURCE')
-)
-env.Depends(devGuideMD, mdFile)
 devGuide = env.Command(
 	target=devDocsOutputDir.File('developerGuide.html'),
 	source=htmlFile,
 	action=Move('$TARGET', '$SOURCE')
 )
-env.Depends(devGuide, devGuideMD)
-env.Alias("developerGuide",devGuide)
+env.Alias("developerGuide", devGuide)
 
 devDocs_nvdaHelper_temp=env.Doxygen(source='../../../nvdaHelper/doxyfile')
 devDocs_nvdaHelper = env.Command(

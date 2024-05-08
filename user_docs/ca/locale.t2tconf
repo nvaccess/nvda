@@ -1,5 +1,0 @@
-% locale.t2tconf for Catalan
-
-% macro to allow hreflang attribute
-% rewrite en_[string url] to <a hreflang="en" href="url">string</a>
-%!PreProc: '([A-za-z-_]+)_\[([^\]]*)\]' '[{@hreflang=\1}\2]'

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-06 02:06+0000\n"
-"PO-Revision-Date: 2024-03-06 02:37\n"
+"POT-Creation-Date: 2024-03-19 19:59+0000\n"
+"PO-Revision-Date: 2024-03-19 23:39\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -10566,7 +10566,7 @@ msgstr "P&uhesanastot"
 #. Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
 #: gui\__init__.py:499
 msgid "&Punctuation/symbol pronunciation..."
-msgstr "&Välimerkkien ja symboleiden puhuminen..."
+msgstr "&Välimerkkien ja symbolien puhuminen..."
 
 #. Translators: The label for the menu item to open the Input Gestures dialog.
 #: gui\__init__.py:502
@@ -10820,7 +10820,7 @@ msgstr "&Ei"
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
-#: gui\addonGui.py:110 gui\nvdaControls.py:258
+#: gui\addonGui.py:110 gui\nvdaControls.py:261
 msgid "OK"
 msgstr "OK"
 
@@ -11510,7 +11510,7 @@ msgid "Log is unavailable"
 msgstr "Loki ei ole käytettävissä"
 
 #. Translators: A cancel button on a message dialog.
-#: gui\nvdaControls.py:267
+#: gui\nvdaControls.py:270
 msgid "Cancel"
 msgstr "Peruuta"
 
@@ -11518,7 +11518,7 @@ msgstr "Peruuta"
 #. Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'
 #. The placeholder {} is replaced with the label of the option which describes current default behavior
 #. in NVDA. EG "Default (Yes)".
-#: gui\nvdaControls.py:538
+#: gui\nvdaControls.py:541
 msgid "Default ({})"
 msgstr "Oletus ({})"
 
@@ -11710,7 +11710,7 @@ msgstr "&Syntetisaattori"
 #. it appears in the context of a braille display group on the braille settings panel.
 #: gui\settingsDialogs.py:1056 gui\settingsDialogs.py:3510
 msgid "C&hange..."
-msgstr "Va&ihda..."
+msgstr "&Muuta..."
 
 #. Translators: This is the label for the synthesizer selection dialog
 #: gui\settingsDialogs.py:1111
@@ -11979,13 +11979,13 @@ msgstr "Ilmoita lyhyet merkki&kuvaukset aina ehdotuksia luettaessa"
 #. Input composition settings panel.
 #: gui\settingsDialogs.py:2010
 msgid "Report changes to the &reading string"
-msgstr "Ilmoita &lukumerkkijonon muutokset"
+msgstr "Puhu &lukumerkkijonon muutokset"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
 #: gui\settingsDialogs.py:2019
 msgid "Report changes to the &composition string"
-msgstr "Lue &merkkiyhdistelmien muutokset"
+msgstr "Puhu &merkkiyhdistelmien muutokset"
 
 #. Translators: This is a label appearing on the Object Presentation settings panel.
 #: gui\settingsDialogs.py:2039
@@ -12070,7 +12070,7 @@ msgstr "Ilmaise ta&ustalla olevat edistymispalkit"
 #. object presentation settings panel.
 #: gui\settingsDialogs.py:2141
 msgid "Report dynamic &content changes"
-msgstr "Lue d&ynaamisen sisällön muutokset"
+msgstr "Puhu d&ynaamisen sisällön muutokset"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -12705,7 +12705,7 @@ msgstr "Difflib"
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
 #: gui\settingsDialogs.py:3126
 msgid "Speak new text in Windows Terminal via:"
-msgstr "Uuden tekstin puhumismenetelmä Windows Terminalissa:"
+msgstr "Uuden tekstin puhumismenetelmä Windows-päätteessä:"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
@@ -13028,7 +13028,7 @@ msgstr "&Symboli:"
 #: gui\settingsDialogs.py:4515
 #, python-format
 msgid "Symbol Pronunciation (%s)"
-msgstr "Symboleiden puhuminen (%s)"
+msgstr "Symbolien puhuminen (%s)"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
 #: gui\settingsDialogs.py:4529
@@ -13530,7 +13530,7 @@ msgstr "Poista lisäosa"
 msgctxt "addonStore"
 msgid "Warning: add-on is incompatible: {name} {version}. Check for an updated version of this add-on if possible. The last tested NVDA version for this add-on is {lastTestedNVDAVersion}, your current NVDA version is {NVDAVersion}. Installation may cause unstable behavior in NVDA.\n"
 "Proceed with installation anyway? "
-msgstr "Varoitus: Lisäosa ei ole yhteensopiva: {name} {version}. Mikäli mahdollista, etsi tästä lisäosasta päivitettyä versiota. Viimeisin testattu NVDA-versio on {lastTestedNVDAVersion} ja tämänhetkinen NVDA-versiosi on {NVDAVersion}. Asentaminen saattaa aiheuttaa epävakautta NVDA:ssa.\n"
+msgstr "Varoitus: Lisäosa ei ole yhteensopiva: {name} {version}. Mikäli mahdollista, etsi tästä lisäosasta päivitetty versio. Viimeisin testattu NVDA-versio on {lastTestedNVDAVersion} ja tämänhetkinen NVDA-versiosi on {NVDAVersion}. Asentaminen saattaa aiheuttaa epävakautta NVDA:ssa.\n"
 "Haluatko silti jatkaa asennusta?"
 
 #. Translators: The message displayed when enabling an add-on package that is incompatible
@@ -13540,7 +13540,7 @@ msgstr "Varoitus: Lisäosa ei ole yhteensopiva: {name} {version}. Mikäli mahdol
 msgctxt "addonStore"
 msgid "Warning: add-on is incompatible: {name} {version}. Check for an updated version of this add-on if possible. The last tested NVDA version for this add-on is {lastTestedNVDAVersion}, your current NVDA version is {NVDAVersion}. Enabling may cause unstable behavior in NVDA.\n"
 "Proceed with enabling anyway? "
-msgstr "Varoitus: Lisäosa ei ole yhteensopiva: {name} {version}. Mikäli mahdollista, etsi tämän lisäosan päivitettyä versiota. Viimeisin testattu NVDA-versio on {lastTestedNVDAVersion} ja tämänhetkinen NVDA-versiosi on {NVDAVersion}. Käyttöönotto saattaa aiheuttaa epävakautta NVDA:ssa.\n"
+msgstr "Varoitus: Lisäosa ei ole yhteensopiva: {name} {version}. Mikäli mahdollista, etsi tämän lisäosan päivitetty versio. Viimeisin testattu NVDA-versio on {lastTestedNVDAVersion} ja tämänhetkinen NVDA-versiosi on {NVDAVersion}. Käyttöönotto saattaa aiheuttaa epävakautta NVDA:ssa.\n"
 "Haluatko silti jatkaa käyttöönottoa?"
 
 #. Translators: The message displayed when installing an add-on package is prohibited,
