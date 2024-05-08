@@ -29,8 +29,6 @@ dlldata.c
 .sconsign.dblite
 user_docs/*/*.html
 user_docs/*/*.css
-# TODO remove when migrating from t2t to md as markdown files will be committed.
-user_docs/*/*.md
 extras/controllerClient/x86/nvdaController.h
 extras/controllerClient/x64
 extras/controllerClient/arm64
@@ -43,6 +41,7 @@ uninstaller/UAC.nsh
 *.pyo
 *.dmp
 tests/unit/nvda.ini
+tests/unit/brailleTables
 tests/system/settingsCache/*
 !tests/system/settingsCache/2020.4/*.txt
 source/locale/en/LC_MESSAGES/nvda.po
@@ -51,3 +50,4 @@ source/locale/*/cldr.dic
 .vs
 .venv
 nvdaHelper/docs/
+*.pfx
