@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2017-2023 NV Access Limited, Babbage B.V., Cyrille Bougot
+# Copyright (C) 2017-2024 NV Access Limited, Babbage B.V., Cyrille Bougot, Leonard de Ruijter
 
 """NVDA unit testing.
 All unit tests should reside within this package and should be
@@ -121,6 +121,13 @@ brailleInput.initialize()
 
 # Make sure there's no blinking cursor as that relies on wx
 config.conf['braille']['cursorBlink'] = False
+
+# To be able to use uniscribe in textInfos, map the NVDAHelper local library without initializing it.
+import ctypes  # noqa: E402
+import NVDAHelper  # noqa: E402
+NVDAHelper.localLib = ctypes.cdll.LoadLibrary(
+	os.path.join(NVDAHelper.versionedLibPath, 'nvdaHelperLocal.dll')
+)
 
 # The focus and navigator objects need to be initialized to something.
 from .objectProvider import PlaceholderNVDAObject,NVDAObjectWithRole
