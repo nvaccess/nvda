@@ -121,8 +121,10 @@ class Ia2Web(IAccessible):
 		return bool(res)
 
 	def _get_positionInfo(self):
-		if self.role == controlTypes.Role.TABLECELL and self.parent is not None:
-			return self.parent.positionInfo
+		if self.role == controlTypes.Role.TABLECELL:
+			for anc in reversed(api.getFocusAncestors()):
+				if anc.role == controlTypes.Role.TREEVIEWITEM:
+					return anc.positionInfo
 		info=super(Ia2Web,self).positionInfo
 		level=info.get('level',None)
 		if not level:
