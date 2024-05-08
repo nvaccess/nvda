@@ -6,7 +6,7 @@
 
 ### New Features
 
-- Error messages referenced with `aria-errormessage` are now reported in Google Chrome and Mozilla Firefox. (#8318)
+* Error messages referenced with `aria-errormessage` are now reported in Google Chrome and Mozilla Firefox. (#8318)
 
 ### Changes
 
