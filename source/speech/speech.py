@@ -17,6 +17,7 @@ import api
 from annotation import _AnnotationRolesT
 import controlTypes
 from controlTypes import OutputReason, TextPosition
+from controlTypes.state import State
 import tones
 from synthDriverHandler import getSynth
 import re
@@ -567,6 +568,9 @@ def getObjectPropertiesSpeech(  # noqa: C901
 		):
 			newPropertyValues['_description-from'] = obj.descriptionFrom
 			newPropertyValues['description'] = obj.description
+		# Error messages should only be spoken when the input is marked invalid.
+		elif name == "errorMessage" and value and State.INVALID_ENTRY not in obj.states:
+			newPropertyValues["errorMessage"] = None
 		elif value:
 			# Certain properties such as row and column numbers have presentational versions, which should be used for speech if they are available.
 			# Therefore redirect to those values first if they are available, falling back to the normal properties if not.
@@ -775,6 +779,7 @@ def _objectSpeech_calculateAllowedProps(
 		'role': True,
 		'roleText': True,
 		'states': True,
+		"errorMessage": True,
 		'value': True,
 		'description': True,
 		'hasDetails': config.conf["annotations"]["reportDetails"],
@@ -794,7 +799,7 @@ def _objectSpeech_calculateAllowedProps(
 		"columnHeaderText": True,
 		"rowSpan": True,
 		"columnSpan": True,
-		"current": True
+		"current": True,
 	}
 	if reason in (OutputReason.FOCUSENTERED, OutputReason.MOUSE):
 		allowProperties["value"] = False
@@ -1959,6 +1964,11 @@ def getPropertiesSpeech(  # noqa: C901
 				_speechState.oldTreeLevel = level
 			else:
 				textList.append(levelTranslation)
+	
+	errorMessage: str | None = propertyValues.get("errorMessage", None)
+	if errorMessage:
+		textList.append(errorMessage)
+
 	types.logBadSequenceTypes(textList)
 	return textList
 
@@ -2073,6 +2083,9 @@ def getControlFieldSpeech(  # noqa: C901
 	hasDetails = attrs.get('hasDetails', False)
 	detailsRoles: _AnnotationRolesT = attrs.get("detailsRoles", tuple())
 	placeholderValue=attrs.get('placeholder', None)
+	errorMessage = None
+	if State.INVALID_ENTRY in states:
+		errorMessage = attrs.get("errorMessage", None)
 	value=attrs.get('value',"")
 
 	description: Optional[str] = None
@@ -2133,6 +2146,7 @@ def getControlFieldSpeech(  # noqa: C901
 	isCurrentSequence = getPropertiesSpeech(reason=reason, current=isCurrent)
 	hasDetailsSequence = getPropertiesSpeech(reason=reason, hasDetails=hasDetails, detailsRoles=detailsRoles)
 	placeholderSequence = getPropertiesSpeech(reason=reason, placeholder=placeholderValue)
+	errorMessageSequence = getPropertiesSpeech(reason=reason, errorMessage=errorMessage)
 	nameSequence = getPropertiesSpeech(reason=reason, name=name)
 	valueSequence = getPropertiesSpeech(reason=reason, value=value, _role=role)
 	descriptionSequence = []
@@ -2307,6 +2321,7 @@ def getControlFieldSpeech(  # noqa: C901
 		out.extend(keyboardShortcutSequence)
 		if content and not speakContentFirst:
 			out.append(content)
+		out.extend(errorMessageSequence)
 
 		types.logBadSequenceTypes(out)
 		return out
