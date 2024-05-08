@@ -19,6 +19,7 @@
 
 * NVDA will announce correctly the autocomplete suggestions in Eclipse and other Eclipse-based environments on Windows 11. (#16416, @thgcode)
 * Braille cursor routing is now much more reliable when a line contains one or more Unicode variation selectors or decomposed characters. (#10960, #16477, @mltony, @LeonarddeR)
+* NVDA will correctly announce selection changes when editing a cell's text in Microsoft Excel. (#15843)
 
 ### Changes for Developers
 
@@ -31,6 +32,7 @@ It is especially useful to read the error location markers in tracebacks. (#1632
   * Tables can be provided in the `brailleTables` folder in an add-on package.
   * Table metadata can be added to an optional `brailleTables` section in the add-on manifest or to a `.ini` file with the same format found in the brailleTables subdirectory of the scratchpad directory.
   * Please consult the [braille translation tables section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#BrailleTables) for more details.
+* When a `gainFocus` event is queued with an object that has a valid `focusRedirect` property, the object pointed to by the `focusRedirect` property is now held by `eventHandler.lastQueuedFocusObject`, rather than the originally queued object. (#15843)
 
 #### Deprecations
 
