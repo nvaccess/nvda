@@ -9,6 +9,7 @@
 ### Changes
 
 * The fallback braille input table is now equal to the fallback output table, which is Unified English Braille Code grade 1. (#9863, @JulienCochuyt, @LeonarddeR)
+* Position information is now reported for gridcells in ARIA treegrids. (#15818)
 
 ### Bug Fixes
 
