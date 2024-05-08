@@ -49,9 +49,6 @@ def queueEvent(eventName,obj,**kwargs):
 	@param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
 	@type eventName: string
 	"""
-	# Allow NVDAObjects to redirect focus events to another object of their choosing.
-	if eventName == "gainFocus" and obj.focusRedirect:
-		obj = obj.focusRedirect
 	_trackFocusObject(eventName, obj)
 	with _pendingEventCountsLock:
 		_pendingEventCountsByName[eventName]=_pendingEventCountsByName.get(eventName,0)+1
@@ -242,7 +239,7 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 	def isMenuItemOfCurrentFocus(self) -> bool:
 		"""
 		Checks if the current object is a menu item of the current focus.
-		The only known case where this returns True is the following (see #12624):
+		The only known case where this returns True is the following (see #12624, #14550):
 		
 		When opening a submenu in certain applications (like Thunderbird 78.12),
 		NVDA can process a menu start event after the first item in the menu is focused.
@@ -253,24 +250,37 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 		The focus event order after activating the menu item's sub menu is (submenu item, submenu).
 		"""
 		from NVDAObjects import IAccessible
+		from comInterfaces import IAccessible2Lib as IA2
+
 		lastFocus = api.getFocusObject()
-		_isMenuItemOfCurrentFocus = (
+		
+		# This case can only occur when the old focus has a parent, when the old and new focus targets are instances
+		# of IAccessible, when the old focus is a menuitem, menuitemradio or menuitemcheckbox, and the old focus is
+		# a menu.
+		if not (
 			self._obj.parent
 			and isinstance(self._obj, IAccessible.IAccessible)
 			and isinstance(lastFocus, IAccessible.IAccessible)
-			and self._obj.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUITEM
-			and lastFocus.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUPOPUP
-			and self._obj.parent == lastFocus
-		)
-		if _isMenuItemOfCurrentFocus:
-			# Change this to log.error for easy debugging
-			log.debugWarning(
-				"This parent menu was not announced properly, "
-				"and should have been focused before the submenu item.\n"
-				f"Object info: {self._obj.devInfo}\n"
-				f"Object parent info: {self._obj.parent.devInfo}\n"
-			)
-		return _isMenuItemOfCurrentFocus
+			and self._obj.IAccessibleRole in (
+				oleacc.ROLE_SYSTEM_MENUITEM, IA2.IA2_ROLE_CHECK_MENU_ITEM, IA2.IA2_ROLE_RADIO_MENU_ITEM)
+			and lastFocus.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUPOPUP):
+			return False
+
+		# Check that the old focus is a child of the new focus.
+		ancestor = self._obj.parent
+		while ancestor is not None:
+			if ancestor == lastFocus:
+				log.debugWarning(
+					"This parent menu was not announced properly, "
+					"and should have been focused before the submenu item.\n"
+					f"Object info: {self._obj.devInfo}\n"
+					f"Object parent info: {self._obj.parent.devInfo}\n"
+				)
+				return True
+			
+			ancestor = ancestor.parent
+		
+		return False
 
 
 def _getFocusLossCancellableSpeechCommand(
@@ -306,6 +316,9 @@ def executeEvent(
 	try:
 		global _virtualDesktopName
 		isGainFocus = eventName == "gainFocus"
+		# Allow NVDAObjects to redirect focus events to another object of their choosing.
+		if isGainFocus and obj.focusRedirect:
+			obj = obj.focusRedirect
 		sleepMode = obj.sleepMode
 		# Handle possible virtual desktop name change event.
 		# More effective in Windows 10 Version 1903 and later.
