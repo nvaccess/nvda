@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2023 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
-# Leonard de Ruijter, Burman's Computer and Education Ltd.
+# Copyright (C) 2008-2024 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
+# Leonard de Ruijter, Burman's Computer and Education Ltd., Julien Cochuyt
 
 import itertools
 import os
@@ -71,6 +71,8 @@ if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
 	from speech.types import SpeechSequence
 
+FALLBACK_TABLE = config.conf.getConfigValidation(("braille", "translationTable")).default
+"""Table to use if the output table configuration is invalid."""
 
 roleLabels: typing.Dict[controlTypes.Role, str] = {
 	# Translators: Displayed in braille for an object which is a
@@ -495,8 +497,7 @@ class Region(object):
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
 			mode |= louis.compbrlAtCursor
 		self.brailleCells, self.brailleToRawPos, self.rawToBraillePos, self.brailleCursorPos = louisHelper.translate(
-			[os.path.join(brailleTables.TABLES_DIR, config.conf["braille"]["translationTable"]),
-				"braille-patterns.cti"],
+			[handler.table.fileName, "braille-patterns.cti"],
 			self.rawText,
 			typeform=self.rawTextTypeforms,
 			mode=mode,
@@ -1364,12 +1365,17 @@ class TextInfoRegion(Region):
 	def getTextInfoForBraillePos(self, braillePos):
 		pos = self._rawToContentPos[self.brailleToRawPos[braillePos]]
 		# pos is relative to the start of the reading unit.
-		# Therefore, get the start of the reading unit...
-		dest = self._readingInfo.copy()
-		dest.collapse()
-		# and move pos characters from there.
-		dest.move(textInfos.UNIT_CHARACTER, pos)
-		return dest
+		# Therefore, move pos code points from there.
+		# Note that, as liblouis uses 32 bit encoding internally,
+		# it is really safe to assume that one code point offset is equal to one character within liblouis.
+		try:
+			return self._readingInfo.moveToCodepointOffset(pos)
+		except (ValueError, RuntimeError):
+			log.exception(f"Error in moveToCodepointOffset, falling back to moving by {pos} characters")
+			dest = self._readingInfo.copy()
+			dest.collapse()
+			dest.move(textInfos.UNIT_CHARACTER, pos)
+			return dest
 
 	def routeTo(self, braillePos: int):
 		if self._brailleInputIndStart is not None and self._brailleInputIndStart <= braillePos < self._brailleInputIndEnd:
@@ -2049,6 +2055,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def __init__(self):
 		louisHelper.initialize()
+		self._table: brailleTables.BrailleTable = brailleTables.getTable(FALLBACK_TABLE)
 		self.display: Optional[BrailleDisplayDriver] = None
 		self._displaySize: int = 0
 		"""
@@ -2118,6 +2125,18 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			winKernel.closeHandle(self.ackTimerHandle)
 			self.ackTimerHandle = None
 		louisHelper.terminate()
+
+	table: brailleTables.BrailleTable
+	"""Type definition for auto prop '_get_table/_set_table'"""
+
+	def _get_table(self) -> brailleTables.BrailleTable:
+		"""The translation table to use for braille output.
+		"""
+		return self._table
+
+	def _set_table(self, table: brailleTables.BrailleTable):
+		self._table = table
+		config.conf["braille"]["translationTable"] = table.fileName
 
 	# The list containing the regions that will be shown in braille when the speak function is called
 	# and the braille mode is set to speech output
@@ -2534,8 +2553,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.update()
 		# Last region should receive focus.
 		self.mainBuffer.focus(region)
-		self.scrollToCursorOrSelection(region)
-		if self.buffer is self.mainBuffer:
+		if isinstance(region, TextInfoRegion):
+			self.scrollToCursorOrSelection(region)
+		elif self.buffer is self.mainBuffer:
 			self.update()
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
@@ -2590,7 +2610,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.mainBuffer.restoreWindow()
 			if scrollTo is not None:
 				self.scrollToCursorOrSelection(scrollTo)
-			if self.buffer is self.mainBuffer:
+			elif self.buffer is self.mainBuffer:
 				self.update()
 			elif (
 				self.buffer is self.messageBuffer
@@ -2686,12 +2706,20 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def handlePostConfigProfileSwitch(self):
 		display = config.conf["braille"]["display"]
-		# Do not choose a new display if:
-		if not (
-			# The display in the new profile is equal to the last requested display name
-			display == self._lastRequestedDisplayName
-			# or the new profile uses auto detection, which supports detection of the currently active display.
-			or (display == AUTO_DISPLAY_NAME and bdDetect.driverIsEnabledForAutoDetection(self.display.name))
+		# #7459: the syncBraille has been dropped in favor of the native hims driver.
+		# Migrate to renamed drivers as smoothly as possible.
+		newDriverName = RENAMED_DRIVERS.get(display)
+		if newDriverName:
+			display = config.conf["braille"]["display"] = newDriverName
+		if (
+			self.display is None
+			# Do not choose a new display if:
+			or not (
+				# The display in the new profile is equal to the last requested display name
+				display == self._lastRequestedDisplayName
+				# or the new profile uses auto detection, which supports detection of the currently active display.
+				or (display == AUTO_DISPLAY_NAME and bdDetect.driverIsEnabledForAutoDetection(self.display.name))
+			)
 		):
 			self.setDisplayByName(display)
 		elif (
@@ -2705,6 +2733,20 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._detector._limitToDevices = bdDetect.getBrailleDisplayDriversEnabledForDetection()
 
 		self._tether = config.conf["braille"]["tetherTo"]
+		tableName = config.conf["braille"]["translationTable"]
+		# #6140: Migrate to new table names as smoothly as possible.
+		newTableName = brailleTables.RENAMED_TABLES.get(tableName)
+		if newTableName:
+			tableName = config.conf["braille"]["translationTable"] = newTableName
+		if tableName != self._table.fileName:
+			try:
+				self._table = brailleTables.getTable(tableName)
+			except LookupError:
+				log.error(
+					f"Invalid translation table ({tableName}), "
+					f"falling back to default ({FALLBACK_TABLE})."
+				)
+				self._table = brailleTables.getTable(FALLBACK_TABLE)
 
 	def handleDisplayUnavailable(self):
 		"""Called when the braille display becomes unavailable.
@@ -2813,19 +2855,9 @@ def initialize():
 	log.info("Using liblouis version %s" % louis.version())
 	import serial
 	log.info("Using pySerial version %s"%serial.VERSION)
-	# #6140: Migrate to new table names as smoothly as possible.
-	oldTableName = config.conf["braille"]["translationTable"]
-	newTableName = brailleTables.RENAMED_TABLES.get(oldTableName)
-	if newTableName:
-		config.conf["braille"]["translationTable"] = newTableName
 	handler = BrailleHandler()
-	# #7459: the syncBraille has been dropped in favor of the native hims driver.
-	# Migrate to renamed drivers as smoothly as possible.
-	oldDriverName = config.conf["braille"]["display"]
-	newDriverName = RENAMED_DRIVERS.get(oldDriverName)
-	if newDriverName:
-		config.conf["braille"]["display"] = newDriverName
-	handler.setDisplayByName(config.conf["braille"]["display"])
+	handler.handlePostConfigProfileSwitch()
+	config.post_configProfileSwitch.register(handler.handlePostConfigProfileSwitch)
 
 def pumpAll():
 	"""Runs tasks at the end of each core cycle. For now just region updates, e.g. for caret movement."""
