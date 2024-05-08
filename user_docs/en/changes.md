@@ -6,6 +6,8 @@
 
 ### New Features
 
+* Error messages referenced with `aria-errormessage` are now reported in Google Chrome and Mozilla Firefox. (#8318)
+
 ### Changes
 
 * The fallback braille input table is now equal to the fallback output table, which is Unified English Braille Code grade 1. (#9863, @JulienCochuyt, @LeonarddeR)
