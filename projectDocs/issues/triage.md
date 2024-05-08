@@ -219,7 +219,7 @@ This grants the ability to manage issues, pull requests and discussions, such as
 Refer to [GitHub documentation](https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization) for more information on triage permissions.
 
 To request triage permissions, email info@nvaccess.org.
-A consistent history of activity in the repository is expected, particularly with triaging issues.
+A consistent history of helpful activity in the repository is expected, for example helping debug issues, asking for missing information, providing constructive feedback on pull requests, submitting well-documented pull requests, constructively participating in discussions, mentoring new contributors or improving documentation.
 Candidates will be considered on a case by case basis.
 
 If conflict arises between how best to triage an issue, please defer to NV Access and keep the issue in an open, untriaged state i.e. with the labels "needs triage" and "blocked/needs-product-decision".
