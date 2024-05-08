@@ -49,6 +49,9 @@ def queueEvent(eventName,obj,**kwargs):
 	@param eventName: the name of the event type (e.g. 'gainFocus', 'nameChange')
 	@type eventName: string
 	"""
+	# Allow NVDAObjects to redirect focus events to another object of their choosing.
+	if eventName == "gainFocus" and obj.focusRedirect:
+		obj = obj.focusRedirect
 	_trackFocusObject(eventName, obj)
 	with _pendingEventCountsLock:
 		_pendingEventCountsByName[eventName]=_pendingEventCountsByName.get(eventName,0)+1
@@ -303,9 +306,6 @@ def executeEvent(
 	try:
 		global _virtualDesktopName
 		isGainFocus = eventName == "gainFocus"
-		# Allow NVDAObjects to redirect focus events to another object of their choosing.
-		if isGainFocus and obj.focusRedirect:
-			obj = obj.focusRedirect
 		sleepMode = obj.sleepMode
 		# Handle possible virtual desktop name change event.
 		# More effective in Windows 10 Version 1903 and later.

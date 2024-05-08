@@ -6,14 +6,21 @@
 
 ### New Features
 
+* Error messages referenced with `aria-errormessage` are now reported in Google Chrome and Mozilla Firefox. (#8318)
+* In LibreOffice Writer (version 24.8 and newer), when toggling text formatting (bold, italic, underline, subscript/superscript, alignment) using the corresponding keyboard shortcut, NVDA announces the new formatting attribute (e.g. "Bold on", "Bold off"). (#4248, @michaelweghorn)
+
 ### Changes
 
 * The fallback braille input table is now equal to the fallback output table, which is Unified English Braille Code grade 1. (#9863, @JulienCochuyt, @LeonarddeR)
+* NVDA will now report figures with no accessible children, but with a label or description. (#14514)
+* When reading by line in browse mode, "caption" is no longer reported on each line of a long figure or table caption. (#14874)
 * Position information is now reported for gridcells in ARIA treegrids. (#15818)
 
 ### Bug Fixes
 
+* NVDA will announce correctly the autocomplete suggestions in Eclipse and other Eclipse-based environments on Windows 11. (#16416, @thgcode)
 * Braille cursor routing is now much more reliable when a line contains one or more Unicode variation selectors or decomposed characters. (#10960, #16477, @mltony, @LeonarddeR)
+* NVDA will correctly announce selection changes when editing a cell's text in Microsoft Excel. (#15843)
 
 ### Changes for Developers
 
@@ -26,6 +33,7 @@ It is especially useful to read the error location markers in tracebacks. (#1632
   * Tables can be provided in the `brailleTables` folder in an add-on package.
   * Table metadata can be added to an optional `brailleTables` section in the add-on manifest or to a `.ini` file with the same format found in the brailleTables subdirectory of the scratchpad directory.
   * Please consult the [braille translation tables section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#BrailleTables) for more details.
+* When a `gainFocus` event is queued with an object that has a valid `focusRedirect` property, the object pointed to by the `focusRedirect` property is now held by `eventHandler.lastQueuedFocusObject`, rather than the originally queued object. (#15843)
 
 #### Deprecations
 
