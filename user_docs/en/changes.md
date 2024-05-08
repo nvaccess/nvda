@@ -12,7 +12,7 @@
 
 ### Bug Fixes
 
-* Diff match patch proxy crash no longer causes NVDA to freeze. (#15850, #16027, @Danstiv)
+* Improved reliability of automatic text readout, particularly in terminal applications. (#15850, #16027, @Danstiv)
 * Braille cursor routing is now much more reliable when a line contains one or more Unicode variation selectors or decomposed characters. (#10960, #16477, @mltony, @LeonarddeR)
 
 ### Changes for Developers
