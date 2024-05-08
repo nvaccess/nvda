@@ -66,8 +66,8 @@ class DiffMatchPatch(DiffAlgo):
 	def _readData(cls, size: int) -> bytes:
 		"""Reads from stdout, raises exception on EOF."""
 		buffer = b""
-		while (requiredLength := size - len(buffer)) > 0:
-			chunk = cls._proc.stdout.read(requiredLength)
+		while (remainingLength := size - len(buffer)) > 0:
+			chunk = cls._proc.stdout.read(remainingLength)
 			if chunk:
 				buffer += chunk
 				continue
