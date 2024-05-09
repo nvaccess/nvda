@@ -11,6 +11,8 @@
 
 ### Changes
 
+* Component updates:
+  * Updated Unicode CLDR to version 45.0. (#16507, @OzancanKaratas)
 * The fallback braille input table is now equal to the fallback output table, which is Unified English Braille Code grade 1. (#9863, @JulienCochuyt, @LeonarddeR)
 * NVDA will now report figures with no accessible children, but with a label or description. (#14514)
 * When reading by line in browse mode, "caption" is no longer reported on each line of a long figure or table caption. (#14874)
@@ -18,6 +20,7 @@
 ### Bug Fixes
 
 * NVDA will announce correctly the autocomplete suggestions in Eclipse and other Eclipse-based environments on Windows 11. (#16416, @thgcode)
+* Improved reliability of automatic text readout, particularly in terminal applications. (#15850, #16027, @Danstiv)
 * Braille cursor routing is now much more reliable when a line contains one or more Unicode variation selectors or decomposed characters. (#10960, #16477, @mltony, @LeonarddeR)
 * NVDA will correctly announce selection changes when editing a cell's text in Microsoft Excel. (#15843)
 
