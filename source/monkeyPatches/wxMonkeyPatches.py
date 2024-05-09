@@ -3,6 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from functools import wraps
 
 def apply(mainFrame, winUser, wx):
 	"""Patch wx.CallAfter to overcome an execution timing issue.
@@ -15,6 +16,7 @@ def apply(mainFrame, winUser, wx):
 	"""
 	old_wx_CallAfter = wx.CallAfter
 
+	@wraps(wx.CallAfter)
 	def wx_CallAfter_wrapper(func, *args, **kwargs):
 		old_wx_CallAfter(func, *args, **kwargs)
 		# mainFrame may be None as NVDA could be terminating.
