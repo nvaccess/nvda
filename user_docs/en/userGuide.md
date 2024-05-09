@@ -434,8 +434,8 @@ However, you can enable or disable the data gathering process manually in NVDA's
 Most NVDA-specific keyboard commands consist of pressing a particular key called the NVDA modifier key in conjunction with one or more other keys.
 Notable exceptions to this are the text review commands for the desktop keyboard layout which just use the numpad keys by themselves, but there are some other exceptions as well.
 
-NVDA can be configured so that the numpad Insert, Extended Insert and/or Caps Lock key can be used as the NVDA modifier key.
-By default, both the numpad Insert and Extended Insert keys are set as NVDA modifier keys.
+NVDA can be configured so that the Insert, numpad Insert, and/or Caps Lock key can be used as the NVDA modifier key.
+By default, both the Insert and numpad Insert keys are set as NVDA modifier keys.
 
 If you wish to cause one of the NVDA modifier keys to behave as it usually would if NVDA were not running (e.g. you wish to turn Caps Lock on when you have set Caps Lock to be an NVDA modifier key), you can press the key twice in quick succession.
 
