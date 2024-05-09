@@ -20,6 +20,7 @@
 ### Bug Fixes
 
 * NVDA will announce correctly the autocomplete suggestions in Eclipse and other Eclipse-based environments on Windows 11. (#16416, @thgcode)
+* Improved reliability of automatic text readout, particularly in terminal applications. (#15850, #16027, @Danstiv)
 * Braille cursor routing is now much more reliable when a line contains one or more Unicode variation selectors or decomposed characters. (#10960, #16477, @mltony, @LeonarddeR)
 * NVDA will correctly announce selection changes when editing a cell's text in Microsoft Excel. (#15843)
 
