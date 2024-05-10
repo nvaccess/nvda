@@ -13,7 +13,7 @@ There are many new braille features and bug fixes.
 A new braille mode called "display speech output" has been added.
 When active, the braille display shows exactly what NVDA speaks.
 Support was also added for the BrailleEdgeS2 and BrailleEdgeS3 displays.
-LibLouis was updated, adding new detailed (with capital letters indicated) Belarusian and Ukrainian Braille tables, along with a Spanish table for reading Greek texts.
+LibLouis was updated, adding new detailed (with capital letters indicated) Belarusian and Ukrainian Braille tables, a Lao table, and a Spanish table for reading Greek texts.
 
 eSpeak was updated, adding new language Tigrinya.
 
@@ -61,7 +61,9 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
   * The community reviews action will be available, and the reviews webpage will be shown in the details panel, in all tabs of the store. (#16179, @nvdaes)
 * Component updates:
   * Updated LibLouis Braille translator to [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0). (#16259, @codeofdusk)
-    * Added new detailed (with capital letters indicated) Belarusian and Ukrainian Braille tables, along with a Spanish table for reading Greek texts.
+    * New detailed (with capital letters indicated) Belarusian and Ukrainian Braille tables.
+    * New Spanish table for reading Greek texts.
+    * New table for Lao Grade 1. (#16470)
   * eSpeak NG has been updated to 1.52-dev commit `cb62d93fd7`. (#15913)
     * Added new language Tigrinya. 
 * Changed several gestures for BrailleSense devices to avoid conflicts with characters of the French braille table. (#15306)
