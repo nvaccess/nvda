@@ -13,6 +13,7 @@ If you are new to the project, or looking for some way to help take a look at:
   - This allows us to discuss these aspects and any other concerns that might arise, thus potentially avoiding a great deal of wasted time.
 - It is recommended to wait for acceptance of your proposal before you start coding.
   - A `triaged` label is an indicator that an issue is ready for a fix.
+  - A triaged issue should have a priority, as a developer, consider focusing on higher priority issues (p1-p3) instead of lower priority issues (p4-p5).
   - Please understand that we very likely will not accept changes that are not discussed first.
   - Consider starting a [GitHub discussion](https://github.com/nvaccess/nvda/discussions) or [mailing list topic](https://groups.io/g/nvda-devel/topics) to see if there is interest.
 - A minor/trivial change which definitely wouldn't require design, user experience or implementation discussion, you can just create a pull request rather than using an issue first.
@@ -24,7 +25,7 @@ If you are new to the project, or looking for some way to help take a look at:
 
 ### Overview of contribution process:
 1. [Setup your development environment](./createDevEnvironment.md).
-        - Alternatively, you can use [AppVeyor](https://appveyor.com/) to build NVDA for you, without setting up a local development environment, by following [this how-to](./buildingNVDAOnAppveyor.md).
+        - Alternatively, you can use [AppVeyor](https://appveyor.com/) to build NVDA for you, without setting up a local development environment, by following [this how-to](./buildingNVDAOnAppVeyor.md).
 1. Ensure the issue you plan to fix is [triaged](../issues/triage.md)
 1. Create a branch for the contribution, to be used for a pull request.
 	- Pull requests should be based on the latest commit in the official master branch.
