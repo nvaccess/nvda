@@ -777,6 +777,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 			tmpInfo = info.copy()
 			if codepointOffsetLeft <= codepointOffsetRight:
 				# Move from the left end of info. Let's compute by how many characters in moveCharacters variable.
+				moveFromLeft = True
 				tmpInfo.collapse()
 				if (
 					lastRecursed is not None and (
@@ -802,6 +803,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 				tmpInfo.collapse(end=True)
 			else:
 				# Move from the right end of info.
+				moveFromLeft = False
 				tmpInfo.collapse(end=True)
 				if (
 					lastRecursed is not None and (
@@ -825,10 +827,15 @@ class TextInfo(baseObject.AutoPropertyObject):
 				tmpInfo.collapse()
 			if code == 0:
 				raise RuntimeError("Move by character operation unexpectedly failed.")
-			if actualCodepointOffset <= 0 or actualCodepointOffset >= totalCodepointOffset:
+			if (
+				(not moveFromLeft and actualCodepointOffset <= 0)
+				or (moveFromLeft and actualCodepointOffset >= totalCodepointOffset)
+			):
 				# We overshot, call this recursion attempt failed and try again lower movement
 				lastRecursed = 0
 				continue
+			if actualCodepointOffset < 0 or actualCodepointOffset > totalCodepointOffset:
+				raise RuntimeError(f"{actualCodepointOffset=} went out of the boundaries; {totalCodepointOffset=}")
 			if actualCodepointOffset == codepointOffsetLeft:
 				return tmpInfo
 			elif actualCodepointOffset < codepointOffsetLeft:

@@ -248,10 +248,9 @@ The actual commands will not execute while in input help mode.
 |Move to next synth setting |`NVDA+control+rightArrow` |`NVDA+shift+control+rightArrow` |Moves to the next available speech setting after the current, wrapping around to the first setting again after the last|
 |Move to previous synth setting |`NVDA+control+leftArrow` |`NVDA+shift+control+leftArrow` |Moves to the next available speech setting before the current, wrapping around to the last setting after the first|
 |Increment current synth setting |`NVDA+control+upArrow` |`NVDA+shift+control+upArrow` |increases the current speech setting you are on. E.g. increases the rate, chooses the next voice, increases the volume|
-|Increment the current synth setting in a larger step |`NVDA+control+pageUp` |`NVDA+shift+control+pageUp` |Increases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump forward every 20 voices; when you're on slider settings (rate, pitch, etc) it will jump forward the value up to 20%|
-
+|Increment the current synth setting in larger steps |`NVDA+control+pageUp` |`NVDA+shift+control+pageUp` |Increases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump forward every 20 voices; when you're on slider settings (rate, pitch, etc) it will jump forward the value up to 20%|
 |Decrement current synth setting |`NVDA+control+downArrow` |`NVDA+shift+control+downArrow` |decreases the current speech setting you are on. E.g. decreases the rate, chooses the previous voice, decreases the volume|
-|Decrement the current synth setting in a larger step |`NVDA+control+pageDown` |`NVDA+shift+control+pageDown` |Decreases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump backward every 20 voices; when you're on a slider setting, it will jump backward the value up to 20%.|
+|Decrement the current synth setting in larger steps |`NVDA+control+pageDown` |`NVDA+shift+control+pageDown` |Decreases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump backward every 20 voices; when you're on a slider setting, it will jump backward the value up to 20%.|
 
 It is also possible to set the first or last value of the current synth setting by assign custom gestures in [Input Gestures dialog](#InputGestures), under the speech category.
 This means, for example, when you're on a rate setting, it will set the rate to 0 or 100.
@@ -2114,10 +2113,16 @@ This setting allows you to select between the available braille modes.
 |Options |follow cursors, follow speech output|
 |Default |follow cursors|
 
+<<<<<<< HEAD
 | Option |Behaviour|
 |---|---|
 |follow cursors |the braille display will follow either the system focus/caret or the navigator object/review cursor, depending on what braille is tethered to.|
 |follow speech output |the braille display will show what NVDA speaks, or would have spoken if speech mode was set to "talk".|
+=======
+When follow cursors is selected, the braille display will follow either the system focus/caret or the navigator object/review cursor, depending on what braille is tethered to.
+
+When display speech output is selected, the braille display will show what NVDA speaks, or would have spoken if speech mode was set to "talk".
+>>>>>>> 2d865027ef3938d4601bf036743d3e0c8fb54b16
 
 ##### Expand to computer braille for the word at the cursor {#BrailleSettingsExpandToComputerBraille}
 
@@ -2527,7 +2532,26 @@ A gesture allows cycling through the various sound split modes:
 
 <!-- KC:endInclude -->
 
+<<<<<<< HEAD
 ##### Customizing Sound split modes command {#CustomizeSoundSplitModes}
+=======
+By default this command will cycle between the following modes:
+
+* Disabled sound split: both NVDA and other applications output sounds to both left and right channels.
+* NVDA on the left and applications on the right: NVDA will speak in the left channel, while other applications will play sounds in the right channel.
+* NVDA on the right and applications on the left: NVDA will speak in the right channel, while other applications will play sounds in the left channel.
+
+There are more advanced sound split modes available in NVDA setting combo box.
+Please note, that sound split doesn't work as a mixer.
+For example, if an application is playing a stereo sound track while sound split is set to "NVDA on the left and applications on the right", then you will only hear the right channel of the sound track, while the left channel of the sound track will be muted.
+
+This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
+
+Please note, that if NVDA crashes, then it won't be able to restore application sounds volume, and those applications might still output sound only in one channel after NVDA crash.
+In order to mitigate this, please restart NVDA.
+
+##### Customizing Sound split modes {#CustomizeSoundSplitModes}
+>>>>>>> 2d865027ef3938d4601bf036743d3e0c8fb54b16
 
 This checkable list allows selecting which sound split modes are included when cycling between them using `NVDA+alt+s`.
 Navigate to [Sound Split](#SelectSoundSplitMode) to read more about all available modes which you can include or exclude from the key command.
@@ -2542,6 +2566,7 @@ By default only three modes are included.
 Note that it is necessary to check at least one mode.
 This setting is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
+<<<<<<< HEAD
 ##### Volume of other applications {#OtherAppVolume}
 
 This slider allows you to adjust the volume of all currently running applications other than NVDA.
@@ -2575,6 +2600,8 @@ The following keyboard command can also be used from anywhere:
 
 This setting is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
+=======
+>>>>>>> 2d865027ef3938d4601bf036743d3e0c8fb54b16
 #### Vision {#VisionSettings}
 
 The Vision category in the NVDA Settings dialog allows you to enable, disable and configure [visual aids](#Vision).
@@ -5995,4 +6022,3 @@ The following values can be set under this registry key:
 If you require further information or assistance regarding NVDA, please visit the [NVDA web site](NVDA_URL).
 Here, you can find additional documentation, as well as technical support and community resources.
 This site also provides information and resources concerning NVDA development.
-

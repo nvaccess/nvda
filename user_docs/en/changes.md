@@ -13,6 +13,7 @@
 
 * Component updates:
   * Updated Unicode CLDR to version 45.0. (#16507, @OzancanKaratas)
+  * Updated fast_diff_match_patch (used to detect changes in terminals and other dynamic content) to version 2.1.0. (#16508, @codeofdusk)
 * The fallback braille input table is now equal to the fallback output table, which is Unified English Braille Code grade 1. (#9863, @JulienCochuyt, @LeonarddeR)
 * NVDA will now report figures with no accessible children, but with a label or description. (#14514)
 * When reading by line in browse mode, "caption" is no longer reported on each line of a long figure or table caption. (#14874)
@@ -43,16 +44,16 @@ It is especially useful to read the error location markers in tracebacks. (#1632
 ## 2024.2
 
 There is a new feature called sound split.
-This allows splitting NVDA sounds into one channel (e.g. left) while sounds from all other applications are placed in the other channel (e.g. right).
+This allows splitting NVDA sounds into one channel (e.g. left) while sounds from all other applications are directed to the other channel (e.g. right).
 
-There are new commands for modifying the synth settings ring, allowing users to jump to the first or last setting, and to increase or decrease the current setting in a larger step.
-There are also new quick navigation commands, allowing userts to bind gestures to quickly jump between: paragraph, vertically aligned paragraph, same style text, different style text, menu item, toggle button, progress bar, figure, and math formula.
+There are new commands for modifying the synth settings ring, allowing users to jump to the first or last setting, and to increase or decrease the current setting in larger steps.
+There are also new quick navigation commands, allowing users to bind gestures to quickly jump between: paragraph, vertically aligned paragraph, same style text, different style text, menu item, toggle button, progress bar, figure, and math formula.
 
 There are many new braille features and bug fixes.
 A new braille mode called "display speech output" has been added.
-When active, the braille display shows exactly what NVDA prepares to speak.
-Support was also added for the BrailleEdgeS2, BrailleEdgeS3 braille devices.
-LibLouis was updated, adding new detailed (with capital letters indicated) Belarusian and Ukrainian Braille tables, along with a Spanish table for reading Greek texts.
+When active, the braille display shows exactly what NVDA speaks.
+Support was also added for the BrailleEdgeS2 and BrailleEdgeS3 displays.
+LibLouis was updated, adding new detailed (with capital letters indicated) Belarusian and Ukrainian Braille tables, a Lao table, and a Spanish table for reading Greek texts.
 
 eSpeak was updated, adding new language Tigrinya.
 
@@ -78,15 +79,13 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
       * Laptop: `NVDA+control+shift+pageUp` or `NVDA+control+shift+pageDown`.
   * Added a new unassigned input gesture to toggle the reporting of figures and captions. (#10826, #14349)
 * Braille:
-  * Added support for the BrailleEdgeS2, BrailleEdgeS3 braille device. (#16033, #16279, @EdKweon)
+  * Added support for the BrailleEdgeS2 and BrailleEdgeS3 displays. (#16033, #16279, @EdKweon)
   * A new braille mode called "display speech output" has been added. (#15898, @Emil-18)
-    * When active, the braille display shows exactly what NVDA prepares to speak.
+    * When active, the braille display shows exactly what NVDA speaks.
     * It can be toggled by pressing `NVDA+alt+t`, or from the braille settings dialog.
 * Sound split: (#12985, @mltony)
-  * Allows splitting NVDA sounds into one channel (e.g. left) while sounds from all other applications are placed in the other channel (e.g. right).
+  * Allows splitting NVDA sounds into one channel (e.g. left) while sounds from all other applications are directed to the other channel (e.g. right).
   * Toggled by `NVDA+alt+s`.
-  * The volume of the other applications can be adjusted by `NVDA+alt+pageUp` and `NVDA+alt+pageDown`. (#16052, @mltony)
-  * The sound of the other applications can be muted with `NVDA+alt+delete`. (#16052, @mltony)
 * Reporting row and column headers is now supported in contenteditable HTML elements. (#14113)
 * Added the option to disable the reporting of figures and captions in Document Formatting settings. (#10826, #14349)
 * In Windows 11, NVDA will announce alerts from voice typing and suggested actions including the top suggestion when copying data such as phone numbers to the clipboard (Windows 11 2022 Update and later). (#16009, @josephsl)
@@ -100,7 +99,9 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
   * The community reviews action will be available, and the reviews webpage will be shown in the details panel, in all tabs of the store. (#16179, @nvdaes)
 * Component updates:
   * Updated LibLouis Braille translator to [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0). (#16259, @codeofdusk)
-    * Added new detailed (with capital letters indicated) Belarusian and Ukrainian Braille tables, along with a Spanish table for reading Greek texts.
+    * New detailed (with capital letters indicated) Belarusian and Ukrainian Braille tables.
+    * New Spanish table for reading Greek texts.
+    * New table for Lao Grade 1. (#16470)
   * eSpeak NG has been updated to 1.52-dev commit `cb62d93fd7`. (#15913)
     * Added new language Tigrinya. 
 * Changed several gestures for BrailleSense devices to avoid conflicts with characters of the French braille table. (#15306)
@@ -117,6 +118,7 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
   * In Version 24H2 (2024 Update and Windows Server 2025), mouse and touch interaction can be used in quick settings. (#16348, @josephsl)
 * Add-on Store:
   * When pressing `ctrl+tab`, focus properly moves to the new current tab title. (#14986, @ABuffEr)
+  * If cache files are not correct, NVDA no longer will restart. (#16362, @nvdaes)
 * Fixes for Chromium-based browsers when used with UIA:
   * Fixed bugs causing NVDA to hang. (#16393, #16394)
   * Backspace key is now working correctly in Gmail sign-in fields. (#16395)
