@@ -6,13 +6,13 @@
 There is a new feature called sound split.
 This allows splitting NVDA sounds into one channel (e.g. left) while sounds from all other applications are placed in the other channel (e.g. right).
 
-There are new commands for modifying the synth settings ring, allowing users to jump to the first or last setting, and to increase or decrease the current setting in a larger step.
-There are also new quick navigation commands, allowing userts to bind gestures to quickly jump between: paragraph, vertically aligned paragraph, same style text, different style text, menu item, toggle button, progress bar, figure, and math formula.
+There are new commands for modifying the synth settings ring, allowing users to jump to the first or last setting, and to increase or decrease the current setting in larger steps.
+There are also new quick navigation commands, allowing users to bind gestures to quickly jump between: paragraph, vertically aligned paragraph, same style text, different style text, menu item, toggle button, progress bar, figure, and math formula.
 
 There are many new braille features and bug fixes.
 A new braille mode called "display speech output" has been added.
-When active, the braille display shows exactly what NVDA prepares to speak.
-Support was also added for the BrailleEdgeS2, BrailleEdgeS3 braille devices.
+When active, the braille display shows exactly what NVDA speaks.
+Support was also added for the BrailleEdgeS2 and BrailleEdgeS3 displays.
 LibLouis was updated, adding new detailed (with capital letters indicated) Belarusian and Ukrainian Braille tables, along with a Spanish table for reading Greek texts.
 
 eSpeak was updated, adding new language Tigrinya.
@@ -39,9 +39,9 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
       * Laptop: `NVDA+control+shift+pageUp` or `NVDA+control+shift+pageDown`.
   * Added a new unassigned input gesture to toggle the reporting of figures and captions. (#10826, #14349)
 * Braille:
-  * Added support for the BrailleEdgeS2, BrailleEdgeS3 braille device. (#16033, #16279, @EdKweon)
+  * Added support for the BrailleEdgeS2 and BrailleEdgeS3 displays. (#16033, #16279, @EdKweon)
   * A new braille mode called "display speech output" has been added. (#15898, @Emil-18)
-    * When active, the braille display shows exactly what NVDA prepares to speak.
+    * When active, the braille display shows exactly what NVDA speaks.
     * It can be toggled by pressing `NVDA+alt+t`, or from the braille settings dialog.
 * Sound split: (#12985, @mltony)
   * Allows splitting NVDA sounds into one channel (e.g. left) while sounds from all other applications are placed in the other channel (e.g. right).
@@ -4852,4 +4852,3 @@ Major highlights of this release include support for 64 bit editions of Windows;
 * NVDA now asks if it should save configuration and restart if the user has just changed the language in the User Interface Settings Dialog. NVDA must be restarted for the language change to fully take effect.
 * If a synthesizer can not be loaded, when choosing it from the synthesizer dialog, a message box alerts the user to the fact.
 * When loading a synthesizer for the first time, NVDA lets the synthesizer choose the most suitable voice, rate and pitch parameters, rather than forcing it to defaults it thinks are ok. This fixes a problem where Eloquence and Viavoice sapi4 synths start speaking way too fast for the first time.
-

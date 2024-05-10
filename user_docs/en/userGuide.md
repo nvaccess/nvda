@@ -248,10 +248,9 @@ The actual commands will not execute while in input help mode.
 |Move to next synth setting |`NVDA+control+rightArrow` |`NVDA+shift+control+rightArrow` |Moves to the next available speech setting after the current, wrapping around to the first setting again after the last|
 |Move to previous synth setting |`NVDA+control+leftArrow` |`NVDA+shift+control+leftArrow` |Moves to the next available speech setting before the current, wrapping around to the last setting after the first|
 |Increment current synth setting |`NVDA+control+upArrow` |`NVDA+shift+control+upArrow` |increases the current speech setting you are on. E.g. increases the rate, chooses the next voice, increases the volume|
-|Increment the current synth setting in a larger step |`NVDA+control+pageUp` |`NVDA+shift+control+pageUp` |Increases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump forward every 20 voices; when you're on slider settings (rate, pitch, etc) it will jump forward the value up to 20%|
-
+|Increment the current synth setting in larger steps |`NVDA+control+pageUp` |`NVDA+shift+control+pageUp` |Increases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump forward every 20 voices; when you're on slider settings (rate, pitch, etc) it will jump forward the value up to 20%|
 |Decrement current synth setting |`NVDA+control+downArrow` |`NVDA+shift+control+downArrow` |decreases the current speech setting you are on. E.g. decreases the rate, chooses the previous voice, decreases the volume|
-|Decrement the current synth setting in a larger step |`NVDA+control+pageDown` |`NVDA+shift+control+pageDown` |Decreases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump backward every 20 voices; when you're on a slider setting, it will jump backward the value up to 20%.|
+|Decrement the current synth setting in larger steps |`NVDA+control+pageDown` |`NVDA+shift+control+pageDown` |Decreases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump backward every 20 voices; when you're on a slider setting, it will jump backward the value up to 20%.|
 
 It is also possible to set the first or last value of the current synth setting by assign custom gestures in [Input Gestures dialog](#InputGestures), under the speech category.
 This means, for example, when you're on a rate setting, it will set the rate to 0 or 100.
@@ -1946,7 +1945,7 @@ Currently, two braille modes are supported, "follow cursors" and "display speech
 
 When follow cursors is selected, the braille display will follow either the system focus/caret or the navigator object/review cursor, depending on what braille is tethered to.
 
-When display speech output is selected, the braille display will show what NVDA speaks, or would have spoken if speech mode was set to "talk"
+When display speech output is selected, the braille display will show what NVDA speaks, or would have spoken if speech mode was set to "talk".
 
 ##### Expand to computer braille for the word at the cursor {#BrailleSettingsExpandToComputerBraille}
 
@@ -4981,4 +4980,3 @@ The following values can be set under this registry key:
 If you require further information or assistance regarding NVDA, please visit the [NVDA web site](NVDA_URL).
 Here, you can find additional documentation, as well as technical support and community resources.
 This site also provides information and resources concerning NVDA development.
-
