@@ -1817,7 +1817,7 @@ When this option is enabled, unicode normalization is performed on the text that
 This is beneficial when speaking characters that can be represented in several forms.
 NVDA uses the NFKC (Normalization Form Compatibility Composition) algorithm, which provides the following benefits, among others:
 
-1. The bold and italic versions of characters that are part of the unicode standard and are usually used on social media are normalized to their most common compatible equivalent.
+1. The bold and italic versions of characters that are part of the unicode standard and are commonly used on social media are normalized to their most common compatible equivalent.
 For example, the latin letter "h" can also be presented as "𝐡" (bold), "ℎ" (itallic), etc. but will always be spoken as "h" when normalization is enabled.
 
 1. Normalization to composed characters.
@@ -2077,7 +2077,7 @@ Enabling this may allow for more fluent reading, but generally requires you to s
 |Default |Disabled|
 
 When this option is enabled, unicode normalization is performed on the text that is brailled on the braille display.
-This is beneficial when coming across characters in braille that are unknown in a particular braille table and which have a compatible alternative, like the bold and italic characters usually use on social media.
+This is beneficial when coming across characters in braille that are unknown in a particular braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
 Other benefits of unicode normalization are explained in greater detail in the [section for the equivalent speech setting](#SpeechSettingsUnicodeNormalization).
 
 ##### Focus context presentation {#BrailleSettingsFocusContextPresentation}
