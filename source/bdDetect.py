@@ -669,5 +669,5 @@ class DriverRegistrar:
 
 
 class DeviceMathcer:
-    fallBackDevices = list()
-    matches = list()
+    fallBackDevices: List[?] = []
+    matches: List[?] = []
