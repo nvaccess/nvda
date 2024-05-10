@@ -2746,25 +2746,6 @@ class AudioPanel(SettingsPanel):
 		self.bindHelpEvent("SoundVolume", self.soundVolSlider)
 		self.soundVolSlider.SetValue(config.conf["audio"]["soundVolume"])
 
-		# Translators: This is the label for a slider control in the
-		# Audio settings panel.
-		label = _("Volume of other applications")
-		self.appSoundVolSlider: nvdaControls.EnhancedInputSlider = sHelper.addLabeledControl(
-			label,
-			nvdaControls.EnhancedInputSlider,
-			minValue=0,
-			maxValue=100
-		)
-		self.bindHelpEvent("OtherAppVolume", self.appSoundVolSlider)
-		self.appSoundVolSlider.SetValue(config.conf["audio"]["applicationsSoundVolume"])
-
-		# Translators: This is the label for a checkbox control in the
-		# Audio settings panel.
-		label = _("Mute other applications")
-		self.muteApplicationsCheckBox: wx.CheckBox = sHelper.addItem(wx.CheckBox(self, label=label))
-		self.bindHelpEvent("MuteApplications", self.muteApplicationsCheckBox)
-		self.muteApplicationsCheckBox.SetValue(config.conf["audio"]["applicationsMuted"])
-
 		# Translators: This is a label for the sound split combo box in the Audio Settings dialog.
 		soundSplitLabelText = _("&Sound split mode:")
 		self.soundSplitComboBox = sHelper.addLabeledControl(
@@ -2854,8 +2835,6 @@ class AudioPanel(SettingsPanel):
 
 		config.conf["audio"]["soundVolumeFollowsVoice"] = self.soundVolFollowCheckBox.IsChecked()
 		config.conf["audio"]["soundVolume"] = self.soundVolSlider.GetValue()
-		config.conf["audio"]["applicationsSoundVolume"] = self.appSoundVolSlider.GetValue()
-		config.conf["audio"]["applicationsMuted"] = self.muteApplicationsCheckBox.IsChecked()
 
 		index = self.soundSplitComboBox.GetSelection()
 		config.conf["audio"]["soundSplitState"] = index
@@ -2885,8 +2864,6 @@ class AudioPanel(SettingsPanel):
 			wasapi
 			and not self.soundVolFollowCheckBox.IsChecked()
 		)
-		self.appSoundVolSlider.Enable(wasapi)
-		self.muteApplicationsCheckBox.Enable(wasapi)
 		self.soundSplitComboBox.Enable(wasapi)
 		self.soundSplitModesList.Enable(wasapi)
 

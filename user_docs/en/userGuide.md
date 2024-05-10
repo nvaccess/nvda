@@ -2233,7 +2233,6 @@ By default this command will cycle between the following modes:
 * NVDA on the right and applications on the left: NVDA will speak in the right channel, while other applications will play sounds in the left channel.
 
 There are more advanced sound split modes available in NVDA setting combo box.
-If you wish to adjust volume of all applications except for NVDA, consider using [the dedicated commands](#OtherAppVolume).
 Please note, that sound split doesn't work as a mixer.
 For example, if an application is playing a stereo sound track while sound split is set to "NVDA on the left and applications on the right", then you will only hear the right channel of the sound track, while the left channel of the sound track will be muted.
 
@@ -2253,39 +2252,6 @@ By default only three modes are included.
 * NVDA on the right and all other applications on the left channel.
 
 Note that it is necessary to check at least one mode.
-This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
-
-##### Volume of other applications {#OtherAppVolume}
-
-This slider allows you to adjust the volume of all currently running applications other than NVDA.
-This volume setting will apply to all other applications sound output, even if they start after this setting is changed.
-This volume can also be controlled via the following keyboard commands from anywhere:
-
-<!-- KC:beginInclude -->
-
-| Name |Key |Description|
-|---|---|---|
-|Increase applications volume |`NVDA+alt+pageUp` |Increases volume of all applications except NVDA.|
-|Decrease applications volume |`NVDA+alt+pageDown` |Decreases volume of all applications except NVDA.|
-
-<!-- KC:endInclude -->
-
-This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
-
-##### Mute other applications {#MuteApplications}
-
-This checkbox allows you to mute all applications other than NVDA.
-This mute setting will apply to all other applications outputting sound, even if they start after this setting is changed.
-The following keyboard command can also be used from anywhere:
-
-<!-- KC:beginInclude -->
-
-| Name |Key |Description|
-|---|---|---|
-|Toggle mute other applications |`NVDA+alt+delete` |Mutes or unmutes all applications other than NVDA.|
-
-<!-- KC:endInclude -->
-
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
 #### Vision {#VisionSettings}
