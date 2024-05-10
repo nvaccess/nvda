@@ -2392,6 +2392,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		# if direction == "previous" then it spans from the beginning of current paragraph until cursor+1
 		# For all following iterations paragraph will represent a complete paragraph.
 		styles = self._mergeIdenticalStyles(self._extractStyles(paragraph))
+		if len(styles) < 2:
+			return
 		initialStyle = styles[0 if direction == documentBase._Movement.NEXT else -2]
 		# Creating currentTextInfo - text written in initialStyle in this paragraph.
 		currentTextInfo = initialTextInfo.copy()
@@ -2545,17 +2547,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			desiredValue = paragraphFunction(info)
 		for i in range(self.MAX_ITERATIONS_FOR_SIMILAR_PARAGRAPH):
 			# move by one paragraph in the desired direction
-			try:
-				info.collapse(end=direction == _Movement.NEXT)
-			except RuntimeError:
-				# Microsoft Word raises RuntimeError when collapsing textInfo to the last character of the document.
-				return
-
-			if direction == _Movement.PREVIOUS:
-				if info.move(textInfos.UNIT_CHARACTER, -1) == 0:
-					return
-			info.expand(textInfos.UNIT_PARAGRAPH)
-			if info.isCollapsed:
+			if not self._moveToNextParagraph(info, direction):
 				return
 			value = paragraphFunction(info)
 			if value == desiredValue:
