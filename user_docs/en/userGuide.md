@@ -1656,6 +1656,7 @@ Please note that NVDA must be restarted when changing the language.
 When the confirmation dialog appears, select "restart now" or "restart later" if you wish to use the new language now or at a later time, respectively. If "restart later" is selected, the configuration must be saved (either manually or using the save on exit functionality).
 
 ##### Save configuration on exit {#GeneralSettingsSaveConfig}
+This checkbox tells NVDA whether settings should be saved automatically when you exit NVDA.
 
 | . {.hideHeaderRow} |.|
 |---|---|
