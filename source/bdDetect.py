@@ -631,7 +631,7 @@ class DriverRegistrar:
 			driverUsb = devs[type]
 			driverUsb.update(ids)
 		else:
-			DeviceMathcer.fallBackDevices.extend([(type, id) for id in ids])
+			DeviceMatcher.fallBackDevices.extend([(type, id) for id in ids])
 
 	def addBluetoothDevices(self, matchFunc: MatchFuncT):
 		"""Associate Bluetooth HID or COM ports with the driver on this instance.
