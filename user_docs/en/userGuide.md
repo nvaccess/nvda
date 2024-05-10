@@ -568,15 +568,15 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |off, beeps, talk, on-demand|
+|Options |talk, on-demand, off, beeps|
 |Default |talk|
 
 | Option |Behaviour|
 |---|---|
-|off |NVDA will not speak anything, however it will silently react to commands.|
-|beeps |NVDA will replace normal speech with short beeps.|
 |talk |NVDA will speak normally in reaction to screen changes, notifications, and actions such as moving the focus, or issuing commands.|
 |on-demand |NVDA will only speak when you use commands with a reporting function (e.g. report the title of the window); but it will not speak in reaction to actions such as moving the focus or the cursor.|
+|off |NVDA will not speak anything, however it will silently react to commands.|
+|beeps |NVDA will replace normal speech with short beeps.|
 
 The speech mode governs how screen content, notifications, responses to commands, and other output is spoken during operation of NVDA.
 The default mode is "talk", which speaks in situations that are expected when using a screen reader.
