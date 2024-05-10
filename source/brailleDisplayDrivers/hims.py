@@ -278,7 +278,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		super(BrailleDisplayDriver, self).__init__()
 		self.numCells = 0
 		self._model = None
-		self._serData = b''
+		self._serialData = b''
 
 		for match in self._getTryPorts(port):
 			portType, portId, port, portInfo = match
