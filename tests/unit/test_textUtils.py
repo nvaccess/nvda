@@ -244,27 +244,27 @@ class TestUnicodeNormalizationOffsetConverter(unittest.TestCase):
 			15, 16, 17, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,  # geïnteresseerde
 			31, 33, 34, 35, 36, 37,  # ijsbeer
 		)
-		self.assertSequenceEqual(converter._strToEncodedOffsets, expectedStrToEncoded)
+		self.assertSequenceEqual(converter.computedStrToEncodedOffsets, expectedStrToEncoded)
 		expectedEncodedToStr = (
 			0, 2, 4, 5,  # Één
 			6, 7, 8, 9, 10, 11, 12, 12, 13, 14, 15,  # eigenwijze
 			16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32,  # geïnteresseerde
 			33, 33, 34, 35, 36, 37, 38,  # ijsbeer
 		)
-		self.assertSequenceEqual(converter._encodedToStrOffsets, expectedEncodedToStr)
+		self.assertSequenceEqual(converter.computedEncodedToStrOffsets, expectedEncodedToStr)
 
 	def test_normalizedOfssetsMixed(self):
 		text = "Ééĳo"
 		converter = UnicodeNormalizationOffsetConverter(text, "NFKC")
 		expectedStrToEncoded = (0, 0, 1, 1, 2, 4)
-		self.assertSequenceEqual(converter._strToEncodedOffsets, expectedStrToEncoded)
+		self.assertSequenceEqual(converter.computedStrToEncodedOffsets, expectedStrToEncoded)
 		expectedEncodedToStr = (0, 2, 4, 4, 5)
-		self.assertSequenceEqual(converter._encodedToStrOffsets, expectedEncodedToStr)
+		self.assertSequenceEqual(converter.computedEncodedToStrOffsets, expectedEncodedToStr)
 
 	def test_normalizedOfssetsDifferentOrder(self):
 		text = "בְּרֵאשִׁית"
 		converter = UnicodeNormalizationOffsetConverter(text, "NFKC")
 		expectedStrToEncoded = (0, 2, 1, 3, 4, 5, 6, 8, 7, 9, 10)
-		self.assertSequenceEqual(converter._strToEncodedOffsets, expectedStrToEncoded)
+		self.assertSequenceEqual(converter.computedStrToEncodedOffsets, expectedStrToEncoded)
 		expectedEncodedToStr = (0, 2, 1, 3, 4, 5, 6, 8, 7, 9, 10)
-		self.assertSequenceEqual(converter._encodedToStrOffsets, expectedEncodedToStr)
+		self.assertSequenceEqual(converter.computedEncodedToStrOffsets, expectedEncodedToStr)

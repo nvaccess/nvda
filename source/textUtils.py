@@ -429,14 +429,14 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 	which takes two characters instead of one.
 	"""
 	normalizationForm: str
-	_strToEncodedOffsets: tuple[int]
-	_encodedToStrOffsets: tuple[int]
+	computedStrToEncodedOffsets: tuple[int]
+	computedEncodedToStrOffsets: tuple[int]
 
 	def __init__(self, text: str, normalizationForm: str = DEFAULT_UNICODE_NORMALIZATION_ALGORITHM):
 		super().__init__(text)
 		self.normalizationForm = normalizationForm
 		self.encoded: str = unicodedata.normalize(normalizationForm, text)
-		self._strToEncodedOffsets, self._encodedToStrOffsets = self._calculateOffsets()
+		self.computedStrToEncodedOffsets, self.computedEncodedToStrOffsets = self._calculateOffsets()
 
 	def _calculateOffsets(self) -> tuple[tuple[int], tuple[int]]:
 		diff = list(ndiff(self.decoded, self.encoded))
@@ -529,13 +529,13 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 		if strStart == 0:
 			resultStart = 0
 		else:
-			resultStart = self._strToEncodedOffsets[strStart]
+			resultStart = self.computedStrToEncodedOffsets[strStart]
 		if strEnd is None:
 			return resultStart
 		elif strStart == strEnd:
 			return (resultStart, resultStart)
 		else:
-			resultEnd = self._strToEncodedOffsets[strEnd]
+			resultEnd = self.computedStrToEncodedOffsets[strEnd]
 			return (resultStart, resultEnd)
 
 	def encodedToStrOffsets(
@@ -548,13 +548,13 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 		if encodedStart == 0:
 			resultStart = 0
 		else:
-			resultStart = self._encodedToStrOffsets[encodedStart]
+			resultStart = self.computedEncodedToStrOffsets[encodedStart]
 		if encodedEnd is None:
 			return resultStart
 		elif encodedStart == encodedEnd:
 			return (resultStart, resultStart)
 		else:
-			resultEnd = self._encodedToStrOffsets[encodedEnd]
+			resultEnd = self.computedEncodedToStrOffsets[encodedEnd]
 			return (resultStart, resultEnd)
 
 

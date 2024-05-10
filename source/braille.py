@@ -501,7 +501,11 @@ class Region(object):
 		if config.conf["braille"]["unicodeNormalization"] and not isNormalized(self.rawText):
 			converter = UnicodeNormalizationOffsetConverter(self.rawText)
 			textToTranslate = converter.encoded
-			textToTranslateTypeforms = [self.rawTextTypeforms[i] for i in converter._encodedToStrOffsets]
+			# Typeforms must be adapted to represent normalized characters.
+			textToTranslateTypeforms = [
+				self.rawTextTypeforms[strOffset] for strOffset in converter.computedEncodedToStrOffsets
+			]
+			# Convert the cursor position to a normalized offset.
 			cursorPos = converter.strToEncodedOffsets(self.cursorPos)
 		else:
 			textToTranslate = self.rawText
@@ -515,8 +519,12 @@ class Region(object):
 			cursorPos=cursorPos
 		)
 		if converter:
+			# The received brailleToRawPos contains braille to normalized positions.
+			# Process them to represent real raw positions by converting them from normalized ones.
 			brailleToRawPos = [converter.encodedToStrOffsets(i) for i in brailleToRawPos]
-			rawToBraillePos = [rawToBraillePos[i] for i in converter._strToEncodedOffsets]
+			# The received rawToBraillePos contains normalized to braille positions.
+			# Create a new list based on real raw positions.
+			rawToBraillePos = [rawToBraillePos[i] for i in converter.computedStrToEncodedOffsets]
 		self.brailleToRawPos = brailleToRawPos
 		self.rawToBraillePos = rawToBraillePos
 		if (
