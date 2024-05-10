@@ -13,6 +13,7 @@
 
 * Component updates:
   * Updated Unicode CLDR to version 45.0. (#16507, @OzancanKaratas)
+  * Updated fast_diff_match_patch (used to detect changes in terminals and other dynamic content) to version 2.1.0. (#16508, @codeofdusk)
 * The fallback braille input table is now equal to the fallback output table, which is Unified English Braille Code grade 1. (#9863, @JulienCochuyt, @LeonarddeR)
 * NVDA will now report figures with no accessible children, but with a label or description. (#14514)
 * When reading by line in browse mode, "caption" is no longer reported on each line of a long figure or table caption. (#14874)
