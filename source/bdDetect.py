@@ -472,8 +472,8 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 		)
 	)
 	for match in usbDevs:
-		if (match.type, match.id) in DeviceMathcer.fallBackDevices:
-			DeviceMathcer.matches.append(match)
+		if (match.type, match.id) in FallbackDevicesStore.fallBackDevices:
+			FallbackDevicesStore.matches.append(match)
 			continue
 
 		if driver == _getStandardHidDriverName():
@@ -485,8 +485,8 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 				if match.type == type and match.id in ids:
 					yield match
 
-	for match in DeviceMathcer.matches:
-		if (match.type, match.id) in DeviceMathcer.fallBackDevices:
+	for match in FallbackDevicesStore.matches:
+		if (match.type, match.id) in FallbackDevicesStore.fallBackDevices:
 			yield match
 
 def getPossibleBluetoothDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
@@ -637,7 +637,7 @@ class DriverRegistrar:
 			driverUsb = devs[type]
 			driverUsb.update(ids)
 		else:
-			DeviceMatcher.fallBackDevices.extend([(type, id) for id in ids])
+			FallbackDevicesStore.fallBackDevices.extend([(type, id) for id in ids])
 
 	def addBluetoothDevices(self, matchFunc: MatchFuncT):
 		"""Associate Bluetooth HID or COM ports with the driver on this instance.
@@ -675,5 +675,5 @@ class DriverRegistrar:
 
 
 class FallbackDevicesStore:
-    fallBackDevices: List[?] = []
-    matches: List[?] = []
+    fallBackDevices: List[Tuple[DeviceType, str]] = []
+    matches: List[DeviceMatch] = []
