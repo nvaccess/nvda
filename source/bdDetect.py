@@ -471,6 +471,8 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 			for port in deviceInfoFetcher.usbComPorts
 		)
 	)
+ 
+	FallbackDevicesStore.matches.clear()
 	for match in usbDevs:
 		if (match.type, match.id) in FallbackDevicesStore.fallBackDevices:
 			FallbackDevicesStore.matches.append(match)
