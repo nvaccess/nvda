@@ -52,31 +52,48 @@ This is because the first and only first level TOC element is the heading for th
   content: counter(toc1-counter) "." counter(toc2-counter) "." counter(toc3-counter) "." counter(toc4-counter) "." counters(toc5-counter) ". ";
 }
 
-/* RTL */
+/* Eastern Arabic */
 
-:lang(ar) .toc > ul > li > ul > li a:before,
 :lang(fa) .toc > ul > li > ul > li a:before {
   content: counter(toc1-counter, arabic-indic) ". ";
 }
 
-:lang(ar) .toc > ul > li > ul > li > ul > li a:before,
 :lang(fa) .toc > ul > li > ul > li > ul > li a:before {
   content: counter(toc2-counter, arabic-indic) "." counter(toc1-counter, arabic-indic) ". ";
 }
 
-:lang(ar) .toc > ul > li > ul > li > ul > li > ul > li a:before,
 :lang(fa) .toc > ul > li > ul > li > ul > li > ul > li a:before {
   content: counter(toc3-counter, arabic-indic) "." counter(toc2-counter, arabic-indic) "." counter(toc1-counter, arabic-indic) ". ";
 }
 
-:lang(ar) .toc > ul > li > ul > li > ul > li > ul > li > ul > li a:before,
 :lang(fa) .toc > ul > li > ul > li > ul > li > ul > li > ul > li a:before {
   content: counter(toc4-counter, arabic-indic) "." counter(toc3-counter, arabic-indic) "." counter(toc2-counter, arabic-indic) "." counter(toc1-counter, arabic-indic) ". ";
 }
 
-:lang(ar) .toc > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li a:before,
 :lang(fa) .toc > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li a:before {
   content: counter(toc5-counter, arabic-indic) "." counter(toc4-counter, arabic-indic) "." counter(toc3-counter, arabic-indic) "." counter(toc2-counter, arabic-indic) "." counter(toc1-counter, arabic-indic) ". ";
+}
+
+/* Western Arabic */
+
+:lang(ar) .toc > ul > li > ul > li a:before {
+  content: counter(toc1-counter) ". ";
+}
+
+:lang(ar) .toc > ul > li > ul > li > ul > li a:before {
+  content: counter(toc1-counter) "." counter(toc2-counter) ". ";
+}
+
+:lang(ar) .toc > ul > li > ul > li > ul > li > ul > li a:before {
+  content: counter(toc1-counter) "." counter(toc2-counter) "." counter(toc3-counter) ". ";
+}
+
+:lang(ar) .toc > ul > li > ul > li > ul > li > ul > li > ul > li a:before {
+  content: counter(toc1-counter) "." counter(toc2-counter) "." counter(toc3-counter) "." counter(toc4-counter) ". ";
+}
+
+:lang(ar) .toc > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li a:before {
+  content: counter(toc1-counter) "." counter(toc2-counter) "." counter(toc3-counter) "." counter(toc4-counter) "." counter(toc5-counter) ". ";
 }
 
 
