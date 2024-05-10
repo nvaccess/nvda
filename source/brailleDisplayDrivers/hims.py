@@ -248,10 +248,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
 		# Hid device
-		driverRegistrar.addUsbDevices(bdDetect.DeviceType.HID, {
-			"VID_045E&PID_940A",  # Braille Edge3S 40
-		}, True)
-
+		driverRegistrar.addUsbDevices(
+			bdDetect.DeviceType.HID,
+			{
+				"VID_045E&PID_940A",  # Braille Edge3S 40
+			},
+			True
+		)
 		# Bulk devices
 		driverRegistrar.addUsbDevices(bdDetect.DeviceType.CUSTOM, {
 			"VID_045E&PID_930A",  # Braille Sense & Smart Beetle
