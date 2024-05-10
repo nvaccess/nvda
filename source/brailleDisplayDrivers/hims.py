@@ -4,6 +4,7 @@
 # Copyright (C) 2010-2023 Gianluca Casalino, NV Access Limited, Babbage B.V., Leonard de Ruijter,
 # Bram Duvigneau
 
+import typing
 from typing import List
 
 import serial
@@ -274,7 +275,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		)))
 
 	@classmethod
-	def getManualPorts(cls):
+	def getManualPorts(cls) -> typing.Iterator[typing.Tuple[str, str]]:
 		return braille.getSerialPorts()
 
 	def __init__(self, port="auto"):
