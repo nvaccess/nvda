@@ -2616,8 +2616,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.mainBuffer.update()
 			self.mainBuffer.restoreWindow()
 			if scrollTo is not None:
-				if self.buffer is self.messageBuffer:
-					self._dismissMessage(shouldUpdate=False)
 				self.scrollToCursorOrSelection(scrollTo)
 			elif self.buffer is self.mainBuffer:
 				self.update()
