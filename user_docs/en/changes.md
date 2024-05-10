@@ -89,6 +89,7 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
 * Fixed a rare case when saving the configuration may fail to save all profiles. (#16343, @CyrilleB79)
 * In Firefox and Chromium-based browsers, NVDA will correctly enter focus mode when pressing enter when positioned within a presentational list (ul / ol) inside editable content. (#16325)
 * Column state change is automatically reported when selecting columns to display in Thunderbird message list. (#16323)
+* The commandline switches `-h` and `--help` work properly again.. (#16522, @XLTechie)
 
 ### Changes for Developers
 
