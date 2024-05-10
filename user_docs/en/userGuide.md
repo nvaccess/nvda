@@ -433,8 +433,8 @@ However, you can enable or disable the data gathering process manually in NVDA's
 Most NVDA-specific keyboard commands consist of pressing a particular key called the NVDA modifier key in conjunction with one or more other keys.
 Notable exceptions to this are the text review commands for the desktop keyboard layout which just use the numpad keys by themselves, but there are some other exceptions as well.
 
-NVDA can be configured so that the numpad Insert, Extended Insert and/or Caps Lock key can be used as the NVDA modifier key.
-By default, both the numpad Insert and Extended Insert keys are set as NVDA modifier keys.
+NVDA can be configured so that the Insert, numpad Insert, and/or Caps Lock key can be used as the NVDA modifier key.
+By default, both the Insert and numpad Insert keys are set as NVDA modifier keys.
 
 If you wish to cause one of the NVDA modifier keys to behave as it usually would if NVDA were not running (e.g. you wish to turn Caps Lock on when you have set Caps Lock to be an NVDA modifier key), you can press the key twice in quick succession.
 
@@ -2113,16 +2113,10 @@ This setting allows you to select between the available braille modes.
 |Options |follow cursors, follow speech output|
 |Default |follow cursors|
 
-<<<<<<< HEAD
 | Option |Behaviour|
 |---|---|
 |follow cursors |the braille display will follow either the system focus/caret or the navigator object/review cursor, depending on what braille is tethered to.|
 |follow speech output |the braille display will show what NVDA speaks, or would have spoken if speech mode was set to "talk".|
-=======
-When follow cursors is selected, the braille display will follow either the system focus/caret or the navigator object/review cursor, depending on what braille is tethered to.
-
-When display speech output is selected, the braille display will show what NVDA speaks, or would have spoken if speech mode was set to "talk".
->>>>>>> 2d865027ef3938d4601bf036743d3e0c8fb54b16
 
 ##### Expand to computer braille for the word at the cursor {#BrailleSettingsExpandToComputerBraille}
 
@@ -2532,27 +2526,7 @@ A gesture allows cycling through the various sound split modes:
 
 <!-- KC:endInclude -->
 
-<<<<<<< HEAD
-##### Customizing Sound split modes command {#CustomizeSoundSplitModes}
-=======
-By default this command will cycle between the following modes:
-
-* Disabled sound split: both NVDA and other applications output sounds to both left and right channels.
-* NVDA on the left and applications on the right: NVDA will speak in the left channel, while other applications will play sounds in the right channel.
-* NVDA on the right and applications on the left: NVDA will speak in the right channel, while other applications will play sounds in the left channel.
-
-There are more advanced sound split modes available in NVDA setting combo box.
-Please note, that sound split doesn't work as a mixer.
-For example, if an application is playing a stereo sound track while sound split is set to "NVDA on the left and applications on the right", then you will only hear the right channel of the sound track, while the left channel of the sound track will be muted.
-
-This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
-
-Please note, that if NVDA crashes, then it won't be able to restore application sounds volume, and those applications might still output sound only in one channel after NVDA crash.
-In order to mitigate this, please restart NVDA.
-
 ##### Customizing Sound split modes {#CustomizeSoundSplitModes}
->>>>>>> 2d865027ef3938d4601bf036743d3e0c8fb54b16
-
 This checkable list allows selecting which sound split modes are included when cycling between them using `NVDA+alt+s`.
 Navigate to [Sound Split](#SelectSoundSplitMode) to read more about all available modes which you can include or exclude from the key command.
 Modes which are unchecked are excluded.
@@ -2566,42 +2540,6 @@ By default only three modes are included.
 Note that it is necessary to check at least one mode.
 This setting is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
-<<<<<<< HEAD
-##### Volume of other applications {#OtherAppVolume}
-
-This slider allows you to adjust the volume of all currently running applications other than NVDA.
-This volume setting will apply to all other applications sound output, even if they start after this setting is changed.
-This volume can also be controlled via the following keyboard commands from anywhere:
-
-<!-- KC:beginInclude -->
-
-| Name |Key |Description|
-|---|---|---|
-|Increase applications volume |`NVDA+alt+pageUp` |Increases volume of all applications except NVDA.|
-|Decrease applications volume |`NVDA+alt+pageDown` |Decreases volume of all applications except NVDA.|
-
-<!-- KC:endInclude -->
-
-This setting is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
-
-##### Mute other applications {#MuteApplications}
-
-This checkbox allows you to mute all applications other than NVDA.
-This mute setting will apply to all other applications outputting sound, even if they start after this setting is changed.
-The following keyboard command can also be used from anywhere:
-
-<!-- KC:beginInclude -->
-
-| Name |Key |Description|
-|---|---|---|
-|Toggle mute other applications |`NVDA+alt+delete` |Mutes or unmutes all applications other than NVDA.|
-
-<!-- KC:endInclude -->
-
-This setting is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
-
-=======
->>>>>>> 2d865027ef3938d4601bf036743d3e0c8fb54b16
 #### Vision {#VisionSettings}
 
 The Vision category in the NVDA Settings dialog allows you to enable, disable and configure [visual aids](#Vision).
