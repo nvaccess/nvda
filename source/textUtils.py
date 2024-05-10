@@ -558,8 +558,14 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 			return (resultStart, resultEnd)
 
 
-def isNormalized(text: str, normalizationForm: str = DEFAULT_UNICODE_NORMALIZATION_ALGORITHM) -> bool:
+def isUnicodeNormalized(text: str, normalizationForm: str = DEFAULT_UNICODE_NORMALIZATION_ALGORITHM) -> bool:
+	"""Convenience function to wrap unicodedata.is_normalized with a default normalization form."""
 	return unicodedata.is_normalized(normalizationForm, text)
+
+
+def unicodeNormalize(text: str, normalizationForm: str = DEFAULT_UNICODE_NORMALIZATION_ALGORITHM) -> str:
+	"""Convenience function to wrap unicodedata.normalize with a default normalization form."""
+	return unicodedata.normalize(normalizationForm, text)
 
 
 ENCODINGS_TO_CONVERTERS: dict[str, Type[OffsetConverter]] = {

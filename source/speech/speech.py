@@ -25,6 +25,7 @@ import textInfos
 import speechDictHandler
 import characterProcessing
 import languageHandler
+from textUtils import unicodeNormalize
 from . import manager
 from .extensions import speechCanceled, pre_speechCanceled, pre_speech
 from .extensions import filter_speechSequence, speechCanceled
@@ -1569,7 +1570,7 @@ def getTextInfoSpeech(  # noqa: C901
 					indentationDone=True
 			if command:
 				if config.conf["speech"]["unicodeNormalization"]:
-					command = unicodedata.normalize("NFKC", command)
+					command = unicodeNormalize(command)
 				if inTextChunk:
 					relativeSpeechSequence[-1]+=command
 				else:
@@ -1971,7 +1972,7 @@ def getPropertiesSpeech(  # noqa: C901
 	if errorMessage:
 		textList.append(errorMessage)
 	if config.conf["speech"]["unicodeNormalization"]:
-		textList = [unicodedata.normalize("NFKC", t) for t in textList]
+		textList = [unicodeNormalize(t) for t in textList]
 	types.logBadSequenceTypes(textList)
 	return textList
 

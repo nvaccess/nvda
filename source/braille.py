@@ -64,7 +64,7 @@ import queueHandler
 import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
-from textUtils import isNormalized, UnicodeNormalizationOffsetConverter
+from textUtils import isUnicodeNormalized, UnicodeNormalizationOffsetConverter
 import hwIo
 from editableText import EditableText
 
@@ -498,7 +498,7 @@ class Region(object):
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
 			mode |= louis.compbrlAtCursor
 		converter: UnicodeNormalizationOffsetConverter | None = None
-		if config.conf["braille"]["unicodeNormalization"] and not isNormalized(self.rawText):
+		if config.conf["braille"]["unicodeNormalization"] and not isUnicodeNormalized(self.rawText):
 			converter = UnicodeNormalizationOffsetConverter(self.rawText)
 			textToTranslate = converter.encoded
 			# Typeforms must be adapted to represent normalized characters.
