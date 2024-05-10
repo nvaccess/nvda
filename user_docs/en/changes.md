@@ -78,6 +78,7 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
   * In Version 24H2 (2024 Update and Windows Server 2025), mouse and touch interaction can be used in quick settings. (#16348, @josephsl)
 * Add-on Store:
   * When pressing `ctrl+tab`, focus properly moves to the new current tab title. (#14986, @ABuffEr)
+  * If cache files are not correct, NVDA no longer will restart. (#16362, @nvdaes)
 * Fixes for Chromium-based browsers when used with UIA:
   * Fixed bugs causing NVDA to hang. (#16393, #16394)
   * Backspace key is now working correctly in Gmail sign-in fields. (#16395)
