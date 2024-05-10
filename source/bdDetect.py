@@ -668,6 +668,6 @@ class DriverRegistrar:
 			scanForDevices.moveToEnd(scanFunc, last=False)
 
 
-class DeviceMathcer:
+class FallbackDevicesStore:
     fallBackDevices: List[?] = []
     matches: List[?] = []
