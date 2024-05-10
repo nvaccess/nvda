@@ -612,7 +612,7 @@ class DriverRegistrar:
 			ret = _driverDevices[self._driver] = DriverDictT(set)
 			return ret
 
-	def addUsbDevices(self, type: DeviceType, ids: Set[str], useAsFallBack: bool = False):
+	def addUsbDevices(self, type: DeviceType, ids: set[str], useAsFallBack: bool = False):
 		"""Associate USB devices with the driver on this instance.
 		:param type: The type of the driver.
 		:param ids: A set of USB IDs in the form C{"VID_xxxx&PID_XXXX"}.
@@ -637,7 +637,7 @@ class DriverRegistrar:
 			driverUsb = devs[type]
 			driverUsb.update(ids)
 		else:
-			DeviceMathcer.fallBackDevices.extend([(type, id) for id in ids])
+			DeviceMatcher.fallBackDevices.extend([(type, id) for id in ids])
 
 	def addBluetoothDevices(self, matchFunc: MatchFuncT):
 		"""Associate Bluetooth HID or COM ports with the driver on this instance.
@@ -674,6 +674,6 @@ class DriverRegistrar:
 			scanForDevices.moveToEnd(scanFunc, last=False)
 
 
-class DeviceMathcer:
-    fallBackDevices = list()
-    matches = list()
+class FallbackDevicesStore:
+    fallBackDevices: List[?] = []
+    matches: List[?] = []
