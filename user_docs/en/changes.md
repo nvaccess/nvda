@@ -4,7 +4,7 @@
 ## 2024.2
 
 There is a new feature called sound split.
-This allows splitting NVDA sounds into one channel (e.g. left) while sounds from all other applications are placed in the other channel (e.g. right).
+This allows splitting NVDA sounds into one channel (e.g. left) while sounds from all other applications are directed to the other channel (e.g. right).
 
 There are new commands for modifying the synth settings ring, allowing users to jump to the first or last setting, and to increase or decrease the current setting in larger steps.
 There are also new quick navigation commands, allowing users to bind gestures to quickly jump between: paragraph, vertically aligned paragraph, same style text, different style text, menu item, toggle button, progress bar, figure, and math formula.
@@ -44,10 +44,8 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
     * When active, the braille display shows exactly what NVDA speaks.
     * It can be toggled by pressing `NVDA+alt+t`, or from the braille settings dialog.
 * Sound split: (#12985, @mltony)
-  * Allows splitting NVDA sounds into one channel (e.g. left) while sounds from all other applications are placed in the other channel (e.g. right).
+  * Allows splitting NVDA sounds into one channel (e.g. left) while sounds from all other applications are directed to the other channel (e.g. right).
   * Toggled by `NVDA+alt+s`.
-  * The volume of the other applications can be adjusted by `NVDA+alt+pageUp` and `NVDA+alt+pageDown`. (#16052, @mltony)
-  * The sound of the other applications can be muted with `NVDA+alt+delete`. (#16052, @mltony)
 * Reporting row and column headers is now supported in contenteditable HTML elements. (#14113)
 * Added the option to disable the reporting of figures and captions in Document Formatting settings. (#10826, #14349)
 * In Windows 11, NVDA will announce alerts from voice typing and suggested actions including the top suggestion when copying data such as phone numbers to the clipboard (Windows 11 2022 Update and later). (#16009, @josephsl)
