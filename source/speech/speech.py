@@ -162,8 +162,6 @@ RE_CONVERT_WHITESPACE = re.compile("[\0\r\n]")
 def processText(locale: str, text: str, symbolLevel: characterProcessing.SymbolLevel) -> str:
 	text = speechDictHandler.processText(text)
 	text = characterProcessing.processSpeechSymbols(locale, text, symbolLevel)
-	if len(text) > 1 and config.conf["speech"]["unicodeNormalization"]:
-		text = unicodedata.normalize("NFKC", text)
 	text = RE_CONVERT_WHITESPACE.sub(" ", text)
 	return text.strip()
 
@@ -1570,6 +1568,8 @@ def getTextInfoSpeech(  # noqa: C901
 					# There was content after the indentation, so there is no more indentation.
 					indentationDone=True
 			if command:
+				if config.conf["speech"]["unicodeNormalization"]:
+					command = unicodedata.normalize("NFKC", command)
 				if inTextChunk:
 					relativeSpeechSequence[-1]+=command
 				else:
@@ -1970,7 +1970,8 @@ def getPropertiesSpeech(  # noqa: C901
 	errorMessage: str | None = propertyValues.get("errorMessage", None)
 	if errorMessage:
 		textList.append(errorMessage)
-
+	if config.conf["speech"]["unicodeNormalization"]:
+		textList = [unicodedata.normalize("NFKC", t) for t in textList]
 	types.logBadSequenceTypes(textList)
 	return textList
 
