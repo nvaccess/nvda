@@ -381,30 +381,30 @@ def unlockRightMouseButton():
 	executeMouseEvent(winUser.MOUSEEVENTF_RIGHTUP, 0, 0)
 
 
-def scrollMouseWheel(scrollSteps: int, isVertical: bool = True) -> None:
+def rotateMouseWheel(rotateSteps: int, isVertical: bool = True) -> None:
 	"""
-	Scrolls the mouse wheel either vertically or horizontally, controlling the scroll direction and amount.
+	Rotates the mouse wheel either vertically or horizontally, controlling the direction and amount of rotation.
 	More details on mouse events can be found at:
 	https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-mousewheel
 
-	:param scrollSteps: The number of steps to scroll. Each step should correspond to a fraction or multiple
+	:param rotateSteps: The number of steps to rotate. Each step should correspond to a fraction or multiple
 		of WHEEL_DELTA, which is typically set to 120. This defines the standard increment
-		or decrement in scroll position.
-	:param isVertical: Determines the direction of the scroll; vertical if True, horizontal if False.
+		or decrement in rotation position.
+	:param isVertical: Determines the direction of the rotation; vertical if True, horizontal if False.
 	:return: None
 	"""
-	if not isinstance(scrollSteps, int):
-		raise TypeError(f"'scrollSteps' should be an integer. Type received: {type(scrollSteps).__name__}")
-	if scrollSteps == 0:
+	if not isinstance(rotateSteps, int):
+		raise TypeError(f"'rotateSteps' should be an integer. Type received: {type(rotateSteps).__name__}")
+	if rotateSteps == 0:
 		return
-	scrollEvent = winUser.MOUSEEVENTF_WHEEL if isVertical else winUser.MOUSEEVENTF_HWHEEL
-	sign = -1 if scrollSteps < 0 else 1
-	totalSteps = abs(scrollSteps)
+	rotateEvent = winUser.MOUSEEVENTF_WHEEL if isVertical else winUser.MOUSEEVENTF_HWHEEL
+	sign = -1 if rotateSteps < 0 else 1
+	totalSteps = abs(rotateSteps)
 	maxSteps = winUser.WHEEL_DELTA
-	# Decompose the scroll operation into smaller deltas to accommodate applications
+	# Decompose the rotate operation into smaller deltas to accommodate applications
 	# that may not process deltas larger than the standard efficiently.
 	for _ in range(0, totalSteps, maxSteps):
-		scrollStep = min(maxSteps, totalSteps)
-		scrollData = sign * scrollStep
-		executeMouseEvent(scrollEvent, 0, 0, scrollData)
-		totalSteps -= scrollStep
+		rotateStep = min(maxSteps, totalSteps)
+		rotateData = sign * rotateStep
+		executeMouseEvent(rotateEvent, 0, 0, rotateData)
+		totalSteps -= rotateStep
