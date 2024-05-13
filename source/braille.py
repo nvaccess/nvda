@@ -1365,17 +1365,12 @@ class TextInfoRegion(Region):
 	def getTextInfoForBraillePos(self, braillePos):
 		pos = self._rawToContentPos[self.brailleToRawPos[braillePos]]
 		# pos is relative to the start of the reading unit.
-		# Therefore, move pos code points from there.
-		# Note that, as liblouis uses 32 bit encoding internally,
-		# it is really safe to assume that one code point offset is equal to one character within liblouis.
-		try:
-			return self._readingInfo.moveToCodepointOffset(pos)
-		except (ValueError, RuntimeError):
-			log.exception(f"Error in moveToCodepointOffset, falling back to moving by {pos} characters")
-			dest = self._readingInfo.copy()
-			dest.collapse()
-			dest.move(textInfos.UNIT_CHARACTER, pos)
-			return dest
+		# Therefore, get the start of the reading unit...
+		dest = self._readingInfo.copy()
+		dest.collapse()
+		# and move pos characters from there.
+		dest.move(textInfos.UNIT_CHARACTER, pos)
+		return dest
 
 	def routeTo(self, braillePos: int):
 		if self._brailleInputIndStart is not None and self._brailleInputIndStart <= braillePos < self._brailleInputIndEnd:
