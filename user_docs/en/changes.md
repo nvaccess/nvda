@@ -32,11 +32,11 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
     * math formula (#16001, @mltony)
     * same style text (#16000, @mltony)
     * different style text (#16000, @mltony)
-    * Added commands to jump first, last, forward and backward through the synth settings ring. (#13768, #16095, @rmcpantoja)
+  * Added commands to jump first, last, forward and backward through the synth settings ring. (#13768, #16095, @rmcpantoja)
     * Setting the first/last setting in the synth settings ring has no assigned gesture. (#13768)
     * Decrease and increase the current setting of the synth settings ring in a larger step (#13768):
-      * Desktop: `NVDA+control+pageUp` or `NVDA+control+pageDown`.
-      * Laptop: `NVDA+control+shift+pageUp` or `NVDA+control+shift+pageDown`.
+      * Desktop: `NVDA+control+pageUp` and `NVDA+control+pageDown`.
+      * Laptop: `NVDA+control+shift+pageUp` and `NVDA+control+shift+pageDown`.
   * Added a new unassigned input gesture to toggle the reporting of figures and captions. (#10826, #14349)
 * Braille:
   * Added support for the BrailleEdgeS2 and BrailleEdgeS3 displays. (#16033, #16279, @EdKweon)
