@@ -26,6 +26,7 @@
 * Improved reliability of automatic text readout, particularly in terminal applications. (#15850, #16027, @Danstiv)
 * Braille cursor routing is now much more reliable when a line contains one or more Unicode variation selectors or decomposed characters. (#10960, #16477, @mltony, @LeonarddeR)
 * NVDA will correctly announce selection changes when editing a cell's text in Microsoft Excel. (#15843)
+* In Windows 11 emoji panel, NVDA will no longer appear to get stuck when closing clipboard history. (#16347, @josephsl)
 
 ### Changes for Developers
 
@@ -39,6 +40,8 @@ It is especially useful to read the error location markers in tracebacks. (#1632
   * Table metadata can be added to an optional `brailleTables` section in the add-on manifest or to a `.ini` file with the same format found in the brailleTables subdirectory of the scratchpad directory.
   * Please consult the [braille translation tables section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#BrailleTables) for more details.
 * When a `gainFocus` event is queued with an object that has a valid `focusRedirect` property, the object pointed to by the `focusRedirect` property is now held by `eventHandler.lastQueuedFocusObject`, rather than the originally queued object. (#15843)
+* NVDA will log its executable architecture (x86) at startup. (#16432, @josephsl)
+* `wx.CallAfter`, which is wrapped in `monkeyPatches/wxMonkeyPatches.py`, now includes proper `functools.wraps` indication. (#16520, @XLTechie)
 
 #### Deprecations
 
