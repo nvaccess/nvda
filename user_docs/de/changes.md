@@ -17,7 +17,7 @@ LibLouis wurde aktualisiert, wobei neue detaillierte (mit Großbuchstaben verseh
 
 Die Sprachausgabe eSpeak wurde aktualisiert und um die neue Sprache Tigrinisch erweitert.
 
-Es gibt viele kleinere Fehlerbehebungen für Anwendungen wie Thunderbird, Adobe Reader, Web-Browser, Nudi und Geekbench.
+Es gibt viele kleinere Fehlerbehebungen für Anwendungen wie Mozilla Thunderbird, Adobe Reader, Web-Browser, Nudi und Geekbench.
 
 ### Neue Features
 
@@ -42,17 +42,17 @@ Es gibt viele kleinere Fehlerbehebungen für Anwendungen wie Thunderbird, Adobe 
   * Unterstützungen für die Braillezeilen BrailleEdgeS2, BrailleEdgeS3 hinzugefügt. (#16033, #16279, @EdKweon)
   * Ein neuer Braille-Modus mit der Bezeichnung "Sprachausgabenverlauf anzeigen" wurde hinzugefügt. (#15898, @Emil-18)
     * Wenn eine Braillezeile angeschlossen und aktiviert ist, zeigt sie exakt das an, was NVDA spricht.
-    * Sie kann mit der Tastenkombination `NVDA+Alt+T` oder über das Dialogfeld Braille in den Einstellungen umgeschaltet werden.
+    * Sie kann mit der Tastenkombination `NVDA+Alt+T` oder über in den Einstellungen in der Kategorie "Braille" umgeschaltet werden.
 * Sound-Teilung: (#12985, @mltony)
   * Ermöglicht die Aufteilung der NVDA-Sounds auf einen Kanal (z. B. links), während die Sounds aller anderen Anwendungen auf den anderen Kanal (z. B. rechts) gelegt werden.
   * Umgeschaltet mit `NVDA+Alt+S`.
   * Die Lautstärke der anderen Anwendungen lässt sich durch `NVDA+Alt+Seite nach oben` und `NVDA+Alt+Seite nach unten` einstellen. (#16052, @mltony)
-  * Der Ton der anderen Anwendungen kann mit `NVDA+Alt+Entf` geändert werden. (#16052, @mltony)
+  * Der Sound der anderen Anwendungen kann mit `NVDA+Alt+Entf` geändert werden. (#16052, @mltony)
 * Die Meldung von Zeilen- und Spaltenüberschriften wird jetzt in inhaltsverarbeitbaren HTML-Elementen unterstützt. (#14113)
-* In den Einstellungen für die Dokument-Formatierung wurde die Option hinzugefügt, die Meldung von Abbildungen und Beschriftungen zu deaktivieren. (#10826, #14349)
+* In den Einstellungen für die Dokument-Formatierung wurde die Option für die Meldung zum Deaktivieren von Abbildungen und Beschriftungen hinzugefügt. (#10826, #14349)
 * In Windows 11 teilt NVDA über Warnungen bei der Spracheingabe und schlägt Aktionen vor, einschließlich des obersten Vorschlags beim Kopieren von Daten wie Telefonnummern in die Zwischenablage (Windows 11 Version 2022 Update und neuer). (#16009, @josephsl)
 * NVDA blendet das Audio-Gerät nach Beendigung der Wiedergabe über die Sprachausgabe nicht länger aus, um zu verhindern, dass der Beginn der nächsten Wiedergabe über die Sprachausgabe bei einigen Audio-Geräten wie Bluetooth-Kopfhörern abgeschnitten wird. (#14386, @jcsteh, @mltony)
-* Der Secure-Browser von HP wird nun unterstützt. (#16377)
+* Der HP Secure-Browser wird nun unterstützt. (#16377)
 
 ### Änderungen
 

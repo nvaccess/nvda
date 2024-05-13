@@ -17,6 +17,7 @@ from typing import (
 
 import requests
 from requests.structures import CaseInsensitiveDict
+from json import JSONDecodeError
 
 import addonAPIVersion
 from baseObject import AutoPropertyObject
@@ -183,16 +184,17 @@ class _DataManager:
 			return None
 		try:
 			data = cacheData["data"]
+			cachedAddonData = _createStoreCollectionFromJson(data)
 			cacheHash = cacheData["cacheHash"]
 			cachedLanguage = cacheData["cachedLanguage"]
 			nvdaAPIVersion = cacheData["nvdaAPIVersion"]
-		except KeyError:
+		except (KeyError, JSONDecodeError):
 			log.exception(f"Invalid add-on store cache:\n{cacheData}")
 			if NVDAState.shouldWriteToDisk():
 				os.remove(cacheFilePath)
 			return None
 		return CachedAddonsModel(
-			cachedAddonData=_createStoreCollectionFromJson(data),
+			cachedAddonData=cachedAddonData,
 			cacheHash=cacheHash,
 			cachedLanguage=cachedLanguage,
 			nvdaAPIVersion=tuple(nvdaAPIVersion),  # loads as list,
