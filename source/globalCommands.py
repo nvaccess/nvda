@@ -43,6 +43,7 @@ import config
 from config.configFlags import (
 	TetherTo,
 	ShowMessages,
+	BrailleMode,
 )
 from config.featureFlag import FeatureFlag
 from config.featureFlagEnums import BoolFlag
@@ -66,6 +67,7 @@ import winVersion
 from base64 import b16encode
 import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
+import audio
 
 
 #: Script category for text review commands.
@@ -113,6 +115,14 @@ SCRCAT_INPUT = _("Input")
 #: Script category for document formatting commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_DOCUMENTFORMATTING = _("Document formatting")
+#: Script category for audio streaming commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_AUDIO = _("Audio")
+
+# Translators: Reported when there are no settings to configure in synth settings ring
+# (example: when there is no setting for language).
+NO_SETTINGS_MSG = _("No settings")
+
 
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus.
@@ -123,6 +133,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Describes the Cycle audio ducking mode command.
 			"Cycles through audio ducking modes which determine when NVDA lowers the volume of other sounds"
 		),
+		category=SCRCAT_AUDIO,
 		gesture="kb:NVDA+shift+d"
 	)
 	def script_cycleAudioDuckingMode(self,gesture):
@@ -313,6 +324,32 @@ class GlobalCommands(ScriptableObject):
 		ui.message(text)
 
 	@script(
+		# Translators: Input help mode message for set the first value in the synth ring setting.
+		description=_("Set the first value of the current setting in the synth settings ring"),
+		category=SCRCAT_SPEECH
+	)
+	def script_firstValueSynthRing(self, gesture: inputCore.InputGesture):
+		settingName = globalVars.settingsRing.currentSettingName
+		if not settingName:
+			ui.message(NO_SETTINGS_MSG)
+			return
+		settingValue = globalVars.settingsRing.first()
+		ui.message("%s %s" % (settingName, settingValue))
+
+	@script(
+		# Translators: Input help mode message for set the last value in the synth ring settings.
+		description=_("Set the last value of the current setting in the synth settings ring"),
+		category=SCRCAT_SPEECH
+	)
+	def script_lastValueSynthRing(self, gesture: inputCore.InputGesture):
+		settingName = globalVars.settingsRing.currentSettingName
+		if not settingName:
+			ui.message(NO_SETTINGS_MSG)
+			return
+		settingValue = globalVars.settingsRing.last()
+		ui.message("%s %s" % (settingName, settingValue))
+
+	@script(
 		# Translators: Input help mode message for increase synth setting value command.
 		description=_("Increases the currently active setting in the synth settings ring"),
 		category=SCRCAT_SPEECH,
@@ -321,11 +358,24 @@ class GlobalCommands(ScriptableObject):
 	def script_increaseSynthSetting(self,gesture):
 		settingName=globalVars.settingsRing.currentSettingName
 		if not settingName:
-			# Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
-			ui.message(_("No settings"))
+			ui.message(NO_SETTINGS_MSG)
 			return
 		settingValue=globalVars.settingsRing.increase()
 		ui.message("%s %s" % (settingName,settingValue))
+
+	@script(
+		# Translators: Input help mode message for increasing synth setting value command in larger steps.
+		description=_("Increases the currently active setting in the synth settings ring in a larger step"),
+		category=SCRCAT_SPEECH,
+		gestures=("kb(desktop):NVDA+control+pageUp", "kb(laptop):NVDA+shift+control+pageUp")
+	)
+	def script_increaseLargeSynthSetting(self, gesture: inputCore.InputGesture):
+		settingName = globalVars.settingsRing.currentSettingName
+		if not settingName:
+			ui.message(NO_SETTINGS_MSG)
+			return
+		settingValue = globalVars.settingsRing.increaseLarge()
+		ui.message("%s %s" % (settingName, settingValue))
 
 	@script(
 		# Translators: Input help mode message for decrease synth setting value command.
@@ -336,10 +386,24 @@ class GlobalCommands(ScriptableObject):
 	def script_decreaseSynthSetting(self,gesture):
 		settingName=globalVars.settingsRing.currentSettingName
 		if not settingName:
-			ui.message(_("No settings"))
+			ui.message(NO_SETTINGS_MSG)
 			return
 		settingValue=globalVars.settingsRing.decrease()
 		ui.message("%s %s" % (settingName,settingValue))
+
+	@script(
+		# Translators: Input help mode message for decreasing synth setting value command in larger steps.
+		description=_("Decreases the currently active setting in the synth settings ring in a larger step"),
+		category=SCRCAT_SPEECH,
+		gestures=("kb(desktop):NVDA+control+pageDown", "kb(laptop):NVDA+control+shift+pageDown")
+	)
+	def script_decreaseLargeSynthSetting(self, gesture: inputCore.InputGesture):
+		settingName = globalVars.settingsRing.currentSettingName
+		if not settingName:
+			ui.message(NO_SETTINGS_MSG)
+			return
+		settingValue = globalVars.settingsRing.decreaseLarge()
+		ui.message("%s %s" % (settingName, settingValue))
 
 	@script(
 		# Translators: Input help mode message for next synth setting command.
@@ -350,7 +414,7 @@ class GlobalCommands(ScriptableObject):
 	def script_nextSynthSetting(self,gesture):
 		nextSettingName=globalVars.settingsRing.next()
 		if not nextSettingName:
-			ui.message(_("No settings"))
+			ui.message(NO_SETTINGS_MSG)
 			return
 		nextSettingValue=globalVars.settingsRing.currentSettingValue
 		ui.message("%s %s"%(nextSettingName,nextSettingValue))
@@ -364,7 +428,7 @@ class GlobalCommands(ScriptableObject):
 	def script_previousSynthSetting(self,gesture):
 		previousSettingName=globalVars.settingsRing.previous()
 		if not previousSettingName:
-			ui.message(_("No settings"))
+			ui.message(NO_SETTINGS_MSG)
 			return
 		previousSettingValue=globalVars.settingsRing.currentSettingValue
 		ui.message("%s %s"%(previousSettingName,previousSettingValue))
@@ -927,6 +991,24 @@ class GlobalCommands(ScriptableObject):
 			# Translators: The message announced when toggling the report if clickable document formatting setting.
 			state = _("report if clickable on")
 			config.conf["documentFormatting"]["reportClickable"]=True
+		ui.message(state)
+
+	@script(
+		# Translators: Input help mode message for toggle report figures and captions command.
+		description=_("Toggles on and off the reporting of figures and captions"),
+		category=SCRCAT_DOCUMENTFORMATTING
+	)
+	def script_toggleReportFigures(self, gesture: inputCore.InputGesture):
+		if config.conf["documentFormatting"]["reportFigures"]:
+			# Translators: The message announced when toggling the report figures and captions document formatting
+			# setting.
+			state = _("report figures and captions off")
+			config.conf["documentFormatting"]["reportFigures"] = False
+		else:
+			# Translators: The message announced when toggling the report figures and captions document formatting
+			# setting.
+			state = _("report figures and captions on")
+			config.conf["documentFormatting"]["reportFigures"] = True
 		ui.message(state)
 
 	@script(
@@ -1922,13 +2004,17 @@ class GlobalCommands(ScriptableObject):
 			speech.spellTextInfo(info,useCharacterDescriptions=True)
 		else:
 			try:
-				c = ord(info.text)
+				cList = [ord(c) for c in info.text]
 			except TypeError:
 				c = None
-			if c is not None:
-				speech.speakMessage("%d," % c)
-				speech.speakSpelling(hex(c))
-				braille.handler.message(f"{c}, {hex(c)}")
+			if cList:
+				
+				for c in cList:
+					speech.speakMessage("%d," % c)
+					# Report hex along with decimal only when there is one character; else, it's confusing.
+					if len(cList) == 1:
+						speech.speakSpelling(hex(c))
+				braille.handler.message("; ".join(f"{c}, {hex(c)}" for c in cList))
 			else:
 				log.debugWarning("Couldn't calculate ordinal for character %r" % info.text)
 				speech.speakTextInfo(info, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.OutputReason.CARET)
@@ -3287,6 +3373,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_BRAILLE,
 		gesture="kb:NVDA+control+t"
 	)
+	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
 	def script_braille_toggleTether(self, gesture):
 		values = [x.value for x in TetherTo]
 		index = values.index(config.conf["braille"]["tetherTo"])
@@ -3305,11 +3392,37 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Braille tethered %s") % TetherTo(newTetherChoice).displayString)
 
 	@script(
+		# Translators: Input help mode message for toggle braille mode command
+		description=_("Toggles braille mode"),
+		category=SCRCAT_BRAILLE,
+		gesture="kb:nvda+alt+t"
+	)
+	def script_toggleBrailleMode(self, gesture: inputCore.InputGesture):
+		curMode = BrailleMode(config.conf["braille"]["mode"])
+		modeList = list(BrailleMode)
+		index = modeList.index(curMode)
+		index = index + 1 if not index == len(modeList) - 1 else 0
+		newMode = modeList[index]
+		config.conf["braille"]["mode"] = newMode.value
+		if braille.handler.buffer == braille.handler.messageBuffer:
+			braille.handler._dismissMessage()
+		braille.handler.mainBuffer.clear()
+		# Translators: The message reported when switching braille modes
+		ui.message(_("Braille mode {brailleMode}").format(brailleMode=newMode.displayString))
+		if newMode == BrailleMode.SPEECH_OUTPUT:
+			return
+		if braille.handler.getTether() == TetherTo.REVIEW.value:
+			braille.handler.handleReviewMove(shouldAutoTether=braille.handler.shouldAutoTether)
+			return
+		braille.handler.handleGainFocus(api.getFocusObject())
+
+	@script(
 		# Translators: Input help mode message for cycle through
 		# braille move system caret when routing review cursor command.
 		description=_("Cycle through the braille move system caret when routing review cursor states"),
 		category=SCRCAT_BRAILLE
 	)
+	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
 	def script_braille_cycleReviewRoutingMovesSystemCaret(self, gesture: inputCore.InputGesture) -> None:
 		# If braille is not tethered to focus, set next state of
 		# braille Move system caret when routing review cursor.
@@ -3345,6 +3458,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Toggle the way context information is presented in braille"),
 		category=SCRCAT_BRAILLE
 	)
+	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
 	def script_braille_toggleFocusContextPresentation(self, gesture):
 		values = [x[0] for x in braille.focusContextPresentations]
 		labels = [x[1] for x in braille.focusContextPresentations]
@@ -3366,6 +3480,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Toggle the braille cursor on and off"),
 		category=SCRCAT_BRAILLE
 	)
+	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
 	def script_braille_toggleShowCursor(self, gesture):
 		if config.conf["braille"]["showCursor"]:
 			# Translators: The message announced when toggling the braille cursor.
@@ -3384,6 +3499,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Cycle through the braille cursor shapes"),
 		category=SCRCAT_BRAILLE
 	)
+	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
 	def script_braille_cycleCursorShape(self, gesture):
 		if not config.conf["braille"]["showCursor"]:
 			# Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
@@ -3410,6 +3526,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Cycle through the braille show messages modes"),
 		category=SCRCAT_BRAILLE
 	)
+	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
 	def script_braille_cycleShowMessages(self, gesture: inputCore.InputGesture) -> None:
 		"""Set next state of braille show messages and reports it with ui.message."""
 		values = [x.value for x in ShowMessages]
@@ -3427,6 +3544,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Cycle through the braille show selection states"),
 		category=SCRCAT_BRAILLE
 	)
+	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
 	def script_braille_cycleShowSelection(self, gesture: inputCore.InputGesture) -> None:
 		"""Set next state of braille show selection and reports it with ui.message."""
 		featureFlag: FeatureFlag = config.conf["braille"]["showSelection"]
@@ -4381,6 +4499,17 @@ class GlobalCommands(ScriptableObject):
 		newFlag: config.featureFlag.FeatureFlag = nextParagraphStyle()
 		config.conf["documentNavigation"]["paragraphStyle"] = newFlag.name
 		ui.message(newFlag.displayString)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Cycles through sound split modes",
+		),
+		category=SCRCAT_AUDIO,
+		gesture="kb:NVDA+alt+s",
+	)
+	def script_cycleSoundSplit(self, gesture: "inputCore.InputGesture") -> None:
+		audio.toggleSoundSplitState()
 
 
 #: The single global commands instance.

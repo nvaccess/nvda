@@ -70,6 +70,7 @@ EXPORTS
 	_nvdaControllerInternal_reportLiveRegion
 	_nvdaControllerInternal_openConfigDirectory
 	rateLimitedUIAEventHandler_create
+	rateLimitedUIAEventHandler_terminate
 	wasPlay_create
 	wasPlay_destroy
 	wasPlay_open
@@ -81,3 +82,6 @@ EXPORTS
 	wasPlay_resume
 	wasPlay_setChannelVolume
 	wasPlay_startup
+	wasSilence_init
+	wasSilence_playFor
+	wasSilence_terminate

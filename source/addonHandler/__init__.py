@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2023 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
-# Joseph Lee, Babbage B.V., Arnold Loubriat, Łukasz Golonka, Leonard de Ruijter
+# Copyright (C) 2012-2024 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
+# Joseph Lee, Babbage B.V., Arnold Loubriat, Łukasz Golonka, Leonard de Ruijter, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -10,7 +10,6 @@ from abc import abstractmethod, ABC
 import sys
 import os.path
 import gettext
-import tempfile
 import inspect
 import itertools
 import collections
@@ -45,6 +44,7 @@ from addonStore.models.status import AddonStateCategory, SupportsAddonState
 from addonStore.models.version import MajorMinorPatch, SupportsVersionCheck
 import extensionPoints
 from utils.caseInsensitiveCollections import CaseInsensitiveSet
+from utils.tempFile import _createEmptyTempFileForDeletingFile
 
 from .addonVersionCheck import (
 	isAddonCompatible,
@@ -535,7 +535,7 @@ class Addon(AddonBase):
 			return None
 
 		try:
-			os.rename(self.pendingInstallPath, self.installPath)
+			os.replace(self.pendingInstallPath, self.installPath)
 			state[AddonStateCategory.PENDING_INSTALL].discard(self.name)
 			return self.installPath
 		except OSError:
@@ -573,9 +573,9 @@ class Addon(AddonBase):
 			finally:
 				del _availableAddons[self.path]
 				self._cleanupAddonImports()
-		tempPath=tempfile.mktemp(suffix=DELETEDIR_SUFFIX,dir=os.path.dirname(self.path))
+		tempPath = _createEmptyTempFileForDeletingFile(suffix=DELETEDIR_SUFFIX, dir=os.path.dirname(self.path))
 		try:
-			os.rename(self.path,tempPath)
+			os.replace(self.path, tempPath)
 		except (WindowsError,IOError):
 			raise RuntimeError("Cannot rename add-on path for deletion")
 		shutil.rmtree(tempPath,ignore_errors=True)
@@ -833,6 +833,13 @@ def getCodeAddon(obj=None, frameDist=1):
 
 
 def initTranslation():
+	"""Initializes the translation of an add-on so that the Gettext functions (_, ngettext, npgettext and
+	pgettext) point to the add-on's translation rather than to NVDA's one.
+	This function should be called at the top of any module containing translatable strings and belonging to
+	an add-on. It cannot be called in a module that does not belong to an add-on (e.g. in a subdirectory of the
+	scratchpad).
+	"""
+
 	addon = getCodeAddon(frameDist=2)
 	translations = addon.getTranslationsInstance()
 	_TRANSLATION_FUNCTIONS = {
@@ -991,6 +998,15 @@ url = string(default=None)
 # Name of default documentation file for the add-on.
 docFileName = string(default=None)
 
+# Custom braille tables
+[brailleTables]
+	# The key is the table file name (not the full path)
+	[[__many__]]
+		displayName = string()
+		contracted = boolean(default=false)
+		input = boolean(default=true)
+		output = boolean(default=true)
+
 # NOTE: apiVersion:
 # EG: 2019.1.0 or 0.0.0
 # Must have 3 integers separated by dots.
@@ -1007,7 +1023,7 @@ docFileName = string(default=None)
 		@param translatedInput: translated manifest input
 		@type translatedInput: file-like object
 		"""
-		super(AddonManifest, self).__init__(input, configspec=self.configspec, encoding='utf-8', default_encoding='utf-8')
+		super().__init__(input, configspec=self.configspec, encoding='utf-8', default_encoding='utf-8')
 		self._errors = None
 		val = Validator({"apiVersion":validate_apiVersionString})
 		result = self.validate(val, copy=True, preserve_errors=True)
@@ -1025,6 +1041,10 @@ docFileName = string(default=None)
 				val=self._translatedConfig.get(k)
 				if val:
 					self[k]=val
+			for fileName, tableConfig in self._translatedConfig.get("brailleTables", {}).items():
+				value = tableConfig.get("displayName")
+				if value:
+					self["brailleTables"][fileName]["displayName"] = value
 
 	@property
 	def errors(self):

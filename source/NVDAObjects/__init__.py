@@ -1047,6 +1047,16 @@ Tries to force this object to take the focus.
 		@rtype: L{NVDAObject} or None
 		"""
 		return None
+	
+	#: Type definition for auto prop "_get_errorMessage"
+	errorMessage: str | None
+
+	def _get_errorMessage(self) -> str | None:
+		"""Retrieves the string that describes the error for this control, if one exists.
+
+		:return: A string describing the error, else None.
+		"""
+		return None
 
 	#: Type definition for auto prop '_get_positionInfo'
 	positionInfo: Dict[str, int]

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited
+# Copyright (C) 2022-2024 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -174,7 +174,10 @@ class AddonFileDownloader:
 		if not NVDAState.shouldWriteToDisk():
 			return False
 
-		with requests.get(addonData.model.URL, stream=True) as r:
+		# Some add-ons are quite large, so we need to allow for a long download time.
+		# 1GB at 0.5 MB/s takes 4.5hr to download.
+		MAX_ADDON_DOWNLOAD_TIME = 60 * 60 * 6  # 6 hours
+		with requests.get(addonData.model.URL, stream=True, timeout=MAX_ADDON_DOWNLOAD_TIME) as r:
 			with open(downloadFilePath, 'wb') as fd:
 				# Most add-ons are small. This value was chosen quite arbitrarily, but with the intention to allow
 				# interrupting the download. This is particularly important on a slow connection, to provide
@@ -244,7 +247,7 @@ class AddonFileDownloader:
 				_addonDownloadFailureMessageTitle,
 			)
 		log.debug(f"Download complete: {inProgressFilePath}")
-		os.rename(src=inProgressFilePath, dst=cacheFilePath)
+		os.replace(src=inProgressFilePath, dst=cacheFilePath)
 		log.debug(f"Cache file available: {cacheFilePath}")
 		return cast(os.PathLike, cacheFilePath)
 

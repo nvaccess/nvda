@@ -302,6 +302,7 @@ class UIAHandler(COMObject):
 		UIA.IUIAutomationNotificationEventHandler,
 		UIA.IUIAutomationActiveTextPositionChangedEventHandler,
 	]
+	_rateLimitedEventHandler: IUnknown | None = None
 
 	#: A cache of UIA notification kinds to friendly names for logging
 	_notificationKindsToNamesCache = {
@@ -431,15 +432,24 @@ class UIAHandler(COMObject):
 		self.MTAThreadInitException=None
 		self.MTAThread = threading.Thread(
 			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}.MTAThread",
-			target=self.MTAThreadFunc
+			target=self.MTAThreadFunc,
+			daemon=True,
 		)
-		self.MTAThread.daemon=True
 		self.MTAThread.start()
 		self.MTAThreadInitEvent.wait(2)
 		if self.MTAThreadInitException:
 			raise self.MTAThreadInitException
 
 	def terminate(self):
+		# Terminate the rate limited event handler if it exists.
+		# We must do this from the main thread to totally ensure that the thread is terminated,
+		# As this is a c++ thread so Python cannot kill it off at process exit.
+		if config.conf["UIA"]["enhancedEventProcessing"]:
+			if self._rateLimitedEventHandler:
+				log.debug("UIAHandler: Terminating enhanced event processing")
+				NVDAHelper.localLib.rateLimitedUIAEventHandler_terminate(self._rateLimitedEventHandler)
+
+		# Terminate the MTA thread
 		MTAThreadHandle = ctypes.wintypes.HANDLE(
 			windll.kernel32.OpenThread(
 				winKernel.SYNCHRONIZE,
@@ -514,10 +524,10 @@ class UIAHandler(COMObject):
 			self.reservedNotSupportedValue=self.clientObject.ReservedNotSupportedValue
 			self.ReservedMixedAttributeValue=self.clientObject.ReservedMixedAttributeValue
 			if config.conf["UIA"]["enhancedEventProcessing"]:
-				handler = pRateLimitedEventHandler = POINTER(IUnknown)()
+				handler = self._rateLimitedEventHandler = POINTER(IUnknown)()
 				NVDAHelper.localLib.rateLimitedUIAEventHandler_create(
 					self._com_pointers_[IUnknown._iid_],
-					byref(pRateLimitedEventHandler)
+					byref(self._rateLimitedEventHandler)
 				)
 			else:
 				handler = self
@@ -543,6 +553,9 @@ class UIAHandler(COMObject):
 		del self.localEventHandlerGroup
 		del self.localEventHandlerGroupWithTextChanges
 		del self.globalEventHandlerGroup
+		self._rateLimitedEventHandler = None
+		if winVersion.getWinVer() >= winVersion.WIN11:
+			UIARemote.terminate()
 
 	def _registerGlobalEventHandlers(self, handler: "UIAHandler"):
 		self.clientObject.AddFocusChangedEventHandler(self.baseCacheRequest, handler)
@@ -1131,8 +1144,17 @@ class UIAHandler(COMObject):
 			# Using IAccessible for NetUIHWND controls causes focus changes not to be reported
 			# when the ribbon is collapsed.
 			# Testing shows that these controls emits proper events but they are ignored by NVDA.
-			isOfficeApp = appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
-			isOffice2013OrOlder = int(appModule.productVersion.split(".")[0]) < 16
+			try:
+				isOfficeApp = appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
+				isOffice2013OrOlder = int(appModule.productVersion.split(".")[0]) < 16
+			except RuntimeError:
+				# this is not necessarily an office app, or an app with version information, for example geekbench 6.
+				log.debugWarning(
+					"Failed parsing productName / productVersion, version information likely missing",
+					exc_info=True
+				)
+				isOfficeApp = False
+				isOffice2013OrOlder = False
 			if isOfficeApp and isOffice2013OrOlder:
 				parentHwnd = winUser.getAncestor(hwnd, winUser.GA_PARENT)
 				while parentHwnd:
@@ -1182,7 +1204,9 @@ class UIAHandler(COMObject):
 				# As their IA2 implementation is still better at the moment.
 				# However, in cases where Chromium is running under another logon session,
 				# the IAccessible2 implementation is unavailable.
-				hasAccessToIA2 = not appModule.isRunningUnderDifferentLogonSession
+				# 'brchrome' is part of HP SureClick, a chromium-based browser which runs webpages to run in separate
+				# virtual machines - it supports UIA remoting but not IAccessible2 remoting.
+				hasAccessToIA2 = not appModule.isRunningUnderDifferentLogonSession and not appModule.appName == "brchrome"
 				if (
 					AllowUiaInChromium.getConfig() == AllowUiaInChromium.NO
 					# Disabling is only useful if we can inject in-process (and use our older code)

@@ -35,6 +35,11 @@ def initialize(doRemote: bool, UIAClient: UIA.IUIAutomation):
 	return True
 
 
+def terminate():
+	""" Terminates UIA remote operations support."""
+	_dll.cleanup()
+
+
 def msWord_getCustomAttributeValue(
 		docElement: UIA.IUIAutomationElement,
 		textRange: UIA.IUIAutomationTextRange,

@@ -84,7 +84,6 @@ makensis = os.path.abspath(os.path.join("include", "nsis", "NSIS", "makensis.exe
 # Get the path to xgettext.
 XGETTEXT = os.path.abspath(os.path.join("miscDeps", "tools", "xgettext.exe"))
 
-import txt2tags  # noqa: F401, import required here to build docs
 
 vars = Variables()
 vars.Add("version", "The version of this build", versionInfo.version)
@@ -104,7 +103,6 @@ vars.Add(EnumVariable('nvdaHelperLogLevel','The level of logging you wish to see
 env = Environment(variables=vars,HOST_ARCH='x86',tools=[
 	"textfile",
 	"gettextTool",
-	"t2t",
 	"md2html",
 	"doxygen",
 	"recursiveInstall"
@@ -235,33 +233,22 @@ envArm64.SConscript('nvdaHelper/archBuild_sconscript',exports={'env':envArm64,'c
 for po in env.Glob(sourceDir.path+'/locale/*/lc_messages/*.po'):
 	env.gettextMoFile(po)
 
-userGuideConf = os.path.join(userDocsDir.path, 'userGuide.t2tconf')
-globalConf = os.path.join(userDocsDir.path, 'global.t2tconf')
-changesConf = os.path.join(userDocsDir.path, 'changes.t2tconf')
 styles = os.path.join(userDocsDir.path, 'styles.css')
+numberedHeadingsStyle = os.path.join(userDocsDir.path, "numberedHeadings.css")
 
-#Allow all t2t files to be converted to html in user_docs
-#As we use scons Glob this will also include the keyCommands.t2t files
-for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
-	mdFile = env.txt2tags(t2tFile)
-	#txt2tags can not be run in parallel so make sure scons knows this
-	env.SideEffect('_txt2tags', mdFile)
-	env.Depends(
-		mdFile,
-		[
-			userGuideConf,
-			globalConf,
-			changesConf,
-		]
-	)
-	htmlFile = env.md2html(t2tFile.abspath.replace(".t2t", ".md"))
-	styleInstallPath = os.path.dirname(t2tFile.abspath)
+# Allow all markdown files to be converted to html in user_docs
+for mdFile in env.Glob(os.path.join(userDocsDir.path, '*', '*.md')):
+	htmlFile = env.md2html(mdFile)
+	styleInstallPath = os.path.dirname(mdFile.abspath)
 	installedStyle = env.Install(styleInstallPath, styles)
+	installedHeadingsStyle = env.Install(styleInstallPath, numberedHeadingsStyle)
 	env.Depends(
 		htmlFile,
 		[
 			styles,
 			installedStyle,
+			numberedHeadingsStyle,
+			installedHeadingsStyle,
 		]
 	)
 	env.Depends(htmlFile, mdFile)
@@ -413,12 +400,21 @@ env.Alias("launcher", launcher)
 clientArchive = env.ZipArchive(outputDir.File("%s_controllerClient.zip" % outFilePrefix), clientDir, relativeTo=clientDir)
 env.Alias("client", clientArchive)
 
-outputStylesFile=env.Command(outputDir.File("styles.css"),userDocsDir.File('styles.css'),Copy('$TARGET','$SOURCE'))
+outputStylesFile = env.Command(
+	outputDir.File("styles.css"),
+	userDocsDir.File("styles.css"),
+	Copy("$TARGET", "$SOURCE")
+)
+outputHeadingStylesFile = env.Command(
+	outputDir.File("numberedHeadings.css"),
+	userDocsDir.File("numberedHeadings.css"),
+	Copy("$TARGET", "$SOURCE")
+)
 changesFile=env.Command(outputDir.File("%s_changes.html" % outFilePrefix),userDocsDir.File('en/changes.html'),Copy('$TARGET','$SOURCE'))
 changesMDFile = env.Command(
 	outputDir.File("changes.md"),
 	userDocsDir.File('en/changes.md'),
-	Copy('$TARGET','$SOURCE')
+	Copy('$TARGET', '$SOURCE')
 )
 env.Depends(changesFile, changesMDFile)
 env.Depends(changesFile, outputStylesFile)

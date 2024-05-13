@@ -140,15 +140,22 @@ We also have a label for `enhancement`, think of this as a more internal facing 
 
 ### Triaged status
 An issue is triaged if it is ready to be worked on.
-Once a bug has clear steps to reproduce and is well documented, the `triaged` label can be applied.
 New features and enhancements should be [well defined](#new-features-1) before applying the `triaged` label.
+Once a bug has clear steps to reproduce and is well documented, the `triaged` label can be applied.
+A `triaged` issue should also have a [priority label](#priority).
+Generally these labels are provided by NV Access only, particularly for issues that are controversial, or priority is unclear.
 
-If it is a complex issue, technical investigation may be required. This can be indicated with adding the label `blocked/needs-technical-investigation`.
+For controversial changes, a product decision from NV Access may be required before applying the `triaged` label.
+This can be indicated with adding the label `blocked/needs-product-decision`.
+
+If an issue has been checked by NV Access, and needs further triage, the `needs-triage` label will be applied.
+Please notify NV Access when you believe the issue is ready for the `triaged` label.
 
 A `triaged` issue that requires a complex fix may require advice from NV Access, such as a project plan, before implementation is started.
-An issue with a simple solution should get labelled `good first issue`.
 
-For controversial changes, a product decision from NV Access may be required before applying the `triaged` label. This can be indicated with adding the label `blocked/needs-product-decision`.
+An issue with a simple solution should get labelled `good first issue`.
+If it is a complex issue, technical investigation may be required.
+This can be indicated with adding the label `blocked/needs-technical-investigation`.
 
 ### Priority
 Bugs/regressions are given priorities based on an estimate of their severity and impact.
@@ -167,6 +174,7 @@ Bugs/regressions are given priorities based on an estimate of their severity and
   - Popular task not supported and no work around
   - Misleading information or misleading handling from a popular task or feature
 - `P3`:
+  - Crash, freeze, instability or performance issue that affects one user, i.e. it cannot be reproduced by anyone else.
   - Feature does not work as expected
   - Task not supported and no work around
   - Misleading information or misleading handling
@@ -189,3 +197,29 @@ Some of the migrated issues have comments that indicate an attachment should be 
 All of these Trac attachments are accessible on the [NV Access website](https://www.nvaccess.org/files/nvdaTracAttachments/), you can search for issue numbers in the folder, or append the GitHub issue number to the URL.
 As an example, for issue [#2396](https://github.com/nvaccess/nvda/issues/2396), get the attachments from <https://www.nvaccess.org/files/nvdaTracAttachments/2396>.
 If you come across one of these missing attachments, please upload if you think they're relevant to GitHub. Note you'll need to pay attention to GitHub's attachment naming restrictions, if it fails try zipping it.
+
+## NV Access staff-created tickets
+
+The NVDA project greatly appreciates the involvement and contributions of its vibrant community, and we strongly encourage community members to actively engage with the project's issues and pull requests.
+
+However, it's important to maintain a clear distinction between community contributions and the internal workflow of NV Access staff.
+To that end, we kindly request that community members refrain from closing or consolidating tickets (issues, pull requests, etc.) that are created by NV Access staff.
+
+Community members are welcome and encouraged to interact with staff tickets in the following ways:
+
+- Commenting on issues to provide feedback, suggestions, or additional context.
+- Discussing proposed changes or feature requests.
+- Submitting pull requests that address the issue or implement the requested changes, once issues have been triaged.
+
+By refraining from closing or consolidating staff tickets, we can ensure that the NV Access team maintains control over their internal workflow and prioritisation, while still benefiting from the valuable insights and contributions of the community.
+
+## Extra permissions for triage
+GitHub allows NV Access to grant "triage" permissions to active contributors in the repository.
+This grants the ability to manage issues, pull requests and discussions, such as closing/opening, labeling, and assigning.
+Refer to [GitHub documentation](https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization) for more information on triage permissions.
+
+To request triage permissions, email info@nvaccess.org.
+A consistent history of helpful activity in the repository is expected, for example helping debug issues, asking for missing information, providing constructive feedback on pull requests, submitting well-documented pull requests, constructively participating in discussions, mentoring new contributors or improving documentation.
+Candidates will be considered on a case by case basis.
+
+If conflict arises between how best to triage an issue, please defer to NV Access and keep the issue in an open, untriaged state i.e. with the labels "needs triage" and "blocked/needs-product-decision".

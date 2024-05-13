@@ -1,10 +1,12 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2010-2022 NV Access Limited, Bram Duvigneau
+# Copyright (C) 2010-2024 NV Access Limited, Bram Duvigneau
+
 from typing import (
 	Optional,
 	Dict,
+	Self,
 )
 
 import textUtils
@@ -172,6 +174,8 @@ class CompoundTextInfo(textInfos.TextInfo):
 			field["table-id"] = 1 # FIXME
 			field["table-rownumber"] = obj.rowNumber
 			field["table-columnnumber"] = obj.columnNumber
+			field["table-rowheadertext"] = obj.rowHeaderText
+			field["table-columnheadertext"] = obj.columnHeaderText
 			# Row/column span is not supported by all implementations (e.g. LibreOffice)
 			try:
 				field['table-rowsspanned']=obj.rowSpan
@@ -199,6 +203,22 @@ class CompoundTextInfo(textInfos.TextInfo):
 
 	def __ne__(self, other):
 		return not self == other
+	
+	def moveToCodepointOffset(
+			self,
+			codepointOffset: int,
+	) -> Self:
+		if self._start == self._end:
+			# This is an optimization: if nested TextInfo is an OffsetsTextInfo,
+			# it will do the job faster.
+			nested = self._start.moveToCodepointOffset(codepointOffset)
+			result = self.copy()
+			result._start = result._end = nested
+			return result
+		else:
+			return super().moveToCodepointOffset(codepointOffset)
+
+
 
 class TreeCompoundTextInfo(CompoundTextInfo):
 	#: Units contained within a single TextInfo.

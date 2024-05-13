@@ -17,6 +17,7 @@ from typing import (
 
 import requests
 from requests.structures import CaseInsensitiveDict
+from json import JSONDecodeError
 
 import addonAPIVersion
 from baseObject import AutoPropertyObject
@@ -52,6 +53,7 @@ if TYPE_CHECKING:
 
 
 addonDataManager: Optional["_DataManager"] = None
+FETCH_TIMEOUT_S = 120  # seconds
 
 
 def initialize():
@@ -61,6 +63,16 @@ def initialize():
 		return
 	log.debug("initializing addonStore data manager")
 	addonDataManager = _DataManager()
+
+
+def terminate():
+	global addonDataManager
+	if config.isAppX:
+		log.info("Add-ons not supported when running as a Windows Store application")
+		return
+	addonDataManager.terminate()
+	log.debug("terminating addonStore data manager")
+	addonDataManager = None
 
 
 class _DataManager:
@@ -85,15 +97,24 @@ class _DataManager:
 		self._compatibleAddonCache = self._getCachedAddonData(self._cacheCompatibleFile)
 		self._installedAddonsCache = _InstalledAddonsCache()
 		# Fetch available add-ons cache early
-		threading.Thread(
+		self._initialiseAvailableAddonsThread = threading.Thread(
 			target=self.getLatestCompatibleAddons,
 			name="initialiseAvailableAddons",
-		).start()
+			daemon=True,
+		)
+		self._initialiseAvailableAddonsThread.start()
+
+	def terminate(self):
+		if self._initialiseAvailableAddonsThread.is_alive():
+			self._initialiseAvailableAddonsThread.join(timeout=1)
+		if self._initialiseAvailableAddonsThread.is_alive():
+			log.debugWarning("initialiseAvailableAddons thread did not terminate immediately")
 
 	def _getLatestAddonsDataForVersion(self, apiVersion: str) -> Optional[bytes]:
 		url = _getAddonStoreURL(self._preferredChannel, self._lang, apiVersion)
 		try:
-			response = requests.get(url)
+			log.debug(f"Fetching add-on data from {url}")
+			response = requests.get(url, timeout=FETCH_TIMEOUT_S)
 		except requests.exceptions.RequestException as e:
 			log.debugWarning(f"Unable to fetch addon data: {e}")
 			return None
@@ -108,7 +129,8 @@ class _DataManager:
 	def _getCacheHash(self) -> Optional[str]:
 		url = _getCacheHashURL()
 		try:
-			response = requests.get(url)
+			log.debug(f"Fetching add-on data from {url}")
+			response = requests.get(url, timeout=FETCH_TIMEOUT_S)
 		except requests.exceptions.RequestException as e:
 			log.debugWarning(f"Unable to get cache hash: {e}")
 			return None
@@ -162,16 +184,17 @@ class _DataManager:
 			return None
 		try:
 			data = cacheData["data"]
+			cachedAddonData = _createStoreCollectionFromJson(data)
 			cacheHash = cacheData["cacheHash"]
 			cachedLanguage = cacheData["cachedLanguage"]
 			nvdaAPIVersion = cacheData["nvdaAPIVersion"]
-		except KeyError:
+		except (KeyError, JSONDecodeError):
 			log.exception(f"Invalid add-on store cache:\n{cacheData}")
 			if NVDAState.shouldWriteToDisk():
 				os.remove(cacheFilePath)
 			return None
 		return CachedAddonsModel(
-			cachedAddonData=_createStoreCollectionFromJson(data),
+			cachedAddonData=cachedAddonData,
 			cacheHash=cacheHash,
 			cachedLanguage=cachedLanguage,
 			nvdaAPIVersion=tuple(nvdaAPIVersion),  # loads as list,
