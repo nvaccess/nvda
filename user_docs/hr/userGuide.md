@@ -249,7 +249,6 @@ Prečaci se neće izvršavati sve dok se nalazite u ovom načinu.
 |Premjesti se na prethodnu postavku govorne jedinice |`NVDA+control+strelica lijevo` |`NVDA+shift+control+strelica lijevo` |Premješta na sljedeću postavku govorne jedinice prije aktivne postavke, ponovno se vraćajući na prvu postavku poslije posljednje|
 |Povećaj vrijednost postavke govorne jedinice |`NVDA+control+strelica gore` |`NVDA+shift+control+strelica gore` |Povećava vrijednost trenutne postavke govorne jedinice na kojoj se nalazite. Npr: Povećava brzinu, bira sljedeći glas, povećava glasnoću|
 |Povećaj  postavku govorne jedinice u većim koracima |`NVDA+control+pageUp` |`NVDA+shift+control+pageUp` |Povećava vrijednost trenutne postavke govora na kojoj se nalazite u većim koracima. Na primjer kada se nalazite na postavci glasa, premještavat ćete se svakih dvadeset glasova; kada se nalazite na postavci sa klizačem (brzina, visina, itd.) postavka će se promijeniti za 20%|
-
 |Smanji postavku govorne jedinice |`NVDA+control+strelica dolje` |`NVDA+shift+control+strelica dolje` |smanjuje vrijednost trenutne postavke govorne jedinice na kojoj se nalazite. Npr: smanjuje brzinu, bira prethodni glas, smanjuje glasnoću|
 |Smanji postavku govorne  jedinice u većim koracima |`NVDA+control+pageDown` |`NVDA+shift+control+pageDown` |Smanjuje vrijednost trenutne postavke govorne jedinice na kojoj se nalazite u većim koracima. Na primjer kada se nalazite na postavci glas, prebacivat ćete se u nazad za dvadeset glasova; kada se nalazite na postavci klizača, prebacivat ćete se između opcija za 20%.|
 
@@ -1943,7 +1942,7 @@ Prečac: `NVDA+alt+t`
 
 Ova vam opcija omogućuje izbor dostupnih modusa brajice.
 
-Trenutno su dostupna dva modusa brajice: "prećenje kursora" i "prikaz govora".
+Trenutno su dostupna dva modusa brajice: "praćenje kursora" i "prikaz govora".
 
 Kada je označeno praćenje kursora, brajični redak će pratiti kursor sustava ili navigator objekta ovisno o tome na koji od njih je brajica povezana.
 
@@ -2234,8 +2233,7 @@ Podrazumijevano, ovaj će prečac prebacivati između slijedećih modusa:
 * NVDA u lijevom kanalu, a programi u desnom: NVDA će govoriti u lijevom kanalu, dok će drugi programi reproducirati svoje zvukove u desnom.
 * NVDA u desnom kanalu, a programi u lijevom: NVDA će govoriti u desnom kanalu, dok će zvukovi drugih programa biti reproducirani u lijevom.
 
-Dostupno je više naprednih načina podjele u oabirnom okviru.
-Ako želite postaviti glasnoću za druge programe koji nisu NVDA, koristite [za to predviđene prečace](#OtherAppVolume).
+Dostupno je više naprednih načina podjele u odabirnom okviru.
 Imajte na umu da ova opcija ne radi kao mikser.
 Na primjer, ako program reproducira  glazbu u stereo formatu kada je način podjele zvuka postavljen na "NVDA u lijevom kanalu a programi u desnom", tada ćete čuti desni kanal pjesme, dok će lijevi kanal biti utišan.
 
@@ -2256,39 +2254,6 @@ Podrazumjevano su dostupna tri modusa.
 
 Imajte na umu da je potrebno odabrati barem jedan modus.
 Ova opcija nije dostupna ako je NVDA pokrenut [sa isključenim Wasapi za audioizlaz](#WASAPI) u naprednim postavkama.
-
-##### Glasnoća drugih programa {#OtherAppVolume}
-
-Ovaj vam klizač omogućuje promjenu glasnoće drugih programam koji nisu NVDA.
-Ova će promjena glasnoće biti primijenjena čak i kada se taj program tek pokrene.
-Ova postavka glasnoće može se mijenjati i uz pomoć sljedećih tipkovničkih prečaca sa bilo kojeg mjesta:
-
-<!-- KC:beginInclude -->
-
-| naziv |prečac |opis|
-|---|---|---|
-|povećaj glasnoću drugih programa |`NVDA+alt+pageUp` |Povećava glasnoću svih programa osim NVDA.|
-|Smanji glasnoću programa |`NVDA+alt+pageDown` |smanjuje glasnoću svih programa osim NVDA.|
-
-<!-- KC:endInclude -->
-
-Ova opcija nije dostupna ako ste pokrenuli NVDA sa [isključenim Wasapi za audioizlaz](#WASAPI) u naprednim postavkama.
-
-##### Utišaj druge programe {#MuteApplications}
-
-Ovaj vam potvrdni okvir omogućuje utišavanje svih drugih programa koji nisu NVDA.
-Ova će se postavka utišavanja primijeniti čak i kada se neki drugi program tek pokrene.
-Sljedeći tipkovnički prečac se može također koristiti s bilo kojeg mjesta:
-
-<!-- KC:beginInclude -->
-
-| Naziv |Prečac |Opis|
-|---|---|---|
-|Uključi ili isključi utišavanje drugih programa |`NVDA+alt+delete` |Utišava ili odtišava sve druge programe osim NVDA.|
-
-<!-- KC:endInclude -->
-
-Ova opcija nije dostupna ako ste pokrenuli NVDA sa [isključenim Wasapi za audioizlaz](#WASAPI) u naprednim postavkama.
 
 #### Vid {#VisionSettings}
 
@@ -4981,4 +4946,3 @@ Sljedeće vrijednosti se mogu postaviti pod ovim ključem:
 Ako trebate više informacija ili pomoć sa čitačem ekrana NVDA, molimo posjetite [NVDA web stranicu](NVDA_URL).
 Tamo je moguće naći dodatnu dokumentaciju, tehničku podršku i resurse zajednice.
 Ova web stranica sadržava informacije koje se tiču razvoja NVDA čitača.
-

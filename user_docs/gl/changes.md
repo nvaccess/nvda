@@ -1,6 +1,102 @@
 # Que hai de Novo no NVDA
 
 
+## 2024.2
+
+Hai unha característica nova chamada separación de son.
+Esto permite separar os sons do NVDA nunha canle (ex: esquerdo) mentres os sons de todas as demáis aplicacións colócanse na outra canle (ex.: dereito).
+
+Hai novas ordes para modificar as opcións do anel do sintetizador, permitindo aos usuarios saltar cara a primeira ou cara a última opción, e aumentar ou diminuir a opción actual en pasos longos.
+Tamén hai novas ordes de navegación rápida, permitindo aos usuarios vincular xestos para saltar rápidamente entre: parágrafo, parágrafo aliñado verticalmente, mesmo estilo de texto, diferente estilo de texto, elemento de menú, botón conmutable, barra de progreso, figura e fórmula matemática.
+
+Hai moitas características braille novas e arranxos de erros.
+Engadiuse un novo modo braille chamado "amosar saída de fala".
+Cando estea activo, a pantalla braille amosa exactamente o que o NVDA vaia a falar.
+Tamén se engadíu o soporte para os dispositivos BrailleEdgeS2 e BrailleEdgeS3.
+LibLouis actualizouse, engadindo as novas táboas braille detalladas (con letras maiúsculas indicadas) para bieloruso e ucraniano, xunto cunha táboa en español para ler texto en grego.
+
+eSpeak actualizouse, engadindo a nova lingua Tigrinya.
+
+Hai moitos outros arranxos menores de fallos para aplicacións como Thunderbird, Adobe Reader, navegadores web, Nudi e Geekbench.
+
+### Novas Características
+
+* Novas teclas de ordes:
+  * Nova orde de navegación rápida `p` para saltar ao seguinte e anterior parágrafo de texto en modo exploración. (#15998, @mltony)
+  * Novas ordes de navegación rápida non asignadas, que poden usarse para saltar ao seguinte e anterior:
+    * figura (#10826)
+    * parágrafo aliñado verticalmente (#15999, @mltony)
+    * elemento de menú (#16001, @mltony)
+    * botón conmutable (#16001, @mltony)
+    * barra de progreso (#16001, @mltony)
+    * fórmula matemática (#16001, @mltony)
+    * mesmo estilo de texto (#16000, @mltony)
+    * diferente estilo de texto (#16000, @mltony)
+    * Engadidas ordes para saltar cara a á primeira, última, adiante e atrás polas opcións do anel do sintetizador. (#13768, #16095, @rmcpantoja)
+    * Estabrecer a opción primeira e última no anel do sintetizador non ten xesto asignado. (#13768)
+    * Diminuir e aumentar a opción actual do anel de opcións do sintetizador en pasos longos (#13768):
+      * Escritorio: `NVDA+control+rePáx` ou `NVDA+control+avPáx`.
+      * Portátil: `NVDA+control+shift+rePáx` ou `NVDA+control+shift+avPáx`.
+  * Engadido un novo xesto de entrada non asignado para conmutar o anunciado de figuras e pes de foto. (#10826, #14349)
+* Braille:
+  * Engadido o soporte para os dispositivos braille BrailleEdgeS2 e BrailleEdgeS3. (#16033, #16279, @EdKweon)
+  * Engadiuse un novo modo braille chamado "amosar saída de fala". (#15898, @Emil-18)
+    * Cando se activa, a pantalla braille amosa exactamente o que o NVDA vai falar.
+    * Pode conmutarse premendo `NVDA+alt+t`, ou dende o diálogo Opcións de Braille.
+* Separación de son: (#12985, @mltony)
+  * Permite separar sons do NVDA nunha canle (ex.: esquerda) mentres os sons das demáis aplicacións se colocan na outra canle (ex.: dereita).
+  * Conmutado con `NVDA+alt+s`.
+  * O volume das outras aplicacións pode axustarse con `NVDA+alt+rePáx` e `NVDA+alt+avPáx`. (#16052, @mltony)
+  * O son das outras aplicacións pode silenciarse con `NVDA+alt+supr`. (#16052, @mltony)
+* Agora admítese o anunciado de cabeceiras de fila e de columna en elementos HTML contenteditable. (#14113)
+* Engadida a opción para deshabilitar o anunciado de figuras e pes de foto nas opcións de formateado de documentos. (#10826, #14349)
+* En Windows 11, o NVDA anunciará alertas dende a escritura de voz e accións suxeridas incluindo a suxerencia superior ao copiar datos como números de teléfono ao portapapeis (Windows 11 2022 Update e posterior). (#16009, @josephsl)
+* O NVDA manterá o dispositivo de audio activo despois de que se deteña a fala para evitar que  se corte o comezo da seguinte fala con algúns dispositivos de audio como auriculares bluetooth. (#14386, @jcsteh, @mltony)
+* Agora sopórtase HP Secure Browser. (#16377)
+
+### Cambios
+
+* Tenda de Complementos:
+  * A versión mínima e a última comprobada de NVDA para un complemento agora amósanse na área "outros detalles". (#15776, @Nael-Sayegh)
+  * A acción reseñas da comunidade estará dispoñible e a páxina web de reseñas amosarase no panel detalles, en todas as pestanas da tenda. (#16179, @nvdaes)
+* Actualización de compoñentes:
+  * Actualizado o transcriptor braille LibLouis a [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0). (#16259, @codeofdusk)
+    * Engadidas novas táboas detalladas braille (con letras maiúsculas indicadas) para bieloruso e ucraniano, xunto cunha táboa braille española para ler textos en grego.
+  * eSpeak NG actualizouse a 1.52-dev commit `cb62d93fd7`. (#15913)
+    * Engadida nova lingua Tigrinya. 
+* Cambiáronse varios xestos para dispositivos BrailleSense para evitar conflictos con caracteres da táboa braille francesa. (#15306)
+  * `alt+frecha esquerda` agora asígnase a `punto2+punto7+espazo`
+  * `alt+frecha dereita` agora asígnase a `punto5+punto7+espazo`
+  * `alt+frecha arriba` agora asígnase a `punto2+punto3+punto7+espazo`
+  * `alt+frecha abaixo` agora asígnase a `punto5+punto6+punto7+espazo`
+* Os puntos de recheo usados habitualmente nos índices xa non se indican nos niveis de puntuación baixa. (#15845, @CyrilleB79)
+
+### Arranxo de Erros
+
+* Arranxos para Windows 11:
+  * o NVDA voltará a anunciar as suxerencias de entrada de teclado por hardware. (#16283, @josephsl)
+  * Na Versión 24H2 (actualización de 2024 e Windows Server 2025), a interacción co rato e tactil pode usarse en axustes rápidos. (#16348, @josephsl)
+* Tenda de Complementos:
+  * Ao se premer `ctrl+tab`, o foco móvese apropriadamente cara o título da pestana actual. (#14986, @ABuffEr)
+* Arranxos para navegadores web baseados en Chromium cando se usan con UIA:
+  * Arranxados erros que provocan que o NVDA se colgue. (#16393, #16394)
+  * A tecla retroceso agora funciona correctamente en campos de inicio de sesión en Gmail. (#16395)
+* O retroceso agora funciona correctamente ao usar Nudi 6.1 coa opción de NVDA "Manexar teclas de outras aplicacións" habilitada. (#15822, @jcsteh)
+* Arranxado un erro onde as cordinadas de audio se reproducían mentres a aplicación estaba en modo durminte cando "Reproducir cordinadas de audio ao mover o rato" estea activada. (#8059, @hwf1324)
+* En Adobe Reader, o NVDA xa non ignora o texto alternativo nas fórmulas en PDFs. (#12715)
+* Arranxado un erro que causa que o NVDA falle ao ler a cinta e as opcións dentro de Geekbench. (#16251, @mzanm)
+* Arranxado un caso pouco frecuente no que ao se gardar a configuración podía fallar o gardado de todos os perfís. (#16343, @CyrilleB79)
+* En Firefox e navegadores baseados en Chromium, o NVDA entrará correctamente en modo foco ao premer intro cando se posicione dentro dunha listaxe de presentación (ul / ol) dentro de contido editable. (#16325)
+* O cambio de estado de columna notifícase automáticamente ao selecionar as columnas que se amosarán na listaxe de mensaxes de Thunderbird. (#16323)
+
+### Cambios para desenvolvedores
+
+Por favor consulta [a guía do desenvolvedor ](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) para información sobre obsolescencias da API do NVDA e o proceso de eliminación.
+
+* Aa instanciación de obxectos `winVersion.WinVersion` con versións de Windows descoñecidas por enriba de 10.0.22000 como 10.0.25398 devolve "Windows 11 unknown" en lugar de "Windows 10 unknown" para o nome de versión. (#15992, @josephsl)
+* Facilítase o proceso de compilación de AppVeyor para as bifurcacións de NVDA, engadindo variables configurables en appveyor.yml para deshabilitar ou modificar partes específicas dos scripts de compilación de NV Access. (#16216, @XLTechie)
+* Engadido un documento how-to, explicando o proceso de compilación das bifurcacións do NVDA en AppVeyor. (#16293, @XLTechie)
+
 ## 2024.1
 
 Engaiduse un novo modo de voz "baixo demanda".

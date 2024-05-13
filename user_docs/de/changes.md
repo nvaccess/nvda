@@ -4,16 +4,16 @@
 ## 2024.2
 
 Es gibt eine neue Funktion namens Sound-Teilung.
-Dies ermöglicht die Aufteilung der NVDA-Sounds auf einen Kanal (z. B. links), während die Sounds aller anderen Anwendungen auf den anderen Kanal (z. B. rechts) gelegt werden.
+Dies ermöglicht die Aufteilung von NVDA-Sounds auf einen Kanal (z. B. links), während Sounds von allen anderen Anwendungen auf den anderen Kanal (z. B. rechts) ausgegeben werden.
 
-Es gibt neue Befehle zum Ändern des Sprachausgaben-Einstellungsrings, mit denen der Benutzer zur ersten oder letzten Einstellung springen und die aktuelle Einstellung in größeren Schritten erhöhen oder verringern kann.
-Außerdem gibt es neue Schnellnavigationsbefehle, die es dem Benutzer ermöglichen, Tastenbefehle festzulegen, um schnell zwischen folgenden Optionen zu wechseln: Absatz, vertikal ausgerichteter Absatz, Text im gleichen Stil, Text in einem anderen Stil, Menü-Element, Umschalter, Fortschrittsbalken, Abbildung und mathematische Formeln.
+Es gibt neue Befehle zum Ändern des Sprachausgaben-Einstellungsrings, mit denen lassen sich die ersten oder letzten Einstellung sowie die aktuelle Einstellung in größeren Schritten verändern.
+Außerdem gibt es neue Schnellnavigationsbefehle, mit denen lassen sich die Tastenbefehle verbinden, um schnell zwischen folgenden Optionen zu wechseln: Absätze, vertikal ausgerichtete Absätze, Texte im gleichen Stil, Texte unterschiedlichem Stil, Menü-Elemente, Umschalter, Fortschrittsbalken, Abbildungen und mathematische Formeln.
 
 Es gibt viele neue Braille-Funktionen und Fehlerbehebungen.
 Ein neuer Braille-Modus namens "Sprachausgabenverlauf anzeigen" wurde hinzugefügt.
-Wenn die Braillezeile angeschlossen und eingeschaltet ist, zeigt sie exakt das an, was NVDA spricht.
+Wenn sie aktiviert ist, wird auf der Braillezeile genau das angezeigt, was NVDA mitteilt.
 Unterstützung wurde auch für die Braillezeilen BrailleEdgeS2 und BrailleEdgeS3 hinzugefügt.
-LibLouis wurde aktualisiert, wobei neue detaillierte (mit Großbuchstaben versehene) belarussische und ukrainische Braille-Tabellen sowie eine spanische Tabelle zum Lesen griechischer Texte hinzugefügt wurden.
+LibLouis wurde aktualisiert, wobei neue detaillierte (mit Großbuchstaben versehene) belarussische und ukrainische Braille-Tabellen, eine laotische Tabelle und eine spanische Tabelle zum Lesen griechischer Texte hinzugefügt wurden.
 
 Die Sprachausgabe eSpeak wurde aktualisiert und um die neue Sprache Tigrinisch erweitert.
 
@@ -39,15 +39,13 @@ Es gibt viele kleinere Fehlerbehebungen für Anwendungen wie Mozilla Thunderbird
       * Laptop: `NVDA+Strg+Umschalt+Seite nach oben` oder `NVDA+Strg+Umschalt+Seite nach unten`.
   * Es wurde ein neuer, nicht zugewiesener Tastenbefehl hinzugefügt, mit der die Anzeige von Abbildungen und Beschriftungen umgeschaltet werden kann. (#10826, #14349)
 * Braille:
-  * Unterstützungen für die Braillezeilen BrailleEdgeS2, BrailleEdgeS3 hinzugefügt. (#16033, #16279, @EdKweon)
+  * Unterstützungen für die Braillezeilen BrailleEdgeS2 und BrailleEdgeS3 hinzugefügt. (#16033, #16279, @EdKweon)
   * Ein neuer Braille-Modus mit der Bezeichnung "Sprachausgabenverlauf anzeigen" wurde hinzugefügt. (#15898, @Emil-18)
-    * Wenn eine Braillezeile angeschlossen und aktiviert ist, zeigt sie exakt das an, was NVDA spricht.
+    * Wenn sie aktiviert ist, wird auf der Braillezeile genau das angezeigt, was NVDA mitteilt.
     * Sie kann mit der Tastenkombination `NVDA+Alt+T` oder über in den Einstellungen in der Kategorie "Braille" umgeschaltet werden.
 * Sound-Teilung: (#12985, @mltony)
-  * Ermöglicht die Aufteilung der NVDA-Sounds auf einen Kanal (z. B. links), während die Sounds aller anderen Anwendungen auf den anderen Kanal (z. B. rechts) gelegt werden.
+  * Ermöglicht die Aufteilung von NVDA-Sounds auf einen Kanal (z. B. links), während Sounds von allen anderen Anwendungen auf den anderen Kanal (z. B. rechts) ausgegeben werden.
   * Umgeschaltet mit `NVDA+Alt+S`.
-  * Die Lautstärke der anderen Anwendungen lässt sich durch `NVDA+Alt+Seite nach oben` und `NVDA+Alt+Seite nach unten` einstellen. (#16052, @mltony)
-  * Der Sound der anderen Anwendungen kann mit `NVDA+Alt+Entf` geändert werden. (#16052, @mltony)
 * Die Meldung von Zeilen- und Spaltenüberschriften wird jetzt in inhaltsverarbeitbaren HTML-Elementen unterstützt. (#14113)
 * In den Einstellungen für die Dokument-Formatierung wurde die Option für die Meldung zum Deaktivieren von Abbildungen und Beschriftungen hinzugefügt. (#10826, #14349)
 * In Windows 11 teilt NVDA über Warnungen bei der Spracheingabe und schlägt Aktionen vor, einschließlich des obersten Vorschlags beim Kopieren von Daten wie Telefonnummern in die Zwischenablage (Windows 11 Version 2022 Update und neuer). (#16009, @josephsl)
@@ -61,7 +59,9 @@ Es gibt viele kleinere Fehlerbehebungen für Anwendungen wie Mozilla Thunderbird
   * Die Aktion "Community-Bewertungen" ist nun verfügbar und die Webseite für die Bewertungen wird im Detailbereich in allen Registerkarten des Stores angezeigt. (#16179, @nvdaes)
 * Komponenten-Updates:
   * Der Braille-Übersetzer LibLouis wurde auf [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0) aktualisiert. (#16259, @codeofdusk)
-    * Neue detaillierte (mit Großbuchstaben versehene) belarussische und ukrainische Braille-Tabellen sowie eine spanische Tabelle zum Lesen griechischer Texte hinzugefügt.
+    * Neue detaillierte (mit Großbuchstaben gekennzeichnete) belarussische und ukrainische Braille-Tabellen.
+    * Neue spanische Tabelle zum Lesen griechischer Texte.
+    * Neue Tabelle für die laotische Kurzschrift. (#16470)
   * Die Sprachausgabe eSpeak NG wurde auf 1.52-dev commit `cb62d93fd7` aktualisiert. (#15913)
     * Neue Sprache Tigrinisch hinzugefügt.
 * Mehrere Tastenbefehle für Braillezeilen BrailleSense wurden geändert, um Konflikte mit Zeichen der französischen Braille-Tabelle zu vermeiden. (#15306)
@@ -78,6 +78,7 @@ Es gibt viele kleinere Fehlerbehebungen für Anwendungen wie Mozilla Thunderbird
   * In Version 24H2 (2024 Update und Windows Server 2025) können Maus- und Touch-Interaktion in den Schnelleinstellungen verwendet werden. (#16348, @josephsl)
 * Store für NVDA-Erweiterungen:
   * Wenn Sie die Tastenkombination `Strg+Tab` drücken, wird der Fokus korrekt auf den neuen Titel des aktuellen Tabs gesetzt. (#14986, @ABuffEr)
+  * Wenn die Cache-Dateien nicht korrekt sind, lässt sich NVDA nicht mehr neu starten. (#16362, @nvdaes)
 * Chromium-basierte Browser bei Verwendung mit UIA:
   * Fehler behoben, die zum Einfrieren von NVDA führten. (#16393, #16394)
   * Die Rücktaste funktioniert jetzt in Anmeldefeldern von Google Mail korrekt. (#16395)
@@ -4843,4 +4844,3 @@ Die wichtigsten Neuerungen dieser Version sind u. a. die Unterstützung von 64-B
 * NVDA fragt nun nach, ob nach einem Sprachenwechsel die Konfiguration gespeichert und neu gestartet werden soll. Ein Neustart von NVDA ist nach einem sprachenwechsel notwendig.
 * Wenn bei der Auswahl eines Synthesizers aus dem Sprachausgabendialog dieser nicht geladen werden kann, wird der Anwender darüber informiert.
 * Wird eine Sprachausgabe das erste mal geladen, wird nach einer passenden Stimme gesucht bzw. passende Werte für Geschwindigkeit, Lautstärke und Stimmhöhe eingestellt. Dies behebt Probleme mit den sapi4-Versionen von Eloquence und viavoice, die bisher zu schnell gesprochen haben.
-
