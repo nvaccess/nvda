@@ -1362,7 +1362,8 @@ class TextInfoRegion(Region):
 		else:
 			self._brailleInputIndStart = None
 
-	def getTextInfoForBraillePos(self, braillePos):
+	def getTextInfoForBraillePos(self, braillePos: int) -> textInfos.TextInfo:
+		"""Fetches a collapsed TextInfo at the specified braille position in the region."""
 		pos = self._rawToContentPos[self.brailleToRawPos[braillePos]]
 		# pos is relative to the start of the reading unit.
 		# Therefore, get the start of the reading unit...
