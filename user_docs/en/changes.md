@@ -63,7 +63,7 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
     * New Spanish table for reading Greek texts.
     * New table for Lao Grade 1. (#16470)
   * eSpeak NG has been updated to 1.52-dev commit `cb62d93fd7`. (#15913)
-    * Added new language Tigrinya. 
+    * Added new language Tigrinya.
 * Changed several gestures for BrailleSense devices to avoid conflicts with characters of the French braille table. (#15306)
   * `alt+leftArrow` is now mapped to `dot2+dot7+space`
   * `alt+rightArrow` is now mapped to `dot5+dot7+space`
