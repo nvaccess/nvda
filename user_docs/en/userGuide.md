@@ -1189,7 +1189,7 @@ In order to fit as much information as possible on a braille display, the follow
 |tv |tree view|
 |tvbtn |tree view button|
 |tvitem |tree view item|
-|lv N |a tree view item has a hierarchical level N||
+|lv N |a tree view item has a hierarchical level N|
 |wnd |window|
 |⠤⠤⠤⠤⠤ |separator|
 |mrkd |marked content|
