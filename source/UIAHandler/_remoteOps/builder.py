@@ -160,7 +160,7 @@ class GenericInstruction(InstructionBase):
 		self._params = kwargs
 
 	@property
-	def params(self):
+	def params(self) -> dict[str, Operand | _SimpleCData | ctypes.Array | ctypes.Structure]:
 		return self._params
 
 
@@ -199,7 +199,7 @@ class InstructionList:
 	def addMetaCommand(self, command: str):
 		self._addItem(f"[{command}]")
 
-	def getByteCode(self):
+	def getByteCode(self) -> bytes:
 		if self._byteCodeCache is not None and not self._modified:
 			return self._byteCodeCache
 		byteCode = b''
