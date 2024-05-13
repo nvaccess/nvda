@@ -51,6 +51,15 @@ class ImeCandidateUI(UIA):
 			eventHandler.queueEvent("UIA_elementSelected", candidateItem)
 
 
+	def event_focusEntered(self):
+		# #14023: announce visible IME candidates.
+		if (
+			self.parent.UIAAutomationId == "IME_Candidate_Window"
+			and config.conf["inputComposition"]["autoReportAllCandidates"]
+		):
+			ui.message(self.firstChild.visibleCandidateItemsText)
+
+
 class ImeCandidateItem(CandidateItemBehavior, UIA):
 	"""
 	A UIAutomation-based IME candidate Item (such as for  the modern Chinese Microsoft Quick input).
