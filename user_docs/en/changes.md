@@ -43,12 +43,12 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
   * A new braille mode called "display speech output" has been added. (#15898, @Emil-18)
     * When active, the braille display shows exactly what NVDA speaks.
     * It can be toggled by pressing `NVDA+alt+t`, or from the braille settings dialog.
-* Sound split: (#12985, @mltony)
+* A new sound split feature: (#12985, @mltony)
   * Allows splitting NVDA sounds into one channel (e.g. left) while sounds from all other applications are directed to the other channel (e.g. right).
   * Toggled by `NVDA+alt+s`.
 * Reporting row and column headers is now supported in contenteditable HTML elements. (#14113)
-* Added the option to disable the reporting of figures and captions in Document Formatting settings. (#10826, #14349)
-* In Windows 11, NVDA will announce alerts from voice typing and suggested actions including the top suggestion when copying data such as phone numbers to the clipboard (Windows 11 2022 Update and later). (#16009, @josephsl)
+* Added an option to disable the reporting of figures and captions in Document Formatting settings. (#10826, #14349)
+* In Windows 11, NVDA will announce alerts from voice typing and suggested actions including the top suggestion when copying data such as phone numbers to the clipboard (Windows 11 22H2 Update and later). (#16009, @josephsl)
 * NVDA will keep the audio device awake after speech stops, in order to prevent the start of the next speech being clipped with some audio devices such as Bluetooth headphones. (#14386, @jcsteh, @mltony)
 * HP Secure Browser is now supported. (#16377)
 
@@ -56,7 +56,7 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
 
 * Add-on Store:
   * The minimum and the last tested NVDA version for an add-on are now displayed in the "other details" area. (#15776, @Nael-Sayegh)
-  * The community reviews action will be available, and the reviews webpage will be shown in the details panel, in all tabs of the store. (#16179, @nvdaes)
+  * The community reviews action will be available in all tabs of the store. (#16179, @nvdaes)
 * Component updates:
   * Updated LibLouis Braille translator to [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0). (#16259, @codeofdusk)
     * New detailed (with capital letters indicated) Belarusian and Ukrainian Braille tables.
@@ -88,7 +88,7 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
 * Fixed a bug causing NVDA to fail to read the ribbon and options within Geekbench. (#16251, @mzanm)
 * Fixed a rare case when saving the configuration may fail to save all profiles. (#16343, @CyrilleB79)
 * In Firefox and Chromium-based browsers, NVDA will correctly enter focus mode when pressing enter when positioned within a presentational list (ul / ol) inside editable content. (#16325)
-* Column state change is automatically reported when selecting columns to display in Thunderbird message list. (#16323)
+* Column state change is now correctly reported when selecting columns to display in Thunderbird message list. (#16323)
 * The command line switch `-h`/`--help` works properly again. (#16522, @XLTechie)
 
 ### Changes for Developers
