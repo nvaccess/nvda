@@ -138,27 +138,28 @@ class LocalExecutor(operation.Executor):
 			breakAddress: int | None = None,
 			continueAddress: int | None = None
 	):
-		if type(instruction) is instructions.Halt:
-			raise HaltException()
-		elif type(instruction) is instructions.Fork:
-			self._ip += instruction.jumpTo.value
-		elif type(instruction) is instructions.ForkIfFalse:
-			self._execute_ForkIfFalse(instruction)
-		elif type(instruction) is instructions.NewLoopBlock:
-			self._execute_NewLoopBlock(instruction)
-		elif type(instruction) is instructions.NewTryBlock:
-			self._execute_NewTryBlock(instruction)
-		elif type(instruction) is instructions.BreakLoop:
-			raise BreakLoopException()
-		elif type(instruction) is instructions.ContinueLoop:
-			self._execute_ContinueLoop(instruction, continueAddress)
-		elif type(instruction) is instructions.SetOperationStatus:
-			self._execute_SetOperationStatus(instruction)
-		elif type(instruction) is instructions.GetOperationStatus:
-			self._execute_GetOperationStatus(instruction)
-		else:
-			instruction.localExecute(self._registers)
-			self._ip += 1
+		match instruction:
+			case instructions.Halt():
+				raise HaltException()
+			case instructions.Fork():
+				self._ip += instruction.jumpTo.value
+			case instructions.ForkIfFalse():
+				self._execute_ForkIfFalse(instruction)
+			case instructions.NewLoopBlock():
+				self._execute_NewLoopBlock(instruction)
+			case instructions.NewTryBlock():
+				self._execute_NewTryBlock(instruction)
+			case instructions.BreakLoop():
+				raise BreakLoopException()
+			case instructions.ContinueLoop():
+				self._execute_ContinueLoop(instruction, continueAddress)
+			case instructions.SetOperationStatus():
+				self._execute_SetOperationStatus(instruction)
+			case instructions.GetOperationStatus():
+				self._execute_GetOperationStatus(instruction)
+			case _:
+				instruction.localExecute(self._registers)
+				self._ip += 1
 
 	def _instructionLoop(
 			self,
