@@ -93,14 +93,6 @@ class ImeCandidateItem(CandidateItemBehavior, UIA):
 		return super(ImeCandidateItem, self).name
 
 	def event_UIA_elementSelected(self):
-		# In Windows 11, focus event is fired when a candidate item receives focus,
-		# therefore ignore this event for now.
-		# #16283: do handle hardware keyboard input suggestions.
-		if (
-			winVersion.getWinVer() >= winVersion.WIN11
-			and isinstance(api.getFocusObject().parent, ImeCandidateUI)
-		):
-			return
 		oldNav = api.getNavigatorObject()
 		if isinstance(oldNav, ImeCandidateItem) and self.name == oldNav.name:
 			# Duplicate selection event fired on the candidate item. Ignore it.
@@ -116,6 +108,14 @@ class ImeCandidateItem(CandidateItemBehavior, UIA):
 				self.appModule._lastImeCandidateVisibleText = newText
 				# speak the new page
 				ui.message(newText)
+		# In Windows 11, focus event is fired when a candidate item receives focus,
+		# therefore ignore this event for now.
+		# #16283: do handle hardware keyboard input suggestions.
+		if (
+			winVersion.getWinVer() >= winVersion.WIN11
+			and isinstance(api.getFocusObject().parent, ImeCandidateUI)
+		):
+			return
 		# Now just report the currently selected candidate item.
 		self.reportFocus()
 
