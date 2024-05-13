@@ -1778,7 +1778,7 @@ def getPropertiesSpeech(  # noqa: C901
 		reason: OutputReason = OutputReason.QUERY,
 		**propertyValues
 ) -> SpeechSequence:
-	textList: List[str] = []
+	textList: SpeechSequence = []
 	name: Optional[str] = propertyValues.get('name')
 	if name:
 		textList.append(name)
@@ -1972,7 +1972,10 @@ def getPropertiesSpeech(  # noqa: C901
 	if errorMessage:
 		textList.append(errorMessage)
 	if config.conf["speech"]["unicodeNormalization"]:
-		textList = [unicodeNormalize(t) for t in textList]
+		textList = [
+			unicodeNormalize(t) if isinstance(t, str) else t
+			for t in textList
+		]
 	types.logBadSequenceTypes(textList)
 	return textList
 
