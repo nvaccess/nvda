@@ -2367,6 +2367,14 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			direction: documentBase._Movement = documentBase._Movement.NEXT,
 			pos: textInfos.TextInfo | None = None
 	) -> Generator[TextInfoQuickNavItem, None, None]:
+		from NVDAObjects.window.winword import BrowseModeWordDocumentTextInfo
+		if isinstance(pos, BrowseModeWordDocumentTextInfo):
+			raise NotImplementedError(
+				"We don't support non-UIA word textInfos due to multiple issues with textInfo implementation "
+			)
+		from appModules.outlook import OutlookUIAWordDocument
+		if isinstance(api.getFocusObject(), OutlookUIAWordDocument):
+			raise NotImplementedError("We don't support Outlook due to its slowness")
 		if direction not in [
 			documentBase._Movement.NEXT,
 			documentBase._Movement.PREVIOUS,
