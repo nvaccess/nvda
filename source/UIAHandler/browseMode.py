@@ -175,7 +175,8 @@ def UIAHeadingQuicknavIterator(
 		direction: str = "next"
 ):
 	reverse = bool(direction == "previous")
-	wantedLevel = int(itemType[7:]) if len(itemType) > 7 else None
+	itemTypeBaseLen = len('heading')
+	wantedLevel = int(itemType[itemTypeBaseLen:]) if len(itemType) > itemTypeBaseLen else None
 	entireDocument = document.makeTextInfo(textInfos.POSITION_ALL)
 	if position is None:
 		searchArea = entireDocument
