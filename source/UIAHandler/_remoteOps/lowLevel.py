@@ -163,7 +163,7 @@ class RemoteOperation:
 		_dll.remoteOp_isOpcodeSupported(self._pRemoteOperation, opcode, byref(val))
 		return val.value
 
-	def execute(self, byteCode: bytes):
+	def execute(self, byteCode: bytes) -> RemoteOperationResultSet:
 		"""
 		Executes the given byte code in the remote operation VM.
 		:param byteCode: The byte code array to execute.
