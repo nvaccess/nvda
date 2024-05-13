@@ -50,7 +50,6 @@ class ImeCandidateUI(UIA):
 			candidateItem = self.firstChild.firstChild
 			eventHandler.queueEvent("UIA_elementSelected", candidateItem)
 
-
 	def event_focusEntered(self):
 		# #14023: announce visible IME candidates.
 		if (
