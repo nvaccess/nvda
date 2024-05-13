@@ -29,6 +29,8 @@ from ._remoteOps.lowLevel import (
 def initialize(doRemote: bool, UIAClient: UIA.IUIAutomation):
 	"""
 	Initializes UI Automation remote operations.
+	This function is deprecated and will be removed in the future.
+	The following parameters are ignored:
 	@param doRemote: true if code should be executed remotely, or false for locally.
 	@param UIAClient: the current instance of the UI Automation client library running in NVDA.
 	"""
