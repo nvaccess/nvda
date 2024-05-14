@@ -1598,7 +1598,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			keyPath=["speech", "unicodeNormalization"],
 			conf=config.conf,
 		)
-		self.bindHelpEvent("SpeechSettingsUnicodeNormalization", self.unicodeNormalizationCombo)
+		self.bindHelpEvent("SpeechUnicodeNormalization", self.unicodeNormalizationCombo)
 
 		includeCLDRText = _(
 			# Translators: This is the label for a checkbox in the
@@ -4166,7 +4166,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			keyPath=["braille", "unicodeNormalization"],
 			conf=config.conf,
 		)
-		self.bindHelpEvent("BrailleSettingsUnicodeNormalization", self.unicodeNormalizationCombo)
+		self.bindHelpEvent("BrailleUnicodeNormalization", self.unicodeNormalizationCombo)
 
 		self.brailleInterruptSpeechCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=_(

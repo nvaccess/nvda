@@ -1806,7 +1806,7 @@ This option applies to all synthesizers, not just the currently active synthesiz
 On by default, this option tells NVDA if the current voice's language can be trusted when processing symbols and characters.
 If you find that NVDA is reading punctuation in the wrong language for a particular synthesizer or voice, you may wish to turn this off to force NVDA to use its global language setting instead.
 
-##### Unicode normalization {#SpeechSettingsUnicodeNormalization}
+##### Unicode normalization {#SpeechUnicodeNormalization}
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |Default (Disabled), Enabled, Disabled|
@@ -1821,7 +1821,7 @@ For example, the latin letter "h" can also be presented as "𝐡" (bold), "ℎ" 
 
 1. Normalization to composed characters.
 For example, the character "ü" (u with umlaut/diaeresis), a common character in languages like German and Turkish can be represented in two forms.
-  1. One stand alone unicode character (ú)
+  1. One stand alone unicode character (ü)
   1. A decomposition into two characters (ú), namely the normal latin letter u and a diaeresis modifier
 
   Unicode normalization ensures that only one form will be used throughout all speech output, which is the one character variant.
@@ -2069,7 +2069,7 @@ When you scroll the display, you will then be able to read the rest of the word.
 
 Enabling this may allow for more fluent reading, but generally requires you to scroll the display more.
 
-##### Unicode normalization {#BrailleSettingsUnicodeNormalization}
+##### Unicode normalization {#BrailleUnicodeNormalization}
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |Default (Disabled), Enabled, Disabled|
@@ -2077,7 +2077,7 @@ Enabling this may allow for more fluent reading, but generally requires you to s
 
 When this option is enabled, unicode normalization is performed on the text that is brailled on the braille display.
 This is beneficial when coming across characters in braille that are unknown in a particular braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
-Other benefits of unicode normalization are explained in greater detail in the [section for the equivalent speech setting](#SpeechSettingsUnicodeNormalization).
+Other benefits of unicode normalization are explained in greater detail in the [section for the equivalent speech setting](#SpeechUnicodeNormalization).
 
 ##### Focus context presentation {#BrailleSettingsFocusContextPresentation}
 
