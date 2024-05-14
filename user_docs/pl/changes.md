@@ -8,7 +8,7 @@ Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angiels
 ## 2024.2
 
 Dodano nową funkcję "podzielony dźwięk".
-Ta funkcja umożliwia rozdzielenie dźwięku NVDA na przykład w lewym kanale gdy dźwięki z innych programów będą odtwarzane w innym kanale na przykład prawym.
+Ta funkcja umożliwia rozdzielenie dźwięku NVDA na przykład w lewym kanale gdy dźwięki z innych programów będą przekierowane do innego kanału na przykład prawego.
 
 Dodano nowe polecenia do modyfikowania ustawień w pierścieniu ustawień mowy, tym samym umożliwiając użytkownikowi przemieszczanie sie od pierwszego do ostatniego ustawienia, a także do zmniejszania lub zwiększania ustawień w większych krokach.
 Dodano także nowe polecenia do szybkiej nawigacji, umożliwiając użytkownikowi przemieszczanie się pomiędzy: akapitami, pionowo wyrównanymi akapitami, tekstem tego samego stylu, tekstem różnego stylu, elementami menu, przyciskami przełączania, paskami postępu, figurami, i formułami matematycznymi.
@@ -17,7 +17,7 @@ Dodano dużo nowych funkcji brajla, wraz z poprawkami błędów.
 Nowy tryb brajla "wyświetlanie mowy" został dodany.
 Gdy jest aktywny, monitor brajlowski dokłądnie pokazuje, co NVDA wymówi.
 Dodano także wsparcie do monitorów brajlowskich BrailleEdgeS2, BrailleEdgeS3.
-Zaktualizowano LibLouis dodając nowe tablice brajlowskie z włączonym pokazywaniem wielkich liter dla języków białoruskiego i ukraińskiego wraz z tablicą brajlowskąd dla języka hiszpańskiego ze wskarcie odczytu greki.
+Zaktualizowano LibLouis dodając nowe tablice brajlowskie z włączonym pokazywaniem wielkich liter dla języków białoruskiego i ukraińskiego, nową tablicę brajlowską do jezyka laotańskiego, a także   tablicę brajlowską dla języka hiszpańskiego ze wsparciem odczytu greki.
 
 eSpeak został zaktualizowany z dodanym nowym językiem Tigrinya.
 
@@ -43,15 +43,13 @@ Naprawiono dużo błędó w aplikacjach, takich jak Thunderbird, Adobe Reader, p
       * dla komputerów przenośnych: `NVDA+control+shift+pageUp` or `NVDA+control+shift+pageDown`.
   * Dodano nowy nieprzydzielony skrót do regulacji odczytu figur i podpisów. (#10826, #14349)
 * Brajl:
-  * Dodano wsparcie dla monitorów brajlowskich BrailleEdgeS2, BrailleEdgeS3. (#16033, #16279, @EdKweon)
+  * Dodano wsparcie dla monitorów brajlowskich BrailleEdgeS2 i BrailleEdgeS3. (#16033, #16279, @EdKweon)
   * Dodano nowy tryb brajla "wyświetlanie mowy". (#15898, @Emil-18)
     * Gdy jest aktywny, monitor brajlowski wyświetla to, co NVDA wymawia.
-    * można go włączać lub wyłączać za pomocą skrótu `NVDA+alt+t`, lub z okna diologewo ustawień brajla.
+    * można go włączać lub wyłączać za pomocą skrótu `NVDA+alt+t`, lub z okna dialogowego ustawień brajla.
 * Tryb podzielonego dźwięku: (#12985, @mltony)
-  * Ta funkcja umożliwia rozdzielenie dźwięku NVDA na przykład w lewym kanale gdy dźwięki z innych programów będą odtwarzane w innym kanale na przykład prawym.
+  * Ta funkcja umożliwia rozdzielenie dźwięku NVDA na przykład w lewym kanale gdy dźwięki z innych programów będą przekierowane do innego kanału na przykład prawego.
   * Można przełączać za pomocą `NVDA+alt+s`.
-  * Głośność innych aplikacji można ustawiać za pomocą skrótów `NVDA+alt+pageUp` i `NVDA+alt+pageDown`. (#16052, @mltony)
-  * Dźwięk innych aplikacji można wyciszać za pomocą skrótu `NVDA+alt+delete`. (#16052, @mltony)
 * Odczyt nagłówków wierszy i kolumn w HTML elementach contenteditable. (#14113)
 * Dodano opcję do wyłączenia odczytu figur i podpisów w ustawieniach formatowania dokumentów. (#10826, #14349)
 * W systemie Windows 11, NVDA będzie odczytywała alerty pochodzące od wpisywania głosowego, a także sugerowane działania, wraz z działaniem an wierschu o kopiowaniu danych, takich jak numerów telefonów do schowka (Windows 11 aktualizacja 2022 i nowsze). (#16009, @josephsl)
@@ -62,10 +60,12 @@ Naprawiono dużo błędó w aplikacjach, takich jak Thunderbird, Adobe Reader, p
 
 * Add-on Store:
   * Minimalna i ostatnia testowana wersja są wyświetlane w rozdziale dla każdego dodatku "inne szczegóły" . (#15776, @Nael-Sayegh)
-  * Działanie recenzji społeczności  będzie dostępne, a strona internetowa z recenzjami wyświetli się w panelu szczegółów, we wszystkch kartach właściwości add-on store. (#16179, @nvdaes)
+  * Działanie recenzji społeczności  będzie dostępne, a strona internetowa z recenzjami wyświetli się w panelu szczegółów, we wszystkich kartach właściwości add-on store. (#16179, @nvdaes)
 * Aktualizacje komponentów:
   * Zaktualizowano LibLouis Braille translator do wersji [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0). (#16259, @codeofdusk)
-    * Dodano nowe tablice brajlowskie z możliwością wyświetlania wielkich liter dla języków białoruskiego i ukraińskiego wraz z tablicą brajlowską dla języka hiszpańskiego ze wsparciem odczytu greckiego tekstu.
+    * Nowe tablice brajlowskie z możliwością wyświetlania wielkich liter dla języków białoruskiego i ukraińskiego.
+    * Nowa tablica brajlowska dla języka hiszpańskiego ze wsparciem odczytu greki.
+    * Nowa tablica brajlowska dla języka laotańskiego, pismo pełne. (#16470)
   * eSpeak NG został zaktualizowany do wersji 1.52-dev commit `cb62d93fd7`. (#15913)
     * Dodano nowy język Tigrinya. 
 * Zmieniono kilka skrótów klawiszowych dla urządzeń BrailleSense w celu zapobiegania konfliktów ze znakami w tablicy brajlowskiej dla języka francuzkiego. (#15306)
@@ -81,15 +81,16 @@ Naprawiono dużo błędó w aplikacjach, takich jak Thunderbird, Adobe Reader, p
   * NVDA ponownie może wymawiać podpowiedzi podczas wpisywania na klawiaturze sprzętowej. (#16283, @josephsl)
   * W wersji 24H2 (aktualizacja 2024 i Windows Server 2025), mysz i interakcja dotykiem mogą być używane w szybkich ustawieniach. (#16348, @josephsl)
 * Add-on Store:
-  * Gdy skrót klawiszowy`ctrl+tab`, jest naciśnięty fokus poprawnie się przemieszcza do nowego bieżącego tytułu karty włąściwości. (#14986, @ABuffEr)
-* Poprawki dla przegłądarek opartych na silniku Chromiumgdy są używane z Uia:
+  * Gdy skrót klawiszowy`ctrl+tab` jest naciśnięty, fokus poprawnie się przemieszcza do nowego bieżącego tytułu karty włąściwości. (#14986, @ABuffEr)
+  * NVDA nie będzie się ponownie uruchamiała gdy pliki pamięci podręcznej są nieprawidłowe. (#16362, @nvdaes)
+* Poprawki dla przegłądarek opartych na silniku Chromium gdy są używane z Uia:
   * Naprawiono błędy, powodujące zawieszanie się NVDA. (#16393, #16394)
   * Klawisz Backspace od teraz działa  prawidłowo w polach edycji logowania w Gmailu. (#16395)
 * Klawisz backspace od teraz działa prawidłowo podczas używania programu Nudi 6.1 z włączoną opcją "Przetwarzaj klawisze z innych aplikacji". (#15822, @jcsteh)
 * Naprawiono błąd gdy współrzędne dźwiękowe zostaną odtworzone gdy aplikacje znajdują się w trybie uśpienia, a opcja "Sygnalizuj dźwiękiem położenie myszy" jest włączona. (#8059, @hwf1324)
-* W programie Adobe Reader, NVDA już nie ignoruje w formułach ustawionych w plikach Pdf. (#12715)
+* W programie Adobe Reader, NVDA już nie ignoruje tekstu alternatywnego w formułach ustawionych w plikach Pdf. (#12715)
 * Naprawiono błąd, który skutkował niemożliwością odczytu wstążki w programie Geekbench przez NVDA. (#16251, @mzanm)
-* Naprawiono rzadki błąd przez który nie wszystkie profile konfiguracji nie były zachowane. (#16343, @CyrilleB79)
+* Naprawiono rzadki błąd przez który nie wszystkie profile konfiguracji były zachowane. (#16343, @CyrilleB79)
 * W Firefoxie i w przeglądarkach opartych na Chromium, NVDA poprawnie wejdzie do trybu fokusu w polach edycyjnych w listach prezentacyjnych (ul / ol). (#16325)
 * Stan kolumn jest automatycznie odczytywany podczas zaznaczania kolumn w liście wiadomości w Thunderbirdzie. (#16323)
 
