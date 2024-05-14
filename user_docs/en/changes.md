@@ -48,7 +48,7 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
   * Toggled by `NVDA+alt+s`.
 * Reporting row and column headers is now supported in contenteditable HTML elements. (#14113)
 * Added an option to disable the reporting of figures and captions in Document Formatting settings. (#10826, #14349)
-* In Windows 11, NVDA will announce alerts from voice typing and suggested actions including the top suggestion when copying data such as phone numbers to the clipboard (Windows 11 22H2 Update and later). (#16009, @josephsl)
+* In Windows 11, NVDA will announce alerts from voice typing and suggested actions including the top suggestion when copying data such as phone numbers to the clipboard (Windows 11 2022 Update and later). (#16009, @josephsl)
 * NVDA will keep the audio device awake after speech stops, in order to prevent the start of the next speech being clipped with some audio devices such as Bluetooth headphones. (#14386, @jcsteh, @mltony)
 * HP Secure Browser is now supported. (#16377)
 
