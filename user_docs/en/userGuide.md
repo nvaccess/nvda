@@ -2218,7 +2218,7 @@ By default this command will cycle between the following modes:
 
 * Disabled sound split: both NVDA and other applications output sounds to both left and right channels.
 * NVDA on the left and applications on the right: NVDA will speak in the left channel, while other applications will play sounds in the right channel.
-* NVDA on the right and applications on the left: NVDA will speak in the right channel, while other applications will play sounds in the left channel.
+* NVDA on the left and applications in both channels: NVDA will speak in the left channel, while other applications will play sounds in  both left and right channels.
 
 There are more advanced sound split modes available in NVDA setting combo box.
 Please note, that sound split doesn't work as a mixer.
