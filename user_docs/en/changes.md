@@ -32,11 +32,11 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
     * math formula (#16001, @mltony)
     * same style text (#16000, @mltony)
     * different style text (#16000, @mltony)
-    * Added commands to jump first, last, forward and backward through the synth settings ring. (#13768, #16095, @rmcpantoja)
+  * Added commands to jump first, last, forward and backward through the synth settings ring. (#13768, #16095, @rmcpantoja)
     * Setting the first/last setting in the synth settings ring has no assigned gesture. (#13768)
     * Decrease and increase the current setting of the synth settings ring in a larger step (#13768):
-      * Desktop: `NVDA+control+pageUp` or `NVDA+control+pageDown`.
-      * Laptop: `NVDA+control+shift+pageUp` or `NVDA+control+shift+pageDown`.
+      * Desktop: `NVDA+control+pageUp` and `NVDA+control+pageDown`.
+      * Laptop: `NVDA+control+shift+pageUp` and `NVDA+control+shift+pageDown`.
   * Added a new unassigned input gesture to toggle the reporting of figures and captions. (#10826, #14349)
 * Braille:
   * Added support for the BrailleEdgeS2 and BrailleEdgeS3 displays. (#16033, #16279, @EdKweon)
@@ -47,7 +47,7 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
   * Allows splitting NVDA sounds into one channel (e.g. left) while sounds from all other applications are directed to the other channel (e.g. right).
   * Toggled by `NVDA+alt+s`.
 * Reporting row and column headers is now supported in contenteditable HTML elements. (#14113)
-* Added the option to disable the reporting of figures and captions in Document Formatting settings. (#10826, #14349)
+* Added an option to disable the reporting of figures and captions in Document Formatting settings. (#10826, #14349)
 * In Windows 11, NVDA will announce alerts from voice typing and suggested actions including the top suggestion when copying data such as phone numbers to the clipboard (Windows 11 2022 Update and later). (#16009, @josephsl)
 * NVDA will keep the audio device awake after speech stops, in order to prevent the start of the next speech being clipped with some audio devices such as Bluetooth headphones. (#14386, @jcsteh, @mltony)
 * HP Secure Browser is now supported. (#16377)
@@ -56,14 +56,14 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
 
 * Add-on Store:
   * The minimum and the last tested NVDA version for an add-on are now displayed in the "other details" area. (#15776, @Nael-Sayegh)
-  * The community reviews action will be available, and the reviews webpage will be shown in the details panel, in all tabs of the store. (#16179, @nvdaes)
+  * The community reviews action will be available in all tabs of the store. (#16179, @nvdaes)
 * Component updates:
   * Updated LibLouis Braille translator to [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0). (#16259, @codeofdusk)
     * New detailed (with capital letters indicated) Belarusian and Ukrainian Braille tables.
     * New Spanish table for reading Greek texts.
     * New table for Lao Grade 1. (#16470)
   * eSpeak NG has been updated to 1.52-dev commit `cb62d93fd7`. (#15913)
-    * Added new language Tigrinya. 
+    * Added new language Tigrinya.
 * Changed several gestures for BrailleSense devices to avoid conflicts with characters of the French braille table. (#15306)
   * `alt+leftArrow` is now mapped to `dot2+dot7+space`
   * `alt+rightArrow` is now mapped to `dot5+dot7+space`
@@ -88,7 +88,7 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
 * Fixed a bug causing NVDA to fail to read the ribbon and options within Geekbench. (#16251, @mzanm)
 * Fixed a rare case when saving the configuration may fail to save all profiles. (#16343, @CyrilleB79)
 * In Firefox and Chromium-based browsers, NVDA will correctly enter focus mode when pressing enter when positioned within a presentational list (ul / ol) inside editable content. (#16325)
-* Column state change is automatically reported when selecting columns to display in Thunderbird message list. (#16323)
+* Column state change is now correctly reported when selecting columns to display in Thunderbird message list. (#16323)
 * The command line switch `-h`/`--help` works properly again. (#16522, @XLTechie)
 
 ### Changes for Developers
