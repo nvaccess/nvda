@@ -249,9 +249,8 @@ Polecenia nie będą wykonywane, gdy pomoc klawiatury jest aktywna.
 |przejdź do poprzedniego ustawienia syntezatora |`NVDA+control+strzałka w lewo` |`NVDA+shift+control+strzałka w lewo` |przemieszcza do poprzedniego ustawienia syntezatora, pozwalając krążyć po ustawieniach syntezatora po ostatnim ustawieniu|
 |zwiększ aktualne ustawienie syntezatora |`NVDA+control+strzałka w górę` |`NVDA+shift+control+strzałka w górę` |Zwiększa aktualne ustawienie syntezatora które ustawiasz. Na przykład zwiększa prędkość, wybiera następny głos, zwiększa głośność|
 |Zwiększ aktualne ustawienie pierścienia syntezatora mowy większymi krokami |`NVDA+control+pageUp` |`NVDA+shift+control+pageUp` |zwiększa wartość aktualnego ustawienia mowy na której się znajdujesz larger większymi krokami. Na przykład gdy znajdujesz się na ustawieniu głosu, przeskakiwać będziesz o każdych 20 głosów; gdy znajdujesz się na ustawieniu z suwakiem (prędkość, wysokość, itd) Ustawienie zwiększy się o dwadzieścia procent|
-
 |Zmniejsz aktualne ustawienie syntezatora |`NVDA+control+strzałka w dół` |`NVDA+shift+control+strzałka w dół` |Zmniejsza aktualne ustawienie syntezatora które ustawiasz. Na przykład zmniejsza prędkość, wybiera poprzedni głos, zmniejsza głośność|
-|Zmniejsza aktualne ustawienie mowy większymi krokami |`NVDA+control+pageDown` |`NVDA+shift+control+pageDown` |Zmniejsza ustawienie mowy na któym sieznajdujesz mniejszym krokiem. Na przykłąd, gdy znajdujesz sięna ustawieniu głosu, będziesz sieprzemieszczał co dwadzieścia głosów; Gdy znajdujesz się na ustawieniu podobnym od suwaka, wartości zmeini sięo dwadzieścia procent.|
+|Zmniejsz aktualne ustawienie mowy większymi krokami |`NVDA+control+pageDown` |`NVDA+shift+control+pageDown` |Zmniejsza ustawienie mowy na któym sieznajdujesz mniejszym krokiem. Na przykłąd, gdy znajdujesz sięna ustawieniu głosu, będziesz sieprzemieszczał co dwadzieścia głosów; Gdy znajdujesz się na ustawieniu podobnym od suwaka, wartości zmeini sięo dwadzieścia procent.|
 
 Możesz także ustawić pierwszą lub ostatnią wartość aktualnego ustawienia mowy w pierścieniu ustawień mowy przypisując skrót w [oknie dialogowym zdarzeń wejścia](#InputGestures), w kategorii mowa.
 To w praktyce oznacza, że gdy znajdujesz sie na ustawieniu prędkości, to umożliwi ustawienie jej na zero albo sto procent.
@@ -1943,7 +1942,7 @@ Ta opcja umożliwia wybór wspośród dostępnych trybów brajla.
 
 W aktualnym momencie dostępne są dwa tryby brajla, "śledzenie kursoru" i "wyświetlanie mowy".
 
-Gdy śledzenie kursoru jest włączone, monitor brajlowski będzie śledził korsor systemu/obiekt nawigatora oraz nawigację obiektową, w zależności od przywiązania brajla.
+Gdy śledzenie kursoru jest włączone, monitor brajlowski będzie śledził kursor systemu/obiekt nawigatora oraz nawigację obiektową, w zależności od przywiązania brajla.
 
 Gdy "wyświetlanie mowy jest" wybrane, monitor brajlowski wyświetli to, co NVDA wymawia, lub co by wymówił, jeżeli tryb mowy byłby ustawiony na "mowa"
 
@@ -2232,8 +2231,7 @@ Domyślnie, ty skrótem można przełączać się pomiędzy następujacymi tryba
 * NVDA w lewym kanale, a inne programy w prawym: NVDA będzie mówiłą w lewym kanale, gdy inne dźwięki będą odtwarzane w prawym kanale.
 * NVDA NVDA w prawym, a inne programy w lewym: NVDA będzie mówiła w prawym kanale, gdy inne programy będą odtwarzały dźwięki w lewym kanale.
 
-Istneije więcej dostępnych zaawansowanych trybów podziału dźwięku dostępnych w liście rozwijanej ustawień.
-Jeżeli chcesz ustawić głośność innych programó oprócz NVDA, używaj [do tego dedykowanych skrótów](#OtherAppVolume).
+Istnieje więcej dostępnych zaawansowanych trybów podziału dźwięku dostępnych w liście rozwijanej ustawień.
 Miewaj na uwadze,, że tryb podzielonego dźwięku nie działa jako mikser.
 Na przykład, jeżeli program odtwarza utwór w stereo, a tryb podziału dźwięku jest ustawiony na "NVDA w lewym a aplikacje w prawym", wtedy usłyszysz tylko prawy kanał utworu, a lewy kanał utworu będzie wyciszony.
 
@@ -2254,38 +2252,6 @@ Domyślnie, tylko trzy tryby są dostępne.
 
 Miewaj na uwadze, że musisz zaznaczyć conajmniej jeden tryb.
 Ta opcja nie jest dostępna gdy [Wasapi](#WASAPI) jest wyłączony w ustawieniach zaawansowanych.
-
-##### Głośność innych aplikacji {#OtherAppVolume}
-
-Ten suwak umożliwia ustawianie głośności innych aplikacji oprócz NVDA.
-To ustawienie będzie zastosowane, nawet przed uruchomieniem innych aplikacji.
-Ta głośność może być ustawiona globalnie za pomocą następujących skrótów klawiszowych:
-
-<!-- KC:beginInclude -->
-
-|Nazwa |Skrót |Opis|
-|Zwiększa głośność innych programów |`NVDA+alt+pageUp` |Zgłaśnia inne programy oprócz NVDA.|
-|Zmniejsz głośność innych programów |`NVDA+alt+pageDown` |Scisza innych programów oprócz NVDA.|
-
-<!-- KC:endInclude -->
-
-Ta opcja nie jest dostépna, jeæeli NVDA jest uruchomiona z [wyøáczonym Wasapi](#WASAPI) w ustawieniach zaawansowanych.
-
-##### Wyciszanie innych programów {#MuteApplications}
-
-To pole wyboru umoæliwia wyciszenie wszystkich programów, oprócz NVDA.
-To ustawienie będzie zastosowane nawet gdy  inne programy będą uruchomione po włączeniu tego ustawienia.
-To ustawienie można regulować globalnie, za pomocą następującego skrótu:
-
-<!-- KC:beginInclude -->
-
-| Nazwa |Skrót |Opis|
-|---|---|---|
-|Wycisz,/odcisz inne programy |`NVDA+alt+delete` |Wycisza lub odcisza inne programy, oprócz NVDA.|
-
-<!-- KC:endInclude -->
-
-Ta opcja jest niedostępe gdy NVDA jest włączona z [wyłączonym Wasapi](#WASAPI) w ustawieniach zaawansowanych.
 
 #### Ustawienia widoczności {#VisionSettings}
 
@@ -4979,4 +4945,3 @@ Następujące wartości mogą zostać ustawione w tym kluczu rejestru:
 Jeżeli potrzebujesz więcej informacji odnośnie programu  NVDA lub dodatkowej pomocy, oddwiedź stronę [Projektu NVDA](NVDA_URL).
 Tutaj można znaleźć dodatkowe dokumenty, jak również wsparcie techniczne i zasoby społecznościowe.
 Ta strona zawiera również informacje i materiały dotyczące rozwoju NVDA. Zachęcamy również do odwiedzenia polskiej strony społeczności użytkowników NVDA pod adresem: [www.nvda.pl](http://www.nvda.pl)
-
