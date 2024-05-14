@@ -248,9 +248,9 @@ Die eigentlichen Befehle werden im Eingabehilfemodus nicht ausgeführt.
 |Zur nächsten Sprachausgaben-Einstellung wechseln |`NVDA+Strg+Pfeiltaste nach rechts` |`NVDA+Umschalt+Strg+Pfeiltaste nach rechts` |Wechselt zur nächsten verfügbaren Spracheinstellung nach der aktuellen und kehrt nach der letzten Einstellung wieder zur ersten Einstellung zurück.|
 |Zur vorherigen Sprachausgaben-Einstellung wechseln |`NVDA+Strg+Pfeiltaste nach links` |`NVDA+Umschalt+Strg+Pfeiltaste nach links` |Wechselt zur nächsten verfügbaren Spracheinstellung vor der aktuellen und geht zur letzten Einstellung nach der ersten.|
 |Erhöhen der aktuellen Sprachausgaben-Einstellung |`NVDA+Strg+Pfeiltaste nach oben` |`NVDA+Umschalt+Strg+Pfeiltaste nach oben` |Erhöht die aktuelle Spracheinstellung, auf der Sie sich befinden. Erhöht z. B. die Geschwindigkeit, wählt die nächste Stimme aus, erhöht die Lautstärke.|
-|Erhöhen der aktuellen Sprachausgaben-Einstellung in größeren Schritten |`NVDA+Strg+Seite nach oben` |`NVDA+Umschalt+Strg+Seite nach oben` |Erhöht den Wert der aktuellen Sprachausgaben-Einstellung, auf der Sie sich befinden, in größeren Schritten. Wenn Sie sich z. B. auf einer Stimmen-Einstellung befinden, springt der Wert alle 20 Stimmen vorwärts; wenn Sie sich auf Schiebereglereinstellungen (Geschwindigkeit, Tonhöhe, etc.) befinden, springt der Wert um bis zu 20 % vorwärts.|
+|Erhöhen der aktuellen Sprachausgaben-Einstellung in größeren Schritten |`NVDA+Strg+Seite nach oben` |`NVDA+Umschalt+Strg+Seite nach oben` |Erhöht den Wert der aktuellen Sprachausgaben-Einstellung, auf der Sie sich befinden, in größeren Schritten. Wenn Sie sich z. B. auf einer Stimmen-Einstellung befinden, wird alle 20 Stimmen vorwärts mitgeteilt; wenn Sie sich auf Schiebereglereinstellungen (Geschwindigkeit, Tonhöhe, etc.) befinden, wird um bis zu 20 % vorwärts mitgeteilt.|
 |Verringern der aktuellen Sprachausgaben-Einstellung |`NVDA+Strg+Pfeiltaste nach unten` |`NVDA+Umschalt+Strg+Pfeiltaste nach unten` |Verringert die aktuelle Spracheinstellung, auf der Sie sich befinden. Verringert z. B. die Geschwindigkeit, wählt die vorherige Stimme aus, verringert die Lautstärke.|
-|Verringern der aktuellen Sprachausgaben-Einstellung in größeren Schritten |`NVDA+Strg+Seite nach unten` |`NVDA+Umschalt+Strg+Seite nach unten` |Verringert den Wert der aktuellen Sprachausgaben-Einstellung, auf der Sie sich befinden, in größeren Schritten. Wenn Sie sich z. B. auf einer Stimmen-Einstellung befinden, springt der Wert alle 20 Stimmen rückwärts; wenn Sie sich auf einer Schiebereglereinstellung (Geschwindigkeit, Tonhöhe, etc.) befinden, springt der Wert um bis zu 20 % rückwärts.|
+|Verringern der aktuellen Sprachausgaben-Einstellung in größeren Schritten |`NVDA+Strg+Seite nach unten` |`NVDA+Umschalt+Strg+Seite nach unten` |Verringert den Wert der aktuellen Sprachausgaben-Einstellung, auf der Sie sich befinden, in größeren Schritten. Wenn Sie sich z. B. auf einer Stimmen-Einstellung befinden, wird der Wert alle 20 Stimmen vorwärts mitgeteilt; wenn Sie sich auf Schiebereglereinstellungen (Geschwindigkeit, Tonhöhe, etc.) befinden, wird um bis zu 20 % vorwärts mitgeteilt.|
 
 Es ist auch möglich, den ersten oder letzten Wert der aktuellen Sprachausgaben-Einstellung zu setzen, indem Sie benutzerdefinierte Tastenbefehle im [Dialogfeld für die Tastenbefehle](#InputGestures), dort die Kategorie "Sprachausgabe" auswählen und diese dann zuweisen.
 Das bedeutet, dass zum Beispiel bei der Einstellung einer Geschwindigkeit den Wert auf 0 oder 100 festgelegt wird.
@@ -1942,9 +1942,9 @@ Mit dieser Option können Sie zwischen den verfügbaren Braille-Modi auswählen.
 
 Derzeit werden zwei Braille-Modi unterstützt: "Cursor folgen" und "Sprachausgabenverlauf anzeigen".
 
-Wenn die Option "Cursor folgen" ausgewählt ist, folgt die Braillezeile entweder dem System-Fokus/-Cursor oder dem Navigationsobjekt/NVDA-Cursor, je nachdem, woran die Ausgabe auf der Braillezeile gekoppelt ist.
+Wenn die Option "Cursor folgen" ausgewählt ist, folgt die Braillezeile entweder dem System-Fokus/-Cursor oder dem Navigationsobjekt bzw. dem NVDA-Cursor, je nachdem, woran die Ausgabe auf der Braillezeile gekoppelt ist.
 
-Wenn die Option "Sprachausgabenverlauf anzeigen" ausgewählt ist, zeigt die Braillezeile an, was NVDA spricht oder gesprochen hätte, wenn der Sprachmodus auf "Sprechen" eingestellt wäre.
+Wenn der Sprachausgabenverlauf ausgewählt ist, zeigt die Braillezeile an, was NVDA mitgeteilt hätte, wenn der Sprachmodus auf "Sprechen" eingestellt wäre.
 
 ##### Aktuelles Wort in Computerbraille ausschreiben {#BrailleSettingsExpandToComputerBraille}
 
@@ -2231,8 +2231,7 @@ In der Standard-Einstellung wechselt dieser Befehl zwischen den folgenden Modi:
 * NVDA links und Anwendungen rechts: NVDA spricht im linken Kanal, während andere Anwendungen im rechten Kanal zu hören sind.
 * NVDA rechts und Anwendungen links: NVDA spricht im rechten Kanal, während andere Anwendungen im linken Kanal zu hören sind.
 
-In der Einstellungskombination in NVDA sind weitere erweiterte Modi für die Sound-Teilung verfügbar.
-Wenn Sie die Lautstärke aller Anwendungen mit Ausnahme von NVDA anpassen möchten, sollten Sie [den speziellen Befehl](#OtherAppVolume) verwenden.
+Im Kombinationsfeld der Einstellung in NVDA sind weitere erweiterte Modi für die Sound-Teilung verfügbar.
 Bitte beachten Sie, dass die Sound-Teilung nicht als Mixer funktioniert.
 Wenn beispielsweise eine Anwendung eine Stereo-Tonspur abspielt und die Sound-Teilung auf "NVDA links und Anwendungen rechts" eingestellt ist, dann hören Sie nur den rechten Kanal der Tonspur, während der linke Kanal der Tonspur stummgeschaltet wird.
 
@@ -2254,42 +2253,9 @@ Standardmäßig sind nur drei Modi enthalten.
 Es ist zu beachten, dass mindestens ein Modus zu prüfen ist.
 Diese Option ist nicht verfügbar, wenn Sie NVDA mit [WASAPI deaktiviert für Audio-Ausgabe](#WASAPI) in den Erweiterten Einstellungen gestartet haben.
 
-##### Lautstärke der sonstigen Anwendungen einstellen {#OtherAppVolume}
-
-Mit diesem Schieberegler können Sie die Lautstärke aller derzeit ausgeführten Anwendungen außer NVDA einstellen.
-Diese Lautstärke-Einstellung gilt für alle weiteren Anwendungen, auch wenn sie nach der Änderung dieser Einstellung gestartet werden.
-Diese Lautstärke kann auch über die folgenden Tastaturbefehle von überall aus gesteuert werden:
-
-<!-- KC:beginInclude -->
-
-| Name |Tastenkombination |Beschreibung|
-|---|---|---|
-|Erhöhung der Lautstärke der Anwendung |`NVDA+Alt+Seite nach oben` |Erhöht die Lautstärke aller Anwendungen außer NVDA.|
-|Verringerung der Lautstärke der Anwendung |`NVDA+Alt+Seite nach unten` |Verringert die Lautstärke aller Anwendungen außer NVDA.|
-
-<!-- KC:endInclude -->
-
-Diese Option ist nicht verfügbar, wenn Sie NVDA mit [WASAPI deaktiviert für Audio-Ausgabe](#WASAPI) in den Erweiterten Einstellungen gestartet haben.
-
-##### Sonstige Anwendungen stummschalten {#MuteApplications}
-
-Mit diesem Kontrollkästchen können Sie alle anderen Anwendungen außer NVDA stummschalten.
-Diese Stummschaltung gilt für alle anderen Anwendungen, die Sounds ausgeben, auch wenn sie nach der Änderung dieser Einstellung gestartet werden.
-Der folgende Tastaturbefehl kann auch von überall aus verwendet werden:
-
-<!-- KC:beginInclude -->
-
-| Name |Tastenkombination |Beschreibung|
-|---|---|---|
-|Sonstige Anwendungen stummschalten |`NVDA+Alt+Entf` |Schaltet alle Anwendungen außer NVDA stumm bzw. deaktiviert sie.|
-
-<!-- KC:endInclude -->
-
-Diese Option ist nicht verfügbar, wenn Sie NVDA mit [WASAPI deaktiviert für Audio-Ausgabe](#WASAPI) in den Erweiterten Einstellungen gestartet haben.
-
 #### Visuelle Darstellungen {#VisionSettings}
 
-Mit der Kategorie "Visuelle Darstellungen" in den NVDA-Einstellungen können Sie[visuelle Verbesserungen](#Vision) aktivieren, deaktivieren und konfigurieren.
+Mit dieser Kategorie in den NVDA-Einstellungen können Sie[visuelle Verbesserungen](#Vision) aktivieren, deaktivieren und konfigurieren.
 
 Beachten Sie, dass die verfügbaren Optionen in dieser Kategorie durch [NVDA-Erweiterungen](#AddonsManager) erweitert werden können.
 Standardmäßig enthält diese Einstellungskathegorie die folgenden Optionen:
@@ -4978,4 +4944,3 @@ Die folgenden Werte können geändert werden:
 Wenn Sie weitere Informationen oder Hilfe bezüglich NVDA benötigen, besuchen Sie bitte die [Internetseite von NVDA](NVDA_URL).
 Neben Ressourcen der Community und dem technischen Support finden Sie auch zusätzliche Dokumentationen.
 Auf diesen Seiten werden Informationen und Ressourcen zur NVDA-Entwicklung ebenfalls bereitgestellt.
-
