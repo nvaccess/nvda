@@ -7,7 +7,7 @@
 ### New Features
 
 * New key commands:
-  * Added unassigned commands for vertical and horizontal rotation of the mouse wheel to enhance navigation on web pages and apps with dynamic content, such as Dism++. (#16462, @Cary-Rowen)
+  * Added unassigned commands for vertical and horizontal rotation of the mouse wheel to enhance navigation on web pages and apps with dynamic content, such as Dism++. Most mouses have a scroll wheel click, by pressing down on the scroll wheel. Holding this allows you to scroll horizontally and vertically at the same time by moving the cursor in the direction you want to scroll. (#16462, @Cary-Rowen)
 * Error messages referenced with `aria-errormessage` are now reported in Google Chrome and Mozilla Firefox. (#8318)
 * In LibreOffice Writer (version 24.8 and newer), when toggling text formatting (bold, italic, underline, subscript/superscript, alignment) using the corresponding keyboard shortcut, NVDA announces the new formatting attribute (e.g. "Bold on", "Bold off"). (#4248, @michaelweghorn)
 
