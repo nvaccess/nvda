@@ -43,7 +43,7 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
   * A new braille mode called "display speech output" has been added. (#15898, @Emil-18)
     * When active, the braille display shows exactly what NVDA speaks.
     * It can be toggled by pressing `NVDA+alt+t`, or from the braille settings dialog.
-* A new sound split feature: (#12985, @mltony)
+* Sound split: (#12985, @mltony)
   * Allows splitting NVDA sounds into one channel (e.g. left) while sounds from all other applications are directed to the other channel (e.g. right).
   * Toggled by `NVDA+alt+s`.
 * Reporting row and column headers is now supported in contenteditable HTML elements. (#14113)
