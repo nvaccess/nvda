@@ -370,14 +370,14 @@ def isRightMouseButtonLocked():
 def lockRightMouseButton():
 	""" Locks the right mouse button """
 	# Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-	ui.message(_("Right mouse button lock"))
+	ui.message(_("Right mouse button locked"))
 	executeMouseEvent(winUser.MOUSEEVENTF_RIGHTDOWN, 0, 0)
 
 
 def unlockRightMouseButton():
 	""" Unlocks the right mouse button """
 	# Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-	ui.message(_("Right mouse button unlock"))
+	ui.message(_("Right mouse button unlocked"))
 	executeMouseEvent(winUser.MOUSEEVENTF_RIGHTUP, 0, 0)
 
 

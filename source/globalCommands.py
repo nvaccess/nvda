@@ -267,7 +267,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for mouse wheel Rotate up command.
-			"Rotates up the mouse wheel at the current mouse position"
+			"Rotates the mouse wheel up at the current mouse position"
 		),
 		category=SCRCAT_MOUSE
 	)
@@ -277,7 +277,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for mouse wheel rotate down command.
-			"Rotates down the mouse wheel at the current mouse position"
+			"Rotates the mouse wheel down at the current mouse position"
 		),
 		category=SCRCAT_MOUSE
 	)
@@ -287,7 +287,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for mouse wheel rotate left command.
-			"Rotates left the mouse wheel at the current mouse position"
+			"Rotates the mouse wheel left at the current mouse position"
 		),
 		category=SCRCAT_MOUSE
 	)
@@ -297,7 +297,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for mouse wheel rotate right command.
-			"Rotates right the mouse wheel at the current mouse position"
+			"Rotates the mouse wheel right at the current mouse position"
 		),
 		category=SCRCAT_MOUSE
 	)
