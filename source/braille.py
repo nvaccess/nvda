@@ -1362,20 +1362,16 @@ class TextInfoRegion(Region):
 		else:
 			self._brailleInputIndStart = None
 
-	def getTextInfoForBraillePos(self, braillePos):
+	def getTextInfoForBraillePos(self, braillePos: int) -> textInfos.TextInfo:
+		"""Fetches a collapsed TextInfo at the specified braille position in the region."""
 		pos = self._rawToContentPos[self.brailleToRawPos[braillePos]]
 		# pos is relative to the start of the reading unit.
-		# Therefore, move pos code points from there.
-		# Note that, as liblouis uses 32 bit encoding internally,
-		# it is really safe to assume that one code point offset is equal to one character within liblouis.
-		try:
-			return self._readingInfo.moveToCodepointOffset(pos)
-		except (ValueError, RuntimeError):
-			log.exception(f"Error in moveToCodepointOffset, falling back to moving by {pos} characters")
-			dest = self._readingInfo.copy()
-			dest.collapse()
-			dest.move(textInfos.UNIT_CHARACTER, pos)
-			return dest
+		# Therefore, get the start of the reading unit...
+		dest = self._readingInfo.copy()
+		dest.collapse()
+		# and move pos characters from there.
+		dest.move(textInfos.UNIT_CHARACTER, pos)
+		return dest
 
 	def routeTo(self, braillePos: int):
 		if self._brailleInputIndStart is not None and self._brailleInputIndStart <= braillePos < self._brailleInputIndEnd:
@@ -2553,9 +2549,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.update()
 		# Last region should receive focus.
 		self.mainBuffer.focus(region)
-		if isinstance(region, TextInfoRegion):
-			self.scrollToCursorOrSelection(region)
-		elif self.buffer is self.mainBuffer:
+		self.scrollToCursorOrSelection(region)
+		if self.buffer is self.mainBuffer:
 			self.update()
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
@@ -2609,10 +2604,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.mainBuffer.update()
 			self.mainBuffer.restoreWindow()
 			if scrollTo is not None:
-				if self.buffer is self.messageBuffer:
-					self._dismissMessage(shouldUpdate=False)
 				self.scrollToCursorOrSelection(scrollTo)
-			elif self.buffer is self.mainBuffer:
+			if self.buffer is self.mainBuffer:
 				self.update()
 			elif (
 				self.buffer is self.messageBuffer

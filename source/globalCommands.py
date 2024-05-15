@@ -4511,63 +4511,6 @@ class GlobalCommands(ScriptableObject):
 	def script_cycleSoundSplit(self, gesture: "inputCore.InputGesture") -> None:
 		audio.toggleSoundSplitState()
 
-	@script(
-		description=_(
-			# Translators: Describes a command.
-			"Increases the volume of the other applications",
-		),
-		category=SCRCAT_AUDIO,
-		gesture="kb:NVDA+alt+pageUp",
-	)
-	def script_increaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
-		volume = config.conf["audio"]["applicationsSoundVolume"]
-		volume = min(100, volume + 5)
-		config.conf["audio"]["applicationsSoundVolume"] = volume
-		config.conf["audio"]["applicationsMuted"] = False
-		audio.updateSoundSplitState()
-		# Translators: a message reporting applications volume
-		msg = _("Applications volume %d") % volume
-		ui.message(msg)
-
-	@script(
-		description=_(
-			# Translators: Describes a command.
-			"Decreases the volume of the other applications",
-		),
-		category=SCRCAT_AUDIO,
-		gesture="kb:NVDA+alt+pageDown",
-	)
-	def script_decreaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
-		volume = config.conf["audio"]["applicationsSoundVolume"]
-		volume = max(0, volume - 5)
-		config.conf["audio"]["applicationsSoundVolume"] = volume
-		config.conf["audio"]["applicationsMuted"] = False
-		audio.updateSoundSplitState()
-		# Translators: a message reporting applications volume
-		msg = _("Applications volume %d") % volume
-		ui.message(msg)
-
-	@script(
-		description=_(
-			# Translators: Describes a command.
-			"Toggles other applications mute",
-		),
-		category=SCRCAT_AUDIO,
-		gesture="kb:NVDA+alt+delete",
-	)
-	def script_toggleApplicationsMute(self, gesture: "inputCore.InputGesture") -> None:
-		muted = config.conf["audio"]["applicationsMuted"]
-		muted = not muted
-		config.conf["audio"]["applicationsMuted"] = muted
-		audio.updateSoundSplitState()
-		if muted:
-			# Translators: a message reporting applications volume
-			msg = _("Applications muted")
-		else:
-			# Translators: a message reporting applications volume
-			msg = _("Applications unmuted")
-		ui.message(msg)
-
 
 #: The single global commands instance.
 #: @type: L{GlobalCommands}

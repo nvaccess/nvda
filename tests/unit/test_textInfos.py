@@ -180,6 +180,7 @@ class TestMoveToCodepointOffsetInBlackBoxTextInfo(unittest.TestCase):
 	THREE_CHARS = "012"
 	TEN_CHARS = "0123456789"
 	TWELVE_CHARS = "0123456789AB"
+	LETTERS = "ABCDEFGHIJ"
 
 	def runTestImpl(self, tokens: list[str], target: str):
 		info = MockBlackBoxTextInfo(tokens)
@@ -213,6 +214,13 @@ class TestMoveToCodepointOffsetInBlackBoxTextInfo(unittest.TestCase):
 	def test_doubleRightRecursion(self):
 		self.runTestImpl([self.THREE_CHARS, self.THREE_CHARS, self.THREE_CHARS, "a", self.THREE_CHARS], "a")
 
+	def test_emptyCharacter(self):
+		for c in self.LETTERS:
+			self.runTestImpl(list(self.LETTERS) + [""], c)
+
+	def test_emptyCharacterAtStart(self):
+		for c in self.LETTERS:
+			self.runTestImpl([""] + list(self.LETTERS), c)
 
 class TestMoveToCodepointOffsetInOffsetsTextInfo(unittest.TestCase):
 	encodings = [
