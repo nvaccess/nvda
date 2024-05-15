@@ -1,10 +1,10 @@
 ---
 name: Special Case Issue
-about: A complex or exceptional issue that doesn't fit the usual templates
+about: A complex or exceptional issue that doesn't fit into the usual templates
 
 ---
 
-<!-- 
+<!--
 Please read the text in this edit field before filling it in. 
 
 For guidance on how to fill in this template, including how to provide the required files, please see:
@@ -15,7 +15,7 @@ Before proceeding, please review the existing templates to ensure that those do 
 - Bug Report Template: https://github.com/nvaccess/nvda/issues/new?template=bug_report.md
 - Feature Request Template: https://github.com/nvaccess/nvda/issues/new?template=feature_request.md
 
-If required information is not provided when requested, the issue may be closed.
+If the required information is not provided upon request, the issue may be closed.
 
 Please also note that the NVDA project has a Citizen and Contributor Code of Conduct which can be found at https://github.com/nvaccess/nvda/blob/master/CODE_OF_CONDUCT.md. 
 NV Access expects that all contributors and other community members read and abide by the rules set out in this document while participating or contributing to this project. 
