@@ -11,9 +11,9 @@ If you are not familiar, please take some time to learn about
 Your issue will likely be closed if a template has not been followed.
 
 We currently have four templates:
-- For bug reports
-- For feature requests
-- For special case issues that cannot easily be categorised as either a bug report or a feature request
+- For [feature requests](#feature-request-template)
+- For [bug reports](#bug-report-template)
+- For [special case issues](#special-case-issue-template) that cannot easily be categorised as either a bug report or a feature request
 - For security vulnerabilities (please note that these are reported differently, for more information see https://github.com/nvaccess/nvda/blob/master/security.md)
 
 
