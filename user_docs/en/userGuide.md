@@ -316,7 +316,8 @@ The search field can contain information including the add-on ID, display name, 
 The list changes while typing the search terms.
 Once done, press `tab` to go to the filtered list of add-ons and browse the results.
 
-+++ Installing add-ons +++[InstallingAddons]
+#### Installing add-ons {#InstallingAddons}
+
 To install an add-on:
 1. With the focus on an add-on you would like to install, press `enter`.
 1. The actions menu opens with a list of actions including: "Install", "Home page", "License", "Source code", "Community reviews".
