@@ -20,7 +20,7 @@ import ui
 import config
 import winVersion
 import controlTypes
-from NVDAObjects.UIA import UIA, XamlEditableText
+from NVDAObjects.UIA import UIA, XamlEditableText, ListItem
 from NVDAObjects.behaviors import CandidateItem as CandidateItemBehavior, EditableTextWithAutoSelectDetection
 from NVDAObjects import NVDAObject
 
@@ -126,6 +126,17 @@ class ImeCandidateItem(CandidateItemBehavior, UIA):
 			return
 		# Now just report the currently selected candidate item.
 		self.reportFocus()
+
+
+class NavigationMenuItem(ListItem):
+	"""
+	A Windows 11 emoji panel navigation menu item.
+	In Windows 10 Version 1903 and later, emoji panel can be used to insert emojis, kaomojis, and symbols.
+	System focus cannot move to these choices in Windows 10 but can do so in Windows 11.
+	In addition to the choices above, Windows 11 adds GIF and clipboard history to navigation menu.
+	"""
+
+	pass
 
 
 class AppModule(appModuleHandler.AppModule):
