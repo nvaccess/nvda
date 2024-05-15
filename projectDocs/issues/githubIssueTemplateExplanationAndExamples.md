@@ -10,7 +10,8 @@ If you are not familiar, please take some time to learn about
 **Warning**: In all but exceptional circumstances we require one of these templates to be completed.
 Your issue will likely be closed if a template has not been followed.
 
-We currently have four templates (click to jump to the section):
+We currently have four templates:
+
 - For [feature requests](#feature-request-template)
 - For [bug reports](#bug-report-template)
 - For [special case issues](#special-case-issue-template) that cannot easily be categorised as either a bug report or a feature request
@@ -209,14 +210,14 @@ websites or navigation problems in focus or browse mode on different interfaces 
 ## Special Case Issue template
 
 ### Detailed description of the issue
-Provide a detailed description of the issue you are reporting. 
+Provide a detailed description of the issue you are reporting.
 Include specific details to help us understand the context.
 
 ### Why are the other templates not appropriate in this case?
 Explain why this issue cannot be addressed using the standard bug report or feature request templates.
 
 ### Have you asked for advice on how to report this issue via a community discussion? If so, please link to the discussion
-Mention if you have sought advice or shared this issue in community discussions before creating this issue ticket. 
+Mention if you have sought advice or shared this issue in community discussions before creating this issue ticket.
 Include links to discussion threads if applicable, for example:
 - https://github.com/nvaccess/nvda/discussions
 - https://nvda.groups.io/g/nvda
@@ -228,7 +229,8 @@ If this or the following sections are not applicable, write "N/A."
 ### Expected outcome or behaviour (if applicable)
 Describe what you expected to happen or how you expect the project to handle this kind of issue.
 
-### Screenshots, logs, and other attachments (if applicable)
+### Logs, screenshots and other attachments (if applicable)
+
 Attach any relevant logs or files that would help in diagnosing or understanding the issue.
 Since many contributors are blind, screenshots should preferably be provided only in case the issue is purely graphical, and an alternative textual description is welcome.
 
