@@ -34,7 +34,7 @@ Include specific details to help us understand the context.
 Explain why this issue cannot be addressed using the standard bug report or feature request templates.
 -->
 
-### Have you asked for advice on how to report this issue via a discussion?
+### Have you asked for advice on how to report this issue via a community discussion? If so, please link to the discussion
 <!--
 Mention if you have sought advice or shared this issue in community discussions before creating this issue ticket. 
 Include links to discussion threads if applicable, for example:
@@ -58,7 +58,7 @@ Describe what you expected to happen or how you expect the project to handle thi
 Attach any relevant screenshots, logs, or files that would help in diagnosing or understanding the issue.
 -->
 
-### System configuration or environmental context (if applicable)
+### System configuration or software environment (if applicable)
 <!--
 Include details about your environment where relevant (e.g., operating system, NVDA version, other relevant software).
 -->

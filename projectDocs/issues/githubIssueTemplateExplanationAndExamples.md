@@ -7,14 +7,14 @@ The template uses github markdown, to provide formatting for headings, lists, qu
 If you are not familiar, please take some time to learn about 
 [Github markdown](https://guides.github.com/features/mastering-markdown/)
 
-**Warning**: In all but exceptional circumstances we require this template to be completed.
-Your issue will likely be closed if this template has not been followed.
+**Warning**: In all but exceptional circumstances we require one of these templates to be completed.
+Your issue will likely be closed if a template has not been followed.
 
 We currently have four templates:
-- for bug reports
-- for feature requests
-- for special case issues that cannot be easily categorised as either a bug report or a feature request
-- for security vulnerabilities
+- For bug reports
+- For feature requests
+- For special case issues that cannot easily be categorised as either a bug report or a feature request
+- For security vulnerabilities
 
 As they form the vast majority of all issues raised, the Bug Report and Feature Requests issue templates are described in detail in this document. 
 
