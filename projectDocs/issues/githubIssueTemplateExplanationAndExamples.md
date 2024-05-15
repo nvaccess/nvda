@@ -14,9 +14,8 @@ We currently have four templates:
 - For bug reports
 - For feature requests
 - For special case issues that cannot easily be categorised as either a bug report or a feature request
-- For security vulnerabilities
+- For security vulnerabilities (please note that these are reported differently, for more information see https://github.com/nvaccess/nvda/blob/master/security.md)
 
-As they form the vast majority of all issues raised, the Bug Report and Feature Requests issue templates are described in detail in this document. 
 
 ## General information
 The following information applies to all issues (bug reports, new features, even pull requests).
@@ -205,3 +204,35 @@ In any case, re-registering those DLL files does not have any negative impact on
 functionality.
 Thus, it is recommended to run the fixing tool whenever focus problems, performance problems on
 websites or navigation problems in focus or browse mode on different interfaces are encountered.
+
+
+## Special Case Issue template
+
+### Detailed description of the issue
+Provide a detailed description of the issue you are reporting. 
+Include specific details to help us understand the context.
+
+### Why are the other templates not appropriate in this case?
+Explain why this issue cannot be addressed using the standard bug report or feature request templates.
+
+### Have you asked for advice on how to report this issue via a community discussion? If so, please link to the discussion
+Mention if you have sought advice or shared this issue in community discussions before creating this issue ticket. 
+Include links to discussion threads if applicable, for example:
+- https://github.com/nvaccess/nvda/discussions
+- https://nvda.groups.io/g/nvda
+
+### Steps to reproduce or illustrate the issue (if applicable)
+If possible, provide steps to demonstrate or reproduce the issue. 
+If this or the following sections are not applicable, write "N/A."
+
+### Expected outcome or behaviour (if applicable)
+Describe what you expected to happen or how you expect the project to handle this kind of issue.
+
+### Screenshots, logs, and other attachments (if applicable)
+Attach any relevant screenshots, logs, or files that would help in diagnosing or understanding the issue.
+
+### System configuration or software environment (if applicable)
+Include details about your environment where relevant (e.g., operating system, NVDA version, other relevant software).
+
+### Additional information (if applicable)
+Provide any additional context or information that you think may be helpful for understanding or resolving the issue.
