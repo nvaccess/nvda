@@ -254,27 +254,29 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 
 		lastFocus = api.getFocusObject()
 		
-		# This case can only occur when the old focus has a parent, when the old and new focus targets are instances
-		# of IAccessible, when the old focus is a menuitem, menuitemradio or menuitemcheckbox, and the old focus is
-		# a menu.
+		# This case can only occur when:
+		# 1. the old and new focus targets are instances of IAccessible; and
+		# 2. the old focus is a menuitem, menuitemradio or menuitemcheckbox; and
+		# 3. the new focus is a menu; and
+		# 4. the old focus has a parent.
 		if not (
-			isinstance(self._obj, IAccessible.IAccessible)
-			and isinstance(lastFocus, IAccessible.IAccessible)
-			and self._obj.IAccessibleRole in (
-				oleacc.ROLE_SYSTEM_MENUITEM, IA2.IA2_ROLE_CHECK_MENU_ITEM, IA2.IA2_ROLE_RADIO_MENU_ITEM)
-			and lastFocus.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUPOPUP
-			and self._obj.parent):
+				isinstance(self._obj, IAccessible.IAccessible)
+				and isinstance(lastFocus, IAccessible.IAccessible)
+				and self._obj.IAccessibleRole in (
+					oleacc.ROLE_SYSTEM_MENUITEM, IA2.IA2_ROLE_CHECK_MENU_ITEM, IA2.IA2_ROLE_RADIO_MENU_ITEM)
+				and lastFocus.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUPOPUP
+				and self._obj.parent):
 			return False
 
-		# Check that the old focus is a child of the new focus.
+		# Check that the old focus is a descendant of the new focus.
 		ancestor = self._obj.parent
 		while ancestor is not None:
 			if ancestor == lastFocus:
 				log.debugWarning(
-					"This parent menu was not announced properly, "
-					"and should have been focused before the submenu item.\n"
-					f"Object info: {self._obj.devInfo}\n"
-					f"Object parent info: {self._obj.parent.devInfo}\n"
+					"This ancestor menu was not announced properly, and should have been focused before the submenu item.\n"
+					"Object info: %s\n"
+					f"Ancestor info: %s\n",
+					self._obj.devInfo, ancestor.devInfo
 				)
 				return True
 			
