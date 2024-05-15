@@ -364,21 +364,24 @@ class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if isinstance(obj, UIA):
-			if obj.role == controlTypes.Role.LISTITEM and (
-				(
-					obj.parent.UIAAutomationId in (
-						"ExpandedCandidateList",
-						"TEMPLATE_PART_AdaptiveSuggestionList",
+			if obj.role == controlTypes.Role.LISTITEM:
+				if (
+					(
+						obj.parent.UIAAutomationId in (
+							"ExpandedCandidateList",
+							"TEMPLATE_PART_AdaptiveSuggestionList",
+						)
+						and obj.parent.parent.UIAAutomationId == "IME_Candidate_Window"
 					)
-					and obj.parent.parent.UIAAutomationId == "IME_Candidate_Window"
-				)
-				or obj.parent.UIAAutomationId in (
-					"IME_Candidate_Window",
-					"IME_Prediction_Window",
-					"TEMPLATE_PART_CandidatePanel",
-				)
-			):
-				clsList.insert(0, ImeCandidateItem)
+					or obj.parent.UIAAutomationId in (
+						"IME_Candidate_Window",
+						"IME_Prediction_Window",
+						"TEMPLATE_PART_CandidatePanel",
+					)
+				):
+					clsList.insert(0, ImeCandidateItem)
+				elif obj.UIAAutomationId.startswith("navigation-menu-item")
+					clsList.insert(0, NavigationMenuItem)
 			elif (
 				obj.role in (controlTypes.Role.PANE, controlTypes.Role.LIST, controlTypes.Role.POPUPMENU)
 				and obj.UIAAutomationId in (
