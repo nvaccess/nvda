@@ -229,7 +229,8 @@ If this or the following sections are not applicable, write "N/A."
 Describe what you expected to happen or how you expect the project to handle this kind of issue.
 
 ### Screenshots, logs, and other attachments (if applicable)
-Attach any relevant screenshots, logs, or files that would help in diagnosing or understanding the issue.
+Attach any relevant logs or files that would help in diagnosing or understanding the issue.
+Since many contributors are blind, screenshots should preferably be provided only in case the issue is purely graphical, and an alternative textual description is welcome.
 
 ### System configuration or software environment (if applicable)
 Include details about your environment where relevant (e.g., operating system, NVDA version, other relevant software).
