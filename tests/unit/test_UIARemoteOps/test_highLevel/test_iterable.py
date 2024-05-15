@@ -10,9 +10,6 @@ High-level UIA remote ops Unit tests for writing iterable functions that can yie
 from unittest import TestCase
 from UIAHandler._remoteOps import operation
 from UIAHandler._remoteOps import remoteAPI
-from UIAHandler._remoteOps.lowLevel import (
-	PropertyId,
-)
 
 
 class Test_iterable(TestCase):

@@ -12,9 +12,6 @@ from unittest.mock import Mock
 from ctypes import POINTER
 from UIAHandler._remoteOps import operation
 from UIAHandler._remoteOps import remoteAPI
-from UIAHandler._remoteOps.lowLevel import (
-	PropertyId,
-)
 
 
 class Test_errorHandling(TestCase):
