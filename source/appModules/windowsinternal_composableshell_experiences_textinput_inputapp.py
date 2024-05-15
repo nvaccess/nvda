@@ -149,9 +149,14 @@ class AppModule(appModuleHandler.AppModule):
 	disableBrowseModeByDefault: bool = True
 
 	def event_UIA_elementSelected(self, obj, nextHandler):
-		# Logic for IME candidate items is handled all within its own object
+		# Logic for the following items is handled by overlay classes
 		# Therefore pass these events straight on.
-		if isinstance(obj, ImeCandidateItem):
+		if isinstance(
+			obj, (
+				ImeCandidateItem,  # IME candidate items
+				NavigationMenuItem  # Windows 11 emoji panel navigation menu items
+			)
+		):
 			return nextHandler()
 		# #7273: When this is fired on categories,
 		# the first emoji from the new category is selected but not announced.
