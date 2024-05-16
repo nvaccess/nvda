@@ -152,6 +152,9 @@ class NavigationMenuItem(ListItem):
 		if (
 			# #16346: NVDA is stuck in a nonexistent edit field (location is None).
 			not any(focus.location)
+			# #16347: focus is once again stuck in top-level modern keyboard window
+			# after switching to clipboard history from other emoji panel screens.
+			or focus.firstChild and focus.firstChild.UIAAutomationId == "Windows.Shell.InputApp.FloatingSuggestionUI"
 		):
 			eventHandler.queueEvent("gainFocus", self.objectWithFocus())
 			return
