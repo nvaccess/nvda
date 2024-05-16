@@ -142,6 +142,8 @@ class NavigationMenuItem(ListItem):
 		if (
 			# #16346: system focus restored.
 			(focus := api.getFocusObject()).appModule != self.appModule
+			# #16532: repeat announcement due to pending gain focus event on category entries.
+			or eventHandler.isPendingEvents("gainFocus")
 		):
 			return
 		# Manipulate NVDA's focus object.
