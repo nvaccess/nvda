@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+﻿# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2007-2023 NV Access Limited, Peter Vágner, Renaud Paquay, Babbage B.V.
 # This file is covered by the GNU General Public License.
@@ -7,6 +7,7 @@
 from enum import IntEnum, IntFlag
 import os
 import queue
+from sys import maxsize
 from ctypes import (
 	c_short,
 	c_long,
@@ -43,6 +44,9 @@ import NVDAHelper
 import config
 from utils.security import isRunningOnSecureDesktop
 
+#: Verification of the architecture of the running system
+is_64Bit = maxsize > 2**32
+
 #: The path to the user's .accessibility.properties file, used
 #: to enable JAB.
 A11Y_PROPS_PATH = os.path.expanduser(r"~\.accessibility.properties")
@@ -53,7 +57,6 @@ A11Y_PROPS_CONTENT = (
 )
 
 #Some utility functions to help with function defines
-
 def _errcheck(res, func, args):
 	if not res:
 		raise RuntimeError("Result %s" % res)
@@ -80,8 +83,8 @@ jint=c_int
 jfloat=c_float
 jboolean=c_bool
 
-
-class JOBJECT64(c_int64):
+# If the machine is 64-bit, use c_int64, otherwise use c_int as a parameter.
+class JOBJECT64(c_int64 if is_64Bit else c_int):
 	pass
 AccessibleTable=JOBJECT64
 
@@ -791,7 +794,7 @@ def event_enterJavaWindow(hwnd):
 def enterJavaWindow_helper(hwnd):
 	vmID=c_long()
 	accContext=JOBJECT64()
-	timeout=time.time()+0.2
+	timeout=time.time()+0.5
 	while time.time()<timeout and not eventHandler.isPendingEvents("gainFocus"):
 		try:
 			bridgeDll.getAccessibleContextWithFocus(hwnd,byref(vmID),byref(accContext))
@@ -836,10 +839,12 @@ def enableBridge():
 
 
 def initialize():
-	global bridgeDll, isRunning
+	global bridgeDll, is_64Bit, isRunning
+	# If the system is 64-bit, load the dll that we have in the NVDA distribution.
+	# Otherwise, it loads the one on the 32-bit system, which does not have the -32 suffix.
+	correctDll = os.path.join(NVDAHelper.versionedLibPath, "windowsaccessbridge-32.dll") if is_64Bit else "windowsaccessbridge.dll"
 	try:
-		bridgeDll = cdll.LoadLibrary(
-			os.path.join(NVDAHelper.versionedLibPath, "windowsaccessbridge-32.dll"))
+		bridgeDll = cdll.LoadLibrary(correctDll)
 	except WindowsError:
 		raise NotImplementedError("dll not available")
 	_fixBridgeFuncs()
