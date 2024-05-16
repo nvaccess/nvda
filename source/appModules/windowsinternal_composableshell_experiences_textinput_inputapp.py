@@ -136,7 +136,14 @@ class NavigationMenuItem(ListItem):
 	In addition to the choices above, Windows 11 adds GIF and clipboard history to navigation menu.
 	"""
 
-	pass
+	def event_UIA_elementSelected(self):
+		# Workarounds for Windows 11 emoji panel category items.
+		# Ignore the event altogether.
+		if (
+			# #16346: system focus restored.
+			(focus := api.getFocusObject()).appModule != self.appModule
+		):
+			return
 
 
 class AppModule(appModuleHandler.AppModule):
