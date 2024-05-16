@@ -224,18 +224,19 @@ Include links to discussion threads if applicable, for example:
 
 ### Steps to reproduce or illustrate the issue (if applicable)
 If possible, provide steps to demonstrate or reproduce the issue. 
+Refer to [Steps to reproduce](#steps-to-reproduce) for more information.
 If this or the following sections are not applicable, write "N/A."
 
 ### Expected outcome or behaviour (if applicable)
 Describe what you expected to happen or how you expect the project to handle this kind of issue.
 
 ### Logs, screenshots and other attachments (if applicable)
-
 Attach any relevant logs or files that would help in diagnosing or understanding the issue.
-Since many contributors are blind, screenshots should preferably be provided only in case the issue is purely graphical, and an alternative textual description is welcome.
+Refer to [Attachments / Images](#attachments--images) for more information.
 
 ### System configuration or software environment (if applicable)
 Include details about your environment where relevant (e.g., operating system, NVDA version, other relevant software).
+Refer to [System configuration](#system-configuration) for more information.
 
 ### Additional information (if applicable)
 Provide any additional context or information that you think may be helpful for understanding or resolving the issue.
