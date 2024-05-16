@@ -286,15 +286,15 @@ Add-ons are developed by the NVDA community, or external companies and are unaff
 As with any software, it is important to trust the developer of an add-on before using it.
 Please refer to [Installing Add-ons](#AddonStoreInstalling) for ways to verify add-ons prior to installation.
 
-The first time the add-on store is opened, NVDA displays a warning about add-ons.
+The first time the Add-on Store is opened, NVDA displays a warning about add-ons.
 Add-ons are not vetted by NV Access and may have unrestricted functionality and access to information.
 Press `spacebar` if you have read the warning and do not need to see it next time.
 Press `tab` to reach the "OK" button, then `enter` to accept the warning and proceed to the Add-on Store.
-The "[Add-ons and the Add-on Store](#AddonsManager)" section of the user guide contains information about every feature of the add-on store.
+The "[Add-ons and the Add-on Store](#AddonsManager)" section of the User Guide contains information about every feature of the Add-on Store.
 
 The Add-on Store is available from the Tools menu.
-Press `NVDA+n` to open the NVDA menu, then `t` for tools, then `a` for add-on store.
-When the add-on store opens, it shows "Available add-ons" if no add-ons are installed.
+Press `NVDA+n` to open the NVDA menu, then `t` for tools, then `a` for Add-on Store.
+When the Add-on Store opens, it shows "Available add-ons" if no add-ons are installed.
 When add-ons are installed, the Add-on Store opens to the "Installed add-ons" tab.
 
 #### Available add-ons {#AvailableAddons}
@@ -321,7 +321,7 @@ Once done, press `tab` to go to the filtered list of add-ons and browse the resu
 To install an add-on:
 1. With the focus on an add-on you would like to install, press `enter`.
 1. The actions menu opens with a list of actions including: "Install", "Home page", "License", "Source code", "Community reviews".
-1. To install the add-on, press `i` or `down arrow` to "install" and press `enter`.
+1. To install the add-on, press `i` or `downArrow` to "install" and press `enter`.
 1. The focus returns to the add-on in the list and NVDA will read the details about the add-on.
 1. The "Status" information reported by NVDA changes from "Available" to "Downloading".
 1. Once the add-on has finished downloading, it will change to "Downloaded. Pending install".
@@ -334,7 +334,7 @@ To install an add-on:
 Press `control+tab` to move between the tabs or sections of the Add-on Store.
 The tabs include: "Installed add-ons", "Updatable add-ons", "Available add-ons" and "Installed incompatible add-ons".
 Each of the tabs are set out similar to each other, as a list of add-ons, a panel for more details on the selected add-on, and the ability to perform actions for the add-on.
-The actions menu of installed add-ons includes "Disable", and "Remove" rather than "Install".
+The actions menu of installed add-ons includes "Disable" and "Remove" rather than "Install".
 Disabling an add-on stops NVDA from loading it, but leaves it installed.
 To re-enable a disabled add-on, activate "Enable" from the actions menu.
 After enabling, disabling, or removing add-ons, NVDA will prompt to restart when closing the add-on store.
@@ -343,7 +343,7 @@ Any changes you had made in the dialog have already happened, but they don't tak
 
 ### Updating add-ons {#UpdatingAddons}
 When there is an update to an add-on you have installed, it will be listed in the "Updatable add-ons" tab.
-Press `control+tab` to get to this tab from anywhere in the add-on store.
+Press `control+tab` to get to this tab from anywhere in the Add-on Store.
 The status of the add-on will be listed as "Update available".
 The table will list the currently installed version and the available version.
 Press `enter` on the add-on to open the actions list; choose "Update".
