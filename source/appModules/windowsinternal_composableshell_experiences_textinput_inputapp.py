@@ -144,6 +144,13 @@ class NavigationMenuItem(ListItem):
 			(focus := api.getFocusObject()).appModule != self.appModule
 		):
 			return
+		# Manipulate NVDA's focus object.
+		if (
+			# #16346: NVDA is stuck in a nonexistent edit field (location is None).
+			not any(focus.location)
+		):
+			eventHandler.queueEvent("gainFocus", self.objectWithFocus())
+			return
 		# Report the selected navigation menu item.
 		super().event_UIA_elementSelected()
 
