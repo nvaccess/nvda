@@ -408,7 +408,7 @@ class AppModule(appModuleHandler.AppModule):
 					)
 				):
 					clsList.insert(0, ImeCandidateItem)
-				elif obj.UIAAutomationId.startswith("navigation-menu-item")
+				elif obj.UIAAutomationId.startswith("navigation-menu-item"):
 					clsList.insert(0, NavigationMenuItem)
 			elif (
 				obj.role in (controlTypes.Role.PANE, controlTypes.Role.LIST, controlTypes.Role.POPUPMENU)
