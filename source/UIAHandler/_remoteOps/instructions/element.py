@@ -5,7 +5,9 @@
 
 """
 This module contains the instructions that operate on UI Automation elements.
-Including to check if an object is an element, get a property value of an element, and navigate the UI Automation tree.
+Including to check if an object is an element,
+get a property value of an element,
+and navigate the UI Automation tree.
 """
 
 

@@ -6,8 +6,13 @@
 """
 This package contains all the instructions that can be executed by the remote ops framework.
 Each instruction contains the appropriate op code and parameter types.
-Most instructions also contain a `localExecute` method, which provides an implementation of the instruction that can be executed locally. 
+Most instructions also contain a `localExecute` method,
+which provides an implementation of the instruction that can be executed locally.
 """
+
+
+# Import all instructions so that they can be accessed as attributes of this module.
+# flake8: noqa: F401
 
 
 from .arithmetic import (

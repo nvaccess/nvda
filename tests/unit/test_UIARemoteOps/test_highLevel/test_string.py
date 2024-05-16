@@ -8,14 +8,8 @@ High-level UIA remote ops Unit tests for strings.
 """
 
 from unittest import TestCase
-from unittest.mock import Mock
-from ctypes import POINTER
-from UIAHandler import UIA
 from UIAHandler._remoteOps import operation
 from UIAHandler._remoteOps import remoteAPI
-from UIAHandler._remoteOps.lowLevel import (
-	PropertyId,
-)
 
 
 class Test_string(TestCase):
