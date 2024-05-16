@@ -1,4 +1,4 @@
-﻿# -*- coding: UTF-8 -*-
+# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2007-2023 NV Access Limited, Peter Vágner, Renaud Paquay, Babbage B.V.
 # This file is covered by the GNU General Public License.
@@ -82,6 +82,7 @@ jchar=c_wchar
 jint=c_int
 jfloat=c_float
 jboolean=c_bool
+
 
 # If the machine is 64-bit, use c_int64, otherwise use c_int as a parameter.
 class JOBJECT64(c_int64 if is_64Bit else c_int):
@@ -794,7 +795,7 @@ def event_enterJavaWindow(hwnd):
 def enterJavaWindow_helper(hwnd):
 	vmID=c_long()
 	accContext=JOBJECT64()
-	timeout=time.time()+0.5
+	timeout=time.time() + 0.5
 	while time.time()<timeout and not eventHandler.isPendingEvents("gainFocus"):
 		try:
 			bridgeDll.getAccessibleContextWithFocus(hwnd,byref(vmID),byref(accContext))
@@ -842,7 +843,10 @@ def initialize():
 	global bridgeDll, is_64Bit, isRunning
 	# If the system is 64-bit, load the dll that we have in the NVDA distribution.
 	# Otherwise, it loads the one on the 32-bit system, which does not have the -32 suffix.
-	correctDll = os.path.join(NVDAHelper.versionedLibPath, "windowsaccessbridge-32.dll") if is_64Bit else "windowsaccessbridge.dll"
+	if is_64Bit:
+		correctDll = os.path.join(NVDAHelper.versionedLibPath, "windowsaccessbridge-32.dll")
+	else:
+		correctDll = "windowsaccessbridge.dll"
 	try:
 		bridgeDll = cdll.LoadLibrary(correctDll)
 	except WindowsError:
