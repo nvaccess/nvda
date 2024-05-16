@@ -195,7 +195,7 @@ In case the issue is caused by an add-on, it is recommended to contact the autho
 
 #### Does the issue still occur after you run the COM Registration Fixing Tool in NVDA's tools menu?
 
-COM DLL files, which i.e. the IAccessible COM interface depends on, can get unregistered after
+COM DLL files, which the IAccessible COM interface depends on, can get unregistered after
 installing and uninstalling different programs on a computer.
 The consequence is that NVDA in certain cases does not work properly.
 Specifically, it reports "unknown" when trying to navigate websites or fails to switch between focus
