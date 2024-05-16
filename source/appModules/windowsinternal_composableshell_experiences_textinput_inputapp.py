@@ -144,6 +144,8 @@ class NavigationMenuItem(ListItem):
 			(focus := api.getFocusObject()).appModule != self.appModule
 		):
 			return
+		# Report the selected navigation menu item.
+		super().event_UIA_elementSelected()
 
 
 class AppModule(appModuleHandler.AppModule):
