@@ -144,6 +144,8 @@ class NavigationMenuItem(ListItem):
 			(focus := api.getFocusObject()).appModule != self.appModule
 			# #16532: repeat announcement due to pending gain focus event on category entries.
 			or eventHandler.isPendingEvents("gainFocus")
+			# #16533: system focus is located in GIF/kaomoji/symbol entry.
+			or focus.UIAAutomationId.startswith("item-")
 		):
 			return
 		# Manipulate NVDA's focus object.
