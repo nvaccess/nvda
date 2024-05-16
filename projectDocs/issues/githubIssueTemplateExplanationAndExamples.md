@@ -19,7 +19,8 @@ We currently have four templates:
 
 
 ## General information
-The following information applies to all issues (bug reports, new features, even pull requests).
+The following information applies to all issues and pull requests.
+
 At the start of the template there is an HTML comment block which points to this wiki page, it can
 be left in place and will not appear once the issue is saved.
 Feel free to delete it.
