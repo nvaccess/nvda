@@ -349,9 +349,20 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			cell = self._getTableCellCoordsCached(selection, axis)
 		except LookupError as e:
 			# Translators: The message reported when a user attempts to use a table movement command
-			# when the cursor is not within a table.
-			ui.message(_("Not in a table cell"))
-			raise e
+			parent = self.parent
+			while parent:
+				try:
+					outerSelection = parent.makeTextInfo(self)
+				except LookupError:
+					outerSelection = None
+				if outerSelection:
+					outerSelection.collapse()
+					return parent._tableFindNewCell(movement, axis, outerSelection, raiseOnEdge)
+				parent = parent.parent
+			else:
+				# when the cursor is not within a table.
+				ui.message(_("Not in a table cell"))
+				raise e
 
 		try:
 			if movement in {_Movement.PREVIOUS, _Movement.NEXT}:
