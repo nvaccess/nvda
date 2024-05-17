@@ -2475,18 +2475,6 @@ This slider allows you to set the volume of NVDA sounds and beeps.
 This setting only takes effect when "Volume of NVDA sounds follows voice volume" is disabled.
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
-##### Time to keep audio device awake after speech {#AudioAwakeTime}
-
-This edit box specifies how long NVDA keeps the audio device awake after speech ends.
-This allows NVDA to avoid certain speech glitches like dropped parts of words.
-This can happen due to audio devices (especially Bluetooth and wireless devices) entering standby mode.
-This might also be helpful in other use cases, such as when running NVDA inside a virtual machine (e.g. Citrix Virtual Desktop), or on certain laptops.
-
-Lower values may allow audio to be cut-off more often, as a device may enter standby mode too soon, causing the start of the following speech to be clipped.
-Setting the value too high may cause the battery of the sound output device to discharge faster, as it stays active for longer while no sound is being sent.
-
-You can set the time to zero in order to disable this feature.
-
 ##### Sound split {#SelectSoundSplitMode}
 
 The sound split feature allows users to make use of their stereo output devices, such as headphones and speakers.
@@ -2540,6 +2528,18 @@ By default only three modes are included.
 
 Note that it is necessary to check at least one mode.
 This setting is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
+
+##### Time to keep audio device awake after speech {#AudioAwakeTime}
+
+This edit box specifies how long NVDA keeps the audio device awake after speech ends.
+This allows NVDA to avoid certain speech glitches like dropped parts of words.
+This can happen due to audio devices (especially Bluetooth and wireless devices) entering standby mode.
+This might also be helpful in other use cases, such as when running NVDA inside a virtual machine (e.g. Citrix Virtual Desktop), or on certain laptops.
+
+Lower values may allow audio to be cut-off more often, as a device may enter standby mode too soon, causing the start of the following speech to be clipped.
+Setting the value too high may cause the battery of the sound output device to discharge faster, as it stays active for longer while no sound is being sent.
+
+You can set the time to zero in order to disable this feature.
 
 #### Vision {#VisionSettings}
 
