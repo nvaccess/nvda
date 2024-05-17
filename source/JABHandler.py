@@ -795,7 +795,7 @@ def event_enterJavaWindow(hwnd):
 def enterJavaWindow_helper(hwnd):
 	vmID=c_long()
 	accContext=JOBJECT64()
-	timeout=time.time() + 0.5
+	timeout = time.time() + 0.5
 	while time.time()<timeout and not eventHandler.isPendingEvents("gainFocus"):
 		try:
 			bridgeDll.getAccessibleContextWithFocus(hwnd,byref(vmID),byref(accContext))
