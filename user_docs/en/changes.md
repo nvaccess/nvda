@@ -24,7 +24,7 @@
 * Improved reliability of automatic text readout, particularly in terminal applications. (#15850, #16027, @Danstiv)
 * NVDA will correctly announce selection changes when editing a cell's text in Microsoft Excel. (#15843)
 * Java Access Bridge support works as expected on 32-bit systems, as it did in version 2019.2.1 and earlier. (#10842, @FelipeZanabria)
-* * Windows 11 fixes:
+* Windows 11 fixes:
   * In emoji panel, NVDA will no longer appear to get stuck when closing clipboard history. (#16347, @josephsl)
   * NVDA will once again announce visible candidates when opening Windows 11 IME interface. (#14023, @josephsl)
 
