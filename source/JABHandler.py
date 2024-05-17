@@ -7,7 +7,6 @@
 from enum import IntEnum, IntFlag
 import os
 import queue
-from sys import maxsize
 from ctypes import (
 	c_short,
 	c_long,
@@ -45,7 +44,7 @@ import config
 from utils.security import isRunningOnSecureDesktop
 
 #: Verification of the architecture of the running system
-is_64Bit = maxsize > 2**32
+is_64Bit = os.environ["PROCESSOR_ARCHITECTURE"].endswith("64")
 
 #: The path to the user's .accessibility.properties file, used
 #: to enable JAB.
@@ -795,6 +794,7 @@ def event_enterJavaWindow(hwnd):
 def enterJavaWindow_helper(hwnd):
 	vmID=c_long()
 	accContext=JOBJECT64()
+	# I changed the timeout to 0.5 because when a Java object disappeared NVDA would hang until I moved focus again.
 	timeout = time.time() + 0.5
 	while time.time()<timeout and not eventHandler.isPendingEvents("gainFocus"):
 		try:
@@ -843,12 +843,9 @@ def initialize():
 	global bridgeDll, is_64Bit, isRunning
 	# If the system is 64-bit, load the dll that we have in the NVDA distribution.
 	# Otherwise, it loads the one on the 32-bit system, which does not have the -32 suffix.
-	if is_64Bit:
-		correctDll = os.path.join(NVDAHelper.versionedLibPath, "windowsaccessbridge-32.dll")
-	else:
-		correctDll = "windowsaccessbridge.dll"
+	correctDll = "windowsaccessbridge-32.dll" if is_64Bit else "windowsaccessbridge.dll"
 	try:
-		bridgeDll = cdll.LoadLibrary(correctDll)
+		bridgeDll = cdll.LoadLibrary(os.path.join(NVDAHelper.versionedLibPath, correctDll))
 	except WindowsError:
 		raise NotImplementedError("dll not available")
 	_fixBridgeFuncs()
