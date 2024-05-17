@@ -1050,9 +1050,9 @@ However, for scenarios where you wish to copy an entire table or paragraph of ri
 
 ## Reading Mathematical Content {#ReadingMath}
 
-NVDA can read and navigate mathematical content on the web and in other applications, providing access in both speech and braille. 
+NVDA can read and navigate mathematical content on the web and in other applications, providing access in both speech and braille.
 However, in order for NVDA to read and interact with mathematical content, you will first need to install a Math component for NvDA.
-There are several NVDA add-ons available in the NVDA Add-on Store that provide support for math, including the [MathCAT NVDA add-on](https://nsoiffer.github.io/MathCAT/) and [Access8Math](https://github.com/tsengwoody/Access8Math). 
+There are several NVDA add-ons available in the NVDA Add-on Store that provide support for math, including the [MathCAT NVDA add-on](https://nsoiffer.github.io/MathCAT/) and [Access8Math](https://github.com/tsengwoody/Access8Math).
 Please refer to the [Add-on Store section](#AddonsManager) to learn how to browse and install available add-ons in NVDA.
 NVDA also can make use of the older [MathPlayer](https://info.wiris.com/mathplayer-info) software from Wiris if found on your system, though this software is no longer maintained.
 
@@ -1121,7 +1121,7 @@ Although it is generally recommended to use one of the newer NVDA add-ons to sup
 E.g. MathPlayer may support a particular language or Braille code that is unsupported in newer add-ons.
 MathPlayer is available for free from the Wiris website.
 [Download MathPlayer](https://downloads.wiris.com/mathplayer/MathPlayerSetup.exe).
-After installing MathPlayer, you will need to restart NVDA. 
+After installing MathPlayer, you will need to restart NVDA.
 Please note that information about MathPlayer may state that it is only for older browsers such as Internet Explorer 8.
 This is only referring to using MathPlayer to display mathematical content visually, and can be ignored by those using it to read or navigate math with NVDA.
 
@@ -1189,7 +1189,7 @@ In order to fit as much information as possible on a braille display, the follow
 |tv |tree view|
 |tvbtn |tree view button|
 |tvitem |tree view item|
-|lv N |a tree view item has a hierarchical level N||
+|lv N |a tree view item has a hierarchical level N|
 |wnd |window|
 |⠤⠤⠤⠤⠤ |separator|
 |mrkd |marked content|
@@ -2200,18 +2200,6 @@ This slider allows you to set the volume of NVDA sounds and beeps.
 This setting only takes effect when "Volume of NVDA sounds follows voice volume" is disabled.
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
-##### Time to keep audio device awake after speech {#AudioAwakeTime}
-
-This edit box specifies how long NVDA keeps the audio device awake after speech ends.
-This allows NVDA to avoid certain speech glitches like dropped parts of words.
-This can happen due to audio devices (especially Bluetooth and wireless devices) entering standby mode.
-This might also be helpful in other use cases, such as when running NVDA inside a virtual machine (e.g. Citrix Virtual Desktop), or on certain laptops.
-
-Lower values may allow audio to be cut-off more often, as a device may enter standby mode too soon, causing the start of the following speech to be clipped.
-Setting the value too high may cause the battery of the sound output device to discharge faster, as it stays active for longer while no sound is being sent.
-
-You can set the time to zero in order to disable this feature.
-
 ##### Sound split {#SelectSoundSplitMode}
 
 The sound split feature allows users to make use of their stereo output devices, such as headphones and speakers.
@@ -2230,7 +2218,7 @@ By default this command will cycle between the following modes:
 
 * Disabled sound split: both NVDA and other applications output sounds to both left and right channels.
 * NVDA on the left and applications on the right: NVDA will speak in the left channel, while other applications will play sounds in the right channel.
-* NVDA on the right and applications on the left: NVDA will speak in the right channel, while other applications will play sounds in the left channel.
+* NVDA on the left and applications in both channels: NVDA will speak in the left channel, while other applications will play sounds in  both left and right channels.
 
 There are more advanced sound split modes available in NVDA setting combo box.
 Please note, that sound split doesn't work as a mixer.
@@ -2247,12 +2235,24 @@ This checkable list allows selecting which sound split modes are included when c
 Modes which are unchecked are excluded.
 By default only three modes are included.
 
-* Sound split disabled: both NVDA and applications play sounds in both left and right channels.
-* NVDA on the left and all other applications on the right channel.
-* NVDA on the right and all other applications on the left channel.
+* Disabled sound split.
+* NVDA on the left and applications on the right.
+* NVDA on the left and applications in both channels.
 
 Note that it is necessary to check at least one mode.
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
+
+##### Time to keep audio device awake after speech {#AudioAwakeTime}
+
+This edit box specifies how long NVDA keeps the audio device awake after speech ends.
+This allows NVDA to avoid certain speech glitches like dropped parts of words.
+This can happen due to audio devices (especially Bluetooth and wireless devices) entering standby mode.
+This might also be helpful in other use cases, such as when running NVDA inside a virtual machine (e.g. Citrix Virtual Desktop), or on certain laptops.
+
+Lower values may allow audio to be cut-off more often, as a device may enter standby mode too soon, causing the start of the following speech to be clipped.
+Setting the value too high may cause the battery of the sound output device to discharge faster, as it stays active for longer while no sound is being sent.
+
+You can set the time to zero in order to disable this feature.
 
 #### Vision {#VisionSettings}
 
@@ -4487,12 +4487,12 @@ Due to this, and to maintain compatibility with other screen readers in Taiwan, 
 
 ### Eurobraille displays {#Eurobraille}
 
-The b.book, b.note, Esys, Esytime and Iris displays from Eurobraille are supported by NVDA.  
-These devices have a braille keyboard with 10 keys. 
+The b.book, b.note, Esys, Esytime and Iris displays from Eurobraille are supported by NVDA.
+These devices have a braille keyboard with 10 keys.
 Please refer to the display's documentation for descriptions of these keys.
 Of the two keys placed like a space bar, the left key is corresponding to the backspace key and the right key to the space key.
 
-These devices are connected via USB and have one stand-alone USB keyboard. 
+These devices are connected via USB and have one stand-alone USB keyboard.
 It is possible to enable/disable this keyboard by toggling "HID Keyboard simulation" using an input gesture.
 The braille keyboard functions described directly below is when "HID Keyboard simulation" is disabled.
 
