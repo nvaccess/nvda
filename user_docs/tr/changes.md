@@ -4,16 +4,16 @@
 ## 2024.2
 
 Ses ayırma özelliği eklendi.
-Bu özellik, örneğin NVDA sesinin sol kanaldan gelirken diğer seslerin sağ kanaldan gelmesini sağlıyor.
+Bu özellik, NVDA sesinin bir kanala (örn. sol), diğer uygulamalardan gelen seslerin diğer kanala (örn. sağ) yönlendirilmesini sağlar.
 
 Sentezleyici ayar zincirini değiştirmeye yarayan kısayollar eklendi. Bu kısayollar kullanılarak ilk ve son ayara atlanabiliyor ve üzerinde bulunulan ayar daha büyük adımlarla arttırılıp azaltılabiliyor.
 Yeni hızlı dolaşım komutları da eklendi. Bu sayede şunlar arasında dolaşmak için kısayollar atanabiliyor: Paragraf, dik hizalanmış paragraf, aynı biçimde metin, farklı biçimde metin, menü öğesi, geçiş düğmesi, aşama çubuğu, figür ve matematik formülü.
 
 Braille ile ilgili birçok özellik eklendi ve hata düzeltmesi yapıldı.
-"Konuşmayı görüntüle" braille modu eklendi.
+"Konuşmayı görüntüle" braille kipi eklendi.
 Etkinleştirildiğinde braille ekran tam olarak NVDA'nın konuşacağı metni gösterir.
-BrailleEdgeS2, BrailleEdgeS3 braille cihazları için destek eklendi.
-LibLouis güncellendi, bu güncellemeyle detaylı (büyük harflerin belirtildiği) yeni Belarusça ve Ukraynaca braille tabloları eklendi. Bununla birlikte Yunanca metinlerin okunması için İspanyolca braille tablosu eklendi.
+BrailleEdgeS2, BrailleEdgeS3 braille ekranları için destek eklendi.
+LibLouis güncellendi, bu güncellemeyle detaylı (büyük harflerin belirtildiği) yeni Belarusça ve Ukraynaca braille tabloları eklendi. Bununla birlikte Laoca braille tablosu ve Yunanca metinlerin okunması için İspanyolca braille tablosu da eklendi.
 
 ESpeak güncellendi, Tigrinya dili eklendi.
 
@@ -32,22 +32,73 @@ Thunderbird, Adobe Reader, web tarayıcıları, Nudi ve Geekbench gibi uygulamal
     * Matematik formülü (#16001, @mltony)
     * Aynı biçimde metin (#16000, @mltony)
     * Farklı biçimde metin (#16000, @mltony)
-* Sentezleyici ayarları zincirinde ilk ve son ayara, ileri ve geri gitmek için komutlar eklendi. (#13768, #16095, @rmcpantoja)
+    * Sentezleyici ayarları zincirinde ilk ve son ayara, ileri ve geri gitmek için komutlar eklendi. (#13768, #16095, @rmcpantoja)
     * Sentezleyici ayarları zincirinde ilk ve son ayarı ayarlama özelliğinin kısayolu atanmamıştır. (#13768)
     * üzerinde bulunulan ayarı daha büyük adımlarla arttırıp azaltma (#13768):
       * Masa üstü: `NVDA+kontrol+sayfa yukarı` veya `NVDA+kontrol+sayfa aşağı`.
       * Dizüstü: `NVDA+kontrol+şift+sayfa yukarı` veya `NVDA+kontrol+şift+sayfa aşağı`.
   * Figürlerin ve resim yazılarının seslendirilmesini açıp kapatmak için kısayolu atanmamış bir girdi hareketi eklendi. (#10826, #14349)
 * Braille:
-  * BrailleEdgeS2, BrailleEdgeS3 cihazları için destek eklendi. (#16033, #16279, @EdKweon)
-  * "Konuşmayı görüntüle" braille modu eklendi. (#15898, @Emil-18)
+  * BrailleEdgeS2, BrailleEdgeS3 ekranları için destek eklendi. (#16033, #16279, @EdKweon)
+  * "Konuşmayı görüntüle" braille kipi eklendi. (#15898, @Emil-18)
     * Etkinleştirildiğinde braille ekran tam olarak NVDA'nın konuşacağı metni gösterir.
-* Bu özellik `NVDA+alt+t` tuşlarına basarak veya braille ayarları iletişim kutusundan açılıp kapatılabilir.
-    -
-  -
+    * Bu özellik `NVDA+alt+t` tuşlarına basarak veya braille ayarları iletişim kutusundan açılıp kapatılabilir.
 * Ses ayırma: (#12985, @mltony)
+  * Bu özellik, NVDA sesinin bir kanala (örn. sol), diğer uygulamalardan gelen seslerin diğer kanala (örn. sağ) yönlendirilmesini sağlar.
+  * `NVDA+alt+s` tuşlarıyla ayarlanabilir.
+* Contenteditable HTML öğelerinde satır ve sütun başlıklarının seslendirilmesi destekleniyor. (#14113)
+* Belge formatları ayarlarına figürlerin ve alt yazıların seslendirilmesini devre dışı bırakma seçeneği eklendi. (#10826 ,#14349)
+* Windows 11'de NVDA, panoya telefon numaraları gibi bilgiler kopyalandığında sesli yazmadan ve en üstteki öneri dahil olmak üzere önerilen eylemlerden gelen uyarıları seslendirecek. Bu özellik Windows 11 2022 güncellemesi ve üzeri sürümler için geçerlidir. (#16009, @josephsl)
+* NVDA, Bluetooth kulaklık gibi bazı ses cihazlarında konuşma başlangıcının kesilmesini önlemek için konuşma durduktan sonra ses cihazını açık tutacak. (#14386, @ jcsteh, @mltony)
+* HP Secure Browser desteği eklendi. (#16377)
 
-= 2024.1 =
+### Değişiklikler
+
+* Eklenti mağazası:
+  * Eklentilerin asgari ve son test edilen NVDA sürümü bilgileri "diğer ayrıntılar" alanında görüntüleniyor. (#15776, @ Nael - Sayegh)
+  * Topluluk incelemeleri özelliği kullanılabilecek ve incelemeler web sayfası, mağazanın tüm sekmelerinde ayrıntılar kısmında gösterilecek. (#16179, @ nvdaes)
+* Bileşen güncellemeleri:
+  * LibLouis Braille translator [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0) sürümüne güncellendi. (#16259, @codeofdusk)
+    * Büyük harflerin belirtildiği detaylı Belarusça ve Ukraynaca Braille tabloları eklendi.
+    * Yunanca metinleri okumak için İspanyolca braille tablosu eklendi.
+    * Laoca derece 1 braille tablosu eklendi. (#16470)
+  * eSpeak NG 1.52 - dev commit `cb62d93fd7` sürümüne güncellendi. (#15913)
+    * Tigrinya dili eklendi.
+* Fransızca braille tablosunun karakterleriyle çakışmaları önlemek için BrailleSense cihazlarının birkaç hareketi değiştirildi. (#15306)
+  * `alt+sol ok` `2. nokta+7.nokta+boşluk` olarak değiştirildi
+  * `alt+ sağ ok` `5. nokta+7. nokta +boşluk` olarak değiştirildi
+  * `alt+ Yukarı ok` `2. nokta+3. nokta+7. nokta+boşluk` olarak değiştirildi
+  * `alt+ aşağı ok` `5. nokta + 6. nokta+7. nokta+boşluk` olarak değiştirildi
+* İçindekiler tablolarında yaygın olarak kullanılan çoklu noktalar düşük imla seslendirme düzeylerinde seslendirilmeyecek. (#15845, @CyrilleB79)
+
+### Hata düzeltmeleri
+
+* Windows 11 düzeltmeleri:
+  * NVDA, donanım klavyesi giriş önerilerini yeniden seslendirecek. (#16283, @josephsl)
+  * 24H2 sürümünde (2024 Güncellemesi ve Windows Server 2025) fare ve dokunma etkileşimi hızlı ayarlarda kullanılabilecek. (#16348, @josephsl)
+* Eklenti mağazası:
+  *  `kontrol+tab` tuşlarına basıldığında, odak düzgün bir şekilde odaklanılan sekmenin başlığına taşınacak. (#14986, @ABuffEr)
+  * Önbellek dosyaları bozuk olduğunda NVDA yeniden başlamayacak. (#16362, @nvdaes)
+* UIA ile kullanıldığında Chromium tabanlı tarayıcılar için düzeltmeler:
+  * NVDA'nın takılmasına neden olan hatalar düzeltildi. (#16393, #16394)
+  * Geri tuşu Gmail oturum açma alanlarında doğru şekilde çalışıyor. (#16395)
+* NVDA'nın "Başka uygulamaların tuşlarını işle" ayarı etkinken Nudi 6.1 kullanıldığında geri tuşu doğru şekilde çalışıyor. (#15822, @jcsteh)
+* "Fare hareketlerinde koordinatları ses çalarak bildir" seçeneği etkinleştirildiğinde, uygulama uyku kipindeyken ses koordinatlarının oynatılma hatası düzeltildi. (#8059, @hwf1324)
+* Adobe Reader'da, NVDA PDF'lerdeki formüllerin alternatif metinlerini göz ardı etmiyor. (#12715)
+* NVDA'nın Geekbench'teki şeridi ve seçenekleri okuyamamasına neden olan bir hata düzeltildi. (#16251, @mzanm)
+* Konfigürasyon kaydedildiiğinde tüm profillerin kaydedilememesi gibi nadir bir durum düzeltildi. (# 16343, @CyrilleB79)
+* Firefox ve Chromium tabanlı tarayıcılarda, NVDA, düzenlenebilir içeriğin içinde bir sunum listesinde (ul / ol) Enter tuşuna basıldığında odak kipine doğru bir şekilde girecek. (#16325)
+* Thunderbird mesaj listesinde görüntülenecek sütunları seçerken sütun durumu değişikliği otomatik olarak bildiriliyor. (#16323)
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+* Instantiating `winVersion.WinVersion` objects with unknown Windows versions above 10.0.22000 such as 10.0.25398 returns "Windows 11 unknown" instead of "Windows 10 unknown" for release name. (#15992, @josephsl)
+* Make the AppVeyor build process easier for NVDA forks, by adding configurable variables in appveyor.yml to disable or modify NV Access specific portions of the build scripts. (#16216, @XLTechie)
+* Added a how-to document, explaining the process of building NVDA forks on AppVeyor. (#16293, @XLTechie)
+
+## 2024.1
 
 Yeni "isteğe bağlı" konuşma modu eklendi.
 Konuşma modu isteğe bağlı olarak ayarlandığında, NVDA imlecin hareket ettirilmesi gibi durumlarda olduğu gibi otomatik olarak konuşmaz, sadece pencere başlığının seslendirilmesi gibi işlevi özellikle bir şeyin seslendirilmesi olan komutlar uygulandığında konuşur.
@@ -68,7 +119,7 @@ Yeni Tayca, Filipin dili ve Rumence braille tabloları eklendi.
 
 Özellikle eklenti mağazası, braille, Libre Office, Microsoft Office ve ses için birçok hata düzeltmesi yapıldı.
 
-== Önemli notlar == 
+### Önemli notlar
 * Bu sürüm mevcut eklentilerle uyumluluğu bozar
 * Windows 7 ve Windows 8 artık desteklenmiyor.
 Desteklenen asgari Windows sürümü Windows 8.1'dir.
