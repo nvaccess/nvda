@@ -12,6 +12,8 @@ complexSymbols:
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
+# Series of dots used for visual presentation, e.g. in table of contents
+çoklu .	\.{4,}
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
@@ -38,7 +40,7 @@ negative number	eksi	none	norep
 \r	satır sonu	char
  	aralık	char
  	aralık	char	# no-break space
-	aralık	char
+ 	aralık	char
 
 # Standard punctuation/symbols
 !	ünlem	all
@@ -124,8 +126,8 @@ _	alt çizgi	most
 ●	daire	most
 ○	çember	most
 ¨	diaeresis	most
-���	soldan sağa işareti	char
-���	sağdan sola işareti	char
+   	soldan sağa işareti	char
+   	sağdan sola işareti	char
 ■	siyah boşluk	some
 ▪	siyah boşluk	some
 ◾	siyah boşluk	some
