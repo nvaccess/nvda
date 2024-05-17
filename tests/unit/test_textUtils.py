@@ -235,7 +235,7 @@ class TestEdgeCases(unittest.TestCase):
 class TestUnicodeNormalizationOffsetConverter(unittest.TestCase):
 	"""Tests for unicode normalization using the UnicodeNormalizationOffsetConverter"""
 
-	def test_normalizedOfssetsSentence(self):
+	def test_normalizedOffsetsSentence(self):
 		text = "Één eigenwĳze geïnteresseerde ĳsbeer"
 		converter = UnicodeNormalizationOffsetConverter(text, "NFKC")
 		expectedStrToEncoded = (
@@ -253,7 +253,7 @@ class TestUnicodeNormalizationOffsetConverter(unittest.TestCase):
 		)
 		self.assertSequenceEqual(converter.computedEncodedToStrOffsets, expectedEncodedToStr)
 
-	def test_normalizedOfssetsMixed(self):
+	def test_normalizedOffsetsMixed(self):
 		text = "Ééĳo"
 		converter = UnicodeNormalizationOffsetConverter(text, "NFKC")
 		expectedStrToEncoded = (0, 0, 1, 1, 2, 4)
@@ -261,7 +261,7 @@ class TestUnicodeNormalizationOffsetConverter(unittest.TestCase):
 		expectedEncodedToStr = (0, 2, 4, 4, 5)
 		self.assertSequenceEqual(converter.computedEncodedToStrOffsets, expectedEncodedToStr)
 
-	def test_normalizedOfssetsDifferentOrder(self):
+	def test_normalizedOffsetsDifferentOrder(self):
 		text = "בְּרֵאשִׁית"
 		converter = UnicodeNormalizationOffsetConverter(text, "NFKC")
 		expectedStrToEncoded = (0, 2, 1, 3, 4, 5, 6, 8, 7, 9, 10)

@@ -1591,7 +1591,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 
 		self.unicodeNormalizationCombo: nvdaControls.FeatureFlagCombo = settingsSizerHelper.addLabeledControl(
 			labelText=_(
-				# Translators: This is a label for a combo-box in the Braille settings panel.
+				# Translators: This is a label for a combo-box in the Speech settings panel.
 				"Unicode normali&zation"
 			),
 			wxCtrlClass=nvdaControls.FeatureFlagCombo,

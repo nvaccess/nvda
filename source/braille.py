@@ -497,6 +497,7 @@ class Region(object):
 		mode = louis.dotsIO
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
 			mode |= louis.compbrlAtCursor
+
 		converter: UnicodeNormalizationOffsetConverter | None = None
 		if config.conf["braille"]["unicodeNormalization"] and not isUnicodeNormalized(self.rawText):
 			converter = UnicodeNormalizationOffsetConverter(self.rawText)
@@ -511,6 +512,7 @@ class Region(object):
 			textToTranslate = self.rawText
 			textToTranslateTypeforms = self.rawTextTypeforms
 			cursorPos = self.cursorPos
+
 		self.brailleCells, brailleToRawPos, rawToBraillePos, self.brailleCursorPos = louisHelper.translate(
 			[handler.table.fileName, "braille-patterns.cti"],
 			textToTranslate,
@@ -518,6 +520,7 @@ class Region(object):
 			mode=mode,
 			cursorPos=cursorPos
 		)
+
 		if converter:
 			# The received brailleToRawPos contains braille to normalized positions.
 			# Process them to represent real raw positions by converting them from normalized ones.
@@ -527,6 +530,7 @@ class Region(object):
 			rawToBraillePos = [rawToBraillePos[i] for i in converter.computedStrToEncodedOffsets]
 		self.brailleToRawPos = brailleToRawPos
 		self.rawToBraillePos = rawToBraillePos
+
 		if (
 			self.selectionStart is not None
 			and self.selectionEnd is not None

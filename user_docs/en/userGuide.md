@@ -1823,7 +1823,6 @@ For example, the latin letter "h" can also be presented as "𝐡" (bold), "ℎ" 
 For example, the character "ü" (u with umlaut/diaeresis), a common character in languages like German and Turkish can be represented in two forms.
   1. One stand alone unicode character (ü)
   1. A decomposition into two characters (ü), namely the normal latin letter u and a diaeresis modifier
-
   Unicode normalization ensures that only one form will be used throughout all speech output, which is the one character variant.
 
 1. Decomposition of some ligatures, Including "ĳ" (ligature ij) to their two letter form ("ij").
