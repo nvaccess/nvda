@@ -20,7 +20,7 @@ import ui
 import config
 import winVersion
 import controlTypes
-from NVDAObjects.UIA import UIA, XamlEditableText
+from NVDAObjects.UIA import UIA, XamlEditableText, ListItem
 from NVDAObjects.behaviors import CandidateItem as CandidateItemBehavior, EditableTextWithAutoSelectDetection
 from NVDAObjects import NVDAObject
 
@@ -128,6 +128,40 @@ class ImeCandidateItem(CandidateItemBehavior, UIA):
 		self.reportFocus()
 
 
+class NavigationMenuItem(ListItem):
+	"""
+	A Windows 11 emoji panel navigation menu item.
+	In Windows 10 Version 1903 and later, emoji panel can be used to insert emojis, kaomojis, and symbols.
+	System focus cannot move to these choices in Windows 10 but can do so in Windows 11.
+	In addition to the choices above, Windows 11 adds GIF and clipboard history to navigation menu.
+	"""
+
+	def event_UIA_elementSelected(self) -> None:
+		# Workarounds for Windows 11 emoji panel category items.
+		# Ignore the event altogether.
+		if (
+			# #16346: system focus restored.
+			(focus := api.getFocusObject()).appModule != self.appModule
+			# #16532: repeat announcement due to pending gain focus event on category entries.
+			or eventHandler.isPendingEvents("gainFocus")
+			# #16533: system focus is located in GIF/kaomoji/symbol entry.
+			or focus.UIAAutomationId.startswith("item-")
+		):
+			return
+		# Manipulate NVDA's focus object.
+		if (
+			# #16346: NVDA is stuck in a nonexistent edit field (location is None).
+			not any(focus.location)
+			# #16347: focus is once again stuck in top-level modern keyboard window
+			# after switching to clipboard history from other emoji panel screens.
+			or focus.firstChild and focus.firstChild.UIAAutomationId == "Windows.Shell.InputApp.FloatingSuggestionUI"
+		):
+			eventHandler.queueEvent("gainFocus", self.objectWithFocus())
+			return
+		# Report the selected navigation menu item.
+		super().event_UIA_elementSelected()
+
+
 class AppModule(appModuleHandler.AppModule):
 
 	# Cache the most recently selected item.
@@ -138,9 +172,14 @@ class AppModule(appModuleHandler.AppModule):
 	disableBrowseModeByDefault: bool = True
 
 	def event_UIA_elementSelected(self, obj, nextHandler):
-		# Logic for IME candidate items is handled all within its own object
+		# Logic for the following items is handled by overlay classes
 		# Therefore pass these events straight on.
-		if isinstance(obj, ImeCandidateItem):
+		if isinstance(
+			obj, (
+				ImeCandidateItem,  # IME candidate items
+				NavigationMenuItem  # Windows 11 emoji panel navigation menu items
+			)
+		):
 			return nextHandler()
 		# #7273: When this is fired on categories,
 		# the first emoji from the new category is selected but not announced.
@@ -353,21 +392,24 @@ class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if isinstance(obj, UIA):
-			if obj.role == controlTypes.Role.LISTITEM and (
-				(
-					obj.parent.UIAAutomationId in (
-						"ExpandedCandidateList",
-						"TEMPLATE_PART_AdaptiveSuggestionList",
+			if obj.role == controlTypes.Role.LISTITEM:
+				if (
+					(
+						obj.parent.UIAAutomationId in (
+							"ExpandedCandidateList",
+							"TEMPLATE_PART_AdaptiveSuggestionList",
+						)
+						and obj.parent.parent.UIAAutomationId == "IME_Candidate_Window"
 					)
-					and obj.parent.parent.UIAAutomationId == "IME_Candidate_Window"
-				)
-				or obj.parent.UIAAutomationId in (
-					"IME_Candidate_Window",
-					"IME_Prediction_Window",
-					"TEMPLATE_PART_CandidatePanel",
-				)
-			):
-				clsList.insert(0, ImeCandidateItem)
+					or obj.parent.UIAAutomationId in (
+						"IME_Candidate_Window",
+						"IME_Prediction_Window",
+						"TEMPLATE_PART_CandidatePanel",
+					)
+				):
+					clsList.insert(0, ImeCandidateItem)
+				elif obj.UIAAutomationId.startswith("navigation-menu-item"):
+					clsList.insert(0, NavigationMenuItem)
 			elif (
 				obj.role in (controlTypes.Role.PANE, controlTypes.Role.LIST, controlTypes.Role.POPUPMENU)
 				and obj.UIAAutomationId in (
