@@ -1,6 +1,103 @@
 # Quoi de Neuf dans NVDA
 
 
+## 2024.2
+
+Il existe une nouvelle fonctionnalité nommée séparation du son.
+Cela permet de séparer les sons de NVDA d'un côté (par exemple à gauche) tandis que les sons de toutes les autres applications arriveront de l'autre côté (par exemple à droite).
+
+Il existe de nouvelles commandes pour modifier la boucle des paramètres synthétiseur, permettant aux utilisateurs de passer au premier ou au dernier paramètre et d'augmenter ou de diminuer le paramètre courant par pas plus importants.
+Il existe également de nouvelles commandes de navigation rapide, permettant aux utilisateurs d'assigner des gestes pour naviguer rapidement entre : paragraphe, paragraphe aligné verticalement, texte de style identique, texte de style différent, élément de menu, bouton bascule, barre de progression, figure, et formule mathématique.
+
+De nombreuses nouvelles fonctionnalités Braille et corrections sont présentes.
+Un nouveau mode Braille appelé "afficher la parole" a été ajouté.
+Lorsque ce mode est activé, l'affichage Braille affiche exactement ce que NVDA prononce.
+Le support des afficheurs Braille BrailleEdgeS2 et BrailleEdgeS3 a également été ajouté.
+LibLouis a été mis à jour, avec l'ajout des nouvelles tables Braille Biélorusse et Ukrainien détaillés (avec lettres majuscules indiquées), une table Laotien, et une table Espagnole pour lire le textes grecs.
+
+eSpeak a été mis à jour, avec l'ajout du langage Tigrigna.
+
+Sont présents de nombreux correctifs de bogues mineures pour des applications, telles que Thunderbird, Adobe Reader, les navigateurs Web, Nudi et Geekbench.
+
+### Nouvelles Fonctionnalités
+
+* Nouvelles commandes clavier :
+  * Nouvelle commande de navigation rapide `p` pour sauter au paragraphe suivant/précédent en mode navigation. (#15998, @mltony)
+  * Nouvelles commandes de navigation rapides non assignées, pouvant être utilisées pour sauter à ces types d'élément suivants/précédents :
+    * figure (#10826)
+    * paragraphe aligné verticalement (#15999, @mltony)
+    * élément de menu (#16001, @mltony)
+    * bouton bascule (#16001, @mltony)
+    * barre de progression (#16001, @mltony)
+    * formule mathématique (#16001, @mltony)
+    * texte de style identique (#16000, @mltony)
+    * texte de style différent (#16000, @mltony)
+    * Ajout de commandes pour sauter au premier, au dernier, en avant et en arrière dans la boucle des paramètres synthétiseur. (#13768, #16095, @rmcpantoja)
+    * Aller à la première/dernière valeur du paramètre courant dans la boucle des paramètres synthétiseur n'a pas de geste assigné. (#13768)
+    * Diminuer et augmenter le paramètre courant de la boucle des paramètres synthétiseur d'un intervalle plus important (#13768) :
+      * Ordinateur de Bureau : `NVDA+contrôle+pagePrec` ou `NVDA+contrôle+pageSuiv`.
+      * Ordinateur portable : `NVDA+contrôle+maj+pagePrec` ou `NVDA+contrôle+maj+pageSuiv`.
+  * Ajout d'un nouveau geste de commande non assigné pour basculer l'annonce des figures et légendes. (#10826, #14349)
+* Braille :
+  * Ajout du support des afficheurs BrailleEdgeS2 et BrailleEdgeS3. (#16033, #16279, @EdKweon)
+  * Un nouveau mode Braille appelé "afficher la parole" a été ajouté. (#15898, @Emil-18)
+    * Lorsque ce mode est activé, l'affichage Braille affiche exactement ce que NVDA prononce.
+    * Il peut être activé/désactivé en appuyant sur `NVDA+alt+t`, ou depuis le dialogue des paramètres Braille.
+* Séparation du son : (#12985, @mltony)
+  * Permet de séparer les sons de NVDA d'un côté (par exemple à gauche) tandis que les sons de toutes les autres applications arriveront de l'autre côté (par exemple à droite).
+  * Activé/désactivé par `NVDA+alt+s`.
+* L'annonce des en-têtes de lignes et colonnes est maintenant supporté dans les éléments HTML au contenu éditable. (#14113)
+* Ajout d'une option pour désactivé l'annonce des figures et légendes dans les paramètres de mise en forme des documents. (#10826, #14349)
+* Sous Windows 11, NVDA annoncera les alertes de saisie vocale et les actions suggérées lors de la copie de données telles que des numéros de téléphone dans le presse-papiers (mise à jour Windows 11 2022 et versions ultérieures). (#16009, @josephsl)
+* NVDA maintiendra le périphérique audio éveillé après l'arrêt de la parole, afin d'éviter que le début de la parole suivante ne soit tronqué avec certains périphériques audio tels que les casques Bluetooth. (#14386, @jcsteh, @mltony)
+* HP Secure Browser est maintenant supporté. (#16377)
+
+### Changements
+
+* Add-on Store :
+  * La version minimale et la dernière version testées d'une extension sont maintenant affichées dans la zone "autres détails". (#15776, @Nael-Sayegh)
+  * L'action avis de la communauté sera disponible, et l'URL des avis sera affichée dans la zone de détails, dans tous les onglets du store. (#16179, @nvdaes)
+* Mises à jour de composants :
+  * Mise à jour du transcripteur Braille LibLouis à la version [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0). (#16259, @codeofdusk)
+    * Nouvelles tables Braille Biélorusse et Ukrainien détaillés (avec lettres majuscules indiquées).
+    * Nouvelle table Espagnole pour le texte Grec.
+    * Nouvelle table Laotien intégral. (#16470)
+  * eSpeak NG a été mis à jour à la version 1.52-dev révision `cb62d93fd7`. (#15913)
+    * Ajout du langage Tigrigna. 
+* Changements de plusieurs gestes pour les périphériques BrailleSense pour éviter des conflits avec les caractères de la table Braille française. (#15306)
+  * `alt+flècheGauche` est maintenant assigné à `point2+point7+espace`
+  * `alt+flècheDroite` est maintenant assigné à `point5+point7+espace`
+  * `alt+flècheHaut` est maintenant assigné à `point2+point3+point7+espace`
+  * `alt+flècheBas` est maintenant assigné à `point5+point6+point7+espace`
+* Les points de remplissage couramment utilisés dans les tables des matières ne sont plus signalés aux faibles niveaux de ponctuation. (#15845, @CyrilleB79)
+
+### Corrections de Bogues
+
+* Correctifs pour Windows 11 :
+  * NVDA annoncera de nouveau les suggestions de saisie pour le clavier physique. (#16283, @josephsl)
+  * Dans la version 24H2 (mise à jour 2024 et Windows Server 2025), la souris et l'interaction tactile peuvent être utilisées dans les paramètres rapides. (#16348, @josephsl)
+* Add-on Store :
+  * Lors de l'appui sur `ctrl+tab`, le focus se déplace correctement vers le titre du nouvel onglet. (#14986, @ABuffEr)
+  * Si les fichiers mis en cache sont incorrects, NVDA ne redémarrera plus. (#16362, @nvdaes)
+* Correctifs pour les navigateurs basés sur Chromium lorsqu'ils sont utilisés avec UIA :
+  * Correction de bugs provoquant le blocage de NVDA. (#16393, #16394)
+  * Retour arrière fonctionne désormais correctement dans les champs de connexion de Gmail. (#16395)
+* Retour arrière fonctionne désormais correctement lors de l'utilisation de Nudi 6.1 avec le paramètre "Exécuter les touches d'autres applications" de NVDA activé. (#15822, @jcsteh)
+* Correction d'un bug où les coordonnées audio étaient joués alors que l'application était en veille lorsque "Sonoriser les coordonnées quand la souris se déplace" est activé. (#8059, @hwf1324)
+* Dans Adobe Reader, NVDA n'ignore plus le texte alternatif défini dans les formulaires PDF. (#12715)
+* Correction d'un bug causant l'échec de NVDA à lire les rubans et options dans Geekbench. (#16251, @mzanm)
+* Correction d'un rare cas où l'enregistrement de la configuration pouvait échouer à enregistrer tous les profils. (#16343, @CyrilleB79)
+* Dans Firefox et les navigateurs basés sur Chromium, NVDA entrera correctement en mode formulaire lors de l'appui sur entrée lorsque vous êtes positionné dans une liste de présentation (ul / ol) dans un contenu éditable. (#16325)
+* Le changement d'état d'une colonne est automatiquement annoncé lors du choix des colonnes à afficher dans la liste de messages de Thunderbird. (#16323)
+
+### Changements pour les Développeurs
+
+Veuillez consulter le [guide du développeur](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) pour plus d'informations sur le processus de dépréciation et de suppression de l'API de NVDA.
+
+* Instancier les objets `winVersion.WinVersion` avec des versions de Windows inconnues supérieures à 10.0.22000 tel que 10.0.25398 renvoi "Windows 11 unknown" au lieu de "Windows 10 unknown" comme nom de version. (#15992, @josephsl)
+* Le processus de compilation AppVeyor est plus simple pour les forks de NVDA, grâce à l'ajout de variables configurables dans appveyor.yml pour désactiver ou modifier les portions des scripts de compilation propres à NV Access. (#16216, @XLTechie)
+* Ajout d'un document how-to, expliquant le processus de compilation pour les forks de NVDA avec AppVeyor. (#16293, @XLTechie)
+
 ## 2024.1
 
 Un nouveau mode de parole "à la demande" a été ajouté.
@@ -103,7 +200,7 @@ Les utilisateurs de Poedit 1 sont encouragés à mettre à jour vers Poedit 3 s'
   * Dans Excel avec UIA désactivé, le braille est mis à jour et le contenu de la cellule active est annoncé lors de l'appui sur `contrôle+y`, `contrôle+z` ou `alt+retour arrière`. (#15547)
   * Dans Word avec UIA désactivé, le braille est mis à jour lors de l'appui sur `contrôle+v`, `contrôle+x`, `contrôle+y`, `contrôle+z`, `alt+retour arrière`, `retour arrière` ou `contrôle+retour arrière`.
   Il est également mis à jour avec UIA activé, lors de la saisie de texte quand le braille suit la revue et que le curseur de revue suit le curseur applicatif. (#3276)
-  * Dans Word, la cellule d'arrivée sera désormais correctement annoncée lors de l'utilisation des commandes Word natives pour la navigation dans les tableaux `alt+début`, `alt+fin`, `alt+page précédente` et ``alt+page suivante ``. (#15805, @CyrilleB79)
+  * Dans Word, la cellule d'arrivée sera désormais correctement annoncée lors de l'utilisation des commandes Word natives pour la navigation dans les tableaux `alt+début`, `alt+fin`, `alt+page précédente` et `alt+page suivante`. (#15805, @CyrilleB79)
 * L'annonce des touches de raccourci des objets a été amélioré. (#10807, #15816, @CyrilleB79)
 * Le synthétiseur SAPI4 prend désormais correctement en charge les changements de volume, de débit et de hauteur intégrés dans les paramètres de parole. (#15271, @LeonarddeR)
 * L'état multiligne est désormais correctement signalé dans les applications utilisant Java Access Bridge. (#14609)
@@ -205,7 +302,7 @@ Cette méthode reçoit un objet `DriverRegistrar` sur lequel les méthodes `addU
 * `IoThread.autoDeleteApcReference` a été supprimé. (#14924, @LeonarddeR)
 * Pour prendre en charge les changements de hauteur  pour les majuscules, les synthétiseurs doivent désormais déclarer explicitement qu'ils supportent les `PitchCommand` dans l'attribut `supportedCommands` du pilote. (#15433, @LeonarddeR)
 * `speechDictHandler.speechDictVars` a été supprimé. Utilisez `NVDAState.WritePaths.speechDictsDir` au lieu de `speechDictHandler.speechDictVars.speechDictsPath`. (#15614, @lukaszgo1)
-* `` LanguageHandler.makeNpgettext`` et `` LanguageHandler.makePgettext`` ont été supprimés.
+* `languageHandler.makeNpgettext` et `languageHandler.makePgettext` ont été supprimés.
 `npgettext` et `pgettext` sont désormais supportés nativement. (#15546)
 * Le module d'application pour [Poedit](https://poedit.net) a été considérablement modifié. La fonction `fetchObject` a été supprimée. (#15313, #7303, @LeonarddeR)
 * Les types et constantes redondants suivants ont été supprimés de `hwPortUtils` : (#15764, @LeonarddeR)
@@ -684,7 +781,7 @@ Veuillez vous référer au [guide de développement](https://www.nvaccess.org/fi
 
 * Les tests système devrait maintenant réussir lorsqu'ils sont exécuté localement sur des systèmes non anglais. (#13362)
 * Dans Windows 11 sur ARM, les applications x64 ne sont plus identifiées comme des applications ARM64. (#14403)
-* Il n'est plus nécessaire d'utiliser `NVDAObjects.UIA.SearchField` et `NVDAObjects.UIA.SuggestionListItem` dans les nouveaux scénarios UI Automation où l'annonce automatique des suggestions de recherche et où le type a été exposé via UI Automation avec le motif `controllerFor`.
+* Il n'est plus nécessaire d'utiliser les `NVDAObjects` `UIA` `SearchField` et `NVDAObjects.UIA.SuggestionListItem` dans les nouveaux scénarios UI Automation où l'annonce automatique des suggestions de recherche et où le type a été exposé via UI Automation avec le motif `controllerFor`.
 Cette fonctionnalité est désormais disponible de manière générique via `behaviours.EditableText` et le `NVDAObject` de base respectivement. (#14222)
 * La catégorie de journalisation de débogage UIA, lorsqu'elle est activée, produit désormais beaucoup plus de journalisation pour les gestionnaires d'événements et les utilitaires UIA. (#14256)
 * Mise à jour des normes de construction de NVDAHelper. (#13072)
@@ -835,7 +932,7 @@ Notez qu'il subsiste des problèmes connus avec Chrome et Edge. (#13254)
 * Les changements d'état d'orientation (paysage/portrait) sont maintenant correctement ignorés lorsqu'inexistants, par exemple en cas de changement d'écran. (#14035)
 * NVDA annoncera les éléments glissés/déposés sur l'écran tels que lors du réarrangement des vignettes du menu démarrer de Windows 10 ou des bureaux virtuels sous Windows 11. (#12271, #14081)
 * Dans les paramètres avancés, l'option "Jouer un son pour les erreurs journalisées" est maintenant correctement rétablie à sa valeur d'origine lors de l'appui sur le bouton "Rétablir les paramètres par défaut". (#14149)
-* NVDA peut désormais sélectionner du texte en utilisant le raccourcis clavier NVDA+F10 dans les applications Java. (#14163)
+* NVDA peut désormais sélectionner du texte en utilisant le raccourcis clavier `NVDA+f10` dans les applications Java. (#14163)
 * NVDA ne sera plus bloqué dans un menu lors de l'utilisation des flèches haut et bas dans le filtre des conversations de Microsoft Teams. (#14355)
 
 ### Changements pour les Développeurs
@@ -926,7 +1023,7 @@ eSpeak a été mis à jour, ce qui introduit 3 nouvelles langues : Bélarusse, 
 
 * Dans l'hôte de console Windows utilisé par l'invite de commande, PowerShell, et le sous-système Windows pour Linux sous Windows 11 version 22H2 (Sun Valley 2) et supérieur :
   * Considérables améliorations de performance et de stabilité. (#10964)
-  * Lors de l'appui sur CTRL-F pour effectuer une recherche, la position du curseur de revue est mise à jour à la position du résultat trouvé. (#11172)
+  * Lors de l'appui sur `contrôle+f` pour effectuer une recherche, la position du curseur de revue est mise à jour à la position du résultat trouvé. (#11172)
   * L'annonce du texte tapé n'apparaissant pas à l'écran (comme les mots de passe) est désactivée par défaut.
 Elle peut être réactivée dans le panneau des paramètres avancés de NVDA. (#11554)
   * Le texte ayant défilé hors de l'écran peut être revu sans devoir faire défiler la fenêtre de la console. (#12669)
@@ -1089,7 +1186,7 @@ comme la barre des tâches en utilisant la souris ou l'interaction tactile. (#13
 * La compilation des dépendances de NVDA avec Visual Studio 2022 (17.0) est maintenant supportée.
 Pour le développement et les versions de production, Visual Studio 2019 est toujours utilisé. (#13033)
 * Lors de la récupération du nombre d'enfants sélectionnés via accSelection,
-le cas où un ID d'enfant négatif ou un IDispatch est renvoyé par IAccessible::get_accSelection est désormais correctement géré. (#13277)
+le cas où un ID d'enfant négatif ou un IDispatch est renvoyé par `IAccessible::get_accSelection` est désormais correctement géré. (#13277)
 * De nouvelles fonctions pratiques `registerExecutableWithAppModule` et `unregisterExecutable` ont été ajoutées au module `appModuleHandler`.
 Elles peuvent être utilisées pour utiliser un seul module d'application avec plusieurs exécutables. (#13366)
 
@@ -1183,7 +1280,7 @@ Note :
 * `NVDA+pavNum effacement` reporte la position du curseur ou de l'objet mis en évidence par défaut. (#13060)
 * `NVDA+Maj+pavNum effacement` reporte la position du curseur de revue. (#13060)
 * Ajout de gestes par défaut pour basculer les touches de modification sur les afficheurs Freedom Scientific (#13152)
-* "Ligne de base" n'est plus annoncé par la commande d'annonce de formatage (NVDA+F). (#11815)
+* "Ligne de base" n'est plus annoncé par la commande d'annonce de formatage (`NVDA+f`). (#11815)
 * L'annonce de la description longue n'a plus de geste assigné par défaut. (#13380)
 * Le report des détails d'un résumé a maintenant un geste par défaut (`NVDA+d`). (#13380)
 * NVDA doit être redémarré après l'installation de MathPlayer. (#13486)
@@ -1203,7 +1300,7 @@ Note :
 * Dans la calculatrice de Windows 10, NVDA annoncera les labels pour l'historique et la liste des éléments de mémoire. (#11858)
 * Les gestes tels que le défilement ou le routage fonctionnent à nouveau avec les afficheurs Braille HID. (#13228)
 * Courrier pour Windows 11 : Lors de la bascule entre plusieurs applications, pendant la lecture d'un long message, NVDA ne se bloque plus sur une ligne du message. (#13050)
-* HID braille : Les gestes multitouches (par exemple Espace+Point4) peuvent maintenant être correctement réalisés sur les afficheurs Braille. (#13326)
+* HID braille : Les gestes multitouches (par exemple `espace+point4`) peuvent maintenant être correctement réalisés sur les afficheurs Braille. (#13326)
 * Correction d'un problème où plusieurs dialogues de paramétrage pouvaient être ouverts en même temps. (#12818)
 * Correction d'un problème où certains afficheurs Braille Focus Blue pouvaient ne plus fonctionner lorsque l'ordinateur sortait de veille. (#9830)
 * "Ligne de base" n'est plus incorrectement reporté lorsque l'annonce des exposants et indices est activée. (#11078)
@@ -1524,7 +1621,7 @@ Note :
   * Nouvelles tables Braille: Bélarusse Braille littéraire, Bélarusse Braille informatique, Urdu intégral, Urdu abrégé.
 * Le support des contenus flash a été supprimé de NVDA en raison de l'utilisation de flash déconseillée par Adobe. (#11131)
 * On pourra maintenant quitter NVDA même avec des fenêtres ouvertes, le processus de fermeture ferme maintenant toutes les fenêtres et dialogues de NVDA. (#1740)
-* La visionneuse de parole peut maintenant être fermée par Alt-F4 et contient un bouton de fermeture standard pour les utilisateurs de périphériques de pointage. (#12330)
+* La visionneuse de parole peut maintenant être fermée par `alt+F4` et contient un bouton de fermeture standard pour les utilisateurs de périphériques de pointage. (#12330)
 * La visionneuse Braille a maintenant un bouton de fermeture standard pour les utilisateurs de périphériques de pointage. (#12328)
 * Dans la liste d'éléments, la touche accélératrice du bouton "Activer" a été retirée dans certaines langues afin d'éviter un conflit avec le type d'élément "Bouton radio". Quand il est disponible, le bouton est toujours celui par défaut pour le dialogue et peut donc être activé simplement en appuyant sur entrée dans la liste d'éléments elle-même. (#6167)
 
