@@ -1,19 +1,19 @@
-# ﻿Mitä uutta NVDA:ssa
+# Mitä uutta NVDA:ssa
 
 
 ## 2024.2
 
-Lisätty äänenjakotoiminto.
-Se mahdollistaa NVDA:n äänien jakamisen yhteen kanavaan (esim. vasempaan), kun taas muiden sovellusten äänet sijoitetaan toiseen (esim. oikeaan).
+Lisätty äänijakotoiminto.
+Se mahdollistaa NVDA:n äänien jakamisen yhteen kanavaan (esim. vasempaan), kun taas muiden sovellusten äänet ohjataan toiseen (esim. oikeaan).
 
 Lisätty syntetisaattorin asetusrenkaan komentoja, jotka mahdollistavat ensimmäiseen tai viimeiseen asetukseen siirtymisen sekä aktiivisen asetuksen suurentamisen tai pienentämisen  enemmän kerrallaan.
 Lisätty uusia pikanavigointikomentoja: tekstikappale, pystysuunnassa tasattu kappale, samantyylinen teksti, eri tyylinen teksti, valikkokohde, vaihtopainike, edistymispalkki, kuva sekä matemaattinen kaava.
 
 Useita uusia pistekirjoitusominaisuuksia sekä bugikorjauksia.
 Lisätty "näytä puhetuloste" -pistekirjoitustila.
-Kun se on käytössä, pistenäytöllä näytetään täsmälleen se, mitä NVDA valmistautuu puhumaan.
+Kun se on käytössä, pistenäytöllä näytetään, mitä NVDA puhuu.
 Lisätty tuki Braille Edge S2- ja Braille Edge S3 -pistenäytöille.
-Päivitetty LibLouis, johon on lisätty uudet yksityiskohtaiset valkovenäläiset ja ukrainalaiset pistetaulukot (isot kirjaimet näytetään) sekä espanjalainen taulukko kreikkalaisten tekstien lukemista varten.
+Päivitetty LibLouis, johon on lisätty uudet yksityiskohtaiset valkovenäläiset ja ukrainalaiset pistetaulukot (isot kirjaimet näytetään), laosilainen sekä espanjalainen taulukko kreikkalaisten tekstien lukemista varten.
 
 Päivitetty eSpeak, johon on lisätty tigrinjan kieli.
 
@@ -41,13 +41,11 @@ Tehty useita pieniä bugikorjauksia sovelluksille, kuten Thunderbirdille, Adobe 
 * Pistekirjoitus:
   * Lisätty tuki Braille Edge S2- ja Braille Edge S3 -pistenäytöille. (#16033, #16279, @EdKweon)
   * Lisätty uusi "näytä puhetuloste" -pistekirjoitustila. (#15898, @Emil-18)
-    * Kun se on käytössä, pistenäytöllä näytetään, mitä NVDA valmistautuu puhumaan.
+    * Kun se on käytössä, pistenäytöllä näytetään, mitä NVDA puhuu.
     * Asetuksen tilaa voidaan vaihtaa painamalla `NVDA+Alt+T` tai pistekirjoitusasetusten paneelista.
 * Äänijako: (#12985, @mltony)
-  * Mahdollistaa NVDA:n äänien jakamisen yhteen kanavaan (esim. vasempaan), kun taas kaikkien muiden sovellusten äänet sijoitetaan toiseen (esim. oikeaan).
+  * Mahdollistaa NVDA:n äänien jakamisen yhteen kanavaan (esim. vasempaan), kun taas kaikkien muiden sovellusten äänet ohjataan toiseen (esim. oikeaan).
   * Otetaan käyttöön tai poistetaan käytöstä näppäinkomennolla `NVDA+Alt+S`.
-  * Muiden sovellusten äänenvoimakkuutta voidaan säätää painamalla `NVDA+Alt+Page up` ja `NVDA+Alt+Page down`. (#16052, @mltony)
-  * Muiden sovellusten ääni voidaan mykistää painamalla `NVDA+Alt+Delete`. (#16052, @mltony)
 * Rivi- ja sarakeotsikoiden puhumista tuetaan nyt contenteditable-HTML-elementeissä. (#14113)
 * Lisätty asiakirjojen muotoiluasetuksiin asetus kuvien ja kuvatekstien puhumisen käytöstä poistamiselle. (#10826, #14349)
 * NVDA puhuu Windows 11:n 2022 Update -versiossa ja sitä uudemmissa puheentunnistuksen ja ehdotettujen toimintojen ilmoitukset, paras ehdotus mukaan lukien, kun leikepöydälle kopioidaan esim. puhelinnumeroita. (#16009, @josephsl)
@@ -61,7 +59,9 @@ Tehty useita pieniä bugikorjauksia sovelluksille, kuten Thunderbirdille, Adobe 
   * Lisäosan arviointitoiminto on käytettävissä ja arviointien verkkosivu näytetään Tiedot-paneelissa lisäosakaupan kaikissa välilehdissä. (#16179, @nvdaes)
 * Päivitetyt komponentit:
   * Päivitetty LibLouis-pistekääntäjä versioksi [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0). (#16259, @codeofdusk)
-    * Lisätty uudet yksityiskohtaiset valkovenäläiset ja ukrainalaiset pistetaulukot (isot kirjaimet näytetään) sekä espanjalainen taulukko kreikkalaisten tekstien lukemista varten.
+    * Uudet yksityiskohtaiset valkovenäläiset ja ukrainalaiset pistetaulukot (isot kirjaimet näytetään).
+    * Espanjalainen pistetaulukko kreikkalaisten tekstien lukemista varten.
+    * Uusi laosilainen tason 1 pistetaulukko. (#16470)
   * eSpeak NG on päivitetty versioksi 1.52-dev muutos `cb62d93fd7`. (#15913)
     * Lisätty tigrinjan kieli. 
 * Muutettu useita BrailleSense-pistenäyttöjen komentoja, jotta vältetään ristiriidat ranskalaisten pistekirjoitusmerkkien kanssa. (#15306)
@@ -78,6 +78,7 @@ Tehty useita pieniä bugikorjauksia sovelluksille, kuten Thunderbirdille, Adobe 
   * Hiirtä ja kosketusvuorovaikutusta voidaan käyttää pika-asetuksissa versiossa 24H2 (2024 Update ja Windows Server 2025). (#16348, @josephsl)
 * Lisäosakauppa:
   * Kohdistus siirtyy asianmukaisesti uuteen senhetkiseen välilehden otsikkoon painettaessa `Ctrl+Sarkain`. (#14986, @ABuffEr)
+  * NVDA ei käynnisty enää uudelleen, jos välimuistitiedostot ovat virheellisiä. (#16362, @nvdaes)
 * Korjaukset Chromium-pohjaisille selaimille UIA:ta käytettäessä:
   * Korjattu NVDA:n jumiutumisen aiheuttaneet bugit. (#16393, #16394)
   * Askelpalautin-näppäin toimii nyt oikein Gmailin kirjautumiskentissä. (#16395)
@@ -4018,5 +4019,4 @@ Saadaksesi lisätietoja eSpeakista tai ladataksesi sen muita versioita, käy oso
 * Käyttäjälle ilmoitetaan, jos käyttöliittymän asetusvalintaikkunasta valitun kielen kielitiedostossa on virheitä.
 * Jos kieltä on vaihdettu käyttöliittymän asetusvalintaikkunassa, käyttäjältä kysytään, tallennetaanko asetukset ja käynnistetäänkö NVDA uudelleen. NVDA on käynnistettävä uudelleen, jotta uusi kieli voidaan ottaa käyttöön.
 * Jos puhesyntetisaattoria ei voida ladata, kun se valitaan Syntetisaattori-valintaikkunasta, siitä ilmoittava viestiruutu näytetään.
-* Kun puhesyntetisaattori ladataan ensimmäistä kertaa, NVDA antaa sen valita sopivimmat puheääni-, nopeus- ja korkeusparametrit sen sijaan, että se pakotetaan NVDA:n valitsemiin oletuksiin. Tämä korjaa ongelman, jossa Eloquence ja ViaVoice SAPI 4 -syntetisaattorit alkavat puhua aivan liian nopeasti.
-
+* Kun puhesyntetisaattori ladataan ensimmäistä kertaa, NVDA antaa sen valita sopivimmat puheääni-, nopeus- ja korkeusparametrit sen sijaan, että se pakotetaan NVDA:n valitsemiin oletuksiin. Tämä korjaa ongelman, jossa Eloquence- ja ViaVoice SAPI 4 -syntetisaattorit alkavat puhua aivan liian nopeasti.

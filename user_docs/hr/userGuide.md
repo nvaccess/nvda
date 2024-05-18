@@ -249,7 +249,6 @@ Prečaci se neće izvršavati sve dok se nalazite u ovom načinu.
 |Premjesti se na prethodnu postavku govorne jedinice |`NVDA+control+strelica lijevo` |`NVDA+shift+control+strelica lijevo` |Premješta na sljedeću postavku govorne jedinice prije aktivne postavke, ponovno se vraćajući na prvu postavku poslije posljednje|
 |Povećaj vrijednost postavke govorne jedinice |`NVDA+control+strelica gore` |`NVDA+shift+control+strelica gore` |Povećava vrijednost trenutne postavke govorne jedinice na kojoj se nalazite. Npr: Povećava brzinu, bira sljedeći glas, povećava glasnoću|
 |Povećaj  postavku govorne jedinice u većim koracima |`NVDA+control+pageUp` |`NVDA+shift+control+pageUp` |Povećava vrijednost trenutne postavke govora na kojoj se nalazite u većim koracima. Na primjer kada se nalazite na postavci glasa, premještavat ćete se svakih dvadeset glasova; kada se nalazite na postavci sa klizačem (brzina, visina, itd.) postavka će se promijeniti za 20%|
-
 |Smanji postavku govorne jedinice |`NVDA+control+strelica dolje` |`NVDA+shift+control+strelica dolje` |smanjuje vrijednost trenutne postavke govorne jedinice na kojoj se nalazite. Npr: smanjuje brzinu, bira prethodni glas, smanjuje glasnoću|
 |Smanji postavku govorne  jedinice u većim koracima |`NVDA+control+pageDown` |`NVDA+shift+control+pageDown` |Smanjuje vrijednost trenutne postavke govorne jedinice na kojoj se nalazite u većim koracima. Na primjer kada se nalazite na postavci glas, prebacivat ćete se u nazad za dvadeset glasova; kada se nalazite na postavci klizača, prebacivat ćete se između opcija za 20%.|
 
@@ -346,7 +345,7 @@ Ova je opcija standardno aktivirana za nove instalacije.
 #### Izradi prečac na radnoj površini (kontrol+alt+F5) {#CreateDesktopShortcut}
 
 Ova opcija omogućuje izradu prečaca na radnoj površini za pokretanje NVDA čitača. 
-Ako je izrađen, prečacu na radnoj površini bit će dodijeljen tipkovnički prečac kontrol+alt+F5, pomoću kojeg je moguće pokrenuti NVDA čitača u bilo kojem trenutku.
+Ako je izrađen, prečacu na radnoj površini bit će dodijeljen tipkovnički prečac `kontrol+alt+F5`, pomoću kojeg je moguće pokrenuti NVDA čitača u bilo kojem trenutku.
 
 #### Kopiraj prijenosnu konfiguraciju na ovaj korisnički račun {#CopyPortableConfigurationToCurrentUserAccount}
 
@@ -710,8 +709,7 @@ Da biste se kretali po objektima, koristite sljedeće prečace:
 |Premesti se na prethodni objekat u ravnom prikazu |NVDA+numeričko9 |NVDA+šift+[ |prevlačenje levo (režim objekata) |Premešta se na prethodni objekat u ravnom prikazu hierarhije navigacije objekata|
 |Premesti se na sledeći objekat |NVDA+numeričko6 |NVDA+šift+strelica desno |nema |premešta se na objekat posle trenutnog navigacionog objekta|
 |Premesti se na sledeći objekat u ravnom prikazu |NVDA+numeričko3 |NVDA+šift+] |prevlačenje desno (režim objekata) |Premešta se na sledeći objekat u ravnom prikazu hierarhije navigacije objekata|
-| Premjesti se na sljedeći sadržavajući objekt |NVDA+num2 |NVDA+šift+strelicaDolje |klizni dolje (objektni modus) |Premješta se na prvi objekt sadržan u navigacijskom objektu|
-|---|---|---|---|---|
+|Premjesti se na sljedeći sadržavajući objekt |NVDA+num2 |NVDA+šift+strelicaDolje |klizni dolje (objektni modus) |Premješta se na prvi objekt sadržan u navigacijskom objektu|
 |Premjesti se na objekt fokusa |NVDA+numMinus |NVDA+backspace |nema |Premješta se na objekt koji je trenutačno u fokusu sustava te premješta kursor pregleda na poziciju kursora sustava, ako se prikazuje|
 |Aktiviraj trenutačni navigacijski objekt |NVDA+numEnter |NVDA+enter |dvostruki dodir |Aktivira trenutačni navigacijski objekt (slično pritiskanjem miša ili razmaknice kad postoji fokus sustava)|
 |Premjesti fokus sustava ili kursor na trenutačnu poziciju |NVDA+šift+numMinus |NVDA+šift+backspace |nema |Kad se pritisne jedanput, premješta fokus sustava na trenutačni navigacijski objekt. Kad se pritisne dvaput, premješta kursor sustava na trenutačnu poziciju preglednog kursora|
@@ -1191,14 +1189,14 @@ Kako bi stalo što više informacija na brajični redak, definirane su sljedeće
 |sp |stablasti prikaz|
 |gbsp |gumb za stablasti prikaz|
 |ssp |stavka stablastog prikaza|
-|raz x |stavka stabla na razini x u hierarhiji|
+|raz x |stavka stabla na razini x u hierarhiji||
 |pr |prozor|
 |⠤⠤⠤⠤⠤ |rastavljač|
 |⠕⠃⠣⠮ |obilježen sadržaj|
 
 Definirane kratice za indikatore stanja:
 
-| Kratica |Stanje kontrole|
+|Kratica |Stanje kontrole|
 |---|---|
 |... |prikazuje se kad objekt podržava automatsko dovršavanje|
 |⢎⣿⡱ |prikazuje se kad je objekt pritisnut (npr. preklopni gumb)|
@@ -1225,7 +1223,7 @@ Definirane kratice za indikatore stanja:
 
 Definirane kratice za orijentire:
 
-| Kratica |Orijentir|
+|Kratica |Orijentir|
 |---|---|
 |nslv |naslov|
 |ios |informacije o sadržaju|
@@ -1607,11 +1605,11 @@ Mnoge od tih postavki je moguće pronaći u višestraničnom dijaloškom okviru 
 Za prihvaćanje učinjenih promjena, pritisnite gumb U redu. To vrijedi za sve dijaloške okvire.
 Za odustajanje od promjena, pritisnite gumb Odustani ili tipku escape.
 U nekim dijaloškim okvirima je moguće pritisnuti gumb Primijeni, kako bi postavke odmah stupile na snagu.
-Neke postavke se mogu promijeniti pomoću tipkovničkih prečaca, koji su navedeni u sljedećim poglavljima.
 Većina NVDA dijaloških okvira podržava kontekstualnu pomoć.
 <!-- KC:beginInclude -->
 Kada se nalazite u dijaloškom okviru, pritisak prečaca `f1` otvara Vodić za korisnike u odlomku koji je vezan za tu određenu postavku ili trenutni dijaloški okvir.
 <!-- KC:endInclude -->
+Većina postavki može se promijenitiuz pomoć tipkovničkih prečaca koji su popisani ispod.
 
 ### NVDA Postavke {#NVDASettings}
 
@@ -1943,7 +1941,7 @@ Prečac: `NVDA+alt+t`
 
 Ova vam opcija omogućuje izbor dostupnih modusa brajice.
 
-Trenutno su dostupna dva modusa brajice: "prećenje kursora" i "prikaz govora".
+Trenutno su dostupna dva modusa brajice: "praćenje kursora" i "prikaz govora".
 
 Kada je označeno praćenje kursora, brajični redak će pratiti kursor sustava ili navigator objekta ovisno o tome na koji od njih je brajica povezana.
 
@@ -2173,7 +2171,7 @@ Ovaj odabirni okvir omogućuje odabir zvučnog uređaja kojeg će govorna jedini
 
 ##### Modus stišavanja zvuka {#SelectSynthesizerDuckingMode}
 
-Tipkovnički prečac: NVDA+šift+d
+'Tipkovnički prečac: `NVDA+šift+d`\n'
 
 Ova opcija omogućuje odabir hoće li NVDA stišati glasnoću drugih aplikacija dok NVDA govori ili će to raditi cijelo vrijeme dok je NVDA pokrenut.
 
@@ -2234,8 +2232,7 @@ Podrazumijevano, ovaj će prečac prebacivati između slijedećih modusa:
 * NVDA u lijevom kanalu, a programi u desnom: NVDA će govoriti u lijevom kanalu, dok će drugi programi reproducirati svoje zvukove u desnom.
 * NVDA u desnom kanalu, a programi u lijevom: NVDA će govoriti u desnom kanalu, dok će zvukovi drugih programa biti reproducirani u lijevom.
 
-Dostupno je više naprednih načina podjele u oabirnom okviru.
-Ako želite postaviti glasnoću za druge programe koji nisu NVDA, koristite [za to predviđene prečace](#OtherAppVolume).
+Dostupno je više naprednih načina podjele u odabirnom okviru.
 Imajte na umu da ova opcija ne radi kao mikser.
 Na primjer, ako program reproducira  glazbu u stereo formatu kada je način podjele zvuka postavljen na "NVDA u lijevom kanalu a programi u desnom", tada ćete čuti desni kanal pjesme, dok će lijevi kanal biti utišan.
 
@@ -2256,39 +2253,6 @@ Podrazumjevano su dostupna tri modusa.
 
 Imajte na umu da je potrebno odabrati barem jedan modus.
 Ova opcija nije dostupna ako je NVDA pokrenut [sa isključenim Wasapi za audioizlaz](#WASAPI) u naprednim postavkama.
-
-##### Glasnoća drugih programa {#OtherAppVolume}
-
-Ovaj vam klizač omogućuje promjenu glasnoće drugih programam koji nisu NVDA.
-Ova će promjena glasnoće biti primijenjena čak i kada se taj program tek pokrene.
-Ova postavka glasnoće može se mijenjati i uz pomoć sljedećih tipkovničkih prečaca sa bilo kojeg mjesta:
-
-<!-- KC:beginInclude -->
-
-| naziv |prečac |opis|
-|---|---|---|
-|povećaj glasnoću drugih programa |`NVDA+alt+pageUp` |Povećava glasnoću svih programa osim NVDA.|
-|Smanji glasnoću programa |`NVDA+alt+pageDown` |smanjuje glasnoću svih programa osim NVDA.|
-
-<!-- KC:endInclude -->
-
-Ova opcija nije dostupna ako ste pokrenuli NVDA sa [isključenim Wasapi za audioizlaz](#WASAPI) u naprednim postavkama.
-
-##### Utišaj druge programe {#MuteApplications}
-
-Ovaj vam potvrdni okvir omogućuje utišavanje svih drugih programa koji nisu NVDA.
-Ova će se postavka utišavanja primijeniti čak i kada se neki drugi program tek pokrene.
-Sljedeći tipkovnički prečac se može također koristiti s bilo kojeg mjesta:
-
-<!-- KC:beginInclude -->
-
-| Naziv |Prečac |Opis|
-|---|---|---|
-|Uključi ili isključi utišavanje drugih programa |`NVDA+alt+delete` |Utišava ili odtišava sve druge programe osim NVDA.|
-
-<!-- KC:endInclude -->
-
-Ova opcija nije dostupna ako ste pokrenuli NVDA sa [isključenim Wasapi za audioizlaz](#WASAPI) u naprednim postavkama.
 
 #### Vid {#VisionSettings}
 
@@ -2767,7 +2731,7 @@ Možete podesiti izvještavanje o sljedećim elementima:
   * orijentiri
   * članci
   * okviri
-    * figure i potpisi
+  * figure i potpisi
   * klikajući elementi
 
 Da biste ove postavke mogli uključiti ili isključiti s bilo kojeg mjesta, dodijelite prilagođene tipkovničke prečace, koristeći [dijaloški okvir ulazne geste](#InputGestures).
@@ -3124,8 +3088,8 @@ Možete filtrirati simbol, upisujući cijelu zamjenu ili dio zamjene simbola u p
 * Polje zamjena omogućuje izmjenu teksta koji će biti izgovoren na mjestu tog simbola.
 * Koristeći polje razina, možete prilagoditi najnižu razinu simbola na kojoj taj simbol treba biti izgovoren (ništa, neki, većina ili sve).
 Također možete postaviti razinu na znak; u tom slučaju simbol neće biti izgovoren, neovisno o razini koja se koristi, uz slijedeće dve iznimke:
- * prilikom kretanja po znakovima.
- * Kada NVDA slovka tekst koji sadrži taj simbol.
+  * prilikom kretanja po znakovima.
+  * Kada NVDA slovka tekst koji sadrži taj simbol.
 * Polje "Pošalji trenutačni simbol govornoj jedinici", kad će sam simbol (u sprezi s njegovom zamjenom) biti poslan govornoj jedinici.
 To je korisno kad govorna jedinica reagira na simbol pauzom ili povisivanjem modulacije glasa.
 Na primjer, zarez prouzrokuje pauzu kod govorne jedinice.
@@ -3175,8 +3139,8 @@ Upozorenje:
 
 * Emulirani prečaci moraju imati pridjeljene geste kako bi se zadržali prilikom spremanja /zatvaranja dijaloškog okvira.
 * Geste sa modifikatorima možda neće moći biti pridjeljene emuliranoj gesti bez modifikatora
-Na primjer, postavljanjem emuliranog unosa 'a' i podešavanje ulazne geste 'ctrl+m', prouzrokovat će 
-da će program primiti 'ctrl+a'.
+Na primjer, postavljanjem emuliranog unosa `a` i podešavanje ulazne geste `ctrl+m`, prouzrokovat će 
+da će program primiti `ctrl+a`.
 
 Kad ste gotovi s promjenama, pritisnite gumb U redu da biste ih sačuvali ili gumb Odustani da biste ih poništili.
 
@@ -3869,7 +3833,7 @@ Ako spajate brajične redke koji ne koriste hid preko usb veze, morate instalira
 VarioUltra i Pronto! brajični redci koriste HID.
 Refreshabraille i Orbit Reader 20 mogu koristiti HID ako su konfigurirani na određeni način.
 
- USB serijski način u Orbit Reader 20 brajičnom redku, trenutačno je podržan samo u Windows 10 i novijim inačicama operacijskog sustava.
+USB serijski način u Orbit Reader 20 brajičnom redku, trenutačno je podržan samo u Windows 10 i novijim inačicama operacijskog sustava.
 Umjesto toga, trebali biste koristiti USB HID.
 
 Slijede prečaci za ove brajične retke s NVDA čitačem.
@@ -4068,7 +4032,7 @@ Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
 |Tipka kontrol+šift+strelica lijevo |točkica5+točkica8+razmaknica+f1|
 |Tipka kontrol+strelica desno |točkica5+razmaknica|
 |Tipka šift+alt+strelica desno |točkica5+točkica7+f1|
-|`Tipka alt+strelica desno` |točkica5+točkica7+razmak|
+|`Tipka alt+strelica desno` |`točkica5+točkica7+razmak`|
 |Tipka pejdž ap |točkica1+točkica2+točkica6+razmaknica|
 |Tipka kontrol+pejdž ap key |točkica1+točkica2+točkica6+točkica8+razmaknica|
 |Tipka strelica gore |točkica1+razmaknica, lijevaStranaStrelicaGore|
@@ -4083,7 +4047,7 @@ Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
 |Tipka kontrol+šift+strelica dolje |točkica5+točkica6+točkica8+razmaknica+f1|
 |Tipka kontrol+strelica dolje |točkica5+točkica6+razmaknica|
 |Tipka šift+alt+strelica dolje |točkica5+točkica6+točkica7+f1|
-|++Tipka alt+strelica dolje++ |točkica5+točkica6+točkica7+razmak|
+|`Tipka alt+strelica dolje`|`točkica5+točkica6+točkica7+razmak`|
 |Tipka šift+strelica dolje |razmaknica+desnaStranaKlizačDolje|
 |Tipka escape |točkica1+točkica5+razmaknica, f4, brailleedge:f1|
 |Tipka dilit |točkica1+točkica3+točkica5+razmaknica, točkica1+točkica4+točkica5+razmaknica|
@@ -4274,7 +4238,7 @@ Obje srednje tipke su mapirane na razmaknicu.
 |Tipka kontrol+escape |razmaknica s točkicama 1 2 3 4 5 6|
 |Tipka tabulator |razmaknica s točkicama 3 7|
 
-<!-- KC:endInclude  -->
+<!-- KC:endInclude -->
 
 ### Papenmeier Braille BRAILLEX stariji modeli {#PapenmeierOld}
 
@@ -4379,7 +4343,7 @@ Sljedeći modeli su podržani:
 * BrailleNote MPower (Serijska i Bluetooth veza)
 * BrailleNote Apex (USB i bluetooth veza)
 
-Za BrailleNote Touch, pogledajte poglavlje [Brailliant BI serije / BrailleNote Touch](HumanWareBrailliant).
+Za BrailleNote Touch, pogledajte poglavlje [Brailliant BI serije / BrailleNote Touch](#HumanWareBrailliant).
 
 Izuzimajući BrailleNote PK, braille (BT) i QWERTY (QT) tipkovnice su podržane.
 Za BrailleNote QT, emulacija tipkovnice osobnog računala nije podržana.
@@ -4437,7 +4401,7 @@ Slijede prečaci za BrailleNote QT kad nije u modusu brajičnog unosa.
 |NVDA izbornik |read+n|
 |Tipka strelica gore |strelica gore|
 |Tipka strelica dolje |strelica dolje|
-|Tipka strelica lijevo |strelica lijevo||
+|Tipka strelica lijevo |strelica lijevo|
 |Tipka strelica desno |strelica desno|
 |Tipka pejdž ap |funkcija+strelica gore|
 |Tipka pejdž daun |funkcija+strelica dolje|
@@ -4740,18 +4704,18 @@ Pogledajte [BRLTTY tablice tipkovničkih prečaca](https://brltty.app/doc/KeyBin
 
 | Naziv |BRLTTY naredba|
 |---|---|
-|Kliži po brajičnom retku natrag |fwinlt (idi jedan prozor u lijevo)|
-|Kliži po brajičnom retku naprijed |fwinrt (idi jedan prozor u desno)|
-|Premjesti brajični redak na prethodni redak |lnup (idi jedan redak gore)|
-|Premjesti brajični redak na sljedeći redak |lndn (idi jedan redak dolje)|
-|Premjesti se na brajičnu ćeliju |route (dovedi kursor na znak)|
-|Uključi pomoć tipkovnice |learn (uključuje način učenja tipkovnice)|
-|Otvori NVDA izbornik |prefmenu (otvara izlazi iz izbornika postavki)|
-|Vrati konfiguraciju |prefload (vraća postavke s diska)|
-|Spremi konfiguraciju |prefsave (sprema postavke na disk)|
-|Čitaj vrijeme |time (pokazuje trenutni datum i vrijeme)|
-|Čitaj redaj gdje se nalazi pregledni kursor |say_line (izgovara trenutni redak)|
-|Čitaj sve koristeći pregledni kursor |say_below (izgovara od trenutnog redka do kraja)|
+|Kliži po brajičnom retku natrag |`fwinlt` (idi jedan prozor u lijevo)|
+|Kliži po brajičnom retku naprijed |`fwinrt` (idi jedan prozor u desno)|
+|Premjesti brajični redak na prethodni redak |`lnup` (idi jedan redak gore)|
+|Premjesti brajični redak na sljedeći redak |`lndn` (idi jedan redak dolje)|
+|Premjesti se na brajičnu ćeliju |`route` (dovedi kursor na znak)|
+|Uključi pomoć tipkovnice |`learn` (uključuje način učenja tipkovnice)|
+|Otvori NVDA izbornik |`prefmenu` (otvara izlazi iz izbornika postavki)|
+|Vrati konfiguraciju |`prefload` (vraća postavke s diska)|
+|Spremi konfiguraciju |`prefsave` (sprema postavke na disk)|
+|Čitaj vrijeme |`time` (pokazuje trenutni datum i vrijeme)|
+|Čitaj redak gdje se nalazi pregledni kursor |`say_line` (izgovara trenutni redak)|
+|Čitaj sve koristeći pregledni kursor |`say_below` (izgovara od trenutnog redka do kraja)|
 
 <!-- KC:endInclude -->
 
@@ -4837,7 +4801,7 @@ Slijede dodjeljeni prečaci za te brajične retke.
 |---|---|
 |premještanje brajičnog retka u natrag |pan left ili rocker up|
 |Premještanje brajičnog redka u naprijed |pan right ili rocker down|
-|premjesti se na brajičnu ćeliju |routing set 1||
+|premjesti se na brajičnu ćeliju |routing set 1|
 |prebacuje prikazivanje fokusa |up+down|
 |Strelica gore |joystick up, dpad up ili razmaknica+točkica1|
 |strelica dolje |joystick down, dpad down ili razmaknica+točkica4|
@@ -4912,7 +4876,7 @@ Tijekom pokretanja, NVDA može prihvatiti jednu ili više opcija, čime se mijen
 Možete proslijediti onoliko opcija koliko trebate.
 Ove se opcije mogu proslijediti kad se NVDA pokreće putem prečaca na radnoj površini (u postavkama prečaca), iz dijaloškog okvira "Pokreni" (izbornik Start>Pokreni ili prečac Windows+r) ili iz Windowsovog naredbenog retka.
 Opcije moraju biti odvojene od imena NVDA izvršne datoteke i od drugih opcija razmacima.
-Na primjer, korisna opcija je --disable-addons, koja govori NVDA čitaču da se pokrene bez dodataka.
+Na primjer, korisna opcija je `--disable-addons`, koja govori NVDA čitaču da se pokrene bez dodataka.
 Ovo vam pomaže otkriti je li problem nastao zbog dodatka i omogućuje oporavljanje od ozbiljnih problema koje dodaci mogu prouzročiti.
 
 Na primjer, iz trenutačno pokrenute kopije NVDA čitača možete izaći upisom sljedeće opcije u dijaloški okvir "Pokreni":
@@ -4925,48 +4889,49 @@ Za opcije koje imaju kratku verziju, možete ih kombinirati na sljedeće načine
 | . {.hideHeaderRow} |.|
 |---|---|
 |`nvda -mc CONFIGPATH` |Ovo će pokrenuti NVDA sa zvukom za pokretanje i isključenim porukama, i sa određenom konfiguracijom|
-|nvda -mc CONFIGPATH --disable-addons |Ista opcija kao i prethodna, ali s deaktiviranim dodacima|
+|`nvda -mc CONFIGPATH --disable-addons` |Ista opcija kao i prethodna, ali s deaktiviranim dodacima|
 
 Neke opcije naredbenog retka prihvaćaju dodatne parametre; npr. koliko će zapisivanje u zapisnik biti detaljno ili staza do korisničke konfiguracijske mape.
-Ovi parametri trebaju biti smješteni poslije opcije, odvojene razmakom ako se koristi kratka verzija ili znakom jednakosti (=) kad se koristi duga verzija; npr:
-+|| . {.hideHeaderRow} | . |
+Ovi parametri trebaju biti smješteni poslije opcije, odvojene razmakom ako se koristi kratka verzija ili znakom jednakosti `(=)` kad se koristi duga verzija; npr:
 
-|nvda -l 10 |proslijeđuje NVDA informaciju da se mora pokrenuti s razinom loga postavljenom kao debug|
-|nvda --log-file=c:\nvda.log |određuje put do NVDA datoteke zapisnika na sljedeću vrijednost c:\nvda.log|
-|nvda --log-level=20 -f c:\nvda.log |proslijeđuje naredbu da se NVDA pokreće s razinom loga info i da zapisuje svoj log u c:\nvda.log|
+| . {.hideHeaderRow} |.|
+|---|---|
+|`nvda -l 10` |proslijeđuje NVDA informaciju da se mora pokrenuti s razinom loga postavljenom kao debug|
+|`nvda --log-file=c:\nvda.log` |određuje put do NVDA datoteke zapisnika na sljedeću vrijednost `c:\nvda.log`|
+|`nvda --log-level=20 -f c:\nvda.log` |proslijeđuje naredbu da se NVDA pokreće s razinom loga info i da zapisuje svoj log u `c:\nvda.log`|
 
 Slijede opcije naredbenog retka za NVDA:
 
 | Kratka |Duga |Opis|
 |---|---|---|
-|-h |--help |Prikazuje pomoć u naredbenom retku i izlazi|
-|-q |--quit |Zaustavlja trenutačno pokrenutu kopiju NVDA čitača|
-|-k |--check-running |Izvještava o pokrenutosti NVDA putem izlaznog koda; 0 ako je pokrenut, 1 ako nije pokrenut|
-|-f LOGFILENAME |--log-file=LOGFILENAME |datoteka u kojoj poruke zapisnika trebaju biti zapisane. Zapisivanje dnevnika je uvijek isključeno kada je sigurni način uključen.|
-|-l LOGLEVEL |--log-level=LOGLEVEL |Najniža razina zapisivanih poruak u zapisniku (debug 10, ulaz/izlaz 12, debug upozorenje 15, info 20, onemogućeno 100). Zapisivanje dnevnika je uvijek isključeno kada je sigurni način uključen.|
-|-c CONFIGPATH |--config-path=CONFIGPATH |određuje mapu u kojoj su pospremljene sve postavke Podrazumjevana vrijednost je prisilno ako je uključen sigurni način.|
-|Nema |--lang=LANGUAGE |Nadpisuje konfigurirani NVDA jezik. Postavljen na "korisnički zadan" za trenutnog korisnika podrazumjevano, "en" za engleski, itd.|
-|-m |--minimal |bez zvuka, bez sučelja, bez poruke dobrodošlice itd|
-|-s |--secure |sigurni modus: onemogućuje Python konzolu značajke profila poput stvaranja, brisanja, preimenovanja profila itd., provjeru nadogradnji, neke potvrdne okvire u dijaloškom okviru dobrodošlice i u kategoriji općenitih postavki (npr. koristi NVDA prilikom prijave, spremi konfiguraciju poslje izlaza itd.), kao i zapisnik dnevnika i funkcije zapisa  (koristi se često na sigurnim ekranima). Imajte na umu da se postavke neće odavde spremati u mapu konfiguracije sustava te isto tako neće se spremati definirani prečaci.|
-|nema |--disable-addons |dodaci neće imati utjecaja|
-|nema |--debug-logging |Omogućuje dijagnostiku samo pri trenutačno pokrenutoj kopiji. Ova postavka natpisuje bilo koju drugu razinu vođenja zapisnika ( --loglevel, -l) specificirani argument uključujući i opciju bez logiranja.|
-|nema |--no-logging |Potpuno isključuje vođenje zapisnika. OVa postavka može biti nadpisana ako razina loga ( --loglevel, -l) je specificiran iz naredbenog retka, ili je uključeno vođenje zapisnika.|
-|nema |--no-sr-flag |Ne mijenjaj glavnu zastavicu čitača ekrana u sustavu|
-|nema |--install |Instalira NVDA, pritom pokrečući novoinstaliranu kopiju|
-|nema |--install-silent |Tiho instalira NVDA (ne pokreće novu instaliranu kopiju)|
-|nema |--enable-start-on-logon=True|False |Tijekom instaliranja, aktivirajte [opciju pokretanja NVDA čitača na ekranu za prijavu](#StartAtWindowsLogon)|
-|Nema |~~copy-portable-config |Prilikom instalacije, kopira se prijenosna kopija sa zadane lokacije (~~config-path, -c) u trenutnu korisničku mapu|
-|nema |--create-portable |Stvara prijenosnu kopiju NVDA čitača (pri tome ponovo pokrečući novostvorenu kopiju). Zahtijeva određenu funkciju --portable-path|
-|nema |--create-portable-silent |Stvara prijenosnu kopiju NVDA čitača (ne pokreće novostvorenu kopiju). zahtjeva određen parametar --portable-path|
-|nema |--portable-path=PORTABLEPATH |Putanja za stvorenu prijenosnu kopiju|
+|`-h` |`--help` |Prikazuje pomoć u naredbenom retku i izlazi|
+|`-q` |`--quit` |Zaustavlja trenutačno pokrenutu kopiju NVDA čitača|
+|`-k` |`--check-running` |Izvještava o pokrenutosti NVDA putem izlaznog koda; 0 ako je pokrenut, 1 ako nije pokrenut|
+|`-f LOGFILENAME` |`--log-file=LOGFILENAME` |datoteka u kojoj poruke zapisnika trebaju biti zapisane. Zapisivanje dnevnika je uvijek isključeno kada je sigurni način uključen.|
+|`-l LOGLEVEL` |`--log-level=LOGLEVEL` |Najniža razina zapisivanih poruka u zapisniku (debug 10, ulaz/izlaz 12, debug upozorenje 15, info 20, onemogućeno 100). Zapisivanje dnevnika je uvijek isključeno kada je sigurni način uključen.|
+|`-c CONFIGPATH` |`--config-path=CONFIGPATH` |određuje mapu u kojoj su pospremljene sve postavke Podrazumjevana vrijednost je prisilno ako je uključen sigurni način.|
+|Nema |`--lang=LANGUAGE` |Nadpisuje konfigurirani NVDA jezik. Postavljen na "korisnički zadan" za trenutnog korisnika podrazumjevano, "en" za engleski, itd.|
+|`-m` |`--minimal` |bez zvuka, bez sučelja, bez poruke dobrodošlice itd|
+|`-s` |`--secure` |Pokreće NVDA u [sigurnom načinu](#SecureMode)|
+|nema |`--disable-addons` |dodaci neće imati utjecaja|
+|nema |`--debug-logging` |Omogućuje dijagnostiku samo pri trenutačno pokrenutoj kopiji. Ova postavka natpisuje bilo koju drugu razinu vođenja zapisnika ( `--loglevel`, `-l`) specificirani argument uključujući i opciju bez logiranja.|
+|nema |`--no-logging` |Potpuno isključuje vođenje zapisnika. Ova postavka može biti nadpisana ako razina loga ( `--loglevel`, `-l`) je specificiran iz naredbenog retka, ili je uključeno vođenje zapisnika.|
+|nema |`--no-sr-flag` |Ne mijenjaj glavnu zastavicu čitača ekrana u sustavu|
+|nema |`--install` |Instalira NVDA, pritom pokrečući novoinstaliranu kopiju|
+|nema |`--install-silent` |Tiho instalira NVDA (ne pokreće novu instaliranu kopiju)|
+|nema |`--enable-start-on-logon=True|False` |Tijekom instaliranja, aktivirajte [opciju pokretanja NVDA čitača na ekranu za prijavu](#StartAtWindowsLogon)|
+|Nema |`copy-portable-config` |Prilikom instalacije, kopira se prijenosna kopija sa zadane lokacije (`config-path`, `-c`) u trenutnu korisničku mapu|
+|nema |`--create-portable` |Stvara prijenosnu kopiju NVDA čitača (pri tome ponovo pokrečući novostvorenu kopiju). Zahtijeva određenu funkciju `--portable-path`|
+|nema |`--create-portable-silent` |Stvara prijenosnu kopiju NVDA čitača (ne pokreće novostvorenu kopiju). zahtjeva određen parametar `--portable-path`|
+|nema |`--portable-path=PORTABLEPATH` |Putanja za stvorenu prijenosnu kopiju|
 
 ### Cijelosustavski parametri {#SystemWideParameters}
 
 NVDA omogućuje izmjenu nekih postavki u registru sustava, čime se mijenja ponašanje NVDA čitača u tom sustavu.
 Te su vrijednosti spremljene u registru pod sljedećim ključevima:
 
-* 32-bitni sustav: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
-* 64-bitni sustav: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+* 32-bitni sustav: `"HKEY_LOCAL_MACHINE\SOFTWARE\nvda"`
+* 64-bitni sustav: `"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"`
 
 Sljedeće vrijednosti se mogu postaviti pod ovim ključem:
 
@@ -4981,4 +4946,3 @@ Sljedeće vrijednosti se mogu postaviti pod ovim ključem:
 Ako trebate više informacija ili pomoć sa čitačem ekrana NVDA, molimo posjetite [NVDA web stranicu](NVDA_URL).
 Tamo je moguće naći dodatnu dokumentaciju, tehničku podršku i resurse zajednice.
 Ova web stranica sadržava informacije koje se tiču razvoja NVDA čitača.
-

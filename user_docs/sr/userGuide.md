@@ -41,7 +41,6 @@ Glavne karakteristike su:
 
 * Operativni sistemi: Sve 32-bitne i 64-bitne verzije Windowsa 8.1, Windowsa 10, Windowsa 11 i sve serverske operativne sisteme počevši od Windows Servera 2012 R2.
     * AMD64 i ARM64 Windows verzije su podržane.
--
 * Barem 150 MB memorijskog prostora.
 
 ### Internacionalizacija {#Internationalization}
@@ -250,7 +249,6 @@ Same komande neće biti izvršene dok ste u režimu pomoći za unos.
 |Pomeri se na prethodno podešavanje sintetizatora |`NVDA+kontrol+strelicaLevo` |`NVDA+šift+kontrol+strelicaLevo` |Pomera se na sledeće dostupno podešavanje govora pre trenutnog, vraćajući se na poslednje podešavanje nakon što dođe do prvog|
 |Povećaj trenutno podešavanje sintetizatora |`NVDA+kontrol+strelicaGore` |`NVDA+šift+kontrol+strelicaGore` |Povećava podešavanje sintetizatora na kojem se trenutno nalazite. Na primer povećava brzinu, bira sledeći glas, pojačava jačinu|
 |Povećaj trenutno podešavanje govora većim skokom |`NVDA+kontrol+pageUp` |`NVDA+šift+kontrol+pageUp` |Povećava vrednost trenutnog podešavanja govora na kojem se nalazite većim skokom. Na primer kada ste na podešavanju glasa, skočiće napred za dvadeset glasova; kada ste na podešavanjima klizača (brzina, visina, i tako dalje) povećaće vrednost za 20%.|
-
 |Smanji trenutno podešavanje sintetizatora |`NVDA+kontrol+strelicaDole` |`NVDA+šift+kontrol+strelicaDole` |Smanjuje podešavanje sintetizatora na kojem se trenutno nalazite. Na primer smanjuje brzinu, bira prethodni glas, smanjuje jačinu|
 |Smanji trenutno podešavanje govora većim skokom |`NVDA+kontrol+pageDown` |`NVDA+šift+kontrol+pageDown` |Smanjuje vrednost trenutnog podešavanja govora na kojem se nalazite većim skokom. Na primer kada ste na podešavanju glasa, skočiće nazad za dvadeset glasova; kada ste na podešavanjima klizača (brzina, visina, i tako dalje) smanjiće vrednost za 20%.|
 
@@ -1947,7 +1945,7 @@ Trenutno, dostupna su dva brajeva režima, "Prati kursore" i "Prikaži govor".
 
 Kada izaberete da brajev red prati kursore, brajev red će pratiti ili sistemski fokus/kursor ili navigacioni objekat/pregledni kursor, u zavisnosti od toga za šta je brajev red vezan.
 
-Kada se izabere da brajev red prikazuje govor, brajev red će prikazati šta NVDA govori, ili šta bi govorio da je režim govora podešen na "Sa pričom"
+Kada se izabere da brajev red prikazuje govor, brajev red će prikazati šta NVDA govori, ili šta bi govorio da je režim govora podešen na "Sa pričom".
 
 ##### Proširi na kompjuterski brajev kod za reč na poziciji kursora {#BrailleSettingsExpandToComputerBraille}
 
@@ -2235,7 +2233,6 @@ Podrazumevano, ova komanda će kružiti kroz sledeće režime:
 * NVDA na desnoj strani a aplikacije na levoj: NVDA će govoriti na desnom kanalu, dok će druge aplikacije reprodukovati zvukove na levom.
 
 Napredniji režimi razdvajanja zvuka su dostupni u izbornom okviru podešavanja razdvajanja zvuka.
-Ako želite da promenite jačinu svih aplikacija osim programa NVDA, razmotrite korišćenje [navedenih komandi](#OtherAppVolume).
 Imajte na umu da razdvajanje zvukova ne funkcioniše kao mikser.
 
 Na primer, ako aplikacija reprodukuje stereo zvučni zapis dok je razdvajanje zvukova podešeno na "NVDA na levoj strani a aplikacije na desnoj", čućete samo desni kanal zvučnog zapisa, dok će levi kanal zvučnog zapisa biti utišan.
@@ -2255,39 +2252,6 @@ Podrazumevano, omogućena su samo tri režima.
 * NVDA na desnom  a sve druge aplikacije na levom kanalu.
 
 Imajte na umu da je neophodno označiti bar jedan režim.
-Ova opcija nije dostupna ako je NVDA pokrenut uz [WASAPI onemogućen za zvučni izlaz](#WASAPI) u naprednim podešavanjima.
-
-##### Jačina drugih aplikacija {#OtherAppVolume}
-
-Ovaj klizač vam dozvoljava da promenite jačinu svih pokrenutih aplikacija osim programa NVDA.
-Ovo podešavanje jačine će se primeniti na zvukove za sve druge aplikacije, čak i kada se pokrenu nakon što se ovo podešavanje promeni.
-Ova jačina se takođe može promeniti sledećim prečicama sa tastature bilo gde da se nalazite:
-
-<!-- KC:beginInclude -->
-
-| Ime |Prečica |Opis|
-|---|---|---|
-|Pojačaj aplikacije |`NVDA+alt+pageUp` |Pojačava sve aplikacije osim programa NVDA.|
-|Smanji aplikacije |`NVDA+alt+pageDown` |Smanjuje jačinu svih aplikacija osim programa NVDA.|
-
-<!-- KC:endInclude -->
-
-Ova opcija nije dostupna ako je NVDA pokrenut uz [WASAPI onemogućen za zvučni izlaz](#WASAPI) u naprednim podešavanjima.
-
-##### Utišaj druge aplikacije {#MuteApplications}
-
-Ovo izborno polje vam dozvoljava da utišate sve druge aplikacije osim programa NVDA.
-Ovo podešavanje utišavanja će se primeniti na sve druge aplikacije koje reprodukuju zvukove, čak i kada se pokrenu nakon što se ovo podešavanje promeni.
-Sledeća prečica na tastaturi se takođe može koristiti bilo gde da se nalazite:
-
-<!-- KC:beginInclude -->
-
-| Ime |Prečica |Opis|
-|---|---|---|
-|Utišaj druge aplikacije |`NVDA+alt+delete` |Utišava ili ponovo vraća zvuk svih aplikacija osim programa NVDA.|
-
-<!-- KC:endInclude -->
-
 Ova opcija nije dostupna ako je NVDA pokrenut uz [WASAPI onemogućen za zvučni izlaz](#WASAPI) u naprednim podešavanjima.
 
 #### Vid {#VisionSettings}
@@ -4982,4 +4946,3 @@ Sledeće vrednosti se mogu podesiti u ovom registry ključu:
 Ako vam trebaju dodatne informacije ili pomoć za program NVDA, molimo posetite [NVDA Websajt](NVDA_URL).
 Ovde, možete pronaći dodatnu dokumentaciju, kao i tehničku podršku i mesta zajednice.
 Ovaj sajt takođe pruža informacije o razvoju programa NVDA.
-
