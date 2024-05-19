@@ -15,6 +15,7 @@ which provides an implementation of the instruction that can be executed locally
 # flake8: noqa: F401
 
 
+from ..builder import InstructionBase
 from .arithmetic import (
 	BinaryAdd,
 	BinarySubtract,
