@@ -13,7 +13,7 @@ from typing import (
 from comtypes import GUID
 from comInterfaces import UIAutomationClient as UIA
 from ._remoteOps import remoteAlgorithms
-from ._remoteOps.remoteAPI import (
+from ._remoteOps.remoteTypes import (
 	RemoteExtensionTarget,
 	RemoteInt
 )
