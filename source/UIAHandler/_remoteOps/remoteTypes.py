@@ -9,15 +9,12 @@ from typing import (
 	Type,
 	Any,
 	Self,
-	Callable,
 	ParamSpec,
 	Iterable,
-	Generator,
 	Generic,
 	TypeVar,
 	cast
 )
-import contextlib
 import ctypes
 from ctypes import (
 	_SimpleCData,
@@ -34,13 +31,11 @@ from comtypes import (
 import enum
 from UIAHandler import UIA
 from . import lowLevel
-from .lowLevel import RelativeOffset
 from . import instructions
 from . import builder
 from .remoteFuncWrapper import (
 	remoteMethod,
-	remoteMethod_mutable,
-	remoteContextManager
+	remoteMethod_mutable
 )
 from . import operation
 
