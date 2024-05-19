@@ -8,8 +8,8 @@ from collections.abc import Generator
 from .remoteFuncWrapper import (
 	remoteContextManager
 )
-from .remoteAPI import (
-	RemoteAPI,
+from .remoteAPI import RemoteAPI
+from .remoteTypes import (
 	RemoteIntEnum,
 	RemoteTextRange
 )
