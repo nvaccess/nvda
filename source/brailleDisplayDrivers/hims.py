@@ -249,10 +249,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
 		# Hid device
-		driverRegistrar.addUsbDevices(bdDetect.DeviceType.HID, {
-			"VID_045E&PID_940A",  # Braille Edge3S 40
-		})
-
+		driverRegistrar.addUsbDevices(
+			bdDetect.DeviceType.HID,
+			{
+				"VID_045E&PID_940A",  # Braille Edge3S 40
+			},
+			True
+		)
 		# Bulk devices
 		driverRegistrar.addUsbDevices(bdDetect.DeviceType.CUSTOM, {
 			"VID_045E&PID_930A",  # Braille Sense & Smart Beetle
@@ -279,7 +282,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		super(BrailleDisplayDriver, self).__init__()
 		self.numCells = 0
 		self._model = None
-		self._serData = b''
+		self._serialData = b''
 
 		for match in self._getTryPorts(port):
 			portType, portId, port, portInfo = match
@@ -502,9 +505,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 		# sometimes serial data is received in fragments.
 		# so accumulate data until it reaches 10 bytes.
-		if self._serData:
-			self._serData += data
-			if len(self._serData) == 10:
+		if self._serialData:
+			self._serialData += data
+			if len(self._serialData) == 10:
 				firstByte = b"\xfa"
 			else:
 				return
@@ -517,17 +520,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._handleIdentification(deviceId)
 		elif firstByte == b"\xfa":
 			# serial data first received
-			if not self._serData:
+			if not self._serialData:
 				try:
 					# Command packets are ten bytes long
 					packet = firstByte + stream.read(9)
 				except Exception:
 					# remaining data will be received next onReceive
-					self._serData = firstByte
+					self._serialData = firstByte
 					return
 			else:
-				packet = self._serData
-				self._serData = b""
+				packet = self._serialData
+				self._serialData = b""
 
 			assert packet[2] == 0x01 # Fixed value
 			CHECKSUM_INDEX = 8
