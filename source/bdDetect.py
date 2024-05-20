@@ -106,7 +106,7 @@ class DeviceMatch(Sequence):
 	"""Indicates whether the device should act as a fallback."""
 
 	def __getitem__(self, index):
-		# Implement sequence methods excluding the fallback propert
+		# Implement sequence methods excluding the fallback property.
 		return (self.type, self.id, self.port, self.deviceInfo)[index]
 
 	def __len__(self):
