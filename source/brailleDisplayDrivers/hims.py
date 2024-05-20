@@ -290,6 +290,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				match portType:
 					case bdDetect.DeviceType.HID:
 						self._dev = hwIo.Hid(port, onReceive=self._hidOnReceive)
+					case bdDetect.DeviceType.CUSTOM:
+						# onReceiveSize based on max packet size according to USB endpoint information.
+						self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, onReceiveSize=64)
 					case bdDetect.DeviceType.SERIAL:
 						self._dev = hwIo.Serial(
 							port,
@@ -299,9 +302,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 							writeTimeout=self.timeout,
 							onReceive=self._onReceive
 						)
-					case bdDetect.DeviceType.CUSTOM:
-						# onReceiveSize based on max packet size according to USB endpoint information.
-						self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, onReceiveSize=64)
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
 				continue
