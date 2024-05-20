@@ -105,7 +105,7 @@ class DeviceMatch(Sequence):
 	fallback: bool = field(default=False)
 	"""Indicates whether the device should act as a fallback."""
 
-	def __getItem__(self, index):
+	def __getitem__(self, index):
 		# Implement sequence methods excluding the fallback propert
 		return (self.type, self.id, self.port, self.deviceInfo)[index]
 
@@ -483,8 +483,14 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 			for port in deviceInfoFetcher.usbComPorts
 		)
 	)
+ 
+	# initialize fallback property
+	for match in usbDevs:
+		if (match.type, match.id) in FallbackDevicesStore.fallBackDevices:
+			match.fallback = True
+   
 	fallback_matches = []
-
+ 
 	for match in usbDevs:
 		if driver == _getStandardHidDriverName():
 			if _isHIDBrailleMatch(match):
@@ -647,6 +653,9 @@ class DriverRegistrar:
 				f"Invalid IDs provided for driver {self._driver!r}, type {type!r}: "
 				f"{', '.join(malformedIds)}"
 			)
+		if useAsFallBack:
+			FallbackDevicesStore.fallBackDevices.extend([(type, id) for id in ids])
+		
 		devs = self._getDriverDict()
 		driverUsb = devs[type]
 		driverUsb.update(ids)
@@ -684,3 +693,6 @@ class DriverRegistrar:
 		scanForDevices.register(scanFunc)
 		if moveToStart:
 			scanForDevices.moveToEnd(scanFunc, last=False)
+
+class FallbackDevicesStore:
+    fallBackDevices: List[Tuple[DeviceType, str]] = []
