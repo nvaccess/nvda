@@ -483,14 +483,14 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 			for port in deviceInfoFetcher.usbComPorts
 		)
 	)
- 
+
 	# initialize fallback property
 	for match in usbDevs:
 		if (match.type, match.id) in FallbackDevicesStore.fallBackDevices:
 			match.fallback = True
-   
+
 	fallback_matches = []
- 
+
 	for match in usbDevs:
 		if driver == _getStandardHidDriverName():
 			if _isHIDBrailleMatch(match):
@@ -693,6 +693,7 @@ class DriverRegistrar:
 		scanForDevices.register(scanFunc)
 		if moveToStart:
 			scanForDevices.moveToEnd(scanFunc, last=False)
+
 
 class FallbackDevicesStore:
     fallBackDevices: List[Tuple[DeviceType, str]] = []
