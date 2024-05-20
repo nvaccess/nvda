@@ -2370,7 +2370,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		from NVDAObjects.window.winword import BrowseModeWordDocumentTextInfo
 		if isinstance(pos, BrowseModeWordDocumentTextInfo):
 			raise NotImplementedError(
-				"non-UIA word textInfos is not supported due to multiple issues with them - #16569"
+				"non-UIA word textInfos are not supported due to multiple issues with them - #16569"
 			)
 		from appModules.outlook import OutlookUIAWordDocument
 		if isinstance(api.getFocusObject(), OutlookUIAWordDocument):
