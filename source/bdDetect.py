@@ -44,6 +44,8 @@ from winAPI import messageWindow
 import extensionPoints
 from logHandler import log
 from collections import defaultdict
+from dataclasses import dataclass, field
+from collections.abc import Sequence
 
 
 HID_USAGE_PAGE_BRAILLE = 0x41
@@ -88,7 +90,7 @@ def __getattr__(attrName: str) -> Any:
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
-class DeviceMatch(NamedTuple):
+class DeviceMatch(Sequence):
 	"""Represents a detected device.
 	"""
 	type: DeviceType
@@ -99,7 +101,18 @@ class DeviceMatch(NamedTuple):
 	"""The port that can be used by a driver to communicate with a device."""
 	deviceInfo: Dict[str, str]
 	"""All known information about a device."""
+	fallback: bool = field(default=False)
+	"""Indicates whether the device should act as a fallback."""
 
+
+	def __getItem__(self, index):
+    	# Implement sequence methods excluding the fallback propert
+		return (self.type, self.id, self.port, self.deviceInfo)[index]
+
+
+	def __len__(self):
+		# Implement sequence length excluding the fallback property
+		return 4
 
 MatchFuncT = Callable[[DeviceMatch], bool]
 DriverDictT = defaultdict[DeviceType, set[str] | MatchFuncT]
@@ -471,15 +484,26 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 			for port in deviceInfoFetcher.usbComPorts
 		)
 	)
+	fallback_matches = []
+
 	for match in usbDevs:
 		if driver == _getStandardHidDriverName():
 			if _isHIDBrailleMatch(match):
-				yield match
+				if match.fallback:
+					fallback_matches.append(match)
+				else:
+					yield match
 		else:
 			devs = _driverDevices[driver]
 			for type, ids in devs.items():
 				if match.type == type and match.id in ids:
-					yield match
+					if match.fallback:
+						fallback_matches.append(match)
+					else:
+						yield match
+
+	for match in fallback_matches:
+		yield match
 
 
 def getPossibleBluetoothDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
