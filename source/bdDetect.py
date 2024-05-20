@@ -90,6 +90,7 @@ def __getattr__(attrName: str) -> Any:
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
+@dataclass
 class DeviceMatch(Sequence):
 	"""Represents a detected device.
 	"""
@@ -104,11 +105,9 @@ class DeviceMatch(Sequence):
 	fallback: bool = field(default=False)
 	"""Indicates whether the device should act as a fallback."""
 
-
 	def __getItem__(self, index):
-    	# Implement sequence methods excluding the fallback propert
+		# Implement sequence methods excluding the fallback propert
 		return (self.type, self.id, self.port, self.deviceInfo)[index]
-
 
 	def __len__(self):
 		# Implement sequence length excluding the fallback property
