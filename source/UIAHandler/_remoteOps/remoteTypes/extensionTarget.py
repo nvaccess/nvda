@@ -23,6 +23,9 @@ from ..remoteFuncWrapper import (
 from . import (
 	LocalTypeVar,
 	RemoteBaseObject,
+	RemoteVariant,
+	RemoteBool,
+	RemoteGuid,
 )
 
 
@@ -32,7 +35,6 @@ class RemoteExtensionTarget(RemoteBaseObject[LocalTypeVar], Generic[LocalTypeVar
 	Including checking for the existence of extensions and
 	calling extensions.
 	"""
-
 
 	def _generateInitInstructions(self) -> Iterable[instructions.InstructionBase]:
 		yield instructions.NewNull(

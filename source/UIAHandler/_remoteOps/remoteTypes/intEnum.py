@@ -18,6 +18,7 @@ from ctypes import (
 	c_long
 )
 import enum
+from .. import builder
 from . import (
 	RemoteInt,
 	remoteMethod
