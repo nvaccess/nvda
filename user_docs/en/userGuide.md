@@ -3139,8 +3139,7 @@ Note:
 
 * Emulated keys must have gestures assigned in order to persist when saving / closing the dialog.
 * An input gesture with modifier keys may not be able to be mapped to an emulated gesture without modifier keys.
-For instance, setting the emulated input `a` and configuring an input gesture of `ctrl+m`, may result
-in the application receiving `ctrl+a`.
+For instance, setting the emulated input `a` and configuring an input gesture of `ctrl+m`, may result in the application receiving `ctrl+a`.
 
 When you are finished making changes, press the OK button to save them or the Cancel button to discard them.
 
