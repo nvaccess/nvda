@@ -249,13 +249,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
 		# Hid device
-		driverRegistrar.addUsbDevices(
-			bdDetect.DeviceType.HID,
-			{
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.HID, {
 				"VID_045E&PID_940A",  # Braille Edge3S 40
-			},
-			True
-		)
+		})
 
 		# Bulk devices
 		driverRegistrar.addUsbDevices(bdDetect.DeviceType.CUSTOM, {
@@ -292,6 +288,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# Try talking to the display.
 			try:
 				match portType:
+					case bdDetect.DeviceType.HID:
+						self._dev = hwIo.Hid(port, onReceive=self._hidOnReceive)
 					case bdDetect.DeviceType.SERIAL:
 						self._dev = hwIo.Serial(
 							port,
@@ -301,8 +299,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 							writeTimeout=self.timeout,
 							onReceive=self._onReceive
 						)
-					case bdDetect.DeviceType.HID:
-						self._dev = hwIo.Hid(port, onReceive=self._hidOnReceive)
 					case bdDetect.DeviceType.CUSTOM:
 						# onReceiveSize based on max packet size according to USB endpoint information.
 						self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, onReceiveSize=64)
