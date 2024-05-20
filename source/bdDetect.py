@@ -484,8 +484,11 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 		)
 	)
 
+	# Create two independent iterators from usbDevs
+	usbDevs, usbDevs_for_fallback = itertools.tee(usbDevs)
+
 	# initialize fallback property
-	for match in usbDevs:
+	for match in usbDevs_for_fallback:
 		if (match.type, match.id) in FallbackDevicesStore.fallBackDevices:
 			match.fallback = True
 
