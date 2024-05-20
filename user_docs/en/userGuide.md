@@ -339,7 +339,7 @@ Each of the tabs are set out similar to each other, as a list of add-ons, a pane
 The actions menu of installed add-ons includes "Disable" and "Remove" rather than "Install".
 Disabling an add-on stops NVDA from loading it, but leaves it installed.
 To re-enable a disabled add-on, activate "Enable" from the actions menu.
-After enabling, disabling, or removing add-ons, NVDA will prompt to restart when closing the add-on store.
+After enabling, disabling, or removing add-ons, you will be prompted to restart NVDA when closing the Add-on Store.
 Note that in this dialog `escape` works the same as the close button.
 Any changes you had made in the dialog have already happened, but they don't take effect until NVDA restarts.
 
