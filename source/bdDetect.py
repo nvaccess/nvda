@@ -605,7 +605,7 @@ class DriverRegistrar:
 			ret = _driverDevices[self._driver] = DriverDictT(set)
 			return ret
 
-	def addUsbDevices(self, type: DeviceType, ids: set[str]):
+	def addUsbDevices(self, type: DeviceType, ids: Set[str]):
 		"""Associate USB devices with the driver on this instance.
 		:param type: The type of the driver.
 		:param ids: A set of USB IDs in the form C{"VID_xxxx&PID_XXXX"}.
