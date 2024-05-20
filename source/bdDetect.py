@@ -471,7 +471,6 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 			for port in deviceInfoFetcher.usbComPorts
 		)
 	)
-
 	for match in usbDevs:
 		if driver == _getStandardHidDriverName():
 			if _isHIDBrailleMatch(match):
@@ -625,11 +624,10 @@ class DriverRegistrar:
 				f"Invalid IDs provided for driver {self._driver!r}, type {type!r}: "
 				f"{', '.join(malformedIds)}"
 			)
-		
 		devs = self._getDriverDict()
 		driverUsb = devs[type]
 		driverUsb.update(ids)
-	
+
 	def addBluetoothDevices(self, matchFunc: MatchFuncT):
 		"""Associate Bluetooth HID or COM ports with the driver on this instance.
 		@param matchFunc: A function which determines whether a given Bluetooth device matches.
