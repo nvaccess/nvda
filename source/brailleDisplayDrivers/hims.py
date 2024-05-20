@@ -256,6 +256,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			},
 			True
 		)
+
 		# Bulk devices
 		driverRegistrar.addUsbDevices(bdDetect.DeviceType.CUSTOM, {
 			"VID_045E&PID_930A",  # Braille Sense & Smart Beetle

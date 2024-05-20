@@ -471,13 +471,8 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 			for port in deviceInfoFetcher.usbComPorts
 		)
 	)
- 
-	FallbackDevicesStore.matches.clear()
-	for match in usbDevs:
-		if (match.type, match.id) in FallbackDevicesStore.fallBackDevices:
-			FallbackDevicesStore.matches.append(match)
-			continue
 
+	for match in usbDevs:
 		if driver == _getStandardHidDriverName():
 			if _isHIDBrailleMatch(match):
 				yield match
@@ -487,9 +482,6 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 				if match.type == type and match.id in ids:
 					yield match
 
-	for match in FallbackDevicesStore.matches:
-		if (match.type, match.id) in FallbackDevicesStore.fallBackDevices:
-			yield match
 
 def getPossibleBluetoothDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 	"""Get any possible Bluetooth devices associated with a particular driver.
@@ -634,13 +626,10 @@ class DriverRegistrar:
 				f"{', '.join(malformedIds)}"
 			)
 		
-		if not useAsFallBack:
-			devs = self._getDriverDict()
-			driverUsb = devs[type]
-			driverUsb.update(ids)
-		else:
-			FallbackDevicesStore.fallBackDevices.extend([(type, id) for id in ids])
-
+		devs = self._getDriverDict()
+		driverUsb = devs[type]
+		driverUsb.update(ids)
+	
 	def addBluetoothDevices(self, matchFunc: MatchFuncT):
 		"""Associate Bluetooth HID or COM ports with the driver on this instance.
 		@param matchFunc: A function which determines whether a given Bluetooth device matches.
@@ -674,8 +663,3 @@ class DriverRegistrar:
 		scanForDevices.register(scanFunc)
 		if moveToStart:
 			scanForDevices.moveToEnd(scanFunc, last=False)
-
-
-class FallbackDevicesStore:
-    fallBackDevices: List[Tuple[DeviceType, str]] = []
-    matches: List[DeviceMatch] = []
