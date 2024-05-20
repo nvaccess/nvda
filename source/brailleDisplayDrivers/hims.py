@@ -250,7 +250,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
 		# Hid device
 		driverRegistrar.addUsbDevices(bdDetect.DeviceType.HID, {
-				"VID_045E&PID_940A",  # Braille Edge3S 40
+			"VID_045E&PID_940A",  # Braille Edge3S 40
 		})
 
 		# Bulk devices
@@ -279,7 +279,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		super(BrailleDisplayDriver, self).__init__()
 		self.numCells = 0
 		self._model = None
-		self._serialData = b''
+		self._serData = b''
 
 		for match in self._getTryPorts(port):
 			portType, portId, port, portInfo = match
