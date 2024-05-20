@@ -327,7 +327,9 @@ To install an add-on:
 1. Once the add-on has finished downloading, it will change to "Downloaded. Pending install".
 1. Repeat with any other add-ons you would like to install at the same time.
 1. Once finished, press `tab` until the focus is on the "Close" button, then press `enter`.
-1. A dialog appears advising that changes were made, and you must restart NVDA.
+1. The downloaded add-ons will start the installation process once the Add-on Store is closed.
+Add-ons may create dialogs during the installation process that you will need to respond to.
+1. When the add-ons have been installed, a dialog appears advising that changes were made, and you must restart NVDA for the add-on installation to complete.
 1. Press `enter` to restart NVDA.
 
 #### Managing installed add-ons {#ManagingInstalledAddons}
