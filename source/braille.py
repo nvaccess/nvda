@@ -1860,7 +1860,6 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		while pos < self.windowStartPos:
 			if not self._previousWindow():
 				break
-		self.updateDisplay()
 
 	def focus(self, region):
 		"""Bring the specified region into focus.
