@@ -476,7 +476,7 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 	for match in usbDevs:
 		if driver == _getStandardHidDriverName():
 			if _isHIDBrailleMatch(match):
-				if (match.type, match.id) in FallbackDevicesStore.fallBackDevices:
+				if (driver, match.type, match.id) in FallbackDevicesStore.fallBackDevices:
 					fallback_matches.append(match)
 				else:
 					yield match
@@ -484,7 +484,7 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 			devs = _driverDevices[driver]
 			for type, ids in devs.items():
 				if match.type == type and match.id in ids:
-					if (match.type, match.id) in FallbackDevicesStore.fallBackDevices:
+					if (driver, match.type, match.id) in FallbackDevicesStore.fallBackDevices:
 						fallback_matches.append(match)
 					else:
 						yield match
@@ -636,7 +636,7 @@ class DriverRegistrar:
 				f"{', '.join(malformedIds)}"
 			)
 		if useAsFallBack:
-			FallbackDevicesStore.fallBackDevices.extend([(type, id) for id in ids])
+			FallbackDevicesStore.fallBackDevices.extend([(self._driver, type, id) for id in ids])
 		
 		devs = self._getDriverDict()
 		driverUsb = devs[type]
@@ -678,4 +678,4 @@ class DriverRegistrar:
 
 
 class FallbackDevicesStore:
-    fallBackDevices: List[Tuple[DeviceType, str]] = []
+    fallBackDevices: List[Tuple[str, DeviceType, str]] = []
