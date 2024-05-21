@@ -8,9 +8,45 @@ from .soundSplit import (
 	setSoundSplitState,
 	toggleSoundSplitState,
 )
+from . import appsVolume, soundSplit, utils
+import atexit
+import nvwave
+from pycaw.utils import AudioUtilities
+from comtypes import COMError
+from logHandler import log
 
 __all__ = [
 	"SoundSplitState",
 	"setSoundSplitState",
 	"toggleSoundSplitState",
 ]
+
+audioUtilitiesInitialized: bool = False
+
+
+def initialize() -> None:
+	if nvwave.usingWasapiWavePlayer():
+		try:
+			AudioUtilities.GetAudioSessionManager()
+		except COMError:
+			log.exception("Could not initialize audio session manager")
+			return
+		utils.initialize()
+		appsVolume.initialize()
+		soundSplit.initialize()
+		global audioUtilitiesInitialized
+		audioUtilitiesInitialized = True
+	else:
+		log.debug("Cannot initialize audio utilities as WASAPI is disabled")
+
+
+@atexit.register
+def terminate():
+	if not audioUtilitiesInitialized:
+		log.debug("Skipping terminating audio utilities as initialization was skipped.")
+	elif not nvwave.usingWasapiWavePlayer():
+		log.debug("Skipping terminating audio utilites as WASAPI is disabled.")
+	else:
+		soundSplit.terminate()
+		appsVolume.terminate()
+		utils.terminate()

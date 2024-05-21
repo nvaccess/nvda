@@ -68,6 +68,7 @@ from base64 import b16encode
 import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import audio
+from audio import appsVolume
 
 
 #: Script category for text review commands.
@@ -4511,6 +4512,38 @@ class GlobalCommands(ScriptableObject):
 	def script_cycleSoundSplit(self, gesture: "inputCore.InputGesture") -> None:
 		audio.toggleSoundSplitState()
 
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Increases the volume of the other applications",
+		),
+		category=SCRCAT_AUDIO,
+		gesture="kb:NVDA+alt+pageUp",
+	)
+	def script_increaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
+		appsVolume.adjustAppsVolume(5)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Decreases the volume of the other applications",
+		),
+		category=SCRCAT_AUDIO,
+		gesture="kb:NVDA+alt+pageDown",
+	)
+	def script_decreaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
+		appsVolume.adjustAppsVolume(-5)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggles other applications mute",
+		),
+		category=SCRCAT_AUDIO,
+		gesture="kb:NVDA+alt+delete",
+	)
+	def script_toggleApplicationsMute(self, gesture: "inputCore.InputGesture") -> None:
+		appsVolume.toggleAppsVolumeState()
 
 #: The single global commands instance.
 #: @type: L{GlobalCommands}

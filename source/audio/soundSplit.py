@@ -18,6 +18,7 @@ from dataclasses import dataclass
 from comtypes import COMError
 from threading import Lock
 import core
+from .utils import AudioSessionCallback, DummyAudioSessionCallback
 
 VolumeTupleT = tuple[float, float]
 
@@ -89,91 +90,32 @@ class SoundSplitState(DisplayStringIntEnum):
 				raise RuntimeError(f"Unexpected or unknown state {self=}")
 
 
-audioSessionManager: IAudioSessionManager2 | None = None
-activeCallback: AudioSessionNotification | None = None
+activeCallback: DummyAudioSessionCallback | None = None
 
 
 def initialize() -> None:
-	if nvwave.usingWasapiWavePlayer():
-		global audioSessionManager
-		try:
-			audioSessionManager = AudioUtilities.GetAudioSessionManager()
-		except COMError:
-			log.exception("Could not initialize audio session manager")
-			return
-		state = SoundSplitState(config.conf["audio"]["soundSplitState"])
-		setSoundSplitState(state, initial=True)
-	else:
-		log.debug("Cannot initialize sound split as WASAPI is disabled")
+	state = SoundSplitState(config.conf["audio"]["soundSplitState"])
+	setSoundSplitState(state)
 
 
-@atexit.register
 def terminate():
-	if nvwave.usingWasapiWavePlayer():
-		state = SoundSplitState(config.conf["audio"]["soundSplitState"])
-		if state != SoundSplitState.OFF:
-			setSoundSplitState(SoundSplitState.OFF)
-		unregisterCallback()
-	else:
-		log.debug("Skipping terminating sound split as WASAPI is disabled.")
-
-
-@dataclass(unsafe_hash=True)
-class AudioSessionNotificationWrapper(AudioSessionNotification):
-	listener: AudioSessionNotification
-
-	def on_session_created(self, new_session: AudioSession):
-		pid = new_session.ProcessId
-		with applicationExitCallbacksLock:
-			if pid not in applicationExitCallbacks:
-				volumeRestorer = VolumeRestorer(pid, new_session)
-				new_session.register_notification(volumeRestorer)
-				applicationExitCallbacks[pid] = volumeRestorer
-		self.listener.on_session_created(new_session)
-
-
-def applyToAllAudioSessions(
-		callback: AudioSessionNotification,
-		applyToFuture: bool = True,
-) -> None:
-	"""
-		Executes provided callback function on all active audio sessions.
-		Additionally, if applyToFuture is True, then it will register a notification with audio session manager,
-		which will execute the same callback for all future sessions as they are created.
-		That notification will be active until next invokation of this function,
-		or until unregisterCallback() is called.
-	"""
-	unregisterCallback()
-	callback = AudioSessionNotificationWrapper(callback)
-	if applyToFuture:
-		audioSessionManager.RegisterSessionNotification(callback)
-		# The following call is required to make callback to work:
-		audioSessionManager.GetSessionEnumerator()
-		global activeCallback
-		activeCallback = callback
-	sessions: list[AudioSession] = AudioUtilities.GetAllSessions()
-	for session in sessions:
-		callback.on_session_created(session)
-
-
-def unregisterCallback() -> None:
 	global activeCallback
 	if activeCallback is not None:
-		audioSessionManager.UnregisterSessionNotification(activeCallback)
+		activeCallback.unregister()
 		activeCallback = None
 
 
 @dataclass(unsafe_hash=True)
-class VolumeSetter(AudioSessionNotification):
-	leftVolume: float
-	rightVolume: float
-	leftNVDAVolume: float
-	rightNVDAVolume: float
+class ChannelVolumeSetter(AudioSessionCallback):
+	leftVolume: float = 0.0
+	rightVolume: float = 0.0
+	leftNVDAVolume: float = 0.0
+	rightNVDAVolume: float = 0.0
 	foundSessionWithNot2Channels: bool = False
 
-	def on_session_created(self, new_session: AudioSession):
-		pid = new_session.ProcessId
-		channelVolume = new_session.channelAudioVolume()
+	def onSessionUpdate(self, session: AudioSession) -> None:
+		pid = session.ProcessId
+		channelVolume = session.channelAudioVolume()
 		channelCount = channelVolume.GetChannelCount()
 		if channelCount != 2:
 			log.warning(f"Audio session for pid {pid} has {channelCount} channels instead of 2 - cannot set volume!")
@@ -186,23 +128,42 @@ class VolumeSetter(AudioSessionNotification):
 			channelVolume.SetChannelVolume(0, self.leftNVDAVolume, None)
 			channelVolume.SetChannelVolume(1, self.rightNVDAVolume, None)
 
+	def onSessionTerminated(self, session: AudioSession) -> None:
+		pid = session.ProcessId
+		try:
+			channelVolume = session.channelAudioVolume()
+			channelCount = channelVolume.GetChannelCount()
+			if channelCount != 2:
+				log.warning(
+					f"Audio session for pid {pid} has {channelCount} channels instead of 2 - cannot set volume!"
+				)
+				return
+			channelVolume.SetChannelVolume(0, 1.0, None)
+			channelVolume.SetChannelVolume(1, 1.0, None)
+		except Exception:
+			log.exception(f"Could not restore channel volume of process {pid} upon exit.")
 
-def setSoundSplitState(state: SoundSplitState, initial: bool = False) -> dict:
-	applyToFuture = True
+
+def setSoundSplitState(state: SoundSplitState) -> dict:
+	global activeCallback
+	if activeCallback is not None:
+		activeCallback.unregister()
+		activeCallback = None
 	if state == SoundSplitState.OFF:
-		if initial:
-			return {}
-		else:
-			# Disabling sound split via command or via settings
-			# We need to restore volume of all applications, but then don't set up callback for future audio sessions
-			state = SoundSplitState.NVDA_BOTH_APPS_BOTH
-			applyToFuture = False
-	leftVolume, rightVolume = state.getAppVolume()
-	leftNVDAVolume, rightNVDAVolume = state.getNVDAVolume()
-	volumeSetter = VolumeSetter(leftVolume, rightVolume, leftNVDAVolume, rightNVDAVolume)
-	applyToAllAudioSessions(volumeSetter, applyToFuture=applyToFuture)
+		activeCallback = DummyAudioSessionCallback()
+	else:
+		leftVolume, rightVolume = state.getAppVolume()
+		leftNVDAVolume, rightNVDAVolume = state.getNVDAVolume()
+		activeCallback = ChannelVolumeSetter(
+			leftVolume=leftVolume,
+			rightVolume=rightVolume,
+			leftNVDAVolume=leftNVDAVolume,
+			rightNVDAVolume=rightNVDAVolume,
+		)
+	activeCallback.register()
+	notTwoChannels = False if state == SoundSplitState.OFF else activeCallback.foundSessionWithNot2Channels
 	return {
-		"foundSessionWithNot2Channels": volumeSetter.foundSessionWithNot2Channels,
+		"foundSessionWithNot2Channels": notTwoChannels,
 	}
 
 
@@ -235,45 +196,3 @@ def toggleSoundSplitState() -> None:
 			"one of audio sessions is either mono, or has more than 2 audio channels."
 		)
 		ui.message(msg)
-
-
-@dataclass(unsafe_hash=True)
-class VolumeRestorer(AudioSessionEvents):
-	pid: int
-	audioSession: AudioSession
-
-	def on_state_changed(self, new_state: str, new_state_id: int):
-		if new_state == "Expired":
-			# For some reason restoring volume doesn't work in this thread, so scheduling in the main thread.
-			core.callLater(0, self.restoreVolume)
-
-	def restoreVolume(self):
-		# Application connected to this audio session is terminating. Restore its volume.
-		try:
-			channelVolume = self.audioSession.channelAudioVolume()
-			channelCount = channelVolume.GetChannelCount()
-			if channelCount != 2:
-				log.warning(
-					f"Audio session for pid {self.pid} has {channelCount} channels instead of 2 - cannot set volume!"
-				)
-				return
-			channelVolume.SetChannelVolume(0, 1.0, None)
-			channelVolume.SetChannelVolume(1, 1.0, None)
-		except Exception:
-			log.exception(f"Could not restore volume of process {self.pid} upon exit.")
-		self.unregister()
-
-	def unregister(self):
-		with applicationExitCallbacksLock:
-			try:
-				del applicationExitCallbacks[self.pid]
-			except KeyError:
-				pass
-			try:
-				self.audioSession.unregister_notification()
-			except Exception:
-				log.exception(f"Cannot unregister audio session for process {self.pid}")
-
-
-applicationExitCallbacksLock = Lock()
-applicationExitCallbacks: dict[int, VolumeRestorer] = {}
