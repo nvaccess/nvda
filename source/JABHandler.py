@@ -794,8 +794,8 @@ def event_enterJavaWindow(hwnd):
 def enterJavaWindow_helper(hwnd):
 	vmID=c_long()
 	accContext=JOBJECT64()
-	# I changed the timeout to 0.5 because when a Java object disappeared
-	# NVDA would hang until I moved focus again.
+	# Previous value of 0.2 was increased to 0.5 as when a Java object disappeared
+	# NVDA would hang until focus was moved again #16557.
 	timeout = time.time() + 0.5
 	while time.time()<timeout and not eventHandler.isPendingEvents("gainFocus"):
 		try:
