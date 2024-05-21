@@ -505,7 +505,7 @@ class Region(object):
 			# Typeforms must be adapted to represent normalized characters.
 			textToTranslateTypeforms = [
 				self.rawTextTypeforms[strOffset] for strOffset in converter.computedEncodedToStrOffsets
-			]
+			] if self.rawTextTypeforms is not None else None
 			# Convert the cursor position to a normalized offset.
 			cursorPos = converter.strToEncodedOffsets(self.cursorPos)
 		else:
