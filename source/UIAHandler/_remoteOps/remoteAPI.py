@@ -46,7 +46,7 @@ class RemoteAPI(builder._RemoteBase):
 	_rob: builder.RemoteOperationBuilder
 	_logObj: RemoteString | None = None
 
-	def __init__(self, op: operation.Operation, enableRemoteLogging=False):
+	def __init__(self, op: operation.Operation, enableRemoteLogging: bool = False):
 		super().__init__(op._rob)
 		self._op = op
 		self._logObj = self.newString() if enableRemoteLogging else None
@@ -95,7 +95,7 @@ class RemoteAPI(builder._RemoteBase):
 			self,
 			RemoteType: Type[_newObject_RemoteType],
 			value: Any,
-			static=False
+			static: bool = False
 	) -> _newObject_RemoteType:
 		section = "static" if static else "main"
 		with self.rob.overrideDefaultSection(section):
@@ -104,22 +104,22 @@ class RemoteAPI(builder._RemoteBase):
 			self._op._registerStaticOperand(obj)
 		return obj
 
-	def newUint(self, value: int = 0, static=False) -> RemoteUint:
+	def newUint(self, value: int = 0, static: bool = False) -> RemoteUint:
 		return self._newObject(RemoteUint, value, static=static)
 
-	def newInt(self, value: int = 0, static=False) -> RemoteInt:
+	def newInt(self, value: int = 0, static: bool = False) -> RemoteInt:
 		return self._newObject(RemoteInt, value, static=static)
 
-	def newFloat(self, value: float = 0.0, static=False) -> RemoteFloat:
+	def newFloat(self, value: float = 0.0, static: bool = False) -> RemoteFloat:
 		return self._newObject(RemoteFloat, value, static=static)
 
-	def newString(self, value: str = "", static=False) -> RemoteString:
+	def newString(self, value: str = "", static: bool = False) -> RemoteString:
 		return self._newObject(RemoteString, value, static=static)
 
-	def newBool(self, value: bool = False, static=False) -> RemoteBool:
+	def newBool(self, value: bool = False, static: bool = False) -> RemoteBool:
 		return self._newObject(RemoteBool, value, static=static)
 
-	def newGuid(self, value: GUID | str | None = None, static=False) -> RemoteGuid:
+	def newGuid(self, value: GUID | str | None = None, static: bool = False) -> RemoteGuid:
 		if value is None:
 			realValue = GUID()
 		elif isinstance(value, str):
@@ -134,7 +134,11 @@ class RemoteAPI(builder._RemoteBase):
 	def newArray(self) -> RemoteArray:
 		return RemoteArray.createNew(self.rob)
 
-	def newElement(self, value: UIA.IUIAutomationElement | None = None, static=False) -> RemoteElement:
+	def newElement(
+		self,
+		value: UIA.IUIAutomationElement | None = None,
+		static: bool = False
+	) -> RemoteElement:
 		section = "static" if static else "main"
 		with self.rob.overrideDefaultSection(section):
 			if value is not None:
@@ -145,7 +149,11 @@ class RemoteAPI(builder._RemoteBase):
 			else:
 				return self._newObject(RemoteElement, value, static=static)
 
-	def newTextRange(self, value: UIA.IUIAutomationTextRange | None = None, static=False) -> RemoteTextRange:
+	def newTextRange(
+		self,
+		value: UIA.IUIAutomationTextRange | None = None,
+		static: bool = False
+	) -> RemoteTextRange:
 		section = "static" if static else "main"
 		with self.rob.overrideDefaultSection(section):
 			if value is not None:
@@ -178,7 +186,7 @@ class RemoteAPI(builder._RemoteBase):
 	_scopeInstructionJustExited: instructions.InstructionBase | None = None
 
 	@contextlib.contextmanager
-	def ifBlock(self, condition: RemoteBool, silent=False):
+	def ifBlock(self, condition: RemoteBool, silent: bool = False):
 		instructionList = self.rob.getDefaultInstructionList()
 		conditionInstruction = instructions.ForkIfFalse(
 			condition=condition,
@@ -195,7 +203,7 @@ class RemoteAPI(builder._RemoteBase):
 		self._scopeInstructionJustExited = conditionInstruction
 
 	@contextlib.contextmanager
-	def elseBlock(self, silent=False):
+	def elseBlock(self, silent: bool = False):
 		scopeInstructionJustExited = self._scopeInstructionJustExited
 		if not isinstance(scopeInstructionJustExited, instructions.ForkIfFalse):
 			raise RuntimeError("Else block not directly preceded by If block")
@@ -227,7 +235,7 @@ class RemoteAPI(builder._RemoteBase):
 		instructionList.addInstruction(instructions.BreakLoop())
 
 	@contextlib.contextmanager
-	def whileBlock(self, conditionBuilderFunc: Callable[[], RemoteBool], silent=False):
+	def whileBlock(self, conditionBuilderFunc: Callable[[], RemoteBool], silent: bool = False):
 		instructionList = self.rob.getDefaultInstructionList()
 		# Add a new loop block instruction to start the while loop
 		loopBlockInstruction = instructions.NewLoopBlock(
@@ -286,7 +294,7 @@ class RemoteAPI(builder._RemoteBase):
 			yield array[index]
 
 	@contextlib.contextmanager
-	def tryBlock(self, silent=False):
+	def tryBlock(self, silent: bool = False):
 		instructionList = self.rob.getDefaultInstructionList()
 		# Add a new try block instruction to start the try block
 		tryBlockInstruction = instructions.NewTryBlock(
@@ -306,7 +314,7 @@ class RemoteAPI(builder._RemoteBase):
 		self._scopeInstructionJustExited = tryBlockInstruction
 
 	@contextlib.contextmanager
-	def catchBlock(self, silent=False):
+	def catchBlock(self, silent: bool = False):
 		scopeInstructionJustExited = self._scopeInstructionJustExited
 		if not isinstance(scopeInstructionJustExited, instructions.NewTryBlock):
 			raise RuntimeError("Catch block not directly preceded by Try block")

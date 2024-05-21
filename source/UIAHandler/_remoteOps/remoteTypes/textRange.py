@@ -37,7 +37,7 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 
 	LocalType = POINTER(UIA.IUIAutomationTextRange)
 
-	def _initOperand(self, initialValue: None = None, const=False):
+	def _initOperand(self, initialValue: None = None, const: bool = False):
 		if initialValue is not None:
 			raise TypeError("Cannot initialize RemoteTextRange with an initial value.")
 		return super()._initOperand()
@@ -161,7 +161,7 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 		)
 		return result
 
-	def getLogicalAdapter(self, reverse=False) -> RemoteTextRangeLogicalAdapter:
+	def getLogicalAdapter(self, reverse: bool = False) -> RemoteTextRangeLogicalAdapter:
 		obj = RemoteTextRangeLogicalAdapter(self.rob, self, reverse=reverse)
 		return obj
 
@@ -171,7 +171,8 @@ class _RemoteTextRangeEndpoint(builder._RemoteBase):
 	def __init__(
 			self,
 			rob: builder.RemoteOperationBuilder,
-			textRangeLA: RemoteTextRangeLogicalAdapter, isStart: bool
+			textRangeLA: RemoteTextRangeLogicalAdapter,
+			isStart: bool
 	):
 		super().__init__(rob)
 		self._la = textRangeLA
@@ -235,7 +236,8 @@ class RemoteTextRangeLogicalAdapter(builder._RemoteBase):
 	def __init__(
 			self,
 			rob: builder.RemoteOperationBuilder,
-			textRange: RemoteTextRange, reverse=False
+			textRange: RemoteTextRange,
+			reverse: bool = False
 	):
 		super().__init__(rob)
 		self._textRange = textRange

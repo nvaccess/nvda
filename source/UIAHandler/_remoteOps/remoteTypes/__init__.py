@@ -68,7 +68,7 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 	def _generateInitInstructions(self) -> Iterable[instructions.InstructionBase]:
 		raise NotImplementedError()
 
-	def _initOperand(self, initialValue: LocalTypeVar | None = None, const=False):
+	def _initOperand(self, initialValue: LocalTypeVar | None = None, const: bool =False):
 		if initialValue is not None:
 			if self.LocalType is None:
 				raise TypeError(f"{type(self).__name__} does not support an initial value")
@@ -138,7 +138,7 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 		return self._generateDefaultInitialValue()
 
 	@property
-	def isLocalValueAvailable(self):
+	def isLocalValueAvailable(self) -> bool:
 		return self._executionResult is not None and self._executionResult.hasOperand(self.operandId)
 
 	@property
@@ -554,7 +554,7 @@ class RemoteString(RemoteBaseObject[str]):
 
 	def _generateInitInstructions(self) -> Iterable[instructions.InstructionBase]:
 		initialValue = self.initialValue
-		stringLen = (len(initialValue) + 1)
+		stringLen = len(initialValue) + 1
 		stringVal = ctypes.create_unicode_buffer(initialValue)
 		yield instructions.NewString(
 			result=self,

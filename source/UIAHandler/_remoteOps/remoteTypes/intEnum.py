@@ -74,7 +74,7 @@ class RemoteIntEnum(RemoteInt, Generic[_RemoteIntEnum_LocalTypeVar]):
 	localType = enum.IntEnum
 	_enumType: _RemoteIntEnum_LocalTypeVar
 
-	def _initOperand(self, initialValue: _RemoteIntEnum_LocalTypeVar, const=False):
+	def _initOperand(self, initialValue: _RemoteIntEnum_LocalTypeVar, const: bool = False):
 		if not isinstance(initialValue, enum.IntEnum):
 			raise TypeError(f"initialValue must be of type {enum.IntEnum.__name__} not {type(initialValue).__name__}")
 		self.LocalType = type(initialValue)

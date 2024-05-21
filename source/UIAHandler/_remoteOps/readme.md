@@ -102,7 +102,7 @@ But the most important thing to remember here is that you should avoid using any
 The remote API has all the control flow you need, such as ifBlock, elseBlock, whileBlock, tryBlock, again covered in later sections.
 
 ### Method arguments 
-when providing arguments to methods, you can use remote values previously declared in the operation, or you can use literal Python values.
+When providing arguments to methods, you can use remote values previously declared in the operation, or you can use literal Python values.
 When using literal Python values, these will be automatically remoted as special constant values for you.
 For example:
 ```py
@@ -257,7 +257,7 @@ textRange = ra.newElement(UIATextRange)
 Note that under the hood the text range is automatically cloned after it has been remoted, so that any manipulation of the remote text range (such as moving its ends) is not reflected in the original IUIAutomationTextRange you gave it.
 
 #### Retrieving text, comparison and manipulation
-the majority of methods found on IUIAutomationTextRange are available on remote text ranges, including:
+The majority of methods found on `IUIAutomationTextRange` are available on remote text ranges, including:
 * `getText`
 * `compareEndpoints`
 * `moveEndpointByUnit`
@@ -314,17 +314,17 @@ with ra.whileBlock(lambda: counter < 20):
 ra.Return(words)
 ```
 
-and by simply changing the False to True, the algorithm is automatically reversed, as the start and end properties reverse, and the numUnits argument on the methods have their sign flipped.
+By simply changing the False to True, the algorithm is automatically reversed, as the start and end properties reverse, and the `numUnits` argument on the methods have their sign flipped.
 As shown above, `start` and `end` properties can be assigned to which moves the endpoint, and they can be moved by a unit with `moveByUnit`.
 They can also be compared with `<`, `<=`, `==`, `>=`, and `>`.
-If you still want the comparison delta (like with `compareEndpoints` the properties also have a `compareWith` method which takes another endpoint and gives back a number less than 0, 0 or greater than 0.
+If you still want the comparison delta (like with `compareEndpoints` the properties also have a `compareWith` method which takes another endpoint and gives back a number less than 0, equal to 0 or greater than 0.
 
 ### control flow
 The remoteAPI object has methods for control flow that return Python context managers, so that they can be used as `with` statements.
 
 #### if-else
 To conditionally perform actions, place them in a `with` statement using `ra.ifBlock`.
-`ifblock` takes one argument, which is a remote boolean.
+`ifBlock` takes one argument, which is a remote boolean.
 If this argument is evaluated to True during execution, then the actions within the `with` statement are executed.
 An optional `with` statement using `ra.elseBlock` can directly follow the `ifBlock` `with` statement, and if the condition evaluates to False, then the actions within the `elseBlock` `with` statement will be executed instead.
 ```py
@@ -407,7 +407,8 @@ However, if `maxTries` is greater than 1, `Operation.execute` will automatically
 This in itself however is not too useful unless some other changes are made to the algorithm itself, so that it is suitable for running multiple times by remembering where it left off.
 
 #### Static values
-Most `ra.newXXX` methods take a `static` keyword argument which is set to `False` by default. However, if set to True, subsequent executions of the operation will initialize the value to what it was when the last execution finished.
+Most `ra.newXXX` methods take a `static` keyword argument which is set to `False` by default.
+However, if set to `True`, subsequent executions of the operation will initialize the value to what it was when the last execution finished.
 ```py
 counter = ra.newInt(0, static=True)
 with ra.whileBlock(lambda: counter < 20000):

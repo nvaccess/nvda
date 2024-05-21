@@ -32,4 +32,4 @@ class IsNull(_TypedInstruction):
 	target: builder.Operand
 
 	def localExecute(self, registers: dict[lowLevel.OperandId, object]):
-		registers[self.result.operandId] = (registers[self.target.operandId] is None)
+		registers[self.result.operandId] = registers[self.target.operandId] is None

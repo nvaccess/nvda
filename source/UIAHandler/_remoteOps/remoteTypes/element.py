@@ -34,7 +34,7 @@ class RemoteElement(RemoteExtensionTarget[POINTER(UIA.IUIAutomationElement)]):
 	_IsTypeInstruction = instructions.IsElement
 	LocalType = POINTER(UIA.IUIAutomationElement)
 
-	def _initOperand(self, initialValue: None = None, const=False):
+	def _initOperand(self, initialValue: None = None, const: bool = False):
 		if initialValue is not None:
 			raise TypeError("Cannot initialize RemoteElement with an initial value.")
 		return super()._initOperand()
