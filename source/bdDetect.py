@@ -102,11 +102,11 @@ class DeviceMatch(Sequence):
 	"""The port that can be used by a driver to communicate with a device."""
 	deviceInfo: Dict[str, str]
 	"""All known information about a device."""
-	fallback: bool = field(default=False)
+	fallback: bool = False
 	"""Indicates whether the device should act as a fallback."""
 
 	def __getitem__(self, index):
-		# Implement sequence methods excluding the fallback propert
+		# Implement sequence methods excluding the fallback property.
 		return (self.type, self.id, self.port, self.deviceInfo)[index]
 
 	def __len__(self):
