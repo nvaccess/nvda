@@ -6,7 +6,7 @@ comtypes==1.2.0
 pyserial==3.5
 ./miscDeps/python/wxPython-4.2.2a1-cp311-cp311-win32.whl
 git+https://github.com/DiffSK/configobj@e2ba4457c4651fa54f8d59d8dcdd3da950e956b8#egg=configobj
-requests==2.31.0
+requests==2.32.0
 # Pillow is an implicit dependency and requires zlib and jpeg by default, but we don't need it
 Pillow==10.3.0 -C "zlib=disable" -C "jpeg=disable"
 
