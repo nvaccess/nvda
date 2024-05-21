@@ -40,7 +40,7 @@ Together you should be able to agree on the best translation and terms to be use
 
 You can send an email to the translation mailing list to find out the correct person. 
 
-If your language is no longer maintained, you can request to be the new maintainer for the language.
+If your language is no longer maintained, you can request to be the new maintainer for the language via the [NVDA translations mailing list](https://groups.io/g/nvda-translations).
 
 ## Files to be Localized
 These files are listed in order of importance.
