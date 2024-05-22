@@ -954,7 +954,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 			
 			{ // Add the table summary if one is present and the table is visible.
 				VBufStorage_fieldNode_t* summaryTempNode = nullptr;
-				if (isVisible && description.has_value()) {
+				if (isVisible && description.has_value() && !description.value().empty()) {
 					tempNode = summaryTempNode = buffer->addTextFieldNode(parentNode, previousNode, description.value());
 				}
 				else if (
