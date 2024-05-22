@@ -13,5 +13,5 @@ from ..builder import (
 class _TypedInstruction(InstructionBase):
 
 	@property
-	def params(self):
+	def params(self) -> dict[str, object]:
 		return vars(self)
