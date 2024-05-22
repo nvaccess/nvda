@@ -268,3 +268,11 @@ class TestUnicodeNormalizationOffsetConverter(unittest.TestCase):
 		self.assertSequenceEqual(converter.computedStrToEncodedOffsets, expectedStrToEncoded)
 		expectedEncodedToStr = (0, 2, 1, 3, 4, 5, 6, 8, 7, 9, 10)
 		self.assertSequenceEqual(converter.computedEncodedToStrOffsets, expectedEncodedToStr)
+
+	def test_normalizedOffsetsMixedSpaces(self):
+		text = "\xa0 "
+		converter = UnicodeNormalizationOffsetConverter(text, "NFKC")
+		expectedStrToEncoded = (0, 1)
+		self.assertSequenceEqual(converter.computedStrToEncodedOffsets, expectedStrToEncoded)
+		expectedEncodedToStr = (0, 1)
+		self.assertSequenceEqual(converter.computedEncodedToStrOffsets, expectedEncodedToStr)
