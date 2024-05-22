@@ -135,9 +135,9 @@ class RemoteAPI(builder._RemoteBase):
 		return RemoteArray.createNew(self.rob)
 
 	def newElement(
-		self,
-		value: UIA.IUIAutomationElement | None = None,
-		static: bool = False
+			self,
+			value: UIA.IUIAutomationElement | None = None,
+			static: bool = False
 	) -> RemoteElement:
 		section = "static" if static else "main"
 		with self.rob.overrideDefaultSection(section):
@@ -150,9 +150,9 @@ class RemoteAPI(builder._RemoteBase):
 				return self._newObject(RemoteElement, value, static=static)
 
 	def newTextRange(
-		self,
-		value: UIA.IUIAutomationTextRange | None = None,
-		static: bool = False
+			self,
+			value: UIA.IUIAutomationTextRange | None = None,
+			static: bool = False
 	) -> RemoteTextRange:
 		section = "static" if static else "main"
 		with self.rob.overrideDefaultSection(section):
