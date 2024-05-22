@@ -152,13 +152,18 @@ def getDriversForConnectedUsbDevices(
 		for port in deviceInfoFetcher.hidDevices
 		if port["provider"] == "usb"
 	))
+
+	fallbackMatches = []
 	for match in itertools.chain(usbCustomDeviceMatches, usbHidDeviceMatchesForCustom, usbComDeviceMatches):
 		for driver, devs in _driverDevices.items():
 			if limitToDevices and driver not in limitToDevices:
 				continue
 			for type, ids in devs.items():
 				if match.type == type and match.id in ids:
-					yield driver, match
+					if (driver, match.type, match.id) in FallbackDevicesStore.fallBackDevices:
+						fallbackMatches.append(Set(driver, match))
+					else:
+						yield driver, match
 
 	hidName = _getStandardHidDriverName()
 	if limitToDevices and hidName not in limitToDevices:
@@ -168,7 +173,13 @@ def getDriversForConnectedUsbDevices(
 		# This ensures that a vendor specific driver is preferred over the braille HID protocol.
 		# This preference may change in the future.
 		if _isHIDBrailleMatch(match):
-			yield (hidName, match)
+			if (driver, match.type, match.id) in FallbackDevicesStore.fallBackDevices:
+				fallbackMatches.append(Set(hidName, match))
+			else:
+				yield (hidName, match)
+
+	for match in fallbackMatches:
+		yield match
 
 
 def _getStandardHidDriverName() -> str:
@@ -471,13 +482,13 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 		)
 	)
 
-	fallback_matches = []
+	fallbackMatches = []
 
 	for match in usbDevs:
 		if driver == _getStandardHidDriverName():
 			if _isHIDBrailleMatch(match):
 				if (driver, match.type, match.id) in FallbackDevicesStore.fallBackDevices:
-					fallback_matches.append(match)
+					fallbackMatches.append(match)
 				else:
 					yield match
 		else:
@@ -485,11 +496,11 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 			for type, ids in devs.items():
 				if match.type == type and match.id in ids:
 					if (driver, match.type, match.id) in FallbackDevicesStore.fallBackDevices:
-						fallback_matches.append(match)
+						fallbackMatches.append(match)
 					else:
 						yield match
 
-	for match in fallback_matches:
+	for match in fallbackMatches:
 		yield match
 
 
