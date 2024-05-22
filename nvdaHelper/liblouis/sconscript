@@ -111,5 +111,5 @@ env.Depends(testTable, env.Install(unitTestTablesDir, [
 	louisTableDir.File("latinLetterDef8Dots.uti"),
 	louisTableDir.File("en-us-comp8-ext.utb")
 ]))
-# Ensure the braille tables for tests are installed with scons source
-env.Alias("source", testTable)
+# Ensure the braille tables for tests are installed when copying the louis wrapper
+env.Depends(louisPython, testTable)

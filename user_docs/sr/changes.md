@@ -11,9 +11,9 @@ Dodate su takođe nove komande brze navigacije, one dozvoljavaju korisnicima da 
 
 Dodate su brojne nove karakteristike za brajeve redove i ispravljene greške.
 Dodat je novi brajev režim "Prikaži govor".
-Kada je aktivan, brajev red će prikazati tačno ono što NVDA priprema za izgovor.
-Takođe je dodata podrška za BrailleEdgeS2, BrailleEdgeS3 brajeve uređaje.
-LibLouis je ažuriran, dodajući nove detaljne (uz indikaciju velikih slova) beloruske i ukrajinske brajeve tabele, uz špansku tabelu za čitanje grčkih tekstova.
+Kada je aktivan, brajev red će prikazati tačno ono što NVDA izgovara.
+Takođe je dodata podrška za BrailleEdgeS2 i BrailleEdgeS3 brajeve uređaje.
+LibLouis je ažuriran, dodajući nove detaljne (uz indikaciju velikih slova) beloruske i ukrajinske brajeve tabele, lao  tabelu i  špansku tabelu za čitanje grčkih tekstova.
 
 eSpeak je ažuriran, dodajući novi tigrinjski jezik.
 
@@ -39,16 +39,14 @@ Postoje brojne ispravke za sitne greške u aplikacijama, kao što su Thunderbird
       * Laptop: `NVDA+kontrol+šift+pageUp` ili `NVDA+kontrol+šift+pageDown`.
   * Dodata nova komanda bez dodeljene prečice za uključivanje ili isključivanje prijavljivanja figura i naslova slika. (#10826, #14349)
 * Brajevi redovi:
-  * Dodata podrška za BrailleEdgeS2, BrailleEdgeS3 brajeve uređaje. (#16033, #16279, @EdKweon)
+  * Dodata podrška za BrailleEdgeS2 i BrailleEdgeS3 brajeve redove. (#16033, #16279, @EdKweon)
   * Dodat je novi brajev režim "Prikaži govor". (#15898, @Emil-18)
-    * Kada je aktivan, na brajevom redu će se prikazati ono što NVDA priprema za izgovor.
+    * Kada je aktivan, na brajevom redu će se prikazati ono što NVDA izgovara.
     * Može se uključiti ili isključiti prečicom `NVDA+alt+t`, ili iz dijaloga brajevih podešavanja.
 * Razdvajanje zvuka: (#12985, @mltony)
   * Dozvoljava da odvojite NVDA zvukove na jednom kanalu (na primer levom) dok su zvukovi drugih aplikacija na drugom kanalu (na primer desnom).
   * Uključuje se ili isključuje prečicom `NVDA+alt+s`.
-  * Jačina drugih aplikacija se može menjati prečicama `NVDA+alt+pageUp` i `NVDA+alt+pageDown`. (#16052, @mltony)
-  * Zvuk drugih aplikacija se može isključiti prečicom `NVDA+alt+delete`. (#16052, @mltony)
-* Prijavljivanje zaglavlja redova i kolona je sada podržano u contenteditable HTML elementima. (#14113)
+ * Prijavljivanje zaglavlja redova i kolona je sada podržano u contenteditable HTML elementima. (#14113)
 * Dodata opcija kako biste onemogućili prijavljivanje figura i naslova slika u podešavanjima formatiranja dokumenta. (#10826, #14349)
 * U Windowsu 11, NVDA će izgovarati upozorenja glasovnog unosa i predloženih radnji uključujući predlog na vrhu kada kopirate podatke kao što su brojevi telefona u privremenu memoriju (Windows 11 2022 ažuriranje i novija). (#16009, @josephsl)
 * NVDA će održavati zvučni uređaj budnim nakon što se govor zaustavi, kako bi sprečio da početak sledećeg izgovorenog teksta bude isprekidan sa nekim zvučnim uređajima kao što su Bluetooth slušalice. (#14386, @jcsteh, @mltony)
@@ -61,9 +59,11 @@ Postoje brojne ispravke za sitne greške u aplikacijama, kao što su Thunderbird
   * Radnja za recenzije zajednice će biti dostupna i Web stranica za recenzije će se prikazivati u panelu sa detaljima, na svim karticama prodavnice. (#16179, @nvdaes)
 * Ažurirane komponente:
   * Ažuriran LibLouis brajev prevodilac na [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0). (#16259, @codeofdusk)
-    * Dodate nove detaljne (uz indikaciju velikih slova) beloruske i ukrajinske brajeve tabele, uz špansku tabelu za čitanje grčkih tekstova.
-  * eSpeak NG je ažuriran na 1.52-dev commit `cb62d93fd7`. (#15913)
-    * Dodat novi tigrinjski jezik. 
+        * Nove detaljne (uz indikaciju velikih slova) beloruske i ukrajinske brajeve tabele.
+    * Nova španska tabela za čitanje grčkih tekstova.
+    * Nova tabela za lao stepen 1. (#16470)
+* eSpeak NG je ažuriran na 1.52-dev commit `cb62d93fd7`. (#15913)
+   * Dodat novi tigrinjski jezik. 
 * Promenjeno nekoliko prečica za BrailleSense uređaje kako bi se sprečili konflikti sa znakovima francuske brajeve tabele. (#15306)
   * `alt+strelicaLevo` je sada  `tačka2+tačka7+razmak`
   * `alt+strelicaDesno` je sada `tačka5+tačka7+razmak`
@@ -78,6 +78,7 @@ Postoje brojne ispravke za sitne greške u aplikacijama, kao što su Thunderbird
   * U verziji 24H2 (2024 ažuriranje i Windows Server 2025), interakcija mišem ili ekranom osetljivim na dodir se može koristiti u brzim podešavanjima. (#16348, @josephsl)
 * Prodavnica dodataka:
   * Kada pritisnete `ctrl+tab`, fokus se ispravno prebacuje na novi naziv trenutne kartice. (#14986, @ABuffEr)
+  * Ako datoteke keša nisu ispravne, NVDA se neće neprekidno restartovati. (#16362, @nvdaes)
 * Ispravke za pretraživače zasnovane na Chromiumu kada se koriste uz UIA:
   * Ispravljene greške koje su izazvale da se NVDA zamrzne. (#16393, #16394)
   * Backspace taster sada ispravno radi u Gmail poljima za prijavljivanje. (#16395)
@@ -1995,4 +1996,3 @@ Glavne karakteristike ove verzije uključuju podršku za stišavanje pozadinskih
 ## Starije verzije
 
 Za starije verzije, pogledajte[Englesku verziju ovog dokumenta](../en/changes.html).
-

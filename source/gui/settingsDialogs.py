@@ -1589,6 +1589,17 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.bindHelpEvent("SpeechSettingsTrust", self.trustVoiceLanguageCheckbox)
 		self.trustVoiceLanguageCheckbox.SetValue(config.conf["speech"]["trustVoiceLanguage"])
 
+		self.unicodeNormalizationCombo: nvdaControls.FeatureFlagCombo = settingsSizerHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is a label for a combo-box in the Speech settings panel.
+				"Unicode normali&zation"
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["speech", "unicodeNormalization"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("SpeechUnicodeNormalization", self.unicodeNormalizationCombo)
+
 		includeCLDRText = _(
 			# Translators: This is the label for a checkbox in the
 			# voice settings panel (if checked, data from the unicode CLDR will be used
@@ -1701,6 +1712,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			self.symbolLevelList.GetSelection()
 		].value
 		config.conf["speech"]["trustVoiceLanguage"] = self.trustVoiceLanguageCheckbox.IsChecked()
+		self.unicodeNormalizationCombo.saveCurrentValueToConf()
 		currentIncludeCLDR = config.conf["speech"]["includeCLDR"]
 		config.conf["speech"]["includeCLDR"] = newIncludeCldr = self.includeCLDRCheckbox.IsChecked()
 		if currentIncludeCLDR is not newIncludeCldr:
@@ -2746,25 +2758,6 @@ class AudioPanel(SettingsPanel):
 		self.bindHelpEvent("SoundVolume", self.soundVolSlider)
 		self.soundVolSlider.SetValue(config.conf["audio"]["soundVolume"])
 
-		# Translators: This is the label for a slider control in the
-		# Audio settings panel.
-		label = _("Volume of other applications")
-		self.appSoundVolSlider: nvdaControls.EnhancedInputSlider = sHelper.addLabeledControl(
-			label,
-			nvdaControls.EnhancedInputSlider,
-			minValue=0,
-			maxValue=100
-		)
-		self.bindHelpEvent("OtherAppVolume", self.appSoundVolSlider)
-		self.appSoundVolSlider.SetValue(config.conf["audio"]["applicationsSoundVolume"])
-
-		# Translators: This is the label for a checkbox control in the
-		# Audio settings panel.
-		label = _("Mute other applications")
-		self.muteApplicationsCheckBox: wx.CheckBox = sHelper.addItem(wx.CheckBox(self, label=label))
-		self.bindHelpEvent("MuteApplications", self.muteApplicationsCheckBox)
-		self.muteApplicationsCheckBox.SetValue(config.conf["audio"]["applicationsMuted"])
-
 		# Translators: This is a label for the sound split combo box in the Audio Settings dialog.
 		soundSplitLabelText = _("&Sound split mode:")
 		self.soundSplitComboBox = sHelper.addLabeledControl(
@@ -2854,8 +2847,6 @@ class AudioPanel(SettingsPanel):
 
 		config.conf["audio"]["soundVolumeFollowsVoice"] = self.soundVolFollowCheckBox.IsChecked()
 		config.conf["audio"]["soundVolume"] = self.soundVolSlider.GetValue()
-		config.conf["audio"]["applicationsSoundVolume"] = self.appSoundVolSlider.GetValue()
-		config.conf["audio"]["applicationsMuted"] = self.muteApplicationsCheckBox.IsChecked()
 
 		index = self.soundSplitComboBox.GetSelection()
 		config.conf["audio"]["soundSplitState"] = index
@@ -2885,8 +2876,6 @@ class AudioPanel(SettingsPanel):
 			wasapi
 			and not self.soundVolFollowCheckBox.IsChecked()
 		)
-		self.appSoundVolSlider.Enable(wasapi)
-		self.muteApplicationsCheckBox.Enable(wasapi)
 		self.soundSplitComboBox.Enable(wasapi)
 		self.soundSplitModesList.Enable(wasapi)
 
@@ -4168,6 +4157,17 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.bindHelpEvent("BrailleSettingsWordWrap", self.wordWrapCheckBox)
 		self.wordWrapCheckBox.Value = config.conf["braille"]["wordWrap"]
 
+		self.unicodeNormalizationCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is a label for a combo-box in the Braille settings panel.
+				"Unicode normali&zation"
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["braille", "unicodeNormalization"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("BrailleUnicodeNormalization", self.unicodeNormalizationCombo)
+
 		self.brailleInterruptSpeechCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=_(
 				# Translators: This is a label for a combo-box in the Braille settings panel.
@@ -4207,6 +4207,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.brailleReviewRoutingMovesSystemCaretCombo.saveCurrentValueToConf()
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
+		self.unicodeNormalizationCombo.saveCurrentValueToConf()
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[self.focusContextPresentationList.GetSelection()]
 		self.brailleInterruptSpeechCombo.saveCurrentValueToConf()
 		self.brailleShowSelectionCombo.saveCurrentValueToConf()

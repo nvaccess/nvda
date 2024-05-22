@@ -30,6 +30,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <vbufBase/storage.h>
 #include <common/log.h>
 #include <vbufBase/utils.h>
+#include <remote/textFromIAccessible.h>
 #include "gecko_ia2.h"
 
 using namespace std;
@@ -494,6 +495,29 @@ void GeckoVBufBackend_t::fillVBufAriaDetails(
 		auto detailsOriginNode = buffer.getControlFieldNodeWithIdentifier(docHandle, idOfDetailsOrigin);
 		if (detailsOriginNode != nullptr) {
 			_extendDetailsRolesAttribute(*detailsOriginNode, nodeBeingFilledRole);
+		}
+	}
+}
+
+
+void GeckoVBufBackend_t::fillVBufAriaError(
+	CComPtr<IAccessible2> pacc,
+	VBufStorage_controlFieldNode_t& nodeBeingFilled
+){
+	// Since we get error targets as IAccessible objects, not as vbuf nodes, we don't need to perform checks in both directions.
+	CComQIPtr<IAccessible2_2> pacc2_2 = pacc.p;
+	if (pacc2_2 == nullptr) {
+		return;
+	}
+	auto errorTargets = getRelationElementsOfType(IA2_RELATION_ERROR, pacc2_2, 1);
+	if(errorTargets.size() > 0) {
+		wstring textBuf;
+		// Since `aria-errormessage` is an ID reference, it can only have one value. Thus, take the first target.
+		IAccessible2 *target = errorTargets[0];
+		if (target != nullptr) {
+			if (getTextFromIAccessible(textBuf, target)) {
+				nodeBeingFilled.addAttribute(L"errorMessage", textBuf);
+			}
 		}
 	}
 }
@@ -1307,6 +1331,11 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		*buffer,
 		*parentNode,
 		roleAttr
+	);
+
+	fillVBufAriaError(
+		smartPacc,
+		*parentNode
 	);
 
 	// Clean up.

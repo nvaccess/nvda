@@ -35,6 +35,7 @@ import wx
 import louisHelper
 import louis
 import gui
+from controlTypes.state import State
 import winKernel
 import keyboardHandler
 import baseObject
@@ -63,6 +64,7 @@ import queueHandler
 import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
+from textUtils import isUnicodeNormalized, UnicodeNormalizationOffsetConverter
 import hwIo
 from editableText import EditableText
 
@@ -495,13 +497,40 @@ class Region(object):
 		mode = louis.dotsIO
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
 			mode |= louis.compbrlAtCursor
-		self.brailleCells, self.brailleToRawPos, self.rawToBraillePos, self.brailleCursorPos = louisHelper.translate(
+
+		converter: UnicodeNormalizationOffsetConverter | None = None
+		if config.conf["braille"]["unicodeNormalization"] and not isUnicodeNormalized(self.rawText):
+			converter = UnicodeNormalizationOffsetConverter(self.rawText)
+			textToTranslate = converter.encoded
+			# Typeforms must be adapted to represent normalized characters.
+			textToTranslateTypeforms = [
+				self.rawTextTypeforms[strOffset] for strOffset in converter.computedEncodedToStrOffsets
+			]
+			# Convert the cursor position to a normalized offset.
+			cursorPos = converter.strToEncodedOffsets(self.cursorPos)
+		else:
+			textToTranslate = self.rawText
+			textToTranslateTypeforms = self.rawTextTypeforms
+			cursorPos = self.cursorPos
+
+		self.brailleCells, brailleToRawPos, rawToBraillePos, self.brailleCursorPos = louisHelper.translate(
 			[handler.table.fileName, "braille-patterns.cti"],
-			self.rawText,
-			typeform=self.rawTextTypeforms,
+			textToTranslate,
+			typeform=textToTranslateTypeforms,
 			mode=mode,
-			cursorPos=self.cursorPos
+			cursorPos=cursorPos
 		)
+
+		if converter:
+			# The received brailleToRawPos contains braille to normalized positions.
+			# Process them to represent real raw positions by converting them from normalized ones.
+			brailleToRawPos = [converter.encodedToStrOffsets(i) for i in brailleToRawPos]
+			# The received rawToBraillePos contains normalized to braille positions.
+			# Create a new list based on real raw positions.
+			rawToBraillePos = [rawToBraillePos[i] for i in converter.computedStrToEncodedOffsets]
+		self.brailleToRawPos = brailleToRawPos
+		self.rawToBraillePos = rawToBraillePos
+
 		if (
 			self.selectionStart is not None
 			and self.selectionEnd is not None
@@ -632,6 +661,11 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 		)
 	if roleText:
 		textList.append(roleText)
+	
+	errorMessage = propertyValues.get("errorMessage")
+	if errorMessage:
+		textList.append(errorMessage)
+
 	description = propertyValues.get("description")
 	if description:
 		textList.append(description)
@@ -714,6 +748,9 @@ class NVDAObjectRegion(Region):
 		placeholderValue = obj.placeholder
 		if placeholderValue and not obj._isTextEmpty:
 			placeholderValue = None
+		errorMessage = obj.errorMessage
+		if errorMessage and State.INVALID_ENTRY not in obj.states:
+			errorMessage = None
 
 		# determine if description should be read
 		_shouldUseDescription = (
@@ -746,6 +783,7 @@ class NVDAObjectRegion(Region):
 			keyboardShortcut=obj.keyboardShortcut if presConfig["reportKeyboardShortcuts"] else None,
 			positionInfo=obj.positionInfo if presConfig["reportObjectPositionInformation"] else None,
 			cellCoordsText=obj.cellCoordsText if config.conf["documentFormatting"]["reportTableCellCoords"] else None,
+			errorMessage=errorMessage,
 		)
 		if role == controlTypes.Role.MATH:
 			import mathPres
@@ -822,6 +860,11 @@ def getControlFieldBraille(
 	value=field.get('value',None)
 	current = field.get('current', controlTypes.IsCurrent.NO)
 	placeholder=field.get('placeholder', None)
+	errorMessage = None
+	if errorMessage and State.INVALID_ENTRY in states:
+		errorMessage = field.get("errorMessage", None)
+
+
 	hasDetails = field.get('hasDetails', False) and config.conf["annotations"]["reportDetails"]
 	if config.conf["annotations"]["reportDetails"]:
 		detailsRoles: Set[Union[None, controlTypes.Role]] = field.get('detailsRoles')
@@ -870,6 +913,7 @@ def getControlFieldBraille(
 			value=value,
 			roleText=roleText,
 			placeholder=placeholder,
+			errorMessage=errorMessage
 		)
 
 	else:
@@ -945,6 +989,7 @@ def _getControlFieldForReportStart(
 		value: Optional[str],
 		roleText: str,
 		placeholder: Optional[str],
+		errorMessage: str | None,
 ) -> str:
 	props = {
 		"states": states,
@@ -955,6 +1000,7 @@ def _getControlFieldForReportStart(
 		"description": description,
 		"hasDetails": hasDetails,
 		"detailsRoles": detailsRoles,
+		"errorMessage": errorMessage,
 	}
 
 	if role == controlTypes.Role.MATH:
@@ -1344,20 +1390,16 @@ class TextInfoRegion(Region):
 		else:
 			self._brailleInputIndStart = None
 
-	def getTextInfoForBraillePos(self, braillePos):
+	def getTextInfoForBraillePos(self, braillePos: int) -> textInfos.TextInfo:
+		"""Fetches a collapsed TextInfo at the specified braille position in the region."""
 		pos = self._rawToContentPos[self.brailleToRawPos[braillePos]]
 		# pos is relative to the start of the reading unit.
-		# Therefore, move pos code points from there.
-		# Note that, as liblouis uses 32 bit encoding internally,
-		# it is really safe to assume that one code point offset is equal to one character within liblouis.
-		try:
-			return self._readingInfo.moveToCodepointOffset(pos)
-		except (ValueError, RuntimeError):
-			log.exception(f"Error in moveToCodepointOffset, falling back to moving by {pos} characters")
-			dest = self._readingInfo.copy()
-			dest.collapse()
-			dest.move(textInfos.UNIT_CHARACTER, pos)
-			return dest
+		# Therefore, get the start of the reading unit...
+		dest = self._readingInfo.copy()
+		dest.collapse()
+		# and move pos characters from there.
+		dest.move(textInfos.UNIT_CHARACTER, pos)
+		return dest
 
 	def routeTo(self, braillePos: int):
 		if self._brailleInputIndStart is not None and self._brailleInputIndStart <= braillePos < self._brailleInputIndEnd:
@@ -1724,7 +1766,6 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		while pos < self.windowStartPos:
 			if not self._previousWindow():
 				break
-		self.updateDisplay()
 
 	def focus(self, region):
 		"""Bring the specified region into focus.
@@ -2535,9 +2576,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.update()
 		# Last region should receive focus.
 		self.mainBuffer.focus(region)
-		if isinstance(region, TextInfoRegion):
-			self.scrollToCursorOrSelection(region)
-		elif self.buffer is self.mainBuffer:
+		self.scrollToCursorOrSelection(region)
+		if self.buffer is self.mainBuffer:
 			self.update()
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
@@ -2592,7 +2632,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.mainBuffer.restoreWindow()
 			if scrollTo is not None:
 				self.scrollToCursorOrSelection(scrollTo)
-			elif self.buffer is self.mainBuffer:
+			if self.buffer is self.mainBuffer:
 				self.update()
 			elif (
 				self.buffer is self.messageBuffer

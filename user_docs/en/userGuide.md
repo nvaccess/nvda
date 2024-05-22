@@ -248,10 +248,9 @@ The actual commands will not execute while in input help mode.
 |Move to next synth setting |`NVDA+control+rightArrow` |`NVDA+shift+control+rightArrow` |Moves to the next available speech setting after the current, wrapping around to the first setting again after the last|
 |Move to previous synth setting |`NVDA+control+leftArrow` |`NVDA+shift+control+leftArrow` |Moves to the next available speech setting before the current, wrapping around to the last setting after the first|
 |Increment current synth setting |`NVDA+control+upArrow` |`NVDA+shift+control+upArrow` |increases the current speech setting you are on. E.g. increases the rate, chooses the next voice, increases the volume|
-|Increment the current synth setting in a larger step |`NVDA+control+pageUp` |`NVDA+shift+control+pageUp` |Increases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump forward every 20 voices; when you're on slider settings (rate, pitch, etc) it will jump forward the value up to 20%|
-
+|Increment the current synth setting in larger steps |`NVDA+control+pageUp` |`NVDA+shift+control+pageUp` |Increases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump forward every 20 voices; when you're on slider settings (rate, pitch, etc) it will jump forward the value up to 20%|
 |Decrement current synth setting |`NVDA+control+downArrow` |`NVDA+shift+control+downArrow` |decreases the current speech setting you are on. E.g. decreases the rate, chooses the previous voice, decreases the volume|
-|Decrement the current synth setting in a larger step |`NVDA+control+pageDown` |`NVDA+shift+control+pageDown` |Decreases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump backward every 20 voices; when you're on a slider setting, it will jump backward the value up to 20%.|
+|Decrement the current synth setting in larger steps |`NVDA+control+pageDown` |`NVDA+shift+control+pageDown` |Decreases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump backward every 20 voices; when you're on a slider setting, it will jump backward the value up to 20%.|
 
 It is also possible to set the first or last value of the current synth setting by assign custom gestures in [Input Gestures dialog](#InputGestures), under the speech category.
 This means, for example, when you're on a rate setting, it will set the rate to 0 or 100.
@@ -434,8 +433,8 @@ However, you can enable or disable the data gathering process manually in NVDA's
 Most NVDA-specific keyboard commands consist of pressing a particular key called the NVDA modifier key in conjunction with one or more other keys.
 Notable exceptions to this are the text review commands for the desktop keyboard layout which just use the numpad keys by themselves, but there are some other exceptions as well.
 
-NVDA can be configured so that the numpad Insert, Extended Insert and/or Caps Lock key can be used as the NVDA modifier key.
-By default, both the numpad Insert and Extended Insert keys are set as NVDA modifier keys.
+NVDA can be configured so that the Insert, numpad Insert, and/or Caps Lock key can be used as the NVDA modifier key.
+By default, both the Insert and numpad Insert keys are set as NVDA modifier keys.
 
 If you wish to cause one of the NVDA modifier keys to behave as it usually would if NVDA were not running (e.g. you wish to turn Caps Lock on when you have set Caps Lock to be an NVDA modifier key), you can press the key twice in quick succession.
 
@@ -1051,9 +1050,9 @@ However, for scenarios where you wish to copy an entire table or paragraph of ri
 
 ## Reading Mathematical Content {#ReadingMath}
 
-NVDA can read and navigate mathematical content on the web and in other applications, providing access in both speech and braille. 
+NVDA can read and navigate mathematical content on the web and in other applications, providing access in both speech and braille.
 However, in order for NVDA to read and interact with mathematical content, you will first need to install a Math component for NvDA.
-There are several NVDA add-ons available in the NVDA Add-on Store that provide support for math, including the [MathCAT NVDA add-on](https://nsoiffer.github.io/MathCAT/) and [Access8Math](https://github.com/tsengwoody/Access8Math). 
+There are several NVDA add-ons available in the NVDA Add-on Store that provide support for math, including the [MathCAT NVDA add-on](https://nsoiffer.github.io/MathCAT/) and [Access8Math](https://github.com/tsengwoody/Access8Math).
 Please refer to the [Add-on Store section](#AddonsManager) to learn how to browse and install available add-ons in NVDA.
 NVDA also can make use of the older [MathPlayer](https://info.wiris.com/mathplayer-info) software from Wiris if found on your system, though this software is no longer maintained.
 
@@ -1122,7 +1121,7 @@ Although it is generally recommended to use one of the newer NVDA add-ons to sup
 E.g. MathPlayer may support a particular language or Braille code that is unsupported in newer add-ons.
 MathPlayer is available for free from the Wiris website.
 [Download MathPlayer](https://downloads.wiris.com/mathplayer/MathPlayerSetup.exe).
-After installing MathPlayer, you will need to restart NVDA. 
+After installing MathPlayer, you will need to restart NVDA.
 Please note that information about MathPlayer may state that it is only for older browsers such as Internet Explorer 8.
 This is only referring to using MathPlayer to display mathematical content visually, and can be ignored by those using it to read or navigate math with NVDA.
 
@@ -1190,7 +1189,7 @@ In order to fit as much information as possible on a braille display, the follow
 |tv |tree view|
 |tvbtn |tree view button|
 |tvitem |tree view item|
-|lv N |a tree view item has a hierarchical level N||
+|lv N |a tree view item has a hierarchical level N|
 |wnd |window|
 |⠤⠤⠤⠤⠤ |separator|
 |mrkd |marked content|
@@ -1807,6 +1806,29 @@ This option applies to all synthesizers, not just the currently active synthesiz
 On by default, this option tells NVDA if the current voice's language can be trusted when processing symbols and characters.
 If you find that NVDA is reading punctuation in the wrong language for a particular synthesizer or voice, you may wish to turn this off to force NVDA to use its global language setting instead.
 
+##### Unicode normalization {#SpeechUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Disabled), Enabled, Disabled|
+|Default |Disabled|
+
+When this option is enabled, unicode normalization is performed on the text that is spoken by NVDA.
+This is beneficial when speaking characters that can be represented in several forms.
+NVDA uses the NFKC (Normalization Form Compatibility Composition) algorithm, which provides the following benefits, among others:
+
+1. The bold and italic versions of characters that are part of the unicode standard and are commonly used on social media are normalized to their most common compatible equivalent.
+For example, the latin letter "h" can also be presented as "𝐡" (bold), "ℎ" (itallic), etc. but will always be spoken as "h" when normalization is enabled.
+
+1. Normalization to composed characters.
+For example, the character "ü" (u with umlaut/diaeresis), a common character in languages like German and Turkish can be represented in two forms.
+  1. One stand alone unicode character (ü)
+  1. A decomposition into two characters (ü), namely the normal latin letter u and a diaeresis modifier
+  Unicode normalization ensures that only one form will be used throughout all speech output, which is the one character variant.
+
+1. Decomposition of some ligatures, Including "ĳ" (ligature ij) to their two letter form ("ij").
+
+1. Stable ordering of modifiers in composite characters, for example in ancient Hebrew.
+
 ##### Include Unicode Consortium data (including emoji) when processing characters and symbols {#SpeechSettingsCLDR}
 
 When this checkbox is checked, NVDA will include additional symbol pronunciation dictionaries when pronouncing characters and symbols.
@@ -1946,7 +1968,7 @@ Currently, two braille modes are supported, "follow cursors" and "display speech
 
 When follow cursors is selected, the braille display will follow either the system focus/caret or the navigator object/review cursor, depending on what braille is tethered to.
 
-When display speech output is selected, the braille display will show what NVDA speaks, or would have spoken if speech mode was set to "talk"
+When display speech output is selected, the braille display will show what NVDA speaks, or would have spoken if speech mode was set to "talk".
 
 ##### Expand to computer braille for the word at the cursor {#BrailleSettingsExpandToComputerBraille}
 
@@ -2045,6 +2067,16 @@ If this is disabled, as much of the word as possible will be displayed, but the 
 When you scroll the display, you will then be able to read the rest of the word.
 
 Enabling this may allow for more fluent reading, but generally requires you to scroll the display more.
+
+##### Unicode normalization {#BrailleUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Disabled), Enabled, Disabled|
+|Default |Disabled|
+
+When this option is enabled, unicode normalization is performed on the text that is brailled on the braille display.
+This is beneficial when coming across characters in braille that are unknown in a particular braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
+Other benefits of unicode normalization are explained in greater detail in the [section for the equivalent speech setting](#SpeechUnicodeNormalization).
 
 ##### Focus context presentation {#BrailleSettingsFocusContextPresentation}
 
@@ -2201,18 +2233,6 @@ This slider allows you to set the volume of NVDA sounds and beeps.
 This setting only takes effect when "Volume of NVDA sounds follows voice volume" is disabled.
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
-##### Time to keep audio device awake after speech {#AudioAwakeTime}
-
-This edit box specifies how long NVDA keeps the audio device awake after speech ends.
-This allows NVDA to avoid certain speech glitches like dropped parts of words.
-This can happen due to audio devices (especially Bluetooth and wireless devices) entering standby mode.
-This might also be helpful in other use cases, such as when running NVDA inside a virtual machine (e.g. Citrix Virtual Desktop), or on certain laptops.
-
-Lower values may allow audio to be cut-off more often, as a device may enter standby mode too soon, causing the start of the following speech to be clipped.
-Setting the value too high may cause the battery of the sound output device to discharge faster, as it stays active for longer while no sound is being sent.
-
-You can set the time to zero in order to disable this feature.
-
 ##### Sound split {#SelectSoundSplitMode}
 
 The sound split feature allows users to make use of their stereo output devices, such as headphones and speakers.
@@ -2231,10 +2251,9 @@ By default this command will cycle between the following modes:
 
 * Disabled sound split: both NVDA and other applications output sounds to both left and right channels.
 * NVDA on the left and applications on the right: NVDA will speak in the left channel, while other applications will play sounds in the right channel.
-* NVDA on the right and applications on the left: NVDA will speak in the right channel, while other applications will play sounds in the left channel.
+* NVDA on the left and applications in both channels: NVDA will speak in the left channel, while other applications will play sounds in  both left and right channels.
 
 There are more advanced sound split modes available in NVDA setting combo box.
-If you wish to adjust volume of all applications except for NVDA, consider using [the dedicated commands](#OtherAppVolume).
 Please note, that sound split doesn't work as a mixer.
 For example, if an application is playing a stereo sound track while sound split is set to "NVDA on the left and applications on the right", then you will only hear the right channel of the sound track, while the left channel of the sound track will be muted.
 
@@ -2249,45 +2268,24 @@ This checkable list allows selecting which sound split modes are included when c
 Modes which are unchecked are excluded.
 By default only three modes are included.
 
-* Sound split disabled: both NVDA and applications play sounds in both left and right channels.
-* NVDA on the left and all other applications on the right channel.
-* NVDA on the right and all other applications on the left channel.
+* Disabled sound split.
+* NVDA on the left and applications on the right.
+* NVDA on the left and applications in both channels.
 
 Note that it is necessary to check at least one mode.
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
-##### Volume of other applications {#OtherAppVolume}
+##### Time to keep audio device awake after speech {#AudioAwakeTime}
 
-This slider allows you to adjust the volume of all currently running applications other than NVDA.
-This volume setting will apply to all other applications sound output, even if they start after this setting is changed.
-This volume can also be controlled via the following keyboard commands from anywhere:
+This edit box specifies how long NVDA keeps the audio device awake after speech ends.
+This allows NVDA to avoid certain speech glitches like dropped parts of words.
+This can happen due to audio devices (especially Bluetooth and wireless devices) entering standby mode.
+This might also be helpful in other use cases, such as when running NVDA inside a virtual machine (e.g. Citrix Virtual Desktop), or on certain laptops.
 
-<!-- KC:beginInclude -->
+Lower values may allow audio to be cut-off more often, as a device may enter standby mode too soon, causing the start of the following speech to be clipped.
+Setting the value too high may cause the battery of the sound output device to discharge faster, as it stays active for longer while no sound is being sent.
 
-| Name |Key |Description|
-|---|---|---|
-|Increase applications volume |`NVDA+alt+pageUp` |Increases volume of all applications except NVDA.|
-|Decrease applications volume |`NVDA+alt+pageDown` |Decreases volume of all applications except NVDA.|
-
-<!-- KC:endInclude -->
-
-This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
-
-##### Mute other applications {#MuteApplications}
-
-This checkbox allows you to mute all applications other than NVDA.
-This mute setting will apply to all other applications outputting sound, even if they start after this setting is changed.
-The following keyboard command can also be used from anywhere:
-
-<!-- KC:beginInclude -->
-
-| Name |Key |Description|
-|---|---|---|
-|Toggle mute other applications |`NVDA+alt+delete` |Mutes or unmutes all applications other than NVDA.|
-
-<!-- KC:endInclude -->
-
-This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
+You can set the time to zero in order to disable this feature.
 
 #### Vision {#VisionSettings}
 
@@ -3174,8 +3172,7 @@ Note:
 
 * Emulated keys must have gestures assigned in order to persist when saving / closing the dialog.
 * An input gesture with modifier keys may not be able to be mapped to an emulated gesture without modifier keys.
-For instance, setting the emulated input `a` and configuring an input gesture of `ctrl+m`, may result
-in the application receiving `ctrl+a`.
+For instance, setting the emulated input `a` and configuring an input gesture of `ctrl+m`, may result in the application receiving `ctrl+a`.
 
 When you are finished making changes, press the OK button to save them or the Cancel button to discard them.
 
@@ -4522,12 +4519,12 @@ Due to this, and to maintain compatibility with other screen readers in Taiwan, 
 
 ### Eurobraille displays {#Eurobraille}
 
-The b.book, b.note, Esys, Esytime and Iris displays from Eurobraille are supported by NVDA.  
-These devices have a braille keyboard with 10 keys. 
+The b.book, b.note, Esys, Esytime and Iris displays from Eurobraille are supported by NVDA.
+These devices have a braille keyboard with 10 keys.
 Please refer to the display's documentation for descriptions of these keys.
 Of the two keys placed like a space bar, the left key is corresponding to the backspace key and the right key to the space key.
 
-These devices are connected via USB and have one stand-alone USB keyboard. 
+These devices are connected via USB and have one stand-alone USB keyboard.
 It is possible to enable/disable this keyboard by toggling "HID Keyboard simulation" using an input gesture.
 The braille keyboard functions described directly below is when "HID Keyboard simulation" is disabled.
 
@@ -4981,4 +4978,3 @@ The following values can be set under this registry key:
 If you require further information or assistance regarding NVDA, please visit the [NVDA web site](NVDA_URL).
 Here, you can find additional documentation, as well as technical support and community resources.
 This site also provides information and resources concerning NVDA development.
-

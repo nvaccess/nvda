@@ -137,7 +137,7 @@ def read_welcome_dialog():
 		"\n".join([
 			(
 				"Welcome to NVDA  dialog  Welcome to NVDA! Most commands for controlling NVDA require you to hold "
-				"down the NVDA key while pressing other keys. By default, the numpad Insert and main Insert keys "
+				"down the NVDA key while pressing other keys. By default, the Insert and numpad Insert keys "
 				"may both be used as the NVDA key. You can also configure NVDA to use the Caps Lock as the NVDA "
 				"key. Press NVDA plus n at any time to activate the NVDA menu. From this menu, you can configure "
 				"NVDA, get help, and access other NVDA functions."

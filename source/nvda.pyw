@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka,
+# Copyright (C) 2006-2024 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka,
 # Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -139,8 +139,8 @@ parser.add_argument(
 	"--log-file",
 	dest="logFileName",
 	type=str,
-	help="The file where log messages should be written to. "
-	"Default destination is %TEMP%/nvda.log. "
+	help="The file to which log messages should be written. "
+	"Default destination is \"%%TEMP%%\\nvda.log\". "
 	"Logging is always disabled if secure mode is enabled. "
 )
 parser.add_argument(
@@ -394,7 +394,7 @@ logHandler.initialize()
 if logHandler.log.getEffectiveLevel() is log.DEBUG:
 	log.debug("Provided arguments: {}".format(sys.argv[1:]))
 import buildVersion
-log.info("Starting NVDA version %s" % buildVersion.version)
+log.info(f"Starting NVDA version {buildVersion.version} {os.environ['PROCESSOR_ARCHITECTURE']}")
 log.debug("Debug level logging enabled")
 if customVenvDetected:
 	log.warning("NVDA launched using a custom Python virtual environment.")

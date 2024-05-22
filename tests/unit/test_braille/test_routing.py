@@ -1,9 +1,9 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2023-2024 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2023 NV Access Limited, Leonard de Ruijter
 
-"""Unit tests for braille cursor routing.
+"""Unit tests for the move system caret when routing review cursor braille setting.
 """
 
 import config
@@ -11,7 +11,7 @@ import braille
 import textInfos
 import api
 import controlTypes
-from ..textProvider import CursorManager, BasicTextProvider
+from ..textProvider import CursorManager
 import unittest
 import time
 from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag
@@ -145,31 +145,3 @@ class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
 		self.assertGreaterEqual(self.cm.lastActivateTime, curTime)
 		caret = self.cm.makeTextInfo(textInfos.POSITION_CARET)
 		self.assertEquals(caret, review)
-
-
-class TestTextInfoRegionRouting(unittest.TestCase):
-	"""A test for TextInfoRegion.getTextInfoForBraillePos, which is used in braille cursor routing.
-	This test ensures that braille routes to the expected character when dealing with emoji
-	containing modifier characters.
-	These emoji are threated as one character by uniscribe, however they span multiple characters
-	on a braille display.
-	Note that due to the nature of this test, it relies on uniscribe to be available.
-	"""
-
-	def test_routeToEmoji(self):
-		testText = "⚠️test"
-		obj = BasicTextProvider(text=testText)
-		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
-		ti.expand(textInfos.UNIT_CHARACTER)
-		self.assertEqual(ti.text, testText[:2])
-		ti.collapse(end=True)
-		ti.expand(textInfos.UNIT_CHARACTER)
-		self.assertEqual(ti.text, testText[2])
-		region = braille.TextInfoRegion(obj)
-		region.update()
-		index = 3  # Position of e
-		pos = region.rawToBraillePos[index]
-		region.routeTo(pos)
-		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
-		ti.expand(textInfos.UNIT_CHARACTER)
-		self.assertEqual(ti.text, testText[index])
