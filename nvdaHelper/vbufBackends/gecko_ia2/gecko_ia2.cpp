@@ -1286,7 +1286,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 			parentNode->isBlock=false;
 		}
 
-		if ((isInteractive || role == ROLE_SYSTEM_SEPARATOR || name || description.has_value()) && parentNode->getLength() == 0) {
+		if ((isInteractive || role == ROLE_SYSTEM_SEPARATOR || SysStringLen(name) > 0 || (description.has_value() && !description.value().empty())) && parentNode->getLength() == 0) {
 			// If the node is interactive or otherwise relevant even when empty
 			// and it still has no content, render a space so the user can access the node.
 			previousNode = buffer->addTextFieldNode(parentNode, previousNode, EMPTY_TEXT_NODE);
