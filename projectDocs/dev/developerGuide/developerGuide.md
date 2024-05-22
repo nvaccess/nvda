@@ -44,7 +44,7 @@ For an overview of nvdaHelper, including how to configure Visual Studio to enabl
 In order to support multiple languages/locales, NVDA must be translated and data specific to the locale must be provided.
 This section only includes information on custom NVDA file formats required for translation.
 Other items need to be translated, such as the NVDA user interface and documentation, but these use standard file formats.
-For complete documentation about translating NVDA, please see the [Translating wiki page](https://github.com/nvaccess/nvda/wiki/Translating)
+For complete documentation about translating NVDA, please see the [Translating page](https://github.com/nvaccess/nvda/blob/master/projectDocs/translating/readme.md)
 
 ### Character Descriptions {#toc7}
 
@@ -881,7 +881,7 @@ Each language directory can also contain gettext information, which is the syste
 As with the rest of NVDA, an `nvda.mo` compiled gettext database file should be placed in the `LC_MESSAGES` directory within this directory.
 To allow plugins in your add-on to access gettext message information via calls to `_()`, `ngettext()`, `npgettext()` and `pgettext()` you must initialize translations at the top of each Python module by calling `addonHandler.initTranslation()`.
 This function cannot be called in modules that do not belong to an add-on, e.g. in a scratchpad subdirectory.
-For more information about gettext and NVDA translation in general, please read the [Translating NVDA wiki page](https://github.com/nvaccess/nvda/wiki/Translating)
+For more information about gettext and NVDA translation in general, please read the [Translating NVDA page](https://github.com/nvaccess/nvda/blob/master/projectDocs/translating/readme.md)
 
 ### Add-on Documentation {#AddonDoc}
 
@@ -1176,4 +1176,3 @@ Please see the `EventExtensionPoints` class documentation for more information, 
 |`Action` |`post_reviewMove` |the position of the review cursor has changed.|
 |`Action` |`post_mouseMove` |the mouse has moved.|
 |`Action` |`post_coreCycle` |the end of each core cycle has been reached.|
-

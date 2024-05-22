@@ -248,8 +248,7 @@ Het eigenlijke commando wordt niet uitgevoerd wanneer u in de Invoerhulpmodus be
 |Ga naar  volgende synth setting |`NVDA+control+pijlRechts` |`NVDA+shift+control+pijlRechts` |Gaat verder naar de eerstvolgend beschikbare spraakinstelling na de momenteel ingestelde, en begint weer bij de eerste instelling nadat de laatste is gepasseerd|
 |Ga naar vorige synth setting |`NVDA+control+pijlLinks` |`NVDA+shift+control+pijlLinks` |Gaat naar de eerstvolgend beschikbare spraakinstelling die aan de huidige vooraf gaat en springt verder naar de laatste instelling  na het passeren van de eerste|
 |Huidige synth setting stapsgewijs oplopend wijzigen |`NVDA+control+pijlOmhoog` |`NVDA+shift+control+pijlOmhoog` |Verhoogt of wijzigt de actuele instelling voor spraak. De spreeksnelheid wordt bijvoorbeeld verhoogd, volgende stem wordt gekozen, volume  gaat omhoog|
-|De huidige synthesizer-instelling in grotere stappen oplopend bijstellen |`NVDA+control+pageUp` |`NVDA+shift+control+pageUp` |Verhoogt de waarde van de momenteel geldende spraakinstelling met een groter bereik. Als je je bijv wilt veranderen van stem, spring je steeds 20 stemmen vooruit; voor aanpassingen met een schuifbalk (snelheid, toonhoogte, etc) wordt de waarde met tot 20% verhoogd.|
-
+|De huidige synthesizer-instelling in grotere stappen oplopend bijstellen |`NVDA+control+pageUp` |`NVDA+shift+control+pageUp` |Verhoogt de waarde van de momenteel geldende spraakinstelling met een groter bereik. Als je bijv wilt veranderen van stem, spring je steeds 20 stemmen vooruit; voor aanpassingen met een schuifbalk (snelheid, toonhoogte, etc) wordt de waarde met tot 20% verhoogd.|
 |Huidige synth setting stapsgewijs aflopend wijzigen |`NVDA+control+pijlOmlaag` |`NVDA+shift+control+pijlOmlaag` |Verlaagt of wijzigt de actuele instelling voor spraak. De spreeksnelheid wordt bijvoorbeeld verlaagd, vorige stem wordt gekozen, volume  gaat omlaag|
 |De huidige synthesizer-instelling in grotere stappen aflopend bijstellen |`NVDA+control+pageDown` |`NVDA+shift+control+pageDown` |Verlaagt de waarde van de momenteel geldende spraakinstelling met een groter bereik. Als je bijv wilt veranderen van stem, spring je steeds 20 stemmen terug; voor aanpassingen met een schuifbalk (snelheid, toonhoogte, etc) wordt de waarde met tot 20% verlaagd.|
 
@@ -2246,7 +2245,6 @@ Standaard doorloop je met dit commando de volgende modi:
 * NVDA via het rechter en toepassingen via het linker: spraak van NVDA komt via rechter kanaal, terwijl andere toepassingen te horen zijn via het linker kanaal.
 
 Er zijn meer geavanceerde modi voor stereosplitsing beschikbaar in vervolgkeuzemenu instellingen van NVDA.
-Als je het volume van alle toepassingen, met uitzondering dat van NVDA, wilt aanpassen, zou je eens kunnen kijken bij de speciaal hiervoor bestemde commando's #OtherAppVolume].
 Merk op dat stereosplitsing (sound split) niet als mixer te gebruiken is.
 Als een bepaalde toepassing bijv een stereo track afspeelt terwijl stereosplitsing is ingesteld op  "NVDA via het linker  en toepassingen via het rechter kanaal", zul je alleen het rechter kanaal van de sound track horen terwijl het linker kanaal van de sound track onderdrukt wordt.
 
@@ -2266,39 +2264,6 @@ Standaard zijn slechts drie modi opgenomen.
 * NVDA via het rechter en alle andere toepassingen via het linker kanaal.
 
 Merk op dat tenminste 1 modus moet worden geselecteerd.
-Deze optie is niet beschikbaar  als bij het opstarten van NVDA  [WASAPI voor audiouitvoer in Geavanceerde Instellingen uitgeschakeld was](#WASAPI).
-
-##### Volume van andere toepassingen {#OtherAppVolume}
-
-Hiermee kun je het volume van alle toepassingen die actief zijn met uitzondering van NVDA aanpassen.
-Het zo ingestelde geluidsniveau geldt voor alle andere toepassingen zelfs als ze gestart worden na aanpassing van deze instelling.
-Dit volume kan ook vanaf elke willekeurige plaats worden beheerd met de volgende toetsenbordcommando's:
-
-<!-- KC:beginInclude -->
-
-| Naam |Toets |Beschrijving|
-|---|---|---|
-|Volume van toepassingen verhogen |`NVDA+alt+pageUp` |Verhoogt volume van alle toepassingen behalve dat van NVDA.|
-|Volume vam toepassingen verlagen |`NVDA+alt+pageDown` |Verlaagt volume van alle toepassingen behalve dat van t NVDA.|
-
-<!-- KC:endInclude -->
-
-Deze optie is niet beschikbaar  als bij het opstarten van NVDA  [WASAPI voor audiouitvoer in Geavanceerde Instellingen uitgeschakeld was](#WASAPI).
-
-##### Overige toepassingen onderdrukken {#MuteApplications}
-
-Met dit selectievakje kun je (het geluid van)alle toepassingen onderdrukken uitgezonderd NVDA.
-Deze instelling voor het onderdrukken van het geluid is van toepassing op alle overige applicaties die geluid afspelen, zelfs wanneer ze starten nadat  de instelling werd aangepast.
-Vanaf elke willekeurige plaats kan ook het volgende toetsenbordcommando gebruikt worden:
-
-<!-- KC:beginInclude -->
-
-| Naam |Toets |Beschrijving|
-|---|---|---|
-|Geluidsonderdrukking van overige toepassingen in- of uitschakelen |`NVDA+alt+delete` |Schakelt de geluidsonderdrukking van alle toepassingen behalve NVDA in of uit.|
-
-<!-- KC:endInclude -->
-
 Deze optie is niet beschikbaar  als bij het opstarten van NVDA  [WASAPI voor audiouitvoer in Geavanceerde Instellingen uitgeschakeld was](#WASAPI).
 
 #### Zicht {#VisionSettings}

@@ -1,5 +1,5 @@
 ﻿# A part of NonVisual Desktop Access (NVDA)
-# Copyright (c) 2011-2023 NVDA contributors.
+# Copyright (c) 2011-2024 NVDA contributors.
 # This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -37,6 +37,7 @@ symbols:
 … sentence ending	points de suspension	all	always	# … fin de phrase
 ; phrase ending	point virgule	# ; fin de phrase
 : phrase ending	deux points	# : fin de phrase
+padding .	points de remplissage
 
 decimal point		# virgule décimale
 thousands separator		# point des mille
@@ -61,6 +62,7 @@ n°	\1 \2 	most	norep	# numéro
 
 # Standard punctuation/symbols
 !	point d'exclamation
+！	point d'exclamation pleine chasse
 "	guillemet
 \#	dièse	none
 $	dollar
@@ -80,17 +82,21 @@ $	dollar
 ،	virgule arabe	all	always
 -	tiret
 .	point
+．	point pleine chasse
 |	bar	most
 ·	point médian	most
 /	barre oblique
 :	deux points
+：	deux points pleine chasse
 ;	point virgule
 ؛	point-virgule arabe	most
+；	point virgule pleine chasse
 <	inférieur
 =	égal
 ?	point d'interrogation
 ⸮	point d'interrogation réfléchi	some
 ؟	point d’interrogation arabe
+？	point d'interrogation pleine chasse
 @	arobase	none
 [	crochet gauche
 ]	crochet droit

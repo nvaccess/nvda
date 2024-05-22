@@ -193,7 +193,7 @@ Toutes les commandes sont configurables, ce sont donc les frappes par défaut po
 
 #### La Touche de Modification NVDA {#NVDAModifierKey}
 
-La touche de modification NVDA par défaut est soit `pavnumZéro`, (avec `verrouillage numérique` désactivé), soit la touche `insert`, près des touches `effacement`, `début` et ``fin ``.
+La touche de modification NVDA par défaut est soit `pavnumZéro`, (avec `verrouillage numérique` désactivé), soit la touche `insert`, près des touches `effacement`, `début` et `fin`.
 La touche de modification NVDA peut également être définie sur la touche `verrouillage majuscule`.
 
 #### Aide à la Saisie {#InputHelp}
@@ -254,7 +254,6 @@ Les commandes réelles ne s'exécuteront pas en mode d'aide à la saisie.
 
 Il est également possible de sauter à la première ou à la dernière valeur du paramètre de synthétiseur courant en attribuant des gestes personnalisés dans la [boîte de dialogue Gestes de commandes](#InputGestures), sous la catégorie parole.
 Par exemple, cela signifie que lorsque le débit est le paramètre courant, le débit sera modifié à 0 ou 100.
-When you're on a voice setting, it will set the first or last voice.
 Lorsque vous êtes sur le paramètre voix, la première ou la dernière voix sera activée.
 
 #### Navigation sur le web {#WebNavigation}
@@ -669,7 +668,7 @@ Dans un tableau, vous disposez également des touches de commandes suivantes :
 ### Naviguer par Objet {#ObjectNavigation}
 
 La plupart du temps, vous travaillerez avec les applications en utilisant des commandes qui déplacent le [focus](#SystemFocus) et le [curseur](#SystemCaret).
-Cependant, vous pouvez parfois avoir besoin d'explorer l'application en cours ou le système sans déplacer le [focus](#SystemFocus).
+Cependant, vous pouvez parfois avoir besoin d'explorer l'application en cours ou le système sans déplacer le focus ou le curseur.
 Vous pouvez aussi avoir besoin d'accéder à des [objets](#Objects) inaccessibles par les commandes clavier habituelles.
 Dans ces cas, vous pouvez utiliser la navigation par objet.
 
@@ -818,7 +817,7 @@ Notez que dans certaines nouvelles applications, NVDA ne pourra pas lire tout ou
 Lorsqu'on déplace la souris, NVDA annonce par défaut le texte se trouvant directement sous le pointeur de la souris.
 Quand c'est possible, NVDA lira un paragraphe, cependant certains contrôles ne peuvent être lus que par ligne.
 
-NVDA peut également être configuré de manière à annoncer aussi le type de contrôle ou l'objet sur lequel se trouve la souris (ex : liste, bouton etc.).
+NVDA peut être configuré pour annoncer également le type d'[objet](#Objects) sous la souris lors de son déplacement (par exemple liste, bouton, etc.).
 Cela peut être utile pour les personnes complètement aveugles car le texte n'est pas toujours suffisant.
 
 NVDA offre à l'utilisateur un moyen d'évaluer la position de la souris sur l'écran en émettant des bips audio représentant les coordonnées de la souris.
@@ -977,7 +976,7 @@ Par exemple, si vous souhaitez utiliser les touches `y` / `maj+y` pour naviguer 
 
 1. Ouvrez la boîte de dialogue des gestes de commandes à partir du mode navigation.
 1. Recherchez l'élément "Aller à l'onglet suivant" dans la section Mode navigation.
-1. Attribuez la touche `` y`` pour le geste trouvé.
+1. Attribuez la touche `y` pour le geste trouvé.
 1. Recherchez l'élément "Aller à l'onglet précédent".
 1. Attribuez `maj+y` pour le geste trouvé.
 
@@ -1053,7 +1052,7 @@ Cependant, pour les scénarios dans lesquels vous souhaitez copier un tableau ou
 
 NVDA peut lire et naviguer dans du contenu mathématique sur le Web et dans d'autres applications, offrant un accès à la fois en parole et en braille. 
 Cependant, pour que NVDA puisse lire et interagir avec le contenu mathématique, vous devrez d'abord installer un composant mathématique pour NVDA.
-Il existe plusieures extensions NVDA disponibles dans l'Add-on Store de NVDA qui prennent en charge les mathématiques, notamment l'[extension MathCAT NVDA](https://nsoiffer.github.io/MathCAT/) et [Access8Math https://github](.com/tsengwoody/Access8Math).
+Il existe plusieures extensions NVDA disponibles dans l'Add-on Store de NVDA qui prennent en charge les mathématiques, notamment l'[extension MathCAT NVDA](https://nsoiffer.github.io/MathCAT/) et [Access8Math](https://github.com/tsengwoody/Access8Math). 
 Veuillez vous référer à la [section Add-on Store](#AddonsManager) pour savoir comment découvrir et installer les extensions disponibles dans NVDA.
 NVDA peut également utiliser l'ancien logiciel [MathPlayer](https://info.wiris.com/mathplayer-info) de Wiris s'il se trouve sur votre système, bien que ce logiciel ne soit plus maintenu.
 
@@ -1122,7 +1121,7 @@ Bien qu'il soit généralement recommandé d'utiliser l'une des extensions NVDA 
 Par exemple. MathPlayer peut prendre en charge une langue particulière ou un code braille qui n'est pas pris en charge dans les extensions plus récentes.
 MathPlayer est disponible gratuitement sur le site Wiris.
 [Télécharger MathPlayer](https://downloads.wiris.com/mathplayer/MathPlayerSetup.exe).
-Après avoir installé MathPlayer, vous devrez redémarrer NVDA.
+Après avoir installé MathPlayer, vous devrez redémarrer NVDA. 
 Veuillez noter que les informations sur MathPlayer peuvent indiquer qu'il est uniquement destiné aux navigateurs plus anciens tels qu'Internet Explorer 8.
 Cela fait uniquement référence à l'utilisation de MathPlayer pour afficher visuellement du contenu mathématique et peut être ignoré par ceux qui l'utilisent pour lire ou naviguer dans les mathématiques avec NVDA.
 
@@ -1279,7 +1278,7 @@ Bien que NVDA soit en premier lieu destiné à des personnes aveugles ou malvoya
 Sous NVDA, une telle aide visuelle est appelée un service d'amélioration visuelle.
 
 NVDA offre plusieurs services d'amélioration visuelle décrits ci-dessous.
-Des services d'amélioration visuelle additionnels peuvent être apportés dans des [Extensions](NVDA#AddonsManager).
+Des services d'amélioration visuelle additionnels peuvent être apportés dans des [Extensions NVDA](#AddonsManager).
 
 Les paramètres de vision de NVDA peuvent être modifiés dans la [catégorie vision](#VisionSettings) du dialogue [Paramètres NVDA](#NVDASettings).
 
@@ -1521,8 +1520,8 @@ NVDA offre un support amélioré pour Poedit 3.4 ou plus récent.
 |---|---|---|
 |Annonce des notes pour les traducteurs |`contrôle+maj+a` |Annonce les notes pour les traducteurs. Deux appuis présente les notes en mode navigation|
 |Annonce de la fenêtre de commentaires |`contrôle+maj+c` |Annonce tout commentaire dans la fenêtre de commentaires. Deux appuis présente le commentaire en mode navigation|
-|Annonce de l'ancien texte source |`contrôle+shift+o` |Annonce l'ancien texte source s'il y en a un. Deux appuis présente le texte en mode navigation|
-|Annonce l'avertissement de traduction |`contrôle+shift+w` |Annonce l'avertissement de traduction, s'il y en a un. Deux appuis présente l'avertissement en mode navigation|
+|Annonce de l'ancien texte source |`contrôle+maj+o` |Annonce l'ancien texte source s'il y en a un. Deux appuis présente le texte en mode navigation|
+|Annonce l'avertissement de traduction |`contrôle+maj+w` |Annonce l'avertissement de traduction, s'il y en a un. Deux appuis présente l'avertissement en mode navigation|
 
 <!-- KC:endInclude -->
 
@@ -1944,10 +1943,8 @@ Cette option vous permet de choisir entre les modes braille disponibles.
 
 Actuellement, deux modes braille sont pris en charge : "suivre les curseurs" et "afficher la parol".
 
-When follow cursors is selected, the braille display will follow either the system focus/caret or the navigator object/review cursor, depending on what braille is tethered to.
 Lorsque suivre les curseurs est sélectionné, l'afficheur braille suivra soit le focus / le curseur système, soit l'objet navigateur / curseur de revue en fonction de ce que le braille doit suivre.
 
-+When display speech output is selected, the braille display will show what NVDA speaks, or would have spoken if speech mode was set to "talk"
 Lorsque l'affichage de la parole est sélectionné, l'afficheur braille affichera ce que NVDA annonce, ou aurait annoncé si le mode de parole était réglé sur "parole activée".
 
 ##### Afficher le mot sous le curseur en braille informatique {#BrailleSettingsExpandToComputerBraille}
@@ -2231,13 +2228,11 @@ Un geste de commande permet de parcourir les différents modes de séparation du
 
 Par défaut, cette commande alternera entre les modes suivants :
 
-* Disabled sound split: both NVDA and other applications output sounds to both left and right channels.
 * Séparation du son désactivée : NVDA et les autres applications diffuseront leur son sur les canaux gauche et droit.
 * NVDA à gauche et applications à droite : NVDA parlera dans le canal de gauche, tandis que les autres applications diffuseront leur son dans le canal de droite.
 * NVDA à droite et applications à gauche : NVDA parlera dans le canal de droite, tandis que les autres applications diffuseront leur son dans le canal de gauche.
 
 Il existe des modes de séparation du son plus avancés disponibles dans la liste déroulante des paramètres NVDA.
-Si vous souhaitez régler le volume de toutes les applications à l'exception de NVDA, pensez à utiliser [les commandes dédiées](#OtherAppVolume).
 Veuillez noter que le séparateur de son ne fonctionne pas comme un mélangeur audio.
 Par exemple, si une application joue une piste audio stéréo alors que la séparation du son est définie sur "NVDA à gauche et applications à droite", alors vous n'entendrez que le canal droit de la piste audio, tandis que le canal gauche de la piste sera mis en sourdine.
 
@@ -2258,38 +2253,6 @@ Par défaut, seuls trois modes sont inclus.
 
 Veuillez noter qu'il est nécessaire de cocher au moins un mode.
 Cette option n'est pas disponible si vous avez démarré NVDA avec [WASAPI désactivé pour la sortie audio](#WASAPI) dans les Paramètres avancés.
-
-##### Volume of other applications {#OtherAppVolume}
-
-+
-+This slider allows you to adjust the volume of all currently running applications other than NVDA.
-+This volume setting will apply to all other applications sound output, even if they start after this setting is changed.
-+This volume can also be controlled via the following keyboard commands from anywhere:
-+
-+<!-- KC:beginInclude -->
-+|| Name | Key | Description |
-+| Increase applications volume | `NVDA+alt+pageUp` | Increases volume of all applications except NVDA. |
-+| Decrease applications volume | `NVDA+alt+pageDown` | Decreases volume of all applications except NVDA. |
-+
-+<!-- KC:endInclude -->
-+
-+This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
-+
-
-##### Mute other applications {#MuteApplications}
-
-+
-+This checkbox allows you to mute all applications other than NVDA.
-+This mute setting will apply to all other applications outputting sound, even if they start after this setting is changed.
-+The following keyboard command can also be used from anywhere:
-+
-+<!-- KC:beginInclude -->
-+|| Name | Key | Description |
-+| Toggle mute other applications | `NVDA+alt+delete` | Mutes or unmutes all applications other than NVDA. |
-+
-+<!-- KC:endInclude -->
-+
-+This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
 #### Vision {#VisionSettings}
 
@@ -2672,17 +2635,17 @@ Cette option est activée par défaut.
 
 ##### Annoncer les tables de disposition {#BrowseModeSettingsIncludeLayoutTables}
 
-Cette option définit ce que NVDA doit faire des tableaux qui ne servent qu'à la présentation.
-Si désactivée, NVDA ne rapporte que les tableaux contenant des données tabulaires (quand il tombe sous le sens qu'il s'agit d'un tableau).
-Les autres tableaux sont affichés sous forme de texte normal.
-Si activée, NVDA annonce vraiment tous les tableaux, y compris ceux servant uniquement à la présentation.
+Cette option affecte la façon dont NVDA gère les tableaux utilisées uniquement à des fins de mise en page.
+Lorsqu'elle est activée, NVDA les traitera comme des tableaux normaux en les annonçant en fonction des [Paramètres de Mise en forme des documents](#DocumentFormattingSettings) et en les localisant par les commandes de navigation rapides.
+Lorsqu'elle est désactivée, ces tableaux ne seront ni annoncés ni trouvés par la navigation rapide.
+Cependant, le contenu des tableaux sera toujours inclus sous forme de texte normal.
 Cette option est désactivée par défaut.
 
 Pour activer/désactiver l'inclusion des tables de disposition de n'importe où, veuillez assigner un geste personnalisé en utilisant [le dialogue Gestes de commandes](#InputGestures).
 
 ##### Configurer l'annonce de champs tels que liens et titres {#BrowseModeLinksAndHeadings}
 
-Veuillez consulter les options dans [Mise en forme des Documents](#DocumentFormattingSettings) du dialogue Paramètres pour configurer les champs qui sont annoncés durant la navigation tels que les liens, les titres et les tableaux.
+Veuillez consulter les options dans [Mise en forme des Documents](#DocumentFormattingSettings) du dialogue [Paramètres de NVDA](#NVDASettings) pour configurer les champs qui sont annoncés durant la navigation tels que les liens, les titres et les tableaux.
 
 ##### Mode formulaire automatique au changement de focus {#BrowseModeSettingsAutoPassThroughOnFocusChange}
 
@@ -3117,7 +3080,7 @@ Pour un tutoriel d'introduction, veuillez consulter le [Guide des expressions r�
 Ce dialogue vous permet de modifier la façon dont les ponctuations et autres symboles sont prononcés ainsi que le niveau de symbole auquel ils sont annoncés.
 
 La langue pour laquelle la prononciation des symboles est en cours d'édition sera indiquée dans le titre du dialogue.
-Notez que ce dialogue tient compte de l'option "Se baser sur la langue de la voix pour le traitement des caractères et symboles" qui se trouve dans la catégorie [Parole](#SpeechSettings) du dialogue Paramètres. Il utilise la langue de la voix plutôt que les paramètres vocaux globaux de NVDA quand cette option est activée.
+Notez que ce dialogue tient compte de l'option "Se baser sur la langue de la voix pour le traitement des caractères et symboles" qui se trouve dans la catégorie [Parole](#SpeechSettings) du dialogue [Paramètres de NVDA](#NVDASettings). Il utilise la langue de la voix plutôt que le paramètre global langue de NVDA quand cette option est activée.
 
 Pour modifier un symbole, sélectionnez-le d'abord dans la liste de symboles.
 Vous pouvez filtrer les symboles en entrant le symbole ou une partie du remplacement du symbole dans le champ d'édition Filtrer par.
@@ -3176,8 +3139,8 @@ Note :
 
 * Les touches émulées doivent avoir un geste assigné pour persister lors de la sauvegarde ou de la fermeture du dialogue.
 * Un geste de commande avec modificateur peut ne pas pouvoir êttre assigné à un geste émulé sans modificateur
-Par exemple, définir le 'a' comme touche émulée et configurer un geste de commande 'ctrl+m', peut avoir comme résultat
-que l'application reçoit 'ctrl+a'.
+Par exemple, définir le `a` comme touche émulée et configurer un geste de commande `ctrl+m`, peut avoir comme résultat
+que l'application reçoit `ctrl+a`.
 
 Lorsque vous avez terminé vos modifications, appuyez sur le bouton "OK" pour les sauvegarder ou sur le bouton "Annuler" pour les ignorer.
 
@@ -4524,12 +4487,12 @@ Pour cette raison, et pour maintenir la compatibilité avec d'autres revues d'é
 
 ### Afficheurs Eurobraille {#Eurobraille}
 
-Les afficheurs b.book, b.note, Esys, Esytime et Iris d'Eurobraille sont supportés par NVDA.
-Ces appareils disposent d'un clavier braille à 10 touches.
+Les afficheurs b.book, b.note, Esys, Esytime et Iris d'Eurobraille sont supportés par NVDA.  
+Ces appareils disposent d'un clavier braille à 10 touches. 
 Veuillez consulter la documentation de l'afficheur pour une description de ces touches.
 Des deux touches placées comme une barre d'espace, la touche gauche correspond à la touche retour arrière et la touche droite à la touche espace.
 
-Ces appareils sont connectés via USB et disposent d'un clavier USB autonome.
+Ces appareils sont connectés via USB et disposent d'un clavier USB autonome. 
 Il est possible d'activer/désactiver ce clavier en basculant "simulation de clavier HID" à l'aide d'un geste de commande.
 Les fonctions du clavier braille décrites directement ci-dessous sont lorsque la "simulation du clavier HID" est désactivée.
 
@@ -4865,7 +4828,7 @@ NVDA permet l'installation d'extensions personnalisées, qui peuvent exécuter d
 NVDA permet également aux utilisateurs d'exécuter du code arbitraire via la console NVDA Python.
 Le mode sécurisé de NVDA empêche les utilisateurs de modifier leur configuration NVDA et limite par ailleurs l'accès non autorisé au système.
 
-NVDA s'exécute en mode sécurisé lorsqu'il est exécuté sur les [écrans sécurisés](#SecureScreens), à moins que le [paramètre à l'échelle du système](#SystemWideParameters) `serviceDebug` soit activé.
+NVDA s'exécute en mode sécurisé lorsqu'il est exécuté sur les [écrans sécurisés](#SecureScreens) à moins que le [paramètre à l'échelle du système](#SystemWideParameters) `serviceDebug` soit activé.
 Pour forcer NVDA à toujours démarrer en mode sécurisé, définissez le [paramètre système](#SystemWideParameters) `forceSecureMode`.
 NVDA peut également être démarré en mode sécurisé avec  [l'option de ligne de commande](#CommandLineOptions) `-s`.
 
@@ -4896,7 +4859,7 @@ Le mode sécurisé gèle les modifications apportées à la configuration de NVD
 
 ### Écrans Sécurisés {#SecureScreens}
 
-NVDA s'exécute en mode sécurisé lorsqu'il est exécuté sur les [écrans sécurisés](#SecureScreens), à moins que le [paramètre à l'échelle du système](#SystemWideParameters) `serviceDebug` soit activé.
+NVDA s'exécute en [mode sécurisé](#SecureMode) lorsqu'il est exécuté sur les écrans sécurisés à moins que le [paramètre à l'échelle du système](#SystemWideParameters) `serviceDebug` soit activé.
 
 Lorsqu'il s'exécute sur un écran sécurisé, NVDA utilise un profil système pour les préférences.
 Les préférences utilisateur de NVDA peuvent être copiées [pour une utilisation dans les écrans sécurisés](#GeneralSettingsCopySettings).
@@ -4951,7 +4914,7 @@ Voici les options de ligne de commande de NVDA :
 |`-m` |`--minimal` |Pas de sons, pas d'interface, pas de message de démarrage etc.|
 |`-s` |`--secure` |Démarre NVDA en [Mode Sécurisé](#SecureMode)|
 |Aucune |`--disable-addons` |Les extensions n'auront pas d'effet|
-|Aucune |`--no-logging` |Désactive complètement la journalisation durant l'utilisation de NVDA. Ce paramètre peut être ignoré si un niveau de journalisation ( --loglevel, -l) est spécifié dans la ligne de commande ou si la journalisation de débogage est activée.|
+|Aucune |`--no-logging` |Désactive complètement la journalisation durant l'utilisation de NVDA. Ce paramètre peut être ignoré si un niveau de journalisation (`--loglevel`, `-l`) est spécifié dans la ligne de commande ou si la journalisation de débogage est activée.|
 |Aucune |`--debug-logging` |Active le niveau de journalisation débogage seulement pour cette session. Ce paramètre remplacera tout autre niveau de journalisation (`--loglevel`, `-l`) argument donné, incluant l'option pas de journalisation.|
 |Aucune |`--no-sr-flag` |Ne change pas l'indicateur système global de revue d'écran|
 |Aucune |`--install` |Installe NVDA (en démarrant la copie nouvellement installée)|
@@ -4983,4 +4946,3 @@ Les valeurs suivantes peuvent être définies dans ces clés de registre :
 Si vous avez besoin d'informations complémentaires ou d'aide concernant l'utilisation de NVDA, veuillez visiter le [site web de NVDA](NVDA_URL).
 Sur ce site, vous pourrez trouver des informations complémentaires telles que des listes de discussion spécialisées et d'autres ressources communautaires pour vous aider à utiliser NVDA.
 Ce site fournit également des informations concernant le développement de NVDA.
-

@@ -64,6 +64,7 @@ import queueHandler
 import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
+from textUtils import isUnicodeNormalized, UnicodeNormalizationOffsetConverter
 import hwIo
 from editableText import EditableText
 
@@ -496,13 +497,40 @@ class Region(object):
 		mode = louis.dotsIO
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
 			mode |= louis.compbrlAtCursor
-		self.brailleCells, self.brailleToRawPos, self.rawToBraillePos, self.brailleCursorPos = louisHelper.translate(
+
+		converter: UnicodeNormalizationOffsetConverter | None = None
+		if config.conf["braille"]["unicodeNormalization"] and not isUnicodeNormalized(self.rawText):
+			converter = UnicodeNormalizationOffsetConverter(self.rawText)
+			textToTranslate = converter.encoded
+			# Typeforms must be adapted to represent normalized characters.
+			textToTranslateTypeforms = [
+				self.rawTextTypeforms[strOffset] for strOffset in converter.computedEncodedToStrOffsets
+			]
+			# Convert the cursor position to a normalized offset.
+			cursorPos = converter.strToEncodedOffsets(self.cursorPos)
+		else:
+			textToTranslate = self.rawText
+			textToTranslateTypeforms = self.rawTextTypeforms
+			cursorPos = self.cursorPos
+
+		self.brailleCells, brailleToRawPos, rawToBraillePos, self.brailleCursorPos = louisHelper.translate(
 			[handler.table.fileName, "braille-patterns.cti"],
-			self.rawText,
-			typeform=self.rawTextTypeforms,
+			textToTranslate,
+			typeform=textToTranslateTypeforms,
 			mode=mode,
-			cursorPos=self.cursorPos
+			cursorPos=cursorPos
 		)
+
+		if converter:
+			# The received brailleToRawPos contains braille to normalized positions.
+			# Process them to represent real raw positions by converting them from normalized ones.
+			brailleToRawPos = [converter.encodedToStrOffsets(i) for i in brailleToRawPos]
+			# The received rawToBraillePos contains normalized to braille positions.
+			# Create a new list based on real raw positions.
+			rawToBraillePos = [rawToBraillePos[i] for i in converter.computedStrToEncodedOffsets]
+		self.brailleToRawPos = brailleToRawPos
+		self.rawToBraillePos = rawToBraillePos
+
 		if (
 			self.selectionStart is not None
 			and self.selectionEnd is not None
@@ -1738,7 +1766,6 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		while pos < self.windowStartPos:
 			if not self._previousWindow():
 				break
-		self.updateDisplay()
 
 	def focus(self, region):
 		"""Bring the specified region into focus.
