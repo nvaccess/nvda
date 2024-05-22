@@ -23,6 +23,7 @@ import extensionPoints
 import oleacc
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import winVersion
+from comInterfaces import IAccessible2Lib as IA2
 
 if typing.TYPE_CHECKING:
 	import NVDAObjects
@@ -250,7 +251,6 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 		The focus event order after activating the menu item's sub menu is (submenu item, submenu).
 		"""
 		from NVDAObjects import IAccessible
-		from comInterfaces import IAccessible2Lib as IA2
 
 		lastFocus = api.getFocusObject()
 		
