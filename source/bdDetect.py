@@ -153,7 +153,7 @@ def getDriversForConnectedUsbDevices(
 		if port["provider"] == "usb"
 	))
 
-	fallbackMatches = []
+	fallbackDriversAndMatches = []
 	for match in itertools.chain(usbCustomDeviceMatches, usbHidDeviceMatchesForCustom, usbComDeviceMatches):
 		for driver, devs in _driverDevices.items():
 			if limitToDevices and driver not in limitToDevices:
@@ -161,7 +161,7 @@ def getDriversForConnectedUsbDevices(
 			for type, ids in devs.items():
 				if match.type == type and match.id in ids:
 					if (driver, match.type, match.id) in FallbackDevicesStore.fallBackDevices:
-						fallbackMatches.append(Set(driver, match))
+						fallbackDriversAndMatches.append(Set(driver, match))
 					else:
 						yield driver, match
 
@@ -174,12 +174,12 @@ def getDriversForConnectedUsbDevices(
 		# This preference may change in the future.
 		if _isHIDBrailleMatch(match):
 			if (driver, match.type, match.id) in FallbackDevicesStore.fallBackDevices:
-				fallbackMatches.append(Set(hidName, match))
+				fallbackDriversAndMatches.append(Set(hidName, match))
 			else:
 				yield (hidName, match)
 
-	for match in fallbackMatches:
-		yield match
+	for driver, match in fallbackDriversAndMatches:
+		yield driver, match
 
 
 def _getStandardHidDriverName() -> str:
