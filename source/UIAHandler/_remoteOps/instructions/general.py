@@ -38,20 +38,21 @@ class Compare(_TypedInstruction):
 	def localExecute(self, registers: dict[lowLevel.OperandId, object]):
 		localLeft = registers[self.left.operandId]
 		localRight = registers[self.right.operandId]
-		if self.comparisonType == lowLevel.ComparisonType.Equal:
-			localResult = (localLeft == localRight)
-		elif self.comparisonType == lowLevel.ComparisonType.NotEqual:
-			localResult = (localLeft != localRight)
-		elif self.comparisonType == lowLevel.ComparisonType.LessThan:
-			localResult = (localLeft < localRight)
-		elif self.comparisonType == lowLevel.ComparisonType.LessThanOrEqual:
-			localResult = (localLeft <= localRight)
-		elif self.comparisonType == lowLevel.ComparisonType.GreaterThan:
-			localResult = (localLeft > localRight)
-		elif self.comparisonType == lowLevel.ComparisonType.GreaterThanOrEqual:
-			localResult = (localLeft >= localRight)
-		else:
-			raise NotImplementedError(f"Unknown comparison type {self.comparisonType}")
+		match self.comparisonType:
+			case lowLevel.ComparisonType.Equal:
+				localResult = (localLeft == localRight)
+			case lowLevel.ComparisonType.NotEqual:
+				localResult = (localLeft != localRight)
+			case lowLevel.ComparisonType.LessThan:
+				localResult = (localLeft < localRight)
+			case lowLevel.ComparisonType.LessThanOrEqual:
+				localResult = (localLeft <= localRight)
+			case lowLevel.ComparisonType.GreaterThan:
+				localResult = (localLeft > localRight)
+			case lowLevel.ComparisonType.GreaterThanOrEqual:
+				localResult = (localLeft >= localRight)
+			case _:
+				raise NotImplementedError(f"Unknown comparison type {self.comparisonType}")
 		registers[self.result.operandId] = localResult
 
 
