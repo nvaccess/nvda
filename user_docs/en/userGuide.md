@@ -1918,6 +1918,29 @@ This setting applies to all synthesizers, not just the currently active synthesi
 
 You might want to disable this setting if you find that NVDA is reading punctuation in the wrong language for a particular synthesizer or voice.
 
+##### Unicode normalization {#SpeechUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Disabled), Enabled, Disabled|
+|Default |Disabled|
+
+When this option is enabled, unicode normalization is performed on the text that is spoken by NVDA.
+This is beneficial when speaking characters that can be represented in several forms.
+NVDA uses the NFKC (Normalization Form Compatibility Composition) algorithm, which provides the following benefits, among others:
+
+1. The bold and italic versions of characters that are part of the unicode standard and are commonly used on social media are normalized to their most common compatible equivalent.
+For example, the latin letter "h" can also be presented as "𝐡" (bold), "ℎ" (itallic), etc. but will always be spoken as "h" when normalization is enabled.
+
+1. Normalization to composed characters.
+For example, the character "ü" (u with umlaut/diaeresis), a common character in languages like German and Turkish can be represented in two forms.
+  1. One stand alone unicode character (ü)
+  1. A decomposition into two characters (ü), namely the normal latin letter u and a diaeresis modifier
+  Unicode normalization ensures that only one form will be used throughout all speech output, which is the one character variant.
+
+1. Decomposition of some ligatures, Including "ĳ" (ligature ij) to their two letter form ("ij").
+
+1. Stable ordering of modifiers in composite characters, for example in ancient Hebrew.
+
 ##### Include Unicode Consortium data (including emoji) when processing characters and symbols {#SpeechSettingsCLDR}
 
 | . {.hideHeaderRow} |.|
@@ -2285,6 +2308,16 @@ Enabling this setting may allow for more fluent reading of large amounts of text
 
 Note: if the word is too large to fit on the display even by itself, the word must still be split despite the word wrap setting enabled.
 Enabling this setting may allow for more fluent reading, but generally requires you to scroll the display more often.
+
+##### Unicode normalization {#BrailleUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Disabled), Enabled, Disabled|
+|Default |Disabled|
+
+When this option is enabled, unicode normalization is performed on the text that is brailled on the braille display.
+This is beneficial when coming across characters in braille that are unknown in a particular braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
+Other benefits of unicode normalization are explained in greater detail in the [section for the equivalent speech setting](#SpeechUnicodeNormalization).
 
 ##### Focus context presentation {#BrailleSettingsFocusContextPresentation}
 
@@ -4154,8 +4187,7 @@ Note:
 
 * Emulated keys must have gestures assigned in order to persist when saving / closing the dialog.
 * An input gesture with modifier keys may not be able to be mapped to an emulated gesture without modifier keys.
-For instance, setting the emulated input `a` and configuring an input gesture of `ctrl+m`, may result
-in the application receiving `ctrl+a`.
+For instance, setting the emulated input `a` and configuring an input gesture of `ctrl+m`, may result in the application receiving `ctrl+a`.
 
 When you are finished making changes, press the OK button to save them or the Cancel button to discard them.
 

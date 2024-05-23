@@ -8,6 +8,9 @@
 
 * Error messages referenced with `aria-errormessage` are now reported in Google Chrome and Mozilla Firefox. (#8318)
 * In LibreOffice Writer (version 24.8 and newer), when toggling text formatting (bold, italic, underline, subscript/superscript, alignment) using the corresponding keyboard shortcut, NVDA announces the new formatting attribute (e.g. "Bold on", "Bold off"). (#4248, @michaelweghorn)
+* Added support for Unicode Normalization to speech and braille output. (#16466 @LeonarddeR).
+  * This can be of help when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly uses on social media.
+  * You can enable this functionality for both speech and braille in their respective settings categories in the NVDA Settings dialog.
 
 ### Changes
 
@@ -28,6 +31,7 @@
   * NVDA will announce visible candidates again when opening the Windows 11 IME interface. (#14023, @josephsl)
   * NVDA will no longer announce "clipboard history" twice when navigating through the emoji panel menu items. (#16532, @josephsl)
   * NVDA will no longer cut off speech and braille when reviewing kaomojis and symbols in the emoji panel. (#16533, @josephsl)
+* In applications using Java Access Bridge, NVDA will now correctly read the last blank line of a text instead of repeating the previous line. (#9376, @dmitrii-drobotov)
 
 ### Changes for Developers
 

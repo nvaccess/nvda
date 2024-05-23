@@ -147,23 +147,45 @@ h6:before {
   content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) "." counter(h6counter) ". ";
 }
 
-/* RTL */
-:lang(ar) h2:before, :lang(fa) h2:before {
+/* Eastern Arabic */
+:lang(fa) h2:before {
   content: counter(h2counter, arabic-indic) ". ";
 }
 
-:lang(ar) h3:before, :lang(fa) h3:before {
+:lang(fa) h3:before {
   content: counter(h3counter, arabic-indic) "." counter(h2counter, arabic-indic) ". ";
 }
 
-:lang(ar) h4:before, :lang(fa) h4:before {
+:lang(fa) h4:before {
   content: counter(h4counter, arabic-indic) "."  counter(h3counter, arabic-indic) "." counter(h2counter, arabic-indic) ". ";
 }
 
-:lang(ar) h5:before, :lang(fa) h5:before {
+:lang(fa) h5:before {
   content: counter(h5counter, arabic-indic) "." counter(h4counter, arabic-indic) "."  counter(h3counter, arabic-indic) "." counter(h2counter, arabic-indic) ". ";
 }
 
-:lang(ar) h6:before, :lang(fa) h6:before {
+:lang(fa) h6:before {
   content: counter(h6counter, arabic-indic) "." counter(h5counter, arabic-indic) "." counter(h4counter, arabic-indic) "."  counter(h3counter, arabic-indic) "." counter(h2counter, arabic-indic) ". ";
+}
+
+/* Western Arabic */
+
+:lang(ar) h2:before {
+  content: counter(h2counter) ". ";
+}
+
+:lang(ar) h3:before {
+  content: counter(h2counter) "." counter(h3counter) ". ";
+}
+
+:lang(ar) h4:before {
+  content: counter(h2counter) "."  counter(h3counter) "." counter(h4counter) ". ";
+}
+
+:lang(ar) h5:before {
+  content: counter(h2counter) "." counter(h3counter) "."  counter(h4counter) "." counter(h5counter) ". ";
+}
+
+:lang(ar) h6:before {
+  content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "."  counter(h5counter) "." counter(h6counter) ". ";
 }
