@@ -279,7 +279,8 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 				log.debug(
 					"This ancestor menu was not announced properly, and should have been focused before the submenu item.\n"
 					f"Object info: {self._obj.devInfo}\n"
-					f"Ancestor info: {ancestor.devInfo}")
+					f"Ancestor info: {ancestor.devInfo}"
+				)
 				return True
 			
 			ancestor = ancestor.parent
