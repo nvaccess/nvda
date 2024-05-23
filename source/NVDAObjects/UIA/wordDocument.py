@@ -6,6 +6,7 @@
 from typing import (
 	Optional,
 	Dict,
+	Generator,
 )
 
 import enum
@@ -38,6 +39,7 @@ from NVDAObjects import NVDAObject
 from scriptHandler import script
 import eventHandler
 from globalCommands import SCRCAT_SYSTEMCARET
+import documentBase
 
 """Support for Microsoft Word via UI Automation."""
 
@@ -513,6 +515,17 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 		return super(WordBrowseModeDocument,self)._iterNodesByType(nodeType,direction=direction,pos=pos)
 
 	ElementsListDialog=ElementsListDialog
+
+	def _iterTextStyle(
+			self,
+			kind: str,
+			direction: documentBase._Movement = documentBase._Movement.NEXT,
+			pos: textInfos.TextInfo | None = None
+	) -> Generator[browseMode.TextInfoQuickNavItem, None, None]:
+		raise NotImplementedError(
+			"word textInfos are not supported due to multiple issues with them - #16569"
+		)
+
 
 class WordDocumentNode(UIA):
 	TextInfo=WordDocumentTextInfo
