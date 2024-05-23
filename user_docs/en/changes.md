@@ -32,6 +32,7 @@
   * NVDA will no longer announce "clipboard history" twice when navigating through the emoji panel menu items. (#16532, @josephsl)
   * NVDA will no longer cut off speech and braille when reviewing kaomojis and symbols in the emoji panel. (#16533, @josephsl)
 * In applications using Java Access Bridge, NVDA will now correctly read the last blank line of a text instead of repeating the previous line. (#9376, @dmitrii-drobotov)
+* If present, NVDA will now use `aria-labelledby` to provide accessible names for tables in Mozilla Firefox. (#5183)
 * NVDA will correctly announce radio and checkbox menuitems when first entering submenus in Google Chrome and Mozilla Firefox. (#14550)
 
 ### Changes for Developers
