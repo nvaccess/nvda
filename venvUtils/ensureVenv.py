@@ -84,9 +84,19 @@ def populate():
 			"py", "-m", "pip",
 			"install", "--upgrade", "pip",
 			"&&",
+			# py2exe is not compatible with setuptools 70+
+			# wheel must be manually installed when creating an non-isolated build with a custom setuptools version.
+			"py", "-m", "pip",
+			"install", "setuptools==69.5.1", "wheel",
+			"&&",
 			# Install required packages with pip
 			"py", "-m", "pip",
-			"install", "-r", requirements_path,
+			# "--no-build-isolation" is used to avoid issues with py2exe.
+			# When AppVeyor creates an isolated build environment, it uses a different version of setuptools
+			# that is incompatible with py2exe.
+			# Using --no-build-isolation ensures that the same version of setuptools is used in the build environment,
+			# however requires us manually installing the wheel package.
+			"install", "--no-build-isolation", "-r", requirements_path,
 		],
 		check=True,
 		shell=True,
