@@ -1928,7 +1928,7 @@ This option is disabled by default.
 
 ##### Punctuation/Symbol Level {#SpeechSettingsSymbolLevel}
 
-key: NVDA+p
+Key: NVDA+p
 
 This allows you to choose the amount of punctuation and other symbols that should be spoken as words.
 For example, when set to all, all symbols will be spoken as words.
@@ -2630,7 +2630,7 @@ By default this command will cycle between the following modes:
 
 * Disabled sound split: both NVDA and other applications output sounds to both left and right channels.
 * NVDA on the left and applications on the right: NVDA will speak in the left channel, while other applications will play sounds in the right channel.
-* NVDA on the right and applications on the left: NVDA will speak in the right channel, while other applications will play sounds in the left channel.
+* NVDA on the left and applications in both channels: NVDA will speak in the left channel, while other applications will play sounds in  both left and right channels.
 
 There are more advanced sound split modes available in NVDA setting combo box.
 If you wish to adjust volume of all applications except for NVDA, consider using [the dedicated commands](#OtherAppVolume).
@@ -3073,7 +3073,7 @@ This category contains the following options:
 This checkbox enables NVDA's touch interaction support.
 If enabled, you can use your fingers to navigate and interact with items on screen using a touchscreen device.
 If disabled, touchscreen support will be disabled as though NVDA is not running.
-This setting can also be toggled using `NVDA+control+alt+t`.
+This setting can also be toggled using NVDA+control+alt+t.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3490,6 +3490,7 @@ This checkbox toggles whether browse mode should be automatically enabled when l
 When this option is disabled, browse mode can still be manually activated on pages or in documents where browse mode is supported.
 See the [Browse Mode section](#BrowseMode) for a list of applications supported by browse mode.
 Note that this option does not apply to situations where browse mode is always optional, e.g. in Microsoft Word.
+This option is enabled by default.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3521,6 +3522,7 @@ This option is enabled by default.
 This option affects how NVDA handles tables used purely for layout purposes.
 When on, NVDA will treat these as normal tables, reporting them based on [Document Formatting Settings](#DocumentFormattingSettings) and locating them with quick navigation commands.
 When off, they will not be reported nor found with quick navigation.
+However, the content of the tables will still be included as normal text.
 This option is turned off by default.
 
 To toggle inclusion of layout tables from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
@@ -4028,6 +4030,7 @@ This may also be the case if you are unsure if the settings have been changed.
 ##### Enable loading custom code from Developer Scratchpad Directory {#AdvancedSettingsEnableScratchpad}
 
 When developing add-ons for NVDA, it is useful to be able to test code as you are writing it.
+This option when enabled, allows NVDA to load custom appModules, globalPlugins, brailleDisplayDrivers, synthDrivers and vision enhancement providers, from a special developer scratchpad directory in your NVDA user configuration directory.
 As their equivalents in add-ons, these modules are loaded when starting NVDA or, in the case of appModules and globalPlugins, when [reloading plugins](#ReloadPlugins).
 This option is off by default, ensuring that no untested code is ever run in NVDA with out the user's explicit knowledge.
 If you wish to distribute custom code to others, you should package it as an NVDA add-on.
@@ -4179,6 +4182,7 @@ The combo box has the following options:
 ##### Annotations {#Annotations}
 
 This group of options is used to enable features which add experimental support for ARIA annotations.
+Some of these features may be incomplete.
 
 <!-- KC:beginInclude -->
 To "Report summary of any annotation details at the system caret", press NVDA+d.
@@ -4332,7 +4336,7 @@ If you find that NVDA seems to be incorrectly tracking the caret E.g. it seems t
 ##### Report transparency for colors {#ReportTransparentColors}
 
 This option enables reporting when colors are transparent, useful for addon/appModule developers gathering information to improve user experience with a 3rd party application.
-
+Some GDI applications will highlight text with a background color, NVDA (via display model) attempts to report this color.
 In some situations, the text background may be entirely transparent, with the text layered on some other GUI element.
 With several historically popular GUI APIs, the text may be rendered with a transparent background, but visually the background color is accurate.
 
