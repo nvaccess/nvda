@@ -64,6 +64,7 @@ import queueHandler
 import brailleViewer
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
+from textUtils import isUnicodeNormalized, UnicodeNormalizationOffsetConverter
 import hwIo
 from editableText import EditableText
 
@@ -496,13 +497,40 @@ class Region(object):
 		mode = louis.dotsIO
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
 			mode |= louis.compbrlAtCursor
-		self.brailleCells, self.brailleToRawPos, self.rawToBraillePos, self.brailleCursorPos = louisHelper.translate(
+
+		converter: UnicodeNormalizationOffsetConverter | None = None
+		if config.conf["braille"]["unicodeNormalization"] and not isUnicodeNormalized(self.rawText):
+			converter = UnicodeNormalizationOffsetConverter(self.rawText)
+			textToTranslate = converter.encoded
+			# Typeforms must be adapted to represent normalized characters.
+			textToTranslateTypeforms = [
+				self.rawTextTypeforms[strOffset] for strOffset in converter.computedEncodedToStrOffsets
+			]
+			# Convert the cursor position to a normalized offset.
+			cursorPos = converter.strToEncodedOffsets(self.cursorPos)
+		else:
+			textToTranslate = self.rawText
+			textToTranslateTypeforms = self.rawTextTypeforms
+			cursorPos = self.cursorPos
+
+		self.brailleCells, brailleToRawPos, rawToBraillePos, self.brailleCursorPos = louisHelper.translate(
 			[handler.table.fileName, "braille-patterns.cti"],
-			self.rawText,
-			typeform=self.rawTextTypeforms,
+			textToTranslate,
+			typeform=textToTranslateTypeforms,
 			mode=mode,
-			cursorPos=self.cursorPos
+			cursorPos=cursorPos
 		)
+
+		if converter:
+			# The received brailleToRawPos contains braille to normalized positions.
+			# Process them to represent real raw positions by converting them from normalized ones.
+			brailleToRawPos = [converter.encodedToStrOffsets(i) for i in brailleToRawPos]
+			# The received rawToBraillePos contains normalized to braille positions.
+			# Create a new list based on real raw positions.
+			rawToBraillePos = [rawToBraillePos[i] for i in converter.computedStrToEncodedOffsets]
+		self.brailleToRawPos = brailleToRawPos
+		self.rawToBraillePos = rawToBraillePos
+
 		if (
 			self.selectionStart is not None
 			and self.selectionEnd is not None
@@ -1364,24 +1392,13 @@ class TextInfoRegion(Region):
 
 	def getTextInfoForBraillePos(self, braillePos: int) -> textInfos.TextInfo:
 		"""Fetches a collapsed TextInfo at the specified braille position in the region."""
-		rawPos = self.brailleToRawPos[braillePos]
-		contentPos = self._rawToContentPos[rawPos]
-		if contentPos > 0:
-			# rawPos is relative to the start of the reading unit.
-			# Therefore, move rawPos code points from there.
-			# Note that, as liblouis uses 32 bit encoding internally,
-			# it is really safe to assume that one code point offset is equal to one character within liblouis.
-			try:
-				return self._readingInfo.moveToCodepointOffset(rawPos)
-			except (ValueError, RuntimeError):
-				log.exception(
-					f"Error in moveToCodepointOffset with {rawPos} offsets, "
-					f"falling back to moving by {contentPos} characters",
-				)
+		pos = self._rawToContentPos[self.brailleToRawPos[braillePos]]
+		# pos is relative to the start of the reading unit.
+		# Therefore, get the start of the reading unit...
 		dest = self._readingInfo.copy()
 		dest.collapse()
-		if contentPos > 0:
-			dest.move(textInfos.UNIT_CHARACTER, contentPos)
+		# and move pos characters from there.
+		dest.move(textInfos.UNIT_CHARACTER, pos)
 		return dest
 
 	def routeTo(self, braillePos: int):
@@ -1749,7 +1766,6 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		while pos < self.windowStartPos:
 			if not self._previousWindow():
 				break
-		self.updateDisplay()
 
 	def focus(self, region):
 		"""Bring the specified region into focus.
