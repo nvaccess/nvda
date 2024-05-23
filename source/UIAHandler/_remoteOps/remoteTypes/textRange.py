@@ -50,7 +50,7 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 		return cast(UIA.IUIAutomationTextRange, value.QueryInterface(UIA.IUIAutomationTextRange))
 
 	@remoteMethod
-	def clone(self):
+	def clone(self) -> RemoteTextRange:
 		result = RemoteTextRange(self.rob, self.rob.requestNewOperandId())
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.TextRangeClone(
@@ -98,7 +98,7 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 			endpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint,
 			unit: RemoteIntEnum[lowLevel.TextUnit] | lowLevel.TextUnit,
 			count: RemoteInt | int
-	):
+	) -> RemoteInt:
 		result = RemoteInt(self.rob, self.rob.requestNewOperandId())
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.TextRangeMoveEndpointByUnit(
