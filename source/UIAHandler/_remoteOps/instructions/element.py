@@ -64,15 +64,16 @@ class ElementNavigate(_TypedInstruction):
 		client = cast(UIA.IUIAutomation, UIAHandler.handler.clientObject)
 		treeWalker = client.RawViewWalker
 		direction = cast(lowLevel.NavigationDirection, registers[self.direction.operandId])
-		if direction == lowLevel.NavigationDirection.Parent:
-			registers[self.result.operandId] = treeWalker.GetParentElement(element)
-		elif direction == lowLevel.NavigationDirection.FirstChild:
-			registers[self.result.operandId] = treeWalker.GetFirstChildElement(element)
-		elif direction == lowLevel.NavigationDirection.LastChild:
-			registers[self.result.operandId] = treeWalker.GetLastChildElement(element)
-		elif direction == lowLevel.NavigationDirection.NextSibling:
-			registers[self.result.operandId] = treeWalker.GetNextSiblingElement(element)
-		elif direction == lowLevel.NavigationDirection.PreviousSibling:
-			registers[self.result.operandId] = treeWalker.GetPreviousSiblingElement(element)
-		else:
-			raise ValueError(f"Unknown navigation direction {direction}")
+		match direction:
+			case lowLevel.NavigationDirection.Parent:
+				registers[self.result.operandId] = treeWalker.GetParentElement(element)
+			case lowLevel.NavigationDirection.FirstChild:
+				registers[self.result.operandId] = treeWalker.GetFirstChildElement(element)
+			case lowLevel.NavigationDirection.LastChild:
+				registers[self.result.operandId] = treeWalker.GetLastChildElement(element)
+			case lowLevel.NavigationDirection.NextSibling:
+				registers[self.result.operandId] = treeWalker.GetNextSiblingElement(element)
+			case lowLevel.NavigationDirection.PreviousSibling:
+				registers[self.result.operandId] = treeWalker.GetPreviousSiblingElement(element)
+			case _:
+				raise ValueError(f"Unknown navigation direction {direction}")
