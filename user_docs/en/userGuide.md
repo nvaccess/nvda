@@ -338,20 +338,20 @@ After installation, you are able to re-enable incompatible add-ons at your own r
 
 #### Use NVDA during sign-in {#StartAtWindowsLogon}
 
-This setting allows you to choose whether or not NVDA should automatically start while at the Windows sign-in screen, before you have entered a password.
+This option allows you to choose whether or not NVDA should automatically start while at the Windows sign-in screen, before you have entered a password.
 This also includes User Account Control and [other secure screens](#SecureScreens).
-This setting is enabled by default for fresh installations.
+This option is enabled by default for fresh installations.
 
 #### Create Desktop Shortcut (ctrl+alt+n) {#CreateDesktopShortcut}
 
-This setting allows you to choose whether or not NVDA should create a shortcut on the desktop to start NVDA.
+This option allows you to choose whether or not NVDA should create a shortcut on the desktop to start NVDA.
 If created, this shortcut will also be assigned a shortcut key of `control+alt+n`, allowing you to start NVDA at any time with this keystroke.
 
 #### Copy Portable Configuration to Current User Account {#CopyPortableConfigurationToCurrentUserAccount}
 
-This setting allows you to choose whether or not NVDA should copy the user configuration from the currently running NVDA into the configuration for the currently logged on  user, for the installed copy of NVDA.
+This option allows you to choose whether or not NVDA should copy the user configuration from the currently running NVDA into the configuration for the currently logged on  user, for the installed copy of NVDA.
 This will not copy the configuration for any other users of this system nor to the system configuration for use during Windows sign-in and [other secure screens](#SecureScreens).
-This setting is only available when installing from a portable copy, not when installing directly from the downloaded Launcher package.
+This option is only available when installing from a portable copy, not when installing directly from the downloaded Launcher package.
 
 ### Creating a Portable Copy {#CreatingAPortableCopy}
 
@@ -361,7 +361,7 @@ If you have already closed this dialog or you are running an installed copy of N
 The Dialog that appears allows you to choose where the portable copy should be created.
 This can be a directory on your hard drive or a location on a USB thumb drive or other portable media.
 There is also a setting to choose whether NVDA should copy the logged on user's current NVDA configuration for use  with the newly created portable copy.
-This setting is only available when creating a portable copy from an installed copy, not when creating from the download package.
+This option is only available when creating a portable copy from an installed copy, not when creating from the download package.
 Pressing Continue will create the portable copy.
 Once creation is complete, a message will appear telling you it was successful.
 Press OK to dismiss this dialog.
@@ -565,19 +565,6 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 <!-- KC:endInclude -->
 
 ### Speech modes {#SpeechModes}
-
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |talk, on-demand, off, beeps|
-|Default |talk|
-
-| Option |Behaviour|
-|---|---|
-|talk |NVDA will speak normally in reaction to screen changes, notifications, and actions such as moving the focus, or issuing commands.|
-|on-demand |NVDA will only speak when you use commands with a reporting function (e.g. report the title of the window); but it will not speak in reaction to actions such as moving the focus or the cursor.|
-|off |NVDA will not speak anything, however it will silently react to commands.|
-|beeps |NVDA will replace normal speech with short beeps.|
-
 The speech mode governs how screen content, notifications, responses to commands, and other output is spoken during operation of NVDA.
 The default mode is "talk", which speaks in situations that are expected when using a screen reader.
 However, under certain circumstances, or when running particular programs, you may find one of the other speech modes valuable.
@@ -597,6 +584,18 @@ A gesture allows cycling through the various speech modes:
 <!-- KC:endInclude -->
 
 If you only need to switch between a limited subset of speech modes, see [Modes available in the Cycle speech mode command](#SpeechModesDisabling) for a way to disable unwanted modes.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |talk, on-demand, off, beeps|
+|Default |talk|
+
+| Option |Behaviour|
+|---|---|
+|talk |NVDA will speak normally in reaction to screen changes, notifications, and actions such as moving the focus, or issuing commands.|
+|on-demand |NVDA will only speak when you use commands with a reporting function (e.g. report the title of the window); but it will not speak in reaction to actions such as moving the focus or the cursor.|
+|off |NVDA will not speak anything, however it will silently react to commands.|
+|beeps |NVDA will replace normal speech with short beeps.|
 
 ## Navigating with NVDA {#NavigatingWithNVDA}
 
@@ -1656,7 +1655,8 @@ Please note that NVDA must be restarted when changing the language.
 When the confirmation dialog appears, select "restart now" or "restart later" if you wish to use the new language now or at a later time, respectively. If "restart later" is selected, the configuration must be saved (either manually or using the save on exit functionality).
 
 ##### Save configuration on exit {#GeneralSettingsSaveConfig}
-This checkbox tells NVDA whether settings should be saved automatically when you exit NVDA.
+
+This option is a checkbox that, when checked, tells NVDA to automatically save the current configuration when you exit NVDA.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -1670,7 +1670,9 @@ This checkbox tells NVDA whether settings should be saved automatically when you
 
 ##### Show exit options when exiting NVDA {#GeneralSettingsShowExitOptions}
 
-This setting is a checkbox that allows you to choose whether or not a dialog appears when you exit NVDA that asks what action you want to perform.
+This option is a checkbox that allows you to choose whether or not a dialog appears when you exit NVDA that asks what action you want to perform.
+When checked, a dialog will appear when you attempt to exit NVDA asking whether you want to exit, restart, restart with add-ons disabled or install pending updates (if any).
+When unchecked, NVDA will exit immediately.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -1683,6 +1685,8 @@ This setting is a checkbox that allows you to choose whether or not a dialog app
 |disabled |NVDA will exit directly without showing any confirmation dialog.|
 
 ##### Play sounds when starting or exiting NVDA {#GeneralSettingsPlaySounds}
+
+This option is a checkbox that, when checked, tells NVDA to play sounds when it starts or exits.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -1700,6 +1704,16 @@ This is a combo box that lets you choose how much NVDA will log as it's running.
 Generally users should not need to touch this as not too much is logged.
 However, if you wish to provide information in a bug report, or enable or disable logging altogether, then it may be a useful option.
 
+The available logging levels are:
+
+* Disabled: Apart from a brief startup message, NVDA will not log anything while it runs.
+* Info: NVDA will log basic information such as startup messages and information useful for developers.
+* Debug warning: Warning messages that are not caused by severe errors will be logged.
+* Input/output: Input from keyboard and braille displays, as well as speech and braille output will be logged.
+If you are concerned about privacy, do not set the logging level to this option.
+* Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.
+Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |disabled, info, debug warning, input/output, debug|
@@ -1715,6 +1729,9 @@ However, if you wish to provide information in a bug report, or enable or disabl
 
 ##### Start NVDA after I sign in {#GeneralSettingsStartAfterLogOn}
 
+If this option is enabled, NVDA will start automatically as soon as you sign in to Windows.
+This option is only available for installed copies of NVDA.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |enabled, disabled|
@@ -1725,9 +1742,10 @@ However, if you wish to provide information in a bug report, or enable or disabl
 |enabled |NVDA will start automatically directly after you signed in to Windows.|
 |disabled |NVDA will not start automatically after you signed in  Windows.|
 
-This setting is only available for installed copies of NVDA.
-
 ##### Use NVDA during sign-in (requires administrator privileges) {#GeneralSettingsStartOnLogOnScreen}
+
+If you sign in to Windows by providing a user name and password, then enabling this option will make NVDA start automatically at the sign-in screen when Windows starts.
+This option is only available for installed copies of NVDA.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -1739,15 +1757,22 @@ This setting is only available for installed copies of NVDA.
 |enabled |NVDA will start automatically on the Windows sign-in screen when Windows starts, so you will hear NVDA speaking when you log in to Windows.|
 |disabled |NVDA will not start automatically on the Windows sign-in screen when Windows starts, so you might not hear anything when you log in to Windows.|
 
-This setting is only available for installed copies of NVDA.
-
 ##### Use currently saved settings during sign-in and on secure screens (requires administrator privileges) {#GeneralSettingsCopySettings}
 
 Pressing this button copies your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it during sign-in and when running on User Account Control (UAC) and other [secure screens](#SecureScreens).
 To make sure that all your settings are transferred, make sure to save your configuration first with control+NVDA+c or Save configuration in the NVDA menu.
-This setting is only available for installed copies of NVDA.
+This option is only available for installed copies of NVDA.
 
 ##### Automatically check for updates to NVDA {#GeneralSettingsCheckForUpdates}
+
+If this is enabled, NVDA will automatically check for updated versions and inform you when an update is available.
+You can also manually check for updates by selecting Check for updates under Help in the NVDA menu.
+When manually or automatically checking for updates, it is necessary for NVDA to send some information to the update server in order to receive the correct update for your system.
+The following information is always sent:
+
+* Current NVDA version
+* Operating System version
+* Whether the Operating System is 64 or 32 bit
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -1759,26 +1784,9 @@ This setting is only available for installed copies of NVDA.
 |enabled |NVDA will automatically check for updated versions and inform you when an update is available.|
 |disabled |NVDA will not  automatically check for updated versions, and you will not be automatically notified when an update is available.|
 
-You can also manually check for updates by selecting Check for updates under Help in the NVDA menu.
-When manually or automatically checking for updates, it is necessary for NVDA to send some information to the update server in order to receive the correct update for your system.
-The following information is always sent:
-
-* Current NVDA version
-* Operating System version
-* Whether the Operating System is 64 or 32 bit
-
 ##### Allow NV Access to gather NVDA usage statistics {#GeneralSettingsGatherUsageStats}
 
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |enabled, disabled|
-|Default |disabled|
-
-| Option |Behaviour|
-|---|---|
-|enabled |NV Access will use the information from update checks in order to track  the number of NVDA users including particular demographics such as Operating system, country of origin and information related to interface language, speech synthesizer, braille display and braille tables, or type of NVDA instance.|
-|disabled |NV Access will not gather any user and device related information.|
-
+If this is enabled, NV Access will use the information from update checks in order to track  the number of NVDA users including particular demographics such as Operating system and country of origin.
 Note that although your IP address will be used to calculate your country during the update check, the IP address is never kept.
 Apart from the mandatory information required to check for updates, the following extra information is also currently sent:
 
@@ -1790,7 +1798,20 @@ Apart from the mandatory information required to check for updates, the followin
 
 This information greatly aides NV Access to prioritize future development of NVDA.
 
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |enabled, disabled|
+|Default |disabled|
+
+| Option |Behaviour|
+|---|---|
+|enabled |NV Access will use the information from update checks in order to track  the number of NVDA users including particular demographics such as Operating system, country of origin and information related to interface language, speech synthesizer, braille display and braille tables, or type of NVDA instance.|
+|disabled |NV Access will not gather any user and device related information.|
+
 ##### Notify for pending updates on startup {#GeneralSettingsNotifyPendingUpdates}
+
+If this is enabled, NVDA will inform you when there is a pending update on startup, offering you the possibility to install it.
+You can also manually install the pending update from the Exit NVDA dialog (if enabled),  from the NVDA menu, or when you perform a new check from the Help menu.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -1817,7 +1838,7 @@ The Speech Settings category contains the following options:
 
 ##### Change synthesizer {#SpeechSettingsChange}
 
-The first edit field in the speech settings category shows the currently selected synthesizer. The Change... button attached to this edit field activates the [Select Synthesizer](#SelectSynthesizer) dialog, which allows you to select the active speech synthesizer.
+The first option in the speech settings category shows the currently selected synthesizer. The Change... button attached to this edit field activates the [Select Synthesizer](#SelectSynthesizer) dialog, which allows you to select the active speech synthesizer.
 This dialog opens on top of the NVDA Settings dialog.
 Saving or dismissing the settings in the Select Synthesizer dialog will return you to the NVDA Settings dialog.
 
@@ -1836,10 +1857,12 @@ If using a third-party synthesizer, you may also be able to change this value if
 
 ##### Rate {#SpeechSettingsRate}
 
-This setting allows you to change the rate of your voice.
+This option allows you to change the rate of your voice.
 This is a slider that goes from 0 to 100 - 0 being the slowest, 100 being the fastest.
 
 ##### Rate boost {#SpeechSettingsRateBoost}
+
+Enabling this option will significantly increase the speech rate, if supported by the current synthesizer.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -1853,18 +1876,21 @@ This is a slider that goes from 0 to 100 - 0 being the slowest, 100 being the fa
 
 ##### Pitch {#SpeechSettingsPitch}
 
-This setting allows you to change the pitch of the current voice.
+This option allows you to change the pitch of the current voice.
 It is a slider which goes from 0 to 100 - 0 being the lowest pitch and 100 being the highest.
 
 ##### Volume {#SpeechSettingsVolume}
 
-This setting is a slider which goes from 0 to 100 - 0 being the lowest volume and 100 being the highest.
+This option is a slider which goes from 0 to 100 - 0 being the lowest volume and 100 being the highest.
 
 ##### Inflection {#SpeechSettingsInflection}
 
-This setting is a slider that lets you choose how much inflection (rise and fall in pitch) the synthesizer should use to speak with.
+This option is a slider that lets you choose how much inflection (rise and fall in pitch) the synthesizer should use to speak with.
 
 ##### Automatic Language switching {#SpeechSettingsLanguageSwitching}
+
+This checkbox allows you to toggle whether NVDA should switch speech synthesizer languages automatically if the text being read specifies its language.
+This option is enabled by default.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -1877,6 +1903,10 @@ This setting is a slider that lets you choose how much inflection (rise and fall
 |disabled |the current voice of the synthesizer will not switch between languages automatically when processing symbols and characters.|
 
 ##### Automatic Dialect switching {#SpeechSettingsDialectSwitching}
+
+This checkbox allows you to toggle whether or not dialect changes should be made, rather than just actual language changes.
+For example, if reading in an English U.S. voice but a document specifies that some text is in English U.K., then the synthesizer will switch accents if this option is enabled.
+This option is disabled by default.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -1895,16 +1925,18 @@ This setting is a slider that lets you choose how much inflection (rise and fall
 key: `NVDA+p`
 
 This allows you to choose the amount of punctuation and other symbols that should be spoken as words.
+For example, when set to all, all symbols will be spoken as words.
+This option applies to all synthesizers, not just the currently active synthesizer.
 
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |all, most, some, none|
 |Default |some|
 
-For example, when set to all, all symbols will be spoken as words.
-This setting applies to all synthesizers, not just the currently active synthesizer.
-
 ##### Trust voice's language when processing characters and symbols {#SpeechSettingsTrust}
+
+On by default, this option tells NVDA if the current voice's language can be trusted when processing symbols and characters.
+If you find that NVDA is reading punctuation in the wrong language for a particular synthesizer or voice, you may wish to turn this off to force NVDA to use its global language setting instead.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -1916,13 +1948,7 @@ This setting applies to all synthesizers, not just the currently active synthesi
 |enabled |the current voice's language of the synthesizer will be trusted when processing symbols and characters.|
 |disabled |the current voice's language of the synthesizer will be ignored, and NVDA will use the current global NVDA language when processing symbols and characters.|
 
-You might want to disable this setting if you find that NVDA is reading punctuation in the wrong language for a particular synthesizer or voice.
-
 ##### Unicode normalization {#SpeechUnicodeNormalization}
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Default (Disabled), Enabled, Disabled|
-|Default |Disabled|
 
 When this option is enabled, unicode normalization is performed on the text that is spoken by NVDA.
 This is beneficial when speaking characters that can be represented in several forms.
@@ -1941,7 +1967,23 @@ For example, the character "ü" (u with umlaut/diaeresis), a common character in
 
 1. Stable ordering of modifiers in composite characters, for example in ancient Hebrew.
 
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Disabled), Enabled, Disabled|
+|Default |Disabled|
+
 ##### Include Unicode Consortium data (including emoji) when processing characters and symbols {#SpeechSettingsCLDR}
+
+When this checkbox is checked, NVDA will include additional symbol pronunciation dictionaries when pronouncing characters and symbols.
+These dictionaries contain descriptions for symbols (particularly emoji) that are provided by the [Unicode Consortium](https://www.unicode.org/consortium/) as part of their [Common Locale Data Repository](http://cldr.unicode.org/).
+If you want NVDA to speak descriptions of emoji characters based on this data, you should enable this option.
+However, if you are using a speech synthesizer that supports speaking emoji descriptions natively, you may wish to turn this off.
+
+Note that manually added or edited character descriptions are saved as part of your user settings.
+Therefore, if you change the description of a particular emoji, your custom description will be spoken for that emoji regardless of whether this option is enabled.
+You can add, edit or remove symbol descriptions in NVDA's [punctuation/symbol pronunciation dialog](#SymbolPronunciation).
+
+To toggle Unicode Consortium data inclusion from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -1953,16 +1995,6 @@ For example, the character "ü" (u with umlaut/diaeresis), a common character in
 |enabled |NVDA will include additional symbol pronunciation dictionaries from CLDR when pronouncing characters and symbols.|
 |disabled |NVDA will not include additional symbol pronunciation dictionaries when pronouncing characters and symbols, but will let the synthesizer handle the pronounciation with its native dictionaries instead.|
 
-The [Unicode Consortium](https://www.unicode.org/consortium/) provides descriptions for symbols (particularly emoji) as part of their [Common Locale Data Repository](http://cldr.unicode.org/).
-If you want NVDA to speak descriptions of emoji characters based on this data, you should enable this setting.
-However, if you are using a speech synthesizer that supports speaking emoji descriptions natively, you may wish to turn this off.
-
-Note that manually added or edited character descriptions are saved as part of your user settings.
-Therefore, if you change the description of a particular emoji, your custom description will be spoken for that emoji regardless of whether this setting is enabled.
-You can add, edit or remove symbol descriptions in NVDA's [punctuation/symbol pronunciation dialog](#SymbolPronunciation).
-
-To toggle Unicode Consortium data inclusion from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
-
 ##### Capital pitch change percentage {#SpeechSettingsCapPitchChange}
 
 This edit field allows you to type the amount that the pitch of the voice will change when speaking a capital letter.
@@ -1972,6 +2004,8 @@ Usually, NVDA raises the pitch slightly for any capital letter, but some synthes
 In case pitch change for capitals is not supported, consider [Say "cap" before capitals](#SpeechSettingsSayCapBefore) and/or [ Beep for capitals](#SpeechSettingsBeepForCaps) instead.
 
 ##### Say "cap" before capitals {#SpeechSettingsSayCapBefore}
+
+This setting is a checkbox that, when checked, tells NVDA to say the word "cap" before any capital letter when spoken as an individual character such as when spelling.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -1985,6 +2019,8 @@ In case pitch change for capitals is not supported, consider [Say "cap" before c
 
 ##### Beep for capitals {#SpeechSettingsBeepForCaps}
 
+If this checkbox is checked, NVDA will make a small beep each time it encounters a capitalized character by itself.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |enabled, disabled|
@@ -1997,6 +2033,15 @@ In case pitch change for capitals is not supported, consider [Say "cap" before c
 
 ##### Use spelling functionality if supported {#SpeechSettingsUseSpelling}
 
+Some words consist of only one character, but the pronunciation is different depending on whether the character is being spoken as an individual character (such as when spelling) or a word.
+For example, in English, "a" is both a letter and a word and is pronounced differently in each case.
+This option allows the synthesizer to differentiate between these two cases if the synthesizer supports it.
+Most synthesizers do support it.
+
+This option should generally be enabled.
+However, some Microsoft Speech API synthesizers do not implement this correctly and behave strangely when it is enabled.
+If you are having problems with the pronunciation of individual characters, try disabling this option.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |enabled, disabled|
@@ -2007,16 +2052,13 @@ In case pitch change for capitals is not supported, consider [Say "cap" before c
 |enabled |NVDA will recognize whether a character is part of a word or not and will pronounce the character as expected.|
 |disabled |NVDA will pronounce a character individually, no matter if it is part of a word or not.|
 
-Some words consist of only one character, but the pronunciation is different depending on whether the character is being spoken as an individual character (such as when spelling) or a word.
-For example, in English, "a" is both a letter and a word and is pronounced differently in each case.
-This setting allows the synthesizer to differentiate between these two cases if the synthesizer supports it.
-Most synthesizers do support it.
-
-This setting should generally be enabled.
-However, some Microsoft Speech API synthesizers do not implement this correctly and behave strangely when it is enabled.
-If you are having problems with the pronunciation of individual characters, try disabling this setting.
-
 ##### Delayed descriptions for characters on cursor movement {#delayedCharacterDescriptions}
+
+When this setting is checked, NVDA will say the character description when you move by characters.
+For example, while reviewing a line by characters, when the letter "b" is read NVDA will say "Bravo" after a 1 second delay.
+This can be useful if it is hard to distinguish between pronunciation of symbols, or for hearing impaired users.
+
+The delayed character description will be cancelled if other text is spoken during that time, or if you press the `control` key.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2028,14 +2070,14 @@ If you are having problems with the pronunciation of individual characters, try 
 |enabled |NVDA will say the character description when you move by characters.|
 |disabled |NVDA will not speak the character description when you move by characters.|
 
-For example, while reviewing a line by characters, when the letter "b" is read NVDA will say "Bravo" after a 1 second delay.
-This can be useful if it is hard to distinguish between pronunciation of symbols, or for hearing impaired users.
-
-The delayed character description will be cancelled if other text is spoken during that time, or if you press the `control` key.
-
 ##### Modes available in the Cycle speech mode command {#SpeechModesDisabling}
 
 This checkable list allows selecting which [speech modes](#SpeechModes) are included when cycling between them using `NVDA+s`.
+Modes which are unchecked are excluded.
+By default all modes are included.
+
+For example if you do not need to use "beeps" and "off" mode you should uncheck these two, and keep both "talk" and "on-demand" checked.
+Note that it is necessary to check at least two modes.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2048,10 +2090,6 @@ This checkable list allows selecting which [speech modes](#SpeechModes) are incl
 |beeps |NVDA will replace normal speech with short beeps.|
 |talk |NVDA will speak normally in reaction to screen changes, notifications, and actions such as moving the focus, or issuing commands.|
 |on-demand |NVDA will only speak when you use commands with a reporting function (e.g. report the title of the window); but it will not speak in reaction to actions such as moving the focus or the cursor.|
-
-Modes which are unchecked are excluded from the NVDA+s command.
-For example if you do not need to use "beeps" and "off" mode you should uncheck these two, and keep both "talk" and "on-demand" checked.
-Note that it is necessary to check at least two modes.
 
 #### Select Synthesizer {#SelectSynthesizer}
 
@@ -2067,19 +2105,17 @@ If there is an error loading the synthesizer, NVDA will notify you with a messag
 
 ##### Synthesizer {#SelectSynthesizerSynthesizer}
 
-This combo box allows you to choose the synthesizer you wish NVDA to use for speech output.
+This option allows you to choose the synthesizer you wish NVDA to use for speech output.
+
+For a list of the Synthesizers that NVDA supports, please see the [Supported Speech Synthesizers](#SupportedSpeechSynths) section.
+
+One special item that will always appear in this list is "No speech", which allows you to use NVDA with no speech output whatsoever.
+This may be useful for someone who wishes to only use NVDA with braille, or perhaps to sighted developers who only wish to use the Speech Viewer.
 
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |eSpeak NG, Microsoft Speech API Version 4, Microsoft Speech API Version 5, Microsoft Speech plattform, Windows OneCore Voices, no speech|
 |Default |OneCore Voices on Windows 10 or higher, eSpeak NG on Windows 8.1|
-
-For more information about each  of the Synthesizers that NVDA supports, please see the [Supported Speech Synthesizers](#SupportedSpeechSynths) section.
-
-One special item that will always appear in this list is "No speech", which allows you to use NVDA with no speech output whatsoever.
-This may be useful for someone who wishes to only use NVDA with braille, or perhaps to sighted developers who only wish to use the Speech Viewer.
-
-This combo box might contain third party synthesizers such as Vocalizer or Acapela TTS if you installed them.
 
 #### Synth settings ring {#SynthSettingsRing}
 
@@ -2121,7 +2157,7 @@ Complementary to the previous option, the next setting you will find is the brai
 The chosen table will be used to translate braille entered on your braille display's Perkins-style keyboard into text.
 You can move from braille table to braille table in the list by using the arrow keys.
 
-Note that this setting is only useful if your braille display has a Perkins-style keyboard and this feature is supported by the braille display driver.
+Note that this option is only useful if your braille display has a Perkins-style keyboard and this feature is supported by the braille display driver.
 If input is not supported on a display which does have a braille keyboard, this will be noted in the [Supported Braille Displays](#SupportedBrailleDisplays) section.
 
 <!-- KC:setting -->
@@ -2130,7 +2166,13 @@ If input is not supported on a display which does have a braille keyboard, this 
 
 Key: `NVDA+alt+t`
 
-This setting allows you to select between the available braille modes.
+This option allows you to select between the available braille modes.
+
+Currently, two braille modes are supported, "follow cursors" and "display speech output".
+
+When follow cursors is selected, the braille display will follow either the system focus/caret or the navigator object/review cursor, depending on what braille is tethered to.
+
+When display speech output is selected, the braille display will show what NVDA speaks, or would have spoken if speech mode was set to "talk"
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2144,6 +2186,8 @@ This setting allows you to select between the available braille modes.
 
 ##### Expand to computer braille for the word at the cursor {#BrailleSettingsExpandToComputerBraille}
 
+This option allows the word that is under the cursor to be displayed in non-contracted computer braille.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |enabled, disabled|
@@ -2156,6 +2200,9 @@ This setting allows you to select between the available braille modes.
 
 ##### Show Cursor {#BrailleSettingsShowCursor}
 
+This option allows the braille cursor to be turned on and off.
+It applies to the system caret and review cursor, but not to the selection indicator.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |enabled, disabled|
@@ -2166,9 +2213,11 @@ This setting allows you to select between the available braille modes.
 |enabled |A braille cursor will be shown on the braille display, indicating the system caret, system focus and the review cursor.|
 |disabled |System caret, system focus and review cursor will not be indicated in braille.|
 
-Note: the braille cursor does not apply to the selection indicator. The selection indicator will always be shown on the Braille display.
-
 ##### Blink Cursor {#BrailleSettingsBlinkCursor}
+
+This option allows the braille cursor to blink.
+If blinking is turned off, the braille cursor will constantly be in the "up" position.
+The selection indicator is not affected by this option, it is always dots 7 and 8 without blinking.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2180,15 +2229,14 @@ Note: the braille cursor does not apply to the selection indicator. The selectio
 |enabled |The dots for the Braille cursor will blink, moving up and down.|
 |disabled |The Braille dots for the Braille cursor will always be in the "up" position.|
 
-The selection indicator is not affected by this setting, it is always dots 7 and 8 without blinking.
-
 ##### Cursor Blink Rate (ms) {#BrailleSettingsBlinkRate}
 
-This setting is a numerical field that allows you to change the blink rate of the cursor in milliseconds.
+This option is a numerical field that allows you to change the blink rate of the cursor in milliseconds.
 
 ##### Cursor Shape for Focus {#BrailleSettingsCursorShapeForFocus}
 
-This setting allows you to choose the shape (dot pattern) of the braille cursor when braille is tethered to focus.
+This option allows you to choose the shape (dot pattern) of the braille cursor when braille is tethered to focus.
+The selection indicator is not affected by this option, it is always dots 7 and 8 without blinking.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2201,11 +2249,10 @@ This setting allows you to choose the shape (dot pattern) of the braille cursor 
 |dot 8 |The Braille cursor will indicate system caret and system focus by dot 8 under the focused character on the Braille cell.|
 |all dots |The Braille cursor will indicate system caret and system focus by all dots of the Braille cell on the left side of the focused character.|
 
-The selection indicator is not affected by this setting, it is always dots 7 and 8 without blinking.
-
 ##### Cursor Shape for Review {#BrailleSettingsCursorShapeForReview}
 
-This setting allows you to choose the shape (dot pattern) of the braille cursor when braille is tethered to review.
+This option allows you to choose the shape (dot pattern) of the braille cursor when braille is tethered to review.
+The selection indicator is not affected by this option, it is always dots 7 and 8 without blinking.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2218,11 +2265,11 @@ This setting allows you to choose the shape (dot pattern) of the braille cursor 
 |dot 8 |The Braille cursor will indicate review cursor by dot 8 under the focused character on the Braille cell.|
 |all dots |The Braille cursor will indicate review cursor by all dots of the Braille cell on the left side of the focused character.|
 
-The selection indicator is not affected by this setting, it is always dots 7 and 8 without blinking.
-
 ##### Show Messages {#BrailleSettingsShowMessages}
 
 This is a combobox that allows you to select if NVDA should display braille messages and when they should disappear automatically.
+
+To toggle show messages from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2235,13 +2282,11 @@ This is a combobox that allows you to select if NVDA should display braille mess
 |use timeout |Braille messages will be shown on the Braille display for a certain period of time.|
 |show indefinitely |Braille messages will be shown on the Braille display permanently.|
 
-To toggle show messages from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
-
 ##### Message Timeout (sec) {#BrailleSettingsMessageTimeout}
 
-This setting is a numerical field that controls how long NVDA messages are displayed on the braille display.
+This option is a numerical field that controls how long NVDA messages are displayed on the braille display.
 The NVDA message is immediately dismissed when pressing a routing key on the braille display, but appears again when pressing a corresponding key which triggers the message.
-This setting is shown only if "Show Messages" is set to "Use timeout".
+This option is shown only if "Show Messages" is set to "Use timeout".
 
 <!-- KC:setting -->
 
@@ -2249,7 +2294,13 @@ This setting is shown only if "Show Messages" is set to "Use timeout".
 
 Key: NVDA+control+t
 
-This setting allows you to choose whether the braille display will follow the system focus / caret, the navigator object / review cursor, or both.
+This option allows you to choose whether the braille display will follow the system focus / caret, the navigator object / review cursor, or both.
+When "automatically" is selected, NVDA will follow the system focus and caret by default.
+In this case, when the navigator object or the review cursor position is changed by means of explicit user interaction, NVDA will tether to review temporarily, until the focus or the caret changes.
+If you want it to follow the focus and caret only, you need to configure braille to be tethered to focus.
+In this case, braille will not follow the NVDA navigator during object navigation or the review cursor during review.
+If you want braille to follow object navigation and text review instead, you need to configure braille to be tethered to review.
+In this case, Braille  will not follow system focus and system caret.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2264,8 +2315,20 @@ This setting allows you to choose whether the braille display will follow the sy
 
 ##### Move system caret when routing review cursor {#BrailleSettingsReviewRoutingMovesSystemCaret}
 
-This setting determines if the system caret should also be moved when routing the review cursor to a Braille cell with a routing button press.
-This setting is shown only if "[tether braille](#BrailleTether)" is set to "automatically" or "to review".
+This setting determines if the system caret should also be moved with a routing button press.
+This option is set to Never by default, meaning that routing will never move the caret when routing the review cursor.
+
+When this option is set to Always, and [braille tethering](#BrailleTether) is set to "automatically" or "to review", pressing a cursor routing key will also move the system caret or focus when supported.
+When the current review mode is [Screen Review](#ScreenReview), there is no physical caret.
+In this case, NVDA tries to focus the object under the text you're routing to.
+The same applies to [object review](#ObjectReview).
+
+You can also set this option to only move the caret when tethered automatically.
+In that case, pressing a cursor routing key will only move the system caret or focus when NVDA is tethered to the review cursor automatically, whereas no movement will occur when manually tethered to the review cursor.
+
+This option is shown only if "[tether braille](#BrailleTether)" is set to "automatically" or "to review".
+
+To toggle move system caret when routing review cursor from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2278,9 +2341,13 @@ This setting is shown only if "[tether braille](#BrailleTether)" is set to "auto
 |only when tethered automatically |pressing a cursor routing key will only move the system caret or focus when NVDA is tethered to the review cursor automatically. No movement will occur when you tether manually the Braille display to the review cursor.|
 |always |pressing a cursor routing key will always move the system caret or focus when supported. When the current review mode is [Screen Review](#ScreenReview) or [object review](#ObjectReview), there is no physical caret. In this case, NVDA tries to focus the object in which the text you're routing to is located.|
 
-To toggle move system caret when routing review cursor from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
-
 ##### Read by Paragraph {#BrailleSettingsReadByParagraph}
+
+If enabled, braille will be displayed by paragraphs instead of lines.
+Also, the next and previous line commands will move by paragraph accordingly.
+This means that you do not have to scroll the display at the end of each line even where more text would fit on the display.
+This may allow for more fluent reading of large amounts of text.
+It is disabled by default.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2292,9 +2359,18 @@ To toggle move system caret when routing review cursor from anywhere, please ass
 |enabled |Braille will be displayed by paragraphs instead of lines. Also, the next and previous line commands will move by paragraph accordingly. This means that you do not have to scroll the display at the end of each line even where more text would fit on the display.|
 |disabled |Braille will be displayed by lines instead of paragraphs. The next and previous line commands will move line by line accordingly.|
 
-Enabling this setting may allow for more fluent reading of large amounts of text.
-
 ##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
+
+If this is enabled, a word which is too large to fit at the end of the braille display will not be split.
+Instead, there will be some blank space at the end of the display.
+When you scroll the display, you will be able to read the entire word.
+This is sometimes called "word wrap".
+Note that if the word is too large to fit on the display even by itself, the word must still be split.
+
+If this is disabled, as much of the word as possible will be displayed, but the rest will be cut off.
+When you scroll the display, you will then be able to read the rest of the word.
+
+Enabling this may allow for more fluent reading, but generally requires you to scroll the display more.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2306,22 +2382,43 @@ Enabling this setting may allow for more fluent reading of large amounts of text
 |enabled |a word which is too large to fit at the end of the braille display will not be split. Instead, the word will be shown  completely on the display. There will be some blank space at the end of the display in some cases. That means the word has been wrapped to the next line of braille in order to fit completely on the display.|
 |disabled |as much of the word as possible will be shown on the Braille display, but the rest of the word will be cut off. When you scroll the display to the nex line of Braille, you will then be able to read the rest of the word.|
 
-Note: if the word is too large to fit on the display even by itself, the word must still be split despite the word wrap setting enabled.
-Enabling this setting may allow for more fluent reading, but generally requires you to scroll the display more often.
-
 ##### Unicode normalization {#BrailleUnicodeNormalization}
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Default (Disabled), Enabled, Disabled|
-|Default |Disabled|
 
 When this option is enabled, unicode normalization is performed on the text that is brailled on the braille display.
 This is beneficial when coming across characters in braille that are unknown in a particular braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
 Other benefits of unicode normalization are explained in greater detail in the [section for the equivalent speech setting](#SpeechUnicodeNormalization).
 
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Disabled), Enabled, Disabled|
+|Default |Disabled|
+
 ##### Focus context presentation {#BrailleSettingsFocusContextPresentation}
 
-This setting allows you to choose what context information NVDA will show on the braille display when an object gets focus.
+This option allows you to choose what context information NVDA will show on the braille display when an object gets focus.
+Context information refers to the hierarchy of objects containing the focus.
+For example, when you focus a list item, this list item is part of a list.
+This list might be contained by a dialog, etc.
+Please consult the section about [object navigation](#ObjectNavigation) for more information about the hierarchy that applies to objects in NVDA.
+
+When set to fill display for context changes, NVDA will try to display as much context information as possible on the braille display, but only for the parts of the context that have changed.
+For the example above, this means that when changing focus to the list, NVDA will show the list item on the braille display.
+Furthermore, if there is enough space left on the braille display, NVDA will try to show that the list item is part of a list.
+If you then start moving through the list with your arrow keys, it is assumed that you are aware that you are still in the list.
+Thus, for the remaining list items you focus, NVDA will only show the focused list item on the display.
+In order for you to read the context again (i.e. that you are in a list and that the list is part of a dialog), you will have to scroll your braille display back.
+
+When this option is set to always fill the display, NVDA will try to show as much context information as possible on the braille display, regardless of whether you have seen the same context information before.
+This has the advantage that NVDA will fit as much information as possible on the display.
+However, the downside is that there is always a difference in the position where the focus starts on the braille display.
+This can make it difficult to skim a long list of items, for example, as you will need to continually move your finger to find the start of the item.
+This was the default behaviour for NVDA 2017.2 and before.
+
+When you set the focus context presentation option to only show the context information when scrolling back, NVDA never shows context information on your braille display by default.
+Thus, in the example above, NVDA will display that you focused a list item.
+However, in order for you to read the context (i.e. that you are in a list and that the list is part of a dialog), you will have to scroll your braille display back.
+
+To toggle focus context presentation from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2334,29 +2431,14 @@ This setting allows you to choose what context information NVDA will show on the
 |always fill the display |NVDA will try to show as much context information as possible on the braille display, regardless of whether you have seen the same context information before.|
 |only when scrolling back |NVDA never shows context information on your braille display by default unless you scroll the display backwards.|
 
-Context information refers to the hierarchy of objects containing the focus.
-For example, when you focus a list item, this list item is part of a list.
-This list might be contained by a dialog, etc.
-Please consult the section about [object navigation](#ObjectNavigation) for more information about the hierarchy that applies to objects in NVDA.
-
-With the default setting, when changing focus to e.g. a list, NVDA will show the list item on the braille display.
-Furthermore, if there is enough space left on the braille display, NVDA will try to show that the list item is part of a list.
-If you then start moving through the list with your arrow keys, it is assumed that you are aware that you are still in the list.
-Thus, for the remaining list items you focus, NVDA will only show the focused list item on the display.
-In order for you to read the context again (i.e. that you are in a list and that the list is part of a dialog), you will have to scroll your braille display back.
-
-Setting the option "always fill the display" has the advantage that NVDA will fit as much information as possible on the display.
-However, the downside is that on every line there is always a difference in the position where the focus starts on the braille display.
-This can make it difficult to skim a long list of items, for example, as you will need to continually move your finger to find the start of the item.
-
-When setting the option "only when scrolling back", NVDA will display e.g. that you focused a list item.
-However, in order for you to read the context (i.e. that you are in a list and that the list is part of a dialog), you will have to scroll your braille display backwards.
-
-To toggle focus context presentation from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
-
 ##### Interrupt speech while scrolling {#BrailleSettingsInterruptSpeech}
 
 This setting determines if speech should be interrupted when the Braille display is scrolled backwards/forwards.
+Previous/next line commands always interrupt speech.
+
+On-going speech might be a distraction while reading Braille.
+For this reason the option is enabled by default, interrupting speech when scrolling braille.
+Disabling this option allows speech to be heard while simultaneously reading Braille.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2368,12 +2450,14 @@ This setting determines if speech should be interrupted when the Braille display
 |enabled |Previous/next line commands on the Braille display will always interrupt speech.|
 |disabled |allows speech to be heard while simultaneously reading Braille.|
 
-On-going speech might be a distraction while reading Braille.
-For this reason the setting is enabled by default, interrupting speech when scrolling braille.
-
 ##### Show selection {#BrailleSettingsShowSelection}
 
 This setting determines if selection indicator (dots 7 and 8) is shown by the braille display.
+The option is enabled by default so the selection indicator is shown.
+The selection indicator might be a distraction while reading.
+Disabling this option may improve readability.
+
+To toggle show selection from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2384,10 +2468,6 @@ This setting determines if selection indicator (dots 7 and 8) is shown by the br
 |---|---|
 |enabled |the selection indicator is shown as dots 7 and 8 on the Braille display, and the dots are not blinking.|
 |disabled |The selection indicator is not shown in Braille.|
-
-The selection indicator might be a distraction while reading.
-
-To toggle show selection from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
 #### Select Braille Display {#SelectBrailleDisplay}
 
@@ -2404,12 +2484,7 @@ If there is an error loading the display driver, NVDA will notify you with a mes
 ##### Braille Display {#SelectBrailleDisplayDisplay}
 
 This combo box presents you with several options depending on what braille display drivers are available on your system.
-NVDA comes packed with following options:
-
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |automatic, Eco Braille displays, Hedo mobile USB, Hedo Profile USB, MDV Lilli, Papenmeier Braillex newer models, Papenmeier Braillex older models, Seika Braille displays, no Braille|
-|Default |automatic|
+Move between these options with the arrow keys.
 
 The automatic option will allow NVDA to search for many supported braille displays in the background.
 When this feature is enabled and you connect a supported display using USB or bluetooth, NVDA will automatically connect with this display.
@@ -2417,6 +2492,14 @@ When this feature is enabled and you connect a supported display using USB or bl
 No braille means that you are not using braille.
 
 Please see the [Supported Braille Displays](#SupportedBrailleDisplays) section for more information about supported braille displays and which of these support automatic detection in the background.
+
+NVDA comes packed with following options:
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |automatic, Eco Braille displays, Hedo mobile USB, Hedo Profile USB, MDV Lilli, Papenmeier Braillex newer models, Papenmeier Braillex older models, Seika Braille displays, no Braille|
+|Default |automatic|
+
 
 ##### Displays to detect automatically {#SelectBrailleDisplayAutoDetect}
 
@@ -2431,14 +2514,14 @@ You may consult the documentation for your braille display in the section [Suppo
 
 ##### Port {#SelectBrailleDisplayPort}
 
-This setting, if available, allows you to choose what port or type of connection will be used to communicate with the braille display you have selected.
+This option, if available, allows you to choose what port or type of connection will be used to communicate with the braille display you have selected.
 It is a combo box containing the possible choices for your braille display.
 
 By default, NVDA employs automatic port detection, which means the connection with the braille device will be established automatically by scanning for available USB and bluetooth devices on your system.
 However, for some braille displays, you may be able to explicitly choose what port should be used.
 Common options are "Automatic" (which tells NVDA to employ the default automatic port selection procedure), "USB", "Bluetooth" and legacy serial communication ports if your braille display supports this type of communication.
 
-This setting won't be available if your braille display only supports automatic port detection.
+This option won't be available if your braille display only supports automatic port detection.
 
 You may consult the documentation for your braille display in the section [Supported Braille Displays](#SupportedBrailleDisplays) to check for more details on the supported types of communication and available ports.
 
@@ -2458,12 +2541,7 @@ The Audio category in the NVDA Settings dialog contains options that let you cha
 
 ##### Output device {#SelectSynthesizerOutputDevice}
 
-This setting allows you to choose the audio device that NVDA should instruct the selected synthesizer to speak through. The combo box contains options related to your installed sound cards or any sound output device.
-
-The option Microsoft Sound Mapper will make NVDA speak through the old Windows MME audio host.
-Microsoft Sound Mapper is a virtual device which is automatically installed on Windows Vista and higher. It installs an input and an output channel for handling audio recording and playback based on your installed real sound device.
-Some synthesizers or tones used in NVDA might need the sound mapper if the tones or the speech produce sample rates below 32 KHZ.
-The sound mapper is the default virtual device in Windows which can playback such sample rates.
+This option allows you to choose the audio device that NVDA should instruct the selected synthesizer to speak through. The combo box contains options related to your installed sound cards or any sound output device.
 
 <!-- KC:setting -->
 
@@ -2471,7 +2549,14 @@ The sound mapper is the default virtual device in Windows which can playback suc
 
 Key: `NVDA+shift+d`
 
-This setting allows you to choose if NVDA should lower the volume of other applications while NVDA is speaking, or all the time while NVDA is running.
+This option allows you to choose if NVDA should lower the volume of other applications while NVDA is speaking, or all the time while NVDA is running.
+
+* No Ducking: NVDA will never lower the volume of other audio.
+* Duck when outputting speech and sounds: NVDA will only lower the volume of other audio when NVDA is speaking or playing sounds. This may not work for all synthesizers.
+* Always duck: NVDA will keep the volume of other audio lower the whole time NVDA is running.
+
+This option is only available if NVDA has been installed.
+It is not possible to support audio ducking for portable and temporary copies of NVDA.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2484,11 +2569,12 @@ This setting allows you to choose if NVDA should lower the volume of other appli
 |duck when outputting speech and sounds |NVDA will only lower the volume of other audio when NVDA is speaking or playing sounds.|
 |always duck |The first time NVDA speaks or plays sounds while other audio is playing, NVDA will lower  the volume of other audio permanently until NVDA exit.|
 
-This setting may not work for all synthesizers.
-This setting is only available if NVDA has been installed.
-It is not possible to support audio ducking for portable and temporary copies of NVDA.
-
 ##### Volume of NVDA sounds follows voice volume {#SoundVolumeFollowsVoice}
+
+When this option is enabled, the volume of NVDA sounds and beeps will follow the volume setting of the voice you are using.
+If you decrease the volume of the voice, the volume of sounds will decrease.
+Similarly, if you increase the volume of the voice, the volume of sounds will increase.
+This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2500,19 +2586,54 @@ It is not possible to support audio ducking for portable and temporary copies of
 |enabled |the volume of NVDA sounds and beeps will follow the volume setting of the synthesizer voice you are using. If you change  the volume of the synthesizer's voice, the volume of NVDA sounds will change too.|
 |disabled |The changes to the volume of the synthesizer's voice will not have any effect on the volume of NVDA sounds.|
 
-This setting is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
-
 ##### Volume of NVDA sounds {#SoundVolume}
 
 This slider allows you to set the volume of NVDA sounds and beeps.
 This setting only takes effect when "Volume of NVDA sounds follows voice volume" is disabled.
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
+##### Time to keep audio device awake after speech {#AudioAwakeTime}
+
+This edit box specifies how long NVDA keeps the audio device awake after speech ends.
+This allows NVDA to avoid certain speech glitches like dropped parts of words.
+This can happen due to audio devices (especially Bluetooth and wireless devices) entering standby mode.
+This might also be helpful in other use cases, such as when running NVDA inside a virtual machine (e.g. Citrix Virtual Desktop), or on certain laptops.
+
+Lower values may allow audio to be cut-off more often, as a device may enter standby mode too soon, causing the start of the following speech to be clipped.
+Setting the value too high may cause the battery of the sound output device to discharge faster, as it stays active for longer while no sound is being sent.
+
+You can set the time to zero in order to disable this feature.
+
 ##### Sound split {#SelectSoundSplitMode}
 
 The sound split feature allows users to make use of their stereo output devices, such as headphones and speakers.
 Sound split makes it possible to have NVDA speech in one channel (e.g. left) and have all other applications play their sounds in the other channel (e.g. right).
-Following options are available in the combo box:
+
+By default sound split is disabled, which means that all applications including NVDA will play sounds in both left and right channels.
+A gesture allows cycling through the various sound split modes:
+<!-- KC:beginInclude -->
+
+| Name |Key |Description|
+|---|---|---|
+|Cycle Sound Split Mode |`NVDA+alt+s` |Cycles between sound split modes.|
+
+<!-- KC:endInclude -->
+
+By default this command will cycle between the following modes:
+
+* Disabled sound split: both NVDA and other applications output sounds to both left and right channels.
+* NVDA on the left and applications on the right: NVDA will speak in the left channel, while other applications will play sounds in the right channel.
+* NVDA on the right and applications on the left: NVDA will speak in the right channel, while other applications will play sounds in the left channel.
+
+There are more advanced sound split modes available in NVDA setting combo box.
+If you wish to adjust volume of all applications except for NVDA, consider using [the dedicated commands](#OtherAppVolume).
+Please note, that sound split doesn't work as a mixer.
+For example, if an application is playing a stereo sound track while sound split is set to "NVDA on the left and applications on the right", then you will only hear the right channel of the sound track, while the left channel of the sound track will be muted.
+
+This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
+
+Please note, that if NVDA crashes, then it won't be able to restore application sounds volume, and those applications might still output sound only in one channel after NVDA crash.
+In order to mitigate this, please restart NVDA.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2530,27 +2651,9 @@ Following options are available in the combo box:
 |NVDA in both channels and applications on the left |NVDA will play sounds in both left and right channels but all other applications will be panned to the left channel.|
 |NVDA in both channels and applications on the right |NVDA will play sounds in both left and right channels but all other applications will be panned to the right channel.|
 
-When sound split is not disabled, NVDA will not restore volume and panning of other apps after NVDA exit. You have to choose "sound split disabled" to have the volume and panning of other apps restored.
-If you wish to adjust volume of all applications except for NVDA, consider using [the dedicated commands](#OtherAppVolume).
-Please note, that sound split doesn't work as a mixer.
-For example, if an application is playing a stereo sound track while sound split is set to "NVDA on the left and applications on the right", then you will only hear the right channel of the sound track, while the left channel of the sound track will be muted.
-
-This setting is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
-Please note, that if NVDA crashes, then it won't be able to restore application sounds volume, and those applications might still output sound only in one channel after NVDA crash.
-In order to mitigate this, please restart NVDA.
-
-A gesture allows cycling through the various sound split modes:
-<!-- KC:beginInclude -->
-
-| Name |Key |Description|
-|---|---|---|
-|Cycle sound split mode |`NVDA+alt+s` |Cycles between sound split modes.|
-
-<!-- KC:endInclude -->
-
 ##### Customizing Sound split modes {#CustomizeSoundSplitModes}
+
 This checkable list allows selecting which sound split modes are included when cycling between them using `NVDA+alt+s`.
-Navigate to [Sound Split](#SelectSoundSplitMode) to read more about all available modes which you can include or exclude from the key command.
 Modes which are unchecked are excluded.
 
 By default only three modes are included.
@@ -2560,30 +2663,28 @@ By default only three modes are included.
 * NVDA in both channels and applications in both channels
 
 Note that it is necessary to check at least one mode.
-This setting is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
-
-##### Time to keep audio device awake after speech {#AudioAwakeTime}
-
-This edit box specifies how long NVDA keeps the audio device awake after speech ends.
-This allows NVDA to avoid certain speech glitches like dropped parts of words.
-This can happen due to audio devices (especially Bluetooth and wireless devices) entering standby mode.
-This might also be helpful in other use cases, such as when running NVDA inside a virtual machine (e.g. Citrix Virtual Desktop), or on certain laptops.
-
-Lower values may allow audio to be cut-off more often, as a device may enter standby mode too soon, causing the start of the following speech to be clipped.
-Setting the value too high may cause the battery of the sound output device to discharge faster, as it stays active for longer while no sound is being sent.
-
-You can set the time to zero in order to disable this feature.
+This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
 #### Vision {#VisionSettings}
 
 The Vision category in the NVDA Settings dialog allows you to enable, disable and configure [visual aids](#Vision).
 
-Note that the available settings in this category could be extended by [NVDA add-ons](#AddonsManager).
-By default, this settings category contains the following settings:
+Note that the available options in this category could be extended by [NVDA add-ons](#AddonsManager).
+By default, this settings category contains the following options:
 
 ##### Visual Highlight {#VisionSettingsFocusHighlight}
 
 The check boxes in the Visual Highlight grouping control the behaviour of NVDA's built-in [Visual Highlight](#VisionFocusHighlight) facility.
+
+* Enable Highlighting: Toggles Visual Highlight on and off.
+* Highlight system focus: toggles whether the [system focus](#SystemFocus) will be highlighted.
+* Highlight navigator object: toggles whether the [navigator object](#ObjectNavigation) will be highlighted.
+* Highlight browse mode cursor: Toggles whether the [virtual browse mode cursor](#BrowseMode) will be highlighted.
+
+Note that checking and unchecking the "Enable Highlighting" check box wil also change the state of the tree other check boxes accordingly.
+Therefore, if "Enable Highlighting" is off and you check this check box, the other tree check boxes will also be checked automatically.
+If you only want to highlight the focus and leave the navigator object and browse mode check boxes unchecked, the state of the "Enable Highlighting" check box will be half checked.
+
 Following settings are available:
 
 | Setting |Option |Default|
@@ -2605,13 +2706,19 @@ Following settings are available:
 |Highlight browse mode cursor |enabled |[virtual browse mode cursor](#BrowseMode) will be  highlighted by visual rectangles on the screen.|
 | |disabled |[virtual browse mode cursor](#BrowseMode) will not be  highlighted on the screen.|
 
-Note that checking and unchecking the "Enable Highlighting" check box wil also change the state of the tree other check boxes accordingly.
-Therefore, if "Enable Highlighting" is off and you check this check box, the other tree check boxes will also be checked automatically.
-If you only want to highlight the focus and leave the navigator object and browse mode check boxes unchecked, the state of the "Enable Highlighting" check box will be half checked.
-
 ##### Screen Curtain {#VisionSettingsScreenCurtain}
 
-These checkboxes allow you to manage whether content is shown on the screen or not.
+You can enable the [Screen Curtain](#VisionScreenCurtain) by checking the "Make screen black (immediate effect)" check box.
+A warning that your screen will become black after activation will be displayed.
+Before continuing (selecting "Yes"), ensure you have enabled speech / braille and will be able to control your computer without the use of the screen.
+Select "No" if you no longer wish to enable the Screen Curtain.
+If you are sure, you can choose the Yes button to enable the screen curtain.
+If you no longer want to see this warning message every time, you can change this behaviour in the dialog that displays the message.
+You can always restore the warning by checking the "Always show a warning when loading Screen Curtain" check box next to the "Make screen black" check box.
+
+By default, sounds are played when the Screen Curtain is toggled.
+When you want to change this behaviour, you can uncheck the "Play sound when toggling Screen Curtain" check box.
+
 Following settings are available:
 
 | Setting |Option |Default|
@@ -2628,12 +2735,6 @@ Following settings are available:
 | |disabled |Screen curtain will load everytime without and warning dialog.|
 |Play sound when toggling Screen Curtain |enabled |NVDA will play sounds when enabling or disabling  screen curtain.|
 | |disabled |NVDA will not play any sounds when enabling or disabling  screen curtain.|
-
-When you enable screen curtain, a warning that your screen will become black after activation will be displayed.
-Before continuing (selecting "Yes"), ensure you have enabled speech / braille and will be able to control your computer without the use of the screen.
-Select "No" if you no longer wish to enable the Screen Curtain.
-If you are sure, you can choose the Yes button to enable the screen curtain.
-If you no longer want to see this warning message every time, you can change this behaviour in the dialog that displays the message.
 
 ##### Settings for third party visual aids {#VisionSettingsThirdPartyVisualAids}
 
@@ -2654,7 +2755,7 @@ This settings category contains the following options:
 
 ##### Keyboard layout {#KeyboardSettingsLayout}
 
-This combo box lets you choose what type of keyboard layout NVDA should use.
+This combo box lets you choose what type of keyboard layout NVDA should use. Currently the two that come with NVDA are Desktop and Laptop.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2670,6 +2771,12 @@ This combo box lets you choose what type of keyboard layout NVDA should use.
 
 The checkboxes in this list control what keys can be used as [NVDA modifier keys](#TheNVDAModifierKey). The following keys are available to choose from:
 
+* The Caps Lock key
+* The insert key on the number pad
+* The extended insert key (usually found above the arrow keys, near home and end)
+
+If no key is chosen as the NVDA key it may be impossible to access many NVDA commands, therefore you are required to check at least one of the modifiers.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |caps lock, numpad  insert, insert|
@@ -2681,13 +2788,13 @@ The checkboxes in this list control what keys can be used as [NVDA modifier keys
 |`numpad insert` |when turning the `numlock` off, the `numpadZero`, key will become an `insert` key. This will work as NVDA key. Pressing and holding it will allow you to perform NVDA specific key commands.|
 |`insert` |the `insert` key, near the `delete`, `home` and `end` keys will work as NVDA key. Pressing and holding it will allow you to perform NVDA specific key commands.|
 
-If no key is chosen as the NVDA key it may be impossible to access many NVDA commands, therefore you are required to check at least one of the modifiers.
-
 <!-- KC:setting -->
 
 ##### Speak Typed Characters {#KeyboardSettingsSpeakTypedCharacters}
 
 Key: NVDA+2
+
+When enabled, NVDA will announce all characters you type on the keyboard.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2705,6 +2812,8 @@ Key: NVDA+2
 
 Key: NVDA+3
 
+When enabled, NVDA will announce all words you type on the keyboard.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |enabled, disabled|
@@ -2716,6 +2825,8 @@ Key: NVDA+3
 |disabled |NVDA will not announce typed words on the keyboard.|
 
 ##### Speech interrupt for typed characters {#KeyboardSettingsSpeechInteruptForCharacters}
+
+If on, this option will cause speech to be interrupted each time a character is typed. This is on by default.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2729,6 +2840,8 @@ Key: NVDA+3
 
 ##### Speech interrupt for Enter key {#KeyboardSettingsSpeechInteruptForEnter}
 
+If on, this option will cause speech to be interrupted each time the Enter key is pressed. This is on by default.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |enabled, disabled|
@@ -2740,6 +2853,8 @@ Key: NVDA+3
 |disabled |NVDA speech will  always speak until the end of an uterance  and will not be interrupted each time when the `enter` key is pressed.|
 
 ##### Allow skim reading in Say All {#KeyboardSettingsSkimReading}
+
+If on, certain navigation commands (such as quick navigation in browse mode or moving by line or paragraph) do not stop Say All, rather Say All jumps to the new position and continues reading.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2753,6 +2868,10 @@ Key: NVDA+3
 
 ##### Beep if Typing Lowercase Letters when Caps Lock is On {#KeyboardSettingsBeepLowercase}
 
+When enabled, a warning beep will be heard if a letter is typed with the shift key while Caps Lock is on.
+Generally, typing shifted letters with Caps Lock is unintentional and is usually due to not realizing that Caps Lock is enabled.
+Therefore, it can be quite helpful to be warned about this.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |enabled, disabled|
@@ -2763,14 +2882,13 @@ Key: NVDA+3
 |enabled |A warning beep will be heard if a letter is typed with the shift key while Caps Lock is on.|
 |disabled |NVDA will not warn  you if a letter is typed with the shift key while Caps Lock is on.|
 
-Generally, typing shifted letters with Caps Lock is unintentional and is usually due to not realizing that Caps Lock is enabled.
-Therefore, it can be quite helpful to be warned about this.
-
 <!-- KC:setting -->
 
 ##### Speak Command Keys {#KeyboardSettingsSpeakCommandKeys}
 
 Key: NVDA+4
+
+When enabled, NVDA will announce all non-character keys you type on the keyboard. This includes key combinations such as control plus another letter.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2784,6 +2902,9 @@ Key: NVDA+4
 
 ##### Play sound for spelling errors while typing {#KeyboardSettingsAlertForSpellingErrors}
 
+When enabled, a short buzzer sound will be played when a word you type contains a spelling error.
+This option is only available if reporting of spelling errors is enabled in NVDA's [Document Formatting Settings](#DocumentFormattingSettings), found in the NVDA Settings dialog.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |enabled, disabled|
@@ -2794,9 +2915,10 @@ Key: NVDA+4
 |enabled |A short buzzer sound will be played when a word you type contains a spelling error.|
 |disabled |NVDA will not play any sound when a word you typed contains a spelling error.|
 
-This setting is only available if reporting of spelling errors is enabled in NVDA's [Document Formatting Settings](#DocumentFormattingSettings), found in the NVDA Settings dialog.
-
 ##### Handle keys from other applications {#KeyboardSettingsHandleKeys}
+
+This option allows the user to control if key presses generated by applications such as on-screen keyboards and speech recognition software should be processed by NVDA.
+This option is on by default, though certain users may wish to turn this off, such as those typing Vietnamese with the UniKey typing software as it will  cause incorrect character input.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2807,8 +2929,6 @@ This setting is only available if reporting of spelling errors is enabled in NVD
 |---|---|
 |enabled |Key presses generated by applications such as on-screen keyboards and speech recognition software will be processed by NVDA.|
 |disabled |Key presses generated by applications such as on-screen keyboards and speech recognition software will not be processed by NVDA, for example NVDA will be silent when typing on an on-screen keyboard.|
-
-Certain users may wish to turn off this setting, such as those typing Vietnamese with the UniKey typing software as it will  cause incorrect character input.
 
 #### Mouse {#MouseSettings}
 
@@ -2822,6 +2942,9 @@ The Mouse category in the NVDA Settings dialog allows NVDA to track the mouse, p
 This category contains the following options:
 
 ##### Report Mouse Shape Changes {#MouseSettingsShape}
+
+A checkbox, that when checked means that NVDA will announce the shape of the mouse pointer each time it changes.
+The mouse pointer in Windows changes shape to convey certain information such as when something is editable, or when something is loading etc.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2839,6 +2962,8 @@ This category contains the following options:
 
 Key: NVDA+m
 
+When enabled, NVDA will announce the text currently under the mouse pointer, as you move it around the screen. This allows you to find things on the screen, by physically moving the mouse, rather than trying to find them through object navigation.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |enabled, disabled|
@@ -2849,9 +2974,12 @@ Key: NVDA+m
 |enabled |NVDA will announce the text and the object currently under the mouse pointer, as you move it over the screen. This allows you to find things on the screen, by physically moving the mouse, rather than trying to find them through object navigation.|
 |disabled |NVDA will be silent when you move the mouse pointer over the screen.|
 
-This setting must be enabled in order for all other mouse related settings to be available.
-
 ##### Text unit resolution {#MouseSettingsTextUnit}
+
+If NVDA is set to announce the text under the mouse as you move it, this option allows you to choose exactly how much text will be spoken.
+The options are character, word, line and paragraph.
+
+To toggle text unit resolution from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2865,9 +2993,11 @@ This setting must be enabled in order for all other mouse related settings to be
 |Line |NVDA will announce every line of visible text on the screen, even from multiple objects, e.g. when two links are on the same line.|
 |paragraph |NVDA will announce every paragraph  of visible text on the screen if possible, even when it contains  multiple objects, e.g. when a text paragraph contains multiple links.|
 
-To toggle text unit resolution from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
-
 ##### Report object when mouse enters it {#MouseSettingsRole}
+
+If this checkbox is checked, NVDA will announce information about objects as the mouse moves inside them.
+This includes the role (type) of the object as well as states (checked/pressed), cell coordinates in tables, etc.
+Note that the announcement of some object details might be dependent on how other settings are set, such as in the [object presentation](#ObjectPresentationSettings) or [Document Formatting](#DocumentFormattingSettings) categories.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2879,9 +3009,11 @@ To toggle text unit resolution from anywhere, please assign a custom gesture usi
 |enabled |NVDA will announce information about objects as the mouse moves inside them. This includes the role (type) of the object as well as states (checked/pressed), cell coordinates in tables, etc.|
 |disabled |NVDA will not announce information about objects you enter  when you move the mouse pointer over the screen. Instead, NVDA will only announce the visible text.|
 
-Note that the announcement of some object details might be dependent on how other settings are set, such as in the [object presentation](#ObjectPresentationSettings) or [Document Formatting](#DocumentFormattingSettings) categories.
-
 ##### Play audio coordinates when mouse moves {#MouseSettingsAudio}
+
+Checking this checkbox makes NVDA play beeps as the mouse moves, so that the user can work out where the mouse is in regards to the dimensions of the screen.
+The higher the mouse is on the screen, the higher the pitch of the beeps.
+The further left or right the mouse is located on the screen, the further left or right the sound will be played (assuming the user has stereo speakers or headphones).
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2893,10 +3025,10 @@ Note that the announcement of some object details might be dependent on how othe
 |enabled |NVDA plays beeps as the mouse moves, so that the user can work out where the mouse is in regards to the dimensions of the screen.|
 |disabled |NVDA will not announce the location of the   mouse pointer via beeps when you move the mouse pointer over the screen.|
 
-The higher the mouse is on the screen, the higher the pitch of the beeps.
-The further left or right the mouse is located on the screen, the further left or right the sound will be played (assuming the user has stereo speakers or headphones).
-
 ##### Brightness controls audio coordinates volume {#MouseSettingsBrightness}
+
+If the "play audio coordinates when mouse moves" checkbox is checked, then checking this checkbox means that the volume of the audio coordinates beeps is controlled by how bright the screen is under the mouse.
+This setting is unchecked by default.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2909,6 +3041,10 @@ The further left or right the mouse is located on the screen, the further left o
 |disabled |The brightness of the screen will not have any effect on the volume of audio coordinates.|
 
 ##### Ignore mouse input from other applications {#MouseSettingsHandleMouseControl}
+
+This option allows the user to ignore mouse events (including mouse movement and button presses) generated by other applications such as TeamViewer and other remote control software.
+This option is unchecked by default.
+If you check this option and you have the "Enable mouse tracking" option enabled, NVDA will not announce what is under the mouse if the mouse is moved by another application.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2928,6 +3064,9 @@ This category contains the following options:
 ##### Enable touch interaction support {#TouchSupportEnable}
 
 This checkbox enables NVDA's touch interaction support.
+If enabled, you can use your fingers to navigate and interact with items on screen using a touchscreen device.
+If disabled, touchscreen support will be disabled as though NVDA is not running.
+This setting can also be toggled using `NVDA+control+alt+t`.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2939,11 +3078,11 @@ This checkbox enables NVDA's touch interaction support.
 |enabled |You can use your fingers to navigate and interact with items on screen using a touchscreen device.|
 |disabled |NVDA will not process finger gestures on a touchscreen device, so the touchscreen will work as if NVDA was not running.|
 
-This setting can also be toggled using `NVDA+control+alt+t`.
-
 ##### Touch typing mode {#TouchTypingMode}
 
 This checkbox allows you to specify the method you wish to use when entering text using the touch keyboard.
+If this checkbox is checked, when you locate a key on the touch keyboard, you can lift your finger and the selected key will be pressed.
+If this is unchecked, you need to double-tap on the key of the touch keyboard to press the key.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2966,6 +3105,8 @@ This category contains the following options:
 
 Key: NVDA+7
 
+When enabled, The review cursor will always be placed in the same object as the current system focus whenever the focus changes.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |enabled, disabled|
@@ -2982,6 +3123,8 @@ Key: NVDA+7
 
 Key: NVDA+6
 
+When enabled, the review cursor will automatically be moved to the position of the System caret each time it moves.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |enabled, disabled|
@@ -2993,6 +3136,8 @@ Key: NVDA+6
 |disabled |When the system caret changes, the review cursor will remain in its old position. This way you can explore two regions of the screen independently.|
 
 ##### Follow mouse cursor {#ReviewCursorFollowMouse}
+
+When enabled, the review cursor will follow the mouse as it moves.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3006,6 +3151,10 @@ Key: NVDA+6
 
 ##### Simple Review mode {#ReviewCursorSimple}
 
+When enabled, NVDA will filter the hierarchy of objects that can be navigated to exclude objects that aren't of interest to the user; e.g. invisible objects and objects used only for layout purposes.
+
+To toggle simple review mode from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |enabled, disabled|
@@ -3015,8 +3164,6 @@ Key: NVDA+6
 |---|---|
 |enabled |NVDA will filter the hierarchy of objects that can be navigated to exclude objects that aren't of interest to the user; e.g. invisible objects and objects used only for layout purposes.|
 |disabled |NVDA will report the whole hierarchy of objects that can be navigated, even objects which are invisible or are created for layout purposes only.|
-
-To toggle simple review mode from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
 #### Object Presentation {#ObjectPresentationSettings}
 
@@ -3032,6 +3179,9 @@ These options typically apply to focus reporting and NVDA object navigation, but
 
 ##### Report tooltips {#ObjectPresentationReportToolTips}
 
+A checkbox that when checked tells NVDA to report tooltips as they appear.
+Many Windows and controls show a small message (or tooltip) when you move the mouse pointer over them, or sometimes when you move the focus to them.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |enabled, disabled|
@@ -3044,6 +3194,11 @@ These options typically apply to focus reporting and NVDA object navigation, but
 
 ##### Report notifications {#ObjectPresentationReportNotifications}
 
+This checkbox, when checked, tells NVDA to report help balloons and toast notifications as they appear.
+
+* Help Balloons are like tooltips, but are usually larger in size, and are associated with system events such as a network cable being unplugged, or perhaps to alert you about Windows security issues.
+* Toast notifications have been introduced in Windows 10 and appear in the notification centre in the system tray, informing about several events (i.e. if an update has been downloaded, a new e-mail arrived in your inbox, etc.).
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |enabled, disabled|
@@ -3054,10 +3209,10 @@ These options typically apply to focus reporting and NVDA object navigation, but
 |enabled |NVDA reports help baloons and toast notifications as they appear. These notifications appear usually in the notifications area of Windows.|
 |disabled |NVDA will ignore help baloons and toas notifications when they appear on the screen.|
 
-* Help Balloons are like tooltips, but are usually larger in size, and are associated with system events such as a network cable being unplugged, or perhaps to alert you about Windows security issues.
-* Toast notifications have been introduced in Windows 10 and appear in the notification centre in the system tray, informing about several events (i.e. if an update has been downloaded, a new e-mail arrived in your inbox, etc.).
-
 ##### Report Object Shortcut Keys {#ObjectPresentationShortcutKeys}
+
+When this checkbox is checked, NVDA will include the shortcut key that is associated with a certain object or control when it is reported.
+For example the File menu on a menu bar may have a shortcut key of alt+f.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3071,6 +3226,8 @@ These options typically apply to focus reporting and NVDA object navigation, but
 
 ##### Report object position information {#ObjectPresentationPositionInfo}
 
+This option lets you choose whether you wish to have an object's position (e.g. 1 of 4) reported when moving to the object with the focus or object navigation.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |enabled, disabled|
@@ -3083,6 +3240,10 @@ These options typically apply to focus reporting and NVDA object navigation, but
 
 ##### Guess Object Position Information when unavailable {#ObjectPresentationGuessPositionInfo}
 
+If reporting of object position information is turned on, this option allows NVDA to guess object position information when it is otherwise unavailable for a particular control.
+
+When on, NVDA will report position information for more controls such as menus and toolbars, however this information may be slightly inaccurate.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |enabled, disabled|
@@ -3093,9 +3254,9 @@ These options typically apply to focus reporting and NVDA object navigation, but
 |enabled |If reporting of object position information is turned on, NVDA will try to guess object position information when it is otherwise unavailable for a particular control.|
 |disabled |When focusing an object with the system focus or the navigator object, NVDA will not try to guess  its position when it is unavailable.|
 
-This setting makes NVDA report position information for more controls such as menus and toolbars, however this information may be slightly inaccurate.
-
 ##### Report Object descriptions {#ObjectPresentationReportDescriptions}
+
+Uncheck this checkbox if you don't wish to have the description reported along with objects (i.e. search suggestions, reporting of whole dialog window right after the dialog opens, etc.).
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3113,7 +3274,14 @@ This setting makes NVDA report position information for more controls such as me
 
 Key: NVDA+u
 
-This setting controls how NVDA reports progress bar updates to you.
+This option controls how NVDA reports progress bar updates to you.
+
+It has the following options:
+
+* Off: Progress bars will not be reported as they change.
+* Speak: This option tells NVDA to speak the progress bar in percentages. Each time the progress bar changes, NVDA will speak the new value.
+* Beep: This tells NVDA to beep each time the progress bar changes. The higher the beep, the closer the progress bar is to completion.
+* Beep and speak: This option tells NVDA to both beep and speak when a progress bar updates.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3128,6 +3296,9 @@ This setting controls how NVDA reports progress bar updates to you.
 |beep and speak |NVDA will both beep and speak when a progress bar updates.|
 
 ##### Report background progress bars {#ObjectPresentationReportBackgroundProgressBars}
+
+This is an option that, when checked, tells NVDA to keep reporting a progress bar, even if it is not physically in the foreground.
+If you minimize or switch away from a window that contains a progress bar, NVDA will keep track of it, allowing you to do other things while NVDA tracks the progress bar.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3145,6 +3316,8 @@ This setting controls how NVDA reports progress bar updates to you.
 
 Key: NVDA+5
 
+Toggles the announcement of new content in particular objects such as terminals and the history control in chat programs.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |enabled, disabled|
@@ -3157,6 +3330,13 @@ Key: NVDA+5
 
 ##### Play a sound when auto-suggestions appear {#ObjectPresentationSuggestionSounds}
 
+Toggles announcement of appearance of auto-suggestions, and if enabled, NVDA will play a sound to indicate this.
+
+Auto-suggestions are lists of suggested entries based on text entered into certain edit fields and documents.
+For example, when you enter text into the search box in Start menu in Windows Vista and later, Windows displays a list of suggestions based on what you typed.
+For some edit fields such as search fields in various Windows 10 apps, NVDA can notify you that a list of suggestions has appeared when you type text.
+The auto-suggestions list will close once you move away from the edit field, and for some fields, NVDA can notify you of this when this happens.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |enabled, disabled|
@@ -3167,17 +3347,16 @@ Key: NVDA+5
 |enabled |NVDA indicates automatically via sound that auto-suggestions appear on the screen while typing in certain edit fields such as start menu or address bars in browsers. NVDA will speak suggestions as well.|
 |disabled |NVDA will not indicate  via sound that auto-suggestions appear on the screen while typing, but it will speak the suggestions.|
 
-Auto-suggestions are lists of suggested entries based on text entered into certain edit fields and documents.
-For example, when you enter text into the search box in Start menu in Windows Vista and later, Windows displays a list of suggestions based on what you typed.
-For some edit fields such as search fields in various Windows 10 apps, NVDA can notify you that a list of suggestions has appeared when you type text.
-The auto-suggestions list will close once you move away from the edit field, and for some fields, NVDA can notify you of this when this happens.
-
 #### Input Composition {#InputCompositionSettings}
 
 The Input Composition category allows you to control how NVDA reports the input of Asian characters, such as with IME or Text Service input methods.
 Note that due to the fact that input methods vary greatly by available features and by how they convey information, it will most likely be necessary to configure these options differently for each input method to get the most efficient typing experience.
 
 ##### Automatically report all available candidates {#InputCompositionReportAllCandidates}
+
+This option, which is on by default,  allows you to choose whether or not all visible candidates should be reported automatically when a candidate list appears or its page is changed.
+Having this option on for pictographic input methods such as Chinese New ChangJie or Boshiami is useful, as you can automatically hear all symbols and their numbers and you can choose one right away.
+However, for phonetic input methods such as Chinese New Phonetic, it may be more useful to turn this option off, as all the symbols will sound the same and you will have to use the arrow keys to navigate the list items individually to gain more information  from the character descriptions for each candidate.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3189,10 +3368,11 @@ Note that due to the fact that input methods vary greatly by available features 
 |enabled |NVDA will automatically report all visible candidates when a candidate list appears or when its page has changed.|
 |disabled |NVDA will not report candidates when the list of candidates appears or its page has changed.|
 
-Having this setting on for pictographic input methods such as Chinese New ChangJie or Boshiami is useful, as you can automatically hear all symbols and their numbers and you can choose one right away.
-However, for phonetic input methods such as Chinese New Phonetic, it may be more useful to turn this setting off, as all the symbols will sound the same and you will have to use the arrow keys to navigate the list items individually to gain more information  from the character descriptions for each candidate.
-
 ##### Announce Selected Candidate {#InputCompositionAnnounceSelectedCandidate}
+
+This option, which is on by default, allows you to choose whether NVDA should announce the selected candidate when a candidate list appears or when the selection is changed.
+For input methods where the selection can be changed with the arrow keys  (such as Chinese New Phonetic) this is necessary, but for some input methods it may be more efficient typing with this option turned off.
+Note that even with this option off, the review cursor will still be placed on the selected candidate allowing you to use object navigation / review to manually read this or other candidates.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3204,10 +3384,11 @@ However, for phonetic input methods such as Chinese New Phonetic, it may be more
 |enabled |NVDA will automatically report the selected  visible candidate when a candidate list appears or when the selection has changed.|
 |disabled |NVDA will not report the selected candidate when the list of candidates appears or when the selection has changed.|
 
-For input methods where the selection can be changed with the arrow keys  (such as Chinese New Phonetic) this is necessary, but for some input methods it may be more efficient typing with this setting turned off.
-Note that even with this setting off, the review cursor will still be placed on the selected candidate allowing you to use object navigation / review to manually read this or other candidates.
-
 ##### Always include short character descriptions for candidates {#InputCompositionCandidateIncludesShortCharacterDescription}
+
+This option, which is on by default, allows you to choose whether or not NVDA should provide a short description for each character in a candidate, either when it's selected or when it's automatically read when the candidate list appears.
+Note that for locales such as Chinese, the announcement of extra character descriptions for the selected candidate is not affected by this option.
+This option may be useful for Korean and Japanese input methods.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3219,10 +3400,12 @@ Note that even with this setting off, the review cursor will still be placed on 
 |enabled |NVDA will provide a short description for each character in a candidate, either when it's selected or when it's automatically read when the candidate list appears.|
 |disabled |NVDA will not provide any short description for characters in a candidate when it is selected or the list of candidates appears.|
 
-Note that for locales such as Chinese, the announcement of extra character descriptions for the selected candidate is not affected by this setting.
-This setting may be useful for Korean and Japanese input methods.
-
 ##### Report changes to the reading string {#InputCompositionReadingStringChanges}
+
+Some input methods such as Chinese New Phonetic and New ChangJie have a reading string (sometimes known as a precomposition string).
+You can choose whether or not NVDA should announce new characters being typed into this reading string with this option.
+This option is on by default.
+Note some older input methods such as Chinese ChangJie may not use the reading string to hold precomposition characters, but instead use the composition string directly. Please see the next option for configuring reporting of the composition string.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3234,9 +3417,11 @@ This setting may be useful for Korean and Japanese input methods.
 |enabled |Some input methods such as Chinese New Phonetic and New ChangJie have a reading string (sometimes known as a precomposition string). With this option, NVDA will announce new characters being typed into this reading string.|
 |disabled |NVDA will not announce new characters being typed into reading strings such as preconmposition strings.|
 
-Note some older input methods such as Chinese ChangJie may not use the reading string to hold precomposition characters, but instead use the composition string directly. Please see the next option for configuring reporting of the composition string.
-
 ##### Report changes to the composition string {#InputCompositionCompositionStringChanges}
+
+After reading or precomposition data has been combined into a valid pictographic symbol, most input methods place this symbol into a composition string for temporary storage along with other combined symbols before they are finally inserted into the document.
+This option allows you to choose whether or not NVDA should report new symbols as they appear  in the composition string.
+This option is on by default.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3247,8 +3432,6 @@ Note some older input methods such as Chinese ChangJie may not use the reading s
 |---|---|
 |enabled |NVDA will report new symbols as they appear  in the composition string.|
 |disabled |NVDA will not report new symbols as they appear  in the composition string.|
-
-After reading or precomposition data has been combined into a valid pictographic symbol, most input methods place this symbol into a composition string for temporary storage along with other combined symbols before they are finally inserted into the document.
 
 #### Browse Mode {#BrowseModeSettings}
 
@@ -3275,7 +3458,13 @@ This field sets the amount of lines you will move by when pressing page up or pa
 
 Key: NVDA+v
 
-This setting allows you to specify whether browse mode should place clickable content (links, buttons and fields) on its own line, or if it should keep it in the flow of text as it is visually shown.
+This option allows you to specify whether browse mode should place clickable content (links, buttons and fields) on its own line, or if it should keep it in the flow of text as it is visually shown.
+Note that this option doesn't apply to Microsoft Office apps such as Outlook and Word, which always use screen layout.
+
+When screen layout is enabled, page elements will stay as they are visually shown.
+For example, a visual line of multiple links will be presented in speech and braille as multiple links on the same line.
+If it is disabled, then page elements will be placed on their own lines.
+This may be easier to understand during line by line page navigation and make items easier to interact with for some users.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3287,11 +3476,13 @@ This setting allows you to specify whether browse mode should place clickable co
 |enabled |Clickable elements will stay as they are visually shown. For example, a visual line of multiple links will be presented in speech and braille as multiple links on the same line.|
 |disabled |Clickable elements will be placed on their own lines. This may be easier to understand during line by line page navigation in browse mode and might make items easier to interact with for some users.|
 
-Note that this setting doesn't apply to Microsoft Office apps such as Outlook and Word, which always use screen layout.
-
 ##### Enable browse mode on page load {#BrowseModeSettingsEnableOnPageLoad}
 
 This checkbox toggles whether browse mode should be automatically enabled when loading a page.
+
+When this option is disabled, browse mode can still be manually activated on pages or in documents where browse mode is supported.
+See the [Browse Mode section](#BrowseMode) for a list of applications supported by browse mode.
+Note that this option does not apply to situations where browse mode is always optional, e.g. in Microsoft Word.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3303,11 +3494,10 @@ This checkbox toggles whether browse mode should be automatically enabled when l
 |enabled |Browse mode will be activated automatically on every page load, so users can use quick navigation keys to navigate the page. See the [Browse Mode section](#BrowseMode) for a list of applications which support this navigation mode.|
 |disabled |Pages will be loaded in focus mode, browse mode can still be manually activated on pages or in documents where browse mode is supported. See the [Browse Mode section](#BrowseMode) for a list of applications which support this navigation mode.|
 
-Note that this setting does not apply to situations where browse mode is always optional, e.g. in Microsoft Word.
-
 ##### Automatic Say All on page load {#BrowseModeSettingsAutoSayAll}
 
 This checkbox toggles the automatic reading of a page after it loads in browse mode.
+This option is enabled by default.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3321,7 +3511,12 @@ This checkbox toggles the automatic reading of a page after it loads in browse m
 
 ##### Include layout tables {#BrowseModeSettingsIncludeLayoutTables}
 
-This setting affects how NVDA handles tables used purely for layout purposes.
+This option affects how NVDA handles tables used purely for layout purposes.
+When on, NVDA will treat these as normal tables, reporting them based on [Document Formatting Settings](#DocumentFormattingSettings) and locating them with quick navigation commands.
+When off, they will not be reported nor found with quick navigation.
+This option is turned off by default.
+
+To toggle inclusion of layout tables from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3333,16 +3528,14 @@ This setting affects how NVDA handles tables used purely for layout purposes.
 |enabled |NVDA will treat layout tables as normal tables, reporting them based on [Document Formatting Settings](#DocumentFormattingSettings) and locating them with quick navigation commands.|
 |disabled |NVDA will not recognize layout tables as normal tables, and will not report them. Quick navigation commands cannot be used to find them.|
 
-In some situations, some browsers show some tables with content as layout tables. In these cases layout table option in NVDA should be turned on.
-However, even when it is turned off, the content of the tables will still be included as normal text.
-
-To toggle inclusion of layout tables from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
-
 ##### Configuring reporting of fields such as links and headings {#BrowseModeLinksAndHeadings}
 
-Please see the settings in the [Document Formatting category](#DocumentFormattingSettings) of the [NVDA Settings](#NVDASettings) dialog to configure the fields that are reported when navigating, such as links, headings and tables.
+Please see the options in the [Document Formatting category](#DocumentFormattingSettings) of the [NVDA Settings](#NVDASettings) dialog to configure the fields that are reported when navigating, such as links, headings and tables.
 
 ##### Automatic focus mode for focus changes {#BrowseModeSettingsAutoPassThroughOnFocusChange}
+
+This option allows focus mode to be invoked if focus changes.
+For example, when on a web page, if you press tab and you land on a form, if this option is checked, focus mode will automatically be invoked.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3354,9 +3547,11 @@ Please see the settings in the [Document Formatting category](#DocumentFormattin
 |enabled |focus mode will be invoked automatically if the system focus changes. For example, when on a web page, if you press tab and you land on a form edit field, focus mode will automatically be invoked so you can type directly something in the field.|
 |disabled |NVDA will not automatically invoke focus mode if the system focus changes. So if you press tab and land on a form field, you cannot type directly in the field.|
 
-You can however disable this setting and e.g. still type in edit fields while staying in browse mode to navigate the page with arrow keys. For this to work, you have to turn off single letter navigation via NVDA+shift+space. See the [Browse Mode section](#BrowseMode) for more details.
-
 ##### Automatic focus mode for caret movement {#BrowseModeSettingsAutoPassThroughOnCaretMove}
+
+This option, when checked, allows NVDA to enter and leave focus mode when using arrow keys.
+For example, if arrowing down a web page and you land on an edit box, NVDA will automatically bring you into focus mode.
+If you arrow out of the edit box, NVDA will put you back in browse mode.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3368,9 +3563,9 @@ You can however disable this setting and e.g. still type in edit fields while st
 |enabled |allows NVDA to enter and leave focus mode when using arrow keys. For example, if arrowing down a web page and you land on an edit box, NVDA will automatically bring you into focus mode so you can type directly in the field. If you arrow out of the edit box, NVDA will put you back in browse mode.|
 |disabled |NVDA will not automatically switch between  focus mode and browse mode when you enter or leave an edit field with arrow keys. So if you press arrow keys and enter a form edit field, you cannot type directly in the field.|
 
-You can disable this setting and e.g. still type in edit fields while staying in browse mode to navigate the page with arrow keys. For this to work, you have to turn off single letter navigation via NVDA+shift+space. See the [Browse Mode section](#BrowseMode) for more details.
-
 ##### Audio indication of Focus and Browse modes {#BrowseModeSettingsPassThroughAudioIndication}
+
+If this option is enabled, NVDA will play special sounds when it switches between browse mode and focus mode, rather than speaking the change.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3383,6 +3578,10 @@ You can disable this setting and e.g. still type in edit fields while staying in
 |disabled |NVDA will speak "focus mode" or "browse mode" when you change between these navigation modes. NVDA will not play any sounds.|
 
 ##### Trap non-command gestures from reaching the document {#BrowseModeSettingsTrapNonCommandGestures}
+
+Enabled by default, this option allows you to choose if gestures (such as key presses) that  do not result in an NVDA command and are not considered to be a command key in general, should be trapped from going through to the document you are currently focused on.
+As an example, if enabled and the letter j was pressed, it would be trapped from reaching the document, even though it is not a quick navigation command nor is it likely to be a command in the application itself.
+In this case NVDA will tell Windows to play a default sound whenever a key which gets trapped is pressed.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3400,6 +3599,12 @@ You can disable this setting and e.g. still type in edit fields while staying in
 
 Key: NVDA+8
 
+Disabled by default, this option allows you to choose if the system focus should automatically be set to elements that can take the system focus (links, form fields, etc.) when navigating content with the browse mode caret.
+Leaving this option disabled will not automatically focus focusable elements when they are selected with the browse mode caret.
+This might result in faster browsing experience and better responsiveness in browse mode.
+The focus will yet be updated to the particular element when interacting with it (e.g. pressing a button, checking a check box).
+Enabling this option may improve support for some websites at the cost of performance and stability.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |enabled, disabled|
@@ -3409,10 +3614,6 @@ Key: NVDA+8
 |---|---|
 |enabled |the system focus will automatically be set to elements that can take the system focus (links, form fields, etc.) when navigating content with the virtual cursor in browse mode.|
 |disabled |NVDA will not automatically move system focus to focusable elements when they are selected with the virtual cursor in browse mode.|
-
-This setting should preferably stay disabled which will result in faster and more stable browsing experience and better responsiveness in browse mode.
-The system focus will yet be synchronized to the particular element when interacting with it (e.g. pressing a button, checking a check box, enabling focus mode, etc.).
-Enabling this setting might result in undesirable effects.
 
 #### Document Formatting {#DocumentFormattingSettings}
 
@@ -3426,6 +3627,50 @@ Most of the settings in this category are for configuring what type of formattin
 For example, if you check the report font name checkbox, each time you arrow onto text with a different font, the name of the font will be announced.
 
 The document formatting settings are organized into groups.
+You can configure reporting of:
+
+* Font
+  * Font name
+  * Font size
+  * Font attributes
+  * Superscripts and subscripts
+  * Emphasis
+  * Highlighted (Marked) text
+  * Style
+  * Colours
+* Document information
+  * Comments
+  * Bookmarks
+  * Editor revisions
+  * Spelling errors
+* Pages and spacing
+  * Page numbers
+  * Line numbers
+  * Line indentation reporting [(Off, Speech, Tones, Both Speech and Tones)](#DocumentFormattingSettingsLineIndentation)
+  * Ignore blank lines for line indentation reporting
+  * Paragraph indentation (e.g. hanging indent, first line indent)
+  * Line spacing (single, double, etc.)
+  * Alignment
+* Table information
+  * Tables
+  * Row/column headers (Off, Rows, Columns, Rows and columns)
+  * Cell coordinates
+  * Cell borders (Off, Styles, Both Colours and Styles)
+* Elements
+  * Headings
+  * Links
+  * Graphics
+  * Lists
+  * Block quotes
+  * Groupings
+  * Landmarks
+  * Articles
+  * Frames
+  * Figures and captions
+  * Clickable
+
+To toggle these settings from anywhere, please assign custom gestures using the [Input Gestures dialog](#InputGestures).
+
 In the font group, you can configure reporting of:
 
 | **Font name** |Setting value|
@@ -3657,28 +3902,13 @@ In the group table information, you can configure reporting of:
 |styles |NVDA will report the style of borders (e.g. solid line, dashed line, dotted line, etc.) when navigating from cell to cell in a table. This is currently supported only in Microsoft Excel.|
 |both colours and styles |NVDA will report the style and the colour  of cell borders (e.g. solid line black, etc.) when navigating from cell to cell in a table. This is currently supported only in Microsoft Excel.|
 
-In the group elements, you can configure the reporting of following elements.
-Toggling these on will make NVDA report them when entering and leaving the  areas which use these elements as role.
-Turning them off will make NVDA ignore reporting the coresponding role.
-This might have impact both in browse and focus mode.
-
-* Headings
-* Links
-* Graphics
-* Lists
-* Block quotes
-* Groupings
-* Landmarks
-* Articles
-* Frames
-* Figures and captions
-* Clickable
-
-All the settings from the elements group are enabled by default except for the element "articles".
-
-To toggle these settings from anywhere, please assign custom gestures using the [Input Gestures dialog](#InputGestures).
-
 ##### Report formatting changes after the cursor {#DocumentFormattingDetectFormatAfterCursor}
+
+If enabled, this setting tells NVDA to try and detect all the formatting changes on a line as it reports it, even if doing this may slow down NVDA's performance.
+
+By default, NVDA will detect the formatting at the position of the System caret / Review Cursor, and in some instances may detect formatting on the rest of the line, only if it is not going to cause a performance decrease.
+
+Enable this option while proof reading documents in applications such as WordPad, where formatting is important.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3690,11 +3920,19 @@ To toggle these settings from anywhere, please assign custom gestures using the 
 |enabled |NVDA will try to detect all the formatting changes on a line when it is reported. By default, NVDA will detect the formatting at the position of the System caret / Review Cursor, and in some instances may detect formatting on the rest of the line, only if it is not going to cause a performance decrease.|
 |disabled |NVDA will not detect any formatting changes on a line when it is reported.|
 
-Enabling this setting will help in proof reading documents in applications such as Microsoft Word, where formatting is important. However, in some cases enabling this setting may slow down NVDA's performance.
-
 ##### Line indentation reporting {#DocumentFormattingSettingsLineIndentation}
 
-This setting allows you to configure how indentation at the beginning of lines is reported.
+This option allows you to configure how indentation at the beginning of lines is reported.
+The Report line indentation with combo box has four options.
+
+* Off: NVDA will not treat indentation specially.
+* Speech: If speech is selected, when the  amount of indentation changes, NVDA will say something like "twelve space" or "four tab."
+* Tones: If Tones is selected, when the  amount of  indentation changes, tones indicate the amount of change in indent.
+The tone will increase in pitch every space, and for a tab, it will increase in pitch the equivalent of 4 spaces.
+* Both Speech and Tones: This option reads indentation using both of the above methods.
+
+If you tick the "Ignore blank lines for line indentation reporting" checkbox, then indentation changes won't be reported for blank lines.
+This may be useful when reading a document where blank lines are used to separate indented bloks of text, such as in programming source code.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3708,9 +3946,6 @@ This setting allows you to configure how indentation at the beginning of lines i
 |tones |NVDA will play tones when the  level of indentation changes while navigating a document. The tone will increase in pitch every space, and for a tab, it will increase in pitch the equivalent of 4 spaces.|
 |both Speech and Tones |NVDA will indicate  indentation using both of the above methods while navigating a document.|
 
-If you tick the "Ignore blank lines for line indentation reporting" checkbox, then indentation changes won't be reported for blank lines.
-This may be useful when reading a document where blank lines are used to separate indented bloks of text, such as in programming source code.
-
 #### Document Navigation {#DocumentNavigation}
 
 This category allows you to adjust various aspects of document navigation.
@@ -3718,6 +3953,17 @@ This category allows you to adjust various aspects of document navigation.
 ##### Paragraph Style {#ParagraphStyle}
 
 This combo box allows you to select the paragraph style to be used when navigating by paragraphs with `control+upArrow` and `control+downArrow`.
+The available paragraph styles are:
+
+* Handled by application: NVDA will let the application determine the previous or next paragraph, and NVDA will read the new paragraph when navigating.
+This style works best when the application supports paragraph navigation natively, and is the default.
+* Single line break: NVDA will attempt to determine the previous or next paragraph using a single line break as the paragraph indicator.
+This style works best when reading documents in an application which does not natively support paragraph navigation, and paragraphs in the document are marked by a single press of the `enter` key.
+* Multi line break: NVDA will attempt to determine the previous or next paragraph using at least one blank line (two presses of the `enter` key) as the paragraph indicator.
+This style works best when working with documents which use block paragraphs.
+Note that this paragraph style cannot be used in Microsoft Word or Microsoft Outlook, unless you are using UIA to access Microsoft Word controls.
+
+You may toggle through the available paragraph styles from anywhere by assigning a key in the [Input Gestures dialog](#InputGestures).
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3730,8 +3976,6 @@ This combo box allows you to select the paragraph style to be used when navigati
 |Single line break |NVDA will attempt to determine the previous or next paragraph using a single line break as the paragraph indicator. This style works best when reading documents in an application which does not natively support paragraph navigation, and paragraphs in the document are marked by a single press of the `enter` key.|
 |Multi line break |NVDA will attempt to determine the previous or next paragraph using at least one blank line (two presses of the `enter` key) as the paragraph indicator. This style works best when working with documents which use block paragraphs. Note that this paragraph style cannot be used in Microsoft Word or Microsoft Outlook, unless you are using UIA to access Microsoft Word controls.|
 
-You may toggle through the available paragraph styles from anywhere by assigning a key in the [Input Gestures dialog](#InputGestures).
-
 #### Windows OCR Settings {#Win10OcrSettings}
 
 The settings in this category allow you to configure [Windows OCR](#Win10Ocr).
@@ -3743,6 +3987,11 @@ This combo box allows you to choose the language to be used for text recognition
 To cycle through available languages from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
 ##### Periodically refresh recognized content {#Win10OcrSettingsAutoRefresh}
+
+When this checkbox is enabled, NVDA will automatically refresh the recognized content when a recognition result has focus.
+This can be very useful when you want to monitor constantly changing content, such as when watching a video with subtitles.
+The refresh takes place every one and a half seconds.
+This option is disabled by default.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3771,6 +4020,11 @@ This may also be the case if you are unsure if the settings have been changed.
 
 ##### Enable loading custom code from Developer Scratchpad Directory {#AdvancedSettingsEnableScratchpad}
 
+When developing add-ons for NVDA, it is useful to be able to test code as you are writing it.
+As their equivalents in add-ons, these modules are loaded when starting NVDA or, in the case of appModules and globalPlugins, when [reloading plugins](#ReloadPlugins).
+This option is off by default, ensuring that no untested code is ever run in NVDA without the user's explicit knowledge.
+If you wish to distribute custom code to others, you should package it as an NVDA add-on.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |enabled, disabled|
@@ -3781,11 +4035,6 @@ This may also be the case if you are unsure if the settings have been changed.
 |enabled |Allows NVDA to load custom appModules, globalPlugins, brailleDisplayDrivers, synthDrivers and vision enhancement providers, from a special developer scratchpad directory created in the NVDA user configuration directory.|
 |disabled |NVDA will not create any special developer scratchpad directory in the NVDA user configuration directory, so NVDA will not load any custom appModules, globalPlugins, brailleDisplayDrivers, synthDrivers and vision enhancement providers.|
 
-When developing add-ons for NVDA, it is useful to be able to test code as you are writing it.
-As their equivalents in add-ons, these modules are loaded when starting NVDA or, in the case of appModules and globalPlugins, when [reloading plugins](#ReloadPlugins).
-This setting is off by default, ensuring that no untested code is ever run in NVDA without the user's explicit knowledge.
-If you wish to distribute custom code to others, you should package it as an NVDA add-on.
-
 ##### Open Developer Scratchpad Directory {#AdvancedSettingsOpenScratchpadDir}
 
 This button opens the directory where you can place custom code while developing it.
@@ -3793,7 +4042,15 @@ This button is only enabled if NVDA is configured to enable loading custom code 
 
 ##### Registration for UI Automation events and property changes {#AdvancedSettingsSelectiveUIAEventRegistration}
 
-This setting changes how NVDA registers for events fired by the Microsoft UI Automation accessibility API.
+This option changes how NVDA registers for events fired by the Microsoft UI Automation accessibility API.
+The registration for UI Automation events and property changes combo box has three options:
+
+* Automatic: "selective" on Windows 11 Sun Valley 2 (version 22H2) and later, "global" otherwise.
+* Selective: NVDA will limit event registration to the system focus for most events.
+If you suffer from performance issues in one or more applications, We recommend you to try this functionality to see whether performance improves.
+However, on older versions of Windows, NVDA may have trouble tracking focus in some controls (such as the task manager and emoji panel).
+* Global: NVDA registers for many UIA events that are processed and discarded within NVDA itself.
+While focus tracking is more reliable in more situations, performance is significantly degraded, especially in applications like Microsoft Visual Studio.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3810,6 +4067,14 @@ This setting changes how NVDA registers for events fired by the Microsoft UI Aut
 
 Configures whether or not NVDA should use the UI Automation accessibility API to access Microsoft Word documents, rather than the older Microsoft Word object model.
 
+This applies to documents in Microsoft word itself, plus messages in Microsoft Outlook.
+This setting contains the following values:
+
+* Default (where suitable)
+* Only where necessary: where the Microsoft Word object model is not  available at all
+* Where suitable: Microsoft Word version 16.0.15000 or higher, or where the Microsoft Word object model is unavailable
+* Always: where ever UI automation is available in Microsoft word (no matter how complete).
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |Default (where suitable), Only where necessary, Where suitable, Always|
@@ -3821,9 +4086,14 @@ Configures whether or not NVDA should use the UI Automation accessibility API to
 |Only where necessary |NVDA will use UIA only when the Microsoft Word object model is not  available at all in Microsoft Word and Outlook.|
 |Always |NVDA will use UI automation where ever it is available in Microsoft word and Outlook (no matter how complete).|
 
-This setting applies to documents in Microsoft word itself, plus messages in Microsoft Outlook.
-
 ##### Use UI automation to access Microsoft Excel spreadsheet controls when available {#UseUiaForExcel}
+
+When this option is enabled, NVDA will try to use the Microsoft UI Automation accessibility API in order to fetch information from Microsoft Excel Spreadsheet controls.
+This is an experimental feature, and some features of Microsoft Excel may not be available in this mode.
+For instance, NVDA's Elements List for listing formulas and comments, and Browse mode quick navigation to jump to form fields on a spreadsheet features are not available.
+However, for basic spreadsheet navigating / editing, this option may provide a vast performance improvement.
+We still do not recommend that the majority of users turn this on by default, though we do welcome users of Microsoft Excel build 16.0.13522.10000 or higher to test this feature and provide feedback.
+Microsoft Excel's UI automation implementation is ever changing, and versions of Microsoft Office older than 16.0.13522.10000 may not expose enough information for this option to be of any use.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3835,13 +4105,10 @@ This setting applies to documents in Microsoft word itself, plus messages in Mic
 |enabled |NVDA will try to use the Microsoft UI Automation accessibility API in order to fetch information from Microsoft Excel Spreadsheet controls.|
 |disabled |NVDA will use a combination of older object model and display model   in order to fetch information from Microsoft Excel Spreadsheet controls.|
 
-This is an experimental feature, and some features of Microsoft Excel may not be available in this mode.
-For instance, NVDA's Elements List for listing formulas and comments, and Browse mode quick navigation to jump to form fields on a spreadsheet features are not available.
-However, for basic spreadsheet navigating / editing, this option may provide a vast performance improvement.
-We still do not recommend that the majority of users turn this on by default, though we do welcome users of Microsoft Excel build 16.0.13522.10000 or higher to test this feature and provide feedback.
-Microsoft Excel's UI automation implementation is ever changing, and versions of Microsoft Office older than 16.0.13522.10000 may not expose enough information for this setting to be of any use.
-
 ##### Use enhanced event processing {#UIAEnhancedEventProcessing}
+
+When this option is enabled, NVDA should remain responsive when being flooded with many UI Automation events, e.g. large amounts of text in a terminal.
+After changing this option, you will need to restart NVDA for the change to take effect.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3853,11 +4120,21 @@ Microsoft Excel's UI automation implementation is ever changing, and versions of
 |enabled |NVDA will be remain  responsive when being flooded with many UI Automation events, e.g. large amounts of text in a terminal.|
 |disabled |NVDA will process all the events comming from the UI Automation API without any limit, so when NVDA is flooded with many events it might become unresponsive, especially in terminals and areas with a lot of text which is changing continuously.|
 
-After changing the option of this setting, you will need to restart NVDA for the change to take effect.
-
 ##### Windows Console support {#AdvancedSettingsConsoleUIA}
 
-This setting selects how NVDA interacts with the Windows Console used by command prompt, PowerShell, and the Windows Subsystem for Linux.
+This option selects how NVDA interacts with the Windows Console used by command prompt, PowerShell, and the Windows Subsystem for Linux.
+It does not affect the modern Windows Terminal.
+In Windows 10 version 1709, Microsoft [added support for its UI Automation API to the console](https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/), bringing vastly improved performance and stability for screen readers that support it.
+In situations where UI Automation is unavailable or known to result in an inferior user experience, NVDA's legacy console support is available as a fallback.
+The Windows Console support combo box has three options:
+
+* Automatic: Uses UI Automation in the version of Windows Console included with Windows 11 version 22H2 and later.
+This option is recommended and set by default.
+* UIA when available: Uses UI Automation in consoles if available, even for versions with incomplete or buggy implementations.
+While this limited functionality may be useful (and even sufficient for your usage), use of this option is entirely at your own risk and no support for it will be provided.
+* Legacy: UI Automation in the Windows Console will be completely disabled.
+The legacy fallback will always be used even in situations where UI Automation would provide a superior user experience.
+Therefore, selecting this option is not recommended unless you know what you are doing.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3870,12 +4147,16 @@ This setting selects how NVDA interacts with the Windows Console used by command
 |UIA when available |NVDA will use UI Automation in consoles if available, even for versions with incomplete or buggy implementations. While this limited functionality may be useful (and even sufficient for your usage), this option is incomplete and there is no support provided for it.|
 |Legacy |UI Automation in the Windows Console will be completely disabled. The legacy fallback will always be used even in situations where UI Automation would provide a superior user experience. Therefore, selecting this option is not recommended unless you know what you are doing.|
 
-This setting does not affect the modern Windows Terminal.
-In Windows 10 version 1709, Microsoft [added support for its UI Automation API to the console](https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/), bringing vastly improved performance and stability for screen readers that support it.
-
 ##### Use UIA with Microsoft Edge and other Chromium based browsers when available {#ChromiumUIA}
 
 Allows specifying when UIA will be used when it is available in Chromium based browsers such as Microsoft Edge.
+UIA support for Chromium based browsers is early in development and may not provide the same level of access as IA2.
+The combo box has the following options:
+
+* Default (Only when necessary): The NVDA default, currently this is "Only when necessary". This default may change in the future as the technology matures.
+* Only when necessary: When NVDA is unable to inject into the browser process in order to use IA2 and UIA is available, then NVDA will fall back to using UIA.
+* Yes: If the browser makes UIA available, NVDA will use it.
+* No: Don't use UIA, even if NVDA is unable to inject in process. This may be useful for developers debugging issues with IA2 and want to ensure that NVDA does not fall back to UIA.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3888,12 +4169,26 @@ Allows specifying when UIA will be used when it is available in Chromium based b
 |Yes |If the browser makes UIA available, NVDA will use it no matter whether it is incomplete or buggy.|
 |No |NVDA will never use UIA, even if NVDA is unable to inject in process. This may be useful for developers debugging issues with IA2 and want to ensure that NVDA does not fall back to UIA.|
 
-UIA support for Chromium based browsers is early in development and may not provide the same level of access as IA2.
-The default setting may change in the future as the technology matures.
-
 ##### Annotations {#Annotations}
 
 This group of options is used to enable features which add experimental support for ARIA annotations.
+
+<!-- KC:beginInclude -->
+To "Report summary of any annotation details at the system caret", press NVDA+d.
+<!-- KC:endInclude -->
+
+The following options exist:
+
+* "Report 'has details' for structured annotations": enables reporting if the text or control has further details.
+* "Report aria-description always":
+  When the source of `accDescription` is aria-description, the description is reported.
+  This is useful for annotations on the web.
+
+Note:
+  * There are many sources for `accDescription` several have mixed or unreliable semantics.
+    Historically AT has not been able to differentiate sources of `accDescription` typically it wasn't spoken due to the mixed semantics.
+  * This option is in very early development, it relies on browser features not yet widely available.
+  * Expected to work with Chromium 92.0.4479.0+
 
 | Setting |Option |Default|
 |---|---|---|
@@ -3907,19 +4202,10 @@ This group of options is used to enable features which add experimental support 
 |Report aria-description always |enabled |NVDA will report descriptions when using browse mode to navigate on web pages and the source of `accDescription` is aria-description. This is useful for annotations on the web.|
 | |disabled |NVDA will not report descriptions when using browse mode to navigate on web pages and the source of `accDescription` is aria-description.|
 
-<!-- KC:beginInclude -->
-To "Report summary of any annotation details at the system caret", press NVDA+d.
-<!-- KC:endInclude -->
-
-Note:
-There are many sources for `accDescription` several have mixed or unreliable semantics.
-This setting is in very early development, it relies on browser features not yet widely available.
-Historically assistive technologies have not been able to differentiate sources of `accDescription` typically it wasn't spoken due to the mixed semantics.
-This is expected to work with Chromium 92.0.4479.0 or newer.
-
 ##### Report live regions {#BrailleLiveRegions}
 
-This setting selects whether NVDA reports changes in some dynamic web content in Braille.
+This option selects whether NVDA reports changes in some dynamic web content in Braille.
+Disabling this option is equivalent to NVDA's behaviour in versions 2023.1 and earlier, which only reported these content changes in speech.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3933,6 +4219,10 @@ This setting selects whether NVDA reports changes in some dynamic web content in
 
 ##### Speak passwords in all enhanced terminals {#AdvancedSettingsWinConsoleSpeakPasswords}
 
+This setting controls whether characters are spoken by [speak typed characters](#KeyboardSettingsSpeakTypedCharacters) or [speak typed words](#KeyboardSettingsSpeakTypedWords) in situations where the screen does not update (such as password entry) in some terminal programs, such as the Windows Console with UI automation support enabled and Mintty.
+For security purposes, this setting should be left disabled.
+However, you may wish to enable it if you experience performance issues or instability with typed character and/or word reporting in consoles, or work in trusted environments and prefer password announcement.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |Enabled, disabled|
@@ -3943,12 +4233,13 @@ This setting selects whether NVDA reports changes in some dynamic web content in
 |enabled |NVDA will report characters when typing them with [speak typed characters](#KeyboardSettingsSpeakTypedCharacters) or [speak typed words](#KeyboardSettingsSpeakTypedWords) enabled in situations where the screen does not update (such as password entry) in some terminal programs, such as the Windows Console with UI automation support enabled and Mintty.|
 |disabled |In some cases NVDA will not be able to report characters when typing.|
 
-For security purposes, this setting should be left disabled.
-However, you may wish to enable it if you experience performance issues or instability with typed character and/or word reporting in consoles, or work in trusted environments and prefer password announcement.
-
 ##### Use enhanced typed character support in legacy Windows Console when available {#AdvancedSettingsKeyboardSupportInLegacy}
 
-This setting enables an alternative method for detecting typed characters in legacy Windows consoles.
+This option enables an alternative method for detecting typed characters in legacy Windows consoles.
+While it improves performance and prevents some console output from being spelled out, it may be incompatible with some terminal programs.
+This feature is available and enabled by default on Windows 10 versions 1607 and later when UI Automation is unavailable or disabled.
+Warning: with this option enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
+In untrusted environments, you may temporarily disable [speak typed characters](#KeyboardSettingsSpeakTypedCharacters) and [speak typed words](#KeyboardSettingsSpeakTypedWords) when entering passwords.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3960,14 +4251,20 @@ This setting enables an alternative method for detecting typed characters in leg
 |enabled |NVDA will use an alternative method to report characters when typing them with [speak typed characters](#KeyboardSettingsSpeakTypedCharacters) or [speak typed words](#KeyboardSettingsSpeakTypedWords) enabled in situations where UIA is not available or disabled.|
 |disabled |NVDA will preferably use UIA to report typed characters and will be silent if UIA doesn't provide the information.|
 
-While this setting improves performance and prevents some console output from being spelled out, it may be incompatible with some terminal programs.
-This feature is available and enabled by default on Windows 10 versions 1607 and later when UI Automation is unavailable or disabled.
-Warning: with this setting enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
-In untrusted environments, you may temporarily disable [speak typed characters](#KeyboardSettingsSpeakTypedCharacters) and [speak typed words](#KeyboardSettingsSpeakTypedWords) when entering passwords.
-
 ##### Diff algorithm {#DiffAlgo}
 
 This setting controls how NVDA determines the new text to speak in terminals.
+
+The diff algorithm combo box has three options:
+
+* Automatic: This option causes NVDA to prefer Diff Match Patch in most situations, but fall back to Difflib in problematic applications, such as older versions of the Windows Console and Mintty.
+* Diff Match Patch: This option causes NVDA to calculate changes to terminal text by character, even in situations where it is not recommended.
+It may improve performance when large volumes of text are written to the console and allow more accurate reporting of changes made in the middle of lines.
+However, in some applications, reading of new text may be choppy or inconsistent.
+* Difflib: this option causes NVDA to calculate changes to terminal text by line, even in situations where it is not recommended.
+It is identical to NVDA's behaviour in versions 2020.4 and earlier.
+This setting may stabilize reading of incoming text in some applications.
+However, in terminals, when inserting or deleting a character in the middle of a line, the text after the caret will be read out.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3982,8 +4279,17 @@ This setting controls how NVDA determines the new text to speak in terminals.
 
 ##### Speak new text in Windows Terminal via {#WtStrategy}
 
-This setting selects how NVDA determines what text is "new" (and thus what to speak when "report dynamic content changes" is enabled) in Windows Terminal and the WPF Windows Terminal control used in Visual Studio 2022.
+This option selects how NVDA determines what text is "new" (and thus what to speak when "report dynamic content changes" is enabled) in Windows Terminal and the WPF Windows Terminal control used in Visual Studio 2022.
 It does not affect the Windows Console (`conhost.exe`).
+The Speak new text in Windows Terminal combo box has three options:
+
+* Default: This option is currently equivalent to "diffing", but it is anticipated to change once support for UIA notifications is further developed.
+* Diffing: This option uses the selected diff algorithm to calculate changes each time the terminal renders new text.
+This is identical to NVDA's behaviour in versions 2022.4 and earlier.
+* UIA notifications: This option defers the responsibility of determining what text to speak to Windows Terminal itself, meanning that NVDA no longer has to determine what text currently on-screen is "new".
+This should markedly improve performance and stability of Windows Terminal, but this feature is not yet complete.
+In particular, typed characters that are not displayed on-screen, such as passwords, are reported when this option is selected.
+Additionally, contiguous spans of output of over 1,000 characters may not be reported accurately.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3996,12 +4302,11 @@ It does not affect the Windows Console (`conhost.exe`).
 |Diffing |This option uses the selected diff algorithm to calculate changes each time the terminal renders new text.|
 |UIA notifications |This option defers the responsibility of determining what text to speak to Windows Terminal itself, meanning that NVDA no longer has to determine what text currently on-screen is "new". This should markedly improve performance and stability of Windows Terminal, but this feature is not yet complete.|
 
-When using UIA notifications in particular, typed characters that are not displayed on-screen, such as passwords, are reported when this setting is selected.
-Additionally, contiguous spans of output of over 1,000 characters may not be reported accurately.
-
 ##### Attempt to cancel speech for expired focus events {#CancelExpiredFocusSpeech}
 
-This setting enables behaviour which attempts to cancel speech for expired focus events.
+This option enables behaviour which attempts to cancel speech for expired focus events.
+In particular moving quickly through messages in Gmail with Chrome can cause NVDA to speak outdated information.
+This functionality is enabled by default as of NVDA 2021.1.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -4015,12 +4320,15 @@ This setting enables behaviour which attempts to cancel speech for expired focus
 
 ##### Caret move timeout (in MS) {#AdvancedSettingsCaretMoveTimeout}
 
-This setting allows you to configure the number of milliseconds NVDA will wait for the caret (insertion point) to move in editable text controls.
+This option allows you to configure the number of milliseconds NVDA will wait for the caret (insertion point) to move in editable text controls.
 If you find that NVDA seems to be incorrectly tracking the caret E.g. it seems to be always one character behind or is repeating lines, then you may wish to try increasing this value.
 
 ##### Report transparency for colors {#ReportTransparentColors}
 
-This setting enables reporting when colors are transparent, useful for addon/appModule developers gathering information to improve user experience with a 3rd party application.
+This option enables reporting when colors are transparent, useful for addon/appModule developers gathering information to improve user experience with a 3rd party application.
+
+In some situations, the text background may be entirely transparent, with the text layered on some other GUI element.
+With several historically popular GUI APIs, the text may be rendered with a transparent background, but visually the background color is accurate.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -4032,12 +4340,16 @@ This setting enables reporting when colors are transparent, useful for addon/app
 |enabled |NVDA will attempt to report the background colour via display model in some GDI applications which highlight text with such a colour even when the GUI aPI suggests the background is transparent.|
 |disabled |NVDA will not report the background colour in some GDI applications when the GUI API suggests the background is transparent.|
 
-In some situations, the text background may be entirely transparent, with the text layered on some other GUI element.
-With several historically popular GUI APIs, the text may be rendered with a transparent background, but visually the background color is accurate.
-
 ##### Use WASAPI for audio output {#WASAPI}
 
-This setting enables audio output via the Windows Audio Session API (WASAPI).
+This option enables audio output via the Windows Audio Session API (WASAPI).
+WASAPI is a more modern audio framework which may improve the responsiveness, performance and stability of NVDA audio output, including both speech and sounds.
+After changing this option, you will need to restart NVDA for the change to take effect.
+Disabling WASAPI will disable the following options:
+
+* [Volume of NVDA sounds follows voice volume](#SoundVolumeFollowsVoice)
+* [Volume of NVDA sounds](#SoundVolume)
+* [Sound split feature](#SelectSoundSplitMode)
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -4049,13 +4361,6 @@ This setting enables audio output via the Windows Audio Session API (WASAPI).
 |enabled |NVDA will use a more modern Windows audio framework and NVDA's speech will be more performant and less likely cut-off. Features like simultaneous control of voice and sounds volume or sound split will be available.|
 |disabled |Speech and sounds might become less performant, and some features will not be available. In some cases, speech will sound crackling can be heard.|
 
-After changing the option of this setting, you will need to restart NVDA for the change to take effect.
-Disabling WASAPI will disable the following settings:
-
-* [Volume of NVDA sounds follows voice volume](#SoundVolumeFollowsVoice)
-* [Volume of NVDA sounds](#SoundVolume)
-* [Sound split feature](#SelectSoundSplitMode)
-
 ##### Debug logging categories {#AdvancedSettingsDebugLoggingCategories}
 
 The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.
@@ -4065,7 +4370,9 @@ All checkboxes in this list are disabled by default.
 
 ##### Play a sound for logged errors {#PlayErrorSound}
 
-This setting allows you to specify if NVDA will play an error sound in case an error is logged.
+This option allows you to specify if NVDA will play an error sound in case an error is logged.
+Choosing Only in test versions (default) makes NVDA play error sounds only if the current NVDA version is a test version (alpha, beta or run from source).
+Choosing Yes allows to enable error sounds whatever your current NVDA version is.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -4128,7 +4435,7 @@ For an introductory tutorial, please refer to [Python's Regular Expression Guide
 This dialog allows you to change the way punctuation and other symbols are pronounced, as well as the symbol level at which they are spoken.
 
 The language for which symbol pronunciation is being edited will be shown in the dialog's title.
-Note that this dialog respects the "Trust voice's language for processing symbols and characters" setting found in the [Speech category](#SpeechSettings) of the [NVDA Settings](#NVDASettings) dialog; i.e. it uses the voice language rather than the NVDA global language setting when this setting is enabled.
+Note that this dialog respects the "Trust voice's language for processing symbols and characters" setting found in the [Speech category](#SpeechSettings) of the [NVDA Settings](#NVDASettings) dialog; i.e. it uses the voice language rather than the NVDA global language setting when this option is enabled.
 
 To change a symbol, first select it in the Symbols list.
 You can filter the symbols by entering the symbol or a part of the symbol's replacement into the Filter by edit box.
