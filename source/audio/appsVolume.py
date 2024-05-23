@@ -124,7 +124,7 @@ def adjustAppsVolume(
 	# We skip running terminators here to avoid application volume spiking to 100% for a split second.
 	updateAppsVolumeImpl(volume / 100.0, state, runTerminators=False)
 	# Translators: Announcing new applications' volume message
-	msg = _("Applications volume %s") % volume
+	msg = _("Applications volume {}").format(volume)
 	ui.message(msg)
 
 
