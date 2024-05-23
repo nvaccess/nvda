@@ -156,9 +156,9 @@ For more details on the options available, please see [Installation options](#In
 
 1. From the launcher, ensure the checkbox to agree to the license is checked.
 1. `Tab` to, and activate the "Install NVDA on this computer" button.
-1. Next, are settings to use NVDA during Windows sign-in and to create a desktop shortcut.
+1. Next, are options to use NVDA during Windows sign-in and to create a desktop shortcut.
 These are checked by default.
-If desired, press `tab` and `spaceBar` to change any of these settings, or leave them at the default.
+If desired, press `tab` and `spaceBar` to change any of these options, or leave them at the default.
 1. Press `enter` to continue.
 1. A Windows "User Account Control (UAC)" dialog appears asking "Do you want to allow this app to make changes to your PC?".
 1. Press `alt+y` to accept the UAC prompt.
@@ -177,7 +177,7 @@ If desired, press `downArrow` to choose "Laptop" keyboard layout to reassign num
 Press `spaceBar` to select `capsLock` as an alternate modifier key.
 Note that the keyboard layout is set separately from the NVDA modifier key.
 The NVDA key and keyboard layout can be changed later from the Keyboard Settings.
-1. Use `tab` and `spaceBar` to adjust the other settings on this screen.
+1. Use `tab` and `spaceBar` to adjust the other options on this screen.
 These set whether NVDA starts automatically.
 1. Press `enter` to close the dialog box with NVDA now running.
 
@@ -360,7 +360,7 @@ If you have already closed this dialog or you are running an installed copy of N
 
 The Dialog that appears allows you to choose where the portable copy should be created.
 This can be a directory on your hard drive or a location on a USB thumb drive or other portable media.
-There is also a setting to choose whether NVDA should copy the logged on user's current NVDA configuration for use  with the newly created portable copy.
+There is also a option to choose whether NVDA should copy the logged on user's current NVDA configuration for use  with the newly created portable copy.
 This option is only available when creating a portable copy from an installed copy, not when creating from the download package.
 Pressing Continue will create the portable copy.
 Once creation is complete, a message will appear telling you it was successful.
@@ -568,6 +568,12 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 The speech mode governs how screen content, notifications, responses to commands, and other output is spoken during operation of NVDA.
 The default mode is "talk", which speaks in situations that are expected when using a screen reader.
 However, under certain circumstances, or when running particular programs, you may find one of the other speech modes valuable.
+The four available speech modes are:
+
+* Talk (Default): NVDA will speak normally in reaction to screen changes, notifications, and actions such as moving the focus, or issuing commands.
+* On-demand: NVDA will only speak when you use commands with a reporting function (e.g. report the title of the window); but it will not speak in reaction to actions such as moving the focus or the cursor.
+* Off: NVDA will not speak anything, however unlike sleep mode, it will silently react to commands.
+* Beeps: NVDA will replace normal speech with short beeps.
 
 The Beeps mode may be useful when some very verbose output is scrolling in a terminal window, but you don't care what it is, only that it is continuing to scroll; or in other circumstances when the fact that there is output is more relevant than the output itself.
 
@@ -1838,7 +1844,7 @@ The Speech Settings category contains the following options:
 
 ##### Change synthesizer {#SpeechSettingsChange}
 
-The first option in the speech settings category shows the currently selected synthesizer. The Change... button attached to this edit field activates the [Select Synthesizer](#SelectSynthesizer) dialog, which allows you to select the active speech synthesizer.
+The first option in the Speech Settings category is the Change... button. This button activates the [Select Synthesizer](#SelectSynthesizer) dialog, which allows you to select the active speech synthesizer and output device.
 This dialog opens on top of the NVDA Settings dialog.
 Saving or dismissing the settings in the Select Synthesizer dialog will return you to the NVDA Settings dialog.
 
@@ -1922,7 +1928,7 @@ This option is disabled by default.
 
 ##### Punctuation/Symbol Level {#SpeechSettingsSymbolLevel}
 
-key: `NVDA+p`
+key: NVDA+p
 
 This allows you to choose the amount of punctuation and other symbols that should be spoken as words.
 For example, when set to all, all symbols will be spoken as words.
@@ -2035,7 +2041,7 @@ If this checkbox is checked, NVDA will make a small beep each time it encounters
 
 Some words consist of only one character, but the pronunciation is different depending on whether the character is being spoken as an individual character (such as when spelling) or a word.
 For example, in English, "a" is both a letter and a word and is pronounced differently in each case.
-This option allows the synthesizer to differentiate between these two cases if the synthesizer supports it.
+This option allows the synthesizer to differentiate between these two cases if the synthesizer supports this.
 Most synthesizers do support it.
 
 This option should generally be enabled.
@@ -2172,7 +2178,7 @@ Currently, two braille modes are supported, "follow cursors" and "display speech
 
 When follow cursors is selected, the braille display will follow either the system focus/caret or the navigator object/review cursor, depending on what braille is tethered to.
 
-When display speech output is selected, the braille display will show what NVDA speaks, or would have spoken if speech mode was set to "talk"
+When display speech output is selected, the braille display will show what NVDA speaks, or would have spoken if speech mode was set to "talk".
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2184,6 +2190,7 @@ When display speech output is selected, the braille display will show what NVDA 
 |follow cursors |the braille display will follow either the system focus/caret or the navigator object/review cursor, depending on what braille is tethered to.|
 |follow speech output |the braille display will show what NVDA speaks, or would have spoken if speech mode was set to "talk".|
 
+##### Expand to computer braille for the word at the cursor {#BrailleSettingsExpandToComputerBraille}
 ##### Expand to computer braille for the word at the cursor {#BrailleSettingsExpandToComputerBraille}
 
 This option allows the word that is under the cursor to be displayed in non-contracted computer braille.
@@ -3623,10 +3630,10 @@ Enabling this option may improve support for some websites at the cost of perfor
 
 Key: `NVDA+control+d`
 
-Most of the settings in this category are for configuring what type of formatting you wish to have reported as you move the cursor around documents.
+Most of the options in this category are for configuring what type of formatting you wish to have reported as you move the cursor around documents.
 For example, if you check the report font name checkbox, each time you arrow onto text with a different font, the name of the font will be announced.
 
-The document formatting settings are organized into groups.
+The document formatting options are organized into groups.
 You can configure reporting of:
 
 * Font
@@ -4022,7 +4029,7 @@ This may also be the case if you are unsure if the settings have been changed.
 
 When developing add-ons for NVDA, it is useful to be able to test code as you are writing it.
 As their equivalents in add-ons, these modules are loaded when starting NVDA or, in the case of appModules and globalPlugins, when [reloading plugins](#ReloadPlugins).
-This option is off by default, ensuring that no untested code is ever run in NVDA without the user's explicit knowledge.
+This option is off by default, ensuring that no untested code is ever run in NVDA with out the user's explicit knowledge.
 If you wish to distribute custom code to others, you should package it as an NVDA add-on.
 
 | . {.hideHeaderRow} |.|
@@ -4183,8 +4190,7 @@ The following options exist:
 * "Report aria-description always":
   When the source of `accDescription` is aria-description, the description is reported.
   This is useful for annotations on the web.
-
-Note:
+  Note:
   * There are many sources for `accDescription` several have mixed or unreliable semantics.
     Historically AT has not been able to differentiate sources of `accDescription` typically it wasn't spoken due to the mixed semantics.
   * This option is in very early development, it relies on browser features not yet widely available.
@@ -4435,7 +4441,7 @@ For an introductory tutorial, please refer to [Python's Regular Expression Guide
 This dialog allows you to change the way punctuation and other symbols are pronounced, as well as the symbol level at which they are spoken.
 
 The language for which symbol pronunciation is being edited will be shown in the dialog's title.
-Note that this dialog respects the "Trust voice's language for processing symbols and characters" setting found in the [Speech category](#SpeechSettings) of the [NVDA Settings](#NVDASettings) dialog; i.e. it uses the voice language rather than the NVDA global language setting when this option is enabled.
+Note that this dialog respects the "Trust voice's language for processing symbols and characters" option found in the [Speech category](#SpeechSettings) of the [NVDA Settings](#NVDASettings) dialog; i.e. it uses the voice language rather than the NVDA global language setting when this option is enabled.
 
 To change a symbol, first select it in the Symbols list.
 You can filter the symbols by entering the symbol or a part of the symbol's replacement into the Filter by edit box.
@@ -4501,7 +4507,7 @@ When you are finished making changes, press the OK button to save them or the Ca
 ### Saving and Reloading the configuration {#SavingAndReloading}
 
 By default NVDA will automatically save your settings on exit.
-Note, however, that this setting can be changed under the general settings category in the settings dialog under the preference menu.
+Note, however, that this option can be changed under the general settings category in the settings dialog under the preference menu.
 To save the settings manually at any time, choose the Save configuration item in the NVDA menu.
 
 If you ever make a mistake with your settings and need to revert back to the saved settings, choose the "revert to saved configuration" item in the NVDA menu.
