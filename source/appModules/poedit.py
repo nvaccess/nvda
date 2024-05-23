@@ -99,12 +99,9 @@ class AppModule(appModuleHandler.AppModule):
 		splitterControlID = dataViewControlId + _WindowControlIdOffsetFromDataView.MAIN_SPLITTER_IDENTIFIER
 		fg = api.getForegroundObject()
 		splitterHwnd = windowUtils.findDescendantWindow(fg.windowHandle, controlID=splitterControlID)
-		print(f"splitter: {winUser.getClassName(splitterHwnd)}")
 		sidebarHwnd = winUser.getWindow(splitterHwnd, winUser.GW_HWNDNEXT)
 		while sidebarHwnd and not ctypes.windll.user32.IsWindowVisible(sidebarHwnd):
-			print(f"skipping non-sidebar: {winUser.getClassName(sidebarHwnd)}")
 			sidebarHwnd = winUser.getWindow(sidebarHwnd, winUser.GW_HWNDNEXT)
-		print(f"sidebar? {winUser.getClassName(sidebarHwnd)}")
 		if not sidebarHwnd:
 			return None
 		return winUser.getControlID(sidebarHwnd)
