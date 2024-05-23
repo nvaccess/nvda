@@ -360,7 +360,7 @@ If you have already closed this dialog or you are running an installed copy of N
 
 The Dialog that appears allows you to choose where the portable copy should be created.
 This can be a directory on your hard drive or a location on a USB thumb drive or other portable media.
-There is also a option to choose whether NVDA should copy the logged on user's current NVDA configuration for use  with the newly created portable copy.
+There is also an option to choose whether NVDA should copy the logged on user's current NVDA configuration for use  with the newly created portable copy.
 This option is only available when creating a portable copy from an installed copy, not when creating from the download package.
 Pressing Continue will create the portable copy.
 Once creation is complete, a message will appear telling you it was successful.
