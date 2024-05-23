@@ -5,7 +5,7 @@
 
 """
 This module contains the instructions that operate on all object types.
-Including to set a value, compare two values, and stringify a value.
+Including to set a value, or compare two values.
 """
 
 
@@ -54,13 +54,3 @@ class Compare(_TypedInstruction):
 			case _:
 				raise NotImplementedError(f"Unknown comparison type {self.comparisonType}")
 		registers[self.result.operandId] = localResult
-
-
-@dataclass
-class Stringify(_TypedInstruction):
-	opCode = lowLevel.InstructionType.Stringify
-	result: builder.Operand
-	target: builder.Operand
-
-	def localExecute(self, registers: dict[lowLevel.OperandId, object]):
-		registers[self.result.operandId] = str(registers[self.target.operandId])

@@ -51,3 +51,13 @@ class StringConcat(_TypedInstruction):
 		localRight = cast(str, registers[self.right.operandId])
 		localResult = localLeft + localRight
 		registers[self.result.operandId] = localResult
+
+
+@dataclass
+class Stringify(_TypedInstruction):
+	opCode = lowLevel.InstructionType.Stringify
+	result: builder.Operand
+	target: builder.Operand
+
+	def localExecute(self, registers: dict[lowLevel.OperandId, object]):
+		registers[self.result.operandId] = str(registers[self.target.operandId])

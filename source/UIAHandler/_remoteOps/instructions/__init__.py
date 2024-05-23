@@ -69,7 +69,6 @@ from .float import (
 from .general import (
 	Set,
 	Compare,
-	Stringify,
 )
 from .guid import (
 	NewGuid,
@@ -93,6 +92,7 @@ from .string import (
 	NewString,
 	IsString,
 	StringConcat,
+	Stringify,
 )
 from .textRange import (
 	TextRangeGetText,
