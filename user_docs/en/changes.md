@@ -90,6 +90,7 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
 * In Firefox and Chromium-based browsers, NVDA will correctly enter focus mode when pressing enter when positioned within a presentational list (ul / ol) inside editable content. (#16325)
 * Column state change is now correctly reported when selecting columns to display in Thunderbird message list. (#16323)
 * The command line switch `-h`/`--help` works properly again. (#16522, @XLTechie)
+* NVDA's support for the Poedit translation software version 3.4 or higher correctly functions when translating languages with 1 or more than 2 plural forms (e.g. Chinese, Polish). (#16318)
 
 ### Changes for Developers
 
