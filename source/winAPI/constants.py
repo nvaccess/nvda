@@ -3,7 +3,12 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+import winVersion
 import enum
+
+
+#: Verification of the architecture of the running system
+is_64Bit = winVersion.getWinVer().processorArchitecture.endswith("64")
 
 
 class HResult(enum.IntEnum):
