@@ -89,6 +89,7 @@ Tehty useita pieniä bugikorjauksia sovelluksille, kuten Thunderbirdille, Adobe 
 * Korjattu harvinainen tilanne, jossa asetusten tallentaminen ei saattanut tallentaa kaikkia profiileja. (#16343, @CyrilleB79)
 * NVDA siirtyy Firefoxissa ja Chromium-pohjaisissa selaimissa asianmukaisesti vuorovaikutustilaan painettaessa Enteriä oltaessa esitysmuotoisen luettelon kohdalla (ul / ol) muokattavassa sisällössä. (#16325)
 * Sarakkeen tilanmuutos puhutaan automaattisesti valittaessa näytettäviä sarakkeita Thunderbirdin viestiluettelossa. (#16323)
+* Komentorivivalitsin `-h`/`--help` toimii taas oikein. (#16522, @XLTechie)
 
 ### Muutokset kehittäjille
 
@@ -271,7 +272,7 @@ Ilmoita tietoturvaongelmista vastuullisesti noudattaen NVDA:n [tietoturvakäytä
 Tämä versio sisältää suoritus- ja reagointikyvyn sekä äänentoiston vakauden parannuksia.
 Lisätty asetukset NVDA-äänien ja piippausten voimakkuuden säätämiseen tai käytettävän puheäänen voimakkuuteen mukautumiseen.
 
-NVDA voi nyt päivittää tekstintunnistuksen tulokset automaattisesti ja puhua uuden tekstin sen ilmestyessä.
+NVDA voi nyt päivittää tekstintunnistuksen tulokset ajoittain ja puhua uuden tekstin sen ilmestyessä.
 Tämä voidaan määrittää NVDA:n asetusvalintaikkunan Windowsin tekstintunnistus -kategoriasta.
 
 Useita pistenäyttöjen korjauksia, jotka parantavat laitteiden tunnistusta ja kohdistimen siirtämistä.
