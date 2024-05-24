@@ -54,7 +54,8 @@ class Test_errorHandling(TestCase):
 				i / 0
 			with ra.catchBlock():
 				was_in_catch.set(True)
-			ra.Return(was_in_catch)
+			ra.Return(i, was_in_catch)
 
-		was_in_catch = op.execute()
+		i, was_in_catch = op.execute()
+		self.assertEqual(i, 3)
 		self.assertTrue(was_in_catch)
