@@ -320,7 +320,7 @@ Once done, press `tab` to go to the filtered list of add-ons and browse the resu
 
 To install an add-on:
 1. With the focus on an add-on you would like to install, press `enter`.
-1. The actions menu opens with a list of actions including: "Install", "Home page", "License", "Source code", "Community reviews".
+1. The actions menu opens with a list of actions; the first action is "Install".
 1. To install the add-on, press `i` or `downArrow` to "install" and press `enter`.
 1. The focus returns to the add-on in the list and NVDA will read the details about the add-on.
 1. The "Status" information reported by NVDA changes from "Available" to "Downloading".
