@@ -139,7 +139,7 @@ def toggleAppsVolumeState():
 	if not nvwave.usingWasapiWavePlayer():
 		message = _(
 			# Translators: error message when wasapi is turned off.
-			"Other applications` volume cannot be adjusted. "
+			"Other applications' volume cannot be adjusted. "
 			"Please enable WASAPI in the Advanced category in NVDA Settings to use it."
 		)
 		ui.message(message)
