@@ -129,9 +129,9 @@ def adjustAppsVolume(
 
 
 APPS_VOLUME_STATES_ORDER = [
-	AppsVolumeAdjusterFlag .DISABLED,
-	AppsVolumeAdjusterFlag .ENABLED,
-	AppsVolumeAdjusterFlag .MUTED,
+	AppsVolumeAdjusterFlag.DISABLED,
+	AppsVolumeAdjusterFlag.ENABLED,
+	AppsVolumeAdjusterFlag.MUTED,
 ]
 
 
