@@ -10,7 +10,6 @@ from comtypes.automation import VARIANT, VT_EMPTY
 
 import array
 import winUser
-import winVersion
 import UIAHandler
 import UIAHandler.remote
 from .utils import (
@@ -186,7 +185,7 @@ def UIAHeadingQuicknavIterator(
 			searchArea.start = entireDocument.start
 		else:
 			searchArea.end = entireDocument.end
-	if winVersion.getWinVer() >= winVersion.WIN11:
+	if UIAHandler.remote.isSupported():
 		if position is None:
 			headings = UIAHandler.remote.collectAllHeadingsInTextRange(searchArea._rangeObj)
 			for level, label, rangeObj in headings:

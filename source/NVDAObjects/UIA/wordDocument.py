@@ -424,7 +424,7 @@ class WordDocumentTextInfo(UIATextInfo):
 		formatField = super()._getFormatFieldAtRange(textRange, formatConfig, ignoreMixedValues=ignoreMixedValues)
 		if not formatField:
 			return formatField
-		if winVersion.getWinVer() >= winVersion.WIN11:
+		if UIARemote.isSupported():
 			docElement = self.obj.UIAElement
 			if formatConfig['reportLineNumber']:
 				lineNumber = UIARemote.msWord_getCustomAttributeValue(

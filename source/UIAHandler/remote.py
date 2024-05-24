@@ -12,6 +12,7 @@ from typing import (
 )
 from comtypes import GUID
 from comInterfaces import UIAutomationClient as UIA
+import winVersion
 from ._remoteOps import remoteAlgorithms
 from ._remoteOps.remoteTypes import (
 	RemoteExtensionTarget,
@@ -26,14 +27,25 @@ from ._remoteOps.lowLevel import (
 )
 
 
+_isSupported: bool = False
+
+
+def isSupported() -> bool:
+	"""
+	Returns whether UIA remote operations are supported on this version of Windows.
+	"""
+	return _isSupported
+
+
 def initialize(doRemote: bool, UIAClient: UIA.IUIAutomation):
 	"""
 	Initializes UI Automation remote operations.
-	This function is deprecated and will be removed in the future.
-	The following parameters are ignored:
+	The following parameters are deprecated and ignored:
 	@param doRemote: true if code should be executed remotely, or false for locally.
 	@param UIAClient: the current instance of the UI Automation client library running in NVDA.
 	"""
+	global _isSupported
+	_isSupported = winVersion.getWinVer() >= winVersion.WIN11
 	return True
 
 
