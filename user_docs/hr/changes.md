@@ -93,6 +93,7 @@ Ispravljeno je puno pogrešaka u programima, poput Thunderbirda, Adobe Readera, 
 * Ispravljen je rijedak slučaj nemogućnosti spremanja konfiguracije, kada se nisu spremali i konfiguracijski profili. (#16343, @CyrilleB79)
 * U Firefoxu i preglednicima baziranima na Chromiumu, NVDA će ispravno aktivirati modus fokusa prilikom pritiska entera kad je fokus na prezentacijskom popisu (ul / ol) unutar sadržaja za uređivanje. (#16325)
 * Stanje promjena stupaca kada se označuju stupci za prikaz u popisu poruka u Thunderbirdu sada se ispravno čitaju. (#16323)
+* preklopnik u naredbenom redku `-h`/`--help` ponovno ispravno radi. (#16522, @XLTechie)
 
 ## 2024.1
 

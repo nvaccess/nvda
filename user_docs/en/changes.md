@@ -32,6 +32,8 @@
   * NVDA will no longer announce "clipboard history" twice when navigating through the emoji panel menu items. (#16532, @josephsl)
   * NVDA will no longer cut off speech and braille when reviewing kaomojis and symbols in the emoji panel. (#16533, @josephsl)
 * In applications using Java Access Bridge, NVDA will now correctly read the last blank line of a text instead of repeating the previous line. (#9376, @dmitrii-drobotov)
+* If present, NVDA will now use `aria-labelledby` to provide accessible names for tables in Mozilla Firefox. (#5183)
+* NVDA will correctly announce radio and checkbox menuitems when first entering submenus in Google Chrome and Mozilla Firefox. (#14550)
 
 ### Changes for Developers
 
@@ -140,6 +142,7 @@ There are many minor bug fixes for applications, such as Thunderbird, Adobe Read
 * In Firefox and Chromium-based browsers, NVDA will correctly enter focus mode when pressing enter when positioned within a presentational list (ul / ol) inside editable content. (#16325)
 * Column state change is now correctly reported when selecting columns to display in Thunderbird message list. (#16323)
 * The command line switch `-h`/`--help` works properly again. (#16522, @XLTechie)
+* NVDA's support for the Poedit translation software version 3.4 or higher correctly functions when translating languages with 1 or more than 2 plural forms (e.g. Chinese, Polish). (#16318)
 
 ### Changes for Developers
 
