@@ -89,6 +89,7 @@ Thunderbird, Adobe Reader, web tarayıcıları, Nudi ve Geekbench gibi uygulamal
 * Konfigürasyon kaydedildiiğinde tüm profillerin kaydedilememesi gibi nadir bir durum düzeltildi. (# 16343, @CyrilleB79)
 * Firefox ve Chromium tabanlı tarayıcılarda, NVDA, düzenlenebilir içeriğin içinde bir sunum listesinde (ul / ol) Enter tuşuna basıldığında odak kipine doğru bir şekilde girecek. (#16325)
 * Thunderbird mesaj listesinde görüntülenecek sütunları seçerken sütun durumu değişikliği otomatik olarak bildiriliyor. (#16323)
+* `-h`/`--help` komut satırı komutu yeniden doğru biçimde çalışıyor. (#16522, @XLTechie)
 
 ### Changes for Developers
 

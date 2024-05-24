@@ -2,7 +2,7 @@
 
 [TOC]
 
-<!-- KC:title: NVDA NVDA_VERSION - komentojen pikaopas -->
+<!-- KC:title: NVDA NVDA_VERSION:n komentojen pikaopas -->
 
 
 
@@ -100,13 +100,13 @@ Katso tarkemmat tiedot kohdasta [Järjestelmävaatimukset](#SystemRequirements).
 
 Nämä vaiheet edellyttävät jonkin verran perehtymistä verkkosivulla liikkumiseen.
 
-* Avaa verkkoselain (paina ``Windows``-näppäintä, kirjoita "internet" ilman lainausmerkkejä ja paina ``Enter``)
-* Avaa NV Accessin lataussivu (paina ``Alt+D``, kirjoita seuraava osoite ja paina ``Enter``):
+* Avaa verkkoselain (paina `Windows`-näppäintä, kirjoita "internet" ilman lainausmerkkejä ja paina `Enter`)
+* Avaa NV Accessin lataussivu (paina `Alt+D`, kirjoita seuraava osoite ja paina `Enter`):
 https://www.nvaccess.org/download
 * Paina "Download"-painiketta
 * Selain saattaa kysyä suoritettavaa toimintoa lataamisen jälkeen ja käynnistää sitten ladatun tiedoston
 * Selaimesta riippuen tiedosto saatetaan suorittaa automaattisesti latauksen jälkeen
-* Jos tiedosto on käynnistettävä manuaalisesti, siirry selaimen ilmoituksiin painamalla ``F6`` ja sitten ``Alt+S`` suorittaaksesi tiedoston (tehtävät vaiheet riippuvat käytettävästä selaimesta)
+* Jos tiedosto on käynnistettävä manuaalisesti, siirry selaimen ilmoituksiin painamalla `F6` ja sitten `Alt+S` suorittaaksesi tiedoston (tehtävät vaiheet riippuvat käytettävästä selaimesta)
 
 ### NVDA:n asentaminen {#SettingUpNVDA}
 
@@ -125,9 +125,9 @@ Vuosi ja versio muuttuvat päivitysten välillä vastaamaan nykyistä versiota.
 Tunnusmusiikki soi NVDA:n tilapäisversion käynnistyessä.
 Kun se on käynnistynyt, NVDA puhuu koko prosessin ajan.
 1. Näyttöön tulee NVDA:n asennusohjelman ikkuna, jossa näytetään käyttöoikeussopimus.
-Lue sopimus halutessasi painamalla ``Nuoli alas``.
-1. Siirry "Hyväksyn"-valintaruudun kohdalle painamalla ``Sarkainta`` ja valitse se painamalla ``Välilyöntiä``.
-1. Liiku vaihtoehtojen välillä painamalla ``Sarkainta`` ja valitse haluamasi painamalla ``Enter``.
+Lue sopimus halutessasi painamalla `Nuoli alas`.
+1. Siirry "Hyväksyn"-valintaruudun kohdalle painamalla `Sarkainta` ja valitse se painamalla `Välilyöntiä`.
+1. Liiku vaihtoehtojen välillä painamalla `Sarkainta` ja valitse haluamasi painamalla `Enter`.
 
 Vaihtoehdot ovat:
 
@@ -147,7 +147,7 @@ NVDA:n asentaminen mahdollistaa lisätoimintoja, kuten automaattisen käynnistyk
 Nämä toiminnot eivät ole käytettävissä massamuisti- tai tilapäisversioissa.
 Katso täydelliset tiedot massamuisti- ja tilapäisversioiden käytön rajoituksista luvusta [Massamuisti- ja tilapäisversioiden rajoitukset](#PortableAndTemporaryCopyRestrictions).
 
-Asennus tarjoaa myös Käynnistä-valikon ja työpöydän pikakuvakkeiden luomisen sekä mahdollistaa NVDA:n käynnistämisen pikanäppäimellä ``Ctrl+Alt+N``.
+Asennus tarjoaa myös Käynnistä-valikon ja työpöydän pikakuvakkeiden luomisen sekä mahdollistaa NVDA:n käynnistämisen pikanäppäimellä `Ctrl+Alt+N`.
 
 #### NVDA:n asentamisen vaiheet asennusohjelmalla {#StepsForInstallingNVDAFromTheLauncher}
 
@@ -155,31 +155,31 @@ Näissä vaiheissa käydään läpi yleisimmät asennusvaihtoehdot.
 Lisätietoja käytettävissä olevista vaihtoehdoista on kohdassa [Asennusvaihtoehdot](#InstallingNVDA).
 
 1. Varmista, että käyttöoikeussopimuksen hyväksymisvalintaruutu on valittuna asennusohjelmassa.
-1. Siirry ``Sarkaimella`` "Asenna"-painikkeen kohdalle ja paina sitä.
+1. Siirry `Sarkaimella` "Asenna"-painikkeen kohdalle ja paina sitä.
 1. Seuraavana ovat asetukset NVDA:n käyttämiseen Windowsin sisäänkirjautumisen aikana ja työpöydän pikakuvakkeen luomiseen.
 Ne ovat oletusarvoisesti valittuina.
-Voit halutessasi Muuttaa näitä asetuksia painamalla ``Sarkainta`` ja ``Välilyöntiä`` tai jättää ne oletusarvoihinsa.
-1. Jatka painamalla ``Enter``.
+Voit halutessasi Muuttaa näitä asetuksia painamalla `Sarkainta` ja `Välilyöntiä` tai jättää ne oletusarvoihinsa.
+1. Jatka painamalla `Enter`.
 1. Näkyviin tulee Windowsin käyttäjätilien valvonnan valintaikkuna, jossa kysytään, haluatko sallia tämän sovelluksen tehdä muutoksia tietokoneeseesi.
-1. Hyväksy muutosten tekeminen painamalla ``Alt+Ä``.
-1. Edistymispalkki täyttyy NVDA:n asentuessa.
+1. Hyväksy muutosten tekeminen painamalla `Alt+Ä`.
+1. Edistymispalkki ilmaisee asennuksen edistymisen.
 Asennuksen aikana NVDA antaa yhä korkeammaksi muuttuvan äänimerkin.
 Tämä prosessi on usein nopea, eikä sitä välttämättä huomaa.
 1. Näyttöön tulee valintaikkuna, joka vahvistaa, että NVDA:n asennus on onnistunut.
 Ilmoitus neuvoo käynnistämään asennetun version painamalla OK.
-Käynnistä asennettu versio painamalla ``Enter``.
+Käynnistä asennettu versio painamalla `Enter`.
 1. "Tervetuloa NVDA:han" -valintaikkuna tulee näkyviin, ja NVDA lukee tervetuloviestin.
 Kohdistus on "Näppäinasettelu"-alasvetovalikossa.
 "Pöytäkone"-näppäinasettelussa käytetään oletusarvoisesti laskinnäppäimistöä joihinkin toimintoihin.
-Voit halutessasi määrittää laskinnäppäimistön toiminnot muille näppäimille painamalla ``Nuoli alas``, joka valitsee "kannettava"-näppäinasettelun.
-1. Siirry kohtaan "Käytä ``Caps Lockia`` NVDA-näppäimenä" painamalla ``Sarkainta``.
-Oletusnäppäimenä käytetään ``Insertiä``.
-Valitse ``Caps Lock`` vaihtoehtoiseksi painamalla ``Välilyöntiä``.
+Voit halutessasi määrittää laskinnäppäimistön toiminnot muille näppäimille painamalla `Nuoli alas`, joka valitsee "kannettava"-näppäinasettelun.
+1. Siirry kohtaan "Käytä `Caps Lockia` NVDA-näppäimenä" painamalla `Sarkainta`.
+Oletusnäppäimenä käytetään `Insertiä`.
+Valitse `Caps Lock` vaihtoehtoiseksi painamalla `Välilyöntiä`.
 Huom: Näppäinasettelu määritetään erillään NVDA-näppäimestä.
 NVDA-näppäin ja näppäinasettelu voidaan vaihtaa myöhemmin NVDA:n asetusten Näppäimistö-kategoriasta.
-1. Käytä ``Sarkainta`` ja ``Välilyöntiä`` muiden tässä näytössä olevien asetusten säätämiseen.
+1. Käytä `Sarkainta` ja `Välilyöntiä` muiden tässä näytössä olevien asetusten muuttamiseen.
 Niiden avulla määritetään, käynnistyykö NVDA automaattisesti.
-Sulje valintaikkuna painamalla ``Enter``, kun NVDA on nyt käynnissä.
+1. Sulje valintaikkuna painamalla `Enter`.
 
 ### NVDA:n käyttäminen {#RunningNVDA}
 
@@ -193,64 +193,64 @@ Kaikki komennot ovat käyttäjän määritettävissä, joten nämä ovat toimint
 
 #### NVDA-näppäin {#NVDAModifierKey}
 
-Oletusarvoinen NVDA-näppäin on joko ``Laskinnäppäimistön 0`` (``Num Lock`` pois päältä) tai lähellä ``Delete``-, ``Home``- ja ``End``-näppäimiä oleva ``Insert``-näppäin.
-``Caps Lock`` voidaan myös määrittää NVDA-näppäimeksi.
+Oletusarvoinen NVDA-näppäin on joko `Laskinnäppäimistön 0` (`Num Lock` pois päältä) tai lähellä `Delete`-, `Home`- ja `End`-näppäimiä oleva `Insert`-näppäin.
+`Caps Lock` voidaan myös määrittää NVDA-näppäimeksi.
 
 #### Näppäinohje {#InputHelp}
 
-Voit opetella ja harjoitella näppäinten sijainteja painamalla ``NVDA+1``, joka ottaa käyttöön näppäinohjeen.
+Voit opetella ja harjoitella näppäinten sijainteja painamalla `NVDA+1`, joka ottaa käyttöön näppäinohjeen.
 Näppäinohjetilassa minkä tahansa komennon (kuten näppäinkomennon tai kosketuseleen) suorittaminen ilmoittaa kyseiseen komentoon määritetyn toiminnon ja kuvailee, mitä se tekee.
 Varsinaisia komentoja ei suoriteta.
 
 #### NVDA:n käynnistäminen ja sulkeminen {#StartingAndStoppingNVDA}
 
-|| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
+| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
 |---|---|---|---|
-| Käynnistä NVDA | ``Ctrl+Alt+N`` | ``Ctrl+Alt+N`` | Käynnistää tai uudelleenkäynnistää NVDA:n. |
-| Sulje NVDA | ``NVDA+Q`` ja sitten ``Enter`` | ``NVDA+Q`` ja sitten ``Enter`` | Sulkee NVDA:n. |
-| Tauota tai jatka puhetta | ``Vaihto`` | ``Vaihto`` | Tauottaa puheen välittömästi. Uudelleen painaminen jatkaa puhetta kohdasta, jossa se tauotettiin. |
-| Keskeytä puhe | ``Ctrl`` | ``Ctrl`` | Keskeyttää puheen välittömästi. |
+| Käynnistä NVDA | `Ctrl+Alt+N` | `Ctrl+Alt+N` | Käynnistää tai uudelleenkäynnistää NVDA:n. |
+| Sulje NVDA | `NVDA+Q` ja sitten `Enter` | `NVDA+Q` ja sitten `Enter` | Sulkee NVDA:n. |
+| Tauota tai jatka puhetta | `Vaihto` | `Vaihto` | Tauottaa puheen välittömästi. Uudelleen painaminen jatkaa puhetta kohdasta, jossa se tauotettiin. |
+| Keskeytä puhe | `Ctrl` | `Ctrl` | Keskeyttää puheen välittömästi. |
 
 #### Tekstin lukeminen {#ReadingText}
 
-|| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
+| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
 |---|---|---|---|
-| Jatkuva luku | ``NVDA+Nuoli alas`` | ``NVDA+A`` | Alkaa lukea nykyisestä sijainnista lähtien siirtäen samalla kohdistinta. |
-| Puhu nykyinen rivi | ``NVDA+Nuoli ylös`` | ``NVDA+L`` | Puhuu nykyisen rivin. Kahdesti painettaessa se tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen (Antti, Bertta, Celsius, jne.). |
-| Puhu valinta | ``NVDA+Vaihto+Nuoli ylös`` | ``NVDA+Vaihto+S`` | Puhuu valitun tekstin. Kahdesti painettaessa se tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen. |
-| Puhu leikepöydän teksti | ``NVDA+C`` | ``NVDA+C`` | Puhuu leikepöydällä olevan tekstin. Kahdesti painettaessa se tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen. |
+| Jatkuva luku | `NVDA+Nuoli alas` | `NVDA+A` | Alkaa lukea nykyisestä sijainnista lähtien siirtäen samalla kohdistinta. |
+| Puhu nykyinen rivi | `NVDA+Nuoli ylös` | `NVDA+L` | Puhuu nykyisen rivin. Kahdesti painettaessa se tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen (Antti, Bertta, Celsius, jne.). |
+| Puhu valinta | `NVDA+Vaihto+Nuoli ylös` | `NVDA+Vaihto+S` | Puhuu valitun tekstin. Kahdesti painettaessa se tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen. |
+| Puhu leikepöydän teksti | `NVDA+C` | `NVDA+C` | Puhuu leikepöydällä olevan tekstin. Kahdesti painettaessa se tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen. |
 
 #### Sijainti- ja muiden tietojen puhuminen {#ReportingLocation}
 
-|| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
+| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
 |---|---|---|---|
-| Ikkunan nimi | ``NVDA+T`` | ``NVDA+T`` | Lukee aktiivisen ikkunan nimen. Kahdesti painettaessa se tavataan ja kolmesti painettaessa kopioidaan leikepöydälle. |
-| Puhu kohdistus | ``NVDA+Sarkain`` | ``NVDA+Sarkain`` | Puhuu säätimen, jossa järjestelmän kohdistus on. Kahdesti painettaessa se tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen. |
-| Puhu ikkuna | ``NVDA+B`` | ``NVDA+B`` | Puhuu koko nykyisen ikkunan (hyödyllinen valintaikkunoissa). |
-| Puhu tilarivi | ``NVDA+End`` | ``NVDA+Vaihto+End`` | Puhuu tilarivin, mikäli sellainen löytyy. Kahdesti painettaessa se tavataan ja kolmesti painettaessa kopioidaan leikepöydälle. |
-| Puhu kellonaika | ``NVDA+F12`` | ``NVDA+F12`` | Puhuu kerran painettaessa kellonajan ja kahdesti painettaessa päivämäärän. Ajan ja päivämäärän muoto vastaa Windowsin asetuksissa tehtäväpalkin kellolle määriteltyä muotoa. |
-| Puhu tekstin muotoilut | ``NVDA+F`` | ``NVDA+F`` | Puhuu tekstin muotoilutiedot. Kahdesti painettaessa ne näytetään selaustilassa. |
-| Puhu linkin kohde | ``NVDA+K`` | ``NVDA+K`` | Puhuu kerran painettaessa kohdistimen tai kohdistuksen kohdalla olevan linkin kohteen URLin. Kahdesti painettaessa se näytetään erillisessä ikkunassa. |
+| Ikkunan nimi | `NVDA+T` | `NVDA+T` | Lukee aktiivisen ikkunan nimen. Kahdesti painettaessa se tavataan ja kolmesti painettaessa kopioidaan leikepöydälle. |
+| Puhu kohdistus | `NVDA+Sarkain` | `NVDA+Sarkain` | Puhuu säätimen, jossa järjestelmän kohdistus on. Kahdesti painettaessa se tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen. |
+| Puhu ikkuna | `NVDA+B` | `NVDA+B` | Puhuu koko nykyisen ikkunan (hyödyllinen valintaikkunoissa). |
+| Puhu tilarivi | `NVDA+End` | `NVDA+Vaihto+End` | Puhuu tilarivin, mikäli sellainen löytyy. Kahdesti painettaessa se tavataan ja kolmesti painettaessa kopioidaan leikepöydälle. |
+| Puhu kellonaika | `NVDA+F12` | `NVDA+F12` | Puhuu kerran painettaessa kellonajan ja kahdesti painettaessa päivämäärän. Ajan ja päivämäärän muoto vastaa Windowsin asetuksissa tehtäväpalkin kellolle määriteltyä muotoa. |
+| Puhu tekstin muotoilut | `NVDA+F` | `NVDA+F` | Puhuu tekstin muotoilutiedot. Kahdesti painettaessa ne näytetään selaustilassa. |
+| Puhu linkin kohde | `NVDA+K` | `NVDA+K` | Puhuu kerran painettaessa kohdistimen tai kohdistuksen kohdalla olevan linkin kohteen URLin. Kahdesti painettaessa se näytetään erillisessä ikkunassa. |
 
 #### Valitse, mitä tietoja NVDA puhuu {#ToggleWhichInformationNVDAReads}
 
-|| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
+| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
 |---|---|---|---|
-| Puhu kirjoitetut merkit | ``NVDA+2`` | ``NVDA+2`` | Kun tämä on käytössä, NVDA puhuu kaikki kirjoitetut merkit. |
-| Puhu kirjoitetut sanat | ``NVDA+3`` | ``NVDA+3`` | Kun tämä on käytössä, NVDA puhuu kaikki kirjoitetut sanat. |
-| Puhu komentonäppäimet | ``NVDA+4`` | ``NVDA+4`` | Kun tämä on käytössä, NVDA puhuu kaikki painetut näppäimet, jotka eivät ole kirjaimia. Näitä ovat esim. näppäinyhdistelmät Ctrl+jokin kirjain. |
-| Käytä hiiren seurantaa | ``NVDA+M`` | ``NVDA+M`` | Kun tämä on käytössä, NVDA puhuu hiiriosoittimen alla olevan tekstin. Tällä tavalla on mahdollista löytää asioita ruudulta hiirtä liikuttamalla sen sijaan, että käytettäisiin objektinavigointia. |
+| Puhu kirjoitetut merkit | `NVDA+2` | `NVDA+2` | Kun tämä on käytössä, NVDA puhuu kaikki kirjoitetut merkit. |
+| Puhu kirjoitetut sanat | `NVDA+3` | `NVDA+3` | Kun tämä on käytössä, NVDA puhuu kaikki kirjoitetut sanat. |
+| Puhu komentonäppäimet | `NVDA+4` | `NVDA+4` | Kun tämä on käytössä, NVDA puhuu kaikki painetut näppäimet, jotka eivät ole kirjaimia. Näitä ovat esim. näppäinyhdistelmät Ctrl+jokin kirjain. |
+| Käytä hiiren seurantaa | `NVDA+M` | `NVDA+M` | Kun tämä on käytössä, NVDA puhuu hiiriosoittimen alla olevan tekstin. Tällä tavalla on mahdollista löytää asioita ruudulta hiirtä liikuttamalla sen sijaan, että käytettäisiin objektinavigointia. |
 
 #### Syntetisaattorin asetusrengas {#TheSynthSettingsRing}
 
-|| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
+| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
 |---|---|---|---|
-| Siirrä seuraavaan syntetisaattorin asetukseen | ``NVDA+Ctrl+Nuoli oikealle`` | ``NVDA+Vaihto+Ctrl+Nuoli oikealle`` | Siirtää seuraavaan käytettävissä olevaan nykyisen jälkeiseen puheasetukseen palaten viimeisen jälkeen takaisin ensimmäiseen. |
-| Siirrä edelliseen syntetisaattorin asetukseen | ``NVDA+Ctrl+Nuoli vasemmalle`` | ``NVDA+Vaihto+Ctrl+Nuoli vasemmalle`` | Siirtää seuraavaan käytettävissä olevaan nykyistä edeltävään puheasetukseen palaten ensimmäisen jälkeen takaisin viimeiseen. |
-| Suurenna aktiivista syntetisaattorin asetusta | ``NVDA+Ctrl+Nuoli ylös`` | ``NVDA+Vaihto+Ctrl+Nuoli ylös`` | Suurentaa valittua puheasetusta, esim. lisää nopeutta, valitsee seuraavan puheäänen tai lisää äänenvoimakkuutta. |
-| Suurenna aktiivista syntetisaattorin asetusta enemmän | ``NVDA+Ctrl+Page up`` | ``NVDA+Vaihto+Ctrl+Page up`` | Suurentaa nykyisen puheasetuksen arvoa enemmän kerrallaan. Kun esim. puheääniasetus on valittuna, tämä komento siirtää kerralla eteenpäin 20 äänen yli. Liukusäädinasetusten kohdalla (nopeus, korkeus jne.) se suurentaa arvoa jopa 20 %. |
-| Pienennä aktiivista syntetisaattorin asetusta | ``NVDA+Ctrl+Nuoli alas`` | ``NVDA+Vaihto+Ctrl+Nuoli alas`` | Pienentää valittua puheasetusta, esim. vähentää nopeutta, valitsee edellisen puheäänen tai vähentää äänenvoimakkuutta. |
-| Pienennä aktiivista syntetisaattorin asetusta enemmän | ``NVDA+Ctrl+Page down`` | ``NVDA+Vaihto+Ctrl+Page down`` | Pienentää aktiivisen puheasetuksen arvoa enemmän kerrallaan. Kun esim. puheääniasetus on valittuna, tämä komento siirtää kerralla taaksepäin 20 äänen yli. Liukusäädinasetusten kohdalla se pienentää arvoa jopa 20 %. |
+| Siirrä seuraavaan syntetisaattorin asetukseen | `NVDA+Ctrl+Nuoli oikealle` | `NVDA+Vaihto+Ctrl+Nuoli oikealle` | Siirtää seuraavaan käytettävissä olevaan nykyisen jälkeiseen puheasetukseen palaten viimeisen jälkeen takaisin ensimmäiseen. |
+| Siirrä edelliseen syntetisaattorin asetukseen | `NVDA+Ctrl+Nuoli vasemmalle` | `NVDA+Vaihto+Ctrl+Nuoli vasemmalle` | Siirtää seuraavaan käytettävissä olevaan nykyistä edeltävään puheasetukseen palaten ensimmäisen jälkeen takaisin viimeiseen. |
+| Suurenna aktiivista syntetisaattorin asetusta | `NVDA+Ctrl+Nuoli ylös` | `NVDA+Vaihto+Ctrl+Nuoli ylös` | Suurentaa valittua puheasetusta, esim. lisää nopeutta, valitsee seuraavan puheäänen tai lisää äänenvoimakkuutta. |
+| Suurenna aktiivista syntetisaattorin asetusta enemmän | `NVDA+Ctrl+Page up` | `NVDA+Vaihto+Ctrl+Page up` | Suurentaa nykyisen puheasetuksen arvoa enemmän kerrallaan. Kun esim. puheääniasetus on valittuna, tämä komento siirtää kerralla eteenpäin 20 äänen yli. Liukusäädinasetusten kohdalla (nopeus, korkeus jne.) se suurentaa arvoa jopa 20 %. |
+| Pienennä aktiivista syntetisaattorin asetusta | `NVDA+Ctrl+Nuoli alas` | `NVDA+Vaihto+Ctrl+Nuoli alas` | Pienentää valittua puheasetusta, esim. vähentää nopeutta, valitsee edellisen puheäänen tai vähentää äänenvoimakkuutta. |
+| Pienennä aktiivista syntetisaattorin asetusta enemmän | `NVDA+Ctrl+Page down` | `NVDA+Vaihto+Ctrl+Page down` | Pienentää aktiivisen puheasetuksen arvoa enemmän kerrallaan. Kun esim. puheääniasetus on valittuna, tämä komento siirtää kerralla taaksepäin 20 äänen yli. Liukusäädinasetusten kohdalla se pienentää arvoa jopa 20 %. |
 
 Aktiivisen syntetisaattoriasetuksen ensimmäiseen tai viimeiseen arvoon on myös mahdollista siirtyä määrittämällä kyseisille toiminnoille mukautetut näppäinkomennot [Näppäinkomennot-valintaikkunan](#InputGestures) Puhe-kategoriassa.
 Tämä tarkoittaa esimerkiksi sitä, että kun nopeusasetus on valittuna, nopeudeksi määritetään joko 0 tai 100.
@@ -262,23 +262,23 @@ Täydellinen luettelo pikanavigointinäppäimistä on käyttöoppaan [Selaustila
 
 | Komento | Näppäin | Kuvaus |
 |---|---|---|
-| Otsikko | ``H`` | Siirrä seuraavaan otsikkoon. |
-| Otsikkotaso 1, 2 tai 3 | ``1``, ``2``, ``3`` | Siirrä seuraavaan otsikkoon määritetyllä tasolla. |
-| Lomakekenttä | ``F`` | Siirrä seuraavaan lomakekenttään (muokkausruutu, painike jne.). |
-| Linkki | ``K`` | Siirrä seuraavaan linkkiin. |
-| Kiintopiste | ``D`` | Siirrä seuraavaan kiintopisteeseen. |
-| Luettelo | ``L`` | Siirrä seuraavaan luetteloon. |
-| Taulukko | ``T`` | Siirrä seuraavaan taulukkoon. |
-| Siirrä taaksepäin | ``Vaihto+Kirjain`` | Paina ``Vaihto`` ja mitä tahansa yllä olevista kirjaimista siirtyäksesi edelliseen kyseisen tyypin elementtiin. |
-| Elementtilista | ``NVDA+F7`` | Näyttää luettelon erityyppisistä elementeistä, kuten linkeistä ja otsikoista. |
+| Otsikko | `H` | Siirrä seuraavaan otsikkoon. |
+| Otsikkotaso 1, 2 tai 3 | `1`, `2`, `3` | Siirrä seuraavaan otsikkoon määritetyllä tasolla. |
+| Lomakekenttä | `F` | Siirrä seuraavaan lomakekenttään (muokkausruutu, painike jne.). |
+| Linkki | `K` | Siirrä seuraavaan linkkiin. |
+| Kiintopiste | `D` | Siirrä seuraavaan kiintopisteeseen. |
+| Luettelo | `L` | Siirrä seuraavaan luetteloon. |
+| Taulukko | `T` | Siirrä seuraavaan taulukkoon. |
+| Siirrä taaksepäin | `Vaihto+Kirjain` | Paina `Vaihto` ja mitä tahansa yllä olevista kirjaimista siirtyäksesi edelliseen kyseisen tyypin elementtiin. |
+| Elementtilista | `NVDA+F7` | Näyttää luettelon erityyppisistä elementeistä, kuten linkeistä ja otsikoista. |
 
 ### Asetukset {#Preferences}
 
 Useimmat NVDA:n toiminnot voidaan ottaa käyttöön tai muuttaa NVDA:n asetusten kautta.
 Asetukset ja muut vaihtoehdot ovat käytettävissä NVDA-valikon kautta.
-Avaa NVDA-valikko painamalla ``NVDA+N``.
-Avaa NVDA:n yleisten asetusten valintaikkuna suoraan painamalla ``NVDA+Ctrl+G``.
-Monilla asetusvalintaikkunoilla on pikanäppäin niiden avaamiseksi suoraan, kuten ``NVDA+Ctrl+S`` syntetisaattorille tai ``NVDA+Ctrl+V`` muille puheäänen asetuksille.
+Avaa NVDA-valikko painamalla `NVDA+N`.
+Avaa NVDA:n yleisten asetusten valintaikkuna suoraan painamalla `NVDA+Ctrl+G`.
+Monilla asetusvalintaikkunoilla on pikanäppäin niiden avaamiseksi suoraan, kuten `NVDA+Ctrl+S` syntetisaattorille tai `NVDA+Ctrl+V` muille puheäänen asetuksille.
 
 ### Yhteisö {#Community}
 
@@ -293,7 +293,7 @@ Se on online-koe, jonka voit suorittaa osoittaaksesi NVDA:n käyttötaitosi.
 
 ### Avun hankkiminen {#GettingHelp}
 
-Saat ohjeita NVDA:ssa painamalla ``NVDA+N`` avataksesi NVDA-valikon ja sitten ``O`` avataksesi Ohje-valikon.
+Saat ohjeita NVDA:ssa avaamalla NVDA-valikon painamalla `NVDA+N` ja sitten Ohje-valikon painamalla `O`.
 Tästä alivalikosta voit avata käyttöoppaan, komentojen pikaoppaan, uusien ominaisuuksien historian sekä paljon muuta.
 Nämä kolme ensimmäistä vaihtoehtoa avautuvat oletusselaimessa.
 Kattavampaa opetusmateriaalia on saatavilla [NV Access Shopista](https://www.nvaccess.org/shop).
@@ -302,7 +302,7 @@ Suosittelemme aloittamaan "Basic Training for NVDA" -moduulista.
 Se kattaa käsitteet alkuun pääsemisestä verkon selaamiseen ja objektinavigoinnin käyttöön.
 Moduuli on saatavana seuraavissa muodoissa:
 
-* [E-kirja](https://www.nvaccess.org/product/basic-training-for-nvda-ebook/), joka sisältää Wordin DOCX-, HTML-, ePub-e-kirjan sekä Kindlen KFX-muodot.
+* [E-kirja](https://www.nvaccess.org/product/basic-training-for-nvda-ebook/), johon sisältyy Wordin DOCX-, HTML-, ePub-e-kirja sekä Kindlen KFX-muodot.
 * [Ihmisen lukema MP3-äänikirja](https://www.nvaccess.org/product/basic-training-for-nvda-downloadable-audio/)
 * [Paperiversio UEB-pistekirjoituksella](https://www.nvaccess.org/product/basic-training-for-nvda-braille-hard-copy/) sisältäen toimituksen minne tahansa maailmassa.
 
@@ -345,12 +345,12 @@ Se on oletusarvoisesti käytössä uusissa asennuksissa.
 #### Luo pikakuvake työpöydälle (Ctrl+Alt+N) {#CreateDesktopShortcut}
 
 Tällä asetuksella voit valita, luodaanko työpöydälle NVDA:n pikakuvake.
-Jos pikakuvake luodaan, sille määritetään myös pikanäppäin ``Ctrl+Alt+N``, jota painamalla NVDA voidaan käynnistää.
+Jos pikakuvake luodaan, sille määritetään myös pikanäppäin `Ctrl+Alt+N`, jota painamalla NVDA voidaan käynnistää.
 
 #### Kopioi massamuistiversion asetukset nykyiseen käyttäjätiliin {#CopyPortableConfigurationToCurrentUserAccount}
 
 Tällä asetuksella voit valita, kopioidaanko käynnissä olevan NVDA:n asetukset asennettuun versioon nykyiselle sisäänkirjautuneelle käyttäjälle.
-Asetuksia ei kopioida tietokoneen muille käyttäjille eikä Windowsin sisäänkirjautumisen aikana tai [muissa suojatuissa](ruuduissa)(#SecureScreens) käytettäväksi.
+Asetuksia ei kopioida tietokoneen muille käyttäjille eikä Windowsin sisäänkirjautumisen aikana tai [muissa suojatuissa ruuduissa](#SecureScreens) käytettäväksi.
 Tämä vaihtoehto on käytettävissä vain massamuistiversiosta asennettaessa.
 
 ### Massamuistiversion luominen {#CreatingAPortableCopy}
@@ -395,7 +395,7 @@ Käynnistäminen on mahdollista myös kirjoittamalla Suorita-valintaikkunaan NVD
 Mikäli NVDA on jo käynnissä, se käynnistetään uudelleen.
 Lisäksi on mahdollista käyttää [komentorivivalitsimia](#CommandLineOptions), joilla NVDA voidaan sulkea (-q), poistaa lisäosat käytöstä (--disable-addons) jne.
 
-NVDA:n asennettu versio tallentaa asetuksensa oletusarvoisesti nykyisen käyttäjän sovellustietojen Roaming-kansioon (esim. "``C:\Users\<Käyttäjä>\AppData\Roaming``").
+NVDA:n asennettu versio tallentaa asetuksensa oletusarvoisesti nykyisen käyttäjän sovellustietojen Roaming-kansioon (esim. "`C:\Users\<Käyttäjä>\AppData\Roaming`").
 Tämä on mahdollista muuttaa myös niin, että asetukset ladataan em. sijainnin asemesta paikallisten sovellustietojen kansiosta.
 Lisätietoja on [Järjestelmänlaajuiset parametrit](#SystemWideParameters) -luvussa.
 
@@ -526,29 +526,29 @@ NVDA-valikosta voit säätää NVDA:n asetuksia, lukea ohjetta, tallentaa ja pal
 
 NVDA-valikkoon pääsee seuraavasti kaikkialta Windowsista NVDA:n ollessa käynnissä:
 
-* Painamalla näppäimistöltä ``NVDA+N``.
+* Painamalla näppäimistöltä `NVDA+N`.
 * Kaksoisnapauttamalla kosketusnäyttöä kahdella sormella.
-* Siirtymällä ilmoitusalueelle painamalla ``Windows+B``, ``Nuoli alas`` -näppäimellä NVDA-kuvakkeen kohdalle ja painamalla ``Enter``.
-* Siirtymällä vaihtoehtoisesti ilmoitusalueelle painamalla ``Windows+B``, ``Nuoli alas`` -näppäimellä NVDA-kuvakkeen kohdalle ja avaamalla pikavalikon painamalla ``sovellusnäppäintä``, joka löytyy useimmista näppäimistöistä oikeanpuoleisen Ctrl-näppäimen vierestä.
-Näppäimistöissä, joissa ei ole ``sovellusnäppäintä``, käytetään sen sijaan ``Vaihto+F10``-näppäinyhdistelmää.
+* Siirtymällä ilmoitusalueelle painamalla `Windows+B`, `Nuoli alas` -näppäimellä NVDA-kuvakkeen kohdalle ja painamalla `Enter`.
+* Siirtymällä vaihtoehtoisesti ilmoitusalueelle painamalla `Windows+B`, `Nuoli alas` -näppäimellä NVDA-kuvakkeen kohdalle ja avaamalla pikavalikon painamalla `sovellusnäppäintä`, joka löytyy useimmista näppäimistöistä oikeanpuoleisen Ctrl-näppäimen vierestä.
+Näppäimistöissä, joissa ei ole `sovellusnäppäintä`, käytetään sen sijaan `Vaihto+F10`-näppäinyhdistelmää.
 * Napsauttamalla hiiren oikealla painikkeella ilmoitusalueella olevaa NVDA:n kuvaketta.
 
-Kun valikko tulee näkyviin, voit käyttää nuolinäppäimiä siinä liikkumiseen ja ``Enter``-näppäintä kohteen valitsemiseen.
+Kun valikko tulee näkyviin, voit käyttää nuolinäppäimiä siinä liikkumiseen ja `Enter`-näppäintä kohteen valitsemiseen.
 
 ### Peruskomennot {#BasicNVDACommands}
 
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kosketusele | Kuvaus |
+| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kosketusele | Kuvaus |
 |---|---|---|---|---|
-| Käynnistä tai käynnistä uudelleen NVDA | ``Ctrl+Alt+N`` | ``Ctrl+Alt+N`` | Ei mitään | Käynnistää tai käynnistää uudelleen NVDA:n työpöydältä, mikäli tämä pikanäppäin on otettu käyttöön NVDA:n asennuksen aikana. Tämä on Windowsin pikanäppäin, eikä sitä siksi voida uudelleenmäärittää Näppäinkomennot-valintaikkunassa. |
-| Keskeytä puhe | ``Ctrl`` | ``Ctrl`` | Napautus kahdella sormella | Keskeyttää puheen välittömästi. |
-| Tauota puhe | ``Vaihto`` | ``Vaihto`` | Ei mitään | Tauottaa puheen välittömästi. Uudelleen painaminen jatkaa puhetta kohdasta, jossa se tauotettiin (mikäli käytössä oleva puhesyntetisaattori tukee puheen tauottamista). |
-| NVDA-valikko | ``NVDA+N`` | ``NVDA+N`` | Kaksoisnapautus kahdella sormella | Avaa NVDA-valikon, josta voidaan säätää asetuksia, käyttää työkaluja ja lukea ohjetta jne. |
-| Ota käyttöön tai poista käytöstä näppäinohjetila | ``NVDA+1`` | ``NVDA+1`` | Ei mitään | Tässä tilassa minkä tahansa näppäimen painaminen kertoo sen nimen ja kaikki siihen määritellyt NVDA-komennot. |
-| Sulje NVDA | ``NVDA+Q`` | ``NVDA+Q`` | Ei mitään | Sulkee NVDA:n. |
-| Ohita seuraava näppäinpainallus | ``NVDA+F2`` | ``NVDA+F2`` | Ei mitään | Välittää seuraavan näppäinpainalluksen suoraan aktiiviselle sovellukselle suorittamatta sen mahdollista NVDA-komentoa. |
-| Ota käyttöön tai poista käytöstä lepotila | ``NVDA+Vaihto+S`` | ``NVDA+Vaihto+Z`` | Ei mitään | Lepotila poistaa käytöstä kaikki NVDA:n komennot sekä puheen ja pistekirjoituksen tuottamisen nykyisessä sovelluksessa. Tästä on eniten hyötyä sovelluksissa, joissa on sisäänrakennettu puhe- tai ruudunlukutoiminto. Lepotila poistetaan käytöstä painamalla uudelleen tätä näppäinyhdistelmää. Huom: Asetus säilyy vain seuraavaan NVDA:n uudelleenkäynnistykseen saakka. |
+| Käynnistä tai käynnistä uudelleen NVDA | Ctrl+Alt+N | Ctrl+Alt+N | Ei mitään | Käynnistää tai käynnistää uudelleen NVDA:n työpöydältä, mikäli tämä pikanäppäin on otettu käyttöön NVDA:n asennuksen aikana. Tämä on Windowsin pikanäppäin, eikä sitä siksi voi uudelleenmäärittää Näppäinkomennot-valintaikkunassa. |
+| Keskeytä puhe | Ctrl | Ctrl | Napautus kahdella sormella | Keskeyttää puheen välittömästi. |
+| Tauota puhe | Vaihto | Vaihto | Ei mitään | Tauottaa puheen välittömästi. Uudelleen painaminen jatkaa puhetta kohdasta, jossa se tauotettiin (mikäli käytössä oleva puhesyntetisaattori tukee puheen tauottamista). |
+| NVDA-valikko | NVDA+N | NVDA+N | Kaksoisnapautus kahdella sormella | Avaa NVDA-valikon, josta voidaan muuttaa asetuksia, käyttää työkaluja ja lukea ohjetta jne. |
+| Ota käyttöön tai poista käytöstä näppäinohjetila | NVDA+1 | NVDA+1 | Ei mitään | Tässä tilassa minkä tahansa näppäimen painaminen kertoo sen nimen ja kaikki siihen määritellyt NVDA-komennot. |
+| Sulje NVDA | NVDA+Q | NVDA+Q | Ei mitään | Sulkee NVDA:n. |
+| Ohita seuraava näppäinpainallus | NVDA+F2 | NVDA+F2 | Ei mitään | Välittää seuraavan näppäinpainalluksen suoraan aktiiviselle sovellukselle suorittamatta sen mahdollista NVDA-komentoa. |
+| Ota käyttöön tai poista käytöstä lepotila | NVDA+Vaihto+S | NVDA+Vaihto+Z | Ei mitään | Lepotila poistaa käytöstä kaikki NVDA:n komennot sekä puheen ja pistekirjoituksen tuottamisen nykyisessä sovelluksessa. Tästä on eniten hyötyä sovelluksissa, joissa on sisäänrakennettu puhe- tai ruudunlukutoiminto. Lepotila poistetaan käytöstä painamalla uudelleen tätä näppäinyhdistelmää. Huom: Asetus säilyy vain seuraavaan NVDA:n uudelleenkäynnistykseen saakka. |
 
 <!-- KC:endInclude -->
 
@@ -556,7 +556,7 @@ Kun valikko tulee näkyviin, voit käyttää nuolinäppäimiä siinä liikkumise
 
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento | Kuvaus |
+| Nimi | Näppäinkomento | Kuvaus |
 |---|---|---|
 | Puhu päivämäärä/kellonaika | ``NVDA+F12`` | Puhuu kerran painettaessa kellonajan ja kahdesti painettaessa päivämäärän. |
 | Puhu akun tila | ``NVDA+Vaihto+B`` | Puhuu akun tilan, ts. onko verkkovirta käytössä, tai kertoo nykyisen varauksen tason prosentteina. |
@@ -585,9 +585,9 @@ Esimerkkeinä tällaisista voisivat olla äänen nauhoittaminen, näytön suuren
 Näppäinkomento mahdollistaa puhetilan vaihtamisen:
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento | Kuvaus |
+| Nimi | Näppäinkomento | Kuvaus |
 |---|---|---|
-| Vaihda puhetilaa | ``NVDA+S`` | Vaihtaa puhetilojen välillä. |
+| Vaihda puhetilaa | `NVDA+S` | Vaihtaa puhetilojen välillä. |
 
 <!-- KC:endInclude -->
 
@@ -614,13 +614,13 @@ Kun [visuaalinen korostus](#VisionFocusHighlight) on käytössä, järjestelmäk
 Järjestelmäkohdistuksella liikkumista varten on joitakin hyödyllisiä näppäinkomentoja:
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
+| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
 |---|---|---|---|
-| Puhu nykyinen kohdistus | ``NVDA+Sarkain`` | ``NVDA+Sarkain`` | Puhuu nykyisen objektin tai säätimen, jossa järjestelmän kohdistus on. Kahdesti painettaessa se tavataan. |
-| Puhu ikkunan nimi | ``NVDA+T`` | ``NVDA+T`` | Puhuu aktiivisen ikkunan nimen. Kahdesti painettaessa se tavataan ja kolmesti painettaessa kopioidaan leikepöydälle. |
-| Puhu aktiivinen ikkuna | ``NVDA+B`` | ``NVDA+B`` | Puhuu kaikki aktiivisen ikkunan säätimet (hyödyllinen valintaikkunoissa). |
-| Puhu tilarivi | ``NVDA+End`` | ``NVDA+Vaihto+End`` | Puhuu tilarivin, mikäli sellainen löytyy. Kahdesti painettaessa se tavataan ja kolmesti painettaessa kopioidaan leikepöydälle. |
-| Puhu pikanäppäin | ``Vaihto+Laskinnäppäimistön 2`` | ``NVDA+Ctrl+Vaihto+.`` | Puhuu aktiivisen objektin pikanäppäimen. |
+| Puhu nykyinen kohdistus | NVDA+Sarkain | NVDA+Sarkain | Puhuu nykyisen objektin tai säätimen, jossa järjestelmän kohdistus on. Kahdesti painettaessa se tavataan. |
+| Puhu ikkunan nimi | NVDA+T | NVDA+T | Puhuu aktiivisen ikkunan nimen. Kahdesti painettaessa se tavataan ja kolmesti painettaessa kopioidaan leikepöydälle. |
+| Puhu aktiivinen ikkuna | NVDA+B | NVDA+B | Puhuu kaikki aktiivisen ikkunan säätimet (hyödyllinen valintaikkunoissa). |
+| Puhu tilarivi | NVDA+End | NVDA+Vaihto+End | Puhuu tilarivin, mikäli sellainen löytyy. Kahdesti painettaessa se tavataan ja kolmesti painettaessa kopioidaan leikepöydälle. |
+| Puhu pikanäppäin | `Vaihto+Laskinnäppäimistön 2` | `NVDA+Ctrl+Vaihto+.` | Puhuu aktiivisen objektin pikanäppäimen. |
 
 <!-- KC:endInclude -->
 
@@ -635,33 +635,33 @@ NVDA puhuu kaiken merkki, sana ja rivi kerrallaan liikuttaessa ja ilmoittaa myö
 NVDA:ssa on seuraavat järjestelmäkohdistimeen liittyvät näppäinkomennot:
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
+| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
 |---|---|---|---|
-| Jatkuva luku | ``NVDA+Nuoli alas`` | ``NVDA+A`` | Aloittaa lukemisen järjestelmäkohdistimen nykyisestä sijainnista lähtien siirtäen samalla sitä. |
-| Puhu nykyinen rivi | ``NVDA+Nuoli ylös`` | ``NVDA+L`` | Puhuu järjestelmäkohdistimen kohdalla olevan rivin. Kahdesti painettaessa se tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen. |
-| Puhu valittu teksti | ``NVDA+Vaihto+Nuoli ylös`` | ``NVDA+Vaihto+S`` | Puhuu valittuna olevan tekstin. |
-| Puhu tekstin muotoilutiedot | ``NVDA+F`` | ``NVDA+F`` | Puhuu kohdistimen kohdalla olevan tekstin muotoilutiedot. Kahdesti painettaessa ne näytetään selaustilassa. |
-| Puhu linkin kohde | ``NVDA+K`` | ``NVDA+K`` | Puhuu kerran painettaessa kohdistimen tai kohdistuksen kohdalla olevan linkin kohteen URLin. Kahdesti painettaessa se näytetään erillisessä ikkunassa. |
-| Puhu kohdistimen sijainti | ``NVDA+Laskinnäppäimistön Delete`` | ``NVDA+Delete`` | Puhuu järjestelmäkohdistimen kohdalla olevan tekstin tai objektin sijaintitiedot. Näitä tietoja voivat olla esim. asiakirjan luettu osuus prosentteina, etäisyys sivun reunasta tai tarkka paikka ruudulla. Kahdesti painaminen saattaa antaa lisätietoja. |
-| Seuraava lause | ``Alt+Nuoli alas`` | ``Alt+Nuoli alas`` | Siirtää kohdistimen seuraavaan lauseeseen ja puhuu sen (tuetaan vain Microsoft Wordissa ja Outlookissa). |
-| Edellinen lause | ``Alt+Nuoli ylös`` | ``Alt+Nuoli ylös`` | Siirtää kohdistimen edelliseen lauseeseen ja puhuu sen (tuetaan vain Microsoft Wordissa ja Outlookissa). |
+| Jatkuva luku | NVDA+Nuoli alas | NVDA+A | Aloittaa lukemisen järjestelmäkohdistimen nykyisestä sijainnista lähtien siirtäen samalla sitä. |
+| Puhu nykyinen rivi | NVDA+Nuoli ylös | NVDA+L | Puhuu järjestelmäkohdistimen kohdalla olevan rivin. Kahdesti painettaessa se tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen. |
+| Puhu valittu teksti | NVDA+Vaihto+Nuoli ylös | NVDA+Vaihto+S | Puhuu valittuna olevan tekstin. |
+| Puhu tekstin muotoilutiedot | NVDA+F | NVDA+F | Puhuu kohdistimen kohdalla olevan tekstin muotoilutiedot. Kahdesti painettaessa ne näytetään selaustilassa. |
+| Puhu linkin kohde | `NVDA+K` | `NVDA+K` | Puhuu kerran painettaessa kohdistimen tai kohdistuksen kohdalla olevan linkin kohteen URLin. Kahdesti painettaessa se näytetään erillisessä ikkunassa. |
+| Puhu kohdistimen sijainti | NVDA+Laskinnäppäimistön Delete | NVDA+Delete | Puhuu järjestelmäkohdistimen kohdalla olevan tekstin tai objektin sijaintitiedot. Näitä tietoja voivat olla esim. asiakirjan luettu osuus prosentteina, etäisyys sivun reunasta tai tarkka paikka ruudulla. Kahdesti painaminen saattaa antaa lisätietoja. |
+| Seuraava lause | Alt+Nuoli alas | Alt+Nuoli alas | Siirtää kohdistimen seuraavaan lauseeseen ja puhuu sen (tuetaan vain Microsoft Wordissa ja Outlookissa). |
+| Edellinen lause | Alt+Nuoli ylös | Alt+Nuoli ylös | Siirtää kohdistimen edelliseen lauseeseen ja puhuu sen (tuetaan vain Microsoft Wordissa ja Outlookissa). |
 
 Taulukoissa ovat käytettävissä lisäksi seuraavat näppäinkomennot:
 
-|| Nimi | Näppäinkomento | Kuvaus |
+| Nimi | Näppäinkomento | Kuvaus |
 |---|---|---|
-| Siirrä edelliseen sarakkeeseen | ``Ctrl+Alt+Nuoli vasemmalle`` | Siirtää järjestelmäkohdistimen edelliseen sarakkeeseen pysyen samalla rivillä. |
-| Siirrä seuraavaan sarakkeeseen | ``Ctrl+Alt+Nuoli oikealle`` | Siirtää järjestelmäkohdistimen seuraavaan sarakkeeseen pysyen samalla rivillä. |
-| Siirrä edelliselle riville | ``Ctrl+Alt+Nuoli ylös`` | Siirtää järjestelmäkohdistimen edelliselle riville pysyen samassa sarakkeessa. |
-| Siirrä seuraavalle riville | ``Ctrl+Alt+Nuoli alas`` | Siirtää järjestelmäkohdistimen seuraavalle riville pysyen samassa sarakkeessa. |
-| Siirrä ensimmäiseen sarakkeeseen | ``Ctrl+Alt+Home`` | Siirtää järjestelmäkohdistimen ensimmäiseen sarakkeeseen pysyen samalla rivillä. |
-| Siirrä viimeiseen sarakkeeseen | ``Ctrl+Alt+End`` | Siirtää järjestelmäkohdistimen viimeiseen sarakkeeseen pysyen samalla rivillä. |
-| Siirrä ensimmäiselle riville | ``Ctrl+Alt+Page up`` | Siirtää järjestelmäkohdistimen ensimmäiselle riville pysyen samassa sarakkeessa. |
-| Siirrä viimeiselle riville | ``Ctrl+Alt+Page down`` | Siirtää järjestelmäkohdistimen viimeiselle riville pysyen samassa sarakkeessa. |
-| Sarakkeen jatkuva luku | ``NVDA+Ctrl+Alt+Nuoli alas`` | Lukee sarakkeen pystysuunnassa alaspäin nykyisestä solusta viimeiseen. |
-| Rivin jatkuva luku | ``NVDA+Ctrl+Alt+Nuoli oikealle`` | Lukee rivin vaakasuunnassa oikealle nykyisestä solusta viimeiseen. |
-| Lue koko sarake | ``NVDA+Ctrl+Alt+Nuoli ylös`` | Lukee nykyisen sarakkeen pystysuunnassa ylhäältä alas siirtämättä järjestelmäkohdistinta. |
-| Lue koko rivi | ``NVDA+Ctrl+Alt+Nuoli vasemmalle`` | Lukee nykyisen rivin vaakasuunnassa vasemmalta oikealle siirtämättä järjestelmäkohdistinta. |
+| Siirrä edelliseen sarakkeeseen | Ctrl+Alt+Nuoli vasemmalle | Siirtää järjestelmäkohdistimen edelliseen sarakkeeseen pysyen samalla rivillä.  |
+| Siirrä seuraavaan sarakkeeseen | Ctrl+Alt+Nuoli oikealle | Siirtää järjestelmäkohdistimen seuraavaan sarakkeeseen pysyen samalla rivillä. |
+| Siirrä edelliselle riville | Ctrl+Alt+Nuoli ylös | Siirtää järjestelmäkohdistimen edelliselle riville pysyen samassa sarakkeessa. |
+| Siirrä seuraavalle riville | Ctrl+Alt+Nuoli alas | Siirtää järjestelmäkohdistimen seuraavalle riville pysyen samassa sarakkeessa. |
+| Siirrä ensimmäiseen sarakkeeseen | Ctrl+Alt+Home | Siirtää järjestelmäkohdistimen ensimmäiseen sarakkeeseen pysyen samalla rivillä. |
+| Siirrä viimeiseen sarakkeeseen | Ctrl+Alt+End | Siirtää järjestelmäkohdistimen viimeiseen sarakkeeseen pysyen samalla rivillä. |
+| Siirrä ensimmäiselle riville | Ctrl+Alt+Page up | Siirtää järjestelmäkohdistimen ensimmäiselle riville pysyen samassa sarakkeessa. |
+| Siirrä viimeiselle riville | Ctrl+Alt+Page down | Siirtää järjestelmäkohdistimen viimeiselle riville pysyen samassa sarakkeessa. |
+| Sarakkeen jatkuva luku | `NVDA+Ctrl+Alt+Nuoli alas` | Lukee sarakkeen pystysuunnassa alaspäin nykyisestä solusta viimeiseen. |
+| Rivin jatkuva luku | `NVDA+Ctrl+Alt+Nuoli oikealle` | Lukee rivin vaakasuunnassa oikealle nykyisestä solusta viimeiseen. |
+| Lue koko sarake | `NVDA+Ctrl+Alt+Nuoli ylös` | Lukee nykyisen sarakkeen pystysuunnassa ylhäältä alas siirtämättä järjestelmäkohdistinta. |
+| Lue koko rivi | `NVDA+Ctrl+Alt+Nuoli vasemmalle` | Lukee nykyisen rivin vaakasuunnassa vasemmalta oikealle siirtämättä järjestelmäkohdistinta. |
 
 <!-- KC:endInclude -->
 
@@ -701,24 +701,24 @@ Seuraavia komentoja käytetään objekteittain liikkumiseen:
 
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kosketusele | Kuvaus |
+| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kosketusele | Kuvaus |
 |---|---|---|---|---|
-| Puhu nykyinen objekti | ``NVDA+Laskinnäppäimistön 5`` | ``NVDA+Vaihto+O`` | Ei mitään | Puhuu nykyisen navigointiobjektin. Kahdesti painettaessa se tavataan ja kolmesti painettaessa objektin nimi ja arvo kopioidaan leikepöydälle. |
-| Siirrä säilöobjektiin | ``NVDA+Laskinnäppäimistön 8`` | ``NVDA+Vaihto+Nuoli ylös`` | Pyyhkäisy ylös (objektitila) | Siirtää objektiin, joka sisältää nykyisen navigointiobjektin. |
-| Siirrä edelliseen objektiin | ``NVDA+Laskinnäppäimistön 4`` | ``NVDA+Vaihto+Nuoli vasemmalle`` | Ei mitään | Siirtää nykyistä navigointiobjektia edeltävään objektiin. |
-| Siirrä edelliseen objektiin tasatussa näkymässä | ``NVDA+Laskinnäppäimistön 9`` | ``NVDA+Vaihto+I`` | Pyyhkäisy vasemmalle (objektitila) | Siirtää edelliseen objektiin objektinavigointihierarkian tasatussa näkymässä. |
-| Siirrä seuraavaan objektiin | ``NVDA+Laskinnäppäimistön 6`` | ``NVDA+Vaihto+Nuoli oikealle`` | Ei mitään | Siirtää nykyisen navigointiobjektin jälkeiseen objektiin. |
-| Siirrä seuraavaan objektiin tasatussa näkymässä | ``NVDA+Laskinnäppäimistön 3`` | ``NVDA+Vaihto+O`` | Pyyhkäisy oikealle (objektitila) | Siirtää seuraavaan objektiin objektinavigointihierarkian tasatussa näkymässä. |
-| Siirrä ensimmäiseen sisältöobjektiin | ``NVDA+Laskinnäppäimistön 2`` | ``NVDA+Vaihto+Nuoli alas`` | Pyyhkäisy alas (objektitila) | Siirtää ensimmäiseen navigointiobjektin sisällä olevaan objektiin. |
-| Siirrä aktiiviseen objektiin | ``NVDA+Laskinnäppäimistön miinus`` | ``NVDA+Askelpalautin`` | Ei mitään | Siirtää objektiin, jossa järjestelmän kohdistus on tällä hetkellä ja sijoittaa tarkastelukohdistimen järjestelmäkohdistimen kohdalle, mikäli se on näkyvissä. |
-| Aktivoi nykyinen navigointiobjekti | ``NVDA+Laskinnäppäimistön Enter`` | ``NVDA+Enter`` | Kaksoisnapautus | Aktivoi nykyisen navigointiobjektin (vastaa hiiren napsauttamista tai ``Välilyönnin`` painamista, kun järjestelmän kohdistus on siinä). |
-| Siirrä kohdistus tai kohdistin tarkastelukohtaan | ``NVDA+Vaihto+Laskinnäppäimistön miinus`` | ``NVDA+Vaihto+Askelpalautin`` | Ei mitään | Siirtää kerran painettaessa järjestelmän kohdistuksen nykyiseen navigointiobjektiin tai kahdesti painettaessa järjestelmäkohdistimen tarkastelukohdistimen kohdalle. |
-| Puhu tarkastelukohdistimen sijainti | ``NVDA+Vaihto+Laskinnäppäimistön Delete`` | ``NVDA+Vaihto+Delete`` | Ei mitään | Lukee tarkastelukohdistimen kohdalla olevan tekstin tai objektin sijaintitiedot. Näitä tietoja voivat olla esim. asiakirjan luettu osuus prosentteina, etäisyys sivun reunasta tai tarkka paikka ruudulla. Kahdesti painaminen saattaa antaa lisätietoja. |
+| Puhu nykyinen objekti | NVDA+Laskinnäppäimistön 5 | NVDA+Vaihto+O | Ei mitään | Puhuu nykyisen navigointiobjektin. Kahdesti painettaessa se tavataan ja kolmesti painettaessa objektin nimi ja arvo kopioidaan leikepöydälle. |
+| Siirrä säilöobjektiin | NVDA+Laskinnäppäimistön 8 | NVDA+Vaihto+Nuoli ylös | Pyyhkäisy ylös (objektitila) | Siirtää objektiin, joka sisältää nykyisen navigointiobjektin. |
+| Siirrä edelliseen objektiin | NVDA+Laskinnäppäimistön 4 | NVDA+Vaihto+Nuoli vasemmalle | Ei mitään | Siirtää nykyistä navigointiobjektia edeltävään objektiin. |
+| Siirrä edelliseen objektiin tasatussa näkymässä | NVDA+Laskinnäppäimistön 9 | NVDA+Vaihto+I | Pyyhkäisy vasemmalle (objektitila) | Siirtää edelliseen objektiin objektinavigointihierarkian tasatussa näkymässä. |
+| Siirrä seuraavaan objektiin | NVDA+Laskinnäppäimistön 6 | NVDA+Vaihto+Nuoli oikealle | Ei mitään | Siirtää nykyisen navigointiobjektin jälkeiseen objektiin. |
+| Siirrä seuraavaan objektiin tasatussa näkymässä | NVDA+Laskinnäppäimistön 3 | NVDA+Vaihto+O | Pyyhkäisy oikealle (objektitila) | Siirtää seuraavaan objektiin objektinavigointihierarkian tasatussa näkymässä. |
+| Siirrä ensimmäiseen sisältöobjektiin | NVDA+Laskinnäppäimistön 2 | NVDA+Vaihto+Nuoli alas | Pyyhkäisy alas (objektitila) | Siirtää ensimmäiseen navigointiobjektin sisällä olevaan objektiin. |
+| Siirrä aktiiviseen objektiin | NVDA+Laskinnäppäimistön miinus | NVDA+Askelpalautin | Ei mitään | Siirtää objektiin, jossa järjestelmän kohdistus on tällä hetkellä ja sijoittaa tarkastelukohdistimen järjestelmäkohdistimen kohdalle, mikäli se on näkyvissä. |
+| Aktivoi nykyinen navigointiobjekti | NVDA+Laskinnäppäimistön Enter | NVDA+Enter | Kaksoisnapautus | Aktivoi nykyisen navigointiobjektin (vastaa hiiren napsauttamista tai Väli-näppäimen painamista, kun järjestelmän kohdistus on siinä). |
+| Siirrä kohdistus tai kohdistin tarkastelukohtaan | NVDA+Vaihto+Laskinnäppäimistön miinus | NVDA+Vaihto+Askelpalautin | Ei mitään | Siirtää kerran painettaessa järjestelmän kohdistuksen nykyiseen navigointiobjektiin tai kahdesti painettaessa järjestelmäkohdistimen tarkastelukohdistimen kohdalle. |
+| Puhu tarkastelukohdistimen sijainti | NVDA+Vaihto+Laskinnäppäimistön Delete | NVDA+Vaihto+Delete | Ei mitään | Lukee tarkastelukohdistimen kohdalla olevan tekstin tai objektin sijaintitiedot. Näitä tietoja voivat olla esim. asiakirjan luettu osuus prosentteina, etäisyys sivun reunasta tai tarkka paikka ruudulla. Kahdesti painaminen saattaa antaa lisätietoja. |
 | Siirrä tarkastelukohdistin tilariville | Ei mitään | Ei mitään | Ei mitään | Puhuu tilarivin, mikäli sellainen löytyy. Lisäksi navigointiobjekti siirretään sen kohdalle. |
 
 <!-- KC:endInclude -->
 
-Huom: ``Num Lockin`` on oltava pois käytöstä, jotta laskinnäppäimistön näppäimet toimivat oikein.
+Huom: Num Lockin on oltava pois käytöstä, jotta laskinnäppäimistön näppäimet toimivat oikein.
 
 ### Tekstin tarkasteleminen {#ReviewingText}
 
@@ -735,33 +735,33 @@ Huom: Pistenäyttö voidaan määrittää seuraamaan tarkastelukohdistinta [Pist
 Seuraavat tekstintarkastelukomennot ovat käytettävissä:
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kosketusele | Kuvaus |
+| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kosketusele | Kuvaus |
 |---|---|---|---|---|
-| Siirrä tarkastelukohdistin ylimmälle riville | ``Vaihto+Laskinnäppäimistön 7`` | ``NVDA+Ctrl+Home`` | Ei mitään | Siirtää tarkastelukohdistimen ylimmälle riville. |
-| Siirrä tarkastelukohdistin edelliselle riville | ``Laskinnäppäimistön 7`` | ``NVDA+Nuoli ylös`` | Pyyhkäisy ylös (tekstitila) | Siirtää tarkastelukohdistimen edelliselle riville. |
-| Puhu tarkastelukohdistimen kohdalla oleva rivi | ``Laskinnäppäimistön 8`` | ``NVDA+Vaihto+.`` | Ei mitään | Puhuu tarkastelukohdistimen kohdalla olevan rivin. Kahdesti painettaessa se tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen. |
-| Siirrä tarkastelukohdistin seuraavalle riville | ``Laskinnäppäimistön 9`` | ``NVDA+Nuoli alas`` | Pyyhkäisy alas (tekstitila) | Siirtää tarkastelukohdistimen seuraavalle riville. |
-| Siirrä tarkastelukohdistin alimmalle riville | ``Vaihto+Laskinnäppäimistön 9`` | ``NVDA+Ctrl+End`` | Ei mitään | Siirtää tarkastelukohdistimen alimmalle riville. |
-| Siirrä tarkastelukohdistin edelliseen sanaan | ``Laskinnäppäimistön 4`` | ``NVDA+Ctrl+Nuoli vasemmalle`` | Pyyhkäisy vasemmalle kahdella sormella (tekstitila) | Siirtää tarkastelukohdistimen edellisen sanan kohdalle. |
-| Puhu tarkastelukohdistimen kohdalla oleva sana | ``Laskinnäppäimistön 5`` | ``NVDA+Ctrl+.`` | Ei mitään | Puhuu tarkastelukohdistimen kohdalla olevan sanan. Kahdesti painettaessa se tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen. |
-| Siirrä tarkastelukohdistin seuraavaan sanaan | ``Laskinnäppäimistön 6`` | ``NVDA+Ctrl+Nuoli oikealle`` | Pyyhkäisy oikealle kahdella sormella (tekstitila) | Siirtää tarkastelukohdistimen seuraavan sanan kohdalle. |
-| Siirrä tarkastelukohdistin rivin alkuun | ``Vaihto+Laskinnäppäimistön 1`` | ``NVDA+Home`` | Ei mitään | Siirtää tarkastelukohdistimen nykyisen rivin alkuun. |
-| Siirrä tarkastelukohdistin edelliseen merkkiin | ``Laskinnäppäimistön 1`` | ``NVDA+Nuoli vasemmalle`` | Pyyhkäisy vasemmalle (tekstitila) | Siirtää tarkastelukohdistimen seuraavan merkin kohdalle nykyisellä rivillä. |
-| Puhu tarkastelukohdistimen kohdalla oleva merkki | ``Laskinnäppäimistön 2`` | ``NVDA+.`` | Ei mitään | Puhuu nykyisen merkin tarkastelukohdistimen kohdalla olevalta riviltä. Kahdesti painettaessa luetaan merkin kuvaus tai esimerkki sen käytöstä. Kolmesti painettaessa luetaan sen numeerinen arvo desimaaleina ja heksadesimaaleina. |
-| Siirrä tarkastelukohdistin seuraavaan merkkiin | ``Laskinnäppäimistön 3`` | ``NVDA+Nuoli oikealle`` | Pyyhkäisy oikealle (tekstitila) | Siirtää tarkastelukohdistimen seuraavan merkin kohdalle nykyisellä rivillä. |
-| Siirrä tarkastelukohdistin rivin loppuun | ``Vaihto+Laskinnäppäimistön 3`` | ``NVDA+End`` | Ei mitään | Siirtää tarkastelukohdistimen nykyisen rivin loppuun. |
-| Siirrä tarkastelukohdistin edelliselle sivulle | ``NVDA+Page up`` | ``NVDA+Vaihto+Page up`` | Ei mitään | Siirtää tarkastelukohdistimen edelliselle sivulle, mikäli sovellus tukee sitä. |
-| Siirrä tarkastelukohdistin seuraavalle sivulle | ``NVDA+Page down`` | ``NVDA+Vaihto+Page down`` | Ei mitään | Siirtää tarkastelukohdistimen seuraavalle sivulle, mikäli sovellus tukee sitä. |
-| Jatkuva luku tarkastelukohdistimella | ``Laskinnäppäimistön plus`` | ``NVDA+Vaihto+A`` | Pyyhkäisy alas kolmella sormella (tekstitila) | Lukee tarkastelukohdistimen nykyisestä kohdasta alkaen siirtäen samalla tarkastelukohdistinta. |
-| Valitse ja kopioi tarkastelukohdistimesta | ``NVDA+F9`` | ``NVDA+F9`` | Ei mitään | Aloittaa tekstin valitsemisen ja kopioinnin tarkastelukohdistimen nykyisestä kohdasta. Kopiointia ei suoriteta ennen kuin NVDA:lle kerrotaan, missä tekstilohkon loppu on. |
-| Valitse ja kopioi tarkastelukohdistimeen | ``NVDA+F10`` | ``NVDA+F10`` | Ei mitään | Valitsee ensimmäisellä painalluksella aiemmin asetetusta tekstilohkon alkukohdasta lähtien tarkastelukohdistimen nykyiseen sijaintiin saakka. Järjestelmäkohdistin siirretään valittuun tekstiin, mikäli se on mahdollista. Toisen kerran painettaessa teksti kopioidaan leikepöydälle. |
-| Siirrä tarkastelukohdistin kopioitavaksi merkityn tekstin alkukohtaan | ``NVDA+Vaihto+F9`` | ``NVDA+Vaihto+F9`` | Ei mitään | Siirtää tarkastelukohdistimen aiemmin kopioitavaksi merkityn tekstin alkukohtaan. |
-| Puhu tekstin muotoilutiedot | ``NVDA+Vaihto+F`` | ``NVDA+Vaihto+F`` | Ei mitään | Puhuu tarkastelukohdistimen nykyisessä sijainnissa olevan tekstin muotoilutiedot. Kahdesti painettaessa ne näytetään selaustilassa. |
+| Siirrä tarkastelukohdistin ylimmälle riville | Vaihto+Laskinnäppäimistön 7 | NVDA+Ctrl+Home | Ei mitään | Siirtää tarkastelukohdistimen ylimmälle riville. |
+| Siirrä tarkastelukohdistin edelliselle riville | Laskinnäppäimistön 7 | NVDA+Nuoli ylös | Pyyhkäisy ylös (tekstitila) | Siirtää tarkastelukohdistimen edelliselle riville. |
+| Puhu tarkastelukohdistimen kohdalla oleva rivi | Laskinnäppäimistön 8 | NVDA+Vaihto+. | Ei mitään | Puhuu tarkastelukohdistimen kohdalla olevan rivin. Kahdesti painettaessa se tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen. |
+| Siirrä tarkastelukohdistin seuraavalle riville | Laskinnäppäimistön 9 | NVDA+Nuoli alas | Pyyhkäisy alas (tekstitila) | Siirtää tarkastelukohdistimen seuraavalle riville. |
+| Siirrä tarkastelukohdistin alimmalle riville | Vaihto+Laskinnäppäimistön 9 | NVDA+Ctrl+End | Ei mitään | Siirtää tarkastelukohdistimen alimmalle riville. |
+| Siirrä tarkastelukohdistin edelliseen sanaan | Laskinnäppäimistön 4 | NVDA+Ctrl+Nuoli vasemmalle | Pyyhkäisy vasemmalle kahdella sormella (tekstitila) | Siirtää tarkastelukohdistimen edellisen sanan kohdalle. |
+| Puhu tarkastelukohdistimen kohdalla oleva sana | Laskinnäppäimistön 5 | NVDA+Ctrl+. | Ei mitään | Puhuu tarkastelukohdistimen kohdalla olevan sanan. Kahdesti painettaessa se tavataan normaalisti ja kolmesti painettaessa merkkikuvauksia käyttäen. |
+| Siirrä tarkastelukohdistin seuraavaan sanaan | Laskinnäppäimistön 6 | NVDA+Ctrl+Nuoli oikealle | Pyyhkäisy oikealle kahdella sormella (tekstitila) | Siirtää tarkastelukohdistimen seuraavan sanan kohdalle. |
+| Siirrä tarkastelukohdistin rivin alkuun | Vaihto+Laskinnäppäimistön 1 | NVDA+Home | Ei mitään | Siirtää tarkastelukohdistimen nykyisen rivin alkuun. |
+| Siirrä tarkastelukohdistin edelliseen merkkiin | Laskinnäppäimistön 1 | NVDA+Nuoli vasemmalle | Pyyhkäisy vasemmalle (tekstitila) | Siirtää tarkastelukohdistimen seuraavan merkin kohdalle nykyisellä rivillä. |
+| Puhu tarkastelukohdistimen kohdalla oleva merkki | Laskinnäppäimistön 2 | NVDA+. | Ei mitään | Puhuu nykyisen merkin tarkastelukohdistimen kohdalla olevalta riviltä. Kahdesti painettaessa luetaan merkin kuvaus tai esimerkki sen käytöstä. Kolmesti painettaessa luetaan sen numeerinen arvo desimaaleina ja heksadesimaaleina. |
+| Siirrä tarkastelukohdistin seuraavaan merkkiin | Laskinnäppäimistön 3 | NVDA+Nuoli oikealle | Pyyhkäisy oikealle (tekstitila) | Siirtää tarkastelukohdistimen seuraavan merkin kohdalle nykyisellä rivillä. |
+| Siirrä tarkastelukohdistin rivin loppuun | Vaihto+Laskinnäppäimistön 3 | NVDA+End | Ei mitään | Siirtää tarkastelukohdistimen nykyisen rivin loppuun. |
+| Siirrä tarkastelukohdistin edelliselle sivulle | `NVDA+Page up` | `NVDA+Vaihto+Page up` | Ei mitään | Siirtää tarkastelukohdistimen edelliselle sivulle, mikäli sovellus tukee sitä. |
+| Siirrä tarkastelukohdistin seuraavalle sivulle | `NVDA+Page down` | `NVDA+Vaihto+Page down` | Ei mitään | Siirtää tarkastelukohdistimen seuraavalle sivulle, mikäli sovellus tukee sitä. |
+| Jatkuva luku tarkastelukohdistimella | Laskinnäppäimistön plus | NVDA+Vaihto+A | Pyyhkäisy alas kolmella sormella (tekstitila) | Lukee tarkastelukohdistimen nykyisestä kohdasta alkaen siirtäen samalla tarkastelukohdistinta. |
+| Valitse ja kopioi tarkastelukohdistimesta | NVDA+F9 | NVDA+F9 | Ei mitään | Aloittaa tekstin valitsemisen ja kopioinnin tarkastelukohdistimen nykyisestä kohdasta. Kopiointia ei suoriteta ennen kuin NVDA:lle kerrotaan, missä tekstilohkon loppu on. |
+| Valitse ja kopioi tarkastelukohdistimeen | NVDA+F10 | NVDA+F10 | Ei mitään | Valitsee ensimmäisellä painalluksella aiemmin asetetusta tekstilohkon alkukohdasta lähtien tarkastelukohdistimen nykyiseen sijaintiin saakka. Järjestelmäkohdistin siirretään valittuun tekstiin, mikäli se on mahdollista. Toisen kerran painettaessa teksti kopioidaan leikepöydälle. |
+| Siirrä tarkastelukohdistin kopioitavaksi merkityn tekstin alkukohtaan | NVDA+Vaihto+F9 | NVDA+Vaihto+F9 | Ei mitään | Siirtää tarkastelukohdistimen aiemmin kopioitavaksi merkityn tekstin alkukohtaan. |
+| Puhu tekstin muotoilutiedot | NVDA+Vaihto+F | NVDA+Vaihto+F | Ei mitään | Puhuu tarkastelukohdistimen nykyisessä sijainnissa olevan tekstin muotoilutiedot. Kahdesti painettaessa ne näytetään selaustilassa. |
 | Puhu nykyisen symbolin korvaava teksti | Ei mitään | Ei mitään | Ei mitään | Puhuu tarkastelukohdistimen kohdalla olevan symbolin ja näyttää kahdesti painettaessa selaustilassa sekä symbolin että sen korvaavan tekstin. |
 
 <!-- KC:endInclude -->
 
-Huom: ``Num Lockin`` on oltava pois käytöstä, jotta laskinnäppäimistön näppäimet toimivat oikein.
+Huom: Num Lockin on oltava pois käytöstä, jotta laskinnäppäimistön näppäimet toimivat oikein.
 
 Hyvä keino tekstin tarkastelun peruskomentojen muistamiseen pöytäkoneen näppäinasettelua käytettäessä on ajatella niitä kolme kertaa kolme ruudukkona, jossa on ylhäältä alas rivi, sana ja merkki sekä vasemmalta oikealle edellinen, nykyinen ja seuraava.
 Asettelua havainnollistetaan seuraavasti:
@@ -779,10 +779,10 @@ NVDA:n [tekstintarkastelukomennot](#ReviewingText) lukevat tekstiä valitusta ta
 Seuraavat komennot vaihtavat tarkastelutilojen välillä:
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kosketusele | Kuvaus |
+| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kosketusele | Kuvaus |
 |---|---|---|---|---|
-| Vaihda seuraavaan tarkastelutilaan | ``NVDA+Laskinnäppäimistön 7`` | ``NVDA+Page up`` | Pyyhkäisy ylös kahdella sormella | Vaihtaa seuraavaan käytettävissä olevaan tarkastelutilaan. |
-| Vaihda edelliseen tarkastelutilaan | ``NVDA+Laskinnäppäimistön 1`` | ``NVDA+Page down`` | Pyyhkäisy alas kahdella sormella | Vaihtaa edelliseen käytettävissä olevaan tarkastelutilaan. |
+| Vaihda seuraavaan tarkastelutilaan | NVDA+Laskinnäppäimistön 7 | NVDA+Page up | Pyyhkäisy ylös kahdella sormella | Vaihtaa seuraavaan käytettävissä olevaan tarkastelutilaan. |
+| Vaihda edelliseen tarkastelutilaan | NVDA+Laskinnäppäimistön 1 | NVDA+Page down | Pyyhkäisy alas kahdella sormella | Vaihtaa edelliseen käytettävissä olevaan tarkastelutilaan. |
 
 <!-- KC:endInclude -->
 
@@ -830,14 +830,14 @@ Voit halutessasi ottaa ne käyttöön [Hiiri](#MouseSettings)-kategoriasta [Aset
 Vaikka hiiren avulla liikkumiseen tulisikin käyttää fyysistä hiirtä tai kosketuslevyä, on NVDA:ssa joitakin hiiren käyttöön tarkoitettuja näppäinkomentoja:
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kosketusele | Kuvaus |
+| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kosketusele | Kuvaus |
 |---|---|---|---|---|
-| Vasemman hiiripainikkeen napsautus | ``Laskinnäppäimistön jakomerkki (/)`` | ``NVDA+Ö`` | Ei mitään | Napsauttaa kerran hiiren vasenta painiketta. Kaksoisnapsautus tehdään painamalla tätä näppäinkomentoa kaksi kertaa nopeasti peräkkäin. |
-| Vasemman hiiripainikkeen lukitus | ``Vaihto+Laskinnäppäimistön jakomerkki (/)`` | ``NVDA+Ctrl+Ö`` | Ei mitään | Lukitsee vasemman hiiripainikkeen alas. Lukitus vapautetaan painamalla tätä näppäinkomentoa uudelleen. Hiirellä vetäminen tehdään painamalla tätä näppäinkomentoa vasemman painikkeen lukitsemiseksi ja siirtämällä sitten hiirtä joko fyysisesti tai käyttämällä jotakin muista hiiren siirtämiskomennoista. |
-| Oikean hiiripainikkeen napsautus | ``Laskinnäppäimistön kertomerkki (*)`` | ``NVDA+Ä`` | Napauta ja pidä | Napsauttaa kerran hiiren oikeaa painiketta. Käytetään useimmiten pikavalikon avaamiseen hiiren sijainnissa. |
-| Oikean hiiripainikkeen lukitus | ``Vaihto+Laskinnäppäimistön kertomerkki (*)`` | ``NVDA+Ctrl+Ä`` | Ei mitään | Lukitsee oikean hiiripainikkeen alas. Lukitus vapautetaan painamalla tätä näppäinkomentoa uudelleen. Hiirellä vetäminen tehdään painamalla tätä komentoa oikean painikkeen lukitsemiseksi ja siirtämällä sitten hiirtä joko fyysisesti tai käyttämällä jotakin muista hiiren siirtämiskomennoista. |
-| Siirrä hiiri nykyiseen navigointiobjektiin | ``NVDA+Laskinnäppäimistön jakomerkki (/)`` | ``NVDA+Vaihto+M`` | Ei mitään | Siirtää hiiren nykyisen navigointiobjektin ja tarkastelukohdistimen sijaintiin. |
-| Siirrä hiiren alla olevaan objektiin | ``NVDA+Laskinnäppäimistön kertomerkki (*)`` | ``NVDA+Vaihto+N`` | Ei mitään | Siirtää navigointiobjektin hiiren alla olevaan objektiin. |
+| Vasemman hiiripainikkeen napsautus | Laskinnäppäimistön jakomerkki (/) | NVDA+Ö | Ei mitään | Napsauttaa kerran hiiren vasenta painiketta. Kaksoisnapsautus tehdään painamalla tätä näppäinkomentoa kaksi kertaa nopeasti peräkkäin. |
+| Vasemman hiiripainikkeen lukitus | Vaihto+Laskinnäppäimistön jakomerkki (/) | NVDA+Ctrl+Ö | Ei mitään | Lukitsee vasemman hiiripainikkeen alas. Lukitus vapautetaan painamalla tätä näppäinkomentoa uudelleen. Hiirellä vetäminen tehdään painamalla tätä näppäinkomentoa vasemman painikkeen lukitsemiseksi ja siirtämällä sitten hiirtä joko fyysisesti tai käyttämällä jotakin muista hiiren siirtämiskomennoista. |
+| Oikean hiiripainikkeen napsautus | Laskinnäppäimistön kertomerkki (*) | NVDA+Ä | Napauta ja pidä | Napsauttaa kerran hiiren oikeaa painiketta. Käytetään useimmiten pikavalikon avaamiseen hiiren sijainnissa. |
+| Oikean hiiripainikkeen lukitus | Vaihto+Laskinnäppäimistön kertomerkki (*) | NVDA+Ctrl+Ä | Ei mitään | Lukitsee oikean hiiripainikkeen alas. Lukitus vapautetaan painamalla tätä näppäinkomentoa uudelleen. Hiirellä vetäminen tehdään painamalla tätä komentoa oikean painikkeen lukitsemiseksi ja siirtämällä sitten hiirtä joko fyysisesti tai käyttämällä jotakin muista hiiren siirtämiskomennoista. |
+| Siirrä hiiri nykyiseen navigointiobjektiin | NVDA+Laskinnäppäimistön jakomerkki (/) | NVDA+Vaihto+M | Ei mitään | Siirtää hiiren nykyisen navigointiobjektin ja tarkastelukohdistimen sijaintiin. |
+| Siirrä hiiren alla olevaan objektiin | NVDA+Laskinnäppäimistön kertomerkki (*) | NVDA+Vaihto+N | Ei mitään | Siirtää navigointiobjektin hiiren alla olevaan objektiin. |
 
 <!-- KC:endInclude -->
 
@@ -874,14 +874,14 @@ Vuorovaikutustila voidaan lisäksi ottaa käyttöön manuaalisesti, jolloin se p
 
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento | Kuvaus |
+| Nimi | Näppäinkomento | Kuvaus |
 |---|---|---|
-| Vaihda selaus- ja vuorovaikutustilojen välillä | ``NVDA+Väli`` | Vaihtaa vuorovaikutus- ja selaustilojen välillä. |
-| Poistu vuorovaikutustilasta | ``Esc`` | Siirtää takaisin selaustilaan, mikäli NVDA siirtyi aiemmin automaattisesti vuorovaikutustilaan. |
-| Päivitä selaustila-asiakirja | ``NVDA+F5`` tai ``NVDA+Esc`` | Lataa uudelleen nykyisen asiakirjan sisällön. (Hyödyllinen, jos sivulta vaikuttaa puuttuvan jotakin. Komento ei ole käytettävissä Microsoft Wordissa tai Outlookissa.) |
-| Etsi | ``NVDA+Ctrl+F`` tai ``Ctrl+F`` | Avaa valintaikkunan, jossa voidaan etsiä tekstiä nykyisestä asiakirjasta. Katso lisätietoja [Tekstin etsiminen](#SearchingForText) -osiosta. |
-| Etsi seuraava | ``NVDA+F3`` tai ``F3`` | Etsii asiakirjasta aiemmin haetun tekstin seuraavan esiintymän. |
-| Etsi edellinen | ``NVDA+Vaihto+F3`` tai ``Vaihto+F3`` | Etsii asiakirjasta aiemmin haetun tekstin edellisen esiintymän. |
+| Vaihda selaus- ja vuorovaikutustilojen välillä | NVDA+Väli | Vaihtaa vuorovaikutus- ja selaustilojen välillä. |
+| Poistu vuorovaikutustilasta | Esc | Siirtää takaisin selaustilaan, mikäli NVDA siirtyi aiemmin automaattisesti vuorovaikutustilaan. |
+| Päivitä selaustila-asiakirja | NVDA+F5 tai NVDA+Esc | Lataa uudelleen nykyisen asiakirjan sisällön. (Hyödyllinen, jos sivulta vaikuttaa puuttuvan jotakin. Komento ei ole käytettävissä Microsoft Wordissa tai Outlookissa.) |
+| Etsi | NVDA+Ctrl+F tai Ctrl+F | Avaa valintaikkunan, jossa voidaan etsiä tekstiä nykyisestä asiakirjasta. Katso lisätietoja [Tekstin etsiminen](#SearchingForText) -osiosta. |
+| Etsi seuraava | NVDA+F3 tai F3 | Etsii asiakirjasta aiemmin haetun tekstin seuraavan esiintymän. |
+| Etsi edellinen | NVDA+Vaihto+F3 tai Vaihto+F3 | Etsii asiakirjasta aiemmin haetun tekstin edellisen esiintymän. |
 
 <!-- KC:endInclude -->
 
@@ -915,12 +915,12 @@ Sellaisinaan nämä komennot siirtävät seuraavan ja ``Vaihto``-näppäimen kan
 * ``O``: upotettu objekti (ääni- ja videosoitin, sovellus, valintaikkuna jne.)
 * Numerot ``1–6``: otsikot tasoilla 1–6
 * ``A``: merkintä (kommentti, muokkaajan muutokset jne.)
-* ``P``: kappale
+* `P`: kappale
 * ``W``: kirjoitusvirhe
 
 Säilöelementtien, kuten luetteloiden ja taulukoiden alkuun tai loppuun siirtymiseen:
 
-|| Nimi | Näppäinkomento | Kuvaus |
+| Nimi | Näppäinkomento | Kuvaus |
 |---|---|---|
 | Siirrä säilöelementin alkuun | ``Vaihto+pilkku`` | Siirtää sen säilöelementin alkuun, jossa kohdistin on (luettelo, taulukko jne). |
 | Siirrä säilöelementin loppuun | ``Pilkku`` | Siirtää sen säilöelementin loppuun, jossa kohdistin on (luettelo, taulukko jne). |
@@ -935,7 +935,7 @@ Ota käyttöön tai poista käytöstä pikanavigointinäppäimet nykyisessä asi
 
 #### Tekstikappaleiden navigointikomento {#TextNavigationCommand}
 
-Voit siirtyä seuraavaan tai edelliseen tekstikappaleeseen painamalla ``P`` tai ``Vaihto+P``.
+Voit siirtyä seuraavaan tai edelliseen tekstikappaleeseen painamalla `P` tai `Vaihto+P`.
 Tekstikappaleet määritellään tekstiryhmiksi, jotka näyttävät kokonaisin lausein kirjoitetuilta.
 Tästä voi olla hyötyä luettavan sisällön alun löytämisessä erilaisilla verkkosivuilla, kuten:
 
@@ -950,7 +950,7 @@ Nämä komennot voivat myös auttaa ohittamaan tiettyjä häiriötekijöitä, ku
 * Otsikot
 
 Huomaa kuitenkin, että vaikka NVDA pyrkii parhaansa mukaan tunnistamaan tekstikappaleet, algoritmi ei ole täydellinen ja saattaa joskus tehdä virheitä.
-Lisäksi tämä komento eroaa kappalenavigointikomennoista ``Ctrl+Nuoli alas/ylös``.
+Lisäksi tämä komento eroaa kappalenavigointikomennoista `Ctrl+Nuoli alas/ylös`.
 Tekstikappalenavigointi siirtää vain tekstikappaleiden välillä, kun taas kappalenavigointikomennot siirtävät kohdistimen edelliseen/seuraavaan kappaleeseen riippumatta siitä, sisältävätkö ne tekstiä vai ei.
 
 #### Muut navigointikomennot {#OtherNavigationCommands}
@@ -972,13 +972,13 @@ Tässä on luettelo käytettävissä olevista komennoista:
 * Eri tyylinen teksti
 
 Muista, että kullekin elementtityypille on komennot eteen- ja taaksepäin siirtymistä varten, ja sinun on määritettävä näppäimet molemmille, jotta voit siirtyä nopeasti molempiin suuntiin.
-Jos esimerkiksi haluat käyttää ``Y``- ja ``Vaihto+Y``-näppäimiä välilehtien välillä siirtymiseen, sinun tulee tehdä seuraavasti:
+Jos esimerkiksi haluat käyttää `Y`- ja `Vaihto+Y`-näppäimiä välilehtien välillä siirtymiseen, sinun tulee tehdä seuraavasti:
 
 1. Avaa Näppäinkomennot-valintaikkuna selaustilan ollessa aktiivisena.
 1. Etsi Selaustila-osiosta "Siirtää seuraavan välilehden kohdalle" -komento.
-1. Määritä löytyneelle komennolle ``Y``-näppäin.
+1. Määritä löytyneelle komennolle `Y`-näppäin.
 1. Etsi "Siirtää edellisen välilehden kohdalle" -komento.
-1. Määritä löytyneelle komennolle ``Vaihto+Y``-näppäimet.
+1. Määritä löytyneelle komennolle `Vaihto+Y`-näppäimet.
 
 ### Elementtilista {#ElementsList}
 
@@ -989,7 +989,7 @@ Valintaikkunassa on myös muokkauskenttä, jonka avulla luetteloa on mahdollista
 Kun haluttu kohde on valittu, sen kohdalle voidaan siirtyä tai se voidaan avata käyttämällä valintaikkunassa olevia painikkeita.
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento | Kuvaus |
+| Nimi | Näppäinkomento | Kuvaus |
 |---|---|---|
 | Selaustilan elementtilista | ``NVDA+F7`` | Näyttää luettelon nykyisen asiakirjan sisältämistä eri tyyppisistä elementeistä. |
 
@@ -1004,7 +1004,7 @@ Esim. kun tämä on valittuna, teksti "NV Access" löytyy, muttei tekstiä "nv a
 hakujen suorittamiseen käytetään seuraavia näppäimiä:
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento | kuvaus |
+| Nimi | Näppäinkomento | kuvaus |
 |---|---|---|
 | Etsi tekstiä | ``NVDA+Ctrl+F`` tai ``Ctrl+F`` | Avaa Etsi-valintaikkunan. |
 | Etsi seuraava | ``NVDA+F3`` tai ``F3`` | Etsii asiakirjasta aiemmin haetun tekstin seuraavan esiintymän. |
@@ -1022,7 +1022,7 @@ Jos objekti on saavutettava, siinä voidaan liikkua ``Sarkain-näppäimellä`` j
 Seuraavalla näppäinkomennolla voidaan palata alkuperäiselle upotetun objektin sisältävälle sivulle:
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento | Kuvaus |
+| Nimi | Näppäinkomento | Kuvaus |
 |---|---|---|
 | Siirrä upotetun objektin sisältävään selaustila-asiakirjaan | ``NVDA+Ctrl+Väli`` | Siirtää kohdistuksen pois nykyisestä upotetusta objektista asiakirjaan, jossa se on. |
 
@@ -1030,20 +1030,20 @@ Seuraavalla näppäinkomennolla voidaan palata alkuperäiselle upotetun objektin
 
 ### Alkuperäinen valintatila {#NativeSelectionMode}
 
-Kun tekstiä valitaan selaustilassa ``Vaihto+Nuolinäppäimillä``, valinta tehdään oletusarvoisesti vain NVDA:n muodostamassa asiakirjan selaustilaesityksessä eikä sovelluksen sisällä.
-Tämä tarkoittaa, että valinta ei näy näytöllä, ja tekstin kopiointi ``Ctrl+C``-näppäinyhdistelmällä kopioi vain NVDA:n tekstiesityksen sisällöstä. Eli taulukoiden muotoilu tai linkit eivät välity kopioitaessa.
+Kun tekstiä valitaan selaustilassa `Vaihto+Nuolinäppäimillä`, valinta tehdään oletusarvoisesti vain NVDA:n muodostamassa asiakirjan selaustilaesityksessä eikä sovelluksen sisällä.
+Tämä tarkoittaa, että valinta ei näy näytöllä, ja tekstin kopiointi `Ctrl+C`-näppäinyhdistelmällä kopioi vain NVDA:n tekstiesityksen sisällöstä. Eli taulukoiden muotoilu tai linkit eivät välity kopioitaessa.
 NVDA:ssa on kuitenkin alkuperäinen valintatila, joka voidaan ottaa käyttöön tietyissä selaustila-asiakirjoissa (tällä hetkellä vain Mozilla Firefoxissa), mikä saa asiakirjan alkuperäisen valinnan seuraamaan NVDA:n selaustilan valintaa.
 
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento | Kuvaus |
+| Nimi | Näppäinkomento | Kuvaus |
 |---|---|---|
-| Ota käyttöön tai poista käytöstä alkuperäinen valintatila | ``NVDA+Vaihto+F10`` | Ottaa käyttöön tai poistaa käytöstä alkuperäisen valintatilan. |
+| Ota käyttöön tai poista käytöstä alkuperäinen valintatila | `NVDA+Vaihto+F10` | Ottaa käyttöön tai poistaa käytöstä alkuperäisen valintatilan. |
 
 <!-- KC:endInclude -->
 
-Kun alkuperäinen valintatila on käytössä, valinnan kopioiminen ``Ctrl+C``-näppäinyhdistelmällä käyttää myös sovelluksen omaa kopiointitoimintoa, mikä merkitsee, että rikas sisältö kopioituu leikepöydälle pelkän tekstin sijaan.
-Tämä tarkoittaa, että muotoilu, kuten taulukot tai linkit, säilytetään, kun sisältö liitetään johonkin ohjelmaan, kuten Microsoft Wordiin tai Exceliin.
+Kun alkuperäinen valintatila on käytössä, valinnan kopioiminen `Ctrl+C`-näppäinyhdistelmällä käyttää myös sovelluksen omaa kopiointitoimintoa, mikä merkitsee, että rikas sisältö kopioituu leikepöydälle pelkän tekstin sijaan.
+Tämä tarkoittaa, että muotoilu, kuten taulukot tai linkit, säilytetään liitettäessä sisältöä johonkin ohjelmaan, kuten Microsoft Wordiin tai Exceliin.
 Huomaa kuitenkin, että jotkin NVDA:n selaustilassa luomat saavutettavuusselitteet tai muut tiedot menetetään.
 Lisäksi, vaikka sovellus pyrkii parhaansa mukaan säilyttämään alkuperäisen valinnan sisällön NVDA:n selaustilan valintaa vastaavana, lopputulos ei välttämättä aina ole täysin tarkka.
 Tämä toiminto voi Kuitenkin olla hyödyllinen tilanteissa, joissa haluat kopioida koko taulukon tai kappaleen sisällön muotoiluineen.
@@ -1095,7 +1095,7 @@ Tarkastelukohdistin seuraa oletusarvoisesti järjestelmäkohdistinta, joten voit
 
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento | Kuvaus |
+| Nimi | Näppäinkomento | Kuvaus |
 |---|---|---|
 | Vuorovaikutus matemaattisen sisällön kanssa | NVDA+Alt+M | Aloittaa vuorovaikutuksen matemaattisen sisällön kanssa. |
 
@@ -1189,7 +1189,7 @@ Jotta pistenäytölle mahtuisi mahdollisimman paljon tietoa, seuraavat lyhenteet
 | pn | puunäkymä |
 | pnpnk | puunäkymäpainike |
 | pnkhde | puunäkymän kohde |
-| ts N | puunäkymän kohteella on hierarkkinen taso N |
+| ts N | puunäkymän kohteella on hierarkkinen taso N ||
 | ikk | ikkuna |
 | ⠤⠤⠤⠤⠤ | erotin |
 | merk | merkitty sisältö |
@@ -1304,9 +1304,9 @@ Voit ottaa näyttöverhon käyttöön [NVDA:n asetusvalintaikkunan](#NVDASetting
 
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento | Kuvaus |
+| Nimi | Näppäinkomento | Kuvaus |
 |---|---|---|
-| Vaihda näyttöverhon tilaa | ``NVDA+Ctrl+Esc`` | Ottaa käyttöön tai poistaa käytöstä näyttöverhon. Pimennä näyttö ottamalla näyttöverho käyttöön tai näytä näytön sisältö poistamalla se käytöstä. Kerran painettaessa näyttöverho on käytössä, kunnes NVDA käynnistetään uudelleen. Kahdesti painettaessa se on käytössä, kunnes se poistetaan käytöstä. |
+| Vaihda näyttöverhon tilaa | `NVDA+Ctrl+Esc` | Ottaa käyttöön tai poistaa käytöstä näyttöverhon. Pimennä näyttö ottamalla näyttöverho käyttöön tai näytä näytön sisältö poistamalla se käytöstä. Kerran painettaessa näyttöverho on käytössä, kunnes NVDA käynnistetään uudelleen. Kahdesti painettaessa se on käytössä, kunnes se poistetaan käytöstä. |
 
 <!-- KC:endInclude -->
 
@@ -1366,7 +1366,7 @@ Jos et käytä [UIA:ta Word-asiakirjoille](#MSWordUIA), NVDA:lle on ilmoitettava
 Kun olet siirtynyt ensimmäiseen soluun otsikoita sisältävässä sarakkeessa tai rivissä, käytä jotakin seuraavista komennoista:
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento | Kuvaus |
+| Nimi | Näppäinkomento | Kuvaus |
 |---|---|---|
 | Määritä sarakeotsikot | NVDA+Vaihto+C | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen solu on ensimmäinen otsikkosolu rivillä, joka sisältää sarakeotsikoita, jotka luetaan automaattisesti liikuttaessa sarakkeiden välillä kyseisen rivin alapuolella. Kahdesti painaminen nollaa tämän asetuksen. |
 | Määritä riviotsikot | NVDA+Vaihto+R | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen solu on ensimmäinen otsikkosolu sarakkeessa, joka sisältää riviotsikoita, jotka luetaan automaattisesti liikuttaessa rivien välillä kyseisen sarakkeen oikealla puolella. Kahdesti painaminen nollaa tämän asetuksen. |
@@ -1406,7 +1406,7 @@ Toiseksi NVDA:n on tiedettävä, mikä rivi tai sarake sisältää otsikoita.
 Kun on siirrytty ensimmäiseen soluun otsikoita sisältävässä sarakkeessa tai rivissä, käytetään jotakin seuraavista komennoista:
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento | Kuvaus |
+| Nimi | Näppäinkomento | Kuvaus |
 |---|---|---|
 | Määritä sarakeotsikot | NVDA+Vaihto+C | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen solu on ensimmäinen otsikkosolu rivillä, joka sisältää sarakeotsikoita, jotka luetaan automaattisesti liikuttaessa sarakkeiden välillä kyseisen rivin alapuolella. Kahdesti painaminen nollaa tämän asetuksen. |
 | Määritä riviotsikot | NVDA+Vaihto+R | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen solu on ensimmäinen otsikkosolu sarakkeessa, joka sisältää riviotsikoita, jotka luetaan automaattisesti liikuttaessa rivien välillä kyseisen sarakkeen oikealla puolella. Kahdesti painaminen nollaa tämän asetuksen. |
@@ -1480,7 +1480,7 @@ Lisätietoja selaustilasta ja pikanavigointinäppäimistä on [Selaustila](#Brow
 
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento | Kuvaus |
+| Nimi | Näppäinkomento | Kuvaus |
 |---|---|---|
 | Muuta esittäjän muistiinpanojen lukemista | Ctrl+Vaihto+S | Tämä komento vaihtaa esittäjän muistiinpanojen ja dian sisällön lukemisen välillä meneillään olevassa diaesityksessä oltaessa. Asetus ei vaikuta siihen, mitä näytöllä näkyy, vaan pelkästään siihen, mitä NVDA lukee. |
 
@@ -1490,7 +1490,7 @@ Lisätietoja selaustilasta ja pikanavigointinäppäimistä on [Selaustila](#Brow
 
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento | Kuvaus |
+| Nimi | Näppäinkomento | Kuvaus |
 |---|---|---|
 | Ilmoita jäljellä oleva aika | Ctrl+Vaihto+R | Ilmoittaa toistettavan kappaleen jäljellä olevan ajan. |
 | Ilmoita kulunut aika | Ctrl+Vaihto+E | Ilmoittaa toistettavan kappaleen kuluneen ajan. |
@@ -1504,7 +1504,7 @@ Huom: Yllä olevat näppäinkomennot toimivat vain foobar2000:n tilarivin muotoi
 
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento | Kuvaus |
+| Nimi | Näppäinkomento | Kuvaus |
 |---|---|---|
 | Lue uusin viesti | NVDA+Ctrl+1-4 | Lukee jonkin uusimmista, painettua numeroa vastaavista viesteistä, esim. NVDA+Ctrl+2 lukee toiseksi uusimman. |
 
@@ -1516,12 +1516,12 @@ NVDA tarjoaa parannetun tuen Poedit 3.4:lle tai sitä uudemmille versioille.
 
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento | Kuvaus |
+| Nimi | Näppäinkomento | Kuvaus |
 |---|---|---|
-| Puhu huomautukset kääntäjille | ``Ctrl+Vaihto+A`` | Puhuu kääntäjille tarkoitetut huomautukset. Kahdesti painettaessa ne näytetään selaustilassa. |
-| Puhu kommentti | ``Ctrl+Vaihto+C`` | Puhuu kommentti-ikkunassa olevan kommentin. Kahdesti painettaessa se näytetään selaustilassa. |
-| Puhu vanha lähdeteksti | ``Ctrl+Vaihto+O`` | Puhuu vanhan lähdetekstin, mikäli sellainen löytyy. Kahdesti painettaessa se näytetään selaustilassa. |
-| Puhu käännösvaroitus | ``Ctrl+Vaihto+W`` | Puhuu käännösvaroituksen, mikäli sellainen löytyy. Kahdesti painettaessa se näytetään selaustilassa. |
+| Puhu huomautukset kääntäjille | `Ctrl+Vaihto+A` | Puhuu kääntäjille tarkoitetut huomautukset. Kahdesti painettaessa ne näytetään selaustilassa. |
+| Puhu kommentti | `Ctrl+Vaihto+C` | Puhuu kommentti-ikkunassa olevan kommentin. Kahdesti painettaessa se näytetään selaustilassa. |
+| Puhu vanha lähdeteksti | `Ctrl+Vaihto+O` | Puhuu vanhan lähdetekstin, mikäli sellainen löytyy. Kahdesti painettaessa se näytetään selaustilassa. |
+| Puhu käännösvaroitus | `Ctrl+Vaihto+W` | Puhuu käännösvaroituksen, mikäli sellainen löytyy. Kahdesti painettaessa se näytetään selaustilassa. |
 
 <!-- KC:endInclude -->
 
@@ -1589,7 +1589,7 @@ Uudemmissa konsolin versioissa ja Windows-päätteessä on mahdollista tarkastel
 <!-- KC:beginInclude -->
 Seuraavat sisäänrakennetut Windows-konsolin pikanäppäimet voivat olla hyödyllisiä [tarkasteltaessa tekstiä](#ReviewingText) NVDA:lla vanhemmissa Windows-konsolin versioissa:
 
-|| Nimi | Näppäinkomento | Kuvaus |
+| Nimi | Näppäinkomento | Kuvaus |
 |---|---|---|
 | Vieritä ylös | Ctrl+Nuoli ylös | Vierittää konsoli-ikkunaa ylöspäin, jotta aiempaa tekstiä voidaan lukea. |
 | Vieritä alas | Ctrl+Nuoli alas | Vierittää konsoli-ikkunaa alaspäin, jotta uudempaa tekstiä voidaan lukea. |
@@ -1607,7 +1607,7 @@ Peruuta muutokset painamalla Peruuta-painiketta tai Esc-näppäintä.
 Tietyissä valintaikkunoissa voit ottaa asetukset heti käyttöön painamalla Käytä-painiketta sulkematta valintaikkunaa.
 Useimmissa NVDA:n valintaikkunoissa on käytettävissä tilannekohtainen ohje.
 <!-- KC:beginInclude -->
-Kun valintaikkunassa painetaan ``F1``, käyttöopas avataan kohdasta, joka liittyy kyseiseen asetukseen tai senhetkiseen valintaikkunaan.
+Kun valintaikkunassa painetaan `F1`, käyttöopas avataan kohdasta, joka liittyy kohdalla olevaan asetukseen tai senhetkiseen valintaikkunaan.
 <!-- KC:endInclude -->
 Joitakin asetuksia on mahdollista muuttaa myös pikanäppäimillä, jotka on lueteltu alla olevissa kappaleissa.
 
@@ -1617,8 +1617,8 @@ Joitakin asetuksia on mahdollista muuttaa myös pikanäppäimillä, jotka on lue
 NVDA sisältää useita asetuksia, joita voidaan muuttaa asetusvalintaikkunan avulla.
 Valintaikkunassa on luettelo valittavissa olevista asetuskategorioista, jotta muutettavien asetusten löytäminen olisi helpompaa.
 Kun valitset kategorian, kaikki siihen liittyvät asetukset näytetään.
-Liiku kategorioiden välillä siirtymällä ``Sarkain``- tai ``Vaihto+Sarkain``-näppäimillä kategorialuetteloon ja käytä sitten ylä- ja alanuolinäppäimiä siinä liikkumiseen.
-Lisäksi voit siirtyä missä tahansa valintaikkunan kohdassa yhden kategorian eteenpäin painamalla ``Ctrl+Sarkain`` tai taaksepäin painamalla ``Vaihto+Ctrl+Sarkain``.
+Liiku kategorioiden välillä siirtymällä `Sarkain`- tai `Vaihto+Sarkain`-näppäimillä kategorialuetteloon ja käytä sitten ylä- ja alanuolinäppäimiä siinä liikkumiseen.
+Lisäksi voit siirtyä missä tahansa valintaikkunan kohdassa yhden kategorian eteenpäin painamalla `Ctrl+Sarkain` tai taaksepäin painamalla `Vaihto+Ctrl+Sarkain`.
 
 Kun olet muuttanut yhtä tai useampaa asetusta, muutokset voidaan ottaa käyttöön painamalla Käytä-painiketta, jolloin valintaikkuna pysyy avoimena, mikä mahdollistaa muiden asetusten muuttamisen tai toisen kategorian valitsemisen.
 Paina OK-painiketta, jos haluat tallentaa asetukset ja sulkea valintaikkunan.
@@ -1636,7 +1636,7 @@ Valintaikkunan asetuskategoriat on kuvailtu alla.
 
 ##### Avaa yleiset asetukset {#toc110}
 
-Pikanäppäin: ``NVDA+Ctrl+G``
+Pikanäppäin: `NVDA+Ctrl+G`
 
 Yleiset-kategoriassa määritetään NVDA:n yleinen toiminta, kuten käyttöliittymän kieli ja automaattinen päivitysten tarkistus.
 Se sisältää seuraavat asetukset:
@@ -1732,7 +1732,7 @@ Päivitys voidaan asentaa myös manuaalisesti Sulje NVDA -valintaikkunasta (mik�
 
 ##### Avaa puheasetukset {#toc123}
 
-Pikanäppäin: ``NVDA+Ctrl+V``
+Pikanäppäin: `NVDA+Ctrl+V`
 
 Puhe-kategoria sisältää asetuksia, joilla muutetaan sekä käytettävää puhesyntetisaattoria että sen puheäänen ominaisuuksia.
 Tietoja nopeammasta vaihtoehtoisesta tavasta puheparametrien säätämiseen mistä tahansa on [Syntetisaattorin asetusrengas](#SynthSettingsRing) -osiossa.
@@ -1780,7 +1780,7 @@ Tällä liukusäätimellä muutetaan puheen voimakkuutta – arvot 0 - 100 ovat 
 
 Tällä liukusäätimellä muutetaan äänensävyä (korkeuden nousuja ja laskuja), jolla puhesyntetisaattori puhuu.
 
-##### Vaihda kieltä automaattisesti {#VoiceSettingsLanguageSwitching}
+##### Vaihda kieltä automaattisesti {#SpeechSettingsLanguageSwitching}
 
 Tällä valintaruudulla voidaan vaikuttaa siihen, vaihtaako NVDA puhesyntetisaattorin kieltä automaattisesti, jos luettavan tekstin kieli on määritetty asianmukaisesti.
 Asetus on oletusarvoisesti käytössä.
@@ -1855,14 +1855,14 @@ Asetus kannattaa poistaa käytöstä, jos yksittäisten kirjainten lausumisessa 
 
 Kun tämä asetus on käytössä, NVDA sanoo merkin kuvauksen liikkuessasi tekstissä merkki kerrallaan.
 
-Esimerkiksi kun kirjain "b" luetaan tarkasteltaessa riviä merkeittäin, NVDA sanoo "Bertta" yhden sekunnin viipeen jälkeen.
-Tästä voi olla hyötyä, mikäli symbolien ääntämistä on vaikea erottaa toisistaan, tai kuulovammaisille käyttäjille.
+Esimerkiksi kun kirjain "b" luetaan tarkasteltaessa riviä merkeittäin, NVDA sanoo "Bertta" sekunnin viipeen jälkeen.
+Tästä voi olla hyötyä, mikäli symbolien ääntämystä on vaikea erottaa toisistaan, tai kuulovammaisille käyttäjille.
 
-Viivästetty merkin kuvaus peruuntuu, jos tuona aikana puhutaan muuta tekstiä tai jos painat ``Ctrl``-näppäintä.
+Viivästetty merkin kuvaus peruuntuu, jos sinä aikana puhutaan muuta tekstiä tai jos painat `Ctrl`-näppäintä.
 
 ##### Puhetilakomennon valinnat {#SpeechModesDisabling}
 
-Tästä valintaluettelosta on mahdollista valita, mitkä [puhetilat](#SpeechModes) ovat käytettävissä vaihdettaessa niiden välillä ``NVDA+S``-näppäinkomennolla.
+Tästä valintaluettelosta on mahdollista valita, mitkä [puhetilat](#SpeechModes) ovat käytettävissä vaihdettaessa niiden välillä `NVDA+S`-näppäinkomennolla.
 Valitsemattomat tilat jätetään pois komennosta.
 Oletusarvoisesti kaikki tilat ovat käytettävissä.
 
@@ -1875,7 +1875,7 @@ Huom: Vähintään kaksi tilaa on oltava valittuna.
 
 ##### Avaa Valitse syntetisaattori -valintaikkuna {#toc144}
 
-Pikanäppäin: ``NVDA+Ctrl+S``
+Pikanäppäin: `NVDA+Ctrl+S`
 
 Valitse 	syntetisaattori -valintaikkunassa, joka voidaan avata painamalla "Muuta..."-painiketta Asetukset-valintaikkunan Puhe-kategoriassa, valitaan, mitä syntetisaattoria NVDA käyttää.
 Kun haluttu syntetisaattori on valittu, NVDA ottaa sen käyttöön OK-painikkeen painamisen jälkeen.
@@ -1895,14 +1895,14 @@ Tästä voi olla hyötyä NVDA:ta pelkän pistenäytön varassa käyttävälle t
 NVDA:ssa on joitakin näppäinkomentoja, joiden avulla voidaan siirtyä missä tahansa yleisimpien puheasetusten välillä, mikäli niitä halutaan muuttaa nopeasti menemättä Asetukset-valintaikkunan Puhe-kategoriaan:
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
+| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
 |---|---|---|---|
 | Siirrä seuraavaan syntetisaattorin asetukseen | NVDA+Ctrl+Nuoli oikealle | NVDA+Vaihto+Ctrl+Nuoli oikealle | Siirtää nykyisen puheasetuksen jälkeen seuraavana käytettävissä olevaan asetukseen, siirtyen viimeisen jälkeen takaisin ensimmäiseen. |
 | Siirrä edelliseen syntetisaattorin asetukseen | NVDA+Ctrl+Nuoli vasemmalle | NVDA+Vaihto+Ctrl+Nuoli vasemmalle | Siirtää nykyistä puheasetusta edeltävään käytettävissä olevaan asetukseen, siirtyen ensimmäisen jälkeen takaisin viimeiseen. |
 | Suurenna nykyistä syntetisaattorin asetusta | NVDA+Ctrl+Nuoli ylös | NVDA+Vaihto+Ctrl+Nuoli ylös | Suurentaa valittua puheasetusta, esim. lisää nopeutta, valitsee seuraavan puheäänen tai lisää äänenvoimakkuutta. |
-| Suurenna aktiivista syntetisaattorin asetusta enemmän | ``NVDA+Ctrl+Page up`` | ``NVDA+Vaihto+Ctrl+Page up`` | Suurentaa nykyisen puheasetuksen arvoa enemmän kerrallaan. Kun esim. puheääniasetus on valittuna, tämä komento siirtää kerralla eteenpäin 20 äänen yli. Liukusäädinasetusten kohdalla (nopeus, korkeus jne.) se suurentaa arvoa jopa 20 %. |
+| Suurenna aktiivista syntetisaattorin asetusta enemmän | `NVDA+Ctrl+Page up` | `NVDA+Vaihto+Ctrl+Page up` | Suurentaa nykyisen puheasetuksen arvoa enemmän kerrallaan. Kun esim. puheääniasetus on valittuna, tämä komento siirtää kerralla eteenpäin 20 äänen yli. Liukusäädinasetusten kohdalla (nopeus, korkeus jne.) se suurentaa arvoa jopa 20 %. |
 | Pienennä nykyistä syntetisaattorin asetusta | NVDA+Ctrl+Nuoli alas | NVDA+Vaihto+Ctrl+Nuoli alas | Pienentää valittua puheasetusta, esim. vähentää nopeutta, valitsee edellisen puheäänen tai vähentää äänenvoimakkuutta. |
-| Pienennä aktiivista syntetisaattorin asetusta enemmän | ``NVDA+Ctrl+Page down`` | ``NVDA+Vaihto+Ctrl+Page down`` | Pienentää aktiivisen puheasetuksen arvoa enemmän kerrallaan. Kun esim. puheääniasetus on valittuna, tämä komento siirtää kerralla taaksepäin 20 äänen yli. Liukusäädinasetusten kohdalla se pienentää arvoa jopa 20 %. |
+| Pienennä aktiivista syntetisaattorin asetusta enemmän | `NVDA+Ctrl+Page down` | `NVDA+Vaihto+Ctrl+Page down` | Pienentää aktiivisen puheasetuksen arvoa enemmän kerrallaan. Kun esim. puheääniasetus on valittuna, tämä komento siirtää kerralla taaksepäin 20 äänen yli. Liukusäädinasetusten kohdalla se pienentää arvoa jopa 20 %. |
 
 <!-- KC:endInclude -->
 
@@ -1937,7 +1937,7 @@ Jos pistenäppäimistön sisältävä pistenäyttö ei tue syöttöä, siitä hu
 
 ##### Pistekirjoitustila {#BrailleMode}
 
-Pikanäppäin: ``NVDA+Alt+T``
+Pikanäppäin: `NVDA+Alt+T`
 
 Tällä asetuksella voit valita käytettävän pistekirjoitustilan.
 
@@ -1997,7 +1997,7 @@ Pikanäppäin: ``NVDA+Ctrl+T``
 Tällä asetuksella voit valita, seuraako pistenäyttö järjestelmän kohdistusta/kohdistinta, navigointiobjektia/tarkastelukohdistinta vai molempia.
 NVDA seuraa oletusarvoisesti kohdistusta ja kohdistinta, kun "automaattisesti"-vaihtoehto on valittuna.
 Kun navigointiobjektin tai tarkastelukohdistimen sijainti muuttuu käyttäjän toimesta, NVDA seuraa tällöin tilapäisesti tarkastelukohdistinta, kunnes kohdistuksen tai kohdistimen sijainti muuttuu.
-Jos haluat sen seuraavan vain kohdistusta ja kohdistinta, pistenäyttö on [määritettävä seuraamaan](#BrailleTether) kohdistusta.
+Jos haluat sen seuraavan vain kohdistusta ja kohdistinta, pistenäyttö on määritettävä seuraamaan kohdistusta.
 Tällöin näyttö ei seuraa navigointiobjektia objektinavigointia käytettäessä tai tarkastelukohdistinta tekstiä tarkasteltaessa.
 Jos sen sijaan haluat pistenäytön seuraavan objektinavigointia ja tarkastelukohdistinta, näyttö on määritettävä seuraamaan tarkastelukohdistinta.
 Tällöin pistenäyttö ei seuraa järjestelmän kohdistusta eikä kohdistinta.
@@ -2107,7 +2107,7 @@ Voit ottaa valinnan näyttämisen käyttöön tai poistaa sen käytöstä mistä
 
 ##### Avaa Valitse pistenäyttö -valintaikkuna {#toc168}
 
-Pikanäppäin: ``NVDA+Ctrl+A``
+Pikanäppäin: `NVDA+Ctrl+A`
 
 Valitse pistenäyttö -valintaikkunasta, joka voidaan avata painamalla "Muuta..."-painiketta Asetukset-valintaikkunan Pistekirjoitus-kategoriassa, valitaan, mitä pistenäyttöä NVDA käyttää pistekirjoituksen tulostamiseen.
 Kun haluttu pistenäyttö on valittu, NVDA ottaa sen käyttöön OK-painikkeen painamisen jälkeen.
@@ -2159,7 +2159,7 @@ Siksi on suositeltavaa kytkeä koneeseen vain yksi tietyn tyyppinen/valmistajan 
 
 ##### Avaa ääniasetukset {#toc173}
 
-Pikanäppäin: ``NVDA+Ctrl+U``
+Pikanäppäin: `NVDA+Ctrl+U`
 
 NVDA:n asetusvalintaikkunan Ääni-kategoriasta voidaan muuttaa useita äänen ulostuloon liittyviä asetuksia.
 
@@ -2171,7 +2171,7 @@ Tästä valitaan, mitä äänilaitetta NVDA:ssa valittuna oleva puhesyntetisaatt
 
 ##### Äänenvaimennus {#SelectSynthesizerDuckingMode}
 
-Näppäinkomento: ``NVDA+Vaihto+D``
+Pikanäppäin: `NVDA+Vaihto+D`
 
 Tällä asetuksella voit valita, pienentääkö NVDA muiden sovellusten äänenvoimakkuutta puhuessaan vai koko ajan käynnissä ollessaan.
 
@@ -2220,9 +2220,9 @@ Oletuksena äänijako ei ole käytössä, mikä tarkoittaa, että kaikki sovellu
 Näppäinkomento mahdollistaa vaihtamisen eri äänijakotilojen välillä:
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento | Kuvaus |
+| Nimi | Näppäinkomento | Kuvaus |
 |---|---|---|
-| Vaihda äänijakotilaa | ``NVDA+Alt+S`` | Vaihtaa äänijakotilojen välillä. |
+| Vaihda äänijakotilaa | `NVDA+Alt+S` | Vaihtaa äänijakotilojen välillä. |
 
 <!-- KC:endInclude -->
 
@@ -2243,7 +2243,7 @@ Käynnistä NVDA uudelleen tämän vähentämiseksi.
 
 ##### Äänijakotilojen mukauttaminen {#CustomizeSoundSplitModes}
 
-Tästä valintaruutuluettelosta voit valita äänijakotilat, jotka ovat käytettävissä vaihdettaessa eri tilojen välillä näppäinkomentoa ``NVDA+Alt+S`` käyttäen.
+Tästä valintaruutuluettelosta voit valita äänijakotilat, jotka ovat käytettävissä vaihdettaessa eri tilojen välillä näppäinkomentoa `NVDA+Alt+S` käyttäen.
 Valitsemattomat tilat eivät ole käytettävissä.
 Oletuksena vain kolme tilaa on valittuna.
 
@@ -2285,7 +2285,7 @@ Jos et halua enää nähdä tätä varoitusta, voit poistaa sen käytöstä sama
 Voit milloin tahansa palauttaa varoituksen käyttöön valitsemalla "Näytä varoitus aina, kun näyttöverho otetaan käyttöön" -valintaruudun.
 
 NVDA toistaa oletusarvoisesti äänen, kun näyttöverho otetaan käyttöön tai poistetaan käytöstä.
- Jos haluat muuttaa tätä, voit poistaa valinnan "Toista ääni, kun näyttöverho otetaan käyttöön tai poistetaan käytöstä" -valintaruudusta.
+Jos haluat muuttaa tätä, poista valinta "Toista ääni, kun näyttöverho otetaan käyttöön tai poistetaan käytöstä" -valintaruudusta.
 
 ##### Kolmannen osapuolen näön apuvälineiden asetukset {#VisionSettingsThirdPartyVisualAids}
 
@@ -2299,7 +2299,7 @@ Katso tietoja kunkin tarjoajan tukemista asetuksista kyseisen tarjoajan ohjeesta
 
 ##### Avaa näppäimistöasetukset {#toc188}
 
-Pikanäppäin: ``NVDA+Ctrl+K``
+Pikanäppäin: `NVDA+Ctrl+K`
 
 Näppäimistö-kategoria sisältää asetuksia, jotka määrittävät, miten NVDA käyttäytyy kirjoitettaessa ja käytettäessä näppäimistöä muilla tavoin.
 Tämä asetuskategoria sisältää seuraavat asetukset:
@@ -2376,7 +2376,7 @@ Asetus on oletusarvoisesti käytössä, mutta esim. vietnaminkielistä tekstiä 
 
 ##### Avaa hiiriasetukset {#toc201}
 
-Pikanäppäin: ``NVDA+Ctrl+M``
+Pikanäppäin: `NVDA+Ctrl+M`
 
 Hiiri-kategoriassa NVDA:n voi määrittää seuraamaan hiirtä, ilmaisemaan hiiren koordinaatit äänimerkeillä sekä muuttaa muita hiiren käyttöön liittyviä asetuksia.
 Tämä kategoria sisältää seuraavat asetukset:
@@ -2479,7 +2479,7 @@ Yksinkertainen tarkastelutila otetaan käyttöön tai poistetaan käytöstä mis
 
 ##### Avaa objektien lukemisen asetukset {#toc218}
 
-Pikanäppäin: ``NVDA+Ctrl+O``
+Pikanäppäin: `NVDA+Ctrl+O`
 
 Objektien lukeminen -kategoriaa käytetään määrittämään, kuinka paljon säädinten tietoja, kuten kuvaus, sijaintitiedot jne., NVDA lukee.
 Nämä asetukset eivät yleensä koske selaustilaa.
@@ -2594,7 +2594,7 @@ Asetus on oletusarvoisesti käytössä.
 
 ##### Avaa selaustilan asetukset {#toc236}
 
-Pikanäppäin: ``NVDA+Ctrl+B``
+Pikanäppäin: `NVDA+Ctrl+B`
 
 NVDA:n asetusvalintaikkunan Selaustila-kategoriaa käytetään määrittämään NVDA:n toimintaa luettaessa ja liikuttaessa monisisältöisissä asiakirjoissa, kuten verkkosivuilla.
 Kategoria sisältää seuraavat asetukset:
@@ -2649,14 +2649,14 @@ Ilmoitettavat elementit, kuten linkit, otsikot ja taulukot, määritetään [Ase
 
 ##### Automaattinen vuorovaikutustila kohdistuksen muuttuessa {#BrowseModeSettingsAutoPassThroughOnFocusChange}
 
-Kun tämä valintaruutu on valittuna, vuorovaikutustila otetaan käyttöön, jos kohdistus muuttuu.
+Kun tämä valintaruutu on valittuna, vuorovaikutustila otetaan käyttöön kohdistuksen muuttuessa.
 Kun esim. verkkosivulla siirryt sarkaimella lomakkeen kohdalle tämän asetuksen ollessa käytössä, vuorovaikutustila otetaan käyttöön automaattisesti.
-Mikäli siirryt nuolinäppäimillä pois muokkauskentästä, NVDA vaihtaa takaisin selaustilaan.
 
 ##### Automaattinen vuorovaikutustila kohdistinta siirrettäessä {#BrowseModeSettingsAutoPassThroughOnCaretMove}
 
 Kun tämä asetus on käytössä, NVDA siirtyy automaattisesti vuorovaikutustilaan ja siitä pois nuolinäppäimillä liikuttaessa.
 Jos esim. verkkosivua nuolinäppäimillä selattaessa tullaan muokkauskentän kohdalle, NVDA ottaa vuorovaikutustilan käyttöön automaattisesti. Jos kentästä siirrytään pois nuolinäppäimillä, palataan takaisin selaustilaan.
+Mikäli siirryt nuolinäppäimillä pois muokkauskentästä, NVDA vaihtaa takaisin selaustilaan.
 
 ##### Ilmaise vuorovaikutus- ja selaustilat äänimerkillä {#BrowseModeSettingsPassThroughAudioIndication}
 
@@ -2686,7 +2686,7 @@ Tämän asetuksen käyttöön ottaminen voi parantaa joidenkin verkkosivustojen 
 
 ##### Avaa asiakirjojen muotoiluasetukset {#toc250}
 
-Pikanäppäin: ``NVDA+Ctrl+D``
+Pikanäppäin: `NVDA+Ctrl+D`
 
 Useimmilla tämän kategorian valintaruuduilla voidaan määrittää, minkä tyyppisiä muotoilutietoja halutaan automaattisesti kuulla siirrettäessä kohdistinta asiakirjoissa.
 Jos esim. valitaan Lue fontti -valintaruutu, NVDA kertoo fontin nimen aina kun siirrytään nuolinäppäimillä sellaisen tekstin kohdalle, jonka fontti eroaa aikaisemmasta.
@@ -2769,14 +2769,14 @@ Tästä kategoriasta voit säätää asiakirjan selauksen asetuksia.
 | Vaihtoehdot | Oletus (Sovelluksen määrittämä), Sovelluksen määrittämä, Yksi rivinvaihto, Useita rivinvaihtoja |
 | Oletus | Sovelluksen määrittämä |
 
-Tästä yhdistelmäruudusta voit valita kappaletyylin, jota käytetään kappaleittain liikuttaessa näppäinkomennoilla ``Ctrl+Nuoli ylös`` ja ``Ctrl+Nuoli alas``.
+Tästä yhdistelmäruudusta voit valita kappaletyylin, jota käytetään liikuttaessa kappaleittain näppäinkomennoilla `Ctrl+Nuoli ylös` ja `Ctrl+Nuoli alas`.
 Seuraavat kappaletyylit ovat käytettävissä:
 
 * Sovelluksen määrittämä: NVDA antaa sovelluksen määrittää edellisen tai seuraavan kappaleen, ja lukee uuden kappaleen siirryttäessä siihen.
 Tämä tyyli, joka on käytössä oletusarvoisesti, toimii parhaiten, kun sovellus tukee kappaleittain liikkumista.
 * Yksi rivinvaihto: NVDA yrittää määrittää edellisen tai seuraavan kappaleen käyttäen yhtä rivinvaihtoa kappaleenilmaisimena.
-Tämä tyyli toimii parhaiten, kun asiakirjoja luetaan sovelluksessa, joka ei tue kappaleittain liikkumista ja asiakirjan kappaleet on merkitty yhdellä Enter-näppäimen painalluksella.
-* Useita rivinvaihtoja: NVDA yrittää määrittää edellisen tai seuraavan kappaleen käyttäen ainakin yhtä tyhjää riviä (kaksi ``Enter``-näppäimen painallusta) kappaleenilmaisimena.
+Tämä tyyli toimii parhaiten, kun asiakirjoja luetaan sovelluksessa, joka ei tue kappaleittain liikkumista ja asiakirjan kappaleet on merkitty yhdellä `Enter`-näppäimen painalluksella.
+* Useita rivinvaihtoja: NVDA yrittää määrittää edellisen tai seuraavan kappaleen käyttäen ainakin yhtä tyhjää riviä (kaksi `Enter`-näppäimen painallusta) kappaleenilmaisimena.
 Tämä tyyli toimii parhaiten asiakirjoissa, joissa käytetään lohkokappaleita.
 Huom: Tätä tyyliä ei voi käyttää Microsoft Wordissa eikä Outlookissa, ellei "Käytä UI Automation -rajapintaa Microsoft Wordin asiakirjasäätimissä" -asetus ole käytössä.
 
@@ -2792,12 +2792,12 @@ Kategoria sisältää seuraavat asetukset:
 Tästä yhdistelmäruudusta voit valita tekstintunnistuksen käyttämän kielen.
 Voit vaihtaa käytettävissä olevien kielten välillä mistä tahansa määrittämällä kyseiselle komennolle oman pikanäppäimen [Näppäinkomennot-valintaikkunaa](#InputGestures) käyttäen.
 
-##### Päivitä tunnistettu sisältö automaattisesti {#Win10OcrSettingsAutoRefresh}
+##### Päivitä tunnistettu sisältö ajoittain {#Win10OcrSettingsAutoRefresh}
 
-Kun tämä valintaruutu on valittuna, NVDA päivittää tunnistetun sisällön automaattisesti, kun tunnistuksen tulos on aktiivisena.
-Tämä voi olla erittäin hyödyllistä silloin, kun haluat seurata jatkuvasti muuttuvaa sisältöä, kuten esim. katsoessasi videota tekstitysten kanssa.
+Kun tämä valintaruutu on valittuna, NVDA päivittää tunnistetun sisällön automaattisesti kohdistuksen ollessa tunnistuksen tuloksessa.
+Tämä voi olla erittäin hyödyllistä, kun haluat seurata jatkuvasti muuttuvaa sisältöä, kuten esim. katsoessasi tekstityksellä varustettua videota.
 Sisältöä päivitetään puolentoista sekunnin välein.
-Tämä asetus on oletusarvoisesti poissa käytöstä.
+Tämä asetus on oletuksena poissa käytöstä.
 
 #### Lisäasetukset {#AdvancedSettings}
 
@@ -2919,11 +2919,11 @@ Seuraavat vaihtoehdot ovat käytettävissä:
 
 * Ilmoita rakenteellisten merkintöjen lisätiedoista: ilmoittaa, mikäli tekstillä tai säätimellä on lisätietoja.
 * Puhu aina ARIA-kuvaukset:
-  Kuvaus puhutaan, kun ``accDescription``-attribuutin lähteenä on aria-description.
+  Kuvaus puhutaan, kun `accDescription`-attribuutin lähteenä on aria-description.
   Tästä on hyötyä verkkosivuilla olevissa merkinnöissä.
   Huom:
-  * ``accDescription``-attribuutille on monia lähteitä, joista useilla on sekava tai epäluotettava semantiikka.
-    Historiallisesti apuvälineteknologia ei ole kyennyt erottamaan ``accDescription``-attribuutin lähteitä toisistaan. Tyypillisesti sitä ei puhuttu sekalaisen semantiikan vuoksi.
+  * `accDescription`-attribuutille on monia lähteitä, joista useilla on sekava tai epäluotettava semantiikka.
+    Historiallisesti apuvälineteknologia ei ole kyennyt erottamaan `accDescription`-attribuutin lähteitä toisistaan. Tyypillisesti sitä ei puhuttu sekalaisen semantiikan vuoksi.
   * Tämän asetuksen kehitys on vasta alkuvaiheessa. Se perustuu sellaisiin selaimen ominaisuuksiin, joita ei ole vielä laajasti saatavilla.
   * Odotetaan toimivan Chromium 92.0.4479.0:n ja sitä uudempien kanssa.
 
@@ -2973,7 +2973,7 @@ Kohdistimen jälkeinen teksti kuitenkin luetaan päätteissä, kun rivin keskell
 | Oletus | Muutosten havaitseminen |
 
 Tämä asetus valitsee, miten NVDA määrittää "uuden" tekstin (ja näin ollen sen, mitä puhutaan "Puhu dynaamisen sisällön muutokset" -asetuksen ollessa käytössä) Windows-päätteessä sekä sen WPF-säätimessä, jota käytetään Visual Studio 2022:ssa.
-Asetus ei vaikuta Windows-konsoliin (``conhost.exe``).
+Asetus ei vaikuta Windows-konsoliin (`conhost.exe`).
 Uuden tekstin puhumismenetelmä Windows-päätteessä -yhdistelmäruudussa on kolme vaihtoehtoa:
 
 * Oletus: Tämä asetus vastaa tällä hetkellä "muutosten havaitsemista", mutta sen odotetaan muuttuvan, kun UIA-ilmoitusten tukea kehitetään edelleen.
@@ -3139,8 +3139,8 @@ Huom:
 
 * Jäljiteltävillä näppäimillä täytyy olla näppäinkomennot määritettyinä, jotta ne säilyvät tallennettaessa/valintaikkunaa suljettaessa.
 * Näppäinkomentoa, jossa käytetään muokkausnäppäimiä, ei välttämättä voi liittää jäljiteltävään näppäinkomentoon, jossa ei muokkaus
-näppäimiä ole. Kun esim. jäljiteltäväksi syötteeksi määritetään "a" ja näppäinkomennoksi Ctrl+M, saattaa siitä seurata,
-että sovellus vastaanottaa näppäinyhdistelmän Ctrl+A.
+näppäimiä ole. Kun esim. jäljiteltäväksi syötteeksi määritetään `a` ja näppäinkomennoksi `Ctrl+M`, saattaa siitä seurata,
+että sovellus vastaanottaa näppäinyhdistelmän `Ctrl+A`.
 
 Tehdyt muutokset tallennetaan painamalla OK-painiketta tai hylätään painamalla Peruuta.
 
@@ -3156,7 +3156,7 @@ Asetukset voidaan lisäksi palauttaa alkuperäisiin oletusarvoihin valitsemalla 
 Seuraavista näppäinkomennoista voi myös olla hyötyä:
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
+| Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
 |---|---|---|---|
 | Tallenna asetukset | NVDA+Ctrl+C | NVDA+Ctrl+C | Tallentaa nykyiset asetukset, jotta ne eivät häviä, kun NVDA suljetaan |
 | Palauta asetukset | NVDA+Ctrl+R | NVDA+Ctrl+R | Palauttaa kerran painettaessa viimeksi tallennetut asetukset. Kolmesti painaminen palauttaa oletusasetukset. |
@@ -3300,8 +3300,8 @@ Käytettävissä olevat toiminnot muuttuvat sen mukaan, onko lisäosa asennettu 
 #### Lisäosaluettelon näkymät {#AddonStoreFilterStatus}
 
 Asennetuille, päivitettäville ja saatavilla oleville sekä yhteensopimattomille lisäosille on eri näkymät.
-Voit vaihtaa näkymää painamalla ``Ctrl+Sarkain``, joka vaihtaa lisäosaluettelon aktiivista välilehteä.
-Voit myös siirtyä näkymäluetteloon painamalla ``Sarkain``-näppäintä ja liikkua näkymien välillä painamalla ``Nuoli vasemmalle``- ja ``Nuoli oikealle`` -näppäimiä.
+Voit vaihtaa näkymää painamalla `Ctrl+Sarkain`, joka vaihtaa lisäosaluettelon aktiivista välilehteä.
+Voit myös siirtyä näkymäluetteloon painamalla `Sarkain`-näppäintä ja liikkua näkymien välillä painamalla `Nuoli vasemmalle`- ja `Nuoli oikealle` -näppäimiä.
 
 #### Suodatus käytössä olevien tai käytöstä poistettujen lisäosien perusteella {#AddonStoreFilterEnabled}
 
@@ -3335,14 +3335,14 @@ Saat luettelon johonkin tiettyyn kanavaan kuuluvista lisäosista muuttamalla "Ka
 #### Lisäosien etsiminen {#AddonStoreFilterSearch}
 
 Voit etsiä lisäosia käyttämällä "Etsi"-tekstikenttää.
-Pääset siihen painamalla lisäosaluettelossa ``Vaihto+Sarkain``.
-Kirjoita avainsana tai pari etsimästäsi lisäosasta ja siirry sitten lisäosaluetteloon painamalla ``Sarkain``-näppäintä.
+Pääset siihen painamalla lisäosaluettelossa `Vaihto+Sarkain`.
+Kirjoita avainsana tai pari etsimästäsi lisäosasta ja siirry sitten lisäosaluetteloon painamalla `Sarkain`-näppäintä.
 Lisäosat näytetään, jos etsittävä teksti löytyy lisäosan tunnuksesta, näyttönimestä, julkaisijasta, tekijästä tai kuvauksesta.
 
 ### Lisäosien toiminnot {#AddonStoreActions}
 
 Lisäosilla on niihin liittyviä toimintoja, kuten asenna, ohje, poista käytöstä ja poista.
-Saat toimintovalikon näkyviin painamalla ``Sovellus``- tai ``Enter``-näppäintä, napsauttamalla hiiren oikealla painikkeella tai kaksoisnapsauttamalla lisäosaa.
+Saat toimintovalikon näkyviin painamalla `sovellus`- tai `Enter`-näppäintä, napsauttamalla hiiren oikealla painikkeella tai kaksoisnapsauttamalla lisäosaa.
 Tämä valikko voidaan avata myös Valitun lisäosan tietojen kohdassa olevalla Toiminnot-painikkeella.
 
 #### Lisäosien asentaminen {#AddonStoreInstalling}
@@ -3360,7 +3360,7 @@ Voit myös asentaa useita lisäosia kerralla.
 Tämä tehdään valitsemalla useita lisäosia saatavilla olevien lisäosien välilehdellä, avaamalla valinnan pikavalikko ja valitsemalla sitten "Asenna valitut lisäosat" -toiminto.
 
 Jos haluat asentaa lisäosan, jonka olet hankkinut lisäosakaupan ulkopuolelta, paina "Asenna ulkoisesta lähteestä" -painiketta.
-Tämä mahdollistaa lisäosapaketin (``.nvda-addon``-tiedosto) etsimisen tietokoneeltasi tai verkosta.
+Tämä mahdollistaa lisäosapaketin (`.nvda-addon`-tiedosto) etsimisen tietokoneeltasi tai verkosta.
 Asennus käynnistyy, kun avaat lisäosapaketin.
 
 Jos NVDA on asennettu ja käynnissä, voit myös aloittaa asennuksen avaamalla lisäosatiedoston suoraan selaimesta tai resurssienhallinnasta.
@@ -3409,7 +3409,7 @@ Mikäli yhteensopimaton lisäosa aiheuttaa myöhemmin ongelmia, voit poistaa sen
 
 Jos sinulla on vaikeuksia NVDA:n käytössä ja olet äskettäin päivittänyt tai asentanut lisäosan, erityisesti mikäli se on yhteensopimaton, kannattaa kokeilla käyttää NVDA:ta tilapäisesti kaikki lisäosat käytöstä poistettuina.
 Käynnistä NVDA uudelleen ja poista kaikki lisäosat käytöstä valitsemalla asianmukainen vaihtoehto NVDA:n sulkemisvalintaikkunasta.
-Vaihtoehtoisesti voit käyttää [komentorivivalitsinta](#CommandLineOptions) ``--disable-addons``.
+Vaihtoehtoisesti voit käyttää [komentorivivalitsinta](#CommandLineOptions) `--disable-addons`.
 
 Voit selata yhteensopimattomia lisäosia [saatavilla olevien ja päivitettävien lisäosien välilehtiä](#AddonStoreFilterStatus) käyttäen.
 Asennettuina olevia yhteensopimattomia lisäosia voit selata [asennettujen yhteensopimattomien lisäosien välilehteä](#AddonStoreFilterStatus) käyttäen.
@@ -3422,17 +3422,17 @@ Lokintarkastelulla, joka löytyy NVDA-valikon Työkalut-alivalikosta, voidaan tu
 Loki voidaan myös tallentaa tiedostoon tai ikkunan sisältö päivittää, jotta uusimmat lokin avaamisen jälkeen tulleet merkinnät näytetään.
 Nämä toiminnot ovat käytettävissä lokintarkastelun Loki-valikossa.
 
-Tiedosto, joka näytetään lokintarkastelua avattaessa, tallennetaan sijaintiin ``%temp%\nvda.log``.
+Tiedosto, joka näytetään lokintarkastelua avattaessa, tallennetaan sijaintiin `%temp%\nvda.log`.
 Jokaisella NVDA:n käynnistyskerralla luodaan uusi lokitiedosto.
-Kun näin tapahtuu, edellisen NVDA-istunnon lokitiedosto siirretään nimelle ``%temp%\nvda-old.log``.
+Kun näin tapahtuu, edellisen NVDA-istunnon loki siirretään tiedostoon `%temp%\nvda-old.log`.
 
 Voit myös kopioida osan nykyisestä lokitiedostosta leikepöydälle avaamatta lokintarkastelua.
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento | Kuvaus |
+| Nimi | Näppäinkomento | Kuvaus |
 |---|---|---|
-| Avaa lokintarkastelu | ``NVDA+F1`` | Avaa lokintarkastelun ja näyttää kehittäjille tarkoitettua tietoa nykyisestä navigointiobjektista. |
-| Kopioi osa lokista leikepöydälle | ``NVDA+Ctrl+Vaihto+F1`` | Kerran painaminen asettaa tallennettavan lokisisällön aloituspisteen. Toisen kerran painaminen kopioi lokin sisällön leikepöydälle aloituspisteestä lähtien. |
+| Avaa lokintarkastelu | `NVDA+F1` | Avaa lokintarkastelun ja näyttää kehittäjille tarkoitettua tietoa nykyisestä navigointiobjektista. |
+| Kopioi osa lokista leikepöydälle | `NVDA+Ctrl+Vaihto+F1` | Kerran painaminen asettaa tallennettavan lokisisällön aloituspisteen. Toisen kerran painettaessa lokin sisältö kopioidaan leikepöydälle aloituspisteestä lähtien. |
 
 <!-- KC:endInclude -->
 
@@ -3524,10 +3524,10 @@ Yleisliitännäiset puolestaan hallitsevat sitä, miten NVDA on vuorovaikutukses
 Seuraavista näppäinkomennoista voi myös olla hyötyä:
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento | Kuvaus |
+| Nimi | Näppäinkomento | Kuvaus |
 |---|---|---|
-| Lataa liitännäiset uudelleen | ``NVDA+Ctrl+F3`` | Lataa uudelleen NVDA:n yleisliitännäiset ja sovellusmoduulit. |
-| Puhu ladattu sovellusmoduuli ja sovelluksen tiedostonimi | ``NVDA+Ctrl+F1`` | Puhuu sovellusmoduulin nimen, mikäli sellainen on käytössä, ja aktiivisen sovelluksen tiedostonimen. |
+| Lataa liitännäiset uudelleen | `NVDA+Ctrl+F3` | Lataa uudelleen NVDA:n yleisliitännäiset ja sovellusmoduulit. |
+| Puhu ladattu sovellusmoduuli ja sovelluksen tiedostonimi | `NVDA+Ctrl+F1` | Puhuu sovellusmoduulin nimen, mikäli sellainen on käytössä, ja aktiivisen sovelluksen tiedostonimen. |
 
 <!-- KC:endInclude -->
 
@@ -3632,7 +3632,7 @@ Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäess�
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Vieritä taaksepäin | ``ylin kosketuskohdistinnäppäin 1 (ensimmäinen pistesolu)`` |
 | Vieritä eteenpäin | ``ylin kosketuskohdistinnäppäin 20/40/80 (viimeinen pistesolu)`` |
@@ -3682,14 +3682,14 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 
 Uudet Focus-mallit, joissa on keinunäppäimiä (Focus 40, 80 ja Blue):
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Siirrä edelliselle riville | ``vasen keinunäppäin alas``, ``oikea keinunäppäin ylös`` |
 | Siirrä seuraavalle riville | ``vasen keinunäppäin alas``, ``oikea keinunäppäin alas`` |
 
 Vain Focus 80:
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Vieritä taaksepäin | ``leftBumperBarUp``, ``rightBumperBarUp`` |
 | Vieritä eteenpäin | ``leftBumperBarDown``, ``rightBumperBarDown`` |
@@ -3714,7 +3714,7 @@ Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäess�
 Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Vieritä taaksepäin | ``t1``, ``etouch1`` |
 | Siirrä edelliselle riville | ``t2`` |
@@ -3767,7 +3767,7 @@ Seuraavassa on lueteltu Handy Tech -pistenäyttöjen näppäinkomennot NVDA:ta k
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Vieritä taaksepäin | ``vasen``, ``ylös``, ``b3`` |
 | Vieritä eteenpäin | ``oikea``, ``alas``, ``b6`` |
@@ -3803,7 +3803,7 @@ Seuraavassa on lueteltu tämän pistenäytön näppäinkomennot NVDA:ta käytett
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Vieritä taaksepäin | ``LF`` |
 | Vieritä eteenpäin | ``RG`` |
@@ -3840,32 +3840,32 @@ Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäess�
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
-| Vieritä taaksepäin | ``d2`` |
-| Vieritä eteenpäin | ``d5`` |
-| Siirrä edelliselle riville | ``d1`` |
-| Siirrä seuraavalle riville | ``d3`` |
-| Siirrä pistesoluun | ``kosketuskohdistinnäppäin`` |
-| ``Vaihto+Sarkain``-näppäinyhdistelmä | ``väli+pisteet 1 ja 3`` |
-| ``Sarkain``-näppäin | ``väli+pisteet 4 ja 6`` |
-| ``Alt``-näppäin | ``väli+pisteet 1, 3 ja 4`` (``väli+m``) |
-| ``Esc``-näppäin | ``väli+pisteet 1 ja 5`` (``väli+e``) |
-| ``Windows``-näppäin | ``väli+pisteet 3 ja 4`` |
-| ``Alt+Sarkain``-näppäinyhdistelmä | ``väli+pisteet 2, 3, 4 ja 5`` (``väli+t``) |
-| NVDA-valikko | ``väli+pisteet 1, 3, 4 ja 5`` (``väli+n``) |
-| ``Windows+D``-näppäinyhdistelmä (pienennä kaikki sovellukset) | ``väli+pisteet 1, 4 ja 5`` (``väli+d``) |
-| Jatkuva luku | ``väli+pisteet 1, 2, 3, 4, 5 ja 6`` |
+| Vieritä taaksepäin | `d2` |
+| Vieritä eteenpäin | `d5` |
+| Siirrä edelliselle riville | `d1` |
+| Siirrä seuraavalle riville | `d3` |
+| Siirrä pistesoluun | `kosketuskohdistinnäppäin` |
+| `Vaihto+Sarkain`-näppäinyhdistelmä | `väli+pisteet 1 ja 3` |
+| `Sarkain`-näppäin | `väli+pisteet 4 ja 6` |
+| `Alt`-näppäin | `väli+pisteet 1, 3 ja 4` (`väli+m`) |
+| `Esc`-näppäin | `väli+pisteet 1 ja 5` (`väli+e`) |
+| `Windows`-näppäin | `väli+pisteet 3 ja 4` |
+| `Alt+Sarkain`-näppäinyhdistelmä | `väli+pisteet 2, 3, 4 ja 5` (`väli+t`) |
+| NVDA-valikko | `väli+pisteet 1, 3, 4 ja 5` (`väli+n`) |
+| `Windows+D`-näppäinyhdistelmä (pienennä kaikki sovellukset) | `väli+pisteet 1, 4 ja 5` (`väli+d`) |
+| Jatkuva luku | `väli+pisteet 1, 2, 3, 4, 5 ja 6` |
 
 Malleissa, joissa on ohjaustappi:
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
-| Nuoli ylös -näppäin | ``ylös`` |
-| Nuoli alas -näppäin | ``alas`` |
-| Nuoli vasemmalle -näppäin | ``vasen`` |
-| Nuoli oikealle -näppäin | ``oikea`` |
-| Enter-näppäin | ``valitse`` |
+| Nuoli ylös -näppäin | ylös |
+| Nuoli alas -näppäin | alas |
+| Nuoli vasemmalle -näppäin | vasen |
+| Nuoli oikealle -näppäin | oikea |
+| Enter-näppäin | valitse |
 
 <!-- KC:endInclude -->
 
@@ -3880,7 +3880,7 @@ Seuraavassa on tämän pistenäytön näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Vieritä taaksepäin | ``K1`` |
 | Vieritä eteenpäin | ``K3`` |
@@ -3903,7 +3903,7 @@ Seuraavassa on tämän pistenäytön näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Vieritä taaksepäin | ``K1`` |
 | Vieritä eteenpäin | ``K3`` |
@@ -3935,7 +3935,7 @@ Katso laitteiden käyttöohjeista kuvaukset näppäinten paikoista.
 
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Vieritä taaksepäin | ``vasen`` |
 | Vieritä eteenpäin | ``oikea`` |
@@ -3964,7 +3964,7 @@ Katso laitteiden käyttöohjeista kuvaukset näppäinten paikoista.
 
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | NVDA-valikko | ``c1``, ``c3``, ``c4`` ja ``c5`` (komento n) |
 | Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | ``c1``, ``c4`` ja ``c5`` (komento d) |
@@ -3976,7 +3976,7 @@ Katso laitteiden käyttöohjeista kuvaukset näppäinten paikoista.
 
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Nuoli ylös -näppäin | ``ohjaussauva ylös`` |
 | Nuoli alas -näppäin | ``ohjaussauva alas`` |
@@ -3995,7 +3995,7 @@ Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäess�
 Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Siirrä pistesoluun | ``kosketuskohdistin`` |
 | Vieritä taaksepäin | ``vasemmanpuoleinen vieritä ylös``, ``oikeanpuoleinen vieritä ylös``, ``vasemmanpuoleinen vieritä`` |
@@ -4027,19 +4027,19 @@ Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 | Ctrl+Vaihto+Nuoli vasemmalle -näppäinyhdistelmä | ``pisteet 2 ja 8+väli+f1`` |
 | Ctrl+Nuoli vasemmalle -näppäinyhdistelmä | ``piste 2+väli`` |
 | Vaihto+Alt+Nuoli vasemmalle -näppäinyhdistelmä | ``pisteet 2 ja 7+f1`` |
-| Alt+Nuoli vasemmalle -näppäinyhdistelmä | ``pisteet 2 ja 7+väli`` |
-| Nuoli oikealle -näppäin | ``piste 6+väli``, ``vasemmanpuoleinen nuoli oikealle`` |
-| Ctrl+Vaihto+Nuoli oikealle -näppäinyhdistelmä | ``pisteet 5 ja 8+väli+f1`` |
-| Ctrl+Nuoli oikealle -näppäinyhdistelmä | ``piste 5+väli`` |
+| `Alt+Nuoli vasemmalle` -näppäinyhdistelmä | `pisteet 2 ja 7+väli` |
+| Nuoli oikealle -näppäin | piste 6+väli, vasemmanpuoleinen nuoli oikealle |
+| Ctrl+Vaihto+Nuoli oikealle -näppäinyhdistelmä | pisteet 5 ja 8+väli+f1 |
+| Ctrl+Nuoli oikealle -näppäinyhdistelmä | piste 5+väli |
 | Vaihto+Alt+Nuoli oikealle -näppäinyhdistelmä | ``pisteet 5 ja 7+f1`` |
-| Alt+Nuoli oikealle -näppäinyhdistelmä | ``pisteet 5 ja 7+väli`` |
+| `Alt+Nuoli oikealle` -näppäinyhdistelmä | `pisteet 5 ja 7+väli` |
 | Page up -näppäin | ``pisteet 1, 2 ja 6+väli`` |
 | Ctrl+Page up -näppäinyhdistelmä | ``pisteet 1, 2, 6 ja 8+väli`` |
 | Nuoli ylös -näppäin | ``piste 1+väli``, ``vasemmanpuoleinen nuoli ylös`` |
 | Ctrl+Vaihto+Nuoli ylös -näppäinyhdistelmä | ``pisteet 2, 3 ja 8+väli+f1`` |
 | Ctrl+Nuoli ylös -näppäinyhdistelmä | ``pisteet 2 ja 3+väli`` |
 | Vaihto+Alt+Nuoli ylös -näppäinyhdistelmä | ``pisteet 2, 3 ja 7+f1`` |
-| Alt+Nuoli ylös -näppäinyhdistelmä | ``pisteet 2, 3 ja 7+väli`` |
+| `Alt+Nuoli ylös` -näppäinyhdistelmä | `pisteet 2, 3 ja 7+väli` |
 | Vaihto+Nuoli ylös -näppäinyhdistelmä | ``vasemmanpuoleinen vieritä alas+väli`` |
 | Page down -näppäin | ``pisteet 3, 4 ja 5+väli`` |
 | Ctrl+Page down -näppäinyhdistelmä | ``pisteet 3, 4, 5 ja 8+väli`` |
@@ -4047,7 +4047,7 @@ Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 | Ctrl+Vaihto+Nuoli alas -näppäinyhdistelmä | ``pisteet 5, 6 ja 8+väli+f1`` |
 | Ctrl+Nuoli alas -näppäinyhdistelmä | ``pisteet 5 ja 6+väli`` |
 | Vaihto+Alt+Nuoli alas -näppäinyhdistelmä | ``pisteet 5, 6 ja 7+f1`` |
-| Alt+Nuoli alas -näppäinyhdistelmä | ``pisteet 5, 6 ja 7+väli`` |
+| `Alt+Nuoli alas` -näppäinyhdistelmä | `pisteet 5, 6 ja 7+väli` |
 | Vaihto+Nuoli alas -näppäinyhdistelmä | ``väli+oikeanpuoleinen vieritä alas`` |
 | Esc-näppäin | ``pisteet 1 ja 5+väli``, ``f4``, Braille EDGE: ``f1`` |
 | Delete-näppäin | ``pisteet 1, 3 ja 5+väli``, ``pisteet 1, 4 ja 5+väli`` |
@@ -4081,7 +4081,7 @@ Seuraavassa ovat näiden pistenäyttöjen näppäinmääritykset.
 Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Vieritä taaksepäin | ``vasen`` |
 | Vieritä eteenpäin | ``oikea`` |
@@ -4107,7 +4107,7 @@ Seuraavassa ovat näiden näyttöjen näppäinmääritykset.
 Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäin |
+| Nimi | Näppäin |
 |---|---|
 | Vieritä taaksepäin | ``vasen`` |
 | Vieritä eteenpäin | ``oikea`` |
@@ -4175,7 +4175,7 @@ Ylös-, alas-, oikea- ja vasen-näppäinten (tai EAB:n) painaminen ja alhaalla p
 
 Näissä pistenäytöissä on käytettävissä yleensä seuraavat näppäimet:
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | l1 | Vasen etunäppäin |
 | l2 | Vasen takanäppäin |
@@ -4193,7 +4193,7 @@ Näissä pistenäytöissä on käytettävissä yleensä seuraavat näppäimet:
 Seuraavassa on Papenmeierin näppäinmääritykset NVDA:lle:
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Vieritä taaksepäin | left |
 | Vieritä eteenpäin | right |
@@ -4226,7 +4226,7 @@ Molemmat sisemmät näppäimet on määritelty Väli-näppäimeksi.
 
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Esc-näppäin | väli ja piste 7 |
 | Nuoli ylös -näppäin | väli ja piste 2 |
@@ -4258,7 +4258,7 @@ Vanhoissa laitteissa ei ole EAB:tä; sen sijaan käytetään etupaneelin näppä
 
 Näissä pistenäytöissä on yleensä käytettävissä seuraavat näppäimet:
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | l1 | Vasen etunäppäin |
 | l2 | Vasen takanäppäin |
@@ -4278,7 +4278,7 @@ Seuraaavassa on Papenmeierin komentomääritykset NVDA:lle:
 <!-- KC:beginInclude -->
 Laitteet, joissa on EAB:
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Vieritä taaksepäin | left |
 | Vieritä eteenpäin | right |
@@ -4297,7 +4297,7 @@ Laitteet, joissa on EAB:
 
 BRAILLEX Tiny:
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Lue nykyinen merkki | l1 |
 | Aktivoi nykyinen navigointiobjekti | l2 |
@@ -4316,7 +4316,7 @@ BRAILLEX Tiny:
 
 BRAILLEX 2D Screen:
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Lue nykyinen merkki | l1 |
 | Aktivoi nykyinen navigointiobjekti | l2 |
@@ -4366,7 +4366,7 @@ Katso laitteen käyttöohjeesta tarkat kuvaukset näppäinten paikoista.
 
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Vieritä taaksepäin | takaisin |
 | Vieritä eteenpäin | eteenpäin |
@@ -4396,7 +4396,7 @@ Katso laitteen käyttöohjeesta tarkat kuvaukset näppäinten paikoista.
 
 Seuraavassa on BrailleNote QT:lle määritellyt komennot, kun se ei ole pistekirjoituksen syöttötilassa.
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | NVDA-valikko | read+n |
 | Nuoli ylös -näppäin | nuoli ylös |
@@ -4419,7 +4419,7 @@ Seuraavassa on BrailleNote QT:lle määritellyt komennot, kun se ei ole pistekir
 
 Seuraavassa on vieritysrullaan määritellyt komennot:
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Nuoli ylös -näppäin | nuoli ylös |
 | Nuoli alas -näppäin | nuoli alas |
@@ -4449,7 +4449,7 @@ Katso [EcoBraillen käyttöohjeesta](ftp://ftp.once.es/pub/utt/bibliotecnia/Line
 
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Vieritä taaksepäin | T2 |
 | Vieritä eteenpäin | T4 |
@@ -4478,7 +4478,7 @@ Koska laitteessa ei ole fyysisiä kirjoitus- tai vieritysnäppäimiä, kaikki ko
 Tämän takia, ja jotta säilytetään yhteensopivuus muiden taiwanilaisten ruudunlukuohjelmien kanssa, pistenäytön vierittämistä varten on käytettävissä kaksi komentoa:
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Vieritä taaksepäin | Laskinnäppäimistön miinus |
 | Vieritä eteenpäin | Laskinnäppäimistön plus |
@@ -4500,66 +4500,66 @@ Alla kuvaillut pistekirjoitusnäppäimistön toiminnot ovat käytettävissä vai
 
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
-| Poista viimeksi syötetty pistesolu tai merkki | ``askelpalautin`` |
-| Käännä mikä tahansa pistekirjoitussyöte ja paina Enter-näppäintä | ``askelpalautin+väli`` |
-| Vaihda ``NVDA``-näppäimen tilaa | ``piste 3+piste 5+väli`` |
-| ``Insert``-näppäin | ``pisteet 1, 3 ja 5+väli``, ``pisteet 3, 4 ja 5+väli`` |
-| ``Delete``-näppäin | ``pisteet 3 ja 6+väli`` |
-| ``Home``-näppäin | ``pisteet 1, 2, 3+väli`` |
-| ``End``-näppäin | ``pisteet 4, 5 ja 6+väli`` |
-| ``Vasen nuolinäppäin`` | ``piste 2+väli`` |
-| ``Oikea nuolinäppäin`` | ``piste 5+väli`` |
-| ``Ylänuolinäppäin`` | ``piste 1+väli`` |
-| ``Alanuolinäppäin`` | ``piste 6+väli`` |
-| ``Page up`` -näppäin | ``pisteet 1 ja 3+väli`` |
-| ``Page down`` -näppäin | ``pisteet 4 ja 6+väli`` |
-| ``Laskinnäppäimistön 1`` | ``pisteet 1 ja 6+askelpalautin`` |
-| ``Laskinnäppäimistön 2`` | ``pisteet 1, 2 ja 6+askelpalautin`` |
-| ``Laskinnäppäimistön 3`` | ``pisteet 1, 4 ja 6+askelpalautin`` |
-| ``Laskinnäppäimistön 4`` | ``pisteet 1, 4, 5 ja 6+askelpalautin`` |
-| ``Laskinnäppäimistön 5`` | ``pisteet 1, 5 ja 6+askelpalautin`` |
-| ``Laskinnäppäimistön 6`` | ``pisteet 1, 2, 4 ja 6+askelpalautin`` |
-| ``Laskinnäppäimistön 7`` | ``pisteet 1, 2, 4, 5 ja 6+askelpalautin`` |
-| ``Laskinnäppäimistön 8`` | ``pisteet 1, 2, 5 ja 6+askelpalautin`` |
-| ``Laskinnäppäimistön 9`` | ``pisteet 2, 4 ja 6+askelpalautin`` |
-| ``Laskinnäppäimistön Insert`` | ``pisteet 3, 4, 5 ja 6+askelpalautin`` |
-| ``Laskinnäppäimistön pilkku`` | ``piste 2+askelpalautin`` |
-| ``Laskinnäppäimistön jakomerkki`` | ``pisteet 3 ja 4+askelpalautin`` |
-| ``Laskinnäppäimistön kertomerkki`` | ``pisteet 3 ja 5+askelpalautin`` |
-| ``Laskinnäppäimistön miinus`` | ``pisteet 3 ja 6+askelpalautin`` |
-| ``Laskinnäppäimistön plus`` | ``pisteet 2, 3 ja 5+askelpalautin`` |
-| ``Laskinnäppäimistön Enter`` | ``pisteet 3, 4 ja 5+askelpalautin`` |
-| ``Esc``-näppäin | ``pisteet 1, 2, 4 ja 5+väli``, ``l2`` |
-| ``Sarkain``-näppäin | ``pisteet 2, 5 ja 6+väli``, ``l3`` |
-| ``Vaihto+Sarkain``-näppäinyhdistelmä | ``pisteet 2, 3 ja 5+väli`` |
-| ``PrintScreen``-näppäin | ``pisteet 1, 3, 4 ja 6+väli`` |
-| ``Pause``-näppäin | ``pisteet 1 ja 4+väli`` |
-| ``Sovellusnäppäin`` | ``pisteet 5 ja 6+askelpalautin`` |
-| ``F1``-näppäin | ``piste 1+askelpalautin`` |
-| ``F2``-näppäin | ``pisteet 1 ja 2+askelpalautin`` |
-| ``F3``-näppäin | ``pisteet 1 ja 4+askelpalautin`` |
-| ``F4``-näppäin | ``pisteet 1, 4 ja 5+askelpalautin`` |
-| ``F5``-näppäin | ``pisteet 1 ja 5+askelpalautin`` |
-| ``F6``-näppäin | ``pisteet 1, 2 ja 4+askelpalautin`` |
-| ``F7``-näppäin | ``pisteet 1, 2, 4 ja 5+askelpalautin`` |
-| ``F8``-näppäin | ``pisteet 1, 2 ja 5+askelpalautin`` |
-| ``F9``-näppäin | ``pisteet 2 ja 4+askelpalautin`` |
-| ``F10``-näppäin | ``pisteet 2, 4 ja 5+askelpalautin`` |
-| ``F11``-näppäin | ``pisteet 1 ja 3+askelpalautin`` |
-| ``F12``-näppäin | ``pisteet 1, 2 ja 3+askelpalautin`` |
-| ``Windows``-näppäin | ``pisteet 1, 2, 4, 5 ja 6+väli`` |
-| Vaihda ``Windows``-näppäimen tilaa | ``pisteet 1, 2, 3 ja 4+askelpalautin``, ``pisteet 2, 4, 5 ja 6+väli`` |
-| ``CapsLock``-näppäin | ``piste 7+askelpalautin``, ``piste 8+askelpalautin`` |
-| ``NumLock``-näppäin | ``piste 3+askelpalautin``, ``piste 6+askelpalautin`` |
-| ``Vaihto``-näppäin | ``piste 7+väli`` |
-| Vaihda ``Vaihto``-näppäimen tilaa | ``pisteet 1 ja 7+väli``, ``pisteet 4 ja 7+väli`` |
-| ``Ctrl``-näppäin | ``pisteet 7 ja 8+väli`` |
-| Vaihda ``Ctrl``-näppäimen tilaa | ``pisteet 1, 7 ja 8+väli``, ``pisteet 4, 7 ja 8+väli`` |
-| ``Alt``-näppäin | ``piste 8+väli`` |
-| Vaihda ``Alt``-näppäimen tilaa | ``pisteet 1 ja 8+väli``, ``pisteet 4 ja 8+väli`` |
-| Vaihda HID-näppäimistösyötteen simuloinnin asetusta | ``switch1Left+joystick1Down``, ``switch1Right+joystick1Down`` |
+| Poista viimeksi syötetty pistesolu tai merkki | `askelpalautin` |
+| Käännä mikä tahansa pistekirjoitussyöte ja paina Enter-näppäintä | `askelpalautin+väli` |
+| Vaihda `NVDA`-näppäimen tilaa | `pisteet 3 ja 5+väli` |
+| `Insert`-näppäin | `pisteet 1, 3 ja 5+väli`, `pisteet 3, 4 ja 5+väli` |
+| `Delete`-näppäin | `pisteet 3 ja 6+väli` |
+| `Home`-näppäin | `pisteet 1, 2, 3+väli` |
+| `End`-näppäin | `pisteet 4, 5 ja 6+väli` |
+| `Vasen nuolinäppäin` | `piste 2+väli` |
+| `Oikea nuolinäppäin` | `piste 5+väli` |
+| `Ylänuolinäppäin` | `piste 1+väli` |
+| `Alanuolinäppäin` | `piste 6+väli` |
+| `Page up` -näppäin | `pisteet 1 ja 3+väli` |
+| `Page down` -näppäin | `pisteet 4 ja 6+väli` |
+| `Laskinnäppäimistön 1` | `pisteet 1 ja 6+askelpalautin` |
+| `Laskinnäppäimistön 2` | `pisteet 1, 2 ja 6+askelpalautin` |
+| `Laskinnäppäimistön 3` | `pisteet 1, 4 ja 6+askelpalautin` |
+| `Laskinnäppäimistön 4` | `pisteet 1, 4, 5 ja 6+askelpalautin` |
+| `Laskinnäppäimistön 5` | `pisteet 1, 5 ja 6+askelpalautin` |
+| `Laskinnäppäimistön 6` | `pisteet 1, 2, 4 ja 6+askelpalautin` |
+| `Laskinnäppäimistön 7` | `pisteet 1, 2, 4, 5 ja 6+askelpalautin` |
+| `Laskinnäppäimistön 8` | `pisteet 1, 2, 5 ja 6+askelpalautin` |
+| `Laskinnäppäimistön 9` | `pisteet 2, 4 ja 6+askelpalautin` |
+| `Laskinnäppäimistön Insert` | `pisteet 3, 4, 5 ja 6+askelpalautin` |
+| `Laskinnäppäimistön pilkku` | `piste 2+askelpalautin` |
+| `Laskinnäppäimistön jakomerkki` | `pisteet 3 ja 4+askelpalautin` |
+| `Laskinnäppäimistön kertomerkki` | `pisteet 3 ja 5+askelpalautin` |
+| `Laskinnäppäimistön miinus` | `pisteet 3 ja 6+askelpalautin` |
+| `Laskinnäppäimistön plus` | `pisteet 2, 3 ja 5+askelpalautin` |
+| `Laskinnäppäimistön Enter` | `pisteet 3, 4 ja 5+askelpalautin` |
+| `Esc`-näppäin | `pisteet 1, 2, 4 ja 5+väli`, `l2` |
+| `Sarkain`-näppäin | `pisteet 2, 5 ja 6+väli`, `l3` |
+| `Vaihto+Sarkain`-näppäinyhdistelmä | `pisteet 2, 3 ja 5+väli` |
+| `PrintScreen`-näppäin | `pisteet 1, 3, 4 ja 6+väli` |
+| `Pause`-näppäin | `pisteet 1 ja 4+väli` |
+| `Sovellusnäppäin` | `pisteet 5 ja 6+askelpalautin` |
+| `F1`-näppäin | `piste 1+askelpalautin` |
+| `F2`-näppäin | `pisteet 1 ja 2+askelpalautin` |
+| `F3`-näppäin | `pisteet 1 ja 4+askelpalautin` |
+| `F4`-näppäin | `pisteet 1, 4 ja 5+askelpalautin` |
+| `F5`-näppäin | `pisteet 1 ja 5+askelpalautin` |
+| `F6`-näppäin | `pisteet 1, 2 ja 4+askelpalautin` |
+| `F7`-näppäin | `pisteet 1, 2, 4 ja 5+askelpalautin` |
+| `F8`-näppäin | `pisteet 1, 2 ja 5+askelpalautin` |
+| `F9`-näppäin | `pisteet 2 ja 4+askelpalautin` |
+| `F10`-näppäin | `pisteet 2, 4 ja 5+askelpalautin` |
+| `F11`-näppäin | `pisteet 1 ja 3+askelpalautin` |
+| `F12`-näppäin | `pisteet 1, 2 ja 3+askelpalautin` |
+| `Windows`-näppäin | `pisteet 1, 2, 4, 5 ja 6+väli` |
+| Vaihda `Windows`-näppäimen tilaa | `pisteet 1, 2, 3 ja 4+askelpalautin`, `pisteet 2, 4, 5 ja 6+väli` |
+| `Caps Lock` -näppäin | `piste 7+askelpalautin`, `piste 8+askelpalautin` |
+| `Num Lock` -näppäin | `piste 3+askelpalautin`, `piste 6+askelpalautin` |
+| `Vaihto`-näppäin | `piste 7+väli` |
+| Vaihda `Vaihto`-näppäimen tilaa | `pisteet 1 ja 7+väli`, `pisteet 4 ja 7+väli` |
+| `Ctrl`-näppäin | `pisteet 7 ja 8+väli` |
+| Vaihda `Ctrl`-näppäimen tilaa | `pisteet 1, 7 ja 8+väli`, `pisteet 4, 7 ja 8+väli` |
+| `Alt`-näppäin | `piste 8+väli` |
+| Vaihda `Alt`-näppäimen tilaa | `pisteet 1 ja 8+väli`, `pisteet 4 ja 8+väli` |
+| Vaihda HID-näppäimistösyötteen simuloinnin asetusta | `switch1Left+joystick1Down`, `switch1Right+joystick1Down` |
 
 <!-- KC:endInclude -->
 
@@ -4567,25 +4567,25 @@ Alla kuvaillut pistekirjoitusnäppäimistön toiminnot ovat käytettävissä vai
 
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
-| Vieritä taaksepäin | ``backward`` |
-| Vieritä eteenpäin | ``forward`` |
-| Siirrä nykyiseen kohdistukseen | ``backward+forward`` |
-| Siirrä pistesoluun | ``kosketuskohdistinnäppäin`` |
-| ``Vasen nuolinäppäin`` | ``joystick2Left`` |
-| ``Oikea nuolinäppäin`` | ``joystick2Right`` |
-| ``Ylänuolinäppäin`` | ``joystick2Up`` |
-| ``Alanuolinäppäin`` | ``joystick2Down`` |
-| ``Enter``-näppäin | ``joystick2Center`` |
-| ``Esc``-näppäin | ``c1`` |
-| ``Sarkain``-näppäin | ``c2`` |
-| Vaihda ``Vaihto``-näppäimen tilaa | ``c3`` |
-| Vaihda ``Ctrl``-näppäimen tilaa | ``c4`` |
-| Vaihda ``Alt``-näppäimen tilaa | ``c5`` |
-| Vaihda ``NVDA``-näppäimen tilaa | ``c6`` |
-| ``Ctrl+Home``-näppäinyhdistelmä | ``c1+c2+c3`` |
-| ``Ctrl+End``-näppäinyhdistelmä | ``c4+c5+c6`` |
+| Vieritä taaksepäin | `backward` |
+| Vieritä eteenpäin | `forward` |
+| Siirrä nykyiseen kohdistukseen | `backward+forward` |
+| Siirrä pistesoluun | `kosketuskohdistinnäppäin` |
+| `Vasen nuolinäppäin` | `joystick2Left` |
+| `Oikea nuolinäppäin` | `joystick2Right` |
+| `Ylänuolinäppäin` | `joystick2Up` |
+| `Alanuolinäppäin` | `joystick2Down` |
+| `Enter`-näppäin | `joystick2Center` |
+| `Esc`-näppäin | `c1` |
+| `Sarkain`-näppäin | `c2` |
+| Vaihda `Vaihto`-näppäimen tilaa | `c3` |
+| Vaihda `Ctrl`-näppäimen tilaa | `c4` |
+| Vaihda `Alt`-näppäimen tilaa | `c5` |
+| Vaihda `NVDA`-näppäimen tilaa | `c6` |
+| `Ctrl+Home`-näppäinyhdistelmä | `c1+c2+c3` |
+| `Ctrl+End`-näppäinyhdistelmä | `c4+c5+c6` |
 
 <!-- KC:endInclude -->
 
@@ -4593,21 +4593,21 @@ Alla kuvaillut pistekirjoitusnäppäimistön toiminnot ovat käytettävissä vai
 
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
-| Vieritä taaksepäin | ``leftKeypadLeft`` |
-| Vieritä eteenpäin | ``leftKeypadRight`` |
-| Siirrä pistesoluun | ``routing`` |
-| Lue tekstin muotoilutiedot pistesolusta | ``doubleRouting`` |
-| Siirrä seuraavalle riville | ``leftKeypadDown`` |
-| Vaihda edelliseen tarkastelutilaan | ``leftKeypadLeft+leftKeypadUp`` |
-| Vaihda seuraavaan tarkastelutilaan | ``leftKeypadRight+leftKeypadDown`` |
-| ``Vasen nuolinäppäin`` | ``rightKeypadLeft`` |
-| ``Oikea nuolinäppäin`` | ``rightKeypadRight`` |
-| ``Ylänuolinäppäin`` | ``rightKeypadUp`` |
-| ``Alanuolinäppäin`` | ``rightKeypadDown`` |
-| ``Ctrl+Home``-näppäinyhdistelmä | ``rightKeypadLeft+rightKeypadUp`` |
-| ``Ctrl+End``-näppäinyhdistelmä | ``rightKeypadLeft+rightKeypadUp`` |
+| Vieritä taaksepäin | `leftKeypadLeft` |
+| Vieritä eteenpäin | `leftKeypadRight` |
+| Siirrä pistesoluun | `routing` |
+| Lue tekstin muotoilutiedot pistesolusta | `doubleRouting` |
+| Siirrä seuraavalle riville | `leftKeypadDown` |
+| Vaihda edelliseen tarkastelutilaan | `leftKeypadLeft+leftKeypadUp` |
+| Vaihda seuraavaan tarkastelutilaan | `leftKeypadRight+leftKeypadDown` |
+| `Vasen nuolinäppäin` | `rightKeypadLeft` |
+| `Oikea nuolinäppäin` | `rightKeypadRight` |
+| `Ylänuolinäppäin` | `rightKeypadUp` |
+| `Alanuolinäppäin` | `rightKeypadDown` |
+| `Ctrl+Home`-näppäinyhdistelmä | `rightKeypadLeft+rightKeypadUp` |
+| `Ctrl+End`-näppäinyhdistelmä | `rightKeypadLeft+rightKeypadUp` |
 
 <!-- KC:endInclude -->
 
@@ -4615,22 +4615,22 @@ Alla kuvaillut pistekirjoitusnäppäimistön toiminnot ovat käytettävissä vai
 
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
-| Vieritä taaksepäin | ``switch1Left`` |
-| Vieritä eteenpäin | ``switch1Right`` |
-| Siirrä nykyiseen kohdistukseen | ``switch1Center`` |
-| Siirrä pistesoluun | ``routing`` |
-| Lue tekstin muotoilutiedot pistesolusta | ``doubleRouting`` |
-| Siirrä edelliselle riville | ``joystick1Up`` |
-| Siirrä seuraavalle riville | ``joystick1Down`` |
-| Siirrä edelliseen merkkiin | ``joystick1Left`` |
-| Siirrä seuraavaan merkkiin | ``joystick1Right`` |
-| ``Vasen nuolinäppäin`` | ``joystick2Left`` |
-| ``Oikea nuolinäppäin`` | ``joystick2Right`` |
-| ``Ylänuolinäppäin`` | ``joystick2Up`` |
-| ``Alanuolinäppäin`` | ``joystick2Down`` |
-| ``Enter``-näppäin | ``joystick2Center`` |
+| Vieritä taaksepäin | `switch1Left` |
+| Vieritä eteenpäin | `switch1Right` |
+| Siirrä nykyiseen kohdistukseen | `switch1Center` |
+| Siirrä pistesoluun | `routing` |
+| Lue tekstin muotoilutiedot pistesolusta | `doubleRouting` |
+| Siirrä edelliselle riville | `joystick1Up` |
+| Siirrä seuraavalle riville | `joystick1Down` |
+| Siirrä edelliseen merkkiin | `joystick1Left` |
+| Siirrä seuraavaan merkkiin | `joystick1Right` |
+| `Vasen nuolinäppäin` | `joystick2Left` |
+| `Oikea nuolinäppäin` | `joystick2Right` |
+| `Ylänuolinäppäin` | `joystick2Up` |
+| `Alanuolinäppäin` | `joystick2Down` |
+| `Enter`-näppäin | `joystick2Center` |
 
 <!-- KC:endInclude -->
 
@@ -4638,31 +4638,31 @@ Alla kuvaillut pistekirjoitusnäppäimistön toiminnot ovat käytettävissä vai
 
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
-| Vieritä taaksepäin | ``l1`` |
-| Vieritä eteenpäin | ``l8`` |
-| Siirrä nykyiseen kohdistukseen | ``l1+l8`` |
-| Siirrä pistesoluun | ``routing`` |
-| Lue tekstin muotoilutiedot pistesolusta | ``doubleRouting`` |
-| Siirrä edelliselle riville | ``joystick1Up`` |
-| Siirrä seuraavalle riville | ``joystick1Down`` |
-| Siirrä edelliseen merkkiin | ``joystick1Left`` |
-| Siirrä seuraavaan merkkiin | ``joystick1Right`` |
-| ``Vasen nuolinäppäin`` | ``joystick2Left`` |
-| ``Oikea nuolinäppäin`` | ``joystick2Right`` |
-| ``Ylänuolinäppäin`` | ``joystick2Up`` |
-| ``Alanuolinäppäin`` | ``joystick2Down`` |
-| ``Enter``-näppäin | ``joystick2Center`` |
-| ``Esc``-näppäin | ``l2`` |
-| ``Sarkain``-näppäin | ``l3`` |
-| Vaihda ``Vaihto``-näppäimen tilaa | ``l4`` |
-| Vaihda ``Ctrl``-näppäimen tilaa | ``l5`` |
-| Vaihda ``Alt``-näppäimen tilaa | ``l6`` |
-| Vaihda ``NVDA``-näppäimen tilaa | ``l7`` |
-| ``Ctrl+Home``-näppäinyhdistelmä | ``l1+l2+l3``, ``l2+l3+l4`` |
-| ``Ctrl+End``-näppäinyhdistelmä | ``l6+l7+l8``, ``l5+l6+l7`` |
-| Vaihda HID-näppäimistösyötteen simuloinnin asetusta | ``l1+joystick1Down``, ``l8+joystick1Down`` |
+| Vieritä taaksepäin | `l1` |
+| Vieritä eteenpäin | `l8` |
+| Siirrä nykyiseen kohdistukseen | `l1+l8` |
+| Siirrä pistesoluun | `routing` |
+| Lue tekstin muotoilutiedot pistesolusta | `doubleRouting` |
+| Siirrä edelliselle riville | `joystick1Up` |
+| Siirrä seuraavalle riville | `joystick1Down` |
+| Siirrä edelliseen merkkiin | `joystick1Left` |
+| Siirrä seuraavaan merkkiin | `joystick1Right` |
+| `Vasen nuolinäppäin` | `joystick2Left` |
+| `Oikea nuolinäppäin` | `joystick2Right` |
+| `Ylänuolinäppäin` | `joystick2Up` |
+| `Alanuolinäppäin` | `joystick2Down` |
+| `Enter`-näppäin | `joystick2Center` |
+| `Esc`-näppäin | `l2` |
+| `Sarkain`-näppäin | `l3` |
+| Vaihda `Vaihto`-näppäimen tilaa | `l4` |
+| Vaihda `Ctrl`-näppäimen tilaa | `l5` |
+| Vaihda `Alt`-näppäimen tilaa | `l6` |
+| Vaihda `NVDA`-näppäimen tilaa | `l7` |
+| `Ctrl+Home`-näppäinyhdistelmä | `l1+l2+l3`, `l2+l3+l4` |
+| `Ctrl+End`-näppäinyhdistelmä | `l6+l7+l8`, `l5+l6+l7` |
+| Vaihda HID-näppäimistösyötteen simuloinnin asetusta | `l1+joystick1Down`, `l8+joystick1Down` |
 
 <!-- KC:endInclude -->
 
@@ -4676,7 +4676,7 @@ Seuraavassa ovat Nattiq Technologiesin pistenäyttöjen näppäinkomennot NVDA:t
 Katso kuvaukset näppäinten paikoista laitteen käyttöohjeesta.
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Vieritä taaksepäin | ylös |
 | Vieritä eteenpäin | alas |
@@ -4702,20 +4702,20 @@ Seuraavassa on BRLTTY:n näppäinkomennot NVDA:ta käytettäessä.
 Katso [BRLTTY:n näppäinsidosluetteloista](https://brltty.app/doc/KeyBindings/) tietoja BRLTTY:n komentojen määrittämisestä pistenäyttöjen näppäimiin.
 <!-- KC:beginInclude -->
 
-|| Nimi | BRLTTY-komento |
+| Nimi | BRLTTY-komento |
 |---|---|
-| Vieritä taaksepäin | ``fwinlt`` (siirry yksi ikkuna vasemmalle) |
-| Vieritä eteenpäin | ``fwinrt`` (siirry yksi ikkuna oikealle) |
-| Siirrä edelliselle riville | ``lnup`` (siirry yksi rivi ylöspäin) |
-| Siirrä seuraavalle riville | ``lndn`` (siirry yksi rivi alaspäin) |
-| siirrä pistesoluun | ``route`` (siirrä kohdistin merkin kohdalle) |
-| Ota näppäinohje käyttöön tai poista se käytöstä | ``learn`` (siirry näppäinohjetilaan tai poistu siitä) |
-| Avaa NVDA-valikko | ``prefmenu`` (avaa NVDA-valikko tai poistu siitä) |
-| Palauta asetukset | ``prefload`` (palauta asetukset levyltä) |
-| Tallenna asetukset | ``prefsave`` (tallenna asetukset levylle) |
-| Ilmoita kellonaika | ``time`` (näytä nykyinen päivämäärä ja kellonaika) |
-| Lue rivi, jolla tarkastelukohdistin on | ``say_line`` (puhu nykyinen rivi) |
-| Jatkuva luku | ``say_below`` (puhu nykyiseltä riviltä lähtien näytön alareunaan saakka) |
+| Vieritä taaksepäin | `fwinlt` (siirry yksi ikkuna vasemmalle) |
+| Vieritä eteenpäin | `fwinrt` (siirry yksi ikkuna oikealle) |
+| Siirrä edelliselle riville | `lnup` (siirry yksi rivi ylöspäin) |
+| Siirrä seuraavalle riville | `lndn` (siirry yksi rivi alaspäin) |
+| siirrä pistesoluun | `route` (siirrä kohdistin merkin kohdalle) |
+| Ota näppäinohje käyttöön tai poista se käytöstä | `learn` (siirry näppäinohjetilaan tai poistu siitä) |
+| Avaa NVDA-valikko | `prefmenu` (avaa NVDA-valikko tai poistu siitä) |
+| Palauta asetukset | `prefload` (palauta asetukset levyltä) |
+| Tallenna asetukset | `prefsave` (tallenna asetukset levylle) |
+| Ilmoita kellonaika | `time` (näytä nykyinen päivämäärä ja kellonaika) |
+| Puhu tarkastelukohdistimen kohdalla oleva rivi | `say_line` (puhu nykyinen rivi) |
+| Jatkuva luku | `say_below` (puhu nykyiseltä riviltä lähtien näytön alareunaan saakka) |
 
 <!-- KC:endInclude -->
 
@@ -4735,55 +4735,55 @@ Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäess�
 Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
-| Siirrä ylimmälle riville | ``home1``, ``home2`` |
-| Siirrä alimmalle riville | ``end1``, ``end2`` |
-| Siirrä aktiiviseen objektiin | ``eCursor1``, ``eCursor2`` |
-| Siirrä nykyiseen kohdistukseen | ``cursor1``, ``cursor2`` |
-| Siirtää hiiren nykyiseen navigointiobjektiin | ``home1+home2`` |
-| Siirtää navigointiobjektin hiiren alla olevaan objektiin ja lukee sen | ``end1+end2`` |
-| Siirrä järjestelmän kohdistus tai -kohdistin tarkastelukohtaan | ``eCursor1+eCursor2`` |
-| Vaihda Pistenäyttö seuraa -asetusta | ``cursor1+cursor2`` |
-| Siirrä edelliselle riville | ``up1``, ``up2``, ``up3`` |
-| Siirrä seuraavalle riville | ``down1``, ``down2``, ``down3`` |
-| Vieritä taaksepäin | ``left``, ``lWheelLeft``, ``rWheelLeft`` |
-| Vieritä eteenpäin | ``right``, ``lWheelRight``, ``rWheelRight`` |
-| Siirrä pistesoluun | ``kosketuskohdistinnäppäin`` |
-| Ilmoita muotoilutiedot pistesolusta | ``toissijainen kosketuskohdistinnäppäin`` |
-| Vaihda tapaa, jolla kontekstitiedot näytetään pistenäytöllä | ``attribute1+attribute3`` |
-| Vaihda puhetilaa | ``attribute2+attribute4`` |
-| Vaihda edelliseen tarkastelutilaan | ``f1`` |
-| Vaihda seuraavaan tarkastelutilaan | ``f2`` |
-| Siirrä säilöobjektiin | ``f3`` |
-| Siirrä ensimmäiseen sisältöobjektiin | ``f4`` |
-| Siirrä edelliseen objektiin | ``f5`` |
-| Siirrä seuraavaan objektiin | ``f6`` |
-| Lue nykyinen objekti | ``f7`` |
-| Lue tarkastelukohdistimen kohdalla olevan tekstin tai objektin sijaintitiedot | ``f8`` |
-| Näytä pistekirjoituksen asetukset | ``f1+home1``, ``f9+home2`` |
-| Lue tilarivi ja siirrä navigointiobjekti siihen | ``f1+end1``, ``f9+end2`` |
-| Vaihda pistekohdistimen muotoa | ``f1+eCursor1``, ``f9+eCursor2`` |
-| Ota pistekohdistin käyttöön tai poista se käytöstä | ``f1+cursor1``, ``f9+cursor2`` |
-| Vaihda Näytä ilmoitukset -asetusta | ``f1+f2``, ``f9+f10`` |
-| Vaihda Näytä valinnan tila -asetusta | ``f1+f5``, ``f9+f14`` |
-| Vaihda "Siirrä järjestelmäkohdistin tarkastelukohdistimen kohdalle pistenäytön kosketuskohdistinnäppäimillä" -asetuksen tilaa | ``f1+f3``, ``f9+f11`` |
-| Aktivoi nykyinen navigointiobjekti | ``f7+f8`` |
-| Lue päiväys/aika | ``f9`` |
-| Ilmoittaa akun tilan ja jäljellä olevan ajan, jos verkkovirta ei ole käytössä | ``f10`` |
-| Lue ikkunan nimi | ``f11`` |
-| Lue tilarivi | ``f12`` |
-| Lue nykyinen rivi | ``f13`` |
-| Lue nykyinen teksti loppuun saakka järjestelmäkohdistimesta lähtien siirtäen samalla sitä | ``f14`` |
-| Lue merkki, jonka kohdalla tarkastelukohdistin on nykyisessä navigointiobjektissa | ``f15`` |
-| Lue nykyisen navigointiobjektin rivi, jolla tarkastelukohdistin on | ``f16`` |
-| Lue nykyisen navigointiobjektin sana, jonka kohdalla tarkastelukohdistin on | ``f15+f16`` |
-| Siirrä tarkastelukohdistin nykyisen navigointiobjektin edelliselle riville ja lue se | ``lWheelUp``, ``rWheelUp`` |
-| Siirrä tarkastelukohdistin nykyisen navigointiobjektin seuraavalle riville ja lue se | ``lWheelDown``, ``rWheelDown`` |
-| ``Windows+D`` (pienennä kaikki sovellukset) | ``attribute1`` |
-| ``Windows+E`` (tämä tietokone) | ``attribute2`` |
-| ``Windows+B`` (siirrä kohdistus ilmaisinalueelle) | ``attribute3`` |
-| ``Windows+I`` (Windowsin asetukset) | ``attribute4`` |
+| Siirrä ylimmälle riville | `home1`, `home2` |
+| Siirrä alimmalle riville | `end1`, `end2` |
+| Siirrä aktiiviseen objektiin | `eCursor1`, `eCursor2` |
+| Siirrä nykyiseen kohdistukseen | `cursor1`, `cursor2` |
+| Siirrä hiiri nykyiseen navigointiobjektiin | `home1+home2` |
+| Siirrä navigointiobjekti hiiren alla olevaan objektiin ja lue se | `end1+end2` |
+| Siirrä järjestelmän kohdistus tai -kohdistin tarkastelukohtaan | `eCursor1+eCursor2` |
+| Vaihda Pistenäyttö seuraa -asetusta | `cursor1+cursor2` |
+| Siirrä edelliselle riville | `up1`, `up2`, `up3` |
+| Siirrä seuraavalle riville | `down1`, `down2`, `down3` |
+| Vieritä taaksepäin | `left`, `lWheelLeft`, `rWheelLeft` |
+| Vieritä eteenpäin | `right`, `lWheelRight`, `rWheelRight` |
+| Siirrä pistesoluun | `kosketuskohdistinnäppäin` |
+| Ilmoita muotoilutiedot pistesolusta | `toissijainen kosketuskohdistinnäppäin` |
+| Vaihda tapaa, jolla kontekstitiedot näytetään pistenäytöllä | `attribute1+attribute3` |
+| Vaihda puhetilaa | `attribute2+attribute4` |
+| Vaihda edelliseen tarkastelutilaan | `f1` |
+| Vaihda seuraavaan tarkastelutilaan | `f2` |
+| Siirrä säilöobjektiin | `f3` |
+| Siirrä ensimmäiseen sisältöobjektiin | `f4` |
+| Siirrä edelliseen objektiin | `f5` |
+| Siirrä seuraavaan objektiin | `f6` |
+| Puhu nykyinen objekti | `f7` |
+| Puhu tarkastelukohdistimen kohdalla olevan tekstin tai objektin sijaintitiedot | `f8` |
+| Näytä pistekirjoituksen asetukset | `f1+home1`, `f9+home2` |
+| Puhu tilarivi ja siirrä navigointiobjekti siihen | `f1+end1`, `f9+end2` |
+| Vaihda pistekohdistimen muotoa | `f1+eCursor1`, `f9+eCursor2` |
+| Ota pistekohdistin käyttöön tai poista se käytöstä | `f1+cursor1`, `f9+cursor2` |
+| Vaihda Näytä ilmoitukset -asetusta | `f1+f2`, `f9+f10` |
+| Vaihda Näytä valinnan tila -asetusta | `f1+f5`, `f9+f14` |
+| Vaihda "Siirrä järjestelmäkohdistin tarkastelukohdistimen kohdalle pistenäytön kosketuskohdistinnäppäimillä" -asetuksen tilaa | `f1+f3`, `f9+f11` |
+| Aktivoi nykyinen navigointiobjekti | `f7+f8` |
+| Puhu päiväys/kellonaika | `f9` |
+| Puhu akun tila ja jäljellä oleva aika, jos verkkovirta ei ole käytössä | `f10` |
+| Puhu ikkunan nimi | `f11` |
+| Puhu tilarivi | `f12` |
+| Puhu nykyinen rivi | `f13` |
+| Puhu nykyinen teksti loppuun saakka järjestelmäkohdistimesta lähtien siirtäen samalla sitä | `f14` |
+| Puhu tarkastelukohdistimen kohdalla oleva merkki nykyisessä navigointiobjektissa | `f15` |
+| Puhu tarkastelukohdistimen kohdalla oleva rivi nykyisessä navigointiobjektissa | `f16` |
+| Puhu tarkastelukohdistimen kohdalla oleva sana nykyisessä navigointiobjektissa | `f15+f16` |
+| Siirrä tarkastelukohdistin nykyisen navigointiobjektin edelliselle riville ja lue se | `lWheelUp`, `rWheelUp` |
+| Siirrä tarkastelukohdistin nykyisen navigointiobjektin seuraavalle riville ja lue se | `lWheelDown`, `rWheelDown` |
+| `Windows+D` (pienennä kaikki sovellukset) | `attribute1` |
+| `Windows+E` (tämä tietokone) | `attribute2` |
+| `Windows+B` (siirrä kohdistus ilmoitusalueelle) | `attribute3` |
+| `Windows+I` (Windowsin asetukset) | `attribute4` |
 
 <!-- KC:endInclude -->
 
@@ -4797,7 +4797,7 @@ NVDA:n automaattinen pistenäytön tunnistus tunnistaa myös kaikki tätä proto
 Seuraavassa ovat näiden näyttöjen näppäinkomennot NVDA:ta käytettäessä.
 <!-- KC:beginInclude -->
 
-|| Nimi | Näppäinkomento |
+| Nimi | Näppäinkomento |
 |---|---|
 | Vieritä taaksepäin | panoroi vasemmalle tai keinunäppäin ylös |
 | Vieritä eteenpäin | panoroi oikealle tai keinunäppäin alas |
@@ -4828,16 +4828,16 @@ NVDA sallii mukautettujen lisäosien asentamisen, jotka voivat suorittaa mieliva
 NVDA sallii myös käyttäjien suorittaa mielivaltaista koodia Python-konsolin kautta.
 Suojattu tila estää käyttäjiä muokkaamasta NVDA:n asetuksia ja rajoittaa muutenkin luvatonta järjestelmän käyttöä.
 
-NVDA on käynnissä suojatussa tilassa, kun se suoritetaan [suojatuissa ruuduissa](#SecureScreens), ellei [järjestelmänlaajuista parametria](#SystemWideParameters) ``serviceDebug`` ole otettu käyttöön.
-Käynnistä NVDA aina suojatussa tilassa määrittämällä [järjestelmänlaajuinen parametri](#SystemWideParameters) ``forceSecureMode``.
-NVDA voidaan käynnistää suojatussa tilassa myös ``-s``-[komentorivivalitsimella](#CommandLineOptions).
+NVDA on käynnissä suojatussa tilassa, kun se suoritetaan [suojatuissa ruuduissa](#SecureScreens), ellei [järjestelmänlaajuista parametria](#SystemWideParameters) `serviceDebug` ole otettu käyttöön.
+Käynnistä NVDA aina suojatussa tilassa määrittämällä [järjestelmänlaajuinen parametri](#SystemWideParameters) `forceSecureMode`.
+NVDA voidaan käynnistää suojatussa tilassa myös `-s`-[komentorivivalitsimella](#CommandLineOptions).
 
 Suojattu tila poistaa käytöstä:
 
 * NVDA:n omien ja muiden asetusten tallentamisen levylle
 * Näppäinkomentokartan tallentamisen levylle
 * [Asetusprofiilien](#ConfigurationProfiles) ominaisuudet, kuten luonnin, poiston, uudelleennimeämisen jne.
-* Mukautettujen asetuskansioiden lataaminen [``-c``-komentorivivalitsinta](#CommandLineOptions) käyttäen
+* Mukautettujen asetuskansioiden lataaminen [`-c`-komentorivivalitsinta](#CommandLineOptions) käyttäen
 * NVDA:n päivittämisen ja massamuistiversion luonnin
 * [Lisäosakaupan](#AddonsManager)
 * [Python-konsolin](#PythonConsole)
@@ -4845,7 +4845,7 @@ Suojattu tila poistaa käytöstä:
 * [Pistekirjoituksen tarkastelun](#BrailleViewer) ja [Puheen tarkastelun](#SpeechViewer)
 * Ulkoisten asiakirjojen, kuten käyttöoppaan tai tekijät-tiedoston avaamisen NVDA-valikosta
 
-NVDA:n asennetut versiot tallentavat asetuksensa, lisäosat mukaan lukien, hakemistoon ``%APPDATA%\nvda``.
+NVDA:n asennetut versiot tallentavat asetuksensa, lisäosat mukaan lukien, hakemistoon `%APPDATA%\nvda`.
 Estä NVDA-käyttäjiä muokkaamasta asetuksiaan tai lisäosiaan rajoittamalla heidän käyttöoikeuksiaan tähän kansioon.
 
 Suojattu tila ei ole tehokas NVDA:n massamuistiversioissa.
@@ -4859,7 +4859,7 @@ Suojattu tila jäädyttää NVDA:n asetuksiin tehdyt muutokset, joten varmista, 
 
 ### Suojatut ruudut {#SecureScreens}
 
-NVDA on käynnissä [suojatussa tilassa](#SecureMode), kun se suoritetaan suojatuissa ruuduissa, ellei [järjestelmänlaajuista parametria](#SystemWideParameters) ``serviceDebug`` ole otettu käyttöön.
+NVDA on käynnissä [suojatussa tilassa](#SecureMode), kun se suoritetaan suojatuissa ruuduissa, ellei [järjestelmänlaajuista parametria](#SystemWideParameters) `serviceDebug` ole otettu käyttöön.
 
 NVDA käyttää järjestelmäprofiilia asetuksia varten ollessaan käynnissä suojatussa ruudussa.
 NVDA:n käyttäjäasetukset voidaan kopioida [suojatuissa ruuduissa käytettäväksi](#GeneralSettingsCopySettings).
@@ -4876,7 +4876,7 @@ NVDA hyväksyy käynnistyessään yhden tai useamman toimintaansa vaikuttavan ko
 Voit käyttää kerralla niin monta valitsinta kuin tarvitset.
 Valitsimet voidaan antaa pikakuvakkeesta käynnistettäessä (syötetään kuvakkeen Ominaisuudet-valintaikkunassa olevaan Kohde-kenttään), Suorita-valintaikkunasta (Käynnistä-valikko -> Suorita tai Windows+R) tai Windowsin komentokonsolista.
 Valitsimet erotetaan NVDA:n ohjelmatiedoston nimestä ja toisistaan välilyönnillä.
-Hyödyllinen valitsin on esim. ``--disable-addons``, joka poistaa kaikki lisäosat käytöstä.
+Hyödyllinen valitsin on esim. `--disable-addons`, joka poistaa kaikki lisäosat käytöstä.
 Sen avulla voit selvittää, aiheuttaako jokin lisäosa ongelmia.
 
 Voit esimerkiksi sulkea NVDA:n nykyisen version kirjoittamalla seuraavan komennon Suorita-valintaikkunaan:
@@ -4888,58 +4888,58 @@ Voit yhdistellä lyhyitä valitsimia näin:
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| ``nvda -mc ASETUSPOLKU`` | Tämä käynnistää NVDA:n poistaen käytöstä sekä käynnistysäänen että -ilmoituksen, ja käyttää määritetyssä hakemistossa olevia asetuksia. |
-| ``nvda -mc ASETUSPOLKU --disable-addons`` | Muuten sama kuin edellä, mutta poistaa myös lisäosat käytöstä. |
+| `nvda -mc ASETUSPOLKU` | Tämä käynnistää NVDA:n poistaen käytöstä sekä käynnistysäänen että -ilmoituksen, ja käyttää määritetyssä hakemistossa olevia asetuksia. |
+| `nvda -mc ASETUSPOLKU --disable-addons` | Muuten sama kuin edellä, mutta poistaa myös lisäosat käytöstä. |
 
 Jotkin valitsimet hyväksyvät lisäparametreja, esim. miten yksityiskohtaisia tietoja lokiin tallennetaan tai käyttäjän asetushakemiston polkumäärityksen.
-Parametrit annetaan valitsimen jälkeen ja erotetaan sen lyhyestä muodosta välilyönnillä tai pitkää muotoa käytettäessä yhtä suuri kuin -merkillä (``=``), esim.:
+Parametrit annetaan valitsimen jälkeen ja erotetaan sen lyhyestä muodosta välilyönnillä tai pitkää muotoa käytettäessä yhtä suuri kuin -merkillä (`=`), esim.:
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| ``nvda -l 10`` | Käynnistää NVDA:n virheenkorjaus-lokitasolla. |
-| ``nvda --log-file=c:\nvda.log`` | NVDA tallentaa lokin tiedostoon c:\nvda.log. |
-| ``nvda --log-level=20 -f c:\nvda.log`` | Käynnistää NVDA:n tiedot-lokitasolla ja tallentaa lokin tiedostoon c:\nvda.log. |
+| `nvda -l 10` | Käynnistää NVDA:n virheenkorjaus-lokitasolla. |
+| `nvda --log-file=c:\nvda.log` | NVDA tallentaa lokin tiedostoon `c:\nvda.log`. |
+| `nvda --log-level=20 -f c:\nvda.log` | Käynnistää NVDA:n tiedot-lokitasolla ja tallentaa lokin tiedostoon `c:\nvda.log`. |
 
 Seuraavassa on luettelo NVDA:n komentorivivalitsimista:
 
 | Lyhyt | Pitkä | Kuvaus |
 |---|---|---|
-| ``-h`` | ``--help`` | Näyttää komentorivivalitsimien ohjeen. |
-| ``-q`` | ``--quit`` | Sulkee jo käynnissä olevan NVDA:n version. |
-| ``-k`` | ``--check-running`` | Ilmoittaa lopetuskoodilla, onko NVDA käynnissä, 0 = jos käynnissä tai 1 = jos ei käynnissä. |
-| ``-f LOKITIEDOSTO`` | ``--log-file=LOKITIEDOSTO`` | Tiedosto, johon lokiviestit tallennetaan. Lokin tallennus on aina poissa käytöstä, jos suojattu tila on käytössä. |
-| ``-l LOKITASO`` | ``--log-level=LOKITASO`` | Alin taso, jonka viestit tallennetaan lokiin (virheenkorjaus = 10, syöttö/tulostus = 12, virheenkorjausvaroitus = 15, tiedot = 20, ei käytössä = 100). Lokin tallennus on aina poissa käytöstä, jos suojattu tila on käytössä. |
-| ``-c ASETUSPOLKU`` | ``--config-path=ASETUSPOLKU`` | Hakemistopolku, johon kaikki NVDA:n asetukset tallennetaan. Oletusarvo pakotetaan, jos suojattu tila on käytössä. |
-| Ei mitään | ``--lang=KIELI`` | Ohita NVDA:n asetuksissa määritetty kieli. Määritä kieleksi "Windows" käyttääksesi nykyistä käyttäjän oletusarvoa, "en" englantia jne. |
-| ``-m`` | ``--minimal`` | Ei ääniä, käyttöliittymää tai käynnistysilmoitusta jne. |
-| ``-s`` | ``--secure`` | Käynnistää NVDA:n [suojatussa tilassa](#SecureMode). |
-| Ei mitään | ``--disable-addons`` | Poistaa lisäosat käytöstä. |
-| Ei mitään | ``--debug-logging`` | Ottaa käyttöön virheenkorjaus-lokitason vain nykyisessä istunnossa. Tämä asetus korvaa minkä tahansa muun annetun lokitason argumentin (``--loglevel``, ``-l``), lokin käytöstä poistava valitsin mukaan lukien. |
-| Ei mitään | ``--no-logging`` | Poistaa lokin kokonaan käytöstä NVDA:ta käytettäessä. Tämä asetus voidaan ohittaa, mikäli lokitaso (``--loglevel``, ``-l``) määritetään komentoriviparametrilla tai jos virheenkorjauslokin tallennus otetaan käyttöön. |
-| Ei mitään | ``--no-sr-flag`` | Ei muuta järjestelmänlaajuista ruudunlukijalippua. |
-| Ei mitään | ``--install`` | Asentaa NVDA:n ja käynnistää asennetun kopion. |
-| Ei mitään | ``--install-silent`` | Asentaa NVDA:n ilman kehotteita ja asennetun kopion käynnistämistä. |
-| Ei mitään | ``--enable-start-on-logon=True | False`` | Ottaa asennettaessa käyttöön NVDA:n [Käytä sisäänkirjautumisen aikana -asetuksen.](#StartAtWindowsLogon) |
-| Ei mitään | ``--copy-portable-config`` | Kopioi asennettaessa massamuistiversion asetukset annetusta hakemistopolusta (``--config-path``, ``-c``) nykyiseen käyttäjätiliin. |
-| Ei mitään | ``--create-portable`` | Luo ja käynnistää NVDA:n massamuistiversion. Parametri ``--portable-path`` on myös määritettävä. |
-| Ei mitään | ``--create-portable-silent`` | Luo NVDA:n massamuistiversion eikä käynnistä sitä luonnin jälkeen. Parametri ``--portable-path`` on myös määritettävä. |
-| Ei mitään | ``--portable-path=POLKU`` | Hakemistopolku, johon massamuistiversio luodaan. |
+| `-h` | `--help` | Näyttää komentorivivalitsimien ohjeen. |
+| `-q` | `--quit` | Sulkee jo käynnissä olevan NVDA:n version. |
+| `-k` | `--check-running` | Ilmoittaa lopetuskoodilla, onko NVDA käynnissä, 0 = jos käynnissä tai 1 = jos ei käynnissä. |
+| `-f LOKITIEDOSTO` | `--log-file=LOKITIEDOSTO` | Tiedosto, johon lokiviestit tallennetaan. Lokin tallennus on aina poissa käytöstä, jos suojattu tila on käytössä. |
+| `-l LOKITASO` | `--log-level=LOKITASO` | Alin taso, jonka viestit tallennetaan lokiin (virheenkorjaus = 10, syöttö/tulostus = 12, virheenkorjausvaroitus = 15, tiedot = 20, ei käytössä = 100). Lokin tallennus on aina poissa käytöstä, jos suojattu tila on käytössä. |
+| `-c ASETUSPOLKU` | `--config-path=ASETUSPOLKU` | Hakemistopolku, johon kaikki NVDA:n asetukset tallennetaan. Oletusarvo pakotetaan, jos suojattu tila on käytössä. |
+| Ei mitään | `--lang=KIELI` | Ohita NVDA:n asetuksissa määritetty kieli. Määritä kieleksi "Windows" käyttääksesi nykyistä käyttäjän oletusarvoa, "en" englantia jne. |
+| `-m` | `--minimal` | Ei ääniä, käyttöliittymää tai käynnistysilmoitusta jne. |
+| `-s` | `--secure` | Käynnistää NVDA:n [suojatussa tilassa](#SecureMode). |
+| Ei mitään | `--disable-addons` | Poistaa lisäosat käytöstä. |
+| Ei mitään | `--debug-logging` | Ottaa käyttöön virheenkorjaus-lokitason vain nykyisessä istunnossa. Tämä asetus korvaa minkä tahansa muun annetun lokitason argumentin (`--loglevel`, `-l`), lokin käytöstä poistava valitsin mukaan lukien. |
+| Ei mitään | `--no-logging` | Poistaa lokin kokonaan käytöstä NVDA:ta käytettäessä. Tämä asetus voidaan ohittaa, mikäli lokitaso (`--loglevel`, `-l`) määritetään komentoriviparametrilla tai jos virheenkorjauslokin tallennus otetaan käyttöön. |
+| Ei mitään | `--no-sr-flag` | Ei muuta järjestelmänlaajuista ruudunlukijalippua. |
+| Ei mitään | `--install` | Asentaa NVDA:n ja käynnistää asennetun kopion. |
+| Ei mitään | `--install-silent` | Asentaa NVDA:n ilman kehotteita ja asennetun kopion käynnistämistä. |
+| Ei mitään | `--enable-start-on-logon=True | False` | Ottaa asennettaessa käyttöön NVDA:n [Käytä sisäänkirjautumisen aikana -asetuksen.](#StartAtWindowsLogon) |
+| Ei mitään | `--copy-portable-config` | Kopioi asennettaessa massamuistiversion asetukset annetusta hakemistopolusta (`--config-path`, `-c`) nykyiseen käyttäjätiliin. |
+| Ei mitään | `--create-portable` | Luo ja käynnistää NVDA:n massamuistiversion. Parametri `--portable-path` on myös määritettävä. |
+| Ei mitään | `--create-portable-silent` | Luo NVDA:n massamuistiversion eikä käynnistä sitä luonnin jälkeen. Parametri `--portable-path` on myös määritettävä. |
+| Ei mitään | `--portable-path=POLKU` | Hakemistopolku, johon massamuistiversio luodaan. |
 
 ### Järjestelmänlaajuiset parametrit {#SystemWideParameters}
 
 Windowsin rekisterissä on mahdollista muuttaa joitakin arvoja, jotka vaikuttavat NVDA:n järjestelmänlaajuiseen toimintaan.
 Arvot tallennetaan johonkin seuraavista rekisteriavaimista:
 
-* 32-bittiset järjestelmät: ``HKEY_LOCAL_MACHINE\SOFTWARE\nvda``
-* 64-bittiset järjestelmät: ``HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda``
+* 32-bittiset järjestelmät: `HKEY_LOCAL_MACHINE\SOFTWARE\nvda`
+* 64-bittiset järjestelmät: `HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda`
 
 Seuraavien rekisteriavainten määrittäminen on mahdollista:
 
-|| Nimi | Tyyppi | Mahdolliset arvot | Kuvaus |
+| Nimi | Tyyppi | Mahdolliset arvot | Kuvaus |
 |---|---|---|---|
-| ``configInLocalAppData`` | DWORD | 0 = ei käytössä (oletus), 1 = käytössä | Jos tämä otetaan käyttöön, NVDA:n asetukset tallennetaan paikallisen sovellusdatan hakemistoon roaming-hakemistossa sijaitsevan sovellusdatakansion asemesta. |
-| ``serviceDebug`` | DWORD | 0 = ei käytössä (oletus), 1 = käytössä | Jos tämä asetus otetaan käyttöön, [suojattu tila](#SecureMode) poistetaan käytöstä [suojatuissa ruuduissa](#SecureScreens). Tämän asetuksen käyttöä ei suositella tietoturvan merkittävän heikkenemisen vuoksi. |
-| ``forceSecureMode`` | DWORD | 0 = ei käytössä (oletus), 1 = käytössä | Jos tämä otetaan käyttöön, [suojattu tila](#SecureMode) pakotetaan käyttöön NVDA:ta käytettäessä. |
+| `configInLocalAppData` | DWORD | 0 = ei käytössä (oletus), 1 = käytössä | Jos tämä otetaan käyttöön, NVDA:n asetukset tallennetaan paikallisen sovellusdatan hakemistoon roaming-hakemistossa sijaitsevan sovellusdatakansion asemesta. |
+| `serviceDebug` | DWORD | 0 = ei käytössä (oletus), 1 = käytössä | Jos tämä asetus otetaan käyttöön, [suojattu tila](#SecureMode) poistetaan käytöstä [suojatuissa ruuduissa](#SecureScreens). Tämän asetuksen käyttöä ei suositella tietoturvan merkittävän heikkenemisen vuoksi. |
+| `forceSecureMode` | DWORD | 0 = ei käytössä (oletus), 1 = käytössä | Jos tämä otetaan käyttöön, [suojattu tila](#SecureMode) pakotetaan käyttöön NVDA:ta käytettäessä. |
 
 ## Lisätietoja {#FurtherInformation}
 

@@ -89,6 +89,7 @@ Hay muchas otras correcciones menores de fallos para aplicaciones tales como Thu
 * Corregido un caso poco frecuente en el que al guardar la configuración podía fallar el guardado de todos los perfiles. (#16343, @CyrilleB79)
 * En Firefox y navegadores basados en Chromium, NVDA entrará correctamente en modo foco al pulsar intro cuando se posicione dentro de una lista de presentación (ul / ol) dentro de contenido editable. (#16325)
 * El cambio de estado de columna se notifica automáticamente al seleccionar las columnas que se mostrarán en la lista de mensajes de Thunderbird. (#16323)
+* El conmutador de línea de órdenes `-h`/`--help` funciona apropiadamente de nuevo. (#16522, @XLTechie)
 
 ### Cambios para desarrolladores
 
