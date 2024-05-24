@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2023 NV Access Limited
+# Copyright (C) 2024 NV Access Limited
 
 """
 High-level UIA remote ops Unit tests for strings.
@@ -14,7 +14,7 @@ from UIAHandler._remoteOps import remoteAPI
 
 class Test_string(TestCase):
 
-	def test_string_concat(self):
+	def test_concat(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction

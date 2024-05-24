@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2023 NV Access Limited
+# Copyright (C) 2024 NV Access Limited
 
 """
 High-level UIA remote ops Unit tests for integer arithmetic.
@@ -14,7 +14,7 @@ from UIAHandler._remoteOps import remoteAPI
 
 class Test_int(TestCase):
 
-	def test_int_inplace_add(self):
+	def test_inplace_add(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction
@@ -27,7 +27,7 @@ class Test_int(TestCase):
 		i = op.execute()
 		self.assertEqual(i, 8)
 
-	def test_int_binary_add(self):
+	def test_binary_add(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction
@@ -40,7 +40,7 @@ class Test_int(TestCase):
 		k = op.execute()
 		self.assertEqual(k, 7)
 
-	def test_int_inplace_subtract(self):
+	def test_inplace_subtract(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction
@@ -53,7 +53,7 @@ class Test_int(TestCase):
 		i = op.execute()
 		self.assertEqual(i, 2)
 
-	def test_int_binary_subtract(self):
+	def test_binary_subtract(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction
@@ -66,7 +66,7 @@ class Test_int(TestCase):
 		k = op.execute()
 		self.assertEqual(k, 4)
 
-	def test_int_inplace_multiply(self):
+	def test_inplace_multiply(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction
@@ -79,7 +79,7 @@ class Test_int(TestCase):
 		i = op.execute()
 		self.assertEqual(i, 15)
 
-	def test_int_binary_multiply(self):
+	def test_binary_multiply(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction
@@ -92,7 +92,7 @@ class Test_int(TestCase):
 		k = op.execute()
 		self.assertEqual(k, 12)
 
-	def test_int_inplace_divide(self):
+	def test_inplace_divide(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction
@@ -105,7 +105,7 @@ class Test_int(TestCase):
 		i = op.execute()
 		self.assertEqual(i, 6)
 
-	def test_int_binary_divide(self):
+	def test_binary_divide(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction
@@ -118,7 +118,7 @@ class Test_int(TestCase):
 		k = op.execute()
 		self.assertEqual(k, 7)
 
-	def test_int_inplace_mod(self):
+	def test_inplace_mod(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction
@@ -131,7 +131,7 @@ class Test_int(TestCase):
 		i = op.execute()
 		self.assertEqual(i, 1)
 
-	def test_int_binary_mod(self):
+	def test_binary_mod(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction

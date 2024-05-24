@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2023 NV Access Limited
+# Copyright (C) 2024 NV Access Limited
 
 """
 High-level UIA remote ops Unit tests for floating point arithmetic.
@@ -14,7 +14,7 @@ from UIAHandler._remoteOps import remoteAPI
 
 class Test_float(TestCase):
 
-	def test_float_inplace_add(self):
+	def test_inplace_add(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction
@@ -27,7 +27,7 @@ class Test_float(TestCase):
 		i = op.execute()
 		self.assertEqual(i, 8.8)
 
-	def test_float_binary_add(self):
+	def test_binary_add(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction
@@ -40,7 +40,7 @@ class Test_float(TestCase):
 		k = op.execute()
 		self.assertEqual(k, 7.7)
 
-	def test_float_inplace_subtract(self):
+	def test_inplace_subtract(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction
@@ -53,7 +53,7 @@ class Test_float(TestCase):
 		i = op.execute()
 		self.assertEqual(i, 2.2)
 
-	def test_float_binary_subtract(self):
+	def test_binary_subtract(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction
@@ -66,7 +66,7 @@ class Test_float(TestCase):
 		k = op.execute()
 		self.assertEqual(k, 4.1)
 
-	def test_float_inplace_multiply(self):
+	def test_inplace_multiply(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction
@@ -79,7 +79,7 @@ class Test_float(TestCase):
 		i = op.execute()
 		self.assertEqual(i, 15.0)
 
-	def test_float_binary_multiply(self):
+	def test_binary_multiply(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction
@@ -92,7 +92,7 @@ class Test_float(TestCase):
 		k = op.execute()
 		self.assertEqual(k, 14.4)
 
-	def test_float_inplace_divide(self):
+	def test_inplace_divide(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction
@@ -105,7 +105,7 @@ class Test_float(TestCase):
 		i = op.execute()
 		self.assertEqual(i, 8.0)
 
-	def test_float_binary_divide(self):
+	def test_binary_divide(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction

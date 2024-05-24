@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2023 NV Access Limited
+# Copyright (C) 2024 NV Access Limited
 
 """
 High-level UIA remote ops Unit tests for setting and comparing booleans.
@@ -14,7 +14,7 @@ from UIAHandler._remoteOps import remoteAPI
 
 class Test_bool(TestCase):
 
-	def test_bool_false(self):
+	def test_false(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction
@@ -25,7 +25,7 @@ class Test_bool(TestCase):
 		b = op.execute()
 		self.assertFalse(b)
 
-	def test_bool_setTrue(self):
+	def test_setTrue(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction
@@ -37,7 +37,7 @@ class Test_bool(TestCase):
 		b = op.execute()
 		self.assertTrue(b)
 
-	def test_bool_inverse(self):
+	def test_inverse(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction
@@ -52,7 +52,7 @@ class Test_bool(TestCase):
 		self.assertFalse(t_inverse)
 		self.assertTrue(f_inverse)
 
-	def test_bool_and(self):
+	def test_and(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction
@@ -71,7 +71,7 @@ class Test_bool(TestCase):
 		self.assertFalse(f_and_t)
 		self.assertFalse(f_and_f)
 
-	def test_bool_or(self):
+	def test_or(self):
 		op = operation.Operation(localMode=True)
 
 		@op.buildFunction
