@@ -6,6 +6,7 @@
 
 from enum import IntEnum, IntFlag
 import os
+from winAPI.constants import is_64Bit
 import queue
 from ctypes import (
 	c_short,
@@ -43,8 +44,6 @@ import NVDAHelper
 import config
 from utils.security import isRunningOnSecureDesktop
 
-#: Verification of the architecture of the running system
-is_64Bit = os.environ["PROCESSOR_ARCHITECTURE"].endswith("64")
 
 #: The path to the user's .accessibility.properties file, used
 #: to enable JAB.
