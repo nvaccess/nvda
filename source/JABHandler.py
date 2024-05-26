@@ -6,7 +6,7 @@
 
 from enum import IntEnum, IntFlag
 import os
-from winAPI.constants import is_64Bit
+from winAPI.constants import IS_64_BIT
 import queue
 from ctypes import (
 	c_short,
@@ -83,7 +83,7 @@ jboolean=c_bool
 
 
 # If the machine is 64-bit, use c_int64, otherwise use c_int as a parameter.
-class JOBJECT64(c_int64 if is_64Bit else c_int):
+class JOBJECT64(c_int64 if IS_64_BIT else c_int):
 	pass
 AccessibleTable=JOBJECT64
 
@@ -840,7 +840,7 @@ def enableBridge():
 
 
 def initialize():
-	global bridgeDll, is_64Bit, isRunning
+	global bridgeDll, isRunning
 	# If the system is 64-bit, load the dll that we have in the NVDA distribution.
 	# Otherwise, it loads the one on the 32-bit system, which does not have the -32 suffix.
 	correctDll = "windowsaccessbridge-32.dll" if is_64Bit else "windowsaccessbridge.dll"
