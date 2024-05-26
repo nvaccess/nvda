@@ -843,7 +843,7 @@ def initialize():
 	global bridgeDll, isRunning
 	# If the system is 64-bit, load the dll that we have in the NVDA distribution.
 	# Otherwise, it loads the one on the 32-bit system, which does not have the -32 suffix.
-	correctDll = "windowsaccessbridge-32.dll" if is_64Bit else "windowsaccessbridge.dll"
+	correctDll = "windowsaccessbridge-32.dll" if IS_64_BIT else "windowsaccessbridge.dll"
 	try:
 		bridgeDll = cdll.LoadLibrary(os.path.join(NVDAHelper.versionedLibPath, correctDll))
 	except WindowsError:
