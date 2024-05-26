@@ -2274,7 +2274,7 @@ This option is not available if you have started NVDA with [WASAPI disabled for 
 
 The sound split feature allows users to make use of their stereo output devices, such as headphones and speakers.
 Sound split makes it possible to have NVDA speech in one channel (e.g. left) and have all other applications play their sounds in the other channel (e.g. right).
-By default sound split is disabled, which means that all applications including NVDA will play sounds in both left and right channels.
+By default sound split is disabled.
 A gesture allows cycling through the various sound split modes:
 <!-- KC:beginInclude -->
 
@@ -2286,18 +2286,21 @@ A gesture allows cycling through the various sound split modes:
 
 By default this command will cycle between the following modes:
 
-* Disabled sound split: both NVDA and other applications output sounds to both left and right channels.
+* Sound split disabled: NVDA does not apply any sound split processing.
 * NVDA on the left and applications on the right: NVDA will speak in the left channel, while other applications will play sounds in the right channel.
 * NVDA on the left and applications in both channels: NVDA will speak in the left channel, while other applications will play sounds in  both left and right channels.
 
 There are more advanced sound split modes available in NVDA setting combo box.
+Among these modes, "NVDA in both channels and applications in both channels" forces all the sounds to be directed in both channels.
+This mode may differ from "Sound split disabled" mode in case other audio processing interfers with channel volumes.
+
 Please note, that sound split doesn't work as a mixer.
 For example, if an application is playing a stereo sound track while sound split is set to "NVDA on the left and applications on the right", then you will only hear the right channel of the sound track, while the left channel of the sound track will be muted.
 
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
 Please note, that if NVDA crashes, then it won't be able to restore application sounds volume, and those applications might still output sound only in one channel after NVDA crash.
-In order to mitigate this, please restart NVDA.
+In order to mitigate this, please restart NVDA and select the mode "NVDA in both channels and applications in both channels".
 
 ##### Customizing Sound split modes {#CustomizeSoundSplitModes}
 
@@ -2305,7 +2308,7 @@ This checkable list allows selecting which sound split modes are included when c
 Modes which are unchecked are excluded.
 By default only three modes are included.
 
-* Disabled sound split.
+* Sound split disabled.
 * NVDA on the left and applications on the right.
 * NVDA on the left and applications in both channels.
 
