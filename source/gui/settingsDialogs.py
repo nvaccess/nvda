@@ -2812,7 +2812,7 @@ class AudioPanel(SettingsPanel):
 		index = self.soundSplitComboBox.GetSelection()
 		config.conf["audio"]["soundSplitState"] = index
 		if nvwave.usingWasapiWavePlayer():
-			audio.setSoundSplitState(audio.SoundSplitState(index))
+			audio._setSoundSplitState(audio.SoundSplitState(index))
 		config.conf["audio"]["includedSoundSplitModes"] = [
 			mIndex
 			for mIndex in range(len(self._allSoundSplitModes))
