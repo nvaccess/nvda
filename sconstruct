@@ -218,9 +218,11 @@ envArm64['projectResFile'] = resFile
 env.recursiveCopy(sourceDir,Dir('miscdeps/source'))
 # Copy in some other dependencies.
 jabDll32 = "windowsaccessbridge-32.dll"
-Command(sourceLibDir.File(jabDll32),
+Command(
+	sourceLibDir.File(jabDll32),
 	env.Dir("#include/javaAccessBridge32").File(jabDll32),
-	Copy("$TARGET", "$SOURCE"))
+	Copy("$TARGET", "$SOURCE")
+)
 jabDll = "windowsaccessbridge.dll"
 Command(sourceLibDir.File(jabDll),
 	env.Dir("#include/javaAccessBridge32").File(jabDll),

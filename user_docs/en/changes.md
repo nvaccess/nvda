@@ -14,7 +14,6 @@
 * Component updates:
   * Updated Unicode CLDR to version 45.0. (#16507, @OzancanKaratas)
   * Updated fast_diff_match_patch (used to detect changes in terminals and other dynamic content) to version 2.1.0. (#16508, @codeofdusk)
-
   * Updated Java Access Bridge to 17.0.11+9Zulu (17.50.19). (#16557)
 * The fallback braille input table is now equal to the fallback output table, which is Unified English Braille Code grade 1. (#9863, @JulienCochuyt, @LeonarddeR)
 * NVDA will now report figures with no accessible children, but with a label or description. (#14514)
@@ -44,7 +43,6 @@ It is especially useful to read the error location markers in tracebacks. (#1632
 * When a `gainFocus` event is queued with an object that has a valid `focusRedirect` property, the object pointed to by the `focusRedirect` property is now held by `eventHandler.lastQueuedFocusObject`, rather than the originally queued object. (#15843)
 * NVDA will log its executable architecture (x86) at startup. (#16432, @josephsl)
 * `wx.CallAfter`, which is wrapped in `monkeyPatches/wxMonkeyPatches.py`, now includes proper `functools.wraps` indication. (#16520, @XLTechie)
-* Added a variable called `is_64Bit` in `winAPI.constants` to determine the architecture of the running system. (#16330, #16557)
 
 #### Deprecations
 

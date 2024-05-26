@@ -7,8 +7,8 @@ import winVersion
 import enum
 
 
-#: Verification of the architecture of the running system
-is_64Bit = winVersion.getWinVer().processorArchitecture.endswith("64")
+IS_64_BIT: bool = winVersion.getWinVer().processorArchitecture.endswith("64")
+"""True if the system is 64bit"""
 
 
 class HResult(enum.IntEnum):
