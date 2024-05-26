@@ -2791,34 +2791,7 @@ class AudioPanel(SettingsPanel):
 		self.soundSplitModesList.Checked = [
 			mIndex for mIndex in range(len(self._allSoundSplitModes)) if mIndex in includedModes
 		]
-		self.soundSplitModesList.Bind(wx.EVT_CHECKLISTBOX, self._onSoundSplitModesListChange)
 		self.soundSplitModesList.Select(0)
-
-	def _onSoundSplitModesListChange(self, evt: wx.CommandEvent):
-		# continue event propagation to custom control event handler
-		# to guarantee user is notified about checkbox being checked or unchecked
-		evt.Skip()
-		if (
-			evt.GetInt() == self._allSoundSplitModes.index(audio.SoundSplitState.OFF)
-			and not self.soundSplitModesList.IsChecked(evt.GetInt())
-		):
-			if gui.messageBox(
-				_(
-					# Translators: Warning shown when 'OFF' sound split mode is disabled in settings.
-					"You did not choose 'Off' as one of your sound split mode options. "
-					"Please note that this may result in no speech output at all "
-					"in case one of your audio channels is malfunctioning. "
-					"Are you sure you want to continue?"
-				),
-				# Translators: Title of the warning message.
-				_("Warning"),
-				wx.YES | wx.NO | wx.ICON_WARNING,
-				self,
-			) == wx.NO:
-				self.soundSplitModesList.SetCheckedItems(
-					list(self.soundSplitModesList.GetCheckedItems())
-					+ [self._allSoundSplitModes.index(audio.SoundSplitState.OFF)]
-				)
 
 	def onSave(self):
 		if config.conf["speech"]["outputDevice"] != self.deviceList.GetStringSelection():
@@ -2839,7 +2812,7 @@ class AudioPanel(SettingsPanel):
 		index = self.soundSplitComboBox.GetSelection()
 		config.conf["audio"]["soundSplitState"] = index
 		if nvwave.usingWasapiWavePlayer():
-			audio.setSoundSplitState(audio.SoundSplitState(index))
+			audio._setSoundSplitState(audio.SoundSplitState(index))
 		config.conf["audio"]["includedSoundSplitModes"] = [
 			mIndex
 			for mIndex in range(len(self._allSoundSplitModes))
