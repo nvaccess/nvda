@@ -1050,10 +1050,10 @@ Međutim, za scenarije kada želite kopirati cijelu tablicu ili odlomak sa oblik
 
 ## Čitanje matematičkog sadržaja {#ReadingMath}
 
-Uz pomoć NVDA se možete kretati po matematičkom sadržaju na web stranicama i u drugim aplikacijama, koristeći govor i brajicu. 
-Međutim, kako bi NVDA mogao čitati matematički sadržaj, najprije trebate instalirati matematički komponentu za NVDA.
-Postoji nekoliko NVDA dodataka u add-on storeu koji omogućuju pristup matematičkom sadržaju, uključujući [MathCAT NVDA add-on](https://nsoiffer.github.io/MathCAT/) i [Access8Math](https://github.com/tsengwoody/Access8Math). 
-Molimo pogledajte poglavlje [Add-on Store](#AddonsManager) kako biste saznali kako pregledavati i instaliravati dostupne dodatke unutar NVDA.
+NVDA može čitati matematički sadržaj na web stranicama te u ostalim programima, čineći tako pristup takvom sadržaju uz pomoć govora i brajice mogućim.
+Međutim, kako bi NVDA mogao čitati matematički sadržaj, najprije trebate instalirati matematičku komponentu za NVDA.
+Postoji nekoliko dodataka, koji se mogu preuzeti u NVDA add-on storeu za pristup matamatičkom sadržaju, uključujući [MathCAT NVDA dodatak](https://nsoiffer.github.io/MathCAT/) te [Access8Math](https://github.com/tsengwoody/Access8Math).
+Molimo pogledajte poglavlje [Add-on Store](#AddonsManager) kako biste saznali kako pregledavati i instalirati dostupne dodatke unutar NVDA.
 NVDA također može koristiti stariji [MathPlayer](https://info.wiris.com/mathplayer-info) softver tvrtke Wiris ako se pronađe u vašem sustavu, iako ovaj softver se više ne razvija.
 
 ### Podržani matematički sadržaj {#SupportedMathContent}
@@ -1189,7 +1189,7 @@ Kako bi stalo što više informacija na brajični redak, definirane su sljedeće
 |sp |stablasti prikaz|
 |gbsp |gumb za stablasti prikaz|
 |ssp |stavka stablastog prikaza|
-|raz x |stavka stabla na razini x u hierarhiji||
+|raz x |stavka stabla na razini x u hierarhiji|
 |pr |prozor|
 |⠤⠤⠤⠤⠤ |rastavljač|
 |⠕⠃⠣⠮ |obilježen sadržaj|
@@ -2200,18 +2200,6 @@ Ovaj klizač vam dozvoljava regulaciju glasnoće govorne jedinice i  zvukova.
 Ova postavka se primjenjuje samo kada je opcija "Koristi WASAPI za audio izlaz" omogućena i opcija "Jačina NVDA zvukova prati jačinu glasa" onemogućena.
 Ova postavka nije dostupna ako ste pokrenuli  NVDA sa isključenim [WASAPI za audio izlaz](#WASAPI) U naprednim postavkama.
 
-##### Vrijeme držanja audiouređaja budnim poslije zadnje izgovorene stavke {#AudioAwakeTime}
-
-U ovom se polju za uređivanje određuje koliko će dugo audiouređaj ostati budan poslije završetka govora.
-Ovo omogućuje NVDA izbjegavanje većinu problema sa govorom poput izrezanih riječi.
-Ovo se može događati zbog toga što audiouređaji, a posebno oni povezani putem Bluetootha ulaze u način mirovanja.
-Ovo može biti od pomoći i u drugim slučajevima poput pokretanja NVDA u u virtualnom okruženju (npr. Citrix Virtual Desktop), ili na nekim prijenosnim računalima.
-
-Manje vrijednosti mogu prouzrokovati češće rezanje zvuka, jer audiouređaj može ulaziti u način mirovanja prečesto, što prouzrokuje češće rezanje početka govora.
-Postavljanje ove opcije na višu vrijednost može prouzročiti brže pražnjenje baterije audiouređaja, zbog toga što audiouređaj ostaje duže aktivan kada nema zvuka.
-
-Kako biste onemogućili ovu značajku, postavite vrijeme na nulu.
-
 ##### Način podijeljenog zvuka {#SelectSoundSplitMode}
 
 Ova funkcija omogućuje korisnicima korištenje stereouređaja poput zvučnika ili slušalica.
@@ -2230,7 +2218,7 @@ Podrazumijevano, ovaj će prečac prebacivati između slijedećih modusa:
 
 * Onemogućena podjela zvuka: Programi i NVDA reproduciraju svoje zvukove u oba kanala.
 * NVDA u lijevom kanalu, a programi u desnom: NVDA će govoriti u lijevom kanalu, dok će drugi programi reproducirati svoje zvukove u desnom.
-* NVDA u desnom kanalu, a programi u lijevom: NVDA će govoriti u desnom kanalu, dok će zvukovi drugih programa biti reproducirani u lijevom.
+* NVDA u lijevom kanalu a programi u oba kanala: NVDA će govoriti u lijevom kanalu, dok će se zvukovi reproducirati u oba kanala.
 
 Dostupno je više naprednih načina podjele u odabirnom okviru.
 Imajte na umu da ova opcija ne radi kao mikser.
@@ -2244,15 +2232,27 @@ Kako biste to spriječili, molimo ponovno pokrenite NVDA.
 ##### Prilagođavanje načina podjele zvuka {#CustomizeSoundSplitModes}
 
 Ovaj popis sa odabirnim okvirima omogućuje vam prilagođavanje koji će načini podjele zvuka biti dostupni pri prebacivanju uz pomoć prečaca `NVDA+alt+s`.
-Načini koji nisu odabrani nedostupni na tom popisu.
+Načini koji nisu odabrani su nedostupni na tom popisu.
 Podrazumjevano su dostupna tri modusa.
 
-* Modus podjele zvuka isključen: NVDA i drugi programi reproduraju zvuk u oba kanala.
-* NVDA u lijevom kanalu i ostali programi u desnom.
-* NVDA u desnom kanalu i sve ostali programi u lijevom.
+* Onemogućena podjela zvuka.
+* NVDA u lijevom kanalu a programi u desnom.
+* NVDA u lijevom kanalu a programi u oba kanala.
 
 Imajte na umu da je potrebno odabrati barem jedan modus.
 Ova opcija nije dostupna ako je NVDA pokrenut [sa isključenim Wasapi za audioizlaz](#WASAPI) u naprednim postavkama.
+
+##### Vrijeme držanja audiouređaja budnim poslije zadnje izgovorene stavke {#AudioAwakeTime}
+
+U ovom se polju za uređivanje određuje koliko će dugo audiouređaj ostati budan poslije završetka govora.
+Ovo omogućuje NVDA izbjegavanje većinu problema sa govorom poput izrezanih riječi.
+Ovo se može događati zbog toga što audiouređaji, a posebno oni povezani putem Bluetootha ulaze u način mirovanja.
+Ovo može biti od pomoći i u drugim slučajevima poput pokretanja NVDA u u virtualnom okruženju (npr. Citrix Virtual Desktop), ili na nekim prijenosnim računalima.
+
+Manje vrijednosti mogu prouzrokovati češće rezanje zvuka, jer audiouređaj može ulaziti u način mirovanja prečesto, što prouzrokuje češće rezanje početka govora.
+Postavljanje ove opcije na višu vrijednost može prouzročiti brže pražnjenje baterije audiouređaja, zbog toga što audiouređaj ostaje duže aktivan kada nema zvuka.
+
+Kako biste onemogućili ovu značajku, postavite vrijeme na nulu.
 
 #### Vid {#VisionSettings}
 
@@ -3139,8 +3139,7 @@ Upozorenje:
 
 * Emulirani prečaci moraju imati pridjeljene geste kako bi se zadržali prilikom spremanja /zatvaranja dijaloškog okvira.
 * Geste sa modifikatorima možda neće moći biti pridjeljene emuliranoj gesti bez modifikatora
-Na primjer, postavljanjem emuliranog unosa `a` i podešavanje ulazne geste `ctrl+m`, prouzrokovat će 
-da će program primiti `ctrl+a`.
+Na primjer, postavljanjem emuliranog unosa `a` i podešavanje ulazne geste `ctrl+m`, prouzrokovat će da će program primiti `ctrl+a`.
 
 Kad ste gotovi s promjenama, pritisnite gumb U redu da biste ih sačuvali ili gumb Odustani da biste ih poništili.
 
@@ -4485,10 +4484,10 @@ Zbog toga, te kako bi se zadržala kompatibilnost s drugim čitačima ekrana na 
 
 <!-- KC:endInclude -->
 
-### Eurobraille redovi {#Eurobraille}
+### Eurobraille brajični redci {#Eurobraille}
 
-b.book, b.note, Esys, Esytime i Iris brajevi redovi kompanije Eurobraille su podržani od strane NVDA.  
-Ovi uređaji imaju brajevu tastaturu sa 10 tastera. 
+b.book, b.note, Esys, Esytime i Iris brajični redci tvrtke Eurobraille su podržani.  
+Ovi uređaji imaju brajičnu tipkovnicu sa 10 tipaka. 
 Molimo pogledajte dokumentaciju brajevog reda za opis ovih tastera.
 Od dva tastera koji izgledaju slično razmaku, levi taster je backspace i desni je razmak.
 

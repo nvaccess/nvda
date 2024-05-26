@@ -60,7 +60,7 @@ Ispravljeno je puno pogrešaka u programima, poput Thunderbirda, Adobe Readera, 
 
 * Add-on Store:
   * Minimalna verzija i posljednja testirana verzija dodatka sada se prikazuju u području "više detalja". (#15776, @Nael-Sayegh)
-  * Radnja "recenzije zajednice" biti će dostupna, a web stranica će se prikazati u pojedinostima u svim karticama svojstava u Add-on storeu. (#16179, @nvdaes)
+  * Radnja "recenzije zajednice" biti će dostupna u pojedinostima u svim karticama svojstava u Add-on storeu. (#16179, @nvdaes)
 * Nadogradnje komponenti:
   * Nadograđen LibLouis brajični prevoditelj na inačicu [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0). (#16259, @codeofdusk)
     * Nove brajične tablice za bjeloruski i ukrajinski jezik sa podrškom prikazivanja znakova za velika slova.
@@ -94,6 +94,7 @@ Ispravljeno je puno pogrešaka u programima, poput Thunderbirda, Adobe Readera, 
 * U Firefoxu i preglednicima baziranima na Chromiumu, NVDA će ispravno aktivirati modus fokusa prilikom pritiska entera kad je fokus na prezentacijskom popisu (ul / ol) unutar sadržaja za uređivanje. (#16325)
 * Stanje promjena stupaca kada se označuju stupci za prikaz u popisu poruka u Thunderbirdu sada se ispravno čitaju. (#16323)
 * preklopnik u naredbenom redku `-h`/`--help` ponovno ispravno radi. (#16522, @XLTechie)
+* NVDA podrška za Poedit softver za prevođenje inačica 3.4 ili novije verzije ispravno radi prilikom prevođenja na jezike sa jednim ili više od dva oblika množine (npr: u kineskom, poljskom). (#16318)
 
 ## 2024.1
 
