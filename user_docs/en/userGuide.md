@@ -302,6 +302,7 @@ When the window first opens, add-ons may take a few seconds to load.
 NVDA will read the name of the first add-on once the list of add-ons finishes loading.
 Available add-ons are listed alphabetically in a grid.
 To browse the list and find out about a specific add-on:
+
 1. Use the `arrow keys` or press the first letter of an add-on name to move around the list.
 1. Press `tab` once to move to a description of the currently selected add-on.
 1. Use the [reading keys](#ReadingText) or `arrow keys` to read the full description.
@@ -319,6 +320,7 @@ Once done, press `tab` to go to the filtered list of add-ons and browse the resu
 #### Installing add-ons {#InstallingAddons}
 
 To install an add-on:
+
 1. With the focus on an add-on you would like to install, press `enter`.
 1. The actions menu opens with a list of actions; the first action is "Install".
 1. To install the add-on, press `i` or `downArrow` to "install" and press `enter`.
@@ -343,7 +345,7 @@ After enabling, disabling, or removing add-ons, you will be prompted to restart 
 These changes will only take effect once NVDA is restarted.
 Note that in this dialog `escape` works the same as the Close button.
 
-### Updating add-ons {#UpdatingAddons}
+#### Updating add-ons {#UpdatingAddons}
 When there is an update to an add-on you have installed, it will be listed in the "Updatable add-ons" tab.
 Press `control+tab` to get to this tab from anywhere in the Add-on Store.
 The status of the add-on will be listed as "Update available".
