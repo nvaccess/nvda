@@ -81,21 +81,22 @@ class VolumeSetter(AudioSessionCallback):
 def updateAppsVolumeImpl(
 		volume: float,
 		state: AppsVolumeAdjusterFlag,
-		runTerminators: bool = True,
 ):
 	global activeCallback
-	if activeCallback is not None:
-		activeCallback.unregister(runTerminators=runTerminators)
-		activeCallback = None
 	if state == AppsVolumeAdjusterFlag.DISABLED:
-		activeCallback = DummyAudioSessionCallback()
+		newCallback = DummyAudioSessionCallback()
+		runTerminators = True
 	else:
-		activeCallback = VolumeSetter(
+		newCallback = VolumeSetter(
 			volumeAndMute=VolumeAndMute(
 				volume=volume,
 				mute=state == AppsVolumeAdjusterFlag.MUTED,
 			)
 		)
+		runTerminators = False
+	if activeCallback is not None:
+		activeCallback.unregister(runTerminators=runTerminators)
+	activeCallback = newCallback
 	activeCallback.register()
 
 
@@ -122,7 +123,7 @@ def adjustAppsVolume(
 	config.conf["audio"]["applicationsSoundVolume"] = volume
 
 	# We skip running terminators here to avoid application volume spiking to 100% for a split second.
-	updateAppsVolumeImpl(volume / 100.0, state, runTerminators=False)
+	updateAppsVolumeImpl(volume / 100.0, state)
 	# Translators: Announcing new applications' volume message
 	msg = _("Applications volume {}").format(volume)
 	ui.message(msg)
