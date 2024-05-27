@@ -29,8 +29,9 @@ Unicode CLDR has been updated.
 * The fallback braille input table is now equal to the fallback output table, which is Unified English Braille Code grade 1. (#9863, @JulienCochuyt, @LeonarddeR)
 * NVDA will now report figures with no accessible children, but with a label or description. (#14514)
 * When reading by line in browse mode, "caption" is no longer reported on each line of a long figure or table caption. (#14874)
-* 
+
 ### Bug Fixes
+
 * Windows 11 fixes:
   * NVDA will no longer appear to get stuck when closing the clipboard history and emoji panel. (#16346, #16347, @josephsl)
   * NVDA will announce visible candidates again when opening the Windows 11 IME interface. (#14023, @josephsl)
@@ -44,11 +45,9 @@ Unicode CLDR has been updated.
 * Improved reliability of automatic text readout, particularly in terminal applications. (#15850, #16027, @Danstiv)
 * NVDA will correctly announce selection changes when editing a cell's text in Microsoft Excel. (#15843)
 * Java Access Bridge support works as expected on 32-bit systems, as it did in version 2019.2.1 and earlier. (#10842, @FelipeZanabria)
-* Windows 11 fixes:
-  * In emoji panel, NVDA will no longer appear to get stuck when closing clipboard history. (#16347, @josephsl)
-  * NVDA will once again announce visible candidates when opening Windows 11 IME interface. (#14023, @josephsl)
 * In applications using Java Access Bridge, NVDA will now correctly read the last blank line of a text instead of repeating the previous line. (#9376, @dmitrii-drobotov)
 * In LibreOffice Writer (version 24.8 and newer), when toggling text formatting (bold, italic, underline, subscript/superscript, alignment) using the corresponding keyboard shortcut, NVDA announces the new formatting attribute (e.g. "Bold on", "Bold off"). (#4248, @michaelweghorn)
+
 ### Changes for Developers
 
 Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
