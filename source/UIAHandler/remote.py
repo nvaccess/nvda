@@ -51,7 +51,8 @@ def initialize(doRemote: bool, UIAClient: UIA.IUIAutomation):
 
 def terminate():
 	""" Terminates UIA remote operations support."""
-	_dll.cleanup()
+	global _isSupported
+	_isSupported = False
 
 
 def msWord_getCustomAttributeValue(
