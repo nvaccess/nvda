@@ -152,6 +152,6 @@ def toggleAppsVolumeState():
 		index = -1
 	index = (index + 1) % len(APPS_VOLUME_STATES_ORDER)
 	state = APPS_VOLUME_STATES_ORDER[index]
-	config.conf["audio"]["ApplicationsVolumeMode"] = state.name
+	config.conf["audio"]["applicationsVolumeMode"] = state.name
 	updateAppsVolumeImpl(volume / 100.0, state)
 	ui.message(state.displayString)
