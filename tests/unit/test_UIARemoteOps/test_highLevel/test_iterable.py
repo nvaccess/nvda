@@ -30,6 +30,17 @@ class Test_iterable(TestCase):
 		self.assertEqual(results, [0, 1, 2, 3])
 
 	def test_long_iterableFunction(self):
+		"""
+		Tests that a long operation is automatically re-executed multiple times
+		until it is successfully run without exceeding the instruction limit.
+		Using a static variable which is not reset between executions,
+		and then incremented once each execution,
+		We can track how many times the operation was executed.
+		The operation itself  involves incrementing a counter variable 'i'
+		within a while loop until it reaches 5000,
+		yielding i and the execution count on every loop.
+		This is expected to take 5 executions to fully complete.
+		"""
 		op = operation.Operation(localMode=True)
 
 		@op.buildIterableFunction
@@ -37,20 +48,17 @@ class Test_iterable(TestCase):
 			executionCount = ra.newInt(0, static=True)
 			executionCount += 1
 			i = ra.newInt(0, static=True)
-			j = ra.newInt(0, static=True)
 			with ra.whileBlock(lambda: i < 5000):
-				with ra.ifBlock(j == 1000):
-					ra.Yield(i)
-					j.set(0)
 				i += 1
-				j += 1
-			ra.Yield(executionCount)
+				ra.Yield(i, executionCount)
 
 		results = []
-		for i in op.iterExecute(maxTries=20):
-			results.append(i)
-		self.assertEqual(results[:-1], list(range(1000, 5000, 1000)))
-		self.assertEqual(results[-1], 4)
+		for i, executionCount in op.iterExecute(maxTries=20):
+			results.append((i, executionCount))
+		self.assertEqual(len(results), 5000)
+		last_i, last_executionCount = results[-1]
+		self.assertEqual(last_i, 5000)
+		self.assertEqual(last_executionCount, 5)
 
 	def test_forEachNumInRange(self):
 		op = operation.Operation(localMode=True)
@@ -66,6 +74,13 @@ class Test_iterable(TestCase):
 		self.assertEqual(results, [10, 11, 12, 13, 14])
 
 	def test_forEachItemInArray(self):
+		"""
+		Tests that a long operation is automatically re-executed multiple times
+		until it is successfully run without exceeding the instruction limit.
+		Using a static variable which is not reset between executions,
+		and then incremented once each execution,
+		We can track how many times the operation was executed.
+		"""
 		op = operation.Operation(localMode=True)
 
 		@op.buildIterableFunction
