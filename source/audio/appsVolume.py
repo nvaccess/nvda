@@ -27,7 +27,7 @@ activeCallback: DummyAudioSessionCallback | None = None
 
 
 def initialize() -> None:
-	state = config.conf["audio"]["ApplicationsVolumeMode"]
+	state = config.conf["audio"]["applicationsVolumeMode"]
 	if state == AppsVolumeAdjusterFlag.MUTED:
 		state = AppsVolumeAdjusterFlag.ENABLED
 		config.conf["audio"]["ApplicationsVolumeMode"] = state
