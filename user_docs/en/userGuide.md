@@ -302,6 +302,7 @@ When the window first opens, add-ons may take a few seconds to load.
 NVDA will read the name of the first add-on once the list of add-ons finishes loading.
 Available add-ons are listed alphabetically in a grid.
 To browse the list and find out about a specific add-on:
+
 1. Use the `arrow keys` or press the first letter of an add-on name to move around the list.
 1. Press `tab` once to move to a description of the currently selected add-on.
 1. Use the [reading keys](#ReadingText) or `arrow keys` to read the full description.
@@ -319,6 +320,7 @@ Once done, press `tab` to go to the filtered list of add-ons and browse the resu
 #### Installing add-ons {#InstallingAddons}
 
 To install an add-on:
+
 1. With the focus on an add-on you would like to install, press `enter`.
 1. The actions menu opens with a list of actions; the first action is "Install".
 1. To install the add-on, press `i` or `downArrow` to "install" and press `enter`.
@@ -343,7 +345,7 @@ After enabling, disabling, or removing add-ons, you will be prompted to restart 
 These changes will only take effect once NVDA is restarted.
 Note that in this dialog `escape` works the same as the Close button.
 
-### Updating add-ons {#UpdatingAddons}
+#### Updating add-ons {#UpdatingAddons}
 When there is an update to an add-on you have installed, it will be listed in the "Updatable add-ons" tab.
 Press `control+tab` to get to this tab from anywhere in the Add-on Store.
 The status of the add-on will be listed as "Update available".
@@ -1888,6 +1890,7 @@ NVDA uses the NFKC (Normalization Form Compatibility Composition) algorithm, whi
 
 1. The bold and italic versions of characters that are part of the unicode standard and are commonly used on social media are normalized to their most common compatible equivalent.
 For example, the latin letter "h" can also be presented as "𝐡" (bold), "ℎ" (itallic), etc. but will always be spoken as "h" when normalization is enabled.
+This aspect of normalization also aids in reading equations in the Microsoft Word equation editor.
 
 1. Normalization to composed characters.
 For example, the character "ü" (u with umlaut/diaeresis), a common character in languages like German and Turkish can be represented in two forms.
@@ -2307,7 +2310,7 @@ This option is not available if you have started NVDA with [WASAPI disabled for 
 
 The sound split feature allows users to make use of their stereo output devices, such as headphones and speakers.
 Sound split makes it possible to have NVDA speech in one channel (e.g. left) and have all other applications play their sounds in the other channel (e.g. right).
-By default sound split is disabled, which means that all applications including NVDA will play sounds in both left and right channels.
+By default sound split is disabled.
 A gesture allows cycling through the various sound split modes:
 <!-- KC:beginInclude -->
 
@@ -2319,18 +2322,21 @@ A gesture allows cycling through the various sound split modes:
 
 By default this command will cycle between the following modes:
 
-* Disabled sound split: both NVDA and other applications output sounds to both left and right channels.
+* Sound split disabled: NVDA does not apply any sound split processing.
 * NVDA on the left and applications on the right: NVDA will speak in the left channel, while other applications will play sounds in the right channel.
 * NVDA on the left and applications in both channels: NVDA will speak in the left channel, while other applications will play sounds in  both left and right channels.
 
 There are more advanced sound split modes available in NVDA setting combo box.
+Among these modes, "NVDA in both channels and applications in both channels" forces all the sounds to be directed in both channels.
+This mode may differ from "Sound split disabled" mode in case other audio processing interfers with channel volumes.
+
 Please note, that sound split doesn't work as a mixer.
 For example, if an application is playing a stereo sound track while sound split is set to "NVDA on the left and applications on the right", then you will only hear the right channel of the sound track, while the left channel of the sound track will be muted.
 
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
 Please note, that if NVDA crashes, then it won't be able to restore application sounds volume, and those applications might still output sound only in one channel after NVDA crash.
-In order to mitigate this, please restart NVDA.
+In order to mitigate this, please restart NVDA and select the mode "NVDA in both channels and applications in both channels".
 
 ##### Customizing Sound split modes {#CustomizeSoundSplitModes}
 
@@ -2338,7 +2344,7 @@ This checkable list allows selecting which sound split modes are included when c
 Modes which are unchecked are excluded.
 By default only three modes are included.
 
-* Disabled sound split.
+* Sound split disabled.
 * NVDA on the left and applications on the right.
 * NVDA on the left and applications in both channels.
 

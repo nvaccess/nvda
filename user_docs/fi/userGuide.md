@@ -1189,7 +1189,7 @@ Jotta pistenäytölle mahtuisi mahdollisimman paljon tietoa, seuraavat lyhenteet
 | pn | puunäkymä |
 | pnpnk | puunäkymäpainike |
 | pnkhde | puunäkymän kohde |
-| ts N | puunäkymän kohteella on hierarkkinen taso N ||
+| ts N | puunäkymän kohteella on hierarkkinen taso N |
 | ikk | ikkuna |
 | ⠤⠤⠤⠤⠤ | erotin |
 | merk | merkitty sisältö |
@@ -2200,18 +2200,6 @@ Tällä liukusäätimellä voidaan määrittää NVDA:n äänien ja piippausten 
 Tämä asetus on käytettävissä vain, kun "NVDA-äänien voimakkuus mukautuu puheäänen voimakkuuteen" ei ole käytössä.
 Tämä asetus ei ole käytettävissä, jos [Käytä WASAPIa äänen toistamiseen](#WASAPI) on poistettu käytöstä lisäasetuksissa.
 
-##### Äänilaitteen hereilläpitoaika puheen jälkeen {#AudioAwakeTime}
-
-Tässä muokkausruudussa määritetään, kuinka kauan NVDA pitää äänilaitteen hereillä puheen loputtua.
-Se mahdollistaa tiettyjen puheen häiriöiden, kuten puuttuvien sanojen osien, välttämisen.
-Tämä voi johtua äänilaitteiden (erityisesti Bluetooth- ja muiden langattomien laitteiden) valmiustilaan siirtymisestä.
-Tästä voi olla hyötyä myös muissa käyttötarkoituksissa, kuten käytettäessä NVDA:ta virtuaalikoneessa (esim. Citrix Virtual Desktopissa) tai tietyissä kannettavissa tietokoneissa.
-
-Pienempien arvojen käyttö voi aiheuttaa useammin äänen katkeamista, koska laite saattaa siirtyä valmiustilaan liian aikaisin, mistä on seurauksena seuraavan puhuttavan asian alun katkeaminen.
-Liian suuren arvon käyttö saattaa tyhjentää äänilaitteen akun nopeammin, koska laite pysyy aktiivisena pidempään, vaikka ääntä ei lähetetä.
-
-Poista tämä toiminto käytöstä määrittämällä ajaksi 0.
-
 ##### Äänijako {#SelectSoundSplitMode}
 
 Äänijako-toiminto mahdollistaa stereoäänilaitteiden, kuten kuulokkeiden ja kaiuttimien, hyödyntämisen.
@@ -2230,7 +2218,7 @@ Oletuksena tämä komento vaihtaa seuraavien tilojen välillä:
 
 * Ei käytössä: NVDA ja muut sovellukset toistavat ääntä sekä vasemmassa että oikeassa kanavassa.
 * NVDA vasemmalla ja sovellukset oikealla: NVDA puhuu vasemmassa kanavassa, kun taas muut sovellukset toistavat ääntä oikeassa.
-* NVDA oikealla ja sovellukset vasemmalla: NVDA puhuu oikeassa kanavassa, kun taas muut sovellukset toistavat ääntä vasemmassa.
+* NVDA vasemmalla ja sovellukset molemmissa kanavissa: NVDA puhuu vasemmassa kanavassa, kun taas muut sovellukset toistavat ääntä sekä vasemmassa että oikeassa.
 
 NVDA:n asetusyhdistelmäruudussa on käytettävissä myös edistyneempiä äänijakotiloja.
 Huom: Äänijako ei toimi mikserinä.
@@ -2247,12 +2235,24 @@ Tästä valintaruutuluettelosta voit valita äänijakotilat, jotka ovat käytett
 Valitsemattomat tilat eivät ole käytettävissä.
 Oletuksena vain kolme tilaa on valittuna.
 
-* Ei käytössä: NVDA ja muut sovellukset toistavat ääntä sekä vasemmassa että oikeasssa kanavassa.
+* Ei käytössä.
 * NVDA vasemmalla ja muut sovellukset oikealla.
-* NVDA oikealla ja muut sovellukset vasemmalla.
+* NVDA vasemmalla ja sovellukset molemmissa kanavissa.
 
 Huom: Vähintään yksi tila on oltava valittuna.
 Tämä asetus ei ole käytettävissä, jos olet [poistanut WASAPIn käytöstä](#WASAPI) NVDA:n lisäasetuksissa.
+
+##### Äänilaitteen hereilläpitoaika puheen jälkeen {#AudioAwakeTime}
+
+Tässä muokkausruudussa määritetään, kuinka kauan NVDA pitää äänilaitteen hereillä puheen loputtua.
+Se mahdollistaa tiettyjen puheen häiriöiden, kuten puuttuvien sanojen osien, välttämisen.
+Tämä voi johtua äänilaitteiden (erityisesti Bluetooth- ja muiden langattomien laitteiden) valmiustilaan siirtymisestä.
+Tästä voi olla hyötyä myös muissa käyttötarkoituksissa, kuten käytettäessä NVDA:ta virtuaalikoneessa (esim. Citrix Virtual Desktopissa) tai tietyissä kannettavissa tietokoneissa.
+
+Pienempien arvojen käyttö voi aiheuttaa useammin äänen katkeamista, koska laite saattaa siirtyä valmiustilaan liian aikaisin, mistä on seurauksena seuraavan puhuttavan asian alun katkeaminen.
+Liian suuren arvon käyttö saattaa tyhjentää äänilaitteen akun nopeammin, koska laite pysyy aktiivisena pidempään, vaikka ääntä ei lähetetä.
+
+Poista tämä toiminto käytöstä määrittämällä ajaksi 0.
 
 #### Näkö {#VisionSettings}
 
@@ -3138,9 +3138,8 @@ Tämän jälkeen näppäin näkyy Jäljiteltävät järjestelmänäppäimistön 
 Huom:
 
 * Jäljiteltävillä näppäimillä täytyy olla näppäinkomennot määritettyinä, jotta ne säilyvät tallennettaessa/valintaikkunaa suljettaessa.
-* Näppäinkomentoa, jossa käytetään muokkausnäppäimiä, ei välttämättä voi liittää jäljiteltävään näppäinkomentoon, jossa ei muokkaus
-näppäimiä ole. Kun esim. jäljiteltäväksi syötteeksi määritetään `a` ja näppäinkomennoksi `Ctrl+M`, saattaa siitä seurata,
-että sovellus vastaanottaa näppäinyhdistelmän `Ctrl+A`.
+* Näppäinkomentoa, jossa käytetään muokkausnäppäimiä, ei välttämättä voi liittää jäljiteltävään näppäinkomentoon, jossa ei muokkausnäppäimiä ole.
+Kun jäljiteltäväksi syötteeksi määritetään esim. `a` ja näppäinkomennoksi `Ctrl+M`, saattaa siitä seurata, että sovellus vastaanottaa näppäinyhdistelmän `Ctrl+A`.
 
 Tehdyt muutokset tallennetaan painamalla OK-painiketta tai hylätään painamalla Peruuta.
 
