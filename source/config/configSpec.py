@@ -35,7 +35,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# symbolLevel: One of the characterProcessing.SymbolLevel values.
 	symbolLevel = integer(default=100)
 	trustVoiceLanguage = boolean(default=true)
-	unicodeNormalization = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
+	unicodeNormalization = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	includeCLDR = boolean(default=True)
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
 	outputDevice = string(default=default)
