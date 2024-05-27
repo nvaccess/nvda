@@ -13,7 +13,7 @@ complexSymbols:
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Series of dots used for visual presentation, e.g. in table of contents
-padding .	\.{4,}
+multiple .	\.{4,}
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
@@ -28,7 +28,7 @@ symbols:
 ? sentence ending	знак питання	all	always
 ; phrase ending	крапка з комою	most	always
 : phrase ending	двокрапка	most	always
-padding .	множинні крапки	all	always
+multiple .	кілька крапок	all	always
 decimal point		none	always
 in-word '	апостроф	all	norep
 negative number	мінус	none	norep

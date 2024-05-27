@@ -89,6 +89,7 @@ Hai moitos outros arranxos menores de fallos para aplicacións como Thunderbird,
 * Arranxado un caso pouco frecuente no que ao se gardar a configuración podía fallar o gardado de todos os perfís. (#16343, @CyrilleB79)
 * En Firefox e navegadores baseados en Chromium, o NVDA entrará correctamente en modo foco ao premer intro cando se posicione dentro dunha listaxe de presentación (ul / ol) dentro de contido editable. (#16325)
 * O cambio de estado de columna notifícase automáticamente ao selecionar as columnas que se amosarán na listaxe de mensaxes de Thunderbird. (#16323)
+* O conmutador de liña de ordes `-h`/`--help` funciona apropriadamente de novo. (#16522, @XLTechie)
 
 ### Cambios para desenvolvedores
 

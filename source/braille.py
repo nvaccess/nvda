@@ -499,20 +499,20 @@ class Region(object):
 			mode |= louis.compbrlAtCursor
 
 		converter: UnicodeNormalizationOffsetConverter | None = None
-		if config.conf["braille"]["unicodeNormalization"] and not isUnicodeNormalized(self.rawText):
-			converter = UnicodeNormalizationOffsetConverter(self.rawText)
+		textToTranslate = self.rawText
+		textToTranslateTypeforms = self.rawTextTypeforms
+		cursorPos = self.cursorPos
+		if config.conf["braille"]["unicodeNormalization"] and not isUnicodeNormalized(textToTranslate):
+			converter = UnicodeNormalizationOffsetConverter(textToTranslate)
 			textToTranslate = converter.encoded
-			# Typeforms must be adapted to represent normalized characters.
-			textToTranslateTypeforms = [
-				self.rawTextTypeforms[strOffset] for strOffset in converter.computedEncodedToStrOffsets
-			]
-			# Convert the cursor position to a normalized offset.
-			cursorPos = converter.strToEncodedOffsets(self.cursorPos)
-		else:
-			textToTranslate = self.rawText
-			textToTranslateTypeforms = self.rawTextTypeforms
-			cursorPos = self.cursorPos
-
+			if textToTranslateTypeforms is not None:
+				# Typeforms must be adapted to represent normalized characters.
+				textToTranslateTypeforms = [
+					textToTranslateTypeforms[strOffset] for strOffset in converter.computedEncodedToStrOffsets
+				]
+			if cursorPos is not None:
+				# Convert the cursor position to a normalized offset.
+				cursorPos = converter.strToEncodedOffsets(cursorPos)
 		self.brailleCells, brailleToRawPos, rawToBraillePos, self.brailleCursorPos = louisHelper.translate(
 			[handler.table.fileName, "braille-patterns.cti"],
 			textToTranslate,

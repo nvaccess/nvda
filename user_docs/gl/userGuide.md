@@ -1,4 +1,4 @@
-# ﻿Guía do Usuario do NVDA NVDA_VERSION
+# Guía do Usuario do NVDA NVDA_VERSION
 
 [TOC]
 
@@ -248,7 +248,13 @@ As ordes reais non se executarán mentres se estea en modo axuda de entrada.
 |Moverse á seguinte opción do anel do sintetizador |`NVDA+control+frecha dereita` |`NVDA+shift+control+frecha dereita` |Desprázase á seguinte opción de voz dispoñible despois da actual, voltando á primeira opción de novo tras a última|
 |Moverse á anterior opción do anel do sintetizador |`NVDA+control+frecha esquerda` |`NVDA+shift+control+frecha esquerda` |Desprázase á seguinte opción de voz dispoñible antes da actual, voltando á última opción tras a primeira|
 |Aumentar a opción actual do sintetizador |`NVDA+control+frecha arriba` |`NVDA+shift+control+frecha arriba` |Aumenta a opción de voz actual na que esteass. Ex.: aumenta a velocidade, escolle a seguinte voz, aumenta o volume|
+|Aumentar a opción actual en pasos longos | ``NVDA+control+rePáx`` | ``NVDA+shift+control+rePáx`` | aumenta o valor da actual opción de voz sobre a que esteas en pasos grandes. Ex.: cando esteas sobre unha opción de voz, saltarás cara adiante cada 20 voces; cando esteas en opcións dun deslizador (velocidade, ton, etc) saltará adiante o valor de 20% |
 |Disminuir a opción actual do sintetizador |`NVDA+control+frecha abaixo` |`NVDA+shift+control+frecha abaixo` |Disminúe a opción de voz actual na que esteas. Ex.: disminúe a velocidade, escolle a voz anterior, disminúe o volume|
+|Diminuir a actual opción do sintetizador nun paso longo | ``NVDA+control+avPáx`` | ``NVDA+shift+control+avPáx`` | Diminúe o valor da actual opción de voz sobre a que esteas en pasos máis longos. ex.: cando esteas sobre unha opción de voz, saltará cara atrás cada 20 voces; cando esteas sobre unha opción de deslizador, saltará atrás o valor de 20%. |
+
+Tamén é posible estabrecer o primeiro ou o último valor da actual opción do sintetizador asignando xestos persoalizados no [diálogo Xestos de Entrada #InputGestures], na categoría voz.
+Esto significa, por exemplo, que cando esteas sobre unha opción de velocidade, estabreceráa a 0 ou a 100.
+Cando esteas sobre unha opción de voz, estabrecerá a primeira ou a última voz.
 
 #### Navegación Web {#WebNavigation}
 
@@ -909,6 +915,7 @@ A seguintes teclas elas soas saltan ao seguinte campo, ca tecla shift saltan ao 
 * o: obxecto empotrado (reproductor de audio e vídeo, aplicación, diálogo, etc.)
 * 1 a 6: cabeceiras da 1 á 6 respectivamente
 * a: anotación (comentario, revisión do editor, etc.)
+* ``p``: parágrafo de texto
 * w: erro de ortografía
 
 Para te mover cara o comezo ou o remate de elementos contedores como listas e táboas:
@@ -926,6 +933,26 @@ Se queres utilizar éstas aínda poderás usar as teclas de cursor para ler en m
 Para activar ou desactivar a navegación cunha soa letra para o documento actual, preme NVDA+shift+espazo.
 <!-- KC:endInclude -->
 
+#### Orde de navegación de parágrafos de texto {#TextNavigationCommand}
+
+Podes saltar ao seguinte ou ao anterior parágrafo de texto premendo `p` ou `shift+p`.
+Os parágrafos de texto defínense por un grupo de texto que semella estar escrebido con frases compretas.
+Esto pode seren útil para atopar o comezo de contido lexible en varias páxinas web, como:
+
+* Sitios web de novas
+* Foros
+* Publicacións de Blog
+
+Estas ordes tamén poden seren útiles para saltarse certos tipos de desórdenes, como:
+
+* Anuncios
+* Menús
+* Cabeceiras
+
+Ten en conta, sen embargo, que mentres o NVDA fai todo o posible por identificar os parágrafos de texto, o algoritmo non é perfecto e ás veces pode cometer erros.
+Ademáis, esta orde é diferente das ordes de navegación por parágrafos `control+frecha abaixo ou frecha arriba`.
+A navegación de parágrafos de texto só salta entre parágrafos de texto, mentres que as ordes de navegación por parágrafos levan o cursor aos parágrafos anterior e posterior independentemente de se conteñen texto ou non.
+
 #### Outras ordes de navegación {#OtherNavigationCommands}
 
 Ademáis das ordes enumeradas enriba, o NVDA ten ordes que non teñen teclas predeterminadas asignadas.
@@ -933,8 +960,16 @@ Para usar estas ordes, primeiro necesitas asignarlles xestos usando o [diálogo 
 Aquí tes unha listaxe das ordes dispoñibles
 
 * Artigo
+* Figura
 * Grupo
 * Pestana
+* Elemento de menú
+* Botón conmutable
+* Barra de progreso
+* Fórmula matemática
+* Parágrafo aliñado verticalmente
+* Mesmo estilo de texto
+* Diferente estilo de texto
 
 Ten en conta que hai dúas ordes para cada tipo de elemento, para avanzar e para retroceder no documento, e debes asignar xestos para ambas ordes para poder navegar rápidamente en ambas direcións.
 Por exemplo, se queres usar as teclas `y` / `shift+y` para navegar rápidamente polas pestanas, farías o seguinte
@@ -1280,6 +1315,8 @@ Cando a Cortina de Pantalla estea activa algunhas tarefas baseadas directamente 
 Debido a un cambio na API Windows Magnification, a Cortina de Pantalla tivo que actualizarse para admitir as versións máis novas de Windows.
 Usa o NVDA 2021.2 para activar a Cortina de Pantalla con Windows 10 21H2 (10.0.19044) ou posteriores.
 Por razóns de seguridade, ao usar unha versión nova de Windows, obtén unha confirmación visual de que a Cortina de Pantalla faga a esta totalmente negra.
+
+Por favor ten en conta que mentres o magnificador de Windows estea en execución e se estean a usar as cores invertidas da pantalla,  a cortina de pantalla non pode habilitarse.
 
 ## Recoñecemento de Contidos {#ContentRecognition}
 
@@ -1896,6 +1933,20 @@ Podes moverte entre as táboas braille na lista utilizando as teclas de cursor.
 Ten en conta que esta opción só é útil se a túa pantalla braille ten un teclado tipo Perkins e se esta característica se soporta polo controlador da liña braille.
 Se a entrada non se soporta nunha pantalla que teña un teclado braille, esto notificarase na sección [Pantallas Braille Soportadas](#SupportedBrailleDisplays).
 
+<!-- KC:setting -->
+
+##### Modo Braille {#BrailleMode}
+
+Tecla: `NVDA+alt+t`
+
+Esta opción permíteche selecionar entre os modos braille dispoñibles.
+
+Actualmente admítense dous modos braille, "seguir cursores" e "amosar saída de fala".
+
+Cando estea selecionado seguir cursores, a pantalla braille seguirá ou ao foco e ao cursor do sistema ou ao navegador de obxectos e ao cursor de revisión, dependendo a que sega o braille.
+
+Cando estea selecionado amosar saída de fala, a pantalla braille amosará o que fhale o NVDA, ou o que tería falado se o modo de fala estivera en "fhalar".
+
 ##### Expandir a braille de ordenador para a palabra no cursor {#BrailleSettingsExpandToComputerBraille}
 
 Esta opción permite á palabra que está baixo o cursor seren amosada en braille de ordenador non contraído.
@@ -1955,10 +2006,8 @@ Neste caso, o Braille non seguerá ao foco del sistema e ao cursor.
 
 | . {.hideHeaderRow} |.|
 |---|---|
-| Predeterminada |Nunca|
-|---|---|
 | Opcións |Predeterminada (Nunca), Nunca, só cando segue automáticamente, Sempre|
-|---|---|
+| Predeterminada |Nunca|
 
 Esta opción determina se o cursor do sistema tamén debería moverse ao premer un sensor de enrutamento.
 Esta opción está configurada a nunca por defecto, o que significa que o enrutamento nunca moverá o cursor do sistema ao enrutar o cursor de revisión.
@@ -2027,10 +2076,8 @@ Para conmutar a presentación de contexto do foco dende calquera lugar, por favo
 
 | . {.hideHeaderRow} |.|
 |---|---|
-| Predeterminada |Habilitada|
-|---|---|
 | Opcións |Predeterminada (Habilitada), Habilitada, Deshabilitada|
-|---|---|
+| Predeterminada |Habilitada|
 
 Esta opción determina se a voz debería interrumpirse cando a pantalla Braille se desprace cara adiante ou cara atrás.
 As ordes de liña anterior e seguinte sempre interrumpen a fala.
@@ -2044,10 +2091,8 @@ Deshabilitar esta opción permite que a voz se escoite mentres se le en braille 
 
 | . {.hideHeaderRow} |.|
 |---|---|
-| Predeterminada |Habilitada|
-|---|---|
 | Opcións |Predeterminada (Habilitada), Habilitada, Deshabilitada|
-|---|---|
+| Predeterminada |Habilitada|
 
 Esta opción determina se se amosa o indicador de seleción (puntos 7 e 8) na pantalla braille.
 A opción está habilitada por defecto para que se amose o indicador de selección.
@@ -2141,10 +2186,8 @@ Non é posible o soporte da atenuación de audio para as copias portable e tempo
 
 | . {.hideHeaderRow} |.|
 |---|---|
-| Predeterminada |Deshabilitada|
-|---|---|
 | Opcións |Deshabilitada, Habilitada|
-|---|---|
+| Predeterminada |Deshabilitada|
 
 Cando esta opción está activada, o volume dos sons e os pitidos do NVDA seguerán a configuración de volume da voz que esteas a usar.
 Se disminúes o volume da voz, o volume dos sons diminuirá.
@@ -2156,6 +2199,60 @@ Esta opción non está dispoñible se arancaches o NVDA co [WASAPI deshabilitado
 Este deslizador permíteche configurar o volume dos sons e os pitidos do NVDA.
 Esta opción só ten efecto  cando "Usar WASAPI para a saída de audio" estea habilitado e "O Volume dos sons do NVDA segue ao volume da voz" estea deshabilitado.
 Esta opción non está dispoñible se arancaches o NVDA co [WASAPI deshabilitado para a saída de audio](#WASAPI) nas Opcións Avanzadas.
+
+##### Tempo para manter o dispositivo de audio desperto tras a fala {#AudioAwakeTime}
+
+Esta caixa de edición especifica canto tempo mantén o NVDA o dispositivo de audio desperto despois de que deixe de falar.
+Esto permite ao NVDA evitar certos fallos da fala coma partes de palabras soltas.
+Esto pode ocorrer debido a que os dispositivos de audio (especialmente dispositivos Bluetooth e wireless) entren en modo de espera.
+Esto tamén podería seren útil noutros casos de uso, coma cando se executa o NVDA dentro dunha máquina virtual (ex.: Citrix Virtual Desktop), ou en certos portátiles.
+
+Os valores máis baixos poden permitir que o audio se corte máis de cotío, xa que un dispositivo pode entrar en modo de espera demasiado cedo, facendo que  o comezo da seguinte fala se curte.
+Un valor demasiado alto pode facer que a batería do dispositivo de saída de son se descargue máis rápidamente, xa que permanece activo durante máis tempo mentres non se envía son.
+
+Podes estabrecer o tempo a cero para deshabilitar esta característica.
+
+##### Separación de son {#SelectSoundSplitMode}
+
+A característica separación de son permite aos usuarios usar os seus dispositivos de saída en estéreo, como auriculares e altavoces.
+A separación de son fai posible que o NVDA fale nunha canle (ex.: a esquerda) e ter as outras aplicacións reproducindo o seu son na outra canle (ex.: a dereita).
+Por defecto a separación de son está deshabilitada, o que significa que todas as aplicacións incluíndo ao NVDA reproducirán o son en ambas as dúas canles.
+Un xesto permite percorrer os distintos modos de separación de son:
+<!-- KC:beginInclude -->
+
+| Nome |Tecla |Descripción|
+|---|---|---|
+|Modo Cíclico de Separación de Son |`NVDA+alt+s` |percorre os modos de separación de son.|
+
+<!-- KC:endInclude -->
+
+Por defecto esta orde percorrerá os seguintes modos:
+
+* Separación de son deshabilitada: o NVDA e as demáis aplicacións sacan os sons por ambas canles.
+* NVDA na esquerda e as aplicacións na dereita: o NVDA falará pola canle esquerda, mentres as outras aplicacións reproducirán o son pola canle da dereita.
+* NVDA na dereita e as aplicacións na esquerda: o NVDA falará pola canle da dereita, mentres as outras aplicacións reproducirán o son pola canle da esquerda.
+
+Hai máis modos avanzados de separación de son dispoñibles na caixa combinada nas opcións do NVDA.
+Ten en conta que a separación de son non funciona coma un mixturador.
+Por exemplo, se unha aplicación está reproducindo unha pista de son estéreo mentres a división de son está configurada a "NVDA na esquerda e as aplicacións na dereita", entón só oirás a canle dereita da pista de son, mentres a canle esquerda da pista de son estará silenciada.
+
+Esta opción non está dispoñible se arrancaches o NVDA con [WASAPI deshabilitado para a saída de audio](#WASAPI) nas opcións avanzadas.
+
+Ten en conta que se o NVDA se bloquea, entón non poderás restaurar o volume dos sons da aplicación, e esas aplicacións poderían seguir emitindo o son só nunha canle tras o bloqueo do NVDA.
+Para mitigar esto, por favor reinicia o NVDA.
+
+##### Persoalizar modos de Separación de Son {#CustomizeSoundSplitModes}
+
+Esta listaxe marcable permite selecionar que modos de separación de son se inclúen ao percorrer entre eles usando `NVDA+alt+s`.
+Os modos que estean desmarcados esclúense.
+Por defecto só se inclúen tres modos.
+
+* Separación de son deshabilitada: NVDA e as aplicacións reproducen o son en ambas canles.
+* NVDA na canle esquerda e as outras aplicacións na dereita.
+* NVDA na canle dereita e as outras aplicacións na esquerda.
+
+Ten en conta que é necesario marcar polo menos un modo.
+Esta opción non está dispoñible se iniciaches o NVDA con [WASAPI deshabilitado para a saída de audio](#WASAPI) nas opcións avanzadas.
 
 #### Visión {#VisionSettings}
 
@@ -2634,6 +2731,7 @@ Podes configurar o anunciado de:
   * Rexións
   * Artigos
   * Marcos
+  * Figuras e pes de foto
   * Admite clic
 
 Para conmutar estas  opcións dende calquera lugar, por favor asigna xestos persoalizados utilizando o [diálogo Xestos de Entrada](#InputGestures).
@@ -2668,10 +2766,8 @@ Esta categoría permíteche axustar varios aspectos da navegación de documento.
 
 | . {.hideHeaderRow} |.|
 |---|---|
-| Predeterminado |Manexado pola aplicación|
-|---|---|
 | Opcións |Predeterminado (manexado pola aplicación), Manexado pola aplicación, salto de unha única liña, salto multiliña|
-|---|---|
+| Predeterminado |Manexado pola aplicación|
 
 Esta caixa combinada permíteche selecionar o estilo de parágrafo a usar cando se navegue por parágrafos con `control+frecha arriba` e `control+frecha abaixo`.
 Os estilos de parágrafo dispoñibles son:
@@ -2735,10 +2831,8 @@ Este botón só está habilitado se o NVDA está configurado para permitir a car
 
 | . {.hideHeaderRow} |.|
 |---|---|
-| Por defecto |Automático|
-|---|---|
 | Opcións |Automático, Selectivo, Global|
-|---|---|
+| Por defecto |Automático|
 
 Esta opción cambia o xeito no que o NVDA rexistra os eventos lanzados pola API de accesibilidade Microsoft UI Automation.
 A caixa combinada Rexistro para eventos UI Automation e cambios de propiedade ten tres opcións:
@@ -2774,10 +2868,8 @@ A implementación de UI automation de Microsoft Excel cambia constantemente e é
 
 | . {.hideHeaderRow} |.|
 |---|---|
-| Predeterminada |Habilitada|
-|---|---|
 | Opcións |Predeterminada (Habilitada), Deshabilitada, Habilitada|
-|---|---|
+| Predeterminada |Habilitada|
 
 Cando esta opción está habilitada, o NVDA debería seguir respondento cando se lle inunda con moitos eventos UI Automation, ex.: grandes cantidades de texto nunha terminal.
 Despois de cambiar esta opción, necesitarás reiniciar o NVDA para que o cambio teña efecto.
@@ -2786,10 +2878,8 @@ Despois de cambiar esta opción, necesitarás reiniciar o NVDA para que o cambio
 
 | . {.hideHeaderRow} |.|
 |---|---|
-| Predeterminado |Automático|
-|---|---|
 | Opcións |Automático, UIA cando estea dispoñible, herdado|
-|---|---|
+| Predeterminado |Automático|
 
 Esta opción seleciona coma o NVDA interactúa coa Consola de Windows usada polo símbolo do sistema, polo PowerShell e polo subsistema de Windows para Linux.
 Non afecta á Terminal moderna de Windows.
@@ -2841,10 +2931,8 @@ Existen as seguintes opcións:
 
 | . {.hideHeaderRow} |.|
 |---|---|
-| Predeterminado |Habilitado|
-|---|---|
 | Opcións |Deshabilitado, Habilitado|
-|---|---|
+| Predeterminado |Habilitado|
 
 Esta opción seleciona se o NVDA anuncia cambios nalgúns contidos web dinámicos en Braille.
 Deshabilitar esta opción equivale ao comportamento do NVDA en versións 2023.1 e anteriores, que só anunciaban estos cambios de contenidos en voz.
@@ -2881,10 +2969,8 @@ Sen embargo, nas terminais, ao insertar ou borrar un carácter no medio dunha li
 
 | . {.hideHeaderRow} |.|
 |---|---|
-| Predeterminado |Difusión|
-|---|---|
 | Opcións |Difusión, notificacións UIA|
-|---|---|
+| Predeterminado |Difusión|
 
 Esta opción seleciona como determina o NVDA que texto é "novo" (e que falar cando "anunciar cambios de contido dinámico" estea habilitado) na Terminal de Windows e no control WPF da Terminal de Windows utilizado en Visual Studio 2022.
 Non afecta á Consola de Windows (`conhost.exe`).
@@ -2920,10 +3006,8 @@ Con varias APIs de GUI históricamente populares, o texto pode seren renderizado
 
 | . {.hideHeaderRow} |.|
 |---|---|
-| predeterminada |Habilitada|
-|---|---|
 | Opcións |Predeterminada (habilitada), Deshabilitada, Habilitada|
-|---|---|
+| predeterminada |Habilitada|
 
 Esta opción habilita a saída de audio a través da API Windows Audio Session (WASAPI).
 WASAPI é un framework de audio máis moderno que pode mellorar a resposta, o rendemento e a estabilidade da saída de audio do NVDA, incluíndo a voz e os sons.
@@ -2944,6 +3028,11 @@ Activa só un deles se un desenvolvedor do NVDA che dou instrucións específica
 Esta opción permite especificar se o NVDA reproducirá un son de erro en caso de que se rexistre un erro.
 Escollendo Só en versións de proba (por defecto) fai que o NVDA reproduza sons de erro só se a versión actual do NVDA é unha versión de proba (alfa, beta ou executada dende o código fonte).
 Escollendo Si permite habilitar os sons de erro calquera que sexa a versión actual do NVDA.
+
+##### Expresión regular para ordes de navegación rápida de parágrafos de texto {#TextParagraphRegexEdit}
+
+Este campo permite aos usuarios persoalizar a expresión regular para detectar parágrafos  de texto en modo exploración.
+A [orde de navegación de parágrafos de texto](#TextNavigationCommand) procura parágrafos emparellados por esta expresión regular.
 
 ### Miscelánea de Opcións {#MiscSettings}
 
@@ -4759,7 +4848,12 @@ O modo seguro deshabilita:
 As copias instaladas do NVDA almacenan a súa configuración incluindo os complementos en `%APPDATA%\nvda`.
 Para evitar que os usuarios do NVDA modifiquen a súa configuración ou complementos directamente, o seu aceso a este cartafol tamén debe estar restrinxido.
 
-Os usuarios do NVDA a menudo confían en configurar o seu perfil de NVDA para adaptalo ás sçúas necesidades.
+O modo seguro non é efectivo para copias portables do NVDA.
+Esta limitación tamén se aplica á copia temporal do NVDA que se executa ao se lanzar o instalador.
+En ambientes seguros, que un usuario poda correr un executable portable é o mesmo risco de seguridade independentemente do modo seguro.
+Espérase que os administradores de sistemas restrinxan a execución de software non autorizado nos seus sistemas, incluidas as copias portables do NVDA.
+
+Os usuarios do NVDA de cotío confían en configurar o seu perfil de NVDA para adaptalo ás sçúas necesidades.
 Esto pode incluir a instalación e configuración de complementos persoalizados, que deberían ser examinados independentemente  de NVDA.
 O modo seguro conxela os cambios na configuración do NVDA, así que por favor asegúrate de que o NVDA estea configurado adecuadamente antes de forzar o modo seguro.
 
@@ -4852,4 +4946,3 @@ Os seguintes valores poden configurarse baixo estas claves do rexistro:
 Se requires información adicional ou asistencia referente ao NVDA, por favor visita o [sitio web do NVDA](NVDA_URL).
 Aquí, podes atopar documentación adicional,  así como soporte técnico e recursos para a comunidade. 
 Este sitio tamén proporciona información e recursos concernintes ao desenrolo do NVDA.
-

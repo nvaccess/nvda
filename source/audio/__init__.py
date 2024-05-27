@@ -5,8 +5,8 @@
 
 from .soundSplit import (
 	SoundSplitState,
-	setSoundSplitState,
-	toggleSoundSplitState,
+	_setSoundSplitState,
+	_toggleSoundSplitState,
 )
 from . import appsVolume, soundSplit, utils
 import atexit
@@ -17,8 +17,8 @@ from logHandler import log
 
 __all__ = [
 	"SoundSplitState",
-	"setSoundSplitState",
-	"toggleSoundSplitState",
+	"_setSoundSplitState",
+	"_toggleSoundSplitState",
 ]
 
 audioUtilitiesInitialized: bool = False

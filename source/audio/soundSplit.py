@@ -167,7 +167,7 @@ def setSoundSplitState(state: SoundSplitState) -> dict:
 	}
 
 
-def toggleSoundSplitState() -> None:
+def _toggleSoundSplitState() -> None:
 	if not nvwave.usingWasapiWavePlayer():
 		message = _(
 			# Translators: error message when wasapi is turned off.
@@ -185,7 +185,7 @@ def toggleSoundSplitState() -> None:
 		i = -1
 	i = (i + 1) % len(allowedStates)
 	newState = SoundSplitState(allowedStates[i])
-	result = setSoundSplitState(newState)
+	result = _setSoundSplitState(newState)
 	config.conf["audio"]["soundSplitState"] = newState.value
 	ui.message(newState.displayString)
 	if result["foundSessionWithNot2Channels"]:

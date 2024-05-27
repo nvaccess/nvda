@@ -9,6 +9,7 @@ import time
 from typing import (
 	Optional,
 	Dict,
+	Generator,
 	TYPE_CHECKING,
 )
 
@@ -44,6 +45,7 @@ from ..behaviors import EditableTextWithoutAutoSelectDetection
 from . import _msOfficeChart
 import locationHelper
 from enum import IntEnum
+import documentBase
 
 if TYPE_CHECKING:
 	import inputCore
@@ -1252,6 +1254,16 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 	def script_previousColumn(self,gesture):
 		self.rootNVDAObject._moveInTable(row=False,forward=False)
 		braille.handler.handleCaretMove(self)
+
+	def _iterTextStyle(
+			self,
+			kind: str,
+			direction: documentBase._Movement = documentBase._Movement.NEXT,
+			pos: textInfos.TextInfo | None = None
+	) -> Generator[browseMode.TextInfoQuickNavItem, None, None]:
+		raise NotImplementedError(
+			"word textInfos are not supported due to multiple issues with them - #16569"
+		)
 
 	__gestures={
 		"kb:tab":"trapNonCommandGesture",

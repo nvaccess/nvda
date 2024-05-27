@@ -478,17 +478,24 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 					# and still matches the beginning of the normalized buffer.
 					for i in range(len(originBuffer)):
 						originPart = originBuffer[: (i + 1)]
+						originPartLen = len(originPart)
 						normalizedPart = unicodedata.normalize(self.normalizationForm, originPart)
+						normalizedPartLen = len(normalizedPart)
 						if (
 							originPart == normalizedPart
 							or not normalizedBuffer.startswith(normalizedPart)
 						):
 							continue
-						originPartLen = len(originPart)
 						originBuffer = originBuffer[originPartLen:]
-						normalizedPartLen = len(normalizedPart)
 						normalizedBuffer = normalizedBuffer[normalizedPartLen:]
 						break
+					else:
+						# No normalizable characters in originBuffer.
+						# All characters are now copied to originPart and normalizedPart.
+						assert originBuffer == originPart
+						assert normalizedBuffer == normalizedPart
+						# Reset buffers to ensure the while loop doesn't run next time.
+						originBuffer = normalizedBuffer = ""
 					# Map the original indices to the normalized indices.
 					# originMultiplier is used to multiply indices in origin
 					# when a character takes more space in origin than in normalized.
