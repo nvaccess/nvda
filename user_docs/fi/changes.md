@@ -32,12 +32,12 @@ Tehty useita pieniä bugikorjauksia sovelluksille, kuten Thunderbirdille, Adobe 
     * matemaattiseen kaavaan (#16001, @mltony)
     * samantyyliseen tekstiin (#16000, @mltony)
     * eri tyyliseen tekstiin (#16000, @mltony)
-    * Lisätty komennot syntetisaattorin asetusrenkaan ensimmäiseen ja viimeiseen asetukseen sekä eteen- ja taaksepäin siirtymistä varten. (#13768, #16095, @rmcpantoja)
+  * Lisätty komennot syntetisaattorin asetusrenkaan ensimmäiseen ja viimeiseen asetukseen sekä eteen- ja taaksepäin siirtymistä varten. (#13768, #16095, @rmcpantoja)
     * Ensimmäiseen ja viimeiseen asetukseen siirtymiselle ei ole määritetty näppäinkomentoa. (#13768)
     * Pienennä ja suurenna syntetisaattorin asetusrenkaan aktiivista asetusta enemmän kerrallaan (#13768):
-      * Pöytäkone: `NVDA+Ctrl+Page up` tai `NVDA+Ctrl+Page down`.
-      * Kannettava: `NVDA+Ctrl+Vaihto+Page up` tai `NVDA+Ctrl+Vaihto+Page down`.
-  * Lisätty uusi määrittämätön näppäinkomento kuvien ja kuvatekstien puhumisen käyttöönottamista tai käytöstä poistamista varten. (#10826, #14349)
+      * Pöytäkone: `NVDA+Ctrl+Page up` ja `NVDA+Ctrl+Page down`.
+      * Kannettava: `NVDA+Ctrl+Vaihto+Page up` ja `NVDA+Ctrl+Vaihto+Page down`.
+* Lisätty uusi määrittämätön näppäinkomento kuvien ja kuvatekstien puhumisen käyttöönottamista tai käytöstä poistamista varten. (#10826, #14349)
 * Pistekirjoitus:
   * Lisätty tuki Braille Edge S2- ja Braille Edge S3 -pistenäytöille. (#16033, #16279, @EdKweon)
   * Lisätty uusi "näytä puhetuloste" -pistekirjoitustila. (#15898, @Emil-18)
@@ -56,20 +56,20 @@ Tehty useita pieniä bugikorjauksia sovelluksille, kuten Thunderbirdille, Adobe 
 
 * Lisäosakauppa:
   * Lisäosan tiedot NVDA:n vähimmäis- ja viimeisimmästä testatusta versiosta näytetään nyt "Muita tietoja" -osiossa. (#15776, @Nael-Sayegh)
-  * Lisäosan arviointitoiminto on käytettävissä ja arviointien verkkosivu näytetään Tiedot-paneelissa lisäosakaupan kaikissa välilehdissä. (#16179, @nvdaes)
+  * Yhteisön arvioinnit -toiminto on käytettävissä lisäosakaupan kaikissa välilehdissä. (#16179, @nvdaes)
 * Päivitetyt komponentit:
   * Päivitetty LibLouis-pistekääntäjä versioksi [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0). (#16259, @codeofdusk)
     * Uudet yksityiskohtaiset valkovenäläiset ja ukrainalaiset pistetaulukot (isot kirjaimet näytetään).
     * Espanjalainen pistetaulukko kreikkalaisten tekstien lukemista varten.
     * Uusi laosilainen tason 1 pistetaulukko. (#16470)
   * eSpeak NG on päivitetty versioksi 1.52-dev muutos `cb62d93fd7`. (#15913)
-    * Lisätty tigrinjan kieli. 
-* Muutettu useita BrailleSense-pistenäyttöjen komentoja, jotta vältetään ristiriidat ranskalaisten pistekirjoitusmerkkien kanssa. (#15306)
+    * Lisätty tigrinjan kieli.
+* Muutettu useita BrailleSense-pistenäyttöjen komentoja, jotta ristiriidat ranskalaisten pistekirjoitusmerkkien kanssa vältetään. (#15306)
   * `Alt+Nuoli vasemmalle` on nyt `pisteet 2 ja 7+väli`
   * `Alt+Nuoli oikealle` on nyt `pisteet 5 ja 7+väli`
   * `Alt+Nuoli ylös` on nyt `pisteet 2, 3 ja 7+väli`
   * `Alt+Nuoli alas` on nyt `pisteet 5, 6 ja 7+väli`
-* Täytepisteitä, joita yleisesti käytetään sisällysluetteloissa, ei enää puhuta alhaisilla välimerkkitasoilla. (#15845, @CyrilleB79)
+* Useita peräkkäisiä pisteitä, joita käytetään yleisesti sisällysluetteloissa, ei enää puhuta alhaisilla välimerkkitasoilla. (#15845, @CyrilleB79)
 
 ### Bugikorjaukset
 
@@ -90,6 +90,7 @@ Tehty useita pieniä bugikorjauksia sovelluksille, kuten Thunderbirdille, Adobe 
 * NVDA siirtyy Firefoxissa ja Chromium-pohjaisissa selaimissa asianmukaisesti vuorovaikutustilaan painettaessa Enteriä oltaessa esitysmuotoisen luettelon kohdalla (ul / ol) muokattavassa sisällössä. (#16325)
 * Sarakkeen tilanmuutos puhutaan automaattisesti valittaessa näytettäviä sarakkeita Thunderbirdin viestiluettelossa. (#16323)
 * Komentorivivalitsin `-h`/`--help` toimii taas oikein. (#16522, @XLTechie)
+* Tuki Poedit-käännösohjelmiston versiolle 3.4 ja sitä uudemmille toimii oikein käännettäessä kieliä, joissa on yksi tai enemmän kuin kaksi monikkomuotoa (esim. kiina ja puola). (#16318)
 
 ### Muutokset kehittäjille
 
