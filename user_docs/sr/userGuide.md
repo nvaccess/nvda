@@ -41,7 +41,6 @@ Glavne karakteristike su:
 
 * Operativni sistemi: Sve 32-bitne i 64-bitne verzije Windowsa 8.1, Windowsa 10, Windowsa 11 i sve serverske operativne sisteme počevši od Windows Servera 2012 R2.
     * AMD64 i ARM64 Windows verzije su podržane.
--
 * Barem 150 MB memorijskog prostora.
 
 ### Internacionalizacija {#Internationalization}

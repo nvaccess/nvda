@@ -248,8 +248,7 @@ Het eigenlijke commando wordt niet uitgevoerd wanneer u in de Invoerhulpmodus be
 |Ga naar  volgende synth setting |`NVDA+control+pijlRechts` |`NVDA+shift+control+pijlRechts` |Gaat verder naar de eerstvolgend beschikbare spraakinstelling na de momenteel ingestelde, en begint weer bij de eerste instelling nadat de laatste is gepasseerd|
 |Ga naar vorige synth setting |`NVDA+control+pijlLinks` |`NVDA+shift+control+pijlLinks` |Gaat naar de eerstvolgend beschikbare spraakinstelling die aan de huidige vooraf gaat en springt verder naar de laatste instelling  na het passeren van de eerste|
 |Huidige synth setting stapsgewijs oplopend wijzigen |`NVDA+control+pijlOmhoog` |`NVDA+shift+control+pijlOmhoog` |Verhoogt of wijzigt de actuele instelling voor spraak. De spreeksnelheid wordt bijvoorbeeld verhoogd, volgende stem wordt gekozen, volume  gaat omhoog|
-|De huidige synthesizer-instelling in grotere stappen oplopend bijstellen |`NVDA+control+pageUp` |`NVDA+shift+control+pageUp` |Verhoogt de waarde van de momenteel geldende spraakinstelling met een groter bereik. Als je je bijv wilt veranderen van stem, spring je steeds 20 stemmen vooruit; voor aanpassingen met een schuifbalk (snelheid, toonhoogte, etc) wordt de waarde met tot 20% verhoogd.|
-
+|De huidige synthesizer-instelling in grotere stappen oplopend bijstellen |`NVDA+control+pageUp` |`NVDA+shift+control+pageUp` |Verhoogt de waarde van de momenteel geldende spraakinstelling met een groter bereik. Als je bijv wilt veranderen van stem, spring je steeds 20 stemmen vooruit; voor aanpassingen met een schuifbalk (snelheid, toonhoogte, etc) wordt de waarde met tot 20% verhoogd.|
 |Huidige synth setting stapsgewijs aflopend wijzigen |`NVDA+control+pijlOmlaag` |`NVDA+shift+control+pijlOmlaag` |Verlaagt of wijzigt de actuele instelling voor spraak. De spreeksnelheid wordt bijvoorbeeld verlaagd, vorige stem wordt gekozen, volume  gaat omlaag|
 |De huidige synthesizer-instelling in grotere stappen aflopend bijstellen |`NVDA+control+pageDown` |`NVDA+shift+control+pageDown` |Verlaagt de waarde van de momenteel geldende spraakinstelling met een groter bereik. Als je bijv wilt veranderen van stem, spring je steeds 20 stemmen terug; voor aanpassingen met een schuifbalk (snelheid, toonhoogte, etc) wordt de waarde met tot 20% verlaagd.|
 
@@ -1054,9 +1053,9 @@ Echter, in scenario's waarbij  je een hele tabel of alinea  verrijkte content wi
 
 ## Inhoud van wiskundige aard lezen {#ReadingMath}
 
-Met NVDA kun je inhoud van wiskundige aard op het web en in andere toepassingen lezen en er in navigeren, waarbij zowel spraak als braille gebruikt kunnen worden. 
+Met NVDA kun je inhoud van wiskundige aard op het web en in andere toepassingen lezen en er in navigeren, waarbij zowel spraak als braille gebruikt kunnen worden.
 Om NVDA in staat te stellen, wiskundige inhoud te lezen en er interactief mee om te gaan moet je evenwel eerst   een Math component voor NvDA installeren.
-Er zijn verscheidene NVDA add-ons te krijgen in de NVDA Add-on Store die ondersteuning bieden voor math (wiskunde), waaronder de NVDA add-on [MathCAT](https://nsoiffer.github.io/MathCAT/) and [Access8Math](https://github.com/tsengwoody/Access8Math). 
+Er zijn verscheidene NVDA add-ons te krijgen in de NVDA Add-on Store die ondersteuning bieden voor math (wiskunde), waaronder de NVDA add-on [MathCAT](https://nsoiffer.github.io/MathCAT/) and [Access8Math](https://github.com/tsengwoody/Access8Math).
 Ga naar de  [Add-on Store en lees onder](#AddonsManager)hoe je door de beschikbare add-ons bladert en deze installeert in NVDA.
 In NVDA kan ook de oudere [MathPlayer](https://info.wiris.com/mathplayer-info) gebruikt worden; (software van Wiris) als deze op je systeem staat, hoewel deze software niet langer onderhouden wordt.
 
@@ -1067,17 +1066,17 @@ Vooropgesteld dat er een geschikte math component is geïnstalleerd, biedt NVDA 
 * MathML in Mozilla Firefox, Microsoft Internet Explorer en Google Chrome.
 * Microsoft Word 365 Modern Math Equations via UI automation:
 NVDA kan wiskundige vergelijkingen in Microsoft Word 365/2016 build 14326 en hoger lezen  en er interactief mee omgaan.
-Merk evenwel op dat eerder gemaakte MathType-vergelijkingen eerst omgezet moeten worden naar Office Math. 
-Dit kunt u doendoor elk van de vergelijkingen te selecteren om vervolgens in het contextmenu van de opties voor vergelijkingen te kiezen  en dan 'Omzetten naar Office Math'. 
+Merk evenwel op dat eerder gemaakte MathType-vergelijkingen eerst omgezet moeten worden naar Office Math.
+Dit kunt u doendoor elk van de vergelijkingen te selecteren om vervolgens in het contextmenu van de opties voor vergelijkingen te kiezen  en dan 'Omzetten naar Office Math'.
 Vergewis u ervan dat u over de nieuwste versie van MathType beschikt voordat u dit doet.
-Microsoft Word biedt nu ook de mogelijkheid van lineaire symbool-gebaseerde navigatie door de  vergelijkingen zelf, en ondersteunt wiskundige invoer waarbij gebruik wordt gemaakt van syntaxis van uiteenlopende aard, waaronder LateX. 
+Microsoft Word biedt nu ook de mogelijkheid van lineaire symbool-gebaseerde navigatie door de  vergelijkingen zelf, en ondersteunt wiskundige invoer waarbij gebruik wordt gemaakt van syntaxis van uiteenlopende aard, waaronder LateX.
 Verdere details, vindt u onder [Linear format equations using UnicodeMath and LaTeX in Word](https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8)
 * Microsoft Powerpoint, en oudere versies van Microsoft Word:
-In zowel Microsoft Powerpoint als in  Microsoft Word kunt u met NVDA MathType-vergelijkingen lezen en er in navigeren. 
-MathType moet worden geïnstalleerd anders werkt dit niet. 
+In zowel Microsoft Powerpoint als in  Microsoft Word kunt u met NVDA MathType-vergelijkingen lezen en er in navigeren.
+MathType moet worden geïnstalleerd anders werkt dit niet.
 De proefversie ishiervoor voldoende.
 Je kunt deze  downloaden van the [MathType presentatiepagina](https://www.wiris.com/en/mathtype/).
-* Adobe Reader. 
+* Adobe Reader.
 NB. Dit is nog geen officiële standaard. Er is dan ook geen software publiek verkrijgbaar waarmee deze inhoud geproduceerd kan worden.
 * Kindle Reader voor PC.
 In boeken met toegankelijke wiskundige inhoud die u gebruikt via Kindle voor PC stelt NVDA u in staat de wiskundige inhoud te lezen en er in te navigeren.
@@ -1125,7 +1124,7 @@ Hoewel het in 't algemeen aan te bevelen is om een van de nieuwere NVDA add-ons 
 MathPlayer kan bijv. ondersteuning voor een specifieke taal of Braill- code bieden waarvoor geen ondersteuning is in de nieuwere add-ons.
 MathPlayer is gratis verkrijgbaar op de website van Wiris.
 [Download MathPlayer](https://downloads.wiris.com/mathplayer/MathPlayerSetup.exe).
-Na installatie van  MathPlayer, moet NVDA opnieuw gestart worden. 
+Na installatie van  MathPlayer, moet NVDA opnieuw gestart worden.
 Merk op dat in de informatie over  MathPlayer kan staan dat deze alleen bestemd is voor oudere browsers zoals Internet Explorer 8.
 Hiermee wordt uitsluitend gedoeld op het gebruik van MathPlayer om wiskundige inhoud visueel weer te geven, en kan worden genegeerd door gebruikers  die met NVDA inhoud van wiskundige aard willen lezen of erin willen navigeren.
 
@@ -1152,7 +1151,7 @@ Om zoveel mogelijk informatie op een brailleleesregel te krijgen zijn de volgend
 |bst |boomstructuur|
 |bsitem |boomstructuuritem|
 |bskn |boomstructuurknop|
-|nv N |Items in de boomstructuur zijn hirarchisch ingedeeld, bijv. Niveau 1, 2, 3, enz.|
+|nv N |Items in de boomstructuur zijn hirarchisch ingedeeld, bijv. Niveau 1, 2, 3, enz|
 |bijst |bijschrift (caption)|
 |dlg |dialoogvenster|
 |doc |document|
@@ -2213,18 +2212,6 @@ Met deze schuifbalk kunt u het volume van geluiden en pieptonen van NVDA instell
 Deze instelling werkt alleen wanneer "Volume van NVDA-geluiden volgt stemvolume" uitgeschakeld is.
 Deze optie is niet beschikbaar als u NVDA gestart hebt  terwijll [WASAPI voor audiouitvoer](#WASAPI) in Geavanceerde Instellingen UIT stond.
 
-##### Duur van staat van paraatheid van audio-apparaatna audiouitvoer {#AudioAwakeTime}
-
-Dit invoervak specifieert hoe lan NVDA het audioapparaat wakker  houdt, nadat de spraak stopt.
-Hiermee kan NVDA voorkomen dat er haperingen en onvolkomenheden in de spraak optreden, zoals het wegvallen van delen van woorden.
-Dit kan gebeuren wanneer audioapparate(n (met name Bluetooth en draadloze apparaten) in de standby modus gaan.
-Dit kan ook handig zijn in andere gebruiksomstandigheden, bijv als NVDA binnen een virtuele machine wordt gedraaid, zoals (Citrix Virtual Desktop), of op bepaalde laptops.
-
-Bij lagere waardes is de kans dat audio wordt afgekapt groter bij het te vlug overgaan van het apparaat in de standby modus waardoor het begin van het volgende spraakfragment wegvalt.
-Als een te hoge waarde wordt ingesteld kan dit tot gevolg hebben dat de batterij van het afspeelapparaat sneller leeg raakt omdat het langer actief blijft zonder dat er geluid wordt afgespeeld.
-
-Je kunt de tijd instellen op nul Als je van deze mogelijkheid geen gebruik wilt maken.
-
 ##### Sound split (stereogeluid splitsen) {#SelectSoundSplitMode}
 
 tereosplitsing (sound split) stelt gebruikers in staat te werken met stereo geluidsapparatuur zoals koptelefoons en speakers.
@@ -2243,10 +2230,9 @@ Standaard doorloop je met dit commando de volgende modi:
 
 * Uitgeschakeld stereosplitsing: zowel NVDA en andere toepassingen sturen hun geluid over het linker  alsmede  het rechter kanaal.
 * NVDA via het linker en toepassingen via het rechter: spraak van NVDA komt via linker kanaal, terwijl andere toepassingen te horen zijn via het rechter kanaal.
-* NVDA via het rechter en toepassingen via het linker: spraak van NVDA komt via rechter kanaal, terwijl andere toepassingen te horen zijn via het linker kanaal.
+* NVDA via het linker en toepassingen via beide kanalen: spraak van NVDA komt via linker kanaal, terwijl andere toepassingen te horen zijn zowel via het linker als rechter kanaal.
 
 Er zijn meer geavanceerde modi voor stereosplitsing beschikbaar in vervolgkeuzemenu instellingen van NVDA.
-Als je het volume van alle toepassingen, met uitzondering dat van NVDA, wilt aanpassen, zou je eens kunnen kijken bij de speciaal hiervoor bestemde commando's #OtherAppVolume].
 Merk op dat stereosplitsing (sound split) niet als mixer te gebruiken is.
 Als een bepaalde toepassing bijv een stereo track afspeelt terwijl stereosplitsing is ingesteld op  "NVDA via het linker  en toepassingen via het rechter kanaal", zul je alleen het rechter kanaal van de sound track horen terwijl het linker kanaal van de sound track onderdrukt wordt.
 
@@ -2261,45 +2247,24 @@ In deze lijst kun je aanvinken welke stereosplitsingsmodi opgenomen moeten zijn 
 Modi die niet zijn aangevinkt worden genegeerd.
 Standaard zijn slechts drie modi opgenomen.
 
-* Stereosplitsing uitgeschakeld: zowel NVDA als toepassingen spelen geluid af via het linker en het rechter kanaal.
-* NVDA via het linker en alle andere toepassingen via rechter kanaal.
-* NVDA via het rechter en alle andere toepassingen via het linker kanaal.
+* Stereosplitsing uitgeschakeld.
+* NVDA via het linker en toepassingen via rechter kanaal.
+* NVDA via het linker kanaal en alle andere toepassingen via beide kanalen.
 
 Merk op dat tenminste 1 modus moet worden geselecteerd.
 Deze optie is niet beschikbaar  als bij het opstarten van NVDA  [WASAPI voor audiouitvoer in Geavanceerde Instellingen uitgeschakeld was](#WASAPI).
 
-##### Volume van andere toepassingen {#OtherAppVolume}
+##### Duur van staat van paraatheid van audio-apparaat na audiouitvoer {#AudioAwakeTime}
 
-Hiermee kun je het volume van alle toepassingen die actief zijn met uitzondering van NVDA aanpassen.
-Het zo ingestelde geluidsniveau geldt voor alle andere toepassingen zelfs als ze gestart worden na aanpassing van deze instelling.
-Dit volume kan ook vanaf elke willekeurige plaats worden beheerd met de volgende toetsenbordcommando's:
+Dit invoervak specifieert hoe lan NVDA het audioapparaat wakker  houdt, nadat de spraak stopt.
+Hiermee kan NVDA voorkomen dat er haperingen en onvolkomenheden in de spraak optreden, zoals het wegvallen van delen van woorden.
+Dit kan gebeuren wanneer audioapparate(n (met name Bluetooth en draadloze apparaten) in de standby modus gaan.
+Dit kan ook handig zijn in andere gebruiksomstandigheden, bijv als NVDA binnen een virtuele machine wordt gedraaid, zoals (Citrix Virtual Desktop), of op bepaalde laptops.
 
-<!-- KC:beginInclude -->
+Bij lagere waardes is de kans dat audio wordt afgekapt groter bij het te vlug overgaan van het apparaat in de standby modus waardoor het begin van het volgende spraakfragment wegvalt.
+Als een te hoge waarde wordt ingesteld kan dit tot gevolg hebben dat de batterij van het afspeelapparaat sneller leeg raakt omdat het langer actief blijft zonder dat er geluid wordt afgespeeld.
 
-| Naam |Toets |Beschrijving|
-|---|---|---|
-|Volume van toepassingen verhogen |`NVDA+alt+pageUp` |Verhoogt volume van alle toepassingen behalve dat van NVDA.|
-|Volume vam toepassingen verlagen |`NVDA+alt+pageDown` |Verlaagt volume van alle toepassingen behalve dat van t NVDA.|
-
-<!-- KC:endInclude -->
-
-Deze optie is niet beschikbaar  als bij het opstarten van NVDA  [WASAPI voor audiouitvoer in Geavanceerde Instellingen uitgeschakeld was](#WASAPI).
-
-##### Overige toepassingen onderdrukken {#MuteApplications}
-
-Met dit selectievakje kun je (het geluid van)alle toepassingen onderdrukken uitgezonderd NVDA.
-Deze instelling voor het onderdrukken van het geluid is van toepassing op alle overige applicaties die geluid afspelen, zelfs wanneer ze starten nadat  de instelling werd aangepast.
-Vanaf elke willekeurige plaats kan ook het volgende toetsenbordcommando gebruikt worden:
-
-<!-- KC:beginInclude -->
-
-| Naam |Toets |Beschrijving|
-|---|---|---|
-|Geluidsonderdrukking van overige toepassingen in- of uitschakelen |`NVDA+alt+delete` |Schakelt de geluidsonderdrukking van alle toepassingen behalve NVDA in of uit.|
-
-<!-- KC:endInclude -->
-
-Deze optie is niet beschikbaar  als bij het opstarten van NVDA  [WASAPI voor audiouitvoer in Geavanceerde Instellingen uitgeschakeld was](#WASAPI).
+Je kunt de tijd instellen op nul Als je van deze mogelijkheid geen gebruik wilt maken.
 
 #### Zicht {#VisionSettings}
 
@@ -4550,13 +4515,13 @@ Om deze reden en om compatibiliteit met andere schermlezers in Taiwan te bewerks
 
 ### Eurobraille leesregels {#Eurobraille}
 
-De b.book, b.note, Esys, Esytime en Iris leesregels  van Eurobraille worden door NVDA ondersteund.  
-Deze apaaraten hebben een brailletoetsenbord met 10 toetsen. 
+De b.book, b.note, Esys, Esytime en Iris leesregels  van Eurobraille worden door NVDA ondersteund.
+Deze apaaraten hebben een brailletoetsenbord met 10 toetsen.
 Raadpleeg de bij deze leesregel behorende documentatie voor de beschrijving van deze toetsen.
 Van de twee toetsen die als een spatiebalk geplaatst zijn, werkt de linker toets als backspace en met de rechter toets maak je een spatie.
 
-Deze leesregels, die via usb worden aangesloten, hebben 1 los, op zichzelfstaand, usb-toetsenbord. 
-Het is mogelijk dit toetsenbord te activeren of te deactiveren door "HID Toetsenbord simulatie" aan of uit tezetten met behulp van een invoerhandeling. 
+Deze leesregels, die via usb worden aangesloten, hebben 1 los, op zichzelfstaand, usb-toetsenbord.
+Het is mogelijk dit toetsenbord te activeren of te deactiveren door "HID Toetsenbord simulatie" aan of uit tezetten met behulp van een invoerhandeling.
 In de onderstaande beschrijving van het brailletoetsenbord wordt er van uitgegaan dat dit gedeactiveerd is.
 
 #### Brailletoetsenbordfuncties {#EurobrailleBraille}

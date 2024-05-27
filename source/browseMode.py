@@ -2338,6 +2338,9 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			paragraph: textInfos.TextInfo,
 			direction: documentBase._Movement,
 	) -> bool:
+		from appModules.kindle import BookPageViewTreeInterceptor
+		if isinstance(paragraph._obj(), BookPageViewTreeInterceptor):
+			raise NotImplementedError("Kindle textInfo implementation is broken and doesn't support this - #16570")
 		oldParagraph = paragraph.copy()
 		if direction == documentBase._Movement.NEXT:
 			try:

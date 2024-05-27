@@ -280,6 +280,76 @@ To open NVDA's menu, press `NVDA+n`.
 To open NVDA's general settings dialog directly, press `NVDA+control+g`.
 Many settings screens have keystrokes to open them directly, such as `NVDA+control+s` for synthesizer, or `NVDA+control+v` for other voice options.
 
+### Add-ons {#Addons}
+Add-ons are programs which provide new or changed functionality for NVDA.
+Add-ons are developed by the NVDA community, or external companies and are unaffiliated with NV Access.
+As with any software, it is important to trust the developer of an add-on before using it.
+Please refer to [Installing Add-ons](#AddonStoreInstalling) for ways to verify add-ons prior to installation.
+
+The first time the Add-on Store is opened, NVDA displays a warning about add-ons.
+Add-ons are not vetted by NV Access and may have unrestricted functionality and access to information.
+Press `spacebar` if you have read the warning and do not need to see it next time.
+Press `tab` to reach the "OK" button, then `enter` to accept the warning and proceed to the Add-on Store.
+The "[Add-ons and the Add-on Store](#AddonsManager)" section of the User Guide contains information about every feature of the Add-on Store.
+
+The Add-on Store is available from the Tools menu.
+Press `NVDA+n` to open the NVDA menu, then `t` for tools, then `a` for Add-on Store.
+When the Add-on Store opens, it shows "Available add-ons" if no add-ons are installed.
+When add-ons are installed, the Add-on Store opens to the "Installed add-ons" tab.
+
+#### Available add-ons {#AvailableAddons}
+When the window first opens, add-ons may take a few seconds to load.
+NVDA will read the name of the first add-on once the list of add-ons finishes loading.
+Available add-ons are listed alphabetically in a grid.
+To browse the list and find out about a specific add-on:
+1. Use the `arrow keys` or press the first letter of an add-on name to move around the list.
+1. Press `tab` once to move to a description of the currently selected add-on.
+1. Use the [reading keys](#ReadingText) or `arrow keys` to read the full description.
+1. Press `tab` to the "Actions" button, which can be used to install the add-on, among other actions.
+1. Press `tab` to "Other Details", which lists details such as the publisher, version and homepage.
+1. To return to the list of add-ons, press `alt+a`, or `shift+tab` back to the "Available add-ons" list.
+
+#### Searching for add-ons {#SearchingForAddons}
+As well as browsing all available add-ons, it is possible to filter the add-ons shown.
+To search, press `alt+s` to jump to the "search" field and type the text to search for.
+The search field can contain information including the add-on ID, display name, publisher, author or description.
+The list changes while typing the search terms.
+Once done, press `tab` to go to the filtered list of add-ons and browse the results.
+
+#### Installing add-ons {#InstallingAddons}
+
+To install an add-on:
+1. With the focus on an add-on you would like to install, press `enter`.
+1. The actions menu opens with a list of actions; the first action is "Install".
+1. To install the add-on, press `i` or `downArrow` to "install" and press `enter`.
+1. The focus returns to the add-on in the list and NVDA will read the details about the add-on.
+1. The "Status" information reported by NVDA changes from "Available" to "Downloading".
+1. Once the add-on has finished downloading, it will change to "Downloaded. Pending install".
+1. Repeat with any other add-ons you would like to install at the same time.
+1. Once finished, press `tab` until the focus is on the "Close" button, then press `enter`.
+1. The downloaded add-ons will start the installation process once the Add-on Store is closed.
+Add-ons may create dialogs during the installation process that you will need to respond to.
+1. When the add-ons have been installed, a dialog appears advising that changes were made, and you must restart NVDA for the add-on installation to complete.
+1. Press `enter` to restart NVDA.
+
+#### Managing installed add-ons {#ManagingInstalledAddons}
+Press `control+tab` to move between the tabs or sections of the Add-on Store.
+The tabs include: "Installed add-ons", "Updatable add-ons", "Available add-ons" and "Installed incompatible add-ons".
+Each of the tabs are set out similar to each other, as a list of add-ons, a panel for more details on the selected add-on, and the ability to perform actions for the add-on.
+The actions menu of installed add-ons includes "Disable" and "Remove" rather than "Install".
+Disabling an add-on stops NVDA from loading it, but leaves it installed.
+To re-enable a disabled add-on, activate "Enable" from the actions menu.
+After enabling, disabling, or removing add-ons, you will be prompted to restart NVDA when closing the Add-on Store.
+These changes will only take effect once NVDA is restarted.
+Note that in this dialog `escape` works the same as the Close button.
+
+### Updating add-ons {#UpdatingAddons}
+When there is an update to an add-on you have installed, it will be listed in the "Updatable add-ons" tab.
+Press `control+tab` to get to this tab from anywhere in the Add-on Store.
+The status of the add-on will be listed as "Update available".
+The table will list the currently installed version and the available version.
+Press `enter` on the add-on to open the actions list; choose "Update".
+
 ### Community {#Community}
 
 NVDA has a vibrant user community.
@@ -1806,6 +1876,30 @@ This option applies to all synthesizers, not just the currently active synthesiz
 On by default, this option tells NVDA if the current voice's language can be trusted when processing symbols and characters.
 If you find that NVDA is reading punctuation in the wrong language for a particular synthesizer or voice, you may wish to turn this off to force NVDA to use its global language setting instead.
 
+##### Unicode normalization {#SpeechUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Disabled), Enabled, Disabled|
+|Default |Disabled|
+
+When this option is enabled, unicode normalization is performed on the text that is spoken by NVDA.
+This is beneficial when speaking characters that can be represented in several forms.
+NVDA uses the NFKC (Normalization Form Compatibility Composition) algorithm, which provides the following benefits, among others:
+
+1. The bold and italic versions of characters that are part of the unicode standard and are commonly used on social media are normalized to their most common compatible equivalent.
+For example, the latin letter "h" can also be presented as "𝐡" (bold), "ℎ" (itallic), etc. but will always be spoken as "h" when normalization is enabled.
+This aspect of normalization also aids in reading equations in the Microsoft Word equation editor.
+
+1. Normalization to composed characters.
+For example, the character "ü" (u with umlaut/diaeresis), a common character in languages like German and Turkish can be represented in two forms.
+  1. One stand alone unicode character (ü)
+  1. A decomposition into two characters (ü), namely the normal latin letter u and a diaeresis modifier
+  Unicode normalization ensures that only one form will be used throughout all speech output, which is the one character variant.
+
+1. Decomposition of some ligatures, Including "ĳ" (ligature ij) to their two letter form ("ij").
+
+1. Stable ordering of modifiers in composite characters, for example in ancient Hebrew.
+
 ##### Include Unicode Consortium data (including emoji) when processing characters and symbols {#SpeechSettingsCLDR}
 
 When this checkbox is checked, NVDA will include additional symbol pronunciation dictionaries when pronouncing characters and symbols.
@@ -2045,6 +2139,16 @@ When you scroll the display, you will then be able to read the rest of the word.
 
 Enabling this may allow for more fluent reading, but generally requires you to scroll the display more.
 
+##### Unicode normalization {#BrailleUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Disabled), Enabled, Disabled|
+|Default |Disabled|
+
+When this option is enabled, unicode normalization is performed on the text that is brailled on the braille display.
+This is beneficial when coming across characters in braille that are unknown in a particular braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
+Other benefits of unicode normalization are explained in greater detail in the [section for the equivalent speech setting](#SpeechUnicodeNormalization).
+
 ##### Focus context presentation {#BrailleSettingsFocusContextPresentation}
 
 This option allows you to choose what context information NVDA will show on the braille display when an object gets focus.
@@ -2200,23 +2304,11 @@ This slider allows you to set the volume of NVDA sounds and beeps.
 This setting only takes effect when "Volume of NVDA sounds follows voice volume" is disabled.
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
-##### Time to keep audio device awake after speech {#AudioAwakeTime}
-
-This edit box specifies how long NVDA keeps the audio device awake after speech ends.
-This allows NVDA to avoid certain speech glitches like dropped parts of words.
-This can happen due to audio devices (especially Bluetooth and wireless devices) entering standby mode.
-This might also be helpful in other use cases, such as when running NVDA inside a virtual machine (e.g. Citrix Virtual Desktop), or on certain laptops.
-
-Lower values may allow audio to be cut-off more often, as a device may enter standby mode too soon, causing the start of the following speech to be clipped.
-Setting the value too high may cause the battery of the sound output device to discharge faster, as it stays active for longer while no sound is being sent.
-
-You can set the time to zero in order to disable this feature.
-
 ##### Sound split {#SelectSoundSplitMode}
 
 The sound split feature allows users to make use of their stereo output devices, such as headphones and speakers.
 Sound split makes it possible to have NVDA speech in one channel (e.g. left) and have all other applications play their sounds in the other channel (e.g. right).
-By default sound split is disabled, which means that all applications including NVDA will play sounds in both left and right channels.
+By default sound split is disabled.
 A gesture allows cycling through the various sound split modes:
 <!-- KC:beginInclude -->
 
@@ -2228,18 +2320,21 @@ A gesture allows cycling through the various sound split modes:
 
 By default this command will cycle between the following modes:
 
-* Disabled sound split: both NVDA and other applications output sounds to both left and right channels.
+* Sound split disabled: NVDA does not apply any sound split processing.
 * NVDA on the left and applications on the right: NVDA will speak in the left channel, while other applications will play sounds in the right channel.
-* NVDA on the right and applications on the left: NVDA will speak in the right channel, while other applications will play sounds in the left channel.
+* NVDA on the left and applications in both channels: NVDA will speak in the left channel, while other applications will play sounds in  both left and right channels.
 
 There are more advanced sound split modes available in NVDA setting combo box.
+Among these modes, "NVDA in both channels and applications in both channels" forces all the sounds to be directed in both channels.
+This mode may differ from "Sound split disabled" mode in case other audio processing interfers with channel volumes.
+
 Please note, that sound split doesn't work as a mixer.
 For example, if an application is playing a stereo sound track while sound split is set to "NVDA on the left and applications on the right", then you will only hear the right channel of the sound track, while the left channel of the sound track will be muted.
 
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
 Please note, that if NVDA crashes, then it won't be able to restore application sounds volume, and those applications might still output sound only in one channel after NVDA crash.
-In order to mitigate this, please restart NVDA.
+In order to mitigate this, please restart NVDA and select the mode "NVDA in both channels and applications in both channels".
 
 ##### Customizing Sound split modes {#CustomizeSoundSplitModes}
 
@@ -2247,12 +2342,24 @@ This checkable list allows selecting which sound split modes are included when c
 Modes which are unchecked are excluded.
 By default only three modes are included.
 
-* Sound split disabled: both NVDA and applications play sounds in both left and right channels.
-* NVDA on the left and all other applications on the right channel.
-* NVDA on the right and all other applications on the left channel.
+* Sound split disabled.
+* NVDA on the left and applications on the right.
+* NVDA on the left and applications in both channels.
 
 Note that it is necessary to check at least one mode.
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
+
+##### Time to keep audio device awake after speech {#AudioAwakeTime}
+
+This edit box specifies how long NVDA keeps the audio device awake after speech ends.
+This allows NVDA to avoid certain speech glitches like dropped parts of words.
+This can happen due to audio devices (especially Bluetooth and wireless devices) entering standby mode.
+This might also be helpful in other use cases, such as when running NVDA inside a virtual machine (e.g. Citrix Virtual Desktop), or on certain laptops.
+
+Lower values may allow audio to be cut-off more often, as a device may enter standby mode too soon, causing the start of the following speech to be clipped.
+Setting the value too high may cause the battery of the sound output device to discharge faster, as it stays active for longer while no sound is being sent.
+
+You can set the time to zero in order to disable this feature.
 
 #### Vision {#VisionSettings}
 
@@ -3139,8 +3246,7 @@ Note:
 
 * Emulated keys must have gestures assigned in order to persist when saving / closing the dialog.
 * An input gesture with modifier keys may not be able to be mapped to an emulated gesture without modifier keys.
-For instance, setting the emulated input `a` and configuring an input gesture of `ctrl+m`, may result
-in the application receiving `ctrl+a`.
+For instance, setting the emulated input `a` and configuring an input gesture of `ctrl+m`, may result in the application receiving `ctrl+a`.
 
 When you are finished making changes, press the OK button to save them or the Cancel button to discard them.
 

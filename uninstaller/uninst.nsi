@@ -9,7 +9,7 @@ SetCompressor /SOLID LZMA
 CRCCheck On
 XPStyle on
 InstProgressFlags Smooth
-RequestExecutionLevel admin
+RequestExecutionLevel user
 
 Name "${appName}"
 VIProductVersion "${VERSION_YEAR}.${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_BUILD}" ;Needs to be here so other version info shows up

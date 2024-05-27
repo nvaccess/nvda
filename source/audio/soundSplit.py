@@ -89,20 +89,20 @@ class SoundSplitState(DisplayStringIntEnum):
 				raise RuntimeError(f"Unexpected or unknown state {self=}")
 
 
-audioSessionManager: IAudioSessionManager2 | None = None
-activeCallback: AudioSessionNotification | None = None
+_audioSessionManager: IAudioSessionManager2 | None = None
+_activeCallback: AudioSessionNotification | None = None
 
 
 def initialize() -> None:
 	if nvwave.usingWasapiWavePlayer():
-		global audioSessionManager
+		global _audioSessionManager
 		try:
-			audioSessionManager = AudioUtilities.GetAudioSessionManager()
+			_audioSessionManager = AudioUtilities.GetAudioSessionManager()
 		except COMError:
 			log.exception("Could not initialize audio session manager")
 			return
 		state = SoundSplitState(config.conf["audio"]["soundSplitState"])
-		setSoundSplitState(state, initial=True)
+		_setSoundSplitState(state, initial=True)
 	else:
 		log.debug("Cannot initialize sound split as WASAPI is disabled")
 
@@ -112,27 +112,27 @@ def terminate():
 	if nvwave.usingWasapiWavePlayer():
 		state = SoundSplitState(config.conf["audio"]["soundSplitState"])
 		if state != SoundSplitState.OFF:
-			setSoundSplitState(SoundSplitState.OFF)
-		unregisterCallback()
+			_setSoundSplitState(SoundSplitState.OFF)
+		_unregisterCallback()
 	else:
 		log.debug("Skipping terminating sound split as WASAPI is disabled.")
 
 
 @dataclass(unsafe_hash=True)
-class AudioSessionNotificationWrapper(AudioSessionNotification):
+class _AudioSessionNotificationWrapper(AudioSessionNotification):
 	listener: AudioSessionNotification
 
 	def on_session_created(self, new_session: AudioSession):
 		pid = new_session.ProcessId
-		with applicationExitCallbacksLock:
-			if pid not in applicationExitCallbacks:
-				volumeRestorer = VolumeRestorer(pid, new_session)
+		with _applicationExitCallbacksLock:
+			if pid not in _applicationExitCallbacks:
+				volumeRestorer = _VolumeRestorer(pid, new_session)
 				new_session.register_notification(volumeRestorer)
-				applicationExitCallbacks[pid] = volumeRestorer
+				_applicationExitCallbacks[pid] = volumeRestorer
 		self.listener.on_session_created(new_session)
 
 
-def applyToAllAudioSessions(
+def _applyToAllAudioSessions(
 		callback: AudioSessionNotification,
 		applyToFuture: bool = True,
 ) -> None:
@@ -141,30 +141,30 @@ def applyToAllAudioSessions(
 		Additionally, if applyToFuture is True, then it will register a notification with audio session manager,
 		which will execute the same callback for all future sessions as they are created.
 		That notification will be active until next invokation of this function,
-		or until unregisterCallback() is called.
+		or until _unregisterCallback() is called.
 	"""
-	unregisterCallback()
-	callback = AudioSessionNotificationWrapper(callback)
+	_unregisterCallback()
+	callback = _AudioSessionNotificationWrapper(callback)
 	if applyToFuture:
-		audioSessionManager.RegisterSessionNotification(callback)
+		_audioSessionManager.RegisterSessionNotification(callback)
 		# The following call is required to make callback to work:
-		audioSessionManager.GetSessionEnumerator()
-		global activeCallback
-		activeCallback = callback
+		_audioSessionManager.GetSessionEnumerator()
+		global _activeCallback
+		_activeCallback = callback
 	sessions: list[AudioSession] = AudioUtilities.GetAllSessions()
 	for session in sessions:
 		callback.on_session_created(session)
 
 
-def unregisterCallback() -> None:
-	global activeCallback
-	if activeCallback is not None:
-		audioSessionManager.UnregisterSessionNotification(activeCallback)
-		activeCallback = None
+def _unregisterCallback() -> None:
+	global _activeCallback
+	if _activeCallback is not None:
+		_audioSessionManager.UnregisterSessionNotification(_activeCallback)
+		_activeCallback = None
 
 
 @dataclass(unsafe_hash=True)
-class VolumeSetter(AudioSessionNotification):
+class _VolumeSetter(AudioSessionNotification):
 	leftVolume: float
 	rightVolume: float
 	leftNVDAVolume: float
@@ -187,7 +187,7 @@ class VolumeSetter(AudioSessionNotification):
 			channelVolume.SetChannelVolume(1, self.rightNVDAVolume, None)
 
 
-def setSoundSplitState(state: SoundSplitState, initial: bool = False) -> dict:
+def _setSoundSplitState(state: SoundSplitState, initial: bool = False) -> dict:
 	applyToFuture = True
 	if state == SoundSplitState.OFF:
 		if initial:
@@ -199,14 +199,14 @@ def setSoundSplitState(state: SoundSplitState, initial: bool = False) -> dict:
 			applyToFuture = False
 	leftVolume, rightVolume = state.getAppVolume()
 	leftNVDAVolume, rightNVDAVolume = state.getNVDAVolume()
-	volumeSetter = VolumeSetter(leftVolume, rightVolume, leftNVDAVolume, rightNVDAVolume)
-	applyToAllAudioSessions(volumeSetter, applyToFuture=applyToFuture)
+	volumeSetter = _VolumeSetter(leftVolume, rightVolume, leftNVDAVolume, rightNVDAVolume)
+	_applyToAllAudioSessions(volumeSetter, applyToFuture=applyToFuture)
 	return {
 		"foundSessionWithNot2Channels": volumeSetter.foundSessionWithNot2Channels,
 	}
 
 
-def toggleSoundSplitState() -> None:
+def _toggleSoundSplitState() -> None:
 	if not nvwave.usingWasapiWavePlayer():
 		message = _(
 			# Translators: error message when wasapi is turned off.
@@ -224,7 +224,7 @@ def toggleSoundSplitState() -> None:
 		i = -1
 	i = (i + 1) % len(allowedStates)
 	newState = SoundSplitState(allowedStates[i])
-	result = setSoundSplitState(newState)
+	result = _setSoundSplitState(newState)
 	config.conf["audio"]["soundSplitState"] = newState.value
 	ui.message(newState.displayString)
 	if result["foundSessionWithNot2Channels"]:
@@ -238,7 +238,7 @@ def toggleSoundSplitState() -> None:
 
 
 @dataclass(unsafe_hash=True)
-class VolumeRestorer(AudioSessionEvents):
+class _VolumeRestorer(AudioSessionEvents):
 	pid: int
 	audioSession: AudioSession
 
@@ -264,9 +264,9 @@ class VolumeRestorer(AudioSessionEvents):
 		self.unregister()
 
 	def unregister(self):
-		with applicationExitCallbacksLock:
+		with _applicationExitCallbacksLock:
 			try:
-				del applicationExitCallbacks[self.pid]
+				del _applicationExitCallbacks[self.pid]
 			except KeyError:
 				pass
 			try:
@@ -275,5 +275,5 @@ class VolumeRestorer(AudioSessionEvents):
 				log.exception(f"Cannot unregister audio session for process {self.pid}")
 
 
-applicationExitCallbacksLock = Lock()
-applicationExitCallbacks: dict[int, VolumeRestorer] = {}
+_applicationExitCallbacksLock = Lock()
+_applicationExitCallbacks: dict[int, _VolumeRestorer] = {}

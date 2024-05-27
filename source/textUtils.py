@@ -1,30 +1,32 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2021 NV Access Limited, Babbage B.V., Łukasz Golonka
+# Copyright (C) 2018-2024 NV Access Limited, Babbage B.V., Łukasz Golonka
 
 """
 Classes and utilities to deal with offsets variable width encodings, particularly utf_16.
 """
 
-import encodings
-import sys
 import ctypes
-from collections.abc import ByteString
-from typing import Tuple, Optional, Type
+import encodings
 import locale
+import unicodedata
+from abc import ABCMeta, abstractmethod, abstractproperty
+from collections import defaultdict
+from difflib import ndiff
+from functools import cached_property
+from typing import Optional, Tuple, Type
+
 from logHandler import log
-from abc import abstractmethod
 
 WCHAR_ENCODING = "utf_16_le"
 UTF8_ENCODING = "utf-8"
 USER_ANSI_CODE_PAGE = locale.getpreferredencoding()
 
 
-class OffsetConverter:
+class OffsetConverter(metaclass=ABCMeta):
 	decoded: str
-	
+
 	def __init__(self, text: str):
 		if not isinstance(text, str):
 			raise TypeError("Value must be of type str")
@@ -33,7 +35,7 @@ class OffsetConverter:
 	def __repr__(self):
 		return f"{self.__class__.__name__}({repr(self.decoded)})"
 
-	@property
+	@abstractproperty
 	def encodedStringLength(self) -> int:
 		"""Returns the length of the string in itssubclass-specific encoded representation."""
 		raise NotImplementedError
@@ -385,8 +387,6 @@ class IdentityOffsetConverter(OffsetConverter):
 		This is a dummy converter that assumes 1:1 correspondence between encoded and decoded characters.
 	"""
 
-	_encoding: str = UTF8_ENCODING
-
 	def __init__(self, text: str):
 		super().__init__(text)
 
@@ -415,6 +415,189 @@ class IdentityOffsetConverter(OffsetConverter):
 		if encodedEnd is None:
 			return encodedStart
 		return (encodedStart, encodedEnd)
+
+
+DEFAULT_UNICODE_NORMALIZATION_ALGORITHM = "NFKC"
+
+
+class UnicodeNormalizationOffsetConverter(OffsetConverter):
+	"""
+	Object that holds a string in both its decoded and its unicode normalized form.
+	The object allows for easy conversion between offsets in strings which may or may not be normalized,
+
+	For example, when using the NFKC algorithm, the "ĳ" ligature normalizes to "ij",
+	which takes two characters instead of one.
+	"""
+	normalizationForm: str
+	computedStrToEncodedOffsets: tuple[int]
+	computedEncodedToStrOffsets: tuple[int]
+
+	def __init__(self, text: str, normalizationForm: str = DEFAULT_UNICODE_NORMALIZATION_ALGORITHM):
+		super().__init__(text)
+		self.normalizationForm = normalizationForm
+		self.encoded: str = unicodedata.normalize(normalizationForm, text)
+		self.computedStrToEncodedOffsets, self.computedEncodedToStrOffsets = self._calculateOffsets()
+
+	def _calculateOffsets(self) -> tuple[tuple[int], tuple[int]]:
+		# Initialize a diff list between the decoded original and the normalized string.
+		diff = list(ndiff(self.decoded, self.encoded))
+		diff.append("!")  # Closing the diff
+		# Initialize indices and buffers for tracking positions and changes.
+		iOrigin = iNormalized = 0
+		originBuffer = ""
+		normalizedBuffer = ""
+		originToNormalizedDict = defaultdict(list)
+		normalizedToOriginDict = defaultdict(list)
+		originPending = normalizedPending = False
+		# Iterate over each character in the diff list.
+		for char in diff:
+			if char[0] == "?":
+				raise RuntimeError("Unexpected entry in diff")
+			elif char[0] == "-":
+				# Accumulate characters in the origin buffer that aren't in the normalized string.
+				originBuffer += char[2:]
+				originPending = True
+			elif char[0] == "+":
+				# Accumulate characters in the normalized buffer that aren't in the original string.
+				normalizedBuffer += char[2:]
+				normalizedPending = True
+			elif char[0] == " " and (
+				(not originPending and normalizedPending) or (originPending and not normalizedPending)
+			):
+				# Accumulate unchanged characters in both buffers.
+				originBuffer += char[2:]
+				normalizedBuffer += char[2:]
+			else:
+				# Process accumulated characters in the buffers.
+				while originBuffer and normalizedBuffer:
+					originPart = ""
+					originPartLen = 0
+					normalizedPart = ""
+					normalizedPartLen = 0
+					# Find the smallest part that can be normalized
+					# and still matches the beginning of the normalized buffer.
+					for i in range(len(originBuffer)):
+						originPart = originBuffer[: (i + 1)]
+						originPartLen = len(originPart)
+						normalizedPart = unicodedata.normalize(self.normalizationForm, originPart)
+						normalizedPartLen = len(normalizedPart)
+						if (
+							originPart == normalizedPart
+							or not normalizedBuffer.startswith(normalizedPart)
+						):
+							continue
+						originBuffer = originBuffer[originPartLen:]
+						normalizedBuffer = normalizedBuffer[normalizedPartLen:]
+						break
+					else:
+						# No normalizable characters in originBuffer.
+						# All characters are now copied to originPart and normalizedPart.
+						assert originBuffer == originPart
+						assert normalizedBuffer == normalizedPart
+						# Reset buffers to ensure the while loop doesn't run next time.
+						originBuffer = normalizedBuffer = ""
+					# Map the original indices to the normalized indices.
+					# originMultiplier is used to multiply indices in origin
+					# when a character takes more space in origin than in normalized.
+					# This is applicable when normalizing letter+modifier compositions to one character.
+					originMultiplier = min(originPartLen / normalizedPartLen, 1)
+					# normalizedMultiplier is used to multiply indices in normalized
+					# when a character takes more space in normalized than in origin.
+					# This is applicable when normalizing one character ligeatures
+					# into their two corresponding letters.
+					normalizedMultiplier = min(normalizedPartLen / originPartLen, 1)
+					for i in range(max(originPartLen, normalizedPartLen)):
+						tempOrigin = iOrigin + int(i * originMultiplier)
+						tempNormalized = iNormalized + int(i * normalizedMultiplier)
+						originC = originPart[i] if i < originPartLen else None
+						if originC:
+							# If normalization results in the same characters
+							# but they have moved in the string, for example when normalizing the order of modifiers
+							# on ancient hebrew consonants, the normalized index should be based on
+							# the position of the origin character in normalized.
+							normalizedIndex = normalizedPart.find(originC)
+							if normalizedIndex != -1:
+								tempNormalized = iNormalized + normalizedIndex
+						normalizedC = normalizedPart[i] if i < normalizedPartLen else None
+						if normalizedC:
+							# The origin index should be based on the position
+							# of the normalized character in origin.
+							originIndex = originPart.find(normalizedC)
+							if originIndex != -1:
+								tempOrigin = iOrigin + originIndex
+						originToNormalizedDict[tempOrigin].append(tempNormalized)
+						normalizedToOriginDict[tempNormalized].append(tempOrigin)
+					iOrigin += originPartLen
+					iNormalized += normalizedPartLen
+				originPending = normalizedPending = False
+				if char[0] == " ":
+					# Map indices directly for unchanged characters.
+					originToNormalizedDict[iOrigin].append(iNormalized)
+					normalizedToOriginDict[iNormalized].append(iOrigin)
+					iOrigin += 1
+					iNormalized += 1
+		# Finalize the mapping by selecting the minimum index for each original position.
+		originResult = tuple(map(min, originToNormalizedDict.values()))
+		assert len(originResult) == len(self.decoded)
+		normalizedResult = tuple(map(min, normalizedToOriginDict.values()))
+		assert len(normalizedResult) == len(self.encoded)
+		return tuple((
+			originResult,
+			normalizedResult
+		))
+
+	@cached_property
+	def encodedStringLength(self) -> int:
+		"""Returns the length of the string in its normalized representation."""
+		return len(self.encoded)
+
+	def strToEncodedOffsets(
+			self,
+			strStart: int,
+			strEnd: int | None = None,
+			raiseOnError: bool = False,
+	) -> int | Tuple[int]:
+		super().strToEncodedOffsets(strStart, strEnd, raiseOnError)
+		if strStart == 0:
+			resultStart = 0
+		else:
+			resultStart = self.computedStrToEncodedOffsets[strStart]
+		if strEnd is None:
+			return resultStart
+		elif strStart == strEnd:
+			return (resultStart, resultStart)
+		else:
+			resultEnd = self.computedStrToEncodedOffsets[strEnd]
+			return (resultStart, resultEnd)
+
+	def encodedToStrOffsets(
+			self,
+			encodedStart: int,
+			encodedEnd: int | None = None,
+			raiseOnError: bool = False
+	) -> int | Tuple[int]:
+		super().encodedToStrOffsets(encodedStart, encodedEnd, raiseOnError)
+		if encodedStart == 0:
+			resultStart = 0
+		else:
+			resultStart = self.computedEncodedToStrOffsets[encodedStart]
+		if encodedEnd is None:
+			return resultStart
+		elif encodedStart == encodedEnd:
+			return (resultStart, resultStart)
+		else:
+			resultEnd = self.computedEncodedToStrOffsets[encodedEnd]
+			return (resultStart, resultEnd)
+
+
+def isUnicodeNormalized(text: str, normalizationForm: str = DEFAULT_UNICODE_NORMALIZATION_ALGORITHM) -> bool:
+	"""Convenience function to wrap unicodedata.is_normalized with a default normalization form."""
+	return unicodedata.is_normalized(normalizationForm, text)
+
+
+def unicodeNormalize(text: str, normalizationForm: str = DEFAULT_UNICODE_NORMALIZATION_ALGORITHM) -> str:
+	"""Convenience function to wrap unicodedata.normalize with a default normalization form."""
+	return unicodedata.normalize(normalizationForm, text)
 
 
 ENCODINGS_TO_CONVERTERS: dict[str, Type[OffsetConverter]] = {
