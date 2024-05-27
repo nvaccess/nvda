@@ -126,8 +126,8 @@ Ein Signalton wird wiedergegeben, während eine temporäre NVDA-Version geladen 
 Nach dem Laden wird NVDA den Rest während des Prozesses sprechen.
 1. Das Fenster des NVDA Launchers wird mit der Lizenzvereinbarung angezeigt.
 Drücken Sie `Pfeiltaste nach unten`, um die Lizenzvereinbarung zu lesen, falls gewünscht.
-1. Drücken Sie die `Tabulatortaste`, um zum Kontrollkästchen "Ich stimme zu" zu gelangen und drücken Sie dann die `Leertaste`, um es zu aktivieren.
-1. Drücken Sie die `Tabulatortaste`, um sich durch die Optionen zu bewegen und drücken Sie dann die `Eingabetaste` bei der gewünschten Option.
+1. Drücken Sie die `Tab-Taste`, um zum Kontrollkästchen "Ich stimme zu" zu gelangen und drücken Sie dann die `Leertaste`, um es zu aktivieren.
+1. Drücken Sie die `Tab-Taste`, um sich durch die Optionen zu bewegen und drücken Sie dann die `Eingabetaste` bei der gewünschten Option.
 
 Die Optionen sind:
 
@@ -616,7 +616,7 @@ Einige nützliche Tastenkombinationen zum Navigieren mit dem System-Fokus sind:
 
 | Name |"Desktop"-Tastenkombination |"Laptop"-Tastenkombination |Beschreibung|
 |---|---|---|---|
-|Aktuellen Fokus ansagen |NVDA+Tabulatortaste |NVDA+Tabulatortaste |Spricht das aktuell hervorgehobene Objekt. Bei zweimal Drücken werden die Informationen buchstabiert.|
+|Aktuellen Fokus ansagen |NVDA+Tab-Taste |NVDA+Tab-Taste |Spricht das aktuell hervorgehobene Objekt. Bei zweimal Drücken werden die Informationen buchstabiert.|
 |Titelleiste ansagen |NVDA+T |NVDA+T |Liest die Titelleiste der aktuellen Anwendung vor. Bei zweimal Drücken, werden die Informationen buchstabiert. Bei dreimal Drücken wird der Text in die Zwischenablage kopiert. Diese Information wird auch in Braille angezeigt.|
 |Aktives Fenster vorlesen |NVDA+B |NVDA+B |Liest alle Steuerelemente im aktiven Fenster vor (hilfreich für Dialogfelder).|
 |Statuszeile ausgeben |NVDA+Ende |NVDA+Umschalt+Ende |Liest die Statusleiste vor, falls vorhanden. Durch zweimaliges Drücken werden die Informationen buchstabiert. Durch dreimaliges Drücken werden die Informationen in die Zwischenablage kopiert.|
@@ -1018,7 +1018,7 @@ Es gibt zunehmend Internetseiten, die mit Technologien für mediale Inhalte wie 
 Wenn Sie im Lesemodus auf einen dieser Inhalte stoßen, meldet NVDA dem entsprechend "Eingebettetes Objekt", "Anwendung" oder "Dialog".
 Um zu einem eingebetteten Objekt zu navigieren, betätigen Sie die Schnellnavigationstaste O oder Umschalt+O.
 Betätigen Sie anschließend die Eingabetaste, um mit einem Objekt zu interagieren.
-Sofern das Objekt barrierefrei gestaltet wurde, können Sie innerhalb dieses Objekts normal mit der Tabulatortaste navigieren und damit wie in einer gewöhnlichen Anwendung arbeiten.
+Sofern das Objekt barrierefrei gestaltet wurde, können Sie innerhalb dieses Objekts normal mit der Tab-Taste navigieren und damit wie in einer gewöhnlichen Anwendung arbeiten.
 Es gibt eine Tastenkombination, um in die Originalansicht der Seite zurückzukehren:
 <!-- KC:beginInclude -->
 
@@ -1189,7 +1189,7 @@ Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende 
 |ba |Baumansicht|
 |gldsltr |Gliederungsschalter|
 |bae |Eintrag einer Baumstruktur|
-|en |Ein Eintrag in einer Baumstuktur in der Ebene N||
+|EN |Ein Eintrag in einer Baumstuktur in der Ebene N|
 |fst |Fenster|
 |⠤⠤⠤⠤⠤ |Trennlinie|
 |mrki |Markierten Inhalt|
@@ -2200,19 +2200,7 @@ Mit diesem Schieberegler können Sie die Lautstärke der NVDA-Sounds und -Signal
 Diese Einstellung ist nur wirksam, sofern die "Lautstärke der NVDA-Sounds folgt der Lautstärke der verwendeten Stimme" deaktiviert ist.
 Diese Option ist nicht verfügbar, wenn Sie NVDA mit [WASAPI deaktiviert für Audio-Ausgabe](#WASAPI) in den Erweiterten Einstellungen gestartet haben.
 
-##### Zeit, um das Audio-Gerät nach dem Sprechen nicht auszublenden {#AudioAwakeTime}
-
-Dieses Eingabefeld legt fest, wie lange NVDA das Audio-Gerät nach Beendigung des Sprechens nicht ausblenden soll.
-Dadurch kann NVDA bestimmte Sprachfehler wie ausgelassene Wortteile vermeiden.
-Dies kann passieren, wenn Audio-Geräte (insbesondere Bluetooth- und drahtlose Geräte) in den Standby-Modus wechseln.
-Dies kann auch in anderen Anwendungsfällen hilfreich sein, z. B. bei der Ausführung von NVDA innerhalb einer virtuellen Maschine (z. B. Citrix Virtual Desktop) oder auf bestimmten Laptops.
-
-Bei niedrigeren Werten kann es vorkommen, dass der Ton oder Wortsilben häufiger abgeschnitten wird, da ein Gerät möglicherweise zu früh in den Standby-Modus wechselt, wodurch der Sprechvorgang ausgeblendet wird.
-Ein zu hoher Wert kann dazu führen, dass sich die Batterie eines externen Audio-Geräts (z. B. Kopfhörer) schneller entlädt, da sie länger aktiv bleibt, während kein Ton gesendet wird.
-
-Sie können die Zeitspanne auf 0 setzen, um diese Funktion zu deaktivieren.
-
-##### Aufteilung der Sounds auf die Audio-Kanäle {#SelectSoundSplitMode}
+##### Sound-Teilung der Audio-Kanäle {#SelectSoundSplitMode}
 
 Mit der Sound-Teilung können die Benutzer ihre Stereo-Ausgabegeräte wie Kopfhörer und Lautsprecher nutzen.
 Damit können Sie die Sprachausgabe in NVDA auf einen Kanal (z. B. links) und alle anderen Anwendungen auf dem anderen Kanal (z. B. rechts) hören.
@@ -2229,8 +2217,8 @@ Mit einem Tastenbefehl können Sie zwischen den verschiedenen Modi wechseln:
 In der Standard-Einstellung wechselt dieser Befehl zwischen den folgenden Modi:
 
 * Deaktivierte Sound-Teilung: Sowohl NVDA als auch andere Anwendungen sind auf beiden Kanälen zu hören.
-* NVDA links und Anwendungen rechts: NVDA spricht im linken Kanal, während andere Anwendungen im rechten Kanal zu hören sind.
-* NVDA rechts und Anwendungen links: NVDA spricht im rechten Kanal, während andere Anwendungen im linken Kanal zu hören sind.
+* NVDA links und Anwendungen rechts: NVDA ist auf dem linken Kanal, während Sounds anderer Anwendungen auf dem rechten Kanal zu hören sind.
+* NVDA links und Anwendungen beidseitig: NVDA ist auf dem linken Kanal, während Sounds anderer Anwendungen auf beiden Kanälen zu hören sind.
 
 Im Kombinationsfeld der Einstellung in NVDA sind weitere erweiterte Modi für die Sound-Teilung verfügbar.
 Bitte beachten Sie, dass die Sound-Teilung nicht als Mixer funktioniert.
@@ -2247,12 +2235,24 @@ Um dieses Problem zu beheben, starten Sie bitte NVDA neu.
 Modi, die nicht markiert sind, sind ausgenommen.
 Standardmäßig sind nur drei Modi enthalten.
 
-* Sound-Teilung deaktiviert: Sowohl NVDA als auch Anwendungen sind auf beiden kanälen zu hören.
-* NVDA auf dem linken Kanal und alle anderen Anwendungen auf dem rechten Kanal.
-* NVDA auf dem rechten Kanal und alle anderen Anwendungen auf dem linken Kanal.
+* Sound-Tteilung ausgeschaltet.
+* NVDA links und Anwendungen rechts.
+* NVDA links und Anwendungen beidseitig.
 
-Es ist zu beachten, dass mindestens ein Modus zu prüfen ist.
+Es ist zu beachten, dass mindestens ein Modus ausgewählt  ist.
 Diese Option ist nicht verfügbar, wenn Sie NVDA mit [WASAPI deaktiviert für Audio-Ausgabe](#WASAPI) in den Erweiterten Einstellungen gestartet haben.
+
+##### Zeit, um das Audio-Gerät nach dem Sprechen nicht auszublenden {#AudioAwakeTime}
+
+Dieses Eingabefeld legt fest, wie lange NVDA das Audio-Gerät nach Beendigung des Sprechens nicht ausblenden soll.
+Dadurch kann NVDA bestimmte Sprachfehler wie ausgelassene Wortteile vermeiden.
+Dies kann passieren, wenn Audio-Geräte (insbesondere Bluetooth- und drahtlose Geräte) in den Standby-Modus wechseln.
+Dies kann auch in anderen Anwendungsfällen hilfreich sein, z. B. bei der Ausführung von NVDA innerhalb einer virtuellen Maschine (z. B. Citrix Virtual Desktop) oder auf bestimmten Laptops.
+
+Bei niedrigeren Werten kann es vorkommen, dass der Ton oder Wortsilben häufiger abgeschnitten wird, da ein Gerät möglicherweise zu früh in den Standby-Modus wechselt, wodurch der Sprechvorgang ausgeblendet wird.
+Ein zu hoher Wert kann dazu führen, dass sich die Batterie eines externen Audio-Geräts (z. B. Kopfhörer) schneller entlädt, da sie länger aktiv bleibt, während kein Ton gesendet wird.
+
+Sie können die Zeitspanne auf 0 setzen, um diese Funktion zu deaktivieren.
 
 #### Die Einstellungen der visuellen Darstellungen {#VisionSettings}
 
@@ -2650,7 +2650,7 @@ Bitte beachten Sie die Optionen in der Kategorie [Dokument-Formatierungen](#Docu
 ##### Automatisch bei Änderungen im Fokus den Fokusmodus einschalten {#BrowseModeSettingsAutoPassThroughOnFocusChange}
 
 Diese Option ermöglicht bei Änderungen den Fokusmodus automatisch zu aktivieren.
-Zum Beispiel: Sie befinden sich auf einer Webseite und landen beim Drücken der Tabulatortaste auf einem Formularfeld, schaltet NVDA in den Fokusmodus um, sofern diese Option eingeschaltet ist.
+Zum Beispiel: Sie befinden sich auf einer Webseite und landen beim Drücken der Tab-Taste auf einem Formularfeld, schaltet NVDA in den Fokusmodus um, sofern diese Option eingeschaltet ist.
 
 ##### Beim Navigieren mit dem System-Cursor automatisch den Fokusmodus einschalten {#BrowseModeSettingsAutoPassThroughOnCaretMove}
 
@@ -3122,7 +3122,7 @@ In diesem Dialogfeld werden alle verfügbaren NVDA-Funktionen in einer Baumansic
 Unterhalb jeder Funktion werden die zugewiesenen Befehle, sofern vorhanden, angezeigt.
 
 um einen Befehl einer Funktion zuzuweisen, wählen Sie die Funktion aus und klicken Sie auf den Schalter "Hinzufügen".
-Führen Sie anschließend den zuzuweisenden Befehl durch - Drücken Sie die entsprechende Tastenkombination oder die Tasten an der Braillezeile.
+Führen Sie anschließend den zuzuweisenden Befehl aus - Drücken Sie die entsprechende Tastenkombination oder die Tasten an der Braillezeile.
 Oft kann eine NVDA-Funktion durch mehr als eine Tastenkombination ausgeführt werden.
 Bei Tastenkombinationen kann es beispielsweise sinnvoll sein, das Tastaturschema anzugeben, in dem diese Tastenkombination wirksam werden soll (Desktop/Laptop).
 In solchen Fällen wird ein Menü angezeigt, in dem Sie die entsprechende Option auswählen können.
@@ -3139,10 +3139,9 @@ Hinweis:
 
 * Emulierte Tasten müssen Tastenbefehlen zugewiesen sein, damit sie beim Speichern und Schließen des Dialogfeldes bestehen bleiben.
 * Ein Tastenbefehl mit NVDA-Tasten kann möglicherweise nicht auf einen emulierten Tastenbefehl ohne NVDA-Tasten abgebildet werden.
-
 Zum Beispiel kann das definieren der emulierten Eingabe `A` und das Konfigurieren des Tastenbefehls `Strg+M` dazu führen, dass die Anwendung `Strg+A` interpretieren könnte.
 
-Um die Änderungen zu übernehmen, klicken Sie auf den Schalter "OK" oder auf "Abbrechen", um die Änderungen zu verwerfen.
+Klicken Sie auf den Schalter "OK", um die Änderungen zu übernehmen oder auf den Schalter "Abbrechen", um die Änderungen zu verwerfen.
 
 ### Konfiguration speichern und erneut laden {#SavingAndReloading}
 
@@ -3774,7 +3773,7 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 |Eine Zeile nach oben springen |B4|
 |Eine Zeile nach unten springen |B5|
 |Zum Braille-Modul springen |Routing-Taste|
-|Umschalt+Tabulatortaste |Escape-Taste, Linke Triple-Aktionstaste auf+ab|
+|Umschalt+Tab-Taste |Escape-Taste, Linke Triple-Aktionstaste auf+ab|
 |Alt-Taste |B2+B4+B5|
 |Escape-Taste |B4+B6|
 |Tab-Taste |Eingabe, rechte Triple-Aktionstaste auf+ab|
