@@ -164,6 +164,8 @@ def processText(locale: str, text: str, symbolLevel: characterProcessing.SymbolL
 	text = speechDictHandler.processText(text)
 	text = characterProcessing.processSpeechSymbols(locale, text, symbolLevel)
 	text = RE_CONVERT_WHITESPACE.sub(" ", text)
+	if config.conf["speech"]["unicodeNormalization"]:
+		text = unicodeNormalize(text)
 	return text.strip()
 
 
@@ -310,7 +312,7 @@ def _getSpellingSpeechAddCharMode(
 		seq: Generator[SequenceItemT, None, None],
 ) -> Generator[SequenceItemT, None, None]:
 	"""Inserts CharacterMode commands in a speech sequence generator to ensure any single character
-	is spelt by the synthesizer.
+	is spelled by the synthesizer.
 	@param seq: The speech sequence to be spelt.
 	"""
 	charMode = False
@@ -331,14 +333,16 @@ def _getSpellingCharAddCapNotification(
 		sayCapForCapitals: bool,
 		capPitchChange: int,
 		beepForCapitals: bool,
+		reportNormalized: bool,
 ) -> Generator[SequenceItemT, None, None]:
 	"""This function produces a speech sequence containing a character to be spelt as well as commands
-	to indicate that this character is uppercase if applicable.
-	@param speakCharAs: The character as it will be spoken by the synthesizer.
-	@param sayCapForCapitals: indicates if 'cap' should be reported along with the currently spelt character.
-	@param capPitchChange: pitch offset to apply while spelling the currently spelt character.
-	@param beepForCapitals: indicates if a cap notification beep should be produced while spelling the currently
-	spellt character.
+	to indicate that this character is uppercase and/or normalized, if applicable.
+	:param speakCharAs: The character as it will be spoken by the synthesizer.
+	:param sayCapForCapitals: indicates if 'cap' should be reported along with the currently speled character.
+	:param capPitchChange: pitch offset to apply while spelling the currently speled character.
+	:param beepForCapitals: indicates if a cap notification beep should be produced while spelling the currently
+	spelled character.
+	:param reportNormalized: indicates if 'normalized' should be reported along with the currently speled character.
 	"""
 	if sayCapForCapitals:
 		# Translators: cap will be spoken before the given letter when it is capitalized.
@@ -347,16 +351,26 @@ def _getSpellingCharAddCapNotification(
 	else:
 		capMsgBefore = ''
 		capMsgAfter = ''
-	
+	if reportNormalized:
+		# Translators: 'Normalized' will be spoken after the given letter when it is normalized.
+		normalizedMsg = _("%s normalized")
+		normalizedMsgBefore, normalizedMsgAfter = normalizedMsg.split('%s')
+	else:
+		normalizedMsgBefore = normalizedMsgAfter = ''
+
 	if capPitchChange:
 		yield PitchCommand(offset=capPitchChange)
+	if normalizedMsgBefore:
+		yield normalizedMsgBefore
 	if beepForCapitals:
 		yield BeepCommand(2000, 50)
 	if capMsgBefore:
 		yield capMsgBefore
-	yield speakCharAs
+	yield  speakCharAs
 	if capMsgAfter:
 		yield capMsgAfter
+	if normalizedMsgAfter:
+		yield normalizedMsgAfter
 	if capPitchChange:
 		yield PitchCommand()
 
@@ -369,13 +383,14 @@ def _getSpellingSpeechWithoutCharMode(
 		capPitchChange: int,
 		beepForCapitals: bool,
 		fallbackToCharIfNoDescription: bool = True,
+		unicodeNormalization: bool = False,
+		reportNormalizedForCharacterNavigation: bool = False,
 ) -> Generator[SequenceItemT, None, None]:
 	"""
 	@param fallbackToCharIfNoDescription: Only applies if useCharacterDescriptions is True.
 	If fallbackToCharIfNoDescription is True, and no character description is found,
 	the character itself will be announced. Otherwise, nothing will be spoken.
 	"""
-	
 	defaultLanguage=getCurrentLanguage()
 	if not locale or (not config.conf['speech']['autoDialectSwitching'] and locale.split('_')[0]==defaultLanguage.split('_')[0]):
 		locale=defaultLanguage
@@ -386,8 +401,14 @@ def _getSpellingSpeechWithoutCharMode(
 		return
 	if not text.isspace():
 		text=text.rstrip()
-
 	textLength=len(text)
+	isNormalized = False
+	if unicodeNormalization and textLength > 1:
+		normalized = unicodeNormalize(text)
+		if len(normalized) == 1:
+			# Normalization of a composition
+			text = normalized
+			isNormalized = True
 	localeHasConjuncts = True if locale.split('_',1)[0] in LANGS_WITH_CONJUNCT_CHARS else False
 	charDescList = getCharDescListFromText(text,locale) if localeHasConjuncts else text
 	for item in charDescList:
@@ -408,6 +429,11 @@ def _getSpellingSpeechWithoutCharMode(
 			return None
 		else:
 			speakCharAs=characterProcessing.processSpeechSymbol(locale,speakCharAs)
+			if not isNormalized and unicodeNormalization:
+				normalized = unicodeNormalize(speakCharAs)
+				if speakCharAs != normalized:
+					speakCharAs = " ".join(normalized)
+					isNormalized = True
 		if config.conf['speech']['autoLanguageSwitching']:
 			yield LangChangeCommand(locale)
 		yield from _getSpellingCharAddCapNotification(
@@ -415,6 +441,7 @@ def _getSpellingSpeechWithoutCharMode(
 			uppercase and sayCapForCapitals,
 			capPitchChange if uppercase else 0,
 			uppercase and beepForCapitals,
+			isNormalized and reportNormalizedForCharacterNavigation
 		)
 		yield EndUtteranceCommand()
 
@@ -487,6 +514,8 @@ def getSpellingSpeech(
 		sayCapForCapitals=synthConfig["sayCapForCapitals"],
 		capPitchChange=capPitchChange,
 		beepForCapitals=synthConfig["beepForCapitals"],
+		unicodeNormalization=config.conf["speech"]["unicodeNormalization"],
+		reportNormalizedForCharacterNavigation=config.conf["speech"]["reportNormalizedForCharacterNavigation"],
 	)
 	if synthConfig["useSpellingFunctionality"]:
 		seq = _getSpellingSpeechAddCharMode(seq)
@@ -1526,18 +1555,18 @@ def getTextInfoSpeech(  # noqa: C901
 	if onlyInitialFields or (
 		isWordOrCharUnit
 		and len(textWithFields) > 0
-		and len(textWithFields[0].strip() if not textWithFields[0].isspace() else textWithFields[0]) == 1
+		and len(unicodeNormalize(textWithFields[0].strip()) if not textWithFields[0].isspace() else textWithFields[0]) == 1
 		and all(_isControlEndFieldCommand(x) for x in itertools.islice(textWithFields, 1, None))
 	):
 		if reason != OutputReason.ONLYCACHE:
-			yield from list(_getTextInfoSpeech_considerSpelling(
+			yield from _getTextInfoSpeech_considerSpelling(
 				unit,
 				onlyInitialFields,
 				textWithFields,
 				reason,
 				speechSequence,
 				language,
-			))
+			)
 		if useCache:
 			_getTextInfoSpeech_updateCache(
 				useCache,
@@ -1569,8 +1598,6 @@ def getTextInfoSpeech(  # noqa: C901
 					# There was content after the indentation, so there is no more indentation.
 					indentationDone=True
 			if command:
-				if config.conf["speech"]["unicodeNormalization"]:
-					command = unicodeNormalize(command)
 				if inTextChunk:
 					relativeSpeechSequence[-1]+=command
 				else:
@@ -1971,11 +1998,6 @@ def getPropertiesSpeech(  # noqa: C901
 	errorMessage: str | None = propertyValues.get("errorMessage", None)
 	if errorMessage:
 		textList.append(errorMessage)
-	if config.conf["speech"]["unicodeNormalization"]:
-		textList = [
-			unicodeNormalize(t) if isinstance(t, str) else t
-			for t in textList
-		]
 	types.logBadSequenceTypes(textList)
 	return textList
 
