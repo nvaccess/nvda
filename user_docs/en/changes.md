@@ -2,14 +2,21 @@
 
 ## 2024.3
 
-### Important notes
+This release adds support for Unicode Normalization to speech and braille output.
+This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly uses on social media.
+It also allows reading of equations in the Microsoft Word equation editor.
+You can enable this functionality for both speech and braille in their respective settings categories in the NVDA Settings dialog.
+
+There are several bug fixes, particularly for the Windows 11 Emoji Panel and Clipboard history.
+For web browsers, there are fixes for reporting error messages, figures, captions, table labels and checkbox/radio button menu items.
+
+Unicode CLDR has been updated.
+
 
 ### New Features
 
-* Error messages referenced with `aria-errormessage` are now reported in Google Chrome and Mozilla Firefox. (#8318)
-* In LibreOffice Writer (version 24.8 and newer), when toggling text formatting (bold, italic, underline, subscript/superscript, alignment) using the corresponding keyboard shortcut, NVDA announces the new formatting attribute (e.g. "Bold on", "Bold off"). (#4248, @michaelweghorn)
 * Added support for Unicode Normalization to speech and braille output. (#11570, #16466 @LeonarddeR).
-  * This can be of help when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly uses on social media.
+  * This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly uses on social media.
   * It also allows reading of equations in the Microsoft Word equation editor. (#4631)
   * You can enable this functionality for both speech and braille in their respective settings categories in the NVDA Settings dialog.
 
@@ -23,18 +30,20 @@
 * When reading by line in browse mode, "caption" is no longer reported on each line of a long figure or table caption. (#14874)
 
 ### Bug Fixes
-
-* NVDA will announce correctly the autocomplete suggestions in Eclipse and other Eclipse-based environments on Windows 11. (#16416, @thgcode)
-* Improved reliability of automatic text readout, particularly in terminal applications. (#15850, #16027, @Danstiv)
-* NVDA will correctly announce selection changes when editing a cell's text in Microsoft Excel. (#15843)
 * Windows 11 fixes:
   * NVDA will no longer appear to get stuck when closing the clipboard history and emoji panel. (#16346, #16347, @josephsl)
   * NVDA will announce visible candidates again when opening the Windows 11 IME interface. (#14023, @josephsl)
   * NVDA will no longer announce "clipboard history" twice when navigating through the emoji panel menu items. (#16532, @josephsl)
   * NVDA will no longer cut off speech and braille when reviewing kaomojis and symbols in the emoji panel. (#16533, @josephsl)
+* Web browser fixes:
+  * Error messages referenced with `aria-errormessage` are now reported in Google Chrome and Mozilla Firefox. (#8318)
+  * If present, NVDA will now use `aria-labelledby` to provide accessible names for tables in Mozilla Firefox. (#5183)
+  * NVDA will correctly announce radio and checkbox menuitems when first entering submenus in Google Chrome and Mozilla Firefox. (#14550)
+* NVDA will announce correctly the autocomplete suggestions in Eclipse and other Eclipse-based environments on Windows 11. (#16416, @thgcode)
+* Improved reliability of automatic text readout, particularly in terminal applications. (#15850, #16027, @Danstiv)
+* NVDA will correctly announce selection changes when editing a cell's text in Microsoft Excel. (#15843)
 * In applications using Java Access Bridge, NVDA will now correctly read the last blank line of a text instead of repeating the previous line. (#9376, @dmitrii-drobotov)
-* If present, NVDA will now use `aria-labelledby` to provide accessible names for tables in Mozilla Firefox. (#5183)
-* NVDA will correctly announce radio and checkbox menuitems when first entering submenus in Google Chrome and Mozilla Firefox. (#14550)
+* In LibreOffice Writer (version 24.8 and newer), when toggling text formatting (bold, italic, underline, subscript/superscript, alignment) using the corresponding keyboard shortcut, NVDA announces the new formatting attribute (e.g. "Bold on", "Bold off"). (#4248, @michaelweghorn)
 
 ### Changes for Developers
 
