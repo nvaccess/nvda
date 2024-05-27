@@ -75,6 +75,7 @@ if TYPE_CHECKING:
 FALLBACK_TABLE = config.conf.getConfigValidation(("braille", "translationTable")).default
 """Table to use if the output table configuration is invalid."""
 
+
 roleLabels: typing.Dict[controlTypes.Role, str] = {
 	# Translators: Displayed in braille for an object which is a
 	# window.
@@ -499,20 +500,20 @@ class Region(object):
 			mode |= louis.compbrlAtCursor
 
 		converter: UnicodeNormalizationOffsetConverter | None = None
-		textToTranslate = self.rawText
-		textToTranslateTypeforms = self.rawTextTypeforms
-		cursorPos = self.cursorPos
-		if config.conf["braille"]["unicodeNormalization"] and not isUnicodeNormalized(textToTranslate):
-			converter = UnicodeNormalizationOffsetConverter(textToTranslate)
+		if config.conf["braille"]["unicodeNormalization"] and not isUnicodeNormalized(self.rawText):
+			converter = UnicodeNormalizationOffsetConverter(self.rawText)
 			textToTranslate = converter.encoded
-			if textToTranslateTypeforms is not None:
-				# Typeforms must be adapted to represent normalized characters.
-				textToTranslateTypeforms = [
-					textToTranslateTypeforms[strOffset] for strOffset in converter.computedEncodedToStrOffsets
-				]
-			if cursorPos is not None:
-				# Convert the cursor position to a normalized offset.
-				cursorPos = converter.strToEncodedOffsets(cursorPos)
+			# Typeforms must be adapted to represent normalized characters.
+			textToTranslateTypeforms = [
+				self.rawTextTypeforms[strOffset] for strOffset in converter.computedEncodedToStrOffsets
+			]
+			# Convert the cursor position to a normalized offset.
+			cursorPos = converter.strToEncodedOffsets(self.cursorPos)
+		else:
+			textToTranslate = self.rawText
+			textToTranslateTypeforms = self.rawTextTypeforms
+			cursorPos = self.cursorPos
+
 		self.brailleCells, brailleToRawPos, rawToBraillePos, self.brailleCursorPos = louisHelper.translate(
 			[handler.table.fileName, "braille-patterns.cti"],
 			textToTranslate,
@@ -1496,28 +1497,23 @@ class ReviewTextInfoRegion(TextInfoRegion):
 	_fakeSelection: textInfos.TextInfo | None = None
 	_readingUnitContainsSelectedCharacters: bool = False
 
-	def _selectionHelper(self) -> None:
+	def _selectionHelper(self) -> textInfos.TextInfo:
 		"""Helper function to decide what should be regarded as selection.
-		It may vary between real selection, part of real selection and
-		review position (no selection).
+		:return: it may vary between real selection, part of real selection and
+		review position (when there is no selection or review position is
+		outside of selection).
 		"""
 		self._readingUnitContainsSelectedCharacters = False
-		if not config.conf["braille"]["showSelection"]:
-			self._realSelection = None
-			self._fakeSelection = api.getReviewPosition().copy()
-			return
 		info: textInfos.TextInfo
 		try:
 			info = self.obj.makeTextInfo(textInfos.POSITION_SELECTION)
 		except (LookupError, RuntimeError):
 			self._realSelection = None
-			self._fakeSelection = self._collapsedReviewPosition()
-			return
+			return self._collapsedReviewPosition()
 		if info.isCollapsed:
 			# Cursor
 			self._realSelection = None
-			self._fakeSelection = self._collapsedReviewPosition()
-			return
+			return self._collapsedReviewPosition()
 		# Selection
 		if (
 			self._realSelection is None
@@ -1528,20 +1524,15 @@ class ReviewTextInfoRegion(TextInfoRegion):
 			self._realSelection = info.copy()
 			if config.conf["reviewCursor"]["followCaret"]:
 				# Update also review position
-				reviewPosition: textInfos.TextInfo = info.copy()
+				self._fakeSelection = info.copy()
 				if self.obj.isTextSelectionAnchoredAtStart:
 					# The end of the range is exclusive, so make it inclusive first.
-					reviewPosition.move(textInfos.UNIT_CHARACTER, -1, "end")
+					info.move(textInfos.UNIT_CHARACTER, -1, "end")
 				# Collapse the selection to the unanchored end which is also review position.
-				reviewPosition.collapse(end=self.obj.isTextSelectionAnchoredAtStart)
-				# Enqueue to avoid recursion error
-				queueHandler.queueFunction(
-					queueHandler.eventQueue,
-					self._setCursor,
-					reviewPosition
-				)
-				self._fakeSelection = info
-				return
+				info.collapse(end=self.obj.isTextSelectionAnchoredAtStart)
+				# Enqueue to avoid recursion error when reviewing different object
+				queueHandler.queueFunction(queueHandler.eventQueue, self._setCursor, info)
+				return self._fakeSelection
 		# Selection unchanged or review does not follow caret
 		readingInfo: textInfos.TextInfo = api.getReviewPosition().copy()
 		readingInfo.expand(self._getReadingUnit())
@@ -1550,8 +1541,7 @@ class ReviewTextInfoRegion(TextInfoRegion):
 			or readingInfo.end <= info.start
 		):
 			# Reading unit containing review position is outside of selection
-			self._fakeSelection = self._collapsedReviewPosition()
-			return
+			return self._collapsedReviewPosition()
 		else:
 			# Reading unit contains selected charactersbut all characters are not
 			# necessarily selected
@@ -1560,18 +1550,20 @@ class ReviewTextInfoRegion(TextInfoRegion):
 			if readingInfo.end > self._realSelection.end:
 				readingInfo.end = self._realSelection.end
 			self._readingUnitContainsSelectedCharacters = True
-			self._fakeSelection = readingInfo
+			return readingInfo
 
 	def _getSelection(self) -> textInfos.TextInfo:
 		"""Gets selection for use in update function.
 		:return: when review position is within selection, whole real selection
 		is returned if it fits to reading unit, or part of it if it does not.
 		When review position is outside of selection or there is no selection
-		or showing selection is disabled, review position is returned.
+		review position is returned.
 		Logic which defines what to return is in _selectionHelper
 		and update functions.
 		"""
-		return self._fakeSelection
+		if self._fakeSelection is not None:
+			return self._fakeSelection
+		return self._selectionHelper()
 
 	def _collapsedReviewPosition(self) -> textInfos.TextInfo:
 		"""Gets collapsed review position.
@@ -1586,15 +1578,17 @@ class ReviewTextInfoRegion(TextInfoRegion):
 	def update(self):
 		"""Updates this region.
 		"""
-		self._selectionHelper()
+		self._fakeSelection = self._getSelection()
 		if self._readingUnitContainsSelectedCharacters:
+			# Braille cursor position is at most self._currentContentPos
 			# Get braille cursor position so that braille can be scrolled correctly.
 			fakeSelection: textInfos.TextInfo = self._fakeSelection.copy()
 			# It is obtained when parent class update function detects cursor.
 			# If it detects selection brailleCursorPos is None.
 			self._fakeSelection = self._collapsedReviewPosition()
 			super().update()
-			scrollPos: int = self.brailleCursorPos
+			maxPos: int = self._currentContentPos
+			scrollPos: int = self.brailleCursorPos if self.brailleCursorPos < maxPos - 1 else maxPos - 1
 			self._fakeSelection = fakeSelection
 			# Update region with selection
 			super().update()
@@ -1607,6 +1601,7 @@ class ReviewTextInfoRegion(TextInfoRegion):
 			self.brailleSelectionEnd = scrollPos + 1
 		else:
 			super().update()
+		self._fakeSelection = None
 
 	def _routeToTextInfo(self, info: textInfos.TextInfo):
 		"""Move cursor to new cell, or activate if it is already there.

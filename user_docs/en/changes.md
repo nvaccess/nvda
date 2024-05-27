@@ -22,6 +22,8 @@ Unicode CLDR has been updated.
 
 ### Changes
 
+* Braille:
+  * Show selection in edit controls and documents when tethered to review. (#3095, #15994, #16549)
 * Component updates:
   * Updated Unicode CLDR to version 45.0. (#16507, @OzancanKaratas)
   * Updated fast_diff_match_patch (used to detect changes in terminals and other dynamic content) to version 2.1.0. (#16508, @codeofdusk)
