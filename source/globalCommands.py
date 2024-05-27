@@ -4510,7 +4510,7 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+alt+s",
 	)
 	def script_cycleSoundSplit(self, gesture: "inputCore.InputGesture") -> None:
-		audio._toggleSoundSplitState()
+		audio.toggleSoundSplitState()
 
 	@script(
 		description=_(
