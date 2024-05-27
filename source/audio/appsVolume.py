@@ -144,7 +144,7 @@ def toggleAppsVolumeState():
 		)
 		ui.message(message)
 		return
-	state = config.conf["audio"]["ApplicationsVolumeMode"]
+	state = config.conf["audio"]["applicationsVolumeMode"]
 	volume: int = config.conf["audio"]["applicationsSoundVolume"]
 	try:
 		index = APPS_VOLUME_STATES_ORDER.index(state)
