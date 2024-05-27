@@ -13,6 +13,8 @@ complexSymbols:
 # Phrase endings.
 ; phrase ending	(?<=[^\s;])\s?;(?=[\"'”’);\s]|$)
 : phrase ending	(?<=[^\s:])\s?:(?=[\"'”’);\s]|$)
+# Series of dots used for visual presentation, e.g. in table of contents
+multiple .	\.{4,}
 # Others
 decimal point	(?<![^\d -])\,(?=\d)
 thousands separator	(?<![^\d -])\.(?=\d{3}(\D|$))
@@ -37,7 +39,7 @@ symbols:
 … sentence ending	points de suspension	all	always	# … fin de phrase
 ; phrase ending	point virgule	# ; fin de phrase
 : phrase ending	deux points	# : fin de phrase
-padding .	points de remplissage
+multiple .	points multiples
 
 decimal point		# virgule décimale
 thousands separator		# point des mille

@@ -1050,9 +1050,9 @@ Cependant, pour les scénarios dans lesquels vous souhaitez copier un tableau ou
 
 ## Lecture de Contenu Mathématique {#ReadingMath}
 
-NVDA peut lire et naviguer dans du contenu mathématique sur le Web et dans d'autres applications, offrant un accès à la fois en parole et en braille. 
+NVDA peut lire et naviguer dans du contenu mathématique sur le Web et dans d'autres applications, offrant un accès à la fois en parole et en braille.
 Cependant, pour que NVDA puisse lire et interagir avec le contenu mathématique, vous devrez d'abord installer un composant mathématique pour NVDA.
-Il existe plusieures extensions NVDA disponibles dans l'Add-on Store de NVDA qui prennent en charge les mathématiques, notamment l'[extension MathCAT NVDA](https://nsoiffer.github.io/MathCAT/) et [Access8Math](https://github.com/tsengwoody/Access8Math). 
+Il existe plusieures extensions NVDA disponibles dans l'Add-on Store de NVDA qui prennent en charge les mathématiques, notamment l'[extension MathCAT NVDA](https://nsoiffer.github.io/MathCAT/) et [Access8Math](https://github.com/tsengwoody/Access8Math).
 Veuillez vous référer à la [section Add-on Store](#AddonsManager) pour savoir comment découvrir et installer les extensions disponibles dans NVDA.
 NVDA peut également utiliser l'ancien logiciel [MathPlayer](https://info.wiris.com/mathplayer-info) de Wiris s'il se trouve sur votre système, bien que ce logiciel ne soit plus maintenu.
 
@@ -1121,7 +1121,7 @@ Bien qu'il soit généralement recommandé d'utiliser l'une des extensions NVDA 
 Par exemple. MathPlayer peut prendre en charge une langue particulière ou un code braille qui n'est pas pris en charge dans les extensions plus récentes.
 MathPlayer est disponible gratuitement sur le site Wiris.
 [Télécharger MathPlayer](https://downloads.wiris.com/mathplayer/MathPlayerSetup.exe).
-Après avoir installé MathPlayer, vous devrez redémarrer NVDA. 
+Après avoir installé MathPlayer, vous devrez redémarrer NVDA.
 Veuillez noter que les informations sur MathPlayer peuvent indiquer qu'il est uniquement destiné aux navigateurs plus anciens tels qu'Internet Explorer 8.
 Cela fait uniquement référence à l'utilisation de MathPlayer pour afficher visuellement du contenu mathématique et peut être ignoré par ceux qui l'utilisent pour lire ou naviguer dans les mathématiques avec NVDA.
 
@@ -1189,7 +1189,7 @@ Dans le but de loger autant d'informations que possible sur un afficheur braille
 |arb |arborescence|
 |btnarb |bouton d'arborescence|
 |élarb |élément d'arborescence|
-|nv N |un élément d'arborescence a un niveau hiérarchique N||
+|nv N |un élément d'arborescence a un niveau hiérarchique N|
 |fen |fenêtre|
 |⠤⠤⠤⠤⠤ |séparateur|
 |mrq |contenu marqué|
@@ -2200,18 +2200,6 @@ Ce potentiomètre vous permet de régler le volume des sons et des bips de NVDA.
 Ce paramètre ne prend effet que lorsque "Le volume des sons NVDA suit le volume de la voix" est désactivé.
 Cette option n'est pas disponible si vous avez démarré NVDA avec [WASAPI désactivé pour la sortie audio](#WASAPI) dans les Paramètres avancés.
 
-##### Durée de maintien en éveil du périphérique audio après la parole {#AudioAwakeTime}
-
-Cette zone d'édition spécifie combien de temps NVDA maintient le périphérique audio en éveil après la fin de la parole.
-Cela permet à NVDA d'éviter certains problèmes de parole comme des parties de mots coupées.
-Cela peut se produire lorsque des appareils audio (en particulier les appareils Bluetooth et sans fil) passent en mode veille.
-Cela peut également être utile dans d'autres cas d'utilisation, par exemple lors de l'exécution de NVDA dans une machine virtuelle (par exemple Citrix Virtual Desktop) ou sur certains ordinateurs portables.
-
-Des valeurs plus faibles peuvent permettre de couper l'audio plus souvent, car un appareil peut passer en mode veille trop tôt, provoquant ainsi une coupure du début de la parole suivante.
-Une valeur trop élevée peut entraîner une décharge plus rapide de la batterie du périphérique de sortie audio, car il reste active plus longtemps alors qu'aucun son n'est envoyé.
-
-Vous pouvez mettre cette durée à zéro afin de désactiver cette fonctionnalité.
-
 ##### Séparation du son {#SelectSoundSplitMode}
 
 La fonction de séparation du son permet aux utilisateurs d'utiliser leurs périphériques de sortie stéréo, tels que des écouteurs et des haut-parleurs.
@@ -2230,7 +2218,7 @@ Par défaut, cette commande alternera entre les modes suivants :
 
 * Séparation du son désactivée : NVDA et les autres applications diffuseront leur son sur les canaux gauche et droit.
 * NVDA à gauche et applications à droite : NVDA parlera dans le canal de gauche, tandis que les autres applications diffuseront leur son dans le canal de droite.
-* NVDA à droite et applications à gauche : NVDA parlera dans le canal de droite, tandis que les autres applications diffuseront leur son dans le canal de gauche.
+* NVDA à gauche et applications dans les deux canaux : NVDA parlera dans le canal de gauche, tandis que les autres applications diffuseront leur son dans les deux canaux, gauche et droit.
 
 Il existe des modes de séparation du son plus avancés disponibles dans la liste déroulante des paramètres NVDA.
 Veuillez noter que le séparateur de son ne fonctionne pas comme un mélangeur audio.
@@ -2248,11 +2236,23 @@ Les modes non cochés sont exclus.
 Par défaut, seuls trois modes sont inclus.
 
 * Séparation du son désactivée : NVDA et les applications diffusent des sons dans les canaux gauche et droit.
-* NVDA à gauche et toutes les autres applications sur le canal de droite.
-* NVDA à droite et toutes les autres applications sur le canal de gauche.
+* NVDA à gauche et applications à droite.
+* NVDA à gauche et applications dans les deux canaux.
 
 Veuillez noter qu'il est nécessaire de cocher au moins un mode.
 Cette option n'est pas disponible si vous avez démarré NVDA avec [WASAPI désactivé pour la sortie audio](#WASAPI) dans les Paramètres avancés.
+
+##### Durée de maintien en éveil du périphérique audio après la parole {#AudioAwakeTime}
+
+Cette zone d'édition spécifie combien de temps NVDA maintient le périphérique audio en éveil après la fin de la parole.
+Cela permet à NVDA d'éviter certains problèmes de parole comme des parties de mots coupées.
+Cela peut se produire lorsque des appareils audio (en particulier les appareils Bluetooth et sans fil) passent en mode veille.
+Cela peut également être utile dans d'autres cas d'utilisation, par exemple lors de l'exécution de NVDA dans une machine virtuelle (par exemple Citrix Virtual Desktop) ou sur certains ordinateurs portables.
+
+Des valeurs faibles peuvent provoquer une coupure de l'audio plus souvent, car un appareil peut passer en mode veille trop tôt, provoquant ainsi une coupure du début de la parole suivante.
+Une valeur trop élevée peut entraîner une décharge plus rapide de la batterie du périphérique de sortie audio, car il reste active plus longtemps alors qu'aucun son n'est envoyé.
+
+Vous pouvez mettre cette durée à zéro afin de désactiver cette fonctionnalité.
 
 #### Vision {#VisionSettings}
 
@@ -3139,8 +3139,7 @@ Note :
 
 * Les touches émulées doivent avoir un geste assigné pour persister lors de la sauvegarde ou de la fermeture du dialogue.
 * Un geste de commande avec modificateur peut ne pas pouvoir êttre assigné à un geste émulé sans modificateur
-Par exemple, définir le `a` comme touche émulée et configurer un geste de commande `ctrl+m`, peut avoir comme résultat
-que l'application reçoit `ctrl+a`.
+Par exemple, définir le `a` comme touche émulée et configurer un geste de commande `ctrl+m`, peut avoir comme résultat que l'application reçoit `ctrl+a`.
 
 Lorsque vous avez terminé vos modifications, appuyez sur le bouton "OK" pour les sauvegarder ou sur le bouton "Annuler" pour les ignorer.
 
@@ -4487,12 +4486,12 @@ Pour cette raison, et pour maintenir la compatibilité avec d'autres revues d'é
 
 ### Afficheurs Eurobraille {#Eurobraille}
 
-Les afficheurs b.book, b.note, Esys, Esytime et Iris d'Eurobraille sont supportés par NVDA.  
-Ces appareils disposent d'un clavier braille à 10 touches. 
+Les afficheurs b.book, b.note, Esys, Esytime et Iris d'Eurobraille sont supportés par NVDA.
+Ces appareils disposent d'un clavier braille à 10 touches.
 Veuillez consulter la documentation de l'afficheur pour une description de ces touches.
 Des deux touches placées comme une barre d'espace, la touche gauche correspond à la touche retour arrière et la touche droite à la touche espace.
 
-Ces appareils sont connectés via USB et disposent d'un clavier USB autonome. 
+Ces appareils sont connectés via USB et disposent d'un clavier USB autonome.
 Il est possible d'activer/désactiver ce clavier en basculant "simulation de clavier HID" à l'aide d'un geste de commande.
 Les fonctions du clavier braille décrites directement ci-dessous sont lorsque la "simulation du clavier HID" est désactivée.
 

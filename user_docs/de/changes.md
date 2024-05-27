@@ -32,11 +32,11 @@ Es gibt viele kleinere Fehlerbehebungen für Anwendungen wie Mozilla Thunderbird
     * Mathematische Formeln (#16001, @mltony)
     * Text mit gleichem Stil (#16000, @mltony)
     * Text in einem anderen Stil (#16000, @mltony)
-    * Es wurden Befehle hinzugefügt, um zum ersten, zum letzten, vorwärts und rückwärts durch den Sprachausgaben-Einstellungsring zu springen. (#13768, #16095, @rmcpantoja)
+  * Es wurden Befehle hinzugefügt, um zum ersten, zum letzten, vorwärts und rückwärts durch den Sprachausgaben-Einstellungsring zu springen. (#13768, #16095, @rmcpantoja)
     * Das Einstellen der ersten/letzten Einstellung im Sprachausgaben-Einstellungsring hat keinen zugewiesenen Tastenbefehl. (#13768)
     * Verändern der aktuellen Einstellung des Sprachausgaben-Einstellungsrings in größeren Schritten (#13768):
-      * Desktop: `NVDA+Strg+Seite nach oben` oder `NVDA+Strg+Seite nach unten`.
-      * Laptop: `NVDA+Strg+Umschalt+Seite nach oben` oder `NVDA+Strg+Umschalt+Seite nach unten`.
+      * Desktop: `NVDA+Strg+Seite nach oben` und `NVDA+Strg+Seite nach unten`.
+      * Laptop: `NVDA+Strg+Umschalt+Seite nach oben` und `NVDA+Strg+Umschalt+Seite nach unten`.
   * Es wurde ein neuer, nicht zugewiesener Tastenbefehl hinzugefügt, mit der die Anzeige von Abbildungen und Beschriftungen umgeschaltet werden kann. (#10826, #14349)
 * Braille:
   * Unterstützungen für die Braillezeilen BrailleEdgeS2 und BrailleEdgeS3 hinzugefügt. (#16033, #16279, @EdKweon)
@@ -47,7 +47,7 @@ Es gibt viele kleinere Fehlerbehebungen für Anwendungen wie Mozilla Thunderbird
   * Ermöglicht die Aufteilung von NVDA-Sounds auf einen Kanal (z. B. links), während Sounds von allen anderen Anwendungen auf den anderen Kanal (z. B. rechts) ausgegeben werden.
   * Umgeschaltet mit `NVDA+Alt+S`.
 * Die Meldung von Zeilen- und Spaltenüberschriften wird jetzt in inhaltsverarbeitbaren HTML-Elementen unterstützt. (#14113)
-* In den Einstellungen für die Dokument-Formatierung wurde die Option für die Meldung zum Deaktivieren von Abbildungen und Beschriftungen hinzugefügt. (#10826, #14349)
+* In den Einstellungen für die Dokument-Formatierung wurde eine Option für die Meldung zum Deaktivieren von Abbildungen und Beschriftungen hinzugefügt. (#10826, #14349)
 * In Windows 11 teilt NVDA über Warnungen bei der Spracheingabe und schlägt Aktionen vor, einschließlich des obersten Vorschlags beim Kopieren von Daten wie Telefonnummern in die Zwischenablage (Windows 11 Version 2022 Update und neuer). (#16009, @josephsl)
 * NVDA blendet das Audio-Gerät nach Beendigung der Wiedergabe über die Sprachausgabe nicht länger aus, um zu verhindern, dass der Beginn der nächsten Wiedergabe über die Sprachausgabe bei einigen Audio-Geräten wie Bluetooth-Kopfhörern abgeschnitten wird. (#14386, @jcsteh, @mltony)
 * Der HP Secure-Browser wird nun unterstützt. (#16377)
@@ -56,7 +56,7 @@ Es gibt viele kleinere Fehlerbehebungen für Anwendungen wie Mozilla Thunderbird
 
 * Store für NVDA-Erweiterungen:
   * Die minimale und die zuletzt getestete NVDA-Version für eine NVDA-Erweiterung werden nun im Bereich "Weitere Details" angezeigt. (#15776, @Nael-Sayegh)
-  * Die Aktion "Community-Bewertungen" ist nun verfügbar und die Webseite für die Bewertungen wird im Detailbereich in allen Registerkarten des Stores angezeigt. (#16179, @nvdaes)
+  * Die Aktion "Community-Rezensionen" wird auf allen Registerkarten im Store verfügbar sein. (#16179, @nvdaes)
 * Komponenten-Updates:
   * Der Braille-Übersetzer LibLouis wurde auf [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0) aktualisiert. (#16259, @codeofdusk)
     * Neue detaillierte (mit Großbuchstaben gekennzeichnete) belarussische und ukrainische Braille-Tabellen.
@@ -88,8 +88,9 @@ Es gibt viele kleinere Fehlerbehebungen für Anwendungen wie Mozilla Thunderbird
 * Es wurde ein Fehler behoben, der dazu führte, dass NVDA das Menüband und die Optionen in Geekbench nicht lesen konnte. (#16251, @mzanm)
 * Ein seltener Fall wurde behoben, in dem beim Speichern der Konfiguration nicht alle Profile gespeichert werden konnten. (#16343, @CyrilleB79)
 * In Firefox und Chromium-basierten Browsern geht NVDA korrekt in den Fokusmodus über, sobald die Eingabetaste innerhalb einer Präsentationsliste (ul / ol) innerhalb eines bearbeitbaren Inhalts gedrückt wird. (#16325)
-* Die Änderung des Status der Spalten wird automatisch mitgeteilt, wenn Spalten zur Anzeige in der Nachrichtenliste von Thunderbird ausgewählt werden. (#16323)
+* Die Änderung des Status der Spalten wird nun korrekt mitgeteilt, wenn Spalten zur Anzeige in der Nachrichtenliste in Mozilla Thunderbird ausgewählt werden. (#16323)
 * Der Kommandozeilen-Parameter `--help` bzw. `h` funktioniert wieder korrekt. (#16522, @XLTechie)
+* Die Unterstützung in NVDA für die Poedit-Übersetzungssoftware ab Version 3.4 funktioniert korrekt, wenn Sprachen mit 1 oder mehr als 2 Pluralformen (z. B. Chinesisch, Polnisch) übersetzt werden. (#16318)
 
 ### Änderungen für Entwickler
 
