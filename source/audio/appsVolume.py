@@ -111,7 +111,7 @@ def adjustAppsVolume(
 		ui.message(message)
 		return
 	volume: int = config.conf["audio"]["applicationsSoundVolume"]
-	state = config.conf["audio"]["ApplicationsVolumeMode"]
+	state = config.conf["audio"]["applicationsVolumeMode"]
 	if state != AppsVolumeAdjusterFlag.ENABLED:
 		# Translators: error message when applications' volume is disabled
 		msg = _("Please enable applications' volume adjuster in order to adjust applications' volume")
