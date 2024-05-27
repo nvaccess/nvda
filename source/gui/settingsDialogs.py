@@ -2788,7 +2788,7 @@ class AudioPanel(SettingsPanel):
 		self.appVolAdjusterCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=label,
 			wxCtrlClass=nvdaControls.FeatureFlagCombo,
-			keyPath=["audio", "ApplicationsVolumeMode"],
+			keyPath=["audio", "applicationsVolumeMode"],
 			conf=config.conf
 		)
 		self.appVolAdjusterCombo.Bind(wx.EVT_CHOICE, self._onSoundVolChange)
