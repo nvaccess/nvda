@@ -6,6 +6,36 @@ If you are new to the project, or looking for some way to help take a look at:
 - [label:closed/needs-new-author](https://github.com/nvaccess/nvda/issues?q=label%3Aclosed%2Fneeds-new-author)
 - [label:Abandoned](https://github.com/nvaccess/nvda/issues?q=label%3AAbandoned)
 
+For a quick-start guide on setting up a development environment for NVDA, please follow these steps:
+1. Install Visual Studio Code Community Edition: https://aka.ms/vs/17/release/vs_Community.exe
+   
+		* During installation, choose "Desktop development with C++"
+   
+			* Select "C++ Clang tools for Windows" in the optional items pane on the right.
+   
+		* In the Individual components tab, select the following items:
+   
+			* Windows 11 SDK (10.0.22621.0)
+   
+			* MSVC v143 - VS 2022 C++ ARM64/ARM64EC build tools
+   
+			* MSVC v143 - VS 2022 C++ x64/x86 build tools
+   
+			* C++ ATL for v143 build tools (x86 & x64)
+   
+			* C++ ATL for v143 build tools (ARM64/ARM64EC)
+   
+	
+2. Install Git, if not already installed.  [GitHub Desktop](https://desktop.github.com/)  is a convenient installer with both a GUI and CLI tools.
+	
+3. Install [Python](https://www.python.org/) version 3.11 or higher, and ensure that you select the installer for 32-bit.
+
+4. Fork the main repository and then clone your fork 
+	
+	```cmd
+	git clone --recursive https://github.com/YOUR-USERNAME/nvda.git
+	```
+
 ### Guidelines:
 - For anything other than minor bug fixes, please comment on an existing issue or create a new issue providing details about your proposed change.
 - Unrelated changes should be addressed in separate issues.
@@ -24,7 +54,7 @@ If you are new to the project, or looking for some way to help take a look at:
 
 
 ### Overview of contribution process:
-1. [Setup your development environment](./createDevEnvironment.md).
+1. [Setup your development environment](./createDevEnvironment.md) if you have not already done so through the quick-start guide above.
         - Alternatively, you can use [AppVeyor](https://appveyor.com/) to build NVDA for you, without setting up a local development environment, by following [this how-to](./buildingNVDAOnAppVeyor.md).
 1. Ensure the issue you plan to fix is [triaged](../issues/triage.md)
 1. Create a branch for the contribution, to be used for a pull request.
