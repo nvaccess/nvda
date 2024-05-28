@@ -333,7 +333,7 @@ def _getSpellingCharAddCapNotification(
 		sayCapForCapitals: bool,
 		capPitchChange: int,
 		beepForCapitals: bool,
-		reportNormalized: bool,
+		reportNormalized: bool = False,
 ) -> Generator[SequenceItemT, None, None]:
 	"""This function produces a speech sequence containing a character to be spelt as well as commands
 	to indicate that this character is uppercase and/or normalized, if applicable.
