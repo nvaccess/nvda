@@ -308,7 +308,7 @@ To browse the list and find out about a specific add-on:
 1. Use the [reading keys](#ReadingText) or arrow keys to read the full description.
 1. Press `tab` to the "Actions" button, which can be used to install the add-on, among other actions.
 1. Press `tab` to "Other Details", which lists details such as the publisher, version and homepage.
-1. To return to the list of add-ons, press `alt+a`, or multiple times `shift+tab`.
+1. To return to the list of add-ons, press `alt+a`, or `shift+tab` until reaching the list.
 
 #### Searching for add-ons {#SearchingForAddons}
 As well as browsing all available add-ons, it is possible to filter the add-ons shown.
