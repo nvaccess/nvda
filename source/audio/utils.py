@@ -27,7 +27,7 @@ def initialize() -> None:
 
 
 def terminate():
-	pass
+	audioSessionManager = None
 
 
 class AudioSessionEventsListener(AudioSessionEvents):
@@ -76,21 +76,21 @@ class DummyAudioSessionCallback:
 	def register(self, applyToFuture: bool = True):
 		pass
 
-	def unregister(self, runTerminators=True):
+	def unregister(self, runTerminators: bool = True):
 		pass
 
 
 @dataclass(unsafe_hash=True)
 class AudioSessionCallback(DummyAudioSessionCallback):
 	"""
-		This is an abstract class that allows implementing custom logic, that will be applied to all WASAPI
-		audio sessions. Customers are expected to implement functions:
-		* def onSessionUpdate(self, session: AudioSession):
-			It will be called once for every existing audio session and also will be scheduled to be called
-			for every new audio session.
-		* def onSessionTerminated(self, session: AudioSession):
-			It will be called when an audio session is terminated or when unregister() is called, which
-			typically happens when NVDA quits.
+	This is an abstract class that allows implementing custom logic, that will be applied to all WASAPI
+	audio sessions. Consumers are expected to implement functions:
+	* def onSessionUpdate(self, session: AudioSession):
+		It will be called once for every existing audio session and also will be scheduled to be called
+		for every new audio session.
+	* def onSessionTerminated(self, session: AudioSession):
+		It will be called when an audio session is terminated or when unregister() is called, which
+		typically happens when NVDA quits.
 	"""
 	_lock: Lock = Lock()
 	_audioSessionNotification: AudioSessionNotification | None = None
@@ -105,7 +105,7 @@ class AudioSessionCallback(DummyAudioSessionCallback):
 	def register(self, applyToFuture: bool = True):
 		applyToAllAudioSessions(self, applyToFuture)
 
-	def unregister(self, runTerminators=True):
+	def unregister(self, runTerminators: bool = True):
 		if self._audioSessionNotification is not None:
 			audioSessionManager.UnregisterSessionNotification(self._audioSessionNotification)
 		with self._lock:
@@ -122,9 +122,9 @@ def applyToAllAudioSessions(
 		applyToFuture: bool = True,
 ) -> None:
 	"""
-		Executes provided callback function on all active audio sessions.
-		Additionally, if applyToFuture is True, then it will register a notification with audio session manager,
-		which will execute the same callback for all future sessions as they are created.
+	Executes provided callback function on all active audio sessions.
+	Additionally, if applyToFuture is True, then it will register a notification with audio session manager,
+	which will execute the same callback for all future sessions as they are created.
 	"""
 	listener = AudioSessionNotificationListener(callback)
 	if applyToFuture:

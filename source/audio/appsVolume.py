@@ -46,7 +46,7 @@ def terminate():
 class VolumeSetter(AudioSessionCallback):
 	volumeAndMute: VolumeAndMute | None = None
 
-	def getOriginalVolumeAndMute(self, pid):
+	def getOriginalVolumeAndMute(self, pid: int) -> VolumeAndMute:
 		try:
 			with appVolumesCacheLock:
 				originalVolumeAndMute = appVolumesCache[pid]
