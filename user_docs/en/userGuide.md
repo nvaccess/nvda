@@ -313,7 +313,7 @@ To browse the list and find out about a specific add-on:
 #### Searching for add-ons {#SearchingForAddons}
 As well as browsing all available add-ons, it is possible to filter the add-ons shown.
 To search, press `alt+s` to jump to the "Search" field and type the text to search for.
-The content of the search field is searched in the add-on ID, display name, publisher, author and description.
+Searching checks for matches in the add-on ID, display name, publisher, author and description fields.
 The list updates while typing the search terms.
 Once done, press `tab` to go to the filtered list of add-ons and browse the results.
 
