@@ -1607,7 +1607,10 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.reportNormalizedForCharacterNavigationCheckBox = settingsSizerHelper.addItem(
 			wx.CheckBox(self, label=reportNormalizedForCharacterNavigationText)
 		)
-		self.bindHelpEvent("SpeechreportNormalizedForCharacterNavigation", self.reportNormalizedForCharacterNavigationCheckBox)
+		self.bindHelpEvent(
+			"SpeechreportNormalizedForCharacterNavigation",
+			self.reportNormalizedForCharacterNavigationCheckBox
+		)
 		self.reportNormalizedForCharacterNavigationCheckBox.SetValue(
 			config.conf["speech"]["reportNormalizedForCharacterNavigation"]
 		)

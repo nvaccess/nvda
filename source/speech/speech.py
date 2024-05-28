@@ -342,7 +342,8 @@ def _getSpellingCharAddCapNotification(
 	:param capPitchChange: pitch offset to apply while spelling the currently speled character.
 	:param beepForCapitals: indicates if a cap notification beep should be produced while spelling the currently
 	spelled character.
-	:param reportNormalized: indicates if 'normalized' should be reported along with the currently speled character.
+	:param reportNormalized: indicates if 'normalized' should be reported
+	along with the currently speled character.
 	"""
 	if sayCapForCapitals:
 		# Translators: cap will be spoken before the given letter when it is capitalized.
@@ -366,7 +367,7 @@ def _getSpellingCharAddCapNotification(
 		yield BeepCommand(2000, 50)
 	if capMsgBefore:
 		yield capMsgBefore
-	yield  speakCharAs
+	yield speakCharAs
 	if capMsgAfter:
 		yield capMsgAfter
 	if normalizedMsgAfter:
@@ -1555,7 +1556,9 @@ def getTextInfoSpeech(  # noqa: C901
 	if onlyInitialFields or (
 		isWordOrCharUnit
 		and len(textWithFields) > 0
-		and len(unicodeNormalize(textWithFields[0].strip()) if not textWithFields[0].isspace() else textWithFields[0]) == 1
+		and len(
+			unicodeNormalize(textWithFields[0].strip() if not textWithFields[0].isspace() else textWithFields[0])
+		) == 1
 		and all(_isControlEndFieldCommand(x) for x in itertools.islice(textWithFields, 1, None))
 	):
 		if reason != OutputReason.ONLYCACHE:
