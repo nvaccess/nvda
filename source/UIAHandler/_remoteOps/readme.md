@@ -317,7 +317,7 @@ ra.Return(words)
 By simply changing the False to True, the algorithm is automatically reversed, as the start and end properties reverse, and the `numUnits` argument on the methods have their sign flipped.
 As shown above, `start` and `end` properties can be assigned to which moves the endpoint, and they can be moved by a unit with `moveByUnit`.
 They can also be compared with `<`, `<=`, `==`, `>=`, and `>`.
-If you still want the comparison delta (like with `compareEndpoints` the properties also have a `compareWith` method which takes another endpoint and gives back a number less than 0, equal to 0 or greater than 0.
+If you still want the comparison delta (like with `compareEndpoints`), the properties also have a `compareWith` method, which takes another endpoint and gives back a number less than 0, equal to 0 or greater than 0.
 
 ### control flow
 The remoteAPI object has methods for control flow that return Python context managers, so that they can be used as `with` statements.
