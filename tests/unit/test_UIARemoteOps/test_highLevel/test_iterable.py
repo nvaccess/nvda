@@ -35,8 +35,8 @@ class Test_iterable(TestCase):
 		until it is successfully run without exceeding the instruction limit.
 		Using a static variable which is not reset between executions,
 		and then incremented once each execution,
-		We can track how many times the operation was executed.
-		The operation itself  involves incrementing a counter variable 'i'
+		we can track how many times the operation was executed.
+		The operation itself involves incrementing a counter variable 'i'
 		within a while loop until it reaches 5000,
 		yielding i and the execution count on every loop.
 		This is expected to take 5 executions to fully complete.
@@ -79,7 +79,7 @@ class Test_iterable(TestCase):
 		until it is successfully run without exceeding the instruction limit.
 		Using a static variable which is not reset between executions,
 		and then incremented once each execution,
-		We can track how many times the operation was executed.
+		we can track how many times the operation was executed.
 		"""
 		op = operation.Operation(localMode=True)
 

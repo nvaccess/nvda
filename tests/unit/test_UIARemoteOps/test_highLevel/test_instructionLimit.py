@@ -33,8 +33,8 @@ class Test_instructionLimit(TestCase):
 		until it is successfully run without exceeding the instruction limit.
 		Using a static variable which is not reset between executions,
 		and then incremented once each execution,
-		We can track how many times the operation was executed.
-		The operation itself  involves incrementing a counter variable 'i'
+		we can track how many times the operation was executed.
+		The operation itself involves incrementing a counter variable 'i'
 		within a while loop until it reaches 20000.
 		This is expected to take 9 executions to fully complete.
 		"""

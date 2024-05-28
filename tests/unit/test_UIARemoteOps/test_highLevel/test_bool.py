@@ -4,7 +4,7 @@
 # Copyright (C) 2024 NV Access Limited
 
 """
-High-level UIA remote ops Unit tests for setting and comparing booleans.
+High-level UIA remote ops unit tests for setting and comparing booleans.
 """
 
 from unittest import TestCase
