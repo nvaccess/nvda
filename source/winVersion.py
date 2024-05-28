@@ -1,24 +1,29 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Bill Dengler, Joseph Lee
+# Copyright (C) 2006-2024 NV Access Limited, Bill Dengler, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 """A module used to record Windows versions.
 It is also used to define feature checks such as
 making sure NVDA can run on a minimum supported version of Windows.
+
+When working on this file, consider moving to winAPI.
 """
 
-from typing import Optional
+from typing import Any
 import sys
 import os
 import functools
 import winreg
+import platform
+import NVDAState
+from logHandler import log
 
 
 # Records a mapping between Windows builds and release names.
 # These include build 10240 for Windows 10 1507 and releases with multiple release builds.
 # These are applicable to Windows 10 and later as they report the same system version (10.0).
-_BUILDS_TO_RELEASE_NAMES = {
+_BUILDS_TO_RELEASE_NAMES: dict[int, str] = {
 	10240: "Windows 10 1507",
 	10586: "Windows 10 1511",
 	14393: "Windows 10 1607",
@@ -32,8 +37,11 @@ _BUILDS_TO_RELEASE_NAMES = {
 	19042: "Windows 10 20H2",
 	19043: "Windows 10 21H1",
 	19044: "Windows 10 21H2",
+	19045: "Windows 10 22H2",
 	20348: "Windows Server 2022",
 	22000: "Windows 11 21H2",
+	22621: "Windows 11 22H2",
+	22631: "Windows 11 23H2",
 }
 
 
@@ -64,7 +72,7 @@ def _getRunningVersionNameFromWinReg() -> str:
 class WinVersion(object):
 	"""
 	Represents a Windows release.
-	Includes version major, minor, build, service pack information,
+	Includes version major, minor, build, service pack information, machine architecture,
 	as well as tools such as checking for specific Windows 10 releases.
 	"""
 
@@ -73,9 +81,10 @@ class WinVersion(object):
 			major: int = 0,
 			minor: int = 0,
 			build: int = 0,
-			releaseName: Optional[str] = None,
+			releaseName: str | None = None,
 			servicePack: str = "",
-			productType: str = ""
+			productType: str = "",
+			processorArchitecture: str = ""
 	):
 		self.major = major
 		self.minor = minor
@@ -86,31 +95,32 @@ class WinVersion(object):
 			self.releaseName = self._getWindowsReleaseName()
 		self.servicePack = servicePack
 		self.productType = productType
+		self.processorArchitecture = processorArchitecture
 
 	def _getWindowsReleaseName(self) -> str:
 		"""Returns the public release name for a given Windows release based on major, minor, and build.
 		This is useful if release names are not defined when constructing this class.
-		For example, 6.1 will return 'Windows 7'.
-		For Windows 10, feature update release name will be included.
+		For example, 6.3 will return 'Windows 8.1'.
+		For Windows 10 and later, feature update release name will be included.
 		On server systems, unless noted otherwise, client release names will be returned.
 		For example, 'Windows 10 1809' will be returned on Server 2019 systems.
 		"""
-		if (self.major, self.minor) == (6, 1):
-			return "Windows 7"
-		elif (self.major, self.minor) == (6, 2):
-			return "Windows 8"
-		elif (self.major, self.minor) == (6, 3):
-			return "Windows 8.1"
-		elif self.major == 10:
-			# From Version 1511 (build 10586), release Id/display version comes from Windows Registry.
+		match (self.major, self.minor):
+			case (6, 3):
+				return "Windows 8.1"
+			# From Windows 10 1511 (build 10586), release Id/display version comes from Windows Registry.
 			# However there are builds with no release name (Version 1507/10240)
 			# or releases with different builds.
 			# Look these up first before asking Windows Registry.
-			if self.build in _BUILDS_TO_RELEASE_NAMES:
+			case (10, 0) if self.build in _BUILDS_TO_RELEASE_NAMES:
 				return _BUILDS_TO_RELEASE_NAMES[self.build]
-			return "Windows 10 unknown"
-		else:
-			return "Windows release unknown"
+			# #15992: 10.0.22000 or later is Windows 11.
+			case (10, 0) if self.build >= 22000:
+				return "Windows 11 unknown"
+			case (10, 0):
+				return "Windows 10 unknown"
+			case _:
+				return "Windows release unknown"
 
 	def __repr__(self):
 		winVersionText = [self.releaseName]
@@ -119,6 +129,8 @@ class WinVersion(object):
 			winVersionText.append(f"service pack {self.servicePack}")
 		if self.productType != "":
 			winVersionText.append(self.productType)
+		if self.processorArchitecture != "":
+			winVersionText.append(self.processorArchitecture)
 		return " ".join(winVersionText)
 
 	def __eq__(self, other):
@@ -135,9 +147,6 @@ class WinVersion(object):
 
 
 # Windows releases to WinVersion instances for easing comparisons.
-WIN7 = WinVersion(major=6, minor=1, build=7600)
-WIN7_SP1 = WinVersion(major=6, minor=1, build=7601, servicePack="1")
-WIN8 = WinVersion(major=6, minor=2, build=9200)
 WIN81 = WinVersion(major=6, minor=3, build=9600)
 WIN10 = WIN10_1507 = WinVersion(major=10, minor=0, build=10240)
 WIN10_1511 = WinVersion(major=10, minor=0, build=10586)
@@ -152,8 +161,11 @@ WIN10_2004 = WinVersion(major=10, minor=0, build=19041)
 WIN10_20H2 = WinVersion(major=10, minor=0, build=19042)
 WIN10_21H1 = WinVersion(major=10, minor=0, build=19043)
 WIN10_21H2 = WinVersion(major=10, minor=0, build=19044)
+WIN10_22H2 = WinVersion(major=10, minor=0, build=19045)
 WINSERVER_2022 = WinVersion(major=10, minor=0, build=20348)
 WIN11 = WIN11_21H2 = WinVersion(major=10, minor=0, build=22000)
+WIN11_22H2 = WinVersion(major=10, minor=0, build=22621)
+WIN11_23H2 = WinVersion(major=10, minor=0, build=22631)
 
 
 @functools.lru_cache(maxsize=1)
@@ -181,13 +193,14 @@ def getWinVer():
 		build=winVer.build,
 		releaseName=releaseName,
 		servicePack=winVer.service_pack,
-		productType=("workstation", "domain controller", "server")[winVer.product_type - 1]
+		productType=("workstation", "domain controller", "server")[winVer.product_type - 1],
+		processorArchitecture=platform.machine()
 	)
 
 
 def isSupportedOS():
-	# NVDA can only run on Windows 7 Service pack 1 and above
-	return getWinVer() >= WIN7_SP1
+	# NVDA can only run on Windows 8.1 (Blue) and above
+	return getWinVer() >= WIN81
 
 
 UWP_OCR_DATA_PATH = os.path.expandvars(r"$windir\OCR")
@@ -197,10 +210,30 @@ def isUwpOcrAvailable():
 	return os.path.isdir(UWP_OCR_DATA_PATH)
 
 
-def isFullScreenMagnificationAvailable() -> bool:
-	"""
-	Technically this is always False. The Magnification API has been marked by MS as unsupported for
-	WOW64 applications such as NVDA. For our usages, support has been added since Windows 8, relying on our
-	testing our specific usage of the API with each Windows version since Windows 8
-	"""
-	return getWinVer() >= WIN8
+if NVDAState._allowDeprecatedAPI():
+	def isFullScreenMagnificationAvailable() -> bool:
+		"""
+		Technically this is always False. The Magnification API has been marked by MS as unsupported for
+		WOW64 applications such as NVDA. For our usages, support has been added since Windows 8, relying on our
+		testing our specific usage of the API with each Windows version since Windows 8
+		"""
+		log.debugWarning(
+			"Deprecated function called: winVersion.isFullScreenMagnificationAvailable, "
+			"use visionEnhancementProviders.screenCurtain.ScreenCurtainProvider.canStart instead.",
+			stack_info=True
+		)
+		return True
+
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "WIN7" and NVDAState._allowDeprecatedAPI():
+		log.warning("WIN7 is deprecated.")
+		return WinVersion(major=6, minor=1, build=7600, releaseName="Windows 7")
+	if attrName == "WIN7_SP1" and NVDAState._allowDeprecatedAPI():
+		log.warning("WIN7_SP1 is deprecated.")
+		return WinVersion(major=6, minor=1, build=7601, releaseName="Windows 7", servicePack="1")
+	if attrName == "WIN8" and NVDAState._allowDeprecatedAPI():
+		log.warning("WIN8 is deprecated.")
+		return WinVersion(major=6, minor=2, build=9200, releaseName="Windows 8")
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")

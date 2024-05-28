@@ -109,7 +109,7 @@ class TestSynthDriver_Integration(unittest.TestCase):
 			expectedUnsupportedMappedLanguages,
 			unsupportedLanguagesWithoutLocale,
 			msg=(
-				"eSpeak has a language with locale supported"
+				"eSpeak has a language with locale supported "
 				"but the language without locale is unsupported."
 				"Update _defaultLangToLocale to include a new mapping."
 			)

@@ -1,7 +1,7 @@
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2017 NV Access Limited
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2017-2022 NV Access Limited, Cyrille Bougot
 
 """appModule for Microsoft Skype for business. """
 
@@ -43,17 +43,24 @@ class NetUIRicherLabel(UIA):
 		else:
 			# For other versions of Lync / Skype for Business, self.value is just None.
 			# So we just look at self.name formatting to split content from person and timestamp (less robust).
-			pattern = r'^(?P<name>.+?): (?P<priority>.*?), , (?P<content>.+),(?!, , ) , (?P<timestamp>.+)'
+			pattern = r'^(?P<name>.+?): (?P<priority>.*?), , (?P<content>.+), (?P<status>.*?), (?P<timestamp>.+?)$'
 			match = re.match(pattern, self.name, flags=re.DOTALL)
 			if match:
 				pretext = match['name']
 				priority = match['priority']
 				content = match['content']
+				status = match['status']
 				if priority:
 					content = priority + ', ' + content
+				if status:
+					content = content + ', ' + status
 			else:
-				# In case no match is found, log the unexpected message and return the whole message.
-				log.error(f'Unrecognized pattern in the following message: {self.name}')
+				# Some messages may not follow the person+priority+content+status+timestamp pattern.
+				# E.g. call start, call end or first message which is a privacy warning.
+				# The match may also fail if an unexpected conversation pattern exists in some versions or uses of Skype.
+				# In all these cases, return the whole message.
+				# Also log the message in case unexpected conversation pattern has to be debugged.
+				log.debug(f'No message pattern found in the following message: {self.name}')
 				pretext = ''
 				content = self.name
 			content = content.replace('\r', '\n').strip()

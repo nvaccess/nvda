@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2020 NV Access Limited
+# Copyright (C) 2006-2023 NV Access Limited, Leonard de Ruijter
 
 """
 Commands that can be embedded in a speech sequence for changing synth parameters, playing sounds or running
@@ -10,7 +10,9 @@ Commands that can be embedded in a speech sequence for changing synth parameters
 """
  
 from abc import ABCMeta, abstractmethod
-from typing import Optional, Callable
+from typing import (
+	Optional,
+)
 
 import config
 from synthDriverHandler import getSynth
@@ -107,6 +109,14 @@ class IndexCommand(SynthCommand):
 	def __repr__(self):
 		return "IndexCommand(%r)" % self.index
 
+	def __eq__(self, __o: object) -> bool:
+		if __o is self:
+			return True
+		if type(self) is not type(__o):
+			return super().__eq__(__o)
+		return self.index == __o.index
+
+
 class SynthParamCommand(SynthCommand):
 	"""A synth command which changes a parameter for subsequent speech.
 	"""
@@ -131,6 +141,14 @@ class CharacterModeCommand(SynthParamCommand):
 	def __repr__(self):
 		return "CharacterModeCommand(%r)" % self.state
 
+	def __eq__(self, __o: object) -> bool:
+		if __o is self:
+			return True
+		if type(self) is not type(__o):
+			return super().__eq__(__o)
+		return self.state == __o.state
+
+
 class LangChangeCommand(SynthParamCommand):
 	"""A command to switch the language within speech."""
 
@@ -153,19 +171,28 @@ class LangChangeCommand(SynthParamCommand):
 			return self.lang == __o.lang
 		return super().__eq__(__o)
 
+
 class BreakCommand(SynthCommand):
 	"""Insert a break between words.
 	"""
 
-	def __init__(self, time=0):
+	def __init__(self, time: int = 0):
 		"""
 		@param time: The duration of the pause to be inserted in milliseconds.
-		@param time: int
 		"""
 		self.time = time
+		"""Time in milliseconds"""
 
 	def __repr__(self):
-		return "BreakCommand(time=%d)" % self.time
+		return f"BreakCommand(time={self.time})"
+
+	def __eq__(self, __o: object) -> bool:
+		if __o is self:
+			return True
+		if type(self) is not type(__o):
+			return super().__eq__(__o)
+		return self.time == __o.time
+
 
 class EndUtteranceCommand(SpeechCommand):
 	"""End the current utterance at this point in the speech.
@@ -262,6 +289,21 @@ class BaseProsodyCommand(SynthParamCommand):
 		return "{type}({param})".format(
 			type=type(self).__name__, param=param)
 
+	def __eq__(self, __o: object) -> bool:
+		if __o is self:
+			return True
+		if type(self) is not type(__o):
+			return super().__eq__(__o)
+		return self._offset == __o._offset and self._multiplier == __o._multiplier
+
+	def __ne__(self, __o) -> bool:
+		if __o is self:
+			return False
+		if type(self) is not type(__o):
+			return super().__ne__(__o)
+		return self._offset != __o._offset or self._multiplier != __o._multiplier
+
+
 class PitchCommand(BaseProsodyCommand):
 	"""Change the pitch of the voice.
 	"""
@@ -300,6 +342,14 @@ class PhonemeCommand(SynthCommand):
 		if self.text:
 			out += ", text=%r" % self.text
 		return out + ")"
+
+	def __eq__(self, __o: object) -> bool:
+		if __o is self:
+			return True
+		if type(self) is not type(__o):
+			return super().__eq__(__o)
+		return self.ipa == __o.ipa and self.text == __o.text
+
 
 class BaseCallbackCommand(SpeechCommand, metaclass=ABCMeta):
 	"""Base class for commands which cause a function to be called when speech reaches them.
@@ -350,7 +400,13 @@ class BeepCommand(BaseCallbackCommand):
 
 	def run(self):
 		import tones
-		tones.beep(self.hz, self.length, left=self.left, right=self.right)
+		tones.beep(
+			self.hz,
+			self.length,
+			left=self.left,
+			right=self.right,
+			isSpeechBeepCommand=True
+		)
 
 	def __repr__(self):
 		return "BeepCommand({hz}, {length}, left={left}, right={right})".format(
@@ -365,7 +421,7 @@ class WaveFileCommand(BaseCallbackCommand):
 
 	def run(self):
 		import nvwave
-		nvwave.playWaveFile(self.fileName, asynchronous=True)
+		nvwave.playWaveFile(self.fileName, asynchronous=True, isSpeechWaveFileCommand=True)
 
 	def __repr__(self):
 		return "WaveFileCommand(%r)" % self.fileName

@@ -151,6 +151,7 @@ class TestStateOrder(unittest.TestCase):
 
 
 class TestBackCompat(unittest.TestCase):
+	MISSING_ROLE_VALUES = {68, 81, 114}
 
 	def test_statesValues(self):
 		class oldStates(enum.IntEnum):
@@ -209,26 +210,57 @@ class TestBackCompat(unittest.TestCase):
 				msg=f"Can't construct from integer value: {new.name}"
 			)
 
+	def test_rolesValues(self):
+		for i in range(max(controlTypes.Role)):
+			if i in self.MISSING_ROLE_VALUES:
+				with self.assertRaises(
+					ValueError,
+					msg=f"Role with value {i} expected to not exist."
+				):
+					controlTypes.Role(i)
+			else:
+				self.assertEqual(
+					i,
+					controlTypes.Role(i),
+					msg=f"Role with value {i} expected to exist."
+				)
+
+		for role in controlTypes.Role:
+			self.assertTrue(
+				isinstance(role, int),
+				msg="Role expected to subclass int"
+			)
+			self.assertEqual(
+				type(role.value),
+				int,
+				msg="Role value expected to be of type int"
+			)
+			self.assertEqual(
+				role,
+				role.value,
+				msg="Role (enum member) and role value (int) expected to be considered equal"
+			)
+			self.assertLess(
+				role,
+				role.value + 1,
+				msg="Role (enum member) expected to be compared as int"
+			)
+			self.assertGreater(
+				role,
+				role.value - 1,
+				msg="Role (enum member) expected to be compared as int"
+			)
+
 
 class Test_FontSize(unittest.TestCase):
 	def test_translateFromAttribute(self):
-		with self.assertLogs(logHandler.log, level=logging.DEBUG) as logContext:
-			# We want to assert there are no logs, but the 'assertLogs' method does not support that.
-			# 'assertNoLogs' has been added in Python 3.10
-			# Therefore, we are adding a canary warning, and then we will assert it is the only warning.
-			logHandler.log.debug("Canary warning")
+		with self.assertNoLogs(logHandler.log, level=logging.DEBUG) as logContext:
 			# Ensure keyword sizes parse to a translatable version of themselves
 			self.assertEqual(FontSize.translateFromAttribute("smaller"), "smaller")
 			# Ensure measurement sizes parse to a translatable version of themselves
 			self.assertEqual(FontSize.translateFromAttribute("13.0pt"), "13.0 pt")
 			self.assertEqual(FontSize.translateFromAttribute("11px"), "11 px")
 			self.assertEqual(FontSize.translateFromAttribute("23.3%"), "23.3%")
-		
-		self.assertEqual(
-			["DEBUG:nvda:Canary warning"],
-			logContext.output,
-			msg="Font size parsing failed, failure was logged"
-		)
 
 		with self.assertLogs(logHandler.log, level=logging.DEBUG) as logContext:
 			self.assertEqual(FontSize.translateFromAttribute("unsupported"), "unsupported")

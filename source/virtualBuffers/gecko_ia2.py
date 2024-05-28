@@ -1,28 +1,36 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2022 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions, Julien Cochuyt
+# Copyright (C) 2008-2023 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions, Julien Cochuyt
 
+from dataclasses import dataclass
+from typing import (
+	Iterable,
+	Optional,
+)
 import typing
 import weakref
+from ctypes import byref
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import treeInterceptorHandler
 import controlTypes
 import NVDAObjects.IAccessible.mozilla
 import NVDAObjects.behaviors
 import winUser
-import mouseHandler
 import IAccessibleHandler
-
 import oleacc
 from logHandler import log
 import textInfos
 from comtypes.gen.IAccessible2Lib import IAccessible2
 from comInterfaces import IAccessible2Lib as IA2
+from comInterfaces.IAccessible2Lib import IAccessibleTextSelectionContainer, IA2TextSelection, IAccessibleText
 from comtypes import COMError
 import aria
 import config
 from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
+import documentBase
+import locationHelper
+
 
 def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> typing.Dict[str, typing.Any]:
 	valForCurrent = attrs.get("IAccessible2::attribute_current", "false")
@@ -39,6 +47,14 @@ def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> typing.Dict[str
 
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
+
+	def _setSelectionOffsets(self, start: int, end: int):
+		super()._setSelectionOffsets(start, end)
+		if self.obj._nativeAppSelectionMode:
+			if start != end:
+				self.obj.updateAppSelection()
+			else:
+				self.obj.clearAppSelection()
 
 	def _getBoundingRectFromOffset(self,offset):
 		formatFieldStart, formatFieldEnd = self._getUnitOffsets(textInfos.UNIT_FORMATFIELD, offset)
@@ -84,6 +100,15 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 	# Note: when working on _normalizeControlField, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
 	def _normalizeControlField(self, attrs):  # noqa: C901
+		# convert some IAccessible2 text values to integers
+		for name in (
+			"ia2TextWindowHandle",
+			"ia2TextUniqueID",
+			"ia2TextStartOffset",
+		):
+			val = attrs.get(name, None)
+			if val is not None:
+				attrs[name] = int(val)
 		for attr in (
 			"table-rownumber-presentational",
 			"table-columnnumber-presentational",
@@ -134,6 +159,9 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		roleText=attrs.get("IAccessible2::attribute_roledescription")
 		if roleText:
 			attrs['roleText']=roleText
+		roleTextBraille = attrs.get("IAccessible2::attribute_brailleroledescription")
+		if roleTextBraille:
+			attrs['roleTextBraille'] = roleTextBraille
 		if attrs.get("IAccessible2::attribute_dropeffect", "none") != "none":
 			states.add(controlTypes.State.DROPTARGET)
 		if role==controlTypes.Role.LINK and controlTypes.State.LINKED not in states:
@@ -153,25 +181,85 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			role = controlTypes.Role.REGION
 		elif xmlRoles[0] == "switch":
 			# role="switch" gets mapped to IA2_ROLE_TOGGLE_BUTTON, but it uses the
-			# checked state instead of pressed. The simplest way to deal with this
-			# identity crisis is to map it to a check box.
-			role = controlTypes.Role.CHECKBOX
+			# checked state instead of pressed.
+			# We want to map this to our own Switch role and On state.
+			role = controlTypes.Role.SWITCH
 			states.discard(controlTypes.State.PRESSED)
+			states.discard(controlTypes.State.CHECKABLE)
+			if controlTypes.State.CHECKED in states:
+				states.discard(controlTypes.State.CHECKED)
+				states.add(controlTypes.State.ON)
+		popupState = aria.ariaHaspopupValuesToNVDAStates.get(
+			attrs.get("IAccessible2::attribute_haspopup")
+		)
+		if popupState:
+			states.discard(controlTypes.State.HASPOPUP)
+			states.add(popupState)
 		attrs['role']=role
 		attrs['states']=states
 		if level != "" and level is not None:
 			attrs['level']=level
 		if landmark:
 			attrs["landmark"]=landmark
-		return super(Gecko_ia2_TextInfo,self)._normalizeControlField(attrs)
+
+		detailsRoles = attrs.get('detailsRoles')
+		if detailsRoles is not None:
+			attrs['detailsRoles'] = set(self._normalizeDetailsRole(detailsRoles))
+			if config.conf["debugLog"]["annotations"]:
+				log.debug(f"detailsRoles: {attrs['detailsRoles']}")
+		return super()._normalizeControlField(attrs)
+
+	def _normalizeDetailsRole(self, detailsRoles: str) -> Iterable[Optional[controlTypes.Role]]:
+		"""
+		The attribute has been added directly to the buffer as a string, containing a comma separated list
+		of values, each value is either:
+		- role string
+		- role integer
+		Ensures the returned role is a fully supported by the details-roles attribute.
+		Braille and speech needs consistent normalization for translation and reporting.
+		"""
+		# Can't import at module level as chromium imports from this module
+		from NVDAObjects.IAccessible.chromium import supportedAriaDetailsRoles
+		if config.conf["debugLog"]["annotations"]:
+			log.debug(f"detailsRoles: {repr(detailsRoles)}")
+		detailsRolesValues = detailsRoles.split(',')
+		for detailsRole in detailsRolesValues:
+			if detailsRole.isdigit():
+				detailsRoleInt = int(detailsRole)
+				# get a role, but it may be unsupported
+				detailsRole = IAccessibleHandler.IAccessibleRolesToNVDARoles.get(detailsRoleInt)
+				# return a supported details role
+				if detailsRole in supportedAriaDetailsRoles.values():
+					yield detailsRole
+				else:
+					yield None
+			else:
+				# return a supported details role
+				# Note, "unknown" is used when the target has no role.
+				if detailsRole == "unknown" and config.conf["debugLog"]["annotations"]:
+					log.debug("Found unknown aria details role")
+				detailsRole = supportedAriaDetailsRoles.get(detailsRole)
+				yield detailsRole
 
 	def _normalizeFormatField(self, attrs):
 		normalizeIA2TextFormatField(attrs)
-		ia2TextStartOffset = attrs.get("ia2TextStartOffset")
-		if ia2TextStartOffset is not None:
-			assert ia2TextStartOffset.isdigit(), "ia2TextStartOffset isn't a digit, %r" % ia2TextStartOffset
-			attrs["ia2TextStartOffset"] = int(ia2TextStartOffset)
+		# convert some IAccessible2 values to integers
+		for name in (
+			"ia2TextWindowHandle",
+			"ia2TextUniqueID",
+			"ia2TextStartOffset",
+		):
+			val = attrs.get(name, None)
+			if val is not None:
+				attrs[name] = int(val)
 		return super(Gecko_ia2_TextInfo,self)._normalizeFormatField(attrs)
+
+	def _get_location(self) -> locationHelper.RectLTWH:
+		document = self.obj.rootNVDAObject.IAccessibleObject
+		docHandle, ID = self._getFieldIdentifierFromOffset(self._startOffset)
+		location = document.accLocation(ID)
+		return locationHelper.RectLTWH(*location)
+
 
 class Gecko_ia2(VirtualBuffer):
 
@@ -182,6 +270,7 @@ class Gecko_ia2(VirtualBuffer):
 	#: frame/iframe in the lists is a tuple of (IAccessible2_2, uniqueId). This
 	#: cache is used across instances.
 	_framesCache = weakref.WeakKeyDictionary()
+	_nativeAppSelectionModeSupported = True
 
 	def __init__(self,rootNVDAObject):
 		super(Gecko_ia2,self).__init__(rootNVDAObject,backendName="gecko_ia2")
@@ -334,29 +423,6 @@ class Gecko_ia2(VirtualBuffer):
 		obj=self.getNVDAObjectFromIdentifier(docHandle,ID)
 		obj.doAction(index)
 
-	def _activateNVDAObject(self, obj):
-		while obj and obj != self.rootNVDAObject:
-			try:
-				obj.doAction()
-				break
-			except:
-				log.debugWarning("doAction failed")
-			if obj.hasIrrelevantLocation:
-				# This check covers invisible, off screen and a None location
-				log.debugWarning("No relevant location for object")
-				obj = obj.parent
-				continue
-			location = obj.location
-			if not location.width or not location.height:
-				obj = obj.parent
-				continue
-			log.debugWarning("Clicking with mouse")
-			oldX, oldY = winUser.getCursorPos()
-			winUser.setCursorPos(*location.center)
-			mouseHandler.doPrimaryClick()
-			winUser.setCursorPos(oldX, oldY)
-			break
-
 	def _searchableTagValues(self, values):
 		return values
 
@@ -486,6 +552,33 @@ class Gecko_ia2(VirtualBuffer):
 				},
 				{"IAccessible::role":[oleacc.ROLE_SYSTEM_APPLICATION,oleacc.ROLE_SYSTEM_DIALOG]},
 			]
+		elif nodeType == "tab":
+			attrs = [
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_PAGETAB]}
+			]
+		elif nodeType == "figure":
+			attrs = [
+				{"Iaccessible::role": [oleacc.ROLE_SYSTEM_GROUPING]},
+				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("figure")]},
+				# Needed so that navigation by figure works for HTML figures in Chromium
+				{"IAccessible2::attribute_tag": self._searchableTagValues(["figure"])},
+			]
+		elif nodeType == "menuItem":
+			attrs = [
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_BUTTONMENU]}
+			]
+		elif nodeType == "toggleButton":
+			attrs = [
+				{"IAccessible::role": [IA2.IA2_ROLE_TOGGLE_BUTTON]}
+			]
+		elif nodeType == "progressBar":
+			attrs = [
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_PROGRESSBAR]}
+			]
+		elif nodeType == "math":
+			attrs = [
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_EQUATION]}
+			]
 		else:
 			return None
 		return attrs
@@ -518,9 +611,15 @@ class Gecko_ia2(VirtualBuffer):
 		except (COMError, RuntimeError):
 			raise LookupError
 
-	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
+	def _getNearestTableCell(
+			self,
+			startPos: textInfos.TextInfo,
+			cell: documentBase._TableCell,
+			movement: documentBase._Movement,
+			axis: documentBase._Axis,
+	) -> textInfos.TextInfo:
 		# Skip the VirtualBuffer implementation as the base BrowseMode implementation is good enough for us here.
-		return super(VirtualBuffer,self)._getNearestTableCell(tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis)
+		return super(VirtualBuffer, self)._getNearestTableCell(startPos, cell, movement, axis)
 
 	def _get_documentConstantIdentifier(self):
 		try:
@@ -533,3 +632,143 @@ class Gecko_ia2(VirtualBuffer):
 		if initialPos:
 			return initialPos
 		return self._initialScrollObj
+	
+	def _getStartSelection(self, ia2Sel: "_Ia2Selection", selFields: TextInfo.TextWithFieldsT):
+		"""Get the start of the selection.
+
+		:param ia2Sel: Selection object to update.
+		:param selFields: List of fields in the selection.
+		:raises NotImplementedError: If the start of the selection could not be found.
+		AssertionError: If the start object query interface failed.
+		"""
+		# Locate the start of the selection by walking through the fields.
+		# Until we find the deepest field with IAccessibleText information.
+		# It may be on a formatChange which represents a text attribute run,
+		# or on a controlStart which represents an embeded object within text,
+		# Where we have not included its inner text attribute run
+		# as the content was overridden by an ARIA label or similar.
+		for field in selFields:
+			if isinstance(field, textInfos.FieldCommand):
+				if field.command in ("controlStart", "formatChange"):
+					hwnd = field.field.get('ia2TextWindowHandle')
+					if hwnd is not None:
+						ia2Sel.startWindow = hwnd
+						ia2Sel.startID = field.field['ia2TextUniqueID']
+						ia2Sel.startOffset = field.field['ia2TextStartOffset']
+						if field.command == "formatChange":
+							ia2Sel.startOffset += field.field.get('strippedCharsFromStart', 0)
+							ia2Sel.startOffset += field.field['_offsetFromStartOfNode']
+					if field.command == "controlStart":
+						continue
+			break
+		if ia2Sel.startOffset is None:
+			raise NotImplementedError("No ia2TextStartOffset in any field")
+		log.debug(f"ia2 start window: {ia2Sel.startWindow}")
+		log.debug(f"ia2 start ID: {ia2Sel.startID}")
+		log.debug(f"ia2 start offset: {ia2Sel.startOffset}")
+		ia2Sel.startObj, childID = IAccessibleHandler.accessibleObjectFromEvent(
+			ia2Sel.startWindow, winUser.OBJID_CLIENT, ia2Sel.startID
+		)
+		assert (childID == 0), "childID should be 0"
+		ia2Sel.startObj = ia2Sel.startObj.QueryInterface(IAccessibleText)
+		log.debug(f"ia2 start obj: {ia2Sel.startObj}")
+
+	def _getEndSelection(self, ia2Sel: "_Ia2Selection", selFields: TextInfo.TextWithFieldsT):
+		"""Get the end of the selection.
+
+		:param ia2Sel: Selection object to update.
+		:param selFields: List of fields in the selection.
+		:raises NotImplementedError: If the end of the selection could not be found.
+		AssertionError: If the end object query interface failed.
+		"""
+		textLen = 0
+		# Locate the end of the selection by walking through the fields in reverse,
+		# similar to how we located the start of the selection.
+		for field in reversed(selFields):
+			if isinstance(field, str):
+				textLen = len(field)
+				continue
+			elif isinstance(field, textInfos.FieldCommand):
+				if field.command in ("controlEnd", "formatChange"):
+					hwnd = field.field.get('ia2TextWindowHandle')
+					if hwnd is not None:
+						ia2Sel.endWindow = hwnd
+						ia2Sel.endID = field.field['ia2TextUniqueID']
+						ia2Sel.endOffset = field.field['ia2TextStartOffset']
+						if field.command == "controlEnd":
+							ia2Sel.endOffset += 1
+						elif field.command == "formatChange":
+							ia2Sel.endOffset += field.field.get('strippedCharsFromStart', 0)
+							ia2Sel.endOffset += field.field['_offsetFromStartOfNode']
+							ia2Sel.endOffset += textLen
+				if field.command == "controlEnd":
+					continue
+			break
+		if ia2Sel.endOffset is None:
+			raise NotImplementedError("No ia2TextEndOffset in any field")
+		log.debug(f"ia2 end window: {repr(ia2Sel.endWindow)}")
+		log.debug(f"ia2 end ID: {repr(ia2Sel.endID)}")
+		log.debug(f"ia2 end offset: {ia2Sel.endOffset}")
+		if ia2Sel.endID == ia2Sel.startID:
+			ia2Sel.endObj = ia2Sel.startObj
+			log.debug("Reusing ia2Sel.startObj for ia2Sel.endObj")
+		else:
+			ia2Sel.endObj, childID = IAccessibleHandler.accessibleObjectFromEvent(
+				ia2Sel.endWindow, winUser.OBJID_CLIENT, ia2Sel.endID
+			)
+			assert (childID == 0), "childID should be 0"
+			ia2Sel.endObj = ia2Sel.endObj.QueryInterface(IAccessibleText)
+			log.debug(f"ia2 end obj {ia2Sel.endObj}")
+
+	def updateAppSelection(self):
+		"""Update the native selection in the application to match the browse mode selection in NVDA."""
+		try:
+			paccTextSelectionContainer = self.rootNVDAObject.IAccessibleObject.QueryInterface(
+				IAccessibleTextSelectionContainer
+			)
+		except COMError as e:
+			raise NotImplementedError from e
+		selInfo = self.makeTextInfo(textInfos.POSITION_SELECTION)
+		if not selInfo.isCollapsed:
+			selFields = selInfo.getTextWithFields()
+			ia2Sel = _Ia2Selection()
+
+			log.debug("checking fields...")
+			self._getStartSelection(ia2Sel, selFields)
+			self._getEndSelection(ia2Sel, selFields)
+
+			log.debug("setting selection...")
+			r = IA2TextSelection(
+				ia2Sel.startObj,
+				ia2Sel.startOffset,
+				ia2Sel.endObj,
+				ia2Sel.endOffset,
+				False
+			)
+			paccTextSelectionContainer.SetSelections(1, byref(r))
+		else:  # No selection
+			r = IA2TextSelection(None, 0, None, 0, False)
+			paccTextSelectionContainer.SetSelections(0, byref(r))
+
+	def clearAppSelection(self):
+		"""Clear the native selection in the application."""
+		try:
+			paccTextSelectionContainer = self.rootNVDAObject.IAccessibleObject.QueryInterface(
+				IAccessibleTextSelectionContainer
+			)
+		except COMError as e:
+			raise NotImplementedError from e
+		r = IA2TextSelection(None, 0, None, 0, False)
+		paccTextSelectionContainer.SetSelections(0, byref(r))
+
+
+@dataclass
+class _Ia2Selection:
+	startObj: IA2.IAccessible2 | None = None
+	startWindow: int | None = None
+	startID: int | None = None
+	startOffset: int | None = None
+	endObj: IA2.IAccessible2 | None = None
+	endWindow: int | None = None
+	endID: int | None = None
+	endOffset: int | None = None

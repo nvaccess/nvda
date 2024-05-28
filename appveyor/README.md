@@ -57,3 +57,23 @@ At the end of the build, regardless of failure, we upload the list of successful
 ## Deploying
 
 The server side deploy code (`nvdaAppveyorHook`) is triggered from `deployScript.ps1`. The server-side deployment relies on our artifacts, so they must be uploaded first.
+
+
+## Modifying behavior
+
+Environment variables can be configured to modify behavior on Appveyor.
+These tools can be used (by NV Access) to more quickly investigate issues with the build.
+These must be set before the build starts, and should be removed again once the build has started.
+
+- `APPVEYOR_RDP_PASSWORD`: Setting an RDP password will allow connecting over RDP.
+   Monitor the early build output to get the connection string.
+- `VERBOSE_SYSTEM_TEST_LOGGING`: Setting `True` (or any non-empty string) will enable more verbose NVDA logs
+   for the tests.
+   See method `enable_verbose_debug_logging_if_requested` in `NvdaLib.py`, enables:
+  - `MSAA`
+  - `UIA`
+  - `TimeSinceInput`
+- `INCLUDE_SYSTEM_TEST_TAGS`: Set (space separated) tags to be used when running system tests.
+  - E.G. To run the tests with the default tags: `installer NVDA`
+  - See the `*.robot` files for tags.
+  - Use `excluded_from_build` to run no system tests.

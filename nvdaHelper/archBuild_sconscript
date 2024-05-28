@@ -1,16 +1,7 @@
-###
-#This file is a part of the NVDA project.
-#URL: http://www.nvda-project.org/
-#Copyright 2006-2010 NVDA contributers.
-#This program is free software: you can redistribute it and/or modify
-#it under the terms of the GNU General Public License version 2.0, as published by
-#the Free Software Foundation.
-#This program is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-#This license can be found at:
-#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-###
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2023 NV Access Limited
+# This file may be used under the terms of the GNU General Public License, version 2 or later.
+# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 import os
 import shutil
@@ -55,8 +46,7 @@ def COMProxyDllBuilder(env,target,source,proxyClsid):
 		target=target,
 		source=source,
 		LIBS=['rpcrt4','oleaut32','ole32'],
-		CPPDEFINES=[
-			env['CPPDEFINES'],
+		CPPDEFINES=list(env['CPPDEFINES']) + [
 			'WIN32',
 			('PROXY_CLSID_IS',clsidStringToCLSIDDefine(proxyClsid)),
 		],
@@ -87,17 +77,13 @@ env.Append(
 	CPPDEFINES=[
 		'UNICODE',
 		'_CRT_SECURE_NO_DEPRECATE',
-		('LOGLEVEL','${nvdaHelperLogLevel}'),
-		('_WIN32_WINNT','_WIN32_WINNT_WIN7')
+		('LOGLEVEL', '${nvdaHelperLogLevel}'),
+		('_WIN32_WINNT', '_WIN32_WINNT_WINBLUE'),
+		# NOMINMAX: prevent minwindef.h min/max macro definition, which unexpectedly override developer
+		# expectations
+		'NOMINMAX',
 	]
 )
-env.Append(CCFLAGS=[
-	'/std:c++17',
-	# '/showIncludes': Useful to understand which file causes some other file to be included.
-	# It will output a list of the include files.
-	# The option also displays nested include files, that is, the files
-	# included by the files that you include.
-])
 
 env.Append(CXXFLAGS=['/EHsc'])
 
@@ -107,10 +93,10 @@ env.Append(CPPPATH=[
 	'#/miscDeps/include',
 	Dir('.').abspath
 ])
-if TARGET_ARCH == "arm64":
-	subsystem = "/subsystem:windows,6.02"
-else:
-	subsystem = "/subsystem:windows,6.01"
+
+# Windows 8.1 (blue)
+subsystem = "/subsystem:windows,6.03"
+
 env.Append(
 	LINKFLAGS=[
 		'/incremental:no',
@@ -134,7 +120,7 @@ else:
 	env.Append(LINKFLAGS=['/LTCG'])
 
 if 'debugCRT' not in debug:
-	env.Append(CPPDEFINES=['NDEBUG'])
+	env.Append(CPPDEFINES='NDEBUG')
 
 if 'RTC' in debug:
 	env.Append(CCFLAGS=['/RTCsu'])
@@ -144,13 +130,14 @@ if 'RTC' in debug:
 env.Append(PDB='${TARGET}.pdb')
 env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we have no need for unused symbols
 
-# Ignoring Flake8 F821: 'undefined name' due to nonstandard SCons import
-win10env = env.Clone()  # noqa: F821
-# Swap C++17 for C++20 for co-routine support, used by C++/WinRT.
-win10env.Replace(CCFLAGS=[
+env.Append(CCFLAGS=[
 	'/std:c++20',
+	'/permissive-',
+	# '/showIncludes': Useful to understand which file causes some other file to be included.
+	# It will output a list of the include files.
+	# The option also displays nested include files, that is, the files
+	# included by the files that you include.
 ])
-Export('win10env')
 
 if 'debugCRT' in debug:
 	env.Append(CCFLAGS=['/MTd'])
@@ -203,6 +190,12 @@ mathPlayerRPCStubs=env.SConscript('mathPlayer_sconscript')
 if TARGET_ARCH=='x86':
 	env.Install(sourceTypelibDir,mathPlayerRPCStubs[0]) #typelib
 
+detoursLib = env.SConscript('detours/sconscript')
+Export('detoursLib')
+
+apiHookObj = env.Object("apiHook","common/apiHook.cpp")
+Export('apiHookObj')
+
 if TARGET_ARCH=='x86':
 	localLib=env.SConscript('local/sconscript')
 	Export('localLib')
@@ -226,9 +219,6 @@ Export('clientLib')
 if signExec:
 	env.AddPostAction(clientLib[0],[signExec])
 env.Install(clientInstallDir,clientLib)
-
-detoursLib = env.SConscript('detours/sconscript')
-Export('detoursLib')
 
 remoteLib=env.SConscript('remote/sconscript')
 Export('remoteLib')

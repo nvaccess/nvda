@@ -1,12 +1,26 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2021 NV Access Limited, Derek Riemer
+# Copyright (C) 2016-2024 NV Access Limited, Derek Riemer, Cyrille Bougot, Luke Davis
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+import collections
+import enum
+import typing
+from typing import (
+	List,
+	OrderedDict,
+	Type,
+)
 
 import wx
 from wx.lib import scrolledpanel
 from wx.lib.mixins import listctrl as listmix
+
+import config
+from config.featureFlag import (
+	FeatureFlag,
+	FlagValueEnum as FeatureFlagEnumT,
+)
 from .dpiScalingHelper import DpiScalingHelperMixin
 from . import guiHelper
 import winUser
@@ -100,9 +114,12 @@ class ListCtrlAccessible(wx.Accessible):
 		if self.Window.IsChecked(childId - 1):
 			states |= wx.ACC_STATE_SYSTEM_CHECKED
 		if self.Window.IsSelected(childId - 1):
+			states |= wx.ACC_STATE_SYSTEM_SELECTED
 			# wx doesn't seem to  have a method to check whether a list item is focused.
-			# Therefore, assume that a selected item is focused,which is the case in single select list boxes.
-			states |= wx.ACC_STATE_SYSTEM_SELECTED | wx.ACC_STATE_SYSTEM_FOCUSED
+			# Therefore, assume that a selected item is focused when the list itself has focus,
+			# which is the case in single select list boxes.
+			if self.Window.HasFocus():
+				states |= wx.ACC_STATE_SYSTEM_FOCUSED
 		return (wx.ACC_OK, states)
 
 
@@ -277,7 +294,8 @@ class MessageDialog(DPIScaledDialog):
 			return
 
 	def _playSound(self):
-		winsound.MessageBeep(self._soundID)
+		if self._soundID is not None:
+			winsound.MessageBeep(self._soundID)
 
 	def __init__(self, parent, title, message, dialogType=DIALOG_TYPE_STANDARD):
 		DPIScaledDialog.__init__(self, parent, title=title)
@@ -290,7 +308,9 @@ class MessageDialog(DPIScaledDialog):
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
 
-		text = wx.StaticText(self, label=message)
+		# Double ampersand in the dialog's label to avoid this character to be interpreted as an accelerator.
+		label = message.replace('&', '&&')
+		text = wx.StaticText(self, label=label)
 		text.Wrap(self.scaleSize(self.GetSize().Width))
 		contentsSizer.addItem(text)
 		self._addContents(contentsSizer)
@@ -391,3 +411,137 @@ class TabbableScrolledPanel(scrolledpanel.ScrolledPanel):
 		finally:
 			# ensure child.GetRect is reset properly even if super().ScrollChildIntoView throws an exception
 			child.GetRect = oldChildGetRectFunction
+
+
+class FeatureFlagCombo(wx.Choice):
+	"""Creates a combobox (wx.Choice) with a list of feature flags.
+	"""
+	def __init__(
+			self,
+			parent: wx.Window,
+			keyPath: List[str],
+			conf: config.ConfigManager,
+			pos=wx.DefaultPosition,
+			size=wx.DefaultSize,
+			style=0,
+			validator=wx.DefaultValidator,
+			name=wx.ChoiceNameStr,
+	):
+		"""
+		@param parent: The parent window.
+		@param keyPath: The list of keys required to get to the config value.
+		@param conf: The config.conf object.
+		@param pos: The position of the control. Forwarded to wx.Choice
+		@param size: The size of the control. Forwarded to wx.Choice
+		@param style: The style of the control. Forwarded to wx.Choice
+		@param validator: The validator for the control. Forwarded to wx.Choice
+		@param name: The name of the control. Forwarded to wx.Choice
+		"""
+		self._confPath = keyPath
+		self._conf = conf
+		configValue = self._getConfigValue()
+		self._optionsEnumClass: Type[FeatureFlagEnumT] = configValue.enumClassType
+		translatedOptions: typing.OrderedDict[FeatureFlagEnumT, str] = collections.OrderedDict({
+			value: value.displayString
+			for value in self._optionsEnumClass
+			if value != self._optionsEnumClass.DEFAULT
+		})
+		if self._optionsEnumClass.DEFAULT in translatedOptions:
+			raise ValueError(
+				f"The translatedOptions dictionary should not contain the key {self._optionsEnumClass.DEFAULT!r}"
+				" It will be added automatically. See _setDefaultOptionLabel"
+			)
+		self._translatedOptions = self._createOptionsDict(translatedOptions)
+		choices = list(self._translatedOptions.values())
+		super().__init__(
+			parent,
+			choices=choices,
+			pos=pos,
+			size=size,
+			style=style,
+			validator=validator,
+			name=name,
+		)
+
+		self.SetSelection(self._getChoiceIndex(configValue.value))
+		self.defaultValue = self._getConfSpecDefaultValue()
+		"""The default value of the config spec. Not the "behavior of default".
+		This is provided to maintain compatibility with other controls in the
+		advanced settings dialog.
+		"""
+
+	def _getChoiceIndex(self, value: FeatureFlagEnumT) -> int:
+		return list(self._translatedOptions.keys()).index(value)
+
+	def _getConfSpecDefaultValue(self) -> FeatureFlagEnumT:
+		defaultValueFromSpec = self._conf.getConfigValidation(self._confPath).default
+		if not isinstance(defaultValueFromSpec, FeatureFlag):
+			raise ValueError(f"Default spec value is not a FeatureFlag, but {type(defaultValueFromSpec)}")
+		return defaultValueFromSpec.value
+
+	def _getConfigValue(self) -> FeatureFlag:
+		keyPath = self._confPath
+		if not keyPath or len(keyPath) < 1:
+			raise ValueError("Key path not provided")
+
+		conf = self._conf
+		for nextKey in keyPath:
+			conf = conf[nextKey]
+
+		if not isinstance(conf, FeatureFlag):
+			raise ValueError(f"Config value is not a FeatureFlag, but a {type(conf)}")
+		return conf
+
+	def isValueConfigSpecDefault(self) -> bool:
+		"""Does the current value of the control match the default value from the config spec?
+		This is not the same as the "behaviour of default".
+		"""
+		return self.GetSelection() == self.defaultValue
+
+	def resetToConfigSpecDefault(self) -> None:
+		"""Set the value of the control to the default value from the config spec.
+		"""
+		self.SetSelection(self._getChoiceIndex(self.defaultValue))
+
+	def _getControlCurrentValue(self) -> enum.Enum:
+		return list(self._translatedOptions.keys())[self.GetSelection()]
+
+	def _getControlCurrentFlag(self) -> FeatureFlag:
+		flagValue = self._getControlCurrentValue()
+		currentFlag = self._getConfigValue()
+		return FeatureFlag(flagValue, currentFlag.behaviorOfDefault)
+
+	def saveCurrentValueToConf(self) -> None:
+		""" Set the config value to the current value of the control.
+		"""
+		flagValue = self._getControlCurrentValue()
+		keyPath = self._confPath
+		if not keyPath or len(keyPath) < 1:
+			raise ValueError("Key path not provided")
+		lastIndex = len(keyPath) - 1
+
+		conf = self._conf
+		for index, nextKey in enumerate(keyPath):
+			if index == lastIndex:
+				conf[nextKey] = flagValue.name
+				return
+			else:
+				conf = conf[nextKey]
+
+	def _createOptionsDict(
+			self,
+			translatedOptions: OrderedDict[FeatureFlagEnumT, str]
+	) -> OrderedDict[enum.Enum, str]:
+		behaviorOfDefault = self._getConfigValue().behaviorOfDefault
+		translatedStringForBehaviorOfDefault = translatedOptions[behaviorOfDefault]
+		# Translators: Label for the default option for some feature-flag combo boxes
+		# Such as, in the Advanced settings panel option, 'Load Chromium virtual buffer when document busy.'
+		# The placeholder {} is replaced with the label of the option which describes current default behavior
+		# in NVDA. EG "Default (Yes)".
+		defaultOptionLabel: str = _("Default ({})").format(
+			translatedStringForBehaviorOfDefault
+		)
+		return collections.OrderedDict({
+			self._optionsEnumClass.DEFAULT: defaultOptionLabel,  # make sure default is the first option.
+			**translatedOptions
+		})

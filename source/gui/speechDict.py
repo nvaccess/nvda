@@ -1,9 +1,11 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2022 NV Access Limited, Peter Vágner, Mesar Hameed, Joseph Lee,
+# Copyright (C) 2007-2023 NV Access Limited, Peter Vágner, Mesar Hameed, Joseph Lee,
 # Aaron Cannon, Ethan Holliger, Julien Cochuyt, Thomas Stivers, Cyrille Bougot, Aleksey Sadovoy
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
+from re import error as RegexpError
 
 from abc import abstractmethod
 import wx
@@ -94,25 +96,44 @@ class DictionaryEntryDialog(
 			)
 			self.patternTextCtrl.SetFocus()
 			return
+		entryType = self.getType()
 		try:
 			dictEntry = self.dictEntry = speechDictHandler.SpeechDictEntry(
 				self.patternTextCtrl.GetValue(),
 				self.replacementTextCtrl.GetValue(),
 				self.commentTextCtrl.GetValue(),
 				bool(self.caseSensitiveCheckBox.GetValue()),
-				self.getType()
+				entryType,
 			)
-			dictEntry.sub("test")  # Ensure there are no grouping error (#11407)
-		except Exception as e:
-			log.debugWarning("Could not add dictionary entry due to (regex error) : %s" % e)
+		except RegexpError as e:
+			log.debugWarning(f"Could not add dictionary entry due to regex error in the pattern field : {e}")
+			if entryType != speechDictHandler.ENTRY_TYPE_REGEXP:
+				raise e
 			gui.messageBox(
 				# Translators: This is an error message to let the user know that the dictionary entry is not valid.
-				_("Regular Expression error: \"%s\".") % e,
+				_("Regular Expression error in the pattern field: \"{error}\".").format(error=e),
 				# Translators: The title of an error message raised by the Dictionary Entry dialog
 				_("Dictionary Entry Error"),
 				wx.OK | wx.ICON_WARNING,
 				self
 			)
+			self.patternTextCtrl.SetFocus()
+			return
+		try:
+			dictEntry.sub("test")  # Ensure there are no grouping error (#11407)
+		except RegexpError as e:
+			log.debugWarning(f"Could not add dictionary entry due to regex error in the replacement field : {e}")
+			if entryType != speechDictHandler.ENTRY_TYPE_REGEXP:
+				raise e
+			gui.messageBox(
+				# Translators: This is an error message to let the user know that the dictionary entry is not valid.
+				_("Regular Expression error in the replacement field: \"{error}\".").format(error=e),
+				# Translators: The title of an error message raised by the Dictionary Entry dialog
+				_("Dictionary Entry Error"),
+				wx.OK | wx.ICON_WARNING,
+				self
+			)
+			self.replacementTextCtrl.SetFocus()
 			return
 		evt.Skip()
 
@@ -156,19 +177,19 @@ class DictionaryDialog(
 			wx.ListCtrl, style=wx.LC_REPORT | wx.LC_SINGLE_SEL
 		)
 		# Translators: The label for a column in dictionary entries list used to identify comments for the entry.
-		self.dictList.InsertColumn(0, _("Comment"), width=150)
+		self.dictList.AppendColumn(_("Comment"), width=150)
 		# Translators: The label for a column in dictionary entries list used to identify pattern
 		# (original word or a pattern).
-		self.dictList.InsertColumn(1, _("Pattern"), width=150)
+		self.dictList.AppendColumn(_("Pattern"), width=150)
 		# Translators: The label for a column in dictionary entries list and in a list of symbols
 		# from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-		self.dictList.InsertColumn(2, _("Replacement"), width=150)
+		self.dictList.AppendColumn(_("Replacement"), width=150)
 		# Translators: The label for a column in dictionary entries list used to identify
 		# whether the entry is case sensitive or not.
-		self.dictList.InsertColumn(3, _("case"), width=50)
+		self.dictList.AppendColumn(_("case"), width=50)
 		# Translators: The label for a column in dictionary entries list used to identify
 		# whether the entry is a regular expression, matches whole words, or matches anywhere.
-		self.dictList.InsertColumn(4, _("Type"), width=50)
+		self.dictList.AppendColumn(_("Type"), width=50)
 		self.offOn = (_("off"), _("on"))
 		for entry in self.tempSpeechDict:
 			self.dictList.Append((

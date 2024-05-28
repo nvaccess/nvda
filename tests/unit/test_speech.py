@@ -5,22 +5,27 @@
 
 """Unit tests for the speech module.
 """
-import unittest
 import gettext
 import typing
+import unittest
+
 import config
 from speech import (
-	_getSpellingSpeechAddCharMode,
 	_getSpellingCharAddCapNotification,
+	_getSpellingSpeechAddCharMode,
 	_getSpellingSpeechWithoutCharMode,
+	cancelSpeech,
+	speechCanceled,
 )
 from speech.commands import (
-	EndUtteranceCommand,
-	CharacterModeCommand,
-	PitchCommand,
 	BeepCommand,
-	LangChangeCommand
+	CharacterModeCommand,
+	EndUtteranceCommand,
+	LangChangeCommand,
+	PitchCommand,
 )
+
+from .extensionPointTestHelpers import actionTester
 
 
 class Test_getSpellingSpeechAddCharMode(unittest.TestCase):
@@ -112,8 +117,11 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 
 	@classmethod
 	def setUpClass(cls):
-		from . import translations as originalTranslationClass
-		cls.translationsFake = Translation_Fake(originalTranslationClass)
+		# Initialize fake translation,
+		# providing translation installed by `languageHandler` as an original one.
+		# To retrieve it we just get an gettext instance bound to the `_` function.
+		orig_translation = _.__self__
+		cls.translationsFake = Translation_Fake(orig_translation)
 		cls.translationsFake.install()
 
 	@classmethod
@@ -344,3 +352,13 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 			beepForCapitals=False,
 		)
 		self.assertEqual(repr(list(output)), expected)
+
+
+class SpeechExtensionPoints(unittest.TestCase):
+
+	def test_speechCanceledExtensionPoint(self):
+		with actionTester(
+			self,
+			speechCanceled,
+		):
+			cancelSpeech()

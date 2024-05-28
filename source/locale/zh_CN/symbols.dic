@@ -7,7 +7,7 @@ $	美元
 /	斜杠
 ;	分号
 \\	反斜杠
-|	竖线
+|	竖线	most
 ¦	间断条	most
 ¡	倒置感叹号	some
 ¿	倒置问号	some
@@ -34,7 +34,7 @@ $	美元
 )	右括号
 *	星号
 +	加
--	减
+-	减	most	never
 _	下划线
 [	左方括号
 ]	右方括号
@@ -52,26 +52,29 @@ negative number	负
 ™	商标	some
 ®	注册
 µ	百万分之一	some
-»	右双尖括号	none
-«	左双尖括号	none
+»	右双尖括号
+«	左双尖括号
 ➔	右箭头	most
 🡺	向右箭头	some
 ‏	右至左符号	most
 ‎	左至右符号	most
 –	短破折号	most	always
 ·	间隔号	most	never
+~	波浪号	none	never
 ⁃	连字符	most
 ­	软连字符	most
 •	着重号	most
 `	反撇号	most
 ^	脱字符	most
-?	问号	most	always
 ¥	元	most
+?	问号	most	always
 ¢	分	most	always
 €	欧元	most	always
 £	英镑	most	always
-no-break space	空格	most
-、	全角顿号	most	always
+、	全角顿号	all	always
+،	阿拉伯文逗号	all	always
+؛	阿拉伯文分号	most
+؟	阿拉伯文问号	all
 ．	全角点	all
 ；	全角分号	most	always
 ？	全角问号	most	always
@@ -129,7 +132,16 @@ no-break space	空格	most
 ＃	全角井号	most
 ＆	全角与号	most
 ＊	全角星号	most
-※	重点 符号	most
+＄	全角美元	most
+％	全角百分号	most
+＾	全角脱字符	most
+＿	全角下划线	most
+｜	全角竖线	most
+＇	全角单引号	most	always
+＂	全角双引号	most	always
+［	左中括号
+］	右中括号
+※	重点符号	most
 §	章节符	most
 ¶	段落符	most
 ¸	变音符	most
@@ -229,7 +241,6 @@ no-break space	空格	most
 嗧	加仑	none
 瓩	千瓦	none
 糎	公分	none
-~	波浪号	none	always
 
 # 特殊数字
 １	全角一	char	always
@@ -746,7 +757,9 @@ no-break space	空格	most
 ₎	下标右圆括号	some
 
 # Miscellaneous Technical
-⌘	mac Command键	none
+⌘	mac Command 键	none
+⌥	mac Option 键	none
+
 ′	撇号	some
 ″	双撇号	some
 ‴	三撇号	some
@@ -759,7 +772,7 @@ no-break space	空格	most
 ◦	空心着重号	some
 ‣	三角着重号	none
 ✗	X-形 着重号	none
-￼	对象替换符	none
+￼	对象替换符	all	always
 ƒ	弗罗林	all	norep
 ‰	千分之	some
 ®	注册	some
@@ -1008,3 +1021,56 @@ no-break space	空格	most
 ⇏	并不意味着	none
 ⇐	意味着	none
 
+
+
+# 数字印刷符号（NVDA 简体中文维护组增加）
+⓵	双圈数字一	none
+⓶	双圈数字二	none
+⓷	双圈数字三	none
+⓸	双圈数字四	none
+⓹	双圈数字五	none
+⓺	双圈数字六	none
+⓻	双圈数字七	none
+⓼	双圈数字八	none
+⓽	双圈数字九	none
+⓾	双圈数字十	none
+➀	圆圈无衬线数字一	none
+➁	圆圈无衬线数字二	none
+➂	圆圈无衬线数字三	none
+➃	圆圈无衬线数字四	none
+➄	圆圈无衬线数字五	none
+➅	圆圈无衬线数字六	none
+➆	圆圈无衬线数字七	none
+➇	圆圈无衬线数字八	none
+➈	圆圈无衬线数字九	none
+➉	圆圈无衬线数字十	none
+➊	反白带圆圈无衬线数字一	none
+➋	反白带圆圈无衬线数字二	none
+➌	反白带圆圈无衬线数字三	none
+➍	反白带圆圈无衬线数字四	none
+➎	反白带圆圈无衬线数字五	none
+➏	反白带圆圈无衬线数字六	none
+➐	反白带圆圈无衬线数字七	none
+➑	反白带圆圈无衬线数字八	none
+➒	反白带圆圈无衬线数字九	none
+➓	反白带圆圈无衬线数字十	none
+❶	反白带圆圈数字一	none
+❷	反白带圆圈数字二	none
+❸	反白带圆圈数字三	none
+❹	反白带圆圈数字四	none
+❺	反白带圆圈数字五	none
+❻	反白带圆圈数字六	none
+❼	反白带圆圈数字七	none
+❽	反白带圆圈数字八	none
+❾	反白带圆圈数字九	none
+❿	反白带圆圈数字十	none
+㊀	圆圈汉字一	none
+㊁	圆圈汉字二	none
+㊂	圆圈汉字三	none
+㊃	圆圈汉字四	none
+㊄	圆圈汉字五	none
+㊅	圆圈汉字六	none
+㊆	圆圈汉字七	none
+㊇	圆圈汉字八	none
+㊈	圆圈汉字九	none
+㊉	圆圈汉字十	none

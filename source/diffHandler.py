@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2020-2022 NV Access Limited, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2020 Bill Dengler
 
 import config
 import globalVars
@@ -16,6 +16,7 @@ from logHandler import log
 from textInfos import TextInfo, UNIT_LINE
 from threading import Lock
 from typing import List
+import NVDAState
 
 
 class DiffAlgo(AutoPropertyObject):
@@ -44,12 +45,12 @@ class DiffMatchPatch(DiffAlgo):
 		@note: This should be run from within the context of an acquired lock."""
 		if not DiffMatchPatch._proc:
 			log.debug("Starting diff-match-patch proxy")
-			if hasattr(sys, "frozen"):
-				dmp_path = (os.path.join(globalVars.appDir, "nvda_dmp.exe"),)
-			else:
+			if NVDAState.isRunningAsSource():
 				dmp_path = (sys.executable, os.path.join(
 					globalVars.appDir, "..", "include", "nvda_dmp", "nvda_dmp.py"
 				))
+			else:
+				dmp_path = (os.path.join(globalVars.appDir, "nvda_dmp.exe"),)
 			DiffMatchPatch._proc = subprocess.Popen(
 				dmp_path,
 				creationflags=subprocess.CREATE_NO_WINDOW,
@@ -61,6 +62,21 @@ class DiffMatchPatch(DiffAlgo):
 	def _getText(self, ti: TextInfo) -> str:
 		return ti.text
 
+	@classmethod
+	def _readData(cls, size: int) -> bytes:
+		"""Reads from stdout, raises exception on EOF."""
+		buffer = b""
+		while (remainingLength := size - len(buffer)) > 0:
+			chunk = cls._proc.stdout.read(remainingLength)
+			if chunk:
+				buffer += chunk
+				continue
+			return_code = cls._proc.poll()
+			if return_code is None:
+				continue
+			raise RuntimeError(f'Diff-match-patch proxy process died! Return code {return_code}')
+		return buffer
+
 	def diff(self, newText: str, oldText: str) -> List[str]:
 		try:
 			if not newText and not oldText:
@@ -69,31 +85,23 @@ class DiffMatchPatch(DiffAlgo):
 				return []
 			with DiffMatchPatch._lock:
 				self._initialize()
-				old = oldText.encode("utf-8")
-				new = newText.encode("utf-8")
+				oldEncodedText = oldText.encode()
+				newEncodedText = newText.encode()
 				# Sizes are packed as 32-bit ints in native byte order.
 				# Since nvda and nvda_dmp are running on the same Python
 				# platform/version, this is okay.
-				tl = struct.pack("=II", len(old), len(new))
-				DiffMatchPatch._proc.stdin.write(tl)
-				DiffMatchPatch._proc.stdin.write(old)
-				DiffMatchPatch._proc.stdin.write(new)
-				buf = b""
-				sizeb = b""
-				SIZELEN = 4
-				while len(sizeb) < SIZELEN:
-					try:
-						sizeb += DiffMatchPatch._proc.stdout.read(SIZELEN - len(sizeb))
-					except TypeError:
-						pass
-				(size,) = struct.unpack("=I", sizeb)
-				while len(buf) < size:
-					buf += DiffMatchPatch._proc.stdout.read(size - len(buf))
+				packedTextLength = struct.pack("=II", len(oldEncodedText), len(newEncodedText))
+				DiffMatchPatch._proc.stdin.write(packedTextLength)
+				DiffMatchPatch._proc.stdin.write(oldEncodedText)
+				DiffMatchPatch._proc.stdin.write(newEncodedText)
 				DiffMatchPatch._proc.stdin.flush()
-				DiffMatchPatch._proc.stdout.flush()
+				DIFF_LENGTH_BUFFER_SIZE = 4
+				diffLengthBuffer = DiffMatchPatch._readData(DIFF_LENGTH_BUFFER_SIZE)
+				(diff_length,) = struct.unpack("=I", diffLengthBuffer)
+				diffBuffer = DiffMatchPatch._readData(diff_length)
 				return [
 					line
-					for line in buf.decode("utf-8").splitlines()
+					for line in diffBuffer.decode("utf-8").splitlines()
 					if line and not line.isspace()
 				]
 		except Exception:
@@ -106,11 +114,15 @@ class DiffMatchPatch(DiffAlgo):
 			if DiffMatchPatch._proc:
 				log.debug("Terminating diff-match-patch proxy")
 				# nvda_dmp exits when it receives two zero-length texts.
-				try:
-					DiffMatchPatch._proc.stdin.write(struct.pack("=II", 0, 0))
-					DiffMatchPatch._proc.wait(timeout=5)
-				except Exception:
-					log.exception("Exception during DMP termination")
+				returnCode = DiffMatchPatch._proc.poll()
+				if returnCode is None:
+					try:
+						DiffMatchPatch._proc.stdin.write(struct.pack("=II", 0, 0))
+						DiffMatchPatch._proc.wait(timeout=5)
+					except Exception:
+						log.exception("Exception during DMP termination")
+				else:
+					log.debug(f"Diff-match-patch proxy already terminated, return code is {returnCode}")
 				DiffMatchPatch._proc = None
 
 

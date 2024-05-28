@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2009-2019 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2009-2022 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -7,7 +7,8 @@ from typing import Dict
 from enum import Enum
 import controlTypes
 
-ariaRolesToNVDARoles: Dict[str, int] = {
+
+ariaRolesToNVDARoles: Dict[str, controlTypes.Role] = {
 	"description": controlTypes.Role.STATICTEXT,  # Not in ARIA 1.1 spec
 	"alert":controlTypes.Role.ALERT,
 	"alertdialog":controlTypes.Role.DIALOG,
@@ -17,7 +18,7 @@ ariaRolesToNVDARoles: Dict[str, int] = {
 	"checkbox":controlTypes.Role.CHECKBOX,
 	"columnheader":controlTypes.Role.TABLECOLUMNHEADER,
 	"combobox":controlTypes.Role.COMBOBOX,
-	"definition":controlTypes.Role.LISTITEM,
+	"definition": controlTypes.Role.DEFINITION,
 	"dialog":controlTypes.Role.DIALOG,
 	"directory":controlTypes.Role.LIST,
 	"document":controlTypes.Role.DOCUMENT,
@@ -61,6 +62,10 @@ ariaRolesToNVDARoles: Dict[str, int] = {
 	"tree":controlTypes.Role.TREEVIEW,
 	"treegrid":controlTypes.Role.TREEVIEW,
 	"treeitem":controlTypes.Role.TREEVIEWITEM,
+	"suggestion": controlTypes.Role.SUGGESTION,
+	"comment": controlTypes.Role.COMMENT,
+	"deletion": controlTypes.Role.DELETED_CONTENT,
+	"insertion": controlTypes.Role.INSERTED_CONTENT,
 }
 
 ariaSortValuesToNVDAStates: Dict[str, controlTypes.State] = {
@@ -110,3 +115,13 @@ class AriaLivePoliteness(str, Enum):
 	OFF = "off"
 	POLITE = "polite"
 	ASSERTIVE = "assertive"
+
+
+ariaHaspopupValuesToNVDAStates: Dict[str, controlTypes.State] = {
+	"true": controlTypes.State.HASPOPUP,
+	"menu": controlTypes.State.HASPOPUP,
+	"dialog": controlTypes.State.HASPOPUP_DIALOG,
+	"grid": controlTypes.State.HASPOPUP_GRID,
+	"listbox": controlTypes.State.HASPOPUP_LIST,
+	"tree": controlTypes.State.HASPOPUP_TREE,
+}

@@ -27,6 +27,8 @@ Starts
 	NVDA_Starts	# run test
 
 Starts from desktop shortcut
+	# Excluded until test can be fixed. Tracked in issue: (#14293)
+	[Tags]	excluded_from_build
 	[Documentation]	Ensure that NVDA can start from desktop shortcut
 	[Setup]	start NVDA	standard-dontShowWelcomeDialog.ini
 	Pass Execution If	"${whichNVDA}"!="installed"	Desktop shortcut only exists on installed copies
@@ -67,9 +69,9 @@ Restarts on crash
 	[Documentation]	Ensure NVDA restarts on crash.
 	NVDA restarts on crash
 
-Restarts on braille crash
-	[Documentation]	Ensure NVDA restarts on a crash on the braille thread.
-	NVDA restarts on braille crash
+Restarts on io thread crash
+	[Documentation]	Ensure NVDA restarts on a crash on the hwIo background thread.
+	NVDA restarts on io thread crash
 
 Restarts on UIAHandler crash
 	[Documentation]	Ensure NVDA restarts on crash on the UIAHandler thread.

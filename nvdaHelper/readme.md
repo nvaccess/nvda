@@ -53,22 +53,35 @@ The following steps won't prepare a buildable solution, but it will enable intel
 You should still build on the command line to verify errors.
 
 - Ensure you have built NVDA on the command line first.
-- Create a new project from existing code
-- Type: Visual C++, press next.
-- Set the `<repo root>/nvdaHelper/` directory as the project file location.
-- Project name: "nvdaHelper"
-- Add files to the project from these folders: checked.
-  - This should have a single 'checked' item, the path to nvdaHelper
-- Other defaults are fine, press next
-- Select "use external build system" for "How do you want to build the project?", press next
-- Build command line: `scons source`
-- Include search paths: `../include;../miscDeps/include;./;../build\x86_64;../include/minhook/include`
-- Preprocessor definitions: `WIN32;_WINDOWS;_USRDLL;NVDAHELPER_EXPORTS;UNICODE;_CRT_SECURE_NO_DEPRECATE;LOGLEVEL=15;_WIN32_WINNT=_WIN32_WINNT_WIN7;`
-- Forced Included files: `winuser.h`
-- Press next
-- Ensure "same as Debug configuration" is checked and press finish
-- Open the project settings and change the following:
-  - NMake -> Additional Options -> `/std:c++17`
+- From the files menu select: `Create a new project from existing code`
+- "Welcome to the Create Project from Existing Code Files Wizard"
+  - "What type of project would you like to create?": `Visual C++`
+  - Press next.
+- "Specify Project Location and Source Files"
+  - "Project file location": `<repo root>/nvdaHelper/`
+  - Project name: `nvdaHelper`
+  - Add files to the project from these folders: `checked`
+  - One **checked** item: `<path to nvdaHelper>`
+  - Files types to add to the project: **use default**
+  - Show all files in Solution Explorer: *use default (checked)**
+  - Press next
+- "Specify Project Settings"
+  - "How do you want to build the project?": Select `use external build system`
+  - Press next
+-  Specify Debug Configuration Settings
+  - Build command line: `scons source`
+  - Preprocessor definitions (/D): `WIN32;_WINDOWS;_USRDLL;NVDAHELPER_EXPORTS;UNICODE;_CRT_SECURE_NO_DEPRECATE;LOGLEVEL=15;_WIN32_WINNT=_WIN32_WINNT_WINBLUE;NOMINMAX`
+  - Include search paths (/I): `../include;../miscDeps/include;./;../build\x86_64;../include/minhook/include`
+  - Forced Included files (/FI): `winuser.h`
+  - Press next
+-  Specify Debug Configuration Settings
+  - "Same as Debug configuration": **Checked**
+- Press Finish
+- Set the C++ standard:
+  - In the project menu, select Properties
+  - Select "Configuration:" `All Configurations`
+  - Under "Configuration Properties" select NMake
+  - Set additional Options -> `/std:c++20`
 
 #### To confirm these settings
 - Build NVDA normally
@@ -76,15 +89,45 @@ You should still build on the command line to verify errors.
   - EG
   ```
   cl /Fobuild\x86\vbufBackends\gecko_ia2\gecko_ia2.obj /c build\x86\vbufBackends\gecko_ia2\gecko_ia2.cpp
-  /TP /EHsc /nologo /std:c++17 /Od /MT /W3 /WX
-  /DUNICODE /D_CRT_SECURE_NO_DEPRECATE /DLOGLEVEL=15 /D_WIN32_WINNT=_WIN32_WINNT_WIN7 /DNDEBUG
+  /TP /EHsc /nologo /std:c++20 /permissive- /Od /MT /W3 /WX
+  /DUNICODE /D_CRT_SECURE_NO_DEPRECATE /DLOGLEVEL=15 /D_WIN32_WINNT=_WIN32_WINNT_WINBLUE /DNOMINMAX /DNDEBUG
   /Iinclude /Imiscdeps\include /Ibuild\x86
   /Z7
   ```
 - This shows the:
   - defines beginning with `/D`
   - includes directories beginning with `/I`
-  - Additional options like `/std:c++17`
+  - Additional options like `/std:c++20`
+
+### Compiling NVDAHelper with Debugging Options
+Among other things, preparing the source tree builds the NVDAHelper libraries.
+If trying to debug nvdaHelper, you can control various debugging options by building with the `nvdaHelperDebugFlags` and `nvdaHelperLogLevel` command line variables.
+
+The `nvdaHelperLogLevel` variable specifies the level of logging (0-59) you wish to see, lower is more verbose. The default is 15.
+
+The `nvdaHelperDebugFlags` variable takes one or more of the following flags:
+
+* debugCRT: the libraries will be linked against the debug C runtime and assertions will be enabled. (By default, the normal CRT is used and assertions are disabled.)
+* RTC: runtime checks (stack corruption, uninitialized variables, etc.) will be enabled. (The default is no runtime checks.)
+* analyze: runs MSVC code analysis on all nvdaHelper code, halting on any warning. (default is no analysis).
+
+The special keywords none and all can also be used in place of the individual flags.
+
+An example follows that enables debug CRT and runtime checks 
+
+```cmd
+scons source nvdaHelperDebugFlags=debugCRT,RTC
+```
+
+Symbol pdb files are always produced when building, regardless of the debug flags.
+However, they are not included in the NVDA distribution.
+Instead, `scons symbolsArchive` will package them as a separate archive.
+
+By default, builds also do not use any compiler optimizations.
+Please see the `release` keyword argument for what compiler optimizations it will enable.
+
+### Building nvdaHelper developer documentation
+[Refer to this section](../projectDocs/dev/buildingDevDocumentation.md#building-nvdahelper-developer-documentation)
 
 ### Virtual Buffer Backends
 

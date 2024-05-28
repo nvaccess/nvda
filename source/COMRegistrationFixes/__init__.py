@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018-2021 NV Access Limited, Luke Davis (Open Source Systems, Ltd.)
+# Copyright (C) 2018-2023 NV Access Limited, Luke Davis (Open Source Systems, Ltd.)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -29,8 +29,8 @@ PROGRAM_FILES_X86 = os.path.join(SYSTEM_DRIVE, "Program Files (x86)")
 def register32bitServer(fileName: str) -> None:
 	"""Registers the COM proxy dll with the given file name, using the 32-bit version of regsvr32.
 	Note: this function is valid while NVDA remains a 32-bit app. Re-evaluate if we move to 64-bit.
-	@param fileName: the path to the dll
-	@type fileName: str
+
+	:param fileName: The path to the DLL
 	"""
 	# Points to the 32-bit version, on Windows 32-bit or 64-bit.
 	regsvr32 = os.path.join(SYSTEM32, "regsvr32.exe")
@@ -49,8 +49,8 @@ def register32bitServer(fileName: str) -> None:
 def register64bitServer(fileName: str) -> None:
 	"""Registers the COM proxy dll with the given file name, using the 64-bit version of regsvr64.
 	Note: this function is valid while NVDA remains a 32-bit app. Re-evaluate if we move to 64-bit.
-	@param fileName: the path to the dll
-	@type fileName: str
+
+	:param fileName: The path to the DLL
 	"""
 	# SysWOW64 provides a virtual directory to allow 32-bit programs to reach 64-bit executables.
 	regsvr32 = os.path.join(SYSNATIVE, "regsvr32.exe")
@@ -69,8 +69,7 @@ def register64bitServer(fileName: str) -> None:
 def apply32bitRegistryPatch(fileName: str) -> None:
 	"""Applies the registry patch with the given file name, using 32-bit regExe.
 	Note: this function is valid while NVDA remains a 32-bit app. Re-evaluate if we move to 64-bit.
-	@param fileName: the path to the .reg file
-	@type fileName: str
+	:param fileName: The path to the .reg file
 	"""
 	if not os.path.isfile(fileName):
 		raise FileNotFoundError(f"Cannot apply 32-bit registry patch: {fileName} not found.")
@@ -91,8 +90,8 @@ def apply32bitRegistryPatch(fileName: str) -> None:
 def apply64bitRegistryPatch(fileName: str) -> None:
 	"""Applies the registry patch with the given file name, using 64-bit regExe.
 	Note: this function is valid while NVDA remains a 32-bit app. Re-evaluate if we move to 64-bit.
-	@param fileName: the path to the .reg file
-	@type fileName: str
+
+	:param fileName: The path to the .reg file
 	"""
 	if not os.path.isfile(fileName):
 		raise FileNotFoundError(f"Cannot apply 64-bit registry patch: {fileName} not found.")
@@ -110,13 +109,13 @@ def apply64bitRegistryPatch(fileName: str) -> None:
 		log.debug(f"Applied 64-bit registry patch from {fileName}")
 
 
-def fixCOMRegistrations():
+def fixCOMRegistrations() -> None:
 	"""Registers most common COM proxies, in case they have accidentally been unregistered or overwritten by
 	3rd party software installs or uninstalls.
 	"""
-	is64bit = os.environ.get("PROCESSOR_ARCHITEW6432", "").endswith("64")
 	winVer = winVersion.getWinVer()
 	OSMajorMinor = (winVer.major, winVer.minor)
+	is64bit = winVer.processorArchitecture.endswith("64")
 	log.debug(
 		f"Fixing COM registrations for Windows {OSMajorMinor[0]}.{OSMajorMinor[1]}, "
 		"{} bit.".format("64" if is64bit else "32")
@@ -131,12 +130,3 @@ def fixCOMRegistrations():
 	if is64bit:
 		register64bitServer(os.path.join(SYSTEM32, "oleaut32.dll"))
 		register64bitServer(os.path.join(SYSTEM32, "actxprxy.dll"))
-	# IServiceProvider on windows 7 can become unregistered 
-	if OSMajorMinor == (6, 1):  # Windows 7
-		# There was no "Program Files (x86)" in Windows 7 32-bit, so we cover both cases
-		register32bitServer(os.path.join(
-			PROGRAM_FILES_X86 if is64bit else PROGRAM_FILES,
-			"Internet Explorer", "ieproxy.dll"
-		))
-		if is64bit:
-			register64bitServer(os.path.join(PROGRAM_FILES, "Internet Explorer", "ieproxy.dll"))

@@ -6,9 +6,11 @@
 import operator
 from comtypes import COMError
 import config
+from config.featureFlagEnums import WindowsTerminalStrategyFlag
 import ctypes
 import UIAHandler
 import weakref
+import winVersion
 from functools import lru_cache
 from logHandler import log
 from .constants import WinConsoleAPILevel
@@ -122,13 +124,19 @@ def iterUIARangeByUnit(rangeObj,unit,reverse=False):
 	tempRange.MoveEndpointByRange(Endpoint_relativeEnd,rangeObj,Endpoint_relativeStart)
 	endRange=tempRange.Clone()
 	loopCount = 0
+	yieldRange = None
 	while relativeGTOperator(endRange.Move(unit,minRelativeDistance),0):
 		loopCount += 1
 		tempRange.MoveEndpointByRange(Endpoint_relativeEnd,endRange,Endpoint_relativeStart)
 		pastEnd=relativeGTOperator(tempRange.CompareEndpoints(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd),0)
 		if pastEnd:
 			tempRange.MoveEndpointByRange(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd)
-		yield tempRange.clone()
+		if yieldRange and bool(yieldRange.compare(tempRange)):
+			# we've looped onto range we've already yielded previously - shortcircuit to prevent
+			# infinite loop
+			return
+		yieldRange = tempRange.clone()
+		yield yieldRange
 		if pastEnd:
 			return
 		tempRange.MoveEndpointByRange(Endpoint_relativeStart,tempRange,Endpoint_relativeEnd)
@@ -305,9 +313,7 @@ def _shouldUseUIAConsole(hwnd: int) -> bool:
 	else:
 		# #7497: the UIA implementation in old conhost is incomplete, therefore we
 		# should ignore it.
-		# When the UIA implementation is improved, the below line will be replaced
-		# with a check that _getConhostAPILevel >= FORMATTED.
-		return False
+		return _getConhostAPILevel(hwnd) >= WinConsoleAPILevel.FORMATTED
 
 
 @lru_cache(maxsize=10)
@@ -352,3 +358,34 @@ def _getConhostAPILevel(hwnd: int) -> WinConsoleAPILevel:
 	except (COMError, ValueError):
 		log.exception()
 		return WinConsoleAPILevel.END_INCLUSIVE
+
+
+def _shouldSelectivelyRegister() -> bool:
+	"Determines whether to register for UIA events selectively or globally."
+	setting = config.conf['UIA']['eventRegistration']
+	if setting == "selective":
+		return True
+	elif setting == "global":
+		return False
+	else:
+		return winVersion.getWinVer() >= winVersion.WIN11_22H2
+
+
+def _shouldUseWindowsTerminalNotifications() -> bool:
+	"Determines whether to use notifications for new text reporting in Windows Terminal."
+	return config.conf["terminals"]["wtStrategy"] == WindowsTerminalStrategyFlag.NOTIFICATIONS
+
+
+def _isFrameworkIdWinForm(hwnd: int) -> bool:
+	"""
+	Returns whether this window belongs to an element that originates from the Windows Forms framework (WinForm).
+	This is used to determine whether a native UIA implementation should be used for SysListView32 controls.
+	"""
+	try:
+		UIAElement = UIAHandler.handler.clientObject.ElementFromHandleBuildCache(
+			hwnd, UIAHandler.handler.baseCacheRequest
+		)
+		return UIAElement.cachedFrameworkID == "WinForm"
+	except COMError:
+		log.exception(f"Couldn't get FrameworkId for window {hwnd}")
+		return False

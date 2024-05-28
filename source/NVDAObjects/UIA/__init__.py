@@ -1,36 +1,39 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2009-2022 NV Access Limited, Joseph Lee, Mohammad Suliman,
-# Babbage B.V., Leonard de Ruijter, Bill Dengler
+# Copyright (C) 2009-2023 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V., Leonard de Ruijter,
+# Bill Dengler, Cyrille Bougot
 
 """Support for UI Automation (UIA) controls."""
 import typing
 from typing import (
+	Generator,
+	List,
 	Optional,
 	Dict,
+	Tuple,
 )
-from ctypes import byref
-from ctypes.wintypes import POINT, RECT
+import array
+from ctypes.wintypes import POINT
 from comtypes import COMError
-from comtypes.automation import VARIANT
 import time
-import weakref
 import numbers
 import colors
 import languageHandler
 import UIAHandler
 import UIAHandler.customProps
 import UIAHandler.customAnnotations
-import globalVars
-import eventHandler
 import controlTypes
-from controlTypes import TextPosition
+from controlTypes import TextPosition, TextAlign
+import inputCore
 import config
 import speech
 import api
 import textInfos
 from logHandler import log
+from UIAHandler.types import (
+	IUIAutomationTextRangeT
+)
 from UIAHandler.utils import (
 	BulkUIATextRangeAttributeValueFetcher,
 	UIATextRangeAttributeValueFetcher,
@@ -39,11 +42,17 @@ from UIAHandler.utils import (
 	iterUIARangeByUnit,
 	UIAMixedAttributeError,
 	UIATextRangeFromElement,
+	_shouldUseWindowsTerminalNotifications,
 )
 from NVDAObjects.window import Window
-from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
+from NVDAObjects import (
+	NVDAObject,
+	NVDAObjectTextInfo,
+	InvalidNVDAObject,
+)
 from NVDAObjects.behaviors import (
 	ProgressBar,
+	EditableTextBase,
 	EditableTextWithoutAutoSelectDetection,
 	EditableTextWithAutoSelectDetection,
 	Dialog,
@@ -55,6 +64,7 @@ import braille
 import locationHelper
 import ui
 import winVersion
+import NVDAObjects
 
 
 paragraphIndentIDs = {
@@ -63,8 +73,16 @@ paragraphIndentIDs = {
 	UIAHandler.UIA_IndentationTrailingAttributeId,
 }
 
+textAlignLabels = {
+	UIAHandler.HorizontalTextAlignment_Left: TextAlign.LEFT,
+	UIAHandler.HorizontalTextAlignment_Centered: TextAlign.CENTER,
+	UIAHandler.HorizontalTextAlignment_Right: TextAlign.RIGHT,
+	UIAHandler.HorizontalTextAlignment_Justified: TextAlign.JUSTIFY,
+}
+
 
 class UIATextInfo(textInfos.TextInfo):
+	_rangeObj: IUIAutomationTextRangeT
 
 	_cache_controlFieldNVDAObjectClass=True
 	def _get_controlFieldNVDAObjectClass(self):
@@ -149,20 +167,25 @@ class UIATextInfo(textInfos.TextInfo):
 			return True
 		return False
 
-	def _getFormatFieldAtRange(self,textRange,formatConfig,ignoreMixedValues=False):
+	# C901 '_getFormatFieldAtRange' is too complex
+	# Note: when working on _getFormatFieldAtRange, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def _getFormatFieldAtRange(  # noqa: C901
+			self,
+			textRange: IUIAutomationTextRangeT,
+			formatConfig: Dict,
+			ignoreMixedValues: bool = False,
+	) -> textInfos.FormatField:
 		"""
 		Fetches formatting for the given UI Automation Text range.
 		@param textRange: the text range whos formatting should be fetched.
-		@type textRange: L{UIAutomation.IUIAutomationTextRange}
 		@param formatConfig: the types of formatting requested.
 		@type formatConfig: a dictionary of NVDA document formatting configuration keys
 			with values set to true for those types that should be fetched.
 		@param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included.
 			If False, L{UIAHandler.utils.MixedAttributeError} will be raised if UI Automation gives back
 			a mixed attribute value signifying that the caller may want to try again with a smaller range.
-		@type: bool
 		@return: The formatting for the given text range.
-		@rtype: L{textInfos.FormatField}
 		"""
 		formatField=textInfos.FormatField()
 		if not isinstance(textRange,UIAHandler.IUIAutomationTextRange):
@@ -256,19 +279,13 @@ class UIATextInfo(textInfos.TextInfo):
 		if formatConfig["reportParagraphIndentation"]:
 			formatField.update(self._getFormatFieldIndent(fetcher, ignoreMixedValues=ignoreMixedValues))
 		if formatConfig["reportAlignment"]:
-			val=fetcher.getValue(UIAHandler.UIA_HorizontalTextAlignmentAttributeId,ignoreMixedValues=ignoreMixedValues)
-			if val==UIAHandler.HorizontalTextAlignment_Left:
-				val="left"
-			elif val==UIAHandler.HorizontalTextAlignment_Centered:
-				val="center"
-			elif val==UIAHandler.HorizontalTextAlignment_Right:
-				val="right"
-			elif val==UIAHandler.HorizontalTextAlignment_Justified:
-				val="justify"
-			else:
-				val=None
-			if val:
-				formatField['text-align']=val
+			val = fetcher.getValue(
+				UIAHandler.UIA_HorizontalTextAlignmentAttributeId,
+				ignoreMixedValues=ignoreMixedValues,
+			)
+			textAlign = textAlignLabels.get(val)
+			if textAlign:
+				formatField['text-align'] = textAlign
 		if formatConfig["reportColor"]:
 			val=fetcher.getValue(UIAHandler.UIA_BackgroundColorAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if isinstance(val,int):
@@ -374,8 +391,7 @@ class UIATextInfo(textInfos.TextInfo):
 			formatField['right-indent'] = self._getIndentValueDisplayString(uiaIndentTrailing)
 		return formatField
 	
-	@staticmethod
-	def _getIndentValueDisplayString(val: float) -> str:
+	def _getIndentValueDisplayString(self, val: float) -> str:
 		"""A function returning the string to display in formatting info.
 		@param val: an indent value measured in points, fetched via
 			an UIAHandler.UIA_Indentation*AttributeId attribute.
@@ -394,8 +410,15 @@ class UIATextInfo(textInfos.TextInfo):
 			valText = _("{val:.2f} cm").format(val=val)
 		return valText
 	
-	
-	def __init__(self,obj,position,_rangeObj=None):
+	# C901 '__init__' is too complex
+	# Note: when working on getPropertiesBraille, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def __init__(  # noqa: C901
+			self,
+			obj: NVDAObject,
+			position: str,
+			_rangeObj: Optional[IUIAutomationTextRangeT] = None
+	):
 		super(UIATextInfo,self).__init__(obj,position)
 		if _rangeObj:
 			try:
@@ -410,7 +433,7 @@ class UIATextInfo(textInfos.TextInfo):
 			except COMError:
 				raise RuntimeError("No selection available")
 			if sel.length>0:
-				self._rangeObj=sel.getElement(0).clone()
+				self._rangeObj: IUIAutomationTextRangeT = sel.getElement(0).clone()
 			else:
 				raise NotImplementedError("UIAutomationTextRangeArray is empty")
 			if position==textInfos.POSITION_CARET:
@@ -419,36 +442,34 @@ class UIATextInfo(textInfos.TextInfo):
 			self._rangeObj=position._rangeObj
 		elif position==textInfos.POSITION_FIRST:
 			try:
-				self._rangeObj=self.obj.UIATextPattern.documentRange
+				self._rangeObj: IUIAutomationTextRangeT = self.obj.UIATextPattern.documentRange
 			except COMError:
 				# Error: first position not supported by the UIA text pattern.
 				raise RuntimeError
 			self.collapse()
 		elif position==textInfos.POSITION_LAST:
-			self._rangeObj=self.obj.UIATextPattern.documentRange
+			self._rangeObj: IUIAutomationTextRangeT = self.obj.UIATextPattern.documentRange
 			self.collapse(True)
 		elif position==textInfos.POSITION_ALL or position==self.obj:
-			self._rangeObj=self.obj.UIATextPattern.documentRange
+			self._rangeObj: IUIAutomationTextRangeT = self.obj.UIATextPattern.documentRange
 		elif isinstance(position,UIA) or isinstance(position,UIAHandler.IUIAutomationElement):
 			if isinstance(position,UIA):
 				position=position.UIAElement
 			try:
-				self._rangeObj=self.obj.UIATextPattern.rangeFromChild(position)
+				self._rangeObj: Optional[IUIAutomationTextRangeT] = self.obj.UIATextPattern.rangeFromChild(position)
 			except COMError:
 				raise LookupError
 			# sometimes rangeFromChild can return a NULL range
 			if not self._rangeObj: raise LookupError
 		elif isinstance(position,locationHelper.Point):
-			if winVersion.getWinVer() <= winVersion.WIN7_SP1:
-				# #9435: RangeFromPoint causes a freeze in UIA client library in the Windows 7 start menu!
-				raise NotImplementedError("RangeFromPoint not supported on Windows 7")
-			self._rangeObj=self.obj.UIATextPattern.RangeFromPoint(position.toPOINT())
-		elif isinstance(position,UIAHandler.IUIAutomationTextRange):
-			self._rangeObj=position.clone()
+			self._rangeObj: IUIAutomationTextRangeT = self.obj.UIATextPattern.RangeFromPoint(position.toPOINT())
+		elif isinstance(position, UIAHandler.IUIAutomationTextRange):
+			position = typing.cast(IUIAutomationTextRangeT, position)
+			self._rangeObj = position.clone()
 		else:
 			raise ValueError("Unknown position %s"%position)
 
-	def __eq__(self,other):
+	def __eq__(self, other: "UIATextInfo"):
 		if self is other: return True
 		if self.__class__ is not other.__class__: return False
 		return bool(self._rangeObj.compare(other._rangeObj))
@@ -553,27 +574,28 @@ class UIATextInfo(textInfos.TextInfo):
 				pass
 		return field
 
-	def _getTextFromUIARange(self, textRange):
+	def _getTextFromUIARange(self, textRange: IUIAutomationTextRangeT) -> str:
 		"""
 		Fetches plain text from the given UI Automation text range.
 		Just calls getText(-1). This only exists to be overridden for filtering.
 		"""
 		return textRange.getText(-1)
 
-	def _getTextWithFields_text(self,textRange,formatConfig,UIAFormatUnits=None):
+	def _getTextWithFields_text(
+			self,
+			textRange: IUIAutomationTextRangeT,
+			formatConfig: Dict,
+			UIAFormatUnits: Optional[List[int]] = None
+	) -> Generator[textInfos.FieldCommand, None, None]:
 		"""
 		Yields format fields and text for the given UI Automation text range, split up by the first available UI Automation text unit that does not result in mixed attribute values.
 		@param textRange: the UI Automation text range to walk.
-		@type textRange: L{UIAHandler.IUIAutomationTextRange}
-		@param formatConfig: the types of formatting requested.
-		@type formatConfig: a dictionary of NVDA document formatting configuration keys
+		@param formatConfig: a dictionary of NVDA document formatting configuration keys
 			with values set to true for those types that should be fetched.
 		@param UIAFormatUnits: the UI Automation text units (in order of resolution) that should be used to split the text so as to avoid mixed attribute values. This is None by default.
 			If the parameter is a list of 1 or more units, The range will be split by the first unit in the list, and this method will be recursively run on each subrange, with the remaining units in this list given as the value of this parameter. 
 			If this parameter is an empty list, then formatting and text is fetched for the entire range, but any mixed attribute values are ignored and no splitting occures.
 			If this parameter is None, text and formatting is fetched for the entire range in one go, but if mixed attribute values are found, it will split by the first unit in self.UIAFormatUnits, and run this method recursively on each subrange, providing the remaining units from self.UIAFormatUnits as the value of this parameter. 
-		@type UIAFormatUnits: List of UI Automation Text Units or None
-		@rtype: a Generator yielding L{textInfos.FieldCommand} objects containing L{textInfos.FormatField} objects, and text strings.
 		"""
 		debug = UIAHandler._isDebug() and log.isEnabledFor(log.DEBUG)
 		if debug:
@@ -615,26 +637,31 @@ class UIATextInfo(textInfos.TextInfo):
 		if debug:
 			log.debug("Done _getTextWithFields_text")
 
-	def _getTextWithFieldsForUIARange(self,rootElement,textRange,formatConfig,includeRoot=False,alwaysWalkAncestors=True,recurseChildren=True,_rootElementClipped=(True,True)):
+	# C901 '_getTextWithFieldsForUIARange' is too complex
+	# Note: when working on getPropertiesBraille, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def _getTextWithFieldsForUIARange(  # noqa: C901
+			self,
+			rootElement: UIAHandler.IUIAutomationElement,
+			textRange: IUIAutomationTextRangeT,
+			formatConfig: Dict,
+			includeRoot: bool = False,
+			alwaysWalkAncestors: bool = True,
+			recurseChildren: bool = True,
+			_rootElementClipped: Tuple[bool, bool] = (True, True),
+	) -> Generator[textInfos.TextInfo.TextOrFieldsT, None, None]:
 		"""
 		Yields start and end control fields, and text, for the given UI Automation text range.
 		@param rootElement: the highest ancestor that encloses the given text range. This function will not walk higher than this point.
-		@type rootElement: L{UIAHandler.IUIAutomation}
 		@param textRange: the UI Automation text range whos content should be fetched.
-		@type textRange: L{UIAHandler.IUIAutomation}
 		@param formatConfig: the types of formatting requested.
 		@type formatConfig: a dictionary of NVDA document formatting configuration keys
 			with values set to true for those types that should be fetched.
 		@param includeRoot: If true, then a control start and end will be yielded for the root element.
-		@type includeRoot: bool
 		@param alwaysWalkAncestors: If true then control fields will be yielded for any element enclosing the given text range, that is a descendant of the root element. If false then the root element may be  assumed to be the only ancestor.
-		@type alwaysWalkAncestors: bool
 		@param recurseChildren: If true, this function will be recursively called for each child of the given text range, clipped to the bounds of this text range. Formatted text between the children will also be yielded. If false, only formatted text will be yielded.
-		@type recurseChildren: bool
 		@param _rootElementClipped: Indicates if textRange represents all of the given rootElement,
 			or is clipped at the start or end.
-		@type _rootElementClipped: 2-tuple
-		@rtype: A generator that yields L{textInfo.FieldCommand} objects and text strings.
 		"""
 		debug = UIAHandler._isDebug() and log.isEnabledFor(log.DEBUG)
 		if debug:
@@ -853,12 +880,11 @@ class UIATextInfo(textInfos.TextInfo):
 	def _get_text(self):
 		return self._getTextFromUIARange(self._rangeObj)
 
-	def _getBoundingRectsFromUIARange(self, textRange):
+	def _getBoundingRectsFromUIARange(self, textRange: IUIAutomationTextRangeT) -> locationHelper.RectLTWH:
 		"""
 		Fetches per line bounding rectangles from the given UI Automation text range.
 		Note that if the range object doesn't cover a whole line (e.g. a character),
 		the bounding rectangle will be restricted to the range.
-		@rtype: [locationHelper.RectLTWH]
 		"""
 		rects = []
 		rectArray = textRange.GetBoundingRectangles()
@@ -872,11 +898,16 @@ class UIATextInfo(textInfos.TextInfo):
 	def _get_boundingRects(self):
 		return self._getBoundingRectsFromUIARange(self._rangeObj)
 
-	def expand(self,unit):
+	def expand(self, unit: str) -> None:
 		UIAUnit=UIAHandler.NVDAUnitsToUIAUnits[unit]
 		self._rangeObj.ExpandToEnclosingUnit(UIAUnit)
 
-	def move(self,unit,direction,endPoint=None):
+	def move(
+			self,
+			unit: str,
+			direction: int,
+			endPoint: Optional[str] = None,
+	):
 		UIAUnit=UIAHandler.NVDAUnitsToUIAUnits[unit]
 		if endPoint=="start":
 			res=self._rangeObj.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_Start,UIAUnit,direction)
@@ -892,13 +923,13 @@ class UIATextInfo(textInfos.TextInfo):
 	def copy(self):
 		return self.__class__(self.obj,None,_rangeObj=self._rangeObj)
 
-	def collapse(self,end=False):
+	def collapse(self, end: bool = False):
 		if end:
 			self._rangeObj.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,self._rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
 		else:
 			self._rangeObj.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,self._rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)
 
-	def compareEndPoints(self,other,which):
+	def compareEndPoints(self, other: "UIATextInfo", which: str):
 		if which.startswith('start'):
 			src=UIAHandler.TextPatternRangeEndpoint_Start
 		else:
@@ -909,7 +940,7 @@ class UIATextInfo(textInfos.TextInfo):
 			target=UIAHandler.TextPatternRangeEndpoint_End
 		return self._rangeObj.CompareEndpoints(src,other._rangeObj,target)
 
-	def setEndPoint(self,other,which):
+	def setEndPoint(self, other: "UIATextInfo", which: str):
 		if which.startswith('start'):
 			src=UIAHandler.TextPatternRangeEndpoint_Start
 		else:
@@ -923,11 +954,15 @@ class UIATextInfo(textInfos.TextInfo):
 	def updateSelection(self):
 		self._rangeObj.Select()
 
-	updateCaret = updateSelection
+	def updateCaret(self) -> None:
+		copyTextInfo = self.copy()
+		copyTextInfo.collapse()
+		copyTextInfo.updateSelection()
+
 
 class UIA(Window):
-	_UIACustomProps = UIAHandler.customProps.CustomPropertiesCommon.get()
-	_UIACustomAnnotationTypes = UIAHandler.customAnnotations.CustomAnnotationTypesCommon.get()
+	_UIACustomProps = UIAHandler.customProps.CustomPropertiesCommon()
+	_UIACustomAnnotationTypes = UIAHandler.customAnnotations.CustomAnnotationTypesCommon()
 
 	shouldAllowDuplicateUIAFocusEvent = False
 
@@ -977,16 +1012,22 @@ class UIA(Window):
 		for ID in IDs:
 			elementCache[ID]=cacheElement
 
-	def findOverlayClasses(self,clsList):
-		UIAControlType=self.UIAElement.cachedControlType
-		UIAClassName=self.UIAElement.cachedClassName
+	# C901 'findOverlayClasses' is too complex
+	# Note: when working on findOverlayClasses, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def findOverlayClasses(self, clsList):  # NOQA: C901
+		UIAControlType = self.UIAElement.cachedControlType
+		UIAClassName = self.UIAElement.cachedClassName
 		# #11445: to avoid COM errors, do not fetch cached UIA Automation Id from the underlying element.
 		UIAAutomationId = self.UIAAutomationId
-		if UIAClassName=="NetUITWMenuItem" and UIAControlType==UIAHandler.UIA_MenuItemControlTypeId and not self.name and not self.previous:
+		if (
+			UIAClassName == "NetUITWMenuItem"
+			and UIAControlType == UIAHandler.UIA_MenuItemControlTypeId
+			and not self.name
+			and not self.previous
+		):
 			# Bounces focus from a netUI dead placeholder menu item when no item is selected up to the menu itself.
 			clsList.append(PlaceholderNetUITWMenuItem)
-		elif UIAClassName=="WpfTextView":
-			clsList.append(WpfTextView)
 		elif (
 			UIAClassName == "ListViewItem"
 			and self.UIAElement.cachedFrameworkID == "WPF"
@@ -994,7 +1035,7 @@ class UIA(Window):
 		):
 			from NVDAObjects.behaviors import RowWithFakeNavigation
 			clsList.append(RowWithFakeNavigation)
-		elif UIAClassName=="NetUIDropdownAnchor":
+		elif UIAClassName == "NetUIDropdownAnchor":
 			clsList.append(NetUIDropdownAnchor)
 		elif self.windowClassName == "EXCEL6" and self.role == controlTypes.Role.PANE:
 			from .excel import BadExcelFormulaEdit
@@ -1006,6 +1047,9 @@ class UIA(Window):
 			elif self.role == controlTypes.Role.DATAGRID:
 				from .excel import ExcelWorksheet
 				clsList.append(ExcelWorksheet)
+			elif self.role == controlTypes.Role.TABLE:
+				from .excel import ExcelTable
+				clsList.append(ExcelTable)
 			elif self.role == controlTypes.Role.EDITABLETEXT:
 				from .excel import CellEdit
 				clsList.append(CellEdit)
@@ -1015,12 +1059,16 @@ class UIA(Window):
 			or UIAAutomationId.startswith('UIA_AutomationId_Word_Content')
 		):
 			from .wordDocument import WordDocument, WordDocumentNode
-			if self.role==controlTypes.Role.DOCUMENT:
+			if self.role == controlTypes.Role.DOCUMENT:
 				clsList.append(WordDocument)
 			else:
 				clsList.append(WordDocumentNode)
-		# #5136: Windows 8.x and Windows 10 uses different window class and other attributes for toast notifications.
-		elif UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId: #Windows 8.x
+		# #5136: Windows 8.x and Windows 10 uses different window class
+		# and other attributes for toast notifications.
+		elif (
+			UIAClassName == "ToastContentHost"
+			and UIAControlType == UIAHandler.UIA_ToolTipControlTypeId
+		):  # Windows 8.x
 			clsList.append(Toast_win8)
 		elif (
 			self.windowClassName == "Windows.UI.Core.CoreWindow"
@@ -1028,9 +1076,10 @@ class UIA(Window):
 			and "ToastView" in UIAAutomationId
 		):  # Windows 10
 			clsList.append(Toast_win10)
-		# #8118: treat UIA tool tips (including those found in UWP apps) as proper tool tips, especially those found in Microsoft Edge and other apps.
+		# #8118: treat UIA tool tips (including those found in UWP apps) as proper tool tips,
+		# especially those found in Microsoft Edge and other apps.
 		# Windows 8.x toast, although a form of tool tip, is covered separately.
-		elif UIAControlType==UIAHandler.UIA_ToolTipControlTypeId:
+		elif UIAControlType == UIAHandler.UIA_ToolTipControlTypeId:
 			clsList.append(ToolTip)
 		elif(
 			self.UIAElement.cachedFrameworkID in ("InternetExplorer", "MicrosoftEdge")
@@ -1038,7 +1087,7 @@ class UIA(Window):
 			and not self.appModule.appName == 'iexplore'
 		):
 			from . import spartanEdge
-			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.Role.PANE:
+			if UIAClassName in ("Internet Explorer_Server", "WebView") and self.role == controlTypes.Role.PANE:
 				clsList.append(spartanEdge.EdgeHTMLRootContainer)
 			elif (
 				self.UIATextPattern
@@ -1054,16 +1103,16 @@ class UIA(Window):
 					isinstance(self.parent, spartanEdge.EdgeHTMLRootContainer)
 					or not isinstance(self.parent, spartanEdge.EdgeNode)
 				)
-			): 
+			):
 				clsList.append(spartanEdge.EdgeHTMLRoot)
-			elif self.role==controlTypes.Role.LIST:
+			elif self.role == controlTypes.Role.LIST:
 				clsList.append(spartanEdge.EdgeList)
 			else:
 				clsList.append(spartanEdge.EdgeNode)
-		elif self.windowClassName == "Chrome_WidgetWin_1" and self.UIATextPattern:
-			from . import chromium
-			clsList.append(chromium.ChromiumUIA)
-		elif self.windowClassName == "Chrome_RenderWidgetHostHWND":
+		elif (
+			self.windowClassName == "Chrome_RenderWidgetHostHWND"
+			or self.UIAElement.cachedFrameworkID == "Chrome"
+		):
 			from . import chromium
 			from . import web
 			if (
@@ -1078,6 +1127,15 @@ class UIA(Window):
 					clsList.append(web.List)
 				clsList.append(chromium.ChromiumUIA)
 		elif (
+			(
+				self.windowClassName == "Chrome_WidgetWin_1"
+				or self.UIAElement.cachedFrameworkID == "Chrome"
+			)
+			and self.UIATextPattern
+		):
+			from . import chromium
+			clsList.append(chromium.ChromiumUIA)
+		elif (
 			self.role == controlTypes.Role.DOCUMENT
 			and UIAAutomationId == "Microsoft.Windows.PDF.DocumentView"
 		):
@@ -1091,52 +1149,66 @@ class UIA(Window):
 			clsList.insert(0, DevExpressXtraRichEdit)
 		if UIAControlType == UIAHandler.UIA_ProgressBarControlTypeId:
 			clsList.insert(0, ProgressBar)
-		if UIAClassName=="ControlPanelLink":
+		if UIAClassName == "ControlPanelLink":
 			clsList.append(ControlPanelLink)
-		if UIAClassName=="UIColumnHeader":
+		if UIAClassName == "UIColumnHeader":
 			clsList.append(UIColumnHeader)
-		elif UIAClassName=="UIItem":
+		elif UIAClassName == "UIItem":
 			clsList.append(UIItem)
-		elif UIAClassName=="SensitiveSlider":
-			clsList.append(SensitiveSlider) 
-		if UIAControlType==UIAHandler.UIA_TreeItemControlTypeId:
+		elif UIAClassName == "SensitiveSlider":
+			clsList.append(SensitiveSlider)
+		if UIAControlType == UIAHandler.UIA_TreeItemControlTypeId:
 			clsList.append(TreeviewItem)
-		if UIAControlType==UIAHandler.UIA_MenuItemControlTypeId:
+		if UIAControlType == UIAHandler.UIA_MenuItemControlTypeId:
 			clsList.append(MenuItem)
 		# Some combo boxes and looping selectors do not expose value pattern.
-		elif (UIAControlType==UIAHandler.UIA_ComboBoxControlTypeId
-		# #5231: Announce values in time pickers by "transforming" them into combo box without value pattern objects.
-		or (UIAControlType==UIAHandler.UIA_ListControlTypeId and "LoopingSelector" in UIAClassName)):
+		elif (
+			UIAControlType == UIAHandler.UIA_ComboBoxControlTypeId
+			# #5231: Announce values in time pickers by "transforming" them into
+			# combo box without value pattern objects.
+			or (UIAControlType == UIAHandler.UIA_ListControlTypeId and "LoopingSelector" in UIAClassName)
+		):
 			try:
 				if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsValuePatternAvailablePropertyId):
 					clsList.append(ComboBoxWithoutValuePattern)
 			except COMError:
 				pass
-		elif UIAControlType==UIAHandler.UIA_ListItemControlTypeId:
+		elif UIAControlType == UIAHandler.UIA_ListItemControlTypeId:
 			clsList.append(ListItem)
-		# #5942: In Windows 10 build 14332 and later, Microsoft rewrote various dialog code including that of User Account Control.
+		# #5942: In Windows 10 build 14332 and later, Microsoft rewrote various dialog code
+		# including that of User Account Control.
 		# #8405: there are more dialogs scattered throughout Windows 10 and various apps.
 		# Dialog detection is a bit easier on build 17682 and later thanks to IsDialog property.
 		try:
 			isDialog = self._getUIACacheablePropertyValue(UIAHandler.UIA_IsDialogPropertyId)
 		except COMError:
-			# We can fallback to a known set of dialog classes for window elements.
+			# #15729: prepare to fallback if encountering a dialog when UIA says it is not.
+			isDialog = False
+		# We can fallback to a known set of dialog classes for window elements.
+		if not isDialog:
 			isDialog = (self.UIAIsWindowElement and UIAClassName in UIAHandler.UIADialogClassNames)
 		if isDialog:
 			clsList.append(Dialog)
-		# #6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
+		# #6241: Try detecting all possible suggestions containers and search fields
+		# scattered throughout Windows 10 and later.
 		if UIAAutomationId in ("SearchTextBox", "TextBox"):
 			clsList.append(SearchField)
 		# #12790: detect suggestions list views firing layout invalidated event.
 		if UIAAutomationId == "SuggestionsList":
 			clsList.append(SuggestionsList)
 		try:
-			# Nested block here in order to catch value error and variable binding error when attempting to access automation ID for invalid elements.
+			# Nested block here in order to catch value error and variable binding error
+			# when attempting to access automation ID for invalid elements.
 			try:
-				# #6241: Raw UIA base tree walker is better than simply looking at self.parent when locating suggestion list items.
+				# #6241: Raw UIA base tree walker is better than simply looking at self.parent
+				# when locating suggestion list items.
 				# #10329: 2019 Windows Search results require special handling due to UI redesign.
-				parentElement=UIAHandler.handler.baseTreeWalker.GetParentElementBuildCache(self.UIAElement,UIAHandler.handler.baseCacheRequest)
-				# Sometimes, fetching parent (list control) via base tree walker fails, especially when dealing with suggestions in Windows10 Start menu.
+				parentElement = UIAHandler.handler.baseTreeWalker.GetParentElementBuildCache(
+					self.UIAElement,
+					UIAHandler.handler.baseCacheRequest
+				)
+				# Sometimes, fetching parent (list control) via base tree walker fails,
+				# especially when dealing with suggestions in Windows10 Start menu.
 				# Oddly, we need to take care of context menu for Start search suggestions as well.
 				if parentElement.cachedAutomationId.lower() in ("suggestionslist", "contextmenu"):
 					clsList.append(SuggestionListItem)
@@ -1149,21 +1221,46 @@ class UIA(Window):
 			from . import VisualStudio
 			VisualStudio.findExtraOverlayClasses(self, clsList)
 
-		# Support Windows Console's UIA interface
+		# Support Windows Console and Terminal
+		_all_wt_UIAClassNames = frozenset((
+			# TermControl represents an up-to-date version of the UWP (standard)
+			# Windows Terminal control.
+			"TermControl",
+			# TermControl2 was going to represent a
+			# terminal that supported UIA notifications (i.e. one where
+			# microsoft/terminal#12358 has been merged). However, the UIA class
+			# name was not changed in microsoft/terminal#12358 due to backward
+			# compat concerns raised by Freedom Scientific. However, a check for
+			# it is kept here just in case it should later become necessary to
+			# change it.
+			"TermControl2",
+			# WPFTermControl represents an embedded Windows Terminal control
+			# In .NET apps, such as LTS Visual Studio.
+			# WPFTermControl does not follow the same update cadence as TermControl
+			# and is anticipated to be replaced by the UWP implementation.
+			"WPFTermControl",
+		))
 		if self.windowClassName == "ConsoleWindowClass":
 			from . import winConsoleUIA
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
-		elif UIAClassName in ("TermControl", "TermControl2"):
-			# microsoft/terminal#12358: Eventually, TermControl2 should have
-			# a separate overlay class that is not a descendant of LiveText.
-			# TermControl2 sends inserted text using UIA notification events,
-			# so it is no longer necessary to diff the object as with all
-			# previous terminal implementations.
+		elif UIAClassName in _all_wt_UIAClassNames:
 			from . import winConsoleUIA
-			clsList.append(winConsoleUIA.WinTerminalUIA)
+			if _shouldUseWindowsTerminalNotifications():
+				clsList.append(winConsoleUIA._NotificationsBasedWinTerminalUIA)
+			else:
+				clsList.append(winConsoleUIA._DiffBasedWinTerminalUIA)
+
+		elif self.normalizeWindowClassName(self.windowClassName) == "SysListView32":
+			from . import sysListView32
+			sysListView32.findExtraOverlayClasses(self, clsList)
 
 		# Add editableText support if UIA supports a text pattern
-		if self.TextInfo==UIATextInfo:
+		if self.TextInfo == UIATextInfo:
+			if self.UIAFrameworkId == 'XAML':
+				# This UIA element is being exposed by the XAML framework.
+				clsList.append(XamlEditableText)
+			elif UIAClassName == "WpfTextView":
+				clsList.append(WpfTextView)
 			if UIAHandler.autoSelectDetectionAvailable:
 				clsList.append(EditableTextWithAutoSelectDetection)
 			else:
@@ -1172,13 +1269,16 @@ class UIA(Window):
 		clsList.append(UIA)
 
 		if self.UIAIsWindowElement:
-			super(UIA,self).findOverlayClasses(clsList)
+			super(UIA, self).findOverlayClasses(clsList)
 			if self.UIATextPattern:
-				#Since there is a UIA text pattern, there is no need to use the win32 edit support at all
+				# Since there is a UIA text pattern, there is no need to use the win32 edit support at all.
+				# However, UIA classifies (rich) edit controls with a role of document and doesn't add a multiline state.
+				# Remove any win32 Edit class and insert EditBase to keep backwards compatibility with win32.
 				import NVDAObjects.window.edit
 				for x in list(clsList):
-					if issubclass(x,NVDAObjects.window.edit.Edit):
+					if issubclass(x, NVDAObjects.window.edit.Edit):
 						clsList.remove(x)
+						clsList.insert(0, NVDAObjects.window.edit.EditBase)
 
 	@classmethod
 	def kwargsFromSuper(cls, kwargs, relation=None, ignoreNonNativeElementsWithFocus=True):
@@ -1186,6 +1286,11 @@ class UIA(Window):
 		windowHandle=kwargs.get('windowHandle')
 		if isinstance(relation,tuple):
 			UIAElement=UIAHandler.handler.clientObject.ElementFromPointBuildCache(POINT(relation[0],relation[1]),UIAHandler.handler.baseCacheRequest)
+			if UIAHandler._isDebug():
+				log.debug(
+					f"kwargsFromSuper: given coordinates {relation}, "
+					f"fetched element {UIAHandler.handler.getUIAElementDebugString(UIAElement)}"
+				)
 			# Ignore this object if it is non native.
 			if not UIAHandler.handler.isNativeUIAElement(UIAElement):
 				if UIAHandler._isDebug():
@@ -1203,6 +1308,11 @@ class UIA(Window):
 			except COMError:
 				log.debugWarning("getFocusedElement failed", exc_info=True)
 				return False
+			if UIAHandler._isDebug():
+				log.debug(
+					f"kwargsFromSuper: fetched focused element "
+					f"{UIAHandler.handler.getUIAElementDebugString(UIAElement)}"
+				)
 			# Ignore this object if it is non native.
 			if ignoreNonNativeElementsWithFocus and not UIAHandler.handler.isNativeUIAElement(UIAElement):
 				if UIAHandler._isDebug():
@@ -1243,6 +1353,11 @@ class UIA(Window):
 		UIACachedWindowHandle=UIAElement.cachedNativeWindowHandle
 		self.UIAIsWindowElement=bool(UIACachedWindowHandle)
 		if not windowHandle:
+			if UIAHandler._isDebug():
+				log.debug(
+					f"No windowHandle for UIA NvDAObject. "
+					f"Searching UIA element ancestry for nearest windowHandle"
+				)
 			windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
 		if not windowHandle:
 			raise InvalidNVDAObject("no windowHandle")
@@ -1478,6 +1593,13 @@ class UIA(Window):
 			# #11445: due to timing errors, elements will be instantiated with no automation Id present.
 			return ""
 
+	def _get_UIAFrameworkId(self) -> str:
+		try:
+			return self._getUIACacheablePropertyValue(UIAHandler.UIA_FrameworkIdPropertyId)
+		except COMError:
+			log.debugWarning("Could not fetch framework ID", exc_info=True)
+			return ""
+
 	#: Typing info for auto property _get_name()
 	name: str
 
@@ -1555,6 +1677,7 @@ class UIA(Window):
 		UIAHandler.UIA_IsEnabledPropertyId,
 		UIAHandler.UIA_IsOffscreenPropertyId,
 		UIAHandler.UIA_AnnotationTypesPropertyId,
+		UIAHandler.UIA_DragIsGrabbedPropertyId,
 	}
 
 	def _get_states(self):
@@ -1613,6 +1736,11 @@ class UIA(Window):
 		if s!=UIAHandler.handler.reservedNotSupportedValue:
 			if not role:
 				role=self.role
+			if s == UIAHandler.ToggleState_Indeterminate:
+				if role == controlTypes.Role.TOGGLEBUTTON:
+					states.add(controlTypes.State.HALF_PRESSED)
+				else:
+					states.add(controlTypes.State.HALFCHECKED)
 			if role==controlTypes.Role.TOGGLEBUTTON:
 				if s==UIAHandler.ToggleState_On:
 					states.add(controlTypes.State.PRESSED)
@@ -1628,6 +1756,13 @@ class UIA(Window):
 		if annotationTypes:
 			if UIAHandler.AnnotationType_Comment in annotationTypes:
 				states.add(controlTypes.State.HASCOMMENT)
+		# Drag "is grabbed" property was added in Windows 8.
+		try:
+			isGrabbed = self._getUIACacheablePropertyValue(UIAHandler.UIA_DragIsGrabbedPropertyId)
+		except COMError:
+			isGrabbed = False
+		if isGrabbed:
+			states.add(controlTypes.State.DRAGGING)
 		return states
 
 	def _getReadOnlyState(self) -> bool:
@@ -1841,6 +1976,11 @@ class UIA(Window):
 			return UIA(UIAElement=e)
 		raise NotImplementedError
 
+	def _get_tableID(self):
+		table = self.table
+		if table:
+			return self.table.UIAElement.GetRuntimeId()
+
 	def _get_processID(self):
 		if self.windowClassName == 'ConsoleWindowClass':
 			# #10115: The UIA implementation for Windows console windows exposes the process ID of conhost,
@@ -1900,11 +2040,13 @@ class UIA(Window):
 		if index==0:
 			if self.UIAInvokePattern:
 				self.UIAInvokePattern.Invoke()
-			elif self.UIATogglePattern:
+				return
+			if self.UIATogglePattern:
 				self.UIATogglePattern.toggle()
-			elif self.UIASelectionItemPattern:
+				return
+			if self.UIASelectionItemPattern:
 				self.UIASelectionItemPattern.select()
-			return
+				return
 		raise NotImplementedError
 
 	def _get_hasFocus(self):
@@ -1947,8 +2089,42 @@ class UIA(Window):
 	def scrollIntoView(self):
 		pass
 
+	def isDescendantOf(self, obj: "NVDAObjects.NVDAObject") -> bool:
+		if isinstance(obj, UIA):
+			# As both objects are UIA,
+			# We can search this object's ancestors for obj with a UIA treeWalker
+			# which is much more efficient than fetching each parent.
+			objID = obj.UIAElement.GetRuntimeId()
+			objIDArray = array.array("l", objID)
+			UIACondition = UIAHandler.handler.clientObject.createPropertyCondition(
+				UIAHandler.UIA_RuntimeIdPropertyId,
+				objIDArray
+			)
+			UIAWalker = UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
+			try:
+				objUIAElement = UIAWalker.normalizeElement(self.UIAElement)
+			except COMError:
+				log.debugWarning("Error walking ancestors", exc_info=True)
+				objUIAElement = None
+			return bool(objUIAElement)
+		else:  # not UIA
+			raise NotImplementedError
+
 	def _get_controllerFor(self):
-		e=self._getUIACacheablePropertyValue(UIAHandler.UIA_ControllerForPropertyId)
+		try:
+			e = self._getUIACacheablePropertyValue(UIAHandler.UIA_ControllerForPropertyId)
+		except KeyError:
+			# #14270: comtypes may raise KeyError as it does not know how to unpack a variant of VT_Unknown | VT_Array.
+			# this may be seen on Windows 7 where
+			# the UIA client library directly returns the provider's VT_Unknown | VT_Array variant,
+			# Which is useless for a client.
+			# On Newer Windows versions, the client library correctly marshals this to
+			# IUIAutomationElementArray per the UI Automation documentation.
+			# UI Automation documentation seems to suggest controllerFor is supported on Windows 7,
+			# So it is unclear as to what versions have this bug.
+			# Best just to catch KeyError.
+			log.debugWarning("Bad controllerFor property", exc_info=True)
+			return []
 		if UIAHandler.handler.clientObject.checkNotSupported(e):
 			return None
 		a=e.QueryInterface(UIAHandler.IUIAutomationElementArray)
@@ -1961,8 +2137,11 @@ class UIA(Window):
 				objList.append(obj)
 		return objList
 
+	def event_UIA_controllerFor(self) -> None:
+		return self.event_controllerForChange()
+
 	def event_UIA_elementSelected(self):
-		self.event_stateChange()
+		self.event_selection()
 
 	def event_valueChange(self):
 		if issubclass(self.TextInfo, UIATextInfo):
@@ -1979,7 +2158,13 @@ class UIA(Window):
 		# Ideally, we wouldn't use getPropertiesBraille directly.
 		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
 
-	def event_UIA_notification(self, notificationKind=None, notificationProcessing=UIAHandler.NotificationProcessing_CurrentThenMostRecent, displayString=None, activityId=None):
+	def event_UIA_notification(
+			self,
+			notificationKind: Optional[int] = None,
+			notificationProcessing: Optional[int] = UIAHandler.NotificationProcessing_CurrentThenMostRecent,
+			displayString: Optional[str] = None,
+			activityId: Optional[str] = None
+	):
 		"""
 		Introduced in Windows 10 Fall Creators Update (build 16299).
 		This base implementation announces all notifications from the UIA element.
@@ -1995,6 +2180,64 @@ class UIA(Window):
 				# Note that no distinction is made between important and non-important.
 				speech.cancelSpeech()
 			ui.message(displayString)
+
+	def event_UIA_dragDropEffect(self):
+		# UIA drag drop effect was introduced in Windows 8.
+		try:
+			ui.message(self._getUIACacheablePropertyValue(UIAHandler.UIA_DragDropEffectPropertyId))
+		except COMError:
+			pass
+
+	def event_UIA_dropTargetEffect(self):
+		# UIA drop target effect property was introduced in Windows 8.
+		try:
+			dropTargetEffect = self._getUIACacheablePropertyValue(
+				UIAHandler.UIA_DropTargetDropTargetEffectPropertyId
+			)
+		except COMError:
+			dropTargetEffect = ""
+		# Sometimes drop target effect text is empty as it comes from a different object.
+		if not dropTargetEffect:
+			for element in reversed(api.getFocusAncestors()):
+				if not isinstance(element, UIA):
+					continue
+				try:
+					dropTargetEffect = element._getUIACacheablePropertyValue(
+						UIAHandler.UIA_DropTargetDropTargetEffectPropertyId
+					)
+				except COMError:
+					dropTargetEffect = ""
+				if dropTargetEffect:
+					break
+		if dropTargetEffect:
+			ui.message(dropTargetEffect)
+
+
+class InaccurateTextChangeEventEmittingEditableText(EditableTextBase, UIA):
+
+	# XAML and WPF fire UIA textSelectionChange events before the caret position change is reflected
+	# in the related UIA text pattern.
+	# This means that, apart from deleting text, NVDA cannot rely on textSelectionChange (caret) events
+	# in XAML or WPF to detect if the caret has moved, as it occurs too early.
+	caretMovementDetectionUsesEvents = False
+
+	def _backspaceScriptHelper(self, unit: str, gesture: inputCore.InputGesture):
+		"""As UIA text range objects from XAML or WPF don't mutate with backspace,
+		comparing a text range copied from before backspace with a text range fetched after backspace
+		isn't reliable, as the ranges compare equal.
+		Therefore, we must always rely on events for caret change detection in this case.
+		"""
+		self.caretMovementDetectionUsesEvents = True
+		try:
+			super()._backspaceScriptHelper(unit, gesture)
+		finally:
+			self.caretMovementDetectionUsesEvents = False
+
+
+class XamlEditableText(InaccurateTextChangeEventEmittingEditableText):
+	"""An UIA element with editable text exposed by the XAML framework."""
+	...
+
 
 class TreeviewItem(UIA):
 
@@ -2161,10 +2404,12 @@ class ToolTip(ToolTip, UIA):
 	event_UIA_toolTipOpened=ToolTip.event_show
 
 
-#WpfTextView fires name state changes once a second, plus when IUIAutomationTextRange::GetAttributeValue is called.
-#This causes major lags when using this control with Braille in NVDA. (#2759) 
-#For now just ignore the events.
-class WpfTextView(UIA):
+class WpfTextView(InaccurateTextChangeEventEmittingEditableText):
+	"""WpfTextView fires name state changes once a second,
+	plus when IUIAutomationTextRange::GetAttributeValue is called.
+	This causes major lag when using this control with Braille in NVDA. (#2759)
+	For now just ignore the events.
+	"""
 
 	def event_nameChange(self):
 		return
@@ -2172,16 +2417,11 @@ class WpfTextView(UIA):
 	def event_stateChange(self):
 		return
 
+
 class SearchField(EditableTextWithSuggestions, UIA):
 	"""An edit field that presents suggestions based on a search term.
+	This is now an empty class as functionality has been moved to the base EditableText behaviour.
 	"""
-
-	def event_UIA_controllerFor(self):
-		# Only useful if suggestions appear and disappear.
-		if self == api.getFocusObject() and len(self.controllerFor)>0:
-			self.event_suggestionsOpened()
-		else:
-			self.event_suggestionsClosed()
 
 
 class SuggestionsList(UIA):
@@ -2211,20 +2451,11 @@ class SuggestionsList(UIA):
 class SuggestionListItem(UIA):
 	"""Recent Windows releases use suggestions lists for various things, including Start menu suggestions, Store, Settings app and so on.
 	Unlike suggestions list class, top suggestion is automatically selected.
+	Note that support for reporting the selection is now handled generically on the base NVDAObject.
 	"""
 
 	role = controlTypes.Role.LISTITEM
 
-	def event_UIA_elementSelected(self):
-		focusControllerFor = api.getFocusObject().controllerFor
-		if len(focusControllerFor) > 0 and focusControllerFor[0].appModule is self.appModule and self.name:
-			speech.cancelSpeech()
-			api.setNavigatorObject(self, isFocus=True)
-			self.reportFocus()
-			# Display results as flash messages.
-			braille.handler.message(braille.getPropertiesBraille(
-				name=self.name, role=self.role, positionInfo=self.positionInfo
-			))
 
 # NetUIDropdownAnchor comboBoxes (such as in the MS Office Options dialog)
 class NetUIDropdownAnchor(UIA):

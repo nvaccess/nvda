@@ -1,6 +1,9 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020 NV Access Limited
+# Copyright (C) 2013-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
+# Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers
+# Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -459,15 +462,12 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 			if filteredGesturesVM is self.gesturesVM.allGestures:  # same object, no filtering applied
 				return catVM.displayName
 			nbResults = len(catVM.scripts)
-			if nbResults == 1:
+			return ngettext(
 				# Translators: The label for a filtered category in the Input Gestures dialog.
-				return _("{category} (1 result)").format(
-					category=catVM.displayName
-				)
-			# Translators: The label for a filtered category in the Input Gestures dialog.
-			return _("{category} ({nbResults} results)").format(
-				category=catVM.displayName, nbResults=nbResults
-			)
+				"{category} ({nbResults} result)",
+				"{category} ({nbResults} results)",
+				nbResults,
+			).format(category=catVM.displayName, nbResults=nbResults)
 
 		assert len(index) >= 2
 		scriptIndex = index[1]
@@ -633,6 +633,7 @@ class InputGesturesDialog(SettingsDialog):
 		super()._onWindowDestroy(evt)
 
 	def onFilterChange(self, evt):
+		self.tree.Unselect()
 		filterText = evt.GetEventObject().GetValue()
 		self.filter(filterText)
 

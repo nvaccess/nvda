@@ -1,11 +1,12 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020-2021 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2020-2022 NV Access Limited, Leonard de Ruijter, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 """Logic for NVDA + Google Chrome tests
 """
 
+import typing
 import os
 from robot.libraries.BuiltIn import BuiltIn
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
@@ -22,6 +23,9 @@ _builtIn: BuiltIn = BuiltIn()
 _chrome: _ChromeLib = _getLib("ChromeLib")
 _asserts: _AssertsLib = _getLib("AssertsLib")
 
+if typing.TYPE_CHECKING:
+	from ..libraries.SystemTestSpy.speechSpyGlobalPlugin import NVDASpyLib
+
 
 #: Double space is used to separate semantics in speech output this typically
 # adds a slight pause to the synthesizer.
@@ -30,8 +34,12 @@ SPEECH_CALL_SEP = '\n'
 #: single space is used to separate semantics in braille output.
 BRAILLE_SEP = " "
 
-ARIAExamplesDir = os.path.join(
-	_NvdaLib._locations.repoRoot, "include", "w3c-aria-practices", "examples"
+ARIAPatternsDir = os.path.join(
+	_NvdaLib._locations.repoRoot,
+	"include",
+	"w3c-aria-practices",
+	"content",
+	"patterns",
 )
 
 
@@ -57,7 +65,7 @@ def checkbox_labelled_by_inner_element():
 
 REVIEW_CURSOR_FOLLOW_CARET_KEY = ["reviewCursor", "followCaret"]
 REVIEW_CURSOR_FOLLOW_FOCUS_KEY = ["reviewCursor", "followFocus"]
-READ_DETAILS_GESTURE = "NVDA+\\"  # see chrome-gestures.ini
+READ_DETAILS_GESTURE = "NVDA+d"
 
 
 def _getNoVBuf_AriaDetails_sample() -> str:
@@ -73,8 +81,11 @@ def _getNoVBuf_AriaDetails_sample() -> str:
 		"""
 
 
-def _doTestAriaDetails_NoVBufNoTextInterface():
+def _doTestAriaDetails_NoVBufNoTextInterface(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
 	_chrome.prepareChrome(_getNoVBuf_AriaDetails_sample())
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy.modifyNVDAConfig(nvdaConfValues)
+
 	actualSpeech = _NvdaLib.getSpeechAfterKey("tab")
 	_builtIn.should_contain(actualSpeech, "focus in app")
 
@@ -96,7 +107,7 @@ def _doTestAriaDetails_NoVBufNoTextInterface():
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey(READ_DETAILS_GESTURE)
 	_asserts.speech_matches(
 		actualSpeech,
-		"Press to self destruct",
+		"Press to self-destruct",
 		message="Report details"
 	)
 	_asserts.braille_matches(
@@ -110,37 +121,212 @@ def test_aria_details_noVBufNoTextInterface():
 	"""The uncommon case, but for completeness, a role=application containing an element that does not have a text
 	interface.
 	"""
-	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_CARET_KEY, True)
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, True)
-	_doTestAriaDetails_NoVBufNoTextInterface()
+	_doTestAriaDetails_NoVBufNoTextInterface(
+		nvdaConfValues=[
+			(REVIEW_CURSOR_FOLLOW_CARET_KEY, True),
+			(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, True),
+	])
 
 
 def test_aria_details_noVBufNoTextInterface_freeReview():
 	"""The uncommon case, but for completeness, a role=application containing an element without a text
 	interface. Test with the review cursor configured not to follow focus or caret.
 	"""
-	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_CARET_KEY, False)
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, False)
-	_doTestAriaDetails_NoVBufNoTextInterface()
+	_doTestAriaDetails_NoVBufNoTextInterface(
+		nvdaConfValues=[
+			(REVIEW_CURSOR_FOLLOW_CARET_KEY, False),
+			(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, False),
+	])
 
 
 def test_mark_aria_details():
-	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_CARET_KEY, True)
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, True)
-	exercise_mark_aria_details()
+	exercise_mark_aria_details(
+		nvdaConfValues=[
+			(REVIEW_CURSOR_FOLLOW_CARET_KEY, True),
+			(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, True),
+	])
 
 
 def test_mark_aria_details_FreeReviewCursor():
-	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_CARET_KEY, False)
-	spy.set_configValue(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, False)
-	exercise_mark_aria_details()
+	exercise_mark_aria_details(
+		nvdaConfValues=[
+			(REVIEW_CURSOR_FOLLOW_CARET_KEY, False),
+			(REVIEW_CURSOR_FOLLOW_FOCUS_KEY, False),
+	])
 
 
-def exercise_mark_aria_details():
+def test_mark_aria_details_role():
+	_chrome.prepareChrome(
+		"""
+		<div class="editor" contenteditable spellcheck="false" role="textbox" aria-multiline="true">
+			<p>
+				<span aria-details="endnote-details">doc-endnote,</span>
+				<span aria-details="footnote-details">doc-footnote,</span>
+				<span aria-details="comment-details">comment,</span>
+				<span aria-details="definition-details-as-tag" role="term">definition,</span>
+				<span aria-details="definition-details-as-role" role="term">definition,</span>
+				<span aria-details="unknown-details">form</span>
+			</p>
+		</div>
+		<div>
+			<p>
+				<!-- Supported by Chrome attribute details-roles -->
+				<div id="endnote-details" role="doc-endnote">details with role doc-endnote</div>
+				<div id="footnote-details" role="doc-footnote">details with role doc-footnote</div>
+				<div id="comment-details" role="comment">details with role comment</div>
+				<!--
+					When using the following syntax, the dfn tag holds the role "term",
+					and the accompanying text becomes the "definition".
+					Authors may expected the aria-details to target the definition.
+					It is uncertain as to which element aria-details
+					should point towards, but we assume the dfn tag in this case,
+					as the accompanying definition text is not specifically captured by an HTML element.
+				-->
+				<p>
+					<dfn id="definition-details-as-tag">definition</dfn>:
+					details with tag definition
+				</p>
+				<!--
+					Authors may expected the aria-details to target the definition.
+					As the definition text is specifically captured by an HTML element with role "definition",
+					we map to that element.
+					This is inconsistent with previous example, using the dfn tag.
+				-->
+				<p>
+					<span role="term">definition</span>:
+					<span id="definition-details-as-role" role="definition">details with role definition</span>
+				</p>
+				<!-- Included as "form" is not supported by Chrome attribute details-roles -->
+				<div id="unknown-details" role="form">details with role form</div>
+			</p>
+		</div>
+		"""
+	)
+	expectedSpeech = SPEECH_SEP.join([
+		"edit",
+		"multi line",
+		# the role doc-endnote is unsupported as an IA2 role
+		# The role "ROLE_LIST_ITEM" is used instead
+		"has details",
+		"doc-endnote,",
+		"",  # space between spans
+		"has foot note",
+		"doc-footnote,",
+		"",  # space between spans
+		"has comment",
+		"comment,",
+		"",  # space between spans
+		# the role definition is unsupported as an IA2 role
+		# The role "ROLE_PARAGRAPH" is used instead
+		"has details",
+		"definition,",
+		"",  # space between spans
+		"has details",
+		"definition,",
+		"",  # space between spans
+		# The role "form" is deliberately unsupported
+		"has details",
+		"form",
+	])
+	_spy: NVDASpyLib = _NvdaLib.getSpyLib()
+	_spy.setBrailleCellCount(400)
+
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey('downArrow')
+
+	_asserts.speech_matches(
+		actualSpeech,
+		expectedSpeech,
+		message="Browse mode speech: Read line with different aria details roles."
+	)
+	_asserts.braille_matches(
+		message="Browse mode braille: Read line with different aria details roles.",
+		actual=actualBraille,
+		expected=" ".join([
+			"mln",
+			"edt ",
+			# the role doc-endnote is unsupported as an IA2 role
+			# The role "ROLE_LIST_ITEM" is used instead
+			"details",
+			"doc-endnote,",
+			" ",  # space between spans
+			"has fnote",
+			"doc-footnote,",
+			" ",  # space between spans
+			"has cmnt",
+			"comment,",
+			" ",  # space between spans
+			# the role definition is unsupported as an IA2 role
+			# The role "ROLE_PARAGRAPH" is used instead
+			"details",
+			"definition,",
+			" ",  # space between spans
+			"details",
+			"definition,",
+			" ",
+			"details",
+			"form",
+			"edt end",
+		])
+	)
+	
+	# Reset caret
+	actualSpeech = _NvdaLib.getSpeechAfterKey("upArrow")
+	_asserts.speech_matches(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"out of edit",
+			"Test page load complete",
+		]),
+		message="reset caret",
+	)
+
+	# Force focus mode
+	actualSpeech = _NvdaLib.getSpeechAfterKey("NVDA+space")
+	_asserts.speech_matches(
+		actualSpeech,
+		"Focus mode",
+		message="force focus mode",
+	)
+
+	# Tab into the contenteditable
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("tab")
+	_asserts.speech_matches(
+		actualSpeech,
+		expectedSpeech,
+		message="Focus mode speech: Read line with different aria details roles"
+	)
+	_asserts.braille_matches(
+		message="Focus mode braille: Read line with different aria details roles",
+		actual=actualBraille,
+		expected=" ".join([
+			# no "mln edt"
+			# the role doc-endnote is unsupported as an IA2 role
+			# The role "ROLE_LIST_ITEM" is used instead
+			"details",
+			"doc-endnote,",
+			" ",  # space between spans
+			"has fnote",
+			"doc-footnote,",
+			" ",  # space between spans
+			"has cmnt",
+			"comment,",
+			" ",  # space between spans
+			# the role definition is unsupported as an IA2 role
+			# The role "ROLE_PARAGRAPH" is used instead
+			"details",
+			"definition,",
+			" ",  # space between spans
+			"details",
+			"definition,",
+			" ",
+			"details",
+			"form",
+			# "edt end",
+		])
+	)
+
+
+def exercise_mark_aria_details(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
 	_chrome.prepareChrome(
 		"""
 		<div class="editor" contenteditable spellcheck="false" role="textbox" aria-multiline="true">
@@ -163,6 +349,8 @@ def exercise_mark_aria_details():
 		</div>
 		"""
 	)
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy.modifyNVDAConfig(nvdaConfValues)
 
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey('downArrow')
 	_asserts.speech_matches(
@@ -172,7 +360,7 @@ def exercise_mark_aria_details():
 			"multi line",
 			"The word",  # content
 			"highlighted",
-			"has details",
+			"has comment",
 			"cat",  # highlighted content
 			"out of highlighted",
 			"has a comment tied to it.",  # content
@@ -181,7 +369,7 @@ def exercise_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"mln edt The word  hlght details cat hlght end  has a comment tied to it. edt end",
+		"mln edt The word  hlght has cmnt cat hlght end  has a comment tied to it. edt end",
 		message="Browse mode: Read line with details.",
 	)
 	# this word has no details attached
@@ -193,7 +381,7 @@ def exercise_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"mln edt The word  hlght details cat hlght end  has a comment tied to it. edt end",
+		"mln edt The word  hlght has cmnt cat hlght end  has a comment tied to it. edt end",
 		message="Browse mode: Move by word to word without details",
 	)
 
@@ -209,23 +397,23 @@ def exercise_mark_aria_details():
 		"No additional details",
 		message="Browse mode: Report details on word without details",
 	)
-	# this word has details attached to it
+	# this word has a comment attached to it
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("control+rightArrow")
 	_asserts.speech_matches(
 		actualSpeech,
-		"highlighted  has details  cat  out of highlighted",
+		"highlighted  has comment  cat  out of highlighted",
 		message="Browse mode: Move by word to word with details",
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"mln edt The word  hlght details cat hlght end  has a comment tied to it. edt end",
+		"mln edt The word  hlght has cmnt cat hlght end  has a comment tied to it. edt end",
 		message="Browse mode: Move by word to word with details",
 	)
 	# read the details summary
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey(READ_DETAILS_GESTURE)
 	_asserts.speech_matches(
 		actualSpeech,
-		"Cats go woof BTW  Jonathon Commentor No they don't  Zara",
+		"Cats go woof BTW —Jonathon Commentor No they don't —Zara",
 		message="Browse mode: Report details on word with details"
 	)
 	_asserts.braille_matches(
@@ -269,7 +457,7 @@ def exercise_mark_aria_details():
 			"multi line",
 			"The word",  # content
 			"highlighted",
-			"has details",
+			"has comment",
 			"cat",  # highlighted content
 			"out of highlighted",
 			"has a comment tied to it.",  # content
@@ -329,7 +517,7 @@ def exercise_mark_aria_details():
 			"multi line",
 			"The word",  # content
 			"highlighted",
-			"has details",
+			"has comment",
 			"cat",  # highlighted content
 			"out of highlighted",
 			"has a comment tied to it.",  # content
@@ -338,7 +526,7 @@ def exercise_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		"The word  hlght details cat hlght end  has a comment tied to it.",
+		"The word  hlght has cmnt cat hlght end  has a comment tied to it.",
 		message="Focus mode: report content editable with details",
 	)
 
@@ -364,7 +552,7 @@ def exercise_mark_aria_details():
 		actualSpeech,
 		SPEECH_SEP.join([
 			"highlighted",
-			"has details",
+			"has comment",
 			"cat",  # highlighted content
 			"out of highlighted",
 		]),
@@ -372,7 +560,7 @@ def exercise_mark_aria_details():
 	)
 	_asserts.braille_matches(
 		actualBraille,
-		expected="The word  hlght details cat hlght end  has a comment tied to it.",
+		expected="The word  hlght has cmnt cat hlght end  has a comment tied to it.",
 		message="Focus mode: Move by word to word with details",
 	)
 
@@ -380,7 +568,7 @@ def exercise_mark_aria_details():
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey(READ_DETAILS_GESTURE)
 	_asserts.speech_matches(
 		actualSpeech,
-		"Cats go woof BTW  Jonathon Commentor No they don't  Zara",
+		"Cats go woof BTW —Jonathon Commentor No they don't —Zara",
 		message="Focus mode:  Report details on word with details.",
 	)
 	_asserts.braille_matches(
@@ -424,6 +612,102 @@ def exercise_mark_aria_details():
 		actualBraille,
 		"No additional details",
 		message="Focus mode: Try to read details, link nested in container with details.",
+	)
+
+
+def test_annotations_multi_target():
+	_chrome.prepareChrome(
+		"""
+		<div class="editor" contenteditable spellcheck="false" role="textbox" aria-multiline="true">
+			<span aria-details="footnote-details comment-details form-details">example origin</span>
+		</div>
+		<div>
+			<p>
+				<div id="footnote-details" role="doc-footnote">example footnote</div>
+				<div id="comment-details" role="comment">example comment</div>
+				<div id="form-details" role="form">example form</div>
+			</p>
+		</div>
+		"""
+	)
+	expectedSpeechParts = [
+		"has foot note",
+		"has comment",
+		"has details",  # The role "form" is deliberately unsupported
+		"example origin",
+	]
+	expectedBrailleParts = [
+		"has fnote",
+		"has cmnt",
+		"details",  # The role "form" is deliberately unsupported
+		"example origin",
+	]
+	_spy: NVDASpyLib = _NvdaLib.getSpyLib()
+	_spy.setBrailleCellCount(400)
+
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey('downArrow')
+
+	# Order of annotation announcement is non-deterministic, so do not consider order with testing
+	_asserts.speech_contains(
+		actualSpeech,
+		expectedSpeechParts,
+		message="Browse mode speech: Read line with different aria details roles."
+	)
+	_asserts.braille_contains(
+		actualBraille,
+		expectedBrailleParts,
+		message="Browse mode braille: Read line with different aria details roles.",
+	)
+	
+	# Reset caret
+	actualSpeech = _NvdaLib.getSpeechAfterKey("upArrow")
+	_asserts.speech_matches(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"out of edit",
+			"Test page load complete",
+		]),
+		message="reset caret",
+	)
+
+	# Force focus mode
+	actualSpeech = _NvdaLib.getSpeechAfterKey("NVDA+space")
+	_asserts.speech_matches(
+		actualSpeech,
+		"Focus mode",
+		message="force focus mode",
+	)
+
+	# Tab into the contenteditable
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("tab")
+	# Order of annotation announcement is non-deterministic, so do not consider order with testing
+	_asserts.speech_contains(
+		actualSpeech,
+		expectedSpeechParts,
+		message="Focus mode speech: Read line with different aria details roles"
+	)
+	_asserts.braille_contains(
+		actualBraille,
+		expectedBrailleParts,
+		message="Focus mode braille: Read line with different aria details roles",
+	)
+
+	# Order of annotation announcement is non-deterministic, so do not consider order with testing
+	collectedSpeech = []
+	collectedBraille = []
+	expectedSummaries = [f"example {x}" for x in ("footnote", "comment", "form")]
+	for _ in range(len(expectedSummaries)):
+		actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey(READ_DETAILS_GESTURE)
+		collectedSpeech.append(actualSpeech)
+		collectedBraille.append(actualBraille)
+	
+	_builtIn.should_be_equal(
+		sorted(collectedSpeech),
+		sorted(expectedSummaries),
+	)
+	_builtIn.should_be_equal(
+		sorted(collectedBraille),
+		sorted(expectedSummaries),
 	)
 
 
@@ -614,7 +898,7 @@ def test_ariaTreeGrid_browseMode():
 	"""
 	Ensure that ARIA treegrids are accessible as a standard table in browse mode.
 	"""
-	testFile = os.path.join(ARIAExamplesDir, "treegrid", "treegrid-1.html")
+	testFile = os.path.join(ARIAPatternsDir, "treegrid", "examples", "treegrid-1.html")
 	_chrome.prepareChrome(
 		f"""
 			<iframe src="{testFile}"></iframe>
@@ -633,7 +917,7 @@ def test_ariaTreeGrid_browseMode():
 	actualSpeech = _chrome.getSpeechAfterKey("tab")
 	_asserts.strings_match(
 		actualSpeech,
-		"issue 790.  link"
+		"Treegrid Pattern  link"
 	)
 	# Jump to the ARIA treegrid with the next table quicknav command.
 	# The browse mode caret will be inside the table on the caption before the first row.
@@ -711,7 +995,7 @@ def test_ariaCheckbox_browseMode():
 	"""
 	Navigate to an unchecked checkbox in reading mode.
 	"""
-	testFile = os.path.join(ARIAExamplesDir, "checkbox", "checkbox-1", "checkbox-1.html")
+	testFile = os.path.join(ARIAPatternsDir, "checkbox", "examples", "checkbox.html")
 	_chrome.prepareChrome(
 		f"""
 			<iframe src="{testFile}"></iframe>
@@ -1284,16 +1568,17 @@ def test_preventDuplicateSpeechFromDescription_browse_tab():
 	Settings which may affect this:
 	- speech.reportObjectDescriptions default:True
 	"""
-	spy = _NvdaLib.getSpyLib()
-	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
-	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
-
 	_chrome.prepareChrome(
 		"""
 		<a href="#" title="apple" style="display:block">apple</a>
 		<a href="#" title="banana" aria-label="banana" style="display:block">contents</a>
 		"""
 	)
+
+	spy = _NvdaLib.getSpyLib()
+	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
+	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
+
 	# Read in browse
 	actualSpeech = _chrome.getSpeechAfterKey('tab')
 	_asserts.strings_match(
@@ -1314,16 +1599,16 @@ def preventDuplicateSpeechFromDescription_focus():
 	Settings which may affect this:
 	- speech.reportObjectDescriptions default:True
 	"""
-	spy = _NvdaLib.getSpyLib()
-	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
-	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
-
 	_chrome.prepareChrome(
 		"""
 		<a href="#" title="apple" style="display:block">apple</a>
 		<a href="#" title="banana" aria-label="banana" style="display:block">contents</a>
 		"""
 	)
+	spy = _NvdaLib.getSpyLib()
+	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
+	spy.set_configValue(REPORT_OBJ_DESC_KEY, True)
+
 	# Force focus mode
 	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
 	_asserts.strings_match(
@@ -1347,11 +1632,6 @@ def test_ensureNoBrowseModeDescription():
 	Test that option (speech.reportObjectDescriptions default:True)
 	does not result in description in browse mode.
 	"""
-	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
-	spy = _NvdaLib.getSpyLib()
-	# prevent browse / focus mode messages from interfering, 0 means don't show.
-	spy.set_configValue(["braille", "messageTimeout"], 0)
-
 	_chrome.prepareChrome(
 		"\n".join([
 			r'<button>something for focus</button>'
@@ -1360,6 +1640,12 @@ def test_ensureNoBrowseModeDescription():
 			r'<a href="#" style="display:block" title="Fish">Banana</a>',
 		])
 	)
+
+	REPORT_OBJ_DESC_KEY = ["presentation", "reportObjectDescriptions"]
+	spy = _NvdaLib.getSpyLib()
+	# prevent browse / focus mode messages from interfering, 0 means configFlags.ShowMessages.DISABLED,
+	# i.e. don't show.
+	spy.set_configValue(["braille", "showMessages"], 0)
 
 	actualSpeech = _NvdaLib.getSpeechAfterKey('tab')
 	_builtIn.should_contain(actualSpeech, "something for focus")
@@ -1468,10 +1754,6 @@ def test_quickNavTargetReporting():
 	When using quickNav, the target object should be spoken first, inner context should be given before outer
 	context.
 	"""
-	spy = _NvdaLib.getSpyLib()
-	REPORT_ARTICLES = ["documentFormatting", "reportArticles"]
-	spy.set_configValue(REPORT_ARTICLES, False)
-
 	_chrome.prepareChrome(
 		"""
 		<div
@@ -1489,6 +1771,10 @@ def test_quickNavTargetReporting():
 		</div>
 		"""
 	)
+	spy = _NvdaLib.getSpyLib()
+	REPORT_ARTICLES = ["documentFormatting", "reportArticles"]
+	spy.set_configValue(REPORT_ARTICLES, False)
+
 	# Quick nav to heading
 	actualSpeech = _chrome.getSpeechAfterKey("h")
 	_asserts.strings_match(
@@ -1528,10 +1814,6 @@ def test_focusTargetReporting():
 	When moving focus the target object should be spoken first, inner context should be given before outer
 	context.
 	"""
-	spy = _NvdaLib.getSpyLib()
-	REPORT_ARTICLES = ["documentFormatting", "reportArticles"]
-	spy.set_configValue(REPORT_ARTICLES, False)
-
 	_chrome.prepareChrome(
 		"""
 		<a href="#">before Target</a>
@@ -1550,6 +1832,11 @@ def test_focusTargetReporting():
 		</div>
 		"""
 	)
+
+	spy = _NvdaLib.getSpyLib()
+	REPORT_ARTICLES = ["documentFormatting", "reportArticles"]
+	spy.set_configValue(REPORT_ARTICLES, False)
+
 	# Set focus
 	actualSpeech = _chrome.getSpeechAfterKey("tab")
 	_asserts.strings_match(
@@ -1705,6 +1992,197 @@ def test_tableNavigationWithMergedColumns():
 	_asserts.strings_match(actualSpeech, "row 1  column 2  b 1")
 
 
+def prepareChromeForTableSayAllTests():
+	_chrome.prepareChrome("""
+		<p>Hello, world!</p>
+		<table border=3>
+			<tr>
+				<td>A1</td>
+				<td>B1</td>
+				<td rowspan=2>C1+C2</td>
+				<td>D1</td>
+				<td>E1</td>
+			</tr>
+			<tr>
+				<td>A2</td>
+				<td>B2</td>
+				<td>D2</td>
+				<td>E2</td>
+			</tr>
+			<tr>
+				<td colspan=2>A3+B3</td>
+				<td>C3</td>
+				<td colspan=2>D3+E3</td>
+			</tr>
+			<tr>
+				<td>A4</td>
+				<td>B4</td>
+				<td colspan=2 rowspan=2>C4+D4+<br>C5+D5</td>
+				<td>E4</td>
+			</tr>
+			<tr>
+				<td>A5</td>
+				<td>B5</td>
+				<td>E5</td>
+			</tr>
+		</table>
+		<p>Bye-bye, world!</p>
+	""")
+
+	# Jump to table
+	actualSpeech = _chrome.getSpeechAfterKey("t")
+	_asserts.strings_match(actualSpeech, "table  with 5 rows and 5 columns  row 1  column 1  A 1")
+
+
+def tableSayAllJumpToB2():
+	_chrome.getSpeechAfterKey("control+alt+pageUp")
+	_chrome.getSpeechAfterKey("control+alt+home")
+	_chrome.getSpeechAfterKey("control+alt+rightArrow")
+	actualSpeech = _chrome.getSpeechAfterKey("control+alt+downArrow")
+	_asserts.strings_match(actualSpeech, "row 2  B 2")
+
+
+def test_tableSayAllCommands():
+	""" Tests that table sayAll commands work correctly.
+	Key bindings: NVDA+control+alt+downArrow/rightArrow
+	Refer to #13469.
+	"""
+	prepareChromeForTableSayAllTests()
+	tableSayAllJumpToB2()
+	# sayAll column
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			"B 2",
+			"row 3  column 1  through 2  A 3 plus B 3",
+			"row 4  column 2  B 4",
+			"row 5  B 5",
+		]),
+	)
+
+	# Check that cursor has moved to B5
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+upArrow")
+	_asserts.strings_match(actualSpeech, "B 5")
+
+	tableSayAllJumpToB2()
+	# sayAll row
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+rightArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			"B 2",
+			"row 1  through 2  column 3  C 1 plus C 2",
+			"row 2  D 2",
+			"column 4  E 2",
+		]),
+	)
+
+	# Check that cursor has moved to E2
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+upArrow")
+	_asserts.strings_match(actualSpeech, "E 2")
+
+	# Jump to A3
+	_chrome.getSpeechAfterKey("control+alt+pageUp")
+	_chrome.getSpeechAfterKey("control+alt+home")
+	_chrome.getSpeechAfterKey("control+alt+downArrow")
+	actualSpeech = _chrome.getSpeechAfterKey("control+alt+downArrow")
+	_asserts.strings_match(actualSpeech, "row 3  column 1  through 2  A 3 plus B 3")
+
+	# sayAll row with cells merged horizontally
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+rightArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			"A 3 plus B 3",
+			"column 3  C 3",
+			"column 4  through 5  D 3 plus E 3",
+		]),
+	)
+
+	# Check that cursor has moved to E3
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+upArrow")
+	_asserts.strings_match(actualSpeech, "D 3 plus E 3")
+
+
+def test_tableSpeakAllCommands():
+	""" Tests that table speak entire row/column commands work correctly.
+	Key bindings: NVDA+control+alt+upArrow/leftArrow
+	Refer to #13469.
+	"""
+	prepareChromeForTableSayAllTests()
+	tableSayAllJumpToB2()
+	# Speak current column
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("NVDA+control+alt+upArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			"row 1  B 1",
+			"row 2  B 2",
+			"row 3  column 1  through 2  A 3 plus B 3",
+			"row 4  column 2  B 4",
+			"row 5  B 5",
+		])
+	)
+	_asserts.braille_matches(
+		actualBraille,
+		"r2 c2 B2",
+		message="Speak entire column",
+	)
+
+	# Check that cursor still stays at B2
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+upArrow")
+	_asserts.strings_match(actualSpeech, "row 2  B 2")
+
+	# Speak current row
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+leftArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			"column 1  A 2",
+			"column 2  B 2",
+			"row 1  through 2  column 3  C 1 plus C 2",
+			"row 2  D 2",
+			"column 4  E 2",
+		])
+	)
+
+	# Check that cursor stays at B2
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+upArrow")
+	_asserts.strings_match(actualSpeech, "column 2  B 2")
+
+
+def test_tableSayAllAxisCachingForMergedCells():
+	""" Tests that axis caching for merged cells in table sayAll commands works.
+	Refer to #13469.
+	"""
+	prepareChromeForTableSayAllTests()
+
+	# Jump to D5
+	_chrome.getSpeechAfterKey("control+alt+pageUp")
+	_chrome.getSpeechAfterKey("control+alt+end")
+	_chrome.getSpeechAfterKey("control+alt+leftArrow")
+	_chrome.getSpeechAfterKey("control+alt+downArrow")
+	_chrome.getSpeechAfterKey("control+alt+downArrow")
+	actualSpeech = _chrome.getSpeechAfterKey("control+alt+downArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"row 4  column 3  through row 5 column 4  C 4 plus D 4 plus  C 5 plus D 5"
+	)
+
+	# Speak current column - should reuse cached column
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+upArrow")
+	_asserts.strings_match(
+		actualSpeech,
+		"\n".join([
+			"row 1  column 4  D 1",
+			"row 2  column 3  D 2",
+			"row 3  column 4  through 5  D 3 plus E 3",
+			"row 4  column 3  through row 5 column 4  C 4 plus D 4 plus  C 5 plus D 5",
+		]),
+	)
+
+
 def test_focus_mode_on_focusable_read_only_lists():
 	"""
 	If a list is read-only, but is focusable, and a list element receives focus, switch to focus mode.
@@ -1749,4 +2227,479 @@ def test_focus_mode_on_focusable_read_only_lists():
 			"Focus mode",  # Focus mode should be enabled automatically and be indicated
 		]),
 		message="focus mode - focus list item and turn on focus mode"
+	)
+
+
+def test_i10890():
+	"""
+	Ensure that sort state is announced on a column header when changed with inner button
+	"""
+	spy = _NvdaLib.getSpyLib()
+	# Chrome sometimes exposes tables as clickable, sometimes not.
+	# This test does not need to know, so disable reporting of clickables.
+	spy.set_configValue(["documentFormatting", "reportClickable"], False)
+	testFile = os.path.join(ARIAPatternsDir, "grid", "examples", "data-grids.html")
+	_chrome.prepareChrome(
+		f"""
+			<iframe src="{testFile}"></iframe>
+		"""
+	)
+	# Jump to the Example 2 heading
+	_chrome.getSpeechAfterKey("3")
+	actualSpeech = _chrome.getSpeechAfterKey("3")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Example 2: Sortable Data Grid With Editable Cells",
+			"heading",
+			"level 3",
+		])
+	)
+	# Jump to the table
+	actualSpeech = _chrome.getSpeechAfterKey("t")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Transactions January 1 through January 7",
+			"table",
+			"with 8 rows and 6 columns",
+			"row 1",
+			"column 1",
+			"sorted ascending",
+			"Date",
+			"button",
+		])
+	)
+	# Press the button
+	actualSpeech = _chrome.getSpeechAfterKey("space")
+	# and ensure that the new sort state is spoken.
+	_asserts.strings_match(
+		actualSpeech,
+		"sorted descending",
+	)
+
+
+def test_ARIASwitchRole():
+	"""
+	Ensure that ARIA switch controls have an appropriate role and states in browse mode.
+	"""
+	testFile = os.path.join(ARIAPatternsDir, "switch", "examples", "switch.html")
+	_chrome.prepareChrome(
+		f"""
+			<iframe src="{testFile}"></iframe>
+		"""
+	)
+	# Jump to the second heading 2 in the iframe.
+	_chrome.getSpeechAfterKey("2")
+	actualSpeech = _chrome.getSpeechAfterKey("2")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Example",
+			"heading  level 2"
+		]),
+		message="Move to first heading 2 in frame",
+	)
+	# Tab to the switch control
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Notifications",
+			"switch",
+			"off",
+		]),
+		message="tab to switch control",
+	)
+	# Read the current line
+	actualSpeech = _chrome.getSpeechAfterKey("numpad8")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"switch",
+			"off",
+			"Notifications",
+		]),
+		message="Read current line",
+	)
+	# Report the current focus
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Notifications",
+			"switch",
+			"focused",
+			"off",
+		]),
+		message="Report focus",
+	)
+	# Toggle the switch on
+	actualSpeech = _chrome.getSpeechAfterKey("space")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"on",
+		]),
+		message="Toggle switch control on",
+	)
+	# Read the current line
+	actualSpeech = _chrome.getSpeechAfterKey("numpad8")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"switch",
+			"on",
+			"Notifications",
+		]),
+		message="Read current line",
+	)
+	# Report the current focus
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Notifications",
+			"switch",
+			"focused",
+			"on",
+		]),
+		message="Report focus",
+	)
+	# Toggle the switch off
+	actualSpeech = _chrome.getSpeechAfterKey("space")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"off",
+		]),
+		message="Toggle switch control off",
+	)
+	# Read the current line
+	actualSpeech = _chrome.getSpeechAfterKey("numpad8")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"switch",
+			"off",
+			"Notifications",
+		]),
+		message="Read current line",
+	)
+	# Report the current focus
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"Notifications",
+			"switch",
+			"focused",
+			"off",
+		]),
+		message="Report focus",
+	)
+
+
+def test_i13307():
+	"""
+	Even if (to avoid duplication) NVDA may choose to not speak a landmark or region's label
+	when arrowing into a landmark or region with an aria-labelledby,
+	it should still speak the label when junping inside the landmark or region
+	from outside using quicknav or focus.
+	"""
+	_chrome.prepareChrome(
+		"""
+		<p>navigation landmark with aria-label</p>
+		<nav aria-label="label">
+			<button>inner element</button>
+		</nav>
+		<p>Navigation landmark with aria-labelledby</p>
+		<nav aria-labelledby="innerHeading1">
+			<h1 id="innerHeading1">labelled by</h1>
+			<button>inner element</button>
+		</nav>
+		<p>Region with aria-label</p>
+		<section aria-label="label">
+			<button>inner element</button>
+		</section>
+		<p>Region with aria-labelledby</p>
+		<section aria-labelledby="innerHeading2">
+			<h1 id="innerHeading2">labelled by</h1>
+			<button>inner element</button>
+		</section>
+		"""
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"label",
+			"navigation landmark",
+			"inner element",
+			"button",
+		]),
+		message="jumping into landmark with aria-label should speak label",
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"labelled by",
+			"navigation landmark",
+			"inner element",
+			"button",
+		]),
+		message="jumping into landmark with aria-labelledby should speak label",
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"label",
+			"region",
+			"inner element",
+			"button",
+		]),
+		message="jumping into region with aria-label should speak label",
+	)
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join([
+			"labelled by",
+			"region",
+			"inner element",
+			"button",
+		]),
+		message="jumping into region with aria-labelledby should speak label",
+	)
+
+
+def test_textParagraphNavigation():
+	_chrome.prepareChrome("""
+		<!-- First a bunch of paragraphs that don't match text regex -->
+		<p>Header</p>
+		<p>Liberal MP: 1904–1908</p>
+		<p>.</p>
+		<p>…</p>
+		<p>5.</p>
+		<p>test....</p>
+		<p>a.b</p>
+		<p></p>
+		<!-- Now a bunch of matching paragraphs -->
+		<p>Hello, world!</p>
+		<p>He replied, "That's wonderful."</p>
+		<p>He replied, "That's wonderful".</p>
+		<p>He replied, "That's wonderful."[4]</p>
+		<p>Предложение по-русски.</p>
+		<p>我不会说中文！</p>
+		<p>Bye-bye, world!</p>
+	""")
+
+	expectedParagraphs = [
+		# Tests exclamation sign
+		"Hello, world!",
+		# Tests Period with preceding quote
+		"He replied,  That's wonderful.",
+		# Tests period with trailing quote
+		"He replied,  That's wonderful .",
+		# Tests wikipedia-style reference
+		"He replied,  That's wonderful.  4",
+		# Tests compatibility with Russian Cyrillic script
+		"Предложение по-русски.",
+		# Tests regex condition for CJK full width character terminators
+		"我不会说中文！",
+		"Bye-bye, world!",
+	]
+	for p in expectedParagraphs:
+		actualSpeech = _chrome.getSpeechAfterKey("p")
+		_asserts.strings_match(actualSpeech, p)
+	actualSpeech = _chrome.getSpeechAfterKey("p")
+	_asserts.strings_match(actualSpeech, "no next text paragraph")
+
+	for p in expectedParagraphs[-2::-1]:
+		actualSpeech = _chrome.getSpeechAfterKey("shift+p")
+		_asserts.strings_match(actualSpeech, p)
+	actualSpeech = _chrome.getSpeechAfterKey("shift+p")
+	_asserts.strings_match(actualSpeech, "no previous text paragraph")
+
+
+def test_styleNav():
+	""" Tests that same style and different style navigation work correctly in browse mode.
+	By default these commands don't have assigned gestures,
+	so we will assign temporary gestures just for testing.
+	"""
+	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy.assignGesture(
+		"kb:s",
+		"browseMode",
+		"BrowseModeTreeInterceptor",
+		"nextSameStyle",
+	)
+
+	spy.assignGesture(
+		"kb:shift+s",
+		"browseMode",
+		"BrowseModeTreeInterceptor",
+		"previousSameStyle",
+	)
+	spy.assignGesture(
+		"kb:d",
+		"browseMode",
+		"BrowseModeTreeInterceptor",
+		"nextDifferentStyle",
+	)
+
+	spy.assignGesture(
+		"kb:shift+d",
+		"browseMode",
+		"BrowseModeTreeInterceptor",
+		"previousDifferentStyle",
+	)
+
+	_chrome.prepareChrome("""
+		<p>Hello world!</p>
+		<p>This text is <b>bold</b></p>
+		<p>Second line is <font size="15pt">large</font></p>
+		<p>Third line is <mark>highlighted</mark></p>
+		<p>Fourth line is <b>bold again</b></p>
+		<p>End of document.</p>
+	""")
+	# For some reason we need to send Control+RightArrow;
+	# otherwise getting "Test page load complete" as actual speech
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("control+rightArrow")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
+	_asserts.strings_match(actualSpeech, "Hello world!")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("shift+d")
+	_asserts.strings_match(actualSpeech, "No previous different style text")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
+	_asserts.strings_match(actualSpeech, "This text is")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
+	_asserts.strings_match(actualSpeech, "Second line is")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("shift+d")
+	_asserts.strings_match(actualSpeech, "bold")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
+	_asserts.strings_match(actualSpeech, "bold again")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
+	_asserts.strings_match(actualSpeech, "No next same style text")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("d")
+	_asserts.strings_match(actualSpeech, "End of document.")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("d")
+	_asserts.strings_match(actualSpeech, "No next different style text")
+	for s in [
+		"Second line is",
+		"Third line is",
+		"Fourth line is",
+	][::-1]:
+		actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("shift+s")
+		_asserts.strings_match(actualSpeech, s)
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("d")
+	_asserts.strings_match(actualSpeech, "large")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("shift+s")
+	_asserts.strings_match(actualSpeech, "No previous same style text")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
+	_asserts.strings_match(actualSpeech, "No next same style text")
+	
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("d")
+	_asserts.strings_match(actualSpeech, "Third line is")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("d")
+	_asserts.strings_match(actualSpeech, "highlighted  highlighted")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("shift+s")
+	_asserts.strings_match(actualSpeech, "No previous same style text")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
+	_asserts.strings_match(actualSpeech, "No next same style text")
+
+
+def test_ariaErrorMessage():
+	_chrome.prepareChrome("""
+		<h2>Native valid</h2>
+		<label for="i1">Input 1</label>
+		<input type="text" autocomplete="off" id="i1" aria-errormessage="e1" />
+		<p id="e1">Error 1</p>
+
+		<h2>Native invalid</h2>
+		<label for="i2">Input 2</label>
+		<input type="text" autocomplete="off"  id="i2" pattern="a" value="b" aria-errormessage="e2" />
+		<p id="e2">Error 2</p>
+
+		<h2>ARIA valid</h2>
+		<label id="l3">Input 3</label>
+		<div contenteditable role="textbox" aria-multiline="false" aria-labelledby="l3" aria-errormessage="e3"
+		     aria-invalid="false"></div>
+		<p id="e3">Error 3</p>
+
+		<h2>ARIA valid</h2>
+		<label id="l4">Input 4</label>
+		<div contenteditable role="textbox" aria-multiline="false" aria-labelledby="l4" aria-errormessage="e4"
+		     aria-invalid="true"></div>
+		<p id="e4">Error 4</p>
+	""")
+	# Force focus mode
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
+	_asserts.strings_match(
+		actualSpeech,
+		"Focus mode"
+	)
+	# Tab to the native valid field
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(("Input 1", "edit", "blank"))
+	)
+
+	# Tab to the native invalid field
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(("Input 2", "edit", "invalid entry", "Error 2", "selected b"))
+	)
+
+	# Tab to the ARIA valid field
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(("Input 3", "edit", "blank"))
+	)
+
+	# Tab to the native invalid field
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(("Input 4", "edit", "invalid entry", "Error 4", "blank"))
+	)
+
+	# Force browse mode
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
+	_asserts.strings_match(
+		actualSpeech,
+		"Browse mode"
+	)
+	# Jump to the top of the document
+	_chrome.getSpeechAfterKey("control+home")
+	# Quick nav to the native valid field
+	actualSpeech = _chrome.getSpeechAfterKey("e")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(("Input 1", "edit"))
+	)
+
+	# Quick nav to the native invalid field
+	actualSpeech = _chrome.getSpeechAfterKey("e")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(("Input 2", "edit", "invalid entry", "Error 2", "b"))
+	)
+
+	# Quick nav to the ARIA valid field
+	actualSpeech = _chrome.getSpeechAfterKey("e")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(("Input 3", "edit"))
+	)
+
+	# Quick nav to the native invalid field
+	actualSpeech = _chrome.getSpeechAfterKey("e")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(("Input 4", "edit", "invalid entry", "Error 4"))
 	)

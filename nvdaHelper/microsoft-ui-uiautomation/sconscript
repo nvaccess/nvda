@@ -41,6 +41,12 @@ env = env.Clone()
 # otherwise the build fails with Visual Studio 2022
 env['ENV']['windir'] = os.environ['windir']
 
+
+# We must ensure that msbuild uses the same platform toolset as the rest of NVDA.
+# Thus we must fetch this info from the MSVC_VERSION SCons variable,
+# Formatting it as vMajorMinor (e.g. v143 for 14.3). 
+platformToolset = "v" + "".join(env.get('MSVC_VERSION').split('.')[:2])
+
 MSUIA_sourceDir = Dir('#include/microsoft-ui-uiautomation/src/uiAutomation')
 MSUIA_lib_outDir = Dir('lib')
 MSUIA_include_outDir = Dir('include')
@@ -66,11 +72,14 @@ MSUIA_wrapper_libs = env.Command(
 	],
 	action = [
 		# Fetch any required NuGet packages
-		f"msbuild {MSUIA_solutionFile} /t:Restore /p:RestorePackagesConfig=true,Configuration=Release,Platform=x86",
+		f"msbuild {MSUIA_solutionFile} /t:Restore /p:RestorePackagesConfig=true,Configuration=Release,Platform=x86,PlatformToolset={platformToolset}",
 		# Remove any old generated files
 		Delete(MSUIA_sourceDir.Dir('microsoft.ui.uiautomation/Generated Files')),
 		# Do the actual build
-		"msbuild /t:Build /p:Configuration=Release,Platform=x86,OutDir={outDir}/ $SOURCE".format(outDir=MSUIA_lib_outDir.abspath)
+		"msbuild /t:Build /p:Configuration=Release,Platform=x86,PlatformToolset={platformToolset},OutDir={outDir}/ $SOURCE".format(
+			outDir=MSUIA_lib_outDir.abspath,
+			platformToolset=platformToolset
+		)
 	],
 )
 env.Ignore(MSUIA_wrapper_libs,MSUIA_sourceDir.File('microsoft.ui.uiautomation/Microsoft.UI.UIAutomation_h.h'))
@@ -88,7 +97,10 @@ MSUIA_abstraction_libs = env.Command(
 		glob.glob(os.path.join(MSUIA_sourceDir.abspath, 'UiaOperationAbstraction', '*.h')),
 	],
 	action = [
-		"msbuild /t:Build /p:Configuration=Release,Platform=x86,OutDir={outDir}/ $SOURCE".format(outDir=MSUIA_lib_outDir.abspath),
+		"msbuild /t:Build /p:Configuration=Release,Platform=x86,PlatformToolset={platformToolset},OutDir={outDir}/ $SOURCE".format(
+			outDir=MSUIA_lib_outDir.abspath,
+			platformToolset=platformToolset
+		),
 	]
 )
 

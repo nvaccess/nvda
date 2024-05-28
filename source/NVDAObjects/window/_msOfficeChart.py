@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2014-2021 NV Access Limited, NVDA India, dineshkaushal
+# Copyright (C) 2014-2022 NV Access Limited, NVDA India, dineshkaushal
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -557,12 +557,13 @@ class OfficeChart(OfficeChartElementList):
 		count = self.officeChartObject.SeriesCollection().count
 		text=""
 		if count>0:
-			if count == 1:
-				# Translators: Indicates that there is 1 series in a chart.
-				seriesValueString = _( "There is 1 series in this chart" )
-			else:
-				# Translators: Indicates the number of series in a chart where there are multiple series.
-				seriesValueString = _( "There are total %d series in this chart" ) %(count)
+			seriesValueString = ngettext(
+				# Translators: Indicates the number of series in a chart.
+				"There is %d series in this chart",
+				"There are %d series in this chart",
+				count,
+			) % count
+			if count > 1:
 				for i in range(1, count+1):
 					# Translators: Specifies the number and name of a series when listing series in a chart.
 					seriesValueString += ", " + _("series {number} {name}").format(number=i, name=self.officeChartObject.SeriesCollection(i).Name)
@@ -710,16 +711,23 @@ class OfficeChartElementPoint(OfficeChartElementBase):
 				output=""
 				if self.officeChartObject.ChartType in (xlLine, xlLineMarkers , xlLineMarkersStacked, xlLineMarkersStacked100, xlLineStacked, xlLineStacked100):
 					if arg2 > 1:
-
-						if self.officeChartObject.SeriesCollection(arg1).Values[arg2 - 1] == self.officeChartObject.SeriesCollection(arg1).Values[arg2 - 2]: 
+						rightDataPoint = self.officeChartObject.SeriesCollection(arg1).Values[arg2 - 1]
+						leftDataPoint = self.officeChartObject.SeriesCollection(arg1).Values[arg2 - 2]
+						if rightDataPoint == leftDataPoint:
 							# Translators: For line charts, indicates no change from the previous data point on the left
-							output += _( "no change from point {previousIndex}, ").format( previousIndex = arg2 - 1 )
-						elif self.officeChartObject.SeriesCollection(arg1).Values[arg2 - 1] > self.officeChartObject.SeriesCollection(arg1).Values[arg2 - 2]: 
+							output += _("no change from point {previousIndex}, ").format(previousIndex=arg2 - 1)
+						elif rightDataPoint > leftDataPoint:
 							# Translators: For line charts, indicates an increase from the previous data point on the left
-							output += _( "Increased by {incrementValue} from point {previousIndex}, ").format( incrementValue = self.officeChartObject.SeriesCollection(arg1).Values[arg2 - 1] - self.officeChartObject.SeriesCollection(arg1).Values[arg2 - 2] , previousIndex = arg2 - 1 ) 
+							output += _("increased by {incrementValue} from point {previousIndex}, ").format(
+								incrementValue=rightDataPoint - leftDataPoint,
+								previousIndex=arg2 - 1,
+							)
 						else:
 							# Translators: For line charts, indicates a decrease from the previous data point on the left
-							output += _( "decreased by {decrementValue} from point {previousIndex}, ").format( decrementValue = self.officeChartObject.SeriesCollection(arg1).Values[arg2 - 2] - self.officeChartObject.SeriesCollection(arg1).Values[arg2 - 1] , previousIndex = arg2 - 1 ) 
+							output += _("decreased by {decrementValue} from point {previousIndex}, ").format(
+								decrementValue=leftDataPoint - rightDataPoint,
+								previousIndex=arg2 - 1,
+							)
 
 				if self.officeChartObject.HasAxis(xlCategory) and self.officeChartObject.Axes(xlCategory).HasTitle:
 					# Translators: Specifies the category of a data point.

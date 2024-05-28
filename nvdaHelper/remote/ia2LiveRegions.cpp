@@ -121,10 +121,8 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 		default:
 		return;
 	}
-	IAccessible* pacc=NULL;
-	IServiceProvider* pserv=NULL;
-	IAccessible2* pacc2=NULL;
-	VARIANT varChild;
+	CComPtr<IAccessible> pacc;
+	CComVariant varChild;
 	//Try getting the IAccessible from the event
 	if(AccessibleObjectFromEvent(hwnd,objectID,childID,&pacc,&varChild)!=S_OK) {
 		return;
@@ -132,28 +130,23 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	//Retreave the object states, and if its invisible or offscreen ignore the event.
 	CComVariant varState;
 	pacc->get_accState(varChild,&varState);
-	VariantClear(&varChild);
 	if(varState.vt==VT_I4&&(varState.lVal&STATE_SYSTEM_INVISIBLE)) {
-		pacc->Release();
 		return;
 	}
 	//Retreave an IAccessible2 via IServiceProvider if it exists.
-	pacc->QueryInterface(IID_IServiceProvider,(void**)(&pserv));
-	pacc->Release();
+	CComQIPtr<IServiceProvider> pserv(pacc);
 	if(!pserv) return; 
-	pserv->QueryService(IID_IAccessible,IID_IAccessible2,(void**)(&pacc2));
-	pserv->Release();
+	CComPtr<IAccessible2> pacc2;
+	pserv->QueryService(IID_IAccessible, IID_IAccessible2, (void**)(&pacc2));
 	if(!pacc2) return;
 	//Retreave the IAccessible2 attributes, and if the object is not a live region then ignore the event.
 	map<wstring,wstring> attribsMap;
 	if(!fetchIA2Attributes(pacc2,attribsMap)) {
-		pacc2->Release();
 		return;
 	}
 	auto i=attribsMap.find(L"container-live");
 	bool live=(i!=attribsMap.end()&&(i->second.compare(L"polite")==0||i->second.compare(L"assertive")==0||i->second.compare(L"rude")==0));
 	if(!live) {
-		pacc2->Release();
 		return;
 	}
 	// #1318: In Firefox, all tabs have the same HWND. Objects in background
@@ -163,14 +156,21 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	// check.
 	if (varState.vt==VT_I4 && varState.lVal & STATE_SYSTEM_OFFSCREEN
 			&& isInBackgroundTab(pacc2, hwnd)) {
-		pacc2->Release();
+		return;
+	}
+	long ia2States = 0;
+	pacc2->get_states(&ia2States);
+	if (ia2States & IA2_STATE_EDITABLE) {
+		// This is editable text. Editable text should never be a live region, as
+		// this causes typed characters to be echoed when they shouldn't, etc.
+		// Nevertheless, some authors misguidedly set aria-live on editable text.
+		// We explicitly ignore this here.
 		return;
 	}
 	wstring politeness = i->second;
 	i=attribsMap.find(L"container-busy");
 	bool busy=(i!=attribsMap.end()&&i->second.compare(L"true")==0);
 	if(busy) {
-		pacc2->Release();
 		return;
 	}
 	i=attribsMap.find(L"container-relevant");
@@ -185,33 +185,30 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	} 
 	// We only support additions or text
 	if(!allowAdditions&&!allowText) {
-		pacc2->Release();
 		return;
 	}
 	//Only handle show events if additions are allowed
 	if(eventID==EVENT_OBJECT_SHOW&&!allowAdditions) {
-		pacc2->Release();
 		return;
 	}
 	// If this is a show event and this is not the root of the region and there is a text parent, 
 	// We can ignore this event as there will be text events which can handle this better
 	if(eventID==EVENT_OBJECT_SHOW) {
 		bool ignoreShowEvent=false;
-		IDispatch* pdispParent=NULL;
+		CComPtr<IDispatch> pdispParent;
 		pacc2->get_accParent(&pdispParent);
 		if(pdispParent) {
 			// check for text on parent
-			IAccessibleText* paccTextParent=NULL;
-			if(pdispParent->QueryInterface(IID_IAccessibleText,(void**)&paccTextParent)==S_OK&&paccTextParent) {
+			CComQIPtr<IAccessibleText> paccTextParent(pdispParent);
+			if (paccTextParent) {
 				ignoreShowEvent=true;
-				paccTextParent->Release();
 			}
 			if(!ignoreShowEvent) {
 				// Check for useful container-live on parent, as if missing or off, then child must be the root 
 				// Firstly, we assume we are the root of the region and therefore should ignore the event
 				ignoreShowEvent=true;
-				IAccessible2* pacc2Parent=NULL;
-				if(pdispParent->QueryInterface(IID_IAccessible2,(void**)&pacc2Parent)==S_OK) {
+				CComQIPtr<IAccessible2> pacc2Parent(pdispParent);
+				if (pacc2Parent) {
 					map<wstring,wstring> parentAttribsMap;
 					if(fetchIA2Attributes(pacc2Parent,parentAttribsMap)) {
 						i=parentAttribsMap.find(L"container-live");
@@ -220,55 +217,43 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 							ignoreShowEvent=false;
 						}
 					}
-					pacc2Parent->Release();
 				}
 			}
-			pdispParent->Release();
 		}
 		if(ignoreShowEvent) {
-			pacc2->Release();
 			return;
 		}
 	}
 	// name and description changes can only be announced if relevant is text
 	if(!allowText&&(eventID==EVENT_OBJECT_NAMECHANGE||eventID==EVENT_OBJECT_DESCRIPTIONCHANGE)) {
-		pacc2->Release();
 		return;
 	}
 	wstring textBuf;
 	bool gotText=false;
-	IAccessible2* pacc2Atomic=findAriaAtomic(pacc2,attribsMap);
+	CComPtr<IAccessible2> pacc2Atomic = findAriaAtomic(pacc2,attribsMap);
 	if(pacc2Atomic) {
 		gotText=getTextFromIAccessible(textBuf,pacc2Atomic);
-		pacc2Atomic->Release();
 	} else if(eventID==EVENT_OBJECT_NAMECHANGE) {
-		BSTR name=NULL;
-		VARIANT varChild;
-		varChild.vt=VT_I4;
-		varChild.lVal=0;
+		CComBSTR name;
+		CComVariant varChild(0, VT_I4);
 		pacc2->get_accName(varChild,&name);
 		if(name) {
 			textBuf.append(name);
 			gotText=true;
-			SysFreeString(name);
 		}
 	} else if(eventID==EVENT_OBJECT_DESCRIPTIONCHANGE) {
-		BSTR desc=NULL;
-		VARIANT varChild;
-		varChild.vt=VT_I4;
-		varChild.lVal=0;
+		CComBSTR desc;
+		CComVariant varChild(0, VT_I4);
 		pacc2->get_accDescription(varChild,&desc);
 		if(desc) {
 			textBuf.append(desc);
 			gotText=true;
-			SysFreeString(desc);
 		}
 	} else if(eventID==EVENT_OBJECT_SHOW) {
 		gotText=getTextFromIAccessible(textBuf,pacc2);
 	} else if(eventID==IA2_EVENT_TEXT_INSERTED||eventID==IA2_EVENT_TEXT_UPDATED) {
 		gotText=getTextFromIAccessible(textBuf,pacc2,true,allowAdditions,allowText);
 	}
-	pacc2->Release();
 	if (gotText && !textBuf.empty()) {
 		nvdaControllerInternal_reportLiveRegion(textBuf.c_str(), politeness.c_str());
 	}

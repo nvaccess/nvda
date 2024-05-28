@@ -1,10 +1,9 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2007-2021 NV Access Limited, Babbage B.V.
+# Copyright (C) 2007-2022 NV Access Limited, Babbage B.V.
 
 from enum import (
-	auto,
 	unique,
 )
 from typing import Dict, Set
@@ -14,15 +13,35 @@ from utils.displayString import DisplayStringIntEnum
 
 @unique
 class Role(DisplayStringIntEnum):
+	"""
+	Add-on authors are recommended not to depend on values and use a `Role` directly.
+	From a string, this can be done as `controlTypes.Role[nameOfRole]` e.g. `Role["CHECKBOX"]`.
+	Although unlikely to change, if names/values changing represents a significant risk for your add-on,
+	then consider decoupling, and maintain an internal mapping of `Role` to add-on internal roles.
+
+	As add-on authors may still rely on the values, new members of `Role` should continue
+	the previous pattern of incrementing.
+	Using `enum.auto` may backfill role values and should be avoided.
+	Refer to `test_controlTypes.TestBackCompat.test_rolesValues` for compatibility requirements.
+
+	Some behaviour of treating roles as their integer values is already unsupported.
+	```
+	# Former constants
+	ROLE_GRAPHIC: int = controlTypes.Role.GRAPHIC.value
+	ROLE_GRAPHIC is 16
+	True
+
+	# New aliases
+	ROLE_GRAPHIC: controlTypes.Role = controlTypes.Role.GRAPHIC
+	ROLE_GRAPHIC is 16
+	False
+	```
+	"""
 	@property
 	def _displayStringLabels(self):
 		return _roleLabels
 
 	# To maintain backwards compatibility, these Roles must maintain their values.
-	# Add-on authors are recommended not to depend on values, instead
-	# use role.name, and construct from string with controlTypes.Role[nameOfRole] eg. Role["CHECKBOX"]
-	# Although unlikely to change, if names/values changing represents a significant risk for your add-on, then
-	# consider decoupling, and maintain an internal mapping of Roles to add-on internal Roles.
 	UNKNOWN = 0
 	WINDOW = 1
 	TITLEBAR = 2
@@ -91,6 +110,7 @@ class Role(DisplayStringIntEnum):
 	ENDNOTE = 65
 	FOOTER = 66
 	FOOTNOTE = 67
+	# note 68 missing
 	GLASSPANE = 69
 	HEADER = 70
 	IMAGEMAP = 71
@@ -136,6 +156,7 @@ class Role(DisplayStringIntEnum):
 	TREEVIEWBUTTON = 111
 	IPADDRESS = 112
 	DESKTOPICON = 113
+	# note 114 is missing
 	INTERNALFRAME = 115
 	DESKTOPPANE = 116
 	OPTIONPANE = 117
@@ -177,6 +198,10 @@ class Role(DisplayStringIntEnum):
 	MARKED_CONTENT = 153
 	BUSY_INDICATOR = 154  # Used for progress bars with indeterminate state
 	# To maintain backwards compatibility, above Roles must maintain their values.
+	COMMENT = 155
+	SUGGESTION = 156
+	DEFINITION = 157
+	SWITCH = 158
 
 
 _roleLabels: Dict[Role, str] = {
@@ -323,7 +348,7 @@ _roleLabels: Dict[Role, str] = {
 	Role.ENDNOTE: _("end note"),
 	# Translators: Identifies a footer (usually text).
 	Role.FOOTER: _("footer"),
-	# Translators: Identifies a foot note (text at the end of a passage or used for anotations).
+	# Translators: Identifies a foot note (text at the end of a passage or used for annotations).
 	Role.FOOTNOTE: _("foot note"),
 	# Translators: Reported for an object which is a glass pane; i.e.
 	# a pane that is guaranteed to be on top of all panes beneath it.
@@ -498,6 +523,15 @@ _roleLabels: Dict[Role, str] = {
 	Role.MARKED_CONTENT: _("highlighted"),
 	# Translators: Identifies a progress bar with indeterminate state, I.E. progress can not be determined.
 	Role.BUSY_INDICATOR: _("busy indicator"),
+	# Translators: Identifies a comment.
+	Role.COMMENT: _("comment"),
+	# Translators: Identifies a suggestion.
+	Role.SUGGESTION: _("suggestion"),
+	# Translators: Identifies a definition.
+	Role.DEFINITION: _("definition"),
+	# Translators: The word role for a switch control
+	# I.e. a control that can be switched on or off.
+	Role.SWITCH: _("switch"),
 }
 
 

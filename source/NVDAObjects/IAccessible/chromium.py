@@ -1,19 +1,44 @@
-#NVDAObjects/IAccessible/chromium.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-# Copyright (C) 2010-2013 NV Access Limited
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2010-2022 NV Access Limited
 
 """NVDAObjects for the Chromium browser project
 """
-
+import typing
+from typing import Dict, Optional
 from comtypes import COMError
-import oleacc
+
+import config
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
 from virtualBuffers.gecko_ia2 import Gecko_ia2 as GeckoVBuf, Gecko_ia2_TextInfo as GeckoVBufTextInfo
 from . import ia2Web
 from logHandler import log
+
+if typing.TYPE_CHECKING:
+	# F401 imported but unused, actually used as a string within type annotation (to avoid having to import
+	# at run time)
+	from treeInterceptorHandler import TreeInterceptor  # noqa: F401
+
+supportedAriaDetailsRoles: Dict[str, Optional[controlTypes.Role]] = {
+	"unknown": None,  # no explicit role, should be reported as "details"
+	"comment": controlTypes.Role.COMMENT,
+	"doc-footnote": controlTypes.Role.FOOTNOTE,
+	# These roles are current unsupported by IAccessible2,
+	# and as such, have not been fully implemented in NVDA.
+	# They can only be fetched via the IA2Attribute "details-roles",
+	# which is only supported in Chrome.
+	# Currently maps to the IA2 role ROLE_LIST_ITEM
+	"doc-endnote": None,  # controlTypes.Role.ENDNOTE
+	# Currently maps to the IA2 role ROLE_PARAGRAPH
+	"definition": None,  # controlTypes.Role.DEFINITION
+}
+"""
+details-roles attribute is only defined in Chrome as of May 2022.
+Refer to ComputeDetailsRoles:
+https://chromium.googlesource.com/chromium/src/+/main/ui/accessibility/platform/ax_platform_node_base.cc#2419
+"""
 
 
 class ChromeVBufTextInfo(GeckoVBufTextInfo):
@@ -40,11 +65,23 @@ class ChromeVBufTextInfo(GeckoVBufTextInfo):
 		if attrs['role'] == controlTypes.Role.TOGGLEBUTTON and controlTypes.State.CHECKABLE in attrs['states']:
 			# In Chromium, the checkable state is exposed erroneously on toggle buttons.
 			attrs['states'].discard(controlTypes.State.CHECKABLE)
+
+		if (
+			attrs["role"] == controlTypes.Role.GROUPING
+			and attrs.get("IAccessible2::attribute_tag", "").lower() == "figure"
+		):
+			# Chromium doesn't expose the `<figure>` element as a figure.
+			attrs["role"] = controlTypes.Role.FIGURE
 		return attrs
 
 
 class ChromeVBuf(GeckoVBuf):
 	TextInfo = ChromeVBufTextInfo
+
+	# selecting with IAccessibleTextSelectionContainer is currently broken in Chromium.
+	# Please refer to comments on Chromium issue where this was implemented:
+	# https://bugs.chromium.org/p/chromium/issues/detail?id=1298144
+	_nativeAppSelectionModeSupported = False
 
 	def __contains__(self, obj):
 		if obj.windowHandle != self.rootNVDAObject.windowHandle:
@@ -64,11 +101,28 @@ class ChromeVBuf(GeckoVBuf):
 
 class Document(ia2Web.Document):
 
-	def _get_treeInterceptorClass(self):
-		states = self.states
-		if controlTypes.State.EDITABLE not in states and controlTypes.State.BUSY not in states:
-			return ChromeVBuf
-		return super(Document, self).treeInterceptorClass
+	def _get_treeInterceptorClass(self) -> typing.Type["TreeInterceptor"]:
+		shouldLoadVBufOnBusyFeatureFlag = bool(
+			config.conf["virtualBuffers"]["loadChromiumVBufOnBusyState"]
+		)
+		vBufUnavailableStates = {  # if any of these are in states, don't return ChromeVBuf
+			controlTypes.State.EDITABLE,
+		}
+		if not shouldLoadVBufOnBusyFeatureFlag:
+			log.debug(
+				f"loadChromiumVBufOnBusyState feature flag is {shouldLoadVBufOnBusyFeatureFlag},"
+				" vBuf WILL NOT be loaded when state of the document is busy."
+			)
+			vBufUnavailableStates.add(controlTypes.State.BUSY)
+		else:
+			log.debug(
+				f"loadChromiumVBufOnBusyState feature flag is {shouldLoadVBufOnBusyFeatureFlag},"
+				" vBuf WILL be loaded when state of the document is busy."
+			)
+		if self.states.intersection(vBufUnavailableStates):
+			return super().treeInterceptorClass
+		return ChromeVBuf
+
 
 class ComboboxListItem(IAccessible):
 	"""
@@ -107,6 +161,11 @@ class PresentationalList(ia2Web.Ia2Web):
 		return states
 
 
+class Figure(ia2Web.Ia2Web):
+	def _get_role(self) -> controlTypes.Role:
+		return controlTypes.Role.FIGURE
+
+
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class(es) for Chromium objects.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
@@ -117,5 +176,7 @@ def findExtraOverlayClasses(obj, clsList):
 		clsList.append(ToggleButton)
 	elif obj.role == controlTypes.Role.LIST and obj.IA2Attributes.get('tag') in ('ul', 'dl', 'ol'):
 		clsList.append(PresentationalList)
+	elif obj.role == controlTypes.Role.GROUPING and obj.IA2Attributes.get("tag", "").casefold() == "figure":
+		clsList.append(Figure)
 	ia2Web.findExtraOverlayClasses(obj, clsList,
 		documentClass=Document)

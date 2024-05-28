@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Łukasz Golonka
+# Copyright (C) 2006-2023 NV Access Limited, Łukasz Golonka, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -9,10 +9,12 @@ import weakref
 import wx
 
 import config
+from config.configFlags import NVDAKey
 import core
 from documentationUtils import getDocFilePath
 import globalVars
 import gui
+from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 import keyboardHandler
 from logHandler import log
 import versionInfo
@@ -33,10 +35,10 @@ class WelcomeDialog(
 		# Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
 		"Most commands for controlling NVDA require you to hold down"
 		" the NVDA key while pressing other keys.\n"
-		"By default, the numpad Insert and main Insert keys may both be used as the NVDA key.\n"
+		"By default, the Insert and numpad Insert keys may both be used as the NVDA key.\n"
 		"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 		"Press NVDA+n at any time to activate the NVDA menu.\n"
-		"From this menu, you can configure NVDA, get help and access other NVDA functions."
+		"From this menu, you can configure NVDA, get help, and access other NVDA functions."
 	)
 	_instances: Set["WelcomeDialog"] = weakref.WeakSet()
 
@@ -75,7 +77,7 @@ class WelcomeDialog(
 		# Translators: The label of a checkbox in the Welcome dialog.
 		capsAsNVDAModifierText = _("&Use CapsLock as an NVDA modifier key")
 		self.capsAsNVDAModifierCheckBox = sHelper.addItem(wx.CheckBox(optionsBox, label=capsAsNVDAModifierText))
-		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"])
+		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.CAPS_LOCK)
 		# Translators: The label of a checkbox in the Welcome dialog.
 		startAfterLogonText = _("St&art NVDA after I sign in")
 		self.startAfterLogonCheckBox = sHelper.addItem(wx.CheckBox(optionsBox, label=startAfterLogonText))
@@ -103,7 +105,26 @@ class WelcomeDialog(
 	def onOk(self, evt):
 		layout = self.kbdNames[self.kbdList.GetSelection()]
 		config.conf["keyboard"]["keyboardLayout"] = layout
-		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"] = self.capsAsNVDAModifierCheckBox.IsChecked()
+		NVDAKeysVal = (
+			(NVDAKey.CAPS_LOCK.value if self.capsAsNVDAModifierCheckBox.IsChecked() else 0)
+			| (config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.NUMPAD_INSERT.value)
+			| (config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.EXTENDED_INSERT.value)
+		)
+		if NVDAKeysVal == 0:
+			log.debugWarning("No NVDA key set")
+			gui.messageBox(
+				_(
+					# Translators: The title of an error message box displayed when validating the startup dialog
+					"At least one NVDA modifier key must be set. "
+					"Caps lock will remain as an NVDA modifier key. "
+				),
+				# Translators: The title of an error message box displayed when validating the startup dialog
+				_("Error"),
+				wx.OK | wx.ICON_ERROR,
+				self,
+			)
+		else:
+			config.conf["keyboard"]["NVDAModifierKeys"] = NVDAKeysVal
 		if self.startAfterLogonCheckBox.Enabled:
 			config.setStartAfterLogon(self.startAfterLogonCheckBox.Value)
 		config.conf["general"]["showWelcomeDialogAtStartup"] = self.showWelcomeDialogAtStartupCheckBox.IsChecked()
@@ -135,8 +156,9 @@ class WelcomeDialog(
 
 
 class LauncherDialog(
+		DpiScalingHelperMixinWithoutInit,
 		gui.contextHelp.ContextHelpMixin,
-		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""The dialog that is displayed when NVDA is started from the launcher.
 	This displays the license and allows the user to install or create a portable copy of NVDA.
@@ -144,18 +166,15 @@ class LauncherDialog(
 	helpId = "InstallingNVDA"
 
 	def __init__(self, parent):
-		super().__init__(parent, title=f"{versionInfo.name} {_('Launcher')}")
+		super().__init__(
+			parent,
+			title=f"{versionInfo.name} {_('Launcher')}",
+		)
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
-		# Translators: The label of the license text which will be shown when NVDA installation program starts.
-		groupLabel = _("License Agreement")
-		sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=groupLabel)
-		sHelper.addItem(sizer)
-		licenseTextCtrl = wx.TextCtrl(self, size=(500, 400), style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH)
-		licenseTextCtrl.Value = open(getDocFilePath("copying.txt", False), "r", encoding="UTF-8").read()
-		sizer.Add(licenseTextCtrl)
+		sHelper.addItem(self._createLicenseAgreementGroup())
 
 		# Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 		agreeText = _("I &agree")
@@ -192,6 +211,30 @@ class LauncherDialog(
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
 		self.CentreOnScreen()
+
+	def _createLicenseAgreementGroup(self) -> wx.StaticBoxSizer:
+		# Translators: The label of the license text which will be shown when NVDA installation program starts.
+		groupLabel = _("License Agreement")
+		sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=groupLabel)
+		# Create a fake text control to determine appropriate width of license text box
+		_fakeTextCtrl = wx.StaticText(
+			self,
+			label="a" * 80,  # The GPL2 text of copying.txt wraps sentences at 80 characters
+		)
+		widthOfLicenseText = _fakeTextCtrl.Size[0]
+		_fakeTextCtrl.Destroy()
+		licenseTextCtrl = wx.TextCtrl(
+			self,
+			size=(widthOfLicenseText, self.scaleSize(300)),
+			style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH,
+		)
+		licenseTextCtrl.Value = open(getDocFilePath("copying.txt", False), "r", encoding="UTF-8").read()
+		sizer.Add(
+			licenseTextCtrl,
+			flag=wx.EXPAND,
+			proportion=1,
+		)
+		return sizer
 
 	def onLicenseAgree(self, evt):
 		for ctrl in self.actionButtons:

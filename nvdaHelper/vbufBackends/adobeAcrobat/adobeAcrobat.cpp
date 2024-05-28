@@ -47,7 +47,6 @@ IAccessible* IAccessibleFromIdentifier(int docHandle, int ID) {
 long getAccID(IServiceProvider* servprov) {
 	int res;
 	IAccID* paccID = NULL;
-	long ID;
 
 	LOG_DEBUG(L"calling IServiceProvider::QueryService for IAccID");
 	if((res=servprov->QueryService(SID_AccID,IID_IAccID,(void**)(&paccID)))!=S_OK) {
@@ -56,8 +55,16 @@ long getAccID(IServiceProvider* servprov) {
 	} 
 	LOG_DEBUG(L"IAccID at "<<paccID);
 
+	// IAccID::get_accID takes a longlong on 64 bit and a long on 32 bit.
+	// However, Acrobat will internally only place a 32 bit value into ID.
+	// Thus we call it with a LONG_PTR* and can safely static cast it to a long.
+	// LONG_PTR docs:
+	// A signed long type for pointer precision.
+	// Use when casting a pointer to a long to perform pointer arithmetic.
+	LONG_PTR ID = 0;  // LONG_PTR is 'long' on x86, 'long long' on x64. 
+
 	LOG_DEBUG(L"Calling get_accID");
-	if((res=paccID->get_accID((long*)(&ID)))!=S_OK) {
+	if ((res = paccID->get_accID(&ID)) != S_OK) {
 		LOG_DEBUG(L"paccID->get_accID returned "<<res);
 		ID = 0;
 	}
@@ -65,7 +72,7 @@ long getAccID(IServiceProvider* servprov) {
 	LOG_DEBUG("Releasing IAccID");
 	paccID->Release();
 
-	return ID;
+	return static_cast<long>(ID);  // Expected to contain a 32bit value, so it is safe to cast to a 32bit value.
 }
 
 IPDDomNode* getPDDomNode(VARIANT& varChild, IServiceProvider* servprov) {
@@ -133,9 +140,9 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 		// #2174: Alt or actual text should override any other text content.
 		// Unfortunately, GetTextContent() still includes the text of descendants,
 		// so handle this ourselves.
-		domElement->GetAttribute(L"Alt", NULL, &text);
+		domElement->GetAttribute(BSTR(L"Alt"), NULL, &text);
 		if (!text)
-			domElement->GetAttribute(L"ActualText", NULL, &text);
+			domElement->GetAttribute(BSTR(L"ActualText"), NULL, &text);
 	}
 
 	long childCount = 0;
@@ -430,6 +437,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 	}
 
 	BSTR stdName = NULL;
+	BSTR tagName = NULL;
 	int textFlags = 0;
 	// Whether to render just a space in place of the content.
 	bool renderSpace = false;
@@ -446,21 +454,31 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 				// This is an inline element.
 				parentNode->isBlock=false;
 			}
-			if (wcscmp(stdName, L"Formula") == 0) {
-				// We don't want the content of formulas,
+		}
+
+		// Get tagName.
+		if ((res = domElement->GetTagName(&tagName)) != S_OK) {
+			LOG_DEBUG(L"IPDDomElement::GetTagName returned " << res);
+			tagName = NULL;
+		}
+		if (tagName) {
+			parentNode->addAttribute(L"acrobat::tagname", tagName);
+			if (wcscmp(tagName, L"math") == 0) {
+				// We don't want the content of math nodes here,
+				// As it will be fetched by NVDAObjects outside of the virtualBuffer.
 				// but we still want a space so the user can get at them.
 				renderSpace = true;
 			}
 		}
 
 		// Get language.
-		if (domElement->GetAttribute(L"Lang", NULL, &tempBstr) == S_OK && tempBstr) {
+		if (domElement->GetAttribute(BSTR(L"Lang"), NULL, &tempBstr) == S_OK && tempBstr) {
 			parentNode->language = tempBstr;
 			SysFreeString(tempBstr);
 		}
 
 		// Determine whether the text has underline or strikethrough.
-		if (domElement->GetAttribute(L"TextDecorationType", L"Layout", &tempBstr) == S_OK && tempBstr) {
+		if (domElement->GetAttribute(BSTR(L"TextDecorationType"), BSTR(L"Layout"), &tempBstr) == S_OK && tempBstr) {
 			if (wcscmp(tempBstr, L"Underline") == 0)
 				textFlags |= TEXTFLAG_UNDERLINE;
 			else if (wcscmp(tempBstr, L"LineThrough") == 0)
@@ -512,7 +530,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		wostringstream s;
 		s << ID;
 		parentNode->addAttribute(L"table-id", s.str());
-		if (domElement && domElement->GetAttribute(L"Summary", L"Table", &tempBstr) == S_OK && tempBstr) {
+		if (domElement && domElement->GetAttribute(BSTR(L"Summary"), BSTR(L"Table"), &tempBstr) == S_OK && tempBstr) {
 			if (tempNode = buffer->addTextFieldNode(parentNode, previousNode, tempBstr)) {
 				addAttrsToTextNode(tempNode);
 				previousNode = tempNode;
@@ -535,7 +553,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		int startCol = tableInfo->curColumnNumber;
 		s << startCol;
 		parentNode->addAttribute(L"table-columnnumber", s.str());
-		if (domElement && domElement->GetAttribute(L"Headers", L"Table", &tempBstr) == S_OK && tempBstr) {
+		if (domElement && domElement->GetAttribute(BSTR(L"Headers"), BSTR(L"Table"), &tempBstr) == S_OK && tempBstr) {
 			// This node has explicitly defined headers.
 			// Some of the referenced nodes might not be rendered yet,
 			// so handle these later.
@@ -556,12 +574,12 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		// This will be updated below if there is a row span.
 		int endRow = tableInfo->curRowNumber;
 		if (domElement) {
-			if (domElement->GetAttribute(L"ColSpan", L"Table", &tempBstr) == S_OK && tempBstr) {
+			if (domElement->GetAttribute(BSTR(L"ColSpan"), BSTR(L"Table"), &tempBstr) == S_OK && tempBstr) {
 				parentNode->addAttribute(L"table-columnsspanned", tempBstr);
 				tableInfo->curColumnNumber += max(_wtoi(tempBstr) - 1, 0);
 				SysFreeString(tempBstr);
 			}
-			if (domElement->GetAttribute(L"RowSpan", L"Table", &tempBstr) == S_OK && tempBstr) {
+			if (domElement->GetAttribute(BSTR(L"RowSpan"), BSTR(L"Table"), &tempBstr) == S_OK && tempBstr) {
 				parentNode->addAttribute(L"table-rowsspanned", tempBstr);
 				// Keep trakc of how many rows after this one are spanned by this cell.
 				int span = _wtoi(tempBstr) - 1;
@@ -576,7 +594,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		}
 		if (role == ROLE_SYSTEM_COLUMNHEADER || role == ROLE_SYSTEM_ROWHEADER) {
 			int headerType = 0;
-			if (domElement && domElement->GetAttribute(L"Scope", L"Table", &tempBstr) == S_OK && tempBstr) {
+			if (domElement && domElement->GetAttribute(BSTR(L"Scope"), BSTR(L"Table"), &tempBstr) == S_OK && tempBstr) {
 				if (wcscmp(tempBstr, L"Column") == 0)
 					headerType = TABLEHEADER_COLUMN;
 				else if (wcscmp(tempBstr, L"Row") == 0)
@@ -729,6 +747,8 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		delete pageNum;
 	if (stdName)
 		SysFreeString(stdName);
+	if (tagName)
+		SysFreeString(tagName);
 	if (domElement) {
 		LOG_DEBUG(L"Releasing IPDDomElement");
 		domElement->Release();

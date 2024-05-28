@@ -1,15 +1,17 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited
+# Copyright (C) 2023 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import config
+from config.configFlags import BrailleMode
 from dataclasses import dataclass
 from enum import Enum
 from functools import wraps
 import globalVars
 from typing import Callable
 import ui
+from utils.security import isLockScreenModeActive, isRunningOnSecureDesktop
 from gui.message import isModalMessageBoxActive
 import queueHandler
 
@@ -37,6 +39,22 @@ class Context(_Context, Enum):
 		# Translators: Reported when an action cannot be performed because NVDA is waiting
 		# for a response from a modal dialog
 		_("Action unavailable while a dialog requires a response"),
+	)
+	WINDOWS_LOCKED = (
+		lambda: isLockScreenModeActive() or isRunningOnSecureDesktop(),
+		# Translators: Reported when an action cannot be performed because Windows is locked.
+		_("Action unavailable while Windows is locked"),
+	)
+	RUNNING_LAUNCHER = (
+		lambda: globalVars.appArgs.launcher,
+		# Translators: Reported when an action cannot be performed because NVDA is running the launcher temporary
+		# version
+		_("Action unavailable in a temporary version of NVDA"),
+	)
+	BRAILLE_MODE_SPEECH_OUTPUT = (
+		lambda: config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value,
+		# Translators: Reported when trying to toggle an unsupported setting in speech output mode.
+		_("Action unavailable while the braille mode is set to speech output"),
 	)
 
 

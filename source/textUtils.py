@@ -1,26 +1,111 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2021 NV Access Limited, Babbage B.V., Łukasz Golonka
+# Copyright (C) 2018-2024 NV Access Limited, Babbage B.V., Łukasz Golonka
 
 """
 Classes and utilities to deal with offsets variable width encodings, particularly utf_16.
 """
 
-import encodings
-import sys
 import ctypes
-from collections.abc import ByteString
-from typing import Tuple, Optional
+import encodings
 import locale
+import unicodedata
+from abc import ABCMeta, abstractmethod, abstractproperty
+from collections import defaultdict
+from difflib import ndiff
+from functools import cached_property
+from typing import Optional, Tuple, Type
+
 from logHandler import log
 
 WCHAR_ENCODING = "utf_16_le"
+UTF8_ENCODING = "utf-8"
 USER_ANSI_CODE_PAGE = locale.getpreferredencoding()
 
 
-class WideStringOffsetConverter:
+class OffsetConverter(metaclass=ABCMeta):
+	decoded: str
+
+	def __init__(self, text: str):
+		if not isinstance(text, str):
+			raise TypeError("Value must be of type str")
+		self.decoded: str = text
+
+	def __repr__(self):
+		return f"{self.__class__.__name__}({repr(self.decoded)})"
+
+	@abstractproperty
+	def encodedStringLength(self) -> int:
+		"""Returns the length of the string in itssubclass-specific encoded representation."""
+		raise NotImplementedError
+
+	@property
+	def strLength(self) -> int:
+		"""Returns the length of the string in its pythonic string representation."""
+		return len(self.decoded)
+
+	@abstractmethod
+	def strToEncodedOffsets(
+			self,
+			strStart: int,
+			strEnd: int | None = None,
+			raiseOnError: bool = False,
+	) -> int | Tuple[int, int]:
+		"""
+		This method takes two offsets from the str representation
+		of the string the object is initialized with, and converts them to subclass-specific encoded string offsets.
+		@param strStart: The start offset in the str representation of the string.
+		@param strEnd: The end offset in the str representation of the string.
+			This offset is exclusive.
+		@param raiseOnError: Raises an IndexError when one of the given offsets
+			exceeds L{strLength} or is lower than zero.
+			If C{False}, the out of range offset will be bounded to the range of the string.
+		@raise ValueError: if strEnd < strStart
+		"""
+		if strEnd is not None and strEnd < strStart:
+			raise ValueError(
+				"strEnd=%d must be greater than or equal to strStart=%d"
+				% (strEnd, strStart)
+			)
+		if strStart < 0 or strStart > self.strLength:
+			if raiseOnError:
+				raise IndexError("str start index out of range")
+		if strEnd is not None and (strEnd < 0 or strEnd > self.strLength):
+			if raiseOnError:
+				raise IndexError("str end index out of range")
+
+	@abstractmethod
+	def encodedToStrOffsets(
+			self,
+			encodedStart: int,
+			encodedEnd: int | None = None,
+			raiseOnError: bool = False,
+	) -> int | Tuple[int, int]:
+		r"""
+		This method takes two offsets from subclass-specific encoded string representation
+		of the string the object is initialized with, and converts them to str offsets.
+		@param encodedStart: The start offset in the wide character representation of the string.
+		@param encodedEnd: The end offset in the wide character representation of the string.
+			This offset is exclusive.
+		@param raiseOnError: Raises an IndexError when one of the given offsets
+			exceeds L{encodedStringLength} or is lower than zero.
+			If C{False}, the out of range offset will be bounded to the range of the string.
+		@raise ValueError: if wideStringEnd < wideStringStart
+		"""
+		if encodedEnd is not None and encodedEnd < encodedStart:
+			raise ValueError(
+				f"{encodedEnd=} must be greater than or equal to {encodedStart=}"
+			)
+		if encodedStart < 0 or encodedStart > self.encodedStringLength:
+			if raiseOnError:
+				raise IndexError("Wide string start index out of range")
+		if encodedEnd is not None and (encodedEnd < 0 or encodedEnd > self.encodedStringLength):
+			if raiseOnError:
+				raise IndexError("Wide string end index out of range")
+
+
+class WideStringOffsetConverter(OffsetConverter):
 	R"""
 	Object that holds a string in both its decoded and its UTF-16 encoded form.
 	The object allows for easy conversion between offsets in str type strings,
@@ -43,31 +128,20 @@ class WideStringOffsetConverter:
 	_bytesPerIndex: int = ctypes.sizeof(ctypes.c_wchar)
 
 	def __init__(self, text: str):
-		super().__init__()
-		if not isinstance(text, str):
-			raise TypeError("Value must be of type str")
-		self.decoded: str = text
+		super().__init__(text)
 		self.encoded: bytes = text.encode(self._encoding, errors="surrogatepass")
 
-	def __repr__(self):
-		return "{}({})".format(self.__class__.__name__, repr(self.decoded))
-
 	@property
-	def wideStringLength(self) -> int:
+	def encodedStringLength(self) -> int:
 		"""Returns the length of the string in its wide character (UTF-16) representation."""
 		return len(self.encoded) // self._bytesPerIndex
 
-	@property
-	def strLength(self) -> int:
-		"""Returns the length of the string in its pythonic string representation."""
-		return len(self.decoded)
-
-	def strToWideOffsets(
-		self,
-		strStart: int,
-		strEnd: int,
-		raiseOnError: bool =False
-	) -> Tuple[int, int]:
+	def strToEncodedOffsets(
+			self,
+			strStart: int,
+			strEnd: int | None = None,
+			raiseOnError: bool = False,
+	) -> int | Tuple[int, int]:
 		"""
 		This method takes two offsets from the str representation
 		of the string the object is initialized with, and converts them to wide character string offsets.
@@ -79,78 +153,62 @@ class WideStringOffsetConverter:
 			If C{False}, the out of range offset will be bounded to the range of the string.
 		@raise ValueError: if strEnd < strStart
 		"""
+		super().strToEncodedOffsets(strStart, strEnd, raiseOnError)
+		strStart = max(0, min(strStart, self.strLength))
 		# Optimisation, don't do anything special if offsets are collapsed at the start.
 		if 0 == strEnd == strStart:
 			return (0, 0)
-		if strEnd < strStart:
-			raise ValueError(
-				"strEnd=%d must be greater than or equal to strStart=%d"
-				% (strEnd, strStart)
-			)
-		if strStart < 0 or strStart > self.strLength:
-			if raiseOnError:
-				raise IndexError("str start index out of range")
-			strStart = max(0, min(strStart, self.strLength))
-		if strEnd < 0 or strEnd > self.strLength:
-			if raiseOnError:
-				raise IndexError("str end index out of range")
-			strEnd = max(0, min(strEnd, self.strLength))
 		# If the original string contains surrogate characters, we want to preserve them
 		if strStart == 0:
 			wideStringStart: int = 0
 		else:
 			precedingBytes: bytes = self.decoded[:strStart].encode(self._encoding, errors="surrogatepass")
 			wideStringStart= len(precedingBytes) // self._bytesPerIndex
+		if strEnd is None:
+			return wideStringStart
+		strEnd = max(0, min(strEnd, self.strLength))
 		if strStart == strEnd:
 			return (wideStringStart, wideStringStart)
 		encodedRange: bytes = self.decoded[strStart:strEnd].encode(self._encoding, errors="surrogatepass")
 		wideStringEnd: int = wideStringStart + (len(encodedRange) // self._bytesPerIndex)
 		return (wideStringStart, wideStringEnd)
 
-	def wideToStrOffsets(
-		self,
-		wideStringStart: int,
-		wideStringEnd: int,
-		raiseOnError: bool = False
+	def encodedToStrOffsets(
+			self,
+			encodedStart: int,
+			encodedEnd: int,
+			raiseOnError: bool = False,
 	) -> Tuple[int, int]:
 		r"""
 		This method takes two offsets from the wide character representation
 		of the string the object is initialized with, and converts them to str offsets.
-		wideStringEnd is considered an exclusive offset.
-		If either wideStringStart or wideStringEnd corresponds with an offset
+		encodedEnd is considered an exclusive offset.
+		If either encodedStart or encodedEnd corresponds with an offset
 		in the middel of a surrogate pair, it is yet counted as one offset in the string.
 		For example, when L{decoded} is "😂", which is one offset in the str representation,
 		this method returns (0, 1) in all of the following cases:
-			* wideStringStart=0, wideStringEnd=1
-			* wideStringStart=0, wideStringEnd=2
-			* wideStringStart=1, wideStringEnd=2
-		However, wideStringStart=1, wideStringEnd=1 results in (0, 0)
-		@param wideStringStart: The start offset in the wide character representation of the string.
-		@param wideStringEnd: The end offset in the wide character representation of the string.
+			* encodedStart=0, encodedEnd=1
+			* encodedStart=0, encodedEnd=2
+			* encodedStart=1, encodedEnd=2
+		However, encodedStart=1, encodedEnd=1 results in (0, 0)
+		@param encodedStart: The start offset in the wide character representation of the string.
+		@param encodedEnd: The end offset in the wide character representation of the string.
 			This offset is exclusive.
 		@param raiseOnError: Raises an IndexError when one of the given offsets
-			exceeds L{wideStringLength} or is lower than zero.
+			exceeds L{encodedStringLength} or is lower than zero.
 			If C{False}, the out of range offset will be bounded to the range of the string.
-		@raise ValueError: if wideStringEnd < wideStringStart
+		@raise ValueError: if encodedEnd < encodedStart
 		"""
 		# Optimisation, don't do anything special if offsets are collapsed at the start.
-		if 0 == wideStringEnd == wideStringStart:
+		if 0 == encodedEnd == encodedStart:
 			return (0, 0)
-		if wideStringEnd < wideStringStart:
-			raise ValueError(
-				"wideStringEnd=%d must be greater than or equal to wideStringStart=%d"
-				% (wideStringEnd, wideStringStart)
-			)
-		if wideStringStart < 0 or wideStringStart > self.wideStringLength:
-			if raiseOnError:
-				raise IndexError("Wide string start index out of range")
-			wideStringStart = max(0, min(wideStringStart, self.wideStringLength))
-		if wideStringEnd < 0 or wideStringEnd > self.wideStringLength:
-			if raiseOnError:
-				raise IndexError("Wide string end index out of range")
-			wideStringEnd = max(0, min(wideStringEnd, self.wideStringLength))
-		bytesStart: int = wideStringStart * self._bytesPerIndex
-		bytesEnd: int = wideStringEnd * self._bytesPerIndex
+		if encodedEnd is None:
+			return self.encodedToStrOffsets(encodedStart, encodedStart, raiseOnError)[0]
+		super().encodedToStrOffsets(encodedStart, encodedEnd, raiseOnError)
+		encodedStart = max(0, min(encodedStart, self.encodedStringLength))
+		encodedEnd = max(0, min(encodedEnd, self.encodedStringLength))
+		bytesStart: int = encodedStart * self._bytesPerIndex
+		bytesEnd: int = encodedEnd * self._bytesPerIndex
 		precedingStr= self.encoded[:bytesStart].decode(self._encoding, errors="surrogatepass")
 		strStart= len(precedingStr)
 		if bytesStart == bytesEnd and bytesEnd <= (len(self.encoded) - self._bytesPerIndex):
@@ -176,6 +234,11 @@ class WideStringOffsetConverter:
 			# Compensate for the case where we stretched our offsets earlier
 			strEnd -= (correctedBytesEnd - bytesEnd) // self._bytesPerIndex
 		return (strStart, strEnd)
+	
+	wideStringLength = encodedStringLength
+	strToWideOffsets = strToEncodedOffsets
+	wideToStrOffsets = encodedToStrOffsets
+
 
 def getTextFromRawBytes(
 	buf: bytes,
@@ -247,3 +310,307 @@ OBJ_REPLACEMENT_CHAR = u"\uFFFC"
 # used to replace an unknown, unrecognized, or unrepresentable character.
 # https://en.wikipedia.org/wiki/Specials_(Unicode_block)
 REPLACEMENT_CHAR = u"\uFFFD"
+
+
+class UTF8OffsetConverter(OffsetConverter):
+	R"""
+	Object that holds a string in both its decoded and its UTF-8 encoded form.
+	The object allows for easy conversion between offsets in str type strings,
+	and offsets in UTF-8 encoded strings.
+
+	A single character in UTF-8 encoding might take 1, 2, or 4 bytes.
+	Examples of applications using UTF-8 encoding are all Scintilla-based text editors,
+	including Notepad++.
+	"""
+
+	_encoding: str = UTF8_ENCODING
+
+	def __init__(self, text: str):
+		super().__init__(text)
+		self.encoded: bytes = text.encode(self._encoding)
+
+	@property
+	def encodedStringLength(self) -> int:
+		"""Returns the length of the string in its UTF-8 representation."""
+		return len(self.encoded)
+
+	def strToEncodedOffsets(
+			self,
+			strStart: int,
+			strEnd: int | None = None,
+			raiseOnError: bool = False,
+	) -> int | Tuple[int, int]:
+		super().strToEncodedOffsets(strStart, strEnd, raiseOnError)
+		if strStart == 0:
+			resultStart = 0
+		else:
+			resultStart = len(self.decoded[:strStart].encode(self._encoding))
+		if strEnd is None:
+			return resultStart
+		elif strStart == strEnd:
+			return (resultStart, resultStart)
+		else:
+			resultEnd = resultStart + len(self.decoded[strStart:strEnd].encode(self._encoding))
+			return (resultStart, resultEnd)
+
+	def encodedToStrOffsets(
+			self,
+			encodedStart: int,
+			encodedEnd: int | None = None,
+			raiseOnError: bool = False,
+	) -> int | Tuple[int, int]:
+		r"""
+			This method takes two offsets from UTF-8 representation
+			of the string the object is initialized with, and converts them to str offsets.
+			This implementation ignores raiseOnError argument and
+			it will allways raise UnicodeDecodeError if indices are invalid.
+		"""
+		# Optimisation, don't do anything special if offsets are collapsed at the start.
+		if 0 == encodedEnd == encodedStart:
+			return (0, 0)
+		super().encodedToStrOffsets(encodedStart, encodedEnd, raiseOnError)
+		if encodedStart == 0:
+			resultStart = 0
+		else:
+			resultStart = len(self.encoded[:encodedStart].decode(self._encoding))
+		if encodedEnd is None:
+			return resultStart
+		elif encodedEnd == encodedStart:
+			return (resultStart, resultStart)
+		else:
+			resultEnd = resultStart + len(self.encoded[encodedStart:encodedEnd].decode(self._encoding))
+			return (resultStart, resultEnd)
+
+
+class IdentityOffsetConverter(OffsetConverter):
+	R"""
+		This is a dummy converter that assumes 1:1 correspondence between encoded and decoded characters.
+	"""
+
+	def __init__(self, text: str):
+		super().__init__(text)
+
+	@property
+	def encodedStringLength(self) -> int:
+		return self.strLength
+
+	def strToEncodedOffsets(
+			self,
+			strStart: int,
+			strEnd: int | None = None,
+			raiseOnError: bool = False,
+	) -> int | Tuple[int, int]:
+		super().strToEncodedOffsets(strStart, strEnd, raiseOnError)
+		if strEnd is None:
+			return strStart
+		return (strStart, strEnd)
+
+	def encodedToStrOffsets(
+			self,
+			encodedStart: int,
+			encodedEnd: int | None = None,
+			raiseOnError: bool = False,
+	) -> int | Tuple[int, int]:
+		super().encodedToStrOffsets(encodedStart, encodedEnd, raiseOnError)
+		if encodedEnd is None:
+			return encodedStart
+		return (encodedStart, encodedEnd)
+
+
+DEFAULT_UNICODE_NORMALIZATION_ALGORITHM = "NFKC"
+
+
+class UnicodeNormalizationOffsetConverter(OffsetConverter):
+	"""
+	Object that holds a string in both its decoded and its unicode normalized form.
+	The object allows for easy conversion between offsets in strings which may or may not be normalized,
+
+	For example, when using the NFKC algorithm, the "ĳ" ligature normalizes to "ij",
+	which takes two characters instead of one.
+	"""
+	normalizationForm: str
+	computedStrToEncodedOffsets: tuple[int]
+	computedEncodedToStrOffsets: tuple[int]
+
+	def __init__(self, text: str, normalizationForm: str = DEFAULT_UNICODE_NORMALIZATION_ALGORITHM):
+		super().__init__(text)
+		self.normalizationForm = normalizationForm
+		self.encoded: str = unicodedata.normalize(normalizationForm, text)
+		self.computedStrToEncodedOffsets, self.computedEncodedToStrOffsets = self._calculateOffsets()
+
+	def _calculateOffsets(self) -> tuple[tuple[int], tuple[int]]:
+		# Initialize a diff list between the decoded original and the normalized string.
+		diff = list(ndiff(self.decoded, self.encoded))
+		diff.append("!")  # Closing the diff
+		# Initialize indices and buffers for tracking positions and changes.
+		iOrigin = iNormalized = 0
+		originBuffer = ""
+		normalizedBuffer = ""
+		originToNormalizedDict = defaultdict(list)
+		normalizedToOriginDict = defaultdict(list)
+		originPending = normalizedPending = False
+		# Iterate over each character in the diff list.
+		for char in diff:
+			if char[0] == "?":
+				raise RuntimeError("Unexpected entry in diff")
+			elif char[0] == "-":
+				# Accumulate characters in the origin buffer that aren't in the normalized string.
+				originBuffer += char[2:]
+				originPending = True
+			elif char[0] == "+":
+				# Accumulate characters in the normalized buffer that aren't in the original string.
+				normalizedBuffer += char[2:]
+				normalizedPending = True
+			elif char[0] == " " and (
+				(not originPending and normalizedPending) or (originPending and not normalizedPending)
+			):
+				# Accumulate unchanged characters in both buffers.
+				originBuffer += char[2:]
+				normalizedBuffer += char[2:]
+			else:
+				# Process accumulated characters in the buffers.
+				while originBuffer and normalizedBuffer:
+					originPart = ""
+					originPartLen = 0
+					normalizedPart = ""
+					normalizedPartLen = 0
+					# Find the smallest part that can be normalized
+					# and still matches the beginning of the normalized buffer.
+					for i in range(len(originBuffer)):
+						originPart = originBuffer[: (i + 1)]
+						originPartLen = len(originPart)
+						normalizedPart = unicodedata.normalize(self.normalizationForm, originPart)
+						normalizedPartLen = len(normalizedPart)
+						if (
+							originPart == normalizedPart
+							or not normalizedBuffer.startswith(normalizedPart)
+						):
+							continue
+						originBuffer = originBuffer[originPartLen:]
+						normalizedBuffer = normalizedBuffer[normalizedPartLen:]
+						break
+					else:
+						# No normalizable characters in originBuffer.
+						# All characters are now copied to originPart and normalizedPart.
+						assert originBuffer == originPart
+						assert normalizedBuffer == normalizedPart
+						# Reset buffers to ensure the while loop doesn't run next time.
+						originBuffer = normalizedBuffer = ""
+					# Map the original indices to the normalized indices.
+					# originMultiplier is used to multiply indices in origin
+					# when a character takes more space in origin than in normalized.
+					# This is applicable when normalizing letter+modifier compositions to one character.
+					originMultiplier = min(originPartLen / normalizedPartLen, 1)
+					# normalizedMultiplier is used to multiply indices in normalized
+					# when a character takes more space in normalized than in origin.
+					# This is applicable when normalizing one character ligeatures
+					# into their two corresponding letters.
+					normalizedMultiplier = min(normalizedPartLen / originPartLen, 1)
+					for i in range(max(originPartLen, normalizedPartLen)):
+						tempOrigin = iOrigin + int(i * originMultiplier)
+						tempNormalized = iNormalized + int(i * normalizedMultiplier)
+						originC = originPart[i] if i < originPartLen else None
+						if originC:
+							# If normalization results in the same characters
+							# but they have moved in the string, for example when normalizing the order of modifiers
+							# on ancient hebrew consonants, the normalized index should be based on
+							# the position of the origin character in normalized.
+							normalizedIndex = normalizedPart.find(originC)
+							if normalizedIndex != -1:
+								tempNormalized = iNormalized + normalizedIndex
+						normalizedC = normalizedPart[i] if i < normalizedPartLen else None
+						if normalizedC:
+							# The origin index should be based on the position
+							# of the normalized character in origin.
+							originIndex = originPart.find(normalizedC)
+							if originIndex != -1:
+								tempOrigin = iOrigin + originIndex
+						originToNormalizedDict[tempOrigin].append(tempNormalized)
+						normalizedToOriginDict[tempNormalized].append(tempOrigin)
+					iOrigin += originPartLen
+					iNormalized += normalizedPartLen
+				originPending = normalizedPending = False
+				if char[0] == " ":
+					# Map indices directly for unchanged characters.
+					originToNormalizedDict[iOrigin].append(iNormalized)
+					normalizedToOriginDict[iNormalized].append(iOrigin)
+					iOrigin += 1
+					iNormalized += 1
+		# Finalize the mapping by selecting the minimum index for each original position.
+		originResult = tuple(map(min, originToNormalizedDict.values()))
+		assert len(originResult) == len(self.decoded)
+		normalizedResult = tuple(map(min, normalizedToOriginDict.values()))
+		assert len(normalizedResult) == len(self.encoded)
+		return tuple((
+			originResult,
+			normalizedResult
+		))
+
+	@cached_property
+	def encodedStringLength(self) -> int:
+		"""Returns the length of the string in its normalized representation."""
+		return len(self.encoded)
+
+	def strToEncodedOffsets(
+			self,
+			strStart: int,
+			strEnd: int | None = None,
+			raiseOnError: bool = False,
+	) -> int | Tuple[int]:
+		super().strToEncodedOffsets(strStart, strEnd, raiseOnError)
+		if strStart == 0:
+			resultStart = 0
+		else:
+			resultStart = self.computedStrToEncodedOffsets[strStart]
+		if strEnd is None:
+			return resultStart
+		elif strStart == strEnd:
+			return (resultStart, resultStart)
+		else:
+			resultEnd = self.computedStrToEncodedOffsets[strEnd]
+			return (resultStart, resultEnd)
+
+	def encodedToStrOffsets(
+			self,
+			encodedStart: int,
+			encodedEnd: int | None = None,
+			raiseOnError: bool = False
+	) -> int | Tuple[int]:
+		super().encodedToStrOffsets(encodedStart, encodedEnd, raiseOnError)
+		if encodedStart == 0:
+			resultStart = 0
+		else:
+			resultStart = self.computedEncodedToStrOffsets[encodedStart]
+		if encodedEnd is None:
+			return resultStart
+		elif encodedStart == encodedEnd:
+			return (resultStart, resultStart)
+		else:
+			resultEnd = self.computedEncodedToStrOffsets[encodedEnd]
+			return (resultStart, resultEnd)
+
+
+def isUnicodeNormalized(text: str, normalizationForm: str = DEFAULT_UNICODE_NORMALIZATION_ALGORITHM) -> bool:
+	"""Convenience function to wrap unicodedata.is_normalized with a default normalization form."""
+	return unicodedata.is_normalized(normalizationForm, text)
+
+
+def unicodeNormalize(text: str, normalizationForm: str = DEFAULT_UNICODE_NORMALIZATION_ALGORITHM) -> str:
+	"""Convenience function to wrap unicodedata.normalize with a default normalization form."""
+	return unicodedata.normalize(normalizationForm, text)
+
+
+ENCODINGS_TO_CONVERTERS: dict[str, Type[OffsetConverter]] = {
+	WCHAR_ENCODING: WideStringOffsetConverter,
+	UTF8_ENCODING: UTF8OffsetConverter,
+	"utf_32_le": IdentityOffsetConverter,
+	USER_ANSI_CODE_PAGE: IdentityOffsetConverter,
+	None: IdentityOffsetConverter,
+}
+
+
+def getOffsetConverter(encoding: str) -> Type[OffsetConverter]:
+	try:
+		return ENCODINGS_TO_CONVERTERS[encoding]
+	except IndexError as e:
+		raise LookupError(f"Don't know how to deal with encoding '{encoding}'", e)

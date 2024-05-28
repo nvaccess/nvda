@@ -4,7 +4,6 @@
 # Copyright (C) 2007-2021 NV Access Limited, Babbage B.V.
 
 from enum import (
-	auto,
 	unique,
 )
 from typing import Dict
@@ -18,6 +17,16 @@ def setBit(bitPos: int) -> int:
 
 @unique
 class State(DisplayStringIntEnum):
+	"""
+	Add-on authors are recommended not to depend on values and use a `State` directly.
+	From a string, this can be done as `controlTypes.State[nameOfState]` e.g. `State["CHECKED"]`.
+	Although unlikely to change, if names/values changing represents a significant risk for your add-on,
+	then consider decoupling, and maintain an internal mapping of `State` to add-on internal states.
+
+	As add-on authors may still rely on the values, new members of State should continue
+	the pattern of incrementing.
+	"""
+
 	@property
 	def _displayStringLabels(self):
 		return _stateLabels
@@ -80,13 +89,19 @@ class State(DisplayStringIntEnum):
 	OVERFLOWING = setBit(40)
 	UNLOCKED = setBit(41)
 	# HAS_ARIA_DETAILS is not used internally.
-	# See instead NVDAObject.hasDetails introduced with commit aa351c55ada5254e061957097a9e0e638091b13d
+	# See instead refer to NVDAObject.annotations
 	# This enum value was initially added to controlTypes.py in commit d6787b8f47861f5e76aba68da7a13a217404196f
 	HAS_ARIA_DETAILS = setBit(42)  # Restored for backwards compat only.
 	HASNOTE = setBit(43)
 	# indeterminate progress bar, aka busy indicator. No specific state label.
 	# when combined with role of 'progress bar', role is mutated to 'busy indicator'
 	INDETERMINATE = setBit(44)
+	HALF_PRESSED = setBit(45)
+	ON = setBit(46)
+	HASPOPUP_DIALOG = setBit(47)
+	HASPOPUP_GRID = setBit(48)
+	HASPOPUP_LIST = setBit(49)
+	HASPOPUP_TREE = setBit(50)
 
 
 STATES_SORTED = frozenset([State.SORTED, State.SORTED_ASCENDING, State.SORTED_DESCENDING])
@@ -107,6 +122,8 @@ _stateLabels: Dict[State, str] = {
 	State.CHECKED: _("checked"),
 	# Translators: This is presented when a three state check box is half checked.
 	State.HALFCHECKED: _("half checked"),
+	# Translators: This is presented when a three state toggle button is half pressed.
+	State.HALF_PRESSED: _("half pressed"),
 	# Translators: This is presented when the control is a read-only control such as read-only edit box.
 	State.READONLY: _("read only"),
 	# Translators: This is presented when a tree view or submenu item is expanded.
@@ -176,6 +193,17 @@ _stateLabels: Dict[State, str] = {
 	State.UNLOCKED: _("unlocked"),
 	# Translators: a state that denotes the existence of a note.
 	State.HASNOTE: _("has note"),
+	# Translators: a state that denotes a control is currently on
+	# E.g. a switch control.
+	State.ON: _("on"),
+	# Translators: Presented when a control has a pop-up dialog.
+	State.HASPOPUP_DIALOG: _("opens dialog"),
+	# Translators: Presented when a control has a pop-up grid.
+	State.HASPOPUP_GRID: _("opens grid"),
+	# Translators: Presented when a control has a pop-up list box.
+	State.HASPOPUP_LIST: _("opens list"),
+	# Translators: Presented when a control has a pop-up tree.
+	State.HASPOPUP_TREE: _("opens tree"),
 }
 
 
@@ -189,4 +217,6 @@ _negativeStateLabels: Dict[State, str] = {
 	# Translators: This is presented when drag and drop is finished.
 	# This is only reported for objects which support accessible drag and drop.
 	State.DROPTARGET: _("done dragging"),
+	# Translators: This is presented when a switch control is off.
+	State.ON: _("off"),
 }

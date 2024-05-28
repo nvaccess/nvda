@@ -402,7 +402,9 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 		return res
 
 	def updateCaret(self):
-		self._rangeObj.select()
+		copyTextInfo = self.copy()
+		copyTextInfo.collapse()
+		copyTextInfo._rangeObj.select()
 
 	def updateSelection(self):
 		self._rangeObj.select()

@@ -20,6 +20,8 @@ from typing import (
 	Optional,
 	Tuple,
 	Dict,
+	List,
+	Self,
 )
 from logHandler import log
 
@@ -179,7 +181,10 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			textList.append(_("at {x}, {y}").format(x=curPoint.x,y=curPoint.y))
 		return ", ".join(textList)
 
-	def _get_boundingRects(self):
+	# C901 '_get_boundingRects' is too complex
+	# Note: when working on _get_boundingRects, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	def _get_boundingRects(self) -> List[locationHelper.RectLTWH]:  # noqa: C901
 		if self.isCollapsed:
 			return []
 		startOffset = self._startOffset
@@ -235,12 +240,11 @@ class OffsetsTextInfo(textInfos.TextInfo):
 				)
 				offset = inclusiveLineEnd + 1
 		else:
-			if isinstance(startLocation, locationHelper.Point):
-				rects.append(
-					locationHelper.RectLTWH.fromPoint(startLocation)
+			rects.append(
+				locationHelper.RectLTWH.fromCollection(
+					startLocation
 				)
-			else:
-				rects.append(startLocation)
+			)
 		intersectedRects = []
 		for rect in rects:
 			intersection = rect.intersection(objLocation)
@@ -284,7 +288,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		text=self._getStoryText()
 		if self.encoding == textUtils.WCHAR_ENCODING:
 			offsetConverter = textUtils.WideStringOffsetConverter(text)
-			start, end = offsetConverter.wideToStrOffsets(start, end)
+			start, end = offsetConverter.encodedToStrOffsets(start, end)
 		elif not (
 			self.encoding is None
 			or self.encoding == "utf_32_le"
@@ -331,10 +335,10 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		uniscribeLineText = lineText + "xx"
 		# We can't rely on len(lineText) to calculate the length of the line.
 		offsetConverter = textUtils.WideStringOffsetConverter(lineText)
-		lineLength = offsetConverter.wideStringLength
+		lineLength = offsetConverter.encodedStringLength
 		if self.encoding != textUtils.WCHAR_ENCODING:
 			# We need to convert the str based line offsets to wide string offsets.
-			relOffset = offsetConverter.strToWideOffsets(relOffset, relOffset)[0]
+			relOffset = offsetConverter.strToEncodedOffsets(relOffset, relOffset)[0]
 		uniscribeLineLength = lineLength + 2
 		if helperFunc(
 			uniscribeLineText,
@@ -347,7 +351,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			relEnd = min(lineLength, relEnd.value)
 			if self.encoding != textUtils.WCHAR_ENCODING:
 				# We need to convert the uniscribe based offsets to str offsets.
-				relStart, relEnd = offsetConverter.wideToStrOffsets(relStart, relEnd)
+				relStart, relEnd = offsetConverter.encodedToStrOffsets(relStart, relEnd)
 			return (relStart, relEnd)
 		log.debugWarning(f"Uniscribe failed to calculate {unit} offsets for text {lineText!r}")
 		return None
@@ -369,8 +373,8 @@ class OffsetsTextInfo(textInfos.TextInfo):
 				return (offsets[0] + lineStart, offsets[1] + lineStart)
 		if self.encoding == textUtils.WCHAR_ENCODING:
 			offsetConverter = textUtils.WideStringOffsetConverter(lineText)
-			relStrStart, relStrEnd = offsetConverter.wideToStrOffsets(relOffset, relOffset + 1)
-			relWideStringStart, relWideStringEnd = offsetConverter.strToWideOffsets(relStrStart, relStrEnd)
+			relStrStart, relStrEnd = offsetConverter.encodedToStrOffsets(relOffset, relOffset + 1)
+			relWideStringStart, relWideStringEnd = offsetConverter.strToEncodedOffsets(relStrStart, relStrEnd)
 			return (relWideStringStart + lineStart, relWideStringEnd + lineStart)
 		return (offset, offset + 1)
 
@@ -394,10 +398,10 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		#Fall back to the older word offsets detection that only breaks on non alphanumeric
 		if self.encoding == textUtils.WCHAR_ENCODING:
 			offsetConverter = textUtils.WideStringOffsetConverter(lineText)
-			relStrOffset = offsetConverter.wideToStrOffsets(relOffset, relOffset)[0]
+			relStrOffset = offsetConverter.encodedToStrOffsets(relOffset, relOffset)[0]
 			relStrStart = findStartOfWord(lineText, relStrOffset)
 			relStrEnd = findEndOfWord(lineText, relStrOffset)
-			relWideStringStart, relWideStringEnd = offsetConverter.strToWideOffsets(relStrStart, relStrEnd)
+			relWideStringStart, relWideStringEnd = offsetConverter.strToEncodedOffsets(relStrStart, relStrEnd)
 			return (relWideStringStart + lineStart, relWideStringEnd + lineStart)
 		start=findStartOfWord(lineText,offset-lineStart)+lineStart
 		end=findEndOfWord(lineText,offset-lineStart)+lineStart
@@ -410,10 +414,10 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		text=self._getStoryText()
 		if self.encoding == textUtils.WCHAR_ENCODING:
 			offsetConverter = textUtils.WideStringOffsetConverter(text)
-			strOffset = offsetConverter.wideToStrOffsets(offset, offset)[0]
+			strOffset = offsetConverter.encodedToStrOffsets(offset, offset)[0]
 			strStart=findStartOfLine(text, strOffset)
 			strEnd=findEndOfLine(text, strOffset)
-			return offsetConverter.strToWideOffsets(strStart, strEnd)
+			return offsetConverter.strToEncodedOffsets(strStart, strEnd)
 		elif not (
 			self.encoding is None
 			or self.encoding == "utf_32_le"
@@ -696,3 +700,15 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		if 0==offset<self._getStoryLength():
 			raise LookupError("Couldn't get reliable last visible offset")
 		return offset
+	
+	def _getOffsetEncoder(self):
+		return textUtils.getOffsetConverter(self.encoding)(self.text)
+
+	def moveToCodepointOffset(
+			self,
+			codepointOffset: int,
+	) -> Self:
+		result = self.copy()
+		encodedOffset = self._startOffset + self._getOffsetEncoder().strToEncodedOffsets(codepointOffset)
+		result._startOffset = result._endOffset = encodedOffset
+		return result

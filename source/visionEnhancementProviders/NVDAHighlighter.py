@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2019 NV Access Limited, Babbage B.V., Takuya Nishimoto
+# Copyright (C) 2018-2023 NV Access Limited, Babbage B.V., Takuya Nishimoto
 
 """Default highlighter based on GDI Plus."""
 from typing import Optional, Tuple
@@ -15,7 +15,11 @@ from vision.visionHandlerExtensionPoints import EventExtensionPoints
 from vision import providerBase
 from windowUtils import CustomWindow
 import wx
-import gui
+from gui.settingsDialogs import (
+	AutoSettingsMixin,
+	SettingsPanel,
+	VisionProviderStateControl,
+)
 import api
 from ctypes import byref, WinError
 from ctypes.wintypes import COLORREF, MSG
@@ -25,6 +29,7 @@ from mouseHandler import getTotalWidthAndHeightAndMinimumPosition
 from locationHelper import RectLTWH
 from collections import namedtuple
 import threading
+from winAPI.messageWindow import WindowMessage
 import winGDI
 import weakref
 from colors import RGB
@@ -143,7 +148,7 @@ class HighlightWindow(CustomWindow):
 			winUser.user32.PostQuitMessage(0)
 		elif msg == winUser.WM_TIMER:
 			self.refresh()
-		elif msg == winUser.WM_DISPLAYCHANGE:
+		elif msg == WindowMessage.DISPLAY_CHANGE:
 			# wx might not be aware of the display change at this point
 			core.callLater(100, self.updateLocationForDisplays)
 
@@ -238,16 +243,14 @@ class NVDAHighlighterSettings(providerBase.VisionEnhancementProviderSettings):
 
 
 class NVDAHighlighterGuiPanel(
-		gui.AutoSettingsMixin,
-		gui.SettingsPanel
+		AutoSettingsMixin,
+		SettingsPanel
 ):
 	
 	_enableCheckSizer: wx.BoxSizer
 	_enabledCheckbox: wx.CheckBox
 	
 	helpId = "VisionSettingsFocusHighlight"
-
-	from gui.settingsDialogs import VisionProviderStateControl
 
 	def __init__(
 			self,
@@ -415,10 +418,10 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		winGDI.gdiPlusInitialize()
 		self._highlighterThread = threading.Thread(
 			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}",
-			target=self._run
+			target=self._run,
+			daemon=True,
 		)
 		self._highlighterRunningEvent = threading.Event()
-		self._highlighterThread.daemon = True
 		self._highlighterThread.start()
 		# Make sure the highlighter thread doesn't exit early.
 		waitResult = self._highlighterRunningEvent.wait(0.2)
@@ -446,12 +449,13 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 			timer = winUser.WinTimer(window.handle, 0, self._refreshInterval, None)
 			self._highlighterRunningEvent.set()  # notify main thread that initialisation was successful
 			msg = MSG()
-			# Python 3.8 note, Change this to use an Assignment expression to catch a return value of -1.
-			# See the remarks section of
-			# https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getmessage
-			while winUser.getMessage(byref(msg), None, 0, 0) > 0:
+			while (res := winUser.getMessage(byref(msg), None, 0, 0)) > 0:
 				winUser.user32.TranslateMessage(byref(msg))
 				winUser.user32.DispatchMessageW(byref(msg))
+			if res == -1:
+				# See the return value section of
+				# https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getmessage
+				raise WinError()
 			if vision._isDebug():
 				log.debug("Quit message received on NVDAHighlighter thread")
 			timer.terminate()

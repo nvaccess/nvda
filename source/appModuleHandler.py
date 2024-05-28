@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
-# Babbage B.V., Mozilla Corporation, Julien Cochuyt
+# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
+# Babbage B.V., Mozilla Corporation, Julien Cochuyt, Leonard de Ruijter, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -22,19 +22,18 @@ from typing import (
 	List,
 	Optional,
 	Tuple,
-	Union,
 )
-import zipimport
 
 import winVersion
-import pkgutil
 import importlib
+import importlib.util
 import threading
 import tempfile
 import comtypes.client
 import baseObject
 from logHandler import log
 import NVDAHelper
+import NVDAState
 import winKernel
 import config
 import NVDAObjects #Catches errors before loading default appModule
@@ -44,17 +43,15 @@ import exceptions
 import extensionPoints
 from fileUtils import getFileVersionInfo
 import globalVars
+from systemUtils import getCurrentProcessLogonSessionId, getProcessLogonSessionId
 
 
-_KNOWN_IMPORTERS_T = Union[importlib.machinery.FileFinder, zipimport.zipimporter]
 # Dictionary of processID:appModule pairs used to hold the currently running modules
 runningTable: Dict[int, AppModule] = {}
-_CORE_APP_MODULES_PATH: os.PathLike = appModules.__path__[0]
-_importers: Optional[List[_KNOWN_IMPORTERS_T]] = None
 _getAppModuleLock=threading.RLock()
 #: Notifies when another application is taking foreground.
 #: This allows components to react upon application switches.
-#: For example, braille triggers bluetooth polling for braille displaysf necessary.
+#: For example, braille triggers bluetooth polling for braille displays if necessary.
 #: Handlers are called with no arguments.
 post_appSwitch = extensionPoints.Action()
 
@@ -81,6 +78,14 @@ class processEntry32W(ctypes.Structure):
 	]
 
 
+class _PROCESS_MACHINE_INFORMATION(ctypes.Structure):
+	_fields_ = [
+		("ProcessMachine", ctypes.wintypes.USHORT),
+		("Res0", ctypes.wintypes.USHORT),
+		("MachineAttributes", ctypes.wintypes.DWORD)
+	]
+
+
 def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility.
 	The module level variable `NVDAProcessID` is deprecated
@@ -89,36 +94,12 @@ def __getattr__(attrName: str) -> Any:
 	since add-ons are initialized before `appModuleHandler`
 	and when `appModuleHandler` was not yet initialized the variable was set to `None`.
 	"""
-	if attrName == "NVDAProcessID" and globalVars._allowDeprecatedAPI:
+	if attrName == "NVDAProcessID" and NVDAState._allowDeprecatedAPI():
 		log.warning("appModuleHandler.NVDAProcessID is deprecated, use globalVars.appPid instead.")
 		if initialize._alreadyInitialized:
 			return globalVars.appPid
 		return None
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
-
-
-def _warnDeprecatedAliasAppModule() -> None:
-	"""This function should be executed at the top level of an alias App Module,
-	to log a deprecation warning when the module is imported.
-	"""
-	import inspect
-	# Determine the name of the module inside which this function is executed by using introspection.
-	# Since the current frame belongs to the calling function inside `appModuleHandler`
-	# we need to retrieve the file name from the preceding frame which belongs to the module in which this
-	# function is executed.
-	currModName = os.path.splitext(os.path.basename(inspect.stack()[1].filename))[0]
-	try:
-		replacementModName = appModules.EXECUTABLE_NAMES_TO_APP_MODS[currModName]
-	except KeyError:
-		raise RuntimeError("This function can be executed only inside an alias App Module.") from None
-	else:
-		deprecatedImportWarning = (
-			f"Importing appModules.{currModName} is deprecated,"
-			f" instead import appModules.{replacementModName}."
-		)
-		log.warning(deprecatedImportWarning)
-		if not globalVars._allowDeprecatedAPI:
-			raise ModuleNotFoundError(deprecatedImportWarning)
 
 
 def registerExecutableWithAppModule(executableName: str, appModName: str) -> None:
@@ -136,16 +117,6 @@ def unregisterExecutable(executableName: str) -> None:
 		log.error(f"Executable {executableName} was not previously registered.")
 
 
-def _getPathFromImporter(importer: _KNOWN_IMPORTERS_T) -> os.PathLike:
-	try:  # Standard `FileFinder` instance
-		return importer.path
-	except AttributeError:
-		try:  # Special case for `zipimporter`
-			return os.path.normpath(os.path.join(importer.archive, importer.prefix))
-		except AttributeError:
-			raise TypeError(f"Cannot retrieve path from {repr(importer)}") from None
-
-
 def _getPossibleAppModuleNamesForExecutable(executableName: str) -> Tuple[str, ...]:
 	"""Returns list of the appModule names for a given executable.
 	The names in the tuple are placed in order in which import of these aliases should be attempted that is:
@@ -156,38 +127,26 @@ def _getPossibleAppModuleNamesForExecutable(executableName: str) -> Tuple[str, .
 	return tuple(
 		aliasName for aliasName in (
 			_executableNamesToAppModsAddons.get(executableName),
-			executableName,
+			# #5323: Certain executables contain dots as part of their file names.
+			# Since Python treats dot as a package separator we replace it with an underscore
+			# in the name of the Python module.
+			# For new App Modules consider adding an alias to `appModule.EXECUTABLE_NAMES_TO_APP_MODS`
+			# rather than rely on the fact that dots are replaced.
+			executableName.replace(".", "_"),
 			appModules.EXECUTABLE_NAMES_TO_APP_MODS.get(executableName)
 		) if aliasName is not None
 	)
 
 
-def doesAppModuleExist(name: str, ignoreDeprecatedAliases: bool = False) -> bool:
-	"""Returns c{True} if App Module with a given name exists, c{False} otherwise.
-	:param ignoreDeprecatedAliases: used for backward compatibility, so that by default alias modules
-	are not excluded.
-	"""
-	for importer in _importers:
-		modExists = importer.find_module(f"appModules.{name}")
-		if modExists:
-			# While the module has been found it is possible tis is just a deprecated alias.
-			# Before PR #13366 the only possibility to map a single app module to multiple executables
-			# was to create a alias app module and import everything from the main module into it.
-			# Now the preferred solution is to add an entry into `appModules.EXECUTABLE_NAMES_TO_APP_MODS`,
-			# but old alias modules have to stay to preserve backwards compatibility.
-			# We cannot import the alias module since they show a deprecation warning on import.
-			# To determine if the module should be imported or not we check if:
-			# - it is placed in the core appModules package, and
-			# - it has an alias defined in `appModules.EXECUTABLE_NAMES_TO_APP_MODS`.
-			# If both of these are true the module should not be imported in core.
-			if (
-				ignoreDeprecatedAliases
-				and name in appModules.EXECUTABLE_NAMES_TO_APP_MODS
-				and _getPathFromImporter(importer) == _CORE_APP_MODULES_PATH
-			):
-				continue
-			return True
-	return False  # None of the aliases exists
+def doesAppModuleExist(name: str) -> bool:
+	"""Returns c{True} if App Module with a given name exists, c{False} otherwise."""
+	try:
+		modSpec = importlib.util.find_spec(f"appModules.{name}", package=appModules)
+	except ImportError:
+		modSpec = None
+	if modSpec is None:
+		return False
+	return True
 
 
 def _importAppModuleForExecutable(executableName: str) -> Optional[ModuleType]:
@@ -195,10 +154,10 @@ def _importAppModuleForExecutable(executableName: str) -> Optional[ModuleType]:
 	"""
 	for possibleModName in _getPossibleAppModuleNamesForExecutable(executableName):
 		# First, check whether the module exists.
-		# We need to do this separately to exclude alias modules,
-		# and because even though an ImportError is raised when a module can't be found,
+		# We need to do this separately
+		# because even though an ImportError is raised when a module can't be found,
 		# it might also be raised for other reasons.
-		if doesAppModuleExist(possibleModName, ignoreDeprecatedAliases=True):
+		if doesAppModuleExist(possibleModName):
 			return importlib.import_module(
 				f"appModules.{possibleModName}",
 				package="appModules"
@@ -240,10 +199,18 @@ def getAppNameFromProcessID(processID: int, includeExt: bool = False) -> str:
 	return appName
 
 
-def getAppModuleForNVDAObject(obj):
-	if not isinstance(obj,NVDAObjects.NVDAObject):
+def getAppModuleForNVDAObject(obj: NVDAObjects.NVDAObject) -> AppModule:
+	if not isinstance(obj, NVDAObjects.NVDAObject):
 		return
-	return getAppModuleFromProcessID(obj.processID)
+	mod = getAppModuleFromProcessID(obj.processID)
+	# #14403: some apps report process handle of 0, causing process information and other functions to fail.
+	if mod.processHandle == 0:
+		# Sometimes process handle for the NVDA object may not be defined, more so when running tests.
+		try:
+			mod.processHandle = obj.processHandle
+		except AttributeError:
+			pass
+	return mod
 
 
 def getAppModuleFromProcessID(processID: int) -> AppModule:
@@ -254,8 +221,7 @@ def getAppModuleFromProcessID(processID: int) -> AppModule:
 	with _getAppModuleLock:
 		mod=runningTable.get(processID)
 		if not mod:
-			# #5323: Certain executables contain dots as part of their file names.
-			appName=getAppNameFromProcessID(processID).replace(".","_")
+			appName = getAppNameFromProcessID(processID)
 			mod=fetchAppModule(processID,appName)
 			if not mod:
 				raise RuntimeError("error fetching default appModule")
@@ -347,6 +313,8 @@ def reloadAppModules():
 	for mod in mods:
 		del sys.modules[mod]
 	import appModules
+	from addonHandler.packaging import addDirsToPythonPackagePath
+	addDirsToPythonPackagePath(appModules)
 	initialize()
 	for entry in state:
 		pid = entry.pop("processID")
@@ -367,9 +335,6 @@ def reloadAppModules():
 def initialize():
 	"""Initializes the appModule subsystem. 
 	"""
-	global _importers
-	config.addConfigDirsToPythonPackagePath(appModules)
-	_importers=list(pkgutil.iter_importers("appModules.__init__"))
 	if not initialize._alreadyInitialized:
 		initialize._alreadyInitialized = True
 
@@ -540,23 +505,19 @@ class AppModule(baseObject.ScriptableObject):
 		# Sometimes (I.E. when NVDA starts) handle is 0, so stop if it is the case
 		if not self.processHandle:
 			raise RuntimeError("processHandle is 0")
-		# No need to worry about immersive (hosted) apps and friends until Windows 8.
-		if winVersion.getWinVer() >= winVersion.WIN8:
-			# Some apps such as File Explorer says it is an immersive process but error 15700 is shown.
-			# Therefore resort to file version info behavior because it is not a hosted app.
-			# Others such as Store version of Office are not truly hosted apps,
-			# yet returns an internal version anyway because they are converted desktop apps.
-			# For immersive apps, default implementation is generic - returns Windows version information.
-			# Thus probe package full name and parse the serialized representation of package info structure.
-			packageInfo = self._getImmersivePackageInfo()
-			if packageInfo is not None:
-				# Product name is of the form publisher.name for a hosted app.
-				productInfo = packageInfo.split("_")
-			else:
-				# File Explorer and friends which are really native aps.
-				productInfo = self._getExecutableFileInfo()
+		# Some apps such as File Explorer says it is an immersive process but error 15700 is shown.
+		# Therefore resort to file version info behavior because it is not a hosted app.
+		# Others such as Store version of Office are not truly hosted apps,
+		# yet returns an internal version anyway because they are converted desktop apps.
+		# For immersive apps, default implementation is generic - returns Windows version information.
+		# Thus probe package full name and parse the serialized representation of package info structure.
+		packageInfo = self._getImmersivePackageInfo()
+		if packageInfo is not None:
+			# Product name is of the form publisher.name for a hosted app.
+			productInfo = packageInfo.split("_")
 		else:
-			# Not only native apps, but also some converted desktop aps such as Office.
+			# File Explorer and friends which are really native aps.
+			# Also includes converted desktop apps such as Office.
 			productInfo = self._getExecutableFileInfo()
 		self.productName = productInfo[0]
 		self.productVersion = productInfo[1]
@@ -570,7 +531,10 @@ class AppModule(baseObject.ScriptableObject):
 		return self.productVersion
 
 	def __repr__(self):
-		return "<%r (appName %r, process ID %s) at address %x>"%(self.appModuleName,self.appName,self.processID,id(self))
+		return (
+			f"{self.__class__.__name__}"
+			f"({self.appModuleName}, appName={self.appName!r}, processID={self.processID!r})"
+		)
 
 	def _get_appModuleName(self):
 		return self.__class__.__module__.split('.')[-1]
@@ -616,11 +580,11 @@ class AppModule(baseObject.ScriptableObject):
 		self.appPath = path.value if path else None
 		return self.appPath
 
-	def _get_is64BitProcess(self):
+	def _get_is64BitProcess(self) -> bool:
 		"""Whether the underlying process is a 64 bit process.
 		@rtype: bool
 		"""
-		if os.environ.get("PROCESSOR_ARCHITEW6432") not in ("AMD64","ARM64"):
+		if winVersion.getWinVer().processorArchitecture not in ("AMD64", "ARM64"):
 			# This is 32 bit Windows.
 			self.is64BitProcess = False
 			return False
@@ -646,17 +610,13 @@ class AppModule(baseObject.ScriptableObject):
 	def _get_isWindowsStoreApp(self):
 		"""Whether this process is a Windows Store (immersive) process.
 		An immersive process is a Windows app that runs inside a Windows Runtime (WinRT) container.
-		These include Windows store apps on Windows 8 and 8.1,
-		and Universal Windows Platform (UWP) apps on Windows 10.
+		These include Windows store apps on Windows 8.1,
+		and Universal Windows Platform (UWP) apps on Windows 10 and later.
 		A special case is a converted desktop app distributed on Microsoft Store.
 		Not all immersive apps are packaged as a true Store app with a package info
 		e.g. File Explorer reports itself as immersive when it is not.
 		@rtype: bool
 		"""
-		if winVersion.getWinVer() < winVersion.WIN8:
-			# Windows Store/UWP apps were introduced in Windows 8.
-			self.isWindowsStoreApp = False
-			return False
 		# Package info is much more accurate than IsImmersiveProcess
 		# because IsImmersive Process returns nonzero for File Explorer
 		# and zero for Store version of Office.
@@ -666,7 +626,21 @@ class AppModule(baseObject.ScriptableObject):
 		self.isWindowsStoreApp = False
 		return self.isWindowsStoreApp
 
-	def _get_appArchitecture(self):
+	def _get_isRunningUnderDifferentLogonSession(self) -> bool:
+		"""Returns whether the application for this appModule was started under a different logon session.
+		This applies to applications started with the Windows runas command
+		or when choosing "run as a different user" from an application's (shortcut) context menu.
+		"""
+		try:
+			self.isRunningUnderDifferentLogonSession = (
+				getCurrentProcessLogonSessionId() != getProcessLogonSessionId(self.processHandle)
+			)
+		except WindowsError:
+			log.error(f"Couldn't compare logon session ID for {self}", exc_info=True)
+			self.isRunningUnderDifferentLogonSession = False
+		return self.isRunningUnderDifferentLogonSession
+
+	def _get_appArchitecture(self) -> str:
 		"""Returns the target architecture for the specified app.
 		This is useful for detecting X86/X64 apps running on ARM64 releases of Windows 10.
 		The following strings are returned:
@@ -677,28 +651,43 @@ class AppModule(baseObject.ScriptableObject):
 		@rtype: str
 		"""
 		# Details: https://docs.microsoft.com/en-us/windows/desktop/SysInfo/image-file-machine-constants
-		# The only value missing is ARM64 (AA64)
-		# because it is only applicable if ARM64 app is running on ARM64 machines.
 		archValues2ArchNames = {
 			0x014c: "x86",  # I386-32
 			0x8664: "AMD64",  # X86-64
-			0x01c0: "ARM"  # 32-bit ARM
+			0x01c0: "ARM",  # 32-bit ARM
+			0xaa64: "ARM64",  # 64-bit ARM
 		}
-		# IsWow64Process2 can be used on Windows 10 Version 1511 (build 10586) and later.
-		# Just assume this is an x64 (AMD64) app.
-		# if this is a64-bit app running on 7 through 10 Version 1507 (build 10240).
-		try:
-			# If a native app is running (such as x64 app on x64 machines), app architecture value is not set.
-			processMachine = ctypes.wintypes.USHORT()
-			ctypes.windll.kernel32.IsWow64Process2(self.processHandle, ctypes.byref(processMachine), None)
-			if not processMachine.value:
-				self.appArchitecture = os.environ.get("PROCESSOR_ARCHITEW6432")
+		# #14403: GetProcessInformation can be called from Windows 11 and later to obtain process machine.
+		if winVersion.getWinVer() >= winVersion.WIN11:
+			processMachineInfo = _PROCESS_MACHINE_INFORMATION()
+			# Constant comes from PROCESS_INFORMATION_CLASS enumeration.
+			ProcessMachineTypeInfo = 9
+			# Sometimes getProcessInformation may fail, so say "unknown".
+			if not ctypes.windll.kernel32.GetProcessInformation(
+				self.processHandle,
+				ProcessMachineTypeInfo,
+				ctypes.byref(processMachineInfo),
+				ctypes.sizeof(_PROCESS_MACHINE_INFORMATION)
+			):
+				self.appArchitecture = "unknown"
 			else:
-				# On ARM64, two 32-bit architectures are supported: x86 (via emulation) and ARM (natively).
-				self.appArchitecture = archValues2ArchNames[processMachine.value]
-		except AttributeError:
-			# Windows 10 Version 1507 (build 10240) and earlier.
-			self.appArchitecture = "AMD64" if self.is64BitProcess else "x86"
+				self.appArchitecture = archValues2ArchNames.get(processMachineInfo.ProcessMachine, "unknown")
+		else:
+			# IsWow64Process2 can be used on Windows 10 Version 1511 (build 10586) and later.
+			# Just assume this is an x64 (AMD64) app.
+			# if this is a64-bit app running on 7 through 10 Version 1507 (build 10240).
+			try:
+				# If a native app is running (such as x64 app on x64 machines), app architecture value is not set.
+				processMachine = ctypes.wintypes.USHORT()
+				ctypes.windll.kernel32.IsWow64Process2(self.processHandle, ctypes.byref(processMachine), None)
+				if not processMachine.value:
+					self.appArchitecture = winVersion.getWinVer().processorArchitecture
+				else:
+					# On ARM64, two 32-bit architectures are supported: x86 (via emulation) and ARM (natively).
+					self.appArchitecture = archValues2ArchNames[processMachine.value]
+			except AttributeError:
+				# Windows 10 Version 1507 (build 10240) and earlier.
+				self.appArchitecture = "AMD64" if self.is64BitProcess else "x86"
 		return self.appArchitecture
 
 	def isGoodUIAWindow(self,hwnd):

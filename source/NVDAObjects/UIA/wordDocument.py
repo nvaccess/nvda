@@ -1,11 +1,12 @@
 # This file is covered by the GNU General Public License.
 # A part of NonVisual Desktop Access (NVDA)
 # See the file COPYING for more details.
-# Copyright (C) 2016-2022 NV Access Limited, Joseph Lee, Jakub Lukowicz
+# Copyright (C) 2016-2023 NV Access Limited, Joseph Lee, Jakub Lukowicz, Cyrille Bougot
 
 from typing import (
 	Optional,
 	Dict,
+	Generator,
 )
 
 import enum
@@ -36,10 +37,11 @@ from NVDAObjects.window.winword import (
 )
 from NVDAObjects import NVDAObject
 from scriptHandler import script
-
+import eventHandler
+from globalCommands import SCRCAT_SYSTEMCARET
+import documentBase
 
 """Support for Microsoft Word via UI Automation."""
-
 
 class UIACustomAttributeID(enum.IntEnum):
 	LINE_NUMBER = 0
@@ -448,6 +450,24 @@ class WordDocumentTextInfo(UIATextInfo):
 					if isinstance(textColumnNumber, int):
 						formatField.field['text-column-number'] = textColumnNumber
 		return formatField
+	
+	def _getIndentValueDisplayString(self, val: float) -> str:
+		"""A function returning the string to display in formatting info in Word documents.
+		@param val: an indent value measured in points, fetched via
+			an UIAHandler.UIA_Indentation*AttributeId attribute.
+		@return: The string used in formatting information to report the length of an indentation.
+		"""
+		
+		if self.obj.WinwordApplicationObject:
+			# When Word object model is available we honour Word's options to report distances so that what is
+			# reported by NVDA matches Word's UI (rulers, paragraph formatting dialog, etc.)
+			# Default seem to be inch or centimeters for Western countries localization of Word and characters for
+			# east Asian localisations.
+			return self.obj.getLocalizedMeasurementTextForPointSize(val)
+		
+		# If Word object model is not available, we just fallback to general UIA case, i.e. use Windows regional
+		# settings.
+		return super()._getIndentValueDisplayString(val)
 
 
 class WordBrowseModeDocument(UIABrowseModeDocument):
@@ -496,6 +516,17 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 
 	ElementsListDialog=ElementsListDialog
 
+	def _iterTextStyle(
+			self,
+			kind: str,
+			direction: documentBase._Movement = documentBase._Movement.NEXT,
+			pos: textInfos.TextInfo | None = None
+	) -> Generator[browseMode.TextInfoQuickNavItem, None, None]:
+		raise NotImplementedError(
+			"word textInfos are not supported due to multiple issues with them - #16569"
+		)
+
+
 class WordDocumentNode(UIA):
 	TextInfo=WordDocumentTextInfo
 
@@ -526,7 +557,10 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 	def event_textChange(self):
 		# Ensure Braille is updated when text changes,
 		# As Microsoft Word does not fire caret events when typing text, even though the caret does move.
-		braille.handler.handleCaretMove(self)
+		# Update braille also when tethered to review, and review position
+		# if review follows caret.
+		if not eventHandler.isPendingEvents("caret", self):
+			eventHandler.queueEvent("caret", self)
 
 	suppressedActivityIds = [
 		"AccSN1",  # #10950: font attributes
@@ -583,7 +617,9 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 	@script(
 		gesture="kb:NVDA+alt+c",
 		# Translators: a description for a script that reports the comment at the caret.
-		description=_("Reports the text of the comment where the System caret is located.")
+		description=_("Reports the text of the comment where the system caret is located."),
+		category=SCRCAT_SYSTEMCARET,
+		speakOnDemand=True,
 	)
 	def script_reportCurrentComment(self,gesture):
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
@@ -594,3 +630,21 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 			# Translators: a message when there is no comment to report in Microsoft Word
 			ui.message(_("No comments"))
 		return
+
+	@script(gesture="kb:NVDA+shift+c")
+	def script_setColumnHeader(self, gesture):
+		ui.message(_(
+			# Translators: The message reported in Microsoft Word for document types not supporting setting custom
+			# headers.
+			"Command not supported in this type of document. "
+			"The tables have their first row cells automatically set as column headers."
+		))
+
+	@script(gesture="kb:NVDA+shift+r")
+	def script_setRowHeader(self, gesture):
+		ui.message(_(
+			# Translators: The message reported in Microsoft Word for document types not supporting setting custom
+			# headers.
+			"Command not supported in this type of document. "
+			"The tables have their first column cells automatically set as row headers."
+		))

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Leonard de Ruijter
+# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Leonard de Ruijter, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -18,6 +18,7 @@ from . import IAccessible, List
 from ..window import Window
 from NVDAObjects.behaviors import RowWithoutCellObjects, RowWithFakeNavigation
 import config
+from config.configFlags import ReportTableHeaders
 from locationHelper import RectLTRB
 from logHandler import log
 from typing import Optional
@@ -626,7 +627,10 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			content = self._getColumnContent(col)
 			if not content:
 				continue
-			if config.conf["documentFormatting"]["reportTableHeaders"] and col != 1:
+			if config.conf["documentFormatting"]["reportTableHeaders"] in (
+				ReportTableHeaders.ROWS_AND_COLUMNS,
+				ReportTableHeaders.COLUMNS,
+			) and col != 1:
 				header = self._getColumnHeader(col)
 			else:
 				header = None
