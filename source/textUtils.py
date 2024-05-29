@@ -508,8 +508,12 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 					else:
 						# No normalizable characters in originBuffer.
 						# All characters are now copied to originPart and normalizedPart.
-						assert originBuffer == originPart
-						assert normalizedBuffer == normalizedPart
+						assert originBuffer == originPart, (
+							f"Origin: {originBuffer!r} != {originPart!r} for origin {self.decoded!r}"
+						)
+						assert normalizedBuffer == normalizedPart, (
+							f"Normalized: {normalizedBuffer!r} != {normalizedPart!r} for origin {self.decoded!r}"
+						)
 						# Reset buffers to ensure the while loop doesn't run next time.
 						originBuffer = normalizedBuffer = ""
 					# Map the original indices to the normalized indices.
@@ -554,9 +558,13 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 					iNormalized += 1
 		# Finalize the mapping by selecting the minimum index for each original position.
 		originResult = tuple(map(min, originToNormalizedDict.values()))
-		assert len(originResult) == len(self.decoded)
+		assert len(originResult) == len(self.decoded), (
+			f"Length of origin: {originResult!r} != {self.decoded!r}"
+		)
 		normalizedResult = tuple(map(min, normalizedToOriginDict.values()))
-		assert len(normalizedResult) == len(self.encoded)
+		assert len(normalizedResult) == len(self.encoded), (
+			f"Length of normalized: {normalizedResult!r} != {self.encoded!r}"
+		)
 		return tuple((
 			originResult,
 			normalizedResult
