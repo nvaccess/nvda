@@ -71,7 +71,7 @@ It is assumed that characters will have the same description regardless of their
 #### Translating this file {#TranslatingCharacterDescriptionsFile}
 Translations for characterDescriptions.dic happen on SVN following [this process](https://github.com/nvaccess/nvda/wiki/TranslatingUsingAutomaticProcess).
 
-For a full example and reference, please look at the English [characterDescriptions.dic file]((https://github.com/nvaccess/nvda/blob/master/source/locale/en/characterDescriptions.dic)
+For a full example and reference, please look at the English [characterDescriptions.dic file](https://github.com/nvaccess/nvda/blob/master/source/locale/en/characterDescriptions.dic)
 
 ### Symbol Pronunciation {#toc8}
 
@@ -126,30 +126,31 @@ Subsequent lines should contain several fields separated by tabs.
 The only mandatory fields are the identifier and replacement.
 The default will be used for omitted fields.
 The fields are as follows:
-- `identifier`: The identifier of the symbol.
+
+* `identifier`: The identifier of the symbol.
 	In most cases, this is just the character or characters of the symbol.
 	However, it can also be the identifier of a complex symbol.
 	Certain characters cannot be typed into the file, so the following special sequences can be used:
-	- `\0`: null
-	- `\t`: tab
-	- `\n`: line feed
-	- `\r`: carriage return
-	- `\f`: form feed
-	- `\#`: # character (needed because # at the start of a line denotes a comment)
-- `replacement:` The text which should be spoken for the symbol.
-- `level`: The symbol level at which the symbol should be spoken.
-	- The symbol level is configured by the user and specifies the amount of symbols that should be spoken.
-	- This field should contain one of the levels "none", "some", "most", "all" or "char", or "-" to use the default.
-	- "char" means that the symbol should only be pronounced when moving by character.
-	- The default is to inherit the value or "all" if there is nothing to inherit.
-- `preserve`: Whether the symbol itself should be preserved to facilitate correct pronunciation by the synthesiser.
+  * `\0`: null
+  * `\t`: tab
+  * `\n`: line feed
+  * `\r`: carriage return
+  * `\f`: form feed
+  * `\#`: # character (needed because # at the start of a line denotes a comment)
+* `replacement:` The text which should be spoken for the symbol.
+* `level`: The symbol level at which the symbol should be spoken.
+  * The symbol level is configured by the user and specifies the amount of symbols that should be spoken.
+  * This field should contain one of the levels "none", "some", "most", "all" or "char", or "-" to use the default.
+  * "char" means that the symbol should only be pronounced when moving by character.
+  * The default is to inherit the value or "all" if there is nothing to inherit.
+* `preserve`: Whether the symbol itself should be preserved to facilitate correct pronunciation by the synthesiser.
 	For example, symbols which cause pauses or inflection (such as the comma in English) should be preserved.
 	This field should be one of the following:
-	- `never`: Never preserve the symbol.
-	- `always`: Always preserve the symbol.
-	- `norep`: Only preserve the symbol if it is not being replaced; i.e. the user has set symbol level lower than the level of this symbol.
-	- `-`: Use the default.
-	The default is to inherit the value or "never" if there is nothing to inherit.
+  * `never`: Never preserve the symbol.
+  * `always`: Always preserve the symbol.
+  * `norep`: Only preserve the symbol if it is not being replaced; i.e. the user has set symbol level lower than the level of this symbol.
+  * `-`: Use the default.
+  The default is to inherit the value or "never" if there is nothing to inherit.
 
 Finally, a display name for the symbol can be provided in a comment after a tab at the end of the line.
 This will be shown to users when editing the symbol information and is especially useful for translators to define translated names for English complex symbols.
@@ -185,9 +186,6 @@ This line appears in the French symbols.dic file.
 It means that the first, second, and third groups of the match will be included, separated by the word 'point'.
 The effect is thus to replace the dots from the date with the word 'point'.
 
-Please see the file locale\en\symbols.dic for the English definitions which are inherited for all locales.
-This is also a good full example.
-
 If your language uses a thousands separator such as a full stop (.) which is handled incorrectly due to other rules, you will need to define a complex symbol pattern for it.
 For example, if your language uses a comma (,) as its thousands separator, you would include the following in the complex symbols section:
 
@@ -219,7 +217,7 @@ In all of this case, NVDA allows to remap this gesture for this specific locale.
 
 Below are three detailed examples of gestures.ini files corresponding to the three listed situations where a gesture remapping could be required.
 
-###### Example 1: The original gesture is defined with a character that is not a key name on the locale keyboard layout {#TranslatingGesturesEx1}
+##### Example 1: The original gesture is defined with a character that is not a key name on the locale keyboard layout {#TranslatingGesturesEx1}
 
 In English original version, the scripts for left and right mouse click (laptop layout) are executed respectively with `NVDA+[` and `NVDA+]`.
 
@@ -313,22 +311,26 @@ You will need to explore NVDA's source code to find the class and the script nam
 Translations for gestures.ini happen on SVN following [this process](https://github.com/nvaccess/nvda/wiki/TranslatingUsingAutomaticProcess).
 
 1. In your local copy of the screenReaderTranslations repository, check if the gestures.ini file exists, e.g. `d:\SVN\SRT\fr\gestures.ini`
-
    * If this file does not exist, create it by copying it from the last version of NVDA.
    * If it already exists, all is fine.
-
 2. In this file the sections correspond to the class to which the script belongs.
 If the class your looking for does not exist, create this section.
-3. Under the targeted section, add a line corresponding to the new shortcut. E.g.:
+3. Under the targeted section, add a line corresponding to the new shortcut. e.g.:
+
    ```
    toggleBold = kb:control+g, kb:control+shift+b
    ```
+
    If a line already exists for the script name you want to modify the shortcut, add the new shortcut on the same line, separating each shortcut from another with a comma (,)
+
 4. If you want to unmap the original shortcut, just map it to `None`, e.g.:
+
    ```
    None = kb:control+b
    ```
+
    Unmapping the original shortcut is only required if this shortcut does not match any other remapped locale shortcut.
+
 5. Save your file in UTF-8 format.
 6. Commit your changes to screenReaderTranslations repo.
 
