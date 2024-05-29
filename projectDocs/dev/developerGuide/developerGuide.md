@@ -48,7 +48,7 @@ For complete documentation about translating NVDA, please see the [Translating p
 
 ### Character Descriptions {#toc7}
 
-Sometimes, it can be very difficult or even impossible to distinguish one character from another.
+Sometimes it can be very difficult or even impossible to distinguish one character from another.
 For example, two characters might be pronounced the same way, even though they are actually different characters.
 To help users when this occurs, character descriptions can be provided which describe the character in a unique way.
 
@@ -59,14 +59,19 @@ All other lines should contain a character, followed by a tab, then one or more 
 
 For example:
 
-    # This is a comment.
-    a	alpha
-    b	bravo
-
-See the file locale\en\characterDescriptions.dic for a full example.
+```
+# This is a comment.
+a	alpha
+b	bravo
+```
 
 In most cases, the characters in this file should be a single lower case character.
 It is assumed that characters will have the same description regardless of their case, so upper case characters are converted to lower case before looking up their character descriptions.
+
+#### Translating this file {#TranslatingCharacterDescriptionsFile}
+Translations for characterDescriptions.dic happen on SVN following [this process](https://github.com/nvaccess/nvda/wiki/TranslatingUsingAutomaticProcess).
+
+For a full example and reference, please look at the English [characterDescriptions.dic file]((https://github.com/nvaccess/nvda/blob/master/source/locale/en/characterDescriptions.dic)
 
 ### Symbol Pronunciation {#toc8}
 
@@ -79,7 +84,11 @@ This is a UTF-8 encoded text file.
 Blank lines and lines beginning with a "#" character are ignored.
 All locales implicitly inherit the symbol information for English, though any of this information can be overridden.
 
-The file contains two sections.
+The file contains two sections, [complex symbols](#toc9) and [symbols](#toc10).
+
+#### Translating this file {#TranslatingSymbolsFile}
+Translations for symbols.dic happen on SVN following [this process](https://github.com/nvaccess/nvda/wiki/TranslatingUsingAutomaticProcess).
+See the file [locale\en\symbols.dic](https://github.com/nvaccess/nvda/blob/master/source/locale/en/symbols.dic) for the English definitions which are inherited for all locales.
 
 #### Defining Complex Symbols {#toc9}
 
@@ -90,13 +99,17 @@ The "." is used for multiple purposes, so a more complicated check is required t
 
 The complex symbols section begins with the line:
 
-    complexSymbols:
+```
+complexSymbols:
+```
 
 Subsequent lines contain a textual identifier used to identify the symbol, a tab and the regular expression pattern for that symbol.
 For example:
 
-    . sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
-    dates with .	\b(\d\d)\.(\d\d)\.(\d{2}|\d{4})\b
+```re
+sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
+dates with .	\b(\d\d)\.(\d\d)\.(\d{2}|\d{4})\b
+```
 
 Again, the English symbols are inherited by all other locales, so you need not include any complex symbols already defined for English.
 
@@ -105,61 +118,68 @@ Again, the English symbols are inherited by all other locales, so you need not i
 The second section provides information about when and how to pronounce all symbols.
 It begins with the line:
 
-    symbols:
+```
+symbols:
+```
 
 Subsequent lines should contain several fields separated by tabs.
 The only mandatory fields are the identifier and replacement.
 The default will be used for omitted fields.
 The fields are as follows:
-
-* identifier: The identifier of the symbol.
-In most cases, this is just the character or characters of the symbol.
-However, it can also be the identifier of a complex symbol.
-Certain characters cannot be typed into the file, so the following special sequences can be used:
-  * \0: null
-  * \t: tab
-  * \n: line feed
-  * \r: carriage return
-  * \f: form feed
-  * \#: # character (needed because # at the start of a line denotes a comment)
-* replacement: The text which should be spoken for the symbol.
-If the symbol is a complex symbol, \1, \2, etc. can be used to refer to the groups matches, which will be inlined in the replacement, allowing for simpler rules.
-This also means that to get a \ character in the replacement, one has to type \\.
-* level: The symbol level at which the symbol should be spoken.
-The symbol level is configured by the user and specifies the amount of symbols that should be spoken.
-This field should contain one of the levels "none", "some", "most", "all" or "char", or "-" to use the default.
-"char" means that the symbol should only be pronounced when moving by character.
-The default is to inherit the value or "all" if there is nothing to inherit.
-* preserve: Whether the symbol itself should be preserved to facilitate correct pronunciation by the synthesiser.
-For example, symbols which cause pauses or inflection (such as the comma in English) should be preserved.
-This field should be one of the following:
-  * never: Never preserve the symbol.
-  * always: Always preserve the symbol.
-  * norep: Only preserve the symbol if it is not being replaced; i.e. the user has set symbol level lower than the level of this symbol.
-  * -: Use the default.
-  * The default is to inherit the value or "never" if there is nothing to inherit.
+- `identifier`: The identifier of the symbol.
+	In most cases, this is just the character or characters of the symbol.
+	However, it can also be the identifier of a complex symbol.
+	Certain characters cannot be typed into the file, so the following special sequences can be used:
+	- `\0`: null
+	- `\t`: tab
+	- `\n`: line feed
+	- `\r`: carriage return
+	- `\f`: form feed
+	- `\#`: # character (needed because # at the start of a line denotes a comment)
+- `replacement:` The text which should be spoken for the symbol.
+- `level`: The symbol level at which the symbol should be spoken.
+	- The symbol level is configured by the user and specifies the amount of symbols that should be spoken.
+	- This field should contain one of the levels "none", "some", "most", "all" or "char", or "-" to use the default.
+	- "char" means that the symbol should only be pronounced when moving by character.
+	- The default is to inherit the value or "all" if there is nothing to inherit.
+- `preserve`: Whether the symbol itself should be preserved to facilitate correct pronunciation by the synthesiser.
+	For example, symbols which cause pauses or inflection (such as the comma in English) should be preserved.
+	This field should be one of the following:
+	- `never`: Never preserve the symbol.
+	- `always`: Always preserve the symbol.
+	- `norep`: Only preserve the symbol if it is not being replaced; i.e. the user has set symbol level lower than the level of this symbol.
+	- `-`: Use the default.
+	The default is to inherit the value or "never" if there is nothing to inherit.
 
 Finally, a display name for the symbol can be provided in a comment after a tab at the end of the line.
 This will be shown to users when editing the symbol information and is especially useful for translators to define translated names for English complex symbols.
 
-Here are some examples:
+#### Examples {#TranslatingSymbolsExamples}
 
-    (	left paren	most
+```
+(	left paren	most
+```
 
 This means that the "(" character should be spoken as "left paren" only when the symbol level is set to most or higher; i.e. most or all.
 
-    ,	comma	all	always
+```
+,	comma	all	always
+```
 
 This means that the "," character should be spoken as "comma" when the symbol level is set to all and that the character itself should always be preserved so that the synthesiser will pause appropriately.
 
-    . sentence ending	point	# . fin de phrase
+```
+. sentence ending	point	# . fin de phrase
+```
 
 This line appears in the French symbols.dic file.
 It means that the ". sentence ending" complex symbol should be spoken as "point".
 Level and preserve are not specified, so they will be taken from English.
 A display name is provided so that French users will know what the symbol represents.
 
-    dates with .	\1 point \2 point \3	all	norep	# date avec points
+```
+dates with .	\1 point \2 point \3	all	norep	# date avec points
+```
 
 This line appears in the French symbols.dic file.
 It means that the first, second, and third groups of the match will be included, separated by the word 'point'.
@@ -167,6 +187,151 @@ The effect is thus to replace the dots from the date with the word 'point'.
 
 Please see the file locale\en\symbols.dic for the English definitions which are inherited for all locales.
 This is also a good full example.
+
+If your language uses a thousands separator such as a full stop (.) which is handled incorrectly due to other rules, you will need to define a complex symbol pattern for it.
+For example, if your language uses a comma (,) as its thousands separator, you would include the following in the complex symbols section:
+
+```re
+thousands separator	(?<=\d)\,(?=\d)
+```
+
+You would also include something like the following in the main symbols section:
+
+```
+thousands separator	comma	all	norep
+```
+
+### Gestures {#TranslatingGestures}
+
+The gestures defined originally in NVDA are adapted with English softwares and keyboard layout.
+In most cases, these gestures can also be executed on other keyboard layouts without any problem.
+However, sometimes a gesture originally defined by NVDA is not adapted for a specific locale (keyboard layout or software).
+The need to modify an original gesture may be due to the following reasons:
+
+* The original gesture is defined with a character that is not a key name on the locale keyboard layout.
+Generally, the key names are the characters that can be input without the help of a modifier key (`shift`, `control`, etc.)
+* The original gesture takes advantage of the keys physical location on the English keyboard layout, but this advantage does not appear anymore with the locale keyboard layout.
+* The original gesture is defined to match a native shortcut in Windows or in an application, but the shortcut in the local version of Windows or of this application is not the same as the English one.
+
+In all of this case, NVDA allows to remap this gesture for this specific locale.
+
+#### Examples {#TranslatingGesturesExamples}
+
+Below are three detailed examples of gestures.ini files corresponding to the three listed situations where a gesture remapping could be required.
+
+###### Example 1: The original gesture is defined with a character that is not a key name on the locale keyboard layout {#TranslatingGesturesEx1}
+
+In English original version, the scripts for left and right mouse click (laptop layout) are executed respectively with `NVDA+[` and `NVDA+]`.
+
+* On English keyboard layout, the `[` and `]` keys are the two keys at the right of the `p` key.
+* On Italian keyboard layout, `[` and `]` characters can only be input with the help of `AltGr` modifier: `AltGr+è` and `AltGr+Plus` respectively.
+
+Thus Italian translators decided to remap these scripts with the two keys at the right of the `p` key on Italian keyboard layout, i.e. `è` and `+`.
+To do this they have added the following lines in the `gestures.ini` file:
+
+```
+[globalCommands.GlobalCommands]
+	leftMouseClick = kb(laptop):NVDA+è
+	rightMouseClick = kb(laptop):NVDA+plus
+```
+
+##### Example 2: The original gesture takes advantage of the keys physical location {#TranslatingGesturesEx2}
+
+Looking again at the scripts for left and right mouse click (laptop layout) we can see that they are originally mapped (in English) to two neighboring keys.
+This corresponds to the left and right buttons of the mouse.
+As seen in example 1, many translators have had to modify these keys.
+Most of them (if not all) have chosen two neighboring keys.
+For example, in French `gestures.ini` the following lines have been added:
+
+```
+[globalCommands.GlobalCommands]
+	None = kb(laptop):nvda+[, kb(laptop):nvda+control+[, kb(laptop):nvda+], kb(laptop):nvda+control+], kb(laptop):nvda+shift+., kb(laptop):nvda+., kb(laptop):nvda+control+.
+	leftMouseClick = kb(laptop):nvda+ù
+	rightMouseClick = kb(laptop):nvda+*
+```
+
+The `ù` and `*` on French layout are not at the same location as `[` and `]` of English layout, but these are still two neighboring keys.
+Moreover we can see here that `NVDA+[` and `NVDA+]` has been among other mapped to None in order to unbind these gestures.
+For French (France) layout, this was not mandatory since there is no possibility to input `NVDA+[` or `NVDA+]` without any other modifier key.
+
+##### Example 3: The original gesture is defined to match a native shortcut {#TranslatingGesturesEx3}
+
+NVDA provides a script for Word document object named `toggleBold`.
+This script is mapped to the same gesture as the Word native shortcut to set text bold, i.e. `control+b` in English version of Word.
+However on French version of Word, the shortcut to turn text bold is `control+g`.
+The G stands for "gras" meaning "bold" in French.
+The following lines have been added in the French `gestures.ini` file to remap this script:
+
+```
+[NVDAObjects.window.winword.WordDocument]
+	None = kb:control+b, kb:control+[, kb:control+], "kb:control+shift+,", kb:control+shift+., kb:control+l, kb:control+r
+	toggleBold = kb:control+g, kb:control+shift+b
+```
+
+We can see that `control+b` has been unbound.
+This was necessary because it is the shortcut of another command in French version of Word.
+No remapping has been done for `toggleItalic` script since the shortcut is the same for French and English versions of Word.
+
+#### How to remap a shortcut key {#TranslatingGesturesSteps}
+
+##### Identify the class, the script and the original gesture to be remapped {#TranslatingGesturesStepIdentify}
+
+To edit the gesture.ini file, you will have to identify the class, the script and the original shortcut you want to remap.
+
+##### Case of a global command script {#TranslatingGesturesStepCaseGlobal}
+
+If the gesture to be remapped is a global command, you may execute the following steps to find out the class and the script name of the command:
+
+* activate input help (`NVDA+1`)
+* press the gesture you want to remap, e.g. `NVDA+]` (laptop layout)
+* de-activate input help (`NVDA+1`)
+* open the log (`NVDA+F1`)
+* find out the line corresponding to the moment you have executed the gesture, e.g.:
+  ```
+  Input help: gesture kb(laptop):NVDA+], bound to script rightMouseClick on globalCommands.GlobalCommands
+  ```
+
+The information you are searching is on this line:
+
+* script name: `rightMouseClick`
+* class name: `globalCommands.GlobalCommands` (Note that this is always this class for global commands)
+* original gesture: `kb(laptop):NVDA+]`
+
+##### Case of an application specific script {#TranslatingGesturesStepCaseApplication}
+
+In case you want to remap an application specific script, you will have to follow the same steps as those for a global command script.
+You just need to ensure before proceeding that you are in the targeted application.
+
+##### Case of an object specific script {#TranslatingGesturesStepCaseObject}
+
+Object specific scripts such as the ones linked to `NVDAObjects.window.winword.WordDocument` do not have generally a help message.
+So the previous technique will not work.
+You will need to explore NVDA's source code to find the class and the script name of the gesture you want to remap.
+
+#### Translating this file {#TranslatingGesturesFile}
+
+Translations for gestures.ini happen on SVN following [this process](https://github.com/nvaccess/nvda/wiki/TranslatingUsingAutomaticProcess).
+
+1. In your local copy of the screenReaderTranslations repository, check if the gestures.ini file exists, e.g. `d:\SVN\SRT\fr\gestures.ini`
+
+   * If this file does not exist, create it by copying it from the last version of NVDA.
+   * If it already exists, all is fine.
+
+2. In this file the sections correspond to the class to which the script belongs.
+If the class your looking for does not exist, create this section.
+3. Under the targeted section, add a line corresponding to the new shortcut. E.g.:
+   ```
+   toggleBold = kb:control+g, kb:control+shift+b
+   ```
+   If a line already exists for the script name you want to modify the shortcut, add the new shortcut on the same line, separating each shortcut from another with a comma (,)
+4. If you want to unmap the original shortcut, just map it to `None`, e.g.:
+   ```
+   None = kb:control+b
+   ```
+   Unmapping the original shortcut is only required if this shortcut does not match any other remapped locale shortcut.
+5. Save your file in UTF-8 format.
+6. Commit your changes to screenReaderTranslations repo.
+
 
 ## Plugins {#toc11}
 ### Overview {#toc12}

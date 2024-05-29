@@ -29,8 +29,10 @@ Start by subscribing to the translation list above, so that you can get help and
 
 The current process for translation is split between multiple processes:
 - Crowdin for the NVDA interface
-- The legacy SVN translation system for the User Guide and Changes files
-- GitHub for Character Descriptions, Symbols and Gestures
+- The legacy SVN translation system for the User Guide and Changes files.
+This is planned to move to Crowdin.
+- The legacy SVN translation system for Character Descriptions, Symbols and Gestures.
+This is planned to move to GitHub.
 
 Read [Files to be Localized](#files-to-be-localized) to learn the translation for process for these.
 
@@ -47,9 +49,9 @@ These files are listed in order of importance.
 Note that linked guides may be out of date, as the translation system is undergoing the process of migration.
 
 - nvda.po: NVDA's interface messages, see [Translating The Interface](https://github.com/nvaccess/nvda/wiki/TranslatingTheInterface) page for more info.
-- characterDescriptions.dic: names of characters in your language, see [Translating Character Descriptions](https://github.com/nvaccess/nvda/wiki/TranslatingCharacterDescriptions) for more info.
-- symbols.dic: names of symbols and punctuation in your language, see [Translating Symbols](https://github.com/nvaccess/nvda/wiki/TranslatingSymbols) for more information.
-- gestures.ini: remapping of gestures for your language, see [Translating Gestures](https://github.com/nvaccess/nvda/wiki/TranslatingGestures) for more information.
+- characterDescriptions.dic: names of characters in your language, see [Translating Character Descriptions](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#toc7) for more info.
+- symbols.dic: names of symbols and punctuation in your language, see [Translating Symbols](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#toc8) for more information.
+- gestures.ini: remapping of gestures for your language, see [Translating Gestures](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#TranslatingGestures) for more information.
 - userGuide.md: the User Guide, see [Translating the User Guide](https://github.com/nvaccess/nvda/wiki/TranslatingUserGuide) for more information.
 - changes.md (optional): a list of changes between releases, see [Translating Changes](https://github.com/nvaccess/nvda/wiki/TranslatingChanges) for more information.
 - Add-ons (optional): a set of optional features that users can install, see [Translating Addons](https://github.com/nvaccess/nvda/wiki/TranslatingAddons) for more information.
