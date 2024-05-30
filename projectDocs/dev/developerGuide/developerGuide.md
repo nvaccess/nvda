@@ -62,8 +62,10 @@ For example:
 ```
 # This is a comment.
 a	alpha
-b	bravo
+b	bravo beta
 ```
+
+In this example, "a" will read "alpha" as the character description, and "b" will read as "bravo, beta".
 
 In most cases, the characters in this file should be a single lower case character.
 It is assumed that characters will have the same description regardless of their case, so upper case characters are converted to lower case before looking up their character descriptions.
@@ -128,9 +130,9 @@ The default will be used for omitted fields.
 The fields are as follows:
 
 * `identifier`: The identifier of the symbol.
-	In most cases, this is just the character or characters of the symbol.
-	However, it can also be the identifier of a complex symbol.
-	Certain characters cannot be typed into the file, so the following special sequences can be used:
+  In most cases, this is just the character or characters of the symbol.
+  However, it can also be the identifier of a complex symbol.
+  Certain characters cannot be typed into the file, so the following special sequences can be used:
   * `\0`: null
   * `\t`: tab
   * `\n`: line feed
@@ -138,14 +140,16 @@ The fields are as follows:
   * `\f`: form feed
   * `\#`: # character (needed because # at the start of a line denotes a comment)
 * `replacement:` The text which should be spoken for the symbol.
+  If the symbol is a complex symbol, `\1`, `\2`, etc. can be used to refer to the groups matches, which will be inlined in the replacement, allowing for simpler rules.
+  This also means that to get a `\` character in the replacement, one has to type `\\`.
 * `level`: The symbol level at which the symbol should be spoken.
   * The symbol level is configured by the user and specifies the amount of symbols that should be spoken.
   * This field should contain one of the levels "none", "some", "most", "all" or "char", or "-" to use the default.
   * "char" means that the symbol should only be pronounced when moving by character.
   * The default is to inherit the value or "all" if there is nothing to inherit.
 * `preserve`: Whether the symbol itself should be preserved to facilitate correct pronunciation by the synthesiser.
-	For example, symbols which cause pauses or inflection (such as the comma in English) should be preserved.
-	This field should be one of the following:
+  For example, symbols which cause pauses or inflection (such as the comma in English) should be preserved.
+  This field should be one of the following:
   * `never`: Never preserve the symbol.
   * `always`: Always preserve the symbol.
   * `norep`: Only preserve the symbol if it is not being replaced; i.e. the user has set symbol level lower than the level of this symbol.
