@@ -73,7 +73,7 @@ It is assumed that characters will have the same description regardless of their
 #### Translating this file {#TranslatingCharacterDescriptionsFile}
 Translations for characterDescriptions.dic happen on SVN following [this process](https://github.com/nvaccess/nvda/wiki/TranslatingUsingAutomaticProcess).
 
-For a full example and reference, please look at the English [characterDescriptions.dic file](https://github.com/nvaccess/nvda/blob/master/source/locale/en/characterDescriptions.dic)
+For a full example and reference, please look at the English [characterDescriptions.dic file](https://github.com/nvaccess/nvda/blob/master/source/locale/en/characterDescriptions.dic).
 
 ### Symbol Pronunciation {#toc8}
 
