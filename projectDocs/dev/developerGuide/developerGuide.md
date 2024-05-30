@@ -56,6 +56,7 @@ Character descriptions can be provided for a locale in a file named characterDes
 This is a UTF-8 encoded text file.
 Blank lines and lines beginning with a "#" character are ignored.
 All other lines should contain a character, followed by a tab, then one or more descriptions separated by tabs.
+Multiple descriptions for a character will be read with natural pauses between them.
 
 For example:
 
