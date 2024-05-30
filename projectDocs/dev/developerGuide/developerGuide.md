@@ -302,9 +302,13 @@ You just need to ensure before proceeding that you are in the targeted applicati
 
 ##### Case of an object specific script {#TranslatingGesturesStepCaseObject}
 
-Object specific scripts such as the ones linked to `NVDAObjects.window.winword.WordDocument` do not have generally a help message.
-So the previous technique will not work.
-You will need to explore NVDA's source code to find the class and the script name of the gesture you want to remap.
+For object specific scripts such as the ones linked to `NVDAObjects.window.winword.WordDocument`, you may follow the same steps as those for application specific script, paying attention to the two following points:
+
+* You need to ensure before proceeding that the object to which the script is bound is focused.
+* Some of these scripts have no help message, so you may not hear anything when executing them in input help mode; but the script's name and the class of the object will still appear in the log.
+
+Though, the class of the object appearing in the log may be a subclass of the one where the original gesture is actually bound.
+In this case, you will have to explore NVDA's source code to find this parent class.
 
 #### Translating this file {#TranslatingGesturesFile}
 
