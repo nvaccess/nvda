@@ -1083,12 +1083,12 @@ def speak(  # noqa: C901
 		item=speechSequence[index]
 		if isinstance(item, CharacterModeCommand):
 			inCharacterMode=item.state
-		elif autoLanguageSwitching and isinstance(item, LangChangeCommand):
+		if autoLanguageSwitching and isinstance(item, LangChangeCommand):
 			curLanguage=item.lang
-		elif isinstance(item, SuppressUnicodeNormalizationCommand):
-			unicodeNormalization = initialUnicodeNormalization and item.state
-		elif isinstance(item,str):
-			speechSequence[index]=processText(
+		if isinstance(item, SuppressUnicodeNormalizationCommand):
+			unicodeNormalization = initialUnicodeNormalization and not item.state
+		if isinstance(item,str):
+			speechSequence[index] = processText(
 				curLanguage,
 				item,
 				symbolLevel,
