@@ -82,7 +82,7 @@ Para obter detalles sobre as escepcións, acesa ao documento de licencia dende o
 ## Guía de Inicio Rápido de NVDA {#NVDAQuickStartGuide}
 
 Esta guía de inicio rápido contén tres secións principais: descargar, configuración inicial e executar o NVDA.
-Éstas séguense por información sobre o axuste de preferencias, a participación na comunidade e a obtención de axuda.
+Éstas séguense por información sobre o axuste de preferencias, o uso dos complementos, a participación na comunidade e a obtención de axuda.
 A información nesta guía é un condensado de outras partes da guía do usuario de NVDA.
 Por favor consulta a guía compreta do usuario para información máis detallada sobre cada tema.
 
@@ -279,6 +279,78 @@ A configuración e outras opcións están dispoñibles a través do menú NVDA.
 Para abrir o menú NVDA, preme `NVDA+n`.
 Para abrir directamente o diálogo Opcións Xerais de NVDA, preme `NVDA+control+g`.
 Moitas pantallas de opcións teñen pulsacións de teclas para abrilas directamente, como `NVDA+control+s` para Sintetizador, ou `NVDA+control+v` para outras opcións de voz.
+
+### Complementos {#Addons}
+Os complementos son programas que proporcionan funcionalidade nova ou cambiada para o NVDA.
+Os complementos son desenvolvidos pola comunidade do NVDA, ou por compañías externas e non están afiliados a NV Access.
+Coma con calquera software, é importante confiar no desenvolvedor dun complemento antes de usalo.
+Consulta [Instalar Complementos ](#AddonStoreInstalling) para ver xeitos de verificar os complementos antes de instalalos.
+
+A primeira vez que se abra a tenda de complementos, o NVDA amosa unha advertencia sobre os complementos.
+Os complementos non se examinan por parte de NV Access e poden ter funcionalidade e aceso sen restricións á información.
+Preme `barra espaciadora` se leches a advertencia e non necesitas vela a seguinte vez.
+Preme `tab` para acesar ao botón "Aceptar", logo `intro` para aceptar a advertencia e acesar á tenda de complementos.
+A seción "[Complementos e a Tenda de Complementos](#AddonsManager)" da Guía do Usuario contén información sobre cada característica da mesma.
+
+A Tenda de Complementos está dispoñible dende o menú Ferramentas.
+Preme `NVDA+n` para abrir o menú NVDA, logo `f` para Ferramentas, logo `c` para Tenda de Complementos.
+Cando se abra a Tenda de Complementos, amosa "Complementos dispoñibles" se non hai complementos instalados.
+Cando haxa complementos instalados, a Tenda de Complementos ábrese na pestana "Complementos instalados".
+
+#### Complementos dispoñibles {#AvailableAddons}
+Cando a xanela se abre por primeira vez, os complementos poden tardar uns segundos en cargarse.
+O NVDA lerá o nome do complemento unha vez que a listaxe de complementos remate de se cargar.
+Os complementos dispoñibles lístánse alfabéticamente nunha listaxe de varias columnas.
+Para navegar pola listaxe e atopar información sobre un complemento específico:
+
+1. Usa as frechas ou preme a primeira letra dun nome de complemento para moverte pola listaxe.
+1. Preme `tab` unha vez para moverte a unha descripción do complemento selecionado actualmente.
+1. Usa as [teclas de lectura](#ReadingText) ou as frechas para ler toda a descripción.
+1. Preme `tab` hate o botón "Acións", que se pode usar para instalar o complemento, entre outras acións.
+1. Preme `tab` ate "Outros  Detalles", que enumera detalles como o editor, a versión e a páxina de inicio.
+1. Para voltar á listaxe de complementos, preme `alt+d`, ou `shift+tab` ate a listaxe "Complementos dispoñibles".
+
+#### Procurar complementos {#SearchingForAddons}
+Ademáis de explorar todos os complementos dispoñibles, é posible filtrar os amosados.
+Para procurar, preme `alt+b` para saltar ao campo "procurar" e escrebe o texto a atopar.
+A procura atopa coincidencias nos campos do identificador do complemento, o nome amosado, o editor, o autor ou a descripción.
+A listaxe cambia segundo se teclean os termos de búsqueda.
+Unha vez feito, preme `tab` para ir á listaxe filtrada de complementos e navega polos resultados.
+
+#### Instalar complementos {#InstallingAddons}
+
+Para instalar un complemento:
+
+1. Co foco sobre un complemento que desexes instalar, preme `intro`.
+1. O menú acións ábrese cunha listaxe de acións; a primeira é "Instalar".
+1. Para instalar o complemento, preme `i` ou `frecha abaixo` ate "instalar" e preme `intro`.
+1. O foco volta ao complemento na listaxe e o NVDA lerá os detalles sobre do mesmo.
+1. A información de "Estado" anunciada polo NVDA cambia de "Dispoñible" a "Descargando".
+1. Unha vez o complemento rematara de descargarse, cambiará a "Descargado. Pendente de se instalar".
+1. Repite con calquera outro complemento que queiras instalar ao mesmo tempo.
+1. Unha vez rematado, preme `tab` ate que o foco estea sobre o botón "Pechar", entón preme `intro`.
+1. Os complementos descargados comezarán o proceso de instalación unha vez a Tenda de Complementos se peche.
+Os complementos poden crear diálogos durante o proceso de instalación aos que podes necesitar respostar.
+1. Cando os complementos se instalaran, aparece un diálogo avisando que os cambios se fixeron, e debes reiniciar o NVDA para que se comprete a instalación.
+1. Preme `intro` para reiniciar o NVDA.
+
+#### Xestionar complementos instalados {#ManagingInstalledAddons}
+Preme `control+tab` para moverte entre as pestanas da Tenda de Complementos.
+As pestanas inclúen: "Complementos instalados", "Complementos actualizables", "Complementos dispoñibles" e "Complementos instalados incompatibles".
+Cada unha das pestanas está configurada de xeito semellante, como unha listaxe de complementos, un panel para máis detalles sobre o complemento selecionado e a posibilidade de realizar acións para o complemento.
+O menú acións de complementos instalados inclúe "Deshabilitar" e "Borrar" a cambio de "Instalar".
+Deshabilitar un complemento impide que o NVDA o cargue, pero déixao instalado.
+Para voltar a habilitar un complemento deshabilitado, activa "Habilitar" dende o menú acións.
+Despois de habilitar, deshabilitar ou borrar complementos, pediráseche que reinicies o NVDA ao pechar a Tenda de Complementos.
+Estos cambios só terán efecto unha vez o NVDA se reinicie.
+Ten en conta que na xanela da Tenda de Complementos `escape` funciona igual que o botón Pechar.
+
+#### Actualizar complementos {#UpdatingAddons}
+Cando haxa unha actualización dun complemento que instalaras, aparecerá na pestana "Complementos actualizables".
+Preme `control+tab` para acesar a esta pestana dende calquera lugar na Tenda de Complementos.
+O estado do complemento aparecerá como "Actualización dispoñible".
+A listaxe amosará a versión actual instalada e a versión dispoñible.
+Preme `intro` sobre o complemento para abrir a listaxe de acións; escolle "Actualizar".
 
 ### Comunidade {#Community}
 
@@ -1050,9 +1122,9 @@ Sen embargo, para situacións nas que desexes copiar unha táboa enteira ou un p
 
 ## Ler Contido Matemático {#ReadingMath}
 
-O NVDA pode ler e navegar polo contido matemático na web e noutras aplicacións, proporcionando acceso en braille e voz. 
+O NVDA pode ler e navegar polo contido matemático na web e noutras aplicacións, proporcionando acceso en braille e voz.
 Non obstante, para que o NVDA lea e interactúe co contido matemático, primeiro necesitarás instalar un componente de matemáticas para o NVDA.
-Hai varios complementos de NVDA dispoñibles na Tenda de Complementos de NVDA que proporcionan soporte para matemáticas, incluindo o [complemento de NVDA MathCAT](https://nsoiffer.github.io/MathCAT/) e [Access8Math](https://github.com/tsengwoody/Access8Math). 
+Hai varios complementos de NVDA dispoñibles na Tenda de Complementos de NVDA que proporcionan soporte para matemáticas, incluindo o [complemento de NVDA MathCAT](https://nsoiffer.github.io/MathCAT/) e [Access8Math](https://github.com/tsengwoody/Access8Math).
 Por favor consulta a [seción Tenda de Complementos](#AddonsManager) para deprender como explorar e instalar complementos dispoñibles no NVDA.
 NVDA tamén pode facer uso do vello software [MathPlayer](https://info.wiris.com/mathplayer-info) de Wiris se se atopa no teu sistema, aíndaque este software xa non se mantén.
 
@@ -1121,7 +1193,7 @@ Aíndaque xeralmente recoméndase usar un dos novos complementos de NVDA para so
 Ex.: MathPlayer pode admitir unha lingua ou un código braille en particular que non estea soportado nos complementos máis novos.
 MathPlayer está dispoñible gratuitamente no sitio web de Wiris.
 [Descargar MathPlayer](https://downloads.wiris.com/mathplayer/MathPlayerSetup.exe).
-Despois de instalar MathPlayer, necesitarás reiniciar o NVDA. 
+Despois de instalar MathPlayer, necesitarás reiniciar o NVDA.
 Ten en conta que a información sobre MathPlayer pode indicar que é só para navegadores antigos coma o Internet Explorer 8.
 Esto só se refire ao uso de MathPlayer para amosar contido matemático visualmente e pode ignorarse por aqueles  que o usen para ler ou navegar por matemáticas con NVDA.
 
@@ -1189,7 +1261,7 @@ Co fin de ter a maior cantidade de información posible nunha pantalla braille, 
 |vár |vista en árbore|
 |btvár |botón de vista en árbore|
 |elvár |elemento de vista en árbore|
-|nv N |un elemento de vista en árbore que ten un nivel xerárquico N||
+|nv N |un elemento de vista en árbore que ten un nivel xerárquico N|
 |vt |ventá|
 |~~-~~ |separador|
 |cmr |contido marcado|
@@ -2200,23 +2272,11 @@ Este deslizador permíteche configurar o volume dos sons e os pitidos do NVDA.
 Esta opción só ten efecto  cando "Usar WASAPI para a saída de audio" estea habilitado e "O Volume dos sons do NVDA segue ao volume da voz" estea deshabilitado.
 Esta opción non está dispoñible se arancaches o NVDA co [WASAPI deshabilitado para a saída de audio](#WASAPI) nas Opcións Avanzadas.
 
-##### Tempo para manter o dispositivo de audio desperto tras a fala {#AudioAwakeTime}
-
-Esta caixa de edición especifica canto tempo mantén o NVDA o dispositivo de audio desperto despois de que deixe de falar.
-Esto permite ao NVDA evitar certos fallos da fala coma partes de palabras soltas.
-Esto pode ocorrer debido a que os dispositivos de audio (especialmente dispositivos Bluetooth e wireless) entren en modo de espera.
-Esto tamén podería seren útil noutros casos de uso, coma cando se executa o NVDA dentro dunha máquina virtual (ex.: Citrix Virtual Desktop), ou en certos portátiles.
-
-Os valores máis baixos poden permitir que o audio se corte máis de cotío, xa que un dispositivo pode entrar en modo de espera demasiado cedo, facendo que  o comezo da seguinte fala se curte.
-Un valor demasiado alto pode facer que a batería do dispositivo de saída de son se descargue máis rápidamente, xa que permanece activo durante máis tempo mentres non se envía son.
-
-Podes estabrecer o tempo a cero para deshabilitar esta característica.
-
 ##### Separación de son {#SelectSoundSplitMode}
 
 A característica separación de son permite aos usuarios usar os seus dispositivos de saída en estéreo, como auriculares e altavoces.
 A separación de son fai posible que o NVDA fale nunha canle (ex.: a esquerda) e ter as outras aplicacións reproducindo o seu son na outra canle (ex.: a dereita).
-Por defecto a separación de son está deshabilitada, o que significa que todas as aplicacións incluíndo ao NVDA reproducirán o son en ambas as dúas canles.
+Por defecto a separación de son está deshabilitada.
 Un xesto permite percorrer os distintos modos de separación de son:
 <!-- KC:beginInclude -->
 
@@ -2228,18 +2288,21 @@ Un xesto permite percorrer os distintos modos de separación de son:
 
 Por defecto esta orde percorrerá os seguintes modos:
 
-* Separación de son deshabilitada: o NVDA e as demáis aplicacións sacan os sons por ambas canles.
+* Separación de son deshabilitada: o NVDA non aplica ningún procesamento de división de son.
 * NVDA na esquerda e as aplicacións na dereita: o NVDA falará pola canle esquerda, mentres as outras aplicacións reproducirán o son pola canle da dereita.
-* NVDA na dereita e as aplicacións na esquerda: o NVDA falará pola canle da dereita, mentres as outras aplicacións reproducirán o son pola canle da esquerda.
+* NVDA na esquerda e as aplicacións en ambas as canles: o NVDA falará na canle esquerda, mentres as outras aplicacións reproducirán o son en ambas canles.
 
 Hai máis modos avanzados de separación de son dispoñibles na caixa combinada nas opcións do NVDA.
+Entre estos modos, "NVDA en ambas canles e as aplicacións en ambas canles" obriga a que todos os sons vaian a ambas canles.
+Este modo pode diferir do modo "Separación de son deshabilitada" en caso de que outro procesamento de audio interfira cos volúmenes das canles.
+
 Ten en conta que a separación de son non funciona coma un mixturador.
 Por exemplo, se unha aplicación está reproducindo unha pista de son estéreo mentres a división de son está configurada a "NVDA na esquerda e as aplicacións na dereita", entón só oirás a canle dereita da pista de son, mentres a canle esquerda da pista de son estará silenciada.
 
 Esta opción non está dispoñible se arrancaches o NVDA con [WASAPI deshabilitado para a saída de audio](#WASAPI) nas opcións avanzadas.
 
 Ten en conta que se o NVDA se bloquea, entón non poderás restaurar o volume dos sons da aplicación, e esas aplicacións poderían seguir emitindo o son só nunha canle tras o bloqueo do NVDA.
-Para mitigar esto, por favor reinicia o NVDA.
+Para mitigar esto, por favor reinicia o NVDA e seleciona o modo "NVDA en ambas canles e aplicacións en ambas canles".
 
 ##### Persoalizar modos de Separación de Son {#CustomizeSoundSplitModes}
 
@@ -2247,12 +2310,24 @@ Esta listaxe marcable permite selecionar que modos de separación de son se incl
 Os modos que estean desmarcados esclúense.
 Por defecto só se inclúen tres modos.
 
-* Separación de son deshabilitada: NVDA e as aplicacións reproducen o son en ambas canles.
-* NVDA na canle esquerda e as outras aplicacións na dereita.
-* NVDA na canle dereita e as outras aplicacións na esquerda.
+* Separación de son deshabilitada.
+* NVDA na esquerda e as aplicacións na dereita.
+* NVDA na esquerda e as aplicacións en ambas.
 
 Ten en conta que é necesario marcar polo menos un modo.
 Esta opción non está dispoñible se iniciaches o NVDA con [WASAPI deshabilitado para a saída de audio](#WASAPI) nas opcións avanzadas.
+
+##### Tempo para manter o dispositivo de audio desperto tras a fala {#AudioAwakeTime}
+
+Esta caixa de edición especifica canto tempo mantén o NVDA o dispositivo de audio desperto despois de que deixe de falar.
+Esto permite ao NVDA evitar certos fallos da fala coma partes de palabras soltas.
+Esto pode ocorrer debido a que os dispositivos de audio (especialmente dispositivos Bluetooth e wireless) entren en modo de espera.
+Esto tamén podería seren útil noutros casos de uso, coma cando se executa o NVDA dentro dunha máquina virtual (ex.: Citrix Virtual Desktop), ou en certos portátiles.
+
+Os valores máis baixos poden permitir que o audio se corte máis de cotío, xa que un dispositivo pode entrar en modo de espera demasiado cedo, facendo que  o comezo da seguinte fala se curte.
+Un valor demasiado alto pode facer que a batería do dispositivo de saída de son se descargue máis rápidamente, xa que permanece activo durante máis tempo mentres non se envía son.
+
+Podes estabrecer o tempo a cero para deshabilitar esta característica.
 
 #### Visión {#VisionSettings}
 
@@ -3139,8 +3214,7 @@ Notas:
 
 * As teclas asignadas deben ter xestos asignados para persistir cando se garden ou se peche o diálogo.
 * Un xesto de entrada con teclas modificadoras pode non seren capaz de mapearse a un xesto emulado sen teclas modificadoras.
-Por exemplo, configurar a entrada emulada 'a' e configurar un xesto de entrada de 'ctrl+m', pode resultar
-en que a aplicación reciba un 'ctrl+a'.
+Por exemplo, configurar a entrada emulada 'a' e configurar un xesto de entrada de 'ctrl+m', pode resultar en que a aplicación reciba un 'ctrl+a'.
 
 Cando teñas rematado de facer cambios, preme o botón Aceptar para gardalos ou o botón Cancelar para descartalos.
 
@@ -4487,12 +4561,12 @@ Debido a esto, e para manter compatibilidade con outros lectores de pantalla en 
 
 ### Pantallas Eurobraille {#Eurobraille}
 
-As pantallas b.book, b.note, Esys, Esytime e Iris de Eurobraille están admitidas polo NVDA.  
-Estos dispositivos teñen un teclado braille con 10 teclas. 
+As pantallas b.book, b.note, Esys, Esytime e Iris de Eurobraille están admitidas polo NVDA.
+Estos dispositivos teñen un teclado braille con 10 teclas.
 Por favor consulta a documentación da pantalla para descripcións destas teclas.
 Das dúas teclas colocadas como barra espaciadora, a tecla da esquerda correspóndese coa tecla retroceso e a tecla dereita coa barra espaciadora.
 
-Estos dispositivos conéctanse mediante USB e teñen un teclado USB independente. 
+Estos dispositivos conéctanse mediante USB e teñen un teclado USB independente.
 É posible habilitar e deshabilitar este teclado conmutando "Simulación de Teclado HID" usando un xesto de entrada.
 As funcións do teclado braille que se describen a continuación realízanse cando a "Simulación de teclado HID" está desactivada.
 
