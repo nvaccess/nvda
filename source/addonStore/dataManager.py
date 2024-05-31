@@ -37,6 +37,7 @@ from .models.addon import (
 	_createStoreCollectionFromJson,
 )
 from .models.channel import Channel
+from .models.status import AvailableAddonStatus, getStatus, _StatusFilterKey
 from .network import (
 	_getCurrentApiVersionForURL,
 	_getAddonStoreURL,
@@ -47,7 +48,7 @@ from .network import (
 if TYPE_CHECKING:
 	from addonHandler import Addon as AddonHandlerModel  # noqa: F401
 	# AddonGUICollectionT must only be imported when TYPE_CHECKING
-	from .models.addon import AddonGUICollectionT, _AddonStoreModel  # noqa: F401
+	from .models.addon import AddonGUICollectionT, _AddonGUIModel, _AddonStoreModel  # noqa: F401
 	from gui.addonStoreGui.viewModels.addonList import AddonListItemVM  # noqa: F401
 	from gui.message import DisplayableError  # noqa: F401
 
@@ -307,6 +308,15 @@ class _DataManager:
 		if not cacheData:
 			return None
 		return _createInstalledStoreModelFromData(cacheData)
+
+	def _addonsPendingUpdate(self) -> set["_AddonGUIModel"]:
+		addonsPendingUpdate = set()
+		compatibleAddons = self.getLatestCompatibleAddons()
+		for channel in compatibleAddons:
+			for addon in compatibleAddons[channel].values():
+				if getStatus(addon, _StatusFilterKey.UPDATE) == AvailableAddonStatus.UPDATE:
+					addonsPendingUpdate.add(addon)
+		return addonsPendingUpdate
 
 
 class _InstalledAddonsCache(AutoPropertyObject):

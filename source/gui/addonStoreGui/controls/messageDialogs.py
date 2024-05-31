@@ -15,7 +15,10 @@ from addonStore.models.addon import (
 	_AddonStoreModel,
 	_AddonManifestModel,
 )
+from addonStore.dataManager import addonDataManager
 import config
+from logHandler import log
+import gui
 from gui.addonGui import ConfirmAddonInstallDialog, ErrorAddonInstallDialog
 from gui.contextHelp import ContextHelpMixin
 from gui.guiHelper import (
@@ -348,3 +351,62 @@ class _SafetyWarningDialog(
 	def onOkButton(self, evt: wx.CommandEvent):
 		config.conf["addonStore"]["showWarning"] = not self.dontShowAgainCheckbox.GetValue()
 		self.EndModal(wx.ID_OK)
+
+
+class UpdatableAddonsDialog(
+		ContextHelpMixin,
+		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+):
+	"""A dialog notifying users that updatable add-ons are available"""
+
+	helpId = "UpdatingAddons"  # TODO make custom
+
+	def __init__(self, parent: wx.Window, addonsPendingUpdate: set[_AddonGUIModel]):
+		# Translators: The warning of a dialog
+		super().__init__(parent, title=pgettext("addonStore", "Add-on updates available"))
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		sHelper = BoxSizerHelper(self, orientation=wx.VERTICAL)
+
+		_message = pgettext(
+			"addonStore",
+			# Translators: Message displayed when updates are available for some installed add-ons.
+			"Updates are available for some of your installed add-ons. "
+			"Open the Add-on Store to update them. "
+		)
+
+		sText = sHelper.addItem(wx.StaticText(self, label=_message))
+		# the wx.Window must be constructed before we can get the handle.
+		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
+		sText.Wrap(
+			# 600 was fairly arbitrarily chosen by a visual user to look acceptable on their machine.
+			self.scaleFactor * 600
+		)
+
+		sHelper.sizer.AddSpacer(SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
+
+		bHelper = sHelper.addDialogDismissButtons(ButtonHelper(wx.HORIZONTAL))
+
+		# Translators: The label of a button in a dialog
+		updateButton = bHelper.addButton(self, wx.ID_OK, label=pgettext("addonStore", "&Update Add-ons"))
+		updateButton.Bind(wx.EVT_BUTTON, self.onUpdateButton)
+
+		bHelper.addButton(self, wx.ID_CLOSE, label=pgettext("addonStore", "&Close"))
+
+		mainSizer.Add(sHelper.sizer, border=BORDER_FOR_DIALOGS, flag=wx.ALL)
+		self.Sizer = mainSizer
+		mainSizer.Fit(self)
+		self.CentreOnScreen()
+
+	def onUpdateButton(self, evt: wx.CommandEvent):
+		"""Open the Add-on Store to update add-ons"""
+		# call later so current dialog is dismissed and doesn't block the store from opening
+		wx.CallLater(100, gui.mainFrame.onAddonStoreUpdatableCommand, None)
+		self.EndModal(wx.ID_OK)
+
+	@classmethod
+	def _checkForUpdatableAddons(cls):
+		log.debug("checking for updatable add-ons")
+		addonsPendingUpdate = addonDataManager._addonsPendingUpdate()
+		if addonsPendingUpdate:
+			log.debug("updatable add-ons found")
+			displayDialogAsModal(cls(gui.mainFrame, addonsPendingUpdate))

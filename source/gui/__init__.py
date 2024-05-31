@@ -408,6 +408,21 @@ class MainFrame(wx.Frame):
 		_storeVM.refresh()
 		self.popupSettingsDialog(AddonStoreDialog, _storeVM)
 
+	@blockAction.when(
+		blockAction.Context.SECURE_MODE,
+		blockAction.Context.MODAL_DIALOG_OPEN,
+		blockAction.Context.WINDOWS_LOCKED,
+		blockAction.Context.WINDOWS_STORE_VERSION,
+		blockAction.Context.RUNNING_LAUNCHER,
+	)
+	def onAddonStoreUpdatableCommand(self, evt: wx.MenuEvent):
+		from .addonStoreGui import AddonStoreDialog
+		from .addonStoreGui.viewModels.store import AddonStoreVM
+		from addonStore.models.status import _StatusFilterKey
+		_storeVM = AddonStoreVM()
+		_storeVM.refresh()
+		self.popupSettingsDialog(AddonStoreDialog, _storeVM, openToTab=_StatusFilterKey.UPDATE)
+
 	def onReloadPluginsCommand(self, evt):
 		import appModuleHandler, globalPluginHandler
 		from NVDAObjects import NVDAObject
