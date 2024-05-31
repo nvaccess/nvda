@@ -37,6 +37,7 @@ from .commands import (
 	LangChangeCommand,
 	BeepCommand,
 	EndUtteranceCommand,
+	SuppressUnicodeNormalizationCommand,
 	CharacterModeCommand,
 )
 from .shortcutKeys import getKeyboardShortcutsSpeech
@@ -160,11 +161,16 @@ def isBlank(text):
 RE_CONVERT_WHITESPACE = re.compile("[\0\r\n]")
 
 
-def processText(locale: str, text: str, symbolLevel: characterProcessing.SymbolLevel) -> str:
+def processText(
+		locale: str,
+		text: str,
+		symbolLevel: characterProcessing.SymbolLevel,
+		normalize: bool = False
+) -> str:
 	text = speechDictHandler.processText(text)
 	text = characterProcessing.processSpeechSymbols(locale, text, symbolLevel)
 	text = RE_CONVERT_WHITESPACE.sub(" ", text)
-	if config.conf["speech"]["unicodeNormalization"]:
+	if normalize:
 		text = unicodeNormalize(text)
 	return text.strip()
 
@@ -508,6 +514,10 @@ def getSpellingSpeech(
 		capPitchChange = synthConfig["capPitchChange"]
 	else:
 		capPitchChange = 0
+	unicodeNormalization = (
+		not useCharacterDescriptions
+		and bool(config.conf["speech"]["unicodeNormalization"])
+	)
 	seq = _getSpellingSpeechWithoutCharMode(
 		text,
 		locale,
@@ -515,12 +525,17 @@ def getSpellingSpeech(
 		sayCapForCapitals=synthConfig["sayCapForCapitals"],
 		capPitchChange=capPitchChange,
 		beepForCapitals=synthConfig["beepForCapitals"],
-		unicodeNormalization=bool(config.conf["speech"]["unicodeNormalization"]),
+		unicodeNormalization=unicodeNormalization,
 		reportNormalizedForCharacterNavigation=config.conf["speech"]["reportNormalizedForCharacterNavigation"],
 	)
 	if synthConfig["useSpellingFunctionality"]:
 		seq = _getSpellingSpeechAddCharMode(seq)
+	# This function applies Unicode normalization as appropriate.
+	# Therefore, suppress the global normalization that might still occur
+	# (i.e. when speak calls the processText function).
+	yield SuppressUnicodeNormalizationCommand(True)
 	yield from seq
+	yield SuppressUnicodeNormalizationCommand(False)
 
 
 def getCharDescListFromText(text,locale):
@@ -1036,6 +1051,7 @@ def speak(  # noqa: C901
 	curLanguage=defaultLanguage=getCurrentLanguage()
 	prevLanguage=None
 	defaultLanguageRoot=defaultLanguage.split('_')[0]
+	unicodeNormalization = initialUnicodeNormalization = config.conf["speech"]["unicodeNormalization"]
 	oldSpeechSequence=speechSequence
 	speechSequence=[]
 	for item in oldSpeechSequence:
@@ -1065,12 +1081,19 @@ def speak(  # noqa: C901
 	inCharacterMode=False
 	for index in range(len(speechSequence)):
 		item=speechSequence[index]
-		if isinstance(item,CharacterModeCommand):
+		if isinstance(item, CharacterModeCommand):
 			inCharacterMode=item.state
-		if autoLanguageSwitching and isinstance(item,LangChangeCommand):
+		elif autoLanguageSwitching and isinstance(item, LangChangeCommand):
 			curLanguage=item.lang
-		if isinstance(item,str):
-			speechSequence[index]=processText(curLanguage,item,symbolLevel)
+		elif isinstance(item, SuppressUnicodeNormalizationCommand):
+			unicodeNormalization = initialUnicodeNormalization and item.state
+		elif isinstance(item,str):
+			speechSequence[index]=processText(
+				curLanguage,
+				item,
+				symbolLevel,
+				normalize=unicodeNormalization
+			)
 			if not inCharacterMode:
 				speechSequence[index]+=CHUNK_SEPARATOR
 	_manager.speak(speechSequence, priority)

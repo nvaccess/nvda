@@ -202,6 +202,24 @@ class EndUtteranceCommand(SpeechCommand):
 	def __repr__(self):
 		return "EndUtteranceCommand()"
 
+
+class SuppressUnicodeNormalizationCommand(SpeechCommand):
+	"""Suppresses Unicode normalization at a point in a speech sequence.
+	For any text after this, Unicode normalization will be suppressed.
+	To restore normalization, provide an EndUtteranceCommand.
+	"""
+	state: bool
+
+	def __init__(self, state: bool = True):
+		"""
+		@param state: SUppress normalization if True, don't suppress when False
+		"""
+		self.state = state
+
+	def __repr__(self):
+		return f"SuppressUnicodeNormalizationCommand({self.state!r})"
+
+
 class BaseProsodyCommand(SynthParamCommand):
 	"""Base class for commands which change voice prosody; i.e. pitch, rate, etc.
 	The change to the setting is specified using either an offset or a multiplier, but not both.
