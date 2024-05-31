@@ -515,7 +515,7 @@ def getSpellingSpeech(
 		sayCapForCapitals=synthConfig["sayCapForCapitals"],
 		capPitchChange=capPitchChange,
 		beepForCapitals=synthConfig["beepForCapitals"],
-		unicodeNormalization=config.conf["speech"]["unicodeNormalization"],
+		unicodeNormalization=bool(config.conf["speech"]["unicodeNormalization"]),
 		reportNormalizedForCharacterNavigation=config.conf["speech"]["reportNormalizedForCharacterNavigation"],
 	)
 	if synthConfig["useSpellingFunctionality"]:
@@ -1553,12 +1553,12 @@ def getTextInfoSpeech(  # noqa: C901
 		speechSequence.append(LangChangeCommand(language))
 		lastLanguage=language
 	isWordOrCharUnit = unit in (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD)
+	firstText = ""
+	if len(textWithFields) > 0:
+		firstText = textWithFields[0].strip() if not textWithFields[0].isspace() else textWithFields[0]
 	if onlyInitialFields or (
 		isWordOrCharUnit
-		and len(textWithFields) > 0
-		and len(
-			unicodeNormalize(textWithFields[0].strip() if not textWithFields[0].isspace() else textWithFields[0])
-		) == 1
+		and (len(firstText) == 1 or len(unicodeNormalize(firstText)) == 1)
 		and all(_isControlEndFieldCommand(x) for x in itertools.islice(textWithFields, 1, None))
 	):
 		if reason != OutputReason.ONLYCACHE:
