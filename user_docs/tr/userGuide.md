@@ -232,7 +232,7 @@ Girdi yardımı açıkken komutlar farklı uygulamalara gönderilmez.
 |Metin biçimini oku |`NVDA+f` |`NVDA+f` |Metin biçimlendirmesini bildirir. İki kez basıldığında bilgileri bir pencerede gösterir|
 |Link hedefini bildir |`NVDA+k` |`NVDA+k` |NESNE Sunucusu üzerinde bulunduğu linkin yönlendirdiği web adresini okur. İki kez basıldığında daha kolay incelenebilmesi için web adresini bir pencerede gösterir|
 
-#### NVDA'nın hangi bilgileri okumasını değiştirme {#ToggleWhichInformationNVDAReads}
+#### NVDA'nın hangi bilgileri okumasınıAyarlama {#ToggleWhichInformationNVDAReads}
 
 | işlev |Masa üstü kısayolu |Dizüstü Kısayolu |Açıklama|
 |---|---|---|---|
@@ -3139,8 +3139,7 @@ Not:
 
 * Taklit sistem klavye tuşu kategorisine eklediğiniz komutların, iletişim kutusunu kaydederken / kapatırken silinmemelerini istiyorsanız o komutlar için girdi hareketi atamalısınız. Başka deyişle, girdi hareketleri iletişim kutusunu eklediğiniz komut için girdi hareketi atamadan kapatırsanız, bu iletişim kutusunu tekrar açtığınızda eklediğiniz komutu bulamazsınız.
 * Değişken tuşlara sahip bir giriş hareketi, değişken tuş olmadan taklit edilen bir hareketle eşlenemeyebilir.
-Örneğin, taklit 'a' girişini ayarlamak ve 'ctrl + m' giriş hareketini yapılandırmak,
-uygulamanın 'ctrl + a' almasına neden olabilir.
+Örneğin, taklit 'a' girişini ayarlamak ve 'ctrl + m' giriş hareketini yapılandırmak, uygulamanın 'ctrl + a' almasına neden olabilir.
 
 Değişiklikleri yaptıktan sonra, kaydetmek için tamam, vazgeçmek için iptal tuşuna basın.
 
@@ -4945,5 +4944,5 @@ Bu kayıt defteri anahtarı altında aşağıdaki değerler ayarlanabilir:
 
 NVDA ile ilgili daha fazla bilgiye veya yardıma ihtiyaç duyarsanız, NVDA_URL adresini ziyaret edebilirsiniz.
 Burada, ek belgeleri, ve teknik destek ile açık kaynak kodlarını bulabilirsiniz.
-Bu sayfa ayrıca NVDA geliştirmesiyle ilgili olarak bilgi ve kaynaklar da sağlamaktadır.
+Bu sayfa ayrıca NVDA geliştirmesiyle ilgili olarak bilgi ve kaynaklar da sağlamaktadır. 
 

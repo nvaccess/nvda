@@ -1,5 +1,5 @@
 ﻿# A part of NonVisual Desktop Access (NVDA)
-# Copyright (c) 2011-2023 NVDA Contributors
+# Copyright (c) 2011-2024 NVDA Contributors
 # This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -11,6 +11,8 @@ complexSymbols:
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
+# Series of dots used for visual presentation, e.g. in table of contents
+multiple .	\.{4,}
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word -	(?<=[^\W_])[-]
@@ -28,6 +30,7 @@ symbols:
 ? sentence ending	cerrar interrogación	all	always
 ; phrase ending	punto y coma	most	always
 : phrase ending	dos puntos	most	always
+multiple .	múltiples puntos	all	always
 decimal point		none	always
 in-word '	apóstrofo	all	norep
 in-word -	guión	all	norep
@@ -66,12 +69,16 @@ $	dólares	all	norep
 ،	coma arábiga	all	always
 -	guion	most	always
 .	punto	some
+．	punto y a parte de ancho completo	some
 /	barra	some
 :	dos puntos	most	norep
+：	dos puntos de ancho completo	most	norep
 ;	punto y coma	most
 ؛	punto y coma arábigo	most
+；	punto y coma de ancho completo	most
 ?	cerrar interrogación	all
 ؟	signo de interrogación arábigo	all
+？	signo de interrogación de ancho completo	all
 @	arroba	some
 [	abrir corchete	most
 ]	cerrar corchete	most
