@@ -1881,8 +1881,8 @@ If you find that NVDA is reading punctuation in the wrong language for a particu
 ##### Unicode normalization {#SpeechUnicodeNormalization}
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Default (Enabled), Enabled, Disabled|
-|Default |Enabled|
+|Options |Default (Disabled), Enabled, Disabled|
+|Default |Disabled|
 
 When this option is enabled, unicode normalization is performed on the text that is spoken by NVDA.
 This is beneficial when speaking characters that can be represented in several forms.
@@ -1903,6 +1903,13 @@ For example, the character "ü" (u with umlaut/diaeresis), a common character in
 1. Stable ordering of modifiers in composite characters, for example in ancient Hebrew.
 
 To toggle Unicode normalization from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+
+##### Report "Normalized" when navigating by character {#SpeechReportNormalizedForCharacterNavigation}
+
+This setting is a checkbox that, when checked, tells NVDA to explicitly report that a character is normalized when spoken as an individual character such as when spelling.
+For example, when this option is enabled, spelling the character "ĳ" will pronounce it as "i j normalized".
+
+Note that this setting is only available when "[Unicode normalization](#SpeechUnicodeNormalization)" is enabled.
 
 ##### Include Unicode Consortium data (including emoji) when processing characters and symbols {#SpeechSettingsCLDR}
 
