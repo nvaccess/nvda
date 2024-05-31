@@ -56,7 +56,8 @@ Character descriptions can be provided for a locale in a file named characterDes
 This is a UTF-8 encoded text file.
 Blank lines and lines beginning with a "#" character are ignored.
 All other lines should contain a character, followed by a tab, then one or more descriptions separated by tabs.
-Multiple descriptions for a character will be read with natural pauses between them.
+Multiple descriptions for a character will be read with natural pauses between them when reading a single character, e.g. when using `leftArrow` or `rightArrow`.
+When reading character descriptions of multiple subsequent characters using spelling commands, the first description is used for each character, e.g. spelling the current line with triple press on `NVDA+upArrow`.
 
 For example:
 
