@@ -319,7 +319,7 @@ class AddonStoreDialog(SettingsDialog):
 			_StatusFilterKey.AVAILABLE,
 			_StatusFilterKey.UPDATE,
 		}:
-			if self._storeVM._filteredStatusKey ==_StatusFilterKey.UPDATE and (
+			if self._storeVM._filteredStatusKey == _StatusFilterKey.UPDATE and (
 				self._storeVM._installedAddons[Channel.DEV]
 				or self._storeVM._installedAddons[Channel.BETA]
 			):
