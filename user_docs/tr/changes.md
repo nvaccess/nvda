@@ -56,7 +56,7 @@ Thunderbird, Adobe Reader, web tarayıcıları, Nudi ve Geekbench gibi uygulamal
 
 * Eklenti mağazası:
   * Eklentilerin asgari ve son test edilen NVDA sürümü bilgileri "diğer ayrıntılar" alanında görüntüleniyor. (#15776, @ Nael - Sayegh)
-  * Topluluk incelemeleri özelliği kullanılabilecek ve incelemeler web sayfası, mağazanın tüm sekmelerinde ayrıntılar kısmında gösterilecek. (#16179, @ nvdaes)
+  * Topluluk incelemeleri özelliği mağazanın tüm sekmelerinde kullanılabilecek. (#16179, @ nvdaes)
 * Bileşen güncellemeleri:
   * LibLouis Braille translator [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0) sürümüne güncellendi. (#16259, @codeofdusk)
     * Büyük harflerin belirtildiği detaylı Belarusça ve Ukraynaca Braille tabloları eklendi.
@@ -88,8 +88,9 @@ Thunderbird, Adobe Reader, web tarayıcıları, Nudi ve Geekbench gibi uygulamal
 * NVDA'nın Geekbench'teki şeridi ve seçenekleri okuyamamasına neden olan bir hata düzeltildi. (#16251, @mzanm)
 * Konfigürasyon kaydedildiiğinde tüm profillerin kaydedilememesi gibi nadir bir durum düzeltildi. (# 16343, @CyrilleB79)
 * Firefox ve Chromium tabanlı tarayıcılarda, NVDA, düzenlenebilir içeriğin içinde bir sunum listesinde (ul / ol) Enter tuşuna basıldığında odak kipine doğru bir şekilde girecek. (#16325)
-* Thunderbird mesaj listesinde görüntülenecek sütunları seçerken sütun durumu değişikliği otomatik olarak bildiriliyor. (#16323)
+* Thunderbird mesaj listesinde görüntülenecek sütunları seçerken sütun durumu değişikliği doğru bir şekilde bildiriliyor. (#16323)
 * `-h`/`--help` komut satırı komutu yeniden doğru biçimde çalışıyor. (#16522, @XLTechie)
+* Çince, Lehçe gibi bir veya 2'den fazla çoğul kelime hâli olan dillere çeviri yaparken NVDA'nın Poedit çeviri yazılımının 3.4 ve üzeri sürümleri için desteği doğru biçimde çalışıyor. (#16318)
 
 ### Changes for Developers
 
