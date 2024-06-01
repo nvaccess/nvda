@@ -13,7 +13,8 @@ import locale
 import unicodedata
 from abc import ABCMeta, abstractmethod, abstractproperty
 from collections import defaultdict
-from difflib import ndiff
+from difflib import ndiff, SequenceMatcher
+from contextlib import contextmanager
 from functools import cached_property
 from typing import Optional, Tuple, Type
 
@@ -420,6 +421,20 @@ class IdentityOffsetConverter(OffsetConverter):
 DEFAULT_UNICODE_NORMALIZATION_ALGORITHM = "NFKC"
 
 
+@contextmanager
+def _monkeyPatch_SequenceMatcher_autojunk():
+	"""difflib.ndiff uses difflib.SequenceMatcher under the hood,
+	but it doesn't allow us to control the autojunk parameter of SequenceMatcher.
+	This context manager, when active, ensures that ndiff uses a monkey patched SequenceMatcher
+	with autojunk disabled.
+	"""
+	try:
+		SequenceMatcher.autojunk=property(lambda sm: False, lambda sm, v: None)
+		yield
+	finally:
+		del SequenceMatcher.autojunk
+
+
 class UnicodeNormalizationOffsetConverter(OffsetConverter):
 	"""
 	Object that holds a string in both its decoded and its unicode normalized form.
@@ -440,7 +455,8 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 
 	def _calculateOffsets(self) -> tuple[tuple[int], tuple[int]]:
 		# Initialize a diff list between the decoded original and the normalized string.
-		diff = list(ndiff(self.decoded, self.encoded))
+		with _monkeyPatch_SequenceMatcher_autojunk():
+			diff = list(ndiff(self.decoded, self.encoded))
 		diff.append("!")  # Closing the diff
 		# Initialize indices and buffers for tracking positions and changes.
 		iOrigin = iNormalized = 0
