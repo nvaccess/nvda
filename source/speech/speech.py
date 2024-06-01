@@ -437,12 +437,10 @@ def _getSpellingSpeechWithoutCharMode(
 		elif useCharacterDescriptions and not charDesc and not fallbackToCharIfNoDescription:
 			return None
 		else:
-			symbol = characterProcessing.processSpeechSymbol(locale,speakCharAs)
-			if symbol != speakCharAs:
+			if (symbol := characterProcessing.processSpeechSymbol(locale, speakCharAs)) != speakCharAs:
 				speakCharAs = symbol
 			elif not isNormalized and unicodeNormalization:
-				normalized = unicodeNormalize(speakCharAs)
-				if speakCharAs != normalized:
+				if (normalized := unicodeNormalize(speakCharAs)) != speakCharAs:
 					speakCharAs = " ".join(normalized)
 					isNormalized = True
 		if config.conf['speech']['autoLanguageSwitching']:
