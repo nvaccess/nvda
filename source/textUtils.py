@@ -449,7 +449,7 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 		with autojunk disabled.
 		"""
 		try:
-			SequenceMatcher.autojunk=property(lambda sm: False, lambda sm, v: None)
+			SequenceMatcher.autojunk = property(lambda sm: False, lambda sm, v: None)
 			yield
 		finally:
 			del SequenceMatcher.autojunk
