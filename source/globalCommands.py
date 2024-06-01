@@ -4510,7 +4510,7 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+alt+s",
 	)
 	def script_cycleSoundSplit(self, gesture: "inputCore.InputGesture") -> None:
-		audio.toggleSoundSplitState()
+		audio._toggleSoundSplitState()
 
 	@script(
 		description=_(
@@ -4521,7 +4521,7 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+alt+pageUp",
 	)
 	def script_increaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
-		appsVolume.adjustAppsVolume(5)
+		appsVolume._adjustAppsVolume(5)
 
 	@script(
 		description=_(
@@ -4532,7 +4532,7 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+alt+pageDown",
 	)
 	def script_decreaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
-		appsVolume.adjustAppsVolume(-5)
+		appsVolume._adjustAppsVolume(-5)
 
 	@script(
 		description=_(
@@ -4543,7 +4543,7 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+alt+delete",
 	)
 	def script_toggleApplicationsMute(self, gesture: "inputCore.InputGesture") -> None:
-		appsVolume.toggleAppsVolumeState()
+		appsVolume._toggleAppsVolumeState()
 
 #: The single global commands instance.
 #: @type: L{GlobalCommands}

@@ -21,9 +21,9 @@ class VolumeAndMute(NamedTuple):
 	mute: bool
 
 
-appVolumesCache: dict[int, VolumeAndMute] = {}
-appVolumesCacheLock = Lock()
-activeCallback: DummyAudioSessionCallback | None = None
+_appVolumesCache: dict[int, VolumeAndMute] = {}
+_appVolumesCacheLock = Lock()
+_activeCallback: DummyAudioSessionCallback | None = None
 
 
 def initialize() -> None:
@@ -32,14 +32,14 @@ def initialize() -> None:
 		state = AppsVolumeAdjusterFlag.ENABLED
 		config.conf["audio"]["applicationsVolumeMode"] = state
 	volume = config.conf["audio"]["applicationsSoundVolume"]
-	updateAppsVolumeImpl(volume / 100.0, state)
+	_updateAppsVolumeImpl(volume / 100.0, state)
 
 
 def terminate():
-	global activeCallback
-	if activeCallback is not None:
-		activeCallback.unregister()
-		activeCallback = None
+	global _activeCallback
+	if _activeCallback is not None:
+		_activeCallback.unregister()
+		_activeCallback = None
 
 
 @dataclass(unsafe_hash=True)
@@ -48,8 +48,9 @@ class VolumeSetter(AudioSessionCallback):
 
 	def getOriginalVolumeAndMute(self, pid: int) -> VolumeAndMute:
 		try:
-			with appVolumesCacheLock:
-				originalVolumeAndMute = appVolumesCache[pid]
+			with _appVolumesCacheLock:
+				originalVolumeAndMute = _appVolumesCache[pid]
+				del _appVolumesCache[pid]
 		except KeyError:
 			originalVolumeAndMute = VolumeAndMute(volume=1.0, mute=False)
 		return originalVolumeAndMute
@@ -57,9 +58,9 @@ class VolumeSetter(AudioSessionCallback):
 	def onSessionUpdate(self, session: AudioSession) -> None:
 		pid = session.ProcessId
 		simpleVolume = session.SimpleAudioVolume
-		with appVolumesCacheLock:
-			if pid not in appVolumesCache:
-				appVolumesCache[pid] = VolumeAndMute(
+		with _appVolumesCacheLock:
+			if pid not in _appVolumesCache:
+				_appVolumesCache[pid] = VolumeAndMute(
 					volume=simpleVolume.GetMasterVolume(),
 					mute=simpleVolume.GetMute(),
 				)
@@ -78,11 +79,11 @@ class VolumeSetter(AudioSessionCallback):
 			log.exception(f"Could not restore master volume of process {pid} upon exit.")
 
 
-def updateAppsVolumeImpl(
+def _updateAppsVolumeImpl(
 		volume: float,
 		state: AppsVolumeAdjusterFlag,
 ):
-	global activeCallback
+	global _activeCallback
 	if state == AppsVolumeAdjusterFlag.DISABLED:
 		newCallback = DummyAudioSessionCallback()
 		runTerminators = True
@@ -94,13 +95,13 @@ def updateAppsVolumeImpl(
 			)
 		)
 		runTerminators = False
-	if activeCallback is not None:
-		activeCallback.unregister(runTerminators=runTerminators)
-	activeCallback = newCallback
-	activeCallback.register()
+	if _activeCallback is not None:
+		_activeCallback.unregister(runTerminators=runTerminators)
+	_activeCallback = newCallback
+	_activeCallback.register()
 
 
-def adjustAppsVolume(
+def _adjustAppsVolume(
 		volumeAdjustment: int | None = None,
 ):
 	if not nvwave.usingWasapiWavePlayer():
@@ -123,20 +124,20 @@ def adjustAppsVolume(
 	config.conf["audio"]["applicationsSoundVolume"] = volume
 
 	# We skip running terminators here to avoid application volume spiking to 100% for a split second.
-	updateAppsVolumeImpl(volume / 100.0, state)
+	_updateAppsVolumeImpl(volume / 100.0, state)
 	# Translators: Announcing new applications' volume message
 	msg = _("Applications volume {}").format(volume)
 	ui.message(msg)
 
 
-APPS_VOLUME_STATES_ORDER = [
+_APPS_VOLUME_STATES_ORDER = [
 	AppsVolumeAdjusterFlag.DISABLED,
 	AppsVolumeAdjusterFlag.ENABLED,
 	AppsVolumeAdjusterFlag.MUTED,
 ]
 
 
-def toggleAppsVolumeState():
+def _toggleAppsVolumeState():
 	if not nvwave.usingWasapiWavePlayer():
 		message = _(
 			# Translators: error message when wasapi is turned off.
@@ -148,11 +149,11 @@ def toggleAppsVolumeState():
 	state = config.conf["audio"]["applicationsVolumeMode"]
 	volume: int = config.conf["audio"]["applicationsSoundVolume"]
 	try:
-		index = APPS_VOLUME_STATES_ORDER.index(state)
+		index = _APPS_VOLUME_STATES_ORDER.index(state)
 	except ValueError:
 		index = -1
-	index = (index + 1) % len(APPS_VOLUME_STATES_ORDER)
-	state = APPS_VOLUME_STATES_ORDER[index]
+	index = (index + 1) % len(_APPS_VOLUME_STATES_ORDER)
+	state = _APPS_VOLUME_STATES_ORDER[index]
 	config.conf["audio"]["applicationsVolumeMode"] = state.name
-	updateAppsVolumeImpl(volume / 100.0, state)
+	_updateAppsVolumeImpl(volume / 100.0, state)
 	ui.message(state.displayString)

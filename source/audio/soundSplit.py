@@ -90,19 +90,19 @@ class SoundSplitState(DisplayStringIntEnum):
 				raise RuntimeError(f"Unexpected or unknown state {self=}")
 
 
-activeCallback: DummyAudioSessionCallback | None = None
+_activeCallback: DummyAudioSessionCallback | None = None
 
 
 def initialize() -> None:
 	state = SoundSplitState(config.conf["audio"]["soundSplitState"])
-	setSoundSplitState(state)
+	_setSoundSplitState(state)
 
 
 def terminate():
-	global activeCallback
-	if activeCallback is not None:
-		activeCallback.unregister()
-		activeCallback = None
+	global _activeCallback
+	if _activeCallback is not None:
+		_activeCallback.unregister()
+		_activeCallback = None
 
 
 @dataclass(unsafe_hash=True)
@@ -144,30 +144,30 @@ class ChannelVolumeSetter(AudioSessionCallback):
 			log.exception(f"Could not restore channel volume of process {pid} upon exit.")
 
 
-def setSoundSplitState(state: SoundSplitState) -> dict:
-	global activeCallback
-	if activeCallback is not None:
-		activeCallback.unregister()
-		activeCallback = None
+def _setSoundSplitState(state: SoundSplitState) -> dict:
+	global _activeCallback
+	if _activeCallback is not None:
+		_activeCallback.unregister()
+		_activeCallback = None
 	if state == SoundSplitState.OFF:
-		activeCallback = DummyAudioSessionCallback()
+		_activeCallback = DummyAudioSessionCallback()
 	else:
 		leftVolume, rightVolume = state.getAppVolume()
 		leftNVDAVolume, rightNVDAVolume = state.getNVDAVolume()
-		activeCallback = ChannelVolumeSetter(
+		_activeCallback = ChannelVolumeSetter(
 			leftVolume=leftVolume,
 			rightVolume=rightVolume,
 			leftNVDAVolume=leftNVDAVolume,
 			rightNVDAVolume=rightNVDAVolume,
 		)
-	activeCallback.register()
-	notTwoChannels = False if state == SoundSplitState.OFF else activeCallback.foundSessionWithNot2Channels
+	_activeCallback.register()
+	notTwoChannels = False if state == SoundSplitState.OFF else _activeCallback.foundSessionWithNot2Channels
 	return {
 		"foundSessionWithNot2Channels": notTwoChannels,
 	}
 
 
-def toggleSoundSplitState() -> None:
+def _toggleSoundSplitState() -> None:
 	if not nvwave.usingWasapiWavePlayer():
 		message = _(
 			# Translators: error message when wasapi is turned off.
@@ -185,7 +185,7 @@ def toggleSoundSplitState() -> None:
 		i = -1
 	i = (i + 1) % len(allowedStates)
 	newState = SoundSplitState(allowedStates[i])
-	result = setSoundSplitState(newState)
+	result = _setSoundSplitState(newState)
 	config.conf["audio"]["soundSplitState"] = newState.value
 	ui.message(newState.displayString)
 	if result["foundSessionWithNot2Channels"]:

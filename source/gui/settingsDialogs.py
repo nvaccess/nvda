@@ -2847,7 +2847,7 @@ class AudioPanel(SettingsPanel):
 		index = self.soundSplitComboBox.GetSelection()
 		config.conf["audio"]["soundSplitState"] = index
 		if nvwave.usingWasapiWavePlayer():
-			audio.setSoundSplitState(audio.SoundSplitState(index))
+			audio._setSoundSplitState(audio.SoundSplitState(index))
 		config.conf["audio"]["includedSoundSplitModes"] = [
 			mIndex
 			for mIndex in range(len(self._allSoundSplitModes))
@@ -2855,6 +2855,11 @@ class AudioPanel(SettingsPanel):
 		]
 		config.conf["audio"]["applicationsSoundVolume"] = self.appSoundVolSlider.GetValue()
 		self.appVolAdjusterCombo.saveCurrentValueToConf()
+		audio.appsVolume._updateAppsVolumeImpl(
+			volume=self.appSoundVolSlider.GetValue()/100.0,
+			state=self.appVolAdjusterCombo._getControlCurrentValue(),
+		)
+
 		if audioDucking.isAudioDuckingSupported():
 			index = self.duckingList.GetSelection()
 			config.conf["audio"]["audioDuckingMode"] = index
