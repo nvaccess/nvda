@@ -1,4 +1,3 @@
-#  -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -205,14 +204,15 @@ class EndUtteranceCommand(SpeechCommand):
 
 class SuppressUnicodeNormalizationCommand(SpeechCommand):
 	"""Suppresses Unicode normalization at a point in a speech sequence.
-	For any text after this, Unicode normalization will be suppressed.
-	To restore normalization, provide an EndUtteranceCommand.
+	For any text after this, Unicode normalization will be suppressed when state is True.
+	When state is False, original behavior of normalization will be restored.
+	This command is a no-op when normalization is disabled.
 	"""
 	state: bool
 
 	def __init__(self, state: bool = True):
 		"""
-		@param state: SUppress normalization if True, don't suppress when False
+		:param state: Suppress normalization if True, don't suppress when False
 		"""
 		self.state = state
 

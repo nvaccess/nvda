@@ -398,6 +398,7 @@ def _getSpellingSpeechWithoutCharMode(
 	If fallbackToCharIfNoDescription is True, and no character description is found,
 	the character itself will be announced. Otherwise, nothing will be spoken.
 	"""
+	
 	defaultLanguage=getCurrentLanguage()
 	if not locale or (not config.conf['speech']['autoDialectSwitching'] and locale.split('_')[0]==defaultLanguage.split('_')[0]):
 		locale=defaultLanguage
@@ -408,6 +409,7 @@ def _getSpellingSpeechWithoutCharMode(
 		return
 	if not text.isspace():
 		text=text.rstrip()
+
 	textLength=len(text)
 	isNormalized = False
 	if unicodeNormalization and textLength > 1:
@@ -435,8 +437,10 @@ def _getSpellingSpeechWithoutCharMode(
 		elif useCharacterDescriptions and not charDesc and not fallbackToCharIfNoDescription:
 			return None
 		else:
-			speakCharAs=characterProcessing.processSpeechSymbol(locale,speakCharAs)
-			if not isNormalized and unicodeNormalization:
+			symbol = characterProcessing.processSpeechSymbol(locale,speakCharAs)
+			if symbol != speakCharAs:
+				speakCharAs = symbol
+			elif not isNormalized and unicodeNormalization:
 				normalized = unicodeNormalize(speakCharAs)
 				if speakCharAs != normalized:
 					speakCharAs = " ".join(normalized)
@@ -1060,6 +1064,9 @@ def speak(  # noqa: C901
 			curLanguage=item.lang
 			if not curLanguage or (not autoDialectSwitching and curLanguage.split('_')[0]==defaultLanguageRoot):
 				curLanguage=defaultLanguage
+		elif isinstance(item, SuppressUnicodeNormalizationCommand):
+			if not unicodeNormalization:
+				continue
 		elif isinstance(item,str):
 			if not item: continue
 			if autoLanguageSwitching and curLanguage!=prevLanguage:
