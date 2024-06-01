@@ -14,20 +14,21 @@ from pycaw.api.audiopolicy import IAudioSessionControl2
 import weakref
 
 
-audioSessionManager: IAudioSessionManager2 | None = None
+_audioSessionManager: IAudioSessionManager2 | None = None
 
 
 def initialize() -> None:
-	global audioSessionManager
+	global _audioSessionManager
 	try:
-		audioSessionManager = AudioUtilities.GetAudioSessionManager()
+		_audioSessionManager = AudioUtilities.GetAudioSessionManager()
 	except COMError:
 		log.exception("Could not initialize audio session manager")
 		return
 
 
 def terminate():
-	audioSessionManager = None
+	global _audioSessionManager
+	_audioSessionManager = None
 
 
 class AudioSessionEventsListener(AudioSessionEvents):
@@ -103,11 +104,11 @@ class AudioSessionCallback(DummyAudioSessionCallback):
 		pass
 
 	def register(self, applyToFuture: bool = True):
-		applyToAllAudioSessions(self, applyToFuture)
+		_applyToAllAudioSessions(self, applyToFuture)
 
 	def unregister(self, runTerminators: bool = True):
 		if self._audioSessionNotification is not None:
-			audioSessionManager.UnregisterSessionNotification(self._audioSessionNotification)
+			_audioSessionManager.UnregisterSessionNotification(self._audioSessionNotification)
 		with self._lock:
 			listenersCopy = list(self._audioSessionEventListeners)
 		for audioSessionEventListener in listenersCopy:
@@ -117,7 +118,7 @@ class AudioSessionCallback(DummyAudioSessionCallback):
 				audioSessionEventListener.audioSession.unregister_notification()
 
 
-def applyToAllAudioSessions(
+def _applyToAllAudioSessions(
 		callback: AudioSessionCallback,
 		applyToFuture: bool = True,
 ) -> None:
@@ -128,9 +129,9 @@ def applyToAllAudioSessions(
 	"""
 	listener = AudioSessionNotificationListener(callback)
 	if applyToFuture:
-		audioSessionManager.RegisterSessionNotification(listener)
+		_audioSessionManager.RegisterSessionNotification(listener)
 		callback._audioSessionNotification = listener
-	sessionEnumerator = audioSessionManager.GetSessionEnumerator()
+	sessionEnumerator = _audioSessionManager.GetSessionEnumerator()
 	count = sessionEnumerator.GetCount()
 	for i in range(count):
 		ctl = sessionEnumerator.GetSession(i)
