@@ -2856,7 +2856,7 @@ class AudioPanel(SettingsPanel):
 		config.conf["audio"]["applicationsSoundVolume"] = self.appSoundVolSlider.GetValue()
 		self.appVolAdjusterCombo.saveCurrentValueToConf()
 		audio.appsVolume._updateAppsVolumeImpl(
-			volume=self.appSoundVolSlider.GetValue()/100.0,
+			volume=self.appSoundVolSlider.GetValue() / 100.0,
 			state=self.appVolAdjusterCombo._getControlCurrentValue(),
 		)
 
