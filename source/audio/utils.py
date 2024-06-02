@@ -12,6 +12,8 @@ from comtypes import COMError
 from threading import Lock
 from pycaw.api.audiopolicy import IAudioSessionControl2
 import weakref
+import globalVars
+import os
 
 
 _audioSessionManager: IAudioSessionManager2 | None = None
@@ -31,7 +33,12 @@ def terminate():
 	_audioSessionManager = None
 
 
-class AudioSessionEventsListener(AudioSessionEvents):
+class _AudioSessionEventsListener(AudioSessionEvents):
+	"""
+		This class is a listener for audio session termination event. It is registered in WASAPI by
+		`_AudioSessionNotificationListener.on_session_created()` method. It calls custom logic defined in
+		`AudioSessionCallback.onSessionTerminated()` implementation and allows customers to restore audio volume.
+	"""
 	callback: "weakref.ReferenceType[AudioSessionCallback]"
 	pid: int
 	audioSession: AudioSession
@@ -58,7 +65,14 @@ class AudioSessionEventsListener(AudioSessionEvents):
 			log.exception(f"Cannot unregister audio session for process {self.pid}")
 
 
-class AudioSessionNotificationListener(AudioSessionNotification):
+class _AudioSessionNotificationListener(AudioSessionNotification):
+	"""
+		This class is a handler for existing and newly created audio sessions. Its method `on_session_created`
+		will be called from `AudioSessionCallback.register()` for all existing audio sessions; and, additionally,
+		it will be notified by WASAPI for every new audio session created.
+		It sets up a callback for session termination - an instance of `_AudioSessionEventsListener` class;
+		then it calls custom logic provided in `AudioSessionCallback.onSessionUpdate()` implementation.
+	"""
 	callback: "weakref.ReferenceType[AudioSessionCallback]"
 
 	def __init__(self, callback: "AudioSessionCallback"):
@@ -66,7 +80,16 @@ class AudioSessionNotificationListener(AudioSessionNotification):
 
 	def on_session_created(self, new_session: AudioSession):
 		pid = new_session.ProcessId
-		audioSessionEventsListener = AudioSessionEventsListener(self.callback(), pid, new_session)
+		if pid != globalVars.appPid:
+			process = new_session.Process
+			if process is not None:
+				exe = os.path.basename(process.exe())
+				isNvda = exe.lower() == "nvda.exe"
+				if isNvda:
+					# This process must be NVDA running on secure screen.
+					# We shouldn't change volume of such process.
+					return
+		audioSessionEventsListener = _AudioSessionEventsListener(self.callback(), pid, new_session)
 		new_session.register_notification(audioSessionEventsListener)
 		with self.callback()._lock:
 			self.callback()._audioSessionEventListeners.add(audioSessionEventsListener)
@@ -95,7 +118,7 @@ class AudioSessionCallback(DummyAudioSessionCallback):
 	"""
 	_lock: Lock = Lock()
 	_audioSessionNotification: AudioSessionNotification | None = None
-	_audioSessionEventListeners: set[AudioSessionEventsListener] = field(default_factory=set)
+	_audioSessionEventListeners: set[_AudioSessionEventsListener] = field(default_factory=set)
 
 	def onSessionUpdate(self, session: AudioSession) -> None:
 		pass
@@ -127,7 +150,7 @@ def _applyToAllAudioSessions(
 	Additionally, if applyToFuture is True, then it will register a notification with audio session manager,
 	which will execute the same callback for all future sessions as they are created.
 	"""
-	listener = AudioSessionNotificationListener(callback)
+	listener = _AudioSessionNotificationListener(callback)
 	if applyToFuture:
 		_audioSessionManager.RegisterSessionNotification(listener)
 		callback._audioSessionNotification = listener
