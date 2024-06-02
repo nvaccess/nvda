@@ -13,7 +13,7 @@ complexSymbols:
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Series of dots used for visual presentation, e.g. in table of contents
-padding .	\.{4,}
+multiple .	\.{4,}
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
@@ -27,7 +27,7 @@ symbols:
 ! sentence ending	uskličnik	all	always
 ? sentence ending	upitnik	all	always
 ; phrase ending	točka zarez	most	always
-padding .	višetočje	all	always
+multiple .	višetočje	all	always
 : phrase ending	dvotočka	most	always
 cijelih		none	always
 in-word '	apostrof	all	norep
