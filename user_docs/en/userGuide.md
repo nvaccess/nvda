@@ -909,10 +909,10 @@ Although a physical mouse or trackpad should be used to navigate with the mouse,
 |Left mouse button lock |shift+numpadDivide |NVDA+control+[ |none |Locks the left mouse button down. Press again to release it. To drag the mouse, press this key to lock the left button down and then move the mouse either physically or use one of the other mouse routing commands|
 |Right mouse click |numpadMultiply |NVDA+] |tap and hold |Clicks the right mouse button once, mostly used to open context menu at the location of the mouse.|
 |Right mouse button lock |shift+numpadMultiply |NVDA+control+] |none |Locks the right mouse button down. Press again to release it. To drag the mouse, press this key to lock the right button down and then move the mouse either physically or use one of the other mouse routing commands|
-|Mouse wheel rotate up |none |none |none |Rotates the mouse wheel up at the current mouse position|
-|Mouse wheel rotate down |none |none |none |Rotates the mouse wheel down at the current mouse position|
-|Mouse wheel rotate left |none |none |none |Rotates the mouse wheel left at the current mouse position|
-|Mouse wheel rotate right |none |none |none |Rotates the mouse wheel right at the current mouse position|
+|Scroll up at the mouse position |none |none |none |Scrolls the mouse wheel up at the current mouse position|
+|Scroll down at the mouse position|none |none |none |Scrolls the mouse wheel down at the current mouse position|
+|Scroll left at the mouse position |none |none |none |Scrolls the mouse wheel left at the current mouse position|
+|Scroll right at the mouse position |none |none |none |Scrolls the mouse wheel right at the current mouse position|
 |Move mouse to current navigator object |NVDA+numpadDivide |NVDA+shift+m |none |Moves the mouse to the location of the current navigator object and review cursor|
 |Navigate to the object under the mouse |NVDA+numpadMultiply |NVDA+shift+n |none |Set the navigator object to the object located at the position of the mouse|
 

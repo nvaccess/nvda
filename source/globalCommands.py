@@ -266,43 +266,43 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		description=_(
-			# Translators: Input help mode message for mouse wheel Rotate up command.
-			"Rotates the mouse wheel up at the current mouse position"
+			# Translators: Input help mode message for scroll up at the mouse position command.
+			"scroll up at the mouse position"
 		),
 		category=SCRCAT_MOUSE
 	)
-	def script_rotateMouseWheelUp(self, gesture: "inputCore.InputGesture") -> None:
-		mouseHandler.rotateMouseWheel(winUser.WHEEL_DELTA, isVertical=True)
+	def script_mouseScrollUp(self, gesture: "inputCore.InputGesture") -> None:
+		mouseHandler.scrollMouseWheel(winUser.WHEEL_DELTA, isVertical=True)
 
 	@script(
 		description=_(
-			# Translators: Input help mode message for mouse wheel rotate down command.
-			"Rotates the mouse wheel down at the current mouse position"
+			# Translators: Input help mode message for scroll down at the mouse position command.
+			"scroll down at the mouse position"
 		),
 		category=SCRCAT_MOUSE
 	)
-	def script_rotateMouseWheelDown(self, gesture: "inputCore.InputGesture") -> None:
-		mouseHandler.rotateMouseWheel(-winUser.WHEEL_DELTA, isVertical=True)
+	def script_mouseScrollDown(self, gesture: "inputCore.InputGesture") -> None:
+		mouseHandler.scrollMouseWheel(-winUser.WHEEL_DELTA, isVertical=True)
 
 	@script(
 		description=_(
-			# Translators: Input help mode message for mouse wheel rotate left command.
-			"Rotates the mouse wheel left at the current mouse position"
+			# Translators: Input help mode message for scroll left at the mouse position command.
+			"scroll left at the mouse position"
 		),
 		category=SCRCAT_MOUSE
 	)
-	def script_rotateMouseWheelLeft(self, gesture: "inputCore.InputGesture") -> None:
-		mouseHandler.rotateMouseWheel(-winUser.WHEEL_DELTA, isVertical=False)
+	def script_mouseScrollLeft(self, gesture: "inputCore.InputGesture") -> None:
+		mouseHandler.scrollMouseWheel(-winUser.WHEEL_DELTA, isVertical=False)
 
 	@script(
 		description=_(
-			# Translators: Input help mode message for mouse wheel rotate right command.
-			"Rotates the mouse wheel right at the current mouse position"
+			# Translators: Input help mode message for scroll right at the mouse position command.
+			"Scroll right at the mouse position"
 		),
 		category=SCRCAT_MOUSE
 	)
-	def script_rotateMouseWheelRight(self, gesture: "inputCore.InputGesture") -> None:
-		mouseHandler.rotateMouseWheel(winUser.WHEEL_DELTA, isVertical=False)
+	def script_mouseScrollRight(self, gesture: "inputCore.InputGesture") -> None:
+		mouseHandler.scrollMouseWheel(winUser.WHEEL_DELTA, isVertical=False)
 
 	@script(
 		description=_(

@@ -17,7 +17,7 @@ Unicode CLDR has been updated.
 
 
 * New key commands:
-  * Added unassigned commands for vertical and horizontal rotation of the mouse wheel to enhance navigation on web pages and apps with dynamic content, such as Dism++. Most mice have a scroll wheel click, by pressing down on the scroll wheel. Holding this allows you to scroll horizontally and vertically at the same time by moving the cursor in the direction you want to scroll. (#16462, @Cary-Rowen)
+  * Added unassigned commands for vertical and horizontal scrolling of the mouse wheel to enhance navigation on web pages and apps with dynamic content, such as Dism++. Most mice have a scroll wheel click; by pressing down on the scroll wheel, you can scroll horizontally and vertically simultaneously by moving the cursor in the desired direction. (#16462, @Cary-Rowen)
 * Error messages referenced with `aria-errormessage` are now reported in Google Chrome and Mozilla Firefox. (#8318)
 * In LibreOffice Writer (version 24.8 and newer), when toggling text formatting (bold, italic, underline, subscript/superscript, alignment) using the corresponding keyboard shortcut, NVDA announces the new formatting attribute (e.g. "Bold on", "Bold off"). (#4248, @michaelweghorn)
 * Added support for Unicode Normalization to speech and braille output. (#11570, #16466 @LeonarddeR).
