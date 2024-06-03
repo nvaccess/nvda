@@ -371,11 +371,21 @@ class UpdatableAddonsDialog(
 		super().__init__(parent, title=pgettext("addonStore", "Add-on updates available"))
 		self.addonsPendingUpdate = addonsPendingUpdate
 		self.onDisplayableError = DisplayableError.OnDisplayableErrorT()
-		self.Bind(wx.EVT_CLOSE, self.onClose)
+		self._setupUI()
 
+	def _setupUI(self):
+		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = BoxSizerHelper(self, orientation=wx.VERTICAL)
+		self._setupMessage(sHelper)
+		self._createAddonsPanel(sHelper)
+		self._setupButtons(sHelper)
+		mainSizer.Add(sHelper.sizer, border=BORDER_FOR_DIALOGS, flag=wx.ALL)
+		self.Sizer = mainSizer
+		mainSizer.Fit(self)
+		self.CentreOnScreen()
 
+	def _setupMessage(self, sHelper: BoxSizerHelper):
 		_message = pgettext(
 			"addonStore",
 			# Translators: Message displayed when updates are available for some installed add-ons.
@@ -386,15 +396,10 @@ class UpdatableAddonsDialog(
 		sText = sHelper.addItem(wx.StaticText(self, label=_message))
 		# the wx.Window must be constructed before we can get the handle.
 		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
-		sText.Wrap(
-			# 600 was fairly arbitrarily chosen by a visual user to look acceptable on their machine.
-			self.scaleFactor * 600
-		)
+		# 600 was fairly arbitrarily chosen by a visual user to look acceptable on their machine.
+		sText.Wrap(self.scaleFactor * 600)
 
-		sHelper.sizer.AddSpacer(SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
-
-		self._createAddonsPanel(sHelper)
-
+	def _setupButtons(self, sHelper: BoxSizerHelper):
 		bHelper = sHelper.addDialogDismissButtons(ButtonHelper(wx.HORIZONTAL))
 
 		# Translators: The label of a button in a dialog
@@ -408,11 +413,6 @@ class UpdatableAddonsDialog(
 		# Translators: The label of a button in a dialog
 		closeButton = bHelper.addButton(self, wx.ID_CLOSE, label=pgettext("addonStore", "&Close"))
 		closeButton.Bind(wx.EVT_BUTTON, self.onCloseButton)
-
-		mainSizer.Add(sHelper.sizer, border=BORDER_FOR_DIALOGS, flag=wx.ALL)
-		self.Sizer = mainSizer
-		mainSizer.Fit(self)
-		self.CentreOnScreen()
 
 	def _createAddonsPanel(self, sHelper: BoxSizerHelper):
 		# Translators: the label for the addons list in the updatable addons dialog.
