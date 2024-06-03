@@ -17,6 +17,7 @@ from addonStore.models.addon import (
 )
 from addonStore.dataManager import addonDataManager
 import config
+from config.configFlags import AutomaticUpdateBehaviour
 from logHandler import log
 import gui
 from gui.addonGui import ConfirmAddonInstallDialog, ErrorAddonInstallDialog
@@ -359,7 +360,7 @@ class UpdatableAddonsDialog(
 ):
 	"""A dialog notifying users that updatable add-ons are available"""
 
-	helpId = "UpdatingAddons"  # TODO make custom
+	helpId = "AutomaticAddonUpdates"
 
 	def __init__(self, parent: wx.Window, addonsPendingUpdate: set[_AddonGUIModel]):
 		# Translators: The warning of a dialog
@@ -405,6 +406,9 @@ class UpdatableAddonsDialog(
 
 	@classmethod
 	def _checkForUpdatableAddons(cls):
+		if AutomaticUpdateBehaviour.DISABLED == config.conf["addonStore"]["automaticUpdates"]:
+			log.debug("automatic updates are disabled")
+			return
 		log.debug("checking for updatable add-ons")
 		addonsPendingUpdate = addonDataManager._addonsPendingUpdate()
 		if addonsPendingUpdate:

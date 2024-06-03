@@ -352,6 +352,9 @@ The status of the add-on will be listed as "Update available".
 The list will display the currently installed version and the available version.
 Press `enter` on the add-on to open the actions list; choose "Update".
 
+By default, after NVDA startup, the Add-on Store will notify you if any add-on updates are available.
+To learn more about and configure this behaviour, refer to ["Update Notifications"](#AutomaticAddonUpdates).
+
 ### Community {#Community}
 
 NVDA has a vibrant user community.
@@ -2890,6 +2893,27 @@ This style works best when working with documents which use block paragraphs.
 Note that this paragraph style cannot be used in Microsoft Word or Microsoft Outlook, unless you are using UIA to access Microsoft Word controls.
 
 You may toggle through the available paragraph styles from anywhere by assigning a key in the [Input Gestures dialog](#InputGestures).
+
+#### Add-on Store Settings {#AddonStoreSettings}
+
+This category allows you to adjust the behaviour of the Add-on Store.
+
+##### Update Notifications {#AutomaticAddonUpdates}
+
+By default, after NVDA startup, the Add-on Store will notify you if any add-on updates are available.
+This check is performed every 24 hours.
+Notifications will only occur for add-ons with updates available within the same channel.
+For example, for installed beta add-ons, you will only be notified of updates within the beta channel.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Notify (Default), Disabled |
+|Default |Notify |
+
+|Option |Behaviour |
+|---|---|
+|Enabled |Notify when updates are available to add-ons within the same channel |
+|Disabled |Do not automatically check for updates to add-ons |
 
 #### Windows OCR Settings {#Win10OcrSettings}
 

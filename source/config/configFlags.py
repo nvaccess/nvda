@@ -202,3 +202,20 @@ class ReportCellBorders(DisplayStringIntEnum):
 			# document formatting settings panel.
 			ReportCellBorders.COLOR_AND_STYLE: _("Both Colors and Styles"),
 		}
+
+
+class AutomaticUpdateBehaviour(DisplayStringStrEnum):
+	NOTIFY = "notify"
+	# UPDATE = "update"
+	DISABLED = "disabled"
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: This is a label for the automatic update behaviour of an add-on.
+			# It will notify the user when an update is available.
+			self.NOTIFY: _("Notify (default)"),
+			# self.UPDATE: _("Update Automatically"),
+			# Translators: This is a label for the automatic update behaviour of an add-on.
+			self.DISABLED: _("Disabled"),
+		}

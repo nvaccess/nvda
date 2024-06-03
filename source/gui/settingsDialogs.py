@@ -27,6 +27,7 @@ import installer
 from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, SynthDriver
 import config
 from config.configFlags import (
+	AutomaticUpdateBehaviour,
 	NVDAKey,
 	ShowMessages,
 	TetherTo,
@@ -2873,11 +2874,22 @@ class AddonStorePanel(SettingsPanel):
 	helpId = "AddonStoreSettings"
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
-		# sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-		pass
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		# Translators: This is a label for the automatic updates combo box in the Add-on Store Settings dialog.
+		automaticUpdatesLabelText = _("&Update notifications:")
+		# TODO: change label to the following when the feature is implemented
+		# automaticUpdatesLabelText = _("Automatic &updates:")
+		self.automaticUpdatesComboBox = sHelper.addLabeledControl(
+			automaticUpdatesLabelText,
+			wx.Choice,
+			choices=[mode.displayString for mode in AutomaticUpdateBehaviour]
+		)
+		self.bindHelpEvent("AutomaticAddonUpdates", self.automaticUpdatesComboBox)
+		index = [x.value for x in AutomaticUpdateBehaviour].index(config.conf["addonStore"]["automaticUpdates"])
+		self.automaticUpdatesComboBox.SetSelection(index)
 
 	def onSave(self):
-		pass
+		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AutomaticUpdateBehaviour][self.automaticUpdatesComboBox.GetSelection()]
 
 
 class TouchInteractionPanel(SettingsPanel):
@@ -4638,7 +4650,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		BrowseModePanel,
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
-		# AddonStorePanel, currently empty
+		AddonStorePanel,
 	]
 	if touchHandler.touchSupported():
 		categoryClasses.append(TouchInteractionPanel)
