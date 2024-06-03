@@ -18,10 +18,11 @@ from addonStore.models.addon import (
 from addonStore.dataManager import addonDataManager
 import config
 from config.configFlags import AddonsAutomaticUpdate
-from logHandler import log
 import gui
+from gui import nvdaControls
 from gui.addonGui import ConfirmAddonInstallDialog, ErrorAddonInstallDialog
 from gui.contextHelp import ContextHelpMixin
+from gui.dpiScalingHelper import scaleSize
 from gui.guiHelper import (
 	BoxSizerHelper,
 	BORDER_FOR_DIALOGS,
@@ -29,6 +30,7 @@ from gui.guiHelper import (
 	SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS,
 )
 from gui.message import displayDialogAsModal, messageBox
+from logHandler import log
 import windowUtils
 
 if TYPE_CHECKING:
@@ -248,7 +250,7 @@ def _showConfirmAddonInstallDialog(
 	return displayDialogAsModal(ConfirmAddonInstallDialog(
 		parent=parent,
 		# Translators: Title for message asking if the user really wishes to install an Addon.
-		title=_("Add-on Installation"),
+		title=pgettext("addonStore", "Add-on Installation"),
 		message=confirmInstallMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon)
 	))
@@ -385,24 +387,59 @@ class UpdatableAddonsDialog(
 
 		sHelper.sizer.AddSpacer(SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 
+		# Translators: the label for the addons list in the updatable addons dialog.
+		entriesLabel=pgettext("addonStore", "Updatable Add-ons")
+		self.addonsList = sHelper.addLabeledControl(
+			entriesLabel,
+			nvdaControls.AutoWidthColumnListCtrl,
+			style=wx.LC_REPORT|wx.LC_SINGLE_SEL,
+		)
+
+		# Translators: Label for an extra detail field for an add-on. In the add-on store UX.
+		nameLabel = pgettext("addonStore", "Name:")
+		# Translators: Label for an extra detail field for an add-on. In the add-on store UX.
+		installedVersionLabel = pgettext("addonStore", "Installed version:")
+		# Translators: Label for an extra detail field for an add-on. In the add-on store UX.
+		availableVersionLabel = pgettext("addonStore", "Available version:")
+		# Translators: Label for an extra detail field for an add-on. In the add-on store UX.
+		channelLabel = pgettext("addonStore", "Channel:")
+
+		self.addonsList.AppendColumn(nameLabel, width=300)
+		self.addonsList.AppendColumn(installedVersionLabel, width=300)
+		self.addonsList.AppendColumn(availableVersionLabel, width=300)
+		self.addonsList.AppendColumn(channelLabel, width=150)
+		for addon in addonsPendingUpdate:
+			self.addonsList.Append((
+				addon.name,
+				addon._addonHandlerModel.version,
+				addon.addonVersionName,
+				addon.channel.displayString,
+			))
+		self.addonsList.Refresh()
+
 		bHelper = sHelper.addDialogDismissButtons(ButtonHelper(wx.HORIZONTAL))
 
 		# Translators: The label of a button in a dialog
-		updateButton = bHelper.addButton(self, wx.ID_OK, label=pgettext("addonStore", "&Update Add-ons"))
-		updateButton.Bind(wx.EVT_BUTTON, self.onUpdateButton)
+		openStoreButton = bHelper.addButton(self, wx.ID_YES, label=pgettext("addonStore", "Open Add-on &Store"))
+		openStoreButton.Bind(wx.EVT_BUTTON, self.onOpenStoreButton)
 
-		bHelper.addButton(self, wx.ID_CLOSE, label=pgettext("addonStore", "&Close"))
+		# Translators: The label of a button in a dialog
+		closeButton = bHelper.addButton(self, wx.ID_CLOSE, label=pgettext("addonStore", "&Close"))
+		closeButton.Bind(wx.EVT_BUTTON, self.onCloseButton)
 
 		mainSizer.Add(sHelper.sizer, border=BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
 		self.CentreOnScreen()
 
-	def onUpdateButton(self, evt: wx.CommandEvent):
+	def onOpenStoreButton(self, evt: wx.CommandEvent):
 		"""Open the Add-on Store to update add-ons"""
 		# call later so current dialog is dismissed and doesn't block the store from opening
 		wx.CallLater(100, gui.mainFrame.onAddonStoreUpdatableCommand, None)
-		self.EndModal(wx.ID_OK)
+		self.EndModal(wx.ID_CLOSE)
+
+	def onCloseButton(self, evt: wx.CommandEvent):
+		self.EndModal(wx.ID_CLOSE)
 
 	@classmethod
 	def _checkForUpdatableAddons(cls):

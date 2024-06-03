@@ -39,32 +39,32 @@ class ScheduleThreadTests(unittest.TestCase):
 
 		expectedResult = [0, 0, 0]
 		self.assertEqual(scheduledVals, expectedResult)
-		for index in range(3):
+		for jobIndex in range(3):
 			# Simulate a forced job run
 			startTime = NVDAState.getStartTime()
-			currentJob = ScheduleThread.scheduledJobs[index]
+			currentJob = ScheduleThread.scheduledJobs[jobIndex]
 
 			# Ensure that the job is scheduled to run at the expected time
-			expectedSecsOffsetMin = index * ScheduleThread.DAILY_JOB_MINUTE_OFFSET * 60
-			expectedSecsOffsetMax = (index + 1) * ScheduleThread.DAILY_JOB_MINUTE_OFFSET * 60
+			expectedSecsOffsetMin = jobIndex * ScheduleThread.DAILY_JOB_MINUTE_OFFSET * 60
+			expectedSecsOffsetMax = (jobIndex + 1) * ScheduleThread.DAILY_JOB_MINUTE_OFFSET * 60
 			nextRun = currentJob.next_run.timestamp()
 			actualSecsOffset = nextRun - startTime
 			self.assertLessEqual(
 				actualSecsOffset,
 				expectedSecsOffsetMax,
-				f"Job {index} did not scheduled as expected. Job: {currentJob}"
+				f"Job {jobIndex} did not scheduled as expected. Job: {currentJob}"
 			)
 			self.assertGreaterEqual(
 				actualSecsOffset,
 				expectedSecsOffsetMin,
-				f"Job {index} did not scheduled as expected. Job: {currentJob}"
+				f"Job {jobIndex} did not scheduled as expected. Job: {currentJob}"
 			)
 
 			# Ensure the job runs as expected
 			currentJob.run()
-			expectedResult[index] += 1
+			expectedResult[jobIndex] += 1
 			self.assertEqual(
 				scheduledVals,
 				expectedResult,
-				f"Job {index} did not run as expected. Scheduled jobs: {ScheduleThread.scheduledJobs}"
+				f"Job {jobIndex} did not run as expected. Scheduled jobs: {ScheduleThread.scheduledJobs}"
 			)
