@@ -22,7 +22,8 @@ class ScheduleThread(threading.Thread):
 	"""Event which can be set to cease continuous run."""
 
 	SLEEP_INTERVAL_SECS = 0.5
-	"""Note that the behaviour of ScheduleThread is to not run missed jobs.
+	"""
+	Note that the behaviour of ScheduleThread is to not run missed jobs.
 	For example, if you've registered a job that should run every minute and
 	you set a continuous run interval of one hour then your job won't be run 60 times
 	at each interval but only once.

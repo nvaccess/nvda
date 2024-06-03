@@ -415,7 +415,7 @@ class MainFrame(wx.Frame):
 		blockAction.Context.WINDOWS_STORE_VERSION,
 		blockAction.Context.RUNNING_LAUNCHER,
 	)
-	def onAddonStoreUpdatableCommand(self, evt: wx.MenuEvent):
+	def onAddonStoreUpdatableCommand(self, evt: wx.MenuEvent | None):
 		from .addonStoreGui import AddonStoreDialog
 		from .addonStoreGui.viewModels.store import AddonStoreVM
 		from addonStore.models.status import _StatusFilterKey
