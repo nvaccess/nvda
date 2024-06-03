@@ -2889,7 +2889,8 @@ class AddonStorePanel(SettingsPanel):
 		self.automaticUpdatesComboBox.SetSelection(index)
 
 	def onSave(self):
-		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsAutomaticUpdate][self.automaticUpdatesComboBox.GetSelection()]
+		index = self.automaticUpdatesComboBox.GetSelection()
+		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsAutomaticUpdate][index]
 
 
 class TouchInteractionPanel(SettingsPanel):

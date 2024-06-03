@@ -29,6 +29,12 @@ class ScheduleThread(threading.Thread):
 	at each interval but only once.
 	"""
 
+	DAILY_JOB_MINUTE_OFFSET = 3
+	"""
+	Offset in minutes to schedule daily jobs.
+	Daily scheduled jobs occur offset by X minutes to avoid overlapping jobs.
+	"""
+
 	scheduledJobs: list[schedule.Job] = []
 
 	@classmethod
@@ -41,25 +47,29 @@ class ScheduleThread(threading.Thread):
 	def scheduleDailyJobAtStartUp(cls, job: Callable, *args, **kwargs):
 		"""Schedule a daily job to run at startup."""
 		startTime = datetime.fromtimestamp(NVDAState.getStartTime())
-		# Schedule jobs so that they occur offset by 3 minutes to avoid overlapping jobs.
+		# Schedule jobs so that they occur offset by a regular period to avoid overlapping jobs.
 		# Start with a delay to give time for NVDA to start up.
-		startTimeMinuteOffset = startTime.minute + (len(cls.scheduledJobs) + 1) * 3
+		startTimeMinuteOffset = startTime.minute + (len(cls.scheduledJobs) + 1) * cls.DAILY_JOB_MINUTE_OFFSET
 		# Handle the case where the minute offset is greater than 60.
 		startTimeHourOffset = startTime.hour + (startTimeMinuteOffset // 60)
 		startTimeMinuteOffset = startTimeMinuteOffset % 60
-		scheduledJob = schedule.every().day.at(f"{startTimeHourOffset}:{startTimeMinuteOffset}").do(job, *args, **kwargs)
+		# Handle the case where the hour offset is greater than 24.
+		startTimeHourOffset = startTimeHourOffset % 24
+		scheduledTime = f"{startTimeHourOffset:02d}:{startTimeMinuteOffset:02d}"
+		scheduledJob = schedule.every().day.at(scheduledTime).do(job, *args, **kwargs)
 		cls.scheduledJobs.append(scheduledJob)
 
 
 def initialize():
 	global scheduleThread
-	scheduleThread = ScheduleThread()
+	scheduleThread = ScheduleThread(daemon=True)
 	scheduleThread.start()
 
 
 def terminate():
 	global scheduleThread
 	if scheduleThread is not None:
+		ScheduleThread.scheduledJobs.clear()
 		schedule.clear()
 		scheduleThread.KILL.set()
 		scheduleThread.join()

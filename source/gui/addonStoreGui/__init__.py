@@ -17,4 +17,6 @@ __all__ = [
 def initialize():
 	from utils.schedule import ScheduleThread
 	# Ensure the GUI functionality is called from the wx thread from the schedule thread
-	ScheduleThread.scheduleDailyJobAtStartUp(lambda: wx.CallAfter(UpdatableAddonsDialog._checkForUpdatableAddons))
+	ScheduleThread.scheduleDailyJobAtStartUp(
+		lambda: wx.CallAfter(UpdatableAddonsDialog._checkForUpdatableAddons)
+	)
