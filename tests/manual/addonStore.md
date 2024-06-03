@@ -161,7 +161,6 @@ For example: "Clock".
 1. Install the add-on again to test the "migrate" path.
 
 ### Updating multiple add-ons
-### Updating from add-on installed from add-on store
 1. [Install an add-on from the add-on store](#install-add-on)
 For example: "Clock".
 1. Go to your NVDA user configuration folder:
@@ -185,8 +184,7 @@ For example: "Clock".
 1. Restart NVDA as prompted.
 1. Confirm the up-to-date add-ons are listed in the installed add-ons tab of the Add-ons Store.
 
-### Automatic updating
-### Updating from add-on installed from add-on store
+### Automatic update notifications
 1. [Install an add-on from the add-on store](#install-add-on)
 For example: "Clock".
 1. Go to your NVDA user configuration folder:
@@ -217,6 +215,9 @@ For example: "Clock".
     - Press "Update All": Ensure NVDA installs the add-ons.
     - Press "Close": Ensure if Add-ons have been installed that NVDA prompts for restart afterwards
     - Press "Open Add-on Store": Ensure NVDA opens to the Updatable tab in the Add-on Store
+
+### Automatic updating
+Full automatic updates is currently unsupported.
 
 ## Other add-on actions
 
