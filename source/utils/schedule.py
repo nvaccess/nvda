@@ -41,9 +41,13 @@ class ScheduleThread(threading.Thread):
 	def scheduleDailyJobAtStartUp(cls, job: Callable, *args, **kwargs):
 		"""Schedule a daily job to run at startup."""
 		startTime = datetime.fromtimestamp(NVDAState.getStartTime())
-		# We add the length of the scheduled jobs to the minute offset to avoid overlapping jobs.
-		startTimeMinuteOffset = startTime.minute + len(cls.scheduledJobs) + 1
-		scheduledJob = schedule.every().day.at(f"{startTime.hour}:{startTimeMinuteOffset}").do(job, *args, **kwargs)
+		# Schedule jobs so that they occur offset by 3 minutes to avoid overlapping jobs.
+		# Start with a delay to give time for NVDA to start up.
+		startTimeMinuteOffset = startTime.minute + (len(cls.scheduledJobs) + 1) * 3
+		# Handle the case where the minute offset is greater than 60.
+		startTimeHourOffset = startTime.hour + (startTimeMinuteOffset // 60)
+		startTimeMinuteOffset = startTimeMinuteOffset % 60
+		scheduledJob = schedule.every().day.at(f"{startTimeHourOffset}:{startTimeMinuteOffset}").do(job, *args, **kwargs)
 		cls.scheduledJobs.append(scheduledJob)
 
 
