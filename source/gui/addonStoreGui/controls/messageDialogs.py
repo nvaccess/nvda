@@ -19,6 +19,7 @@ from addonStore.dataManager import addonDataManager
 from addonStore.models.status import AvailableAddonStatus
 import config
 from config.configFlags import AddonsAutomaticUpdate
+import globalVars
 import gui
 from gui import nvdaControls
 from gui.addonGui import ConfirmAddonInstallDialog, ErrorAddonInstallDialog, promptUserForRestart
@@ -534,8 +535,11 @@ class UpdatableAddonsDialog(
 
 	@classmethod
 	def _checkForUpdatableAddons(cls):
-		if AddonsAutomaticUpdate.DISABLED == config.conf["addonStore"]["automaticUpdates"]:
-			log.debug("automatic updates are disabled")
+		if (
+			globalVars.appArgs.secure
+			or (AddonsAutomaticUpdate.DISABLED == config.conf["addonStore"]["automaticUpdates"])
+		):
+			log.debug("automatic add-on updates are disabled")
 			return
 		log.debug("checking for updatable add-ons")
 		addonsPendingUpdate = addonDataManager._addonsPendingUpdate()
