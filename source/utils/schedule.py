@@ -29,7 +29,7 @@ class ScheduleThread(threading.Thread):
 	at each interval but only once.
 	"""
 
-	scheduledJobs: list[Callable[[], None]] = []
+	scheduledJobs: list[schedule.Job] = []
 
 	@classmethod
 	def run(cls):
