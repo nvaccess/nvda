@@ -29,7 +29,7 @@ class ScheduleThread(threading.Thread):
 	at each interval but only once.
 	"""
 
-	DAILY_JOB_MINUTE_OFFSET = 3
+	DAILY_JOB_MINUTE_OFFSET = 1
 	"""
 	Offset in minutes to schedule daily jobs.
 	Daily scheduled jobs occur offset by X minutes to avoid overlapping jobs.

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited
+# Copyright (C) 2022-2024 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -309,15 +309,15 @@ class _DataManager:
 			return None
 		return _createInstalledStoreModelFromData(cacheData)
 
-	def _addonsPendingUpdate(self) -> set["_AddonGUIModel"]:
-		addonsPendingUpdate = set()
+	def _addonsPendingUpdate(self) -> list["_AddonGUIModel"]:
+		addonsPendingUpdate: list["_AddonGUIModel"] = []
 		compatibleAddons = self.getLatestCompatibleAddons()
 		for channel in compatibleAddons:
 			for addon in compatibleAddons[channel].values():
 				if getStatus(addon, _StatusFilterKey.UPDATE) == AvailableAddonStatus.UPDATE:
 					# Only consider add-on updates for the same channel
 					if addon.channel == addon._addonHandlerModel._addonStoreData.channel:
-						addonsPendingUpdate.add(addon)
+						addonsPendingUpdate.append(addon)
 		return addonsPendingUpdate
 
 

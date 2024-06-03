@@ -161,10 +161,62 @@ For example: "Clock".
 1. Install the add-on again to test the "migrate" path.
 
 ### Updating multiple add-ons
-Updating multiple add-ons at once is currently unsupported.
+### Updating from add-on installed from add-on store
+1. [Install an add-on from the add-on store](#install-add-on)
+For example: "Clock".
+1. Go to your NVDA user configuration folder:
+    - For source: `.\source\userConfig`
+    - For installed copies: `%APPDATA%\nvda`
+1. To spoof an old release, we need to edit 2 files:
+    - Add-on store JSON metadata
+        - Located in: `.\addonStore\addons\`.
+        - Example: `source\userConfig\addonStore\addons\clock.json`
+        - Edit "addonVersionNumber" and "addonVersionName": decrease the major release value number.
+    - Add-on manifest
+        - Located in: `.\addons\`.
+        - Example: `source\userConfig\addons\clock\manifest.ini`
+        - Edit "version": decrease the major release value number to match earlier edits.
+1. Repeat several times to ensure multiple add-on updates are available.
+1. Open the Add-on Store
+1. Ensure the same add-on you edited is available on the Add-on Store with the status "update".
+1. Select multiple add-ons using `shift` and `ctrl`.
+1. Using the context menu, install the add-ons.
+1. Exit the dialog
+1. Restart NVDA as prompted.
+1. Confirm the up-to-date add-ons are listed in the installed add-ons tab of the Add-ons Store.
 
 ### Automatic updating
-Automatic updating of add-ons is currently unsupported.
+### Updating from add-on installed from add-on store
+1. [Install an add-on from the add-on store](#install-add-on)
+For example: "Clock".
+1. Go to your NVDA user configuration folder:
+    - For source: `.\source\userConfig`
+    - For installed copies: `%APPDATA%\nvda`
+1. To spoof an old release, we need to edit 2 files:
+    - Add-on store JSON metadata
+        - Located in: `.\addonStore\addons\`.
+        - Example: `source\userConfig\addonStore\addons\clock.json`
+        - Edit "addonVersionNumber" and "addonVersionName": decrease the major release value number.
+    - Add-on manifest
+        - Located in: `.\addons\`.
+        - Example: `source\userConfig\addons\clock\manifest.ini`
+        - Edit "version": decrease the major release value number to match earlier edits.
+1. Start NVDA
+1. Ensure Automatic update notifications are enabled in the Add-on Store panel
+1. Trigger the update notification manually, or alternatively wait for the notification to occur
+    1. From the NVDA Python console, find the scheduled thread
+        ```py
+        from utils.schedule import ScheduleThread
+        ScheduleThread.scheduledJobs
+        ```
+    1. Replace `i` with the index of the scheduled thread to find the job
+        ```py
+        ScheduleThread.scheduledJobs[i].run()
+        ```
+1. Test various buttons:
+    - Press "Update All": Ensure NVDA installs the add-ons.
+    - Press "Close": Ensure if Add-ons have been installed that NVDA prompts for restart afterwards
+    - Press "Open Add-on Store": Ensure NVDA opens to the Updatable tab in the Add-on Store
 
 ## Other add-on actions
 
