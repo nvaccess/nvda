@@ -5,7 +5,8 @@
 This release adds support for Unicode Normalization to speech and braille output.
 This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly uses on social media.
 It also allows reading of equations in the Microsoft Word equation editor.
-You can enable this functionality for both speech and braille in their respective settings categories in the NVDA Settings dialog.
+
+The Add-on Store will now notify you if any add-on updates are available on NVDA start up.
 
 There are several bug fixes, particularly for the Windows 11 Emoji Panel and Clipboard history.
 For web browsers, there are fixes for reporting error messages, figures, captions, table labels and checkbox/radio button menu items.
