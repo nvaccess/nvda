@@ -27,7 +27,7 @@ import installer
 from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, SynthDriver
 import config
 from config.configFlags import (
-	AutomaticUpdateBehaviour,
+	AddonsAutomaticUpdate,
 	NVDAKey,
 	ShowMessages,
 	TetherTo,
@@ -2882,14 +2882,14 @@ class AddonStorePanel(SettingsPanel):
 		self.automaticUpdatesComboBox = sHelper.addLabeledControl(
 			automaticUpdatesLabelText,
 			wx.Choice,
-			choices=[mode.displayString for mode in AutomaticUpdateBehaviour]
+			choices=[mode.displayString for mode in AddonsAutomaticUpdate]
 		)
 		self.bindHelpEvent("AutomaticAddonUpdates", self.automaticUpdatesComboBox)
-		index = [x.value for x in AutomaticUpdateBehaviour].index(config.conf["addonStore"]["automaticUpdates"])
+		index = [x.value for x in AddonsAutomaticUpdate].index(config.conf["addonStore"]["automaticUpdates"])
 		self.automaticUpdatesComboBox.SetSelection(index)
 
 	def onSave(self):
-		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AutomaticUpdateBehaviour][self.automaticUpdatesComboBox.GetSelection()]
+		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsAutomaticUpdate][self.automaticUpdatesComboBox.GetSelection()]
 
 
 class TouchInteractionPanel(SettingsPanel):

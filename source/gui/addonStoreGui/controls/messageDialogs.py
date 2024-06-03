@@ -17,7 +17,7 @@ from addonStore.models.addon import (
 )
 from addonStore.dataManager import addonDataManager
 import config
-from config.configFlags import AutomaticUpdateBehaviour
+from config.configFlags import AddonsAutomaticUpdate
 from logHandler import log
 import gui
 from gui.addonGui import ConfirmAddonInstallDialog, ErrorAddonInstallDialog
@@ -406,7 +406,7 @@ class UpdatableAddonsDialog(
 
 	@classmethod
 	def _checkForUpdatableAddons(cls):
-		if AutomaticUpdateBehaviour.DISABLED == config.conf["addonStore"]["automaticUpdates"]:
+		if AddonsAutomaticUpdate.DISABLED == config.conf["addonStore"]["automaticUpdates"]:
 			log.debug("automatic updates are disabled")
 			return
 		log.debug("checking for updatable add-ons")
