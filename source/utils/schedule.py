@@ -4,15 +4,42 @@
 # See the file COPYING for more details.
 
 from datetime import datetime
+from enum import Enum, auto
 import threading
 import time
 from typing import Callable
 
 import schedule
 
+from logHandler import log
 import NVDAState
 
 scheduleThread: "ScheduleThread | None" = None
+
+
+class ThreadTarget(Enum):
+	GUI = auto()
+	"""
+	Uses wx.CallAfter to run the job on the GUI thread.
+	This is encouraged for tasks that interact with the GUI, such as dialogs.
+	"""
+
+	DAEMON = auto()
+	"""
+	Uses threading.Thread(daemon=True) to run the job in the background.
+	"""
+
+	CUSTOM = auto()
+	"""
+	No thread target.
+	Runs directly and blocks `scheduleThread`.
+	Run code on a custom thread to ensure `scheduleThread` is not blocked.
+	"""
+
+
+class JobClashError(Exception):
+	"""Raised when a job time clashes with an existing job."""
+	pass
 
 
 class ScheduleThread(threading.Thread):
@@ -29,13 +56,14 @@ class ScheduleThread(threading.Thread):
 	at each interval but only once.
 	"""
 
-	DAILY_JOB_MINUTE_OFFSET = 1
+	DAILY_JOB_MINUTE_OFFSET = 3
 	"""
 	Offset in minutes to schedule daily jobs.
 	Daily scheduled jobs occur offset by X minutes to avoid overlapping jobs.
 	"""
 
 	scheduledJobs: list[schedule.Job] = []
+	scheduledDailyJobCount = 0
 
 	@classmethod
 	def run(cls):
@@ -44,19 +72,103 @@ class ScheduleThread(threading.Thread):
 			time.sleep(cls.SLEEP_INTERVAL_SECS)
 
 	@classmethod
-	def scheduleDailyJobAtStartUp(cls, job: Callable, *args, **kwargs):
-		"""Schedule a daily job to run at startup."""
+	def _calculateDailyTimeOffset(cls) -> str:
 		startTime = datetime.fromtimestamp(NVDAState.getStartTime())
 		# Schedule jobs so that they occur offset by a regular period to avoid overlapping jobs.
 		# Start with a delay to give time for NVDA to start up.
-		startTimeMinuteOffset = startTime.minute + (len(cls.scheduledJobs) + 1) * cls.DAILY_JOB_MINUTE_OFFSET
+		startTimeMinuteOffset = startTime.minute + (cls.scheduledDailyJobCount + 1) * cls.DAILY_JOB_MINUTE_OFFSET
 		# Handle the case where the minute offset is greater than 60.
 		startTimeHourOffset = startTime.hour + (startTimeMinuteOffset // 60)
 		startTimeMinuteOffset = startTimeMinuteOffset % 60
 		# Handle the case where the hour offset is greater than 24.
 		startTimeHourOffset = startTimeHourOffset % 24
-		scheduledTime = f"{startTimeHourOffset:02d}:{startTimeMinuteOffset:02d}"
-		scheduledJob = schedule.every().day.at(scheduledTime).do(job, *args, **kwargs)
+		return f"{startTimeHourOffset:02d}:{startTimeMinuteOffset:02d}"
+
+	@classmethod
+	def scheduleDailyJobAtStartUp(cls, job: Callable, queueToThread: ThreadTarget, *args, **kwargs):
+		"""
+		Schedule a daily job to run at startup.
+		Designed to handle clashes in a smart way to offset jobs.
+		:param job: The job to run.
+		:param queueToThread: The thread to run the job on.
+		:param args: Arguments to pass to the job.
+		:param kwargs: Keyword arguments to pass to the job.
+		"""
+		try:
+			cls.scheduleDailyJob(job, cls._calculateDailyTimeOffset(), queueToThread, *args, **kwargs)
+		except JobClashError as e:
+			log.warning(f"Failed to schedule daily job due to clash: {e}")
+			cls.scheduledDailyJobCount += 1
+			log.debugWarning(f"Attempting to reschedule daily job {cls.DAILY_JOB_MINUTE_OFFSET} min later")
+			return cls.scheduleDailyJobAtStartUp(job, queueToThread, *args, **kwargs)
+		else:
+			cls.scheduledDailyJobCount += 1
+
+	@classmethod
+	def scheduleDailyJob(cls, job: Callable, cronTime: str, queueToThread: ThreadTarget, *args, **kwargs):
+		"""
+		Schedule a daily job to run at specific times.
+		:param job: The job to run.
+		:param cronTime: The time to run the job using a valid cron string.
+		It is recommended to use minute level precision at most.
+		https://schedule.readthedocs.io/en/stable/examples.html#run-a-job-every-x-minute
+		:param queueToThread: The thread to run the job on.
+		:param args: Arguments to pass to the job.
+		:param kwargs: Keyword arguments to pass to the job.
+		:raises JobClashError: If the job's next run clashes with an existing job's next run.
+		"""
+		scheduledJob = schedule.every().day.at(cronTime)
+		cls.scheduleJob(job, scheduledJob, queueToThread, *args, **kwargs)
+
+	@classmethod
+	def scheduleJob(cls, job: Callable, jobSchedule: schedule.Job, queueToThread: ThreadTarget, *args, **kwargs):
+		"""
+		Schedule a job to run at specific times.
+		:param job: The job to run.
+		:param jobSchedule: The schedule to run the job on.
+		Constructed using schedule e.g. `schedule.every().day.at("**:15")`.
+		:param cronTime: The time to run the job at using a valid cron string.
+		https://schedule.readthedocs.io/en/stable/examples.html#run-a-job-every-x-minute
+		:param queueToThread: The thread to run the job on.
+		:param args: Arguments to pass to the job.
+		:param kwargs: Keyword arguments to pass to the job.
+		:raises JobClashError: If the job's next run clashes with an existing job's next run.
+		"""
+		match queueToThread:
+			case ThreadTarget.GUI:
+				def callJobOnThread(*args, **kwargs):
+					import wx
+					log.debug(f"Starting thread for job: {job.__name__} on GUI thread")
+					wx.CallAfter(job, *args, **kwargs)
+			case ThreadTarget.DAEMON:
+				def callJobOnThread(*args, **kwargs):  # noqa F811: lint bug with flake8 4.0.1 not recognizing case statement
+					t = threading.Thread(target=job, args=args, kwargs=kwargs, daemon=True, name=f"{job.__name__}")
+					log.debug(f"Starting thread for job: {job.__name__} on thread {t.ident}")
+					t.run()
+			case ThreadTarget.CUSTOM:
+				def callJobOnThread(*args, **kwargs):  # noqa F811: lint bug with flake8 4.0.1 not recognizing case statement
+					log.debug(f"Starting thread for job: {job.__name__} on custom thread")
+					job(*args, **kwargs)
+			case _:
+				raise ValueError(f"Invalid queueToThread value: {queueToThread}")
+		# Check if scheduled job time clashes with existing jobs.
+		for existingJob in cls.scheduledJobs:
+			if (
+				(
+					jobSchedule.at_time is not None
+					and existingJob.at_time == jobSchedule.at_time
+				)
+				or (
+					jobSchedule.next_run is not None
+					and existingJob.next_run == jobSchedule.next_run
+				)
+			):
+				# raise warning that job time clashes with existing job
+				raise JobClashError(
+					f"Job time {jobSchedule.at_time} clashes with existing job: "
+					f"{existingJob.job_func} and {job}"
+				)
+		scheduledJob = jobSchedule.do(callJobOnThread, *args, **kwargs)
 		cls.scheduledJobs.append(scheduledJob)
 
 
@@ -70,6 +182,7 @@ def terminate():
 	global scheduleThread
 	if scheduleThread is not None:
 		ScheduleThread.scheduledJobs.clear()
+		ScheduleThread.scheduledDailyJobCount = 0
 		schedule.clear()
 		scheduleThread.KILL.set()
 		scheduleThread.join()

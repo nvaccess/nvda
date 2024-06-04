@@ -1,12 +1,11 @@
 # What's New in NVDA
 
 ## 2024.3
+The Add-on Store will now notify you if any add-on updates are available on NVDA start up.
 
 This release adds support for Unicode Normalization to speech and braille output.
 This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly uses on social media.
 It also allows reading of equations in the Microsoft Word equation editor.
-
-The Add-on Store will now notify you if any add-on updates are available on NVDA start up.
 
 There are several bug fixes, particularly for the Windows 11 Emoji Panel and Clipboard history.
 For web browsers, there are fixes for reporting error messages, figures, captions, table labels and checkbox/radio button menu items.
@@ -64,9 +63,10 @@ It is especially useful to read the error location markers in tracebacks. (#1632
 * When a `gainFocus` event is queued with an object that has a valid `focusRedirect` property, the object pointed to by the `focusRedirect` property is now held by `eventHandler.lastQueuedFocusObject`, rather than the originally queued object. (#15843)
 * NVDA will log its executable architecture (x86) at startup. (#16432, @josephsl)
 * `wx.CallAfter`, which is wrapped in `monkeyPatches/wxMonkeyPatches.py`, now includes proper `functools.wraps` indication. (#16520, @XLTechie)
-* There is a new module for scheduling tasks, using the pip module `schedule`.
-You can use `utils.schedule.ScheduleThread.scheduleDailyJobAtStartUp` to automatically schedule a job that happens after NVDA starts, and every 24 hours after that.
-Jobs are scheduled with a delay to avoid conflicts. (#16636)
+* There is a new module for scheduling tasks `utils.schedule`, using the pip module `schedule`. (#16636)
+  * You can use `ScheduleThread.scheduleDailyJobAtStartUp` to automatically schedule a job that happens after NVDA starts, and every 24 hours after that.
+  Jobs are scheduled with a delay to avoid conflicts.
+  * `ScheduleThread.scheduleDailyJob` and `scheduleJob` can be used to schedule jobs at custom times, where a `JobClashError` will be raised on a known job scheduling clash.
 
 #### Deprecations
 
