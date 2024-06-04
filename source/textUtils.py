@@ -455,9 +455,13 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 			del SequenceMatcher.autojunk
 
 	def _calculateOffsets(self) -> tuple[tuple[int], tuple[int]]:
+		# Optimization, replace \xa0 (non breaking space) with normal
+		# space before diffing to avoid issues with mixed spaces.
+		decoded = self.decoded.replace("\xa0", " ")
+		encoded = self.encoded
 		# Initialize a diff list between the decoded original and the normalized string.
 		with self._monkeyPatch_SequenceMatcher_autojunk():
-			diff = list(ndiff(self.decoded, self.encoded))
+			diff = list(ndiff(decoded, encoded, charjunk=None))
 		diff.append("!")  # Closing the diff
 		# Initialize indices and buffers for tracking positions and changes.
 		iOrigin = iNormalized = 0
@@ -559,12 +563,12 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 					iNormalized += 1
 		# Finalize the mapping by selecting the minimum index for each original position.
 		originResult = tuple(map(min, originToNormalizedDict.values()))
-		assert len(originResult) == len(self.decoded), (
-			f"Length of origin: {originResult!r} != {self.decoded!r}"
+		assert len(originResult) == len(decoded), (
+			f"Length of origin: {originResult!r} != {decoded!r}"
 		)
 		normalizedResult = tuple(map(min, normalizedToOriginDict.values()))
-		assert len(normalizedResult) == len(self.encoded), (
-			f"Length of normalized: {normalizedResult!r} != {self.encoded!r}"
+		assert len(normalizedResult) == len(encoded), (
+			f"Length of normalized: {normalizedResult!r} != {encoded!r}"
 		)
 		return tuple((
 			originResult,

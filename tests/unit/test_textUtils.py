@@ -272,7 +272,7 @@ class TestUnicodeNormalizationOffsetConverter(unittest.TestCase):
 	def test_normalizedOffsetsMixedSpaces(self):
 		text = "\xa0 \xa0 \xa0"
 		converter = UnicodeNormalizationOffsetConverter(text, "NFKC")
-		expectedStrToEncoded = (0, 1)
+		expectedStrToEncoded = (0, 1, 2, 3, 4)
 		self.assertSequenceEqual(converter.computedStrToEncodedOffsets, expectedStrToEncoded)
-		expectedEncodedToStr = (0, 1)
+		expectedEncodedToStr = (0, 1, 2, 3, 4)
 		self.assertSequenceEqual(converter.computedEncodedToStrOffsets, expectedEncodedToStr)
