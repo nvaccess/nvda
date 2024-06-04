@@ -364,7 +364,7 @@ addTable("grc-international-en.utb", _("Greek international braille"))
 addTable("grc-international-es.utb", _("Spanish for Greek text"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("hbo.utb", _("Biblical Hebrew"))
+addTable("hbo.utb", _("Hebrew (Biblical) grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("he-IL.utb", _("Israeli grade 1"))
