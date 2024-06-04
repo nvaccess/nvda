@@ -373,6 +373,8 @@ class UpdatableAddonsDialog(
 		self.addonsPendingUpdate = addonsPendingUpdate
 		self.onDisplayableError = DisplayableError.OnDisplayableErrorT()
 		self._setupUI()
+		self.Raise()
+		self.SetFocus()
 
 	def _setupUI(self):
 		self.Bind(wx.EVT_CLOSE, self.onClose)
