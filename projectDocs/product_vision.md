@@ -7,6 +7,14 @@ All blind and vision impaired people deserve these rights and opportunities, no 
 NVDA (NonVisual Desktop Access) is software that allows blind and vision impaired people to independently interact with the Windows Operating System and popular third party applications by outputting content in either synthetic speech or via a refreshable Braille Display.
 Developed by NV Access in partnership with a dedicated open source community, NVDA enables blind and vision impaired people to increase their chances at education and employment, and to participate in and contribute to society.
 
+NVDA provides solutions for blind and vision impaired people in accessing technology that:
+
+* Will provide utility to a significant proportion of users in day-to-day use, OR
+* Is a necessity for a small subset of our users, without which NVDA would not be functional for them,
+
+AND
+*  Providing this support through an add-on is impractical (see "Extendable" below).
+
 ## Guiding Principles
 1. Freely Available to all: To ensure that NVDA is available to anyone who needs to access the Windows Operating system, no matter their economic status:
     * NVDA is free of charge for anyone who needs to access a computer.
