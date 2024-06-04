@@ -45,14 +45,14 @@ class ScheduleThreadTests(unittest.TestCase):
 		ScheduleThread.scheduleDailyJobAtStartUp(incrementB, ThreadTarget.CUSTOM, scheduledVals)
 		ScheduleThread.scheduleDailyJobAtStartUp(incrementC, ThreadTarget.CUSTOM, scheduledVals)
 		# Sanity checks (have failed in development)
-		self.assertEqual(len(ScheduleThread.scheduledJobs), 3)
+		self.assertEqual(len(schedule.jobs), 3)
 		self.assertEqual(ScheduleThread.scheduledDailyJobCount, 3)
 
 		expectedResult = [0, 0, 0]
 		self.assertEqual(scheduledVals, expectedResult)
 		for jobIndex in range(3):
 			startTime = NVDAState.getStartTime()
-			currentJob = ScheduleThread.scheduledJobs[jobIndex]
+			currentJob = schedule.jobs[jobIndex]
 
 			# Ensure that the job is scheduled to run at the expected time
 			expectedSecsOffsetMin = jobIndex * ScheduleThread.DAILY_JOB_MINUTE_OFFSET * 60
@@ -76,7 +76,7 @@ class ScheduleThreadTests(unittest.TestCase):
 			self.assertEqual(
 				scheduledVals,
 				expectedResult,
-				f"Job {jobIndex} did not run as expected. Scheduled jobs: {ScheduleThread.scheduledJobs}"
+				f"Job {jobIndex} did not run as expected. Scheduled jobs: {schedule.jobs}"
 			)
 
 	def test_scheduleJob(self):
@@ -91,8 +91,8 @@ class ScheduleThreadTests(unittest.TestCase):
 		ScheduleThread.scheduleJob(jobFunc, jobSchedule, ThreadTarget.GUI)
 
 		# Assert that the job is scheduled correctly
-		self.assertEqual(len(ScheduleThread.scheduledJobs), 1)
-		scheduledJob = ScheduleThread.scheduledJobs[0]
+		self.assertEqual(len(schedule.jobs), 1)
+		scheduledJob = schedule.jobs[0]
 		self.assertEqual(f"{scheduledJob.at_time.hour:02d}:{scheduledJob.at_time.minute:02d}", cronTime)
 
 	def test_scheduleJob_jobClash(self):
