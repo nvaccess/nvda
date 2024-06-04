@@ -352,7 +352,7 @@ The status of the add-on will be listed as "Update available".
 The list will display the currently installed version and the available version.
 Press `enter` on the add-on to open the actions list; choose "Update".
 
-By default, after NVDA startup, the Add-on Store will notify you if any add-on updates are available.
+By default, after NVDA startup, you will be notified if any add-on updates are available.
 To learn more about and configure this behaviour, refer to ["Update Notifications"](#AutomaticAddonUpdates).
 
 ### Community {#Community}
@@ -2900,7 +2900,7 @@ This category allows you to adjust the behaviour of the Add-on Store.
 
 ##### Update Notifications {#AutomaticAddonUpdates}
 
-By default, after NVDA startup, the Add-on Store will notify you if any add-on updates are available.
+When this option is set to "Notify", the Add-on Store will notify you after NVDA startup if any add-on updates are available.
 This check is performed every 24 hours.
 Notifications will only occur for add-ons with updates available within the same channel.
 For example, for installed beta add-ons, you will only be notified of updates within the beta channel.
@@ -3500,7 +3500,7 @@ If NVDA is installed and running on your system, you can also open an add-on fil
 When an add-on is being installed from an external source, NVDA will ask you to confirm the installation.
 Once the add-on is installed, NVDA must be restarted for the add-on to start running, although you may postpone restarting NVDA if you have other add-ons to install or update.
 
-By default, after NVDA startup, the Add-on Store will notify you if any add-on updates are available.
+By default, after NVDA startup, you will be notified if any add-on updates are available.
 To learn more about and configure this behaviour, refer to ["Update Notifications"](#AutomaticAddonUpdates).
 
 #### Removing Add-ons {#AddonStoreRemoving}

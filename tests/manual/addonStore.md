@@ -100,38 +100,40 @@ You can do this by:
 
 ## Updating add-ons
 
-### Updating from add-on installed from add-on store
-1. [Install an add-on from the add-on store](#install-add-on)
+### Simulate creating an updatable add-on from the Add-on Store
+Without having a previously installed add-on get an update, it is hard to naturally test updatable add-ons.
+This process allows you to spoof an update for an add-on.
+
+1. [Install an add-on from the Add-on Store](#install-add-on)
 For example: "Clock".
 1. Go to your NVDA user configuration folder:
-    - For source: `.\source\userConfig`
-    - For installed copies: `%APPDATA%\nvda`
+    - For source: `.\source\userConfig\addons`
+    - For installed copies: `%APPDATA%\nvda\addons`
 1. To spoof an old release, we need to edit 2 files:
-    - Add-on store JSON metadata
-        - Located in: `.\addonStore\addons\`.
-        - Example: `source\userConfig\addonStore\addons\clock.json`
+    - Add-on Store JSON metadata
+        - Example: `source\userConfig\addons\clock.json`
         - Edit "addonVersionNumber" and "addonVersionName": decrease the major release value number.
     - Add-on manifest
-        - Located in: `.\addons\`.
         - Example: `source\userConfig\addons\clock\manifest.ini`
         - Edit "version": decrease the major release value number to match earlier edits.
-1. Open the add-on store
-1. Ensure the same add-on you edited is available on the add-on store with the status "update".
+
+### Updating from add-on installed from Add-on Store
+1. [Simulate creating an updatable add-on from the Add-on Store](#simulate-creating-an-updatable-add-on-from-the-add-on-store)
+1. Open the Add-on Store
+1. Ensure the same add-on you edited is available on the Add-on Store with the status "update".
 1. Install the add-on again to test the "update" path.
 
 ### Updating from add-on installed externally with valid version
-1. [Install an add-on from the add-on store](#install-add-on)
+1. [Install an add-on from the Add-on Store](#install-add-on)
 For example: "Clock".
 1. Go to your NVDA user configuration folder:
-    - For source: `.\source\userConfig`
-    - For installed copies: `%APPDATA%\nvda`
+    - For source: `.\source\userConfig\addons`
+    - For installed copies: `%APPDATA%\nvda\addons`
 1. To spoof an externally loaded older release, we need to edit 2 files:
-    - Add-on store JSON metadata
-        - Located in: `.\addonStore\addons\`.
-        - Example: `source\userConfig\addonStore\addons\clock.json`
+    - Add-on Store JSON metadata
+        - Example: `source\userConfig\addons\clock.json`
       - Delete this file.
     - Add-on manifest
-        - Located in: `.\addons\`.
         - Example: `source\userConfig\addons\clock\manifest.ini`
         - Edit "version": decrease the major release value number to match earlier edits.
 1. Open the add-on store
@@ -145,15 +147,13 @@ This means using the latest add-on store version might be a downgrade or sidegra
 1. [Install an add-on from the add-on store](#install-add-on)
 For example: "Clock".
 1. Go to your NVDA user configuration folder:
-    - For source: `.\source\userConfig`
-    - For installed copies: `%APPDATA%\nvda`
+    - For source: `.\source\userConfig\addons`
+    - For installed copies: `%APPDATA%\nvda\addons`
 1. To spoof an externally loaded release, with an invalid version, we need to edit 2 files:
-    - Add-on store JSON metadata
-        - Located in: `.\addonStore\addons\`.
-        - Example: `source\userConfig\addonStore\addons\clock.json`
+    - Add-on Store JSON metadata
+        - Example: `source\userConfig\addons\clock.json`
         - Delete this file.
     - Add-on manifest
-        - Located in: `.\addons\`.
         - Example: `source\userConfig\addons\clock\manifest.ini`
         - Edit "version": to something invalid e.g. "foo".
 1. Open the add-on store
@@ -161,21 +161,7 @@ For example: "Clock".
 1. Install the add-on again to test the "migrate" path.
 
 ### Updating multiple add-ons
-1. [Install an add-on from the add-on store](#install-add-on)
-For example: "Clock".
-1. Go to your NVDA user configuration folder:
-    - For source: `.\source\userConfig`
-    - For installed copies: `%APPDATA%\nvda`
-1. To spoof an old release, we need to edit 2 files:
-    - Add-on store JSON metadata
-        - Located in: `.\addonStore\addons\`.
-        - Example: `source\userConfig\addonStore\addons\clock.json`
-        - Edit "addonVersionNumber" and "addonVersionName": decrease the major release value number.
-    - Add-on manifest
-        - Located in: `.\addons\`.
-        - Example: `source\userConfig\addons\clock\manifest.ini`
-        - Edit "version": decrease the major release value number to match earlier edits.
-1. Repeat several times to ensure multiple add-on updates are available.
+1. Repeatedly [create updatable add-ons](#simulate-creating-an-updatable-add-on-from-the-add-on-store).
 1. Open the Add-on Store
 1. Ensure the same add-on you edited is available on the Add-on Store with the status "update".
 1. Select multiple add-ons using `shift` and `ctrl`.
@@ -185,20 +171,7 @@ For example: "Clock".
 1. Confirm the up-to-date add-ons are listed in the installed add-ons tab of the Add-ons Store.
 
 ### Automatic update notifications
-1. [Install an add-on from the add-on store](#install-add-on)
-For example: "Clock".
-1. Go to your NVDA user configuration folder:
-    - For source: `.\source\userConfig`
-    - For installed copies: `%APPDATA%\nvda`
-1. To spoof an old release, we need to edit 2 files:
-    - Add-on store JSON metadata
-        - Located in: `.\addonStore\addons\`.
-        - Example: `source\userConfig\addonStore\addons\clock.json`
-        - Edit "addonVersionNumber" and "addonVersionName": decrease the major release value number.
-    - Add-on manifest
-        - Located in: `.\addons\`.
-        - Example: `source\userConfig\addons\clock\manifest.ini`
-        - Edit "version": decrease the major release value number to match earlier edits.
+1. Repeatedly [create updatable add-ons](#simulate-creating-an-updatable-add-on-from-the-add-on-store).
 1. Start NVDA
 1. Ensure Automatic update notifications are enabled in the Add-on Store panel
 1. Trigger the update notification manually, or alternatively wait for the notification to occur

@@ -391,7 +391,6 @@ class UpdatableAddonsDialog(
 			"addonStore",
 			# Translators: Message displayed when updates are available for some installed add-ons.
 			"Updates are available for some of your installed add-ons. "
-			"Open the Add-on Store to update them. "
 		)
 
 		sText = sHelper.addItem(wx.StaticText(self, label=_message))
@@ -435,11 +434,11 @@ class UpdatableAddonsDialog(
 		# Translators: Label for an extra detail field for an add-on. In the add-on store UX.
 		statusLabel = pgettext("addonStore", "Status:")
 
-		self.addonsList.AppendColumn(nameLabel, width=300)
-		self.addonsList.AppendColumn(installedVersionLabel, width=200)
-		self.addonsList.AppendColumn(availableVersionLabel, width=200)
-		self.addonsList.AppendColumn(channelLabel, width=150)
-		self.addonsList.AppendColumn(statusLabel, width=300)
+		self.addonsList.AppendColumn(nameLabel, width=self.scaleFactor * 300)
+		self.addonsList.AppendColumn(installedVersionLabel, width=self.scaleFactor * 200)
+		self.addonsList.AppendColumn(availableVersionLabel, width=self.scaleFactor * 200)
+		self.addonsList.AppendColumn(channelLabel, width=self.scaleFactor * 150)
+		self.addonsList.AppendColumn(statusLabel, width=self.scaleFactor * 300)
 		for addon in self.addonsPendingUpdate:
 			self.addonsList.Append((
 				addon.name,
@@ -465,6 +464,7 @@ class UpdatableAddonsDialog(
 			self.listItemVMs.append(listItemVM)
 		AddonStoreVM.getAddons(self.listItemVMs)
 		self.addonsList.Refresh()
+		self.addonsList.Focus(0)
 		# Translators: Message shown when updating add-ons in the updatable add-ons dialog
 		ui.message(pgettext("addonStore", "Updating add-ons..."))
 		self.updateAllButton.Disable()
