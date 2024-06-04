@@ -434,11 +434,11 @@ class UpdatableAddonsDialog(
 		# Translators: Label for an extra detail field for an add-on. In the add-on store UX.
 		statusLabel = pgettext("addonStore", "Status:")
 
-		self.addonsList.AppendColumn(nameLabel, width=self.scaleFactor * 300)
-		self.addonsList.AppendColumn(installedVersionLabel, width=self.scaleFactor * 200)
-		self.addonsList.AppendColumn(availableVersionLabel, width=self.scaleFactor * 200)
-		self.addonsList.AppendColumn(channelLabel, width=self.scaleFactor * 150)
-		self.addonsList.AppendColumn(statusLabel, width=self.scaleFactor * 300)
+		self.addonsList.AppendColumn(nameLabel, width=300)
+		self.addonsList.AppendColumn(installedVersionLabel, width=200)
+		self.addonsList.AppendColumn(availableVersionLabel, width=200)
+		self.addonsList.AppendColumn(channelLabel, width=150)
+		self.addonsList.AppendColumn(statusLabel, width=300)
 		for addon in self.addonsPendingUpdate:
 			self.addonsList.Append((
 				addon.name,

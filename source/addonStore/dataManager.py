@@ -315,9 +315,9 @@ class _DataManager:
 		for channel in compatibleAddons:
 			for addon in compatibleAddons[channel].values():
 				if (
+					getStatus(addon, _StatusFilterKey.UPDATE) == AvailableAddonStatus.UPDATE
 					# Only consider add-ons that have been installed through the Add-on Store
-					addon._addonHandlerModel._addonStoreData is not None
-					and getStatus(addon, _StatusFilterKey.UPDATE) == AvailableAddonStatus.UPDATE
+					and addon._addonHandlerModel._addonStoreData is not None
 				):
 					# Only consider add-on updates for the same channel
 					if addon.channel == addon._addonHandlerModel._addonStoreData.channel:
