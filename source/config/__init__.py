@@ -507,8 +507,8 @@ class ConfigManager(object):
 	#: Sections that only apply to the base configuration;
 	#: i.e. they cannot be overridden in profiles.
 	BASE_ONLY_SECTIONS = frozenset({
-		"general", 
-		"update", 
+		"general",
+		"update",
 		"upgrade",
 		"development",
 		"addonStore",
