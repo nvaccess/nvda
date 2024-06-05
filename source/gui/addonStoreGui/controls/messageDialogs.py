@@ -378,6 +378,7 @@ class UpdatableAddonsDialog(
 
 	def _setupUI(self):
 		self.Bind(wx.EVT_CLOSE, self.onClose)
+		self.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = BoxSizerHelper(self, orientation=wx.VERTICAL)
 		self._setupMessage(sHelper)
@@ -387,6 +388,11 @@ class UpdatableAddonsDialog(
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
 		self.CentreOnScreen()
+
+	def onCharHook(self, evt: wx.KeyEvent):
+		if evt.KeyCode == wx.WXK_ESCAPE:
+			self.Close()
+		evt.Skip()
 
 	def _setupMessage(self, sHelper: BoxSizerHelper):
 		_message = pgettext(
@@ -426,15 +432,15 @@ class UpdatableAddonsDialog(
 		)
 
 		# Translators: Label for an extra detail field for an add-on. In the add-on store UX.
-		nameLabel = pgettext("addonStore", "Name:")
+		nameLabel = pgettext("addonStore", "Name")
 		# Translators: Label for an extra detail field for an add-on. In the add-on store UX.
-		installedVersionLabel = pgettext("addonStore", "Installed version:")
+		installedVersionLabel = pgettext("addonStore", "Installed version")
 		# Translators: Label for an extra detail field for an add-on. In the add-on store UX.
-		availableVersionLabel = pgettext("addonStore", "Available version:")
+		availableVersionLabel = pgettext("addonStore", "Available version")
 		# Translators: Label for an extra detail field for an add-on. In the add-on store UX.
-		channelLabel = pgettext("addonStore", "Channel:")
+		channelLabel = pgettext("addonStore", "Channel")
 		# Translators: Label for an extra detail field for an add-on. In the add-on store UX.
-		statusLabel = pgettext("addonStore", "Status:")
+		statusLabel = pgettext("addonStore", "Status")
 
 		self.addonsList.AppendColumn(nameLabel, width=300)
 		self.addonsList.AppendColumn(installedVersionLabel, width=200)
