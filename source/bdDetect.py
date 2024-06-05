@@ -689,4 +689,4 @@ class DriverRegistrar:
 
 
 class FallbackDevicesStore:
-    fallBackDevices: List[Tuple[str, DeviceType, str]] = []
+    fallBackDevices: set[Tuple[str, DeviceType, str]] = set()
