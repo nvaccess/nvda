@@ -62,7 +62,9 @@ class ScheduleThread(threading.Thread):
 	Daily scheduled jobs occur offset by X minutes to avoid overlapping jobs.
 	"""
 
-	scheduledDailyJobCount = 0
+	def __init__(self, *args, **kwargs) -> None:
+		super().__init__(*args, **kwargs)
+		self.scheduledDailyJobCount = 0
 
 	@classmethod
 	def run(cls):
@@ -70,12 +72,11 @@ class ScheduleThread(threading.Thread):
 			schedule.run_pending()
 			time.sleep(cls.SLEEP_INTERVAL_SECS)
 
-	@classmethod
-	def _calculateDailyTimeOffset(cls) -> str:
+	def _calculateDailyTimeOffset(self) -> str:
 		startTime = datetime.fromtimestamp(NVDAState.getStartTime())
 		# Schedule jobs so that they occur offset by a regular period to avoid overlapping jobs.
 		# Start with a delay to give time for NVDA to start up.
-		startTimeMinuteOffset = startTime.minute + (cls.scheduledDailyJobCount + 1) * cls.DAILY_JOB_MINUTE_OFFSET
+		startTimeMinuteOffset = startTime.minute + (self.scheduledDailyJobCount + 1) * self.DAILY_JOB_MINUTE_OFFSET
 		# Handle the case where the minute offset is greater than 60.
 		startTimeHourOffset = startTime.hour + (startTimeMinuteOffset // 60)
 		startTimeMinuteOffset = startTimeMinuteOffset % 60
@@ -83,9 +84,8 @@ class ScheduleThread(threading.Thread):
 		startTimeHourOffset = startTimeHourOffset % 24
 		return f"{startTimeHourOffset:02d}:{startTimeMinuteOffset:02d}"
 
-	@classmethod
 	def scheduleDailyJobAtStartUp(
-			cls,
+			self,
 			task: Callable,
 			queueToThread: ThreadTarget,
 			*args,
@@ -101,19 +101,18 @@ class ScheduleThread(threading.Thread):
 		:return: The scheduled job.
 		"""
 		try:
-			job = cls.scheduleDailyJob(task, cls._calculateDailyTimeOffset(), queueToThread, *args, **kwargs)
+			job = self.scheduleDailyJob(task, self._calculateDailyTimeOffset(), queueToThread, *args, **kwargs)
 		except JobClashError as e:
 			log.warning(f"Failed to schedule daily job due to clash: {e}")
-			cls.scheduledDailyJobCount += 1
-			log.debugWarning(f"Attempting to reschedule daily job {cls.DAILY_JOB_MINUTE_OFFSET} min later")
-			return cls.scheduleDailyJobAtStartUp(task, queueToThread, *args, **kwargs)
+			self.scheduledDailyJobCount += 1
+			log.debugWarning(f"Attempting to reschedule daily job {self.DAILY_JOB_MINUTE_OFFSET} min later")
+			return self.scheduleDailyJobAtStartUp(task, queueToThread, *args, **kwargs)
 		else:
-			cls.scheduledDailyJobCount += 1
+			self.scheduledDailyJobCount += 1
 			return job
 
-	@classmethod
 	def scheduleDailyJob(
-			cls,
+			self,
 			task: Callable,
 			cronTime: str,
 			queueToThread: ThreadTarget,
@@ -133,11 +132,10 @@ class ScheduleThread(threading.Thread):
 		:raises JobClashError: If the job's next run clashes with an existing job's next run.
 		"""
 		scheduledJob = schedule.every().day.at(cronTime)
-		return cls.scheduleJob(task, scheduledJob, queueToThread, *args, **kwargs)
+		return self.scheduleJob(task, scheduledJob, queueToThread, *args, **kwargs)
 
-	@classmethod
 	def scheduleJob(
-			cls,
+			self,
 			task: Callable,
 			jobSchedule: schedule.Job,
 			queueToThread: ThreadTarget,
@@ -174,6 +172,7 @@ class ScheduleThread(threading.Thread):
 					task(*args, **kwargs)
 			case _:
 				raise ValueError(f"Invalid queueToThread value: {queueToThread}")
+
 		# Check if scheduled job time clashes with existing jobs.
 		for existingJob in schedule.jobs:
 			if (
@@ -203,7 +202,6 @@ def initialize():
 def terminate():
 	global scheduleThread
 	if scheduleThread is not None:
-		ScheduleThread.scheduledDailyJobCount = 0
 		schedule.clear()
 		scheduleThread.KILL.set()
 		scheduleThread.join()

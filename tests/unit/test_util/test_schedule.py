@@ -10,6 +10,9 @@ from unittest.mock import MagicMock
 import schedule
 
 import NVDAState
+# import the entire module to make accessing top level global variables safer
+# i.e. scheduleThread
+from utils import schedule as _sch
 from utils.schedule import (
 	JobClashError,
 	ScheduleThread,
@@ -23,6 +26,8 @@ class ScheduleThreadTests(unittest.TestCase):
 	def setUp(self):
 		self.oldNVDAStateGetStartTime = NVDAState.getStartTime
 		NVDAState.getStartTime = MagicMock(return_value=datetime.now().timestamp())
+		self.assertEqual(len(schedule.jobs), 0, "No jobs should be scheduled at the start of the test.")
+		self.assertIsNone(_sch.scheduleThread, "scheduleThread should be None at the start of the test.")
 		initialize()
 
 	def tearDown(self):
@@ -41,12 +46,12 @@ class ScheduleThreadTests(unittest.TestCase):
 		def incrementC(scheduledVals: list):
 			scheduledVals[2] += 1
 
-		ScheduleThread.scheduleDailyJobAtStartUp(incrementA, ThreadTarget.CUSTOM, scheduledVals)
-		ScheduleThread.scheduleDailyJobAtStartUp(incrementB, ThreadTarget.CUSTOM, scheduledVals)
-		ScheduleThread.scheduleDailyJobAtStartUp(incrementC, ThreadTarget.CUSTOM, scheduledVals)
+		_sch.scheduleThread.scheduleDailyJobAtStartUp(incrementA, ThreadTarget.CUSTOM, scheduledVals)
+		_sch.scheduleThread.scheduleDailyJobAtStartUp(incrementB, ThreadTarget.CUSTOM, scheduledVals)
+		_sch.scheduleThread.scheduleDailyJobAtStartUp(incrementC, ThreadTarget.CUSTOM, scheduledVals)
 		# Sanity checks (have failed in development)
 		self.assertEqual(len(schedule.jobs), 3)
-		self.assertEqual(ScheduleThread.scheduledDailyJobCount, 3)
+		self.assertEqual(_sch.scheduleThread.scheduledDailyJobCount, 3)
 
 		expectedResult = [0, 0, 0]
 		self.assertEqual(scheduledVals, expectedResult)
@@ -88,7 +93,7 @@ class ScheduleThreadTests(unittest.TestCase):
 		jobSchedule = schedule.every().day.at(cronTime)
 
 		# Call the scheduleJob method
-		ScheduleThread.scheduleJob(jobFunc, jobSchedule, ThreadTarget.GUI)
+		_sch.scheduleThread.scheduleJob(jobFunc, jobSchedule, ThreadTarget.GUI)
 
 		# Assert that the job is scheduled correctly
 		self.assertEqual(len(schedule.jobs), 1)
@@ -104,34 +109,33 @@ class ScheduleThreadTests(unittest.TestCase):
 		jobSchedule = schedule.every().day.at(cronTime)
 
 		# Call the scheduleJob method
-		ScheduleThread.scheduleJob(jobFunc, jobSchedule, ThreadTarget.GUI)
+		_sch.scheduleThread.scheduleJob(jobFunc, jobSchedule, ThreadTarget.GUI)
 
 		with self.assertRaises(JobClashError):
 			# Call the scheduleJob method with the same cron time
-			ScheduleThread.scheduleJob(jobFunc, jobSchedule, ThreadTarget.GUI)
+			_sch.scheduleThread.scheduleJob(jobFunc, jobSchedule, ThreadTarget.GUI)
 
 	def test_calculateDailyTimeOffset(self):
 		todayAtMidnight = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
 		NVDAState.getStartTime = MagicMock(return_value=todayAtMidnight.timestamp())
-		# Call the _calculateDailyTimeOffset method
-		offset = ScheduleThread._calculateDailyTimeOffset()
+		offset = _sch.scheduleThread._calculateDailyTimeOffset()
 		# Assert that the offset is calculated correctly
 		self.assertEqual(offset, f"00:{ScheduleThread.DAILY_JOB_MINUTE_OFFSET:02d}")
 		
-		ScheduleThread.scheduledDailyJobCount = 1
-		offset = ScheduleThread._calculateDailyTimeOffset()
+		_sch.scheduleThread.scheduledDailyJobCount = 1
+		offset = _sch.scheduleThread._calculateDailyTimeOffset()
 		self.assertEqual(offset, f"00:{ScheduleThread.DAILY_JOB_MINUTE_OFFSET * 2:02d}")
 
 		# Test the case where the start time is 11:59 to ensure the hour offset is calculated correctly
 		NVDAState.getStartTime = MagicMock(return_value=todayAtMidnight.replace(hour=11, minute=59).timestamp())
-		ScheduleThread.scheduledDailyJobCount = 0
-		offset = ScheduleThread._calculateDailyTimeOffset()
+		_sch.scheduleThread.scheduledDailyJobCount = 0
+		offset = _sch.scheduleThread._calculateDailyTimeOffset()
 		expectedMinOffset = (ScheduleThread.DAILY_JOB_MINUTE_OFFSET + 59) % 60
 		self.assertEqual(offset, f"12:{expectedMinOffset:02d}")
 
 		# Test the case where the start time is 23:59 to ensure the day and hour offset is calculated correctly
 		NVDAState.getStartTime = MagicMock(return_value=todayAtMidnight.replace(hour=23, minute=59).timestamp())
-		ScheduleThread.scheduledDailyJobCount = 0
-		offset = ScheduleThread._calculateDailyTimeOffset()
+		_sch.scheduleThread.scheduledDailyJobCount = 0
+		offset = _sch.scheduleThread._calculateDailyTimeOffset()
 		expectedMinOffset = (ScheduleThread.DAILY_JOB_MINUTE_OFFSET + 59) % 60
 		self.assertEqual(offset, f"00:{expectedMinOffset:02d}")

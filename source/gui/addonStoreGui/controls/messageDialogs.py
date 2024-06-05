@@ -466,10 +466,10 @@ class UpdatableAddonsDialog(
 			self.listItemVMs.append(listItemVM)
 		AddonStoreVM.getAddons(self.listItemVMs)
 		self.addonsList.Refresh()
-		self.addonsList.Focus(0)
 		# Translators: Message shown when updating add-ons in the updatable add-ons dialog
 		ui.message(pgettext("addonStore", "Updating add-ons..."))
 		self.updateAllButton.Disable()
+		self.addonsList.SetFocus()
 
 	def _statusUpdate(self, addonListItemVM: AddonListItemVM):
 		log.debug(f"{addonListItemVM.Id} status: {addonListItemVM.status}")

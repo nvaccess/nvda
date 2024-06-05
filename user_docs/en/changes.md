@@ -64,9 +64,9 @@ It is especially useful to read the error location markers in tracebacks. (#1632
 * NVDA will log its executable architecture (x86) at startup. (#16432, @josephsl)
 * `wx.CallAfter`, which is wrapped in `monkeyPatches/wxMonkeyPatches.py`, now includes proper `functools.wraps` indication. (#16520, @XLTechie)
 * There is a new module for scheduling tasks `utils.schedule`, using the pip module `schedule`. (#16636)
-  * You can use `ScheduleThread.scheduleDailyJobAtStartUp` to automatically schedule a job that happens after NVDA starts, and every 24 hours after that.
+  * You can use `scheduleThread.scheduleDailyJobAtStartUp` to automatically schedule a job that happens after NVDA starts, and every 24 hours after that.
   Jobs are scheduled with a delay to avoid conflicts.
-  * `ScheduleThread.scheduleDailyJob` and `scheduleJob` can be used to schedule jobs at custom times, where a `JobClashError` will be raised on a known job scheduling clash.
+  * `scheduleThread.scheduleDailyJob` and `scheduleJob` can be used to schedule jobs at custom times, where a `JobClashError` will be raised on a known job scheduling clash.
 
 #### Deprecations
 

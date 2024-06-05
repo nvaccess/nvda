@@ -177,12 +177,12 @@ For example: "Clock".
 1. Trigger the update notification manually, or alternatively wait for the notification to occur
     1. From the NVDA Python console, find the scheduled thread
         ```py
-        from utils.schedule import ScheduleThread
-        ScheduleThread.scheduledJobs
+        import schedule
+        schedule.jobs
         ```
     1. Replace `i` with the index of the scheduled thread to find the job
         ```py
-        ScheduleThread.scheduledJobs[i].run()
+        schedule.jobs[i].run()
         ```
 1. Test various buttons:
     - Press "Update All": Ensure NVDA installs the add-ons.
