@@ -18,6 +18,16 @@ scheduleThread: "ScheduleThread | None" = None
 
 
 class ThreadTarget(Enum):
+	"""
+	When running a task, specify the thread to run the task on.
+	ScheduleThread blocks until the scheduled task is complete.
+	To avoid blocking the ScheduleThread, all tasks should be run on a separate thread.
+	Using GUI or DAEMON thread targets ensures that the ScheduleThread is not blocked.
+	CUSTOM thread target is used for tasks where the supplier of the task is responsible
+	for running the task on a separate thread.
+	"""
+
+
 	GUI = auto()
 	"""
 	Uses wx.CallAfter to run the job on the GUI thread.
@@ -33,7 +43,8 @@ class ThreadTarget(Enum):
 	"""
 	No thread target.
 	Runs directly and blocks `scheduleThread`.
-	Run code on a custom thread to ensure `scheduleThread` is not blocked.
+	Authors of tasks are responsible for running the task on a
+	separate thread to ensure that `scheduleThread` is not blocked.
 	"""
 
 
