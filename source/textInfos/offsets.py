@@ -667,7 +667,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			return False
 		converter = textUtils.getOffsetConverter(self.encoding)(inText)
 		if reverse:
-			offset = self._startOffset- converter.strToEncodedOffsets(m.end())
+			offset = self._startOffset - converter.strToEncodedOffsets(m.end())
 		else:
 			offset = self._startOffset + 1 + converter.strToEncodedOffsets(m.start())
 		self._startOffset=self._endOffset=offset
