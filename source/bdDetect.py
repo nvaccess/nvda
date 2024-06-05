@@ -456,6 +456,8 @@ class _Detector:
 		appModuleHandler.post_appSwitch.unregister(self.pollBluetoothDevices)
 		messageWindow.pre_handleWindowMessage.unregister(self.handleWindowMessage)
 		self._stopBgScan()
+		# Clear the fallback devices
+		FallbackDevicesStore.fallBackDevices.clear()
 		# Clear the cache of bluetooth devices so new devices can be picked up with a new instance.
 		deviceInfoFetcher.btDevsCache = None
 		self._executor.shutdown(wait=False)
@@ -647,7 +649,7 @@ class DriverRegistrar:
 				f"{', '.join(malformedIds)}"
 			)
 		if useAsFallBack:
-			FallbackDevicesStore.fallBackDevices.extend([(self._driver, type, id) for id in ids])
+			FallbackDevicesStore.fallBackDevices.update([(self._driver, type, id) for id in ids])
 		
 		devs = self._getDriverDict()
 		driverUsb = devs[type]
