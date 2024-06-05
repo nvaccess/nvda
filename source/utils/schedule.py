@@ -27,7 +27,6 @@ class ThreadTarget(Enum):
 	for running the task on a separate thread.
 	"""
 
-
 	GUI = auto()
 	"""
 	Uses wx.CallAfter to run the job on the GUI thread.
