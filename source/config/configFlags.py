@@ -214,7 +214,7 @@ class AddonsAutomaticUpdate(DisplayStringStrEnum):
 		return {
 			# Translators: This is a label for the automatic update behaviour for add-ons.
 			# It will notify the user when updates are available.
-			self.NOTIFY: _("Notify (default)"),
+			self.NOTIFY: _("Notify"),
 			# self.UPDATE: _("Update Automatically"),
 			# Translators: This is a label for the automatic update behaviour for add-ons.
 			self.DISABLED: _("Disabled"),
