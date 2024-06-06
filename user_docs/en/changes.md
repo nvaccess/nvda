@@ -3,7 +3,7 @@
 ## 2024.3
 
 This release adds support for Unicode Normalization to speech and braille output.
-This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly uses on social media.
+This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
 It also allows reading of equations in the Microsoft Word equation editor.
 You can enable this functionality for both speech and braille in their respective settings categories in the NVDA Settings dialog.
 
@@ -16,7 +16,7 @@ Unicode CLDR has been updated.
 ### New Features
 
 * Added support for Unicode Normalization to speech and braille output. (#11570, #16466 @LeonarddeR).
-  * This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly uses on social media.
+  * This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
   * It also allows reading of equations in the Microsoft Word equation editor. (#4631)
   * You can enable this functionality for both speech and braille in their respective settings categories in the NVDA Settings dialog.
 
@@ -28,6 +28,7 @@ Unicode CLDR has been updated.
 * The fallback braille input table is now equal to the fallback output table, which is Unified English Braille Code grade 1. (#9863, @JulienCochuyt, @LeonarddeR)
 * NVDA will now report figures with no accessible children, but with a label or description. (#14514)
 * When reading by line in browse mode, "caption" is no longer reported on each line of a long figure or table caption. (#14874)
+* In the Python console, the last unexecuted command will no longer be lost when moving in the input history. (#16653, @CyrilleB79)
 
 ### Bug Fixes
 * Windows 11 fixes:
@@ -39,6 +40,7 @@ Unicode CLDR has been updated.
   * Error messages referenced with `aria-errormessage` are now reported in Google Chrome and Mozilla Firefox. (#8318)
   * If present, NVDA will now use `aria-labelledby` to provide accessible names for tables in Mozilla Firefox. (#5183)
   * NVDA will correctly announce radio and checkbox menuitems when first entering submenus in Google Chrome and Mozilla Firefox. (#14550)
+  * NVDA's browse mode find functionality is now more accurate when the page contains emojis. (#16317, @LeonarddeR)
 * NVDA will announce correctly the autocomplete suggestions in Eclipse and other Eclipse-based environments on Windows 11. (#16416, @thgcode)
 * Improved reliability of automatic text readout, particularly in terminal applications. (#15850, #16027, @Danstiv)
 * NVDA will correctly announce selection changes when editing a cell's text in Microsoft Excel. (#15843)
