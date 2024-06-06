@@ -443,14 +443,15 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 			normPart = unicodedata.normalize(normalizationForm, origPart)
 			normalized += normPart
 			isReorder = all(c in normPart for c in origPart)
-			if isReorder:
-				computedStrToEncodedOffsets.extend((normOffset + i for i in self._processReordered(origPart, normPart)))
-				computedEncodedToStrOffsets.extend((origOffset + i for i in self._processReordered(normPart, origPart)))
+			if origPart == normPart:
+				computedStrToEncodedOffsets.extend(normOffset + i for i in range(len(origPart)))
+				computedEncodedToStrOffsets.extend(origOffset + i for i in range(len(normPart)))
+			elif isReorder:
+				computedStrToEncodedOffsets.extend(normOffset + i for i in self._processReordered(origPart, normPart))
+				computedEncodedToStrOffsets.extend(origOffset + i for i in self._processReordered(normPart, origPart))
 			else:
-				for origChar in origPart:
-					computedStrToEncodedOffsets.append(normOffset)
-				for normChar in normPart:
-					computedEncodedToStrOffsets.append(origOffset)
+				computedStrToEncodedOffsets.extend(normOffset for origChar in origPart)
+				computedEncodedToStrOffsets.extend(origOffset for normChar in normPart)
 			origOffset += len(origPart)
 			normOffset += len(normPart)
 		self.encoded = normalized
