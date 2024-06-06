@@ -12,13 +12,12 @@ import encodings
 import locale
 import unicodedata
 from abc import ABCMeta, abstractmethod, abstractproperty
-from collections import defaultdict
-from difflib import ndiff, SequenceMatcher
-from contextlib import contextmanager
 from functools import cached_property
 from typing import Optional, Tuple, Type
 
 from logHandler import log
+
+from .uniscribe import splitAtCharacterBoundaries
 
 WCHAR_ENCODING = "utf_16_le"
 UTF8_ENCODING = "utf-8"
@@ -430,150 +429,38 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 	which takes two characters instead of one.
 	"""
 	normalizationForm: str
-	computedStrToEncodedOffsets: tuple[int]
-	computedEncodedToStrOffsets: tuple[int]
+	computedStrToEncodedOffsets: list[int]
+	computedEncodedToStrOffsets: list[int]
 
 	def __init__(self, text: str, normalizationForm: str = DEFAULT_UNICODE_NORMALIZATION_ALGORITHM):
 		super().__init__(text)
 		self.normalizationForm = normalizationForm
-		self.encoded: str = unicodedata.normalize(normalizationForm, text)
-		self.computedStrToEncodedOffsets, self.computedEncodedToStrOffsets = self._calculateOffsets()
-
-	@staticmethod
-	@contextmanager
-	def _monkeyPatch_SequenceMatcher_autojunk():
-		"""difflib.ndiff uses difflib.SequenceMatcher under the hood,
-		but it doesn't allow us to control the autojunk parameter of SequenceMatcher.
-		Diffing with autojunk on sometimes breaks the logic to calculate offsets for unicode normalization.
-		This context manager, when active, ensures that ndiff uses a monkey patched SequenceMatcher
-		with autojunk disabled.
-		"""
-		try:
-			SequenceMatcher.autojunk = property(lambda sm: False, lambda sm, v: None)
-			yield
-		finally:
-			del SequenceMatcher.autojunk
-
-	def _calculateOffsets(self) -> tuple[tuple[int], tuple[int]]:
-		# Optimization, replace \xa0 (non breaking space) with normal
-		# space before diffing to avoid issues with mixed spaces.
-		decoded = self.decoded.replace("\xa0", " ")
-		encoded = self.encoded
-		# Initialize a diff list between the decoded original and the normalized string.
-		with self._monkeyPatch_SequenceMatcher_autojunk():
-			diff = list(ndiff(decoded, encoded, charjunk=None))
-		diff.append("!")  # Closing the diff
-		# Initialize indices and buffers for tracking positions and changes.
-		iOrigin = iNormalized = 0
-		originBuffer = ""
-		normalizedBuffer = ""
-		originToNormalizedDict = defaultdict(list)
-		normalizedToOriginDict = defaultdict(list)
-		originPending = normalizedPending = False
-		# Iterate over each character in the diff list.
-		for char in diff:
-			if char[0] == "?":
-				raise RuntimeError("Unexpected entry in diff")
-			elif char[0] == "-":
-				# Accumulate characters in the origin buffer that aren't in the normalized string.
-				originBuffer += char[2:]
-				originPending = True
-			elif char[0] == "+":
-				# Accumulate characters in the normalized buffer that aren't in the original string.
-				normalizedBuffer += char[2:]
-				normalizedPending = True
-			elif char[0] == " " and (
-				(not originPending and normalizedPending) or (originPending and not normalizedPending)
-			):
-				# Accumulate unchanged characters in both buffers.
-				originBuffer += char[2:]
-				normalizedBuffer += char[2:]
+		self.computedStrToEncodedOffsets = computedStrToEncodedOffsets = []
+		self.computedEncodedToStrOffsets = computedEncodedToStrOffsets = []
+		origOffset = normOffset = 0
+		normalized = ""
+		for origPart in splitAtCharacterBoundaries(text):
+			normPart = unicodedata.normalize(normalizationForm, origPart)
+			normalized += normPart
+			isReorder = all(c in normPart for c in origPart)
+			if isReorder:
+				computedStrToEncodedOffsets.extend((normOffset + i for i in self._processReordered(origPart, normPart)))
+				computedEncodedToStrOffsets.extend((origOffset + i for i in self._processReordered(normPart, origPart)))
 			else:
-				# Process accumulated characters in the buffers.
-				while originBuffer and normalizedBuffer:
-					originPart = ""
-					originPartLen = 0
-					normalizedPart = ""
-					normalizedPartLen = 0
-					# Find the smallest part that can be normalized
-					# and still matches the beginning of the normalized buffer.
-					for i in range(len(originBuffer)):
-						originPart = originBuffer[: (i + 1)]
-						originPartLen = len(originPart)
-						normalizedPart = unicodedata.normalize(self.normalizationForm, originPart)
-						normalizedPartLen = len(normalizedPart)
-						if (
-							originPart == normalizedPart
-							or not normalizedBuffer.startswith(normalizedPart)
-						):
-							continue
-						originBuffer = originBuffer[originPartLen:]
-						normalizedBuffer = normalizedBuffer[normalizedPartLen:]
-						break
-					else:
-						# No normalizable characters in originBuffer.
-						# All characters are now copied to originPart and normalizedPart.
-						assert originBuffer == originPart, (
-							f"Origin: {originBuffer!r} != {originPart!r} for origin {self.decoded!r}"
-						)
-						assert normalizedBuffer == normalizedPart, (
-							f"Normalized: {normalizedBuffer!r} != {normalizedPart!r} for origin {self.decoded!r}"
-						)
-						# Reset buffers to ensure the while loop doesn't run next time.
-						originBuffer = normalizedBuffer = ""
-					# Map the original indices to the normalized indices.
-					# originMultiplier is used to multiply indices in origin
-					# when a character takes more space in origin than in normalized.
-					# This is applicable when normalizing letter+modifier compositions to one character.
-					originMultiplier = min(originPartLen / normalizedPartLen, 1)
-					# normalizedMultiplier is used to multiply indices in normalized
-					# when a character takes more space in normalized than in origin.
-					# This is applicable when normalizing one character ligeatures
-					# into their two corresponding letters.
-					normalizedMultiplier = min(normalizedPartLen / originPartLen, 1)
-					for i in range(max(originPartLen, normalizedPartLen)):
-						tempOrigin = iOrigin + int(i * originMultiplier)
-						tempNormalized = iNormalized + int(i * normalizedMultiplier)
-						originC = originPart[i] if i < originPartLen else None
-						if originC:
-							# If normalization results in the same characters
-							# but they have moved in the string, for example when normalizing the order of modifiers
-							# on ancient hebrew consonants, the normalized index should be based on
-							# the position of the origin character in normalized.
-							normalizedIndex = normalizedPart.find(originC)
-							if normalizedIndex != -1:
-								tempNormalized = iNormalized + normalizedIndex
-						normalizedC = normalizedPart[i] if i < normalizedPartLen else None
-						if normalizedC:
-							# The origin index should be based on the position
-							# of the normalized character in origin.
-							originIndex = originPart.find(normalizedC)
-							if originIndex != -1:
-								tempOrigin = iOrigin + originIndex
-						originToNormalizedDict[tempOrigin].append(tempNormalized)
-						normalizedToOriginDict[tempNormalized].append(tempOrigin)
-					iOrigin += originPartLen
-					iNormalized += normalizedPartLen
-				originPending = normalizedPending = False
-				if char[0] == " ":
-					# Map indices directly for unchanged characters.
-					originToNormalizedDict[iOrigin].append(iNormalized)
-					normalizedToOriginDict[iNormalized].append(iOrigin)
-					iOrigin += 1
-					iNormalized += 1
-		# Finalize the mapping by selecting the minimum index for each original position.
-		originResult = tuple(map(min, originToNormalizedDict.values()))
-		assert len(originResult) == len(decoded), (
-			f"Length of origin: {originResult!r} != {decoded!r}"
-		)
-		normalizedResult = tuple(map(min, normalizedToOriginDict.values()))
-		assert len(normalizedResult) == len(encoded), (
-			f"Length of normalized: {normalizedResult!r} != {encoded!r}"
-		)
-		return tuple((
-			originResult,
-			normalizedResult
-		))
+				for origChar in origPart:
+					computedStrToEncodedOffsets.append(normOffset)
+				for normChar in normPart:
+					computedEncodedToStrOffsets.append(origOffset)
+			origOffset += len(origPart)
+			normOffset += len(normPart)
+		self.encoded = normalized
+
+	def _processReordered(self, a: str, b: str):
+		""""Yields the offset in b of every character in a"""
+		for char in a:
+			index = b.find(char)
+			yield index
+			b = f"{b[:index]}\0{b[index + 1 :]}"
 
 	@cached_property
 	def encodedStringLength(self) -> int:
