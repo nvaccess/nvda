@@ -411,7 +411,8 @@ class UpdatableAddonsDialog(
 		bHelper = sHelper.addDialogDismissButtons(ButtonHelper(wx.HORIZONTAL))
 
 		# Translators: The label of a button in a dialog
-		self.openStoreButton = bHelper.addButton(self, wx.ID_CLOSE, label=pgettext("addonStore", "Open Add-on &Store"))
+		openStoreLabel = pgettext("addonStore", "Open Add-on &Store")
+		self.openStoreButton = bHelper.addButton(self, wx.ID_CLOSE, label=openStoreLabel)
 		self.openStoreButton.Bind(wx.EVT_BUTTON, self.onOpenStoreButton)
 
 		# Translators: The label of a button in a dialog
@@ -477,6 +478,7 @@ class UpdatableAddonsDialog(
 		self.updateAllButton.Disable()
 		self.openStoreButton.Disable()
 		self.addonsList.SetFocus()
+		self.addonsList.Focus(0)
 
 	def _statusUpdate(self, addonListItemVM: AddonListItemVM):
 		log.debug(f"{addonListItemVM.Id} status: {addonListItemVM.status}")
