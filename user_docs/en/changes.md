@@ -17,8 +17,6 @@ Unicode CLDR has been updated.
 
 * New key commands:
   * Added unassigned commands for vertical and horizontal scrolling of the mouse wheel, to enhance navigation on web pages and apps with dynamic content, such as Dism++. (#16462, @Cary-Rowen)
-* Error messages referenced with `aria-errormessage` are now reported in Google Chrome and Mozilla Firefox. (#8318)
-* In LibreOffice Writer (version 24.8 and newer), when toggling text formatting (bold, italic, underline, subscript/superscript, alignment) using the corresponding keyboard shortcut, NVDA announces the new formatting attribute (e.g. "Bold on", "Bold off"). (#4248, @michaelweghorn)
 * Added support for Unicode Normalization to speech and braille output. (#11570, #16466 @LeonarddeR).
   * This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
   * It also allows reading of equations in the Microsoft Word equation editor. (#4631)
