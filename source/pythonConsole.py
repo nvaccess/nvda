@@ -313,6 +313,8 @@ class ConsoleUI(
 		self.inputCtrl.SetFont(font)
 		self.inputCtrl.Bind(wx.EVT_CHAR, self.onInputChar)
 		self.inputCtrl.Bind(wx.EVT_TEXT_PASTE, self.onInputPaste)
+		self.inputCtrl.Bind(wx.EVT_TEXT, self.onInputTextChange)
+		self.inputTextModified = False
 		inputSizer.Add(self.inputCtrl, proportion=1, flag=wx.EXPAND)
 		mainSizer.Add(inputSizer, proportion=1, flag=wx.EXPAND)
 		self.SetSizer(mainSizer)
@@ -374,6 +376,9 @@ class ConsoleUI(
 			self.outputPositions.append(self.outputCtrl.GetInsertionPoint())
 
 	def historyMove(self, movement):
+		if self.inputTextModified:
+			self.inputHistoryPos = len(self.inputHistory) - 1
+			self.inputHistory[self.inputHistoryPos] = self.inputCtrl.GetValue()
 		newIndex = self.inputHistoryPos + movement
 		if not (0 <= newIndex < len(self.inputHistory)):
 			# No more lines in this direction.
@@ -381,6 +386,7 @@ class ConsoleUI(
 		self.inputHistoryPos = newIndex
 		self.inputCtrl.ChangeValue(self.inputHistory[newIndex])
 		self.inputCtrl.SetInsertionPointEnd()
+		self.inputTextModified = False
 		return True
 
 	RE_COMPLETE_UNIT = re.compile(r"[\w.]*$")
@@ -515,6 +521,10 @@ class ConsoleUI(
 				# reading of output errors.
 				self.inputCtrl.ChangeValue(suffix)
 				break
+
+	def onInputTextChange(self, evt: wx.CommandEvent):
+		self.inputTextModified = True
+		evt.Skip()
 
 	def onOutputKeyDown(self, evt):
 		key = evt.GetKeyCode()
