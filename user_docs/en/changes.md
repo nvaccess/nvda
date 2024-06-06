@@ -15,7 +15,6 @@ Unicode CLDR has been updated.
 
 ### New Features
 
-
 * New key commands:
   * Added unassigned commands for vertical and horizontal scrolling of the mouse wheel to enhance navigation on web pages and apps with dynamic content, such as Dism++. Most mice have a scroll wheel click; by pressing down on the scroll wheel, you can scroll horizontally and vertically simultaneously by moving the cursor in the desired direction. (#16462, @Cary-Rowen)
 * Error messages referenced with `aria-errormessage` are now reported in Google Chrome and Mozilla Firefox. (#8318)

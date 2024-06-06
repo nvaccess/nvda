@@ -267,7 +267,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for scroll up at the mouse position command.
-			"scroll up at the mouse position"
+			"Scroll up at the mouse position"
 		),
 		category=SCRCAT_MOUSE
 	)
@@ -277,7 +277,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for scroll down at the mouse position command.
-			"scroll down at the mouse position"
+			"Scroll down at the mouse position"
 		),
 		category=SCRCAT_MOUSE
 	)
@@ -287,7 +287,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for scroll left at the mouse position command.
-			"scroll left at the mouse position"
+			"Scroll left at the mouse position"
 		),
 		category=SCRCAT_MOUSE
 	)
