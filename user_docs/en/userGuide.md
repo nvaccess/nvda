@@ -540,7 +540,7 @@ You can also keep your finger on the screen and move it around to read other con
 When NVDA commands are described later in this user guide, they may list a touch gesture which can be used to activate that command with the touchscreen.
 Following are some instructions on how to perform the various touch gestures.
 
-##### Taps {#toc45}
+##### Taps {#Taps}
 
 Tap the screen quickly with one or more fingers.
 
@@ -552,7 +552,7 @@ Tapping twice will result in a double-tap.
 Tapping 3 times will result in a triple-tap and so on.
 Of course, these multi-tap gestures also recognize how many fingers were used, so it's possible to have gestures like a 2-finger triple-tap, a 4-finger tap, etc.
 
-##### Flicks {#toc46}
+##### Flicks {#Flicks}
 
 Quickly swipe your finger across the screen.
 
