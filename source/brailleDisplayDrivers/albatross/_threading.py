@@ -18,6 +18,7 @@ import serial
 from ctypes import byref
 from ctypes.wintypes import DWORD
 from logHandler import log
+from serial.tools import list_ports
 from serial.win32 import (
 	ERROR_IO_PENDING,
 	EV_RXCHAR,
@@ -61,11 +62,19 @@ class ReadThread(Thread):
 	def run(self):
 		data = dwEvtMask = DWORD()
 		log.debug(f"{self.name} started")
-		while not self._event.isSet():
+		while not self._event.is_set():
 			# Try to reconnect if port is not open
 			if not self._dev.is_open:
+				# But if port is not present, just wait and continue
+				if not self._portPresent():
+					log.debug(
+						f"Sleepin {KC_INTERVAL} seconds, port {self._dev.name} not present"
+					)
+					self._event.wait(KC_INTERVAL)
+					continue
 				log.debug(
-					f"Calling {self._readFunction.__name__}, port {self._dev.name} not open"
+					f"Port {self._dev.name} present, calling {self._readFunction.__name__} "
+					"to open it"
 				)
 				self._readFunction()
 				if not self._dev.is_open:
@@ -78,7 +87,7 @@ class ReadThread(Thread):
 			try:
 				if not SetCommMask(self._dev._port_handle, EV_RXCHAR):
 					# Exiting
-					if self._event.isSet():
+					if self._event.is_set():
 						break
 					self._disableFunction()
 					log.debug("SetCommMask failed")
@@ -89,7 +98,7 @@ class ReadThread(Thread):
 					byref(self._dev._overlapped_read)
 				)
 				if not result and GetLastError() != ERROR_IO_PENDING:
-					if self._event.isSet():
+					if self._event.is_set():
 						break
 					self._disableFunction()
 					log.debug("WaitCommEvent failed")
@@ -104,7 +113,7 @@ class ReadThread(Thread):
 					log.debug(f"Calling function {self._readFunction.__name__} for read")
 					self._readFunction()
 				else:
-					if self._event.isSet():
+					if self._event.is_set():
 						break
 					log.debug(f"GetOverLappedResult failed {ctypes.WinError()}")
 					self._disableFunction()
@@ -112,12 +121,21 @@ class ReadThread(Thread):
 			# but writing to display fails during it - or vice versa - AttributeError
 			# or TypeError might raise.
 			except (OSError, AttributeError, TypeError):
-				if self._event.isSet():
+				if self._event.is_set():
 					break
 				else:
 					self._disableFunction()
 					log.debug("", exc_info=True)
 		log.debug(f"Exiting {self.name}")
+
+	def _portPresent(self) -> bool:
+		"""USB serial port disappears if cable is plugged out or device powered off.
+		@return: C{True} if port is present, C{False} if not
+		"""
+		for p in list_ports.comports():
+			if p.name == self._dev.name:
+				return True
+		return False
 
 
 class RepeatedTimer:

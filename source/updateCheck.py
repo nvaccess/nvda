@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2012-2023 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
+# Copyright (C) 2012-2024 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
 
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
@@ -16,6 +16,7 @@ import garbageHandler
 import globalVars
 import config
 import core
+from NVDAState import WritePaths
 if globalVars.appArgs.secure:
 	raise RuntimeError("updates disabled in secure mode")
 elif config.isAppX:
@@ -36,9 +37,9 @@ import pickle
 # #9818: one must import at least urllib.request in Python 3 in order to use full urllib functionality.
 import urllib.request
 import urllib.parse
-import tempfile
 import hashlib
 import ctypes.wintypes
+import requests
 import ssl
 import wx
 import languageHandler
@@ -47,13 +48,19 @@ import synthDriverHandler  # noqa: E402
 import braille
 import gui
 from gui import guiHelper
+from gui.message import displayDialogAsModal  # noqa: E402
 from addonHandler import getCodeAddon, AddonError, getIncompatibleAddons
+from addonStore.models.version import (  # noqa: E402
+	getAddonCompatibilityMessage,
+	getAddonCompatibilityConfirmationMessage,
+)
 from logHandler import log, isPathExternalToNVDA
 import config
 import shellapi
 import winUser
 import winKernel
 import fileUtils
+from utils.tempFile import _createEmptyTempFileForDeletingFile
 
 #: The URL to use for update checks.
 CHECK_URL = "https://www.nvaccess.org/nvdaUpdateCheck"
@@ -65,7 +72,7 @@ RETRY_INTERVAL = 600 # 10 min
 DOWNLOAD_BLOCK_SIZE = 8192 # 8 kb
 
 #: directory to store pending update files
-storeUpdatesDir=os.path.join(globalVars.appArgs.configPath, 'updates')
+storeUpdatesDir = WritePaths.updatesDir
 try:
 	os.makedirs(storeUpdatesDir)
 except OSError:
@@ -74,7 +81,7 @@ except OSError:
 
 #: Persistent state information.
 state: Optional[Dict[str, Any]] = None
-_stateFilename: Optional[str] = None
+
 #: The single instance of L{AutoUpdateChecker} if automatic update checking is enabled,
 #: C{None} if it is disabled.
 autoChecker: Optional["AutoUpdateChecker"] = None
@@ -99,6 +106,9 @@ def getQualifiedDriverClassNameForStats(cls):
 	if isPathExternalToNVDA(path):
 		return "%s (external)"%name
 	return "%s (core)"%name
+
+
+UPDATE_FETCH_TIMEOUT_S = 30  # seconds
 
 
 def checkForUpdate(auto: bool = False) -> Optional[Dict]:
@@ -145,14 +155,16 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 		params.update(extraParams)
 	url = "%s?%s" % (CHECK_URL, urllib.parse.urlencode(params))
 	try:
-		res = urllib.request.urlopen(url)
+		log.debug(f"Fetching update data from {url}")
+		res = urllib.request.urlopen(url, timeout=UPDATE_FETCH_TIMEOUT_S)
 	except IOError as e:
 		if isinstance(e.reason, ssl.SSLCertVerificationError) and e.reason.reason == "CERTIFICATE_VERIFY_FAILED":
 			# #4803: Windows fetches trusted root certificates on demand.
 			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves
 			_updateWindowsRootCertificates()
 			# and then retry the update check.
-			res = urllib.request.urlopen(url)
+			log.debug(f"Fetching update data from {url}")
+			res = urllib.request.urlopen(url, timeout=UPDATE_FETCH_TIMEOUT_S)
 		else:
 			raise
 	if res.code != 200:
@@ -225,7 +237,7 @@ def _executeUpdate(destPath):
 		if os.access(portablePath, os.W_OK):
 			executeParams = u'--create-portable --portable-path "{portablePath}" --config-path "{configPath}" -m'.format(
 				portablePath=portablePath,
-				configPath=globalVars.appArgs.configPath
+				configPath=WritePaths.configDir
 			)
 		else:
 			executeParams = u"--launcher"
@@ -247,9 +259,9 @@ class UpdateChecker(garbageHandler.TrackedObject):
 		"""
 		t = threading.Thread(
 			name=f"{self.__class__.__module__}.{self.check.__qualname__}",
-			target=self._bg
+			target=self._bg,
+			daemon=True,
 		)
-		t.daemon = True
 		self._started()
 		t.start()
 
@@ -363,9 +375,11 @@ class UpdateResultDialog(
 			# Translators: A message indicating that no update to NVDA is available.
 			message = _("No update available.")
 		elif canOfferPendingUpdate:
-			# Translators: A message indicating that an updated version of NVDA has been downloaded
-			# and is pending to be installed.
-			message = _("NVDA version {version} has been downloaded and is pending installation.").format(**updateInfo)
+			message = _(
+				# Translators: A message indicating that an update to NVDA has been downloaded and is ready to be
+				# applied.
+				"Update to NVDA version {version} has been downloaded and is ready to be applied."
+			).format(**updateInfo)
 
 			self.apiVersion = pendingUpdateDetails[2]
 			self.backCompatTo = pendingUpdateDetails[3]
@@ -374,39 +388,30 @@ class UpdateResultDialog(
 				backCompatToAPIVersion=self.backCompatTo
 			))
 			if showAddonCompat:
-				message = message + _(
-					# Translators: A message indicating that some add-ons will be disabled
-					# unless reviewed before installation.
-					"\n\n"
-					"However, your NVDA configuration contains add-ons that are incompatible with this version of NVDA. "
-					"These add-ons will be disabled after installation. If you rely on these add-ons, "
-					"please review the list to decide whether to continue with the installation"
-				)
+				message += "\n\n" + getAddonCompatibilityMessage()
 				confirmationCheckbox = sHelper.addItem(wx.CheckBox(
 					self,
-					# Translators: A message to confirm that the user understands that addons that have not been
-					# reviewed and made available, will be disabled after installation.
-					label=_("I understand that these incompatible add-ons will be disabled")
+					label=getAddonCompatibilityConfirmationMessage()
 				))
 				confirmationCheckbox.Bind(
 					wx.EVT_CHECKBOX,
-					lambda evt: self.installPendingButton.Enable(not self.installPendingButton.Enabled)
+					lambda evt: self.updateButton.Enable(not self.updateButton.Enabled)
 				)
 				confirmationCheckbox.SetFocus()
 				# Translators: The label of a button to review add-ons prior to NVDA update.
 				reviewAddonsButton = bHelper.addButton(self, label=_("&Review add-ons..."))
 				reviewAddonsButton.Bind(wx.EVT_BUTTON, self.onReviewAddonsButton)
-			self.installPendingButton = bHelper.addButton(
+			self.updateButton = bHelper.addButton(
 				self,
-				# Translators: The label of a button to install a pending NVDA update.
+				# Translators: The label of a button to apply a pending NVDA update.
 				# {version} will be replaced with the version; e.g. 2011.3.
-				label=_("&Install NVDA {version}").format(**updateInfo)
+				label=_("&Update to NVDA {version}").format(**updateInfo)
 			)
-			self.installPendingButton.Bind(
+			self.updateButton.Bind(
 				wx.EVT_BUTTON,
-				lambda evt: self.onInstallButton(pendingUpdateDetails[0])
+				lambda evt: self.onUpdateButton(pendingUpdateDetails[0])
 			)
-			self.installPendingButton.Enable(not showAddonCompat)
+			self.updateButton.Enable(not showAddonCompat)
 			bHelper.addButton(
 				self,
 				# Translators: The label of a button to re-download a pending NVDA update.
@@ -444,7 +449,7 @@ class UpdateResultDialog(
 		self.CentreOnScreen()
 		self.Show()
 
-	def onInstallButton(self, destPath):
+	def onUpdateButton(self, destPath):
 		_executeUpdate(destPath)
 		self.Destroy()
 
@@ -468,7 +473,7 @@ class UpdateResultDialog(
 			APIVersion=self.apiVersion,
 			APIBackwardsCompatToVersion=self.backCompatTo
 		)
-		incompatibleAddons.ShowModal()
+		displayDialogAsModal(incompatibleAddons)
 
 
 class UpdateAskInstallDialog(
@@ -485,35 +490,26 @@ class UpdateAskInstallDialog(
 		self.apiVersion = apiVersion
 		self.backCompatTo = backCompatTo
 		self.storeUpdatesDirWritable = os.path.isdir(storeUpdatesDir) and os.access(storeUpdatesDir, os.W_OK)
-		# Translators: The title of the dialog asking the user to Install an NVDA update.
+		# Translators: The title of the dialog asking the user to apply an NVDA update.
 		super().__init__(parent, title=_("NVDA Update"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
-		# Translators: A message indicating that an updated version of NVDA is ready to be installed.
-		message = _("NVDA version {version} is ready to be installed.\n").format(version=version)
+		# Translators: A message indicating that an update to NVDA is ready to be applied.
+		message = _("Update to NVDA version {version} is ready to be applied.\n").format(version=version)
 
 		showAddonCompat = any(getIncompatibleAddons(
 			currentAPIVersion=self.apiVersion,
 			backCompatToAPIVersion=self.backCompatTo
 		))
 		if showAddonCompat:
-			message = message + _(
-				# Translators: A message indicating that some add-ons will be disabled
-				# unless reviewed before installation.
-				"\n"
-				"However, your NVDA configuration contains add-ons that are incompatible with this version of NVDA. "
-				"These add-ons will be disabled after installation. If you rely on these add-ons, "
-				"please review the list to decide whether to continue with the installation"
-			)
+			message += "\n" + getAddonCompatibilityMessage()
 		text = sHelper.addItem(wx.StaticText(self, label=message))
 		text.Wrap(self.scaleSize(500))
 
 		if showAddonCompat:
 			self.confirmationCheckbox = sHelper.addItem(wx.CheckBox(
 				self,
-				# Translators: A message to confirm that the user understands that addons that have not been reviewed and made
-				# available, will be disabled after installation.
-				label=_("I understand that these incompatible add-ons will be disabled")
+				label=getAddonCompatibilityConfirmationMessage()
 			))
 
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
@@ -521,18 +517,18 @@ class UpdateAskInstallDialog(
 			# Translators: The label of a button to review add-ons prior to NVDA update.
 			reviewAddonsButton = bHelper.addButton(self, label=_("&Review add-ons..."))
 			reviewAddonsButton.Bind(wx.EVT_BUTTON, self.onReviewAddonsButton)
-		# Translators: The label of a button to install an NVDA update.
-		installButton = bHelper.addButton(self, wx.ID_OK, label=_("&Install update"))
-		installButton.Bind(wx.EVT_BUTTON, self.onInstallButton)
+		# Translators: The label of a button to update NVDA.
+		updateButton = bHelper.addButton(self, wx.ID_OK, label=_("&Update now"))
+		updateButton.Bind(wx.EVT_BUTTON, self.onUpdateButton)
 		if not showAddonCompat:
-			installButton.SetFocus()
+			updateButton.SetFocus()
 		else:
 			self.confirmationCheckbox.SetFocus()
 			self.confirmationCheckbox.Bind(
 				wx.EVT_CHECKBOX,
-				lambda evt: installButton.Enable(not installButton.Enabled)
+				lambda evt: updateButton.Enable(not updateButton.Enabled)
 			)
-			installButton.Enable(False)
+			updateButton.Enable(False)
 		if self.storeUpdatesDirWritable:
 			# Translators: The label of a button to postpone an NVDA update.
 			postponeButton = bHelper.addButton(self, wx.ID_CLOSE, label=_("&Postpone update"))
@@ -553,9 +549,9 @@ class UpdateAskInstallDialog(
 			APIVersion=self.apiVersion,
 			APIBackwardsCompatToVersion=self.backCompatTo
 		)
-		incompatibleAddons.ShowModal()
+		displayDialogAsModal(incompatibleAddons)
 
-	def onInstallButton(self, evt):
+	def onUpdateButton(self, evt):
 		_executeUpdate(self.destPath)
 		self.EndModal(wx.ID_OK)
 
@@ -566,6 +562,7 @@ class UpdateAskInstallDialog(
 			# In Python 2, os.renames did rename files across drives, no longer allowed in Python 3 (error 17 (cannot move files across drives) is raised).
 			# This is prominent when trying to postpone an update for portable copy of NVDA if this runs from a USB flash drive or another internal storage device.
 			# Therefore use kernel32::MoveFileEx with copy allowed (0x2) flag set.
+			# TODO: consider moving to shutil.move, which supports moves across filesystems.
 			winKernel.moveFileEx(self.destPath, finalDest, winKernel.MOVEFILE_COPY_ALLOWED)
 		except:
 			log.debugWarning("Unable to rename the file from {} to {}".format(self.destPath, finalDest), exc_info=True)
@@ -605,7 +602,7 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 		self.backCompatToAPIVersion = getAPIVersionTupleFromString(updateInfo["apiCompatTo"])
 		self.versionTuple = None
 		self.fileHash = updateInfo.get("launcherHash")
-		self.destPath = tempfile.mktemp(prefix="nvda_update_", suffix=".exe")
+		self.destPath = _createEmptyTempFileForDeletingFile(prefix="nvda_update_", suffix=".exe")
 
 	def start(self):
 		"""Start the download.
@@ -626,9 +623,9 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 		self._progressDialog.Raise()
 		t = threading.Thread(
 			name=f"{self.__class__.__module__}.{self.start.__qualname__}",
-			target=self._bg
+			target=self._bg,
+			daemon=True,
 		)
-		t.daemon = True
 		t.start()
 
 	def _guiExec(self, func, *args):
@@ -668,7 +665,12 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 		# #2352: Some security scanners such as Eset NOD32 HTTP Scanner
 		# cause huge read delays while downloading.
 		# Therefore, set a higher timeout.
-		remote = urllib.request.urlopen(url, timeout=120)
+		# The NVDA exe is about 35 MB.
+		# The average download speed in the world is 0.5 MB/s
+		# in some developing countries with the slowest internet.
+		# This yields an expected download time of 10min on slower networks.
+		UPDATE_DOWNLOAD_TIMEOUT = 60 * 30  # 30 min
+		remote = urllib.request.urlopen(url, timeout=UPDATE_DOWNLOAD_TIMEOUT)
 		if remote.code != 200:
 			raise RuntimeError("Download failed with code %d" % remote.code)
 		size = int(remote.headers["content-length"])
@@ -790,17 +792,16 @@ class DonateRequestDialog(wx.Dialog):
 def saveState():
 	try:
 		# #9038: Python 3 requires binary format when working with pickles.
-		with open(_stateFilename, "wb") as f:
+		with open(WritePaths.updateCheckStateFile, "wb") as f:
 			pickle.dump(state, f, protocol=0)
 	except:
 		log.debugWarning("Error saving state", exc_info=True)
 
 def initialize():
-	global state, _stateFilename, autoChecker
-	_stateFilename = os.path.join(globalVars.appArgs.configPath, "updateCheckState.pickle")
+	global state, autoChecker
 	try:
 		# #9038: Python 3 requires binary format when working with pickles.
-		with open(_stateFilename, "rb") as f:
+		with open(WritePaths.updateCheckStateFile, "rb") as f:
 			state = pickle.load(f)
 	except:
 		log.debugWarning("Couldn't retrieve update state", exc_info=True)
@@ -864,14 +865,19 @@ class CERT_CHAIN_PARA(ctypes.Structure):
 	)
 
 def _updateWindowsRootCertificates():
+	log.debug("Updating Windows root certificates")
 	crypt = ctypes.windll.crypt32
-	# Get the server certificate.
-	sslCont = ssl._create_unverified_context()
-	# We must specify versionType so the server doesn't return a 404 error and
-	# thus cause an exception.
-	u = urllib.request.urlopen(CHECK_URL + "?versionType=stable", context=sslCont)
-	cert = u.fp.raw._sock.getpeercert(True)
-	u.close()
+	with requests.get(
+		# We must specify versionType so the server doesn't return a 404 error and
+		# thus cause an exception.
+		CHECK_URL + "?versionType=stable",
+		timeout=UPDATE_FETCH_TIMEOUT_S,
+		# Use an unverified connection to avoid a certificate error.
+		verify=False,
+		stream=True,
+	) as response:
+		# Get the server certificate.
+		cert = response.raw.connection.sock.getpeercert(True)
 	# Convert to a form usable by Windows.
 	certCont = crypt.CertCreateCertificateContext(
 		0x00000001, # X509_ASN_ENCODING

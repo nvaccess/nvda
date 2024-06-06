@@ -462,15 +462,12 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 			if filteredGesturesVM is self.gesturesVM.allGestures:  # same object, no filtering applied
 				return catVM.displayName
 			nbResults = len(catVM.scripts)
-			if nbResults == 1:
+			return ngettext(
 				# Translators: The label for a filtered category in the Input Gestures dialog.
-				return _("{category} (1 result)").format(
-					category=catVM.displayName
-				)
-			# Translators: The label for a filtered category in the Input Gestures dialog.
-			return _("{category} ({nbResults} results)").format(
-				category=catVM.displayName, nbResults=nbResults
-			)
+				"{category} ({nbResults} result)",
+				"{category} ({nbResults} results)",
+				nbResults,
+			).format(category=catVM.displayName, nbResults=nbResults)
 
 		assert len(index) >= 2
 		scriptIndex = index[1]

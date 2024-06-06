@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2007-2022 NV Access Limited, Babbage B.V.
+# Copyright (C) 2007-2023 NV Access Limited, Babbage B.V., Joseph Lee
 
 import threading
 import typing
@@ -22,6 +22,8 @@ import winUser
 import extensionPoints
 import oleacc
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
+import winVersion
+from comInterfaces import IAccessible2Lib as IA2
 
 if typing.TYPE_CHECKING:
 	import NVDAObjects
@@ -36,6 +38,12 @@ _pendingEventCountsLock=threading.RLock()
 
 #: the last object queued for a gainFocus event. Useful for code running outside NVDA's core queue 
 lastQueuedFocusObject=None
+
+
+# Handle virtual desktop switch announcements in Windows 10 and later
+_virtualDesktopName: Optional[str] = None
+_canAnnounceVirtualDesktopNames: bool = winVersion.getWinVer() >= winVersion.WIN10_1903
+
 
 def queueEvent(eventName,obj,**kwargs):
 	"""Queues an NVDA event to be executed.
@@ -232,7 +240,7 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 	def isMenuItemOfCurrentFocus(self) -> bool:
 		"""
 		Checks if the current object is a menu item of the current focus.
-		The only known case where this returns True is the following (see #12624):
+		The only known case where this returns True is the following (see #12624, #14550):
 		
 		When opening a submenu in certain applications (like Thunderbird 78.12),
 		NVDA can process a menu start event after the first item in the menu is focused.
@@ -243,24 +251,41 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 		The focus event order after activating the menu item's sub menu is (submenu item, submenu).
 		"""
 		from NVDAObjects import IAccessible
+
 		lastFocus = api.getFocusObject()
-		_isMenuItemOfCurrentFocus = (
-			self._obj.parent
-			and isinstance(self._obj, IAccessible.IAccessible)
+		
+		# This case can only occur when:
+		# 1. the old and new focus targets are instances of IAccessible; and
+		# 2. the old focus is a menuitem, menuitemradio or menuitemcheckbox; and
+		# 3. the new focus is a menu; and
+		# 4. the old focus has a parent.
+		if not (
+			isinstance(self._obj, IAccessible.IAccessible)
 			and isinstance(lastFocus, IAccessible.IAccessible)
-			and self._obj.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUITEM
-			and lastFocus.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUPOPUP
-			and self._obj.parent == lastFocus
-		)
-		if _isMenuItemOfCurrentFocus:
-			# Change this to log.error for easy debugging
-			log.debugWarning(
-				"This parent menu was not announced properly, "
-				"and should have been focused before the submenu item.\n"
-				f"Object info: {self._obj.devInfo}\n"
-				f"Object parent info: {self._obj.parent.devInfo}\n"
+			and self._obj.IAccessibleRole in (
+				oleacc.ROLE_SYSTEM_MENUITEM,
+				IA2.IA2_ROLE_CHECK_MENU_ITEM,
+				IA2.IA2_ROLE_RADIO_MENU_ITEM
 			)
-		return _isMenuItemOfCurrentFocus
+			and lastFocus.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUPOPUP
+			and self._obj.parent
+		):
+			return False
+
+		# Check that the old focus is a descendant of the new focus.
+		ancestor = self._obj.parent
+		while ancestor is not None:
+			if ancestor == lastFocus:
+				log.debugWarning(
+					"This ancestor menu was not announced properly, and should have been focused before the submenu item.\n"
+					f"Object info: {self._obj.devInfo}\n"
+					f"Ancestor info: {ancestor.devInfo}"
+				)
+				return True
+			
+			ancestor = ancestor.parent
+		
+		return False
 
 
 def _getFocusLossCancellableSpeechCommand(
@@ -294,31 +319,57 @@ def executeEvent(
 	):
 		return
 	try:
+		global _virtualDesktopName
 		isGainFocus = eventName == "gainFocus"
 		# Allow NVDAObjects to redirect focus events to another object of their choosing.
 		if isGainFocus and obj.focusRedirect:
-			obj=obj.focusRedirect
-		sleepMode=obj.sleepMode
+			obj = obj.focusRedirect
+		sleepMode = obj.sleepMode
+		# Handle possible virtual desktop name change event.
+		# More effective in Windows 10 Version 1903 and later.
+		from NVDAObjects.window import Window
+		if (
+			eventName == "nameChange"
+			and isinstance(obj, Window)
+			and obj.windowClassName == "#32769"
+			and _canAnnounceVirtualDesktopNames
+		):
+			import core
+			_virtualDesktopName = obj.name
+			core.callLater(250, handlePossibleDesktopNameChange)
 		if isGainFocus and not doPreGainFocus(obj, sleepMode=sleepMode):
 			return
-		elif not sleepMode and eventName=="documentLoadComplete" and not doPreDocumentLoadComplete(obj):
+		elif not sleepMode and eventName == "documentLoadComplete" and not doPreDocumentLoadComplete(obj):
 			return
 		elif not sleepMode:
-			_EventExecuter(eventName,obj,kwargs)
-	except:
-		log.exception("error executing event: %s on %s with extra args of %s"%(eventName,obj,kwargs))
+			_EventExecuter(eventName, obj, kwargs)
+	except Exception:
+		log.exception(f"error executing event: {eventName} on {obj} with extra args of {kwargs}")
+
+
+def handlePossibleDesktopNameChange() -> None:
+	"""
+	Reports the new virtual desktop name if changed.
+	On Windows versions lower than Windows 10, this function does nothing.
+	"""
+	global _virtualDesktopName
+	# Virtual desktop switch announcement works more effectively in Version 1903 and later.
+	if not _canAnnounceVirtualDesktopNames:
+		return
+	if _virtualDesktopName:
+		import ui
+		ui.message(_virtualDesktopName)
+		_virtualDesktopName = None
 
 
 def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bool:
-	from IAccessibleHandler import SecureDesktopNVDAObject
-
 	if objectBelowLockScreenAndWindowsIsLocked(
 		obj,
 		shouldLog=config.conf["debugLog"]["events"],
 	):
 		return False
-	oldFocus=api.getFocusObject()
-	oldTreeInterceptor=oldFocus.treeInterceptor if oldFocus else None
+	oldFocus = api.getFocusObject()
+	oldTreeInterceptor = oldFocus.treeInterceptor if oldFocus else None
 	if not api.setFocusObject(obj):
 		return False
 	if speech.manager._shouldCancelExpiredFocusEvents():
@@ -335,35 +386,32 @@ def doPreGainFocus(obj: "NVDAObjects.NVDAObject", sleepMode: bool = False) -> bo
 		# - api.getFocusAncestors() via api.setFocusObject() called in doPreGainFocus
 		speech._manager.removeCancelledSpeechCommands()
 
-	if (
-		api.getFocusDifferenceLevel() <= 1
-		# This object should not set off a foreground event.
-		# SecureDesktopNVDAObject uses a gainFocus event to trigger NVDA
-		# to sleep as the secure instance of NVDA starts for the
-		# secure desktop.
-		# The newForeground object fetches from the User Desktop,
-		# not the secure desktop.
-		and not isinstance(obj, SecureDesktopNVDAObject)
-	):
-		newForeground=api.getDesktopObject().objectInForeground()
+	if api.getFocusDifferenceLevel() <= 1:
+		newForeground = api.getDesktopObject().objectInForeground()
 		if not newForeground:
 			log.debugWarning("Can not get real foreground, resorting to focus ancestors")
-			ancestors=api.getFocusAncestors()
-			if len(ancestors)>1:
-				newForeground=ancestors[1]
+			ancestors = api.getFocusAncestors()
+			if len(ancestors) > 1:
+				newForeground = ancestors[1]
 			else:
-				newForeground=obj
+				newForeground = obj
 		if not api.setForegroundObject(newForeground):
 			return False
 		executeEvent('foreground', newForeground)
-	if sleepMode: return True
-	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
+	handlePossibleDesktopNameChange()
+	if sleepMode:
+		return True
+	# Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
 	for parent in api.getFocusAncestors()[api.getFocusDifferenceLevel():]:
-		executeEvent("focusEntered",parent)
+		executeEvent("focusEntered", parent)
 	if obj.treeInterceptor is not oldTreeInterceptor:
-		if hasattr(oldTreeInterceptor,"event_treeInterceptor_loseFocus"):
+		if hasattr(oldTreeInterceptor, "event_treeInterceptor_loseFocus"):
 			oldTreeInterceptor.event_treeInterceptor_loseFocus()
-		if obj.treeInterceptor and obj.treeInterceptor.isReady and hasattr(obj.treeInterceptor,"event_treeInterceptor_gainFocus"):
+		if (
+			obj.treeInterceptor
+			and obj.treeInterceptor.isReady
+			and hasattr(obj.treeInterceptor, "event_treeInterceptor_gainFocus")
+		):
 			obj.treeInterceptor.event_treeInterceptor_gainFocus()
 	return True
 
@@ -459,15 +507,14 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 			return True
 
 	fg = winUser.getForegroundWindow()
-	fgClassName=winUser.getClassName(fg)
-	if wClass == "NetUIHWND" and fgClassName in ("Net UI Tool Window Layered","Net UI Tool Window"):
-		# #5504: In Office >= 2013 with the ribbon showing only tabs,
-		# when a tab is expanded, the window we get from the focus object is incorrect.
-		# This window isn't beneath the foreground window,
-		# so our foreground application checks fail.
-		# Just compare the root owners.
-		if winUser.getAncestor(windowHandle, winUser.GA_ROOTOWNER) == winUser.getAncestor(fg, winUser.GA_ROOTOWNER):
-			return True
+	# #5504, #14916, #15432 : Some windows, such as in the Office ribbon or Edge downloads window
+	# aren't directly beneath the foreground window, so our foreground application checks fail.
+	# However, they share the same root owner and events for them should be allowed.
+	if (
+		winUser.getAncestor(windowHandle, winUser.GA_ROOTOWNER)
+		== winUser.getAncestor(fg, winUser.GA_ROOTOWNER)
+	):
+		return True
 	if (winUser.isDescendantWindow(fg, windowHandle)
 			# #3899, #3905: Covers cases such as the Firefox Page Bookmarked window and OpenOffice/LibreOffice context menus.
 			or winUser.isDescendantWindow(fg, winUser.getAncestor(windowHandle, winUser.GA_ROOTOWNER))):

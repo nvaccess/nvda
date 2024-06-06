@@ -1,7 +1,6 @@
-﻿#locale/fr/symbols.dic
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2017 NVDA contributors.
-#This file is covered by the GNU General Public License.
+﻿# A part of NonVisual Desktop Access (NVDA)
+# Copyright (c) 2011-2024 NVDA contributors.
+# This file is covered by the GNU General Public License.
 
 complexSymbols:
 # identifier	regexp
@@ -14,6 +13,8 @@ complexSymbols:
 # Phrase endings.
 ; phrase ending	(?<=[^\s;])\s?;(?=[\"'”’);\s]|$)
 : phrase ending	(?<=[^\s:])\s?:(?=[\"'”’);\s]|$)
+# Series of dots used for visual presentation, e.g. in table of contents
+multiple .	\.{4,}
 # Others
 decimal point	(?<![^\d -])\,(?=\d)
 thousands separator	(?<![^\d -])\.(?=\d{3}(\D|$))
@@ -38,6 +39,7 @@ symbols:
 … sentence ending	points de suspension	all	always	# … fin de phrase
 ; phrase ending	point virgule	# ; fin de phrase
 : phrase ending	deux points	# : fin de phrase
+multiple .	points multiples
 
 decimal point		# virgule décimale
 thousands separator		# point des mille
@@ -62,6 +64,7 @@ n°	\1 \2 	most	norep	# numéro
 
 # Standard punctuation/symbols
 !	point d'exclamation
+！	point d'exclamation pleine chasse
 "	guillemet
 \#	dièse	none
 $	dollar
@@ -81,17 +84,21 @@ $	dollar
 ،	virgule arabe	all	always
 -	tiret
 .	point
+．	point pleine chasse
 |	bar	most
 ·	point médian	most
 /	barre oblique
 :	deux points
+：	deux points pleine chasse
 ;	point virgule
 ؛	point-virgule arabe	most
+；	point virgule pleine chasse
 <	inférieur
 =	égal
 ?	point d'interrogation
 ⸮	point d'interrogation réfléchi	some
 ؟	point d’interrogation arabe
+？	point d'interrogation pleine chasse
 @	arobase	none
 [	crochet gauche
 ]	crochet droit
@@ -132,14 +139,14 @@ _	souligné
 □	carré blanc	some
 ◦	puce blanche
 ❖	losange noir avec croix	some
-♣	carreau noir
+♣	trèfle noir
 ➔	flèche droite
 ➢	pointe de flèche droite	some
 
 §	section
 °	degré	some	norep
-«	guillemet ouvert	most
-»	guillemet fermé	most
+«	guillemet ouvert
+»	guillemet fermé
 µ	micro
 º	ordinal
 ª	puissance a	some
@@ -211,9 +218,9 @@ _	souligné
 #operations sur les ensembles
 ∖	différence d'ensembles
 ⊍	multiplication de multiensemble
-𝒫	ensemble de pouvoirs de l'ensemble
-𝔓	ensemble de pouvoirs de l'ensemble
-℘	ensemble de pouvoirs de l'ensemble
+𝒫	ensemble des parties de l'ensemble
+𝔓	ensemble des parties de l'ensemble
+℘	ensemble des parties de l'ensemble
 ∁	complément
 
 #Définir les relations et définir les constructions
@@ -460,7 +467,7 @@ _	souligné
 ⊀	ne précède pas
 ⊁	ne suit pas
 
-# Vulgur Fractions U+2150 to U+215E
+# Vulgar Fractions U+2150 to U+215E
 ¼	un quart
 ½	un demi
 ¾	trois quarts
@@ -500,6 +507,7 @@ _	souligné
 
 # Miscellaneous Technical
 ⌘	Touche Commande Mac
+⌥	Touche Option mac
 
 # Fixes for some synthesizers
 ô	o circonflexe	char	norep
@@ -509,7 +517,8 @@ Y	igrèque	char	norep
 À	a accent grave	char	norep
 à	a accent grave	char	norep
 
-# Unicode braille
+## 6-dot cell
+### note: the character on the next line is U+2800 (braille space), not U+0020 (ASCII space)
 ⠀	cellule braille vide	none
 ⠁	point braille 1	none
 ⠂	point braille 2	none
@@ -574,6 +583,7 @@ Y	igrèque	char	norep
 ⠽	points braille 1 3 4 5 6	none
 ⠾	points braille 2 3 4 5 6	none
 ⠿	cellules braille avec les 6 points	none
+## 8-braille cell
 ⡀	point braille 7	none
 ⡁	points braille 1 7	none
 ⡂	points braille 2 7	none

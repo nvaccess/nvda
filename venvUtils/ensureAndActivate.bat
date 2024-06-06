@@ -9,7 +9,7 @@ set scriptsDir=%here%
 set venvLocation=%here%\..\.venv
 
 rem Ensure the environment is created and up to date
-py -3.7-32 "%scriptsDir%\ensureVenv.py"
+py -3.11-32 "%scriptsDir%\ensureVenv.py"
 if ERRORLEVEL 1 goto :EOF
 
 rem Set the necessary environment variables to have Python use this virtual environment.

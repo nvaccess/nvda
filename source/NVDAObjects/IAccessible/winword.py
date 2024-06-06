@@ -1,12 +1,13 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NVDA Contributors
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2023 NV Access, Cyrille Bougot and other NVDA Contributors
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 from comtypes import COMError
 import ctypes
 import operator
 import uuid
+import time
 from logHandler import log
 import winUser
 import speech
@@ -17,19 +18,24 @@ import tableUtils
 import textInfos
 import eventHandler
 import scriptHandler
+from scriptHandler import script
 import ui
 from . import IAccessible
 from displayModel import EditableTextDisplayModelTextInfo
 from ..behaviors import EditableTextWithoutAutoSelectDetection
 import NVDAObjects.window.winword as winWordWindowModule
 from speech import sayAll
-
+import inputCore
+from globalCommands import SCRCAT_SYSTEMCARET
 
 class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordWindowModule.WordDocument):
 
 	treeInterceptorClass = winWordWindowModule.WordDocumentTreeInterceptor
 	shouldCreateTreeInterceptor=False
 	TextInfo = winWordWindowModule.WordDocumentTextInfo
+	# Should braille and review position be updated, set to True in
+	# L{script_updateBrailleAndReviewPosition}.
+	_fromUpdateBrailleAndReviewPosition = False
 
 	def _get_ignoreEditorRevisions(self):
 		try:
@@ -46,12 +52,15 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 	#: True if formatting should be ignored (text only) such as for spellCheck error field
 	ignoreFormatting=False
 
-	def event_caret(self):
+	def event_caret(self) -> None:
 		curSelectionPos=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		lastSelectionPos=getattr(self,'_lastSelectionPos',None)
 		self._lastSelectionPos=curSelectionPos
 		if lastSelectionPos:
 			if curSelectionPos._rangeObj.isEqual(lastSelectionPos._rangeObj):
+				if self._fromUpdateBrailleAndReviewPosition:
+					super().event_caret()
+					self._fromUpdateBrailleAndReviewPosition = False
 				return
 		super(WordDocument,self).event_caret()
 
@@ -203,6 +212,16 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 			if text:
 				return text
 
+	@script(
+		gesture="kb:NVDA+shift+c",
+		description=_(
+			# Translators: The label of a shortcut of NVDA.
+			"Set column header. Pressing once will set this cell as the first column header for any cell lower and "
+			"to the right of it within this table. Pressing twice will forget the current column header for this "
+			"cell."
+		),
+		category=SCRCAT_SYSTEMCARET
+	)
 	def script_setColumnHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		try:
@@ -225,8 +244,16 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 			else:
 				# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 				ui.message(_("Cannot find row {rowNumber} column {columnNumber}  in column headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
-	script_setColumnHeader.__doc__=_("Pressing once will set this cell as the first column header for any cells lower and to the right of it within this table. Pressing twice will forget the current column header for this cell.")
 
+	@script(
+		gesture="kb:NVDA+shift+r",
+		description=_(
+			# Translators: The label of a shortcut of NVDA.
+			"Set row header. Pressing once will set this cell as the first row header for any cell lower and to the "
+			"right of it within this table. Pressing twice will forget the current row header for this cell."
+		),
+		category=SCRCAT_SYSTEMCARET
+	)
 	def script_setRowHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		try:
@@ -249,24 +276,53 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 			else:
 				# Translators: a message reported in the SetRowHeader script for Microsoft Word.
 				ui.message(_("Cannot find row {rowNumber} column {columnNumber}  in row headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
-	script_setRowHeader.__doc__=_("Pressing once will set this cell as the first row header for any cells lower and to the right of it within this table. Pressing twice will forget the current row header for this cell.")
 
-	def script_reportCurrentHeaders(self,gesture):
-		cell=self.WinwordSelectionObject.cells[1]
-		rowText=self.fetchAssociatedHeaderCellText(cell,False)
-		columnText=self.fetchAssociatedHeaderCellText(cell,True)
-		ui.message("Row %s, column %s"%(rowText or "empty",columnText or "empty"))
-
-	def script_caret_moveByCell(self,gesture):
+	@script(
+		gestures=(
+			"kb:alt+home",
+			"kb:alt+end",
+			"kb:alt+pageUp",
+			"kb:alt+pageDown"
+		)
+	)
+	def script_caret_moveByCell(self, gesture: inputCore.InputGesture) -> None:
+		info = self.makeTextInfo(textInfos.POSITION_SELECTION)
+		inTable = info._rangeObj.tables.count > 0
+		if not inTable:
+			gesture.send()
+			return
+		oldSelection = info.start, info.end
 		gesture.send()
-		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		inTable=info._rangeObj.tables.count>0
-		isCollapsed=info.isCollapsed
-		if inTable:
-			info.expand(textInfos.UNIT_CELL)
-			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
-			braille.handler.handleCaretMove(self)
+		start = time.time()
+		retryInterval = 0.01
+		maxTimeout = 0.15
+		elapsed = 0
+		while True:
+			if scriptHandler.isScriptWaiting():
+				# Prevent lag if keys are pressed rapidly
+				return
+			info = self.makeTextInfo(textInfos.POSITION_SELECTION)
+			newSelection = info.start, info.end
+			if newSelection != oldSelection:
+				elapsed = time.time() - start
+				log.debug(f"Detected new selection after {elapsed} sec")
+				break
+			elapsed = time.time() - start
+			if elapsed >= maxTimeout:
+				log.debug(f"Canceled detecting new selection after {elapsed} sec")
+				break
+			time.sleep(retryInterval)
+		info.expand(textInfos.UNIT_CELL)
+		speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
+		braille.handler.handleCaretMove(self)
 
+	@script(
+		# Translators: a description for a script
+		description=_("Reports the text of the comment where the system caret is located."),
+		gesture="kb:NVDA+alt+c",
+		category=SCRCAT_SYSTEMCARET,
+		speakOnDemand=True,
+	)
 	def script_reportCurrentComment(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		info.expand(textInfos.UNIT_CHARACTER)
@@ -286,8 +342,6 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 						return
 		# Translators: a message when there is no comment to report in Microsoft Word
 		ui.message(_("No comments"))
-	# Translators: a description for a script
-	script_reportCurrentComment.__doc__=_("Reports the text of the comment where the System caret is located.")
 
 	def _moveInTable(self,row=True,forward=True):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
@@ -341,57 +395,83 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		newInfo.updateCaret()
 		return True
 
+	@script(
+		gesture="kb:control+alt+downArrow"
+	)
 	def script_nextRow(self,gesture):
 		self._moveInTable(row=True,forward=True)
 
+	@script(
+		gesture="kb:control+alt+upArrow"
+	)
 	def script_previousRow(self,gesture):
 		self._moveInTable(row=True,forward=False)
 
+	@script(
+		gesture="kb:control+alt+rightArrow"
+	)
 	def script_nextColumn(self,gesture):
 		self._moveInTable(row=False,forward=True)
 
+	@script(
+		gesture="kb:control+alt+leftArrow"
+	)
 	def script_previousColumn(self,gesture):
 		self._moveInTable(row=False,forward=False)
 
+	@script(
+		gesture="kb:control+downArrow",
+		resumeSayAllMode=sayAll.CURSOR.CARET
+	)
 	def script_nextParagraph(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		# #4375: can't use self.move here as it may check document.chracters.count which can take for ever on large documents.
 		info._rangeObj.move(winWordWindowModule.wdParagraph, 1)
 		info.updateCaret()
 		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
-	script_nextParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
 
+	@script(
+		gesture="kb:control+upArrow",
+		resumeSayAllMode=sayAll.CURSOR.CARET
+	)
 	def script_previousParagraph(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		# #4375: keeping symmetrical with nextParagraph script.
 		info._rangeObj.move(winWordWindowModule.wdParagraph, -1)
 		info.updateCaret()
 		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
-	script_previousParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
+
+	@script(
+		gestures=(
+			"kb:control+v",
+			"kb:control+x",
+			"kb:control+y",
+			"kb:control+z",
+			"kb:alt+backspace",
+		)
+	)
+	def script_updateBrailleAndReviewPosition(self, gesture: inputCore.InputGesture) -> None:
+		"""Helper script to update braille and review position.
+		"""
+		# Ensuring braille and review position updates are allowed in caret event.
+		self._fromUpdateBrailleAndReviewPosition = True
+		gesture.send()
+		# Caret event is not always fired when control+v, control+x, control+y
+		# or control+z (alt+backspace) is pressed.
+		self.event_caret()
+
+	def _backspaceScriptHelper(self, unit: str, gesture: inputCore.InputGesture) -> None:
+		"""Helper function to update braille and review position.
+		"""
+		# Ensuring braille and review position updates are allowed in caret event.
+		self._fromUpdateBrailleAndReviewPosition = True
+		super()._backspaceScriptHelper(unit, gesture)
 
 	def focusOnActiveDocument(self, officeChartObject):
 		rangeStart=officeChartObject.Parent.Range.Start
 		self.WinwordApplicationObject.ActiveDocument.Range(rangeStart, rangeStart).Select()
 		import api
 		eventHandler.executeEvent("gainFocus", api.getDesktopObject().objectWithFocus())
-
-	__gestures={
-		"kb:NVDA+shift+c":"setColumnHeader",
-		"kb:NVDA+shift+r":"setRowHeader",
-		"kb:NVDA+shift+h":"reportCurrentHeaders",
-		"kb:control+alt+upArrow": "previousRow",
-		"kb:control+alt+downArrow": "nextRow",
-		"kb:control+alt+leftArrow": "previousColumn",
-		"kb:control+alt+rightArrow": "nextColumn",
-		"kb:control+downArrow":"nextParagraph",
-		"kb:control+upArrow":"previousParagraph",
-		"kb:alt+home":"caret_moveByCell",
-		"kb:alt+end":"caret_moveByCell",
-		"kb:alt+pageUp":"caret_moveByCell",
-		"kb:alt+pageDown":"caret_moveByCell",
-		"kb:NVDA+alt+c":"reportCurrentComment",
-	}
-
 
 class SpellCheckErrorField(IAccessible, winWordWindowModule.WordDocument_WwN):
 

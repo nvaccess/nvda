@@ -27,7 +27,7 @@ import windowUtils
 pre_handleWindowMessage = extensionPoints.Action()
 """
 Notifies when a window message has been received by NVDA.
-This allows components to perform an action when several system events occur,
+This allows components to perform an action when certain system events occur,
 such as power, screen orientation and hardware changes.
 
 Handlers are called with three arguments.

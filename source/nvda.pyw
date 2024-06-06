@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka,
+# Copyright (C) 2006-2024 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka,
 # Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -134,7 +134,15 @@ parser=NoConsoleOptionParser()
 quitGroup = parser.add_mutually_exclusive_group()
 quitGroup.add_argument('-q','--quit',action="store_true",dest='quit',default=False,help="Quit already running copy of NVDA")
 parser.add_argument('-k','--check-running',action="store_true",dest='check_running',default=False,help="Report whether NVDA is running via the exit code; 0 if running, 1 if not running")
-parser.add_argument('-f','--log-file',dest='logFileName',type=str,help="The file where log messages should be written to")
+parser.add_argument(
+	"-f",
+	"--log-file",
+	dest="logFileName",
+	type=str,
+	help="The file to which log messages should be written. "
+	"Default destination is \"%%TEMP%%\\nvda.log\". "
+	"Logging is always disabled if secure mode is enabled. "
+)
 parser.add_argument(
 	'-l',
 	'--log-level',
@@ -142,11 +150,19 @@ parser.add_argument(
 	type=int,
 	default=0,  # 0 means unspecified in command line.
 	choices=[10, 12, 15, 20, 100],
-	help=(
-		"The lowest level of message logged (debug 10, input/output 12, debugwarning 15, info 20, off 100),"
-	),
+	help="The lowest level of message logged (debug 10, input/output 12, debugwarning 15, info 20, off 100). "
+	"Default value is 20 (info) or the user configured setting. "
+	"Logging is always disabled if secure mode is enabled. "
 )
-parser.add_argument('-c','--config-path',dest='configPath',default=None,type=str,help="The path where all settings for NVDA are stored")
+parser.add_argument(
+	"-c",
+	"--config-path",
+	dest="configPath",
+	default=None,
+	type=str,
+	help="The path where all settings for NVDA are stored. "
+	"The default value is forced if secure mode is enabled. "
+)
 parser.add_argument(
 	'--lang',
 	dest='language',
@@ -276,7 +292,8 @@ elif globalVars.appArgs.check_running:
 
 
 # Suppress E402 (module level import not at top of file)
-from systemUtils import _getDesktopName, _isSecureDesktop  # noqa: E402
+from utils.security import isRunningOnSecureDesktop  # noqa: E402
+from systemUtils import _getDesktopName  # noqa: E402
 # Ensure multiple instances are not fully started by using a mutex
 desktopName = _getDesktopName()
 _log.info(f"DesktopName: {desktopName}")
@@ -355,20 +372,12 @@ if mutex is None:
 	sys.exit(1)
 
 
-def _serviceDebugEnabled() -> bool:
-	import winreg
-	try:
-		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\NVDA")
-		if winreg.QueryValueEx(k, "serviceDebug")[0]:
-			return True
-	except WindowsError:
-		# Expected state by default, serviceDebug parameter not set
-		pass
-	return False
+if NVDAState._forceSecureModeEnabled():
+	globalVars.appArgs.secure = True
 
 
-if _isSecureDesktop():
-	if not _serviceDebugEnabled():
+if isRunningOnSecureDesktop():
+	if not NVDAState._serviceDebugEnabled():
 		globalVars.appArgs.secure = True
 	globalVars.appArgs.changeScreenReaderFlag = False
 	globalVars.appArgs.minimal = True
@@ -385,7 +394,7 @@ logHandler.initialize()
 if logHandler.log.getEffectiveLevel() is log.DEBUG:
 	log.debug("Provided arguments: {}".format(sys.argv[1:]))
 import buildVersion
-log.info("Starting NVDA version %s" % buildVersion.version)
+log.info(f"Starting NVDA version {buildVersion.version} {os.environ['PROCESSOR_ARCHITECTURE']}")
 log.debug("Debug level logging enabled")
 if customVenvDetected:
 	log.warning("NVDA launched using a custom Python virtual environment.")
@@ -398,7 +407,7 @@ if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT, winUser.M
 	raise winUser.WinError()
 # Make this the last application to be shut down and don't display a retry dialog box.
 winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)
-if not _isSecureDesktop() and not config.isAppX:
+if not isRunningOnSecureDesktop() and not config.isAppX:
 	import easeOfAccess
 	easeOfAccess.notify(3)
 try:
@@ -408,7 +417,7 @@ except:
 	log.critical("core failure",exc_info=True)
 	sys.exit(1)
 finally:
-	if not _isSecureDesktop() and not config.isAppX:
+	if not isRunningOnSecureDesktop() and not config.isAppX:
 		easeOfAccess.notify(2)
 	if globalVars.appArgs.changeScreenReaderFlag:
 		winUser.setSystemScreenReaderFlag(False)

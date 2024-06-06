@@ -1,22 +1,42 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020-2022 NV Access Limited, Łukasz Golonka
+# Copyright (C) 2020-2023 NV Access Limited, Łukasz Golonka, Luke Davis
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 """ System related functions."""
 import ctypes
+import time
+import threading
+from collections.abc import (
+	Callable,
+)
 from ctypes import (
 	byref,
 	create_unicode_buffer,
 	sizeof,
 	windll,
 )
+from typing import (
+	Generic,
+	Optional,
+)
+from typing_extensions import (
+	# Uses `TypeVar` from `typing_extensions`, to be able to specify default type.
+	# This should be changed to use version from `typing`
+	# when updating to version of Python supporting PEP 696.
+	TypeVar,
+)
+
 import winKernel
+import winreg
 import shellapi
 import winUser
 import functools
 import shlobj
+from os import startfile
+from logHandler import log
+from NVDAState import WritePaths
 
 
 @functools.lru_cache(maxsize=1)
@@ -29,8 +49,7 @@ def hasSyswow64Dir() -> bool:
 
 def openUserConfigurationDirectory():
 	"""Opens directory containing config files for the current user"""
-	import globalVars
-	shellapi.ShellExecute(0, None, globalVars.appArgs.configPath, None, None, winUser.SW_SHOWNORMAL)
+	shellapi.ShellExecute(0, None, WritePaths.configDir, None, None, winUser.SW_SHOWNORMAL)
 
 
 def openDefaultConfigurationDirectory():
@@ -165,17 +184,71 @@ def _getDesktopName() -> str:
 	return name.value
 
 
-def _isSecureDesktop() -> bool:
-	"""
-	When NVDA is running on a secure screen,
-	it is running on the secure desktop.
-	When the serviceDebug parameter is not set,
-	NVDA should run in secure mode when on the secure desktop.
-	globalVars.appArgs.secure being set to True means NVDA is running in secure mode.
+def _displayTextFileWorkaround(file: str) -> None:
+	# os.startfile does not currently (NVDA 2023.1, Python 3.7) work reliably to open .txt files in Notepad under
+	# Windows 11, if relying on the default behavior (i.e. `operation="open"`). (#14725)
+	# Using `operation="edit"`, however, has the desired effect--opening the text file in Notepad. (#14816)
+	# Since this may be a bug in Python 3.7's os.startfile, or the underlying Win32 function, it may be
+	# possible to deprecate this workaround after a Python upgrade.
+	startfile(file, operation="edit")
 
-	For more information, refer to devDocs/technicalDesignOverview.md 'Logging in secure mode'
-	and the following userGuide sections:
-	 - SystemWideParameters (information on the serviceDebug parameter)
-	 - SecureMode and SecureScreens
+
+def _isSystemClockSecondsVisible() -> bool:
 	"""
-	return _getDesktopName() == "Winlogon"
+	Query the value of 'ShowSecondsInSystemClock' DWORD32 value in the Windows registry under
+	the path HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced.
+	If the value is 1, return True, if the value is 0 or the key does not exist, return False.
+
+	@return: True if the 'ShowSecondsInSystemClock' value is 1, False otherwise.
+	"""
+	registry_path = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
+	value_name = "ShowSecondsInSystemClock"
+	try:
+		with winreg.OpenKey(winreg.HKEY_CURRENT_USER, registry_path) as key:
+			value, value_type = winreg.QueryValueEx(key, value_name)
+			return value == 1 and value_type == winreg.REG_DWORD
+	except FileNotFoundError:
+		return False
+	except OSError:
+		return False
+
+
+_execAndPumpResT = TypeVar("_execAndPumpResT", default=None)
+
+
+class ExecAndPump(threading.Thread, Generic[_execAndPumpResT]):
+	"""Executes the given function with given args and kwargs in a background thread,
+	while blocking and pumping in the current thread.
+	"""
+
+	def __init__(self, func: Callable[..., _execAndPumpResT], *args, **kwargs) -> None:
+		self.func = func
+		self.args = args
+		self.kwargs = kwargs
+		# Intentionally uses older syntax with `Optional`, instead of `_execAndPumpResT | None`,
+		# as latter is not yet supported for unions potentially containing two instances of `None`
+		# (see CPython issue 107271).
+		self.funcRes: Optional[_execAndPumpResT] = None
+		fname = repr(func)
+		super().__init__(
+			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}({fname})"
+		)
+		self.threadExc: Exception | None = None
+		self.start()
+		time.sleep(0.1)
+		threadHandle = ctypes.c_int()
+		threadHandle.value = winKernel.kernel32.OpenThread(0x100000, False, self.ident)
+		msg = ctypes.wintypes.MSG()
+		while winUser.user32.MsgWaitForMultipleObjects(1, ctypes.byref(threadHandle), False, -1, 255) == 1:
+			while winUser.user32.PeekMessageW(ctypes.byref(msg), None, 0, 0, 1):
+				winUser.user32.TranslateMessage(ctypes.byref(msg))
+				winUser.user32.DispatchMessageW(ctypes.byref(msg))
+		if self.threadExc:
+			raise self.threadExc
+
+	def run(self):
+		try:
+			self.funcRes = self.func(*self.args, **self.kwargs)
+		except Exception as e:
+			self.threadExc = e
+			log.debugWarning("task had errors", exc_info=True)

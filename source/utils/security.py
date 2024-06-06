@@ -3,21 +3,24 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-import typing
+import hashlib
 from typing import (
 	Any,
+	BinaryIO,
 	Callable,
 	List,
 	Optional,
 	Set,
+	TYPE_CHECKING,
 )
 
 import extensionPoints
 from logHandler import log
-from winAPI.sessionTracking import _isLockScreenModeActive
+import systemUtils
+from winAPI.sessionTracking import isLockScreenModeActive
 import winUser
 
-if typing.TYPE_CHECKING:
+if TYPE_CHECKING:
 	import scriptHandler  # noqa: F401, use for typing
 	import NVDAObjects  # noqa: F401, use for typing
 
@@ -167,7 +170,7 @@ def objectBelowLockScreenAndWindowsIsLocked(
 	@return: C{True} if the Windows 10/11 lockscreen is active and C{obj} is below the lock screen.
 	"""
 	try:
-		isObjectBelowLockScreen = _isLockScreenModeActive() and obj.isBelowLockScreen
+		isObjectBelowLockScreen = isLockScreenModeActive() and obj.isBelowLockScreen
 	except Exception:
 		log.exception()
 		return False
@@ -202,7 +205,6 @@ def _isObjectBelowLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	An object below the lockscreen should only be accessible when Windows is unlocked,
 	as it may contain sensitive information.
 	"""
-	from IAccessibleHandler import SecureDesktopNVDAObject
 	from NVDAObjects.IAccessible import TaskListIcon
 	import systemUtils
 
@@ -221,10 +223,6 @@ def _isObjectBelowLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 		# The task switcher window does not become the foreground process on the lock screen,
 		# so we must whitelist it explicitly.
 		isinstance(obj, TaskListIcon)
-		# Secure Desktop Object.
-		# Used to indicate to the user and to API consumers (including NVDA remote) via gainFocus,
-		# that the user has switched to a secure desktop.
-		or isinstance(obj, SecureDesktopNVDAObject)
 	):
 		return False
 
@@ -383,3 +381,37 @@ def warnSessionLockStateUnknown() -> None:
 		caption=_("Lock screen not secure while using NVDA"),
 		style=wx.ICON_ERROR | wx.OK,
 	)
+
+
+#: The read size for each chunk read from the file, prevents memory overuse with large files.
+SHA_BLOCK_SIZE = 65536
+
+
+def sha256_checksum(binaryReadModeFile: BinaryIO, blockSize: int = SHA_BLOCK_SIZE) -> str:
+	"""
+	@param binaryReadModeFile: An open file (mode=='rb'). Calculate its sha256 hash.
+	@param blockSize: The size of each read.
+	@returns: The sha256 hex digest.
+	"""
+	sha256sum = hashlib.sha256()
+	assert binaryReadModeFile.readable() and binaryReadModeFile.mode == 'rb'
+	f = binaryReadModeFile
+	for block in iter(lambda: f.read(blockSize), b''):
+		sha256sum.update(block)
+	return sha256sum.hexdigest()
+
+
+def isRunningOnSecureDesktop() -> bool:
+	"""
+	When NVDA is running on a secure screen,
+	it is running on the secure desktop.
+	When the serviceDebug parameter is not set,
+	NVDA should run in secure mode when on the secure desktop.
+	globalVars.appArgs.secure being set to True means NVDA is running in secure mode.
+
+	For more information, refer to projectDocs/design/technicalDesignOverview.md 'Logging in secure mode'
+	and the following userGuide sections:
+	 - SystemWideParameters (information on the serviceDebug parameter)
+	 - SecureMode and SecureScreens
+	"""
+	return systemUtils._getDesktopName() == "Winlogon"

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2022 NV Access Limited, Derek Riemer, Cyrille Bougot
+# Copyright (C) 2016-2024 NV Access Limited, Derek Riemer, Cyrille Bougot, Luke Davis
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import collections
@@ -114,9 +114,12 @@ class ListCtrlAccessible(wx.Accessible):
 		if self.Window.IsChecked(childId - 1):
 			states |= wx.ACC_STATE_SYSTEM_CHECKED
 		if self.Window.IsSelected(childId - 1):
+			states |= wx.ACC_STATE_SYSTEM_SELECTED
 			# wx doesn't seem to  have a method to check whether a list item is focused.
-			# Therefore, assume that a selected item is focused,which is the case in single select list boxes.
-			states |= wx.ACC_STATE_SYSTEM_SELECTED | wx.ACC_STATE_SYSTEM_FOCUSED
+			# Therefore, assume that a selected item is focused when the list itself has focus,
+			# which is the case in single select list boxes.
+			if self.Window.HasFocus():
+				states |= wx.ACC_STATE_SYSTEM_FOCUSED
 		return (wx.ACC_OK, states)
 
 
@@ -291,7 +294,8 @@ class MessageDialog(DPIScaledDialog):
 			return
 
 	def _playSound(self):
-		winsound.MessageBeep(self._soundID)
+		if self._soundID is not None:
+			winsound.MessageBeep(self._soundID)
 
 	def __init__(self, parent, title, message, dialogType=DIALOG_TYPE_STANDARD):
 		DPIScaledDialog.__init__(self, parent, title=title)
@@ -459,7 +463,7 @@ class FeatureFlagCombo(wx.Choice):
 			name=name,
 		)
 
-		self.SetSelection(self._getChoiceIndex(self._getConfigValue().value))
+		self.SetSelection(self._getChoiceIndex(configValue.value))
 		self.defaultValue = self._getConfSpecDefaultValue()
 		"""The default value of the config spec. Not the "behavior of default".
 		This is provided to maintain compatibility with other controls in the
@@ -499,10 +503,18 @@ class FeatureFlagCombo(wx.Choice):
 		"""
 		self.SetSelection(self._getChoiceIndex(self.defaultValue))
 
+	def _getControlCurrentValue(self) -> enum.Enum:
+		return list(self._translatedOptions.keys())[self.GetSelection()]
+
+	def _getControlCurrentFlag(self) -> FeatureFlag:
+		flagValue = self._getControlCurrentValue()
+		currentFlag = self._getConfigValue()
+		return FeatureFlag(flagValue, currentFlag.behaviorOfDefault)
+
 	def saveCurrentValueToConf(self) -> None:
 		""" Set the config value to the current value of the control.
 		"""
-		flagValue: enum.Enum = list(self._translatedOptions.keys())[self.GetSelection()]
+		flagValue = self._getControlCurrentValue()
 		keyPath = self._confPath
 		if not keyPath or len(keyPath) < 1:
 			raise ValueError("Key path not provided")

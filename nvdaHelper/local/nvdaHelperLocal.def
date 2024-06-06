@@ -50,6 +50,8 @@ EXPORTS
 	_nvdaController_brailleMessage
 	_nvdaController_cancelSpeech
 	_nvdaController_speakText
+	_nvdaController_speakSsml
+	nvdaController_onSsmlMarkReached
 	_nvdaControllerInternal_vbufChangeNotify
 	displayModel_getWindowTextInRect
 	displayModel_getFocusRect
@@ -67,3 +69,19 @@ EXPORTS
 	getOleClipboardText
 	_nvdaControllerInternal_reportLiveRegion
 	_nvdaControllerInternal_openConfigDirectory
+	rateLimitedUIAEventHandler_create
+	rateLimitedUIAEventHandler_terminate
+	wasPlay_create
+	wasPlay_destroy
+	wasPlay_open
+	wasPlay_feed
+	wasPlay_stop
+	wasPlay_sync
+	wasPlay_idle
+	wasPlay_pause
+	wasPlay_resume
+	wasPlay_setChannelVolume
+	wasPlay_startup
+	wasSilence_init
+	wasSilence_playFor
+	wasSilence_terminate

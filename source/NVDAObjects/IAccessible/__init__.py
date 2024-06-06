@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Babbage B.V.
+# Copyright (C) 2006-2024 NV Access Limited, Babbage B.V., Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -50,7 +50,7 @@ import api
 import config
 import controlTypes
 from controlTypes import TextPosition
-from controlTypes.formatFields import FontSize
+from controlTypes.formatFields import FontSize, TextAlign
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
@@ -86,11 +86,23 @@ def getNVDAObjectFromPoint(x,y):
 FORMAT_OBJECT_ATTRIBS = frozenset({"text-align"})
 def normalizeIA2TextFormatField(formatField):
 	try:
-		textAlign=formatField.pop("text-align")
+		val = formatField.pop("text-align")
 	except KeyError:
 		textAlign=None
+	else:
+		mozillaTextAlign = {
+			'-moz-left': 'left',
+			'-moz-center': 'center',
+			'-moz-right': 'right',
+		}
+		val = mozillaTextAlign.get(val, val)
+		try:
+			textAlign = TextAlign(val)
+		except ValueError:
+			log.debugWarning(f'Unsupported value for text-align attribute: "{val}"')
+			textAlign = None
 	if textAlign:
-		formatField["text-align"]=textAlign
+		formatField["text-align"] = textAlign
 	try:
 		fontWeight=formatField.pop("font-weight")
 	except KeyError:
@@ -946,8 +958,12 @@ the NVDAObject for IAccessible
 		IAccessible2States = self.IA2States
 		states |= IAccessibleHandler.getStatesSetFromIAccessible2States(IAccessible2States)
 
-		# Readonly should override editable
-		if controlTypes.State.READONLY in states:
+		# Readonly should override editable, except in the case of lists and listitems, where the readonly state
+		# differentiates between interactive and non-interactive lists in Firefox.
+		if (
+			self.role not in (controlTypes.Role.LIST, controlTypes.Role.LISTITEM)
+			and controlTypes.State.READONLY in states
+		):
 			states.discard(controlTypes.State.EDITABLE)
 		try:
 			IA2Attribs=self.IA2Attributes
@@ -1336,8 +1352,23 @@ the NVDAObject for IAccessible
 			# Each header must be fetched from the headers array once and only once,
 			# as it gets released when it gets garbage collected.
 			for i in range(nHeaders):
+				header = headers[i]
 				try:
-					text = headers[i].QueryInterface(IA2.IAccessible2).accName(0)
+					headerIA2Ptr = header.QueryInterface(IA2.IAccessible2)
+				except COMError:
+					log.debugWarning("could not get IAccessible2 pointer for table header", exc_info=True)
+					continue
+				# Chromium exposes cells as their own headers, so exclude cells with the same `Iaccessible2::uniqueID`.
+				if self.IA2UniqueID is not None:  # No point checking if we don't have this cell's UID
+					try:
+						headerUniqueID = headerIA2Ptr.uniqueID
+					except COMError:
+						log.debugWarning("could not get IAccessible2::uniqueID to use as headerUniqueID", exc_info=True)
+						headerUniqueID = None
+					if self.IA2UniqueID == headerUniqueID:
+						continue
+				try:
+					text = headerIA2Ptr.accName(0)
 				except COMError:
 					continue
 				if not text:
@@ -1473,6 +1504,10 @@ the NVDAObject for IAccessible
 			try:
 				info={}
 				info["level"],info["similarItemsInGroup"],info["indexInGroup"]=self.IAccessibleObject.groupPosition
+				if not info["level"]:
+					ia2Attrs = self.IA2Attributes
+					if "level" in ia2Attrs:
+						info["level"] = ia2Attrs["level"]
 				# Object's with an IAccessibleTableCell interface should not expose indexInGroup/similarItemsInGroup as the cell's 2d info is much more useful.
 				if self._IATableCell:
 					del info['indexInGroup']
@@ -1691,6 +1726,11 @@ the NVDAObject for IAccessible
 
 	def _get_flowsFrom(self) -> typing.Optional["IAccessible"]:
 		return self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.FLOWS_FROM)
+	
+	def _get_errorMessage(self) -> str | None:
+		errorNode = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.ERROR)
+		if errorNode is not None:
+			return errorNode.summarizeInProcess()
 
 	def event_valueChange(self):
 		if isinstance(self, EditableTextWithAutoSelectDetection):
@@ -1949,7 +1989,7 @@ class WindowRoot(GenericWindow):
 
 	def _get_presentationType(self):
 		states=self.states
-		if controlTypes.State.INVISIBLE in states or controlTypes.State.UNAVAILABLE in states:
+		if controlTypes.State.INVISIBLE in states:
 			return self.presType_unavailable
 		if not self.windowHasExtraIAccessibles(self.windowHandle):
 			return self.presType_layout

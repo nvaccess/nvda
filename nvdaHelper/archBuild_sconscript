@@ -1,16 +1,7 @@
-###
-#This file is a part of the NVDA project.
-#URL: http://www.nvda-project.org/
-#Copyright 2006-2010 NVDA contributers.
-#This program is free software: you can redistribute it and/or modify
-#it under the terms of the GNU General Public License version 2.0, as published by
-#the Free Software Foundation.
-#This program is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-#This license can be found at:
-#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-###
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2023 NV Access Limited
+# This file may be used under the terms of the GNU General Public License, version 2 or later.
+# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 import os
 import shutil
@@ -55,8 +46,7 @@ def COMProxyDllBuilder(env,target,source,proxyClsid):
 		target=target,
 		source=source,
 		LIBS=['rpcrt4','oleaut32','ole32'],
-		CPPDEFINES=[
-			env['CPPDEFINES'],
+		CPPDEFINES=list(env['CPPDEFINES']) + [
 			'WIN32',
 			('PROXY_CLSID_IS',clsidStringToCLSIDDefine(proxyClsid)),
 		],
@@ -88,7 +78,7 @@ env.Append(
 		'UNICODE',
 		'_CRT_SECURE_NO_DEPRECATE',
 		('LOGLEVEL', '${nvdaHelperLogLevel}'),
-		('_WIN32_WINNT', '_WIN32_WINNT_WIN7'),
+		('_WIN32_WINNT', '_WIN32_WINNT_WINBLUE'),
 		# NOMINMAX: prevent minwindef.h min/max macro definition, which unexpectedly override developer
 		# expectations
 		'NOMINMAX',
@@ -103,10 +93,10 @@ env.Append(CPPPATH=[
 	'#/miscDeps/include',
 	Dir('.').abspath
 ])
-if TARGET_ARCH == "arm64":
-	subsystem = "/subsystem:windows,6.02"
-else:
-	subsystem = "/subsystem:windows,6.01"
+
+# Windows 8.1 (blue)
+subsystem = "/subsystem:windows,6.03"
+
 env.Append(
 	LINKFLAGS=[
 		'/incremental:no',
@@ -130,7 +120,7 @@ else:
 	env.Append(LINKFLAGS=['/LTCG'])
 
 if 'debugCRT' not in debug:
-	env.Append(CPPDEFINES=['NDEBUG'])
+	env.Append(CPPDEFINES='NDEBUG')
 
 if 'RTC' in debug:
 	env.Append(CCFLAGS=['/RTCsu'])
@@ -200,6 +190,12 @@ mathPlayerRPCStubs=env.SConscript('mathPlayer_sconscript')
 if TARGET_ARCH=='x86':
 	env.Install(sourceTypelibDir,mathPlayerRPCStubs[0]) #typelib
 
+detoursLib = env.SConscript('detours/sconscript')
+Export('detoursLib')
+
+apiHookObj = env.Object("apiHook","common/apiHook.cpp")
+Export('apiHookObj')
+
 if TARGET_ARCH=='x86':
 	localLib=env.SConscript('local/sconscript')
 	Export('localLib')
@@ -210,9 +206,6 @@ if TARGET_ARCH=='x86':
 	if signExec:
 		env.AddPostAction(win10localLib[0],[signExec])
 	env.Install(libInstallDir,win10localLib)
-	MSUIA_lib_outDir,MSUIA_include_outDir = thirdPartyEnv.SConscript('microsoft-ui-uiautomation/sconscript')
-	Export('MSUIA_lib_outDir')
-	Export('MSUIA_include_outDir')
 	UIARemoteLib=env.SConscript('UIARemote/sconscript')
 	if signExec:
 		env.AddPostAction(UIARemoteLib[0],[signExec])
@@ -223,9 +216,6 @@ Export('clientLib')
 if signExec:
 	env.AddPostAction(clientLib[0],[signExec])
 env.Install(clientInstallDir,clientLib)
-
-detoursLib = env.SConscript('detours/sconscript')
-Export('detoursLib')
 
 remoteLib=env.SConscript('remote/sconscript')
 Export('remoteLib')

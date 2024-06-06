@@ -10,6 +10,7 @@ A cursor manager provides caret navigation and selection commands for a virtual 
 
 import wx
 import core
+import inputCore
 import baseObject
 import documentBase
 import gui
@@ -98,6 +99,12 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 	@type selection: L{textInfos.TextInfo}
 	"""
 
+	# Whether or not 'gainFocus' events handled by this CursorManager should update the caret position.
+	# If NVDA fully manages the caret (such as for reviewCursorManagers and virtualBuffers) then they should.
+	# However if the caret is managed by the application,
+	# We trust that the application will move the caret itself if firing focus events on inner content.
+	_focusEventMustUpdateCaretPosition = False
+
 	# Translators: the script category for browse mode
 	scriptCategory=SCRCAT_BROWSEMODE
 
@@ -179,7 +186,16 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			if not willSayAllResume:
 				speech.speakTextInfo(info, reason=controlTypes.OutputReason.CARET)
 		else:
-			wx.CallAfter(gui.messageBox,_('text "%s" not found')%text,_("Find Error"),wx.OK|wx.ICON_ERROR)
+			wx.CallAfter(
+				gui.messageBox,
+				# Translators: message displayed to the user when
+				# searching text and no text is found.
+				_('text "%s" not found') % text,
+				# Translators: message dialog title displayed to the user when
+				# searching text and no text is found.
+				_("0 matches"),
+				wx.OK | wx.ICON_INFORMATION
+			)
 		CursorManager._lastFindText=text
 		CursorManager._lastCaseSensitivity=caseSensitive
 
@@ -428,7 +444,16 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 	def script_selectAll(self,gesture):
 		self._selectionMovementScriptHelper(toPosition=textInfos.POSITION_ALL)
 
-	def script_copyToClipboard(self,gesture):
+	_nativeAppSelectionModeSupported: bool = False
+	"Whether native selection mode is available in this browse mode document"
+
+	_nativeAppSelectionMode: bool = False
+	"Whether native selection mode is turned on or off"
+
+	def script_copyToClipboard(self, gesture: inputCore.InputGesture):
+		if self._nativeAppSelectionMode:
+			gesture.send()
+			return
 		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		if info.isCollapsed:
 			# Translators: Reported when there is no text selected (for copying).
@@ -496,6 +521,10 @@ class ReviewCursorManager(CursorManager):
 	This cursor manager maintains its own caret and selection information.
 	Thus, the underlying text range need not support updating the caret or selection.
 	"""
+
+	# As NVDA manages the caret virtually,
+	# It is necessary for 'gainFocus' events to update the caret.
+	_focusEventMustUpdateCaretPosition = True
 
 	def initCursorManager(self):
 		super(ReviewCursorManager, self).initCursorManager()

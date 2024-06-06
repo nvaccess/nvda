@@ -106,6 +106,23 @@ class NVDASpyLib:
 		ultimateKey = keyPath[-1]
 		penultimateConf[ultimateKey] = val
 
+	def assignGesture(
+			self,
+			gesture: str,
+			module: str,
+			className: str,
+			script: Optional[str],
+			replace: bool = False
+	):
+		import inputCore
+		inputCore.manager.userGestureMap.add(
+			gesture,
+			module,
+			className,
+			script,
+			replace,
+		)
+
 	fakeTranslations: typing.Optional[gettext.NullTranslations] = None
 
 	def override_translationString(self, invariantString: str, replacementString: str):
@@ -534,7 +551,11 @@ class SystemTestSpyServer(globalPluginHandler.GlobalPlugin):
 			serve=False  # we want to start this serving on another thread so as not to block.
 		)
 		log.debug("Server address: {}".format(server.server_address))
-		server_thread = threading.Thread(target=server.serve, name="RF Test Spy Thread")
+		server_thread = threading.Thread(
+			target=server.serve,
+			name="RF Test Spy Thread",
+			daemon=True,
+		)
 		server_thread.start()
 
 	def terminate(self):

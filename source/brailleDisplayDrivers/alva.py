@@ -108,10 +108,21 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	# Translators: The name of a braille display.
 	description = _("Optelec ALVA 6 series/protocol converter")
 	isThreadSafe = True
+	supportsAutomaticDetection = True
 	timeout = 0.2
 	supportedSettings = (
 		braille.BrailleDisplayDriver.HIDInputSetting(useConfig=False),
 	)
+
+	@classmethod
+	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.HID, {
+			"VID_0798&PID_0640",  # BC640
+			"VID_0798&PID_0680",  # BC680
+			"VID_0798&PID_0699",  # USB protocol converter
+		})
+
+		driverRegistrar.addBluetoothDevices(lambda m: m.id.startswith("ALVA "))
 
 	@classmethod
 	def getManualPorts(cls):
@@ -159,7 +170,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._deviceId = None
 
 		for portType, portId, port, portInfo in self._getTryPorts(port):
-			self.isHid = portType == bdDetect.KEY_HID
+			self.isHid = portType == bdDetect.DeviceType.HID
 			# Try talking to the display.
 			try:
 				if self.isHid:

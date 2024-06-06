@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Leonard de Ruijter, Joseph Lee, Renaud Paquay, pvagner
+# Copyright (C) 2006-2023 NV Access Limited, Leonard de Ruijter, Joseph Lee, Renaud Paquay, pvagner
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -96,6 +96,7 @@ JABStatesToNVDAStates={
 	"iconified":controlTypes.State.ICONIFIED,
 	"modal":controlTypes.State.MODAL,
 	"multi_line":controlTypes.State.MULTILINE,
+	"multiple line": controlTypes.State.MULTILINE,
 	"focusable":controlTypes.State.FOCUSABLE,
 	"editable":controlTypes.State.EDITABLE,
 	"selectable": controlTypes.State.SELECTABLE,
@@ -172,8 +173,11 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if end==-1 and offset>0:
 			# #1892: JAB returns -1 for the end insertion position
 			# instead of returning the offsets for the last line.
-			# Try one character back.
-			(start,end)=self.obj.jabContext.getAccessibleTextLineBounds(offset-1)
+			# Try one character back, unless we're on a new line.
+			if self.obj.jabContext.getAccessibleTextRange(offset - 1, offset - 1) != "\n":
+				(start, end) = self.obj.jabContext.getAccessibleTextLineBounds(offset - 1)
+			else:
+				(start, end) = (offset, offset)
 		#Java gives end as the last character, not one past the last character
 		end=end+1
 		return (start,end)

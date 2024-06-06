@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V., Cyrille Bougot
+# Copyright (C) 2006-2023 NV Access Limited, Babbage B.V., Cyrille Bougot, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -28,7 +28,7 @@ from winAPI.winUser.constants import SysColorIndex
 import textInfos
 import textInfos.offsets
 import controlTypes
-from controlTypes import TextPosition
+from controlTypes import TextPosition, TextAlign
 from . import Window
 from ..behaviors import EditableTextWithAutoSelectDetection
 import watchdog
@@ -75,18 +75,20 @@ class TextRangeStruct(ctypes.Structure):
 		('lpstrText',ctypes.c_char_p),
 	]
 
-CFM_LINK=0x20
-CFE_AUTOBACKCOLOR=0x4000000
-CFE_AUTOCOLOR=0x40000000
-CFE_BOLD=1
-CFE_ITALIC=2
-CFE_UNDERLINE=4
-CFE_STRIKEOUT=8
-CFE_PROTECTED=16
-CFE_SUBSCRIPT=0x00010000 # Superscript and subscript are 
-CFE_SUPERSCRIPT=0x00020000 #  mutually exclusive			 
 
-SCF_SELECTION=0x1
+CFM_LINK = 0x20
+CFE_AUTOBACKCOLOR = 0x4000000
+CFE_AUTOCOLOR = 0x40000000
+CFE_BOLD = 1
+CFE_ITALIC = 2
+CFE_UNDERLINE = 4
+CFE_STRIKEOUT = 8
+CFE_PROTECTED = 16
+CFE_SUBSCRIPT = 0x00010000  # Superscript and subscript are
+CFE_SUPERSCRIPT = 0x00020000  # mutually exclusive
+
+SCF_SELECTION = 0x1
+
 
 class CharFormat2WStruct(ctypes.Structure):
 	_fields_=[
@@ -176,7 +178,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			res=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_POSFROMCHAR,offset,None)
 			point=locationHelper.Point(winUser.GET_X_LPARAM(res),winUser.GET_Y_LPARAM(res))
 		# A returned coordinate can be a negative value if
-		# the specified character is not displayed in the edit control's client area. 
+		# the specified character is not displayed in the edit control's client area.
 		# If the specified index is greater than the index of the last character in the control,
 		# the control returns -1.
 		if point.x <0 or point.y <0:
@@ -289,7 +291,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			if charFormat is None: charFormat=self._getCharFormat(offset)
 			formatField["link"]=bool(charFormat.dwEffects&CFM_LINK)
 		return formatField,(startOffset,endOffset)
-	
+
 	def _setFormatFieldColor(
 			self,
 			charFormat: Union[CharFormat2AStruct, CharFormat2WStruct],
@@ -313,7 +315,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		else:
 			rgb = charFormat.crBackColor
 			formatField["background-color"] = colors.RGB.fromCOLORREF(rgb)
-	
+
 	def _getSelectionOffsets(self):
 		if self.obj.editAPIVersion>=1:
 			charRange=CharRangeStruct()
@@ -520,13 +522,16 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 				paraFormatObj = textRange.para
 			alignment=paraFormatObj.alignment
 			if alignment==comInterfaces.tom.tomAlignLeft:
-				formatField["text-align"]="left"
+				formatField["text-align"] = TextAlign.LEFT
 			elif alignment==comInterfaces.tom.tomAlignCenter:
-				formatField["text-align"]="center"
+				formatField["text-align"] = TextAlign.CENTER
 			elif alignment==comInterfaces.tom.tomAlignRight:
-				formatField["text-align"]="right"
+				formatField["text-align"] = TextAlign.RIGHT
 			elif alignment==comInterfaces.tom.tomAlignJustify:
-				formatField["text-align"]="justify"
+				formatField["text-align"] = TextAlign.JUSTIFY
+			else:
+				log.debugWarning(f'Unsupported text-align: {alignment}')
+				formatField["text-align"] = TextAlign.UNDEFINED
 		if formatConfig["reportLineNumber"]:
 			formatField["line-number"] = textRange.getIndex(comInterfaces.tom.tomLine)
 		if formatConfig["reportFontName"]:
@@ -602,7 +607,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			formatField['background-color'] = _("Unknown color")
 		else:
 			formatField["background-color"] = colors.RGB.fromCOLORREF(bkColor)
-	
+
 	def _expandFormatRange(self, textRange, formatConfig):
 		startLimit=self._rangeObj.start
 		endLimit=self._rangeObj.end
@@ -640,7 +645,8 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			pass
 		if label:
 			return label
-		# Outlook 2003 and Outlook Express write the embedded object text to the display with GDI thus we can use display model 
+		# Outlook 2003 and Outlook Express write the embedded object text to the display with GDI
+		# thus we can use display model
 		left,top=embedRangeObj.GetPoint(comInterfaces.tom.tomStart)
 		right,bottom=embedRangeObj.GetPoint(comInterfaces.tom.tomEnd|TA_BOTTOM)
 		# Outlook Express bug: when expanding to the first embedded object on lines after the first, the range's start coordinates are the start coordinates of the previous character (on the line above)
@@ -674,9 +680,13 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 
 	def _getTextAtRange(self,rangeObj):
 		embedRangeObj=None
-		bufText=rangeObj.text
+		try:
+			bufText = rangeObj.text
+		except COMError:
+			log.debugWarning("rangeObj.text failed", exc_info=True)
+			bufText = None
 		if not bufText:
-			return u""
+			return ""
 		if controlTypes.State.PROTECTED in self.obj.states:
 			return u'*'*len(bufText)
 		newTextList=[]
@@ -708,7 +718,11 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			self._rangeObj=self.obj.ITextSelectionObject.duplicate
 		elif position==textInfos.POSITION_CARET:
 			self._rangeObj=self.obj.ITextSelectionObject.duplicate
-			self._rangeObj.Collapse(True)
+			startActive: bool = (self.obj.ITextSelectionObject.Flags & comInterfaces.tom.tomSelStartActive) > 0
+			# Notice: in the following line Collapse() method is called on ITextRange object, not on TextInfo.
+			# It's boolean argument has the opposite meaning from the one in TextInfo:
+			# True means collapse to the start, while False means collapse to the end
+			self._rangeObj.Collapse(startActive)
 		elif position==textInfos.POSITION_FIRST:
 			self._rangeObj=self.obj.ITextDocumentObject.range(0,0)
 		elif position==textInfos.POSITION_LAST:
@@ -832,7 +846,24 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		self.obj.ITextSelectionObject.start=self._rangeObj.start
 		self.obj.ITextSelectionObject.end=self._rangeObj.end
 
-class Edit(EditableTextWithAutoSelectDetection, Window):
+
+class EditBase(Window):
+	""""Base class for Edit and Rich Edit controls, shared by legacy and UIA implementations."""
+
+	def _get_value(self):
+		return None
+
+	def _get_role(self):
+		return controlTypes.Role.EDITABLETEXT
+
+	def _get_states(self):
+		states = super()._get_states()
+		if self.windowStyle & winUser.ES_MULTILINE:
+			states.add(controlTypes.State.MULTILINE)
+		return states
+
+
+class Edit(EditableTextWithAutoSelectDetection, EditBase):
 
 	editAPIVersion=0
 	editValueUnit=textInfos.UNIT_LINE
@@ -862,12 +893,6 @@ class Edit(EditableTextWithAutoSelectDetection, Window):
 				self._ITextSelectionObject=None
 		return self._ITextSelectionObject
 
-	def _get_value(self):
-		return None
-
-	def _get_role(self):
-		return controlTypes.Role.EDITABLETEXT
-
 	def event_caret(self):
 		global selOffsetsAtLastCaretEvent
 		#Fetching formatting and calculating word offsets needs to move the caret, so try to ignore these events
@@ -886,11 +911,6 @@ class Edit(EditableTextWithAutoSelectDetection, Window):
 	def event_valueChange(self):
 		self.event_textChange()
 
-	def _get_states(self):
-		states = super(Edit, self)._get_states()
-		if self.windowStyle & winUser.ES_MULTILINE:
-			states.add(controlTypes.State.MULTILINE)
-		return states
 
 class RichEdit(Edit):
 	editAPIVersion=1

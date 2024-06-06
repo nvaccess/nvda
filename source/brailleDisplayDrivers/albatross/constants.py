@@ -53,9 +53,9 @@ Because 19200 is the display default, it is tried at first.
 """
 
 READ_TIMEOUT = 0.2
-WRITE_TIMEOUT = 0
+WRITE_TIMEOUT = 0.2
 SLEEP_TIMEOUT = 0.2
-"""How long to sleep between port init or open retries."""
+"""How long to sleep when port cannot be opened or I/O buffers reset fails."""
 
 MAX_INIT_RETRIES = 20
 """
@@ -307,4 +307,12 @@ Display requires at least L{START_BYTE} and L{END_BYTE} combination within
 approximately 2 seconds from previous appropriate data packet.
 Otherwise it falls back to "wait for connection" state.
 This behavior is built-in feature of the firmware of device.
+"""
+
+BUS_DEVICE_DESC = "Albatross Braille Display"
+"""Bus reported device description
+"""
+
+VID_AND_PID = "VID_0403&PID_6001"
+"""Vid and pid
 """

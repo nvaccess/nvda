@@ -7,10 +7,13 @@ from abc import ABC, ABCMeta, abstractproperty
 from enum import (
 	Enum,
 	EnumMeta,
+	Flag,
 	IntEnum,
 	IntFlag,
 )
-from typing import Dict
+from typing import (
+	Self,
+)
 
 from logHandler import log
 
@@ -33,7 +36,7 @@ class _DisplayStringEnumMixin(ABC):
 	This mixin can be used with a class which subclasses Enum to provided translated display strings for
 	members of the enum. The abstract properties must be overridden.
 	To be used with `_DisplayStringEnumMixinMeta`.
-	Usage for python 3.7 is as follows:
+	Usage:
 	```
 	class ExampleEnum(_DisplayStringEnumMixin, str, Enum, metaclass=_DisplayStringEnumMixinMeta):
 		pass
@@ -43,11 +46,10 @@ class _DisplayStringEnumMixin(ABC):
 	```
 	"""
 	@abstractproperty
-	def _displayStringLabels(self) -> Dict[Enum, str]:
+	def _displayStringLabels(self) -> dict[Self, str]:
 		"""
 		Specify a dictionary which takes members of the Enum and returns the translated display string.
 		"""
-		pass
 
 	@property
 	def displayString(self) -> str:
@@ -63,6 +65,11 @@ class _DisplayStringEnumMixin(ABC):
 
 class DisplayStringEnum(_DisplayStringEnumMixin, Enum, metaclass=_DisplayStringEnumMixinMeta):
 	"""An Enum class that adds a displayString property defined by _displayStringLabels"""
+	pass
+
+
+class DisplayStringFlag(_DisplayStringEnumMixin, Flag, metaclass=_DisplayStringEnumMixinMeta):
+	"""A Flag class that adds a displayString property defined by _displayStringLabels"""
 	pass
 
 

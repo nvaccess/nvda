@@ -116,8 +116,9 @@ for k,v in COM_INTERFACES.items():
 
 
 # When cleaning comInterfaces get rid of everything
-# except for things starting with __ (e.g. __init__.py)
+# except for things starting with __ (e.g. __init__.py), and files tracked by Git
 env.Clean(
 	Dir('comInterfaces'),
-	Glob('comInterfaces/[!_]*') + Glob('comInterfaces/_[!_]*')
+	Glob('comInterfaces/[!_]*', exclude=['comInterfaces/readme.md', 'comInterfaces/UIAutomationClient.py'])
+	+ Glob('comInterfaces/_[!_]*', exclude='comInterfaces/_944DE083_8FB8_45CF_BCB7_C477ACB2F897_0_1_0.py')
 )

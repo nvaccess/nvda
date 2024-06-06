@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2020 NV Access Limited, James Teh, Dinesh Kaushal, Davy Kager, André-Abush Clause,
-# Babbage B.V., Leonard de Ruijter, Michael Curran, Accessolutions, Julien Cochuyt
+# Copyright (C) 2008-2024 NV Access Limited, James Teh, Dinesh Kaushal, Davy Kager, André-Abush Clause,
+# Babbage B.V., Leonard de Ruijter, Michael Curran, Accessolutions, Julien Cochuyt, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,9 +12,16 @@ See L{gui} for the graphical user interface.
 
 import os
 import sys
-from ctypes import windll, byref, POINTER, addressof
+from ctypes import (
+	windll,
+	oledll,
+	byref,
+	POINTER
+)
+import comtypes.client
 from comtypes import IUnknown
 from comtypes import automation 
+from comtypes import COMError
 from html import escape
 from logHandler import log
 import gui
@@ -24,7 +31,8 @@ from config.configFlags import TetherTo
 import globalVars
 from typing import Optional
 
-from systemUtils import _isSecureDesktop
+from utils.security import isRunningOnSecureDesktop
+
 
 # From urlmon.h
 URL_MK_UNIFORM = 1
@@ -88,8 +96,7 @@ def browseableMessage(message: str, title: Optional[str] = None, isHtml: bool = 
 	@param title: The title for the message.
 	@param isHtml: Whether the message is html
 	"""
-	splitWith: str = "__NVDA:split-here__"  # Unambiguous regex splitter for javascript in message.html, #14667
-	if _isSecureDesktop():
+	if isRunningOnSecureDesktop():
 		import wx  # Late import to prevent circular dependency.
 		wx.CallAfter(_warnBrowsableMessageNotAvailableOnSecureScreens, title)
 		return
@@ -104,14 +111,25 @@ def browseableMessage(message: str, title: Optional[str] = None, isHtml: bool = 
 		title = _("NVDA Message")
 	if not isHtml:
 		message = f"<pre>{escape(message)}</pre>"
-	dialogString = f"{title}{splitWith}{message}"
-	dialogArguements = automation.VARIANT( dialogString )
+	try:
+		d = comtypes.client.CreateObject("Scripting.Dictionary")
+	except (COMError, OSError):
+		log.error("Scripting.Dictionary component unavailable", exc_info=True)
+		# Store the module level message function in a new variable since it is masked by a local variable with
+		# the same name
+		messageFunction = globals()['message']
+		# Translators: reported when unable to display a browsable message.
+		messageFunction(_("Unable to display browseable message"))
+		return
+	d.add("title", title)
+	d.add("message", message)
+	dialogArgsVar = automation.VARIANT(d)
 	gui.mainFrame.prePopup() 
 	windll.mshtml.ShowHTMLDialogEx( 
 		gui.mainFrame.Handle , 
 		moniker , 
 		HTMLDLG_MODELESS , 
-		addressof( dialogArguements ) , 
+		byref(dialogArgsVar), 
 		DIALOG_OPTIONS, 
 		None
 	)
@@ -155,11 +173,12 @@ def reportTextCopiedToClipboard(text: Optional[str] = None):
 		message(_("Unable to copy"))
 		return
 	# Depending on the speech synthesizer, large amount of spoken text can freeze NVDA (#11843)
-	if len(text) < 1024:
+	textLength = len(text)
+	if textLength < 1024:
 		spokenText = text
 	else:
 		# Translators: Spoken instead of a lengthy text when copied to clipboard.
-		spokenText = _("%d characters") % len(text)
+		spokenText = ngettext("%d character", "%d characters", textLength) % textLength
 	message(
 		# Translators: Announced when a text has been copied to clipboard.
 		# {text} is replaced by the copied text.

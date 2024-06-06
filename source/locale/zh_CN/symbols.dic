@@ -7,7 +7,7 @@ $	美元
 /	斜杠
 ;	分号
 \\	反斜杠
-|	竖线
+|	竖线	most
 ¦	间断条	most
 ¡	倒置感叹号	some
 ¿	倒置问号	some
@@ -34,7 +34,7 @@ $	美元
 )	右括号
 *	星号
 +	加
--	减
+-	减	most	never
 _	下划线
 [	左方括号
 ]	右方括号
@@ -52,8 +52,8 @@ negative number	负
 ™	商标	some
 ®	注册
 µ	百万分之一	some
-»	右双尖括号	none
-«	左双尖括号	none
+»	右双尖括号
+«	左双尖括号
 ➔	右箭头	most
 🡺	向右箭头	some
 ‏	右至左符号	most
@@ -71,7 +71,6 @@ negative number	负
 ¢	分	most	always
 €	欧元	most	always
 £	英镑	most	always
-no-break space	空格	most
 、	全角顿号	all	always
 ،	阿拉伯文逗号	all	always
 ؛	阿拉伯文分号	most
@@ -133,7 +132,16 @@ no-break space	空格	most
 ＃	全角井号	most
 ＆	全角与号	most
 ＊	全角星号	most
-※	重点 符号	most
+＄	全角美元	most
+％	全角百分号	most
+＾	全角脱字符	most
+＿	全角下划线	most
+｜	全角竖线	most
+＇	全角单引号	most	always
+＂	全角双引号	most	always
+［	左中括号
+］	右中括号
+※	重点符号	most
 §	章节符	most
 ¶	段落符	most
 ¸	变音符	most
@@ -749,7 +757,9 @@ no-break space	空格	most
 ₎	下标右圆括号	some
 
 # Miscellaneous Technical
-⌘	mac Command键	none
+⌘	mac Command 键	none
+⌥	mac Option 键	none
+
 ′	撇号	some
 ″	双撇号	some
 ‴	三撇号	some

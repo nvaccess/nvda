@@ -16,6 +16,7 @@ import weakref
 import time
 from typing import (
 	Any,
+	Callable,
 	Dict,
 	Generator,
 	List,
@@ -42,10 +43,12 @@ import languageHandler
 import controlTypes
 import winKernel
 import extensionPoints
+from NVDAState import WritePaths
 
 
 InputGestureBindingClassT = TypeVar("InputGestureBindingClassT")
 ScriptNameT = str
+
 InputGestureScriptT = Tuple[InputGestureBindingClassT, Optional[ScriptNameT]]
 """
 The Python class and script name for each script;
@@ -228,6 +231,7 @@ FlattenedGestureMapT = Dict[
 		Optional[Union[str, List[str]]],  # Normalized gestures
 	],
 ]
+ScriptT = Callable[[InputGesture], None]
 _InternalGestureMapT = Dict[
 	str,  # Normalized gesture
 	List[
@@ -522,9 +526,21 @@ class InputManager(baseObject.AutoPropertyObject):
 		if wasInSayAll:
 			gesture.wasInSayAll=True
 
+		immediate = getattr(gesture, "_immediate", True)
 		speechEffect = gesture.speechEffectWhenExecuted
 		if speechEffect == gesture.SPEECHEFFECT_CANCEL:
-			queueHandler.queueFunction(queueHandler.eventQueue, speech.cancelSpeech, _immediate=True)
+			# Import late to avoid circular import.
+			import braille
+
+			@braille.handler.suppressClearBrailleRegions(script)
+			def suppressCancelSpeech():
+				speech.cancelSpeech()
+
+			queueHandler.queueFunction(
+				queueHandler.eventQueue,
+				suppressCancelSpeech,
+				_immediate=immediate,
+			)
 		elif speechEffect in (gesture.SPEECHEFFECT_PAUSE, gesture.SPEECHEFFECT_RESUME):
 			queueHandler.queueFunction(queueHandler.eventQueue, speech.pauseSpeech, speechEffect == gesture.SPEECHEFFECT_PAUSE)
 
@@ -585,12 +601,13 @@ class InputManager(baseObject.AutoPropertyObject):
 
 	def _inputHelpCaptor(self, gesture):
 		bypass = gesture.bypassInputHelp or getattr(gesture.script, "bypassInputHelp", False)
+		immediate = getattr(gesture, "_immediate", True)
 		queueHandler.queueFunction(
 			queueHandler.eventQueue,
 			self._handleInputHelp,
 			gesture,
 			onlyLog=bypass or not gesture.reportInInputHelp,
-			_immediate=True
+			_immediate=immediate
 		)
 		return bypass
 
@@ -633,7 +650,7 @@ class InputManager(baseObject.AutoPropertyObject):
 	def loadUserGestureMap(self):
 		self.userGestureMap.clear()
 		try:
-			self.userGestureMap.load(os.path.join(globalVars.appArgs.configPath, "gestures.ini"))
+			self.userGestureMap.load(WritePaths.gesturesConfigFile)
 		except IOError:
 			log.debugWarning("No user gesture map")
 
@@ -688,7 +705,7 @@ class _AllGestureMappingsRetriever(object):
 		self.addGlobalMap(manager.userGestureMap)
 		self.addGlobalMap(manager.localeGestureMap)
 		import braille
-		gmap = braille.handler.display.gestureMap
+		gmap = braille.handler.display.gestureMap if braille.handler and braille.handler.display else None
 		if gmap:
 			self.addGlobalMap(gmap)
 

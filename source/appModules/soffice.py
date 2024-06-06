@@ -4,12 +4,14 @@
 # Copyright (C) 2006-2022 NV Access Limited, Bill Dengler, Leonard de Ruijter
 
 from typing import (
+	Optional,
 	Union
 )
 
 from comtypes import COMError
 import comtypes.client
 import oleacc
+import time
 from IAccessibleHandler import IA2, splitIA2Attribs
 import appModuleHandler
 import controlTypes
@@ -17,31 +19,43 @@ from controlTypes import TextPosition
 import textInfos
 import colors
 from compoundDocuments import CompoundDocument, TreeCompoundTextInfo
+from NVDAObjects import NVDAObject
 from NVDAObjects.IAccessible import IAccessible, IA2TextTextInfo
 from NVDAObjects.behaviors import EditableText
 from logHandler import log
+from scriptHandler import script
 import speech
 import api
 import braille
+import inputCore
 import languageHandler
+import ui
 import vision
 
 
 class SymphonyTextInfo(IA2TextTextInfo):
+	# C901 '_getFormatFieldFromLegacyAttributesString' is too complex
+	# Note: when working on _getFormatFieldFromLegacyAttributesString, look for opportunities to simplify
+	# and move logic out into smaller helper functions.
+	# This is legacy code, kept for compatibility reasons.
+	def _getFormatFieldFromLegacyAttributesString(  # noqa: C901
+			self,
+			attribsString: str,
+			offset: int
+	) -> textInfos.FormatField:
 
-	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
-		obj = self.obj
-		try:
-			startOffset,endOffset,attribsString=obj.IAccessibleTextObject.attributes(offset)
-		except COMError:
-			log.debugWarning("could not get attributes",exc_info=True)
-			return textInfos.FormatField(),(self._startOffset,self._endOffset)
+		"""Get format field with information retrieved from a text
+		attributes string containing LibreOffice's legacy custom text
+		attributes (used by LibreOffice <= 7.6), instead of attributes
+		according to the IAccessible2 text attributes specification
+		(used by LibreOffice >= 24.2).
+
+		:param attribsString: Legacy text attributes string.
+		:param offset: Character offset for which to retrieve the
+		 			   attributes.
+		:return: Format field containing the text attribute information.
+		"""
 		formatField=textInfos.FormatField()
-		if not attribsString and offset>0:
-			try:
-				attribsString=obj.IAccessibleTextObject.attributes(offset-1)[2]
-			except COMError:
-				pass
 		if attribsString:
 			formatField.update(splitIA2Attribs(attribsString))
 
@@ -98,6 +112,73 @@ class SymphonyTextInfo(IA2TextTextInfo):
 		if backgroundColor:
 			formatField['background-color']=colors.RGB.fromString(backgroundColor)
 
+		if offset == 0:
+			# Only include the list item prefix on the first line of the paragraph.
+			numbering = formatField.get("Numbering")
+			if numbering:
+				formatField["line-prefix"] = numbering.get("NumberingPrefix") or numbering.get("BulletChar")
+
+		return formatField
+
+	def _getFormatFieldAndOffsetsFromAttributes(
+			self,
+			offset: int,
+			formatConfig: Optional[dict],
+			calculateOffsets: bool
+	) -> tuple[textInfos.FormatField, tuple[int, int]]:
+		"""Get format field and offset information from either
+		attributes according to the IAccessible2 specification
+		(for LibreOffice >= 24.2) or from legacy custom
+		text attributes (used by LibreOffice <= 7.6 and Apache OpenOffice).
+		:param offset: Character offset for which to retrieve the
+		 			   attributes.
+		:param formatConfig: Format configuration.
+		:param calculateOffsets: Whether to calculate offsets.
+		:return: Format field containing the text attribute information
+				 and start and end offset of the attribute run.
+		"""
+		obj = self.obj
+		try:
+			startOffset, endOffset, attribsString = obj.IAccessibleTextObject.attributes(offset)
+		except COMError:
+			log.debugWarning("could not get attributes", exc_info=True)
+			return textInfos.FormatField(), (self._startOffset, self._endOffset)
+
+		if not attribsString and offset > 0:
+			try:
+				attribsString = obj.IAccessibleTextObject.attributes(offset - 1)[2]
+			except COMError:
+				pass
+
+		# LibreOffice >= 24.2 uses IAccessible2 text attributes, earlier versions use
+		# custom attributes, with the attributes string starting with "Version:1;"
+		if attribsString and attribsString.startswith('Version:1;'):
+			formatField = self._getFormatFieldFromLegacyAttributesString(
+				attribsString,
+				offset
+			)
+		else:
+			formatField, (startOffset, endOffset) = super()._getFormatFieldAndOffsets(
+				offset,
+				formatConfig,
+				calculateOffsets
+			)
+
+		return formatField, (startOffset, endOffset)
+
+	def _getFormatFieldAndOffsets(
+			self,
+			offset: int,
+			formatConfig: Optional[dict],
+			calculateOffsets: bool = True
+	) -> tuple[textInfos.FormatField, tuple[int, int]]:
+		formatField, (startOffset, endOffset) = self._getFormatFieldAndOffsetsFromAttributes(
+			offset,
+			formatConfig,
+			calculateOffsets
+		)
+		obj = self.obj
+
 		# optimisation: Assume a hyperlink occupies a full attribute run.
 		try:
 			if obj.IAccessibleTextObject.QueryInterface(
@@ -106,12 +187,6 @@ class SymphonyTextInfo(IA2TextTextInfo):
 				formatField["link"] = True
 		except COMError:
 			pass
-
-		if offset == 0:
-			# Only include the list item prefix on the first line of the paragraph.
-			numbering = formatField.get("Numbering")
-			if numbering:
-				formatField["line-prefix"] = numbering.get("NumberingPrefix") or numbering.get("BulletChar")
 
 		if obj.hasFocus:
 			# Symphony exposes some information for the caret position as attributes on the document object.
@@ -131,7 +206,7 @@ class SymphonyTextInfo(IA2TextTextInfo):
 				except KeyError:
 					pass
 
-		return formatField,(startOffset,endOffset)
+		return formatField, (startOffset, endOffset)
 
 	def _getLineOffsets(self, offset):
 		start, end = super(SymphonyTextInfo, self)._getLineOffsets(offset)
@@ -150,6 +225,9 @@ class SymphonyText(IAccessible, EditableText):
 	TextInfo = SymphonyTextInfo
 
 	def _get_positionInfo(self):
+		# LibreOffice versions >= 5.0 report the "level" attribute that's
+		# handled in the base class, but Apache OpenOffice doesn't,
+		# so check for the custom "heading-level" attribute first
 		level = self.IA2Attributes.get("heading-level")
 		if level:
 			return {"level": int(level)}
@@ -197,7 +275,11 @@ class SymphonyIATableCell(SymphonyTableCell):
 
 	def event_selectionAdd(self):
 		curFocus = api.getFocusObject()
-		if self.table and self.table == curFocus.table:
+		if (
+			self.table
+			and self.table == curFocus.table
+			and self.table.IAccessibleTable2Object.nSelectedCells > 0
+		):
 			curFocus.announceSelectionChange()
 
 	def event_selectionRemove(self):
@@ -271,6 +353,40 @@ class SymphonyTable(IAccessible):
 			curFocus.announceSelectionChange()
 
 
+class SymphonyButton(IAccessible):
+
+    def event_stateChange(self) -> None:
+        # announce new state of toggled toolbar button to indicate formatting change
+        # if registered gesture resulted in button state change
+        if (
+            SymphonyDocument.announceToolbarButtonToggle
+            and self.parent
+            and self.parent.role == controlTypes.Role.TOOLBAR
+            and time.time()
+            < (
+                SymphonyDocument.lastFormattingGestureEventTime
+                + SymphonyDocument.GESTURE_ANNOUNCEMENT_TIMEOUT
+            )
+        ):
+            states = self.states
+            enabled = (
+                controlTypes.State.PRESSED in states
+                or controlTypes.State.CHECKED in states
+            )
+            # button's accessible name is the font attribute, e.g. "Bold", "Italic"
+            if enabled:
+                # Translators: a message when toggling formatting (e.g. bold, italic) in LibreOffice
+                message = _("{textAttribute} on").format(textAttribute=self.name)
+            else:
+                # Translators: a message when toggling formatting (e.g. bold, italic) in LibreOffice
+                message = _("{textAttribute} off").format(textAttribute=self.name)
+            ui.message(message)
+            # disable announcement until next registered keypress enables it again
+            SymphonyDocument.announceToolbarButtonToggle = False
+
+        return super().event_stateChange()
+
+
 class SymphonyParagraph(SymphonyText):
 	"""Removes redundant information that can be retreaved in other ways."""
 	value=None
@@ -282,12 +398,20 @@ def getDistanceTextForTwips(twips):
 	converted to the local measurement unit."""
 	if languageHandler.useImperialMeasurements():
 		val = twips / 1440.0
-		# Translators: a measurement in inches
-		valText = _("{val:.2f} inches").format(val=val)
+		valText = ngettext(
+			# Translators: a measurement in inches
+			"{val:.2f} inch",
+			"{val:.2f} inches",
+			val,
+		).format(val=val)
 	else:
 		val = twips * 0.0017638889
-		# Translators: a measurement in centimetres
-		valText = _("{val:.2f} centimetres").format(val=val)
+		valText = ngettext(
+			# Translators: a measurement in centimetres
+			"{val:.2f} centimetre",
+			"{val:.2f} centimetres",
+			val,
+		).format(val=val)
 	return valText
 
 
@@ -312,6 +436,76 @@ class SymphonyDocumentTextInfo(TreeCompoundTextInfo):
 class SymphonyDocument(CompoundDocument):
 	TextInfo = SymphonyDocumentTextInfo
 
+	# variables used for handling announcements resulting from gestures
+	GESTURE_ANNOUNCEMENT_TIMEOUT = 0.15
+	announceToolbarButtonToggle = False
+	lastFormattingGestureEventTime = 0
+
+	# override base class implementation because that one assumes
+	# that the text retrieved from the text info for the text unit
+	# is the same as the text that actually gets removed, which at
+	# least isn't true for Writer paragraphs when removing a word
+	# followed by whitespace using Ctrl+Backspace
+	def _backspaceScriptHelper(self, unit: str, gesture: inputCore.InputGesture):
+		try:
+			oldInfo = self.makeTextInfo(textInfos.POSITION_CARET)
+			ia2TextObj = oldInfo._start.obj.IAccessibleTextObject
+			oldCaretOffset = ia2TextObj.caretOffset
+			oldText = ia2TextObj.text(0, ia2TextObj.nCharacters)
+		except NotImplementedError:
+			gesture.send()
+			return
+
+		gesture.send()
+
+		newInfo = self.makeTextInfo(textInfos.POSITION_CARET)
+		ia2TextObj = newInfo._start.obj.IAccessibleTextObject
+		newCaretOffset = ia2TextObj.caretOffset
+		newText = ia2TextObj.text(0, ia2TextObj.nCharacters)
+
+		# double-check check that text between previous and current
+		# caret position was deleted and announce it
+		deletedText = oldText[newCaretOffset:oldCaretOffset]
+		if newText == oldText[0:newCaretOffset] + oldText[oldCaretOffset:]:
+			if len(deletedText) > 1:
+				speech.speakMessage(deletedText)
+			else:
+				speech.speakSpelling(deletedText)
+				self._caretScriptPostMovedHelper(None, gesture, newInfo)
+		else:
+			log.warning('Backspace did not remove text as expected.')
+
+	@script(
+		gestures=[
+			# bold
+			"kb:control+b",
+			# italic
+			"kb:control+i",
+			# underline
+			"kb:control+u",
+			# superscript
+			"kb:control+shift+p",
+			# subscript
+			"kb:control+shift+b",
+			# align left
+			"kb:control+l",
+			# align center
+			"kb:control+e",
+			# align right
+			"kb:control+r",
+			# justified
+			"kb:control+j",
+		]
+	)
+	def script_toggleTextAttribute(self, gesture: inputCore.InputGesture):
+		"""Reset time and enable announcement of toggled toolbar buttons.
+		See :func:`SymphonyButton.event_stateChange`
+		"""
+		SymphonyDocument.announceToolbarButtonToggle = True
+		SymphonyDocument.lastFormattingGestureEventTime = time.time()
+		# send gesture
+		gesture.send()
+
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -324,6 +518,8 @@ class AppModule(appModuleHandler.AppModule):
 					clsList.insert(0, SymphonyIATableCell)
 				else:
 					clsList.insert(0, SymphonyTableCell)
+			elif role in {controlTypes.Role.BUTTON, controlTypes.Role.DROPDOWNBUTTON}:
+				clsList.insert(0, SymphonyButton)
 			elif role == controlTypes.Role.TABLE and (
 				hasattr(obj, "IAccessibleTable2Object")
 				or hasattr(obj, "IAccessibleTableObject")
@@ -340,3 +536,37 @@ class AppModule(appModuleHandler.AppModule):
 			# This is a word processor document.
 			obj.description = None
 			obj.treeInterceptorClass = SymphonyDocument
+
+	def searchStatusBar(self, obj: NVDAObject, max_depth: int = 5) -> Optional[NVDAObject]:
+		"""Searches for and returns the status bar object
+		if either the object itself or one of its recursive children
+		(up to the given depth) has the corresponding role."""
+		if obj.role == controlTypes.Role.STATUSBAR:
+			return obj
+		if max_depth < 1 or obj.role not in {
+			controlTypes.Role.DIALOG,
+			controlTypes.Role.FRAME,
+			controlTypes.Role.OPTIONPANE,
+			controlTypes.Role.ROOTPANE,
+			controlTypes.Role.WINDOW
+		}:
+			return None
+		for child in obj.children:
+			status_bar = self.searchStatusBar(child, max_depth - 1)
+			if status_bar:
+				return status_bar
+		return None
+
+	def _get_statusBar(self) -> Optional[NVDAObject]:
+		return self.searchStatusBar(api.getForegroundObject())
+
+	def getStatusBarText(self, obj: NVDAObject) -> str:
+		text = ""
+		for child in obj.children:
+			if hasattr(child, 'IAccessibleTextObject'):
+				textObj = child.IAccessibleTextObject
+				if textObj:
+					if text:
+						text += " "
+					text += textObj.textAtOffset(0, IA2.IA2_TEXT_BOUNDARY_ALL)[2]
+		return text

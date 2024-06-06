@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2019 NV Access Limited, Peter Vágner, Renaud Paquay, Babbage B.V.
+# Copyright (C) 2007-2023 NV Access Limited, Peter Vágner, Renaud Paquay, Babbage B.V.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -41,7 +41,7 @@ import core
 import textUtils
 import NVDAHelper
 import config
-import globalVars
+from utils.security import isRunningOnSecureDesktop
 
 #: The path to the user's .accessibility.properties file, used
 #: to enable JAB.
@@ -844,7 +844,9 @@ def initialize():
 		raise NotImplementedError("dll not available")
 	_fixBridgeFuncs()
 	if (
-		not globalVars.appArgs.secure and config.isInstalledCopy()
+		# We should not attempt to write to disk from the secure desktop.
+		not isRunningOnSecureDesktop()
+		and config.isInstalledCopy()
 		and not isBridgeEnabled()
 	):
 		enableBridge()

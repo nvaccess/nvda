@@ -26,13 +26,22 @@ class TestBgThreadApc(unittest.TestCase):
 
 	def test_apc(self):
 		"""Test queuing an APC that executes correctly.
+		As the param provided to the internal APC differs from the param passed to the Python function,
+		This test also ensures that the expected param is propagated correctly.
 		"""
 		# Initially, our event isn't set
 		self.assertFalse(self.event.is_set())
-		# Queue a function as APC that sets the event
 
+		class Container:
+			param: int
+
+		paramContainer = Container()
+
+		# Queue a function as APC that sets the event
 		def apc(param: int) -> None:
+			paramContainer.param = param
 			self.event.set()
-		hwIo.bgThread.queueAsApc(apc)
+		hwIo.bgThread.queueAsApc(apc, 42)
 		# Wait for atmost 2 seconds for the event to be set
 		self.assertTrue(self.event.wait(2))
+		self.assertEqual(paramContainer.param, 42)

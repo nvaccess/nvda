@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited
+# Copyright (C) 2022-2023 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,11 +13,7 @@ This file refers to this header with the convention `WtsApi32.h#L36` meaning lin
 from enum import (
 	IntEnum,
 )
-from typing import (
-	Callable,
-	Union,
-	Type,
-)
+from typing import Callable
 import ctypes  # Use for ctypes.Union to prevent name collision with typing.Union
 from ctypes import (
 	windll,
@@ -35,7 +31,6 @@ from ctypes.wintypes import (
 	LPWSTR,
 	BOOL,
 )
-import winVersion
 
 
 WTS_CURRENT_SERVER_HANDLE = HANDLE(0)
@@ -214,13 +209,13 @@ class _WTS_LockState_Win7(IntEnum):
 	"""The session is unlocked."""
 
 
-def _setWTS_LockState() -> Type[Union[_WTS_LockState, _WTS_LockState_Win7]]:
+def _setWTS_LockState() -> _WTS_LockState:
 	""" Ensure that the correct values for WTS_SESSIONSTATE_LOCK are used based on the platform.
 	"""
-	return _WTS_LockState_Win7 if (winVersion.getWinVer() < winVersion.WIN8) else _WTS_LockState
+	return _WTS_LockState
 
 
-WTS_LockState: Type[Union[_WTS_LockState, _WTS_LockState_Win7]] = _setWTS_LockState()
+WTS_LockState: _WTS_LockState = _setWTS_LockState()
 """
 Set of known session states that NVDA can handle.
 These values are different on different versions of Windows.

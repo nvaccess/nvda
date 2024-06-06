@@ -2,7 +2,7 @@
 # Copyright (C) 2014-2023 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-from typing import Optional, List
+from typing import Optional
 
 import gui
 import extensionPoints
@@ -53,7 +53,7 @@ _brailleGui: Optional[BrailleViewerFrame] = None
 # Extension points action:
 # Triggered every time the Braille Viewer is created / shown or hidden / destroyed.
 # Callback definition: Callable(created: bool) -> None
-#   created - True for created/shown, False for hidden/destructed.
+#   created - True for created/shown, False for hidden/destroyed.
 postBrailleViewerToolToggledAction = extensionPoints.Action()
 DEFAULT_NUM_CELLS = config.conf['brailleViewer']['defaultCellCount']
 
@@ -66,13 +66,14 @@ def destroyBrailleViewer():
 	global _brailleGui
 	d: Optional[BrailleViewerFrame] = _brailleGui
 	_brailleGui = None  # protect against re-entrance
-	if d and not d.isDestroyed:
+	if d is not None:
 		import braille  # imported late to avoid a circular import.
-		updateBrailleDisplayedUnregistered = braille.pre_writeCells.unregister(d.updateBrailleDisplayed)
-		assert updateBrailleDisplayedUnregistered
+		if not d.isDestroyed:
+			updateBrailleDisplayedUnregistered = braille.pre_writeCells.unregister(d.updateBrailleDisplayed)
+			assert updateBrailleDisplayedUnregistered
+			d.saveInfoAndDestroy()
 		getDisplaySizeUnregistered = braille.filter_displaySize.unregister(_getDisplaySize)
 		assert getDisplaySizeUnregistered
-		d.saveInfoAndDestroy()
 
 
 def _onGuiDestroyed():
@@ -90,6 +91,7 @@ def _getDisplaySize(numCells: int):
 	return numCells if numCells > 0 else DEFAULT_NUM_CELLS
 
 
+@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 def createBrailleViewerTool():
 	if not gui.mainFrame:
 		raise RuntimeError("Can not initialise the BrailleViewerGui: gui.mainFrame not yet initialised")

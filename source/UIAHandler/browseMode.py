@@ -6,10 +6,12 @@
 from typing import Optional
 from ctypes import byref
 from comtypes import COMError
-from comtypes.automation import VARIANT
+from comtypes.automation import VARIANT, VT_EMPTY
+
 import array
 import winUser
 import UIAHandler
+import UIAHandler.remote
 from .utils import (
 	createUIAMultiPropertyCondition,
 	getDeepestLastChildUIAElementInWalker,
@@ -21,7 +23,8 @@ import treeInterceptorHandler
 import cursorManager
 import textInfos
 import browseMode
-from NVDAObjects.UIA import UIA
+from logHandler import log
+from NVDAObjects.UIA import UIA, UIATextInfo
 
 class UIADocumentWithTableNavigation(documentBase.DocumentWithTableNavigation):
 
@@ -142,9 +145,21 @@ def UIATextAttributeQuicknavIterator(ItemClass,itemType,document,position,direct
 
 class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 
-	def __init__(self,itemType,document,position,level=0):
+	def __init__(
+			self,
+			itemType: str,
+			document: UIA,
+			position: UIATextInfo,
+			label: str | None = None,
+			level: int = 0
+	):
 		super(HeadingUIATextInfoQuickNavItem,self).__init__(itemType,document,position)
 		self.level=level
+		self._label = label
+
+	@property
+	def label(self):
+		return self._label or super().label
 
 	def isChild(self,parent):
 		if not isinstance(parent,HeadingUIATextInfoQuickNavItem):
@@ -159,6 +174,8 @@ def UIAHeadingQuicknavIterator(
 		direction: str = "next"
 ):
 	reverse = bool(direction == "previous")
+	itemTypeBaseLen = len('heading')
+	wantedLevel = int(itemType[itemTypeBaseLen:]) if len(itemType) > itemTypeBaseLen else None
 	entireDocument = document.makeTextInfo(textInfos.POSITION_ALL)
 	if position is None:
 		searchArea = entireDocument
@@ -168,6 +185,19 @@ def UIAHeadingQuicknavIterator(
 			searchArea.start = entireDocument.start
 		else:
 			searchArea.end = entireDocument.end
+	if UIAHandler.remote.isSupported():
+		if position is None:
+			headings = UIAHandler.remote.collectAllHeadingsInTextRange(searchArea._rangeObj)
+			for level, label, rangeObj in headings:
+				pos = document.makeTextInfo(rangeObj)
+				yield HeadingUIATextInfoQuickNavItem(itemType, document, pos, label=label, level=level)
+		else:
+			heading = UIAHandler.remote.findFirstHeadingInTextRange(searchArea._rangeObj, wantedLevel, reverse)
+			if heading is not None:
+				level, label, rangeObj = heading
+				pos = document.makeTextInfo(rangeObj)
+				yield HeadingUIATextInfoQuickNavItem(itemType, document, pos, label=label, level=level)
+		return
 	firstLoop=True
 	for subrange in iterUIARangeByUnit(searchArea._rangeObj, UIAHandler.TextUnit_Paragraph, reverse=reverse):
 		if firstLoop:
@@ -181,7 +211,6 @@ def UIAHeadingQuicknavIterator(
 		# In Python 3, comparing an int with a pointer raises a TypeError.
 		if isinstance(styleIDValue, int) and UIAHandler.StyleId_Heading1 <= styleIDValue <= UIAHandler.StyleId_Heading9:
 			foundLevel = (styleIDValue - UIAHandler.StyleId_Heading1) + 1
-			wantedLevel = int(itemType[7:]) if len(itemType) > 7 else None
 			if not wantedLevel or wantedLevel==foundLevel: 
 				tempInfo = document.makeTextInfo(subrange)
 				yield HeadingUIATextInfoQuickNavItem(itemType, document, tempInfo, level=foundLevel)
@@ -372,6 +401,7 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 	# UIA browseMode documents cannot remember caret positions across loads (I.e. when going back a page in Edge) 
 	# Because UIA TextRanges are opaque and are tied specifically to one particular document.
 	shouldRememberCaretPositionAcrossLoads=False
+	_nativeAppSelectionMode = True
 
 	def event_UIA_activeTextPositionChanged(self, obj, nextHandler, textRange=None):
 		if not self.isReady:
@@ -486,6 +516,18 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 				)
 			])
 			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
+		elif nodeType == "tab":
+			condition = UIAHandler.handler.clientObject.createPropertyCondition(
+				UIAHandler.UIA_ControlTypePropertyId, UIAHandler.UIA_TabItemControlTypeId
+			)
+			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
+		elif nodeType == "progressBar":
+			condition = UIAHandler.handler.clientObject.createPropertyCondition(
+				UIAHandler.UIA_ControlTypePropertyId,
+				UIAHandler.UIA_ProgressBarControlTypeId
+			)
+			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
+
 		elif nodeType=="nonTextContainer":
 			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:True},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ComboBoxControlTypeId})
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
@@ -493,12 +535,6 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_PaneControlTypeId,UIAHandler.UIA_AriaRolePropertyId:[u"application",u"alertdialog",u"dialog"]})
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		raise NotImplementedError
-
-	def _activateNVDAObject(self,obj):
-		try:
-			obj.doAction()
-		except NotImplementedError:
-			pass
 
 	def _get_isAlive(self):
 		if not winUser.isWindow(self.rootNVDAObject.windowHandle):
@@ -514,7 +550,17 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 			return False
 		# Ensure that this object is a descendant of the document or is the document itself. 
 		runtimeID=VARIANT()
-		self.rootNVDAObject.UIAElement._IUIAutomationElement__com_GetCurrentPropertyValue(UIAHandler.UIA_RuntimeIdPropertyId,byref(runtimeID))
+		try:
+			self.rootNVDAObject.UIAElement._IUIAutomationElement__com_GetCurrentPropertyValue(
+				UIAHandler.UIA_RuntimeIdPropertyId, byref(runtimeID)
+			)
+		except COMError:
+			runtimeID = VARIANT()
+		if runtimeID.vt == VT_EMPTY:
+			log.debugWarning(
+				"Could not get runtimeID of document. Most likely document is dead."
+			)
+			return False
 		UIACondition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_RuntimeIdPropertyId,runtimeID)
 		UIAWalker=UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
 		try:

@@ -26,9 +26,9 @@ import os
 from typing import (
 	TYPE_CHECKING,
 	List,
+	Literal,
 	Optional,
 )
-from typing_extensions import Literal
 
 if TYPE_CHECKING:
 	import documentBase  # noqa: F401 used for type checking only
@@ -48,12 +48,13 @@ class DefaultAppArgs(argparse.Namespace):
 	When this is True, NVDA is running in secure mode.
 	This is set to True when NVDA starts with the --secure parameter.
 	This is also set to True when NVDA is running on a secure screen
-	(systemUtils._isSecureDesktop() returns True)
+	(utils.security.isRunningOnSecureDesktop() returns True)
 	and the serviceDebug parameter is not set.
+	This is forced to true if the forceSecureMode parameter is set.
 
-	For more information, refer to devDocs/technicalDesignOverview.md 'Logging in secure mode'
+	For more information, refer to projectDocs/design/technicalDesignOverview.md 'Logging in secure mode'
 	and the following userGuide sections:
-	 - SystemWideParameters (information on the serviceDebug parameter)
+	 - SystemWideParameters (information on the serviceDebug and forceSecureMode parameters)
 	 - SecureMode and SecureScreens
 	"""
 	disableAddons: bool = False
@@ -130,6 +131,11 @@ appPid: int = 0
 """The process ID of NVDA itself.
 """
 
+appDir: str
+"""
+The directory where NVDA is installed or running from.
+Set by nvda_slave.pyw and nvda.pyw.
+"""
 
 # TODO: encapsulate in synthDriverHandler
 settingsRing = None
