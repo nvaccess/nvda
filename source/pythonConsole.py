@@ -522,7 +522,7 @@ class ConsoleUI(
 				self.inputCtrl.ChangeValue(suffix)
 				break
 
-	def onInputTextChange(self, evt):
+	def onInputTextChange(self, evt: wx.CommandEvent):
 		self.inputTextModified = True
 		evt.Skip()
 
