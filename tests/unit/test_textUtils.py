@@ -276,3 +276,11 @@ class TestUnicodeNormalizationOffsetConverter(unittest.TestCase):
 		self.assertSequenceEqual(converter.computedStrToEncodedOffsets, expectedStrToEncoded)
 		expectedEncodedToStr = (0, 1, 2, 3, 4)
 		self.assertSequenceEqual(converter.computedEncodedToStrOffsets, expectedEncodedToStr)
+
+	def test_normalizedOffsetsMixedIJ(self):
+		text = "ĳijĳijĳ"
+		converter = UnicodeNormalizationOffsetConverter(text, "NFKC")
+		expectedStrToEncoded = (0, 2, 3, 4, 6, 7, 8)
+		self.assertSequenceEqual(converter.computedStrToEncodedOffsets, expectedStrToEncoded)
+		expectedEncodedToStr = (0, 0, 1, 2, 3, 3, 4, 5, 6, 6)
+		self.assertSequenceEqual(converter.computedEncodedToStrOffsets, expectedEncodedToStr)
