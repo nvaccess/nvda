@@ -3,7 +3,7 @@
 ## 2024.3
 
 This release adds support for Unicode Normalization to speech and braille output.
-This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly uses on social media.
+This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
 It also allows reading of equations in the Microsoft Word equation editor.
 You can enable this functionality for both speech and braille in their respective settings categories in the NVDA Settings dialog.
 
@@ -16,7 +16,7 @@ Unicode CLDR has been updated.
 ### New Features
 
 * Added support for Unicode Normalization to speech and braille output. (#11570, #16466 @LeonarddeR).
-  * This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly uses on social media.
+  * This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
   * It also allows reading of equations in the Microsoft Word equation editor. (#4631)
   * You can enable this functionality for both speech and braille in their respective settings categories in the NVDA Settings dialog.
 
