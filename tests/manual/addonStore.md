@@ -100,8 +100,8 @@ You can do this by:
 
 ## Updating add-ons
 
-### Simulate creating an updatable add-on from the Add-on Store
-Without having a previously installed add-on get an update, it is hard to naturally test updatable add-ons.
+### Simulate creating an updatable add-on
+Without having an installed add-on which has an update pending, it is hard to test updatable add-ons.
 This process allows you to spoof an update for an add-on.
 
 1. [Install an add-on from the Add-on Store](#install-add-on)
@@ -117,17 +117,18 @@ For example: "Clock".
         - Example: `source\userConfig\addons\clock\manifest.ini`
         - Edit "version": decrease the major release value number to match earlier edits.
 
-### Updating from add-on installed from Add-on Store
+### Updating from add-on originally installed via Add-on Store
+
 1. [Simulate creating an updatable add-on from the Add-on Store](#simulate-creating-an-updatable-add-on-from-the-add-on-store)
 1. Open the Add-on Store
-1. Ensure the same add-on you edited is available on the Add-on Store with the status "update".
+1. Ensure the same add-on you edited is available on the Add-on Store with the status "update available".
 1. Install the add-on again to test the "update" path.
 
 ### Updating from add-on installed externally with valid version
 1. [Install an add-on from the Add-on Store](#install-add-on)
 For example: "Clock".
 1. Go to your NVDA user configuration folder:
-    - For source: `.\source\userConfig\addons`
+    - For source: `source\userConfig\addons`
     - For installed copies: `%APPDATA%\nvda\addons`
 1. To spoof an externally loaded older release, we need to edit 2 files:
     - Add-on Store JSON metadata
@@ -163,11 +164,11 @@ For example: "Clock".
 ### Updating multiple add-ons
 1. Repeatedly [create updatable add-ons](#simulate-creating-an-updatable-add-on-from-the-add-on-store).
 1. Open the Add-on Store
-1. Ensure the same add-on you edited is available on the Add-on Store with the status "update".
+1. Ensure the same add-on you edited is available on the Add-on Store with the status "update available".
 1. Select multiple add-ons using `shift` and `ctrl`.
 1. Using the context menu, install the add-ons.
 1. Exit the dialog
-1. Restart NVDA as prompted.
+1. Restart NVDA when prompted.
 1. Confirm the up-to-date add-ons are listed in the installed add-ons tab of the Add-ons Store.
 
 ### Automatic update notifications
@@ -186,11 +187,11 @@ For example: "Clock".
         ```
 1. Test various buttons:
     - Press "Update All": Ensure NVDA installs the add-ons.
-    - Press "Close": Ensure if Add-ons have been installed that NVDA prompts for restart afterwards
+    - Press "Close": Ensure that NVDA prompts for restart if any add-ons have been installed, enabled, disabled or removed
     - Press "Open Add-on Store": Ensure NVDA opens to the Updatable tab in the Add-on Store
 
 ### Automatic updating
-Full automatic updates is currently unsupported.
+Full automatic updating is not currently supported.
 
 ## Other add-on actions
 
