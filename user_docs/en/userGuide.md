@@ -1706,7 +1706,7 @@ The settings categories found in the NVDA Settings dialog will be outlined below
 
 <!-- KC:setting -->
 
-##### Open General settings {#toc110}
+##### Open General settings {#OpenGeneralSettings}
 
 Key: `NVDA+control+g`
 
@@ -1802,7 +1802,7 @@ You can also manually install the pending update from the Exit NVDA dialog (if e
 
 <!-- KC:setting -->
 
-##### Open Speech settings {#toc123}
+##### Open Speech settings {#OpenSpeechSettings}
 
 Key: `NVDA+control+v`
 
@@ -1945,7 +1945,7 @@ Note that it is necessary to check at least two modes.
 
 <!-- KC:setting -->
 
-##### Open Select Synthesizer dialog {#toc144}
+##### Open Select Synthesizer dialog {#OpenSelectSynthesizer}
 
 Key: `NVDA+control+s`
 
@@ -2177,7 +2177,7 @@ To toggle show selection from anywhere, please assign a custom gesture using the
 
 <!-- KC:setting -->
 
-##### Open Select Braille Display dialog {#toc168}
+##### Open Select Braille Display dialog {#OpenSelectBrailleDisplay}
 
 Key: `NVDA+control+a`
 
@@ -2229,7 +2229,7 @@ Therefore it is recommended to only connect one Braille Display of a given type 
 
 <!-- KC:setting -->
 
-##### Open Audio settings {#toc173}
+##### Open Audio settings {#OpenAudioSettings}
 
 Key: `NVDA+control+u`
 
@@ -2372,7 +2372,7 @@ For the supported settings per provider, please refer to the documentation for t
 
 <!-- KC:setting -->
 
-##### Open Keyboard settings {#toc188}
+##### Open Keyboard settings {#OpenKeyboardSettings}
 
 Key: `NVDA+control+k`
 
@@ -2449,7 +2449,7 @@ This option is on by default, though certain users may wish to turn this off, su
 
 <!-- KC:setting -->
 
-##### Open Mouse settings {#toc201}
+##### Open Mouse settings {#OpenMouseSettings}
 
 Key: `NVDA+control+m`
 
@@ -2552,7 +2552,7 @@ To toggle simple review mode from anywhere, please assign a custom gesture using
 
 <!-- KC:setting -->
 
-##### Open Object Presentation settings {#toc218}
+##### Open Object Presentation settings {#OpenObjectPresentationSettings}
 
 Key: `NVDA+control+o`
 
@@ -2667,7 +2667,7 @@ This option is on by default.
 
 <!-- KC:setting -->
 
-##### Open Browse Mode settings {#toc236}
+##### Open Browse Mode settings {#OpenBrowseModeSettings}
 
 Key: `NVDA+control+b`
 
@@ -2759,7 +2759,7 @@ Enabling this option may improve support for some websites at the cost of perfor
 
 <!-- KC:setting -->
 
-##### Open Document Formatting settings {#toc250}
+##### Open Document Formatting settings {#OpenDocumentFormattingSettings}
 
 Key: `NVDA+control+d`
 
