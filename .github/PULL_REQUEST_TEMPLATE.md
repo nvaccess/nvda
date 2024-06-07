@@ -7,9 +7,6 @@ When you would like a review, mark the PR as "ready for review".
 See https://github.com/nvaccess/nvda/blob/master/.github/CONTRIBUTING.md.
 -->
 
-<!-- Please keep the following -->
-@coderabbitai summary
-
 ### Link to issue number:
 
 ### Summary of the issue:
@@ -52,3 +49,6 @@ https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/githubPullRequestTe
   - Localization in other languages / culture than English
 - [ ] API is compatible with existing add-ons.
 - [ ] Security precautions taken.
+
+<!-- Please keep the following -->
+@coderabbitai summary
