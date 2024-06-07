@@ -15,6 +15,8 @@ Unicode CLDR has been updated.
 
 ### New Features
 
+* New key commands:
+  * Added unassigned commands for vertical and horizontal scrolling of the mouse wheel, to enhance navigation on web pages and apps with dynamic content, such as Dism++. (#16462, @Cary-Rowen)
 * Added support for Unicode Normalization to speech and braille output. (#11570, #16466 @LeonarddeR).
   * This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
   * It also allows reading of equations in the Microsoft Word equation editor. (#4631)
