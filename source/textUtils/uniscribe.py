@@ -21,7 +21,7 @@ def splitAtCharacterBoundaries(text: str) -> Generator[str, None, None]:
 	if not text:
 		return
 	# uniscribe does some strange things
-	# when you give it a string  with not more than two alphanumeric chars in a row.
+	# when you give it a string with not more than two alphanumeric chars in a row.
 	# Inject two alphanumeric characters at the end to fix this
 	uniscribeText = text + "xx"
 	buffer = ctypes.create_unicode_buffer(uniscribeText)

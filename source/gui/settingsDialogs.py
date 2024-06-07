@@ -1603,7 +1603,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# speech settings panel.
-		reportNormalizedForCharacterNavigationText = _("Report &Normalized when navigating by character")
+		reportNormalizedForCharacterNavigationText = _("Report '&Normalized' when navigating by character")
 		self.reportNormalizedForCharacterNavigationCheckBox = settingsSizerHelper.addItem(
 			wx.CheckBox(self, label=reportNormalizedForCharacterNavigationText)
 		)

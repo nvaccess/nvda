@@ -344,12 +344,12 @@ def _getSpellingCharAddCapNotification(
 	"""This function produces a speech sequence containing a character to be spelt as well as commands
 	to indicate that this character is uppercase and/or normalized, if applicable.
 	:param speakCharAs: The character as it will be spoken by the synthesizer.
-	:param sayCapForCapitals: indicates if 'cap' should be reported along with the currently speled character.
-	:param capPitchChange: pitch offset to apply while spelling the currently speled character.
+	:param sayCapForCapitals: indicates if 'cap' should be reported along with the currently spelled character.
+	:param capPitchChange: pitch offset to apply while spelling the currently spelled character.
 	:param beepForCapitals: indicates if a cap notification beep should be produced while spelling the currently
 	spelled character.
 	:param reportNormalized: indicates if 'normalized' should be reported
-	along with the currently speled character.
+	along with the currently spelled character.
 	"""
 	if sayCapForCapitals:
 		# Translators: cap will be spoken before the given letter when it is capitalized.
