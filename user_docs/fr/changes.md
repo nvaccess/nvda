@@ -32,11 +32,11 @@ Sont présents de nombreux correctifs de bogues mineures pour des applications, 
     * formule mathématique (#16001, @mltony)
     * texte de style identique (#16000, @mltony)
     * texte de style différent (#16000, @mltony)
-    * Ajout de commandes pour sauter au premier, au dernier, en avant et en arrière dans la boucle des paramètres synthétiseur. (#13768, #16095, @rmcpantoja)
+  * Ajout de commandes pour sauter au premier, au dernier, en avant et en arrière dans la boucle des paramètres synthétiseur. (#13768, #16095, @rmcpantoja)
     * Aller à la première/dernière valeur du paramètre courant dans la boucle des paramètres synthétiseur n'a pas de geste assigné. (#13768)
     * Diminuer et augmenter le paramètre courant de la boucle des paramètres synthétiseur d'un intervalle plus important (#13768) :
-      * Ordinateur de Bureau : `NVDA+contrôle+pagePrec` ou `NVDA+contrôle+pageSuiv`.
-      * Ordinateur portable : `NVDA+contrôle+maj+pagePrec` ou `NVDA+contrôle+maj+pageSuiv`.
+      * Ordinateur de Bureau : `NVDA+contrôle+pagePrec` et `NVDA+contrôle+pageSuiv`.
+      * Ordinateur portable : `NVDA+contrôle+maj+pagePrec` et `NVDA+contrôle+maj+pageSuiv`.
   * Ajout d'un nouveau geste de commande non assigné pour basculer l'annonce des figures et légendes. (#10826, #14349)
 * Braille :
   * Ajout du support des afficheurs BrailleEdgeS2 et BrailleEdgeS3. (#16033, #16279, @EdKweon)
@@ -56,14 +56,14 @@ Sont présents de nombreux correctifs de bogues mineures pour des applications, 
 
 * Add-on Store :
   * La version minimale et la dernière version testées d'une extension sont maintenant affichées dans la zone "autres détails". (#15776, @Nael-Sayegh)
-  * L'action avis de la communauté sera disponible, et l'URL des avis sera affichée dans la zone de détails, dans tous les onglets du store. (#16179, @nvdaes)
+  * L'action avis de la communauté sera disponible dans tous les onglets du store. (#16179, @nvdaes)
 * Mises à jour de composants :
   * Mise à jour du transcripteur Braille LibLouis à la version [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0). (#16259, @codeofdusk)
     * Nouvelles tables Braille Biélorusse et Ukrainien détaillés (avec lettres majuscules indiquées).
     * Nouvelle table Espagnole pour le texte Grec.
     * Nouvelle table Laotien intégral. (#16470)
   * eSpeak NG a été mis à jour à la version 1.52-dev révision `cb62d93fd7`. (#15913)
-    * Ajout du langage Tigrigna. 
+    * Ajout du langage Tigrigna.
 * Changements de plusieurs gestes pour les périphériques BrailleSense pour éviter des conflits avec les caractères de la table Braille française. (#15306)
   * `alt+flècheGauche` est maintenant assigné à `point2+point7+espace`
   * `alt+flècheDroite` est maintenant assigné à `point5+point7+espace`
@@ -88,7 +88,9 @@ Sont présents de nombreux correctifs de bogues mineures pour des applications, 
 * Correction d'un bug causant l'échec de NVDA à lire les rubans et options dans Geekbench. (#16251, @mzanm)
 * Correction d'un rare cas où l'enregistrement de la configuration pouvait échouer à enregistrer tous les profils. (#16343, @CyrilleB79)
 * Dans Firefox et les navigateurs basés sur Chromium, NVDA entrera correctement en mode formulaire lors de l'appui sur entrée lorsque vous êtes positionné dans une liste de présentation (ul / ol) dans un contenu éditable. (#16325)
-* Le changement d'état d'une colonne est automatiquement annoncé lors du choix des colonnes à afficher dans la liste de messages de Thunderbird. (#16323)
+* Le changement d'état d'une colonne est maintenant correctement annoncé lors du choix des colonnes à afficher dans la liste de messages de Thunderbird. (#16323)
+* Le paramètre de ligne de commande `-h`/`--help` fonctionne de nouveau correctement. (#16522, @XLTechie)
+* Le support de NVDA pour le logiciel de traduction Poedit version 3.4 ou au-delà fonctionne correctement lors de la traduction de langues avec une ou plus de 2 formes pluriel (par exemple Chinois, Polonais). (#16318)
 
 ### Changements pour les Développeurs
 
@@ -294,7 +296,7 @@ Veuillez ouvrir un problème GitHub si votre extension a un problème avec la mi
 * `IAccessibleHandler.SecureDesktopNVDAObject` a été supprimé.
 Au lieu de cela, lorsque NVDA s'exécute sur le profil utilisateur, suivez la présence du bureau sécurisé avec le point d'extension : `winAPI.secureDesktop.post_secureDesktopStateChange`. (#14488)
 * `braille.BrailleHandler.handlePendingCaretUpdate` a été supprimé sans remplacement public. (#15163, @LeonarddeR)
-* `bdDetect.addUsbDevices` et `bdDetect.addBluetoothDevices` ont été supprimés.
+* `bdDetect.addUsbDevices et bdDetect.addBluetoothDevices` ont été supprimés.
 Les pilotes d'afficheur braille doivent implémenter la méthode de classe `registerAutomaticDetection` à la place.
 Cette méthode reçoit un objet `DriverRegistrar` sur lequel les méthodes `addUsbDevices` et `addBluetoothDevices` peuvent être utilisées. (#15200, @LeonarddeR)
 * L'implémentation par défaut de la méthode de vérification sur un `BrailleDisplayDriver` nécessite désormais que les attributs `threadSafe` et `supportsAutomaticDetection` soient définis sur `True`. (#15200, @LeonarddeR)
@@ -1692,7 +1694,7 @@ Note :
 * `speech.getSpeechForSpelling` a été supprimé - utilisez `speech.getSpellingSpeech`. (#12145)
 * Les commandes ne peuvent pas être directement importées depuis speech de la façon suivante: `import speech; speech.ExampleCommand ()` ou `import speech.manager; speech.manager.ExampleCommand()` - utilisez `from speech.commands import ExampleCommand` à la place. (#12126)
 * `speakTextInfo` n'enverra plus de parole via `speakWithoutPauses` si la raison est `SAYALL`, vu que `SayAllHandler` le fait maintenant manuellement. (#12150)
-* Le contenu du module `synthDriverHandler` n'est plus importée globalement (`from synthDriverHandler import *`) dans `globalCommands` et `gui.settingsDialogs` - utilisez `from synthDriverHandler import synthFunctionExample` à la place. (#12172)
+* Le contenu du module `synthDriverHandler` n'est plus importée globalement dans `globalCommands` et `gui.settingsDialogs` - utilisez `from synthDriverHandler import synthFunctionExample` à la place. (#12172)
 * `ROLE_EQUATION` a été supprimé de controlTypes - utilisez `ROLE_MATH` à la place. (#12164)
 * Les classes `autoSettingsUtils.driverSetting` sont supprimées de `driverHandler` - veuillez les utiliser depuis `autoSettingsUtils.driverSetting`. (#12168)
 * Les classes `autoSettingsUtils.utils` sont supprimées de `driverHandler` - veuillez les utiliser depuis `autoSettingsUtils.utils`. (#12168)
@@ -2743,7 +2745,7 @@ Les points forts de cette versions incluent le support intégral de l'atténuati
 
 ### Nouvelles Fonctionnalités
 
-* Sous Microsoft Excel, l'information de bordure de cellule peut maintenant être annoncée en utilisant `NVDA+f`. (#3044)
+* Sous Microsoft Excel, l'information de bordure de cellule peut maintenant être annoncée en utilisant NVDA+f. (#3044)
 * Dans les navigateurs web, NVDA indique maintenant quand un élément a été marqué comme courant (spécifiquement, en utilisant l'attribut aria-current). (#6358)
 * Le changement de langue automatique est maintenant supporté sous Microsoft Edge. (#6852)
 * Ajout du support de la Calculatrice Windows sous Windows 10 Enterprise LTSB (Long-Term Servicing Branch) et Server. (#6914)
@@ -4853,4 +4855,3 @@ Les points forts principaux de cette version comprennent le support des édition
 * NVDA demande si la configuration doit être sauvegardée et s'il doit redémarrer lors du changement de langue sous le dialogue Langue de l'interface utilisateur. NVDA doit être relancé pour que les changements prennent effet.
 * Lorsqu'un synthétiseur choisi par l'utilisateur ne peut pas être chargé à l'aide du dialogue Synthétiseur, NVDA affiche une alerte à cet effet.
 * Lors du chargement d'un synthétiseur pour la première fois, NVDA lui permet de choisir les paramètres de voix, de débit et de hauteur les mieux adaptés, plutôt que de le forcer à appliquer des valeurs par défaut qu’il juge correctes. Cela corrige un problème où les synthétiseurs Eloquence et Viavoice sapi4 tendaient à parler trop vite de prime abord.
-

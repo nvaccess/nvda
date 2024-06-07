@@ -35,8 +35,8 @@ Hai moitos outros arranxos menores de fallos para aplicacións como Thunderbird,
     * Engadidas ordes para saltar cara a á primeira, última, adiante e atrás polas opcións do anel do sintetizador. (#13768, #16095, @rmcpantoja)
     * Estabrecer a opción primeira e última no anel do sintetizador non ten xesto asignado. (#13768)
     * Diminuir e aumentar a opción actual do anel de opcións do sintetizador en pasos longos (#13768):
-      * Escritorio: `NVDA+control+rePáx` ou `NVDA+control+avPáx`.
-      * Portátil: `NVDA+control+shift+rePáx` ou `NVDA+control+shift+avPáx`.
+      * Escritorio: `NVDA+control+rePáx` e `NVDA+control+avPáx`.
+      * Portátil: `NVDA+control+shift+rePáx` e `NVDA+control+shift+avPáx`.
   * Engadido un novo xesto de entrada non asignado para conmutar o anunciado de figuras e pes de foto. (#10826, #14349)
 * Braille:
   * Engadido o soporte para as pantallas braille BrailleEdgeS2 e BrailleEdgeS3. (#16033, #16279, @EdKweon)
@@ -47,7 +47,7 @@ Hai moitos outros arranxos menores de fallos para aplicacións como Thunderbird,
   * Permite separar sons do NVDA nunha canle (ex.: esquerda) mentres os sons das demáis aplicacións se colocan na outra canle (ex.: dereita).
   * Conmutado con `NVDA+alt+s`.
 * Agora admítese o anunciado de cabeceiras de fila e de columna en elementos HTML contenteditable. (#14113)
-* Engadida a opción para deshabilitar o anunciado de figuras e pes de foto nas opcións de formateado de documentos. (#10826, #14349)
+* Engadida unha opción para deshabilitar o anunciado de figuras e pes de foto nas opcións de formateado de documentos. (#10826, #14349)
 * En Windows 11, o NVDA anunciará alertas dende a escritura de voz e accións suxeridas incluindo a suxerencia superior ao copiar datos como números de teléfono ao portapapeis (Windows 11 2022 Update e posterior). (#16009, @josephsl)
 * O NVDA manterá o dispositivo de audio activo despois de que se deteña a fala para evitar que  se corte o comezo da seguinte fala con algúns dispositivos de audio como auriculares bluetooth. (#14386, @jcsteh, @mltony)
 * Agora sopórtase HP Secure Browser. (#16377)
@@ -56,14 +56,14 @@ Hai moitos outros arranxos menores de fallos para aplicacións como Thunderbird,
 
 * Tenda de Complementos:
   * A versión mínima e a última comprobada de NVDA para un complemento agora amósanse na área "outros detalles". (#15776, @Nael-Sayegh)
-  * A acción reseñas da comunidade estará dispoñible e a páxina web de reseñas amosarase no panel detalles, en todas as pestanas da tenda. (#16179, @nvdaes)
+  * A acción reseñas da comunidade estará dispoñible en todas as pestanas da tenda. (#16179, @nvdaes)
 * Actualización de compoñentes:
   * Actualizado o transcriptor braille LibLouis a [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0). (#16259, @codeofdusk)
     * Novas táboas detalladas braille (con letras maiúsculas indicadas) para bieloruso e ucraniano.
     * Nova táboa braille española para ler textos en grego.
 	   * Nova táboa para Lao grao 1.
 * eSpeak NG actualizouse a 1.52-dev commit `cb62d93fd7`. (#15913)
-    * Engadida nova lingua Tigrinya. 
+    * Engadida nova lingua Tigrinya.
 * Cambiáronse varios xestos para dispositivos BrailleSense para evitar conflictos con caracteres da táboa braille francesa. (#15306)
   * `alt+frecha esquerda` agora asígnase a `punto2+punto7+espazo`
   * `alt+frecha dereita` agora asígnase a `punto5+punto7+espazo`
@@ -88,8 +88,9 @@ Hai moitos outros arranxos menores de fallos para aplicacións como Thunderbird,
 * Arranxado un erro que causa que o NVDA falle ao ler a cinta e as opcións dentro de Geekbench. (#16251, @mzanm)
 * Arranxado un caso pouco frecuente no que ao se gardar a configuración podía fallar o gardado de todos os perfís. (#16343, @CyrilleB79)
 * En Firefox e navegadores baseados en Chromium, o NVDA entrará correctamente en modo foco ao premer intro cando se posicione dentro dunha listaxe de presentación (ul / ol) dentro de contido editable. (#16325)
-* O cambio de estado de columna notifícase automáticamente ao selecionar as columnas que se amosarán na listaxe de mensaxes de Thunderbird. (#16323)
+* O cambio de estado de columna notifícase agora corectamente ao selecionar as columnas que se amosarán na listaxe de mensaxes de Thunderbird. (#16323)
 * O conmutador de liña de ordes `-h`/`--help` funciona apropriadamente de novo. (#16522, @XLTechie)
+* O soporte de NVDA para o software de tradución Poedit versión 3.4 ou superior funciona corectamente ao traducir linguas con 1 ou máis de 2 formas plurais (ex.: Chinés, Polaco). (#16318)
 
 ### Cambios para desenvolvedores
 

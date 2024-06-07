@@ -31,8 +31,8 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
 * Installazione guidata semplice ed intuitiva tramite sintesi vocale
 * Tradotto in 54 lingue
 * Supporto ai sistemi operativi più moderni, comprese le edizioni a 32 e 64 bit
-* Supporto al prompt dei comandi di Windows e alle applicazioni lanciate da console
 * Gestione delle schermate di accesso utente e quelle [relative alla sicurezza](#SecureScreens)
+* Supporto al prompt dei comandi di Windows e alle applicazioni lanciate da console
 * Lettura di testo e controlli mentre si utilizza un touch screen.
 * Supporto alle interfacce più comuni per l'accessibilità, come Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation.
 * Capacità di evidenziare il focus di sistema.
@@ -249,7 +249,6 @@ I comandi effettivi non verranno eseguiti nella modalità di aiuto immissione.
 |Spostarsi al parametro precedente del sintetizzatore |`NVDA+control+FrecciaSinistra` |`NVDA+Maiusc+control+FrecciaSinistra` |Si sposta al parametro precedente disponibile inerente la sintesi vocale e nel caso si sia raggiunto l'ultimo dell'elenco tornerà al primo|
 |Aumentare il parametro corrente del sintetizzatore |`NVDA+Control+Freccia su` |`NVDA+Maiusc+Control+Freccia su` |Aumenta il valore del parametro sul quale si è posizionati. Ad esempio si aumenta la velocità, poi ci si sposta all'impostazione successiva, si aumenta il volume etc|
 |Aumentare il parametro corrente del sintetizzatore con un incremento maggiore |`NVDA+control+pagina su` |`NVDA+shift+control+pagina su` |Aumenta il valore del parametro del sintetizzatore su cui si è posizionati con un incremento maggiore. Ad esempio, se ci si trova nelle impostazioni per scegliere la voce, avanzerà di 20 valori alla volta invece che uno soltanto; oppure, se ci si trova nei cursori di avanzamento (velocità, tono, etc) incrementerà il valore fino al 20%|
-
 |Diminuire il parametro corrente del sintetizzatore |`NVDA+Control+Freccia giù` |`NVDA+Shift+Control+Freccia giù` |Diminuisce il valore del parametro sul quale si è posizionati. Ad esempio si diminuisce la velocità, poi ci si sposta all'impostazione successiva, si diminuisce il volume etc|
 |Diminuire il parametro corrente del sintetizzatore con un decremento maggiore |`NVDA+control+pagina giù` |`NVDA+shift+control+pagina giù` |Diminuisce il valore del parametro del sintetizzatore su cui si è posizionati con un decremento maggiore. Ad esempio, se ci si trova nelle impostazioni per scegliere la voce, tornerà indietro di 20 valori alla volta invece che uno soltanto; oppure, se ci si trova nei cursori di avanzamento (velocità, tono, etc) diminuirà il valore fino al 20%|
 
@@ -280,6 +279,78 @@ Le impostazioni e altre opzioni sono disponibili tramite il menu di NVDA.
 Per aprire il menu di NVDA, premere `NVDA+n`.
 Per aprire direttamente la finestra di dialogo delle impostazioni generali di NVDA, premere `NVDA+control+g`.
 Molte schermate delle impostazioni hanno sequenze di tasti per aprirle direttamente, come `NVDA+control+s` per sintetizzatore o `NVDA+control+v` per altre opzioni inerenti la voce.
+
+### Gli Add-on {#Addons}
+I componenti aggiuntivi, o add-on, sono pacchetti software che forniscono funzionalità innovative o vanno a modificare alcune caratteristiche di NVDA.
+Vengono sviluppati dalla community di NVDA e da organizzazioni esterne quali fornitori commerciali o programmatori.
+Come con qualsiasi software, è importante avere la massima fiducia nello sviluppatore di un componente aggiuntivo prima di utilizzarlo.
+Fare riferimento a [Installazione degli add-on](#AddonStoreInstalling) per informazioni su come verificare i componenti aggiuntivi prima dell'installazione.
+
+La prima volta che si apre lo store dei componenti aggiuntivi, NVDA visualizzerà un avviso importante.
+Gli add-on non sono di responsabilità della NV Access e potrebbero disporre di funzioni e accesso alle informazioni illimitati.
+Premere la `barra spaziatrice` se l'avviso risulta chiaro e non si necessita di rileggerlo in futuro.
+Premere `tab` per raggiungere il pulsante "OK", poi `invio` per accettare l'avviso e procedere all'Add-on Store.
+La sezione "[Componenti aggiuntivi e add-on store](#AddonsManager)" della Guida utente, come suggerisce il nome,  contiene informazioni su ogni funzionalità dello store e della gestione degli add-on.
+
+Lo si trova dal menu strumenti di NVDA.
+Premere `NVDA+n` per aprire il menu NVDA, quindi `t` per Strumenti, poi `a` per add-on store.
+Una volta aperto l'add-on store, verranno mostrati i componenti aggiuntivi disponibili, nel caso in cui non sia ancora stato installato un add-on.
+Invece, se è stato installato almeno un componente aggiuntivo, allora lo store si aprirà sulla scheda add-on installati.
+
+#### Add-on disponibili {#AvailableAddons}
+Quando la finestra si apre per la prima volta, il caricamento dei componenti aggiuntivi potrebbe richiedere alcuni secondi.
+NVDA leggerà il nome del primo add-on una volta terminato il caricamento dell'elenco.
+I componenti aggiuntivi disponibili vengono visualizzati in ordine alfabetico in un elenco a più colonne.
+Ecco come sfogliare la lista e trovare un-addon specifico:
+
+1. Utilizzare i tasti freccia o premere la prima lettera del nome di un componente aggiuntivo per spostarsi nell'elenco.
+1. Premere `tab` una volta per passare alla descrizione dell'add-on attualmente selezionato.
+1. Utilizzare i [tasti di lettura](#ReadingText) o i tasti freccia per leggere la descrizione completa.
+1. Premere `tab` fino al pulsante "Azioni", che può essere utilizzato, tra le altre cose, per installare l'add-on.
+1. Premere `tab` su "Altri dettagli", per ottenere informazioni quali l'editore, la versione e la home page.
+1. Per tornare all'elenco dei componenti aggiuntivi, premere `alt+a` o `shift+tab` fino a raggiungere l'elenco.
+
+#### Cercare tra gli add-on {#SearchingForAddons}
+Oltre a sfogliare tutti i componenti aggiuntivi disponibili, è anche possibile filtrare gli add-on visualizzati.
+Per effettuare la ricerca, premere `alt+s` per passare al campo "Cerca" e digitare quindi il testo da cercare.
+La ricerca verifica le corrispondenze nei campi ID componente aggiuntivo, nome visualizzato, editore, autore e descrizione.
+L'elenco si aggiorna man mano che si digitano i termini di ricerca.
+Una volta terminato, premere `tab` per accedere all'elenco filtrato dei componenti aggiuntivi e sfogliare i risultati.
+
+#### Installare un add-on {#InstallingAddons}
+
+Per installare un componente aggiuntivo:
+
+1. Con il focus sull'add-on che si desidera installare, premere `invio`.
+1. Si aprirà il menu azioni con un elenco di voci; la prima azione è "Installa".
+1. Per installare il componente aggiuntivo, premere la lettera `i`, oppure la `frecciaGiù` per andare su "Installa" e premere `invio`.
+1. Il focus ritornerà sull'add-on nell'elenco e NVDA ne leggerà i dettagli.
+1. Le informazioni sullo "Stato" annunciate da NVDA cambiano da "Disponibile" a "Download in corso".
+1. Una volta terminato il download, lo stato del componente aggiuntivo cambierà in "Scaricato. Installazione in attesa".
+1. Ripetere l'operazione per tutti gli altri componenti aggiuntivi che si desidera installare contemporaneamente.
+1. Una volta terminato, premere `tab` fino a che il focus raggiungerà il pulsante "Chiudi", quindi premere `invio`.
+1. I componenti aggiuntivi scaricati avvieranno il processo di installazione una volta chiuso l'Add-on Store.
+Durante il processo di installazione, i componenti aggiuntivi potrebbero visualizzare finestre di dialogo a cui si dovrà rispondere.
+1. Una volta installati i componenti aggiuntivi, verrà visualizzata una finestra di dialogo che informa che sono state apportate modifiche e sarà necessario riavviare NVDA.
+1. Premere `invio` per riavviare lo screen reader.
+
+#### Gestione dei componenti aggiuntivi installati {#ManagingInstalledAddons}
+Premere `control+tab` per spostarsi tra le schede dell'add-on store.
+Le schede includono: "add-on installati", "Add-on aggiornabili", "Add-on disponibili" e "Add-on incompatibili installati".
+Ciascuna scheda è strutturata in modo simile alle altre, con un elenco di componenti aggiuntivi, un pannello che fornisce maggiori dettagli e un pulsante per eseguire azioni per il componente aggiuntivo selezionato.
+Il menu delle azioni per gli add-on installati contiene le voci "Disabilita" e "Rimuovi" anziché "Installa".
+La disattivazione di un componente aggiuntivo impedisce a NVDA di caricarlo, ma lo lascia installato.
+Per riattivare un add-on disabilitato, utilizzare la voce "Abilita" dal menu azioni.
+Dopo aver abilitato, disabilitato o rimosso gli add-on, verrà richiesto di riavviare NVDA alla chiusura dell-addon store..
+Queste modifiche avranno effetto solo una volta riavviato NVDA.
+Si tenga presente che nella finestra dell'add-on store, il tasto `escape` funziona allo stesso modo del pulsante Chiudi.
+
+#### Aggiornamento dei componenti aggiuntivi {#UpdatingAddons}
+Quando è disponibile un aggiornamento per un componente aggiuntivo installato, verrà mostrato nella scheda "add-on aggiornabili".
+Premere `control+tab` per accedere a questa scheda da qualsiasi punto dell'add-on store.
+Lo stato del componente aggiuntivo verrà visualizzato come "Aggiornamento disponibile".
+L'elenco mostrerà la versione attualmente installata e la versione disponibile.
+Premere `invio` sull'add-on per aprire il menu azioni; scegliere "Aggiorna".
 
 ### Comunità {#Community}
 
@@ -346,7 +417,7 @@ Questa opzione è abilitata di default per le nuove installazioni.
 #### Crea collegamento per il desktop e il tasto rapido (Control+alt+n) {#CreateDesktopShortcut}
 
 Questa opzione permette di selezionare se NVDA debba creare o meno un collegamento nel desktop per lanciare lo screen reader.
-Inoltre, se viene creato tale collegamento, verrà assegnato un tasto rapido corrispondente alla combinazione Control+alt+n, che permetterà di eseguire NVDA da qualsiasi punto ci si trovi.
+Inoltre, se viene creato tale collegamento, verrà assegnato un tasto rapido corrispondente alla combinazione `Control+alt+n`, che permetterà di eseguire NVDA da qualsiasi punto ci si trovi.
 
 #### Copia la configurazione portable nelle impostazioni dell'utente attuale {#CopyPortableConfigurationToCurrentUserAccount}
 
@@ -433,8 +504,8 @@ Tuttavia, è possibile abilitare o disabilitare manualmente il processo di racco
 
 La maggior parte dei comandi da tastiera di NVDA è costituita dalla combinazione del tasto funzione NVDA più qualsiasi altro tasto o serie di tasti. 
 Fanno eccezione i tasti di revisione del testo che utilizzano i soli tasti del tastierino numerico.
-NVDA può essere configurato in modo tale che sia il tasto Insert del tastierino numerico, sia l'Insert della tastiera estesa e il tasto Blocca Maiuscole agiscano contemporaneamente come tasto funzione NVDA.
 
+NVDA può essere configurato in modo tale che sia il tasto Insert del tastierino numerico, sia l'Insert della tastiera estesa e il tasto Blocca Maiuscole agiscano contemporaneamente come tasto funzione NVDA.
 Da impostazioni predefinite entrambi i tasti Insert, della tastiera estesa e del tastierino, sono configurati come tasti funzione di NVDA.
 
 Se si desidera che uno dei tasti funzione NVDA agisca usando la sua funzione originale (ad esempio si potrebbe volere attivare il BloccaMaiuscole che però è stato impostato come tasto funzione NVDA) sarà sufficiente premere quel tasto due volte in rapida successione.
@@ -527,14 +598,14 @@ Il menu di NVDA consente di controllare le impostazioni dello screen reader, acc
 
 Per accedere al menu di NVDA da qualsiasi punto ci si trovi in Windows mentre NVDA è in esecuzione, eseguire una delle seguenti operazioni:
 
-* Premere la combinazione di tasti NVDA+n sulla tastiera.
+* Premere la combinazione di tasti `NVDA+n` sulla tastiera.
 * effettuare un doppio tap con due dita sul touch screen.
-* premere Windows+B per raggiungere la system tray, scorrere con la freccia giù sino ad arrivare alla voce NVDA e premere invio.
+* premere `Windows+B` per raggiungere la system tray, scorrere con la `frecciaGiù` sino ad arrivare alla voce NVDA e premere `invio`.
 * In alternativa, accedere alla system tray premendo `Windows+b`, `freccia giù` sino a giungere sull'icona NVDA e aprire il menu contestuale premendo il tasto `applicazioni` situato accanto al tasto control destro sulla maggior parte delle tastiere.
-Se la tastiera è sprovvista di tasto applicazioni, premere Maiusc+f10.
+Se la tastiera è sprovvista di tasto `applicazioni`, premere `Maiusc+f10`.
 * Fare clic con il tasto destro sull'icona NVDA situata nella system tray di Windows
 
-Una volta che il menu appare, è possibile scorrerlo con le frecce direzionali, mentre per attivare un elemento come sempre è sufficiente premere invio.
+Una volta che il menu appare, è possibile scorrerlo con le frecce direzionali, mentre per attivare un elemento come sempre è sufficiente premere `invio`.
 
 ### Comandi di base da tastiera {#BasicNVDACommands}
 
@@ -544,8 +615,8 @@ Una volta che il menu appare, è possibile scorrerlo con le frecce direzionali, 
 |---|---|---|---|---|
 |Esegue o Riavvia NVDA |Control+alt+n |Control+alt+n |none |Esegue o riavvia NVDA dal desktop, se durante il processo di installazione di NVDA si è scelto di creare un collegamento. Si tratta di un collegamento specifico di Windows e pertanto non può essere riassegnato nella finestra di dialogo dei gesti di immissione.|
 |Interrompe la Sintesi Vocale |Control |Control |tocco con due dita |Ferma immediatamente la Sintesi Vocale|
-|Pausa Sintesi Vocale |Shift |Nessuno |Mette in pausa immediatamente la Sintesi Vocale. Premendo nuovamente il tasto la sintesi vocale riprenderà a parlare dal punto in cui era stata fermata (sempre che questo sia supportato dal sintetizzatore utilizzato, in genere non dovrebbe costituire un problema)|
-|Menu NVDA |NVDA+n |Doppio tocco con due dita |Mostra il Menu di NVDA per permettere di accedere alle Preferenze, agli strumenti, all'Aiuto etc|
+|Pausa Sintesi Vocale |Shift |shift |Nessuno |Mette in pausa immediatamente la Sintesi Vocale. Premendo nuovamente il tasto la sintesi vocale riprenderà a parlare dal punto in cui era stata fermata (sempre che questo sia supportato dal sintetizzatore utilizzato, in genere non dovrebbe costituire un problema)|
+|Menu NVDA |NVDA+n |NVDA+n |Doppio tocco con due dita |Mostra il Menu di NVDA per permettere di accedere alle Preferenze, agli strumenti, all'Aiuto etc|
 |Commuta Modalità Aiuto Immissione |NVDA+1 |NVDA+1 |Nessuno |in questa modalità sarà possibile premere qualsiasi tasto e ne verrà annunciato il nome e la propria funzione in NVDA|
 |Uscire da NVDA |NVDA+q |NVDA+q |Nessuno |Esce da NVDA|
 |Passa Tasto Successivo a |NVDA+f2 |NVDA+f2 |Nessuno |Questo comando istruisce NVDA a passare la combinazione di tasti successiva all'applicazione attiva, anche se si tratta di un comando di NVDA.|
@@ -560,7 +631,7 @@ Una volta che il menu appare, è possibile scorrerlo con le frecce direzionali, 
 | Nome |Tasto |Descrizione|
 |---|---|---|
 |Annuncia data/Ora |NVDA+f12 |Premendo una volta questa combinazione di tasti viene annunciato l'orario corrente, mentre premendola due volte verrà annunciata la data|
-|Annuncia stato batteria |NVDA+shift+b Annuncia elementi come la percentuale di carica della batteria, se il computer è collegato alla corrente, etc.|
+|Annuncia stato batteria |NVDA+shift+b |Annuncia elementi come la percentuale di carica della batteria, se il computer è collegato alla corrente, etc.|
 |Legge testo negli appunti |NVDA+c |Annuncia il testo contenuto negli appunti, se presente.|
 
 <!-- KC:endInclude -->
@@ -639,7 +710,7 @@ NVDA fornisce i seguenti comandi quando si lavora con il cursore di sistema:
 | Nome |Tasto desktop |Tasto laptop |Descrizione|
 |---|---|---|---|
 |Dire Tutto |NVDA+Freccia Giù |NVDA+a |Inizia a leggere dalla posizione del cursore di sistema sino alla fine del documento, spostando il cursore man mano che la lettura continua|
-|Legge Riga Corrente |NVDA+freccia su |NVDA+l |Legge la riga sulla quale si trova il cursore di sistema. Premendo la combinazione due volte viene effettuato lo spelling della riga. La tripla pressione effettuerà lo spelling utilizzando la descrizione dei caratteri (ancona, bari, como, domodossola, etc||
+|Legge Riga Corrente |NVDA+freccia su |NVDA+l |Legge la riga sulla quale si trova il cursore di sistema. Premendo la combinazione due volte viene effettuato lo spelling della riga. La tripla pressione effettuerà lo spelling utilizzando la descrizione dei caratteri (ancona, bari, como, domodossola, etc|
 |Legge Selezione corrente |NVDA+Shift+freccia su |NVDA+shift+s |Legge il testo selezionato ammesso che ve ne sia uno.|
 |Annuncia formattazione testo |NVDA+f |NVDA+f |Legge la formattazione del testo alla posizione del cursore di sistema. Una doppia pressione visualizzerà le informazioni in modalità navigazione|
 |Legge destinazione link |`NVDA+k` |`NVDA+k` |Premendo una volta verrà letto l'URL di destinazione del collegamento alla posizione del cursore o del focus. La doppia pressione mostrerà il contenuto in una finestra per poterlo analizzare più comodamente|
@@ -706,9 +777,9 @@ Per navigare ad oggetti, utilizzare i tasti seguenti:
 |---|---|---|---|---|
 |Legge l'oggetto corrente |NVDA+5 del tastierino numerico |NVDA+shift+o |Nessuno |Annuncia l'oggetto corrente. Premendolo due volte ne fa lo spelling, mentre premendolo tre volte copia il nome dell'oggetto ed il suo valore negli appunti|
 |Spostarsi all'oggetto contenitore |NVDA+8 del tastierino numerico |NVDA+Shift+freccia su |Scorrimento in alto (modo oggetti) |ci si sposta all'oggetto che contiene l'oggetto corrente|
-|Spostarsi all'oggetto precedente |NVDA+4 del tastierino numerico |NVDA+shift+freccia sinistra |nessuno |Scorrimento a sinistra |ci si Sposta all'oggetto precedente rispetto a quello attuale, sullo stesso livello|
+|Spostarsi all'oggetto precedente |NVDA+4 del tastierino numerico |NVDA+shift+freccia sinistra |nessuno |ci si Sposta all'oggetto precedente rispetto a quello attuale, sullo stesso livello|
 |Spostarsi all'oggetto precedente in modalità lineare |NVDA+9 del tastierino numerico |NVDA+shift+à |scorrimento a sinistra (modo oggetti) |Ci si sposta all'oggetto precedente in una modalità lineare che non tiene conto della gerarchia|
-|Spostarsi all'oggetto successivo |NVDA+6 del tastierino numerico |nessuno |NVDA+shift+freccia destra |Scorrimento a destra |ci si Sposta all'oggetto successivo rispetto a quello attuale, sullo stesso livello)|
+|Spostarsi all'oggetto successivo |NVDA+6 del tastierino numerico |nessuno |NVDA+shift+freccia destra |ci si Sposta all'oggetto successivo rispetto a quello attuale, sullo stesso livello)|
 |Spostarsi all'oggetto successivo in modalità lineare |NVDA+3 del tastierino numerico |NVDA+shift+ù |scorrimento a destra (modo oggetti) |Ci si sposta all'oggetto successivo in una modalità lineare che non tiene conto della gerarchia|
 |Spostarsi al primo oggetto contenuto |NVDA+2 del tastierino numerico |NVDA+shift+freccia giù |Scorrimento in basso (modo oggetti) |Ci si sposta al primo oggetto contenuto nell'oggetto attuale|
 |Spostarsi all'oggetto focalizzato |NVDA+Meno del tastierino numerico |NVDA+Backspace |Nessuno |Sposta il navigatore ad oggetti sull'oggetto che attualmente ha il focus di sistema, e porta anche il cursore di controllo in quella posizione, se il cursore di sistema è visualizzato|
@@ -721,7 +792,7 @@ Per navigare ad oggetti, utilizzare i tasti seguenti:
 
 Nota, Per utilizzare il tastierino numerico, il tasto NumLock deve essere impostato su spento.
 
-### Controllare il testo {#toc59}
+### Controllare il testo {#ReviewingText}
 
 NVDA consente di leggere il contenuto dello [schermo/navigazione in linea](#ScreenReview), del [documento corrente](#DocumentReview) o dell'[oggetto](#ObjectReview) per carattere, parola o riga.
 Questo risulta utile principalmente nel prompt dei comandi di Windows o in tutte quelle situazioni dove il [cursore di sistema](#SystemCaret) non esiste o ha funzioni limitate.
@@ -757,7 +828,7 @@ Sono disponibili i seguenti tasti caldi per esplorare il testo:
 |Selezionare e poi copiare dalla posizione del cursore di controllo |NVDA+f9 |NVDA+f9 |Nessuno |Dà inizio al processo di selezione e copia a partire dalla posizione del cursore di controllo. Si noti che NVDA non effettuerà alcuna operazione fino a quando non verrà specificato il punto di fine|
 |Selezionare e copiare fino al cursore di controllo |NVDA+f10 |NVDA+f10 |Nessuno |Una singola pressione seleziona il testo dalla posizione iniziale impostata in precedenza fino alla posizione attuale del cursore di controllo, incluso il carattere in cui si trova. Se possibile, il cursore di sistema si sposterà al testo selezionato. Una seconda pressione copierà il testo negli appunti di Windows|
 |Spostare il cursore di controllo al marcatore iniziale per la copia |NVDA+shift+f9 |NVDA+shift+f9 |nessuno |Sposta il cursore di controllo alla posizione precedentemente impostata come marcatore iniziale per la copia|
-|Annuncia formattazione testo |NVDA+SHIFT+f |NVDA+shift+f |Legge la formattazione del testo alla posizione del cursore di controllo. Una doppia pressione visualizzerà le informazioni in modalità navigazione|
+|Annuncia formattazione testo |NVDA+SHIFT+f |NVDA+shift+f |nessuno |Legge la formattazione del testo alla posizione del cursore di controllo. Una doppia pressione visualizzerà le informazioni in modalità navigazione|
 |Annuncia sostituzione simbolo corrente |Nessuno |Nessuno |nessuno |Legge il simbolo situato alla posizione del cursore di controllo. Una doppia pressione visualizza il simbolo accompagnato dal testo ad esso dedicato in modalità navigazione.|
 
 <!-- KC:endInclude -->
@@ -803,7 +874,7 @@ Quando ci si sposta all'interno del documento con i comandi di esplorazione, la 
 
 Si noti che NVDA passerà automaticamente dalla navigazione ad oggetti all'esplorazione documento quando ci si sposta in modalità navigazione.
 
-#### Esplorazione schermo (modalità in linea) {#toc63}
+#### Esplorazione schermo (modalità in linea) {#ScreenReview}
 
 La modalità di navigazione in linea, o esplorazione schermo, permette di intercettare qualsiasi testo visibile a schermo all'interno dell'applicazione corrente.
 è una funzione molto simile alla navigazione col mouse o con cursori speciali presente in altri screen reader, ad esempio cursore Jaws, cursore WE, etc.
@@ -826,7 +897,7 @@ Più il mouse si troverà in alto sullo schermo, più acuto sarà il segnale acu
 Allo stesso modo, più a destra o sinistra si troverà il puntatore, più verso destra o verso sinistra si sposterà il suono nelle casse, presumendo naturalmente che l'utente si trovi difronte agli altoparlanti in posizione centrale.
 
 Queste caratteristiche aggiuntive riguardanti il mouse non sono attivate di Default.
-Se le si vuole provare sarà sufficiente configurarle dalla categoria [impostazioni mouse](#MouseSettings), raggiungibile dal menu Preferenze di NVDA.
+Se le si vuole provare sarà sufficiente configurarle dalla categoria [impostazioni mouse](#MouseSettings), raggiungibile dalla finestra di dialogo delle [Impostazioni di NVDA](#NVDASettings).
 
 Sebbene un mouse o un trackpad risultino la maniera migliore per esplorare lo schermo in tale modalità, NVDA mette a disposizione qualche comando relativo al mouse:
 <!-- KC:beginInclude -->
@@ -1190,7 +1261,7 @@ Per far stare più informazioni possibili su di un display braille, sono state d
 |tv |visualizzazione ad albero|
 |tvbtn |pulsante visualizzazione ad albero|
 |tvitem |elemento visualizzazione ad albero|
-|lv N |un elemento in visualizzazione ad albero con livello di gerarchia N||
+|lv N |un elemento in visualizzazione ad albero con livello di gerarchia N|
 |wnd |finestra|
 |⠤⠤⠤⠤⠤ |separatore|
 |mrkd |contenuto contrassegnato|
@@ -1288,7 +1359,7 @@ Le impostazioni di visione possono essere modificate nella [categoria visione](#
 L'evidenziazione del focus può risultare molto utile nell'individuare velocemente la posizione del [cursore di sistema](#SystemFocus), del [navigatore ad oggetti](#ObjectNavigation) e della [modalità navigazione](#BrowseMode).
 Queste posizioni sono evidenziate tramite un contorno rettangolare colorato.
 
-* Il blu viene usato per evidenziare il cursore di sistema e il navigatore ad oggetti quando sono insieme e hanno la medesima posizione, cosa che generalmente accade quasi sempre. 
+* Il blu viene usato per evidenziare il cursore di sistema e il navigatore ad oggetti quando sono insieme e hanno la medesima posizione (grazie alla funzione [il navigatore ad oggetti segue il cursore di sistema](#ReviewCursorFollowFocus)), cosa che generalmente accade quasi sempre. 
 * Il blu tratteggiato viene utilizzato per mostrare solo la posizione dell'oggetto su cui si trova il cursore di sistema.
 * Il rosa mostra la posizione del navigatore ad oggetti.
 * Il giallo infine serve a visualizzare la posizione del cursore virtuale, ad esempio durante la navigazione di pagine web.
@@ -1363,7 +1434,7 @@ Per far questo, è necessario che l'opzione "Leggi le intestazioni riga/colonna 
 
 Se si utilizza [UI Automation per accedere ai controlli dei documenti Microsoft Word](#MSWordUIA), che è predefinito nelle ultime versioni di Word e Windows, le celle della prima riga verranno automaticamente considerate come intestazioni di colonna; analogamente, le celle della prima colonna verranno automaticamente considerate come intestazioni di riga.
 
-Di contro, se non si utilizza tale funzione, si dovrà indicare a NVDA quale riga o colonna contiene le intestazioni di una determinata tabella.
+Di contro, se non si utilizza [Tale funzione](#MSWordUIA), si dovrà indicare a NVDA quale riga o colonna contiene le intestazioni di una determinata tabella.
 Dopo essersi spostati nella prima cella della colonna o della riga che contiene le intestazioni, utilizzare uno dei comandi sottostanti:
 <!-- KC:beginInclude -->
 
@@ -1519,7 +1590,7 @@ NVDA offre un supporto avanzato per Poedit 3.4 o versioni successive.
 
 | Nome |Tasto |Descrizione|
 |---|---|---|
-|Legge le note per traduttori |``control+shift+a |Legge ogni nota presente per traduttori. La doppia pressione mostrerà il contenuto in una finestra navigabile.|
+|Legge le note per traduttori |`control+shift+a` |Legge ogni nota presente per traduttori. La doppia pressione mostrerà il contenuto in una finestra navigabile.|
 |Legge commenti |`control+shift+c` |Legge qualsiasi commento all'interno della finestra commenti. La doppia pressione mostrerà il contenuto in una finestra navigabile|
 |Legge il vecchio testo sorgente |`control+shift+o` |Legge il vecchio testo sorgente, se presente. La doppia pressione mostrerà il contenuto in una finestra navigabile|
 |Legge avvisi di traduzione |`control+shift+w` |Segnala un avviso di traduzione, se presente. La doppia pressione mostrerà il contenuto in una finestra navigabile|
@@ -1539,7 +1610,7 @@ Sempre automaticamente verranno girate le pagine sia con lo spostamento del curs
 <!-- KC:endInclude -->
 
 La navigazione veloce con le lettere è supportata per link e grafici, ma soltanto per la pagina corrente.
- La navigazione per link comprende anche le note a piè di pagina.
+La navigazione per link comprende anche le note a piè di pagina.
 
 NVDA fornisce un supporto iniziale per la lettura e la navigazione interattiva di contenuti matematici per i libri accessibili per la matematica.
 Si prega di consultare la sezione [lettura della matematica](#ReadingMath) per ulteriori informazioni.
@@ -1708,7 +1779,7 @@ Verranno sempre inviate le seguenti informazioni:
 * Versione del sistema operativo in uso
 * Se il sistema operativo è a 64 o a 32 bit
 
-##### Consenti a NV Access di raccogliere statistiche sull'utilizzo dello screen reader {#toc120}
+##### Consenti a NV Access di raccogliere statistiche sull'utilizzo dello screen reader {#GeneralSettingsGatherUsageStats}
 
 Se questa funzione è attivata, la Nv Access utilizzerà le informazioni provenienti dal server che gestisce gli aggiornamenti per raccogliere alcune informazioni di carattere demografico sugli utenti di NVDA, ossia sistema operativo e nazione d'origine.
 Si noti comunque che sebbene venga utilizzato l'indirizzo IP per calcolare lo stato di provenienza dell'utente, tale indirizzo IP non verrà mai salvato sui server.
@@ -1746,20 +1817,20 @@ La prima opzione della categoria voce è il pulsante cambia... Premendolo, si at
 Questa finestra si aprirà in cima alla schermata di impostazioni di NVDA.
 Per tornare alla finestra impostazioni di NVDA sarà sufficiente salvare o annullare.
 
-##### Voce {#VoiceSettingsVoice}
+##### Voce {#SpeechSettingsVoice}
 
 Una casella combinata che elenca tutte le voci del sintetizzatore selezionato. 
 è possibile scorrere la lista ed ascoltarla con le frecce.
 In particolare la freccia giù e la freccia sinistra sposteranno verso il basso dell'elenco, mentre la freccia su e la freccia destra sposteranno verso l'alto.
 
-##### Variante {#VoiceSettingsVariant}
+##### Variante {#SpeechSettingsVariant}
 
 Una casella combinata che permette di selezionare con quale variante il sintetizzatore debba parlare. 
 Al momento, soltanto Espeak NG supporta questa impostazione. 
 Le varianti in Espeak sono simili alle voci, esse modificano i parametri e gli attributi della voce originale, per cui ad esempio potremmo avere voci simili a quelle maschili o femminili.
 Nel caso si utilizzi una sintesi vocale di terze parti, la funzione è disponibile solo se il sintetizzatore supporta le varianti.
 
-##### Velocità {#VoiceSettingsRate}
+##### Velocità {#SpeechSettingsRate}
 
 Questa opzione permette di modificare la velocità della voce. 
 Si tratta di un controllo che va da 0 a 100, (dove 0 indica il limite più lento e 100 il massimo della velocità).
@@ -1768,25 +1839,25 @@ Si tratta di un controllo che va da 0 a 100, (dove 0 indica il limite più lento
 
 Abilitando questa opzione si aumenterà in modo significativo la velocità del parlato, se supportato dal sintetizzatore corrente.
 
-##### Tono {#VoiceSettingsPitch}
+##### Tono {#SpeechSettingsPitch}
 
 Questa opzione permette di modificare l'altezza della voce corrente. 
 Si tratta di un controllo che va da 0 a 100, (0 rappresenta l'altezza minima, 100 la massima).
 
-##### Volume {#VoiceSettingsVolume}
+##### Volume {#SpeechSettingsVolume}
 
 Un controllo che va da 0 a 100, (0 indica il volume più basso, 100 il più alto).
 
-##### Inflessione {#VoiceSettingsInflection}
+##### Inflessione {#SpeechSettingsInflection}
 
 Un controllo che permette di selezionare con quanta inflessione (aumento e decadimento del pitch) la sintesi vocale debba parlare. Al momento soltanto Espeak NG fornisce questa funzionalità.
 
-##### Cambio automatico della lingua {#VoiceSettingsLanguageSwitching}
+##### Cambio automatico della lingua {#SpeechSettingsLanguageSwitching}
 
 Questa casella di controllo permette di stabilire se NVDA debba cambiare al volo la lingua con cui parla, nel caso all'interno del testo che si sta leggendo siano presenti i marcatori appositi.
 Questa opzione risulta abilitata di default.
 
-##### cambiamento automatico dialetti (quando supportato) {#VoiceSettingsDialectSwitching}
+##### cambiamento automatico dialetti (quando supportato) {#SpeechSettingsDialectSwitching}
 
 Se l'impostazione cambio automatico della lingua è attiva, questa casella di controllo farà in modo che NVDA modifichi anche il dialetto della lingua in uso.
 Ad esempio, potrebbe essere possibile passare da un "american English" ad un "british English".
@@ -1794,7 +1865,7 @@ L'impostazione è disabilitata di default.
 
 <!-- KC:setting -->
 
-##### Livello di punteggiatura/simboli {#VoiceSettingsSymbolLevel}
+##### Livello di punteggiatura/simboli {#SpeechSettingsSymbolLevel}
 
 Tasto: NVDA+p
 
@@ -1802,7 +1873,7 @@ Questa opzione permette di stabilire la quantità di punteggiatura e di altri si
 Ad esempio, se impostata su tutto, tutti i simboli verranno annunciati in parole.
 Questa impostazione viene applicata a tutti i sintetizzatori, non soltanto a quello usato al momento.
 
-##### Considera attendibile la lingua della voce corrente nel processare caratteri e simboli {#VoiceSettingsTrust}
+##### Considera attendibile la lingua della voce corrente nel processare caratteri e simboli {#SpeechSettingsTrust}
 
 Da impostazioni predefinite, questa funzione risulta attiva e consente di stabilire se NVDA debba ritenere affidabile la lingua della voce corrente nel processare simboli e caratteri.
 Se per qualche motivo ci si accorge che NVDA sta leggendo la punteggiatura con un sintetizzatore o voce particolare in una lingua sbagliata, si consiglia di disattivare questa opzione, per forzare NVDA ad utilizzare le impostazioni globali per quella lingua.
@@ -1820,7 +1891,7 @@ Perciò, se si modifica la descrizione di un'emoji, essa verrà letta a prescind
 
 Per attivare o disattivare l'inclusione dei dati del consorzio Unicode da qualsiasi punto ci si trovi, assegnare un gesto personalizzato usando la [Finestra di dialogo Tasti e gesti di immissione](#InputGestures).
 
-##### Percentuale di cambio tono per lettere maiuscole {#VoiceSettingsCapPitchChange}
+##### Percentuale di cambio tono per lettere maiuscole {#SpeechSettingsCapPitchChange}
 
 Questo campo editazione permette di digitare un numero che sarà equivalente alla variazione di altezza (pitch) effettuato dalla sintesi vocale in presenza di lettere maiuscole.
 Questo valore lavora in percentuale, perciò un valore negativo abbasserà il pitch, mentre uno positivo lo alzerà.
@@ -1828,15 +1899,15 @@ Per non effettuare alcuna modifica, digitare 0.
 Di solito, NVDA aumenta leggermente il tono per qualsiasi lettera maiuscola, ma alcuni sintetizzatori potrebbero non supportare in maniera ottimale questa funzione.
 Nel caso in cui il cambiamento del tono per le lettere maiuscole non sia ben supportato, si consiglia di servirsi delle opzioni [Leggi "cap" prima delle maiuscole](#SpeechSettingsSayCapBefore) e/o [ Emetti un beep per le maiuscole](#SpeechSettingsBeepForCaps) instead.
 
-##### Leggi Cap prima delle Maiuscole {#VoiceSettingsSayCapBefore}
+##### Leggi Cap prima delle Maiuscole {#SpeechSettingsSayCapBefore}
 
 Una casella di controllo che, se attivata, istruisce NVDA a dire la parola "CAP" in presenza di una lettera maiuscola, se raggiunta scorrendo il testo con le frecce o se digitata a mano. 
 
-##### Emetti un beep per le maiuscole {#VoiceSettingsBeepForCaps}
+##### Emetti un beep per le maiuscole {#SpeechSettingsBeepForCaps}
 
 Se questa casella di controllo viene attivata, NVDA emetterà un leggero beep ogni qualvolta verrà incontrata una lettera maiuscola. 
 
-##### Utilizza la modalità spelling se supportata ====[VoiceSpellingFunctionality] {#VoiceSpellingFunctionality}
+##### Utilizza la modalità spelling se supportata {#SpeechSettingsUseSpelling}
 
 Alcune parole sono costituite soltanto da un singolo carattere, ma talvolta, la pronuncia può risultare diversa se il carattere viene annunciato da solo (come quando viene fatto lo spelling), oppure come una parola.
 Ad esempio, in inglese, "a" è sia una lettera che una parola e viene pronunciata in maniera diversa in entrambe i casi.
@@ -1847,7 +1918,7 @@ Generalmente, si consiglia di abilitare questa impostazione.
 Talvolta, può succedere che alcune sintesi Microsoft Speech Api si comportino in modo strano nell'eseguire lo spelling.
 In caso ciò avvenga, consigliamo di disattivare questa caratteristica.
 
-##### Descrizione ritardata dei caratteri al movimento del cursore {#toc141}
+##### Descrizione ritardata dei caratteri al movimento del cursore {#delayedCharacterDescriptions}
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -1859,7 +1930,7 @@ Quando questa impostazione viene attivata, NVDA pronuncerà una descrizione del 
 Per esempio, se si sta esaminando una riga carattere per carattere, e ci troviamo sulla lettera b, NVDA pronuncerà "Bologna" dopo un secondo di ritardo.
 Questo può essere utile nel caso in cui si incontrino difficoltà nella comprensione dei simboli, o per le persone con problemi di udito..
 
-Tale funzione verrà inibita nel caso in cui venga letto del testo durante il secondo di ritardo, oppure se viene premuto il tasto control..
+Tale funzione verrà inibita nel caso in cui venga letto del testo durante il secondo di ritardo, oppure se viene premuto il tasto `control`.
 
 ##### Opzioni disponibili per il comando passa tra le modalità di voce {#SpeechModesDisabling}
 
@@ -1972,6 +2043,11 @@ Si tratta di un campo numerico che permette di modificare la velocità di lampeg
 Questa opzione permette di selezionare la forma, in punti braille, del cursore braille quando il braille segue il focus.
 L'indicatore della selezione non è affetto da questa funzione.
 
+##### Forma del cursore di controllo {#BrailleSettingsCursorShapeForReview}
+
+Questa opzione permette di selezionare la forma, in punti braille, del cursore braille quando il braille segue il cursore di controllo.
+L'indicatore della selezione non è affetto da questa funzione.
+
 ##### Mostra Messaggi {#BrailleSettingsShowMessages}
 
 Si tratta di una casella combinata che stabilisce se NVDA debba visualizzare o meno messaggi in braille e la loro durata in secondi sul display, prima che essi scompaiano automaticamente.
@@ -1983,11 +2059,6 @@ Per attivare o disattivare la visualizzazione dei messaggi da qualsiasi posto, a
 Si tratta di un campo numerico che controlla per quanto tempo i messaggi di NVDA saranno mostrati sul Display Braille.
 Il messaggio sparirà immediatamente non appena si preme un cursor routing sulla barra braille, ma lo si potrà rileggere se si preme una combinazione di tasti che attivano il messaggio.
 L'opzione è visibile soltanto se "mostra messaggi" è impostato su "usa timeout".
-
-##### Forma del cursore di controllo {#BrailleSettingsCursorShapeForReview}
-
-Questa opzione permette di selezionare la forma, in punti braille, del cursore braille quando il braille segue il cursore di controllo.
-L'indicatore della selezione non è affetto da questa funzione.
 
 <!-- KC:setting -->
 
@@ -2193,7 +2264,7 @@ Non è possibile supportare l'attenuazione audio in versioni portable o temporan
 Quando questa opzione è abilitata, il volume dei suoni e dei segnali acustici di NVDA seguirà l'impostazione del volume della voce in uso.
 Se si riduce il volume della voce, anche il volume dei suoni diminuirà.
 Allo stesso modo, se si aumenta il volume della voce, aumenterà anche quello dei suoni..
-Inoltre, ha effetto solo quando l'impostazione "Usa WASAPI per l'output audio" è abilitata.
+Inoltre, ha effetto solo quando l'impostazione [Usa WASAPI per l'output audio](#WASAPI) è abilitata.
 
 ##### Volume dei suoni di NVDA {#SoundVolume}
 
@@ -2201,19 +2272,7 @@ Questo cursore di avanzamento consente di impostare il volume dei suoni e dei se
 L'impostazione ha effetto solo quando l'opzione "Il volume dei suoni di NVDA segue il volume della voce" è disabilitata.
 La funzione non risulta disponibile se NVDA è stato avviato con l'impostazione [WASAPI disattivato per l'uscita audio](#WASAPI) nelle Impostazioni avanzate.
 
-##### Tempo di funzionamento del dispositivo audio dopo la sintesi {#AudioAwakeTime}
-
-Questo campo editazione specifica per quanto tempo NVDA mantiene attivo il dispositivo audio dopo che la sintesi ha parlato.
-Ciò consente a NVDA di evitare alcuni problemi con la sintesi vocale, come la perdita di parti di parole.
-Questo può accadere perché i dispositivi audio (in particolare Bluetooth e wireless) entrano in modalità standby.
-La funzione potrebbe essere utile anche in altri casi d'uso, come quando si esegue NVDA all'interno di una macchina virtuale (ad esempio Citrix Virtual Desktop) o su alcuni laptop.
-
-Valori più bassi potrebbero causare interruzioni dell'audio più frequenti, poiché il dispositivo tenderà ad entrare in modalità standby troppo presto, tagliando l'inizio della frase successiva.
-Invece, impostare un valore troppo alto potrebbe portare allo scaricamento più veloce della batteria del dispositivo audio, poiché rimarrà attivo più a lungo anche quando non viene emesso alcun suono.
-
-È possibile impostare il tempo su zero per disabilitare questa funzione.
-
-+==== bilanciamento audio====[SelectSoundSplitMode]
+##### bilanciamento audio {#SelectSoundSplitMode}
 
 La funzione di bilanciamento audio consente agli utenti di utilizzare i propri dispositivi di uscita stereo, come cuffie e altoparlanti.
 In questo modo, si potrà portare la voce di NVDA in un canale (ad esempio sinistro) e tutte le altre applicazioni nell'altro canale (ad esempio destro).
@@ -2231,10 +2290,12 @@ Per impostazione predefinita, questo comando passerà tra le seguenti modalità:
 
 * bilanciamento disattivato: sia NVDA che altre applicazioni trasmettono l'audio ai canali sinistro e destro.
 * NVDA a sinistra e applicazioni a destra: NVDA parlerà nel canale sinistro, mentre le altre applicazioni riprodurranno i suoni nel canale destro.
-* NVDA a destra e applicazioni a sinistra: NVDA parlerà nel canale destro, mentre le altre applicazioni riprodurranno i suoni nel canale sinistro.
+* NVDA a sinistra e applicazioni su entrambe i canali: NVDA parlerà nel canale sinistro, mentre le altre applicazioni riprodurranno i suoni sia nel canale sinistro che destro.
 
 Sono disponibili modalità di bilanciamento audio più avanzate nella casella combinata delle impostazioni NVDA.
-Se si desidera modificare il volume di tutte le applicazioni ad eccezione di NVDA, si consiglia di servirsi dei [comandi dedicati](#OtherAppVolume).
+Tra queste, una menzione particolare merita l'opzione "NVDA in entrambi i canali e applicazioni in entrambi i canali", che impone che tutti i suoni siano diretti su entrambi i canali.
+Tale funzione si comporta in maniera differente rispetto a "bilanciamento disattivato", nel caso in cui altre elaborazioni audio interferiscano con i volumi dei canali.
+
 Tenere sempre presente che la modalità bilanciamento audio di NVDA non è un mixer..
 Ad esempio, se un'applicazione riproduce una traccia stereo, e il bilanciamento è configurato con "NVDA a sinistra e applicazioni a destra", si ascolterà solo il canale destro della traccia audio, mentre il canale sinistro rimarrà dedicato a NVDA..
 
@@ -2251,43 +2312,22 @@ Per impostazioni predefinite, sono incluse solo tre modalità.
 
 * Bilanciamento audio disabilitato: NVDA e le applicazioni riproducono suoni sia nei canali sinistro che destro.
 * NVDA sul canale sinistro e tutte le altre applicazioni sul canale destro.
-* NVDA sul canale destro e tutte le altre applicazioni sul canale sinistro.
+* NVDA sul canale sinistro e tutte le altre applicazioni su entrambe i canali.
 
 Tenere presente che è necessario selezionare almeno una modalità.
 Questa opzione non risulta disponibile se NVDA è stato avviato con [Usa Wasapi per l'output audio](#WASAPI) disabilitato nelle impostazioni avanzate.
 
-##### Volume di altre applicazioni {#OtherAppVolume}
+##### Tempo di funzionamento del dispositivo audio dopo la sintesi {#AudioAwakeTime}
 
-Questo controllo consente di regolare il volume di tutte le applicazioni attualmente in esecuzione diverse da NVDA.
-L'impostazione viene applicata per tutti i programmi, anche quelli che saranno eseguiti dopo aver regolato questo parametro.
-Il volume può anche essere controllato da qualsiasi luogo tramite i seguenti comandi da tastiera:
+Questo campo editazione specifica per quanto tempo NVDA mantiene attivo il dispositivo audio dopo che la sintesi ha parlato.
+Ciò consente a NVDA di evitare alcuni problemi con la sintesi vocale, come la perdita di parti di parole.
+Questo può accadere perché i dispositivi audio (in particolare Bluetooth e wireless) entrano in modalità standby.
+La funzione potrebbe essere utile anche in altri casi d'uso, come quando si esegue NVDA all'interno di una macchina virtuale (ad esempio Citrix Virtual Desktop) o su alcuni laptop.
 
-<!-- KC:beginInclude -->
+Valori più bassi potrebbero causare interruzioni dell'audio più frequenti, poiché il dispositivo tenderà ad entrare in modalità standby troppo presto, tagliando l'inizio della frase successiva.
+Invece, impostare un valore troppo alto potrebbe portare allo scaricamento più veloce della batteria del dispositivo audio, poiché rimarrà attivo più a lungo anche quando non viene emesso alcun suono.
 
-| Nome |Tasto |Descrizione|
-|---|---|---|
-|Alza volume applicazioni |`NVDA+alt+paginaSu` |Alza il volume di tutte le applicazioni ad eccezione di NVDA.|
-|Abbassa volume applicazioni |`NVDA+alt+paginaGiù` |Abbassa il volume di tutte le applicazioni ad eccezione di NVDA.|
-
-<!-- KC:endInclude -->
-
-Questa opzione non risulta disponibile se NVDA è stato avviato con [Usa Wasapi per l'output audio](#WASAPI) disabilitato nelle impostazioni avanzate.
-
-##### Disattiva l'audio delle altre applicazioni {#MuteApplications}
-
-Questa casella di controllo consente di disattivare l'audio di tutte le applicazioni diverse da NVDA.
-L'impostazione viene applicata per tutti i programmi, anche quelli che saranno eseguiti dopo aver regolato questo parametro.
-Esiste un comando da tastiera che può essere richiamato da qualsiasi luogo:
-
-<!-- KC:beginInclude -->
-
-| Nome |Tasto |Descrizione|
-|---|---|---|
-|Disattiva l'audio delle altre applicazioni |`NVDA+alt+canc` |Disattiva o riattiva tutte le applicazioni diverse da NVDA.|
-
-<!-- KC:endInclude -->
-
-Questa opzione non risulta disponibile se NVDA è stato avviato con [Usa Wasapi per l'output audio](#WASAPI) disabilitato nelle impostazioni avanzate.
+È possibile impostare il tempo su zero per disabilitare questa funzione.
 
 #### Visione {#VisionSettings}
 
@@ -2301,7 +2341,7 @@ Per impostazione predefinita, questa categoria di impostazioni contiene le segue
 Le caselle di controllo presenti in questo gruppo di opzioni attivano o disattivano le funzionalità interne dell'[Evidenziatore focus](#VisionFocusHighlight).
 
 * Abilita evidenziazione: attiva o disattiva l'evidenziazione del focus.
-* Evidenzia Focus di sistema: attiva o disattiva l'evidenziazione del Focus di Sistema #SystemFocus].
+* Evidenzia Focus di sistema: attiva o disattiva l'evidenziazione del [focus di sistema](#SystemFocus).
 * Evidenzia navigatore ad oggetti: attiva o disattiva l'evidenziazione del [navigatore ad oggetti](#ObjectNavigation).
 * Evidenzia il cursore in modalità navigazione: attiva o disattiva l'evidenziazione del [cursore virtuale in modalità navigazione](#BrowseMode)
 
@@ -2332,7 +2372,7 @@ Fare riferimento alla documentazione del miglioramento visivo in merito alla spi
 
 <!-- KC:setting -->
 
-##### Apri impostazioni tastiera {#toc187}
+##### Apri impostazioni tastiera {#toc188}
 
 Tasto: `NVDA+control+k`
 
@@ -2409,7 +2449,7 @@ L'opzione risulta attiva di default, sebbene alcuni utenti che utilizzano la lin
 
 <!-- KC:setting -->
 
-##### Apri impostazioni mouse {#toc200}
+##### Apri impostazioni mouse {#toc201}
 
 Tasto: `NVDA+control+m`
 
@@ -2512,7 +2552,7 @@ Per abilitare o disabilitare la modalità semplice da qualsiasi punto ci si trov
 
 <!-- KC:setting -->
 
-##### Apri le impostazioni presentazione oggetti {#toc217}
+##### Apri le impostazioni presentazione oggetti {#toc218}
 
 Tasto: `NVDA+control+o`
 
@@ -2627,7 +2667,7 @@ L'opzione è attiva di default.
 
 <!-- KC:setting -->
 
-##### Apri impostazioni modalità navigazione {#toc235}
+##### Apri impostazioni modalità navigazione {#toc236}
 
 Tasto: `NVDA+control+b`
 
@@ -2655,7 +2695,7 @@ Ad esempio, una riga che visivamente è formata da più collegamenti verrà pres
 Se invece la casella di controllo è disattivata, ciascun elemento sarà posto in una riga differente.
 Questo per alcuni utenti si traduce in una navigazione più comoda ma meno simile alla disposizione reale degli oggetti.
 
-##### Attiva modalità navigazione al caricamento della pagina {#toc239}
+##### Attiva modalità navigazione al caricamento della pagina {#BrowseModeSettingsEnableOnPageLoad}
 
 Questa casella abilita o disabilita la modalità navigazione automatica al caricamento di una pagina.
 Quando questa opzione è disabilitata, la modalità di navigazione può ancora essere attivata manualmente sulle pagine o nei documenti in cui essa è supportata.
@@ -2680,7 +2720,7 @@ Per poter cambiare al volo la lettura delle tabelle di layout da qualsiasi parte
 
 ##### Configurare l'annuncio di campi come link e intestazioni {#BrowseModeLinksAndHeadings}
 
-Si vedano le opzioni della sezione [Impostazioni formato documento](#DocumentFormattingSettings) per configurare i campi che verranno annunciati quando si naviga, come link, intestazioni e tabelle
+Si vedano le opzioni della sezione [Impostazioni formato documento](#DocumentFormattingSettings) alla finestra di dialogo [Inpostazioni NVDA](#NVDASettings) per configurare i campi che verranno annunciati quando si naviga, come link, intestazioni e tabelle
 
 ##### Modalità focus automatica per i cambiamenti del focus {#BrowseModeSettingsAutoPassThroughOnFocusChange}
 
@@ -2719,7 +2759,7 @@ L'abilitazione di questa opzione può migliorare il supporto per alcuni siti Web
 
 <!-- KC:setting -->
 
-##### Apri Impostazioni formattazione documento {#toc249}
+##### Apri Impostazioni formattazione documento {#toc250}
 
 Tasto: `NVDA+control+d`
 
@@ -2746,7 +2786,7 @@ Le opzioni di formattazione documento sono divise in gruppi.
 * Pagine e spaziatura
   * Numeri di pagina
   * Numeri di riga
-  * Annuncio rientro righe (disattivo, voce, toni, voce e toni) #DocumentFormattingSettingsLineIndentation]
+  * Annuncio rientro righe [(disattivo, voce, toni, voce e toni)](#DocumentFormattingSettingsLineIndentation)
   * Ignora righe vuote nel segnalare i rientri
   * Rientro paragrafi (ad esempio rientro prima riga)
   * Spaziatura righe (singola, doppia etc)
@@ -2804,7 +2844,7 @@ Questa categoria consente di regolare vari aspetti della navigazione del documen
 |Opzioni |Predefinito (Gestito dall'applicazione), Gestito dall'applicazione, Interruzione riga singola, Interruzione di più righe|
 |Predefinito |Gestito dall'applicazione|
 
-Questa casella combinata permette di selezionare lo stile del paragrafo da utilizzare quando si naviga tra gli stessi tramite "control+freccia su" e "control+freccia giù".
+Questa casella combinata permette di selezionare lo stile del paragrafo da utilizzare quando si naviga tra gli stessi tramite `control+freccia su` e `control+freccia giù`.
 Gli stili di paragrafo disponibili sono:
 
 * Gestito dall'applicazione: NVDA consentirà all'applicazione di determinare il paragrafo precedente o successivo; conseguentemente lo screen reader leggerà il nuovo paragrafo durante la navigazione.
@@ -2834,7 +2874,7 @@ Ciò può essere molto utile quando si desidera monitorare contenuti in continua
 L'aggiornamento avviene ogni secondo e mezzo.
 Questa opzione è disabilitata di default.
 
-#### Impostazioni avanzate {#toc257}
+#### Impostazioni avanzate {#AdvancedSettings}
 
 Attenzione! Le impostazioni in questa categoria sono per utenti esperti e potrebbero causare il mancato funzionamento di NVDA se configurate in modo errato.
 Si prega di modificare i vari parametri solo nel caso in cui si sono ricevute istruzioni da uno sviluppatore oppure se si è perfettamente consapevoli di ciò che si sta facendo.
@@ -3052,7 +3092,7 @@ Se si disattiva il supporto a Wasapi, anche le seguenti opzioni verranno disabil
 * [Il volume dei suoni di NVDA segue il volume della voce](#SoundVolumeFollowsVoice)
 * [Volume dei suoni di NVDA](#SoundVolume)
 
-> ==== Categorie Debug Logging ====[AdvancedSettingsDebugLoggingCategories]
+##### Categorie Debug Logging {#AdvancedSettingsDebugLoggingCategories}
 
 Le caselle di controllo presenti in questo elenco consentono di abilitare categorie specifiche di messaggi log di NVDA.
 Si tenga presente che il log di questi messaggi può comportare un calo delle prestazioni e file di registro di grandi dimensioni.
@@ -3174,8 +3214,7 @@ Nota:
 
 * Ai tasti simulati deve essere assegnato un gesto , altrimenti andranno persi nella finestra di salvataggio/chiusura.
 * Potrebbe non essere possibile mappare un gesto di immissione con tasto modificatore ad un tasto emulato senza modificatore. 
-Per esempio, se vogliamo mappare al tasto "a" la combinazione emulata "ctrl-m", 
-il risultato finale potrebbe essere "ctrl-a".
+Per esempio, se vogliamo mappare al tasto `a` la combinazione emulata `ctrl-m`, il risultato finale potrebbe essere `ctrl-a`.
 
 Al termine delle modifiche, premere il pulsante OK per salvarle, o il tasto Annulla per non modificare alcunché.
 
@@ -3297,7 +3336,7 @@ Le versioni portabili di NVDA registrano tutte le impostazioni, i moduli persona
 Le versioni installer di NVDA registrano tutte le impostazioni, i moduli personalizzati per le applicazioni e i driver in una cartella speciale situata nei profili utente di Windows. 
 Ciò significa che ciascun utente del sistema potrà avere le proprie impostazioni. 
 Per accedere a tale cartella da qualsiasi punto ci si trovi, è possibile servirsi della [Finestra di dialogo Tasti e Gesti di immissione](#InputGestures) per aggiungere un gesto personalizzato.
-Inoltre, solo per le versioni di NVDA installato nel sistema, sarà sufficiente aprire il menu avvio, selezionare programmi - NVDA- esplora le impostazioni utente.
+Inoltre, solo per le versioni di NVDA installate nel sistema, sarà sufficiente aprire il menu avvio, selezionare programmi - NVDA- esplora le impostazioni utente.
 
 Le impostazioni di NVDA per quanto riguarda il proprio funzionamento nelle schermate di Logon o UAC sono salvate nella cartella systemConfig situata nella directory di installazione di NVDA.
 In genere questa configurazione non dovrebbe essere modificata.
@@ -3336,7 +3375,7 @@ Tali azioni cambieranno in base allo stato del componente aggiuntivo, installato
 
 Esistono diverse visualizzazioni per i componenti aggiuntivi: installati, aggiornabili, disponibili e incompatibili.
 è possibile utilizzare `ctrl+tab`.per passare tra le varie visualizzazioni.
-Come previsto dalla maggior parte dei programmi, è anche possibile usare il tasto tab per posizionarsi sulla parte in cui vi sono le schede delle varie voci, e spostarsi quindi tra di esse servendosi della `frecciaSinistra` e della `frecciaDestra`.
+Come previsto dalla maggior parte dei programmi, è anche possibile usare il tasto `tab` per posizionarsi sulla parte in cui vi sono le schede delle varie voci, e spostarsi quindi tra di esse servendosi della `frecciaSinistra` e della `frecciaDestra`.
 
 #### Filtraggio per componenti aggiuntivi abilitati o disabilitati {#AddonStoreFilterEnabled}
 
@@ -3517,7 +3556,7 @@ Per attivare o disattivare il visualizzatore braille da qualsiasi parte, assegna
 La Console Python di NVDA, situata nel menu strumenti, è uno strumento per sviluppatori che risulta utile in fase di debug, di diagnosi delle funzioni interne di NVDA o di analisi della gerarchia degli oggetti accessibili presenti in un'applicazione.
 Per ulteriori informazioni, si veda la [guida agli sviluppatori per NVDA](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html), in lingua inglese.
 
-### Add-on Store {#toc312}
+### Add-on Store {#toc314}
 
 Consente di aprire l'[Add-on Store di NVDA](#AddonsManager).
 Per maggiori informazioni, leggere la sezione di approfondimento: [Componenti aggiuntivi e l'Add-on Store](#AddonsManager).
@@ -3606,8 +3645,8 @@ Per usare queste voci, è necessaria l'installazione di due componenti:
 * [Microsoft Speech Platform - Runtime (Version 11), x86](https://www.microsoft.com/download/en/details.aspx?id=27225)
 * [Microsoft Speech Platform - Runtime Languages (Version 11)](https://www.microsoft.com/download/en/details.aspx?id=27224)
   * Questa pagina contiene diversi file sia per il riconoscimento vocale sia per la sintesi vocale stessa.
-  Selezionare i file che si desiderano, a seconda del TTS e della lingua che si vuole utilizzare.
-  Ad esempio, il file MSSpeech_TTS_en-US_ZiraPro.msi è una voce inglese Stati Uniti.
+ Selezionare i file che si desiderano, a seconda del TTS e della lingua che si vuole utilizzare.
+ Ad esempio, il file MSSpeech_TTS_en-US_ZiraPro.msi è una voce inglese Stati Uniti.
 
 ### Voci Windows OneCore {#OneCore}
 
@@ -3882,14 +3921,14 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 |Sposta il display braille alla riga precedente |`d1`|
 |Sposta il display braille alla riga successiva |`d3`|
 |Route to braille cell |`routing`|
-|tasti shift+tab |`spazio+punto1+punto3`|
-|tasto tab |`spazio+punto4+punto6`|
-|tasti alt |`spazio+punto1+punto3+punto4` (`spazio+m`)|
-|tasto escape |`spazio+punto1+punto5` (`spazio+e`)|
-|tasto windows |`spazio+punto3+punto4`|
-|tasti alt+tab |`spazio+punto2+punto3+punto4+punto5` (`spazio+t`)|
+|tasti `shift+tab` |`spazio+punto1+punto3`|
+|tasto `tab` |`spazio+punto4+punto6`|
+|tasti `alt` |`spazio+punto1+punto3+punto4` (`spazio+m`)|
+|tasto `escape` |`spazio+punto1+punto5` (`spazio+e`)|
+|tasto `windows` |`spazio+punto3+punto4`|
+|tasti `alt+tab` |`spazio+punto2+punto3+punto4+punto5` (`spazio+t`)|
 |Menu NVDA |`spazio+punto1+punto3+punto4+punto5` (`spazio+n`)|
-|tasti windows+d (ridurre ad icona tutte le applicazioni) |`spazio+punto1+punto4+punto5` (`spazio+d`)|
+|tasti `windows+d` (ridurre ad icona tutte le applicazioni) |`spazio+punto1+punto4+punto5` (`spazio+d`)|
 |Dire tutto |`spazio+punto1+punto2+punto3+punto4+punto5+punto6`|
 
 Per i modelli che possiedono un Joystick:
@@ -3966,7 +4005,7 @@ Sono supportati anche i dispositivi seguenti e non necessitano dell'installazion
 Di seguito, ecco l'elenco dell'assegnazione dei tasti per queste righe braille con NVDA.
 Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
 
-#### Assegnazione tasti per tutti i modelli {#toc332}
+#### Assegnazione tasti per tutti i modelli {#toc334}
 
 <!-- KC:beginInclude -->
 
@@ -3995,7 +4034,7 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 
 <!-- KC:endInclude -->
 
-#### Assegnazione tasti per Brailliant BI 32, BI 40 e B 80 {#toc333}
+#### Assegnazione tasti per Brailliant BI 32, BI 40 e B 80 {#toc335}
 
 <!-- KC:beginInclude -->
 
@@ -4007,7 +4046,7 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 
 <!-- KC:endInclude -->
 
-#### Assegnazione tasti per Brailliant BI 14 {#toc334}
+#### Assegnazione tasti per Brailliant BI 14 {#toc336}
 
 <!-- KC:beginInclude -->
 
@@ -4062,19 +4101,19 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 |tasto control+shift+freccia sinistra |punto2+punto8+spazio+f1|
 |tasto control+frecciaSinistra |punto2+spazio|
 |tasto shift+alt+frecciaSinistra |punto2+punto7+f1|
-|tasto alt+frecciaSinistra |punto2+punto7+spazio|
+|tasto `alt+frecciaSinistra` |`punto2+punto7+spazio`|
 |tasto frecciaDestra |punto6+spazio, frecciaDestraLatoSinistro|
 |tasto control+shift+frecciaDestra |punto5+punto8+spazio+f1|
 |tasto control+frecciaDestra |punto5+spazio|
 |tasto shift+alt+frecciaDestra |punto5+punto7+f1|
-|tasto alt+frecciaDestra |punto5+punto7+spazio|
+|tasto `alt+frecciaDestra` |`punto5+punto7+spazio`|
 |tasto paginaSu |punto1+punto2+punto6+spazio|
 |tasto control+paginaSu |punto1+punto2+punto6+punto8+spazio|
 |tasto frecciaSu |punto1+spazio, frecciaSuLatoSinistro|
 |tasto control+shift+frecciaSu |punto2+punto3+punto8+spazio+f1|
 |tasto control+frecciaSu |punto2+punto3+spazio|
 |tasto shift+alt+frecciaSu |punto2+punto3+punto7+f1|
-|tasto alt+frecciaSu |punto2+punto3+punto7+spazio|
+|tasto `alt+frecciaSu` |`punto2+punto3+punto7+spazio`|
 |tasto shift+frecciaSu |ScorriGiuLatoSinistro+spazio|
 |tasto PaginaGiù |punto3+punto4+punto5+spazio|
 |tasto control+paginaGiù |punto3+punto4+punto5+punto8+spazio|
@@ -4082,7 +4121,7 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 |tasto control+shift+frecciaGiù |punto5+punto6+punto8+spazio+f1|
 |tasto control+frecciaGiù |punto5+punto6+spazio|
 |tasto shift+alt+frecciaGiù |punto5+punto6+punto7+f1|
-|tasto alt+frecciaGiù |punto5+punto6+punto7+spazio|
+|tasto `alt+frecciaGiù` |`punto5+punto6+punto7+spazio`|
 |tasto shift+frecciaGiù |spazio+ScorriGiùLatoDestro|
 |tasto escape |punto1+punto5+spazio, f4, brailleedge:f1|
 |tasto canc |punto1+punto3+punto5+spazio, punto1+punto4+punto5+spazio|
@@ -4273,7 +4312,7 @@ I tasti più interni svolgono la funzione di barra spaziatrice.
 |control+escape |spazio con punto 1 2 3 4 5 6|
 |tab |spazio con punto 3 7|
 
-<!-- KC:endInclude  -->
+<!-- KC:endInclude -->
 
 ### Papenmeier Braille BRAILLEX vecchi modelli {#PapenmeierOld}
 
@@ -4739,11 +4778,11 @@ Si legga la [tabella dei tasti di Brltty](http://mielke.cc/brltty/doc/KeyBinding
 
 | Nome |comando BRLTTY|
 |---|---|
-|Scorre Display Braille indietro |fwinlt (va indietro di una finestra)|
-|Scorre Display Braille avanti |fwinrt (va avanti di una finestra)|
-|Sposta il Display Braille alla riga precedente |lnup (va su di una riga)|
-|Sposta il Display Braille alla riga successiva |lndn (va giù di una riga)|
-|Route to braille cell |route (porta il cursore al carattere)|
+|Scorre Display Braille indietro |`fwinlt` (va indietro di una finestra)|
+|Scorre Display Braille avanti |`fwinrt` (va avanti di una finestra)|
+|Sposta il Display Braille alla riga precedente |`lnup` (va su di una riga)|
+|Sposta il Display Braille alla riga successiva |`lndn` (va giù di una riga)|
+|Route to braille cell |`route` (porta il cursore al carattere)|
 |Attiva / disattiva aiuto tastiera |`learn` (entra/esce dalla modalità apprendimento comandi)|
 |Apre il menu di NVDA |`prefmenu` (Entra/esce dal menu preferenze)|
 |Ripristina la configurazione |`prefload` (ripristina le preferenze dal disco)|
@@ -4836,7 +4875,7 @@ Di seguito sono riportate le assegnazioni dei tasti per questi display.
 |---|---|
 |Scorri il display braille indietro |pan left or rocker up|
 |Scorri il display braille avanti |pan right or rocker down|
-|Route to braille cell |routing set 1||
+|Route to braille cell |routing set 1|
 |Attiva/disattiva inseguimento braille |su+giù|
 |Tasto freccia su |joystick su, dpad up o spazio+punto1|
 |Tasto freccia giù |joystick giù, dpad down o spazio+punto4|
@@ -4894,7 +4933,7 @@ La modalità protetta blocca le modifiche alla configurazione di NVDA, perciò p
 
 ### Schermate protette {#SecureScreens}
 
-NVDA viene avviato in modalità protetta quando eseguito nelle [schermate protette](#SecureScreens), a meno che non sia abilitato il [parametro a livello di sistema](#SystemWideParameters) `serviceDebug`..
+NVDA viene avviato in [modalità protetta](#SecureMode) quando eseguito nelle schermate protette, a meno che non sia abilitato il [parametro a livello di sistema](#SystemWideParameters) `serviceDebug`..
 
 Quando NVDA è in modalità protetta, lo screen reader utilizza un particolare profilo di sistema per le preferenze.
 Le preferenze dell'utente possono essere copiate [per essere utilizzate nelle schermate protette](#GeneralSettingsCopySettings).
@@ -4911,7 +4950,7 @@ NVDA è in grado di accettare alcune opzioni a riga di comando per modificarne i
 Si possono inserire tutti i parametri che si desiderano.
 Queste opzioni possono essere digitate sia dalla finestra esegui di Windows, sia nelle proprietà di un collegamento sul desktop o semplicemente nella console prompt dei comandi.
 Le opzioni devono essere separate da spazi, come del resto è consuetudine.
-Per esempio, Un parametro molto utile è --disable-addons, che permette di sospendere tutti i componenti aggiuntivi all'avvio di NVDA.
+Per esempio, Un parametro molto utile è `--disable-addons`, che permette di sospendere tutti i componenti aggiuntivi all'avvio di NVDA.
 Ciò permette di stabilire se un determinato problema è causato da un componente aggiuntivo e in quel caso poterlo risolvere senza che gli addon vengano eseguiti.
 
 Per fare un esempio, è possibile uscire da NVDA digitando la stringa seguente nella finestra esegui di Windows:
@@ -4923,50 +4962,50 @@ Per quelli che possiedono solo la versione breve, si possono unire nel modo segu
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|``nvda -mc CONFIGPATH |NVDA si avvierà con il messaggio e il suono iniziale disattivati, e con la configurazione specificata|
-|nvda -mc CONFIGPATH --disable-addons |Come sopra, ma con i componenti aggiuntivi disattivati|
+|`nvda -mc CONFIGPATH` |NVDA si avvierà con il messaggio e il suono iniziale disattivati, e con la configurazione specificata|
+|`nvda -mc CONFIGPATH --disable-addons` |Come sopra, ma con i componenti aggiuntivi disattivati|
 
-Alcune delle opzioni della riga di comando accetta parametri aggiuntivi; ad esempio quanto dettagliato debba essere il log oppure la cartella inerente il profilo di configurazione utente.
-Questi parametri devono essere collocati dopo l'opzione, separati da essa da uno spazio in cui si utilizza la versione corta o un segno di uguale (=) quando si utilizza la versione lunga; ad esempio .:
+Alcune delle opzioni della riga di comando accettano parametri aggiuntivi; ad esempio quanto dettagliato debba essere il log oppure la cartella inerente il profilo di configurazione utente.
+Questi parametri devono essere collocati dopo l'opzione, separati da essa da uno spazio in cui si utilizza la versione corta o un segno di uguale (`=`) quando si utilizza la versione lunga; ad esempio .:
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|nvda -l 10 |Dice a NVDA di avviarsi con il log impostato su debug|
-|nvda --log-file=c:\nvda.log |Dice a NVDA di scrivere il log in c:\nvda.log|
-|nvda --log-level=20 -f c:\nvda.log |Dice a NVDA di avviarsi con livello di log impostato su info e di scrivere il log in c:\nvda.log|
+|`nvda -l 10` |Dice a NVDA di avviarsi con il log impostato su debug|
+|`nvda --log-file=c:\nvda.log` |Dice a NVDA di scrivere il log in `c:\nvda.log`|
+|`nvda --log-level=20 -f c:\nvda.log` |Dice a NVDA di avviarsi con livello di log impostato su info e di scrivere il log in `c:\nvda.log`|
 
 Ecco l'elenco dei parametri a riga di comando di NVDA:
 
 | Breve |Lungo |Descrizione|
 |---|---|---|
-|-h |--help |Visualizza l'aiuto sulla riga di comando ed esce|
-|-q |--quit |Chiude eventuali copie in esecuzione di NVDA|
-|-k |--check-running |Notifica se NVDA è in esecuzione tramite exit code; 0 se in esecuzione, 1 se non lo è|
-|-f LOGFILENAME |--log-file=LOGFILENAME |Il file nel quale verrà scritto il log. Le funzioni di log saranno sempre disabilitate se ci si trova in modalità protetta.|
-|-l LOGLEVEL |--log-level=LOGLEVEL |Il livello più basso di un messaggio loggato (debug 10, input/output 12, debug warning 15, info 20, disabled 100). Le funzioni di log saranno sempre disabilitate se ci si trova in modalità protetta.|
-|-c CONFIGPATH |--config-path=CONFIGPATH |Il percorso ove sono salvate tutte le impostazioni di NVDA. Se ci si trova in modalità protetta verrà forzato il valore predefinito.|
-|None |--lang=LANGUAGE |Sovrascrive la lingua configurata per NVDA. Impostarla a "Windows" per la lingua predefinita dell'utente, "en" per Inglese, etc.|
-|-m |--minimal |Niente suoni, niente interfaccia, niente messaggio all'avvio etc|
-|-s |--secure |Avvia NVDA in [modalità protetta](#SecureMode)|
-|None |--disable-addons |I componenti aggiuntivi non avranno alcun effetto|
-|None |--debug-logging |Abilita il debug nei log solo per la presente istanza. Questa impostazione ha la precedenza su qualsiasi altro livello di log ( --loglevel, -l), compresa la funzione no logging|
-|None |--no-logging |Disabilita completamente le funzioni di log durante l'uso di NVDA. Questa impostazione può essere sovrascritta se viene specificato un livello di log ( --loglevel, -l) dalla riga di comando o se la funzione debug logging è attiva.|
-|None |--no-sr-flag |Non modifica il flag Screen Reader per il sistema|
-|None |--install |Installa NVDA (avviando la copia appena installata)|
-|None |--install |Silent Installa NVDA (non avviando la copia appena installata)|
-|None |--enable-start-on-logon=True|False |Durante l'installazione, abilita [l'avvio di NVDA alla schermata di logon](#StartAtWindowsLogon)|
-|None |~~copy-portable-config |Durante l'installazione, copia la configurazione portable dal percorso specificato (~~config-path, -c) all'account utente corrente|
-|None |--create-portable |Crea una copia portable di NVDA (avviando la copia appena creata). Richiede --portable-path da specificare|
-|None |--create-portable-silent |Crea una copia portable di NVDA (non avvia la nuova copia appena creata). Richiede --portable-path da specificare|
-|None |--portable-path=PORTABLEPATH |Il percorso in cui verrà creata la copia portable di NVDA|
+|`-h` |`--help` |Visualizza l'aiuto sulla riga di comando ed esce|
+|`-q` |`--quit` |Chiude eventuali copie in esecuzione di NVDA|
+|`-k` |`--check-running` |Notifica se NVDA è in esecuzione tramite exit code; 0 se in esecuzione, 1 se non lo è|
+|`-f LOGFILENAME` |`--log-file=LOGFILENAME` |Il file nel quale verrà scritto il log. Le funzioni di log saranno sempre disabilitate se ci si trova in modalità protetta.|
+|`-l LOGLEVEL` |`--log-level=LOGLEVEL` |Il livello più basso di un messaggio loggato (debug 10, input/output 12, debug warning 15, info 20, disabled 100). Le funzioni di log saranno sempre disabilitate se ci si trova in modalità protetta.|
+|`-c CONFIGPATH` |`--config-path=CONFIGPATH` |Il percorso ove sono salvate tutte le impostazioni di NVDA. Se ci si trova in modalità protetta verrà forzato il valore predefinito.|
+|None |`--lang=LANGUAGE` |Sovrascrive la lingua configurata per NVDA. Impostarla a "Windows" per la lingua predefinita dell'utente, "en" per Inglese, etc.|
+|`-m` |`--minimal` |Niente suoni, niente interfaccia, niente messaggio all'avvio etc|
+|`-s` |`--secure` |Avvia NVDA in [modalità protetta](#SecureMode)|
+|None |`--disable-addons` |I componenti aggiuntivi non avranno alcun effetto|
+|None |`--debug-logging` |Abilita il debug nei log solo per la presente istanza. Questa impostazione ha la precedenza su qualsiasi altro livello di log ( `--loglevel`, `-l`), compresa la funzione no logging|
+|None |`--no-logging` |Disabilita completamente le funzioni di log durante l'uso di NVDA. Questa impostazione può essere sovrascritta se viene specificato un livello di log ( `--loglevel`, `-l`) dalla riga di comando o se la funzione debug logging è attiva.|
+|None |`--no-sr-flag` |Non modifica il flag Screen Reader per il sistema|
+|None |`--install` |Installa NVDA (avviando la copia appena installata)|
+|None |`--install-silent` | Installa NVDA (non avviando la copia appena installata)|
+|None |`--enable-start-on-logon=True|False` |Durante l'installazione, abilita [l'avvio di NVDA alla schermata di logon](#StartAtWindowsLogon)|
+|None |`--copy-portable-config` |Durante l'installazione, copia la configurazione portable dal percorso specificato (`--config-path`, `-c`) all'account utente corrente|
+|None |`--create-portable` |Crea una copia portable di NVDA (avviando la copia appena creata). Richiede `--portable-path` da specificare|
+|None |`--create-portable-silent` |Crea una copia portable di NVDA (non avvia la nuova copia appena creata). Richiede `--portable-path` da specificare|
+|None |`--portable-path=PORTABLEPATH` |Il percorso in cui verrà creata la copia portable di NVDA|
 
 ### Parametri di sistema {#SystemWideParameters}
 
 NVDA consente di impostare alcuni valori nel registro di sistema che andranno ad influenzare il comportamento dello screen reader.
 Tali valori sono salvati nel registro in una delle seguenti chiavi:
 
-* sistemi a 32-bit: "HKEY_LOCAL_MACHINE\SOFTWARE\nvda"
-* Sistemi a 64-bit: "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda"
+* sistemi a 32-bit: `HKEY_LOCAL_MACHINE\SOFTWARE\nvda`
+* Sistemi a 64-bit: `HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\nvda`
 
 Di seguito vengono elencati i valori modificabili con queste chiavi di registro:
 
@@ -4979,6 +5018,5 @@ Di seguito vengono elencati i valori modificabili con queste chiavi di registro:
 ## Ulteriori Informazioni {#FurtherInformation}
 
 Se si vogliono trovare maggiori informazioni o richiedere assistenza riguardo NVDA, si prega di consultare il [Sito internazionale di NVDA in lingua inglese](NVDA_URL), oppure quello relativo alla comunità italiana all'indirizzo [www.nvda.it](http://www.nvda.it).
-In entrambe i siti web sarà possibile reperire documentazione aggiuntiva, supporto tecnico e risorse varie come forum o mailing list. In particolare, per quanto concerne il sito italiano, esiste una lista di discussione alla quale chiunque può iscriversi mandando un messaggio a: <nvda-request@groups.io> e nell'oggetto del messaggio scrivere la parola "subscribe" senza le virgolette. Rispondere poi al messaggio di conferma.
-I messaggi che transitano nella mailing list sono tutti consultabili anche dal sito nvda.it, nel riquadro ultime notizie dal forum. Non esitate a contattarci in caso di problemi.
-
+In entrambe i siti web sarà possibile reperire documentazione aggiuntiva, supporto tecnico e risorse varie come forum o mailing list.
+In particolare, per quanto concerne il sito italiano, esiste una lista di discussione alla quale chiunque può iscriversi mandando un messaggio a: <nvda-request@groups.io> e nell'oggetto del messaggio scrivere la parola "subscribe" senza le virgolette. Rispondere poi al messaggio di conferma. I messaggi che transitano nella mailing list sono tutti consultabili anche dal sito nvda.it, nel riquadro ultime notizie dal forum. Non esitate a contattarci in caso di problemi.
