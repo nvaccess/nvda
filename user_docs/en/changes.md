@@ -21,6 +21,8 @@ Unicode CLDR has been updated.
   * This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
   * It also allows reading of equations in the Microsoft Word equation editor. (#4631)
   * You can enable this functionality for both speech and braille in their respective settings categories in the NVDA Settings dialog.
+* New Braille features:
+  * Added support for the Help Tech Activator Pro displays.
 
 ### Changes
 
