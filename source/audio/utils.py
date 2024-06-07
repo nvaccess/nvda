@@ -35,9 +35,9 @@ def terminate():
 
 class _AudioSessionEventsListener(AudioSessionEvents):
 	"""
-		This class is a listener for audio session termination event. It is registered in WASAPI by
-		`_AudioSessionNotificationListener.on_session_created()` method. It calls custom logic defined in
-		`AudioSessionCallback.onSessionTerminated()` implementation and allows customers to restore audio volume.
+	This class is a listener for audio session termination event. It is registered in WASAPI by
+	`_AudioSessionNotificationListener.on_session_created()` method. It calls custom logic defined in
+	`AudioSessionCallback.onSessionTerminated()` implementation and allows customers to restore audio volume.
 	"""
 	callback: "weakref.ReferenceType[AudioSessionCallback]"
 	pid: int
@@ -67,11 +67,11 @@ class _AudioSessionEventsListener(AudioSessionEvents):
 
 class _AudioSessionNotificationListener(AudioSessionNotification):
 	"""
-		This class is a handler for existing and newly created audio sessions. Its method `on_session_created`
-		will be called from `AudioSessionCallback.register()` for all existing audio sessions; and, additionally,
-		it will be notified by WASAPI for every new audio session created.
-		It sets up a callback for session termination - an instance of `_AudioSessionEventsListener` class;
-		then it calls custom logic provided in `AudioSessionCallback.onSessionUpdate()` implementation.
+	This class is a handler for existing and newly created audio sessions. Its method `on_session_created`
+	will be called from `AudioSessionCallback.register()` for all existing audio sessions; and, additionally,
+	it will be notified by WASAPI for every new audio session created.
+	It sets up a callback for session termination - an instance of `_AudioSessionEventsListener` class;
+	then it calls custom logic provided in `AudioSessionCallback.onSessionUpdate()` implementation.
 	"""
 	callback: "weakref.ReferenceType[AudioSessionCallback]"
 
