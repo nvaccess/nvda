@@ -15,7 +15,7 @@
 支持了新的盲文点显器 BrailleEdgeS2 和 BrailleEdgeS3。
 LibLouis 更新后，增加了新的详细（以大写字母表示）白俄罗斯语和乌克兰语盲文表，以及用于阅读希腊文的西班牙语盲文表。
 
-更新 eSpeak 后，增加了新语言 Tigrinya 语。
+更新 eSpeak 后，增加了新语言提格里尼亚语。
 
 • 修复了 Thunderbird、Adobe Reader、浏览器、Nudi 和 Geekbench 等应用程序的许多小错误。
 

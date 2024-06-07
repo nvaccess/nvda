@@ -22,22 +22,22 @@ eSpeak был обновлен, добавлен новый язык тигри�
 ### Новые Возможности
 
 * Новые комбинации клавиш:
-  * New Quick Navigation command `p` for jumping to next/previous text paragraph in browse mode. (#15998, @mltony)
-  * New unassigned Quick Navigation commands, which can be used to jump to the next/previous:
-    * figure (#10826)
-    * vertically aligned paragraph (#15999, @mltony)
-    * menu item (#16001, @mltony)
-    * toggle button (#16001, @mltony)
-    * progress bar (#16001, @mltony)
-    * math formula (#16001, @mltony)
-    * same style text (#16000, @mltony)
-    * different style text (#16000, @mltony)
-  * Added commands to jump first, last, forward and backward through the synth settings ring. (#13768, #16095, @rmcpantoja)
-    * Setting the first/last setting in the synth settings ring has no assigned gesture. (#13768)
-    * Decrease and increase the current setting of the synth settings ring in a larger step (#13768):
-      * Desktop: `NVDA+control+pageUp` or `NVDA+control+pageDown`.
-      * Laptop: `NVDA+control+shift+pageUp` or `NVDA+control+shift+pageDown`.
-  * Added a new unassigned input gesture to toggle the reporting of figures and captions. (#10826, #14349)
+  * Новая команда быстрой навигации `p` для перехода к следующему/предыдущему текстовому абзацу в режиме обзора. (#15998, @mltony)
+  * Новые неназначенные команды быстрой навигации, которые можно использовать для перехода к следующему/предыдущему:
+    * иллюстрации (#10826)
+    * вертикально выровненному абзацу (#15999, @mltony)
+    * элементу меню (#16001, @mltony)
+    * кнопке-переключателю (#16001, @mltony)
+    * индикатору выполнения (#16001, @mltony)
+    * математической формуле (#16001, @mltony)
+    * тексту в одном стиле (#16000, @mltony)
+    * тексту в разных стилях (#16000, @mltony)
+  * Добавлены команды для перехода к первому, последнему, следующему и предыдущему параметрам кольца настроек синтезатора. (#13768, #16095, @rmcpantoja)
+    * На выбор первой/последней настройки кольца синтезатора не назначены жесты. (#13768)
+    * Уменьшить и увеличить текущую настройку кольца настроек синтезатора на большой шаг (#13768):
+      * Настольная: `NVDA+control+pageUp` or `NVDA+control+pageDown`.
+      * Ноутбук: `NVDA+control+shift+pageUp` or `NVDA+control+shift+pageDown`.
+  * Добавлен новый неназначенный жест ввода для переключения объявления рисунков и подписей. (#10826, #14349)
 * Брайль:
   * Added support for the BrailleEdgeS2 and BrailleEdgeS3 displays. (#16033, #16279, @EdKweon)
   * A new braille mode called "display speech output" has been added. (#15898, @Emil-18)

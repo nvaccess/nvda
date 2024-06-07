@@ -3345,7 +3345,7 @@ Sisäänkirjautumisen aikana ja käyttäjätilien valvonnan ruuduissa käytettä
 ## Lisäosat ja lisäosakauppa {#AddonsManager}
 
 Lisäosat ovat ohjelmistopaketteja, jotka tarjoavat uusia tai muokattuja toiminnallisuuksia NVDA:lle.
-Niitä kehittävät NVDA-yhteisö ja ulkoiset organisaatiot, kuten kaupalliset toimittajat.
+Niitä kehittävät NVDA-yhteisö ja ulkopuoliset organisaatiot, kuten kaupalliset toimittajat.
 Lisäosat voivat tehdä seuraavia asioita:
 
 * Lisätä tai parantaa tiettyjen sovellusten tukea.
