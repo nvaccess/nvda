@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+# https://docs.coderabbit.ai/guides/configure-coderabbit/
+
+language: "en-US"
+early_access: true
+reviews:
+  profile: "chill"
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+  auto_review:
+    enabled: true
+    drafts: false
+    auto_incremental_review: false
+    base_branches:
+      - master
+      - beta
+      - rc
+  path_instructions:
+    - path: "**/*"
+      instructions: "
+      Focus on code smells, logic errors, edge cases, missing test cases, security flaws and serious issues.
+      Avoid commenting on minor issues such as linting, formatting and style issues.
+      _, pgettext, ngettext, and ngettext is defined globally, errors for this being undefined can be ignored.
+      This project uses tabs instead of spaces, do not suggest usage of spaces over tabs.
+      Are there any 'red flags' in this code that might warrant closer investigation from a security standpoint?
+      Explain what makes them suspicious.
+      "
+  tools:
+    github-checks:
+      enabled: true
+    ruff:
+      # Should become true if we switch linters, 
+      # right now linting is done by a flake8 check
+      enabled: false
+    markdownlint:
+      # Consider making false if errors are introduced,
+      # or we introduce a markdownlint as a separate check.
+      enabled: true
+chat:
+  auto_reply: true
