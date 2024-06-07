@@ -649,7 +649,7 @@ class DriverRegistrar:
 				f"{', '.join(malformedIds)}"
 			)
 		if useAsFallBack:
-			FallbackDevicesStore.fallBackDevices.update([(self._driver, type, id) for id in ids])
+			FallbackDevicesStore.fallBackDevices.update(((self._driver, type, id) for id in ids))
 		
 		devs = self._getDriverDict()
 		driverUsb = devs[type]
