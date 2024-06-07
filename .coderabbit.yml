@@ -28,16 +28,23 @@ reviews:
       Are there any 'red flags' in this code that might warrant closer investigation from a security standpoint?
       Explain what makes them suspicious.
       "
+    - path: "**/*.md"
+      instructions: "
+      Focus on grammar, spelling, and punctuation.
+      Also consider readability and clarity of contents.
+      Ensure that changes follow the style of one sentence per line, suggest changes if this is not met.
+      "
   tools:
     github-checks:
       enabled: true
     ruff:
       # Should become true if we switch linters, 
-      # right now linting is done by a flake8 check
+      # right now linting is done by a flake8 check (#14817).
       enabled: false
     markdownlint:
-      # Consider making false if errors are introduced,
-      # or we introduce a markdownlint as a separate check.
-      enabled: true
+      # We use custom markdown syntax such as {#Anchor} for anchors.
+      # This is not supported by markdownlint.
+      # In future we plan to introduce markdownlint directly with custom rules. (#16453)
+      enabled: false
 chat:
   auto_reply: true
