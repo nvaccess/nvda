@@ -542,7 +542,14 @@ class Modular80(Modular):
 	numCells = 80
 
 
-class Activator(ActiveSplitMixin, TimeSyncFirmnessMixin, AtcMixin, JoystickMixin, TripleActionKeysMixin, Model):
+class Activator(
+	ActiveSplitMixin,
+	TimeSyncFirmnessMixin,
+	AtcMixin,
+	JoystickMixin,
+	TripleActionKeysMixin,
+	Model
+):
 	deviceId = MODEL_ACTIVATOR
 	numCells = 40
 	genericName = name = 'Activator'
@@ -556,7 +563,13 @@ class Activator(ActiveSplitMixin, TimeSyncFirmnessMixin, AtcMixin, JoystickMixin
 		return keys
 
 
-class ActivatorPro64(ActiveSplitMixin, TimeSyncFirmnessMixin, AtcMixin, TripleActionKeysMixin, Model):
+class ActivatorPro64(
+	ActiveSplitMixin,
+	TimeSyncFirmnessMixin,
+	AtcMixin,
+	TripleActionKeysMixin,
+	Model
+):
 	deviceId = MODEL_ACTIVATOR_PRO_64
 	numCells = 64
 	genericName = name = 'Activator Pro 64'
