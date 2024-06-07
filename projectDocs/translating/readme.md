@@ -49,8 +49,8 @@ These files are listed in order of importance.
 Note that linked guides may be out of date, as the translation system is undergoing the process of migration.
 
 - nvda.po: NVDA's interface messages, see [Translating The Interface](https://github.com/nvaccess/nvda/wiki/TranslatingTheInterface) page for more info.
-- characterDescriptions.dic: names of characters in your language, see [Translating Character Descriptions](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#toc7) for more info.
-- symbols.dic: names of symbols and punctuation in your language, see [Translating Symbols](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#toc8) for more information.
+- characterDescriptions.dic: names of characters in your language, see [Translating Character Descriptions](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#characterDescriptions) for more info.
+- symbols.dic: names of symbols and punctuation in your language, see [Translating Symbols](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#symbolPronunciation) for more information.
 - gestures.ini: remapping of gestures for your language, see [Translating Gestures](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#TranslatingGestures) for more information.
 - userGuide.md: the User Guide, see [Translating the User Guide](https://github.com/nvaccess/nvda/wiki/TranslatingUserGuide) for more information.
 - changes.md (optional): a list of changes between releases, see [Translating Changes](https://github.com/nvaccess/nvda/wiki/TranslatingChanges) for more information.
