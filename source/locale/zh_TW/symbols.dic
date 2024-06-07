@@ -1,5 +1,5 @@
 ﻿# A part of NonVisual Desktop Access (NVDA)
-# Copyright (c) 2011-2023 NVDA Contributors
+# Copyright (c) 2011-2024 NVDA Contributors
 # This file is covered by the GNU General Public License.
 # Edited by NVDA-Taiwan Volunteers Team
 # 在本檔案內，當一個符號的解釋出現多音字（或破音字）時，為使其報讀正確，得用另一同音字代替，以避免混淆。
@@ -13,6 +13,9 @@ complexSymbols:
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
+# 用於視覺呈現的連續點 (例如用於目錄中)
+multiple .	\.{4,}
+
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
@@ -27,6 +30,7 @@ symbols:
 ? sentence ending	半形問號	all	always
 ; phrase ending	semi	most	always
 : phrase ending	colon	most	always
+multiple .	多個點	all	always
 decimal point		none	always
 in-word '	tick	all	norep
 negative number	負	none	norep
@@ -803,6 +807,12 @@ _	半形底線	most
 鈇	夫	none
 鿬	田	none
 鿫	澳	none
+㗁	咢	none
+呤	鈴	none
+嘌	飄	none
+胺	安	none
+腈	青	none
+氰	青	none
 
 # 以下的「中日韓相容表意文字」，每個字的外觀與該字的詞解字相同，或近似，但內碼不同。
 豈	豈	none

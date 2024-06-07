@@ -81,10 +81,10 @@ Za detalje o iznimkama, molimo pročitajte dokument licence kojeg možete naći 
 
 ## NVDA vodič za brzo pokretanje {#NVDAQuickStartGuide}
 
-Ovaj vodič za brzo pokreanje sadrži tri glavna poglavlja: preuzimanje, početno postavljanje, te pokretanje NVDA.
-Poslje tih poglavlja slijede informacije o prilagođavanju postavki, sudjelovanje u zajednici te kako dobiti pomoć.
+Ovaj vodič za brzo pokretanje sadrži tri glavna poglavlja: preuzimanje, početno postavljanje, te pokretanje NVDA.
+Poslije tih poglavlja slijede informacije o prilagođavanju postavki, korištenju dodataka, sudjelovanju u zajednici te kako dobiti pomoć.
 Informacije u ovom vodiču skupljene su iz drugih djelova priručnika za NVDA.
-ZA više detaljnijih informacija, molimo pogledajte priručnik za korisnike i svaku njegovu rubriku.
+Za više detaljnijih informacija, molimo pogledajte priručnik za korisnike i svaku njegovu rubriku.
 
 ### Preuzimanje NVDA {#GettingAndSettingUpNVDA}
 
@@ -279,6 +279,78 @@ Postavke i druge opcije dostupne su u NVDA izborniku.
 Kako biste otvorili NVDA izbornik, pritisnite `NVDA+n`.
 Kako biste izravno otvorili NVDA opće postavke, pritisnite `NVDA+control+g`.
 Većina NVDA ekrana postavki ima pripadajuće prečace za izravno otvaranje, kao što je to `NVDA+control+s` za postavke govorne jedinice, ili `NVDA+control+v` za ostale glasovne postavke.
+
+### Dodaci {#Addons}
+Dodaci su programi koji dodaju nove ili unapređuju postojeće funkcije NVDA.
+Dodatke razvijaju NVDA zajednica ili vanjske tvrtke te nisu povezani sa organizacijom Nv Access.
+Kao i kod svakog softvera, važno je vjerovati programeru koji je napisao dodatak prije njegovog korištenja.
+Za načine provjere sigurnosti dodataka, molimo pogledajte poglavlje [o instaliranju dodataka](#AddonStoreInstalling).
+
+Prvi put kada se otvori Add-on store, prikazat će se obavijest o dodacima.
+NV Access ne provjerava dodatke, te isti mogu imati neograničen pristup informacijama.
+Pritisnite `razmak` ako ste pročitali upozorenje i ne trebate ga ponovo čuti.
+Pritisnite `tab` kako biste došli do gumba "U redu" a potom pritisnite `enter` kako biste zatvorili upozorenje i produžili u NVDA add-on store.
+Poglavlje "[Dodaci i add-on store](#AddonsManager)" korisničkog priručnika sadrži detaljne informacije o svakoj funkciji add-on storea.
+
+Add-on store je dostupan iz NVDA izbornika.
+Pritisnite `NVDA+n` kako biste otvorili NVDA izbornik, a potom `a` za alate, a potom `a` za add-on store.
+Kada se otvori Add-on store, pokazat će se  kartica "dostupni dodaci" ako niti jedan dodatak nije instaliran.
+Kada su dodaci instalirani, Add-on store će se otvoriti na kartici "instalirani dodaci".
+
+#### Dostupni dodaci {#AvailableAddons}
+Kada se prozor prvi put otvori, potrebno je nekoliko sekundi kako bi se dodaci učitali.
+NVDA će pročitati naziv prvog dodatka kada se cijeli popis učita.
+Dostupni dodaci su popisani po abecednom redu u obliku višestupčastog popisa.
+Kako biste pregledavali popis i doznali nešto o određenom dodatku:
+
+1. Koristite strelice ili pritisnite prvo slovo naziva dodatka kako biste se kretali po popisu.
+1. Jedamput pritisnite `tab` kako biste se premjestili na opis trenutno odabranog dodatka.
+1. Koristite [tipke za čitanje](#ReadingText) ili strelice kako biste pročitali puni opis.
+1. Pritisnite `tab` kako biste došli do gumba "radnje" koji se može koristiti i prilikom instalacije dodataka.
+1. Pritisnite `tab` kako biste došli do "ostalih detalja", gdje su prikazane informacije o verziji i izdavaču.
+1. Kako biste se vratili na popis dodataka, pritisnite `alt+a`, ili `shift+tab`.
+
+#### Pretraživanje dodataka {#SearchingForAddons}
+Kao što se mogu pregledavati, dodaci se mogu i filtrirati.
+Za pretragu, pritisnite `alt+p` da se prebacite na polje za "pretragu" i upišete tekst za pretragu.
+Polje za pretragu može sadržavati informacije koje uključuju identifikator dodatka, naziv dodatka, izdavača, autor ili opis.
+Popis se osvježava prilikom upisivanja pojma za pretragu.
+Kada ste završili, pritisnite `tab` kako biste došli do filtriranog popisa dodataka i pregledavali rezultate.
+
+#### Instaliranje dodataka {#InstallingAddons}
+
+Kako biste instalirali dodatak:
+
+1. Kada ste fokusirani na dodatku kojeg želite instalirati, pritisnite `enter`.
+1. Otvara se izbornik radnji sa popisom radnji. Prva je radnja "instaliraj".
+1. Kako biste instalirali dodatak, pritisnite `i` ili `strelicu dolje` kako biste došli do opcije "instaliraj" i pritisnite `enter`.
+1. Fokus će se vratiti na popis dodataka a nVDA će pročitati detalje o dodatku.
+1. Informacija "stanje" kuju čita NVDA mijenja se iz "dostupan" u "preuzimanje".
+1. Jednom kada se dodatak preuzme, promijenit će se u "preuzeto. čeka instalaciju".
+1. Ponovite ove korake sa svakim dodatkom koje biste željeli instalirati.
+1. Kada završite, pritisnite `tab` kada se fokus nađe na gumbu "zatvori", i pritisnite `enter`.
+1. Preuzeti dodaci će se započeti instalirati kada se zatvori Add-on store.
+Dodaci mogu prikazivati dijaloške okvire na koje trebate odgovarati potvrdno kada se prikažu.
+1. Kada se dodaci instaliraju, pojavljuje se dijaloški okvir koji govori da su učinjene promjene te da trebate ponovno pokrenuti NVDA kako bi se instalacija završila.
+1. Pritisnite `enter` za ponovno pokretanje NVDA.
+
+#### Upravljanje instaliranim dodacima {#ManagingInstalledAddons}
+Pritisnite `control+tab` kako biste se kretali između kartica svojstava ili odjeljaka add-on storea.
+Kartice svojstava uključuju: "instalirani dodaci", "dodaci koji se mogu nadograditi", "dostupni dodaci" i "instalirani nekompatibilni dodaci".
+Svaka kartica je konstruirana na sličan način: sa popisom dodataka, sa panelom za više detalja o dodatku, te sa mogućnošću izvršavanja konkretne radne na označenom dodatku.
+Izbornik radnji za dodatke uključuje "onemogućavanje" i "uklanjanje" te suprotne radnje "instalaciju".
+Onemogućavanje dodatka zaustavlja učitavanje istog, ali ga ostavlja instaliranog.
+Kako biste ponovno uključili onemogućeni dodatak, aktivirajte stavku "omogući" u izborniku radnji.
+Poslije omogućavanja, onemogućavanja, ili uklanjanja dodataka, od vas će se zahtijevate da ponovno pokrenete NVDA poslije zatvaranja Add-on store.
+Te će se promjene primijeniti poslije ponovnog pokretanja NVDA.
+Imajte na umu da u add-on storeu tipka `escape` funkcionira na isti način kao gumb "zatvori".
+
+#### Nadogradnja dodataka {#UpdatingAddons}
+Kada nadogradnja dodatka postane dostupna, ista će biti prikazana u kartici svojstva "dodaci koji se mogu nadograditi".
+Pritisnite `control+tab` kako biste došli do te kartice svojstava sa bilo kojeg mjesta u add-on storeu.
+Status dodatka će biti prikazan kao "nadogradnja je dostupna".
+na popisu će se prikazati trenutno instalirana verzija i dostupna verzija.
+Pritisnite `enter` na dodatku, kako biste otvorili popis radnji a potom izaberite "nadogradi".
 
 ### Zajednica {#Community}
 
@@ -2203,8 +2275,8 @@ Ova postavka nije dostupna ako ste pokrenuli  NVDA sa isključenim [WASAPI za au
 ##### Način podijeljenog zvuka {#SelectSoundSplitMode}
 
 Ova funkcija omogućuje korisnicima korištenje stereouređaja poput zvučnika ili slušalica.
-Ova funkcija omogućuje da zvuk govora NVDA bude na primjer u lijevom kanalu, a drugi zvukove na primjer u desnom.
-Podrazumjevano način podjeljenog zvuka je onemogućen, što znači da će svi programi, uključujući i NVDA reproducirati zvukove u oba audiokanala.
+Ova funkcija omogućuje da zvuk govora NVDA bude na primjer u lijevom kanalu, a drugi zvukovi na primjer u desnom.
+Podrazumijevano način podjeljenog zvuka je onemogućen.
 Tipkovničkim prečacem možete se prebacivati između različitih načina podjele zvuka:
 <!-- KC:beginInclude -->
 
@@ -2216,24 +2288,27 @@ Tipkovničkim prečacem možete se prebacivati između različitih načina podje
 
 Podrazumijevano, ovaj će prečac prebacivati između slijedećih modusa:
 
-* Onemogućena podjela zvuka: Programi i NVDA reproduciraju svoje zvukove u oba kanala.
+* Podjela zvuka onemogućena: NVDA ne razdjeljuje zvuk.
 * NVDA u lijevom kanalu, a programi u desnom: NVDA će govoriti u lijevom kanalu, dok će drugi programi reproducirati svoje zvukove u desnom.
 * NVDA u lijevom kanalu a programi u oba kanala: NVDA će govoriti u lijevom kanalu, dok će se zvukovi reproducirati u oba kanala.
 
 Dostupno je više naprednih načina podjele u odabirnom okviru.
+Osim tih modusa, "NVDA u oba kanala i programi u oba kanala" prisiljava sve druge zvukove da budu preusmjereni u oba kanala.
+taj modus može se razlikovati od modusa "podjela zvuka onemogućena" u slučaju da druga obrada zvuka smeta.
+
 Imajte na umu da ova opcija ne radi kao mikser.
 Na primjer, ako program reproducira  glazbu u stereo formatu kada je način podjele zvuka postavljen na "NVDA u lijevom kanalu a programi u desnom", tada ćete čuti desni kanal pjesme, dok će lijevi kanal biti utišan.
 
 Ova opcija nije dostupna ako ste pokrenuli NVDA sa [isključenim Wasapi za izlaz zvuka](#WASAPI) in Advanced Settings.
 
 Imajte na umu da ako se NVDA sruši, glasnoća zvuka programa neće se vratiti na zadane vrijednosti, i ti programi će i dalje reproducirati zvuk samo u jednom kanalu.
-Kako biste to spriječili, molimo ponovno pokrenite NVDA.
+Kako biste to spriječili, molimo ponovno pokrenite NVDA i odaberite modus "NVDA u oba kanala i programi u oba kanala".
 
 ##### Prilagođavanje načina podjele zvuka {#CustomizeSoundSplitModes}
 
 Ovaj popis sa odabirnim okvirima omogućuje vam prilagođavanje koji će načini podjele zvuka biti dostupni pri prebacivanju uz pomoć prečaca `NVDA+alt+s`.
 Načini koji nisu odabrani su nedostupni na tom popisu.
-Podrazumjevano su dostupna tri modusa.
+Podrazumijevano su dostupna tri modusa.
 
 * Onemogućena podjela zvuka.
 * NVDA u lijevom kanalu a programi u desnom.
