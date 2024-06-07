@@ -494,57 +494,62 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _onReceive(self, data: bytes):
 		if self.isBulk:
-			# data contains the entire packet.
 			stream = BytesIO(data)
-			firstByte:bytes = data[0:1]
+			firstByte: bytes = data[0:1]
 			stream.seek(1)
 		else:
 			firstByte = data
-			# data only contained the first byte. Read the rest from the device.
 			stream = self._dev
 
 		# sometimes serial data is received in fragments.
 		# so accumulate data until it reaches 10 bytes.
-		if self._serialData:
-			self._serialData += data
-			if len(self._serialData) == 10:
-				firstByte = b"\xfa"
-			else:
-				return
+		if not self._accumulateSerialData(data):
+			return
 
-		if firstByte == b"\x1c":
+		if firstByte == b"\xfa":
+			self._processSerialData(firstByte, stream)
+		elif firstByte == b"\x1c":
 			# A device is identifying itself
 			deviceId: bytes = stream.read(2)
 			# When a device identifies itself, the packets ends with 0x1f
 			assert stream.read(1) == b"\x1f"
 			self._handleIdentification(deviceId)
-		elif firstByte == b"\xfa":
-			# serial data first received
-			if not self._serialData:
-				try:
-					# Command packets are ten bytes long
-					packet = firstByte + stream.read(9)
-				except Exception:
-					# remaining data will be received next onReceive
-					self._serialData = firstByte
-					return
-			else:
-				packet = self._serialData
-				self._serialData = b""
-
-			assert packet[2] == 0x01 # Fixed value
-			CHECKSUM_INDEX = 8
-			checksum: int = packet[CHECKSUM_INDEX]
-			assert packet[9] == 0xfb # Command End
-			calcCheckSum: int = 0xff & sum(
-				c for index, c in enumerate(packet) if(
-					index != CHECKSUM_INDEX)
-			)
-			assert(calcCheckSum == checksum)
-			self._handlePacket(packet)
 		else:
-			log.debug("Unknown first byte received: 0x%x"%ord(firstByte))
+			log.debug("Unknown first byte received: 0x%x" % ord(firstByte))
 			return
+
+	def _accumulateSerialData(self, data: bytes) -> bool:
+		if self._serialData:
+			self._serialData += data
+			if len(self._serialData) == 10:
+				return True
+			else:
+				return False
+		return True
+
+	def _processSerialData(self, firstByte: bytes, stream):
+		# serial data first received
+		if not self._serialData:
+			try:
+				# Command packets are ten bytes long
+				packet = firstByte + stream.read(9)
+			except Exception:
+				# remaining data will be received next onReceive
+				self._serialData = firstByte
+				return
+		else:
+			packet = self._serialData
+			self._serialData = b""
+		
+		assert packet[2] == 0x01  # Fixed value
+		CHECKSUM_INDEX = 8
+		checksum: int = packet[CHECKSUM_INDEX]
+		assert packet[9] == 0xfb  # Command End
+		calcCheckSum: int = 0xff & sum(
+			c for index, c in enumerate(packet) if index != CHECKSUM_INDEX
+		)
+		assert calcCheckSum == checksum
+		self._handlePacket(packet)
 
 	def _sendPacket(
 			self,
