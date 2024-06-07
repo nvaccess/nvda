@@ -23,10 +23,13 @@ reviews:
       instructions: "
       Focus on code smells, logic errors, edge cases, missing test cases, security flaws and serious issues.
       Avoid commenting on minor issues such as linting, formatting and style issues.
-      _, pgettext, ngettext, and ngettext is defined globally, errors for this being undefined can be ignored.
       This project uses tabs instead of spaces, do not suggest usage of spaces over tabs.
       Are there any 'red flags' in this code that might warrant closer investigation from a security standpoint?
       Explain what makes them suspicious.
+      "
+    - path: "**/*.py"
+      instructions: "
+      _, pgettext, ngettext, and ngettext are defined globally, errors for this being undefined can be ignored.
       "
     - path: "**/*.md"
       instructions: "
