@@ -7,9 +7,9 @@ When you would like a review, mark the PR as "ready for review".
 See https://github.com/nvaccess/nvda/blob/master/.github/CONTRIBUTING.md.
 -->
 
-### AI high-level summary
 <!-- Please keep the following -->
 @coderabbitai summary
+
 ### Link to issue number:
 
 ### Summary of the issue:
