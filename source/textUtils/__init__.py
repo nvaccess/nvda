@@ -13,7 +13,7 @@ import locale
 import unicodedata
 from abc import ABCMeta, abstractmethod, abstractproperty
 from functools import cached_property
-from typing import Optional, Tuple, Type
+from typing import Generator, Optional, Tuple, Type
 
 from logHandler import log
 
