@@ -31,14 +31,16 @@ def initialize() -> None:
 		except COMError:
 			log.exception("Could not initialize audio session manager")
 			return
+		log.debug("Initializing utils")
 		utils.initialize()
+		log.debug("Initializing appsVolume")
 		appsVolume.initialize()
+		log.debug("Initializing soundSplit")
 		soundSplit.initialize()
 		global audioUtilitiesInitialized
 		audioUtilitiesInitialized = True
 	else:
 		log.debug("Cannot initialize audio utilities as WASAPI is disabled")
-
 
 @atexit.register
 def terminate():
