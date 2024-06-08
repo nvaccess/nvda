@@ -456,7 +456,7 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 			normOffset += len(normPart)
 		self.encoded = normalized
 
-	def _processReordered(self, a: str, b: str):
+	def _processReordered(self, a: str, b: str) -> Generator[int, None, None]:
 		""""Yields the offset in b of every character in a"""
 		for char in a:
 			index = b.find(char)
