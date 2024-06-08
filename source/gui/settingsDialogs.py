@@ -2781,7 +2781,12 @@ class AudioPanel(SettingsPanel):
 			maxValue=100
 		)
 		self.bindHelpEvent("OtherAppVolume", self.appSoundVolSlider)
-		self.appSoundVolSlider.SetValue(config.conf["audio"]["applicationsSoundVolume"])
+		volume = config.conf["audio"]["applicationsSoundVolume"]
+		if 0 <= volume <= 100:
+		    self.appSoundVolSlider.SetValue(volume)
+		else:
+		    log.error("Invalid volume level: {}", volume)
+		    self.appSoundVolSlider.SetValue(50)  # Set to default or previous valid value
 
 		# Translators: This is a label for the applications volume adjuster combo box in settings.
 		label = _("&Application volume adjuster mode")
@@ -2793,7 +2798,6 @@ class AudioPanel(SettingsPanel):
 		)
 		self.appVolAdjusterCombo.Bind(wx.EVT_CHOICE, self._onSoundVolChange)
 		self.bindHelpEvent("AppsVolumeAdjusterStatus", self.appVolAdjusterCombo)
-
 		self._onSoundVolChange(None)
 
 		audioAwakeTimeLabelText = _(
