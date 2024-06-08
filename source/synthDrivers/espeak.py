@@ -24,6 +24,7 @@ from logHandler import log
 
 from speech.types import SpeechSequence
 from speech.commands import (
+	BaseProsodyCommand,
 	IndexCommand,
 	CharacterModeCommand,
 	LangChangeCommand,
@@ -312,10 +313,40 @@ class SynthDriver(SynthDriver):
 			voiceChangeXML += "<voice>"
 		return voiceChangeXML
 
-	# C901 'speak' is too complex
-	# Note: when working on speak, look for opportunities to simplify
-	# and move logic out into smaller helper functions.
-	def speak(self, speechSequence: SpeechSequence):  # noqa: C901
+	def _handleProsodyCommands(
+			self,
+			prosody: Dict[str, int],
+			item: BaseProsodyCommand
+	) -> str:
+		textList = []
+		if prosody:
+			# Close previous prosody tag.
+			textList.append("</prosody>")
+
+		attr = self.PROSODY_ATTRS[type(item)]
+
+		if item.multiplier == 1 and item.offset == 0:
+			# Default values, returning to normal.
+			try:
+				del prosody[attr]
+			except KeyError:
+				pass
+		elif item.offset != 0:
+			prosody[attr] = int(item.offset)
+		else:
+			prosody[attr] = int(item.multiplier * 100)
+
+		if not prosody:
+			return ""
+
+		textList.append("<prosody")
+		for attr, val in prosody.items():
+			textList.append(f' {attr}="{val}%"')
+		textList.append(">")
+
+		return "".join(textList)
+
+	def speak(self, speechSequence: SpeechSequence):
 		textList: List[str] = []
 		langChanged = False
 		prosody: Dict[str, int] = {}
@@ -336,24 +367,7 @@ class SynthDriver(SynthDriver):
 			elif isinstance(item, BreakCommand):
 				textList.append(f'<break time="{item.time}ms" />')
 			elif type(item) in self.PROSODY_ATTRS:
-				if prosody:
-					# Close previous prosody tag.
-					textList.append("</prosody>")
-				attr=self.PROSODY_ATTRS[type(item)]
-				if item.multiplier==1:
-					# Returning to normal.
-					try:
-						del prosody[attr]
-					except KeyError:
-						pass
-				else:
-					prosody[attr]=int(item.multiplier* 100)
-				if not prosody:
-					continue
-				textList.append("<prosody")
-				for attr,val in prosody.items():
-					textList.append(' %s="%d%%"'%(attr,val))
-				textList.append(">")
+				textList.append(self._handleProsodyCommands(prosody, item))
 			elif isinstance(item, PhonemeCommand):
 				# We can't use str.translate because we want to reject unknown characters.
 				try:
