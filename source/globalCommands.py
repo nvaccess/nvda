@@ -267,6 +267,46 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		description=_(
+			# Translators: Input help mode message for scroll up at the mouse position command.
+			"Scroll up at the mouse position"
+		),
+		category=SCRCAT_MOUSE
+	)
+	def script_mouseScrollUp(self, gesture: "inputCore.InputGesture") -> None:
+		mouseHandler.scrollMouseWheel(winUser.WHEEL_DELTA, isVertical=True)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for scroll down at the mouse position command.
+			"Scroll down at the mouse position"
+		),
+		category=SCRCAT_MOUSE
+	)
+	def script_mouseScrollDown(self, gesture: "inputCore.InputGesture") -> None:
+		mouseHandler.scrollMouseWheel(-winUser.WHEEL_DELTA, isVertical=True)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for scroll left at the mouse position command.
+			"Scroll left at the mouse position"
+		),
+		category=SCRCAT_MOUSE
+	)
+	def script_mouseScrollLeft(self, gesture: "inputCore.InputGesture") -> None:
+		mouseHandler.scrollMouseWheel(-winUser.WHEEL_DELTA, isVertical=False)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for scroll right at the mouse position command.
+			"Scroll right at the mouse position"
+		),
+		category=SCRCAT_MOUSE
+	)
+	def script_mouseScrollRight(self, gesture: "inputCore.InputGesture") -> None:
+		mouseHandler.scrollMouseWheel(winUser.WHEEL_DELTA, isVertical=False)
+
+	@script(
+		description=_(
 			# Translators: Input help mode message for report current selection command.
 			"Announces the current selection in edit controls and documents. "
 			"Pressing twice spells this information. "

@@ -11,8 +11,8 @@ complexSymbols:
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
-# Series of dots used for visual presentation, e.g. in table of contents
-padding .	\.{4,}
+# Serija tačaka koja se koristi za vizuelnu prezentaciju, na primer u sadržaju
+multiple .	\.{4,}
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
@@ -27,7 +27,7 @@ symbols:
 ? sentence ending	Upitnik	all	always
 ; phrase ending	tačkazarez	most	always
 : phrase ending	Dve tačke	most	always
-padding .	Niz tačaka	all	always
+multiple .	više tačaka	all	always
 decimal point		none	always
 in-word '	Apostrof	all	norep
 negative number	minus	none	norep

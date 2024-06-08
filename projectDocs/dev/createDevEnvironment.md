@@ -62,6 +62,12 @@ To replicate the production build environment, use the 3.11.x minor version of P
 		* MSVC v143 - VS 2022 C++ x64/x86 build tools
 		* C++ ATL for v143 build tools (x86 & x64)
 		* C++ ATL for v143 build tools (ARM64/ARM64EC)
+* When you are using Visual Studio Code as your integrated development environment of preference, you can make use of our [prepopulated workspace configuration](https://github.com/nvaccess/vscode-nvda/) for [Visual Studio Code](https://code.visualstudio.com/).
+	While this VSCode project is not included as a submodule in the NVDA repository, you can easily check out the workspace configuration in your repository by executing the following from the root of the repository.
+
+	```sh
+	git clone https://github.com/nvaccess/vscode-nvda.git .vscode
+	```
 
 ### Git Submodules
 Some of the dependencies are contained in Git submodules.
@@ -93,12 +99,7 @@ Additionally, the following build time dependencies are included in the miscDeps
 
 The following dependencies aren't needed by most people, and are not included in Git submodules:
 * To generate [developer documentation for nvdaHelper](#building-nvdahelper-developer-documentation): [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15:
-* When you are using Visual Studio Code as your integrated development environment of preference, you can make use of our [prepopulated workspace configuration](https://github.com/nvaccess/vscode-nvda/) for [Visual Studio Code](https://code.visualstudio.com/).
-	While this VSCode project is not included as a submodule in the NVDA repository, you can easily check out the workspace configuration in your repository by executing the following from the root of the repository.
 
-	```sh
-	git clone https://github.com/nvaccess/vscode-nvda.git .vscode
-	```
 
 ### Python dependencies
 NVDA and its build system also depend on an extensive list of Python packages. They are all listed with their specific versions in the requirements.txt file in the root of this repository. However, the build system takes care of fetching these itself when needed. These packages will be installed into an isolated Python virtual environment within this repository, and will not affect your system-wide set of packages.

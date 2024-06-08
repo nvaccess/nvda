@@ -12,9 +12,9 @@ Existem também novos comandos de navegação rápida, que permitem aos utilizad
 
 Foram adicionadas muitas novas funcionalidades braille e correcções de erros.
 Foi adicionado um novo modo braille denominado "Apresentar saída de voz".
-Quando activo, o ecrã braille mostra exatamente o que o NVDA falar.
+Quando activo, o dispositivo braille mostra exatamente o que o NVDA anuncia.
 Foi também adicionado suporte para os dispositivos Braille BrailleEdgeS2, BrailleEdgeS3.
-A LibLouis foi actualizada, adicionando novas tabelas Braille bielorrussas e ucranianas detalhadas (com indicação de letras maiúsculas), juntamente com uma tabela espanhola para leitura de textos gregos.
+LibLouis foi actualizada, adicionando novas tabelas Braille bielorrussas e ucranianas detalhadas (com indicação de letras maiúsculas), tabela para Laos e uma tabela espanhola para leitura de textos gregos.
 
 O eSpeak foi atualizado, adicionando o novo idioma Tigrinya.
 
@@ -24,7 +24,6 @@ Existem muitas correcções de erros menores para aplicações, tais como o Thun
 
 * Novos comandos de teclas:
   * Novo comando de navegação rápida `p` para saltar para o próximo/anterior parágrafo de texto no modo de navegação. (#15998, @mltony)
-  * Novos comandos de Navegação Rápida não atribuídos, que podem fazer o parágrafo de texto anterior no modo de navegação. (#15998, @mltony)
   * Novos comandos de Navegação Rápida não atribuídos, que podem ser utilizados para saltar para o seguinte e anterior:
     * figura (#10826)
     * parágrafo alinhado verticalmente (#15999, @mltony)
@@ -34,52 +33,53 @@ Existem muitas correcções de erros menores para aplicações, tais como o Thun
     * fórmula matemática (#16001, @mltony)
     * texto com o mesmo estilo (#16000, @mltony)
     * texto de estilo diferente (#16000, @mltony)
-  * Adicionados comandos para saltar primeiro, último, para a frente e para trás no anel de definições do sintetizador. (#13768, #16095, @rmcpantoja)
+  * Adicionados comandos para saltar para primeiro, último, a frente e para trás no anel de definições do sintetizador. (#13768, #16095, @rmcpantoja)
   * Definir a primeira e a última definição no anel de definições de sintetizador não tem nenhum gesto atribuído. (#13768)
   * Diminuir e aumentar a definição atual do anel de definições de sintetizador num passo maior (#13768):
     * Desktop: `NVDA+control+pageUp` ou `NVDA+control+pageDown`.
     * Laptop: `NVDA+controlo+shift+pageUp` ou `NVDA+controlo+shift+pageDown`.
-  * Adicionado um novo gesto de entrada não atribuído para alternar o relatório de figuras e legendas. (#10826, #14349)
+  * Adicionado um novo gesto de entrada não atribuído para alternar o anúncio de figuras e legendas. (#10826, #14349)
 * Braille:
   * Adicionado suporte para os dispositivos Braille BrailleEdgeS2 e BrailleEdgeS3. (#16033, #16279, @EdKweon)
   * Foi adicionado um novo modo Braille chamado "Apresentar saída de voz". (#15898, @Emil-18)
-    * Quando ativo, o dispositivo Braille mostra exatamente o que o NVDA fala.
+    * Quando activo, o dispositivo Braille mostra exatamente o que o NVDA fala.
     * Pode ser alternado pressionando `NVDA+alt+t`, ou a partir do diálogo de configurações braille.
 * Divisão de som: (#12985, @mltony)
   * Permite dividir os sons do NVDA em um canal (por exemplo, esquerdo) enquanto os sons de todos os outros aplicativos são colocados no outro canal (por exemplo, direito).
   * Pode ser alternado por `NVDA+alt+s`.
-  * O volume das outras aplicações pode ser ajustado por `NVDA+alt+pageUp` e `NVDA+alt+pageDown`. (#16052, @mltony)
-  * O som de outras aplicações pode ser silenciado com `NVDA+alt+delete`. (#16052, @mltony)
-* Reportar cabeçalhos de linhas e colunas é agora suportado em elementos HTML com conteúdo. (#14113)
-* Adicionada a opção para desativar o relatório de figuras e legendas nas definições de formatação do documento. (#10826, #14349)
+* O anúncio de cabeçalhos de linhas e colunas é agora suportado em elementos HTML com conteúdo. (#14113)
+* Adicionada a opção para desactivar o anúncio de figuras e legendas nas definições de formatação do documento. (#10826, #14349)
 * No Windows 11, o NVDA anunciará alertas de digitação por voz e acções sugeridas, incluindo a sugestão principal ao copiar dados como números de telefone para a área de transferência (Windows 11 2022 Update e posterior). (#16009, @josephsl)
-* O NVDA manterá o dispositivo de áudio activo depois de a fala parar, para evitar que o início da fala seguinte seja cortado, em alguns dispositivos de áudio, como auscultadores Bluetooth. (#14386, @jcsteh, @mltony)
+* O NVDA manterá o dispositivo de áudio aberto depois de a fala parar, para evitar que o início da fala seguinte seja cortado, em alguns dispositivos de áudio, como auscultadores Bluetooth. (#14386, @jcsteh, @mltony)
 * O HP Secure Browser é agora suportado. (#16377)
 
 ### Alterações
 
 * Loja de extras:
   * A versão mínima e a última versão testada do NVDA para um extra são agora apresentadas na área "outros detalhes". (#15776, @Nael-Sayegh)
-  * A ação de revisões da comunidade estará disponível e a página web de análises será apresentada no painel de detalhes, em todos os separadores da loja. (#16179, @nvdaes)
+  * A ação de revisões da comunidade estará disponível em todos os separadores da loja. (#16179, @nvdaes)
 * Actualizações de componentes:
-  * Actualização do tradutor LibLouis Braille para [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0). (#16259, @codeofdusk)
-    * Adicionadas novas tabelas detalhadas (com letras maiúsculas indicadas) de Braille bielorrusso e ucraniano, juntamente com uma tabela espanhola para ler textos gregos.
+  * Actualização do conversor LibLouis Braille para [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0). (#16259, @codeofdusk)
+    * Adicionadas novas tabelas detalhadas (com letras maiúsculas indicadas) de Braille bielorrusso e ucraniano;
+    * Nova tabela espanhola para ler textos gregos.
+    * Nova tabela para Lao Grau 1. (#16470)
   * O eSpeak NG foi atualizado para a versão 1.52-dev commit `cb62d93fd7`. (#15913)
     * Adicionado novo idioma Tigrinya. 
 * Alterados vários comandos para dispositivos BrailleSense para evitar conflitos com caracteres da tabela Braille francesa. (#15306)
   * `alt+seta esquerda` agora é mapeado para `dot2+dot7+espaço`
   * `alt+seta direita` agora é mapeada para `dot5+dot7+espaço`
-  * `alt+seta para cima` agora é mapeado para `dot2+dot3+dot7+espaço`
-  * `alt+downArrow` agora está mapeado para `dot5+dot6+dot7+espaço`
+  * `alt+seta acima` agora é mapeado para `dot2+dot3+dot7+espaço`
+  * `alt+seta abaixo` agora está mapeado para `dot5+dot6+dot7+espaço`
 * Os pontos de preenchimento normalmente usados em tabelas de conteúdo não são mais reportados em níveis baixos de pontuação. (#15845, @CyrilleB79)
 
 ### Correcções de erros
 
 * Correcções para Windows 11:
-  * O NVDA voltará a anunciar sugestões de entrada de teclado de hardware. (#16283, @josephsl)
+  * O NVDA volta a anunciar sugestões de entrada de teclado de hardware. (#16283, @josephsl)
   * Na Versão 24H2 (Atualização 2024 e Windows Server 2025), a interação do rato e do toque pode ser utilizada nas definições rápidas. (#16348, @josephsl)
 * Loja de extras:
   * Ao pressionar `ctrl+tab`, o foco move-se correctamente para o novo título do separador atual. (#14986, @ABuffEr)
+  * Se os ficheiros de cache não estiverem correctos o NVDA já não é reiniciado. (#16362, @nvdaes)
 * Correcções para navegadores baseados em Chromium quando usados com UIA:
   * Corrigidos bugs que faziam o NVDA travar. (#16393, #16394)
   * A tecla Backspace está agora a funcionar corretamente nos campos de início de sessão do Gmail. (#16395)
@@ -90,6 +90,8 @@ Existem muitas correcções de erros menores para aplicações, tais como o Thun
 * Corrigido um caso raro em que guardar a configuração podia falhar ao guardar todos os perfis. (#16343, @CyrilleB79)
 * Nos navegadores baseados no Firefox e no Chromium, o NVDA entrará corretamente no modo de foco ao premir enter quando posicionado numa lista de apresentação (ul /ol) dentro de conteúdo editável. (#16325)
 * A alteração do estado da coluna é automaticamente reportada ao selecionar colunas para apresentar na lista de mensagens do Thunderbird.(#16323)
+* A opção de linha de comando `-h`/`--help` volta a funcionar. (#16522, @XLTechie)
+* O suporte do NVDA para o software  de tradução Poedit, versão 3.4 ou superior, volta a funcionar correctamente ao traduzir idiomas com uma ou mais de duas formas plurais (por exemplo, Chinês e Polaco). (#16318)
 
 ### Alterações para programadores
 
