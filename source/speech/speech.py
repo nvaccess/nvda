@@ -357,7 +357,7 @@ def _getSpellingCharAddCapNotification(
 	:param capPitchChange: pitch offset to apply while spelling the currently spelled character.
 	:param beepForCapitals: indicates if a cap notification beep should be produced while spelling the currently
 	spelled character.
-	:param reportNormalized: indicates if 'normalized' should be reported
+	:param reportNormalized: Indicates if 'normalized' should be reported
 	along with the currently spelled character.
 	"""
 	if sayCapForCapitals:
@@ -403,11 +403,26 @@ def _getSpellingSpeechWithoutCharMode(
 		reportNormalizedForCharacterNavigation: bool = False,
 ) -> Generator[SequenceItemT, None, None]:
 	"""
-	@param fallbackToCharIfNoDescription: Only applies if useCharacterDescriptions is True.
-	If fallbackToCharIfNoDescription is True, and no character description is found,
-	the character itself will be announced. Otherwise, nothing will be spoken.
+	Processes text when spoken by character.
+	This doesn't take care of character mode (Option "Use spelling functionality").
+	:param text: The text to speak.
+		This is usually one character or a string containing a decomposite character (or glyph)
+	:param locale: The locale used to generate character descrptions, if applicable.
+	:param useCharacterDescriptions: Whether or not to use character descriptions,
+		e.g. speak "a" as "alpha".
+	:param sayCapForCapitals: Indicates if 'cap' should be reported
+		along with the currently spelled character.
+	:param capPitchChange: Pitch offset to apply while spelling the currently spelled character.
+	:param beepForCapitals: Indicates if a cap notification beep should be produced
+		while spelling the currently spelled character.
+	:param fallbackToCharIfNoDescription: Only applies if useCharacterDescriptions is True.
+		If fallbackToCharIfNoDescription is True, and no character description is found,
+		the character itself will be announced. Otherwise, nothing will be spoken.
+	:param unicodeNormalization: Whether to use Unicode normalization for the given text.
+	:param reportNormalizedForCharacterNavigation: When unicodeNormalization is true, indicates if 'normalized'
+		should be reported along with the currently spelled character.
+	:returns: A speech sequence generator.
 	"""
-	
 	defaultLanguage=getCurrentLanguage()
 	if not locale or (not config.conf['speech']['autoDialectSwitching'] and locale.split('_')[0]==defaultLanguage.split('_')[0]):
 		locale=defaultLanguage
