@@ -36,7 +36,6 @@ noCalculatorEntryAnnouncements = [
 	"Value2",
 ]
 
-
 class AppModule(appModuleHandler.AppModule):
 
 	_shouldAnnounceResult = False
