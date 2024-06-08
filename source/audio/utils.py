@@ -53,6 +53,7 @@ class _AudioSessionEventsListener(AudioSessionEvents):
 			self.onSessionTerminated()
 
 	def onSessionTerminated(self):
+		log.debug(f"Audio session for pid {self.pid} terminated")
 		self.callback().onSessionTerminated(self.audioSession)
 		self.unregister()
 		with self.callback()._lock:
@@ -121,15 +122,33 @@ class AudioSessionCallback(DummyAudioSessionCallback):
 	_audioSessionEventListeners: set[_AudioSessionEventsListener] = field(default_factory=set)
 
 	def onSessionUpdate(self, session: AudioSession) -> None:
+		"""
+		Callback function to be implemented by the customer.
+		Will be called for all existing sessions and newly created sessions.
+		"""
 		pass
 
 	def onSessionTerminated(self, session: AudioSession) -> None:
+		"""
+		Callback function to be implemented by the customer.
+		Will be called when each session is terminated or when unregister() method is called.
+		"""
 		pass
 
 	def register(self, applyToFuture: bool = True):
+		"""
+			Registers this callback.
+			This will internally call onSessionUpdate() for all current audio sessions.
+			Additionally if applyToFuture is True, it will also call onSessionUpdate() for all newly created sessions
+			until this callback is unregistered.
+		"""
 		_applyToAllAudioSessions(self, applyToFuture)
 
 	def unregister(self, runTerminators: bool = True):
+		"""
+			Unregisters this callback.
+			If runTerminators is True, it will also trigger onSessionTerminated for all current audio sessions.
+		"""
 		if self._audioSessionNotification is not None:
 			_audioSessionManager.UnregisterSessionNotification(self._audioSessionNotification)
 		with self._lock:

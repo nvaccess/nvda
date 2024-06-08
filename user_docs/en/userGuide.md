@@ -2370,6 +2370,7 @@ This option is not available if you have started NVDA with [WASAPI disabled for 
 
 This combo box allows you to select applications volume adjuster status.
 Possible values are:
+
 * Disabled: NVDA doesn't interfere with volume levels of other applications.
 * Enabled: volume of other applications can be adjusted via [other applications volume slider](#OtherAppVolume).
 * Muted: all other applications are muted.

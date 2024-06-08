@@ -121,6 +121,7 @@ def _adjustAppsVolume(
 		return
 	volume += volumeAdjustment
 	volume = max(0, min(100, volume))
+	log.debug(f"Adjusting applications volume by {volumeAdjustment}% to {volume}%")
 	config.conf["audio"]["applicationsSoundVolume"] = volume
 
 	# We skip running terminators here to avoid application volume spiking to 100% for a split second.
