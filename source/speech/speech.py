@@ -167,6 +167,15 @@ def processText(
 		symbolLevel: characterProcessing.SymbolLevel,
 		normalize: bool = False
 ) -> str:
+	"""
+	Processes text for symbol pronunciation, speech dictionaries and Unicode normalization.
+	:param locale: The language the given text is in, passed for symbol pronunciation.
+	:param text: The text to process.
+	:param symbolLevel: The verbosity level used for symbol pronunciation.
+	:param normalize: Whether to apply Unicode normalization to the text
+		after it has been processed for symbol pronunciation and speech dictionaries.
+	:returns: The processed text
+	"""
 	text = speechDictHandler.processText(text)
 	text = characterProcessing.processSpeechSymbols(locale, text, symbolLevel)
 	text = RE_CONVERT_WHITESPACE.sub(" ", text)
