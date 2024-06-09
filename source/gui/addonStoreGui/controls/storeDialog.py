@@ -319,7 +319,13 @@ class AddonStoreDialog(SettingsDialog):
 			_StatusFilterKey.AVAILABLE,
 			_StatusFilterKey.UPDATE,
 		}:
-			self._storeVM._filterChannelKey = Channel.STABLE
+			if self._storeVM._filteredStatusKey == _StatusFilterKey.UPDATE and (
+				self._storeVM._installedAddons[Channel.DEV]
+				or self._storeVM._installedAddons[Channel.BETA]
+			):
+				self._storeVM._filterChannelKey = Channel.ALL
+			else:
+				self._storeVM._filterChannelKey = Channel.STABLE
 			self.enabledFilterCtrl.Hide()
 			self.enabledFilterCtrl.Disable()
 			self.includeIncompatibleCtrl.Enable()

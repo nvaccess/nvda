@@ -40,7 +40,7 @@ Glavne karakteristike su:
 ### Sistemski zahtevi {#SystemRequirements}
 
 * Operativni sistemi: Sve 32-bitne i 64-bitne verzije Windowsa 8.1, Windowsa 10, Windowsa 11 i sve serverske operativne sisteme počevši od Windows Servera 2012 R2.
-    * AMD64 i ARM64 Windows verzije su podržane.
+  * AMD64 i ARM64 Windows verzije su podržane.
 * Barem 150 MB memorijskog prostora.
 
 ### Internacionalizacija {#Internationalization}
@@ -82,7 +82,7 @@ Za detalje o izuzecima, pristupite dokumentu licence u NVDA meniju u sekciji "po
 ## NVDA vodič za brz početak {#NVDAQuickStartGuide}
 
 Ovaj vodič za brz početak sadrži tri glavne sekcije: preuzimanje, početna podešavanja i pokretanje NVDA.
-Njih prate informacije o menjanju podešavanja, učestvovanju u zajednici i dobijanju pomoći.
+Njih prate informacije o menjanju podešavanja, korišćenju dodataka, učestvovanju u zajednici i dobijanju pomoći.
 Informacije u ovom vodiču su sažeti delovi ostatka korisničkog uputstva.
 Molimo pogledajte potpuno korisničko uputstvo za detaljnije informacije o svakoj temi.
 
@@ -161,7 +161,7 @@ One su podrazumevano označene.
 Ako želite, pritisnite `tab` i `razmak` da promenite bilo koju od ovih opcija, ili ih ostavite na podrazumevanim vrednostima.
 1. Pritisnite `enter` da nastavite.
 1. Windows dijalog "Kontrole korisničkog naloga (KKN)" će se pojaviti i upitaće vas "Da li želite da dozvolite ovoj aplikaciji da izvrši promene na vašem računaru?".
-1. Pritisnite `alt+D` na Srpskoj ili `Alt+Y` na Engleskoj verziji Windowsa da dozvolite promene.
+1. Pritisnite `alt+Y` da dozvolite promene.
 1. Traka napredovanja će se popunjavati dok se NVDA instalira.
 U toku ovog procesa NVDA će reprodukovati zvučne signale koji povećavaju visinu.
 Ovaj proces je često brz i možda se neće ni primetiti.
@@ -280,6 +280,78 @@ Da otvorite NVDA meni, pritisnite `NVDA+n`.
 Da direktno otvorite NVDA dijalog opštih podešavanja, pritisnite `NVDA+kontrol+g`.
 Mnogi ekrani za podešavanja imaju prečice da ih direktno otvorite, kao što su `NVDA+control+s` za sintetizatore, ili `NVDA+control+v` za druga podešavanja glasa.
 
+### Dodaci {#Addons}
+Dodaci su programi koje nude nove ili promenjene funkcije za NVDA.
+Dodatke razvija NVDA zajednica, ili eksterne kompanije i dodaci nisu povezani sa NVAccess organizacijom.
+Kao i sa bilo kojim softverom, važno je verovati programeru dodatka pre nego što ga koristite.
+Molimo pročitajte sekciju [instaliranje dodataka](#AddonStoreInstalling) kako biste saznali načine da verifikujete dodatak pre nego što ga instalirate.
+
+Prvi put kada se prodavnica dodataka otvori, NVDA će prikazati upozorenje o dodacima.
+Dodatke ne proverava NV Access i oni mogu imati neograničenu funkcionalnost i pristup informacijama.
+Pritisnite `Razmak` ako ste pročitali upozorenje i ne želite da ga vidite sledeći put.
+Pritisnite taster `Tab` kako biste došli do tastera "U redu", a zatim `enter` da biste prihvatili upozorenje i nastavili do prodavnice dodataka.
+Sekcija korisničkog uputstva "[Dodaci i prodavnica dodataka](#AddonsManager)" sadrži informacije o svakoj funkciji prodavnice dodataka.
+
+Prodavnica dodataka je dostupna iz menija alati.
+Pritisnite `NVDA+n` da biste otvorili NVDA meni, a zatim `a` za alate, zatim `p` za prodavnicu dodataka.
+Kada se prodavnica dodataka otvori, prikazuje "Dostupne dodatke" ako nemate instaliranih dodataka.
+Kada imate instaliranih dodataka, prodavnica dodataka će se otvoriti na kartici "Instalirani dodaci".
+
+#### Dostupni dodaci {#AvailableAddons}
+Kada se prozor prvi put otvori, dodaci će se možda učitavati nekoliko sekundi.
+NVDA će pročitati ime prvog dodatka nakon što se završi učitavanje liste dodataka.
+Dostupni dodaci su abecedno poređani u listi sa više kolona.
+Kako biste pregledali listu i pronašli informacije o određenom dodatku:
+
+1. Koristite strelice ili pritisnite prvo slovo imena dodatka kako biste se kretali po listi.
+1. Pritisnite `tab` jednom kako biste se prebacili na opis dodatka koji je trenutno izabran.
+1. Koristite [tastere za čitanje](#ReadingText) ili strelice da biste pročitali ceo opis.
+1. Pritisnite `tab` kako biste došli do tastera "Radnje", koji se može koristiti da instalirate dodatak, pored drugih dostupnih radnji.
+1. Pritisnite `tab` kako biste došli do "Drugih detalja", koji prikazuju detalje kao što su izdavača, verziju i početnu stranicu.
+1. Da biste se vratili na listu dodataka, pritisnite `alt+D`, ili `šift+tab` dok se ne vratite na listu "Dostupnih dodataka".
+
+#### Pretraga dodataka {#SearchingForAddons}
+Pored pregledanja svih dostupnih dodataka, moguće je izdvojiti prikazane dodatke.
+Da biste pretražili, pritisnite `alt+p` da se prebacite na polje "pretrage" i upišite tekst koji želite da pretražite.
+Polje pretrage pretražuje podudaranja u poljima  za ID dodatka, prikazano ime, izdavača, autora ili opis.
+Lista se osvežava dok upisujete termine pretrage.
+Nakon što završite, pritisnite `tab` da pređete na listu izdvojenih dodataka i pregledajte rezultate.
+
+#### Instaliranje dodataka {#InstallingAddons}
+
+Da biste instalirali dodatak:
+
+1. Dok ste fokusirani na dodatak koji želite da instalirate, pritisnite `enter`.
+1. Otvoriće se meni radnji sa dostupnim radnjama; prva radnja je "Instaliraj".
+1. Da biste instalirali dodatak, pritisnite `i` ili se krećite `strelicomDole` do opcije "Instaliraj" i pritisnite `enter`.
+1. Fokus se vraća na dodatak u listi i NVDA će pročitati detalje o dodatku.
+1. Informacije o "statusu" koje NVDA prijavljuje se menjaju iz "Dostupan" u "Preuzimanje".
+1. Nakon što se završi preuzimanje dodatka, status će se promeniti u "Preuzet. Čeka na instalaciju".
+1. Ponovite proces za svaki drugi dodatak koji želite da instalirate u isto vreme.
+1. Nakon što završite, pritisnite `tab` dok se ne fokusirate na dugme "Zatvori", a zatim pritisnite `enter`.
+1. Preuzeti dodaci će se instalirati nakno što se zatvori prodavnica dodataka.
+U toku procesa instalacije, dodaci će možda prikazati dijaloge na koje morate da odgovorite.
+1. Nakon što se dodaci instaliraju, dijalog će se pojaviti koji vas obaveštava da su promene izvršene i da morate ponovo da pokrenete NVDA kako bi se završilo instaliranje dodataka.
+1. Pritisnite `enter` da ponovo pokrenete NVDA.
+
+#### Upravljanje instaliranim dodacima {#ManagingInstalledAddons}
+Pritisnite `kontrol+tab` da biste se kretali kroz kartice prodavnice dodataka.
+Kartice su: "Instalirani dodaci", "Dodaci koji imaju ažuriranja", "Dostupni dodaci" i "Instalirani nekompatibilni dodaci".
+Kartice su poređane slično, sa listom dodataka, panelom koji pruža više detalja o izabranom dodatku i tasterom koji vam omogućava da izvršite radnje za izabrani dodatak.
+Meni radnji instaliranih dodataka uključuje "Onemogući" i "Ukloni" umesto "Instaliraj".
+Onemogućavanje dodatka neće učitavati dodatak kada se NVDA pokrene, ali on ostaje instaliran.
+Da biste ponovo omogućili dodatak koji je onemogućen, aktivirajte "Omogući" iz menija radnji.
+Nakon što omogućite, onemogućite, ili uklonite dodatke, biće zahtevano da ponovo pokrenete NVDA kada zatvorite prodavnicu dodataka.
+Ove promene će se primeniti tek nakon što se NVDA ponovo pokrene.
+Imajte na umu da u prozoru prodavnice dodataka `escape` radi na isti način kao i dugme za zatvaranje.
+
+#### Ažuriranje dodataka {#UpdatingAddons}
+Kada je dostupno ažuriranje za dodatak koji je instaliran, biće prikazano na kartici "Dodaci koji se mogu ažurirati".
+Pritisnite `kontrol+tab` da se prebacite na ovu karticu bilo gde iz prodavnice dodataka.
+Status dodatka će biti prikazan kao "Dostupno ažuriranje".
+Lista će prikazati trenutno instaliranu verziju i dostupnu verziju.
+Pritisnite `enter` na dodatku da otvorite listu radnji; izaberite "Ažuriraj".
+
 ### Zajednica {#Community}
 
 NVDA ima aktivnu zajednicu korisnika.
@@ -361,7 +433,7 @@ Ako ste zatvorili ovaj dijalog ili ste instalirali NVDA, Izaberite opciju naprav
 Dijalog koji se otvori nakon toga vam omogućava izbor gde prenosna kopija treba da bude napravljena.
 Ovo može biti lokacija na hard disku ili nekim drugim prenosnim medijima.
 Tu takođe imate opciju koja bira da li treba kopirati trenutna podešavanja u prenosnu kopiju.
- Ova opcija je dostupna samo kada se pravi prenosna kopija iz instalirane kopije, ne i kada se pravi iz preuzete datoteke.
+Ova opcija je dostupna samo kada se pravi prenosna kopija iz instalirane kopije, ne i kada se pravi iz preuzete datoteke.
 Aktiviranje dugmeta nastavi pravi prenosnu kopiju.
 Nakon što se pravljenje završi, poruka će se pojaviti koja će vas obavestiti da je bilo uspešno.
 Pritisnite u redu da zatvorite ovaj dijalog.
@@ -1141,58 +1213,58 @@ Kako bi što je više informacija moguće stalo na brajev red, sledeće skraćen
 
 | Skraćenica |Vrsta kontrole|
 |---|---|
-|app |Aplikacija|
-|art |članak|
-|bqt |Citat|
-|btn |Dugme|
-|drbtn |Dugme padajućeg menija|
-|spnbtn |Kružno dugme|
-|splbtn |Dugme za razdvajanje|
-|tgbtn |Dugme prekidača|
-|cap |naslov|
-|cbo |Izborni okvir|
-|chk |Izborno polje|
+|apl |Aplikacija|
+|čla |članak|
+|cit |Citat|
+|dgm |Dugme|
+|dgmmen |Dugme padajućeg menija|
+|krdgm |Kružno dugme|
+|dgmrzdv |Dugme za razdvajanje|
+|dgmprek |Dugme prekidača|
+|nassl |naslov slike|
+|izbo |Izborni okvir|
+|izbp |Izborno polje|
 |dlg |dialog|
-|doc |Dokument|
-|edt |Polje za unos teksta|
-|pwdedt |Polje za unos lozinke|
-|Umetnuti |Umetnuti objekat|
-|enote |Završna napomena|
+|dok |Dokument|
+|uređ |Polje za uređivanje|
+|lozuređ |Polje za unos lozinke|
+|umet |Umetnuti objekat|
+|znapom |Završna napomena|
 |fig |Figura|
 |fnote |Fusnote|
-|gra |Slika|
+|sli |Slika|
 |grp |Grupisanje|
-|hN |Naslov na nivou n, na primer h1, h2.|
-|hlp |Pomoćni balon|
-|lmk |Orjentir|
+|nN |Naslov na nivou n, na primer n1, n2.|
+|pom |Pomoćni balon|
+|orj |Orjentir|
 |lnk |link|
 |lst |Lista|
-|vlnk |Posećen link|
-|mnu |Meni|
-|mnubar |Traka menija|
-|mnubtn |Dugme menija|
-|mnuitem |Stavka menija|
+|poslnk |Posećen link|
+|men |Meni|
+|trkmen |Traka menija|
+|dgmmen |Dugme menija|
+|stmen |Stavka menija|
 |pnl |panel|
-|prgbar |Traka napredovanja|
-|bsyind |Zauzet pokazivač|
-|rbtn |radio dugme|
-|scrlbar |Klizna traka|
-|sect |Sekcija|
-|stbar |Statusna traka|
-|tabctl |Kontrola kartice|
+|traknapr |Traka napredovanja|
+|zauzpok |Zauzet pokazivač|
+|rdgm |radio dugme|
+|klitrak |Klizna traka|
+|odelj |Odeljak|
+|sttrak |Statusna traka|
+|kontkart |Kontrola kartice|
 |tbl |Tabela|
-|cN |kolona tabele sa brojem n, na primer c1, c2.|
+|kN |kolona tabele sa brojem n, na primer k1, k2.|
 |rN |Red tabele sa brojem n, na primer r1, r2.|
 |term |terminal|
-|tlbar |Traka sa alatima|
-|tltip |Opis alata|
-|tv |Prikaz stabla|
-|tvbtn |Dugme prikaza stabla|
-|tvitem |Stavka prikaza stabla|
-|lv N |Stavka prikaza stabla na nivou N|
-|wnd |Prozor|
+|altrak |Traka sa alatima|
+|opisal |Opis alata|
+|ps |Prikaz stabla|
+|dgmps |Dugme prikaza stabla|
+|psstav |Stavka prikaza stabla|
+|nv N |Stavka prikaza stabla na nivou N|
+|prz |Prozor|
 |⠤⠤⠤⠤⠤ |separator|
-|mrkd |Obeležen sadržaj|
+|obel |Obeležen sadržaj|
 
 Sledeći pokazivači stanja su takođe definisani:
 
@@ -1207,31 +1279,31 @@ Sledeći pokazivači stanja su takođe definisani:
 |- |Prikazano kada se objekat(na primer stavka prikaza stabla) može skupiti|
 |+ |Prikazano kada se objekat(na primer stavka prikaza stabla) može proširiti|
 |*** |Prikazano kada naiđete na zaštićen dokument ili kontrolu|
-|clk |Prikazano kada se na objekat može kliknuti|
-|cmnt |Prikazano kada postoji komentar za ćeliju u tabeli ili deo teksta u dokumentu|
+|klik |Prikazano kada se na objekat može kliknuti|
+|komt |Prikazano kada postoji komentar za ćeliju u tabeli ili deo teksta u dokumentu|
 |frml |Prikazano kada postoji formula u ćeliji tabele|
 |Neispravan |Prikazano kada dođe do neispravnog unosa|
-|ldesc |Prikazano kada objekat (obično slika) ima dug opis|
-|mln |Prikazano kada polje za unos teksta dozvoljava unos više redova na primer polja za unos komentara na sajtovima|
-|req |Prikazano kada je polje za unos obavezno|
-|ro |Prikazano kada je objekat(na primer polje za unos teksta) samo za čitanje|
-|sel |Prikazano kada je objekat izabran|
-|nsel |Prikazano kada objekat nije izabran|
-|sorted asc |Prikazano kada je objekat sortiran uzlazno|
-|sorted desc |Prikazano kada je objekat sortiran silazno|
-|submnu |Prikazano kada objekat ima dodatni prozor(obično podmeni)|
+|dugop |Prikazano kada objekat (obično slika) ima dug opis|
+|višn |Prikazano kada polje za unos teksta dozvoljava unos više redova na primer polja za unos komentara na sajtovima|
+|zaht |Prikazano kada je polje za unos obavezno|
+|čit |Prikazano kada je objekat(na primer polje za unos teksta) samo za čitanje|
+|izab |Prikazano kada je objekat izabran|
+|nizab |Prikazano kada objekat nije izabran|
+|sortir uz |Prikazano kada je objekat sortiran uzlazno|
+|sortir si |Prikazano kada je objekat sortiran silazno|
+|podmen |Prikazano kada objekat ima dodatni prozor(obično podmeni)|
 
 Takođe, sledeće skraćenice za orjentire su definisane:
 
 | Skraćenica |Orjentir|
 |---|---|
-|bnnr |baner|
-|cinf |Informacije o sadržaju|
-|cmpl |Dodatni|
+|bnr |baner|
+|infs |Informacije o sadržaju|
+|dodtn |Dodatni|
 |form |Formular|
-|main |Glavni|
+|glavn |Glavni|
 |navi |Navigacija|
-|srch |Pretraga|
+|pretr |Pretraga|
 |rgn |region|
 
 ### Brajev unos {#BrailleInput}
@@ -1358,7 +1430,7 @@ NVDA pruža određene dodatne karakteristike za neke aplikacije koje ili omoguć
 #### Automatsko čitanje zaglavlja kolona i redova {#WordAutomaticColumnAndRowHeaderReading}
 
 NVDA može automatski čitati zaglavlja redova i kolona tabela u programu Microsoft Word.
- Ovo zahteva da opcija prijavi zaglavlja redova/kolona iz kategorije formatiranje dokumenta, koja se nalazi u [NVDA podešavanjima](#NVDASettings) bude uključena.
+Ovo zahteva da opcija prijavi zaglavlja redova/kolona iz kategorije formatiranje dokumenta, koja se nalazi u [NVDA podešavanjima](#NVDASettings) bude uključena.
 
 Ako koristite [UIA za pristup Word dokumentima](#MSWordUIA), što je podrazumevano podešavanje u novijim Word i Windows verzijama, ćelije prvog reda će automatski biti smatrane zaglavljima kolone; slično tome, ćelije prve kolone će automatski biti smatrane zaglavljima redova.
 
@@ -1387,8 +1459,8 @@ Za dodatne informacije o režimu pretraživanja i brzoj navigaciji, pogledajte [
 
 <!-- KC:beginInclude -->
 Dok ste u režimu pretraživanja u programu Microsoft Word, možete pristupiti listi elemenata komandom NVDA+f7.
-Lista elemenata može prikazati naslove, linkove, napomene (što uključuje komentare i praćenje izmena) i greške(trenutno ograničeno na greške u pravopisu).
 <!-- KC:endInclude -->
+Lista elemenata može prikazati naslove, linkove, napomene (što uključuje komentare i praćenje izmena) i greške(trenutno ograničeno na greške u pravopisu).
 
 #### Prijavljivanje komentara {#WordReportingComments}
 
@@ -2200,23 +2272,11 @@ Ovaj klizač vam dozvoljava da podesite jačinu NVDA zvukova i  pištanja.
 Ovo podešavanje se primenjuje samo kada je opcija "Jačina NVDA zvukova prati jačinu glasa" onemogućena.
 Ova opcija nije dostupna ako je NVDA pokrenut sa onemogućenom [WASAPI opcijom za zvučni izlaz](#WASAPI) u naprednim podešavanjima.
 
-##### Vreme tokom kojeg treba održavati zvučnu kartu budnom nakon govora {#AudioAwakeTime}
-
-Ovo polje za uređivanje određuje koliko dugo će NVDA održavati zvučnu kartu budnom nakon što se govor završi.
-Ovo vam dozvoljava da NVDA izbegne određene greške u govoru kao što su odsečeni delovi reči.
-Ovo se može desiti usled toga što zvučne karte (posebno Bluetooth i bežični uređaji) ulaze u stendbaj režim.
-Ovo takođe može pomoći u drugim situacijama, kao što su korišćenje programa NVDA u virtuelnoj mašini (nna primer Citrix Virtual Desktop), ili na nekim laptop računarima.
-
-Niske vrednosti će možda izazvati da se početak zvuka iseče češće, budući da će uređaj možda prebrzo ući u stendbaj režim, što će izazvati da se početak sledećeg izgovorenog teksta iseče.
-Podešavanje previsoke vrednosti će možda izazvati da se baterija zvučne karte brže potroši, budući da uređaj ostaje aktivan duže a ne reprodukuje nikakve zvukove.
-
-Možete podesiti vreme na nula kako biste onemogućili ovu funkciju.
-
 ##### Razdvajanje zvuka {#SelectSoundSplitMode}
 
 Funkcija razdvajanja zvuka dozvoljava korisnicima da iskoriste stereo mogućnosti zvučnih uređaja, kao što su slušalice ili zvučnici.
 Razdvajanje zvuka dozvoljava da NVDA zvukovi pređu na jedan kanal (na primer levi) a sve druge aplikacije reprodukuju zvukove na drugom kanalu (na primer desnom).
-Razdvajanje zvukova je podrazumevano onemogućeno, što znači da će sve aplikacije uključujući NVDA reprodukovati zvukove na levom i desnom kanalu.
+Razdvajanje zvukova je podrazumevano onemogućeno.
 Prečica dozvoljava da kružite kroz različite režime razdvajanja zvuka:
 <!-- KC:beginInclude -->
 
@@ -2228,18 +2288,21 @@ Prečica dozvoljava da kružite kroz različite režime razdvajanja zvuka:
 
 Podrazumevano, ova komanda će kružiti kroz sledeće režime:
 
-* Razdvajanje zvuka onemogućeno: NVDA i druge aplikacije reprodukuju zvukove na oba kanala.
+* Razdvajanje zvukova onemogućeno: NVDA ne utiče na razdvajanje zvukova.
 * NVDA na levoj strani a aplikacije na desnoj: NVDA će govoriti na levom kanalu, dok će druge aplikacije reprodukovati zvukove na desnom.
-* NVDA na desnoj strani a aplikacije na levoj: NVDA će govoriti na desnom kanalu, dok će druge aplikacije reprodukovati zvukove na levom.
+* NVDA na levoj strani a aplikacije na oba kanala: NVDA će govoriti na levom kanalu, dok će druge aplikacije reprodukovati zvukove i na levom i na desnom kanalu.
 
 Napredniji režimi razdvajanja zvuka su dostupni u izbornom okviru podešavanja razdvajanja zvuka.
-Imajte na umu da razdvajanje zvukova ne funkcioniše kao mikser.
+U dostupnim režimima, "NVDA i aplikacije na oba kanala" prisiljava sve zvukove da budu preusmereni na oba kanala.
+Ovaj režim će se možda razlikovati sa režimom "Razdvajanje zvukova onemogućeno" u slučaju da  drugo obrađivanje zvuka menja jačinu kanala.
 
+Imajte na umu da razdvajanje zvukova ne funkcioniše kao mikser.
 Na primer, ako aplikacija reprodukuje stereo zvučni zapis dok je razdvajanje zvukova podešeno na "NVDA na levoj strani a aplikacije na desnoj", čućete samo desni kanal zvučnog zapisa, dok će levi kanal zvučnog zapisa biti utišan.
+
 Ova opcija nije dostupna ako je NVDA pokrenut uz [WASAPI onemogućen za zvučni izlaz](#WASAPI) u naprednim podešavanjima.
 
 Imajte na umu da ako se NVDA sruši, neće biti u stanju da vrati jačinu aplikacija, a te aplikacije će možda još uvek reprodukovati zvuk samo na jednom kanalu nakon rušenja programa NVDA.
-Kako biste ovo rešili, molimo ponovo pokrenite NVDA.
+Kako biste ovo rešili, molimo ponovo pokrenite NVDA i izaberite režim "NVDA i aplikacije na oba kanala".
 
 ##### Prilagođavanje režima razdvajanja zvuka {#CustomizeSoundSplitModes}
 
@@ -2247,12 +2310,24 @@ Ova lista sa kontrolama koje se mogu označiti dozvoljava da izaberete koji će 
 Režimi koji nisu označeni neće biti uključeni.
 Podrazumevano, omogućena su samo tri režima.
 
-* Razdvajanje zvukova onemogućeno: I NVDA i aplikacije reprodukuju zvukove i na levom i na desnom kanalu.
-* NVDA na levom kanalu a sve druge aplikacije na desnom kanalu.
-* NVDA na desnom  a sve druge aplikacije na levom kanalu.
+* Onemogućeno razdvajanje zvukova.
+* NVDA na levoj strani a aplikacije na desnoj.
+* NVDA na levoj strani a aplikacije u oba kanala.
 
 Imajte na umu da je neophodno označiti bar jedan režim.
 Ova opcija nije dostupna ako je NVDA pokrenut uz [WASAPI onemogućen za zvučni izlaz](#WASAPI) u naprednim podešavanjima.
+
+##### Vreme tokom kojeg treba održavati zvučnu kartu budnom nakon govora {#AudioAwakeTime}
+
+Ovo polje za uređivanje određuje koliko dugo će NVDA održavati zvučnu kartu budnom nakon što se govor završi.
+Ovo vam dozvoljava da NVDA izbegne određene greške u govoru kao što su odsečeni delovi reči.
+Ovo se može desiti usled toga što zvučne karte (posebno Blutut i bežični uređaji) ulaze u stendbaj režim.
+Ovo takođe može pomoći u drugim situacijama, kao što su korišćenje programa NVDA u virtuelnoj mašini (nna primer Citrix Virtual Desktop), ili na nekim laptop računarima.
+
+Niske vrednosti će možda izazvati da se početak zvuka iseče češće, budući da će uređaj možda prebrzo ući u stendbaj režim, što će izazvati da se početak sledećeg izgovorenog teksta iseče.
+Podešavanje previsoke vrednosti će možda izazvati da se baterija zvučne karte brže potroši, budući da uređaj ostaje aktivan duže a ne reprodukuje nikakve zvukove.
+
+Možete podesiti vreme na nula kako biste onemogućili ovu funkciju.
 
 #### Vid {#VisionSettings}
 
@@ -2731,9 +2806,8 @@ Možete podesiti prijavljivanje sledećih elemenata:
   * Orjentiri
   * članci
   * Okviri
-    * Figure i naslovi slika
-* Klikabilnost
-  -
+  * Figure i naslovi slika
+  * Klikabilnost
 
 Da uključite i isključite ova podešavanja bilo gde, podesite prilagođene komande koristeći [dijalog ulazne komande](#InputGestures).
 
@@ -3140,8 +3214,7 @@ Napomena:
 
 * Emulirani tasteri moraju da sadrže komandu kako bi ostali sačuvani kada se dijalog zatvori.
 * Ulazna komanda sa modifikatorskim tasterima možda neće moći da se podesi kao emulirana komanda bez modifikatorskih tastera.
-Na primer, podešavanje emuliranog unosa 'a' i podešavanje komande 'ctrl+m', će možda izazvati
-da aplikacija primi komandu 'ctrl+a'.
+Na primer, podešavanje emuliranog unosa `a` i podešavanje komande `ctrl+m` će možda izazvati da aplikacija primi komandu `ctrl+a`.
 
 Када завршите са променама, притисните дугме у реду да их сачувате или откажи да их одбаците.
 
@@ -3786,6 +3859,7 @@ Molimo pogledajte uputstvo za upotrebu brajevog reda da biste znali gde se odre�
 |StrelicaDesno |Džojstik desno|
 |NVDA meni |b2+b4+b5+b6|
 |Menjanje vezivanja brajevog reda |b2|
+|Uključuje ili isključuje brajev kursor  |b1|
 |Menjanje predstavljanja sadržaja fokusa |b7|
 |Uključivanje i isključivanje brajevog unosa |Razmak+b1+b3+b4 (Razmak +veliko B)|
 
@@ -3833,7 +3907,7 @@ Ako povezujete brajeve redove koji ne koriste hid preko usb veze, morate instali
 VarioUltra i Pronto! brajevi redovi koriste HID.
 Refreshabraille i Orbit Reader 20 mogu koristiti HID ako su podešeni na određeni način.
 
- USB serijski način u Orbit Reader 20 brajevom redu, trenutno je podržan samo na Windows 10 operativnom sistemu i novijim.
+USB serijski način u Orbit Reader 20 brajevom redu, trenutno je podržan samo na Windows 10 operativnom sistemu i novijim.
 Umesto toga, koristite USB HID.
 
 Slede prečice za ovaj brajev red za korišćenje uz pomoć NVDA.
@@ -4473,7 +4547,7 @@ Molimo pogledajte [EcoBraille korisničko uputstvo](ftp://ftp.once.es/pub/utt/bi
 
 ### SuperBraille {#SuperBraille}
 
- SuperBraille uređaj, uglavnom dostupan u Tajvanu, se može povezati putem USB ili serijskog porta.
+SuperBraille uređaj, uglavnom dostupan u Tajvanu, se može povezati putem USB ili serijskog porta.
 Budući da SuperBraille nema fizičke tastere za unos teksta ili pomeranje, sav unos mora se vršiti putem tastature računara.
 Zbog ovoga, i zbog zadržavanja kompatibilnosti sa drugim čitačima ekrana u Tajvanu, dve komande za pomeranje brajevog reda su dodate:
 <!-- KC:beginInclude -->
@@ -4801,7 +4875,7 @@ Slede trenutne tasterske prečice za ove redove.
 |---|---|
 |Pomeri brajev red nazad |pan levo ili rocker gore|
 |Pomeri brajev red napred |pan desno ili rocker dole|
-|Prebaci na brajevu ćeliju |routing set 1||
+|Prebaci na brajevu ćeliju |routing set 1|
 |Promeni vezivanje brajevog reda |Gore+Dole|
 |Strelica gore |Džojstik gore, strelica gore ili razmak+tačka1|
 |Strelica dole |Džojstik dole, strelica dole ili razmak+tačka4|
@@ -4898,7 +4972,7 @@ Ovi parametri se postavljaju nakon opcije odvojeni razmakom, kada se koristi kra
 |---|---|
 |`nvda -l 10` |Govori programu NVDA da se pokrene sa evidencijom u dnevniku podešenom na otklanjanje grešaka|
 |`nvda --log-file=c:\nvda.log` |Govori programiu NVDA da piše svoje dnevnike u `c:\nvda.log`|
-|`nvda --log-level=20 -f c:\nvda.log` |Govori programu NVDA da se pokrene sa evidencijom u dnevniku podešenom na informacije i da piše datoteke sa dnevnikom na lokaciji c:\NVDA.log|
+|`nvda --log-level=20 -f c:\nvda.log` |Govori programu NVDA da se pokrene sa evidencijom u dnevniku podešenom na informacije i da piše datoteke sa dnevnikom na lokaciji `c:\NVDA.log`|
 
 Slede opcije komandne linije za NVDA:
 
@@ -4914,13 +4988,13 @@ Slede opcije komandne linije za NVDA:
 |`-m` |`--minimal` |Nema zvukova, nema interfejsa, nema poruka pokretanja i tako dalje|
 |`-s` |`--secure` |Pokreće NVDA u [bezbednom načinu rada](#SecureMode)|
 |Nema |`--disable-addons` |Dodaci neće imati efekta|
-|Nema |`--debug-logging` |Omogući evidenciju otklanjanja grešaka za ovo pokretanje. Ovo podešavanje će promeniti ostale nivoe evidencije( ``--loglevel``, `-l`) uključujući kada je evidentiranje onemogućeno.|
-|Nema |`--no-logging` |Onemogući evidentiranje dok se NVDA koristi. Ovo podešavanje se može zameniti ako nivo evidentiranja ( ``--loglevel``, `-l`) bude određen iz komandne linije ili se dnevnici za otklanjanje grešaka uključe.|
+|Nema |`--debug-logging` |Omogući evidenciju otklanjanja grešaka za ovo pokretanje. Ovo podešavanje će promeniti ostale nivoe evidencije( `--loglevel`, `-l`) uključujući kada je evidentiranje onemogućeno.|
+|Nema |`--no-logging` |Onemogući evidentiranje dok se NVDA koristi. Ovo podešavanje se može zameniti ako nivo evidentiranja ( `--loglevel`, `-l`) bude određen iz komandne linije ili se dnevnici za otklanjanje grešaka uključe.|
 |Nema |`--no-sr-flag` |Ne menjaj globalnu oznaku čitača ekrana na sistemu|
 |Nema |`--install` |Instalira NVDA(i pokreće novo instaliranu kopiju)|
 |Nema |`--install-silent` |Tiha instalacija programa NVDA(ne pokreće novo instaliranu kopiju)|
-|Nema |`--enable-start-on-logon=True` |`False` |U toku instalacije, omogući podešavanje [pokreni NVDA na Windows ekranu za prijavljivanje](#StartAtWindowsLogon)|
-|Nema |`--copy-portable-config` |Kada instalirate, kopira podešavanja iz označene adrese (`--config-path, -c`) u trenutni korisnički nalog|
+|Nema |`--enable-start-on-logon=True|False` |U toku instalacije, omogući podešavanje [pokreni NVDA na Windows ekranu za prijavljivanje](#StartAtWindowsLogon)|
+|Nema |`--copy-portable-config` |Kada instalirate, kopira podešavanja iz označene adrese (`--config-path`, `-c`) u trenutni korisnički nalog|
 |Nema |`--create-portable` |Pravi prenosnu kopiju programa NVDA (pokreće se automatski nakon pravljenja). Zahteva opciju `--portable-path` koja određuje adresu kopije|
 |Nema |`--create-portable-silent` |Pravi prenosnu kopiju programa NVDA (bez pokretanja nakon završetka). Zahteva opciju `--portable-path` koja određuje adresu kopije|
 |Nema |`--portable-path=AdresaKopije` |Adresa na kojoj će prenosna kopija biti napravljena|

@@ -39,8 +39,17 @@ Major highlights include:
 
 ### System Requirements {#SystemRequirements}
 
+#### Recommended System Requirements {#MinimumSystemRequirements}
+* Operating Systems: 64-bit editions of Windows 10, Windows 11, and Window Server 2022
+  * both AMD64 and ARM64 variants of Windows are supported.
+* at least 150 MB of storage space.
+* at least 4 GB of RAM.
+
+#### Minimum System Requirements {#MinimumSystemRequirements}
 * Operating Systems: all 32-bit and 64-bit editions of Windows 8.1, Windows 10, Windows 11, and all Server Operating Systems starting from Windows Server 2012 R2.
   * both AMD64 and ARM64 variants of Windows are supported.
+  * Note 32-bit operating systems are no longer under active support.
+  * Note that Windows 8.1 and Windows Server versions older than 2022 are no longer under active support.
 * at least 150 MB of storage space.
 
 ### Internationalization {#Internationalization}
@@ -540,7 +549,7 @@ You can also keep your finger on the screen and move it around to read other con
 When NVDA commands are described later in this user guide, they may list a touch gesture which can be used to activate that command with the touchscreen.
 Following are some instructions on how to perform the various touch gestures.
 
-##### Taps {#toc45}
+##### Taps {#Taps}
 
 Tap the screen quickly with one or more fingers.
 
@@ -552,7 +561,7 @@ Tapping twice will result in a double-tap.
 Tapping 3 times will result in a triple-tap and so on.
 Of course, these multi-tap gestures also recognize how many fingers were used, so it's possible to have gestures like a 2-finger triple-tap, a 4-finger tap, etc.
 
-##### Flicks {#toc46}
+##### Flicks {#Flicks}
 
 Quickly swipe your finger across the screen.
 
@@ -900,6 +909,7 @@ These extra mouse features are not turned on by default in NVDA.
 If you wish to take advantage of them, you can configure them from the [Mouse settings](#MouseSettings) category of the [NVDA Settings](#NVDASettings) dialog, found in the NVDA Preferences menu.
 
 Although a physical mouse or trackpad should be used to navigate with the mouse, NVDA provides some commands related to the mouse:
+
 <!-- KC:beginInclude -->
 
 | Name |Desktop key |Laptop key |Touch |Description|
@@ -908,6 +918,10 @@ Although a physical mouse or trackpad should be used to navigate with the mouse,
 |Left mouse button lock |shift+numpadDivide |NVDA+control+[ |none |Locks the left mouse button down. Press again to release it. To drag the mouse, press this key to lock the left button down and then move the mouse either physically or use one of the other mouse routing commands|
 |Right mouse click |numpadMultiply |NVDA+] |tap and hold |Clicks the right mouse button once, mostly used to open context menu at the location of the mouse.|
 |Right mouse button lock |shift+numpadMultiply |NVDA+control+] |none |Locks the right mouse button down. Press again to release it. To drag the mouse, press this key to lock the right button down and then move the mouse either physically or use one of the other mouse routing commands|
+|Scroll up at the mouse position |none |none |none |Scrolls the mouse wheel up at the current mouse position|
+|Scroll down at the mouse position|none |none |none |Scrolls the mouse wheel down at the current mouse position|
+|Scroll left at the mouse position |none |none |none |Scrolls the mouse wheel left at the current mouse position|
+|Scroll right at the mouse position |none |none |none |Scrolls the mouse wheel right at the current mouse position|
 |Move mouse to current navigator object |NVDA+numpadDivide |NVDA+shift+m |none |Moves the mouse to the location of the current navigator object and review cursor|
 |Navigate to the object under the mouse |NVDA+numpadMultiply |NVDA+shift+n |none |Set the navigator object to the object located at the position of the mouse|
 
@@ -1706,7 +1720,7 @@ The settings categories found in the NVDA Settings dialog will be outlined below
 
 <!-- KC:setting -->
 
-##### Open General settings {#toc110}
+##### Open General settings {#OpenGeneralSettings}
 
 Key: `NVDA+control+g`
 
@@ -1802,7 +1816,7 @@ You can also manually install the pending update from the Exit NVDA dialog (if e
 
 <!-- KC:setting -->
 
-##### Open Speech settings {#toc123}
+##### Open Speech settings {#OpenSpeechSettings}
 
 Key: `NVDA+control+v`
 
@@ -1969,7 +1983,7 @@ Note that it is necessary to check at least two modes.
 
 <!-- KC:setting -->
 
-##### Open Select Synthesizer dialog {#toc144}
+##### Open Select Synthesizer dialog {#OpenSelectSynthesizer}
 
 Key: `NVDA+control+s`
 
@@ -2211,7 +2225,7 @@ To toggle show selection from anywhere, please assign a custom gesture using the
 
 <!-- KC:setting -->
 
-##### Open Select Braille Display dialog {#toc168}
+##### Open Select Braille Display dialog {#OpenSelectBrailleDisplay}
 
 Key: `NVDA+control+a`
 
@@ -2263,7 +2277,7 @@ Therefore it is recommended to only connect one Braille Display of a given type 
 
 <!-- KC:setting -->
 
-##### Open Audio settings {#toc173}
+##### Open Audio settings {#OpenAudioSettings}
 
 Key: `NVDA+control+u`
 
@@ -2406,7 +2420,7 @@ For the supported settings per provider, please refer to the documentation for t
 
 <!-- KC:setting -->
 
-##### Open Keyboard settings {#toc188}
+##### Open Keyboard settings {#OpenKeyboardSettings}
 
 Key: `NVDA+control+k`
 
@@ -2483,7 +2497,7 @@ This option is on by default, though certain users may wish to turn this off, su
 
 <!-- KC:setting -->
 
-##### Open Mouse settings {#toc201}
+##### Open Mouse settings {#OpenMouseSettings}
 
 Key: `NVDA+control+m`
 
@@ -2586,7 +2600,7 @@ To toggle simple review mode from anywhere, please assign a custom gesture using
 
 <!-- KC:setting -->
 
-##### Open Object Presentation settings {#toc218}
+##### Open Object Presentation settings {#OpenObjectPresentationSettings}
 
 Key: `NVDA+control+o`
 
@@ -2701,7 +2715,7 @@ This option is on by default.
 
 <!-- KC:setting -->
 
-##### Open Browse Mode settings {#toc236}
+##### Open Browse Mode settings {#OpenBrowseModeSettings}
 
 Key: `NVDA+control+b`
 
@@ -2793,7 +2807,7 @@ Enabling this option may improve support for some websites at the cost of perfor
 
 <!-- KC:setting -->
 
-##### Open Document Formatting settings {#toc250}
+##### Open Document Formatting settings {#OpenDocumentFormattingSettings}
 
 Key: `NVDA+control+d`
 
@@ -3590,7 +3604,7 @@ To toggle the braille viewer from anywhere, please assign a custom gesture using
 The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
 For more information, please see the [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html).
 
-### Add-on Store {#toc314}
+### Add-on Store {#AddonStoreMenuItem}
 
 This will open the [NVDA Add-on Store](#AddonsManager).
 For more information, read the in-depth section: [Add-ons and the Add-on Store](#AddonsManager).
@@ -4040,7 +4054,7 @@ The following extra devices are also supported (and do not require any special d
 Following are the key assignments for  the Brailliant BI/B and BrailleNote touch displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 
-#### Key assignments for All models {#toc334}
+#### Key assignments for All models {#HumanWareBrailliantKeyAssignmentForAllModels}
 
 <!-- KC:beginInclude -->
 
@@ -4069,7 +4083,7 @@ Please see the display's documentation for descriptions of where these keys can 
 
 <!-- KC:endInclude -->
 
-#### Key assignments for Brailliant BI 32, BI 40 and B 80 {#toc335}
+#### Key assignments for Brailliant BI 32, BI 40 and B 80 {#HumanWareBrailliantKeyAssignmentForBI32BI40AndB80}
 
 <!-- KC:beginInclude -->
 
@@ -4081,7 +4095,7 @@ Please see the display's documentation for descriptions of where these keys can 
 
 <!-- KC:endInclude -->
 
-#### Key assignments for Brailliant BI 14 {#toc336}
+#### Key assignments for Brailliant BI 14 {#HumanWareBrailliantKeyAssignmentForBI14}
 
 <!-- KC:beginInclude -->
 

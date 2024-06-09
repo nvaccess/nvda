@@ -82,7 +82,7 @@ Pour les détails concernant les exceptions, veuillez consulter le document de l
 ## Guide de Démarrage Rapide de NVDA {#NVDAQuickStartGuide}
 
 Ce guide de démarrage rapide contient trois sections principales : téléchargement, configuration initiale et exécution de NVDA.
-Celles-ci sont suivies d'informations sur l'ajustement des préférences, la participation à la communauté et l'obtention d'aide.
+Celles-ci sont suivies d'informations sur l'ajustement des préférences, l'utilisation des extensions, la participation à la communauté et l'obtention d'aide.
 Les informations contenues dans ce guide sont condensées à partir d'autres parties du Guide de l'utilisateur NVDA.
 Veuillez vous reporter au Guide de l'utilisateur complet pour obtenir des informations plus détaillées sur chaque sujet.
 
@@ -101,7 +101,7 @@ Vérifiez les [Configurations requises](#SystemRequirements) pour plus de détai
 Ces étapes supposent une certaine familiarité avec la navigation sur une page Web.
 
 * Ouvrez votre navigateur Web (appuyez sur la touche `Windows`, tapez le mot "internet" sans les guillemets et appuyez sur `entrer`)
-* Chargez la page de téléchargement de NV Access (Appuyez sur `alt+d`, tapez l'adresse suivante et appuyez sur `entrer`):
+* Chargez la page de téléchargement de NV Access (Appuyez sur `alt+d`, tapez l'adresse suivante et appuyez sur `entrée`):
 https://www.nvaccess.org/download
 * Activez le bouton "télécharger"
 * Le navigateur peut ou non demander une action à effectuer après le téléchargement, puis lancer le téléchargement
@@ -127,7 +127,7 @@ Une fois chargé, NVDA parlera tout au long du processus.
 1. La fenêtre du Lanceur NVDA apparaît avec le contrat de licence.
 Appuyez sur `flècheBas` pour lire le contrat de licence si vous le souhaitez.
 1. Appuyez sur `tab` pour passer à la case "J'accepte", puis appuyez sur la `barre d'espace` pour la cocher.
-1. Appuyez sur `tab` pour parcourir les options, puis appuyez sur `entrer` sur l'option souhaitée.
+1. Appuyez sur `tab` pour parcourir les options, puis appuyez sur `entrée` sur l'option souhaitée.
 
 Les options sont :
 
@@ -159,7 +159,7 @@ Pour plus de détails sur les options disponibles, veuillez consulter [Options d
 1. Ensuite, viennent des options pour utiliser NVDA lors de la connexion à Windows et pour créer un raccourci sur le bureau.
 Celles-ci sont cochées par défaut.
 Si vous le souhaitez, appuyez sur `tabulation` et `barre d'espace` pour modifier l'une de ces options, ou laissez-les par défaut.
-1. Appuyez sur `entrer` pour continuer.
+1. Appuyez sur `entrée` pour continuer.
 1. Un dialogue Windows "Contrôle de compte d'utilisateur (UAC)" apparaît et vous demande "Voulez-vous autoriser cette application à apporter des modifications à votre PC ?".
 1. Appuyez sur `alt+o` pour accepter l'invite UAC.
 1. Une barre de progression se remplit au fur et à mesure de l'installation de NVDA.
@@ -167,7 +167,7 @@ Au cours de ce processus, NVDA émet un bip de plus en plus aigu.
 Ce processus est souvent rapide et peut ne pas être remarqué.
 1. Un dialogue apparaît confirmant que l'installation de NVDA a réussi.
 Le message demande d'"Appuyer sur OK pour démarrer la copie installée".
-Appuyez sur `entrer` pour démarrer la copie installée.
+Appuyez sur `entrée` pour démarrer la copie installée.
 1. Le dialogue "Bienvenue dans NVDA" apparaît et NVDA lit un message de bienvenue.
 Le focus est mis sur le menu déroulant "Disposition du clavier".
 Par défaut, la disposition du clavier "Ordinateur de bureau" utilise le pavé numérique pour certaines fonctions.
@@ -179,7 +179,7 @@ Notez que la disposition du clavier est définie séparément de la touche de mo
 La touche de modification NVDA et la disposition du clavier peuvent être modifiées ultérieurement à partir des paramètres du clavier.
 1. Utilisez `tab` et `barre d'espace` pour ajuster les autres options sur cet écran.
 Celles-ci définissent si NVDA doit démarrer automatiquement.
-1. Appuyez sur `entrer` pour fermer le dialogue avec NVDA en cours d'exécution.
+1. Appuyez sur `entrée` pour fermer le dialogue avec NVDA en cours d'exécution.
 
 ### Exécuter NVDA {#RunningNVDA}
 
@@ -207,7 +207,7 @@ Les commandes réelles ne s'exécuteront pas en mode d'aide à la saisie.
 | Nom |Touche ordinateur de bureau |Touche ordinateur portable |Description|
 |---|---|---|---|
 |Démarrer NVDA |`contrôle+alt+n` |`contrôle+alt+n` |Démarre ou redémarre NVDA|
-|Quitter NVDA |`NVDA+q`, puis `entrer` |`NVDA+q`, puis `entrer` |quitte NVDA|
+|Quitter NVDA |`NVDA+q`, puis `entrée` |`NVDA+q`, puis `entrée` |quitte NVDA|
 |Interrompre ou relancer la parole |`majuscule` |`majuscule` |Interrompt instantanément la parole. Un nouvel appui reprendra la parole là où elle s'est arrêtée|
 |Arrêt de la parole |`contrôle` |`contrôle` |Interrompt instantanément la parole|
 
@@ -279,6 +279,78 @@ Les paramètres et d'autres options sont disponibles via le menu de NVDA.
 Pour ouvrir le menu de NVDA, appuyez sur `NVDA+n`.
 Pour ouvrir directement le dialogue des paramètres généraux de NVDA, appuyez sur `NVDA+contrôle+g`.
 De nombreux écrans de paramètres ont des touches pour les ouvrir directement, comme `NVDA+contrôle+s` pour le synthétiseur, ou `NVDA+contrôle+v` pour les autres options de parole.
+
+### Extensions {#Addons}
+Les extension sont des programmes qui fournissent des fonctionnalités nouvelles ou modifiées pour NVDA.
+Les extensions sont développées par la communauté NVDA ou par des sociétés externes et ne sont pas affiliés à NV Access.
+Comme pour tout logiciel, il est important de faire confiance au développeur d'une extension avant de l’utiliser.
+Veuillez consulter [Installation d'extensions](#AddonStoreInstalling) pour savoir comment vérifier les extensions avant l'installation.
+
+La première fois que l'Add-on Store est ouvert, NVDA affiche un avertissement concernant les extensions.
+Les extensions ne sont pas approuvées par NV Access et peuvent avoir des fonctionnalités et un accès aux informations sans restriction.
+Appuyez sur `espace` si vous avez lu l'avertissement et que vous n'avez pas besoin de le voir la prochaine fois.
+Appuyez sur `tab` pour atteindre le bouton "OK", puis sur `Entrée` pour accepter l'avertissement et accéder à l'Add-on Store.
+La section "[Extensions et Add-on Store](#AddonsManager)" du guide de l'utilisateur contient des informations sur chaque fonctionnalité de l'Add-on Store.
+
+L'Add-on Store est disponible dans le menu Outils.
+Appuyez sur `NVDA+n` pour ouvrir le menu NVDA, puis sur `o` pour Outils, puis sur `s` pour Add-on Store.
+Lorsque l'Add-on Store s'ouvre, il affiche "Extensions disponibles" si aucune extension n'est installée.
+Lorsque des extensions sont déjà installées, l'Add-on Store s'ouvre sur l'onglet "Extensions installées".
+
+#### Extensions disponibles {#AvailableAddons}
+Lorsque la fenêtre s'ouvre pour la première fois, le chargement des extensions peut prendre quelques secondes.
+NVDA lira le nom de la première extension une fois que le chargement de la liste des extensions est terminé.
+Les extensions disponibles sont listées par ordre alphabétique dans une liste à plusieurs colonnes.
+Pour parcourir la liste et trouver une extension spécifique :
+
+1. Utilisez les touches fléchées ou appuyez sur la première lettre du nom d'une extension pour vous déplacer dans la liste.
+1. Appuyez une fois sur `tab` pour passer à une description de l'extension actuellement sélectionné.
+1. Utilisez les [touches de lecture](#ReadingText) ou les touches fléchées pour lire la description complète.
+1. Appuyez sur `tab` pour atteindre le bouton "Actions", qui peut être utilisé pour installer l'extension entre autres actions.
+1. Appuyez sur `tab` jusqu'au champ "Autres détails", qui répertorie des détails tels que l'éditeur, la version et la page web.
+1. Pour revenir à la liste des extensions, appuyez sur `alt+e`, ou `maj+tab` jusqu'à atteindre la liste.
+
+#### Rechercher des extensions {#SearchingForAddons}
+En plus de pouvoir parcourir toutes les extensions disponibles, il est possible de filtrer les extensions affichées.
+Pour effectuer une recherche, appuyez sur `alt+r` pour accéder au champ "Recherche" et tapez le texte à rechercher.
+La recherche vérifie les correspondances dans les champs ID, nom affiché, éditeur, auteur ou description de l'extension.
+La liste se met à jour au cours de la saisie des termes de recherche.
+Une fois la saisie terminée, appuyez sur `tab` pour accéder à la liste filtrée des extensions et parcourir les résultats.
+
+#### Installer des extensions {#InstallingAddons}
+
+Pour installer une extension :
+
+1. Lorsque le focus se trouve sur une extension que vous souhaitez installer, appuyez sur `entrée`.
+1. Le menu d'actions s'ouvre avec une liste d'actions ; la première action est "Installer".
+1. Pour installer l'extension, appuyez sur `i` ou `flècheBas` pour atteindre "Installer" et appuyez sur `entrée`.
+1. Le focus revient sur l'extension dans la liste et NVDA lira les détails de cette extension.
+1. L'information "État" annoncée par NVDA passent de "Disponible" à "Téléchargement en cours".
+1. Une fois le téléchargement de l'extension terminé, elle passe à l'état "Téléchargé, en attente d'installation".
+1. Répétez cette procédure pour toutes les extensions que vous souhaitez également installer.
+1. Une fois que vous avez fini, appuyez sur `tab` jusqu'à ce que le focus soit sur le bouton "Fermer", puis appuyez sur `entrée`.
+1. Les extensions téléchargées démarreront leur processus d'installation dès la fermeture de l'Add-on Store.
+Pendant le processus d'installation, les extensions peuvent afficher des boîtes de dialogue auxquelles vous devrez répondre.
+1. Une fois que les extensions sont installées, une boîte de dialogue apparaît vous informant que des modifications ont été apportées et vous devez redémarrer NVDA pour que l'installation des extensions soit terminée.
+1. Appuyez sur `entrée` pour redémarrer NVDA.
+
+#### Gérer les extensions {#ManagingInstalledAddons}
+Appuyez sur `contrôle+tab` pour vous déplacer entre les onglets de l'Add-on Store.
+Les onglets sont : "Extensions installées", "Mises à jour", "Extensions disponibles" et "Extensions incompatibles installés".
+Chacun des onglets est présenté de manière similaire, sous la forme d'une liste d'extensions, d'un panneau pour plus de détails sur l'extension sélectionné et d'un bouton pour effectuer des actions pour l'extension sélectionnée.
+Le menu d'actions des extensions installés comprend les actions "Désactiver" et "Supprimer" au lieu de "Installer".
+La désactivation d'une extension empêche NVDA de la charger, mais la garde installée.
+Pour réactiver une extension désactivée, appuyez sur "Activer" dans le menu actions.
+Après avoir activé, désactivé ou supprimé des extensions, vous serez invité à redémarrer NVDA lors de la fermeture de l'Add-on Store.
+Ces modifications ne prendront effet qu'une fois NVDA redémarré.
+Veuillez noter que dans la fenêtre de l'Add-on Store, `échap` fonctionne de la même manière que le bouton Fermer.
+
+#### Mettre à jour des extensions {#UpdatingAddons}
+Lorsqu'une mise à jour pour une extension que vous avez installée est disponible, elle sera listée dans l'onglet "Mises à jour".
+Appuyez sur `contrôle+tab` pour accéder à cet onglet depuis n'importe où dans l'Add-on Store.
+L'état de l'extension sera "Mise à jour disponible".
+La liste indiquera la version actuellement installée et la version disponible.
+Appuyez sur `entrée` sur l'extension pour ouvrir la liste d'actions ; choisissez "Mettre à jour".
 
 ### Communauté {#Community}
 
@@ -528,12 +600,12 @@ Pour accéder au menu NVDA depuis n'importe où dans Windows pendant que NVDA es
 
 * appuyez sur `NVDA+n` sur le clavier.
 * Effectuez une double-tape à 2 doigts sur l'écran tactile.
-* Accédez à la barre d'état système en appuyant sur `Windows+b`, `flècheBas` jusqu'à l'icône NVDA, et appuyez sur `entrer`.
+* Accédez à la barre d'état système en appuyant sur `Windows+b`, `flècheBas` jusqu'à l'icône NVDA, et appuyez sur `entrée`.
 * Alternativement, accédez à la barre d'état système en appuyant sur `Windows+b`, `flècheBas` jusqu'à l'icône NVDA, et ouvrez le menu contextuel en appuyant sur la touche `applications` située à côté de la touche de contrôle droite sur la plupart des claviers.
 Sur un clavier sans touche `applications`, appuyez sur `maj+f10` à la place.
 * Faites un clic droit sur l'icône NVDA située dans la barre d'état système de Windows
 
-Lorsque le menu apparaît, vous pouvez utiliser les touches fléchées pour naviguer dans le menu et la touche `entrer` pour activer un élément.
+Lorsque le menu apparaît, vous pouvez utiliser les touches fléchées pour naviguer dans le menu et la touche `entrée` pour activer un élément.
 
 ### Commandes de Base {#BasicNVDACommands}
 
@@ -711,7 +783,7 @@ Pour naviguer par objet, utilisez les commandes suivantes :
 |Passer à l'objet suivant dans la vue à plat |NVDA+pavnum3 |NVDA+maj+* |glisser vers la droite (mode objet) |Passe à l'objet suivant dans une vue à plat de la hiérarchie de navigation d'objets|
 |Aller au premier objet inclus |NVDA+pavnum2 |NVDA+maj+flèche bas |Glisser vers le bas (mode objet) |Va au premier objet inclus dans l'objet navigateur courant|
 |Aller à l'objet en focus |NVDA+pavnumMoins |NVDA+retour arrière |Aucun |Va à l'objet ayant le focus système, et place le curseur de revue sur le curseur système s'il est présent|
-|Activer l'objet navigateur courant |NVDA+pavnumEntrer |NVDA+entrer |Double tape |Active l'objet navigateur courant (similaire à un clic de souris ou à appuyer la barre d'espace quand l'objet a le focus système)|
+|Activer l'objet navigateur courant |NVDA+pavnumEntrer |NVDA+entrée |Double tape |Active l'objet navigateur courant (similaire à un clic de souris ou à appuyer la barre d'espace quand l'objet a le focus système)|
 |Amener le focus système à l'objet navigateur courant |NVDA+maj+pavnumMoins |NVDA+maj+retour arrière |Aucun |Amène le focus système à l'objet navigateur courant si c'est possible|
 |Annoncer la position du curseur de revue |NVDA+pavnumEffacement |NVDA+effacement |Aucun |Annonce la position du texte ou de l'objet sous le curseur de revue. Cela peut inclure, par exemple, le pourcentage dans le document, la distance au bord de la page ou la position exacte sur l'écran. Un double appui annonce éventuellement des informations supplémentaires.|
 |Amener le curseur de revue à la barre d'état |aucun |aucun |aucun |Annonce la barre d'état si NVDA en trouve une. Amène également l'objet navigateur à sa position.|
@@ -1017,7 +1089,7 @@ Utilisez les touches suivantes pour effectuer des recherches :
 Certaines pages peuvent inclure du contenu riche utilisant des technologies comme Oracle Java et HTML5, tout comme des applications ou des dialogues.
 Quand il en rencontre dans un document, NVDA annonce "objet embarqué", "application", ou "dialogue" respectivement.
 Vous pouvez vous y rendre rapidement en utilisant les touches de navigation rapide pour objets embarqués o et maj+o.
-Pour interagir avec ces objets, vous pouvez presser Entrer sur eux.
+Pour interagir avec ces objets, vous pouvez presser Entrée sur eux.
 Si l'objet est accessible, vous pourrez interagir avec lui comme n'importe quelle autre application.
 Une touche de commande permet de retourner à la page contenant l'objet embarqué.
 <!-- KC:beginInclude -->
@@ -1113,7 +1185,7 @@ Pour plus d'informations sur les commandes disponibles et les préférences pour
 * [Documentation MathPlayer](https://docs.wiris.com/mathplayer/en/mathplayer-user-manual.html)
 
 Parfois le contenu mathématique peut être affiché comme un bouton ou autre type d'élément qui, quand activé, peut afficher un dialogue ou plus d'informations relatives à la formule.
-Pour activer le bouton ou l'élément contenant la formule, appuyez sur ctrl+entrer.
+Pour activer le bouton ou l'élément contenant la formule, appuyez sur ctrl+entrée.
 
 ### Installation de MathPlayer {#InstallingMathPlayer}
 
@@ -1240,14 +1312,14 @@ NVDA supporte la saisie de braille intégral ou abrégé via un clavier braille.
 Vous pouvez sélectionner la table de conversion utilisée pour convertir le braille en texte en utilisant le paramètre [Table de saisie](#BrailleSettingsInputTable) de la catégorie Braille du dialogue [Paramètres](#NVDASettings).
 
 Quand on utilise le braille intégral , le texte est inséré aussitôt qu'il est entré.
-Quand on utilise le braille abrégé, le texte est inséré quand on presse espace ou entrer à la fin d'un mot.
+Quand on utilise le braille abrégé, le texte est inséré quand on presse espace ou entrée à la fin d'un mot.
 Notez que la conversion ne concerne que les mots braille que vous êtes en train de taper et ne peut pas considérer du texte existant.
 Par exemple, si vous utilisez un code braille dont les nombres doivent commencer par un indicateur numérique et pressez retour arrière pour aller à la fin d'un nombre, vous devrez entrer à nouveau l'indicateur numérique pour entrer des chiffres supplémentaires.
 
 <!-- KC:beginInclude -->
 L'appui sur le point 7 efface la dernière cellule ou le dernier caractère braille saisi.
 Le point 8 traduit toute saisie braille puis appuie sur la touche Entrée.
-L'appui simultané sur les points 7 et 8 traduit toute saisie braille sans ajouter d'espace ou actionner la touche entrer.
+L'appui simultané sur les points 7 et 8 traduit toute saisie braille sans ajouter d'espace ou actionner la touche entrée.
 <!-- KC:endInclude -->
 
 #### Saisie de raccourcis clavier {#BrailleKeyboardShortcuts}
@@ -1427,13 +1499,13 @@ Les différents types d'informations disponibles dans la liste d'éléments sont
 Sélectionner un diagramme et appuyer sur la touche Entrée ou le bouton "Aller à" amène le focus au diagramme pour naviguer et lire avec les flèches.
 * Commentaires : Ceci liste toutes les cellules de la feuille de travail active contenant des commentaires.
 L'adresse de la cellule et ses commentaires sont présentés pour chaque cellule.
-L'appui sur la touche Entrer ou le bouton Aller à sur un commentaire de la liste vous amènera directement à cette cellule.
+L'appui sur la touche Entrée ou le bouton Aller à sur un commentaire de la liste vous amènera directement à cette cellule.
 * Formules : Ceci liste toutes les cellules de la feuille de travail contenant une formule.
 L'adresse de la cellule et sa formule sont présentés pour chaque cellule.
-L'appui sur la touche Entrer ou le bouton Aller à sur une formule de la liste vous amènera directement à cette cellule.
+L'appui sur la touche Entrée ou le bouton Aller à sur une formule de la liste vous amènera directement à cette cellule.
 * feuilles : Ceci liste toutes les feuilles du classeur.
 L'appui sur f2 sur une feuille de la liste vous permet de renommer cette feuille.
-L'appui sur la touche Entrer ou le bouton Aller à sur une feuille de la liste vous amènera directement à cette feuille.
+L'appui sur la touche Entrée ou le bouton Aller à sur une feuille de la liste vous amènera directement à cette feuille.
 * Champs de formulaire : Ceci liste tous les champs de formulaire dans la feuille de travail active.
 Pour chaque champ de formulaire, la liste d'éléments présente le texte alternatif du champ avec l'adresse des cellules concernées.
 La sélection d'un champ de formulaire et l'appui sur entrée ou le bouton Aller à amènent à ce champ en mode navigation.
@@ -1573,7 +1645,7 @@ Quand vous êtes dans le tableau des livres ajoutés :
 
 | Nom |Touche |Description|
 |---|---|---|
-|Entrer |entrer |Ouvre le livre sélectionné.|
+|Entrée |entrée |Ouvre le livre sélectionné.|
 |Menu contextuel |applications |Ouvre le menu contextuel pour le livre sélectionné.|
 
 <!-- KC:endInclude -->
@@ -2204,7 +2276,7 @@ Cette option n'est pas disponible si vous avez démarré NVDA avec [WASAPI désa
 
 La fonction de séparation du son permet aux utilisateurs d'utiliser leurs périphériques de sortie stéréo, tels que des écouteurs et des haut-parleurs.
 La séparation du son permet d'avoir la parole de NVDA sur un canal (par exemple gauche) et de faire en sorte que toutes les autres applications diffusent leur son sur l'autre canal (par exemple droit).
-Par défaut, la séparation du son est désactivée, ce qui signifie que toutes les applications, y compris NVDA, joueront les sons sur les canaux gauche et droit.
+Par défaut, la séparation du son est désactivée.
 Un geste de commande permet de parcourir les différents modes de séparation du son :
 <!-- KC:beginInclude -->
 
@@ -2216,18 +2288,21 @@ Un geste de commande permet de parcourir les différents modes de séparation du
 
 Par défaut, cette commande alternera entre les modes suivants :
 
-* Séparation du son désactivée : NVDA et les autres applications diffuseront leur son sur les canaux gauche et droit.
+* Séparation du son désactivée : NVDA n'applique aucun traitement de séparation du son.
 * NVDA à gauche et applications à droite : NVDA parlera dans le canal de gauche, tandis que les autres applications diffuseront leur son dans le canal de droite.
 * NVDA à gauche et applications dans les deux canaux : NVDA parlera dans le canal de gauche, tandis que les autres applications diffuseront leur son dans les deux canaux, gauche et droit.
 
 Il existe des modes de séparation du son plus avancés disponibles dans la liste déroulante des paramètres NVDA.
+Parmi ces modes, le mode "NVDA dans les deux canaux et applications dans les deux canaux" force tous les sons à être dirigés dans les deux canaux.
+Ce mode peut différer du mode "Séparation du son désactivé" dans le cas où un autre traitement audio interférerait avec les volumes des canaux.
+
 Veuillez noter que le séparateur de son ne fonctionne pas comme un mélangeur audio.
 Par exemple, si une application joue une piste audio stéréo alors que la séparation du son est définie sur "NVDA à gauche et applications à droite", alors vous n'entendrez que le canal droit de la piste audio, tandis que le canal gauche de la piste sera mis en sourdine.
 
 Cette option n'est pas disponible si vous avez démarré NVDA avec [WASAPI désactivé pour la sortie audio](#WASAPI) dans les Paramètres avancés.
 
 Veuillez noter que si NVDA plante, il ne sera pas en mesure de restaurer le volume sonore des applications et il se pourrait que ces applications continuent à diffuser leur son sur un seul canal après le crash de NVDA.
-Pour corriger ce problème, veuillez redémarrer NVDA.
+Pour corriger ce problème, veuillez redémarrer NVDA et sélectionner le mode "NVDA dans les deux canaux et applications dans les deux canaux".
 
 ##### Personnalisation des modes de séparation du son {#CustomizeSoundSplitModes}
 
@@ -2755,7 +2830,7 @@ La liste déroulante "Annoncer les retraits de ligne par" a quatre options :
 La hauteur du son montera pour chaque espace, et pour une tabulation, la hauteur montera de l'équivalent de 4 espaces.
 * Parole et sons : Cette option indique les retraits en utilisant les deux méthodes ci-dessus.
 
-Si vous cochez la case « Ignorer les lignes vides pour l'annonce de retrait de ligne », les modifications d'indentation ne seront pas signalées pour les lignes vides.
+Si vous cochez la case "Ignorer les lignes vides pour l'annonce de retrait de ligne", les modifications d'indentation ne seront pas signalées pour les lignes vides.
 Cela peut être utile lors de la lecture d'un document dans lequel des lignes vides sont utilisées pour séparer des blocs de texte en retrait, comme dans le code source de programmation.
 
 #### Navigation dans les documents {#DocumentNavigation}
@@ -2775,8 +2850,8 @@ Les styles de paragraphe disponibles sont :
 * Géré par l'application : NVDA laissera l'application déterminer le paragraphe précédent ou suivant, et NVDA lira le nouveau paragraphe lors de la navigation.
 Ce style fonctionne mieux lorsque l'application prend en charge la navigation dans les paragraphes de manière native et est la valeur par défaut.
 * Saut de ligne simple : NVDA tentera de déterminer le paragraphe précédent ou suivant en utilisant un saut de ligne simple comme indicateur de paragraphe.
-Ce style fonctionne mieux lors de la lecture de documents dans une application qui ne prend pas en charge nativement la navigation dans les paragraphes, et dont les paragraphes du document sont marqués par une simple pression sur la touche `entrer`.
-* Saut de ligne multiple : NVDA tentera de déterminer le paragraphe précédent ou suivant en utilisant au moins une ligne vierge (deux appuis sur la touche `entrer`) comme indicateur de paragraphe.
+Ce style fonctionne mieux lors de la lecture de documents dans une application qui ne prend pas en charge nativement la navigation dans les paragraphes, et dont les paragraphes du document sont marqués par une simple pression sur la touche `entreé`.
+* Saut de ligne multiple : NVDA tentera de déterminer le paragraphe précédent ou suivant en utilisant au moins une ligne vierge (deux appuis sur la touche `entreé`) comme indicateur de paragraphe.
 Ce style fonctionne mieux lorsque vous travaillez avec des documents qui utilisent des paragraphes de bloc.
 Notez que ce style de paragraphe ne peut pas être utilisé dans Microsoft Word ou Microsoft Outlook, sauf si vous utilisez l'UIA pour accéder aux contrôles de Microsoft Word.
 
@@ -3390,7 +3465,7 @@ Vous pouvez également activer ou désactiver plusieurs extensions à la fois en
 
 Vous souhaiterez peut-être lire les avis d'autres utilisateurs qui ont déjà utilisé une extension par exemple avant de l'installer ou pendant que vous apprenez à l'utiliser.
 En outre, il est utile pour les autres utilisateurs que vous déposiez des commentaires sur les extensions que vous avez testées.
-Pour lire les avis sur une extension, sélectionnez-la et utilisez l'action « Avis de la communauté ».
+Pour lire les avis sur une extension, sélectionnez-la et utilisez l'action "Avis de la communauté".
 Cela renvoie vers une page Web de discussion GitHub, où vous pourrez lire et rédiger des avis sur l'extension.
 Veuillez noter que cela ne remplace pas une communication directe avec les développeurs d'extension.
 Le but de cette fonctionnalité est plutôt de partager des commentaires pour aider les utilisateurs à décider si une extension peut leur être utile.
@@ -3736,7 +3811,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 |Flèche bas |spDown|
 |Flèche gauche |spLeft|
 |Flèche droite |spRight|
-|Entrer |spEnter, enter|
+|Entrée |spEnter, enter|
 |date et heure |sp2+sp3|
 |Menu NVDA |sp1+sp3|
 |Touche Windows+d (Minimiser toutes les applications) |sp1+sp4|
@@ -3950,7 +4025,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 |Touche tab |espace+point4+point6|
 |Touche alt |espace+point1+point3+point4 (espace+m)|
 |Touche échap |espace+point1+point5 (espace+e)|
-|Touche entrer |point8|
+|Touche entrée |point8|
 |Touche Windows |espace+point3+point4|
 |Touche alt+tab |Espace+point2+point3+point4+point5 (espace+t)|
 |Menu NVDA |c1+c3+c4+c5 (commande n)|
@@ -3981,7 +4056,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 |touche flèche bas |joystick vers le bas|
 |touche flèche gauche |joystick vers la gauche|
 |touche flèche droit |joystick vers la droite|
-|touche entrer |joystick action|
+|touche entrée |joystick action|
 
 <!-- KC:endInclude -->
 
@@ -4126,7 +4201,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 |Maj+flècheBas |Espace+RJ bas, RetourArrière+RJ bas|
 |maj+flèchegauche |Espace+RJ gauche, RetourArrière+RJ gauche|
 |maj+flècheDroite |Espace+RJ droit, RetourArrière+RJ droit|
-|touche entrer |RJ centre, point8|
+|touche entrée |RJ centre, point8|
 |touche échap |Espace+RJ centre|
 |touche windows |RetourArrière+RJ centre|
 |touche espace |Espace, RetourArrière|
@@ -4408,7 +4483,7 @@ Voici les commandes assignées au BrailleNote QT quand il n'est pas en mode sais
 |touche fin |fonction+flècheDroite|
 |touche contrôle+début |lecture+t|
 |touche contrôle+fin |lecture+b|
-|touche entrer |entrer|
+|touche entrée |entrée|
 |touche retour arrière |retourArrière|
 |touche tab |tab|
 |touche maj+tab keys |maj+tab|
@@ -4424,7 +4499,7 @@ Voici les commandes assignées à la roue de défilement :
 |touche flècheBas |flècheBas|
 |touche flècheGauche |flècheGauche|
 |touche flècheDroite |flècheDroite|
-|touche entrer |bouton central|
+|touche entrée |bouton central|
 |touche tab |tourner la roue dans le sens des aiguilles d'une montre|
 |touche maj+tab |tourner la roue dans le sens inverse des aiguilles d'une montre|
 
@@ -4810,7 +4885,7 @@ Voici les affectations de touches actuelles pour ces affichages.
 |Touche tab |espace+point4+point6|
 |Touche alt |espace+point1+point3+point4 (espace+m)|
 |Touche échap |espace+point1+poin5 (espace+e)|
-|touche entrer |poin8, joystick centre ou dpad centre|
+|touche entrée |poin8, joystick centre ou dpad centre|
 |Touche Windows |espace+point3+point4|
 |Touche alt+tab |espace+point2+point3+point4+point5 (espace+t)|
 |Menu NVDA |espace+point1+point3+point4+point5 (espace+n)|

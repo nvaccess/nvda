@@ -79,10 +79,10 @@ Tämä koskee sekä alkuperäisiä että muokattuja ohjelmistokopioita ja kaikki
 Voit [tarkastella koko käyttöoikeussopimusta](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html) saadaksesi lisätietoja.
 Saat lisätietoja poikkeuksista käyttöoikeussopimusdokumentista, jonka voit avata NVDA-valikon Ohje-alivalikosta.
 
-## Pikaopas {#NVDAQuickStartGuide}
+## NVDA:n pikaopas {#NVDAQuickStartGuide}
 
-Tämä pika-aloitusopas sisältää kolme pääosaa: NVDA:n lataaminen, asentaminen ja käyttäminen.
-Näiden jälkeen on tietoja asetusten muuttamisesta, yhteisöön osallistumisesta ja avun hankkimisesta.
+Tämä pikaopas sisältää kolme pääosaa: NVDA:n lataaminen, asentaminen ja käyttäminen.
+Näiden jälkeen on tietoja asetusten muuttamisesta, lisäosien käyttämisestä, yhteisöön osallistumisesta ja avun saamisesta.
 Tämän oppaan tiedot on tiivistetty NVDA:n käyttöoppaan muista osista.
 Katso täydellisestä käyttöoppaasta lisätietoja kustakin aiheesta.
 
@@ -279,6 +279,78 @@ Asetukset ja muut vaihtoehdot ovat käytettävissä NVDA-valikon kautta.
 Avaa NVDA-valikko painamalla `NVDA+N`.
 Avaa NVDA:n yleisten asetusten valintaikkuna suoraan painamalla `NVDA+Ctrl+G`.
 Monilla asetusvalintaikkunoilla on pikanäppäin niiden avaamiseksi suoraan, kuten `NVDA+Ctrl+S` syntetisaattorille tai `NVDA+Ctrl+V` muille puheäänen asetuksille.
+
+### Lisäosat {#Addons}
+Lisäosat ovat ohjelmia, jotka tarjoavat uusia tai muokattuja toiminnallisuuksia NVDA:han.
+Lisäosia kehittää NVDA-yhteisö tai ulkopuoliset yritykset, eivätkä ne ole sidoksissa NV Accessiin.
+Kuten minkä tahansa ohjelmiston kohdalla, on tärkeää luottaa lisäosan kehittäjään ennen sen käyttämistä.
+Katso lisätietoja lisäosien varmentamisesta ennen asennusta kohdasta [Lisäosien asentaminen](#AddonStoreInstalling).
+
+Kun lisäosakauppa avataan ensimmäistä kertaa, NVDA näyttää varoituksen lisäosista.
+NV Access ei tarkista lisäosia, ja niillä voi olla rajoittamaton toiminnallisuus ja pääsy tietoihin.
+Paina `Välilyöntiä`, jos olet lukenut varoituksen etkä halua nähdä sitä seuraavalla kerralla.
+Siirry OK-painikkeen kohdalle painamalla `Sarkainta` ja sitten `Enteriä` hyväksyäksesi varoituksen ja siirtyäksesi lisäosakauppaan.
+Tietoa kaikista lisäosakaupan ominaisuuksista on käyttöoppaan osiossa [Lisäosat ja lisäosakauppa](#AddonsManager).
+
+Lisäosakauppa on käytettävissä Työkalut-valikosta.
+Avaa NVDA-valikko painamalla `NVDA+N`, sitten Työkalut painamalla `Y` ja lopuksi lisäosakauppa painamalla `I`.
+Kun lisäosakauppa avataan ja  lisäosia ei ole asennettu, se näyttää "Saatavilla olevat lisäosat".
+Jos lisäosia on asennettu, lisäosakauppa avautuu "Asennetut lisäosat" -välilehdelle.
+
+#### Saatavilla olevat lisäosat {#AvailableAddons}
+Kun ikkuna avautuu ensimmäistä kertaa, lisäosien lataaminen voi kestää muutaman sekunnin.
+NVDA lukee ensimmäisen lisäosan nimen, kun lisäosien luettelo on latautunut.
+Saatavilla olevat lisäosat näytetään aakkosjärjestyksessä monisarakkeisessa luettelossa.
+Voit selata luetteloa ja saada tietoa jostakin tietystä lisäosasta seuraavasti:
+
+1. Liiku luettelossa nuolinäppäimiä käyttäen tai painamalla lisäosan nimen ensimmäistä kirjainta.
+1. Siirry valitun lisäosan kuvaukseen painamalla kerran `Sarkainta`.
+1. Lue koko kuvaus [lukunäppäimiä](#ReadingText) tai nuolinäppäimiä käyttäen.
+1. Paina `Sarkainta` siirtyäksesi "Toiminnot"-painikkeeseen, jota voidaan käyttää lisäosan asentamiseen sekä muihin toimintoihin.
+1. Paina `Sarkainta` siirtyäksesi "Muita tietoja" -kohtaan, jossa näytetään  esim. julkaisija, versio ja kotisivu.
+1. Palaa lisäosien luetteloon painamalla `Alt+I` tai tarpeeksi monta kertaa `Vaihto+Sarkain`.
+
+#### Lisäosien etsiminen {#SearchingForAddons}
+Kaikkien saatavilla olevien lisäosien selaamisen lisäksi on mahdollista suodattaa näytettäviä lisäosia.
+Etsi painamalla `Alt+S`, joka siirtää hakukenttään, ja kirjoita etsittävä teksti.
+Haku tarkistaa osumat lisäosan tunnisteesta, näyttönimestä, julkaisijasta, tekijästä ja kuvauskentästä.
+Luettelo päivittyy hakuehtoja kirjoitettaessa.
+Kun olet valmis, siirry suodatettuun lisäosaluetteloon ja selaa tuloksia painamalla `Sarkainta`.
+
+#### Lisäosien asentaminen {#InstallingAddons}
+
+Asenna lisäosia seuraavasti:
+
+1. Paina `Enter`, kun kohdistus on sellaisen lisäosan kohdalla, jonka haluat asentaa.
+1. Toiminnot-valikko avautuu, jossa on valittavissa eri toimintoja, joista ensimmäinen on "Asenna".
+1. Asenna lisäosa painamalla `A` tai siirtymällä `alanuolella`  "asenna"-vaihtoehdon kohdalle ja painamalla `Enter`.
+1. Kohdistus palaa luettelossa olevaan lisäosaan ja NVDA lukee sen tiedot.
+1. Lisäosan tilaksi, joka oli aiemmin "Saatavilla", muuttuu "Ladataan".
+1. Kun lisäosan lataus on valmis, tilaksi muuttuu "Ladattu, odottaa asennusta".
+1. Toista edellä kuvaillut vaiheet kaikille lisäosille, jotka haluat asentaa samalla kertaa.
+1. Kun olet valmis, paina `Sarkainta` kunnes kohdistus on "Sulje"-painikkeen kohdalla, ja paina sitten `Enter`.
+1. Ladattujen lisäosien asennus alkaa, kun lisäosakauppa suljetaan.
+Asennuksen aikana saattaa tulla näkyviin valintaikkunoita, joihin sinun täytyy reagoida.
+1. Kun lisäosat on asennettu, näkyviin tulee valintaikkuna, jossa ilmoitetaan, että tehtyjen muutosten vuoksi  NVDA on käynnistettävä uudelleen, jotta lisäosien asennus saadaan viimeisteltyä.
+1. Käynnistä NVDA uudelleen painamalla `Enter`.
+
+#### Asennettujen lisäosien hallinta {#ManagingInstalledAddons}
+Siirry lisäosakaupan välilehtien välillä painamalla `Ctrl+Sarkain`.
+Seuraavat välilehdet ovat käytettävissä: "Asennetut lisäosat", "Päivitettävät lisäosat", "Saatavilla olevat lisäosat" ja "Asennetut yhteensopimattomat lisäosat".
+Kaikkien välilehtien asettelu on  samanlainen sisältäen lisäosien luettelon, paneelin valitun lisäosan lisätiedoille sekä painikkeen  toimintojen suorittamista varten valitulle lisäosalle.
+Asennettujen lisäosien Toiminnot-valikko sisältää "Poista käytöstä"- ja "Poista"-vaihtoehdot "Asenna"-toiminnon sijaan.
+Lisäosan poistaminen käytöstä estää NVDA:ta lataamasta sitä, mutta se jää asennetuksi.
+Ota käytöstä poistettu lisäosa uudelleen käyttöön valitsemalla Toiminnot-valikosta "Ota käyttöön".
+Kun olet ottanut lisäosan käyttöön, poistanut sen käytöstä tai poistanut sen kokonaan, sinua kehotetaan käynnistämään NVDA uudelleen lisäosakauppaa sulkiessasi.
+Nämä muutokset tulevat voimaan vasta NVDA:n uudelleenkäynnistyksen jälkeen.
+Huom: Lisäosakaupan ikkunassa `Esc`-näppäin toimii samalla tavalla kuin Sulje-painike.
+
+#### Lisäosien päivittäminen {#UpdatingAddons}
+Kun asentamaasi lisäosaan on saatavilla päivitys, se näytetään "Päivitettävät lisäosat" -välilehdellä.
+Siirry tälle välilehdelle miltä tahansa muulta lisäosakaupan välilehdeltä painamalla `Ctrl+Sarkain`.
+Lisäosan tilana näkyy "Päivitys saatavilla".
+Luettelossa näytetään tällä hetkellä asennettuna oleva  ja saatavilla oleva versio.
+Avaa Toiminnot-valikko painamalla lisäosan kohdalla `Enteriä` ja valitse "Päivitä"-vaihtoehto.
 
 ### Yhteisö {#Community}
 
@@ -2204,7 +2276,7 @@ Tämä asetus ei ole käytettävissä, jos [Käytä WASAPIa äänen toistamiseen
 
 Äänijako-toiminto mahdollistaa stereoäänilaitteiden, kuten kuulokkeiden ja kaiuttimien, hyödyntämisen.
 Sen avulla on mahdollista saada NVDA:n puhe toiseen kanavaan (esim. vasempaan) ja muiden sovellusten äänet toiseen (esim. oikeaan).
-Oletuksena äänijako ei ole käytössä, mikä tarkoittaa, että kaikki sovellukset NVDA mukaan lukien toistavat ääntä sekä vasemmassa että oikeassa kanavassa.
+Ääänijako ei ole käytössä oletuksena.
 Näppäinkomento mahdollistaa vaihtamisen eri äänijakotilojen välillä:
 <!-- KC:beginInclude -->
 
@@ -2216,18 +2288,21 @@ Näppäinkomento mahdollistaa vaihtamisen eri äänijakotilojen välillä:
 
 Oletuksena tämä komento vaihtaa seuraavien tilojen välillä:
 
-* Ei käytössä: NVDA ja muut sovellukset toistavat ääntä sekä vasemmassa että oikeassa kanavassa.
+* Ei käytössä: NVDA ei käytä äänijakoa.
 * NVDA vasemmalla ja sovellukset oikealla: NVDA puhuu vasemmassa kanavassa, kun taas muut sovellukset toistavat ääntä oikeassa.
 * NVDA vasemmalla ja sovellukset molemmissa kanavissa: NVDA puhuu vasemmassa kanavassa, kun taas muut sovellukset toistavat ääntä sekä vasemmassa että oikeassa.
 
 NVDA:n asetusyhdistelmäruudussa on käytettävissä myös edistyneempiä äänijakotiloja.
+Näistä tiloista "NVDA ja sovellukset molemmissa kanavissa" pakottaa kaikki äänet ohjautumaan molempiin kanaviin.
+Tämä tila saattaa poiketa "Ei käytössä" -tilasta siinä tapauksessa, että muu äänenkäsittely vaikuttaa kanavien äänenvoimakkuuteen.
+
 Huom: Äänijako ei toimi mikserinä.
 Jos esimerkiksi sovellus toistaa stereoääniraitaa, kun äänijaon tilaksi on määritetty "NVDA vasemmalla ja sovellukset oikealla", kuulet vain ääniraidan oikean kanavan, kun taas raidan vasen kanava mykistetään.
 
 Tämä asetus ei ole käytettävissä, jos olet [poistanut WASAPIn käytöstä](#WASAPI) NVDA:n lisäasetuksissa.
 
 Huom: Jos NVDA kaatuu, se ei pysty palauttamaan sovellusten äänenvoimakkuutta, jolloin ne saattavat edelleen toistaa ääntä vain yhdessä kanavassa.
-Käynnistä NVDA uudelleen tämän vähentämiseksi.
+Käynnistä tämän vähentämiseksi NVDA uudelleen ja valitse tilaksi "NVDA ja sovellukset molemmissa kanavissa".
 
 ##### Äänijakotilojen mukauttaminen {#CustomizeSoundSplitModes}
 
@@ -3270,7 +3345,7 @@ Sisäänkirjautumisen aikana ja käyttäjätilien valvonnan ruuduissa käytettä
 ## Lisäosat ja lisäosakauppa {#AddonsManager}
 
 Lisäosat ovat ohjelmistopaketteja, jotka tarjoavat uusia tai muokattuja toiminnallisuuksia NVDA:lle.
-Niitä kehittävät NVDA-yhteisö ja ulkoiset organisaatiot, kuten kaupalliset toimittajat.
+Niitä kehittävät NVDA-yhteisö ja ulkopuoliset organisaatiot, kuten kaupalliset toimittajat.
 Lisäosat voivat tehdä seuraavia asioita:
 
 * Lisätä tai parantaa tiettyjen sovellusten tukea.

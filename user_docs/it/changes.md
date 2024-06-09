@@ -1,6 +1,105 @@
 # ﻿Novità in NVDA 
 
 
+## 2024.2
+
+Introdotta una nuova funzionalità chiamata hbilanciamento audio.
+Ciò consente di impostare i suoni di NVDA in un canale (ad esempio sinistro) mentre i suoni di tutte le altre applicazioni vengono diretti all'altro canale (ad esempio destro).
+
+Vi sono nuovi comandi per modificare le impostazioni al volo del sintetizzatore, consentendo agli utenti di passare al primo o all'ultimo elemento e di aumentare o diminuire l'impostazione corrente con incrementi più ampi.
+Sono inoltre disponibili nuovi comandi di navigazione veloce, che consentono agli utenti di associare gesti per passare rapidamente tra: paragrafo, paragrafo allineato verticalmente, testo con lo stesso stile, testo con stile diverso, voce di menu, interruttore, barra di avanzamento, figura e formula matematica.
+
+Sono presenti molte nuove funzionalità braille e correzioni di bug.
+È stata aggiunta una modalità braille denominata "mostra output sintesi vocale".
+Quando attiva, sul display braille si visualizzerà esattamente ciò che dice NVDA.
+Aggiunto anche il supporto per i display BrailleEdgeS2 e BrailleEdgeS3.
+LibLouis è stato aggiornato, con nuove tabelle dettagliate (con lettere maiuscole indicate) in Braille bielorusso e ucraino, una tabella laotiana e una tabella spagnola per la lettura di testi greci.
+
+eSpeak riceve un aggiornamento che prevede l'aggiunta della nuova lingua Tigrinya.
+
+Sono disponibili numerose correzioni di bug minori per applicazioni come Thunderbird, Adobe Reader, browser Web, Nudi e Geekbench.
+
+### Novità
+
+* Nuovi tasti di scelta rapida:
+  * Nuovo comando di navigazione veloce "p" per passare al paragrafo di testo successivo/precedente in modalità navigazione. (#15998, @mltony)
+  * Nuovi comandi di navigazione veloce non assegnati, che possono essere utilizzati per passare all'elemento  successivo/precedente indicati di seguito:
+    * figura (#10826)
+    * paragrafo allineato verticalmente (#15999, @mltony)
+    * voce di menu (#16001, @mltony)
+    * Interruttore (#16001, @mltony)
+    * barra di avanzamento (#16001, @mltony)
+    * Formula matematica (#16001, @mltony)
+    * Testo con lo stesso stile (#16000, @mltony)
+    * testo con stile diverso (#16000, @mltony)
+  * Aggiunti comandi relativi alle impostazioni al volo del sintetizzatore per saltare al primo elemento, all'ultimo, avanti e indietro. (#13768, #16095, @rmcpantoja)
+    * Nessuna assegnazione di gesti per andare al primo o all'ultimo elemento delle impostazioni al volo del sintetizzatore. (#13768)
+    * Aumentare/diminuire il parametro corrente del sintetizzatore con un incremento maggiore/minore. (#13768):
+      * Desktop: `NVDA+control+paginaSu` e `NVDA+control+paginaGiù`.
+      * Laptop: `NVDA+control+shift+paginaSu` e `NVDA+control+shift+paginaGiù`.
+  * Aggiunto un nuovo gesto di immissione non assegnato per attivare/disattivare la segnalazione di figure e didascalie. (#10826, #14349)
+* Braille:
+  * Introdotto il supporto per i display BrailleEdgeS2 and BrailleEdgeS3. (#16033, #16279, @EdKweon)
+  * Aggiunta una nuova modalità braille denominata "Mostra output sintesi vocale". (#15898, @Emil-18)
+    * Quando attiva, sul display braille si visualizzerà esattamente ciò che dice NVDA.
+    * Può essere abilitata attraverso la combinazione di tasti `NVDA+alt+t`, o dalla finestra impostazioni braille.
+* bilanciamento del suono: (#12985, @mltony)
+  * Consente di impostare i suoni di NVDA in un canale (ad esempio sinistro) mentre i suoni di tutte le altre applicazioni vengono diretti all'altro canale (ad esempio destro).
+  * Per attivarlo/disattivarlo, usare `NVDA+alt+s`.
+* Viene ora supportata la segnalazione di intestazioni di righe e colonne negli elementi html con contenuto modificabile. (#14113)
+* Aggiunta un'opzione per disabilitare la lettura di figure e didascalie nelle impostazioni formato documento. (#10826, #14349)
+* In Windows 11, NVDA annuncerà gli avvisi derivanti dalla digitazione vocale e le azioni suggerite, incluso il suggerimento principale quando si copiano dati come i numeri di telefono negli appunti (Windows 11 2022 Update e versioni successive). (#16009, @josephsl)
+* NVDA manterrà attiva la scheda audio dopo che la sintesi vocale ha smesso di parlare, per evitare che l'inizio della frase successiva venga troncata con alcuni dispositivi audio come le cuffie Bluetooth. (#14386, @jcsteh, @mltony)
+* Supporto per HP Secure Browser. (#16377)
+
+### Cambiamenti
+
+* Add-on Store:
+  * vengono ora visualizzate nell'area "altri dettagli" La versione minima e l'ultima testata di NVDA per un add-on. (#15776, @Nael-Sayegh)
+  * Disponibile in tutte le schede dello store la funzione recensione degli utenti. (#16179, @nvdaes)
+* Aggiornamento dei componenti:
+  * Aggiornato LibLouis Braille translator alla versione [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0). (#16259, @codeofdusk)
+    * Nuove tabelle Braille bielorusse e ucraine dettagliate (con le lettere maiuscole indicate).
+    * Nuova tabella spagnola per la lettura di testi greci.
+    * Nuova tabella per Lao Grado 1. (#16470)
+  * eSpeak NG è stato aggiornato al commit 1.52-dev `cb62d93fd7`. (#15913)
+    * Aggiunta la nuova lingua Tigrinya.
+* Modificati diversi gesti per i dispositivi BrailleSense per evitare conflitti con i caratteri della tabella braille francese. (#15306)
+  * `alt+frecciaSinistra` è ora mappato su `punto2+punto7+spazio`
+  * `alt+frecciadestra` è ora mappato su `punto5+punto7+spazio`
+  * `alt+frecciaSu` è ora mappato su `punto2+punto3+punto7+spazio`
+  * "alt+frecciaGiù" è ora mappato su "punto5+punto6+punto7+spazio"
+* I punti di riempimento comunemente utilizzati nei sommari non vengono più inseriti nei livelli di punteggiatura più bassi. (#15845, @CyrilleB79)
+
+### Bug Corretti
+
+* Correzioni per Windows 11:
+  * NVDA annuncerà nuovamente i suggerimenti per l'immissione da tastiera hardware. (#16283, @josephsl)
+  * Nella versione 24H2 (aggiornamento 2024 e Windows Server 2025), l'interazione con mouse e tocco può essere utilizzata nelle impostazioni rapide. (#16348, @josephsl)
+* Add-on Store:
+  * Quando si preme `ctrl+tab`, lo stato attivo si sposta correttamente sul nuovo titolo della scheda corrente. (#14986, @ABuffEr)
+  * Se i file della cache non sono corretti, NVDA non si riavvierà più. (#16362, @nvdaes)
+* Correzioni per i browser basati su Chromium se utilizzati con UIA:
+  * Risolti i bug che causavano il blocco di NVDA. (#16393, #16394)
+  * Il tasto Backspace ora funziona correttamente nei campi di login di Gmail. (#16395)
+* Il tasto backspace ora funziona correttamente quando si utilizza Nudi 6.1 con l'impostazione "Gestisci tasti da altre applicazioni" di NVDA abilitata. (#15822, @jcsteh)
+* Risolto un bug per cui, nonostante un'applicazione si trovasse in modalità riposo, venivano erroneamente emessi i segnali acustici con l'opzione "coordinate audio quando il mouse si sposta" attivata. (#8059, @hwf1324)
+* In Adobe Reader, NVDA non ignora più il testo alternativo impostato nelle formule nei PDF. (#12715)
+* Risolto un bug che impediva a NVDA di leggere la barra multifunzione e le opzioni all'interno di Geekbench. (#16251, @mzanm)
+* Risolto un bug piuttosto raro in cui il salvataggio della configurazione non salvava tutti i profili. (#16343, @CyrilleB79)
+* Nei browser basati su Firefox e Chromium, NVDA entrerà correttamente in modalità focus quando si preme Invio se posizionati all'interno di un elenco di presentazione (ul / ol) dentro al contenuto modificabile. (#16325)
+* La modifica dello stato delle colonne ora viene letta correttamente quando si scelgono le colonne da visualizzare nell'elenco dei messaggi di Thunderbird. (#16323)
+* L'opzione a riga di comando `-h`/`--help` funziona di nuovo correttamente. (#16522, @XLTechie)
+* Il supporto di NVDA per il software di traduzione Poedit versione 3.4 o successiva gestisce correttamente la traduzione di lingue con 1 o più di 2 forme plurali (ad esempio cinese, polacco). (#16318)
+
+### Cambiamenti per sviluppatori, in ingleseChanges for Developers
+
+Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+* Instantiating `winVersion.WinVersion` objects with unknown Windows versions above 10.0.22000 such as 10.0.25398 returns "Windows 11 unknown" instead of "Windows 10 unknown" for release name. (#15992, @josephsl)
+* Make the AppVeyor build process easier for NVDA forks, by adding configurable variables in appveyor.yml to disable or modify NV Access specific portions of the build scripts. (#16216, @XLTechie)
+* Added a how-to document, explaining the process of building NVDA forks on AppVeyor. (#16293, @XLTechie)
+
 ## 2024.1
 
 Aggiunta una nuova modalità per la sintesi vocale, chiamata su richiesta.

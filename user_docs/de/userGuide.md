@@ -82,7 +82,7 @@ Einzelheiten zu Ausnahmen finden Sie im NVDA-Menü unter "Hilfe", "Lizenz".
 ## NVDA-Schnellstartanleitung {#NVDAQuickStartGuide}
 
 Diese Schnellstartanleitung enthält drei Hauptabschnitte: Herunterladen, Ersteinrichtung und Ausführung von NVDA.
-Es folgen Informationen über die Anpassung von Einstellungen, die Teilnahme an der Community und die Inanspruchnahme von Hilfe.
+Es folgen Informationen über die Anpassung der Einstellungen, die Verwendung von NVDA-Erweiterungen, die Teilnahme an der Community und die Hilfe.
 Die Informationen in diesem Handbuch wurden aus anderen Teilen des NVDA-Benutzerhandbuchs zusammengefasst.
 Ausführlichere Informationen zu den einzelnen Themen finden Sie im vollständigen Benutzerhandbuch.
 
@@ -278,7 +278,79 @@ Die meisten NVDA-Funktionen können über die NVDA-Einstellungen aktiviert oder 
 Einstellungen und andere Optionen sind über das Menü von NVDA verfügbar.
 Um das Menü von NVDA zu öffnen, drücken Sie `NVDA+N`.
 Um das Dialogfeld mit den allgemeinen Einstellungen von NVDA direkt zu öffnen, drücken Sie `NVDA+Strg+G`.
-Viele Einstellungsbereiche haben Tastenkombinationen, um sie direkt zu öffnen, z. B. `NVDA+Strg+S` für Sprachausgaben oder `NVDA+Strg+V` für andere Sprachausgaben-Optionen.
+Viele Einstellungsbereiche haben Tastenkombinationen, um sie direkt zu öffnen, z. B. `NVDA+Strg+S` für Sprachausgaben oder `NVDA+Strg+V` für weitere Sprachausgaben-Optionen.
+
+### Die NVDA-Erweiterungen {#Addons}
+NVDA-Erweiterungen sind Software-Pakete, die neue oder geänderte Funktionen für NVDA bereitstellen.
+Diese werden von der NVDA-Community oder von externen Unternehmen entwickelt und gehören nicht zu NV Access.
+Wie bei jeder Software ist es wichtig, vor der Verwendung dem Entwickler zu vertrauen.
+Bitte lesen Sie unter [NVDA-Erweiterungen installieren](#AddonStoreInstalling) nach, wie Sie die NVDA-Erweiterungen vor der Installation überprüfen können.
+
+Beim ersten Öffnen des Stores zeigt NVDA eine Warnung zu NVDA-Erweiterungen an.
+Diese NVDA-Erweiterungen werden von NV Access selbst nicht geprüft und können uneingeschränkte Funktionalität und Zugriff auf Informationen haben.
+Drücken Sie die die `Leertaste`, sobald Sie die Warnung gelesen haben und sie beim nächsten Mal nicht mehr daran erinnert werden möchten.
+Drücken Sie die `Tab-Taste`, um zum Schalt "OK" zu gelangen und dann betätigen Sie die `Eingabetaste`, um die Warnung zu akzeptieren und anschließend zum Store zu gelangen.
+Der Abschnitt "[NVDA-Erweiterungen und der Store](#AddonsManager)" in diesem Benutzerhandbuch enthält Informationen zu allen Funktionen des Stores.
+
+Der Store ist über Werkzeuge im NVDA-Menü verfügbar.
+Drücken Sie `NVDA+N`, um das NVDA-Menü zu öffnen, dann `Z` für Werkzeuge und `T` für den Store für NVDA-ERweiterungen.
+Wenn noch keine NVDA-Erweiterungen installiert sind, wird im Store die Registerkarte "Verfügbare Pakete" angezeigt.
+Wenn NVDA-Erweiterungen installiert sind, wird im Store die Registerkarte "Installierte Pakete" angezeigt.
+
+#### Verfügbare NVDA-Erweiterungen {#AvailableAddons}
+Wenn das Fenster zum ersten Mal geöffnet wird, kann es einige Sekunden dauern, bis die NVDA-Erweiterungen geladen sind.
+NVDA teilt automatisch den Namen der ersten NVDA-Erweiterung mit, sobald die Liste geladen ist.
+Die verfügbaren NVDA-Erweiterungen werden in einer mehrspaltigen Liste alphabetisch aufgelistet.
+Um die Liste zu durchsuchen und sich über eine bestimmte NVDA-Erweiterung zu informieren:
+
+1. Verwenden Sie die Pfeiltasten oder drücken Sie den Anfangsbuchstaben des Namens, um in der Liste zu navigieren.
+1. Betätigen Sie einmal die `Tab-Taste`, um in das Feld für die Beschreibung zu gelangen.
+1. Verwenden Sie die [Lesetasten](#ReadingText) oder die Pfeiltasten, um den kompletten Text zu lesen.
+1. Betätigen Sie die `Tab-Taste`, um zum Schalter "Aktionen" zu gelangen, mit der Sie unter anderem die NVDA-Erweiterung installieren können.
+1. Betätigen Sie die `Tab-Taste`, um zu "Weitere Details" zu gelangen, in der Details wie der Herausgeber, die Version und die Adresse der Homepage stehen.
+1. Um zur Liste der NVDA-Erweiterungen zurückzukehren, drücken Sie `Alt+A`" oder `Umschalt+Tab`, bis Sie die Liste erreichen.
+
+#### Nach NVDA-Erweiterungen suchen {#SearchingForAddons}
+Neben der Suche nach verfügbaren NVDA-Erweiterungen können Sie auch diese filtern.
+Um zu suchen, drücken Sie `Alt+S`, um zum Feld "Suchen" zu gelangen und geben Sie den zu suchenden Begriff ein.
+Bei der Suche wird nach Übereinstimmungen in den Feldern ID, Anzeigename, Herausgeber, Autor und Beschreibung gesucht.
+Die Liste wird während der Eingabe der Suchbegriffe aktualisiert.
+Betätigen Sie anschließend die `Tab-Taste`, um die gefilterte Liste aufzurufen und die Ergebnisse sich anzeigen zu lassen.
+
+#### NVDA-Erweiterungen installieren {#InstallingAddons}
+
+Um eine NVDA-Erweiterung zu installieren:
+
+1. Wenn eine zu installierende NVDA-Erweiterung ausgewählt ist, betätigen Sie die `Eingabetaste`.
+1. Es öffnet sich das Aktionsmenü mit einer Liste von Aktionen; die erste Aktion ist "Installieren".
+1. Um eine NVDA-Erweiterung zu installieren, drücken Sie den Buchstaben `I` oder die `Pfeiltaste nach unten` bis zum Schalter "Installieren" und betätigen Sie dann die `Eingabetaste`.
+1. Der Fokus kehrt zur Liste zurück und NVDA teilt die Details mit.
+1. Der von NVDA mitgeteilte Status ändert sich von "Verfügbar" zu "Herunterladen".
+1. Sobald der Download abgeschlossen ist, ändert sich der Status in "Heruntergeladen, Installation ausstehend".
+1. Wiederholen Sie diesen Vorgang mit weiteren NVDA-Erweiterungen, die Sie gleichzeitig installieren möchten.
+1. Wenn Sie fertig sind, drücken Sie die `Tab-Taste`, bis zum Schalter "Schließen" und betätigen Sie dann die `Eingabetaste`.
+1. Die heruntergeladenen NVDA-Erweiterungen werden installiert, sobald der Store geschlossen wird.
+Beim Installationsvorgang könnten Dialogfelder angezeigt werden, indem Sie entweder weitere Aktionen auswählen oder Fragen beantwortet werden müssen.
+1. Nach der Installation wird ein Dialogfeld mit dem Hinweis angezeigt, dass Änderungen vorgenommen wurden und Sie müssen NVDA neu starten, damit die Installation abgeschlossen werden kann.
+1. Betätigen Sie nun die `Eingabetaste`, um NVDA neu zu starten.
+
+#### Installierte NVDA-Erweiterungen verwalten {#ManagingInstalledAddons}
+Drücken Sie die Tastenkombination `Strg+Tab`, um zwischen den Registerkarten im Store zu wechseln.
+Die Registerkarten umfassen: "Installierte Pakete", "Updates", "Verfügbare Pakete" und "Installierte inkompatible Pakete".
+Jeder dieser Registerkarten ist ähnlich aufgebaut, d. h., sie enthält eine Liste der NVDA-Erweiterungen, ein Feld für weitere Details und ein Schalter für Aktionen, die durchgeführt werden können.
+Das Aktionsmenü der installierten NVDA-Erweiterung enthält die Einträge "Deaktivieren" und "Entfernen" anstatt "Installieren".
+Wenn Sie eine NVDA-Erweiterung deaktivieren, wird es nicht mehr in NVDA geladen, bleibt aber installiert.
+Um eine deaktivierte NVDA-Erweiterung wieder zu aktivieren, wählen Sie im Aktionsmenü den Eintrag "Aktivieren" aus.
+Nach dem Aktivieren, Deaktivieren oder Entfernen werden Sie beim Schließen des Stores aufgefordert, NVDA neu zu starten.
+Diese Änderungen werden erst nach einem Neustart von NVDA wirksam.
+Beachten Sie, dass im Store die `Escape-Taste` gleichermaßen funktioniert wie der Schalter "Schließen".
+
+#### NVDA-Erweiterungen aktualisieren {#UpdatingAddons}
+Sollte ein Update von einer installierten NVDA-Erweiterung verfügbar sein, wird dies in der Registerkarte "Updates" aufgeführt.
+Drücken Sie die Tastenkombination `Strg+Tab`, um diese Registerkarte von einer beliebigen Stelle im Store aus aufzurufen.
+Der Status wird als "Update verfügbar" angezeigt.
+In der Liste werden die derzeit installierte Version und die verfügbare Version angezeigt.
+Drücken Sie die `Eingabetaste`, um die Liste der Aktionen zu öffnen; wählen Sie dann hier "Aktualisieren" aus.
 
 ### Die Community {#Community}
 
@@ -915,7 +987,7 @@ Folgende Befehle springen ohne Umschalttaste gedrückt zum nächsten Element; zu
 * O: Eingebettetes Objekt (Anwendung, Dialogfeld, Audio- und Video-Player)
 * 1 bis 6: Überschrift der jeweiligen Ordnung
 * A: Anmerkung: Kommentar, Dokumentänderung, etc.
-* P: Absatz
+* `P`: Absatz
 * W: Rechtschreibfehler
 
 Verwenden Sie folgende Tastenkombinationen, um zum Beginn oder zum Ende eines Container-Objektes (Listen, Tabellen, etc.) zu springen:
@@ -1052,8 +1124,8 @@ In Szenarien, in denen Sie eine ganze Tabelle oder einen ganzen Absatz mit umfan
 
 Sie können MathPlayer 4 von Design Science verwenden, um mit NVDA in mathematischen Inhalten zu navigieren. Die Inhalte werden in Sprache und Braille ausgegeben.
 Damit NVDA jedoch mathematische Inhalte lesen und mit ihnen interagieren kann, müssen Sie zunächst eine Mathematikkomponente für NVDA installieren.
-Im Store für NVDA-Erweiterungen sind mehrere NVDA-Erweiterungen verfügbar, die Mathematik unterstützen, darunter die Erweiterung [MathCAT](https://nsoiffer.github.io/MathCAT/) und [Access8Math https://github](.com/tsengwoody/Access8Math).
-Weitere Informationen zum Durchsuchen und Installieren verfügbarer Erweiterungen in NVDA finden Sie im Abschnitt [Erweiterungs-Store](#AddonsManager).
+Im Store sind mehrere NVDA-Erweiterungen verfügbar, die Mathematik unterstützen, darunter [MathCAT](https://nsoiffer.github.io/MathCAT/) und [Access8Math https://github](.com/tsengwoody/Access8Math).
+Weitere Informationen zum Suchen und Installieren verfügbarer NVDA-Erweiterungen finden Sie im Abschnitt [die NVDA-Erweiterungen und der Store](#AddonsManager).
 NVDA kann auch die veraltete Software [MathPlayer](https://info.wiris.com/mathplayer-info) von Wiris nutzen, sofern diese auf Ihrem System vorhanden ist. Diese Software wird jedoch nicht mehr aktuallisiert.
 
 ### Unterstützte Mathematik-Inhalte {#SupportedMathContent}
@@ -1715,8 +1787,8 @@ Wenn die Option aktiviert ist, werden die folgenden Daten zusätzlich gesendet:
 
 * Eingestellte Landessprache in NVDA.
 * Art der NVDA-Instanz (portabel oder installiert).
-* Name der verwendeten Sprachausgabe (einschließlich Name der Erweiterung, aus der die Sprachausgabe stammt).
-* Name der verwendeten Braillezeile (einschließlich Name der Erweiterung, aus der der Treiber stammt).
+* Name der verwendeten Sprachausgabe (einschließlich Name der NVDA-Erweiterung, aus der die Sprachausgabe stammt).
+* Name der verwendeten Braillezeile (einschließlich Name der NVDA-Erweiterung, aus der der Treiber stammt).
 * Aktuelle Ausgabetabelle (sofern Braille benutzt wird).
 
 Diese Informationen helfen NV Access bei der zukünftigen Entwicklung von NVDA.
@@ -2204,7 +2276,7 @@ Diese Option ist nicht verfügbar, wenn Sie NVDA mit [WASAPI deaktiviert für Au
 
 Mit der Sound-Teilung können die Benutzer ihre Stereo-Ausgabegeräte wie Kopfhörer und Lautsprecher nutzen.
 Damit können Sie die Sprachausgabe in NVDA auf einen Kanal (z. B. links) und alle anderen Anwendungen auf dem anderen Kanal (z. B. rechts) hören.
-Standardmäßig ist die Sound-Teilung deaktiviert, was bedeutet, dass alle Anwendungen, einschließlich NVDA, Töne sowohl im linken als auch im rechten Kanal zu hören sind.
+Standardmäßig ist die Sound-Teilung deaktiviert.
 Mit einem Tastenbefehl können Sie zwischen den verschiedenen Modi wechseln:
 <!-- KC:beginInclude -->
 
@@ -2216,18 +2288,21 @@ Mit einem Tastenbefehl können Sie zwischen den verschiedenen Modi wechseln:
 
 In der Standard-Einstellung wechselt dieser Befehl zwischen den folgenden Modi:
 
-* Deaktivierte Sound-Teilung: Sowohl NVDA als auch andere Anwendungen sind auf beiden Kanälen zu hören.
+* Sound-Teilung deaktiviert: Keine Sound-Teilung ist aktiv in NVDA.
 * NVDA links und Anwendungen rechts: NVDA ist auf dem linken Kanal, während Sounds anderer Anwendungen auf dem rechten Kanal zu hören sind.
 * NVDA links und Anwendungen beidseitig: NVDA ist auf dem linken Kanal, während Sounds anderer Anwendungen auf beiden Kanälen zu hören sind.
 
-Im Kombinationsfeld der Einstellung in NVDA sind weitere erweiterte Modi für die Sound-Teilung verfügbar.
+Im Kombinationsfeld den Einstellung in NVDA sind weitere erweiterte Modi für die Sound-Teilung verfügbar.
+Unter diesen Modi erzwingt die Einstellung "NVDA und Anwendungen beidseitig", dass alle Sounds in beide Kanäle zu hören sind.
+Dieser Modus kann sich vom Modus "Sound-Teilung deaktivieren" unterscheiden, sobald weitere Audio-Verarbeitungen die Lautstärke des Kanals beeinträchtigen.
+
 Bitte beachten Sie, dass die Sound-Teilung nicht als Mixer funktioniert.
 Wenn beispielsweise eine Anwendung eine Stereo-Tonspur abspielt und die Sound-Teilung auf "NVDA links und Anwendungen rechts" eingestellt ist, dann hören Sie nur den rechten Kanal der Tonspur, während der linke Kanal der Tonspur stummgeschaltet wird.
 
 Diese Option ist nicht verfügbar, wenn Sie NVDA mit [WASAPI deaktiviert für Audioausgabe](#WASAPI) in den Erweiterten Einstellungen gestartet haben.
 
 Bitte beachten Sie, dass bei einem Absturz von NVDA die Lautstärke der Anwendungstöne nicht wiederhergestellt werden kann und dass diese Anwendungen nach dem Absturz von NVDA den Sound möglicherweise nur noch auf einem Kanal ausgegeben werden.
-Um dieses Problem zu beheben, starten Sie bitte NVDA neu.
+Um dies zu verhindern, starten Sie NVDA neu und wählen Sie den Modus "NVDA und Anwendungen beidseitig" aus.
 
 ##### Anpassen der Modi für die Sound-Teilung {#CustomizeSoundSplitModes}
 
@@ -2235,7 +2310,7 @@ Um dieses Problem zu beheben, starten Sie bitte NVDA neu.
 Modi, die nicht markiert sind, sind ausgenommen.
 Standardmäßig sind nur drei Modi enthalten.
 
-* Sound-Tteilung ausgeschaltet.
+* Sound-Tteilung deaktiviert.
 * NVDA links und Anwendungen rechts.
 * NVDA links und Anwendungen beidseitig.
 
@@ -2291,7 +2366,7 @@ Wenn Sie dieses Verhalten ändern möchten, können Sie das Kontrollkästchen "S
 
 Zusätzliche Quellen für die Verbesserung der visuellen Darstellungen können mittels [NVDA-Erweiterungen](#AddonsManager) von Drittanbietern bereitgestellt werden.
 Wenn diese Quellen über konfigurierbare Einstellungen verfügen, werden sie in dieser Einstellungskategorie in separaten Gruppierungen angezeigt.
-Die unterstützten Einstellungen pro Quelle finden Sie in der Dokumentation der jeweiligen Erweiterung.
+Die unterstützten Einstellungen pro Quelle finden Sie in der Dokumentation der jeweiligen NVDA-Erweiterung.
 
 #### Die Tastatur-Einstellungen {#KeyboardSettings}
 
@@ -3267,7 +3342,7 @@ Die Einstellungen von NVDA für das Anmeldefenster und die Sicherheitsmeldungen 
 Für gewöhnlich sollte diese Konfiguration unberührt bleiben!
 Um die Konfiguration von NVDA während der Anmeldung oder bei Sicherheitsmeldungen zu ändern, konfigurieren Sie NVDA wie gewünscht, während Sie bei Windows angemeldet sind, speichern Sie die Konfiguration und betätigen Sie dann den Schalter "Aktuell gespeicherte Einstellungen während der Anmeldung und bei Sicherheitsmeldungen verwenden" in der Kategorie "Allgemein" der [NVDA-Einstellungen](#NVDASettings).
 
-## NVDA-Erweiterungen und der Store für NVDA-Erweiterungen {#AddonsManager}
+## Die NVDA-Erweiterungen und der Store {#AddonsManager}
 
 NVDA-Erweiterungen sind Software-Pakete, die neue oder geänderte Funktionen für NVDA bereitstellen.
 Sie werden von der NVDA-Community und externen Organisationen wie kommerziellen Anbietern entwickelt.
@@ -3277,8 +3352,8 @@ NVDA-Erweiterungen können eine der folgenden Funktionen haben:
 * Unterstützung für zusätzliche Braillezeilen oder Sprachausgaben.
 * Hinzufügen oder Ändern von Funktionen in NVDA.
 
-Mit dem Store für NVDA-Erweiterungen können Sie Erweiterungspakete durchsuchen und verwalten.
-Alle NVDA-Erweiterungen, die im Store für NVDA-Erweiterungen verfügbar sind, können kostenlos heruntergeladen werden.
+Mit dem Store können Sie nach NVDA-Erweiterungen suchen und verwalten.
+Alle NVDA-Erweiterungen, die im Store verfügbar sind, können kostenlos heruntergeladen werden.
 Einige davon erfordern jedoch, dass die Benutzer für eine Lizenz oder zusätzliche Software bezahlen, bevor sie verwendet werden können.
 Kommerzielle Sprachausgaben sind ein Beispiel für diese Art von NVDA-Erweiterungen.
 Wenn Sie eine NVDA-Erweiterung mit kostenpflichtigen Komponenten installieren und es dann doch nicht mehr verwenden möchten, kann die NVDA-Erweiterung problemlos entfernt werden.
@@ -3351,18 +3426,18 @@ Es ist sehr wichtig, dass Sie nur NVDA-Erweiterungen aus offiziellen Quellen ins
 Die Funktionalität von NVDA-Erweiterungen ist innerhalb von NVDA nicht eingeschränkt.
 Dies könnte den Zugriff auf Ihre persönlichen Daten oder sogar auf das gesamte System beinhalten.
 
-Sie können NVDA-Erweiterungen installieren und aktualisieren, indem Sie [Verfügbare NVDA-Erweiterungen durchsuchen](#AddonStoreBrowsing).
-Wählen Sie eine NVDA-Erweiterung auf der Registerkarte "Verfügbare NVDA-Erweiterungen" oder "Zu aktualisierende NVDA-Erweiterungen" aus.
+Sie können NVDA-Erweiterungen installieren und aktualisieren, indem Sie nach [Verfügbare Pakete](#AddonStoreBrowsing) suchen.
+Wählen Sie eine NVDA-Erweiterung in der Registerkarte "Verfügbare Pakete" oder "Updates" aus.
 Starten Sie dann die Installation mit der Aktion "Aktualisieren", "Installieren" oder "Ersetzen".
 
-Sie können auch mehrere Erweiterungen gleichzeitig installieren.
-Dies kann erreicht werden, indem Sie auf der Registerkarte "Verfügbare Erweiterungen" mehrere Erweiterungen auswählen, dann das Kontextmenü der Auswahl aktivieren und die Aktion "Ausgewählte Erweiterungen installieren" auswählen.
+Sie können auch mehrere NVDA-Erweiterungen gleichzeitig installieren.
+Dies kann erreicht werden, indem Sie in der Registerkarte "Verfügbare Pakete" mehrere NVDA-Erweiterungen auswählen, dann das Kontextmenü der Auswahl aktivieren und die Aktion "Ausgewählte NVDA-Erweiterungen installieren" auswählen.
 
 Um eine NVDA-Erweiterung zu installieren, die Sie außerhalb des Store geladen haben, klicken Sie auf den Schalter "Aus externer Quelle installieren".
-Damit können Sie nach einem Erweiterungspaket (`.nvda-addon`-Datei) irgendwo auf Ihrem Computer oder in einem Netzwerk suchen.
-Sobald Sie das Erweiterungspaket angeklickt haben, beginnt der Installationsprozess.
+Damit können Sie nach einer NVDA-Erweiterung (`.nvda-addon`-Datei) irgendwo auf Ihrem Computer oder in einem Netzwerk suchen.
+Sobald Sie die NVDA-Erweiterung angeklickt haben, beginnt der Installationsprozess.
 
-Wenn NVDA auf Ihrem System installiert ist und läuft, können Sie diese Datei auch direkt über den Browser oder das Datei-System öffnen, um den Installationsvorgang zu starten.
+Wenn NVDA auf Ihrem System installiert ist und gestartet wurde, können Sie diese Datei auch direkt über den Browser oder das Datei-System öffnen, um den Installationsvorgang zu starten.
 
 Wenn eine NVDA-Erweiterung aus einer externen Quelle installiert werden soll, werden Sie von NVDA aufgefordert, diese Installation zu bestätigen.
 Nach der Installation der NVDA-Erweiterung muss NVDA neu gestartet werden, damit die NVDA-Erweiterung ausgeführt werden kann. Sie können den Neustart von NVDA jedoch verschieben, wenn Sie weitere NVDA-Erweiterungen installieren oder aktualisieren möchten.
@@ -3373,7 +3448,7 @@ Um eine NVDA-Erweiterung zu entfernen, wählen Sie sie aus der Liste aus und ver
 Von NVDA werden Sie aufgefordert, die Entfernung zu bestätigen.
 Wie bei der Installation muss NVDA neu gestartet werden, damit die NVDA-Erweiterung vollständig entfernt wird.
 Solange Sie dies nicht tun, wird für diese NVDA-Erweiterung in der Liste der Status "Zur Entfernung ausstehend" angezeigt.
-Wie bei der Installation können Sie auch mehrere Erweiterungen gleichzeitig entfernen.
+Wie bei der Installation können Sie auch mehrere NVDA-Erweiterungen gleichzeitig entfernen.
 
 #### NVDA-Erweiterungen aktivieren oder deaktivieren {#AddonStoreDisablingEnabling}
 
@@ -3384,16 +3459,16 @@ Bei jeder Verwendung der Aktion "Aktivieren/Deaktivieren" ändert sich der Statu
 Hatte die NVDA-Erweiterung zuvor den Status "Deaktiviert", wird der Status "Nach Neustart aktiviert" angezeigt.
 Hatte die NVDA-Erweiterung zuvor den Status "Aktiviert", wird der Status auf "Nach Neustart deaktiviert" gesetzt.
 Genau wie beim Installieren oder Entfernen von NVDA-Erweiterungen müssen Sie NVDA neu starten, damit die Änderungen wirksam werden.
-Sie können auch mehrere Erweiterungen gleichzeitig aktivieren oder deaktivieren, indem Sie auf der Registerkarte "Verfügbare Erweiterungen" mehrere Erweiterungen auswählen, dann das Kontextmenü der Auswahl aktivieren und die entsprechende Aktion auswählen.
+Sie können auch mehrere NVDA-Erweiterungen gleichzeitig aktivieren oder deaktivieren, indem Sie in der Registerkarte "Verfügbare Pakete" mehrere NVDA-Erweiterungen auswählen, dann das Kontextmenü der Auswahl aktivieren und die entsprechende Aktion auswählen.
 
 #### NVDA-Erweiterungen bewerten und Rezensionen lesen {#AddonStoreReviews}
 
-Vielleicht möchten Sie Bewertungen von anderen Nutzern lesen, die bereits Erfahrungen mit einer NVDA-Erweiterung gemacht haben, z. B. bevor Sie es installieren oder während Sie lernen, diese zu benutzen.
+Vielleicht möchten Sie Rezensionen von anderen Nutzern lesen, die bereits Erfahrungen mit einer NVDA-Erweiterung gemacht haben, z. B. bevor Sie es installieren oder während Sie lernen, diese zu benutzen.
 Außerdem ist es für andere Nutzer hilfreich, wenn Sie uns Feedback zu den von Ihnen ausprobierten NVDA-Erweiterungen geben.
-Um Bewertungen für eine NVDA-Erweiterung zu lesen, wählen Sie sie aus und verwenden Sie die Aktion "Community-Bewertungen".
-Dies führt zu einer GitHub-Diskussionsseite, auf der Sie Rezensionen für die Erweiterung lesen und schreiben können.
-Bitte beachten Sie, dass dies nicht die direkte Kommunikation mit Erweiterungs-Entwicklern ersetzt.
-Stattdessen besteht der Zweck dieser Funktion darin, Feedback zu teilen, um Benutzern bei der Entscheidung zu helfen, ob eine Erweiterung für sie nützlich sein könnte.
+Um Bewertungen für eine NVDA-Erweiterung zu lesen, wählen Sie sie aus und verwenden Sie die Aktion "Community-Rezensionen".
+Dies führt zu einer GitHub-Diskussionsseite, auf der Sie Rezensionen für die NVDA-Erweiterung lesen und schreiben können.
+Bitte beachten Sie, dass dies nicht die direkte Kommunikation mit den Entwicklern der NVDA-Erweiterung ersetzt.
+Stattdessen besteht der Zweck dieser Funktion darin, Feedback zu teilen, um Benutzern bei der Entscheidung zu helfen, ob eine NVDA-Erweiterung für sie nützlich sein könnte.
 
 ### Inkompatible NVDA-Erweiterungen {#incompatibleAddonsManager}
 
@@ -4918,7 +4993,7 @@ Folgende Kommandozeilenoptionen stehen zur Verfügung:
 |Keine |`--no-sr-flag` |Keine Mitteilung in Windows über einen installierten Screenreader.|
 |Keine |`--install` |Installiert NVDA ohne Ausgabe von Rückmeldungen und startet die neu installierte Version.|
 |Keine |`--install-silent` |Installiert NVDA ohne Ausgabe von Rückmeldungen, startet die Version aber nicht.|
-|Keine |`--enable-start-on-logon=True/False` |Aktivieren Sie bei der Installation [NVDA bei der Windows-Anmeldung starten](#StartAtWindowsLogon).|
+|Keine |`--enable-start-on-logon=True|False` |Aktivieren Sie bei der Installation [NVDA bei der Windows-Anmeldung starten](#StartAtWindowsLogon).|
 |Keine |`--copy-portable-config` |Kopieren Sie bei der Installation die portable Konfiguration vom angegebenen Pfad (`--config-path`, `-c`) im aktuellen Benutzerkonto.|
 |Keine |`--create-portable` |Erstellt und startet eine neue portable NVDA-Version. Hierfür müssen Sie außerdem den Parameter `--portable-path` angeben.|
 |Keine |`--create-portable-silent` |Erstellt eine neue portable NVDA-Version, ohne diese zu starten. Hierfür müssen Sie außerdem den Parameter `--portable-path` angeben.|
