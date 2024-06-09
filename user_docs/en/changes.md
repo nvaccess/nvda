@@ -28,6 +28,7 @@ Unicode CLDR has been updated.
 * The fallback braille input table is now equal to the fallback output table, which is Unified English Braille Code grade 1. (#9863, @JulienCochuyt, @LeonarddeR)
 * NVDA will now report figures with no accessible children, but with a label or description. (#14514)
 * When reading by line in browse mode, "caption" is no longer reported on each line of a long figure or table caption. (#14874)
+* Add the action to cancel the download/install of a add-on. You can cancel the ongoing download when the add-on is being downloaded, and cancel the installation of the add-on when it's waiting to be installed. (#15578, @hwf1324)
 
 ### Bug Fixes
 * Windows 11 fixes:

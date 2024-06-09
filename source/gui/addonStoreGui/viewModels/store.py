@@ -148,6 +148,20 @@ class AddonStoreVM:
 				actionTarget=selectedListItem
 			),
 			AddonActionVM(
+				# Translators: Label for an action that cancels the installation of the selected addon
+				displayName=pgettext("addonStore", "Ca&ncel install"),
+				actionHandler=self.cancelInstallAddon,
+				validCheck=lambda aVM: aVM.canUseCancelInstallAction(),
+				actionTarget=selectedListItem
+			),
+			AddonActionVM(
+				# Translators: Label for an action that cancels the download of the selected addon
+				displayName=pgettext("addonStore", "Ca&ncel download"),
+				actionHandler=self.cancelDownloadAddon,
+				validCheck=lambda aVM: aVM.canUseCancelDownloadAction(),
+				actionTarget=selectedListItem
+			),
+			AddonActionVM(
 				# Translators: Label for an action that disables the selected addon
 				displayName=pgettext("addonStore", "&Disable"),
 				actionHandler=self.disableAddon,
@@ -603,6 +617,33 @@ class AddonStoreVM:
 		# ensure calling on the main thread.
 		core.callLater(delay=0, callable=self.detailsVM.updated.notify, addonDetailsVM=self.detailsVM)
 		log.debug("completed refresh")
+
+	def cancelInstallAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):
+		log.debug(f"Cancelling install of {listItemVM.Id}")
+
+		pendingInstallCopy = addonDataManager._downloadsPendingInstall.copy()
+		for addonData, fileDownloaded in pendingInstallCopy:
+			if addonData == listItemVM:
+				addonDataManager._downloadsPendingInstall.remove((addonData, fileDownloaded))
+				# Clean up download file
+				try:
+					os.remove(fileDownloaded)
+				except FileNotFoundError:
+					pass
+
+		listItemVM.status = getStatus(listItemVM.model, self._filteredStatusKey)
+
+	def cancelDownloadAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):
+		futuresCopy = self._downloader._pending.copy()
+		try:
+			addonDataManager._downloadsPendingCompletion.remove(listItemVM)
+			for future, addon in futuresCopy.items():
+				if listItemVM == addon[0] and not future.cancel():
+					self._downloader.progress.pop(addon[0], None)
+			listItemVM.status = getStatus(listItemVM.model, self._filteredStatusKey)
+		except KeyError:
+			log.debug("Download already completed")
+			self.cancelInstallAddon(listItemVM)
 
 	def cancelDownloads(self):
 		while addonDataManager._downloadsPendingCompletion:
