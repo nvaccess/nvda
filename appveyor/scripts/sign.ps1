@@ -8,5 +8,7 @@ param(
 	[string]$FileToSign
 )
 
+# TODO how to install this module in appveyor: $ Install-Module -Name SignPath -Scope CurrentUser
+
 # Execute Submit-SigningRequest command from the SignPath module
 Submit-SigningRequest -ApiToken $ApiToken -InputArtifactPath $FileToSign -OutputArtifactPath $FileToSign -OrganizationId "12147e94-bba9-4fef-b29b-300398e90c5a" -ProjectSlug "NVDA"  -SigningPolicySlug "test_signing_policy" -WaitForCompletion -Force
