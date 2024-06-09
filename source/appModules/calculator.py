@@ -136,6 +136,7 @@ class AppModule(appModuleHandler.AppModule):
 				if child.UIAAutomationId in ("CalculatorResults", "CalculatorAlwaysOnTopResults"):
 					speech.cancelSpeech()
 					speech.speakMessage(child.name)
+					braille.handler.message(child.name)
 					return
 		nextHandler()
 
