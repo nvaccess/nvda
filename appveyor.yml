@@ -17,6 +17,9 @@ environment:
  PY_PYTHON: 3.11-32
  secure_authenticode_pass:
   secure: Way+hJyhbiLG/cmCo4+dHHzS5DiSvk/45o6frnIQ27GBX6nVDsh7jwQ7fSnqxBRP
+ # TODO use appveyor encrypt YAML to change this from test cert to prod cert
+ apiSigningToken:
+  secure: pTgq98Ewdmg+NgPNoaskkeG6UoPNw1BvIKPAHP/v1PqvD7ihPaVc0TbvZ3qpTgRE
  secure_ssh_pass:
   secure: Iql/RhSathGacONacsyr6gis+rjL75UFZ/R+nPAJpo3asAzQSQQd8hfxq0iv8+Th
  mozillaSymsAuthToken:
