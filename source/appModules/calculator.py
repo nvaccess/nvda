@@ -29,6 +29,7 @@ import queueHandler
 import ui
 import scriptHandler
 import braille
+import speech
 import UIAHandler
 from comtypes import COMError
 
@@ -133,7 +134,8 @@ class AppModule(appModuleHandler.AppModule):
 			# and fetch the value directly from the UI element.
 			for child in resultElement.children:
 				if child.UIAAutomationId in ("CalculatorResults", "CalculatorAlwaysOnTopResults"):
-					ui.message(child.name)
+					speech.cancelSpeech()
+					speech.speakMessage(child.name)
 					return
 		nextHandler()
 
@@ -175,8 +177,6 @@ class AppModule(appModuleHandler.AppModule):
 	@scriptHandler.script(
 		gestures=[f"kb:{i}" for i in range(10)]
 		+ [f"kb:numLockNumpad{i}" for i in range(10)]
-		# HACK: when pasting, we get two UIA notifications.  Ignore the first one.
-		+ [f"kb:control+v"]
 	)
 	def script_doNotAnnounceCalculatorResults(self, gesture):
 		gesture.send()
