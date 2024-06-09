@@ -91,8 +91,10 @@ vars.Add("version_build", "A unique number for this build.", "0")
 vars.Add(BoolVariable("release", "Whether this is a release version", False))
 vars.Add("publisher", "The publisher of this build", versionInfo.publisher)
 vars.Add("updateVersionType", "The version type for which to check for updates", versionInfo.updateVersionType or "")
-# TODO we may need to add back in the certFile and certPassword since people still need to be able to make self-signed builds
-# TODO can we possibly just create a separate script that does the signing for self-signed builds, separate from AppVeyor?
+vars.Add(PathVariable("certFile", "The certificate file with which to sign executables", "",
+	lambda key, val, env: not val or PathVariable.PathIsFile(key, val, env)))
+vars.Add("certPassword", "The password for the private key in the signing certificate", "")
+vars.Add("certTimestampServer", "The URL of the timestamping server to use to timestamp authenticode signatures", "")
 vars.Add("apiSigningToken", "The API key for the signing service", "")
 vars.Add(PathVariable("outputDir", "The directory where the final built archives and such will be placed", "output",PathVariable.PathIsDirCreate))
 vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you require", 'none', ["debugCRT","RTC","analyze"]))
@@ -142,9 +144,11 @@ version = env["version"]
 version_build = env["version_build"]
 release = env["release"]
 publisher = env["publisher"]
+certFile = env["certFile"]
+certPassword = env["certPassword"]
+certTimestampServer = env["certTimestampServer"]
 # TODO remove local testing code when using secure Appveyor store
 apiSigningToken = env["apiSigningToken"] or os.environ.get("apiSigningToken") # workaround for local testing
-
 userDocsDir=Dir('user_docs')
 sourceDir = env.Dir("source")
 Export('sourceDir')
@@ -167,10 +171,32 @@ Export('outputDir')
 # TODO replace test_signing_policy with prod policy slug
 # TODO make sure that the unencrypted API key isn't logged anywhere eg AppVeyor
 
-def signExec(target, source, env):
-	# TODO see if we have to pass the apiSigningToken or whether the shell can find the variable
-	ps_cmd = f"powershell -File appveyor\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {target[0].abspath}"
-	return env.Execute(ps_cmd, shell=True)
+assert not (apiSigningToken and certFile), "Cannot specify signing with both API token (cloud) and local certificate"
+if apiSigningToken:
+	def signExec(target, source, env):
+		# TODO see if we have to pass the apiSigningToken or whether the shell can find the variable
+		ps_cmd = f"powershell -File appveyor\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {target[0].abspath}"
+		return env.Execute(ps_cmd, shell=True)
+if certFile:
+	def signExec(target,source,env):
+		# An action to sign an executable with certFile.
+		# we encrypt with SHA256 as this is the minimum required by the Windows Store for appx packages 
+		signExecCmd = ["signtool", "sign", "/fd", "SHA256", "/f", certFile]
+		if certPassword:
+			signExecCmd.extend(("/p", certPassword))
+		if certTimestampServer:
+			signExecCmd.extend(("/tr", certTimestampServer, "/td", "SHA256"))
+		def signExec(target,source,env):
+			print([str(x) for x in target])
+			#sys.exit(1)
+			# #3795: signtool can quite commonly fail with timestamping, so allow it to try up to 3 times with a 1 second delay between each try. 
+			res=0
+			for count in range(3):
+				res=env.Execute([signExecCmd+[target[0].abspath]])
+				if not res:
+					return 0 # success
+				time.sleep(1)
+			return res # failed
 #Export via scons environment so other libraries can be signed
 env['signExec']=signExec
 
@@ -301,7 +327,7 @@ def NVDADistGenerator(target, source, env, for_signature):
 			if file.name.endswith(".dll") and file.is_file():
 				action.append(Copy(target[0], file.path))
 
-	if apiSigningToken:
+	if certFile or apiSigningToken:
 		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe":
 			action.append(lambda target,source,env, progByVal=prog: signExec([target[0].File(progByVal)],source,env))
 
@@ -364,7 +390,7 @@ uninstGen = env.Command(File("uninstaller/uninstGen.exe"), "uninstaller/uninst.n
 	"/DINSTEXE=${TARGET.abspath}",
 	"$SOURCE"]])
 uninstaller=env.Command(uninstFile,uninstGen,[uninstGen])
-if apiSigningToken:
+if certFile or apiSigningToken:
 	env.AddPostAction(uninstaller, [signExec])
 
 dist = env.NVDADist("dist", [sourceDir,userDocsDir], uiAccess=bool(apiSigningToken))
@@ -381,7 +407,7 @@ launcher = env.Command(outputDir.File("%s.exe" % outFilePrefix), ["launcher/nvda
 	"/DVERSION=$version", '/DPUBLISHER="$publisher"','/DCOPYRIGHT="$copyright"','/DVERSION_YEAR="$version_year"','/DVERSION_MAJOR="$version_major"','/DVERSION_MINOR="$version_minor"','/DVERSION_BUILD="$version_build"',
 	"/DNVDADistDir=${SOURCES[1].abspath}", "/DLAUNCHEREXE=${TARGET.abspath}",
 	"$SOURCE"]])
-if apiSigningToken:
+if certFile or apiSigningToken:
 	env.AddPostAction(launcher, [signExec])
 env.Alias("launcher", launcher)
 

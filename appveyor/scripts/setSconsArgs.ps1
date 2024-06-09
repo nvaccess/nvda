@@ -12,8 +12,8 @@ if ($env:versionType) {
 }
 $sconsArgs += " publisher=`"$env:scons_publisher`""
 if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:feature_signing) {
-	# TODO this exposes the API key in the appveyor log
-	# TODO we may need to add back in the certFile and certPassword since people still need to be able to make self-signed builds
+	# TODO make sure this doesn't expose the decrypted API key in the appveyor log
+	# TODO Is this script run in local builds? if so we need to add back the certFile and certPassword since people still need to be able to make self-signed builds. 
 	$sconsArgs += " apiSigningToken=$env:apiSigningToken"
 }
 $sconsArgs += " version_build=$env:APPVEYOR_BUILD_NUMBER"

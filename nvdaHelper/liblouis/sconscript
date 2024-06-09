@@ -33,7 +33,7 @@ louisSourceDir = louisRootDir.Dir("liblouis")
 louisTableDir = louisRootDir.Dir("tables")
 outDir = sourceDir.Dir("louis")
 unitTestTablesDir = env.Dir("#tests/unit/brailleTables")
-signExec=env['signExec'] if env['apiSigningToken'] else None
+signExec=env['signExec'] if  (bool(env['certFile']) ^ bool(env['apiSigningToken'])) else None
 
 RE_AC_INIT = re.compile(r"^AC_INIT\(\[(?P<package>.*)\], \[(?P<version>.*)\], \[(?P<bugReport>.*)\], \[(?P<tarName>.*)\], \[(?P<url>.*)\]\)")
 def getLouisVersion():
