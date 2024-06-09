@@ -6,6 +6,22 @@
 """App module for Windows 10 Calculator.
 This is also the base app module for Windows 11 Calculator."""
 
+# This file has some fairly tricky logic, so here is a test plan to make sure
+# you didn't break anything:
+#
+# Test 1: Type a digit (use numbers on the top row as well as the numpad)
+# Expect: should announce only that digit, not the current value
+#
+# Test 2: Paste "12.45"
+# Expect: should announce "Display is 12.45", not "display is 1"
+# Expect: should not announce twice
+#
+# Test 3: Type "S" (for sine)
+# Expect: should announce "S" and "Display is <some number>"
+#
+# Test 4: Run the above tests with the calculator in "keep on top" mode
+# Expect: should behave the same as in regular mode
+
 import appModuleHandler
 import api
 from NVDAObjects.UIA import UIA
@@ -111,6 +127,14 @@ class AppModule(appModuleHandler.AppModule):
 				and doNotAnnounceCalculatorResults
 			):
 				return
+			# #16573: when pasting, calculator sends a truncated UIA displayString
+			# (for example "Display is 1" when it should be "Display is 12.34").
+			# To fix this, we ignore the displayString sent via the UIA notification,
+			# and fetch the value directly from the UI element.
+			for child in resultElement.children:
+				if child.UIAAutomationId in ("CalculatorResults", "CalculatorAlwaysOnTopResults"):
+					ui.message(child.name)
+					return
 		nextHandler()
 
 	# A list of native commands to handle calculator result announcement.
@@ -151,6 +175,8 @@ class AppModule(appModuleHandler.AppModule):
 	@scriptHandler.script(
 		gestures=[f"kb:{i}" for i in range(10)]
 		+ [f"kb:numLockNumpad{i}" for i in range(10)]
+		# HACK: when pasting, we get two UIA notifications.  Ignore the first one.
+		+ [f"kb:control+v"]
 	)
 	def script_doNotAnnounceCalculatorResults(self, gesture):
 		gesture.send()
