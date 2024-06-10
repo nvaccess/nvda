@@ -172,13 +172,15 @@ Export('outputDir')
 assert not (apiSigningToken and certFile), "Cannot specify signing with both API token (cloud) and local certificate"
 if apiSigningToken:
 	# Code signing with SignPath HSM 
-	def signExec(target, source, env):
+	def signExecApi(target, source, env):
 		# TODO see if we have to pass the apiSigningToken or whether the sign.ps1 shell can find the variable
 		ps_cmd = f"powershell -File appveyor\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {target[0].abspath}"
 		return env.Execute(ps_cmd, shell=True)
-if certFile:
+	#Export via scons environment so other libraries can be signed
+	env['signExec']=signExecApi
+elif certFile:
 	# Local code signing with a certFile
-	def signExec(target,source,env):
+	def signExecCert(target,source,env):
 		# we encrypt with SHA256 as this is the minimum required by the Windows Store for appx packages 
 		signExecCmd = ["signtool", "sign", "/fd", "SHA256", "/f", certFile]
 		if certPassword:
@@ -196,8 +198,8 @@ if certFile:
 					return 0 # success
 				time.sleep(1)
 			return res # failed
-#Export via scons environment so other libraries can be signed
-env['signExec']=signExec
+	#Export via scons environment so other libraries can be signed
+	env['signExec']=signExecCert	
 
 #architecture-specific environments
 archTools=['default','midl','msrpc']
