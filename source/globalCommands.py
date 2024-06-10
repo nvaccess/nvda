@@ -4577,7 +4577,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggles other applications mute",
+			"Toggles other applications volume and mute status",
 		),
 		category=SCRCAT_AUDIO,
 		gesture="kb:NVDA+alt+delete",
