@@ -31,6 +31,7 @@ Unicode CLDR has been updated.
 * NVDA will now report figures with no accessible children, but with a label or description. (#14514)
 * When reading by line in browse mode, "caption" is no longer reported on each line of a long figure or table caption. (#14874)
 * In the Python console, the last unexecuted command will no longer be lost when moving in the input history. (#16653, @CyrilleB79)
+  * Updated NSIS 3.09 to 3.10 (#16674, @dpy013)
 
 ### Bug Fixes
 * Windows 11 fixes:
