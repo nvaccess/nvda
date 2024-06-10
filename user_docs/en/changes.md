@@ -31,7 +31,8 @@ Unicode CLDR has been updated.
 * NVDA will now report figures with no accessible children, but with a label or description. (#14514)
 * When reading by line in browse mode, "caption" is no longer reported on each line of a long figure or table caption. (#14874)
 * In the Python console, the last unexecuted command will no longer be lost when moving in the input history. (#16653, @CyrilleB79)
-* Add the action to cancel the download/install of a add-on. You can cancel the ongoing download when the add-on is being downloaded, and cancel the installation of the add-on when it's waiting to be installed. (#15578, @hwf1324)
+* Added an action in the add-on store's updatable/available add-ons list to cancel the download/install of just downloaded add-on(s). (#15578, @hwf1324)
+
 
 ### Bug Fixes
 * Windows 11 fixes:
