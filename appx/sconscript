@@ -58,7 +58,7 @@ else: # not for submission, just side-loadable
 	packagePublisherDisplayName=env['publisher']
 	productName="NVDA Screen Reader (Windows Desktop Bridge Edition)" 
 
-signExec=env['signExec'] if env['certFile'] else None
+signExec=env['signExec'] if  (bool(env['certFile']) ^ bool(env['apiSigningToken'])) else None
 
 # Files from NVDA's distribution that cannot be included in the appx due to policy or security restrictions
 excludedDistFiles = [

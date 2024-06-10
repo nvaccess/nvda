@@ -12,7 +12,10 @@ if ($env:versionType) {
 }
 $sconsArgs += " publisher=`"$env:scons_publisher`""
 if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:feature_signing) {
+	# TODO leaving this in for now so that the code will still work with the old certfile
 	$sconsArgs += " certFile=appveyor\authenticode.pfx certTimestampServer=http://timestamp.digicert.com"
+	# TODO make sure this doesn't expose the decrypted API key in the appveyor log - either now or when calling sign.ps1
+	$sconsArgs += " apiSigningToken=$env:apiSigningToken"
 }
 $sconsArgs += " version_build=$env:APPVEYOR_BUILD_NUMBER"
 # We use cmd to run scons because PowerShell throws exceptions if warnings get dumped to stderr.
