@@ -11,7 +11,7 @@ param(
 # Check if the Submit-SigningRequest command is available
 if (-not (Get-Command -Name Submit-SigningRequest -ErrorAction SilentlyContinue)) {
     # If the command is not available, install the SignPath module
-    Install-Module -Name SignPath -Scope CurrentUser -Force
+    Install-Module -Verbose -Name SignPath -Scope CurrentUser -Force
 }
 
 # Execute Submit-SigningRequest command from the SignPath module
