@@ -147,9 +147,8 @@ publisher = env["publisher"]
 certFile = env["certFile"]
 certPassword = env["certPassword"]
 certTimestampServer = env["certTimestampServer"]
-# TODO remove local testing code when using secure Appveyor store
 # TODO make sure that the unencrypted API key isn't logged anywhere eg AppVeyor
-apiSigningToken = env["apiSigningToken"] or os.environ.get("apiSigningToken") # workaround for local testing
+apiSigningToken = env["apiSigningToken"]
 userDocsDir=Dir('user_docs')
 sourceDir = env.Dir("source")
 Export('sourceDir')
