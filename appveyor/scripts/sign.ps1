@@ -10,6 +10,14 @@ param(
 
 # Check if the Submit-SigningRequest command is available
 if (-not (Get-Command -Name Submit-SigningRequest -ErrorAction SilentlyContinue)) {
+    Get-PSRepository
+    
+    Install-Module -Name PowerShellGet -Force -Scope CurrentUser
+    Install-Module -Name PackageManagement -Force -Scope CurrentUser
+
+    Find-Module -Name SignPath
+    Register-PSRepository -Default
+    
     # If the command is not available, install the SignPath module
     Install-Module -Verbose -Name SignPath -Scope CurrentUser -Force
 }
