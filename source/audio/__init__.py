@@ -42,6 +42,7 @@ def initialize() -> None:
 	else:
 		log.debug("Cannot initialize audio utilities as WASAPI is disabled")
 
+
 @atexit.register
 def terminate():
 	if not audioUtilitiesInitialized:
