@@ -75,14 +75,12 @@ On any supported version of Windows, you can manage certifications through the "
 
 ### Using the certificate
 
-# TODO update for apiSigningToken
 When running a scons command, append `certFile=local.pfx certPassword=<Password>`.
 
 #### Example: building a self-signed installer
 
 From Command Prompt in your NVDA source directory:
 ```cmd
-# TODO update for apiSigningToken - remember people still need to be able to make self-signed builds
 scons launcher certFile=local.pfx certPassword=<Password>
 ```
 

@@ -148,6 +148,7 @@ certFile = env["certFile"]
 certPassword = env["certPassword"]
 certTimestampServer = env["certTimestampServer"]
 # TODO remove local testing code when using secure Appveyor store
+# TODO make sure that the unencrypted API key isn't logged anywhere eg AppVeyor
 apiSigningToken = env["apiSigningToken"] or os.environ.get("apiSigningToken") # workaround for local testing
 userDocsDir=Dir('user_docs')
 sourceDir = env.Dir("source")
@@ -168,18 +169,16 @@ Export('outFilePrefix')
 outputDir=Dir(env['outputDir'])
 Export('outputDir')
 
-# TODO replace test_signing_policy with prod policy slug
-# TODO make sure that the unencrypted API key isn't logged anywhere eg AppVeyor
-
 assert not (apiSigningToken and certFile), "Cannot specify signing with both API token (cloud) and local certificate"
 if apiSigningToken:
+	# Code signing with SignPath HSM 
 	def signExec(target, source, env):
-		# TODO see if we have to pass the apiSigningToken or whether the shell can find the variable
+		# TODO see if we have to pass the apiSigningToken or whether the sign.ps1 shell can find the variable
 		ps_cmd = f"powershell -File appveyor\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {target[0].abspath}"
 		return env.Execute(ps_cmd, shell=True)
 if certFile:
+	# Local code signing with a certFile
 	def signExec(target,source,env):
-		# An action to sign an executable with certFile.
 		# we encrypt with SHA256 as this is the minimum required by the Windows Store for appx packages 
 		signExecCmd = ["signtool", "sign", "/fd", "SHA256", "/f", certFile]
 		if certPassword:
@@ -393,7 +392,7 @@ uninstaller=env.Command(uninstFile,uninstGen,[uninstGen])
 if certFile or apiSigningToken:
 	env.AddPostAction(uninstaller, [signExec])
 
-dist = env.NVDADist("dist", [sourceDir,userDocsDir], uiAccess=bool(apiSigningToken))
+dist = env.NVDADist("dist", [sourceDir,userDocsDir], uiAccess=bool(certFile) or bool(apiSigningToken))
 env.Depends(dist,uninstaller)
 # dist will always be considered obsolete
 AlwaysBuild(dist)
