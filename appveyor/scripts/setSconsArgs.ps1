@@ -14,8 +14,7 @@ $sconsArgs += " publisher=`"$env:scons_publisher`""
 if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:feature_signing) {
 	# TODO leaving this in for now so that the code will still work with the old certfile
 	$sconsArgs += " certFile=appveyor\authenticode.pfx certTimestampServer=http://timestamp.digicert.com"
-	# TODO make sure this doesn't expose the decrypted API key in the appveyor log
-	# TODO Is this script run in local builds? if so we need to add back the certFile and certPassword since people still need to be able to make self-signed builds. 
+	# TODO make sure this doesn't expose the decrypted API key in the appveyor log - either now or when calling sign.ps1
 	$sconsArgs += " apiSigningToken=$env:apiSigningToken"
 }
 $sconsArgs += " version_build=$env:APPVEYOR_BUILD_NUMBER"

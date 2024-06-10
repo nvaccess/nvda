@@ -16,4 +16,4 @@ if (-not (Get-Command -Name Submit-SigningRequest -ErrorAction SilentlyContinue)
 
 # Execute Submit-SigningRequest command from the SignPath module
 # TODO replace test_signing_policy with prod policy slug
-Submit-SigningRequest -ApiToken $ApiToken -InputArtifactPath $FileToSign -OutputArtifactPath $FileToSign -OrganizationId "12147e94-bba9-4fef-b29b-300398e90c5a" -ProjectSlug "NVDA"  -SigningPolicySlug "test_signing_policy" -WaitForCompletion -Force
+Submit-SigningRequest -ApiToken $ApiToken -InputArtifactPath $FileToSign -OutputArtifactPath $FileToSign -OrganizationId "12147e94-bba9-4fef-b29b-300398e90c5a" -ProjectSlug "NVDA"  -SigningPolicySlug "release_signing_policy" -WaitForCompletion -Force

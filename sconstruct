@@ -330,7 +330,7 @@ def NVDADistGenerator(target, source, env, for_signature):
 
 	if certFile or apiSigningToken:
 		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe":
-			action.append(lambda target,source,env, progByVal=prog: signExec([target[0].File(progByVal)],source,env))
+			action.append(lambda target,source,env, progByVal=prog: env['signExec']([target[0].File(progByVal)],source,env))
 
 	action.extend((
 		Delete(buildVersionFn),
@@ -392,7 +392,7 @@ uninstGen = env.Command(File("uninstaller/uninstGen.exe"), "uninstaller/uninst.n
 	"$SOURCE"]])
 uninstaller=env.Command(uninstFile,uninstGen,[uninstGen])
 if certFile or apiSigningToken:
-	env.AddPostAction(uninstaller, [signExec])
+	env.AddPostAction(uninstaller, [env['signExec']])
 
 dist = env.NVDADist("dist", [sourceDir,userDocsDir], uiAccess=bool(certFile) or bool(apiSigningToken))
 env.Depends(dist,uninstaller)
@@ -409,7 +409,7 @@ launcher = env.Command(outputDir.File("%s.exe" % outFilePrefix), ["launcher/nvda
 	"/DNVDADistDir=${SOURCES[1].abspath}", "/DLAUNCHEREXE=${TARGET.abspath}",
 	"$SOURCE"]])
 if certFile or apiSigningToken:
-	env.AddPostAction(launcher, [signExec])
+	env.AddPostAction(launcher, [env['signExec']])
 env.Alias("launcher", launcher)
 
 clientArchive = env.ZipArchive(outputDir.File("%s_controllerClient.zip" % outFilePrefix), clientDir, relativeTo=clientDir)
