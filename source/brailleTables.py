@@ -574,7 +574,7 @@ addTable("sot-za-g2.ctb", _("Sesotho grade 2"), contracted=True)
 addTable("sr-g1.ctb", _("Serbian grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("sr-Cyrl.ctb", _("Serbian Cyrillic grade 1"))
+addTable("sr-Cyrl.ctb", _("serbian cyrillic grade 1"))
 
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.

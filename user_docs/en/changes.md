@@ -10,7 +10,7 @@ You can enable this functionality for both speech and braille in their respectiv
 There are several bug fixes, particularly for the Windows 11 Emoji Panel and Clipboard history.
 For web browsers, there are fixes for reporting error messages, figures, captions, table labels and checkbox/radio button menu items.
 
-Unicode CLDR and Liblouis have been updated.
+Liblouis has been updated, adding new Braille tables for Cyrillic Serbian, Yiddish, several ancient languages (Biblical Hebrew, Akkadian, Syriac, and Ugaritic), and transliterated Cuneiform text. Unicode CLDR has also been updated.
 
 
 ### New Features
