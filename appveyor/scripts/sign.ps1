@@ -8,18 +8,31 @@ param(
     [string]$FileToSign
 )
 
+$VerbosePreference = "Continue"
+$DebugPreference = "Continue"
+
 # Check if the Submit-SigningRequest command is available
 if (-not (Get-Command -Name Submit-SigningRequest -ErrorAction SilentlyContinue)) {
-    Get-PSRepository
-    
-    Install-Module -Name PowerShellGet -Force -Scope CurrentUser
-    Install-Module -Name PackageManagement -Force -Scope CurrentUser
 
-    Find-Module -Name SignPath
-    Register-PSRepository -Default
+    # connectivity checks
+    try {
+        Invoke-WebRequest -Uri "https://www.powershellgallery.com" -UseBasicParsing -ErrorAction Stop
+        Write-Output "Internet connectivity check passed."
+    } catch {
+        Write-Error "Internet connectivity check failed. Cannot reach PowerShell Gallery."
+    }    
     
+    Get-PSRepository
+    Write-Output "PowerShell Version: $($PSVersionTable.PSVersion)"
+    
+    if (-not (Get-PSRepository -Name "PSGallery" -ErrorAction SilentlyContinue)) {
+        Write-Output "Registering PSGallery repository."
+        Register-PSRepository -Default -Verbose -Debug
+    }
+    Get-PSRepository
+
     # If the command is not available, install the SignPath module
-    Install-Module -Verbose -Name SignPath -Scope CurrentUser -Force
+    Install-Module -Verbose -Debug -Name SignPath -Scope CurrentUser -Force
 }
 
 # Execute Submit-SigningRequest command from the SignPath module
