@@ -89,7 +89,7 @@ For reference, the following run time dependencies are included in Git submodule
 * lilli.dll, version 2.1.0.0
 * Python interface to FTDI driver/chip
 * [Nullsoft Install System](https://nsis.sourceforge.io), version 3.08
-* [Java Access Bridge 32 bit, from Zulu Community OpenJDK build 17.0.9+8Zulu (17.46.19)](https://github.com/nvaccess/javaAccessBridge32-bin)
+* [Java Access Bridge 32 bit, from Zulu Community OpenJDK build 17.0.11+9Zulu (17.50.19)](https://github.com/nvaccess/javaAccessBridge32-bin)
 * [wil](https://github.com/microsoft/wil/)
 * [NVDA DiffMatchPatch](https://github.com/codeofdusk/nvda_dmp)
 

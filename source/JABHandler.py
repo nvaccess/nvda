@@ -6,6 +6,7 @@
 
 from enum import IntEnum, IntFlag
 import os
+from winAPI.constants import IS_64_BIT
 import queue
 from ctypes import (
 	c_short,
@@ -43,6 +44,7 @@ import NVDAHelper
 import config
 from utils.security import isRunningOnSecureDesktop
 
+
 #: The path to the user's .accessibility.properties file, used
 #: to enable JAB.
 A11Y_PROPS_PATH = os.path.expanduser(r"~\.accessibility.properties")
@@ -53,7 +55,6 @@ A11Y_PROPS_CONTENT = (
 )
 
 #Some utility functions to help with function defines
-
 def _errcheck(res, func, args):
 	if not res:
 		raise RuntimeError("Result %s" % res)
@@ -81,7 +82,8 @@ jfloat=c_float
 jboolean=c_bool
 
 
-class JOBJECT64(c_int64):
+# If the machine is 64-bit, use c_int64, otherwise use c_int as a parameter.
+class JOBJECT64(c_int64 if IS_64_BIT else c_int):
 	pass
 AccessibleTable=JOBJECT64
 
@@ -791,7 +793,9 @@ def event_enterJavaWindow(hwnd):
 def enterJavaWindow_helper(hwnd):
 	vmID=c_long()
 	accContext=JOBJECT64()
-	timeout=time.time()+0.2
+	# Previous value of 0.2 was increased to 0.5 as when a Java object disappeared
+	# NVDA would hang until focus was moved again #16557.
+	timeout = time.time() + 0.5
 	while time.time()<timeout and not eventHandler.isPendingEvents("gainFocus"):
 		try:
 			bridgeDll.getAccessibleContextWithFocus(hwnd,byref(vmID),byref(accContext))
@@ -837,9 +841,11 @@ def enableBridge():
 
 def initialize():
 	global bridgeDll, isRunning
+	# If the system is 64-bit, load the dll that we have in the NVDA distribution.
+	# Otherwise, it loads the one on the 32-bit system, which does not have the -32 suffix.
+	correctDll = "windowsaccessbridge-32.dll" if IS_64_BIT else "windowsaccessbridge.dll"
 	try:
-		bridgeDll = cdll.LoadLibrary(
-			os.path.join(NVDAHelper.versionedLibPath, "windowsaccessbridge-32.dll"))
+		bridgeDll = cdll.LoadLibrary(os.path.join(NVDAHelper.versionedLibPath, correctDll))
 	except WindowsError:
 		raise NotImplementedError("dll not available")
 	_fixBridgeFuncs()
