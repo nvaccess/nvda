@@ -58,7 +58,7 @@ build_script:
  - ps: |
      "BUILD_START, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
  - ps: appveyor\scripts\setSconsArgs.ps1
- - ps: Install-Module -Name SignPath 
+ - ps: Install-Module -Name SignPath -Force
  - scons source %sconsArgs%
  - scons %sconsOutTargets% %sconsArgs%
  - ps: appveyor\scripts\buildSymbolStore.ps1
