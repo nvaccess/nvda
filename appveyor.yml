@@ -104,3 +104,12 @@ on_finish:
  - ps: |
      "FINISH_END, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
  - ps: appveyor\scripts\logCiTiming.ps1
+
+notifications:
+ - provider: GitHubPullRequest
+   on_build_status_changed: false
+   template: |-
+    {{#passed}}Build succeeded!{{/passed}}{{#failed}}Build failed!{{/failed}} [Build {{&projectName}} {{buildVersion}} {{status}}]({{buildUrl}}) (commit {{commitUrl}} by @{{&commitAuthorUsername}})
+    {{#passed}}Downloads:{{#jobs}}
+    <details>
+    <summary>{{name}}</summary>
