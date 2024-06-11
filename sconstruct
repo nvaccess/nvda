@@ -171,10 +171,9 @@ assert not (apiSigningToken and certFile), "Cannot specify signing with both API
 if apiSigningToken:
 	# Code signing with SignPath HSM 
 	def signExecApi(target, source, env):
-		# TODO see if we have to pass the apiSigningToken or whether the sign.ps1 shell can find the variable
 		ps_cmd = f"powershell -File appveyor\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {target[0].abspath}"
 		return env.Execute(ps_cmd, shell=True)
-	#Export via scons environment so other libraries can be signed
+	# Export via scons environment so other libraries can be signed
 	env['signExec']=signExecApi
 elif certFile:
 	# Local code signing with a certFile
