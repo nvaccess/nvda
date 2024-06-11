@@ -107,6 +107,8 @@ You can do this by:
 Without having an installed add-on which has an update pending, it is hard to test updatable add-ons.
 This process allows you to mock an update for an add-on.
 
+#### Manual process
+
 1. [Install an add-on from the Add-on Store](#install-add-on)
 For example: "Clock".
 1. Go to the "addons" folder in your [NVDA user configuration folder](#editing-user-configuration)
@@ -117,6 +119,17 @@ For example: "Clock".
     - Add-on manifest
         - Example: `source\userConfig\addons\clock\manifest.ini`
         - Edit "version": decrease the major release value number to match earlier edits.
+
+#### Using a script
+1. [Install an add-on from the Add-on Store](#install-add-on)
+For example: "Clock".
+1. From PowerShell, call the following script to make the add-on updatable.
+  - `tests\manual\createUpdatableAddons.ps1 $addonName $configPath`
+  - Replace `$configPath` with your [NVDA user configuration folder](#editing-user-configuration).
+  This script defaults to using the installed user config folder in `%APPDATA%`.
+  - Example when running from source: `tests\manual\createUpdatableAddons.ps1 clock source\userConfig`
+  - Example when running an installed copy: `tests\manual\createUpdatableAddons.ps1 clock`
+  - Note this script sets the add-on version to 0.0.0.
 
 ### Updating from add-on originally installed via Add-on Store
 
