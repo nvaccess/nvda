@@ -15,21 +15,21 @@ $DebugPreference = "Continue"
 if (-not (Get-Command -Name Submit-SigningRequest -ErrorAction SilentlyContinue)) {
 
     # connectivity checks
-    try {
-        Invoke-WebRequest -Uri "https://www.powershellgallery.com" -UseBasicParsing -ErrorAction Stop
-        Write-Output "Internet connectivity check passed."
-    } catch {
-        Write-Error "Internet connectivity check failed. Cannot reach PowerShell Gallery."
-    }    
+    # try {
+    #     Invoke-WebRequest -Uri "https://www.powershellgallery.com" -UseBasicParsing -ErrorAction Stop
+    #     Write-Output "Internet connectivity check passed."
+    # } catch {
+    #     Write-Error "Internet connectivity check failed. Cannot reach PowerShell Gallery."
+    # }    
     
     Get-PSRepository
     Write-Output "PowerShell Version: $($PSVersionTable.PSVersion)"
     
-    if (-not (Get-PSRepository -Name "PSGallery" -ErrorAction SilentlyContinue)) {
-        Write-Output "Registering PSGallery repository."
-        Register-PSRepository -Default -Verbose -Debug
-    }
-    Get-PSRepository
+    # if (-not (Get-PSRepository -Name "PSGallery" -ErrorAction SilentlyContinue)) {
+    #     Write-Output "Registering PSGallery repository."
+    #     Register-PSRepository -Default -Verbose -Debug
+    # }
+    # Get-PSRepository
 
     # If the command is not available, install the SignPath module
     Install-Module -Verbose -Debug -Name SignPath -Scope CurrentUser -Force
