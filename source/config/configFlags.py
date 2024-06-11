@@ -206,6 +206,7 @@ class ReportCellBorders(DisplayStringIntEnum):
 
 class AddonsAutomaticUpdate(DisplayStringStrEnum):
 	NOTIFY = "notify"
+	# TODO: uncomment when implementing #3208
 	# UPDATE = "update"
 	DISABLED = "disabled"
 
