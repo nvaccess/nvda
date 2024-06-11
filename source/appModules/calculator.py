@@ -6,22 +6,6 @@
 """App module for Windows 10 Calculator.
 This is also the base app module for Windows 11 Calculator."""
 
-# This file has some fairly tricky logic, so here is a test plan to make sure
-# you didn't break anything:
-#
-# Test 1: Type a digit (use numbers on the top row as well as the numpad)
-# Expect: should announce only that digit, not the current value
-#
-# Test 2: Paste "12.45"
-# Expect: should announce "Display is 12.45", not "display is 1"
-# Expect: should not announce twice
-#
-# Test 3: Type "S" (for sine)
-# Expect: should announce "S" and "Display is <some number>"
-#
-# Test 4: Run the above tests with the calculator in "keep on top" mode
-# Expect: should behave the same as in regular mode
-
 import appModuleHandler
 import api
 from NVDAObjects.UIA import UIA
