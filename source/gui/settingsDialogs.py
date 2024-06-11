@@ -1597,8 +1597,23 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			wxCtrlClass=nvdaControls.FeatureFlagCombo,
 			keyPath=["speech", "unicodeNormalization"],
 			conf=config.conf,
+			onChoiceEventHandler=self._onUnicodeNormalizationChange,
 		)
 		self.bindHelpEvent("SpeechUnicodeNormalization", self.unicodeNormalizationCombo)
+
+		# Translators: This is the label for a checkbox in the
+		# speech settings panel.
+		reportNormalizedForCharacterNavigationText = _("Report '&Normalized' when navigating by character")
+		self.reportNormalizedForCharacterNavigationCheckBox = settingsSizerHelper.addItem(
+			wx.CheckBox(self, label=reportNormalizedForCharacterNavigationText)
+		)
+		self.bindHelpEvent(
+			"SpeechReportNormalizedForCharacterNavigation",
+			self.reportNormalizedForCharacterNavigationCheckBox
+		)
+		self.reportNormalizedForCharacterNavigationCheckBox.SetValue(
+			config.conf["speech"]["reportNormalizedForCharacterNavigation"]
+		)
 
 		includeCLDRText = _(
 			# Translators: This is the label for a checkbox in the
@@ -1713,6 +1728,9 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		].value
 		config.conf["speech"]["trustVoiceLanguage"] = self.trustVoiceLanguageCheckbox.IsChecked()
 		self.unicodeNormalizationCombo.saveCurrentValueToConf()
+		config.conf["speech"]["reportNormalizedForCharacterNavigation"] = (
+			self.reportNormalizedForCharacterNavigationCheckBox.IsChecked()
+		)
 		currentIncludeCLDR = config.conf["speech"]["includeCLDR"]
 		config.conf["speech"]["includeCLDR"] = newIncludeCldr = self.includeCLDRCheckbox.IsChecked()
 		if currentIncludeCLDR is not newIncludeCldr:
@@ -1752,6 +1770,12 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 					list(self.speechModesList.GetCheckedItems())
 					+ [self._allSpeechModes.index(speech.SpeechMode.talk)]
 				)
+
+	def _onUnicodeNormalizationChange(self, evt: wx.CommandEvent):
+		evt.Skip()
+		self.reportNormalizedForCharacterNavigationCheckBox.Enable(
+			bool(self.unicodeNormalizationCombo._getControlCurrentFlag())
+		)
 
 	def isValid(self) -> bool:
 		enabledSpeechModes = self.speechModesList.CheckedItems
