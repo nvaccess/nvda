@@ -184,17 +184,15 @@ elif certFile:
 			signExecCmd.extend(("/p", certPassword))
 		if certTimestampServer:
 			signExecCmd.extend(("/tr", certTimestampServer, "/td", "SHA256"))
-		def signExec(target,source,env):
-			print([str(x) for x in target])
-			#sys.exit(1)
-			# #3795: signtool can quite commonly fail with timestamping, so allow it to try up to 3 times with a 1 second delay between each try. 
-			res=0
-			for count in range(3):
-				res=env.Execute([signExecCmd+[target[0].abspath]])
-				if not res:
-					return 0 # success
-				time.sleep(1)
-			return res # failed
+		print([str(x) for x in target])
+		# #3795: signtool can quite commonly fail with timestamping, so allow it to try up to 3 times with a 1 second delay between each try. 
+		res=0
+		for count in range(3):
+			res=env.Execute([signExecCmd+[target[0].abspath]])
+			if not res:
+				return 0 # success
+			time.sleep(1)
+		return res # failed
 	#Export via scons environment so other libraries can be signed
 	env['signExec']=signExecCert	
 
