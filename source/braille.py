@@ -1099,6 +1099,14 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 				# Translators: brailled when text contains a bookmark
 				text = _("bkmk")
 				textList.append(text)
+	
+	bold = field.get("bold", False)
+	oldBold = fieldCache.get("bold", False) if fieldCache is not None else False
+	if bold and not oldBold:
+		textList.append("⣏⠃⣹")
+	elif oldBold and not bold:
+		textList.append("⣏⡃⣹")
+	
 	fieldCache.clear()
 	fieldCache.update(field)
 	return TEXT_SEPARATOR.join([x for x in textList if x])
