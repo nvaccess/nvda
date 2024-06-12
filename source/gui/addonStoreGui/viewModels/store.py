@@ -151,7 +151,7 @@ class AddonStoreVM:
 			AddonActionVM(
 				# Translators: Label for an action that cancels the installation of the selected addon
 				displayName=pgettext("addonStore", "Ca&ncel install"),
-				actionHandler=self.cancelInstallAddon,
+				actionHandler=self.cancelInstallForAddon,
 				validCheck=lambda aVM: aVM.canUseCancelInstallAction(),
 				actionTarget=selectedListItem
 			),
@@ -619,7 +619,7 @@ class AddonStoreVM:
 		core.callLater(delay=0, callable=self.detailsVM.updated.notify, addonDetailsVM=self.detailsVM)
 		log.debug("completed refresh")
 
-	def cancelDownloadAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):
+	def _cancelDownloadForAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):
 		try:
 			addonDataManager._downloadsPendingCompletion.remove(listItemVM)
 		except KeyError:
@@ -632,28 +632,32 @@ class AddonStoreVM:
 		finally:
 			listItemVM.status = getStatus(listItemVM.model, self._filteredStatusKey)
 
-	def cancelInstallAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):
+	def _cancelPendingInstallForAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):
+		pendingInstallCopy = addonDataManager._downloadsPendingInstall.copy()
+		for addonData, fileDownloaded in pendingInstallCopy:
+			if addonData == listItemVM:
+				addonDataManager._downloadsPendingInstall.remove((addonData, fileDownloaded))
+				listItemVM.status = getStatus(listItemVM.model, self._filteredStatusKey)
+				# Clean up download file
+				try:
+					os.remove(fileDownloaded)
+				except FileNotFoundError:
+					pass  # File not found is benign and expected in some cases
+				except Exception as e:
+					log.error(f"Failed to delete downloaded file {fileDownloaded}: {e}")
+
+	def cancelInstallForAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):
 		log.debug(f"Cancelling install of {listItemVM.Id}")
 
-		if listItemVM in addonDataManager._downloadsPendingCompletion:
-			self.cancelDownloadAddon(listItemVM)
+		if listItemVM.status == AvailableAddonStatus.DOWNLOADING:
+			self._cancelDownloadForAddon(listItemVM)
 		elif listItemVM.status == AvailableAddonStatus.DOWNLOAD_SUCCESS:
-			pendingInstallCopy = addonDataManager._downloadsPendingInstall.copy()
-			for addonData, fileDownloaded in pendingInstallCopy:
-				if addonData == listItemVM:
-					addonDataManager._downloadsPendingInstall.remove((addonData, fileDownloaded))
-					# Clean up download file
-					try:
-						os.remove(fileDownloaded)
-					except Exception as e:
-						log.error(f"Failed to delete downloaded file {fileDownloaded}: {e}")
+			self._cancelPendingInstallForAddon(listItemVM)
 
-			listItemVM.status = getStatus(listItemVM.model, self._filteredStatusKey)
-
-	def cancelInstallAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]):
+	def cancelInstallForAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]):
 		for aVM in listItemVMs:
 			if aVM.canUseCancelInstallAction():
-				self.cancelInstallAddon(aVM)
+				self.cancelInstallForAddon(aVM)
 
 	@classmethod
 	def cancelDownloads(cls):
