@@ -627,7 +627,7 @@ class AddonStoreVM:
 	def cancelInstallAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):
 		log.debug(f"Cancelling install of {listItemVM.Id}")
 
-		if listItemVM not in addonDataManager._downloadsPendingCompletion:
+		if listItemVM in addonDataManager._downloadsPendingCompletion:
 			self.cancelDownloadAddon(listItemVM)
 			return
 		else:
