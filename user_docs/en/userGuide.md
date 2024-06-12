@@ -3397,7 +3397,8 @@ There are a number of ways of doing this:
 
 * Read [Community reviews #AddonStoreReviews] of the add-on
 
-* Seeking community feedback through forums or social media.
+* Seek community feedback through forums or social media.
+
 
 You can install and update add-ons by [browsing Available add-ons](#AddonStoreBrowsing).
 Select an add-on from the "Available add-ons" or "Updatable add-ons" tab.
