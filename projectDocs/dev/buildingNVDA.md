@@ -76,7 +76,6 @@ This is useful when [creating a self signed build](./selfSignedBuild.md).
 	* This enables various C++ compiler optimizations such as /O2 and whole-program optimization.
 	* It also instructs Python to generate optimized byte code.
 * publisher: The publisher of this build.
-# TODO update documentation for apiSigningToken
 * certFile: The certificate file with which to sign executables. The certificate must be in pfx format and contain the private key.
 * certPassword: The password for the private key in the signing certificate. If omitted, no password will be assumed.
 * certTimestampServer: The URL of the timestamping server to use to timestamp authenticode signatures. If omitted, signatures will not be timestamped.

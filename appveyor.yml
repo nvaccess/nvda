@@ -15,9 +15,6 @@ branches:
 
 environment:
  PY_PYTHON: 3.11-32
- # TODO: remove key now that we have apiSigningToken
- secure_authenticode_pass:
-  secure: Way+hJyhbiLG/cmCo4+dHHzS5DiSvk/45o6frnIQ27GBX6nVDsh7jwQ7fSnqxBRP
  apiSigningToken:
   secure: 8ARK3NZNRlz8VrhTbpTLP5GMnwbqlUN0DK4SYL4FUYSAAEgXUSB+MBcHHLa6JL9E
  secure_ssh_pass:
