@@ -3355,11 +3355,18 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message to activate Add-on Store command.
-		description=_("Activates the Add-on Store to browse and manage add-on packages for NVDA"),
+		description=_(
+			"Opens the Add-on Store. "
+			"Press twice to open directly to updatable add-ons list."
+		),
 		category=SCRCAT_TOOLS
 	)
 	def script_activateAddonsManager(self, gesture: inputCore.InputGesture):
-		wx.CallAfter(gui.mainFrame.onAddonStoreCommand, None)
+		presses = scriptHandler.getLastScriptRepeatCount() + 1
+		if presses == 1:
+			wx.CallAfter(gui.mainFrame.onAddonStoreCommand, None)
+		elif presses == 2:
+			wx.CallAfter(gui.mainFrame.onAddonStoreUpdatableCommand, None)
 
 	@script(
 		description=_(
