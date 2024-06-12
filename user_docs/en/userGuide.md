@@ -3389,7 +3389,8 @@ This could include accessing your personal data or even the entire system.
 
 As with any software, it is important to trust the developer of an add-on before using it.
 There are a number of ways of doing this:
-* Researching the developer's reputation (e.g. how long have they been contributing, or their GitHub profile)
+* Research the developer's reputation (e.g. how long have they been contributing, or their GitHub profile)
+
 * Looking for user feedback in the [NVDA user group](https://nvda.groups.io/g/nvda) or [NVDA add-on group](https://nvda-addons.groups.io/g/nvda-addons)
 * Verifying that the add-on is regularly updated
 * Read [Community reviews #AddonStoreReviews] of the add-on
