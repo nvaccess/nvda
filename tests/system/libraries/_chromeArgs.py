@@ -14,6 +14,7 @@ def getChromeArgs() -> str:
 	"""
 	return (
 		"chrome"  # Start Chrome
+		" --no-first-run"  # Don't show intro pages for the first run of chrome
 		" --force-renderer-accessibility"  # don't rely on chrome detecting a screen reader.
 		" --suppress-message-center-popups"  # prevent popups that may interfere with automated tests.
 		" --disable-notifications"  # prevent notifications that may interfere with automated tests.
