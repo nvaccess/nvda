@@ -629,8 +629,7 @@ class AddonStoreVM:
 
 		if listItemVM in addonDataManager._downloadsPendingCompletion:
 			self.cancelDownloadAddon(listItemVM)
-			return
-		else:
+		elif listItemVM.status == AvailableAddonStatus.DOWNLOAD_SUCCESS:
 			pendingInstallCopy = addonDataManager._downloadsPendingInstall.copy()
 			for addonData, fileDownloaded in pendingInstallCopy:
 				if addonData == listItemVM:
@@ -641,7 +640,7 @@ class AddonStoreVM:
 					except Exception as e:
 						log.error(f"Failed to delete downloaded file {fileDownloaded}: {e}")
 
-		listItemVM.status = getStatus(listItemVM.model, self._filteredStatusKey)
+			listItemVM.status = getStatus(listItemVM.model, self._filteredStatusKey)
 
 	def cancelInstallAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]):
 		for aVM in listItemVMs:
