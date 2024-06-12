@@ -3387,7 +3387,6 @@ It is very important to only install add-ons from sources you trust.
 The functionality of add-ons is unrestricted inside NVDA.
 This could include accessing your personal data or even the entire system.
 
-As with any software, it is important to trust the developer of an add-on before using it.
 There are a number of ways of doing this:
 * Research the developer's reputation (e.g. how long have they been contributing, or their GitHub profile)
 * Look for user feedback in the [NVDA user group](https://nvda.groups.io/g/nvda) or [NVDA add-on group](https://nvda-addons.groups.io/g/nvda-addons)
