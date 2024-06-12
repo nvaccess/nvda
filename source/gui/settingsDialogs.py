@@ -27,6 +27,7 @@ import installer
 from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, SynthDriver
 import config
 from config.configFlags import (
+	AddonsAutomaticUpdate,
 	NVDAKey,
 	ShowMessages,
 	TetherTo,
@@ -2897,11 +2898,23 @@ class AddonStorePanel(SettingsPanel):
 	helpId = "AddonStoreSettings"
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
-		# sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-		pass
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		# Translators: This is a label for the automatic updates combo box in the Add-on Store Settings dialog.
+		automaticUpdatesLabelText = _("&Update notifications:")
+		# TODO: change label to the following when the feature is implemented
+		# automaticUpdatesLabelText = _("Automatic &updates:")
+		self.automaticUpdatesComboBox = sHelper.addLabeledControl(
+			automaticUpdatesLabelText,
+			wx.Choice,
+			choices=[mode.displayString for mode in AddonsAutomaticUpdate]
+		)
+		self.bindHelpEvent("AutomaticAddonUpdates", self.automaticUpdatesComboBox)
+		index = [x.value for x in AddonsAutomaticUpdate].index(config.conf["addonStore"]["automaticUpdates"])
+		self.automaticUpdatesComboBox.SetSelection(index)
 
 	def onSave(self):
-		pass
+		index = self.automaticUpdatesComboBox.GetSelection()
+		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsAutomaticUpdate][index]
 
 
 class TouchInteractionPanel(SettingsPanel):
@@ -4662,7 +4675,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		BrowseModePanel,
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
-		# AddonStorePanel, currently empty
+		AddonStorePanel,
 	]
 	if touchHandler.touchSupported():
 		categoryClasses.append(TouchInteractionPanel)
@@ -4682,7 +4695,11 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 	def _doOnCategoryChange(self):
 		global NvdaSettingsDialogActiveConfigProfile
 		NvdaSettingsDialogActiveConfigProfile = config.conf.profiles[-1].name
-		if not NvdaSettingsDialogActiveConfigProfile or isinstance(self.currentCategory, GeneralSettingsPanel):
+		if (
+			not NvdaSettingsDialogActiveConfigProfile
+			or isinstance(self.currentCategory, GeneralSettingsPanel)
+			or isinstance(self.currentCategory, AddonStorePanel)
+		):
 			# Translators: The profile name for normal configuration
 			NvdaSettingsDialogActiveConfigProfile = _("normal configuration")
 		self.SetTitle(self._getDialogTitle())

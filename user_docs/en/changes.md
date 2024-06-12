@@ -1,11 +1,11 @@
 # What's New in NVDA
 
 ## 2024.3
+The Add-on Store will now notify you if any add-on updates are available on NVDA start up.
 
 This release adds support for Unicode Normalization to speech and braille output.
 This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
 It also allows reading of equations in the Microsoft Word equation editor.
-You can enable this functionality for both speech and braille in their respective settings categories in the NVDA Settings dialog.
 
 There are several bug fixes, particularly for the Windows 11 Emoji Panel and Clipboard history.
 For web browsers, there are fixes for reporting error messages, figures, captions, table labels and checkbox/radio button menu items.
@@ -21,6 +21,10 @@ Unicode CLDR has been updated.
   * This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
   * It also allows reading of equations in the Microsoft Word equation editor. (#4631)
   * You can enable this functionality for both speech and braille in their respective settings categories in the NVDA Settings dialog.
+* By default, after NVDA startup, you will be notified if any add-on updates are available. (#15035)
+  * This can be disabled in the "Add-on Store" category of settings.
+  * NVDA checks daily for add-on updates.
+  * Only updates within the same channel will be checked (e.g. installed beta add-ons will only notify for updates in the beta channel).
 
 ### Changes
 
@@ -64,6 +68,10 @@ It is especially useful to read the error location markers in tracebacks. (#1632
 * When a `gainFocus` event is queued with an object that has a valid `focusRedirect` property, the object pointed to by the `focusRedirect` property is now held by `eventHandler.lastQueuedFocusObject`, rather than the originally queued object. (#15843)
 * NVDA will log its executable architecture (x86) at startup. (#16432, @josephsl)
 * `wx.CallAfter`, which is wrapped in `monkeyPatches/wxMonkeyPatches.py`, now includes proper `functools.wraps` indication. (#16520, @XLTechie)
+* There is a new module for scheduling tasks `utils.schedule`, using the pip module `schedule`. (#16636)
+  * You can use `scheduleThread.scheduleDailyJobAtStartUp` to automatically schedule a job that happens after NVDA starts, and every 24 hours after that.
+  Jobs are scheduled with a delay to avoid conflicts.
+  * `scheduleThread.scheduleDailyJob` and `scheduleJob` can be used to schedule jobs at custom times, where a `JobClashError` will be raised on a known job scheduling clash.
 
 #### Deprecations
 
