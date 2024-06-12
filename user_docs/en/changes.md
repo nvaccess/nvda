@@ -32,7 +32,7 @@ Unicode CLDR has been updated.
 * NVDA will now report figures with no accessible children, but with a label or description. (#14514)
 * When reading by line in browse mode, "caption" is no longer reported on each line of a long figure or table caption. (#14874)
 * In the Python console, the last unexecuted command will no longer be lost when moving in the input history. (#16653, @CyrilleB79)
-* Added an action in the add-on store's updatable/available add-ons list to cancel the install of just downloaded add-on(s). (#15578, @hwf1324)
+* Added an action in the Add-on Store to cancel the install of add-ons. (#15578, @hwf1324)
 
 
 ### Bug Fixes

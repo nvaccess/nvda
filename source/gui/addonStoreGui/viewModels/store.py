@@ -611,29 +611,35 @@ class AddonStoreVM:
 		core.callLater(delay=0, callable=self.detailsVM.updated.notify, addonDetailsVM=self.detailsVM)
 		log.debug("completed refresh")
 
-	def cancelInstallAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):
-		log.debug(f"Cancelling install of {listItemVM.Id}")
-
-		futuresCopy = self._downloader._pending.copy()
+	def cancelDownloadAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):
 		try:
 			addonDataManager._downloadsPendingCompletion.remove(listItemVM)
+		except KeyError:
+			log.debug("Download already completed")
+		else:
+			futuresCopy = self._downloader._pending.copy()
 			for future, addon in futuresCopy.items():
 				if listItemVM == addon[0] and not future.cancel():
 					self._downloader.progress.pop(addon[0], None)
+		finally:
 			listItemVM.status = getStatus(listItemVM.model, self._filteredStatusKey)
-			return
-		except KeyError:
-			log.debug("Download already completed")
 
-		pendingInstallCopy = addonDataManager._downloadsPendingInstall.copy()
-		for addonData, fileDownloaded in pendingInstallCopy:
-			if addonData == listItemVM:
-				addonDataManager._downloadsPendingInstall.remove((addonData, fileDownloaded))
-				# Clean up download file
-				try:
-					os.remove(fileDownloaded)
-				except FileNotFoundError:
-					pass
+	def cancelInstallAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):
+		log.debug(f"Cancelling install of {listItemVM.Id}")
+
+		if listItemVM not in addonDataManager._downloadsPendingCompletion:
+			self.cancelDownloadAddon(listItemVM)
+			return
+		else:
+			pendingInstallCopy = addonDataManager._downloadsPendingInstall.copy()
+			for addonData, fileDownloaded in pendingInstallCopy:
+				if addonData == listItemVM:
+					addonDataManager._downloadsPendingInstall.remove((addonData, fileDownloaded))
+					# Clean up download file
+					try:
+						os.remove(fileDownloaded)
+					except Exception as e:
+						log.error(f"Failed to delete downloaded file {fileDownloaded}: {e}")
 
 		listItemVM.status = getStatus(listItemVM.model, self._filteredStatusKey)
 
