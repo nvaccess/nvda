@@ -1,7 +1,7 @@
 ;;;
 ;This file is a part of the NVDA project.
 ;URL: http://www.nvda-project.org/
-;Copyright 2006-2010 NVDA contributers.
+;Copyright 2006-2023 NV Access Limited, Leonard de Ruijter.
 ;This program is free software: you can redistribute it and/or modify
 ;it under the terms of the GNU Lesser General Public License version 2.1, as published by
 ;the Free Software Foundation.
@@ -17,3 +17,6 @@ EXPORTS
 	nvdaController_speakText
 	nvdaController_cancelSpeech
 	nvdaController_brailleMessage
+	nvdaController_getProcessId
+	nvdaController_speakSsml
+	nvdaController_setOnSsmlMarkReachedCallback

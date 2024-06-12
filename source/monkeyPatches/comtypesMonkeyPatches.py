@@ -10,7 +10,6 @@ import ctypes
 import _ctypes
 from ctypes import cast, c_void_p
 from _ctypes import _Pointer
-import importlib
 import sys
 import exceptions
 import RPCConstants
@@ -187,19 +186,6 @@ def replace_check_version() -> None:
 	comtypes._check_version = _check_version
 
 
-def new_my_import(fullname):
-	import comtypes.client._generate
-	importlib.invalidate_caches()
-	return comtypes.client._generate._my_import_orig(fullname)
-
-
-def replace_my_import() -> None:
-	# Monkeypatch comtypes to clear the importlib cache when importing a new module
-	import comtypes.client._generate
-	comtypes.client._generate._my_import_orig = comtypes.client._generate._my_import
-	comtypes.client._generate._my_import = new_my_import
-
-
 def vt_R8_to_c_double() -> None:
 	# Correctly map VT_R8 to c_double.
 	# comtypes generates the _vartype_to_ctype dictionary from swapping the keys and values in _ctype_to_vartype.
@@ -233,6 +219,5 @@ def applyMonkeyPatches() -> None:
 	replace_VARIAN_value_fget()
 	replace_idispatch_getTypeInfo()
 	replace_check_version()
-	replace_my_import()
 	vt_R8_to_c_double()
 	appendComInterfacesToGenSearchPath()

@@ -33,8 +33,7 @@ These are used to save / load settings for the provider.
 
 A GUI can be built automatically from the DriverSettings objects accessed via the VisionEnhancementProviderSettings.
 Alternatively the provider can supply a custom settings panel implementation via the getSettingsPanelClass class method.
-A custom settings panel must return a class type derived from gui.SettingsPanel which will take responsibility for
-building the GUI.
+A custom settings panel must return a class type derived from `gui.settingsDialogs.SettingsPanel` which will take responsibility for building the GUI.
 For an example see NVDAHighlighter or ScreenCurtain.
 
 #### Automatic GUI building

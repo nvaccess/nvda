@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2007-2022 NV Access Limited, Peter Vágner
+# Copyright (C) 2007-2023 NV Access Limited, Peter Vágner, Cyrille Bougot
 
 import time
 import threading
@@ -268,7 +268,13 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		if not isinstance(command, textInfos.FieldCommand):
 			return command  # no need to normalize str or None
 		field = command.field
-		if isinstance(field, textInfos.ControlField):
+		if (
+			isinstance(field, textInfos.ControlField)
+			# #15830: only process controlStart commands.
+			# Otherwise also processing controlEnd commands would double-process the same field attributes,
+			# As controlStart and controlEnd commands now share the same field dictionary.
+			and command.command == "controlStart"
+		):
 			command.field = self._normalizeControlField(field)
 		elif isinstance(field, textInfos.FormatField):
 			command.field = self._normalizeFormatField(field)
@@ -320,7 +326,15 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 			attrs['table-layout']=tableLayout=="1"
 
 		# convert some table attributes to ints
-		for attr in ("table-id","table-rownumber","table-columnnumber","table-rowsspanned","table-columnsspanned"):
+		for attr in (
+			"table-id",
+			"table-rownumber",
+			"table-columnnumber",
+			"table-rowsspanned",
+			"table-columnsspanned",
+			"table-rowcount",
+			"table-columncount",
+		):
 			attrVal=attrs.get(attr)
 			if attrVal is not None:
 				attrs[attr]=int(attrVal)
@@ -409,6 +423,10 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	TextInfo=VirtualBufferTextInfo
 
+	# As NVDA manages the caret virtually,
+	# It is necessary for 'gainFocus' events to update the caret.
+	_focusEventMustUpdateCaretPosition = True
+
 	#: Maps root identifiers (docHandle and ID) to buffers.
 	rootIdentifiers = weakref.WeakValueDictionary()
 
@@ -447,8 +465,9 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		self._loadProgressCallLater = wx.CallLater(1000, self._loadProgress)
 		threading.Thread(
 			name=f"{self.__class__.__module__}.{self.loadBuffer.__qualname__}",
-			target=self._loadBuffer).start(
-		)
+			target=self._loadBuffer,
+			daemon=True,
+		).start()
 
 	def _loadBuffer(self):
 		try:
@@ -671,10 +690,13 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 
 		# Cells are grouped by row, so in most cases, we simply need to search in the right direction.
 		for info in self._iterTableCells(tableID, direction=movement, startPos=startPos):
-			_ignore, row, col, rowSpan, colSpan = self._getTableCellCoords(info)
-			if row <= destRow < row + rowSpan and col <= destCol < col + colSpan:
+			cell = self._getTableCellCoords(info)
+			if (
+				cell.row <= destRow < (cell.row + cell.rowSpan)
+				and cell.col <= destCol < (cell.col + cell.colSpan)
+			):
 				return info
-			elif row > destRow and movement == "next":
+			elif cell.row > destRow and movement == "next":
 				# Optimisation: We've gone forward past destRow, so we know we won't find the cell.
 				# We can't reverse this logic when moving backwards because there might be a prior cell on an earlier row which spans multiple rows.
 				break
@@ -688,8 +710,11 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			# In this case, there might be a cell on an earlier row which spans multiple rows.
 			# Therefore, try searching backwards.
 			for info in self._iterTableCells(tableID, direction="previous", startPos=startPos):
-				_ignore, row, col, rowSpan, colSpan = self._getTableCellCoords(info)
-				if row <= destRow < row + rowSpan and col <= destCol < col + colSpan:
+				cell = self._getTableCellCoords(info)
+			if (
+				cell.row <= destRow < (cell.row + cell.rowSpan)
+				and cell.col <= destCol < (cell.col + cell.colSpan)
+			):
 					return info
 			else:
 				raise LookupError

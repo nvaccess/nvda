@@ -14,52 +14,82 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <windows.h>
 #include <usp10.h>
+#include <vector>
 #include <common/log.h>
+
+using namespace std;
 
 enum UNIT {
 	UNIT_CHARACTER,
 	UNIT_WORD
 };
 
+vector<SCRIPT_LOGATTR> _getLogAttrArray(const wchar_t* text, int textLength) {
+	if (textLength <= 0 || !text) {
+		return {};
+	}
+	vector<SCRIPT_ITEM> items(textLength + 1);
+	int numItems = 0;
+	if (ScriptItemize(text, textLength, textLength, nullptr, nullptr, items.data(), &numItems) != S_OK || numItems == 0) {
+		return {};
+	}
+
+	vector<SCRIPT_LOGATTR> logAttrArray(textLength);
+	int nextICharPos = textLength;
+	for (int itemIndex = numItems - 1; itemIndex >= 0; --itemIndex) {
+		int iCharPos = items[itemIndex].iCharPos;
+		int iCharLength = nextICharPos - iCharPos;
+		if (ScriptBreak(text + iCharPos, iCharLength, &(items[itemIndex].a), logAttrArray.data() + iCharPos) != S_OK) {
+			return {};
+		}
+	}
+	return logAttrArray;
+}
+
+bool calculateCharacterBoundaries(const wchar_t* text, int textLength, int* offsets, int* offsetsCount) {
+	if (!offsets) {
+		return false;
+	}
+	vector<SCRIPT_LOGATTR> logAttrArray = _getLogAttrArray(text, textLength);
+	if (logAttrArray.empty()) {
+		return false;
+	}
+	int count = 0;
+	for (int i = 0; i < textLength; ++i) {
+		if (logAttrArray[i].fCharStop) {
+			offsets[count++] = i;
+		}
+	}
+	*offsetsCount = count;
+	return true;
+}
+
 bool _calculateUniscribeOffsets(enum UNIT unit, wchar_t* text, int textLength, int offset, int* startOffset, int* endOffset) {
 	if(unit!=UNIT_CHARACTER&&unit!=UNIT_WORD) {
 		LOG_ERROR(L"Unsupported unit");
 		return false;
 	}
-	if(textLength<=0) return false;
-	if(offset<0) return false;
-	if(offset>=textLength) {
-		*startOffset=offset;
-		*endOffset=offset+1;
-		return true;
-	}
-	SCRIPT_ITEM* pItems=new SCRIPT_ITEM[textLength+1];
-	int numItems=0;
-	if(ScriptItemize(text,textLength,textLength,NULL,NULL,pItems,&numItems)!=S_OK||numItems==0) {
-		delete[] pItems;
+	if (offset < 0 || !text) {
 		return false;
 	}
-	SCRIPT_LOGATTR* logAttrArray=new SCRIPT_LOGATTR[textLength];
-	int nextICharPos=textLength;
-	for(int itemIndex=numItems-1;itemIndex>=0;--itemIndex) {
-		int iCharPos=pItems[itemIndex].iCharPos;
-		int iCharLength=nextICharPos-iCharPos;
-		if(ScriptBreak(text+iCharPos,iCharLength,&(pItems[itemIndex].a),logAttrArray+iCharPos)!=S_OK) {
-			delete[] pItems;
-			delete[] logAttrArray;
-			return false;
-		}
+	if (offset >= textLength) {
+		*startOffset = offset;
+		*endOffset = offset + 1;
+		return true;
 	}
-	delete[] pItems;
+	vector<SCRIPT_LOGATTR> logAttrArray = _getLogAttrArray(text, textLength);
+	if (logAttrArray.empty()) {
+		return false;
+	}
 	if(unit==UNIT_CHARACTER) {
 		for(int i=offset;i>=0;--i) {
-			if(logAttrArray[i].fCharStop) {
+			if (logAttrArray[i].fCharStop) {
 				*startOffset=i;
 				break;
 			}
 		}
 		for(int i=offset+1;i<textLength;++i) {
-			if(logAttrArray[i].fCharStop) {
+			if (logAttrArray[i].fCharStop) {
 				*endOffset=i;
 				break;
 			}
@@ -110,7 +140,6 @@ bool _calculateUniscribeOffsets(enum UNIT unit, wchar_t* text, int textLength, i
 			}
 		}
 	}
-	delete[] logAttrArray;
 	return true;
 }
 

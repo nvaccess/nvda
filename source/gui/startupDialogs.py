@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Łukasz Golonka
+# Copyright (C) 2006-2023 NV Access Limited, Łukasz Golonka, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -9,6 +9,7 @@ import weakref
 import wx
 
 import config
+from config.configFlags import NVDAKey
 import core
 from documentationUtils import getDocFilePath
 import globalVars
@@ -34,10 +35,10 @@ class WelcomeDialog(
 		# Translators: The main message for the Welcome dialog when the user starts NVDA for the first time.
 		"Most commands for controlling NVDA require you to hold down"
 		" the NVDA key while pressing other keys.\n"
-		"By default, the numpad Insert and main Insert keys may both be used as the NVDA key.\n"
+		"By default, the Insert and numpad Insert keys may both be used as the NVDA key.\n"
 		"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 		"Press NVDA+n at any time to activate the NVDA menu.\n"
-		"From this menu, you can configure NVDA, get help and access other NVDA functions."
+		"From this menu, you can configure NVDA, get help, and access other NVDA functions."
 	)
 	_instances: Set["WelcomeDialog"] = weakref.WeakSet()
 
@@ -76,7 +77,7 @@ class WelcomeDialog(
 		# Translators: The label of a checkbox in the Welcome dialog.
 		capsAsNVDAModifierText = _("&Use CapsLock as an NVDA modifier key")
 		self.capsAsNVDAModifierCheckBox = sHelper.addItem(wx.CheckBox(optionsBox, label=capsAsNVDAModifierText))
-		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"])
+		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.CAPS_LOCK)
 		# Translators: The label of a checkbox in the Welcome dialog.
 		startAfterLogonText = _("St&art NVDA after I sign in")
 		self.startAfterLogonCheckBox = sHelper.addItem(wx.CheckBox(optionsBox, label=startAfterLogonText))
@@ -104,7 +105,26 @@ class WelcomeDialog(
 	def onOk(self, evt):
 		layout = self.kbdNames[self.kbdList.GetSelection()]
 		config.conf["keyboard"]["keyboardLayout"] = layout
-		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"] = self.capsAsNVDAModifierCheckBox.IsChecked()
+		NVDAKeysVal = (
+			(NVDAKey.CAPS_LOCK.value if self.capsAsNVDAModifierCheckBox.IsChecked() else 0)
+			| (config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.NUMPAD_INSERT.value)
+			| (config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.EXTENDED_INSERT.value)
+		)
+		if NVDAKeysVal == 0:
+			log.debugWarning("No NVDA key set")
+			gui.messageBox(
+				_(
+					# Translators: The title of an error message box displayed when validating the startup dialog
+					"At least one NVDA modifier key must be set. "
+					"Caps lock will remain as an NVDA modifier key. "
+				),
+				# Translators: The title of an error message box displayed when validating the startup dialog
+				_("Error"),
+				wx.OK | wx.ICON_ERROR,
+				self,
+			)
+		else:
+			config.conf["keyboard"]["NVDAModifierKeys"] = NVDAKeysVal
 		if self.startAfterLogonCheckBox.Enabled:
 			config.setStartAfterLogon(self.startAfterLogonCheckBox.Value)
 		config.conf["general"]["showWelcomeDialogAtStartup"] = self.showWelcomeDialogAtStartupCheckBox.IsChecked()

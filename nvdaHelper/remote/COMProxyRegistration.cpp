@@ -37,7 +37,7 @@ typedef void(RPC_ENTRY *LPFNGETPROXYDLLINFO)(ProxyFileInfo***, CLSID**);
 // http://thrysoee.dk/InsideCOM+/ch12d.htm
 const wchar_t* StringCLSID_StandardMarshaler=L"{00020424-0000-0000-C000-000000000046}";
 
-COMProxyRegistration_t* registerCOMProxy(wchar_t* dllPath) {
+COMProxyRegistration_t* registerCOMProxy(const wchar_t* dllPath) {
 	LOG_DEBUG(L"Registering proxy "<<dllPath);
 	int res;
 	// Fetch the CLSID for the standard marshaler which will be used to unregister PS CLSIDs later

@@ -177,7 +177,7 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 				f"Adding winEvent to limiter: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
 			)
 		if winEventLimiter.addEvent(eventID, window, objectID, childID, threadID):
-			core.requestPump()
+			core.requestPump(immediate=eventID == winUser.EVENT_OBJECT_FOCUS)
 	except Exception:
 		log.error("winEventCallback", exc_info=True)
 

@@ -1,4 +1,8 @@
 $ErrorActionPreference = "Stop";
+if (!$env:feature_buildSymbols) {
+	exit
+}
+
 foreach ($syms in
 	# We don't just include source\*.dll because that would include system dlls.
 	"source\liblouis.dll", "source\*.pdb",

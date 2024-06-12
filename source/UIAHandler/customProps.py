@@ -1,21 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2021 NV Access Limited
+# Copyright (C) 2021-2022 NV Access Limited, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-
-from dataclasses import (
-	dataclass,
-	field,
-)
-from typing import Optional
-
-from comtypes import (
-	GUID,
-	byref,
-)
-from .constants import (
-	UIAutomationType,
-)
 
 """
 This module provides helpers and a common format to define UIA custom properties.
@@ -33,8 +19,22 @@ This relies on both the UIA server application and the UIA client application sh
 GUID for the property.
 """
 
+import dataclasses
+from typing import (
+	ClassVar,
+	Dict,
+)
 
-@dataclass
+from comtypes import (
+	GUID,
+	byref,
+)
+from .constants import (
+	UIAutomationType,
+)
+
+
+@dataclasses.dataclass
 class CustomPropertyInfo:
 	"""Holds information about a CustomProperty
 	This makes it easy to define custom properties to be loaded.
@@ -42,38 +42,41 @@ class CustomPropertyInfo:
 	guid: GUID
 	programmaticName: str
 	uiaType: UIAutomationType
-	id: int = field(init=False)
+	_registeredProperties: ClassVar[Dict[GUID, int]] = dict()
 
-	def __post_init__(self) -> None:
-		""" The id field must be initialised at runtime.
+	def _registerCustomProperty(self) -> int:
+		""" Registers a custom property with a given id.
+
 		UIA will return the id to use when given the GUID.
 		Any application can be first to register a custom property, subsequent applications
 		will be given the same id.
 		"""
 		import NVDAHelper
-		self.id = NVDAHelper.localLib.registerUIAProperty(
+		return NVDAHelper.localLib.registerUIAProperty(
 			byref(self.guid),
 			self.programmaticName,
 			self.uiaType
 		)
 
+	@property
+	def id(self) -> int:
+		"""Return the integer id of the given property registering it first if necessary.
+
+		Id's of all registered properties are cached when requested for the first time
+		to prevent unnecessary work by repeatedly interacting with UIA.
+		"""
+		try:
+			propertyId = self._registeredProperties[self.guid]
+		except KeyError:
+			propertyId = self._registerCustomProperty()
+			self._registeredProperties[self.guid] = propertyId
+		return propertyId
+
 
 class CustomPropertiesCommon:
 	"""UIA 'custom properties' common to all applications.
 	Once registered, all subsequent registrations will return the same ID value.
-	This class should be used as a singleton via CustomPropertiesCommon.get()
-	to prevent unnecessary work by repeatedly interacting with UIA.
-	"""
-	#: Singleton instance
-	_instance: "Optional[CustomPropertiesCommon]" = None
-
-	@classmethod
-	def get(cls) -> "CustomPropertiesCommon":
-		"""Get the singleton instance or initialise it.
 		"""
-		if cls._instance is None:
-			cls._instance = cls()
-		return cls._instance
 
 	def __init__(self):
 

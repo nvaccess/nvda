@@ -334,9 +334,7 @@ class SynthDriver(SynthDriver):
 				textList.append(langChangeXML)
 				langChanged = True
 			elif isinstance(item, BreakCommand):
-				# Break commands are ignored at the start of speech unless strength is specified.
-				# Refer to eSpeak issue: https://github.com/espeak-ng/espeak-ng/issues/1232
-				textList.append(f'<break time="{item.time}ms" strength="1" />')
+				textList.append(f'<break time="{item.time}ms" />')
 			elif type(item) in self.PROSODY_ATTRS:
 				if prosody:
 					# Close previous prosody tag.
@@ -424,10 +422,10 @@ class SynthDriver(SynthDriver):
 		val=self._percentToParam(val, _espeak.minPitch, _espeak.maxPitch)
 		_espeak.setParameter(_espeak.espeakRANGE,val,0)
 
-	def _get_volume(self):
+	def _get_volume(self) -> int:
 		return _espeak.getParameter(_espeak.espeakVOLUME,1)
 
-	def _set_volume(self,volume):
+	def _set_volume(self, volume: int):
 		_espeak.setParameter(_espeak.espeakVOLUME,volume,0)
 
 	def _getAvailableVoices(self):

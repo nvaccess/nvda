@@ -271,11 +271,6 @@ VBufStorage_controlFieldNode_t* VBufBackend_t::reuseExistingNodeInRender(VBufSto
 		LOG_DEBUG(L"Could not locate a node with docHandle "<<docHandle<<L", and ID "<<ID);
 		return nullptr;
 	}
-	// Ensure the node allows us to reuse it
-	if(!existingNode->allowReuseInAncestorUpdate) {
-		LOG_DEBUG(L"Existing node refuses to be reused");
-		return nullptr;
-	}
 	// Don't reuse the node if it has no parent (is the root of the buffer).
 	auto existingParent=existingNode->getParent();
 	if(!existingParent) {
@@ -286,10 +281,18 @@ VBufStorage_controlFieldNode_t* VBufBackend_t::reuseExistingNodeInRender(VBufSto
 	// must not reuse descendants.
 	if (existingParent->alwaysRerenderDescendants) {
 		// Propagate to descendants.
+		// Important! This propagation must happen before the early returns for
+		// existingNode below. Otherwise, we might not respect this flag on
+		// descendants, making it effectively useless in some cases.
 		existingNode->alwaysRerenderDescendants = true;
 	}
 	if ( existingNode->alwaysRerenderDescendants) {
 		LOG_DEBUG(L"Existing node and its descendants must not be reused");
+		return nullptr;
+	}
+	// Ensure the node allows us to reuse it
+	if(!existingNode->allowReuseInAncestorUpdate) {
+		LOG_DEBUG(L"Existing node refuses to be reused");
 		return nullptr;
 	}
 	if(existingNode->denyReuseIfPreviousSiblingsChanged) {

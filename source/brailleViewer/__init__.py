@@ -1,9 +1,8 @@
-# brailleViewer.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2014-2019 NV Access Limited
+# Copyright (C) 2014-2023 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-from typing import Optional, List
+from typing import Optional
 
 import gui
 import extensionPoints
@@ -54,7 +53,7 @@ _brailleGui: Optional[BrailleViewerFrame] = None
 # Extension points action:
 # Triggered every time the Braille Viewer is created / shown or hidden / destroyed.
 # Callback definition: Callable(created: bool) -> None
-#   created - True for created/shown, False for hidden/destructed.
+#   created - True for created/shown, False for hidden/destroyed.
 postBrailleViewerToolToggledAction = extensionPoints.Action()
 DEFAULT_NUM_CELLS = config.conf['brailleViewer']['defaultCellCount']
 
@@ -63,21 +62,18 @@ def isBrailleViewerActive() -> bool:
 	return bool(_brailleGui)
 
 
-def update(cells: List[int], rawText: str):
-	if _brailleGui:
-		_brailleGui.updateBrailleDisplayed(
-			cells,
-			rawText,
-			_getDisplaySize()
-		)
-
-
 def destroyBrailleViewer():
 	global _brailleGui
 	d: Optional[BrailleViewerFrame] = _brailleGui
 	_brailleGui = None  # protect against re-entrance
-	if d and not d.isDestroyed:
-		d.saveInfoAndDestroy()
+	if d is not None:
+		import braille  # imported late to avoid a circular import.
+		if not d.isDestroyed:
+			updateBrailleDisplayedUnregistered = braille.pre_writeCells.unregister(d.updateBrailleDisplayed)
+			assert updateBrailleDisplayedUnregistered
+			d.saveInfoAndDestroy()
+		getDisplaySizeUnregistered = braille.filter_displaySize.unregister(_getDisplaySize)
+		assert getDisplaySizeUnregistered
 
 
 def _onGuiDestroyed():
@@ -91,12 +87,11 @@ def _onGuiDestroyed():
 	postBrailleViewerToolToggledAction.notify(created=False)
 
 
-def _getDisplaySize():
-	import braille  # imported late to avoid a circular import.
-	numCells = braille.handler.displaySize
+def _getDisplaySize(numCells: int):
 	return numCells if numCells > 0 else DEFAULT_NUM_CELLS
 
 
+@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 def createBrailleViewerTool():
 	if not gui.mainFrame:
 		raise RuntimeError("Can not initialise the BrailleViewerGui: gui.mainFrame not yet initialised")
@@ -105,13 +100,15 @@ def createBrailleViewerTool():
 	if not braille.handler:
 		raise RuntimeError("Can not initialise the BrailleViewerGui: braille.handler not yet initialised")
 
+	braille.filter_displaySize.register(_getDisplaySize)
+
 	global _brailleGui
 	if _brailleGui:
 		destroyBrailleViewer()
 
 	_brailleGui = BrailleViewerFrame(
-		_getDisplaySize(),
+		braille.handler.displaySize,
 		_onGuiDestroyed
 	)
-
+	braille.pre_writeCells.register(_brailleGui.updateBrailleDisplayed)
 	postBrailleViewerToolToggledAction.notify(created=True)

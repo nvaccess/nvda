@@ -25,3 +25,6 @@ class RelationType(str, enum.Enum):
 	CONTAINING_DOCUMENT = "containingDocument"
 	DETAILS = "details"
 	DETAILS_FOR = "detailsFor"
+	CONTROLLER_FOR = "controllerFor"
+	ERROR = "error"
+	ERROR_FOR = "errorFor"

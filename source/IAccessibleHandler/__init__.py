@@ -45,7 +45,6 @@ import appModuleHandler
 import controlTypes
 import core
 import eventHandler
-import keyboardHandler
 from logHandler import log
 import mouseHandler
 import NVDAObjects.IAccessible
@@ -558,7 +557,7 @@ def winEventToNVDAEvent(  # noqa: C901
 			)
 		return None
 	# We do not support MSAA object proxied from native UIA
-	if UIAHandler.handler and UIAHandler.handler.isUIAWindow(window):
+	if UIAHandler.handler and UIAHandler.handler.isUIAWindow(window, isDebug=isMSAADebugLoggingEnabled()):
 		if isMSAADebugLoggingEnabled():
 			log.debug(
 				f"Native UIA window. Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}"
@@ -773,26 +772,8 @@ def processFocusNVDAEvent(obj, force=False):
 	return True
 
 
-class SecureDesktopNVDAObject(NVDAObjects.window.Desktop):
-
-	def findOverlayClasses(self, clsList):
-		clsList.append(SecureDesktopNVDAObject)
-		return clsList
-
-	def _get_name(self):
-		# Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
-		return _("Secure Desktop")
-
-	def _get_role(self):
-		return controlTypes.Role.PANE
-
-	def event_gainFocus(self):
-		super(SecureDesktopNVDAObject, self).event_gainFocus()
-		# After handling the focus, NVDA should sleep while the secure desktop is active.
-		self.sleepMode = self.SLEEP_FULL
-
-
 def processDesktopSwitchWinEvent(window, objectID, childID):
+	from winAPI.secureDesktop import _handleSecureDesktopChange
 	if isMSAADebugLoggingEnabled():
 		log.debug(
 			f"Processing desktopSwitch winEvent: {getWinEventLogInfo(window, objectID, childID)}"
@@ -800,18 +781,23 @@ def processDesktopSwitchWinEvent(window, objectID, childID):
 	hDesk = windll.user32.OpenInputDesktop(0, False, 0)
 	if hDesk != 0:
 		windll.user32.CloseDesktop(hDesk)
-		core.callLater(200, _correctFocus)
+		core.callLater(200, _handleUserDesktop)
 	else:
-		# Switching to a secure desktop.
-		# We don't receive key up events for any keys down before switching to a secure desktop,
-		# so clear our recorded modifiers.
-		keyboardHandler.currentModifiers.clear()
-		obj = SecureDesktopNVDAObject(windowHandle=window)
-		eventHandler.executeEvent("gainFocus", obj)
+		# When hDesk == 0, the active desktop has changed.
+		# This is usually means the secure desktop has been launched,
+		# but the new desktop can also be a secondary desktop created through the Windows API.
+		# https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-createdesktopa
+		# This secondary desktop has some bugs, and as such is not properly supported (#14395).
+		# It is not immediately clear how to differentiate changing to a secondary desktop and the secure desktop.
+		# When looking to support the secondary desktop,
+		# the UX should be updated to announce "desktop change" rather than "Secure Desktop".
+		_handleSecureDesktopChange()
 
 
-def _correctFocus():
+def _handleUserDesktop():
+	from winAPI.secureDesktop import post_secureDesktopStateChange
 	eventHandler.queueEvent("gainFocus", api.getDesktopObject().objectWithFocus())
+	post_secureDesktopStateChange.notify(isSecureDesktop=False)
 
 
 def processForegroundWinEvent(window, objectID, childID):

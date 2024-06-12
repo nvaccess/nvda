@@ -1,12 +1,18 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Joseph Lee, Arnold Loubriat, Leonard de Ruijter
 
 import pkgutil
 import importlib
-from typing import Optional, OrderedDict, Set
+from typing import (
+	List,
+	Optional,
+	OrderedDict,
+	Set,
+	Tuple,
+)
 from locale import strxfrm
 
 import config
@@ -53,7 +59,7 @@ class SynthDriver(driverHandler.Driver):
 	Each synthesizer driver should be a separate Python module in the root synthDrivers directory
 	containing a SynthDriver class
 	which inherits from this base class.
-	
+
 	At a minimum, synth drivers must set L{name} and L{description} and override the L{check} method.
 	The methods L{speak}, L{cancel} and L{pause} should be overridden as appropriate.
 	L{supportedSettings} should be set as appropriate for the settings supported by the synthesiser.
@@ -251,22 +257,34 @@ class SynthDriver(driverHandler.Driver):
 			self._availableVoices = self._getAvailableVoices()
 		return self._availableVoices
 
-	def _get_rate(self):
+	#: Typing information for auto-property: _get_rate
+	rate: int
+	"""Between 0-100"""
+
+	def _get_rate(self) -> int:
 		return 0
 
-	def _set_rate(self, value):
+	def _set_rate(self, value: int):
 		pass
 
-	def _get_pitch(self):
+	#: Typing information for auto-property: _get_pitch
+	pitch: int
+	"""Between 0-100"""
+
+	def _get_pitch(self) -> int:
 		return 0
 
-	def _set_pitch(self, value):
+	def _set_pitch(self, value: int):
 		pass
 
-	def _get_volume(self):
+	#: Typing information for auto-property: _get_volume
+	volume: int
+	"""Between 0-100"""
+
+	def _get_volume(self) -> int:
 		return 0
 
-	def _set_volume(self, value):
+	def _set_volume(self, value: int):
 		pass
 
 	def _get_variant(self):
@@ -339,7 +357,7 @@ class SynthDriver(driverHandler.Driver):
 		elif not onlyChanged:
 			changeVoice(self, None)
 		for s in self.supportedSettings:
-			if s.id == "voice" or c[s.id] is None:
+			if not s.useConfig or s.id == "voice" or c[s.id] is None:
 				continue
 			val = c[s.id]
 			if onlyChanged and getattr(self, s.id) == val:
@@ -371,7 +389,6 @@ _audioOutputDevice = None
 
 
 def initialize():
-	config.addConfigDirsToPythonPackagePath(synthDrivers)
 	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
 
 
@@ -392,8 +409,10 @@ def _getSynthDriver(name) -> SynthDriver:
 	return importlib.import_module("synthDrivers.%s" % name, package="synthDrivers").SynthDriver
 
 
-def getSynthList():
-	synthList = []
+def getSynthList() -> List[Tuple[str, str]]:
+	from synthDrivers.silence import SynthDriver as SilenceSynthDriver
+
+	synthList: List[Tuple[str, str]] = []
 	# The synth that should be placed at the end of the list.
 	lastSynth = None
 	for loader, name, isPkg in pkgutil.iter_modules(synthDrivers.__path__):
@@ -406,7 +425,7 @@ def getSynthList():
 			continue
 		try:
 			if synth.check():
-				if synth.name == "silence":
+				if synth.name == SilenceSynthDriver.name:
 					lastSynth = (synth.name, synth.description)
 				else:
 					synthList.append((synth.name, synth.description))
@@ -442,6 +461,8 @@ if winVersion.getWinVer() >= winVersion.WIN10:
 
 
 def setSynth(name: Optional[str], isFallback: bool = False):
+	from synthDrivers.silence import SynthDriver as SilenceSynthDriver
+
 	asDefault = False
 	global _curSynth, _audioOutputDevice
 	if name is None:
@@ -463,22 +484,24 @@ def setSynth(name: Optional[str], isFallback: bool = False):
 		_curSynth = getSynthInstance(name, asDefault)
 	except:  # noqa: E722 # Legacy bare except
 		log.error(f"setSynth failed for {name}", exc_info=True)
-	
+
 	if _curSynth is not None:
 		_audioOutputDevice = config.conf["speech"]["outputDevice"]
 		if not isFallback:
 			config.conf["speech"]["synth"] = name
 		log.info(f"Loaded synthDriver {_curSynth.name}")
+		synthChanged.notify(synth=_curSynth, audioOutputDevice=_audioOutputDevice, isFallback=isFallback)
 		return True
 	# As there was an error loading this synth:
-	elif prevSynthName:
+	elif prevSynthName and not prevSynthName == SilenceSynthDriver.name:
+		# Don't fall back to silence if speech is expected
 		log.info(f"Falling back to previous synthDriver {prevSynthName}")
 		# There was a previous synthesizer, so switch back to that one.
 		setSynth(prevSynthName, isFallback=True)
 	else:
 		# There was no previous synth, so fallback to the next available default synthesizer
 		# that has not been tried yet.
-		log.info(f"Searching for next synthDriver")
+		log.info("Searching for next synthDriver")
 		findAndSetNextSynth(name)
 	return False
 
@@ -531,3 +554,16 @@ synthIndexReached = extensionPoints.Action()
 #: Handlers are called with one keyword argument:
 #: synth: The L{SynthDriver} which reached the index.
 synthDoneSpeaking = extensionPoints.Action()
+
+synthChanged = extensionPoints.Action()
+"""
+Action that allows components or add-ons to be notified of synthesizer changes.
+For example, when a system is controlled by a remote system and the remote system switches synth,
+The local system should be notified about synth parameters at the remote system.
+@param synth: The new synthesizer driver
+@type synth: L{SynthDriver}
+@param audioOutputDevice: The identifier of the audio output device used for this synth.
+@type audioOutputDevice: str
+@param isFallback: Whether the synth is set as fallback synth due to another synth's failure
+@type isFallback: bool
+"""

@@ -66,7 +66,16 @@ def getConfigLanguage():
 	config.conf["uwpOcr"]["language"] = initial
 	return initial
 
+
 class UwpOcr(ContentRecognizer):
+
+	@classmethod
+	def _get_allowAutoRefresh(cls) -> bool:
+		return config.conf['uwpOcr']['autoRefresh']
+
+	@classmethod
+	def _get_autoRefreshInterval(cls) -> int:
+		return config.conf['uwpOcr']['autoRefreshInterval']
 
 	def getResizeFactor(self, width, height):
 		# UWP OCR performs poorly with small images, so increase their size.

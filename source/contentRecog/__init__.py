@@ -1,8 +1,7 @@
-#contentRecog/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2017 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2017-2023 NV Access Limited, James Teh, Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+#  See the file COPYING for more details.
 
 """Framework for recognition of content; OCR, image recognition, etc.
 When authors don't provide sufficient information for a screen reader user to determine the content of something,
@@ -14,11 +13,17 @@ They are implemented using the L{ContentRecognizer} class.
 """
 
 from collections import namedtuple
+import ctypes
+from typing import Callable, Dict, List, Union
 import garbageHandler
+from baseObject import AutoPropertyObject
 import cursorManager
 import textInfos.offsets
 from abc import ABCMeta, abstractmethod
 from locationHelper import RectLTWH
+from NVDAObjects import NVDAObject
+
+onRecognizeResultCallbackT = Callable[[Union["RecognitionResult", Exception]], None]
 
 
 class BaseContentRecogTextInfo(cursorManager._ReviewCursorManagerTextInfo):
@@ -27,24 +32,31 @@ class BaseContentRecogTextInfo(cursorManager._ReviewCursorManagerTextInfo):
 	"""
 
 
-class ContentRecognizer(garbageHandler.TrackedObject, metaclass=ABCMeta):
+class ContentRecognizer(AutoPropertyObject):
 	"""Implementation of a content recognizer.
 	"""
 
-	def getResizeFactor(self, width, height):
+	allowAutoRefresh: bool = False
+	"""
+	Whether to allow automatic, periodic refresh when using this recognizer.
+	This allows the user to see live changes as they occur. However, if a
+	recognizer uses an internet service or is very resource intensive, this
+	may be undesirable.
+	"""
+	autoRefreshInterval: int = 1500
+	"""How often (in ms) to perform recognition."""
+
+	def getResizeFactor(self, width: int, height: int) -> Union[int, float]:
 		"""Return the factor by which an image must be resized
 		before it is passed to this recognizer.
 		@param width: The width of the image in pixels.
-		@type width: int
 		@param height: The height of the image in pixels.
-		@type height: int
 		@return: The resize factor, C{1} for no resizing.
-		@rtype: int or float
 		"""
 		return 1
 
 	@abstractmethod
-	def recognize(self, pixels, imageInfo, onResult):
+	def recognize(self, pixels: ctypes.Array, imageInfo: "RecogImageInfo", onResult: onRecognizeResultCallbackT):
 		"""Asynchronously recognize content from an image.
 		This method should not block.
 		Only one recognition can be performed at a time.
@@ -56,9 +68,8 @@ class ContentRecognizer(garbageHandler.TrackedObject, metaclass=ABCMeta):
 			However, the alpha channel should be ignored.
 		@type pixels: Two dimensional array (y then x) of L{winGDI.RGBQUAD}
 		@param imageInfo: Information about the image for recognition.
-		@type imageInfo: L{RecogImageInfo}
-		@param onResult: A callable which takes a L{RecognitionResult} (or an exception on failure) as its only argument.
-		@type onResult: callable
+		@param onResult: A callable which takes a L{RecognitionResult} (or an exception on failure)
+			as its only argument.
 		"""
 		raise NotImplementedError
 
@@ -73,17 +84,16 @@ class ContentRecognizer(garbageHandler.TrackedObject, metaclass=ABCMeta):
 		"""
 		return True
 
-	def validateObject(self, nav):
+	def validateObject(self, nav: NVDAObject) -> bool:
 		"""Validation to be performed on the navigator object before content recognition
 		@param nav: The navigator object to be validated
-		@type nav: L{NVDAObjects.NVDAObject}
 		@return: C{True} or C{False}, depending on whether the navigator object is valid or not.
 			C{True} for no validation.
-		@rtype: bool
 		"""
 		return True
 
-class RecogImageInfo(object):
+
+class RecogImageInfo:
 	"""Encapsulates information about a recognized image and
 	provides functionality to convert coordinates.
 	An image captured for recognition can begin at any point on the screen.
@@ -97,18 +107,20 @@ class RecogImageInfo(object):
 	This is done using the L{convertXToScreen} and L{convertYToScreen} methods.
 	"""
 
-	def __init__(self, screenLeft, screenTop, screenWidth, screenHeight, resizeFactor):
+	def __init__(
+			self,
+			screenLeft: int,
+			screenTop: int,
+			screenWidth: int,
+			screenHeight: int,
+			resizeFactor: Union[int, float]
+	):
 		"""
 		@param screenLeft: The x screen coordinate of the upper-left corner of the image.
-		@type screenLeft: int
 		@param screenTop: The y screen coordinate of the upper-left corner of the image.
-		@type screenTop: int
 		@param screenWidth: The width of the image on the screen.
-		@type screenWidth: int
 		@param screenHeight: The height of the image on the screen.
-		@type screenHeight: int
 		@param resizeFactor: The factor by which the image must be resized for recognition.
-		@type resizeFactor: int or float
 		@raise ValueError: If the supplied screen coordinates indicate that
 			the image is not visible; e.g. width or height of 0.
 		"""
@@ -125,7 +137,14 @@ class RecogImageInfo(object):
 		self.recogHeight = int(screenHeight * resizeFactor)
 
 	@classmethod
-	def createFromRecognizer(cls, screenLeft, screenTop, screenWidth, screenHeight, recognizer):
+	def createFromRecognizer(
+			cls,
+			screenLeft: int,
+			screenTop: int,
+			screenWidth: int,
+			screenHeight: int,
+			recognizer: ContentRecognizer
+	):
 		"""Convenience method to construct an instance using a L{ContentRecognizer}.
 		The resize factor is obtained by calling L{ContentRecognizer.getResizeFactor}.
 		"""
@@ -172,9 +191,11 @@ class RecognitionResult(garbageHandler.TrackedObject, metaclass=ABCMeta):
 		"""
 		raise NotImplementedError
 
+
 # Used internally by LinesWordsResult.
 # (Lwr is short for LinesWordsResult.)
 LwrWord = namedtuple("LwrWord", ("offset", "left", "top", "width", "height"))
+
 
 class LinesWordsResult(RecognitionResult):
 	"""A L{RecognizerResult} which can create TextInfos based on a simple lines/words data structure.
@@ -183,7 +204,7 @@ class LinesWordsResult(RecognitionResult):
 	Several OCR engines produce output in a format which can be easily converted to this.
 	"""
 
-	def __init__(self, data, imageInfo):
+	def __init__(self, data: List[List[Dict[str, Union[str, int]]]], imageInfo: RecogImageInfo):
 		"""Constructor.
 		@param data: The lines/words data structure. For example:
 			[
@@ -196,11 +217,9 @@ class LinesWordsResult(RecognitionResult):
 					{"x": 117, "y": 105, "width": 11, "height": 9, "text": "Word4"}
 				]
 			]
-		@type data: list of lists of dicts
 		@param imageInfo: Information about the recognized image.
 			This is used to convert coordinates in the recognized image
 			to screen coordinates.
-		@type imageInfo: L{RecogImageInfo}
 		"""
 		self.data = data
 		self.imageInfo = imageInfo
@@ -223,11 +242,13 @@ class LinesWordsResult(RecognitionResult):
 					# Separate with a space.
 					self._textList.append(" ")
 					self.textLen += 1
-				self.words.append(LwrWord(self.textLen,
+				self.words.append(LwrWord(
+					self.textLen,
 					self.imageInfo.convertXToScreen(word["x"]),
 					self.imageInfo.convertYToScreen(word["y"]),
 					self.imageInfo.convertWidthToScreen(word["width"]),
-					self.imageInfo.convertHeightToScreen(word["height"])))
+					self.imageInfo.convertHeightToScreen(word["height"]))
+				)
 				text = word["text"]
 				self._textList.append(text)
 				self.textLen += len(text)
@@ -249,7 +270,7 @@ class LwrTextInfo(BaseContentRecogTextInfo, textInfos.offsets.OffsetsTextInfo):
 
 	def __init__(self, obj, position, result):
 		self.result = result
-		super(LwrTextInfo, self).__init__(obj, position)
+		super().__init__(obj, position)
 
 	def copy(self):
 		return self.__class__(self.obj, self.bookmark, self.result)
@@ -315,7 +336,7 @@ class SimpleResultTextInfo(BaseContentRecogTextInfo, textInfos.offsets.OffsetsTe
 
 	def __init__(self, obj, position, result):
 		self.result = result
-		super(SimpleResultTextInfo, self).__init__(obj, position)
+		super().__init__(obj, position)
 
 	def copy(self):
 		return self.__class__(self.obj, self.bookmark, self.result)
@@ -325,6 +346,3 @@ class SimpleResultTextInfo(BaseContentRecogTextInfo, textInfos.offsets.OffsetsTe
 
 	def _getStoryLength(self):
 		return len(self.result.text)
-
-	def _getStoryText(self):
-		return self.result.text

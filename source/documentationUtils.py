@@ -1,22 +1,23 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Łukasz Golonka
+# Copyright (C) 2006-2023 NV Access Limited, Łukasz Golonka
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
+from typing import Optional
 import os
-import sys
 
 import globalVars
 import languageHandler
+import NVDAState
 
 
-def getDocFilePath(fileName, localized=True):
+def getDocFilePath(fileName: str, localized: bool = True) -> Optional[str]:
 	if not getDocFilePath.rootPath:
-		if hasattr(sys, "frozen"):
-			getDocFilePath.rootPath = os.path.join(globalVars.appDir, "documentation")
-		else:
+		if NVDAState.isRunningAsSource():
 			getDocFilePath.rootPath = os.path.join(globalVars.appDir, "..", "user_docs")
+		else:
+			getDocFilePath.rootPath = os.path.join(globalVars.appDir, "documentation")
 
 	if localized:
 		lang = languageHandler.getLanguage()
@@ -42,7 +43,7 @@ def getDocFilePath(fileName, localized=True):
 		return None
 	else:
 		# Not localized.
-		if not hasattr(sys, "frozen") and fileName in ("copying.txt", "contributors.txt"):
+		if NVDAState.isRunningAsSource() and fileName in ("copying.txt", "contributors.txt"):
 			# If running from source, these two files are in the root dir.
 			return os.path.join(globalVars.appDir, "..", fileName)
 		else:

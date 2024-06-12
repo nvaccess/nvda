@@ -9,6 +9,7 @@ from comtypes.hresult import S_OK
 import comtypes.client
 import comtypes.automation
 import ctypes
+import winVersion
 from hwPortUtils import SYSTEMTIME
 import scriptHandler
 from scriptHandler import script
@@ -26,6 +27,7 @@ from UIAHandler.utils import createUIAMultiPropertyCondition
 import api
 import controlTypes
 import config
+from config.configFlags import ReportTableHeaders
 import speech
 import ui
 from NVDAObjects.IAccessible import IAccessible
@@ -42,7 +44,9 @@ from NVDAObjects.behaviors import RowWithFakeNavigation, Dialog
 from NVDAObjects.UIA import UIA
 from NVDAObjects.UIA.wordDocument import WordDocument as UIAWordDocument
 import languageHandler
-
+from typing import Generator
+import documentBase
+import browseMode
 
 PR_LAST_VERB_EXECUTED=0x10810003
 VERB_REPLYTOSENDER=102
@@ -97,6 +101,21 @@ def getSentMessageString(obj):
 	return ", ".join(nameList)
 
 class AppModule(appModuleHandler.AppModule):
+
+	def isGoodUIAWindow(self, hwnd: int) -> bool:
+		windowClass = winUser.getClassName(hwnd)
+		versionMajor = int(self.productVersion.split('.')[0])
+		if (
+			versionMajor >= 16
+			and windowClass == "RICHEDIT60W"
+			and winVersion.getWinVer() >= winVersion.WIN10
+		):
+			# #12726: RICHEDIT60W In Outlook 2016+ on Windows 10+
+			# has a very good UI Automation implementation,
+			# Though oddly IsServerSideProvider returns false for these windows.
+			# Examples: date picker in the Outlook Advanced search dialog
+			return True
+		return False
 
 	def __init__(self,*args,**kwargs):
 		super(AppModule,self).__init__(*args,**kwargs)
@@ -335,10 +354,12 @@ class CalendarView(IAccessible):
 			bufLength
 		) == 0:
 			raise ctypes.WinError()
+		categoriesCount = len(categories.split(f"{separatorBuf.value} "))
 
 		# Translators: Part of a message reported when on a calendar appointment with one or more categories
 		# in Microsoft Outlook.
-		return _("categories {categories}").format(categories=categories)
+		categoriesText = ngettext("category {categories}", "categories {categories}", categoriesCount)
+		return categoriesText.format(categories=categories)
 
 	def isDuplicateIAccessibleEvent(self,obj):
 		return False
@@ -509,7 +530,10 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 				continue
 			name=e.cachedName
 			columnHeaderTextList=[]
-			if name and config.conf['documentFormatting']['reportTableHeaders']:
+			if name and config.conf['documentFormatting']['reportTableHeaders'] in (
+				ReportTableHeaders.ROWS_AND_COLUMNS,
+				ReportTableHeaders.COLUMNS,
+			):
 				columnHeaderItems=e.getCachedPropertyValueEx(UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId,True)
 			else:
 				columnHeaderItems=None
@@ -583,6 +607,14 @@ class MailViewerTreeInterceptor(WordDocumentTreeInterceptor):
 		if not isCollapsed:
 			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
 		braille.handler.handleCaretMove(self)
+
+	def _iterTextStyle(
+			self,
+			kind: str,
+			direction: documentBase._Movement = documentBase._Movement.NEXT,
+			pos: textInfos.TextInfo | None = None
+	) -> Generator[browseMode.TextInfoQuickNavItem, None, None]:
+		raise NotImplementedError("Outlook is not supported due to performance - #16408")
 
 	__gestures={
 		"kb:tab":"tab",

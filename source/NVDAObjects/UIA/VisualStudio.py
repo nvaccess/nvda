@@ -25,12 +25,12 @@ class IntelliSenseItem(UIA):
 		# Therefore, if speech wouldn't be cancelled,
 		# selection announcements would queue up when changing selection rapidly.
 		speech.cancelSpeech()
-		api.setNavigatorObject(self, isFocus=True)
-		self.reportFocus()
-		# Display results as flash messages.
-		braille.handler.message(braille.getPropertiesBraille(
-			name=self.name, role=self.role, positionInfo=self.positionInfo, description=self.description
-		))
+		if api.setNavigatorObject(self, isFocus=True):
+			self.reportFocus()
+			# Display results as flash messages.
+			braille.handler.message(braille.getPropertiesBraille(
+				name=self.name, role=self.role, positionInfo=self.positionInfo, description=self.description
+			))
 
 
 class IntelliSenseList(UIA):

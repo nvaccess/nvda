@@ -25,8 +25,6 @@ default teardown
 default startup
 	start NVDAInstaller	standard-dontShowWelcomeDialog.ini
 
-default pass execution
-
 *** Test Cases ***
 
 Read install dialog

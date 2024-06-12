@@ -487,6 +487,7 @@ def HeadingControlQuicknavIterator(itemType, document, position, direction="next
 
 class UIAWebTreeInterceptor(cursorManager.ReviewCursorManager, UIABrowseModeDocument):
 	TextInfo = UIABrowseModeDocumentTextInfo
+	_nativeAppSelectionMode = False
 
 	def makeTextInfo(self, position):
 		try:

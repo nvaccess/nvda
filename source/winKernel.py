@@ -4,14 +4,42 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""Functions that wrap Windows API functions from kernel32.dll and advapi32.dll"""
+"""
+Functions that wrap Windows API functions from kernel32.dll and advapi32.dll.
 
-from typing import Optional, Union
+When working on this file, consider moving to winAPI.
+"""
+
 import contextlib
 import ctypes
 import ctypes.wintypes
 from ctypes import byref, c_byte, POINTER, sizeof, Structure, windll, WinError
 from ctypes.wintypes import BOOL, DWORD, HANDLE, LARGE_INTEGER, LCID, LPWSTR, LPVOID, WORD
+from typing import (
+	TYPE_CHECKING,
+	Any,
+	Optional,
+	Union,
+)
+
+if TYPE_CHECKING:
+	from winAPI._powerTracking import SystemPowerStatus
+
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility.
+	"""
+	import NVDAState
+	if attrName == "SYSTEM_POWER_STATUS" and NVDAState._allowDeprecatedAPI():
+		from logHandler import log
+		from winAPI._powerTracking import SystemPowerStatus
+		log.warning(
+			"winKernel.SYSTEM_POWER_STATUS is deprecated, "
+			"use winAPI._powerTracking.SystemPowerStatus instead."
+		)
+		return SystemPowerStatus
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
 
 kernel32=ctypes.windll.kernel32
 advapi32 = windll.advapi32
@@ -138,14 +166,10 @@ def openProcess(*args):
 def closeHandle(*args):
 	return kernel32.CloseHandle(*args)
 
-#added by Rui Batista to use on Say_battery_status script 
-#copied from platform sdk documentation (with required changes to work in python) 
-class SYSTEM_POWER_STATUS(ctypes.Structure):
-	_fields_ = [("ACLineStatus", ctypes.c_byte), ("BatteryFlag", ctypes.c_byte), ("BatteryLifePercent", ctypes.c_byte), ("Reserved1", ctypes.c_byte), ("BatteryLifeTime", ctypes.wintypes.DWORD), ("BatteryFullLiveTime", ctypes.wintypes.DWORD)]
 
-
-def GetSystemPowerStatus(sps):
+def GetSystemPowerStatus(sps: "SystemPowerStatus") -> int:
 	return kernel32.GetSystemPowerStatus(ctypes.byref(sps))
+
 
 def getThreadLocale():
 	return kernel32.GetThreadLocale()

@@ -1,13 +1,13 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2009-2022 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
+# Copyright (C) 2009-2023 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot
 
 from comtypes import COMError
 import eventHandler
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import controlTypes
-from controlTypes import TextPosition
+from controlTypes import TextPosition, TextAlign
 from controlTypes.formatFields import FontSize
 import NVDAObjects.IAccessible.MSHTML
 import winUser
@@ -22,6 +22,10 @@ import api
 import aria
 import config
 import exceptions
+from typing import (
+	Dict,
+	Optional,
+)
 
 FORMATSTATE_INSERTED=1
 FORMATSTATE_DELETED=2
@@ -39,6 +43,14 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			log.debug(f'textPositionValue={textPositionValue}')
 			return TextPosition.BASELINE
 
+	def _getTextAlignAttribute(self, attrs: Dict[str, str]) -> Optional[TextAlign]:
+		textAlignValue = attrs.get('text-align')
+		try:
+			return TextAlign(textAlignValue)
+		except ValueError:
+			log.debug(f'textAlignValue={textAlignValue}')
+			return None
+
 	def _normalizeFormatField(self, attrs):
 		formatState=attrs.get('formatState',"0")
 		formatState=int(formatState)
@@ -53,12 +65,17 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		language=attrs.get('language')
 		if language:
 			attrs['language']=languageHandler.normalizeLanguage(language)
+		
 		textPosition = attrs.get('textPosition')
 		textPosition = self._getTextPositionAttribute(attrs)
 		attrs['text-position'] = textPosition
 		fontSize = attrs.get("font-size")
 		if fontSize is not None:
 			attrs["font-size"] = FontSize.translateFromAttribute(fontSize)
+		textAlign = attrs.get('textAlign')
+		textAlign = self._getTextAlignAttribute(attrs)
+		if textAlign:
+			attrs['text-align'] = textAlign
 		return attrs
 
 	def _getIsCurrentAttribute(self, attrs: dict) -> controlTypes.IsCurrent:
@@ -206,7 +223,11 @@ class MSHTML(VirtualBuffer):
 		# Force focus mode for applications, and dialogs with no parent treeInterceptor (E.g. a dialog embedded in an application)  
 		if rootNVDAObject.role==controlTypes.Role.APPLICATION or (rootNVDAObject.role==controlTypes.Role.DIALOG and (not rootNVDAObject.parent or not rootNVDAObject.parent.treeInterceptor or rootNVDAObject.parent.treeInterceptor.passThrough)):
 			self.disableAutoPassThrough=True
-			self.passThrough=True
+			# Note, as _set_passThrough has logic to handle braille and vision updates which are unnecessary when
+			# initializing this tree interceptor, we set the private _passThrough variable here, which is enough.
+			self._passThrough = True
+			import browseMode
+			browseMode.reportPassThrough.last = True
 
 	def _getInitialCaretPos(self):
 		initialPos = super(MSHTML,self)._getInitialCaretPos()
@@ -378,6 +399,12 @@ class MSHTML(VirtualBuffer):
 				{
 					"IHTMLDOMNode::nodeName": [VBufStorage_findMatch_word("FIELDSET")],
 					"name": [VBufStorage_findMatch_notEmpty]
+				},
+			]
+		elif nodeType == "tab":
+			attrs = [
+				{
+					"IAccessible::role": [oleacc.ROLE_SYSTEM_PAGETAB],
 				},
 			]
 		elif nodeType == "embeddedObject":

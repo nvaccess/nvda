@@ -49,7 +49,17 @@ class WebKit(VirtualBuffer):
 		super(WebKit,self).__init__(rootNVDAObject,backendName="webKit")
 
 	def __contains__(self,obj):
-		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle, obj.windowHandle)
+		if not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle, obj.windowHandle):
+			return False
+		# #15653: The list items within combo boxes should not be classed as part of the browse mode document.
+		# Otherwise arrowing to them will switch back to browse mode.
+		if obj.role == controlTypes.Role.STATICTEXT:
+			parent = obj.parent
+			if parent and parent.role == controlTypes.Role.LIST:
+				parent = parent.parent
+				if parent and parent.role == controlTypes.Role.COMBOBOX:
+					return False
+		return True
 
 	def _get_isAlive(self):
 		if self.isLoading:

@@ -198,7 +198,7 @@ IHTMLElement* LocateHTMLElementInDocument(IHTMLDocument3* pHTMLDocument3, const 
 	}
 	BSTR tagName=NULL;
 	hRes=pHTMLElement->get_tagName(&tagName);
-	wchar_t* embeddingTagName=(tagName&&(wcscmp(tagName,L"FRAMESET"))==0)?L"FRAME":L"IFRAME";
+	auto embeddingTagName = (tagName&&(wcscmp(tagName, L"FRAMESET")) == 0) ? L"FRAME" : L"IFRAME";
 	SysFreeString(tagName);
 	IHTMLElement2* pHTMLElement2=NULL;
 	hRes=pHTMLElement->QueryInterface(IID_IHTMLElement2,(void**)&pHTMLElement2);
@@ -208,7 +208,7 @@ IHTMLElement* LocateHTMLElementInDocument(IHTMLDocument3* pHTMLDocument3, const 
 		return NULL;
 	}
 	IHTMLElementCollection* pHTMLElementCollection=NULL;
-	hRes=pHTMLElement2->getElementsByTagName(embeddingTagName,&pHTMLElementCollection);
+	hRes=pHTMLElement2->getElementsByTagName(BSTR(embeddingTagName), &pHTMLElementCollection);
 	pHTMLElement2->Release();
 	if(hRes!=S_OK||!pHTMLElementCollection) {
 		LOG_DEBUG(L"Could not get collection from getElementsByName");
@@ -867,7 +867,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		IHTMLElement* pHTMLElement=NULL;
 		if(pHTMLDOMNodeTemp->QueryInterface(IID_IHTMLElement,(void**)&pHTMLElement)==S_OK&&pHTMLElement) {
 			VARIANT v;
-			if(pHTMLElement->getAttribute(L"lang",2,&v)==S_OK) {
+			if(pHTMLElement->getAttribute(BSTR(L"lang"), 2, &v) == S_OK) {
 				if(v.vt==VT_BSTR&&v.bstrVal) {
 					language=v.bstrVal;
 				}

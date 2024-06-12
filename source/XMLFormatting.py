@@ -16,6 +16,9 @@ CommandListT = typing.List[CommandsT]
 
 class XMLTextParser(object): 
 
+	def __init__(self) -> None:
+		self._controlFieldStack: list[textInfos.ControlField] = []
+
 	def _startElementHandler(self,tagName,attrs):
 		if tagName=='unich':
 			data=attrs.get('value',None)
@@ -28,6 +31,7 @@ class XMLTextParser(object):
 			return
 		elif tagName=='control':
 			newAttrs=textInfos.ControlField(attrs)
+			self._controlFieldStack.append(newAttrs)
 			self._commandList.append(textInfos.FieldCommand("controlStart",newAttrs))
 		elif tagName=='text':
 			newAttrs=textInfos.FormatField(attrs)
@@ -44,10 +48,19 @@ class XMLTextParser(object):
 			newAttrs["_endOfNode"] = newAttrs["_endOfNode"] == "1"
 		except KeyError:
 			pass
+		try:
+			newAttrs["_offsetFromStartOfNode"] = int(newAttrs["_offsetFromStartOfNode"])
+		except KeyError:
+			pass
+		try:
+			newAttrs["_offsetFromEndOfNode"] = int(newAttrs["_offsetFromEndOfNode"])
+		except KeyError:
+			pass
 
 	def _EndElementHandler(self,tagName):
 		if tagName=="control":
-			self._commandList.append(textInfos.FieldCommand("controlEnd",None))
+			attrs = self._controlFieldStack.pop()
+			self._commandList.append(textInfos.FieldCommand("controlEnd", attrs))
 		elif tagName in ("text","unich"):
 			pass
 		else:

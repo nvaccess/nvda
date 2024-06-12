@@ -15,7 +15,7 @@ from .featureFlagEnums import (
 	FlagValueEnum,
 )
 from typing import (
-	Optional,
+	Union,
 )
 from configobj.validate import (
 	ValidateError,
@@ -79,7 +79,7 @@ class FeatureFlag:
 
 
 def _validateConfig_featureFlag(
-		value: Optional[str],
+		value: Union[str, FeatureFlag, None],
 		optionsEnum: str,
 		behaviorOfDefault: str
 ) -> FeatureFlag:
@@ -122,6 +122,9 @@ def _validateConfig_featureFlag(
 	if behaviorOfDefault == OptionsEnumClass.DEFAULT:
 		raise ValidateError("Spec Error: behaviorOfDefault must not be 'default'/'DEFAULT'")
 
+	if isinstance(value, FeatureFlag):
+		return value
+
 	if not isinstance(value, str):
 		raise ValidateError(
 			'Expected a featureFlag value in the form of a string. EG "disabled", "enabled", or "default".'
@@ -151,7 +154,6 @@ def _transformSpec_AddFeatureFlagDefault(specString: str, **kwargs) -> str:
 		- 'behaviorOfDefault'
 		- 'optionsEnum'
 	"""
-	log.info(f"specString: {specString}, kwargs: {kwargs}")
 	usage = 'Usage: featureFlag(behaviorOfDefault="enabled"|"disabled", optionsEnum="BoolFlag")'
 	if "default=" in specString:
 		raise VdtParamError(

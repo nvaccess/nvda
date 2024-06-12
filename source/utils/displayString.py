@@ -1,11 +1,19 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2021 NV Access Limited.
+# Copyright (C) 2021-2023 NV Access Limited, Cyrille Bougot
 
 from abc import ABC, ABCMeta, abstractproperty
-from enum import Enum, EnumMeta, IntEnum
-from typing import Dict
+from enum import (
+	Enum,
+	EnumMeta,
+	Flag,
+	IntEnum,
+	IntFlag,
+)
+from typing import (
+	Self,
+)
 
 from logHandler import log
 
@@ -28,7 +36,7 @@ class _DisplayStringEnumMixin(ABC):
 	This mixin can be used with a class which subclasses Enum to provided translated display strings for
 	members of the enum. The abstract properties must be overridden.
 	To be used with `_DisplayStringEnumMixinMeta`.
-	Usage for python 3.7 is as follows:
+	Usage:
 	```
 	class ExampleEnum(_DisplayStringEnumMixin, str, Enum, metaclass=_DisplayStringEnumMixinMeta):
 		pass
@@ -38,11 +46,10 @@ class _DisplayStringEnumMixin(ABC):
 	```
 	"""
 	@abstractproperty
-	def _displayStringLabels(self) -> Dict[Enum, str]:
+	def _displayStringLabels(self) -> dict[Self, str]:
 		"""
 		Specify a dictionary which takes members of the Enum and returns the translated display string.
 		"""
-		pass
 
 	@property
 	def displayString(self) -> str:
@@ -61,6 +68,11 @@ class DisplayStringEnum(_DisplayStringEnumMixin, Enum, metaclass=_DisplayStringE
 	pass
 
 
+class DisplayStringFlag(_DisplayStringEnumMixin, Flag, metaclass=_DisplayStringEnumMixinMeta):
+	"""A Flag class that adds a displayString property defined by _displayStringLabels"""
+	pass
+
+
 class DisplayStringStrEnum(_DisplayStringEnumMixin, str, Enum, metaclass=_DisplayStringEnumMixinMeta):
 	"""A str Enum class that adds a displayString property defined by _displayStringLabels"""
 	pass
@@ -68,4 +80,9 @@ class DisplayStringStrEnum(_DisplayStringEnumMixin, str, Enum, metaclass=_Displa
 
 class DisplayStringIntEnum(_DisplayStringEnumMixin, IntEnum, metaclass=_DisplayStringEnumMixinMeta):
 	"""An IntEnum class that adds a displayString property defined by _displayStringLabels"""
+	pass
+
+
+class DisplayStringIntFlag(_DisplayStringEnumMixin, IntFlag, metaclass=_DisplayStringEnumMixinMeta):
+	"""An IntFlag class that adds a displayString property defined by _displayStringLabels"""
 	pass

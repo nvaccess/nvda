@@ -1,7 +1,6 @@
-#brailleDisplayDrivers/brailleNote.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 # Copyright (C) 2011-2018 NV access Limited, Rui Batista, Joseph Lee
 
 """ Braille Display driver for the BrailleNote notetakers in terminal mode.
@@ -13,6 +12,7 @@ See Brailliant B module for BrailleNote Touch support routines.
 from typing import List, Optional
 
 import serial
+import bdDetect
 import braille
 import brailleInput
 import inputCore
@@ -125,6 +125,22 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	# Translators: Names of braille displays
 	description = _("HumanWare BrailleNote")
 	isThreadSafe = True
+	supportsAutomaticDetection = True
+
+	@classmethod
+	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.SERIAL, {
+			"VID_1C71&PID_C004",  # Apex
+		})
+		driverRegistrar.addBluetoothDevices(lambda m: (
+			any(
+				first <= m.deviceInfo.get("bluetoothAddress", 0) <= last
+				for first, last in (
+					(0x0025EC000000, 0x0025EC01869F),  # Apex
+				)
+			)
+			or m.id.startswith("Braillenote")
+		))
 
 	@classmethod
 	def getManualPorts(cls):

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2014-2022 NV Access Limited
+# Copyright (C) 2014-2023 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -9,29 +9,29 @@
 from enum import Enum, IntEnum
 from typing import Any, List
 
-import globalVars
 from logHandler import log
+import NVDAState
 import winreg
 import winUser
-import winVersion
 
 
-# Windows >= 8
-canConfigTerminateOnDesktopSwitch: bool = winVersion.getWinVer() >= winVersion.WIN8
 _APP_KEY_NAME = "nvda_nvda_v1"
 
 
 def __getattr__(attrName: str) -> Any:
 	"""Module level `__getattr__` used to preserve backward compatibility."""
-	if attrName == "ROOT_KEY" and globalVars._allowDeprecatedAPI:
+	if attrName == "ROOT_KEY" and NVDAState._allowDeprecatedAPI():
 		log.warning("ROOT_KEY is deprecated, use RegistryKey.ROOT instead.")
 		return RegistryKey.ROOT.value
-	if attrName == "APP_KEY_PATH" and globalVars._allowDeprecatedAPI:
+	if attrName == "APP_KEY_PATH" and NVDAState._allowDeprecatedAPI():
 		log.warning("APP_KEY_PATH is deprecated, use RegistryKey.APP instead.")
 		return RegistryKey.APP.value
-	if attrName == "APP_KEY_NAME" and globalVars._allowDeprecatedAPI:
+	if attrName == "APP_KEY_NAME" and NVDAState._allowDeprecatedAPI():
 		log.warning("APP_KEY_NAME is deprecated.")
 		return _APP_KEY_NAME
+	if attrName == "canConfigTerminateOnDesktopSwitch" and NVDAState._allowDeprecatedAPI():
+		log.warning("canConfigTerminateOnDesktopSwitch is deprecated.")
+		return True
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
@@ -73,8 +73,8 @@ def notify(signal):
 	for vk in winUser.VK_SHIFT, winUser.VK_CONTROL, winUser.VK_MENU:
 		if winUser.getAsyncKeyState(vk) & 32768:
 			keys.append((vk, False))
-	keys.append((0x5B, True)) # leftWindows
-	keys.append((0x55, True)) # u
+	keys.append((0x5B, True))  # leftWindows
+	keys.append((0x55, True))  # u
 	inputs = []
 	# Release unwanted keys and press desired keys.
 	for vk, desired in keys:
@@ -166,5 +166,10 @@ def setAutoStart(autoStartContext: AutoStartContext, enable: bool) -> None:
 			0,
 			winreg.KEY_READ | winreg.KEY_WRITE | winreg.KEY_WOW64_64KEY
 		)
-		winreg.SetValueEx(k, "Configuration", None, winreg.REG_SZ,
-			",".join(conf))
+		winreg.SetValueEx(
+			k,
+			"Configuration",
+			None,
+			winreg.REG_SZ,
+			",".join(conf)
+		)

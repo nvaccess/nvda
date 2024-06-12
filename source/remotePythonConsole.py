@@ -76,9 +76,9 @@ def initialize():
 	server.daemon_threads = True
 	thread = threading.Thread(
 		name=__name__,  # remotePythonConsole
-		target=server.serve_forever
+		target=server.serve_forever,
+		daemon=True,
 	)
-	thread.daemon = True
 	thread.start()
 
 def terminate():

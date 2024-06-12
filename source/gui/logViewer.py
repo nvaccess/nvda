@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2022 NV Access Limited
+# Copyright (C) 2008-2024 NV Access Limited, Cyrille Bougot
 
 """Provides functionality to view the NVDA log.
 """
@@ -33,6 +33,10 @@ class LogViewer(
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		self.outputCtrl = wx.TextCtrl(self, wx.ID_ANY, size=(500, 500), style=wx.TE_MULTILINE | wx.TE_READONLY|wx.TE_RICH)
+		font = self.outputCtrl.GetFont()
+		# Set a fixed width font so that the error is correctly pointed in Python tracebacks.
+		font.SetFaceName('Consolas')
+		self.outputCtrl.SetFont(font)
 		self.outputCtrl.Bind(wx.EVT_KEY_DOWN, self.onOutputKeyDown)
 		mainSizer.Add(self.outputCtrl, proportion=1, flag=wx.EXPAND)
 		self.SetSizer(mainSizer)

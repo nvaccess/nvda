@@ -1,7 +1,7 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016-2018 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2016-2023 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 from dataclasses import dataclass
 from typing import Optional
@@ -15,7 +15,6 @@ import queueHandler
 import api
 import screenBitmap
 import speech
-import globalVars
 import eventHandler
 from logHandler import log
 import config
@@ -25,6 +24,8 @@ import ui
 from math import floor
 from contextlib import contextmanager
 import threading
+from winAPI.winUser.constants import SystemMetrics
+
 
 WM_MOUSEMOVE=0x0200
 WM_LBUTTONDOWN=0x0201
@@ -200,19 +201,18 @@ def getTotalWidthAndHeightAndMinimumPosition(displays):
 	return (totalWidth, totalHeight, wx.Point(smallestX, smallestY))
 
 def executeMouseMoveEvent(x,y):
-	global currentMouseWindow
 	desktopObject=api.getDesktopObject()
 	displays = [ wx.Display(i).GetGeometry() for i in range(wx.Display.GetCount()) ]
 	x, y = getMouseRestrictedToScreens(x, y, displays)
 	screenWidth, screenHeight, minPos = getTotalWidthAndHeightAndMinimumPosition(displays)
+	oldMouseObject = api.getMouseObject()
+	mouseObject = desktopObject.objectFromPoint(x, y)
 
-	if config.conf["mouse"]["audioCoordinatesOnMouseMove"]:
+	if config.conf["mouse"]["audioCoordinatesOnMouseMove"] and not oldMouseObject.sleepMode:
 		playAudioCoordinates(x, y, screenWidth, screenHeight, minPos,
 			config.conf['mouse']['audioCoordinates_detectBrightness'],
 			config.conf['mouse']['audioCoordinates_blurFactor'])
 
-	oldMouseObject=api.getMouseObject()
-	mouseObject=desktopObject.objectFromPoint(x, y)
 	while mouseObject and mouseObject.beTransparentToMouse:
 		mouseObject=mouseObject.parent
 	if not mouseObject:
@@ -220,7 +220,8 @@ def executeMouseMoveEvent(x,y):
 	if oldMouseObject==mouseObject:
 		mouseObject=oldMouseObject
 	else:
-		api.setMouseObject(mouseObject)
+		if not api.setMouseObject(mouseObject):
+			return
 	try:
 		eventHandler.executeEvent("mouseMove",mouseObject,x=x,y=y)
 		oldMouseObject=mouseObject
@@ -288,7 +289,7 @@ def getLogicalButtonFlags() -> LogicalButtonFlags:
 	taking into account the Windows user setting
 	for which button (left or right) is primary and which is secondary.
 	"""
-	swappedButtons = ctypes.windll.user32.GetSystemMetrics(winUser.SM_SWAPBUTTON)
+	swappedButtons = ctypes.windll.user32.GetSystemMetrics(SystemMetrics.SWAP_BUTTON)
 	if not swappedButtons:
 		return LogicalButtonFlags(
 			primaryDown=winUser.MOUSEEVENTF_LEFTDOWN,
@@ -369,12 +370,41 @@ def isRightMouseButtonLocked():
 def lockRightMouseButton():
 	""" Locks the right mouse button """
 	# Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-	ui.message(_("Right mouse button lock"))
+	ui.message(_("Right mouse button locked"))
 	executeMouseEvent(winUser.MOUSEEVENTF_RIGHTDOWN, 0, 0)
 
 
 def unlockRightMouseButton():
 	""" Unlocks the right mouse button """
 	# Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-	ui.message(_("Right mouse button unlock"))
+	ui.message(_("Right mouse button unlocked"))
 	executeMouseEvent(winUser.MOUSEEVENTF_RIGHTUP, 0, 0)
+
+
+def scrollMouseWheel(scrollSteps: int, isVertical: bool = True) -> None:
+	"""
+	Scrolls the mouse wheel either vertically or horizontally, controlling the direction and amount of scrolling.
+	More details on mouse events can be found at:
+	https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-mousewheel
+
+	:param scrollSteps: The number of steps to scroll. Each step should correspond to a fraction or multiple
+		of WHEEL_DELTA, which is typically set to 120. This defines the standard increment
+		or decrement in scrolling position.
+	:param isVertical: Determines the direction of the scrolling; vertical if True, horizontal if False.
+	:return: None
+	"""
+	if not isinstance(scrollSteps, int):
+		raise TypeError(f"'scrollSteps' should be an integer. Type received: {type(scrollSteps).__name__}")
+	if scrollSteps == 0:
+		return
+	scrollEvent = winUser.MOUSEEVENTF_WHEEL if isVertical else winUser.MOUSEEVENTF_HWHEEL
+	sign = -1 if scrollSteps < 0 else 1
+	totalSteps = abs(scrollSteps)
+	maxSteps = winUser.WHEEL_DELTA
+	# Decompose the scroll operation into smaller deltas to accommodate applications
+	# that may not process deltas larger than the standard efficiently.
+	for _ in range(0, totalSteps, maxSteps):
+		scrollStep = min(maxSteps, totalSteps)
+		scrollData = sign * scrollStep
+		executeMouseEvent(scrollEvent, 0, 0, scrollData)
+		totalSteps -= scrollStep

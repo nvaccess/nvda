@@ -399,6 +399,24 @@ class TestHandlerRegistrar(unittest.TestCase):
 		actual = list(self.reg.handlers)
 		self.assertEqual(actual, [inst1.method, inst2.method, inst3.method])
 
+	def test_registerWithMoveToEnd(self):
+		"""Test that moveToEnd can reorder registered handlers.
+		"""
+		inst3 = ExampleClass()
+		inst2 = ExampleClass()
+		inst1 = ExampleClass()
+		self.reg.register(inst1.method)
+		self.reg.register(inst2.method)
+		self.reg.register(inst3.method)
+		actual1 = list(self.reg.handlers)
+		self.assertEqual(actual1, [inst1.method, inst2.method, inst3.method])
+		self.reg.moveToEnd(inst2.method, last=False)
+		actual2 = list(self.reg.handlers)
+		self.assertEqual(actual2, [inst2.method, inst1.method, inst3.method])
+		self.reg.moveToEnd(inst2.method, last=True)
+		actual3 = list(self.reg.handlers)
+		self.assertEqual(actual3, [inst1.method, inst3.method, inst2.method])
+
 	def test_unregisterMiddle(self):
 		"""Test behaviour when unregistering a handler registered between of other handlers.
 		"""
@@ -1022,3 +1040,115 @@ class TestAccumulatingDecider(unittest.TestCase):
 		decision = decider.decide()
 		self.assertEqual(value, 36)
 		self.assertEqual(decision, True)
+
+
+class TestChain(unittest.TestCase):
+	chain: extensionPoints.Chain
+
+	def setUp(self):
+		self.chain = extensionPoints.Chain()
+
+	def test_noHandlers(self):
+		with self.assertRaises(StopIteration):
+			next(self.chain.iter())
+
+	def test_oneHandler(self):
+		def handler():
+			yield 1
+		self.chain.register(handler)
+		generator = self.chain.iter()
+		self.assertEqual(next(generator), 1)
+		with self.assertRaises(StopIteration):
+			next(generator)
+
+	def test_twoHandlers(self):
+		def handler1():
+			yield 1
+
+		def handler2():
+			yield 2
+		self.chain.register(handler1)
+		self.chain.register(handler2)
+		generator = self.chain.iter()
+		self.assertEqual(next(generator), 1)
+		self.assertEqual(next(generator), 2)
+		with self.assertRaises(StopIteration):
+			next(generator)
+
+	def test_instanceMethodHandler(self):
+		""" Test that a instance method function is called as expected
+		"""
+
+		class handlerClass():
+			def handlerMethod(self, **kwargs):
+				return kwargs.items()
+
+		h = handlerClass()
+		self.chain.register(h.handlerMethod)
+		generator = self.chain.iter(a='a value')
+		self.assertEqual({k: v for k, v in generator}, {'a': 'a value'})
+
+	def test_lambdaHandler(self):
+		""" Test that a lambda can be used as a handler.
+		Note: the lambda must be kept alive, since register uses a weak reference to it.
+		"""
+		# E731 do not assign a lambda expression, use a def
+		# Ignored because a lambda is used on purpose in this test.
+		la = lambda a: iter([("a", a)])  # NOQA: E731
+		self.chain.register(la)
+		generator = self.chain.iter(a='a value')
+		self.assertEqual({k: v for k, v in generator}, {'a': 'a value'})
+
+	def test_handlerException(self):
+		"""Test that a handler which raises an exception doesn't affect later handlers.
+		"""
+		def handler1():
+			raise Exception("barf")
+
+		def handler2():
+			yield 2
+
+		self.chain.register(handler1)
+		self.chain.register(handler2)
+		generator = self.chain.iter()
+		self.assertEqual(next(generator), 2)
+
+	def test_handlerAcceptsKwargs(self):
+		""" Test that a handler that accepts **kwargs receives all arguments
+		"""
+		def handler(**kwargs):
+			return kwargs.items()
+
+		self.chain.register(handler)
+		gen = self.chain.iter(a='a value')
+		self.assertEqual({k: v for k, v in gen}, {'a': 'a value'})
+
+	def test_handlerParamsWithoutDefault(self):
+		""" Test that a handler that accepts params without a default receives arguments
+		"""
+		def handler(a):
+			yield ("a", a)
+
+		self.chain.register(handler)
+		gen = self.chain.iter(a='a value')
+		self.assertEqual(next(gen), ('a', 'a value'))
+
+	def test_handlerParamsWithDefault(self):
+		""" Test that a handler that accepts params with a default receives arguments
+		"""
+		def handler(a=0):
+			yield ("a", a)
+
+		self.chain.register(handler)
+		generator = self.chain.iter(a=1)
+		self.assertEqual(next(generator), ('a', 1))
+
+	def test_handlerParamsWithRequiredKwarg(self):
+		""" Test that a handler that accepts required keyword arguments receives arguments
+		"""
+		def handler(*, a):
+			yield ("a", a)
+
+		self.chain.register(handler)
+		gen = self.chain.iter(a='a value')
+		self.assertEqual(next(gen), ('a', 'a value'))

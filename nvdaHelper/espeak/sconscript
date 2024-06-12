@@ -93,7 +93,7 @@ env.Append(
 		# Ignore all warnings as the code is not ours.
 		'/W0',
 		# Preprocessor definitions. Migrated from 'nvdaHelper/espeak/config.h'
-		'/DPACKAGE_VERSION=\\"1.52-dev\\"',  # See 'include/espeak/src/windows/config.h'
+		'/DPACKAGE_VERSION=\\"1.52-dev 530bf0ab\\"',  # See 'include/espeak/src/windows/config.h'
 		'/DHAVE_STDINT_H=1',
 		'/D__WIN32__#1',
 		'/DLIBESPEAK_NG_EXPORT',
@@ -101,9 +101,9 @@ env.Append(
 		# errors when winsock2 is included by espeak\src\include\compat\endian.h
 		'/DWIN32_LEAN_AND_MEAN',
 		# Preprocessor definitions. Espeak Features
-		'/DINCLUDE_SPEECHPLAYER=1',
-		'/DINCLUDE_KLATT=1',
-		'/DHAVE_SONIC_H=1',
+		'/DUSE_SPEECHPLAYER=1',
+		'/DUSE_KLATT=1',
+		'/DUSE_LIBSONIC=1',
 	])
 
 env.Append(
@@ -278,6 +278,7 @@ espeakDictionaryCompileList: typing.Dict[
 	"ta_dict": ("ta", ["ta_list", "ta_rules", ]),
 	"te_dict": ("te", ["te_list", "te_rules", ]),
 	"th_dict": ("th", ["th_list", "th_rules", ]),
+	"ti_dict": ("ti", ["ti_list", "ti_rules", ]),
 	"tk_dict": ("tk", ["tk_listx", "tk_list", "tk_rules"]),
 	"tn_dict": ("tn", ["tn_list", "tn_rules", ]),
 	"tr_dict": ("tr", ["tr_listx", "tr_list", "tr_rules"]),
@@ -385,6 +386,7 @@ espeakLib=env.SharedLibrary(
 		"../ucd-tools/src/proplist.c",
 		"../ucd-tools/src/scripts.c",
 		"../ucd-tools/src/tostring.c",
+		"common.c",
 		"compiledata.c",
 		"compiledict.c",
 #		"compilembrola.c", # we dont use MBROLA, this is a compile option in espeak
@@ -394,6 +396,7 @@ espeakLib=env.SharedLibrary(
 		"espeak_api.c",
 		"ieee80.c",
 		"intonation.c",
+		"langopts.c",
 		"klatt.c", # we do use KLATT, this is a compile option in espeak
 #		"mbrowrap.c", # we don't use MBROLA, this is a compile option in espeak
 		"mnemonics.c",
@@ -410,6 +413,7 @@ espeakLib=env.SharedLibrary(
 		"synthesize.c",
 		"synth_mbrola.c", # provides symbols used by synthesize.obj, voices.obj, and wavegen.obj
 		"translate.c",
+		"translateword.c",
 		"tr_languages.c",
 		"voices.c",
 		"wavegen.c",

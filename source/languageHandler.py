@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2021 NV access Limited, Joseph Lee, Łukasz Golonka
+# Copyright (C) 2007-2023 NV access Limited, Joseph Lee, Łukasz Golonka, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -8,7 +8,6 @@ This module assists in NVDA going global through language services
 such as converting Windows locale ID's to friendly names and presenting available languages.
 """
 
-import builtins
 import os
 import sys
 import ctypes
@@ -165,6 +164,8 @@ def getLanguageDescription(language: str) -> Optional[str]:
 		# and `languageHandler` is responsible for setting the translation.
 		import localesData
 		desc = localesData.LANG_NAMES_TO_LOCALIZED_DESCS.get(language, None)
+	if not desc:
+		log.debugWarning(f'Unable to provide a description for the following language: {language}')
 	return desc
 
 
@@ -287,28 +288,6 @@ def getAvailableLanguages(presentational: bool = False) -> List[Tuple[str, str]]
 	return langs
 
 
-def makePgettext(translations):
-	"""Obtaina  pgettext function for use with a gettext translations instance.
-	pgettext is used to support message contexts,
-	but Python's gettext module doesn't support this,
-	so NVDA must provide its own implementation.
-	"""
-	if isinstance(translations, gettext.GNUTranslations):
-		def pgettext(context, message):
-			try:
-				# Look up the message with its context.
-				return translations._catalog[u"%s\x04%s" % (context, message)]
-			except KeyError:
-				return message
-	elif isinstance(translations, gettext.NullTranslations):
-		# A language with out a translation catalog, such as English.
-		def pgettext(context, message):
-			return message
-	else:
-		raise ValueError("%s is Not a GNUTranslations or NullTranslations object" % translations)
-	return pgettext
-
-
 def getLanguageCliArgs() -> Tuple[str, ...]:
 	"""Returns all command line arguments which were used to set current NVDA language
 	or an empty tuple if language has not been specified from the CLI."""
@@ -381,10 +360,8 @@ def setLanguage(lang: str) -> None:
 	if trans is None:
 		trans = _createGettextTranslation("en")
 
-	trans.install()
+	trans.install(names=["pgettext", "npgettext", "ngettext"])
 	setLocale(getLanguage())
-	# Install our pgettext function.
-	builtins.pgettext = makePgettext(trans)
 
 	global installedTranslation
 	installedTranslation = weakref.ref(trans)

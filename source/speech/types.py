@@ -10,7 +10,6 @@ Kept here so they can be re-used without having to worry about circular imports.
 from collections.abc import Sequence
 from typing import (
 	Union,
-	List,
 	Iterable, Any, Optional, Generator,
 )
 
@@ -19,7 +18,7 @@ from logHandler import log
 from .commands import SpeechCommand
 
 SequenceItemT = Union[SpeechCommand, str]
-SpeechSequence = List[SequenceItemT]
+SpeechSequence = list[SequenceItemT]
 SpeechIterable = Iterable[SequenceItemT]
 
 _IndexT = int  # Type for indexes.

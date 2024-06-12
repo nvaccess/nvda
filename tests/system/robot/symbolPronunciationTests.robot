@@ -1,10 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2021 NV Access Limited
+# Copyright (C) 2021-2022 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 *** Settings ***
 Documentation	Symbol pronunciation tests
-Force Tags	NVDA	smoke test	symbols
+Force Tags	NVDA	smoke test	symbols	excluded_from_build
 
 # for start & quit in Test Setup and Test Test Teardown
 Library	NvdaLib.py
@@ -17,6 +17,7 @@ Test Teardown	default teardown
 
 *** Keywords ***
 default teardown
+	logForegroundWindowTitle
 	${screenshotName}=	create_preserved_test_output_filename	failedTest.png
 	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
 	dump_speech_to_log
@@ -24,7 +25,10 @@ default teardown
 	quit NVDA
 
 default setup
+	logForegroundWindowTitle
 	start NVDA	standard-dontShowWelcomeDialog.ini
+	logForegroundWindowTitle
+	enable_verbose_debug_logging_if_requested
 
 *** Test Cases ***
 
@@ -42,6 +46,10 @@ moveByCharacter
 	[Documentation]	Ensure symbols announced as expected when navigating by character (numpad 3).
 	test_moveByChar
 
+delayedCharacterDescriptions
+	[Documentation]	Ensure delayed character descriptions are announced as expected when navigating by character.
+	test_delayedDescriptions
+
 selectionByWord
 	[Documentation]	Ensure symbols announced as expected when selecting by word (shift+control+right arrow).
 	[Tags]	selection
@@ -57,5 +65,9 @@ selectionByCharacter
 
 tableHeaderSymbols
 	[Documentation]	Ensure symbols announced as expected in table headers.
-	[Tags]	table
+	[Tags]	table	excluded_from_build
 	test_tableHeaders
+
+ignoreBlankLinesForReportLineIndentation
+	[Documentation]	Ensure indentation announced as expected when ignore blank lines for line indentation reporting is on/off.
+	test_ignoreBlankLinesForReportLineIndentation

@@ -1,14 +1,17 @@
 # -*- coding: UTF-8 -*-
-#mathPlayer.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2014-2015 NV Access Limited
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2014-2023 NV Access Limited, Cyrille Bougot
 
 """Support for math presentation using MathPlayer 4.
 """
 
 import re
+from typing import (
+	Generator,
+)
+
 import comtypes.client
 from comtypes import COMError
 from comtypes.gen.MathPlayer import MPInterface, IMathSpeech, IMathSpeechSettings, IMathNavigation, IMathBraille
@@ -17,6 +20,7 @@ from synthDriverHandler import getSynth
 from keyboardHandler import KeyboardInputGesture
 import braille
 import mathPres
+import config
 
 from speech.commands import (
 	PitchCommand,
@@ -27,6 +31,8 @@ from speech.commands import (
 	CharacterModeCommand,
 	PhonemeCommand,
 )
+from utils.security import objectBelowLockScreenAndWindowsIsLocked
+
 
 RE_MP_SPEECH = re.compile(
 	# Break.
@@ -63,7 +69,10 @@ def _processMpSpeech(text, language):
 		if m.lastgroup == "break":
 			out.append(BreakCommand(time=int(m.group("break")) * breakMulti))
 		elif m.lastgroup == "char":
-			out.extend((CharacterModeCommand(True), m.group("char"), CharacterModeCommand(False)))
+			if config.conf["speech"][synth.name]["useSpellingFunctionality"]:
+				out.extend((CharacterModeCommand(True), m.group("char"), CharacterModeCommand(False)))
+			else:
+				out.append(m.group("char"))
 		elif m.lastgroup == "comma":
 			out.append(BreakCommand(time=100))
 		elif m.lastgroup in PROSODY_COMMANDS:
@@ -94,7 +103,12 @@ class MathPlayerInteraction(mathPres.MathInteractionNVDAObject):
 		speech.speak(_processMpSpeech(self.provider._mpSpeech.GetSpokenText(),
 			self.provider._language))
 
-	def getBrailleRegions(self, review=False):
+	def getBrailleRegions(
+			self,
+			review: bool = False,
+	) -> Generator[braille.Region, None, None]:
+		if objectBelowLockScreenAndWindowsIsLocked(self):
+			return
 		yield braille.NVDAObjectRegion(self, appendText=" ")
 		region = braille.Region()
 		region.focusToHardLeft = True

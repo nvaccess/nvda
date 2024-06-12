@@ -1,11 +1,12 @@
-# -*- coding: UTF-8 -*-
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2017 NV Access Limited, Coscell Kao, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2017-2023 NV Access Limited, Coscell Kao, Babbage B.V.
+
 from typing import List
 
 import serial
+import bdDetect
 import braille
 import hwIo
 from hwIo import intToByte
@@ -27,6 +28,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	# Translators: Names of braille displays.
 	description = _("SuperBraille")
 	isThreadSafe=True
+	supportsAutomaticDetection = True
+
+	@classmethod
+	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.SERIAL, {
+			"VID_10C4&PID_EA60",  # SuperBraille 3.2
+		})
 
 	@classmethod
 	def getManualPorts(cls):
@@ -88,4 +96,3 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"braille_scrollForward": ("kb:numpadPlus",),
 		},
 	})
-

@@ -1,8 +1,7 @@
-#appModules/eclipse.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2010-2014 NV Access Limited
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2010-2023 NV Access Limited, Cyrille Bougot
 
 import controlTypes
 import appModuleHandler
@@ -13,9 +12,11 @@ import braille
 import ui
 import api
 from speech import sayAll
-import eventHandler
 import keyboardHandler
 from scriptHandler import script
+
+# Translators: The name of a category of NVDA commands.
+SCRCAT_ECLIPSE = _("Eclipse")
 
 class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 
@@ -53,15 +54,18 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 
 	@script(
 		# Translators: Input help mode message for the 'read documentation script
-		description = _("Tries to read documentation for the selected autocompletion item."),
-		gesture = "kb:nvda+d"
+		description=_("Tries to read documentation for the selected autocompletion item."),
+		gesture="kb:nvda+d",
+		category=SCRCAT_ECLIPSE
 	)
 	def script_readDocumentation(self, gesture):
 		rootDocumentationWindow = None
 
 		# If there aren't any suggestion selected, there is no way to find quick documentation
 		if not self.appModule.selectedItem:
-			gesture.send()
+			# Translators: When trying to read the documentation but there is no selected autocompletion item in
+			# Eclipse
+			ui.message(_("No selection"))
 			return
 
 		# Try to locate the documentation document
@@ -79,8 +83,11 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 				pass
 
 		# Check if this object is from the same appModule
-		if rootDocumentationWindow and rootDocumentationWindow.appModule == self.appModule:
-			api.setNavigatorObject(rootDocumentationWindow)
+		if (
+			rootDocumentationWindow
+			and rootDocumentationWindow.appModule == self.appModule
+			and api.setNavigatorObject(rootDocumentationWindow)
+		):
 			
 			documentObj = rootDocumentationWindow
 
@@ -105,7 +112,7 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 
 		else:
 			# Translators: When the help popup cannot be found for the selected autocompletion item
-			ui.message(_("Cann't find the documentation window."))
+			ui.message(_("Can't find the documentation window."))
 
 	@script(
 		gesture="kb:tab"
@@ -174,10 +181,18 @@ class AppModule(appModuleHandler.AppModule):
 		try:
 
 			# Autocompletion items are placed outside the main eclipse window
-			if (obj.role == controlTypes.Role.LISTITEM
+			if (
+				obj.role == controlTypes.Role.LISTITEM
 				and obj.parent.parent.parent.role == controlTypes.Role.DIALOG
-				and obj.parent.parent.parent.parent.parent == api.getDesktopObject()
-				and obj.parent.parent.parent.parent.simpleNext.role == controlTypes.Role.BUTTON):
+				and (
+					obj.parent.parent.parent.simpleParent == api.getDesktopObject()
+					or obj.parent.parent.parent.parent.parent == api.getDesktopObject()
+				)
+				and obj.parent.parent.parent.parent.simpleNext.role in (
+					controlTypes.Role.BUTTON,
+					controlTypes.Role.TOGGLEBUTTON
+				)
+			):
 				clsList.insert(0, AutocompletionListItem)
 		except:
 			pass

@@ -1,10 +1,14 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2014-2021 NV Access Limited, Accessolutions, Julien Cochuyt
+# Copyright (C) 2014-2023 NV Access Limited, Accessolutions, Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import enum
 import time
-from typing import List, Optional
+from typing import (
+	Callable,
+	List,
+	Optional,
+)
 
 import wx
 import gui
@@ -13,6 +17,7 @@ from logHandler import log
 import fonts
 import inputCore
 import gui.contextHelp
+from utils.security import isLockScreenModeActive, post_sessionLockStateChanged
 
 BRAILLE_UNICODE_PATTERNS_START = 0x2800
 BRAILLE_SPACE_CHARACTER = chr(BRAILLE_UNICODE_PATTERNS_START)
@@ -90,11 +95,11 @@ class CharCellBackgroundColorAnimation:
 		# [0..1] proportion accumulatedElapsedTime is through totalTime
 		normalisedElapsed = min(1.0, max(0.0, (0.001 + accumulatedElapsedTime) / self._durationSeconds))
 		colourTransitionValue = self._startValue + normalisedElapsed * (1 - self._startValue)
-		currentColorTuple = _linearInterpolate(
+		currentColorTuple = tuple(int(c) for c in _linearInterpolate(
 			colourTransitionValue,
 			self._originColor.Get(includeAlpha=False),
 			self._destColor.Get(includeAlpha=False)
-		)
+		))
 		currentStyle = createBackgroundColorTextAttr(wx.Colour(*currentColorTuple))
 		index = self._textCellIndex
 		length = len(self._textCtrl.GetValue())
@@ -264,7 +269,7 @@ class BrailleViewerFrame(
 	#: True if _mouseOver has been bound to mouse moved events.
 	_mouseMotionBound: bool = False
 
-	def __init__(self, numCells, onDestroyed):
+	def __init__(self, numCells: int, onDestroyed: Callable[[], None]):
 		log.debug(f"Starting braille viewer with {numCells} cells")
 
 		dialogPos = wx.DefaultPosition
@@ -282,6 +287,7 @@ class BrailleViewerFrame(
 			pos=dialogPos,
 			style=wx.CAPTION | wx.CLOSE_BOX | wx.STAY_ON_TOP
 		)
+		post_sessionLockStateChanged.register(self.onSessionLockStateChange)
 		self.Bind(wx.EVT_CLOSE, self._onClose)
 		self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy)
 
@@ -318,6 +324,16 @@ class BrailleViewerFrame(
 		self.ShowWithoutActivating()
 		self.Fit()
 
+	def onSessionLockStateChange(self, isNowLocked: bool):
+		"""
+		@param isNowLocked: True if new state is locked, False if new state is unlocked
+		"""
+		if isNowLocked:
+			self._brailleOutput.Clear()
+			self._shouldShowOnStartupCheckBox.Disable()
+		else:
+			self._shouldShowOnStartupCheckBox.Enable()
+
 	def _createBrailleTextSizeTestCtrl(self, sizer, parent):
 		self._brailleSizeTest = wx.StaticText(parent)
 		# Use the same font so the size is accurate.
@@ -336,7 +352,7 @@ class BrailleViewerFrame(
 		self._brailleSizeTest.SetLabel((numCells + 5) * " ")
 		return self._brailleSizeTest.GetSize()
 
-	def _createControls(self, sizer, parent):
+	def _createControls(self, sizer: wx.Sizer, parent: wx.Control) -> None:
 		# There seems to be no way to make a TextCtrl (used for braille and raw text output) match its
 		# text content: https://forums.wxwidgets.org/viewtopic.php?t=44472
 		# Hacky fix:
@@ -382,6 +398,8 @@ class BrailleViewerFrame(
 		self._shouldShowOnStartupCheckBox.SetValue(config.conf["brailleViewer"]["showBrailleViewerAtStartup"])
 		self._shouldShowOnStartupCheckBox.Bind(wx.EVT_CHECKBOX, self._onShouldShowOnStartupChanged)
 		optionsSizer.Add(self._shouldShowOnStartupCheckBox)
+		if isLockScreenModeActive():
+			self._shouldShowOnStartupCheckBox.Disable()
 
 		# Translators: The label for a setting in the braille viewer that controls
 		# whether hovering mouse routes to the cell.
@@ -396,12 +414,14 @@ class BrailleViewerFrame(
 		optionsSizer.Add(self._shouldHoverRouteToCellCheckBox)
 		sizer.Add(optionsSizer, flag=wx.EXPAND | wx.TOP, border=5)
 
-	def _onShouldShowOnStartupChanged(self, evt):
-		config.conf["brailleViewer"]["showBrailleViewerAtStartup"] = self._shouldShowOnStartupCheckBox.IsChecked()
+	def _onShouldShowOnStartupChanged(self, evt: wx.CommandEvent):
+		if not isLockScreenModeActive():
+			config.conf["brailleViewer"]["showBrailleViewerAtStartup"] = self._shouldShowOnStartupCheckBox.IsChecked()
 
 	def _onShouldHoverRouteToCellCheckBoxChanged(self, evt: wx.CommandEvent):
-		config.conf["brailleViewer"]["shouldHoverRouteToCell"] = evt.IsChecked()
-		self._updateMouseOverBinding(evt.IsChecked())
+		if not isLockScreenModeActive():
+			config.conf["brailleViewer"]["shouldHoverRouteToCell"] = self._shouldHoverRouteToCellCheckBox.IsChecked()
+		self._updateMouseOverBinding(self._shouldHoverRouteToCellCheckBox.IsChecked())
 
 	def _updateMouseOverBinding(self, shouldReceiveMouseMotion: bool):
 		if not shouldReceiveMouseMotion and self._mouseMotionBound:
@@ -535,8 +555,9 @@ class BrailleViewerFrame(
 		log.debug("braille viewer gui onClose")
 		self.saveInfoAndDestroy()
 
-	def _onDestroy(self, evt):
+	def _onDestroy(self, evt: wx.Event):
 		log.debug("braille viewer gui onDestroy")
+		post_sessionLockStateChanged.unregister(self.onSessionLockStateChange)
 		self.isDestroyed = True
 		self._notifyOfDestroyed()
 		evt.Skip()

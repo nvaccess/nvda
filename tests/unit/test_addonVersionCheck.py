@@ -8,15 +8,25 @@
 import unittest
 
 import addonAPIVersion
-from addonHandler import AddonBase
-from addonHandler import addonVersionCheck
+from addonHandler.addonVersionCheck import (
+	hasAddonGotRequiredSupport,
+	isAddonCompatible,
+	isAddonTested,
+)
+from addonHandler import AddonBase, AddonManifest
 
 latestVersionTuple = (2018, 2, 0)
 nextVersionTuple = (2018, 3, 0)
 previousVersionTuple = (2018, 1, 0)
 oldVersionTuple = (2017, 1, 0)
 
+
 class mockAddon(AddonBase):
+	@property
+	def manifest(self) -> AddonManifest:
+		"""Satisfy abstract base class requirements"""
+		raise NotImplementedError("Not expected to be required for unit tests")
+
 	def __init__(
 			self,
 			minAPIVersion,
@@ -46,6 +56,7 @@ class mockAddon(AddonBase):
 	def lastTestedNVDAVersion(self):
 		return self._lastTestedAPIVersion
 
+
 class TestAddonVersionCheck(unittest.TestCase):
 	"""Tests that the addon version check works as expected."""
 
@@ -53,17 +64,17 @@ class TestAddonVersionCheck(unittest.TestCase):
 		"""Test an addon that has just been developed, requiring an API feature introduced in the current release."""
 		addon = mockAddon(minAPIVersion=latestVersionTuple, lastTestedAPIVersion=latestVersionTuple)
 		nvda_current, nvda_backwardsCompatTo = latestVersionTuple, previousVersionTuple
-		self.assertTrue(addonVersionCheck.hasAddonGotRequiredSupport(addon, nvda_current))
-		self.assertTrue(addonVersionCheck.isAddonTested(addon, nvda_backwardsCompatTo))
-		self.assertTrue(addonVersionCheck.isAddonCompatible(addon, nvda_current, nvda_backwardsCompatTo))
+		self.assertTrue(hasAddonGotRequiredSupport(addon, nvda_current))
+		self.assertTrue(isAddonTested(addon, nvda_backwardsCompatTo))
+		self.assertTrue(isAddonCompatible(addon, nvda_current, nvda_backwardsCompatTo))
 
 	def test_addonCompat_testedAgainstLastBackwardsCompatVersion(self):
 		"""Test an addon has been maintained and tested against the backwardsCompatTo version."""
 		addon = mockAddon(minAPIVersion=oldVersionTuple, lastTestedAPIVersion=previousVersionTuple)
 		nvda_current, nvda_backwardsCompatTo = latestVersionTuple, previousVersionTuple
-		self.assertTrue(addonVersionCheck.hasAddonGotRequiredSupport(addon, nvda_current))
-		self.assertTrue(addonVersionCheck.isAddonTested(addon, nvda_backwardsCompatTo))
-		self.assertTrue(addonVersionCheck.isAddonCompatible(addon, nvda_current, nvda_backwardsCompatTo))
+		self.assertTrue(hasAddonGotRequiredSupport(addon, nvda_current))
+		self.assertTrue(isAddonTested(addon, nvda_backwardsCompatTo))
+		self.assertTrue(isAddonCompatible(addon, nvda_current, nvda_backwardsCompatTo))
 
 	def test_addonCompat_lastTestedAgainstNowNoLongerSupportedAPIVersion(self):
 		"""Test an addon is considered incompatible if the backwards compatible to version is moved forward for an addon
@@ -71,19 +82,18 @@ class TestAddonVersionCheck(unittest.TestCase):
 		addon = mockAddon(minAPIVersion=oldVersionTuple, lastTestedAPIVersion=previousVersionTuple)
 		# NVDA backwards compatible to has been moved forward one version:
 		nvda_current, nvda_backwardsCompatTo = latestVersionTuple, latestVersionTuple
-		self.assertTrue(addonVersionCheck.hasAddonGotRequiredSupport(addon, nvda_current))
-		self.assertFalse(addonVersionCheck.isAddonTested(addon, nvda_backwardsCompatTo))
-		self.assertFalse(addonVersionCheck.isAddonCompatible(addon, nvda_current, nvda_backwardsCompatTo))
+		self.assertTrue(hasAddonGotRequiredSupport(addon, nvda_current))
+		self.assertFalse(isAddonTested(addon, nvda_backwardsCompatTo))
+		self.assertFalse(isAddonCompatible(addon, nvda_current, nvda_backwardsCompatTo))
 
 	def test_addonCompat_attemptingToUseAddonRequiringNewAPIFeaturesWithOldNVDA(self):
 		"""Test that is considered incompatible if a user tries to install a new addon with an old version of NVDA"""
 		# addon requires API features in the future release
 		addon = mockAddon(minAPIVersion=nextVersionTuple, lastTestedAPIVersion=nextVersionTuple)
 		nvda_current, nvda_backwardsCompatTo = latestVersionTuple, previousVersionTuple
-		self.assertFalse(addonVersionCheck.hasAddonGotRequiredSupport(addon, latestVersionTuple))
-		self.assertTrue(addonVersionCheck.isAddonTested(addon, latestVersionTuple))
-		self.assertFalse(addonVersionCheck.isAddonCompatible(addon, nvda_current, nvda_backwardsCompatTo))
-
+		self.assertFalse(hasAddonGotRequiredSupport(addon, latestVersionTuple))
+		self.assertTrue(isAddonTested(addon, latestVersionTuple))
+		self.assertFalse(isAddonCompatible(addon, nvda_current, nvda_backwardsCompatTo))
 
 
 class TestGetAPIVersionTupleFromString(unittest.TestCase):

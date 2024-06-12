@@ -3,20 +3,34 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""Functions that wrap Windows API functions from user32.dll"""
+"""
+Functions that wrap Windows API functions from user32.dll.
+
+When working on this file, consider moving to winAPI.
+"""
 
 import contextlib
 from ctypes import *
 from ctypes import byref, WinError, Structure, c_int, c_char
 from ctypes.wintypes import *
 from ctypes.wintypes import HWND, RECT, DWORD
-from typing import Tuple
+from typing import (
+	Any,
+	Tuple,
+)
+
 import winKernel
 from textUtils import WCHAR_ENCODING
 import enum
+import NVDAState
+from logHandler import log
 
 #dll handles
 user32=windll.user32
+
+# rather than using the ctypes.c_void_p type, which may encourage attempting to dereference
+# what may be an invalid or illegal pointer, we'll treat it as an opaque value.
+HWNDVal = int
 
 LRESULT=c_long
 HCURSOR=c_long
@@ -28,6 +42,29 @@ CS_HREDRAW = 0x0002
 CS_VREDRAW = 0x0001
 
 WNDPROC=WINFUNCTYPE(LRESULT,HWND,c_uint,WPARAM,LPARAM)
+
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	from winAPI.winUser.constants import SystemMetrics
+	_deprecatedConstantsMap = {
+		"SM_CXSCREEN": SystemMetrics.CX_SCREEN,
+		"SM_CYSCREEN": SystemMetrics.CY_SCREEN,
+		"SM_SWAPBUTTON": SystemMetrics.SWAP_BUTTON,
+		"SM_XVIRTUALSCREEN": SystemMetrics.X_VIRTUAL_SCREEN,
+		"SM_YVIRTUALSCREEN": SystemMetrics.Y_VIRTUAL_SCREEN,
+		"SM_CXVIRTUALSCREEN": SystemMetrics.CX_VIRTUAL_SCREEN,
+		"SM_CYVIRTUALSCREEN": SystemMetrics.CY_VIRTUAL_SCREEN,
+	}
+	if attrName in _deprecatedConstantsMap and NVDAState._allowDeprecatedAPI():
+		replacementSymbol = _deprecatedConstantsMap[attrName]
+		log.warning(
+			f"Importing {attrName} from here is deprecated. "
+			f"Import {replacementSymbol.name} from winAPI.winUser.constants instead. "
+		)
+		return replacementSymbol
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
 
 class WNDCLASSEXW(Structure):
 	_fields_=[
@@ -128,10 +165,21 @@ GA_ROOTOWNER=3
 GWL_ID=-12
 GWL_STYLE=-16
 GWL_EXSTYLE=-20
-#getWindow
+
+# getWindow relationship parameters: TODO turn to enum
+GW_HWNDFIRST = 0
+GW_HWNDLAST = 1
 GW_HWNDNEXT=2
 GW_HWNDPREV=3
 GW_OWNER=4
+
+# getWindow results
+GW_RESULT_NOT_FOUND = 0
+"""
+When GetWindow returns 0, it means the window has not been found.
+For example the last window has been reached, or an error has occurred.
+"""
+
 # SetLayeredWindowAttributes
 LWA_ALPHA = 2
 LWA_COLORKEY = 1
@@ -359,22 +407,6 @@ RDW_UPDATENOW = 0x0100
 QS_ALLINPUT = 0x04ff
 MWMO_ALERTABLE = 0x0002
 
-# GetSystemMetrics constants
-# The width of the screen of the primary display monitor, in pixels.
-SM_CXSCREEN = 0
-# The height of the screen of the primary display monitor, in pixels.
-SM_CYSCREEN = 1
-# Whether the left and right mouse buttons are swapped
-SM_SWAPBUTTON = 23
-# The coordinates for the left side of the virtual screen.
-SM_XVIRTUALSCREEN = 76
-# The coordinates for the top of the virtual screen.
-SM_YVIRTUALSCREEN = 77
-# The width of the virtual screen, in pixels.
-SM_CXVIRTUALSCREEN = 78
-# The height of the virtual screen, in pixels.
-SM_CYVIRTUALSCREEN = 79
-
 
 class MSGFLT(enum.IntEnum):
 	# Actions associated with ChangeWindowMessageFilterEx
@@ -423,8 +455,10 @@ def MAKELONG(lo,hi):
 def waitMessage():
 	return user32.WaitMessage()
 
-def getMessage(*args):
+
+def getMessage(*args) -> int:
 	return user32.GetMessageW(*args)
+
 
 def translateMessage(*args):
 	return user32.TranslateMessage(*args)
@@ -458,7 +492,7 @@ def isDescendantWindow(parentHwnd,childHwnd):
 		return False
 
 
-def getForegroundWindow() -> HWND:
+def getForegroundWindow() -> HWNDVal:
 	return user32.GetForegroundWindow()
 
 def setForegroundWindow(hwnd):
@@ -467,8 +501,10 @@ def setForegroundWindow(hwnd):
 def setFocus(hwnd):
 	user32.SetFocus(hwnd)
 
-def getDesktopWindow():
+
+def getDesktopWindow() -> HWNDVal:
 	return user32.GetDesktopWindow()
+
 
 def getControlID(hwnd):
 	return user32.GetWindowLongW(hwnd,GWL_ID)
@@ -494,16 +530,18 @@ def sendMessage(hwnd,msg,param1,param2):
 	return user32.SendMessageW(hwnd,msg,param1,param2)
 
 
-def getWindowThreadProcessID(hwnd: HWND) -> Tuple[int, int]:
+def getWindowThreadProcessID(hwnd: HWNDVal) -> Tuple[int, int]:
 	"""Returns a tuple of (processID, threadID)"""
 	processID=c_int()
 	threadID=user32.GetWindowThreadProcessId(hwnd,byref(processID))
 	return (processID.value, threadID)
 
-def getClassName(window):
+
+def getClassName(window: HWNDVal) -> str:
 	buf=create_unicode_buffer(256)
 	user32.GetClassNameW(window,buf,255)
 	return buf.value
+
 
 def keybd_event(*args):
 	return user32.keybd_event(*args)
@@ -599,6 +637,8 @@ def FindWindow(className, windowName):
 		raise WinError()
 	return res
 
+
+MB_OK = 0
 MB_RETRYCANCEL=5
 MB_ICONERROR=0x10
 MB_SYSTEMMODAL=0x1000

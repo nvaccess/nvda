@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2010-2022 NV Access Limited, World Light Information Limited,
-# Hong Kong Blind Union, Babbage B.V., Julien Cochuyt
+# Copyright (C) 2010-2024 NV Access Limited, World Light Information Limited,
+# Hong Kong Blind Union, Babbage B.V., Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -22,6 +22,7 @@ from typing import (
 from logHandler import log
 import globalVars
 import config
+from NVDAState import WritePaths
 
 
 _LocaleDataT = TypeVar("_LocaleDataT")
@@ -139,6 +140,10 @@ def getCharacterDescription(locale: str, character: str) -> Optional[List[str]]:
 
 # Speech symbol levels
 class SymbolLevel(IntEnum):
+	"""The desired symbol level in a speech sequence or in configuration.
+	Note: This enum has its counterpart in the NVDAController RPC interface (nvdaController.idl).
+	Additions to this enum should also be reflected in nvdaController.idl.
+	"""
 	NONE = 0
 	SOME = 100
 	MOST = 200
@@ -373,11 +378,16 @@ class SpeechSymbols(object):
 		return u"\t".join(fields)
 
 _noSymbolLocalesCache = set()
+_noCLDRLocalesCache = set()
 
 
 def _getSpeechSymbolsForLocale(locale: str) -> Tuple[SpeechSymbols, SpeechSymbols]:
-	if locale in _noSymbolLocalesCache:
+	if (
+		locale in _noSymbolLocalesCache
+		and (locale in _noCLDRLocalesCache or not config.conf['speech']['includeCLDR'])
+	):
 		raise LookupError
+	builtinDataImported = False
 	builtin = SpeechSymbols()
 	if config.conf['speech']['includeCLDR']:
 		# Try to load CLDR data when processing is on.
@@ -388,19 +398,24 @@ def _getSpeechSymbolsForLocale(locale: str) -> Tuple[SpeechSymbols, SpeechSymbol
 				os.path.join(globalVars.appDir, "locale", locale, "cldr.dic"),
 				allowComplexSymbols=False
 			)
+			builtinDataImported = True
 		except IOError:
+			_noCLDRLocalesCache.add(locale)
 			log.debugWarning("No CLDR data for locale %s" % locale)
 	try:
 		builtin.load(os.path.join(globalVars.appDir, "locale", locale, "symbols.dic"))
+		builtinDataImported = True
 	except IOError:
 		_noSymbolLocalesCache.add(locale)
+		log.debugWarning("No symbol data for locale %s" % locale)
+	if not builtinDataImported:
 		raise LookupError("No symbol information for locale %s" % locale)
 	user = SpeechSymbols()
+	pathToSymbolsDic = WritePaths.getSymbolsConfigFile(locale)
 	try:
 		# Don't allow users to specify complex symbols
 		# because an error will cause the whole processor to fail.
-		user.load(os.path.join(globalVars.appArgs.configPath, "symbols-%s.dic" % locale),
-			allowComplexSymbols=False)
+		user.load(pathToSymbolsDic, allowComplexSymbols=False)
 	except IOError:
 		# An empty user SpeechSymbols is okay.
 		pass
@@ -513,17 +528,18 @@ class SpeechSymbolProcessor(object):
 		multiChars.sort(key=lambda identifier: len(identifier), reverse=True)
 
 		# Build the regexp.
-		patterns = [
-			# Strip repeated spaces from the end of the line to stop them from being picked up by repeated.
-			r"(?P<rstripSpace>  +$)",
-			# Repeated characters: more than 3 repeats.
-			r"(?P<repeated>(?P<repTmp>%s)(?P=repTmp){3,})" % characters
-		]
+		patterns: list[str] = []
 		# Complex symbols.
 		# Each complex symbol has its own named group so we know which symbol matched.
 		patterns.extend(
 			u"(?P<c{index}>{pattern})".format(index=index, pattern=symbol.pattern)
 			for index, symbol in enumerate(complexSymbolsList))
+		patterns.extend([
+			# Strip repeated spaces from the end of the line to stop them from being picked up by repeated.
+			r"(?P<rstripSpace>  +$)",
+			# Repeated characters: more than 3 repeats.
+			r"(?P<repeated>(?P<repTmp>%s)(?P=repTmp){3,})" % characters
+		])
 		# Simple symbols.
 		# These are all handled in one named group.
 		# Because the symbols are just text, we know which symbol matched just by looking at the matched text.
@@ -578,7 +594,9 @@ class SpeechSymbolProcessor(object):
 			text = m.group()
 			symbol = self.computedSymbols[text[0]]
 			if self._level >= symbol.level:
-				return u" {count} {char} ".format(count=len(text), char=symbol.replacement)
+				return "  {count} {char} ".format(count=len(text), char=symbol.replacement)
+			elif symbol.preserve in [SYMPRES_ALWAYS, SYMPRES_NOREP]:
+				return text
 			else:
 				return " "
 
@@ -604,7 +622,7 @@ class SpeechSymbolProcessor(object):
 			else:
 				return suffix
 
-	def processText(self, text, level):
+	def processText(self, text: str, level: SymbolLevel) -> str:
 		self._level = level
 		return self._regexp.sub(self._regexpRepl, text)
 

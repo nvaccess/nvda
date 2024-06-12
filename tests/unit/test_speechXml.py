@@ -1,8 +1,7 @@
-#tests/unit/test_speechXml.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2017 NV Access Limited
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2017-2023 NV Access Limited, Leonard de Ruijter
 
 """Unit tests for the speechXml module.
 """
@@ -258,3 +257,31 @@ class TestSsmlConverter(unittest.TestCase):
 			'<phoneme alphabet="ipa" ph="phIpa">phText</phoneme>'
 			'</voice></prosody></speak>'
 		)
+
+
+class TestSsmlParser(unittest.TestCase):
+
+	def test_parse(self):
+		"""Test parsing a speech sequence from SSML."""
+		parser = speechXml.SsmlParser()
+		expectedSequence = [
+			"t1",
+			PitchCommand(multiplier=2),
+			VolumeCommand(multiplier=2),
+			"t2",
+			PitchCommand(),
+			LangChangeCommand("de_DE"),
+			CharacterModeCommand(True),
+			"c",
+			CharacterModeCommand(False),
+			VolumeCommand(),
+		]
+		xml = (
+			'<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">'
+			't1'
+			'<prosody pitch="200%" volume="200%">t2</prosody>'
+			'<prosody volume="200%"><voice xml:lang="de-DE">'
+			'<say-as interpret-as="characters">c</say-as>'
+			'</voice></prosody></speak>'
+		)
+		self.assertEqual(expectedSequence, parser.convertFromXml(xml))

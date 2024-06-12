@@ -1,23 +1,39 @@
-#util.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2017 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2017-2023 NV Access Limited, Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Utilities used withing the extension points framework. Generally it is expected that the class in __init__.py are
 used, however for more advanced requirements these utilities can be used directly.
 """
+
+
+# "annotations" Needed to reference BoundMethodWeakref in one of the init params of itself.
+from __future__ import annotations
 import weakref
-import collections
 import inspect
+from typing import (
+	Callable,
+	Generator,
+	Generic,
+	Optional,
+	OrderedDict,
+	Tuple,
+	TypeVar,
+	Union,
+)
+
+HandlerT = TypeVar("HandlerT", bound=Callable)
+HandlerKeyT = Union[int, Tuple[int, int]]
 
 
-class AnnotatableWeakref(weakref.ref):
+class AnnotatableWeakref(weakref.ref, Generic[HandlerT]):
 	"""A weakref.ref which allows annotation with custom attributes.
 	"""
+	handlerKey: int
 
 
-class BoundMethodWeakref(object):
+class BoundMethodWeakref(Generic[HandlerT]):
 	"""Weakly references a bound instance method.
 	Instance methods are bound dynamically each time they are fetched.
 	weakref.ref on a bound instance method doesn't work because
@@ -26,18 +42,26 @@ class BoundMethodWeakref(object):
 	which can then be used to bind an instance method.
 	To get the actual method, you call an instance as you would a weakref.ref.
 	"""
+	handlerKey: Tuple[int, int]
 
-	def __init__(self, target, onDelete):
-		def onRefDelete(weak):
-			"""Calls onDelete for our BoundMethodWeakref when one of the individual weakrefs (instance or function) dies.
-			"""
-			onDelete(self)
+	def __init__(
+			self,
+			target: HandlerT,
+			onDelete: Optional[Callable[[BoundMethodWeakref], None]] = None
+	):
+		if onDelete:
+			def onRefDelete(weak):
+				"""Calls onDelete for our BoundMethodWeakref when one of the individual weakrefs (instance or function) dies.
+				"""
+				onDelete(self)
+		else:
+			onRefDelete = None
 		inst = target.__self__
 		func = target.__func__
 		self.weakInst = weakref.ref(inst, onRefDelete)
 		self.weakFunc = weakref.ref(func, onRefDelete)
 
-	def __call__(self):
+	def __call__(self) -> Optional[HandlerT]:
 		inst = self.weakInst()
 		if not inst:
 			return
@@ -46,7 +70,8 @@ class BoundMethodWeakref(object):
 		# Get an instancemethod by binding func to inst.
 		return func.__get__(inst)
 
-def _getHandlerKey(handler):
+
+def _getHandlerKey(handler: HandlerT) -> HandlerKeyT:
 	"""Get a key which identifies a handler function.
 	This is needed because we store weak references, not the actual functions.
 	We store the key on the weak reference.
@@ -58,7 +83,7 @@ def _getHandlerKey(handler):
 	return id(handler)
 
 
-class HandlerRegistrar(object):
+class HandlerRegistrar(Generic[HandlerT]):
 	"""Base class to Facilitate registration and unregistration of handler functions.
 	The handlers are stored using weak references and are automatically unregistered
 	if the handler dies.
@@ -75,12 +100,16 @@ class HandlerRegistrar(object):
 		#: Registered handler functions.
 		#: This is an OrderedDict where the keys are unique identifiers (as returned by _getHandlerKey)
 		#: and the values are weak references.
-		self._handlers = collections.OrderedDict()
+		self._handlers = OrderedDict[
+			HandlerKeyT,
+			Union[BoundMethodWeakref[HandlerT], AnnotatableWeakref[HandlerT]]
+		]()
 
-	def register(self, handler):
+	def register(self, handler: HandlerT):
 		"""You can register functions, bound instance methods, class methods, static methods or lambdas.
-		However, the callable must be kept alive by your code otherwise it will be de-registered. This is due to the use
-		of weak references. This is especially relevant when using lambdas.
+		However, the callable must be kept alive by your code otherwise it will be de-registered.
+		This is due to the use of weak references.
+		This is especially relevant when using lambdas.
 		"""
 		if inspect.isfunction(handler):
 			sig = inspect.signature(handler)
@@ -95,7 +124,24 @@ class HandlerRegistrar(object):
 		weak.handlerKey = key
 		self._handlers[key] = weak
 
-	def unregister(self, handler):
+	def moveToEnd(self, handler: HandlerT, last: bool = False) -> bool:
+		"""Move a registered handler to the start or end of the collection with registered handlers.
+		This can be used to modify the order in which handlers are called.
+		@param last: Whether to move the handler to the end.
+			If C{False} (default), the handler is moved to the start.
+		@returns: Whether the handler was found.
+		"""
+		if isinstance(handler, (AnnotatableWeakref, BoundMethodWeakref)):
+			key = handler.handlerKey
+		else:
+			key = _getHandlerKey(handler)
+		try:
+			self._handlers.move_to_end(key=key, last=last)
+		except KeyError:
+			return False
+		return True
+
+	def unregister(self, handler: Union[AnnotatableWeakref[HandlerT], BoundMethodWeakref[HandlerT], HandlerT]):
 		if isinstance(handler, (AnnotatableWeakref, BoundMethodWeakref)):
 			key = handler.handlerKey
 		else:
@@ -107,7 +153,7 @@ class HandlerRegistrar(object):
 		return True
 
 	@property
-	def handlers(self):
+	def handlers(self) -> Generator[HandlerT, None, None]:
 		"""Generator of registered handler functions.
 		This should be used when you want to call the handlers.
 		"""
