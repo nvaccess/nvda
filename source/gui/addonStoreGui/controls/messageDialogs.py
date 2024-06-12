@@ -15,8 +15,15 @@ from addonStore.models.addon import (
 	_AddonStoreModel,
 	_AddonManifestModel,
 )
+from addonStore.dataManager import addonDataManager
+from addonStore.models.status import AvailableAddonStatus
 import config
-from gui.addonGui import ConfirmAddonInstallDialog, ErrorAddonInstallDialog
+from config.configFlags import AddonsAutomaticUpdate
+import globalVars
+import gui
+from gui import nvdaControls
+from gui.addonGui import ConfirmAddonInstallDialog, ErrorAddonInstallDialog, promptUserForRestart
+from gui.addonStoreGui.viewModels.addonList import AddonListItemVM
 from gui.contextHelp import ContextHelpMixin
 from gui.guiHelper import (
 	BoxSizerHelper,
@@ -24,7 +31,9 @@ from gui.guiHelper import (
 	ButtonHelper,
 	SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS,
 )
-from gui.message import displayDialogAsModal, messageBox
+from gui.message import DisplayableError, displayDialogAsModal, messageBox
+from logHandler import log
+import ui
 import windowUtils
 
 if TYPE_CHECKING:
@@ -244,7 +253,7 @@ def _showConfirmAddonInstallDialog(
 	return displayDialogAsModal(ConfirmAddonInstallDialog(
 		parent=parent,
 		# Translators: Title for message asking if the user really wishes to install an Addon.
-		title=_("Add-on Installation"),
+		title=pgettext("addonStore", "Add-on Installation"),
 		message=confirmInstallMessage,
 		showAddonInfoFunction=lambda: _showAddonInfo(addon)
 	))
@@ -348,3 +357,203 @@ class _SafetyWarningDialog(
 	def onOkButton(self, evt: wx.CommandEvent):
 		config.conf["addonStore"]["showWarning"] = not self.dontShowAgainCheckbox.GetValue()
 		self.EndModal(wx.ID_OK)
+
+
+class UpdatableAddonsDialog(
+		ContextHelpMixin,
+		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+):
+	"""A dialog notifying users that updatable add-ons are available"""
+
+	helpId = "AutomaticAddonUpdates"
+
+	def __init__(self, parent: wx.Window, addonsPendingUpdate: list[_AddonGUIModel]):
+		# Translators: The warning of a dialog
+		super().__init__(parent, title=pgettext("addonStore", "Add-on updates available"))
+		self.addonsPendingUpdate = addonsPendingUpdate
+		self.onDisplayableError = DisplayableError.OnDisplayableErrorT()
+		self._setupUI()
+		self.Raise()
+		self.SetFocus()
+
+	def _setupUI(self):
+		self.Bind(wx.EVT_CLOSE, self.onClose)
+		self.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		sHelper = BoxSizerHelper(self, orientation=wx.VERTICAL)
+		self._setupMessage(sHelper)
+		self._createAddonsPanel(sHelper)
+		self._setupButtons(sHelper)
+		mainSizer.Add(sHelper.sizer, border=BORDER_FOR_DIALOGS, flag=wx.ALL)
+		self.Sizer = mainSizer
+		mainSizer.Fit(self)
+		self.CentreOnScreen()
+
+	def onCharHook(self, evt: wx.KeyEvent):
+		if evt.KeyCode == wx.WXK_ESCAPE:
+			self.Close()
+		evt.Skip()
+
+	def _setupMessage(self, sHelper: BoxSizerHelper):
+		_message = pgettext(
+			"addonStore",
+			# Translators: Message displayed when updates are available for some installed add-ons.
+			"Updates are available for some of your installed add-ons. "
+		)
+
+		sText = sHelper.addItem(wx.StaticText(self, label=_message))
+		# the wx.Window must be constructed before we can get the handle.
+		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
+		# 600 was fairly arbitrarily chosen by a visual user to look acceptable on their machine.
+		sText.Wrap(self.scaleFactor * 600)
+
+	def _setupButtons(self, sHelper: BoxSizerHelper):
+		bHelper = sHelper.addDialogDismissButtons(ButtonHelper(wx.HORIZONTAL))
+
+		# Translators: The label of a button in a dialog
+		openStoreLabel = pgettext("addonStore", "Open Add-on &Store")
+		self.openStoreButton = bHelper.addButton(self, wx.ID_CLOSE, label=openStoreLabel)
+		self.openStoreButton.Bind(wx.EVT_BUTTON, self.onOpenStoreButton)
+
+		# Translators: The label of a button in a dialog
+		self.updateAllButton = bHelper.addButton(self, wx.ID_CLOSE, label=pgettext("addonStore", "&Update all"))
+		self.updateAllButton.Bind(wx.EVT_BUTTON, self.onUpdateAllButton)
+
+		# Translators: The label of a button in a dialog
+		closeButton = bHelper.addButton(self, wx.ID_CLOSE, label=pgettext("addonStore", "&Close"))
+		closeButton.Bind(wx.EVT_BUTTON, self.onCloseButton)
+
+	def _createAddonsPanel(self, sHelper: BoxSizerHelper):
+		# Translators: the label for the addons list in the updatable addons dialog.
+		entriesLabel = pgettext("addonStore", "Updatable Add-ons")
+		self.addonsList = sHelper.addLabeledControl(
+			entriesLabel,
+			nvdaControls.AutoWidthColumnListCtrl,
+			style=wx.LC_REPORT | wx.LC_SINGLE_SEL,
+		)
+
+		# Translators: Label for an extra detail field for an add-on. In the add-on store UX.
+		nameLabel = pgettext("addonStore", "Name")
+		# Translators: Label for an extra detail field for an add-on. In the add-on store UX.
+		installedVersionLabel = pgettext("addonStore", "Installed version")
+		# Translators: Label for an extra detail field for an add-on. In the add-on store UX.
+		availableVersionLabel = pgettext("addonStore", "Available version")
+		# Translators: Label for an extra detail field for an add-on. In the add-on store UX.
+		channelLabel = pgettext("addonStore", "Channel")
+		# Translators: Label for an extra detail field for an add-on. In the add-on store UX.
+		statusLabel = pgettext("addonStore", "Status")
+
+		self.addonsList.AppendColumn(nameLabel, width=300)
+		self.addonsList.AppendColumn(installedVersionLabel, width=200)
+		self.addonsList.AppendColumn(availableVersionLabel, width=200)
+		self.addonsList.AppendColumn(channelLabel, width=150)
+		self.addonsList.AppendColumn(statusLabel, width=300)
+		for addon in self.addonsPendingUpdate:
+			self.addonsList.Append((
+				addon.displayName,
+				addon._addonHandlerModel.version,
+				addon.addonVersionName,
+				addon.channel.displayString,
+				AvailableAddonStatus.UPDATE.displayString,
+			))
+		self.addonsList.Refresh()
+
+	def onOpenStoreButton(self, evt: wx.CommandEvent):
+		"""Open the Add-on Store to update add-ons"""
+		# call later so current dialog is dismissed and doesn't block the store from opening
+		wx.CallLater(100, gui.mainFrame.onAddonStoreUpdatableCommand, None)
+		self.EndModal(wx.ID_CLOSE)
+
+	def onUpdateAllButton(self, evt: wx.CommandEvent):
+		from gui.addonStoreGui.viewModels.store import AddonStoreVM
+		self.listItemVMs: list[AddonListItemVM] = []
+		for addon in self.addonsPendingUpdate:
+			listItemVM = AddonListItemVM(addon, status=AvailableAddonStatus.UPDATE)
+			listItemVM.updated.register(self._statusUpdate)
+			self.listItemVMs.append(listItemVM)
+		AddonStoreVM.getAddons(self.listItemVMs)
+		self.addonsList.Refresh()
+		# Translators: Message shown when updating add-ons in the updatable add-ons dialog
+		ui.message(pgettext("addonStore", "Updating add-ons..."))
+		self.updateAllButton.Disable()
+		self.openStoreButton.Disable()
+		self.addonsList.SetFocus()
+		self.addonsList.Focus(0)
+
+	def _statusUpdate(self, addonListItemVM: AddonListItemVM):
+		log.debug(f"{addonListItemVM.Id} status: {addonListItemVM.status}")
+		index = self.listItemVMs.index(addonListItemVM)
+		self.addonsList.SetItem(index, column=4, label=addonListItemVM.status.displayString)
+
+	def onCloseButton(self, evt: wx.CommandEvent):
+		self.Close()
+
+	def onClose(self, evt: wx.CloseEvent):
+		from gui.addonStoreGui.viewModels.store import AddonStoreVM
+		from .storeDialog import AddonStoreDialog
+		evt.Veto()
+
+		numInProgress = len(AddonStoreVM._downloader.progress)
+		if numInProgress:
+			res = gui.messageBox(
+				npgettext(
+					"addonStore",
+					# Translators: Message shown prior to installing add-ons when closing the add-on store dialog
+					# The placeholder {} will be replaced with the number of add-ons to be installed
+					"Download of {} add-on in progress, cancel downloading?",
+					"Download of {} add-ons in progress, cancel downloading?",
+					numInProgress,
+				).format(numInProgress),
+				AddonStoreDialog._installationPromptTitle,
+				style=wx.YES_NO
+			)
+			if res == wx.YES:
+				log.debug("Cancelling the download.")
+				AddonStoreVM.cancelDownloads()
+				# Continue to installation if any downloads completed
+			else:
+				# Let the user return to the dialog and inspect add-ons being downloaded.
+				return
+
+		if addonDataManager._downloadsPendingInstall:
+			nAddonsPendingInstall = len(addonDataManager._downloadsPendingInstall)
+			installingDialog = gui.IndeterminateProgressDialog(
+				self,
+				AddonStoreDialog._installationPromptTitle,
+				npgettext(
+					"addonStore",
+					# Translators: Message shown while installing add-ons after closing the add-on store dialog
+					# The placeholder {} will be replaced with the number of add-ons to be installed
+					"Installing {} add-on, please wait.",
+					"Installing {} add-ons, please wait.",
+					nAddonsPendingInstall,
+				).format(nAddonsPendingInstall)
+			)
+			AddonStoreVM.installPending()
+
+			def postInstall():
+				installingDialog.done()
+				# let the dialog exit.
+				self.DestroyLater()
+				self.SetReturnCode(wx.ID_CLOSE)
+				wx.CallLater(500, promptUserForRestart)
+
+			return wx.CallAfter(postInstall)
+
+		# let the dialog exit.
+		self.DestroyLater()
+		self.SetReturnCode(wx.ID_CLOSE)
+
+	@classmethod
+	def _checkForUpdatableAddons(cls):
+		if (
+			globalVars.appArgs.secure
+			or (AddonsAutomaticUpdate.DISABLED == config.conf["addonStore"]["automaticUpdates"])
+		):
+			log.debug("automatic add-on updates are disabled")
+			return
+		log.debug("checking for updatable add-ons")
+		addonsPendingUpdate = addonDataManager._addonsPendingUpdate()
+		if addonsPendingUpdate:
+			log.debug("updatable add-ons found")
+			displayDialogAsModal(cls(gui.mainFrame, addonsPendingUpdate))
