@@ -173,7 +173,7 @@ if apiSigningToken:
 	# Code signing with SignPath HSM 
 	def signExecApi(target, source, env):
 		# TODO debugging
-		if len(target>1):
+		if len(target)>1:
 			print(f"Too many files passed to signExecApi, skipping {[t.abspath for t in target]}")
 		ps_cmd = f"powershell -File appveyor\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {target[0].abspath}"
 		return env.Execute(ps_cmd, shell=True)
