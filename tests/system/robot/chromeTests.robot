@@ -97,10 +97,10 @@ ARIA roleDescription block browse mode
 	[Documentation]	Read a block element with a custom role in browse mode
 	test_ariaRoleDescription_block_browseMode
 	# Disabled due to chrome message "To get missing image descriptions, open the context menu."
-	[Tags]	excluded_from_build
 ARIA roleDescription inline content editable
 	[Documentation]	Read an inline element with a custom role in content editables 
 	test_ariaRoleDescription_inline_contentEditable
+	[Tags]	excluded_from_build
 ARIA roleDescription block content editable
 	[Documentation]	Read an block element with a custom role in content editables 
 	test_ariaRoleDescription_block_contentEditable
