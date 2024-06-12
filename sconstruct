@@ -172,7 +172,9 @@ assert not (apiSigningToken and certFile), "Cannot specify signing with both API
 if apiSigningToken:
 	# Code signing with SignPath HSM 
 	def signExecApi(target, source, env):
-		# TODO see if we have to pass the apiSigningToken or whether the sign.ps1 shell can find the variable
+		# TODO debugging
+		if len(target>1):
+			print(f"Too many files passed to signExecApi, skipping {[t.abspath for t in target]}")
 		ps_cmd = f"powershell -File appveyor\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {target[0].abspath}"
 		return env.Execute(ps_cmd, shell=True)
 	#Export via scons environment so other libraries can be signed
@@ -186,17 +188,16 @@ elif certFile:
 			signExecCmd.extend(("/p", certPassword))
 		if certTimestampServer:
 			signExecCmd.extend(("/tr", certTimestampServer, "/td", "SHA256"))
-		def signExec(target,source,env):
-			print([str(x) for x in target])
-			#sys.exit(1)
-			# #3795: signtool can quite commonly fail with timestamping, so allow it to try up to 3 times with a 1 second delay between each try. 
-			res=0
-			for count in range(3):
-				res=env.Execute([signExecCmd+[target[0].abspath]])
-				if not res:
-					return 0 # success
-				time.sleep(1)
-			return res # failed
+		print([str(x) for x in target])
+		#sys.exit(1)
+		# #3795: signtool can quite commonly fail with timestamping, so allow it to try up to 3 times with a 1 second delay between each try. 
+		res=0
+		for count in range(3):
+			res=env.Execute([signExecCmd+[target[0].abspath]])
+			if not res:
+				return 0 # success
+			time.sleep(1)
+		return res # failed
 	#Export via scons environment so other libraries can be signed
 	env['signExec']=signExecCert	
 
