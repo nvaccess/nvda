@@ -3393,7 +3393,6 @@ There are a number of ways of doing this:
 * Look for user feedback in the [NVDA user group](https://nvda.groups.io/g/nvda) or [NVDA add-on group](https://nvda-addons.groups.io/g/nvda-addons)
 * Verify that the add-on is regularly updated
 * Read [Community reviews #AddonStoreReviews] of the add-on
-
 * Seek community feedback through forums or social media.
 
 
