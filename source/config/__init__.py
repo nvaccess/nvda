@@ -232,6 +232,7 @@ def getUserDefaultConfigPath(useInstalledPathIfExists=False):
 SCRATCH_PAD_ONLY_DIRS = (
 	'appModules',
 	'brailleDisplayDrivers',
+	'brailleTables',
 	'globalPlugins',
 	'synthDrivers',
 	'visionEnhancementProviders',
@@ -505,12 +506,13 @@ class ConfigManager(object):
 
 	#: Sections that only apply to the base configuration;
 	#: i.e. they cannot be overridden in profiles.
-	BASE_ONLY_SECTIONS = {
-	"general", 
-	"update", 
-	"upgrade",
-	"development",
-}
+	BASE_ONLY_SECTIONS = frozenset({
+		"general",
+		"update",
+		"upgrade",
+		"development",
+		"addonStore",
+	})
 
 	def __init__(self):
 		self.spec = confspec

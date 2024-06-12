@@ -47,10 +47,11 @@ class AddonStoreDialog(SettingsDialog):
 	# point to the Add-on Store one.
 	helpId = "AddonsManager"
 
-	def __init__(self, parent: wx.Window, storeVM: AddonStoreVM):
+	def __init__(self, parent: wx.Window, storeVM: AddonStoreVM, openToTab: _StatusFilterKey | None = None):
 		self._storeVM = storeVM
 		self._storeVM.onDisplayableError.register(self.handleDisplayableError)
 		self._actionsContextMenu = _MonoActionsContextMenu(self._storeVM)
+		self.openToTab = openToTab
 		super().__init__(parent, resizeable=True, buttons={wx.CLOSE})
 		if config.conf["addonStore"]["showWarning"]:
 			displayDialogAsModal(_SafetyWarningDialog(parent))
@@ -78,12 +79,14 @@ class AddonStoreDialog(SettingsDialog):
 		for statusFilter in _statusFilters:
 			self.addonListTabs.AddPage(dynamicTabPage, statusFilter.displayString)
 		tabPageHelper.addItem(self.addonListTabs, flag=wx.EXPAND)
-		if any(self._storeVM._installedAddons[channel] for channel in self._storeVM._installedAddons):
-			# If there's any installed add-ons, use the installed add-ons page by default
-			self.addonListTabs.SetSelection(0)
-		else:
-			availableTabIndex = list(_statusFilters.keys()).index(_StatusFilterKey.AVAILABLE)
-			self.addonListTabs.SetSelection(availableTabIndex)
+		openToTab = self.openToTab
+		if openToTab is None:
+			if any(self._storeVM._installedAddons[channel] for channel in self._storeVM._installedAddons):
+				openToTab = _StatusFilterKey.INSTALLED
+			else:
+				openToTab = _StatusFilterKey.AVAILABLE
+		openToTabIndex = list(_statusFilters.keys()).index(openToTab)
+		self.addonListTabs.SetSelection(openToTabIndex)
 		self.addonListTabs.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onListTabPageChange, self.addonListTabs)
 
 		filterCtrlHelper = guiHelper.BoxSizerHelper(self, wx.VERTICAL)
@@ -319,7 +322,13 @@ class AddonStoreDialog(SettingsDialog):
 			_StatusFilterKey.AVAILABLE,
 			_StatusFilterKey.UPDATE,
 		}:
-			self._storeVM._filterChannelKey = Channel.STABLE
+			if self._storeVM._filteredStatusKey == _StatusFilterKey.UPDATE and (
+				self._storeVM._installedAddons[Channel.DEV]
+				or self._storeVM._installedAddons[Channel.BETA]
+			):
+				self._storeVM._filterChannelKey = Channel.ALL
+			else:
+				self._storeVM._filterChannelKey = Channel.STABLE
 			self.enabledFilterCtrl.Hide()
 			self.enabledFilterCtrl.Disable()
 			self.includeIncompatibleCtrl.Enable()

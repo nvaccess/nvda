@@ -1,7 +1,6 @@
 ﻿#A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2023 NVDA Contributors
+#Copyright (c) 2011-2024 NVDA Contributors. Thanks: Association for the Rights of the Visually Challenged (ARVIC), Coimbatore, Tamil Nadu, India
 #This file is covered by the GNU General Public License.
-# Thanks: Association for the Rights of the Visually Challenged (ARVIC), Coimbatore, Tamil Nadu, India
 
 complexSymbols:
 # identifier	regexp
@@ -12,6 +11,8 @@ complexSymbols:
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
+# Series of dots used for visual presentation, e.g. in table of contents
+multiple .	\.{4,}
 # Others
 decimal point	(?<=\d)\.(?=\d)
 in-word '	(?<=[^\W_])['’]
@@ -29,6 +30,7 @@ symbols:
 ? sentence ending	கேள்வி?	all	always
 ; phrase ending	அரைப் புள்ளி	most	always
 : phrase ending	முக்கால் புள்ளி	most	always
+multiple .	multiple dots	all	always
 decimal point	புள்ளி	all	always
 in-word '	ஒற்றை மேற்கோள்	all	norep
 negative number	கழித்தல்	none	norep
@@ -46,6 +48,7 @@ tamilNumberDash	இணைக்கோடு	char	always
 
 # Standard punctuation/symbols
 !	கூவல்!	all
+！	முழு அகல கூவல்!	all
 "	மேற்கோள்	most
 \#	எண்	most
 $	டாலர்	all	norep
@@ -68,12 +71,16 @@ $	டாலர்	all	norep
 ،	அரேபியக் காற்புள்ளி	all	always
 -	இணைக்கோடு	most	always
 .	புள்ளி	some
+．	முழு அகல முற்றுப் புள்ளி	some
 /	சாய்வு	some
 :	முக்கால் புள்ளி	most	norep
+：	முழு அகல முக்கால் புள்ளி	most	norep
 ;	அரைப் புள்ளி	most
 ؛	அரேபிய அரைப்புள்ளி	most
+；	முழு அகல அரைப் புள்ளி	most
 ?	கேள்வி?	all
 ؟	அரேபியக் கேள்விக் குறி	all
+？	முழு அகல கேள்வி?	all
 @	at	some
 [	இடப்பகரம்	most
 ]	வலப்பகரம்	most

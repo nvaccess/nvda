@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited
+# Copyright (C) 2022-2024 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -17,6 +17,7 @@ from typing import (
 
 import requests
 from requests.structures import CaseInsensitiveDict
+from json import JSONDecodeError
 
 import addonAPIVersion
 from baseObject import AutoPropertyObject
@@ -36,6 +37,7 @@ from .models.addon import (
 	_createStoreCollectionFromJson,
 )
 from .models.channel import Channel
+from .models.status import AvailableAddonStatus, getStatus, _StatusFilterKey
 from .network import (
 	_getCurrentApiVersionForURL,
 	_getAddonStoreURL,
@@ -46,7 +48,7 @@ from .network import (
 if TYPE_CHECKING:
 	from addonHandler import Addon as AddonHandlerModel  # noqa: F401
 	# AddonGUICollectionT must only be imported when TYPE_CHECKING
-	from .models.addon import AddonGUICollectionT, _AddonStoreModel  # noqa: F401
+	from .models.addon import AddonGUICollectionT, _AddonGUIModel, _AddonStoreModel  # noqa: F401
 	from gui.addonStoreGui.viewModels.addonList import AddonListItemVM  # noqa: F401
 	from gui.message import DisplayableError  # noqa: F401
 
@@ -183,16 +185,17 @@ class _DataManager:
 			return None
 		try:
 			data = cacheData["data"]
+			cachedAddonData = _createStoreCollectionFromJson(data)
 			cacheHash = cacheData["cacheHash"]
 			cachedLanguage = cacheData["cachedLanguage"]
 			nvdaAPIVersion = cacheData["nvdaAPIVersion"]
-		except KeyError:
+		except (KeyError, JSONDecodeError):
 			log.exception(f"Invalid add-on store cache:\n{cacheData}")
 			if NVDAState.shouldWriteToDisk():
 				os.remove(cacheFilePath)
 			return None
 		return CachedAddonsModel(
-			cachedAddonData=_createStoreCollectionFromJson(data),
+			cachedAddonData=cachedAddonData,
 			cacheHash=cacheHash,
 			cachedLanguage=cachedLanguage,
 			nvdaAPIVersion=tuple(nvdaAPIVersion),  # loads as list,
@@ -305,6 +308,21 @@ class _DataManager:
 		if not cacheData:
 			return None
 		return _createInstalledStoreModelFromData(cacheData)
+
+	def _addonsPendingUpdate(self) -> list["_AddonGUIModel"]:
+		addonsPendingUpdate: list["_AddonGUIModel"] = []
+		compatibleAddons = self.getLatestCompatibleAddons()
+		for channel in compatibleAddons:
+			for addon in compatibleAddons[channel].values():
+				if (
+					getStatus(addon, _StatusFilterKey.UPDATE) == AvailableAddonStatus.UPDATE
+					# Only consider add-ons that have been installed through the Add-on Store
+					and addon._addonHandlerModel._addonStoreData is not None
+				):
+					# Only consider add-on updates for the same channel
+					if addon.channel == addon._addonHandlerModel._addonStoreData.channel:
+						addonsPendingUpdate.append(addon)
+		return addonsPendingUpdate
 
 
 class _InstalledAddonsCache(AutoPropertyObject):

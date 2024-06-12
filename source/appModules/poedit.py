@@ -8,6 +8,7 @@
 
 from enum import IntEnum
 
+import ctypes
 import api
 import appModuleHandler
 import controlTypes
@@ -19,6 +20,8 @@ import winUser
 from NVDAObjects import NVDAObject
 from NVDAObjects.window import Window
 from scriptHandler import getLastScriptRepeatCount, script
+from logHandler import log
+
 
 LEFT_TO_RIGHT_EMBEDDING = "\u202a"
 """Character often found in translator comments."""
@@ -27,7 +30,7 @@ LEFT_TO_RIGHT_EMBEDDING = "\u202a"
 SCRCAT_POEDIT = _("Poedit")
 
 
-class _WindowControlIdOffset(IntEnum):
+class _WindowControlIdOffsetFromDataView(IntEnum):
 	"""Window control ID's are not static, however, the order of ids stays the same.
 	Therefore, using a wxDataView control in the translations list as a reference,
 	we can safely calculate control ids accross releases or instances.
@@ -35,14 +38,23 @@ class _WindowControlIdOffset(IntEnum):
 	"""
 
 	PRO_IDENTIFIER = -10  # This is a button in the free version
-	OLD_SOURCE_TEXT_PRO = 60
-	OLD_SOURCE_TEXT = 65
-	TRANSLATOR_NOTES_PRO = 63
-	TRANSLATOR_NOTES = 68  # 63 in Pro
-	COMMENT_PRO = 66
-	COMMENT = 71
+	MAIN_SPLITTER_IDENTIFIER = -2  # The splitter that holds the translation list
 	TRANSLATION_WARNING = 17
 	NEEDS_WORK_SWITCH = 21
+
+
+class _WindowControlIdOffsetFromSidebar(IntEnum):
+	"""Window control ID's are not static, however, the order of ids stays the same.
+	Therefore, using the Sidebar window as a reference,
+	we can safely calculate control ids accross releases or instances.
+	This class contains window control id offsets relative to the Sidebar window.
+	Note that this Sidebar window itself is found relative to the dataview's ancestor splitter control.
+	"""
+
+	PRO_OFFSET = -5
+	OLD_SOURCE_TEXT = 36
+	TRANSLATOR_NOTES = 39
+	COMMENT = 42
 
 
 def _findDescendantObject(
@@ -79,42 +91,58 @@ class AppModule(appModuleHandler.AppModule):
 			return None
 		return dataView.windowControlID
 
+	_sidebarControlId: int | None
+	"""Type definition for auto prop '_get__sidebarControlId'"""
+
+	def _get__sidebarControlId(self) -> int | None:
+		dataViewControlId = self._dataViewControlId
+		splitterControlID = dataViewControlId + _WindowControlIdOffsetFromDataView.MAIN_SPLITTER_IDENTIFIER
+		fg = api.getForegroundObject()
+		splitterHwnd = windowUtils.findDescendantWindow(fg.windowHandle, controlID=splitterControlID)
+		sidebarHwnd = winUser.getWindow(splitterHwnd, winUser.GW_HWNDNEXT)
+		while sidebarHwnd and not ctypes.windll.user32.IsWindowVisible(sidebarHwnd):
+			sidebarHwnd = winUser.getWindow(sidebarHwnd, winUser.GW_HWNDNEXT)
+		if not sidebarHwnd:
+			return None
+		return winUser.getControlID(sidebarHwnd)
+
 	_isPro: bool
 	"""Type definition for auto prop '_get__isPro'"""
 
 	def _get__isPro(self) -> bool:
 		"""Returns whether this instance of Poedit is a pro version."""
-		obj = self._getNVDAObjectForWindowControlIdOffset(_WindowControlIdOffset.PRO_IDENTIFIER)
+		obj = self._getNVDAObjectForWindowControlIdOffsetFromDataView(
+			_WindowControlIdOffsetFromDataView.PRO_IDENTIFIER
+		)
 		return obj is None
 
-	def _correctWindowControllIdOfset(
+	def _getNVDAObjectForWindowControlIdOffsetFromDataView(
 			self,
-			windowControlIdOffset: _WindowControlIdOffset
-	) -> _WindowControlIdOffset:
-		"""Corrects a _WindowControlIdOffset when a pro version of Poedit is active."""
-		if self._isPro:
-			match windowControlIdOffset:
-				case _WindowControlIdOffset.OLD_SOURCE_TEXT:
-					return _WindowControlIdOffset.OLD_SOURCE_TEXT_PRO
-				case _WindowControlIdOffset.TRANSLATOR_NOTES:
-					return _WindowControlIdOffset.TRANSLATOR_NOTES_PRO
-				case _WindowControlIdOffset.COMMENT:
-					return _WindowControlIdOffset.COMMENT_PRO
-		return windowControlIdOffset
-
-	def _getNVDAObjectForWindowControlIdOffset(
-			self,
-			windowControlIdOffset: _WindowControlIdOffset
+			windowControlIdOffset: _WindowControlIdOffsetFromDataView
 	) -> Window | None:
 		fg = api.getForegroundObject()
 		return _findDescendantObject(fg.windowHandle, self._dataViewControlId + windowControlIdOffset)
+
+	def _getNVDAObjectForWindowControlIdOffsetFromSidebar(
+			self,
+			windowControlIdOffset: _WindowControlIdOffsetFromSidebar
+	) -> Window | None:
+		fg = api.getForegroundObject()
+		sidebarControlId = self._sidebarControlId
+		if sidebarControlId is None:
+			log.error("Sidebar can not be found")
+			return None
+		extraOffset = 0
+		if self._isPro:
+			extraOffset = _WindowControlIdOffsetFromSidebar.PRO_OFFSET
+		return _findDescendantObject(fg.windowHandle, sidebarControlId + extraOffset + windowControlIdOffset)
 
 	_translatorNotesObj: Window | None
 	"""Type definition for auto prop '_get__translatorNotesObj'"""
 
 	def _get__translatorNotesObj(self) -> Window | None:
-		return self._getNVDAObjectForWindowControlIdOffset(
-			self._correctWindowControllIdOfset(_WindowControlIdOffset.TRANSLATOR_NOTES)
+		return self._getNVDAObjectForWindowControlIdOffsetFromSidebar(
+			_WindowControlIdOffsetFromSidebar.TRANSLATOR_NOTES
 		)
 
 	def _reportControlScriptHelper(self, obj: Window, description: str):
@@ -164,8 +192,8 @@ class AppModule(appModuleHandler.AppModule):
 	"""Type definition for auto prop '_get__commentObj'"""
 
 	def _get__commentObj(self) -> Window | None:
-		return self._getNVDAObjectForWindowControlIdOffset(
-			self._correctWindowControllIdOfset(_WindowControlIdOffset.COMMENT)
+		return self._getNVDAObjectForWindowControlIdOffsetFromSidebar(
+			_WindowControlIdOffsetFromSidebar.COMMENT
 		)
 
 	@script(
@@ -191,8 +219,8 @@ class AppModule(appModuleHandler.AppModule):
 	"""Type definition for auto prop '_get__oldSourceTextObj'"""
 
 	def _get__oldSourceTextObj(self) -> Window | None:
-		return self._getNVDAObjectForWindowControlIdOffset(
-			self._correctWindowControllIdOfset(_WindowControlIdOffset.OLD_SOURCE_TEXT)
+		return self._getNVDAObjectForWindowControlIdOffsetFromSidebar(
+			_WindowControlIdOffsetFromSidebar.OLD_SOURCE_TEXT
 		)
 
 	@script(
@@ -217,7 +245,9 @@ class AppModule(appModuleHandler.AppModule):
 	"""Type definition for auto prop '_get__translationWarningObj'"""
 
 	def _get__translationWarningObj(self) -> Window | None:
-		return self._getNVDAObjectForWindowControlIdOffset(_WindowControlIdOffset.TRANSLATION_WARNING)
+		return self._getNVDAObjectForWindowControlIdOffsetFromDataView(
+			_WindowControlIdOffsetFromDataView.TRANSLATION_WARNING
+		)
 
 	@script(
 		description=pgettext(
@@ -241,7 +271,9 @@ class AppModule(appModuleHandler.AppModule):
 	"""Type definition for auto prop '_get__needsWorkObj'"""
 
 	def _get__needsWorkObj(self) -> Window | None:
-		obj = self._getNVDAObjectForWindowControlIdOffset(_WindowControlIdOffset.NEEDS_WORK_SWITCH)
+		obj = self._getNVDAObjectForWindowControlIdOffsetFromDataView(
+			_WindowControlIdOffsetFromDataView.NEEDS_WORK_SWITCH
+		)
 		if obj and obj.role == controlTypes.Role.CHECKBOX:
 			return obj
 		return None
@@ -270,19 +302,19 @@ class PoeditRichEdit(NVDAObject):
 
 
 class PoeditListItem(NVDAObject):
-	_warningControlToReport: _WindowControlIdOffset | None
+	_warningControlToReport: _WindowControlIdOffsetFromDataView | None
 	appModule: AppModule
 
-	def _get__warningControlToReport(self) -> _WindowControlIdOffset | None:
+	def _get__warningControlToReport(self) -> int | None:
 		obj = self.appModule._needsWorkObj
 		if obj and controlTypes.State.CHECKED in obj.states:
-			return _WindowControlIdOffset.NEEDS_WORK_SWITCH
+			return _WindowControlIdOffsetFromDataView.NEEDS_WORK_SWITCH
 		obj = self.appModule._oldSourceTextObj
 		if obj and not obj.hasIrrelevantLocation:
-			return _WindowControlIdOffset.OLD_SOURCE_TEXT
+			return _WindowControlIdOffsetFromSidebar.OLD_SOURCE_TEXT
 		obj = self.appModule._translationWarningObj
 		if obj and obj.parent and obj.parent.parent and not obj.parent.parent.hasIrrelevantLocation:
-			return _WindowControlIdOffset.TRANSLATION_WARNING
+			return _WindowControlIdOffsetFromDataView.TRANSLATION_WARNING
 		return None
 
 	def _get_name(self):
@@ -301,9 +333,9 @@ class PoeditListItem(NVDAObject):
 			tones.beep(440, 50)
 			return
 		match self._warningControlToReport:
-			case _WindowControlIdOffset.OLD_SOURCE_TEXT:
+			case _WindowControlIdOffsetFromSidebar.OLD_SOURCE_TEXT:
 				tones.beep(495, 50)
-			case _WindowControlIdOffset.TRANSLATION_WARNING:
+			case _WindowControlIdOffsetFromDataView.TRANSLATION_WARNING:
 				tones.beep(550, 50)
-			case _WindowControlIdOffset.NEEDS_WORK_SWITCH:
+			case _WindowControlIdOffsetFromDataView.NEEDS_WORK_SWITCH:
 				tones.beep(660, 50)

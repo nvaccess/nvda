@@ -1,6 +1,6 @@
 ﻿#locale/hr/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2017 NVDA Contributors
+#Copyright (c) 2011-2024 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -12,6 +12,8 @@ complexSymbols:
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
+# Series of dots used for visual presentation, e.g. in table of contents
+multiple .	\.{4,}
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
@@ -25,6 +27,7 @@ symbols:
 ! sentence ending	uskličnik	all	always
 ? sentence ending	upitnik	all	always
 ; phrase ending	točka zarez	most	always
+multiple .	višetočje	all	always
 : phrase ending	dvotočka	most	always
 cijelih		none	always
 in-word '	apostrof	all	norep
@@ -41,6 +44,7 @@ negative number	minus	none	norep
 
 # Standard punctuation/symbols
 !	uskličnik	all
+！	ideografski uskličnik	all
 "	navodnici	most
 \#	znak za broj	some
 $	dolar	all	norep
@@ -63,12 +67,16 @@ $	dolar	all	norep
 ،	arapski zarez	all	always
 -	crtica	most	always
 .	točka	some
+．	Ideografska točka	some
 /	kosa crta	some
 :	dvotočka	most	norep
+：	ideografska dvotočka	most	norep
 ;	točka sa zarezom	most
 ؛	arapska točka sa zarezom	most
+；	ideografska točka sa zarezom	most
 ?	upitnik	all	always
 ؟	arapski upitnik	all
+？	ideografski upitnik	all
 @	et	some
 [	otvorena uglata zagrada	most
 ]	zatvorena uglata zagrada	most

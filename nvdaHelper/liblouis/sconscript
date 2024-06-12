@@ -24,13 +24,15 @@ Import([
 	"thirdPartyEnv",
 	"sourceDir",
 ])
-sourceDir:Base = sourceDir
+sourceDir: Base = sourceDir
 thirdPartyEnv: Environment = thirdPartyEnv
 env: Environment = typing.cast(Environment, thirdPartyEnv.Clone())
 
 louisRootDir = env.Dir("#include/liblouis")
 louisSourceDir = louisRootDir.Dir("liblouis")
+louisTableDir = louisRootDir.Dir("tables")
 outDir = sourceDir.Dir("louis")
+unitTestTablesDir = env.Dir("#tests/unit/brailleTables")
 signExec=env['signExec'] if env['certFile'] else None
 
 RE_AC_INIT = re.compile(r"^AC_INIT\(\[(?P<package>.*)\], \[(?P<version>.*)\], \[(?P<bugReport>.*)\], \[(?P<tarName>.*)\], \[(?P<url>.*)\]\)")
@@ -96,7 +98,18 @@ env.Install(sourceDir, louisLib)
 louisPython = env.Substfile(outDir.File("__init__.py"), louisRootDir.File("python/louis/__init__.py.in"),
 	SUBST_DICT={"###LIBLOUIS_SONAME###": louisLib[0].name})
 
-env.Install(outDir.Dir("tables"),
-	[f for f in env.Glob("%s/tables/*" % louisRootDir)
+env.Install(
+	outDir.Dir("tables"),
+	[
+		f for f in env.Glob(f"{louisTableDir}/*")
 		if f.name not in ("Makefile", "Makefile.am", "Makefile.in", "README", "maketablelist.sh")
-	])
+	]
+)
+# Custom tables unit test
+testTable = env.InstallAs(unitTestTablesDir.File("test.utb"), louisTableDir.File("en-us-comp8-ext.utb"))
+env.Depends(testTable, env.Install(unitTestTablesDir, [
+	louisTableDir.File("latinLetterDef8Dots.uti"),
+	louisTableDir.File("en-us-comp8-ext.utb")
+]))
+# Ensure the braille tables for tests are installed when copying the louis wrapper
+env.Depends(louisPython, testTable)

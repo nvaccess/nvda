@@ -122,6 +122,12 @@ brailleInput.initialize()
 # Make sure there's no blinking cursor as that relies on wx
 config.conf['braille']['cursorBlink'] = False
 
+# textutils tests need uniscribe in NVDAHelper local lib
+import ctypes  # noqa: E402
+import NVDAHelper  # noqa: E402
+NVDAHelper.localLib = ctypes.cdll.LoadLibrary(
+	os.path.join(NVDAHelper.versionedLibPath, 'nvdaHelperLocal.dll')
+)
 # The focus and navigator objects need to be initialized to something.
 from .objectProvider import PlaceholderNVDAObject,NVDAObjectWithRole
 phObj = PlaceholderNVDAObject()

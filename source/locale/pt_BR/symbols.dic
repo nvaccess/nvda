@@ -1,5 +1,5 @@
 ﻿# A part of NonVisual Desktop Access (NVDA)
-# Copyright (c) 2011-2023 NVDA Contributors, Cleverson Casarin Uliana, Rui Batista, Marlin Rodrigues da Silva, Tiago Melo Casal
+# Copyright (c) 2011-2024 NVDA Contributors, Cleverson Casarin Uliana, Rui Batista, Marlin Rodrigues da Silva, Tiago Melo Casal
 # This file is covered by the GNU General Public License.
 
 # pt_BR: na medida do possível, foi usado os nomes oficiais dos caracteres constantes na tabela Unicode como fonte para tradução, fontes como dicionários/enciclopédias/wikipedia/páginas especializadas também foram utilizadas, nos casos em que há nomes locais oficiais foi preferido utilizar a forma local ou uma forma híbrida, foi utilizado para cada caractere um nome distinto dos demais evitando ambiguidades ocasionadas por nomes idênticos para caracteres diferentes, em pouquíssimos casos especiais adaptações foram usadas para uma melhor pronúncia dos sintetizadores. Link da tabela internacional de caracteres Unicode: www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt
@@ -20,6 +20,7 @@ symbols:
 ? sentence ending	interrogação	# interrogação em fim de sentença
 ; phrase ending	ponto e vírgula	# ponto e vírgula em fim de período
 : phrase ending	dois pontos	# dois pontos em fim de período
+multiple .	múltiplos pontos	# múltiplos pontos (vários pontos em sequência)
 decimal point		# separador decimal
 in-word '	apóstrofo	# apóstrofo em palavra
 negative number	menos	# número negativo
@@ -36,6 +37,7 @@ thousands separator	ponto	all	norep	# separador de classes numéricas (milhares,
 
 # Standard punctuation/symbols
 !	exclamação
+！	ponto de exclamação de largura total
 "	aspas
 # pt_BR: "#" na tabela Unicode (caractere U+0023) é nomeado oficialmente como "number sign" (sinal de número), no symbols.dic está como "number", traduzido então como "número"
 \#	número
@@ -60,12 +62,16 @@ $	cifrão
 ،	vírgula árabe
 -	hífen
 .	ponto
+．	ponto de largura total
 /	barra
 :	dois pontos
+：	dois pontos de largura total
 ;	ponto e vírgula
 ؛	ponto e vírgula árabe
+；	ponto e vírgula de largura total
 ?	interrogação
 ؟	ponto de interrogação árabe
+？	ponto de interrogação de largura total
 @	arroba
 [	abre colchete
 ]	fecha colchete

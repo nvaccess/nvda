@@ -1,6 +1,6 @@
 ﻿#locale/pl/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2017 NVDA Contributors
+#Copyright (c) 2011-2024 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -12,6 +12,8 @@ complexSymbols:
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
+# Series of dots used for visual presentation, e.g. in table of contents
+multiple .	\.{4,}
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
@@ -26,6 +28,7 @@ symbols:
 ? sentence ending	pytajnik	all	always
 ; phrase ending	średnik	most	always
 : phrase ending	dwukropek	most	always
+multiple .	kropki	all	always
 przecinek		none	always
 in-word '	apostrof	all	norep
 negative number	minus	none	norep
@@ -41,6 +44,7 @@ negative number	minus	none	norep
 
 # Standard punctuation/symbols
 !	wykrzyknik	all
+！	ideograficzny wykrzyknik	all
 "	cudzysłów	most
 \#	hasz	some
 $	dolar	all	norep
@@ -63,12 +67,16 @@ $	dolar	all	norep
 ،	Przecinek arabski	all	always
 -	minus	most	always
 .	kropka	some
+．	Kropka ideograficzna	some
 /	slesz	some
 :	dwukropek	most	norep
+：	dwukropek ideograficzny	most	norep
 ;	średnik	most
 ؛	średnik arabski	most
+；	średnik ideograficzny	most
 ?	pytajnik	all	always
 ؟	pytajnik arabski	all
+？	pytajnik ideograficzny	all
 @	małpa	some
 [	lewy kwadratowy	most
 ]	prawy kwadratowy	most

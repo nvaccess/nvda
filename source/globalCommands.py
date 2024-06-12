@@ -266,6 +266,46 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		description=_(
+			# Translators: Input help mode message for scroll up at the mouse position command.
+			"Scroll up at the mouse position"
+		),
+		category=SCRCAT_MOUSE
+	)
+	def script_mouseScrollUp(self, gesture: "inputCore.InputGesture") -> None:
+		mouseHandler.scrollMouseWheel(winUser.WHEEL_DELTA, isVertical=True)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for scroll down at the mouse position command.
+			"Scroll down at the mouse position"
+		),
+		category=SCRCAT_MOUSE
+	)
+	def script_mouseScrollDown(self, gesture: "inputCore.InputGesture") -> None:
+		mouseHandler.scrollMouseWheel(-winUser.WHEEL_DELTA, isVertical=True)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for scroll left at the mouse position command.
+			"Scroll left at the mouse position"
+		),
+		category=SCRCAT_MOUSE
+	)
+	def script_mouseScrollLeft(self, gesture: "inputCore.InputGesture") -> None:
+		mouseHandler.scrollMouseWheel(-winUser.WHEEL_DELTA, isVertical=False)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for scroll right at the mouse position command.
+			"Scroll right at the mouse position"
+		),
+		category=SCRCAT_MOUSE
+	)
+	def script_mouseScrollRight(self, gesture: "inputCore.InputGesture") -> None:
+		mouseHandler.scrollMouseWheel(winUser.WHEEL_DELTA, isVertical=False)
+
+	@script(
+		description=_(
 			# Translators: Input help mode message for report current selection command.
 			"Announces the current selection in edit controls and documents. "
 			"Pressing twice spells this information. "
@@ -3568,6 +3608,34 @@ class GlobalCommands(ScriptableObject):
 		ui.message(msg)
 
 	@script(
+		# Translators: Input help mode message for Braille Unicode normalization command.
+		description=_("Cycle through the braille Unicode normalization states"),
+		category=SCRCAT_BRAILLE
+	)
+	def script_braille_cycleUnicodeNormalization(self, gesture: inputCore.InputGesture) -> None:
+		featureFlag: FeatureFlag = config.conf["braille"]["unicodeNormalization"]
+		boolFlag: BoolFlag = featureFlag.enumClassType
+		values = [x.value for x in boolFlag]
+		currentValue = featureFlag.value.value
+		nextValueIndex = (currentValue % len(values)) + 1
+		nextName: str = boolFlag(nextValueIndex).name
+		config.conf["braille"]["unicodeNormalization"] = nextName
+		featureFlag = config.conf["braille"]["unicodeNormalization"]
+		if featureFlag.isDefault():
+			# Translators: Used when reporting braille Unicode normalization state
+			# (default behavior).
+			msg = _("Braille Unicode normalization default ({default})").format(
+				default=featureFlag.behaviorOfDefault.displayString
+			)
+		else:
+			# Translators: Used when reporting braille Unicode normalization state
+			# (disabled or enabled).
+			msg = _("Braille Unicode normalization {state}").format(
+				state=BoolFlag[nextName].displayString
+			)
+		ui.message(msg)
+
+	@script(
 		description=_(
 			# Translators: Input help mode message for report clipboard text command.
 			"Reports the text on the Windows clipboard. "
@@ -4343,6 +4411,34 @@ class GlobalCommands(ScriptableObject):
 		characterProcessing.clearSpeechSymbols()
 		ui.message(state)
 
+	@script(
+		# Translators: Input help mode message for speech Unicode normalization command.
+		description=_("Cycle through the speech Unicode normalization states"),
+		category=SCRCAT_SPEECH
+	)
+	def script_speech_cycleUnicodeNormalization(self, gesture: inputCore.InputGesture) -> None:
+		featureFlag: FeatureFlag = config.conf["speech"]["unicodeNormalization"]
+		boolFlag: BoolFlag = featureFlag.enumClassType
+		values = [x.value for x in boolFlag]
+		currentValue = featureFlag.value.value
+		nextValueIndex = (currentValue % len(values)) + 1
+		nextName: str = boolFlag(nextValueIndex).name
+		config.conf["speech"]["unicodeNormalization"] = nextName
+		featureFlag = config.conf["speech"]["unicodeNormalization"]
+		if featureFlag.isDefault():
+			# Translators: Used when reporting speech Unicode normalization state
+			# (default behavior).
+			msg = _("Speech Unicode normalization default ({default})").format(
+				default=featureFlag.behaviorOfDefault.displayString
+			)
+		else:
+			# Translators: Used when reporting speech Unicode normalization state
+			# (disabled or enabled).
+			msg = _("Speech Unicode normalization {state}").format(
+				state=BoolFlag[nextName].displayString
+			)
+		ui.message(msg)
+
 	_tempEnableScreenCurtain = True
 	_waitingOnScreenCurtainWarningDialog: Optional[wx.Dialog] = None
 	_toggleScreenCurtainMessage: Optional[str] = None
@@ -4509,64 +4605,7 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+alt+s",
 	)
 	def script_cycleSoundSplit(self, gesture: "inputCore.InputGesture") -> None:
-		audio.toggleSoundSplitState()
-
-	@script(
-		description=_(
-			# Translators: Describes a command.
-			"Increases the volume of the other applications",
-		),
-		category=SCRCAT_AUDIO,
-		gesture="kb:NVDA+alt+pageUp",
-	)
-	def script_increaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
-		volume = config.conf["audio"]["applicationsSoundVolume"]
-		volume = min(100, volume + 5)
-		config.conf["audio"]["applicationsSoundVolume"] = volume
-		config.conf["audio"]["applicationsMuted"] = False
-		audio.updateSoundSplitState()
-		# Translators: a message reporting applications volume
-		msg = _("Applications volume %d") % volume
-		ui.message(msg)
-
-	@script(
-		description=_(
-			# Translators: Describes a command.
-			"Decreases the volume of the other applications",
-		),
-		category=SCRCAT_AUDIO,
-		gesture="kb:NVDA+alt+pageDown",
-	)
-	def script_decreaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
-		volume = config.conf["audio"]["applicationsSoundVolume"]
-		volume = max(0, volume - 5)
-		config.conf["audio"]["applicationsSoundVolume"] = volume
-		config.conf["audio"]["applicationsMuted"] = False
-		audio.updateSoundSplitState()
-		# Translators: a message reporting applications volume
-		msg = _("Applications volume %d") % volume
-		ui.message(msg)
-
-	@script(
-		description=_(
-			# Translators: Describes a command.
-			"Toggles other applications mute",
-		),
-		category=SCRCAT_AUDIO,
-		gesture="kb:NVDA+alt+delete",
-	)
-	def script_toggleApplicationsMute(self, gesture: "inputCore.InputGesture") -> None:
-		muted = config.conf["audio"]["applicationsMuted"]
-		muted = not muted
-		config.conf["audio"]["applicationsMuted"] = muted
-		audio.updateSoundSplitState()
-		if muted:
-			# Translators: a message reporting applications volume
-			msg = _("Applications muted")
-		else:
-			# Translators: a message reporting applications volume
-			msg = _("Applications unmuted")
-		ui.message(msg)
+		audio._toggleSoundSplitState()
 
 
 #: The single global commands instance.
