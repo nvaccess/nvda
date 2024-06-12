@@ -175,6 +175,7 @@ if apiSigningToken:
 		# TODO debugging
 		if len(target)>1:
 			print(f"Too many files passed to signExecApi, skipping {[t.abspath for t in target]}")
+			return 0
 		ps_cmd = f"powershell -File appveyor\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {target[0].abspath}"
 		return env.Execute(ps_cmd, shell=True)
 	#Export via scons environment so other libraries can be signed
