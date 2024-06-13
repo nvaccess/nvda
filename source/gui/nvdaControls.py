@@ -1,6 +1,5 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2024 NV Access Limited, Derek Riemer, Cyrille Bougot, Luke Davis
+# Copyright (C) 2016-2024 NV Access Limited, Derek Riemer, Cyrille Bougot, Luke Davis, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import collections
@@ -426,16 +425,18 @@ class FeatureFlagCombo(wx.Choice):
 			style=0,
 			validator=wx.DefaultValidator,
 			name=wx.ChoiceNameStr,
+			onChoiceEventHandler: typing.Callable[[wx.CommandEvent], None] | None = None,
 	):
 		"""
-		@param parent: The parent window.
-		@param keyPath: The list of keys required to get to the config value.
-		@param conf: The config.conf object.
-		@param pos: The position of the control. Forwarded to wx.Choice
-		@param size: The size of the control. Forwarded to wx.Choice
-		@param style: The style of the control. Forwarded to wx.Choice
-		@param validator: The validator for the control. Forwarded to wx.Choice
-		@param name: The name of the control. Forwarded to wx.Choice
+		:param parent: The parent window.
+		:param keyPath: The list of keys required to get to the config value.
+		:param conf: The config.conf object.
+		:param pos: The position of the control. Forwarded to wx.Choice
+		:param size: The size of the control. Forwarded to wx.Choice
+		:param style: The style of the control. Forwarded to wx.Choice
+		:param validator: The validator for the control. Forwarded to wx.Choice
+		:param name: The name of the control. Forwarded to wx.Choice
+		:param onChoiceEventHandler: Event handler bound for EVT_CHOICE
 		"""
 		self._confPath = keyPath
 		self._conf = conf
@@ -462,7 +463,11 @@ class FeatureFlagCombo(wx.Choice):
 			validator=validator,
 			name=name,
 		)
-
+		if onChoiceEventHandler is not None:
+			self.Bind(
+				wx.EVT_CHOICE,
+				onChoiceEventHandler
+			)
 		self.SetSelection(self._getChoiceIndex(configValue.value))
 		self.defaultValue = self._getConfSpecDefaultValue()
 		"""The default value of the config spec. Not the "behavior of default".
