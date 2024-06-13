@@ -504,15 +504,18 @@ class ConfigManager(object):
 	Changed settings are written to the most recently activated profile.
 	"""
 
-	#: Sections that only apply to the base configuration;
-	#: i.e. they cannot be overridden in profiles.
-	BASE_ONLY_SECTIONS = frozenset({
+	BASE_ONLY_SECTIONS = {
 		"general",
 		"update",
 		"upgrade",
 		"development",
 		"addonStore",
-	})
+	}
+	"""
+	Sections that only apply to the base configuration;
+	i.e. they cannot be overridden in profiles.
+	Note this set may be extended by add-ons.
+	"""
 
 	def __init__(self):
 		self.spec = confspec
