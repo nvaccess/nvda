@@ -620,12 +620,14 @@ class AddonStoreVM:
 		log.debug("completed refresh")
 
 	def _cancelDownloadForAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):
+		log.debug(f"Cancelling download for {listItemVM.Id}")
+
 		try:
 			addonDataManager._downloadsPendingCompletion.remove(listItemVM)
+			listItemVM.status = getStatus(listItemVM.model, self._filteredStatusKey)
 		except KeyError:
 			log.debug("Download already completed")
-			if listItemVM.status == AvailableAddonStatus.DOWNLOAD_SUCCESS:
-				self._cancelPendingInstallForAddon(listItemVM)
+			return self._cancelPendingInstallForAddon(listItemVM)
 		else:
 			futuresCopy = self._downloader._pending.copy()
 			for future, addon in futuresCopy.items():
@@ -648,11 +650,12 @@ class AddonStoreVM:
 	def cancelInstallForAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):
 		log.debug(f"Cancelling install of {listItemVM.Id}")
 
-		if listItemVM.status == AvailableAddonStatus.DOWNLOADING:
+		if AvailableAddonStatus.DOWNLOADING == getStatus(listItemVM.model, self._filteredStatusKey):
 			self._cancelDownloadForAddon(listItemVM)
-		elif listItemVM.status == AvailableAddonStatus.DOWNLOAD_SUCCESS:
+		elif AvailableAddonStatus.DOWNLOAD_SUCCESS == getStatus(listItemVM.model, self._filteredStatusKey):
 			self._cancelPendingInstallForAddon(listItemVM)
 
+		log.debug(f"Completed cancelling install of {listItemVM.Id}")
 		listItemVM.status = getStatus(listItemVM.model, self._filteredStatusKey)
 
 	def cancelInstallForAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]):
