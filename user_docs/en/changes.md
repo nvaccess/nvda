@@ -22,7 +22,7 @@ Unicode CLDR has been updated.
   * It also allows reading of equations in the Microsoft Word equation editor. (#4631)
   * You can enable this functionality for both speech and braille in their respective settings categories in the NVDA Settings dialog.
 * New Braille features:
-  * Added support for the Help Tech Activator Pro displays.
+  * Added support for the Help Tech Activator Pro displays. (#16668)
 
 ### Changes
 
