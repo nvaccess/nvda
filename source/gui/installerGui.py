@@ -436,10 +436,19 @@ class PortableCreaterDialog(
 		# needed. The OS's idea of the current drive is used, as in os.getcwd(). (#14681)
 		expandedPortableDirectory = os.path.abspath(expandedPortableDirectory)
 		if self.newFolderCheckBox.Value:
-			expandedPortableDirectory = os.path.join(expandedPortableDirectory, "NVDA")
+			newPortableDirectory = os.path.join(expandedPortableDirectory, "NVDA")
+			i = 1
+			while os.path.exists(newPortableDirectory):
+				newPortableDirectory = os.path.join(expandedPortableDirectory, f"NVDA_{i}")
+				i += 1
+			expandedPortableDirectory = newPortableDirectory
 
-		if os.path.exists(expandedPortableDirectory) and len(os.listdir(expandedPortableDirectory)) > 0:
-			if "nvda.exe" in os.listdir(expandedPortableDirectory):
+		if os.path.exists(expandedPortableDirectory):
+			dirContents = os.listdir(expandedPortableDirectory)
+		else:
+			dirContents = []
+		if len(dirContents) > 0:
+			if "nvda.exe" in dirContents:
 				if wx.NO == gui.messageBox(
 					# Translators: The message displayed when the user has specified a destination directory
 					# that already has a portable copy in the Create Portable NVDA dialog.
