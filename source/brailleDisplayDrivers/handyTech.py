@@ -375,7 +375,7 @@ class StatusCellMixin(AutoPropertyObject):
 		super(StatusCellMixin, self).display(cells)
 
 
-class ActiveSplitMixin(object):
+class ActiveSplitMixin:
 	"""Mixin for displays supporting ActiveSplit, i.e. dynamic adjustment of number of cells"""
 
 	def postInit(self):
