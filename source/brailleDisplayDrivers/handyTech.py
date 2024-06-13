@@ -563,44 +563,35 @@ class Activator(
 		return keys
 
 
-class ActivatorPro64(
+class ActivatorPro(
 		ActiveSplitMixin,
 		TimeSyncFirmnessMixin,
 		AtcMixin,
 		TripleActionKeysMixin,
 		Model
 ):
+	genericName = 'Activator Pro'
+
+	def _get_name(self):
+		return '{name} {cells}'.format(name=self.genericName, cells=self.numCells)
+
+	def _get_keys(self) -> Dict[int, str]:
+		keys = super().keys
+		keys.update({
+			0x7A: "escape",
+			0x7B: "return",
+		})
+		return keys
+
+
+class ActivatorPro64(ActivatorPro):
 	deviceId = MODEL_ACTIVATOR_PRO_64
 	numCells = 64
-	genericName = name = 'Activator Pro 64'
-
-	def _get_keys(self) -> Dict[int, str]:
-		keys = super().keys
-		keys.update({
-			0x7A: "escape",
-			0x7B: "return",
-		})
-		return keys
 
 
-class ActivatorPro80(
-		ActiveSplitMixin,
-		TimeSyncFirmnessMixin,
-		AtcMixin,
-		TripleActionKeysMixin,
-		Model
-):
+class ActivatorPro80(ActivatorPro):
 	deviceId = MODEL_ACTIVATOR_PRO_80
 	numCells = 80
-	genericName = name = 'Activator Pro 80'
-
-	def _get_keys(self) -> Dict[int, str]:
-		keys = super().keys
-		keys.update({
-			0x7A: "escape",
-			0x7B: "return",
-		})
-		return keys
 
 
 def _allSubclasses(cls):
