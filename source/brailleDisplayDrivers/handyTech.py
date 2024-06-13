@@ -379,7 +379,7 @@ class ActiveSplitMixin:
 	"""Mixin for displays supporting ActiveSplit, i.e. dynamic adjustment of number of cells"""
 
 	def postInit(self):
-		super(ActiveSplitMixin, self).postInit()
+		super().postInit()
 		log.debug("Prevent disconnect/reconnect activity for dynamic length adjustment")
 		self._display.sendExtendedPacket(HT_EXTPKT_NO_RECONNECT)
 
