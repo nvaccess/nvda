@@ -367,12 +367,17 @@ class PortableCreaterDialog(
 		browseText = _("Browse...")
 		# Translators: The title of the dialog presented when browsing for the
 		# destination directory when creating a portable copy of NVDA.
-		dirDialogTitle = _("Select portable  directory")
+		dirDialogTitle = _("Select portable directory")
 		directoryPathHelper = guiHelper.PathSelectionHelper(groupBox, browseText, dirDialogTitle)
 		directoryEntryControl = groupHelper.addItem(directoryPathHelper)
 		self.portableDirectoryEdit = directoryEntryControl.pathControl
 		if globalVars.appArgs.portablePath:
 			self.portableDirectoryEdit.Value = globalVars.appArgs.portablePath
+
+		# Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+		newFolderText = _("Create a &new folder for the portable copy")
+		self.newFolderCheckBox = sHelper.addItem(wx.CheckBox(self, label=newFolderText))
+		self.newFolderCheckBox.Value = True
 
 		# Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 		copyConfText = _("Copy current &user configuration")
@@ -430,6 +435,32 @@ class PortableCreaterDialog(
 		# components to that path to make it absolute from other contexts, by adding a drive letter/share path if
 		# needed. The OS's idea of the current drive is used, as in os.getcwd(). (#14681)
 		expandedPortableDirectory = os.path.abspath(expandedPortableDirectory)
+		if self.newFolderCheckBox.Value:
+			expandedPortableDirectory = os.path.join(expandedPortableDirectory, "NVDA")
+
+		if os.path.exists(expandedPortableDirectory) and len(os.listdir(expandedPortableDirectory)) > 0:
+			if "nvda.exe" in os.listdir(expandedPortableDirectory):
+				if wx.NO == gui.messageBox(
+					# Translators: The message displayed when the user has specified a destination directory
+					# that already has a portable copy in the Create Portable NVDA dialog.
+					_("A portable copy already exists in this directory. Do you want to update it?"),
+					# Translators: The title of a dialog presented when the user has specified a destination directory
+					# that already has a portable copy in the Create Portable NVDA dialog.
+					_("Portable Copy Exists"),
+					wx.YES_NO | wx.ICON_QUESTION
+				):
+					return
+			elif wx.NO == gui.messageBox(
+				# Translators: The message displayed when the user has specified a destination directory
+				# that already exists in the Create Portable NVDA dialog.
+				_("The specified directory is not empty. Do you want to overwrite the contents of this folder?"),
+				# Translators: The title of a dialog presented when the user has specified a destination directory
+				# that already exists in the Create Portable NVDA dialog.
+				_("Directory Exists"),
+				wx.YES_NO | wx.ICON_QUESTION
+			):
+				return
+
 		self.Hide()
 		doCreatePortable(
 			expandedPortableDirectory,
