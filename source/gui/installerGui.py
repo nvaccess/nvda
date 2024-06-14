@@ -18,6 +18,7 @@ from gui import guiHelper
 import gui.contextHelp
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 import systemUtils
+import ui
 from NVDAState import WritePaths
 from .message import displayDialogAsModal
 
@@ -340,6 +341,59 @@ def showInstallGui():
 	gui.mainFrame.postPopup()
 
 
+def _warnForNonEmptyDirectory(portableDirectory: str) -> bool:
+	"""
+	Display a warning message if the specified directory is not empty.
+	:param portableDirectory: The directory to check.
+	:return: True if the user wants to continue, False if the user wants to cancel.
+	"""
+	if os.path.exists(portableDirectory):
+		dirContents = os.listdir(portableDirectory)
+	else:
+		dirContents = []
+	if len(dirContents) > 0:
+		if "nvda.exe" in dirContents:
+			if wx.NO == gui.messageBox(
+				# Translators: The message displayed when the user has specified a destination directory
+				# that already has a portable copy in the Create Portable NVDA dialog.
+				_("A portable copy already exists in this directory. Do you want to update it?"),
+				# Translators: The title of a dialog presented when the user has specified a destination directory
+				# that already has a portable copy in the Create Portable NVDA dialog.
+				_("Portable Copy Exists"),
+				wx.YES_NO | wx.ICON_QUESTION
+			):
+				return False
+		elif wx.NO == gui.messageBox(
+			_(
+				# Translators: The message displayed when the user has specified a destination directory
+				# that already exists in the Create Portable NVDA dialog.
+				"The specified directory is not empty. "
+				"Proceeding will delete and replace existing files in the directory. "
+				"Do you want to overwrite the contents of this folder? "
+			),
+			# Translators: The title of a dialog presented when the user has specified a destination directory
+			# that already exists in the Create Portable NVDA dialog.
+			_("Directory Exists"),
+			wx.YES_NO | wx.ICON_QUESTION
+		):
+			return False
+	return True
+
+
+def _getUniqueNewPortableDirectory(basePath: str) -> str:
+	"""
+	Generate a new directory name for a portable copy of NVDA.
+	:param basePath: The base path to use.
+	:return: A new directory name.
+	"""
+	newPortableDirectory = os.path.join(basePath, "NVDA")
+	i = 1
+	while os.path.exists(newPortableDirectory):
+		newPortableDirectory = os.path.join(basePath, f"NVDA_{i}")
+		i += 1
+	return newPortableDirectory
+
+
 class PortableCreaterDialog(
 		gui.contextHelp.ContextHelpMixin,
 		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
@@ -436,46 +490,18 @@ class PortableCreaterDialog(
 		# needed. The OS's idea of the current drive is used, as in os.getcwd(). (#14681)
 		expandedPortableDirectory = os.path.abspath(expandedPortableDirectory)
 		if self.newFolderCheckBox.Value:
-			newPortableDirectory = os.path.join(expandedPortableDirectory, "NVDA")
-			i = 1
-			while os.path.exists(newPortableDirectory):
-				newPortableDirectory = os.path.join(expandedPortableDirectory, f"NVDA_{i}")
-				i += 1
-			expandedPortableDirectory = newPortableDirectory
+			expandedPortableDirectory = _getUniqueNewPortableDirectory(expandedPortableDirectory)
 
-		if os.path.exists(expandedPortableDirectory):
-			dirContents = os.listdir(expandedPortableDirectory)
-		else:
-			dirContents = []
-		if len(dirContents) > 0:
-			if "nvda.exe" in dirContents:
-				if wx.NO == gui.messageBox(
-					# Translators: The message displayed when the user has specified a destination directory
-					# that already has a portable copy in the Create Portable NVDA dialog.
-					_("A portable copy already exists in this directory. Do you want to update it?"),
-					# Translators: The title of a dialog presented when the user has specified a destination directory
-					# that already has a portable copy in the Create Portable NVDA dialog.
-					_("Portable Copy Exists"),
-					wx.YES_NO | wx.ICON_QUESTION
-				):
-					return
-			elif wx.NO == gui.messageBox(
-				# Translators: The message displayed when the user has specified a destination directory
-				# that already exists in the Create Portable NVDA dialog.
-				_("The specified directory is not empty. Do you want to overwrite the contents of this folder?"),
-				# Translators: The title of a dialog presented when the user has specified a destination directory
-				# that already exists in the Create Portable NVDA dialog.
-				_("Directory Exists"),
-				wx.YES_NO | wx.ICON_QUESTION
-			):
-				return
+		if not _warnForNonEmptyDirectory(expandedPortableDirectory):
+			return
 
 		self.Hide()
 		doCreatePortable(
 			expandedPortableDirectory,
-			self.copyUserConfigCheckbox.Value,
-			False,
-			self.startAfterCreateCheckbox.Value
+			copyUserConfig=self.copyUserConfigCheckbox.Value,
+			silent=False,
+			startAfterCreate=self.startAfterCreateCheckbox.Value,
+			warnForNonEmptyDirectory=False,
 		)
 		self.Destroy()
 
@@ -487,8 +513,21 @@ def doCreatePortable(
 		portableDirectory: str,
 		copyUserConfig: bool = False,
 		silent: bool = False,
-		startAfterCreate: bool = False
+		startAfterCreate: bool = False,
+		warnForNonEmptyDirectory: bool = True,
 ) -> None:
+	"""
+	Create a portable copy of NVDA.
+	:param portableDirectory: The directory in which to create the portable copy.
+	:param copyUserConfig: Whether to copy the current user configuration.
+	:param silent: Whether to suppress messages.
+	:param startAfterCreate: Whether to start the new portable copy after creation.
+	:param warnForNonEmptyDirectory: Whether to warn if the destination directory is not empty.
+	"""
+	if warnForNonEmptyDirectory and not _warnForNonEmptyDirectory(portableDirectory):
+		# Translators: The message displayed when the user cancels the creation of a portable copy of NVDA.
+		ui.message(_("Portable copy creation cancelled."))
+		return
 	d = gui.IndeterminateProgressDialog(
 		gui.mainFrame,
 		# Translators: The title of the dialog presented while a portable copy of NVDA is being created.

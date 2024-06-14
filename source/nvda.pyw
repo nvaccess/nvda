@@ -191,8 +191,23 @@ parser.add_argument('--no-sr-flag',action="store_false",dest='changeScreenReader
 installGroup = parser.add_mutually_exclusive_group()
 installGroup.add_argument('--install',action="store_true",dest='install',default=False,help="Installs NVDA (starting the new copy after installation)")
 installGroup.add_argument('--install-silent',action="store_true",dest='installSilent',default=False,help="Installs NVDA silently (does not start the new copy after installation).")
-installGroup.add_argument('--create-portable',action="store_true",dest='createPortable',default=False,help="Creates a portable copy of NVDA (starting the new copy after installation)")
-installGroup.add_argument('--create-portable-silent',action="store_true",dest='createPortableSilent',default=False,help="Creates a portable copy of NVDA silently (does not start the new copy after installation).")
+installGroup.add_argument(
+	"--create-portable",
+	action="store_true",
+	dest="createPortable",
+	default=False,
+	help="Creates a portable copy of NVDA (starting the new copy after installation). "
+	"Requires `--portable-path` to be specified. "
+)
+installGroup.add_argument(
+	"--create-portable-silent",
+	action="store_true",
+	dest="createPortableSilent",
+	default=False,
+	help="Creates a portable copy of NVDA silently (does not start the new copy after installation). "
+	"Note this will suppresses warnings when overwriting non-empty directories. "
+	"Requires --portable-path to be specified. "
+)
 parser.add_argument('--portable-path',dest='portablePath',default=None,type=str,help="The path where a portable copy will be created")
 parser.add_argument('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")
 parser.add_argument('--enable-start-on-logon',metavar="True|False",type=stringToBool,dest='enableStartOnLogon',default=None,

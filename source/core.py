@@ -806,8 +806,13 @@ def main():
 		)
 	elif globalVars.appArgs.portablePath and (globalVars.appArgs.createPortable or globalVars.appArgs.createPortableSilent):
 		import gui.installerGui
-		wx.CallAfter(gui.installerGui.doCreatePortable,portableDirectory=globalVars.appArgs.portablePath,
-			silent=globalVars.appArgs.createPortableSilent,startAfterCreate=not globalVars.appArgs.createPortableSilent)
+		wx.CallAfter(
+			gui.installerGui.doCreatePortable,
+			portableDirectory=globalVars.appArgs.portablePath,
+			silent=globalVars.appArgs.createPortableSilent,
+			startAfterCreate=not globalVars.appArgs.createPortableSilent,
+			warnForNonEmptyDirectory=not globalVars.appArgs.createPortableSilent,
+		)
 	elif not globalVars.appArgs.minimal:
 		try:
 			# Translators: This is shown on a braille display (if one is connected) when NVDA starts.
