@@ -540,7 +540,7 @@ Također možete držati prst na ekranu i pomicati ga okolo, da biste pročitali
 Kad se NVDA naredbe opisuju u ovom priručniku, one će možda navoditi dodirnu gestu koja služi za aktivaciju naredbe pomoću ekrana osjetljivog na dodir.
 Slijedi nekoliko uputa kako izvesti određene dodirne geste.
 
-##### Dodiri {#toc45}
+##### Dodiri {#Taps}
 
 Brzo dodirnite ekran s jednim ili više prstiju.
 
@@ -552,7 +552,7 @@ Dvostruki dodir rezultira dvostrukim dodirom nekog elementa na ekranu.
 Trostruki dodir rezultira trostrukim dodirom itd.
 Naravno, ove višedodirne geste prepoznaju koliko se prstiju koristi. Stoga je moguće imati geste kao što su na primjer trostruki dodir s dva prsta, dodir sa četiri prsta itd. 
 
-##### Klizanje {#toc46}
+##### Klizanje {#Flicks}
 
 Brzo klizanje prstom po ekranu.
 
@@ -1706,7 +1706,7 @@ Kategorije postavki u dijaloškom okviru NVDA Postavke se opisuju niže dolje.
 
 <!-- KC:setting -->
 
-##### Otvara opće postavke {#toc110}
+##### Otvara opće postavke {#OpenGeneralSettings}
 
 Prečac: `NVDA+kontrol+g`
 
@@ -1802,7 +1802,7 @@ Nadogradnje na čekanju je moguće i ručno instalirati u dijaloškom okviru Iza
 
 <!-- KC:setting -->
 
-##### Otvara postavke govora {#toc123}
+##### Otvara postavke govora {#OpenSpeechSettings}
 
 Prečac: `NVDA+kontrol+v`
 
@@ -1945,7 +1945,7 @@ Imajte na umu da je potrebno odabrati najmanje dva modusa.
 
 <!-- KC:setting -->
 
-##### Otvara postavke govorne jedinice {#toc144}
+##### Otvara postavke govorne jedinice {#OpenSelectSynthesizer}
 
 Prečac: `NVDA+kontrol+s`
 
@@ -2177,7 +2177,7 @@ Da biste uključili ili isključili prikazivanje označenog bilo gde da se nalaz
 
 <!-- KC:setting -->
 
-##### Otvara dijaloški okvir odabira brajičnog redka {#toc168}
+##### Otvara dijaloški okvir odabira brajičnog redka {#OpenSelectBrailleDisplay}
 
 Prečac: `NVDA+kontrol+a`
 
@@ -2229,7 +2229,7 @@ Stoga preporuča se spajanje samo jednog brajičnog redka određenog tipa ili pr
 
 <!-- KC:setting -->
 
-##### Otvara postavke zvuka {#toc173}
+##### Otvara postavke zvuka {#OpenAudioSettings}
 
 Prečac: `NVDA+kontrol+u`
 
@@ -2372,7 +2372,7 @@ Podržane postavke za pružatelje potražite u njihovoj dokumentaciji.
 
 <!-- KC:setting -->
 
-##### Otvara postavke tipkovnice {#toc188}
+##### Otvara postavke tipkovnice {#OpenKeyboardSettings}
 
 prečac: `NVDA+kontrol+k`
 
@@ -2449,7 +2449,7 @@ Ova je opcija standardno aktivirana, ali neki korisnici bi to htjeli isključiti
 
 <!-- KC:setting -->
 
-##### Otvara postavke miša {#toc201}
+##### Otvara postavke miša {#OpenMouseSettings}
 
 Prečac: `NVDA+kontrol+m`
 
@@ -2552,7 +2552,7 @@ Da biste uključili ili isključili jednostavni modus pregleda s bilo kojeg mjes
 
 <!-- KC:setting -->
 
-##### Otvara dijaloški okvir prezentacija objekata {#toc218}
+##### Otvara dijaloški okvir prezentacija objekata {#OpenObjectPresentationSettings}
 
 Prečac: `NVDA+kontrol+o`
 
@@ -2667,7 +2667,7 @@ Ova je opcija standardno aktivirana.
 
 <!-- KC:setting -->
 
-##### Otvara postavke modusa čitanja {#toc236}
+##### Otvara postavke modusa čitanja {#OpenBrowseModeSettings}
 
 Prečac: `NVDA+kontrol+b`
 
@@ -2759,7 +2759,7 @@ Ako omogućite ovu opciju, možda će se poboljšati podrška za neke web strani
 
 <!-- KC:setting -->
 
-##### Otvara postavke oblikovanja dokumenta {#toc250}
+##### Otvara postavke oblikovanja dokumenta {#OpenDocumentFormattingSettings}
 
 Prečac: `NVDA+kontrol+d`
 
@@ -3556,7 +3556,7 @@ Kako biste mogli otvarati brajični preglednik s bilo kojeg mjesta, molimo dodje
 NVDA Python konzola koju možemo pronaći u alatima u NVDA izborniku je alat za razvoj koji služi za otkrivanje grešaka, opći nadzor NVDA unutarnjih komponenata ili nadzor hijerarhije aplikacije.
 Za više informacija, Molimo pogledajte [NVDA priručnik za programere](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html).
 
-### Add-on store {#toc314}
+### Add-on store {#AddonStoreMenuItem}
 
 Ovo će otvoriti [Add-on store](#AddonsManager).
 Za više informacija, pročitajte opširno poglavlje: [Dodaci i Add-on store](#AddonsManager).
@@ -4005,7 +4005,7 @@ Podržani su također slijedeći dodatni uređaji, i za njih nisu potrebni dodat
 Slijede prečaci za Brailliant BI/B i BrailleNote brajične retke s NVDA čitačem.
 Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
 
-#### Dodijeljeni prečaci za sve modele {#toc334}
+#### Dodijeljeni prečaci za sve modele {#HumanWareBrailliantKeyAssignmentForAllModels}
 
 <!-- KC:beginInclude -->
 
@@ -4034,7 +4034,7 @@ Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
 
 <!-- KC:endInclude -->
 
-#### Dodijeljeni prečaci za Brailliant BI 32, BI 40 and B 80 {#toc335}
+#### Dodijeljeni prečaci za Brailliant BI 32, BI 40 and B 80 {#HumanWareBrailliantKeyAssignmentForBI32BI40AndB80}
 
 <!-- KC:beginInclude -->
 
@@ -4046,7 +4046,7 @@ Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
 
 <!-- KC:endInclude -->
 
-#### Dodijeljeni prečaci za Brailliant BI 14 {#toc336}
+#### Dodijeljeni prečaci za Brailliant BI 14 {#HumanWareBrailliantKeyAssignmentForBI14}
 
 <!-- KC:beginInclude -->
 
