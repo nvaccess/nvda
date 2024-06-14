@@ -492,6 +492,7 @@ class PortableCreaterDialog(
 		if self.newFolderCheckBox.Value:
 			expandedPortableDirectory = _getUniqueNewPortableDirectory(expandedPortableDirectory)
 
+		# Warn here so that users can update the directory
 		if not _warnForNonEmptyDirectory(expandedPortableDirectory):
 			return
 
