@@ -84,8 +84,8 @@ class _WideParserHelpFormatter(argparse.RawTextHelpFormatter):
 			self,
 			prog: str,
 			indent_increment: int = 2,
-			max_help_position: int = 30,
-			width: int = 100
+			max_help_position: int = 50,
+			width: int = 1000
 	):
 		"""
 		A custom formatter for argparse help messages that uses a wider width.
