@@ -214,7 +214,8 @@ parser.add_argument(
 	dest="debugLogging",
 	default=False,
 	help="Enable debug level logging just for this run.\n"
-	"This setting will override any other log level (--loglevel, -l) argument given, as well as no logging option."
+	"This setting will override any other log level (--loglevel, -l) argument given, "
+	"as well as no logging option."
 )
 parser.add_argument(
 	"--no-logging",
@@ -222,7 +223,8 @@ parser.add_argument(
 	dest="noLogging",
 	default=False,
 	help="Disable logging completely for this run.\n"
-	"This setting can be overwritten with other log level (--loglevel, -l) switch or if debug logging is specified."
+	"This setting can be overwritten with other log level (--loglevel, -l) "
+	"switch or if debug logging is specified."
 )
 parser.add_argument('--no-sr-flag',action="store_false",dest='changeScreenReaderFlag',default=True,help="Don't change the global system screen reader flag")
 installGroup = parser.add_mutually_exclusive_group()
