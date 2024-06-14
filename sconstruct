@@ -172,13 +172,13 @@ if apiSigningToken:
 	# Code signing with SignPath HSM 
 	def signExecApi(target, source, env):
 		# Workaround to skip files that we don't want to sign
-		if len(target)>1:
+		if len(target) > 1:
 			print(f"Too many files passed to signExecApi, skipping {[t.abspath for t in target]}")
 			return 0
 		ps_cmd = f"powershell -File appveyor\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {target[0].abspath}"
 		return env.Execute(ps_cmd, shell=True)
 	# Export via scons environment so other libraries can be signed
-	env['signExec']=signExecApi
+	env["signExec"] = signExecApi
 elif certFile:
 	# Local code signing with a certFile
 	def signExecCert(target,source,env):
@@ -198,7 +198,7 @@ elif certFile:
 			time.sleep(1)
 		return res # failed
 	#Export via scons environment so other libraries can be signed
-	env['signExec']=signExecCert	
+	env["signExec"] = signExecCert	
 
 #architecture-specific environments
 archTools=['default','midl','msrpc']
@@ -329,7 +329,7 @@ def NVDADistGenerator(target, source, env, for_signature):
 
 	if certFile or apiSigningToken:
 		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe":
-			action.append(lambda target,source,env, progByVal=prog: env['signExec']([target[0].File(progByVal)],source,env))
+			action.append(lambda target, source, env, progByVal=prog: env['signExec']([target[0].File(progByVal)], source, env))
 
 	action.extend((
 		Delete(buildVersionFn),
