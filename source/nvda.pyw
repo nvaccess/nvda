@@ -113,7 +113,7 @@ class NoConsoleOptionParser(argparse.ArgumentParser):
 		out = ""
 		out = self.format_usage()
 		out += f"\nerror: {message}"
-		winUser.MessageBox(0, out, "Error", 0)
+		winUser.MessageBox(0, out, "Command-line Argument Error", winUser.MB_ICONERROR)
 		sys.exit(2)
 
 
