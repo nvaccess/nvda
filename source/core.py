@@ -661,6 +661,8 @@ def main():
 	log.info(f"Windows version: {winVersion.getWinVer()}")
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
+	from utils import schedule
+	schedule.initialize()
 	import configobj
 	log.info("Using configobj version %s with validate version %s"%(configobj.__version__,configobj.validate.__version__))
 	# Set a reasonable timeout for any socket connections NVDA makes.
@@ -670,6 +672,8 @@ def main():
 	from addonStore import dataManager
 	dataManager.initialize()
 	addonHandler.initialize()
+	from gui import addonStoreGui
+	addonStoreGui.initialize()
 	if globalVars.appArgs.disableAddons:
 		log.info("Add-ons are disabled. Restart NVDA to enable them.")
 	import appModuleHandler
@@ -959,6 +963,7 @@ def main():
 	_terminate(addonHandler)
 	_terminate(dataManager, name="addon dataManager")
 	_terminate(garbageHandler)
+	_terminate(schedule, name="task scheduler")
 	# DMP is only started if needed.
 	# Terminate manually (and let it write to the log if necessary)
 	# as core._terminate always writes an entry.

@@ -361,6 +361,9 @@ The status of the add-on will be listed as "Update available".
 The list will display the currently installed version and the available version.
 Press `enter` on the add-on to open the actions list; choose "Update".
 
+By default, after NVDA startup, you will be notified if any add-on updates are available.
+To learn more about and configure this behaviour, refer to ["Update Notifications"](#AutomaticAddonUpdates).
+
 ### Community {#Community}
 
 NVDA has a vibrant user community.
@@ -1916,6 +1919,15 @@ For example, the character "ü" (u with umlaut/diaeresis), a common character in
 
 1. Stable ordering of modifiers in composite characters, for example in ancient Hebrew.
 
+To toggle Unicode normalization from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+
+##### Report "Normalized" when navigating by character {#SpeechReportNormalizedForCharacterNavigation}
+
+This setting is a checkbox that, when checked, tells NVDA to explicitly report that a character is normalized when spoken as an individual character such as when spelling.
+For example, when this option is enabled, spelling the character "ĳ" will pronounce it as "i j normalized".
+
+Note that this setting is only available when "[Unicode normalization](#SpeechUnicodeNormalization)" is enabled.
+
 ##### Include Unicode Consortium data (including emoji) when processing characters and symbols {#SpeechSettingsCLDR}
 
 When this checkbox is checked, NVDA will include additional symbol pronunciation dictionaries when pronouncing characters and symbols.
@@ -2164,6 +2176,8 @@ Enabling this may allow for more fluent reading, but generally requires you to s
 When this option is enabled, unicode normalization is performed on the text that is brailled on the braille display.
 This is beneficial when coming across characters in braille that are unknown in a particular braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
 Other benefits of unicode normalization are explained in greater detail in the [section for the equivalent speech setting](#SpeechUnicodeNormalization).
+
+To toggle Unicode normalization from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
 ##### Focus context presentation {#BrailleSettingsFocusContextPresentation}
 
@@ -2937,6 +2951,27 @@ Note that this paragraph style cannot be used in Microsoft Word or Microsoft Out
 
 You may toggle through the available paragraph styles from anywhere by assigning a key in the [Input Gestures dialog](#InputGestures).
 
+#### Add-on Store Settings {#AddonStoreSettings}
+
+This category allows you to adjust the behaviour of the Add-on Store.
+
+##### Update Notifications {#AutomaticAddonUpdates}
+
+When this option is set to "Notify", the Add-on Store will notify you after NVDA startup if any add-on updates are available.
+This check is performed every 24 hours.
+Notifications will only occur for add-ons with updates available within the same channel.
+For example, for installed beta add-ons, you will only be notified of updates within the beta channel.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Notify (Default), Disabled |
+|Default |Notify |
+
+|Option |Behaviour |
+|---|---|
+|Enabled |Notify when updates are available to add-ons within the same channel |
+|Disabled |Do not automatically check for updates to add-ons |
+
 #### Windows OCR Settings {#Win10OcrSettings}
 
 The settings in this category allow you to configure [Windows OCR](#Win10Ocr).
@@ -3521,6 +3556,9 @@ If NVDA is installed and running on your system, you can also open an add-on fil
 
 When an add-on is being installed from an external source, NVDA will ask you to confirm the installation.
 Once the add-on is installed, NVDA must be restarted for the add-on to start running, although you may postpone restarting NVDA if you have other add-ons to install or update.
+
+By default, after NVDA startup, you will be notified if any add-on updates are available.
+To learn more about and configure this behaviour, refer to ["Update Notifications"](#AutomaticAddonUpdates).
 
 #### Removing Add-ons {#AddonStoreRemoving}
 

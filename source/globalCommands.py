@@ -3609,6 +3609,34 @@ class GlobalCommands(ScriptableObject):
 		ui.message(msg)
 
 	@script(
+		# Translators: Input help mode message for Braille Unicode normalization command.
+		description=_("Cycle through the braille Unicode normalization states"),
+		category=SCRCAT_BRAILLE
+	)
+	def script_braille_cycleUnicodeNormalization(self, gesture: inputCore.InputGesture) -> None:
+		featureFlag: FeatureFlag = config.conf["braille"]["unicodeNormalization"]
+		boolFlag: BoolFlag = featureFlag.enumClassType
+		values = [x.value for x in boolFlag]
+		currentValue = featureFlag.value.value
+		nextValueIndex = (currentValue % len(values)) + 1
+		nextName: str = boolFlag(nextValueIndex).name
+		config.conf["braille"]["unicodeNormalization"] = nextName
+		featureFlag = config.conf["braille"]["unicodeNormalization"]
+		if featureFlag.isDefault():
+			# Translators: Used when reporting braille Unicode normalization state
+			# (default behavior).
+			msg = _("Braille Unicode normalization default ({default})").format(
+				default=featureFlag.behaviorOfDefault.displayString
+			)
+		else:
+			# Translators: Used when reporting braille Unicode normalization state
+			# (disabled or enabled).
+			msg = _("Braille Unicode normalization {state}").format(
+				state=BoolFlag[nextName].displayString
+			)
+		ui.message(msg)
+
+	@script(
 		description=_(
 			# Translators: Input help mode message for report clipboard text command.
 			"Reports the text on the Windows clipboard. "
@@ -4383,6 +4411,34 @@ class GlobalCommands(ScriptableObject):
 			config.conf["speech"]["includeCLDR"] = True
 		characterProcessing.clearSpeechSymbols()
 		ui.message(state)
+
+	@script(
+		# Translators: Input help mode message for speech Unicode normalization command.
+		description=_("Cycle through the speech Unicode normalization states"),
+		category=SCRCAT_SPEECH
+	)
+	def script_speech_cycleUnicodeNormalization(self, gesture: inputCore.InputGesture) -> None:
+		featureFlag: FeatureFlag = config.conf["speech"]["unicodeNormalization"]
+		boolFlag: BoolFlag = featureFlag.enumClassType
+		values = [x.value for x in boolFlag]
+		currentValue = featureFlag.value.value
+		nextValueIndex = (currentValue % len(values)) + 1
+		nextName: str = boolFlag(nextValueIndex).name
+		config.conf["speech"]["unicodeNormalization"] = nextName
+		featureFlag = config.conf["speech"]["unicodeNormalization"]
+		if featureFlag.isDefault():
+			# Translators: Used when reporting speech Unicode normalization state
+			# (default behavior).
+			msg = _("Speech Unicode normalization default ({default})").format(
+				default=featureFlag.behaviorOfDefault.displayString
+			)
+		else:
+			# Translators: Used when reporting speech Unicode normalization state
+			# (disabled or enabled).
+			msg = _("Speech Unicode normalization {state}").format(
+				state=BoolFlag[nextName].displayString
+			)
+		ui.message(msg)
 
 	_tempEnableScreenCurtain = True
 	_waitingOnScreenCurtainWarningDialog: Optional[wx.Dialog] = None
