@@ -118,7 +118,7 @@ class AppModule(appModuleHandler.AppModule):
 			# and fetch the value directly from the UI element.
 			for child in resultElement.children:
 				if child.UIAAutomationId in ("CalculatorResults", "CalculatorAlwaysOnTopResults"):
-					# When pasting, we get two UIA notification events.  Cancel the first
+					# When pasting, we get two UIA notification events. Cancel the first
 					# one once we receive the second.
 					speech.cancelSpeech()
 					ui.message(child.name)
