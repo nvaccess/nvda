@@ -2783,10 +2783,11 @@ class AudioPanel(SettingsPanel):
 		self.bindHelpEvent("OtherAppVolume", self.appSoundVolSlider)
 		volume = config.conf["audio"]["applicationsSoundVolume"]
 		if 0 <= volume <= 100:
-		    self.appSoundVolSlider.SetValue(volume)
+			self.appSoundVolSlider.SetValue(volume)
 		else:
-		    log.error("Invalid volume level: {}", volume)
-		    self.appSoundVolSlider.SetValue(50)  # Set to default or previous valid value
+			log.error("Invalid volume level: {}", volume)
+			defaultVolume = config.conf.getConfigValidation(["audio", "applicationsSoundVolume"]).default
+			self.appSoundVolSlider.SetValue(defaultVolume)
 
 		# Translators: This is a label for the applications volume adjuster combo box in settings.
 		label = _("&Application volume adjuster mode")
