@@ -18,3 +18,9 @@ def getAppNameFromHost(processId: int) -> str:
 	if not (parent := proc.parentProcessId):
 		raise LookupError
 	return appModuleHandler.getAppNameFromProcessID(parent)
+
+
+def __getattr__(attrName: str) -> Any:
+	if attrName == "AppModule":
+		return appModuleHandler.AppModule
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
