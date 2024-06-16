@@ -10,7 +10,7 @@ from typing import Any
 import appModuleHandler
 
 
-def getAppNameFromHost(processId):
+def getAppNameFromHost(processId: int) -> str:
 	# #16705: some apps have launcher executables which launch msedgewebview2.exe to display the interface.
 	# In this case, the parent process will usually be the launcher.
 	proc = appModuleHandler.getWmiProcessInfo(processId)
