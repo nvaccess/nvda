@@ -341,7 +341,7 @@ def showInstallGui():
 	gui.mainFrame.postPopup()
 
 
-def _warnForNonEmptyDirectory(portableDirectory: str) -> bool:
+def _warnAndConfirmForNonEmptyDirectory(portableDirectory: str) -> bool:
 	"""
 	Display a warning message if the specified directory is not empty.
 	:param portableDirectory: The directory to check.
@@ -354,9 +354,12 @@ def _warnForNonEmptyDirectory(portableDirectory: str) -> bool:
 	if len(dirContents) > 0:
 		if "nvda.exe" in dirContents:
 			if wx.NO == gui.messageBox(
-				# Translators: The message displayed when the user has specified a destination directory
-				# that already has a portable copy in the Create Portable NVDA dialog.
-				_("A portable copy already exists in this directory. Do you want to update it?"),
+				_(
+					# Translators: The message displayed when the user has specified a destination directory
+					# that already has a portable copy in the Create Portable NVDA dialog.
+					f"A portable copy already exists in the directory '{portableDirectory}'. "
+					"Do you want to update it?"
+				),
 				# Translators: The title of a dialog presented when the user has specified a destination directory
 				# that already has a portable copy in the Create Portable NVDA dialog.
 				_("Portable Copy Exists"),
@@ -367,7 +370,7 @@ def _warnForNonEmptyDirectory(portableDirectory: str) -> bool:
 			_(
 				# Translators: The message displayed when the user has specified a destination directory
 				# that already exists in the Create Portable NVDA dialog.
-				"The specified directory is not empty. "
+				f"The specified directory '{portableDirectory}' is not empty. "
 				"Proceeding will delete and replace existing files in the directory. "
 				"Do you want to overwrite the contents of this folder? "
 			),
@@ -493,7 +496,7 @@ class PortableCreaterDialog(
 			expandedPortableDirectory = _getUniqueNewPortableDirectory(expandedPortableDirectory)
 
 		# Warn here so that users can update the directory
-		if not _warnForNonEmptyDirectory(expandedPortableDirectory):
+		if not _warnAndConfirmForNonEmptyDirectory(expandedPortableDirectory):
 			return
 
 		self.Hide()
@@ -525,7 +528,7 @@ def doCreatePortable(
 	:param startAfterCreate: Whether to start the new portable copy after creation.
 	:param warnForNonEmptyDirectory: Whether to warn if the destination directory is not empty.
 	"""
-	if warnForNonEmptyDirectory and not _warnForNonEmptyDirectory(portableDirectory):
+	if warnForNonEmptyDirectory and not _warnAndConfirmForNonEmptyDirectory(portableDirectory):
 		# Translators: The message displayed when the user cancels the creation of a portable copy of NVDA.
 		ui.message(_("Portable copy creation cancelled."))
 		return
