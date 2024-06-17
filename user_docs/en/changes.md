@@ -41,6 +41,7 @@ Unicode CLDR has also been updated.
 * NVDA will now report figures with no accessible children, but with a label or description. (#14514)
 * When reading by line in browse mode, "caption" is no longer reported on each line of a long figure or table caption. (#14874)
 * In the Python console, the last unexecuted command will no longer be lost when moving in the input history. (#16653, @CyrilleB79)
+* By default, a new folder will be created when making a portable copy. Warnings have been added when writing to a non-empty directory. (#16684)
 
 ### Bug Fixes
 * Windows 11 fixes:
