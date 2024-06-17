@@ -111,7 +111,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 			# but we still want to stay in this loop.
 			try:
 				newInfo = self.makeTextInfo(textInfos.POSITION_CARET)
-			except (RuntimeError,NotImplementedError):
+			except (RuntimeError, NotImplementedError):
 				newInfo = None
 			# Try to detect with bookmarks.
 			newBookmark = None
