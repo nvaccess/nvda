@@ -248,13 +248,13 @@ capsLock 鍵也可以設定為 NVDA 組合鍵。
 |移到下一個語音選項 |NVDA+Ctrl+向右鍵 |NVDA+Shift+Ctrl+向右鍵 |移到下一個可用的語音選項，若已到最後一個則會回到第一個選項。|
 |移到上一個語音選項 |NVDA+Ctrl+向左鍵 |NVDA+Shift+Ctrl+向左鍵 |移到上一個可用的語音選項，若已到第一個則會回到最後一個選項。|
 |增加目前語音選項的設定值 |NVDA+Ctrl+向上鍵 |NVDA+Shift+Ctrl+向上鍵 |增加目前語音選項的設定值，例如加快速度、選擇下一個語音及調大音量。|
-|以較大幅度增加目前語音選項的設定值 |NVDA+Ctrl+Page Up |NVDA+Shift+Ctrl+Page Up |以較大幅度增加目前語音選項的設定值，例如當您處於語音設定時，每次會向前跳 20 個語音；當您處於滑桿設定 (速度、音調等) 時，數值每次增加 20%|
+|以較大幅度增加目前語音選項的設定值 |NVDA+Ctrl+Page Up |NVDA+Shift+Ctrl+Page Up |以較大幅度增加目前語音選項的設定值，例如在語音設定時每次往前跳 20 個語音；在滑桿設定 (速度、音調等) 時數值每次增加 20%|
 |減少目前語音選項的設定值 |NVDA+Ctrl+向下鍵 |NVDA+Shift+Ctrl+向下鍵 |減少目前語音選項的設定值，例如降低速度、選擇上一個語音及調小音量。|
-|以較大幅度減少目前語音選項的設定值 |NVDA+Ctrl+Page Down |NVDA+Shift+Ctrl+Page Down |以較大幅度減少目前語音選項的設定值，例如當您處於語音設定時，每次會往回跳 20 個語音；當您處於滑桿設定 (速度、音調等) 時，數值每次減少 20%|
+|以較大幅度減少目前語音選項的設定值 |NVDA+Ctrl+Page Down |NVDA+Shift+Ctrl+Page Down |以較大幅度減少目前語音選項的設定值，例如在語音設定時每次往回跳 20 個語音；在滑桿設定 (速度、音調等) 時數值每次減少 20%|
 
 也可以透過在[輸入手勢對話框](#InputGestures)的語音類別中指派手勢來設定目前語音選項的第一個或最後一個值，
-這表示例如當您處於速度設定時，它會將速度設定為 0 或 100，
-當您處於語音設定時，它將設定為第一個或最後一個語音。
+這表示例如當在速度設定時，它會將速度設定為 0 或 100，
+當在語音設定時，它將設定為第一個或最後一個語音。
 
 #### 網頁導覽 {#WebNavigation}
 
@@ -540,7 +540,7 @@ NVDA 快速鍵目前有兩種鍵盤配置，分別用在桌上型電腦與筆記
 在本用戶指南隨後提及的 NVDA 指令中，可能會列出可在觸控螢幕上執行該指令的觸控手勢，
 以下是有關如何執行各種觸控手勢的一些說明。
 
-##### 輕點 {#toc45}
+##### 輕點 {#Taps}
 
 用一根或多根手指快速輕點螢幕。
 
@@ -552,7 +552,7 @@ NVDA 快速鍵目前有兩種鍵盤配置，分別用在桌上型電腦與筆記
 輕點三次為點三下，以此類推。
 當然這些多次輕點手勢也要看是由多少根手指組成，所以有可能是兩指點三下或四指點一下等等。
 
-##### 滑動 {#toc46}
+##### 滑動 {#Flicks}
 
 在螢幕上快速滑動手指。
 
@@ -679,7 +679,7 @@ NVDA 允許您以不同的方式探索及導覽 Windows 系統，包括一般性
 系統焦點，也就是所謂的焦點，指的是接收鍵盤輸入所在的[物件](#Objects)，
 例如當您在文字編輯區打字時焦點就在此文字編輯區上。
 
-使用 NVDA 在 Windows 上導覽，最常用到的操作方式是使用標準的 Windows 鍵盤指令來移動系統焦點，例如按 Tab 或 Shift+Tab 在各控制項間向前或往回移動，按 Alt 到功能表列並使用方向鍵導覽功能表的項目，或是使用 Alt+Tab 在執行中的應用程式間切換，
+使用 NVDA 在 Windows 上導覽，最常用到的操作方式是使用標準的 Windows 鍵盤指令來移動系統焦點，例如按 Tab 或 Shift+Tab 在各控制項之間往前或往回移動，按 Alt 到功能表列並使用方向鍵導覽功能表的項目，或是使用 Alt+Tab 在執行中的應用程式之間切換，
 當您這樣操作時 NVDA 通常會讀出焦點所在物件的相關資訊，例如：名稱、類型、數值、狀態、說明、便捷鍵及位置等，
 若有啟用[視覺醒目提示](#VisionFocusHighlight)則目前系統焦點的位置也會在螢幕上呈現出來。
 
@@ -1043,7 +1043,7 @@ NVDA 使用瀏覽模式來瀏覽諸如網頁內容等複雜的唯讀文件，
 * 相同樣式文字
 * 不同樣式文字
 
-請記得每種類型的元素都有兩個指令用以在文件中向前移動及向後移動，您必須為這兩個指令指派手勢以便能夠在兩個方向上快速導覽。
+請記得每種類型的元素都有兩個指令用以在文件中往前移動及在文件中往回移動，您必須為這兩個指令指派手勢以便能夠在兩個方向上快速導覽。
 例如，如果您想使用 Y 或 Shift+Y 快速導覽索引標籤，可以執行以下操作：
 
 1. 在瀏覽模式開啟輸入手勢對話框。
@@ -1545,7 +1545,7 @@ NVDA 也可以顯示一個特定的對話框用來新增或編輯附註，
 
 Excel 工作表可以含有表單欄位，
 您可利用「項目清單」或單鍵導覽按鍵 F 及 Shift+F 移到這些表單欄位，
-一旦您在瀏覽模式下移動到表單欄位，您可按 Enter 或 空白鍵 來啟動或切換到焦點模式，以便依控制項的類型與之互動，
+一旦您在瀏覽模式下移動到表單欄位，您可按 Enter 或空白鍵來啟動或切換到焦點模式，以便依控制項的類型與之互動，
 有關瀏覽模式及單鍵導覽的更多資訊請參見[瀏覽模式章節](#BrowseMode)。
 
 ### Microsoft PowerPoint {#MicrosoftPowerPoint}
@@ -1706,7 +1706,7 @@ NVDA 提供了許多可以使用設定對話框來變更的組態參數，
 
 <!-- KC:setting -->
 
-##### 開啟一般設定 {#toc110}
+##### 開啟一般設定 {#OpenGeneralSettings}
 
 快速鍵: `NVDA+Ctrl+G`
 
@@ -1802,7 +1802,7 @@ NVDA 設定對話框中的「一般」類別可以設定 NVDA 的整體行為，
 
 <!-- KC:setting -->
 
-##### 開啟語音設定 {#toc123}
+##### 開啟語音設定 {#OpenSpeechSettings}
 
 快速鍵: `NVDA+Ctrl+V`
 
@@ -1945,7 +1945,7 @@ ESpeak NG 的變聲聽起來更像語音，因為他們提供的屬性與 ESpeak
 
 <!-- KC:setting -->
 
-##### 開啟選擇合成器對話框 {#toc144}
+##### 開啟選擇合成器對話框 {#OpenSelectSynthesizer}
 
 快速鍵: `NVDA+Ctrl+S`
 
@@ -1972,9 +1972,9 @@ NVDA 支援的合成器清單請參見[支援的語音合成器](#SupportedSpeec
 |移到下一個語音選項 |NVDA+Ctrl+向右鍵 |NVDA+Shift+Ctrl+向右鍵 |移到下一個可用的語音選項，若已到最後一個則會回到第一個選項。|
 |移到上一個語音選項 |NVDA+Ctrl+向左鍵 |NVDA+Shift+Ctrl+向左鍵 |移到上一個可用的語音選項，若已到第一個則會回到最後一個選項。|
 |增加目前語音選項的設定值 |NVDA+Ctrl+向上鍵 |NVDA+Shift+Ctrl+向上鍵 |增加目前語音選項的設定值，例如加快速度、選擇下一個語音及調大音量。|
-|以較大幅度增加目前語音選項的設定值 |NVDA+Ctrl+Page Up |NVDA+Shift+Ctrl+Page Up |以較大幅度增加目前語音選項的設定值，例如當您處於語音設定時，每次會向前跳 20 個語音；當您處於滑桿設定 (速度、音調等) 時，數值每次增加 20%|
+|以較大幅度增加目前語音選項的設定值 |NVDA+Ctrl+Page Up |NVDA+Shift+Ctrl+Page Up |以較大幅度增加目前語音選項的設定值，例如在語音設定時每次往前跳 20 個語音；在滑桿設定 (速度、音調等) 時數值每次增加 20%|
 |減少目前語音選項的設定值 |NVDA+Ctrl+向下鍵 |NVDA+Shift+Ctrl+向下鍵 |減少目前語音選項的設定值，例如降低速度、選擇上一個語音及調小音量。|
-|以較大幅度減少目前語音選項的設定值 |NVDA+Ctrl+Page Down |NVDA+Shift+Ctrl+Page Down |以較大幅度減少目前語音選項的設定值，例如當您處於語音設定時，每次會往回跳 20 個語音；當您處於滑桿設定 (速度、音調等) 時，數值每次減少 20%|
+|以較大幅度減少目前語音選項的設定值 |NVDA+Ctrl+Page Down |NVDA+Shift+Ctrl+Page Down |以較大幅度減少目前語音選項的設定值，例如在語音設定時每次往回跳 20 個語音；在滑桿設定 (速度、音調等) 時數值每次減少 20%|
 
 <!-- KC:endInclude -->
 
@@ -2177,7 +2177,7 @@ NVDA 設定對話框中「點字」類別的「變更...」按鈕，會開啟[�
 
 <!-- KC:setting -->
 
-##### 開啟選擇點顯器對話框 {#toc168}
+##### 開啟選擇點顯器對話框 {#OpenSelectBrailleDisplay}
 
 快速鍵: `NVDA+Ctrl+A`
 
@@ -2229,7 +2229,7 @@ NVDA 設定對話框中「點字」類別的「變更...」按鈕，會開啟[�
 
 <!-- KC:setting -->
 
-##### 開啟音訊設定對話框 {#toc173}
+##### 開啟音訊設定對話框 {#OpenAudioSettings}
 
 快速鍵: `NVDA+Ctrl+U`
 
@@ -2372,7 +2372,7 @@ NVDA 音訊設定中的下拉式方塊提供了更進階的聲音分割模式，
 
 <!-- KC:setting -->
 
-##### 開啟鍵盤設定 {#toc188}
+##### 開啟鍵盤設定 {#OpenKeyboardSettings}
 
 快速鍵: `NVDA+Ctrl+K`
 
@@ -2449,7 +2449,7 @@ NVDA 設定對話框中的「鍵盤」類別包含一些選項用以設定當您
 
 <!-- KC:setting -->
 
-##### 開啟滑鼠設定 {#toc201}
+##### 開啟滑鼠設定 {#OpenMouseSettings}
 
 快速鍵: `NVDA+Ctrl+M`
 
@@ -2552,7 +2552,7 @@ NVDA 設定對話框中的「檢閱游標」類別可以設定 NVDA 的檢閱游
 
 <!-- KC:setting -->
 
-##### 開啟物件呈現設定 {#toc218}
+##### 開啟物件呈現設定 {#OpenObjectPresentationSettings}
 
 快速鍵: `NVDA+Ctrl+O`
 
@@ -2667,7 +2667,7 @@ NVDA 設定對話框中的「物件呈現」類別可以設定 NVDA 將呈現多
 
 <!-- KC:setting -->
 
-##### 開啟瀏覽模式設定 {#toc236}
+##### 開啟瀏覽模式設定 {#OpenBrowseModeSettings}
 
 快速鍵: `NVDA+Ctrl+B`
 
@@ -2759,7 +2759,7 @@ NVDA 設定對話框中的「瀏覽模式」類別用於設定當您閱讀和導
 
 <!-- KC:setting -->
 
-##### 開啟文件格式設定 {#toc250}
+##### 開啟文件格式設定 {#OpenDocumentFormattingSettings}
 
 快速鍵: `NVDA+Ctrl+D`
 
@@ -3556,7 +3556,7 @@ NVDA 將要求您確認移除，
 在 NVDA 功能表的「工具」子功能表的「Python 主控台」是一個很有用的開發工具，可作為偵錯、NVDA 內部的一般檢查，或是應用程式的可及性階層架構檢查，
 要了解更多資訊請參見 [NVDA 開發者指南](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)。
 
-### 附加元件商店 {#toc314}
+### 附加元件商店 {#AddonStoreMenuItem}
 
 這將開啟 [NVDA 附加元件商店](#AddonsManager)，
 要了解更多資訊請閱讀[附加元件和附加元件商店](#AddonsManager)章節的深入說明。
@@ -4005,7 +4005,7 @@ NVDA 也支援下列點顯器 (且不需安裝任何特殊驅動程式)：
 以下是 Brailliant BI/B 和 BrailleNote touch 點顯器在 NVDA 的按鍵指派，
 這些按鍵的實際位置請參見點顯器的說明文件。
 
-#### 所有型號的按鍵指派 {#toc334}
+#### 所有型號的按鍵指派 {#HumanWareBrailliantKeyAssignmentForAllModels}
 
 <!-- KC:beginInclude -->
 
@@ -4034,7 +4034,7 @@ NVDA 也支援下列點顯器 (且不需安裝任何特殊驅動程式)：
 
 <!-- KC:endInclude -->
 
-#### Brailliant BI 32、BI 40 和 B 80 的按鍵指派 {#toc335}
+#### Brailliant BI 32、BI 40 和 B 80 的按鍵指派 {#HumanWareBrailliantKeyAssignmentForBI32BI40AndB80}
 
 <!-- KC:beginInclude -->
 
@@ -4046,7 +4046,7 @@ NVDA 也支援下列點顯器 (且不需安裝任何特殊驅動程式)：
 
 <!-- KC:endInclude -->
 
-#### Brailliant BI 14 的按鍵指派 {#toc336}
+#### Brailliant BI 14 的按鍵指派 {#HumanWareBrailliantKeyAssignmentForBI14}
 
 <!-- KC:beginInclude -->
 
@@ -4911,7 +4911,7 @@ NVDA 也可以使用 `-s` [命令列選項](#CommandLineOptions)在安全模式�
 * 儲存組態及其他設定至磁碟
 * 儲存手勢對應表至磁碟
 * [組態設定檔](#ConfigurationProfiles)功能，例如新增、刪除、重新命名設定檔等。
-* 使用 [``-c`` 命令列選項](#CommandLineOptions)載入自訂組態資料夾
+* 使用 [`-c` 命令列選項](#CommandLineOptions)載入自訂組態資料夾
 * 更新 NVDA 與建立可攜式版
 * [附加元件商店](#AddonsManager)
 * [NVDA Python 主控台](#PythonConsole)
@@ -4994,7 +4994,7 @@ NVDA 使用者偏好設定可以[複製到安全畫面使用](#GeneralSettingsCo
 |無 |`--install` |安裝 NVDA (啟動新安裝的版本)|
 |無 |`--install-silent` |自動安裝 NVDA (不啟動新安裝的版本)|
 |無 |`--enable-start-on-logon=True|False` |安裝時啟用[在登入畫面使用 NVDA](#StartAtWindowsLogon)|
-|無 |--copy-portable-config |安裝時將指定路徑下的可攜式版組態 (config-path, -c) 複製到目前的使用者帳戶中|
+|無 |`--copy-portable-config` |安裝時將指定路徑下的可攜式版組態 (config-path, -c) 複製到目前的使用者帳戶中|
 |無 |`--create-portable` |建立 NVDA 可攜式版 (啟動新建立的版本)。需要指定 --portable-path|
 |無 |`--create-portable-silent` |建立 NVDA 可攜式版 (不啟動新安裝的版本)。需要指定 --portable-path|
 |無 |`--portable-path=PORTABLEPATH` |將建立可攜式版的路徑|

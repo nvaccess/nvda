@@ -540,7 +540,7 @@ Per fare questo, posizionare un dito in un punto qualsiasi di quest'ultimo.
 Nella descrizione dei comandi che si incontrerà più avanti in questo manuale, si parlerà anche di gesti a tocco che possono venir utilizzati per attivare quel comando sul touch screen.
 Di seguito vengono riportate alcune istruzioni di massima per utilizzare correttamente i comandi a tocco.
 
-##### Tap {#toc45}
+##### Tap {#Taps}
 
 Toccare lo schermo velocemente con uno o più dita.
 
@@ -552,7 +552,7 @@ Toccare velocemente per due volte viene chiamato doppio tap e così via.
 Toccare velocemente per tre volte viene chiamato triplo tap, e così via.
 Naturalmente, nei gesti multi-tocco viene riconosciuto anche il numero di dita che si utilizza, per cui possiamo avere gesti del tipo "triplo tocco con due dita", tap con quattro dita, etc.
 
-##### Scorrimento {#toc46}
+##### Scorrimento {#Flicks}
 
 Scorrere velocemente il dito sullo schermo, in inglese flick.
 
@@ -1706,7 +1706,7 @@ Qui di seguito vengono descritte le categorie presenti nella finestra impostazio
 
 <!-- KC:setting -->
 
-##### Apri impostazioni Generali {#toc110}
+##### Apri impostazioni Generali {#OpenGeneralSettings}
 
 tasto: `NVDA+control+g`
 
@@ -1802,7 +1802,7 @@ Se la funzione è attivata, NVDA avviserà l'utente nel caso vi sia un aggiornam
 
 <!-- KC:setting -->
 
-##### Apri Impostazioni Voce {#toc123}
+##### Apri Impostazioni Voce {#OpenSpeechSettings}
 
 Tasto: `NVDA+control+v`
 
@@ -1945,7 +1945,7 @@ Si noti che è necessario mantenere attivate almeno due modalità.
 
 <!-- KC:setting -->
 
-##### Apre la finestra di dialogo Seleziona sintetizzatore {#toc144}
+##### Apre la finestra di dialogo Seleziona sintetizzatore {#OpenSelectSynthesizer}
 
 Tasto: `NVDA+control+s`
 
@@ -2177,7 +2177,7 @@ Per attivare o disattivare i punti 7 e 8 per la selezione da qualsiasi posto, si
 
 <!-- KC:setting -->
 
-##### Apri la finestra di dialogo Seleziona display Braille {#toc168}
+##### Apri la finestra di dialogo Seleziona display Braille {#OpenSelectBrailleDisplay}
 
 Tasto: `NVDA+control+a`
 
@@ -2229,7 +2229,7 @@ Pertanto si consiglia di collegare al pc un solo Display Braille di un determina
 
 <!-- KC:setting -->
 
-##### Apri impostazioni audio {#toc173}
+##### Apri impostazioni audio {#OpenAudioSettings}
 
 Tasto: `NVDA+control+u`
 
@@ -2372,7 +2372,7 @@ Fare riferimento alla documentazione del miglioramento visivo in merito alla spi
 
 <!-- KC:setting -->
 
-##### Apri impostazioni tastiera {#toc188}
+##### Apri impostazioni tastiera {#OpenKeyboardSettings}
 
 Tasto: `NVDA+control+k`
 
@@ -2449,7 +2449,7 @@ L'opzione risulta attiva di default, sebbene alcuni utenti che utilizzano la lin
 
 <!-- KC:setting -->
 
-##### Apri impostazioni mouse {#toc201}
+##### Apri impostazioni mouse {#OpenMouseSettings}
 
 Tasto: `NVDA+control+m`
 
@@ -2552,7 +2552,7 @@ Per abilitare o disabilitare la modalità semplice da qualsiasi punto ci si trov
 
 <!-- KC:setting -->
 
-##### Apri le impostazioni presentazione oggetti {#toc218}
+##### Apri le impostazioni presentazione oggetti {#OpenObjectPresentationSettings}
 
 Tasto: `NVDA+control+o`
 
@@ -2667,7 +2667,7 @@ L'opzione è attiva di default.
 
 <!-- KC:setting -->
 
-##### Apri impostazioni modalità navigazione {#toc236}
+##### Apri impostazioni modalità navigazione {#OpenBrowseModeSettings}
 
 Tasto: `NVDA+control+b`
 
@@ -2759,7 +2759,7 @@ L'abilitazione di questa opzione può migliorare il supporto per alcuni siti Web
 
 <!-- KC:setting -->
 
-##### Apri Impostazioni formattazione documento {#toc250}
+##### Apri Impostazioni formattazione documento {#OpenDocumentFormattingSettings}
 
 Tasto: `NVDA+control+d`
 
@@ -3556,7 +3556,7 @@ Per attivare o disattivare il visualizzatore braille da qualsiasi parte, assegna
 La Console Python di NVDA, situata nel menu strumenti, è uno strumento per sviluppatori che risulta utile in fase di debug, di diagnosi delle funzioni interne di NVDA o di analisi della gerarchia degli oggetti accessibili presenti in un'applicazione.
 Per ulteriori informazioni, si veda la [guida agli sviluppatori per NVDA](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html), in lingua inglese.
 
-### Add-on Store {#toc314}
+### Add-on Store {#AddonStoreMenuItem}
 
 Consente di aprire l'[Add-on Store di NVDA](#AddonsManager).
 Per maggiori informazioni, leggere la sezione di approfondimento: [Componenti aggiuntivi e l'Add-on Store](#AddonsManager).
@@ -4005,7 +4005,7 @@ Sono supportati anche i dispositivi seguenti e non necessitano dell'installazion
 Di seguito, ecco l'elenco dell'assegnazione dei tasti per queste righe braille con NVDA.
 Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
 
-#### Assegnazione tasti per tutti i modelli {#toc334}
+#### Assegnazione tasti per tutti i modelli {#HumanWareBrailliantKeyAssignmentForAllModels}
 
 <!-- KC:beginInclude -->
 
@@ -4034,7 +4034,7 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 
 <!-- KC:endInclude -->
 
-#### Assegnazione tasti per Brailliant BI 32, BI 40 e B 80 {#toc335}
+#### Assegnazione tasti per Brailliant BI 32, BI 40 e B 80 {#HumanWareBrailliantKeyAssignmentForBI32BI40AndB80}
 
 <!-- KC:beginInclude -->
 
@@ -4046,7 +4046,7 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 
 <!-- KC:endInclude -->
 
-#### Assegnazione tasti per Brailliant BI 14 {#toc336}
+#### Assegnazione tasti per Brailliant BI 14 {#HumanWareBrailliantKeyAssignmentForBI14}
 
 <!-- KC:beginInclude -->
 
