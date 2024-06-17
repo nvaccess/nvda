@@ -33,7 +33,7 @@ Unicode CLDR has also been updated.
 ### Changes
 
 * Component updates:
-  * eSpeak NG has been updated to 1.52-dev commit `54ee11a79`. (#15913)
+  * eSpeak NG has been updated to 1.52-dev commit `54ee11a79`. (#16495)
     * Added new language Karakalpak.
   * Updated Unicode CLDR to version 45.0. (#16507, @OzancanKaratas)
   * Updated fast_diff_match_patch (used to detect changes in terminals and other dynamic content) to version 2.1.0. (#16508, @codeofdusk)
