@@ -542,7 +542,7 @@ Als u uw vinger op het scherm houdt en hem over het scherm beweegt, zullen knopp
 Bij de beschrijving van NVDA-commando's verderop in deze handleiding kunnen ook aanraakgebaren voorkomen die het bijbehorende commando via aanraking activeert.
 Hier volgen wat aanwijzingen voor het maken van de aanraakgebaren.
 
-##### Tikken {#toc45}
+##### Tikken {#tikken}
 
 Met de top / toppen van één of meer vingers snel op het scherm tikken.
 
@@ -554,7 +554,7 @@ Twee tikken snel achter elkaar heet een dubbele tik (double-tap),
 drie tikken snel achter elkaar is een driedubbele tik (triple-tap), enzovoorts.
 Bij deze multi-tikgebaren wordt ook herkend met hoeveel vingers de tikbeweging wordt gemaakt zodat er driedubbele tikken met twee vingers kunnen zijn, maar ook een tik met vier vingers.
 
-##### Veegbewegingen {#toc46}
+##### Veegbewegingen {#Flicks}
 
 Met de vinger of vingers snel over het scherm bewegen / vegen.
 
@@ -1709,7 +1709,7 @@ De categorieën instellingen die te vinden zijn in het dialoogvenster Instelling
 
 <!-- KC:setting -->
 
-##### Algemene instellingen openen {#toc109}
+##### Algemene instellingen openen {#Algemeneinstellingenopenen}
 
 Toets: `NVDA+control+g`
 
@@ -1805,7 +1805,7 @@ Een beschikbare update kan ook handmatig worden geïnstalleerd vanuit het dialoo
 
 <!-- KC:setting -->
 
-##### Spraakinstellingen openen {#toc122}
+##### Spraakinstellingen openen {#Spraakinstellingenopenen}
 
 Toets:`NVDA+control+v` 
 
@@ -1950,7 +1950,7 @@ Merk op dat ten minste twee modi aangevinkt moeten zijn.
 
 <!-- KC:setting -->
 
-##### Dialoogvenster synthesizer selecteren openen {#toc143}
+##### Dialoogvenster synthesizer selecteren openen {#synthesizerselecterenOpenen}
 
 Toets: `NVDA+control+s`
 
@@ -2188,7 +2188,7 @@ Om "Toon selectie' van elke willekeurige plek in of uit te schakelen kunt u desg
 
 <!-- KC:setting -->
 
-##### Dialoogvenster brailleleesregel selecteren openen {#toc167}
+##### Dialoogvenster brailleleesregel selecteren openen {#OpenSelectBrailleDisplay}
 
 Toets: `NVDA+control+a`
 
@@ -2240,7 +2240,7 @@ Het verdient dan ook aanbeveling slechts één leesregel van een bepaald type / 
 
 <!-- KC:setting -->
 
-##### Audio-instellingen openen {#toc172}
+##### Audio-instellingen openen {#OpenAudioSettings}
 
 Toets: `NVDA+control+u`
 
@@ -2386,7 +2386,7 @@ Voor de ondersteunde instellingen per element kunt u de documentatie voor dat el
 
 <!-- KC:setting -->
 
-##### Toetsenbordinstellingen openen {#toc187}
+##### Toetsenbordinstellingen openen {#OpenKeyboardSettings}
 
 Toets: `NVDA+control+k`
 
@@ -2463,7 +2463,7 @@ Deze optie is standaard ingeschakeld, maar bepaalde gebruikers,zoals mensen die 
 
 <!-- KC:setting -->
 
-##### Muisinstellingen openen {#toc200}
+##### Muisinstellingen openen {#OpenMouseSettings}
 
 Toets: `NVDA+control+m`
 
@@ -2566,7 +2566,7 @@ Om de eenvoudige leesoverzichtmodus vanaf een willekeurige plaats aan- of uit te
 
 <!-- KC:setting -->
 
-##### Objectweergaveinstellingen openen {#toc217}
+##### Objectweergaveinstellingen openen {#OpenObjectPresentationSettings}
 
 Toets: `NVDA+control+o`
 
@@ -2680,7 +2680,7 @@ Deze optie is standaard aangevinkt.
 
 <!-- KC:setting -->
 
-##### Bladermodusinstellingen openen {#toc234}
+##### Bladermodusinstellingen openen {#OpenBrowseModeSettings}
 
 Toets: `NVDA+control+b`
 
@@ -2772,7 +2772,7 @@ Het inschakelen van deze optie kan ondersteuing voor sommige websites verbeteren
 
 <!-- KC:setting -->
 
-##### Documentopmaakinstellingen openen {#toc248}
+##### Documentopmaakinstellingen openen {#OpenDocumentFormattingSettings}
 
 Toets: `NVDA+control+d`
 
@@ -3582,7 +3582,7 @@ Als u het Brailleweergavevenster altijd en overal wilt kunnen in- of uischakelen
 Het NVDA Python-console, dat u aantreft in het NVDA-menu onder Extra, is een ontwikkelinstrument dat goed van pas komt bij het oplossen van bugs, algemene inspectie van het inwendige van NVDA  of het inspecteren van  de toegankelijkheidsopbouw van een toepassing.
 Voor meer informatie gaat u naar de [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html).
 
-### Add-on-store {#toc311}
+### Add-on-store {#AddonStoreMenuItem}
 
 Hiermee opent u de Add-on-store #AddonsManager].
 Hierover vindt u meer informatie in de uitgebreide rubriek: [Add-ons en de Add-on Store](#AddonsManager).
@@ -4032,7 +4032,7 @@ Aanvullend worden ook de volgende  toestellen  ondersteund en hiervoor hoeven ge
 Bij gebruik van de Brailliant BI/B en de BrailleNote touch met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregels raadplegen.)
 
-#### Toegewezen toetsen die gelden voor Alle modellen {#toc331}
+#### Toegewezen toetsen die gelden voor Alle modellen {#HumanWareBrailliantKeyAssignmentForAllModels}
 
 <!-- KC:beginInclude -->
 
@@ -4061,7 +4061,7 @@ Bij gebruik van de Brailliant BI/B en de BrailleNote touch met NVDA zijn de volg
 
 <!-- KC:endInclude -->
 
-#### Toegewezen toetsen voor de Brailliant BI 32, BI 40 en B 80 {#toc332}
+#### Toegewezen toetsen voor de Brailliant BI 32, BI 40 en B 80 {#HumanWareBrailliantKeyAssignmentForBI32BI40AndB80}
 
 <!-- KC:beginInclude -->
 
@@ -4073,7 +4073,7 @@ Bij gebruik van de Brailliant BI/B en de BrailleNote touch met NVDA zijn de volg
 |Alles lezen | c1+c2+c3+c4+c5+c6 |
 <!-- KC:endInclude -->
 
-#### Toegewezen toetsen voor de Brailliant BI 14 {#toc333}
+#### Toegewezen toetsen voor de Brailliant BI 14 {#HumanWareBrailliantKeyAssignmentForBI14}
 
 <!-- KC:beginInclude -->
 

@@ -11,8 +11,8 @@ Außerdem gibt es neue Schnellnavigationsbefehle, mit denen lassen sich die Tast
 
 Es gibt viele neue Braille-Funktionen und Fehlerbehebungen.
 Ein neuer Braille-Modus namens "Sprachausgabenverlauf anzeigen" wurde hinzugefügt.
-Wenn sie aktiviert ist, wird auf der Braillezeile genau das angezeigt, was NVDA mitteilt.
-Unterstützung wurde auch für die Braillezeilen BrailleEdgeS2 und BrailleEdgeS3 hinzugefügt.
+Wenn dieser aktiviert ist, wird auf der Braillezeile genau das angezeigt, was NVDA spricht.
+Unterstützung für die Braillezeilen BrailleEdgeS2 und BrailleEdgeS3 hinzugefügt.
 LibLouis wurde aktualisiert, wobei neue detaillierte (mit Großbuchstaben versehene) belarussische und ukrainische Braille-Tabellen, eine laotische Tabelle und eine spanische Tabelle zum Lesen griechischer Texte hinzugefügt wurden.
 
 Die Sprachausgabe eSpeak wurde aktualisiert und um die neue Sprache Tigrinisch erweitert.
@@ -23,7 +23,7 @@ Es gibt viele kleinere Fehlerbehebungen für Anwendungen wie Mozilla Thunderbird
 
 * Neue Tastaturbefehle:
   * Neuer Schnellnavigationsbefehl `P` zum Springen zum nächsten/vorherigen Textabsatz im Lesemodus. (#15998, @mltony)
-  * Neue, nicht zugewiesene Schnellnavigationsbefehle, mit denen man zum Nächsten/Vorherigen springen kann:
+  * Neue, nicht zugewiesene Schnellnavigationsbefehle, mit denen man zum Nächsten/Vorherigen Element springen kann:
     * Abbildungen (#10826)
     * Vertikal ausgerichteter Absatz (#15999, @mltony)
     * Menü-Element (#16001, @mltony)
@@ -41,14 +41,14 @@ Es gibt viele kleinere Fehlerbehebungen für Anwendungen wie Mozilla Thunderbird
 * Braille:
   * Unterstützungen für die Braillezeilen BrailleEdgeS2 und BrailleEdgeS3 hinzugefügt. (#16033, #16279, @EdKweon)
   * Ein neuer Braille-Modus mit der Bezeichnung "Sprachausgabenverlauf anzeigen" wurde hinzugefügt. (#15898, @Emil-18)
-    * Wenn sie aktiviert ist, wird auf der Braillezeile genau das angezeigt, was NVDA mitteilt.
-    * Sie kann mit der Tastenkombination `NVDA+Alt+T` oder über in den Einstellungen in der Kategorie "Braille" umgeschaltet werden.
+    * Wenn dieser aktiviert ist, wird auf der Braillezeile genau das angezeigt, was NVDA spricht.
+    * Er kann mit der Tastenkombination `NVDA+Alt+T` oder über in den Einstellungen in der Kategorie "Braille" umgeschaltet werden.
 * Sound-Teilung: (#12985, @mltony)
   * Ermöglicht die Aufteilung von NVDA-Sounds auf einen Kanal (z. B. links), während Sounds von allen anderen Anwendungen auf den anderen Kanal (z. B. rechts) ausgegeben werden.
   * Umgeschaltet mit `NVDA+Alt+S`.
 * Die Meldung von Zeilen- und Spaltenüberschriften wird jetzt in inhaltsverarbeitbaren HTML-Elementen unterstützt. (#14113)
-* In den Einstellungen für die Dokument-Formatierung wurde eine Option für die Meldung zum Deaktivieren von Abbildungen und Beschriftungen hinzugefügt. (#10826, #14349)
-* In Windows 11 teilt NVDA über Warnungen bei der Spracheingabe und schlägt Aktionen vor, einschließlich des obersten Vorschlags beim Kopieren von Daten wie Telefonnummern in die Zwischenablage (Windows 11 Version 2022 Update und neuer). (#16009, @josephsl)
+* In den Einstellungen für die Dokument-Formatierung wurde eine Option für die Ausgabe zum Deaktivieren von Abbildungen und Beschriftungen hinzugefügt. (#10826, #14349)
+* In Windows 11 spricht NVDA Warnungen bei der Spracheingabe und schlägt Aktionen vor, einschließlich des obersten Vorschlags beim Kopieren von Daten wie Telefonnummern in die Zwischenablage (Windows 11 Version 2022 Update und neuer). (#16009, @josephsl)
 * NVDA blendet das Audio-Gerät nach Beendigung der Wiedergabe über die Sprachausgabe nicht länger aus, um zu verhindern, dass der Beginn der nächsten Wiedergabe über die Sprachausgabe bei einigen Audio-Geräten wie Bluetooth-Kopfhörern abgeschnitten wird. (#14386, @jcsteh, @mltony)
 * Der HP Secure-Browser wird nun unterstützt. (#16377)
 
@@ -61,7 +61,7 @@ Es gibt viele kleinere Fehlerbehebungen für Anwendungen wie Mozilla Thunderbird
   * Der Braille-Übersetzer LibLouis wurde auf [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0) aktualisiert. (#16259, @codeofdusk)
     * Neue detaillierte (mit Großbuchstaben gekennzeichnete) belarussische und ukrainische Braille-Tabellen.
     * Neue spanische Tabelle zum Lesen griechischer Texte.
-    * Neue Tabelle für die laotische Kurzschrift. (#16470)
+    * Neue Tabelle:  laotische Kurzschrift. (#16470)
   * Die Sprachausgabe eSpeak NG wurde auf 1.52-dev commit `cb62d93fd7` aktualisiert. (#15913)
     * Neue Sprache Tigrinisch hinzugefügt.
 * Mehrere Tastenbefehle für Braillezeilen BrailleSense wurden geändert, um Konflikte mit Zeichen der französischen Braille-Tabelle zu vermeiden. (#15306)
@@ -69,7 +69,7 @@ Es gibt viele kleinere Fehlerbehebungen für Anwendungen wie Mozilla Thunderbird
   * `Alt+Pfeiltaste nach rechts` wurde jetzt neu zugeordnet auf `Punkt5+Punkt7+Leertaste`
   * `Alt+Pfeiltaste nach oben` wurde jetzt neu zugeordnet auf `Punkt2+Punkt3+Punkt7+Leertaste`
   * `Alt+Pfeiltaste nach unten` wurde jetzt neu zugeordnet auf `Punkt5+Punkt6+Punkt7+Leertaste`
-* Die in Inhaltsverzeichnissen üblicherweise verwendeten gepunktete Linien werden bei niedrigen Interpunktionsstufen nicht mehr mitgeteilt. (#15845, @CyrilleB79)
+* Die in Inhaltsverzeichnissen üblicherweise verwendeten gepunkteten Linien werden bei niedrigen Interpunktionsstufen nicht mehr mitgeteilt. (#15845, @CyrilleB79)
 
 ### Fehlerbehebungen
 
@@ -108,13 +108,14 @@ In der Kategorie "Sprachausgabe" der NVDA-Einstellungen ist es jetzt möglich, u
 
 Ein neuer nativer Auswahlmodus (einzuschalten  mittels `NVDA+Umschalt+F10`) ist jetzt im Lesemodus von NVDA für Mozilla Firefox verfügbar.
 Wenn diese Funktion aktiviert ist, wird durch das Auswählen von Text im Lesemodus auch die native Auswahl von Firefox einbezogen.
-Das Kopieren von Text mit "Strg+C" wird direkt an Firefox weitergeleitet, wodurch der formatierte Inhalt und nicht die reine Textdarstellung von NVDA kopiert wird.
+Das Kopieren von Text mittels `Strg+C` wird direkt an Firefox weitergeleitet, wodurch der formatierte Inhalt und nicht die reine Textdarstellung von NVDA kopiert wird.
 
 Der Store für NVDA-Erweiterungen unterstützt jetzt Massenaktionen, so z. B. das Installieren oder Aktivieren von Erweiterungen durch Auswahl mehrerer Einträge in der Liste.
 Es gibt eine neue Aktion zum Öffnen einer Diskussionsseite für die ausgewählte Erweiterung.
 
 Die Optionen zur Auswahl des Audio-Ausgabegeräts und die Lautstärkenreduktion anderer Anwendungen wurden aus dem Dialogfeld "Sprachausgabe auswählen" entfernt.
-Sie finden sie in den Audio-Einstellungen, die mit `NVDA+Strg+U` geöffnet werden können.
+Diese befinden sich nun in den Audio-Einstellungen, die mit `NVDA+Strg+U` geöffnet werden können.
+
 Die Sprachausgabe eSpeak-NG, der Braille-Übersetzer LibLouis und die Unicode-CLDR wurden aktualisiert.
 Neue Brailletabellen sind verfügbar: Thai, Filipinisch und Rumänisch.
 
