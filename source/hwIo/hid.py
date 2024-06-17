@@ -18,7 +18,7 @@ from .ioThread import IoThread
 from serial.win32 import FILE_FLAG_OVERLAPPED, INVALID_HANDLE_VALUE, CreateFile
 import winKernel
 from logHandler import log
-from .base import IoBase, _isDebug
+from .base import 	IoBase, _isDebug
 import hidpi
 
 
@@ -180,6 +180,7 @@ class Hid(IoBase):
 		self._writeSize = caps.OutputReportByteLength
 		self._readSize = caps.InputReportByteLength
 		# Reading any less than caps.InputReportByteLength is an error.
+		self._isClosed = False
 		super().__init__(
 			handle,
 			onReceive,
@@ -318,7 +319,10 @@ class Hid(IoBase):
 			raise ctypes.WinError()
 
 	def close(self):
+		if self._isClosed:
+			pass
 		super(Hid, self).close()
 		winKernel.closeHandle(self._file)
 		self._file = None
 		hidDll.HidD_FreePreparsedData(self._pd)
+		self._isClosed = True
