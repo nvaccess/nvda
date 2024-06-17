@@ -244,7 +244,8 @@ installGroup.add_argument(
 	dest="createPortableSilent",
 	default=False,
 	help="Creates a portable copy of NVDA (without starting the new copy).\n"
-	"This option suppresses warnings when writing to non-empty directories and may overwrite files without warning.\n"
+	"This option suppresses warnings when writing to non-empty directories "
+	"and may overwrite files without warning.\n"
 	"Requires --portable-path to be specified.\n"
 )
 parser.add_argument('--portable-path',dest='portablePath',default=None,type=str,help="The path where a portable copy will be created")
