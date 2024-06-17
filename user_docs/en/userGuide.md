@@ -1807,7 +1807,7 @@ If this is enabled, NV Access will use the information from update checks in ord
 Note that although your IP address will be used to calculate your country during the update check, the IP address is never kept.
 Apart from the mandatory information required to check for updates, the following extra information is also currently sent:
 
-* A unique ID for the current NVDA user
+* A unique ID for the current NVDA user, this changes once a month
 * NVDA interface language
 * Whether this copy of NVDA is portable or installed
 * Name of the current speech synthesizer in use (including the name of the add-on the driver comes from)
