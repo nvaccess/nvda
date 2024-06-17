@@ -18,7 +18,7 @@ from .ioThread import IoThread
 from serial.win32 import FILE_FLAG_OVERLAPPED, INVALID_HANDLE_VALUE, CreateFile
 import winKernel
 from logHandler import log
-from .base import 	IoBase, _isDebug
+from .base import IoBase, _isDebug
 import hidpi
 
 
