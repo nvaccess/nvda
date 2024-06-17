@@ -449,6 +449,7 @@ You can also choose to use an existing directory, this will overwrite files in t
 If the existing directory is a portable copy of NVDA, that copy will be updated.
 
 There is also an option to choose whether NVDA should copy the logged on user's current NVDA configuration for use with the newly created portable copy.
+This also includes add-ons.
 This option is only available when creating a portable copy from an installed copy, not when creating from the download package.
 
 Pressing Continue will create the portable copy.
