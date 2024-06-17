@@ -442,10 +442,15 @@ This option is only available when installing from a portable copy, not when ins
 If creating a portable copy directly from the NVDA download package, press the Create Portable Copy button.
 If you have already closed this dialog or you are running an installed copy of NVDA, choose the Create Portable copy menu item found under Tools in the NVDA menu.
 
-The Dialog that appears allows you to choose where the portable copy should be created.
+The dialog that appears allows you to choose where the portable copy should be created.
 This can be a directory on your hard drive or a location on a USB thumb drive or other portable media.
-There is also an option to choose whether NVDA should copy the logged on user's current NVDA configuration for use  with the newly created portable copy.
+By default, a new directory is created for the portable copy.
+You can also choose to use an existing directory, this will overwrite files in the directory.
+If the existing directory is a portable copy of NVDA, that copy will be updated.
+
+There is also an option to choose whether NVDA should copy the logged on user's current NVDA configuration for use with the newly created portable copy.
 This option is only available when creating a portable copy from an installed copy, not when creating from the download package.
+
 Pressing Continue will create the portable copy.
 Once creation is complete, a message will appear telling you it was successful.
 Press OK to dismiss this dialog.
@@ -3650,14 +3655,10 @@ For more information, read the in-depth section: [Add-ons and the Add-on Store](
 ### Create portable copy {#CreatePortableCopy}
 
 This will open a dialog which allows you to create a portable copy of NVDA out of the installed version.
-Either way, when running a portable copy of NVDA, in the extra tool sub menu the menu item will be called "install NVDA on this PC" instead of "create portable copy).
 
 The dialog to create a portable copy of NVDA or to install NVDA on this PC will prompt you to choose a folder path in which NVDA should create the portable copy or in which NVDA should be installed.
 
-In this dialog you can enable or disable the following:
-
-* Copy current user configuration (this includes the files in %appdata%\roaming\NVDA or in the user configuration of your portable copy and also includes add-ons and other modules)
-* Start the new portable copy after creation or start NVDA after installation (starts NVDA automatically after the portable copy creation or the installation)
+Follow the directions in [Creating a portable copy](#CreatingAPortableCopy) for more information.
 
 ### Run COM registration fixing tool... {#RunCOMRegistrationFixingTool}
 
