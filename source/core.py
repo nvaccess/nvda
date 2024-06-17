@@ -14,6 +14,7 @@ from typing import (
 	List,
 	Optional,
 )
+from uuid import uuid4
 import comtypes
 import sys
 import winVersion
@@ -638,6 +639,9 @@ def main():
 	log.debug("loading config")
 	import config
 	config.initialize()
+	if not config.conf["general"]["id"]:
+		config.conf["general"]["id"] = uuid4().hex
+		config.conf.save()
 	log.debug(f"NVDA user ID {config.conf['general']['id']}")
 	if config.conf['development']['enableScratchpadDir']:
 		log.info("Developer Scratchpad mode enabled")
