@@ -32,8 +32,8 @@ Der er mange mindre fejlrettelser for programmer, såsom Thunderbird, Adobe Read
     * matematisk formel (#16001, @mltony)
     * tekst med samme typografi (#16000, @mltony)
     * tekst med en anden typografi (#16000, @mltony)
-    * Tilføjede kommandoer til at springe til første, sidste, frem og tilbage gennem indstillingsværdier i ringen for talesynteseindstillinger. (#13768, #16095, @rmcpantoja)
-    * Skift til første og sidste værdi for den aktuelle indstilling i ringen af talesynteseindstillinger har ingen tildelt kommando. (#13768)
+  * Tilføjede kommandoer til at springe til første, sidste, frem og tilbage gennem indstillingsværdier i ringen for talesynteseindstillinger. (#13768, #16095, @rmcpantoja)
+    * Skift til første og sidste værdi for den aktuelle indstilling i ringen af talesynteseindstillinger. Denne har ingen tildelt kommando. (#13768)
     * Formindske og forøge den aktuelle indstilling i ringen af talesynteseindstillinger med i større trin (#13768):
       * Desktop: `NVDA+Ctrl+sideOp` eller `NVDA+Ctrl+sideNed`.
       * Laptop: `NVDA+Ctrl+shift+sideOp` eller `NVDA+Ctrl+Shift+sideNed`.
@@ -65,10 +65,10 @@ Der er mange mindre fejlrettelser for programmer, såsom Thunderbird, Adobe Read
   * eSpeak NG er blevet opdateret til 1.52-dev commit `cb62d93fd7`. (#15913)
     * Tilføjet nyt sprog Tigrinya.
 * Ændret flere kommandoer for BrailleSense-enheder for at undgå konflikter med tegn fra den franske punktskriftstabel. (#15306)
-  * `alt+leftArrow` er nu kortlagt til `dot2+dot7+space`.
-  * `alt+rightArrow` er nu kortlagt til `dot5+dot7+space`
-  * `alt+upArrow` er nu kortlagt til `dot2+dot3+dot7+space`
-  * `alt+downArrow` er nu kortlagt til `dot5+dot6+dot7+space`
+  * `alt+venstre pil` er nu tildelt `punkt2+punkt7+mellemrum`.
+  * `alt+højre pil` er nu tildelt `punkt5+punkt7+mellemrum`
+  * `alt+pil op` er nu tildelt `punkt2+punkt3+punkt7+mellemrum`
+  * `alt+pil ned` er nu tildelt `punkt5+punkt6+punkt7+mellemrum`
 * Prikker, der almindeligvis bruges i indholdsfortegnelser, rapporteres ikke længere på lave tegnsætningsniveauer. (#15845, @CyrilleB79)
 
 ### Fejlrettelser
@@ -89,6 +89,8 @@ Der er mange mindre fejlrettelser for programmer, såsom Thunderbird, Adobe Read
 * Rettede et sjældent tilfælde, hvor gemning af konfigurationen kunne fejle, når NVDA gemmer alle profiler. (#16343, @CyrilleB79)
 * I Firefox og Chromium-baserede browsere vil NVDA korrekt gå ind i fokus-tilstand, når der trykkes enter, når man er placeret i en punktopstilling (med tal og punkttegn) i redigerbart indhold. (#16325)
 * Kolonnetilstandsændring rapporteres automatisk, når kolonner vælges til visning i Thunderbirds meddelelsesliste. (#16323)
+* Kommandolinjeparametre `-h`/`--help` virker nu igen. (#16522, @XLTechie)
+* NVDAs understøttelse for PoEdit version 3.4 eller nyere fungerer nu igen korrekt, hvis du oversætter til et sprog med én eller flere flertalsformer (F.eks. Kinesisk eller Polsk). (#16318)
 
 ### Ændringer for udviklere
 
