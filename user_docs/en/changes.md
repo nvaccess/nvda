@@ -22,6 +22,8 @@ Unicode CLDR has also been updated.
   * This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
   * It also allows reading of equations in the Microsoft Word equation editor. (#4631)
   * You can enable this functionality for both speech and braille in their respective settings categories in the NVDA Settings dialog.
+* New Braille features:
+  * Added support for the Help Tech Activator Pro displays. (#16668)
 * By default, after NVDA startup, you will be notified if any add-on updates are available. (#15035)
   * This can be disabled in the "Add-on Store" category of settings.
   * NVDA checks daily for add-on updates.
