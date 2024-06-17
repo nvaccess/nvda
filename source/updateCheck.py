@@ -138,6 +138,7 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 		# Available values of PROCESSOR_ARCHITEW6432 found in:
 		# https://docs.microsoft.com/en-gb/windows/win32/winprog64/wow64-implementation-details
 		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
+		"ARM": os.environ.get("PROCESSOR_ARCHITEW6432") == "ARM64",
 		"osArchitecture": os.environ.get("PROCESSOR_ARCHITEW6432"),
 	}
 	if auto and allowUsageStats:
