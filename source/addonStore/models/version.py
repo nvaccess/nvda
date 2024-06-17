@@ -123,7 +123,7 @@ class SupportsVersionCheck(Protocol):
 				# The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
 				"An updated version of this add-on is required. "
 				"This add-on was last tested with {lastTestedNVDAVersion}. "
-				"The current version of NVDA requires that the extension be tested with NVDA {nvdaVersion} or higher. "
+				"NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. "
 				"You can enable this add-on at your own risk. "
 				).format(
 			nvdaVersion=addonAPIVersion.formatForGUI(backwardsCompatToVersion),
