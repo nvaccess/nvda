@@ -3344,13 +3344,13 @@ You can also set the level to character; in this case the symbol will not be spo
 
 ## Дополнения и магазин дополнений {#AddonsManager}
 
-Дополнения — это програмные пакеты, которые предоставляют новые или измененные функции NVDA.
+Дополнения — это програмные пакеты, которые предоставляют новые или изменённые функции NVDA.
 Они разрабатываются сообществом NVDA и внешними организациями, такими как коммерческие поставщики.
 Дополнения могут выполнять любое из следующих действий:
 
-* Добавлять или улучшать поддержку определенных приложений.
-* Обеспечивать поддержку дополнительных брайлевских дисплеев или речевых синтезаторов.
-* Добавлять или изменять возможности в NVDA.
+* Добавлять или улучшать поддержку определённых приложений.
+* Обеспечивать поддержку дополнительных брайлевских дисплеев или синтезаторов речи.
+* Добавлять или изменять возможности NVDA.
 
 Магазин дополнений NVDA позволяет вам просматривать пакеты дополнений и управлять ими.
 Все дополнения, доступные в Магазине дополнений, можно скачать бесплатно.
@@ -3377,13 +3377,13 @@ You can also set the level to character; in this case the symbol will not be spo
 Чтобы изменить вид дополнений, измените активную вкладку списка дополнений, используя комбинацию клавиш `ctrl+tab`.
 Также можно клавишей `tab` перейти на список вкладок многостраничного диалога и перемещаться по нему клавишами `Стрелка влево` и `Стрелка вправо`.
 
-#### Фильтрация включенных или отключенных дополнений {#AddonStoreFilterEnabled}
+#### Фильтрация включённых или отключённых дополнений {#AddonStoreFilterEnabled}
 
 Обычно установленное дополнение имеет состояние "включено", что означает, что оно запущено и доступно в NVDA.
 Однако некоторые из установленных вами дополнений могут быть переведены в состояние "отключено".
 Это означает, что они не будут использоваться, и их функции будут недоступны во время вашего текущего сеанса NVDA.
-Возможно, вы отключили надстройку, поскольку она конфликтовала с другой надстройкой или с определенным приложением.
-NVDA также может отключить некоторые дополнения, если они окажутся несовместимыми во время обновления NVDA, хотя вы будете предупреждены, если это произойдет.
+Возможно, вы отключили дополнение, поскольку оно конфликтовало с другим дополнением или с определённым приложением.
+NVDA также может отключить некоторые дополнения, если они окажутся несовместимыми во время обновления NVDA, хотя вы будете предупреждены, если это произойдёт.
 Дополнения также можно отключить, если они просто не нужны вам в течение длительного времени, но вы не хотите их удалять, поскольку ожидаете, что они снова понадобятся вам в будущем.
 
 Списки установленных и несовместимых дополнений можно отфильтровать по их включенному или отключенному состоянию.
@@ -3496,11 +3496,11 @@ NVDA попросит вас подтвердить удаление.
 Помимо чтения содержимого, вы также можете сохранить копию файла журнала или обновить просмотрщик, чтобы он загружал новые выходные данные журнала, сгенерированные после открытия просмотрщика журнала.
 Эти действия доступны в меню Журнал в просмотрщике журнала.
 
-The file which is displayed when you open the log viewer is saved on your computer at the file location `%temp%\nvda.log`.
-A new log file is created each time NVDA is started.
-When this happens, the previous NVDA session's log file is moved to `%temp%\nvda-old.log`.
+Файл, который отображается при открытии просмотрщика журнала, сохраняется на вашем компьютере в файле `%temp%\nvda.log`.
+При каждом запуске NVDA создаётся новый файл журнала.
+Когда это происходит, файл журнала предыдущей сессии NVDA перемещается в `%temp%\nvda-old.log`.
 
-You can also copy a fragment of the current log file to the clipboard without opening the log viewer.
+Вы также можете скопировать фрагмент текущего файла журнала в буфер обмена, не открывая просмотрщик журнала.
 <!-- KC:beginInclude -->
 
 | Название |Комбинация клавиш |Описание|
@@ -3561,7 +3561,7 @@ Python консоль NVDA, которая может быть вызвана и
 Будет открыт [Магазин дополнений NVDA](#AddonsManager).
 Для получения дополнительной информации ознакомьтесь с подробным разделом: [Дополнения и магазин дополнений](#AddonsManager).
 
-### Создание переносной копии {#CreatePortableCopy}
+### Создать переносную копию {#CreatePortableCopy}
 
 Этот пункт меню вызывает диалоговое окно, позволяющее вам из установленной версии NVDA создать её переносную копию.
 Обратите внимание, что при работе с переносной копией NVDA, этот элемент из подменю «Сервис» будет называться «Установить NVDA», вместо «Создать переносную копию».
@@ -4507,19 +4507,19 @@ Following are commands assigned to the scroll wheel:
 
 ### EcoBraille {#EcoBraille}
 
-NVDA supports EcoBraille displays from [ONCE](https://www.once.es/).
-The following models are supported:
+NVDA поддерживает дисплеи EcoBraille от производителя [ONCE](https://www.once.es/).
+Поддерживаются следующие модели:
 
 * EcoBraille 20
 * EcoBraille 40
 * EcoBraille 80
 * EcoBraille Plus
 
-In NVDA, you can set the serial port to which the display is connected in the [Select Braille Display](#SelectBrailleDisplay) dialog.
-These displays do not support NVDA's automatic background braille display detection functionality.
+В NVDA вы можете установить последовательный порт, к которому подключён дисплей, в диалоге [Выбора брайлевского дисплея](#SelectBrailleDisplay).
+Эти дисплеи не поддерживают функцию автоматического определения брайлевских дисплеев  NVDA.
 
-Following are the key assignments for EcoBraille displays.
-Please see the [EcoBraille documentation](ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/) for descriptions of where these keys can be found.
+Ниже приведены назначения клавиш для дисплеев EcoBraille.
+Описание расположения этих клавиш см. в [документации EcoBraille](ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/).
 
 <!-- KC:beginInclude -->
 
@@ -4746,7 +4746,7 @@ NVDA поддерживает брайлевские дисплеи компан
 Windows 10 и более поздние версии обнаруживают эти брайлевские дисплеи при подключении, Возможно, вам придётся скачать драйвера для старших версий Windows (ниже Windows 10).
 Вы можете скачать эти драйвера с сайта производителя.
 
-Следующие клавишные комбинации используются для Nattiq Technologies брайлевских дисплеев с NVDA.
+Для брайлевских дисплеев Nattiq Technologies  с NVDA  используются следующие комбинации клавиш.
 Для описания расположения клавиш, пожалуйста, обратитесь к документации по брайлевскому дисплею.
 <!-- KC:beginInclude -->
 
@@ -4861,14 +4861,14 @@ Please see the display's documentation for descriptions of where these keys can 
 
 <!-- KC:endInclude -->
 
-### Standard HID Braille displays {#HIDBraille}
+### Стандарт для дисплеев Брайля HID Braille {#HIDBraille}
 
-This is an experimental driver for the new Standard HID Braille Specification, agreed upon in 2018 by Microsoft, Google, Apple and several assistive technology companies including NV Access. 
-The hope is that all future Braille Display models created by any manufacturer, will use this standard protocol which will remove the need for manufacturer-specific Braille drivers.
+Это экспериментальный драйвер для нового стандарта спецификации HID Braille Specification, согласованной в 2018 году Microsoft, Google, Apple и несколькими компаниями, занимающимися вспомогательными технологиями, в том числе и NV Access. 
+Мы надеемся, что все будущие модели дисплеев Брайля, созданные любым производителем, будут использовать этот стандартный протокол, который устранит необходимость в драйверах Брайля для конкретных производителей.
 
-NVDA's automatic braille display detection will also recognize any display that supports this protocol.
+Автоматическое определение дисплея Брайля в NVDA также распознает любой дисплей, поддерживающий этот протокол.
 
-Following are the current key assignments for these displays.
+Ниже приведены текущие назначения клавиш для этих дисплеев.
 <!-- KC:beginInclude -->
 
 | Название |Комбинация клавиш|
