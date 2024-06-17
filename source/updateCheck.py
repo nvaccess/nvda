@@ -145,7 +145,8 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 		brailleDisplayClass = braille.handler.display.__class__ if braille.handler else None
 		# Following are parameters sent purely for stats gathering.
 		#  If new parameters are added here, they must be documented in the userGuide for transparency.
-		extraParams={
+		extraParams = {
+			"id": config.conf["general"]["id"],
 			"language": languageHandler.getLanguage(),
 			"installed": config.isInstalledCopy(),
 			"synthDriver":getQualifiedDriverClassNameForStats(synthDriverClass) if synthDriverClass else None,

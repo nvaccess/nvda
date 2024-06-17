@@ -638,6 +638,7 @@ def main():
 	log.debug("loading config")
 	import config
 	config.initialize()
+	log.debug(f"NVDA user ID {config.conf['general']['id']}")
 	if config.conf['development']['enableScratchpadDir']:
 		log.info("Developer Scratchpad mode enabled")
 	if languageHandler.isLanguageForced():

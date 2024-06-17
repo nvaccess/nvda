@@ -6,6 +6,7 @@
 # See the file COPYING for more details.
 
 from io import StringIO
+from uuid import uuid4
 from configobj import ConfigObj
 from . import configDefaults
 
@@ -27,6 +28,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	#possible log levels are DEBUG, IO, DEBUGWARNING, INFO
 	loggingLevel = string(default="INFO")
 	showWelcomeDialogAtStartup = boolean(default=true)
+	# Unique ID per copy of NVDA.
+	id = string(default="{uuid4()}")
 
 # Speech settings
 [speech]
