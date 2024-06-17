@@ -320,7 +320,7 @@ class Hid(IoBase):
 
 	def close(self):
 		if self._isClosed:
-			pass
+			return
 		super(Hid, self).close()
 		winKernel.closeHandle(self._file)
 		self._file = None
