@@ -105,7 +105,8 @@ env = Environment(variables=vars,HOST_ARCH='x86',tools=[
 	"gettextTool",
 	"md2html",
 	"doxygen",
-	"recursiveInstall"
+	"recursiveInstall",
+	"m4",
 ])
 
 # speed up subsequent runs by checking timestamps of targets and dependencies, and only using md5 if timestamps differ.

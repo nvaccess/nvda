@@ -540,7 +540,7 @@ Muita säätimiä ja tekstiä voidaan lukea myös pitämällä ja siirtämällä
 Kun NVDA-komentoja kuvaillaan edempänä tässä käyttöoppaassa, niissä saatetaan mainita kosketusele, jota voidaan käyttää kosketusnäytöllä kyseisen komennon suorittamiseen.
 Seuraavassa on ohjeita eri kosketuseleiden suorittamiseen.
 
-##### Napautukset {#toc45}
+##### Napautukset {#Taps}
 
 Napauta näyttöä nopeasti yhdellä tai useammalla sormella.
 
@@ -552,7 +552,7 @@ Kahdesti napauttamisesta on seurauksena kaksoisnapautus.
 Kolmesti napauttamisesta seuraa kolmoisnapautus jne.
 Moninapautuseleet tunnistavat myös, montaako sormea käytettiin, joten esim. kolmoisnapautus kahdella sormella tai napautus neljällä sormella jne. ovat mahdollisia.
 
-##### Pyyhkäisyt {#toc46}
+##### Pyyhkäisyt {#Flicks}
 
 Liu'uta sormea nopeasti näytöllä.
 
@@ -1706,7 +1706,7 @@ Valintaikkunan asetuskategoriat on kuvailtu alla.
 
 <!-- KC:setting -->
 
-##### Avaa yleiset asetukset {#toc110}
+##### Avaa yleiset asetukset {#OpenGeneralSettings}
 
 Pikanäppäin: `NVDA+Ctrl+G`
 
@@ -1802,7 +1802,7 @@ Päivitys voidaan asentaa myös manuaalisesti Sulje NVDA -valintaikkunasta (mik�
 
 <!-- KC:setting -->
 
-##### Avaa puheasetukset {#toc123}
+##### Avaa puheasetukset {#OpenSpeechSettings}
 
 Pikanäppäin: `NVDA+Ctrl+V`
 
@@ -1945,7 +1945,7 @@ Huom: Vähintään kaksi tilaa on oltava valittuna.
 
 <!-- KC:setting -->
 
-##### Avaa Valitse syntetisaattori -valintaikkuna {#toc144}
+##### Avaa Valitse syntetisaattori -valintaikkuna {#OpenSelectSynthesizer}
 
 Pikanäppäin: `NVDA+Ctrl+S`
 
@@ -2177,7 +2177,7 @@ Voit ottaa valinnan näyttämisen käyttöön tai poistaa sen käytöstä mistä
 
 <!-- KC:setting -->
 
-##### Avaa Valitse pistenäyttö -valintaikkuna {#toc168}
+##### Avaa Valitse pistenäyttö -valintaikkuna {#OpenSelectBrailleDisplay}
 
 Pikanäppäin: `NVDA+Ctrl+A`
 
@@ -2229,7 +2229,7 @@ Siksi on suositeltavaa kytkeä koneeseen vain yksi tietyn tyyppinen/valmistajan 
 
 <!-- KC:setting -->
 
-##### Avaa ääniasetukset {#toc173}
+##### Avaa ääniasetukset {#OpenAudioSettings}
 
 Pikanäppäin: `NVDA+Ctrl+U`
 
@@ -2372,7 +2372,7 @@ Katso tietoja kunkin tarjoajan tukemista asetuksista kyseisen tarjoajan ohjeesta
 
 <!-- KC:setting -->
 
-##### Avaa näppäimistöasetukset {#toc188}
+##### Avaa näppäimistöasetukset {#OpenKeyboardSettings}
 
 Pikanäppäin: `NVDA+Ctrl+K`
 
@@ -2449,7 +2449,7 @@ Asetus on oletusarvoisesti käytössä, mutta esim. vietnaminkielistä tekstiä 
 
 <!-- KC:setting -->
 
-##### Avaa hiiriasetukset {#toc201}
+##### Avaa hiiriasetukset {#OpenMouseSettings}
 
 Pikanäppäin: `NVDA+Ctrl+M`
 
@@ -2552,7 +2552,7 @@ Yksinkertainen tarkastelutila otetaan käyttöön tai poistetaan käytöstä mis
 
 <!-- KC:setting -->
 
-##### Avaa objektien lukemisen asetukset {#toc218}
+##### Avaa objektien lukemisen asetukset {#OpenObjectPresentationSettings}
 
 Pikanäppäin: `NVDA+Ctrl+O`
 
@@ -2667,7 +2667,7 @@ Asetus on oletusarvoisesti käytössä.
 
 <!-- KC:setting -->
 
-##### Avaa selaustilan asetukset {#toc236}
+##### Avaa selaustilan asetukset {#OpenBrowseModeSettings}
 
 Pikanäppäin: `NVDA+Ctrl+B`
 
@@ -2759,7 +2759,7 @@ Tämän asetuksen käyttöön ottaminen voi parantaa joidenkin verkkosivustojen 
 
 <!-- KC:setting -->
 
-##### Avaa asiakirjojen muotoiluasetukset {#toc250}
+##### Avaa asiakirjojen muotoiluasetukset {#OpenDocumentFormattingSettings}
 
 Pikanäppäin: `NVDA+Ctrl+D`
 
@@ -3556,7 +3556,7 @@ Ota pistekirjoituksen tarkastelu käyttöön tai poista se käytöstä mistä ta
 NVDA:n Python-konsoli, joka löytyy NVDA-valikon Työkalut-alivalikosta, on kehitystyökalu, joka on hyödyllinen virheiden etsinnässä, yleisessä NVDA:n sisäisen toiminnan tai sovelluksen saavutettavuushierarkian tutkimisessa.
 Lisätietoja on [NVDA-kehittäjän oppaassa.](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
 
-### Lisäosakauppa {#toc314}
+### Lisäosakauppa {#AddonStoreMenuItem}
 
 Tämä avaa [NVDA:n lisäosakaupan](#AddonsManager).
 Lisätietoja saat lukemalla yksityiskohtaisen [Lisäosat ja lisäosakauppa](#AddonsManager) -luvun.
@@ -4005,7 +4005,7 @@ Myös seuraavia laitteita tuetaan, eikä niitä varten tarvitse asentaa ajureita
 Seuraavassa on Brailliant BI/B- ja BrailleNote Touch -näyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso laitteiden käyttöohjeista kuvaukset näppäinten paikoista.
 
-#### Kaikki mallit {#toc334}
+#### Kaikki mallit {#HumanWareBrailliantKeyAssignmentForAllModels}
 
 <!-- KC:beginInclude -->
 
@@ -4034,7 +4034,7 @@ Katso laitteiden käyttöohjeista kuvaukset näppäinten paikoista.
 
 <!-- KC:endInclude -->
 
-#### Brailliant BI 32, BI 40 ja B 80 {#toc335}
+#### Brailliant BI 32, BI 40 ja B 80 {#HumanWareBrailliantKeyAssignmentForBI32BI40AndB80}
 
 <!-- KC:beginInclude -->
 
@@ -4046,7 +4046,7 @@ Katso laitteiden käyttöohjeista kuvaukset näppäinten paikoista.
 
 <!-- KC:endInclude -->
 
-#### Brailliant BI 14 {#toc336}
+#### Brailliant BI 14 {#HumanWareBrailliantKeyAssignmentForBI14}
 
 <!-- KC:beginInclude -->
 

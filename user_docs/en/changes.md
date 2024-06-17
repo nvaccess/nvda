@@ -10,7 +10,8 @@ It also allows reading of equations in the Microsoft Word equation editor.
 There are several bug fixes, particularly for the Windows 11 Emoji Panel and Clipboard history.
 For web browsers, there are fixes for reporting error messages, figures, captions, table labels and checkbox/radio button menu items.
 
-Unicode CLDR has been updated.
+Liblouis has been updated, adding new Braille tables for Cyrillic Serbian, Yiddish, several ancient languages (Biblical Hebrew, Akkadian, Syriac, and Ugaritic), and transliterated Cuneiform text.
+Unicode CLDR has also been updated.
 
 
 ### New Features
@@ -21,6 +22,8 @@ Unicode CLDR has been updated.
   * This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
   * It also allows reading of equations in the Microsoft Word equation editor. (#4631)
   * You can enable this functionality for both speech and braille in their respective settings categories in the NVDA Settings dialog.
+* New Braille features:
+  * Added support for the Help Tech Activator Pro displays. (#16668)
 * By default, after NVDA startup, you will be notified if any add-on updates are available. (#15035)
   * This can be disabled in the "Add-on Store" category of settings.
   * NVDA checks daily for add-on updates.
@@ -31,13 +34,15 @@ Unicode CLDR has been updated.
 * Component updates:
   * Updated Unicode CLDR to version 45.0. (#16507, @OzancanKaratas)
   * Updated fast_diff_match_patch (used to detect changes in terminals and other dynamic content) to version 2.1.0. (#16508, @codeofdusk)
+  * Updated LibLouis Braille translator to [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0). (#16652, @codeofdusk)
+    * New Braille tables for Cyrillic Serbian, Yiddish, several ancient languages (Biblical Hebrew, Akkadian, Syriac, and Ugaritic), and transliterated Cuneiform text.
   * Updated NSIS 3.09 to 3.10 (#16674, @dpy013)
 * The fallback braille input table is now equal to the fallback output table, which is Unified English Braille Code grade 1. (#9863, @JulienCochuyt, @LeonarddeR)
 * NVDA will now report figures with no accessible children, but with a label or description. (#14514)
 * When reading by line in browse mode, "caption" is no longer reported on each line of a long figure or table caption. (#14874)
 * In the Python console, the last unexecuted command will no longer be lost when moving in the input history. (#16653, @CyrilleB79)
+* By default, a new folder will be created when making a portable copy. Warnings have been added when writing to a non-empty directory. (#16684)
 * Added an action in the Add-on Store to cancel the install of add-ons. (#15578, @hwf1324)
-
 
 ### Bug Fixes
 * Windows 11 fixes:

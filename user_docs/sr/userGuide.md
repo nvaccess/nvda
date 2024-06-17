@@ -540,7 +540,7 @@ Takođe možete držati prst na ekranu i kretati se po njemu kako bi NVDA izgova
 Kada NVDA komande budu kasnije opisane u ovom vodiču, mogu da sadrže pokret koji možete da koristite sa ekrana osetljivog na dodir kako biste aktivirali tu komandu.
 U nastavku su uputstva kako uspešno izvesti neke pokrete na ekranu.
 
-##### Dodiri {#toc45}
+##### Dodiri {#Taps}
 
 Dodirnite ekran brzo sa jednim ili više prsta.
 
@@ -552,7 +552,7 @@ Dodirivanje dva puta je dvostruki dodir.
 Dodirivanje tri puta je trostruki dodir i tako dalje.
 Naravno, ovi dvostruki dodiri takođe prepoznaju koliko prsta je na ekranu, tako da je moguće imati pokrete kao što su dvostruki dodir sa dva prsta, dodir sa četiri prsta, i tako dalje. 
 
-##### Prevlačenja {#toc46}
+##### Prevlačenja {#Flicks}
 
 Brzo prevucite prst preko ekrana.
 
@@ -1706,7 +1706,7 @@ Kategorije koje su dostupne u dijalogu NVDA podešavanja će biti opisane ispod.
 
 <!-- KC:setting -->
 
-##### Otvori opšta podešavanja {#toc110}
+##### Otvori opšta podešavanja {#OpenGeneralSettings}
 
 Prečica: `NVDA+kontrol+g`
 
@@ -1802,7 +1802,7 @@ Takođe možete ručno instalirati ažuriranje iz dijaloga izlaza (ako je omogu�
 
 <!-- KC:setting -->
 
-##### Otvori podešavanja govora {#toc123}
+##### Otvori podešavanja govora {#OpenSpeechSettings}
 
 Prečica: `NVDA+kontrol+v`
 
@@ -1945,7 +1945,7 @@ Imajte na umu da je neophodno označiti bar dva režima.
 
 <!-- KC:setting -->
 
-##### Otvori dijalog za izbor sintetizatora {#toc144}
+##### Otvori dijalog za izbor sintetizatora {#OpenSelectSynthesizer}
 
 Prečica: `NVDA+kontrol+s`
 
@@ -2177,7 +2177,7 @@ Da biste uključili ili isključili prikazivanje izbora bilo gde da se nalazite,
 
 <!-- KC:setting -->
 
-##### Otvori dijalog za izbor brajevog reda {#toc168}
+##### Otvori dijalog za izbor brajevog reda {#OpenSelectBrailleDisplay}
 
 Prečica: `NVDA+kontrol+a`
 
@@ -2229,7 +2229,7 @@ Tako da je preporučeno da povežete jedan brajev red jednog proizvođača / vrs
 
 <!-- KC:setting -->
 
-##### Otvori podešavanja zvuka {#toc173}
+##### Otvori podešavanja zvuka {#OpenAudioSettings}
 
 Prečica: `NVDA+kontrol+u`
 
@@ -2372,7 +2372,7 @@ Za podržana podešavanja po pomoćnicima, molimo proverite dokumentaciju tog po
 
 <!-- KC:setting -->
 
-##### Otvori podešavanja tastature {#toc188}
+##### Otvori podešavanja tastature {#OpenKeyboardSettings}
 
 Prečica: `NVDA+kontrol+k`
 
@@ -2449,7 +2449,7 @@ Ova opcija je uključena po podrazumevanim podešavanjima, ali određeni korisni
 
 <!-- KC:setting -->
 
-##### Otvori podešavanja miša {#toc201}
+##### Otvori podešavanja miša {#OpenMouseSettings}
 
 Prečica: `NVDA+kontrol+m`
 
@@ -2552,7 +2552,7 @@ Da isključite i uključite režim jednostavnog pregleda bilo gde, dodajte prila
 
 <!-- KC:setting -->
 
-##### Otvori podešavanja predstavljanja objekata {#toc218}
+##### Otvori podešavanja predstavljanja objekata {#OpenObjectPresentationSettings}
 
 Prečica: `NVDA+kontrol+o`
 
@@ -2667,7 +2667,7 @@ Uključena je po podrazumevanim podešavanjima.
 
 <!-- KC:setting -->
 
-##### Otvori podešavanja režima pretraživanja {#toc236}
+##### Otvori podešavanja režima pretraživanja {#OpenBrowseModeSettings}
 
 Prečica: `NVDA+kontrol+b`
 
@@ -2759,7 +2759,7 @@ Ako se ova opcija omogući može poboljšati podršku za neke sajtove uz sporiji
 
 <!-- KC:setting -->
 
-##### Otvori  podešavanja formatiranja dokumenta {#toc250}
+##### Otvori  podešavanja formatiranja dokumenta {#OpenDocumentFormattingSettings}
 
 Prečica: `NVDA+kontrol+d`
 
@@ -3556,7 +3556,7 @@ Kako biste isključili ili uključili preglednik brajevog reda bilo gde, molimo 
 NVDA python konzola, koja se nalazi u alatima u NVDA meniju, je alat za programere koji je koristan za otklanjanje grešaka, opšti pristup programu NVDA ili pristup elementima pristupačnosti neke aplikacije.
 Za više informacija, pročitajte uputstvo za programere dostupno u[delu za programere NVDA Web stranice](https://community.nvda-project.org/wiki/Development).
 
-### Prodavnica dodataka {#toc314}
+### Prodavnica dodataka {#AddonStoreMenuItem}
 
 Ovo će otvoriti [prodavnicu NVDA dodataka](#AddonsManager).
 Za više informacija, pročitajte obimnu sekciju: [Dodaci i prodavnica dodataka](#AddonsManager).
@@ -4005,7 +4005,7 @@ Sledeći dodatni uređaji su takođe podržani (i nije neophodno da instalirate 
 Slede komande za Brailliant BI/B i BrailleNote touch redove sa programom NVDA.
 Molimo pogledajte uputstvo za upotrebu ovih brajevih redova kako biste saznali opise tastera i njihov raspored.
 
-#### Komande za sve modele {#toc334}
+#### Komande za sve modele {#HumanWareBrailliantKeyAssignmentForAllModels}
 
 <!-- KC:beginInclude -->
 
@@ -4034,7 +4034,7 @@ Molimo pogledajte uputstvo za upotrebu ovih brajevih redova kako biste saznali o
 
 <!-- KC:endInclude -->
 
-#### Komande za Brailliant BI 32, BI 40 i B 80 {#toc335}
+#### Komande za Brailliant BI 32, BI 40 i B 80 {#HumanWareBrailliantKeyAssignmentForBI32BI40AndB80}
 
 <!-- KC:beginInclude -->
 
@@ -4046,7 +4046,7 @@ Molimo pogledajte uputstvo za upotrebu ovih brajevih redova kako biste saznali o
 
 <!-- KC:endInclude -->
 
-#### Komande za Brailliant BI 14 {#toc336}
+#### Komande za Brailliant BI 14 {#HumanWareBrailliantKeyAssignmentForBI14}
 
 <!-- KC:beginInclude -->
 

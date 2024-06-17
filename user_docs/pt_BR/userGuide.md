@@ -6,7 +6,6 @@
 <!-- KC:title: Referência Rápida de Comandos do NVDA NVDA_VERSION -->
 
 
-
 ## Introdução {#Introduction}
 
 Boas-vindas ao NVDA!
@@ -923,6 +922,7 @@ As teclas seguintes só por si saltam para o próximo elemento disponível, adic
 Para mover-se ao início ou final de elementos que contém outros, tais como listas e tabelas:
 
 |Nome |Tecla |Descrição|
+|---|---|---|
 |Mover para o início do contêiner |shift+vírgula |Move para o início do elemento que contém outros (lista, tabela etc.) onde o cursor esteja posicionado|
 |Mover para depois do final do contêiner |vírgula |Passa para depois do final do elemento que contém outros (lista, tabela, etc.) onde esteja situado o cursor|
 
@@ -1506,6 +1506,7 @@ Nota: Os atalhos acima funcionam apenas com a sequência — string — de forma
 <!-- KC:beginInclude -->
 
 |Nome |Tecla |Descrição|
+|---|---|---|
 |Anunciar mensagem recente |NVDA+control+1-4 |Anuncia uma das mensagens mais recentes, dependendo do número pressionado; isto é, NVDA+control+2 lê a segunda mensagem mais recente.|
 
 <!-- KC:endInclude -->
@@ -2868,7 +2869,7 @@ Este botão só é habilitado se o NVDA estiver configurado para habilitar o car
 |Opções |Automático, Seletivo, Global|
 |Padrão |Automático|
 
-Esta opção altera como o NVDA registra eventos disparados pela API — Interface de Programação de Aplicativos — de acessibilidade da Microsoft UI Automation — Automação da Interface do Usuário (UIA) —.
+Esta opção altera como o NVDA registra eventos disparados pela API — Interface de Programação de Aplicativos — de acessibilidade da Microsoft UI Automation — UIA - Automação da Interface do Usuário —.
 A caixa de combinação de registro para eventos de UI Automation e alterações de propriedade tem três opções:
 
 * Automático: "seletivo" no Windows 11 Sun Valley 2 (versão 22H2) e posterior, "global" caso contrário.
@@ -3690,7 +3691,7 @@ Por favor consulte a documentação da mesma para descrições de onde essas tec
 |Tecla seta para direita |barraDeEspaçoBraille+ponto 6|
 |Tecla home |barraDeEspaçoBraille+ponto 1+ponto 3|
 |tecla end |barraDeEspaçoBraille+ponto 4+ponto 6|
-|Tecla control+home |barraDeEspaçoBraille+ponto 1+ponto 2ponto3|
+|Tecla control+home |barraDeEspaçoBraille+ponto 1+ponto 2+ponto 3|
 |Tecla control+end |barraDeEspaçoBraille+ponto 4+ponto 5+ponto 6|
 |Tecla alt |barraDeEspaçoBraille+ponto 1+ponto 3+ponto 4|
 |Tecla alt+tab |barraDeEspaçoBraille+ponto 2+ponto 3+ponto 4+ponto 5|
@@ -4173,8 +4174,6 @@ Por favor consulte a documentação da linha para obter descrições de onde ess
 |tecla control+home |backspace+Joystick Esquerdo para cima|
 |tecla control+end |backspace+Joystick Esquerdo para baixo|
 
-<!-- KC:endInclude -->
-
 ### Papenmeier BRAILLEX Novos Modelos {#Papenmeier}
 
 As seguintes linhas braille são suportadas:
@@ -4428,7 +4427,7 @@ Por favor consulte a documentação de seu BrailleNote para informações sobre 
 |Comando shift+tab |espaço+ponto1+ponto2+ponto5+ponto6|
 |Tecla Windows |espaço+ponto2+ponto4+ponto5+ponto6 (espaço+w)|
 |Tecla alt |espaço+ponto1+ponto3+ponto4 (espaço+m)|
-|Alternar ajuda de entrada |espaço+ponto1+ponto2+ponto5 (espaço+h)|
+|Alternar ajuda de entrada |espaço+ponto2+ponto3+ponto6 (espaço+h em baixo)|
 
 A seguir, os comandos atribuídos ao BrailleNote QT quando ele não está no modo de entrada — digitação — em braille.
 
@@ -4739,6 +4738,7 @@ Por favor consulte as [listas de associação de teclas BRLTTY](https://brltty.a
 <!-- KC:beginInclude -->
 
 |Nome |Comando BRLTTY|
+|---|---|
 |Rolar linha braille para trás |`fwinlt` (caminha uma janela à esquerda)|
 |Rolar linha braille para frente |`fwinrt` (Caminha uma janela à direita)|
 |Mover linha braille para a linha anterior |`lnup` (sobe uma linha)|
@@ -4782,7 +4782,7 @@ Consulte a documentação da linha para obter descrições de onde essas teclas 
 |Alternar braille vinculado a |`cursor1+cursor2`|
 |Mover a linha braille para a linha anterior |`cima1`, `cima2`, `cima3`|
 |Mover a linha braille para a próxima linha |`baixo1`, `baixo2`, `baixo3`|
-|Rolar a linha braille para trás |`esquerda`, `` rodinha esquerda para a esquerda`, ``rodinha direita para a esquerda`|
+|Rolar a linha braille para trás |`esquerda`, `rodinha esquerda para a esquerda`, `rodinha direita para a esquerda`|
 |Rolar a linha braille para frente |`direita`, `rodinha esquerda para a direita`, `rodinha direita para a direita`|
 |Direcionar para cela braille |`sensor`|
 |Relatar formatação de texto em cela braille |`sensor secundário`|

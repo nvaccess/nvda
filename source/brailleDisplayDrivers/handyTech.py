@@ -110,6 +110,8 @@ MODEL_MODULAR_20 = b"\x80"
 MODEL_MODULAR_80 = b"\x88"
 MODEL_MODULAR_40 = b"\x89"
 MODEL_ACTIVATOR = b"\xA4"
+MODEL_ACTIVATOR_PRO_64 = b"\xA6"
+MODEL_ACTIVATOR_PRO_80 = b"\xA8"
 
 # Key constants
 KEY_B1 = 0x03
@@ -373,6 +375,15 @@ class StatusCellMixin(AutoPropertyObject):
 		super(StatusCellMixin, self).display(cells)
 
 
+class ActiveSplitMixin:
+	"""Mixin for displays supporting ActiveSplit, i.e. dynamic adjustment of number of cells"""
+
+	def postInit(self):
+		super().postInit()
+		log.debug("Prevent disconnect/reconnect activity for dynamic length adjustment")
+		self._display.sendExtendedPacket(HT_EXTPKT_NO_RECONNECT)
+
+
 class ModularConnect88(TripleActionKeysMixin, Model):
 	deviceId = MODEL_MODULAR_CONNECT_88
 	genericName = "Modular Connect"
@@ -531,7 +542,14 @@ class Modular80(Modular):
 	numCells = 80
 
 
-class Activator(TimeSyncFirmnessMixin, AtcMixin, JoystickMixin, TripleActionKeysMixin, Model):
+class Activator(
+		ActiveSplitMixin,
+		TimeSyncFirmnessMixin,
+		AtcMixin,
+		JoystickMixin,
+		TripleActionKeysMixin,
+		Model
+):
 	deviceId = MODEL_ACTIVATOR
 	numCells = 40
 	genericName = name = 'Activator'
@@ -543,6 +561,37 @@ class Activator(TimeSyncFirmnessMixin, AtcMixin, JoystickMixin, TripleActionKeys
 			0x7B: "return",
 		})
 		return keys
+
+
+class ActivatorPro(
+		ActiveSplitMixin,
+		TimeSyncFirmnessMixin,
+		AtcMixin,
+		TripleActionKeysMixin,
+		Model
+):
+	genericName = 'Activator Pro'
+
+	def _get_name(self):
+		return '{name} {cells}'.format(name=self.genericName, cells=self.numCells)
+
+	def _get_keys(self) -> Dict[int, str]:
+		keys = super().keys
+		keys.update({
+			0x7A: "escape",
+			0x7B: "return",
+		})
+		return keys
+
+
+class ActivatorPro64(ActivatorPro):
+	deviceId = MODEL_ACTIVATOR_PRO_64
+	numCells = 64
+
+
+class ActivatorPro80(ActivatorPro):
+	deviceId = MODEL_ACTIVATOR_PRO_80
+	numCells = 80
 
 
 def _allSubclasses(cls):
@@ -569,6 +618,7 @@ HT_PKT_EXTENDED = b"\x79"
 HT_PKT_NAK = b"\x7D"
 HT_PKT_ACK = b"\x7E"
 HT_PKT_OK = b"\xFE"
+HT_PKT_OK_WITH_LENGTH = b"\xFD"
 HT_PKT_RESET = b"\xFF"
 HT_EXTPKT_BRAILLE = HT_PKT_BRAILLE
 HT_EXTPKT_KEY = b"\x04"
@@ -589,6 +639,7 @@ HT_EXTPKT_SET_FIRMNESS = b"\x60"
 HT_EXTPKT_GET_FIRMNESS = b"\x61"
 HT_EXTPKT_GET_PROTOCOL_PROPERTIES = b"\xC1"
 HT_EXTPKT_GET_FIRMWARE_VERSION = b"\xC2"
+HT_EXTPKT_NO_RECONNECT = b"\xAE"
 
 # HID specific constants
 HT_HID_RPT_OutData = b"\x01" # receive data from device
@@ -637,6 +688,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			"VID_1FE4&PID_0093",  # Basic Braille Plus 32
 			"VID_1FE4&PID_0094",  # Basic Braille Plus 40
 			"VID_1FE4&PID_00A4",  # Activator
+			"VID_1FE4&PID_00A6",  # Activator Pro 64
+			"VID_1FE4&PID_00A8",  # Activator Pro 80
 		})
 
 		# Some older HT displays use a HID converter and an internal serial interface
@@ -656,7 +709,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			"Braillino BL",
 			"Braille Wave BW",
 			"Easy Braille EBR",
-			"Activator AC",
+			"Activator",
 		)))
 
 	@classmethod
@@ -712,6 +765,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 			if self.numCells:
 				# A display responded.
+				if not isinstance(self._model, OldProtocolMixin):
+					self.sendExtendedPacket(HT_EXTPKT_GET_PROTOCOL_PROPERTIES)
+					self._dev.waitForRead(self.timeout)
 				self._model.postInit()
 				log.info("Found {device} connected via {type} ({port})".format(
 					device=self._model.name, type=portType, port=port))
@@ -923,7 +979,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._handleInputStream(data, self._dev)
 
 	def _handleInputStream(self, htPacketType: bytes, stream):
-		if htPacketType in (HT_PKT_OK, HT_PKT_EXTENDED):
+		if htPacketType in (HT_PKT_OK, HT_PKT_EXTENDED, HT_PKT_OK_WITH_LENGTH):
 			modelId: bytes = stream.read(1)
 			if not self._model:
 				if modelId not in MODELS:
@@ -931,7 +987,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					raise RuntimeError(
 						"The model with ID %r is not supported by this driver" % modelId)
 				self._model = MODELS.get(modelId)(self)
-				self.numCells = self._model.numCells
+				if htPacketType == HT_PKT_OK_WITH_LENGTH:
+					self.numCells = ord(stream.read(1))
+				else:
+					self.numCells = self._model.numCells
 			elif self._model.deviceId != modelId:
 				# Somehow the model ID of this display changed, probably another display
 				# plugged in the same (already open) serial port.
@@ -962,7 +1021,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				# Ignore ATC packets for now
 				pass
 			elif extPacketType == HT_EXTPKT_GET_PROTOCOL_PROPERTIES:
-				pass
+				self.numCells = packet[3]
 			elif isinstance(self._model, TimeSyncFirmnessMixin):
 				if extPacketType == HT_EXTPKT_GET_RTC:
 					self._model.handleTime(packet[1:])
