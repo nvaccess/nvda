@@ -6,7 +6,7 @@
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
 """
-import datetime
+from datetime import datetime
 from typing import (
 	Any,
 	Dict,
@@ -271,8 +271,8 @@ class UpdateChecker(garbageHandler.TrackedObject):
 
 	def _bg(self):
 		assert state is not None
-		lastCheckDate = datetime.datetime.fromtimestamp(state["lastCheck"])
-		nowDate = datetime.datetime.now()
+		lastCheckDate = datetime.fromtimestamp(state["lastCheck"])
+		nowDate = datetime.now()
 		if (lastCheckDate.year, lastCheckDate.month) != (nowDate.year, nowDate.month):
 			# reset unique ID once a month
 			state["id"] = uuid4().hex
