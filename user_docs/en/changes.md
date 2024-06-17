@@ -11,6 +11,7 @@ There are several bug fixes, particularly for the Windows 11 Emoji Panel and Cli
 For web browsers, there are fixes for reporting error messages, figures, captions, table labels and checkbox/radio button menu items.
 
 Liblouis has been updated, adding new Braille tables for Cyrillic Serbian, Yiddish, several ancient languages (Biblical Hebrew, Akkadian, Syriac, and Ugaritic), and transliterated Cuneiform text.
+eSpeak has been updated, adding support for the Karakalpak language.
 Unicode CLDR has also been updated.
 
 
@@ -32,6 +33,8 @@ Unicode CLDR has also been updated.
 ### Changes
 
 * Component updates:
+  * eSpeak NG has been updated to 1.52-dev commit `54ee11a79`. (#15913)
+    * Added new language Karakalpak.
   * Updated Unicode CLDR to version 45.0. (#16507, @OzancanKaratas)
   * Updated fast_diff_match_patch (used to detect changes in terminals and other dynamic content) to version 2.1.0. (#16508, @codeofdusk)
   * Updated LibLouis Braille translator to [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0). (#16652, @codeofdusk)
