@@ -13,8 +13,8 @@ Please include your Crowdin username and the languages you wish to translate.
 
 #### Translation reviews
 
-Translated strings will need to be reviewed and approved before being included in NVDA by a proofreader.
-Translators may have proofreader status granted on a case-by-case basis.
+Translated strings will need to be reviewed and approved by a proofreader before being included in NVDA.
+Translators may have proofreader status granted on a case-by-case basis by messaging the above contact points.
 
 ### Setup PoEdit
 
