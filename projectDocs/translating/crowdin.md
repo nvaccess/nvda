@@ -3,7 +3,7 @@
 Crowdin is used to translate the main NVDA interface.
 NVDA's Crowdin project: <https://crowdin.com/project/nvda>.
 
-## Set up
+## Setup
 
 ### Create Crowdin account
 
