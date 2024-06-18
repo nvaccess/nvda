@@ -171,12 +171,15 @@ assert not (apiSigningToken and certFile), "Cannot specify signing with both API
 if apiSigningToken:
 	# Code signing with SignPath HSM 
 	def signExecApi(target, source, env):
-		# Workaround to skip files that we don't want to sign
 		if len(target)>1:
-			print(f"Too many files passed to signExecApi, skipping {[t.abspath for t in target]}")
-			return 0
-		ps_cmd = f"powershell -File appveyor\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {target[0].abspath}"
-		return env.Execute(ps_cmd, shell=True)
+			print(f"Iterating through {len(target)} files passed to signExecApi")
+		retval = 0 # error value
+		for targetFile in target:
+			if (abspath := targetFile.abspath).endswith((".exe", ".dll")):
+				ps_cmd = f"powershell -File appveyor\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {abspath}"
+				if (retval := env.Execute(ps_cmd, shell=True)) == 0:
+					print(f"Error signing file: {abspath}")
+		return retval
 	# Export via scons environment so other libraries can be signed
 	env['signExec']=signExecApi
 elif certFile:
