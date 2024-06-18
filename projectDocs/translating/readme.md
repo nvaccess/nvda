@@ -27,7 +27,7 @@ The translation status of user documentation (User Guide and Changes) can only b
 
 ## New Localization
 
-Start by subscribing to the translation list above, so that you can get help and advice.
+Start by subscribing to the translation list above so that you can get help and advice.
 
 The current process for translation is split between multiple processes:
 

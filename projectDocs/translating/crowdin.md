@@ -8,7 +8,7 @@ NVDA's Crowdin project: <https://crowdin.com/project/nvda>.
 ### Create Crowdin account
 
 1. Create a [Crowdin account](https://accounts.crowdin.com/register?continue=%2Fproject%2Fnvda).
-1. Message the [translators mailing list](https://groups.io/g/nvda-translations) or <info@nvaccess.org> to request being added as translator.
+1. Message the [translators mailing list](https://groups.io/g/nvda-translations) or <info@nvaccess.org> to request being added as a translator.
 Please include your Crowdin username and the languages you wish to translate.
 
 #### Translation reviews
@@ -24,7 +24,7 @@ Alternatively, you can use Crowdin's interface directly.
 PoEdit supports connecting with Crowdin directly.
 PoEdit's homepage is: <http://www.poedit.net/>
 
-1. Download the latest Windows PoEdit version at: <https://poedit.net/download>
+1. Download the latest Windows PoEdit version at <https://poedit.net/download>
 1. Install it by following the on-screen instructions, the default options should be sufficient.
 1. When launching PoEdit:
     1. Choose "Translate cloud project"
@@ -33,7 +33,7 @@ PoEdit's homepage is: <http://www.poedit.net/>
 
 ## Translating using PoEdit
 
-After opening a .po file you will be placed on a list with all of strings to translate.
+After opening a .po file you will be placed on a list with all of the strings to translate.
 
 You can read the status bar to see how many strings have already been translated, the number of untranslated messages, and how many are fuzzy.
 A fuzzy string is a message which has been automatically translated, thus it may be wrong.
@@ -41,7 +41,7 @@ PoEdit will collect the new and fuzzy messages and presents them at the top of t
 
 To insert or correct the translation for a string, first select it with the arrows, then tab to the blank edit field and type its translation.
 
-NVDA will beep if you are on a untranslated or fuzzy message.
+NVDA will beep if you are on an untranslated or fuzzy message.
 If you are using a braille display you'll see a star sign in-front of the messages you have to translate.
 
 You may want to spell the original string to be aware of any punctuation mark, capital letters, etc.
@@ -91,7 +91,7 @@ It is best to try not to have duplicated keys.
 1. To test the current interface messages, save the current nvda.po file, and copy the nvda.mo file to the following location: `nvdadir/locale/langcode/LC_MESSAGES`
     - nvdadir is the directory where NVDA has been installed
     - langcode is the ISO 639-1 language code for your language (e.g. en for English, es for Spanish, etc.)
-1. Restart NVDA, then go to NVDA menu, go to Preferences and choose General Settings; or press `NVDA+control+G` to open General Settings.
+1. Restart NVDA, then go to the NVDA menu, go to Preferences and choose General Settings, or press `NVDA+control+G` to open General Settings.
 1. From the language list, select your language (if it is listed), press `enter` and say yes when you're asked to restart NVDA.
 1. The messages you have translated should now be heard or brailled in your native language provided that the synthesizer you are using supports your language or a braille code for your language exists.
 
