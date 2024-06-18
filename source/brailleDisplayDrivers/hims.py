@@ -248,25 +248,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
-		# Hid device
-		driverRegistrar.addUsbDevices(
-			bdDetect.DeviceType.HID,
-			{
-				"VID_045E&PID_940A",  # Braille Edge3S 40
-			},
-			True
-		)
-		# Bulk devices
-		driverRegistrar.addUsbDevices(bdDetect.DeviceType.CUSTOM, {
-			"VID_045E&PID_930A",  # Braille Sense & Smart Beetle
-			"VID_045E&PID_930B",  # Braille EDGE 40
-		})
+		device_types = {
+			bdDetect.DeviceType.HID: ({"VID_045E&PID_940A"}, True),
+			bdDetect.DeviceType.CUSTOM: ({"VID_045E&PID_930A", "VID_045E&PID_930B"}, False),
+			bdDetect.DeviceType.SERIAL: ({"VID_0403&PID_6001", "VID_1A86&PID_55D3"}, False)
+		}
 
-		# Sync Braille, serial device
-		driverRegistrar.addUsbDevices(bdDetect.DeviceType.SERIAL, {
-			"VID_0403&PID_6001",
-			"VID_1A86&PID_55D3",  # Braille Edge2S 40
-		})
+		for device_type, (ids, useAsFallback) in device_types.items():
+			driverRegistrar.addUsbDevices(device_type, ids, useAsFallback)
 
 		driverRegistrar.addBluetoothDevices(lambda m: any(m.id.startswith(prefix) for prefix in (
 			"BrailleSense",

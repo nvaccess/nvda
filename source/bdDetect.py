@@ -100,6 +100,7 @@ class DeviceMatch(NamedTuple):
 	deviceInfo: Dict[str, str]
 	"""All known information about a device."""
 
+
 MatchFuncT = Callable[[DeviceMatch], bool]
 DriverDictT = defaultdict[DeviceType, set[str] | MatchFuncT]
 
