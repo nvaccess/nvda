@@ -28,11 +28,11 @@ environment:
  scons_publisher: NV Access
  # Comment out any of the feature_* variables to disable the respective build feature.
  # They are checked for existence of content, not specific value.
- feature_buildSymbols: True
- feature_uploadSymbolsToMozilla: True
- #feature_buildAppx: True
- feature_crowdinSync: True
- feature_signing: True
+ feature_buildSymbols: configured
+ feature_uploadSymbolsToMozilla: configured
+ #feature_buildAppx: configured
+ feature_crowdinSync: configured
+ feature_signing: configured
 
 # scripts that are called at very beginning, before repo cloning
 init:
