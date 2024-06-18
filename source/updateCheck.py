@@ -820,9 +820,12 @@ def initialize():
 		state = {
 			"lastCheck": 0,
 			"dontRemindVersion": None,
-			"id": uuid4().hex,
 		}
 		_setStateToNone(state)
+
+	if "id" not in state:
+		# ID was introduced in 2024.3
+		state["id"] = uuid4().hex
 
 	# check the pending version against the current version
 	# and make sure that pendingUpdateFile and pendingUpdateVersion are part of the state dictionary.
