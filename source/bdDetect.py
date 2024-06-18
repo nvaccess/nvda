@@ -175,9 +175,9 @@ def getDriversForConnectedUsbDevices(
 		# This preference may change in the future.
 		if _isHIDBrailleMatch(match):
 			if (driver, match.type, match.id) in FallbackDevicesStore.fallBackDevices:
-				fallbackDriversAndMatches.append(Set(hidName, match))
+				fallbackDriversAndMatches.append({hidName, match})
 			else:
-				yield (hidName, match)
+				yield hidName, match
 
 	for driver, match in fallbackDriversAndMatches:
 		yield driver, match
