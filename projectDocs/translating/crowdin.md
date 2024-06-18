@@ -31,11 +31,6 @@ PoEdit's homepage is: <http://www.poedit.net/>
     1. Connect your Crowdin account
     1. Select NVDA and the language you wish to translate
 
-## Translating the interface
-
-Open "nvda.po" for the language you want to translate in PoEdit.
-Alternatively, you can use Crowdin's interface directly.
-
 ## Translating using PoEdit
 
 After opening a .po file you will be placed on a list with all of strings to translate.
@@ -61,7 +56,12 @@ NVDA provides additional shortcuts for PoEdit which are described in [the User G
 If you are unsure of meaning of the original interface message, consult automatic comments (also called translator comments).
 Some comments provide an example output message to help you understand what NVDA will say when speaking or brailling such messages.
 
-## Messages with formatting strings
+## Translating the interface
+
+Open "nvda.po" for the language you want to translate in PoEdit.
+Alternatively, you can use Crowdin's interface directly.
+
+### Messages with formatting strings
 
 You will come across several messages that have additional characters or punctuation as part of the message, this section will explain how they should be treated.
 
@@ -70,14 +70,14 @@ You will come across several messages that have additional characters or punctua
 - `%.2f`, a number to 2 digits after the comma, for example 5.25
 - `{keyword}`, the text around the keyword should be translated, but the word should be left as is.
 
-### Examples
+#### Examples
 
 - `%d percent`: this means that `%d` will be replaced by a number when the program is running, and you only need to translate the word `percent`.
 - `subject: %s`: here `%s` means that another string will be substituted.
 - `on {backgroundColor}`: In this case, the word on should be translated, and the rest should be left alone.
 This will be presented as "black on white", "yellow on black", etc.
 
-## Messages with ampersands - shortcut keys
+### Messages with ampersands - shortcut keys
 
 `&Rate`
 
@@ -86,7 +86,7 @@ So when you translate, you can put the ampersand wherever in the translated mess
 When you have completed all other translation work, you may want to review the shortcut keys, since they provide many users a fast way of jumping to particular items in dialogs, such as specific checkboxes or combo-boxes.
 It is best to try not to have duplicated keys.
 
-## Testing the interface translation
+### Testing the interface translation
 
 1. To test the current interface messages, save the current nvda.po file, and copy the nvda.mo file to the following location: `nvdadir/locale/langcode/LC_MESSAGES`
     - nvdadir is the directory where NVDA has been installed
