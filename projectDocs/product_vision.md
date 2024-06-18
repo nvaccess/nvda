@@ -71,5 +71,5 @@ Developed by NV Access in partnership with a dedicated open source community, NV
         * Is a necessity for a small subset of our users, without which NVDA would not be functional for them,
         
         AND
-        *  Providing this support through an add-on is impractical (see "Extendable" above).
+        *  Providing this support through an add-on is not practical due to the essential nature of the feature or its widespread use (see "Extendable" above).
   
