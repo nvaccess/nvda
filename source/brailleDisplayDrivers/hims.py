@@ -294,7 +294,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 							onReceive=self._onReceive
 						)
 					case _:
-						pass
+						log.error(f"No matching case for portType found: {portType}")
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
 				continue
