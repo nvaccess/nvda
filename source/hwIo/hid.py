@@ -320,6 +320,7 @@ class Hid(IoBase):
 
 	def close(self):
 		if self._isClosed:
+			log.debug("Attempted to close an already closed device.")
 			return
 		super(Hid, self).close()
 		winKernel.closeHandle(self._file)
