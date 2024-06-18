@@ -40,7 +40,6 @@ Alternatively, you can use Crowdin's interface directly.
 
 After opening a .po file you will be placed on a list with all of strings to translate.
 
-<!-- TODO: are fuzzy strings still relevant? -->
 You can read the status bar to see how many strings have already been translated, the number of untranslated messages, and how many are fuzzy.
 A fuzzy string is a message which has been automatically translated, thus it may be wrong.
 PoEdit will collect the new and fuzzy messages and presents them at the top of the already translated messages.
