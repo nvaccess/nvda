@@ -81,7 +81,7 @@ This will be presented as "black on white", "yellow on black", etc.
 
 ### Messages with ampersands - shortcut keys
 
-`&Rate`
+Example: `&Rate`
 
 The letter following the ampersand sign can be used as a shortcut key.
 So when you translate, you can put the ampersand wherever in the translated message, and the letter that follows it will be used as the shortcut for your language.
