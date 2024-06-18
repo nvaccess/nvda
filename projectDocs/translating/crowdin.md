@@ -3,6 +3,8 @@
 Crowdin is used to translate the main NVDA interface.
 NVDA's Crowdin project: <https://crowdin.com/project/nvda>.
 
+This document covers setting up a Crowdin account, connecting it with PoEdit, and translating the main interface using Crowdin and PoEdit.
+
 ## Setup
 
 ### Create Crowdin account
