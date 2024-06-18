@@ -293,6 +293,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 							writeTimeout=self.timeout,
 							onReceive=self._onReceive
 						)
+					case _:
+						pass
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
 				continue
@@ -521,7 +523,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			try:
 				# Command packets are ten bytes long
 				packet = firstByte + stream.read(9)
-			except Exception:
+			except IOError:
 				# remaining data will be received next onReceive
 				self._serialData = firstByte
 				return
