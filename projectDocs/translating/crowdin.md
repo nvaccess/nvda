@@ -89,8 +89,8 @@ It is best to try not to have duplicated keys.
 ### Testing the interface translation
 
 1. To test the current interface messages, save the current nvda.po file, and copy the nvda.mo file to the following location: `nvdadir/locale/langcode/LC_MESSAGES`
-    - nvdadir is the directory where NVDA has been installed
-    - langcode is the ISO 639-1 language code for your language (e.g. en for English, es for Spanish, etc.)
+    - `nvdadir`: the directory where NVDA has been installed
+    - `langcode`: the ISO 639-1 language code for your language (e.g. en for English, es for Spanish, etc.)
 1. Restart NVDA, then go to the NVDA menu, go to Preferences and choose General Settings, or press `NVDA+control+G` to open General Settings.
 1. From the language list, select your language (if it is listed), press `enter` and say yes when you're asked to restart NVDA.
 1. The messages you have translated should now be heard or brailled in your native language provided that the synthesizer you are using supports your language or a braille code for your language exists.
