@@ -162,7 +162,7 @@ def getDriversForConnectedUsbDevices(
 			for type, ids in devs.items():
 				if match.type == type and match.id in ids:
 					if (driver, match.type, match.id) in FallbackDevicesStore.fallBackDevices:
-						fallbackDriversAndMatches.append(set((driver, match)))
+						fallbackDriversAndMatches.append({driver, match})
 					else:
 						yield driver, match
 
