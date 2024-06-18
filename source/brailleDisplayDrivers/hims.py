@@ -503,7 +503,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			assert stream.read(1) == b"\x1f"
 			self._handleIdentification(deviceId)
 		else:
-			log.debug("Unknown first byte received: 0x%x" % ord(firstByte))
+			log.debug(f"Unknown first byte received: 0x{ord(firstByte):x}")
 			return
 
 	def _accumulateSerialData(self, data: bytes) -> bool:
