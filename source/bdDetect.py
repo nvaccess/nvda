@@ -154,7 +154,7 @@ def getDriversForConnectedUsbDevices(
 		if port["provider"] == "usb"
 	))
 
-	fallbackDriversAndMatches = []
+	fallbackDriversAndMatches: list[set[str, DeviceMatch]] = []
 	for match in itertools.chain(usbCustomDeviceMatches, usbHidDeviceMatchesForCustom, usbComDeviceMatches):
 		for driver, devs in _driverDevices.items():
 			if limitToDevices and driver not in limitToDevices:
