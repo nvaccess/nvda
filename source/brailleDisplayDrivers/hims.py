@@ -264,7 +264,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			bdDetect.DeviceType.SERIAL: (
 				{
 					"VID_0403&PID_6001",
-					"VID_1A86&PID_55D3"  # Braille Edge2S 40 
+					"VID_1A86&PID_55D3"  # Braille Edge2S 40
 				},
 				False
 			)

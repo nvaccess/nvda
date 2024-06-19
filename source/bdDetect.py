@@ -693,4 +693,7 @@ class DriverRegistrar:
 
 
 class FallbackDevicesStore:
-    fallBackDevices: set[Tuple[str, DeviceType, str]] = set()
+	"""This class is used to store fallback devices.
+	When registered as a fallback device, it will be yielded last among the connected devices.
+	"""
+	fallBackDevices: set[Tuple[str, DeviceType, str]] = set()
