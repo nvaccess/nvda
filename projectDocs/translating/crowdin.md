@@ -76,7 +76,8 @@ You will come across several messages that have additional characters or punctua
 
 - `%d percent`: this means that `%d` will be replaced by a number when the program is running, and you only need to translate the word `percent`.
 - `subject: %s`: here `%s` means that another string will be substituted.
-- `on {backgroundColor}`: In this case, the word on should be translated, and the rest should be left alone.
+- `{color} on {backgroundColor}`: In this case, the word `on` should be translated.
+The rest should be left alone or rearranged in order to suit the language.
 This will be presented as "black on white", "yellow on black", etc.
 
 ### Messages with ampersands - shortcut keys
