@@ -253,7 +253,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			bdDetect.DeviceType.SERIAL: ({"VID_0403&PID_6001", "VID_1A86&PID_55D3"}, False)
 		}
 
-		for device_type, (ids, useAsFallback) in device_types.items():
+		for deviceType, (ids, useAsFallback) in deviceTypes.items():
 			driverRegistrar.addUsbDevices(device_type, ids, useAsFallback)
 
 		driverRegistrar.addBluetoothDevices(lambda m: any(m.id.startswith(prefix) for prefix in (
