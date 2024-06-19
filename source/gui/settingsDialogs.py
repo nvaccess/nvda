@@ -79,6 +79,8 @@ import weakref
 import time
 import keyLabels
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
+import itertools
+import ui
 
 #: The size that settings panel text descriptions should be wrapped at.
 # Ensure self.scaleSize is used to adjust for OS scaling adjustments.
@@ -542,6 +544,21 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
+		self.filterList = None
+		self.filterGenerator = None
+		self.oldFilterEditValue = None
+		# Translators: The label of a text field to search for settings in preferences dialog.
+		filterLabel = pgettext("nvdaSettings", "Sea&rch:")
+		self.filterEdit = sHelper.addLabeledControl(
+			labelText=filterLabel,
+			wxCtrlClass=wx.TextCtrl,
+			size=(self.scaleSize(310), -1),
+		)
+		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
+		# create a timer to launch search when user stops typing
+		self.filterEditChangingTimer = wx.Timer(self)
+		self.Bind(wx.EVT_TIMER, self.onFilterEditTextReady, self.filterEditChangingTimer)
+
 		# Translators: The label for the list of categories in a multi category settings dialog.
 		categoriesLabelText=_("&Categories:")
 		categoriesLabel = wx.StaticText(self, label=categoriesLabelText)
@@ -621,6 +638,128 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
 		self.Bind(EVT_RW_LAYOUT_NEEDED, self._onPanelLayoutChanged)
 
+	def onFilterEditTextChange(self, evt):
+		curValue = self.filterEdit.Value
+		if curValue:
+			# (re)start timer
+			self.filterEditChangingTimer.StartOnce(500)
+		if curValue != self.oldFilterEditValue:
+			# discard last search generator
+			self.filterGenerator = None
+		self.oldFilterEditValue = curValue
+
+	def onFilterEditTextReady(self, evt):
+		filterText = self.filterEdit.Value.lower()
+		# separate words to OR search
+		filterList = filterText.split()
+		self.filterList = filterList
+		if not self.filterGenerator:
+			# create generator for current search
+			gen = self.searchGenerator()
+			# use itertools.cycle for circular, cached results
+			self.filterGenerator = itertools.cycle(gen)
+		try:
+			# get result as a tuple, containing
+			# wx obj whose label or value matches at least one search term,
+			# and (eventually same) obj, or index into first obj, where to set focus on
+			obj, landTo = next(self.filterGenerator)
+		except StopIteration:
+			# when no result is found
+			obj = None
+		if not obj:
+			# Translators: Message when search in settings gives no result
+			ui.message(_("No result"))
+			return
+		# adjust selection and focus according to wx control
+		if isinstance(landTo, int):
+			if not obj.HasFocus() or landTo != obj.Selection:
+				obj.Select(landTo)
+				obj.SetFocus()
+			else:
+				# when there is only one result
+				# Translators: Message when search in settings gives no other result
+				ui.message(_("No other result"))
+		else:  # landTo is a wx control
+			if isinstance(landTo, wx.TextCtrl):
+				# present selection as when as user moves with tab
+				landTo.SelectAll()
+			if not landTo.HasFocus():
+				landTo.SetFocus()
+			else:
+				# when there is only one result
+				# Translators: Message when search in settings gives no other result
+				ui.message(_("No other result"))
+
+	def searchGenerator(self):  # noqa: C901
+		# inner generator
+		# process each item of passed setting panel
+		def recurseChildren(control):
+			if isinstance(control, (wx.Panel, wx.Sizer, wx.StaticBox)):  # process items into these containers
+				controlChildren = (c for c in control.Children)
+				for child in controlChildren:
+					yield from recurseChildren(child)
+				return
+			elif isinstance(control, wx.ListBox):  # process list and its items
+				controlItems = (i for i in control.Items)
+				for index, item in enumerate(controlItems):
+					# search here, to reduce checked items
+					if control.IsEnabled() and self.searchInLabel(item):
+						yield (control, index)
+				return
+			elif isinstance(control, wx.StaticText):  # process label of a wx.TextCtrl
+				label = control.GetLabel()
+				sizer = control.ContainingSizer
+				lastSizerChild = sizer.Children[-1].GetWindow()
+				res = (control, lastSizerChild)
+			elif isinstance(control, wx.TextCtrl):  # process value of a wx.TextCtrl
+				label = control.GetValue()
+				res = (control, control)
+			elif isinstance(control, wx.Choice):  # process combobox and its current value
+				index = control.GetSelection()
+				label = control.GetString(index)
+				res = (control, index)
+			else:  # process e.g. wx.CheckBox, wx.Button...
+				label = getattr(control, "Label", "")
+				res = (control, control)
+			if control.IsEnabled() and self.searchInLabel(label):
+				yield res
+		# outer generator
+		# process each category/setting panel
+		index = self.catListCtrl.GetFirstSelected()
+		max = self.catListCtrl.ItemCount
+		activeCatPanels = []
+		# loop over categories, starting from current one
+		for catId in itertools.chain(range(index, max), range(0, index)):
+			cls = self.categoryClasses[catId]
+			# skip advanced settings, usually hidden
+			if cls.helpId == "AdvancedSettings":
+				continue
+			# get category panel instance
+			catPanel = self._getCategoryPanel(catId)
+			activeCatPanels.append(catPanel)
+			# instantiate inner generator for selected category
+			gen = recurseChildren(catPanel)
+			# loop as long as there are results in this category
+			while res := next(gen, None):
+				# select and focus category on list, to guarantee scrolling/refresh
+				self._doCategoryChange(catId)
+				self.catListCtrl.Select(catId)
+				self.catListCtrl.Focus(catId)
+				yield res
+			# deactivate old panels
+			for catPanel in activeCatPanels:
+				if catPanel != self.currentCategory:
+					catPanel.onPanelDeactivated()
+
+	def searchInLabel(self, label):
+		if not label:
+			return False
+		label = label.replace("&", "").lower()
+		# return True if there is at least one search term in label
+		for term in self.filterList:
+			if term in label:
+				return True
+
 	def _getCategoryPanel(self, catId):
 		panel = self.catIdToInstanceMap.get(catId, None)
 		if not panel:
@@ -668,6 +807,9 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			evt.Skip()
 			return
 		key = evt.GetKeyCode()
+		if key == wx.WXK_F3:
+			self.onFilterEditTextReady(evt)
+			return
 		listHadFocus = self.catListCtrl.HasFocus()
 		if evt.ControlDown() and key==wx.WXK_TAB:
 			# Focus the categories list. If we don't, the panel won't hide correctly
