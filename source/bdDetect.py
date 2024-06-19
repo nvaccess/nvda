@@ -694,6 +694,6 @@ class DriverRegistrar:
 
 class FallbackDevicesStore:
 	"""This class is used to store fallback devices.
-	When registered as a fallback device, it will be yielded last among the connected devices.
+	When registered as a fallback device, it will be yielded last among the connected USB devices.
 	"""
 	fallBackDevices: set[Tuple[str, DeviceType, str]] = set()
