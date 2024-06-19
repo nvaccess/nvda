@@ -254,7 +254,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		}
 
 		for deviceType, (ids, useAsFallback) in deviceTypes.items():
-			driverRegistrar.addUsbDevices(device_type, ids, useAsFallback)
+			driverRegistrar.addUsbDevices(deviceType, ids, useAsFallback)
 
 		driverRegistrar.addBluetoothDevices(lambda m: any(m.id.startswith(prefix) for prefix in (
 			"BrailleSense",
