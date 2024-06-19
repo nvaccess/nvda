@@ -485,7 +485,7 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 		)
 	)
 
-	fallbackMatches = []
+	fallbackMatches: list[DeviceMatch] = []
 
 	for match in usbDevs:
 		if driver == _getStandardHidDriverName():
