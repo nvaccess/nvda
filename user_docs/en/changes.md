@@ -80,6 +80,7 @@ It is especially useful to read the error location markers in tracebacks. (#1632
   * You can use `scheduleThread.scheduleDailyJobAtStartUp` to automatically schedule a job that happens after NVDA starts, and every 24 hours after that.
   Jobs are scheduled with a delay to avoid conflicts.
   * `scheduleThread.scheduleDailyJob` and `scheduleJob` can be used to schedule jobs at custom times, where a `JobClashError` will be raised on a known job scheduling clash.
+* It is now possible to create app modules for apps hosting Edge WebView2 (msedgewebview2.exe) controls. (#16705, @josephsl)
 
 #### Deprecations
 
