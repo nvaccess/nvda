@@ -68,8 +68,4 @@ Developed by NV Access in partnership with a dedicated open source community, NV
     * NVDA Protects users from installing an add-on that is incompatible with the current version of NVDA, allowing the user to override this protection if they understand the risk. 
  16. Utility: NVDA provides solutions for blind and vision impaired people in accessing technology that:
         * Will provide utility to a significant proportion of users in day-to-day use, OR
-        * Is a necessity for a small subset of our users, without which NVDA would not be functional for them,
-        
-        AND
-        *  Providing this support through an add-on is not practical due to the essential nature of the feature or its widespread use (see "Extendable" above).
-  
+        * Is a necessity for a small subset of our users, without which NVDA would not be functional for them.
