@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018-2023 NV Access Limited
+# Copyright (C) 2018-2024 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -122,8 +122,8 @@ class SupportsVersionCheck(Protocol):
 				# The addon relies on older, removed features of NVDA, an updated add-on is required.
 				# The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
 				"An updated version of this add-on is required. "
-				"The minimum supported API version is now {nvdaVersion}. "
 				"This add-on was last tested with {lastTestedNVDAVersion}. "
+				"NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. "
 				"You can enable this add-on at your own risk. "
 				).format(
 			nvdaVersion=addonAPIVersion.formatForGUI(backwardsCompatToVersion),

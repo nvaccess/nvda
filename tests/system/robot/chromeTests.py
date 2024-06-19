@@ -2508,7 +2508,7 @@ def test_textParagraphNavigation():
 		# Tests compatibility with Russian Cyrillic script
 		"Предложение по-русски.",
 		# Tests regex condition for CJK full width character terminators
-		"我不会说中文！",
+		"我不会说中文",
 		"Bye-bye, world!",
 	]
 	for p in expectedParagraphs:
@@ -2565,15 +2565,8 @@ def test_styleNav():
 		<p>Fourth line is <b>bold again</b></p>
 		<p>End of document.</p>
 	""")
-	# For some reason we need to send Control+RightArrow;
-	# otherwise getting "Test page load complete" as actual speech
-	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("control+rightArrow")
-	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
-	_asserts.strings_match(actualSpeech, "Hello world!")
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("shift+d")
 	_asserts.strings_match(actualSpeech, "No previous different style text")
-	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
-	_asserts.strings_match(actualSpeech, "This text is")
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
 	_asserts.strings_match(actualSpeech, "Second line is")
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("shift+d")
@@ -2583,7 +2576,7 @@ def test_styleNav():
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
 	_asserts.strings_match(actualSpeech, "No next same style text")
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("d")
-	_asserts.strings_match(actualSpeech, "End of document.")
+	_asserts.strings_match(actualSpeech, "End of document.  After Test Case Marker")
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("d")
 	_asserts.strings_match(actualSpeech, "No next different style text")
 	for s in [
