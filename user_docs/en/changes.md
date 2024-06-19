@@ -43,6 +43,7 @@ Unicode CLDR has also been updated.
 * In the Python console, the last unexecuted command will no longer be lost when moving in the input history. (#16653, @CyrilleB79)
 * A unique anonymous ID is now sent as part of optional NVDA usage statistics gathering. (#16266)
 * By default, a new folder will be created when making a portable copy. Warnings have been added when writing to a non-empty directory. (#16684)
+* The Report link destination and character formatting information windows, now include "Close" and "Copy" buttons for user convenience. (#16369, @XLTechie)
 
 ### Bug Fixes
 * Windows 11 fixes:
@@ -81,6 +82,7 @@ It is especially useful to read the error location markers in tracebacks. (#1632
   Jobs are scheduled with a delay to avoid conflicts.
   * `scheduleThread.scheduleDailyJob` and `scheduleJob` can be used to schedule jobs at custom times, where a `JobClashError` will be raised on a known job scheduling clash.
 * It is now possible to create app modules for apps hosting Edge WebView2 (msedgewebview2.exe) controls. (#16705, @josephsl)
+* `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and also an optional close button which may have its name customized. (#16369, @XLTechie)
 
 #### Deprecations
 
