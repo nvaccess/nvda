@@ -13,15 +13,12 @@ This document covers setting up a Crowdin account, connecting it with PoEdit, an
 1. Message the [translators mailing list](https://groups.io/g/nvda-translations) or <info@nvaccess.org> to request being added as a translator.
 Please include your Crowdin username and the languages you wish to translate.
 
-#### Translation reviews
-
-Translated strings will need to be reviewed and approved by a proofreader before being included in NVDA.
-Translators may have proofreader status granted on a case-by-case basis by messaging the above contact points.
-
 ### Setup PoEdit
 
 It is recommended that you use the latest version of PoEdit and NVDA for translating.
-Alternatively, you can use Crowdin's interface directly.
+Alternatively, you can use the [Crowdin web interface directly(https://support.crowdin.com/online-editor/).
+As PoEdit only supports viewing approved strings, large translators team need to co-ordinate submitting unapproved strings to prevent conflicts.
+Using Crowdin's interface avoids this problem.
 
 PoEdit supports connecting with Crowdin directly.
 PoEdit's homepage is: <http://www.poedit.net/>
@@ -32,6 +29,16 @@ PoEdit's homepage is: <http://www.poedit.net/>
     1. Choose "Translate cloud project"
     1. Connect your Crowdin account
     1. Select NVDA and the language you wish to translate
+
+### Translation reviews
+
+Translated strings will need to be reviewed and approved by a proofreader before being included in NVDA.
+A proofreader is required for each language.
+Proofreader status is granted on a case-by-case basis by messaging the [translators mailing list](https://groups.io/g/nvda-translations) or <info@nvaccess.org>
+
+Proofreaders approve strings using the [Crowdin web interface](https://support.crowdin.com/online-editor/).
+PoEdit only supports viewing approved strings.
+When submitting to Crowdin from PoEdit, proofreaders are able to auto-approve all submitted strings.
 
 ## Translating using PoEdit
 
@@ -61,7 +68,7 @@ Some comments provide an example output message to help you understand what NVDA
 ## Translating the interface
 
 Open "nvda.po" for the language you want to translate in PoEdit.
-Alternatively, you can use Crowdin's interface directly.
+Alternatively, you can use the [Crowdin interface directly](https://support.crowdin.com/online-editor/).
 
 ### Messages with formatting strings
 
@@ -89,12 +96,57 @@ So when you translate, you can put the ampersand wherever in the translated mess
 When you have completed all other translation work, you may want to review the shortcut keys, since they provide many users a fast way of jumping to particular items in dialogs, such as specific checkboxes or combo-boxes.
 It is best to try not to have duplicated keys.
 
+### Plural forms
+
+Languages can have any number of plural forms.
+Strings can have multiple versions depending on the plural form of the subject.
+
+Example:
+
+- `with %s item`
+- English plural form:
+  - Multiple: `with %s items`
+- Arabic plural forms:
+  - Zero: `تتضمن %s من العناصر`
+  - One: `تتضمّن %s من العناصر`
+  - Two: `تتضمَّن عنصرين %s`
+  - Few: `تتضمَّن %s عناصر`
+  - Many: `تتضمَّن %s من العناصر`
+  - Other: `تتضمَّن %s من العناصر`
+
+In the [Crowdin web interface](https://support.crowdin.com/online-editor/), these can be set for each language using the "Form" section which replaces the standard translation edit box.
+
+In PoEdit, the standard translation edit box has tabs for each plural form.
+[Object navigation](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#ObjectNavigation) is required to move focus to each tab button for the plural form.
+You can do this by:
+
+- By moving to the previous focus object from the edit box, you can cycle through each plural form tab button by continuing to more backward.
+  - Desktop: `NVDA+numpad4`
+  - Laptop: `NVDA+shift+leftArrow`
+- Activate the current object once the desired tab button is reached.
+  - Desktop: `NVDA+numpadEnter`
+  - Laptop: `NVDA+enter`
+
+If the number of plural forms for your language is incorrect please message the [translators mailing list](https://groups.io/g/nvda-translations) or <info@nvaccess.org>.
+
+### String groupings
+
+Translators may wish to provide two different translations for the same English string depending on the context.
+Translation strings can be grouped by a tag to differentiate contexts.
+This allows differentiating the string "Status" being used in the Add-on Store context, as opposed to a different context.
+Translator comments provide additional context information.
+
+Example: `addonStore` for `Status`.
+
+In PoEdit, these tags are at the start of each translation string list item.
+In Crowdin, this information appears at the end of the context section.
+
 ### Testing the interface translation
 
 1. To test the current interface messages, save the current nvda.po file, and copy the nvda.mo file to the following location: `nvdadir/locale/langcode/LC_MESSAGES`
     - `nvdadir`: the directory where NVDA has been installed
     - `langcode`: the ISO 639-1 language code for your language (e.g. en for English, es for Spanish, etc.)
-1. Restart NVDA, then go to the NVDA menu, go to Preferences and choose General Settings, or press `NVDA+control+G` to open General Settings.
+1. Restart NVDA, then go to the NVDA menu, go to Preferences and choose General Settings, or press `NVDA+control+g` to open General Settings.
 1. From the language list, select your language (if it is listed), press `enter` and say yes when you're asked to restart NVDA.
 1. The messages you have translated should now be heard or brailled in your native language provided that the synthesizer you are using supports your language or a braille code for your language exists.
 
