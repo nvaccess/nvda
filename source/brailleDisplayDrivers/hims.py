@@ -248,9 +248,26 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
 		deviceTypes = {
-			bdDetect.DeviceType.HID: ({"VID_045E&PID_940A"}, True),
-			bdDetect.DeviceType.CUSTOM: ({"VID_045E&PID_930A", "VID_045E&PID_930B"}, False),
-			bdDetect.DeviceType.SERIAL: ({"VID_0403&PID_6001", "VID_1A86&PID_55D3"}, False)
+			bdDetect.DeviceType.HID: (
+				{
+					"VID_045E&PID_940A"  # Braille Edge3S 40
+				},
+				True
+			),
+			bdDetect.DeviceType.CUSTOM: (
+				{
+					"VID_045E&PID_930A",  # Braille Sense & Smart Beetle
+					"VID_045E&PID_930B"  # Braille EDGE 40
+				},
+				False
+			),
+			bdDetect.DeviceType.SERIAL: (
+				{
+					"VID_0403&PID_6001",
+					"VID_1A86&PID_55D3"  # Braille Edge2S 40 
+				},
+				False
+			)
 		}
 
 		for deviceType, (ids, useAsFallback) in deviceTypes.items():
