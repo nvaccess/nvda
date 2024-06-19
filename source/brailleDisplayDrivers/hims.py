@@ -247,7 +247,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
-		device_types = {
+		deviceTypes = {
 			bdDetect.DeviceType.HID: ({"VID_045E&PID_940A"}, True),
 			bdDetect.DeviceType.CUSTOM: ({"VID_045E&PID_930A", "VID_045E&PID_930B"}, False),
 			bdDetect.DeviceType.SERIAL: ({"VID_0403&PID_6001", "VID_1A86&PID_55D3"}, False)
