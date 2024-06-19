@@ -630,12 +630,13 @@ class DriverRegistrar:
 			ret = _driverDevices[self._driver] = DriverDictT(set)
 			return ret
 
-	def addUsbDevices(self, type: DeviceType, ids: Set[str], useAsFallBack: bool = False):
+	def addUsbDevices(self, type: DeviceType, ids: set[str], useAsFallBack: bool = False):
 		"""Associate USB devices with the driver on this instance.
 		:param type: The type of the driver.
 		:param ids: A set of USB IDs in the form C{"VID_xxxx&PID_XXXX"}.
 			Note that alphabetical characters in hexadecimal numbers should be uppercase.
-   		:param useAsFallBack: A boolean flag to determine how USB devices are associated with the driver.
+		:param useAsFallBack: A boolean flag to determine how USB devices are associated with the driver.
+
 			If False (default), the devices are added directly to the primary driver list for the specified type,
 			meaning they are immediately available for use with the driver.
 			If True, the devices are added to a fallback list and are used only if the primary driver cannot use
