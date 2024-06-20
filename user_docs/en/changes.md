@@ -61,6 +61,7 @@ Unicode CLDR has also been updated.
 * In applications using Java Access Bridge, NVDA will now correctly read the last blank line of a text instead of repeating the previous line. (#9376, @dmitrii-drobotov)
 * In LibreOffice Writer (version 24.8 and newer), when toggling text formatting (bold, italic, underline, subscript/superscript, alignment) using the corresponding keyboard shortcut, NVDA announces the new formatting attribute (e.g. "Bold on", "Bold off"). (#4248, @michaelweghorn)
 * When navigating with the cursor keys in text boxes in applications which use UI Automation, NVDA no longer sometimes reports the wrong character, word, etc. (#16711, @jcsteh)
+* When pasting into the Windows 10/11 Calculator, NVDA now correctly reports the full number pasted. (#16573, @TristanBurchett)
 
 ### Changes for Developers
 
