@@ -1,9 +1,14 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited
+# Copyright (C) 2024 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+import winVersion
 import enum
+
+
+IS_64_BIT: bool = winVersion.getWinVer().processorArchitecture.endswith("64")
+"""True if the system is 64bit"""
 
 
 class HResult(enum.IntEnum):
