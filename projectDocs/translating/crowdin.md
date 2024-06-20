@@ -37,8 +37,8 @@ A proofreader is required for each language.
 Proofreader status is granted on a case-by-case basis by messaging the [translators mailing list](https://groups.io/g/nvda-translations) or <info@nvaccess.org>
 
 Proofreaders approve strings using the [Crowdin web interface](https://support.crowdin.com/online-editor/).
-PoEdit only supports viewing approved strings.
-When submitting to Crowdin from PoEdit, proofreaders are able to auto-approve all submitted strings.
+PoEdit does not support viewing unapproved strings from other translators.
+When manually uploading to Crowdin from PoEdit, proofreaders are able to auto-approve all submitted strings.
 
 ## Translating using PoEdit
 
@@ -62,7 +62,7 @@ Each time you press this key, PoEdit saves the po file, and if you check compile
 
 NVDA provides additional shortcuts for PoEdit which are described in [the User Guide](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#Poedit).
 
-If you are unsure of meaning of the original interface message, consult automatic comments (also called translator comments).
+If you are unsure of meaning of the original interface message, consult automatic comments (also called translator comments), by pressing `control+shift+a`.
 Some comments provide an example output message to help you understand what NVDA will say when speaking or brailling such messages.
 
 ## Translating the interface
@@ -133,10 +133,12 @@ If the number of plural forms for your language is incorrect please message the 
 
 Translators may wish to provide two different translations for the same English string depending on the context.
 Translation strings can be grouped by a tag to differentiate contexts.
-This allows differentiating the string "Status" being used in the Add-on Store context, as opposed to a different context.
 Translator comments provide additional context information.
 
-Example: `addonStore` for `Status`.
+The string `none` is defined three times:
+* without any context to report a lack of background pattern in Microsoft Excel
+* with the context tag `symbolLevel`
+* with the context tag `espeakVarient`
 
 In PoEdit, these tags are at the start of each translation string list item.
 In Crowdin, this information appears at the end of the context section.
