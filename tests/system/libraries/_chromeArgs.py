@@ -14,7 +14,12 @@ def getChromeArgs() -> str:
 	"""
 	return (
 		"chrome"  # Start Chrome
+		" --no-first-run"  # Don't show intro pages for the first run of chrome
 		" --force-renderer-accessibility"  # don't rely on chrome detecting a screen reader.
+		" --ash-no-nudges"  # Prevents Chrome from showing nudge messages.
+		" --browser-test"  # Enable browser test mode, helps reduce flakey tests
+		" --disable-default-apps"  # Don't show default apps on the new tab page.
+		" --keep-alive-for-test"  # Reduces start/stop time by keeping the app alive with no windows open.
 		" --suppress-message-center-popups"  # prevent popups that may interfere with automated tests.
 		" --disable-notifications"  # prevent notifications that may interfere with automated tests.
 		" --no-experiments"  # Stable behavior is preferred.

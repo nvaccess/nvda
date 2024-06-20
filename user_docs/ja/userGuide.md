@@ -540,7 +540,7 @@ NVDA設定ダイアログ「タッチ操作」カテゴリでも[タッチ操作
 このユーザーガイドではNVDAのいろいろなコマンドを説明しますが、タッチ画面でコマンドを実行するジェスチャーが、リストに含まれることがあります。
 ここではタッチ画面でのジェスチャーの操作について説明します。
 
-##### タップ {#toc45}
+##### タップ {#Taps}
 
 タップとは、1本または複数の指で画面をすばやく軽くトンとたたいてすぐに指を離す動作です。
 
@@ -552,7 +552,7 @@ NVDA設定ダイアログ「タッチ操作」カテゴリでも[タッチ操作
 タップを3回おこなうと、3回タップになります。それ以上でも同様です。
 このようなマルチタップのジェスチャーは、何本の指でタップしたか区別されます。つまり、2本指3回タップ、4本指タップなどです。
 
-##### スワイプ {#toc46}
+##### スワイプ {#Flicks}
 
 スワイプとは直線を描くように画面の上で指をすばやく動かしてすぐに指を離す動作です。
 
@@ -1706,7 +1706,7 @@ NVDA設定ダイアログには以下のカテゴリがあります。
 
 <!-- KC:setting -->
 
-##### NVDA設定ダイアログ「一般」カテゴリを開く {#toc110}
+##### NVDA設定ダイアログ「一般」カテゴリを開く {#OpenGeneralSettings}
 
 Key: `NVDA+Ctrl+G`
 
@@ -1802,7 +1802,7 @@ IP アドレスは更新チェック時にユーザーの国を判断するた�
 
 <!-- KC:setting -->
 
-##### NVDA設定ダイアログ「音声」カテゴリを開く {#toc123}
+##### NVDA設定ダイアログ「音声」カテゴリを開く {#OpenSpeechSettings}
 
 Key: `NVDA+Ctrl+V`
 
@@ -1945,7 +1945,7 @@ NVDA設定ダイアログを開かないでこのオプションを切り替え�
 
 <!-- KC:setting -->
 
-##### 音声エンジン選択ダイアログを開く {#toc144}
+##### 音声エンジン選択ダイアログを開く {#OpenSelectSynthesizer}
 
 Key: `NVDA+Ctrl+S`
 
@@ -2177,7 +2177,7 @@ NVDA設定ダイアログを開かないで選択範囲の表示を切り替え�
 
 <!-- KC:setting -->
 
-##### 点字ディスプレイ選択ダイアログを開く {#toc168}
+##### 点字ディスプレイ選択ダイアログを開く {#OpenSelectBrailleDisplay}
 
 Key: `NVDA+Ctrl+A`
 
@@ -2229,7 +2229,7 @@ NVDA は通信先の点字ディスプレイを区別できません。
 
 <!-- KC:setting -->
 
-##### NVDA設定ダイアログ「オーディオ」カテゴリを開く {#toc173}
+##### NVDA設定ダイアログ「オーディオ」カテゴリを開く {#OpenAudioSettings}
 
 Key: `NVDA+Ctrl+U`
 
@@ -2372,7 +2372,7 @@ NVDA 設定ダイアログのビジョンカテゴリでは [視覚的な補助�
 
 <!-- KC:setting -->
 
-##### NVDA設定ダイアログ「キーボード」カテゴリを開く {#toc188}
+##### NVDA設定ダイアログ「キーボード」カテゴリを開く {#OpenKeyboardSettings}
 
 Key: `NVDA+Ctrl+K`
 
@@ -2449,7 +2449,7 @@ NVDAキーとして選択されたキーがない場合、多くのNVDAコマン
 
 <!-- KC:setting -->
 
-##### NVDA設定ダイアログ「マウス」カテゴリを開く {#toc201}
+##### NVDA設定ダイアログ「マウス」カテゴリを開く {#OpenMouseSettings}
 
 Key: `NVDA+Ctrl+M`
 
@@ -2552,7 +2552,7 @@ NVDA設定ダイアログを開かないで簡易レビューモードを切り�
 
 <!-- KC:setting -->
 
-##### NVDA設定ダイアログ「オブジェクト表示」カテゴリを開く {#toc218}
+##### NVDA設定ダイアログ「オブジェクト表示」カテゴリを開く {#OpenObjectPresentationSettings}
 
 Key: `NVDA+Ctrl+O`
 
@@ -2667,7 +2667,7 @@ NVDA設定ダイアログのオブジェクト表示カテゴリでは、コン�
 
 <!-- KC:setting -->
 
-##### NVDA設定ダイアログ「ブラウズモード」カテゴリを開く {#toc236}
+##### NVDA設定ダイアログ「ブラウズモード」カテゴリを開く {#OpenBrowseModeSettings}
 
 Key: `NVDA+Ctrl+B`
 
@@ -2759,7 +2759,7 @@ NVDA設定ダイアログを開かないでレイアウトテーブルのオプ�
 
 <!-- KC:setting -->
 
-##### NVDA設定ダイアログ「書式とドキュメント情報」カテゴリを開く {#toc250}
+##### NVDA設定ダイアログ「書式とドキュメント情報」カテゴリを開く {#OpenDocumentFormattingSettings}
 
 Key: `NVDA+Ctrl+D`
 
@@ -3556,7 +3556,7 @@ NVDA設定ダイアログを開かないで点字ビューアーの有効、無�
 NVDAメニュー内のツールにあるPythonコンソールは開発用のツールで、デバッグや一般的なNVDA内部の動作検証、アプリのアクセシビリティ階層構造の検査などに使用できます。
 詳細は、[NVDA 開発者ガイド](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)を参照してください。
 
-### アドオンストア {#toc314}
+### アドオンストア {#AddonStoreMenuItem}
 
 [NVDAアドオンストア](#AddonsManager)が開きます。
 詳細については[アドオンとアドオンストア](#AddonsManager)をお読みください。
@@ -4005,7 +4005,7 @@ USB接続で HumanWare プロトコルを使用する場合は、事前に製造
 以下は Brailliant BI/B および BrailleNote touch で使用できるNVDA用のキー割り当てです。
 各キーの位置については、ディスプレイの説明書を参照してください。
 
-#### すべてのモデル {#toc334}
+#### すべてのモデル {#HumanWareBrailliantKeyAssignmentForAllModels}
 
 <!-- KC:beginInclude -->
 
@@ -4034,7 +4034,7 @@ USB接続で HumanWare プロトコルを使用する場合は、事前に製造
 
 <!-- KC:endInclude -->
 
-#### Brailliant BI 32, BI 40 および B 80 {#toc335}
+#### Brailliant BI 32, BI 40 および B 80 {#HumanWareBrailliantKeyAssignmentForBI32BI40AndB80}
 
 <!-- KC:beginInclude -->
 
@@ -4046,7 +4046,7 @@ USB接続で HumanWare プロトコルを使用する場合は、事前に製造
 
 <!-- KC:endInclude -->
 
-#### Brailliant BI 14 {#toc336}
+#### Brailliant BI 14 {#HumanWareBrailliantKeyAssignmentForBI14}
 
 <!-- KC:beginInclude -->
 

@@ -1,16 +1,17 @@
 # What's New in NVDA
 
 ## 2024.3
+The Add-on Store will now notify you if any add-on updates are available on NVDA start up.
 
 This release adds support for Unicode Normalization to speech and braille output.
 This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
 It also allows reading of equations in the Microsoft Word equation editor.
-You can enable this functionality for both speech and braille in their respective settings categories in the NVDA Settings dialog.
 
 There are several bug fixes, particularly for the Windows 11 Emoji Panel and Clipboard history.
 For web browsers, there are fixes for reporting error messages, figures, captions, table labels and checkbox/radio button menu items.
 
-Unicode CLDR has been updated.
+Liblouis has been updated, adding new Braille tables for Cyrillic Serbian, Yiddish, several ancient languages (Biblical Hebrew, Akkadian, Syriac, and Ugaritic), and transliterated Cuneiform text.
+Unicode CLDR has also been updated.
 
 
 ### New Features
@@ -21,16 +22,27 @@ Unicode CLDR has been updated.
   * This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
   * It also allows reading of equations in the Microsoft Word equation editor. (#4631)
   * You can enable this functionality for both speech and braille in their respective settings categories in the NVDA Settings dialog.
+* New Braille features:
+  * Added support for the Help Tech Activator Pro displays. (#16668)
+* By default, after NVDA startup, you will be notified if any add-on updates are available. (#15035)
+  * This can be disabled in the "Add-on Store" category of settings.
+  * NVDA checks daily for add-on updates.
+  * Only updates within the same channel will be checked (e.g. installed beta add-ons will only notify for updates in the beta channel).
 
 ### Changes
 
 * Component updates:
   * Updated Unicode CLDR to version 45.0. (#16507, @OzancanKaratas)
   * Updated fast_diff_match_patch (used to detect changes in terminals and other dynamic content) to version 2.1.0. (#16508, @codeofdusk)
+  * Updated LibLouis Braille translator to [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0). (#16652, @codeofdusk)
+    * New Braille tables for Cyrillic Serbian, Yiddish, several ancient languages (Biblical Hebrew, Akkadian, Syriac, and Ugaritic), and transliterated Cuneiform text.
+  * Updated NSIS 3.09 to 3.10 (#16674, @dpy013)
 * The fallback braille input table is now equal to the fallback output table, which is Unified English Braille Code grade 1. (#9863, @JulienCochuyt, @LeonarddeR)
 * NVDA will now report figures with no accessible children, but with a label or description. (#14514)
 * When reading by line in browse mode, "caption" is no longer reported on each line of a long figure or table caption. (#14874)
 * In the Python console, the last unexecuted command will no longer be lost when moving in the input history. (#16653, @CyrilleB79)
+* A unique anonymous ID is now sent as part of optional NVDA usage statistics gathering. (#16266)
+* By default, a new folder will be created when making a portable copy. Warnings have been added when writing to a non-empty directory. (#16684)
 
 ### Bug Fixes
 * Windows 11 fixes:
@@ -48,6 +60,7 @@ Unicode CLDR has been updated.
 * NVDA will correctly announce selection changes when editing a cell's text in Microsoft Excel. (#15843)
 * In applications using Java Access Bridge, NVDA will now correctly read the last blank line of a text instead of repeating the previous line. (#9376, @dmitrii-drobotov)
 * In LibreOffice Writer (version 24.8 and newer), when toggling text formatting (bold, italic, underline, subscript/superscript, alignment) using the corresponding keyboard shortcut, NVDA announces the new formatting attribute (e.g. "Bold on", "Bold off"). (#4248, @michaelweghorn)
+* When navigating with the cursor keys in text boxes in applications which use UI Automation, NVDA no longer sometimes reports the wrong character, word, etc. (#16711, @jcsteh)
 
 ### Changes for Developers
 
@@ -63,6 +76,11 @@ It is especially useful to read the error location markers in tracebacks. (#1632
 * When a `gainFocus` event is queued with an object that has a valid `focusRedirect` property, the object pointed to by the `focusRedirect` property is now held by `eventHandler.lastQueuedFocusObject`, rather than the originally queued object. (#15843)
 * NVDA will log its executable architecture (x86) at startup. (#16432, @josephsl)
 * `wx.CallAfter`, which is wrapped in `monkeyPatches/wxMonkeyPatches.py`, now includes proper `functools.wraps` indication. (#16520, @XLTechie)
+* There is a new module for scheduling tasks `utils.schedule`, using the pip module `schedule`. (#16636)
+  * You can use `scheduleThread.scheduleDailyJobAtStartUp` to automatically schedule a job that happens after NVDA starts, and every 24 hours after that.
+  Jobs are scheduled with a delay to avoid conflicts.
+  * `scheduleThread.scheduleDailyJob` and `scheduleJob` can be used to schedule jobs at custom times, where a `JobClashError` will be raised on a known job scheduling clash.
+* It is now possible to create app modules for apps hosting Edge WebView2 (msedgewebview2.exe) controls. (#16705, @josephsl)
 
 #### Deprecations
 
