@@ -88,7 +88,9 @@ class _DataManager:
 		self._preferredChannel = Channel.ALL
 		self._cacheLatestFile = os.path.join(WritePaths.addonStoreDir, _DataManager._cacheLatestFilename)
 		self._cacheCompatibleFile = os.path.join(WritePaths.addonStoreDir, _DataManager._cacheCompatibleFilename)
-		self._cacheCompatibleOldFile = os.path.join(WritePaths.addonStoreDir, _DataManager._cacheCompatibleOldFilename)
+		self._cacheCompatibleOldFile = os.path.join(
+			WritePaths.addonStoreDir, _DataManager._cacheCompatibleOldFilename
+		)
 		self._installedAddonDataCacheDir = WritePaths.addonsDir
 
 		if NVDAState.shouldWriteToDisk():
@@ -168,12 +170,12 @@ class _DataManager:
 			with open(self._cacheCompatibleFile, 'r', encoding='utf-8') as cacheFile:
 				cacheData = json.load(cacheFile)
 		except Exception:
-			log.exception(f"Invalid add-on store cache")
+			log.exception("Invalid add-on store cache")
 		try:
 			with open(self._cacheCompatibleOldFile, 'w', encoding='utf-8') as cacheFile:
 				json.dump(cacheData, cacheFile, ensure_ascii=False)
 		except Exception:
-			log.exception(f"Unable to backup add-on store cache")
+			log.exception("Unable to backup add-on store cache")
 
 	def _cacheLatestAddons(self, addonData: str, cacheHash: Optional[str]):
 		if not NVDAState.shouldWriteToDisk():
@@ -196,7 +198,7 @@ class _DataManager:
 			with open(cacheFilePath, 'r', encoding='utf-8') as cacheFile:
 				cacheData = json.load(cacheFile)
 		except Exception:
-			log.exception(f"Invalid add-on store cache")
+			log.exception("Invalid add-on store cache")
 			if NVDAState.shouldWriteToDisk():
 				os.remove(cacheFilePath)
 			return None

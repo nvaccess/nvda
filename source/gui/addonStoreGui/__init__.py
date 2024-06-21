@@ -29,6 +29,7 @@ def initialize():
 		queueToThread=ThreadTarget.GUI,
 	)
 
+
 def showNewAddons():
 	if AddonsAutomaticUpdate.NOTIFY == config.conf["addonStore"]["showNewAddons"]:
 		availableNewAddons = addonDataManager._checkForNewAddons()
