@@ -157,6 +157,7 @@ class _StatusFilterKey(DisplayStringEnum):
 	UPDATE = enum.auto()
 	AVAILABLE = enum.auto()
 	INCOMPATIBLE = enum.auto()
+	NEW = enum.auto()
 
 	@property
 	def _displayStringLabels(self) -> Dict["_StatusFilterKey", str]:
@@ -173,6 +174,9 @@ class _StatusFilterKey(DisplayStringEnum):
 			# Translators: The label of a tab to display incompatible add-ons in the add-on store.
 			# Ensure the translation matches the label for the add-on list which includes an accelerator key.
 			self.INCOMPATIBLE: pgettext("addonStore", "Installed incompatible add-ons"),
+			# Translators: The label of a tab to display new add-ons in the add-on store.
+			# Ensure the translation matches the label for the add-on list which includes an accelerator key.
+			self.NEW: pgettext("addonStore", "Available new add-ons"),
 		}
 
 	@property
@@ -194,6 +198,10 @@ class _StatusFilterKey(DisplayStringEnum):
 			# Preferably use the same accelerator key for the four labels.
 			# Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
 			self.INCOMPATIBLE: pgettext("addonStore", "Installed incompatible &add-ons"),
+			# Translators: The label of the add-ons list in the corresponding panel.
+			# Preferably use the same accelerator key for the four labels.
+			# Ensure the translation matches the label for the add-on tab which has the accelerator key removed.
+			self.NEW: pgettext("addonStore", "Available new &add-ons"),
 		}
 
 	@property
@@ -313,7 +321,7 @@ def getStatus(model: "_AddonGUIModel", context: _StatusFilterKey) -> AvailableAd
 	:return: Status of add-on for the context of the current tab.
 	"""
 
-	if context in (_StatusFilterKey.AVAILABLE, _StatusFilterKey.UPDATE):
+	if context in (_StatusFilterKey.AVAILABLE, _StatusFilterKey.UPDATE, _StatusFilterKey.NEW):
 		downloadableStatus = _getDownloadableStatus(model)
 		if downloadableStatus:
 			# Is this available in the add-on store and not installed?
@@ -417,6 +425,8 @@ _statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = Order
 		AvailableAddonStatus.INCOMPATIBLE_ENABLED,
 		AvailableAddonStatus.UNKNOWN,
 	},
+	_StatusFilterKey.NEW: _installingStatuses
+	.union({AvailableAddonStatus.AVAILABLE})
 })
 """A dictionary where the keys are a status to filter by,
 and the values are which statuses should be shown for a given filter.

@@ -321,6 +321,7 @@ class AddonStoreDialog(SettingsDialog):
 		if self._storeVM._filteredStatusKey in {
 			_StatusFilterKey.AVAILABLE,
 			_StatusFilterKey.UPDATE,
+			_StatusFilterKey.NEW,
 		}:
 			if self._storeVM._filteredStatusKey == _StatusFilterKey.UPDATE and (
 				self._storeVM._installedAddons[Channel.DEV]
@@ -331,8 +332,9 @@ class AddonStoreDialog(SettingsDialog):
 				self._storeVM._filterChannelKey = Channel.STABLE
 			self.enabledFilterCtrl.Hide()
 			self.enabledFilterCtrl.Disable()
-			self.includeIncompatibleCtrl.Enable()
-			self.includeIncompatibleCtrl.Show()
+			if self._storeVM._filteredStatusKey != _StatusFilterKey.NEW:
+				self.includeIncompatibleCtrl.Enable()
+				self.includeIncompatibleCtrl.Show()
 		else:
 			self.channelFilterCtrl.Append(Channel.EXTERNAL.displayString)
 			self._storeVM._filterChannelKey = Channel.ALL

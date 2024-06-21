@@ -79,6 +79,7 @@ def terminate():
 class _DataManager:
 	_cacheLatestFilename: str = "_cachedLatestAddons.json"
 	_cacheCompatibleFilename: str = "_cachedCompatibleAddons.json"
+	_cacheCompatibleOldFilename: str = "_cachedCompatibleAddons-old.json"
 	_downloadsPendingInstall: Set[Tuple["AddonListItemVM[_AddonStoreModel]", os.PathLike]] = set()
 	_downloadsPendingCompletion: Set["AddonListItemVM[_AddonStoreModel]"] = set()
 
@@ -87,6 +88,7 @@ class _DataManager:
 		self._preferredChannel = Channel.ALL
 		self._cacheLatestFile = os.path.join(WritePaths.addonStoreDir, _DataManager._cacheLatestFilename)
 		self._cacheCompatibleFile = os.path.join(WritePaths.addonStoreDir, _DataManager._cacheCompatibleFilename)
+		self._cacheCompatibleOldFile = os.path.join(WritePaths.addonStoreDir, _DataManager._cacheCompatibleOldFilename)
 		self._installedAddonDataCacheDir = WritePaths.addonsDir
 
 		if NVDAState.shouldWriteToDisk():
@@ -110,6 +112,7 @@ class _DataManager:
 			self._initialiseAvailableAddonsThread.join(timeout=1)
 		if self._initialiseAvailableAddonsThread.is_alive():
 			log.debugWarning("initialiseAvailableAddons thread did not terminate immediately")
+		self._cacheCompatibleAddonsBackup()
 
 	def _getLatestAddonsDataForVersion(self, apiVersion: str) -> Optional[bytes]:
 		url = _getAddonStoreURL(self._preferredChannel, self._lang, apiVersion)
@@ -157,6 +160,20 @@ class _DataManager:
 		}
 		with open(self._cacheCompatibleFile, 'w', encoding='utf-8') as cacheFile:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
+
+	def _cacheCompatibleAddonsBackup(self):
+		if not NVDAState.shouldWriteToDisk():
+			return
+		try:
+			with open(self._cacheCompatibleFile, 'r', encoding='utf-8') as cacheFile:
+				cacheData = json.load(cacheFile)
+		except Exception:
+			log.exception(f"Invalid add-on store cache")
+		try:
+			with open(self._cacheCompatibleOldFile, 'w', encoding='utf-8') as cacheFile:
+				json.dump(cacheData, cacheFile, ensure_ascii=False)
+		except Exception:
+			log.exception(f"Unable to backup add-on store cache")
 
 	def _cacheLatestAddons(self, addonData: str, cacheHash: Optional[str]):
 		if not NVDAState.shouldWriteToDisk():
@@ -280,6 +297,12 @@ class _DataManager:
 		if self._latestAddonCache is None:
 			return _createAddonGUICollection()
 		return deepcopy(self._latestAddonCache.cachedAddonData)
+
+	def _getOldAddons(self):
+		oldCompatibleAddons = self._getCachedAddonData(self._cacheCompatibleOldFile)
+		if oldCompatibleAddons is None:
+			return _createAddonGUICollection()
+		return deepcopy(oldCompatibleAddons.cachedAddonData)
 
 	def _deleteCacheInstalledAddon(self, addonId: str):
 		addonCachePath = os.path.join(self._installedAddonDataCacheDir, f"{addonId}.json")

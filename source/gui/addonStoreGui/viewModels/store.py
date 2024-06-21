@@ -566,6 +566,7 @@ class AddonStoreVM:
 		if self._filteredStatusKey in {
 			_StatusFilterKey.AVAILABLE,
 			_StatusFilterKey.UPDATE,
+			_StatusFilterKey.NEW,
 		}:
 			self._refreshAddonsThread = threading.Thread(
 				target=self._getAvailableAddonsInBG,
@@ -603,6 +604,14 @@ class AddonStoreVM:
 						and incompatibleAddons[channel][addonId].canOverrideCompatibility
 					):
 						availableAddons[channel][addonId] = incompatibleAddons[channel][addonId]
+		elif self._filteredStatusKey == _StatusFilterKey.NEW:
+			oldAddons = addonDataManager._getOldAddons()
+			newAddons = _createAddonGUICollection()
+			for channel in availableAddons:
+				for addonId in availableAddons[channel]:
+					if addonId not in oldAddons[channel]:
+						newAddons[channel][addonId] = availableAddons[channel][addonId]
+			availableAddons = newAddons
 		log.debug("completed getting addons in the background")
 		self._availableAddons = availableAddons
 		self.listVM.resetListItems(self._createListItemVMs())
@@ -643,6 +652,7 @@ class AddonStoreVM:
 		if self._filteredStatusKey in {
 			_StatusFilterKey.AVAILABLE,
 			_StatusFilterKey.UPDATE,
+			_StatusFilterKey.NEW,
 		}:
 			addons = self._availableAddons
 
