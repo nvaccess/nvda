@@ -2919,7 +2919,7 @@ class AddonStorePanel(SettingsPanel):
 			wx.Choice,
 			choices=[mode.displayString for mode in AddonsAutomaticUpdate]
 		)
-		self.bindHelpEvent("AutomaticAddonUpdates", self.showNewAddonsComboBox)
+		self.bindHelpEvent("ShowNewAddons", self.showNewAddonsComboBox)
 		index = [x.value for x in AddonsAutomaticUpdate].index(config.conf["addonStore"]["showNewAddons"])
 		self.showNewAddonsComboBox.SetSelection(index)
 
