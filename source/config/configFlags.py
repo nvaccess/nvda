@@ -220,3 +220,18 @@ class AddonsAutomaticUpdate(DisplayStringStrEnum):
 			# Translators: This is a label for the automatic update behaviour for add-ons.
 			self.DISABLED: _("Disabled"),
 		}
+
+
+class ShowNewAddons(DisplayStringStrEnum):
+	NOTIFY = "notify"
+	DISABLED = "disabled"
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: This is a label for the show new add-ons at startup behavior.
+			# It will notify the user when new add-ons are available.
+			self.NOTIFY: _("Notify"),
+			# Translators: This is a label for the show new add-ons at startup behavior.
+			self.DISABLED: _("Disabled"),
+		}

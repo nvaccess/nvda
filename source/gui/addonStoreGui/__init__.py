@@ -2,11 +2,12 @@
 # Copyright (C) 2022-2024 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
 import wx
 
 from addonStore.dataManager import addonDataManager
 import config
-from config.configFlags import AddonsAutomaticUpdate
+from config.configFlags import ShowNewAddons
 import gui
 from utils.schedule import scheduleThread, ThreadTarget
 
@@ -31,7 +32,7 @@ def initialize():
 
 
 def showNewAddons():
-	if AddonsAutomaticUpdate.NOTIFY == config.conf["addonStore"]["showNewAddons"]:
+	if ShowNewAddons.NOTIFY == config.conf["addonStore"]["showNewAddons"]:
 		availableNewAddons = addonDataManager._checkForNewAddons()
 		if availableNewAddons:
 			wx.CallAfter(gui.mainFrame.onAddonStoreNewAddonsCommand, None)

@@ -28,6 +28,7 @@ from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, Sy
 import config
 from config.configFlags import (
 	AddonsAutomaticUpdate,
+	ShowNewAddons,
 	NVDAKey,
 	ShowMessages,
 	TetherTo,
@@ -2926,7 +2927,7 @@ class AddonStorePanel(SettingsPanel):
 		index = self.automaticUpdatesComboBox.GetSelection()
 		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsAutomaticUpdate][index]
 		index = self.showNewAddonsComboBox.GetSelection()
-		config.conf["addonStore"]["showNewAddons"] = [x.value for x in AddonsAutomaticUpdate][index]
+		config.conf["addonStore"]["showNewAddons"] = [x.value for x in ShowNewAddons][index]
 
 
 class TouchInteractionPanel(SettingsPanel):
