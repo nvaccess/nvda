@@ -345,7 +345,7 @@ During the installation process, add-ons may display dialogs that you will need 
 
 #### Managing installed add-ons {#ManagingInstalledAddons}
 Press `control+tab` to move between the tabs of the Add-on Store.
-The tabs include: "Installed add-ons", "Updatable add-ons", "Available add-ons" and "Installed incompatible add-ons".
+The tabs include: "Installed add-ons", "Updatable add-ons", "Available add-ons" "Installed incompatible add-ons" and "Available new add-ons".
 Each of the tabs are set out similar to each other, as a list of add-ons, a panel for more details on the selected add-on, and a button to perform actions for the selected add-on.
 The actions menu of installed add-ons includes "Disable" and "Remove" rather than "Install".
 Disabling an add-on stops NVDA from loading it, but leaves it installed.
@@ -2945,6 +2945,21 @@ For example, for installed beta add-ons, you will only be notified of updates wi
 |---|---|
 |Enabled |Notify when updates are available to add-ons within the same channel |
 |Disabled |Do not automatically check for updates to add-ons |
+
+##### Show New Add-ons {#ShowNewAddons}
+
+When this option is set to "Notify", the Add-on Store will notify you after NVDA startup if new add-ons were made available from the store since the last time you exitted NVDA.
+You can check this at any moment moving to the Available new add-ons tab of the store.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Notify (Default), Disabled |
+|Default |Notify |
+
+|Option |Behaviour |
+|---|---|
+|Enabled |Notify when new add-ons are available |
+|Disabled |Do not automatically check for new add-ons |
 
 #### Windows OCR Settings {#Win10OcrSettings}
 
