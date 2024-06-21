@@ -207,6 +207,22 @@ For example: "Clock".
 
 Full automatic updating is not currently supported.
 
+### Check for new add-ons
+
+1. Remove `source/userConfig/addonStore/_cachedCompatibleAddons-old.json`, or edit this file removing some entries corresponding to cached add-ons
+1. Open the store to the New available add-ons tab
+1. Ensure Show new add-ons notifications are enabled in the Add-on Store panel
+1. Trigger the Show new add-ons notification manually, or alternatively wait for the notification to occur
+    1. From the NVDA Python console, find the scheduled thread
+        ```py
+        import schedule
+        schedule.jobs
+        ```
+    1. Replace `i` with the index of the scheduled thread to find the job
+        ```py
+        schedule.jobs[i].run()
+        ```
+
 ## Other add-on actions
 
 ### Disabling an add-on
@@ -283,3 +299,4 @@ Where you can find your NVDA user configuration folder:
 - For installed copies: `%APPDATA%\nvda`
 - For source copies: `source\userConfig`
 - Inside a portable copy directory: `userConfig`
+
