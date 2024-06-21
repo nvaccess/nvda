@@ -2925,7 +2925,7 @@ class AddonStorePanel(SettingsPanel):
 	def onSave(self):
 		index = self.automaticUpdatesComboBox.GetSelection()
 		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsAutomaticUpdate][index]
-		index = self.showAddonsComboBox.GetSelection()
+		index = self.showNewAddonsComboBox.GetSelection()
 		config.conf["addonStore"]["showNewAddons"] = [x.value for x in AddonsAutomaticUpdate][index]
 
 
