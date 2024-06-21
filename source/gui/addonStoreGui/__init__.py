@@ -4,6 +4,7 @@
 # See the file COPYING for more details.
 import wx
 
+from addonStore.dataManager import addonDataManager
 import config
 from config.configFlags import AddonsAutomaticUpdate
 import gui
@@ -30,5 +31,6 @@ def initialize():
 
 def showNewAddons():
 	if AddonsAutomaticUpdate.NOTIFY == config.conf["addonStore"]["showNewAddons"]:
-		wx.CallAfter(gui.mainFrame.onAddonStoreNewAddonsCommand, None)
-
+		availableNewAddons = addonDataManager._checkForNewAddons()
+		if availableNewAddons:
+			wx.CallAfter(gui.mainFrame.onAddonStoreNewAddonsCommand, None)

@@ -298,11 +298,21 @@ class _DataManager:
 			return _createAddonGUICollection()
 		return deepcopy(self._latestAddonCache.cachedAddonData)
 
+	def _checkForNewAddons(self) -> bool:
+		oldAddons = self._getOldAddons()
+		compatibleAddons = self.getLatestCompatibleAddons()
+		for channel in compatibleAddons:
+			for addonId in compatibleAddons[channel]:
+				if addonId not in oldAddons[channel]:
+					return True
+		return False
+
 	def _getOldAddons(self):
 		oldCompatibleAddons = self._getCachedAddonData(self._cacheCompatibleOldFile)
 		if oldCompatibleAddons is None:
 			return _createAddonGUICollection()
-		return deepcopy(oldCompatibleAddons.cachedAddonData)
+		oldAddons = deepcopy(oldCompatibleAddons.cachedAddonData)
+		return oldAddons
 
 	def _deleteCacheInstalledAddon(self, addonId: str):
 		addonCachePath = os.path.join(self._installedAddonDataCacheDir, f"{addonId}.json")
