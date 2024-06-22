@@ -335,9 +335,8 @@ class GlobalCommands(ScriptableObject):
 			if scriptCount == 0:
 				speech.speakTextSelected(info.text)
 				braille.handler.message(selectMessage)
-
 			elif scriptCount == 3:
-				ui.browseableMessage(info.text)
+				ui.browseableMessage(info.text, copyButton=True, closeButton=True)
 				return
 
 			elif len(info.text) < speech.speech.MAX_LENGTH_FOR_SELECTION_REPORTING:
