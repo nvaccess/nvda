@@ -19,9 +19,14 @@ function onCopyButtonPress() {
 	rng.moveToElementText(messageID);
 	rng.scrollIntoView();
 	rng.select();
-	rng.execCommand("Copy");
+	var success = rng.execCommand("Copy");
 	rng.collapse(false);
 	rng.select();
+	if (success) {  // Notify the user about the copy result
+		alert("Copied to clipboard");
+	} else {
+		alert("Couldn't copy to clipboard");
+	}
 }
 
 function onCloseButtonPress() {
