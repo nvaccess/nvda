@@ -100,6 +100,7 @@ class _DataManager:
 
 		self._latestAddonCache = self._getCachedAddonData(self._cacheLatestFile)
 		self._compatibleAddonCache = self._getCachedAddonData(self._cacheCompatibleFile)
+		self._oldAddonCache = self._getCachedAddonData(self._cacheCompatibleOldFile)
 		self._installedAddonsCache = _InstalledAddonsCache()
 		# Fetch available add-ons cache early
 		self._initialiseAvailableAddonsThread = threading.Thread(
@@ -171,11 +172,8 @@ class _DataManager:
 				cacheData = json.load(cacheFile)
 		except Exception:
 			log.exception("Invalid add-on store cache")
-		try:
-			with open(self._cacheCompatibleOldFile, 'w', encoding='utf-8') as cacheFile:
-				json.dump(cacheData, cacheFile, ensure_ascii=False)
-		except Exception:
-			log.exception("Unable to backup add-on store cache")
+		with open(self._cacheCompatibleOldFile, 'w', encoding='utf-8') as cacheFile:
+			json.dump(cacheData, cacheFile, ensure_ascii=False)
 
 	def _cacheLatestAddons(self, addonData: str, cacheHash: Optional[str]):
 		if not NVDAState.shouldWriteToDisk():
@@ -309,11 +307,10 @@ class _DataManager:
 					return True
 		return False
 
-	def _getOldAddons(self):
-		oldCompatibleAddons = self._getCachedAddonData(self._cacheCompatibleOldFile)
-		if oldCompatibleAddons is None:
+	def _getOldAddons(self) -> "AddonGUICollectionT":
+		if self._oldAddonCache is None:
 			return _createAddonGUICollection()
-		oldAddons = deepcopy(oldCompatibleAddons.cachedAddonData)
+		oldAddons = deepcopy(self._oldAddonCache.cachedAddonData)
 		return oldAddons
 
 	def _deleteCacheInstalledAddon(self, addonId: str):
