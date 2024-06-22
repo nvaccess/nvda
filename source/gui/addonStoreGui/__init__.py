@@ -32,7 +32,10 @@ def initialize():
 
 
 def showNewAddons():
-	if ShowNewAddons.NOTIFY == config.conf["addonStore"]["showNewAddons"]:
+	if (
+		ShowNewAddons.NOTIFY == config.conf["addonStore"]["showNewAddons"]
+		and addonDataManager._oldAddonCache is not None
+	):
 		availableNewAddons = addonDataManager._checkForNewAddons()
 		if availableNewAddons:
 			wx.CallAfter(gui.mainFrame.onAddonStoreNewAddonsCommand, None)
