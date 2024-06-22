@@ -4,10 +4,12 @@
 <TITLE></TITLE>
 <SCRIPT LANGUAGE=javascript>
 <!--
-function escapeKeyPress(e) {
+function handleKeyPress(e) {
 	e = e || window.event;
 	if(e.keyCode == 27){ // code for escape
 		window.close();
+	} else if (e.altKey && e.keyCode === 67) {
+		onCopyButtonPress();
 	}
 }
 
@@ -49,7 +51,7 @@ function windowOnLoad() {
 //-->
 </SCRIPT>
 </HEAD>
-<BODY tabindex='0' id='main_body' style="margin:1em" LANGUAGE=javascript onload="return windowOnLoad()" onkeypress="return escapeKeyPress()" >
+<BODY tabindex='0' id='main_body' style="margin:1em" LANGUAGE=javascript onload="return windowOnLoad()" onkeypress="return handleKeyPress()" >
 <div id=messageID></div>
 <div id="buttonDiv" style="display: none;"><hr>
 <span id="copyButtonSpan" style="display: none;"><button id="copyButton" onclick="onCopyButtonPress();"></button>&nbsp;</span>
