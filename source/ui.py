@@ -93,7 +93,7 @@ def browseableMessage(
 		message: str,
 		title: Optional[str] = None,
 		isHtml: bool = False,
-		closeButtonText: Optional[str] = None,
+		closeButton: bool = False,
 		copyButton: bool = False
 ) -> None:
 	"""Present a message to the user that can be read in browse mode.
@@ -101,7 +101,7 @@ def browseableMessage(
 	:param message: The message in either html or text.
 	:param title: The title for the message, defaults to "NVDA Message".
 	:param isHtml: Whether the message is html, defaults to False.
-	:param closeButtonText: Text to use as label for a "close" button, defaults to None, meaning no close button.
+	:param closeButton: Whether to include a "close" button, defaults to False.
 	:param copyButton: Whether to include a "copy" (to clipboard) button, defaults to False.
 	"""
 	if isRunningOnSecureDesktop():
@@ -131,8 +131,9 @@ def browseableMessage(
 		return
 	d.add("title", title)
 	d.add("message", message)
-	if closeButtonText is not None:
-		d.add("closeButtonText", closeButtonText)
+	if closeButton:
+		# Translators: The text of a button which closes the window.
+d.add("closeButtonText", _("Close"))
 	if copyButton:
 		# Translators: The text of a button to copy the text of the window to the clipboard.
 		d.add("copyButtonText", _("Copy"))
