@@ -137,17 +137,17 @@ class AudioSessionCallback(DummyAudioSessionCallback):
 
 	def register(self, applyToFuture: bool = True):
 		"""
-			Registers this callback.
-			This will internally call onSessionUpdate() for all current audio sessions.
-			Additionally if applyToFuture is True, it will also call onSessionUpdate() for all newly created sessions
-			until this callback is unregistered.
+		Registers this callback.
+		This will internally call onSessionUpdate() for all current audio sessions.
+		Additionally if applyToFuture is True, it will also call onSessionUpdate() for all newly created sessions
+		until this callback is unregistered.
 		"""
 		_applyToAllAudioSessions(self, applyToFuture)
 
 	def unregister(self, runTerminators: bool = True):
 		"""
-			Unregisters this callback.
-			If runTerminators is True, it will also trigger onSessionTerminated for all current audio sessions.
+		Unregisters this callback.
+		If runTerminators is True, it will also trigger onSessionTerminated for all current audio sessions.
 		"""
 		if self._audioSessionNotification is not None:
 			_audioSessionManager.UnregisterSessionNotification(self._audioSessionNotification)
