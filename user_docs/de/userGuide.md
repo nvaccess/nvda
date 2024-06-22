@@ -540,7 +540,7 @@ Sie können den Finger dann auch über den Bildschirm bewegen, um Text und Steue
 Weiter unten im Handbuch finden Sie bei den Beschreibungen zu den NVDA-Befehlen auch Gesten, mit denen die betreffenden Befehle ausgeführt werden können, wenn Sie einen Touchscreen verwenden.
 In den folgenden Abschnitten finden Sie Anweisungen, wie bestimmte Gesten mit dem Touchscreen verwendet werden.
 
-##### Tippen {#toc45}
+##### Tippen {#Taps}
 
 Tippen Sie schnell mit einem oder mehreren Fingern
 
@@ -552,7 +552,7 @@ Zweimal Tippen wird als Doppel-Tippen erkannt.
 Dreimal Tippen wird als Dreifach-Tippen erkannt, etc.
 Dabei werden ebenfalls die Anzahl der verwendeten Finger erkannt. Ein Doppel-Tippen mit drei Fingern wird dabei ebenso erkannt, wie ein einfaches Tippen mit vier Fingern.
 
-##### Wischen {#toc46}
+##### Wischen {#Flicks}
 
 Hierbei müssen Sie schnell über den Bildschirm wischen.
 
@@ -1706,7 +1706,7 @@ Weiter unten finden Sie Erläuterungen zu jeder Kategorie aus den NVDA-Einstellu
 
 <!-- KC:setting -->
 
-##### Allgemeine Einstellungen öffnen {#toc110}
+##### Allgemeine Einstellungen öffnen {#OpenGeneralSettings}
 
 Tastenkombination: `NVDA+Strg+G`
 
@@ -1802,7 +1802,7 @@ Sie können ausstehende Updates auch manuell über das NVDA-Menü, das Dialogfel
 
 <!-- KC:setting -->
 
-##### Einstellungen für Sprachausgaben öffnen {#toc123}
+##### Sprachausgaben-Einstellungen öffnen {#OpenSpeechSettings}
 
 Tastenkombination: `NVDA+Strg+V`
 
@@ -1934,8 +1934,8 @@ Die verzögerte Zeichenbeschreibung wird abgebrochen, wenn während dieser Zeit 
 
 ##### Verfügbare Modi im Befehl Sprachmodus wechseln {#SpeechModesDisabling}
 
-Mit dieser aktivierbare Liste können Sie auswählen, welche [Sprachmodi](#SpeechModes) enthalten sind, wenn mit der Tastenkombination `NVDA+S` zwischen ihnen gewechselt wird.
-Modi, die nicht markiert sind, sind ausgeschlossen.
+Mit dieser aktivierbare Liste können Sie auswählen, welche [Sprachmodi](#SpeechModes) enthalten sind, sobald mit der Tastenkombination `NVDA+S` zwischen diesen gewechselt wird.
+Modi, die nicht ausgewählt sind, werden ausgeschlossen.
 Standardmäßig sind alle Modi enthalten.
 
 Wenn Sie beispielsweise die Modi Signaltöne und Aus nicht benötigen, sollten Sie diese beiden deaktivieren und sowohl Sprechen als auch bei Bedarf aktiviert lassen.
@@ -1945,7 +1945,7 @@ Beachten Sie, dass mindestens zwei Modi aktiviert sein müssen.
 
 <!-- KC:setting -->
 
-##### Das Dialogfeld zum Sprachausgabe auswählen öffnen {#toc144}
+##### Das Dialogfeld für Sprachausgabe auswählen öffnen {#OpenSelectSynthesizer}
 
 Tastenkombination: `NVDA+Strg+S`
 
@@ -2177,7 +2177,7 @@ Um die Auswahl von einer beliebigen Stelle aus umzuschalten, weisen Sie bitte ei
 
 <!-- KC:setting -->
 
-##### Dialogfeld zum Auswählen der Braillezeile öffnen {#toc168}
+##### Dialogfeld für Braillezeile auswählen öffnen {#OpenSelectBrailleDisplay}
 
 Tastenkombination: `NVDA+Strg+A`
 
@@ -2229,7 +2229,7 @@ Es wird daher empfohlen, immer nur eine Braillezeile eines bestimmten Typs / Her
 
 <!-- KC:setting -->
 
-##### Audio-Einstellungen öffnen {#toc173}
+##### Audio-Einstellungen öffnen {#OpenAudioSettings}
 
 Tastenkombination: `NVDA+Strg+U`
 
@@ -2372,7 +2372,7 @@ Die unterstützten Einstellungen pro Quelle finden Sie in der Dokumentation der 
 
 <!-- KC:setting -->
 
-##### Tastatur-Einstellungen öffnen {#toc188}
+##### Tastatur-Einstellungen öffnen {#OpenKeyboardSettings}
 
 Tastenkombination: `NVDA+Strg+K`
 
@@ -2449,7 +2449,7 @@ Diese Option ist standardmäßig aktiviert, obwohl manche Benutzer dies bestimmt
 
 <!-- KC:setting -->
 
-##### Maus-Einstellungen öffnen {#toc201}
+##### Maus-Einstellungen öffnen {#OpenMouseSettings}
 
 Tastenkombination: `NVDA+Strg+M`
 
@@ -2552,7 +2552,7 @@ Um den einfachen Darstellungsmodus per Tastenkombination ein- und auszuschalten,
 
 <!-- KC:setting -->
 
-##### Einstellungen zur Objekt-Darstellung öffnen {#toc218}
+##### Einstellungen der Objekt-Darstellung öffnen {#OpenObjectPresentationSettings}
 
 Tastenkombination: `NVDA+Strg+O`
 
@@ -2667,7 +2667,7 @@ Diese Option ist standardmäßig aktiviert.
 
 <!-- KC:setting -->
 
-##### Einstellungen zum Lesemodus öffnen {#toc236}
+##### Einstellungen des Lesemodus öffnen {#OpenBrowseModeSettings}
 
 Tastenkombination: `NVDA+Strg+B`
 
@@ -2759,7 +2759,7 @@ Die Aktivierung dieser Option kann die Unterstützung für einige Websites auf K
 
 <!-- KC:setting -->
 
-##### Einstellungen zur Dokument-formatierung öffnen {#toc250}
+##### Einstellungen der Dokument-Formatierung öffnen {#OpenDocumentFormattingSettings}
 
 Tastenkombination: `NVDA+Strg+D`
 
@@ -3556,7 +3556,7 @@ Um den Braille-Betrachter von einer beliebigen Stelle aus umzuschalten, weisen S
 Die Python-Konsole in NVDA, zu finden im Menü "Werkzeuge" im NVDA-Menü, ist ein Entwicklungswerkzeug, das für das Debugging, die allgemeine Inspektion von NVDA-Interna oder die Inspektion der Zugänglichkeitshierarchie einer Anwendung nützlich ist.
 Weitere Informationen finden Sie im [NVDA-Entwicklerhandbuch](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html).
 
-### Der Store für NVDA-Erweiterungen {#toc314}
+### Der Store für NVDA-Erweiterungen {#AddonStoreMenuItem}
 
 Dadurch wird der [Store für NVDA-Erweiterungen](#AddonsManager) geöffnet.
 Für weitere Informationen lesen Sie bitte den ausführlichen Abschnitt: [NVDA-Erweiterungen und der Store für NVDA-Erweiterungen](#AddonsManager).
@@ -3679,11 +3679,11 @@ Die folgenden Braillezeilen unterstützen diese automatische Erkennung.
 
 * Braillezeilen von HandyTech
 * Braillezeilen von Baum/VisioBraille, Humanware, APH, Orbit
-* Humanware Brailliant-Serien BI/B
-* Humanware BrailleNote
+* Serien der Brailliant BI/B von Humanware
+* BrailleNote von Humanware
 * SuperBraille
 * Optelec-Serien ALVA 6
-* HIMS-Serien Braille Sense, Braille EDGE, Smart Beetle, Sync Braille
+* Serien der Braille Sense, Braille EDGE, Smart Beetle, SyncBraille von Hims
 * Braillezeilen von EuroBraille Esys, Esytime, Iris
 * Braillezeilen von Nattiq nBraille
 * Seika Notetaker: MiniSeika (mit 16 und 24 Modulen), V6 und V6Pro (mit 40 Modulen)
@@ -4005,7 +4005,7 @@ Die folgenden zusätzlichen Geräte werden ebenfalls unterstützt (und erfordern
 Folgende Tastenkombinationen sind bei diesen Braillezeilen verfügbar
 Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechenden Tasten zu finden sind.
 
-#### Tastenzuweisungen für alle Braillezeilenmodelle {#toc334}
+#### Tastenzuweisungen für alle Braillezeilenmodelle {#HumanWareBrailliantKeyAssignmentForAllModels}
 
 <!-- KC:beginInclude -->
 
@@ -4034,7 +4034,7 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 
 <!-- KC:endInclude -->
 
-#### Tastenzuweisungen für Brailliant BI 32/40 und B 80 {#toc335}
+#### Tastenzuweisungen für Brailliant BI 32, BI 40 und B 80 {#HumanWareBrailliantKeyAssignmentForBI32BI40AndB80}
 
 <!-- KC:beginInclude -->
 
@@ -4046,7 +4046,7 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 
 <!-- KC:endInclude -->
 
-#### Tastenzuweisungen für Brailliant BI 14 {#toc336}
+#### Tastenzuweisungen für Brailliant BI 14 {#HumanWareBrailliantKeyAssignmentForBI14}
 
 <!-- KC:beginInclude -->
 
@@ -4060,10 +4060,10 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 
 <!-- KC:endInclude -->
 
-### Serien von HIMS Braille Sense / Braille EDGE / Smart Beetle / SyncBraille {#Hims}
+### Serien der Braille Sense / Braille EDGE / Smart Beetle / SyncBraille von Hims {#Hims}
 
-NVDA unterstützt die Braillezeilenmodelle Braille Sense, Braille EDGE, SyncBraille und Smart Beetle von [HIMS](https://www.hims-inc.com/), wahlweise mit USB- oder Bluetooth-Anbindung.
-Wenn Sie die Braillezeile per USB anschließen, müssen Sie noch die [USB-Treiber von HIMS](http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip) auf Ihrem System installieren.
+NVDA unterstützt die Braillezeilenmodelle Braille Sense, Braille EDGE, SyncBraille und Smart Beetle von [Hims](https://www.hims-inc.com/), wahlweise mit USB- oder Bluetooth-Anbindung.
+Wenn Sie die Braillezeile per USB anschließen, müssen Sie noch die [USB-Treiber von Hims](http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip) auf Ihrem System installieren.
 
 Folgende Tastenkombinationen sind in NVDA verfügbar:
 Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechenden Tasten zu finden sind.

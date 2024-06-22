@@ -540,7 +540,7 @@ Vous pouvez également garder votre doigt sur l'écran et le déplacer pour lire
 Lorsque les commandes NVDA sont décrites dans ce guide utilisateur, elles peuvent comporter un geste tactile qui peut être utilisé pour activer cette commande avec l'écran tactile.
 Voici quelques instructions sur la manière d'effectuer les différents gestes tactiles.
 
-##### Tapes {#toc45}
+##### Tapes {#Taps}
 
 Tapoter rapidement sur l'écran avec un ou plusieurs doigts.
 
@@ -552,7 +552,7 @@ Tapoter deux fois sera une double-tape.
 Tapoter trois fois sera une triple-tape et ainsi de suite.
 Bien sûr, ces gestes à tapes multiples reconnaissent combien de doigts sont utilisés, il est donc possible d'avoir des gestes tel qu'une triple-tape à deux doigts, ou une tape à quatre doigts, etc.
 
-##### Glisser {#toc46}
+##### Glisser {#Flicks}
 
 Glissez rapidement votre doigt sur l'écran.
 
@@ -1706,7 +1706,7 @@ Les catégories de paramètres du dialogue Paramètres sont décrite ci-dessous.
 
 <!-- KC:setting -->
 
-##### Ouvrir les paramètres généraux {#toc110}
+##### Ouvrir les paramètres généraux {#OpenGeneralSettings}
 
 Raccourci clavier : `NVDA+contrôle+g`
 
@@ -1802,7 +1802,7 @@ Vous pouvez aussi installer manuellement la mise à jour en attente depuis le di
 
 <!-- KC:setting -->
 
-##### Ouvrir les paramètres de parole {#toc123}
+##### Ouvrir les paramètres de parole {#OpenSpeechSettings}
 
 Raccourci clavier : `NVDA+contrôle+v`
 
@@ -1945,7 +1945,7 @@ A noter qu'il est nécessaire de cocher au moins deux modes.
 
 <!-- KC:setting -->
 
-##### Ouvrir le dialogue sélection du synthétiseur {#toc144}
+##### Ouvrir le dialogue sélection du synthétiseur {#OpenSelectSynthesizer}
 
 Raccourci clavier : `NVDA+contrôle+s`
 
@@ -2177,7 +2177,7 @@ Pour basculer l'affichage de la sélection de n'importe où, veuillez attribuer 
 
 <!-- KC:setting -->
 
-##### Ouvrir le dialogue de sélection de l'afficheur braille {#toc168}
+##### Ouvrir le dialogue de sélection de l'afficheur braille {#OpenSelectBrailleDisplay}
 
 Raccourci clavier : `NVDA+contrôle+a`
 
@@ -2229,7 +2229,7 @@ Par conséquent, il est recommandé de ne connecter qu'un seul afficheur braille
 
 <!-- KC:setting -->
 
-##### Ouvrir les paramètres audio {#toc173}
+##### Ouvrir les paramètres audio {#OpenAudioSettings}
 
 Raccourci clavier : `NVDA+contrôle+u`
 
@@ -2372,7 +2372,7 @@ Pour les paramètres supportés par un service, veuillez vous référer à la do
 
 <!-- KC:setting -->
 
-##### Ouvrir les paramètres Clavier {#toc188}
+##### Ouvrir les paramètres Clavier {#OpenKeyboardSettings}
 
 Raccourci clavier : `NVDA+contrôle+k`
 
@@ -2449,7 +2449,7 @@ Cette option est activée par défaut, mais certains utilisateurs souhaiteraient
 
 <!-- KC:setting -->
 
-##### Ouvrire les paramètres de souris {#toc201}
+##### Ouvrire les paramètres de souris {#OpenMouseSettings}
 
 Raccourci clavier : `NVDA+contrôle+m`
 
@@ -2552,7 +2552,7 @@ Pour activer ou désactiver le mode de revue simple depuis n'importe où, veuill
 
 <!-- KC:setting -->
 
-##### Ouvrir les paramètres de présentation des objets {#toc218}
+##### Ouvrir les paramètres de présentation des objets {#OpenObjectPresentationSettings}
 
 Raccourci clavier : `NVDA+contrôle+o`
 
@@ -2667,7 +2667,7 @@ Cette option est activée par défaut.
 
 <!-- KC:setting -->
 
-##### Ouvrir les paramètres du mode navigation {#toc236}
+##### Ouvrir les paramètres du mode navigation {#OpenBrowseModeSettings}
 
 Raccourci clavier : `NVDA+contrôle+b`
 
@@ -2759,7 +2759,7 @@ Activer cette option peut améliorer le support de quelques sites web au détrim
 
 <!-- KC:setting -->
 
-##### Ouvrir les paramètres de mise en forme des documents {#toc250}
+##### Ouvrir les paramètres de mise en forme des documents {#OpenDocumentFormattingSettings}
 
 Raccourci clavier : `NVDA+contrôle+d`
 
@@ -3556,7 +3556,7 @@ Pour activer/désactiver la visionneuse braille de n'importe où, Veuillez assig
 La console Python de NVDA, disponible sous Outils dans le menu NVDA, est un outil de développement utile pour le débogage, l'inspection générale des internes de NVDA ou l'inspection de la hiérarchie d'accessibilité d'une application.
 Pour plus d'informations, veuillez consulter le [Guide de développement NVDA](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html).
 
-### Add-on Store {#toc314}
+### Add-on Store {#AddonStoreMenuItem}
 
 Cela ouvrira l'[Add-on Store de NVDA](#AddonsManager).
 Pour plus d'informations, lisez la section détaillée : [Extensions et Add-on Store](#AddonsManager).
@@ -4005,7 +4005,7 @@ Les terminaux suivants sont également supportés (et ne nécessitent aucun pilo
 Voici les assignations de touches pour Brailliant BI/B et BrailleNote touch sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
 
-#### Assignations des Touches pour tous les Modèles {#toc334}
+#### Assignations des Touches pour tous les Modèles {#HumanWareBrailliantKeyAssignmentForAllModels}
 
 <!-- KC:beginInclude -->
 
@@ -4034,7 +4034,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 
 <!-- KC:endInclude -->
 
-#### Assignations de Touches pour les Brailliant BI 32, BI 40 et B 80 {#toc335}
+#### Assignations de Touches pour les Brailliant BI 32, BI 40 et B 80 {#HumanWareBrailliantKeyAssignmentForBI32BI40AndB80}
 
 <!-- KC:beginInclude -->
 
@@ -4046,7 +4046,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 
 <!-- KC:endInclude -->
 
-#### Assignations de Touches pour le Brailliant BI 14 {#toc336}
+#### Assignations de Touches pour le Brailliant BI 14 {#HumanWareBrailliantKeyAssignmentForBI14}
 
 <!-- KC:beginInclude -->
 

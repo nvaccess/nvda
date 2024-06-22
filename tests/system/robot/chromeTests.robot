@@ -163,11 +163,9 @@ i13307
 textParagraphNavigation
 	[Documentation]	Text paragraph navigation
 	test_textParagraphNavigation
-	[Tags]	excluded_from_build
 styleNav
 	[Documentation]	Same style navigation
 	test_styleNav
-	[Tags]	excluded_from_build
 aria-errormessage
 	[Documentation]	Test that aria-errormessage is reported correctly in focus and browse mode
 	test_ariaErrorMessage

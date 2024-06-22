@@ -100,7 +100,7 @@ Sprawdź [Wymagania systemowe](#SystemRequirements) dla więcej szczegółów.
 
 Ta procedura wymaga wiedzy poruszania się po stronach internetowych.
 
-* Otwórz swoją przeglądarkę internetową (naciśnij klawisz `windows`, napisz słowo "internet" bez cudzysłówów, i naciśnij `enter`)
+* Otwórz swoją przeglądarkę internetową, (naciśnij klawisz `windows`, napisz słowo "internet" bez cudzysłówów, i naciśnij `enter`)
 * Otwórz stronę pobierania NV Access (naciśnij `alt+d`, wpisz następujący adres i naciśnij `enter`): 
 https://www.nvaccess.org/download 
 * Aktywuj przycisk "download"
@@ -135,7 +135,7 @@ Dostępne opcje to:
 * "Utwórz kopię przenośną": ta opcja umożliwia ustawianie NVDA w jakimkolwiek folderze bez instalacji.
 Ta opcja jest użyteczna na komputerze bez praw administratora, lub na USB stickach w celu noszenia ze sobą.
 Kiedy ta opcja jest zaznaczona, NVDA kieruje użytkownika  w procesie tworzenia przenośnej kopii.
-Główną rzeczą o której NVDA powinien wiedzieć, to folder do przechowywania konfiguracji przenośnej kopii. 
+Główną rzecz o której NVDA powinien wiedzieć, to folder do przechowywania konfiguracji przenośnej kopii. 
 * "Kontynuuj uruchamianie tymczasowej kopii": ta opcja trzyma uruchomioną tymczasową kopię.
 To jest użyteczne w celu testowania funkcji w nowej wersji przed jej instalacją.
 Kiedy ta opcja jest wybrana, okno programu uruchamiającego zamyka się, a tymczasowa kopia nadal działa dopóki nie zostanie zamknięta albo komputer zostanie wyłączone.
@@ -158,7 +158,7 @@ Po więcej opcji dostępnych podczas instalacji, prosimy zajrzeć do rozdziału 
 1. Naciskaj klawisz `Tab` i aktywuj przycisk "Zainstaluj NVDA na tym komputerze".
 1. Dalej, mamy opcje używaj NVDA podczas logowania a także opcje do tworzenia kopii przenośnej.
 Te opcje są domyślnie wybrane.
-Jeżeli chcesz naciśnij `tab` i `spacje` na jakiejkolwiek z tych opcji, lub pozostaw wartości domyślne.
+Jeżeli chcesz, naciśnij `tab` i `spacje` na jakiejkolwiek z tych opcji, lub pozostaw wartości domyślne.
 1. Naciśnij `enter` aby kontynuować.
 1. Pojawi się dialog "kontrola konta użytkownika (UAC)" w którym decydujesz "Czy chcesz, żeby ta aplikacja wykonała zmiany na tym komputerze?".
 1. Naciśnij `alt+t` aby zaakceptować.
@@ -294,21 +294,21 @@ Rozdział "[Dodatki i Add-ons store](#AddonsManager)" podręcznika użytkownika 
 
 Add-on Store jest dostępne w w meni Narzędzia.
 Naciśnij `NVDA+n` aby otworzyć NVDA meni, potem `n` dla narzędzi, a potem `a` dla add-on storu.
-Po ptwarciu Add-on storu, pokazują się karta właściwości "otkryj dodatki" jeżeli nie ma zainstalowanych dodatków.
+Po opwarciu Add-on storu, zostanie wyświetlona karta właściwości "otkryj dodatki", jeżeli nie ma zainstalowanych dodatków.
 Gdy dodatki są zainstalowane, Add-on Store otworzy się na karcie właściwości "zainstalowane dodatki".
 
 #### Otkrywaj dodatki {#AvailableAddons}
-Gdy okno otworzy się pierwszy raz, potrzebna pare sekund, aby dodatki wczytały się.
+Gdy okno otworzy się pierwszy raz,  trzeba poczekać pare sekund, aby dodatki wczytały się.
 NVDA przeczyta nazwę pierwszego dodatku po wczytaniu listy dodatków.
 Dostępne dodatki są wylistowane alfabetycznie w wielokolumnowej liście.
 Aby przeglądać listę i znaleźć informacje o określonym dodatku:
 
-1. Używaj klawiszy strzałek oraz naciśnij pierwszą literę nazwy dodatku aby się przemieszczać po liście.
+1. Używaj klawiszy strzałek oraz naciśnij pierwszą literę nazwy dodatku, aby się przemieszczać po liście.
 1. Naciśnij jeden raz klawisz `tab` aby dotrzeć do opisu zaznaczonego dodatku.
 1. Używaj [klawiszy do odczytu](#ReadingText) lub strzałek, aby przeczytać cały opis.
 1. Naciśnij `tab` aby dojść do przycisku "działania", który wspośród innych działań umożliwi instalację dodatku.
 1. Naciśnij `tab` aby dojść do części okna "więcej szczegółów", w którym podane są takie informacje jak wydawca, wersja i strona internetowa.
-1. Aby wrócić do listy dodatków, naciśnij `alt+a`, lub `shift+tab`, dopóki nei wrócisz na listę.
+1. Aby wrócić do listy dodatków, naciśnij `alt+a`, lub `shift+tab`, dopóki nie wrócisz na listę.
 
 #### Szukanie dodatków {#SearchingForAddons}
 Możliwe jest filtrowanie dodatków w taki sam sposób, jak i ich przeglądanie.
@@ -326,7 +326,7 @@ Aby zainstalować dodatek:
 1. Aby zainstalować dodatek, naciśnij `z` lub `Strzałkę w dół` zaznaczyć opcję "zainstaluj" i naciśnij `enter`.
 1. Fokus powróci do listy dodatków a NVDA przeczyta szczegóły dodatku.
 1. Informacja o "Stanie" przeczytana przez NVDA zmieni się z "dostępny" na "pobieranie".
-1. Gdy pobieranie dodatku zostanei zakończone, stan zmieni się na "Pobrany, oczekujący na instalację".
+1. Gdy pobieranie dodatku zostanie zakończone, stan zmieni się na "Pobrany, oczekujący na instalację".
 1. Powtórz te kroki z każdym dodatkiem, które chcesz zainstalować.
 1. Gdy zakończysz, naciśnij `tab` gdy przejdziesz do przycisku "zamknij", a potem naciśnij `enter`.
 1. Proces instalacji pobranych dodatków rozpocznie się po zamknięciu Add-on store.
@@ -540,7 +540,7 @@ Przesuwaj palec po ekranie, by usłyszeć inne kontrolki lub tekst pod nim.
 Ilekroć w tym podręczniku zostanie wymieniona komenda klawiaturowa NVDA, zostanie podany gest dotykowy, który jest jej odpowiednikiem. 
 Poniżej wyjaśnienie, jak wykonywać te gesty.
 
-##### Stuknięcia {#toc45}
+##### Stuknięcia {#Taps}
 
 Stuknij szybko w ekran jednym lub wieloma palcami.
 
@@ -552,7 +552,7 @@ Stuknięcie dwukrotne będzie podwójnym stuknięciem.
 Stuknięcie 3 razy będzie potrójnym stuknięciem. I tak dalej.
 Te wielokrotne gesty również uwzględniają ilość użytych palców, więc możliwe są gesty takie jak potrójne stuknięcie dwoma palcami, pojedyncze stuknięcie czterema palcami itd. 
 
-##### Machnięcia {#toc46}
+##### Machnięcia {#Flicks}
 
 Przesuń szybko palcem po ekranie.
 
@@ -1706,7 +1706,7 @@ Kategorie w oknie ustawień NVDA zostaną opisane poniżej.
 
 <!-- KC:setting -->
 
-##### Otwiera ustawienia ogólne {#toc110}
+##### Otwiera ustawienia ogólne {#OpenGeneralSettings}
 
 Skrót: `NVDA+control+g`
 
@@ -1802,7 +1802,7 @@ Można ręcznie zainstalować oczekującą aktualizację w oknie opcji wyjścia 
 
 <!-- KC:setting -->
 
-##### Otwiera ustawienia mowy {#toc123}
+##### Otwiera ustawienia mowy {#OpenSpeechSettings}
 
 Skrót: `NVDA+control+v`
 
@@ -1945,7 +1945,7 @@ Miewaj na uwadze, że powinieneś zaznaczyć dwa tryby.
 
 <!-- KC:setting -->
 
-##### Otwiera okno dialogowe wybór syntezatora {#toc144}
+##### Otwiera okno dialogowe wybór syntezatora {#OpenSelectSynthesizer}
 
 Skrót: `NVDA+control+s`
 
@@ -2177,7 +2177,7 @@ Aby włączać i wyłączać pokazywanei zaznaczenia z jakiegokolwiek miejsca, s
 
 <!-- KC:setting -->
 
-##### Otwiera okno dialogowe wybor monitora brajlowskiego {#toc168}
+##### Otwiera okno dialogowe wybor monitora brajlowskiego {#OpenSelectBrailleDisplay}
 
 Skrót: `NVDA+control+a`
 
@@ -2229,7 +2229,7 @@ Czyli zaleca się podłączać monitor brajlowski określonego typu/producenta n
 
 <!-- KC:setting -->
 
-##### Otwiera ustawienia dźwięku {#toc173}
+##### Otwiera ustawienia dźwięku {#OpenAudioSettings}
 
 Skrót: `NVDA+control+u`
 
@@ -2372,7 +2372,7 @@ Po więcej informacji prosimy zajrzeć do pomocy danego rozszerzenia.
 
 <!-- KC:setting -->
 
-##### Otwiera ustawienia klawiatury {#toc188}
+##### Otwiera ustawienia klawiatury {#OpenKeyboardSettings}
 
 Skrót: `NVDA+control+k`
 
@@ -2449,7 +2449,7 @@ Opcja jest domyślnie włączona, aczkolwiek niektórzy użytkownicy mogą chcie
 
 <!-- KC:setting -->
 
-##### Otwiera ustawienia myszy {#toc201}
+##### Otwiera ustawienia myszy {#OpenMouseSettings}
 
 skrót: `NVDA+control+m`
 
@@ -2552,7 +2552,7 @@ Aby móc przełączać ten tryb z każdego miejsca, proszę przypisać własne z
 
 <!-- KC:setting -->
 
-##### Otwiera opcje prezentacji obiektów {#toc218}
+##### Otwiera opcje prezentacji obiektów {#OpenObjectPresentationSettings}
 
 Skrót: `NVDA+control+o`
 
@@ -2667,7 +2667,7 @@ Opcja jest domyślnie włączona.
 
 <!-- KC:setting -->
 
-##### Otwiera ustawienia trybu czytania {#toc236}
+##### Otwiera ustawienia trybu czytania {#OpenBrowseModeSettings}
 
 Skrót: `NVDA+control+b`
 
@@ -2759,7 +2759,7 @@ Włączenie tej opcji może spowodować, że wsparcie pewnych stron internetowyc
 
 <!-- KC:setting -->
 
-##### Otwiera ustawienia formatowania dokumentów {#toc250}
+##### Otwiera ustawienia formatowania dokumentów {#OpenDocumentFormattingSettings}
 
 Skrót: `NVDA+control+d`
 
@@ -3556,7 +3556,7 @@ Aby się dostać do przeglądu brajla z każdego miejsca, prosimy przydzielić z
 Konsola Pythona NVDA znajduje się w menu Narzędzia  w NVDA. Jest narzędziem dla programistów i jest używana do debugowania, przeglądania wewnątrz NVDA lub sprawdzania hierarchii dostępności aplikacji.
 Więcej informacji znajduje się w [podręczniku dla twórców](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html).
 
-### Add-on Store {#toc314}
+### Add-on Store {#AddonStoreMenuItem}
 
 Ta opcja otworzy [NVDA Add-on Store](#AddonsManager).
 Aby się dowiedzieć więcej, przeczytaj szczegółowy rozdział: [Dodatki i Add-on Store](#AddonsManager).
@@ -4005,7 +4005,7 @@ Następujące urządzenia również nie wymagają instalacji dodatkowych sterown
 Poniżej skróty klawiszowe dla Brailliant BI/B i BrailleNote touch, które działają w NVDA.
 Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia.
 
-#### Przypisania klawiszy dla wszystkich modeli {#toc334}
+#### Przypisania klawiszy dla wszystkich modeli {#HumanWareBrailliantKeyAssignmentForAllModels}
 
 <!-- KC:beginInclude -->
 
@@ -4034,7 +4034,7 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia.
 
 <!-- KC:endInclude -->
 
-#### Przypisania klawiszy dla Brailliant BI 32, BI 40 and B 80 {#toc335}
+#### Przypisania klawiszy dla Brailliant BI 32, BI 40 and B 80 {#HumanWareBrailliantKeyAssignmentForBI32BI40AndB80}
 
 <!-- KC:beginInclude -->
 
@@ -4046,7 +4046,7 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia.
 
 <!-- KC:endInclude -->
 
-#### Przypisania klawiszowe dla Brailliant BI 14 {#toc336}
+#### Przypisania klawiszy dla Brailliant BI 14 {#HumanWareBrailliantKeyAssignmentForBI14}
 
 <!-- KC:beginInclude -->
 

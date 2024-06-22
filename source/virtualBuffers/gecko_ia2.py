@@ -565,7 +565,10 @@ class Gecko_ia2(VirtualBuffer):
 			]
 		elif nodeType == "menuItem":
 			attrs = [
-				{"IAccessible::role": [oleacc.ROLE_SYSTEM_BUTTONMENU]}
+				{"IAccessible::role": [
+					oleacc.ROLE_SYSTEM_BUTTONMENU,
+					oleacc.ROLE_SYSTEM_MENUITEM,
+				]}
 			]
 		elif nodeType == "toggleButton":
 			attrs = [

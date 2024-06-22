@@ -1,6 +1,96 @@
 # Čo je nové v NVDA 
 
 
+## 2024.2
+
+Táto verzia prináša novú funkciu, oddelenie zvukov a hlasového výstupu.
+Odteraz je možné nastaviť NVDA tak, aby hlasový výstup bol v jednom kanály (napríklad v pravom) a ostatné zvuky aplikácií v druhom (napríklad v ľavom).
+
+Pribudli nové klávesové skratky, ktoré umožňujú v kruhu nastavení hlasového výstupu prejsť na prvú a poslednú hodnotu nastavenia a tiež meniť nastavenia po väčších krokoch.
+Odteraz je tiež možné definovať si skratky v režime prehliadania na prechod po textových odsekoch, vertikálne zarovnaných odsekoch, text s rovnakým alebo rôznym formátovaním, položky menu, prepínacie tlačidlá, posuvníky, ilustrácie a matematický obsah.
+
+Pribudli tiež novinky v oblasti brailovho písma.
+Pridali sme možnosť zobrazovať na brailovom riadku to, čo zvyčajne hovorí hlasový výstup.
+V tomto prípade sa na riadku zobrazuje to, čo NVDA hovorí resp. posiela na hlasový výstup aj v prípade, že je režim reči nastavený na ticho.
+Pridali sme tiež podporu pre riadky BrailleEdgeS2 a BrailleEdgeS3.
+Aktualizovali sme brailovú prekladovú tabuľku LibLouis, čím pribudli detailné tabuľky pre bieloruštinu, a Ukrajinčinu, tiež Laoštinu a Španielčinu s podporou pre grécke znaky.
+
+Hlasový výstupeSpeak bol tiež aktualizovaný a odteraz podporuje jazyk Tigrinya.
+
+Opravili sme viaceré chyby hlásené v aplikáciách Thunderbird, Adobe Reader, webových prehliadačoch, Nudi a Geekbench.
+
+### Nové vlastnosti
+
+* Nové klávesové skratky:
+  * Nová skratka `p` na prechod po textových odsekoch v režime prehliadania. (#15998, @mltony)
+  * Nové, predvolene nedefinované skratky, ktoré je možné použiť na prechod po:
+    * Ilustráciách (#10826)
+    * Vertikálne zarovnaných odsekoch (#15999, @mltony)
+    * Položkách menu (#16001, @mltony)
+    * Prepínacích tlačidlách (#16001, @mltony)
+    * posuvníkoch (#16001, @mltony)
+    * matematickom obsahu (#16001, @mltony)
+    * text s rovnakým formátovaním (#16000, @mltony)
+    * text s odlišným formátovaním (#16000, @mltony)
+  * Pridané skratky na prechod na prvú a poslednú hodnotu a tiež na rýchly prechod po väčších úsekoch v kruhu nastavení hlasového výstupu. (#13768, #16095, @rmcpantoja)
+    * Nastavenie prvej a poslednej hodnoty nemá predvolene definovanú skratku. (#13768)
+    * Zvýšiť a znížiť hodnoty po väčších krokoch je možné nasledovne: (#13768):
+      * Desktop: `NVDA+ctrl+pageUp` a `NVDA+ctrl+pageDown`.
+      * Laptop: `NVDA+ctrl+shift+pageUp` a `NVDA+ctrl+shift+pageDown`.
+  * Pridaná možnosť definovať skratku, ktorá zapína a vypína oznamovanie ilustrácií a ich popisov. (#10826, #14349)
+* Braille:
+  * Pridaná podpora pre riadky BrailleEdgeS2 a BrailleEdgeS3. (#16033, #16279, @EdKweon)
+  * Pridaný nový režim zobrazovania na brailovom riadku s názvom "sledovanie reči". (#15898, @Emil-18)
+    * Po aktivovaní tohto režimu sa na riadku zobrazuje presne to, čo NVDA hovorí.
+    * Režimi je možné prepínať skratkou `NVDA+alt+t`, alebo v nastaveniach brailu.
+* Oddelenie zvuku: (#12985, @mltony)
+  * Umožňuje hlasový výstup poslať do jedného kanálu (napríklad ľavého) a ostatné zvuky do druhého kanálu (napríklad pravého).
+  * Na prepínanie režimu použite skratku `NVDA+alt+s`.
+* Oznamovanie hlavičiek riadkov a stĺpcov tabuľky je odteraz oznamované aj v html editovateľných prvkoch. (#14113)
+* V nastaveniach čítania textu sme pridali možnosť zapnúť a vypnúť oznamovanie ilustrácií a ich popisov. (#10826, #14349)
+* V systéme Windows 11, NVDA oznamuje návrhy a odporúčania pri diktovaní hlasom a tiež odporúčané akcie vrátane prvého návrhu pri kopírovaní dát, ako napríklad telefónne čísla skopírované do schránky.  (vyžaduje Windows 11 od verzie 2022). (#16009, @josephsl)
+* NVDA udržiava zvukové zariadenie aktívne aj po tom, ako hlasový výstup dočíta text, čím zabraňuje oneskorenej odozve a odsekávaniu začiatkov a koncov fráz pri Bluetooth zariadeniach a niektorých notebookoch. (#14386, @jcsteh, @mltony)
+* Pridaná podpora pre HP Secure Browser. (#16377)
+
+### zmeny
+
+* Katalóg s doplnkami:
+  * Minimálna požadovaná a naposledy testovaná verzia doplnku je zobrazovaná v podrobnostiach o doplnku. (#15776, @Nael-Sayegh)
+  * Recenzie komunity sú dostupné na všetkých záložkách. (#16179, @nvdaes)
+* Aktualizácie komponentov:
+  * Brailová prekladová tabuľka LibLouis aktualizovaná na verziu [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0). (#16259, @codeofdusk)
+    * Pridané nové detailné tabuľky (s indikovaním veľkých písmen) pre Bieloruštinu a Ukrajinčinu.
+    * Pridaná nová Španielska tabuľka pre čítanie gréckych textov.
+    * Pridaná tabuľka Laoština plnopis. (#16470)
+  * Hlasový výstup eSpeak NG aktualizovaný na verziu 1.52-dev commit `cb62d93fd7`. (#15913)
+    * Pridaný nový jazyk Tigrinya.
+* Zmenili sme viacero skratiek na zariadeniach BrailleSense, aby nedochádzalo ku konfliktom pri písaní vo Francúzštine. (#15306)
+  * `alt+ľavá šípka` je odteraz namapovaná na `bod2+bod7+medzera`
+  * `alt+pravá šípka` je namapovaná na `bod5+bod7+medzera`
+  * `alt+šípka hore` je namapovaná na `bod2+bod3+bod7+medzera`
+  * `alt+šípka dole` je namapovaná na `bod5+bod6+bod7+medzera`
+* Oddeľovacie bodky, ktoré sa často používajú pri tvorbe obsahov, viac nie sú oznamované pri nízkych úrovniach interpunkcie. Padding (#15845, @CyrilleB79)
+
+### Opravy
+
+* Opravy pre Windows 11:
+  * NVDA opäť oznamuje návrhy pri písaní na hardwarovej klávesnici. (#16283, @josephsl)
+  * V rýchlych nastaveniach vo verzii 24H2 (aktualizácia 2024 a Windows Server 2025), je možné používať myš a dotykové gestá. (#16348, @josephsl)
+* Katalóg s doplnkami:
+  * Po stlačení `ctrl+tab`, zameranie sa správne presunie na novú záložku. (#14986, @ABuffEr)
+  * NVDA sa viac nereštartuje, ak dočasné súbory nie sú správne. (#16362, @nvdaes)
+  * Opravy pre prehliadače postavené na Chromium v rozhraní UIA:
+  * Kláves backspace správne funguje v prihlasovacích formulároch Gmailu. (#16395)
+* Kláves Backspace správne funguje v aplikácii Nudi 6.1 ak je zapnutá funkcia spracovať vstup z externých programov. (#15822, @jcsteh)
+* NVDA viac neprehráva súradnice kurzora myši, ak je NVDA v režime spánku. (#8059, @hwf1324)
+* V adobe readery NVDA viac neignoruje alternatívny text nastavený vo vzorcoch. (#12715)
+* Opravená chyba, ktorá spôsobovala, že NVDA nečítalo ribbon ponuky a možnosti v aplikácii Geekbench. (#16251, @mzanm)
+* Opravená chyba, ktorá v ojedinelých prípadoch spôsobovala, že pri ukladaní nastavení sa neuložili profily. (#16343, @CyrilleB79)
+* V prehliadačoch Firefox a prehliadačoch postavených na Chromium, NVDA správne prepne do režimu fokusu, ak stlačíte enter v zoznamoch (ul / ol) vo vnútri editovateľného obsahu. (#16325)
+* NVDA správne oznamuje zmenu stavu stĺpca v zozname správ v aplikácii Thunderbird. (#16323)
+* Opäť správne na príkazovom riadku funguje parameter `-h`/`--help` (#16522, @XLTechie)
+* NVDA podporuje poedit od verzie 3.4 aj v prípade, že prekladáte v jazykoch, ktoré majú viacero foriem množného čísla (napríklad Poľština, Čínština a Slovenčina).
+
 ## 2024.1
 
 Pridaný nový režim reči, reč na vyžiadanie.
