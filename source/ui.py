@@ -133,7 +133,7 @@ def browseableMessage(
 	d.add("message", message)
 	if closeButton:
 		# Translators: The text of a button which closes the window.
-d.add("closeButtonText", _("Close"))
+		d.add("closeButtonText", _("Close"))
 	if copyButton:
 		# Translators: The text of a button to copy the text of the window to the clipboard.
 		d.add("copyButtonText", _("Copy"))
