@@ -609,7 +609,10 @@ class AddonStoreVM:
 			newAddons = _createAddonGUICollection()
 			for channel in availableAddons:
 				for addonId in availableAddons[channel]:
-					if addonId not in oldAddons[channel]:
+					if (
+						addonId not in oldAddons[channel]
+						or availableAddons[channel][addonId].addonVersionNumber != oldAddons[channel][addonId].addonVersionNumber
+					):
 						newAddons[channel][addonId] = availableAddons[channel][addonId]
 			availableAddons = newAddons
 		log.debug("completed getting addons in the background")
