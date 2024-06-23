@@ -303,7 +303,11 @@ class _DataManager:
 		compatibleAddons = self.getLatestCompatibleAddons()
 		for channel in compatibleAddons:
 			for addonId in compatibleAddons[channel]:
-				if addonId not in oldAddons[channel]:
+				compatibleAddon = compatibleAddons[channel][addonId]
+				if (
+					addonId not in oldAddons[channel]
+					or compatibleAddon.addonVersionNumber != oldAddons[channel][addonId].addonVersionNumber
+				):
 					return True
 		return False
 
