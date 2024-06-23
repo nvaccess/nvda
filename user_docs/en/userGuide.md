@@ -345,7 +345,7 @@ During the installation process, add-ons may display dialogs that you will need 
 
 #### Managing installed add-ons {#ManagingInstalledAddons}
 Press `control+tab` to move between the tabs of the Add-on Store.
-The tabs include: "Installed add-ons", "Updatable add-ons", "Available add-ons" "Installed incompatible add-ons" and "Available new add-ons".
+The tabs include: "Installed add-ons", "Updatable add-ons", "Available add-ons", "Installed incompatible add-ons" and "Available new add-ons".
 Each of the tabs are set out similar to each other, as a list of add-ons, a panel for more details on the selected add-on, and a button to perform actions for the selected add-on.
 The actions menu of installed add-ons includes "Disable" and "Remove" rather than "Install".
 Disabling an add-on stops NVDA from loading it, but leaves it installed.
