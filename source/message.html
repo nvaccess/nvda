@@ -4,11 +4,13 @@
 <TITLE></TITLE>
 <SCRIPT LANGUAGE=javascript>
 <!--
+var args = window.dialogArguments;
+
 function handleKeyPress(e) {
 	e = e || window.event;
 	if(e.keyCode == 27){ // code for escape
 		window.close();
-	} else if (e.altKey && e.keyCode === 67) {
+	} else if (e.altKey && e.keyCode === 67) {  // Code for Alt+c for copy button
 		onCopyButtonPress();
 	}
 }
@@ -22,10 +24,12 @@ function onCopyButtonPress() {
 	var success = rng.execCommand("Copy");
 	rng.collapse(false);
 	rng.select();
-	if (success) {  // Notify the user about the copy result
-		alert("Copied to clipboard");
-	} else {
-		alert("Couldn't copy to clipboard");
+	if (args) {  // Notify the user about the copy result
+		if (success) {
+			alert(args.item('copySuccessfulAlertText'));
+		} else {
+			alert(args.item('copyFailedAlertText'));
+		}
 	}
 }
 
@@ -35,7 +39,6 @@ function onCloseButtonPress() {
 }
 
 function windowOnLoad() {
-	var args = window.dialogArguments;
 	if (args) {
 		document.title = args.item('title');
 		messageID.innerHTML = args.item('message');
